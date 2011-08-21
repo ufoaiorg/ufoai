@@ -53,7 +53,7 @@ component panel cmpDefNamedTbar
 	string	val {
 		pos "190 0"
 		size "130 20"
-		textalign ALIGN_UR
+		contentalign ALIGN_UR
 	}
 }
 
@@ -83,7 +83,7 @@ component panel cmpMapSlot
 		color 		"0 .78 0 1"
 		string		*cvar:mn_svmapname
 		selectcolor	"1 1 1 1"
-		textalign	ALIGN_CC
+		contentalign	ALIGN_CC
 		padding		8
 		font		"f_small"
 		pos			"32 0"
@@ -138,7 +138,7 @@ component panel cmpDefBaseHeader {
 		pos			"780 30"
 		size		"130 30"
 		font		"f_big"
-		textalign	ALIGN_UR
+		contentalign	ALIGN_UR
 	}
 
 	custombutton bt_back_to_baseview
@@ -358,7 +358,7 @@ component panel cmpTeamPanel
 		image		"ui/button_green_verysmall"
 		color		"0 .78 0 1"
 		selectcolor	"1 1 1 1"
-		textalign	ALIGN_CC
+		contentalign	ALIGN_CC
 		padding		8
 		font		"f_verysmall"
 		disabled	true
@@ -373,7 +373,7 @@ component panel cmpTeamPanel
 		image		"ui/button_green_verysmall"
 		color		"0 .78 0 1"
 		selectcolor	"1 1 1 1"
-		textalign	ALIGN_CC
+		contentalign	ALIGN_CC
 		padding		8
 		font		"f_verysmall"
 		disabled	true
@@ -388,7 +388,7 @@ component panel cmpTeamPanel
 		image		"ui/button_green_verysmall"
 		color		"0 .78 0 1"
 		selectcolor	"1 1 1 1"
-		textalign	ALIGN_CC
+		contentalign	ALIGN_CC
 		padding		8
 		font		"f_verysmall"
 		disabled	true
@@ -403,7 +403,7 @@ component panel cmpTeamPanel
 		image		"ui/button_green_verysmall"
 		color		"0 .78 0 1"
 		selectcolor	"1 1 1 1"
-		textalign	ALIGN_CC
+		contentalign	ALIGN_CC
 		padding		8
 		font		"f_verysmall"
 		disabled	true
@@ -418,7 +418,7 @@ component panel cmpTeamPanel
 		image		"ui/button_green_verysmall"
 		color		"0 .78 0 1"
 		selectcolor	"1 1 1 1"
-		textalign	ALIGN_CC
+		contentalign	ALIGN_CC
 		padding		8
 		font		"f_verysmall"
 		disabled	true
@@ -433,7 +433,7 @@ component panel cmpTeamPanel
 		image		"ui/button_green_verysmall"
 		color		"0 .78 0 1"
 		selectcolor	"1 1 1 1"
-		textalign	ALIGN_CC
+		contentalign	ALIGN_CC
 		padding		8
 		font		"f_verysmall"
 		disabled	true
@@ -450,7 +450,7 @@ component panel cmpTeamPanel
 		image		"ui/button_green_verysmall"
 		color		"0 .78 0 1"
 		selectcolor	"1 1 1 1"
-		textalign	ALIGN_CC
+		contentalign	ALIGN_CC
 		padding		8
 		font		"f_verysmall"
 		disabled	true
@@ -465,7 +465,7 @@ component panel cmpTeamPanel
 		image		"ui/button_green_verysmall"
 		color		"0 .78 0 1"
 		selectcolor	"1 1 1 1"
-		textalign	ALIGN_CC
+		contentalign	ALIGN_CC
 		padding		8
 		font		"f_verysmall"
 		disabled	true
@@ -480,7 +480,7 @@ component panel cmpTeamPanel
 		image		"ui/button_green_verysmall"
 		color		"0 .78 0 1"
 		selectcolor	"1 1 1 1"
-		textalign	ALIGN_CC
+		contentalign	ALIGN_CC
 		padding		8
 		font		"f_verysmall"
 		disabled	true
@@ -495,7 +495,7 @@ component panel cmpTeamPanel
 		image		"ui/button_green_verysmall"
 		color		"0 .78 0 1"
 		selectcolor	"1 1 1 1"
-		textalign	ALIGN_CC
+		contentalign	ALIGN_CC
 		padding		8
 		font		"f_verysmall"
 		disabled	true
@@ -510,7 +510,7 @@ component panel cmpTeamPanel
 		image		"ui/button_green_verysmall"
 		color		"0 .78 0 1"
 		selectcolor	"1 1 1 1"
-		textalign	ALIGN_CC
+		contentalign	ALIGN_CC
 		padding		8
 		font		"f_verysmall"
 		disabled	true
@@ -525,7 +525,7 @@ component panel cmpTeamPanel
 		image		"ui/button_green_verysmall"
 		color		"0 .78 0 1"
 		selectcolor	"1 1 1 1"
-		textalign	ALIGN_CC
+		contentalign	ALIGN_CC
 		padding		8
 		font		"f_verysmall"
 		disabled	true
@@ -598,7 +598,7 @@ window popup_keyinfo
 	{
 		font		"f_verysmall_bold"
 		string		*cvar:mn_keyinfo_label_string
-		textalign	ALIGN_CC
+		contentalign	ALIGN_CC
 		pos			"20 58"
 		size		"498 20"
 	}

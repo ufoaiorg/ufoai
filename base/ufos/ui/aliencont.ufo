@@ -270,7 +270,7 @@ window aliencont
 			pos			"20 424"
 			size		"240 20"
 			font		"f_small"
-			textalign	ALIGN_CC
+			contentalign	ALIGN_CC
 		}
 
 		image image
@@ -304,7 +304,7 @@ window aliencont
 			pos			"130 445"
 			size		"125 20"
 			font		"f_small"
-			textalign	ALIGN_UR
+			contentalign	ALIGN_UR
 		}
 
 		// ==================
@@ -326,7 +326,7 @@ window aliencont
 			pos			"130 470"
 			size		"125 20"
 			font		"f_small"
-			textalign	ALIGN_UR
+			contentalign	ALIGN_UR
 		}
 	}
 

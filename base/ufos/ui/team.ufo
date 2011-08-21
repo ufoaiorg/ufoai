@@ -26,7 +26,7 @@ window game_team_edit extends objectinfo
 	string s_backpack
 	{
 		pos "852 25"
-		textalign ALIGN_UC
+		contentalign ALIGN_UC
 		string	"_Backpack"
 		color "0 0.6 0 1"
 		size "160 25"
@@ -35,7 +35,7 @@ window game_team_edit extends objectinfo
 	string s_left
 	{
 		pos "852 150"
-		textalign ALIGN_UC
+		contentalign ALIGN_UC
 		string	"_Left Hand"
 		color "0 0.6 0 1"
 		size "160 25"
@@ -44,7 +44,7 @@ window game_team_edit extends objectinfo
 	string s_right
 	{
 		pos "530 150"
-		textalign ALIGN_UC
+		contentalign ALIGN_UC
 		string	"_Right Hand"
 		color "0 0.6 0 1"
 		size "160 25"
@@ -53,7 +53,7 @@ window game_team_edit extends objectinfo
 	string s_extension
 	{
 		pos "530 76"
-		textalign ALIGN_UC
+		contentalign ALIGN_UC
 		string	"_Extension"
 		color "0 0.6 0 1"
 		size "160 25"
@@ -62,7 +62,7 @@ window game_team_edit extends objectinfo
 	string s_headgear
 	{
 		pos "620 76"
-		textalign ALIGN_UC
+		contentalign ALIGN_UC
 		string	"_Headgear"
 		color "0 0.6 0 1"
 		size "160 25"
@@ -71,7 +71,7 @@ window game_team_edit extends objectinfo
 	string s_holster
 	{
 		pos "852 245"
-		textalign ALIGN_UC
+		contentalign ALIGN_UC
 		string	"_Holster"
 		color "0 0.6 0 1"
 		size "160 25"
@@ -80,7 +80,7 @@ window game_team_edit extends objectinfo
 	string s_belt
 	{
 		pos "530 245"
-		textalign ALIGN_UC
+		contentalign ALIGN_UC
 		string	"_Belt"
 		color "0 0.6 0 1"
 		size "160 25"
@@ -206,7 +206,7 @@ window game_team_edit extends objectinfo
 		string	*cvar:mn_name0
 		pos		"90 13"
 		size	"270 40"
-		textalign ALIGN_CL
+		contentalign ALIGN_CL
 		onClick { cmd "game_actorselect 0;" }
 	}
 	string txt_actor1
@@ -214,7 +214,7 @@ window game_team_edit extends objectinfo
 		string	*cvar:mn_name1
 		pos		"90 54"
 		size	"270 40"
-		textalign ALIGN_CL
+		contentalign ALIGN_CL
 		onClick { cmd "game_actorselect 1;" }
 	}
 	string txt_actor2
@@ -222,7 +222,7 @@ window game_team_edit extends objectinfo
 		string	*cvar:mn_name2
 		pos		"90 95"
 		size	"270 40"
-		textalign ALIGN_CL
+		contentalign ALIGN_CL
 		onClick { cmd "game_actorselect 2;" }
 	}
 	string txt_actor3
@@ -230,7 +230,7 @@ window game_team_edit extends objectinfo
 		string	*cvar:mn_name3
 		pos		"90 136"
 		size	"270 40"
-		textalign ALIGN_CL
+		contentalign ALIGN_CL
 		onClick { cmd "game_actorselect 3;" }
 	}
 	string txt_actor4
@@ -238,7 +238,7 @@ window game_team_edit extends objectinfo
 		string	*cvar:mn_name4
 		pos		"90 177"
 		size	"270 40"
-		textalign ALIGN_CL
+		contentalign ALIGN_CL
 		onClick { cmd "game_actorselect 4;" }
 	}
 	string txt_actor5
@@ -246,7 +246,7 @@ window game_team_edit extends objectinfo
 		string	*cvar:mn_name5
 		pos		"90 218"
 		size	"270 40"
-		textalign ALIGN_CL
+		contentalign ALIGN_CL
 		onClick { cmd "game_actorselect 5;" }
 	}
 	string txt_actor6
@@ -254,7 +254,7 @@ window game_team_edit extends objectinfo
 		string	*cvar:mn_name6
 		pos		"90 259"
 		size	"270 40"
-		textalign ALIGN_CL
+		contentalign ALIGN_CL
 		onClick { cmd "game_actorselect 6;" }
 	}
 	string txt_actor7
@@ -262,7 +262,7 @@ window game_team_edit extends objectinfo
 		string	*cvar:mn_name7
 		pos		"90 300"
 		size	"270 40"
-		textalign ALIGN_CL
+		contentalign ALIGN_CL
 		onClick { cmd "game_actorselect 7;" }
 	}
 
@@ -342,7 +342,7 @@ window game_team_edit extends objectinfo
 			string	*cvar:mn_itemname
 			pos		"10 6"
 			size	"330 20"
-			textalign	ALIGN_UC
+			contentalign	ALIGN_UC
 		}
 
 		item itemmodel
@@ -408,7 +408,7 @@ window game_team_edit extends objectinfo
 			string	*cvar:mn_linkname
 			pos		"140 290"
 			size	"190 16"
-			textalign	ALIGN_CC
+			contentalign	ALIGN_CC
 			font	"f_small"
 		}
 
@@ -446,7 +446,7 @@ window game_team_edit extends objectinfo
 			string	*cvar:mn_firemodename
 			pos		"140 314"
 			size	"190 16"
-			textalign	ALIGN_CC
+			contentalign	ALIGN_CC
 			font	"f_small"
 		}
 
@@ -769,7 +769,7 @@ window game_team_save_popup
 		image		"ui/button_green_verysmall"
 		color		"0 .78 0 1"
 		selectcolor	"1 1 1 1"
-		textalign	ALIGN_CL
+		contentalign	ALIGN_CL
 		padding		8
 		font		"f_verysmall"
 		pos			"50 53"
@@ -783,7 +783,7 @@ window game_team_save_popup
 		image		"ui/button_green_verysmall"
 		color		"0 .78 0 1"
 		selectcolor	"1 1 1 1"
-		textalign	ALIGN_CC
+		contentalign	ALIGN_CC
 		padding		8
 		font		"f_verysmall"
 		pos			"50 88"
@@ -797,7 +797,7 @@ window game_team_save_popup
 		image		"ui/button_green_verysmall"
 		color		"0 .78 0 1"
 		selectcolor	"1 1 1 1"
-		textalign	ALIGN_CC
+		contentalign	ALIGN_CC
 		padding		8
 		font		"f_verysmall"
 		pos			"50 123"
@@ -811,7 +811,7 @@ window game_team_save_popup
 		image		"ui/button_green_verysmall"
 		color		"0 .78 0 1"
 		selectcolor	"1 1 1 1"
-		textalign	ALIGN_CC
+		contentalign	ALIGN_CC
 		padding		8
 		font		"f_verysmall"
 		pos			"50 158"
@@ -825,7 +825,7 @@ window game_team_save_popup
 		image		"ui/button_green_verysmall"
 		color		"0 .78 0 1"
 		selectcolor	"1 1 1 1"
-		textalign	ALIGN_CC
+		contentalign	ALIGN_CC
 		padding		8
 		font		"f_verysmall"
 		pos			"50 193"
@@ -839,7 +839,7 @@ window game_team_save_popup
 		image		"ui/button_green_verysmall"
 		color		"0 .78 0 1"
 		selectcolor	"1 1 1 1"
-		textalign	ALIGN_CC
+		contentalign	ALIGN_CC
 		padding		8
 		font		"f_verysmall"
 		pos			"50 228"
@@ -853,7 +853,7 @@ window game_team_save_popup
 		image		"ui/button_green_verysmall"
 		color		"0 .78 0 1"
 		selectcolor	"1 1 1 1"
-		textalign	ALIGN_CC
+		contentalign	ALIGN_CC
 		padding		8
 		font		"f_verysmall"
 		pos			"50 263"
@@ -867,7 +867,7 @@ window game_team_save_popup
 		image		"ui/button_green_verysmall"
 		color		"0 .78 0 1"
 		selectcolor	"1 1 1 1"
-		textalign	ALIGN_CC
+		contentalign	ALIGN_CC
 		padding		8
 		font		"f_verysmall"
 		pos			"50 298"
@@ -881,7 +881,7 @@ window game_team_save_popup
 		image		"ui/button_green_verysmall"
 		color		"0 .78 0 1"
 		selectcolor	"1 1 1 1"
-		textalign	ALIGN_CC
+		contentalign	ALIGN_CC
 		padding		8
 		font		"f_verysmall"
 		pos			"50 333"
@@ -895,7 +895,7 @@ window game_team_save_popup
 		image		"ui/button_green_verysmall"
 		color		"0 .78 0 1"
 		selectcolor	"1 1 1 1"
-		textalign	ALIGN_CC
+		contentalign	ALIGN_CC
 		padding		8
 		font		"f_verysmall"
 		pos			"50 368"
@@ -909,7 +909,7 @@ window game_team_save_popup
 		image		"ui/button_green_verysmall"
 		color		"0 .78 0 1"
 		selectcolor	"1 1 1 1"
-		textalign	ALIGN_CC
+		contentalign	ALIGN_CC
 		padding		8
 		font		"f_verysmall"
 		pos			"50 403"
@@ -923,7 +923,7 @@ window game_team_save_popup
 		image		"ui/button_green_verysmall"
 		color		"0 .78 0 1"
 		selectcolor	"1 1 1 1"
-		textalign	ALIGN_CC
+		contentalign	ALIGN_CC
 		padding		8
 		font		"f_verysmall"
 		pos			"50 438"

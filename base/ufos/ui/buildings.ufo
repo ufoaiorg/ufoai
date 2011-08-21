@@ -48,7 +48,7 @@ window buildings
 		selectcolor	"1 1 1 1"
 		rows		"19"
 		longlines	LONGLINES_PRETTYCHOP
-		textalign	ALIGN_CC
+		contentalign	ALIGN_CC
 		onClick		{
 			cmd "buildings_click <lineselected>;"
 			if (((*cvar:mn_building_image eq "base/aliencont") || (*cvar:mn_building_image eq "base/drop")) || (*cvar:mn_building_image eq "base/workshop")) {

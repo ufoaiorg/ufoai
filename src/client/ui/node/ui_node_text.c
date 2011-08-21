@@ -191,7 +191,7 @@ static void UI_TextNodeDrawText (uiNode_t* node, const char *text, const linkedL
 	colorSelectedHover[3] = node->selectedColor[3];
 
 	/* fix position of the start of the draw according to the align */
-	switch (node->textalign % 3) {
+	switch (node->contentAlign % 3) {
 	case 0:	/* left */
 		break;
 	case 1:	/* middle */
@@ -287,7 +287,7 @@ static void UI_TextNodeDrawText (uiNode_t* node, const char *text, const linkedL
 					tabwidth = 0;
 
 				if (tabwidth != 0)
-					UI_DrawString(font, node->textalign, x1, y, x1, tabwidth - 1, EXTRADATA(node).lineHeight, cur, viewSizeY, EXTRADATA(node).super.scrollY.viewPos, &fullSizeY, qfalse, LONGLINES_PRETTYCHOP);
+					UI_DrawString(font, node->contentAlign, x1, y, x1, tabwidth - 1, EXTRADATA(node).lineHeight, cur, viewSizeY, EXTRADATA(node).super.scrollY.viewPos, &fullSizeY, qfalse, LONGLINES_PRETTYCHOP);
 
 				/* next */
 				x1 += tabwidth;
@@ -309,7 +309,7 @@ static void UI_TextNodeDrawText (uiNode_t* node, const char *text, const linkedL
 					R_FontTextSize (font, cur, width, EXTRADATA(node).longlines, NULL, NULL, &lines, NULL);
 					fullSizeY += lines;
 				} else
-					UI_DrawString(font, node->textalign, x1, y, x, width, EXTRADATA(node).lineHeight, cur, viewSizeY, EXTRADATA(node).super.scrollY.viewPos, &fullSizeY, qtrue, EXTRADATA(node).longlines);
+					UI_DrawString(font, node->contentAlign, x1, y, x, width, EXTRADATA(node).lineHeight, cur, viewSizeY, EXTRADATA(node).super.scrollY.viewPos, &fullSizeY, qtrue, EXTRADATA(node).longlines);
 			}
 		}
 

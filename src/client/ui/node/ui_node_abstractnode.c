@@ -839,7 +839,7 @@ static const value_t properties[] = {
 	/* Text color the node will use when something is selected. */
 	{"selectcolor", V_COLOR, offsetof(uiNode_t, selectedColor), MEMBER_SIZEOF(uiNode_t, selectedColor)},
 	/* Alignement of the text into the node, or elements into blocks. */
-	{"textalign", V_UI_ALIGN, offsetof(uiNode_t, textalign), MEMBER_SIZEOF(uiNode_t, textalign)},
+	{"contentalign", V_UI_ALIGN, offsetof(uiNode_t, contentAlign), MEMBER_SIZEOF(uiNode_t, contentAlign)},
 	/* When <code>invis</code> property is false (default value), this condition say if the node is visible or not. It use a script expression. */
 	{"visiblewhen", V_UI_IF, offsetof(uiNode_t, visibilityCondition), 0},
 

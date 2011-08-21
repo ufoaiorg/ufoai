@@ -111,7 +111,7 @@ window transfer
 			string		"_Amount/Transfer"
 			pos			"300 18"
 			size		"200 25"
-			textalign	ALIGN_UC
+			contentalign	ALIGN_UC
 			font		"f_small_bold"
 		}
 
@@ -142,7 +142,7 @@ window transfer
 			pos			"350 41"
 			size		"50 525"
 			lineheight	"25"
-			textalign	ALIGN_CR
+			contentalign	ALIGN_CR
 			onViewChange	{
 				*node:root.itemlist.trans_list@viewpos = <viewpos>
 				*node:root.itemlist.trans_list_transfered@viewpos = <viewpos>
@@ -159,7 +159,7 @@ window transfer
 			pos			"425 41"
 			size		"50 525"
 			lineheight	"25"
-			textalign	ALIGN_CR
+			contentalign	ALIGN_CR
 			onViewChange	{
 				*node:root.itemlist.trans_list@viewpos = <viewpos>
 				*node:root.itemlist.trans_list_amount@viewpos = <viewpos>
@@ -349,7 +349,7 @@ window transfer
 			pos			"320 16"
 			size		"50 225"
 			lineheight	"25"
-			textalign	ALIGN_CR
+			contentalign	ALIGN_CR
 			onViewChange	{
 				*node:root.transfer_cargolist.trans_cargolist@viewpos = <viewpos>
 				*node:root.transfer_cargolist.trans_cargolist_scroll@fullsize = <fullsize>
@@ -391,7 +391,7 @@ window transfer
 			string		"_Destination base"
 			pos			"64 22"
 			size		"288 20"
-			textalign	ALIGN_UC
+			contentalign	ALIGN_UC
 			color		"0.7 0.7 0.7 1"
 			font		"f_small"
 		}

@@ -61,7 +61,7 @@ component panel hud_phone_firemodeentry {
 	{
 		pos "5 5"
 		size "490 60"
-		textalign ALIGN_CL
+		contentalign ALIGN_CL
 		ghost true
 		font "f_verybig"
 		color	"0 0 0 1"
@@ -88,7 +88,7 @@ component panel hud_phone_firemodeentry {
 	{
 		pos "210 70"
 		size "80 70"
-		textalign ALIGN_CC
+		contentalign ALIGN_CC
 		ghost true
 		font "f_verybig"
 		color	"0 0 0 1"
@@ -97,7 +97,7 @@ component panel hud_phone_firemodeentry {
 	{
 		pos "250 70"
 		size "250 70"
-		textalign ALIGN_CC
+		contentalign ALIGN_CC
 		ghost true
 		font "f_verybig"
 		color	"0 0 0 1"
@@ -322,7 +322,7 @@ window hud_phone extends hud
 				color	"0 0 0 1"
 				pos	"10 10"
 				size	"173 22"
-				textalign	ALIGN_CC
+				contentalign	ALIGN_CC
 				font	"f_normal_bold"
 				ghost	true
 			}
@@ -359,7 +359,7 @@ window hud_phone extends hud
 				color	"0 0 0 1"
 				pos	"10 10"
 				size	"173 22"
-				textalign	ALIGN_CC
+				contentalign	ALIGN_CC
 				font	"f_normal_bold"
 				ghost	true
 			}
@@ -418,7 +418,7 @@ window hud_phone extends hud
 				color	"0 0 0 1"
 				pos	"10 10"
 				size	"173 22"
-				textalign	ALIGN_CC
+				contentalign	ALIGN_CC
 				font	"f_normal_bold"
 				ghost	true
 			}

@@ -170,7 +170,7 @@ static void UI_TextNodeDrawText (uiNode_t* node, const linkedList_t* list, qbool
 	width = node->size[0] - node->padding - node->padding;
 
 	/* fix position of the start of the draw according to the align */
-	switch (node->textalign % 3) {
+	switch (node->contentAlign % 3) {
 	case 0:	/* left */
 		break;
 	case 1:	/* middle */
@@ -215,7 +215,7 @@ static void UI_TextNodeDrawText (uiNode_t* node, const linkedList_t* list, qbool
 				R_FontTextSize (font, cur, width, EXTRADATA(node).super.longlines, NULL, NULL, &lines, NULL);
 				fullSizeY += lines;
 			} else
-				UI_DrawString(font, node->textalign, x1, y, x, width, EXTRADATA(node).super.lineHeight, cur, viewSizeY, EXTRADATA(node).super.super.scrollY.viewPos, &fullSizeY, qtrue, EXTRADATA(node).super.longlines);
+				UI_DrawString(font, node->contentAlign, x1, y, x, width, EXTRADATA(node).super.lineHeight, cur, viewSizeY, EXTRADATA(node).super.super.scrollY.viewPos, &fullSizeY, qtrue, EXTRADATA(node).super.longlines);
 		}
 
 		list = list->next;

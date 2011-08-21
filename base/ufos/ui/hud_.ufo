@@ -58,14 +58,14 @@ component panel cmpFiremodeEntry {
 	{
 		pos "27 4"
 		size "183 25"
-		textalign ALIGN_CL
+		contentalign ALIGN_CL
 		ghost true
 	}
 	string tu
 	{
 		pos "27 32"
 		size "69 28"
-		textalign ALIGN_CC
+		contentalign ALIGN_CC
 		ghost true
 		font		"f_verysmall"
 	}
@@ -73,7 +73,7 @@ component panel cmpFiremodeEntry {
 	{
 		pos "99 32"
 		size "111 28"
-		textalign ALIGN_CC
+		contentalign ALIGN_CC
 		ghost true
 		font		"f_verysmall"
 	}
@@ -500,7 +500,7 @@ window hud_chat
 				string say_label {
 					align		LAYOUTALIGN_LEFT
 					width		"50"
-					textalign	ALIGN_CL
+					contentalign	ALIGN_CL
 					string		"_Say:"
 				}
 
@@ -510,7 +510,7 @@ window hud_chat
 					string		*cvar:irc_send_buffer
 					color 		"0 .78 0 1"
 					selectcolor	"1 1 1 1"
-					textalign	ALIGN_CL
+					contentalign	ALIGN_CL
 					padding		8
 					font		"f_verysmall"
 					clickoutabort	true
@@ -564,7 +564,7 @@ window hud_chat
 				string say_label {
 					align		LAYOUTALIGN_LEFT
 					width		"50"
-					textalign	ALIGN_CL
+					contentalign	ALIGN_CL
 					string		"_Say:"
 				}
 				checkbox chat_team
@@ -583,7 +583,7 @@ window hud_chat
 					string		*cvar:mn_entry
 					color 		"0 .78 0 1"
 					selectcolor	"1 1 1 1"
-					textalign	ALIGN_CL
+					contentalign	ALIGN_CL
 					padding		8
 					font		"f_verysmall"
 					clickoutabort	true

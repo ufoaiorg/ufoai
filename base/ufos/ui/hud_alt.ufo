@@ -641,7 +641,7 @@ window hud_alt extends hud
 			string		*cvar:mn_hp
 			pos			"113 301"
 			size		"40 20"
-			textalign	ALIGN_UC
+			contentalign	ALIGN_UC
 			tooltip		"_Health"
 		}
 		string str_tu
@@ -649,7 +649,7 @@ window hud_alt extends hud
 			string		*cvar:mn_tu
 			pos			"141 301"
 			size		"40 20"
-			textalign	ALIGN_UC
+			contentalign	ALIGN_UC
 			tooltip		"_TUs"
 		}
 		string str_morale
@@ -657,7 +657,7 @@ window hud_alt extends hud
 			string		*cvar:mn_morale
 			pos			"170 301"
 			size		"40 20"
-			textalign	ALIGN_UC
+			contentalign	ALIGN_UC
 			tooltip		"_Morale"
 		}
 
@@ -904,7 +904,7 @@ window hud_alt extends hud
 			string		*cvar:cl_worldlevel
 			pos			"1 49"
 			size		"40 20"
-			textalign	ALIGN_CC
+			contentalign	ALIGN_CC
 		}
 	}
 
@@ -948,7 +948,7 @@ window hud_alt extends hud
 			pos			"78 13"
 			size	    "48 34"
 			onClick		{ cmd "nextalien;" }
-			textalign	ALIGN_CC
+			contentalign	ALIGN_CC
 		}
 		image nextround
 		{

@@ -76,7 +76,8 @@ static void UI_ImageNodeLoaded (uiNode_t *node)
 }
 
 /**
- * @todo Center image, or use textalign property
+ * @brief Draws the image node
+ * @param[in] node The UI node to draw
  */
 void UI_ImageNodeDraw (uiNode_t *node)
 {
@@ -127,8 +128,49 @@ void UI_ImageNodeDraw (uiNode_t *node)
 			Vector2Copy(node->size, size);
 		}
 	}
-	UI_DrawNormImage(nodepos[0], nodepos[1], size[0], size[1],
+
+	switch (node->contentAlign) {
+	case ALIGN_UL:
+		UI_DrawNormImage(nodepos[0], nodepos[1], size[0], size[1],
 		EXTRADATA(node).texh[0], EXTRADATA(node).texh[1], EXTRADATA(node).texl[0], EXTRADATA(node).texl[1], image);
+		break;
+	case ALIGN_UC:
+		UI_DrawNormImage(max(nodepos[0], nodepos[0] + node->size[0] / 2 - size[0] / 2), nodepos[1], size[0], size[1],
+		EXTRADATA(node).texh[0], EXTRADATA(node).texh[1], EXTRADATA(node).texl[0], EXTRADATA(node).texl[1], image);
+		break;
+	case ALIGN_UR:
+		UI_DrawNormImage(max(nodepos[0], nodepos[0] + node->size[0] - size[0]), nodepos[1], size[0], size[1],
+		EXTRADATA(node).texh[0], EXTRADATA(node).texh[1], EXTRADATA(node).texl[0], EXTRADATA(node).texl[1], image);
+		break;
+	case ALIGN_CL:
+		UI_DrawNormImage(nodepos[0], max(nodepos[1], nodepos[1] + node->size[1] / 2 - size[1] / 2), size[0], size[1],
+		EXTRADATA(node).texh[0], EXTRADATA(node).texh[1], EXTRADATA(node).texl[0], EXTRADATA(node).texl[1], image);
+		break;
+	case ALIGN_CC:
+		UI_DrawNormImage(max(nodepos[0], nodepos[0] + node->size[0] / 2 - size[0] / 2),  max(nodepos[1], nodepos[1] + node->size[1] / 2 - size[1] / 2), size[0], size[1],
+		EXTRADATA(node).texh[0], EXTRADATA(node).texh[1], EXTRADATA(node).texl[0], EXTRADATA(node).texl[1], image);
+		break;
+	case ALIGN_CR:
+		UI_DrawNormImage(max(nodepos[0], nodepos[0] + node->size[0] - size[0]),  max(nodepos[1], nodepos[1] + node->size[1] / 2 - size[1] / 2), size[0], size[1],
+		EXTRADATA(node).texh[0], EXTRADATA(node).texh[1], EXTRADATA(node).texl[0], EXTRADATA(node).texl[1], image);
+		break;
+	case ALIGN_LL:
+		UI_DrawNormImage(nodepos[0], max(nodepos[1], nodepos[1] + node->size[1] - size[1]), size[0], size[1],
+		EXTRADATA(node).texh[0], EXTRADATA(node).texh[1], EXTRADATA(node).texl[0], EXTRADATA(node).texl[1], image);
+		break;
+	case ALIGN_LC:
+		UI_DrawNormImage(max(nodepos[0], nodepos[0] + node->size[0] / 2 - size[0] / 2),  max(nodepos[1], nodepos[1] + node->size[1] - size[1]), size[0], size[1],
+		EXTRADATA(node).texh[0], EXTRADATA(node).texh[1], EXTRADATA(node).texl[0], EXTRADATA(node).texl[1], image);
+		break;
+	case ALIGN_LR:
+		UI_DrawNormImage(max(nodepos[0], nodepos[0] + node->size[0] - size[0]),  max(nodepos[1], nodepos[1] + node->size[1] - size[1]), size[0], size[1],
+		EXTRADATA(node).texh[0], EXTRADATA(node).texh[1], EXTRADATA(node).texl[0], EXTRADATA(node).texl[1], image);
+		break;
+
+	default:
+		Com_Printf("UI_ImageNodeDraw: Align %d not supported\n", node->contentAlign);
+		break;
+	}
 
 	/** @todo convert all pic using mousefx into button.
 	 * @todo delete mousefx

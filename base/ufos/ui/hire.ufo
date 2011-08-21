@@ -406,10 +406,10 @@ window employees
 		}
 
 		string	missions_lbl { pos "5 318" size "180 20" string "_Missions Performed:" }
-		string	missions_val { pos "190 318" size "130 20" string *cvar:mn_chrmis textalign ALIGN_UR }
+		string	missions_val { pos "190 318" size "130 20" string *cvar:mn_chrmis contentalign ALIGN_UR }
 
 		string	kills_lbl { pos "5 338" size "180 20" string "_Enemies Killed:" }
-		string	kills_val { pos "190 338" size "130 20" string *cvar:mn_chrkillalien textalign ALIGN_UR }
+		string	kills_val { pos "190 338" size "130 20" string *cvar:mn_chrkillalien contentalign ALIGN_UR }
 	}
 
 	// ==================
@@ -427,13 +427,13 @@ window employees
 			string	"_Occupation"
 			pos		"20 48"
 			size	"150 20"
-			textalign	ALIGN_UC
+			contentalign	ALIGN_UC
 		}
 		string number_people {
 			string	*cvar:mn_hirepeople
 			pos		"20 68"
 			size	"150 20"
-			textalign	ALIGN_UC
+			contentalign	ALIGN_UC
 		}
 
 		custombutton icon_soldier {
@@ -445,7 +445,7 @@ window employees
 			string	*cvar:mn_hiresoldiers
 			pos		"190 68"
 			size	"42 20"
-			textalign	ALIGN_UR
+			contentalign	ALIGN_UR
 		}
 
 		custombutton icon_pilot {
@@ -457,7 +457,7 @@ window employees
 			string	*cvar:mn_hirepilots
 			pos		"250 68"
 			size	"42 20"
-			textalign	ALIGN_UR
+			contentalign	ALIGN_UR
 		}
 
 		custombutton icon_worker {
@@ -469,7 +469,7 @@ window employees
 			string	*cvar:mn_hireworkers
 			pos		"310 68"
 			size	"42 20"
-			textalign	ALIGN_UR
+			contentalign	ALIGN_UR
 		}
 
 		custombutton icon_scientist {
@@ -481,7 +481,7 @@ window employees
 			string	*cvar:mn_hirescientists
 			pos		"370 68"
 			size	"42 20"
-			textalign	ALIGN_UR
+			contentalign	ALIGN_UR
 		}
 	}
 

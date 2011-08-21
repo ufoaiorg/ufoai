@@ -23,7 +23,7 @@ component radiobutton cmpMapPreviewButton
 
 	string name {
 		string	"The map name"
-		textalign	ALIGN_CC
+		contentalign	ALIGN_CC
 		font		"f_verysmall"
 		pos	"14 96"
 		size	"100 32"
@@ -255,7 +255,7 @@ window skirmish
 			image		"ui/button_green_verysmall"
 			color		"0 .78 0 1"
 			selectcolor	"1 1 1 1"
-			textalign	ALIGN_CC
+			contentalign	ALIGN_CC
 			padding		8
 			font		"f_verysmall"
 			pos			"30 80"
@@ -297,7 +297,7 @@ window skirmish
 			image		"ui/button_green_verysmall"
 			color		"0 .78 0 1"
 			selectcolor	"1 1 1 1"
-			textalign	ALIGN_CC
+			contentalign	ALIGN_CC
 			padding		8
 			font		"f_verysmall"
 			pos			"30 180"
@@ -340,7 +340,7 @@ window skirmish
 			string		*cvar:ai_numaliens
 			pos			"310 250"
 			size		"50 20"
-			textalign	ALIGN_CC
+			contentalign	ALIGN_CC
 		}
 		spinner ai_numactors_change
 		{
@@ -366,7 +366,7 @@ window skirmish
 			string		*cvar:sv_maxsoldiersperplayer
 			pos			"310 275"
 			size		"50 20"
-			textalign	ALIGN_UC
+			contentalign	ALIGN_UC
 		}
 		spinner maxsoldierperplayer_change
 		{
@@ -392,7 +392,7 @@ window skirmish
 			string		*cvar:cl_ugvs
 			pos			"310 300"
 			size		"50 20"
-			textalign	ALIGN_CC
+			contentalign	ALIGN_CC
 		}
 		spinner numugvs_change
 		{

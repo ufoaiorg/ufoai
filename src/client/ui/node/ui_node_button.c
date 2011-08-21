@@ -116,7 +116,7 @@ static void UI_ButtonNodeDraw (uiNode_t *node)
 	if (text != NULL && *text != '\0') {
 		R_Color(textColor);
 		text = _(text);
-		UI_DrawStringInBox(font, node->textalign,
+		UI_DrawStringInBox(font, node->contentAlign,
 			pos[0] + node->padding + iconPadding, pos[1] + node->padding,
 			node->size[0] - node->padding - node->padding - iconPadding, node->size[1] - node->padding - node->padding,
 			text, LONGLINES_PRETTYCHOP);
@@ -130,7 +130,7 @@ static void UI_ButtonNodeDraw (uiNode_t *node)
 static void UI_ButtonNodeLoading (uiNode_t *node)
 {
 	node->padding = 8;
-	node->textalign = ALIGN_CC;
+	node->contentAlign = ALIGN_CC;
 	Vector4Set(node->selectedColor, 1, 1, 1, 1);
 	Vector4Set(node->color, 1, 1, 1, 1);
 }

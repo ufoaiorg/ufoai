@@ -280,7 +280,7 @@ window hhud extends hud
 			color			"0 0 0 1"
 			bgcolor			".7 .7 .52 .5"
 			font			"f_veryverysmall"
-			textalign		ALIGN_CC
+			contentalign		ALIGN_CC
 		}
 
 		/* Arrow left of the firemode reservation */
@@ -299,7 +299,7 @@ window hhud extends hud
 			size			"120 12"
 			color			".7 .7 .52 1"
 			font			"f_verysmall"
-			textalign		ALIGN_CL
+			contentalign		ALIGN_CL
 		}
 
 		/* Arrow left of the crouch reservation */
@@ -318,7 +318,7 @@ window hhud extends hud
 			size			"120 12"
 			color			".7 .7 .52 1"
 			font			"f_verysmall"
-			textalign		ALIGN_CL
+			contentalign		ALIGN_CL
 		}
 
 		/* Health bar */

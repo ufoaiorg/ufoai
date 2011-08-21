@@ -130,7 +130,7 @@ static void UI_TextLineNodeDrawText (uiNode_t* node, const linkedList_t* list)
 				R_Color(colorHover);
 		}
 
-		UI_DrawStringInBox(font, node->textalign, pos[0], currentY, width, lineHeight, text, LONGLINES_PRETTYCHOP);
+		UI_DrawStringInBox(font, node->contentAlign, pos[0], currentY, width, lineHeight, text, LONGLINES_PRETTYCHOP);
 
 		/* next entries' position */
 		currentY += lineHeight;
@@ -232,7 +232,7 @@ static void UI_TextListNodeLoading (uiNode_t *node)
 	EXTRADATA(node).textLineSelected = -1; /**< Invalid/no line selected per default. */
 	Vector4Set(node->selectedColor, 1.0, 1.0, 1.0, 1.0);
 	Vector4Set(node->color, 1.0, 1.0, 1.0, 1.0);
-	node->textalign = ALIGN_CL;	/**< left center of each cells */
+	node->contentAlign = ALIGN_CL;	/**< left center of each cells */
 }
 
 void UI_RegisterTextListNode (uiBehaviour_t *behaviour)

@@ -33,7 +33,7 @@ window aircraft extends iaircraft
 		string		*cvar:mn_aircraftname
 		pos			"505 480"
 		size		"317 21"
-		textalign	ALIGN_UL
+		contentalign	ALIGN_UL
 		padding		0
 	}
 
@@ -42,7 +42,7 @@ window aircraft extends iaircraft
 		string		"_Status:"
 		pos			"505 510"
 		size		"210 21"
-		textalign	ALIGN_UL
+		contentalign	ALIGN_UL
 		padding		0
 	}
 
@@ -51,7 +51,7 @@ window aircraft extends iaircraft
 		string		*cvar:mn_aircraftstatus
 		pos			"770 510"
 		size		"229 20"
-		textalign	ALIGN_UL
+		contentalign	ALIGN_UL
 	}
 
 	custombutton aircraft_return
@@ -66,7 +66,7 @@ window aircraft extends iaircraft
 		string		"_Health:"
 		pos			"505 540"
 		size		"210 21"
-		textalign	ALIGN_UL
+		contentalign	ALIGN_UL
 		padding		0
 	}
 
@@ -92,7 +92,7 @@ window aircraft extends iaircraft
 		string		"_Team Members:"
 		pos			"505 570"
 		size		"210 20"
-		textalign	ALIGN_CL
+		contentalign	ALIGN_CL
 		padding		0
 	}
 
@@ -101,7 +101,7 @@ window aircraft extends iaircraft
 		string		*cvar:mn_hired
 		pos			"722 570"
 		size		"110 20"
-		textalign	ALIGN_CL
+		contentalign	ALIGN_CL
 		padding		0
 	}
 

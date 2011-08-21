@@ -190,7 +190,7 @@ window serverinfo
 		size		"300 20"
 		color		"1 1 1 1"
 		font		"f_normal_bold"
-		textalign	ALIGN_CC
+		contentalign	ALIGN_CC
 	}
 	string user_list_head1
 	{
@@ -199,7 +199,7 @@ window serverinfo
 		size		"150 20"
 		color		"1 1 1 1"
 		font		"f_verysmall"
-		textalign	ALIGN_UL
+		contentalign	ALIGN_UL
 	}
 	string user_list_head2
 	{
@@ -208,7 +208,7 @@ window serverinfo
 		size		"150 20"
 		color		"1 1 1 1"
 		font		"f_verysmall"
-		textalign	ALIGN_UL
+		contentalign	ALIGN_UL
 	}
 	text user_list
 	{
@@ -321,7 +321,7 @@ window mp_serverbrowser extends abstract_multiplayer_join
 			string		*cvar:mn_serverliststr
 			pos			"300 7"
 			size		"150 20"
-			textalign	ALIGN_UC
+			contentalign	ALIGN_UC
 		}
 		custombutton status_dec
 		{
@@ -413,7 +413,7 @@ window mp_serverbrowser extends abstract_multiplayer_join
 			image		"ui/button_green_verysmall"
 			color		"0 .78 0 1"
 			selectcolor	"1 1 1 1"
-			textalign	ALIGN_CL
+			contentalign	ALIGN_CL
 			padding		8
 			font		"f_verysmall"
 			pos			"65 475"
@@ -437,7 +437,7 @@ window mp_serverbrowser extends abstract_multiplayer_join
 			image		"ui/button_green_verysmall"
 			color		"0 .78 0 1"
 			selectcolor	"1 1 1 1"
-			textalign	ALIGN_CL
+			contentalign	ALIGN_CL
 			padding		8
 			font		"f_verysmall"
 			pos			"65 540"
@@ -494,7 +494,7 @@ window mp_bookmarks extends abstract_multiplayer_join
 			color		"0 0.5 0 1"
 			pos			"15 30"
 			size		"440 35"
-			textalign	ALIGN_UC
+			contentalign	ALIGN_UC
 		}
 
 		rows lines {
@@ -594,7 +594,7 @@ window mp_create_server extends abstract_multiplayer
 			image		"ui/button_green_verysmall"
 			color 		"0 .78 0 1"
 			selectcolor	"1 1 1 1"
-			textalign	ALIGN_CL
+			contentalign	ALIGN_CL
 			padding		8
 			font		"f_verysmall"
 			pos			"245 0"
@@ -620,7 +620,7 @@ window mp_create_server extends abstract_multiplayer
 			string		*cvar:sv_gametype
 			pos			"380 40"
 			size		"80 20"
-			textalign	ALIGN_UC
+			contentalign	ALIGN_UC
 			onWheelUp	{ cmd "mp_prevgametype;" }
 			onWheelDown	{ cmd "mp_nextgametype;" }
 		}
@@ -727,7 +727,7 @@ window mp_create_server extends abstract_multiplayer
 			string		*cvar:sv_maxclients
 			pos			"335 40"
 			size		"50 20"
-			textalign	ALIGN_UC
+			contentalign	ALIGN_UC
 		}
 		spinner maxclients_change
 		{
@@ -754,7 +754,7 @@ window mp_create_server extends abstract_multiplayer
 			string		*cvar:sv_maxsoldiersperteam
 			pos			"335 60"
 			size		"50 20"
-			textalign	ALIGN_UC
+			contentalign	ALIGN_UC
 		}
 		spinner maxperplayer_change
 		{
@@ -781,7 +781,7 @@ window mp_create_server extends abstract_multiplayer
 			string		*cvar:sv_maxsoldiersperplayer
 			pos			"335 80"
 			size		"50 20"
-			textalign	ALIGN_UC
+			contentalign	ALIGN_UC
 		}
 		spinner maxsoldierperplayer_change
 		{
@@ -808,7 +808,7 @@ window mp_create_server extends abstract_multiplayer
 			string		*cvar:sv_maxplayersperteam
 			pos			"335 100"
 			size		"50 20"
-			textalign	ALIGN_UC
+			contentalign	ALIGN_UC
 		}
 		spinner maxplayersperteam_change
 		{
@@ -835,7 +835,7 @@ window mp_create_server extends abstract_multiplayer
 			string		*cvar:ai_numactors
 			pos			"335 120"
 			size		"50 20"
-			textalign	ALIGN_UC
+			contentalign	ALIGN_UC
 		}
 		spinner ai_numactors_change
 		{
@@ -862,7 +862,7 @@ window mp_create_server extends abstract_multiplayer
 			string		*cvar:sv_roundtimelimit
 			pos			"335 140"
 			size		"50 20"
-			textalign	ALIGN_UC
+			contentalign	ALIGN_UC
 		}
 		spinner timelimit_change
 		{
@@ -913,7 +913,7 @@ window mp_create_server extends abstract_multiplayer
 			image		"ui/button_green_verysmall"
 			color 		"0 .78 0 1"
 			selectcolor	"1 1 1 1"
-			textalign	ALIGN_CL
+			contentalign	ALIGN_CL
 			padding		8
 			font		"f_verysmall"
 			pos			"245 75"
@@ -936,7 +936,7 @@ window mp_create_server extends abstract_multiplayer
 			image		"ui/button_green_verysmall"
 			color 		"0 .78 0 1"
 			selectcolor	"1 1 1 1"
-			textalign	ALIGN_CL
+			contentalign	ALIGN_CL
 			padding		8
 			font		"f_verysmall"
 			pos			"245 135"
@@ -957,7 +957,7 @@ window mp_create_server extends abstract_multiplayer
 		pos			"500 530"
 		size		"400 100"
 		longlines	LONGLINES_WRAP
-		textalign	ALIGN_UC
+		contentalign	ALIGN_UC
 		font		"f_small"
 		dataid		TEXT_STANDARD
 	}
@@ -1144,7 +1144,7 @@ window multiplayer_wait extends levelbuttons
 			color		"1 1 1 1"
 			pos			"0 5"
 			size		"415 50"
-			textalign	ALIGN_CC
+			contentalign	ALIGN_CC
 		}
 
 		panel ready {
@@ -1198,7 +1198,7 @@ window multiplayer_wait extends levelbuttons
 			color		"1 1 1 1"
 			pos			"0 5"
 			size		"415 50"
-			textalign	ALIGN_CC
+			contentalign	ALIGN_CC
 		}
 
 		text teamnum_status
@@ -1209,7 +1209,7 @@ window multiplayer_wait extends levelbuttons
 			lineheight	16
 			tabwidth	60
 			rows		2
-			textalign	ALIGN_CC
+			contentalign	ALIGN_CC
 		}
 
 		string teamnum_str
@@ -1223,7 +1223,7 @@ window multiplayer_wait extends levelbuttons
 			string		*cvar:cl_teamnum
 			pos			"248 80"
 			size		"40 20"
-			textalign	ALIGN_UR
+			contentalign	ALIGN_UR
 		}
 		button teamnum_inc
 		{
@@ -1393,7 +1393,7 @@ window serverpassword
 		image		"ui/button_green_verysmall"
 		color		"0 .78 0 1"
 		selectcolor	"1 1 1 1"
-		textalign	ALIGN_CL
+		contentalign	ALIGN_CL
 		padding		8
 		font		"f_verysmall"
 		pos			"66 78"

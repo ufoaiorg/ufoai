@@ -291,7 +291,7 @@ static void UI_TextEntryNodeDraw (uiNode_t *node)
 
 		if (*text != '\0') {
 			R_Color(textColor);
-			UI_DrawStringInBox(font, node->textalign,
+			UI_DrawStringInBox(font, node->contentAlign,
 				pos[0] + node->padding, pos[1] + node->padding,
 				node->size[0] - node->padding - node->padding, node->size[1] - node->padding - node->padding,
 				text, LONGLINES_PRETTYCHOP);
@@ -307,7 +307,7 @@ static void UI_TextEntryNodeDraw (uiNode_t *node)
 static void UI_TextEntryNodeLoading (uiNode_t *node)
 {
 	node->padding = 8;
-	node->textalign = ALIGN_CL;
+	node->contentAlign = ALIGN_CL;
 	Vector4Set(node->color, 1, 1, 1, 1);
 	Vector4Set(node->selectedColor, 1, 1, 1, 1);
 }

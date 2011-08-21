@@ -357,7 +357,7 @@ window ufopedia extends objectinfo
 			string	*cvar:mn_linkname
 			pos		"140 0"
 			size	"190 16"
-			textalign	ALIGN_CC
+			contentalign	ALIGN_CC
 			font	"f_small"
 		}
 
@@ -395,7 +395,7 @@ window ufopedia extends objectinfo
 			string	*cvar:mn_firemodename
 			pos		"140 20"
 			size	"190 16"
-			textalign	ALIGN_CC
+			contentalign	ALIGN_CC
 			font	"f_small"
 		}
 

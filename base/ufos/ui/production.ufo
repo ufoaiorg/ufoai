@@ -152,7 +152,7 @@ window production
 			string		*cvar:mn_production_workers
 			pos			"295 25"
 			size		"100 20"
-			textalign	ALIGN_UR
+			contentalign	ALIGN_UR
 			font		"f_small"
 		}
 
@@ -173,7 +173,7 @@ window production
 			string		*cvar:mn_production_basecap
 			pos			"295 50"
 			size		"100 20"
-			textalign	ALIGN_UR
+			contentalign	ALIGN_UR
 			font		"f_small"
 		}
 
@@ -194,7 +194,7 @@ window production
 			string		*cvar:mn_production_storage
 			pos			"295 75"
 			size		"100 20"
-			textalign	ALIGN_UR
+			contentalign	ALIGN_UR
 			font		"f_small"
 		}
 
@@ -215,7 +215,7 @@ window production
 			string		*cvar:mn_production_limit
 			pos			"295 100"
 			size		"100 20"
-			textalign	ALIGN_UR
+			contentalign	ALIGN_UR
 			font		"f_small"
 		}
 	}
@@ -256,7 +256,7 @@ window production
 	{
 		dataid		TEXT_PRODUCTION_AMOUNT
 		color		"0 .78 0 1"
-		textalign	ALIGN_CR
+		contentalign	ALIGN_CR
 		pos			"330 180"
 		rows		"22"
 		size		"40 550"
@@ -360,7 +360,7 @@ window production
 		size		"40 20"
 		color		"0 .78 0 1"
 		font		"f_small"
-		textalign	ALIGN_UR
+		contentalign	ALIGN_UR
 	}
 
 	string label_1 {
@@ -369,7 +369,7 @@ window production
 		size		"24 20"
 		color		"0 .78 0 1"
 		font		"f_small"
-		textalign	ALIGN_UR
+		contentalign	ALIGN_UR
 	}
 
 	string label_10 {
@@ -378,7 +378,7 @@ window production
 		size		"36 20"
 		color		"0 .78 0 1"
 		font		"f_small"
-		textalign	ALIGN_UR
+		contentalign	ALIGN_UR
 	}
 
 	spinner prod_change {

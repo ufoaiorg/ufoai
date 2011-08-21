@@ -96,7 +96,7 @@ window options
 			pos			"55 67"
 			size		"465 35"
 			font		"f_menubig"
-			textalign	ALIGN_CC
+			contentalign	ALIGN_CC
 			color		"0 0.5 0 1"
 		}
 		// ======================
@@ -118,7 +118,7 @@ window options
 			image		"ui/button_green_verysmall"
 			color 		"0 .78 0 1"
 			selectcolor	"1 1 1 1"
-			textalign	ALIGN_CL
+			contentalign	ALIGN_CL
 			padding		8
 			font		"f_verysmall"
 			pos			"72 135"
@@ -145,7 +145,7 @@ window options
 			color		"0 .78 0 1"
 			selectcolor	"1 1 1 1"
 			padding		6
-			textalign	ALIGN_CC
+			contentalign	ALIGN_CC
 			onViewchange	{
 				*node:root.options_overall.select_language_scroll@current = <viewpos>
 				*node:root.options_overall.select_language_scroll@fullsize = <fullsize>
@@ -207,7 +207,7 @@ window options
 				cvar		*cvar:cl_mapzoommin
 				pos			"343 465"
 				size		"75 20"
-				textalign	ALIGN_CR
+				contentalign	ALIGN_CR
 			}
 			option geocamzoom_min000
 			{
@@ -388,7 +388,7 @@ window options
 			pos			"55 67"
 			size		"465 35"
 			font		"f_menubig"
-			textalign	ALIGN_CC
+			contentalign	ALIGN_CC
 			color		"0 0.5 0 1"
 		}
 
@@ -1357,7 +1357,7 @@ window options
 			pos			"55 67"
 			size		"465 35"
 			font		"f_menubig"
-			textalign	ALIGN_CC
+			contentalign	ALIGN_CC
 			color		"0 0.5 0 1"
 		}
 		// =======================
@@ -1544,7 +1544,7 @@ window options
 			pos			"55 67"
 			size		"465 35"
 			font		"f_menubig"
-			textalign	ALIGN_CC
+			contentalign	ALIGN_CC
 			color		"0 0.5 0 1"
 		}
 		// ====================================
@@ -1646,7 +1646,7 @@ window options
 				cvar		*cvar:cl_campitchmin
 				pos			"343 210"
 				size		"75 20"
-				textalign	ALIGN_CR
+				contentalign	ALIGN_CR
 			}
 			option minus90degrees
 			{
@@ -2159,7 +2159,7 @@ window options
 			pos			"55 67"
 			size		"465 35"
 			font		"f_menubig"
-			textalign	ALIGN_CC
+			contentalign	ALIGN_CC
 			color		"0 0.79 0 1"
 		}
 		// only show the current binding - no support for changing them atm
