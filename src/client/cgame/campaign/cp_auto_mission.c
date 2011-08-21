@@ -33,9 +33,8 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #include "math.h"
 #include "cp_auto_mission_callbacks.h"
 
-/** @brief Possible types of teams that can fight in an auto mission battle.
- * @note This is independent of (int) teamID in the auto mission battle struct.  This allows, in the future, for multiple player teams, or multiple
- * alien teams, etc., to fight in a simulated battle.  (Different teams can have the same TYPE as listed here, yet have different teamID values.)
+/**
+ * @brief Possible types of teams that can fight in an auto mission battle.
  */
 typedef enum autoMission_teamType_s {
 	AUTOMISSION_TEAM_TYPE_PLAYER,				/**< Human player-controlled team.  Includes soldiers as well as downed pilots. */
@@ -57,7 +56,6 @@ typedef enum autoMission_teamType_s {
  * Teams that are isHostile toward no one will wander around like sheep, doing nothing else. */
 typedef struct autoMissionBattle_s {
 	qboolean teamActive[MAX_ACTIVETEAM];					/**< Which teams exist in a battle, supports hardcoded MAX of 8 teams */
-	int teamID[MAX_ACTIVETEAM];								/**< An ID for each team, to keep track, useful if needed.  Note: The same ID may be repeated, but two teams of same ID can't be hostile */
 	qboolean isHostile[MAX_ACTIVETEAM][MAX_ACTIVETEAM];		/**< Friendly or hostile?  Params are [Each team] [Each other team] */
 	short nUnits[MAX_ACTIVETEAM];							/**< Number of units (soldiers, aliens, UGVs, whatever) on each team, hardcoded MAX of 64 per team */
 	autoMissionTeamType_t teamType[MAX_ACTIVETEAM];		/**< What type of team is this?  Human player?  Alien? Something else?  */
@@ -72,10 +70,6 @@ typedef struct autoMissionBattle_s {
 	int unitKills[MAX_ACTIVETEAM][MAX_SOLDIERS_AUTOMISSION];		/**< Number of individual kills each unit accomplishes (for experience award purposes) */
 
 	int winningTeam;								/**< Which team is victorious */
-	qboolean hasBeenFought;							/**< Did this battle run already?  Auto Battles can be fought only once, please. */
-	qboolean isRescueMission;						/**< Is this a rescue or special mission? (Such as recovering a downed aircraft pilot) */
-	int teamToRescue;								/**< If a rescue mission, which team needs rescue? */
-	int teamNeedingRescue;							/**< If a rescue mission, which team is attempting the rescue? */
 	missionResults_t *results;						/**< Manual mission "compatible" result structure */
 } autoMissionBattle_t;
 
@@ -105,7 +99,6 @@ static void AM_ClearBattle (autoMissionBattle_t *battle)
 		int otherTeam;
 		int soldier;
 
-		battle->teamID[team] = -1;
 		battle->teamType[team] = AUTOMISSION_TEAM_TYPE_MAX;
 		battle->teamActive[team] = qfalse;
 		battle->nUnits[team] = 0;
@@ -127,10 +120,6 @@ static void AM_ClearBattle (autoMissionBattle_t *battle)
 	}
 
 	battle->winningTeam = -1;
-	battle->isRescueMission = qfalse;
-	battle->teamToRescue = -1;
-	battle->teamNeedingRescue = -1;
-	battle->hasBeenFought = qfalse;
 	battle->results = NULL;
 }
 
@@ -219,9 +208,6 @@ static void AM_FillTeamFromAircraft (autoMissionBattle_t *battle, const int team
 	default:
 		battle->scoreTeamDifficulty[teamNum] = 0.50;
 	}
-
-	/* Zero is default ID for human player team ID, at least for auto missions. */
-	battle->teamID[teamNum] = 0;
 }
 
 /**
@@ -367,9 +353,6 @@ static void AM_CalculateTeamScores (autoMissionBattle_t *battle)
 	double teamRatioHealthTotal[MAX_ACTIVETEAM];
 	int currentUnit;
 
-	if (battle->hasBeenFought)
-		Com_Error(ERR_DROP, "Error: Auto-Battle has already been fought!");
-
 	for (team = 0; team < MAX_ACTIVETEAM; team++) {
 		unitTotal += battle->nUnits[team];
 
@@ -402,7 +385,6 @@ static void AM_CalculateTeamScores (autoMissionBattle_t *battle)
 	if (totalActiveTeams == 1) {
 		Com_DPrintf(DEBUG_CLIENT, "Note: Only one active team detected, this team will win the auto mission battle by default.\n");
 		battle->winningTeam = lastActiveTeam;
-		battle->hasBeenFought = qtrue;
 		return;
 	}
 
@@ -602,7 +584,6 @@ static void AM_DoFight (autoMissionBattle_t *battle)
 			}
 		}
 	}
-	battle->hasBeenFought = qtrue;
 }
 
 /**
@@ -614,9 +595,6 @@ static void AM_DecideResults (autoMissionBattle_t *battle)
 	int team;
 	int teamPlayer = -1;
 	int teamEnemy = -1;
-
-	if (!battle->hasBeenFought)
-		Com_Error(ERR_DROP, "Error:  Attempt to determine winning team from an auto mission that wasn't fought!");
 
 	/* Figure out who's who (determine which team is the player and which one is aliens.) */
 	for (team = 0; team < MAX_ACTIVETEAM; team++) {
