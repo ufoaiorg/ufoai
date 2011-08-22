@@ -219,7 +219,6 @@ model_t *R_FindModel (const char *name)
 				Q_strncpyz(model.name, name, sizeof(model.name));
 				break;
 			}
-			i++;
 		}
 	} else {
 		/** @todo this case should be useless, do we ever use extension? */
@@ -244,7 +243,7 @@ model_t *R_FindModel (const char *name)
 		r_numModels++;
 	}
 
-	/* copy the model on the slot */
+	/* copy the model to the slot */
 	r_models[i] = model;
 	return &r_models[i];
 }
