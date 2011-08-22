@@ -22,8 +22,8 @@ window ufopedia extends objectinfo
 	panel summary
 	{
 		{
-			pos		"22 92"
-			size	"314 589"
+			pos		"22 88"
+			size	"314 593"
 			image	"ui/panel_green"
 			layout	LAYOUT_BORDER
 			padding	10
@@ -185,13 +185,13 @@ window ufopedia extends objectinfo
 		panel main_panel_small
 		{
 			pos		"8 42"
-			size	"410 573"
+			size	"410 575"
 			image	"ui/panel_green_slim"
 		}
 		panel main_panel_large
 		{
 			pos		"8 42"
-			size	"597 573"
+			size	"597 575"
 			image	"ui/panel_green_slim"
 		}
 		// The Big Picture picture and model
@@ -199,7 +199,7 @@ window ufopedia extends objectinfo
 		{
 			src		*cvar:mn_upimage_top
 			pos			"10 43"
-			size		"594 571"
+			size		"594 573"
 			preventratio	true
 			contentalign 	ALIGN_CC
 		}
@@ -208,7 +208,7 @@ window ufopedia extends objectinfo
 			src			*cvar:mn_upmodel_top
 			angles		"0 25 90"
 			pos			"10 43"
-			size		"594 571"
+			size		"594 573"
 			autoscale	true
 			omega		"0 -9 0"
 			rotatewithmouse	true
@@ -245,7 +245,7 @@ window ufopedia extends objectinfo
 		{
 			image		"ui/scrollbar_v_green"
 			pos			"609 42"
-			height		"573"
+			height		"575"
 			current		0
 			viewsize	26
 			fullsize	50
@@ -270,8 +270,8 @@ window ufopedia extends objectinfo
 		vscrollbar description_scroll
 		{
 			image		"ui/scrollbar_v_green"
-			pos			"406 45"
-			height		"573"
+			pos			"406 42"
+			height		"575"
 			current		0
 			viewsize	20
 			fullsize	20
@@ -282,7 +282,7 @@ window ufopedia extends objectinfo
 		{
 			{
 				pos		"420 466"
-				size	"185 149"
+				size	"185 150"
 				image	"ui/panel_green_slim"
 			}
 			string label
