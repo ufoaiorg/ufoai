@@ -107,6 +107,8 @@ static void R_UpdateMaterial (material_t *m)
 					if (s->image == s->anim.images[frame])
 						frame = (frame + 1) % s->anim.num_frames;
 					break;
+				default:
+					continue;
 				}
 				assert(frame >= 0);
 				assert(frame < s->anim.num_frames);
