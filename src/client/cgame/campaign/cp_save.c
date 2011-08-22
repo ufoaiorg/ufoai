@@ -64,8 +64,8 @@ static qboolean SAV_GameActionsAfterLoad (void)
 {
 	qboolean result = qtrue;
 
-	result = result && B_PostLoadInit();
 	result = result && AIR_PostLoadInit();
+	result = result && B_PostLoadInit();
 	result = result && PR_PostLoadInit();
 
 	/* Make sure the date&time is displayed when loading. */
