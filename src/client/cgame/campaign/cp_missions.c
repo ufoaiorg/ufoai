@@ -587,7 +587,7 @@ static missionDetectionStatus_t CP_CheckMissionVisibleOnGeoscape (const mission_
 {
 	/* This function could be called before position of the mission is defined */
 	if (!mission->posAssigned)
-		return qfalse;
+		return MISDET_CANT_BE_DETECTED;
 
 	if (mission->crashed)
 		return MISDET_ALWAYS_DETECTED;
