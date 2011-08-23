@@ -422,16 +422,33 @@ window employees
 			size	"455 111"
 			image	"ui/panel_grey"
 		}
-
+		string label_people_shadow {
+			string	"_Occupation"
+			font	"f_normal_bold"
+			pos		"22 28"
+			size	"150 20"
+			color 	"0 0 0 0.7"
+			contentalign	ALIGN_UC
+		}
+		string number_people_shadow {
+			string	*cvar:mn_hirepeople
+			font	"f_normal_bold"
+			pos		"22 56"
+			size	"150 20"
+			color	"0 0 0 0.7"
+			contentalign	ALIGN_UC
+		}
 		string label_people {
 			string	"_Occupation"
-			pos		"20 48"
+			font	"f_normal_bold"
+			pos		"20 25"
 			size	"150 20"
 			contentalign	ALIGN_UC
 		}
 		string number_people {
 			string	*cvar:mn_hirepeople
-			pos		"20 68"
+			font	"f_normal_bold"
+			pos		"20 53"
 			size	"150 20"
 			contentalign	ALIGN_UC
 		}
@@ -440,6 +457,13 @@ window employees
 			icon	"icons/bighead_soldier"
 			pos		"190 28"
 			size	"42 42"
+		}
+		string number_soldier_shadow {
+			string	*cvar:mn_hiresoldiers
+			pos		"190 68"
+			size	"44 22"
+			color 	"0 0 0 0.7"
+			contentalign	ALIGN_UR
 		}
 		string number_soldier {
 			string	*cvar:mn_hiresoldiers
@@ -453,6 +477,13 @@ window employees
 			pos		"250 28"
 			size	"42 42"
 		}
+		string number_pilot_shadow {
+			string	*cvar:mn_hirepilots
+			pos		"250 68"
+			size	"44 22"
+			color 	"0 0 0 0.7"
+			contentalign	ALIGN_UR
+		}
 		string number_pilot {
 			string	*cvar:mn_hirepilots
 			pos		"250 68"
@@ -465,6 +496,13 @@ window employees
 			pos		"310 28"
 			size	"42 42"
 		}
+		string number_worker_shadow {
+			string	*cvar:mn_hireworkers
+			pos		"310 68"
+			size	"44 22"
+			color 	"0 0 0 0.7"
+			contentalign	ALIGN_UR
+		}
 		string number_worker {
 			string	*cvar:mn_hireworkers
 			pos		"310 68"
@@ -476,6 +514,13 @@ window employees
 			icon	"icons/bighead_scientist"
 			pos		"370 28"
 			size	"42 42"
+		}
+		string number_scientist_shadow {
+			string	*cvar:mn_hirescientists
+			pos		"370 68"
+			size	"44 22"
+			color 	"0 0 0 0.7"
+			contentalign	ALIGN_UR
 		}
 		string number_scientist {
 			string	*cvar:mn_hirescientists
