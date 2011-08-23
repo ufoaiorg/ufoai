@@ -473,7 +473,7 @@ seeds {
 	19
 /* the next seeds are untested on linux */
 	20
-	21
+/*	21 slow on linux */
 	22
 	23
 	24
