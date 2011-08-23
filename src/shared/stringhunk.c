@@ -62,6 +62,10 @@ void STRHUNK_Reset (stringHunk_t *hunk)
 void STRHUNK_Visit (stringHunk_t *hunk, stringHunkVisitor_t visitor)
 {
 	const char *string = hunk->hunk;
+
+	if (hunk->entries == 0)
+		return;
+
 	for (;;) {
 		visitor(string);
 		string += strlen(string) + 1;

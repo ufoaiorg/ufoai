@@ -32,7 +32,7 @@ static int r_numModelsStatic;
 model_t *r_mapTiles[MAX_MAPTILES];
 int r_numMapTiles;
 
-/* the inline * models from the current map are kept seperate */
+/* the inline * models from the current map are kept separate */
 model_t r_modelsInline[MAX_MOD_KNOWN];
 int r_numModelsInline;
 
@@ -46,7 +46,6 @@ static int r_numActorSkinName;
 static char const* const mod_extensions[] = {
 	"md2", "md3", "dpm", "obj", NULL
 };
-
 
 /**
  * @brief Prints all loaded models
@@ -183,7 +182,7 @@ static qboolean R_LoadModel (model_t *mod, const char *filename)
 /**
  * @brief Tries to load a model
  * @param[in] name The model path or name (with or without extension) - see notes
- * this parameter is always relativ to the game base dir - it can also be relative
+ * this parameter is always relative to the game base dir - it can also be relative
  * to the models/ dir in the game folder
  * @note trying all supported model formats is only supported when you are using
  * a name without extension and relative to models/ dir
