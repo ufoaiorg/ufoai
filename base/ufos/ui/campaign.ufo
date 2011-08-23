@@ -363,7 +363,7 @@ window load
 		selectcolor	"1 1 1 1"
 		contentalign	ALIGN_CL
 		padding		8
-		onClick		{ cmd "game_load slot7; *cvar:mn_fastexit = 1;" *cvar:mn_fastexit = 1; }
+		onClick		{ cmd "game_load slot7; game_timestop;" *cvar:mn_fastexit = 1; }
 	}
 
 	// ==================
