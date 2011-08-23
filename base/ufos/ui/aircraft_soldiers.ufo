@@ -243,46 +243,40 @@ window team extends iaircraft
 	}
 
 	cmpSoldierSelect actor_select0 {
-		pos "38 470"
+		pos "38 462"
 	}
 
 	cmpSoldierSelect actor_select1 {
-		pos "38 505"
+		pos "38 497"
 	}
 
-	cmpSoldierSelect actor_select2
-	{
-		pos			"38 540"
+	cmpSoldierSelect actor_select2 {
+		pos	"38 532"
 	}
 
-	cmpSoldierSelect actor_select3
-	{
-		pos			"38 575"
+	cmpSoldierSelect actor_select3 {
+		pos	"38 567"
 	}
 
-	cmpSoldierSelect actor_select4
-	{
-		pos			"38 610"
+	cmpSoldierSelect actor_select4 {
+		pos	"38 602"
 	}
 
-	cmpSoldierSelect actor_select5
-	{
-		pos			"38 645"
+	cmpSoldierSelect actor_select5 {
+		pos	"38 637"
 	}
 
-	cmpSoldierSelect actor_select6
-	{
-		pos			"38 680"
+	cmpSoldierSelect actor_select6 {
+		pos	"38 672"
 	}
 
-	cmpSoldierSelect actor_select7
-	{
-		pos			"38 715"
+	cmpSoldierSelect actor_select7 {
+		pos	"38 707"
 	}
 	vscrollbar scroll_employees
 	{
 		image	"ui/scrollbar_v_green"
-		pos "310 463"	height	"282"
+		pos "310 462"	height	"283"
 		current 0
 		viewsize 8
 		fullsize 50

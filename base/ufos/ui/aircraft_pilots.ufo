@@ -212,47 +212,41 @@ window aircraft_pilots extends iaircraft
 	}
 
 	cmpPilotSelect actor_select0 {
-		pos "38 470"
+		pos "38 462"
 	}
 
 	cmpPilotSelect actor_select1 {
-		pos "38 505"
+		pos	"38 497"
 	}
 
-	cmpPilotSelect actor_select2
-	{
-		pos			"38 540"
+	cmpPilotSelect actor_select2 {
+		pos	"38 532"
 	}
 
-	cmpPilotSelect actor_select3
-	{
-		pos			"38 575"
+	cmpPilotSelect actor_select3 {
+		pos	"38 567"
 	}
 
-	cmpPilotSelect actor_select4
-	{
-		pos			"38 610"
+	cmpPilotSelect actor_select4 {
+		pos	"38 602"
 	}
 
-	cmpPilotSelect actor_select5
-	{
-		pos			"38 645"
+	cmpPilotSelect actor_select5 {
+		pos	"38 637"
 	}
 
-	cmpPilotSelect actor_select6
-	{
-		pos			"38 680"
+	cmpPilotSelect actor_select6 {
+		pos	"38 672"
 	}
 
-	cmpPilotSelect actor_select7
-	{
-		pos			"38 715"
+	cmpPilotSelect actor_select7 {
+		pos	"38 707"
 	}
 
 	vscrollbar scroll_employees
 	{
 		image	"ui/scrollbar_v_green"
-		pos "310 463"	height	"281"
+		pos "310 462"	height	"283"
 		current 0
 		viewsize 8
 		fullsize 50
