@@ -182,7 +182,13 @@ window campaign_main
 	{
 		string		"_Exit"
 		pos			"640 520"
-		onClick		{ cmd "ui_push popup_exit_confirmation;" }
+		onClick {
+			if ( *cvar:mn_fastexit == 1 ) {
+				cmd "game_exit;"
+			} else {
+				cmd "ui_push popup_exit_confirmation;"
+			}
+		}
 	}
 }
 
@@ -213,7 +219,7 @@ window quickload
 	{
 		string		"_Load"
 		pos			"266 188"
-		onClick		{ cmd "ui_pop;game_quickload;" }
+		onClick		{ cmd "ui_pop;game_quickload;" *cvar:mn_fastexit = 1; }
 	}
 }
 
@@ -266,7 +272,7 @@ window load
 		selectcolor	"1 1 1 1"
 		contentalign	ALIGN_CL
 		padding		8
-		onClick		{ cmd "game_load slot0; game_timestop;" }
+		onClick		{ cmd "game_load slot0; game_timestop;" *cvar:mn_fastexit = 1; }
 	}
 	button slot1
 	{
@@ -279,7 +285,7 @@ window load
 		selectcolor	"1 1 1 1"
 		contentalign	ALIGN_CL
 		padding		8
-		onClick		{ cmd "game_load slot1; game_timestop;" }
+		onClick		{ cmd "game_load slot1; game_timestop;" *cvar:mn_fastexit = 1; }
 	}
 	button slot2
 	{
@@ -292,7 +298,7 @@ window load
 		selectcolor	"1 1 1 1"
 		contentalign	ALIGN_CL
 		padding		8
-		onClick		{ cmd "game_load slot2; game_timestop;" }
+		onClick		{ cmd "game_load slot2; game_timestop;" *cvar:mn_fastexit = 1; }
 	}
 	button slot3
 	{
@@ -305,7 +311,7 @@ window load
 		selectcolor	"1 1 1 1"
 		contentalign	ALIGN_CL
 		padding		8
-		onClick		{ cmd "game_load slot3; game_timestop;" }
+		onClick		{ cmd "game_load slot3; game_timestop;" *cvar:mn_fastexit = 1; }
 	}
 	button slot4
 	{
@@ -318,7 +324,7 @@ window load
 		selectcolor	"1 1 1 1"
 		contentalign	ALIGN_CL
 		padding		8
-		onClick		{ cmd "game_load slot4; game_timestop;" }
+		onClick		{ cmd "game_load slot4; game_timestop;" *cvar:mn_fastexit = 1; }
 	}
 	button slot5
 	{
@@ -331,7 +337,7 @@ window load
 		selectcolor	"1 1 1 1"
 		contentalign	ALIGN_CL
 		padding		8
-		onClick		{ cmd "game_load slot5; game_timestop;" }
+		onClick		{ cmd "game_load slot5; game_timestop;" *cvar:mn_fastexit = 1; }
 	}
 	button slot6
 	{
@@ -344,7 +350,7 @@ window load
 		selectcolor	"1 1 1 1"
 		contentalign	ALIGN_CL
 		padding		8
-		onClick		{ cmd "game_load slot6; game_timestop;" }
+		onClick		{ cmd "game_load slot6; game_timestop;" *cvar:mn_fastexit = 1; }
 	}
 	button slot7
 	{
@@ -357,7 +363,7 @@ window load
 		selectcolor	"1 1 1 1"
 		contentalign	ALIGN_CL
 		padding		8
-		onClick		{ cmd "game_load slot7; game_timestop;" }
+		onClick		{ cmd "game_load slot7; *cvar:mn_fastexit = 1;" *cvar:mn_fastexit = 1; }
 	}
 
 	// ==================
@@ -440,7 +446,7 @@ window save
 		padding		8
 		font		"f_verysmall"
 		onClick		{ cmd "game_savenamecleanup 0;" }
-		onChange		{ cmd "game_save slot0 *mn_slot0;game_comments 0;" }
+		onChange	{ cmd "game_save slot0 *mn_slot0; game_comments 0;" *cvar:mn_fastexit = 1; }
 		onAbort		{ cmd "game_comments 0;" }
 		clickoutabort	true
 	}
@@ -456,7 +462,7 @@ window save
 		padding		8
 		font		"f_verysmall"
 		onClick		{ cmd "game_savenamecleanup 1;" }
-		onChange	{ cmd "game_save slot1 *mn_slot1;game_comments 1;" }
+		onChange	{ cmd "game_save slot1 *mn_slot1; game_comments 1;" *cvar:mn_fastexit = 1; }
 		onAbort		{ cmd "game_comments 1;" }
 		clickoutabort	true
 	}
@@ -472,7 +478,7 @@ window save
 		padding		8
 		font		"f_verysmall"
 		onClick		{ cmd "game_savenamecleanup 2;" }
-		onChange	{ cmd "game_save slot2 *mn_slot2;game_comments 2;" }
+		onChange	{ cmd "game_save slot2 *mn_slot2; game_comments 2;" *cvar:mn_fastexit = 1; }
 		onAbort		{ cmd "game_comments 2;" }
 		clickoutabort	true
 	}
@@ -488,7 +494,7 @@ window save
 		padding		8
 		font		"f_verysmall"
 		onClick		{ cmd "game_savenamecleanup 3;" }
-		onChange	{ cmd "game_save slot3 *mn_slot3;game_comments 3;" }
+		onChange	{ cmd "game_save slot3 *mn_slot3; game_comments 3;" *cvar:mn_fastexit = 1; }
 		onAbort		{ cmd "game_comments 3;" }
 		clickoutabort	true
 	}
@@ -504,7 +510,7 @@ window save
 		padding		8
 		font		"f_verysmall"
 		onClick		{ cmd "game_savenamecleanup 4;" }
-		onChange	{ cmd "game_save slot4 *mn_slot4;game_comments 4;" }
+		onChange	{ cmd "game_save slot4 *mn_slot4; game_comments 4;" *cvar:mn_fastexit = 1; }
 		onAbort		{ cmd "game_comments 4;" }
 		clickoutabort	true
 	}
@@ -520,7 +526,7 @@ window save
 		padding		8
 		font		"f_verysmall"
 		onClick		{ cmd "game_savenamecleanup 5;" }
-		onChange	{ cmd "game_save slot5 *mn_slot5;game_comments 5;" }
+		onChange	{ cmd "game_save slot5 *mn_slot5; game_comments 5;" *cvar:mn_fastexit = 1; }
 		onAbort		{ cmd "game_comments 5;" }
 		clickoutabort	true
 	}
@@ -536,7 +542,7 @@ window save
 		padding		8
 		font		"f_verysmall"
 		onClick		{ cmd "game_savenamecleanup 6;" }
-		onChange	{ cmd "game_save slot6 *mn_slot6;game_comments 6;" }
+		onChange	{ cmd "game_save slot6 *mn_slot6; game_comments 6;" *cvar:mn_fastexit = 1; }
 		onAbort		{ cmd "game_comments 6;" }
 		clickoutabort	true
 	}
@@ -552,7 +558,7 @@ window save
 		padding		8
 		font		"f_verysmall"
 		onClick		{ cmd "game_savenamecleanup 7;" }
-		onChange	{ cmd "game_save slot7 *mn_slot7;game_comments 7;" }
+		onChange	{ cmd "game_save slot7 *mn_slot7; game_comments 7;" *cvar:mn_fastexit = 1; }
 		onAbort		{ cmd "game_comments 7;" }
 		clickoutabort	true
 	}
@@ -572,6 +578,7 @@ window save
 	{
 		cmd "game_comments;"
 	}
+
 }
 
 // ==================

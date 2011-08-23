@@ -229,9 +229,11 @@ window geoscape
 			}
 
 			func faster {
+				*cvar:mn_fastexit = 0;
 				cmd "game_timefast;"
 			}
 			func slower {
+				*cvar:mn_fastexit = 0;
 				cmd "game_timeslow;"
 			}
 
@@ -242,8 +244,8 @@ window geoscape
 				icon		"icons/speed_stop"
 				pos			"48 10"
 				size		"20 20"
-				onChange	{ cmd "game_settimeid <value>;" }
-				onWheelUp	{ cmd "game_timefast;" }
+				onChange	{ *cvar:mn_fastexit = 0; cmd "game_settimeid <value>;" }
+				onWheelUp	{ *cvar:mn_fastexit = 0; cmd "game_timefast;" }
 				onWheelDown	{ cmd "game_timeslow;" }
 			}
 
@@ -254,7 +256,7 @@ window geoscape
 				icon		"icons/speed_dot"
 				pos			"68 10"
 				size		"20 20"
-				onChange	{ cmd "game_settimeid <value>;" }
+				onChange	{ *cvar:mn_fastexit = 0; cmd "game_settimeid <value>;" }
 				onWheelUp	{ cmd "game_timefast;" }
 				onWheelDown	{ cmd "game_timeslow;" }
 			}
@@ -266,7 +268,7 @@ window geoscape
 				icon		"icons/speed_play1"
 				pos			"88 10"
 				size		"20 20"
-				onChange	{ cmd "game_settimeid <value>;" }
+				onChange	{ *cvar:mn_fastexit = 0; cmd "game_settimeid <value>;" }
 				onWheelUp	{ cmd "game_timefast;" }
 				onWheelDown	{ cmd "game_timeslow;" }
 			}
@@ -279,7 +281,7 @@ window geoscape
 				icon		"icons/speed_dot"
 				pos			"108 10"
 				size		"20 20"
-				onChange	{ cmd "game_settimeid <value>;" }
+				onChange	{ *cvar:mn_fastexit = 0; cmd "game_settimeid <value>;" }
 				onWheelUp	{ cmd "game_timefast;" }
 				onWheelDown	{ cmd "game_timeslow;" }
 			}
@@ -291,7 +293,7 @@ window geoscape
 				icon		"icons/speed_play2"
 				pos			"128 10"
 				size		"20 20"
-				onChange	{ cmd "game_settimeid <value>;" }
+				onChange	{ *cvar:mn_fastexit = 0; cmd "game_settimeid <value>;" }
 				onWheelUp	{ cmd "game_timefast;" }
 				onWheelDown	{ cmd "game_timeslow;" }
 			}
@@ -303,7 +305,7 @@ window geoscape
 				icon		"icons/speed_dot"
 				pos			"148 10"
 				size		"20 20"
-				onChange	{ cmd "game_settimeid <value>;" }
+				onChange	{ *cvar:mn_fastexit = 0; cmd "game_settimeid <value>;" }
 				onWheelUp	{ cmd "game_timefast;" }
 				onWheelDown	{ cmd "game_timeslow;" }
 			}
@@ -316,7 +318,7 @@ window geoscape
 				icon		"icons/speed_dot"
 				pos			"168 10"
 				size		"20 20"
-				onChange	{ cmd "game_settimeid <value>;" }
+				onChange	{ *cvar:mn_fastexit = 0; cmd "game_settimeid <value>;" }
 				onWheelUp	{ cmd "game_timefast;" }
 				onWheelDown	{ cmd "game_timeslow;" }
 			}
@@ -328,7 +330,7 @@ window geoscape
 				icon		"icons/speed_play3"
 				pos			"188 10"
 				size		"20 20"
-				onChange	{ cmd "game_settimeid <value>;" }
+				onChange	{ *cvar:mn_fastexit = 0; cmd "game_settimeid <value>;" }
 				onWheelUp	{ cmd "game_timefast;" }
 				onWheelDown	{ cmd "game_timeslow;" }
 			}
@@ -674,15 +676,16 @@ window geoscape
 			cmd "messagesystem_changemode;"
 		}
 	}
+
 }
 
 // ========================================================================
 // POPUPS (GEOSCAPE)
 // ========================================================================
 
-// ==================
+// ======================
 // POPUP INTERCEPT READY
-// ==================
+// ======================
 
 window popup_intercept_ready
 {
