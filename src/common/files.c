@@ -38,9 +38,7 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 
 /** counter for opened files - used to check against missing close calls */
 static int fs_openedFiles;
-
 static filelink_t *fs_links;
-
 static searchpath_t *fs_searchpaths;
 
 /**
@@ -840,6 +838,13 @@ void FS_InitFilesystem (qboolean writeToHomeDir)
 
 	FS_AddGameDirectory("./" BASEDIRNAME, !writeToHomeDir);
 	FS_AddHomeAsGameDirectory(BASEDIRNAME, writeToHomeDir);
+#ifdef COMPILE_UFO
+	const char *fsGameDir = Cvar_GetString("fs_gamedir");
+	if (Q_strvalid(fsGameDir)) {
+		FS_AddGameDirectory(va("./%s", fsGameDir), !writeToHomeDir);
+		FS_AddHomeAsGameDirectory(fsGameDir, writeToHomeDir);
+	}
+#endif
 
 #ifdef COMPILE_UFO
 	FS_InitCommandsAndCvars();
