@@ -117,6 +117,76 @@ static unsigned long tileMask (const char chr)
 	Com_Error(ERR_DROP, "SV_ParseMapTile: Invalid tile char '%c'", chr);
 }
 
+#define DISPLAY_THE_MAP 0
+#define DISPLAY_THE_MAP_ON_FAILURE 0
+#if DISPLAY_THE_MAP
+#define ACW 4	/* ascii cell width */
+#define ACH 2	/* ascii cell height */
+static void SV_RmaPrintMap (const mapInfo_t *map)
+{
+	char screen[24][80];
+	int i;
+
+	/* initialize */
+	memset(screen, ' ', sizeof(screen));
+	for (i = 0; i < 24; i++) {
+		screen[i][48] = '|';
+		screen[i][79] = 0;
+	}
+
+	/* fill in the data */
+	for (i = 0; i < map->numPlaced; i++) {
+		const mPlaced_t *mp = &map->mPlaced[i];
+		const mTile_t *tile = mp->tile;
+		int tx, ty;
+		char *tn = tile->id + 1;
+
+		if (!strncmp(tn, "craft_", 6))
+			tn += 6;
+		for (ty = 0; ty < tile->h; ty++) {
+			for (tx = 0; tx < tile->w; tx++) {
+				if (IS_SOLID(tile->spec[ty][tx])) {
+					int cbX = ACW * (mp->x + tx);
+					int cbY = ACH * (mp->y + ty);
+
+/*					screen[cbY + 1][cbX + 2] = 'X'; */
+					screen[cbY + 1][cbX + 1] = tn[0];
+					screen[cbY + 1][cbX + 2] = tn[1];
+					screen[cbY + 1][cbX + 3] = tn[2];
+
+					if (tx > 0 && !IS_SOLID(tile->spec[ty][tx - 1])) {
+						screen[cbY][cbX] = '!';
+						screen[cbY + 1][cbX] = '!';
+					}
+					if (!IS_SOLID(tile->spec[ty][tx + 1])) {
+						screen[cbY][cbX + ACW] = '!';
+						screen[cbY + 1][cbX + ACW] = '!';
+					}
+					if (ty > 0 && !IS_SOLID(tile->spec[ty - 1][tx])) {
+						screen[cbY][cbX + 1] = '-';
+						screen[cbY][cbX + 2] = '-';
+						screen[cbY][cbX + 3] = '-';
+					}
+					if (!IS_SOLID(tile->spec[ty + 1][tx])) {
+						screen[cbY + ACH][cbX + 1] = '-';
+						screen[cbY + ACH][cbX + 2] = '-';
+						screen[cbY + ACH][cbX + 3] = '-';
+					}
+				}
+			}
+		}
+	}
+
+	/* print it */
+	Com_Printf("\nCurrent state of the map:\n________________\n");
+/*	int h = map->mAssembly[map->numAssemblies].height;	*/
+	int h = ACH * 9;
+	for (i = h; i >=0; i--)
+		Com_Printf("%s\n", screen[i]);
+	Com_Printf("________________\n");
+}
+#endif
+
 static const mTileSet_t *SV_GetMapTileSet (const mapInfo_t *map, const char *tileSetName)
 {
 	int i;
@@ -1150,8 +1220,12 @@ static qboolean SV_AddMissingTiles3_r (mapInfo_t *map, int rec, int posListCnt, 
 		const int remaining = min(allowed, possible);
 		solids += remaining * mToPlace[ti].tile->area;
 	}
-	if (solids < gapCount)
+	if (solids < gapCount) {
+#if DISPLAY_THE_MAP_ON_FAILURE
+		SV_RmaPrintMap(map);
+#endif
 		return qfalse;
+	}
 
 	/** check how well the remaining tiles can cover the gaps */
 	for (i = 0; i < j; i++) {
@@ -1176,8 +1250,12 @@ static qboolean SV_AddMissingTiles3_r (mapInfo_t *map, int rec, int posListCnt, 
 	/** if we find a gap that NO tile can cover, bail */
 	for (y = 1; y < mAsm->height + 1; y++) {
 		for (x = 1; x < mAsm->width + 1; x++) {
-			if (gapList[x][y][0] == 0)
+			if (gapList[x][y][0] == 0) {
+#if DISPLAY_THE_MAP_ON_FAILURE
+				SV_RmaPrintMap(map);
 				return qfalse;
+#endif
+			}
 		}
 	}
 
@@ -1226,8 +1304,12 @@ static qboolean SV_AddMissingTiles3_r (mapInfo_t *map, int rec, int posListCnt, 
 
 							/* tile was a dead end, remove it */
 							SV_RemoveTile(map, NULL, NULL);
-							if (h >= g)
+							if (h >= g) {
+#if DISPLAY_THE_MAP_ON_FAILURE
+								SV_RmaPrintMap(map);
 								return qfalse;
+#endif
+							}
 						}
 					}
 				}
