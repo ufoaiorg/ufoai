@@ -63,7 +63,6 @@ typedef struct autoMissionBattle_s {
 	qboolean teamActive[AUTOMISSION_TEAM_TYPE_MAX];					/**< Which teams exist in a battle, supports hardcoded MAX of 8 teams */
 	qboolean isHostile[AUTOMISSION_TEAM_TYPE_MAX][AUTOMISSION_TEAM_TYPE_MAX];		/**< Friendly or hostile?  Params are [Each team] [Each other team] */
 	short nUnits[AUTOMISSION_TEAM_TYPE_MAX];							/**< Number of units (soldiers, aliens, UGVs, whatever) on each team, hardcoded MAX of 64 per team */
-	autoMissionTeamType_t teamType[AUTOMISSION_TEAM_TYPE_MAX];		/**< What type of team is this?  Human player?  Alien? Something else?  */
 
 	double scoreTeamEquipment[AUTOMISSION_TEAM_TYPE_MAX];			/**< Number from 0.f to 1.f, represents how good a team's equipment is (higher is better) */
 	double scoreTeamSkill[AUTOMISSION_TEAM_TYPE_MAX];				/**< Number from 0.f to 1.f, represents how good a team's abilities are (higher is better) */
@@ -104,7 +103,6 @@ static void AM_ClearBattle (autoMissionBattle_t *battle)
 		int otherTeam;
 		int soldier;
 
-		battle->teamType[team] = AUTOMISSION_TEAM_TYPE_MAX;
 		battle->teamActive[team] = qfalse;
 		battle->nUnits[team] = 0;
 		battle->scoreTeamDifficulty[team] = 0.5;
@@ -176,9 +174,6 @@ static void AM_FillTeamFromAircraft (autoMissionBattle_t *battle, const int team
 
 	if (teamSize > 0)
 		battle->teamActive[teamNum] = qtrue;
-
-	/* Set a few defaults.  These can be overridden later with new values if needed. */
-	battle->teamType[teamNum] = AUTOMISSION_TEAM_TYPE_PLAYER;
 
 	/* NOTE:  For now these are hard-coded to values based upon general campaign difficulty.
 	 * --- In the future, it might be easier to set this according to a scripted value in a .ufo
@@ -259,7 +254,6 @@ static void AM_FillTeamFromBattleParams (autoMissionBattle_t *battle, const batt
 			battle->units[AUTOMISSION_TEAM_TYPE_ALIEN][unit].HP = health;
 		}
 		battle->teamActive[AUTOMISSION_TEAM_TYPE_ALIEN] = qtrue;
-		battle->teamType[AUTOMISSION_TEAM_TYPE_ALIEN] = AUTOMISSION_TEAM_TYPE_ALIEN;
 		battle->scoreTeamSkill[AUTOMISSION_TEAM_TYPE_ALIEN] = (frand() * 0.6f) + 0.2f;
 	}
 
@@ -283,7 +277,6 @@ static void AM_FillTeamFromBattleParams (autoMissionBattle_t *battle, const batt
 			battle->units[AUTOMISSION_TEAM_TYPE_CIVILIAN][unit].HP = health;
 		}
 		battle->teamActive[AUTOMISSION_TEAM_TYPE_CIVILIAN] = qtrue;
-		battle->teamType[AUTOMISSION_TEAM_TYPE_CIVILIAN] = AUTOMISSION_TEAM_TYPE_CIVILIAN;
 		battle->scoreTeamSkill[AUTOMISSION_TEAM_TYPE_CIVILIAN] = (frand() * 0.5f) + 0.05f;
 	}
 }
@@ -297,41 +290,39 @@ static void AM_FillTeamFromBattleParams (autoMissionBattle_t *battle, const batt
  */
 static void AM_SetDefaultHostilities (autoMissionBattle_t *battle, const qboolean civsInfected)
 {
-	int team;
-	int otherTeam;
+	autoMissionTeamType_t team;
+	autoMissionTeamType_t otherTeam;
 	qboolean civsInverted = !civsInfected;
 
-	for (team = 0; team < AUTOMISSION_TEAM_TYPE_MAX; team++) {
+	for (team = AUTOMISSION_TEAM_TYPE_PLAYER; team < AUTOMISSION_TEAM_TYPE_MAX; team++) {
 		if (!battle->teamActive[team])
 			continue;
 
-		for (otherTeam = 0; otherTeam < AUTOMISSION_TEAM_TYPE_MAX; otherTeam++) {
-			const autoMissionTeamType_t teamType = battle->teamType[team];
-			const autoMissionTeamType_t otherTeamType = battle->teamType[otherTeam];
+		for (otherTeam = AUTOMISSION_TEAM_TYPE_PLAYER; otherTeam < AUTOMISSION_TEAM_TYPE_MAX; otherTeam++) {
 
 			if (!battle->teamActive[otherTeam])
 				continue;
 
-			if (AM_IsPlayer(teamType)) {
-				if (AM_IsAlien(otherTeamType))
+			if (AM_IsPlayer(team)) {
+				if (AM_IsAlien(otherTeam))
 					AM_SetHostile(battle, team, otherTeam, qtrue);
-				else if (AM_IsPlayer(otherTeamType))
+				else if (AM_IsPlayer(otherTeam))
 					AM_SetHostile(battle, team, otherTeam, qfalse);
-				else if (AM_IsCivilian(otherTeamType))
+				else if (AM_IsCivilian(otherTeam))
 					AM_SetHostile(battle, team, otherTeam, civsInfected);
-			} else if (AM_IsAlien(teamType)) {
-				if (AM_IsAlien(otherTeamType))
+			} else if (AM_IsAlien(team)) {
+				if (AM_IsAlien(otherTeam))
 					AM_SetHostile(battle, team, otherTeam, qfalse);
-				else if (AM_IsPlayer(otherTeamType))
+				else if (AM_IsPlayer(otherTeam))
 					AM_SetHostile(battle, team, otherTeam, qtrue);
-				else if (AM_IsCivilian(otherTeamType))
+				else if (AM_IsCivilian(otherTeam))
 					AM_SetHostile(battle, team, otherTeam, civsInverted);
-			} else if (AM_IsCivilian(teamType)) {
-				if (AM_IsAlien(otherTeamType))
+			} else if (AM_IsCivilian(team)) {
+				if (AM_IsAlien(otherTeam))
 					AM_SetHostile(battle, team, otherTeam, civsInverted);
-				else if (AM_IsPlayer(otherTeamType))
+				else if (AM_IsPlayer(otherTeam))
 					AM_SetHostile(battle, team, otherTeam, civsInfected);
-				else if (AM_IsCivilian(otherTeamType))
+				else if (AM_IsCivilian(otherTeam))
 					AM_SetHostile(battle, team, otherTeam, qfalse);
 			}
 		}
@@ -642,42 +633,13 @@ static void AM_DoFight (autoMissionBattle_t *battle)
 			}
 		}
 	}
-}
 
-/**
- * @brief Check mission results and select winner
- * @param[in, out] battle The battle we fight
- */
-static void AM_DecideResults (autoMissionBattle_t *battle)
-{
-	int team;
-	int teamPlayer = -1;
-	int teamEnemy = -1;
-
-	/* Figure out who's who (determine which team is the player and which one is aliens.) */
-	for (team = 0; team < AUTOMISSION_TEAM_TYPE_MAX; team++) {
-		switch (battle->teamType[team]) {
-		case AUTOMISSION_TEAM_TYPE_PLAYER:
-			teamPlayer = team;
-			break;
-		case AUTOMISSION_TEAM_TYPE_ALIEN:
-			teamEnemy = team;
-			break;
-		default:
-			break;
-		}
-	}
-
-	assert(teamPlayer >= 0);
-	assert(teamEnemy >= 0);
-	/* NOTE: Some missions do not have civilians, so we don't want to stop the game if there weren't any to begin with. */
-
-	/* Well, if the player team is all dead, we know the player totally lost, and can stop right here. */
-	if (!battle->teamActive[teamPlayer]) {
+	/* Set results */
+	if (!battle->teamActive[AUTOMISSION_TEAM_TYPE_PLAYER]) {
 		battle->results->won = qfalse;
-		battle->winningTeam = teamEnemy;
+		battle->winningTeam = AUTOMISSION_TEAM_TYPE_ALIEN;
 	} else {
-		battle->winningTeam = teamPlayer;
+		battle->winningTeam = AUTOMISSION_TEAM_TYPE_PLAYER;
 		battle->results->won = qtrue;
 	}
 }
@@ -849,7 +811,6 @@ void AM_Go (mission_t *mission, aircraft_t *aircraft, const campaign_t *campaign
 	results->civiliansKilledFriendlyFire = 0;
 
 	AM_DoFight(&autoBattle);
-	AM_DecideResults(&autoBattle);
 
 	AM_UpdateSurivorsAfterBattle(&autoBattle, aircraft);
 	AM_AlienCollect(aircraft, battleParameters);
