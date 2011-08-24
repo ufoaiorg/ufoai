@@ -670,6 +670,7 @@ window geoscape
 
 	func onWindowOpened
 	{
+		*cvar:mn_lastsubmenu = "bases"
 		cmd	"music_change geoscape;"
 		if ( not exists *cvar:mn_messagesystem ) {
 			*cvar:mn_messagesystem = 0
@@ -743,6 +744,7 @@ window popup_intercept_ready
 	func onWindowOpened
 	{
 		cmd "cp_missionauto_check;popup_intercept_ready_update"
+		// reset cvar mn_lastsubmenu when back on the geoscape
 	}
 }
 

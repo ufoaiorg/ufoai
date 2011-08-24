@@ -393,6 +393,7 @@ window aliencont
 	func onWindowOpened
 	{
 		cmd "aliencont_init;"
+		*cvar:mn_lastsubmenu = "aliencont"
 	}
 	func onWindowClosed
 	{

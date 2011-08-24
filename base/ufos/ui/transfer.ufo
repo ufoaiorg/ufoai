@@ -489,6 +489,7 @@ window transfer
 			*cvar:i = ( *cvar:i + 1 )
 		}
 		delete *cvar:i
+		*cvar:mn_lastsubmenu = "transfer"
 	}
 
 	func onWindowClosed

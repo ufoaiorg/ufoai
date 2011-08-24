@@ -67,9 +67,9 @@ window bases
 		size		"721 672"
 	}
 
-	// ===============
-	// buttons
-	// ===============
+	// =================
+	// basemenu buttons
+	// =================
 	panel base_buttons
 	{
 		{
@@ -79,84 +79,106 @@ window bases
 			layoutMargin	6
 		}
 
-	cmpBaseButton buildings
-	{
-		string		"_Buildings"
-		tooltip		"_Build base facilities"
-		onClick		{ cmd "ui_push buildings;" }
+		cmpBaseButton buildings
+		{
+			string		"_Buildings"
+			tooltip		"_Build base facilities"
+			onClick		{ cmd "ui_push buildings;" }
+		}
+
+		cmpBaseButton aircraft
+		{
+			string		"_Aircraft"
+			tooltip		"_Aircraft management and crew equipment"
+			onClick		{ cmd "ui_push aircraft;" }
+		}
+
+		cmpBaseButton buysell
+		{
+			string		"_Buy/Sell"
+			tooltip		"_Buy/Sell equipment, aircraft and UGV"
+			onClick		{ cmd "ui_push market;" }
+		}
+
+		cmpBaseButton transfer
+		{
+			string		"_Transfer"
+			tooltip		"_Transfer equipment, aircraft, UGV, aliens and employees to other bases"
+			onClick		{ cmd "ui_push transfer;" }
+		}
+
+		cmpBaseButton research
+		{
+			string		"_Research"
+			tooltip		"_Research new technology"
+			onClick		{ cmd "ui_push research;" }
+		}
+
+		cmpBaseButton production
+		{
+			string		"_Production"
+			tooltip		"_Produce equipment, aircraft and UGV"
+			onClick		{ cmd "ui_push production;" }
+		}
+
+		cmpBaseButton hire
+		{
+			string		"_Employees"
+			tooltip		"_Hire or dismiss employees"
+			onClick		{ cmd "ui_push employees;" }
+		}
+
+		cmpBaseButton containment
+		{
+			string		"_Containment"
+			tooltip		"_Manage captured aliens"
+			onClick		{ cmd "ui_push aliencont;" }
+		}
+
+		cmpBaseButton hospital
+		{
+			string		"_Hospital"
+			tooltip		"_Treat wounded soldiers and perform implant surgery"
+			onClick		{ cmd "ui_push hospital;" }
+		}
+
+		cmpBaseButton summary
+		{
+			string		"_Base Summary"
+			tooltip		"_Information about this base (available storage space, production, research, etc.)"
+			onClick		{ cmd "ui_push basesummary;" }
+		}
 	}
 
-	cmpBaseButton aircraft
-	{
-		string		"_Aircraft"
-		tooltip		"_Aircraft management and crew equipment"
-		onClick		{ cmd "ui_push aircraft;" }
-	}
-
-	cmpBaseButton buysell
-	{
-		string		"_Buy/Sell"
-		tooltip		"_Buy/Sell equipment, aircraft and UGV"
-		onClick		{ cmd "ui_push market;" }
-	}
-
-	cmpBaseButton transfer
-	{
-		string		"_Transfer"
-		tooltip		"_Transfer equipment, aircraft, UGV, aliens and employees to other bases"
-		onClick		{ cmd "ui_push transfer;" }
-	}
-
-	cmpBaseButton research
-	{
-		string		"_Research"
-		tooltip		"_Research new technology"
-		onClick		{ cmd "ui_push research;" }
-	}
-
-	cmpBaseButton production
-	{
-		string		"_Production"
-		tooltip		"_Produce equipment, aircraft and UGV"
-		onClick		{ cmd "ui_push production;" }
-	}
-
-	cmpBaseButton hire
-	{
-		string		"_Employees"
-		tooltip		"_Hire or dismiss employees"
-		onClick		{ cmd "ui_push employees;" }
-	}
-
-	cmpBaseButton containment
-	{
-		string		"_Containment"
-		tooltip		"_Manage captured aliens"
-		onClick		{ cmd "ui_push aliencont;" }
-	}
-
-	cmpBaseButton hospital
-	{
-		string		"_Hospital"
-		tooltip		"_Treat wounded soldiers and perform implant surgery"
-		onClick		{ cmd "ui_push hospital;" }
-	}
-
-	cmpBaseButton summary
-	{
-		string		"_Base Summary"
-		tooltip		"_Information about this base (available storage space, production, research, etc.)"
-		onClick		{ cmd "ui_push basesummary;" }
-	}
-}
 	confunc update_basebutton
 	{
 		*node:root.base_buttons.<1>@disabled = <2>
 		*node:root.base_buttons.<1>@tooltip = <3>
 	}
 
+	// this confunc checks which base submenu was opened before and reopens it only if available and functional in the currently opened base
+	confunc check_and_switch_submenu
+	{
+		if ( ( *cvar:mn_lastsubmenu eq "aircraft" ) && ( *node:bases.base_buttons.aircraft@disabled == false ) ) { cmd "ui_push aircraft;" }
+		elif ( ( *cvar:mn_lastsubmenu eq "aliencont" ) && ( *node:bases.base_buttons.containment@disabled == false ) ) { cmd "ui_push aliencont;" }
+		elif ( ( *cvar:mn_lastsubmenu eq "employees" ) && ( *node:bases.base_buttons.hire@disabled == false ) ) { cmd "ui_push employees;" }
+		elif ( ( *cvar:mn_lastsubmenu eq "hospital" ) && ( *node:bases.base_buttons.hospital@disabled == false ) ) { cmd "ui_push hospital;" }
+		elif ( ( *cvar:mn_lastsubmenu eq "market" ) && ( *node:bases.base_buttons.buysell@disabled == false ) ) { cmd "ui_push market;" }
+		elif ( ( *cvar:mn_lastsubmenu eq "production" ) && ( *node:bases.base_buttons.production@disabled == false ) ) { cmd "ui_push production;" }
+		elif ( ( *cvar:mn_lastsubmenu eq "research" ) && ( *node:bases.base_buttons.research@disabled == false ) ) { cmd "ui_push research;" }
+		// the following submenus are valid for every base, so those do not need a additional availability check
+		elif ( *cvar:mn_lastsubmenu eq "bases" ) { cmd "ui_push bases;" }
+		elif ( *cvar:mn_lastsubmenu eq "buildings" ) { cmd "ui_push buildings;" }
+		elif ( *cvar:mn_lastsubmenu eq "transfer" ) { cmd "ui_push transfer;" }
+		elif ( *cvar:mn_lastsubmenu eq "basesummary" ) { cmd "ui_push basesummary;" }
+		// no submenu was open before or the submenu opened is not valid, reset cvar mn_lastsubmenu to "bases"
+		else { *cvar:mn_lastsubmenu = "bases" }
+	}
+
 	func onWindowOpened
 	{
 		cmd "base_init;"
+		// just check_and_switch_submenu if the last submenu was not "bases"
+		if ( *cvar:mn_lastsubmenu ne "bases" ) { cmd "check_and_switch_submenu;" }
 	}
 }

@@ -570,5 +570,6 @@ window market extends objectinfo
 			*cvar:i = ( *cvar:i + 1 )
 		}
 		delete *cvar:i
+		*cvar:mn_lastsubmenu = "market"
 	}
 }
