@@ -301,21 +301,24 @@ static void CL_LevelDown_f (void)
 	Cvar_SetValue("cl_worldlevel", (cl_worldlevel->integer > 0) ? cl_worldlevel->integer - 1 : 0);
 }
 
-
 static void CL_ZoomInQuant_f (void)
 {
-	if (mouseSpace == MS_UI)
-		UI_MouseWheel(qfalse, mousePosX, mousePosY);
-	else
-		CL_CameraZoomIn();
+	CL_CameraZoomIn();
 }
 
 static void CL_ZoomOutQuant_f (void)
 {
-	if (mouseSpace == MS_UI)
-		UI_MouseWheel(qtrue, mousePosX, mousePosY);
-	else
-		CL_CameraZoomOut();
+	CL_CameraZoomOut();
+}
+
+static void CL_WheelDown_f (void)
+{
+	UI_MouseScroll(0, 1);
+}
+
+static void CL_WheelUp_f (void)
+{
+	UI_MouseScroll(0, -1);
 }
 
 /**
@@ -968,6 +971,8 @@ void IN_Init (void)
 	Cmd_AddCommand("-middlemouse", CL_MiddleClickUp_f, NULL);
 	Cmd_AddCommand("+rightmouse", CL_RightClickDown_f, N_("Right mouse button click (menu)"));
 	Cmd_AddCommand("-rightmouse", CL_RightClickUp_f, NULL);
+	Cmd_AddCommand("wheelupmouse", CL_WheelUp_f, N_("Mouse wheel up"));
+	Cmd_AddCommand("wheeldownmouse", CL_WheelDown_f, N_("Mouse wheel down"));
 	Cmd_AddCommand("+select", CL_SelectDown_f, N_("Select objects/Walk to a square/In fire mode, fire etc"));
 	Cmd_AddCommand("-select", CL_SelectUp_f, NULL);
 	Cmd_AddCommand("+action", CL_ActionDown_f, N_("Walk to a square/In fire mode, cancel action"));

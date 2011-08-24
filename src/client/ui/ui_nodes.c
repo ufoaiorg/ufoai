@@ -651,7 +651,7 @@ static const int virtualFunctions[] = {
 	offsetof(uiBehaviour_t, leftClick),
 	offsetof(uiBehaviour_t, rightClick),
 	offsetof(uiBehaviour_t, middleClick),
-	offsetof(uiBehaviour_t, mouseWheel),
+	offsetof(uiBehaviour_t, scroll),
 	offsetof(uiBehaviour_t, mouseMove),
 	offsetof(uiBehaviour_t, mouseDown),
 	offsetof(uiBehaviour_t, mouseUp),

@@ -359,9 +359,12 @@ static void UI_MaterialEditorNodeInit (uiNode_t *node, linkedList_t *params)
 /**
  * @brief Called when the user wheel the mouse over the node
  */
-static void UI_MaterialEditorNodeWheel (uiNode_t *node, qboolean down, int x, int y)
+static void UI_MaterialEditorNodeWheel (uiNode_t *node, int deltaX, int deltaY)
 {
+	qboolean down = deltaY > 0;
 	const int diff = (down) ? 1 : -1;
+	if (deltaY == 0)
+		return;
 	UI_AbstractScrollableNodeScrollY(node, diff);
 }
 
@@ -593,7 +596,7 @@ void UI_RegisterMaterialEditorNode (uiBehaviour_t *behaviour)
 	behaviour->draw = UI_MaterialEditorNodeDraw;
 	behaviour->windowOpened = UI_MaterialEditorNodeInit;
 	behaviour->mouseDown = UI_MaterialEditorMouseDown;
-	behaviour->mouseWheel = UI_MaterialEditorNodeWheel;
+	behaviour->scroll = UI_MaterialEditorNodeWheel;
 
 	/** @todo convert it to ui functions */
 	Cmd_AddCommand("ui_materialeditor_removestage", UI_MaterialEditorRemoveStage_f, "Removes the selected material stage");

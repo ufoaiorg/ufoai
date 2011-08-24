@@ -258,14 +258,13 @@ static void UI_VScrollbarNodeCapturedMouseLost (uiNode_t *node)
 /**
  * @brief Called when the user wheel the mouse over the node
  */
-static void UI_VScrollbarNodeWheel (uiNode_t *node, qboolean down, int x, int y)
+static void UI_VScrollbarNodeWheel (uiNode_t *node, int deltaX, int deltaY)
 {
-	const int diff = (down)?1:-1;
-
+	if (deltaY == 0)
+		return;
 	if (EXTRADATA(node).fullsize == 0 || EXTRADATA(node).fullsize < EXTRADATA(node).viewsize)
 		return;
-
-	UI_VScrollbarNodeSet(node, EXTRADATA(node).pos + diff);
+	UI_VScrollbarNodeSet(node, EXTRADATA(node).pos + deltaY);
 }
 
 /**
@@ -427,7 +426,7 @@ void UI_RegisterVScrollbarNode (uiBehaviour_t *behaviour)
 {
 	behaviour->name = "vscrollbar";
 	behaviour->extends = "abstractscrollbar";
-	behaviour->mouseWheel = UI_VScrollbarNodeWheel;
+	behaviour->scroll = UI_VScrollbarNodeWheel;
 	behaviour->mouseDown = UI_VScrollbarNodeMouseDown;
 	behaviour->mouseUp = UI_VScrollbarNodeMouseUp;
 	behaviour->capturedMouseMove = UI_VScrollbarNodeCapturedMouseMove;

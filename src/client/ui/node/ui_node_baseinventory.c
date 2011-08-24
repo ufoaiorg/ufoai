@@ -744,9 +744,12 @@ static void UI_BaseInventoryNodeMouseUp (uiNode_t *node, int x, int y, int butto
 		UI_DNDDrop();
 	}
 }
-static void UI_BaseInventoryNodeWheel (uiNode_t *node, qboolean down, int x, int y)
+static void UI_BaseInventoryNodeWheel (uiNode_t *node, int deltaX, int deltaY)
 {
+	qboolean down = deltaY > 0;
 	const int delta = 20;
+	if (deltaY == 0)
+		return;
 	if (down) {
 		const int lenght = EXTRADATA(node).scrollY.fullSize - EXTRADATA(node).scrollY.viewSize;
 		if (EXTRADATA(node).scrollY.viewPos < lenght) {
@@ -848,7 +851,7 @@ void UI_RegisterBaseInventoryNode (uiBehaviour_t* behaviour)
 	behaviour->drawTooltip = UI_BaseInventoryNodeDrawTooltip;
 	behaviour->mouseDown = UI_BaseInventoryNodeMouseDown;
 	behaviour->mouseUp = UI_BaseInventoryNodeMouseUp;
-	behaviour->mouseWheel = UI_BaseInventoryNodeWheel;
+	behaviour->scroll = UI_BaseInventoryNodeWheel;
 	behaviour->capturedMouseMove = UI_BaseInventoryNodeCapturedMouseMove;
 	behaviour->windowOpened = UI_BaseInventoryNodeInit;
 	behaviour->loading = UI_BaseInventoryNodeLoading;

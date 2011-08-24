@@ -217,9 +217,12 @@ static void UI_OptionListNodeClick (uiNode_t * node, int x, int y)
 /**
  * @brief Auto scroll the list
  */
-static void UI_OptionListNodeMouseWheel (uiNode_t *node, qboolean down, int x, int y)
+static void UI_OptionListNodeMouseWheel (uiNode_t *node, int deltaX, int deltaY)
 {
+	qboolean down = deltaY > 0;
 	qboolean updated;
+	if (deltaY == 0)
+		return;
 	updated = UI_SetScroll(&EXTRADATA(node).scrollY, EXTRADATA(node).scrollY.viewPos + (down ? 1 : -1), -1, -1);
 	if (EXTRADATA(node).onViewChange && updated)
 		UI_ExecuteEventActions(node, EXTRADATA(node).onViewChange);
@@ -252,7 +255,7 @@ void UI_RegisterOptionListNode (uiBehaviour_t *behaviour)
 	behaviour->extends = "abstractoption";
 	behaviour->draw = UI_OptionListNodeDraw;
 	behaviour->leftClick = UI_OptionListNodeClick;
-	behaviour->mouseWheel = UI_OptionListNodeMouseWheel;
+	behaviour->scroll = UI_OptionListNodeMouseWheel;
 	behaviour->loading = UI_OptionListNodeLoading;
 	behaviour->loaded = UI_OptionListNodeLoaded;
 	behaviour->drawItselfChild = qtrue;

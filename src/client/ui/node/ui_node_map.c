@@ -196,8 +196,11 @@ static void UI_MapNodeZoom (uiNode_t *node, qboolean out)
 	MAP_StopSmoothMovement();
 }
 
-static void UI_MapNodeMouseWheel (uiNode_t *node, qboolean down, int x, int y)
+static void UI_MapNodeMouseWheel (uiNode_t *node, int deltaX, int deltaY)
 {
+	qboolean down = deltaY > 0;
+	if (deltaY == 0)
+		return;
 	UI_MapNodeZoom(node, down);
 }
 
@@ -239,7 +242,7 @@ void UI_RegisterMapNode (uiBehaviour_t *behaviour)
 	behaviour->mouseUp = UI_MapNodeMouseUp;
 	behaviour->capturedMouseMove = UI_MapNodeCapturedMouseMove;
 	behaviour->capturedMouseLost = UI_MapNodeCapturedMouseLost;
-	behaviour->mouseWheel = UI_MapNodeMouseWheel;
+	behaviour->scroll = UI_MapNodeMouseWheel;
 	behaviour->loading = UI_MapNodeLoading;
 	behaviour->extraDataSize = sizeof(EXTRADATA_TYPE);
 }

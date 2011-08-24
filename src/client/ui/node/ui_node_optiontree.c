@@ -270,9 +270,12 @@ static void UI_OptionTreeNodeClick (uiNode_t * node, int x, int y)
 /**
  * @brief Auto scroll the list
  */
-static void UI_OptionTreeNodeMouseWheel (uiNode_t *node, qboolean down, int x, int y)
+static void UI_OptionTreeNodeMouseWheel (uiNode_t *node, int deltaX, int deltaY)
 {
+	qboolean down = deltaY > 0;
 	qboolean updated;
+	if (deltaY == 0)
+		return;
 	updated = UI_SetScroll(&EXTRADATA(node).scrollY, EXTRADATA(node).scrollY.viewPos + (down ? 1 : -1), -1, -1);
 	if (EXTRADATA(node).onViewChange && updated)
 		UI_ExecuteEventActions(node, EXTRADATA(node).onViewChange);
@@ -362,7 +365,7 @@ void UI_RegisterOptionTreeNode (uiBehaviour_t *behaviour)
 	behaviour->extends = "abstractoption";
 	behaviour->draw = UI_OptionTreeNodeDraw;
 	behaviour->leftClick = UI_OptionTreeNodeClick;
-	behaviour->mouseWheel = UI_OptionTreeNodeMouseWheel;
+	behaviour->scroll = UI_OptionTreeNodeMouseWheel;
 	behaviour->loading = UI_OptionTreeNodeLoading;
 	behaviour->loaded = UI_OptionTreeNodeLoaded;
 	behaviour->properties = properties;

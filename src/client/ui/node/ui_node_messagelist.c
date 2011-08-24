@@ -251,8 +251,11 @@ static void UI_MessageListNodeDraw (uiNode_t *node)
 	}
 }
 
-static void UI_MessageListNodeMouseWheel (uiNode_t *node, qboolean down, int x, int y)
+static void UI_MessageListNodeMouseWheel (uiNode_t *node, int deltaX, int deltaY)
 {
+	qboolean down = deltaY > 0;
+	if (deltaY == 0)
+		return;
 	UI_AbstractScrollableNodeScrollY(node, (down ? 1 : -1));
 	if (node->onWheelUp && !down)
 		UI_ExecuteEventActions(node, node->onWheelUp);
@@ -288,7 +291,7 @@ void UI_RegisterMessageListNode (uiBehaviour_t *behaviour)
 	behaviour->extends = "abstractscrollable";
 	behaviour->draw = UI_MessageListNodeDraw;
 	behaviour->loading = UI_MessageListNodeLoading;
-	behaviour->mouseWheel = UI_MessageListNodeMouseWheel;
+	behaviour->scroll = UI_MessageListNodeMouseWheel;
 #ifdef DEBUG
 	Cmd_AddCommand("debug_ui_message_useallicons", UI_MessageDebugUseAllIcons_f, "Update message to use all icons");
 #endif

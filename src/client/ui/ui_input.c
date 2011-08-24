@@ -682,36 +682,34 @@ static void UI_MiddleClick (int x, int y)
  * @sa UI_LeftClick
  * @sa UI_RightClick
  * @sa UI_MiddleClick
- * @sa CL_ZoomInQuant
- * @sa CL_ZoomOutQuant
  */
-void UI_MouseWheel (qboolean down, int x, int y)
+void UI_MouseScroll (int deltaX, int deltaY)
 {
 	uiNode_t *node;
 
 	/* send it to the captured mouse node */
 	if (capturedNode) {
-		if (capturedNode->behaviour->mouseWheel)
-			capturedNode->behaviour->mouseWheel(capturedNode, down, x, y);
+		if (capturedNode->behaviour->scroll)
+			capturedNode->behaviour->scroll(capturedNode, deltaX, deltaY);
 		return;
 	}
 
 	node = hoveredNode;
 
 	while (node) {
-		if (node->behaviour->mouseWheel) {
-			node->behaviour->mouseWheel(node, down, x, y);
+		if (node->behaviour->scroll) {
+			node->behaviour->scroll(node, deltaX, deltaY);
 			break;
 		} else {
-			if (node->onWheelUp && !down) {
+			if (node->onWheelUp && deltaY < 0) {
 				UI_ExecuteEventActions(node, node->onWheelUp);
 				break;
 			}
-			if (node->onWheelDown && down) {
+			if (node->onWheelDown && deltaY > 0) {
 				UI_ExecuteEventActions(node, node->onWheelDown);
 				break;
 			}
-			if (node->onWheel) {
+			if (node->onWheel && deltaY != 0) {
 				UI_ExecuteEventActions(node, node->onWheel);
 				break;
 			}
@@ -725,8 +723,6 @@ void UI_MouseWheel (qboolean down, int x, int y)
  * @sa UI_LeftClick
  * @sa UI_RightClick
  * @sa UI_MiddleClick
- * @sa CL_ZoomInQuant
- * @sa CL_ZoomOutQuant
  */
 void UI_MouseDown (int x, int y, int button)
 {
@@ -762,8 +758,6 @@ void UI_MouseDown (int x, int y, int button)
  * @sa UI_LeftClick
  * @sa UI_RightClick
  * @sa UI_MiddleClick
- * @sa CL_ZoomInQuant
- * @sa CL_ZoomOutQuant
  */
 void UI_MouseUp (int x, int y, int button)
 {

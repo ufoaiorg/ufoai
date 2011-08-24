@@ -42,7 +42,7 @@ typedef struct uiKeyBinding_s {
 void UI_SetKeyBinding(const char* path, int key, const char* description);
 
 /* mouse input */
-void UI_MouseWheel(qboolean down, int x, int y);
+void UI_MouseScroll(int deltaX, int deltaY);
 void UI_MouseMove(int x, int y);
 void UI_MouseDown(int x, int y, int button);
 void UI_MouseUp(int x, int y, int button);

@@ -143,9 +143,12 @@ static void UI_SpinnerNodeCapturedMouseLost (uiNode_t *node)
 /**
  * @note Mouse wheel is not inhibited when node is disabled
  */
-static void UI_SpinnerNodeWheel (uiNode_t *node, qboolean down, int x, int y)
+static void UI_SpinnerNodeWheel (uiNode_t *node, int deltaX, int deltaY)
 {
+	qboolean down = deltaY > 0;
 	const qboolean disabled = node->disabled || node->parent->disabled;
+	if (deltaY == 0)
+		return;
 	if (disabled)
 		return;
 	UI_SpinnerNodeStep(node, down);
@@ -234,7 +237,7 @@ void UI_RegisterSpinnerNode (uiBehaviour_t *behaviour)
 	localBehaviour = behaviour;
 	behaviour->name = "spinner";
 	behaviour->extends = "abstractvalue";
-	behaviour->mouseWheel = UI_SpinnerNodeWheel;
+	behaviour->scroll = UI_SpinnerNodeWheel;
 	behaviour->mouseDown = UI_SpinnerNodeDown;
 	behaviour->mouseUp = UI_SpinnerNodeUp;
 	behaviour->capturedMouseLost = UI_SpinnerNodeCapturedMouseLost;
