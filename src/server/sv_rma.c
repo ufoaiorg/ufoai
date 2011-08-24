@@ -117,9 +117,8 @@ static unsigned long tileMask (const char chr)
 	Com_Error(ERR_DROP, "SV_ParseMapTile: Invalid tile char '%c'", chr);
 }
 
-#define DISPLAY_THE_MAP 0
 #define DISPLAY_THE_MAP_ON_FAILURE 0
-#if DISPLAY_THE_MAP
+#if DISPLAY_THE_MAP_ON_FAILURE
 #define ACW 4	/* ascii cell width */
 #define ACH 2	/* ascii cell height */
 static void SV_RmaPrintMap (const mapInfo_t *map)
@@ -1253,8 +1252,8 @@ static qboolean SV_AddMissingTiles3_r (mapInfo_t *map, int rec, int posListCnt, 
 			if (gapList[x][y][0] == 0) {
 #if DISPLAY_THE_MAP_ON_FAILURE
 				SV_RmaPrintMap(map);
-				return qfalse;
 #endif
+				return qfalse;
 			}
 		}
 	}
@@ -1307,8 +1306,8 @@ static qboolean SV_AddMissingTiles3_r (mapInfo_t *map, int rec, int posListCnt, 
 							if (h >= g) {
 #if DISPLAY_THE_MAP_ON_FAILURE
 								SV_RmaPrintMap(map);
-								return qfalse;
 #endif
+								return qfalse;
 							}
 						}
 					}
