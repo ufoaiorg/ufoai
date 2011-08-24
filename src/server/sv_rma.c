@@ -142,7 +142,7 @@ static void SV_RmaPrintMap (const mapInfo_t *map)
 		const mPlaced_t *mp = &map->mPlaced[i];
 		const mTile_t *tile = mp->tile;
 		int tx, ty;
-		char *tn = tile->id + 1;
+		const char *tn = tile->id + 1;
 
 		if (!strncmp(tn, "craft_", 6))
 			tn += 6;
