@@ -37,6 +37,11 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #define ASSEMBLE_THREADS 2
 /** @brief print some debugging info */
 #define PRINT_RMA_PROGRESS 0
+/** @brief place the biggest 'required' tiles first. Helps oriental a lot, but is bad for village. */
+#define SORT_BY_SIZE 0
+/** @brief display a character graphic of the tiles placed when RMA2 reaches a dead end. */
+#define DISPLAY_THE_MAP_ON_FAILURE 0
+
 /** @brief max # of recursions */
 #define RMA2_MAX_REC 64
 /** @brief max # of valid tile/position combinations */
@@ -117,7 +122,6 @@ static unsigned long tileMask (const char chr)
 	Com_Error(ERR_DROP, "SV_ParseMapTile: Invalid tile char '%c'", chr);
 }
 
-#define DISPLAY_THE_MAP_ON_FAILURE 0
 #if DISPLAY_THE_MAP_ON_FAILURE
 #define ACW 4	/* ascii cell width */
 #define ACH 2	/* ascii cell height */
@@ -1976,7 +1980,6 @@ void SV_ParseUMP (const char *name, mapInfo_t *map, qboolean inherit)
 	FS_FreeFile(buf);
 }
 
-#define SORT_BY_SIZE 0
 #if SORT_BY_SIZE
 static int cmpTileAreaSize (const void * a, const void * b)
 {
