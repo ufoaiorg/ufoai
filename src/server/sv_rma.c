@@ -181,12 +181,14 @@ static void SV_RmaPrintMap (const mapInfo_t *map)
 	}
 
 	/* print it */
-	Com_Printf("\nCurrent state of the map:\n________________\n");
+	const char *underscores = "________________________________________________\n";
+	Com_Printf("\nCurrent state of the map:\n");
+	Com_Printf(underscores);
 /*	int h = map->mAssembly[map->numAssemblies].height;	*/
 	int h = ACH * 9;
 	for (i = h; i >=0; i--)
 		Com_Printf("%s\n", screen[i]);
-	Com_Printf("________________\n");
+	Com_Printf(underscores);
 }
 #endif
 
