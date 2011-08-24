@@ -2,18 +2,11 @@
 // COMPONENTS FOR THE MAIN USER INTERFACE
 // =======================================
 
-// ===============================
-// POPUP KEYINFO AND GENERAL HELP
-// ===============================
-
-confunc popup_keyinfo {
-		cmd "ui_push popup_keyinfo;"
-		}
-
 /**
  * Big green button used in all main menu UI
- * We should only use it into the main UI (outside game)
+ * We should only use it for the main UI (outside game)
  */
+
 component button cmpMenuButton
 {
 	size "256 64"
@@ -117,6 +110,7 @@ component panel cmpMapSlot
 /**
  * Header for the base. Used in all baseview screens
  */
+
 component panel cmpDefBaseHeader {
 	{
 		pos "0 0"
@@ -583,6 +577,11 @@ component panel cmpTeamPanel
 	}
 }
 
+
+// ===============================
+// POPUP KEYINFO AND GENERAL HELP
+// ===============================
+
 window popup_keyinfo
 {
 	{
@@ -640,8 +639,4 @@ window popup_keyinfo
 		fullsize	50
 		onChange	{ *node:root.keyinfolist@viewpos = <current> }
 	}
-}
-
-confunc show_popup_keyinfo {
-	cmd "ui_push popup_keyinfo;"
 }
