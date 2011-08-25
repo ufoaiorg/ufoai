@@ -618,5 +618,6 @@ window production
 	func onWindowClosed
 	{
 		delete *cvar:ui_prreq
+		*cvar:mn_lastsubmenu = "bases"
 	}
 }

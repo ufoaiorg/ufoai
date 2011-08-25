@@ -472,4 +472,9 @@ window research
 		cmd "research_init;"
 		*cvar:mn_lastsubmenu = "research"
 	}
+
+	func onWindowClosed
+	{
+		*cvar:mn_lastsubmenu = "bases"
+	}
 }

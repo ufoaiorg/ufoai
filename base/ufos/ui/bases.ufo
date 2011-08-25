@@ -18,7 +18,7 @@ component cmpDefBaseHeader cmpBaseviewHeader
 		background	"buttons/big_blue"
 		pos			"950 20"
 		size		"59 55"
-		onClick		{ cmd "ui_pop;" }
+		onClick		{ *cvar:mn_lastsubmenu = "bases" cmd "ui_pop;" }
 	}
 }
 
@@ -159,19 +159,49 @@ window bases
 	// this confunc checks which base submenu was opened before and reopens it only if available and functional in the currently opened base
 	confunc check_and_switch_submenu
 	{
-		if ( ( *cvar:mn_lastsubmenu eq "aircraft" ) && ( *node:bases.base_buttons.aircraft@disabled == false ) ) { cmd "ui_push aircraft;" }
-		elif ( ( *cvar:mn_lastsubmenu eq "aliencont" ) && ( *node:bases.base_buttons.containment@disabled == false ) ) { cmd "ui_push aliencont;" }
+		// aircraft is a very special case, because it has multiple submenu windows, we have to make sure to close all of those when we exit
+		if ( ( *cvar:mn_lastsubmenu eq "aircraft" ) && ( *node:bases.base_buttons.aircraft@disabled == true ) ) {
+			cmd "ui_close aircraft_info;"
+			cmd "ui_close aircraft_pilots;"
+			cmd "ui_close aircraft_soldiers;"
+			cmd "ui_close aircraft_equip;"
+			cmd "ui_close aircraft;"
+		} elif ( ( *cvar:mn_lastsubmenu eq "aircraft" ) && ( *node:bases.base_buttons.aircraft@disabled == false ) ) {
+			cmd "ui_close aircraft_info;"
+			cmd "ui_close aircraft_pilots;"
+			cmd "ui_close aircraft_soldiers;"
+			cmd "ui_close aircraft_equip;"
+			cmd "ui_close aircraft;"
+			cmd "ui_push aircraft;"
+		} elif ( ( *cvar:mn_lastsubmenu eq "aliencont" ) && ( *node:bases.base_buttons.containment@disabled == false ) ) { cmd "ui_push aliencont;" }
+		elif ( ( *cvar:mn_lastsubmenu eq "aliencont" ) && ( *node:bases.base_buttons.containment@disabled == true ) ) { cmd "ui_close aliencont;" }
 		elif ( ( *cvar:mn_lastsubmenu eq "employees" ) && ( *node:bases.base_buttons.hire@disabled == false ) ) { cmd "ui_push employees;" }
-		elif ( ( *cvar:mn_lastsubmenu eq "hospital" ) && ( *node:bases.base_buttons.hospital@disabled == false ) ) { cmd "ui_push hospital;" }
+		// hospital is a special case, because it has a submenu window: hospital_employee
+		elif ( ( *cvar:mn_lastsubmenu eq "hospital" ) && ( *node:bases.base_buttons.hospital@disabled == false ) ) {
+			cmd "ui_close hospital_employee;"
+			cmd "ui_close hospital;"
+			cmd "ui_push hospital;"
+		} elif ( ( *cvar:mn_lastsubmenu eq "hospital_employee" ) && ( *node:bases.base_buttons.hospital@disabled == true ) ) {
+			cmd "ui_close hospital_employee;"
+			cmd "ui_close hospital;"
+		} elif ( ( *cvar:mn_lastsubmenu eq "hospital_employee" ) && ( *node:bases.base_buttons.hospital@disabled == false ) ) {
+			cmd "ui_close hospital_employee;"
+			cmd "ui_close hospital;"
+			cmd "ui_push hospital_employee;"
+		}
 		elif ( ( *cvar:mn_lastsubmenu eq "market" ) && ( *node:bases.base_buttons.buysell@disabled == false ) ) { cmd "ui_push market;" }
+		elif ( ( *cvar:mn_lastsubmenu eq "market" ) && ( *node:bases.base_buttons.buysell@disabled == true ) ) { cmd "ui_close market;" }
 		elif ( ( *cvar:mn_lastsubmenu eq "production" ) && ( *node:bases.base_buttons.production@disabled == false ) ) { cmd "ui_push production;" }
+		elif ( ( *cvar:mn_lastsubmenu eq "production" ) && ( *node:bases.base_buttons.production@disabled == true ) ) { cmd "ui_close production;" }
 		elif ( ( *cvar:mn_lastsubmenu eq "research" ) && ( *node:bases.base_buttons.research@disabled == false ) ) { cmd "ui_push research;" }
-		// the following submenus are valid for every base, so those do not need a additional availability check
+		elif ( ( *cvar:mn_lastsubmenu eq "research" ) && ( *node:bases.base_buttons.research@disabled == true ) ) { cmd "ui_close research;" }
+		// the following submenus are valid for every base, so those do not need an additional availability check
 		elif ( *cvar:mn_lastsubmenu eq "bases" ) { cmd "ui_push bases;" }
 		elif ( *cvar:mn_lastsubmenu eq "buildings" ) { cmd "ui_push buildings;" }
 		elif ( *cvar:mn_lastsubmenu eq "transfer" ) { cmd "ui_push transfer;" }
 		elif ( *cvar:mn_lastsubmenu eq "basesummary" ) { cmd "ui_push basesummary;" }
-		// no submenu was open before or the submenu opened is not valid, reset cvar mn_lastsubmenu to "bases"
+		// no submenu was open before or the submenu opened is not valid (should rather not happen, but this is a fail-safe protection),
+		// reset cvar mn_lastsubmenu to "bases"
 		else { *cvar:mn_lastsubmenu = "bases" }
 	}
 
@@ -180,5 +210,10 @@ window bases
 		cmd "base_init;"
 		// just check_and_switch_submenu if the last submenu was not "bases"
 		if ( *cvar:mn_lastsubmenu ne "bases" ) { cmd "check_and_switch_submenu;" }
+	}
+
+	func onWindowClosed
+	{
+		*cvar:mn_lastsubmenu = "bases"
 	}
 }

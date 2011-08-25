@@ -399,5 +399,6 @@ window aliencont
 	{
 		cmd "del mn_al_alive;del mn_al_alientype;"
 		cmd "del mn_al_alienimage;del mn_al_dead;del mn_al_capacity;"
+		*cvar:mn_lastsubmenu = "bases"
 	}
 }

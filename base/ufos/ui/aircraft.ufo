@@ -242,4 +242,9 @@ window iaircraft
 		*cvar:mn_thp = ""
 	}
 
+	func onWindowClosed
+	{
+		*cvar:mn_lastsubmenu = "bases"
+	}
+
 }

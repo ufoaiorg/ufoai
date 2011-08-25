@@ -533,8 +533,6 @@ window team extends iaircraft
 			*node:root.actor_background.stats_phys@invis = true
 			*node:root.actor_background.stats_missions@invis = false
 		}
-
-
 	}
 
 	/**
@@ -581,5 +579,12 @@ window team extends iaircraft
 		*cvar:mn_relative_id = 0
 		cmd "update_soldier_list 8 0;team_select 0;set mn_show_employee 1;"
 		cmd "aircraft_status_change"
+		*cvar:mn_lastsubmenu = "aircraft"
 	}
+
+	func onWindowClosed
+	{
+		*cvar:mn_lastsubmenu = "bases"
+	}
+
 }

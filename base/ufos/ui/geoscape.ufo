@@ -245,6 +245,9 @@ window geoscape
 				pos			"48 10"
 				size		"20 20"
 				onChange	{ *cvar:mn_fastexit = 0; cmd "game_settimeid <value>;" }
+				// here the cvar mn_fastexit does also not change when the mousewheel is used
+				// and there is also no soundfx played, when the button timeplay changes and the change is done via mousewheel
+				// TODO: fix onWheelUp and onWheelDown behaviour
 				onWheelUp	{ *cvar:mn_fastexit = 0; cmd "game_timefast;" }
 				onWheelDown	{ cmd "game_timeslow;" }
 			}
@@ -973,9 +976,9 @@ window popup_newbase
 	}
 }
 
-// ==================
+// =======================
 // POPUP NEW INSTALLATION
-// ==================
+// =======================
 window popup_newinstallation_type
 {
 	{
