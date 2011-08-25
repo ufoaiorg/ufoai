@@ -49,15 +49,17 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
  */
 static void UI_OptionListNodeUpdateScroll (uiNode_t *node)
 {
-	const char *font;
-	int fontHeight;
+	int lineHeight;
 	qboolean updated;
 	int elements;
 
-	font = UI_GetFontFromNode(node);
-	fontHeight = UI_FontGetHeight(font);
+	lineHeight =  EXTRADATA(node).lineHeight;
+	if (lineHeight == 0) {
+		const char *font = UI_GetFontFromNode(node);
+		lineHeight = UI_FontGetHeight(font);
+	}
 
-	elements = (node->size[1] - node->padding - node->padding) / fontHeight;
+	elements = (node->size[1] - node->padding - node->padding) / lineHeight;
 	updated = UI_SetScroll(&EXTRADATA(node).scrollY, -1, elements, EXTRADATA(node).count);
 	if (updated && EXTRADATA(node).onViewChange)
 		UI_ExecuteEventActions(node, EXTRADATA(node).onViewChange);
@@ -73,7 +75,7 @@ static void UI_OptionListNodeDraw (uiNode_t *node)
 	uiNode_t* option;
 	const char *ref;
 	const char *font;
-	int fontHeight;
+	int lineHeight;
 	vec2_t pos;
 	const char* image;
 	int currentY;
@@ -92,7 +94,10 @@ static void UI_OptionListNodeDraw (uiNode_t *node)
 		UI_DrawPanel(pos, node->size, image, 0, 0, panelTemplate);
 
 	font = UI_GetFontFromNode(node);
-	fontHeight = UI_FontGetHeight(font);
+
+	lineHeight =  EXTRADATA(node).lineHeight;
+	if (lineHeight == 0)
+		lineHeight = UI_FontGetHeight(font);
 	currentY = pos[1] + node->padding;
 
 	/* skip option over current position */
@@ -107,14 +112,14 @@ static void UI_OptionListNodeDraw (uiNode_t *node)
 		const char *label;
 		int decX = pos[0] + node->padding;
 		/* outside the node */
-		if (currentY + fontHeight > pos[1] + node->size[1] - node->padding) {
+		if (currentY + lineHeight > pos[1] + node->size[1] - node->padding) {
 			count++;
 			break;
 		}
 
 		/* draw the hover effect */
 		if (OPTIONEXTRADATA(option).hovered)
-			UI_DrawFill(pos[0] + node->padding, currentY, node->size[0] - node->padding - node->padding, fontHeight, node->color);
+			UI_DrawFill(pos[0] + node->padding, currentY, node->size[0] - node->padding - node->padding, lineHeight, node->color);
 
 		/* text color */
 		if (Q_streq(OPTIONEXTRADATA(option).value, ref)) {
@@ -132,8 +137,8 @@ static void UI_OptionListNodeDraw (uiNode_t *node)
 			if (option->disabled)
 				iconStatus = SPRITE_STATUS_DISABLED;
 			R_Color(NULL);
-			UI_DrawSpriteInBox(OPTIONEXTRADATA(option).icon, iconStatus, decX, currentY, OPTIONEXTRADATA(option).icon->size[0], fontHeight);
-			decX += OPTIONEXTRADATA(option).icon->size[0] + fontHeight / 4;
+			UI_DrawSpriteInBox(OPTIONEXTRADATA(option).icon, iconStatus, decX, currentY, OPTIONEXTRADATA(option).icon->size[0], lineHeight);
+			decX += OPTIONEXTRADATA(option).icon->size[0] + lineHeight / 4;
 		}
 
 		/* print the option label */
@@ -147,7 +152,7 @@ static void UI_OptionListNodeDraw (uiNode_t *node)
 			0, label, 0, 0, NULL, qfalse, LONGLINES_PRETTYCHOP);
 
 		/* next entries' position */
-		currentY += fontHeight;
+		currentY += lineHeight;
 		count++;
 	}
 	R_Color(NULL);
@@ -168,16 +173,18 @@ static uiNode_t* UI_OptionListNodeGetOptionAtPosition (uiNode_t * node, int x, i
 {
 	uiNode_t* option;
 	vec2_t pos;
-	int fontHeight;
+	int lineHeight;
 	int currentY;
 	int count = 0;
-	const char *font;
 
 	UI_GetNodeAbsPos(node, pos);
 	currentY = pos[1] + node->padding;
 
-	font = UI_GetFontFromNode(node);
-	fontHeight = UI_FontGetHeight(font);
+	lineHeight =  EXTRADATA(node).lineHeight;
+	if (lineHeight == 0) {
+		const char *font = UI_GetFontFromNode(node);
+		lineHeight = UI_FontGetHeight(font);
+	}
 
 	option = UI_AbstractOptionGetFirstOption(node);
 	while (option && count < EXTRADATA(node).scrollY.viewPos) {
@@ -187,11 +194,11 @@ static uiNode_t* UI_OptionListNodeGetOptionAtPosition (uiNode_t * node, int x, i
 
 	/* now draw all available options for this selectbox */
 	for (; option; option = option->next) {
-		if (y < currentY + fontHeight)
+		if (y < currentY + lineHeight)
 			return option;
-		if (currentY + fontHeight > pos[1] + node->size[1] - node->padding)
+		if (currentY + lineHeight > pos[1] + node->size[1] - node->padding)
 			break;
-		currentY += fontHeight;
+		currentY += lineHeight;
 	}
 	return NULL;
 }
