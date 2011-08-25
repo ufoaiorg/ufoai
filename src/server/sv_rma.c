@@ -41,6 +41,7 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #define SORT_BY_SIZE 0
 /** @brief display a character graphic of the tiles placed when RMA2 reaches a dead end. */
 #define DISPLAY_THE_MAP_ON_FAILURE 0
+#define PRINT_FAILURE_REASONCODE 1
 
 /** @brief max # of recursions */
 #define RMA2_MAX_REC 64
@@ -1229,6 +1230,9 @@ static qboolean SV_AddMissingTiles3_r (mapInfo_t *map, int rec, int posListCnt, 
 #if DISPLAY_THE_MAP_ON_FAILURE
 		SV_RmaPrintMap(map);
 #endif
+#if PRINT_FAILURE_REASONCODE
+		Com_Printf("out of solids\n");
+#endif
 		return qfalse;
 	}
 
@@ -1258,6 +1262,9 @@ static qboolean SV_AddMissingTiles3_r (mapInfo_t *map, int rec, int posListCnt, 
 			if (gapList[x][y][0] == 0) {
 #if DISPLAY_THE_MAP_ON_FAILURE
 				SV_RmaPrintMap(map);
+#endif
+#if PRINT_FAILURE_REASONCODE
+		Com_Printf("uncovered gap\n");
 #endif
 				return qfalse;
 			}
@@ -1312,6 +1319,9 @@ static qboolean SV_AddMissingTiles3_r (mapInfo_t *map, int rec, int posListCnt, 
 							if (h >= g) {
 #if DISPLAY_THE_MAP_ON_FAILURE
 								SV_RmaPrintMap(map);
+#endif
+#if PRINT_FAILURE_REASONCODE
+								Com_Printf("no tile works for gap\n");
 #endif
 								return qfalse;
 							}
