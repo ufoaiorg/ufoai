@@ -2,8 +2,7 @@
 // CAMPAIGN MENU
 // ==================
 
-window campaigns
-{
+window campaigns {
 	/** @todo Remove me */
 	{ } // empty properties to fix parsing problem with "image" token (behaviour or property?)
 
@@ -11,75 +10,78 @@ window campaigns
 	// background
 	// ==================
 
-	image background
-	{
-		src	"background/options_bg"
+	image background {
+		src			"background/options_bg"
 	}
 
-	string version
-	{
-		string	*cvar:version
-		pos	"10 744"
+	string version {
+		string		*cvar:version
+		pos			"10 744"
 	}
 
-	string c_headline
-	{
-		string	"_Campaigns"
-		pos	"640 80"
-		font	"f_big"
+	string c_headline {
+		string		"_Campaigns"
+		pos			"640 80"
+		font		"f_big"
 	}
 
 	// ==================
 	// buttons
 	// ==================
-	cmpMenuButton c_button_start
-	{
-		pos	"80 170"
-		onClick	{ cmd "cp_start;" }
-		string	"_Start campaign"
-		tooltip	"_Start a new singleplayer campaign."
+	cmpMenuButton c_button_start {
+		pos			"80 170"
+		string		"_Start campaign"
+		tooltip		"_Start a new singleplayer campaign."
+
+		onClick	{
+			cmd "cp_start  <cvar:cp_campaign>;"
+		}
 	}
 
-	cmpMenuButton button_load
-	{
+	cmpMenuButton button_load {
 		string		"_Load"
 		pos			"80 240"
-		onClick		{ cmd "ui_push load;" }
+		onClick	{
+			cmd "ui_push load;"
+		}
 	}
 
-	cmpMenuButton button_continue
-	{
-		visiblewhen "exists *cvar:mn_lastsave"
+	cmpMenuButton button_continue {
 		string		"_Continue"
 		tooltip		"_Load last saved game or continue playing."
 		pos			"640 380"
-		onClick		{ cmd "game_continue;" }
+		invis		true
+		onClick	{
+			cmd "game_continue;"
+		}
 	}
 
-	cmpMenuButton c_button_exit
-	{
-		pos	"80 470"
-		onClick	{ cmd "ui_pop;" }
-		string	"_Back"
+	cmpMenuButton c_button_exit {
+		string		"_Back"
+		pos			"80 470"
+		onClick	{
+			cmd "ui_pop;"
+		}
 	}
 
-	textlist campaignlist
-	{
-		pos		"500 140"
-		size	"400 120"
-		lineheight	"20"
-		dataid		TEXT_CAMPAIGN_LIST
-		onClick	{ cmd "campaignlist_click <lineselected>;" }
-		color	"0.60 0.60 0.60 1"
+	optionlist campaignlist {
+		dataid		OPTION_CAMPAIGN_LIST
+		cvar		*cvar:cp_campaign
+		pos			"500 140"
+		size		"400 120"
+		color		"0.60 0.60 0.60 1"
 		selectcolor	"1 1 1 1"
-		rows	"6"
+		padding		6
+
+		onChange {
+			cmd "cp_getdescription <cvar:cp_campaign>;"
+		}
 		onViewChange	{
 			*node:root.campaignlist_scroll@fullsize = <fullsize>
 			*node:root.campaignlist_scroll@current = <viewpos>
 			*node:root.campaignlist_scroll@viewsize = <viewsize>
 		}
 	}
-
 	vscrollbar campaignlist_scroll {
 		image		"ui/scrollbar_v_green"
 		pos			"905 140"
@@ -88,7 +90,9 @@ window campaigns
 		viewsize	6
 		fullsize	6
 		hidewhenunused true
-		onChange	{ *node:root.campaignlist@viewpos = <current> }
+		onChange	{
+			*node:root.campaignlist@viewpos = <current>
+		}
 	}
 
 	text campaign_desc
@@ -104,7 +108,6 @@ window campaigns
 			*node:root.campaign_desc_scroll@viewsize = <viewsize>
 		}
 	}
-
 	vscrollbar campaign_desc_scroll {
 		image		"ui/scrollbar_v_green"
 		pos			"923 320"
@@ -120,7 +123,16 @@ window campaigns
 
 	func onWindowOpened
 	{
-		cmd "game_setmode;cp_getcampaigns;"
+		if ( ! exists *cvar:cp_campaign ) {
+			*cvar:cp_campaign = "main"
+		}
+		if ( exists *cvar:mn_lastsave ) {
+			*node:root.button_continue@invis = false
+		} else {
+			*node:root.button_continue@invis = true
+		}
+
+		cmd "game_setmode;cp_getcampaigns;cp_getdescription <cvar:cp_campaign>;"
 	}
 }
 

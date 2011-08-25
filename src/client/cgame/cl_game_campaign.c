@@ -92,68 +92,48 @@ static inline const char* CP_ToDifficultyName (const int difficulty)
 	}
 }
 
-#define MAXCAMPAIGNTEXT 4096
-static char campaignDesc[MAXCAMPAIGNTEXT];
 /**
  * @brief Fill the campaign list with available campaigns
  */
 static void GAME_CP_GetCampaigns_f (void)
 {
 	int i;
-	linkedList_t *campaignList = NULL;
-
-	*campaignDesc = '\0';
+	uiNode_t *campaignOption = NULL;
 
 	for (i = 0; i < ccs.numCampaigns; i++) {
 		const campaign_t *c = &ccs.campaigns[i];
 		if (c->visible)
-			LIST_AddString(&campaignList, va("%s", _(c->name)));
+			UI_AddOption(&campaignOption, "", va("_%s", c->name), c->id);
 	}
-	/* default campaign */
-	UI_RegisterText(TEXT_STANDARD, campaignDesc);
-	UI_RegisterLinkedListText(TEXT_CAMPAIGN_LIST, campaignList);
 
-	/* select main as default */
-	for (i = 0; i < ccs.numCampaigns; i++) {
-		const campaign_t *c = &ccs.campaigns[i];
-		if (Q_streq(c->id, "main")) {
-			Cmd_ExecuteString(va("campaignlist_click %i", i));
-			return;
-		}
-	}
-	Cmd_ExecuteString("campaignlist_click 0");
+	UI_RegisterOption(OPTION_CAMPAIGN_LIST, campaignOption);
 }
 
+#define MAXCAMPAIGNTEXT 4096
+static char campaignDesc[MAXCAMPAIGNTEXT];
 /**
- * @brief Script function to select a campaign from campaign list
+ * @brief Script function to show description of the selected a campaign
  */
-static void GAME_CP_CampaignListClick_f (void)
+static void GAME_CP_CampaignDescription_f (void)
 {
-	int num;
 	const char *racetype;
-	uiNode_t *campaignlist;
 	const campaign_t *campaign;
 
 	if (Cmd_Argc() < 2) {
-		Com_Printf("Usage: %s <campaign list index>\n", Cmd_Argv(0));
+		Com_Printf("Usage: %s <campaign_id>\n", Cmd_Argv(0));
 		return;
 	}
 
-	/* Which campaign in the list? */
-	num = atoi(Cmd_Argv(1));
-	if (num < 0 || num >= ccs.numCampaigns)
+	campaign = CP_GetCampaign(Cmd_Argv(1));
+	if (!campaign) {
+		Com_Printf("Invalid Campaign id: %s\n", Cmd_Argv(1));
 		return;
-
-	/* jump over all invisible campaigns */
-	while (!ccs.campaigns[num].visible) {
-		num++;
-		if (num >= ccs.numCampaigns)
-			return;
 	}
 
-	campaign = &ccs.campaigns[num];
+	/* Make sure that this campaign is selected */
 	Cvar_Set("cp_campaign", campaign->id);
-	if (ccs.campaigns[num].team == TEAM_PHALANX)
+
+	if (campaign->team == TEAM_PHALANX)
 		racetype = _("Human");
 	else
 		racetype = _("Aliens");
@@ -171,10 +151,6 @@ static void GAME_CP_CampaignListClick_f (void)
 		(int)(round(campaign->minhappiness * 100.0f)), campaign->negativeCreditsUntilLost,
 		_(campaign->text));
 	UI_RegisterText(TEXT_STANDARD, campaignDesc);
-
-	/* Highlight currently selected entry */
-	campaignlist = UI_GetNodeByPath("campaigns.campaignlist");
-	UI_TextNodeSelectLine(campaignlist, num);
 }
 
 /**
@@ -184,10 +160,16 @@ static void GAME_CP_CampaignListClick_f (void)
  */
 static void GAME_CP_Start_f (void)
 {
-	/* get campaign - they are already parsed here */
-	campaign_t *campaign = CP_GetCampaign(cp_campaign->string);
-	if (!campaign)
+	campaign_t *campaign;
+
+	campaign = CP_GetCampaign(Cmd_Argv(1));
+	if (!campaign) {
+		Com_Printf("Invalid Campaign id: %s\n", Cmd_Argv(1));
 		return;
+	}
+
+	/* Make sure that this campaign is selected */
+	Cvar_Set("cp_campaign", campaign->id);
 
 	CP_CampaignInit(campaign, qfalse);
 
@@ -452,13 +434,12 @@ static const char* GAME_CP_GetItemModel (const char *string)
 static void GAME_CP_InitStartup (void)
 {
 	Cmd_AddCommand("cp_results", GAME_CP_Results_f, "Parses and shows the game results");
-	Cmd_AddCommand("campaignlist_click", GAME_CP_CampaignListClick_f, NULL);
+	Cmd_AddCommand("cp_getdescription", GAME_CP_CampaignDescription_f, NULL);
 	Cmd_AddCommand("cp_getcampaigns", GAME_CP_GetCampaigns_f, "Fill the campaign list with available campaigns");
 	Cmd_AddCommand("cp_start", GAME_CP_Start_f, "Start the new campaign");
 
 	CP_InitStartup(cgImport);
 
-	cp_campaign = Cvar_Get("cp_campaign", "main", 0, "Which is the current selected campaign id");
 	cp_start_employees = Cvar_Get("cp_start_employees", "1", CVAR_ARCHIVE, "Start with hired employees");
 	/* cvars might have been changed by other gametypes */
 	Cvar_ForceSet("sv_maxclients", "1");
@@ -472,7 +453,7 @@ static void GAME_CP_InitStartup (void)
 static void GAME_CP_Shutdown (void)
 {
 	Cmd_RemoveCommand("cp_results");
-	Cmd_RemoveCommand("campaignlist_click");
+	Cmd_RemoveCommand("cp_getdescription");
 	Cmd_RemoveCommand("cp_getcampaigns");
 	Cmd_RemoveCommand("cp_start");
 
