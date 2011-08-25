@@ -378,10 +378,6 @@ window hospital
 	*cvar:mn_lastsubmenu = "hospital"
 	}
 
-	func onWindowClosed
-	{
-		*cvar:mn_lastsubmenu = "bases"
-	}
 }
 
 // =================================

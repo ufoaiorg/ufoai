@@ -932,8 +932,4 @@ window game_team_save_popup
 		onChange	{ cmd "game_saveteam 11;ui_pop;" }
 	}
 
-	func onWindowClosed
-	{
-		cmd "game_teamcomments;"
-	}
 }

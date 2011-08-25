@@ -582,9 +582,4 @@ window team extends iaircraft
 		*cvar:mn_lastsubmenu = "aircraft"
 	}
 
-	func onWindowClosed
-	{
-		*cvar:mn_lastsubmenu = "bases"
-	}
-
 }

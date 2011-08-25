@@ -246,5 +246,4 @@ window iaircraft
 	{
 		*cvar:mn_lastsubmenu = "bases"
 	}
-
 }
