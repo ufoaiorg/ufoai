@@ -140,9 +140,9 @@ static qboolean CL_CvarCheckVidMode (cvar_t *cvar)
  */
 void VID_Init (void)
 {
-	vid_strech = Cvar_Get("vid_strech", "0", CVAR_ARCHIVE, "Backward compatibility to stretch the screen with a 4:3 ratio");
-	vid_fullscreen = Cvar_Get("vid_fullscreen", "0", CVAR_ARCHIVE, "Run the game in fullscreen mode");
-	vid_mode = Cvar_Get("vid_mode", "-1", CVAR_ARCHIVE, "The video mode - set to -1 and use vid_width and vid_height to use a custom resolution");
+	vid_strech = Cvar_Get("vid_strech", "0", CVAR_ARCHIVE | CVAR_R_CONTEXT, "Backward compatibility to stretch the screen with a 4:3 ratio");
+	vid_fullscreen = Cvar_Get("vid_fullscreen", "0", CVAR_ARCHIVE | CVAR_R_CONTEXT, "Run the game in fullscreen mode");
+	vid_mode = Cvar_Get("vid_mode", "-1", CVAR_ARCHIVE | CVAR_R_CONTEXT, "The video mode - set to -1 and use vid_width and vid_height to use a custom resolution");
 	Cvar_SetCheckFunction("vid_mode", CL_CvarCheckVidMode);
 	vid_grabmouse = Cvar_Get("vid_grabmouse", "0", CVAR_ARCHIVE, "Grab the mouse in the game window - open the console to switch back to your desktop via Alt+Tab");
 	vid_gamma = Cvar_Get("vid_gamma", "1", CVAR_ARCHIVE, "Controls the gamma settings");

@@ -210,15 +210,6 @@ static inline void R_ClearScene (void)
  */
 void R_BeginFrame (void)
 {
-	/* change modes if necessary */
-	if (vid_mode->modified || vid_fullscreen->modified || vid_strech->modified) {
-#if defined(_WIN32) || defined(__APPLE__)
-		VID_Restart_f();
-#else
-		R_SetMode();
-#endif
-	}
-
 	if (Com_IsRenderModified()) {
 		Com_Printf("Modified render related cvars\n");
 		if (Cvar_PendingCvars(CVAR_R_PROGRAMS))
