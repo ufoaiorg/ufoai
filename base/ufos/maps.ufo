@@ -4165,10 +4165,14 @@ mapdef wilderness
 mapdef alienbase
 {
 	map				"+alienbase"
-	multiplayer		false
 	description		"_An alien base."
 	storyrelated	true
 	maxaliens		30
+	multiplayer		true
+	teams			2
+	gametypes {
+		1on1
+	}
 	// TODO: The first alien base is the end of the campaign currently
 	onwin			"cp_endgame"
 }
