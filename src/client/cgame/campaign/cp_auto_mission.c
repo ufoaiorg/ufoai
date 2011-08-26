@@ -728,15 +728,14 @@ static void AM_MoveEmployeeInventoryIntoItemCargo (aircraft_t *aircraft, employe
 		const invList_t *ic = CONTAINER(chr, container);
 
 		while (ic) {
-			/** @todo isn't a pointer enough here, do we really have to do a copy of the item_t struct */
-			const item_t item = ic->item;
+			const item_t *item = &ic->item;
 			const invList_t *next = ic->next;
 
-			if (item.t) {
-				AII_CollectItem(aircraft, item.t, 1);
+			if (item->t) {
+				AII_CollectItem(aircraft, item->t, 1);
 
-				if (item.a && item.m)
-					AII_CollectItem(aircraft, item.m, 1);
+				if (item->a && item->m)
+					AII_CollectItem(aircraft, item->m, 1);
 			}
 			ic = next;
 		}
