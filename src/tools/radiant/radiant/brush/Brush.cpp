@@ -800,8 +800,8 @@ void Brush::buildBRep ()
 {
 	bool degenerate = buildWindings();
 
-	Vector3 colourVertexVec = ColourSchemes().getColourVector3("brush_vertices");
-	const Colour4b colour_vertex(int(colourVertexVec[0] * 255), int(colourVertexVec[1] * 255), int(colourVertexVec[2]
+	static Vector3 colourVertexVec = ColourSchemes().getColourVector3("brush_vertices");
+	static const Colour4b colour_vertex(int(colourVertexVec[0] * 255), int(colourVertexVec[1] * 255), int(colourVertexVec[2]
 			* 255), 255);
 
 	std::size_t faces_size = 0;
