@@ -122,7 +122,6 @@ window hospital
 			pos "25 95"
 		}
 		bar health  {
-			image "ui/bar_health"
 			current *cvar:mn_hos_hp0
 			max *cvar:mn_hos_hpmax0
 		}
@@ -133,7 +132,6 @@ window hospital
 			pos "345 95"
 		}
 		bar health  {
-			image "ui/bar_health"
 			current *cvar:mn_hos_hp1
 			max *cvar:mn_hos_hpmax1
 		}
@@ -144,7 +142,6 @@ window hospital
 			pos "665 95"
 		}
 		bar health  {
-			image "ui/bar_health"
 			current *cvar:mn_hos_hp2
 			max *cvar:mn_hos_hpmax2
 		}
@@ -155,7 +152,6 @@ window hospital
 			pos "25 190"
 		}
 		bar health  {
-			image "ui/bar_health"
 			current *cvar:mn_hos_hp3
 			max *cvar:mn_hos_hpmax3
 		}
@@ -166,7 +162,6 @@ window hospital
 			pos "345 190"
 		}
 		bar health  {
-			image "ui/bar_health"
 			current *cvar:mn_hos_hp4
 			max *cvar:mn_hos_hpmax4
 		}
@@ -177,7 +172,6 @@ window hospital
 			pos "665 190"
 		}
 		bar health  {
-			image "ui/bar_health"
 			current *cvar:mn_hos_hp5
 			max *cvar:mn_hos_hpmax5
 		}
@@ -188,7 +182,6 @@ window hospital
 			pos "25 285"
 		}
 		bar health  {
-			image "ui/bar_health"
 			current *cvar:mn_hos_hp6
 			max *cvar:mn_hos_hpmax6
 		}
@@ -199,7 +192,6 @@ window hospital
 			pos "345 285"
 		}
 		bar health  {
-			image "ui/bar_health"
 			current *cvar:mn_hos_hp7
 			max *cvar:mn_hos_hpmax7
 		}
@@ -210,7 +202,6 @@ window hospital
 			pos "665 285"
 		}
 		bar health  {
-			image "ui/bar_health"
 			current *cvar:mn_hos_hp8
 			max *cvar:mn_hos_hpmax8
 		}
@@ -221,7 +212,6 @@ window hospital
 			pos "25 380"
 		}
 		bar health  {
-			image "ui/bar_health"
 			current *cvar:mn_hos_hp9
 			max *cvar:mn_hos_hpmax9
 		}
@@ -232,7 +222,6 @@ window hospital
 			pos "345 380"
 		}
 		bar health  {
-			image "ui/bar_health"
 			current *cvar:mn_hos_hp10
 			max *cvar:mn_hos_hpmax10
 		}
@@ -243,7 +232,6 @@ window hospital
 			pos "665 380"
 		}
 		bar health  {
-			image "ui/bar_health"
 			current *cvar:mn_hos_hp11
 			max *cvar:mn_hos_hpmax11
 		}
@@ -254,7 +242,6 @@ window hospital
 			pos "25 475"
 		}
 		bar health  {
-			image "ui/bar_health"
 			current *cvar:mn_hos_hp12
 			max *cvar:mn_hos_hpmax12
 		}
@@ -265,7 +252,6 @@ window hospital
 			pos "345 475"
 		}
 		bar health  {
-			image "ui/bar_health"
 			current *cvar:mn_hos_hp13
 			max *cvar:mn_hos_hpmax13
 		}
@@ -276,7 +262,6 @@ window hospital
 			pos "665 475"
 		}
 		bar health  {
-			image "ui/bar_health"
 			current *cvar:mn_hos_hp14
 			max *cvar:mn_hos_hpmax14
 		}
@@ -287,7 +272,6 @@ window hospital
 			pos "25 570"
 		}
 		bar health  {
-			image "ui/bar_health"
 			current *cvar:mn_hos_hp15
 			max *cvar:mn_hos_hpmax15
 		}
@@ -298,7 +282,6 @@ window hospital
 			pos "345 570"
 		}
 		bar health  {
-			image "ui/bar_health"
 			current *cvar:mn_hos_hp16
 			max *cvar:mn_hos_hpmax16
 		}
@@ -309,7 +292,6 @@ window hospital
 			pos "665 570"
 		}
 		bar health  {
-			image "ui/bar_health"
 			current *cvar:mn_hos_hp17
 			max *cvar:mn_hos_hpmax17
 		}
@@ -320,7 +302,6 @@ window hospital
 			pos "25 665"
 		}
 		bar health  {
-			image "ui/bar_health"
 			current *cvar:mn_hos_hp18
 			max *cvar:mn_hos_hpmax18
 		}
@@ -331,7 +312,6 @@ window hospital
 			pos "345 665"
 		}
 		bar health  {
-			image "ui/bar_health"
 			current *cvar:mn_hos_hp19
 			max *cvar:mn_hos_hpmax19
 		}
@@ -342,7 +322,6 @@ window hospital
 			pos "665 665"
 		}
 		bar health  {
-			image "ui/bar_health"
 			current *cvar:mn_hos_hp20
 			max *cvar:mn_hos_hpmax20
 		}
@@ -589,6 +568,5 @@ window hospital_employee
 	func onWindowOpened
 	{
 		cmd "hosp_empl_init;"
-		*cvar:mn_lastsubmenu = "hospital"
 	}
 }

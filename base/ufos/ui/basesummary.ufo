@@ -197,6 +197,5 @@ window basesummary
 	func onWindowOpened
 	{
 		cmd "basesummary_selectbase;"
-		*cvar:mn_lastsubmenu = "basesummary"
 	}
 }

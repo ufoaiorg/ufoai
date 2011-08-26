@@ -171,8 +171,7 @@ window aircraft extends iaircraft
 	func onWindowOpened
 	{
 		*cvar:mn_aircrafttab = "aircraft"
-		cmd "aircraft_update_list;"
 		cmd "mn_select_aircraft <cvar:mn_aircraft_id>;"
-		*cvar:mn_lastsubmenu = "aircraft"
+		cmd "aircraft_update_list;"
 	}
 }

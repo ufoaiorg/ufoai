@@ -469,7 +469,7 @@ window research
 			*cvar:i = ( *cvar:i + 1 )
 		}
 		delete *cvar:i
+
 		cmd "research_init;"
-		*cvar:mn_lastsubmenu = "research"
 	}
 }

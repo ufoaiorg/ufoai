@@ -593,7 +593,6 @@ window employees
 		cmd "employee_init 0;"
 		*cvar:mn_hiretype = 0
 		cmd "employee_update_count;"
-		*cvar:mn_lastsubmenu = "employees"
 	}
 
 	func onWindowClosed
