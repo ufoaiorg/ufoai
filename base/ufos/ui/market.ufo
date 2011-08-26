@@ -572,9 +572,4 @@ window market extends objectinfo
 		delete *cvar:i
 		*cvar:mn_lastsubmenu = "market"
 	}
-
-	func onWindowClosed
-	{
-		*cvar:mn_lastsubmenu = "bases"
-	}
 }

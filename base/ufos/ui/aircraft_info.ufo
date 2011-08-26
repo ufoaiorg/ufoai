@@ -172,14 +172,7 @@ window aircraft extends iaircraft
 	{
 		*cvar:mn_aircrafttab = "aircraft"
 		cmd "aircraft_update_list;"
-		// jump to line 1
-		cmd "mn_select_aircraft 0;"
 		cmd "mn_select_aircraft <cvar:mn_aircraft_id>;"
 		*cvar:mn_lastsubmenu = "aircraft"
-	}
-
-	func onWindowClosed
-	{
-		*cvar:mn_lastsubmenu = "bases"
 	}
 }

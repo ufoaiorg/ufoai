@@ -142,7 +142,7 @@ component panel cmpDefBaseHeader {
 		pos			"950 20"
 		size		"59 55"
 		icon		"icons/return"
-		onClick		{  *cvar:mn_lastsubmenu = "bases" cmd "ui_pop;" }
+		onClick		{ cmd "ui_pop;" }
 	}
 
 }

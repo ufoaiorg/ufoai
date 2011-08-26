@@ -63,6 +63,16 @@ window hospital
 	cmpBaseHeader baseHeader {
 	}
 
+	custombutton bt_continue
+	{
+		tooltip	"_Back to baseview"
+		background	"buttons/big_blue"
+		pos		"950 20"
+		size	"59 55"
+		icon	"icons/return"
+		onClick	{ cmd "ui_pop;" }
+	}
+
 	// ==================
 	// employee list
 	// ==================
@@ -375,18 +385,13 @@ window hospital
 			*cvar:i = ( *cvar:i + 1 )
 		}
 	delete *cvar:i
-	*cvar:mn_lastsubmenu = "hospital"
-	}
 
-	func onWindowClosed
-	{
-		*cvar:mn_lastsubmenu = "bases"
 	}
 }
 
-// =================================
-// HOSPITAL EMPLOYEE SUBMENU WINDOW
-// =================================
+// ======================
+// HOSPITAL EMPLOYEE MENU
+// ======================
 window hospital_employee
 {
 	/** @todo Remove me */
@@ -584,12 +589,6 @@ window hospital_employee
 	func onWindowOpened
 	{
 		cmd "hosp_empl_init;"
-		*cvar:mn_lastsubmenu = "hospital_employee"
+		*cvar:mn_lastsubmenu = "hospital"
 	}
-
-	func onWindowClosed
-	{
-		*cvar:mn_lastsubmenu = "bases"
-	}
-
 }

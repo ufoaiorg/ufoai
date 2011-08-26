@@ -286,12 +286,5 @@ window aircraft_pilots extends iaircraft
 		cmd "mn_select_aircraft <cvar:mn_aircraft_id>"
 		*cvar:mn_relative_id = 0
 		cmd "update_pilot_list 8 0;pilot_select 0;set mn_show_employee 1;"
-		*cvar:mn_lastsubmenu = "aircraft"
 	}
-
-	func onWindowClosed
-	{
-		*cvar:mn_lastsubmenu = "bases"
-	}
-
 }
