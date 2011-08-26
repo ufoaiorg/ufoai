@@ -41,7 +41,7 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #define SORT_BY_SIZE 0
 /** @brief display a character graphic of the tiles placed when RMA2 reaches a dead end. */
 #define DISPLAY_THE_MAP_ON_FAILURE 0
-#define PRINT_FAILURE_REASONCODE 1
+#define PRINT_FAILURE_REASONCODE 0
 
 /** @brief max # of recursions */
 #define RMA2_MAX_REC 64
@@ -124,17 +124,19 @@ static unsigned long tileMask (const char chr)
 }
 
 #if DISPLAY_THE_MAP_ON_FAILURE
-#define ACW 4	/* ascii cell width */
-#define ACH 2	/* ascii cell height */
+#define ACW 6	/* ascii cell width */
+#define ACH 3	/* ascii cell height */
+#define MMW 9	/* map max height */
+#define MMH 9	/* map max height */
 static void SV_RmaPrintMap (const mapInfo_t *map)
 {
-	char screen[24][80];
-	int i;
+	char screen[MMH * ACH][80];
+	int i, j;
 
 	/* initialize */
 	memset(screen, ' ', sizeof(screen));
-	for (i = 0; i < 24; i++) {
-		screen[i][48] = '|';
+	for (i = 0; i < MMH * ACH; i++) {
+		screen[i][MMW * ACW + 1] = '|';
 		screen[i][79] = 0;
 	}
 
@@ -153,28 +155,26 @@ static void SV_RmaPrintMap (const mapInfo_t *map)
 					int cbX = ACW * (mp->x + tx);
 					int cbY = ACH * (mp->y + ty);
 
-/*					screen[cbY + 1][cbX + 2] = 'X'; */
-					screen[cbY + 1][cbX + 1] = tn[0];
-					screen[cbY + 1][cbX + 2] = tn[1];
-					screen[cbY + 1][cbX + 3] = tn[2];
+//					screen[cbY + 1][cbX + 2] = tn[1];
+					for (j = 0; j < ACW - 1; j++)
+						if (tn[j])
+							screen[cbY + ACH - 1][cbX + 1 + j] = tn[j];
 
 					if (tx > 0 && !IS_SOLID(tile->spec[ty][tx - 1])) {
-						screen[cbY][cbX] = '!';
-						screen[cbY + 1][cbX] = '!';
+						for (j = 0; j < ACH; j++)
+							screen[cbY + j][cbX] = '!';
 					}
 					if (!IS_SOLID(tile->spec[ty][tx + 1])) {
-						screen[cbY][cbX + ACW] = '!';
-						screen[cbY + 1][cbX + ACW] = '!';
+						for (j = 0; j < ACH; j++)
+							screen[cbY + j][cbX + ACW] = '!';
 					}
 					if (ty > 0 && !IS_SOLID(tile->spec[ty - 1][tx])) {
-						screen[cbY][cbX + 1] = '-';
-						screen[cbY][cbX + 2] = '-';
-						screen[cbY][cbX + 3] = '-';
+						for (j = 1; j < ACW; j++)
+							screen[cbY][cbX + j] = '-';
 					}
 					if (!IS_SOLID(tile->spec[ty + 1][tx])) {
-						screen[cbY + ACH][cbX + 1] = '-';
-						screen[cbY + ACH][cbX + 2] = '-';
-						screen[cbY + ACH][cbX + 3] = '-';
+						for (j = 1; j < ACW; j++)
+							screen[cbY + ACH][cbX + j] = '-';
 					}
 				}
 			}
@@ -186,8 +186,8 @@ static void SV_RmaPrintMap (const mapInfo_t *map)
 	Com_Printf("\nCurrent state of the map:\n");
 	Com_Printf(underscores);
 /*	int h = map->mAssembly[map->numAssemblies].height;	*/
-	int h = ACH * 9;
-	for (i = h; i >=0; i--)
+	int h = ACH * MMH;
+	for (i = h - 1; i >=0; i--)
 		Com_Printf("%s\n", screen[i]);
 	Com_Printf(underscores);
 }
