@@ -1,0 +1,126 @@
+/**
+ * @brief Unittest to check image features like alignment
+ * Move it into the ui ufo script directory (/base/ufos/ui/), run the game, and run the command "ui_push unittest_imagealign"
+ */
+
+window unittest_imagealign
+{
+	{
+		pos "100 100"
+		size "600 500"
+		dragbutton	true
+		closebutton	true
+		string		"_Unittest image align"
+		bgcolor		"0 0 0 1"
+		timeout		1000
+	}
+
+	image imagetest
+	{
+		pos "50 200"
+		size	"500 250"
+		bgcolor		"0.2 0.2 0.2 1"
+		src		"ranks/rank_pc"
+	}
+
+	selectbox ratio
+	{
+		{
+			cvar		*cvar:unittest_ratio
+			pos			"50 56"
+			size		"150 20"
+			onChange {
+				if (*node:this@cvar == 0) {
+					*node:root.imagetest@preventRatio = false
+				} else {
+					*node:root.imagetest@preventRatio = true
+				}
+			}
+		}
+
+		option yes {
+			label	"Stretch"
+			value	"0"
+		}
+		option no {
+			label	"Prevent ratio"
+			value	"1"
+		}
+	}
+
+	selectbox align
+	{
+		{
+			cvar		*cvar:unittest_align
+			pos			"200 56"
+			size		"150 20"
+			onChange {
+				if (*node:this@cvar eq "ALIGN_UL") {
+					*node:root.imagetest@contentAlign = ALIGN_UL
+				} elif (*node:this@cvar eq "ALIGN_CL") {
+					*node:root.imagetest@contentAlign = ALIGN_CL
+				} elif (*node:this@cvar eq "ALIGN_LL") {
+					*node:root.imagetest@contentAlign = ALIGN_LL
+				} elif (*node:this@cvar eq "ALIGN_CR") {
+					*node:root.imagetest@contentAlign = ALIGN_CR
+				} elif (*node:this@cvar eq "ALIGN_CC") {
+					*node:root.imagetest@contentAlign = ALIGN_CC
+				}
+			}
+		}
+
+		option weapons {
+			label	"ALIGN_UL"
+			value	"ALIGN_UL"
+		}
+		option a {
+			label	"ALIGN_CL"
+			value	"ALIGN_CL"
+		}
+		option b {
+			label	"ALIGN_LL"
+			value	"ALIGN_LL"
+		}
+		option c {
+			label	"ALIGN_CR"
+			value	"ALIGN_CR"
+		}
+		option d {
+			label	"ALIGN_CC"
+			value	"ALIGN_CC"
+		}
+	}
+
+	selectbox padding
+	{
+		{
+			cvar		*cvar:unittest_padding
+			pos			"350 56"
+			size		"150 20"
+			onChange {
+				*node:root.imagetest@padding = (0 + *node:this@cvar)
+			}
+		}
+
+		option a {
+			label	"0"
+			value	"0"
+		}
+		option b {
+			label	"1"
+			value	"1"
+		}
+		option c {
+			label	"5"
+			value	"5"
+		}
+		option d {
+			label	"10"
+			value	"10"
+		}
+		option e {
+			label	"100"
+			value	"100"
+		}
+	}
+}
