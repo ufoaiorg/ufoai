@@ -669,34 +669,39 @@ static void AM_DisplayResults (const autoMissionBattle_t *battle)
 
 /**
  * @brief Collect alien bodies for auto missions
- * @param[out] aircraft mission aircraft that will bring bodies home
- * @param[in] battleParameters Parameters structure that knows how much aliens fought
+ * @param[out] aircraft Mission aircraft that will bring bodies home
+ * @param[in] battleParameters Parameters structure that knows which alien races fought
+ * @param[in] results Result structure that knows how much aliens were killed/stunned fought
  * @note collect all aliens as dead ones
  */
-static void AM_AlienCollect (aircraft_t *aircraft, const battleParam_t *battleParameters)
+static void AM_AlienCollect (aircraft_t *aircraft, const battleParam_t *battleParameters, const missionResults_t *results)
 {
 	int i;
-	int aliens = battleParameters->aliens;
+	int aliens;
+	const alienTeamGroup_t *alienGroup;
 
+	assert(aircraft);
+	assert(battleParameters);
+	assert(results);
+
+	aliens = min(MAX_CARGO, results->aliensStunned + results->aliensKilled);
 	if (!aliens)
 		return;
 
-	MS_AddNewMessage(_("Notice"), _("Collected dead alien bodies"), qfalse, MSG_STANDARD, NULL);
+	alienGroup = battleParameters->alienTeamGroup;
+	if (alienGroup == NULL)
+		return;
+	if (alienGroup->numAlienTeams <= 0)
+		return;
 
-	while (aliens > 0) {
-		const alienTeamGroup_t *group = battleParameters->alienTeamGroup;
-		for (i = 0; i < group->numAlienTeams; i++) {
-			const teamDef_t *teamDef = group->alienTeams[i];
-			const int addDeadAlienAmount = aliens > 1 ? rand() % aliens : aliens;
-			if (!addDeadAlienAmount)
-				continue;
-			assert(i < MAX_CARGO);
-			assert(teamDef);
-			AL_AddAlienTypeToAircraftCargo(aircraft, teamDef, addDeadAlienAmount, qtrue);
-			aliens -= addDeadAlienAmount;
-			if (!aliens)
-				break;
-		}
+	MS_AddNewMessage(_("Notice"), _("Collected alien bodies"), qfalse, MSG_STANDARD, NULL);
+
+	for (i = 0; i < aliens; i++) {
+		int race = rand() % alienGroup->numAlienTeams;
+		const teamDef_t *teamDef = alienGroup->alienTeams[race];
+
+		assert(teamDef);
+		AL_AddAlienTypeToAircraftCargo(aircraft, teamDef, 1, aliens < results->aliensKilled);
 	}
 }
 
@@ -748,9 +753,14 @@ static void AM_MoveEmployeeInventoryIntoItemCargo (aircraft_t *aircraft, employe
  */
 static void AM_UpdateSurivorsAfterBattle (const autoMissionBattle_t *battle, struct aircraft_s *aircraft)
 {
-	employee_t *soldier;
 	int unit = 0;
-	int battleExperience = max(0, battle->teamAccomplishment[AUTOMISSION_TEAM_TYPE_PLAYER]);
+	employee_t *soldier;
+	int battleExperience;
+
+	assert(battle);
+	assert(battle->results);
+
+	battleExperience = max(0, battle->teamAccomplishment[AUTOMISSION_TEAM_TYPE_PLAYER]);
 
 	LIST_Foreach(aircraft->acTeam, employee_t, soldier) {
 		character_t *chr = &soldier->chr;
@@ -765,15 +775,18 @@ static void AM_UpdateSurivorsAfterBattle (const autoMissionBattle_t *battle, str
 		unit++;
 
 		/* dead soldiers are removed in CP_MissionEnd, just move their inventory to itemCargo */
-		if (chr->HP <= 0)
-			AM_MoveEmployeeInventoryIntoItemCargo(aircraft, soldier);
+		if (chr->HP <= 0) {
+			if (battle->results->won)
+				AM_MoveEmployeeInventoryIntoItemCargo(aircraft, soldier);
+			else
+				E_RemoveInventoryFromStorage(soldier);
+		}
 
 		for (expCount = 0; expCount < ABILITY_NUM_TYPES; expCount++)
 			score->experience[expCount] += (int) (battleExperience * ABILITY_AWARD_SCALE * frand());
 
 		for (expCount = ABILITY_NUM_TYPES; expCount < SKILL_NUM_TYPES; expCount++)
 			score->experience[expCount] += (int) (battleExperience * SKILL_AWARD_SCALE * frand());
-
 	}
 }
 
@@ -813,7 +826,8 @@ void AM_Go (mission_t *mission, aircraft_t *aircraft, const campaign_t *campaign
 	AM_DoFight(&autoBattle);
 
 	AM_UpdateSurivorsAfterBattle(&autoBattle, aircraft);
-	AM_AlienCollect(aircraft, battleParameters);
+	if (results->won)
+		AM_AlienCollect(aircraft, battleParameters, results);
 
 	CP_InitMissionResults(results->won, results);
 	AM_DisplayResults(&autoBattle);
