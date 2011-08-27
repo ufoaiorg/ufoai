@@ -80,7 +80,6 @@ typedef struct corona_s {
 typedef struct {
 	vec3_t origin;
 	vec4_t color;
-	vec4_t ambient;
 	float radius;
 } light_t;
 
