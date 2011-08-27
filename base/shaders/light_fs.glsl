@@ -9,7 +9,7 @@ in_qualifier vec3 normal;
 vec3 LightContribution(in gl_LightSourceParameters lightSource, in vec4 diffuse, in vec3 lightmap) {
 	vec3 light = vec3(0.0);
 
-	if (lightSource.constantAttenuation > 0.0) {
+	if (lightSource.constantAttenuation > 0.015) {
 		vec3 delta = lightSource.position.xyz - point;
 		float dist = length(delta);
 		if (lightSource.position.w == 0.0) {
