@@ -98,7 +98,6 @@ static void UI_ImageAlignBoxInBox (vec2_t outerBoxPos, vec2_t outerBoxSize, vec2
 		break;
 	}
 	switch (align / 3) {
-	default:
 	case 0:	/* top */
 		innerBoxPos[1] = outerBoxPos[1];
 		break;
@@ -108,6 +107,9 @@ static void UI_ImageAlignBoxInBox (vec2_t outerBoxPos, vec2_t outerBoxSize, vec2
 	case 2:	/* bottom */
 		innerBoxPos[1] = outerBoxPos[1] + outerBoxSize[1] - innerBoxSize[1];
 		break;
+	default:
+		innerBoxPos[1] = outerBoxPos[1];
+		Com_Error(ERR_FATAL, "UI_ImageAlignBoxInBox: Align %d not supported\n", align);
 	}
 }
 
