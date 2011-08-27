@@ -547,7 +547,7 @@ int main (int argc, const char **argv)
 {
 	char bspFilename[MAX_OSPATH];
 	double begin, start, end;
-	long size;
+	long size = 0;
 
 	OBJZERO(config);
 	/* init thread state */
@@ -612,7 +612,6 @@ int main (int argc, const char **argv)
 	} else if (config.exportLightmaps) {
 		LoadBSPFile(bspFilename);
 		ExportLightmaps(bspFilename);
-		size = 0;
 	} else if (config.performMapCheck || config.fixMap) {
 		LoadMapFile(mapFilename);
 		/* level flags must be fixed before mixed face contents, or they swamp the
