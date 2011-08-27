@@ -94,8 +94,8 @@ typedef struct rstate_s {
 	gltexunit_t *active_texunit;
 
 	/* lights */
-	r_light_t dynamicLights[MAX_DYNAMIC_LIGHTS];
-	int numActiveLights;
+	r_light_t staticLights[MAX_STATIC_LIGHTS];
+	int numStaticLights;
 
 	/* framebuffer objects*/
 	r_framebuffer_t *renderBuffer;

@@ -353,7 +353,7 @@ void R_EnableDynamicLights (const r_light_t **lights, int numLights, qboolean en
 	int i, j;
 	int maxLights = r_dynamic_lights->integer;
 
-	if (!enable || !r_state.lighting_enabled || r_state.numActiveLights == 0) {
+	if (!enable || !r_state.lighting_enabled || r_state.numStaticLights == 0) {
 		if (r_state.lighting_enabled)
 			R_ProgramParameter1i("DYNAMICLIGHTS", 0);
 		if (!r_state.bumpmap_enabled && r_state.dynamic_lighting_enabled)
@@ -893,8 +893,8 @@ void R_SetDefaultState (void)
 	/* alpha blend parameters */
 	R_BlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
 
-	/* make sure no dynamic lights are active */
-	R_ClearActiveLights();
+	/* remove leftover lights */
+	R_ClearStaticLights();
 
 	/* reset gl error state */
 	R_CheckError();

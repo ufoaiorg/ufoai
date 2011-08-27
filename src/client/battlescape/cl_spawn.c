@@ -174,7 +174,7 @@ void CL_SpawnParseEntitystring (void)
 	}
 
 	/* add the appropriate directional source to the list of active light sources*/
-	R_AddLightsource(&sun);
+	R_AddStaticLight(&sun);
 
 	/* after we have parsed all the entities we can resolve the target, targetname
 	 * connections for the misc_model entities */
@@ -308,6 +308,6 @@ static void SP_light (const localEntityParse_t *entData)
 	/** @todo set attenuation from entData->light */
 	light.loc[3] = 0.0;
 	light.enabled = qtrue;
-	R_AddLightsource(&light);
+	R_AddStaticLight(&light);
 #endif
 }

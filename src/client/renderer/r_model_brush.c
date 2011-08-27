@@ -1023,7 +1023,7 @@ void R_ModBeginLoading (const char *tiles, qboolean day, const char *pos, const 
 	assert(mapName);
 
 	/* clear any lights leftover in the active list from previous maps */
-	R_ClearActiveLights();
+	R_ClearStaticLights();
 
 	/* init */
 	R_BeginBuildingLightmaps();

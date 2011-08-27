@@ -138,23 +138,23 @@ void R_EnableLights (void)
 		glLightf(GL_LIGHT0 + i, GL_CONSTANT_ATTENUATION, 0.01);
 }
 
-void R_AddLightsource (const r_light_t *source)
+void R_AddStaticLight (const r_light_t *source)
 {
-	if (r_state.numActiveLights >= MAX_DYNAMIC_LIGHTS) {
-		Com_Printf("Failed to add lightsource: MAX_DYNAMIC_LIGHTS exceeded\n");
+	if (r_state.numStaticLights >= MAX_STATIC_LIGHTS) {
+		Com_Printf("Failed to add lightsource: MAX_STATIC_LIGHTS exceeded\n");
 		return;
 	}
 
-	Com_Printf("added light, ambient=%f\n", source->ambientColor[0]);
+	Com_Printf("added static light, ambient=%f\n", source->ambientColor[0]);
 
-	r_state.dynamicLights[r_state.numActiveLights++] = *source;
+	r_state.staticLights[r_state.numStaticLights++] = *source;
 }
 
-void R_ClearActiveLights (void)
+void R_ClearStaticLights (void)
 {
 	int i;
 
-	r_state.numActiveLights = 0;
+	r_state.numStaticLights = 0;
 	glDisable(GL_LIGHTING);
 	for (i = 0; i < r_dynamic_lights->integer; i++) {
 		glLightf(GL_LIGHT0 + i, GL_CONSTANT_ATTENUATION, 0.01);
@@ -221,7 +221,7 @@ static inline int R_LightDistCompare (const void *a, const void *b)
 
 static inline void R_SortLightList_qsort (const r_light_t **list)
 {
-	qsort(list, r_state.numActiveLights, sizeof(*list), &R_LightDistCompare);
+	qsort(list, r_state.numStaticLights, sizeof(*list), &R_LightDistCompare);
 }
 
 /**
@@ -238,11 +238,11 @@ static void R_SortLightList (const r_light_t **list, vec3_t v)
 
 void R_UpdateLightList (entity_t *ent)
 {
-	if (ent->numLights > r_state.numActiveLights)
+	if (ent->numLights > r_state.numStaticLights)
 		ent->numLights = 0;
 
-	while (ent->numLights < r_state.numActiveLights) {
-		ent->lights[ent->numLights] = &r_state.dynamicLights[ent->numLights];
+	while (ent->numLights < r_state.numStaticLights) {
+		ent->lights[ent->numLights] = &r_state.staticLights[ent->numLights];
 		ent->numLights++;
 	}
 

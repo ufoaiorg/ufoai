@@ -32,7 +32,7 @@ struct entity_s;
  * the time it takes for each entity to sort the light list at each
  * frame (this is based on the number of lights actually used, not
  * the max number allowed) */
-#define MAX_DYNAMIC_LIGHTS 64
+#define MAX_STATIC_LIGHTS 64
 
 typedef struct r_light_s {
 	vec4_t loc;
@@ -53,8 +53,8 @@ void R_AddSustainedLight(const vec3_t org, float radius, const vec3_t color, flo
 void R_EnableLights(void);
 void R_ShiftLights(const vec3_t offset);
 
-void R_AddLightsource(const r_light_t *source);
-void R_ClearActiveLights(void);
+void R_AddStaticLight(const r_light_t *source);
+void R_ClearStaticLights(void);
 void R_UpdateLightList(struct entity_s *ent);
 
 #endif
