@@ -52,6 +52,8 @@ typedef enum autoMission_teamType_s {
  * @TODO add attack and defence scores
  */
 typedef struct autoUnit_s {
+	int idx;
+	autoMissionTeamType_t team;					/**< Team of the unit */
 	character_t *chr;							/**< Character */
 } autoUnit_t;
 
@@ -87,6 +89,9 @@ typedef struct autoMissionBattle_s {
 #define AM_IsCivilian(type) ((type) == AUTOMISSION_TEAM_TYPE_CIVILIAN)
 #define AM_SetHostile(battle, team, otherTeam, value) (battle)->isHostile[(team)][(otherTeam)] = (value)
 #define AM_IsHostile(battle, team, otherTeam) (battle)->isHostile[(team)][(otherTeam)]
+
+#define AM_GetUnit(battle, teamIdx, unitIdx) (&battle->units[teamIdx][unitIdx])
+#define AM_IsUnitActive(unit) (((unit)->chr->HP > 0) && ((unit)->chr->HP > (unit)->chr->STUN))
 
 /**
  * @brief Clears, initializes, or resets a single auto mission, sets default values.
@@ -140,7 +145,11 @@ static void AM_FillTeamFromAircraft (autoMissionBattle_t *battle, const int team
 	teamSize = 0;
 	unitsAlive = 0;
 	LIST_Foreach(aircraft->acTeam, employee_t, employee) {
-		battle->units[teamNum][teamSize].chr = &employee->chr;
+		autoUnit_t *unit = AM_GetUnit(battle, teamNum, teamSize);
+
+		unit->chr = &employee->chr;
+		unit->team = teamNum;
+		unit->idx = teamSize;
 
 		teamSize++;
 		if (employee->chr.HP > 0)
@@ -253,9 +262,11 @@ static void AM_FillTeamFromBattleParams (autoMissionBattle_t *battle, const batt
 		int unitIDX;
 		for (unitIDX = 0; unitIDX < missionParams->aliens; unitIDX++) {
 			const teamDef_t *teamDef = alienTeamGroup->alienTeams[rand() % alienTeamGroup->numAlienTeams];
-			autoUnit_t *unit = &battle->units[AUTOMISSION_TEAM_TYPE_ALIEN][unitIDX];
+			autoUnit_t *unit = AM_GetUnit(battle, AUTOMISSION_TEAM_TYPE_ALIEN, unitIDX);
 
 			AM_CreateUnitChr(unit, teamDef, ed);
+			unit->team = AUTOMISSION_TEAM_TYPE_ALIEN;
+			unit->idx = unitIDX;
 		}
 		battle->teamActive[AUTOMISSION_TEAM_TYPE_ALIEN] = qtrue;
 		battle->scoreTeamSkill[AUTOMISSION_TEAM_TYPE_ALIEN] = (frand() * 0.6f) + 0.2f;
@@ -267,9 +278,11 @@ static void AM_FillTeamFromBattleParams (autoMissionBattle_t *battle, const batt
 		const teamDef_t *teamDef = Com_GetTeamDefinitionByID(missionParams->civTeam);
 		int unitIDX;
 		for (unitIDX = 0; unitIDX < missionParams->civilians; unitIDX++) {
-			autoUnit_t *unit = &battle->units[AUTOMISSION_TEAM_TYPE_CIVILIAN][unitIDX];
+			autoUnit_t *unit = AM_GetUnit(battle, AUTOMISSION_TEAM_TYPE_CIVILIAN, unitIDX);
 
 			AM_CreateUnitChr(unit, teamDef, NULL);
+			unit->team = AUTOMISSION_TEAM_TYPE_CIVILIAN;
+			unit->idx = unitIDX;
 		}
 		battle->teamActive[AUTOMISSION_TEAM_TYPE_CIVILIAN] = qtrue;
 		battle->scoreTeamSkill[AUTOMISSION_TEAM_TYPE_CIVILIAN] = (frand() * 0.5f) + 0.05f;
@@ -393,7 +406,8 @@ static void AM_CalculateTeamScores (autoMissionBattle_t *battle)
 			double skillAdjCalcAbs;
 
 			for (currentUnit = 0; currentUnit < battle->nUnits[team]; currentUnit++) {
-				const character_t *chr = battle->units[team][currentUnit].chr;
+				autoUnit_t *unit = AM_GetUnit(battle, team, currentUnit);
+				const character_t *chr = unit->chr;
 
 				if (chr->HP <= 0)
 					continue;
@@ -437,6 +451,87 @@ static void AM_CalculateTeamScores (autoMissionBattle_t *battle)
 }
 
 /**
+ * @brief returns a randomly selected active team
+ * @param[in] battle The battle we fight
+ * @param[in] currTeam Current team we search for
+ * @param[in] enemy If the team should be enemy or friendly
+ */
+static int AM_GetRandomTeam (autoMissionBattle_t *battle, int currTeam, qboolean enemy)
+{
+	int eTeam;
+
+	assert(battle);
+	assert(currTeam >= 0 && currTeam < AUTOMISSION_TEAM_TYPE_MAX);
+
+	/* select a team randomly */
+	eTeam = rand () % AUTOMISSION_TEAM_TYPE_MAX;
+	/* if selected team is active and it's hostility match, we're ready */
+	if (battle->teamActive[eTeam] && AM_IsHostile(battle, currTeam, eTeam) == enemy) {
+		return eTeam;
+	} else {
+		int nextTeam;
+
+		/* if not, check next */
+		for (nextTeam = eTeam + 1; nextTeam < AUTOMISSION_TEAM_TYPE_MAX; nextTeam++) {
+			if (battle->teamActive[nextTeam] && AM_IsHostile(battle, currTeam, nextTeam) == enemy)
+				return nextTeam;
+		}
+		/* not found any, start over from 0 */
+		for (nextTeam = 0; nextTeam < eTeam; nextTeam++) {
+			if (battle->teamActive[nextTeam] && AM_IsHostile(battle, currTeam, nextTeam) == enemy)
+				return nextTeam;
+		}
+		/* none found */
+		return AUTOMISSION_TEAM_TYPE_MAX;
+	}
+}
+
+/**
+ * @brief returns a randomly selected alive unit from a team
+ * @param[in] battle The battle we fight
+ * @param[in] team Team to get unit from
+ */
+static autoUnit_t *AM_GetRandomActiveUnitOfTeam (autoMissionBattle_t *battle, int team)
+{
+	int idx;
+	autoUnit_t *unit;
+
+	assert(battle);
+	if (team < 0 || team >= AUTOMISSION_TEAM_TYPE_MAX)
+		return NULL;
+	if (!battle->teamActive[team])
+		return NULL;
+	if (battle->nUnits[team] <= 0)
+		return NULL;
+
+	/* select a unit randomly */
+	idx = rand() % battle->nUnits[team];
+	unit = AM_GetUnit(battle, team, idx);
+
+	/* if (s)he is active (alive, not stunned), we're ready */
+	if (AM_IsUnitActive(unit)) {
+		return unit;
+	} else {
+		int nextIdx;
+
+		/* if not active, check next */
+		for (nextIdx = idx + 1; nextIdx < battle->nUnits[team]; nextIdx++) {
+			unit = AM_GetUnit(battle, team, nextIdx);
+			if (AM_IsUnitActive(unit))
+				return unit;
+		}
+		/* not found any active, start over from 0 */
+		for (nextIdx = 0; nextIdx < idx; nextIdx++) {
+			unit = AM_GetUnit(battle, team, nextIdx);
+			if (AM_IsUnitActive(unit))
+				return unit;
+		}
+		/* none found */
+		return NULL;
+	}
+}
+
+/**
  * @brief Check and do attack on a team
  * @param[in, out] battle The battle we fight
  * @param[in] eTeam Team idx to attack
@@ -444,144 +539,123 @@ static void AM_CalculateTeamScores (autoMissionBattle_t *battle)
  * @param[in] currUnit Soldier idx who attacks
  * @param[in] effective Effectiveness of the attack
  */
-static void AM_CheckFire (autoMissionBattle_t *battle, int eTeam, const int currTeam, const int currUnit, const double effective)
+static qboolean AM_CheckFire (autoMissionBattle_t *battle, autoUnit_t *currUnit, autoUnit_t *eUnit, const double effective)
 {
-	int eUnit;
-	character_t *chr = battle->units[currTeam][currUnit].chr;
-	chrScoreGlobal_t *score = &chr->score;
+	character_t *currChr = currUnit->chr;
+	chrScoreGlobal_t *score = &currChr->score;
+	character_t *eChr = eUnit->chr;
+	double calcRand = frand();
+	int strikeDamage;
 
-	for (eUnit = 0; eUnit < battle->nUnits[eTeam]; eUnit++) {
-		character_t *enemyChr = battle->units[eTeam][eUnit].chr;
-		if (enemyChr->HP > 0) {
-			const double calcRand = frand();
-			int strikeDamage;
+	if (AM_IsHostile(battle, currUnit->team, eUnit->team)) {
+		if (calcRand > effective)
+			return qfalse;
+		strikeDamage = (int) (100.0 * battle->scoreTeamDifficulty[currUnit->team] * (effective - calcRand) / effective);
+		battle->teamAccomplishment[currUnit->team] += strikeDamage;
+	} else {
+		if (calcRand >= (0.050 - (effective * 0.050)))
+			return qfalse;
+		strikeDamage = (int) (100.0 * (1.0 - battle->scoreTeamDifficulty[currUnit->team]) * calcRand);
+		battle->teamAccomplishment[currUnit->team] -= strikeDamage;
+	}
 
-			if (AM_IsHostile(battle, currTeam, eTeam)) {
-				if (calcRand > effective)
-					continue;
-				strikeDamage = (int) (100.0 * battle->scoreTeamDifficulty[currTeam] * (effective - calcRand) / effective);
-			} else {
-				if (calcRand >= (0.050 - (effective * 0.050)))
-					continue;
-				strikeDamage = (int) (100.0 * (1.0 - battle->scoreTeamDifficulty[currTeam]) * calcRand);
-			}
+	eChr->HP = max(0, eChr->HP - strikeDamage);
 
-
-			enemyChr->HP = max(0, enemyChr->HP - strikeDamage);
-			Com_DPrintf(DEBUG_CLIENT, "Unit %i on team %i strikes unit %i on team %i for %i damage!\n",
-				currUnit, currTeam, eUnit, eTeam, strikeDamage);
-
-			if (AM_IsHostile(battle, currTeam, eTeam)) {
-				if (enemyChr->HP == 0) {
-					Com_DPrintf(DEBUG_CLIENT, "Unit %i on team %i is killed in action!\n", eUnit, eTeam);
-				}
-			} else {
-				/* we attacked a friendly, teamAcomplishment should go down */
-				strikeDamage *= -1;
-			}
-
-			battle->teamAccomplishment[currTeam] += strikeDamage;
-
-			/* Update result if target died */
-			if (enemyChr->HP > 0) {
-				Com_DPrintf(DEBUG_CLIENT, "Unit %i on team %i strikes unit %i on team %i for %i damage!\n",
-					currUnit, currTeam, eUnit, eTeam, strikeDamage);
-				continue;
-			}
+	/* If target is still active, continue */
+	if (AM_IsUnitActive(eUnit))
+		return qtrue;
 
 #if DEBUG
-			Com_Printf("AutoBattle: Team: %d Unit: %d killed Team: %d Unit: %d\n", currTeam, currUnit, eTeam, eUnit);
+	Com_Printf("AutoBattle: Team: %d Unit: %d killed Team: %d Unit: %d\n", currUnit->team, currUnit->idx, eUnit->team, eUnit->idx);
 #endif
-			switch (currTeam) {
-			case AUTOMISSION_TEAM_TYPE_PLAYER:
-				switch (eTeam) {
-				case AUTOMISSION_TEAM_TYPE_PLAYER:
-					battle->results->ownSurvived--;
-					battle->results->ownKilledFriendlyFire++;
-					score->kills[KILLED_TEAM] += 1;
-					break;
-				case AUTOMISSION_TEAM_TYPE_ALIEN:
-					battle->results->aliensSurvived--;
-					battle->results->aliensKilled++;
-					score->kills[KILLED_ENEMIES] += 1;
-					break;
-				case AUTOMISSION_TEAM_TYPE_CIVILIAN:
-					battle->results->civiliansSurvived--;
-					battle->results->civiliansKilledFriendlyFire++;
-					score->kills[KILLED_CIVILIANS] += 1;
-					break;
-				default:
-					break;
-				}
-				break;
-			case AUTOMISSION_TEAM_TYPE_ALIEN:
-				switch (eTeam) {
-				case AUTOMISSION_TEAM_TYPE_PLAYER:
-					battle->results->ownSurvived--;
-					battle->results->ownKilled++;
-					break;
-				case AUTOMISSION_TEAM_TYPE_ALIEN:
-					battle->results->aliensSurvived--;
-					battle->results->aliensKilled++;
-					break;
-				case AUTOMISSION_TEAM_TYPE_CIVILIAN:
-					battle->results->civiliansSurvived--;
-					battle->results->civiliansKilled++;
-					break;
-				default:
-					break;
-				}
-				break;
-			case AUTOMISSION_TEAM_TYPE_CIVILIAN:
-				switch (eTeam) {
-				case AUTOMISSION_TEAM_TYPE_PLAYER:
-					battle->results->ownSurvived--;
-					battle->results->ownKilledFriendlyFire++;
-					break;
-				case AUTOMISSION_TEAM_TYPE_ALIEN:
-					battle->results->aliensSurvived--;
-					battle->results->aliensKilled++;
-					break;
-					battle->results->civiliansSurvived--;
-					battle->results->civiliansKilledFriendlyFire++;
-					break;
-				default:
-					break;
-				}
-				break;
-			default:
-				break;
-			}
+	switch (currUnit->team) {
+	case AUTOMISSION_TEAM_TYPE_PLAYER:
+		switch (eUnit->team) {
+		case AUTOMISSION_TEAM_TYPE_PLAYER:
+			battle->results->ownSurvived--;
+			battle->results->ownKilledFriendlyFire++;
+			score->kills[KILLED_TEAM] += 1;
+			break;
+		case AUTOMISSION_TEAM_TYPE_ALIEN:
+			battle->results->aliensSurvived--;
+			battle->results->aliensKilled++;
+			score->kills[KILLED_ENEMIES] += 1;
+			break;
+		case AUTOMISSION_TEAM_TYPE_CIVILIAN:
+			battle->results->civiliansSurvived--;
+			battle->results->civiliansKilledFriendlyFire++;
+			score->kills[KILLED_CIVILIANS] += 1;
+			break;
+		default:
+			break;
 		}
+		break;
+	case AUTOMISSION_TEAM_TYPE_ALIEN:
+		switch (eUnit->team) {
+		case AUTOMISSION_TEAM_TYPE_PLAYER:
+			battle->results->ownSurvived--;
+			battle->results->ownKilled++;
+			break;
+		case AUTOMISSION_TEAM_TYPE_ALIEN:
+			battle->results->aliensSurvived--;
+			battle->results->aliensKilled++;
+			break;
+		case AUTOMISSION_TEAM_TYPE_CIVILIAN:
+			battle->results->civiliansSurvived--;
+			battle->results->civiliansKilled++;
+			break;
+		default:
+			break;
+		}
+		break;
+	case AUTOMISSION_TEAM_TYPE_CIVILIAN:
+		switch (eUnit->team) {
+		case AUTOMISSION_TEAM_TYPE_PLAYER:
+			battle->results->ownSurvived--;
+			battle->results->ownKilledFriendlyFire++;
+			break;
+		case AUTOMISSION_TEAM_TYPE_ALIEN:
+			battle->results->aliensSurvived--;
+			battle->results->aliensKilled++;
+			break;
+			battle->results->civiliansSurvived--;
+			battle->results->civiliansKilledFriendlyFire++;
+			break;
+		default:
+			break;
+		}
+		break;
+	default:
+		break;
 	}
+	return qtrue;
 }
 
 /**
  * @brief Make Unit attack his enemies (or friends)
  * @param[in, out] battle The battle we fight
- * @param[in] currTeam Team idx that attacks
- * @param[in] currUnit Soldier idx who attacks
+ * @param[in] currUnit Unit that attacks
  * @param[in] effective Effectiveness of the attack
  */
-static qboolean AM_UnitAttackEnemies (autoMissionBattle_t *battle, const int currTeam, const int currUnit, const double effective)
+static qboolean AM_UnitAttackEnemy (autoMissionBattle_t *battle, autoUnit_t *currUnit, const double effective)
 {
 	int eTeam;
-	int count = 0;
+	autoUnit_t *eUnit;
 
-	Com_DPrintf(DEBUG_CLIENT, "Unit %i on team %i attacks!\n", currUnit, currTeam);
-
-	for (eTeam = 0; eTeam < AUTOMISSION_TEAM_TYPE_MAX; eTeam++) {
-		if (!battle->teamActive[eTeam])
-			continue;
-
-		if (AM_IsHostile(battle, currTeam, eTeam))
-			count++;
-		AM_CheckFire(battle, eTeam, currTeam, currUnit, effective);
-	}
-
-	/* If there's no one left to fight, the battle's OVER. */
-	if (count == 0)
+	eTeam = AM_GetRandomTeam(battle, currUnit->team, qtrue);
+	eUnit = AM_GetRandomActiveUnitOfTeam(battle, eTeam);
+	/* no more enemies */
+	if (eUnit == NULL)
 		return qfalse;
+
+	/* shot an enemy */
+	if (!AM_CheckFire(battle, currUnit, eUnit, effective)) {
+		/* if failed, attack a friendly */
+		eTeam = AM_GetRandomTeam(battle, currUnit->team, qfalse);
+		eUnit = AM_GetRandomActiveUnitOfTeam(battle, eTeam);
+		if (eUnit != NULL)
+			AM_CheckFire(battle, currUnit, eUnit, effective);
+	}
 
 	return qtrue;
 }
@@ -615,19 +689,20 @@ static void AM_DoFight (autoMissionBattle_t *battle)
 			aliveUnits = 0;
 			/* Is this unit still alive (has any health left?) */
 			for (currentUnit = 0; currentUnit < battle->nUnits[team]; currentUnit++) {
-				character_t *chr = battle->units[team][currentUnit].chr;
+				autoUnit_t *unit = AM_GetUnit(battle, team, currentUnit);
+				character_t *chr = unit->chr;
 				/* Wounded units don't fight quite as well */
 				const double hpLeftRatio = chr->HP / chr->maxHP;
 				const double effective = FpCurveDn(battle->scoreTeamSkill[team], hpLeftRatio * 0.50);
 
-				if (chr->HP <= 0)
+				if (!AM_IsUnitActive(unit))
 					continue;
 
 				Com_DPrintf(DEBUG_CLIENT, "Unit %i on team %i has adjusted attack rating of %lf.\n",
 						currentUnit, team, battle->scoreTeamSkill[team]);
 
 				aliveUnits++;
-				combatActive = AM_UnitAttackEnemies(battle, team, currentUnit, effective);
+				combatActive = AM_UnitAttackEnemy(battle, unit, effective);
 			}
 
 			if (aliveUnits == 0) {
@@ -716,17 +791,14 @@ static void AM_AlienCollect (aircraft_t *aircraft, const autoMissionBattle_t *ba
 
 	/* Aliens */
 	for (unitIDX = 0; unitIDX < battle->nUnits[AUTOMISSION_TEAM_TYPE_ALIEN]; unitIDX++) {
-		const autoUnit_t *unit = &battle->units[AUTOMISSION_TEAM_TYPE_ALIEN][unitIDX];
+		const autoUnit_t *unit = AM_GetUnit(battle, AUTOMISSION_TEAM_TYPE_ALIEN, unitIDX);
 
-		if (unit->chr->HP <= 0) {
-			AM_MoveCharacterInventoryIntoItemCargo(aircraft, unit->chr);
-			AL_AddAlienTypeToAircraftCargo(aircraft, unit->chr->teamDef, 1, qtrue);
-			collected++;
-		} else if (unit->chr->HP <= unit->chr->STUN) {
-			AM_MoveCharacterInventoryIntoItemCargo(aircraft, unit->chr);
-			AL_AddAlienTypeToAircraftCargo(aircraft, unit->chr->teamDef, 1, qfalse);
-			collected++;
-		}
+		if (AM_IsUnitActive(unit))
+			continue;
+
+		AM_MoveCharacterInventoryIntoItemCargo(aircraft, unit->chr);
+		AL_AddAlienTypeToAircraftCargo(aircraft, unit->chr->teamDef, 1, unit->chr->HP <= 0);
+		collected++;
 	}
 
 	if (collected > 0)
@@ -787,14 +859,14 @@ static void AM_CleanBattleParameters (autoMissionBattle_t *battle)
 
 	/* Aliens */
 	for (unitIDX = 0; unitIDX < battle->nUnits[AUTOMISSION_TEAM_TYPE_ALIEN]; unitIDX++) {
-		autoUnit_t *unit = &battle->units[AUTOMISSION_TEAM_TYPE_ALIEN][unitIDX];
+		autoUnit_t *unit = AM_GetUnit(battle, AUTOMISSION_TEAM_TYPE_ALIEN, unitIDX);
 
 		AM_DestroyUnitChr(unit);
 	}
 
 	/* Civilians */
 	for (unitIDX = 0; unitIDX < battle->nUnits[AUTOMISSION_TEAM_TYPE_CIVILIAN]; unitIDX++) {
-		autoUnit_t *unit = &battle->units[AUTOMISSION_TEAM_TYPE_CIVILIAN][unitIDX];
+		autoUnit_t *unit = AM_GetUnit(battle, AUTOMISSION_TEAM_TYPE_CIVILIAN, unitIDX);
 
 		AM_DestroyUnitChr(unit);
 	}
