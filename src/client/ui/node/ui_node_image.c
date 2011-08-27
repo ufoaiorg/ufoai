@@ -84,7 +84,7 @@ static void UI_ImageNodeLoaded (uiNode_t *node)
  * @param align Alignment of the inner box inside the outer box.
  * @param[out] innerBoxPos Position of the top-left corner of the inner box.
  */
-static void UI_ImageAlignBoxInBox(vec2_t outerBoxPos, vec2_t outerBoxSize, vec2_t innerBoxSize, align_t align, vec2_t innerBoxPos)
+static void UI_ImageAlignBoxInBox (vec2_t outerBoxPos, vec2_t outerBoxSize, vec2_t innerBoxSize, align_t align, vec2_t innerBoxPos)
 {
 	switch (align % 3) {
 	case 0:	/* left */
@@ -98,6 +98,7 @@ static void UI_ImageAlignBoxInBox(vec2_t outerBoxPos, vec2_t outerBoxSize, vec2_
 		break;
 	}
 	switch (align / 3) {
+	default:
 	case 0:	/* top */
 		innerBoxPos[1] = outerBoxPos[1];
 		break;
