@@ -352,7 +352,7 @@ typedef struct invList_s {
 	struct invList_s *next;		/**< Next entry in this list. */
 } invList_t;
 
-/** @brief inventory defintion with all its containers */
+/** @brief inventory definition with all its containers */
 typedef struct inventory_s {
 	invList_t *c[MAX_CONTAINERS];
 } inventory_t;
