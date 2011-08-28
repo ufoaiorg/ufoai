@@ -153,6 +153,7 @@ particle bullet
 		blend  add
 		offset "0 -16 0"
 //		child  muzzle_rifle
+		child  muzzle_rifle_2D
 		size   "40 40"
 	}
 }
@@ -166,7 +167,7 @@ particle bullet-smg
 		style  axis
 		blend  add
 		offset "0 -16 0"
-//		child  muzzle_gun
+		child  muzzle_gun
 		size   "20 40"
 	}
 }
@@ -180,7 +181,7 @@ particle bullet-hmg
 		style  axis
 		blend  add
 		offset "0 -16 0"
-//		child  muzzle_hmg
+		child  muzzle_hmg
 		size   "40 40"
 	}
 }
@@ -207,7 +208,7 @@ particle bullet_sniper
 		style  axis
 		blend  add
 		offset "0 -16 0"
-//		child  muzzle_sniper
+		child  muzzle_sniper
 		size   "70 40"
 	}
 }
@@ -216,18 +217,18 @@ particle bulletImpact
 {
 	init
 	{
-		image  sfx/smoke
-		blend  blend
-		style  facing
-		thinkfade  sin		// fade the think function with a sinus function
-		size   "20 20"		// set the size vector to 20x20
+//		image  sfx/smoke
+//		blend  blend
+//		style  facing
+//		thinkfade  sin		// fade the think function with a sinus function
+//		size   "20 20"		// set the size vector to 20x20
 
-		push   *v			// push velocity vector on the stack
-		mul    float 5.0	// scalar multiple velocity vector
-		kpop   *v			// write it back into the particle structure (but keep it on the stack)
-		add    *s			// add the current position (v + s)
-		pop    *s			// write it back into the particle structure and remove from stack
-		tps    1.0			// think per seconds to 1
+//		push   *v			// push velocity vector on the stack
+//		mul    float 5.0	// scalar multiple velocity vector
+//		kpop   *v			// write it back into the particle structure (but keep it on the stack)
+//		add    *s			// add the current position (v + s)
+//		pop    *s			// write it back into the particle structure and remove from stack
+//		tps    1.0			// think per seconds to 1
 
 		push   int 20		// push 20 to the stack
 		nspawn bulletFragment	// use the 20 from stack and spawn that many particles
@@ -540,7 +541,7 @@ particle laserBeamSmall
 		thinkfade  out
 		tps    1
 		size	"0 7"
-//		child  muzzle_laser
+		child  muzzle_laser
 	}
 	think { kill }
 }
@@ -554,7 +555,7 @@ particle laserPulseSmall
 		style  axis
 		blend  add
 		size   "20 10"
-//		child  muzzle_laser
+		child  muzzle_laser
 	}
 }
 
@@ -569,7 +570,7 @@ particle laserBeam
 		thinkfade  out
 		tps    0.7
 		size	"0 9"
-//		child  muzzle_laser
+		child  muzzle_laser
 	}
 	think { kill }
 }
@@ -584,7 +585,7 @@ particle laserPulse
 		blend  add
 		offset "0 -16 0"
 		size   "50 10"
-//		child  muzzle_laser
+		child  muzzle_laser
 		tps    0.8
 	}
 	think
@@ -655,8 +656,8 @@ particle laserImpact2
 		pop    *s
 		tps    1.0
 
-		push   int 20
-		nspawn laserSpark
+//		push   int 20
+//		nspawn laserSpark
 	}
 	run
 	{
@@ -679,8 +680,8 @@ particle laserImpact
 
 		tps    1.0
 
-		push   int 20
-		nspawn laserSpark
+//		push   int 20
+//		nspawn laserSpark
 	}
 	run
 	{
@@ -703,8 +704,8 @@ particle laserImpactSmall
 
 		tps    1.0
 
-		push   int 20
-		nspawn laserSpark
+//		push   int 20
+//		nspawn laserSpark
 	}
 	run
 	{
@@ -791,7 +792,7 @@ particle plasmaMiniPulse
 		style  axis
 		child  plasmaMiniPulseBall
 		offset "0 -16 0"
-//		spawn muzzle_plasma
+		spawn muzzle_plasma
 		lightcolor "0 0.8 0.4"
 		lightintensity 0.1
 	}
@@ -863,7 +864,7 @@ particle plasmaPulse
 		style  axis
 		offset "0 0 0"
 		child plasmaPulseBall
-//		spawn muzzle_plasma
+		spawn muzzle_plasma
 		lightcolor "0 0.8 0.4"
 		lightintensity 0.1
 	}
@@ -999,7 +1000,7 @@ particle plasmaBigBall
 		offset "0 0 0"
 		tps    60
 		child plasmaBallCore
-//		spawn muzzle_plasma
+		spawn muzzle_plasma
 	}
 	think
 	{
@@ -1370,7 +1371,7 @@ particle pbeamMiniBeam
 		tps    10.0
 		lightcolor "0.5 0.9 0.5"
 		lightintensity 0.1
-//		spawn muzzle_ptl
+		spawn muzzle_ptl
 	}
 	run
 	{
@@ -1392,7 +1393,7 @@ particle pbeamBeam
 		tps    10.0
 		lightcolor "0.5 0.9 0.5"
 		lightintensity -0.2
-//		spawn muzzle_ptl
+		spawn muzzle_ptl
 //		spawn partLaser
 	}
 	run
@@ -1418,7 +1419,7 @@ particle pbeamBigBeam
 		tps    2.0
 		lightcolor "0.5 0.9 0.5"
 		lightintensity 0.2
-//		spawn muzzle_ptl
+		spawn muzzle_ptl
 	}
 	run
 	{
@@ -1905,7 +1906,7 @@ particle muzzle_gun_front
 	{
 		image  sfx/weapons/muzzle_smg_front
 		blend  add
-		style  axis
+		style  facing
 		thinkfade  out
 		life   0.04
 		tps    1
@@ -1920,7 +1921,7 @@ particle muzzle_gun_side
 	{
 		image  sfx/weapons/muzzlebulletside
 		blend  add
-		style  axis
+		style  facing
 		thinkfade  out
 		tps    1
 		life   0.04
@@ -1938,6 +1939,20 @@ particle muzzle_rifle
 		spawn  muzzle_rifle_front
 //		spawn  muzzle_side
 //		spawn  shell
+		lightcolor "0.4 0.4 1.0"
+		lightintensity 0.1
+		kill
+	}
+}
+
+// 2d muzzles are temp until the ptl bugs are fixed
+
+particle muzzle_rifle_2D
+{
+	init
+	{
+		spawn  muzzle_round
+		spawn  muzzle_rifle_front
 		lightcolor "0.4 0.4 1.0"
 		lightintensity 0.1
 		kill
@@ -1965,7 +1980,7 @@ particle muzzle_rifle_front
 	{
 		image  sfx/weapons/muzzle_rifle_front
 		blend  add
-		style  axis
+		style  facing
 		thinkfade  out
 		life   0.07
 		tps    1
@@ -2010,7 +2025,7 @@ particle muzzle_hmg_front
 	{
 		image  sfx/weapons/muzzle_hmg_front
 		blend  add
-		style  axis
+		style  facing
 		thinkfade  out
 		life   0.07
 		tps    1
@@ -2025,7 +2040,7 @@ particle muzzle_hmg_side
 	{
 		image  sfx/weapons/muzzlebulletside
 		blend  add
-		style  axis
+		style  facing
 //		angles "50 0 0"
 		thinkfade  out
 		life   0.07
@@ -2219,7 +2234,7 @@ particle muzzle_plasma_spiral
 	{
 		image  sfx/weapons/muzzleplasmaspiral
 		blend  add
-		style  rotated
+		style  facing
 		thinkfade  out
 		tps    4
 		offset "0 0 0"
@@ -2282,7 +2297,7 @@ particle muzzle_ptl_cross
 	{
 		image  sfx/weapons/muzzleptl
 		blend  add
-		style  rotated
+		style  facing
 		thinkfade  out
 		tps    4
 		offset "0 0 0"
