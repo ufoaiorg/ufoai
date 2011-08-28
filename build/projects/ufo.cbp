@@ -982,6 +982,10 @@
 			<Option compilerVar="CC" />
 		</Unit>
 		<Unit filename="..\..\src\client\ui\node\ui_node_image.h" />
+		<Unit filename="..\..\src\client\ui\node\ui_node_texture.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="..\..\src\client\ui\node\ui_node_texture.h" />
 		<Unit filename="..\..\src\client\ui\node\ui_node_item.c">
 			<Option compilerVar="CC" />
 		</Unit>

@@ -225,6 +225,7 @@ $(TARGET)_SRCS      = \
 	client/ui/node/ui_node_text2.c \
 	client/ui/node/ui_node_textlist.c \
 	client/ui/node/ui_node_textentry.c \
+	client/ui/node/ui_node_texture.c \
 	client/ui/node/ui_node_todo.c \
 	client/ui/node/ui_node_vscrollbar.c \
 	client/ui/node/ui_node_window.c \

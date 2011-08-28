@@ -69,6 +69,7 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #include "node/ui_node_text2.h"
 #include "node/ui_node_textlist.h"
 #include "node/ui_node_textentry.h"
+#include "node/ui_node_texture.h"
 #include "node/ui_node_keybinding.h"
 #include "node/ui_node_todo.h"
 #include "node/ui_node_vscrollbar.h"
@@ -129,6 +130,7 @@ static const registerFunction_t registerFunctions[] = {
 	UI_RegisterText2Node,
 	UI_RegisterTextEntryNode,
 	UI_RegisterTextListNode,
+	UI_RegisterTextureNode,
 	UI_RegisterTodoNode,
 	UI_RegisterVideoNode,
 	UI_RegisterVScrollbarNode,
