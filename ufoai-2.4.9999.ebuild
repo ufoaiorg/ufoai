@@ -66,13 +66,13 @@ src_compile() {
 	if use editor ; then
 		emake uforadiant || die "emake uforadiant failed"
 	fi
-	${S}/contrib/scripts/map-get.py upgrade
+	emake maps-sync || die "emake maps-sync failed"
 }
 
 src_install() {
 	# server
 	emake DESTDIR="${D}" install || die
-	newicon src/ports/linux/installer/data/ufo.xpm ${PN}.xpm \
+	newicon contrib/installer/linux/data/ufo.xpm ${PN}.xpm \
 		|| die "Failed installing icon"
 	make_desktop_entry ${PN}-ded "UFO: Alien Invasion Server"
 	if ! use dedicated ; then
