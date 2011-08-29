@@ -226,11 +226,35 @@ static void SV_RmaPrintMap (const mapInfo_t *map)
 		}
 	}
 
+	/* now add the specs of the gaps */
+	int cx, cy;
+	int height = map->mAssembly[map->mAsm].height;
+	int width = map->mAssembly[map->mAsm].width;
+	for (cy = 0; cy <= height; cy++) {
+		for (cx = 0; cx <= width; cx++) {
+			if (!IS_SOLID(map->curMap[cy][cx])) {
+				int cbX = ACW * (cx);
+				int cbY = ACH * (cy);
+				char flags2[33] = {0,};
+
+				/* get the requirements of that gap */
+				tileMaskToString(map->curMap[cy][cx], flags2);
+				/* write the flags */
+				for (j = 0; j < ACW - 1; j++) {
+					if (flags2[j])
+						screen[cbY + ACH - 2][cbX + 1 + j] = flags2[j];
+					else
+						break;
+				}
+			}
+		}
+	}
+
 	/* print it */
 	const char *underscores = "_________________________________________________\n";
 	Com_Printf("\nCurrent state of the map:\n");
 	Com_Printf(underscores);
-/*	int h = map->mAssembly[map->numAssemblies].height;	*/
+/*	int h = map->mAssembly[map->mAsm].height;	*/
 	int h = ACH * MMH;
 	for (i = h; i >= ACH; i--)
 		Com_Printf("%s\n", screen[i] + ACW);
