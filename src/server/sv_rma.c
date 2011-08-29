@@ -124,13 +124,42 @@ static unsigned long tileMask (const char chr)
 }
 
 #if DISPLAY_THE_MAP_ON_FAILURE
+static void tileMaskToString (unsigned long m, char *str)
+{
+	int i;
+	int j = 0;	/* writepos */
+
+	if (m == ALL_TILES) {
+		str[0] = '0';
+		str[1] = 0;
+		return;
+	}
+	if (m & 1) {
+		str[0] = '+';
+		 j = 1;
+	}
+	for (i = 1; i < 6; i++) {
+		if (m >> i & 1) {
+			str[j] = '0' + i;
+			j++;
+		}
+	}
+	for (i = 6; i < 32; i++) {
+		if (m >> i & 1) {
+			str[j] = 'a' - 6 + i;
+			j++;
+		}
+	}
+	str[j] = 0;
+}
+
 #define ACW 6	/* ascii cell width */
 #define ACH 3	/* ascii cell height */
 #define MMW 9	/* map max height */
 #define MMH 9	/* map max height */
 static void SV_RmaPrintMap (const mapInfo_t *map)
 {
-	char screen[MMH * ACH][80];
+	char screen[(MMH + 1) * ACH][80];
 	int i, j;
 
 	/* initialize */
@@ -154,12 +183,28 @@ static void SV_RmaPrintMap (const mapInfo_t *map)
 				if (IS_SOLID(tile->spec[ty][tx])) {
 					int cbX = ACW * (mp->x + tx);
 					int cbY = ACH * (mp->y + ty);
+					char flags[33] = {0,};
 
-//					screen[cbY + 1][cbX + 2] = tn[1];
-					for (j = 0; j < ACW - 1; j++)
+					/* write the tilename */
+					for (j = 0; j < ACW - 1; j++) {
 						if (tn[j])
 							screen[cbY + ACH - 1][cbX + 1 + j] = tn[j];
+						else
+							break;
+					}
 
+					/* get the properties of that solid */
+					tileMaskToString(tile->spec[ty][tx], flags);
+					/* write the flags */
+					for (j = 0; j < ACW - 1; j++) {
+						if (flags[j])
+							screen[cbY + ACH - 2][cbX + 1 + j] = flags[j];
+						else
+							break;
+					}
+
+
+					/* left border of tile */
 					if (tx > 0 && !IS_SOLID(tile->spec[ty][tx - 1])) {
 						for (j = 0; j < ACH; j++)
 							screen[cbY + j][cbX] = '!';
