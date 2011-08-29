@@ -164,7 +164,7 @@ static void SV_RmaPrintMap (const mapInfo_t *map)
 
 	/* initialize */
 	memset(screen, ' ', sizeof(screen));
-	for (i = 0; i < MMH * ACH; i++) {
+	for (i = 0; i < MMH * ACH + 1; i++) {
 		screen[i][MMW * ACW + 1] = '|';
 		screen[i][79] = 0;
 	}
@@ -227,13 +227,13 @@ static void SV_RmaPrintMap (const mapInfo_t *map)
 	}
 
 	/* print it */
-	const char *underscores = "________________________________________________\n";
+	const char *underscores = "_________________________________________________\n";
 	Com_Printf("\nCurrent state of the map:\n");
 	Com_Printf(underscores);
 /*	int h = map->mAssembly[map->numAssemblies].height;	*/
 	int h = ACH * MMH;
-	for (i = h - 1; i >=0; i--)
-		Com_Printf("%s\n", screen[i]);
+	for (i = h; i >= ACH; i--)
+		Com_Printf("%s\n", screen[i] + ACW);
 	Com_Printf(underscores);
 }
 #endif
