@@ -1333,7 +1333,7 @@ static qboolean SV_AddMissingTiles3_r (mapInfo_t *map, int rec, int posListCnt, 
 				SV_RmaPrintMap(map);
 #endif
 #if PRINT_FAILURE_REASONCODE
-		Com_Printf("uncovered gap\n");
+		Com_Printf("uncovered gap: %i/%i\n", x, y);
 #endif
 				return qfalse;
 			}
@@ -1385,13 +1385,16 @@ static qboolean SV_AddMissingTiles3_r (mapInfo_t *map, int rec, int posListCnt, 
 
 							/* tile was a dead end, remove it */
 							SV_RemoveTile(map, NULL, NULL);
+
 							if (h >= g) {
+/*
 #if DISPLAY_THE_MAP_ON_FAILURE
 								SV_RmaPrintMap(map);
 #endif
 #if PRINT_FAILURE_REASONCODE
 								Com_Printf("no tile works for gap\n");
 #endif
+*/
 								return qfalse;
 							}
 						}
