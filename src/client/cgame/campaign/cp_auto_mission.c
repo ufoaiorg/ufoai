@@ -55,6 +55,8 @@ typedef struct autoUnit_s {
 	int idx;
 	autoMissionTeamType_t team;					/**< Team of the unit */
 	character_t *chr;							/**< Character */
+	double attackStrength;						/**< How good at attacking a unit is, from 0.0 (can't fight at all) to 1.0 (Higher is better) */
+	double defendStrength;						/**< A unit's armor or protection, from 0.0 (no armor, can't even dodge/stationary) to 1.0 (Higher is better) */
 } autoUnit_t;
 
 /**
