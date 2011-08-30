@@ -48,7 +48,6 @@ static void UI_TextureNodeDraw (uiNode_t *node)
 {
 	vec2_t nodepos;
 	const image_t *image;
-	int x, y;
 
 	const char* imageName = UI_GetReferenceString(node, node->image);
 	if (Q_strnull(imageName))
@@ -63,17 +62,12 @@ static void UI_TextureNodeDraw (uiNode_t *node)
 		return;
 
 	UI_GetNodeAbsPos(node, nodepos);
-	R_PushClipRect(nodepos[0], nodepos[1], node->size[0], node->size[1]);
 
-	/** @todo use opengl feature instead of loop to display a texture */
-	for (y = nodepos[1]; y < nodepos[1] + node->size[1]; y += image->height) {
-		for (x = nodepos[0]; x < nodepos[0] + node->size[0]; x += image->width) {
-			UI_DrawNormImage(x, y, image->width, image->height,
-					image->width, image->height, 0, 0, image);
-		}
-	}
+	R_TextureEnableWrapping(image);
 
-	R_PopClipRect();
+	UI_DrawNormImage(nodepos[0], nodepos[1], node->size[0], node->size[1], node->size[0], node->size[1], 0, 0, image);
+
+	R_TextureDisableWrapping(image);
 }
 
 static const value_t properties[] = {

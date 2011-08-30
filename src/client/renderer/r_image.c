@@ -225,6 +225,8 @@ void R_GetScaledTextureSize (int width, int height, int *scaledWidth, int *scale
 		*scaledHeight = 1;
 }
 
+#define R_ImageIsClamp(image) ((image)->type == it_pic || (image)->type == it_worldrelated)
+
 /**
  * @brief Uploads the opengl texture to the server
  * @param[in] data Must be in RGBA format
@@ -240,7 +242,7 @@ void R_UploadTexture (unsigned *data, int width, int height, image_t* image)
 	int i, c;
 	byte *scan;
 	const qboolean mipmap = (image->type != it_pic && image->type != it_worldrelated && image->type != it_chars);
-	const qboolean clamp = (image->type == it_pic || image->type == it_worldrelated);
+	const qboolean clamp = R_ImageIsClamp(image);
 
 	/* scan the texture for any non-255 alpha */
 	c = width * height;
@@ -309,6 +311,32 @@ void R_UploadTexture (unsigned *data, int width, int height, image_t* image)
 
 	if (scaled != data)
 		Mem_Free(scaled);
+}
+
+void R_TextureDisableWrapping (const image_t *image)
+{
+	if (!R_ImageIsClamp(image))
+		return;
+
+	glBindTexture(GL_TEXTURE_2D, image->texnum);
+	R_CheckError();
+	glTexParameterf(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_CLAMP_TO_EDGE);
+	R_CheckError();
+	glTexParameterf(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_CLAMP_TO_EDGE);
+	R_CheckError();
+}
+
+void R_TextureEnableWrapping (const image_t *image)
+{
+	if (!R_ImageIsClamp(image))
+		return;
+
+	glBindTexture(GL_TEXTURE_2D, image->texnum);
+	R_CheckError();
+	glTexParameterf(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_REPEAT);
+	R_CheckError();
+	glTexParameterf(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_REPEAT);
+	R_CheckError();
 }
 
 /**
