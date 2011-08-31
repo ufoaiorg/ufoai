@@ -757,6 +757,8 @@ static inline qboolean R_CheckExtension (const char *extension)
 	return found;
 }
 
+#define R_CheckGLVersion(max, min) (r_config.glVersionMajor > max || (r_config.glVersionMajor == max && r_config.glVersionMinor >= min))
+
 /**
  * @brief Check and load all needed and supported opengl extensions
  * @sa R_Init
@@ -859,8 +861,11 @@ static qboolean R_InitExtensions (void)
 			Com_Printf("ignoring GL_ARB_texture_non_power_of_two\n");
 		}
 	} else {
-		/** @todo does opengl 2.0 and later really expose the above extension? the npot support is a must since 2.0 */
-		r_config.nonPowerOfTwo = qfalse;
+		if (R_CheckGLVersion(2, 0)) {
+			r_config.nonPowerOfTwo = r_ext_nonpoweroftwo->integer == 1;
+		} else {
+			r_config.nonPowerOfTwo = qfalse;
+		}
 	}
 
 	/* anisotropy */
