@@ -110,7 +110,9 @@ def gen(dst, changed_maps):
                     os.makedirs(dst_dir)
 
                 data = open(bspfile).read()
-                GzipFile(os.path.join(dst, bspfile) + '.gz', 'w').write(data)
+                gzipPath = os.path.join(dst, bspfile) + '.gz'
+                GzipFile(gzipPath, 'w').write(data)
+                os.chmod(gzipPath, 0644)
             else:
                 print '%s - already up to date' % bspfile
 
