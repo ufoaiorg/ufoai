@@ -607,6 +607,10 @@ static void BS_BuyAircraft_f (void)
 
 	if (buyCat == FILTER_AIRCRAFT) {
 		int freeSpace;
+		if (!B_GetBuildingStatus(base, B_COMMAND)) {
+			CP_Popup(_("Note"), _("No command centre in this base.\nHangars are not functional.\n"));
+			return;
+		}
 		/* We cannot buy aircraft if there is no power in our base. */
 		if (!B_GetBuildingStatus(base, B_POWER)) {
 			CP_Popup(_("Note"), _("No power supplies in this base.\nHangars are not functional."));
