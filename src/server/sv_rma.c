@@ -2116,9 +2116,11 @@ static mapInfo_t* SV_DoMapAssemble (mapInfo_t *map, const char *assembly, char *
 			return NULL;
 		}
 	} else {
+		unsigned int seedUsed;
+
 		if (mAsm->numSeeds > 0) {
 			/* if the map has a seedlist defined, use that */
-			unsigned int seedUsed = mAsm->seeds[rand() % mAsm->numSeeds];
+			seedUsed = mAsm->seeds[rand() % mAsm->numSeeds];
 			if (seed) {
 				/* if a seed was passed, we are in cunit test mode */
 				if (seed >= mAsm->numSeeds)
@@ -2127,9 +2129,17 @@ static mapInfo_t* SV_DoMapAssemble (mapInfo_t *map, const char *assembly, char *
 				/* use the passed seed as an index into the seedlist */
 				seedUsed = mAsm->seeds[seed % mAsm->numSeeds];
 			}
-			Com_Printf("Effectively using RMA%i seed: %i for <%s>\n", sv_rma->integer, seedUsed, assembly);
-			Com_SetRandomSeed(seedUsed);
+			Com_Printf("Picked seed: %i for <%s>\n", seedUsed, assembly);
+		} else {
+			/* no seedlist */
+			if (seed)
+				seedUsed = seed;
+			else
+				seedUsed = rand() % 50;	/* limit the possible seeds to (testable) values between 0 and 49 */
 		}
+		Com_SetRandomSeed(seedUsed);
+		Com_Printf("Using RMA%i seed: %i for <%s>\n", sv_rma->integer, seedUsed, assembly);
+
 		if (!SV_AddMapTiles(map)) {
 			map->retryCnt++;
 			if (mAsm->numSeeds > 0) {
