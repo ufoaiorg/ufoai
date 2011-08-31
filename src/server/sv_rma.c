@@ -161,18 +161,21 @@ static void tileMaskToString (unsigned long m, char *str)
 
 #define ACW 6	/* ascii cell width */
 #define ACH 3	/* ascii cell height */
-#define MMW 9	/* map max height */
-#define MMH 9	/* map max height */
+#define MMW 13	/* map max height 13 means we support 12 */
+#define MMH 13	/* map max height */
 static void SV_RmaPrintMap (const mapInfo_t *map)
 {
-	char screen[(MMH + 1) * ACH][80];
+	char screen[(MMH + 1) * ACH][(MMW + 1) * ACW];
 	int i, j;
+
+	assert(map->mAssembly[map->mAsm].height < MMH);
+	assert(map->mAssembly[map->mAsm].width < MMW);
 
 	/* initialize */
 	memset(screen, ' ', sizeof(screen));
 	for (i = 0; i < MMH * ACH + 1; i++) {
 		screen[i][MMW * ACW + 1] = '|';
-		screen[i][79] = 0;
+		screen[i][MMW * ACW + 2] = 0;
 	}
 
 	/* fill in the data */
@@ -257,7 +260,7 @@ static void SV_RmaPrintMap (const mapInfo_t *map)
 	}
 
 	/* print it */
-	const char *underscores = "_________________________________________________\n";
+	const char *underscores = "_________________________________________________________________________\n";
 	Com_Printf("\nCurrent state of the map:\n");
 	Com_Printf(underscores);
 /*	int h = map->mAssembly[map->mAsm].height;	*/
