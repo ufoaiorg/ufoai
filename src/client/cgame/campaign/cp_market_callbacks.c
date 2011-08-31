@@ -617,7 +617,7 @@ static void BS_BuyAircraft_f (void)
 			return;
 		}
 		/* We cannot buy aircraft without any hangar. */
-		if (!B_GetBuildingStatus(base, B_HANGAR) && !B_GetBuildingStatus(base, B_SMALL_HANGAR)) {
+		if (!AIR_AircraftAllowed(base)) {
 			CP_Popup(_("Note"), _("Build a hangar first."));
 			return;
 		}
