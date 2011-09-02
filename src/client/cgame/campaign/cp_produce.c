@@ -715,10 +715,11 @@ void PR_ProductionRun (void)
 
 		prod = &q->items[0];
 		prod->totalFrames = PR_CalculateTotalFrames(base, &prod->data);
-		prod->frame++;
 
 		if (!PR_CheckFrame(base, prod))
 			return;
+
+		prod->frame++;
 
 		PR_ProductionFrame(base, prod);
 		PR_DisassemblingFrame(base, prod);
