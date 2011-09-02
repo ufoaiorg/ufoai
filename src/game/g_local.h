@@ -132,6 +132,7 @@ typedef struct {
 
 	int randomSpawn;	/**< can be set via worldspawn to force random spawn point order for each team */
 
+	int initialAlienActorsSpawned;
 	byte num_alive[MAX_TEAMS];		/**< the number of alive actors per team */
 	byte num_spawned[MAX_TEAMS];	/**< the number of spawned actors per team */
 	byte num_spawnpoints[MAX_TEAMS];	/**< the number of spawn points in the map per team */

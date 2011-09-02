@@ -1217,7 +1217,8 @@ static void G_SpawnAIPlayers (const player_t * player, int numSpawn)
 	const equipDef_t *ed = G_GetEquipmentForAISpawn(player->pers.team);
 
 	for (i = 0; i < numSpawn; i++) {
-		G_SpawnAIPlayer(player, ed);
+		if (G_SpawnAIPlayer(player, ed) == NULL)
+			break;
 	}
 
 	/* show visible actors */
@@ -1238,7 +1239,7 @@ void AI_CheckRespawn (int team)
 	if (team != TEAM_ALIEN)
 		return;
 
-	const int spawned = level.num_spawned[team];
+	const int spawned = level.initialAlienActorsSpawned;
 	const int alive = level.num_alive[team];
 	int diff = spawned - alive;
 	const equipDef_t *ed = G_GetEquipmentForAISpawn(team);
@@ -1249,7 +1250,6 @@ void AI_CheckRespawn (int team)
 		if (ent == NULL)
 			break;
 
-		level.num_spawned[team]--;
 		const int status = G_CheckVis(ent, qfalse);
 		if (!(status & VIS_CHANGE)) {
 			G_EventActorAdd(~G_PlayerToPM(player), ent);
@@ -1283,12 +1283,16 @@ player_t *AI_CreatePlayer (int team)
 			p->num = p - game.players;
 			p->pers.ai = qtrue;
 			G_SetTeamForPlayer(p, team);
-			if (p->pers.team == TEAM_CIVILIAN)
+			if (p->pers.team == TEAM_CIVILIAN) {
 				G_SpawnAIPlayers(p, ai_numcivilians->integer);
-			else if (sv_maxclients->integer == 1)
-				G_SpawnAIPlayers(p, ai_numaliens->integer);
-			else
-				G_SpawnAIPlayers(p, ai_numactors->integer);
+			} else {
+				if (sv_maxclients->integer == 1)
+					G_SpawnAIPlayers(p, ai_numaliens->integer);
+				else
+					G_SpawnAIPlayers(p, ai_numactors->integer);
+
+				level.initialAlienActorsSpawned = level.num_spawned[p->pers.team];
+			}
 
 			gi.DPrintf("Created AI player (team %i)\n", p->pers.team);
 			return p;
