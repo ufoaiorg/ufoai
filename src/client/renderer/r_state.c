@@ -360,7 +360,7 @@ void R_EnableDynamicLights (const r_light_t **lights, int numLights, qboolean en
 			R_DisableAttribute("TANGENTS");
 		glDisable(GL_LIGHTING);
 		for (i = 0; i < maxLights; i++) {
-			glLightf(GL_LIGHT0 + i, GL_CONSTANT_ATTENUATION, 0.01);
+			glLightf(GL_LIGHT0 + i, GL_CONSTANT_ATTENUATION, MIN_GL_CONSTANT_ATTENUATION);
 			glDisable(GL_LIGHT0 + i);
 		}
 
@@ -399,7 +399,7 @@ void R_EnableDynamicLights (const r_light_t **lights, int numLights, qboolean en
 	/* if there aren't enough active lights, turn off the rest */
 	while (j < maxLights) {
 		glDisable(GL_LIGHT0 + j);
-		glLightf(GL_LIGHT0 + j, GL_CONSTANT_ATTENUATION, 0.01);
+		glLightf(GL_LIGHT0 + j, GL_CONSTANT_ATTENUATION, MIN_GL_CONSTANT_ATTENUATION);
 		glLightf(GL_LIGHT0 + j, GL_LINEAR_ATTENUATION, 0.0);
 		glLightf(GL_LIGHT0 + j, GL_QUADRATIC_ATTENUATION, 0.0);
 		j++;

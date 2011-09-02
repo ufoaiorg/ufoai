@@ -135,7 +135,7 @@ void R_EnableLights (void)
 	}
 
 	for (; i < MAX_GL_LIGHTS; i++)  /* disable the rest */
-		glLightf(GL_LIGHT0 + i, GL_CONSTANT_ATTENUATION, 0.01);
+		glLightf(GL_LIGHT0 + i, GL_CONSTANT_ATTENUATION, MIN_GL_CONSTANT_ATTENUATION);
 }
 
 void R_AddStaticLight (const r_light_t *source)
@@ -157,7 +157,7 @@ void R_ClearStaticLights (void)
 	r_state.numStaticLights = 0;
 	glDisable(GL_LIGHTING);
 	for (i = 0; i < r_dynamic_lights->integer; i++) {
-		glLightf(GL_LIGHT0 + i, GL_CONSTANT_ATTENUATION, 0.01);
+		glLightf(GL_LIGHT0 + i, GL_CONSTANT_ATTENUATION, MIN_GL_CONSTANT_ATTENUATION);
 		glDisable(GL_LIGHT0 + i);
 	}
 }
