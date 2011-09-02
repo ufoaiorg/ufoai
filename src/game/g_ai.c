@@ -1252,7 +1252,7 @@ void AI_CheckRespawn (int team)
 
 		const int status = G_CheckVis(ent, qfalse);
 		if (!(status & VIS_CHANGE)) {
-			G_EventActorAdd(~G_PlayerToPM(player), ent);
+			G_EventActorAdd(~G_VisToPM(ent->visflags), ent);
 		}
 		diff--;
 	}
