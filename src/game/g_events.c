@@ -141,6 +141,7 @@ void G_EventInventoryAdd (const edict_t* ent, int playerMask, int itemAmount)
  */
 void G_EventPerish (const edict_t* ent)
 {
+	assert(ent->inuse);
 	gi.AddEvent(G_VisToPM(ent->visflags), EV_ENT_PERISH);
 	gi.WriteShort(ent->number);
 }
@@ -151,6 +152,7 @@ void G_EventPerish (const edict_t* ent)
  */
 void G_EventDestroyEdict (const edict_t* ent)
 {
+	assert(ent->inuse);
 	gi.AddEvent(PM_ALL, EV_ENT_DESTROY);
 	gi.WriteShort(ent->number);
 }
@@ -502,6 +504,7 @@ void G_EventActorAppear (unsigned int playerMask, const edict_t *check, const ed
  */
 void G_EventEdictPerish (unsigned int playerMask, const edict_t *ent)
 {
+	assert(ent->inuse);
 	gi.AddEvent(playerMask, EV_ENT_PERISH);
 	gi.WriteShort(ent->number);
 }
@@ -562,12 +565,14 @@ void G_EventDoorClose (const edict_t *door)
 
 void G_EventModelExplodeTriggered (const edict_t *ent)
 {
+	assert(ent->inuse);
 	gi.AddEvent(PM_ALL, EV_MODEL_EXPLODE_TRIGGERED);
 	gi.WriteShort(ent->number);
 }
 
 void G_EventModelExplode (const edict_t *ent)
 {
+	assert(ent->inuse);
 	gi.AddEvent(PM_ALL, EV_MODEL_EXPLODE);
 	gi.WriteShort(ent->number);
 }
