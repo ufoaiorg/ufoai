@@ -88,7 +88,7 @@ typedef struct fireDef_s {
 
 	/* These values are created in Com_ParseItem and Com_AddObjectLinks.
 	 * They are used for self-referencing the firedef. */
-	struct objDef_s *obj;		/**< The weapon/ammo item this fd is located in. */
+	const struct objDef_s *obj;		/**< The weapon/ammo item this fd is located in. */
 	weaponFireDefIndex_t weapFdsIdx;	/**< The index of the "weapon_mod" entry (objDef_t->fd[weapFdsIdx]) this fd is located in.
 						 ** Depending on this value you can find out via objDef_t->weapIdx[weapFdsIdx] what weapon this firemode is used for.
 						 ** This does _NOT_ equal the index of the weapon object in ods.
@@ -263,11 +263,11 @@ typedef struct objDef_s {
 	int useable;		/**< Defines which team can use this item: TEAM_*.
 						 * Used in checking the right team when filling the containers with available armour. */
 
-	struct objDef_s *ammos[MAX_AMMOS_PER_OBJDEF];		/**< List of ammo-object pointers that can be used in this one. */
+	const struct objDef_s *ammos[MAX_AMMOS_PER_OBJDEF];		/**< List of ammo-object pointers that can be used in this one. */
 	int numAmmos;			/**< Number of ammos this weapon can be used with, which is <= MAX_AMMOS_PER_OBJDEF. */
 
 	/* Firemodes (per weapon). */
-	struct objDef_s *weapons[MAX_WEAPONS_PER_OBJDEF];		/**< List of weapon-object pointers where this item can be used in.
+	const struct objDef_s *weapons[MAX_WEAPONS_PER_OBJDEF];		/**< List of weapon-object pointers where this item can be used in.
 															 * Correct index for this array can be get from fireDef_t.weapFdsIdx. or
 															 * FIRESH_FiredefForWeapon. */
 	fireDef_t fd[MAX_WEAPONS_PER_OBJDEF][MAX_FIREDEFS_PER_WEAPON];	/**< List of firemodes per weapon (the ammo can be used in). */
@@ -335,8 +335,8 @@ typedef struct invDef_s {
  */
 typedef struct item_s {
 	int a;			/**< Number of ammo rounds left - see NONE_AMMO */
-	objDef_t *m;	/**< Pointer to ammo type. */
-	objDef_t *t;	/**< Pointer to weapon. */
+	const objDef_t *m;	/**< Pointer to ammo type. */
+	const objDef_t *t;	/**< Pointer to weapon. */
 	int amount;		/**< The amount of items of this type on the same x and y location in the container */
 	int rotated;	/**< If the item is currently displayed rotated (qtrue or 1) or not (qfalse or 0)
 					 * @note don't change this to anything smaller than 4 bytes - the network
@@ -403,7 +403,7 @@ qboolean INV_IsArmourDef(const invDef_t* invDef);
 /* ================================ */
 
 invList_t* INVSH_HasArmour(const inventory_t *inv);
-void INVSH_InitCSI(struct csi_s * import) __attribute__((nonnull));
+void INVSH_InitCSI(const struct csi_s * import) __attribute__((nonnull));
 int INVSH_CheckToInventory(const inventory_t* const i, const objDef_t *ob, const invDef_t * container, const int x, const int y, const invList_t *ignoredItem);
 qboolean INVSH_CompareItem(const item_t *const item1, const item_t *const item2);
 void INVSH_GetFirstShapePosition(const invList_t *ic, int* const x, int* const y);
@@ -414,12 +414,12 @@ void INVSH_FindSpace(const inventory_t* const inv, const item_t *item, const inv
 qboolean INV_IsCraftItem(const objDef_t *obj);
 qboolean INV_IsBaseDefenceItem(const objDef_t *item);
 
-objDef_t *INVSH_GetItemByID(const char *id);
-objDef_t *INVSH_GetItemByIDX(int index);
-objDef_t *INVSH_GetItemByIDSilent(const char *id);
+const objDef_t *INVSH_GetItemByID(const char *id);
+const objDef_t *INVSH_GetItemByIDX(int index);
+const objDef_t *INVSH_GetItemByIDSilent(const char *id);
 qboolean INVSH_LoadableInWeapon(const objDef_t *od, const objDef_t *weapon);
 
-invDef_t *INVSH_GetInventoryDefinitionByID(const char *id);
+const invDef_t *INVSH_GetInventoryDefinitionByID(const char *id);
 
 #define THIS_FIREMODE(fm, HAND, fdIdx)	((fm)->hand == (HAND) && (fm)->fmIdx == (fdIdx))
 #define SANE_FIREMODE(fm)	(((fm)->hand > ACTOR_HAND_NOT_SET && (fm)->fmIdx >= 0 && (fm)->fmIdx < MAX_FIREDEFS_PER_WEAPON && (fm)->weapon != NULL))

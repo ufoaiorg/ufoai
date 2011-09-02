@@ -532,9 +532,9 @@ static void I_DestroyInventory (inventoryInterface_t* self, inventory_t* const i
  * @param[in] missedPrimary if actor didn't get primary weapon, this is 0-100 number to increase ammo number.
  * @sa INVSH_LoadableInWeapon
  */
-static int I_PackAmmoAndWeapon (inventoryInterface_t *self, inventory_t* const inv, objDef_t* weapon, int missedPrimary, const equipDef_t *ed)
+static int I_PackAmmoAndWeapon (inventoryInterface_t *self, inventory_t* const inv, const objDef_t* weapon, int missedPrimary, const equipDef_t *ed)
 {
-	objDef_t *ammo = NULL;
+	const objDef_t *ammo = NULL;
 	item_t item = {NONE_AMMO, NULL, NULL, 0, 0};
 	qboolean allowLeft;
 	qboolean packed;
@@ -561,7 +561,7 @@ static int I_PackAmmoAndWeapon (inventoryInterface_t *self, inventory_t* const i
 			int totalAvailableAmmo = 0;
 			int i;
 			for (i = 0; i < self->csi->numODs; i++) {
-				objDef_t *obj = INVSH_GetItemByIDX(i);
+				const objDef_t *obj = INVSH_GetItemByIDX(i);
 				if (ed->numItems[i] && INVSH_LoadableInWeapon(obj, weapon)) {
 					totalAvailableAmmo++;
 				}
@@ -569,7 +569,7 @@ static int I_PackAmmoAndWeapon (inventoryInterface_t *self, inventory_t* const i
 			if (totalAvailableAmmo) {
 				int randNumber = rand() % totalAvailableAmmo;
 				for (i = 0; i < self->csi->numODs; i++) {
-					objDef_t *obj = INVSH_GetItemByIDX(i);
+					const objDef_t *obj = INVSH_GetItemByIDX(i);
 					if (ed->numItems[i] && INVSH_LoadableInWeapon(obj, weapon)) {
 						randNumber--;
 						if (randNumber < 0) {
@@ -646,7 +646,7 @@ static int I_PackAmmoAndWeapon (inventoryInterface_t *self, inventory_t* const i
  */
 static void I_EquipActorMelee (inventoryInterface_t *self, inventory_t* const inv, const teamDef_t* td)
 {
-	objDef_t *obj;
+	const objDef_t *obj;
 	item_t item;
 
 	assert(td->onlyWeapon);
@@ -671,7 +671,7 @@ static void I_EquipActorMelee (inventoryInterface_t *self, inventory_t* const in
  * @param[in] inv The inventory that will get the weapon.
  * @param[in] weapon Pointer to the item which being added to robot's inventory.
  */
-static void I_EquipActorRobot (inventoryInterface_t *self, inventory_t* const inv, objDef_t* weapon)
+static void I_EquipActorRobot (inventoryInterface_t *self, inventory_t* const inv, const objDef_t* weapon)
 {
 	item_t item;
 
@@ -723,13 +723,13 @@ static void I_EquipActor (inventoryInterface_t* self, inventory_t* const inv, co
 		int sum;
 		int missedPrimary = 0; /**< If actor has a primary weapon, this is zero. Otherwise, this is the probability * 100
 								* that the actor had to get a primary weapon (used to compensate the lack of primary weapon) */
-		objDef_t *primaryWeapon = NULL;
+		const objDef_t *primaryWeapon = NULL;
 		int hasWeapon = 0;
 		/* Primary weapons */
 		const int maxWeaponIdx = min(self->csi->numODs - 1, numEquip - 1);
 		int randNumber = rand() % 100;
 		for (i = 0; i < maxWeaponIdx; i++) {
-			objDef_t *obj = INVSH_GetItemByIDX(i);
+			const objDef_t *obj = INVSH_GetItemByIDX(i);
 			if (ed->numItems[i] && obj->weapon && obj->fireTwoHanded && obj->isPrimary) {
 				randNumber -= ed->numItems[i];
 				missedPrimary += ed->numItems[i];
@@ -766,9 +766,9 @@ static void I_EquipActor (inventoryInterface_t* self, inventory_t* const inv, co
 		/* Sidearms (secondary weapons with reload). */
 		do {
 			int randNumber = rand() % 100;
-			objDef_t *secondaryWeapon = NULL;
+			const objDef_t *secondaryWeapon = NULL;
 			for (i = 0; i < self->csi->numODs; i++) {
-				objDef_t *obj = INVSH_GetItemByIDX(i);
+				const objDef_t *obj = INVSH_GetItemByIDX(i);
 				if (ed->numItems[i] && obj->weapon && obj->reload && !obj->deplete && obj->isSecondary) {
 					randNumber -= ed->numItems[i] / (primary == WEAPON_PARTICLE_OR_NORMAL ? 2 : 1);
 					if (randNumber < 0) {
@@ -798,7 +798,7 @@ static void I_EquipActor (inventoryInterface_t* self, inventory_t* const inv, co
 		 * have one misc if it fits your backpack */
 		sum = 0;
 		for (i = 0; i < self->csi->numODs; i++) {
-			objDef_t *obj = INVSH_GetItemByIDX(i);
+			const objDef_t *obj = INVSH_GetItemByIDX(i);
 			if (ed->numItems[i] && ((obj->weapon && obj->isSecondary
 			 && (!obj->reload || obj->deplete)) || obj->isMisc)) {
 				/* if ed->num[i] is greater than 100, the first number is the number of items you'll get:
@@ -810,9 +810,9 @@ static void I_EquipActor (inventoryInterface_t* self, inventory_t* const inv, co
 		if (sum) {
 			do {
 				int randNumber = rand() % sum;
-				objDef_t *secondaryWeapon = NULL;
+				const objDef_t *secondaryWeapon = NULL;
 				for (i = 0; i < self->csi->numODs; i++) {
-					objDef_t *obj = INVSH_GetItemByIDX(i);
+					const objDef_t *obj = INVSH_GetItemByIDX(i);
 					if (ed->numItems[i] && ((obj->weapon && obj->isSecondary
 					 && (!obj->reload || obj->deplete)) || obj->isMisc)) {
 						randNumber -= ed->numItems[i] ? max(ed->numItems[i] % 100, 1) : 0;
@@ -835,11 +835,11 @@ static void I_EquipActor (inventoryInterface_t* self, inventory_t* const inv, co
 		/* If no weapon at all, bad guys will always find a blade to wield. */
 		if (!hasWeapon) {
 			int maxPrice = 0;
-			objDef_t *blade = NULL;
+			const objDef_t *blade = NULL;
 			Com_DPrintf(DEBUG_SHARED, "INVSH_EquipActor: no weapon picked in equipment '%s', defaulting to the most expensive secondary weapon without reload. (%s)\n",
 					ed->name, self->name);
 			for (i = 0; i < self->csi->numODs; i++) {
-				objDef_t *obj = INVSH_GetItemByIDX(i);
+				const objDef_t *obj = INVSH_GetItemByIDX(i);
 				if (ed->numItems[i] && obj->weapon && obj->isSecondary && !obj->reload) {
 					if (obj->price > maxPrice) {
 						maxPrice = obj->price;
@@ -865,7 +865,7 @@ static void I_EquipActor (inventoryInterface_t* self, inventory_t* const inv, co
 		do {
 			int randNumber = rand() % 100;
 			for (i = 0; i < self->csi->numODs; i++) {
-				objDef_t *armour = INVSH_GetItemByIDX(i);
+				const objDef_t *armour = INVSH_GetItemByIDX(i);
 				if (ed->numItems[i] && INV_IsArmour(armour)) {
 					randNumber -= ed->numItems[i];
 					if (randNumber < 0) {
@@ -887,7 +887,7 @@ static void I_EquipActor (inventoryInterface_t* self, inventory_t* const inv, co
 		int randNumber = rand() % 10;
 		for (i = 0; i < self->csi->numODs; i++) {
 			if (ed->numItems[i]) {
-				objDef_t *miscItem = INVSH_GetItemByIDX(i);
+				const objDef_t *miscItem = INVSH_GetItemByIDX(i);
 				if (miscItem->isMisc && !miscItem->weapon) {
 					randNumber -= ed->numItems[i];
 					if (randNumber < 0) {

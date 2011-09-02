@@ -1758,8 +1758,7 @@ static void Com_ParseItem (const char *name, const char **text)
 	int i;
 
 	/* search for items with same name */
-	od = INVSH_GetItemByIDSilent(name);
-	if (od != NULL) {
+	if (INVSH_GetItemByIDSilent(name) != NULL) {
 		Com_Printf("Com_ParseItem: weapon def \"%s\" with same name found, second ignored\n", name);
 		return;
 	}
@@ -2036,7 +2035,7 @@ static void Com_ParseEquipment (const char *name, const char **text)
 
 		if (!Com_ParseBlockToken(name, text, ed, equipment_definition_vals, NULL, token)) {
 			if (Q_streq(token, "item")) {
-				objDef_t *od;
+				const objDef_t *od;
 				token = Com_EParse(text, errhead, name);
 				if (!*text || *token == '}')
 					Sys_Error("Invalid item token in equipment definition: %s", ed->name);
@@ -2564,7 +2563,7 @@ static void Com_ParseTeam (const char *name, const char **text)
 
 		if (!Com_ParseBlockToken(name, text, td, teamDefValues, NULL, token)) {
 			if (Q_streq(token, "onlyWeapon")) {
-				objDef_t *od;
+				const objDef_t *od;
 				token = Com_EParse(text, errhead, name);
 				if (!*text)
 					return;
@@ -3124,7 +3123,7 @@ static void Com_AddObjectLinks (void)
 		if (od->numWeapons == 0 && (od->weapon || od->craftitem.type <= AC_ITEM_WEAPON)) {
 			/* this is a weapon, an aircraft weapon, or a base defence system */
 			for (n = 0; n < csi.numODs; n++) {
-				objDef_t *weapon = INVSH_GetItemByIDX(n);
+				const objDef_t *weapon = INVSH_GetItemByIDX(n);
 				for (m = 0; m < weapon->numWeapons; m++) {
 					if (weapon->weapons[m] == od) {
 						assert(od->numAmmos <= MAX_AMMOS_PER_OBJDEF);

@@ -94,7 +94,7 @@ qboolean INV_LoadWeapon (const invList_t *weaponList, inventory_t *inv, const in
 	int equipType;
 	invList_t *ic = NULL;
 	int i = 0;
-	objDef_t *weapon;
+	const objDef_t *weapon;
 
 	assert(weaponList);
 
@@ -144,7 +144,7 @@ static void INV_InventoryList_f (void)
 
 	for (i = 0; i < csi.numODs; i++) {
 		int j;
-		objDef_t *od = INVSH_GetItemByIDX(i);
+		const objDef_t *od = INVSH_GetItemByIDX(i);
 
 		Com_Printf("Item: %s\n", od->id);
 		Com_Printf("... name          -> %s\n", od->name);

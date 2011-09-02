@@ -161,7 +161,7 @@ void CAP_RemoveItemsExceedingCapacity (base_t *base)
 			/* items are destroyed. We guess that all items of a given type are stored in the same location
 			 *	=> destroy all items of this type */
 			const int idx = objIdx[randNumber];
-			objDef_t *od = INVSH_GetItemByIDX(idx);
+			const objDef_t *od = INVSH_GetItemByIDX(idx);
 			B_UpdateStorageAndCapacity(base, od, -B_ItemInBase(od, base), qfalse, qfalse);
 		}
 		REMOVE_ELEM(objIdx, randNumber, num);

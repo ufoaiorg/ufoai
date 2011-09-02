@@ -95,7 +95,7 @@ struct edict_s {
 typedef struct {
 	/* client/server information */
 	int seed; /**< random seed */
-	csi_t *csi;
+	const csi_t *csi;
 	routing_t *routingMap;	/**< server side routing table */
 
 	/* special messages */

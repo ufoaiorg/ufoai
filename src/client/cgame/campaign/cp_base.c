@@ -2628,7 +2628,7 @@ qboolean B_LoadStorageXML (xmlNode_t *parent, equipDef_t *equip)
 	xmlNode_t *node;
 	for (node = XML_GetNode(parent, SAVE_BASES_ITEM); node; node = XML_GetNextNode(node, parent, SAVE_BASES_ITEM)) {
 		const char *s = XML_GetString(node, SAVE_BASES_ODS_ID);
-		objDef_t *od = INVSH_GetItemByID(s);
+		const objDef_t *od = INVSH_GetItemByID(s);
 
 		if (!od) {
 			Com_Printf("B_Load: Could not find item '%s'\n", s);

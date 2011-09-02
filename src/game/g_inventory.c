@@ -65,7 +65,7 @@ qboolean G_InventoryRemoveItemByID (const char *itemID, edict_t *ent, containerI
 {
 	invList_t *ic = CONTAINER(ent, container);
 	while (ic) {
-		objDef_t *item = ic->item.t;
+		const objDef_t *item = ic->item.t;
 		if (item != NULL && Q_streq(item->id, itemID)) {
 			/* remove the virtual item to update the inventory lists */
 			if (!game.i.RemoveFromInventory(&game.i, &ent->chr.i, INVDEF(container), ic))
@@ -127,7 +127,7 @@ qboolean G_AddItemToFloor (const pos3_t pos, const char *itemID)
 {
 	edict_t *floor;
 	item_t item = {NONE_AMMO, NULL, NULL, 0, 0};
-	objDef_t *od = INVSH_GetItemByIDSilent(itemID);
+	const objDef_t *od = INVSH_GetItemByIDSilent(itemID);
 	if (!od) {
 		gi.DPrintf("Could not find item '%s'\n", itemID);
 		return qfalse;
@@ -286,7 +286,7 @@ void G_InventoryToFloor (edict_t *ent)
  * @sa CL_NetReceiveItem
  * @sa EV_INV_TRANSFER
  */
-void G_ReadItem (item_t *item, invDef_t **container, int *x, int *y)
+void G_ReadItem (item_t *item, const invDef_t **container, int *x, int *y)
 {
 	int t, m;
 	containerIndex_t containerID;

@@ -1049,7 +1049,7 @@ static void CP_DebugAllItems_f (void)
 	base = B_GetBaseByIDX(i);
 
 	for (i = 0; i < csi.numODs; i++) {
-		objDef_t *obj = INVSH_GetItemByIDX(i);
+		const objDef_t *obj = INVSH_GetItemByIDX(i);
 		if (!obj->weapon && !obj->numWeapons)
 			continue;
 		B_UpdateStorageAndCapacity(base, obj, 1, qfalse, qtrue);

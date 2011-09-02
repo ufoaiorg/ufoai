@@ -73,7 +73,7 @@ static const invList_t *dragInfoIC;
  * @return invList_t Pointer to the invList_t/item that is located at x/y or equals "item".
  * @sa INVSH_SearchInInventory
  */
-static invList_t *UI_ContainerNodeGetExistingItem (const uiNode_t *node, objDef_t *item, const itemFilterTypes_t filterType)
+static invList_t *UI_ContainerNodeGetExistingItem (const uiNode_t *node, const objDef_t *item, const itemFilterTypes_t filterType)
 {
 	return INVSH_SearchInInventoryWithFilter(ui_inventory, EXTRADATACONST(node).super.container, NONE, NONE, item, filterType);
 }
@@ -118,7 +118,7 @@ static void UI_ContainerItemIteratorNext (containerItemIterator_t *iterator)
 			qboolean isAmmo;
 			qboolean isWeapon;
 			qboolean isArmour;
-			objDef_t *obj = INVSH_GetItemByIDX(iterator->itemID);
+			const objDef_t *obj = INVSH_GetItemByIDX(iterator->itemID);
 
 			/* gameplay filter */
 			if (!GAME_ItemIsUseable(obj))
@@ -215,7 +215,7 @@ static void UI_BaseInventoryNodeUpdateScroll (uiNode_t* node)
  */
 static void UI_GetItemTooltip (item_t item, char *tooltipText, size_t stringMaxLength)
 {
-	objDef_t *weapon;
+	const objDef_t *weapon;
 
 	assert(item.t);
 
@@ -276,7 +276,7 @@ static const vec4_t colorDisabledLoadable = {0.5, 0.25, 0.25, 1.0};
  * @brief Draw the base inventory
  * @return The full height requested by the current view (not the node height)
  */
-static int UI_BaseInventoryNodeDrawItems (uiNode_t *node, objDef_t *highlightType)
+static int UI_BaseInventoryNodeDrawItems (uiNode_t *node, const objDef_t *highlightType)
 {
 	qboolean outOfNode = qfalse;
 	vec2_t nodepos;
@@ -290,7 +290,7 @@ static int UI_BaseInventoryNodeDrawItems (uiNode_t *node, objDef_t *highlightTyp
 	UI_ContainerItemIteratorInit(&iterator, node);
 	for (; iterator.itemID < csi.numODs; UI_ContainerItemIteratorNext(&iterator)) {
 		const int id = iterator.itemID;
-		objDef_t *obj = INVSH_GetItemByIDX(id);
+		const objDef_t *obj = INVSH_GetItemByIDX(id);
 		item_t tempItem = {1, NULL, obj, 0, 0};
 		vec3_t pos;
 		vec3_t ammopos;
@@ -299,7 +299,7 @@ static int UI_BaseInventoryNodeDrawItems (uiNode_t *node, objDef_t *highlightTyp
 		int amount;
 		const int col = items % EXTRADATA(node).columns;
 		int cellHeight = 0;
-		invList_t *icItem = iterator.itemFound;
+		const invList_t *icItem = iterator.itemFound;
 
 		/* skip items over and bellow the node view */
 		if (outOfNode || currentHeight < EXTRADATA(node).scrollY.viewPos) {
@@ -426,7 +426,7 @@ static int UI_BaseInventoryNodeDrawItems (uiNode_t *node, objDef_t *highlightTyp
 /**
  * @brief Draw the inventory of the base
  */
-static void UI_BaseInventoryNodeDraw2 (uiNode_t *node, objDef_t *highlightType)
+static void UI_BaseInventoryNodeDraw2 (uiNode_t *node, const objDef_t *highlightType)
 {
 	qboolean updateScroll = qfalse;
 	int visibleHeight = 0;
@@ -472,7 +472,7 @@ static void UI_BaseInventoryNodeDraw2 (uiNode_t *node, objDef_t *highlightType)
  */
 static void UI_BaseInventoryNodeDraw (uiNode_t *node)
 {
-	objDef_t *highlightType = NULL;
+	const objDef_t *highlightType = NULL;
 
 	if (!EXTRADATA(node).super.container)
 		return;
@@ -515,7 +515,7 @@ static invList_t *UI_BaseInventoryNodeGetItem (const uiNode_t* const node,
 	UI_ContainerItemIteratorInit(&iterator, node);
 	for (; iterator.itemID < csi.numODs; UI_ContainerItemIteratorNext(&iterator)) {
 		const int id = iterator.itemID;
-		objDef_t *obj = INVSH_GetItemByIDX(id);
+		const objDef_t *obj = INVSH_GetItemByIDX(id);
 		vec2_t pos;
 		vec2_t ammopos;
 		const int col = items % EXTRADATACONST(node).columns;
@@ -575,7 +575,7 @@ static invList_t *UI_BaseInventoryNodeGetItem (const uiNode_t* const node,
 		if (obj->weapon && EXTRADATACONST(node).displayAmmoOfWeapon) {
 			int ammoIdx;
 			for (ammoIdx = 0; ammoIdx < obj->numAmmos; ammoIdx++) {
-				objDef_t *objammo = obj->ammos[ammoIdx];
+				const objDef_t *objammo = obj->ammos[ammoIdx];
 
 				/* skip unusable ammo */
 				if (!GAME_ItemIsUseable(objammo))

@@ -62,7 +62,7 @@ void CL_ActorShootHidden (const eventRegister_t *self, struct dbuffer *msg)
 	const fireDef_t *fd;
 	int first;
 	int objIdx;
-	objDef_t *obj;
+	const objDef_t *obj;
 	weaponFireDefIndex_t weapFdsIdx;
 	fireDefIndex_t fdIdx;
 

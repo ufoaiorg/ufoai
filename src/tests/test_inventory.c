@@ -79,9 +79,9 @@ static int UFO_CleanSuiteInventory (void)
 static void testItemAdd (void)
 {
 	inventory_t inv;
-	objDef_t *od;
+	const objDef_t *od;
 	item_t item;
-	invDef_t *container;
+	const invDef_t *container;
 
 	ResetInventoryList();
 
@@ -107,9 +107,9 @@ static void testItemAdd (void)
 static void testItemDel (void)
 {
 	inventory_t inv;
-	objDef_t *od;
+	const objDef_t *od;
 	item_t item;
-	invDef_t *container;
+	const invDef_t *container;
 	invList_t *addedItem;
 
 	ResetInventoryList();
@@ -140,9 +140,9 @@ static void testItemDel (void)
 static void testItemMove (void)
 {
 	inventory_t inv;
-	objDef_t *od;
+	const objDef_t *od;
 	item_t item;
-	invDef_t *container, *containerTo;
+	const invDef_t *container, *containerTo;
 	invList_t *addedItem;
 
 	ResetInventoryList();
@@ -179,9 +179,9 @@ static void testItemMove (void)
 static void testItemReload (void)
 {
 	inventory_t inv;
-	objDef_t *od, *ad;
+	const objDef_t *od, *ad;
 	item_t item, ammo, ammoFrom;
-	invDef_t *container, *containerFrom;
+	const invDef_t *container, *containerFrom;
 	invList_t *addedItem;
 
 	ResetInventoryList();
@@ -255,7 +255,7 @@ static void testItemReload (void)
 	CU_ASSERT(INVSH_ExistsInInventory(&inv, container, &item) == qtrue);
 }
 
-static qboolean testAddSingle (inventory_t *inv, objDef_t *od, invDef_t *container)
+static qboolean testAddSingle (inventory_t *inv, const objDef_t *od, const invDef_t *container)
 {
 	item_t item;
 
@@ -269,8 +269,8 @@ static qboolean testAddSingle (inventory_t *inv, objDef_t *od, invDef_t *contain
 static void testItemMassActions (void)
 {
 	inventory_t inv;
-	objDef_t *od;
-	invDef_t *container;
+	const objDef_t *od;
+	const invDef_t *container;
 	qboolean addedItem;
 	int i;
 
@@ -333,8 +333,8 @@ static void testItemMassActions (void)
 static void testItemToHeadgear (void)
 {
 	inventory_t inv;
-	objDef_t *od;
-	invDef_t *container;
+	const objDef_t *od;
+	const invDef_t *container;
 	item_t item;
 
 	ResetInventoryList();

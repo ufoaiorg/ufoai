@@ -790,9 +790,9 @@ void LE_AddProjectile (const fireDef_t *fd, int flags, const vec3_t muzzle, cons
  * @return the item index in the @c csi.ods array
  * @note Only call this for none empty invList_t - see FLOOR, LEFT, RIGHT and so on macros
  */
-static objDef_t *LE_BiggestItem (const invList_t *ic)
+static const objDef_t *LE_BiggestItem (const invList_t *ic)
 {
-	objDef_t *max;
+	const objDef_t *max;
 	int maxSize = 0;
 
 	for (max = ic->item.t; ic; ic = ic->next) {

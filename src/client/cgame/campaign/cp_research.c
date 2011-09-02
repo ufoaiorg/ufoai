@@ -485,7 +485,7 @@ void RS_InitTree (const campaign_t *campaign, qboolean load)
 	int i, j;
 	technology_t *tech;
 	byte found;
-	objDef_t *od;
+	const objDef_t *od;
 
 	/* Add links to technologies. */
 	for (i = 0, od = csi.ods; i < csi.numODs; i++, od++) {
@@ -526,7 +526,7 @@ void RS_InitTree (const campaign_t *campaign, qboolean load)
 		case RS_ARMOUR:
 			found = qfalse;
 			for (j = 0; j < csi.numODs; j++) {	/* j = item index */
-				objDef_t *item = INVSH_GetItemByIDX(j);
+				const objDef_t *item = INVSH_GetItemByIDX(j);
 
 				/* This item has been 'provided' -> get the correct data. */
 				if (Q_streq(tech->provides, item->id)) {

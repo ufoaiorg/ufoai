@@ -47,7 +47,7 @@ void UI_ContainerNodeAutoPlaceItem (uiNode_t* node, invList_t *ic);
  */
 typedef struct containerExtraData_s {
 	/* for all containers */
-	invDef_t *container;	/**< The container linked to this node. */
+	const invDef_t *container;	/**< The container linked to this node. */
 
 	int lastSelectedId;		/**< id oject the object type selected */
 	struct uiAction_s *onSelect;	/**< call when we select an item */

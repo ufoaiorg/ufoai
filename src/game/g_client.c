@@ -521,7 +521,7 @@ qboolean G_ClientCanReload (edict_t *ent, containerIndex_t containerID)
 {
 	invList_t *ic;
 	containerIndex_t container;
-	objDef_t *weapon;
+	const objDef_t *weapon;
 
 	if (CONTAINER(ent, containerID)) {
 		weapon = CONTAINER(ent, containerID)->item.t;
@@ -552,10 +552,10 @@ void G_ClientGetWeaponFromInventory (edict_t *ent)
 {
 	invList_t *ic;
 	invList_t *icFinal;
-	invDef_t *invDef;
+	const invDef_t *invDef;
 	int tu;
 	containerIndex_t container;
-	invDef_t *bestContainer;
+	const invDef_t *bestContainer;
 
 	/* e.g. bloodspiders are not allowed to carry or collect weapons */
 	if (!ent->chr.teamDef->weapons)
@@ -1089,7 +1089,7 @@ static void G_ClientReadInventory (edict_t *ent)
 	int nr = gi.ReadShort();
 
 	for (; nr-- > 0;) {
-		invDef_t *container;
+		const invDef_t *container;
 		item_t item;
 		int x, y;
 		G_ReadItem(&item, &container, &x, &y);
@@ -1153,7 +1153,7 @@ static void G_ClientSkipActorInfo (void)
 	invDef_t container;
 	item_t item;
 	int x, y;
-	invDef_t *c = &container;
+	const invDef_t *c = &container;
 
 	G_ClientReadCharacter(&ent);
 

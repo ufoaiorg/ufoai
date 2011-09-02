@@ -27,7 +27,7 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 
 #include "q_shared.h"
 
-static csi_t *CSI;
+static const csi_t *CSI;
 
 /**
  * @brief Initializes client server shared data pointer. This works because the client and the server are both
@@ -36,7 +36,7 @@ static csi_t *CSI;
  * @sa G_Init
  * @sa Com_ParseScripts
  */
-void INVSH_InitCSI (csi_t * import)
+void INVSH_InitCSI (const csi_t * import)
 {
 	CSI = import;
 }
@@ -508,14 +508,14 @@ void INVSH_FindSpace (const inventory_t* const inv, const item_t *item, const in
  * @param[in] id the item id in our object definition array (csi.ods)
  * @sa INVSH_GetItemByID
  */
-objDef_t *INVSH_GetItemByIDSilent (const char *id)
+const objDef_t *INVSH_GetItemByIDSilent (const char *id)
 {
 	int i;
 
 	if (!id)
 		return NULL;
 	for (i = 0; i < CSI->numODs; i++) {	/* i = item index */
-		objDef_t *item = &CSI->ods[i];
+		const objDef_t *item = &CSI->ods[i];
 		if (Q_streq(id, item->id)) {
 			return item;
 		}
@@ -526,7 +526,7 @@ objDef_t *INVSH_GetItemByIDSilent (const char *id)
 /**
  * @brief Returns the index of this item in the inventory.
  */
-objDef_t *INVSH_GetItemByIDX (int index)
+const objDef_t *INVSH_GetItemByIDX (int index)
 {
 	if (index == NONE)
 		return NULL;
@@ -542,9 +542,9 @@ objDef_t *INVSH_GetItemByIDX (int index)
  * @param[in] id the item id in our object definition array (csi.ods)
  * @sa INVSH_GetItemByIDSilent
  */
-objDef_t *INVSH_GetItemByID (const char *id)
+const objDef_t *INVSH_GetItemByID (const char *id)
 {
-	objDef_t *od = INVSH_GetItemByIDSilent(id);
+	const objDef_t *od = INVSH_GetItemByIDSilent(id);
 	if (!od)
 		Com_Printf("INVSH_GetItemByID: Item \"%s\" not found.\n", id);
 
@@ -556,10 +556,10 @@ objDef_t *INVSH_GetItemByID (const char *id)
  * @param[in] id ID or name of the inventory container to search for
  * @return @c NULL if not found
  */
-invDef_t *INVSH_GetInventoryDefinitionByID (const char *id)
+const invDef_t *INVSH_GetInventoryDefinitionByID (const char *id)
 {
 	containerIndex_t i;
-	invDef_t *container;
+	const invDef_t *container;
 
 	for (i = 0, container = CSI->ids; i < CSI->numIDs; container++, i++)
 		if (Q_streq(id, container->name))

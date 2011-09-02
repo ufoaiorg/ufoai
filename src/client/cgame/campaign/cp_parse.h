@@ -36,12 +36,12 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
  */
 typedef struct components_s {
 	char assemblyId[MAX_VAR];	/**< The name of the assembly (i.e. the UFO) */
-	objDef_t *assemblyItem;	/**< object (that is an assembly)*/
+	const objDef_t *assemblyItem;	/**< object (that is an assembly)*/
 
 	int time;	/**< The time (in hours) until the disassembly is finished. */
 
 	int numItemtypes;				/**< Number of item-types listed below. (max is MAX_COMP) */
-	objDef_t *items[MAX_COMP];		/**< List of parts (item-types). */
+	const objDef_t *items[MAX_COMP];		/**< List of parts (item-types). */
 	int itemAmount[MAX_COMP];		/**< How many items of this type are in this assembly. */
 	int itemAmount2[MAX_COMP];		/**< How many items of this type are in this assembly when it crashed (max-value?). */
 } components_t;

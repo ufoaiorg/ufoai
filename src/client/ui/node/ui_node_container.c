@@ -90,7 +90,7 @@ static const invList_t *dragInfoIC;
  * @return invList_t Pointer to the invList_t/item that is located at x/y or equals "item".
  * @sa INVSH_SearchInInventory
  */
-static invList_t *UI_ContainerNodeGetExistingItem (const uiNode_t *node, objDef_t *item, const itemFilterTypes_t filterType)
+static invList_t *UI_ContainerNodeGetExistingItem (const uiNode_t *node, const objDef_t *item, const itemFilterTypes_t filterType)
 {
 	return INVSH_SearchInInventoryWithFilter(ui_inventory, EXTRADATACONST(node).container, NONE, NONE, item, filterType);
 }
@@ -123,7 +123,7 @@ void UI_ContainerNodeUpdateEquipment (inventory_t *inv, const equipDef_t *ed)
 	assert(MAX_CONTAINERS >= FILTER_AIRCRAFT);
 
 	for (i = 0; i < csi.numODs; i++) {
-		objDef_t *od = INVSH_GetItemByIDX(i);
+		const objDef_t *od = INVSH_GetItemByIDX(i);
 		/* Don't allow to show unuseable items. */
 		if (!GAME_ItemIsUseable(od))
 			continue;
@@ -161,7 +161,7 @@ void UI_ContainerNodeUpdateEquipment (inventory_t *inv, const equipDef_t *ed)
  */
 void UI_DrawItem (uiNode_t *node, const vec3_t org, const item_t *item, int x, int y, const vec3_t scale, const vec4_t color)
 {
-	objDef_t *od = item->t;
+	const objDef_t *od = item->t;
 	vec4_t col;
 	vec3_t origin;
 
@@ -259,7 +259,7 @@ void UI_DrawItem (uiNode_t *node, const vec3_t org, const item_t *item, int x, i
  */
 static void UI_GetItemTooltip (item_t item, char *tooltipText, size_t stringMaxLength)
 {
-	objDef_t *weapon;
+	const objDef_t *weapon;
 
 	assert(item.t);
 
@@ -401,7 +401,7 @@ static void UI_ContainerNodeDrawFreeSpace (uiNode_t *node, inventory_t *inv)
 static void UI_ContainerNodeLoaded (uiNode_t* const node)
 {
 	const char *name;
-	invDef_t *container;
+	const invDef_t *container;
 
 	/** @todo find a better way to add more equip node, without this hack */
 	name = node->name;
@@ -449,7 +449,7 @@ static const vec4_t colorPreview = { 0.5, 0.5, 1, 1 };	/**< Make the preview ite
  * @param node Context node
  * @param highlightType Current selected object
  */
-static void UI_ContainerNodeDrawSingle (uiNode_t *node, objDef_t *highlightType)
+static void UI_ContainerNodeDrawSingle (uiNode_t *node, const objDef_t *highlightType)
 {
 	vec4_t color;
 	vec3_t pos;
@@ -515,7 +515,7 @@ static void UI_ContainerNodeDrawSingle (uiNode_t *node, objDef_t *highlightType)
 /**
  * @brief Draw a grip container
  */
-static void UI_ContainerNodeDrawGrid (uiNode_t *node, objDef_t *highlightType)
+static void UI_ContainerNodeDrawGrid (uiNode_t *node, const objDef_t *highlightType)
 {
 	const invList_t *ic;
 	vec3_t pos;
@@ -588,7 +588,7 @@ static void UI_ContainerNodeDrawDropPreview (uiNode_t *target)
  */
 static void UI_ContainerNodeDraw (uiNode_t *node)
 {
-	objDef_t *highlightType = NULL;
+	const objDef_t *highlightType = NULL;
 
 	if (!EXTRADATA(node).container)
 		return;
@@ -688,11 +688,11 @@ static void UI_ContainerNodeDrawTooltip (uiNode_t *node, int x, int y)
 	}
 }
 
-static qboolean UI_ContainerNodeAddItem (invDef_t *container, invList_t *ic, containerIndex_t containerID)
+static qboolean UI_ContainerNodeAddItem (const invDef_t *container, invList_t *ic, containerIndex_t containerID)
 {
 	int px, py;
 	qboolean packed;
-	invDef_t *target = INVDEF(containerID);
+	const invDef_t *target = INVDEF(containerID);
 
 	INVSH_FindSpace(ui_inventory, &ic->item, target, &px, &py, NULL);
 	packed = INV_MoveItem(ui_inventory, target, px, py, container, ic);
@@ -711,7 +711,7 @@ void UI_ContainerNodeAutoPlaceItem (uiNode_t* node, invList_t *ic)
 	containerIndex_t target;
 	uiNode_t *targetNode;
 	qboolean ammoChanged = qfalse;
-	invDef_t *container = EXTRADATA(node).container;
+	const invDef_t *container = EXTRADATA(node).container;
 
 	/* Right click: automatic item assignment/removal. */
 	if (container->id != csi.idEquip) {

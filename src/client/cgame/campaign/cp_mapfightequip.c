@@ -90,7 +90,7 @@ itemWeight_t AII_GetItemWeightBySize (const objDef_t *od)
  */
 qboolean AIM_SelectableCraftItem (const aircraftSlot_t *slot, const technology_t *tech)
 {
-	objDef_t *item;
+	const objDef_t *item;
 
 	if (!slot)
 		return qfalse;
@@ -827,7 +827,7 @@ qboolean AII_AddItemToSlot (base_t *base, const technology_t *tech, aircraftSlot
 void AIM_AutoEquipAircraft (aircraft_t *aircraft)
 {
 	int i;
-	objDef_t *item;
+	const objDef_t *item;
 	/** @todo Eliminate hardcoded techs here. */
 	const technology_t *tech = RS_GetTechByID("rs_craft_weapon_sparrowhawk");
 

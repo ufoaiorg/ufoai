@@ -702,10 +702,10 @@ void G_ActorReload (edict_t* ent, const invDef_t *invDef)
 {
 	invList_t *ic;
 	invList_t *icFinal;
-	objDef_t *weapon;
+	const objDef_t *weapon;
 	int tu;
 	containerIndex_t containerID;
-	invDef_t *bestContainer;
+	const invDef_t *bestContainer;
 
 	/* search for clips and select the one that is available easily */
 	icFinal = NULL;

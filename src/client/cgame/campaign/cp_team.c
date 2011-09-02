@@ -39,7 +39,7 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 static item_t CP_AddWeaponAmmo (equipDef_t * ed, item_t item)
 {
 	int i;
-	objDef_t *type = item.t;
+	const objDef_t *type = item.t;
 
 	assert(ed->numItems[type->idx] > 0);
 	ed->numItems[type->idx]--;
@@ -87,7 +87,7 @@ static item_t CP_AddWeaponAmmo (equipDef_t * ed, item_t item)
 	/* Search for any complete clips. */
 	/** @todo We may want to change this to use the type->ammo[] info. */
 	for (i = 0; i < csi.numODs; i++) {
-		objDef_t *od = INVSH_GetItemByIDX(i);
+		const objDef_t *od = INVSH_GetItemByIDX(i);
 		if (INVSH_LoadableInWeapon(od, type)) {
 			if (ed->numItems[i] > 0) {
 				ed->numItems[i]--;
@@ -116,7 +116,7 @@ static item_t CP_AddWeaponAmmo (equipDef_t * ed, item_t item)
 	/** @todo We may want to change this to use the type->ammo[] info. */
 	item.a = NONE_AMMO;
 	for (i = 0; i < csi.numODs; i++) {
-		objDef_t *od = INVSH_GetItemByIDX(i);
+		const objDef_t *od = INVSH_GetItemByIDX(i);
 		if (INVSH_LoadableInWeapon(od, type) && ed->numItemsLoose[i] > item.a) {
 			if (item.a > 0) {
 				/* We previously found some ammo, but we've now found other
