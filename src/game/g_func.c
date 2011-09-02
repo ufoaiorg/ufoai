@@ -96,7 +96,6 @@ static qboolean Destroy_Breakable (edict_t *self)
 		G_FreeEdict(self->child);
 
 	/* now we can destroy the edict completely */
-	G_EventPerish(self);
 	G_FreeEdict(self);
 
 	return qtrue;
