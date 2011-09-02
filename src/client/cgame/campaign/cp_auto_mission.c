@@ -914,6 +914,8 @@ void AM_Go (mission_t *mission, aircraft_t *aircraft, const campaign_t *campaign
 	results->civiliansSurvived = autoBattle.nUnits[AUTOMISSION_TEAM_TYPE_CIVILIAN];
 	results->civiliansKilled = 0;
 	results->civiliansKilledFriendlyFire = 0;
+	results->itemTypes = 0;
+	results->itemAmount = 0;
 
 	AM_DoFight(&autoBattle);
 

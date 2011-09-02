@@ -945,7 +945,9 @@ void CP_InitMissionResults (qboolean won, const missionResults_t *missionResults
 	Q_strcat(resultText, va(_("Civilians killed by Aliens\t%i\n"), missionResults->civiliansKilled), sizeof(resultText));
 	Q_strcat(resultText, va(_("Civilians killed by friendly fire\t%i\n"), missionResults->civiliansKilledFriendlyFire), sizeof(resultText));
 	Q_strcat(resultText, va(_("Civilians saved\t%i\n\n"), missionResults->civiliansSurvived), sizeof(resultText));
-	Q_strcat(resultText, va(_("Gathered items (types/all)\t%i/%i\n"), missionResults->itemTypes,
+
+	if (missionResults->itemTypes > 0 && missionResults->itemAmount > 0)
+		Q_strcat(resultText, va(_("Gathered items (types/all)\t%i/%i\n"), missionResults->itemTypes,
 			missionResults->itemAmount), sizeof(resultText));
 
 	if (won && missionResults->recovery)
