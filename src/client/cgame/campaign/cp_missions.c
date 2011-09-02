@@ -33,6 +33,7 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #include "cp_alienbase.h"
 #include "cp_alien_interest.h"
 #include "cp_missions.h"
+#include "cp_mission_triggers.h"
 #include "cp_time.h"
 #include "cp_xvi.h"
 #include "save/save_missions.h"
@@ -1069,7 +1070,12 @@ void CP_MissionEndActions (mission_t *mission, aircraft_t *aircraft, qboolean wo
 }
 
 /**
- * @sa CP_GameAutoGo
+ * @brief Closing actions after fighting a battle
+ * @param[in] campaign The capmaign we play
+ * @param[in, out] mission The mission the battle was on
+ * @param[in] battleParameters Parameters of the battle
+ * @param[in] if PHALANX won
+ * @note both manual and automatic missions call this through won/lost UI screen
  */
 void CP_MissionEnd (const campaign_t *campaign, mission_t* mission, const battleParam_t* battleParameters, qboolean won)
 {
@@ -1128,6 +1134,7 @@ void CP_MissionEnd (const campaign_t *campaign, mission_t* mission, const battle
 		/* The aircraft can be safely sent to its homebase without losing aliens */
 	}
 
+	CP_ExecuteMissionTrigger(mission, won);
 	CP_MissionEndActions(mission, aircraft, won);
 }
 

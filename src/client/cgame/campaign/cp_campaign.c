@@ -372,10 +372,8 @@ void CP_CheckLostCondition (const campaign_t *campaign)
 		}
 	}
 
-	if (endCampaign) {
-		Cvar_SetValue("mission_uforecovered", 0);
+	if (endCampaign)
 		CP_EndCampaign(qfalse);
-	}
 }
 
 /* Initial fraction of the population in the country where a mission has been lost / won */
@@ -910,9 +908,6 @@ void CP_StartSelectedMission (void)
 
 	CP_CreateBattleParameters(mis, battleParam, aircraft);
 	CP_SetMissionVars(mis, battleParam);
-	/* Set the states of mission Cvars to proper values. */
-	Cvar_SetValue("mission_uforecovered", 0);
-	Cvar_SetValue("mn_autogo", 0);
 
 	/* manage inventory */
 	/**

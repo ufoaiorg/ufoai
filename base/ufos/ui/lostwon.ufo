@@ -36,9 +36,9 @@ window won
 
 	button bt_continue
 	{
-		visiblewhen	"*cvar:sv_maxclients == 1"
 		string		"_Continue"
 		image		"ui/button_blue"
+		invis		true
 		pos			"865 700"
 		size		"128 53"
 		color		"1 1 1 0.8"
@@ -46,19 +46,17 @@ window won
 		font		"f_big"
 		onClick		{
 			*cvar:cp_mission_tryagain = 0
-			cmd "ui_pop;uforecover_check;"
-		}
-	}
-
-	confunc uforecover_check
-	{
-		if ( *cvar:mission_uforecovered == 1 ) {
-			cmd "ui_push uforecovery;"
+			cmd "ui_pop;"
 		}
 	}
 
 	func onWindowOpened
 	{
+		if ( *cvar:sv_maxclients == 1 ) {
+			*node:root.bt_continue@invis = false
+		} else {
+			*node:root.bt_continue@invis = true
+		}
 	}
 
 	func onWindowClosed
@@ -107,9 +105,9 @@ window lost
 
 	button bt_tryagain
 	{
-		visiblewhen	"*cvar:sv_maxclients == 1"
 		string		"_Try again"
 		tooltip		"_Retry this mission"
+		invis		true
 		image		"ui/button_blue"
 		pos			"480 700"
 		size		"128 53"
@@ -124,8 +122,8 @@ window lost
 
 	button bt_continue
 	{
-		visiblewhen	"*cvar:sv_maxclients == 1"
 		string		"_Continue"
+		invis		true
 		image		"ui/button_blue"
 		pos			"865 700"
 		size		"128 53"
@@ -140,10 +138,16 @@ window lost
 
 	func onWindowOpened
 	{
-		if ( *cvar:cp_mission_tryagain == 0 ) {
-			*node:root.bt_tryagain@invis = true
+		if ( *cvar:sv_maxclients == 1 ) {
+			*node:root.bt_continue@invis = false
+			if ( *cvar:cp_mission_tryagain == 1 ) {
+				*node:root.bt_tryagain@invis = true
+			} else {
+				*node:root.bt_tryagain@invis = false
+			}
 		} else {
-			*node:root.bt_tryagain@invis = false
+			*node:root.bt_continue@invis = true
+			*node:root.bt_tryagain@invis = true
 		}
 	}
 
@@ -449,11 +453,7 @@ window uforecovery
 		*node:root.sell_panel.cp_uforecovery_nationlist@lineselected = -1
 		*cvar:mission_recoverynation = ""
 
-		if ( *cvar:mission_uforecovered == 0 ) {
-			cmd "ui_pop;"
-		} else {
-			cmd "cp_uforecovery_sell_init; cp_uforecovery_store_init;"
-		}
+		cmd "cp_uforecovery_sell_init; cp_uforecovery_store_init;"
 	}
 
 	func onWindowClosed {

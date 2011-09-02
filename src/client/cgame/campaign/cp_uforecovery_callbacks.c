@@ -111,8 +111,6 @@ static void UR_DialogInit_f (void)
 	ccs.missionResults.ufoCondition = cond;
 	ccs.missionResults.crashsite = (cond < 1);
 	ccs.missionResults.ufotype = ufoCraft->ufotype;
-	/* Prepare related cvars. */
-	Cvar_SetValue("mission_uforecovered", 1);	/* This is used in menus to enable UFO Recovery nodes. */
 	/* Fill ufoRecovery structure */
 	OBJZERO(ufoRecovery);
 	ufoRecovery.ufoTemplate = ufoCraft;
@@ -120,6 +118,7 @@ static void UR_DialogInit_f (void)
 	ufoRecovery.sortedColumn = ORDER_NATION;
 
 	Cvar_Set("mn_uforecovery_actualufo", UFO_MissionResultToString());
+	UI_PushWindow("uforecovery", NULL, NULL);
 }
 
 /**

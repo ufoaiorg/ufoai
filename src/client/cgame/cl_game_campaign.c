@@ -197,7 +197,6 @@ static void GAME_CP_Results (struct dbuffer *msg, int winner, int *numSpawned, i
 	const qboolean won = (winner == cls.team);
 	missionResults_t *results;
 	aircraft_t *aircraft = MAP_GetMissionAircraft();
-	mission_t *mission = MAP_GetSelectedMission();
 
 	CP_ParseCharacterData(msg);
 
@@ -278,8 +277,6 @@ static void GAME_CP_Results (struct dbuffer *msg, int winner, int *numSpawned, i
 	CP_InitMissionResults(won, results);
 
 	UI_InitStack("geoscape", "campaign_main", qtrue, qtrue);
-
-	CP_ExecuteMissionTrigger(mission, won);
 
 	if (won)
 		UI_PushWindow("won", NULL, NULL);
