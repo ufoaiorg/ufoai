@@ -193,6 +193,8 @@ void G_ClientEndRound (player_t * player)
 
 	G_GetNextActiveTeam();
 
+	AI_CheckRespawn(TEAM_ALIEN);
+
 	/* no other team left? */
 	if (!G_MatchIsRunning())
 		return;

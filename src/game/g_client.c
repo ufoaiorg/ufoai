@@ -972,15 +972,21 @@ static edict_t *G_ClientGetFreeSpawnPoint (const player_t * player, int spawnTyp
 		edict_t *list[MAX_EDICTS];
 		int count = 0;
 		while ((ent = G_EdictsGetNext(ent)))
-			if (ent->type == spawnType && player->pers.team == ent->team)
+			if (ent->type == spawnType && player->pers.team == ent->team) {
+				if (G_GetActorFromPos(ent->pos))
+					continue;
 				list[count++] = ent;
+			}
 
 		if (count)
 			return list[rand() % count];
 	} else {
 		while ((ent = G_EdictsGetNext(ent)))
-			if (ent->type == spawnType && player->pers.team == ent->team)
+			if (ent->type == spawnType && player->pers.team == ent->team) {
+				if (G_GetActorFromPos(ent->pos))
+					continue;
 				return ent;
+			}
 	}
 
 	return NULL;
@@ -1037,14 +1043,21 @@ edict_t* G_ClientGetFreeSpawnPointForActorSize (const player_t *player, const ac
 		/* Find valid actor spawn fields for this player. */
 		ent = G_ClientGetFreeSpawnPoint(player, ET_ACTORSPAWN);
 		if (ent) {
-			ent->type = ET_ACTOR;
+			edict_t *copy = G_EdictDuplicate(ent);
+			if (copy != NULL)
+				copy->type = ET_ACTOR;
+			ent = copy;
 		}
 	} else if (actorSize == ACTOR_SIZE_2x2) {
 		/* Find valid actor spawn fields for this player. */
 		ent = G_ClientGetFreeSpawnPoint(player, ET_ACTOR2x2SPAWN);
 		if (ent) {
-			ent->type = ET_ACTOR2x2;
-			ent->morale = 100;
+			edict_t *copy = G_EdictDuplicate(ent);
+			if (copy != NULL) {
+				copy->type = ET_ACTOR2x2;
+				copy->morale = 100;
+			}
+			ent = copy;
 		}
 	} else {
 		gi.Error("G_ClientGetFreeSpawnPointForActorSize: unknown fieldSize for actor edict (actorSize: %i)\n",

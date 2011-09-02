@@ -59,6 +59,7 @@ cvar_t *sv_ai;
 cvar_t *sv_teamplay;
 cvar_t *sv_maxclients;
 cvar_t *sv_hurtaliens;
+cvar_t *sv_endlessaliens;
 cvar_t *sv_shot_origin;
 static cvar_t *sv_send_edicts;
 
@@ -181,6 +182,7 @@ static void G_Init (void)
 	sv_shot_origin = gi.Cvar_Get("sv_shot_origin", "8", 0, "Assumed distance of muzzle from model");
 	sv_send_edicts = gi.Cvar_Get("sv_send_edicts", "0", CVAR_ARCHIVE | CVAR_CHEAT, "Send server side edicts for client display like triggers");
 	sv_hurtaliens = gi.Cvar_Get("sv_hurtaliens", "0", CVAR_SERVERINFO, "Spawn hurt aliens");
+	sv_endlessaliens = gi.Cvar_Get("sv_endlessaliens", "0", CVAR_SERVERINFO | CVAR_LATCH, "Spawn endless aliens");
 
 	ai_alien = gi.Cvar_Get("ai_alien", "ortnok", 0, "Alien team");
 	ai_civilian = gi.Cvar_Get("ai_civilian", "europe", 0, "Civilian team");

@@ -234,6 +234,7 @@ extern cvar_t *sv_maxvelocity;
 extern cvar_t *sv_maxclients;
 extern cvar_t *sv_shot_origin;
 extern cvar_t *sv_hurtaliens;
+extern cvar_t *sv_endlessaliens;
 extern cvar_t *sv_maxplayersperteam;
 extern cvar_t *sv_maxsoldiersperteam;
 extern cvar_t *sv_maxsoldiersperplayer;
@@ -494,6 +495,7 @@ qboolean G_ClientShoot(const player_t *player, edict_t* ent, const pos3_t at, sh
 
 /* g_ai.c */
 void AI_Init(void);
+void AI_CheckRespawn(int team);
 extern edict_t *ai_waypointList;
 void G_AddToWayPointList(edict_t *ent);
 void AI_Run(void);
@@ -533,6 +535,7 @@ void SP_func_breakable(edict_t *ent);
 edict_t* G_EdictsInit(void);
 void G_EdictsReset(void);
 edict_t* G_EdictsGetNewEdict(void);
+edict_t* G_EdictDuplicate(const edict_t *edict);
 int G_EdictsGetNumber(const edict_t* ent);
 qboolean G_EdictsIsValidNum(const int idx);
 edict_t* G_EdictsGetByNum(const int num);

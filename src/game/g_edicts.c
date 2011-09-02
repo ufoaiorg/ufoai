@@ -124,6 +124,16 @@ edict_t* G_EdictsGetNext (edict_t* lastEnt)
 		return ent;
 }
 
+edict_t* G_EdictDuplicate (const edict_t *edict)
+{
+	edict_t *duplicate = G_EdictsGetNewEdict();
+	if (duplicate == NULL)
+		return NULL;
+	memcpy(duplicate, edict, sizeof(*edict));
+	duplicate->number = G_EdictsGetNumber(duplicate);
+	return duplicate;
+}
+
 /**
  * @brief Find an entity that is not in use
  */
