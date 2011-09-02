@@ -115,27 +115,41 @@ void R_ShiftLights (const vec3_t offset)
 	VectorCopy(offset, lights_offset);
 }
 
+/* currently, this func processes only the world lights */
 void R_EnableLights (void)
 {
 	light_t *l;
 	vec4_t position;
 	vec4_t diffuse;
 	int i;
+	int maxLights = r_dynamic_lights->integer;
+	vec4_t blackColor = {0.0, 0.0, 0.0, 1.0};
+
+	/* with the current blending model, lighting breaks FFP world render */
+	if (!r_programs->integer) {
+		glDisable(GL_LIGHTING);
+		return;
+	}
 
 	R_AddSustainedLights();
 
 	position[3] = diffuse[3] = 1.0;
 
-	for (i = 0, l = r_lightsArray; i < refdef.numLights; i++, l++) {
+	for (i = 0, l = r_lightsArray; i < refdef.numLights && i < maxLights && i < MAX_GL_LIGHTS; i++, l++) {
 		VectorSubtract(l->origin, lights_offset, position);
 		glLightfv(GL_LIGHT0 + i, GL_POSITION, position);
 		VectorCopy(l->color, diffuse);
 		glLightfv(GL_LIGHT0 + i, GL_DIFFUSE, diffuse);
 		glLightf(GL_LIGHT0 + i, GL_CONSTANT_ATTENUATION, l->radius * LIGHT_RADIUS_FACTOR);
+		glEnable(GL_LIGHT0 + i);
 	}
 
-	for (; i < MAX_GL_LIGHTS; i++)  /* disable the rest */
+	for (; i < MAX_GL_LIGHTS; i++) {  /* disable the rest */
 		glLightf(GL_LIGHT0 + i, GL_CONSTANT_ATTENUATION, MIN_GL_CONSTANT_ATTENUATION);
+		glLightfv(GL_LIGHT0 + i, GL_DIFFUSE, blackColor);
+		glDisable(GL_LIGHT0 + i);
+	}
+	glEnable(GL_LIGHTING);
 }
 
 void R_AddStaticLight (const r_light_t *source)
@@ -145,7 +159,7 @@ void R_AddStaticLight (const r_light_t *source)
 		return;
 	}
 
-	Com_Printf("added static light, ambient=%f\n", source->ambientColor[0]);
+	Com_Printf("added static light, radius=%f\n", source->constantAttenuation);
 
 	r_state.staticLights[r_state.numStaticLights++] = *source;
 }
@@ -153,11 +167,13 @@ void R_AddStaticLight (const r_light_t *source)
 void R_ClearStaticLights (void)
 {
 	int i;
+	vec4_t blackColor = {0.0, 0.0, 0.0, 1.0};
 
 	r_state.numStaticLights = 0;
 	glDisable(GL_LIGHTING);
-	for (i = 0; i < r_dynamic_lights->integer; i++) {
+	for (i = 0; i < MAX_GL_LIGHTS; i++) {
 		glLightf(GL_LIGHT0 + i, GL_CONSTANT_ATTENUATION, MIN_GL_CONSTANT_ATTENUATION);
+		glLightfv(GL_LIGHT0 + i, GL_DIFFUSE, blackColor);
 		glDisable(GL_LIGHT0 + i);
 	}
 }

@@ -352,6 +352,7 @@ void R_EnableDynamicLights (const r_light_t **lights, int numLights, qboolean en
 {
 	int i, j;
 	int maxLights = r_dynamic_lights->integer;
+	vec4_t blackColor = {0.0, 0.0, 0.0, 1.0};
 
 	if (!enable || !r_state.lighting_enabled || r_state.numStaticLights == 0) {
 		if (r_state.lighting_enabled)
@@ -359,8 +360,9 @@ void R_EnableDynamicLights (const r_light_t **lights, int numLights, qboolean en
 		if (!r_state.bumpmap_enabled && r_state.dynamic_lighting_enabled)
 			R_DisableAttribute("TANGENTS");
 		glDisable(GL_LIGHTING);
-		for (i = 0; i < maxLights; i++) {
+		for (i = 0; i < MAX_GL_LIGHTS; i++) {
 			glLightf(GL_LIGHT0 + i, GL_CONSTANT_ATTENUATION, MIN_GL_CONSTANT_ATTENUATION);
+			glLightfv(GL_LIGHT0 + i, GL_DIFFUSE, blackColor);
 			glDisable(GL_LIGHT0 + i);
 		}
 
@@ -397,11 +399,12 @@ void R_EnableDynamicLights (const r_light_t **lights, int numLights, qboolean en
 	}
 
 	/* if there aren't enough active lights, turn off the rest */
-	while (j < maxLights) {
+	while (j < MAX_GL_LIGHTS) {
 		glDisable(GL_LIGHT0 + j);
 		glLightf(GL_LIGHT0 + j, GL_CONSTANT_ATTENUATION, MIN_GL_CONSTANT_ATTENUATION);
 		glLightf(GL_LIGHT0 + j, GL_LINEAR_ATTENUATION, 0.0);
 		glLightf(GL_LIGHT0 + j, GL_QUADRATIC_ATTENUATION, 0.0);
+		glLightfv(GL_LIGHT0 + j, GL_DIFFUSE, blackColor);
 		j++;
 	}
 }
@@ -829,6 +832,8 @@ void R_Setup2D (void)
 	glEnable(GL_BLEND);
 
 	glDisable(GL_DEPTH_TEST);
+
+	glDisable(GL_LIGHTING);
 
 	/* disable render-to-framebuffer */
 	R_EnableRenderbuffer(qfalse);
