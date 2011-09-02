@@ -315,7 +315,7 @@ typedef struct gametype_s {
 
 /**
  * @brief The csi structure is the client-server-information structure
- * which contains all the UFO info needed by the server and the client.
+ * which contains all the static data needed by the server and the client.
  * @note Most of this comes from the script files
  */
 typedef struct csi_s {
@@ -354,7 +354,8 @@ typedef struct csi_s {
 	teamDef_t teamDef[MAX_TEAMDEFS];
 	int numTeamDefs;
 
-	/** the current assigned teams for this mission */
+	/** the current assigned teams for this mission
+	 * @todo this does not belong here - this is only static data that is shared */
 	const teamDef_t* alienTeams[MAX_TEAMS_PER_MISSION];
 	int numAlienTeams;
 
