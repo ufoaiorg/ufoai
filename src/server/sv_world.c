@@ -125,9 +125,6 @@ void SV_UnlinkEdict (edict_t * ent)
 	}
 
 	Com_Printf("WARNING: SV_UnlinkEntity: not found in worldSector\n");
-
-	if (ent->child)
-		SV_UnlinkEdict(ent->child);
 }
 
 /**
