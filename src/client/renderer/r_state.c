@@ -352,9 +352,10 @@ void R_EnableDynamicLights (const r_light_t **lights, int numLights, qboolean en
 {
 	int i, j;
 	int maxLights = r_dynamic_lights->integer;
+	const vec4_t sunDirection = {0.0, 0.0, -1.0, 0.0}; /* works only with shader, not the FFP */
 	vec4_t blackColor = {0.0, 0.0, 0.0, 1.0};
 
-	if (!enable || !r_state.lighting_enabled || r_state.numStaticLights == 0) {
+	if (!enable || !r_state.lighting_enabled) {
 		if (r_state.lighting_enabled)
 			R_ProgramParameter1i("DYNAMICLIGHTS", 0);
 		if (!r_state.bumpmap_enabled && r_state.dynamic_lighting_enabled)
@@ -379,7 +380,18 @@ void R_EnableDynamicLights (const r_light_t **lights, int numLights, qboolean en
 
 	glEnable(GL_LIGHTING);
 
-	j = 0;
+	/* Light #0 is reserved for the Sun */
+	glEnable(GL_LIGHT0);
+	glLightf(GL_LIGHT0, GL_CONSTANT_ATTENUATION, 1.0);
+	glLightf(GL_LIGHT0, GL_LINEAR_ATTENUATION, 0.0);
+	glLightf(GL_LIGHT0, GL_QUADRATIC_ATTENUATION, 0.0);
+
+	glLightfv(GL_LIGHT0, GL_POSITION, sunDirection);
+	glLightfv(GL_LIGHT0, GL_AMBIENT, refdef.ambientColor);
+	glLightfv(GL_LIGHT0, GL_DIFFUSE, refdef.sunDiffuseColor);
+	glLightfv(GL_LIGHT0, GL_SPECULAR, refdef.sunSpecularColor);
+
+	j = 1;
 	for (i = 0; j < maxLights && i < numLights; i++) {
 		const r_light_t *l = lights[i];
 		if (!l->enabled) {

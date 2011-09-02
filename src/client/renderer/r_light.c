@@ -135,7 +135,10 @@ void R_EnableLights (void)
 
 	position[3] = diffuse[3] = 1.0;
 
-	for (i = 0, l = r_lightsArray; i < refdef.numLights && i < maxLights && i < MAX_GL_LIGHTS; i++, l++) {
+	/* Light #0 is reserved for the Sun, which is already factored into lightmaps */
+	glDisable(GL_LIGHT0);
+
+	for (i = 1, l = r_lightsArray; i <= refdef.numLights && i < maxLights && i < MAX_GL_LIGHTS; i++, l++) {
 		VectorSubtract(l->origin, lights_offset, position);
 		glLightfv(GL_LIGHT0 + i, GL_POSITION, position);
 		VectorCopy(l->color, diffuse);

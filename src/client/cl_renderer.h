@@ -215,6 +215,9 @@ typedef struct {
 
 	int weather;				/**< weather effects */
 	vec4_t fogColor;
+	vec4_t ambientColor;
+	vec4_t sunDiffuseColor;
+	vec4_t sunSpecularColor;
 
 	int numEntities;
 	int numLights;

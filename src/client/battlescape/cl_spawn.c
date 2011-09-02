@@ -28,8 +28,6 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #include "cl_spawn.h"
 #include "../../shared/parse.h"
 
-static r_light_t sun;
-
 /* position in the spawnflags */
 #define MISC_MODEL_GLOW 9
 #define SPAWNFLAG_NO_DAY 8
@@ -124,8 +122,6 @@ void CL_SpawnParseEntitystring (void)
 	if (cl.numMapParticles || cl.numLMs)
 		return;
 
-	OBJZERO(sun);
-
 	/* parse ents */
 	while (1) {
 		localEntityParse_t entData;
@@ -173,16 +169,13 @@ void CL_SpawnParseEntitystring (void)
 		entnum++;
 	}
 
-	/* add the appropriate directional source to the list of active light sources*/
-	R_AddStaticLight(&sun);
-
 	/* after we have parsed all the entities we can resolve the target, targetname
 	 * connections for the misc_model entities */
 	LM_Think();
 }
 
 #define MIN_AMBIENT_COMPONENT 0.1
-#define MIN_AMBIENT_SUM 1.25
+#define MIN_AMBIENT_SUM 0.50
 
 static void SP_worldspawn (const localEntityParse_t *entData)
 {
@@ -205,31 +198,27 @@ static void SP_worldspawn (const localEntityParse_t *entData)
 	/** @todo - make sun position/color vary based on local time at location? */
 
 	if (dayLightmap)
-		VectorCopy(entData->ambientDayColor, sun.ambientColor);
+		VectorCopy(entData->ambientDayColor, refdef.ambientColor);
 	else
-		VectorCopy(entData->ambientNightColor, sun.ambientColor);
+		VectorCopy(entData->ambientNightColor, refdef.ambientColor);
 
 	/* clamp it */
 	for (i = 0; i < 3; i++)
-		if (sun.ambientColor[i] < MIN_AMBIENT_COMPONENT)
-			sun.ambientColor[i] = MIN_AMBIENT_COMPONENT;
+		if (refdef.ambientColor[i] < MIN_AMBIENT_COMPONENT)
+			refdef.ambientColor[i] = MIN_AMBIENT_COMPONENT;
 
 	/* scale it into a reasonable range, the clamp above ensures this will work */
-	while (VectorSum(sun.ambientColor) < MIN_AMBIENT_SUM)
-		VectorScale(sun.ambientColor, 1.25, sun.ambientColor);
+	while (VectorSum(refdef.ambientColor) < MIN_AMBIENT_SUM)
+		VectorScale(refdef.ambientColor, 1.25, refdef.ambientColor);
 
-	/* set up "global" (ie. directional) light sources */
-	Vector4Set(sun.loc, 0, 0, -1, 0.0);
-	sun.constantAttenuation = 1.0;
-	sun.linearAttenuation = 0.0;
-	sun.quadraticAttenuation = 0.0;
-	sun.enabled = qtrue;
+	refdef.ambientColor[3] = 1.0f; /* unused, but we shouldn't feed garbage to OpenGL driver */
+
 	if (dayLightmap) { /* sunlight color */
-		Vector4Set(sun.diffuseColor, 0.8, 0.8, 0.8, 1);
-		Vector4Set(sun.specularColor, 1.0, 1.0, 0.9, 1);
+		Vector4Set(refdef.sunDiffuseColor, 0.8, 0.8, 0.8, 1);
+		Vector4Set(refdef.sunSpecularColor, 1.0, 1.0, 0.9, 1);
 	} else { /* moonlight color */
-		Vector4Set(sun.diffuseColor, 0.2, 0.2, 0.3, 1);
-		Vector4Set(sun.specularColor, 0.5, 0.5, 0.7, 1);
+		Vector4Set(refdef.sunDiffuseColor, 0.2, 0.2, 0.3, 1);
+		Vector4Set(refdef.sunSpecularColor, 0.5, 0.5, 0.7, 1);
 	}
 
 	/** @todo Parse fog from worldspawn config */
