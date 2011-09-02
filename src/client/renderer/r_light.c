@@ -27,8 +27,6 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #include "r_entity.h"
 #include "r_state.h"
 
-#define LIGHT_RADIUS_FACTOR 80.0
-
 
 /** @todo - merge this stuff into the new lighitng system using r_light_t objects */
 static light_t r_lightsArray[MAX_GL_LIGHTS];
@@ -143,7 +141,8 @@ void R_EnableLights (void)
 		glLightfv(GL_LIGHT0 + i, GL_POSITION, position);
 		VectorCopy(l->color, diffuse);
 		glLightfv(GL_LIGHT0 + i, GL_DIFFUSE, diffuse);
-		glLightf(GL_LIGHT0 + i, GL_CONSTANT_ATTENUATION, l->radius * LIGHT_RADIUS_FACTOR);
+		glLightf(GL_LIGHT0 + i, GL_CONSTANT_ATTENUATION, MIN_GL_CONSTANT_ATTENUATION);
+		glLightf(GL_LIGHT0 + i, GL_QUADRATIC_ATTENUATION, 255.0 / (l->radius * l->radius));
 		glEnable(GL_LIGHT0 + i);
 	}
 
@@ -162,7 +161,7 @@ void R_AddStaticLight (const r_light_t *source)
 		return;
 	}
 
-	Com_Printf("added static light, radius=%f\n", source->constantAttenuation);
+	Com_Printf("added static light, color (%f, %f, %f) attenuation=%f\n", source->diffuseColor[0], source->diffuseColor[1], source->diffuseColor[2], source->quadraticAttenuation);
 
 	r_state.staticLights[r_state.numStaticLights++] = *source;
 }

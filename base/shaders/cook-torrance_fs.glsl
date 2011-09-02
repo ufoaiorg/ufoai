@@ -8,7 +8,7 @@
  * NOTE: portions based on D3D9 source from Jack Hoxley
  */
 
-#define ATTENUATE_THRESH 0.05
+#define ATTENUATE_THRESH 0.005
 
 /**
  * @todo does not compile on my ati x600 yet
