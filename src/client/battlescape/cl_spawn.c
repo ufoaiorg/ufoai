@@ -283,20 +283,23 @@ static void SP_misc_sound (const localEntityParse_t *entData)
 }
 
 /**
- * @todo Add the lights
  * @param entData
  */
 static void SP_light (const localEntityParse_t *entData)
 {
-#if 0
-	r_light_t light;
-	OBJZERO(light);
-	VectorCopy(entData->color, light.diffuseColor);
-	light.diffuseColor[3] = 1.0;
-	VectorCopy(entData->origin, light.loc);
-	/** @todo set attenuation from entData->light */
-	light.loc[3] = 0.0;
-	light.enabled = qtrue;
-	R_AddStaticLight(&light);
-#endif
+	const int dayLightmap = CL_GetConfigStringInteger(CS_LIGHTMAP);
+	if (!(dayLightmap && (entData->spawnflags & (1 << SPAWNFLAG_NO_DAY)))) {
+		r_light_t *light = (r_light_t *)malloc(sizeof(r_light_t));
+
+		OBJZERO(*light);
+		VectorCopy(entData->color, light->diffuseColor);
+		light->diffuseColor[3] = 1.0;
+		VectorCopy(entData->origin, light->loc);
+		light->constantAttenuation = entData->light;
+		if (light->constantAttenuation < 0.1)
+			light->constantAttenuation = 0.1;
+		light->loc[3] = 1.0;
+		light->enabled = qtrue;
+		R_AddStaticLight(light);
+	}
 }

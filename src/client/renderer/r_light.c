@@ -238,9 +238,9 @@ static inline int R_LightDistCompare (const void *a, const void *b)
 		VectorDistSqr(light1->loc, origin) - VectorDistSqr(light2->loc, origin);
 }
 
-static inline void R_SortLightList_qsort (const r_light_t **list)
+static inline void R_SortLightList_qsort (const r_light_t **list, const size_t size)
 {
-	qsort(list, r_state.numStaticLights, sizeof(*list), &R_LightDistCompare);
+	qsort(list, size, sizeof(*list), &R_LightDistCompare);
 }
 
 /**
@@ -249,21 +249,21 @@ static inline void R_SortLightList_qsort (const r_light_t **list)
  * much (if at all) between calls.  Something like bubble-sort
  * might actually be more efficient in practice.
  */
-static void R_SortLightList (const r_light_t **list, vec3_t v)
+static void R_SortLightList (const r_light_t **list, size_t size, vec3_t v)
 {
 	VectorCopy(v, origin);
-	R_SortLightList_qsort(list);
+	R_SortLightList_qsort(list, size);
 }
 
+/** @todo bad implementation -- copying light pointers every frame is a very wrong idea; also, should add dynamic lights to the list */
 void R_UpdateLightList (entity_t *ent)
 {
-	if (ent->numLights > r_state.numStaticLights)
-		ent->numLights = 0;
+	int i;
 
-	while (ent->numLights < r_state.numStaticLights) {
-		ent->lights[ent->numLights] = &r_state.staticLights[ent->numLights];
-		ent->numLights++;
-	}
+	for (i = 0; i < r_state.numStaticLights; i++)
+		ent->lights[i] = &r_state.staticLights[i];
 
-	R_SortLightList(ent->lights, ent->origin);
+	ent->numLights = i;
+
+	R_SortLightList(ent->lights, ent->numLights, ent->origin);
 }
