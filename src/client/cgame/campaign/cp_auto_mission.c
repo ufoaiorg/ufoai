@@ -888,6 +888,7 @@ void AM_Go (mission_t *mission, aircraft_t *aircraft, const campaign_t *campaign
 
 	assert(mission);
 	assert(aircraft);
+	assert(aircraft->homebase);
 
 	AM_ClearBattle(&autoBattle);
 	autoBattle.results = results;
@@ -895,6 +896,13 @@ void AM_Go (mission_t *mission, aircraft_t *aircraft, const campaign_t *campaign
 	AM_FillTeamFromBattleParams(&autoBattle, battleParameters);
 	AM_SetDefaultHostilities(&autoBattle, qfalse);
 	AM_CalculateTeamScores(&autoBattle);
+
+	/**
+	 * @todo find out why this black-magic with inventory is needed and clean up
+	 * @sa CP_StartSelectedMission
+	 * @sa CP_MissionEnd
+	 */
+	ccs.eMission = aircraft->homebase->storage; /* copied, including arrays inside! */
 
 	results->ownSurvived = autoBattle.nUnits[AUTOMISSION_TEAM_TYPE_PLAYER];
 	results->ownStunned = 0;

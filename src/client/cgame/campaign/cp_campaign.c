@@ -915,6 +915,11 @@ void CP_StartSelectedMission (void)
 	Cvar_SetValue("mn_autogo", 0);
 
 	/* manage inventory */
+	/**
+	 * @todo find out why this black-magic with inventory is needed and clean up
+	 * @sa AM_Go
+	 * @sa CP_MissionEnd
+	 */
 	ccs.eMission = base->storage; /* copied, including arrays inside! */
 	CP_CleanTempInventory(base);
 	CP_CleanupAircraftCrew(aircraft, &ccs.eMission);
