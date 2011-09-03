@@ -1115,6 +1115,7 @@ le_t *LE_Add (int entnum)
 void _LE_NotFoundError (const int entnum, const char *file, const int line)
 {
 	Cmd_ExecuteString("debug_listle");
+	Cmd_ExecuteString("debug_listedicts");
 	Com_Error(ERR_DROP, "LE_NotFoundError: Could not get LE with entnum %i (%s:%i)\n", entnum, file, line);
 }
 
