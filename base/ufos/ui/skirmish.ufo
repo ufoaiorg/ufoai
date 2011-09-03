@@ -238,7 +238,7 @@ window skirmish
 	{
 		{
 			pos	"495 150"
-			size	"475 330"
+			size	"475 355"
 		}
 		// ==============================================
 		// EQUIPMENT PLAYER STRINGS, TEXTENTRY & BUTTONS
@@ -403,6 +403,23 @@ window skirmish
 			max			2
 			delta		1
 		}
+		// =======================
+		// ALIEN RUSH
+		// =======================
+		string alienrush_str
+		{
+			string		"_Alien rush:"
+			pos			"10 325"
+			size		"300 20"
+			tooltip		"_Respawn of enemies once you killed one."
+		}
+		checkbox alienrush_value
+		{
+			current		*cvar:g_endlessaliens
+			pos			"366 325"
+			size		"20 18"
+			image		"ui/checkbox_blue"
+		}
 		// ========================
 		// TEAM STRING & SELECTBOX
 		// ========================
@@ -484,6 +501,7 @@ window skirmish
 		*cvar:mn_svmapid = "none"
 		cmd "mn_requestmaplist sk_maplist_listener;"
 		call *node:root.sk_update_config_navigation
-		cmd	"game_teamcomments;define cl_teamdef phalanx;"
+		cmd "game_teamcomments;define cl_teamdef phalanx;"
+		cmd "define g_endlessaliens 0;"
 	}
 }
