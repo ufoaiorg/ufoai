@@ -1227,13 +1227,13 @@ static void G_SpawnAIPlayers (const player_t * player, int numSpawn)
 }
 
 /**
- * @brief If the cvar sv_endlessaliens is set we will endlessly respawn aliens
+ * @brief If the cvar g_endlessaliens is set we will endlessly respawn aliens
  * @note This can be used for rescue or collect missions where it is enough to do something,
  * and then leave the map (rescue zone)
  */
 void AI_CheckRespawn (int team)
 {
-	if (!sv_endlessaliens->integer)
+	if (!g_endlessaliens->integer)
 		return;
 
 	if (team != TEAM_ALIEN)

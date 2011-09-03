@@ -59,7 +59,6 @@ cvar_t *sv_ai;
 cvar_t *sv_teamplay;
 cvar_t *sv_maxclients;
 cvar_t *sv_hurtaliens;
-cvar_t *sv_endlessaliens;
 cvar_t *sv_shot_origin;
 static cvar_t *sv_send_edicts;
 
@@ -104,6 +103,7 @@ cvar_t *m_rage;
 cvar_t *m_rage_stop;
 cvar_t *m_panic_stop;
 
+cvar_t *g_endlessaliens;
 cvar_t *g_reaction_fair;
 cvar_t *g_ailua;
 cvar_t *g_aidebug;
@@ -182,7 +182,6 @@ static void G_Init (void)
 	sv_shot_origin = gi.Cvar_Get("sv_shot_origin", "8", 0, "Assumed distance of muzzle from model");
 	sv_send_edicts = gi.Cvar_Get("sv_send_edicts", "0", CVAR_ARCHIVE | CVAR_CHEAT, "Send server side edicts for client display like triggers");
 	sv_hurtaliens = gi.Cvar_Get("sv_hurtaliens", "0", CVAR_SERVERINFO, "Spawn hurt aliens");
-	sv_endlessaliens = gi.Cvar_Get("sv_endlessaliens", "0", CVAR_SERVERINFO | CVAR_LATCH, "Spawn endless aliens");
 
 	ai_alien = gi.Cvar_Get("ai_alien", "ortnok", 0, "Alien team");
 	ai_civilian = gi.Cvar_Get("ai_civilian", "europe", 0, "Civilian team");
@@ -223,7 +222,8 @@ static void G_Init (void)
 	m_rage_stop = gi.Cvar_Get("m_rage_stop", "2.0", CVAR_LATCH|CVAR_NOSET, NULL);
 	m_panic_stop = gi.Cvar_Get("m_panic_stop", "1.0", CVAR_LATCH|CVAR_NOSET, NULL);
 
-	g_reaction_fair = gi.Cvar_Get("g_reaction_fair", "1", CVAR_LATCH | CVAR_SERVERINFO, "Enable or disable fair reaction fire mode");
+	g_endlessaliens = gi.Cvar_Get("g_endlessaliens", "0", CVAR_LATCH|CVAR_SERVERINFO, "Spawn endless aliens");
+	g_reaction_fair = gi.Cvar_Get("g_reaction_fair", "1", CVAR_LATCH|CVAR_SERVERINFO, "Enable or disable fair reaction fire mode");
 	g_ailua = gi.Cvar_Get("g_ailua", "0", 0, "Activate or deactivate the LUA AI");
 	g_aidebug = gi.Cvar_Get("g_aidebug", "0", CVAR_DEVELOPER|CVAR_CHEAT, "All AI actors are visible");
 	g_drawtraces = gi.Cvar_Get("g_drawtraces", "0", CVAR_DEVELOPER, "All traces will be rendered");
