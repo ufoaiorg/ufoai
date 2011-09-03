@@ -116,7 +116,7 @@ cvar_t *flood_msgs;
 cvar_t *flood_persecond;
 cvar_t *flood_waitdelay;
 
-cvar_t *difficulty;
+cvar_t *g_difficulty;
 
 static const int TAG_INVENTORY = 2389;
 
@@ -237,7 +237,7 @@ static void G_Init (void)
 	flood_persecond = gi.Cvar_Get("flood_persecond", "4", 0, NULL);
 	flood_waitdelay = gi.Cvar_Get("flood_waitdelay", "10", 0, "Delay until someone is unlocked from talking again");
 
-	difficulty = gi.Cvar_Get("difficulty", "0", CVAR_NOSET, "Difficulty level");
+	g_difficulty = gi.Cvar_Get("g_difficulty", "0", CVAR_NOSET, "Singleplayer difficulty level");
 
 	game.sv_maxentities = sv_maxentities->integer;
 	game.sv_maxplayersperteam = sv_maxplayersperteam->integer;

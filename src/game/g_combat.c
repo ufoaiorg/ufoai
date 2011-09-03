@@ -349,9 +349,9 @@ static void G_Damage (edict_t *target, const fireDef_t *fd, int damage, edict_t 
 	/* Apply difficulty settings. */
 	if (sv_maxclients->integer == 1) {
 		if (G_IsAlien(attacker) && !G_IsAlien(target))
-			damage *= pow(1.18, difficulty->integer);
+			damage *= pow(1.18, g_difficulty->value);
 		else if (!G_IsAlien(attacker) && G_IsAlien(target))
-			damage *= pow(1.18, -difficulty->integer);
+			damage *= pow(1.18, -g_difficulty->value);
 	}
 
 	assert(attacker->team >= 0 && attacker->team < MAX_TEAMS);

@@ -300,7 +300,7 @@ extern cvar_t *flood_msgs;
 extern cvar_t *flood_persecond;
 extern cvar_t *flood_waitdelay;
 
-extern cvar_t *difficulty;
+extern cvar_t *g_difficulty;
 
 /* fields are needed for spawning from the entity string */
 #define FFL_SPAWNTEMP		1
