@@ -165,7 +165,10 @@ void R_AddStaticLight (const r_light_t *source)
 		return;
 	}
 
-	Com_Printf("added static light, color (%f, %f, %f) attenuation=%f\n", source->diffuseColor[0], source->diffuseColor[1], source->diffuseColor[2], source->quadraticAttenuation);
+	Com_Printf("added static light, color (%f, %f, %f) position (%f, %f, %f)  attenuation=%f\n",
+		source->diffuseColor[0], source->diffuseColor[1], source->diffuseColor[2],
+		source->loc[0], source->loc[1], source->loc[2],
+		source->quadraticAttenuation);
 
 	r_state.staticLights[r_state.numStaticLights++] = *source;
 }
