@@ -81,10 +81,11 @@ static void testSpawnAndConnect (void)
 	CU_ASSERT_FALSE(svs.ge->RunFrame());
 
 	while ((e = G_EdictsGetNextInUse(e))) {
+		Com_Printf("entity %i: %s\n", cnt, e->classname);
 		cnt++;
 	}
 
-	CU_ASSERT_EQUAL(cnt, 30);
+	CU_ASSERT_EQUAL(cnt, 45);
 
 	SV_ShutdownGameProgs();
 	FS_FreeFile(buf);
