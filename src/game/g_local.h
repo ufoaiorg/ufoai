@@ -371,7 +371,7 @@ qboolean G_ReactionFireOnMovement(edict_t *target);
 void G_ReactionFireEndTurn(void);
 
 void G_CompleteRecalcRouting(void);
-void G_RecalcRouting(const edict_t * ent);
+void G_RecalcRouting(const char *model);
 void G_GenerateEntList(const char *entList[MAX_EDICTS]);
 
 /** @todo make this a byte */

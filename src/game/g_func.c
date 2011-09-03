@@ -52,6 +52,7 @@ static qboolean Touch_Breakable (edict_t *self, edict_t *activator)
 static qboolean Destroy_Breakable (edict_t *self)
 {
 	vec3_t origin;
+	const char *model = self->model;
 
 	VectorCenterFromMinsMaxs(self->absmin, self->absmax, origin);
 
@@ -83,12 +84,6 @@ static qboolean Destroy_Breakable (edict_t *self)
 		break;
 	}
 
-	/* unlink to update the routing */
-	gi.UnlinkEdict(self);
-	self->inuse = qfalse;
-	self->HP = 0;
-
-	G_RecalcRouting(self);
 	G_TouchEdicts(self, 10.0f);
 
 	/* destroy the door trigger */
@@ -97,6 +92,8 @@ static qboolean Destroy_Breakable (edict_t *self)
 
 	/* now we can destroy the edict completely */
 	G_FreeEdict(self);
+
+	G_RecalcRouting(model);
 
 	return qtrue;
 }
@@ -244,7 +241,7 @@ static qboolean Door_Use (edict_t *door, edict_t *activator)
 	Com_DPrintf(DEBUG_GAME, "Server processed door movement.\n");
 
 	/* Update path finding table */
-	G_RecalcRouting(door);
+	G_RecalcRouting(door->model);
 
 	if (activator && G_IsLivingActor(activator)) {
 		/* Check if the player appears/perishes, seen from other teams. */
