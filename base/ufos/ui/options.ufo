@@ -29,7 +29,7 @@ window options
 	// =================================================
 	cmpMenuButton button_overall
 	{
-		tooltip		"_Overall game settings like your name and language or menu settings."
+		tooltip		"_Overall game settings"
 		string		"_Overall"
 		pos			"80 170"
 		onClick
@@ -40,7 +40,7 @@ window options
 	}
 	cmpMenuButton button_video
 	{
-		tooltip		"_Video settings."
+		tooltip		"_Video settings"
 		string		"_Video"
 		pos			"80 240"
 		onClick
@@ -52,7 +52,7 @@ window options
 	}
 	cmpMenuButton button_sound
 	{
-		tooltip		"_Sound settings."
+		tooltip		"_Sound settings"
 		string		"_Audio"
 		pos			"80 310"
 		onClick
@@ -63,7 +63,7 @@ window options
 	}
 	cmpMenuButton button_gameplay
 	{
-		tooltip		"_Battlescape camera, gameplay and input settings."
+		tooltip		"_Battlescape camera, gameplay and input settings"
 		string		"_Gameplay"
 		pos			"80 380"
 		onClick
@@ -74,7 +74,7 @@ window options
 	}
 	cmpMenuButton button_back
 	{
-		tooltip		"_Leave the options menu."
+		tooltip		"_Leave the options menu"
 		string		"_Back"
 		pos			"80 470"
 		onClick		{ cmd "ui_pop;" }
@@ -136,7 +136,7 @@ window options
 		}
 		optionlist select_language
 		{
-			tooltip		"_A list of available languages. ATTENTION: Choose English for the most 'complete' language, other translations might be incomplete."
+			tooltip		"_Available languages"
 			dataid		OPTION_LANGUAGES
 			pos			"297 135"
 			cvar		*cvar:s_language
@@ -195,7 +195,7 @@ window options
 		// =====================================
 		string geocamzoommin_str
 		{
-			tooltip		"_The minimum/maximum zoom of the geoscape camera."
+			tooltip		"_The minimum/maximum zoom of the geoscape camera"
 			string		"_Min/Max Geo-Cam Zoom:"
 			pos			"72 465"
 			size		"270 20"
@@ -203,7 +203,7 @@ window options
 		selectbox geocamzoom_min
 		{
 			{
-				tooltip		"_Default minimum zoom level of the geoscape camera is 1.00."
+				tooltip		"_Minimum zoom level of the geoscape camera"
 				cvar		*cvar:cl_mapzoommin
 				pos			"343 465"
 				size		"75 20"
@@ -244,7 +244,7 @@ window options
 		selectbox geocamzoom_max
 		{
 			{
-				tooltip		"_Default maximum zoom level of the geoscape camera is 6.00."
+				tooltip		"_Maximum zoom level of the geoscape camera"
 				cvar		*cvar:cl_mapzoommax
 				pos			"418 465"
 				size		"75 20"
@@ -296,7 +296,7 @@ window options
 		// ===================
 		string tooltip_str
 		{
-			tooltip		"_Enable mouseover tooltips."
+			tooltip		"_Enable mouseover tooltips"
 			string		"_Tooltips:"
 			pos			"72 545"
 			size		"250 20"
@@ -314,7 +314,7 @@ window options
 		// ================
 		string c_tooltip_str
 		{
-			tooltip		"_Enable tooltips for the cursor."
+			tooltip		"_Enable tooltips for the cursor"
 			string		"_Cursor Tooltips:"
 			pos			"72 570"
 			size		"250 20"
@@ -331,7 +331,6 @@ window options
 		// ===============
 		string tipoftheday_string
 		{
-			tooltip		"_Enable this if you are new to UFO:AI and want to see interesting tips written by the most experienced UFO:AI players out there."
 			string		"_Show 'Tip of the Day':"
 			pos			"72 595"
 			size		"250 20"
@@ -349,7 +348,7 @@ window options
 		// =====================
 		string menu_options
 		{
-			string 		"_Menu Option(s)"
+			string 		"_Menu Options"
 			pos			"62 650"
 			size		"256 20"
 			color		"1.0 0.75 0 1"
