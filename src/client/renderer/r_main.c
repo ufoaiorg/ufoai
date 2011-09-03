@@ -59,6 +59,7 @@ cvar_t *r_screenshot_jpeg_quality;
 cvar_t *r_lightmap;
 cvar_t *r_debug_normals;
 cvar_t *r_debug_tangents;
+cvar_t *r_debug_lights;
 static cvar_t *r_deluxemap;
 cvar_t *r_ext_texture_compression;
 static cvar_t *r_ext_s3tc_compression;
@@ -278,6 +279,7 @@ void R_BeginFrame (void)
  */
 void R_RenderFrame (void)
 {
+	int i;
 	R_Setup3D();
 
 	/* activate wire mode */
@@ -343,6 +345,10 @@ void R_RenderFrame (void)
 			R_DrawFlareSurfaces(bsp->flare_surfaces);
 		}
 		R_EnableFog(qfalse);
+
+		if (r_debug_lights->integer)
+			for (i = 0; i< r_state.numStaticLights; i++)
+				R_AddCorona(r_state.staticLights[i].loc, 1.0/sqrt(r_state.staticLights[i].quadraticAttenuation/255), r_state.staticLights[i].diffuseColor);
 
 		R_DrawCoronas();
 		R_EnableBlend(qfalse);
@@ -546,6 +552,8 @@ static void R_RegisterSystemVars (void)
 	r_debug_normals->modified = qfalse;
 	r_debug_tangents = Cvar_Get("r_debug_tangents", "0", CVAR_R_PROGRAMS, "Draw tangent, bitangent, and normal dotted with light dir as RGB espectively");
 	r_debug_tangents->modified = qfalse;
+	r_debug_lights = Cvar_Get("r_debug_lights", "0", CVAR_ARCHIVE, "Draw active light sources");
+	r_debug_lights->modified = qfalse;
 	r_ext_texture_compression = Cvar_Get("r_ext_texture_compression", "0", CVAR_ARCHIVE | CVAR_R_CONTEXT, NULL);
 	r_ext_nonpoweroftwo = Cvar_Get("r_ext_nonpoweroftwo", "1", CVAR_ARCHIVE, "Enable or disable the non power of two extension");
 	r_ext_s3tc_compression = Cvar_Get("r_ext_s3tc_compression", "1", CVAR_ARCHIVE, "Also see r_ext_texture_compression");
