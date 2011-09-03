@@ -549,7 +549,6 @@ window mp_bookmarks extends abstract_multiplayer_join
 
 window mp_create_server extends abstract_multiplayer
 {
-
 	tab create_natigation {
 		{
 			pos	"462 200"
@@ -659,7 +658,6 @@ window mp_create_server extends abstract_multiplayer
 			size		"20 18"
 			image		"ui/checkbox_blue"
 		}
-
 	}
 
 	cmpMapPanel panel_map {
@@ -711,6 +709,23 @@ window mp_create_server extends abstract_multiplayer
 			size		"20 18"
 			image		"ui/checkbox_blue"
 		}
+		// =======================
+		// ALIEN RUSH
+		// =======================
+		string alienrush_str
+		{
+			string		"_Alien rush:"
+			pos			"25 25"
+			size		"250 20"
+			tooltip		"_Respawn of enemies once you killed one."
+		}
+		checkbox alienrush_value
+		{
+			current		*cvar:g_endlessaliens
+			pos			"350 26"
+			size		"20 18"
+			image		"ui/checkbox_blue"
+		}
 
 		// ===================
 		// MAXCLIENTS
@@ -719,13 +734,13 @@ window mp_create_server extends abstract_multiplayer
 		{
 			string		"_Max. clients:"
 			tooltip		"_Sets the max allowed clients to connect"
-			pos			"25 40"
+			pos			"25 70"
 			size		"300 20"
 		}
 		string maxclients_value
 		{
 			string		*cvar:sv_maxclients
-			pos			"335 40"
+			pos			"335 70"
 			size		"50 20"
 			contentalign	ALIGN_UC
 		}
@@ -733,7 +748,7 @@ window mp_create_server extends abstract_multiplayer
 		{
 			current		*cvar:sv_maxclients
 			image		"ui/spinner_blue"
-			pos			"390 40"
+			pos			"390 70"
 			min			2
 			max			16
 			delta		1
@@ -746,13 +761,13 @@ window mp_create_server extends abstract_multiplayer
 		{
 			string		"_Max. soldiers per team:"
 			tooltip		"_Sets the max allowed soldiers per team"
-			pos			"25 60"
+			pos			"25 90"
 			size		"300 20"
 		}
 		string maxperplayer_value
 		{
 			string		*cvar:sv_maxsoldiersperteam
-			pos			"335 60"
+			pos			"335 90"
 			size		"50 20"
 			contentalign	ALIGN_UC
 		}
@@ -760,7 +775,7 @@ window mp_create_server extends abstract_multiplayer
 		{
 			current		*cvar:sv_maxsoldiersperteam
 			image		"ui/spinner_blue"
-			pos			"390 60"
+			pos			"390 90"
 			min			1
 			max			8
 			delta		1
@@ -773,13 +788,13 @@ window mp_create_server extends abstract_multiplayer
 		{
 			string		"_Max. soldiers per player:"
 			tooltip		"_Sets the max allowed soldiers per player when in teamplay"
-			pos			"25 80"
+			pos			"25 110"
 			size		"300 20"
 		}
 		string maxsoldierperplayer_value
 		{
 			string		*cvar:sv_maxsoldiersperplayer
-			pos			"335 80"
+			pos			"335 110"
 			size		"50 20"
 			contentalign	ALIGN_UC
 		}
@@ -787,7 +802,7 @@ window mp_create_server extends abstract_multiplayer
 		{
 			current		*cvar:sv_maxsoldiersperplayer
 			image		"ui/spinner_blue"
-			pos			"390 80"
+			pos			"390 110"
 			min			1
 			max			8
 			delta		1
@@ -800,13 +815,13 @@ window mp_create_server extends abstract_multiplayer
 		string server_maxplayerperteam_str
 		{
 			string		"_Max. human players per team:"
-			pos			"25 100"
+			pos			"25 130"
 			size		"300 20"
 		}
 		string server_maxplayerperteam_value
 		{
 			string		*cvar:sv_maxplayersperteam
-			pos			"335 100"
+			pos			"335 130"
 			size		"50 20"
 			contentalign	ALIGN_UC
 		}
@@ -814,7 +829,7 @@ window mp_create_server extends abstract_multiplayer
 		{
 			current		*cvar:sv_maxplayersperteam
 			image		"ui/spinner_blue"
-			pos			"390 100"
+			pos			"390 130"
 			min			1
 			max			8
 			delta		1
@@ -827,13 +842,13 @@ window mp_create_server extends abstract_multiplayer
 		{
 			string		"_Max. AI actors:"
 			tooltip		"_Max AI actors for teamplay mode"
-			pos			"25 120"
+			pos			"25 150"
 			size		"300 20"
 		}
 		string ai_numactors_value
 		{
 			string		*cvar:ai_numactors
-			pos			"335 120"
+			pos			"335 150"
 			size		"50 20"
 			contentalign	ALIGN_UC
 		}
@@ -841,7 +856,7 @@ window mp_create_server extends abstract_multiplayer
 		{
 			current		*cvar:ai_numactors
 			image		"ui/spinner_blue"
-			pos			"390 120"
+			pos			"390 150"
 			min			0
 			max			8
 			delta		1
@@ -854,13 +869,13 @@ window mp_create_server extends abstract_multiplayer
 		string timelimit_str
 		{
 			string		"_Round time limit in seconds:"
-			pos			"25 140"
+			pos			"25 170"
 			size		"250 20"
 		}
 		string timelimit_value
 		{
 			string		*cvar:sv_roundtimelimit
-			pos			"335 140"
+			pos			"335 170"
 			size		"50 20"
 			contentalign	ALIGN_UC
 		}
@@ -868,7 +883,7 @@ window mp_create_server extends abstract_multiplayer
 		{
 			current		*cvar:sv_roundtimelimit
 			image		"ui/spinner_blue"
-			pos			"390 140"
+			pos			"390 170"
 			min			30
 			max			500
 			delta		5
@@ -999,6 +1014,7 @@ window mp_create_server extends abstract_multiplayer
 		*cvar:mn_server_config_tab = 1
 		call *node:root.mp_update_config_navigation
 		cmd "ui_resetdata TEXT_STANDARD;"
+		cmd "define g_endlessaliens 0;"
 	}
 }
 
