@@ -335,18 +335,16 @@ void R_RenderFrame (void)
 
 		R_DrawBlendMeshEntities(r_blend_mesh_entities);
 
+		R_EnableFog(qtrue);
 		for (tile = 0; tile < r_numMapTiles; tile++) {
 			const model_t *mapTile = r_mapTiles[tile];
 			const mBspModel_t *bsp = &mapTile->bsp;
 
-			R_EnableFog(qtrue);
 			R_DrawFlareSurfaces(bsp->flare_surfaces);
-
-			R_EnableFog(qfalse);
-
-			R_DrawCoronas();
 		}
+		R_EnableFog(qfalse);
 
+		R_DrawCoronas();
 		R_EnableBlend(qfalse);
 
 		for (tile = 0; tile < r_numMapTiles; tile++) {
