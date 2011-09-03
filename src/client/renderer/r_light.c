@@ -134,6 +134,10 @@ void R_EnableLights (void)
 	position[3] = diffuse[3] = 1.0;
 
 	/* Light #0 is reserved for the Sun, which is already factored into lightmaps */
+	glLightf(GL_LIGHT0, GL_CONSTANT_ATTENUATION, MIN_GL_CONSTANT_ATTENUATION);
+	glLightfv(GL_LIGHT0, GL_DIFFUSE, blackColor);
+	glLightfv(GL_LIGHT0, GL_AMBIENT, blackColor);
+	glLightfv(GL_LIGHT0, GL_SPECULAR, blackColor);
 	glDisable(GL_LIGHT0);
 
 	for (i = 1, l = r_lightsArray; i <= refdef.numLights && i < maxLights && i < MAX_GL_LIGHTS; i++, l++) {
