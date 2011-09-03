@@ -897,25 +897,17 @@ void AM_Go (mission_t *mission, aircraft_t *aircraft, const campaign_t *campaign
 	AM_SetDefaultHostilities(&autoBattle, qfalse);
 	AM_CalculateTeamScores(&autoBattle);
 
+	OBJZERO(*results);
+	results->ownSurvived = autoBattle.nUnits[AUTOMISSION_TEAM_TYPE_PLAYER];
+	results->aliensSurvived = autoBattle.nUnits[AUTOMISSION_TEAM_TYPE_ALIEN];
+	results->civiliansSurvived = autoBattle.nUnits[AUTOMISSION_TEAM_TYPE_CIVILIAN];
+
 	/**
 	 * @todo find out why this black-magic with inventory is needed and clean up
 	 * @sa CP_StartSelectedMission
 	 * @sa CP_MissionEnd
 	 */
 	ccs.eMission = aircraft->homebase->storage; /* copied, including arrays inside! */
-
-	results->ownSurvived = autoBattle.nUnits[AUTOMISSION_TEAM_TYPE_PLAYER];
-	results->ownStunned = 0;
-	results->ownKilled = 0;
-	results->ownKilledFriendlyFire = 0;
-	results->aliensSurvived = autoBattle.nUnits[AUTOMISSION_TEAM_TYPE_ALIEN];
-	results->aliensStunned = 0;
-	results->aliensKilled = 0;
-	results->civiliansSurvived = autoBattle.nUnits[AUTOMISSION_TEAM_TYPE_CIVILIAN];
-	results->civiliansKilled = 0;
-	results->civiliansKilledFriendlyFire = 0;
-	results->itemTypes = 0;
-	results->itemAmount = 0;
 
 	AM_DoFight(&autoBattle);
 
