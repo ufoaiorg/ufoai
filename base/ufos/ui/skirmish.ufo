@@ -411,7 +411,7 @@ window skirmish
 			string		"_Alien rush:"
 			pos			"10 325"
 			size		"300 20"
-			tooltip		"_Respawn of enemies once you killed one."
+			tooltip		"_Enemies respawn when killed."
 		}
 		checkbox alienrush_value
 		{

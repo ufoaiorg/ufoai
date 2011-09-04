@@ -717,7 +717,7 @@ window mp_create_server extends abstract_multiplayer
 			string		"_Alien rush:"
 			pos			"25 25"
 			size		"250 20"
-			tooltip		"_Respawn of enemies once you killed one."
+			tooltip		"_Enemies respawn when killed."
 		}
 		checkbox alienrush_value
 		{
