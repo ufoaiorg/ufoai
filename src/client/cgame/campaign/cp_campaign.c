@@ -922,36 +922,41 @@ void CP_StartSelectedMission (void)
 }
 
 /**
- * Updates mission result menu text with appropriate values
- * @param missionResults Initialized mission results
- * @param won Whether we won the battle
+ * @brief Updates mission result menu text with appropriate values
+ * @param[in] won Whether we won the battle
+ * @param[in] missionResults Initialized mission results
  */
 void CP_InitMissionResults (qboolean won, const missionResults_t *missionResults)
 {
-	static char resultText[1024];
+	linkedList_t *list = NULL;
+
 	/* init result text */
-	UI_RegisterText(TEXT_LIST2, resultText);
+	UI_ResetData(TEXT_LIST2);
 
-	/* needs to be cleared and then append to it */
-	Com_sprintf(resultText, sizeof(resultText), _("Aliens killed\t%i\n"), missionResults->aliensKilled);
-	Q_strcat(resultText, va(_("Aliens captured\t%i\n"), missionResults->aliensStunned), sizeof(resultText));
-	Q_strcat(resultText, va(_("Alien survivors\t%i\n\n"), missionResults->aliensSurvived), sizeof(resultText));
-	/* team stats */
-	Q_strcat(resultText, va(_("PHALANX soldiers killed by Aliens\t%i\n"), missionResults->ownKilled), sizeof(resultText));
-	Q_strcat(resultText, va(_("PHALANX soldiers missing in action\t%i\n"), missionResults->ownStunned), sizeof(resultText));
-	Q_strcat(resultText, va(_("PHALANX friendly fire losses\t%i\n"), missionResults->ownKilledFriendlyFire), sizeof(resultText));
-	Q_strcat(resultText, va(_("PHALANX survivors\t%i\n\n"), missionResults->ownSurvived), sizeof(resultText));
+	/* aliens */
+	LIST_AddString(&list, va("%s\t%i", _("Aliens killed"), missionResults->aliensKilled));
+	LIST_AddString(&list, va("%s\t%i", _("Aliens captured"), missionResults->aliensStunned));
+	LIST_AddString(&list, va("%s\t%i", _("Alien survivors"), missionResults->aliensSurvived));
+	LIST_AddString(&list, "");
+	/* pahanx */
+	LIST_AddString(&list, va("%s\t%i", _("PHALANX soldiers killed by Aliens"), missionResults->ownKilled));
+	LIST_AddString(&list, va("%s\t%i", _("PHALANX soldiers missing in action"), missionResults->ownStunned));
+	LIST_AddString(&list, va("%s\t%i", _("PHALANX friendly fire losses"), missionResults->ownKilledFriendlyFire));
+	LIST_AddString(&list, va("%s\t%i", _("PHALANX survivors"), missionResults->ownSurvived));
+	LIST_AddString(&list, "");
 
-	Q_strcat(resultText, va(_("Civilians killed by Aliens\t%i\n"), missionResults->civiliansKilled), sizeof(resultText));
-	Q_strcat(resultText, va(_("Civilians killed by friendly fire\t%i\n"), missionResults->civiliansKilledFriendlyFire), sizeof(resultText));
-	Q_strcat(resultText, va(_("Civilians saved\t%i\n\n"), missionResults->civiliansSurvived), sizeof(resultText));
+	LIST_AddString(&list, va("%s\t%i", _("Civilians killed by Aliens"), missionResults->civiliansKilled));
+	LIST_AddString(&list, va("%s\t%i", _("Civilians killed by friendly fire"), missionResults->civiliansKilledFriendlyFire));
+	LIST_AddString(&list, va("%s\t%i", _("Civilians saved"), missionResults->civiliansSurvived));
+	LIST_AddString(&list, "");
 
 	if (missionResults->itemTypes > 0 && missionResults->itemAmount > 0)
-		Q_strcat(resultText, va(_("Gathered items (types/all)\t%i/%i\n"), missionResults->itemTypes,
-			missionResults->itemAmount), sizeof(resultText));
+		LIST_AddString(&list, va("%s\t%i/%i", _("Gathered items (types/all)"), missionResults->itemTypes, missionResults->itemAmount));
 
 	if (won && missionResults->recovery)
-		Q_strcat(resultText, UFO_MissionResultToString(), sizeof(resultText));
+		LIST_AddString(&list, UFO_MissionResultToString());
+
+	UI_RegisterLinkedListText(TEXT_LIST2, list);
 }
 
 /**
