@@ -850,6 +850,7 @@ void IN_Frame (void)
 
 		case SDL_KEYDOWN:
 			IN_PrintKey(&event, 1);
+#ifndef _WIN32
 			if ((event.key.keysym.mod & KMOD_ALT) && event.key.keysym.sym == SDLK_RETURN) {
 				SDL_Surface *surface = SDL_GetVideoSurface();
 				if (!SDL_WM_ToggleFullScreen(surface)) {
@@ -867,6 +868,7 @@ void IN_Frame (void)
 				vid_fullscreen->modified = qfalse; /* we just changed it with SDL. */
 				break; /* ignore this key */
 			}
+#endif
 
 			if ((event.key.keysym.mod & KMOD_CTRL) && event.key.keysym.sym == SDLK_g) {
 				SDL_GrabMode gm = SDL_WM_GrabInput(SDL_GRAB_QUERY);
