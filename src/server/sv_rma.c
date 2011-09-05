@@ -1809,6 +1809,12 @@ static qboolean SV_AddMapTiles (mapInfo_t *map)
 #ifdef DEBUG
 			assert(idx == mPlaced[map->numPlaced - 1].idx);
 #endif
+#if DISPLAY_THE_MAP_ON_FAILURE
+			SV_RmaPrintMap(map);
+#endif
+#if PRINT_FAILURE_REASONCODE
+			Com_Printf("required tile doesn't fit\n");
+#endif
 			SV_RemoveTile(map, &idx, &pos);
 			pos++;
 		}
@@ -1834,6 +1840,12 @@ static qboolean SV_AddMapTiles (mapInfo_t *map)
 		}
 
 		if (idx == numToPlace && !SV_AddMissingTiles(map)) {
+#if DISPLAY_THE_MAP_ON_FAILURE
+			SV_RmaPrintMap(map);
+#endif
+#if PRINT_FAILURE_REASONCODE
+			Com_Printf("couldn't pad\n");
+#endif
 			SV_RemoveTile(map, &idx, &pos);
 			pos++;
 		}
