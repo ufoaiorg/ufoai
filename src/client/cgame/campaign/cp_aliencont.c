@@ -200,8 +200,10 @@ void AL_AddAliens (aircraft_t *aircraft)
 			if (ac->teamDef == cargo[i].teamDef) {
 				const qboolean isRobot = CHRSH_IsTeamDefRobot(cargo[i].teamDef);
 				ac->amountDead += cargo[i].amountDead;
-				/* Add breathing apparatuses to aircraft cargo so that they are processed with other collected items */
-				AII_CollectItem(aircraft, alienBreathingObjDef, cargo[i].amountDead);
+				/* Add breathing apparatuses to aircraft cargo so that they are processed with other collected items
+				 * if the alien race is not mechanical */
+				if (!isRobot)
+					AII_CollectItem(aircraft, alienBreathingObjDef, cargo[i].amountDead);
 
 				if (cargo[i].amountAlive <= 0)
 					continue;
