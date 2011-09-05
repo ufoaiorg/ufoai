@@ -193,18 +193,21 @@ void AL_AddAliens (aircraft_t *aircraft)
 
 	for (i = 0; i < alienCargoTypes; i++) {
 		for (j = 0; j < ccs.numAliensTD; j++) {
-			assert(toBase->alienscont[j].teamDef);
+			aliensCont_t *ac = &toBase->alienscont[j];
+			assert(ac->teamDef);
 			assert(cargo[i].teamDef);
 
-			if (toBase->alienscont[j].teamDef == cargo[i].teamDef) {
-				toBase->alienscont[j].amountDead += cargo[i].amountDead;
+			if (ac->teamDef == cargo[i].teamDef) {
+				const qboolean isRobot = CHRSH_IsTeamDefRobot(cargo[i].teamDef);
+				ac->amountDead += cargo[i].amountDead;
 				/* Add breathing apparatuses to aircraft cargo so that they are processed with other collected items */
 				AII_CollectItem(aircraft, alienBreathingObjDef, cargo[i].amountDead);
+
 				if (cargo[i].amountAlive <= 0)
 					continue;
-				if (!alienBreathing && !CHRSH_IsTeamDefRobot(cargo[i].teamDef)) {
+				if (!alienBreathing && !isRobot) {
 					/* We can not store living (i.e. no robots or dead bodies) aliens without rs_alien_breathing tech */
-					toBase->alienscont[j].amountDead += cargo[i].amountAlive;
+					ac->amountDead += cargo[i].amountAlive;
 					/* Add breathing apparatuses as well */
 					AII_CollectItem(aircraft, alienBreathingObjDef, cargo[i].amountAlive);
 					/* only once */
@@ -222,7 +225,7 @@ void AL_AddAliens (aircraft_t *aircraft)
 					for (k = 0; k < cargo[i].amountAlive; k++) {
 						/* Check base capacity. */
 						if (AL_CheckAliveFreeSpace(toBase, NULL, 1)) {
-							AL_ChangeAliveAlienNumber(toBase, &(toBase->alienscont[j]), 1);
+							AL_ChangeAliveAlienNumber(toBase, ac, 1);
 						} else {
 							/* Every exceeding alien is killed
 							 * Display a message only when first one is killed */
@@ -232,7 +235,7 @@ void AL_AddAliens (aircraft_t *aircraft)
 								limit = qtrue;
 							}
 							/* Just kill aliens which don't fit the limit. */
-							toBase->alienscont[j].amountDead++;
+							ac->amountDead++;
 							AII_CollectItem(aircraft, alienBreathingObjDef, 1);
 						}
 					}
