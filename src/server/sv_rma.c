@@ -38,7 +38,7 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 /** @brief print some debugging info */
 #define PRINT_RMA_PROGRESS 0
 /** @brief place the biggest 'required' tiles first. Helps oriental a lot, but is bad for village. */
-#define SORT_BY_SIZE 0
+#define SORT_BY_SIZE 1
 /** @brief display a character graphic of the tiles placed when RMA2 reaches a dead end. */
 #define DISPLAY_THE_MAP 0
 #if DISPLAY_THE_MAP
