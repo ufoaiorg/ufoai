@@ -390,38 +390,7 @@ assembly small
 {
 size "7 8"
 title "_Village residential"
-seeds {
-	1
-	2
-	3
-	4
-/*	5	slow */
-	6
-	7
-/*	8	slow */
-	9
-/*	10,11	slow */
-	12
-	13
-/*	14	slow */
-	15
-	16
-	17
-	18
-	19
-	20
-	/* 13 is really slow */
-/* the next seeds are untested under linux */
-/*	21	slow on linux */
-	22
-	23
-	24
-/*	26	slow on Windows */
-	27
-	28
-	29
-	30
-}
+
 +s02 "0 4"
 +s03 "0 4"
 +s04 "0 4"
