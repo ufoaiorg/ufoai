@@ -172,10 +172,11 @@ static void SV_RmaPrintMap (const mapInfo_t *map)
 	assert(map->mAssembly[map->mAsm].width < MMW);
 
 	/* initialize */
+	int rb = (1 + map->mAssembly[map->mAsm].width) * ACW;	/* index of right border */
 	memset(screen, ' ', sizeof(screen));
 	for (i = 0; i < MMH * ACH + 1; i++) {
-		screen[i][MMW * ACW + 1] = '|';
-		screen[i][MMW * ACW + 2] = 0;
+		screen[i][rb + 1] = '|';
+		screen[i][rb + 2] = 0;
 	}
 
 	/* fill in the data */
@@ -262,12 +263,12 @@ static void SV_RmaPrintMap (const mapInfo_t *map)
 	/* print it */
 	const char *underscores = "_________________________________________________________________________\n";
 	Com_Printf("\nCurrent state of the map:\n");
-	Com_Printf(underscores);
-/*	int h = map->mAssembly[map->mAsm].height;	*/
-	int h = ACH * MMH;
+	int w = ACW * (MMW - 1 - map->mAssembly[map->mAsm].width);
+	Com_Printf(underscores + w);
+	int h = ACH * (height + 1);
 	for (i = h; i >= ACH; i--)
 		Com_Printf("%s\n", screen[i] + ACW);
-	Com_Printf(underscores);
+	Com_Printf(underscores + w);
 }
 #endif
 
