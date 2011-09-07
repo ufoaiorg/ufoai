@@ -215,6 +215,8 @@ static qboolean GAME_SaveTeam (const char *filename, const char *name)
 	header.soldiercount = LittleLong(chrDisplayList.num);
 	Q_strncpyz(header.name, name, sizeof(header.name));
 
+	Cvar_Set("mn_teamname", header.name);
+
 	snode = XML_AddNode(node, SAVE_TEAM_NODE);
 	GAME_SaveTeamInfo(snode);
 
