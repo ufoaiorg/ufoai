@@ -188,8 +188,6 @@ static void testSeedlists (void)
 /**
  * @brief test the maps that have problems with certain seeds
  * this can also be used to produce new seedlists
- * @note "japan big" has problems with seeds 5, 13, 25, 32, 47
- * @note "hills desert_harvester" has problems with seeds 1?, 3, 5, 7, 8
  */
 static void testNewSeedlists (void)
 {
@@ -198,20 +196,13 @@ static void testNewSeedlists (void)
 	mapInfo_t *randomMap;
 
 	sv_threads->integer = 0;
-	for (i = 0; i < 40; i++) {
+	for (i = 0; i < 50; i++) {
 		srand(i);
 		time = Sys_Milliseconds();
 		Com_Printf("Seed: %i\n", i);
-		randomMap = SV_AssembleMap("village", "small", mapStr, posStr, i);
-#if 0
-		randomMap = SV_AssembleMap("farm", "medium", mapStr, posStr, i);
-		randomMap = SV_AssembleMap("farm", "large", mapStr, posStr, i);
 		randomMap = SV_AssembleMap("forest", "large", mapStr, posStr, i);
+#if 0
 		randomMap = SV_AssembleMap("forest", "large_crash", mapStr, posStr, i);
-		randomMap = SV_AssembleMap("village", "commercial", mapStr, posStr, i);
-		randomMap = SV_AssembleMap("oriental", "large", mapStr, posStr, i);
-		randomMap = SV_AssembleMap("japan", "large", mapStr, posStr, i);
-		randomMap = SV_AssembleMap("hills", "desert_harvester", mapStr, posStr, i);
 #endif
 		CU_ASSERT(randomMap != NULL);
 		time = Sys_Milliseconds() - time;
