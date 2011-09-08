@@ -101,13 +101,13 @@ static void LM_AddToSceneOrder (qboolean parents)
 		if (!((1 << cl_worldlevel->integer) & lm->levelflags))
 			continue;
 
-		/* if we want to render the parents an this is a child (has a parent assigned)
+		/* if we want to render the parents and this is a child (has a parent assigned)
 		 * then skip it */
 		if (parents && lm->parent)
 			continue;
 
 		/* if we want to render the children and this is a parent (no further parent
-		 * assigned, then skip it. */
+		 * assigned), then skip it. */
 		if (!parents && lm->parent == NULL)
 			continue;
 

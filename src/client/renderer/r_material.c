@@ -63,7 +63,7 @@ static void R_UpdateMaterial (material_t *m)
 
 			if (moduloPhase < s->pulse.dutycycle) {
 				moduloPhase /= s->pulse.dutycycle;
-				s->pulse.dhz = (1.0 - cos(moduloPhase * (2 * M_PI)) ) / 2.0;
+				s->pulse.dhz = (1.0 - cos(moduloPhase * (2 * M_PI))) / 2.0;
 			} else {
 				s->pulse.dhz = 0;
 			}
