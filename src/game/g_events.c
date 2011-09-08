@@ -526,6 +526,8 @@ void G_EventAddBrushModel (unsigned int playerMask, const edict_t *ent)
 	gi.WriteByte(ent->spawnflags & 0xFF);
 	gi.WritePos(ent->origin);
 	gi.WritePos(ent->angles);
+	gi.WritePos(ent->absmin);
+	gi.WritePos(ent->absmax);
 	gi.WriteShort(ent->speed);
 	gi.WriteByte(ent->angle);
 	gi.WriteByte(ent->dir);

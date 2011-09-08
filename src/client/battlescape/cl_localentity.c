@@ -1326,6 +1326,28 @@ static inline qboolean LE_IsOriginBrush (const le_t *const le)
 }
 
 /**
+ * @brief Adds a box that highlights the current active door
+ */
+static void LE_AddDoorHighlight (const le_t *door)
+{
+#if 0
+	entity_t entDoor;
+
+	OBJZERO(entDoor);
+
+	entDoor.flags = RF_BOX;
+	VectorSet(entDoor.color, 1, 1, 1);
+	entDoor.alpha = (sin(cl.time * 6.28) + 1.0) / 2.0;
+	/** @todo fix angles use */
+	VectorCopy(door->angles, entDoor.angles);
+	VectorCopy(door->absmin, entDoor.mins);
+	VectorCopy(door->absmax, entDoor.maxs);
+
+	R_AddEntity(&entDoor);
+#endif
+}
+
+/**
  * @sa CL_ViewRender
  * @sa CL_AddUGV
  * @sa CL_AddActor
@@ -1392,6 +1414,14 @@ void LE_AddToScene (void)
 				break;
 			default:
 				break;
+			}
+
+			if (le->clientAction != NULL) {
+				le_t *action = le->clientAction;
+				/* highlight the current active door */
+				if (LE_IsDoor(action)) {
+					LE_AddDoorHighlight(action);
+				}
 			}
 
 			/* call add function */
