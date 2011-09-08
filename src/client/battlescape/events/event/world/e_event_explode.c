@@ -38,6 +38,8 @@ void CL_Explode (const eventRegister_t *self, struct dbuffer *msg)
 		LE_NotFoundError(entnum);
 
 	le->inuse = qfalse;
+	if (le->modelnum1 > 0)
+		cl.model_clip[le->modelnum1] = NULL;
 
 	/* Recalc the client routing table because this le (and the inline model) is now gone */
 	CL_RecalcRouting(le);
