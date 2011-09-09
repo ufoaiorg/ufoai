@@ -107,8 +107,10 @@ static void testMapDefsMassRMA (void)
 			else
 				continue;
 
+			Com_Printf("Map: %s Assembly: %s\n", p, md->param);
+
 			sv_threads->integer = 0;
-			for (i = 0; i < 40; i++) {
+			for (i = 0; i < 50; i++) {
 				srand(i);
 				time = Sys_Milliseconds();
 				Com_Printf("Seed: %i\n", i);
@@ -117,7 +119,7 @@ static void testMapDefsMassRMA (void)
 				time = (Sys_Milliseconds() - time);
 				CU_ASSERT(time < 30000);
 				if (time > 10000)
-					Com_Printf("Seed %i: tiles: %i ms: %li\n", i, randomMap->numPlaced, time);
+					Com_Printf("Map: %s Assembly: %s Seed: %i tiles: %i ms: %li\n", p, md->param, i, randomMap->numPlaced, time);
 				Mem_Free(randomMap);
 			}
 		}
