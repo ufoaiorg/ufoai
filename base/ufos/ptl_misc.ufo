@@ -867,6 +867,17 @@ particle crawlTracer
 	}
 }
 
+particle lightTracerDebug
+{
+	init
+	{
+		blend  blend
+		style  line
+		color  "0.5 1 1 1"
+		life   0.0001
+	}
+}
+
 particle blocked_field
 {
 	init

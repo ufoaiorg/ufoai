@@ -32,6 +32,7 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #include "r_mesh_anim.h"
 #include "r_error.h"
 #include "r_draw.h"
+#include "../battlescape/cl_particle.h"
 
 static const float MESH_SHADOW_MAX_DISTANCE = 512.0;
 static const float MESH_SHADOW_ALPHA = 0.3;
@@ -706,6 +707,11 @@ void R_DrawAliasModel (entity_t *e)
 
 	R_UpdateLightList(e);
 	R_EnableDynamicLights(e->lights, e->numLights, qtrue);
+
+	if (r_debug_lights->integer) {
+		for (i = 0; i < e->numLights && i < r_dynamic_lights->integer; i++)
+			CL_ParticleSpawn("lightTracerDebug", 0, e->transform.matrix+12, e->lights[i]->loc, NULL);
+	}
 
 	if (skin->normalmap)
 		R_EnableBumpmap(skin->normalmap, qtrue);
