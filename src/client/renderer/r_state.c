@@ -392,7 +392,7 @@ void R_EnableDynamicLights (const r_light_t **lights, int numLights, qboolean en
 	glLightfv(GL_LIGHT0, GL_SPECULAR, refdef.sunSpecularColor);
 
 	j = 1;
-	for (i = 0; j < maxLights && i < numLights; i++) {
+	for (i = 0; j < MAX_GL_LIGHTS && j <= maxLights && i < numLights; i++) {
 		const r_light_t *l = lights[i];
 		if (!l->enabled) {
 			continue;

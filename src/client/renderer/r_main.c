@@ -473,7 +473,7 @@ static qboolean R_CvarCheckDynamicLights (cvar_t *cvar)
 		}
 		return qfalse;
 	}
-	return Cvar_AssertValue(cvar, 1, r_config.maxLights, qtrue);
+	return Cvar_AssertValue(cvar, 1, r_config.maxLights - 1, qtrue);
 }
 
 static qboolean R_CvarPrograms (cvar_t *cvar)
