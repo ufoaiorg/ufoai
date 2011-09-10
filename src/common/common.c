@@ -1153,6 +1153,7 @@ void Qcommon_Init (int argc, const char **argv)
 #endif
 
 	s = va("UFO: Alien Invasion %s %s %s %s", UFO_VERSION, CPUSTRING, __DATE__, BUILDSTRING);
+	Com_Printf("%s\n", s);
 	Cvar_Get("version", s, CVAR_NOSET, "Full version string");
 	Cvar_Get("ver", UFO_VERSION, CVAR_SERVERINFO | CVAR_NOSET, "Version number");
 
