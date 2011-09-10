@@ -890,7 +890,6 @@ static void SV_DumpRating (const mapInfo_t *map)
 	Com_Printf("\n");
 }
 
-#if PRINT_RMA_PROGRESS
 /**
  * @brief Debug function to dump the map location of a placed tile.
  */
@@ -920,7 +919,6 @@ static void SV_DumpPlaced (const mapInfo_t *map, int pl)
 	}
 	Com_Printf("\n");
 }
-#endif
 
 /**
  * @brief Returns the rating of the given map.
@@ -1154,7 +1152,6 @@ static qboolean SV_AddMissingTilesOld (mapInfo_t *map)
 	}
 }
 
-#if PRINT_RMA_PROGRESS
 /**
  * @brief Prints the mapstrings as known from the ufoconsole.log
  * This can also be used to dump the progress of the RMA process.
@@ -1190,7 +1187,6 @@ static void SV_PrintMapStrings (mapInfo_t *map, char *asmMap, char *asmPos)
 	Com_Printf("pos: %s\n", asmPos);
 	Com_Printf("tiles: %i\n", map->numPlaced);
 }
-#endif
 
 /**
  * @brief get the specs of a tile at map-x/y if it was placed where tileCode indicates
@@ -2184,10 +2180,8 @@ static mapInfo_t* SV_DoMapAssemble (mapInfo_t *map, const char *assembly, char *
 
 	asmPos[0] = 0;
 
-#if PRINT_RMA_PROGRESS
 	/* generate the strings */
 	SV_PrintMapStrings(map, asmMap, asmPos);
-#endif
 
 	return map;
 }
