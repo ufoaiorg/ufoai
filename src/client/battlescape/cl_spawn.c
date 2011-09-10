@@ -45,6 +45,7 @@ static const value_t localEntityValues[] = {
 	{"angles", V_VECTOR, offsetof(localEntityParse_t, angles), MEMBER_SIZEOF(localEntityParse_t, angles)},
 	{"origin", V_VECTOR, offsetof(localEntityParse_t, origin), MEMBER_SIZEOF(localEntityParse_t, origin)},
 	{"color", V_VECTOR, offsetof(localEntityParse_t, color), MEMBER_SIZEOF(localEntityParse_t, color)},
+	{"_color", V_VECTOR, offsetof(localEntityParse_t, color), MEMBER_SIZEOF(localEntityParse_t, color)},
 	{"modelscale_vec", V_VECTOR, offsetof(localEntityParse_t, scale), MEMBER_SIZEOF(localEntityParse_t, scale)},
 	{"wait", V_POS, offsetof(localEntityParse_t, wait), MEMBER_SIZEOF(localEntityParse_t, wait)},
 	{"classname", V_STRING, offsetof(localEntityParse_t, classname), 0},
