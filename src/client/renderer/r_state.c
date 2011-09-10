@@ -352,7 +352,7 @@ void R_EnableDynamicLights (const r_light_t **lights, int numLights, qboolean en
 {
 	int i, j;
 	int maxLights = r_dynamic_lights->integer;
-	const vec4_t sunDirection = {0.0, 0.0, -1.0, 0.0}; /* works only with shader, not the FFP */
+	const vec4_t sunDirection = {0.0, 0.0, 1.0, 0.0}; /* works only with shader, not the FFP */
 	vec4_t blackColor = {0.0, 0.0, 0.0, 1.0};
 
 	if (!enable || !r_state.lighting_enabled) {

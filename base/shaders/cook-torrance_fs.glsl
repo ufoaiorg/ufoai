@@ -18,7 +18,7 @@ vec3 LightContribution(in gl_LightSourceParameters lightSource, in vec3 lightDir
 	float attenuate = 1.0;
 
 	if (bool(lightSource.position.w)) { /* directional sources don't get attenuated */
-		float dist = length((lightSource.position).xyz - point);
+		float dist = length(lightDir);
 		float attenDiv = (lightSource.constantAttenuation +
 				lightSource.linearAttenuation * dist +
 				lightSource.quadraticAttenuation * dist * dist);
@@ -35,7 +35,7 @@ vec3 LightContribution(in gl_LightSourceParameters lightSource, in vec3 lightDir
 
 	/* Normalize vectors and cache dot products */
 	vec3 L = normalize(lightDir);
-	float NdotL = clamp(dot(N, -L), 0.0, 1.0);
+	float NdotL = clamp(dot(N, L), 0.0, 1.0);
 
 	/* Compute the final color contribution of the light */
 	vec3 ambientColor = diffuse.rgb * diffuse.a * lightSource.ambient.rgb;
@@ -44,7 +44,7 @@ vec3 LightContribution(in gl_LightSourceParameters lightSource, in vec3 lightDir
 
 	/* Cook-Torrance shading */
 	if (ROUGHMAP > 0) {
-		vec3 H = normalize(L + V);
+		vec3 H = normalize(-L + V);
 		float NdotH = dot(N, -H);
 		float VdotH = dot(V, H);
 		float NdotH_2 = NdotH * NdotH;
@@ -64,7 +64,7 @@ vec3 LightContribution(in gl_LightSourceParameters lightSource, in vec3 lightDir
 
 		specularColor = lightSource.specular.rgb * specular.rgb * roughness.b * NdotL * (F * R * G) / (NdotV * NdotL);
 	} else { /* Phong shading */
-		specularColor = lightSource.specular.rgb * specular.rgb * pow(max(dot(V, reflect(-L, N)), 0.0), specular.a);
+		specularColor = lightSource.specular.rgb * specular.rgb * pow(max(dot(V, reflect(L, N)), 0.0), specular.a);
 	}
 
 	/* @note We attenuate light here, but attenuation doesn't affect "directional" sources like the sun */
