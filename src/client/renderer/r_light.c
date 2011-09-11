@@ -272,5 +272,5 @@ void R_UpdateLightList (entity_t *ent)
 	ent->numLights = i;
 
 	/* we have to use the offset from accumulated transform matrix, because origin is relative to attachment point for submodels */
-	R_SortLightList(ent->lights, ent->numLights, ent->transform.matrix+12);
+	R_SortLightList(ent->lights, ent->numLights, ent->transform.matrix + 12);
 }

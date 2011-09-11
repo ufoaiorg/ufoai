@@ -708,9 +708,10 @@ void R_DrawAliasModel (entity_t *e)
 	R_UpdateLightList(e);
 	R_EnableDynamicLights(e->lights, e->numLights, qtrue);
 
+	/** @todo this breaks the encapsulation - don't call CL_* functions from within the renderer code */
 	if (r_debug_lights->integer) {
 		for (i = 0; i < e->numLights && i < r_dynamic_lights->integer; i++)
-			CL_ParticleSpawn("lightTracerDebug", 0, e->transform.matrix+12, e->lights[i]->loc, NULL);
+			CL_ParticleSpawn("lightTracerDebug", 0, e->transform.matrix + 12, e->lights[i]->loc, NULL);
 	}
 
 	if (skin->normalmap)
