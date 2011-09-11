@@ -1399,7 +1399,6 @@ void LE_AddToScene (void)
 
 			if (LE_IsOriginBrush(le)) {
 				ent.isOriginBrushModel = qtrue;
-				VectorCopy(le->angles, ent.angles);
 				R_EntitySetOrigin(&ent, le->origin);
 				VectorCopy(le->origin, ent.oldorigin);
 			}
