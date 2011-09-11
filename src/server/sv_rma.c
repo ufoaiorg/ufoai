@@ -872,23 +872,6 @@ static qboolean SV_TestFilled (const mapInfo_t *map)
 }
 
 /**
- * @brief Debug fuction to dump the rating of the current map.
- */
-static void SV_DumpRating (const mapInfo_t *map)
-{
-	int x, y;
-	const mAssembly_t *mAsm = &map->mAssembly[map->mAsm];
-
-	Com_Printf("Rating:\n");
-	for (y = mAsm->height; y >= 1; y--) {
-		for (x = 1; x < mAsm->width + 1; x++)
-			Com_Printf(" %2d", (int) map->curRating[y][x]);
-		Com_Printf("\n");
-	}
-	Com_Printf("\n");
-}
-
-/**
  * @brief Debug function to dump the map location of a placed tile.
  */
 static void SV_DumpPlaced (const mapInfo_t *map, int pl)
@@ -916,28 +899,6 @@ static void SV_DumpPlaced (const mapInfo_t *map, int pl)
 		Com_Printf("\n");
 	}
 	Com_Printf("\n");
-}
-
-/**
- * @brief Returns the rating of the given map.
- * @return A value which roughly describes the connection quality of the map
- * @sa SV_AssembleMap
- * @sa SV_AddRegion
- * @sa SV_FitTile
- */
-static int SV_CalcRating (const mapInfo_t *map)
-{
-	int x, y, rating = 0;
-	const mAssembly_t *mAsm = &map->mAssembly[map->mAsm];
-
-	for (y = 1; y <= mAsm->height; y++)
-		for (x = 1; x <= mAsm->width; x++)
-			rating += map->curRating[y][x];
-
-	if (sv_dumpmapassembly->integer)
-		SV_DumpRating(map);
-
-	return rating;
 }
 
 /**
@@ -1039,115 +1000,6 @@ static void SV_RemoveTile (mapInfo_t *map, int* idx, int* pos)
 
 	if (pos)
 		*pos = map->mPlaced[map->numPlaced].pos;
-}
-
-/**
- * @brief Tries to fit a tile in the current map.
- * @return @c true if a fitting tile was found, @c false if no tile fits.
- * @sa SV_FitTile
- * @sa SV_AddTile
- */
-static qboolean SV_PickRandomTile (mapInfo_t *map, int* idx, int* pos)
-{
-	const mAssembly_t *mAsm = &map->mAssembly[map->mAsm];
-	const int numToPlace = map->numToPlace;
-	const int mapSize = mAsm->size;
-	const int mapW = mAsm->width;
-	const int start_idx = *idx = rand() % numToPlace;
-	const int start_pos = *pos = rand() % mapSize;
-	const mToPlace_t *mToPlace = map->mToPlace;
-
-	do {
-		if (mToPlace[*idx].cnt < mToPlace[*idx].max) {
-			do {
-				const int x = (*pos) % mapW;
-				const int y = (*pos) / mapW;
-
-				if ((x % mAsm->dx == 0)
-					&& (y % mAsm->dy == 0)
-					&& SV_FitTile(map, mToPlace[*idx].tile, x, y)) {
-					return qtrue;
-				}
-
-				(*pos) += 1;
-				(*pos) %= mapSize;
-
-			} while ((*pos) != start_pos);
-		}
-
-		(*idx) += 1;
-		(*idx) %= numToPlace;
-
-	} while ((*idx) != start_idx);
-
-	return qfalse;
-}
-
-/**
- * @brief Number of test alternatives per step in SV_AddMissingTiles
- * @sa SV_AddMissingTiles
- */
-#define CHECK_ALTERNATIVES_COUNT 10
-
-/**
- * @brief Tries to fill the missing tiles of the current map.
- * @return @c false if the tiles does not fit, @c true if the map could be filled.
- * @sa SV_FitTile
- * @sa SV_AddTile
- */
-static qboolean SV_AddMissingTilesOld (mapInfo_t *map)
-{
-	int i;
-	int idx[CHECK_ALTERNATIVES_COUNT];
-	int pos[CHECK_ALTERNATIVES_COUNT];
-	int rating[CHECK_ALTERNATIVES_COUNT];
-	mapInfo_t backup;
-	const mAssembly_t *mAsm = &map->mAssembly[map->mAsm];
-	const int mapW = mAsm->width;
-	const int mapH = mAsm->height;
-	const mToPlace_t *mToPlace = map->mToPlace;
-
-	memcpy(&backup, map, sizeof(*map));
-	while (1) {
-		int maxRating = -mapW * mapH * 4;
-
-		/* check if the map is already filled */
-		if (SV_TestFilled(map))
-			return qtrue;
-
-		/* try some random tiles at random positions */
-		for (i = 0; i < CHECK_ALTERNATIVES_COUNT; i++) {
-			int x, y;
-			if (!SV_PickRandomTile(map, &idx[i], &pos[i])) {
-				/* remove all tiles placed by this function */
-				memcpy(map, &backup, sizeof(*map));
-				return qfalse;
-			}
-
-			x = pos[i] % mapW;
-			y = pos[i] / mapW;
-			SV_AddTile(map, mToPlace[idx[i]].tile, x, y, idx[i], pos[i]);
-
-			if (SV_TestFilled(map))
-				return qtrue;
-
-			rating[i] = SV_CalcRating(map);
-
-			if (rating[i] > maxRating)
-				maxRating = rating[i];
-
-			SV_RemoveTile(map, NULL, NULL);
-		}
-
-		for (i = 0; i < CHECK_ALTERNATIVES_COUNT; i++) {
-			if (rating[i] == maxRating) {
-				const int x = pos[i] % mapW;
-				const int y = pos[i] / mapW;
-				SV_AddTile(map, mToPlace[idx[i]].tile, x, y, idx[i], pos[i]);
-				break;
-			}
-		}
-	}
 }
 
 /**
@@ -1709,18 +1561,6 @@ static qboolean SV_AddMissingTiles3 (mapInfo_t *map)
 }
 
 /**
- * @brief Tries to fill the missing tiles of the current map.
- * @param map All we know about the map to assemble
- * @return @c false if the tiles does not fit, @c true if the map could be filled.
- */
-static qboolean SV_AddMissingTiles (mapInfo_t *map)
-{
-	if (sv_rma->integer == 2)
-		return SV_AddMissingTiles3(map);
-	return SV_AddMissingTilesOld(map);
-}
-
-/**
  * @brief Tries to build the map
  * There are 3 categories of tiles:
  * - fixed: the position of the tile is already given in the assembly definition
@@ -1830,7 +1670,7 @@ static qboolean SV_AddMapTiles (mapInfo_t *map)
 			pos++;
 		}
 
-		if (idx == numToPlace && !SV_AddMissingTiles(map)) {
+		if (idx == numToPlace && !SV_AddMissingTiles3(map)) {
 #if DISPLAY_THE_MAP_ON_FAILURE
 			SV_RmaPrintMap(map);
 			Com_Printf("couldn't pad\n");
