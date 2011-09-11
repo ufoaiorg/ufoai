@@ -641,7 +641,6 @@ window hhud extends hud
 
 	func onWindowOpened
 	{
-		cmd "debug_ui 1;"
 		// missed currently
 		cmd "music_change battlescape;"
 //		call *node:root.right.show_rightweapon
