@@ -53,6 +53,22 @@ static inline void LE_GenerateInlineModelList (void)
 	cl.leInlineModelList[i] = NULL;
 }
 
+static void CL_GridRecalcRouting (const le_t *le, mapTiles_t *mapTiles, routing_t *map, const char *name, const char **list)
+{
+	/* We ALWAYS check against a model, even if it isn't in use.
+	 * An unused model is NOT included in the inline list, so it doesn't get
+	 * traced against. */
+	if (!le->model1 || le->inlineModelName[0] != '*')
+		return;
+
+	if (Com_ServerState())
+		return;
+
+	Com_DPrintf(DEBUG_ROUTING, "Rerouting le %i client side\n", le->entnum);
+
+	Grid_RecalcRouting(mapTiles, map, name, list);
+}
+
 /**
  * @sa G_CompleteRecalcRouting
  */
@@ -63,12 +79,10 @@ void CL_CompleteRecalcRouting (void)
 
 	LE_GenerateInlineModelList();
 
+	Com_DPrintf(DEBUG_ROUTING, "Rerouting everything client side\n");
+
 	for (i = 0, le = cl.LEs; i < cl.numLEs; i++, le++)
-		/* We ALWAYS check against a model, even if it isn't in use.
-		 * An unused model is NOT included in the inline list, so it doesn't get
-		 * traced against. */
-		if (le->model1 && le->inlineModelName[0] == '*')
-			Grid_RecalcRouting(cl.mapTiles, cl.mapData->map, le->inlineModelName, cl.leInlineModelList);
+		CL_GridRecalcRouting(le, cl.mapTiles, cl.mapData->map, le->inlineModelName, cl.leInlineModelList);
 }
 
 /**
@@ -78,11 +92,7 @@ void CL_CompleteRecalcRouting (void)
 void CL_RecalcRouting (const le_t* le)
 {
 	LE_GenerateInlineModelList();
-	/* We ALWAYS check against a model, even if it isn't in use.
-	 * An unused model is NOT included in the inline list, so it doesn't get
-	 * traced against. */
-	if (le->model1 && le->inlineModelName[0] == '*')
-		Grid_RecalcRouting(cl.mapTiles, cl.mapData->map, le->inlineModelName, cl.leInlineModelList);
+	CL_GridRecalcRouting(le, cl.mapTiles, cl.mapData->map, le->inlineModelName, cl.leInlineModelList);
 
 	CL_ActorConditionalMoveCalc(selActor);
 }
