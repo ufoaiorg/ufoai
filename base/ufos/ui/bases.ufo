@@ -2,34 +2,14 @@
 // BASEMANAGEMENT
 // ===============
 
-component cmpDefBaseHeader cmpBaseviewHeader
+component button cmpBaseButton
 {
-	{
-		pos "0 0"
-	}
-
-	cmpBaseHeader baseHeader {
-	}
-
-	custombutton bt_back_to_geoscape
-	{
-		tooltip		"_Back to geoscape"
-		icon		"icons/geoscape"
-		background	"buttons/big_blue"
-		pos			"950 20"
-		size		"59 55"
-		onClick		{ cmd "ui_pop;" }
-	}
+	image		"ui/button_green_small"
+	size		"230 56"
+	color		"0 0.8 0 1"
+	selectcolor "1 1 1 1"
+	font		"f_menu"
 }
-
-	component button cmpBaseButton
-	{
-		image		"ui/button_green_small"
-		size		"230 56"
-		color		"0 0.8 0 1"
-		selectcolor "1 1 1 1"
-		font		"f_menu"
-	}
 
 window bases
 {
@@ -58,7 +38,18 @@ window bases
 		pos			"512 256"
 	}
 
-	cmpBaseviewHeader baseHeader {
+	cmpBaseHeader baseHeader {
+	}
+
+	// here we need the back-to-geoscape button
+	custombutton bt_back_to_geoscape
+	{
+		tooltip		"_Back to geoscape"
+		icon		"icons/geoscape"
+		background	"buttons/big_blue"
+		pos			"950 20"
+		size		"59 55"
+		onClick		{ *cvar:mn_lastsubmenu = "bases" cmd "ui_pop;" }
 	}
 
 	basemap thebasemap
