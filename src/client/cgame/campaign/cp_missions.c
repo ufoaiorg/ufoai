@@ -38,6 +38,7 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #include "cp_xvi.h"
 #include "save/save_missions.h"
 #include "save/save_interest.h"
+#include "cp_mission_callbacks.h"
 
 /** Maximum number of loops to choose a mission position (to avoid infinite loops) */
 const int MAX_POS_LOOP = 10;
@@ -1997,6 +1998,7 @@ qboolean MIS_LoadXML (xmlNode_t *parent)
  */
 void MIS_InitStartup (void)
 {
+	MIS_InitCallbacks();
 #ifdef DEBUG
 	Cmd_AddCommand("debug_missionsetmap", MIS_MissionSetMap_f, "Changes the map for a spawned mission");
 	Cmd_AddCommand("debug_missionadd", MIS_SpawnNewMissions_f, "Add a new mission");
@@ -2012,6 +2014,7 @@ void MIS_Shutdown (void)
 {
 	LIST_Delete(&ccs.missions);
 
+	MIS_ShutdownCallbacks();
 #ifdef DEBUG
 	Cmd_RemoveCommand("debug_missionsetmap");
 	Cmd_RemoveCommand("debug_missionadd");

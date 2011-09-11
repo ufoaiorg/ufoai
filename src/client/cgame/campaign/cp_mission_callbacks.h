@@ -1,6 +1,6 @@
 /**
- * @file cp_auto_mission_callbacks.h
- * @brief header file UI callbacks for automissions subsystem.
+ * @file cp_mission_callbacks.h
+ * @brief header file UI callbacks for missions.
  */
 
 /*
@@ -22,10 +22,14 @@ along with this program; if not, write to the Free Software
 Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 */
 
-#ifndef CP_AUTO_MISSION_CALLBACKS_H
-#define CP_AUTO_MISSION_CALLBACKS_H
+#ifndef CP_MISSION_CALLBACKS_H
+#define CP_MISSION_CALLBACKS_H
 
-void AM_InitCallbacks(void);
-void AM_ShutdownCallbacks(void);
+struct missionResults_s;
+
+void MIS_InitResultScreen(const struct missionResults_s *results);
+
+void MIS_InitCallbacks(void);
+void MIS_ShutdownCallbacks(void);
 
 #endif

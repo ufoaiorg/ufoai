@@ -922,44 +922,6 @@ void CP_StartSelectedMission (void)
 }
 
 /**
- * @brief Updates mission result menu text with appropriate values
- * @param[in] won Whether we won the battle
- * @param[in] missionResults Initialized mission results
- */
-void CP_InitMissionResults (qboolean won, const missionResults_t *missionResults)
-{
-	linkedList_t *list = NULL;
-
-	/* init result text */
-	UI_ResetData(TEXT_LIST2);
-
-	/* aliens */
-	LIST_AddString(&list, va("%s\t%i", _("Aliens killed"), missionResults->aliensKilled));
-	LIST_AddString(&list, va("%s\t%i", _("Aliens captured"), missionResults->aliensStunned));
-	LIST_AddString(&list, va("%s\t%i", _("Alien survivors"), missionResults->aliensSurvived));
-	LIST_AddString(&list, "");
-	/* pahanx */
-	LIST_AddString(&list, va("%s\t%i", _("PHALANX soldiers killed by Aliens"), missionResults->ownKilled));
-	LIST_AddString(&list, va("%s\t%i", _("PHALANX soldiers missing in action"), missionResults->ownStunned));
-	LIST_AddString(&list, va("%s\t%i", _("PHALANX friendly fire losses"), missionResults->ownKilledFriendlyFire));
-	LIST_AddString(&list, va("%s\t%i", _("PHALANX survivors"), missionResults->ownSurvived));
-	LIST_AddString(&list, "");
-
-	LIST_AddString(&list, va("%s\t%i", _("Civilians killed by Aliens"), missionResults->civiliansKilled));
-	LIST_AddString(&list, va("%s\t%i", _("Civilians killed by friendly fire"), missionResults->civiliansKilledFriendlyFire));
-	LIST_AddString(&list, va("%s\t%i", _("Civilians saved"), missionResults->civiliansSurvived));
-	LIST_AddString(&list, "");
-
-	if (missionResults->itemTypes > 0 && missionResults->itemAmount > 0)
-		LIST_AddString(&list, va("%s\t%i/%i", _("Gathered items (types/all)"), missionResults->itemTypes, missionResults->itemAmount));
-
-	if (won && missionResults->recovery)
-		LIST_AddString(&list, UFO_MissionResultToString());
-
-	UI_RegisterLinkedListText(TEXT_LIST2, list);
-}
-
-/**
  * @brief Checks whether a soldier should be promoted
  * @param[in] rank The rank to check for
  * @param[in] chr The character to check a potential promotion for

@@ -297,7 +297,7 @@
 		<Unit filename="..\..\src\client\cgame\campaign\cp_auto_mission.c">
 			<Option compilerVar="CC" />
 		</Unit>
-		<Unit filename="..\..\src\client\cgame\campaign\cp_auto_mission_callbacks.c">
+		<Unit filename="..\..\src\client\cgame\campaign\cp_mission_callbacks.c">
 			<Option compilerVar="CC" />
 		</Unit>
 		<Unit filename="..\..\src\client\cgame\campaign\cp_base.c">

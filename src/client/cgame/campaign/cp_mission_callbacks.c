@@ -1,6 +1,8 @@
 /**
- * @file cp_auto_mission_callbacks.c
- * @brief UI callbacks for automissions subsystem.
+ * @file cp_mission_callbacks.c
+ * @brief UI callbacks for missions.
+ * @note Automission related function prefix: AM_
+ * @note Other mission function prefix: MIS_
  */
 
 /*
@@ -22,9 +24,10 @@ along with this program; if not, write to the Free Software
 Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 */
 
-#include "cp_auto_mission_callbacks.h"
+#include "cp_mission_callbacks.h"
 #include "../../cl_shared.h"
 #include "../../ui/ui_windows.h"
+#include "../../ui/ui_data.h"
 #include "cp_campaign.h"
 #include "cp_map.h"
 #include "cp_missions.h"
@@ -101,18 +104,52 @@ static void AM_Check_f (void)
 }
 
 /**
- * @brief Init UI callbacks for automission-subsystem
+ * @brief Updates mission result menu text with appropriate values
+ * @param[in] missionResults Initialized mission results
  */
-void AM_InitCallbacks (void)
+void MIS_InitResultScreen (const missionResults_t *results)
+{
+	linkedList_t *list = NULL;
+
+	/* init result text */
+	UI_ResetData(TEXT_LIST2);
+
+	/* aliens */
+	LIST_AddString(&list, va("%s\t%i", _("Aliens killed"), results->aliensKilled));
+	LIST_AddString(&list, va("%s\t%i", _("Aliens captured"), results->aliensStunned));
+	LIST_AddString(&list, va("%s\t%i", _("Alien survivors"), results->aliensSurvived));
+	LIST_AddString(&list, "");
+	/* pahanx */
+	LIST_AddString(&list, va("%s\t%i", _("PHALANX soldiers killed by Aliens"), results->ownKilled));
+	LIST_AddString(&list, va("%s\t%i", _("PHALANX soldiers missing in action"), results->ownStunned));
+	LIST_AddString(&list, va("%s\t%i", _("PHALANX friendly fire losses"), results->ownKilledFriendlyFire));
+	LIST_AddString(&list, va("%s\t%i", _("PHALANX survivors"), results->ownSurvived));
+	LIST_AddString(&list, "");
+
+	LIST_AddString(&list, va("%s\t%i", _("Civilians killed by Aliens"), results->civiliansKilled));
+	LIST_AddString(&list, va("%s\t%i", _("Civilians killed by friendly fire"), results->civiliansKilledFriendlyFire));
+	LIST_AddString(&list, va("%s\t%i", _("Civilians saved"), results->civiliansSurvived));
+	LIST_AddString(&list, "");
+
+	if (results->itemTypes > 0 && results->itemAmount > 0)
+		LIST_AddString(&list, va("%s\t%i/%i", _("Gathered items (types/all)"), results->itemTypes, results->itemAmount));
+
+	UI_RegisterLinkedListText(TEXT_LIST2, list);
+}
+
+/**
+ * @brief Init UI callbacks for missions-subsystem
+ */
+void MIS_InitCallbacks (void)
 {
 	Cmd_AddCommand("cp_missionauto_check", AM_Check_f, "Checks whether this mission can be done automatically");
 	Cmd_AddCommand("cp_mission_autogo", AM_Go_f, "Let the current selection mission be done automatically");
 }
 
 /**
- * @brief Close UI callbacks for automission-subsystem
+ * @brief Close UI callbacks for missions-subsystem
  */
-void AM_ShutdownCallbacks (void)
+void MIS_ShutdownCallbacks (void)
 {
 	Cmd_RemoveCommand("cp_missionauto_check");
 	Cmd_RemoveCommand("cp_mission_autogo");

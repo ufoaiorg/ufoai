@@ -34,6 +34,7 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #include "../battlescape/cl_hud.h"
 #include "../ui/ui_main.h"
 #include "../ui/node/ui_node_text.h"
+#include "campaign/cp_mission_callbacks.h"
 
 static const cgame_import_t *cgImport;
 
@@ -274,7 +275,7 @@ static void GAME_CP_Results (struct dbuffer *msg, int winner, int *numSpawned, i
 	results->civiliansKilledFriendlyFire = numKilled[cls.team][TEAM_CIVILIAN] + numKilled[TEAM_CIVILIAN][TEAM_CIVILIAN];
 	results->civiliansSurvived = civiliansSurvived;
 
-	CP_InitMissionResults(won, results);
+	MIS_InitResultScreen(results);
 
 	UI_InitStack("geoscape", "campaign_main", qtrue, qtrue);
 

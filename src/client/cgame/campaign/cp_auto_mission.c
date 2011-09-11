@@ -32,7 +32,7 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #include "../../ui/ui_windows.h"
 #include "../../../shared/mathlib_extra.h"
 #include "math.h"
-#include "cp_auto_mission_callbacks.h"
+#include "cp_mission_callbacks.h"
 
 /**
  * @brief Possible types of teams that can fight in an auto mission battle.
@@ -915,7 +915,7 @@ void AM_Go (mission_t *mission, aircraft_t *aircraft, const campaign_t *campaign
 	if (results->won)
 		AM_AlienCollect(aircraft, &autoBattle);
 
-	CP_InitMissionResults(results->won, results);
+	MIS_InitResultScreen(results);
 	AM_DisplayResults(&autoBattle);
 	AM_CleanBattleParameters(&autoBattle);
 }
@@ -925,7 +925,6 @@ void AM_Go (mission_t *mission, aircraft_t *aircraft, const campaign_t *campaign
  */
 void AM_InitStartup (void)
 {
-	AM_InitCallbacks();
 }
 
 /**
@@ -933,5 +932,4 @@ void AM_InitStartup (void)
  */
 void AM_Shutdown (void)
 {
-	AM_ShutdownCallbacks();
 }
