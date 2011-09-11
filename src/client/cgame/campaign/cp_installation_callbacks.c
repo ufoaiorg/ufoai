@@ -40,7 +40,7 @@ static void INS_SetInstallationTitle (void)
 	const installationTemplate_t *insTemp = INS_GetInstallationTemplateFromInstallationID(Cvar_GetString("mn_installation_type"));
 	char insName[MAX_VAR];
 
-	Com_sprintf(insName, lengthof(insName), "%s #%i", (insTemp) ? _(insTemp->name) : _("Installation"), ccs.campaignStats.installationsBuilt);
+	Com_sprintf(insName, lengthof(insName), "%s #%i", (insTemp) ? _(insTemp->name) : _("Installation"), ccs.campaignStats.installationsBuilt + 1);
 	Cvar_Set("mn_installation_title", insName);
 	if (!insTemp || !insTemp->description || !strlen(insTemp->description))
 		UI_ResetData(TEXT_BUILDING_INFO);
