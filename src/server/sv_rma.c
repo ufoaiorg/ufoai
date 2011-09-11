@@ -43,10 +43,8 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #define DISPLAY_THE_MAP 0
 #if DISPLAY_THE_MAP
 #define DISPLAY_THE_MAP_ON_FAILURE 1
-#define PRINT_FAILURE_REASONCODE 1
 #else
 #define DISPLAY_THE_MAP_ON_FAILURE 0
-#define PRINT_FAILURE_REASONCODE 0
 #endif
 
 /** @brief max # of recursions */
@@ -1308,8 +1306,6 @@ static qboolean SV_AddMissingTiles3_r (mapInfo_t *map, int rec, int posListCnt, 
 	if (solids < gapCount) {
 #if DISPLAY_THE_MAP_ON_FAILURE
 		SV_RmaPrintMap(map);
-#endif
-#if PRINT_FAILURE_REASONCODE
 		Com_Printf("out of solids\n");
 #endif
 		return qfalse;
@@ -1341,9 +1337,7 @@ static qboolean SV_AddMissingTiles3_r (mapInfo_t *map, int rec, int posListCnt, 
 			if (gapList[x][y][0] == 0) {
 #if DISPLAY_THE_MAP_ON_FAILURE
 				SV_RmaPrintMap(map);
-#endif
-#if PRINT_FAILURE_REASONCODE
-		Com_Printf("uncovered gap: %i/%i\n", x, y);
+				Com_Printf("uncovered gap: %i/%i\n", x, y);
 #endif
 				return qfalse;
 			}
@@ -1400,8 +1394,6 @@ static qboolean SV_AddMissingTiles3_r (mapInfo_t *map, int rec, int posListCnt, 
 /*
 #if DISPLAY_THE_MAP_ON_FAILURE
 								SV_RmaPrintMap(map);
-#endif
-#if PRINT_FAILURE_REASONCODE
 								Com_Printf("no tile works for gap\n");
 #endif
 */
@@ -1812,8 +1804,6 @@ static qboolean SV_AddMapTiles (mapInfo_t *map)
 #endif
 #if DISPLAY_THE_MAP_ON_FAILURE
 			SV_RmaPrintMap(map);
-#endif
-#if PRINT_FAILURE_REASONCODE
 			Com_Printf("required tile doesn't fit\n");
 #endif
 			SV_RemoveTile(map, &idx, &pos);
@@ -1843,8 +1833,6 @@ static qboolean SV_AddMapTiles (mapInfo_t *map)
 		if (idx == numToPlace && !SV_AddMissingTiles(map)) {
 #if DISPLAY_THE_MAP_ON_FAILURE
 			SV_RmaPrintMap(map);
-#endif
-#if PRINT_FAILURE_REASONCODE
 			Com_Printf("couldn't pad\n");
 #endif
 			SV_RemoveTile(map, &idx, &pos);
