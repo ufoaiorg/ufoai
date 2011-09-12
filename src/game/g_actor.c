@@ -52,7 +52,7 @@ void G_ActorUseDoor (edict_t *actor, edict_t *door)
 	if (G_IsAI(actor))
 		return;
 
-	while ((closeActor = G_FindRadius(closeActor, door->origin, UNIT_SIZE * 3, ET_ACTOR))) {
+	while ((closeActor = G_FindRadius(closeActor, door->origin, UNIT_SIZE * 3, ET_NULL))) {
 		/* check whether the door is still reachable (this might have
 		 * changed due to the rotation) or whether an actor can reach it now */
 		G_TouchTriggers(closeActor);
