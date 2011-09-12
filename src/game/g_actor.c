@@ -45,7 +45,8 @@ void G_ActorUseDoor (edict_t *actor, edict_t *door)
 {
 	edict_t *closeActor = NULL;
 
-	G_ClientUseEdict(G_PLAYER_FROM_ENT(actor), actor, door);
+	if (!G_ClientUseEdict(G_PLAYER_FROM_ENT(actor), actor, door))
+		return;
 
 	/* end this loop here, for the AI this is a) not interesting,
 	 * and b) could result in endless loops */
