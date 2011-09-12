@@ -1421,7 +1421,7 @@ void LE_AddToScene (void)
 				break;
 			}
 
-			if (le->clientAction != NULL) {
+			if (le->selected && le->clientAction != NULL) {
 				le_t *action = le->clientAction;
 				/* highlight the current active door */
 				if (LE_IsDoor(action)) {
