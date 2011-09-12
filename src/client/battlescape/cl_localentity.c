@@ -1341,21 +1341,16 @@ static inline qboolean LE_IsOriginBrush (const le_t *const le)
  */
 static void LE_AddDoorHighlight (const le_t *door)
 {
-#if 0
 	entity_t entDoor;
+	const cBspModel_t *model = LE_GetClipModel(door);
 
 	OBJZERO(entDoor);
 
 	entDoor.flags = RF_BOX;
 	VectorSet(entDoor.color, 1, 1, 1);
 	entDoor.alpha = (sin(cl.time * 6.28) + 1.0) / 2.0;
-	/** @todo fix angles use */
-	VectorCopy(door->angles, entDoor.angles);
-	VectorCopy(door->absmin, entDoor.mins);
-	VectorCopy(door->absmax, entDoor.maxs);
-
+	CalculateMinsMaxs(door->angles, model->mins, model->maxs, door->origin, entDoor.mins, entDoor.maxs);
 	R_AddEntity(&entDoor);
-#endif
 }
 
 /**

@@ -40,9 +40,9 @@ void CL_AddBrushModel (const eventRegister_t *self, struct dbuffer *msg)
 	entity_type_t type;
 	const cBspModel_t *model;
 	int angle;
-	vec3_t origin, angles, absmin, absmax;
+	vec3_t origin, angles;
 
-	NET_ReadFormat(msg, self->formatString, &type, &entnum, &modelnum1, &levelflags, &origin, &angles, &absmin, &absmax, &speed, &angle, &dir);
+	NET_ReadFormat(msg, self->formatString, &type, &entnum, &modelnum1, &levelflags, &origin, &angles, &speed, &angle, &dir);
 
 	if (type != ET_BREAKABLE && type != ET_DOOR && type != ET_ROTATING && type != ET_DOOR_SLIDING && type != ET_TRIGGER_RESCUE && type != ET_TRIGGER_NEXTMAP)
 		Com_Error(ERR_DROP, "Invalid le announced via EV_ADD_BRUSH_MODEL type: %i\n", type);
@@ -68,8 +68,6 @@ void CL_AddBrushModel (const eventRegister_t *self, struct dbuffer *msg)
 	LE_SetThink(le, LET_BrushModel);
 	/* The origin and angles are REQUIRED for doors to work! */
 	VectorCopy(origin, le->origin);
-	VectorCopy(absmin, le->absmin);
-	VectorCopy(absmax, le->absmax);
 	/* store the initial position - needed for sliding doors */
 	VectorCopy(le->origin, le->oldOrigin);
 	VectorCopy(angles, le->angles);
