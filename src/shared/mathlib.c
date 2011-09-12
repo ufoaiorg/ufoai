@@ -515,6 +515,46 @@ void gaussrand (float *gauss1, float *gauss2)
 	*gauss2 = x2 * w;
 }
 
+void CalculateMinsMaxs (const vec3_t angles, const vec3_t mins, const vec3_t maxs, const vec3_t origin, vec3_t absmin, vec3_t absmax)
+{
+	/* expand for rotation */
+	if (VectorNotEmpty(angles)) {
+		vec3_t minVec, maxVec, tmpMinVec, tmpMaxVec;
+		vec3_t centerVec, halfVec, newCenterVec, newHalfVec;
+		vec3_t m[3];
+
+		/* Find the center of the extents. */
+		VectorCenterFromMinsMaxs(mins, maxs, centerVec);
+
+		/* Find the half height and half width of the extents. */
+		VectorSubtract(maxs, centerVec, halfVec);
+
+		/* Rotate the center about the origin. */
+		VectorCreateRotationMatrix(angles, m);
+		VectorRotate(m, centerVec, newCenterVec);
+		VectorRotate(m, halfVec, newHalfVec);
+
+		/* Set minVec and maxVec to bound around newCenterVec at halfVec size. */
+		VectorSubtract(newCenterVec, newHalfVec, tmpMinVec);
+		VectorAdd(newCenterVec, newHalfVec, tmpMaxVec);
+
+		/* rotation may have changed min and max of the box, so adjust it */
+		minVec[0] = min(tmpMinVec[0], tmpMaxVec[0]);
+		minVec[1] = min(tmpMinVec[1], tmpMaxVec[1]);
+		minVec[2] = min(tmpMinVec[2], tmpMaxVec[2]);
+		maxVec[0] = max(tmpMinVec[0], tmpMaxVec[0]);
+		maxVec[1] = max(tmpMinVec[1], tmpMaxVec[1]);
+		maxVec[2] = max(tmpMinVec[2], tmpMaxVec[2]);
+
+		/* Adjust the absolute mins/maxs */
+		VectorAdd(origin, minVec, absmin);
+		VectorAdd(origin, maxVec, absmax);
+	} else {  /* normal */
+		VectorAdd(origin, mins, absmin);
+		VectorAdd(origin, maxs, absmax);
+	}
+}
+
 /**
  * @param angles The angles to calulcate the rotation matrix for
  * @param matrix The resulting rotation matrix. The @c right part of this matrix is inversed because
