@@ -1941,7 +1941,7 @@ static mapInfo_t* SV_DoMapAssemble (mapInfo_t *map, const char *assembly, char *
 #if SORT_BY_SIZE
 	/* This is the perfect time to sort them by size, which helps RMA a lot.
 	 * This eliminates the need for a seedlist in oriental large completely.
-	 * Unfortunately, it does do that for the others. Instead, it requires a different seedlist for them. */
+	 * Unfortunately, it doesn't do that for the others. Instead, it can slow down some maps quite a bit. */
 	qsort(map->mToPlace, map->numToPlace, sizeof(mToPlace_t), cmpTileAreaSize);
 #endif
 
