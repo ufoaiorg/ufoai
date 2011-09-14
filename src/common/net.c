@@ -373,11 +373,13 @@ static void NET_StreamClose (struct net_stream *s)
 		if (s->onclose != NULL)
 			s->onclose();
 		Mem_Free(s);
+		s = NULL;
 	} else if (s->func) {
 		s->func(s);
-		if (s->onclose != NULL)
-			s->onclose();
 	}
+
+	if (s != NULL && s->onclose != NULL)
+		s->onclose();
 }
 
 static void do_accept (int sock)
