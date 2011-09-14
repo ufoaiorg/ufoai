@@ -1476,7 +1476,7 @@ static qboolean SV_AddMissingTiles3 (mapInfo_t *map)
 		return qtrue;
 
 	/** build a list of all positions of the map and all the tiles that fit there */
-	int i, j, k, n = 0;
+	int i, j, k, offs, num, n = 0;
 	for (i = 0; i < mapSize; i++) {
 		const int x = posList[i] % mapW;
 		const int y = posList[i] / mapW;
@@ -1485,8 +1485,13 @@ static qboolean SV_AddMissingTiles3 (mapInfo_t *map)
 		if (x % mAsm->dx != 0 || y % mAsm->dy != 0) {
 			continue;
 		}
-		for (k = 0; k < map->numToPlace; k++) {
-			const int ti = tilenumList[k];
+		/* if we simply test the tiles in the same sequence for each pos, we get the 'boring maps' problem */
+		/* So let's check them from a different starting point in the list each time */
+		/* Example: if we have say 20 tiles, test eg. 13-20 first, then 1-12 */
+		num = map->numToPlace;
+		offs = rand() % num;
+		for (k = offs; k < num + offs; k++) {
+			const int ti = tilenumList[k % num];
 
 			if (mToPlace[ti].cnt >= mToPlace[ti].max)
 				continue;
