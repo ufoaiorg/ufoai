@@ -241,8 +241,8 @@ static void SV_RmaPrintMap (const mapInfo_t *map)
 	for (cy = 0; cy <= height; cy++) {
 		for (cx = 0; cx <= width; cx++) {
 			if (!IS_SOLID(map->curMap[cy][cx])) {
-				int cbX = ACW * (cx);
-				int cbY = ACH * (cy);
+				const int cbX = ACW * (cx);
+				const int cbY = ACH * (cy);
 				char flags2[33] = {0,};
 
 				/* get the requirements of that gap */
@@ -788,7 +788,7 @@ static void SV_CombineAlternatives (unsigned long *mapAlts, const unsigned long 
 static void SV_ClearMap (mapInfo_t *map)
 {
 	unsigned long *mp = &map->curMap[0][0];
-	unsigned long *end = &map->curMap[MAX_RANDOM_MAP_HEIGHT - 1][MAX_RANDOM_MAP_WIDTH - 1];
+	const unsigned long *end = &map->curMap[MAX_RANDOM_MAP_HEIGHT - 1][MAX_RANDOM_MAP_WIDTH - 1];
 
 	OBJZERO(map->curRating);
 
@@ -1049,14 +1049,14 @@ static void SV_PrintMapStrings (mapInfo_t *map, char *asmMap, char *asmPos)
  */
 static unsigned long SV_GapGetFlagsAtAbsPos (mapInfo_t *map, int tileCode, int mapW, int mapX, int mapY)
 {
-	int pos = tileCode / TCM;
-	int ti = tileCode % TCM;
-	int posX = pos % mapW;
-	int posY = pos / mapW;
+	const int pos = tileCode / TCM;
+	const int ti = tileCode % TCM;
+	const int posX = pos % mapW;
+	const int posY = pos / mapW;
 	const mToPlace_t *mToPlace = map->mToPlace;
-	mTile_t *tile = mToPlace[ti].tile;
+	const mTile_t *tile = mToPlace[ti].tile;
 
-	return tile->spec[mapY-posY][mapX-posX];
+	return tile->spec[mapY - posY][mapX - posX];
 }
 
 /**
