@@ -893,8 +893,7 @@ static void SV_DumpPlaced (const mapInfo_t *map, int pl)
 			const int dx = x - placed->x;
 			const int dy = y - placed->y;
 
-			if ((dx >= 0) && (dx < placed->tile->w) &&
-					(dy >= 0) && (dy < placed->tile->h) &&
+			if (dx >= 0 && dx < placed->tile->w && dy >= 0 && dy < placed->tile->h &&
 					IS_SOLID(placed->tile->spec[dy][dx]))
 				Com_Printf(" X");
 			else
@@ -1303,7 +1302,7 @@ static qboolean SV_GapListBuild (mapInfo_t *map, int tilePosListCnt)
 				gapList[x][y][0] = 0;		/* the counter for this pos */
 	}
 
-	/** check how well the tiles can cover the gaps */
+	/* check how well the tiles can cover the gaps */
 	int i;
 	for (i = 0; i < tilePosListCnt; i++) {
 		const int pos = posTileList[0][i] / TCM;
