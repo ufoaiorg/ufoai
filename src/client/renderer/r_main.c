@@ -348,8 +348,7 @@ void R_RenderFrame (void)
 
 		if (r_debug_lights->integer)
 			for (i = 0; i < r_state.numStaticLights; i++) {
-				const float radius = 1.0 / sqrt(r_state.staticLights[i].quadraticAttenuation / 255);
-				R_AddCorona(r_state.staticLights[i].loc, radius, r_state.staticLights[i].diffuseColor);
+				R_AddCorona(r_state.staticLights[i].origin, r_state.staticLights[i].radius, r_state.staticLights[i].color);
 			}
 
 		R_DrawCoronas();

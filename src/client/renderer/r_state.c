@@ -348,7 +348,7 @@ qboolean R_EnableLighting (r_program_t *program, qboolean enable)
  * @param numLights The amount of lights in the given lights list
  * @param enable Whether to turn realtime lighting on or off
  */
-void R_EnableDynamicLights (const r_light_t **lights, int numLights, qboolean enable)
+void R_EnableDynamicLights (const light_t **lights, int numLights, qboolean enable)
 {
 	int i, j;
 	int maxLights = r_dynamic_lights->integer;
@@ -393,20 +393,18 @@ void R_EnableDynamicLights (const r_light_t **lights, int numLights, qboolean en
 
 	j = 1;
 	for (i = 0; j < MAX_GL_LIGHTS && j <= maxLights && i < numLights; i++) {
-		const r_light_t *l = lights[i];
-		if (!l->enabled) {
-			continue;
-		}
+		const light_t *l = lights[i];
 
 		glEnable(GL_LIGHT0 + j);
-		glLightf(GL_LIGHT0 + j, GL_CONSTANT_ATTENUATION, l->constantAttenuation);
-		glLightf(GL_LIGHT0 + j, GL_LINEAR_ATTENUATION, l->linearAttenuation);
-		glLightf(GL_LIGHT0 + j, GL_QUADRATIC_ATTENUATION, l->quadraticAttenuation);
+		glLightf(GL_LIGHT0 + j, GL_CONSTANT_ATTENUATION, MIN_GL_CONSTANT_ATTENUATION);
+		glLightf(GL_LIGHT0 + j, GL_LINEAR_ATTENUATION, 0);
+		glLightf(GL_LIGHT0 + j, GL_QUADRATIC_ATTENUATION, 255.0 / (l->radius*l->radius));
 
-		glLightfv(GL_LIGHT0 + j, GL_POSITION, l->loc);
-		glLightfv(GL_LIGHT0 + j, GL_AMBIENT, l->ambientColor);
-		glLightfv(GL_LIGHT0 + j, GL_DIFFUSE, l->diffuseColor);
-		glLightfv(GL_LIGHT0 + j, GL_SPECULAR, l->specularColor);
+		glLightfv(GL_LIGHT0 + j, GL_POSITION, l->origin);
+		glLightfv(GL_LIGHT0 + j, GL_AMBIENT, blackColor);
+		glLightfv(GL_LIGHT0 + j, GL_DIFFUSE, l->color);
+		glLightfv(GL_LIGHT0 + j, GL_SPECULAR, blackColor);
+
 		j++;
 	}
 

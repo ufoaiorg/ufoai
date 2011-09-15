@@ -77,7 +77,7 @@ typedef struct corona_s {
 
 #define MAX_GL_LIGHTS 8
 
-typedef struct {
+typedef struct light_s {
 	vec3_t origin;
 	vec4_t color;
 	float radius;

@@ -94,7 +94,7 @@ typedef struct rstate_s {
 	gltexunit_t *active_texunit;
 
 	/* lights */
-	r_light_t staticLights[MAX_STATIC_LIGHTS];
+	light_t staticLights[MAX_STATIC_LIGHTS];
 	int numStaticLights;
 
 	/* framebuffer objects*/
@@ -177,7 +177,7 @@ void R_EnableShell(qboolean enable);
 void R_EnableFog(qboolean enable);
 void R_EnableDrawAsGlow(qboolean enable);
 void R_EnableGlowMap(const struct image_s *image, qboolean enable);
-void R_EnableDynamicLights(const r_light_t **lights, int numLights, qboolean enable);
+void R_EnableDynamicLights(const light_t **lights, int numLights, qboolean enable);
 void R_EnableSpecularMap(const struct image_s *image, qboolean enable);
 void R_EnableRoughnessMap(const struct image_s *image, qboolean enable);
 void R_EnableAnimation(const struct mAliasMesh_s *mesh, float backlerp, qboolean enable);

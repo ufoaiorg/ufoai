@@ -26,6 +26,7 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #define R_LIGHT_H
 
 struct entity_s;
+struct light_s;
 
 /* cap on number of light sources that can be in a scene; feel free
  * to increase if necessary, but be aware that doing so will increase
@@ -34,26 +35,13 @@ struct entity_s;
  * the max number allowed) */
 #define MAX_STATIC_LIGHTS 64
 
-typedef struct r_light_s {
-	vec4_t loc;
-	vec4_t ambientColor;
-	vec4_t diffuseColor;
-	vec4_t specularColor;
-
-	float constantAttenuation;
-	float linearAttenuation;
-	float quadraticAttenuation;
-
-	qboolean enabled;
-} r_light_t;
-
 /** @todo - integrate the particle-based lights into the new dynamic light system */
 void R_AddLight(const vec3_t origin, float radius, const vec3_t color);
 void R_AddSustainedLight(const vec3_t org, float radius, const vec3_t color, float sustain);
 void R_EnableLights(void);
 void R_ShiftLights(const vec3_t offset);
 
-void R_AddStaticLight(const r_light_t *source);
+void R_AddStaticLight(const struct light_s *source);
 void R_ClearStaticLights(void);
 void R_UpdateLightList(struct entity_s *ent);
 

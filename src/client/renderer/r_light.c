@@ -27,8 +27,6 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #include "r_entity.h"
 #include "r_state.h"
 
-
-/** @todo - merge this stuff into the new lighitng system using r_light_t objects */
 static light_t r_lightsArray[MAX_GL_LIGHTS];
 static sustain_t r_sustainArray[MAX_GL_LIGHTS];
 
@@ -158,17 +156,17 @@ void R_EnableLights (void)
 	glEnable(GL_LIGHTING);
 }
 
-void R_AddStaticLight (const r_light_t *source)
+void R_AddStaticLight (const struct light_s *source)
 {
 	if (r_state.numStaticLights >= MAX_STATIC_LIGHTS) {
 		Com_Printf("Failed to add lightsource: MAX_STATIC_LIGHTS exceeded\n");
 		return;
 	}
 
-	Com_Printf("added static light, color (%f, %f, %f) position (%f, %f, %f)  attenuation=%f\n",
-		source->diffuseColor[0], source->diffuseColor[1], source->diffuseColor[2],
-		source->loc[0], source->loc[1], source->loc[2],
-		source->quadraticAttenuation);
+	Com_Printf("added static light, color (%f, %f, %f) position (%f, %f, %f)  radius=%f\n",
+		source->color[0], source->color[1], source->color[2],
+		source->origin[0], source->origin[1], source->origin[2],
+		source->radius);
 
 	r_state.staticLights[r_state.numStaticLights++] = *source;
 }
@@ -236,15 +234,12 @@ static vec3_t origin;
 
 static inline int R_LightDistCompare (const void *a, const void *b)
 {
-	const r_light_t *light1 = *(const r_light_t * const *)a;
-	const r_light_t *light2 = *(const r_light_t * const *)b;
-	return
-		light1->loc[3] == 0 ? -1 :
-		light2->loc[3] == 0 ?  1 :
-		VectorDistSqr(light1->loc, origin) - VectorDistSqr(light2->loc, origin);
+	const light_t *light1 = *(const light_t * const *)a;
+	const light_t *light2 = *(const light_t * const *)b;
+	return VectorDistSqr(light1->origin, origin) - VectorDistSqr(light2->origin, origin);
 }
 
-static inline void R_SortLightList_qsort (const r_light_t **list, const size_t size)
+static inline void R_SortLightList_qsort (const light_t **list, const size_t size)
 {
 	qsort(list, size, sizeof(*list), &R_LightDistCompare);
 }
@@ -255,7 +250,7 @@ static inline void R_SortLightList_qsort (const r_light_t **list, const size_t s
  * much (if at all) between calls.  Something like bubble-sort
  * might actually be more efficient in practice.
  */
-static void R_SortLightList (const r_light_t **list, size_t size, vec3_t v)
+static void R_SortLightList (const light_t **list, size_t size, vec3_t v)
 {
 	VectorCopy(v, origin);
 	R_SortLightList_qsort(list, size);
