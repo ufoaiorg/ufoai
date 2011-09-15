@@ -128,7 +128,7 @@ static unsigned long tileMask (const char chr)
 }
 
 #if DISPLAY_THE_MAP_ON_FAILURE
-static void tileMaskToString (unsigned long m, char *str)
+static void SV_TileMaskToString (unsigned long m, char *str)
 {
 	int i;
 	int j = 0;	/* writepos */
@@ -202,7 +202,7 @@ static void SV_RmaPrintMap (const mapInfo_t *map)
 					}
 
 					/* get the properties of that solid */
-					tileMaskToString(tile->spec[ty][tx], flags);
+					SV_TileMaskToString(tile->spec[ty][tx], flags);
 					/* write the flags */
 					for (j = 0; j < ACW - 1; j++) {
 						if (flags[j])
@@ -246,7 +246,7 @@ static void SV_RmaPrintMap (const mapInfo_t *map)
 				char flags2[33] = {0,};
 
 				/* get the requirements of that gap */
-				tileMaskToString(map->curMap[cy][cx], flags2);
+				SV_TileMaskToString(map->curMap[cy][cx], flags2);
 				/* write the flags */
 				for (j = 0; j < ACW - 1; j++) {
 					if (flags2[j])
