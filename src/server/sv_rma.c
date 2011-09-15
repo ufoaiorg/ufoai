@@ -274,9 +274,11 @@ static const mTileSet_t *SV_GetMapTileSet (const mapInfo_t *map, const char *til
 {
 	int i;
 
-	for (i = 0; i < map->numTileSets; i++)
-		if (Q_streq(tileSetName, map->mTileSets[i].id))
-			return &map->mTileSets[i];
+	for (i = 0; i < map->numTileSets; i++) {
+		const mTileSet_t *tileSet = &map->mTileSets[i];
+		if (Q_streq(tileSetName, tileSet->id))
+			return tileSet;
+	}
 
 	return NULL;
 }
@@ -285,9 +287,11 @@ static inline const mTile_t *SV_GetMapTile (const mapInfo_t *map, const char *ti
 {
 	int i;
 
-	for (i = 0; i < map->numTiles; i++)
-		if (Q_streq(tileName, map->mTile[i].id))
-			return &map->mTile[i];
+	for (i = 0; i < map->numTiles; i++) {
+		const mTile_t *tile = &map->mTile[i];
+		if (Q_streq(tileName, tile->id))
+			return tile;
+	}
 
 	return NULL;
 }
