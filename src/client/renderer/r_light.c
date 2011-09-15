@@ -156,19 +156,25 @@ void R_EnableLights (void)
 	glEnable(GL_LIGHTING);
 }
 
-void R_AddStaticLight (const struct light_s *source)
+void R_AddStaticLight (const vec3_t origin, float radius, const vec3_t color)
 {
+	light_t *l;
 	if (r_state.numStaticLights >= MAX_STATIC_LIGHTS) {
 		Com_Printf("Failed to add lightsource: MAX_STATIC_LIGHTS exceeded\n");
 		return;
 	}
 
 	Com_Printf("added static light, color (%f, %f, %f) position (%f, %f, %f)  radius=%f\n",
-		source->color[0], source->color[1], source->color[2],
-		source->origin[0], source->origin[1], source->origin[2],
-		source->radius);
+		color[0], color[1], color[2],
+		origin[0], origin[1], origin[2],
+		radius);
 
-	r_state.staticLights[r_state.numStaticLights++] = *source;
+	l = &r_state.staticLights[r_state.numStaticLights++];
+
+	VectorCopy(origin, l->origin);
+	VectorCopy(color, l->color);
+	l->color[3] = 1.0; /* needed if we pass this light as parameter to glLightxxx() */
+	l->radius = radius;
 }
 
 void R_ClearStaticLights (void)

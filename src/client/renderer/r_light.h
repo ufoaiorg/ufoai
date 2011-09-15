@@ -26,7 +26,19 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #define R_LIGHT_H
 
 struct entity_s;
-struct light_s;
+
+typedef struct light_s {
+	vec3_t origin;
+	vec4_t color;
+	float radius;
+} light_t;
+
+/** @brief sustains are light flashes which slowly decay */
+typedef struct sustain_s {
+	light_t light;
+	float time;
+	float sustain;
+} sustain_t;
 
 /* cap on number of light sources that can be in a scene; feel free
  * to increase if necessary, but be aware that doing so will increase
@@ -41,7 +53,7 @@ void R_AddSustainedLight(const vec3_t org, float radius, const vec3_t color, flo
 void R_EnableLights(void);
 void R_ShiftLights(const vec3_t offset);
 
-void R_AddStaticLight(const struct light_s *source);
+void R_AddStaticLight(const vec3_t origin, float radius, const vec3_t color);
 void R_ClearStaticLights(void);
 void R_UpdateLightList(struct entity_s *ent);
 

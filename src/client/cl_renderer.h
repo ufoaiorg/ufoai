@@ -77,19 +77,6 @@ typedef struct corona_s {
 
 #define MAX_GL_LIGHTS 8
 
-typedef struct light_s {
-	vec3_t origin;
-	vec4_t color;
-	float radius;
-} light_t;
-
-/** @brief sustains are light flashes which slowly decay */
-typedef struct sustain_s {
-	light_t light;
-	float time;
-	float sustain;
-} sustain_t;
-
 typedef struct {
 	model_t *model;			/**< the loaded model */
 	const char *name;		/**< model path (resolved in the renderer on model loading time) */

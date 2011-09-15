@@ -294,13 +294,6 @@ static void SP_light (const localEntityParse_t *entData)
 		return;
 
 	if (!(dayLightmap && (entData->spawnflags & (1 << SPAWNFLAG_NO_DAY)))) {
-		light_t *light = (light_t *)malloc(sizeof(light_t));
-
-		OBJZERO(*light);
-		VectorCopy(entData->color, light->color);
-		light->color[3] = 1.0; /* needed if we pass this light as parameter to glLightxxx() */
-		VectorCopy(entData->origin, light->origin);
-		light->radius = entData->light;
-		R_AddStaticLight(light);
+		R_AddStaticLight(entData->origin, entData->light, entData->color);
 	}
 }
