@@ -624,7 +624,6 @@ qboolean G_ActorInvMove (edict_t *ent, const invDef_t * from, invList_t *fItem, 
 		G_EventInventoryReload(INV_IsFloorDef(to) ? floor : ent, mask, &item, to, ic);
 
 		if (ia == IA_RELOAD) {
-			gi.EndEvents();
 			return qtrue;
 		} else { /* ia == IA_RELOAD_SWAP */
 			item.a = NONE_AMMO;
@@ -665,6 +664,7 @@ qboolean G_ActorInvMove (edict_t *ent, const invDef_t * from, invList_t *fItem, 
 			 * on the original amount. Otherwise they would end in a different amount of items as the server (+1) */
 			G_EventInventoryAdd(floor, G_VisToPM(floor->visflags), 1);
 			G_WriteItem(&fItemBackup.item, to, tx, ty);
+			gi.EndEvents();
 			/* Couldn't remove it before because that would remove the le from the client and would cause battlescape to crash
 			 * when trying to add back the swapped ammo above */
 			if (ia == IA_RELOAD_SWAP)
@@ -673,6 +673,7 @@ qboolean G_ActorInvMove (edict_t *ent, const invDef_t * from, invList_t *fItem, 
 	} else {
 		G_EventInventoryAdd(ent, G_TeamToPM(ent->team), 1);
 		G_WriteItem(&item, to, tx, ty);
+		gi.EndEvents();
 	}
 
 	G_ReactionFireUpdate(ent, ent->chr.RFmode.fmIdx, ent->chr.RFmode.hand, ent->chr.RFmode.weapon);
@@ -686,9 +687,9 @@ qboolean G_ActorInvMove (edict_t *ent, const invDef_t * from, invList_t *fItem, 
 		if (INV_IsRightDef(to) || INV_IsLeftDef(to)) {
 			G_EventInventoryAdd(ent, mask, 1);
 			G_WriteItem(&item, to, tx, ty);
+			gi.EndEvents();
 		}
 	}
-	gi.EndEvents();
 
 	return qtrue;
 }
