@@ -112,13 +112,14 @@ static void HUD_FireWeapon_f (void)
 	fireDefIndex_t firemode;
 	const objDef_t *ammo;
 	const fireDef_t *fd;
+	le_t *actor = selActor;
 
 	if (Cmd_Argc() < 3) { /* no argument given */
 		Com_Printf("Usage: %s <l|r> <firemode number>\n", Cmd_Argv(0));
 		return;
 	}
 
-	if (!selActor)
+	if (actor == NULL)
 		return;
 
 	hand = ACTOR_GET_HAND_INDEX(Cmd_Argv(1)[0]);
@@ -126,24 +127,24 @@ static void HUD_FireWeapon_f (void)
 	if (firemode >= MAX_FIREDEFS_PER_WEAPON || firemode < 0)
 		return;
 
-	fd = HUD_GetFireDefinitionForHand(selActor, hand);
+	fd = HUD_GetFireDefinitionForHand(actor, hand);
 	if (fd == NULL)
 		return;
 
 	ammo = fd->obj;
 
 	/* Let's check if shooting is possible. */
-	if (!HUD_CheckShooting(selActor, ACTOR_GET_INV(selActor, hand)))
+	if (!HUD_CheckShooting(actor, ACTOR_GET_INV(actor, hand)))
 		return;
 
-	if (ammo->fd[fd->weapFdsIdx][firemode].time <= CL_ActorUsableTUs(selActor)) {
+	if (ammo->fd[fd->weapFdsIdx][firemode].time <= CL_ActorUsableTUs(actor)) {
 		/* Actually start aiming. This is done by changing the current mode of display. */
 		if (hand == ACTOR_HAND_RIGHT)
-			CL_ActorSetMode(selActor, M_FIRE_R);
+			CL_ActorSetMode(actor, M_FIRE_R);
 		else
-			CL_ActorSetMode(selActor, M_FIRE_L);
+			CL_ActorSetMode(actor, M_FIRE_L);
 		/* Store firemode. */
-		selActor->currentSelectedFiremode = firemode;
+		actor->currentSelectedFiremode = firemode;
 	} else {
 		/* Cannot shoot because of not enough TUs - every other
 		 * case should be checked previously in this function. */
@@ -153,9 +154,12 @@ static void HUD_FireWeapon_f (void)
 
 static void HUD_SetMoveMode_f (void)
 {
-	if (!selActor)
+	le_t *actor = selActor;
+
+	if (actor == NULL)
 		return;
-	CL_ActorSetMode(selActor, M_MOVE);
+
+	CL_ActorSetMode(actor, M_MOVE);
 }
 
 
@@ -164,15 +168,17 @@ static void HUD_SetMoveMode_f (void)
  */
 static void HUD_ToggleCrouchReservation_f (void)
 {
-	if (!CL_ActorCheckAction(selActor))
+	le_t *actor = selActor;
+
+	if (!CL_ActorCheckAction(actor))
 		return;
 
-	if (CL_ActorReservedTUs(selActor, RES_CROUCH) >= TU_CROUCH) {
+	if (CL_ActorReservedTUs(actor, RES_CROUCH) >= TU_CROUCH) {
 		/* Reset reserved TUs to 0 */
-		CL_ActorReserveTUs(selActor, RES_CROUCH, 0);
+		CL_ActorReserveTUs(actor, RES_CROUCH, 0);
 	} else {
 		/* Reserve the exact amount for crouching/standing up (if we have enough to do so). */
-		CL_ActorReserveTUs(selActor, RES_CROUCH, TU_CROUCH);
+		CL_ActorReserveTUs(actor, RES_CROUCH, TU_CROUCH);
 	}
 }
 
@@ -182,19 +188,20 @@ static void HUD_ToggleCrouchReservation_f (void)
 static void HUD_ToggleReaction_f (void)
 {
 	int state = 0;
+	le_t *actor = selActor;
 
-	if (!CL_ActorCheckAction(selActor))
+	if (!CL_ActorCheckAction(actor))
 		return;
 
-	if (!(selActor->state & STATE_REACTION))
+	if (!(actor->state & STATE_REACTION))
 		state = STATE_REACTION_ONCE;
-	else if (selActor->state & STATE_REACTION_ONCE)
+	else if (actor->state & STATE_REACTION_ONCE)
 		state = STATE_REACTION_MANY;
-	else if (selActor->state & STATE_REACTION_MANY)
+	else if (actor->state & STATE_REACTION_MANY)
 		state = ~STATE_REACTION;
 
 	/* Send request to update actor's reaction state to the server. */
-	MSG_Write_PA(PA_STATE, selActor->entnum, state);
+	MSG_Write_PA(PA_STATE, actor->entnum, state);
 }
 
 /**
@@ -293,9 +300,11 @@ static void HUD_ReloadLeft_f (void)
  */
 static void HUD_ReloadRight_f (void)
 {
-	if (!selActor || !HUD_CheckReload(selActor, RIGHT(selActor), csi.idRight))
+	le_t *actor = selActor;
+
+	if (!actor || !HUD_CheckReload(actor, RIGHT(actor), csi.idRight))
 		return;
-	CL_ActorReload(selActor, csi.idRight);
+	CL_ActorReload(actor, csi.idRight);
 }
 
 /**
