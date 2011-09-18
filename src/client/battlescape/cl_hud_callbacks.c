@@ -278,9 +278,14 @@ static qboolean HUD_CheckReload (const le_t* le, const invList_t *weapon, contai
 static void HUD_ReloadLeft_f (void)
 {
 	containerIndex_t container = csi.idLeft;
-	if (!HUD_CheckReload(selActor, HUD_GetLeftHandWeapon(selActor, &container), container))
+	le_t *actor = selActor;
+
+	if (actor == NULL)
 		return;
-	CL_ActorReload(selActor, container);
+
+	if (!HUD_CheckReload(actor, HUD_GetLeftHandWeapon(actor, &container), container))
+		return;
+	CL_ActorReload(actor, container);
 }
 
 /**
