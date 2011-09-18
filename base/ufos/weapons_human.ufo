@@ -232,7 +232,7 @@ item machinegun
 	center			"5.9 0 2.5"
 	scale			1.1
 	ammo			100
-	reload			30
+	reload			24
 	reloadsound		weapons/reload-rifle	// @todo better sound?
 	price			1200
 	size			20
