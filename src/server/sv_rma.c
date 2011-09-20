@@ -1075,7 +1075,7 @@ static unsigned long SV_GapGetFlagsAtAbsPos (mapInfo_t *map, int tileCode, int m
  */
 static int availableTiles[MAX_TILETYPES][2];	/* the 2nd dimension is index and count */
 
-static qboolean SV_AddMissingTiles3_r (mapInfo_t *map, int rec, int posListCnt, short myPosList[], const mTile_t *prevTile, int prevX, int prevY)
+static qboolean SV_AddMissingTiles_r (mapInfo_t *map, int rec, int posListCnt, short myPosList[], const mTile_t *prevTile, int prevX, int prevY)
 {
 	static int callCnt = 0;
 	const mAssembly_t *mAsm = &map->mAssembly[map->mAsm];
@@ -1239,7 +1239,7 @@ static qboolean SV_AddMissingTiles3_r (mapInfo_t *map, int rec, int posListCnt, 
 #endif
 							if (SV_TestFilled(map))
 								return qtrue;		/* this was the last tile we needed */
-							if (SV_AddMissingTiles3_r(map, rec + 1, j, posTileList[rec], mToPlace[ti].tile, px, py))
+							if (SV_AddMissingTiles_r(map, rec + 1, j, posTileList[rec], mToPlace[ti].tile, px, py))
 								return qtrue;		/* recursive placement succeeded */
 
 							/* tile was a dead end, remove it */
@@ -1271,7 +1271,7 @@ static qboolean SV_AddMissingTiles3_r (mapInfo_t *map, int rec, int posListCnt, 
 		SV_AddTile(map, mToPlace[ti].tile, x, y, ti, pos);
 		if (SV_TestFilled(map))
 			return qtrue;
-		if (SV_AddMissingTiles3_r(map, rec + 1, j, posTileList[rec], mToPlace[ti].tile, x, y))
+		if (SV_AddMissingTiles_r(map, rec + 1, j, posTileList[rec], mToPlace[ti].tile, x, y))
 			return qtrue;
 		else
 			SV_RemoveTile(map, NULL, NULL);
@@ -1459,7 +1459,7 @@ static int SV_GapListReduce (mapInfo_t *map)
  * @sa SV_FitTile
  * @sa SV_AddTile
  */
-static qboolean SV_AddMissingTiles3 (mapInfo_t *map)
+static qboolean SV_AddMissingTiles (mapInfo_t *map)
 {
 	static int attempts = 0;			/* how often this function is called in the RMA process */
 	const mAssembly_t *mAsm = &map->mAssembly[map->mAsm];
@@ -1565,7 +1565,7 @@ static qboolean SV_AddMissingTiles3 (mapInfo_t *map)
 		}
 	}
 
-	return SV_AddMissingTiles3_r(map, 0, n, posTileList[0], NULL, 0, 0);
+	return SV_AddMissingTiles_r(map, 0, n, posTileList[0], NULL, 0, 0);
 }
 
 /**
@@ -1678,7 +1678,7 @@ static qboolean SV_AddMapTiles (mapInfo_t *map)
 			pos++;
 		}
 
-		if (idx == numToPlace && !SV_AddMissingTiles3(map)) {
+		if (idx == numToPlace && !SV_AddMissingTiles(map)) {
 #if DISPLAY_THE_MAP_ON_FAILURE
 			SV_RmaPrintMap(map);
 			Com_Printf("couldn't pad\n");
