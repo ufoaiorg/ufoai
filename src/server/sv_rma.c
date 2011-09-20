@@ -51,7 +51,7 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #define RMA2_MAX_REC 64
 /** @brief max # of valid tile/position combinations */
 #define RMA2_MAX_TILEPOS 1500
-/** @brief tile code multiplier */
+/** @brief tile code multiplier. For the various debug printfs we want a number that we can easily divide through (20, 50, 100,...) */
 #define TCM 50
 /** @brief the # of different tiles we can store for a gap */
 #define GAPS 25
