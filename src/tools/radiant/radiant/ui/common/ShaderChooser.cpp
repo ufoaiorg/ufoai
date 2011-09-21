@@ -28,7 +28,7 @@ ShaderChooser::ShaderChooser(ChooserClient* client, GtkWindow* parent, GtkWidget
 	_selector(this, SHADER_PREFIXES)
 {
 	if (_targetEntry != NULL) {
-		_initialShader = gtk_entry_get_text(GTK_ENTRY(_targetEntry));
+		_initialShader = std::string(gtk_entry_get_text(GTK_ENTRY(_targetEntry)));
 		// Set the cursor of the tree view to the currently selected shader
 		_selector.setSelection(_initialShader);
 	}

@@ -551,6 +551,9 @@ class ShaderReplacer: public BrushInstanceVisitor
 
 int findAndReplaceShader (const std::string& find, const std::string& replace, bool selectedOnly)
 {
+	if (find.empty() || replace.empty())
+		return 0;
+
 	std::string command("textureFindReplace");
 	command += "-find " + find + " -replace " + replace;
 	UndoableCommand undo(command);
