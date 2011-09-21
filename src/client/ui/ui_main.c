@@ -183,8 +183,6 @@ void UI_Shutdown (void)
 	ui_dynPool = NULL;
 }
 
-#define UI_HUNK_SIZE 2*1024*1024
-
 /**
  * @brief Finish initialization after everything was loaded
  * @note private function
@@ -201,6 +199,8 @@ void UI_FinishInit (void)
 
 void UI_Init (void)
 {
+	cvar_t *ui_hunkSize = Cvar_Get("ui_hunksize", "2", CVAR_ARCHIVE, "UI memory hunk size in megabytes");
+
 #ifdef DEBUG
 	ui_debug = Cvar_Get("debug_ui", "0", CVAR_DEVELOPER, "Prints node names for debugging purposes - valid values are 1 and 2");
 #endif
@@ -219,7 +219,7 @@ void UI_Init (void)
 	ui_dynPool = Mem_CreatePool("Client: Dynamic memory for UI");
 
 	/* 256kb */
-	ui_global.adataize = UI_HUNK_SIZE;
+	ui_global.adataize = ui_hunkSize->integer * 1024 * 1024;
 	ui_global.adata = (byte*)Mem_PoolAlloc(ui_global.adataize, ui_sysPool, 0);
 	ui_global.curadata = ui_global.adata;
 
