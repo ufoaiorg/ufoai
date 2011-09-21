@@ -567,7 +567,8 @@ void GetVectorFromString (const char *value, vec3_t vec)
 
 		/* scanf into doubles, then assign, so it is vec_t size independent */
 		v1 = v2 = v3 = 0;
-		sscanf(value, "%lf %lf %lf", &v1, &v2, &v3);
+		if (sscanf(value, "%lf %lf %lf", &v1, &v2, &v3) != 3)
+			Sys_Error("invalid vector statement given: '%s'", value);
 		VectorSet(vec, v1, v2, v3);
 	} else
 		VectorClear(vec);

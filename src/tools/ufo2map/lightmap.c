@@ -425,7 +425,8 @@ void BuildLights (void)
 
 		if (angles[0] != '\0') {
 			VectorClear(sun_angles);
-			sscanf(angles, "%f %f", &sun_angles[0], &sun_angles[1]);
+			if (sscanf(angles, "%f %f", &sun_angles[0], &sun_angles[1]) != 2)
+				Sys_Error("wrong angles values given: '%s'", angles);
 			AngleVectors(sun_angles, sun_normal, NULL, NULL);
 		}
 
