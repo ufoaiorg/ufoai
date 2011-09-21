@@ -7860,7 +7860,7 @@
 "classname" "light"
 "origin" "1740 882 76"
 "spawnflags" "1"
-"_color" "1"
+"_color" "1 1 1"
 "light" "200"
 }
 // entity 14
@@ -7868,7 +7868,7 @@
 "classname" "light"
 "origin" "1810 884 76"
 "spawnflags" "1"
-"_color" "1"
+"_color" "1 1 1"
 "light" "200"
 }
 // entity 15
@@ -7876,7 +7876,7 @@
 "classname" "light"
 "origin" "2000 816 70"
 "spawnflags" "1"
-"_color" "1"
+"_color" "1 1 1"
 "light" "175"
 }
 // entity 16
@@ -7884,7 +7884,7 @@
 "classname" "light"
 "origin" "1501 664 70"
 "spawnflags" "1"
-"_color" "1"
+"_color" "1 1 1"
 "light" "175"
 }
 // entity 17
@@ -8530,7 +8530,7 @@
 "classname" "light"
 "origin" "1886 884 76"
 "spawnflags" "1"
-"_color" "1"
+"_color" "1 1 1"
 "light" "200"
 }
 // entity 34
@@ -8538,7 +8538,7 @@
 "classname" "light"
 "origin" "1585 946 76"
 "spawnflags" "1"
-"_color" "1"
+"_color" "1 1 1"
 "light" "175"
 }
 // entity 35
@@ -8594,7 +8594,7 @@
 "classname" "light"
 "origin" "2033 946 76"
 "spawnflags" "1"
-"_color" "1"
+"_color" "1 1 1"
 "light" "175"
 }
 // entity 44
@@ -8602,7 +8602,7 @@
 "classname" "light"
 "origin" "1810 1321 76"
 "spawnflags" "1"
-"_color" "1"
+"_color" "1 1 1"
 "light" "175"
 }
 // entity 45
@@ -8610,7 +8610,7 @@
 "classname" "light"
 "origin" "1810 1003 76"
 "spawnflags" "1"
-"_color" "1"
+"_color" "1 1 1"
 "light" "175"
 }
 // entity 46
@@ -10741,7 +10741,7 @@
 "classname" "light"
 "origin" "1176 928 177"
 "spawnflags" "1"
-"_color" "1"
+"_color" "1 1 1"
 "light" "100"
 }
 // entity 94
@@ -10749,7 +10749,7 @@
 "classname" "light"
 "origin" "1048 928 177"
 "spawnflags" "1"
-"_color" "1"
+"_color" "1 1 1"
 "light" "100"
 }
 // entity 95
@@ -10757,7 +10757,7 @@
 "classname" "light"
 "origin" "1400 928 182"
 "spawnflags" "1"
-"_color" "1"
+"_color" "1 1 1"
 "light" "100"
 }
 // entity 96
@@ -10765,7 +10765,7 @@
 "classname" "light"
 "origin" "1304 928 177"
 "spawnflags" "1"
-"_color" "1"
+"_color" "1 1 1"
 "light" "100"
 }
 // entity 97
@@ -10773,7 +10773,7 @@
 "classname" "light"
 "origin" "2043 1278 197"
 "spawnflags" "1"
-"_color" "1"
+"_color" "1 1 1"
 "light" "175"
 }
 // entity 98
@@ -10781,7 +10781,7 @@
 "classname" "light"
 "origin" "1854 1173 197"
 "spawnflags" "1"
-"_color" "1"
+"_color" "1 1 1"
 "light" "175"
 }
 // entity 99
@@ -10789,7 +10789,7 @@
 "classname" "light"
 "origin" "1854 1021 197"
 "spawnflags" "1"
-"_color" "1"
+"_color" "1 1 1"
 "light" "175"
 }
 // entity 100
@@ -10797,7 +10797,7 @@
 "classname" "light"
 "origin" "1854 805 197"
 "spawnflags" "1"
-"_color" "1"
+"_color" "1 1 1"
 "light" "175"
 }
 // entity 101
@@ -10805,7 +10805,7 @@
 "classname" "light"
 "origin" "1762 675 197"
 "spawnflags" "1"
-"_color" "1"
+"_color" "1 1 1"
 "light" "175"
 }
 // entity 102
@@ -10813,7 +10813,7 @@
 "classname" "light"
 "origin" "1973 1058 197"
 "spawnflags" "1"
-"_color" "1"
+"_color" "1 1 1"
 "light" "175"
 }
 // entity 103
@@ -10821,7 +10821,7 @@
 "classname" "light"
 "origin" "2093 1058 197"
 "spawnflags" "1"
-"_color" "1"
+"_color" "1 1 1"
 "light" "175"
 }
 // entity 104
@@ -10829,7 +10829,7 @@
 "classname" "light"
 "origin" "2101 818 197"
 "spawnflags" "1"
-"_color" "1"
+"_color" "1 1 1"
 "light" "175"
 }
 // entity 105
@@ -10837,7 +10837,7 @@
 "classname" "light"
 "origin" "1501 650 197"
 "spawnflags" "1"
-"_color" "1"
+"_color" "1 1 1"
 "light" "175"
 }
 // entity 106
@@ -10845,7 +10845,7 @@
 "classname" "light"
 "origin" "1517 930 197"
 "spawnflags" "1"
-"_color" "1"
+"_color" "1 1 1"
 "light" "150"
 }
 // entity 107
@@ -10978,7 +10978,7 @@
 "classname" "light"
 "origin" "1740 592 184"
 "spawnflags" "1"
-"_color" "1"
+"_color" "1 1 1"
 "light" "200"
 }
 // entity 110
@@ -10986,7 +10986,7 @@
 "classname" "light"
 "origin" "1844 594 184"
 "spawnflags" "1"
-"_color" "1"
+"_color" "1 1 1"
 "light" "200"
 }
 // entity 111
@@ -10994,7 +10994,7 @@
 "classname" "light"
 "origin" "1790 594 184"
 "spawnflags" "1"
-"_color" "1"
+"_color" "1 1 1"
 "light" "200"
 }
 // entity 112
@@ -11002,7 +11002,7 @@
 "classname" "light"
 "origin" "1592 596 173"
 "spawnflags" "1"
-"_color" "1"
+"_color" "1 1 1"
 "light" "255"
 }
 // entity 113
@@ -11010,7 +11010,7 @@
 "classname" "light"
 "origin" "1992 596 175"
 "spawnflags" "1"
-"_color" "1"
+"_color" "1 1 1"
 "light" "255"
 }
 // entity 114
@@ -11557,35 +11557,35 @@
 "classname" "light"
 "origin" "945 904 178"
 "spawnflags" "1"
-"_color" "1"
+"_color" "1 1 1"
 "light" "200"
 }
 // entity 125
 {
 "classname" "light"
 "origin" "904 656 108"
-"_color" "1"
+"_color" "1 1 1"
 "light" "250"
 }
 // entity 126
 {
 "classname" "light"
 "origin" "762 656 108"
-"_color" "1"
+"_color" "1 1 1"
 "light" "250"
 }
 // entity 127
 {
 "classname" "light"
 "origin" "904 586 42"
-"_color" "1"
+"_color" "1 1 1"
 "light" "250"
 }
 // entity 128
 {
 "classname" "light"
 "origin" "762 586 42"
-"_color" "1"
+"_color" "1 1 1"
 "light" "250"
 }
 // entity 129
@@ -11648,7 +11648,7 @@
 "classname" "light"
 "origin" "624 866 142"
 "spawnflags" "1"
-"_color" "1"
+"_color" "1 1 1"
 "light" "250"
 }
 // entity 139
@@ -11656,7 +11656,7 @@
 "classname" "light"
 "origin" "694 866 76"
 "spawnflags" "1"
-"_color" "1"
+"_color" "1 1 1"
 "light" "250"
 }
 // entity 140
@@ -13339,7 +13339,7 @@
 "classname" "light"
 "origin" "1709 930 197"
 "spawnflags" "1"
-"_color" "1"
+"_color" "1 1 1"
 "light" "175"
 }
 // entity 215
@@ -13347,7 +13347,7 @@
 "classname" "light"
 "origin" "1653 746 197"
 "spawnflags" "1"
-"_color" "1"
+"_color" "1 1 1"
 "light" "175"
 }
 // entity 216
@@ -13355,7 +13355,7 @@
 "classname" "light"
 "origin" "1501 842 197"
 "spawnflags" "1"
-"_color" "1"
+"_color" "1 1 1"
 "light" "175"
 }
 // entity 217
@@ -13363,7 +13363,7 @@
 "classname" "light"
 "origin" "1581 680 70"
 "spawnflags" "1"
-"_color" "1"
+"_color" "1 1 1"
 "light" "175"
 }
 // entity 218
@@ -13371,7 +13371,7 @@
 "classname" "light"
 "origin" "1789 792 70"
 "spawnflags" "1"
-"_color" "1"
+"_color" "1 1 1"
 "light" "175"
 }
 // entity 219
