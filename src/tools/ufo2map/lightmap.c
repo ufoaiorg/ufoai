@@ -358,10 +358,11 @@ void BuildLights (void)
 			intensity = 300.0;
 		color = ValueForKey(e, "_color");
 		if (color && color[0] != '\0'){
-			sscanf(color, "%f %f %f", &l->color[0], &l->color[1], &l->color[2]);
+			if (sscanf(color, "%f %f %f", &l->color[0], &l->color[1], &l->color[2]) != 3)
+				Sys_Error("Invalid _color entity property given: %s", color);
 			ColorNormalize(l->color, l->color);
 		} else
-			l->color[0] = l->color[1] = l->color[2] = 1.0;
+			VectorSet(l->color, 1.0, 1.0, 1.0);
 		l->intensity = intensity * config.entity_scale;
 		l->type = emit_point;
 
