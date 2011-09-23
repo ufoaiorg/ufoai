@@ -6081,6 +6081,8 @@ base/textures/tex_nature/soil001.jpg | GNU General Public License 2.0 | Werner H
 base/textures/tex_nature/soil002.jpg | GNU General Public License 2.0 | Werner Höhrer (hoehrer)
 base/textures/tex_nature/sp_ground.jpg | GNU General Public License 2.0 | OpenArena
 base/textures/tex_nature/sp_ground_nm.png | GNU General Public License 2.0 | MCR | OpenArena
+base/textures/tex_nature/stone001.png | Public Domain | yughues | OpenGameArt
+base/textures/tex_nature/stone001_nm.png | Public Domain | yughues | OpenGameArt
 base/textures/tex_nature/tile_teracota.png | GNU General Public License 2.0 | OpenArena
 base/textures/tex_nature/tree001.png | GNU General Public License 2.0 | MCR
 base/textures/tex_nature/tree002.png | GNU General Public License 2.0 | MCR
