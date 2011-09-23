@@ -1106,6 +1106,8 @@ static void G_ClientReadInventory (edict_t *ent)
 		item_t item;
 		int x, y;
 		G_ReadItem(&item, &container, &x, &y);
+		if (container->temp)
+			gi.Error("G_ClientReadInventory failed, tried to add '%s' to a temp container %i", item.t->id, container->id);
 		if (game.i.AddToInventory(&game.i, &ent->chr.i, &item, container, x, y, 1) == NULL)
 			gi.Error("G_ClientReadInventory failed, could not add item '%s' to container %i (x:%i,y:%i)",
 					item.t->id, container->id, x, y);

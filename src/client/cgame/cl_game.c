@@ -915,14 +915,20 @@ static void GAME_NetSendInventory (struct dbuffer *buf, const inventory_t *i)
 	const invList_t *ic;
 
 	for (container = 0; container < csi.numIDs; container++) {
-		for (ic = i->c[container]; ic; ic = ic->next)
+		for (ic = i->c[container]; ic; ic = ic->next) {
+			if (INVDEF(container)->temp)
+				continue;
 			nr++;
+		}
 	}
 
 	NET_WriteShort(buf, nr);
 	for (container = 0; container < csi.numIDs; container++) {
-		for (ic = i->c[container]; ic; ic = ic->next)
+		for (ic = i->c[container]; ic; ic = ic->next) {
+			if (INVDEF(container)->temp)
+				continue;
 			GAME_NetSendItem(buf, ic->item, container, ic->x, ic->y);
+		}
 	}
 }
 
