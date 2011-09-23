@@ -3102,7 +3102,7 @@ mapdef dam
 mapdef england
 {
 	map				"england"
-	description		"_A small village in England."
+	description		"_A small village."
 	multiplayer		true
 	teams			3
 	gametypes {
