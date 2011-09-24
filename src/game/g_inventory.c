@@ -345,6 +345,8 @@ void G_SendInventory (unsigned int playerMask, const edict_t *ent)
 		return;
 
 	for (container = 0; container < gi.csi->numIDs; container++) {
+		if (!G_IsItem(ent) && INVDEF(container)->temp)
+			continue;
 		for (ic = CONTAINER(ent, container); ic; ic = ic->next)
 			nr++;
 	}
@@ -355,6 +357,8 @@ void G_SendInventory (unsigned int playerMask, const edict_t *ent)
 
 	G_EventInventoryAdd(ent, playerMask, nr);
 	for (container = 0; container < gi.csi->numIDs; container++) {
+		if (!G_IsItem(ent) && INVDEF(container)->temp)
+			continue;
 		for (ic = CONTAINER(ent, container); ic; ic = ic->next) {
 			/* send a single item */
 			assert(ic->item.t);

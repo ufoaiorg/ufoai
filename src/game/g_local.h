@@ -182,6 +182,7 @@ extern game_export_t globals;
 #define G_IsDead(ent)			G_IsState(ent, STATE_DEAD)
 #define G_IsActor(ent)			((ent)->type == ET_ACTOR || (ent)->type == ET_ACTOR2x2)
 #define G_IsTriggerNextMap(ent)	((ent)->type == ET_TRIGGER_NEXTMAP)
+#define G_IsItem(ent)			((ent)->type == ET_ITEM)
 
 #define G_IsBreakable(ent)		((ent)->flags & FL_DESTROYABLE)
 #define G_IsBrushModel(ent)		((ent)->type == ET_BREAKABLE || (ent)->type == ET_DOOR || (ent)->type == ET_DOOR_SLIDING || (ent)->type == ET_ROTATING)
