@@ -6066,6 +6066,10 @@ base/textures/tex_nature/rock015.png | GNU General Public License 2.0 | MCR | ht
 base/textures/tex_nature/rock015_nm.png | GNU General Public License 2.0 | MCR
 base/textures/tex_nature/rock016.png | GNU General Public License 2.0 | MCR | http://www.burningwell.org/gallery2/v/textures/ground/rocks/TT1_0202.JPG.html
 base/textures/tex_nature/rock016_nm.png | GNU General Public License 2.0 | MCR
+base/textures/tex_nature/rock017.png | Public Domain | yughues | OpenGameArt
+base/textures/tex_nature/rock017_nm.png | Public Domain | yughues | OpenGameArt
+base/textures/tex_nature/rock018.png | Public Domain | yughues | OpenGameArt
+base/textures/tex_nature/rock018_nm.png | Public Domain | yughues | OpenGameArt
 base/textures/tex_nature/rockyground01.png | GNU General Public License 2.0 |  | Nexuiz GPLed Data, rockyground01.tga
 base/textures/tex_nature/rockyground01_nm.png | GNU General Public License 2.0 | MCR | Nexuiz GPLed Data, rockyground01_bump.tga
 base/textures/tex_nature/rockyground02.png | GNU General Public License 2.0 |  | Nexuiz GPLed Data, rockyground02.tga
