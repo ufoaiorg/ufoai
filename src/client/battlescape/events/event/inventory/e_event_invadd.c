@@ -61,7 +61,7 @@ void CL_InvAdd (const eventRegister_t *self, struct dbuffer *msg)
 	int nr = NET_ReadShort(msg);
 
 	if (!le)
-		Com_Error(ERR_DROP, "InvAdd message ignored... LE not found\n");
+		LE_NotFoundError(number);
 
 	le->removeNextFrame = qfalse;
 
