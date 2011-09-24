@@ -394,12 +394,15 @@ void R_EnableModelLights (const light_t **lights, int numLights, qboolean enable
 	j = 1;
 	for (i = 0; j < MAX_GL_LIGHTS && j <= maxLights && i < numLights; i++) {
 		const light_t *l = lights[i];
+		vec4_t position;
 
 		glEnable(GL_LIGHT0 + j);
 		glLightf(GL_LIGHT0 + j, GL_CONSTANT_ATTENUATION, MIN_GL_CONSTANT_ATTENUATION);
 		glLightf(GL_LIGHT0 + j, GL_LINEAR_ATTENUATION, 0);
 		glLightf(GL_LIGHT0 + j, GL_QUADRATIC_ATTENUATION, 16.0 / (l->radius*l->radius));
 
+		VectorCopy(l->origin, position);
+		position[3] = 1.0; /* spot light */
 		glLightfv(GL_LIGHT0 + j, GL_POSITION, l->origin);
 		glLightfv(GL_LIGHT0 + j, GL_AMBIENT, blackColor);
 		glLightfv(GL_LIGHT0 + j, GL_DIFFUSE, l->color);
