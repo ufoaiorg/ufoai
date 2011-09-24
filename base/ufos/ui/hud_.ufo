@@ -143,9 +143,24 @@ window reactionfire_listener {
  */
 window hud extends levelbuttons {
 
+	/**
+	 * This is called when the hud is initially pushed onto the stack - only called once per battlescape match
+	 */
 	confunc hudinit { }
+	/**
+	 * This is called when you select one of your actors
+	 * @param <1> the actor index
+	 */
 	confunc hudselect { }
+	/**
+	 * This is called for each actor in your team to enable the actor selection buttons
+	 * @param <1> the actor index
+	 */
 	confunc hudenable { }
+	/**
+	 * This is called for each actor slot that is not used, or when an actor died
+	 * @param <1> the actor index
+	 */
 	confunc huddisable { cmd "updateactorvalues <1> \"\" \"0\" \"1\" \"0\" \"1\" \"0\" \"1\" \"0\" \"\";" }
 
 	confunc deselect_primaryleft { }
