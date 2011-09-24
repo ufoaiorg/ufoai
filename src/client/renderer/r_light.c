@@ -262,7 +262,7 @@ static void R_SortLightList (const light_t **list, size_t size, const vec3_t v)
 	R_SortLightList_qsort(list, size);
 }
 
-/** @todo bad implementation -- copying light pointers every frame is a very wrong idea; also, should add dynamic lights to the list
+/** @todo bad implementation -- copying light pointers every frame is a very wrong idea
  * @note to accelerate math, the diagonal of aabb is used to approximate max distance from entity's origin to its most distant point
  * while this is a gross exaggeration for many models, the sole purpose of it is to be used for filtering out distant lights,
  * so nothing is broken by it
@@ -280,6 +280,17 @@ void R_UpdateLightList (entity_t *ent)
 
 	for (i = 0, j = 0; i < r_state.numStaticLights; i++) {
 		const light_t *light = &r_state.staticLights[i];
+		const float distSqr = VectorDistSqr(pos, light->origin);
+
+		if (distSqr > (diameter + light->radius) * (diameter + light->radius))
+			continue;
+
+		ent->lights[j++] = light;
+	}
+
+	/* add dynamic lights, too */
+	for (i = 0; i < refdef.numLights && j < MAX_STATIC_LIGHTS; i++) {
+		const light_t *light = &r_lightsArray[i];
 		const float distSqr = VectorDistSqr(pos, light->origin);
 
 		if (distSqr > (diameter + light->radius) * (diameter + light->radius))
