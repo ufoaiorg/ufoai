@@ -411,8 +411,8 @@ void R_DrawMaterialSurfaces (mBspSurfaces_t *surfs)
 
 	R_EnableLighting(r_state.world_program, qtrue);
 
-	/** @todo - integrate BSP lighting with dynamic lighting */
-	R_EnableDynamicLights(NULL, 0, qfalse);
+	/** @todo - integrate BSP lighting with model lighting */
+	R_EnableModelLights(NULL, 0, qfalse);
 
 	R_EnableColorArray(qtrue);
 

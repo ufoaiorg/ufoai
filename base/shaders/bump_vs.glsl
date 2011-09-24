@@ -4,7 +4,6 @@
  */
 
 in_qualifier vec4 TANGENT;
-uniform int DYNAMICLIGHTS;
 
 out_qualifier vec3 eyedir;
 
@@ -34,20 +33,18 @@ void BumpVertex(void) {
 
 	/* Transform relative light positions into tangent space.*/
 
-	if (DYNAMICLIGHTS > 0) {
-		vec3 lpos;
+	vec3 lpos;
 #unroll r_dynamic_lights
-		if (gl_LightSource[$].position.w != 0.0) {
-			lpos = gl_LightSource[$].position.xyz - point;
-		} else { /* directional light source at "infinite" distance */
-			lpos = normalize(gl_LightSource[$].position.xyz);
-		}
-		lightDirs[$].x = dot(lpos, tangent);
-		lightDirs[$].y = dot(lpos, bitangent);
-		lightDirs[$].z = dot(lpos, normal);
-		lightDirs[$].w = gl_LightSource[$].position.w;
-		lightParams[$].rgb = gl_LightSource[$].diffuse.rgb;
-		lightParams[$].a = gl_LightSource[$].quadraticAttenuation;
-#endunroll
+	if (gl_LightSource[$].position.w != 0.0) {
+		lpos = gl_LightSource[$].position.xyz - point;
+	} else { /* directional light source at "infinite" distance */
+		lpos = normalize(gl_LightSource[$].position.xyz);
 	}
+	lightDirs[$].x = dot(lpos, tangent);
+	lightDirs[$].y = dot(lpos, bitangent);
+	lightDirs[$].z = dot(lpos, normal);
+	lightDirs[$].w = gl_LightSource[$].position.w;
+	lightParams[$].rgb = gl_LightSource[$].diffuse.rgb;
+	lightParams[$].a = gl_LightSource[$].quadraticAttenuation;
+#endunroll
 }

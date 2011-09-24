@@ -6,13 +6,13 @@
 uniform float OFFSET;
 uniform int BUMPMAP;
 uniform int ANIMATE;
+uniform int IS_A_MODEL;
 
 /* from includes:
 varying vec3 point;
 varying vec3 normal;
 
 attribute vec4 TANGENT;
-uniform int DYNAMICLIGHTS;
 
 attribute vec4 NEXT_FRAME_VERTS;
 attribute vec4 NEXT_FRAME_NORMALS;
@@ -41,7 +41,7 @@ void main(void) {
 	} else {
 		Vertex = gl_Vertex;
 		Normal = gl_Normal;
-		Tangent = TANGENTS;
+		Tangent = TANGENTS; /** @todo what if tangents are disabled? */
 	}
 
 	/* MVP transform into clip space.*/
@@ -56,7 +56,7 @@ void main(void) {
 	LightVertex();
 
 #if r_bumpmap
-	if (BUMPMAP > 0 || DYNAMICLIGHTS > 0)
+	if (BUMPMAP > 0 || IS_A_MODEL > 0)
 		BumpVertex();
 #endif
 

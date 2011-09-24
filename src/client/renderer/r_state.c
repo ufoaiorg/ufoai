@@ -348,7 +348,7 @@ qboolean R_EnableLighting (r_program_t *program, qboolean enable)
  * @param numLights The amount of lights in the given lights list
  * @param enable Whether to turn realtime lighting on or off
  */
-void R_EnableDynamicLights (const light_t **lights, int numLights, qboolean enable)
+void R_EnableModelLights (const light_t **lights, int numLights, qboolean enable)
 {
 	int i, j;
 	int maxLights = r_dynamic_lights->integer;
@@ -357,7 +357,7 @@ void R_EnableDynamicLights (const light_t **lights, int numLights, qboolean enab
 
 	if (!enable || !r_state.lighting_enabled) {
 		if (r_state.lighting_enabled)
-			R_ProgramParameter1i("DYNAMICLIGHTS", 0);
+			R_ProgramParameter1i("IS_A_MODEL", 0);
 		if (!r_state.bumpmap_enabled && r_state.dynamic_lighting_enabled)
 			R_DisableAttribute("TANGENTS");
 		glDisable(GL_LIGHTING);
@@ -374,7 +374,7 @@ void R_EnableDynamicLights (const light_t **lights, int numLights, qboolean enab
 	r_state.dynamic_lighting_enabled = qtrue;
 
 	R_EnableAttribute("TANGENTS");
-	R_ProgramParameter1i("DYNAMICLIGHTS", 1);
+	R_ProgramParameter1i("IS_A_MODEL", 1);
 
 	R_UseMaterial(&defaultMaterial);
 

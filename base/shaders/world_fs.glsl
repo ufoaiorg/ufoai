@@ -53,7 +53,7 @@
 uniform int BUMPMAP;
 uniform int ROUGHMAP;
 uniform int SPECULARMAP;
-uniform int DYNAMICLIGHTS;
+uniform int IS_A_MODEL;
 uniform float GLOWSCALE;
 
 /** Diffuse texture.*/
@@ -92,11 +92,13 @@ void main(void) {
 
 	/* use new dynamic lighing system, including
 	 * the Cook-Torrance specularity model with the Phong
-	 * model as a default if the roughness map isn't enabled */
-	if (DYNAMICLIGHTS > 0) {
+	 * model as a default if the roughness map isn't enabled
+	 * ... but only for models for now
+	 */
+	if (IS_A_MODEL > 0) {
 		finalColor = IlluminateFragment();
 	} else {
-		/* use static lighting (ie. legacy rendering code) */
+		/* use Phong lighting (ie. legacy rendering code) */
 		vec2 offset = vec2(0.0);
 		vec3 bump = vec3(1.0);
 
@@ -153,14 +155,14 @@ void main(void) {
 /* Developer tools */
 
 #if r_debug_normals
-	if (DYNAMICLIGHTS > 0) {
+	if (IS_A_MODEL > 0) {
 		gl_FragData[0] = (1.0 + dot(vec3(0.0, 0.0, 1.0), normalize(-lightDirs[0]))) * 0.5 * vec4(1.0);
 		gl_FragData[1] = vec4(0.0);
 	}
 #endif
 
 #if r_debug_tangents
-	if (DYNAMICLIGHTS > 0) {
+	if (IS_A_MODEL > 0) {
 		gl_FragData[0].r = (1.0 + dot(vec3(1.0, 0.0, 0.0), normalize(-lightDirs[0]))) * 0.5;
 		gl_FragData[0].g = (1.0 + dot(vec3(0.0, 1.0, 0.0), normalize(-lightDirs[0]))) * 0.5;
 		gl_FragData[0].b = (1.0 + dot(vec3(0.0, 0.0, 1.0), normalize(-lightDirs[0]))) * 0.5;
