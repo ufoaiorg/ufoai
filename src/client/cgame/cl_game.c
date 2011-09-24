@@ -996,10 +996,19 @@ static void GAME_SendCurrentTeamSpawningInfo (struct dbuffer * buf, chrList_t *t
 	Com_DPrintf(DEBUG_CLIENT, "GAME_SendCurrentTeamSpawningInfo: Upload information about %i soldiers to server\n", team->num);
 	for (i = 0; i < team->num; i++) {
 		character_t *chr = team->chr[i];
+		inventory_t *i = &chr->i;
+		containerIndex_t container;
+
+		/* unlink all temp containers */
+		for (container = 0; container < csi.numIDs; container++) {
+			if (!INVDEF(container)->temp)
+				continue;
+			i->c[container] = NULL;
+		}
 
 		GAME_NetSendCharacter(buf, chr);
 
-		GAME_NetSendInventory(buf, &chr->i);
+		GAME_NetSendInventory(buf, i);
 	}
 }
 
