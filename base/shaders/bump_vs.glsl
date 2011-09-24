@@ -10,11 +10,13 @@ out_qualifier vec3 eyedir;
 
 #define R_DYNAMIC_LIGHTS #replace r_dynamic_lights
 #if r_dynamic_lights
-out_qualifier vec3 lightDirs[R_DYNAMIC_LIGHTS];
+out_qualifier vec4 lightDirs[R_DYNAMIC_LIGHTS];
+out_qualifier vec4 lightParams[R_DYNAMIC_LIGHTS];
 #endif
 
 /**
  * @brief BumpVertex
+ * @todo Why cooridinate transform of lights depends on bump being enabled? We can run lighting on flat surfaces, don't we?
  */
 void BumpVertex(void) {
 	/* Load the tangent.*/
@@ -35,14 +37,17 @@ void BumpVertex(void) {
 	if (DYNAMICLIGHTS > 0) {
 		vec3 lpos;
 #unroll r_dynamic_lights
-		if (gl_LightSource[$].position.a != 0.0) {
-			lpos = gl_LightSource[$].position.rgb - point;
+		if (gl_LightSource[$].position.w != 0.0) {
+			lpos = gl_LightSource[$].position.xyz - point;
 		} else { /* directional light source at "infinite" distance */
-			lpos = normalize(gl_LightSource[$].position.rgb);
+			lpos = normalize(gl_LightSource[$].position.xyz);
 		}
 		lightDirs[$].x = dot(lpos, tangent);
 		lightDirs[$].y = dot(lpos, bitangent);
 		lightDirs[$].z = dot(lpos, normal);
+		lightDirs[$].w = gl_LightSource[$].position.w;
+		lightParams[$].rgb = gl_LightSource[$].diffuse.rgb;
+		lightParams[$].a = gl_LightSource[$].quadraticAttenuation;
 #endunroll
 	}
 }
