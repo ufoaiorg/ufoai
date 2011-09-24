@@ -1533,6 +1533,8 @@ void HUD_InitUI (const char *optionWindowName, qboolean popAll)
 		Cvar_Set("cl_hud", "hud_default");
 	}
 	UI_InitStack(cl_hud->string, optionWindowName, popAll, qtrue);
+
+	UI_ExecuteConfunc("hudinit");
 }
 
 /**

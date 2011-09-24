@@ -143,6 +143,7 @@ window reactionfire_listener {
  */
 window hud extends levelbuttons {
 
+	confunc hudinit { }
 	confunc hudselect { }
 	confunc hudenable { }
 	confunc huddisable { cmd "updateactorvalues <1> \"\" \"0\" \"1\" \"0\" \"1\" \"0\" \"1\" \"0\" \"\";" }

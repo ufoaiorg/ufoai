@@ -1078,9 +1078,10 @@ void GAME_StartBattlescape (qboolean isTeamPlay)
 static void GAME_InitializeBattlescape (chrList_t *team)
 {
 	int i;
+	const size_t size = lengthof(cl.teamList);
 	const cgame_export_t *list = GAME_GetCurrentType();
 
-	for (i = 0; i < lengthof(cl.teamList); i++) {
+	for (i = 0; i < size; i++) {
 		UI_ExecuteConfunc("huddisable %i", i);
 	}
 

@@ -917,13 +917,22 @@ window hud_default extends hud
 	confunc crouch_checkbox_disable {
 		*node:root.left.bt_crouch_reservation@disabled = true
 	}
-	confunc crouch_checkbox_clear	{
+	confunc crouch_checkbox_clear {
 		*node:root.left.bt_crouch_reservation@disabled = false
 		*node:root.left.bt_crouch_reservation@current = 0
 	}
-	confunc crouch_checkbox_check	{
+	confunc crouch_checkbox_check {
 		*node:root.left.bt_crouch_reservation@disabled = false
 		*node:root.left.bt_crouch_reservation@current = 1
+	}
+
+	confunc hudinit {
+		*cvar:i = 0
+		while ( *cvar:i < 8 ) {
+			*node:root.team_selection.buttonList.bt_actor<cvar:i>@disabled = true
+			*cvar:i = ( *cvar:i + 1 )
+		}
+		delete *cvar:i
 	}
 
 	confunc hudselect {
