@@ -3745,7 +3745,6 @@ base/pics/ui/vertical_bar.png | GNU General Public License 2.0 or later |  | Bas
 base/shaders/atmosphere_fs.glsl | GNU General Public License 2.0 or later
 base/shaders/atmosphere_vs.glsl | GNU General Public License 2.0 or later
 base/shaders/bump_fs.glsl | GNU General Public License 2.0 or later
-base/shaders/bump_vs.glsl | GNU General Public License 2.0 or later
 base/shaders/combine2_fs.glsl | GNU General Public License 2.0 or later
 base/shaders/combine2_vs.glsl | GNU General Public License 2.0 or later
 base/shaders/convolve3_fs.glsl | GNU General Public License 2.0 or later
@@ -3760,6 +3759,7 @@ base/shaders/geoscape_fs.glsl | GNU General Public License 2.0 or later
 base/shaders/geoscape_vs.glsl | GNU General Public License 2.0 or later
 base/shaders/light_fs.glsl | GNU General Public License 2.0 or later
 base/shaders/light_vs.glsl | GNU General Public License 2.0 or later
+base/shaders/transform_lights_vs.glsl | GNU General Public License 2.0 or later
 base/shaders/warp_fs.glsl | GNU General Public License 2.0 or later
 base/shaders/warp_vs.glsl | GNU General Public License 2.0 or later
 base/shaders/world_fs.glsl | GNU General Public License 2.0 or later

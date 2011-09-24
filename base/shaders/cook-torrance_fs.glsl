@@ -79,9 +79,10 @@ vec4 IlluminateFragment(void) {
 
 	/* do per-fragment calculations */
 	vec3 V = -normalize(eyedir);
-	vec3 N;
-	if (BUMPMAP > 0) {
+	vec3 N = vec3(0.0, 0.0, 1.0); /* basic surface normal */
+
 #if r_bumpmap
+	if (BUMPMAP > 0) {
 		vec4 normalMap = texture2D(SAMPLER3, coords);
 		N = vec3((normalize(normalMap.xyz) * 2.0 - vec3(1.0)));
 		N.xy *= BUMP;
@@ -89,10 +90,8 @@ vec4 IlluminateFragment(void) {
 			offset = BumpTexcoord(normalMap.a);
 			coords += offset;
 		}
-#endif
-	} else {  /* just use the basic surface normal */
-		N = vec3(0.0, 0.0, 1.0);
 	}
+#endif
 
 	vec4 diffuse = texture2D(SAMPLER0, coords);
 	vec4 specular;

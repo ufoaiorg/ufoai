@@ -1,6 +1,6 @@
 /**
- * @file bump_vs.glsl
- * @brief Bumpmap vertex shader, requires light_vs.glsl and lerp_vs.glsl.
+ * @file transform_lights_vs.glsl
+ * @brief Transform lights to the tangent space. Requires light_vs.glsl and lerp_vs.glsl.
  */
 
 in_qualifier vec4 TANGENT;
@@ -14,10 +14,9 @@ out_qualifier vec4 lightParams[R_DYNAMIC_LIGHTS];
 #endif
 
 /**
- * @brief BumpVertex
- * @todo Why cooridinate transform of lights depends on bump being enabled? We can run lighting on flat surfaces, don't we?
+ * @brief TransformLights
  */
-void BumpVertex(void) {
+void TransformLights(void) {
 	/* Load the tangent.*/
 	vec3 tangent = normalize(gl_NormalMatrix * Tangent.xyz);
 	/* Compute the bitangent.*/

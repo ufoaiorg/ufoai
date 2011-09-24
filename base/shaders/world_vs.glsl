@@ -29,7 +29,7 @@ varying float fog;
 
 #include "lerp_vs.glsl"
 #include "light_vs.glsl"
-#include "bump_vs.glsl"
+#include "transform_lights_vs.glsl"
 #include "fog_vs.glsl"
 
 /**
@@ -55,10 +55,7 @@ void main(void) {
 
 	LightVertex();
 
-#if r_bumpmap
-	if (BUMPMAP > 0 || IS_A_MODEL > 0)
-		BumpVertex();
-#endif
+	TransformLights();
 
 #if r_fog
 	FogVertex();
