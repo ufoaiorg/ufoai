@@ -256,22 +256,39 @@ static inline void R_SortLightList_qsort (const light_t **list, const size_t siz
  * much (if at all) between calls.  Something like bubble-sort
  * might actually be more efficient in practice.
  */
-static void R_SortLightList (const light_t **list, size_t size, vec3_t v)
+static void R_SortLightList (const light_t **list, size_t size, const vec3_t v)
 {
 	VectorCopy(v, origin);
 	R_SortLightList_qsort(list, size);
 }
 
-/** @todo bad implementation -- copying light pointers every frame is a very wrong idea; also, should add dynamic lights to the list */
+/** @todo bad implementation -- copying light pointers every frame is a very wrong idea; also, should add dynamic lights to the list
+ * @note to accelerate math, the diagonal of aabb is used to approximate max distance from entity's origin to its most distant point
+ * while this is a gross exaggeration for many models, the sole purpose of it is to be used for filtering out distant lights,
+ * so nothing is broken by it
+ */
 void R_UpdateLightList (entity_t *ent)
 {
-	int i;
-
-	for (i = 0; i < r_state.numStaticLights; i++)
-		ent->lights[i] = &r_state.staticLights[i];
-
-	ent->numLights = i;
-
+	int i, j;
 	/* we have to use the offset from accumulated transform matrix, because origin is relative to attachment point for submodels */
-	R_SortLightList(ent->lights, ent->numLights, ent->transform.matrix + 12);
+	const vec_t *pos = ent->transform.matrix + 12; /* type system hack, sorry */
+	vec3_t diametralVec; /** < conservative estimate of entity's bounding sphere diameter, in vector form */
+	float diameter; /** < value of this entity's diameter (approx) */
+
+	VectorSubtract(ent->maxs, ent->mins, diametralVec); /** @todo what if origin is NOT inside aabb? then this estimate will not be conservative enough */
+	diameter = VectorLength(diametralVec);
+
+	for (i = 0, j = 0; i < r_state.numStaticLights; i++) {
+		const light_t *light = &r_state.staticLights[i];
+		const float distSqr = VectorDistSqr(pos, light->origin);
+
+		if (distSqr > (diameter + light->radius) * (diameter + light->radius))
+			continue;
+
+		ent->lights[j++] = light;
+	}
+
+	ent->numLights = j;
+
+	R_SortLightList(ent->lights, ent->numLights, pos);
 }
