@@ -398,7 +398,7 @@ void R_EnableDynamicLights (const light_t **lights, int numLights, qboolean enab
 		glEnable(GL_LIGHT0 + j);
 		glLightf(GL_LIGHT0 + j, GL_CONSTANT_ATTENUATION, MIN_GL_CONSTANT_ATTENUATION);
 		glLightf(GL_LIGHT0 + j, GL_LINEAR_ATTENUATION, 0);
-		glLightf(GL_LIGHT0 + j, GL_QUADRATIC_ATTENUATION, 255.0 / (l->radius*l->radius));
+		glLightf(GL_LIGHT0 + j, GL_QUADRATIC_ATTENUATION, 16.0 / (l->radius*l->radius));
 
 		glLightfv(GL_LIGHT0 + j, GL_POSITION, l->origin);
 		glLightfv(GL_LIGHT0 + j, GL_AMBIENT, blackColor);

@@ -144,7 +144,7 @@ void R_EnableLights (void)
 		VectorCopy(l->color, diffuse);
 		glLightfv(GL_LIGHT0 + i, GL_DIFFUSE, diffuse);
 		glLightf(GL_LIGHT0 + i, GL_CONSTANT_ATTENUATION, MIN_GL_CONSTANT_ATTENUATION);
-		glLightf(GL_LIGHT0 + i, GL_QUADRATIC_ATTENUATION, 255.0 / (l->radius * l->radius));
+		glLightf(GL_LIGHT0 + i, GL_QUADRATIC_ATTENUATION, 16.0 / (l->radius * l->radius));
 		glEnable(GL_LIGHT0 + i);
 	}
 
