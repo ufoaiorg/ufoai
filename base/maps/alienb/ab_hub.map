@@ -21187,7 +21187,7 @@
 "origin" "160 256 48"
 "noise" "ambience/alien-device"
 "volume" "0.7"
-"attenuation" "3.0"
+"attenuation" "2.8"
 }
 // entity 41
 {
@@ -21195,5 +21195,5 @@
 "origin" "512 512 192"
 "noise" "ambience/aliencom"
 "volume" "1.0"
-"attenuation" "1.0"
+"attenuation" "2.0"
 }

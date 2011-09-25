@@ -15556,22 +15556,22 @@
 "classname" "misc_sound"
 "origin" "272 608 16"
 "noise" "ambience/alienmachinery1"
-"volume" "0.8"
-"attenuation" "3.0"
+"volume" "1.0"
+"attenuation" "2.8"
 }
 // entity 63
 {
 "classname" "misc_sound"
 "origin" "752 608 16"
 "noise" "ambience/alienmachinery1"
-"volume" "0.8"
-"attenuation" "3.0"
+"volume" "1.0"
+"attenuation" "2.8"
 }
 // entity 64
 {
 "classname" "misc_sound"
-"origin" "688 144 32"
+"origin" "688 144 96"
 "noise" "ambience/alienmachinery2"
 "volume" "1.0"
-"attenuation" "3.0"
+"attenuation" "2.8"
 }

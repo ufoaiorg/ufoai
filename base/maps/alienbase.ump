@@ -106,6 +106,17 @@ tile +storage_v
 	0		a		x		0
 }
 
+// Lab (connects top and bottom)
+tile +lab
+{
+	4 4
+
+	0		a		x		0
+	a		+a		+x		a
+	a		+a		+x		a
+	0		a		x		0
+}
+
 // Hallway, Vertical
 // Has an empty space on its left tile (hall takes up only right tiles)
 tile +hall_v1
@@ -242,7 +253,7 @@ assembly small1
 	fix +powercore "8 2"
 
 	fix +storage_v "0 4"
-	fix +hall_v2 "0 6"
+	fix +lab "0 6"
 	fix +ventl "2 4"
 	fix +hub "4 4"
 	fix +hangar "8 4"

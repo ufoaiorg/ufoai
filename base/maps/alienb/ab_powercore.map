@@ -8728,3 +8728,11 @@
 "volume" "0.4"
 "attenuation" "3.0"
 }
+// entity 14
+{
+"classname" "misc_sound"
+"origin" "576 448 96"
+"noise" "ambience/alienpowermachinery1"
+"volume" "1.0"
+"attenuation" "2.5"
+}
