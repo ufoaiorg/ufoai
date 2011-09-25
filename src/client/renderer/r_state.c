@@ -403,7 +403,7 @@ void R_EnableModelLights (const light_t **lights, int numLights, qboolean enable
 
 		VectorCopy(l->origin, position);
 		position[3] = 1.0; /* spot light */
-		glLightfv(GL_LIGHT0 + j, GL_POSITION, l->origin);
+		glLightfv(GL_LIGHT0 + j, GL_POSITION, position);
 		glLightfv(GL_LIGHT0 + j, GL_AMBIENT, blackColor);
 		glLightfv(GL_LIGHT0 + j, GL_DIFFUSE, l->color);
 		glLightfv(GL_LIGHT0 + j, GL_SPECULAR, blackColor);
