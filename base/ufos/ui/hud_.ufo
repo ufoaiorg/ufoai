@@ -167,7 +167,15 @@ window hud extends levelbuttons {
 	confunc deselect_primaryright { }
 	confunc deselect_reloadleft { }
 	confunc deselect_reloadright { }
+	/**
+	 * This is called on a repeating loop when the selected soldier's stance
+	 * is crouched.
+	 */
 	confunc deselect_stand { }
+	/**
+	 * This is called on a repeating loop when the selected soldier's stance
+	 * is standing.
+	 */
 	confunc deselect_crouch { }
 	confunc deselect_reaction { }
 	confunc deselect_headgear { }
@@ -176,6 +184,13 @@ window hud extends levelbuttons {
 	confunc disable_primaryright { }
 	confunc disable_reloadleft { }
 	confunc disable_reloadright { }
+	/**
+	 * These confuncs are called when the selected soldier no longer
+	 * has enough TUs to change stance. disable_stand is called if this
+	 * this condition is reached while the soldier was standing.
+	 * disable_crouch is called if this condition is reached while the
+	 * soldier was crouching.
+	 */
 	confunc disable_stand { }
 	confunc disable_crouch { }
 	confunc disable_reaction { }
