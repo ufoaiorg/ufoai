@@ -355,6 +355,7 @@ edict_t *G_SpawnParticle(const vec3_t origin, int spawnflags, const char *partic
 void G_FreeEdict(edict_t *e);
 qboolean G_UseEdict(edict_t *ent, edict_t* activator);
 edict_t *G_GetEdictFromPos(const pos3_t pos, const entity_type_t type);
+edict_t *G_GetEdictFromPosExcluding(const pos3_t pos, const int n, ...);
 void G_TakeDamage(edict_t *ent, int damage);
 trace_t G_Trace(const vec3_t start, const vec3_t end, const edict_t * passent, int contentmask);
 qboolean G_TestLineWithEnts(const vec3_t start, const vec3_t end);

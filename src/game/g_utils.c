@@ -68,6 +68,41 @@ edict_t *G_GetEdictFromPos (const pos3_t pos, const entity_type_t type)
 }
 
 /**
+ * @brief Searches an edict that is not of the given types at the given grid location.
+ * @param pos The grid location to look for an edict.
+ * @param n The amount of given entity_type_t values that are given via variadic arguments to this function.
+ * @return @c NULL if nothing was found, otherwise the entity located at the given grid position.
+ */
+edict_t *G_GetEdictFromPosExcluding (const pos3_t pos, const int n, ...)
+{
+	edict_t *ent = NULL;
+	entity_type_t types[ET_MAX];
+	va_list ap;
+	int i;
+
+	assert(n > 0);
+	assert(n < sizeof(types));
+
+	va_start(ap, n);
+
+	for (i = 0; i < n; i++) {
+		types[i] = va_arg(ap, entity_type_t);
+	}
+
+	while ((ent = G_EdictsGetNextInUse(ent))) {
+		for (i = 0; i < n; i++)
+			if (ent->type == types[i])
+				break;
+		if (i != n)
+			continue;
+		if (VectorCompare(pos, ent->pos))
+			return ent;
+	}
+	/* nothing found at this pos */
+	return NULL;
+}
+
+/**
  * @brief Call the 'use' function for the given edict and all its group members
  * @param[in] ent The edict to call the use function for
  * @param[in] activator The edict that uses ent

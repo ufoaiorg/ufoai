@@ -159,6 +159,8 @@ typedef enum {
 	ET_SOLID,
 	ET_MESSAGE,
 
+	ET_MAX,
+
 	ENTITY_TYPE_ENSURE_32BIT = 0x7FFFFFFF
 } entity_type_t;
 
