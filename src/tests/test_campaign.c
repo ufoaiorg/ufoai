@@ -376,7 +376,7 @@ static void testAutoMissions (void)
 	mission = CP_CreateNewMission(INTERESTCATEGORY_RECON, qfalse);
 	Vector2Copy(pos, mission->pos);
 	mission->posAssigned = qtrue;
-	mission->mapDef = Com_GetMapDefinitionByID("farm");
+	mission->mapDef = Com_GetMapDefinitionByID("farm2");
 	CU_ASSERT_PTR_NOT_NULL(mission);
 
 	CP_CreateBattleParameters(mission, &battleParameters, aircraft);
