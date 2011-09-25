@@ -319,18 +319,20 @@ static void SVCmd_ListEdicts_f (void)
 {
 	edict_t *ent = NULL;
 	int i = 0;
-	Com_Printf("number | entnum | mapnum | type | inuse | pnum | team | size |  HP | state | classname      | model/ptl\n");
+	Com_Printf("number | entnum | mapnum | type | inuse | pnum | team | size |  HP | state | classname      | model/ptl             | pos\n");
 	while ((ent = G_EdictsGetNext(ent))) {
-		Com_Printf(
-				"#%5i | #%5i | #%5i | %4i | %5i | %4i | %4i | %4i | %3i | %5i | %14s | ",
-				i, ent->number, ent->mapNum, ent->type, ent->inuse, ent->pnum,
-				ent->team, ent->fieldSize, ent->HP, ent->state, ent->classname);
+		char buf[128];
+		const char *model;
 		if (ent->type == ET_PARTICLE)
-			Com_Printf("%s\n", ent->particle);
+			model = ent->particle;
 		else if (ent->model)
-			Com_Printf("%s\n", ent->model);
+			model = ent->model;
 		else
-			Com_Printf("no mdl\n");
+			model = "no mdl";
+		Com_sprintf(buf, sizeof(buf), "#%5i | #%5i | #%5i | %4i | %5i | %4i | %4i | %4i | %3i | %5i | %14s | %21s | %i:%i:%i",
+				i, ent->number, ent->mapNum, ent->type, ent->inuse, ent->pnum, ent->team, ent->fieldSize,
+				ent->HP, ent->state, ent->classname, model, ent->pos[0], ent->pos[1], ent->pos[2]);
+		Com_Printf("%s\n", buf);
 		i++;
 	}
 }
