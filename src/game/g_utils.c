@@ -53,15 +53,15 @@ void G_FreeEdict (edict_t *ent)
  */
 edict_t *G_GetEdictFromPos (const pos3_t pos, const entity_type_t type)
 {
-	edict_t *floor = NULL;
+	edict_t *ent = NULL;
 
-	while ((floor = G_EdictsGetNextInUse(floor))) {
-		if (type > ET_NULL && floor->type != type)
+	while ((ent = G_EdictsGetNextInUse(ent))) {
+		if (type > ET_NULL && ent->type != type)
 			continue;
-		if (!VectorCompare(pos, floor->pos))
+		if (!VectorCompare(pos, ent->pos))
 			continue;
 
-		return floor;
+		return ent;
 	}
 	/* nothing found at this pos */
 	return NULL;
