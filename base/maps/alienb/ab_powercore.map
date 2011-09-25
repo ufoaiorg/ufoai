@@ -8712,3 +8712,19 @@
 "classname" "info_alien_start"
 "origin" "144 176 92"
 }
+// entity 12
+{
+"classname" "misc_sound"
+"origin" "160 96 96"
+"noise" "ambience/alienmachinery3"
+"volume" "0.5"
+"attenuation" "3.0"
+}
+// entity 13
+{
+"classname" "misc_sound"
+"origin" "576 112 48"
+"noise" "ambience/alienmachinery5"
+"volume" "0.4"
+"attenuation" "3.0"
+}

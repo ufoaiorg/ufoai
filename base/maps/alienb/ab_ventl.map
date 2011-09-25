@@ -9808,3 +9808,11 @@
 "classname" "info_alien_start"
 "origin" "368 80 92"
 }
+// entity 9
+{
+"classname" "misc_sound"
+"origin" "352 512 224"
+"noise" "ambience/alien-ventilation"
+"volume" "1.0"
+"attenuation" "1.5"
+}

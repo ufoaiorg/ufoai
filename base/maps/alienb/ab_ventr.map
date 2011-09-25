@@ -9813,3 +9813,11 @@
 "origin" "112 112 348"
 "angle" "180"
 }
+// entity 9
+{
+"classname" "misc_sound"
+"origin" "160 512 224"
+"noise" "ambience/alien-ventilation"
+"volume" "1.0"
+"attenuation" "1.5"
+}

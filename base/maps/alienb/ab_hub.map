@@ -21173,3 +21173,27 @@
 "origin" "112 624 60"
 "angle" "-1.4033e-014"
 }
+// entity 39
+{
+"classname" "misc_sound"
+"origin" "512 416 160"
+"noise" "ambience/alienatmo"
+"volume" "0.3"
+"attenuation" "0.0"
+}
+// entity 40
+{
+"classname" "misc_sound"
+"origin" "160 256 48"
+"noise" "ambience/alien-device"
+"volume" "0.7"
+"attenuation" "3.0"
+}
+// entity 41
+{
+"classname" "misc_sound"
+"origin" "512 512 192"
+"noise" "ambience/aliencom"
+"volume" "1.0"
+"attenuation" "1.0"
+}

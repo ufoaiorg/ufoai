@@ -4191,3 +4191,12 @@
 "origin" "240 368 92"
 "angle" "90"
 }
+// entity 41
+{
+"classname" "misc_sound"
+"origin" "256 192 96"
+"noise" "ambience/alienwormhole"
+"angle" "90"
+"volume" "1.0"
+"attenuation" "2.0"
+}
