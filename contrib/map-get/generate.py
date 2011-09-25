@@ -26,7 +26,7 @@ def gen(dst, changed_maps):
     from random import choice
 
     if not os.path.exists(dst):
-        os.makedirs(dst)
+        os.makedirs(dst, 755)
 
     if not os.access(dst, os.R_OK | os.W_OK):
         print 'Permission denied. "%s"' % argsdst
@@ -107,7 +107,7 @@ def gen(dst, changed_maps):
                 # make sure destination directory exists
                 dst_dir = os.path.split(os.path.join(dst, bspfile))[0]
                 if not os.path.exists(dst_dir):
-                    os.makedirs(dst_dir)
+                    os.makedirs(dst_dir, 755)
 
                 data = open(bspfile).read()
                 gzipPath = os.path.join(dst, bspfile) + '.gz'
