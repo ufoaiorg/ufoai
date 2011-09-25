@@ -549,7 +549,7 @@ static void G_SpawnItemOnFloor (const pos3_t pos, const item_t *item)
 		if (!game.i.TryAddToInventory(&game.i, &floor->chr.i, item, INVDEF(gi.csi->idFloor))) {
 			G_FreeEdict(floor);
 		} else {
-			edict_t *actor = G_GetActorFromPos(pos);
+			edict_t *actor = G_GetLivingActorFromPos(pos);
 
 			/* send the inventory */
 			G_CheckVis(floor, qtrue);

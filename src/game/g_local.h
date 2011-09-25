@@ -458,8 +458,6 @@ qboolean G_ActorInvMove(edict_t *ent, const invDef_t * from, invList_t *fItem, c
 void G_ClientStateChange(const player_t* player, edict_t* ent, int reqState, qboolean checkaction);
 int G_ActorDoTurn(edict_t * ent, byte dir);
 
-edict_t *G_GetActorFromPos(const pos3_t pos);
-
 void G_SendInvisible(const player_t *player);
 void G_GiveTimeUnits(int team);
 
