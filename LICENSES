@@ -187,7 +187,6 @@ base/maps/eaglenest/en_main.map | GNU General Public License 2.0 or later | Mart
 base/maps/england.map | GNU General Public License 2.0 or later
 base/maps/estate.map | GNU General Public License 2.0 or later | Martin Gerhardy
 base/maps/excavation.map | GNU General Public License 2.0 or later | Martin Gerhardy
-base/maps/farm.map | GNU General Public License 2.0 or later | "SparX" Beyeler
 base/maps/farm.ump | GNU General Public License 2.0 or later
 base/maps/farm/f_barn_a.map | GNU General Public License 2.0 or later
 base/maps/farm/f_barn_b.map | GNU General Public License 2.0 or later
@@ -220,6 +219,7 @@ base/maps/farm/f_silo.map | GNU General Public License 2.0 or later
 base/maps/farm/f_stables_a.map | GNU General Public License 2.0 or later
 base/maps/farm/f_stables_b.map | GNU General Public License 2.0 or later
 base/maps/farm/f_wind.map | GNU General Public License 2.0 or later
+base/maps/farm2/f_main.map | GNU General Public License 2.0 or later | "SparX" Beyeler
 base/maps/ferry.map | GNU General Public License 2.0 or later
 base/maps/fighter_crash.map | GNU General Public License 2.0 or later | "SparX" Beyeler
 base/maps/forest.ump | GNU General Public License 2.0 or later | Kostia "Kildor" Romanov
@@ -2981,7 +2981,7 @@ base/pics/maps/loading/eaglenest.jpg | GNU General Public License 2.0 or later |
 base/pics/maps/loading/england.jpg | GNU General Public License 2.0 or later
 base/pics/maps/loading/estate.jpg | GNU General Public License 2.0 or later | Martin Gerhardy
 base/pics/maps/loading/excavation.jpg | GNU General Public License 2.0 or later | Martin Gerhardy
-base/pics/maps/loading/farm.jpg | GNU General Public License 2.0 or later | Martin Gerhardy
+base/pics/maps/loading/farm2.jpg | GNU General Public License 2.0 or later | Martin Gerhardy
 base/pics/maps/loading/ferry.jpg | GNU General Public License 2.0 or later
 base/pics/maps/loading/fighter_crash.jpg | GNU General Public License 2.0 or later | Martin Gerhardy
 base/pics/maps/loading/forest.jpg | GNU General Public License 2.0 or later
@@ -3088,9 +3088,9 @@ base/pics/maps/shots/estate_3.jpg | GNU General Public License 2.0 or later | Ma
 base/pics/maps/shots/excavation.jpg | GNU General Public License 2.0 or later | Martin Gerhardy
 base/pics/maps/shots/excavation_2.jpg | GNU General Public License 2.0 or later | Martin Gerhardy
 base/pics/maps/shots/excavation_3.jpg | GNU General Public License 2.0 or later | Martin Gerhardy
-base/pics/maps/shots/farm.jpg | GNU General Public License 2.0 or later | Martin Gerhardy
-base/pics/maps/shots/farm_2.jpg | GNU General Public License 2.0 or later | Martin Gerhardy
-base/pics/maps/shots/farm_3.jpg | GNU General Public License 2.0 or later | Martin Gerhardy
+base/pics/maps/shots/farm2.jpg | GNU General Public License 2.0 or later | Martin Gerhardy
+base/pics/maps/shots/farm2_2.jpg | GNU General Public License 2.0 or later | Martin Gerhardy
+base/pics/maps/shots/farm2_3.jpg | GNU General Public License 2.0 or later | Martin Gerhardy
 base/pics/maps/shots/ferry.jpg | GNU General Public License 2.0 or later
 base/pics/maps/shots/ferry_2.jpg | GNU General Public License 2.0 or later
 base/pics/maps/shots/ferry_3.jpg | GNU General Public License 2.0 or later
