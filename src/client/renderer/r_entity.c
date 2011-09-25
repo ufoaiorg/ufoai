@@ -243,8 +243,10 @@ void R_DrawEntityEffects (void)
 				Vector4Set(color, 0, 1, 0.5, 0.5);
 			else if (e->flags & RF_NEUTRAL)
 				Vector4Set(color, 1, 1, 0, 0.5);
-			else
+			else if (e->flags &RF_OPPONENT)
 				Vector4Set(color, 1, 0, 0, 0.5);
+			else
+				Vector4Set(color, 0.4, 0.4, 0.4, 0.5);
 
 			if (e->flags & RF_SELECTED)
 				texnum = selectedActorIndicator->texnum;

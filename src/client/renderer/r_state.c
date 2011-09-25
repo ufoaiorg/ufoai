@@ -399,7 +399,7 @@ void R_EnableModelLights (const light_t **lights, int numLights, qboolean enable
 		glEnable(GL_LIGHT0 + j);
 		glLightf(GL_LIGHT0 + j, GL_CONSTANT_ATTENUATION, MIN_GL_CONSTANT_ATTENUATION);
 		glLightf(GL_LIGHT0 + j, GL_LINEAR_ATTENUATION, 0);
-		glLightf(GL_LIGHT0 + j, GL_QUADRATIC_ATTENUATION, 16.0 / (l->radius*l->radius));
+		glLightf(GL_LIGHT0 + j, GL_QUADRATIC_ATTENUATION, 16.0 / (l->radius * l->radius));
 
 		VectorCopy(l->origin, position);
 		position[3] = 1.0; /* spot light */

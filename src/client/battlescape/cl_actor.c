@@ -1499,6 +1499,8 @@ qboolean CL_AddActor (le_t * le, entity_t * ent)
 				ent->flags |= RF_MEMBER;
 			if (le->pnum != cl.pnum)
 				ent->flags |= RF_ALLIED;
+		} else {
+			ent->flags |= RF_OPPONENT;
 		}
 		if (le->team == TEAM_CIVILIAN)
 			ent->flags |= RF_NEUTRAL;
