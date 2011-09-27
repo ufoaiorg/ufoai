@@ -1226,7 +1226,7 @@ static int HUD_UpdateActorMove (const le_t *actor)
 	return actor->actorMoveLength;
 }
 
-static void HUD_UpdateActorCvar (le_t *actor, const char *cvarPrefix)
+static void HUD_UpdateActorCvar (const le_t *actor, const char *cvarPrefix)
 {
 	const invList_t* invList;
 	const char *animName;
