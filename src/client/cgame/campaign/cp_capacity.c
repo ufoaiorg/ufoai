@@ -198,6 +198,26 @@ void CAP_UpdateStorageCap (base_t *base)
 	CAP_AddCurrent(base, CAP_ITEMS, UGV_SIZE * E_CountHired(base, EMPL_ROBOT));
 }
 
+void CAP_SetMax (base_t* base, baseCapacities_t capacity, int value)
+{
+	base->capacities[capacity].max = max(0, value);
+}
+
+void CAP_AddMax (base_t* base, baseCapacities_t capacity, int value)
+{
+	base->capacities[capacity].max = max(0, base->capacities[capacity].max + value);
+}
+
+void CAP_SetCurrent (base_t* base, baseCapacities_t capacity, int value)
+{
+	base->capacities[capacity].cur = max(0, value);
+}
+
+void CAP_AddCurrent (base_t* base, baseCapacities_t capacity, int value)
+{
+	base->capacities[capacity].cur = max(0, base->capacities[capacity].cur + value);
+}
+
 /**
  * @brief Returns the free capacity of a type
  * @param[in] base Pointer to the base to check

@@ -50,11 +50,11 @@ void CAP_UpdateStorageCap(struct base_s *base);
  */
 #define CAP_Get(base, capacity) &((base)->capacities[(capacity)])
 #define CAP_GetMax(base, capacity) (base)->capacities[(capacity)].max
-#define CAP_SetMax(base, capacity, value) (base)->capacities[(capacity)].max = max(0, (value))
-#define CAP_AddMax(base, capacity, value) (base)->capacities[(capacity)].max = max(0, (base)->capacities[(capacity)].max + (value))
 #define CAP_GetCurrent(base, capacity) (base)->capacities[(capacity)].cur
-#define CAP_SetCurrent(base, capacity, value) (base)->capacities[(capacity)].cur = max(0, (value))
-#define CAP_AddCurrent(base, capacity, value) (base)->capacities[(capacity)].cur = max(0, (base)->capacities[(capacity)].cur + (value))
+void CAP_SetMax(struct base_s* base, baseCapacities_t capacity, int value);
+void CAP_AddMax(struct base_s* base, baseCapacities_t capacity, int value);
+void CAP_SetCurrent(struct base_s* base, baseCapacities_t capacity, int value);
+void CAP_AddCurrent(struct base_s* base, baseCapacities_t capacity, int value);
 
 void CAP_RemoveAircraftExceedingCapacity(struct base_s* base, baseCapacities_t capacity);
 void CAP_RemoveItemsExceedingCapacity(struct base_s *base);
