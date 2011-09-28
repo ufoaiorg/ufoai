@@ -166,6 +166,7 @@ void EntityClassScannerUFO::scanFile (EntityClassCollector& collector)
 				ED_GetLastError());
 		gtkutil::errorDialog(buffer);
 		free(entities);
+		ED_Free();
 		return;
 	}
 	for (int i = 0; i < numEntityDefs; i++) {
@@ -174,4 +175,5 @@ void EntityClassScannerUFO::scanFile (EntityClassCollector& collector)
 			collector.insert(e);
 	}
 	free(entities);
+	ED_Free();
 }
