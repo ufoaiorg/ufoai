@@ -643,6 +643,7 @@ class EntityKeyValues: public Entity
 		{
 			if (value.empty()) {
 				erase(key);
+				m_entityKeyValueChanged();
 			} else {
 				insert(key, value);
 			}
