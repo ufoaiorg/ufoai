@@ -133,8 +133,9 @@ bool EntityInspector::_testDeleteKey (gpointer userData)
 		if (attr != NULL)
 			return !attr->mandatory;
 		return true;
-	} else
-		return false;
+	}
+
+	return false;
 }
 
 void EntityInspector::_onCopyKey (gpointer data, gpointer userData)
