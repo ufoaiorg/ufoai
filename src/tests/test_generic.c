@@ -30,6 +30,7 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #include "../shared/shared.h"
 #include "../shared/infostring.h"
 #include "../shared/stringhunk.h"
+#include "../shared/entitiesdef.h"
 #include "../ports/system.h"
 #include "test_generic.h"
 
@@ -551,6 +552,44 @@ static void testStringCheckFunctions (void)
 	CU_ASSERT_FALSE(Q_strvalid(strNull));
 }
 
+static void testEntitiesDef (void)
+{
+	byte *fileBuffer;
+	const char *buf;
+	int i;
+	qboolean worldSpawnFound;
+
+	FS_LoadFile("ufos/entities.ufo", &fileBuffer);
+
+	buf = (const char *) fileBuffer;
+	CU_ASSERT_EQUAL(ED_Parse(buf), ED_OK);
+
+	CU_ASSERT_TRUE(numEntityDefs > 0);
+
+	worldSpawnFound = qfalse;
+	for (i = 0; i < numEntityDefs; i++) {
+		const entityDef_t* e = &entityDefs[i];
+
+		CU_ASSERT_PTR_NOT_NULL(e);
+		if (Q_streq(e->classname, "worldspawn")) {
+			int j;
+
+			worldSpawnFound = qtrue;
+
+			CU_ASSERT_TRUE(e->numKeyDefs > 10);
+			for (j = 0; j < e->numKeyDefs; j++) {
+				const entityKeyDef_t *keyDef = &e->keyDefs[j];
+				CU_ASSERT_PTR_NOT_NULL(keyDef);
+			}
+		}
+	}
+
+	CU_ASSERT_TRUE(worldSpawnFound);
+
+	FS_FreeFile(fileBuffer);
+	ED_Free();
+}
+
 int UFO_AddGenericTests (void)
 {
 	/* add a suite to the registry */
@@ -606,6 +645,9 @@ int UFO_AddGenericTests (void)
 		return CU_get_error();
 
 	if (CU_ADD_TEST(GenericSuite, testStringCheckFunctions) == NULL)
+		return CU_get_error();
+
+	if (CU_ADD_TEST(GenericSuite, testEntitiesDef) == NULL)
 		return CU_get_error();
 
 	return CUE_SUCCESS;

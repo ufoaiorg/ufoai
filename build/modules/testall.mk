@@ -318,6 +318,7 @@ $(TARGET)_SRCS      = \
 	client/renderer/r_thread.c \
 	\
 	shared/bfd.c \
+	shared/entitiesdef.c \
 	shared/stringhunk.c \
 	shared/byte.c \
 	shared/mutex.c \

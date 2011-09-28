@@ -1205,6 +1205,9 @@
 		<Unit filename="..\..\src\shared\images.c">
 			<Option compilerVar="CC" />
 		</Unit>
+		<Unit filename="..\..\src\shared\entitiesdef.c">
+			<Option compilerVar="CC" />
+		</Unit>
 		<Unit filename="..\..\src\shared\infostring.c">
 			<Option compilerVar="CC" />
 		</Unit>
