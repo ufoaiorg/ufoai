@@ -4274,13 +4274,13 @@ mapdef rescue
 }
 
 ////////////////////
-// TRAINING_A MAP //
+// TRAINING MAPS  //
 ////////////////////
 
 mapdef training_a
 {
 	map			"training_a"
-	description	"_Training Zone: Alpha."
+	description	"_Training Zone: Alpha"
 	teams		2
 	multiplayer	true
 	maxaliens	8
@@ -4290,5 +4290,17 @@ mapdef training_a
 		3on3
 		coop2
 		coop3
+	}
+}
+
+mapdef training_b
+{
+	map			"training_b"
+	description	"_Training Zone: Bravo"
+	teams		2
+	multiplayer	true
+	maxaliens	30
+	gametypes {
+		1on1
 	}
 }
