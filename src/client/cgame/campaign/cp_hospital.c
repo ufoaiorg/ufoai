@@ -57,8 +57,8 @@ qboolean HOS_HealCharacter (character_t* chr, qboolean hospital)
 		if (chr->HP == chr->maxHP)
 			return qfalse;
 		return qtrue;
-	} else
-		return qfalse;
+	}
+	return qfalse;
 }
 
 /**
