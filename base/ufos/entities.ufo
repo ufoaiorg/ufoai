@@ -430,6 +430,7 @@ entity misc_mission {
 		target		"The target that is triggered once the round time was hit - target trigger must have targetname set"
 		message		"A message that is show when the mission is completed"
 		targetname	"The id of this entity"
+		team		"The id of the team this mission is for (1 = Phalanx, 7 = Aliens, 1-6 multiplayer teams)"
 	}
 
 	mandatory {
@@ -439,10 +440,12 @@ entity misc_mission {
 
 	type {
 		origin	"V_FLOAT 3"
+		team	"V_INT"
 	}
 
 	default {
 		spawnflags	"255"
+		team		"1"
 	}
 }
 
