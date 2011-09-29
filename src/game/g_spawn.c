@@ -700,8 +700,11 @@ static void SP_misc_mission (edict_t *ent)
 	ent->think = G_MissionThink;
 	ent->nextthink = 1;
 
-	VectorSet(ent->absmax, PLAYER_WIDTH * 3, PLAYER_WIDTH * 3, PLAYER_STAND);
-	VectorSet(ent->absmin, -(PLAYER_WIDTH * 3), -(PLAYER_WIDTH * 3), PLAYER_MIN);
+	if (ent->radius <= GRID_WIDTH) {
+		ent->radius = GRID_WIDTH * 3;
+	}
+	VectorSet(ent->absmax, ent->radius, ent->radius, PLAYER_STAND);
+	VectorSet(ent->absmin, -ent->radius, -ent->radius, PLAYER_MIN);
 
 	/* spawn the trigger entity */
 	other = G_TriggerSpawn(ent);
