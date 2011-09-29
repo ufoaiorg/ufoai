@@ -15,6 +15,7 @@
 	{
 		texture tex_alienb/ab_floor01_pls
 		pulse 0.1
+		dutycycle 0.3
 		glowmaplink
 	}
 }
@@ -98,6 +99,24 @@
 	hardness 1.0
 }
 
+/* Animated screens */
+
+# Screens block 1
+{
+	material tex_alienb/ab_screens_a
+	bump 1.0
+	parallax 1.0
+	specular 1.0
+	hardness 1.0
+	{
+		texture tex_alienb/ab_screens_a0
+		blend GL_SRC_ALPHA GL_ONE_MINUS_SRC_ALPHA
+		anim 8 2.0
+		glowmaplink
+	}
+}
+
+
 /* Lights and objects
    ------------------ */
 
@@ -122,6 +141,7 @@
 		texture tex_alienb/ab_obj_b0
 		blend GL_SRC_ALPHA GL_ONE_MINUS_SRC_ALPHA
 		anim 8 3.0
+		glowmaplink
 	}
 }
 
