@@ -114,6 +114,7 @@ static const field_t fields[] = {
 	{"count", offsetof(edict_t, count), F_INT, 0},
 	{"time", offsetof(edict_t, time), F_INT, 0},
 	{"health", offsetof(edict_t, HP), F_INT, 0},
+	{"radius", offsetof(edict_t, radius), F_INT, 0},
 	{"sounds", offsetof(edict_t, sounds), F_INT, 0},
 	{"material", offsetof(edict_t, material), F_INT, 0},
 	{"light", 0, F_IGNORE, 0},

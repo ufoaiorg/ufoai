@@ -718,6 +718,7 @@ struct edict_s {
 	float angle;	/**< entity yaw - (0-360 degree) set via mapeditor - sometimes used for movement direction,
 					 * then -1=up; -2=down is used additionally */
 
+	int radius;					/**< this is used to extend the bounding box of a trigger_touch for e.g. misc_mission */
 	int speed;					/**< speed of entities - e.g. rotating or actors */
 	const char *target;			/**< name of the entity to trigger or move towards - this name is stored in the target edicts targetname value */
 	const char *targetname;		/**< name pointed to by target - see the target of the parent edict */
