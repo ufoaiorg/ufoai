@@ -121,7 +121,7 @@
 	{
 		texture tex_alienb/ab_obj_b0
 		blend GL_SRC_ALPHA GL_ONE_MINUS_SRC_ALPHA
-		anim 10 3.0
+		anim 8 3.0
 	}
 }
 
