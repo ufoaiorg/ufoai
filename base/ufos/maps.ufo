@@ -3840,11 +3840,6 @@ mapdef pipes_const
 
 	civilianteam	miner
 
-	aircraft
-	{
-		craft_drop_firebird
-	}
-
 //	ufos
 //	{
 //	}
@@ -4085,11 +4080,6 @@ mapdef subway
 		coop4
 	}
 	maxaliens		8
-
-	aircraft
-	{
-		craft_drop_firebird
-	}
 
 //	ufos
 //	{
