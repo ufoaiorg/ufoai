@@ -1,4 +1,4 @@
-// MAP DESCRIPTIONS
+s// MAP DESCRIPTIONS
 //
 // valid terrain values:
 // * desert, arctic, cold, water, mountain, wasted, tropical, grass
@@ -3973,7 +3973,7 @@ mapdef rivertown
 
 mapdef scout_crash
 {
-	map				"scout_crash"
+	map				"+scout_crash"
 	multiplayer		true
 	hurtaliens		true
 	teams			2
@@ -3992,6 +3992,8 @@ mapdef scout_crash
 	aircraft
 	{
 		craft_drop_firebird
+		craft_drop_raptor
+		craft_drop_herakles
 	}
 
 	ufos
