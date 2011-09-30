@@ -615,7 +615,7 @@ qboolean R_ImageExists (const char *pname)
 }
 
 /**
- * @brief Free the image and its normalmap (if there is one)
+ * @brief Free the image and its assigned maps (roughness, normal, specular, glow - if there are any)
  * @param image The image that should be freed
  */
 void R_FreeImage (image_t *image)
@@ -627,6 +627,9 @@ void R_FreeImage (image_t *image)
 	/* also free the several maps if they are loaded */
 	if (image->normalmap)
 		R_DeleteImage(image->normalmap);
+	/* check for the material glowmaplink feature */
+	if (image->glowmap == image)
+		image->glowmap = NULL;
 	if (image->glowmap)
 		R_DeleteImage(image->glowmap);
 	if (image->roughnessmap)
