@@ -44,6 +44,11 @@ void R_AddLight (const vec3_t origin, float radius, const vec3_t color)
 	VectorCopy(origin, refdef.dynamicLights[i].origin);
 	refdef.dynamicLights[i].radius = radius;
 	VectorCopy(color, refdef.dynamicLights[i].color);
+
+	Com_DPrintf(DEBUG_RENDERER, "added dynamic light, color (%f, %f, %f) position (%f, %f, %f)  radius=%f\n",
+		color[0], color[1], color[2],
+		origin[0], origin[1], origin[2],
+		radius);
 }
 
 /**

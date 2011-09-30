@@ -346,10 +346,14 @@ void R_RenderFrame (void)
 		}
 		R_EnableFog(qfalse);
 
-		if (r_debug_lights->integer)
+		if (r_debug_lights->integer) {
 			for (i = 0; i < r_state.numStaticLights; i++) {
 				R_AddCorona(r_state.staticLights[i].origin, r_state.staticLights[i].radius, r_state.staticLights[i].color);
 			}
+			for (i = 0; i < refdef.numDynamicLights; i++) {
+				R_AddCorona(refdef.dynamicLights[i].origin, refdef.dynamicLights[i].radius, refdef.dynamicLights[i].color);
+			}
+		}
 
 		R_DrawCoronas();
 		R_EnableBlend(qfalse);
