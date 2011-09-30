@@ -27,7 +27,6 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #include "r_entity.h"
 #include "r_state.h"
 
-static light_t r_lightsArray[MAX_GL_LIGHTS];
 static sustain_t r_sustainArray[MAX_GL_LIGHTS];
 
 void R_AddLight (const vec3_t origin, float radius, const vec3_t color)
@@ -37,14 +36,14 @@ void R_AddLight (const vec3_t origin, float radius, const vec3_t color)
 	if (!r_lights->integer)
 		return;
 
-	if (refdef.numLights == MAX_GL_LIGHTS)
+	if (refdef.numDynamicLights == MAX_GL_LIGHTS)
 		return;
 
-	i = refdef.numLights++;
+	i = refdef.numDynamicLights++;
 
-	VectorCopy(origin, r_lightsArray[i].origin);
-	r_lightsArray[i].radius = radius;
-	VectorCopy(color, r_lightsArray[i].color);
+	VectorCopy(origin, refdef.dynamicLights[i].origin);
+	refdef.dynamicLights[i].radius = radius;
+	VectorCopy(color, refdef.dynamicLights[i].color);
 }
 
 /**
@@ -138,7 +137,7 @@ void R_EnableLights (void)
 	glLightfv(GL_LIGHT0, GL_SPECULAR, blackColor);
 	glDisable(GL_LIGHT0);
 
-	for (i = 1, l = r_lightsArray; i <= refdef.numLights && i < maxLights && i < MAX_GL_LIGHTS; i++, l++) {
+	for (i = 1, l = refdef.dynamicLights; i <= refdef.numDynamicLights && i < maxLights && i < MAX_GL_LIGHTS; i++, l++) {
 		VectorSubtract(l->origin, lights_offset, position);
 		glLightfv(GL_LIGHT0 + i, GL_POSITION, position);
 		VectorCopy(l->color, diffuse);
@@ -289,8 +288,8 @@ void R_UpdateLightList (entity_t *ent)
 	}
 
 	/* add dynamic lights, too */
-	for (i = 0; i < refdef.numLights && j < MAX_STATIC_LIGHTS; i++) {
-		const light_t *light = &r_lightsArray[i];
+	for (i = 0; i < refdef.numDynamicLights && j < MAX_STATIC_LIGHTS; i++) {
+		const light_t *light = &refdef.dynamicLights[i];
 		const float distSqr = VectorDistSqr(pos, light->origin);
 
 		if (distSqr > (diameter + light->radius) * (diameter + light->radius))

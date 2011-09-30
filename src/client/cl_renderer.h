@@ -207,8 +207,10 @@ typedef struct {
 	vec4_t sunDiffuseColor;
 	vec4_t sunSpecularColor;
 
+	/* entity, dynamic lights and corona lists are repopulated each frame, don't use them as persistent */
 	int numEntities;
-	int numLights;
+	int numDynamicLights;
+	light_t dynamicLights[MAX_GL_LIGHTS];
 	int numCoronas;
 	corona_t coronas[MAX_CORONAS];
 

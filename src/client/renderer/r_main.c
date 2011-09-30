@@ -202,7 +202,7 @@ static inline void R_Clear (void)
 static inline void R_ClearScene (void)
 {
 	/* lights and coronas are populated as ents are added */
-	refdef.numEntities = refdef.numLights = refdef.numCoronas = 0;
+	refdef.numEntities = refdef.numDynamicLights = refdef.numCoronas = 0;
 }
 
 /**
