@@ -34,6 +34,8 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #define MAX_MAPPARTICLES	1024
 #define MAX_TIMEDPARTICLES 16
 
+#define PTL_INTENSITY_TO_RADIUS 256 /** @todo better scale factor: is 256 too big or not? */
+
 static cvar_t *cl_particleweather;
 
 /** @brief map particles */
@@ -1020,9 +1022,9 @@ static void CL_ParticleRun2 (ptl_t *p)
 	if (VectorNotEmpty(p->lightColor)) {
 		const float intensity = 0.5 + p->lightIntensity;
 		if (p->lightSustain)
-			R_AddSustainedLight(p->s, intensity, p->lightColor, p->lightSustain);
+			R_AddSustainedLight(p->s, intensity * PTL_INTENSITY_TO_RADIUS, p->lightColor, p->lightSustain);
 		else
-			R_AddLight(p->s, intensity, p->lightColor);
+			R_AddLight(p->s, intensity * PTL_INTENSITY_TO_RADIUS, p->lightColor);
 	}
 
 	/* set the new origin */
