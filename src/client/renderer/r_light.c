@@ -168,7 +168,7 @@ void R_AddStaticLight (const vec3_t origin, float radius, const vec3_t color)
 		return;
 	}
 
-	Com_Printf("added static light, color (%f, %f, %f) position (%f, %f, %f)  radius=%f\n",
+	Com_DPrintf(DEBUG_RENDERER, "added static light, color (%f, %f, %f) position (%f, %f, %f)  radius=%f\n",
 		color[0], color[1], color[2],
 		origin[0], origin[1], origin[2],
 		radius);
