@@ -198,21 +198,45 @@ void CAP_UpdateStorageCap (base_t *base)
 	CAP_AddCurrent(base, CAP_ITEMS, UGV_SIZE * E_CountHired(base, EMPL_ROBOT));
 }
 
+/**
+ * @brief Sets the maximal capacity on a base
+ * @param[in,out] base The base to set capacity at
+ * @param[in] capacity Capacity type
+ * @param[in] value New maximal capacity value
+ */
 void CAP_SetMax (base_t* base, baseCapacities_t capacity, int value)
 {
 	base->capacities[capacity].max = max(0, value);
 }
 
+/**
+ * @brief Changes the maximal capacity on a base
+ * @param[in,out] base The base to set capacity at
+ * @param[in] capacity Capacity type
+ * @param[in] value Capacity to add to the maximal capacity value (negative to decrease)
+ */
 void CAP_AddMax (base_t* base, baseCapacities_t capacity, int value)
 {
 	base->capacities[capacity].max = max(0, base->capacities[capacity].max + value);
 }
 
+/**
+ * @brief Sets the current (used) capacity on a base
+ * @param[in,out] base The base to set capacity at
+ * @param[in] capacity Capacity type
+ * @param[in] value New current (used) capacity value
+ */
 void CAP_SetCurrent (base_t* base, baseCapacities_t capacity, int value)
 {
 	base->capacities[capacity].cur = max(0, value);
 }
 
+/**
+ * @brief Changes the current (used) capacity on a base
+ * @param[in,out] base The base to set capacity at
+ * @param[in] capacity Capacity type
+ * @param[in] value Capacity to add to the current (used) capacity value (negative to decrease)
+ */
 void CAP_AddCurrent (base_t* base, baseCapacities_t capacity, int value)
 {
 	base->capacities[capacity].cur = max(0, base->capacities[capacity].cur + value);
