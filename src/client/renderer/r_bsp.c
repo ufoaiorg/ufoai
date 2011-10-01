@@ -120,9 +120,8 @@ qboolean R_CullBspModel (const entity_t *e)
 /**
  * @brief Renders all the surfaces that belongs to an inline bsp model entity
  * @param[in] e The inline bsp model entity
- * @param[in] modelorg relative to viewpoint
  */
-static void R_DrawBspModelSurfaces (const entity_t *e, const vec3_t modelorg)
+static void R_DrawBspModelSurfaces (const entity_t *e)
 {
 	int i;
 	mBspSurface_t *surf;
@@ -135,18 +134,6 @@ static void R_DrawBspModelSurfaces (const entity_t *e, const vec3_t modelorg)
 	surf = &e->model->bsp.surfaces[e->model->bsp.firstmodelsurface];
 
 	for (i = 0; i < e->model->bsp.nummodelsurfaces; i++, surf++) {
-		/** @todo This leads to unrendered backfaces for e.g. doors */
-#if 0
-		float dot;
-		/* find which side of the surf we are on  */
-		if (AXIAL(surf->plane))
-			dot = modelorg[surf->plane->type] - surf->plane->dist;
-		else
-			dot = DotProduct(modelorg, surf->plane->normal) - surf->plane->dist;
-
-		if (((surf->flags & MSURF_PLANEBACK) && (dot < -BACKFACE_EPSILON)) ||
-			(!(surf->flags & MSURF_PLANEBACK) && (dot > BACKFACE_EPSILON)))
-#endif
 			/* visible flag for rendering */
 			surf->frame = r_locals.frame;
 	}
@@ -184,11 +171,6 @@ static void R_DrawBspModelSurfaces (const entity_t *e, const vec3_t modelorg)
  */
 void R_DrawBrushModel (const entity_t * e)
 {
-	/* relative to viewpoint */
-	vec3_t modelorg;
-
-	/* set the relative origin, accounting for rotation if necessary */
-	VectorSubtract(refdef.viewOrigin, e->origin, modelorg);
 	if (VectorNotEmpty(e->angles)) {
 		vec3_t rotationMatrix[3];
 		VectorCreateRotationMatrix(e->angles, rotationMatrix);
@@ -204,7 +186,7 @@ void R_DrawBrushModel (const entity_t * e)
 	glRotatef(e->angles[PITCH], 0, 1, 0);
 	glRotatef(e->angles[ROLL], 1, 0, 0);
 
-	R_DrawBspModelSurfaces(e, modelorg);
+	R_DrawBspModelSurfaces(e);
 
 	/* show model bounding box */
 	if (r_showbox->integer) {
