@@ -154,7 +154,12 @@ static void CL_FreeBattlescapeEvent (void *data)
 
 static qboolean CL_FilterBattlescapeEvents (int when, event_func *func, event_check_func *check, void *data)
 {
-	return (func != &CL_ExecuteBattlescapeEvent);
+	if (func == &CL_ExecuteBattlescapeEvent) {
+		const evTimes_t *event = (const evTimes_t *)data;
+		Com_Printf("Remove pending event %i\n", event->eType);
+		return qfalse;
+	}
+	return qtrue;
 }
 
 void CL_ClearBattlescapeEvents (void)

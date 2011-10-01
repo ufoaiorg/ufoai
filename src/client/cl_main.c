@@ -179,6 +179,7 @@ static void CL_Reconnect (void)
 	if (cls.reconnectTime == 0 || cls.reconnectTime > CL_Milliseconds())
 		return;
 
+	Com_Printf("Reconnecting...\n");
 	CL_Disconnect();
 	CL_SetClientState(ca_connecting);
 	/* otherwise we would time out */
@@ -258,6 +259,8 @@ void CL_Disconnect (void)
 
 	if (cls.state < ca_connecting)
 		return;
+
+	Com_Printf("Disconnecting...\n");
 
 	/* send a disconnect message to the server */
 	if (!Com_ServerState()) {
