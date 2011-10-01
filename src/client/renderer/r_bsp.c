@@ -39,22 +39,27 @@ BRUSH MODELS
 
 
 /**
- * @brief Returns true if the specified bounding box is completely culled by the
- * view frustum, false otherwise.
+ * @brief Returns whether if the specified bounding box is completely culled by the
+ * view frustum (PSIDE_BACK), completely not culled (PSIDE_FRONT) or split by it (PSIDE_BOTH)
  * @param[in] mins The mins of the bounding box
  * @param[in] maxs The maxs of the bounding box
  */
-static qboolean R_CullBox (const vec3_t mins, const vec3_t maxs)
+static int R_CullBox (const vec3_t mins, const vec3_t maxs)
 {
 	int i;
+	int cullState = 0;
 
 	if (r_nocull->integer)
-		return qfalse;
+		return PSIDE_FRONT;
 
-	for (i = lengthof(r_locals.frustum) - 1; i >= 0; i--)
-		if (TR_BoxOnPlaneSide(mins, maxs, &r_locals.frustum[i]) == PSIDE_BACK)
-			return qtrue;
-	return qfalse;
+	for (i = lengthof(r_locals.frustum) - 1; i >= 0; i--) {
+		int planeSide = TR_BoxOnPlaneSide(mins, maxs, &r_locals.frustum[i]);
+		if (planeSide == PSIDE_BACK)
+			return PSIDE_BACK; /* completely culled away */
+		cullState |= planeSide;
+	}
+
+	return cullState;
 }
 
 
@@ -109,7 +114,7 @@ qboolean R_CullBspModel (const entity_t *e)
 		VectorAdd(e->origin, e->model->maxs, maxs);
 	}
 
-	return R_CullBox(mins, maxs);
+	return R_CullBox(mins, maxs) == PSIDE_BACK;
 }
 
 /**
@@ -285,23 +290,81 @@ void R_DrawBspNormals (int tile)
 }
 
 /**
- * @brief Recurse down the bsp tree and mark surfaces that are visible (not culled and in front)
+ * @brief Recurse down the bsp tree and mark all surfaces as visible (if in front)
  * for being rendered
  * @sa R_DrawWorld
  * @sa R_RecurseWorld
- * @param[in] node The bsp node to check
+ * @sa R_RecursiveWorldNode
+ * @param[in] node The bsp node to mark
  * @param[in] tile The maptile (map assembly)
  */
-static void R_RecursiveWorldNode (const mBspNode_t * node, int tile)
+static void R_RecursiveVisibleWorldNode (const mBspNode_t * node, int tile)
 {
-	int i, side, sidebit;
+	int i, sidebit;
+	int cullState;
 	mBspSurface_t *surf;
 	float dot;
 
 	if (node->contents == CONTENTS_SOLID)
 		return;					/* solid */
 
-	if (R_CullBox(node->minmaxs, node->minmaxs + 3))
+	/* if a leaf node, draw stuff */
+	if (node->contents > CONTENTS_NODE)
+		return;
+
+	/* pathfinding nodes are invalid here */
+	assert(node->plane);
+
+	/* node is just a decision point, so go down the appropriate sides
+	 * find which side of the node we are on */
+	if (r_isometric->integer) {
+		dot = -DotProduct(r_locals.forward, node->plane->normal);
+	} else if (!AXIAL(node->plane)) {
+		dot = DotProduct(refdef.viewOrigin, node->plane->normal) - node->plane->dist;
+	} else {
+		dot = refdef.viewOrigin[node->plane->type] - node->plane->dist;
+	}
+
+	if (dot >= 0) {
+		sidebit = 0;
+	} else {
+		sidebit = MSURF_PLANEBACK;
+	}
+
+	surf = r_mapTiles[tile]->bsp.surfaces + node->firstsurface;
+	for (i = 0; i < node->numsurfaces; i++, surf++) {
+		/* visible (front) side */
+		if ((surf->flags & MSURF_PLANEBACK) == sidebit)
+			surf->frame = r_locals.frame;
+	}
+
+	/* recurse down the children */
+	R_RecursiveVisibleWorldNode(node->children[0], tile);
+	R_RecursiveVisibleWorldNode(node->children[1], tile);
+}
+
+/**
+ * @brief Recurse down the bsp tree and mark surfaces that are visible (not culled and in front)
+ * for being rendered
+ * @sa R_DrawWorld
+ * @sa R_RecurseWorld
+ * @sa R_RecursiveVisibleWorldNode
+ * @param[in] node The bsp node to check
+ * @param[in] tile The maptile (map assembly)
+ */
+static void R_RecursiveWorldNode (const mBspNode_t * node, int tile)
+{
+	int i, sidebit;
+	int cullState;
+	mBspSurface_t *surf;
+	float dot;
+
+	if (node->contents == CONTENTS_SOLID)
+		return;					/* solid */
+
+	cullState = R_CullBox(node->minmaxs, node->minmaxs + 3);
+
+	if (cullState == PSIDE_BACK)
 		return;					/* culled out */
 
 	/* if a leaf node, draw stuff */
@@ -322,15 +385,10 @@ static void R_RecursiveWorldNode (const mBspNode_t * node, int tile)
 	}
 
 	if (dot >= 0) {
-		side = 0;
 		sidebit = 0;
 	} else {
-		side = 1;
 		sidebit = MSURF_PLANEBACK;
 	}
-
-	/* recurse down the children, front side first */
-	R_RecursiveWorldNode(node->children[side], tile);
 
 	surf = r_mapTiles[tile]->bsp.surfaces + node->firstsurface;
 	for (i = 0; i < node->numsurfaces; i++, surf++) {
@@ -339,8 +397,16 @@ static void R_RecursiveWorldNode (const mBspNode_t * node, int tile)
 			surf->frame = r_locals.frame;
 	}
 
-	/* recurse down the back side */
-	R_RecursiveWorldNode(node->children[!side], tile);
+	/* recurse down the children */
+	if (cullState == PSIDE_FRONT) {
+		/* completely inside the frustum - no need to do any further checks */
+		R_RecursiveVisibleWorldNode(node->children[0], tile);
+		R_RecursiveVisibleWorldNode(node->children[1], tile);
+	} else {
+		/* partially clipped by frustum - recurse to do finer checks */
+		R_RecursiveWorldNode(node->children[0], tile);
+		R_RecursiveWorldNode(node->children[1], tile);
+	}
 }
 
 /**
