@@ -171,12 +171,6 @@ static void R_DrawBspModelSurfaces (const entity_t *e)
  */
 void R_DrawBrushModel (const entity_t * e)
 {
-	if (VectorNotEmpty(e->angles)) {
-		vec3_t rotationMatrix[3];
-		VectorCreateRotationMatrix(e->angles, rotationMatrix);
-		VectorRotatePoint(modelorg, rotationMatrix);
-	}
-
 	R_ShiftLights(e->origin);
 
 	glPushMatrix();
