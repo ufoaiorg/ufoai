@@ -307,6 +307,7 @@ static void GAME_SK_Shutdown (void)
 	cgi->Cmd_RemoveCommand("sk_start");
 	cgi->Cmd_RemoveCommand("sk_nextequip");
 	cgi->Cmd_RemoveCommand("sk_prevequip");
+	cgi->Cmd_RemoveCommand("sk_initequip");
 	cgi->Cmd_RemoveCommand("game_go");
 
 	cgi->UI_ResetData(OPTION_DROPSHIPS);
