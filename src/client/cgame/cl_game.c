@@ -317,6 +317,7 @@ static const cgame_import_t* GAME_GetImportData (const cgameType_t *t)
 
 		cgi->csi = &csi;
 
+		/** @todo add a wrapper here that stores the cgame command and removes them on shutdown automatically */
 		cgi->Cmd_AddCommand = Cmd_AddCommand;
 		cgi->Cmd_Argc = Cmd_Argc;
 		cgi->Cmd_Args = Cmd_Args;
@@ -332,6 +333,7 @@ static const cgame_import_t* GAME_GetImportData (const cgameType_t *t)
 		cgi->LIST_ContainsString = LIST_ContainsString;
 
 		cgi->Cvar_Delete = Cvar_Delete;
+		/** @todo add a wrapper here that stores the cgame cvars and removes them on shutdown automatically */
 		cgi->Cvar_Get = Cvar_Get;
 		cgi->Cvar_GetInteger = Cvar_GetInteger;
 		cgi->Cvar_GetValue = Cvar_GetValue;
