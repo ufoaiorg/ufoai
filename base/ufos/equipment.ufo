@@ -13,6 +13,7 @@
 
 equipment campaign_player
 {
+	name "_Campaign Start"
 	item assault						1
 	item assault_ammo				12
 	item machinegun					1
@@ -55,6 +56,7 @@ equipment campaign_player
 
 equipment campaign_initial_market
 {
+	name "_Campaign Start (Market)"
 	item assault						4
 	item assault_ammo				45
 	item machinegun					3
@@ -109,6 +111,7 @@ equipment campaign_initial_market
 
 equipment campaign_asymptotic_market
 {
+	name "_Asymptotic Market"
 //	item armour_lightadv			3
 	item armour_medium			3
 	item armour_power			3
@@ -132,6 +135,7 @@ equipment campaign_asymptotic_market
 
 equipment campaign_player_aliens
 {
+	name "_Alien Campain Start (Alien Campaign)"
 	item assault				1
 	item assault_ammo		1
 	item sniper				1
@@ -153,6 +157,7 @@ equipment campaign_player_aliens
 
 equipment campaign_market_aliens
 {
+	name "_Alien Campaign Start (Market)"
 	item assault				4
 	item assault_ammo		40
 	item sniper				3
@@ -360,7 +365,7 @@ equipment multiplayer_phalanx
 
 equipment multiplayer_initial
 {
-	name "_Multiplayer Initial"
+	name "_Multiplayer"
 	item assault				10
 	item assault_ammo		13
 	item machinegun			1
@@ -420,6 +425,7 @@ equipment multiplayer_initial
 
 equipment stun
 {
+	name "_Flamers/Rifles/Grenades"
 	item flamer			8
 	item flamer_ammo	16
 	item assault		8
