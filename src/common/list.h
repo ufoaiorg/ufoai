@@ -18,6 +18,9 @@ typedef int (*linkedListSort_t) (linkedList_t *entry1, linkedList_t *entry2, con
 	for (linkedList_t *var##__iter = (var = 0)?0:(list); var##__iter;) \
 		if (var = (type*)var##__iter->data, var##__iter = var##__iter->next, 0) {} else
 
+#define LIST_ForeachConst(list, type, var) \
+	for (const linkedList_t *var##__iter = (var = 0)?0:(list); var##__iter;) \
+		if (var = (const type*)var##__iter->data, var##__iter = var##__iter->next, 0) {} else
 /**
  * @brief Will sort the list before loop over the sorted list. Make sure the free the sortedList after you done with the loop.
  */
