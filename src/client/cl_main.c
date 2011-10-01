@@ -738,6 +738,13 @@ static const value_t mapdef_vals[] = {
 	{"onwin", V_HUNK_STRING, offsetof(mapDef_t, onwin), 0},
 	{"onlose", V_HUNK_STRING, offsetof(mapDef_t, onlose), 0},
 
+	{"ufos", V_LIST, offsetof(mapDef_t, ufos), 0},
+	{"aircraft", V_LIST, offsetof(mapDef_t, aircraft), 0},
+	{"terrains", V_LIST, offsetof(mapDef_t, terrains), 0},
+	{"populations", V_LIST, offsetof(mapDef_t, populations), 0},
+	{"cultures", V_LIST, offsetof(mapDef_t, cultures), 0},
+	{"gametypes", V_LIST, offsetof(mapDef_t, gameTypes), 0},
+
 	{NULL, 0, 0, 0}
 };
 
@@ -771,34 +778,8 @@ static void CL_ParseMapDefinition (const char *name, const char **text)
 			break;
 
 		if (!Com_ParseBlockToken(name, text, md, mapdef_vals, com_genericPool, token)) {
-			linkedList_t **list;
-			if (Q_streq(token, "ufos")) {
-				list = &md->ufos;
-			} else if (Q_streq(token, "aircraft")) {
-				list = &md->aircraft;
-			} else if (Q_streq(token, "terrains")) {
-				list = &md->terrains;
-			} else if (Q_streq(token, "populations")) {
-				list = &md->populations;
-			} else if (Q_streq(token, "cultures")) {
-				list = &md->cultures;
-			} else if (Q_streq(token, "gametypes")) {
-				list = &md->gameTypes;
-			} else {
-				Com_Printf("Com_ParseMapDefinition: unknown token \"%s\" ignored (mapdef %s)\n", token, name);
-				continue;
-			}
-			token = Com_EParse(text, errhead, name);
-			if (!*text || *token != '{') {
-				Com_Printf("Com_ParseMapDefinition: mapdef \"%s\" has ufos, gametypes, terrains, populations or cultures block with no opening brace\n", name);
-				break;
-			}
-			do {
-				token = Com_EParse(text, errhead, name);
-				if (!*text || *token == '}')
-					break;
-				LIST_AddString(list, token);
-			} while (*text);
+			Com_Printf("Com_ParseMapDefinition: unknown token \"%s\" ignored (mapdef %s)\n", token, name);
+			continue;
 		}
 	} while (*text);
 
