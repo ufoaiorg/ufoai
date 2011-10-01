@@ -72,6 +72,8 @@ void GAME_SetServerInfo(const char *server, const char *serverport);
 
 #include "cgame.h"
 
+const equipDef_t *GAME_ChangeEquip(const linkedList_t *equipmentList, changeEquipType_t changeType, const char *equipID);
+
 #ifndef HARD_LINKED_CGAME
 /* this is only here so the functions in the shared code can link */
 #define CGAME_HARD_LINKED_FUNCTIONS \

@@ -68,9 +68,24 @@ typedef struct cgame_export_s {
 	qboolean (EXPORT *HandleServerCommand) (const char *command, struct dbuffer *msg);
 } cgame_export_t;
 
+typedef struct cgameType_s {
+	char id[MAX_VAR];		/**< the id is also the file basename */
+	char window[MAX_VAR];	/**< the ui window id where this game type should become active for */
+	char name[MAX_VAR];		/**< translatable ui name */
+	linkedList_t *equipmentList; /**< the list of valid equipment definitions for this gametype - if this
+								 * is @c NULL, every equipment may be used */
+} cgameType_t;
+
+typedef enum {
+	FORWARD,
+	BACKWARD,
+	INIT
+} changeEquipType_t;
+
 /** @todo define the import interface */
 typedef struct cgame_import_s {
 	csi_t *csi;
+	const cgameType_t *cgameType;
 
 	/* UI functions */
 	void (IMPORT *UI_ExecuteConfunc) (const char *fmt, ...) __attribute__((format(printf, 1, 2)));
@@ -111,6 +126,7 @@ typedef struct cgame_import_s {
 	int (IMPORT *GAME_GetCurrentTeam) (void);
 	void* (IMPORT *GAME_StrDup) (const char *string);
 	void (IMPORT *GAME_AutoTeam) (const char *equipmentDefinitionID, int teamMembers);
+	const equipDef_t *(IMPORT *GAME_ChangeEquip) (const linkedList_t *equipmentList, changeEquipType_t changeType, const char *equipID);
 	size_t (IMPORT *GAME_GetCharacterArraySize) (void);
 	qboolean (IMPORT *GAME_IsTeamEmpty) (void);
 	qboolean (IMPORT *GAME_LoadDefaultTeam) (void);

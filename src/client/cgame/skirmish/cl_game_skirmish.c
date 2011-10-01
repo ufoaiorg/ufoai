@@ -125,9 +125,10 @@ static void GAME_SK_Restart_f (void)
  */
 static void GAME_SK_ChangeEquip_f (void)
 {
-	const equipDef_t *ed;
-	int index;
 	const char *cvarName;
+	const char *command;
+	changeEquipType_t type;
+	const equipDef_t *ed;
 	char cvarBuf[MAX_VAR];
 
 	if (cgi->Cmd_Argc() < 2) {
@@ -135,22 +136,21 @@ static void GAME_SK_ChangeEquip_f (void)
 		return;
 	}
 
+	command = cgi->Cmd_Argv(0);
 	cvarName = cgi->Cmd_Argv(1);
+
+	if (Q_streq(command, "sk_prevequip")) {
+		type = BACKWARD;
+	} else if (Q_streq(command, "sk_nextequip")) {
+		type = FORWARD;
+	} else {
+		type = INIT;
+	}
+
+	ed = cgi->GAME_ChangeEquip(cgi->cgameType->equipmentList, type, cgi->Cvar_GetString(cvarName));
+
 	Com_sprintf(cvarBuf, sizeof(cvarBuf), "%sname", cvarName);
 
-	ed = cgi->INV_GetEquipmentDefinitionByID(cgi->Cvar_GetString(cvarName));
-	index = ed - cgi->csi->eds;
-
-	if (Q_streq(cgi->Cmd_Argv(0), "sk_prevequip")) {
-		index--;
-		if (index < 0)
-			index = cgi->csi->numEDs - 1;
-	} else if (Q_streq(cgi->Cmd_Argv(0), "sk_nextequip")) {
-		index++;
-		if (index >= cgi->csi->numEDs)
-			index = 0;
-	}
-	ed = &cgi->csi->eds[index];
 	cgi->Cvar_Set(cvarName, ed->id);
 	cgi->Cvar_Set(cvarBuf, ed->name);
 }

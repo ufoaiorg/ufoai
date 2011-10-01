@@ -39,6 +39,10 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #include "../../shared/parse.h"
 #include "../../common/filesys.h"
 
+#define MAX_CGAMETYPES 16
+static cgameType_t cgameTypes[MAX_CGAMETYPES];
+static int numCGameTypes;
+
 #ifdef HARD_LINKED_CGAME
 #include "campaign/cl_game_campaign.h"
 #include "multiplayer/cl_game_multiplayer.h"
@@ -303,7 +307,7 @@ static void GAME_Free (void *ptr)
 	Mem_Free(ptr);
 }
 
-static const cgame_import_t* GAME_GetImportData (void)
+static const cgame_import_t* GAME_GetImportData (const cgameType_t *t)
 {
 	static cgame_import_t gameImport;
 	static cgame_import_t *cgi = NULL;
@@ -402,6 +406,7 @@ static const cgame_import_t* GAME_GetImportData (void)
 		cgi->GAME_GetCurrentTeam = GAME_GetCurrentTeam;
 		cgi->GAME_StrDup = GAME_StrDup;
 		cgi->GAME_AutoTeam = GAME_AutoTeam;
+		cgi->GAME_ChangeEquip = GAME_ChangeEquip;
 		cgi->GAME_GetCharacterArraySize = GAME_GetCharacterArraySize;
 		cgi->GAME_IsTeamEmpty = GAME_IsTeamEmpty;
 		cgi->GAME_LoadDefaultTeam = GAME_LoadDefaultTeam;
@@ -445,6 +450,8 @@ static const cgame_import_t* GAME_GetImportData (void)
 		cgi->XML_AddString = XML_AddString;
 		cgi->XML_AddStringValue = XML_AddStringValue;
 	}
+
+	cgi->cgameType = t;
 
 	return cgi;
 }
@@ -708,27 +715,18 @@ static void UI_SelectMap_f (void)
 	Com_Printf("Could not find map %s\n", mapname);
 }
 
-typedef struct cgameType_s {
-	char id[MAX_VAR];		/**< the id is also the file basename */
-	char window[MAX_VAR];	/**< the ui window id where this game type should become active for */
-	char name[MAX_VAR];		/**< translatable ui name */
-} cgameType_t;
-
-#define MAX_CGAMETYPES 16
-static cgameType_t cgameTypes[MAX_CGAMETYPES];
-static int numCGameTypes;
-
 /** @brief Valid equipment definition values from script files. */
 static const value_t cgame_vals[] = {
 	{"window", V_STRING, offsetof(cgameType_t, window), 0},
 	{"name", V_STRING, offsetof(cgameType_t, name), 0},
+	{"equipmentlist", V_LIST, offsetof(cgameType_t, equipmentList), 0},
 
 	{NULL, 0, 0, 0}
 };
 
 void GAME_ParseModes (const char *name, const char **text)
 {
-	cgameType_t *ed;
+	cgameType_t *cgame;
 	int i;
 
 	/* search for equipments with same name */
@@ -745,12 +743,12 @@ void GAME_ParseModes (const char *name, const char **text)
 		Sys_Error("GAME_ParseModes: MAX_CGAMETYPES exceeded\n");
 
 	/* initialize the equipment definition */
-	ed = &cgameTypes[numCGameTypes++];
-	OBJZERO(*ed);
+	cgame = &cgameTypes[numCGameTypes++];
+	OBJZERO(*cgame);
 
-	Q_strncpyz(ed->id, name, sizeof(ed->id));
+	Q_strncpyz(cgame->id, name, sizeof(cgame->id));
 
-	Com_ParseBlock(name, text, ed, cgame_vals, NULL);
+	Com_ParseBlock(name, text, cgame, cgame_vals, NULL);
 }
 
 #ifndef HARD_LINKED_CGAME
@@ -776,8 +774,9 @@ static qboolean GAME_LoadGame (const char *path, const char *name)
 }
 #endif
 
-static const cgame_export_t *GAME_GetCGameAPI (const char *name)
+static const cgame_export_t *GAME_GetCGameAPI (const cgameType_t *t)
 {
+	const char *name = t->id;
 #ifndef HARD_LINKED_CGAME
 	cgame_api_t GetCGameAPI;
 	const char *path;
@@ -809,7 +808,16 @@ static const cgame_export_t *GAME_GetCGameAPI (const char *name)
 	}
 #endif
 
-	return GetCGameAPI(GAME_GetImportData());
+	/* sanity checks */
+	if (!LIST_IsEmpty(t->equipmentList)) {
+		const char *equipID;
+		LIST_ForeachConst(t->equipmentList, char, equipID) {
+			if (INV_GetEquipmentDefinitionByID(equipID) == NULL)
+				Sys_Error("Could not find the equipDef '%s' in the cgame mode: '%s'", equipID, name);
+		}
+	}
+
+	return GetCGameAPI(GAME_GetImportData(t));
 }
 
 static const cgame_export_t *GAME_GetCGameAPI_ (const cgameType_t *t)
@@ -817,7 +825,7 @@ static const cgame_export_t *GAME_GetCGameAPI_ (const cgameType_t *t)
 #ifdef HARD_LINKED_CGAME
 	cgameMenu = t->window;
 #endif
-	return GAME_GetCGameAPI(t->id);
+	return GAME_GetCGameAPI(t);
 }
 
 /**
@@ -1253,6 +1261,63 @@ mapDef_t* Com_GetMapDefinitionByID (const char *mapDefID)
 mapDef_t* Com_GetMapDefByIDX (int index)
 {
 	return &cls.mds[index];
+}
+
+/**
+ * @brief Changed the given cvar to the next/prev equipment definition
+ */
+const equipDef_t *GAME_ChangeEquip (const linkedList_t *equipmentList, changeEquipType_t changeType, const char *equipID)
+{
+	const equipDef_t *ed;
+
+	if (LIST_IsEmpty(equipmentList)) {
+		int index;
+		ed = INV_GetEquipmentDefinitionByID(equipID);
+		index = ed - csi.eds;
+
+		switch (changeType) {
+		case BACKWARD:
+			index--;
+			if (index < 0)
+				index = csi.numEDs - 1;
+			break;
+		case FORWARD:
+			index++;
+			if (index >= csi.numEDs)
+				index = 0;
+			break;
+		default:
+			break;
+		}
+		ed = &csi.eds[index];
+	} else {
+		const linkedList_t *entry = LIST_ContainsString(equipmentList, equipID);
+		if (entry == NULL) {
+			equipID = (const char *)equipmentList->data;
+		} else if (changeType == FORWARD) {
+			equipID = (const char *)(entry->next != NULL ? entry->next->data : equipmentList->data);
+		} else if (changeType == BACKWARD) {
+			const char *tmp;
+			const char *new = NULL;
+			const char *prev = NULL;
+			LIST_ForeachConst(equipmentList, char, tmp) {
+				if (Q_streq(tmp, equipID)) {
+					if (prev != NULL) {
+						new = prev;
+						break;
+					}
+				}
+				prev = tmp;
+				new = tmp;
+			}
+			equipID = new;
+		}
+		ed = INV_GetEquipmentDefinitionByID(equipID);
+		if (ed == NULL)
+			Com_Error(ERR_DROP, "Could not find the equipment definition for '%s'", equipID);
+	}
+
+	return ed;
 }
 
 /**
