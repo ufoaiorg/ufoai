@@ -40,9 +40,9 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #include "../../common/filesys.h"
 
 #ifdef HARD_LINKED_CGAME
-#include "cl_game_campaign.h"
-#include "cl_game_multiplayer.h"
-#include "cl_game_skirmish.h"
+#include "campaign/cl_game_campaign.h"
+#include "multiplayer/cl_game_multiplayer.h"
+#include "skirmish/cl_game_skirmish.h"
 
 static const cgame_api_t gameTypeList[] = {
 	GetCGameMultiplayerAPI,

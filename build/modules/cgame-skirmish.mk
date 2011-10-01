@@ -12,7 +12,7 @@ $(TARGET)_LDFLAGS  += $(SO_LDFLAGS) -lm
 $(TARGET)_FILE     := base/$(TARGET).$(SO_EXT)
 
 $(TARGET)_SRCS      = \
-	client/cgame/cl_game_skirmish.c
+	client/cgame/skirmish/cl_game_skirmish.c
 
 ifneq ($(HARD_LINKED_CGAME),1)
 	$(TARGET)_SRCS += shared/mathlib.c \

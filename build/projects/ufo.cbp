@@ -667,18 +667,18 @@
 			<Option compilerVar="CC" />
 		</Unit>
 		<Unit filename="..\..\src\client\cgame\cl_game.h" />
-		<Unit filename="..\..\src\client\cgame\cl_game_campaign.c">
+		<Unit filename="..\..\src\client\cgame\campaign\cl_game_campaign.c">
 			<Option compilerVar="CC" />
 		</Unit>
-		<Unit filename="..\..\src\client\cgame\cl_game_campaign.h" />
-		<Unit filename="..\..\src\client\cgame\cl_game_multiplayer.c">
+		<Unit filename="..\..\src\client\cgame\campaign\cl_game_campaign.h" />
+		<Unit filename="..\..\src\client\cgame\multiplayer\cl_game_multiplayer.c">
 			<Option compilerVar="CC" />
 		</Unit>
-		<Unit filename="..\..\src\client\cgame\cl_game_multiplayer.h" />
-		<Unit filename="..\..\src\client\cgame\cl_game_skirmish.c">
+		<Unit filename="..\..\src\client\cgame\multiplayer\cl_game_multiplayer.h" />
+		<Unit filename="..\..\src\client\cgame\skirmish\cl_game_skirmish.c">
 			<Option compilerVar="CC" />
 		</Unit>
-		<Unit filename="..\..\src\client\cgame\cl_game_skirmish.h" />
+		<Unit filename="..\..\src\client\cgame\skirmish\cl_game_skirmish.h" />
 		<Unit filename="..\..\src\client\cgame\cl_game_team.c">
 			<Option compilerVar="CC" />
 		</Unit>

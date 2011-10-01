@@ -23,18 +23,18 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 
 */
 
-#include "../client.h"
-#include "cl_game.h"
+#include "../../client.h"
+#include "../cl_game.h"
 #include "cl_game_campaign.h"
-#include "campaign/cp_campaign.h"
-#include "campaign/cp_missions.h"
-#include "campaign/cp_mission_triggers.h"
-#include "campaign/cp_team.h"
-#include "campaign/cp_map.h"
-#include "../battlescape/cl_hud.h"
-#include "../ui/ui_main.h"
-#include "../ui/node/ui_node_text.h"
-#include "campaign/cp_mission_callbacks.h"
+#include "cp_campaign.h"
+#include "cp_missions.h"
+#include "cp_mission_triggers.h"
+#include "cp_team.h"
+#include "cp_map.h"
+#include "../../battlescape/cl_hud.h"
+#include "../../ui/ui_main.h"
+#include "../../ui/node/ui_node_text.h"
+#include "cp_mission_callbacks.h"
 
 static const cgame_import_t *cgImport;
 

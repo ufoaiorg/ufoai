@@ -113,9 +113,9 @@ $(TARGET)_SRCS      = \
 	client/sound/s_sample.c \
 	\
 	client/cgame/cl_game.c \
-	client/cgame/cl_game_campaign.c \
 	client/cgame/cl_game_team.c \
 	\
+	client/cgame/campaign/cl_game_campaign.c \
 	client/cgame/campaign/cp_aircraft.c \
 	client/cgame/campaign/cp_aircraft_callbacks.c \
 	client/cgame/campaign/cp_alien_interest.c \

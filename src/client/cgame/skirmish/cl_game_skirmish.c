@@ -23,10 +23,10 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 
 */
 
-#include "../cl_shared.h"
-#include "cl_game.h"
+#include "../../cl_shared.h"
+#include "../cl_game.h"
 #include "cl_game_skirmish.h"
-#include "../ui/ui_data.h"
+#include "../../ui/ui_data.h"
 
 #define DROPSHIP_MAX INTERCEPTOR_STILETTO
 

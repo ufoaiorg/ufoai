@@ -12,7 +12,7 @@ $(TARGET)_LDFLAGS  += $(SO_LDFLAGS) -lm
 $(TARGET)_FILE     := base/$(TARGET).$(SO_EXT)
 
 $(TARGET)_SRCS      = \
-	client/cgame/cl_game_multiplayer.c \
+	client/cgame/multiplayer/cl_game_multiplayer.c \
 	client/cgame/multiplayer/mp_callbacks.c \
 	client/cgame/multiplayer/mp_serverlist.c
 

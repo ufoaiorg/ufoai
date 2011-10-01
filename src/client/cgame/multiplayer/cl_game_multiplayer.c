@@ -23,12 +23,12 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 
 */
 
-#include "../cl_shared.h"
-#include "cl_game.h"
+#include "../../cl_shared.h"
+#include "../cl_game.h"
 #include "cl_game_multiplayer.h"
-#include "multiplayer/mp_callbacks.h"
-#include "multiplayer/mp_serverlist.h"
-#include "../ui/ui_data.h"
+#include "mp_callbacks.h"
+#include "mp_serverlist.h"
+#include "../../ui/ui_data.h"
 
 static const cgame_import_t *cgi;
 
