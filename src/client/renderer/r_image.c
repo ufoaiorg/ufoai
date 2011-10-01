@@ -627,9 +627,6 @@ void R_FreeImage (image_t *image)
 	/* also free the several maps if they are loaded */
 	if (image->normalmap)
 		R_DeleteImage(image->normalmap);
-	/* check for the material glowmaplink feature */
-	if (image->glowmap == image)
-		image->glowmap = NULL;
 	if (image->glowmap)
 		R_DeleteImage(image->glowmap);
 	if (image->roughnessmap)

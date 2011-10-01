@@ -120,8 +120,15 @@ static void R_UpdateMaterial (material_t *m)
 
 static void R_StageGlow (const materialStage_t *stage)
 {
-	if (stage->image->glowmap) {
-		R_EnableGlowMap(stage->image->glowmap, qtrue);
+	image_t *glowmap;
+
+	if (stage->flags & STAGE_GLOWMAPLINK)
+		glowmap = stage->image;
+	else
+		glowmap = stage->image->glowmap;
+
+	if (glowmap) {
+		R_EnableGlowMap(glowmap, qtrue);
 		if (r_state.glowmap_enabled)
 			R_ProgramParameter1f("GLOWSCALE", stage->glowscale);
 	} else {
@@ -556,11 +563,6 @@ static int R_LoadAnimImages (materialStage_t *s)
 		if (image == r_noTexture) {
 			Com_Printf("R_LoadAnimImages: Failed to resolve texture: %s\n", c);
 			return -1;
-		}
-		if (s->flags & STAGE_GLOWMAPLINK) {
-			if (image->glowmap)
-				Com_Printf("R_LoadAnimImages: overriding already existing glowmap for %s\n", image->name);
-			image->glowmap = image;
 		}
 	}
 
