@@ -1987,8 +1987,8 @@ const char *const name_strings[NAME_NUM_TYPES] = {
 
 /** @brief Valid equipment definition values from script files. */
 static const value_t equipment_definition_vals[] = {
-	{"mininterest", V_INT, offsetof(equipDef_t, minInterest), 0},
-	{"maxinterest", V_INT, offsetof(equipDef_t, maxInterest), 0},
+	{"mininterest", V_INT, offsetof(equipDef_t, minInterest), MEMBER_SIZEOF(equipDef_t, minInterest)},
+	{"maxinterest", V_INT, offsetof(equipDef_t, maxInterest), MEMBER_SIZEOF(equipDef_t, maxInterest)},
 
 	{NULL, 0, 0, 0}
 };
@@ -2002,7 +2002,7 @@ static void Com_ParseEquipment (const char *name, const char **text)
 
 	/* search for equipments with same name */
 	for (i = 0; i < csi.numEDs; i++)
-		if (Q_streq(name, csi.eds[i].name))
+		if (Q_streq(name, csi.eds[i].id))
 			break;
 
 	if (i < csi.numEDs) {
@@ -2017,7 +2017,7 @@ static void Com_ParseEquipment (const char *name, const char **text)
 	ed = &csi.eds[csi.numEDs++];
 	OBJZERO(*ed);
 
-	Q_strncpyz(ed->name, name, sizeof(ed->name));
+	Q_strncpyz(ed->id, name, sizeof(ed->id));
 
 	/* get it's body */
 	token = Com_Parse(text);
@@ -2038,7 +2038,7 @@ static void Com_ParseEquipment (const char *name, const char **text)
 				const objDef_t *od;
 				token = Com_EParse(text, errhead, name);
 				if (!*text || *token == '}')
-					Sys_Error("Invalid item token in equipment definition: %s", ed->name);
+					Sys_Error("Invalid item token in equipment definition: %s", ed->id);
 
 				od = INVSH_GetItemByID(token);
 				if (od) {
@@ -2060,7 +2060,7 @@ static void Com_ParseEquipment (const char *name, const char **text)
 				humanAircraftType_t type;
 				token = Com_EParse(text, errhead, name);
 				if (!*text || *token == '}')
-					Sys_Error("Invalid aircraft token in equipment definition: %s", ed->name);
+					Sys_Error("Invalid aircraft token in equipment definition: %s", ed->id);
 
 				type = Com_DropShipShortNameToID(token);
 				token = Com_EParse(text, errhead, name);
@@ -2075,7 +2075,7 @@ static void Com_ParseEquipment (const char *name, const char **text)
 				if (n)
 					ed->numAircraft[type] = n;
 			} else {
-				Sys_Error("unknown token in equipment in definition %s: '%s'", ed->name, token);
+				Sys_Error("unknown token in equipment in definition %s: '%s'", ed->id, token);
 			}
 		}
 	} while (*text);

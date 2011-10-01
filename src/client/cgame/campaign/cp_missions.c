@@ -207,7 +207,7 @@ static qboolean CP_IsAlienEquipmentSelectable (const mission_t *mission, const e
 		return qfalse;
 
 	LIST_Foreach(equipPack, const char, name) {
-		if (Q_strstart(equip->name, name))
+		if (Q_strstart(equip->id, name))
 			return qtrue;
 	}
 
@@ -247,7 +247,7 @@ static void CP_SetAlienEquipmentByInterest (const mission_t *mission, linkedList
 		const equipDef_t *ed = &csi.eds[i];
 		if (CP_IsAlienEquipmentSelectable(mission, ed, equipPack)) {
 			if (availableEquipDef == randomNum) {
-				Com_sprintf(battleParameters->alienEquipment, sizeof(battleParameters->alienEquipment), "%s", ed->name);
+				Com_sprintf(battleParameters->alienEquipment, sizeof(battleParameters->alienEquipment), "%s", ed->id);
 				break;
 			} else
 				availableEquipDef++;

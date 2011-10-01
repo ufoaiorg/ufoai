@@ -40,7 +40,7 @@ const equipDef_t *INV_GetEquipmentDefinitionByID (const char *name)
 
 	for (i = 0; i < csi.numEDs; i++) {
 		const equipDef_t *ed = &csi.eds[i];
-		if (Q_streq(name, ed->name))
+		if (Q_streq(name, ed->id))
 			return ed;
 	}
 
@@ -178,7 +178,7 @@ static qboolean INV_EquipmentDefSanityCheck (void)
 	for (i = 0; i < csi.numEDs; i++) {
 		const equipDef_t const *ed = &csi.eds[i];
 		/* only check definitions used for generating teams */
-		if (!Q_strstart(ed->name, "alien") && !Q_strstart(ed->name, "phalanx"))
+		if (!Q_strstart(ed->id, "alien") && !Q_strstart(ed->id, "phalanx"))
 			continue;
 
 		/* Check primary */
@@ -190,7 +190,7 @@ static qboolean INV_EquipmentDefSanityCheck (void)
 				sum += ed->numItems[j];
 		}
 		if (sum > 100) {
-			Com_Printf("INV_EquipmentDefSanityCheck: Equipment Def '%s' has a total probability for primary weapons greater than 100\n", ed->name);
+			Com_Printf("INV_EquipmentDefSanityCheck: Equipment Def '%s' has a total probability for primary weapons greater than 100\n", ed->id);
 			result = qfalse;
 		}
 
@@ -202,7 +202,7 @@ static qboolean INV_EquipmentDefSanityCheck (void)
 				sum += ed->numItems[j];
 		}
 		if (sum > 100) {
-			Com_Printf("INV_EquipmentDefSanityCheck: Equipment Def '%s' has a total probability for secondary weapons greater than 100\n", ed->name);
+			Com_Printf("INV_EquipmentDefSanityCheck: Equipment Def '%s' has a total probability for secondary weapons greater than 100\n", ed->id);
 			result = qfalse;
 		}
 
@@ -214,7 +214,7 @@ static qboolean INV_EquipmentDefSanityCheck (void)
 				sum += ed->numItems[j];
 		}
 		if (sum > 100) {
-			Com_Printf("INV_EquipmentDefSanityCheck: Equipment Def '%s' has a total probability for armours greater than 100\n", ed->name);
+			Com_Printf("INV_EquipmentDefSanityCheck: Equipment Def '%s' has a total probability for armours greater than 100\n", ed->id);
 			result = qfalse;
 		}
 

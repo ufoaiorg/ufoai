@@ -1177,7 +1177,7 @@ static const equipDef_t* G_GetEquipmentForAISpawn (int team)
 		char name[MAX_VAR];
 		Q_strncpyz(name, gi.Cvar_String("ai_equipment"), sizeof(name));
 		for (i = 0, ed = gi.csi->eds; i < gi.csi->numEDs; i++, ed++)
-			if (Q_streq(name, ed->name))
+			if (Q_streq(name, ed->id))
 				break;
 		if (i == gi.csi->numEDs)
 			ed = &gi.csi->eds[0];

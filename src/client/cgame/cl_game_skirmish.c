@@ -142,13 +142,12 @@ static void GAME_SK_ChangeEquip_f (void)
 		index--;
 		if (index < 0)
 			index = cgi->csi->numEDs - 1;
-		cgi->Cvar_Set(cvarName, cgi->csi->eds[index].name);
 	} else {
 		index++;
 		if (index >= cgi->csi->numEDs)
 			index = 0;
-		cgi->Cvar_Set(cvarName, cgi->csi->eds[index].name);
 	}
+	cgi->Cvar_Set(cvarName, cgi->csi->eds[index].id);
 }
 
 /**

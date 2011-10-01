@@ -554,7 +554,7 @@ static int I_PackAmmoAndWeapon (inventoryInterface_t *self, inventory_t* const i
 			item.a = weapon->ammo;
 			item.m = weapon;
 			Com_DPrintf(DEBUG_SHARED, "I_PackAmmoAndWeapon: oneshot weapon '%s' in equipment '%s' (%s).\n",
-					weapon->id, ed->name, self->name);
+					weapon->id, ed->id, self->name);
 		} else {
 			/* find some suitable ammo for the weapon (we will have at least one if there are ammos for this
 			 * weapon in equipment definition) */
@@ -582,7 +582,7 @@ static int I_PackAmmoAndWeapon (inventoryInterface_t *self, inventory_t* const i
 
 			if (!ammo) {
 				Com_DPrintf(DEBUG_SHARED, "I_PackAmmoAndWeapon: no ammo for sidearm or primary weapon '%s' in equipment '%s' (%s).\n",
-						weapon->id, ed->name, self->name);
+						weapon->id, ed->id, self->name);
 				return 0;
 			}
 			/* load ammo */
@@ -593,7 +593,7 @@ static int I_PackAmmoAndWeapon (inventoryInterface_t *self, inventory_t* const i
 
 	if (!item.m) {
 		Com_Printf("I_PackAmmoAndWeapon: no ammo for sidearm or primary weapon '%s' in equipment '%s' (%s).\n",
-				weapon->id, ed->name, self->name);
+				weapon->id, ed->id, self->name);
 		return 0;
 	}
 
@@ -758,7 +758,7 @@ static void I_EquipActor (inventoryInterface_t* self, inventory_t* const inv, co
 				missedPrimary = 0;
 			} else {
 				Com_DPrintf(DEBUG_SHARED, "INVSH_EquipActor: primary weapon '%s' couldn't be equipped in equipment '%s' (%s).\n",
-						primaryWeapon->id, ed->name, self->name);
+						primaryWeapon->id, ed->id, self->name);
 				repeat = WEAPONLESS_BONUS > frand();
 			}
 		}
@@ -837,7 +837,7 @@ static void I_EquipActor (inventoryInterface_t* self, inventory_t* const inv, co
 			int maxPrice = 0;
 			const objDef_t *blade = NULL;
 			Com_DPrintf(DEBUG_SHARED, "INVSH_EquipActor: no weapon picked in equipment '%s', defaulting to the most expensive secondary weapon without reload. (%s)\n",
-					ed->name, self->name);
+					ed->id, self->name);
 			for (i = 0; i < self->csi->numODs; i++) {
 				const objDef_t *obj = INVSH_GetItemByIDX(i);
 				if (ed->numItems[i] && obj->weapon && obj->isSecondary && !obj->reload) {
@@ -853,7 +853,7 @@ static void I_EquipActor (inventoryInterface_t* self, inventory_t* const inv, co
 		/* If still no weapon, something is broken, or no blades in equipment. */
 		if (!hasWeapon)
 			Com_DPrintf(DEBUG_SHARED, "INVSH_EquipActor: cannot add any weapon; no secondary weapon without reload detected for equipment '%s' (%s).\n",
-					ed->name, self->name);
+					ed->id, self->name);
 
 		/* Armour; especially for those without primary weapons. */
 		repeat = (float) missedPrimary > frand() * 100.0;

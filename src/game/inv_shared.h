@@ -360,7 +360,7 @@ typedef struct inventory_s {
 #define MAX_EQUIPDEFS   64
 
 typedef struct equipDef_s {
-	char name[MAX_VAR];		/**< Name of the equipment definition */
+	char id[MAX_VAR];		/**< script id of the equipment definition */
 	int numItems[MAX_OBJDEFS];	/**< Number of item for each item type (see equipment_missions.ufo for more info) */
 	byte numItemsLoose[MAX_OBJDEFS];	/**< currently only used for weapon ammo */
 	int numAircraft[AIRCRAFTTYPE_MAX];
