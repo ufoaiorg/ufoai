@@ -270,7 +270,7 @@ static int CL_CompleteNetworkAddress (const char *partial, const char **match)
 void MP_CallbacksInit (const cgame_import_t *import)
 {
 	cgi = import;
-	rcon_client_password = cgi->Cvar_Get("rcon_password", "", CVAR_ARCHIVE, "Remote console password");
+	rcon_client_password = cgi->Cvar_Get("rcon_password", "", 0, "Remote console password");
 	rcon_address = cgi->Cvar_Get("rcon_address", "", 0, "Address of the host you would like to control via rcon");
 	info_password = cgi->Cvar_Get("password", "", CVAR_USERINFO, NULL);
 	cgi->Cmd_AddCommand("mp_selectteam_init", CL_SelectTeam_Init_f, "Function that gets all connected players and let you choose a free team");
@@ -295,4 +295,8 @@ void MP_CallbacksShutdown (void)
 	cgi->Cmd_RemoveCommand("disconnect");
 	cgi->Cmd_RemoveCommand("connect");
 	cgi->Cmd_RemoveCommand("reconnect");
+
+	cgi->Cvar_Delete("rcon_client_password");
+	cgi->Cvar_Delete("rcon_address");
+	cgi->Cvar_Delete("password");
 }
