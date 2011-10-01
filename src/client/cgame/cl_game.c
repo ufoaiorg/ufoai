@@ -539,7 +539,7 @@ static void UI_MapInfoGetNext (int step)
 	const mapDef_t *md;
 	int ref = cls.currentSelectedMap;
 
-	while (qtrue) {
+	for (;;) {
 		cls.currentSelectedMap += step;
 		if (cls.currentSelectedMap < 0)
 			cls.currentSelectedMap = cls.numMDs - 1;
