@@ -251,7 +251,7 @@ window skirmish
 		}
 		textentry slot_equipment
 		{
-			string		*cvar:cl_equip
+			string		*cvar:cl_equipname
 			image		"ui/button_green_verysmall"
 			color		"0 .78 0 1"
 			selectcolor	"1 1 1 1"
@@ -293,7 +293,7 @@ window skirmish
 		}
 		textentry slot_alien_equipment
 		{
-			string		*cvar:ai_equipment
+			string		*cvar:ai_equipmentname
 			image		"ui/button_green_verysmall"
 			color		"0 .78 0 1"
 			selectcolor	"1 1 1 1"
@@ -501,7 +501,7 @@ window skirmish
 		*cvar:mn_svmapid = "none"
 		cmd "mn_requestmaplist sk_maplist_listener;"
 		call *node:root.sk_update_config_navigation
-		cmd "game_teamcomments;define cl_teamdef phalanx;"
+		cmd "game_teamcomments;define cl_teamdef phalanx;sk_initequip cl_equip;sk_initequip ai_equipment;"
 		cmd "define g_endlessaliens 0;"
 	}
 }

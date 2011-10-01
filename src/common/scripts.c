@@ -1989,6 +1989,7 @@ const char *const name_strings[NAME_NUM_TYPES] = {
 static const value_t equipment_definition_vals[] = {
 	{"mininterest", V_INT, offsetof(equipDef_t, minInterest), MEMBER_SIZEOF(equipDef_t, minInterest)},
 	{"maxinterest", V_INT, offsetof(equipDef_t, maxInterest), MEMBER_SIZEOF(equipDef_t, maxInterest)},
+	{"name", V_TRANSLATION_STRING, offsetof(equipDef_t, name), 0},
 
 	{NULL, 0, 0, 0}
 };
@@ -2018,6 +2019,7 @@ static void Com_ParseEquipment (const char *name, const char **text)
 	OBJZERO(*ed);
 
 	Q_strncpyz(ed->id, name, sizeof(ed->id));
+	ed->name = ed->id;
 
 	/* get it's body */
 	token = Com_Parse(text);
@@ -2033,7 +2035,7 @@ static void Com_ParseEquipment (const char *name, const char **text)
 		if (!*text || *token == '}')
 			return;
 
-		if (!Com_ParseBlockToken(name, text, ed, equipment_definition_vals, NULL, token)) {
+		if (!Com_ParseBlockToken(name, text, ed, equipment_definition_vals, com_genericPool, token)) {
 			if (Q_streq(token, "item")) {
 				const objDef_t *od;
 				token = Com_EParse(text, errhead, name);

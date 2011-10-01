@@ -128,6 +128,7 @@ static void GAME_SK_ChangeEquip_f (void)
 	const equipDef_t *ed;
 	int index;
 	const char *cvarName;
+	char cvarBuf[MAX_VAR];
 
 	if (cgi->Cmd_Argc() < 2) {
 		cgi->Com_Printf("Usage: %s <cvarname>\n", cgi->Cmd_Argv(0));
@@ -135,6 +136,8 @@ static void GAME_SK_ChangeEquip_f (void)
 	}
 
 	cvarName = cgi->Cmd_Argv(1);
+	Com_sprintf(cvarBuf, sizeof(cvarBuf), "%sname", cvarName);
+
 	ed = cgi->INV_GetEquipmentDefinitionByID(cgi->Cvar_GetString(cvarName));
 	index = ed - cgi->csi->eds;
 
@@ -142,12 +145,14 @@ static void GAME_SK_ChangeEquip_f (void)
 		index--;
 		if (index < 0)
 			index = cgi->csi->numEDs - 1;
-	} else {
+	} else if (Q_streq(cgi->Cmd_Argv(0), "sk_nextequip")) {
 		index++;
 		if (index >= cgi->csi->numEDs)
 			index = 0;
 	}
-	cgi->Cvar_Set(cvarName, cgi->csi->eds[index].id);
+	ed = &cgi->csi->eds[index];
+	cgi->Cvar_Set(cvarName, ed->id);
+	cgi->Cvar_Set(cvarBuf, ed->name);
 }
 
 /**
@@ -291,6 +296,7 @@ static void GAME_SK_InitStartup (void)
 	cgi->Cmd_AddCommand("sk_start", GAME_SK_Start_f, "Start the new skirmish game");
 	cgi->Cmd_AddCommand("sk_prevequip", GAME_SK_ChangeEquip_f, "Previous equipment definition");
 	cgi->Cmd_AddCommand("sk_nextequip", GAME_SK_ChangeEquip_f, "Next equipment definition");
+	cgi->Cmd_AddCommand("sk_initequip", GAME_SK_ChangeEquip_f, "Init equipment definition");
 	cgi->Cmd_AddCommand("game_go", GAME_SK_Restart_f, "Restart the skirmish mission");
 
 	GAME_InitMenuOptions();

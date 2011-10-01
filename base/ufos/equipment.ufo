@@ -195,6 +195,7 @@ equipment campaign_market_aliens
 
 equipment multiplayer_alien
 {
+	name "_Multiplayer Alien"
 	item assault				2
 	item assault_ammo		6
 	item vhs					2
@@ -273,6 +274,7 @@ equipment multiplayer_alien
 
 equipment multiplayer_phalanx
 {
+	name "_Multiplayer Phalanx"
 	item assault				2
 	item assault_ammo		6
 	item vhs					2
@@ -358,6 +360,7 @@ equipment multiplayer_phalanx
 
 equipment multiplayer_initial
 {
+	name "_Multiplayer Initial"
 	item assault				10
 	item assault_ammo		13
 	item machinegun			1
