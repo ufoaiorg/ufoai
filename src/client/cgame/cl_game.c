@@ -473,6 +473,7 @@ void GAME_UnloadGame (void)
 {
 #ifndef HARD_LINKED_CGAME
 	if (cls.cgameLibrary) {
+		GAME_SetMode(NULL);
 		Com_Printf("Unload the cgame library\n");
 		SDL_UnloadObject(cls.cgameLibrary);
 		cls.cgameLibrary = NULL;
