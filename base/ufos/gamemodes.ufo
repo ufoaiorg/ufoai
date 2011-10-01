@@ -1,6 +1,14 @@
 cgame multiplayer {
 	window	"multiplayer"
 	name "_Multiplayer"
+	equipmentlist {
+		multiplayer_initial
+		multiplayer_alien
+		multiplayer_phalanx
+		campaign_player
+		campaign_initial_market
+		stun
+	}
 }
 
 cgame campaigns {
@@ -11,4 +19,12 @@ cgame campaigns {
 cgame skirmish {
 	window	"skirmish"
 	name "_Skirmish"
+	equipmentlist {
+		multiplayer_initial
+		multiplayer_alien
+		multiplayer_phalanx
+		campaign_player
+		campaign_initial_market
+		stun
+	}
 }
