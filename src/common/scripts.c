@@ -336,7 +336,8 @@ const char *const vt_names[] = {
 	"race",
 	"ufo",
 	"ufocrashed",
-	"aircrafttype"
+	"aircrafttype",
+	"list"
 };
 CASSERT(lengthof(vt_names) == V_NUM_TYPES);
 
@@ -390,7 +391,8 @@ static const size_t vt_sizes[] = {
 	sizeof(racetypes_t),		/* V_RACE */
 	sizeof(ufoType_t),	/* V_UFO */
 	sizeof(ufoType_t),	/* V_UFOCRASHED */
-	sizeof(humanAircraftType_t)		/* V_AIRCRAFTTYPE */
+	sizeof(humanAircraftType_t),		/* V_AIRCRAFTTYPE */
+	0					/* V_LIST */
 };
 CASSERT(lengthof(vt_sizes) == V_NUM_TYPES);
 
@@ -424,7 +426,8 @@ static const size_t vt_aligns[] = {
 	sizeof(racetypes_t),		/* V_RACE */
 	sizeof(ufoType_t),	/* V_UFO */
 	sizeof(ufoType_t),	/* V_UFOCRASHED */
-	sizeof(humanAircraftType_t)		/* V_AIRCRAFTTYPE */
+	sizeof(humanAircraftType_t),		/* V_AIRCRAFTTYPE */
+	sizeof(void*)
 };
 CASSERT(lengthof(vt_aligns) == V_NUM_TYPES);
 
@@ -1397,6 +1400,20 @@ qboolean Com_ParseBlockToken (const char *name, const char **text, void *base, c
 			case V_HUNK_STRING:
 				Mem_PoolStrDupTo(token, (char**) ((char*)base + (int)v->ofs), mempool, 0);
 				break;
+			case V_LIST: {
+				byte *listPos = (byte*) base + (int)v->ofs;
+				linkedList_t **list = (linkedList_t **)(listPos);
+				assert(*list == NULL);
+				do {
+					token = Com_EParse(text, errhead, name);
+					if (!*text)
+						break;
+					if (*token == '}')
+						break;
+					LIST_AddString(list, token);
+				} while (*text);
+				break;
+			}
 			default:
 				if (Com_EParseValue(base, token, v->type, v->ofs, v->size) == -1)
 					Com_Printf("Com_ParseBlockToken: Wrong size for value %s\n", v->string);

@@ -80,6 +80,7 @@ typedef enum {
 							 * in the ufocrash[dn].ump files */
 	V_UFOCRASHED,
 	V_AIRCRAFTTYPE,
+	V_LIST,
 
 	V_NUM_TYPES
 } valueTypes_t;
