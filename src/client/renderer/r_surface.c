@@ -158,7 +158,7 @@ void R_DrawOpaqueSurfaces (const mBspSurfaces_t *surfs)
  * @brief Draw the surfaces via warp shader
  * @sa R_DrawBlendWarpSurfaces
  */
-void R_DrawOpaqueWarpSurfaces (mBspSurfaces_t *surfs)
+void R_DrawOpaqueWarpSurfaces (const mBspSurfaces_t *surfs)
 {
 	if (!surfs->count)
 		return;
@@ -169,7 +169,7 @@ void R_DrawOpaqueWarpSurfaces (mBspSurfaces_t *surfs)
 	R_EnableGlowMap(NULL, qfalse);
 }
 
-void R_DrawAlphaTestSurfaces (mBspSurfaces_t *surfs)
+void R_DrawAlphaTestSurfaces (const mBspSurfaces_t *surfs)
 {
 	if (!surfs->count)
 		return;
@@ -201,7 +201,7 @@ void R_DrawBlendSurfaces (const mBspSurfaces_t *surfs)
  * @brief Draw the alpha surfaces via warp shader and with blend enabled
  * @sa R_DrawOpaqueWarpSurfaces
  */
-void R_DrawBlendWarpSurfaces (mBspSurfaces_t *surfs)
+void R_DrawBlendWarpSurfaces (const mBspSurfaces_t *surfs)
 {
 	if (!surfs->count)
 		return;
