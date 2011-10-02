@@ -40,7 +40,7 @@ BRUSH MODELS
 #define MAX_BSPS_TO_RENDER 1024
 
 typedef struct bspRenderRef_s {
-	mBspModel_t *bsp;
+	const mBspModel_t *bsp;
 	vec3_t origin;
 	vec3_t angles;
 } bspRenderRef_t;
@@ -386,7 +386,7 @@ void R_ClearBspRRefs ()
 	numBspRRefs = 0;
 }
 
-void R_AddBspRRef (mBspModel_t *model, const vec3_t origin, const vec3_t angles)
+void R_AddBspRRef (const mBspModel_t *model, const vec3_t origin, const vec3_t angles)
 {
 	bspRenderRef_t *bspRR;
 	mBspSurface_t *surf;
