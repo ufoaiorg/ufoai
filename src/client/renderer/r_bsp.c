@@ -381,7 +381,7 @@ Deferred rendering
 =============================================================
 */
 
-void R_ClearBspRRefs ()
+void R_ClearBspRRefs (void)
 {
 	numBspRRefs = 0;
 }
@@ -411,8 +411,8 @@ void R_AddBspRRef (const mBspModel_t *model, const vec3_t origin, const vec3_t a
 	surf = &model->surfaces[model->firstmodelsurface];
 
 	for (i = 0; i < model->nummodelsurfaces; i++, surf++) {
-			/* visible flag for rendering */
-			surf->frame = r_locals.frame;
+		/* visible flag for rendering */
+		surf->frame = r_locals.frame;
 	}
 }
 
@@ -421,7 +421,7 @@ typedef void (*drawSurfaceFunc)(const mBspSurfaces_t *surfs);
 static void R_RenderBspRRefs (drawSurfaceFunc drawFunc, int surfType)
 {
 	int i;
-	for (i=0; i < numBspRRefs; i++) {
+	for (i = 0; i < numBspRRefs; i++) {
 		const bspRenderRef_t const *bspRR = &bspRRefs[i];
 		const mBspModel_t const *bsp = bspRR->bsp;
 
@@ -457,7 +457,7 @@ static void R_RenderBspRRefs (drawSurfaceFunc drawFunc, int surfType)
 /**
  * @brief Draw all simple opaque bsp surfaces with multitexture enabled and light enabled
  */
-void R_RenderOpaqueBspRRefs ()
+void R_RenderOpaqueBspRRefs (void)
 {
 	R_EnableTexture(&texunit_lightmap, qtrue);
 	R_EnableLighting(r_state.world_program, qtrue);
@@ -472,7 +472,7 @@ void R_RenderOpaqueBspRRefs ()
 /**
  * @brief Draw all warped opaque bsp surfaces via warp shader
  */
-void R_RenderOpaqueWarpBspRRefs ()
+void R_RenderOpaqueWarpBspRRefs (void)
 {
 	R_EnableWarp(r_state.warp_program, qtrue);
 
@@ -482,7 +482,7 @@ void R_RenderOpaqueWarpBspRRefs ()
 	R_EnableGlowMap(NULL, qfalse);
 }
 
-void R_RenderAlphaTestBspRRefs ()
+void R_RenderAlphaTestBspRRefs (void)
 {
 	R_EnableAlphaTest(qtrue);
 	R_EnableLighting(r_state.world_program, qtrue);
@@ -494,12 +494,12 @@ void R_RenderAlphaTestBspRRefs ()
 	R_EnableAlphaTest(qfalse);
 }
 
-void R_RenderMaterialBspRRefs ()
+void R_RenderMaterialBspRRefs (void)
 {
 	R_RenderBspRRefs(R_DrawMaterialSurfaces, 5);
 }
 
-void R_RenderFlareBspRRefs ()
+void R_RenderFlareBspRRefs (void)
 {
 	R_RenderBspRRefs(R_DrawFlareSurfaces, 6);
 }
@@ -507,7 +507,7 @@ void R_RenderFlareBspRRefs ()
 /**
  * @brief Draw all translucent bsp surfaces with multitexture enabled and blend enabled
  */
-void R_RenderBlendBspRRefs ()
+void R_RenderBlendBspRRefs (void)
 {
 	assert(r_state.blend_enabled);
 	R_EnableTexture(&texunit_lightmap, qtrue);
@@ -520,7 +520,7 @@ void R_RenderBlendBspRRefs ()
 /**
  * @brief Draw all warped translucent bsp surfaces via warp shader and with blend enabled
  */
-void R_RenderBlendWarpBspRRefs ()
+void R_RenderBlendWarpBspRRefs (void)
 {
 	assert(r_state.blend_enabled);
 	R_EnableWarp(r_state.warp_program, qtrue);
