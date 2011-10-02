@@ -416,7 +416,9 @@ void R_AddBspRRef (mBspModel_t *model, const vec3_t origin, const vec3_t angles)
 	}
 }
 
-void R_RenderBspRRefs ()
+typedef void (*drawSurfaceFunc)(const mBspSurfaces_t *surfs);
+
+static void R_RenderBspRRefs (drawSurfaceFunc drawFunc, int surfType)
 {
 	int i;
 	for (i=0; i < numBspRRefs; i++) {
@@ -432,27 +434,7 @@ void R_RenderBspRRefs ()
 		glRotatef(bspRR->angles[PITCH], 0, 1, 0);
 		glRotatef(bspRR->angles[ROLL], 1, 0, 0);
 
-		R_DrawOpaqueSurfaces(bsp->opaque_surfaces);
-
-		R_DrawOpaqueWarpSurfaces(bsp->opaque_warp_surfaces);
-
-		R_DrawAlphaTestSurfaces(bsp->alpha_test_surfaces);
-
-		R_EnableBlend(qtrue);
-
-		R_DrawMaterialSurfaces(bsp->material_surfaces);
-
-		R_DrawFlareSurfaces(bsp->flare_surfaces);
-
-		R_EnableFog(qfalse);
-
-		R_DrawBlendSurfaces(bsp->blend_surfaces);
-
-		R_DrawBlendWarpSurfaces(bsp->blend_warp_surfaces);
-
-		R_EnableFog(qtrue);
-
-		R_EnableBlend(qfalse);
+		drawFunc(bsp->sorted_surfaces[surfType]);
 
 		/** @todo make it work again */
 #if 0
@@ -467,4 +449,39 @@ void R_RenderBspRRefs ()
 
 		R_ShiftLights(vec3_origin);
 	}
+}
+
+void R_RenderOpaqueBspRRefs ()
+{
+	R_RenderBspRRefs(R_DrawOpaqueSurfaces, 0);
+}
+
+void R_RenderOpaqueWarpBspRRefs ()
+{
+	R_RenderBspRRefs(R_DrawOpaqueWarpSurfaces, 1);
+}
+
+void R_RenderAlphaTestBspRRefs ()
+{
+	R_RenderBspRRefs(R_DrawAlphaTestSurfaces, 2);
+}
+
+void R_RenderMaterialBspRRefs ()
+{
+	R_RenderBspRRefs(R_DrawMaterialSurfaces, 5);
+}
+
+void R_RenderFlareBspRRefs ()
+{
+	R_RenderBspRRefs(R_DrawFlareSurfaces, 6);
+}
+
+void R_RenderBlendBspRRefs ()
+{
+	R_RenderBspRRefs(R_DrawBlendSurfaces, 3);
+}
+
+void R_RenderBlendWarpBspRRefs ()
+{
+	R_RenderBspRRefs(R_DrawBlendWarpSurfaces, 4);
 }

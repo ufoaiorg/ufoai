@@ -322,11 +322,15 @@ void R_RenderFrame (void)
 			R_EnableBlend(qfalse);
 		}
 
+		R_RenderOpaqueBspRRefs();
+		R_RenderOpaqueWarpBspRRefs();
 		R_DrawOpaqueMeshEntities(r_opaque_mesh_entities);
-		/** @todo split R_RenderBspRRefs to per-surface-type calls: it breaks rendering order. */
-		R_RenderBspRRefs();
+
+		R_RenderAlphaTestBspRRefs();
 
 		R_EnableBlend(qtrue);
+		R_RenderMaterialBspRRefs();
+
 		R_EnableFog(qfalse);
 		for (tile = 0; tile < r_numMapTiles; tile++) {
 			const model_t *mapTile = r_mapTiles[tile];
@@ -336,6 +340,8 @@ void R_RenderFrame (void)
 			R_DrawBlendWarpSurfaces(bsp->blend_warp_surfaces);
 		}
 
+		R_RenderBlendBspRRefs();
+		R_RenderBlendWarpBspRRefs();
 		R_DrawBlendMeshEntities(r_blend_mesh_entities);
 
 		R_EnableFog(qtrue);
@@ -345,6 +351,7 @@ void R_RenderFrame (void)
 
 			R_DrawFlareSurfaces(bsp->flare_surfaces);
 		}
+		R_RenderFlareBspRRefs();
 		R_EnableFog(qfalse);
 
 		if (r_debug_lights->integer) {
@@ -372,9 +379,19 @@ void R_RenderFrame (void)
 
 		R_GetEntityLists();
 
+		R_RenderOpaqueBspRRefs();
+		R_RenderOpaqueWarpBspRRefs();
 		R_DrawOpaqueMeshEntities(r_opaque_mesh_entities);
-		R_RenderBspRRefs();
+		R_RenderAlphaTestBspRRefs();
+
+		R_RenderMaterialBspRRefs(); /** @todo proper blending mode */
+
+		R_RenderBlendBspRRefs(); /** @todo proper blending mode */
+		R_RenderBlendWarpBspRRefs(); /** @todo proper blending mode */
 		R_DrawBlendMeshEntities(r_blend_mesh_entities);
+
+		R_RenderFlareBspRRefs();
+
 		R_Color(NULL);
 		R_DrawSpecialEntities(r_special_entities);
 		R_DrawNullEntities(r_null_entities);
