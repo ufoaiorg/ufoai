@@ -418,6 +418,10 @@ void R_AddBspRRef (const mBspModel_t *model, const vec3_t origin, const vec3_t a
 
 typedef void (*drawSurfaceFunc)(const mBspSurfaces_t *surfs);
 
+/**
+ * @param[in] drawFunc The function pointer to the surface draw function
+ * @todo Make surfType a speaking enum
+ */
 static void R_RenderBspRRefs (drawSurfaceFunc drawFunc, int surfType)
 {
 	int i;
