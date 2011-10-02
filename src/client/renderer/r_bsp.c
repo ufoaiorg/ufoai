@@ -425,6 +425,9 @@ static void R_RenderBspRRefs (drawSurfaceFunc drawFunc, int surfType)
 		const bspRenderRef_t const *bspRR = &bspRRefs[i];
 		const mBspModel_t const *bsp = bspRR->bsp;
 
+		if (!bsp->sorted_surfaces[surfType]->count)
+			continue;
+
 		R_ShiftLights(bspRR->origin);
 
 		glPushMatrix();
@@ -451,19 +454,44 @@ static void R_RenderBspRRefs (drawSurfaceFunc drawFunc, int surfType)
 	}
 }
 
+/**
+ * @brief Draw all simple opaque bsp surfaces with multitexture enabled and light enabled
+ */
 void R_RenderOpaqueBspRRefs ()
 {
-	R_RenderBspRRefs(R_DrawOpaqueSurfaces, 0);
+	R_EnableTexture(&texunit_lightmap, qtrue);
+	R_EnableLighting(r_state.world_program, qtrue);
+
+	R_RenderBspRRefs(R_DrawSurfaces, 0);
+
+	R_EnableLighting(NULL, qfalse);
+	R_EnableGlowMap(NULL, qfalse);
+	R_EnableTexture(&texunit_lightmap, qfalse);
 }
 
+/**
+ * @brief Draw all warped opaque bsp surfaces via warp shader
+ */
 void R_RenderOpaqueWarpBspRRefs ()
 {
-	R_RenderBspRRefs(R_DrawOpaqueWarpSurfaces, 1);
+	R_EnableWarp(r_state.warp_program, qtrue);
+
+	R_RenderBspRRefs(R_DrawSurfaces, 1);
+
+	R_EnableWarp(NULL, qfalse);
+	R_EnableGlowMap(NULL, qfalse);
 }
 
 void R_RenderAlphaTestBspRRefs ()
 {
-	R_RenderBspRRefs(R_DrawAlphaTestSurfaces, 2);
+	R_EnableAlphaTest(qtrue);
+	R_EnableLighting(r_state.world_program, qtrue);
+
+	R_RenderBspRRefs(R_DrawSurfaces, 2);
+
+	R_EnableLighting(NULL, qfalse);
+	R_EnableGlowMap(NULL, qfalse);
+	R_EnableAlphaTest(qfalse);
 }
 
 void R_RenderMaterialBspRRefs ()
@@ -476,12 +504,29 @@ void R_RenderFlareBspRRefs ()
 	R_RenderBspRRefs(R_DrawFlareSurfaces, 6);
 }
 
+/**
+ * @brief Draw all translucent bsp surfaces with multitexture enabled and blend enabled
+ */
 void R_RenderBlendBspRRefs ()
 {
-	R_RenderBspRRefs(R_DrawBlendSurfaces, 3);
+	assert(r_state.blend_enabled);
+	R_EnableTexture(&texunit_lightmap, qtrue);
+
+	R_RenderBspRRefs(R_DrawSurfaces, 3);
+
+	R_EnableTexture(&texunit_lightmap, qfalse);
 }
 
+/**
+ * @brief Draw all warped translucent bsp surfaces via warp shader and with blend enabled
+ */
 void R_RenderBlendWarpBspRRefs ()
 {
-	R_RenderBspRRefs(R_DrawBlendWarpSurfaces, 4);
+	assert(r_state.blend_enabled);
+	R_EnableWarp(r_state.warp_program, qtrue);
+
+	R_RenderBspRRefs(R_DrawSurfaces, 4);
+
+	R_EnableWarp(NULL, qfalse);
+	R_EnableGlowMap(NULL, qfalse);
 }

@@ -112,7 +112,7 @@ static inline void R_DrawSurface (const mBspSurface_t *surf)
  * @sa R_DrawSurface
  * @sa R_SetSurfaceState
  */
-static void R_DrawSurfaces (const mBspSurfaces_t *surfs)
+void R_DrawSurfaces (const mBspSurfaces_t *surfs)
 {
 	int i;
 
@@ -134,81 +134,4 @@ static void R_DrawSurfaces (const mBspSurfaces_t *surfs)
 	R_ResetArrayState();
 
 	R_Color(NULL);
-}
-
-/**
- * @brief Draw the surface chain with multitexture enabled and light enabled
- * @sa R_DrawBlendSurfaces
- */
-void R_DrawOpaqueSurfaces (const mBspSurfaces_t *surfs)
-{
-	if (!surfs->count)
-		return;
-
-	R_EnableTexture(&texunit_lightmap, qtrue);
-
-	R_EnableLighting(r_state.world_program, qtrue);
-	R_DrawSurfaces(surfs);
-	R_EnableLighting(NULL, qfalse);
-	R_EnableGlowMap(NULL, qfalse);
-	R_EnableTexture(&texunit_lightmap, qfalse);
-}
-
-/**
- * @brief Draw the surfaces via warp shader
- * @sa R_DrawBlendWarpSurfaces
- */
-void R_DrawOpaqueWarpSurfaces (const mBspSurfaces_t *surfs)
-{
-	if (!surfs->count)
-		return;
-
-	R_EnableWarp(r_state.warp_program, qtrue);
-	R_DrawSurfaces(surfs);
-	R_EnableWarp(NULL, qfalse);
-	R_EnableGlowMap(NULL, qfalse);
-}
-
-void R_DrawAlphaTestSurfaces (const mBspSurfaces_t *surfs)
-{
-	if (!surfs->count)
-		return;
-
-	R_EnableAlphaTest(qtrue);
-	R_EnableLighting(r_state.world_program, qtrue);
-	R_DrawSurfaces(surfs);
-	R_EnableLighting(NULL, qfalse);
-	R_EnableGlowMap(NULL, qfalse);
-	R_EnableAlphaTest(qfalse);
-}
-
-/**
- * @brief Draw the surface chain with multitexture enabled and blend enabled
- * @sa R_DrawOpaqueSurfaces
- */
-void R_DrawBlendSurfaces (const mBspSurfaces_t *surfs)
-{
-	if (!surfs->count)
-		return;
-
-	assert(r_state.blend_enabled);
-	R_EnableTexture(&texunit_lightmap, qtrue);
-	R_DrawSurfaces(surfs);
-	R_EnableTexture(&texunit_lightmap, qfalse);
-}
-
-/**
- * @brief Draw the alpha surfaces via warp shader and with blend enabled
- * @sa R_DrawOpaqueWarpSurfaces
- */
-void R_DrawBlendWarpSurfaces (const mBspSurfaces_t *surfs)
-{
-	if (!surfs->count)
-		return;
-
-	assert(r_state.blend_enabled);
-	R_EnableWarp(r_state.warp_program, qtrue);
-	R_DrawSurfaces(surfs);
-	R_EnableWarp(NULL, qfalse);
-	R_EnableGlowMap(NULL, qfalse);
 }
