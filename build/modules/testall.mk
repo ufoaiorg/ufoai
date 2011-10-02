@@ -14,6 +14,7 @@ $(TARGET)_LDFLAGS  += -lcunit -lpng -ljpeg $(BFD_LIBS) $(INTL_LIBS) $(SDL_TTF_LI
 $(TARGET)_SRCS      = \
 	tests/test_all.c \
 	tests/test_routing.c \
+	tests/test_events.c \
 	tests/test_generic.c \
 	tests/test_inventory.c \
 	tests/test_game.c \

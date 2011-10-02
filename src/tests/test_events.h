@@ -1,5 +1,5 @@
 /**
- * @file e_parse.h
+ * @file test_events.h
  */
 
 /*
@@ -22,13 +22,9 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 
 */
 
-#ifndef CLIENT_CL_PARSE_EVENTS_H
-#define CLIENT_CL_PARSE_EVENTS_H
+#ifndef TEST_EVENTS_H_
+#define TEST_EVENTS_H_
 
-extern cvar_t *cl_log_battlescape_events;
-
-void CL_ParseEvent(struct dbuffer *msg);
-int CL_ClearBattlescapeEvents(void);
-void CL_BlockBattlescapeEvents(qboolean block);
+int UFO_AddEventsTests(void);
 
 #endif

@@ -1368,10 +1368,11 @@ static struct event* Dequeue_Event (int now)
  * @param filter Pointer to the filter function.
  *  When called with event info, it should return true if the event is to be kept.
  */
-void CL_FilterEventQueue (event_filter *filter)
+int CL_FilterEventQueue (event_filter *filter)
 {
 	struct event *event = event_queue;
 	struct event *prev = NULL;
+	int filtered = 0;
 
 	assert(filter);
 
@@ -1394,7 +1395,10 @@ void CL_FilterEventQueue (event_filter *filter)
 		if (freeme->clean != NULL)
 			freeme->clean(freeme->data);
 		Mem_Free(freeme);
+		filtered++;
 	}
+
+	return filtered;
 }
 
 /**

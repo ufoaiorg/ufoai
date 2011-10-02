@@ -299,7 +299,7 @@ typedef qboolean event_check_func(int now, void *data);
 typedef qboolean event_filter(int when, event_func *func, event_check_func *check, void *data);
 typedef void event_clean_func(void * data);
 void Schedule_Event(int when, event_func *func, event_check_func *check, event_clean_func *clean, void *data);
-void CL_FilterEventQueue(event_filter *filter);
+int CL_FilterEventQueue(event_filter *filter);
 
 /*
 ==============================================================
