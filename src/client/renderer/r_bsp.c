@@ -389,6 +389,8 @@ void R_ClearBspRRefs ()
 void R_AddBspRRef (mBspModel_t *model, const vec3_t origin, const vec3_t angles)
 {
 	bspRenderRef_t *bspRR;
+	mBspSurface_t *surf;
+	int i;
 
 	if (numBspRRefs >= MAX_BSPS_TO_RENDER) {
 		Com_Printf("Cannot add BSP model rendering reference: MAX_BSPS_TO_RENDER exceeded\n");
@@ -405,6 +407,13 @@ void R_AddBspRRef (mBspModel_t *model, const vec3_t origin, const vec3_t angles)
 	bspRR->bsp = model;
 	VectorCopy(origin, bspRR->origin);
 	VectorCopy(angles, bspRR->angles);
+
+	surf = &model->surfaces[model->firstmodelsurface];
+
+	for (i = 0; i < model->nummodelsurfaces; i++, surf++) {
+			/* visible flag for rendering */
+			surf->frame = r_locals.frame;
+	}
 }
 
 void R_RenderBspRRefs ()
@@ -413,8 +422,6 @@ void R_RenderBspRRefs ()
 	for (i=0; i < numBspRRefs; i++) {
 		const bspRenderRef_t const *bspRR = &bspRRefs[i];
 		const mBspModel_t const *bsp = bspRR->bsp;
-		mBspSurface_t *surf;
-		int j;
 
 		R_ShiftLights(bspRR->origin);
 
@@ -424,13 +431,6 @@ void R_RenderBspRRefs ()
 		glRotatef(bspRR->angles[YAW], 0, 0, 1);
 		glRotatef(bspRR->angles[PITCH], 0, 1, 0);
 		glRotatef(bspRR->angles[ROLL], 1, 0, 0);
-
-		surf = &bsp->surfaces[bsp->firstmodelsurface];
-
-		for (j = 0; j < bsp->nummodelsurfaces; j++, surf++) {
-				/* visible flag for rendering */
-				surf->frame = r_locals.frame;
-		}
 
 		R_DrawOpaqueSurfaces(bsp->opaque_surfaces);
 
