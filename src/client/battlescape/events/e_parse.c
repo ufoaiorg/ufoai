@@ -168,6 +168,7 @@ static qboolean CL_FilterBattlescapeEvents (int when, event_func *func, event_ch
 void CL_ClearBattlescapeEvents (void)
 {
 	CL_FilterEventQueue(&CL_FilterBattlescapeEvents);
+	CL_BlockBattlescapeEvents(qfalse);
 }
 
 /**
