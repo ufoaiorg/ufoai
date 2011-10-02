@@ -281,7 +281,6 @@ void R_BeginFrame (void)
 void R_RenderFrame (void)
 {
 	int i;
-	vec3_t nullVec = {0.0, 0.0, 0.0};
 
 	R_Setup3D();
 
@@ -311,7 +310,7 @@ void R_RenderFrame (void)
 			const model_t *mapTile = r_mapTiles[tile];
 			const mBspModel_t *bsp = &mapTile->bsp;
 
-			R_AddBspRRef(bsp, nullVec, nullVec);
+			R_AddBspRRef(bsp, vec3_origin, vec3_origin);
 		}
 
 		R_GetEntityLists();
