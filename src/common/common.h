@@ -293,6 +293,9 @@ void Con_Print(const char *txt);
 
 typedef void event_func(int now, void *data);
 typedef qboolean event_check_func(int now, void *data);
+/**
+ * @return @c true to keep the event, @c false to remove it from the queue
+ */
 typedef qboolean event_filter(int when, event_func *func, event_check_func *check, void *data);
 typedef void event_clean_func(void * data);
 void Schedule_Event(int when, event_func *func, event_check_func *check, event_clean_func *clean, void *data);

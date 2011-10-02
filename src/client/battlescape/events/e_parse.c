@@ -152,6 +152,9 @@ static void CL_FreeBattlescapeEvent (void *data)
 	Mem_Free(event);
 }
 
+/**
+ * @return @c true to keep the event, @c false to remove it from the queue
+ */
 static qboolean CL_FilterBattlescapeEvents (int when, event_func *func, event_check_func *check, void *data)
 {
 	if (func == &CL_ExecuteBattlescapeEvent) {
