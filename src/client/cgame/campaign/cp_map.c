@@ -540,7 +540,7 @@ qboolean MAP_AllMapToScreen (const uiNode_t* node, const vec2_t pos, int *x, int
  * @param[in] model The name of the model of the marker.
  * @param[in] skin Number of modelskin to draw on marker
  */
-void MAP_Draw3DMarkerIfVisible (const uiNode_t* node, const vec2_t pos, float theta, const char *model, int skin)
+static void MAP_Draw3DMarkerIfVisible (const uiNode_t* node, const vec2_t pos, float theta, const char *model, int skin)
 {
 	if (cl_3dmap->integer) {
 		R_Draw3DMapMarkers(ccs.mapPos[0], ccs.mapPos[1], ccs.mapSize[0], ccs.mapSize[1], ccs.angles, pos, theta, GLOBE_RADIUS, model, skin);

@@ -57,7 +57,6 @@ struct uiNode_s;
 
 nation_t* MAP_GetNation(const vec2_t pos);
 qboolean MAP_AllMapToScreen(const struct uiNode_s* node, const vec2_t pos, int *x, int *y, int *z);
-void MAP_Draw3DMarkerIfVisible(const struct uiNode_s* node, const vec2_t pos, float angle, const char *model, int skin);
 void MAP_MapDrawEquidistantPoints(const struct uiNode_s* node, const vec2_t center, const float angle, const vec4_t color);
 float MAP_AngleOfPath(const vec3_t start, const vec2_t end, vec3_t direction, vec3_t ortVector);
 void MAP_MapCalcLine(const vec2_t start, const vec2_t end, mapline_t* line);
