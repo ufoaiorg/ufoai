@@ -281,6 +281,8 @@ void R_BeginFrame (void)
 void R_RenderFrame (void)
 {
 	int i;
+	vec3_t nullVec = {0.0, 0.0, 0.0};
+
 	R_Setup3D();
 
 	/* activate wire mode */
@@ -305,22 +307,16 @@ void R_RenderFrame (void)
 
 		R_CheckError();
 
-		R_GetEntityLists();
-
-		R_EnableFog(qtrue);
 		for (tile = 0; tile < r_numMapTiles; tile++) {
 			const model_t *mapTile = r_mapTiles[tile];
 			const mBspModel_t *bsp = &mapTile->bsp;
 
-			R_DrawOpaqueSurfaces(bsp->opaque_surfaces);
-			R_DrawOpaqueWarpSurfaces(bsp->opaque_warp_surfaces);
-
-			R_DrawAlphaTestSurfaces(bsp->alpha_test_surfaces);
-
-			R_EnableBlend(qtrue);
-			R_DrawMaterialSurfaces(bsp->material_surfaces);
-			R_EnableBlend(qfalse);
+			R_AddBspRRef(bsp, nullVec, nullVec);
 		}
+
+		R_GetEntityLists();
+
+		R_EnableFog(qtrue);
 
 		R_RenderOpaqueBspRRefs();
 		R_RenderOpaqueWarpBspRRefs();
@@ -332,25 +328,12 @@ void R_RenderFrame (void)
 		R_RenderMaterialBspRRefs();
 
 		R_EnableFog(qfalse);
-		for (tile = 0; tile < r_numMapTiles; tile++) {
-			const model_t *mapTile = r_mapTiles[tile];
-			const mBspModel_t *bsp = &mapTile->bsp;
-
-			R_DrawBlendSurfaces(bsp->blend_surfaces);
-			R_DrawBlendWarpSurfaces(bsp->blend_warp_surfaces);
-		}
 
 		R_RenderBlendBspRRefs();
 		R_RenderBlendWarpBspRRefs();
 		R_DrawBlendMeshEntities(r_blend_mesh_entities);
 
 		R_EnableFog(qtrue);
-		for (tile = 0; tile < r_numMapTiles; tile++) {
-			const model_t *mapTile = r_mapTiles[tile];
-			const mBspModel_t *bsp = &mapTile->bsp;
-
-			R_DrawFlareSurfaces(bsp->flare_surfaces);
-		}
 		R_RenderFlareBspRRefs();
 		R_EnableFog(qfalse);
 
