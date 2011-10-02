@@ -487,7 +487,7 @@ static qboolean MAP_3DMapToScreen (const uiNode_t* node, const vec2_t pos, int *
  * node. Otherwise returns qfalse.
  * @sa MAP_3DMapToScreen
  */
-qboolean MAP_MapToScreen (const uiNode_t* node, const vec2_t pos, int *x, int *y)
+static qboolean MAP_MapToScreen (const uiNode_t* node, const vec2_t pos, int *x, int *y)
 {
 	float sx;
 
