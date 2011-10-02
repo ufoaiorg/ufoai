@@ -156,6 +156,8 @@ static void R_StageLighting (const mBspSurface_t *surf, const materialStage_t *s
 			R_EnableLighting(NULL, qfalse);
 		}
 	} else {
+		if (!r_state.lighting_enabled)
+			return;
 		R_EnableLighting(NULL, qfalse);
 
 		R_EnableTexture(&texunit_lightmap, qfalse);
