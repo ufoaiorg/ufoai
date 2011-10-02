@@ -386,4 +386,16 @@ typedef struct {
 } dBspHeader_t;
 
 
+#define BSP_SwapHeader(header) { \
+	(header)->ident = LittleLong((header)->ident); \
+	(header)->version = LittleLong((header)->version); \
+	for (i = 0; i < HEADER_LUMPS; i++) { \
+		lump_t *l = &(header)->lumps[i]; \
+		l->filelen = LittleLong(l->filelen); \
+		l->fileofs = LittleLong(l->fileofs); \
+		if (l->fileofs == (uint32_t) -1) \
+			Sys_Error("Invalid bsp header found (lump overflow)"); \
+	} \
+}
+
 #endif /* QFILES_H */

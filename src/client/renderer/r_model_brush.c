@@ -960,14 +960,7 @@ static void R_ModAddMapTile (const char *name, qboolean day, int sX, int sY, int
 	/* swap all the lumps */
 	mod_base = (byte *) header;
 
-	header->ident = LittleLong(header->ident);
-	header->version = LittleLong(header->version);
-
-	for (i = 0; i < HEADER_LUMPS; i++) {
-		lump_t *l = &header->lumps[i];
-		l->filelen = LittleLong(l->filelen);
-		l->fileofs = LittleLong(l->fileofs);
-	}
+	BSP_SwapHeader(header);
 
 	/* load into heap */
 	R_ModLoadVertexes(&header->lumps[LUMP_VERTEXES]);
