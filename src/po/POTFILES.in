@@ -7,6 +7,7 @@
 ./client/battlescape/events/event/actor/e_event_actordie.c
 ./client/battlescape/events/event/actor/e_event_actorrevitalised.c
 ./client/battlescape/events/event/player/e_event_doendround.c
+./client/cgame/campaign/cl_game_campaign.c
 ./client/cgame/campaign/cp_aircraft.c
 ./client/cgame/campaign/cp_aircraft_callbacks.c
 ./client/cgame/campaign/cp_airfight.c
@@ -30,6 +31,7 @@
 ./client/cgame/campaign/cp_market_callbacks.c
 ./client/cgame/campaign/cp_messageoptions.c
 ./client/cgame/campaign/cp_messages.c
+./client/cgame/campaign/cp_mission_callbacks.c
 ./client/cgame/campaign/cp_missions.c
 ./client/cgame/campaign/cp_mission_triggers.c
 ./client/cgame/campaign/cp_nation.c
@@ -51,17 +53,17 @@
 ./client/cgame/campaign/missions/cp_mission_baseattack.c
 ./client/cgame/campaign/missions/cp_mission_harvest.c
 ./client/cgame/campaign/missions/cp_mission_recon.c
-./client/cgame/cl_game_campaign.c
-./client/cgame/cl_game_multiplayer.c
-./client/cgame/cl_game_skirmish.c
 ./client/cgame/cl_game_team.c
+./client/cgame/multiplayer/cl_game_multiplayer.c
 ./client/cgame/multiplayer/mp_callbacks.c
 ./client/cgame/multiplayer/mp_serverlist.c
+./client/cgame/skirmish/cl_game_skirmish.c
 ./client/cl_console.c
 ./client/cl_inventory_callbacks.c
 ./client/cl_irc.c
 ./client/cl_language.c
 ./client/cl_main.c
+./client/cl_menu.c
 ./client/cl_screen.c
 ./client/input/cl_input.c
 ./client/input/cl_joystick.c
@@ -79,4 +81,5 @@
 ./game/g_morale.c
 ./game/g_reaction.c
 ./game/g_round.c
+./game/g_trigger.c
 ./po/OTHER_STRINGS
