@@ -27,6 +27,7 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #include "bspfile.h"
 #include "scriplib.h"
 #include "../bsp.h"
+#include <errno.h>
 
 /**
  * @brief Compress the routing data of a map
@@ -302,10 +303,15 @@ dMapTile_t *LoadBSPFile (const char *filename)
 static inline void AddLump (qFILE *bspfile, dBspHeader_t *header, int lumpnum, void *data, int len)
 {
 	lump_t *lump;
+	long offset;
 
 	lump = &header->lumps[lumpnum];
 
-	lump->fileofs = LittleLong(ftell(bspfile->f));
+	offset = ftell(bspfile->f);
+	if (offset == -1) {
+		Sys_Error("Overflow in AddLump for lump %i (%s) %s", lumpnum, bspfile->name, strerror(errno));
+	}
+	lump->fileofs = LittleLong(offset);
 	lump->filelen = LittleLong(len);
 	/* 4 byte align */
 	FS_Write(data, (len + 3) &~ 3, bspfile);
