@@ -207,10 +207,7 @@ static void SwapBSPFile (void)
 	}
 }
 
-
-static dBspHeader_t *header;
-
-static uint32_t CopyLump (int lumpIdx, void *dest, size_t size)
+static uint32_t CopyLump (const dBspHeader_t *header, int lumpIdx, void *dest, size_t size)
 {
 	const lump_t *lump = &header->lumps[lumpIdx];
 	const uint32_t length = lump->filelen;
@@ -221,7 +218,7 @@ static uint32_t CopyLump (int lumpIdx, void *dest, size_t size)
 	if (length % size)
 		Sys_Error("LoadBSPFile: odd lump size");
 
-	memcpy(dest, (byte *)header + ofs, length);
+	memcpy(dest, (const byte *)header + ofs, length);
 
 	return length / size;
 }
@@ -233,6 +230,7 @@ dMapTile_t *LoadBSPFile (const char *filename)
 {
 	int size;
 	unsigned int i;
+	dBspHeader_t *header;
 
 	/* Create this shortcut to mapTiles[0] */
 	curTile = &mapTiles.mapTiles[0];
@@ -253,23 +251,23 @@ dMapTile_t *LoadBSPFile (const char *filename)
 	if (header->version != BSPVERSION)
 		Sys_Error("%s is version %i, not %i", filename, header->version, BSPVERSION);
 
-	curTile->nummodels = CopyLump(LUMP_MODELS, curTile->models, sizeof(dBspModel_t));
-	curTile->numvertexes = CopyLump(LUMP_VERTEXES, curTile->vertexes, sizeof(dBspVertex_t));
-	curTile->numplanes = CopyLump(LUMP_PLANES, curTile->planes, sizeof(dBspPlane_t));
-	curTile->numleafs = CopyLump(LUMP_LEAFS, curTile->leafs, sizeof(dBspLeaf_t));
-	curTile->numnormals = CopyLump(LUMP_NORMALS, curTile->normals, sizeof(dBspNormal_t));
-	curTile->numnodes = CopyLump(LUMP_NODES, curTile->nodes, sizeof(dBspNode_t));
-	curTile->numtexinfo = CopyLump(LUMP_TEXINFO, curTile->texinfo, sizeof(dBspTexinfo_t));
-	curTile->numfaces = CopyLump(LUMP_FACES, curTile->faces, sizeof(dBspSurface_t));
-	curTile->numleafbrushes = CopyLump(LUMP_LEAFBRUSHES, curTile->leafbrushes, sizeof(curTile->leafbrushes[0]));
-	curTile->numsurfedges = CopyLump(LUMP_SURFEDGES, curTile->surfedges, sizeof(curTile->surfedges[0]));
-	curTile->numedges = CopyLump(LUMP_EDGES, curTile->edges, sizeof(dBspEdge_t));
-	curTile->numbrushes = CopyLump(LUMP_BRUSHES, curTile->dbrushes, sizeof(dBspBrush_t));
-	curTile->numbrushsides = CopyLump(LUMP_BRUSHSIDES, curTile->brushsides, sizeof(dBspBrushSide_t));
-	curTile->routedatasize = CopyLump(LUMP_ROUTING, curTile->routedata, 1);
-	curTile->lightdatasize[LIGHTMAP_NIGHT] = CopyLump(LUMP_LIGHTING_NIGHT, curTile->lightdata[LIGHTMAP_NIGHT], 1);
-	curTile->lightdatasize[LIGHTMAP_DAY] = CopyLump(LUMP_LIGHTING_DAY, curTile->lightdata[LIGHTMAP_DAY], 1);
-	curTile->entdatasize = CopyLump(LUMP_ENTITIES, curTile->entdata, 1);
+	curTile->nummodels = CopyLump(header, LUMP_MODELS, curTile->models, sizeof(dBspModel_t));
+	curTile->numvertexes = CopyLump(header, LUMP_VERTEXES, curTile->vertexes, sizeof(dBspVertex_t));
+	curTile->numplanes = CopyLump(header, LUMP_PLANES, curTile->planes, sizeof(dBspPlane_t));
+	curTile->numleafs = CopyLump(header, LUMP_LEAFS, curTile->leafs, sizeof(dBspLeaf_t));
+	curTile->numnormals = CopyLump(header, LUMP_NORMALS, curTile->normals, sizeof(dBspNormal_t));
+	curTile->numnodes = CopyLump(header, LUMP_NODES, curTile->nodes, sizeof(dBspNode_t));
+	curTile->numtexinfo = CopyLump(header, LUMP_TEXINFO, curTile->texinfo, sizeof(dBspTexinfo_t));
+	curTile->numfaces = CopyLump(header, LUMP_FACES, curTile->faces, sizeof(dBspSurface_t));
+	curTile->numleafbrushes = CopyLump(header, LUMP_LEAFBRUSHES, curTile->leafbrushes, sizeof(curTile->leafbrushes[0]));
+	curTile->numsurfedges = CopyLump(header, LUMP_SURFEDGES, curTile->surfedges, sizeof(curTile->surfedges[0]));
+	curTile->numedges = CopyLump(header, LUMP_EDGES, curTile->edges, sizeof(dBspEdge_t));
+	curTile->numbrushes = CopyLump(header, LUMP_BRUSHES, curTile->dbrushes, sizeof(dBspBrush_t));
+	curTile->numbrushsides = CopyLump(header, LUMP_BRUSHSIDES, curTile->brushsides, sizeof(dBspBrushSide_t));
+	curTile->routedatasize = CopyLump(header, LUMP_ROUTING, curTile->routedata, 1);
+	curTile->lightdatasize[LIGHTMAP_NIGHT] = CopyLump(header, LUMP_LIGHTING_NIGHT, curTile->lightdata[LIGHTMAP_NIGHT], 1);
+	curTile->lightdatasize[LIGHTMAP_DAY] = CopyLump(header, LUMP_LIGHTING_DAY, curTile->lightdata[LIGHTMAP_DAY], 1);
+	curTile->entdatasize = CopyLump(header, LUMP_ENTITIES, curTile->entdata, 1);
 
 	/* Because the tracing functions use cBspBrush_t and not dBspBrush_t,
 	 * copy data from curTile->dbrushes into curTile->cbrushes */
