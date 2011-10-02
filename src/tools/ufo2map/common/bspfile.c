@@ -243,8 +243,14 @@ dMapTile_t *LoadBSPFile (const char *filename)
 		Sys_Error("'%s' doesn't exist", filename);
 
 	/* swap the header */
-	for (i = 0; i < sizeof(dBspHeader_t) / 4; i++)
-		((int *)header)[i] = LittleLong(((int *)header)[i]);
+	header->ident = LittleLong(header->ident);
+	header->version = LittleLong(header->version);
+
+	for (i = 0; i < HEADER_LUMPS; i++) {
+		lump_t *l = &header->lumps[i];
+		l->filelen = LittleLong(l->filelen);
+		l->fileofs = LittleLong(l->fileofs);
+	}
 
 	if (header->ident != IDBSPHEADER)
 		Sys_Error("%s is not a IBSP file", filename);
