@@ -820,15 +820,19 @@ base/models/aliens/ortnokmedium/body.png | GNU General Public License 2.0 | Luka
 base/models/aliens/ortnokmedium/body01.anm | GNU General Public License 2.0 | Lukas "Rastaman" Beyeler
 base/models/aliens/ortnokmedium/body01.md2 | GNU General Public License 2.0 | Lukas "Rastaman" Beyeler
 base/models/aliens/ortnokmedium/body01.tag | GNU General Public License 2.0 | Lukas "Rastaman" Beyeler
+base/models/aliens/ortnokmedium/body_nm.png | GNU General Public License 2.0 | MCR
 base/models/aliens/ortnokmedium/head01.jpg | GNU General Public License 2.0 | Lukas "Rastaman" Beyeler
 base/models/aliens/ortnokmedium/head01.md2 | GNU General Public License 2.0 | Lukas "Rastaman" Beyeler
 base/models/aliens/ortnokmedium/head01_gm.png | GNU General Public License 2.0 | Lukas "Rastaman" Beyeler;MCR
+base/models/aliens/ortnokmedium/head01_nm.png | GNU General Public License 2.0 | MCR
 base/models/aliens/ortnokmedium/head02.jpg | GNU General Public License 2.0 | Lukas "Rastaman" Beyeler
 base/models/aliens/ortnokmedium/head02.md2 | GNU General Public License 2.0 | Lukas "Rastaman" Beyeler
 base/models/aliens/ortnokmedium/head02_gm.png | GNU General Public License 2.0 | Lukas "Rastaman" Beyeler;MCR
+base/models/aliens/ortnokmedium/head02_nm.png | GNU General Public License 2.0 | MCR
 base/models/aliens/ortnokmedium/head03.jpg | GNU General Public License 2.0 | Lukas "Rastaman" Beyeler
 base/models/aliens/ortnokmedium/head03.md2 | GNU General Public License 2.0 | Lukas "Rastaman" Beyeler
 base/models/aliens/ortnokmedium/head03_gm.png | GNU General Public License 2.0 | Lukas "Rastaman" Beyeler;MCR
+base/models/aliens/ortnokmedium/head03_nm.png | GNU General Public License 2.0 | MCR
 base/models/aliens/shevaar/body01.anm | GNU General Public License 2.0 | Lukas "Rastaman" Beyeler
 base/models/aliens/shevaar/body01.md2 | GNU General Public License 2.0 | Lukas "Rastaman" Beyeler
 base/models/aliens/shevaar/body01.tag | GNU General Public License 2.0 | Lukas "Rastaman" Beyeler
