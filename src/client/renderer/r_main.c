@@ -338,10 +338,12 @@ void R_RenderFrame (void)
 
 		if (r_debug_lights->integer) {
 			for (i = 0; i < r_state.numStaticLights; i++) {
-				R_AddCorona(r_state.staticLights[i].origin, r_state.staticLights[i].radius, r_state.staticLights[i].color);
+				const light_t *l = &r_state.staticLights[i];
+				R_AddCorona(l->origin, l->radius, l->color);
 			}
 			for (i = 0; i < refdef.numDynamicLights; i++) {
-				R_AddCorona(refdef.dynamicLights[i].origin, refdef.dynamicLights[i].radius, refdef.dynamicLights[i].color);
+				const light_t *l = &refdef.dynamicLights[i];
+				R_AddCorona(l->origin, l->radius, l->color);
 			}
 		}
 
