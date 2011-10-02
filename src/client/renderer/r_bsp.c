@@ -277,7 +277,6 @@ void R_DrawBspNormals (int tile)
 static void R_RecursiveVisibleWorldNode (const mBspNode_t * node, int tile)
 {
 	int i, sidebit;
-	int cullState;
 	mBspSurface_t *surf;
 	float dot;
 
