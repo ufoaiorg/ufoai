@@ -203,6 +203,7 @@ static inline void R_ClearScene (void)
 {
 	/* lights and coronas are populated as ents are added */
 	refdef.numEntities = refdef.numDynamicLights = refdef.numCoronas = 0;
+	R_ClearBspRRefs();
 }
 
 /**
@@ -322,8 +323,8 @@ void R_RenderFrame (void)
 		}
 
 		R_DrawOpaqueMeshEntities(r_opaque_mesh_entities);
-		/** @todo Remove R_DrawBspEntities; it breaks rendering order. Should add all bsp entities to surface lists instead */
-		R_DrawBspEntities(r_bsp_entities);
+		/** @todo split R_RenderBspRRefs to per-surface-type calls: it breaks rendering order. */
+		R_RenderBspRRefs();
 
 		R_EnableBlend(qtrue);
 		R_EnableFog(qfalse);
@@ -372,7 +373,7 @@ void R_RenderFrame (void)
 		R_GetEntityLists();
 
 		R_DrawOpaqueMeshEntities(r_opaque_mesh_entities);
-		R_DrawBspEntities(r_bsp_entities);
+		R_RenderBspRRefs();
 		R_DrawBlendMeshEntities(r_blend_mesh_entities);
 		R_Color(NULL);
 		R_DrawSpecialEntities(r_special_entities);

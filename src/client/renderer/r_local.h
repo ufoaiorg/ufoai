@@ -128,7 +128,6 @@ extern rlocals_t r_locals;
 qboolean R_CullMeshModel(const entity_t *e);
 
 void R_DrawModelParticle(modelInfo_t *mi);
-void R_DrawBrushModel(const entity_t *e);
 void R_DrawBspNormals(int tile);
 qboolean R_CullBspModel(const entity_t *e);
 qboolean R_CullSphere(const vec3_t centre, const float radius, const unsigned int clipflags);
@@ -137,6 +136,10 @@ void R_GetEntityLists(void);
 void R_DrawInitLocal(void);
 void R_DrawParticles(void);
 void R_SetupFrustum(void);
+
+void R_ClearBspRRefs();
+void R_RenderBspRRefs();
+void R_AddBspRRef(mBspModel_t *model, const vec3_t origin, const vec3_t angles);
 
 typedef enum {
 	GLHW_GENERIC,

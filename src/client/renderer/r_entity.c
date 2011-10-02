@@ -285,27 +285,6 @@ void R_DrawEntityEffects (void)
 }
 
 /**
- * @brief Draws a list of brush model entities (inline models)
- * @param[in] ents The entity list to render (brush model entities)
- * @sa R_GetEntityLists
- * @sa R_DrawBrushModel
- */
-void R_DrawBspEntities (const entity_t *ents)
-{
-	const entity_t *e;
-
-	if (!ents)
-		return;
-
-	e = ents;
-
-	while (e) {
-		R_DrawBrushModel(e);
-		e = e->next;
-	}
-}
-
-/**
  * @brief Draws the list of entities
  * @param[in,out] ents The list of entities that are going to get rendered
  * @sa R_GetEntityLists
@@ -626,7 +605,7 @@ void R_GetEntityLists (void)
 	if (!r_drawentities->integer)
 		return;
 
-	r_bsp_entities = r_opaque_mesh_entities = r_special_entities =
+	r_opaque_mesh_entities = r_special_entities =
 		r_blend_mesh_entities = r_null_entities = NULL;
 
 	for (i = 0; i < refdef.numEntities; i++) {
@@ -647,8 +626,8 @@ void R_GetEntityLists (void)
 			const image_t *skin;
 			switch (e->model->type) {
 			case mod_bsp_submodel:
-				chain = &r_bsp_entities;
-				break;
+				R_AddBspRRef(&(e->model->bsp), e->origin, e->angles);
+				continue;
 			case mod_alias_dpm:
 			case mod_alias_md2:
 			case mod_alias_md3:

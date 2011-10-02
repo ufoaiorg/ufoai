@@ -37,6 +37,16 @@ BRUSH MODELS
 
 #define BACKFACE_EPSILON 0.01
 
+#define MAX_BSPS_TO_RENDER 1024
+
+typedef struct bspRenderRef_s {
+	mBspModel_t *bsp;
+	vec3_t origin;
+	vec3_t angles;
+} bspRenderRef_t;
+
+static bspRenderRef_t bspRRefs[MAX_BSPS_TO_RENDER];
+static int numBspRRefs;
 
 /**
  * @brief Returns whether if the specified bounding box is completely culled by the
@@ -116,83 +126,6 @@ qboolean R_CullBspModel (const entity_t *e)
 
 	return R_CullBox(mins, maxs) == PSIDE_BACK;
 }
-
-/**
- * @brief Renders all the surfaces that belongs to an inline bsp model entity
- * @param[in] e The inline bsp model entity
- */
-static void R_DrawBspModelSurfaces (const entity_t *e)
-{
-	int i;
-	mBspSurface_t *surf;
-
-	/* temporarily swap the view frame so that the surface drawing
-	 * routines pickup only the bsp model's surfaces */
-	const int f = r_locals.frame;
-	r_locals.frame = -1;
-
-	surf = &e->model->bsp.surfaces[e->model->bsp.firstmodelsurface];
-
-	for (i = 0; i < e->model->bsp.nummodelsurfaces; i++, surf++) {
-			/* visible flag for rendering */
-			surf->frame = r_locals.frame;
-	}
-
-	R_DrawOpaqueSurfaces(e->model->bsp.opaque_surfaces);
-
-	R_DrawOpaqueWarpSurfaces(e->model->bsp.opaque_warp_surfaces);
-
-	R_DrawAlphaTestSurfaces(e->model->bsp.alpha_test_surfaces);
-
-	R_EnableBlend(qtrue);
-
-	R_DrawMaterialSurfaces(e->model->bsp.material_surfaces);
-
-	R_DrawFlareSurfaces(e->model->bsp.flare_surfaces);
-
-	R_EnableFog(qfalse);
-
-	R_DrawBlendSurfaces(e->model->bsp.blend_surfaces);
-
-	R_DrawBlendWarpSurfaces(e->model->bsp.blend_warp_surfaces);
-
-	R_EnableFog(qtrue);
-
-	R_EnableBlend(qfalse);
-
-	/* undo the swap */
-	r_locals.frame = f;
-}
-
-/**
- * @brief Draws a brush model
- * @param[in] e The inline bsp model entity
- * @note E.g. a func_breakable or func_door
- */
-void R_DrawBrushModel (const entity_t * e)
-{
-	R_ShiftLights(e->origin);
-
-	glPushMatrix();
-
-	glTranslatef(e->origin[0], e->origin[1], e->origin[2]);
-	glRotatef(e->angles[YAW], 0, 0, 1);
-	glRotatef(e->angles[PITCH], 0, 1, 0);
-	glRotatef(e->angles[ROLL], 1, 0, 0);
-
-	R_DrawBspModelSurfaces(e);
-
-	/* show model bounding box */
-	if (r_showbox->integer) {
-		const model_t *model = e->model;
-		R_DrawBoundingBox(model->mins, model->maxs);
-	}
-
-	glPopMatrix();
-
-	R_ShiftLights(vec3_origin);
-}
-
 
 /*
 =============================================================
@@ -439,5 +372,99 @@ void R_GetLevelSurfaceLists (void)
 
 			R_RecurseWorld(bspModel->nodes + header->headnode, tile);
 		}
+	}
+}
+
+/*
+=============================================================
+Deferred rendering
+=============================================================
+*/
+
+void R_ClearBspRRefs ()
+{
+	numBspRRefs = 0;
+}
+
+void R_AddBspRRef (mBspModel_t *model, const vec3_t origin, const vec3_t angles)
+{
+	bspRenderRef_t *bspRR;
+
+	if (numBspRRefs >= MAX_BSPS_TO_RENDER) {
+		Com_Printf("Cannot add BSP model rendering reference: MAX_BSPS_TO_RENDER exceeded\n");
+		return;
+	}
+
+	if (!model) {
+		Com_Printf("R_AddBspRRef: null model!\n");
+		return;
+	}
+
+	bspRR = &bspRRefs[numBspRRefs++];
+
+	bspRR->bsp = model;
+	VectorCopy(origin, bspRR->origin);
+	VectorCopy(angles, bspRR->angles);
+}
+
+void R_RenderBspRRefs ()
+{
+	int i;
+	for (i=0; i < numBspRRefs; i++) {
+		const bspRenderRef_t const *bspRR = &bspRRefs[i];
+		const mBspModel_t const *bsp = bspRR->bsp;
+		mBspSurface_t *surf;
+		int j;
+
+		R_ShiftLights(bspRR->origin);
+
+		glPushMatrix();
+
+		glTranslatef(bspRR->origin[0], bspRR->origin[1], bspRR->origin[2]);
+		glRotatef(bspRR->angles[YAW], 0, 0, 1);
+		glRotatef(bspRR->angles[PITCH], 0, 1, 0);
+		glRotatef(bspRR->angles[ROLL], 1, 0, 0);
+
+		surf = &bsp->surfaces[bsp->firstmodelsurface];
+
+		for (j = 0; j < bsp->nummodelsurfaces; j++, surf++) {
+				/* visible flag for rendering */
+				surf->frame = r_locals.frame;
+		}
+
+		R_DrawOpaqueSurfaces(bsp->opaque_surfaces);
+
+		R_DrawOpaqueWarpSurfaces(bsp->opaque_warp_surfaces);
+
+		R_DrawAlphaTestSurfaces(bsp->alpha_test_surfaces);
+
+		R_EnableBlend(qtrue);
+
+		R_DrawMaterialSurfaces(bsp->material_surfaces);
+
+		R_DrawFlareSurfaces(bsp->flare_surfaces);
+
+		R_EnableFog(qfalse);
+
+		R_DrawBlendSurfaces(bsp->blend_surfaces);
+
+		R_DrawBlendWarpSurfaces(bsp->blend_warp_surfaces);
+
+		R_EnableFog(qtrue);
+
+		R_EnableBlend(qfalse);
+
+		/** @todo make it work again */
+#if 0
+		/* show model bounding box */
+		if (r_showbox->integer) {
+			const model_t *model = bspRR->bsp;
+			R_DrawBoundingBox(model->mins, model->maxs);
+		}
+#endif
+
+		glPopMatrix();
+
+		R_ShiftLights(vec3_origin);
 	}
 }
