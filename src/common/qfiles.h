@@ -386,7 +386,7 @@ typedef struct {
 } dBspHeader_t;
 
 
-#define BSP_SwapHeader(header) { \
+#define BSP_SwapHeader(header, name) { \
 	(header)->ident = LittleLong((header)->ident); \
 	(header)->version = LittleLong((header)->version); \
 	for (i = 0; i < HEADER_LUMPS; i++) { \
@@ -394,7 +394,7 @@ typedef struct {
 		l->filelen = LittleLong(l->filelen); \
 		l->fileofs = LittleLong(l->fileofs); \
 		if (l->fileofs == (uint32_t) -1) \
-			Sys_Error("Invalid bsp header found (lump overflow)"); \
+			Sys_Error("Invalid bsp header found (lump overflow %i): '%s'", i, (name)); \
 	} \
 }
 

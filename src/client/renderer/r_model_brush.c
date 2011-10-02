@@ -960,7 +960,7 @@ static void R_ModAddMapTile (const char *name, qboolean day, int sX, int sY, int
 	/* swap all the lumps */
 	mod_base = (byte *) header;
 
-	BSP_SwapHeader(header);
+	BSP_SwapHeader(header, r_worldmodel->name);
 
 	/* load into heap */
 	R_ModLoadVertexes(&header->lumps[LUMP_VERTEXES]);

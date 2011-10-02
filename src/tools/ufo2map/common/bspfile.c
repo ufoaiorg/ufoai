@@ -244,7 +244,7 @@ dMapTile_t *LoadBSPFile (const char *filename)
 		Sys_Error("'%s' doesn't exist", filename);
 
 	/* swap the header */
-	BSP_SwapHeader(header);
+	BSP_SwapHeader(header, filename);
 
 	if (header->ident != IDBSPHEADER)
 		Sys_Error("%s is not a IBSP file", filename);

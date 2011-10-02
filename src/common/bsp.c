@@ -810,7 +810,7 @@ static void CM_AddMapTile (const char *name, const qboolean day, const int sX, c
 	checksum = LittleLong(Com_BlockChecksum(buf, length));
 
 	header = *(dBspHeader_t *) buf;
-	BSP_SwapHeader(&header);
+	BSP_SwapHeader(&header, filename);
 
 	if (header.version != BSPVERSION)
 		Com_Error(ERR_DROP, "CM_AddMapTile: %s has wrong version number (%i should be %i)", name, header.version, BSPVERSION);
