@@ -406,6 +406,8 @@ static void HUD_DisplayFiremodeEntry (const char* callback, const le_t* actor, c
 	qboolean status;
 	const fireDef_t *fd;
 	const char *tooltip;
+	const char *fireDefTUs;
+	const char *ammoAmount;
 	char id[32];
 
 	if (index < ammo->numFiredefs[weapFdsIdx]) {
@@ -429,10 +431,12 @@ static void HUD_DisplayFiremodeEntry (const char* callback, const le_t* actor, c
 
 	/* unique identifier of the action */
 	/* @todo use this id as action callback instead of hand and index (we can extend it with any other soldier action we need (open door, reload...)) */
-	Q_strncpyz(id, va("fire_hand%c_i%i", ACTOR_GET_HAND_CHAR(hand), index), sizeof(id));
+	Com_sprintf(id, sizeof(id), "fire_hand%c_i%i", ACTOR_GET_HAND_CHAR(hand), index);
+	fireDefTUs = va(_("TU: %i"), fd->time);
+	ammoAmount = va(_("Shots: %i"), fd->ammo);
 
-	UI_ExecuteConfunc("%s firemode %s %c %i %i %i \"%s\" %i %i \"%s\"", callback, id, ACTOR_GET_HAND_CHAR(hand),
-			fd->fdIdx, fd->reaction, status, _(fd->name), fd->time, fd->ammo, tooltip);
+	UI_ExecuteConfunc("%s firemode %s %c %i %i %i \"%s\" \"%s\" \"%s\" \"%s\"", callback, id, ACTOR_GET_HAND_CHAR(hand),
+			fd->fdIdx, fd->reaction, status, _(fd->name), fireDefTUs, ammoAmount, tooltip);
 
 	/* Display checkbox for reaction firemode */
 	if (fd->reaction) {
