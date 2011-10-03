@@ -310,7 +310,7 @@ void R_RenderFrame (void)
 			const model_t *mapTile = r_mapTiles[tile];
 			const mBspModel_t *bsp = &mapTile->bsp;
 
-			R_AddBspRRef(bsp, vec3_origin, vec3_origin);
+			R_AddBspRRef(bsp, vec3_origin, vec3_origin, qfalse);
 		}
 
 		R_GetEntityLists();

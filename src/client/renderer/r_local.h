@@ -134,7 +134,7 @@ void R_DrawParticles(void);
 void R_SetupFrustum(void);
 
 void R_ClearBspRRefs(void);
-void R_AddBspRRef(const mBspModel_t *model, const vec3_t origin, const vec3_t angles);
+void R_AddBspRRef(const mBspModel_t *model, const vec3_t origin, const vec3_t angles, const qboolean forceVisibility);
 void R_RenderOpaqueBspRRefs(void);
 void R_RenderOpaqueWarpBspRRefs(void);
 void R_RenderAlphaTestBspRRefs(void);

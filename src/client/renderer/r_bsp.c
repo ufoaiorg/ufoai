@@ -388,12 +388,13 @@ void R_ClearBspRRefs (void)
 
 /**
  * @brief Adds bsp render references
- * @note Will mark the surfaces of the given bsp model as visible for this frame.
+ * @note If forceVisibility is set, will mark the surfaces of the given bsp model as visible for this frame.
  * @param[in] model The bsp model to add to the render chain
  * @param[in] origin
  * @param[in] angles
+ * @param[in] forceVisibility force model to be fully visible
  */
-void R_AddBspRRef (const mBspModel_t *model, const vec3_t origin, const vec3_t angles)
+void R_AddBspRRef (const mBspModel_t *model, const vec3_t origin, const vec3_t angles, const qboolean forceVisibility)
 {
 	bspRenderRef_t *bspRR;
 	mBspSurface_t *surf;
@@ -415,11 +416,13 @@ void R_AddBspRRef (const mBspModel_t *model, const vec3_t origin, const vec3_t a
 	VectorCopy(origin, bspRR->origin);
 	VectorCopy(angles, bspRR->angles);
 
-	surf = &model->surfaces[model->firstmodelsurface];
+	if (forceVisibility) {
+		surf = &model->surfaces[model->firstmodelsurface];
 
-	for (i = 0; i < model->nummodelsurfaces; i++, surf++) {
-		/* visible flag for rendering */
-		surf->frame = r_locals.frame;
+		for (i = 0; i < model->nummodelsurfaces; i++, surf++) {
+			/* visible flag for rendering */
+			surf->frame = r_locals.frame;
+		}
 	}
 }
 

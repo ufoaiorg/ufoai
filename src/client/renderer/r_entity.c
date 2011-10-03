@@ -626,7 +626,7 @@ void R_GetEntityLists (void)
 			const image_t *skin;
 			switch (e->model->type) {
 			case mod_bsp_submodel:
-				R_AddBspRRef(&(e->model->bsp), e->origin, e->angles);
+				R_AddBspRRef(&(e->model->bsp), e->origin, e->angles, qtrue);
 				continue;
 			case mod_alias_dpm:
 			case mod_alias_md2:
