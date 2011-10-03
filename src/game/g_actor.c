@@ -98,6 +98,7 @@ void G_ActorSetClientAction (edict_t *actor, edict_t *ent)
 	if (actor->clientAction == ent)
 		return;
 
+	assert(ent == NULL || (ent->flags & FL_CLIENTACTION));
 	actor->clientAction = ent;
 	if (ent == NULL) {
 		G_EventResetClientAction(actor);

@@ -322,6 +322,7 @@ void SP_func_door (edict_t *ent)
 
 	if (ent->HP)
 		ent->flags |= FL_DESTROYABLE;
+	ent->flags |= FL_CLIENTACTION;
 
 	/* spawn the trigger entity */
 	other = G_TriggerSpawn(ent);

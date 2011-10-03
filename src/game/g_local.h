@@ -627,6 +627,10 @@ struct player_s {
  */
 #define FL_GROUPSLAVE	0x00000008
 /**
+ * @brief Edict flag to indicate, that the edict can be used in the context of a client action
+ */
+#define FL_CLIENTACTION	0x00000010
+/**
  * @brief Trigger the edict at spawn.
  */
 #define FL_TRIGGERED	0x00000100
