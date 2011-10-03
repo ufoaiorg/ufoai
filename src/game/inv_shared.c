@@ -426,7 +426,6 @@ qboolean INV_IsBaseDefenceItem (const objDef_t *obj)
  * @param[in] container Container in the inventory.
  * @param[in] x/y Position in the container that you want to check.
  * @return invList_t Pointer to the invList_t/item that is located at x/y.
- * @sa INV_SearchInScrollableContainer
  */
 invList_t *INVSH_SearchInInventory (const inventory_t* const i, const invDef_t * container, const int x, const int y)
 {
@@ -440,8 +439,7 @@ invList_t *INVSH_SearchInInventory (const inventory_t* const i, const invDef_t *
 		return i->c[container->id];
 
 	if (container->scroll)
-		Sys_Error("INVSH_SearchInInventory: Scrollable containers (%i:%s) are not supported by this function.\nUse INV_SearchInScrollableContainer instead!",
-				container->id, container->name);
+		Sys_Error("INVSH_SearchInInventory: Scrollable containers (%i:%s) are not supported by this function.", container->id, container->name);
 
 	/* More than one item - search for the item that is located at location x/y in this container. */
 	for (ic = i->c[container->id]; ic; ic = ic->next)
