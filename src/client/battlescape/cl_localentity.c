@@ -186,6 +186,18 @@ static inline localModel_t *LM_Find (int entnum)
 }
 
 /**
+ * @brief link any floor container into the actor temp floor container
+ */
+void LE_LinkFloorContainer (le_t *le)
+{
+	le_t *floor = LE_Find(ET_ITEM, le->pos);
+	if (floor)
+		FLOOR(le) = FLOOR(floor);
+	else
+		FLOOR(le) = NULL;
+}
+
+/**
  * @brief Checks whether the given le is a living actor
  * @param[in] le The local entity to perform the check for
  * @sa G_IsLivingActor
@@ -572,8 +584,6 @@ static void LE_DoPathMove (le_t *le)
  */
 void LE_DoEndPathMove (le_t *le)
 {
-	le_t *floor;
-
 	/* Verify the current position */
 	if (!VectorCompare(le->pos, le->newPos))
 		Com_Error(ERR_DROP, "LE_DoEndPathMove: Actor movement is out of sync: %i:%i:%i should be %i:%i:%i (step %i of %i) (team %i)",
@@ -586,10 +596,7 @@ void LE_DoEndPathMove (le_t *le)
 		CL_ActorConditionalMoveCalc(selActor);
 	}
 
-	/* link any floor container into the actor temp floor container */
-	floor = LE_Find(ET_ITEM, le->pos);
-	if (floor)
-		FLOOR(le) = FLOOR(floor);
+	LE_LinkFloorContainer(le);
 
 	LE_SetThink(le, LET_StartIdle);
 	LE_ExecuteThink(le);
