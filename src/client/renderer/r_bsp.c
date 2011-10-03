@@ -430,9 +430,8 @@ typedef void (*drawSurfaceFunc)(const mBspSurfaces_t *surfs);
 
 /**
  * @param[in] drawFunc The function pointer to the surface draw function
- * @todo Make surfType a speaking enum
  */
-static void R_RenderBspRRefs (drawSurfaceFunc drawFunc, int surfType)
+static void R_RenderBspRRefs (drawSurfaceFunc drawFunc, surfaceArrayType_t surfType)
 {
 	int i;
 	for (i = 0; i < numBspRRefs; i++) {
@@ -476,7 +475,7 @@ void R_RenderOpaqueBspRRefs (void)
 	R_EnableTexture(&texunit_lightmap, qtrue);
 	R_EnableLighting(r_state.world_program, qtrue);
 
-	R_RenderBspRRefs(R_DrawSurfaces, 0);
+	R_RenderBspRRefs(R_DrawSurfaces, S_OPAQUE);
 
 	R_EnableLighting(NULL, qfalse);
 	R_EnableGlowMap(NULL, qfalse);
@@ -490,7 +489,7 @@ void R_RenderOpaqueWarpBspRRefs (void)
 {
 	R_EnableWarp(r_state.warp_program, qtrue);
 
-	R_RenderBspRRefs(R_DrawSurfaces, 1);
+	R_RenderBspRRefs(R_DrawSurfaces, S_OPAQUE_WARP);
 
 	R_EnableWarp(NULL, qfalse);
 	R_EnableGlowMap(NULL, qfalse);
@@ -501,7 +500,7 @@ void R_RenderAlphaTestBspRRefs (void)
 	R_EnableAlphaTest(qtrue);
 	R_EnableLighting(r_state.world_program, qtrue);
 
-	R_RenderBspRRefs(R_DrawSurfaces, 2);
+	R_RenderBspRRefs(R_DrawSurfaces, S_ALPHA_TEST);
 
 	R_EnableLighting(NULL, qfalse);
 	R_EnableGlowMap(NULL, qfalse);
@@ -510,12 +509,12 @@ void R_RenderAlphaTestBspRRefs (void)
 
 void R_RenderMaterialBspRRefs (void)
 {
-	R_RenderBspRRefs(R_DrawMaterialSurfaces, 5);
+	R_RenderBspRRefs(R_DrawMaterialSurfaces, S_MATERIAL);
 }
 
 void R_RenderFlareBspRRefs (void)
 {
-	R_RenderBspRRefs(R_DrawFlareSurfaces, 6);
+	R_RenderBspRRefs(R_DrawFlareSurfaces, S_FLARE);
 }
 
 /**
@@ -526,7 +525,7 @@ void R_RenderBlendBspRRefs (void)
 	assert(r_state.blend_enabled);
 	R_EnableTexture(&texunit_lightmap, qtrue);
 
-	R_RenderBspRRefs(R_DrawSurfaces, 3);
+	R_RenderBspRRefs(R_DrawSurfaces, S_BLEND);
 
 	R_EnableTexture(&texunit_lightmap, qfalse);
 }
@@ -539,7 +538,7 @@ void R_RenderBlendWarpBspRRefs (void)
 	assert(r_state.blend_enabled);
 	R_EnableWarp(r_state.warp_program, qtrue);
 
-	R_RenderBspRRefs(R_DrawSurfaces, 4);
+	R_RenderBspRRefs(R_DrawSurfaces, S_BLEND_WARP);
 
 	R_EnableWarp(NULL, qfalse);
 	R_EnableGlowMap(NULL, qfalse);
