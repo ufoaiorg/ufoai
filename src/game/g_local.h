@@ -131,6 +131,7 @@ typedef struct {
 	pathing_t *pathingMap;	/**< This is where the data for TUS used to move and actor locations go */
 
 	int randomSpawn;	/**< can be set via worldspawn to force random spawn point order for each team */
+	int noEquipment;	/**< can be set via worldspawn to force the players to collect their equipment in the map */
 
 	int initialAlienActorsSpawned;
 	byte num_alive[MAX_TEAMS];		/**< the number of alive actors per team */
@@ -149,6 +150,7 @@ typedef struct {
 typedef struct {
 	/* world vars */
 	int randomSpawn;	/**< spawn the actors on random spawnpoints */
+	int noEquipment;	/**< spawn the actors with no equipment - must be collected in the map */
 } spawn_temp_t;
 
 /** @brief used in shot probability calculations (pseudo shots) */

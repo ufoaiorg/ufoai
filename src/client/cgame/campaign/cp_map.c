@@ -1525,7 +1525,8 @@ static void MAP_DrawMapOneBase (const uiNode_t* node, const base_t *base,
  * @param[in] aircraft Pointer to the aircraft to draw for
  * @note if max health (AIR_STATS_DAMAGE) <= 0 no healthbar drawn
  */
-static void MAP_DrawAircraftHealthBar (const uiNode_t* node, const aircraft_t *aircraft) {
+static void MAP_DrawAircraftHealthBar (const uiNode_t* node, const aircraft_t *aircraft)
+{
 	const vec4_t bordercolor = {1, 1, 1, 1};
 	const int width = 8 * ccs.zoom;
 	const int height = 1 * ccs.zoom * 0.9;
