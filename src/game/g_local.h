@@ -615,17 +615,17 @@ struct player_s {
 };
 
 /**
- * @brief not the first on the team
- * @sa groupMaster and groupChain
- */
-#define FL_GROUPSLAVE	0x00000008
-/**
  * @brief If an edict is destroyable (like ET_BREAKABLE, ET_DOOR [if health set]
  * or maybe a ET_MISSION [if health set])
  * @note e.g. misc_mission, func_breakable, func_door
  * @note If you mark an edict as breakable, you have to provide a destroy callback, too
  */
 #define FL_DESTROYABLE	0x00000004
+/**
+ * @brief not the first on the team
+ * @sa groupMaster and groupChain
+ */
+#define FL_GROUPSLAVE	0x00000008
 /**
  * @brief Trigger the edict at spawn.
  */

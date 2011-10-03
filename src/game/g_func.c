@@ -292,7 +292,7 @@ static void Reset_DoorTrigger (edict_t *self, edict_t *activator)
 		G_ActorSetClientAction(activator, NULL);
 }
 
-#define FL_REVERSE	0x00000200
+#define REVERSE		0x00000200
 
 /**
  * @brief func_door (0 .5 .8) ?
@@ -317,7 +317,7 @@ void SP_func_door (edict_t *ent)
 	ent->doorState = STATE_CLOSED;
 	ent->dir = YAW;
 
-	if (ent->spawnflags & FL_REVERSE)
+	if (ent->spawnflags & REVERSE)
 		ent->dir |= DOOR_OPEN_REVERSE;
 
 	if (ent->HP)
@@ -351,7 +351,7 @@ void SP_func_door_sliding (edict_t *ent)
 	ent->solid = SOLID_BSP;
 	gi.LinkEdict(ent);
 
-	if (ent->spawnflags & FL_REVERSE)
+	if (ent->spawnflags & REVERSE)
 		ent->dir |= DOOR_OPEN_REVERSE;
 
 	if (ent->HP)
