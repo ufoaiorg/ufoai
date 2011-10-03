@@ -520,8 +520,7 @@ void R_RenderFlareBspRRefs (void)
  */
 void R_RenderBlendBspRRefs (void)
 {
-	/* FIXME: assert command is commented out, to avoid a crash, but a more permanent solution is needed. */
-	/* assert(r_state.blend_enabled); */
+	assert(r_state.blend_enabled);
 	R_EnableTexture(&texunit_lightmap, qtrue);
 
 	R_RenderBspRRefs(R_DrawSurfaces, 3);
@@ -534,8 +533,7 @@ void R_RenderBlendBspRRefs (void)
  */
 void R_RenderBlendWarpBspRRefs (void)
 {
-	/* FIXME: assert command is commented out, to avoid a crash, but a more permanent solution is needed. */
-	/* assert(r_state.blend_enabled); */
+	assert(r_state.blend_enabled);
 	R_EnableWarp(r_state.warp_program, qtrue);
 
 	R_RenderBspRRefs(R_DrawSurfaces, 4);
