@@ -82,7 +82,6 @@ int CL_ActorGetContainerForReload(invList_t **ic, const inventory_t *inv, const 
 void CL_ActorPlaySound(const le_t *le, actorSound_t soundType);
 
 void CL_ActorActionMouse(void);
-void CL_ActorDoorAction_f(void);
 void CL_ActorSetFireDef(le_t *actor, const fireDef_t *fd);
 
 void CL_NextRound_f(void);

@@ -962,22 +962,24 @@ static void CL_ActorUseDoor (const le_t *le)
 }
 
 /**
- * @brief Hud callback to open/close a door
+ * @brief Hud callback to use the current selected entity
  */
-void CL_ActorDoorAction_f (void)
+static void CL_ActorUse_f (void)
 {
 	if (!CL_ActorCheckAction(selActor))
 		return;
 
 	/* no client action */
 	if (selActor->clientAction == NULL) {
-		Com_DPrintf(DEBUG_CLIENT, "CL_ActorDoorAction_f: No client_action set for actor with entnum %i.\n", selActor->entnum);
+		Com_DPrintf(DEBUG_CLIENT, "CL_ActorUse_f: No client_action set for actor with entnum %i.\n", selActor->entnum);
 		return;
 	}
 
-	/* Check if we should even try to send this command (no TUs left or). */
-	if (CL_ActorUsableTUs(selActor) >= TU_DOOR_ACTION)
-		CL_ActorUseDoor(selActor);
+	if (LE_IsDoor(selActor->clientAction)) {
+		/* Check if we should even try to send this command (no TUs left or). */
+		if (CL_ActorUsableTUs(selActor) >= TU_DOOR_ACTION)
+			CL_ActorUseDoor(selActor);
+	}
 }
 
 /**
@@ -2416,7 +2418,7 @@ void ACTOR_InitStartup (void)
 	Cmd_AddCommand("actor_updatecurrent", CL_ActorUpdate_f, N_("Update an actor"));
 	Cmd_AddCommand("actor_standcrouch", CL_ActorStandCrouch_f, N_("Toggle stand/crouch."));
 	Cmd_AddCommand("actor_useheadgear", CL_ActorUseHeadgear_f, N_("Toggle the headgear"));
-	Cmd_AddCommand("actor_dooraction", CL_ActorDoorAction_f, N_("Open or close a door."));
+	Cmd_AddCommand("actor_use", CL_ActorUse_f, N_("Use"));
 	Cmd_AddCommand("actor_confirmaction", CL_ActorConfirmAction_f, N_("Confirm the current action"));
 	Cmd_AddCommand("actor_nextalien", CL_NextAlienVisibleFromActor_f, N_("Toggle to the next alien in sight of the selected actor."));
 
