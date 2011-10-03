@@ -278,13 +278,14 @@ static qboolean Touch_TouchTrigger (edict_t *self, edict_t *activator)
 		return qfalse;
 	}
 
-	if (!self->owner->use) {
-		gi.DPrintf("Owner of %s doesn't have a use function\n", self->classname);
-		G_FreeEdict(self);
-		return qfalse;
-	}
-
-	if (!(self->spawnflags & TRIGGER_TOUCH_ONCE) || self->touchedNext == NULL) {
+	if (self->owner->flags & FL_CLIENTACTION) {
+		G_ActorSetClientAction(activator, self->owner);
+	} else if (!(self->spawnflags & TRIGGER_TOUCH_ONCE) || self->touchedNext == NULL) {
+		if (!self->owner->use) {
+			gi.DPrintf("Owner of %s doesn't have a use function\n", self->classname);
+			G_FreeEdict(self);
+			return qfalse;
+		}
 		G_UseEdict(self->owner, activator);
 	}
 
@@ -294,7 +295,9 @@ static qboolean Touch_TouchTrigger (edict_t *self, edict_t *activator)
 static void Reset_TouchTrigger (edict_t *self, edict_t *activator)
 {
 	/* fire the use function on leaving the trigger area */
-	if ((self->spawnflags & TRIGGER_TOUCH_ONCE) && self->touchedNext == NULL)
+	if (activator != NULL && (self->owner->flags & FL_CLIENTACTION))
+		G_ActorSetClientAction(activator, NULL);
+	else if ((self->spawnflags & TRIGGER_TOUCH_ONCE) && self->touchedNext == NULL)
 		G_UseEdict(self->owner, activator);
 }
 
