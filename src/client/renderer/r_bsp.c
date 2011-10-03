@@ -386,6 +386,13 @@ void R_ClearBspRRefs (void)
 	numBspRRefs = 0;
 }
 
+/**
+ * @brief Adds bsp render references
+ * @note Will mark the surfaces of the given bsp model as visible for this frame.
+ * @param[in] model The bsp model to add to the render chain
+ * @param[in] origin
+ * @param[in] angles
+ */
 void R_AddBspRRef (const mBspModel_t *model, const vec3_t origin, const vec3_t angles)
 {
 	bspRenderRef_t *bspRR;
