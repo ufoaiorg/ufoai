@@ -47,6 +47,7 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #define HEADGEAR(e) (CONTAINER(e, csi.idHeadgear))
 #define EXTENSION(e) (CONTAINER(e, csi.idExtension))
 #define HOLSTER(e) (CONTAINER(e, csi.idHolster))
+#define EQUIP(e) (CONTAINER(e, csi.idEquip))
 
 #define INVDEF(containerID) (&csi.ids[(containerID)])
 
