@@ -966,19 +966,21 @@ static void CL_ActorUseDoor (const le_t *le)
  */
 static void CL_ActorUse_f (void)
 {
-	if (!CL_ActorCheckAction(selActor))
+	le_t *actor = selActor;
+
+	if (!CL_ActorCheckAction(actor))
 		return;
 
 	/* no client action */
-	if (selActor->clientAction == NULL) {
-		Com_DPrintf(DEBUG_CLIENT, "CL_ActorUse_f: No client_action set for actor with entnum %i.\n", selActor->entnum);
+	if (actor->clientAction == NULL) {
+		Com_DPrintf(DEBUG_CLIENT, "CL_ActorUse_f: No client_action set for actor with entnum %i.\n", actor->entnum);
 		return;
 	}
 
-	if (LE_IsDoor(selActor->clientAction)) {
+	if (LE_IsDoor(actor->clientAction)) {
 		/* Check if we should even try to send this command (no TUs left or). */
-		if (CL_ActorUsableTUs(selActor) >= TU_DOOR_ACTION)
-			CL_ActorUseDoor(selActor);
+		if (CL_ActorUsableTUs(actor) >= TU_DOOR_ACTION)
+			CL_ActorUseDoor(actor);
 	}
 }
 
