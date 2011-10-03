@@ -1,8 +1,6 @@
 /**
- * @file r_model.h
- * @brief Brush model header file
- * @note d*_t structures are on-disk representations
- * @note m*_t structures are in-memory
+ * @file r_particle.h
+ * @brief Particle system header file
  */
 
 /*
