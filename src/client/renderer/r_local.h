@@ -133,15 +133,15 @@ void R_DrawInitLocal(void);
 void R_DrawParticles(void);
 void R_SetupFrustum(void);
 
-void R_ClearBspRRefs();
+void R_ClearBspRRefs(void);
 void R_AddBspRRef(const mBspModel_t *model, const vec3_t origin, const vec3_t angles);
-void R_RenderOpaqueBspRRefs();
-void R_RenderOpaqueWarpBspRRefs();
-void R_RenderAlphaTestBspRRefs();
-void R_RenderMaterialBspRRefs();
-void R_RenderFlareBspRRefs();
-void R_RenderBlendBspRRefs();
-void R_RenderBlendWarpBspRRefs();
+void R_RenderOpaqueBspRRefs(void);
+void R_RenderOpaqueWarpBspRRefs(void);
+void R_RenderAlphaTestBspRRefs(void);
+void R_RenderMaterialBspRRefs(void);
+void R_RenderFlareBspRRefs(void);
+void R_RenderBlendBspRRefs(void);
+void R_RenderBlendWarpBspRRefs(void);
 
 
 typedef enum {
