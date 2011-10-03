@@ -318,6 +318,7 @@ void G_ReadItem(item_t *item, const invDef_t **container, int *x, int *y);
 void G_InventoryToFloor(edict_t *ent);
 qboolean G_AddItemToFloor(const pos3_t pos, const char *itemID);
 edict_t *G_GetFloorItemsFromPos(const pos3_t pos);
+const equipDef_t *G_GetEquipDefByID(const char *equipID);
 
 /* g_morale */
 void G_MoraleBehaviour(int team);

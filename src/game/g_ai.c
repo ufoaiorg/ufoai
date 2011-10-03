@@ -1173,13 +1173,9 @@ static const equipDef_t* G_GetEquipmentForAISpawn (int team)
 	const equipDef_t *ed;
 	/* prepare equipment */
 	if (team != TEAM_CIVILIAN) {
-		int i;
-		char name[MAX_VAR];
-		Q_strncpyz(name, gi.Cvar_String("ai_equipment"), sizeof(name));
-		for (i = 0, ed = gi.csi->eds; i < gi.csi->numEDs; i++, ed++)
-			if (Q_streq(name, ed->id))
-				break;
-		if (i == gi.csi->numEDs)
+		const char *equipID = gi.Cvar_String("ai_equipment");
+		ed = G_GetEquipDefByID(equipID);
+		if (ed == NULL)
 			ed = &gi.csi->eds[0];
 	} else {
 		ed = NULL;

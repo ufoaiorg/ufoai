@@ -24,6 +24,19 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 
 #include "g_local.h"
 
+const equipDef_t *G_GetEquipDefByID (const char *equipID)
+{
+	int i;
+	const equipDef_t *ed;
+
+	for (i = 0, ed = gi.csi->eds; i < gi.csi->numEDs; i++, ed++)
+		if (Q_streq(equipID, ed->id))
+			return ed;
+
+	gi.DPrintf("Could not find the equipment with the id: '%s'\n", equipID);
+	return NULL;
+}
+
 /**
  * @brief Callback to G_GetEdictFromPos() for given position, used to get items from position.
  * @param[in] pos A position for which items are wanted.
