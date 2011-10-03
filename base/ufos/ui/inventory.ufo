@@ -196,3 +196,28 @@ window ahudinv extends inventory
 		onRClick  { call *node:root.hideinventory }
 	}
 }
+
+// ====================
+// IN-MISSION INVENTORY
+// ====================
+
+window inventorymission extends inventory
+{
+	baseinventory equip {
+		pos "28 362"
+		size					"207 317"
+		displayweapon			true
+		displayammoofweapon		false
+		displayunavailableitem	false
+		columns					1
+	 }
+
+	string s_floor
+	{
+		pos "24 360"
+		contentalign ALIGN_UC
+		string	"_Floor2"
+		color "0 0.6 0 1"
+		size "76 25"
+	}
+}

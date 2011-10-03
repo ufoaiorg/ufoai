@@ -45,6 +45,7 @@ static void SP_misc_item(edict_t *ent);
 static void SP_misc_mission(edict_t *ent);
 static void SP_misc_mission_aliens(edict_t *ent);
 static void SP_misc_message(edict_t *ent);
+static void SP_misc_inventory(edict_t *ent);
 
 typedef struct {
 	const char *name;
@@ -76,6 +77,7 @@ static const spawn_t spawns[] = {
 	{"trigger_touch", SP_trigger_touch},
 	{"trigger_rescue", SP_trigger_rescue},
 	{"misc_message", SP_misc_message},
+	{"misc_inventory", SP_misc_inventory},
 
 	{NULL, NULL}
 };
@@ -127,6 +129,7 @@ static const field_t fields[] = {
 	{"angles", offsetof(edict_t, angles), F_VECTOR, 0},
 	{"angle", offsetof(edict_t, angle), F_FLOAT, 0},
 	{"message", offsetof(edict_t, message), F_LSTRING, 0},
+	{"equipment", offsetof(edict_t, equipment), F_LSTRING, 0},
 
 	{"randomspawn", offsetof(spawn_temp_t, randomSpawn), F_INT, FFL_SPAWNTEMP},
 	{"noequipment", offsetof(spawn_temp_t, noEquipment), F_INT, FFL_SPAWNTEMP},
@@ -862,6 +865,68 @@ static void SP_misc_message (edict_t *ent)
 	ent->classname = "misc_message";
 	ent->type = ET_MESSAGE;
 	ent->solid = SOLID_NOT;
+}
+
+static void G_MiscInventoryThink (edict_t *self)
+{
+	const equipDef_t *ed;
+	size_t size;
+	int i;
+
+	if (!G_MatchIsRunning())
+		return;
+
+	ed = G_GetEquipDefByID(self->equipment);
+	size = lengthof(ed->numItems);
+
+	for (i = 0; i < size; i++) {
+		const objDef_t *od;
+		item_t item = {NONE_AMMO, NULL, NULL, 1, 0};
+
+		if (ed->numItems[i] <= 0)
+			continue;
+
+		od = INVSH_GetItemByIDX(i);
+		if (od == NULL)
+			continue;
+
+		item.t = od;
+		if (!(INV_IsArmour(od) || od->isDummy || od->isVirtual || od->isUGVitem))
+			if (game.i.AddToInventory(&game.i, &self->chr.i, &item, INVDEF(gi.csi->idEquip), NONE, NONE, item.amount) == NULL)
+				gi.DPrintf("Skipped item '%s' for %s\n", od->id, self->classname);
+	}
+
+	G_SendInventory(PM_ALL, self);
+
+	self->think = NULL;
+}
+
+static void SP_misc_inventory (edict_t *ent)
+{
+	const equipDef_t *ed;
+
+	if (!ent->equipment) {
+		G_FreeEdict(ent);
+		return;
+	}
+
+	ed = G_GetEquipDefByID(ent->equipment);
+	if (ed == NULL) {
+		G_FreeEdict(ent);
+		return;
+	}
+
+	ent->flags |= FL_CLIENTACTION;
+	ent->classname = "misc_inventory";
+	ent->type = ET_INVENTORY;
+
+	/* set an inline model */
+	gi.SetModel(ent, ent->model);
+	ent->solid = SOLID_BSP;
+	gi.LinkEdict(ent);
+
+	ent->think = G_MiscInventoryThink;
+	ent->nextthink = 1;
 }
 
 /**

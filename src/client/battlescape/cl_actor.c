@@ -980,6 +980,10 @@ static void CL_ActorUse_f (void)
 		/* Check if we should even try to send this command (no TUs left or). */
 		if (CL_ActorUsableTUs(actor) >= TU_DOOR_ACTION)
 			CL_ActorUse(actor);
+	} else if (LE_IsInventory(actor->clientAction)) {
+		EQUIP(actor) = EQUIP(actor->clientAction);
+		UI_PushWindow("inventorymission", NULL, NULL);
+		CL_ActorUse(actor);
 	}
 }
 

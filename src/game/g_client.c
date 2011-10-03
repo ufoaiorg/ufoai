@@ -697,14 +697,16 @@ int G_ClientAction (player_t * player)
 			/* get the door edict */
 			actionEnt = G_EdictsGetByNum(i);
 
-			/* maybe the door is no longer 'alive' because it was destroyed */
+			/* maybe the edict is no longer 'alive' because it was destroyed */
 			if (actionEnt && ent->clientAction == actionEnt) {
-				if (G_IsDoor(actionEnt)) {
-					/* check whether it's part of an edict group but not the master */
-					if (actionEnt->flags & FL_GROUPSLAVE)
-						actionEnt = actionEnt->groupMaster;
+				/* check whether it's part of an edict group but not the master */
+				if (actionEnt->flags & FL_GROUPSLAVE)
+					actionEnt = actionEnt->groupMaster;
 
+				if (G_IsDoor(actionEnt)) {
 					G_ActorUseDoor(ent, actionEnt);
+				} else if (G_IsInventory(actionEnt)) {
+					EQUIP(ent) = EQUIP(actionEnt);
 				}
 			}
 		}

@@ -99,6 +99,9 @@ void G_ActorSetClientAction (edict_t *actor, edict_t *ent)
 		return;
 
 	assert(ent == NULL || (ent->flags & FL_CLIENTACTION));
+	if (actor->clientAction != NULL && G_IsInventory(actor->clientAction)) {
+		EQUIP(actor) = NULL;
+	}
 	actor->clientAction = ent;
 	if (ent == NULL) {
 		G_EventResetClientAction(actor);

@@ -186,6 +186,7 @@ extern game_export_t globals;
 #define G_IsActor(ent)			((ent)->type == ET_ACTOR || (ent)->type == ET_ACTOR2x2)
 #define G_IsTriggerNextMap(ent)	((ent)->type == ET_TRIGGER_NEXTMAP)
 #define G_IsItem(ent)			((ent)->type == ET_ITEM)
+#define G_IsInventory(ent)		((ent)->type == ET_INVENTORY)
 #define G_IsDoor(ent)			((ent)->type == ET_DOOR || (ent)->type == ET_DOOR_SLIDING)
 
 #define G_IsBreakable(ent)		((ent)->flags & FL_DESTROYABLE)
@@ -735,6 +736,7 @@ struct edict_s {
 	const char *particle;
 	const char *nextmap;
 	const char *message;		/**< misc_message */
+	const char *equipment;		/**< misc_inventory */
 	const char *noise;			/**< sounds - e.g. for func_door */
 	edictMaterial_t material;	/**< material value (e.g. for func_breakable) */
 	int count;		/**< general purpose 'amount' variable - set via mapeditor often */

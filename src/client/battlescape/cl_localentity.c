@@ -1465,6 +1465,8 @@ void LE_Cleanup (void)
 			CL_ActorCleanup(le);
 		else if (LE_IsItem(le))
 			cls.i.EmptyContainer(&cls.i, &le->i, INVDEF(csi.idFloor));
+		else if (LE_IsInventory(le))
+			cls.i.EmptyContainer(&cls.i, &le->i, INVDEF(csi.idEquip));
 
 		le->inuse = qfalse;
 	}

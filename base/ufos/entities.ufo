@@ -679,3 +679,31 @@ entity misc_item {
 		spawnflags	"255"
 	}
 }
+
+entity misc_inventory {
+	description	"Actors can requip themselves here."
+	spawnflags	"level1 level2 level3 level4 level5 level6 level7 level8"
+
+	optional {
+		team		"The team that can use this entity"
+	}
+
+	mandatory {
+		targetname	"The id of this entity"
+		equipment	"A valid equipment id"
+		spawnflags	"level flags"
+	}
+
+	type {
+		team	"UNSIGNED V_INT"
+		equipment	"V_STRING"
+	}
+
+	range {
+		team	"0 1 2 3 4 5 6 7"
+	}
+
+	default {
+		spawnflags	"255"
+	}
+}
