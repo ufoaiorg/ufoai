@@ -3593,7 +3593,7 @@
 // entity 21
 {
 "classname" "info_player_start"
-"team" "-"
+"team" "1"
 "origin" "240 976 28"
 "angle" "-90"
 }
