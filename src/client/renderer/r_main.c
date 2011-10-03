@@ -368,13 +368,17 @@ void R_RenderFrame (void)
 		R_DrawOpaqueMeshEntities(r_opaque_mesh_entities);
 		R_RenderAlphaTestBspRRefs();
 
-		R_RenderMaterialBspRRefs(); /** @todo proper blending mode */
+		R_EnableBlend(qtrue);
 
-		R_RenderBlendBspRRefs(); /** @todo proper blending mode */
-		R_RenderBlendWarpBspRRefs(); /** @todo proper blending mode */
+		R_RenderMaterialBspRRefs();
+
+		R_RenderBlendBspRRefs();
+		R_RenderBlendWarpBspRRefs();
 		R_DrawBlendMeshEntities(r_blend_mesh_entities);
 
 		R_RenderFlareBspRRefs();
+
+		R_EnableBlend(qfalse);
 
 		R_Color(NULL);
 		R_DrawSpecialEntities(r_special_entities);
