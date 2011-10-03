@@ -808,10 +808,7 @@ static void UI_BaseInventoryNodeDNDLeave (uiNode_t *node)
  */
 static void UI_BaseInventoryNodeInit (uiNode_t *node, linkedList_t *params)
 {
-	/** ATM it should not work with the battlescape cause TU is not computed */
-	assert(!CL_BattlescapeRunning());
 }
-
 
 static const value_t properties[] = {
 	/* Display/hide weapons. */
