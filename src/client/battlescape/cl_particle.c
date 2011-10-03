@@ -66,6 +66,9 @@ typedef struct timedParticle_s {
 static mapParticle_t mapParticles[MAX_MAPPARTICLES];
 static timedParticle_t timedParticles[MAX_TIMEDPARTICLES];
 
+static ptlArt_t r_particlesArt[MAX_PTL_ART];
+static int r_numParticlesArt;
+
 #define	V_VECS		((1 << V_FLOAT) | (1 << V_POS) | (1 << V_VECTOR) | (1 << V_COLOR))
 #define PTL_ONLY_ONE_TYPE		(1<<31)
 #define V_UNTYPED   0x7FFF
