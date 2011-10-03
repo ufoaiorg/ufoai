@@ -1339,18 +1339,18 @@ static inline qboolean LE_IsOriginBrush (const le_t *const le)
 /**
  * @brief Adds a box that highlights the current active door
  */
-static void LE_AddDoorHighlight (const le_t *door)
+static void LE_AddEdictHighlight (const le_t *le)
 {
-	entity_t entDoor;
-	const cBspModel_t *model = LE_GetClipModel(door);
+	entity_t ent;
+	const cBspModel_t *model = LE_GetClipModel(le);
 
-	OBJZERO(entDoor);
+	OBJZERO(ent);
 
-	entDoor.flags = RF_BOX;
-	VectorSet(entDoor.color, 1, 1, 1);
-	entDoor.alpha = (sin(cl.time * 6.28) + 1.0) / 2.0;
-	CalculateMinsMaxs(door->angles, model->mins, model->maxs, door->origin, entDoor.mins, entDoor.maxs);
-	R_AddEntity(&entDoor);
+	ent.flags = RF_BOX;
+	VectorSet(ent.color, 1, 1, 1);
+	ent.alpha = (sin(cl.time * 6.28) + 1.0) / 2.0;
+	CalculateMinsMaxs(le->angles, model->mins, model->maxs, le->origin, ent.mins, ent.maxs);
+	R_AddEntity(&ent);
 }
 
 /**
@@ -1422,11 +1422,8 @@ void LE_AddToScene (void)
 			}
 
 			if (le->selected && le->clientAction != NULL) {
-				le_t *action = le->clientAction;
-				/* highlight the current active door */
-				if (LE_IsDoor(action)) {
-					LE_AddDoorHighlight(action);
-				}
+				const le_t *action = le->clientAction;
+				LE_AddEdictHighlight(action);
 			}
 
 			/* call add function */
