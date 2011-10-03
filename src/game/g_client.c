@@ -598,7 +598,7 @@ void G_ClientGetWeaponFromInventory (edict_t *ent)
  * @param[in,out] actor The actor the player is using to activate the entity
  * @param[in,out] edict The entity that is to be used
  * @todo Do we have to change the trigger position here, too? I don't think this is really needed.
- * @sa CL_ActorUseDoor
+ * @sa CL_ActorUse
  * @sa G_UseEdict
  */
 qboolean G_ClientUseEdict (const player_t *player, edict_t *actor, edict_t *edict)
@@ -687,23 +687,25 @@ int G_ClientAction (player_t * player)
 		}
 		break;
 
-	case PA_USE_DOOR:
+	case PA_USE:
 		if (ent->clientAction) {
-			edict_t *door;
+			edict_t *actionEnt;
 
 			/* read the door the client wants to open */
 			gi.ReadFormat(format, &i);
 
 			/* get the door edict */
-			door = G_EdictsGetByNum(i);
+			actionEnt = G_EdictsGetByNum(i);
 
 			/* maybe the door is no longer 'alive' because it was destroyed */
-			if (door && ent->clientAction == door) {
-				/* check whether it's part of an edict group but not the master */
-				if (door->flags & FL_GROUPSLAVE)
-					door = door->groupMaster;
+			if (actionEnt && ent->clientAction == actionEnt) {
+				if (G_IsDoor(actionEnt)) {
+					/* check whether it's part of an edict group but not the master */
+					if (actionEnt->flags & FL_GROUPSLAVE)
+						actionEnt = actionEnt->groupMaster;
 
-				G_ActorUseDoor(ent, door);
+					G_ActorUseDoor(ent, actionEnt);
+				}
 			}
 		}
 		break;

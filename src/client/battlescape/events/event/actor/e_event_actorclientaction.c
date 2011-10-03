@@ -30,7 +30,7 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
  * @brief Reads the entity number for client interaction
  * @sa EV_CLIENT_ACTION
  * @sa Touch_DoorTrigger
- * @sa CL_ActorUseDoor
+ * @sa CL_ActorUse
  * @todo Hud should have a button that should be activated now
  */
 void CL_ActorClientAction (const eventRegister_t *self, struct dbuffer *msg)

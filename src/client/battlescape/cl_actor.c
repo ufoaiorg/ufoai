@@ -946,19 +946,18 @@ void CL_ActorInvMove (const le_t *le, containerIndex_t fromContainer, int fromX,
 }
 
 /**
- * @brief Opens a door.
- * @sa CL_ActorDoorAction
+ * @brief Uses the current selected entity in the battlescape. Can e.g. opens the selected door.
  * @sa G_ClientUseEdict
  */
-static void CL_ActorUseDoor (const le_t *le)
+static void CL_ActorUse (const le_t *le)
 {
 	if (!CL_ActorCheckAction(le))
 		return;
 
 	assert(le->clientAction);
 
-	MSG_Write_PA(PA_USE_DOOR, le->entnum, le->clientAction->entnum);
-	Com_DPrintf(DEBUG_CLIENT, "CL_ActorUseDoor: Use door number: %i (actor %i).\n", le->clientAction->entnum, le->entnum);
+	MSG_Write_PA(PA_USE, le->entnum, le->clientAction->entnum);
+	Com_DPrintf(DEBUG_CLIENT, "CL_ActorUse: Use door number: %i (actor %i).\n", le->clientAction->entnum, le->entnum);
 }
 
 /**
@@ -980,7 +979,7 @@ static void CL_ActorUse_f (void)
 	if (LE_IsDoor(actor->clientAction)) {
 		/* Check if we should even try to send this command (no TUs left or). */
 		if (CL_ActorUsableTUs(actor) >= TU_DOOR_ACTION)
-			CL_ActorUseDoor(actor);
+			CL_ActorUse(actor);
 	}
 }
 
