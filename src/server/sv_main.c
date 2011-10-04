@@ -637,7 +637,7 @@ static void SV_PingPlayers (void)
 	while ((cl = SV_GetNextClient(cl)) != NULL)
 		if (cl->state != cs_free) {
 			struct dbuffer *msg = new_dbuffer();
-			NET_WriteByte(msg, svc_disconnect);
+			NET_WriteByte(msg, svc_ping);
 			NET_WriteMsg(cl->stream, msg);
 		}
 }
