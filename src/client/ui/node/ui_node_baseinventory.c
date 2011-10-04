@@ -488,10 +488,9 @@ static void UI_BaseInventoryNodeDraw (uiNode_t *node)
 }
 
 /**
- * @note this function is a copy-paste of UI_ContainerNodeDrawItems (with remove of unneed code)
+ * @note this function is a copy-paste of UI_ContainerNodeDrawItems (with remove of unneeded code)
  */
-static invList_t *UI_BaseInventoryNodeGetItem (const uiNode_t* const node,
-	int mouseX, int mouseY, int* contX, int* contY)
+static invList_t *UI_BaseInventoryNodeGetItem (const uiNode_t* const node, int mouseX, int mouseY, int* contX, int* contY)
 {
 	qboolean outOfNode = qfalse;
 	vec2_t nodepos;
@@ -741,6 +740,7 @@ static void UI_BaseInventoryNodeMouseUp (uiNode_t *node, int x, int y, int butto
 		UI_DNDDrop();
 	}
 }
+
 static void UI_BaseInventoryNodeWheel (uiNode_t *node, int deltaX, int deltaY)
 {
 	qboolean down = deltaY > 0;
