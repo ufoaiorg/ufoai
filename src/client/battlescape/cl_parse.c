@@ -177,6 +177,13 @@ void CL_ParseServerMessage (svc_ops_t cmd, struct dbuffer *msg)
 /*		Com_Printf("svc_nop\n"); */
 		break;
 
+	case svc_ping: {
+		struct dbuffer *ack = new_dbuffer();
+		NET_WriteByte(ack, clc_ack);
+		NET_WriteMsg(cls.netStream, msg);
+		break;
+	}
+
 	case svc_disconnect:
 		NET_ReadString(msg, s, sizeof(s));
 		Com_Printf("%s\n", s);

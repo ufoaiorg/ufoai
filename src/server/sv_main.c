@@ -39,6 +39,7 @@ static cvar_t *sv_maxsoldiersperplayer;
 static cvar_t *sv_hostname;
 /** minimum seconds between connect messages */
 static cvar_t *sv_reconnect_limit;
+static cvar_t *sv_timeout;			/* seconds without any message */
 
 cvar_t *sv_maxclients = NULL;
 cvar_t *sv_dumpmapassembly;
@@ -392,7 +393,6 @@ static void SVC_DirectConnect (struct net_stream *stream)
 
 	SV_SetClientState(cl, cs_connected);
 
-	cl->lastconnect = svs.realtime;
 	Q_strncpyz(cl->peername, peername, sizeof(cl->peername));
 	cl->stream = stream;
 	NET_StreamSetData(stream, cl);
@@ -619,6 +619,38 @@ static void SV_CheckStartMatch (void)
 			SV_ClientCommand(cl, "startmatch\n");
 }
 
+#define	PING_SECONDS	5
+
+static void SV_PingPlayers (void)
+{
+	client_t *cl;
+	/* check for time wraparound */
+	if (svs.lastPing > svs.realtime)
+		svs.lastPing = svs.realtime;
+
+	if (svs.realtime - svs.lastPing < PING_SECONDS * 1000)
+		return;					/* not time to send yet */
+
+	svs.lastPing = svs.realtime;
+	while ((cl = SV_GetNextClient(cl)) != NULL)
+		if (cl->state != cs_free) {
+			struct dbuffer *msg = new_dbuffer();
+			NET_WriteByte(msg, svc_disconnect);
+			NET_WriteMsg(cl->stream, msg);
+		}
+}
+
+static void SV_CheckTimeouts (void)
+{
+	client_t *cl = NULL;
+	const int droppoint = svs.realtime - 1000 * sv_timeout->integer;
+
+	cl = NULL;
+	while ((cl = SV_GetNextClient(cl)) != NULL)
+		if (cl->state != cs_free && cl->lastmessage < droppoint)
+			SV_DropClient(cl, "timed out");
+}
+
 /**
  * @sa Qcommon_Frame
  */
@@ -655,6 +687,7 @@ void SV_Frame (int now, void *data)
 
 	SV_CheckSpawnSoldiers();
 	SV_CheckStartMatch();
+	SV_CheckTimeouts();
 
 	if (!sv_threads->integer)
 		SV_RunGameFrame();
@@ -669,6 +702,7 @@ void SV_Frame (int now, void *data)
 
 	/* send a heartbeat to the master if needed */
 	Master_Heartbeat();
+	SV_PingPlayers();
 
 	/* server is empty - so shutdown */
 	if (svs.abandon && svs.killserver)
@@ -763,6 +797,7 @@ void SV_Init (void)
 	sv_rma = Cvar_Get("sv_rma", "2", 0, "1 = old algorithm, 2 = new algorithm");
 	sv_public = Cvar_Get("sv_public", "1", 0, "Should heartbeats be send to the masterserver");
 	sv_reconnect_limit = Cvar_Get("sv_reconnect_limit", "3", CVAR_ARCHIVE, "Minimum seconds between connect messages");
+	sv_timeout = Cvar_Get("sv_timeout", "10", CVAR_ARCHIVE, "Seconds until a client times out");
 
 	SV_MapcycleInit();
 	SV_LogInit();

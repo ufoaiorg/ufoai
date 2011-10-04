@@ -237,6 +237,10 @@ void SV_ExecuteClientMessage (client_t * cl, int cmd, struct dbuffer *msg)
 	case clc_nop:
 		break;
 
+	case clc_ack:
+		cl->lastmessage = svs.realtime;
+		break;
+
 	case clc_userinfo:
 		NET_ReadString(msg, cl->userinfo, sizeof(cl->userinfo));
 		Com_DPrintf(DEBUG_SERVER, "userinfo from client: %s\n", cl->userinfo);
