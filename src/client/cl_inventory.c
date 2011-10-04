@@ -103,7 +103,7 @@ qboolean INV_LoadWeapon (const invList_t *weaponList, inventory_t *inv, const in
 	/* search an ammo */
 	while (i < weapon->numAmmos && !ic) {
 		const objDef_t *ammo = weapon->ammos[i];
-		ic = INVSH_SearchInInventoryWithFilter(inv, srcContainer, NONE, NONE, ammo, equipType);
+		ic = INV_SearchInInventoryWithFilter(inv, srcContainer, ammo, equipType);
 		i++;
 	}
 	if (ic)
@@ -339,7 +339,7 @@ qboolean INV_ItemMatchesFilter (const objDef_t *obj, const itemFilterTypes_t fil
  * @return @c invList_t Pointer to the invList_t/item that is located at x/y or equals "item".
  * @sa INVSH_SearchInInventory
  */
-invList_t *INVSH_SearchInInventoryWithFilter (const inventory_t* const i, const invDef_t * container, int x, int y, const objDef_t *item,  const itemFilterTypes_t filterType)
+invList_t *INV_SearchInInventoryWithFilter (const inventory_t* const i, const invDef_t * container, const objDef_t *item,  const itemFilterTypes_t filterType)
 {
 	invList_t *ic;
 

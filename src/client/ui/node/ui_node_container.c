@@ -83,16 +83,16 @@ static const invList_t *dragInfoIC;
 /**
  * @brief Searches if there is an item at location (x/y) in a scrollable container. You can also provide an item to search for directly (x/y is ignored in that case).
  * @note x = x-th item in a row, y = row. i.e. x/y does not equal the "grid" coordinates as used in those containers.
- * @param[in] node Context node
+ * @param[in] container The container to get the item from
  * @param[in] item Item requested
  * @param[in] filterType Filter used.
  * @todo Remove filter it is not a generic concept, and here it mean nothing
  * @return invList_t Pointer to the invList_t/item that is located at x/y or equals "item".
  * @sa INVSH_SearchInInventory
  */
-static invList_t *UI_ContainerNodeGetExistingItem (const uiNode_t *node, const objDef_t *item, const itemFilterTypes_t filterType)
+static invList_t *UI_ContainerNodeGetExistingItem (const invDef_t *container, const objDef_t *item, const itemFilterTypes_t filterType)
 {
-	return INVSH_SearchInInventoryWithFilter(ui_inventory, EXTRADATACONST(node).container, NONE, NONE, item, filterType);
+	return INV_SearchInInventoryWithFilter(ui_inventory, container, item, filterType);
 }
 
 static inline qboolean UI_IsScrollContainerNode (const uiNode_t* const node)
@@ -1007,7 +1007,7 @@ static qboolean UI_ContainerNodeDNDFinished (uiNode_t *source, qboolean isDroppe
 			const invDef_t *targetContainer = EXTRADATACONST(target).container;
 			assert(targetContainer);
 			if (UI_IsScrollContainerNode(source)) {
-				fItem = UI_ContainerNodeGetExistingItem(source, dragItem->t, MAX_FILTERTYPES);
+				fItem = UI_ContainerNodeGetExistingItem(sourceContainer, dragItem->t, MAX_FILTERTYPES);
 			} else
 				fItem = INVSH_SearchInInventory(ui_inventory, sourceContainer, dragInfoFromX, dragInfoFromY);
 			assert(fItem);

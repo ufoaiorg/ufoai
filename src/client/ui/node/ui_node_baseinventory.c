@@ -74,7 +74,7 @@ static const invList_t *dragInfoIC;
  */
 static invList_t *UI_ContainerNodeGetExistingItem (const uiNode_t *node, const objDef_t *item, const itemFilterTypes_t filterType)
 {
-	return INVSH_SearchInInventoryWithFilter(ui_inventory, EXTRADATACONST(node).super.container, NONE, NONE, item, filterType);
+	return INV_SearchInInventoryWithFilter(ui_inventory, EXTRADATACONST(node).super.container, item, filterType);
 }
 
 /**
