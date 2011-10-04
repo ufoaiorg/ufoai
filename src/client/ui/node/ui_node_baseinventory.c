@@ -3,7 +3,6 @@
  * @brief "Base inventory" is one of the container nodes. It allow to see and
  * drag and drop soldier items from a base to soldier equipments.
  * @todo extend it with aircraft equipment
- * @todo Link base container with a base
  */
 
 /*
@@ -215,8 +214,6 @@ static void UI_BaseInventoryNodeUpdateScroll (uiNode_t* node)
  */
 static void UI_GetItemTooltip (item_t item, char *tooltipText, size_t stringMaxLength)
 {
-	const objDef_t *weapon;
-
 	assert(item.t);
 
 	if (item.amount > 1)
@@ -245,7 +242,7 @@ static void UI_GetItemTooltip (item_t item, char *tooltipText, size_t stringMaxL
 				/* If it's ammo get the weapon names it can be used in */
 				Q_strcat(tooltipText, _("Usable in:\n"), stringMaxLength);
 				for (i = 0; i < item.t->numWeapons; i++) {
-					weapon = item.t->weapons[i];
+					const objDef_t *weapon = item.t->weapons[i];
 					if (GAME_ItemIsUseable(weapon)) {
 						Q_strcat(tooltipText, va("* %s\n", _(weapon->name)), stringMaxLength);
 					}
