@@ -501,8 +501,9 @@ static void G_SplashDamage (edict_t *ent, const fireDef_t *fd, vec3_t impact, sh
 			/* check whether this actor (check) is in the field of view of the 'shooter' (ent) */
 			if (G_FrustumVis(ent, check->origin)) {
 				if (!mock) {
-					G_AppearPerishEvent(~G_VisToPM(check->visflags), qtrue, check, ent);
-					G_VisFlagsAdd(check, ~check->visflags);
+					const unsigned int playerMask = G_TeamToPM(ent->team) ^ G_VisToPM(check->visflags);
+					G_AppearPerishEvent(playerMask, qtrue, check, ent);
+					G_VisFlagsAdd(check, G_PMToVis(playerMask));
 				}
 				continue;
 			}
