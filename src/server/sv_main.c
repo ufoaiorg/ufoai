@@ -632,6 +632,7 @@ static void SV_PingPlayers (void)
 		return;					/* not time to send yet */
 
 	svs.lastPing = svs.realtime;
+	cl = NULL;
 	while ((cl = SV_GetNextClient(cl)) != NULL)
 		if (cl->state != cs_free) {
 			struct dbuffer *msg = new_dbuffer();
