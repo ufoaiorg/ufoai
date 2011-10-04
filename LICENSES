@@ -4978,6 +4978,10 @@ base/textures/tex_furniture/chest006_2_nm.png | GNU General Public License 2.0 o
 base/textures/tex_furniture/chest006_3.png | GNU General Public License 2.0 or later | Martin Gerhardy
 base/textures/tex_furniture/chest006_nm.png | GNU General Public License 2.0 or later | Possum "p0ss" Hodgkin
 base/textures/tex_furniture/chest007.jpg | GNU General Public License 2.0 or later | zark127 | tex_mattn/door_19 and tex_mattn/door_18
+base/textures/tex_furniture/chest008.png | GNU General Public License 2.0 | MCR | based on images from http://www.photorack.net
+base/textures/tex_furniture/chest008_nm.png | GNU General Public License 2.0 | MCR | based on images from http://www.photorack.net
+base/textures/tex_furniture/chest009.png | GNU General Public License 2.0 | MCR | based on images from http://www.photorack.net
+base/textures/tex_furniture/chest009_nm.png | GNU General Public License 2.0 | MCR | based on images from http://www.photorack.net
 base/textures/tex_furniture/clothes.jpg | GNU General Public License 2.0 or later | zark127 | models/civilians/ skins
 base/textures/tex_furniture/couch_d.png | GNU General Public License 2.0 or later | Voller
 base/textures/tex_furniture/couch_d_nm.png | GNU General Public License 2.0 or later | Voller
