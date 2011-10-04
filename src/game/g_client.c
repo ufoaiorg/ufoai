@@ -633,7 +633,8 @@ int G_ClientAction (player_t * player)
 	int i;
 	fireDefIndex_t firemode;
 	int from, fx, fy, to, tx, ty;
-	actorHands_t hand, fmIdx, objIdx;
+	actorHands_t hand;
+	int fmIdx, objIdx;
 	int resCrouch, resShot;
 	edict_t *ent;
 	const char *format;
