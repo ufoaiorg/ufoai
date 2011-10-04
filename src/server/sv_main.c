@@ -380,6 +380,7 @@ static void SVC_DirectConnect (struct net_stream *stream)
 
 	/* new player */
 	cl->player->inuse = qtrue;
+	cl->lastmessage = svs.realtime;
 
 	/* parse some info from the info strings */
 	strncpy(cl->userinfo, userinfo, sizeof(cl->userinfo) - 1);
