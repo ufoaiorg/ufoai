@@ -36,6 +36,7 @@ void CL_InvDel (const eventRegister_t *self, struct dbuffer *msg)
 	int		x, y;
 	containerIndex_t container;
 	invList_t	*ic;
+	invDef_t *invDef;
 
 	NET_ReadFormat(msg, self->formatString, &number, &container, &x, &y);
 
@@ -56,8 +57,14 @@ void CL_InvDel (const eventRegister_t *self, struct dbuffer *msg)
 	if (le->type == ET_ACTOR || le->type == ET_ACTOR2x2)
 		LE_SetThink(le, LET_StartIdle);
 
-	ic = INVSH_SearchInInventory(&le->i, INVDEF(container), x, y);
-	/* ic can be null for other team actors - we don't the full inventory of them, only
+	invDef = INVDEF(container);
+	if (invDef->scroll) {
+		const objDef_t *od = INVSH_GetItemByIDX(x);
+		ic = INVSH_SearchInInventoryByItem(&le->i, INVDEF(container), od);
+	} else {
+		ic = INVSH_SearchInInventory(&le->i, INVDEF(container), x, y);
+	}
+	/* ic can be null for other team actors - we don't want the full inventory of them, only
 	 * the object index */
 	if (!ic)
 		return;

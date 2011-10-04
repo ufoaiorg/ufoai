@@ -116,13 +116,18 @@ void G_EventActorSendReservations (const edict_t *ent)
  * @param[in] x Position of item in container.
  * @param[in] y Position of item in container.
  */
-void G_EventInventoryDelete (const edict_t* ent, int playerMask, const invDef_t* invDef, int x, int y)
+void G_EventInventoryDelete (const edict_t* ent, int playerMask, const invDef_t* invDef, int x, int y, const objDef_t *od)
 {
 	gi.AddEvent(playerMask, EV_INV_DEL);
 	gi.WriteShort(ent->number);
 	gi.WriteByte(invDef->id);
-	gi.WriteByte(x);
-	gi.WriteByte(y);
+	if (invDef->scroll) {
+		gi.WriteByte(od->idx);
+		gi.WriteByte(0);
+	} else {
+		gi.WriteByte(x);
+		gi.WriteByte(y);
+	}
 	gi.EndEvents();
 }
 

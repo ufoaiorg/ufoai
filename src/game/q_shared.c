@@ -41,6 +41,7 @@ const char *pa_format[] =
 	"gbbl",				/**< PA_SHOOT */
 	"s",				/**< PA_USE */
 	"bbbbbb",			/**< PA_INVMOVE */
+	"bsbbb",			/**< PA_INVMOVESCROLLABLE */
 	"sss",				/**< PA_REACT_SELECT */
 	"ss"				/**< PA_RESERVE_STATE */
 };

@@ -1222,7 +1222,7 @@ qboolean G_ClientShoot (const player_t * player, edict_t* ent, const pos3_t at, 
 				assert(invDef->single);
 				itemAlreadyRemoved = qtrue;	/* for assert only */
 				game.i.EmptyContainer(&game.i, &ent->chr.i, invDef);
-				G_EventInventoryDelete(ent, G_VisToPM(ent->visflags), invDef, 0, 0);
+				G_EventInventoryDelete(ent, G_VisToPM(ent->visflags), invDef, 0, 0, weapon->t);
 			}
 		}
 
@@ -1233,7 +1233,7 @@ qboolean G_ClientShoot (const player_t * player, edict_t* ent, const pos3_t at, 
 				gi.Error("Item %s is already removed", weapon->t->id);
 			assert(invDef->single);
 			game.i.EmptyContainer(&game.i, &ent->chr.i, invDef);
-			G_EventInventoryDelete(ent, G_VisToPM(ent->visflags), invDef, 0, 0);
+			G_EventInventoryDelete(ent, G_VisToPM(ent->visflags), invDef, 0, 0, weapon->t);
 		}
 	}
 

@@ -998,8 +998,12 @@ static qboolean UI_ContainerNodeDNDFinished (uiNode_t *source, qboolean isDroppe
 		const uiNode_t *target = UI_DNDGetTargetNode();
 		const invDef_t *targetContainer = EXTRADATACONST(target).container;
 		assert(targetContainer);
-		CL_ActorInvMove(selActor, sourceContainer->id, dragInfoFromX, dragInfoFromY,
-				targetContainer->id, dragInfoToX, dragInfoToY);
+		if (sourceContainer->scroll || targetContainer->scroll) {
+			CL_ActorInvMoveScrollable(selActor, sourceContainer->id, dragItem->t, targetContainer->id, dragInfoToX, dragInfoToY);
+		} else {
+			CL_ActorInvMove(selActor, sourceContainer->id, dragInfoFromX, dragInfoFromY,
+					targetContainer->id, dragInfoToX, dragInfoToY);
+		}
 	} else {
 		uiNode_t *target = UI_DNDGetTargetNode();
 		if (target) {

@@ -25,6 +25,7 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 
 #include "../client.h"
 #include "cl_actor.h"
+#include "../cl_inventory.h"
 #include "../cgame/cl_game.h"
 #include "cl_hud.h"
 #include "cl_parse.h"
@@ -943,6 +944,27 @@ void CL_ActorInvMove (const le_t *le, containerIndex_t fromContainer, int fromX,
 
 	if (INVSH_SearchInInventory(&le->i, fromPtr, fromX, fromY) != NULL)
 		MSG_Write_PA(PA_INVMOVE, le->entnum, fromContainer, fromX, fromY, toContainer, toX, toY);
+}
+
+/**
+ * @brief Sends an inventory move event to the server fir scrollable containers
+ * @param le The le that is doing the inventory move (an actor)
+ * @param fromContainer The container to fetch the item from
+ * @param item The item to move
+ * @param toContainer The container to store the item in
+ * @param toX The x position in the container to move the item to
+ * @param toY The y position in the container to move the item to
+ */
+void CL_ActorInvMoveScrollable (const le_t *le, containerIndex_t fromContainer, const objDef_t *item, containerIndex_t toContainer, int toX, int toY)
+{
+	const invDef_t *fromPtr = INVDEF(fromContainer);
+
+	assert(CL_BattlescapeRunning());
+	assert(le);
+	assert(LE_IsActor(le));
+
+	if (INVSH_SearchInInventoryByItem(&le->i, fromPtr, item) != NULL)
+		MSG_Write_PA(PA_INVMOVESCROLLABLE, le->entnum, fromContainer, item->idx, toContainer, toX, toY);
 }
 
 /**

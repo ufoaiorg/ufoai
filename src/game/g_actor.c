@@ -508,18 +508,22 @@ qboolean G_ActorInvMove (edict_t *ent, const invDef_t * from, invList_t *fItem, 
 	invList_t fItemBackup, tItemBackup;
 	int fx, fy;
 	int originalTU, reservedTU = 0;
+	const objDef_t *od = fItem->item.t;
 
 	player = G_PLAYER_FROM_ENT(ent);
 
-	assert(fItem);
-	assert(fItem->item.t);
+	assert(od);
 
 	/* Store the location/item of 'from' BEFORE actually moving items with I_MoveInInventory. */
 	fItemBackup = *fItem;
 
 	/* Store the location of 'to' BEFORE actually moving items with I_MoveInInventory
 	 * so in case we swap ammo the client can be updated correctly */
-	tc = INVSH_SearchInInventory(&ent->chr.i, to, tx, ty);
+	if (to->scroll)
+		tc = INVSH_SearchInInventoryByItem(&ent->chr.i, to, od);
+	else
+		tc = INVSH_SearchInInventory(&ent->chr.i, to, tx, ty);
+
 	if (tc)
 		tItemBackup = *tc;
 	else
@@ -552,7 +556,7 @@ qboolean G_ActorInvMove (edict_t *ent, const invDef_t * from, invList_t *fItem, 
 
 	/* search for space */
 	if (tx == NONE) {
-		ic = INVSH_SearchInInventory(&ent->chr.i, from, fItem->x, fItem->y);
+		ic = fItem; //INVSH_SearchInInventory(&ent->chr.i, from, fItem->x, fItem->y);
 		if (ic)
 			INVSH_FindSpace(&ent->chr.i, &ic->item, to, &tx, &ty, fItem);
 		if (tx == NONE)
@@ -598,7 +602,7 @@ qboolean G_ActorInvMove (edict_t *ent, const invDef_t * from, invList_t *fItem, 
 			/* Delay this if swapping ammo, otherwise the le will be removed in the client before we can add back
 			 * the current ammo because removeNextFrame is set in LE_PlaceItem() if the floor le has no items */
 			if (ia != IA_RELOAD_SWAP)
-				G_EventInventoryDelete(floor, G_VisToPM(floor->visflags), from, fx, fy);
+				G_EventInventoryDelete(floor, G_VisToPM(floor->visflags), from, fx, fy, od);
 		} else {
 			/* Floor is empty, remove the edict (from server + client) if we are
 			 * not moving to it. */
@@ -606,10 +610,10 @@ qboolean G_ActorInvMove (edict_t *ent, const invDef_t * from, invList_t *fItem, 
 				G_EventPerish(floor);
 				G_FreeEdict(floor);
 			} else
-				G_EventInventoryDelete(floor, G_VisToPM(floor->visflags), from, fx, fy);
+				G_EventInventoryDelete(floor, G_VisToPM(floor->visflags), from, fx, fy, od);
 		}
 	} else {
-		G_EventInventoryDelete(ent, G_TeamToPM(ent->team), from, fx, fy);
+		G_EventInventoryDelete(ent, G_TeamToPM(ent->team), from, fx, fy, od);
 	}
 
 	/* send tu's */
@@ -672,7 +676,7 @@ qboolean G_ActorInvMove (edict_t *ent, const invDef_t * from, invList_t *fItem, 
 			/* Couldn't remove it before because that would remove the le from the client and would cause battlescape to crash
 			 * when trying to add back the swapped ammo above */
 			if (ia == IA_RELOAD_SWAP)
-				G_EventInventoryDelete(floor, G_VisToPM(floor->visflags), from, fx, fy);
+				G_EventInventoryDelete(floor, G_VisToPM(floor->visflags), from, fx, fy, od);
 		}
 	} else {
 		G_EventInventoryAdd(ent, G_TeamToPM(ent->team), 1);
@@ -686,7 +690,7 @@ qboolean G_ActorInvMove (edict_t *ent, const invDef_t * from, invList_t *fItem, 
 	mask = G_VisToPM(ent->visflags) & ~G_TeamToPM(ent->team);
 	if (mask) {
 		if (INV_IsRightDef(from) || INV_IsLeftDef(from)) {
-			G_EventInventoryDelete(ent, mask, from, fx, fy);
+			G_EventInventoryDelete(ent, mask, from, fx, fy, od);
 		}
 		if (INV_IsRightDef(to) || INV_IsLeftDef(to)) {
 			G_EventInventoryAdd(ent, mask, 1);

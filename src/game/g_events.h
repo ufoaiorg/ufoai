@@ -50,7 +50,7 @@ void G_EventEndRound(void);
 void G_EventEndRoundAnnounce(const player_t *player);
 void G_EventInventoryAdd(const edict_t* ent, int playerMask, int itemAmount);
 void G_EventInventoryAmmo(const edict_t* ent, const objDef_t* ammo, int amount, shoot_types_t shootType);
-void G_EventInventoryDelete(const edict_t* ent, int playerMask, const invDef_t* invDef, int x, int y);
+void G_EventInventoryDelete(const edict_t* ent, int playerMask, const invDef_t* invDef, int x, int y, const objDef_t *od);
 void G_EventInventoryReload(const edict_t* ent, int playerMask, const item_t* item, const invDef_t* invDef, const invList_t* ic);
 void G_EventModelExplodeTriggered(const edict_t *ent);
 void G_EventModelExplode(const edict_t *ent);

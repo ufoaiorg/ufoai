@@ -84,7 +84,7 @@ qboolean G_InventoryRemoveItemByID (const char *itemID, edict_t *ent, containerI
 			if (!game.i.RemoveFromInventory(&game.i, &ent->chr.i, INVDEF(container), ic))
 				gi.Error("Could not remove item '%s' from inventory %i",
 						ic->item.t->id, container);
-			G_EventInventoryDelete(ent, G_VisToPM(ent->visflags), INVDEF(container), ic->x, ic->y);
+			G_EventInventoryDelete(ent, G_VisToPM(ent->visflags), INVDEF(container), ic->x, ic->y, item);
 			return qtrue;
 		}
 		ic = ic->next;

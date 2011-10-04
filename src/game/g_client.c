@@ -688,6 +688,21 @@ int G_ClientAction (player_t * player)
 		}
 		break;
 
+	case PA_INVMOVESCROLLABLE:
+		gi.ReadFormat(format, &from, &objIdx, &to, &tx, &ty);
+
+		if (from < 0 || from >= gi.csi->numIDs || to < 0 || to >= gi.csi->numIDs) {
+			gi.DPrintf("G_ClientAction: PA_INVMOVESCROLLABLE Container index out of range. (from: %i, to: %i)\n", from, to);
+		} else {
+			const invDef_t *fromPtr = INVDEF(from);
+			const invDef_t *toPtr = INVDEF(to);
+			const objDef_t *item = INVSH_GetItemByIDX(objIdx);
+			invList_t *fromItem = INVSH_SearchInInventoryByItem(&ent->chr.i, fromPtr, item);
+			if (fromItem)
+				G_ActorInvMove(ent, fromPtr, fromItem, toPtr, tx, ty, qfalse);
+		}
+		break;
+
 	case PA_USE:
 		if (ent->clientAction) {
 			edict_t *actionEnt;
