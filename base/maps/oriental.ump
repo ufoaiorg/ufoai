@@ -176,6 +176,25 @@ a      +a     a
 0      a      0
 }
 
+// or_stand_d - Newspaperstand
+tile +stand_d
+{
+3 3
+
+0      a      0
+a      +a     a
+0      a      0
+}
+
+// or_stand_e - used car parts stand
+tile +stand_e
+{
+3 3
+
+0      a      0
+a      +a     a
+0      a      0
+}
 
 // ########################################
 
@@ -335,6 +354,8 @@ tileset stand{
 +stand_a
 +stand_b
 +stand_c
++stand_d
++stand_e
 }
 
 // ########################################
