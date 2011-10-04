@@ -180,7 +180,7 @@ void CL_ParseServerMessage (svc_ops_t cmd, struct dbuffer *msg)
 	case svc_ping: {
 		struct dbuffer *ack = new_dbuffer();
 		NET_WriteByte(ack, clc_ack);
-		NET_WriteMsg(cls.netStream, msg);
+		NET_WriteMsg(cls.netStream, ack);
 		break;
 	}
 
