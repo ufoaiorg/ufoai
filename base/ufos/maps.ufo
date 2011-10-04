@@ -965,57 +965,6 @@ mapdef frozen_industrial
 	}
 }
 
-//Mapdef to replace industrial.map
-mapdef frozen_industrial_static
-{
-	map			"+frozen"
-	param		"industrial_static"
-	description	"_An industrial compound."
-	multiplayer	true
-	teams		2
-	gametypes {
-		1on1
-		1on1on1
-		2on2
-		2on2on2
-		coop2
-		coop3
-		coop4
-	}
-	maxaliens	10
-
-	aircraft
-	{
-		craft_drop_firebird
-		craft_drop_raptor
-		craft_drop_herakles
-	}
-
-	ufos
-	{
-		craft_ufo_fighter
-	}
-
-	terrains
-	{
-		arctic
-		cold
-	}
-
-	cultures
-	{
-		//any
-	}
-
-	populations
-	{
-		nopopulation
-		rural
-		village
-		suburban
-	}
-}
-
 mapdef frozen_small
 {
 	map			"+frozen"
@@ -3771,7 +3720,7 @@ mapdef oriental
 
 mapdef oriental_mosque
 {
-	map				"oriental_mosque"
+	map				"+oriental_mosque"
 	description		"_An urban district in an oriental region."
 	multiplayer		true
 	teams			2

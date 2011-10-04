@@ -66,7 +66,7 @@ itemFilterTypes_t INV_GetFilterFromItem(const objDef_t *obj);
 const char *INV_GetFilterType(const int id);
 itemFilterTypes_t INV_GetFilterTypeID(const char * filterTypeID);
 qboolean INV_ItemMatchesFilter(const objDef_t *obj, const itemFilterTypes_t filterType);
-invList_t *INVSH_SearchInInventoryWithFilter(const inventory_t* const i, const invDef_t * container, int x, int y, const objDef_t *item,  const itemFilterTypes_t filterType) __attribute__((nonnull(1)));
+invList_t *INV_SearchInInventoryWithFilter(const inventory_t* const i, const invDef_t * container, const objDef_t *item,  const itemFilterTypes_t filterType) __attribute__((nonnull(1)));
 void INV_ItemDescription(const objDef_t *od);
 
 #endif /* CLIENT_CL_INVENTORY_H */

@@ -3,7 +3,6 @@
  * @brief "Base inventory" is one of the container nodes. It allow to see and
  * drag and drop soldier items from a base to soldier equipments.
  * @todo extend it with aircraft equipment
- * @todo Link base container with a base
  */
 
 /*
@@ -75,7 +74,7 @@ static const invList_t *dragInfoIC;
  */
 static invList_t *UI_ContainerNodeGetExistingItem (const uiNode_t *node, const objDef_t *item, const itemFilterTypes_t filterType)
 {
-	return INVSH_SearchInInventoryWithFilter(ui_inventory, EXTRADATACONST(node).super.container, NONE, NONE, item, filterType);
+	return INV_SearchInInventoryWithFilter(ui_inventory, EXTRADATACONST(node).super.container, item, filterType);
 }
 
 /**
@@ -215,8 +214,6 @@ static void UI_BaseInventoryNodeUpdateScroll (uiNode_t* node)
  */
 static void UI_GetItemTooltip (item_t item, char *tooltipText, size_t stringMaxLength)
 {
-	const objDef_t *weapon;
-
 	assert(item.t);
 
 	if (item.amount > 1)
@@ -245,7 +242,7 @@ static void UI_GetItemTooltip (item_t item, char *tooltipText, size_t stringMaxL
 				/* If it's ammo get the weapon names it can be used in */
 				Q_strcat(tooltipText, _("Usable in:\n"), stringMaxLength);
 				for (i = 0; i < item.t->numWeapons; i++) {
-					weapon = item.t->weapons[i];
+					const objDef_t *weapon = item.t->weapons[i];
 					if (GAME_ItemIsUseable(weapon)) {
 						Q_strcat(tooltipText, va("* %s\n", _(weapon->name)), stringMaxLength);
 					}
@@ -491,10 +488,9 @@ static void UI_BaseInventoryNodeDraw (uiNode_t *node)
 }
 
 /**
- * @note this function is a copy-paste of UI_ContainerNodeDrawItems (with remove of unneed code)
+ * @note this function is a copy-paste of UI_ContainerNodeDrawItems (with remove of unneeded code)
  */
-static invList_t *UI_BaseInventoryNodeGetItem (const uiNode_t* const node,
-	int mouseX, int mouseY, int* contX, int* contY)
+static invList_t *UI_BaseInventoryNodeGetItem (const uiNode_t* const node, int mouseX, int mouseY, int* contX, int* contY)
 {
 	qboolean outOfNode = qfalse;
 	vec2_t nodepos;
@@ -744,6 +740,7 @@ static void UI_BaseInventoryNodeMouseUp (uiNode_t *node, int x, int y, int butto
 		UI_DNDDrop();
 	}
 }
+
 static void UI_BaseInventoryNodeWheel (uiNode_t *node, int deltaX, int deltaY)
 {
 	qboolean down = deltaY > 0;

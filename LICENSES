@@ -477,7 +477,7 @@ base/maps/oriental/or_stand_b.map | GNU General Public License 2.0 or later
 base/maps/oriental/or_trees_a.map | GNU General Public License 2.0 or later
 base/maps/oriental/or_trees_b.map | GNU General Public License 2.0 or later
 base/maps/oriental/or_well.map | GNU General Public License 2.0 or later
-base/maps/oriental_mosque.map | GNU General Public License 2.0 or later | "SparX" Beyeler
+base/maps/oriental_mosque/om_main.map | GNU General Public License 2.0 or later | "SparX" Beyeler
 base/maps/pipes_const.map | GNU General Public License 2.0 or later | Martin Gerhardy
 base/maps/rescue/r_craft_crash_drop_firebird.map | GNU General Public License 2.0 or later | Martin Gerhardy
 base/maps/rescue/r_craft_crash_drop_raptor.map | GNU General Public License 2.0 or later | Martin Gerhardy
@@ -845,12 +845,15 @@ base/models/aliens/shevaar/body01c_nm.png | GNU General Public License 2.0 | MCR
 base/models/aliens/shevaar/head01.jpg | GNU General Public License 2.0 | Lukas "Rastaman" Beyeler
 base/models/aliens/shevaar/head01.md2 | GNU General Public License 2.0 | Lukas "Rastaman" Beyeler
 base/models/aliens/shevaar/head01_gm.png | GNU General Public License 2.0 | Lukas "Rastaman" Beyeler;MCR
+base/models/aliens/shevaar/head01_nm.png | GNU General Public License 2.0 | Lukas "Rastaman" Beyeler;MCR
 base/models/aliens/shevaar/head02.md2 | GNU General Public License 2.0 or later | Lukas "Rastaman" Beyeler
 base/models/aliens/shevaar/head02.png | GNU General Public License 2.0 | Lukas "Rastaman" Beyeler;MCR
 base/models/aliens/shevaar/head02_gm.png | GNU General Public License 2.0 | Lukas "Rastaman" Beyeler;MCR
+base/models/aliens/shevaar/head02_nm.png | GNU General Public License 2.0 | Lukas "Rastaman" Beyeler;MCR
 base/models/aliens/shevaar/head03.md2 | GNU General Public License 2.0 or later | Lukas "Rastaman" Beyeler
 base/models/aliens/shevaar/head03.png | GNU General Public License 2.0 | Lukas "Rastaman" Beyeler;MCR
 base/models/aliens/shevaar/head03_gm.png | GNU General Public License 2.0 | Lukas "Rastaman" Beyeler;MCR
+base/models/aliens/shevaar/head03_nm.png | GNU General Public License 2.0 | Lukas "Rastaman" Beyeler;MCR
 base/models/aliens/taman/body01.anm | GNU General Public License 2.0 | Lukas "Rastaman" Beyeler
 base/models/aliens/taman/body01.md2 | GNU General Public License 2.0 | Lukas "Rastaman" Beyeler
 base/models/aliens/taman/body01.tag | GNU General Public License 2.0 | Lukas "Rastaman" Beyeler
