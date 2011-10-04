@@ -3771,7 +3771,7 @@ mapdef oriental
 
 mapdef oriental_mosque
 {
-	map				"oriental_mosque"
+	map				"+oriental_mosque"
 	description		"_An urban district in an oriental region."
 	multiplayer		true
 	teams			2

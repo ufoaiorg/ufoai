@@ -477,7 +477,7 @@ base/maps/oriental/or_stand_b.map | GNU General Public License 2.0 or later
 base/maps/oriental/or_trees_a.map | GNU General Public License 2.0 or later
 base/maps/oriental/or_trees_b.map | GNU General Public License 2.0 or later
 base/maps/oriental/or_well.map | GNU General Public License 2.0 or later
-base/maps/oriental_mosque.map | GNU General Public License 2.0 or later | "SparX" Beyeler
+base/maps/oriental_mosque/om_main.map | GNU General Public License 2.0 or later | "SparX" Beyeler
 base/maps/pipes_const.map | GNU General Public License 2.0 or later | Martin Gerhardy
 base/maps/rescue/r_craft_crash_drop_firebird.map | GNU General Public License 2.0 or later | Martin Gerhardy
 base/maps/rescue/r_craft_crash_drop_raptor.map | GNU General Public License 2.0 or later | Martin Gerhardy
