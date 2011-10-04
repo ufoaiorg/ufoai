@@ -648,9 +648,17 @@ static void SV_CheckTimeouts (void)
 	const int droppoint = svs.realtime - 1000 * sv_timeout->integer;
 
 	cl = NULL;
-	while ((cl = SV_GetNextClient(cl)) != NULL)
-		if (cl->state != cs_free && cl->lastmessage < droppoint)
+	while ((cl = SV_GetNextClient(cl)) != NULL) {
+		if (cl->state == cs_free)
+			continue;
+
+		/* might be invalid across a mapchange */
+		if (cl->lastmessage > svs.realtime)
+			cl->lastmessage = svs.realtime;
+
+		if (cl->lastmessage > 0 && cl->lastmessage < droppoint)
 			SV_DropClient(cl, "timed out");
+	}
 }
 
 /**
