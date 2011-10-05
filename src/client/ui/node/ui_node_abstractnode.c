@@ -723,7 +723,7 @@ static void UI_AbstractNodePropertyChanged (uiNode_t *node, const value_t *prope
 static void UI_AbstractNodeCallRemovaAllChild (uiNode_t *node, const uiCallContext_t *context)
 {
 	if (UI_GetParamNumber(context) != 0) {
-		Com_Printf("UI_AbstractNodeCallRemovaAllChild: Invalide number of param\n");
+		Com_Printf("UI_AbstractNodeCallRemovaAllChild: Invalid number of parameters\n");
 		return;
 	}
 	UI_DeleteAllChild(node);
@@ -737,7 +737,7 @@ static void UI_AbstractNodeCallCreateChild (uiNode_t *node, const uiCallContext_
 	const char *type;
 
 	if (UI_GetParamNumber(context) != 2) {
-		Com_Printf("UI_AbstractNodeCallCreateChild: Invalide number of param\n");
+		Com_Printf("UI_AbstractNodeCallCreateChild: Invalid number of parameters\n");
 		return;
 	}
 
@@ -752,7 +752,7 @@ static void UI_AbstractNodeCallCreateChild (uiNode_t *node, const uiCallContext_
 	}
 
 	if (child == NULL) {
-		Com_Printf("UI_AbstractNodeCallCreateChild: Impossible de create the node\n");
+		Com_Printf("UI_AbstractNodeCallCreateChild: Impossible to create the node\n");
 		return;
 	}
 
@@ -762,7 +762,7 @@ static void UI_AbstractNodeCallCreateChild (uiNode_t *node, const uiCallContext_
 static void UI_AbstractNodeCallDelete (uiNode_t *node, const uiCallContext_t *context)
 {
 	if (UI_GetParamNumber(context) != 0) {
-		Com_Printf("UI_AbstractNodeCallDelete: Invalide number of param\n");
+		Com_Printf("UI_AbstractNodeCallDelete: Invalid number of parameters\n");
 		return;
 	}
 	UI_DeleteNode(node);
