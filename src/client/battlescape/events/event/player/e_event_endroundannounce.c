@@ -40,5 +40,9 @@ void CL_EndRoundAnnounce (const eventRegister_t *self, struct dbuffer * msg)
 	const int playerNum = NET_ReadByte(msg);
 	const int team = NET_ReadByte(msg);
 
+	/* go back into move mode to hide */
+	if (cls.team == playerNum)
+		Cmd_ExecuteString("hud_movemode");
+
 	GAME_EndRoundAnnounce(playerNum, team);
 }
