@@ -329,7 +329,10 @@ window mp_serverbrowser extends abstract_multiplayer_join
 			size		"16 16"
 			icon		"icons/prev"
 			onClick		{
-				*cvar:cl_serverlist = ((*cvar:cl_serverlist - 1) % 2)
+				*cvar:cl_serverlist = ((*cvar:cl_serverlist - 1) % 3)
+				if ( *cvar:cl_serverlist < 0 ) {
+					*cvar:cl_serverlist = 2
+				}
 				call *node:root.set_mn_serverliststr_from_id( *cvar:cl_serverlist )
 				cmd "pingservers refresh;"
 			}
@@ -340,7 +343,7 @@ window mp_serverbrowser extends abstract_multiplayer_join
 			size		"16 16"
 			icon		"icons/next"
 			onClick		{
-				*cvar:cl_serverlist = ((*cvar:cl_serverlist + 1) % 2)
+				*cvar:cl_serverlist = ((*cvar:cl_serverlist + 1) % 3)
 				call *node:root.set_mn_serverliststr_from_id( *cvar:cl_serverlist )
 				cmd "pingservers refresh;"
 			}
