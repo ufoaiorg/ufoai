@@ -1372,6 +1372,11 @@ void G_ClientStartMatch (player_t * player)
 	/* ensure that the last event is send, too */
 	gi.EndEvents();
 
+	if (sv_maxclients->integer > 1) {
+		/* ensure that we restart the round time limit */
+		sv_roundtimelimit->modified = qtrue;
+	}
+
 	/* inform all clients */
 	gi.BroadcastPrintf(PRINT_CONSOLE, "%s has taken control over team %i.\n", player->pers.netname, player->pers.team);
 }
