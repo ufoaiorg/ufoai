@@ -4272,9 +4272,9 @@ base/textures/tex_base/vent_round.png | GNU General Public License 2.0 | Werner 
 base/textures/tex_base/vent_round2.jpg | GNU General Public License 2.0 | Nexuiz GPLed Data
 base/textures/tex_base/vent_round2_nm.png | GNU General Public License 2.0 | MCR | Nexuiz GPLed Data
 base/textures/tex_base/vent_round_nm.png | GNU General Public License 2.0 | Werner Höhrer (hoehrer);MCR
-base/textures/tex_base/wall001.jpg | GNU General Public License 2.0 | Werner Höhrer (hoehrer)
+base/textures/tex_base/wall001.png | GNU General Public License 2.0 | Werner Höhrer (hoehrer)
 base/textures/tex_base/wall001_nm.png | GNU General Public License 2.0 or later | Martin Gerhardy
-base/textures/tex_base/wall002.jpg | GNU General Public License 2.0 | Werner Höhrer (hoehrer)
+base/textures/tex_base/wall002.png | GNU General Public License 2.0 | Werner Höhrer (hoehrer)
 base/textures/tex_base/wall002_black.jpg | GNU General Public License 2.0 | John W. Bjerk (eleazar)
 base/textures/tex_base/wall002_black_nm.png | GNU General Public License 2.0 or later | Martin Gerhardy
 base/textures/tex_base/wall002_blue.jpg | GNU General Public License 2.0 | John W. Bjerk (eleazar)
@@ -4286,7 +4286,7 @@ base/textures/tex_base/wall002_gold_nm.png | GNU General Public License 2.0 or l
 base/textures/tex_base/wall002_nm.png | GNU General Public License 2.0 or later | Martin Gerhardy
 base/textures/tex_base/wall002_red.jpg | GNU General Public License 2.0 | John W. Bjerk (eleazar)
 base/textures/tex_base/wall002_red_nm.png | GNU General Public License 2.0 or later | Martin Gerhardy
-base/textures/tex_base/wall003.jpg | GNU General Public License 2.0 | Werner Höhrer (hoehrer)
+base/textures/tex_base/wall003.png | GNU General Public License 2.0 | Werner Höhrer (hoehrer)
 base/textures/tex_base/wall003_black.jpg | GNU General Public License 2.0 | John W. Bjerk (eleazar)
 base/textures/tex_base/wall003_black_nm.png | GNU General Public License 2.0 or later | Martin Gerhardy
 base/textures/tex_base/wall003_blue.jpg | GNU General Public License 2.0 | John W. Bjerk (eleazar)
@@ -4298,7 +4298,7 @@ base/textures/tex_base/wall003_gold_nm.png | GNU General Public License 2.0 or l
 base/textures/tex_base/wall003_nm.png | GNU General Public License 2.0 or later | Martin Gerhardy
 base/textures/tex_base/wall003_red.jpg | GNU General Public License 2.0 | John W. Bjerk (eleazar)
 base/textures/tex_base/wall003_red_nm.png | GNU General Public License 2.0 or later | Martin Gerhardy
-base/textures/tex_base/wall004.jpg | GNU General Public License 2.0 | Werner Höhrer (hoehrer)
+base/textures/tex_base/wall004.png | GNU General Public License 2.0 | Werner Höhrer (hoehrer)
 base/textures/tex_base/wall004_black.jpg | GNU General Public License 2.0 | John W. Bjerk (eleazar)
 base/textures/tex_base/wall004_black_nm.png | GNU General Public License 2.0 or later | Martin Gerhardy
 base/textures/tex_base/wall004_blue.jpg | GNU General Public License 2.0 | John W. Bjerk (eleazar)
@@ -4978,6 +4978,10 @@ base/textures/tex_furniture/chest006_2_nm.png | GNU General Public License 2.0 o
 base/textures/tex_furniture/chest006_3.png | GNU General Public License 2.0 or later | Martin Gerhardy
 base/textures/tex_furniture/chest006_nm.png | GNU General Public License 2.0 or later | Possum "p0ss" Hodgkin
 base/textures/tex_furniture/chest007.jpg | GNU General Public License 2.0 or later | zark127 | tex_mattn/door_19 and tex_mattn/door_18
+base/textures/tex_furniture/chest008.png | GNU General Public License 2.0 | MCR | based on images from http://www.photorack.net
+base/textures/tex_furniture/chest008_nm.png | GNU General Public License 2.0 | MCR | based on images from http://www.photorack.net
+base/textures/tex_furniture/chest009.png | GNU General Public License 2.0 | MCR | based on images from http://www.photorack.net
+base/textures/tex_furniture/chest009_nm.png | GNU General Public License 2.0 | MCR | based on images from http://www.photorack.net
 base/textures/tex_furniture/clothes.jpg | GNU General Public License 2.0 or later | zark127 | models/civilians/ skins
 base/textures/tex_furniture/couch_d.png | GNU General Public License 2.0 or later | Voller
 base/textures/tex_furniture/couch_d_nm.png | GNU General Public License 2.0 or later | Voller

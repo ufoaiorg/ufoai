@@ -80,6 +80,7 @@ typedef struct {
 	struct client_s *clients;	/**< [sv_maxclients->value]; */
 	int lastHeartbeat;			/**< time where the last heartbeat was send to the master server
 								 * Set to a huge negative value to send immmediately */
+	int lastPing;
 	qboolean abandon;			/**< shutdown server when all clients disconnect and don't accept new connections */
 	qboolean killserver;		/**< will initiate shutdown once abandon is set */
 	threads_mutex_t *serverMutex;
@@ -159,7 +160,7 @@ typedef struct client_s {
 	player_t *player;			/**< game client structure */
 	char name[32];				/**< extracted from userinfo, high bits masked */
 	int messagelevel;			/**< for filtering printed messages */
-	int lastconnect;
+	int lastmessage;			/**< when packet was last received */
 	char peername[256];
 	struct net_stream *stream;
 } client_t;

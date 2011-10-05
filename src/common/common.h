@@ -135,6 +135,7 @@ enum svc_ops_e {
 
 	/** the rest are private to the client and server */
 	svc_nop,
+	svc_ping,
 	svc_disconnect,
 	svc_reconnect,
 	svc_print,					/**< [byte] id [string] null terminated string */
@@ -155,6 +156,7 @@ typedef int32_t svc_ops_t;
 enum clc_ops_e {
 	clc_bad,
 	clc_nop,
+	clc_ack,					/**< answer on a ping */
 	clc_endround,
 	clc_teaminfo,
 	clc_initactorstates,

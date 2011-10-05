@@ -236,8 +236,8 @@ static void SV_Status_f (void)
 	Com_Printf("map              : %s (%s)\n", sv->name, (SV_GetConfigStringInteger(CS_LIGHTMAP) ? "day" : "night"));
 	Com_Printf("active team      : %i\n", svs.ge->ClientGetActiveTeam());
 
-	Com_Printf("num status  name            address              \n");
-	Com_Printf("--- ------- --------------- ---------------------\n");
+	Com_Printf("num status  name            timeout        ready  address              \n");
+	Com_Printf("--- ------- --------------- -------------- ----- ---------------------\n");
 
 	cl = NULL;
 	i = 0;
@@ -257,6 +257,8 @@ static void SV_Status_f (void)
 			state = "SPAWNIN"; break;
 		case cs_began:
 			state = "BEGAN  "; break;
+		case cs_spawned:
+			state = "SPAWNED"; break;
 
 		default:
 			sprintf(state_buf, "%7i", cl->state);
@@ -265,7 +267,8 @@ static void SV_Status_f (void)
 		}
 
 		s = NET_StreamPeerToName(cl->stream, buf, sizeof(buf), qfalse);
-		Com_Printf("%3i %s %-15s %-21s\n", i, state, cl->name, s);
+		Com_Printf("%3i %s %-15s %14i %-5s %-21s\n", i, state, cl->name, cl->lastmessage,
+				cl->player->isReady ? "true" : "false", s);
 	}
 	Com_Printf("\n");
 }

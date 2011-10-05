@@ -237,6 +237,72 @@ equipment multiplayer_phalanx
 	item armour_power		2
 }
 
+equipment mp_arifles_only
+{
+	name "_Assault Rifles Only"
+	item assault				16
+	item assault_ammo		64
+}
+
+equipment mp_no_ir
+{
+	name "_No IR Goggles"
+	item assault				10
+	item assault_ammo		13
+	item machinegun			1
+	item machinegun_ammo		2
+	item sniper				12
+	item sniper_ammo			13
+	item pistol				8
+	item pistol_ammo			25
+	item smg				    10
+	item smg_ammo			25
+	item shotgun				10
+	item shotgun_ammo		25
+	item flamer				9
+	item flamer_ammo			13
+	item medikit						3
+	item rpg				    9
+	item rpg_ammo			13
+//	rpg_incendiary_ammo	13
+	item grenl				10
+	item grenl_ammo			23
+	item grenl_plasma_ammo	13
+	item bolterrifle			8
+	item bolterrifle_ammo	13
+	item laserpistol			10
+	item laserrifle			7
+	item laser_ammo		38
+//	item heavylaser			6
+//	item xaw95				2
+//	item xaw95_ammo			5
+//	item coilgun				2
+//	item coilgun_ammo		5
+//	item needlergun			2
+//	item needlergun_ammo		5
+	item plaspistol			10
+	item plaspistol_ammo		25
+	item plasrifle			6
+	item plasrifle_ammo		13
+	item plasblaster			5
+	item plasblaster_ammo	13
+	item pbeampistol			8
+	item pbeampistol_ammo	25
+	item pbeamcannon			5
+	item pbeamcannon_ammo	13
+	item pbeamrifle			5
+	item pbeamrifle_ammo		13
+	item fraggrenade			3
+	item plasmagrenade		3
+	item kerrblade			2 // bulky, will rarely get into the backpack
+	item plasblade			3
+	item armour_light		10
+	item armour_medium		10
+//	item armour_heavy		5
+//	item armour_power		2
+	item smokegrenade		3
+}
+
 equipment stun
 {
 	name "_Flamers/Rifles/Grenades"
