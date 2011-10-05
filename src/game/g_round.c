@@ -31,6 +31,7 @@ void G_CheckForceEndRound (void)
 {
 	player_t *p;
 	int diff;
+	int activeTeam;
 
 	/* check for roundlimits in multiplayer only */
 	if (!sv_roundtimelimit->integer || sv_maxclients->integer == 1)
@@ -70,10 +71,12 @@ void G_CheckForceEndRound (void)
 
 	gi.BroadcastPrintf(PRINT_HUD, _("Current active team hit the max round time\n"));
 
+	/* store this in a local variable, as the global variable is changed in G_ClientEndRound */
+	activeTeam = level.activeTeam;
 	/* set all team members to ready (only human players) */
 	p = NULL;
 	while ((p = G_PlayerGetNextActiveHuman(p))) {
-		if (p->pers.team == level.activeTeam) {
+		if (p->pers.team == activeTeam) {
 			G_ClientEndRound(p);
 			level.nextEndRound = level.framenum;
 		}
