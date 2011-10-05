@@ -70,7 +70,7 @@ static qboolean Check_InfoStartAligned (const entityDef_t *ed, const entity_t *e
  * @brief check targets exist (targetname), and check targetnames are targetted (target)
  * @return qfalse if there is a problem.
  */
-static qboolean Check_TargetExists(const epair_t *kvp)
+static qboolean Check_TargetExists (const epair_t *kvp)
 {
 	const char *thisKey = kvp->key;
 	const char *value = kvp->value;
@@ -88,7 +88,7 @@ static qboolean Check_TargetExists(const epair_t *kvp)
 	return qfalse;
 }
 
-static void Check_EntityWithBrushes(entity_t *e, const char *classname, int entnum)
+static void Check_EntityWithBrushes (entity_t *e, const char *classname, int entnum)
 {
 	if (!e->numbrushes) {
 		Check_Printf(VERB_CHECK, qtrue, entnum, -1, "%s with no brushes given - will be deleted\n", classname);
