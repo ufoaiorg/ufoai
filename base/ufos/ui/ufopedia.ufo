@@ -85,17 +85,17 @@ window ufopedia extends objectinfo
 				size	"638 36"
 				onChange { cmd "update_ufopedia_layout;" }
 			}
-			option description
-			{
-				label	"_Description"
-				value	"description"
-//				icon	"icons/tab_description"
-			}
 			option preresearch
 			{
 				label	"_Pre-Research Report"
 				value	"preresearch"
 //				icon	"icons/tab_preresearch"
+			}
+			option description
+			{
+				label	"_Description"
+				value	"description"
+//				icon	"icons/tab_description"
 			}
 			option stats
 			{
