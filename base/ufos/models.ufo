@@ -189,10 +189,15 @@ menu_model drop_herakles_pod
 	model	"aircraft/drop_herakles/herakles_int"
 	need	"drop_herakles_pod_top"
 }
+menu_model drop_herakles_pod2
+{
+	model	"aircraft/drop_herakles/herakles_pod_back"
+	need	"drop_herakles_pod"
+}
 menu_model drop_herakles
 {
 	model	"aircraft/drop_herakles/herakles_carryall"
-	need	"drop_herakles_pod"
+	need	"drop_herakles_pod2"
 }
 menu_model drop_herakles_solo_flying
 {
@@ -257,7 +262,7 @@ menu_model inter_saracen
 }
 menu_model inter_saracen_flying
 {
-	model	"aircraft/inter_saracen/inter_saracen_flying"
+	model	"aircraft/inter_saracen/saracen_interceptor_flying"
 }
 
 // ============== Starchaser Interceptor ======================
@@ -278,9 +283,14 @@ menu_model inter_starchaser_flying
 
 // ============== Stiletto Interceptor =====================
 
+menu_model inter_stiletto_gear
+{
+	model	"aircraft/inter_stiletto/stiletto_gear"
+}
 menu_model inter_stiletto
 {
 	model	"aircraft/inter_stiletto/stiletto"
+	need	"inter_stiletto_gear"
 }
 menu_model inter_stiletto_flying
 {
