@@ -145,6 +145,17 @@ a      +a     +a     a
 0      a      a      0
 }
 
+// two level house, 5 + 3 rooms
+tile +house_k
+{
+4 4
+
+0      a      a      0
+a      +a     +a     a
+a      +a     +a     a
+0      a      a      0
+}
+
 
 // or_stand_a - Fruitstand
 tile +stand_a
@@ -482,6 +493,7 @@ tileset stand "0 7"
 +house_g "0 3"
 +house_h "0 3"
 +house_i "0 1"
++house_k "0 1"
 +mosque "1 1"
 +minaret01    "0 1"
 +trees_b "0 2"
