@@ -290,7 +290,7 @@ qboolean LIST_Remove (linkedList_t **list, const void *data)
  */
 static linkedList_t *_LIST_Sort (linkedList_t *list, linkedListSort_t sorter, const void* userData)
 {
-	linkedList_t *p, *q, *e, *tail, *oldhead;
+	linkedList_t *p, *q, *e, *tail;
 	int insize, nmerges, psize, qsize, i;
 
 	/*
@@ -304,7 +304,6 @@ static linkedList_t *_LIST_Sort (linkedList_t *list, linkedListSort_t sorter, co
 
 	while (1) {
 		p = list;
-		oldhead = list; /* only used for circular linkage */
 		list = NULL;
 		tail = NULL;
 
