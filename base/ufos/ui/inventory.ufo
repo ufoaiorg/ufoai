@@ -144,6 +144,15 @@ window inventory
 	container belt		{ pos "54 276" }
 	container holster	{ pos "383 273" }
 	container headgear	{ pos "163 107" }
+}
+
+// ==================
+// HUD INVENTORY
+// ==================
+
+window hudinv extends inventory
+{
+	container floor		{ pos "28 362" }
 
 	// ==================
 	// buttons
@@ -157,15 +166,6 @@ window inventory
 		icon "icons/return"
 		onClick	{ call *node:root.hideinventory }
 	}
-}
-
-// ==================
-// HUD INVENTORY
-// ==================
-
-window hudinv extends inventory
-{
-	container floor		{ pos "28 362" }
 
 	zone bt_physdata
 	{
@@ -189,6 +189,19 @@ window hudinv extends inventory
 window ahudinv extends inventory
 {
 	container floor		{ pos "28 362" }
+
+	// ==================
+	// buttons
+	// ==================
+
+	custombutton bt_exit
+	{
+		background	"buttons/large_blue"
+		size "64 37"
+		pos		"428 458"
+		icon "icons/return"
+		onClick	{ call *node:root.hideinventory }
+	}
 
 	zone zone_clickright
 	{
@@ -223,8 +236,22 @@ window inventorymission extends inventory
 		size					"402 124"
 		displayweapon			true
 		displayammoofweapon		true
-		displayunavailableitem	false
 		columns					2
+		onViewChange {
+			*node:root.equip_scroll@current = <viewpos>
+			*node:root.equip_scroll@viewsize = <viewsize>
+			*node:root.equip_scroll@fullsize = <fullsize>
+		}
+	}
+
+	vscrollbar equip_scroll {
+		image			"ui/scrollbar_v_green"
+		pos				"428 390"
+		height			"50"
+		hidewhenunused	true
+		onChange {
+			*node:root.equip@viewpos = <current>
+		}
 	}
 
 	// override the string
@@ -236,5 +263,18 @@ window inventorymission extends inventory
 		string	"_Equipment"
 		color "0 0.6 0 1"
 		size "100 25"
+	}
+
+	// ==================
+	// buttons
+	// ==================
+
+	custombutton bt_exit
+	{
+		background	"buttons/large_blue"
+		size "64 37"
+		pos		"428 458"
+		icon "icons/return"
+		onClick	{ call *node:root.hideinventory }
 	}
 }

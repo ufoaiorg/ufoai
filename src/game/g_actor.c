@@ -679,7 +679,12 @@ qboolean G_ActorInvMove (edict_t *ent, const invDef_t * from, invList_t *fItem, 
 				G_EventInventoryDelete(floor, G_VisToPM(floor->visflags), from, fx, fy, od);
 		}
 	} else {
-		G_EventInventoryAdd(ent, G_TeamToPM(ent->team), 1);
+		const edict_t *addEnt;
+		if (INV_IsEquipDef(to) && ent->clientAction != NULL && G_IsInventory(ent->clientAction))
+			addEnt = ent->clientAction;
+		else
+			addEnt = ent;
+		G_EventInventoryAdd(addEnt, G_TeamToPM(ent->team), 1);
 		G_WriteItem(&item, to, tx, ty);
 		gi.EndEvents();
 	}
