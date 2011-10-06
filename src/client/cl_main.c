@@ -1131,6 +1131,7 @@ void CL_SetClientState (int state)
 	case ca_connected:
 		/* wipe the client_state_t struct */
 		CL_ClearState();
+		Cvar_Set("cl_ready", "0");
 		break;
 	default:
 		break;
