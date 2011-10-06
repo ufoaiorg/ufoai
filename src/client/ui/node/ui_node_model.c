@@ -73,8 +73,10 @@ static void UI_ListUIModels_f (void)
 
 	/* search for UI models with same name */
 	Com_Printf("UI models: %i\n", ui_global.numModels);
-	for (i = 0; i < ui_global.numModels; i++)
-		Com_Printf("id: %s\n...model: %s\n...need: %s\n\n", ui_global.models[i].id, ui_global.models[i].model, ui_global.models[i].need);
+	for (i = 0; i < ui_global.numModels; i++) {
+		const uiModel_t *m = &ui_global.models[i];
+		Com_Printf("id: %s\n...model: %s\n...need: %s\n\n", m->id, m->model, m->need);
+	}
 }
 
 static void UI_ModelNodeDraw (uiNode_t *node)
@@ -360,7 +362,7 @@ void UI_DrawModelNode (uiNode_t *node, const char *source)
 	/* draw the main model on the node */
 	R_DrawModelDirect(&mi, NULL, NULL);
 
-	/* draw all childs */
+	/* draw all children */
 	if (node->firstChild) {
 		uiNode_t *child;
 		modelInfo_t pmi = mi;
