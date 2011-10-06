@@ -1188,6 +1188,8 @@ qboolean UI_ParseUIModel (const char *name, const char **text)
 				model->next = UI_GetUIModel(token);
 				if (!model->next)
 					Com_Printf("Could not find UI model %s", token);
+				if (model->need != NULL)
+					Sys_Error("UI_ParseUIModel: second 'need' token found in model %s", name);
 				model->need = Mem_PoolStrDup(token, ui_sysPool, 0);
 			}
 		} else {
