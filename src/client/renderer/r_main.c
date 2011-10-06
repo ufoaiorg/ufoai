@@ -280,8 +280,6 @@ void R_BeginFrame (void)
  */
 void R_RenderFrame (void)
 {
-	int i;
-
 	R_Setup3D();
 
 	/* activate wire mode */
@@ -337,6 +335,8 @@ void R_RenderFrame (void)
 		R_EnableFog(qfalse);
 
 		if (r_debug_lights->integer) {
+			int i;
+
 			for (i = 0; i < r_state.numStaticLights; i++) {
 				const light_t *l = &r_state.staticLights[i];
 				R_AddCorona(l->origin, l->radius, l->color);

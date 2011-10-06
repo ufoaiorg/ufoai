@@ -397,8 +397,6 @@ void R_ClearBspRRefs (void)
 void R_AddBspRRef (const mBspModel_t *model, const vec3_t origin, const vec3_t angles, const qboolean forceVisibility)
 {
 	bspRenderRef_t *bspRR;
-	mBspSurface_t *surf;
-	int i;
 
 	if (numBspRRefs >= MAX_BSPS_TO_RENDER) {
 		Com_Printf("Cannot add BSP model rendering reference: MAX_BSPS_TO_RENDER exceeded\n");
@@ -417,7 +415,8 @@ void R_AddBspRRef (const mBspModel_t *model, const vec3_t origin, const vec3_t a
 	VectorCopy(angles, bspRR->angles);
 
 	if (forceVisibility) {
-		surf = &model->surfaces[model->firstmodelsurface];
+		int i;
+		mBspSurface_t *surf = &model->surfaces[model->firstmodelsurface];
 
 		for (i = 0; i < model->nummodelsurfaces; i++, surf++) {
 			/* visible flag for rendering */

@@ -508,10 +508,10 @@ static size_t R_PreprocessShaderR (const char *name, const char **inPtr, char *o
 				Mem_Free(buffer);
 			} else if (!strncmp((*inPtr), "replace", 7)) {
 				int r = 0;
-				byte insertedLen = 0;
 				(*inPtr) += 8;
 				r = Cvar_GetValue(Com_Parse(inPtr));
 				if (out) {
+					byte insertedLen = 0;
 					if (!Com_sprintf(out, (size_t)*remainingOutChars, "%d", r))
 						Com_Error(ERR_FATAL, "R_PreprocessShaderR: Overflow in shader loading '%s'", name);
 					insertedLen = (r / 10) + 1;
