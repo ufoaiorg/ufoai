@@ -35,7 +35,7 @@ static void R_ModLoadTags (model_t * mod, void *buffer, int bufSize)
 {
 	dMD2tag_t *pintag;
 	int version;
-	int i, j, size;
+	int i, j;
 	float *inmat;
 	dMD2tag_t pheader;
 	mAliasTag_t *pouttag;
@@ -45,8 +45,6 @@ static void R_ModLoadTags (model_t * mod, void *buffer, int bufSize)
 	version = LittleLong(pintag->version);
 	if (version != TAG_VERSION)
 		Com_Error(ERR_FATAL, "R_ModLoadTags: tag has wrong version number (%i should be %i)", version, TAG_VERSION);
-
-	size = LittleLong(pintag->ofs_extractend);
 
 	/* byte swap the header fields and sanity check */
 	for (i = 0; i < (int)sizeof(dMD2tag_t) / 4; i++)
