@@ -47,8 +47,14 @@ static void R_ModLoadTags (model_t * mod, void *buffer, int bufSize)
 		Com_Error(ERR_FATAL, "R_ModLoadTags: tag has wrong version number (%i should be %i)", version, TAG_VERSION);
 
 	/* byte swap the header fields and sanity check */
-	for (i = 0; i < (int)sizeof(dMD2tag_t) / 4; i++)
-		((int *) (&pheader))[i] = LittleLong(((int *) buffer)[i]);
+	pheader.ident = LittleLong(pintag->ident);
+	pheader.version = LittleLong(pintag->version);
+	pheader.num_tags = LittleLong(pintag->num_tags);
+	pheader.num_frames = LittleLong(pintag->num_frames);
+	pheader.ofs_names = LittleLong(pintag->ofs_names);
+	pheader.ofs_tags = LittleLong(pintag->ofs_tags);
+	pheader.ofs_end = LittleLong(pintag->ofs_end);
+	pheader.ofs_extractend = LittleLong(pintag->ofs_extractend);
 
 	if (pheader.num_tags <= 0)
 		Com_Error(ERR_FATAL, "R_ModLoadTags: tag file for %s has no tags", mod->name);
