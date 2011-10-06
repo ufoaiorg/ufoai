@@ -647,6 +647,9 @@ static void SV_CheckTimeouts (void)
 	client_t *cl = NULL;
 	const int droppoint = svs.realtime - 1000 * sv_timeout->integer;
 
+	if (sv_maxclients->integer == 1)
+		return;
+
 	cl = NULL;
 	while ((cl = SV_GetNextClient(cl)) != NULL) {
 		if (cl->state == cs_free)
@@ -807,7 +810,7 @@ void SV_Init (void)
 	sv_rma = Cvar_Get("sv_rma", "2", 0, "1 = old algorithm, 2 = new algorithm");
 	sv_public = Cvar_Get("sv_public", "1", 0, "Should heartbeats be send to the masterserver");
 	sv_reconnect_limit = Cvar_Get("sv_reconnect_limit", "3", CVAR_ARCHIVE, "Minimum seconds between connect messages");
-	sv_timeout = Cvar_Get("sv_timeout", "10", CVAR_ARCHIVE, "Seconds until a client times out");
+	sv_timeout = Cvar_Get("sv_timeout", "20", CVAR_ARCHIVE, "Seconds until a client times out");
 
 	SV_MapcycleInit();
 	SV_LogInit();
