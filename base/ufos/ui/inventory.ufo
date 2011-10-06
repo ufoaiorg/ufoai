@@ -140,7 +140,6 @@ window inventory
 	container right		{ pos "33 181" }
 	container left		{ pos "357 181" }
 	// Armour is not switchable in combat - thus no display of "container armour" needed.
-	container floor		{ pos "28 362" }
 	container backpack	{ pos "357 59" }
 	container belt		{ pos "54 276" }
 	container holster	{ pos "383 273" }
@@ -166,6 +165,8 @@ window inventory
 
 window hudinv extends inventory
 {
+	container floor		{ pos "28 362" }
+
 	zone bt_physdata
 	{
 		pos		"983 266"
@@ -187,6 +188,8 @@ window hudinv extends inventory
 
 window ahudinv extends inventory
 {
+	container floor		{ pos "28 362" }
+
 	zone zone_clickright
 	{
 		tooltip "_Inventory and physical stats"
@@ -203,21 +206,35 @@ window ahudinv extends inventory
 
 window inventorymission extends inventory
 {
-	baseinventory equip {
-		pos "28 362"
-		size					"207 317"
-		displayweapon			true
-		displayammoofweapon		false
-		displayunavailableitem	false
-		columns					1
-	 }
+	{
+		pos "256 96"
+		size "512 512"
+	}
 
+	// override the background image
+	image bar_inventory
+	{
+		src	"hud/bar_inventory_equip"
+		pos		"0 0"
+	}
+
+	baseinventory equip {
+		pos 					"26 360"
+		size					"402 124"
+		displayweapon			true
+		displayammoofweapon		true
+		displayunavailableitem	false
+		columns					2
+	}
+
+	// override the string
 	string s_floor
 	{
-		pos "24 360"
+		pos "400 360"
 		contentalign ALIGN_UC
-		string	"_Floor2"
+		ghost true
+		string	"_Equipment"
 		color "0 0.6 0 1"
-		size "76 25"
+		size "100 25"
 	}
 }
