@@ -559,6 +559,17 @@ static inline void CP_AdvanceTimeBySeconds (int seconds)
 }
 
 /**
+ * @return @c true if a month has passed
+ */
+static inline qboolean CP_IsBudgetDue (const dateLong_t *oldDate, const dateLong_t *date)
+{
+	if (oldDate->year < date->year) {
+		return qtrue;
+	}
+	return oldDate->month < date->month;
+}
+
+/**
  * @brief Called every frame when we are in geoscape view
  * @note Called for node types UI_MAP and UI_3DMAP
  * @sa NAT_HandleBudget
@@ -666,7 +677,7 @@ void CP_CampaignRun (campaign_t *campaign)
 
 		CP_DateConvertLong(&ccs.date, &date);
 		/* every new month we have to handle the budget */
-		if (oldDate.month < date.month && ccs.paid && B_AtLeastOneExists()) {
+		if (CP_IsBudgetDue(&oldDate, &date) && ccs.paid && B_AtLeastOneExists()) {
 			NAT_BackupMonthlyData();
 			NAT_HandleBudget(campaign);
 			ccs.paid = qfalse;
