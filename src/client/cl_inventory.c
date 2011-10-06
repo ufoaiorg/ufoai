@@ -346,6 +346,9 @@ invList_t *INV_SearchInInventoryWithFilter (const inventory_t* const i, const in
 	if (item == NULL)
 		return NULL;
 
+	assert(i != NULL);
+	assert(container != NULL);
+
 	for (ic = i->c[container->id]; ic; ic = ic->next) {
 		/* Search only in the items that could get displayed. */
 		if (ic && ic->item.t && (filterType == MAX_FILTERTYPES || INV_ItemMatchesFilter(ic->item.t, filterType))) {

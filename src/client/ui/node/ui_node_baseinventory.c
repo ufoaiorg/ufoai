@@ -74,6 +74,10 @@ static const invList_t *dragInfoIC;
  */
 static invList_t *UI_ContainerNodeGetExistingItem (const uiNode_t *node, const objDef_t *item, const itemFilterTypes_t filterType)
 {
+	if (ui_inventory == NULL) {
+		Com_Printf("Warning: ui_inventory is not set\n");
+		return NULL;
+	}
 	return INV_SearchInInventoryWithFilter(ui_inventory, EXTRADATACONST(node).super.container, item, filterType);
 }
 
