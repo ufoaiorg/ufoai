@@ -33,7 +33,6 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 /** @brief Model that have more than one part (top and down part of an aircraft) */
 typedef struct uiModel_s {
 	char *id;
-	char *need;
 	char *anim;	/**< animation to run for this model */
 	char *parent;	/**< parent model id */
 	char *tag;	/**< the tag the model should placed onto */

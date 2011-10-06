@@ -75,7 +75,8 @@ static void UI_ListUIModels_f (void)
 	Com_Printf("UI models: %i\n", ui_global.numModels);
 	for (i = 0; i < ui_global.numModels; i++) {
 		const uiModel_t *m = &ui_global.models[i];
-		Com_Printf("id: %s\n...model: %s\n...need: %s\n\n", m->id, m->model, m->need);
+		const char *need = m->next != NULL ? m->next->id : "none";
+		Com_Printf("id: %s\n...model: %s\n...need: %s\n\n", m->id, m->model, need);
 	}
 }
 
