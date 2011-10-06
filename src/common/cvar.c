@@ -299,7 +299,7 @@ qboolean Cvar_Delete (const char *varName)
 	for (var = cvarVarsHash[hash]; var; var = var->hash_next) {
 		if (!Q_strcasecmp(varName, var->name)) {
 			cvarChangeListener_t *changeListener;
-			if (var->flags & (CVAR_USERINFO | CVAR_SERVERINFO | CVAR_NOSET | CVAR_LATCH)) {
+			if (var->flags != 0) {
 				Com_Printf("Can't delete the cvar '%s' - it's a special cvar\n", varName);
 				return qfalse;
 			}
