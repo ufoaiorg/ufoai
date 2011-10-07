@@ -45,6 +45,10 @@ static const char* MEMORY_HumanReadable (size_t size)
 	return buf;
 }
 
+#ifdef main
+#undef main
+#endif
+
 int main (void)
 {
 	printf(STRUCTFORMAT"     "SIZEFORMAT"\n\n", "struct", "size");
