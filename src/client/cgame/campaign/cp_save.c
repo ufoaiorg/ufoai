@@ -406,6 +406,10 @@ static void SAV_GameReadGameComment (const int idx)
 		if (FS_Read(&header, sizeof(header), &f) != sizeof(header))
 			Com_Printf("Warning: Savefile header may be corrupted\n");
 
+		header.compressed = LittleLong(header.compressed);
+		header.version = LittleLong(header.version);
+		header.xmlSize = LittleLong(header.xmlSize);
+
 		if (!SAV_VerifyHeader(&header))
 			Com_Printf("Savegame header for slot%d is corrupted!\n", idx);
 		else
