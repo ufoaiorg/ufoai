@@ -97,7 +97,7 @@ static void R_ModLoadTags (model_t * mod, void *buffer, int bufSize)
 				pouttagorient->axis[k][1] = LittleFloat(*inmat++);
 				pouttagorient->axis[k][2] = LittleFloat(*inmat++);
 			}
-			VectorSet(pouttagorient->origin, *inmat++, *inmat++, *inmat++);
+			VectorSet(pouttagorient->origin, LittleFloat(*inmat++), LittleFloat(*inmat++), LittleFloat(*inmat++));
 		}
 	}
 }
