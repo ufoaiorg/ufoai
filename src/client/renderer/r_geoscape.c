@@ -402,7 +402,7 @@ static void R_DrawStarfield (int texnum, const vec3_t pos, const vec3_t rotate, 
 /**
  * @brief rotate a planet (sun or moon) with respect to the earth
  */
-static inline void RotateCelestialBody (const vec4_t v, vec4_t r, const vec3_t rotate, const vec3_t earthPos, const float celestialDist)
+static inline void R_RotateCelestialBody (const vec4_t v, vec4_t r, const vec3_t rotate, const vec3_t earthPos, const float celestialDist)
 {
 	vec4_t v1;
 	vec3_t v2;
@@ -502,7 +502,7 @@ void R_Draw3DGlobe (int x, int y, int w, int h, int day, int second, const vec3_
 	Vector4Set(antiSunPos, -cos(p) * sqrta, sin(p) * sqrta, -a, 0);
 
 	/* Rotate the sun in the relative frame of player view, to get sun location */
-	RotateCelestialBody(sunPos, sunLoc, rotate, earthPos, 1.0);
+	R_RotateCelestialBody(sunPos, sunLoc, rotate, earthPos, 1.0);
 	/* load sun texture image */
 	sun = R_FindImage(va("pics/geoscape/%s_sun", map), it_wrappic);
 	sunOverlay = R_FindImage(va("pics/geoscape/%s_sun_overlay", map), it_pic);
@@ -520,7 +520,7 @@ void R_Draw3DGlobe (int x, int y, int w, int h, int day, int second, const vec3_
 	 * about 24.9 h, and we must take day into account to avoid moon to "jump"
 	 * every time the day is changing) */
 	VectorSet(moonLoc, cos(m) * sqrta, -sin(m) * sqrta, a);
-	RotateCelestialBody(moonLoc, moonLoc, rotate, earthPos, celestialDist);
+	R_RotateCelestialBody(moonLoc, moonLoc, rotate, earthPos, celestialDist);
 
 	/* free last month's texture image */
 	if (r_globeEarth.season != currSeason) {
