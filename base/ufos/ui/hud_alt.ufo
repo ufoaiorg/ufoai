@@ -1019,6 +1019,7 @@ window hud_alt extends hud
 	confunc endround
 	{
 		*node:root.upperright.nextround@image = "althud/buttons_althud1g"
+		cmd "hud_movemode;"
 	}
 
 	confunc deselect_primaryleft { *node:root.right.bt_primaryleft@image		= "althud/buttons_althud1" }

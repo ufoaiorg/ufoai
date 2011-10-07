@@ -977,6 +977,7 @@ window hud_default extends hud
 	confunc endround
 	{
 		*node:root.next.bt_nextround@disabled = true
+		cmd "hud_movemode;"
 	}
 
 	// "RESERVATION FOR SHOT" BUTTON
