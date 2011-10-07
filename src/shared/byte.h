@@ -35,8 +35,29 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #define BigLong(X) (int)SDL_SwapBE32(X)
 #define LittleLong(X) (int)SDL_SwapLE32(X)
 
-float BigFloat(float l);
-float LittleFloat(float l);
+typedef union {
+	float f;
+	int i;
+	unsigned int ui;
+} floatint_t;
+
+static inline float FloatSwap (const float *f)
+{
+	floatint_t out;
+
+	out.f = *f;
+	out.ui = SDL_SwapLE32(out.ui);
+
+	return out.f;
+}
+
+#if SDL_BYTEORDER == SDL_LIL_ENDIAN
+#define BigFloat(X) FloatSwap(&(X))
+#define LittleFloat(X) (X)
+#else
+#define BigFloat(X) (X)
+#define LittleFloat(X) FloatSwap(&(X))
+#endif
 
 void Swap_Init(void);
 
