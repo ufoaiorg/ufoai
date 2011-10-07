@@ -40,6 +40,30 @@ tile +craft_drop_firebird
 
 }
 
+/// This is road too.
+tile +craft_drop_herakles
+{
+4 5
+0      wvu    wvu    0
+1      +vw    +vw    1
+1      +vw    +vw    hg
+1      +vw    +vw    hg
+0      wv     wv    0
+
+}
+
+/// This is road too.
+tile +craft_drop_raptor
+{
+4 5
+0      wvu    wvu    0
+1      +vw    +vw    1
+1      +vw    +vw    hg
+1      +vw    +vw    hg
+0      wv     wv    0
+
+}
+
 tile +craft_ufo_harvester
 {
 8 6
