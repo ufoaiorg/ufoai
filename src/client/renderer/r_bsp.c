@@ -477,7 +477,7 @@ void R_RenderOpaqueBspRRefs (void)
 	R_RenderBspRRefs(R_DrawSurfaces, S_OPAQUE);
 
 	R_EnableLighting(NULL, qfalse);
-	R_EnableGlowMap(NULL, qfalse);
+	R_EnableGlowMap(NULL);
 	R_EnableTexture(&texunit_lightmap, qfalse);
 }
 
@@ -491,7 +491,7 @@ void R_RenderOpaqueWarpBspRRefs (void)
 	R_RenderBspRRefs(R_DrawSurfaces, S_OPAQUE_WARP);
 
 	R_EnableWarp(NULL, qfalse);
-	R_EnableGlowMap(NULL, qfalse);
+	R_EnableGlowMap(NULL);
 }
 
 void R_RenderAlphaTestBspRRefs (void)
@@ -502,7 +502,7 @@ void R_RenderAlphaTestBspRRefs (void)
 	R_RenderBspRRefs(R_DrawSurfaces, S_ALPHA_TEST);
 
 	R_EnableLighting(NULL, qfalse);
-	R_EnableGlowMap(NULL, qfalse);
+	R_EnableGlowMap(NULL);
 	R_EnableAlphaTest(qfalse);
 }
 
@@ -540,5 +540,5 @@ void R_RenderBlendWarpBspRRefs (void)
 	R_RenderBspRRefs(R_DrawSurfaces, S_BLEND_WARP);
 
 	R_EnableWarp(NULL, qfalse);
-	R_EnableGlowMap(NULL, qfalse);
+	R_EnableGlowMap(NULL);
 }

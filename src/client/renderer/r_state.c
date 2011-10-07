@@ -657,24 +657,22 @@ static void R_UpdateGlowBufferBinding (void)
 	}
 }
 
-void R_EnableGlowMap (const image_t *image, qboolean enable)
+void R_EnableGlowMap (const image_t *image)
 {
 	if (!r_postprocess->integer)
 		return;
 
-	if (enable && image != NULL)
+	if (image)
 		R_BindTextureForTexUnit(image->texnum, &texunit_glowmap);
 
-	if (!enable && r_state.glowmap_enabled == enable && r_state.active_program == lastProgram)
+	/** @todo Is the following condition correct or not? Either fix it or write the comment why it should be done that way */
+	if (!image && r_state.glowmap_enabled == !!image && r_state.active_program == lastProgram)
 		return;
 
-	if (image == NULL)
-		enable = qfalse;
-
-	r_state.glowmap_enabled = enable;
+	r_state.glowmap_enabled = !!image;
 
 	/* Shouldn't render glow without GLSL, so enable simple program for it */
-	if (enable) {
+	if (image) {
 		if (!r_state.active_program)
 			R_UseProgram(r_state.simple_glow_program);
 	} else {

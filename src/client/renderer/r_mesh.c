@@ -703,7 +703,7 @@ void R_DrawAliasModel (entity_t *e)
 	assert(skin->texnum > 0);
 	R_BindTexture(skin->texnum);
 
-	R_EnableGlowMap(skin->glowmap, qtrue);
+	R_EnableGlowMap(skin->glowmap);
 
 	R_UpdateLightList(e);
 	R_EnableModelLights(e->lights, e->numLights, qtrue);
@@ -739,7 +739,7 @@ void R_DrawAliasModel (entity_t *e)
 
 	R_EnableModelLights(NULL, 0, qfalse);
 
-	R_EnableGlowMap(NULL, qfalse);
+	R_EnableGlowMap(NULL);
 
 	if (r_state.bumpmap_enabled)
 		R_EnableBumpmap(NULL, qfalse);

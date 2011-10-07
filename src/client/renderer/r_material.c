@@ -128,11 +128,11 @@ static void R_StageGlow (const materialStage_t *stage)
 		glowmap = stage->image->glowmap;
 
 	if (glowmap) {
-		R_EnableGlowMap(glowmap, qtrue);
+		R_EnableGlowMap(glowmap);
 		if (r_state.glowmap_enabled)
 			R_ProgramParameter1f("GLOWSCALE", stage->glowscale);
 	} else {
-		R_EnableGlowMap(NULL, qfalse);
+		R_EnableGlowMap(NULL);
 	}
 }
 
@@ -476,7 +476,7 @@ void R_DrawMaterialSurfaces (const mBspSurfaces_t *surfs)
 
 	R_EnableLighting(NULL, qfalse);
 
-	R_EnableGlowMap(NULL, qfalse);
+	R_EnableGlowMap(NULL);
 
 	R_Color(NULL);
 }

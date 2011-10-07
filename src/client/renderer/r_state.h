@@ -176,7 +176,7 @@ void R_EnableBlur(r_program_t *program, qboolean enable, r_framebuffer_t *source
 void R_EnableShell(qboolean enable);
 void R_EnableFog(qboolean enable);
 void R_EnableDrawAsGlow(qboolean enable);
-void R_EnableGlowMap(const struct image_s *image, qboolean enable);
+void R_EnableGlowMap(const struct image_s *image);
 void R_EnableModelLights(const light_t **lights, int numLights, qboolean enable);
 void R_EnableSpecularMap(const struct image_s *image, qboolean enable);
 void R_EnableRoughnessMap(const struct image_s *image, qboolean enable);
