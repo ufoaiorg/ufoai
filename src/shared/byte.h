@@ -36,12 +36,12 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #define LittleLong(X) (int)SDL_SwapLE32(X)
 
 typedef union {
-	float f;
-	int i;
-	unsigned int ui;
+	float32_t f;
+	int32_t i;
+	uint32_t ui;
 } floatint_t;
 
-static inline float FloatSwap (const float *f)
+static inline float32_t FloatSwap (const float32_t *f)
 {
 	floatint_t out;
 
