@@ -150,12 +150,20 @@ static void Sys_Signal (int s)
 {
 	switch (s) {
 	case SIGHUP:
-	case SIGINT:
-	case SIGQUIT:
 	case SIGTERM:
+	case SIGQUIT:
+#ifndef COMPILE_UFO
+	case SIGINT:
+#endif
 		Com_Printf("Received signal %d, quitting..\n", s);
 		Sys_Quit();
 		break;
+#ifdef COMPILE_UFO
+	case SIGINT:
+		Com_Printf("Received signal %d, quitting..\n", s);
+		Com_Quit();
+		break;
+#endif
 	default:
 		Sys_Error("Received signal %d.\n", s);
 		break;

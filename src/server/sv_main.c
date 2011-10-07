@@ -669,6 +669,8 @@ static void SV_CheckTimeouts (void)
  */
 void SV_Frame (int now, void *data)
 {
+	Com_ReadFromPipe();
+
 	/* change the gametype even if no server is running (e.g. the first time) */
 	if (sv_dedicated->integer && sv_gametype->modified) {
 		Com_SetGameType();

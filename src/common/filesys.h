@@ -130,6 +130,7 @@ void FS_InitFilesystem(qboolean writeToHomeDir);
 void FS_AddGameDirectory(const char *dir, qboolean write);
 void FS_RestartFilesystem(void);
 const char *FS_Gamedir(void);
+void FS_CreateOpenPipeFile(const char *filename, qFILE *f);
 const char *FS_NextPath(const char *prevpath);
 void FS_ExecAutoexec(void);
 const char *FS_GetCwd(void);

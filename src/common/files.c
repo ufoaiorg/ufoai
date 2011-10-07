@@ -41,6 +41,23 @@ static int fs_openedFiles;
 static filelink_t *fs_links;
 static searchpath_t *fs_searchpaths;
 
+void FS_CreateOpenPipeFile (const char *filename, qFILE *f)
+{
+	if (fs_searchpaths == NULL) {
+		Sys_Error("Filesystem call made without initialization");
+	}
+
+	OBJZERO(*f);
+
+	Q_strncpyz(f->name, filename, sizeof(f->name));
+	Sys_Mkfifo(va("%s/%s", FS_Gamedir(), filename), f);
+
+	if (f->f != NULL) {
+		Com_Printf("created pipe %s\n", filename);
+		fs_openedFiles++;
+	}
+}
+
 /**
  * @brief Called to find where to write a file (savegames, etc)
  * @note We will use the searchpath that isn't a pack and has highest priority

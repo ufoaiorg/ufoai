@@ -47,6 +47,7 @@ cvar_t *http_proxy;
 cvar_t *http_timeout;
 static const char *consoleLogName = "ufoconsole.log";
 static cvar_t *logfile_active; /* 1 = buffer log, 2 = flush after each print */
+static cvar_t *com_pipefile; /* name of the pipe to send commands to */
 cvar_t *sv_dedicated;
 #ifndef DEDICATED_ONLY
 static cvar_t *cl_maxfps;
@@ -60,6 +61,7 @@ cvar_t* sys_affinity;
 cvar_t* sys_os;
 
 static qFILE logfile;
+static qFILE pipefile;
 
 struct memPool_s *com_aliasSysPool;
 struct memPool_s *com_cmdSysPool;
@@ -467,6 +469,10 @@ void Com_Error (int code, const char *fmt, ...)
 		NET_Wait(0);
 
 		FS_CloseFile(&logfile);
+		if (pipefile.f != NULL) {
+			FS_CloseFile(&pipefile);
+			FS_RemoveFile(va("%s/%s", FS_Gamedir(), pipefile.name));
+		}
 
 		CL_Shutdown();
 		Qcommon_Shutdown();
@@ -506,6 +512,10 @@ void Com_Quit (void)
 	/* send an receive net messages a last time */
 	NET_Wait(0);
 	FS_CloseFile(&logfile);
+	if (pipefile.f != NULL) {
+		FS_CloseFile(&pipefile);
+		FS_RemoveFile(va("%s/%s", FS_Gamedir(), pipefile.name));
+	}
 	Sys_Quit();
 }
 
@@ -1194,6 +1204,11 @@ void Qcommon_Init (int argc, const char **argv)
 		SCR_EndLoadingPlaque();
 	}
 
+	com_pipefile = Cvar_Get("com_pipefile", "", CVAR_ARCHIVE, "Filename of the pipe that is used to send commands to the game");
+	if (com_pipefile->string[0] != '\0') {
+		FS_CreateOpenPipeFile(com_pipefile->string, &pipefile);
+	}
+
 	CL_InitAfter();
 
 	/* Check memory integrity */
@@ -1219,6 +1234,22 @@ void Qcommon_Init (int argc, const char **argv)
 
 	Com_Printf("====== UFO Initialized ======\n");
 	Com_Printf("=============================\n");
+}
+
+/**
+ * @brief Read whatever is in com_pipefile, if anything, and execute it
+ */
+void Com_ReadFromPipe (void)
+{
+	char buffer[MAX_STRING_CHARS] = { "" };
+	int read;
+
+	if (pipefile.f == NULL)
+		return;
+
+	read = FS_Read2(buffer, sizeof(buffer), &pipefile, qfalse);
+	if (read > 0)
+		Cmd_ExecuteString(buffer);
 }
 
 static void tick_timer (int now, void *data)
