@@ -10,6 +10,7 @@
 
 #include "win_local.h"
 #include "../../common/http.h"
+#include "../../common/filesys.h"
 #ifdef HAVE_BFD_H
 #include "../../shared/bfd.h"
 
