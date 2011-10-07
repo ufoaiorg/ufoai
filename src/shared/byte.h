@@ -30,10 +30,10 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 
 #include <SDL/SDL_endian.h>
 
-#define BigShort(X) SDL_SwapBE16(X)
-#define LittleShort(X) SDL_SwapLE16(X)
-#define BigLong(X) SDL_SwapBE32(X)
-#define LittleLong(X) SDL_SwapLE32(X)
+#define BigShort(X) (short)SDL_SwapBE16(X)
+#define LittleShort(X) (short)SDL_SwapLE16(X)
+#define BigLong(X) (int)SDL_SwapBE32(X)
+#define LittleLong(X) (int)SDL_SwapLE32(X)
 
 float BigFloat(float l);
 float LittleFloat(float l);
