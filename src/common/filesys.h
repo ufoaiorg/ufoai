@@ -153,6 +153,7 @@ int FS_LoadFile(const char *path, byte **buffer);
 /* a null buffer will just return the file length without loading */
 /* a -1 length is not present */
 
+int FS_Read2(void *buffer, int len, qFILE *f, qboolean failOnEmptyRead);
 int FS_Read(void *buffer, int len, qFILE * f);
 /* properly handles partial reads */
 

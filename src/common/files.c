@@ -314,7 +314,7 @@ int FS_CheckFile (const char *fmt, ...)
  * @sa FS_LoadFile
  * @sa FS_OpenFile
  */
-int FS_Read (void *buffer, int len, qFILE * f)
+int FS_Read2 (void *buffer, int len, qFILE *f, qboolean failOnEmptyRead)
 {
 	int block, remaining;
 	int read;
@@ -347,8 +347,10 @@ int FS_Read (void *buffer, int len, qFILE * f)
 			/* we might have been trying to read from a CD */
 			if (!tries)
 				tries = 1;
-			else
+			else if (failOnEmptyRead)
 				Sys_Error("FS_Read: 0 bytes read");
+			else
+				return len - remaining;
 		}
 
 		if (read == -1)
@@ -359,6 +361,11 @@ int FS_Read (void *buffer, int len, qFILE * f)
 		buf += read;
 	}
 	return len;
+}
+
+int FS_Read (void *buffer, int len, qFILE * f)
+{
+	return FS_Read2(buffer, len, f, qtrue);
 }
 
 /**
