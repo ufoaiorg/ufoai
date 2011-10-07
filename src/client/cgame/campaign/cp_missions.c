@@ -1608,7 +1608,6 @@ void CP_InitializeSpawningDelay (void)
 #ifdef DEBUG
 /**
  * @brief Debug function for creating a mission.
- * @note called with debug_addmission
  */
 static void MIS_SpawnNewMissions_f (void)
 {
