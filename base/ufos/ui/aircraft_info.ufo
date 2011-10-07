@@ -120,11 +120,27 @@ window aircraft extends iaircraft
 		if ( *cvar:mn_aircraftinbase > 0 ) {
 			*node:root.aircraft_navigation@disabled = false
 
+			if ( *cvar:mn_aircraft_model eq "drop_firebird_flying" ) { *cvar:mn_aircraft_model = "drop_firebird" }
+			elif ( *cvar:mn_aircraft_model eq "drop_herakles_flying" ) { *cvar:mn_aircraft_model = "drop_herakles" }
+			elif ( *cvar:mn_aircraft_model eq "drop_raptor_flying" ) { *cvar:mn_aircraft_model = "drop_raptor" }
+			elif ( *cvar:mn_aircraft_model eq "inter_dragon_flying" ) { *cvar:mn_aircraft_model = "inter_dragon" }
+			elif ( *cvar:mn_aircraft_model eq "inter_saracen_flying" ) { *cvar:mn_aircraft_model = "inter_saracen" }
+			elif ( *cvar:mn_aircraft_model eq "inter_stiletto_flying" ) { *cvar:mn_aircraft_model = "inter_stiletto" }
+			elif ( *cvar:mn_aircraft_model eq "inter_stingray_flying" ) { *cvar:mn_aircraft_model = "inter_stingray" }
+
 			*node:root.aircraft_return@tooltip = "_Start Aircraft"
 			*node:root.aircraft_return@onClick = { cmd "aircraft_start;" }
 			*node:root.aircraft_return@icon = "icons/aircraft_send"
 		} else {
 			*node:root.aircraft_navigation@disabled = true
+
+			if ( *cvar:mn_aircraft_model eq "drop_firebird" ) { *cvar:mn_aircraft_model = "drop_firebird" }	// TODO: The firebird still does not have a flying version
+			elif ( *cvar:mn_aircraft_model eq "drop_herakles" ) { *cvar:mn_aircraft_model = "drop_herakles_flying" }
+			elif ( *cvar:mn_aircraft_model eq "drop_raptor" ) { *cvar:mn_aircraft_model = "drop_raptor_flying" }
+			elif ( *cvar:mn_aircraft_model eq "inter_dragon" ) { *cvar:mn_aircraft_model = "inter_dragon_flying" }
+			elif ( *cvar:mn_aircraft_model eq "inter_saracen" ) { *cvar:mn_aircraft_model = "inter_saracen_flying" }
+			elif ( *cvar:mn_aircraft_model eq "inter_stiletto" ) { *cvar:mn_aircraft_model = "inter_stiletto_flying" }
+			elif ( *cvar:mn_aircraft_model eq "inter_stingray" ) { *cvar:mn_aircraft_model = "inter_stingray_flying" }
 
 			*node:root.aircraft_return@tooltip = "_Call back"
 			*node:root.aircraft_return@onClick = { cmd "aircraft_return;" }
