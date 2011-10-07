@@ -152,6 +152,10 @@ menu_model drop_firebird_top
 {
 	model	"aircraft/drop_firebird/firebird_top"
 }
+menu_model drop_firebird_top_closed
+{
+	model	"aircraft/drop_firebird/firebird_top_closed"
+}
 menu_model drop_firebird
 {
 	model	"aircraft/drop_firebird/firebird"
@@ -160,6 +164,7 @@ menu_model drop_firebird
 menu_model drop_firebird_flying
 {
 	model	"aircraft/drop_firebird/firebird_flying"
+	need	"drop_firebird_top_closed"
 }
 
 // ============== Herakles Dropship =========================
