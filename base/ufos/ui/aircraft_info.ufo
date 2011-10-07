@@ -134,7 +134,7 @@ window aircraft extends iaircraft
 		} else {
 			*node:root.aircraft_navigation@disabled = true
 
-			if ( *cvar:mn_aircraft_model eq "drop_firebird" ) { *cvar:mn_aircraft_model = "drop_firebird" }	// TODO: The firebird still does not have a flying version
+			if ( *cvar:mn_aircraft_model eq "drop_firebird" ) { *cvar:mn_aircraft_model = "drop_firebird_flying" }
 			elif ( *cvar:mn_aircraft_model eq "drop_herakles" ) { *cvar:mn_aircraft_model = "drop_herakles_flying" }
 			elif ( *cvar:mn_aircraft_model eq "drop_raptor" ) { *cvar:mn_aircraft_model = "drop_raptor_flying" }
 			elif ( *cvar:mn_aircraft_model eq "inter_dragon" ) { *cvar:mn_aircraft_model = "inter_dragon_flying" }
