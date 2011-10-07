@@ -197,7 +197,7 @@ void R_DrawFill (int x, int y, int w, int h, const vec4_t color)
 	const int g = color[1] * 255.0;
 	const int b = color[2] * 255.0;
 	const int a = color[3] * 255.0;
-	const uint32_t c = (r << 0) + (g << 8) + (b << 16) + (a << 24);
+	const uint32_t c = LittleLong((r << 0) + (g << 8) + (b << 16) + (a << 24));
 
 	if (r_fill_arrays.color_index >= lengthof(r_fill_arrays.colors))
 		return;
