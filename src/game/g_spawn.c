@@ -677,7 +677,7 @@ static void SP_misc_mission (edict_t *ent)
 {
 	edict_t *other;
 
-	ent->classname = "mission";
+	ent->classname = "misc_mission";
 	ent->type = ET_MISSION;
 
 	/* maybe this was set to something else for multiplayer */
