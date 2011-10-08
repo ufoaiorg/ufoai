@@ -376,8 +376,8 @@ entity worldspawn {
 	}
 
 	range {
-		angles_day		"-90 - 90"
-		angles_night	"-90 - 90"
+		angles_day		"-90 - 360"
+		angles_night	"-90 - 360"
 		ambient_day		"0.0 - 1.0"
 		ambient_night	"0.0 - 1.0"
 		randomspawn		"0 - 1"
