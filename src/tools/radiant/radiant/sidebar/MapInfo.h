@@ -77,8 +77,6 @@ namespace sidebar
 			/** Updates the map info data
 			 */
 			void update ();
-
-			void selectionChanged (const Selectable& selectable);
 	};
 
 	void MapInfo_Construct ();
