@@ -73,8 +73,6 @@ static void R_SetSurfaceState (const mBspSurface_t *surf)
 		R_Color(color);
 	}
 
-	R_SetArrayState(&mod->bsp);
-
 	image = surf->texinfo->image;
 	R_BindTexture(image->texnum);  /* texture */
 
@@ -129,9 +127,6 @@ void R_DrawSurfaces (const mBspSurfaces_t *surfs)
 		R_EnableBumpmap(NULL, qfalse);
 
 	R_EnableGlowMap(NULL);
-
-	/* and restore array pointers */
-	R_ResetArrayState();
 
 	R_Color(NULL);
 }

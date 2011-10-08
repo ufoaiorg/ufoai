@@ -434,6 +434,8 @@ static void R_RenderBspRRefs (drawSurfaceFunc drawFunc, surfaceArrayType_t surfT
 		if (!bsp->sorted_surfaces[surfType]->count)
 			continue;
 
+		R_SetArrayState(bsp);
+
 		glPushMatrix();
 
 		glTranslatef(bspRR->origin[0], bspRR->origin[1], bspRR->origin[2]);
@@ -454,6 +456,9 @@ static void R_RenderBspRRefs (drawSurfaceFunc drawFunc, surfaceArrayType_t surfT
 
 		glPopMatrix();
 	}
+
+	/* and restore array pointers */
+	R_ResetArrayState();
 }
 
 /**
