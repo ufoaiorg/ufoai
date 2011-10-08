@@ -27,8 +27,6 @@
 #include "MapInfo.h"
 #include "radiant_i18n.h"
 
-#include "iselection.h"
-#include "signal/isignal.h"
 #include "eclasslib.h"
 #include "scenelib.h"
 #include "gtkutil/dialog.h"
