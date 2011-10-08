@@ -26,6 +26,7 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #define R_ENTITY_H
 
 #define MAX_ANIMLIST	8
+#define MAX_ENTITY_LIGHTS 8
 
 #include "r_light.h"
 #include "r_lighting.h"
@@ -81,7 +82,7 @@ typedef struct entity_s {
 
 	vec4_t shell;					/**< shell color */
 
-	const light_t *lights[MAX_STATIC_LIGHTS];		/**< static lights sorted by distance */
+	const light_t *lights[MAX_ENTITY_LIGHTS];		/**< static and dynamic lights sorted by distance */
 	int numLights;
 
 	image_t *deathTexture;

@@ -355,6 +355,8 @@ void R_EnableModelLights (const light_t **lights, int numLights, qboolean enable
 	const vec4_t sunDirection = {0.0, 0.0, 1.0, 0.0}; /* works only with shader, not the FFP */
 	vec4_t blackColor = {0.0, 0.0, 0.0, 1.0};
 
+	assert(numLights <= MAX_GL_LIGHTS);
+
 	if (!enable || !r_state.lighting_enabled) {
 		if (r_state.lighting_enabled)
 			R_ProgramParameter1i("IS_A_MODEL", 0);

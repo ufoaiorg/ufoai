@@ -193,14 +193,7 @@ void R_ClearStaticLights (void)
  * by a separate, low-priority thread that constantly looped
  * through all the entities and updated their light lists,
  * while the high-priority rendering thread just used the most
- * up to date version available.  The current version isn't really
- * thread-safe because it uses a global variable, which is needed
- * due to the way that the standard qsort() function works, but
- * this would be easy to fix if we used our own sorting algorithm,
- * which we should probably do anyway, since qsort() isn't actually
- * likely to be very efficient given that the ordering of the list
- * isn't likely to change very much between calls.  Bubble sort
- * would probably be faster on average.
+ * up to date version available.
  *
  * In the long run, it would probably be highly beneficial to
  * separate the rendering of the world from the updating of the
@@ -227,43 +220,64 @@ void R_ClearStaticLights (void)
  * must be done in real-time (ie. rendering) from things which
  * won't be noticable to the user if they happen a bit slower, or
  * are updated a bit less often.  */
-
-
-/* global variable - NOT THREAD SAFE */
-static vec3_t origin;
-
-static inline int R_LightDistCompare (const void *a, const void *b)
-{
-	const light_t *light1 = *(const light_t * const *)a;
-	const light_t *light2 = *(const light_t * const *)b;
-	return VectorDistSqr(light1->origin, origin) - VectorDistSqr(light2->origin, origin);
-}
-
-static inline void R_SortLightList_qsort (const light_t **list, const size_t size)
-{
-	qsort(list, size, sizeof(*list), &R_LightDistCompare);
-}
-
 /**
- * @todo qsort may not be the best thing to use here,
- * given that the ordering of the list usually won't change
- * much (if at all) between calls.  Something like bubble-sort
- * might actually be more efficient in practice.
+ * @brief Adds light to the entity's lights list, sorted by distance
+ * @note Since list is very small (8 elements), insertion sort is used - it beats qsort and other fancy algos in case of a small list
+ * and allows a better integration with other parts of code.
+ * @param[in] ent The entity for which light is added
+ * @param[in] light The light itself
+ * @param[in] distSqr Squared distance from entity's origin to the light
+ * @sa R_UpdateLightList
  */
-static void R_SortLightList (const light_t **list, size_t size, const vec3_t v)
+static void R_AddLightToEntity (entity_t *ent, light_t *light, const float distSqr)
 {
-	VectorCopy(v, origin);
-	R_SortLightList_qsort(list, size);
+	int i;
+	light_t **el = ent->lights;
+	/* we have to use the offset from accumulated transform matrix, because origin is relative to attachment point for submodels */
+	const vec_t *pos = ent->transform.matrix + 12; /* type system hack, sorry */
+
+	for (i = 0; i < ent->numLights; i++) {
+		if (i == MAX_ENTITY_LIGHTS)
+			return;
+		if (distSqr < VectorDistSqr((el[i]->origin), pos)) { /** @todo will caching VectorDistSqr() results improve the rendering speed? */
+			/* found more distant light, push it down the list and insert this one*/
+			light_t *tmp;
+			if (i+1 == MAX_ENTITY_LIGHTS) {
+				/* shortcut in case light we are replacing is the last light possible; also acts as the overflow guard */
+				el[i] = light;
+				return;
+			}
+
+			while (i < ent->numLights) {
+				tmp = el[i];
+				el[i++] = light;
+				light = tmp;
+			}
+
+			el[i++] = light;
+			ent->numLights = i;
+			return;
+		}
+	}
+
+	if (i == MAX_ENTITY_LIGHTS)
+		return;
+
+	el[i++] = light;
+	ent->numLights = i;
 }
 
 /** @todo bad implementation -- copying light pointers every frame is a very wrong idea
+ * @brief Recalculate active lights list for the given entity
  * @note to accelerate math, the diagonal of aabb is used to approximate max distance from entity's origin to its most distant point
  * while this is a gross exaggeration for many models, the sole purpose of it is to be used for filtering out distant lights,
- * so nothing is broken by it
+ * so nothing is broken by it.
+ * @param[in] ent Entity to recalculate lights for
+ * @sa R_AddLightToEntity
  */
 void R_UpdateLightList (entity_t *ent)
 {
-	int i, j;
+	int i;
 	/* we have to use the offset from accumulated transform matrix, because origin is relative to attachment point for submodels */
 	const vec_t *pos = ent->transform.matrix + 12; /* type system hack, sorry */
 	vec3_t diametralVec; /** < conservative estimate of entity's bounding sphere diameter, in vector form */
@@ -272,28 +286,26 @@ void R_UpdateLightList (entity_t *ent)
 	VectorSubtract(ent->maxs, ent->mins, diametralVec); /** @todo what if origin is NOT inside aabb? then this estimate will not be conservative enough */
 	diameter = VectorLength(diametralVec);
 
-	for (i = 0, j = 0; i < r_state.numStaticLights; i++) {
-		const light_t *light = &r_state.staticLights[i];
+	ent->numLights = 0; /* clear the list of lights */
+
+	for (i = 0; i < r_state.numStaticLights; i++) {
+		light_t *light = &r_state.staticLights[i];
 		const float distSqr = VectorDistSqr(pos, light->origin);
 
 		if (distSqr > (diameter + light->radius) * (diameter + light->radius))
 			continue;
 
-		ent->lights[j++] = light;
+		R_AddLightToEntity(ent, light, distSqr);
 	}
 
 	/* add dynamic lights, too */
-	for (i = 0; i < refdef.numDynamicLights && j < MAX_STATIC_LIGHTS; i++) {
-		const light_t *light = &refdef.dynamicLights[i];
+	for (i = 0; i < refdef.numDynamicLights; i++) {
+		light_t *light = &refdef.dynamicLights[i];
 		const float distSqr = VectorDistSqr(pos, light->origin);
 
 		if (distSqr > (diameter + light->radius) * (diameter + light->radius))
 			continue;
 
-		ent->lights[j++] = light;
+		R_AddLightToEntity(ent, light, distSqr);
 	}
-
-	ent->numLights = j;
-
-	R_SortLightList(ent->lights, ent->numLights, pos);
 }
