@@ -213,10 +213,7 @@ static void R_RecursiveVisibleWorldNode (const mBspNode_t * node, int tile)
 	mBspSurface_t *surf;
 	float dot;
 
-	if (node->contents == CONTENTS_SOLID)
-		return;					/* solid */
-
-	/* if a leaf node, draw stuff */
+	/* if a leaf node, nothing to mark */
 	if (node->contents > CONTENTS_NODE)
 		return;
 
@@ -267,17 +264,14 @@ static void R_RecursiveWorldNode (const mBspNode_t * node, int tile)
 	mBspSurface_t *surf;
 	float dot;
 
-	if (node->contents == CONTENTS_SOLID)
-		return;					/* solid */
+	/* if a leaf node, nothing to mark */
+	if (node->contents > CONTENTS_NODE)
+		return;
 
 	cullState = R_CullBox(node->minmaxs, node->minmaxs + 3);
 
 	if (cullState == PSIDE_BACK)
 		return;					/* culled out */
-
-	/* if a leaf node, draw stuff */
-	if (node->contents > CONTENTS_NODE)
-		return;
 
 	/* pathfinding nodes are invalid here */
 	assert(node->plane);
