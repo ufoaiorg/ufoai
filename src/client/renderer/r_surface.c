@@ -73,7 +73,7 @@ static void R_SetSurfaceState (const mBspSurface_t *surf)
 		R_Color(color);
 	}
 
-	R_SetArrayState(mod);
+	R_SetArrayState(&mod->bsp);
 
 	image = surf->texinfo->image;
 	R_BindTexture(image->texnum);  /* texture */
