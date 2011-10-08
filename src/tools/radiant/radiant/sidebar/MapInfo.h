@@ -78,8 +78,6 @@ namespace sidebar
 			 */
 			void update ();
 	};
-
-	void MapInfo_Construct ();
 }
 
 #endif

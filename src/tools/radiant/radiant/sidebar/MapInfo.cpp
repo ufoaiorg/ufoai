@@ -165,11 +165,4 @@ namespace sidebar
 		gtk_list_store_append(_infoStore, &iter);
 		gtk_list_store_set(_infoStore, &iter, 0, _("Total Entities"), 1, GlobalRadiant().getCounter(counterEntities).get(), -1);
 	}
-
-	/**
-	 * @sa MapInfo_Destroy
-	 */
-	void MapInfo_Construct (void)
-	{
-	}
 }
