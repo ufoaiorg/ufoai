@@ -440,8 +440,6 @@ static void R_RenderBspRRefs (drawSurfaceFunc drawFunc, surfaceArrayType_t surfT
 		if (!bsp->sorted_surfaces[surfType]->count)
 			continue;
 
-		R_ShiftLights(bspRR->origin);
-
 		glPushMatrix();
 
 		glTranslatef(bspRR->origin[0], bspRR->origin[1], bspRR->origin[2]);
@@ -461,8 +459,6 @@ static void R_RenderBspRRefs (drawSurfaceFunc drawFunc, surfaceArrayType_t surfT
 #endif
 
 		glPopMatrix();
-
-		R_ShiftLights(vec3_origin);
 	}
 }
 

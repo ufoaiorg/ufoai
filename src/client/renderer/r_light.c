@@ -105,16 +105,6 @@ static void R_AddSustainedLights (void)
 	}
 }
 
-static vec3_t lights_offset;
-
-/**
- * Light sources must be translated for bsp submodel entities.
- */
-void R_ShiftLights (const vec3_t offset)
-{
-	VectorCopy(offset, lights_offset);
-}
-
 /* currently, this func processes only the world lights */
 void R_EnableLights (void)
 {
@@ -143,7 +133,7 @@ void R_EnableLights (void)
 	glDisable(GL_LIGHT0);
 
 	for (i = 1, l = refdef.dynamicLights; i <= refdef.numDynamicLights && i < maxLights && i < MAX_GL_LIGHTS; i++, l++) {
-		VectorSubtract(l->origin, lights_offset, position);
+		VectorCopy(l->origin, position);
 		glLightfv(GL_LIGHT0 + i, GL_POSITION, position);
 		VectorCopy(l->color, diffuse);
 		glLightfv(GL_LIGHT0 + i, GL_DIFFUSE, diffuse);
