@@ -1157,7 +1157,6 @@ mapdef japan_large
 	description	"_A classic eastern suburban area."
 	teams		2
 	multiplayer	false
-	teams		2
 	gametypes {
 		1on1
 		1on1on1
@@ -1208,7 +1207,6 @@ mapdef japan_small
 	description	"_A classic eastern suburban area."
 	teams		2
 	multiplayer	false
-	teams		2
 	gametypes {
 		1on1
 		1on1on1
@@ -2310,7 +2308,6 @@ mapdef japan_default
 	param		"default"
 	teams		2
 	multiplayer	true
-	teams		2
 	gametypes {
 		1on1
 		1on1on1
