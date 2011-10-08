@@ -229,10 +229,10 @@ void R_ClearStaticLights (void)
  * @param[in] distSqr Squared distance from entity's origin to the light
  * @sa R_UpdateLightList
  */
-static void R_AddLightToEntity (entity_t *ent, light_t *light, const float distSqr)
+static void R_AddLightToEntity (entity_t *ent, const light_t *light, const float distSqr)
 {
 	int i;
-	light_t **el = ent->lights;
+	const light_t **el = ent->lights;
 	/* we have to use the offset from accumulated transform matrix, because origin is relative to attachment point for submodels */
 	const vec_t *pos = ent->transform.matrix + 12; /* type system hack, sorry */
 
@@ -248,7 +248,7 @@ static void R_AddLightToEntity (entity_t *ent, light_t *light, const float distS
 			}
 
 			while (i < ent->numLights) {
-				light_t *tmp = el[i];
+				const light_t *tmp = el[i];
 				el[i++] = light;
 				light = tmp;
 			}
