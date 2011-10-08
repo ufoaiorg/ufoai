@@ -49,5 +49,3 @@ extern sphere_t r_globeEarthAtmosphere;
 void R_SphereGenerate(sphere_t *sphere, const int tris, const float radius);
 void R_SphereRender(const sphere_t *sphere, const vec3_t pos, const vec3_t rotate, const float scale, const vec4_t lightPos);
 void R_SphereInit(void);
-void R_SphereShade(const sphere_t *sphere);
-void R_SphereShadeGLSL(const sphere_t *sphere);

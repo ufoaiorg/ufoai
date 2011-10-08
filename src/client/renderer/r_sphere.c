@@ -166,58 +166,9 @@ static inline qboolean R_SphereCheckGLSL (const sphere_t *sphere)
 }
 
 /**
- * @brief Draw the sphere
- * @param[in] sphere The sphere that should be rendered
- * @param[in] pos The position (translation) of the matrix
- * @param[in] rotate The rotation of the matrix
- * @param[in] scale The scale of the matrix
- * @param[in] lightPos Set this to NULL if you don't want to change the light position
- */
-void R_SphereRender (const sphere_t *sphere, const vec3_t pos, const vec3_t rotate, const float scale, const vec4_t lightPos)
-{
-
-	/* go to a new matrix */
-	glPushMatrix();
-
-	glMatrixMode(GL_MODELVIEW);
-	glTranslatef(pos[0], pos[1], pos[2]);
-
-	/* flatten the sphere */
-	glScalef(scale * viddef.rx, scale * viddef.ry, scale);
-	R_CheckError();
-
-	/* rotate the globe as given in ccs.angles */
-	glRotatef(rotate[YAW], 1, 0, 0);
-	glRotatef(rotate[ROLL], 0, 1, 0);
-	glRotatef(rotate[PITCH], 0, 0, 1);
-
-	if (lightPos && VectorNotEmpty(lightPos))
-		glLightfv(GL_LIGHT0, GL_POSITION, lightPos);
-
-	R_CheckError();
-
-	if (!sphere->overlay  && R_SphereCheckGLSL(sphere))
-		R_SphereShadeGLSL(sphere); /* render globe with bump mapping, specularity, etc. */
-	else
-		R_SphereShade(sphere); /* otherwise, use basic OpenGL rendering */
-
-	/* cleanup common to both GLSL and normal rendering */
-	R_CheckError();
-
-	/* restore the previous matrix */
-	glPopMatrix();
-
-	refdef.aliasCount += sphere->num_tris * sphere->num_tris;
-
-	R_BindDefaultArray(GL_VERTEX_ARRAY);
-	R_BindDefaultArray(GL_TEXTURE_COORD_ARRAY);
-	R_BindDefaultArray(GL_NORMAL_ARRAY);
-}
-
-/**
  * @brief render sphere using standard OpenGL lighting
  */
-void R_SphereShade (const sphere_t *sphere)
+static void R_SphereShade (const sphere_t *sphere)
 {
 	if (sphere->overlay)
 		R_BindTexture(sphere->overlay->texnum);
@@ -248,7 +199,7 @@ void R_SphereShade (const sphere_t *sphere)
 /**
  * @brief render sphere using GLSL (bump mapping, specularity, and season-blending)
  */
-void R_SphereShadeGLSL (const sphere_t *sphere)
+static void R_SphereShadeGLSL (const sphere_t *sphere)
 {
 	if (Vector4NotEmpty(sphere->nightLightPos))
 		glLightfv(GL_LIGHT1, GL_POSITION, sphere->nightLightPos);
@@ -286,4 +237,52 @@ void R_SphereShadeGLSL (const sphere_t *sphere)
 	/* deactivate the shader program */
 	R_EnableLighting(NULL, qfalse);
 	R_SelectTexture(&texunit_diffuse);
+}
+
+/**
+ * @brief Draw the sphere
+ * @param[in] sphere The sphere that should be rendered
+ * @param[in] pos The position (translation) of the matrix
+ * @param[in] rotate The rotation of the matrix
+ * @param[in] scale The scale of the matrix
+ * @param[in] lightPos Set this to NULL if you don't want to change the light position
+ */
+void R_SphereRender (const sphere_t *sphere, const vec3_t pos, const vec3_t rotate, const float scale, const vec4_t lightPos)
+{
+	/* go to a new matrix */
+	glPushMatrix();
+
+	glMatrixMode(GL_MODELVIEW);
+	glTranslatef(pos[0], pos[1], pos[2]);
+
+	/* flatten the sphere */
+	glScalef(scale * viddef.rx, scale * viddef.ry, scale);
+	R_CheckError();
+
+	/* rotate the globe as given in ccs.angles */
+	glRotatef(rotate[YAW], 1, 0, 0);
+	glRotatef(rotate[ROLL], 0, 1, 0);
+	glRotatef(rotate[PITCH], 0, 0, 1);
+
+	if (lightPos && VectorNotEmpty(lightPos))
+		glLightfv(GL_LIGHT0, GL_POSITION, lightPos);
+
+	R_CheckError();
+
+	if (!sphere->overlay && R_SphereCheckGLSL(sphere))
+		R_SphereShadeGLSL(sphere); /* render globe with bump mapping, specularity, etc. */
+	else
+		R_SphereShade(sphere); /* otherwise, use basic OpenGL rendering */
+
+	/* cleanup common to both GLSL and normal rendering */
+	R_CheckError();
+
+	/* restore the previous matrix */
+	glPopMatrix();
+
+	refdef.aliasCount += sphere->num_tris * sphere->num_tris;
+
+	R_BindDefaultArray(GL_VERTEX_ARRAY);
+	R_BindDefaultArray(GL_TEXTURE_COORD_ARRAY);
+	R_BindDefaultArray(GL_NORMAL_ARRAY);
 }
