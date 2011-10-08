@@ -267,7 +267,7 @@ menu_model inter_saracen
 }
 menu_model inter_saracen_flying
 {
-	model	"aircraft/inter_saracen/saracen_interceptor_flying"
+	model	"aircraft/inter_saracen/saracen_flying"
 }
 
 // ============== Starchaser Interceptor ======================
