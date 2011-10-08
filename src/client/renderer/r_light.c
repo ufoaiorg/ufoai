@@ -241,15 +241,14 @@ static void R_AddLightToEntity (entity_t *ent, light_t *light, const float distS
 			return;
 		if (distSqr < VectorDistSqr((el[i]->origin), pos)) { /** @todo will caching VectorDistSqr() results improve the rendering speed? */
 			/* found more distant light, push it down the list and insert this one*/
-			light_t *tmp;
-			if (i+1 == MAX_ENTITY_LIGHTS) {
+			if (i + 1 == MAX_ENTITY_LIGHTS) {
 				/* shortcut in case light we are replacing is the last light possible; also acts as the overflow guard */
 				el[i] = light;
 				return;
 			}
 
 			while (i < ent->numLights) {
-				tmp = el[i];
+				light_t *tmp = el[i];
 				el[i++] = light;
 				light = tmp;
 			}
