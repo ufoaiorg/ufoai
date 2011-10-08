@@ -562,7 +562,7 @@ static void testEntitiesDef (void)
 	FS_LoadFile("ufos/entities.ufo", &fileBuffer);
 
 	buf = (const char *) fileBuffer;
-	CU_ASSERT_EQUAL(ED_Parse(buf), ED_OK);
+	UFO_CU_ASSERT_EQUAL_INT_MSG(ED_Parse(buf), ED_OK, ED_GetLastError());
 
 	CU_ASSERT_TRUE(numEntityDefs > 0);
 
