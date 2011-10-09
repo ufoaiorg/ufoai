@@ -111,14 +111,17 @@ static inline void R_DrawSurface (const mBspSurface_t *surf)
  */
 void R_DrawSurfaces (const mBspSurfaces_t *surfs)
 {
-	int i;
+	int numSurfaces = surfs->count;
+	mBspSurface_t	**surfPtrList = surfs->surfaces;
+	const int frame = r_locals.frame;
 
-	for (i = 0; i < surfs->count; i++) {
-		if (surfs->surfaces[i]->frame != r_locals.frame)
+	while (numSurfaces--) {
+		const mBspSurface_t *surf = *surfPtrList++;
+		if (surf->frame != frame)
 			continue;
 
-		R_SetSurfaceState(surfs->surfaces[i]);
-		R_DrawSurface(surfs->surfaces[i]);
+		R_SetSurfaceState(surf);
+		R_DrawSurface(surf);
 	}
 
 	/* reset state */
