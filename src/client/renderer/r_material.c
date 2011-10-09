@@ -384,7 +384,7 @@ static void R_DrawSurfaceStage (mBspSurface_t *surf, materialStage_t *stage)
 			const float *n = &r_mapTiles[surf->tile]->bsp.normals[surf->index * 3 + i * 3];
 			memcpy(&r_state.normal_array[i * 3], n, sizeof(vec3_t));
 
-			if (r_state.bumpmap_enabled) {
+			if (r_state.active_normalmap) {
 				const float *t = &r_mapTiles[surf->tile]->bsp.tangents[surf->index * 4 + i * 4];
 				memcpy(&r_state.tangent_array[i * 4], t, sizeof(vec3_t));
 			}
@@ -472,7 +472,7 @@ void R_DrawMaterialSurfaces (const mBspSurfaces_t *surfs)
 
 	R_EnableTexture(&texunit_lightmap, qfalse);
 
-	R_EnableBumpmap(NULL, qfalse);
+	R_EnableBumpmap(NULL);
 
 	R_EnableLighting(NULL, qfalse);
 

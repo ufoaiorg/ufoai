@@ -131,7 +131,6 @@ typedef struct rstate_s {
 	qboolean alpha_test_enabled;
 	qboolean stencil_test_enabled;
 	qboolean lighting_enabled;
-	qboolean bumpmap_enabled;
 	qboolean warp_enabled;
 	qboolean fog_enabled;
 	qboolean blur_enabled;
@@ -142,6 +141,8 @@ typedef struct rstate_s {
 	qboolean roughnessmap_enabled;
 	qboolean animation_enabled;
 	qboolean renderbuffer_enabled; /**< renderbuffer vs screen as render target*/
+
+	image_t *active_normalmap;
 } rstate_t;
 
 extern rstate_t r_state;
@@ -170,7 +171,7 @@ void R_EnableBlend(qboolean enable);
 void R_EnableAlphaTest(qboolean enable);
 void R_EnableColorArray(qboolean enable);
 qboolean R_EnableLighting(r_program_t *program, qboolean enable);
-void R_EnableBumpmap(const struct image_s *normalmap, qboolean enable);
+void R_EnableBumpmap(const struct image_s *normalmap);
 void R_EnableWarp(r_program_t *program, qboolean enable);
 void R_EnableBlur(r_program_t *program, qboolean enable, r_framebuffer_t *source, r_framebuffer_t *dest, int dir);
 void R_EnableShell(qboolean enable);

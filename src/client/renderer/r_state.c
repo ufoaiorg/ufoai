@@ -110,7 +110,7 @@ void R_UseMaterial (const material_t *material)
 	if (r_state.active_material == material)
 		return;
 
-	if (!r_state.bumpmap_enabled)
+	if (!r_state.active_normalmap)
 		return;
 
 	if (material)
@@ -360,7 +360,7 @@ void R_EnableModelLights (const light_t **lights, int numLights, qboolean enable
 	if (!enable || !r_state.lighting_enabled) {
 		if (r_state.lighting_enabled)
 			R_ProgramParameter1i("IS_A_MODEL", 0);
-		if (!r_state.bumpmap_enabled && r_state.dynamic_lighting_enabled)
+		if (!r_state.active_normalmap && r_state.dynamic_lighting_enabled)
 			R_DisableAttribute("TANGENTS");
 		glDisable(GL_LIGHTING);
 		for (i = 0; i < MAX_GL_LIGHTS; i++) {
@@ -465,7 +465,7 @@ void R_EnableAnimation (const mAliasMesh_t *mesh, float backlerp, qboolean enabl
  * @note Don't forget to bind the deluxe map, too.
  * @sa R_BindDeluxemapTexture
  */
-void R_EnableBumpmap (const image_t *normalmap, qboolean enable)
+void R_EnableBumpmap (const image_t *normalmap)
 {
 	if (!r_state.lighting_enabled)
 		return;
@@ -473,24 +473,29 @@ void R_EnableBumpmap (const image_t *normalmap, qboolean enable)
 	if (!r_bumpmap->value)
 		return;
 
-	if (enable)
-		R_BindNormalmapTexture(normalmap->texnum);
-
-	if (r_state.bumpmap_enabled == enable)
+	if (r_state.active_normalmap == normalmap)
 		return;
 
-	r_state.bumpmap_enabled = enable;
+	if (!normalmap) {
+		/* disable bump mapping */
+		R_DisableAttribute("TANGENTS");
+		R_ProgramParameter1i("BUMPMAP", 0);
 
-	if (enable) {  /* toggle state */
-		assert(normalmap);
+		r_state.active_normalmap = normalmap;
+		return;
+	}
+
+	if (!r_state.active_normalmap) {
+		/* enable bump mapping */
 		R_EnableAttribute("TANGENTS");
 		R_ProgramParameter1i("BUMPMAP", 1);
 		/* default material to use if no material gets loaded */
 		R_UseMaterial(&defaultMaterial);
-	} else {
-		R_DisableAttribute("TANGENTS");
-		R_ProgramParameter1i("BUMPMAP", 0);
 	}
+
+	R_BindNormalmapTexture(normalmap->texnum);
+
+	r_state.active_normalmap = normalmap;
 }
 
 void R_EnableWarp (r_program_t *program, qboolean enable)

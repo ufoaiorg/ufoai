@@ -108,7 +108,7 @@ static void R_DrawAliasStatic (const mAliasMesh_t *mesh, const vec4_t shellColor
 {
 	R_BindArray(GL_VERTEX_ARRAY, GL_FLOAT, mesh->verts);
 	R_BindArray(GL_NORMAL_ARRAY, GL_FLOAT, mesh->normals);
-	if (r_state.bumpmap_enabled || r_state.dynamic_lighting_enabled)
+	if (r_state.active_normalmap || r_state.dynamic_lighting_enabled)
 		R_BindArray(GL_TANGENT_ARRAY, GL_FLOAT, mesh->tangents);
 	R_BindArray(GL_TEXTURE_COORD_ARRAY, GL_FLOAT, mesh->texcoords);
 
@@ -123,7 +123,7 @@ static void R_ResetArraysAfterStaticMeshRender (void)
 {
 	R_BindDefaultArray(GL_VERTEX_ARRAY);
 	R_BindDefaultArray(GL_NORMAL_ARRAY);
-	if (r_state.bumpmap_enabled || r_state.dynamic_lighting_enabled)
+	if (r_state.active_normalmap || r_state.dynamic_lighting_enabled)
 		R_BindDefaultArray(GL_TANGENT_ARRAY);
 	R_BindDefaultArray(GL_TEXTURE_COORD_ARRAY);
 }
@@ -715,7 +715,7 @@ void R_DrawAliasModel (entity_t *e)
 	}
 
 	if (skin->normalmap)
-		R_EnableBumpmap(skin->normalmap, qtrue);
+		R_EnableBumpmap(skin->normalmap);
 
 	if (skin->specularmap)
 		R_EnableSpecularMap(skin->specularmap, qtrue);
@@ -741,8 +741,8 @@ void R_DrawAliasModel (entity_t *e)
 
 	R_EnableGlowMap(NULL);
 
-	if (r_state.bumpmap_enabled)
-		R_EnableBumpmap(NULL, qfalse);
+	if (r_state.active_normalmap)
+		R_EnableBumpmap(NULL);
 
 	R_DrawMeshShadow(e, mesh);
 
