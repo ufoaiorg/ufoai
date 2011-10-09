@@ -667,9 +667,6 @@ void SurfaceInspector::update ()
 	}
 	updateFlags();
 	updateFlagButtons();
-
-	// Update the TexTool instance as well
-	ui::TexTool::Instance().draw();
 }
 
 // Gets notified upon selection change
