@@ -109,13 +109,14 @@ gboolean EntityList::modelUpdater (GtkTreeModel* model, GtkTreePath* path, GtkTr
 	scene::Instance* instance = reinterpret_cast<scene::Instance*> (gtkutil::TreeModel::getPointer(model, iter,
 			INSTANCE_COL));
 
-	Selectable* selectable = Instance_getSelectable(*instance);
-
-	if (selectable != NULL) {
+	if (instance->isSelected()) {
 		GtkTreeSelection* selection = gtk_tree_view_get_selection(treeView);
-		if (selectable->isSelected()) {
-			gtk_tree_selection_select_path(selection, path);
-		} else {
+		gtk_tree_selection_select_path(selection, path);
+	} else {
+		Selectable* selectable = Instance_getSelectable(*instance);
+
+		if (selectable != NULL) {
+			GtkTreeSelection* selection = gtk_tree_view_get_selection(treeView);
 			gtk_tree_selection_unselect_path(selection, path);
 		}
 	}
