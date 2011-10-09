@@ -3,15 +3,45 @@
 // ==================
 
 component spinner cmp_t_spinner
-		{
-			tooltip		"_Add/Remove item to transfer cargo"
-			image		"ui/spinner_blue"
-			onChange	{
-				*cvar:tline = <node:parent.trans_list@viewpos>
-				*cvar:tline = ( *cvar:tline + *node:this@num )
-				cmd "trans_list_click <cvar:tline> <lastdiff>;"
-			}
-		}
+{
+	tooltip		"_Add/Remove item to transfer cargo"
+	image		"ui/spinner_blue"
+	onChange	{
+		*cvar:tline = <node:parent.trans_list@viewpos>
+		*cvar:tline = ( *cvar:tline + *node:this@num )
+		cmd "trans_list_click <cvar:tline> <lastdiff>;"
+	}
+}
+
+component spinner cmp_t_spinner_x10
+{
+	tooltip		"_Add/Remove item to transfer cargo"
+	image		"ui/spinner_blue"
+	onChange	{
+		*cvar:tline = <node:parent.trans_list@viewpos>
+		*cvar:tline = ( *cvar:tline + *node:this@num )
+//---1
+		cmd "trans_list_click <cvar:tline> <lastdiff>;"
+//---2
+		cmd "trans_list_click <cvar:tline> <lastdiff>;"
+//---3
+		cmd "trans_list_click <cvar:tline> <lastdiff>;"
+//---4
+		cmd "trans_list_click <cvar:tline> <lastdiff>;"
+//---5
+		cmd "trans_list_click <cvar:tline> <lastdiff>;"
+//---6
+		cmd "trans_list_click <cvar:tline> <lastdiff>;"
+//---7
+		cmd "trans_list_click <cvar:tline> <lastdiff>;"
+//---8
+		cmd "trans_list_click <cvar:tline> <lastdiff>;"
+//---9
+		cmd "trans_list_click <cvar:tline> <lastdiff>;"
+//---10
+		cmd "trans_list_click <cvar:tline> <lastdiff>;"
+	}
+}
 
 window transfer
 {
@@ -187,89 +217,171 @@ window transfer
 
 		cmp_t_spinner t_spinner0
 		{
-			pos			"485 43"
+			pos			"490 43"
+		}
+		cmp_t_spinner_x10 t_spinnerb0
+		{
+			pos			"475 43"
 		}
 		cmp_t_spinner t_spinner1
 		{
-			pos			"485 68"
+			pos			"490 68"
+		}
+		cmp_t_spinner_x10 t_spinnerb1
+		{
+			pos			"475 68"
 		}
 		cmp_t_spinner t_spinner2
 		{
-			pos			"485 93"
+			pos			"490 93"
+		}
+		cmp_t_spinner_x10 t_spinnerb2
+		{
+			pos			"475 93"
 		}
 		cmp_t_spinner t_spinner3
 		{
-			pos			"485 118"
+			pos			"490 118"
 		}
-
+		cmp_t_spinner_x10 t_spinnerb3
+		{
+			pos			"475 118"
+		}
 		cmp_t_spinner t_spinner4
 		{
-			pos			"485 143"
+			pos			"490 143"
+		}
+		cmp_t_spinner_x10 t_spinnerb4
+		{
+			pos			"475 143"
 		}
 		cmp_t_spinner t_spinner5
 		{
-			pos			"485 168"
+			pos			"490 168"
+		}
+		cmp_t_spinner_x10 t_spinnerb5
+		{
+			pos			"475 168"
 		}
 		cmp_t_spinner t_spinner6
 		{
-			pos			"485 193"
+			pos			"490 193"
+		}
+		cmp_t_spinner_x10 t_spinnerb6
+		{
+			pos			"475 193"
 		}
 		cmp_t_spinner t_spinner7
 		{
-			pos			"485 218"
+			pos			"490 218"
+		}
+		cmp_t_spinner_x10 t_spinnerb7
+		{
+			pos			"475 218"
 		}
 		cmp_t_spinner t_spinner8
 		{
-			pos			"485 243"
+			pos			"490 243"
+		}
+		cmp_t_spinner_x10 t_spinnerb8
+		{
+			pos			"475 243"
 		}
 		cmp_t_spinner t_spinner9
 		{
-			pos			"485 268"
+			pos			"490 268"
+		}
+		cmp_t_spinner_x10 t_spinnerb9
+		{
+			pos			"475 268"
 		}
 		cmp_t_spinner t_spinner10
 		{
-			pos			"485 293"
+			pos			"490 293"
+		}
+		cmp_t_spinner_x10 t_spinnerb10
+		{
+			pos			"475 293"
 		}
 		cmp_t_spinner t_spinner11
 		{
-			pos			"485 318"
+			pos			"490 318"
 		}
-
+		cmp_t_spinner_x10 t_spinnerb11
+		{
+			pos			"475 318"
+		}
 		cmp_t_spinner t_spinner12
 		{
-			pos			"485 343"
+			pos			"490 343"
+		}
+		cmp_t_spinner_x10 t_spinnerb12
+		{
+			pos			"475 343"
 		}
 		cmp_t_spinner t_spinner13
 		{
-			pos			"485 368"
+			pos			"490 368"
+		}
+		cmp_t_spinner_x10 t_spinnerb13
+		{
+			pos			"475 368"
 		}
 		cmp_t_spinner t_spinner14
 		{
-			pos			"485 393"
+			pos			"490 393"
+		}
+		cmp_t_spinner_x10 t_spinnerb14
+		{
+			pos			"475 393"
 		}
 		cmp_t_spinner t_spinner15
 		{
-			pos			"485 418"
+			pos			"490 418"
+		}
+		cmp_t_spinner_x10 t_spinnerb15
+		{
+			pos			"475 418"
 		}
 		cmp_t_spinner t_spinner16
 		{
-			pos			"485 443"
+			pos			"490 443"
+		}
+		cmp_t_spinner_x10 t_spinnerb16
+		{
+			pos			"475 443"
 		}
 		cmp_t_spinner t_spinner17
 		{
-			pos			"485 468"
+			pos			"490 468"
+		}
+		cmp_t_spinner_x10 t_spinnerb17
+		{
+			pos			"475 468"
 		}
 		cmp_t_spinner t_spinner18
 		{
-			pos			"485 493"
+			pos			"490 493"
+		}
+		cmp_t_spinner_x10 t_spinnerb18
+		{
+			pos			"475 493"
 		}
 		cmp_t_spinner t_spinner19
 		{
-			pos			"485 518"
+			pos			"490 518"
+		}
+		cmp_t_spinner_x10 t_spinnerb19
+		{
+			pos			"475 518"
 		}
 		cmp_t_spinner t_spinner20
 		{
-			pos			"485 543"
+			pos			"490 543"
+		}
+		cmp_t_spinner_x10 t_spinnerb20
+		{
+			pos			"475 543"
 		}
 	}
 
@@ -286,10 +398,12 @@ window transfer
 		}
 		while ( *cvar:i < *cvar:loop_max ) {
 			*node:root.itemlist.t_spinner<cvar:i>@invis = false
+			*node:root.itemlist.t_spinnerb<cvar:i>@invis = false
 			*cvar:i = ( *cvar:i + 1 )
 		}
 		while ( *cvar:i < 21 ) {
 			*node:root.itemlist.t_spinner<cvar:i>@invis = true
+			*node:root.itemlist.t_spinnerb<cvar:i>@invis = true
 			*cvar:i = ( *cvar:i + 1 )
 		}
 	}
@@ -304,6 +418,9 @@ window transfer
 		*node:root.itemlist.t_spinner<1>@current = <2>
 		*node:root.itemlist.t_spinner<1>@min = <3>
 		*node:root.itemlist.t_spinner<1>@max = <4>
+		*node:root.itemlist.t_spinnerb<1>@current = <2>
+		*node:root.itemlist.t_spinnerb<1>@min = <3>
+		*node:root.itemlist.t_spinnerb<1>@max = <4>
 	}
 
 	/**
@@ -486,6 +603,7 @@ window transfer
 		*cvar:i = 0;
 		while ( *cvar:i < 21 ) {
 			*node:root.itemlist.t_spinner<cvar:i>@num = <cvar:i>
+			*node:root.itemlist.t_spinnerb<cvar:i>@num = <cvar:i>
 			*cvar:i = ( *cvar:i + 1 )
 		}
 		delete *cvar:i
