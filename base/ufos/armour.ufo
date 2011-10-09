@@ -64,9 +64,9 @@ item armour_light
 	scale		0.7
 	price		1400
 	size		60
+	penalty		1
 	armourpath	"light"
 	useable		phalanx
-	//TODO: TU penalty value. No support for this yet.
 
 	protection {
 		normal_light		20
@@ -125,9 +125,9 @@ item armour_lightadv
 	scale		0.7
 	price		1600
 	size		60
+	penalty		1
 	useable		phalanx
 	armourpath	"lightadv"
-	//TODO: TU penalty value. No support for this yet.
 
 	protection {
 		normal_light		25
@@ -186,9 +186,9 @@ item armour_medium
 	scale		0.7
 	price		7500
 	size		120
+	penalty		2
 	useable		phalanx
 	armourpath	"medium"
-	//TODO: TU penalty value. No support for this yet.
 
 	protection {
 		normal_light		31
@@ -248,9 +248,9 @@ item armour_power
 	scale		0.7
 	price		32000
 	size		150
+	penalty		4
 	useable		phalanx
 	armourpath	"power"
-	//TODO: TU penalty value. No support for this yet.
 
 	protection {
 		normal_light		41
@@ -307,10 +307,10 @@ item armour_power
 //	shape		"0 0 3 4"
 //	center		"0 0 -5"
 //	scale		0.7
+//	penalty		3
 //	price		32000
 //	useable		phalanx
 //	armourpath	"medium2"
-//	//TODO: TU penalty value. No support for this yet.
 //
 //	protection {
 //		normal_light		25
@@ -366,9 +366,9 @@ item armour_power
 //	center		"0 0 -5"
 //	scale		0.7
 //	price		32000
+//	penalty		4
 //	useable		phalanx
 //	armourpath	"power2"
-//	//TODO: TU penalty value. No support for this yet.
 //
 //	protection {
 //		normal_light	25
@@ -424,9 +424,9 @@ item armour_power
 //	center		"0 0 -5"
 //	scale		0.7
 //	price		32000
+//	penalty		5
 //	useable		phalanx
 //	armourpath	"power3"
-//	//TODO: TU penalty value. No support for this yet.
 //
 //	protection {
 //		normal_light	25
@@ -486,10 +486,10 @@ item armour_light_alien
 	center		"0 0 -5"
 	scale		0.7
 	price		1400
+	penalty		1
 	size		50
 	useable		alien
 	armourpath	"light"
-	//TODO: TU penalty value. No support for this yet.
 
 	protection {
 		normal_light	20
@@ -547,10 +547,10 @@ item armour_medium_alien
 	center		"0 0 -5"
 	scale		0.7
 	price		7500
+	penalty		2
 	size		75
 	useable		alien
 	armourpath	"medium"
-	//TODO: TU penalty value. No support for this yet.
 
 	protection {
 		normal_light	31

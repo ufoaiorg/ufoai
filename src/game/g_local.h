@@ -85,6 +85,9 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #define ACTOR_VIS_10	0.1
 #define ACTOR_VIS_0		0.0
 
+#define G_ArmourGetTUPenalty(armour)	((armour)->penalty)
+#define G_ActorGetArmourTUPenalty(ent)	(ARMOUR(ent) != NULL ? G_ArmourGetTUPenalty(ARMOUR((ent))->item.t) : 0)
+
 #define MIN_TU				27
 #define GET_TU(ent)			(G_IsDazed(ent) ? 0 : GET_MAX_TU(ent));
 #define GET_MAX_TU(ent)		(min((MIN_TU + ((ent)->chr.score.skills[ABILITY_SPEED]) * 20 / MAX_SKILL), 255))
