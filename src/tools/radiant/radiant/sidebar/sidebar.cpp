@@ -65,10 +65,6 @@ Sidebar::Sidebar ()
 Sidebar::~Sidebar ()
 {
 	ui::SurfaceInspector::Instance().shutdown();
-	//EntityList::Instance().shutdown();
-	//EntityInspector::getInstance().shutdown();
-	//sidebar::MapInfo::getInstance().shutdown();
-	//sidebar::JobInfo::getInstance().shutdown();
 	TextureBrowser_Destroy();
 }
 
