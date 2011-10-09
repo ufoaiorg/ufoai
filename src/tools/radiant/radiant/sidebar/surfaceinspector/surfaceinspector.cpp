@@ -115,6 +115,7 @@ SurfaceInspector::SurfaceInspector () :
 	GlobalRegistry().addKeyObserver(this, RKEY_DEFAULT_TEXTURE_SCALE);
 
 	// Register self to the SelSystem to get notified upon selection changes.
+	// TODO: Register when the view is visible, unregister if not
 	GlobalSelectionSystem().addObserver(this);
 
 	GlobalEventManager().addCommand("FitTexture", MemberCaller<SurfaceInspector, &SurfaceInspector::fitTexture> (*this));

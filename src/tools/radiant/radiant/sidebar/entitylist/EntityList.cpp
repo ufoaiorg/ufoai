@@ -34,6 +34,7 @@ EntityList::EntityList () :
 	populateWindow();
 
 	// Register self to the SelSystem to get notified upon selection changes.
+	// TODO: Register when the view is visible, unregister if not
 	GlobalSelectionSystem().addObserver(this);
 }
 
