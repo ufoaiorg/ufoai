@@ -53,7 +53,6 @@ damagetypes standard
 // PHALANX ARMOURS
 // =======================
 
-//weights 100
 item armour_light
 {
 	name		"_Combat Armour"
@@ -64,7 +63,7 @@ item armour_light
 	scale		0.7
 	price		1400
 	size		60
-	penalty		1
+	weight		100
 	armourpath	"light"
 	useable		phalanx
 
@@ -114,7 +113,6 @@ item armour_light
 	}
 }
 
-//weights 100
 item armour_lightadv
 {
 	name		"_Advanced Combat Armour"
@@ -125,7 +123,7 @@ item armour_lightadv
 	scale		0.7
 	price		1600
 	size		60
-	penalty		1
+	weight		100
 	useable		phalanx
 	armourpath	"lightadv"
 
@@ -175,7 +173,6 @@ item armour_lightadv
 	}
 }
 
-//weights 120
 item armour_medium
 {
 	name		"_Nanocomposite Armour"
@@ -186,7 +183,7 @@ item armour_medium
 	scale		0.7
 	price		7500
 	size		120
-	penalty		2
+	weight		120
 	useable		phalanx
 	armourpath	"medium"
 
@@ -236,8 +233,6 @@ item armour_medium
 	}
 }
 
-
-//weights ???
 item armour_power
 {
 	name		"_Power Armour"
@@ -248,7 +243,7 @@ item armour_power
 	scale		0.7
 	price		32000
 	size		150
-	penalty		4
+	weight		140
 	useable		phalanx
 	armourpath	"power"
 
@@ -307,7 +302,7 @@ item armour_power
 //	shape		"0 0 3 4"
 //	center		"0 0 -5"
 //	scale		0.7
-//	penalty		3
+//	weight		130
 //	price		32000
 //	useable		phalanx
 //	armourpath	"medium2"
@@ -366,7 +361,7 @@ item armour_power
 //	center		"0 0 -5"
 //	scale		0.7
 //	price		32000
-//	penalty		4
+//	weight		140
 //	useable		phalanx
 //	armourpath	"power2"
 //
@@ -424,7 +419,7 @@ item armour_power
 //	center		"0 0 -5"
 //	scale		0.7
 //	price		32000
-//	penalty		5
+//	weight		150
 //	useable		phalanx
 //	armourpath	"power3"
 //
@@ -476,7 +471,6 @@ item armour_power
 // ALIEN ARMOURS
 // =======================
 
-//weights 100
 item armour_light_alien
 {
 	name		"_Alien Body Armour"
@@ -486,7 +480,7 @@ item armour_light_alien
 	center		"0 0 -5"
 	scale		0.7
 	price		1400
-	penalty		1
+	weight		100
 	size		50
 	useable		alien
 	armourpath	"light"
@@ -537,7 +531,6 @@ item armour_light_alien
 	}
 }
 
-//weights 120
 item armour_medium_alien
 {
 	name		"_Medium Alien Armour"
@@ -547,7 +540,7 @@ item armour_medium_alien
 	center		"0 0 -5"
 	scale		0.7
 	price		7500
-	penalty		2
+	weight		120
 	size		75
 	useable		alien
 	armourpath	"medium"

@@ -85,7 +85,7 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #define ACTOR_VIS_10	0.1
 #define ACTOR_VIS_0		0.0
 
-#define G_ArmourGetTUPenalty(armour)	((armour)->penalty)
+#define G_ArmourGetTUPenalty(armour)	((armour)->weight >= 100 ? (((armour)->weight - 99) / 10) : 0)
 #define G_ActorGetArmourTUPenalty(ent)	(ARMOUR(ent) != NULL ? G_ArmourGetTUPenalty(ARMOUR((ent))->item.t) : 0)
 
 #define MIN_TU				27
