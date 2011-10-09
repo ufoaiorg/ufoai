@@ -145,7 +145,7 @@ static void G_UpdateCharacterSkills (character_t *chr)
 		gainedXP = min(gainedXP, maxXP);
 		chr->score.experience[i] += gainedXP;
 		totalGainedXP += gainedXP;
-		chr->score.skills[i] = chr->score.initialSkills[i] + (int) (pow((float) (chr->score.experience[i])/100, 0.6f));
+		chr->score.skills[i] = chr->score.initialSkills[i] + (int) (pow((float) (chr->score.experience[i]) / 100, 0.6f));
 		G_PrintStats(va("Soldier %s earned %d experience points in skill #%d (total experience: %d). It is now %d higher.",
 				chr->name, gainedXP, i, chr->score.experience[i], chr->score.skills[i] - chr->score.initialSkills[i]));
 	}
