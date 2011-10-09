@@ -429,8 +429,8 @@ static void G_Damage (edict_t *target, const fireDef_t *fd, int damage, edict_t 
 			if (mor_panic->integer)
 				G_Morale(ML_WOUND, target, attacker, damage);
 		} else { /* medikit, etc. */
-			if (target->HP > GET_HP(target->chr.score.skills[ABILITY_POWER])) {
-				const int hp = GET_HP(target->chr.score.skills[ABILITY_POWER]);
+			const int hp = GET_HP(target->chr.score.skills[ABILITY_POWER]);
+			if (target->HP > hp) {
 				target->HP = min(max(hp, 0), target->chr.maxHP);
 			}
 		}
