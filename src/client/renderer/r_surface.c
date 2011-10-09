@@ -56,7 +56,6 @@ void R_SetSurfaceBumpMappingParameters (const mBspSurface_t *surf, const image_t
  */
 static void R_SetSurfaceState (const mBspSurface_t *surf)
 {
-	const model_t* mod = r_mapTiles[surf->tile];
 	image_t *image;
 
 	if (r_state.blend_enabled) {  /* alpha blend */
