@@ -48,7 +48,7 @@ private:
 	/** greebo: SelectionSystem::Observer implementation.
 	 * 			Gets notified as soon as the selection is changed.
 	 */
-	void selectionChanged();
+	void selectionChanged(scene::Instance& instance, bool isComponent);
 
 	// The callback to catch the delete event (toggles the window)
 	static void onRowExpand(GtkTreeView* view, GtkTreeIter* iter, GtkTreePath* path, EntityList* self);

@@ -423,7 +423,7 @@ void EntityInspector::keyValueChanged ()
 }
 
 // Selection changed callback
-void EntityInspector::selectionChanged ()
+void EntityInspector::selectionChanged (scene::Instance& instance, bool isComponent)
 {
 	getInstance().requestIdleCallback();
 }

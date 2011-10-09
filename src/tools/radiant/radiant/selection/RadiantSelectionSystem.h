@@ -186,7 +186,7 @@ public:
 
 private:
 
-	void notifyObservers();
+	void notifyObservers(scene::Instance& instance, bool isComponent);
 
 protected:
 	// Called when GTK is idle to recalculate the workzone (if necessary)

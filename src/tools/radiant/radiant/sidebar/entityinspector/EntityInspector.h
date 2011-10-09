@@ -169,7 +169,7 @@ class EntityInspector: public SelectionSystem::Observer,
 
 		/** greebo: Gets called by the RadiantSelectionSystem upon selection change.
 		 */
-		void selectionChanged ();
+		void selectionChanged (scene::Instance& instance, bool isComponent);
 
 		// Gets called after an undo operation
 		void postUndo ();

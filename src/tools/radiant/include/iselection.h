@@ -128,7 +128,7 @@ class SelectionSystem
 			public:
 				virtual ~Observer () {
 				}
-				virtual void selectionChanged () = 0;
+				virtual void selectionChanged (scene::Instance& instance, bool isComponent) = 0;
 		};
 
 		virtual void addObserver (Observer* observer) = 0;

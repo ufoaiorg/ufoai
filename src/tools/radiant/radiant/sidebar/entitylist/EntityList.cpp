@@ -132,9 +132,9 @@ void EntityList::update ()
 }
 
 // Gets notified upon selection change
-void EntityList::selectionChanged ()
+void EntityList::selectionChanged (scene::Instance& instance, bool isComponent)
 {
-	if (_callbackActive)
+	if (_callbackActive || isComponent)
 		return; // avoid loops
 
 	update();
