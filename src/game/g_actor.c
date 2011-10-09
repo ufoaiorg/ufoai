@@ -284,12 +284,65 @@ void G_ActorSetMaxs (edict_t* ent)
 }
 
 /**
+ * @brief Calculates the TU penalty when the given actor is wearing armour
+ * @param[in] ent The actor to calculate the TU penalty for
+ * @return The amount of TU that should be used as penalty, @c 0 if the actor does not wear any armour
+ * @note The armour weight only adds penalty if its weight is big enough.
+ */
+static int G_ActorGetArmourTUPenalty (const edict_t *ent)
+{
+	const invList_t *invList = ARMOUR(ent);
+	const objDef_t *armour;
+	int penalty;
+	int weightToCausePenalty = 100;
+	int actorPower;
+	float factorPower;
+
+	if (ARMOUR(ent) == NULL)
+		return 0;
+
+	armour = invList->item.t;
+	if (armour->weight >= weightToCausePenalty)
+		penalty = (armour->weight - weightToCausePenalty - 1) / 10;
+	else
+		penalty = 0;
+
+	actorPower = ent->chr.score.skills[ABILITY_POWER] * 10 / MAX_SKILL;
+	if (actorPower <= 2)
+		factorPower = 2.0F;
+	else if (actorPower <= 5)
+		factorPower = 1.0F;
+	else if (actorPower <= 7)
+		factorPower = 0.5F;
+	else
+		factorPower = 0.25F;
+
+	penalty *= factorPower;
+
+	return penalty;
+}
+
+int G_ActorCalculateMaxTU (const edict_t *ent)
+{
+	const int currentMaxHP = (MIN_TU + (ent->chr.score.skills[ABILITY_SPEED]) * 20 / MAX_SKILL) - G_ActorGetArmourTUPenalty(ent);
+	return min(currentMaxHP, 255);
+}
+
+static inline int G_ActorGetTU (const edict_t *ent)
+{
+	if (G_IsDazed(ent))
+		return 0;
+
+	return G_ActorCalculateMaxTU(ent);
+}
+
+/**
  * @brief Set time units for the given edict. Based on speed skills
  * @param ent The actor edict
  */
 void G_ActorGiveTimeUnits (edict_t *ent)
 {
-	const int tus = GET_TU(ent);
+	const int tus = G_ActorGetTU(ent);
 	G_ActorSetTU(ent, tus);
 	G_RemoveDazed(ent);
 }

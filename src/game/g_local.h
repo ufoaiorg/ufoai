@@ -85,13 +85,7 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #define ACTOR_VIS_10	0.1
 #define ACTOR_VIS_0		0.0
 
-#define G_ArmourGetTUPenalty(armour)	((armour)->weight >= 100 ? (((armour)->weight - 99) / 10) : 0)
-/** @todo use (ent)->chr.score.skills[ABILITY_POWER] here */
-#define G_ActorGetArmourTUPenalty(ent)	(ARMOUR(ent) != NULL ? G_ArmourGetTUPenalty(ARMOUR((ent))->item.t) : 0)
-
 #define MIN_TU				27
-#define GET_TU(ent)			(G_IsDazed(ent) ? 0 : GET_MAX_TU(ent));
-#define GET_MAX_TU(ent)		(min((MIN_TU + ((ent)->chr.score.skills[ABILITY_SPEED]) * 20 / MAX_SKILL) - G_ActorGetArmourTUPenalty(ent), 255))
 
 #define G_FreeTags(tag) gi.FreeTags((tag), __FILE__, __LINE__)
 #define G_TagMalloc(size, tag) gi.TagMalloc((size), (tag), __FILE__, __LINE__)
@@ -343,6 +337,7 @@ int G_ActorGetTUForReactionFire(const edict_t *ent);
 int G_ActorUsableTUs(const edict_t *ent);
 int G_ActorGetReservedTUs(const edict_t *ent);
 void G_ActorCheckRevitalise(edict_t *ent);
+int G_ActorCalculateMaxTU(const edict_t *ent);
 
 /* g_mission.c */
 qboolean G_MissionTouch(edict_t *self, edict_t *activator);
