@@ -191,6 +191,8 @@ static void testMapDefStatistic (void)
 }
 #endif
 
+#if !MAP_STATISTIC
+#if !SEED_TEST
 /**
  * @brief This test cycles through the list of map definitions found in the maps.ufo script
  * and tries to load (and build in case of RMA) each map.
@@ -265,6 +267,8 @@ static void testMapDefsMultiplayer (void)
 		}
 	}
 }
+#endif
+#endif
 
 int UFO_AddMapDefTests (void)
 {
