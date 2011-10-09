@@ -9,7 +9,6 @@
 #include "SelectableComponents.h"
 #include "VertexSelection.h"
 #include "Face.h"
-#include "selectionlib.h"
 
 typedef const Plane3* PlanePointer;
 typedef PlanePointer* PlanesIterator;
