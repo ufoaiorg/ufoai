@@ -253,9 +253,7 @@ static void R_AddLightToEntity (entity_t *ent, const light_t *light, const float
 				light = tmp;
 			}
 
-			el[i++] = light;
-			ent->numLights = i;
-			return;
+			break;
 		}
 	}
 
