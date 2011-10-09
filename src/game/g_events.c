@@ -516,7 +516,7 @@ void G_EventActorAppear (unsigned int playerMask, const edict_t *check, const ed
 	gi.WriteShort(check->state & STATE_PUBLIC);
 	gi.WriteByte(check->fieldSize);
 	/* get the max values for TU and morale */
-	gi.WriteByte(GET_TU(check->chr.score.skills[ABILITY_SPEED]));
+	gi.WriteByte(GET_MAX_TU(check));
 	gi.WriteByte(min(MAX_SKILL, GET_MORALE(check->chr.score.skills[ABILITY_MIND])));
 	gi.WriteShort(check->chr.maxHP);
 

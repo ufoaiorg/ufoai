@@ -289,7 +289,7 @@ void G_ActorSetMaxs (edict_t* ent)
  */
 void G_ActorGiveTimeUnits (edict_t *ent)
 {
-	const int tus = G_IsDazed(ent) ? 0 : GET_TU(ent->chr.score.skills[ABILITY_SPEED]);
+	const int tus = GET_TU(ent);
 	G_ActorSetTU(ent, tus);
 	G_RemoveDazed(ent);
 }
