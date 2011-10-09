@@ -2774,11 +2774,6 @@ tech rs_nano_armour
 		tech rs_alien_body_armour
 	}
 
-	require_for_production
-	{
-	    item alienmaterials 350
-	}
-
 	provides	armour_medium
 	time		8000
 	producetime	168
