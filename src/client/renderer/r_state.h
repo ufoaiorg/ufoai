@@ -142,7 +142,7 @@ typedef struct rstate_s {
 	qboolean animation_enabled;
 	qboolean renderbuffer_enabled; /**< renderbuffer vs screen as render target*/
 
-	image_t *active_normalmap;
+	const image_t *active_normalmap;
 } rstate_t;
 
 extern rstate_t r_state;
