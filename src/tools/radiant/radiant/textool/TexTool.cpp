@@ -245,6 +245,9 @@ void TexTool::rescanSelection() {
 }
 
 void TexTool::selectionChanged() {
+	if (!isVisible())
+		return;
+
 	rescanSelection();
 	draw();
 }
