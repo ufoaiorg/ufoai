@@ -3,15 +3,15 @@
 // ==================
 
 component spinner cmp_t_spinner
-		{
-			tooltip		"_Add/Remove item to transfer cargo"
-			image		"ui/spinner_blue"
-			onChange	{
-				*cvar:tline = <node:parent.trans_list@viewpos>
-				*cvar:tline = ( *cvar:tline + *node:this@num )
-				cmd "trans_list_click <cvar:tline> <lastdiff>;"
-			}
-		}
+{
+	tooltip		"_Add/Remove item to transfer cargo"
+	image		"ui/spinner_blue"
+	onChange	{
+		*cvar:tline = <node:parent.trans_list@viewpos>
+		*cvar:tline = ( *cvar:tline + *node:this@num )
+		cmd "trans_list_click <cvar:tline> <lastdiff>;"
+	}
+}
 
 window transfer
 {
