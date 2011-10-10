@@ -947,7 +947,7 @@ static void R_ModAddMapTile (const char *name, qboolean day, int sX, int sY, int
 
 	/* init */
 	r_worldmodel->type = mod_bsp;
-	r_worldmodel->bsp.maptile = r_numMapTiles-1;
+	r_worldmodel->bsp.maptile = r_numMapTiles - 1;
 
 	/* prepare shifting */
 	VectorSet(shift, sX * UNIT_SIZE, sY * UNIT_SIZE, sZ * UNIT_SIZE);
