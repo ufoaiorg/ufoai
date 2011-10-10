@@ -434,7 +434,8 @@ static void R_RenderBspRRefs (drawSurfaceFunc drawFunc, surfaceArrayType_t surfT
 		if (!bsp->sorted_surfaces[surfType]->count)
 			continue;
 
-		R_SetArrayState(bsp);
+		/* This is required to find the tile (world) bsp model to which arrays belong (submodels do not own arrays, but use world model ones) */
+		R_SetArrayState(&r_mapTiles[bsp->maptile]->bsp);
 
 		glPushMatrix();
 
