@@ -205,6 +205,18 @@ static const keyName_t keyNames[] = {
 };
 #undef M
 
+/**
+ * @brief Checks whether a given key is currently pressed
+ * @param[in] key The key to check, @sa @c keyNum_t
+ * @return @c true if the key is pressed, @c false otherwise
+ */
+qboolean Key_IsDown (unsigned int key)
+{
+	if (key >= K_KEY_SIZE)
+		return qfalse;
+	return keyDown[key];
+}
+
 /*
 ==============================================================================
 LINE TYPING INTO THE CONSOLE

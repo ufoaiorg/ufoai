@@ -191,6 +191,7 @@ extern char *keyBindings[K_KEY_SIZE];
 extern char *menuKeyBindings[K_KEY_SIZE];
 extern char *battleKeyBindings[K_KEY_SIZE];
 
+qboolean Key_IsDown(unsigned int key);
 void Key_SetDest(int key_dest);
 void Key_Event(unsigned int key, unsigned short unicode, qboolean down, unsigned time);
 void Key_Init(void);
