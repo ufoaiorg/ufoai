@@ -343,6 +343,9 @@ invList_t *INV_SearchInInventoryWithFilter (const inventory_t* const i, const in
 {
 	invList_t *ic;
 
+	if (i == NULL)
+		return NULL;
+
 	if (item == NULL)
 		return NULL;
 
