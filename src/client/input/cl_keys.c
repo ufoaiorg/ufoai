@@ -846,8 +846,10 @@ void Key_Event (unsigned int key, unsigned short unicode, qboolean down, unsigne
 
 	/* any key (except F1-F12) during the sequence mode will bring up the menu */
 
-	if (cls.keyDest == key_game && down) {
-		if (UI_KeyPressed(key, unicode))
+	if (cls.keyDest == key_game) {
+		if (down && UI_KeyPressed(key, unicode))
+			return;
+		else if (!down && UI_KeyRelease(key, unicode))
 			return;
 	}
 

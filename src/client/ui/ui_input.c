@@ -364,6 +364,23 @@ static qboolean UI_KeyPressedInWindow (unsigned int key, const uiNode_t *window)
 }
 
 /**
+ * @brief Called by the client when the user released a key
+ * @param[in] key key code, either K_ value or lowercase ascii
+ * @param[in] unicode translated meaning of keypress in unicode
+ * @return qtrue, if we used the event
+ */
+qboolean UI_KeyRelease (unsigned int key, unsigned short unicode)
+{
+	/* translate event into the node with focus */
+	if (focusNode && focusNode->behaviour->keyReleased) {
+		if (focusNode->behaviour->keyReleased(focusNode, key, unicode))
+			return qtrue;
+	}
+
+	return qfalse;
+}
+
+/**
  * @brief Called by the client when the user type a key
  * @param[in] key key code, either K_ value or lowercase ascii
  * @param[in] unicode translated meaning of keypress in unicode

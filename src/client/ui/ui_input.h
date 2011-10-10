@@ -54,6 +54,7 @@ struct uiNode_s *UI_GetHoveredNode(void);
 void UI_RequestFocus(struct uiNode_s* node);
 qboolean UI_HasFocus(const struct uiNode_s* node);
 void UI_RemoveFocus(void);
+qboolean UI_KeyRelease(unsigned int key, unsigned short unicode);
 qboolean UI_KeyPressed(unsigned int key, unsigned short unicode);
 int UI_GetKeyBindingCount(void);
 uiKeyBinding_t* UI_GetKeyBindingByIndex(int index);

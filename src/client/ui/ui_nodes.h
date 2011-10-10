@@ -192,6 +192,7 @@ typedef struct uiBehaviour_s {
 	void (*focusGained)(uiNode_t *node);
 	void (*focusLost)(uiNode_t *node);
 	qboolean (*keyPressed)(uiNode_t *node, unsigned int key, unsigned short unicode);
+	qboolean (*keyReleased)(uiNode_t *node, unsigned int key, unsigned short unicode);
 
 	/* Planned */
 #if 0
