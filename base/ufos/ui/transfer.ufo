@@ -6,6 +6,7 @@ component spinner cmp_t_spinner
 {
 	tooltip		"_Add/Remove item to transfer cargo"
 	image		"ui/spinner_blue"
+	shiftincreasefactor	10.0
 	onChange	{
 		*cvar:tline = <node:parent.trans_list@viewpos>
 		*cvar:tline = ( *cvar:tline + *node:this@num )
