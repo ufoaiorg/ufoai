@@ -842,30 +842,6 @@ window popup_baseattack
 		cmd "ui_removelistener equipment@onWindowClosed <path:this>"
 	}
 
-	cmpPopupButton bt_auto_go
-	{
-		string		"_Auto mission"
-		tooltip		"_Automatically finish mission"
-		pos			"259 241"
-		onClick		{
-			if ( *node:root.liftcrafts@current > 0 ) {
-				cmd "air_liftall;"
-			}
-			if ( *node:root.killaliens@current > 0 ) {
-				cmd "aliencont_killall;"
-			}
-			if ( *node:root.powerdown@current > 0 ) {
-				cmd "pwr_down;"
-			}
-			if ( *node:root.equip@current > 0 ) {
-				cmd "ui_addlistener equipment@onWindowClosed <path:root>.listen_automission;"
-				cmd "ui_push equipment;"
-			} else {
-				cmd "cp_mission_autogo;"
-			}
-		}
-	}
-
 	func listen_mission
 	{
 		cmd "game_go;"
@@ -875,7 +851,8 @@ window popup_baseattack
 	{
 		string		"_Enter"
 		tooltip		"_Enter the battlefield"
-		pos			"74 241"
+		pos			"290 241"
+
 		onClick		{
 			if ( *node:root.liftcrafts@current > 0 ) {
 				cmd "air_liftall;"
