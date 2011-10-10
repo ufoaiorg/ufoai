@@ -1297,7 +1297,7 @@ static qboolean SV_GapListBuild (mapInfo_t *map, int tilePosListCnt)
 	for (y = 1; y < mAsm->height + 1; y++) {
 		for (x = 1; x < mAsm->width + 1; x++)
 			if (IS_SOLID(map->curMap[y][x]))
-				gapList[x][y][0] = -1;
+				gapList[x][y][0] = -1;		/* the gap is solid already, so we don't need a counter. But we might need the info. */
 			else
 				gapList[x][y][0] = 0;		/* the counter for this pos */
 	}
