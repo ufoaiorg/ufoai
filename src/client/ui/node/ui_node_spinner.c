@@ -117,7 +117,7 @@ static void UI_SpinnerNodeDown (uiNode_t *node, int x, int y, int button)
 		capturedDownButton = y > BUTTON_TOP_SIZE;
 		UI_SpinnerNodeStep(node, capturedDownButton);
 		capturedTimer = UI_AllocTimer(node, 500, UI_SpinnerNodeRepeat);
-		UI_TimerStart (capturedTimer);
+		UI_TimerStart(capturedTimer);
 	}
 }
 
