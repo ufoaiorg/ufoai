@@ -243,6 +243,7 @@ qboolean Com_UnregisterConstList(const constListEntry_t constList[]);
 void Com_ParseScripts(qboolean onlyServer);
 const char *Com_EParse(const char **text, const char *errhead, const char *errinfo);
 const char *Com_GetRandomMapAssemblyNameForCraft(const char *craftID);
+const char *Com_GetRandomMapAssemblyNameForCrashedCraft(const char *craftID);
 ufoType_t Com_UFOShortNameToID(const char *token);
 const char* Com_UFOTypeToShortName(ufoType_t type);
 const char* Com_UFOCrashedTypeToShortName(ufoType_t type);

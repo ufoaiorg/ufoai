@@ -3004,6 +3004,26 @@ const char *Com_GetRandomMapAssemblyNameForCraft (const char *craftID)
 }
 
 /**
+ * @todo implement this in a better way
+ */
+const char *Com_GetRandomMapAssemblyNameForCrashedCraft (const char *craftID)
+{
+	if (Q_streq(craftID, "craft_drop_firebird"))
+		return "+craft_crash_drop_firebird";
+	else if (Q_streq(craftID, "craft_drop_raptor"))
+		return "+craft_crash_drop_raptor";
+	else if (Q_streq(craftID, "craft_inter_dragon"))
+		return "+craft_crash_inter_dragon";
+	else if (Q_streq(craftID, "craft_inter_saracen"))
+		return "+craft_crash_inter_saracen";
+	else if (Q_streq(craftID, "craft_inter_starchaser"))
+		return "+craft_crash_inter_starchaser";
+	else
+		/** @todo other tiles does not yet exist */
+		return "+craft_crash_drop_firebird";
+}
+
+/**
  * @brief Translate DropShip type to short name.
  * @return Will always return a valid human aircraft type or errors out if the given token can't
  * be mapped to an human aircraft type
