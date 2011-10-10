@@ -542,7 +542,7 @@ static inline void IN_PrintKey (const SDL_Event* event, int down)
 /**
  * @brief Translate the keys to ufo keys
  */
-static void IN_TranslateKey (SDL_keysym *keysym, unsigned int *ascii, unsigned short *unicode)
+static void IN_TranslateKey (const SDL_keysym *keysym, unsigned int *ascii, unsigned short *unicode)
 {
 	switch (keysym->sym) {
 	case SDLK_KP9:
