@@ -31,13 +31,14 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #include "../ui_actions.h"
 #include "../ui_render.h"
 #include "ui_node_spinner.h"
-#include "ui_node_abstractvalue.h"
 #include "ui_node_abstractnode.h"
 
 #include "../../input/cl_input.h"
 #include "../../input/cl_keys.h"
 
-#define EXTRADATA(node) UI_EXTRADATA(node, abstractValueExtraData_t)
+#define EXTRADATA_TYPE spinnerExtraData_t
+#define EXTRADATA(node) UI_EXTRADATA(node, EXTRADATA_TYPE)
+#define EXTRADATACONST(node) UI_EXTRADATACONST(node, EXTRADATA_TYPE)
 
 static const uiBehaviour_t const *localBehaviour;
 
@@ -47,6 +48,17 @@ static const int SPINNER_HEIGHT = 19;
 static const int BUTTON_TOP_SIZE = 9;
 static const int BUTTON_BOTTOM_SIZE = 10;
 
+static qboolean capturedDownButton;
+static uiTimer_t *capturedTimer = NULL;
+
+static float UI_SpinnerGetFactorFloat (const uiNode_t *node)
+{
+	if (!Key_IsDown(K_SHIFT))
+		return 1.0F;
+
+	return EXTRADATACONST(node).shiftIncreaseFactor;
+}
+
 /**
  * @brief change the value of the spinner of one step
  * @param[in] node Spinner to change
@@ -54,11 +66,11 @@ static const int BUTTON_BOTTOM_SIZE = 10;
  */
 static void UI_SpinnerNodeStep (uiNode_t *node, qboolean down)
 {
-	float value = UI_GetReferenceFloat(node, EXTRADATA(node).value);
+	float value = UI_GetReferenceFloat(node, EXTRADATA(node).super.value);
 	const float last = value;
-	const float delta = UI_GetReferenceFloat(node, EXTRADATA(node).delta);
-	const float max = UI_GetReferenceFloat(node, EXTRADATA(node).max);
-	const float min = UI_GetReferenceFloat(node, EXTRADATA(node).min);
+	const float delta = UI_SpinnerGetFactorFloat(node) * UI_GetReferenceFloat(node, EXTRADATA(node).super.delta);
+	const float max = UI_GetReferenceFloat(node, EXTRADATA(node).super.max);
+	const float min = UI_GetReferenceFloat(node, EXTRADATA(node).super.min);
 
 	if (!down) {
 		if (value + delta <= max) {
@@ -85,19 +97,16 @@ static void UI_SpinnerNodeStep (uiNode_t *node, qboolean down)
 		return;
 
 	/* save result */
-	EXTRADATA(node).lastdiff = value - last;
-	if (Q_strstart((const char *)EXTRADATA(node).value, "*cvar:"))
-		Cvar_SetValue(&((const char*)EXTRADATA(node).value)[6], value);
+	EXTRADATA(node).super.lastdiff = value - last;
+	if (Q_strstart((const char *)EXTRADATA(node).super.value, "*cvar:"))
+		Cvar_SetValue(&((const char*)EXTRADATA(node).super.value)[6], value);
 	else
-		*(float*) EXTRADATA(node).value = value;
+		*(float*) EXTRADATA(node).super.value = value;
 
 	/* fire change event */
 	if (node->onChange)
 		UI_ExecuteEventActions(node, node->onChange);
 }
-
-static qboolean capturedDownButton;
-static uiTimer_t *capturedTimer = NULL;
 
 static void UI_SpinnerNodeRepeat (uiNode_t *node, uiTimer_t *timer)
 {
@@ -154,13 +163,18 @@ static void UI_SpinnerNodeWheel (uiNode_t *node, int deltaX, int deltaY)
 	UI_SpinnerNodeStep(node, down);
 }
 
+static void UI_SpinnerLoaded (uiNode_t *node)
+{
+	EXTRADATA(node).shiftIncreaseFactor = 2.0F;
+}
+
 static void UI_SpinnerNodeDraw (uiNode_t *node)
 {
 	vec2_t pos;
 	int topTexX, topTexY;
 	int bottomTexX, bottomTexY;
 	const char* image = UI_GetReferenceString(node, node->image);
-	const float delta = UI_GetReferenceFloat(node, EXTRADATA(node).delta);
+	const float delta = UI_GetReferenceFloat(node, EXTRADATA(node).super.delta);
 	const qboolean disabled = node->disabled || node->parent->disabled;
 
 	if (!image)
@@ -174,9 +188,9 @@ static void UI_SpinnerNodeDraw (uiNode_t *node)
 		bottomTexX = TILE_SIZE;
 		bottomTexY = TILE_SIZE;
 	} else {
-		const float value = UI_GetReferenceFloat(node, EXTRADATA(node).value);
-		const float min = UI_GetReferenceFloat(node, EXTRADATA(node).min);
-		const float max = UI_GetReferenceFloat(node, EXTRADATA(node).max);
+		const float value = UI_GetReferenceFloat(node, EXTRADATA(node).super.value);
+		const float min = UI_GetReferenceFloat(node, EXTRADATA(node).super.min);
+		const float max = UI_GetReferenceFloat(node, EXTRADATA(node).super.max);
 
 		/* top button status */
 		if (value >= max) {
@@ -229,6 +243,11 @@ static const value_t properties[] = {
 	 * @image html http://ufoai.ninex.info/wiki/images/Spinner_blue.png
 	 */
 
+	/**
+	 * @brief Defines a factor that is applied to the delta value when the shift key is held down.
+	 */
+	{"shiftincreasefactor", V_FLOAT, UI_EXTRADATA_OFFSETOF(spinnerExtraData_t, shiftIncreaseFactor),  MEMBER_SIZEOF(spinnerExtraData_t, shiftIncreaseFactor)},
+
 	{NULL, V_NULL, 0, 0}
 };
 
@@ -241,7 +260,9 @@ void UI_RegisterSpinnerNode (uiBehaviour_t *behaviour)
 	behaviour->mouseDown = UI_SpinnerNodeDown;
 	behaviour->mouseUp = UI_SpinnerNodeUp;
 	behaviour->capturedMouseLost = UI_SpinnerNodeCapturedMouseLost;
+	behaviour->loaded = UI_SpinnerLoaded;
 	behaviour->draw = UI_SpinnerNodeDraw;
 	behaviour->loaded = UI_SpinnerNodeLoaded;
 	behaviour->properties = properties;
+	behaviour->extraDataSize = sizeof(EXTRADATA_TYPE);
 }
