@@ -82,7 +82,7 @@ int MAP_GetCivilianNumberByPosition(const vec2_t pos);
 void MAP_PrintParameterStringByPos(const vec2_t pos);
 void MAP_CheckPositionBoundaries(float *pos);
 qboolean MAP_IsNight(const vec2_t pos);
-byte *MAP_GetColor(const vec2_t pos, mapType_t type);
+const byte *MAP_GetColor(const vec2_t pos, mapType_t type, qboolean *coast);
 void MAP_Init(const char *map);
 void MAP_Reset(const char *map);
 void MAP_Shutdown(void);

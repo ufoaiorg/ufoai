@@ -408,7 +408,7 @@ static void AIRFIGHT_UpdateProjectileForDestroyedAircraft (const aircraft_t * ai
 void AIRFIGHT_ActionsAfterAirfight (const campaign_t* campaign, aircraft_t *shooter, aircraft_t* aircraft, qboolean phalanxWon)
 {
 	if (phalanxWon) {
-		byte *color;
+		const byte *color;
 
 		assert(aircraft);
 
@@ -422,7 +422,7 @@ void AIRFIGHT_ActionsAfterAirfight (const campaign_t* campaign, aircraft_t *shoo
 		 * (in case we need to know what item to collect e.g.) */
 
 		/* get the color value of the map at the crash position */
-		color = MAP_GetColor(aircraft->pos, MAPTYPE_TERRAIN);
+		color = MAP_GetColor(aircraft->pos, MAPTYPE_TERRAIN, NULL);
 		/* if this color value is not the value for water ...
 		 * and we hit the probability to spawn a crashsite mission */
 		if (!MapIsWater(color)) {
@@ -444,7 +444,7 @@ void AIRFIGHT_ActionsAfterAirfight (const campaign_t* campaign, aircraft_t *shoo
 		/* notify UFOs that a phalanx aircraft has been destroyed */
 		UFO_NotifyPhalanxAircraftRemoved(aircraft);
 
-		if (!MapIsWater(MAP_GetColor(aircraft->pos, MAPTYPE_TERRAIN)))
+		if (!MapIsWater(MAP_GetColor(aircraft->pos, MAPTYPE_TERRAIN, NULL)))
 			CP_SpawnRescueMission(aircraft, shooter);
 		else {
 			/* Destroy the aircraft and everything onboard - the aircraft pointer

@@ -296,7 +296,7 @@ qboolean MAP_MapClick (uiNode_t* node, int x, int y)
 	case MA_NEWBASE:
 		/* new base construction */
 		/** @todo make this a function in cp_base.c - B_BuildBaseAtPos */
-		if (!MapIsWater(MAP_GetColor(pos, MAPTYPE_TERRAIN))) {
+		if (!MapIsWater(MAP_GetColor(pos, MAPTYPE_TERRAIN, NULL))) {
 			if (B_GetCount() < MAX_BASES) {
 				Vector2Copy(pos, ccs.newBasePos);
 				CP_GameTimeStop();
@@ -308,7 +308,7 @@ qboolean MAP_MapClick (uiNode_t* node, int x, int y)
 		}
 		break;
 	case MA_NEWINSTALLATION:
-		if (!MapIsWater(MAP_GetColor(pos, MAPTYPE_TERRAIN))) {
+		if (!MapIsWater(MAP_GetColor(pos, MAPTYPE_TERRAIN, NULL))) {
 			Vector2Copy(pos, ccs.newBasePos);
 			CP_GameTimeStop();
 			UI_PushWindow("popup_newinstallation", NULL, NULL);
@@ -2134,7 +2134,7 @@ void MAP_NotifyAircraftRemoved (const aircraft_t* aircraft)
 nation_t* MAP_GetNation (const vec2_t pos)
 {
 	int i;
-	const byte* color = MAP_GetColor(pos, MAPTYPE_NATIONS);
+	const byte* color = MAP_GetColor(pos, MAPTYPE_NATIONS, NULL);
 #ifdef PARANOID
 	Com_DPrintf(DEBUG_CLIENT, "MAP_GetNation: color value for %.0f:%.0f is r:%i, g:%i, b: %i\n", pos[0], pos[1], color[0], color[1], color[2]);
 #endif
@@ -2231,9 +2231,9 @@ static const char* MAP_GetPopulationType (const byte* color)
  * @param[in] pos Map Coordinates to get the terrain type from
  * @return returns the zone name
  */
-static inline const char* MAP_GetTerrainTypeByPos (const vec2_t pos)
+static inline const char* MAP_GetTerrainTypeByPos (const vec2_t pos, qboolean *coast)
 {
-	const byte* color = MAP_GetColor(pos, MAPTYPE_TERRAIN);
+	const byte* color = MAP_GetColor(pos, MAPTYPE_TERRAIN, coast);
 	return MAP_GetTerrainType(color);
 }
 
@@ -2245,7 +2245,7 @@ static inline const char* MAP_GetTerrainTypeByPos (const vec2_t pos)
  */
 static inline const char* MAP_GetCultureTypeByPos (const vec2_t pos)
 {
-	const byte* color = MAP_GetColor(pos, MAPTYPE_CULTURE);
+	const byte* color = MAP_GetColor(pos, MAPTYPE_CULTURE, NULL);
 	return MAP_GetCultureType(color);
 }
 
@@ -2257,7 +2257,7 @@ static inline const char* MAP_GetCultureTypeByPos (const vec2_t pos)
  */
 static inline const char* MAP_GetPopulationTypeByPos (const vec2_t pos)
 {
-	const byte* color = MAP_GetColor(pos, MAPTYPE_POPULATION);
+	const byte* color = MAP_GetColor(pos, MAPTYPE_POPULATION, NULL);
 	return MAP_GetPopulationType(color);
 }
 
@@ -2269,7 +2269,7 @@ static inline const char* MAP_GetPopulationTypeByPos (const vec2_t pos)
  */
 int MAP_GetCivilianNumberByPosition (const vec2_t pos)
 {
-	const byte* color = MAP_GetColor(pos, MAPTYPE_POPULATION);
+	const byte* color = MAP_GetColor(pos, MAPTYPE_POPULATION, NULL);
 
 	if (MapIsWater(color))
 		Com_Error(ERR_DROP, "MAP_GetPopulationType: Trying to get number of civilian in a position on water");
@@ -2295,11 +2295,13 @@ int MAP_GetCivilianNumberByPosition (const vec2_t pos)
  */
 void MAP_PrintParameterStringByPos (const vec2_t pos)
 {
-	const char *terrainType = MAP_GetTerrainTypeByPos(pos);
+	qboolean coast = qfalse;
+	const char *terrainType = MAP_GetTerrainTypeByPos(pos, &coast);
 	const char *cultureType = MAP_GetCultureTypeByPos(pos);
 	const char *populationType = MAP_GetPopulationTypeByPos(pos);
 
-	Com_Printf ("      (Terrain: %s, Culture: %s, Population: %s)\n", terrainType, cultureType, populationType);
+	Com_Printf ("      (Terrain: %s, Culture: %s, Population: %s, Coast: %s)\n",
+			terrainType, cultureType, populationType, coast ? "true" : "false");
 }
 
 /**
@@ -2345,17 +2347,20 @@ qboolean MAP_IsNight (const vec2_t pos)
  * @param[in] type determine the map to get the color from (there are different masks)
  * one for the climazone (bases made use of this - there are grass, ice and desert
  * base tiles available) and one for the nations
+ * @param[out] coast The function will set this to true if the given position is a coast line.
+ * This can be @c NULL if you are not interested in this fact.
  * @return Returns the color value at given position.
  * @note terrainPic, culturePic and populationPic are pointers to an rgba image in memory
  * @sa MAP_GetTerrainType
  * @sa MAP_GetCultureType
  * @sa MAP_GetPopulationType
  */
-byte *MAP_GetColor (const vec2_t pos, mapType_t type)
+const byte *MAP_GetColor (const vec2_t pos, mapType_t type, qboolean *coast)
 {
 	int x, y;
 	int width, height;
-	byte *mask;
+	const byte *mask;
+	const byte* color;
 
 	switch (type) {
 	case MAPTYPE_TERRAIN:
@@ -2404,7 +2409,36 @@ byte *MAP_GetColor (const vec2_t pos, mapType_t type)
 	/* terrainWidth is the width of the image */
 	/* this calculation returns the pixel in col x and in row y */
 	assert(4 * (x + y * width) < width * height * 4);
-	return mask + 4 * (x + y * width);
+	color = mask + 4 * (x + y * width);
+	if (coast != NULL) {
+		if (MapIsWater(color)) {
+			*coast = qfalse;
+		} else {
+			/* only check four directions */
+			const int gap = 4;
+			if (x > gap) {
+				const byte* coastCheck = mask + 4 * ((x - gap) + y * width);
+				*coast = MapIsWater(coastCheck);
+			}
+			if (!*coast && x < width - 1 - gap) {
+				const byte* coastCheck = mask + 4 * ((x + gap) + y * width);
+				*coast = MapIsWater(coastCheck);
+			}
+
+			if (!*coast) {
+				if (y > gap) {
+					const byte* coastCheck = mask + 4 * (x + (y - gap) * width);
+					*coast = MapIsWater(coastCheck);
+				}
+				if (!*coast && y < width - 1 - gap) {
+					const byte* coastCheck = mask + 4 * (x + (y + gap) * width);
+					*coast = MapIsWater(coastCheck);
+				}
+			}
+		}
+	}
+
+	return color;
 }
 
 /**
@@ -2438,14 +2472,15 @@ base_t* MAP_PositionCloseToBase (const vec2_t pos)
  */
 qboolean MAP_PositionFitsTCPNTypes (const vec2_t pos, const linkedList_t* terrainTypes, const linkedList_t* cultureTypes, const linkedList_t* populationTypes, const linkedList_t* nations)
 {
-	const char *terrainType = MAP_GetTerrainTypeByPos(pos);
+	qboolean coast = qfalse;
+	const char *terrainType = MAP_GetTerrainTypeByPos(pos, &coast);
 	const char *cultureType = MAP_GetCultureTypeByPos(pos);
 	const char *populationType = MAP_GetPopulationTypeByPos(pos);
 
-	if (MapIsWater(MAP_GetColor(pos, MAPTYPE_TERRAIN)))
+	if (MapIsWater(MAP_GetColor(pos, MAPTYPE_TERRAIN, NULL)))
 		return qfalse;
 
-	if (!terrainTypes || LIST_ContainsString(terrainTypes, terrainType)) {
+	if (!terrainTypes || LIST_ContainsString(terrainTypes, terrainType) || (coast && LIST_ContainsString(terrainTypes, "coast"))) {
 		if (!cultureTypes || LIST_ContainsString(cultureTypes, cultureType)) {
 			if (!populationTypes || LIST_ContainsString(populationTypes, populationType)) {
 				const nation_t *nationAtPos = MAP_GetNation(pos);

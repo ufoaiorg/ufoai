@@ -91,7 +91,7 @@ void CAP_RemoveAircraftExceedingCapacity (base_t* base, baseCapacities_t capacit
 		aircraft_t *aircraft = (aircraft_t*)LIST_GetByIdx(awayAircraft, randomNum);
 		/* No base can hold this aircraft */
 		UFO_NotifyPhalanxAircraftRemoved(aircraft);
-		if (!MapIsWater(MAP_GetColor(aircraft->pos, MAPTYPE_TERRAIN)))
+		if (!MapIsWater(MAP_GetColor(aircraft->pos, MAPTYPE_TERRAIN, NULL)))
 			CP_SpawnRescueMission(aircraft, NULL);
 		else {
 			/* Destroy the aircraft and everything onboard - the aircraft pointer

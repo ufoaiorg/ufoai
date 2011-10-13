@@ -330,7 +330,7 @@ void CP_CreateBattleParameters (mission_t *mission, battleParam_t *param, const 
 	}
 
 	param->mission = mission;
-	color = MAP_GetColor(mission->pos, MAPTYPE_TERRAIN);
+	color = MAP_GetColor(mission->pos, MAPTYPE_TERRAIN, NULL);
 	zoneType = MAP_GetTerrainType(color);
 	param->zoneType = zoneType; /* store to terrain type for texture replacement */
 	/* Is there a UFO to recover ? */

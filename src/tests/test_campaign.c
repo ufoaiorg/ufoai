@@ -736,17 +736,22 @@ static void testDisassembly (void)
 static void testMap (void)
 {
 	vec2_t pos;
+	qboolean coast = qfalse;
 
 	ResetCampaignData();
 
 	Vector2Set(pos, -51, 0);
-	CU_ASSERT_TRUE(MapIsWater(MAP_GetColor(pos, MAPTYPE_TERRAIN)));
+	CU_ASSERT_TRUE(MapIsWater(MAP_GetColor(pos, MAPTYPE_TERRAIN, NULL)));
 
 	Vector2Set(pos, 51, 0);
-	CU_ASSERT_TRUE(!MapIsWater(MAP_GetColor(pos, MAPTYPE_TERRAIN)));
+	CU_ASSERT_TRUE(!MapIsWater(MAP_GetColor(pos, MAPTYPE_TERRAIN, NULL)));
 
 	Vector2Set(pos, 20, 20);
-	CU_ASSERT_TRUE(MapIsWater(MAP_GetColor(pos, MAPTYPE_TERRAIN)));
+	CU_ASSERT_TRUE(MapIsWater(MAP_GetColor(pos, MAPTYPE_TERRAIN, NULL)));
+
+	Vector2Set(pos, -45, 2.5);
+	CU_ASSERT_TRUE(!MapIsWater(MAP_GetColor(pos, MAPTYPE_TERRAIN, &coast)));
+	CU_ASSERT_TRUE(coast);
 }
 
 static void testAirFight (void)

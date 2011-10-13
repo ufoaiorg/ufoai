@@ -909,7 +909,7 @@ static void B_MoveAircraftOnGeoscapeToOtherBases (const base_t *base)
 			if (!moved) {
 				/* No base can hold this aircraft */
 				UFO_NotifyPhalanxAircraftRemoved(aircraft);
-				if (!MapIsWater(MAP_GetColor(aircraft->pos, MAPTYPE_TERRAIN))) {
+				if (!MapIsWater(MAP_GetColor(aircraft->pos, MAPTYPE_TERRAIN, NULL))) {
 					CP_SpawnRescueMission(aircraft, NULL);
 				} else {
 					/* Destroy the aircraft and everything onboard - the aircraft pointer

@@ -254,7 +254,7 @@ qboolean CP_ChooseMap (mission_t *mission, const vec2_t pos)
 			Com_Printf("CP_ChooseMap: Could not find map with required conditions:\n");
 			Com_Printf("  ufo: %s -- pos: ", mission->ufo ? Com_UFOTypeToShortName(mission->ufo->ufotype) : "none");
 			if (pos)
-				Com_Printf("%s", MapIsWater(MAP_GetColor(pos, MAPTYPE_TERRAIN)) ? " (in water) " : "");
+				Com_Printf("%s", MapIsWater(MAP_GetColor(pos, MAPTYPE_TERRAIN, NULL)) ? " (in water) " : "");
 			if (pos)
 				Com_Printf("(%.02f, %.02f)\n", pos[0], pos[1]);
 			else
@@ -1376,7 +1376,7 @@ void CP_GetRandomPosOnGeoscape (vec2_t pos, qboolean noWater)
 	do {
 		pos[0] = (frand() - 0.5f) * 360.0f;
 		pos[1] = asin((frand() - 0.5f) * 2.0f) * todeg;
-	} while (noWater && MapIsWater(MAP_GetColor(pos, MAPTYPE_TERRAIN)));
+	} while (noWater && MapIsWater(MAP_GetColor(pos, MAPTYPE_TERRAIN, NULL)));
 
 	Com_DPrintf(DEBUG_CLIENT, "CP_GetRandomPosOnGeoscape: Get random position on geoscape %.2f:%.2f\n", pos[0], pos[1]);
 }
