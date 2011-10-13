@@ -1,7 +1,7 @@
 // MAP DESCRIPTIONS
 //
 // valid terrain values:
-// * desert, arctic, cold, water, mountain, wasted, tropical, grass
+// * desert, arctic, cold, water, mountain, wasted, tropical, grass, coast
 // valid culture values:
 // * eastern, western, oriental, african
 // valid population values:
