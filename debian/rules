@@ -56,7 +56,7 @@ build-indep: stamps/build-indep
 stamps/build-indep: config.status
 	dh_testdir
 
-	$(MAKE) $(MAKEFLAGS) installer-pre pdf-manual
+	$(MAKE) $(MAKEFLAGS) installer-pre
 
 	mkdir -p stamps
 	touch $@
