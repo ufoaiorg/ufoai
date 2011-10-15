@@ -1,4 +1,4 @@
-ufoai (2.4-dev-2) intrepid; urgency=low
+ufoai (2.4-dev) intrepid; urgency=low
 
   [ Martin Gerhardy ]
   * Changed package layout to only support three main packages (client, server, editor)
