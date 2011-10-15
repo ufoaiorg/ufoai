@@ -75,9 +75,7 @@ really_clean:
 	rm -rf stamps
 
 	[ ! -f Makefile ] || $(MAKE) clean
-	$(MAKE) -C src/docs/tex clean
-	# WARNING: building maps takes ages
-	# find base/maps -name '*.bsp' | xargs --no-run-if-empty rm
+	find base/maps -name '*.bsp' | xargs --no-run-if-empty rm
 	-rm -f base/*.pk3
 	-rm -f Makefile config.h config.log config.status
 	-rm -rf base/i18n
@@ -128,7 +126,6 @@ binary-arch: install-arch
 	dh_installmime
 	dh_installman
 	dh_link
-	#dh_strip -a --dbg-package=ufoai-dbg
 	dh_strip -a
 	dh_compress -X.pdf
 	dh_fixperms
