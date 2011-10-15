@@ -2,3 +2,13 @@ ufoded                /usr/lib/games/ufoai/
 debian/ufoded         /usr/games/
 debian/ufoded.xpm     /usr/share/pixmaps/
 debian/ufoded.desktop /usr/share/applications
+base/game.so         /usr/lib/games/ufoai/base
+base/0models.pk3 /usr/share/games/ufoai/base
+base/0snd.pk3 /usr/share/games/ufoai/base
+base/0base.pk3 /usr/share/games/ufoai/base
+base/0maps.pk3 /usr/share/games/ufoai/base
+base/0ufos.pk3 /usr/share/games/ufoai/base
+ufo2map /usr/games/
+ufomodel /usr/games/
+contrib/scripts/bashcompletion/ufo2map /etc/bash_completion.d/ufo2map
+contrib/scripts/bashcompletion/ufomodel /etc/bash_completion.d/ufomodel

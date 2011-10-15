@@ -10,3 +10,5 @@
 /usr/share/fonts/truetype/wqy/wqy-zenhei.ttf /usr/share/games/ufoai/media/wqy-zenhei.ttf
 #From ttf-unfonts
 /usr/share/fonts/truetype/unfonts/UnGraphicBold.ttf /usr/share/games/ufoai/media/UnGraphicBold.ttf
+#From ttf-umefont
+/usr/share/fonts/truetype/umefont/ume-pgo4.ttf /usr/share/games/ufoai/media/ume-pgo4.ttf

@@ -90,14 +90,14 @@ clean: really_clean unpatch
 install-arch: stamps/build-arch
 	dh_testdir
 	dh_testroot
-	dh_clean -k
+	dh_prep
 	dh_installdirs
 	dh_install
 
 install-indep: stamps/build-indep
 	dh_testdir
 	dh_testroot
-	dh_clean -k
+	dh_prep
 	dh_installdirs
 	dh_install
 
@@ -128,7 +128,8 @@ binary-arch: install-arch
 	dh_installmime
 	dh_installman
 	dh_link
-	dh_strip -a --dbg-package=ufoai-dbg
+	#dh_strip -a --dbg-package=ufoai-dbg
+	dh_strip -a
 	dh_compress -X.pdf
 	dh_fixperms
 	dh_installdeb
