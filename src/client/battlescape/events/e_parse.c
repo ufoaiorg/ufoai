@@ -39,8 +39,8 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 
 #include "../../client.h"
 #include "e_parse.h"
-#include "e_time.h"
 #include "e_main.h"
+#include "e_time.h"
 
 #include "../cl_localentity.h"
 #include "../../cgame/cl_game.h"
@@ -179,6 +179,7 @@ int CL_ClearBattlescapeEvents (void)
  */
 void CL_ParseEvent (struct dbuffer *msg)
 {
+	static eventTiming_t eventTiming;
 	qboolean now;
 	const eventRegister_t *eventData;
 	event_t eType = NET_ReadByte(msg);
@@ -200,6 +201,9 @@ void CL_ParseEvent (struct dbuffer *msg)
 	if (!eventData->eventCallback)
 		Com_Error(ERR_DROP, "CL_ParseEvent: no handling function for event %i", eType);
 
+	if (eType == EV_RESET)
+		OBJZERO(eventTiming);
+
 	if (now) {
 		/* log and call function */
 		CL_LogEvent(eventData);
@@ -215,7 +219,7 @@ void CL_ParseEvent (struct dbuffer *msg)
 		cur->eType = eType;
 
 		/* timestamp (msec) that is used to determine when the event should be executed */
-		when = CL_GetEventTime(cur->eType, msg);
+		when = CL_GetEventTime(cur->eType, msg, &eventTiming);
 		Schedule_Event(when, &CL_ExecuteBattlescapeEvent, &CL_CheckBattlescapeEvent, &CL_FreeBattlescapeEvent, cur);
 
 		Com_DPrintf(DEBUG_EVENTSYS, "event(at %d): %s %p\n", when, eventData->name, (void*)cur);
