@@ -25,12 +25,13 @@
 #include <gtk/gtk.h>
 #include <map>
 #include <string>
+#include "sidebar.h"
 
 class Selectable;
 
 namespace sidebar
 {
-	class MapInfo
+	class MapInfo : public ui::SidebarComponent
 	{
 		private:
 
@@ -59,15 +60,20 @@ namespace sidebar
 
 			/** Return the singleton instance.
 			 */
-			static MapInfo& getInstance ();
+			static MapInfo& Instance ();
 
 			/** Return the main widget for packing into
 			 * the groupdialog or other parent container.
 			 */
-			GtkWidget* getWidget ()
+			GtkWidget* getWidget () const
 			{
 				gtk_widget_show_all(_widget);
 				return _widget;
+			}
+
+			const std::string getTitle() const
+			{
+				return "MapInfo";
 			}
 
 			/** Constructor creates GTK widgets.

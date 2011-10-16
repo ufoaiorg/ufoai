@@ -98,8 +98,9 @@ class DeferredAdjustment {
 #include "math/Vector3.h"
 #include "preferencesystem.h"
 #include "iregistry.h"
+#include "sidebar.h"
 
-class TextureBrowser: public RegistryKeyObserver, PreferenceConstructor
+class TextureBrowser: public RegistryKeyObserver, public PreferenceConstructor, public ui::SidebarComponent
 {
 	private:
 		TextureGroups groups;
@@ -149,7 +150,8 @@ class TextureBrowser: public RegistryKeyObserver, PreferenceConstructor
 		void setSelectedShader(const std::string& shader);
 		void showStartupShaders();
 		void showDirectory(const std::string& directory);
-		GtkWidget* getWidget();
+		GtkWidget* getWidget() const;
+		const std::string getTitle() const;
 		void activeShadersChanged();
 		void addActiveShadersChangedCallback(const SignalHandler& handler);
 		void constructPreferencePage(PreferenceGroup& group);

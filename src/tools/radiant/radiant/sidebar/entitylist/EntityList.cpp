@@ -1,5 +1,7 @@
+#include "../sidebar.h"
 #include "EntityList.h"
 
+#include "radiant_i18n.h"
 #include "ieventmanager.h"
 #include "iregistry.h"
 #include "iradiant.h"
@@ -32,10 +34,6 @@ EntityList::EntityList () :
 
 	// Create all the widgets and pack them into the window
 	populateWindow();
-
-	// Register self to the SelSystem to get notified upon selection changes.
-	// TODO: Register when the view is visible, unregister if not
-	GlobalSelectionSystem().addObserver(this);
 }
 
 namespace {
@@ -151,6 +149,21 @@ EntityList& EntityList::Instance ()
 GtkWidget* EntityList::getWidget () const
 {
 	return _widget;
+}
+
+const std::string EntityList::getTitle() const
+{
+	return _("EntityList");
+}
+
+void EntityList::switchPage (int pageIndex)
+{
+	if (pageIndex == _pageIndex) {
+		// Register self to the SelSystem to get notified upon selection changes.
+		GlobalSelectionSystem().addObserver(this);
+		update();
+	} else
+		GlobalSelectionSystem().removeObserver(this);
 }
 
 void EntityList::onRowExpand (GtkTreeView* view, GtkTreeIter* iter, GtkTreePath* path, EntityList* self)

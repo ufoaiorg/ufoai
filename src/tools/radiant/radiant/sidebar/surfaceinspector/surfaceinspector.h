@@ -8,6 +8,7 @@
 #include "gtkutil/TextPanel.h"
 #include "../../ui/common/ShaderChooser.h"
 #include "../../brush/ContentsFlagsValue.h"
+#include "../sidebar.h"
 
 // Forward declarations to decrease compile times
 typedef struct _GtkSpinButton GtkSpinButton;
@@ -23,7 +24,8 @@ namespace ui {
 
 class SurfaceInspector: public RegistryKeyObserver,
 		public SelectionSystem::Observer,
-		public ShaderChooser::ChooserClient
+		public ShaderChooser::ChooserClient,
+		public SidebarComponent
 {
 		// The actual dialog window
 		GtkWidget* _dialogVBox;
@@ -137,7 +139,11 @@ class SurfaceInspector: public RegistryKeyObserver,
 		 */
 		void shaderSelectionChanged (const std::string& shaderName);
 
-		GtkWidget* getWidget ();
+		GtkWidget* getWidget () const;
+
+		const std::string getTitle() const;
+
+		void switchPage (int pageIndex);
 
 		// Executes the fit command for the selection
 		void fitTexture ();

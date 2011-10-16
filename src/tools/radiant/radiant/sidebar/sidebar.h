@@ -22,6 +22,34 @@
 
 namespace ui {
 
+class SidebarComponent
+{
+	protected:
+
+		int _pageIndex;
+
+	public:
+		// Get the Gtk Widget for display in the sidebar
+		virtual GtkWidget* getWidget () const = 0;
+
+		virtual const std::string getTitle() const = 0;
+
+		virtual ~SidebarComponent () {
+		};
+
+		virtual void switchPage (int page)
+		{
+		}
+
+		void setIndex(int pageIndex) {
+			_pageIndex = pageIndex;
+		}
+
+		void show(GtkWidget *notebook) {
+			gtk_notebook_set_current_page(GTK_NOTEBOOK(notebook), _pageIndex);
+		}
+};
+
 class Sidebar
 {
 	private:
@@ -31,6 +59,14 @@ class Sidebar
 
 		// the notebook which is part of the sidebar widget
 		GtkWidget *_notebook;
+
+		SidebarComponent &_entityInspector;
+		SidebarComponent &_entityList;
+		SidebarComponent &_textureBrowser;
+		SidebarComponent &_surfaceInspector;
+		SidebarComponent &_prefabSelector;
+		SidebarComponent &_mapInfo;
+		SidebarComponent &_jobInfo;
 
 	public:
 		// constructs the whole sidebar
@@ -43,20 +79,19 @@ class Sidebar
 
 	private:
 
-		void addWidget(const std::string& title, GtkWidget* widget);
+		int addWidget(const std::string& title, GtkWidget* widget);
 
-		// single notebook tabs
-		void constructTextureBrowser ();
-		void constructEntityInspector ();
-		void constructSurfaceInspector ();
-		void constructInfo ();
-		void constructPrefabBrowser ();
+		void addComponents (const std::string &title, SidebarComponent &component1, SidebarComponent &component2);
+		void addComponent (SidebarComponent &component);
 
 		void toggleSidebar (void);
-		void toggleTextureBrowser (void);
-		void togglePrefabs (void);
-		void toggleSurfaceInspector (void);
-		void toggleEntityInspector (void);
+		void showTextureBrowser (void);
+		void showPrefabs (void);
+		void showSurfaceInspector (void);
+		void showEntityInspector (void);
+
+		/* gtk signal handlers */
+		static gboolean _onChangePage (GtkNotebook *notebook, gpointer newPage, guint newPageIndex, Sidebar *self);
 };
 
 }

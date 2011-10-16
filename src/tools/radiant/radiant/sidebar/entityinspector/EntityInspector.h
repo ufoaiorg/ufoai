@@ -21,6 +21,7 @@
 
 class Entity;
 class Selectable;
+class SidebarComponent;
 
 namespace ui {
 
@@ -46,7 +47,8 @@ typedef std::map<std::string, PropertyParms> PropertyParmMap;
 
 class EntityInspector: public SelectionSystem::Observer,
 		public gtkutil::SingleIdleCallback,
-		public UndoSystem::Observer
+		public UndoSystem::Observer,
+		public SidebarComponent
 {
 	private:
 
@@ -159,10 +161,12 @@ class EntityInspector: public SelectionSystem::Observer,
 		EntityInspector ();
 
 		// Return or create the singleton instance
-		static EntityInspector& getInstance ();
+		static EntityInspector& Instance ();
 
 		// Get the Gtk Widget for display in the main application
-		GtkWidget* getWidget ();
+		GtkWidget* getWidget () const;
+
+		const std::string getTitle() const;
 
 		// Callback used by the EntityCreator when a key value changes on an entity
 		static void keyValueChanged ();

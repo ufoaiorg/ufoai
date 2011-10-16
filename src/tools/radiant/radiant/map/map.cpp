@@ -495,7 +495,7 @@ bool Map::loadFile (const std::string& filename)
 	// move the view to a start position
 	focusOnStartPosition();
 
-	sidebar::MapInfo::getInstance().update();
+	sidebar::MapInfo::Instance().update();
 	ui::UMPMenu::addItems();
 	return true;
 }

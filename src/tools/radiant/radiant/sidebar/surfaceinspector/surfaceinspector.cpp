@@ -114,10 +114,6 @@ SurfaceInspector::SurfaceInspector () :
 	GlobalRegistry().addKeyObserver(this, RKEY_ENABLE_TEXTURE_LOCK);
 	GlobalRegistry().addKeyObserver(this, RKEY_DEFAULT_TEXTURE_SCALE);
 
-	// Register self to the SelSystem to get notified upon selection changes.
-	// TODO: Register when the view is visible, unregister if not
-	GlobalSelectionSystem().addObserver(this);
-
 	GlobalEventManager().addCommand("FitTexture", MemberCaller<SurfaceInspector, &SurfaceInspector::fitTexture> (*this));
 	GlobalEventManager().addCommand("CopyShader", FreeCaller<selection::algorithm::pickShaderFromSelection> ());
 	GlobalEventManager().addCommand("PasteShader", FreeCaller<selection::algorithm::pasteShaderToSelection> ());
@@ -701,9 +697,24 @@ void SurfaceInspector::fitTexture ()
 	}
 }
 
-GtkWidget* SurfaceInspector::getWidget ()
+GtkWidget* SurfaceInspector::getWidget () const
 {
 	return _dialogVBox;
+}
+
+const std::string SurfaceInspector::getTitle() const
+{
+	return _("_Surfaces");
+}
+
+void SurfaceInspector::switchPage (int pageIndex)
+{
+	if (pageIndex == _pageIndex) {
+		// Register self to the SelSystem to get notified upon selection changes.
+		GlobalSelectionSystem().addObserver(this);
+		update();
+	} else
+		GlobalSelectionSystem().removeObserver(this);
 }
 
 void SurfaceInspector::shaderSelectionChanged (const std::string& shaderName)

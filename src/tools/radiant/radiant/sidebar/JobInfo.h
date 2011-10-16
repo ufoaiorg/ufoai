@@ -21,10 +21,11 @@
 
 #include <gtk/gtk.h>
 #include "gtkutil/menu/PopupMenu.h"
+#include "sidebar.h"
 
 namespace sidebar
 {
-	class JobInfo
+	class JobInfo : public ui::SidebarComponent
 	{
 			// Main widget
 			GtkWidget* _widget;
@@ -47,7 +48,7 @@ namespace sidebar
 
 			/** Return the singleton instance.
 			 */
-			static JobInfo& getInstance ()
+			static JobInfo& Instance ()
 			{
 				static JobInfo _instance;
 				return _instance;
@@ -56,10 +57,15 @@ namespace sidebar
 			/** Return the main widget for packing into
 			 * the groupdialog or other parent container.
 			 */
-			GtkWidget* getWidget ()
+			GtkWidget* getWidget () const
 			{
 				gtk_widget_show_all(_widget);
 				return _widget;
+			}
+
+			const std::string getTitle() const
+			{
+				return "JobInfo";
 			}
 
 			/** Constructor creates GTK widgets.

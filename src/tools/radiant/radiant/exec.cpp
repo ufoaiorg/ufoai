@@ -429,7 +429,7 @@ void exec_run (Exec *ex)
 	exec_cmd_list = g_list_remove(exec_cmd_list, ex);
 	g_list_free(piped);
 	exec_set_outcome(ex);
-	sidebar::JobInfo::getInstance().update();
+	sidebar::JobInfo::Instance().update();
 }
 
 void exec_stop (Exec *e)

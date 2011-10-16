@@ -12,8 +12,12 @@ typedef struct _GtkTreeModel GtkTreeModel;
 
 namespace ui {
 
+/* FORWARD DECLS */
+class SidebarComponent;
+
 class EntityList :
-	public SelectionSystem::Observer
+	public SelectionSystem::Observer,
+	public SidebarComponent
 {
 	// The main dialog window
 	GtkWidget* _widget;
@@ -36,6 +40,9 @@ public:
 
 	GtkWidget* getWidget() const;
 
+	const std::string getTitle() const;
+
+	void switchPage (int pageIndex);
 private:
 	/** greebo: Creates the widgets
 	 */

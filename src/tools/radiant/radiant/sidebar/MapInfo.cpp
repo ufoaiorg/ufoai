@@ -132,7 +132,7 @@ namespace sidebar
 		return _vboxEntityBreakdown;
 	}
 
-	MapInfo& MapInfo::getInstance ()
+	MapInfo& MapInfo::Instance ()
 	{
 		static MapInfo _instance;
 		return _instance;
