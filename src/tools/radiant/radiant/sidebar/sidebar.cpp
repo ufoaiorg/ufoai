@@ -64,7 +64,7 @@ Sidebar::Sidebar () :
 	GlobalEventManager().addCommand("ToggleTextureBrowser", MemberCaller<Sidebar, &Sidebar::showTextureBrowser> (
 			*this));
 
-	g_signal_connect(G_OBJECT(_notebook), "switch-page", G_CALLBACK(_onChangePage), this);
+	g_signal_connect(G_OBJECT(_notebook), "switch-page", G_CALLBACK(onChangePage), this);
 }
 
 Sidebar::~Sidebar ()
@@ -152,7 +152,7 @@ void Sidebar::showEntityInspector ()
 	_entityInspector.show(_notebook);
 }
 
-gboolean Sidebar::_onChangePage (GtkNotebook *notebook, gpointer newPage, guint newPageIndex, Sidebar *self)
+gboolean Sidebar::onChangePage (GtkNotebook *notebook, gpointer newPage, guint newPageIndex, Sidebar *self)
 {
 	self->_entityInspector.switchPage(newPageIndex);
 	self->_entityList.switchPage(newPageIndex);

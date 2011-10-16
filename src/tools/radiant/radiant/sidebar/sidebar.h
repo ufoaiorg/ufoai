@@ -102,7 +102,7 @@ class Sidebar
 		void showEntityInspector (void);
 
 		/* gtk signal handlers */
-		static gboolean _onChangePage (GtkNotebook *notebook, gpointer newPage, guint newPageIndex, Sidebar *self);
+		static gboolean onChangePage (GtkNotebook *notebook, gpointer newPage, guint newPageIndex, Sidebar *self);
 };
 
 }
