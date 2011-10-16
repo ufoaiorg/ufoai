@@ -210,7 +210,7 @@ int CL_GetEventTime (const event_t eType, struct dbuffer *msg, eventTiming_t *ev
 	return eventTime;
 #else
 	if (!eventData->timeCallback)
-		return cl.time;
+		return eventTiming->nextTime;
 
 	return eventData->timeCallback(eventData, msg, eventTiming);
 #endif
