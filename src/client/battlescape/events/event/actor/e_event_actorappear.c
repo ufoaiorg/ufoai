@@ -34,11 +34,12 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 
 int CL_ActorAppearTime (const eventRegister_t *self, struct dbuffer *msg, eventTiming_t *eventTiming)
 {
-#if 0
-	nextTime += 600;
-#else
-	return cl.time + 600;
-#endif
+	const int eventTime = eventTiming->nextTime;
+
+	if (cl.actTeam != cls.team)
+		eventTiming->nextTime += 600;
+
+	return eventTime;
 }
 
 /**

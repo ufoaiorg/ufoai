@@ -28,8 +28,13 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 
 int CL_ActorDoThrowTime (const eventRegister_t *self, struct dbuffer *msg, eventTiming_t *eventTiming)
 {
-	const int t = NET_ReadShort(msg);
-	return cl.time + t;
+	const int eventTime = eventTiming->nextTime;
+
+	eventTiming->nextTime += NET_ReadShort(msg);
+	eventTiming->impactTime = eventTiming->shootTime = eventTiming->nextTime;
+	eventTiming->parsedDeath = qfalse;
+
+	return eventTime;
 }
 
 /**

@@ -46,18 +46,17 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 int CL_GetEventTime (const event_t eType, struct dbuffer *msg, eventTiming_t *eventTiming)
 {
 	const eventRegister_t *eventData = CL_GetEvent(eType);
-
-#ifdef OLDEVENTTIME
 	int eventTime;
-
-	if (eType == EV_ACTOR_DIE)
-		eventTiming->parsedDeath = qtrue;
 
 	/* get event time */
 	if (eventTiming->nextTime < cl.time)
 		eventTiming->nextTime = cl.time;
 	if (eventTiming->impactTime < cl.time)
 		eventTiming->impactTime = cl.time;
+
+#ifdef OLDEVENTTIME
+	if (eType == EV_ACTOR_DIE)
+		eventTiming->parsedDeath = qtrue;
 
 	if (eType == EV_ACTOR_DIE || eType == EV_MODEL_EXPLODE)
 		eventTime = eventTiming->impactTime;
@@ -203,15 +202,15 @@ int CL_GetEventTime (const event_t eType, struct dbuffer *msg, eventTiming_t *ev
 	default:
 		break;
 	}
+#else
+	if (!eventData->timeCallback)
+		eventTime = eventTiming->nextTime;
+	else
+		eventTime = eventData->timeCallback(eventData, msg, eventTiming);
+#endif
 
 	Com_DPrintf(DEBUG_EVENTSYS, "%s => eventTime: %i, nextTime: %i, impactTime: %i, shootTime: %i, cl.time: %i\n",
 			eventData->name, eventTime, eventTiming->nextTime, eventTiming->impactTime, eventTiming->shootTime, cl.time);
 
 	return eventTime;
-#else
-	if (!eventData->timeCallback)
-		return eventTiming->nextTime;
-
-	return eventData->timeCallback(eventData, msg, eventTiming);
-#endif
 }

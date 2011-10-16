@@ -90,10 +90,10 @@ const eventRegister_t events[] = {
 	{E(EV_ENDROUND), "b", CL_DoEndRound, NULL, NULL},
 	{E(EV_ENDROUNDANNOUNCE), "bb", CL_EndRoundAnnounce, NULL, NULL},
 
-	{E(EV_RESULTS), "", CL_ParseResults, NULL, NULL}, /* manually parsed */
+	{E(EV_RESULTS), "", CL_ParseResults, CL_ParseResultsTime, NULL}, /* manually parsed */
 	{E(EV_CENTERVIEW), "g", CL_CenterView, NULL, NULL},
 
-	{E(EV_ENT_APPEAR), "sbg", CL_EntAppear, NULL, NULL},
+	{E(EV_ENT_APPEAR), "sbg", CL_EntAppear, CL_EntAppearTime, NULL},
 	{E(EV_ENT_PERISH), "s", CL_EntPerish, NULL, NULL},
 	{E(EV_ENT_DESTROY), "s", CL_EntDestroy, NULL, NULL},
 	{E(EV_ADD_BRUSH_MODEL), "bssbppsbb", CL_AddBrushModel, NULL, NULL},
@@ -105,28 +105,28 @@ const eventRegister_t events[] = {
 	{E(EV_ACTOR_MOVE), "!sbbs", CL_ActorDoMove, CL_ActorDoMoveTime, CL_CheckDefault}, /* Don't use this format string - see CL_ActorDoMove for more info */
 	{E(EV_ACTOR_REACTIONFIRECHANGE), "sbbs", CL_ActorReactionFireChange, NULL, NULL},
 
-	{E(EV_ACTOR_START_SHOOT), "sbgg", CL_ActorStartShoot, NULL, NULL},
+	{E(EV_ACTOR_START_SHOOT), "sbgg", CL_ActorStartShoot, CL_ActorStartShootTime, NULL},
 	{E(EV_ACTOR_SHOOT), "ssbsbbbbbppb", CL_ActorDoShoot, CL_ActorDoShootTime, NULL}, /**< @sa NET_WriteDir */
 	{E(EV_ACTOR_SHOOT_HIDDEN), "bsbb", CL_ActorShootHidden, CL_ActorShootHiddenTime, NULL},
 	{E(EV_ACTOR_THROW), "ssbbbpp", CL_ActorDoThrow, CL_ActorDoThrowTime, NULL},
 
-	{E(EV_ACTOR_DIE), "ss", CL_ActorDie, NULL, CL_CheckDefault},
+	{E(EV_ACTOR_DIE), "ss", CL_ActorDie, CL_ActorDieTime, CL_CheckDefault},
 	{E(EV_ACTOR_REVITALISED), "ss", CL_ActorRevitalised, NULL, CL_CheckDefault},
 	{E(EV_ACTOR_STATS), "!sbsbb", CL_ActorStats, NULL, NULL},
 	{E(EV_ACTOR_STATECHANGE), "ss", CL_ActorStateChange, NULL, NULL},
 	{E(EV_ACTOR_RESERVATIONCHANGE), "ssss", CL_ActorReservationChange, NULL, NULL},
 
-	{E(EV_INV_ADD), "s*", CL_InvAdd, NULL, NULL},
+	{E(EV_INV_ADD), "s*", CL_InvAdd, CL_InvAddTime, NULL},
 	{E(EV_INV_DEL), "sbbb", CL_InvDel, NULL, NULL},
 	{E(EV_INV_AMMO), "sbbbbb", CL_InvAmmo, NULL, NULL},
-	{E(EV_INV_RELOAD), "sbbbbb", CL_InvReload, NULL, NULL},
+	{E(EV_INV_RELOAD), "sbbbbb", CL_InvReload, CL_InvReloadTime, NULL},
 	{E(EV_INV_TRANSFER), "sbsbbbbs", NULL, NULL, NULL},
 
-	{E(EV_MODEL_EXPLODE), "s", CL_Explode, NULL, NULL},
+	{E(EV_MODEL_EXPLODE), "s", CL_Explode, CL_ExplodeTime, NULL},
 	{E(EV_MODEL_EXPLODE_TRIGGERED), "s", CL_Explode, NULL, NULL},
 
-	{E(EV_PARTICLE_APPEAR), "ss&", CL_ParticleAppear, NULL, NULL},
-	{E(EV_PARTICLE_SPAWN), "bppp&", CL_ParticleSpawnEvent, NULL, NULL},
+	{E(EV_PARTICLE_APPEAR), "ss&", CL_ParticleAppear, CL_ParticleAppearTime, NULL},
+	{E(EV_PARTICLE_SPAWN), "bppp&", CL_ParticleSpawnEvent, CL_ParticleSpawnEventTime, NULL},
 
 	{E(EV_SOUND), "sp&", CL_SoundEvent, NULL, NULL},
 

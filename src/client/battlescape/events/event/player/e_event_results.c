@@ -26,6 +26,11 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #include "../../../../cgame/cl_game.h"
 #include "e_event_results.h"
 
+int CL_ParseResultsTime (const struct eventRegister_s *self, struct dbuffer *msg, eventTiming_t *eventTiming)
+{
+	return eventTiming->nextTime + 1400;
+}
+
 /**
  * @brief Reads mission result data from server
  * @sa EV_RESULTS

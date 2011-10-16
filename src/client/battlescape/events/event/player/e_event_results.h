@@ -27,6 +27,7 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 
 #include "../../e_main.h"
 
+int CL_ParseResultsTime(const struct eventRegister_s *self, struct dbuffer *msg, eventTiming_t *eventTiming);
 void CL_ParseResults(const eventRegister_t *self, struct dbuffer *msg);
 
 #endif

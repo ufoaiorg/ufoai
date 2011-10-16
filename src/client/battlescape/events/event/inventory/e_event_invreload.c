@@ -27,19 +27,13 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #include "../../../../cgame/cl_game.h"
 #include "e_event_invreload.h"
 
-int CL_InvReloadTime (const eventRegister_t *self, struct dbuffer *msg, const int dt)
+int CL_InvReloadTime (const eventRegister_t *self, struct dbuffer *msg, eventTiming_t *eventTiming)
 {
-#if 0
-	/* let the reload sound play */
-	nextTime += 600;
-#else
-	return cl.time + 600;
-#endif
+	const int eventTime = eventTiming->nextTime;
+	eventTiming->nextTime += 600;
+	return eventTime;
 }
 
-/**
- * @sa CL_InvReload
- */
 void CL_InvReload (const eventRegister_t *self, struct dbuffer *msg)
 {
 	invList_t	*ic;

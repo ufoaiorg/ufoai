@@ -28,6 +28,12 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #include "../../../../renderer/r_mesh_anim.h"
 #include "e_event_actordie.h"
 
+int CL_ActorDieTime (const struct eventRegister_s *self, struct dbuffer *msg, eventTiming_t *eventTiming)
+{
+	eventTiming->parsedDeath = qtrue;
+	return eventTiming->impactTime;
+}
+
 /**
  * @brief Kills an actor (all that is needed is the local entity state set to STATE_DEAD).
  * @note Also changes the animation to a random death sequence and appends the dead animation

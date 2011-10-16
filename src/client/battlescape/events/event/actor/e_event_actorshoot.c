@@ -30,49 +30,46 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 
 int CL_ActorDoShootTime (const eventRegister_t *self, struct dbuffer *msg, eventTiming_t *eventTiming)
 {
-#if 0
-	const fireDef_t	*fd;
-	static int impactTime;
+	const fireDef_t *fd;
 	int flags, dummy;
 	int objIdx, surfaceFlags;
-	objDef_t *obj;
+	const objDef_t *obj;
 	int weap_fds_idx, fd_idx;
 	shoot_types_t shootType;
 	vec3_t muzzle, impact;
-
-	if (impactTime < cl.time)
-		impactTime = cl.time;
+	int eventTime = eventTiming->shootTime;
 
 	/* read data */
-	NET_ReadFormat(msg, self->formatString, &dummy, &dummy, &objIdx, &weap_fds_idx, &fd_idx, &shootType, &flags, &surfaceFlags, &muzzle, &impact, &dummy);
+	NET_ReadFormat(msg, self->formatString, &dummy, &dummy, &dummy, &objIdx, &weap_fds_idx, &fd_idx, &shootType, &flags,
+			&surfaceFlags, &muzzle, &impact, &dummy);
 
 	obj = INVSH_GetItemByIDX(objIdx);
 	fd = FIRESH_GetFiredef(obj, weap_fds_idx, fd_idx);
 
 	if (!(flags & SF_BOUNCED)) {
 		/* shooting */
-		if (fd->speed && !CL_OutsideMap(impact, UNIT_SIZE * 10)) {
-			impactTime = shootTime + 1000 * VectorDist(muzzle, impact) / fd->speed;
+		if (fd->speed > 0.0 && !CL_OutsideMap(impact, UNIT_SIZE * 10)) {
+			eventTiming->impactTime = eventTiming->shootTime + 1000 * VectorDist(muzzle, impact) / fd->speed;
 		} else {
-			impactTime = shootTime;
+			eventTiming->impactTime = eventTiming->shootTime;
 		}
 		if (cl.actTeam != cls.team)
-			nextTime = impactTime + 1400;
+			eventTiming->nextTime = eventTiming->impactTime + 1400;
 		else
-			nextTime = impactTime + 400;
-		if (fd->delayBetweenShots)
-			shootTime += 1000 / fd->delayBetweenShots;
+			eventTiming->nextTime = eventTiming->impactTime + 400;
+		if (fd->delayBetweenShots > 0.0)
+			eventTiming->shootTime += 1000 / fd->delayBetweenShots;
 	} else {
 		/* only a bounced shot */
-		eventTime = impactTime;
-		if (fd->speed) {
-			impactTime += 1000 * VectorDist(muzzle, impact) / fd->speed;
-			nextTime = impactTime;
+		eventTime = eventTiming->impactTime;
+		if (fd->speed > 0.0) {
+			eventTiming->impactTime += 1000 * VectorDist(muzzle, impact) / fd->speed;
+			eventTiming->nextTime = eventTiming->impactTime;
 		}
 	}
-#else
-	return cl.time;
-#endif
+	eventTiming->parsedDeath = qfalse;
+
+	return eventTime;
 }
 
 /**

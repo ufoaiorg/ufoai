@@ -27,30 +27,31 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 
 int CL_ActorShootHiddenTime (const eventRegister_t *self, struct dbuffer *msg, eventTiming_t *eventTiming)
 {
-#if 0
 	int first;
 	int objIdx;
 	const objDef_t *obj;
-	int weap_fds_idx, fd_idx;
+	weaponFireDefIndex_t weapFdsIdx;
+	fireDefIndex_t fireDefIndex;
+	const int eventTime = eventTiming->shootTime;
 
-	NET_ReadFormat(msg, self->formatString, &first, &objIdx, &weap_fds_idx, &fd_idx);
+	NET_ReadFormat(msg, self->formatString, &first, &objIdx, &weapFdsIdx, &fireDefIndex);
 
 	obj = INVSH_GetItemByIDX(objIdx);
 	if (first) {
-		nextTime += 500;
-		impactTime = shootTime = nextTime;
+		eventTiming->nextTime += 500;
+		eventTiming->impactTime = eventTiming->shootTime = eventTiming->nextTime;
 	} else {
-		const fireDef_t *fd = FIRESH_GetFiredef(obj, weap_fds_idx, fd_idx);
+		const fireDef_t *fd = FIRESH_GetFiredef(obj, weapFdsIdx, fireDefIndex);
 		/* impact right away - we don't see it at all
 		 * bouncing is not needed here, too (we still don't see it) */
-		impactTime = shootTime;
-		nextTime = shootTime + 1400;
-		if (fd->delayBetweenShots)
-			shootTime += 1000 / fd->delayBetweenShots;
+		eventTiming->impactTime = eventTiming->shootTime;
+		eventTiming->nextTime = eventTiming->shootTime + 1400;
+		if (fd->delayBetweenShots > 0.0)
+			eventTiming->shootTime += 1000 / fd->delayBetweenShots;
 	}
-#else
-	return cl.time;
-#endif
+	eventTiming->parsedDeath = qfalse;
+
+	return eventTime;
 }
 
 /**

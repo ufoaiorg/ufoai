@@ -49,6 +49,19 @@ static void CL_NetReceiveItem (struct dbuffer *buf, item_t *item, containerIndex
 		Com_Error(ERR_DROP, "no weapon given for item");
 }
 
+int CL_InvAddTime (const struct eventRegister_s *self, struct dbuffer *msg, eventTiming_t *eventTiming)
+{
+	if (eventTiming->parsedDeath) { /* drop items after death (caused by impact) */
+		/* EV_INV_ADD messages are the last events sent after a death */
+		eventTiming->parsedDeath = qfalse;
+		return eventTiming->impactTime + 400;
+	} else if (eventTiming->impactTime > cl.time) { /* item thrown on the ground */
+		return eventTiming->impactTime + 75;
+	}
+
+	return eventTiming->nextTime;
+}
+
 /**
  * @sa CL_InvDel
  * @sa G_SendInventory

@@ -28,10 +28,13 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 
 int CL_ActorDoMoveTime (const eventRegister_t *self, struct dbuffer *msg, eventTiming_t *eventTiming)
 {
-#if 0
 	le_t *le;
 	int number, i;
-	int time = cl.time;
+	int time = 0;
+	int pathLength;
+	byte crouchingState;
+	pos3_t pos, oldPos;
+	const int eventTime = eventTiming->nextTime;
 
 	number = NET_ReadShort(msg);
 	/* get le */
@@ -39,16 +42,27 @@ int CL_ActorDoMoveTime (const eventRegister_t *self, struct dbuffer *msg, eventT
 	if (!le)
 		LE_NotFoundError(number);
 
-	for (i = 0; i < le->pathLength; i++) {
-		const dvec_t dvec = le->dvtab[i];
-		const byte dir = getDVdir(dvec);
-		time += LE_ActorGetStepTime(le, dir, le->pathPos);
-	}
+	pathLength = NET_ReadByte(msg);
 
-	return time;
-#else
-	return cl.time;
-#endif
+	/* Also skip the final position */
+	NET_ReadByte(msg);
+	NET_ReadByte(msg);
+	NET_ReadByte(msg);
+
+	VectorCopy(le->pos, pos);
+	crouchingState = LE_IsCrouched(le) ? 1 : 0;
+
+	for (i = 0; i < pathLength; i++) {
+		const dvec_t dvec = NET_ReadShort(msg);
+		const byte dir = getDVdir(dvec);
+		VectorCopy(pos, oldPos);
+		PosAddDV(pos, crouchingState, dvec);
+		time += LE_ActorGetStepTime(le, pos, oldPos, dir, NET_ReadShort(msg));
+		NET_ReadShort(msg);
+	}
+	eventTiming->nextTime += time + 400;
+
+	return eventTime;
 }
 
 /**
