@@ -41,6 +41,15 @@ class SidebarComponent
 		{
 		}
 
+		virtual void toggleSidebar (bool visible, int page)
+		{
+			if (!visible) {
+				switchPage(-1);
+			} else {
+				switchPage(page);
+			}
+		}
+
 		void setIndex(int pageIndex) {
 			_pageIndex = pageIndex;
 		}
@@ -59,6 +68,8 @@ class Sidebar
 
 		// the notebook which is part of the sidebar widget
 		GtkWidget *_notebook;
+
+		int _currentPageIndex;
 
 		SidebarComponent &_entityInspector;
 		SidebarComponent &_entityList;

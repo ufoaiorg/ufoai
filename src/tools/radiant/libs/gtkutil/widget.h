@@ -52,9 +52,11 @@ inline bool widget_is_visible (GtkWidget* widget)
 	return GTK_WIDGET_VISIBLE(widget) != FALSE;
 }
 
-inline void widget_toggle_visible (GtkWidget* widget)
+inline bool widget_toggle_visible (GtkWidget* widget)
 {
-	widget_set_visible(widget, !widget_is_visible(widget));
+	bool visible = !widget_is_visible(widget);
+	widget_set_visible(widget, visible);
+	return visible;
 }
 
 class ToggleItem

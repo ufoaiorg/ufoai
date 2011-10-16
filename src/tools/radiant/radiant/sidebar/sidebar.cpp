@@ -114,7 +114,14 @@ void Sidebar::addComponents (const std::string &title, SidebarComponent &compone
 
 void Sidebar::toggleSidebar ()
 {
-	widget_toggle_visible(_widget);
+	bool visible = widget_toggle_visible(_widget);
+	_entityInspector.toggleSidebar(visible, _currentPageIndex);
+	_entityList.toggleSidebar(visible, _currentPageIndex);
+	_textureBrowser.toggleSidebar(visible, _currentPageIndex);
+	_surfaceInspector.toggleSidebar(visible, _currentPageIndex);
+	_prefabSelector.toggleSidebar(visible, _currentPageIndex);
+	_mapInfo.toggleSidebar(visible, _currentPageIndex);
+	_jobInfo.toggleSidebar(visible, _currentPageIndex);
 }
 
 void Sidebar::showTextureBrowser ()
@@ -154,6 +161,8 @@ gboolean Sidebar::_onChangePage (GtkNotebook *notebook, gpointer newPage, guint 
 	self->_prefabSelector.switchPage(newPageIndex);
 	self->_mapInfo.switchPage(newPageIndex);
 	self->_jobInfo.switchPage(newPageIndex);
+
+	self->_currentPageIndex = newPageIndex;
 
 	return FALSE;
 }
