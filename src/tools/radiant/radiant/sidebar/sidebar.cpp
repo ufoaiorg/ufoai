@@ -49,7 +49,7 @@ Sidebar::Sidebar () :
 	addComponents(_("Info"), _mapInfo, _jobInfo);
 
 	// console
-	GtkWidget* consoleWidget = Console_constructWindow(GlobalRadiant().getMainWindow());
+	GtkWidget* consoleWidget = Console_constructWindow();
 	addWidget(_("Console"), consoleWidget);
 
 	gtk_box_pack_start(GTK_BOX(_widget), GTK_WIDGET(_notebook), TRUE, TRUE, 0);
