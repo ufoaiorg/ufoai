@@ -19,15 +19,8 @@
 
 namespace ui {
 
-namespace {
-enum
-{
-	NODE_COL, INSTANCE_COL, NUM_COLS
-};
-}
-
 EntityList::EntityList () :
-	_callbackActive(false)
+		_callbackActive(false)
 {
 	// Be sure to pass FALSE to the TransientWindow to prevent it from self-destruction
 	_widget = gtk_vbox_new(FALSE, 0);
@@ -36,44 +29,9 @@ EntityList::EntityList () :
 	populateWindow();
 }
 
-namespace {
-
-inline Nameable* Node_getNameable(scene::Node& node) {
-	return dynamic_cast<Nameable*>(&node);
-}
-
-std::string getNodeName(scene::Node& node) {
-	Nameable* nameable = Node_getNameable(node);
-	return (nameable != NULL) ? nameable->name() : "node";
-}
-
-void cellDataFunc (GtkTreeViewColumn* column, GtkCellRenderer* renderer, GtkTreeModel* model, GtkTreeIter* iter,
-		gpointer data)
+EntityList::~EntityList ()
 {
-	// Load the pointers from the columns
-	scene::Node* node = reinterpret_cast<scene::Node*> (gtkutil::TreeModel::getPointer(model, iter, NODE_COL));
-
-	scene::Instance* instance = reinterpret_cast<scene::Instance*> (gtkutil::TreeModel::getPointer(model, iter,
-			INSTANCE_COL));
-
-	if (node != NULL) {
-		gtk_cell_renderer_set_fixed_size(renderer, -1, -1);
-		std::string name = getNodeName(*node);
-		g_object_set(G_OBJECT(renderer), "text", name.c_str(), "visible", TRUE, NULL);
-
-		GtkWidget* treeView = reinterpret_cast<GtkWidget*> (data);
-
-		GtkStyle* style = gtk_widget_get_style(treeView);
-		if (instance->childSelected()) {
-			g_object_set(G_OBJECT(renderer), "cell-background-gdk", &style->base[GTK_STATE_ACTIVE], NULL);
-		} else {
-			g_object_set(G_OBJECT(renderer), "cell-background-gdk", &style->base[GTK_STATE_NORMAL], NULL);
-		}
-	} else {
-		gtk_cell_renderer_set_fixed_size(renderer, -1, 0);
-		g_object_set(G_OBJECT(renderer), "text", "", "visible", FALSE, NULL);
-	}
-}
+	_treeModel.clear();
 }
 
 void EntityList::populateWindow ()
@@ -81,13 +39,10 @@ void EntityList::populateWindow ()
 	_treeView = GTK_TREE_VIEW(gtk_tree_view_new());
 	gtk_tree_view_set_headers_visible(_treeView, FALSE);
 
-	_treeModel = GTK_TREE_MODEL(scene_graph_get_tree_model());
 	gtk_tree_view_set_model(_treeView, _treeModel);
 
-	GtkCellRenderer* renderer = gtk_cell_renderer_text_new();
-	GtkTreeViewColumn* column = gtk_tree_view_column_new();
-	gtk_tree_view_column_pack_start(column, renderer, TRUE);
-	gtk_tree_view_column_set_cell_data_func(column, renderer, cellDataFunc, _treeView, NULL);
+	GtkTreeViewColumn* column = gtkutil::TextColumn("Name", GraphTreeModel::COL_NAME);
+	gtk_tree_view_column_pack_start(column, gtk_cell_renderer_text_new(), TRUE);
 
 	_selection = gtk_tree_view_get_selection(_treeView);
 	gtk_tree_selection_set_mode(_selection, GTK_SELECTION_MULTIPLE);
@@ -100,34 +55,12 @@ void EntityList::populateWindow ()
 	gtk_container_add(GTK_CONTAINER(_widget), gtkutil::ScrolledFrame(GTK_WIDGET(_treeView)));
 }
 
-gboolean EntityList::modelUpdater (GtkTreeModel* model, GtkTreePath* path, GtkTreeIter* iter, gpointer data)
-{
-	GtkTreeView* treeView = reinterpret_cast<GtkTreeView*> (data);
-
-	// Load the pointers from the columns
-	scene::Instance* instance = reinterpret_cast<scene::Instance*> (gtkutil::TreeModel::getPointer(model, iter,
-			INSTANCE_COL));
-
-	if (instance->isSelected()) {
-		GtkTreeSelection* selection = gtk_tree_view_get_selection(treeView);
-		gtk_tree_selection_select_path(selection, path);
-	} else {
-		Selectable* selectable = Instance_getSelectable(*instance);
-
-		if (selectable != NULL) {
-			GtkTreeSelection* selection = gtk_tree_view_get_selection(treeView);
-			gtk_tree_selection_unselect_path(selection, path);
-		}
-	}
-
-	return FALSE;
-}
-
 void EntityList::update ()
 {
 	// Disable callbacks and traverse the treemodel
 	_callbackActive = true;
-	gtk_tree_model_foreach(_treeModel, modelUpdater, _treeView);
+	// Traverse the entire tree, updating the selection
+	_treeModel.updateSelectionStatus(_selection);
 	_callbackActive = false;
 }
 
@@ -137,7 +70,9 @@ void EntityList::selectionChanged (scene::Instance& instance, bool isComponent)
 	if (_callbackActive || isComponent)
 		return; // avoid loops
 
-	update();
+	_callbackActive = true;
+	_treeModel.updateSelectionStatus(_selection, instance);
+	_callbackActive = false;
 }
 
 EntityList& EntityList::Instance ()
@@ -151,7 +86,7 @@ GtkWidget* EntityList::getWidget () const
 	return _widget;
 }
 
-const std::string EntityList::getTitle() const
+const std::string EntityList::getTitle () const
 {
 	return _("EntityList");
 }
@@ -161,6 +96,10 @@ void EntityList::switchPage (int pageIndex)
 	if (pageIndex == _pageIndex) {
 		// Register self to the SelSystem to get notified upon selection changes.
 		GlobalSelectionSystem().addObserver(this);
+		_callbackActive = true;
+		// Repopulate the model before showing the dialog\r
+		_treeModel.refresh();
+		_callbackActive = false;
 		update();
 	} else
 		GlobalSelectionSystem().removeObserver(this);
@@ -178,7 +117,7 @@ gboolean EntityList::onSelection (GtkTreeSelection *selection, GtkTreeModel *mod
 		gboolean path_currently_selected, gpointer data)
 {
 	// Get a pointer to the class instance
-	EntityList* self = reinterpret_cast<EntityList*> (data);
+	EntityList* self = reinterpret_cast<EntityList*>(data);
 
 	if (self->_callbackActive)
 		return TRUE; // avoid loops
@@ -186,54 +125,32 @@ gboolean EntityList::onSelection (GtkTreeSelection *selection, GtkTreeModel *mod
 	GtkTreeIter iter;
 	gtk_tree_model_get_iter(model, &iter, path);
 
-	// Load the pointers from the columns
-	scene::Node* node = reinterpret_cast<scene::Node*> (gtkutil::TreeModel::getPointer(model, &iter, NODE_COL));
+	// Load the instance pointer from the columns
+	scene::Instance& instance = *reinterpret_cast<scene::Instance*>(gtkutil::TreeModel::getPointer(model, &iter,
+			GraphTreeModel::COL_INSTANCE_POINTER));
 
-	scene::Instance* instance = reinterpret_cast<scene::Instance*> (gtkutil::TreeModel::getPointer(model, &iter,
-			INSTANCE_COL));
+	Selectable *selectable = Instance_getSelectable(instance);
 
-	Selectable* selectable = Instance_getSelectable(*instance);
-
-	if (node == NULL) {
-		if (path_currently_selected != FALSE) {
-			// Disable callbacks
-			self->_callbackActive = true;
-
-			// Deselect all
-			GlobalSelectionSystem().setSelectedAll(false);
-
-			// Now reactivate the callbacks
-			self->_callbackActive = false;
-		}
-	} else if (selectable != NULL) {
+	if (selectable != NULL) {
 		// We've found a selectable instance
 
-		// Disable callbacks
+		// Disable update to avoid loopbacks
 		self->_callbackActive = true;
 
 		// Select the instance
 		selectable->setSelected(path_currently_selected == FALSE);
 
-		// greebo: Grab the origin keyvalue from the entity and focus the view on it
-		Entity* entity = Node_getEntity(*node);
-		if (entity != NULL) {
-			Vector3 entityOrigin(entity->getKeyValue("origin"));
-
-			// Move the camera a bit off the entity origin
-			entityOrigin += Vector3(-50, 0, 50);
-
-			// Rotate the camera a bit towards the "ground"
-			Vector3 angles(0, 0, 0);
-			//angles[CAMERA_PITCH] = -30;
-			// TODO: mattn
-
-			GlobalMap().FocusViews(entityOrigin, -30);
-		}
+		const AABB& aabb = instance.worldAABB();
+		Vector3 origin(aabb.origin);
+		// Move the camera a bit off the AABB origin
+		origin += Vector3(-50, 0, 50);
+		// Rotate the camera a bit towards the "ground"
+		GlobalMap().FocusViews(origin, -30);
 
 		// Now reactivate the callbacks
 		self->_callbackActive = false;
 
-		return TRUE;
+		return TRUE; // don't propagate
 	}
 
 	return FALSE;
