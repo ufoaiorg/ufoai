@@ -7,6 +7,7 @@
 #include "Face.h"
 #include "generic/referencecounted.h"
 #include "../plugin.h"
+#include "../sidebar/surfaceinspector/surfaceinspector.h"
 
 /// \brief Returns true if 'self' takes priority when building brush b-rep.
 inline bool plane3_inside (const Plane3& self, const Plane3& other)
@@ -130,6 +131,9 @@ void Brush::planeChanged ()
 void Brush::shaderChanged ()
 {
 	planeChanged();
+
+	// Queue an UI update of the texture tools
+	ui::SurfaceInspector::Instance().queueUpdate();
 }
 
 void Brush::evaluateBRep () const

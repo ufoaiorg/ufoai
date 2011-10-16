@@ -622,6 +622,18 @@ void SurfaceInspector::updateTexDef ()
 	gtk_entry_set_text(GTK_ENTRY(_manipulators[ROTATION].value), string::toString(texdef._rotate).c_str());
 }
 
+void SurfaceInspector::onGtkIdle ()
+{
+	// Perform the pending update
+	update();
+}
+
+void SurfaceInspector::queueUpdate ()
+{
+	// Request an idle callback to perform the update when GTK is idle
+	requestIdleCallback();
+}
+
 void SurfaceInspector::update ()
 {
 	bool valueSensitivity = (_selectionInfo.totalCount > 0);
@@ -669,7 +681,7 @@ void SurfaceInspector::update ()
 // Gets notified upon selection change
 void SurfaceInspector::selectionChanged (scene::Instance& instance, bool isComponent)
 {
-	update();
+	queueUpdate();
 }
 
 void SurfaceInspector::saveToRegistry ()
