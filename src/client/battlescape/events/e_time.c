@@ -37,17 +37,17 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
  * @param[in] eType The event type
  * @param[in,out] msg The message buffer that can be modified to get the event time
  * @param[in,out] eventTiming The delay data for the events
+ * @return the time the event should be executed. This value is used to sort the
+ * event chain to determine which event must be executed at first. This
+ * value also ensures, that the events are executed in the correct
+ * order. E.g. @c impactTime is used to delay some events in case the
+ * projectile needs some time to reach its target.
  */
 int CL_GetEventTime (const event_t eType, struct dbuffer *msg, eventTiming_t *eventTiming)
 {
 	const eventRegister_t *eventData = CL_GetEvent(eType);
 
 #ifdef OLDEVENTTIME
-	/* the time the event should be executed. This value is used to sort the
-	 * event chain to determine which event must be executed at first. This
-	 * value also ensures, that the events are executed in the correct
-	 * order. E.g. @c impactTime is used to delay some events in case the
-	 * projectile needs some time to reach its target. */
 	int eventTime;
 
 	if (eType == EV_ACTOR_DIE)

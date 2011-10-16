@@ -29,7 +29,8 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 typedef struct eventTiming_s {
 	int nextTime;	/**< time when the next event should be executed */
 	int shootTime;	/**< time when the shoot was fired */
-	int impactTime;	/**< time when the shoot hits the target */
+	int impactTime;	/**< time when the shoot hits the target. This is used to delay some events in case the
+					 * projectile needs some time to reach its target. */
 	qboolean parsedDeath;	/**< extra delay caused by death - @sa @c impactTime */
 } eventTiming_t;
 
