@@ -51,7 +51,6 @@ $(TARGET)_SRCS      = \
 	client/battlescape/events/e_main.c \
 	client/battlescape/events/e_parse.c \
 	client/battlescape/events/e_server.c \
-	client/battlescape/events/e_time.c \
 	client/battlescape/events/event/actor/e_event_actoradd.c \
 	client/battlescape/events/event/actor/e_event_actorappear.c \
 	client/battlescape/events/event/actor/e_event_actorclientaction.c \

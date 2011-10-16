@@ -261,10 +261,6 @@
 			<Option compilerVar="CC" />
 		</Unit>
 		<Unit filename="..\..\src\client\battlescape\events\e_server.h" />
-		<Unit filename="..\..\src\client\battlescape\events\e_time.c">
-			<Option compilerVar="CC" />
-		</Unit>
-		<Unit filename="..\..\src\client\battlescape\events\e_time.h" />
 		<Unit filename="..\..\src\client\battlescape\events\event\actor\e_event_actoradd.c">
 			<Option compilerVar="CC" />
 		</Unit>
