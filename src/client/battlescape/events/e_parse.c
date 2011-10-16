@@ -177,11 +177,11 @@ int CL_ClearBattlescapeEvents (void)
  * @param[in] eType The event type
  * @param[in,out] msg The message buffer that can be modified to get the event time
  * @param[in,out] eventTiming The delay data for the events
- * @return the time the event should be executed. This value is used to sort the
- * event chain to determine which event must be executed at first. This
- * value also ensures, that the events are executed in the correct
- * order. E.g. @c impactTime is used to delay some events in case the
- * projectile needs some time to reach its target.
+ * @return the time (in milliseconds) the event should be executed. This value is
+ * used to sort the event chain to determine which event must be executed at first.
+ * This value also ensures, that the events are executed in the correct order.
+ * E.g. @c impactTime is used to delay some events in case the projectile needs
+ * some time to reach its target.
  */
 static int CL_GetEventTime (const event_t eType, struct dbuffer *msg, eventTiming_t *eventTiming)
 {
