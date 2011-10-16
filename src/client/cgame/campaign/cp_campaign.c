@@ -1325,7 +1325,7 @@ void CP_ResetCampaignData (void)
 		if (CHRSH_IsTeamDefAlien(td))
 			ccs.alienTeams[ccs.numAliensTD++] = td;
 	}
-	/* Clear mapDef usage staistics */
+	/* Clear mapDef usage statistics */
 	for (i = 0; i < cls.numMDs; i++) {
 		mapDef_t *md = Com_GetMapDefByIDX(i);
 		md->timesAlreadyUsed = 0;
