@@ -134,14 +134,22 @@ XYWnd::XYWnd () :
 	updateProjection();
 	updateModelview();
 
-	AddSceneChangeCallback(MemberCaller<XYWnd, &XYWnd::queueDraw> (*this));
+	GlobalSceneGraph().addSceneObserver(this);
 	GlobalCamera().addCameraObserver(this);
 
 	GlobalEventManager().connect(GTK_OBJECT(m_gl_widget));
 }
 
+void XYWnd::onSceneGraphChange ()
+{
+	queueDraw();
+}
+
 XYWnd::~XYWnd (void)
 {
+	// Remove <self> from the scene change callback list
+	GlobalSceneGraph().removeSceneObserver(this);
+
 	// greebo: Remove <self> as CameraObserver to the CamWindow.
 	GlobalCamera().removeCameraObserver(this);
 

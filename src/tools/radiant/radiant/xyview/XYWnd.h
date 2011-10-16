@@ -25,7 +25,7 @@ const int XYWND_MINSIZE_X = 200;
 const int XYWND_MINSIZE_Y = 200;
 }
 
-class XYWnd: public CameraObserver
+class XYWnd: public CameraObserver, public scene::Graph::Observer
 {
 		gtkutil::GLWidget _glWidget;
 		GtkWidget* m_gl_widget;
@@ -171,6 +171,7 @@ class XYWnd: public CameraObserver
 
 		int m_entityCreate_x, m_entityCreate_y;
 		bool m_entityCreate;
+		void onSceneGraphChange ();
 
 		// Save the current event state
 		GdkEventButton* _event;

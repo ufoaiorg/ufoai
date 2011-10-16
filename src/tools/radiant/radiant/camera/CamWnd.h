@@ -14,7 +14,7 @@ const int CAMWND_MINSIZE_Y = 200;
 
 class SelectionTest;
 
-class CamWnd
+class CamWnd : public scene::Graph::Observer
 {
 		View m_view;
 		// The contained camera
@@ -108,6 +108,8 @@ class CamWnd
 
 		static gboolean camera_size_allocate(GtkWidget* widget, GtkAllocation* allocation, CamWnd* camwnd);
 		static gboolean camera_expose(GtkWidget* widget, GdkEventExpose* event, gpointer data);
+
+		void onSceneGraphChange ();
 };
 
 typedef MemberCaller<CamWnd, &CamWnd::queueDraw> CamWndQueueDraw;

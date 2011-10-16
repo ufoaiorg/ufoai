@@ -3,6 +3,7 @@
 
 #include <map>
 #include <vector>
+#include <list>
 
 #include "signal/signal.h"
 #include "scenelib.h"
@@ -25,12 +26,13 @@ class CompiledGraph: public scene::Graph, public scene::Instantiable::Observer
 
 		scene::Path m_rootpath;
 
-		Signal0 m_sceneChangedCallbacks;
-
 		EraseObservers m_eraseObservers;
 
 		// This is the associated graph tree model (used for the EntityList)
 		GraphTreeModel* _treeModel;
+
+		typedef std::list<scene::Graph::Observer*> ObserverList;
+		ObserverList _sceneObservers;
 
 	public:
 
@@ -38,7 +40,11 @@ class CompiledGraph: public scene::Graph, public scene::Instantiable::Observer
 
 		~CompiledGraph();
 
-		void addSceneChangedCallback (const SignalHandler& handler);
+		/** greebo: Adds/removes an observer from the scenegraph,
+		 * 			to get notified upon insertions/deletions
+		 */
+		void addSceneObserver(scene::Graph::Observer* observer);
+		void removeSceneObserver(scene::Graph::Observer* observer);
 
 		// Triggers a call to all the connected Scene::Graph::Observers
 		void sceneChanged ();

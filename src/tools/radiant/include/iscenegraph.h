@@ -103,9 +103,39 @@ namespace scene
 					}
 			};
 
+			/* greebo: Derive from this class to get notified on scene changes
+			 */
+			class Observer {
+			public:
+				virtual ~Observer ()
+				{
+				}
+
+				// Gets called when anything in the scenegraph changes
+				virtual void onSceneGraphChange ()
+				{
+				}
+
+				// Gets called when a new <instance> is inserted into the scenegraph
+				virtual void onSceneNodeInsert (const scene::Instance& instance)
+				{
+				}
+
+				// Gets called when <instance> is removed from the scenegraph
+				virtual void onSceneNodeErase (const scene::Instance& instance)
+				{
+				}
+			};
+
 			virtual ~Graph ()
 			{
 			}
+
+			/** greebo: Adds/removes an observer from the scenegraph,
+			 * 			to get notified upon insertions/deletions
+			 */
+			virtual void addSceneObserver (scene::Graph::Observer* observer) = 0;
+			virtual void removeSceneObserver (scene::Graph::Observer* observer) = 0;
 
 			// will inform the observers if a instance was removed
 			virtual void notifyErase (scene::Instance* instance) = 0;
@@ -132,9 +162,6 @@ namespace scene
 			/** @brief Invokes all scene-changed callbacks. Called when any part of the scene changes the way it will appear when the scene is rendered.
 			 * @todo Move to a separate class. */
 			virtual void sceneChanged () = 0;
-			/** @brief Add a \p callback to be invoked when the scene changes.
-			 * @todo Move to a separate class. */
-			virtual void addSceneChangedCallback (const SignalHandler& handler) = 0;
 
 			/** @brief Invokes all bounds-changed callbacks. Called when the bounds of any instance in the scene change. */
 			/** @todo Move to a separate class. */
@@ -216,10 +243,6 @@ inline scene::Graph& GlobalSceneGraph ()
 	return GlobalSceneGraphModule::getTable();
 }
 
-inline void AddSceneChangeCallback (const SignalHandler& handler)
-{
-	GlobalSceneGraph().addSceneChangedCallback(handler);
-}
 inline void SceneChangeNotify ()
 {
 	GlobalSceneGraph().sceneChanged();
