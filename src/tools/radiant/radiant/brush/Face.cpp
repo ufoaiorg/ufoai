@@ -232,7 +232,6 @@ void Face::testSelect_centroid (SelectionTest& test, SelectionIntersection& best
 void Face::shaderChanged ()
 {
 	EmitTextureCoordinates();
-	Brush_textureChanged();
 	m_observer->shaderChanged();
 	planeChanged();
 	SceneChangeNotify();
@@ -257,7 +256,6 @@ void Face::texdefChanged ()
 {
 	revertTexdef();
 	EmitTextureCoordinates();
-	Brush_textureChanged();
 }
 
 void Face::GetTexdef (TextureProjection& projection) const

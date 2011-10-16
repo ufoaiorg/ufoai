@@ -989,17 +989,3 @@ void Brush::buildBRep ()
 
 double Brush::m_maxWorldCoord = 0;
 Shader* Brush::m_state_point;
-
-#include "signal/signal.h"
-
-static Signal0 g_brushTextureChangedCallbacks;
-
-void Brush_addTextureChangedCallback (const SignalHandler& handler)
-{
-	g_brushTextureChangedCallbacks.connectLast(handler);
-}
-
-void Brush_textureChanged ()
-{
-	g_brushTextureChangedCallbacks();
-}
