@@ -28,16 +28,18 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #include "e_time.h"
 #include "e_main.h"
 
+/** @brief CL_ParseEvent timers and vars */
+typedef struct eventTiming_s {
+	int nextTime;	/**< time when the next event should be executed */
+	int shootTime;	/**< time when the shoot was fired */
+	int impactTime;	/**< time when the shoot hits the target */
+	qboolean parsedDeath;	/**< extra delay caused by death - @sa @c impactTime */
+} eventTiming_t;
+
+static eventTiming_t eventTiming;
+
 /** @todo remove the old event timing */
 #define OLDEVENTTIME
-
-#ifdef OLDEVENTTIME
-/** @brief CL_ParseEvent timers and vars */
-static int nextTime;	/**< time when the next event should be executed */
-static int shootTime;	/**< time when the shoot was fired */
-static int impactTime;	/**< time when the shoot hits the target */
-static qboolean parsedDeath;	/**< extra delay caused by death - @sa @c impactTime */
-#endif
 
 /**
  * @brief Calculates the time the event should get executed. If two events return the same time,
@@ -58,37 +60,34 @@ int CL_GetEventTime (const event_t eType, struct dbuffer *msg, const int dt)
 	 * projectile needs some time to reach its target. */
 	int eventTime;
 
-	if (eType == EV_RESET) {
-		parsedDeath = qfalse;
-		nextTime = 0;
-		shootTime = 0;
-		impactTime = 0;
-	} else if (eType == EV_ACTOR_DIE)
-		parsedDeath = qtrue;
+	if (eType == EV_RESET)
+		OBJZERO(eventTiming);
+	else if (eType == EV_ACTOR_DIE)
+		eventTiming.parsedDeath = qtrue;
 
 	/* get event time */
-	if (nextTime < cl.time)
-		nextTime = cl.time;
-	if (impactTime < cl.time)
-		impactTime = cl.time;
+	if (eventTiming.nextTime < cl.time)
+		eventTiming.nextTime = cl.time;
+	if (eventTiming.impactTime < cl.time)
+		eventTiming.impactTime = cl.time;
 
 	if (eType == EV_ACTOR_DIE || eType == EV_MODEL_EXPLODE)
-		eventTime = impactTime;
+		eventTime = eventTiming.impactTime;
 	else if (eType == EV_ACTOR_SHOOT || eType == EV_ACTOR_SHOOT_HIDDEN)
-		eventTime = shootTime;
+		eventTime = eventTiming.shootTime;
 	else if (eType == EV_RESULTS)
-		eventTime = nextTime + 1400;
+		eventTime = eventTiming.nextTime + 1400;
 	else
-		eventTime = nextTime;
+		eventTime = eventTiming.nextTime;
 
 	if (eType == EV_ENT_APPEAR || eType == EV_INV_ADD || eType == EV_PARTICLE_APPEAR || eType == EV_PARTICLE_SPAWN) {
-		if (parsedDeath) { /* drop items after death (caused by impact) */
-			eventTime = impactTime + 400;
+		if (eventTiming.parsedDeath) { /* drop items after death (caused by impact) */
+			eventTime = eventTiming.impactTime + 400;
 			/* EV_INV_ADD messages are the last events sent after a death */
 			if (eType == EV_INV_ADD)
-				parsedDeath = qfalse;
-		} else if (impactTime > cl.time) { /* item thrown on the ground */
-			eventTime = impactTime + 75;
+				eventTiming.parsedDeath = qfalse;
+		} else if (eventTiming.impactTime > cl.time) { /* item thrown on the ground */
+			eventTime = eventTiming.impactTime + 75;
 		}
 	}
 
@@ -96,15 +95,15 @@ int CL_GetEventTime (const event_t eType, struct dbuffer *msg, const int dt)
 	switch (eType) {
 	case EV_ACTOR_APPEAR:
 		if (cl.actTeam != cls.team)
-			nextTime += 600;
+			eventTiming.nextTime += 600;
 		break;
 	case EV_INV_RELOAD:
 		/* let the reload sound play */
-		nextTime += 600;
+		eventTiming.nextTime += 600;
 		break;
 	case EV_ACTOR_START_SHOOT:
-		nextTime += 300;
-		shootTime = nextTime;
+		eventTiming.nextTime += 300;
+		eventTiming.shootTime = eventTiming.nextTime;
 		break;
 	case EV_ACTOR_SHOOT_HIDDEN:
 		{
@@ -118,18 +117,18 @@ int CL_GetEventTime (const event_t eType, struct dbuffer *msg, const int dt)
 
 			obj = INVSH_GetItemByIDX(objIdx);
 			if (first) {
-				nextTime += 500;
-				impactTime = shootTime = nextTime;
+				eventTiming.nextTime += 500;
+				eventTiming.impactTime = eventTiming.shootTime = eventTiming.nextTime;
 			} else {
 				const fireDef_t *fd = FIRESH_GetFiredef(obj, weapFdsIdx, fireDefIndex);
 				/* impact right away - we don't see it at all
 				 * bouncing is not needed here, too (we still don't see it) */
-				impactTime = shootTime;
-				nextTime = shootTime + 1400;
+				eventTiming.impactTime = eventTiming.shootTime;
+				eventTiming.nextTime = eventTiming.shootTime + 1400;
 				if (fd->delayBetweenShots > 0.0)
-					shootTime += 1000 / fd->delayBetweenShots;
+					eventTiming.shootTime += 1000 / fd->delayBetweenShots;
 			}
-			parsedDeath = qfalse;
+			eventTiming.parsedDeath = qfalse;
 		}
 		break;
 	case EV_ACTOR_MOVE:
@@ -165,7 +164,7 @@ int CL_GetEventTime (const event_t eType, struct dbuffer *msg, const int dt)
 				time += LE_ActorGetStepTime(le, pos, oldPos, dir, NET_ReadShort(msg));
 				NET_ReadShort(msg);
 			}
-			nextTime += time + 400;
+			eventTiming.nextTime += time + 400;
 		}
 		break;
 	case EV_ACTOR_SHOOT:
@@ -187,38 +186,38 @@ int CL_GetEventTime (const event_t eType, struct dbuffer *msg, const int dt)
 			if (!(flags & SF_BOUNCED)) {
 				/* shooting */
 				if (fd->speed > 0.0 && !CL_OutsideMap(impact, UNIT_SIZE * 10)) {
-					impactTime = shootTime + 1000 * VectorDist(muzzle, impact) / fd->speed;
+					eventTiming.impactTime = eventTiming.shootTime + 1000 * VectorDist(muzzle, impact) / fd->speed;
 				} else {
-					impactTime = shootTime;
+					eventTiming.impactTime = eventTiming.shootTime;
 				}
 				if (cl.actTeam != cls.team)
-					nextTime = impactTime + 1400;
+					eventTiming.nextTime = eventTiming.impactTime + 1400;
 				else
-					nextTime = impactTime + 400;
+					eventTiming.nextTime = eventTiming.impactTime + 400;
 				if (fd->delayBetweenShots > 0.0)
-					shootTime += 1000 / fd->delayBetweenShots;
+					eventTiming.shootTime += 1000 / fd->delayBetweenShots;
 			} else {
 				/* only a bounced shot */
-				eventTime = impactTime;
+				eventTime = eventTiming.impactTime;
 				if (fd->speed > 0.0) {
-					impactTime += 1000 * VectorDist(muzzle, impact) / fd->speed;
-					nextTime = impactTime;
+					eventTiming.impactTime += 1000 * VectorDist(muzzle, impact) / fd->speed;
+					eventTiming.nextTime = eventTiming.impactTime;
 				}
 			}
-			parsedDeath = qfalse;
+			eventTiming.parsedDeath = qfalse;
 		}
 		break;
 	case EV_ACTOR_THROW:
-		nextTime += NET_ReadShort(msg);
-		impactTime = shootTime = nextTime;
-		parsedDeath = qfalse;
+		eventTiming.nextTime += NET_ReadShort(msg);
+		eventTiming.impactTime = eventTiming.shootTime = eventTiming.nextTime;
+		eventTiming.parsedDeath = qfalse;
 		break;
 	default:
 		break;
 	}
 
-	Com_DPrintf(DEBUG_EVENTSYS, "%s => eventTime: %i, nextTime: %i, impactTime: %i, shootTime: %i\n",
-			eventData->name, eventTime, nextTime, impactTime, shootTime);
+	Com_DPrintf(DEBUG_EVENTSYS, "%s => eventTime: %i, nextTime: %i, impactTime: %i, shootTime: %i, cl.time: %i\n",
+			eventData->name, eventTime, eventTiming.nextTime, eventTiming.impactTime, eventTiming.shootTime, cl.time);
 
 	return eventTime;
 #else

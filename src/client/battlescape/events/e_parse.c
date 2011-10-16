@@ -203,7 +203,7 @@ void CL_ParseEvent (struct dbuffer *msg)
 	if (now) {
 		/* log and call function */
 		CL_LogEvent(eventData);
-		Com_DPrintf(DEBUG_EVENTSYS, "event(now): %s\n", eventData->name);
+		Com_DPrintf(DEBUG_EVENTSYS, "event(now [%i]): %s\n", cl.time, eventData->name);
 		GAME_NofityEvent(eType);
 		eventData->eventCallback(eventData, msg);
 	} else {
