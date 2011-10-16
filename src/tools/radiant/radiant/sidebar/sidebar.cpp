@@ -124,32 +124,31 @@ void Sidebar::toggleSidebar ()
 	_jobInfo.toggleSidebar(visible, _currentPageIndex);
 }
 
-void Sidebar::showTextureBrowser ()
+void Sidebar::showComponent (SidebarComponent &component)
 {
 	if (!widget_is_visible(GTK_WIDGET(_widget)))
 		widget_set_visible(GTK_WIDGET(_widget), TRUE);
-	_textureBrowser.show(_notebook);
+	component.show(_notebook);
+}
+
+void Sidebar::showTextureBrowser ()
+{
+	showComponent(_textureBrowser);
 }
 
 void Sidebar::showPrefabs ()
 {
-	if (!widget_is_visible(GTK_WIDGET(_widget)))
-		widget_set_visible(GTK_WIDGET(_widget), TRUE);
-	_prefabSelector.show(_notebook);
+	showComponent(_prefabSelector);
 }
 
 void Sidebar::showSurfaceInspector ()
 {
-	if (!widget_is_visible(GTK_WIDGET(_widget)))
-		widget_set_visible(GTK_WIDGET(_widget), TRUE);
-	_surfaceInspector.show(_notebook);
+	showComponent(_surfaceInspector);
 }
 
 void Sidebar::showEntityInspector ()
 {
-	if (!widget_is_visible(GTK_WIDGET(_widget)))
-		widget_set_visible(GTK_WIDGET(_widget), TRUE);
-	_entityInspector.show(_notebook);
+	showComponent(_entityInspector);
 }
 
 gboolean Sidebar::onChangePage (GtkNotebook *notebook, gpointer newPage, guint newPageIndex, Sidebar *self)

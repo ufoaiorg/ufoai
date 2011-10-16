@@ -101,6 +101,8 @@ class Sidebar
 		void showSurfaceInspector (void);
 		void showEntityInspector (void);
 
+		void showComponent (SidebarComponent &component);
+
 		/* gtk signal handlers */
 		static gboolean onChangePage (GtkNotebook *notebook, gpointer newPage, guint newPageIndex, Sidebar *self);
 };
