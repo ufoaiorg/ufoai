@@ -28,7 +28,7 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #include "../../../../renderer/r_mesh_anim.h"
 #include "e_event_actorshoot.h"
 
-int CL_ActorDoShootTime (const eventRegister_t *self, struct dbuffer *msg, const int dt)
+int CL_ActorDoShootTime (const eventRegister_t *self, struct dbuffer *msg, eventTiming_t *eventTiming)
 {
 #if 0
 	const fireDef_t	*fd;

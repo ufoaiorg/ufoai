@@ -26,7 +26,7 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #include "../../../cl_localentity.h"
 #include "e_event_actorthrow.h"
 
-int CL_ActorDoThrowTime (const eventRegister_t *self, struct dbuffer *msg, const int dt)
+int CL_ActorDoThrowTime (const eventRegister_t *self, struct dbuffer *msg, eventTiming_t *eventTiming)
 {
 	const int t = NET_ReadShort(msg);
 	return cl.time + t;

@@ -26,7 +26,7 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #include "../../../cl_localentity.h"
 #include "e_event_actormove.h"
 
-int CL_ActorDoMoveTime (const eventRegister_t *self, struct dbuffer *msg, const int dt)
+int CL_ActorDoMoveTime (const eventRegister_t *self, struct dbuffer *msg, eventTiming_t *eventTiming)
 {
 #if 0
 	le_t *le;

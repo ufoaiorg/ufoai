@@ -28,14 +28,6 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #include "e_time.h"
 #include "e_main.h"
 
-/** @brief CL_ParseEvent timers and vars */
-typedef struct eventTiming_s {
-	int nextTime;	/**< time when the next event should be executed */
-	int shootTime;	/**< time when the shoot was fired */
-	int impactTime;	/**< time when the shoot hits the target */
-	qboolean parsedDeath;	/**< extra delay caused by death - @sa @c impactTime */
-} eventTiming_t;
-
 static eventTiming_t eventTiming;
 
 /** @todo remove the old event timing */
@@ -46,9 +38,8 @@ static eventTiming_t eventTiming;
  * they are going to be executed in the order the were parsed.
  * @param[in] eType The event type
  * @param[in,out] msg The message buffer that can be modified to get the event time
- * @param[in] dt Delta time in msec since the last event was parsed
  */
-int CL_GetEventTime (const event_t eType, struct dbuffer *msg, const int dt)
+int CL_GetEventTime (const event_t eType, struct dbuffer *msg)
 {
 	const eventRegister_t *eventData = CL_GetEvent(eType);
 
@@ -224,6 +215,6 @@ int CL_GetEventTime (const event_t eType, struct dbuffer *msg, const int dt)
 	if (!eventData->timeCallback)
 		return cl.time;
 
-	return eventData->timeCallback(eventData, msg, dt);
+	return eventData->timeCallback(eventData, msg, &eventTiming);
 #endif
 }

@@ -208,8 +208,6 @@ void CL_ParseEvent (struct dbuffer *msg)
 		eventData->eventCallback(eventData, msg);
 	} else {
 		evTimes_t *cur = (evTimes_t *)Mem_PoolAlloc(sizeof(*cur), cl_genericPool, 0);
-		static int lastFrame = 0;
-		const int delta = cl.time - lastFrame;
 		int when;
 
 		/* copy the buffer as first action, the event time functions can modify the buffer already */
@@ -217,10 +215,8 @@ void CL_ParseEvent (struct dbuffer *msg)
 		cur->eType = eType;
 
 		/* timestamp (msec) that is used to determine when the event should be executed */
-		when = CL_GetEventTime(cur->eType, msg, delta);
+		when = CL_GetEventTime(cur->eType, msg);
 		Schedule_Event(when, &CL_ExecuteBattlescapeEvent, &CL_CheckBattlescapeEvent, &CL_FreeBattlescapeEvent, cur);
-
-		lastFrame = cl.time;
 
 		Com_DPrintf(DEBUG_EVENTSYS, "event(at %d): %s %p\n", when, eventData->name, (void*)cur);
 	}
