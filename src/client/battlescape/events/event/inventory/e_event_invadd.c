@@ -49,6 +49,9 @@ static void CL_NetReceiveItem (struct dbuffer *buf, item_t *item, containerIndex
 		Com_Error(ERR_DROP, "no weapon given for item");
 }
 
+/**
+ * @brief Decides if following events should be delayed.
+ */
 int CL_InvAddTime (const struct eventRegister_s *self, struct dbuffer *msg, eventTiming_t *eventTiming)
 {
 	if (eventTiming->parsedDeath) { /* drop items after death (caused by impact) */

@@ -28,6 +28,11 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #include "../../../../renderer/r_mesh_anim.h"
 #include "e_event_actorshoot.h"
 
+/**
+ * @brief Decides if following events should be delayed. If the projectile has a speed value assigned, the
+ * delay is relative to the distance the projectile flies. There are other fire definition related options
+ * that might delay the execution of further events.
+ */
 int CL_ActorDoShootTime (const eventRegister_t *self, struct dbuffer *msg, eventTiming_t *eventTiming)
 {
 	const fireDef_t *fd;

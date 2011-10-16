@@ -26,10 +26,14 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #include "../../../cl_localentity.h"
 #include "e_event_actorthrow.h"
 
+/**
+ * @brief Decides if following events should be delayed
+ */
 int CL_ActorDoThrowTime (const eventRegister_t *self, struct dbuffer *msg, eventTiming_t *eventTiming)
 {
 	const int eventTime = eventTiming->nextTime;
 
+	/* the delay is encoded in the message already */
 	eventTiming->nextTime += NET_ReadShort(msg);
 	eventTiming->impactTime = eventTiming->shootTime = eventTiming->nextTime;
 	eventTiming->parsedDeath = qfalse;
@@ -41,6 +45,7 @@ int CL_ActorDoThrowTime (const eventRegister_t *self, struct dbuffer *msg, event
  * @brief Throw item with actor.
  * @param[in] self Pointer to the event structure that is currently executed
  * @param[in] msg The netchannel message
+ * @sa EV_ACTOR_THROW
  */
 void CL_ActorDoThrow (const eventRegister_t *self, struct dbuffer *msg)
 {

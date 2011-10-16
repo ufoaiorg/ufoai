@@ -27,6 +27,9 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #include "../../../../renderer/r_mesh_anim.h"
 #include "e_event_actorstartshoot.h"
 
+/**
+ * @brief Decides if following events should be delayed
+ */
 int CL_ActorStartShootTime (const eventRegister_t *self, struct dbuffer *msg, eventTiming_t *eventTiming)
 {
 	const int eventTime = eventTiming->nextTime;
