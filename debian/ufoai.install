@@ -23,7 +23,9 @@ base/0videos.pk3      /usr/share/games/ufoai/base
 base/i18n/* /usr/share/games/ufoai/base/i18n
 src/docs/tex/ufo-manual_EN.pdf /usr/share/doc/ufoai-data/
 # This is not in Debian yet
-base/media/UnDinaruBold.ttf /usr/share/games/ufoai/media
+base/media/UnDinaruBold.ttf /usr/share/games/ufoai/base/media
+# There are only the ttcs in the package
+base/media/wqy-zenhei.ttf /usr/share/games/ufoai/base/media
 ufo2map /usr/games/
 ufomodel /usr/games/
 src/tools/blender/md2tag_export.py /usr/share/blender/scripts/blender/
