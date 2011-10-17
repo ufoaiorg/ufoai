@@ -2905,7 +2905,7 @@ base/pics/icons/ufopedia_threat.jpg | Creative Commons Attribution-Share Alike 3
 base/pics/icons/ufopedia_ugvs.jpg | Creative Commons Attribution-Share Alike 3.0 | Michal Bilinski (Blywulf);MCR
 base/pics/maps/loading/README | GNU General Public License 2.0 or later | Martin Gerhardy
 base/pics/maps/loading/africa.jpg | GNU General Public License 2.0 or later | Martin Gerhardy
-base/pics/maps/loading/alienbase.jpg | GNU General Public License 2.0 or later
+base/pics/maps/loading/alienbase.png | GNU General Public License 2.0 or later
 base/pics/maps/loading/bomber_city.jpg | GNU General Public License 2.0 or later
 base/pics/maps/loading/bridge.jpg | GNU General Public License 2.0 or later | Martin Gerhardy
 base/pics/maps/loading/bunker.png | GNU General Public License 2.0 or later | Martin Gerhardy
@@ -2965,9 +2965,9 @@ base/pics/maps/shots/README | GNU General Public License 2.0 or later | Martin G
 base/pics/maps/shots/africa.jpg | GNU General Public License 2.0 or later | Martin Gerhardy
 base/pics/maps/shots/africa_2.jpg | GNU General Public License 2.0 or later | Martin Gerhardy
 base/pics/maps/shots/africa_3.jpg | GNU General Public License 2.0 or later | Martin Gerhardy
-base/pics/maps/shots/alienbase.jpg | GNU General Public License 2.0 or later
-base/pics/maps/shots/alienbase_2.jpg | GNU General Public License 2.0 or later
-base/pics/maps/shots/alienbase_3.jpg | GNU General Public License 2.0 or later
+base/pics/maps/shots/alienbase.png | GNU General Public License 2.0 or later
+base/pics/maps/shots/alienbase_2.png | GNU General Public License 2.0 or later
+base/pics/maps/shots/alienbase_3.png | GNU General Public License 2.0 or later
 base/pics/maps/shots/bomber_city.jpg | GNU General Public License 2.0 or later
 base/pics/maps/shots/bomber_city_2.jpg | GNU General Public License 2.0 or later
 base/pics/maps/shots/bomber_city_3.jpg | GNU General Public License 2.0 or later
