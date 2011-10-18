@@ -366,7 +366,7 @@ qboolean AB_LoadXML (xmlNode_t *p)
 		alienBase_t base;
 
 		base.idx = XML_GetInt(s, SAVE_ALIENBASE_IDX, -1);
-		/* fallback code for compatibility */
+		/** @todo fallback code for compatibility */
 		if (base.idx == -1) {
 			Com_Printf("No IDX defined for Alienbase %d. This must be an old save.\n", i);
 			base.idx = i;

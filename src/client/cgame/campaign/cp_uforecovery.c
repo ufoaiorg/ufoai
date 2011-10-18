@@ -310,7 +310,7 @@ qboolean US_LoadXML (xmlNode_t *p)
 
 		/* ufo->idx */
 		ufo.idx = XML_GetInt(snode, SAVE_UFORECOVERY_UFOIDX, -1);
-		/* fallback code for compatibility */
+		/** @todo fallback code for compatibility */
 		if (ufo.idx == -1) {
 			Com_Printf("No IDX defined for stored UFO %d. This must be an old save.\n", i);
 			ufo.idx = i;

@@ -493,7 +493,7 @@ qboolean INS_LoadXML (xmlNode_t *p)
 
 		inst.idx = XML_GetInt(s, SAVE_INSTALLATION_IDX, -1);
 		if (inst.idx < 0) {
-			/** fallback code for compatibility */
+			/** @todo fallback code for compatibility */
 			inst.idx = i;
 		}
 		inst.installationTemplate = INS_GetInstallationTemplateFromInstallationID(instID);
