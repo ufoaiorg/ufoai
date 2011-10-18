@@ -108,7 +108,7 @@ image_t *R_GetImage(const char *name);
 image_t *R_FindImage(const char *pname, imagetype_t type);
 const image_t *R_FindPics(const char *name);
 
-qboolean R_ImageExists(const char *pname, ...);
+qboolean R_ImageExists(const char *pname, ...) __attribute__((format(printf, 1, 2)));
 
 #define MAX_ENVMAPTEXTURES 2
 extern image_t *r_envmaptextures[MAX_ENVMAPTEXTURES];
