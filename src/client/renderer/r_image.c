@@ -602,13 +602,19 @@ const image_t *R_FindPics (const char *name)
 	return image;
 }
 
-qboolean R_ImageExists (const char *pname)
+qboolean R_ImageExists (const char *pname, ...)
 {
 	char const* const* const types = Img_GetImageTypes();
 	int i;
+	char filename[MAX_QPATH];
+	va_list ap;
+
+	va_start(ap, pname);
+	Q_vsnprintf(filename, sizeof(filename), pname, ap);
+	va_end(ap);
 
 	for (i = 0; types[i]; i++) {
-		if (FS_CheckFile("%s.%s", pname, types[i]) != -1)
+		if (FS_CheckFile("%s.%s", filename, types[i]) != -1)
 			return qtrue;
 	}
 	return qfalse;

@@ -1073,7 +1073,7 @@ static qboolean R_InitExtensions (void)
 		}
 	}
 
-	if (r_config.maxTextureSize > 4096 && R_ImageExists(va("pics/geoscape/%s/map_earth_season_00", "high"))) {
+	if (r_config.maxTextureSize > 4096 && R_ImageExists("pics/geoscape/%s/map_earth_season_00", "high")) {
 		Q_strncpyz(r_config.lodDir, "high", sizeof(r_config.lodDir));
 		Com_Printf("Using high resolution globe textures as requested.\n");
 	} else if (r_config.maxTextureSize > 2048 && R_ImageExists("pics/geoscape/med/map_earth_season_00")) {

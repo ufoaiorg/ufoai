@@ -602,17 +602,17 @@ static void UI_MapInfo (int step)
 		Cvar_Set("mn_svmapname", md->map);
 	}
 
-	if (FS_CheckFile("pics/maps/shots/%s.jpg", mapname) != -1)
+	if (R_ImageExists("pics/maps/shots/%s", mapname))
 		Cvar_Set("mn_mappic", va("maps/shots/%s", mapname));
 	else
 		Cvar_Set("mn_mappic", "maps/shots/default");
 
-	if (FS_CheckFile("pics/maps/shots/%s_2.jpg", mapname) != -1)
+	if (R_ImageExists("pics/maps/shots/%s_2", mapname))
 		Cvar_Set("mn_mappic2", va("maps/shots/%s_2", mapname));
 	else
 		Cvar_Set("mn_mappic2", "maps/shots/default");
 
-	if (FS_CheckFile("pics/maps/shots/%s_3.jpg", mapname) != -1)
+	if (R_ImageExists("pics/maps/shots/%s_3", mapname))
 		Cvar_Set("mn_mappic3", va("maps/shots/%s_3", mapname));
 	else
 		Cvar_Set("mn_mappic3", "maps/shots/default");
