@@ -4,7 +4,7 @@
 
 component spinner cmp_t_spinner
 {
-	tooltip		"_Add/Remove item to transfer cargo"
+	tooltip		"_Add/Remove item to transfer cargo, hold SHIFT for speed increase."
 	image		"ui/spinner_blue"
 	shiftincreasefactor	10.0
 	onChange	{
@@ -185,7 +185,6 @@ window transfer
 			}
 		}
 
-
 		cmp_t_spinner t_spinner0
 		{
 			pos			"485 43"
@@ -235,7 +234,6 @@ window transfer
 		{
 			pos			"485 318"
 		}
-
 		cmp_t_spinner t_spinner12
 		{
 			pos			"485 343"
