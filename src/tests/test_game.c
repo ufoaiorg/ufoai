@@ -135,7 +135,10 @@ static void testShooting (void)
 		/* the other tests didn't call the server shutdown function to clean up */
 		OBJZERO(*sv);
 		SV_Map(qtrue, mapName, NULL);
-		/** @todo implement the test here */
+		/** @todo equip the soldier */
+		/** @todo set the input variables -- gi.ReadFormat(format, &pos, &i, &firemode, &from); */
+		/** @todo do the shot -- G_ClientShoot(player, ent, pos, i, firemode, &mock, qtrue, from); */
+		/** @todo implement the test here - e.g. extend shot_mock_t */
 		SV_ShutdownGameProgs();
 	} else {
 		UFO_CU_FAIL_MSG(va("Map resource '%s.bsp' for test is missing.", mapName));
@@ -178,6 +181,8 @@ static void testVisFlags (void)
 			Mem_Free(teamMaskBuf);
 			num++;
 		}
+
+		SV_ShutdownGameProgs();
 		CU_ASSERT_TRUE(num > 0);
 	} else {
 		UFO_CU_FAIL_MSG(va("Map resource '%s.bsp' for test is missing.", mapName));
