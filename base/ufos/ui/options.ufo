@@ -47,7 +47,6 @@ window options
 		{
 			call *node:root.hidepanels
 			*node:root.options_video@invis = false
-			cmd "copy mn_vidmode vid_mode;"
 		}
 	}
 	cmpMenuButton button_sound
@@ -506,23 +505,11 @@ window options
 			// =========================
 			selectbox select_res
 			{
-				tooltip		"_Select your desired screen resolution. ATTENTION: You might have to restart to make this work correctly."
-				cvar		*cvar:mn_vidmode
+				tooltip		"_Select your desired screen resolution."
+				cvar		*cvar:vid_mode
 				pos			"319 37"
 				size		"125 20"
 				dataid		OPTION_VIDEO_RESOLUTIONS
-			}
-			// ==================
-			// SWITCH RESOLUTION
-			// ==================
-			button res_test_pic
-			{
-				tooltip		"_Switch to the selected resolution. ATTENTION: You might have to restart to make this work correctly."
-				icon		"icons/bordered_magnifying_glass"
-				pos			"446 39"
-				size		"16 16"
-				padding		0
-				onClick		{ cmd "ui_push popup_maintain_resolution;" }
 			}
 			// ===========
 			// FULLSCREEN
@@ -2204,48 +2191,5 @@ window options
 		*node:root.options_video.options_general_video@invis = false
 
 		*node:root.options_overall@invis = false
-	}
-}
-// ====================
-// MAINTAIN RESOLUTION
-// ====================
-window popup_maintain_resolution
-{
-	{
-		string		"_Maintain Resolution"
-		image		"ui/popup_alpha_tile"
-		pos			"264 262"
-		size		"486 247"
-		dragbutton	true
-		closebutton	true
-	}
-	string name_label
-	{
-		string		"_Maintain the selected resolution."
-		pos			"26 58"
-		size		"450 60"
-	}
-	cmpPopupButton bt_change
-	{
-		tooltip		"_Accept the new resolution."
-		string		"_Accept"
-		pos			"28 188"
-		onClick		{ cmd "ui_pop; copy new_vidmode mn_vidmode; saveconfig config.cfg;" }
-	}
-	cmpCancelButton bt_cancel
-	{
-		tooltip		"_Use the previous resolution."
-		pos			"255 188"
-		onClick		{ cmd "ui_pop; copy new_vidmode old_vidmode;" }
-	}
-	func onWindowOpened
-	{
-		cmd "copy old_vidmode vid_mode;"
-		cmd "copy vid_mode mn_vidmode;"
-		cmd "copy new_vidmode old_vidmode;"
-	}
-	func onWindowClosed
-	{
-		cmd "copy vid_mode new_vidmode;"
 	}
 }
