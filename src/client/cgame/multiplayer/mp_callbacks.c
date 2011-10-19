@@ -216,7 +216,7 @@ static void CL_TeamNum_f (void)
 		i = TEAM_DEFAULT;
 	}
 
-	if (!Q_streq(cgi->Cmd_Argv(0), "teamnum_dec")) {
+	if (Q_streq(cgi->Cmd_Argv(0), "teamnum_dec")) {
 		for (i--; i > TEAM_CIVILIAN; i--) {
 			if (GAME_MP_SetTeamNum(i))
 				break;
