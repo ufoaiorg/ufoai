@@ -159,6 +159,7 @@ window aircraft extends iaircraft
 		// normal
 		elif ( *cvar:mn_equipsoldierstate == 3 ) {
 			*node:root.aircraft_navigation@disabled = false
+			*node:root.aircraft_navigation.soldier@invis = false
 		}
 	}
 
