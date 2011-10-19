@@ -213,9 +213,14 @@ static void SV_Kick_f (void)
 static void SV_StartGame_f (void)
 {
 	client_t* cl = NULL;
-	while ((cl = SV_GetNextClient(cl)) != NULL)
-		if (cl->state != cs_free)
+	int cnt = 0;
+	while ((cl = SV_GetNextClient(cl)) != NULL) {
+		if (cl->state != cs_free) {
 			cl->player->isReady = qtrue;
+			cnt++;
+		}
+	}
+	Cvar_ForceSet("sv_maxclients", va("%i", cnt));
 }
 
 /**
