@@ -227,8 +227,6 @@ static void IN_PanTiltDown_f (void)
 }
 static void IN_PanTiltUp_f (void)
 {
-	if (mouseSpace != MS_WORLD)
-		return;
 	IN_KeyUp(&in_pantilt);
 }
 static void IN_ShiftLeftDown_f (void)
@@ -350,9 +348,9 @@ static void CL_ActionDown_f (void)
 
 static void CL_ActionUp_f (void)
 {
+	IN_KeyUp(&in_pantilt);
 	if (mouseSpace == MS_UI)
 		return;
-	IN_KeyUp(&in_pantilt);
 	if (in_pantilt.msec < 250)
 		CL_ActorActionMouse();
 	mouseSpace = MS_NULL;
