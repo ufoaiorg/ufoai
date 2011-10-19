@@ -25,6 +25,7 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #include "../../../../client.h"
 #include "../../../cl_actor.h"
 #include "../../../cl_hud.h"
+#include "../../../cl_parse.h"
 #include "../../../../renderer/r_mesh_anim.h"
 #include "e_event_actordie.h"
 
@@ -47,9 +48,9 @@ int CL_ActorDieTime (const struct eventRegister_s *self, struct dbuffer *msg, ev
 void CL_ActorDie (const eventRegister_t *self, struct dbuffer *msg)
 {
 	le_t *le;
-	int entnum, state;
+	int entnum, state, playerNum;
 
-	NET_ReadFormat(msg, self->formatString, &entnum, &state);
+	NET_ReadFormat(msg, self->formatString, &entnum, &state, &playerNum);
 
 	/* get les */
 	le = LE_Get(entnum);
@@ -81,15 +82,22 @@ void CL_ActorDie (const eventRegister_t *self, struct dbuffer *msg)
 
 	/* Print some info about the death or stun. */
 	if (le->team == cls.team) {
-		const character_t *chr = CL_ActorGetChr(le);
-		if (chr) {
+		if (playerNum != le->pnum) {
+			const char *playerName = CL_PlayerGetName(playerNum);
 			char tmpbuf[128];
-			if (LE_IsStunned(le)) {
-				Com_sprintf(tmpbuf, lengthof(tmpbuf), _("%s was stunned\n"), chr->name);
-			} else {
-				Com_sprintf(tmpbuf, lengthof(tmpbuf), _("%s was killed\n"), chr->name);
-			}
+			Com_sprintf(tmpbuf, lengthof(tmpbuf), _("%s lost a soldier\n"), playerName);
 			HUD_DisplayMessage(tmpbuf);
+		} else {
+			const character_t *chr = CL_ActorGetChr(le);
+			if (chr) {
+				char tmpbuf[128];
+				if (LE_IsStunned(le)) {
+					Com_sprintf(tmpbuf, lengthof(tmpbuf), _("%s was stunned\n"), chr->name);
+				} else {
+					Com_sprintf(tmpbuf, lengthof(tmpbuf), _("%s was killed\n"), chr->name);
+				}
+				HUD_DisplayMessage(tmpbuf);
+			}
 		}
 	} else {
 		switch (le->team) {

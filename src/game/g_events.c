@@ -77,6 +77,7 @@ void G_EventActorDie (const edict_t* ent)
 	gi.AddEvent(G_VisToPM(ent->visflags), EV_ACTOR_DIE);
 	gi.WriteShort(ent->number);
 	gi.WriteShort(ent->state);
+	gi.WriteByte(ent->pnum);
 	gi.EndEvents();
 }
 
