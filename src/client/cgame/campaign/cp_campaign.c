@@ -239,16 +239,16 @@ qboolean CP_ChooseMap (mission_t *mission, const vec2_t pos)
 		if (mission->category == INTERESTCATEGORY_RESCUE) {
 			/* default map for rescue mission is the rescue random map assembly */
 			mission->mapDef = Com_GetMapDefinitionByID("rescue");
-			mission->mapDef->timesAlreadyUsed++;
 			if (!mission->mapDef)
-				Com_Error(ERR_DROP, "Could not find mapdef rescue");
+				Com_Error(ERR_DROP, "Could not find mapdef: rescue");
+			mission->mapDef->timesAlreadyUsed++;
 			return qtrue;
 		} else if (mission->crashed) {
 			/* default map for crashsite mission is the crashsite random map assembly */
 			mission->mapDef = Com_GetMapDefinitionByID("ufocrash");
-			mission->mapDef->timesAlreadyUsed++;
 			if (!mission->mapDef)
-				Com_Error(ERR_DROP, "Could not find mapdef ufocrash");
+				Com_Error(ERR_DROP, "Could not find mapdef: ufocrash");
+			mission->mapDef->timesAlreadyUsed++;
 			return qtrue;
 		} else {
 			Com_Printf("CP_ChooseMap: Could not find map with required conditions:\n");
