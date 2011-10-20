@@ -291,7 +291,6 @@ int NET_ReadLong (struct dbuffer *buf)
  * char *t = NET_ReadString(sb);</code>
  * The second reading uses the same data buffer for the string - so
  * s is no longer the first - but the second string
- * @note strip high bits - don't use this for utf-8 strings
  * @sa NET_ReadStringLine
  * @param[in,out] buf The input buffer to read the string data from
  * @param[out] string The output buffer to read the string into
@@ -307,8 +306,7 @@ int NET_ReadString (struct dbuffer *buf, char *string, size_t length)
 		if (c == -1 || c == 0)
 			break;
 		/* translate all format specs to avoid crash bugs */
-		/* don't allow higher ascii values */
-		if (c == '%' || c > 127)
+		if (c == '%')
 			c = '.';
 		string[l] = c;
 		l++;
@@ -332,8 +330,7 @@ int NET_ReadStringLine (struct dbuffer *buf, char *string, size_t length)
 		if (c == -1 || c == 0 || c == '\n')
 			break;
 		/* translate all format specs to avoid crash bugs */
-		/* don't allow higher ascii values */
-		if (c == '%' || c > 127)
+		if (c == '%')
 			c = '.';
 		string[l] = c;
 		l++;

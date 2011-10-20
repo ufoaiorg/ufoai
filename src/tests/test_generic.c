@@ -455,6 +455,7 @@ static void testStringCopiers (void)
 static void testStringFunctions (void)
 {
 	char targetBuf[256];
+	char buf[16];
 	const size_t length = lengthof(targetBuf);
 
 	CU_ASSERT_FALSE(Q_strreplace("ReplaceNothing", "###", "foobar", targetBuf, length));
@@ -471,6 +472,15 @@ static void testStringFunctions (void)
 	CU_ASSERT_STRING_EQUAL(targetBuf, "foobarReplace#");
 
 	CU_ASSERT_FALSE(Q_strreplace("#ReplaceNothing#", "##", "foobar", targetBuf, length));
+
+	Q_strncpyz(buf, "foobar", sizeof(buf));
+	CU_ASSERT_STRING_EQUAL(Com_StripHighBits(buf), "foobar");
+
+	buf[0] = '\177';
+	CU_ASSERT_STRING_EQUAL(Com_StripHighBits(buf), ".oobar");
+
+	buf[5] = '\177';
+	CU_ASSERT_STRING_EQUAL(Com_StripHighBits(buf), ".ooba.");
 }
 
 static void testHttpHelperFunctions (void)
