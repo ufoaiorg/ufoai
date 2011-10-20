@@ -301,6 +301,7 @@ item machinegun_ammo
 			time				25
 			damage				"45 9"
 			dmgweight			normal_medium
+			reaction			true
 		}
 		firedef
 		{
