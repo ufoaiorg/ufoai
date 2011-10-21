@@ -31,6 +31,7 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #include "cgame/cl_game.h"
 #include "input/cl_keys.h"
 #include "renderer/r_draw.h"
+#include "../shared/utf8.h"
 
 #define ColorIndex(c)	(((c) - '0') & 0x07)
 
@@ -333,7 +334,7 @@ void Con_Print (const char *txt)
 {
 	int y;
 	int c, l;
-	static int cr;
+	static qboolean cr;
 	int color;
 
 	if (!con.initialized)
@@ -342,6 +343,7 @@ void Con_Print (const char *txt)
 	color = CON_COLOR_WHITE;
 
 	while ((c = *txt) != 0) {
+		const int charLength = UTF8_char_len(c);
 		if (Q_IsColorString(txt) ) {
 			color = ColorIndex(*(txt + 1));
 			txt += 2;
@@ -357,7 +359,7 @@ void Con_Print (const char *txt)
 		if (l != con.lineWidth && (con.pos + l > con.lineWidth))
 			con.pos = 0;
 
-		txt++;
+		txt += charLength;
 
 		if (cr) {
 			con.currentLine--;
@@ -368,6 +370,9 @@ void Con_Print (const char *txt)
 			Con_Linefeed();
 		}
 
+		if (charLength > 1)
+			c = '.';
+
 		switch (c) {
 		case '\n':
 			con.pos = 0;
@@ -377,7 +382,7 @@ void Con_Print (const char *txt)
 		case '\r':
 			con.pos = 0;
 			color = CON_COLOR_WHITE;
-			cr = 1;
+			cr = qtrue;
 			break;
 
 		default:	/* display character and advance */
