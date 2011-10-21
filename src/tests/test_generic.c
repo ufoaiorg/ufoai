@@ -474,13 +474,13 @@ static void testStringFunctions (void)
 	CU_ASSERT_FALSE(Q_strreplace("#ReplaceNothing#", "##", "foobar", targetBuf, length));
 
 	Q_strncpyz(buf, "foobar", sizeof(buf));
-	CU_ASSERT_STRING_EQUAL(Com_StripHighCharacters(buf), "foobar");
+	CU_ASSERT_STRING_EQUAL(Com_ConvertToASCII7(buf), "foobar");
 
 	buf[0] = '\177';
-	CU_ASSERT_STRING_EQUAL(Com_StripHighCharacters(buf), ".oobar");
+	CU_ASSERT_STRING_EQUAL(Com_ConvertToASCII7(buf), ".oobar");
 
 	buf[5] = '\177';
-	CU_ASSERT_STRING_EQUAL(Com_StripHighCharacters(buf), ".ooba.");
+	CU_ASSERT_STRING_EQUAL(Com_ConvertToASCII7(buf), ".ooba.");
 }
 
 static void testHttpHelperFunctions (void)

@@ -95,7 +95,7 @@ const char *Com_GetExtension(const char *path);
 void Com_DefaultExtension(char *path, size_t len, const char *extension);
 int Com_Filter(const char *pattern, const char *text);
 char *Com_Trim(char *s);
-char *Com_StripHighCharacters(char *s);
+char *Com_ConvertToASCII7(char *s);
 char *Com_Chop(char *s);
 
 /** returns the amount of elements - not the amount of bytes */

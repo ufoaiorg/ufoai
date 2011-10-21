@@ -79,7 +79,7 @@ char *Com_Trim (char *s)
  * This can be used to print utf-8 characters to the console.
  * It will replace every high character value with a simple dot.
  */
-char *Com_StripHighCharacters (char *s)
+char *Com_ConvertToASCII7 (char *s)
 {
 	unsigned int l;
 	const size_t length = strlen(s);
