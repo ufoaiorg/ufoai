@@ -184,9 +184,6 @@ void CL_ActorDoShoot (const eventRegister_t *self, struct dbuffer *msg)
 	if ((first || !fd->soundOnce) && fd->fireSound != NULL && !(flags & SF_BOUNCED))
 		S_LoadAndPlaySample(fd->fireSound, muzzle, fd->fireAttenuation, SND_VOLUME_WEAPONS);
 
-	if (fd->irgoggles)
-		refdef.rendererFlags |= RDF_IRGOGGLES;
-
 	/* do actor related stuff */
 	if (!leShooter)
 		return; /* maybe hidden or inuse is false? */
@@ -210,7 +207,13 @@ void CL_ActorDoShoot (const eventRegister_t *self, struct dbuffer *msg)
 	} else if (IS_SHOT_LEFT(shootType)) {
 		R_AnimChange(&leShooter->as, leShooter->model1, LE_GetAnim("shoot", leShooter->left, leShooter->right, leShooter->state));
 		R_AnimAppend(&leShooter->as, leShooter->model1, LE_GetAnim("stand", leShooter->left, leShooter->right, leShooter->state));
-	} else if (!IS_SHOT_HEADGEAR(shootType)) {
+	} else if (IS_SHOT_HEADGEAR(shootType)) {
+		if (fd->irgoggles) {
+			leShooter->state |= RF_IRGOGGLESSHOT;
+			if (leShooter->selected)
+				refdef.rendererFlags |= RDF_IRGOGGLES;
+		}
+	} else {
 		/* no animation for headgear (yet) */
 		Com_Error(ERR_DROP, "CL_ActorDoShoot: Invalid shootType given (entnum: %i, shootType: %i).\n", shootType, shooterEntnum);
 	}

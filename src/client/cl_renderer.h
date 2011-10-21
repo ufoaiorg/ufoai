@@ -53,6 +53,7 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #define RF_NEUTRAL			0x00000400	/**< actor from a neutral team */
 #define RF_SHADOW           0x00000800	/**< shadow (when living) for this entity */
 #define RF_OPPONENT         0x00001000	/**< opponent */
+#define RF_IRGOGGLESSHOT	0x00002000	/**< this is the actor that used an irgoggle */
 
 #define EARTH_RADIUS 8192.0f
 #define MOON_RADIUS 1024.0f

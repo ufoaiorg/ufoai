@@ -1169,8 +1169,7 @@ qboolean E_HireAllowed (const base_t* base)
 {
 	if (!B_IsUnderAttack(base) && B_GetBuildingStatus(base, B_QUARTERS))
 		return qtrue;
-	else
-		return qfalse;
+	return qfalse;
 }
 
 /**

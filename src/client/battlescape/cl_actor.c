@@ -442,6 +442,11 @@ qboolean CL_ActorSelect (le_t * le)
 	selActor->selected = qtrue;
 	ui_inventory = &selActor->i;
 
+	if (le->state & RF_IRGOGGLESSHOT)
+		refdef.rendererFlags |= RDF_IRGOGGLES;
+	else
+		refdef.rendererFlags &= ~RDF_IRGOGGLES;
+
 	actorIdx = CL_ActorGetNumber(le);
 	if (actorIdx == -1)
 		return qfalse;
