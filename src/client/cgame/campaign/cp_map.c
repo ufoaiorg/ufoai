@@ -2430,7 +2430,7 @@ const byte *MAP_GetColor (const vec2_t pos, mapType_t type, qboolean *coast)
 					const byte* coastCheck = mask + 4 * (x + (y - gap) * width);
 					*coast = MapIsWater(coastCheck);
 				}
-				if (!*coast && y < width - 1 - gap) {
+				if (!*coast && y < height - 1 - gap) {
 					const byte* coastCheck = mask + 4 * (x + (y + gap) * width);
 					*coast = MapIsWater(coastCheck);
 				}
