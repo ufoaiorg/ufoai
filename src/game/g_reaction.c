@@ -41,17 +41,20 @@ static int G_ReactionFireGetTUsForItem (const edict_t *ent, const edict_t *targe
 	if (invList && invList->item.m && invList->item.t->weapon
 	 && (!invList->item.t->reload || invList->item.a > 0)) {
 		const fireDef_t *fdArray = FIRESH_FiredefForWeapon(&invList->item);
+		const chrFiremodeSettings_t *fmSetting;
 		if (fdArray == NULL)
 			return -1;
 
-		if (ent->chr.RFmode.hand == ACTOR_HAND_RIGHT && ent->chr.RFmode.fmIdx >= 0
-		 && ent->chr.RFmode.fmIdx < MAX_FIREDEFS_PER_WEAPON) { /* If a RIGHT-hand firemode is selected and sane. */
-			const fireDefIndex_t fmIdx = ent->chr.RFmode.fmIdx;
+		fmSetting = &ent->chr.RFmode;
+		if (fmSetting->hand == ACTOR_HAND_RIGHT && fmSetting->fmIdx >= 0
+		 && fmSetting->fmIdx < MAX_FIREDEFS_PER_WEAPON) { /* If a RIGHT-hand firemode is selected and sane. */
+			const fireDefIndex_t fmIdx = fmSetting->fmIdx;
 			const int reactionFire = G_PLAYER_FROM_ENT(ent)->reactionLeftover;
+			const fireDef_t *fd = &fdArray[fmIdx];
+			const int tus = fd->time + reactionFire;
 
-			if (fdArray[fmIdx].time + reactionFire <= ent->TU
-			 && fdArray[fmIdx].range > VectorDist(ent->origin, target->origin)) {
-				return fdArray[fmIdx].time + reactionFire;
+			if (tus <= ent->TU && fd->range > VectorDist(ent->origin, target->origin)) {
+				return tus;
 			}
 		}
 	}
