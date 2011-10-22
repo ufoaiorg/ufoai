@@ -100,6 +100,14 @@ typedef struct mapDef_s {
 	char *onlose;		/**< trigger command after you've lost a battle */
 } mapDef_t;
 
+#define MapDef_ForeachCondition(var, condition) \
+	for (int var##__loopvar = 0; (var) = NULL, var##__loopvar < cls.numMDs; var##__loopvar++) \
+		if ((var) = &cls.mds[var##__loopvar], !(condition)) {} else
+
+#define MapDef_Foreach(var) MapDef_ForeachCondition(var, 1)
+#define MapDef_ForeachSingleplayer(var) MapDef_ForeachCondition(var, (var)->singleplayer)
+#define MapDef_ForeachSingleplayerCampaign(var) MapDef_ForeachCondition(var, (var)->singleplayer && (var)->campaign)
+
 mapDef_t* Com_GetMapDefinitionByID(const char *mapDefID);
 mapDef_t* GAME_GetMapDefByIDX(int index);
 

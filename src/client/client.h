@@ -45,14 +45,6 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 
 struct cgame_export_s;
 
-#define MapDef_ForeachCondition(var, condition) \
-	for (int var##__loopvar = 0; (var) = NULL, var##__loopvar < cls.numMDs; var##__loopvar++) \
-		if ((var) = &cls.mds[var##__loopvar], !(condition)) {} else
-
-#define MapDef_Foreach(var) MapDef_ForeachCondition(var, 1)
-#define MapDef_ForeachSingleplayer(var) MapDef_ForeachCondition(var, (var)->singleplayer)
-#define MapDef_ForeachSingleplayerCampaign(var) MapDef_ForeachCondition(var, (var)->singleplayer && (var)->campaign)
-
 /**
  * @brief Not cleared on a map change (static data)
  * @note Only some data is set to new values on a map change
