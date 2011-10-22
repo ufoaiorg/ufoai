@@ -25,6 +25,7 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #include "../../../../client.h"
 #include "../../../cl_localentity.h"
 #include "e_event_actorresetclientaction.h"
+#include "../../../../ui/ui_main.h"
 
 /**
  * @brief When no trigger is touched, the client actions are reset
@@ -46,5 +47,6 @@ void CL_ActorResetClientAction (const eventRegister_t *self, struct dbuffer *msg
 
 	/* reset client action entity */
 	le->clientAction = NULL;
+	UI_ExecuteConfunc("disable_clientaction");
 	Com_DPrintf(DEBUG_CLIENT, "CL_ActorResetClientAction: Reset client action for actor with entnum %i\n", number);
 }

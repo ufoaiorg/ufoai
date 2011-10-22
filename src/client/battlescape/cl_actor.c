@@ -447,6 +447,11 @@ qboolean CL_ActorSelect (le_t * le)
 	else
 		refdef.rendererFlags &= ~RDF_IRGOGGLES;
 
+	if (le->clientAction != NULL)
+		UI_ExecuteConfunc("enable_clientaction");
+	else
+		UI_ExecuteConfunc("disable_clientaction");
+
 	actorIdx = CL_ActorGetNumber(le);
 	if (actorIdx == -1)
 		return qfalse;

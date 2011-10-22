@@ -180,6 +180,13 @@ window hud extends levelbuttons {
 	confunc deselect_reaction { }
 	confunc deselect_headgear { }
 
+	/**
+	 * This is called when the selected actor enters/leaves an area that allows him to interact
+	 * with the world (e.g. opening a door
+	 */
+	confunc enable_clientaction { }
+	confunc disable_clientaction { }
+
 	confunc disable_primaryleft { }
 	confunc disable_primaryright { }
 	confunc disable_reloadleft { }
