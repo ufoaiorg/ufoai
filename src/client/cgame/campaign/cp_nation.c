@@ -382,17 +382,16 @@ void CL_ParseCities (const char *name, const char **text)
  */
 qboolean NAT_ScriptSanityCheck (void)
 {
-	int i;
 	int error = 0;
 	city_t *city;
 
 	/* Check if there is at least one map fitting city parameter for terror mission */
 	LIST_Foreach(ccs.cities, city_t, city) {
-		int mapIdx;
 		qboolean cityCanBeUsed = qfalse;
 		qboolean parametersFit = qfalse;
 		ufoType_t ufoTypes[UFO_MAX];
 		int numTypes;
+		const mapDef_t const *md;
 
 		if (!city->name) {
 			error++;
@@ -401,15 +400,13 @@ qboolean NAT_ScriptSanityCheck (void)
 
 		numTypes = CP_TerrorMissionAvailableUFOs(NULL, ufoTypes);
 
-		for (mapIdx = 0; mapIdx < cls.numMDs; mapIdx++) {
-			const mapDef_t const *md = Com_GetMapDefByIDX(mapIdx);
-
+		MapDef_ForeachSingleplayerCampaign(md) {
 			if (md->storyRelated)
 				continue;
 
 			if (MAP_PositionFitsTCPNTypes(city->pos, md->terrains, md->cultures, md->populations, NULL)) {
+				int i;
 				/* this map fits city parameter, check if we have some terror mission UFOs available for this map */
-
 				parametersFit = qtrue;
 
 				/* no UFO on this map (LIST_ContainsString doesn't like empty string) */
@@ -434,6 +431,7 @@ qboolean NAT_ScriptSanityCheck (void)
 			error++;
 			Com_Printf("...... city '%s' can't be used in game: it has no map fitting parameters\n", city->id);
 			if (parametersFit) {
+				int i;
 				Com_Printf("      (No map fitting");
 				for (i = 0 ; i < numTypes; i++)
 					Com_Printf(" %s", Com_UFOTypeToShortName(ufoTypes[i]));

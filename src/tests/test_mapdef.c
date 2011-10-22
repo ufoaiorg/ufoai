@@ -84,13 +84,12 @@ char posStr[MAX_TOKEN_CHARS * MAX_TILESTRINGS];
  */
 static void testMapDefsMassRMA (void)
 {
-	int i;
 	const char *filterId = TEST_GetStringProperty("mapdef-id");
+	const mapDef_t* md;
 
 	CU_ASSERT_TRUE(cls.numMDs > 0);
 
-	for (i = 0; i < cls.numMDs; i++) {
-		const mapDef_t* md = &cls.mds[i];
+	MapDef_Foreach(md) {
 		if (md->map[0] == '.')
 			continue;
 		if (filterId && strcmp(filterId, md->id) != 0)
@@ -138,14 +137,14 @@ char posStr[MAX_TOKEN_CHARS * MAX_TILESTRINGS];
  */
 static void testMapDefStatistic (void)
 {
-	int i, j, k;
+	int j, k;
 	int required, solids;
 	const char *filterId = TEST_GetStringProperty("mapdef-id");
+	const mapDef_t* md;
 
 	CU_ASSERT_TRUE(cls.numMDs > 0);
 
-	for (i = 0; i < cls.numMDs; i++) {
-		const mapDef_t* md = &cls.mds[i];
+	MapDef_Foreach(md) {
 		if (md->map[0] == '.')
 			continue;
 		if (filterId && !Q_streq(filterId, md->id))
@@ -199,13 +198,12 @@ static void testMapDefStatistic (void)
  */
 static void testMapDefsSingleplayer (void)
 {
-	int i;
 	const char *filterId = TEST_GetStringProperty("mapdef-id");
+	const mapDef_t* md;
 
 	CU_ASSERT_TRUE(cls.numMDs > 0);
 
-	for (i = 0; i < cls.numMDs; i++) {
-		const mapDef_t* md = &cls.mds[i];
+	MapDef_Foreach(md) {
 		if (md->map[0] == '.')
 			continue;
 		if (filterId && strcmp(filterId, md->id) != 0)
@@ -231,40 +229,38 @@ static void testMapDefsSingleplayer (void)
 
 static void testMapDefsMultiplayer (void)
 {
-	int i;
 	const char *filterId = TEST_GetStringProperty("mapdef-id");
 	char userinfo[MAX_INFO_STRING];
+	const mapDef_t* md;
 
 	CU_ASSERT_TRUE(cls.numMDs > 0);
 
 	Cvar_Set("sv_maxclients", "2");
 
-	for (i = 0; i < cls.numMDs; i++) {
-		const mapDef_t* md = &cls.mds[i];
+	MapDef_ForeachCondition(md, md->multiplayer) {
+		unsigned int seed;
+		player_t *player;
+
 		if (filterId && strcmp(filterId, md->id) != 0)
 			continue;
 
-		if (md->multiplayer) {
-			/* use a known seed to reproduce an error */
-			unsigned int seed;
-			player_t *player;
-			if (TEST_ExistsProperty("mapdef-seed")) {
-				seed = TEST_GetLongProperty("mapdef-seed");
-			} else {
-				seed = (unsigned int) time(NULL);
-			}
-			srand(seed);
-
-			Com_Printf("testMapDefsMultiplayer: Mapdef %s (seed %u)\n", md->id, seed);
-			SV_Map(qtrue, md->map, md->param);
-
-			player = PLAYER_NUM(0);
-			Info_SetValueForKey(userinfo, sizeof(userinfo), "cl_teamnum", "-1");
-			CU_ASSERT_TRUE(svs.ge->ClientConnect(player, userinfo, sizeof(userinfo)));
-
-			SV_ShutdownGameProgs();
-			CU_PASS(md->map);
+		/* use a known seed to reproduce an error */
+		if (TEST_ExistsProperty("mapdef-seed")) {
+			seed = TEST_GetLongProperty("mapdef-seed");
+		} else {
+			seed = (unsigned int) time(NULL);
 		}
+		srand(seed);
+
+		Com_Printf("testMapDefsMultiplayer: Mapdef %s (seed %u)\n", md->id, seed);
+		SV_Map(qtrue, md->map, md->param);
+
+		player = PLAYER_NUM(0);
+		Info_SetValueForKey(userinfo, sizeof(userinfo), "cl_teamnum", "-1");
+		CU_ASSERT_TRUE(svs.ge->ClientConnect(player, userinfo, sizeof(userinfo)));
+
+		SV_ShutdownGameProgs();
+		CU_PASS(md->map);
 	}
 }
 #endif

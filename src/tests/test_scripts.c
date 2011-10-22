@@ -275,16 +275,41 @@ static void testAircraft (void)
 static void testMapDef (void)
 {
 	int i;
+	const mapDef_t *md;
 
-	for (i = 0; i < cls.numMDs; i++) {
-		const mapDef_t *md = Com_GetMapDefByIDX(i);
+	i = 0;
+	MapDef_Foreach(md) {
 		if (md->civTeam != NULL)
 			CU_ASSERT_PTR_NOT_NULL(Com_GetTeamDefinitionByID(md->civTeam));
 
 		CU_ASSERT_FALSE(md->maxAliens <= 0);
 		CU_ASSERT_PTR_NOT_NULL(md->map);
 		CU_ASSERT_PTR_NOT_NULL(md->description);
+		i++;
 	}
+
+	CU_ASSERT_PTR_NULL(md);
+	UFO_CU_ASSERT_EQUAL_INT_MSG_FATAL(i, cls.numMDs, va("only looped over %i mapdefs, but expected %i", i, cls.numMDs));
+
+	i = cls.numMDs;
+
+	MapDef_ForeachCondition(md, !md->singleplayer || !md->campaign) {
+		i--;
+		CU_ASSERT_PTR_NOT_NULL(md);
+	}
+
+	CU_ASSERT_PTR_NULL(md);
+	CU_ASSERT_NOT_EQUAL(i, cls.numMDs);
+
+	MapDef_ForeachSingleplayerCampaign(md) {
+		i--;
+		CU_ASSERT_PTR_NOT_NULL(md);
+		CU_ASSERT_STRING_NOT_EQUAL(md->id, "training_a");
+		CU_ASSERT_STRING_NOT_EQUAL(md->id, "training_b");
+	}
+
+	CU_ASSERT_PTR_NULL(md);
+	UFO_CU_ASSERT_EQUAL_INT_MSG_FATAL(i, 0, va("i: %i", i));
 }
 
 int UFO_AddScriptsTests (void)

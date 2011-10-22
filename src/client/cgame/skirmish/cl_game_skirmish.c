@@ -249,7 +249,17 @@ static inline void GAME_SK_HideUFOs (const linkedList_t *ufos)
 
 static const mapDef_t* GAME_SK_MapInfo (int step)
 {
-	const mapDef_t *md = cgi->GAME_GetCurrentSelectedMap();
+	const mapDef_t *md;
+	int i = 0;
+
+	while (!cgi->GAME_GetCurrentSelectedMap()->singleplayer) {
+		i++;
+		cgi->GAME_SwitchCurrentSelectedMap(step ? step : 1);
+		if (i > 100000)
+			cgi->Com_Error(ERR_DROP, "no singleplayer map found");
+	}
+
+	md = cgi->GAME_GetCurrentSelectedMap();
 
 	if (md->map[0] == '.')
 		return NULL;

@@ -153,11 +153,8 @@ qboolean CP_IsRunning (void)
  * @param[in] mapIdx idx of the map in the mapdef array
  * @return qfalse if map is not selectable
  */
-static qboolean CP_MapIsSelectable (mission_t *mission, int mapIdx, const vec2_t pos)
+static qboolean CP_MapIsSelectable (mission_t *mission, mapDef_t *md, const vec2_t pos)
 {
-	mapDef_t *md;
-
-	md = Com_GetMapDefByIDX(mapIdx);
 	if (md->storyRelated)
 		return qfalse;
 
@@ -196,7 +193,6 @@ static qboolean CP_MapIsSelectable (mission_t *mission, int mapIdx, const vec2_t
  */
 qboolean CP_ChooseMap (mission_t *mission, const vec2_t pos)
 {
-	int i;
 	int maxHits = 1;	/**< Total number of maps fulfilling mission conditions. */
 	int hits = 0;		/**< Number of maps fulfilling mission conditions and that appeared less often during game. */
 	int minMissionAppearance = 9999;
@@ -207,16 +203,14 @@ qboolean CP_ChooseMap (mission_t *mission, const vec2_t pos)
 
 	/* Set maxHits and hits. */
 	while (maxHits) {
+		mapDef_t *md;
 		maxHits = 0;
-		for (i = 0; i < cls.numMDs; i++) {
-			mapDef_t *md;
-
+		MapDef_ForeachSingleplayerCampaign(md) {
 			/* Check if mission fulfill conditions */
-			if (!CP_MapIsSelectable(mission, i, pos))
+			if (!CP_MapIsSelectable(mission, md, pos))
 				continue;
 
 			maxHits++;
-			md = Com_GetMapDefByIDX(i);
 			if (md->timesAlreadyUsed < minMissionAppearance) {
 				/* at least one fulfilling mission as been used less time than minMissionAppearance:
 				 * restart the loop with this number of time.
@@ -228,7 +222,7 @@ qboolean CP_ChooseMap (mission_t *mission, const vec2_t pos)
 				hits++;
 		}
 
-		if (i >= cls.numMDs) {
+		if (md == NULL) {
 			/* We scanned all maps in memory without finding a map used less than minMissionAppearance: exit while loop */
 			break;
 		}
@@ -268,14 +262,12 @@ qboolean CP_ChooseMap (mission_t *mission, const vec2_t pos)
 	randomNum = rand() % hits;
 
 	/* Select mission mission number 'randomnumber' that fulfills the conditions */
-	for (i = 0; i < cls.numMDs; i++) {
-		mapDef_t *md;
-
+	mapDef_t *md;
+	MapDef_ForeachSingleplayerCampaign(md) {
 		/* Check if mission fulfill conditions */
-		if (!CP_MapIsSelectable(mission, i, pos))
+		if (!CP_MapIsSelectable(mission, md, pos))
 			continue;
 
-		md = Com_GetMapDefByIDX(i);
 		if (md->timesAlreadyUsed > minMissionAppearance)
 			continue;
 
@@ -289,7 +281,7 @@ qboolean CP_ChooseMap (mission_t *mission, const vec2_t pos)
 	}
 
 	/* A mission must have been selected */
-	mission->mapDef = Com_GetMapDefByIDX(i);
+	mission->mapDef = md;
 	mission->mapDef->timesAlreadyUsed++;
 	if (cp_missiontest->integer)
 		Com_Printf("Selected map '%s' (among %i possible maps)\n", mission->mapDef->id, hits);
@@ -818,14 +810,13 @@ qboolean CP_LoadXML (xmlNode_t *parent)
  */
 static qboolean CP_SaveMapDefStatXML (xmlNode_t *parent)
 {
-	int i;
+	const mapDef_t const* md;
 
-	for (i = 0; i < cls.numMDs; i++) {
-		const mapDef_t const* map = Com_GetMapDefByIDX(i);
-		if (map->timesAlreadyUsed > 0) {
+	MapDef_ForeachSingleplayerCampaign(md) {
+		if (md->timesAlreadyUsed > 0) {
 			xmlNode_t *node = XML_AddNode(parent, SAVE_CAMPAIGN_MAPDEF);
-			XML_AddString(node, SAVE_CAMPAIGN_MAPDEF_ID, map->id);
-			XML_AddInt(node, SAVE_CAMPAIGN_MAPDEF_COUNT, map->timesAlreadyUsed);
+			XML_AddString(node, SAVE_CAMPAIGN_MAPDEF_ID, md->id);
+			XML_AddInt(node, SAVE_CAMPAIGN_MAPDEF_COUNT, md->timesAlreadyUsed);
 		}
 	}
 
@@ -1304,6 +1295,7 @@ campaign_t* CP_GetCampaign (const char* name)
 void CP_ResetCampaignData (void)
 {
 	int i;
+	mapDef_t *md;
 
 	cp_messageStack = NULL;
 
@@ -1326,8 +1318,7 @@ void CP_ResetCampaignData (void)
 			ccs.alienTeams[ccs.numAliensTD++] = td;
 	}
 	/* Clear mapDef usage statistics */
-	for (i = 0; i < cls.numMDs; i++) {
-		mapDef_t *md = Com_GetMapDefByIDX(i);
+	MapDef_ForeachSingleplayerCampaign(md) {
 		md->timesAlreadyUsed = 0;
 	}
 }

@@ -737,6 +737,8 @@ static const value_t mapdef_vals[] = {
 
 	{"teams", V_INT, offsetof(mapDef_t, teams), MEMBER_SIZEOF(mapDef_t, teams)},
 	{"multiplayer", V_BOOL, offsetof(mapDef_t, multiplayer), MEMBER_SIZEOF(mapDef_t, multiplayer)},
+	{"singleplayer", V_BOOL, offsetof(mapDef_t, singleplayer), MEMBER_SIZEOF(mapDef_t, singleplayer)},
+	{"campaign", V_BOOL, offsetof(mapDef_t, campaign), MEMBER_SIZEOF(mapDef_t, campaign)},
 
 	{"onwin", V_HUNK_STRING, offsetof(mapDef_t, onwin), 0},
 	{"onlose", V_HUNK_STRING, offsetof(mapDef_t, onlose), 0},
@@ -765,13 +767,16 @@ static void CL_ParseMapDefinition (const char *name, const char **text)
 		return;
 	}
 
-	md = Com_GetMapDefByIDX(cls.numMDs);
+	md = GAME_GetMapDefByIDX(cls.numMDs);
 	cls.numMDs++;
 	if (cls.numMDs >= lengthof(cls.mds))
 		Sys_Error("Com_ParseMapDefinition: Max mapdef hit");
 
 	OBJZERO(*md);
 	md->id = Mem_PoolStrDup(name, com_genericPool, 0);
+	md->singleplayer = qtrue;
+	md->campaign = qtrue;
+	md->multiplayer = qfalse;
 
 	do {
 		token = Com_EParse(text, errhead, name);

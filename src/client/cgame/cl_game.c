@@ -501,7 +501,7 @@ void GAME_SwitchCurrentSelectedMap (int step)
 
 const mapDef_t* GAME_GetCurrentSelectedMap (void)
 {
-	return Com_GetMapDefByIDX(cls.currentSelectedMap);
+	return GAME_GetMapDefByIDX(cls.currentSelectedMap);
 }
 
 int GAME_GetCurrentTeam (void)
@@ -554,7 +554,7 @@ static void UI_MapInfoGetNext (int step)
 			cls.currentSelectedMap = cls.numMDs - 1;
 		cls.currentSelectedMap %= cls.numMDs;
 
-		md = Com_GetMapDefByIDX(cls.currentSelectedMap);
+		md = GAME_GetMapDefByIDX(cls.currentSelectedMap);
 
 		/* avoid infinit loop */
 		if (ref == cls.currentSelectedMap)
@@ -572,7 +572,6 @@ static void UI_MapInfoGetNext (int step)
 
 /**
  * @brief Prints the map info for the server creation dialogue
- * @todo Skip special map that start with a '.' (e.g. .baseattack)
  */
 static void UI_MapInfo (int step)
 {
@@ -621,7 +620,8 @@ static void UI_MapInfo (int step)
 static void UI_RequestMapList_f (void)
 {
 	const char *callbackCmd;
-	int i;
+	const mapDef_t *md;
+	const qboolean multiplayer = GAME_IsMultiplayer();
 
 	if (Cmd_Argc() != 2) {
 		Com_Printf("Usage: %s <callback>\n", Cmd_Argv(0));
@@ -635,8 +635,7 @@ static void UI_RequestMapList_f (void)
 
 	Cbuf_AddText(va("%s begin;", callbackCmd));
 
-	for (i = 0; i < cls.numMDs; i++) {
-		const mapDef_t *md = Com_GetMapDefByIDX(i);
+	MapDef_ForeachCondition(md, multiplayer ? md->multiplayer : md->singleplayer) {
 		const char *preview;
 
 		/* special purpose maps are not startable without the specific context */
@@ -684,6 +683,7 @@ static void UI_PreviousMap_f (void)
 static void UI_SelectMap_f (void)
 {
 	const char *mapname;
+	const mapDef_t *md;
 	int i;
 
 	if (Cmd_Argc() != 2) {
@@ -695,21 +695,23 @@ static void UI_SelectMap_f (void)
 		return;
 
 	mapname = Cmd_Argv(1);
+	i = 0;
 
-	for (i = 0; i < cls.numMDs; i++) {
-		const mapDef_t *md = Com_GetMapDefByIDX(i);
+	MapDef_Foreach(md) {
+		i++;
 		if (!Q_streq(md->map, mapname))
 			continue;
-		cls.currentSelectedMap = i;
+		cls.currentSelectedMap = i - 1;
 		UI_MapInfo(0);
 		return;
 	}
 
-	for (i = 0; i < cls.numMDs; i++) {
-		const mapDef_t *md = Com_GetMapDefByIDX(i);
+	i = 0;
+	MapDef_Foreach(md) {
+		i++;
 		if (!Q_streq(md->id, mapname))
 			continue;
-		cls.currentSelectedMap = i;
+		cls.currentSelectedMap = i - 1;
 		UI_MapInfo(0);
 		return;
 	}
@@ -1246,12 +1248,11 @@ const char* GAME_GetModelForItem (const objDef_t *od, uiModel_t** uiModel)
 
 mapDef_t* Com_GetMapDefinitionByID (const char *mapDefID)
 {
-	int i;
+	mapDef_t *md;;
 
 	assert(mapDefID);
 
-	for (i = 0; i < cls.numMDs; i++) {
-		mapDef_t *md = Com_GetMapDefByIDX(i);
+	MapDef_Foreach(md) {
 		if (Q_streq(md->id, mapDefID))
 			return md;
 	}
@@ -1260,7 +1261,7 @@ mapDef_t* Com_GetMapDefinitionByID (const char *mapDefID)
 	return NULL;
 }
 
-mapDef_t* Com_GetMapDefByIDX (int index)
+mapDef_t* GAME_GetMapDefByIDX (int index)
 {
 	return &cls.mds[index];
 }

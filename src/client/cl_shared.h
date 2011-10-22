@@ -78,7 +78,10 @@ typedef struct mapDef_s {
 	int teams;				/**< multiplayer teams */
 	linkedList_t *gameTypes;	/**< gametype strings this map is useable for */
 
+
 	/* singleplayer */
+	qboolean campaign;			/**< available in campaign mode? */
+	qboolean singleplayer;		/**< is this map available in singleplayer games? */
 	int maxAliens;				/**< Number of spawning points on the map */
 	qboolean hurtAliens;		/**< hurt the aliens on spawning them - e.g. for ufocrash missions */
 
@@ -98,7 +101,7 @@ typedef struct mapDef_s {
 } mapDef_t;
 
 mapDef_t* Com_GetMapDefinitionByID(const char *mapDefID);
-mapDef_t* Com_GetMapDefByIDX(int index);
+mapDef_t* GAME_GetMapDefByIDX(int index);
 
 extern memPool_t *cl_genericPool;
 

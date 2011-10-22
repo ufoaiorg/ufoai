@@ -1244,10 +1244,10 @@ static qboolean skipTest (const mapDef_t *md)
 static void testTerrorMissions (void)
 {
 	city_t *city;
-	int i;
 	ufoType_t ufoType;
 	int numUfoTypes;
 	ufoType_t ufoTypes[UFO_MAX];
+	mapDef_t *md;
 
 	ResetCampaignData();
 
@@ -1291,9 +1291,7 @@ static void testTerrorMissions (void)
 		UFO_RemoveFromGeoscape(ufo);
 	}
 
-	for (i = 0; i < cls.numMDs; i++) {
-		mapDef_t *md = &cls.mds[i];
-
+	MapDef_ForeachSingleplayerCampaign(md) {
 		/* skip mapDefs that were used */
 		if (md->timesAlreadyUsed > 0)
 			continue;
@@ -1323,11 +1321,11 @@ static void testTerrorMissions (void)
 
 static void testRandomPosMissions (void)
 {
-	int i;
+	const mapDef_t *md;
 
 	ResetCampaignData();
-	for (i = 0; i < cls.numMDs; i++) {
-		mapDef_t *md = &cls.mds[i];
+
+	MapDef_ForeachSingleplayerCampaign(md) {
 		if (!skipTest(md)) {
 			mission_t mission;
 			qboolean result;

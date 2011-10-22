@@ -13,6 +13,9 @@
 //
 // Empty block means 'any' value
 //
+// singleplayer: available for single player games (default true)
+// multiplayer: available for multiplayer games (default false)
+// campaign: available in campaign games (default true)
 //
 // Triggers:
 // onwin onlose
@@ -4137,6 +4140,7 @@ mapdef training_a
 	description	"_Training Zone: Alpha"
 	teams		2
 	multiplayer	true
+	campaign	false
 	maxaliens	8
 	gametypes {
 		1on1
@@ -4153,6 +4157,7 @@ mapdef training_b
 	description	"_Training Zone: Bravo"
 	teams		2
 	multiplayer	true
+	campaign	false
 	maxaliens	30
 	gametypes {
 		1on1
