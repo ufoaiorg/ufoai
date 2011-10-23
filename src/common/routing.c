@@ -954,7 +954,7 @@ static int RT_FindOpening (RT_data_t *rtd, place_t* from, const int ax, const in
 	int temp_z;
 
 	const int endfloor = RT_FLOOR(rtd->map, rtd->actorSize, ax, ay, from->cell[2]) + from->cell[2] * CELL_HEIGHT;
-	const int hifloor = max (endfloor, bottom);
+	const int hifloor = max(endfloor, bottom);
 
 	if (debugTrace)
 		Com_Printf("ef:%i t:%i b:%i\n", endfloor, top, bottom);
@@ -1253,7 +1253,7 @@ static int RT_TraceOnePassage (RT_data_t *rtd, place_t* from, place_t* to, openi
 	const int ax = to->cell[0];
 	const int ay = to->cell[1];
 
-	az = RT_FindOpening(rtd, from, ax, ay, lower, upper, &opening->base, &hi);
+	RT_FindOpening(rtd, from, ax, ay, lower, upper, &opening->base, &hi);
 	/* calc opening found so far and set stepup */
 	opening->size = hi - opening->base;
 	az = to->floorZ;
@@ -1270,7 +1270,7 @@ static int RT_TraceOnePassage (RT_data_t *rtd, place_t* from, place_t* to, openi
 		if (opening->size < CELL_HEIGHT
 			|| abs(srcFloor - opening->base) > PATHFINDING_MIN_STEPUP
 			|| abs(dstFloor - opening->base) > PATHFINDING_MIN_STEPUP) {
-			int stairway = RT_PlaceIsShifted(from,to);
+			int stairway = RT_PlaceIsShifted(from, to);
 			/* This returns the total opening height, as the
 			 * microtrace may reveal more passage height from the foot space. */
 			const int bonusSize = RT_MicroTrace(rtd, from, ax, ay, az, stairway, opening);
@@ -1360,8 +1360,7 @@ static void RT_TracePassage (RT_data_t *rtd, const int x, const int y, const int
 	 */
 	if (RT_PlaceIsUsable(&to) && RT_PlaceDoesIntersectEnough(&from, &to)) {
 		placeToCheck = &to;
-	}
-	else if (z < PATHFINDING_HEIGHT - 1) {
+	} else if (z < PATHFINDING_HEIGHT - 1) {
 		RT_PlaceInit(rtd->map, rtd->actorSize, &above, ax, ay, z + 1);
 		if (RT_PlaceIsUsable(&above) && RT_PlaceDoesIntersectEnough(&from, &above)) {
 			placeToCheck = &above;
