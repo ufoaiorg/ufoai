@@ -152,7 +152,7 @@ uiSprite_t* UI_AllocStaticSprite (const char* name)
  * @param[in] sizeY Height of the bounded box
  * @todo use named const for status
  */
-void UI_DrawSpriteInBox (const uiSprite_t* sprite, uiSpriteStatus_t status, int posX, int posY, int sizeX, int sizeY)
+void UI_DrawSpriteInBox (qboolean flip, const uiSprite_t* sprite, uiSpriteStatus_t status, int posX, int posY, int sizeX, int sizeY)
 {
 	int texX;
 	int texY;
@@ -193,7 +193,7 @@ void UI_DrawSpriteInBox (const uiSprite_t* sprite, uiSpriteStatus_t status, int 
 		R_Color(color);
 	}
 
-	UI_DrawNormImageByName(posX, posY, sprite->size[0], sprite->size[1],
+	UI_DrawNormImageByName(flip, posX, posY, sprite->size[0], sprite->size[1],
 		texX + sprite->size[0], texY + sprite->size[1], texX, texY, image);
 	if (sprite->blend)
 		R_Color(NULL);

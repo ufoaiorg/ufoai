@@ -168,7 +168,7 @@ static void UI_BaseMapNodeDraw (uiNode_t * node)
 
 			/* draw tile */
 			if (image != NULL)
-				UI_DrawNormImageByName(pos[0], pos[1], width * (building ? building->size[0] : 1), height * (building ? building->size[1] : 1), 0, 0, 0, 0, image);
+				UI_DrawNormImageByName(qfalse, pos[0], pos[1], width * (building ? building->size[0] : 1), height * (building ? building->size[1] : 1), 0, 0, 0, 0, image);
 			if (building) {
 				switch (building->buildingStatus) {
 				case B_STATUS_DOWN:

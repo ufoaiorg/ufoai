@@ -572,7 +572,7 @@ static void UI_RadarNodeDraw (uiNode_t *node)
 		imagePos[0] = radar.x + mapCoefX * (tile->mapX - cl.mapData->mapMin[0]);
 		imagePos[1] = radar.y + mapCoefY * (tile->mapY - cl.mapData->mapMin[1]);
 
-		UI_DrawNormImageByName(imagePos[0], imagePos[1],
+		UI_DrawNormImageByName(qfalse, imagePos[0], imagePos[1],
 				mapCoefX * tile->mapWidth, mapCoefY * tile->mapHeight,
 				0, 0, 0, 0, tile->path[maxlevel]);
 #ifdef RADARSIZE_DEBUG

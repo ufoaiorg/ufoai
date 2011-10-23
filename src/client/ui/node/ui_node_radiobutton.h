@@ -33,6 +33,7 @@ typedef struct radioButtonExtraData_s {
 	char *string;
 	struct uiSprite_s *background;
 	struct uiSprite_s *icon;	/**< Link to an icon */
+	qboolean flipIcon;			/**< Flip the icon rendering (horizontal) */
 } radioButtonExtraData_t;
 
 void UI_RegisterRadioButtonNode(uiBehaviour_t *behaviour);

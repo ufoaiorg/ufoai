@@ -55,6 +55,6 @@ extern const value_t ui_spriteProperties[];
 
 uiSprite_t* UI_GetSpriteByName(const char* name);
 uiSprite_t* UI_AllocStaticSprite(const char* name) __attribute__ ((warn_unused_result));
-void UI_DrawSpriteInBox(const uiSprite_t* icon, uiSpriteStatus_t status, int posX, int posY, int sizeX, int sizeY);
+void UI_DrawSpriteInBox(qboolean flip, const uiSprite_t* icon, uiSpriteStatus_t status, int posX, int posY, int sizeX, int sizeY);
 
 #endif

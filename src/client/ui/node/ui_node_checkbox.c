@@ -72,7 +72,7 @@ static void UI_CheckBoxNodeDraw (uiNode_t* node)
 	}
 
 	UI_GetNodeAbsPos(node, pos);
-	UI_DrawNormImageByName(pos[0], pos[1], node->size[0], node->size[1],
+	UI_DrawNormImageByName(qfalse, pos[0], pos[1], node->size[0], node->size[1],
 		texx + node->size[0], texy + node->size[1], texx, texy, image);
 }
 

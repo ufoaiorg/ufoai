@@ -177,7 +177,7 @@ static void UI_MaterialEditorNodeDraw (uiNode_t *node)
 #undef MARGIN
 		}
 
-		UI_DrawNormImage(imagepos[0], imagepos[1], IMAGE_WIDTH, IMAGE_WIDTH, 0, 0, 0, 0, image);
+		UI_DrawNormImage(qfalse, imagepos[0], imagepos[1], IMAGE_WIDTH, IMAGE_WIDTH, 0, 0, 0, 0, image);
 
 		cnt++;
 		cntView++;

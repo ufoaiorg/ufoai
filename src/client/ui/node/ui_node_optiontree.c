@@ -185,7 +185,7 @@ static void UI_OptionTreeNodeDraw (uiNode_t *node)
 		R_Color(NULL);
 		if (option->firstChild) {
 			uiSprite_t *icon = OPTIONEXTRADATA(option).collapsed ? systemExpand : systemCollapse;
-			UI_DrawSpriteInBox(icon, SPRITE_STATUS_NORMAL, decX, currentY, icon->size[0], fontHeight);
+			UI_DrawSpriteInBox(OPTIONEXTRADATA(option).flipIcon, icon, SPRITE_STATUS_NORMAL, decX, currentY, icon->size[0], fontHeight);
 		}
 
 		decX += COLLAPSEBUTTON_WIDTH;
@@ -194,7 +194,8 @@ static void UI_OptionTreeNodeDraw (uiNode_t *node)
 			uiSpriteStatus_t iconStatus = SPRITE_STATUS_NORMAL;
 			if (option->disabled)
 				iconStatus = SPRITE_STATUS_DISABLED;
-			UI_DrawSpriteInBox(OPTIONEXTRADATA(option).icon, iconStatus, decX, currentY, OPTIONEXTRADATA(option).icon->size[0], fontHeight);
+			UI_DrawSpriteInBox(OPTIONEXTRADATA(option).flipIcon, OPTIONEXTRADATA(option).icon, iconStatus, decX, currentY,
+					OPTIONEXTRADATA(option).icon->size[0], fontHeight);
 			decX += OPTIONEXTRADATA(option).icon->size[0] + fontHeight / 4;
 		}
 

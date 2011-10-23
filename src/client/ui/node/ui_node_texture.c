@@ -65,7 +65,7 @@ static void UI_TextureNodeDraw (uiNode_t *node)
 
 	R_TextureEnableWrapping(image);
 
-	UI_DrawNormImage(nodepos[0], nodepos[1], node->size[0], node->size[1], node->size[0], node->size[1], 0, 0, image);
+	UI_DrawNormImage(qfalse, nodepos[0], nodepos[1], node->size[0], node->size[1], node->size[0], node->size[1], 0, 0, image);
 
 	R_TextureDisableWrapping(image);
 }

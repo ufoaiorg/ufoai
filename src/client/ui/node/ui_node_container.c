@@ -208,7 +208,7 @@ void UI_DrawItem (uiNode_t *node, const vec3_t org, const item_t *item, int x, i
 
 		/* Draw the image. */
 		R_Color(color);
-		UI_DrawNormImageByName(origin[0], origin[1], imgWidth, imgHeight, 0, 0, 0, 0, od->image);
+		UI_DrawNormImageByName(qfalse, origin[0], origin[1], imgWidth, imgHeight, 0, 0, 0, 0, od->image);
 		R_Color(NULL);
 	} else {
 		uiModel_t *model = NULL;

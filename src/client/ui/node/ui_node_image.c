@@ -177,7 +177,7 @@ void UI_ImageNodeDraw (uiNode_t *node)
 	}
 
 	UI_ImageAlignBoxInBox(nodepos, nodesize, size, node->contentAlign, imagepos);
-	UI_DrawNormImage(imagepos[0] + node->padding, imagepos[1] + node->padding, size[0], size[1],
+	UI_DrawNormImage(qfalse, imagepos[0] + node->padding, imagepos[1] + node->padding, size[0], size[1],
 			EXTRADATA(node).texh[0], EXTRADATA(node).texh[1],
 			EXTRADATA(node).texl[0], EXTRADATA(node).texl[1], image);
 

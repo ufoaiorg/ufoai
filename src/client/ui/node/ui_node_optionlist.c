@@ -137,7 +137,7 @@ static void UI_OptionListNodeDraw (uiNode_t *node)
 			if (option->disabled)
 				iconStatus = SPRITE_STATUS_DISABLED;
 			R_Color(NULL);
-			UI_DrawSpriteInBox(OPTIONEXTRADATA(option).icon, iconStatus, decX, currentY, OPTIONEXTRADATA(option).icon->size[0], lineHeight);
+			UI_DrawSpriteInBox(OPTIONEXTRADATA(option).flipIcon, OPTIONEXTRADATA(option).icon, iconStatus, decX, currentY, OPTIONEXTRADATA(option).icon->size[0], lineHeight);
 			decX += OPTIONEXTRADATA(option).icon->size[0] + lineHeight / 4;
 		}
 

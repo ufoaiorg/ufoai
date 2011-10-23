@@ -152,10 +152,9 @@ static void UI_MessageDraw (const uiNode_t *node, message_t *message, const char
 
 	/* identify the begin of a message with a mark */
 	if (lines2 >= 0) {
-		const uiSprite_t *icon;
-		icon = UI_MessageGetIcon(message);
+		const uiSprite_t *icon = UI_MessageGetIcon(message);
 		R_Color(NULL);
-		UI_DrawSpriteInBox(icon, SPRITE_STATUS_NORMAL, x - 25, y + LINEHEIGHT * lines2 - 1, 19, 19);
+		UI_DrawSpriteInBox(qfalse, icon, SPRITE_STATUS_NORMAL, x - 25, y + LINEHEIGHT * lines2 - 1, 19, 19);
 	}
 
 	/* draw the message */

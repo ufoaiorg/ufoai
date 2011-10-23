@@ -108,7 +108,8 @@ static void UI_ButtonNodeDraw (uiNode_t *node)
 		int size = node->size[1] - node->padding - node->padding;
 		if (size < EXTRADATA(node).icon->size[0])
 			size = EXTRADATA(node).icon->size[0];
-		UI_DrawSpriteInBox(EXTRADATA(node).icon, iconStatus, pos[0] + node->padding, pos[1] + node->padding, size, node->size[1] - node->padding - node->padding);
+		UI_DrawSpriteInBox(EXTRADATA(node).flipIcon, EXTRADATA(node).icon, iconStatus, pos[0] + node->padding, pos[1] + node->padding, size,
+				node->size[1] - node->padding - node->padding);
 		iconPadding = size + node->padding;
 	}
 
@@ -163,6 +164,7 @@ static const value_t properties[] = {
 	/* Icon used to display the node
 	 */
 	{"icon", V_UI_SPRITEREF, UI_EXTRADATA_OFFSETOF(EXTRADATA_TYPE, icon), MEMBER_SIZEOF(EXTRADATA_TYPE, icon)},
+	{"flipicon", V_BOOL, UI_EXTRADATA_OFFSETOF(EXTRADATA_TYPE, flipIcon), MEMBER_SIZEOF(EXTRADATA_TYPE, flipIcon)},
 
 	{NULL, V_NULL, 0, 0}
 };

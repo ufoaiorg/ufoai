@@ -256,6 +256,7 @@ window serverinfo
 		background	"buttons/large_blue"
 		pos			"26 720"
 		size		"64 37"
+		flipicon	true
 		icon		"icons/return"
 		onClick		{ cmd "ui_pop; pingservers;" }
 	}
