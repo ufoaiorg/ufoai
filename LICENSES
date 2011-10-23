@@ -4707,6 +4707,8 @@ base/textures/tex_buildings/wall_ind05.png | GNU General Public License 2.0 or l
 base/textures/tex_buildings/wall_ind05_nm.png | GNU General Public License 2.0 or later | Nate Wright
 base/textures/tex_buildings/wall_se07.png | GNU General Public License 2.0 or later | FWishbringer
 base/textures/tex_buildings/wall_se08.png | MIT License | FWishbringer | based on images from http://www.photorack.net
+base/textures/tex_buildings/wall_se12.png | GNU General Public License 2.0 | Martin Gerhardy | Based on OpenArena oa_bases/ceiling_slate and tex_mattn/wall041
+base/textures/tex_buildings/wall_se13.png | GNU General Public License 2.0 | Martin Gerhardy | Based on OpenArena oa_bases/ceiling_slate and tex_mattn/wall041
 base/textures/tex_buildings/wall_se14.png | Creative Commons Attribution-Share Alike 3.0 | hullbr3ach
 base/textures/tex_buildings/wall_se15.png | Creative Commons Attribution-Share Alike 3.0 | hullbr3ach
 base/textures/tex_buildings/wall_stone_dirt.png | Creative Commons Attribution-Share Alike 3.0 | hullbr3ach
