@@ -947,7 +947,7 @@ static int RT_TraceOpening (RT_data_t *rtd, const vec3_t start, const vec3_t end
  * @param[out] hi_val Actual height of the top of the found passage.
  * @return The new z value of the actor after traveling in this direction from the starting location.
  */
-static int RT_FindOpening (RT_data_t *rtd, place_t* from, const int ax, const int ay, const int bottom, const int top, int *lo_val, int *hi_val)
+static int RT_FindOpening (RT_data_t *rtd, const place_t* from, const int ax, const int ay, const int bottom, const int top, int *lo_val, int *hi_val)
 {
 	vec3_t start, end;
 	pos3_t pos;
@@ -1049,7 +1049,7 @@ static int RT_FindOpening (RT_data_t *rtd, place_t* from, const int ax, const in
  * @param[out] opening descriptor of the opening found, if any
  * @return The change in floor height in QUANT units because of the additional trace.
 */
-static int RT_MicroTrace (RT_data_t *rtd, place_t* from, const int ax, const int ay, const int az, const int stairwaySituation, opening_t* opening)
+static int RT_MicroTrace (RT_data_t *rtd, const place_t* from, const int ax, const int ay, const int az, const int stairwaySituation, opening_t* opening)
 {
 	/* OK, now we have a viable shot across.  Run microstep tests now. */
 	/* Now calculate the stepup at the floor using microsteps. */
@@ -1243,7 +1243,7 @@ static int RT_MicroTrace (RT_data_t *rtd, place_t* from, const int ax, const int
  * @param[out] opening descriptor of the opening found, if any
  * @return The size in QUANT units of the detected opening.
  */
-static int RT_TraceOnePassage (RT_data_t *rtd, place_t* from, place_t* to, opening_t* opening)
+static int RT_TraceOnePassage (RT_data_t *rtd, const place_t* from, const place_t* to, opening_t* opening)
 {
 	int hi; /**< absolute ceiling of the passage found. */
 	const int z = from->cell[2];
@@ -1332,7 +1332,7 @@ static void RT_TracePassage (RT_data_t *rtd, const int x, const int y, const int
 	int aboveCeil, lowCeil;
 	/** we don't need the cell below the adjacent cell because we should have already checked it */
 	place_t from, to, above;
-	place_t* placeToCheck = NULL;
+	const place_t* placeToCheck = NULL;
 
 	RT_PlaceInit(rtd->map, rtd->actorSize, &from, x, y, z);
 	RT_PlaceInit(rtd->map, rtd->actorSize, &to, ax, ay, z);
