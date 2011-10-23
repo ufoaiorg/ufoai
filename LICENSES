@@ -1644,6 +1644,12 @@ base/models/objects/vegi/bush/trop_bush.png | GNU General Public License 2.0 | M
 base/models/objects/vegi/bush/trop_bush2.png | GNU General Public License 2.0 | based on Titus Tscharnke's work (http://www.burningwell.org/gallery2/v/textures/plants/leavesAndBranches/) | MCR
 base/models/objects/vegi/bush/trop_bush3.png | GNU General Public License 2.0 | based on Titus Tscharnke's work (http://www.burningwell.org/gallery2/v/textures/plants/leavesAndBranches/) | MCR
 base/models/objects/vegi/bush/trop_bush_nm.png | GNU General Public License 2.0 | MCR
+base/models/objects/vegi/cactus/cactus1.md2 | GNU General Public License 2.0 or later | Willem Sitters
+base/models/objects/vegi/cactus/cactus1.png | GNU General Public License 2.0 or later | Willem Sitters
+base/models/objects/vegi/cactus/cactus1_nm.png | GNU General Public License 2.0 or later | Willem Sitters
+base/models/objects/vegi/cactus/cactus2.md2 | GNU General Public License 2.0 or later | Willem Sitters
+base/models/objects/vegi/cactus/cactus3.md2 | GNU General Public License 2.0 or later | Willem Sitters
+base/models/objects/vegi/cactus/cactus4.md2 | GNU General Public License 2.0 or later | Willem Sitters
 base/models/objects/vegi/chestnut/chestnut_blaetter2.md2 | GNU General Public License 2.0 | hullbr3ach
 base/models/objects/vegi/chestnut/chestnut_blaetter3.md2 | GNU General Public License 2.0 | hullbr3ach
 base/models/objects/vegi/chestnut/chestnut_stamm1.md2 | GNU General Public License 2.0 | hullbr3ach
