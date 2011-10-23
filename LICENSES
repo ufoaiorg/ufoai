@@ -6057,10 +6057,12 @@ base/textures/tex_nature/tree_bark_001.jpg | GNU General Public License 2.0 | We
 base/textures/tex_nature/tree_bark_002.jpg | GNU General Public License 2.0 | Werner Höhrer (hoehrer)
 base/textures/tex_nature/tree_chopped.jpg | GNU General Public License 2.0 or later | Martin Gerhardy
 base/textures/tex_nature/tree_chopped2.jpg | GNU General Public License 2.0 or later | Martin Gerhardy
+base/textures/tex_nature/water.png | GNU General Public License 2.0 | Boson game data
 base/textures/tex_nature/water2.jpg | GNU General Public License 2.0 | OpenArena
-base/textures/tex_nature/water_dark_nm.png | GNU General Public License 2.0 or later | Martin Gerhardy
+base/textures/tex_nature/water_dark.png | GNU General Public License 2.0 | Boson game data
+base/textures/tex_nature/water_dark_nm.png | GNU General Public License 2.0 | Boson game data
 base/textures/tex_nature/water_green.jpg | GNU General Public License 2.0 | OpenArena | greenliqu1.jpg
-base/textures/tex_nature/water_nm.png | GNU General Public License 2.0 or later | Martin Gerhardy
+base/textures/tex_nature/water_nm.png | GNU General Public License 2.0 | Boson game data
 base/textures/tex_nature/wood_chips01.jpg | GNU General Public License 2.0 | Werner Höhrer (hoehrer)
 base/textures/tex_nature/wood_chips02.jpg | GNU General Public License 2.0 | Werner Höhrer (hoehrer)
 base/textures/tex_pics/art001.jpg | GNU General Public License 2.0 | John W. Bjerk (eleazar)
