@@ -49,9 +49,11 @@ eventMail_t* CL_GetEventMail (const char *id, qboolean createCopy)
 	if (!createCopy) {
 		eventMail_t* listMail;
 
-		for (i = 0; i < ccs.numEventMails; i++)
-			if (Q_streq(ccs.eventMails[i].id, id))
-				return &ccs.eventMails[i];
+		for (i = 0; i < ccs.numEventMails; i++) {
+			eventMail_t* mail = &ccs.eventMails[i];
+			if (Q_streq(mail->id, id))
+				return mail;
+		}
 
 		LIST_Foreach(eventMails, eventMail_t, listMail) {
 			if (Q_streq(listMail->id, id))
