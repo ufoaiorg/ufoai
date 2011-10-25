@@ -151,7 +151,7 @@ typedef struct le_s {
 						 * this le_t.  Used to limit to one event per le_t struct at any time. */
 } le_t;
 
-#define MAX_LOCALMODELS		512
+#define MAX_LOCALMODELS		1024
 
 /** @brief local models */
 typedef struct localModel_s {
