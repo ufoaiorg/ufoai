@@ -92,6 +92,12 @@ static void SV_New_f (client_t *cl)
 	if (Com_ServerState() == ss_game) {
 		int i;
 		for (i = 0; i < MAX_CONFIGSTRINGS; i++) {
+			/* CS_TILES and CS_POSITIONS can stretch over multiple configstrings, */
+			/* so don't send the middle parts again. */
+			if (i > CS_TILES && i < CS_TILES + MAX_TILESTRINGS)
+				continue;
+			if (i > CS_POSITIONS && i < CS_POSITIONS + MAX_TILESTRINGS)
+				continue;
 			const char *configString = SV_GetConfigString(i);
 			if (configString[0] != '\0') {
 				struct dbuffer *msg = new_dbuffer();
