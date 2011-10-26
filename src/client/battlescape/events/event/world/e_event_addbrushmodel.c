@@ -82,6 +82,7 @@ void CL_AddBrushModel (const eventRegister_t *self, struct dbuffer *msg)
 	VectorCopy(model->mins, le->mins);
 	VectorCopy(model->maxs, le->maxs);
 	VectorSubtract(le->maxs, le->mins, le->size);
+	VecToPos(le->origin, le->pos);
 
 	/* to allow tracing against this le */
 	if (!LE_IsNotSolid(le)) {
