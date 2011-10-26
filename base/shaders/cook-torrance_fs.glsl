@@ -36,7 +36,6 @@ vec3 LightContribution(in vec4 lightParams, in vec4 lightDir, in vec3 N, in vec3
 	float NdotL = clamp(dot(N, L), 0.0, 1.0);
 
 	/* Compute the final color contribution of the light */
-	vec3 ambientColor = diffuse.rgb * diffuse.a * ambientLight;
 	vec3 diffuseColor = diffuse.rgb * diffuse.a * lightParams.rgb * NdotL;
 	vec3 specularColor = lightParams.rgb;
 
@@ -66,7 +65,7 @@ vec3 LightContribution(in vec4 lightParams, in vec4 lightDir, in vec3 N, in vec3
 	}
 
 	/* @note We attenuate light here, but attenuation doesn't affect "directional" sources like the sun */
-	return (attenuate * (max(ambientColor, 0.0) + max(diffuseColor, 0.0) + max(specularColor, 0.0)));
+	return (attenuate * (max(diffuseColor, 0.0) + max(specularColor, 0.0)));
 }
 
 
@@ -115,6 +114,9 @@ vec4 IlluminateFragment(void) {
 	} else {
 		roughness = vec4(0.0);
 	}
+
+	/* add ambient light */
+	totalColor += diffuse.rgb * diffuse.a * ambientLight;
 
 	/* do per-light calculations */
 #unroll r_dynamic_lights
