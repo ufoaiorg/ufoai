@@ -928,7 +928,7 @@ void R_TexEnv (GLenum mode)
 	if (mode == r_state.active_texunit->texenv)
 		return;
 
-	glTexEnvf(GL_TEXTURE_ENV, GL_TEXTURE_ENV_MODE, mode);
+	glTexEnvi(GL_TEXTURE_ENV, GL_TEXTURE_ENV_MODE, mode);
 	r_state.active_texunit->texenv = mode;
 }
 
