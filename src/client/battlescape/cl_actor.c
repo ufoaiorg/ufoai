@@ -1338,16 +1338,22 @@ qboolean CL_ActorMouseTrace (void)
 	testPos[2] = restingLevel;
 	VectorCopy(testPos, mousePos);
 
-	interactLe = CL_BattlescapeSearchAtGridPos(mousePos, qfalse, selActor != NULL ? selActor->clientAction : NULL);
+	interactLe = CL_BattlescapeSearchAtGridPos(mousePos, qfalse, selActor);
 	if (interactLe != NULL && LE_IsActor(interactLe)) {
 		mouseActor = interactLe;
 		interactEntity = NULL;
 	} else if (selActor != NULL && selActor->clientAction == interactLe) {
-		if (interactLe != NULL) {
-			/** @todo change cursor - also trigger this if we are clicking on the selActor position? */
-		}
 		interactEntity = interactLe;
 		mouseActor = NULL;
+	} else {
+		interactEntity = NULL;
+		mouseActor = NULL;
+	}
+
+	if (interactEntity != NULL) {
+		Cvar_Set("cursor", "2");
+	} else {
+		Cvar_Set("cursor", "1");
 	}
 
 	/* calculate move length */

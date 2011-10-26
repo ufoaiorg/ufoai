@@ -32,8 +32,9 @@ clientBattleScape_t cl;
  * @brief Searches a local entity at the given position.
  * @param[in] pos The grid position to search a local entity at
  * @param[in] includingStunned Also search for stunned actors if @c true.
+ * @param[in] actor The current selected actor
  */
-le_t* CL_BattlescapeSearchAtGridPos (const pos3_t pos, qboolean includingStunned, const le_t *clientAction)
+le_t* CL_BattlescapeSearchAtGridPos (const pos3_t pos, qboolean includingStunned, const le_t *actor)
 {
 	le_t *le;
 	le_t *nonActor = NULL;
@@ -41,7 +42,12 @@ le_t* CL_BattlescapeSearchAtGridPos (const pos3_t pos, qboolean includingStunned
 	/* search for an actor on this field */
 	le = NULL;
 	while ((le = LE_GetNextInUse(le))) {
-		if (LE_IsLivingAndVisibleActor(le) && (includingStunned || !LE_IsStunned(le)))
+		if (actor != NULL && le == actor->clientAction) {
+			/* if the actor has a client action assigned and we click onto the actor,
+			 * we will trigger this client action */
+			if (VectorCompare(actor->pos, pos))
+				nonActor = le;
+		} else if (le != actor && LE_IsLivingAndVisibleActor(le) && (includingStunned || !LE_IsStunned(le)))
 			switch (le->fieldSize) {
 			case ACTOR_SIZE_NORMAL:
 				if (VectorCompare(le->pos, pos))
@@ -62,9 +68,6 @@ le_t* CL_BattlescapeSearchAtGridPos (const pos3_t pos, qboolean includingStunned
 			}
 			default:
 				Com_Error(ERR_DROP, "Grid_MoveCalc: unknown actor-size: %i!", le->fieldSize);
-		} else if (le == clientAction) {
-			if (VectorCompare(le->pos, pos))
-				nonActor = le;
 		}
 	}
 
