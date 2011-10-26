@@ -1218,7 +1218,7 @@ MOUSE SCANNING
  * @param[in] pos The grid position to search an actor at
  * @param[in] includingStunned Also search for stunned actors if @c true.
  */
-static le_t* CL_ActorSearchAtGridPos (const pos3_t pos, qboolean includingStunned)
+static le_t* CL_BattlescapeSearchAtGridPos (const pos3_t pos, qboolean includingStunned, const le_t *clientAction)
 {
 	le_t *le;
 
@@ -1246,6 +1246,9 @@ static le_t* CL_ActorSearchAtGridPos (const pos3_t pos, qboolean includingStunne
 			}
 			default:
 				Com_Error(ERR_DROP, "Grid_MoveCalc: unknown actor-size: %i!", le->fieldSize);
+		} else if (le == clientAction) {
+			if (VectorCompare(le->pos, pos))
+				return le;
 		}
 	}
 
@@ -1268,6 +1271,7 @@ qboolean CL_ActorMouseTrace (void)
 	vec3_t mapNormal, P3, P2minusP1;
 	vec3_t pA, pB, pC;
 	pos3_t testPos;
+	le_t *interactLe;
 
 	/* get cursor position as a -1 to +1 range for projection */
 	cur[0] = (mousePosX * viddef.rx - viddef.viewWidth * 0.5 - viddef.x) / (viddef.viewWidth * 0.5);
@@ -1373,7 +1377,10 @@ qboolean CL_ActorMouseTrace (void)
 	testPos[2] = restingLevel;
 	VectorCopy(testPos, mousePos);
 
-	mouseActor = CL_ActorSearchAtGridPos(mousePos, qfalse);
+	interactLe = CL_BattlescapeSearchAtGridPos(mousePos, qfalse, selActor != NULL ? selActor->clientAction : NULL);
+	if (LE_IsActor(interactLe)) {
+		mouseActor = interactLe;
+	}
 
 	/* calculate move length */
 	if (selActor && !VectorCompare(mousePos, mouseLastPos)) {
@@ -1570,7 +1577,7 @@ static void CL_TargetingStraight (const pos3_t fromPos, actorSizeEnum_t fromActo
 		return;
 
 	/* search for an actor at target */
-	target = CL_ActorSearchAtGridPos(toPos, qtrue);
+	target = CL_BattlescapeSearchAtGridPos(toPos, qtrue, selActor->clientAction);
 
 	/* Determine the target's size. */
 	toActorSize = target
@@ -1650,7 +1657,7 @@ static void CL_TargetingGrenade (const pos3_t fromPos, actorSizeEnum_t fromActor
 		return;
 
 	/* search for an actor at target */
-	target = CL_ActorSearchAtGridPos(toPos, qtrue);
+	target = CL_BattlescapeSearchAtGridPos(toPos, qtrue, selActor->clientAction);
 
 	/* Determine the target's size. */
 	toActorSize = target
