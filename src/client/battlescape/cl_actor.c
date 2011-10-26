@@ -59,6 +59,7 @@ pos3_t mousePos; /**< The cell that an actor will move to when directed to move.
 static int mousePosTargettingAlign = 0;
 
 static le_t *mouseActor;
+static le_t *interactEntity;
 static pos3_t mouseLastPos;
 
 /**
@@ -1140,6 +1141,8 @@ void CL_ActorSelectMouse (void)
 		if (mouseActor && !mouseActor->selected && CL_ActorSelect(mouseActor)) {
 			/* Succeeded so go back into move mode. */
 			CL_ActorSetMode(selActor, M_MOVE);
+		} else if (interactEntity) {
+			CL_ActorUse(selActor);
 		} else {
 			CL_ActorMoveMouse();
 		}
@@ -1336,8 +1339,15 @@ qboolean CL_ActorMouseTrace (void)
 	VectorCopy(testPos, mousePos);
 
 	interactLe = CL_BattlescapeSearchAtGridPos(mousePos, qfalse, selActor != NULL ? selActor->clientAction : NULL);
-	if (LE_IsActor(interactLe)) {
+	if (interactLe != NULL && LE_IsActor(interactLe)) {
 		mouseActor = interactLe;
+		interactEntity = NULL;
+	} else if (selActor != NULL && selActor->clientAction == interactLe) {
+		if (interactLe != NULL) {
+			/** @todo change cursor - also trigger this if we are clicking on the selActor position? */
+		}
+		interactEntity = interactLe;
+		mouseActor = NULL;
 	}
 
 	/* calculate move length */
@@ -1535,7 +1545,7 @@ static void CL_TargetingStraight (const pos3_t fromPos, actorSizeEnum_t fromActo
 		return;
 
 	/* search for an actor at target */
-	target = CL_BattlescapeSearchAtGridPos(toPos, qtrue, selActor->clientAction);
+	target = CL_BattlescapeSearchAtGridPos(toPos, qtrue, NULL);
 
 	/* Determine the target's size. */
 	toActorSize = target
@@ -1615,7 +1625,7 @@ static void CL_TargetingGrenade (const pos3_t fromPos, actorSizeEnum_t fromActor
 		return;
 
 	/* search for an actor at target */
-	target = CL_BattlescapeSearchAtGridPos(toPos, qtrue, selActor->clientAction);
+	target = CL_BattlescapeSearchAtGridPos(toPos, qtrue, NULL);
 
 	/* Determine the target's size. */
 	toActorSize = target
