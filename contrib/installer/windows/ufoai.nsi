@@ -105,7 +105,7 @@ SectionGroup /e "Game" SECGROUP01
 		SetOutPath "$INSTDIR"
 
 		CreateDirectory "$SMPROGRAMS\${PRODUCT_NAME}-${PRODUCT_VERSION}\"
-		CreateShortCut "$SMPROGRAMS\${PRODUCT_NAME}-${PRODUCT_VERSION}\${PRODUCT_NAME}.lnk" "$INSTDIR\ufo.exe" "$INSTDIR\ufo.exe" 0
+		CreateShortCut "$SMPROGRAMS\${PRODUCT_NAME}-${PRODUCT_VERSION}\${PRODUCT_NAME}.lnk" "$INSTDIR\ufo.exe" "" "$INSTDIR\ufo.exe" 0
 		CreateShortCut "$SMPROGRAMS\${PRODUCT_NAME}-${PRODUCT_VERSION}\${PRODUCT_NAME} (safe-mode).lnk" "$INSTDIR\ufo.exe" "+exec safemode.cfg +set vid_fullscreen 1" "$INSTDIR\ufo.exe" 0
 		CreateShortCut "$SMPROGRAMS\${PRODUCT_NAME}-${PRODUCT_VERSION}\${PRODUCT_NAME} (safe-mode windowed).lnk" "$INSTDIR\ufo.exe" "+exec safemode.cfg" "$INSTDIR\ufo.exe" 0
 		CreateShortCut "$SMPROGRAMS\${PRODUCT_NAME}-${PRODUCT_VERSION}\${PRODUCT_NAME_DEDICATED}.lnk" "$INSTDIR\ufoded.exe" "" "$INSTDIR\ufoded.exe" 0
