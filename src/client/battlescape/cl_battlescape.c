@@ -29,6 +29,49 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 clientBattleScape_t cl;
 
 /**
+ * @brief Searches a local entity at the given position.
+ * @param[in] pos The grid position to search a local entity at
+ * @param[in] includingStunned Also search for stunned actors if @c true.
+ */
+le_t* CL_BattlescapeSearchAtGridPos (const pos3_t pos, qboolean includingStunned, const le_t *clientAction)
+{
+	le_t *le;
+	le_t *nonActor = NULL;
+
+	/* search for an actor on this field */
+	le = NULL;
+	while ((le = LE_GetNextInUse(le))) {
+		if (LE_IsLivingAndVisibleActor(le) && (includingStunned || !LE_IsStunned(le)))
+			switch (le->fieldSize) {
+			case ACTOR_SIZE_NORMAL:
+				if (VectorCompare(le->pos, pos))
+					return le;
+				break;
+			case ACTOR_SIZE_2x2: {
+				pos3_t actor2x2[3];
+
+				VectorSet(actor2x2[0], le->pos[0] + 1, le->pos[1],     le->pos[2]);
+				VectorSet(actor2x2[1], le->pos[0],     le->pos[1] + 1, le->pos[2]);
+				VectorSet(actor2x2[2], le->pos[0] + 1, le->pos[1] + 1, le->pos[2]);
+				if (VectorCompare(le->pos, pos)
+				|| VectorCompare(actor2x2[0], pos)
+				|| VectorCompare(actor2x2[1], pos)
+				|| VectorCompare(actor2x2[2], pos))
+					return le;
+				break;
+			}
+			default:
+				Com_Error(ERR_DROP, "Grid_MoveCalc: unknown actor-size: %i!", le->fieldSize);
+		} else if (le == clientAction) {
+			if (VectorCompare(le->pos, pos))
+				nonActor = le;
+		}
+	}
+
+	return nonActor;
+}
+
+/**
  * @brief Check whether we already have actors spawned on the battlefield
  * @sa CL_OnBattlescape
  * @return @c true when we are in battlefield and have soldiers spawned (game is running)

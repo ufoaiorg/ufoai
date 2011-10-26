@@ -86,6 +86,7 @@ typedef struct clientBattleScape_s {
 
 extern clientBattleScape_t cl;
 
+le_t* CL_BattlescapeSearchAtGridPos(const pos3_t pos, qboolean includingStunned, const le_t *clientAction);
 qboolean CL_OnBattlescape(void);
 qboolean CL_BattlescapeRunning(void);
 int CL_GetHitProbability(const le_t* actor);
