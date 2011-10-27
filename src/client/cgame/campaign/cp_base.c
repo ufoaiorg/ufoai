@@ -2468,7 +2468,7 @@ void B_SaveBaseSlotsXML (const baseWeapon_t *weapons, const int numWeapons, xmlN
 	for (i = 0; i < numWeapons; i++) {
 		xmlNode_t *sub = XML_AddNode(node, SAVE_BASES_WEAPON);
 		AII_SaveOneSlotXML(sub, &weapons[i].slot, qtrue);
-		XML_AddBoolValue(sub, SAVE_BASES_AUTOFIRE, weapons[i].autofire);
+		XML_AddBool(sub, SAVE_BASES_AUTOFIRE, weapons[i].autofire);
 		if (weapons[i].target)
 			XML_AddInt(sub, SAVE_BASES_TARGET, weapons[i].target->idx);
 	}
