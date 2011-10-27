@@ -443,58 +443,6 @@ static void CP_CheckMissionEnd (const campaign_t* campaign)
 /* =========================================================== */
 
 /**
- * @brief Converts a number of second into a char to display.
- * @param[in] second Number of second.
- * @todo Abstract the code into an extra function (DateConvertSeconds?) see also CP_DateConvertLong
- */
-const char* CP_SecondConvert (int second)
-{
-	static char buffer[6];
-	const int hour = second / SECONDS_PER_HOUR;
-	const int min = (second - hour * SECONDS_PER_HOUR) / 60;
-	Com_sprintf(buffer, sizeof(buffer), "%2i:%02i", hour, min);
-	return buffer;
-}
-
-static const int monthLength[MONTHS_PER_YEAR] = { 31, 28, 31, 30, 31, 30, 31, 31, 30, 31, 30, 31 };
-
-/**
- * @brief Converts a date from the engine in a (longer) human-readable format.
- * @note The seconds from "date" are ignored here.
- * @note The function always starts calculation from Jan. and also catches new years.
- * @param[in] date Contains the date to be converted.
- * @param[out] dateLong The converted date.
-  */
-void CP_DateConvertLong (const date_t * date, dateLong_t * dateLong)
-{
-	byte i;
-	int d;
-	size_t length = lengthof(monthLength);
-
-	/* Get the year */
-	dateLong->year = date->day / DAYS_PER_YEAR;
-
-	/* Get the days in the year. */
-	d = date->day % DAYS_PER_YEAR;
-
-	/* Subtract days until no full month is left. */
-	for (i = 0; i < length; i++) {
-		if (d < monthLength[i])
-			break;
-		d -= monthLength[i];
-	}
-
-	dateLong->day = d + 1;
-	dateLong->month = i + 1;
-	dateLong->hour = date->sec / SECONDS_PER_HOUR;
-	dateLong->min = (date->sec - dateLong->hour * SECONDS_PER_HOUR) / 60;
-	dateLong->sec = date->sec - dateLong->hour * SECONDS_PER_HOUR - dateLong->min * 60;
-
-	assert(dateLong->month >= 1 && dateLong->month <= MONTHS_PER_YEAR);
-	assert(dateLong->day >= 1 && dateLong->day <= monthLength[i]);
-}
-
-/**
  * @brief Functions that should be called with a minimum time lapse (will be called at least every DETECTION_INTERVAL)
  * @param[in] campaign The campaign data structure
  * @param[in] dt Elapsed game seconds since last call.

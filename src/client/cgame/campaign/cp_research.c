@@ -34,6 +34,7 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #include "cp_capacity.h"
 #include "cp_research.h"
 #include "cp_popup.h"
+#include "cp_time.h"
 #include "save/save_research.h"
 
 #define TECH_HASH_SIZE 64
