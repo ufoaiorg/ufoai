@@ -433,7 +433,7 @@ void SCR_Init (void)
 	scr_conspeed = Cvar_Get("scr_conspeed", "3", 0, "Console open/close speed");
 	scr_consize = Cvar_Get("scr_consize", "1.0", 0, "Console size");
 	scr_rspeed = Cvar_Get("r_speeds", "0", CVAR_ARCHIVE, "Show some rendering stats");
-	scr_cursor = Cvar_Get("cursor", "1", CVAR_ARCHIVE, "Which cursor should be shown - 0-9");
+	scr_cursor = Cvar_Get("cursor", "1", 0, "Which cursor should be shown - 0-9");
 	scr_showcursor = Cvar_Get("scr_showcursor", "1", 0, "Show/hide mouse cursor- 0-1");
 
 	/* register our commands */
