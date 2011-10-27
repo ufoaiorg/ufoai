@@ -44,7 +44,7 @@ createChroot() {
 #	${CHROOTBIN} "${CHROOT}" wget https://launchpad.net/ubuntu/+archive/primary/+files/libxvidcore-dev_1.3.2-3_${ARCH}.deb
 #	${CHROOTBIN} "${CHROOT}" dpkg -i libxvidcore4_1.3.2-3_${ARCH}.deb libxvidcore-dev_1.3.2-3_${ARCH}.deb
 #	${CHROOTBIN} "${CHROOT}" rm -f libxvid*.deb
-	echo "cd ${CHROOTUFOPATH}; ./configure --enable-release; make -j 2; make deb" > ${CHROOT}/usr/bin
+	echo "cd ${CHROOTUFOPATH}; ./configure --enable-release; make -j 2; make deb" > ${CHROOT}/usr/bin/compileufo.sh
 	chmod +x ${CHROOT}/usr/bin/compileufo.sh
 	${CHROOTBIN} ${CHROOT} mkdir -p ${CHROOTHOMEPATH}
 	mount --bind ${UFOGITCHECKOUTROOT} ${CHROOT}${CHROOTHOMEPATH}
