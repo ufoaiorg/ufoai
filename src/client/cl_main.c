@@ -941,7 +941,15 @@ static void CL_ShowConfigstrings_f (void)
 	int i;
 
 	for (i = 0; i < MAX_CONFIGSTRINGS; i++) {
-		const char *configString = CL_GetConfigString(i);
+		const char *configString;
+		/* CS_TILES and CS_POSITIONS can stretch over multiple configstrings,
+		 * so don't print the middle parts */
+		if (i > CS_TILES && i < CS_POSITIONS)
+			continue;
+		if (i > CS_POSITIONS && i < CS_MODELS)
+			continue;
+
+		configString = CL_GetConfigString(i);
 		if (configString[0] == '\0')
 			continue;
 		Com_Printf("configstring[%3i]: %s\n", i, configString);

@@ -53,16 +53,15 @@ memPool_t *sv_genericPool;
 
 char *SV_GetConfigString (int index)
 {
-	if (index < 0 || index >= MAX_CONFIGSTRINGS)
-		Com_Error(ERR_FATAL, "Invalid config string index given");
+	if (!Com_CheckConfigStringIndex(index))
+		Com_Error(ERR_FATAL, "Invalid config string index given: %i", index);
+
 	return sv->configstrings[index];
 }
 
 int SV_GetConfigStringInteger (int index)
 {
-	if (index < 0 || index >= MAX_CONFIGSTRINGS)
-		Com_Error(ERR_FATAL, "Invalid config string index given");
-	return atoi(sv->configstrings[index]);
+	return atoi(SV_GetConfigString(index));
 }
 
 char *SV_SetConfigString (int index, ...)
@@ -70,8 +69,8 @@ char *SV_SetConfigString (int index, ...)
 	va_list ap;
 	const char *value;
 
-	if (index < 0 || index >= MAX_CONFIGSTRINGS)
-		Com_Error(ERR_FATAL, "Invalid config string index given");
+	if (!Com_CheckConfigStringIndex(index))
+		Com_Error(ERR_FATAL, "Invalid config string index given: %i", index);
 
 	va_start(ap, index);
 

@@ -534,7 +534,14 @@ static void SV_PrintConfigStrings_f (void)
 	int i;
 
 	for (i = 0; i < MAX_CONFIGSTRINGS; i++) {
-		const char *configString = SV_GetConfigString(i);
+		const char *configString;
+		/* CS_TILES and CS_POSITIONS can stretch over multiple configstrings,
+		 * so don't send the middle parts again. */
+		if (i > CS_TILES && i < CS_POSITIONS)
+			continue;
+		if (i > CS_POSITIONS && i < CS_MODELS)
+			continue;
+		configString = SV_GetConfigString(i);
 		if (configString[0] == '\0')
 			continue;
 		Com_Printf("configstring[%3i]: %s\n", i, configString);

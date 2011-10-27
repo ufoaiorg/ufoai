@@ -166,7 +166,7 @@ static void SV_Configstring (int index, const char *fmt, ...)
 	char val[MAX_TOKEN_CHARS * MAX_TILESTRINGS];
 	va_list argptr;
 
-	if (index < 0 || index >= MAX_CONFIGSTRINGS)
+	if (!Com_CheckConfigStringIndex(index))
 		SV_error("configstring: bad index %i", index);
 
 	va_start(argptr, fmt);

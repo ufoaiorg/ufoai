@@ -288,7 +288,7 @@ void Qcommon_Shutdown(void);
 void Com_SetGameType(void);
 void Com_ReadFromPipe(void);
 float Com_GrenadeTarget(const vec3_t from, const vec3_t at, float speed, qboolean launched, qboolean rolled, vec3_t v0);
-
+qboolean Com_CheckConfigStringIndex(int index);
 void Con_Print(const char *txt);
 
 /* Event timing */

@@ -862,6 +862,26 @@ static void Com_GameTypeList_f (void)
 	}
 }
 
+/**
+ * @param[in] index The index of the config string array
+ * @note Some config strings are using one value over multiple config string
+ * slots. These may not be accessed directly.
+ */
+qboolean Com_CheckConfigStringIndex (int index)
+{
+	if (index < 0 || index >= MAX_CONFIGSTRINGS)
+		return qfalse;
+
+	/* CS_TILES and CS_POSITIONS can stretch over multiple configstrings,
+	 * so don't access the middle parts. */
+	if (index > CS_TILES && index < CS_POSITIONS)
+		return qfalse;
+	if (index > CS_POSITIONS && index < CS_MODELS)
+		return qfalse;
+
+	return qtrue;
+}
+
 #ifdef DEBUG
 /**
  * @brief Prints some debugging help to the game console

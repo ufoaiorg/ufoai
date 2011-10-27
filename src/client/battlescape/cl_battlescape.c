@@ -362,22 +362,21 @@ void Grid_DumpClientRoutes_f (void)
 
 char *CL_GetConfigString (int index)
 {
-	if (index < 0 || index >= MAX_CONFIGSTRINGS)
-		Com_Error(ERR_DROP, "Invalid config string index given");
+	if (!Com_CheckConfigStringIndex(index))
+		Com_Error(ERR_DROP, "invalid access to configstring array with index: %i", index);
+
 	return cl.configstrings[index];
 }
 
 int CL_GetConfigStringInteger (int index)
 {
-	if (index < 0 || index >= MAX_CONFIGSTRINGS)
-		Com_Error(ERR_DROP, "Invalid config string index given");
-	return atoi(cl.configstrings[index]);
+	return atoi(CL_GetConfigString(index));
 }
 
 char *CL_SetConfigString (int index, struct dbuffer *msg)
 {
-	if (index < 0 || index >= MAX_CONFIGSTRINGS)
-		Com_Error(ERR_DROP, "Invalid config string index given");
+	if (!Com_CheckConfigStringIndex(index))
+		Com_Error(ERR_DROP, "invalid access to configstring array with index: %i", index);
 
 	/* change the string in cl
 	 * there may be overflows in i==CS_TILES - but thats ok
