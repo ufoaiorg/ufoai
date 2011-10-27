@@ -42,6 +42,7 @@ cvar_t *snd_volume;
 cvar_t *snd_distance_scale;
 static cvar_t *snd_init;
 static cvar_t *snd_rate;
+static cvar_t *snd_chunkbufsize;
 
 memPool_t *cl_soundSysPool;
 
@@ -211,6 +212,7 @@ void S_Init (void)
 	snd_distance_scale = Cvar_Get("snd_distance_scale", "0.1", 0, "Sound distance scale");
 	snd_volume = Cvar_Get("snd_volume", "0.7", CVAR_ARCHIVE, "Sound volume - default is 0.7");
 	snd_rate = Cvar_Get("snd_rate", "44100", CVAR_ARCHIVE, "Hz value for sound renderer - default is 44100");
+	snd_chunkbufsize = Cvar_Get("snd_chunkbufsize", "1024", CVAR_ARCHIVE, "The sound buffer chunk size");
 	/* set volumes to be changed so they are applied again for next sound/music playing */
 	/** @todo implement the volume change for already loaded sample chunks */
 	snd_volume->modified = qtrue;
@@ -229,7 +231,7 @@ void S_Init (void)
 	Com_Printf("SDL_mixer version: %d.%d.%d\n", version.major, version.minor, version.patch);
 	Com_Printf("... requested audio rate: %i\n", snd_rate->integer);
 
-	if (Mix_OpenAudio(snd_rate->integer, MIX_DEFAULT_FORMAT, MIX_DEFAULT_CHANNELS, 1024) == -1) {
+	if (Mix_OpenAudio(snd_rate->integer, MIX_DEFAULT_FORMAT, MIX_DEFAULT_CHANNELS, snd_chunkbufsize->integer) == -1) {
 		Com_Printf("S_Init: %s\n", Mix_GetError());
 		return;
 	}
