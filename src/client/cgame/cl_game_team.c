@@ -529,7 +529,7 @@ static void GAME_SaveItem (xmlNode_t *p, const item_t *item, containerIndex_t co
 /**
  * @brief Save callback for savegames in XML Format
  * @param[out] p XML Node structure, where we write the information to
- * @param[in] i Pointerto the inventory to save
+ * @param[in] i Pointer to the inventory to save
  * @sa GAME_SaveItem
  * @sa GAME_LoadInventory
  */
@@ -597,7 +597,7 @@ static void GAME_LoadItem (xmlNode_t *n, item_t *item, containerIndex_t *contain
 /**
  * @brief Load callback for savegames in XML Format
  * @param[in] p XML Node structure, where we load the information from
- * @param[out] i Pointerto the inventory
+ * @param[out] i Pointer to the inventory
  * @sa GAME_SaveInventory
  * @sa GAME_LoadItem
  * @sa I_AddToInventory
@@ -623,7 +623,7 @@ static void GAME_LoadInventory (xmlNode_t *p, inventory_t *i)
 /**
  * @brief saves a character to a given xml node
  * @param[in] p The node to which we should save the character
- * @param[in] chr The charcter we should save
+ * @param[in] chr The character we should save
  */
 qboolean GAME_SaveCharacter (xmlNode_t *p, const character_t* chr)
 {
@@ -695,7 +695,7 @@ qboolean GAME_SaveCharacter (xmlNode_t *p, const character_t* chr)
 /**
  * @brief Loads a character from a given xml node.
  * @param[in] p The node from which we should load the character.
- * @param[in] chr Pointer to the charcter we should load.
+ * @param[in] chr Pointer to the character we should load.
  */
 qboolean GAME_LoadCharacter (xmlNode_t *p, character_t *chr)
 {
