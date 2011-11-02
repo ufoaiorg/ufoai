@@ -521,6 +521,8 @@ void CP_CampaignRun (campaign_t *campaign)
 	/* advance time */
 	ccs.timer += cls.frametime * ccs.gameTimeScale;
 
+	UP_GetUnreadMails();
+
 	if (ccs.timer >= 1.0) {
 		/* calculate new date */
 		int currenthour;
@@ -606,7 +608,6 @@ void CP_CampaignRun (campaign_t *campaign)
 			CP_CampaignFunctionPeriodicCall(campaign, dt, qtrue);
 		}
 
-		UP_GetUnreadMails();
 		CP_CheckMissionEnd(campaign);
 		CP_CheckLostCondition(campaign);
 		/* Check if there is a base attack mission */
@@ -1135,7 +1136,6 @@ void CP_CampaignInit (campaign_t *campaign, qboolean load)
 	CP_XVIInit();
 
 	UI_InitStack("geoscape", "campaign_main", qtrue, qtrue);
-
 
 	if (load) {
 		return;
