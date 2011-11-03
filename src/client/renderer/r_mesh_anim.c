@@ -217,7 +217,9 @@ void R_AnimRun (animState_t * as, const model_t * mod, int msec)
 		}
 	}
 
-	as->backlerp = 1.0 - (float) as->dt / as->time;
+	/* condition check to avoid rapid "flickering" between last two frames with certain animations. */
+	if (as->lcur != as->ladd)
+		as->backlerp = 1.0 - (float) as->dt / as->time;
 }
 
 /**
