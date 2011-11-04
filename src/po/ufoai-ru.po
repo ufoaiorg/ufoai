@@ -3,8 +3,8 @@ msgstr ""
 "Project-Id-Version: UFO Alien Invasion\n"
 "Report-Msgid-Bugs-To: tlh2000@users.sourceforge.net\n"
 "POT-Creation-Date: 2011-07-30 09:00+0200\n"
-"PO-Revision-Date: 2011-08-04 11:59+0600\n"
-"Last-Translator: Vadimuzzz <vadimuzzz@gmail.com>\n"
+"PO-Revision-Date: 2011-11-04 12:05+0700\n"
+"Last-Translator: Kostia (Kildor) Romanov <kostia@ngs.ru>\n"
 "Language-Team: \n"
 "Language: \n"
 "MIME-Version: 1.0\n"
@@ -936,7 +936,7 @@ msgid "Show FPS:"
 msgstr "Показывать FPS:"
 
 msgid "Other Display Settings"
-msgstr "Другие настройки дисплея."
+msgstr "Другие настройки дисплея"
 
 msgid "Screenshot Format:"
 msgstr "Формат скриншотов:"
@@ -1032,7 +1032,7 @@ msgid "Enable this if you are new to UFO:AI and want to see interesting tips wri
 msgstr "Включите, если вы новичок в UFO:AI и хотите видеть интересные заметки, написанные самыми опытными игроками."
 
 msgid "Cursor Tooltips:"
-msgstr "Всплываюште подсказки:"
+msgstr "Всплываюшие подсказки:"
 
 msgid "Enable tooltips for the cursor."
 msgstr "Включить всплывающие подсказки."
