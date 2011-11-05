@@ -2542,12 +2542,10 @@ static qboolean AIR_LoadAircraftXML (xmlNode_t *p, aircraft_t *craft)
 	craft->homebase = (tmpInt != MAX_BASES) ? B_GetBaseByIDX(tmpInt) : NULL;
 
 	craft->idx = XML_GetInt(p, SAVE_AIRCRAFT_IDX, -1);
-	if (craft->idx == -1) {
-		/** @todo fallback code for compatibility */
-		if (!craft->homebase)
-			craft->idx = ccs.numUFOs;
-		else
-			return qfalse;
+	if (craft->idx < 0) {
+		Com_Printf("Invalid (or no) aircraft index %i\n", craft->idx);
+		Com_UnregisterConstList(saveAircraftConstants);
+		return qfalse;
 	}
 
 	Com_RegisterConstList(saveAircraftConstants);

@@ -1125,11 +1125,7 @@ qboolean E_LoadXML (xmlNode_t *p)
 			baseIDX = XML_GetInt(ssnode, SAVE_EMPLOYEE_BASEHIRED, -1);
 			e.baseHired = B_GetBaseByIDX(baseIDX);
 			/* assigned to a building? */
-			/** @todo compatibility code - remove me */
-			if (XML_GetInt(ssnode, SAVE_EMPLOYEE_BUILDING, -1) != -1)
-				e.assigned = qtrue;
-			else
-				e.assigned = XML_GetBool(ssnode, SAVE_EMPLOYEE_ASSIGNED, qfalse);
+			e.assigned = XML_GetBool(ssnode, SAVE_EMPLOYEE_ASSIGNED, qfalse);
 			/* nation */
 			e.nation = NAT_GetNationByID(XML_GetString(ssnode, SAVE_EMPLOYEE_NATION));
 			if (!e.nation) {

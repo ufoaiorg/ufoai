@@ -202,9 +202,6 @@ qboolean STATS_LoadXML (xmlNode_t *parent)
 	ccs.campaignStats.basesBuilt = XML_GetInt(stats, SAVE_STATS_BASESBUILT, 0);
 	ccs.campaignStats.basesAttacked = XML_GetInt(stats, SAVE_STATS_BASESATTACKED, 0);
 	ccs.campaignStats.installationsBuilt = XML_GetInt(stats, SAVE_STATS_INSTALLATIONSBUILT, 0);
-	/** @todo fallback for savegame compatibility */
-	if (ccs.campaignStats.installationsBuilt == 0)
-		ccs.campaignStats.installationsBuilt = INS_GetCount();
 	ccs.campaignStats.interceptions = XML_GetInt(stats, SAVE_STATS_INTERCEPTIONS, 0);
 	ccs.campaignStats.soldiersLost = XML_GetInt(stats, SAVE_STATS_SOLDIERSLOST, 0);
 	ccs.campaignStats.soldiersNew = XML_GetInt(stats, SAVE_STATS_SOLDIERSNEW, 0);
@@ -217,17 +214,8 @@ qboolean STATS_LoadXML (xmlNode_t *parent)
 	ccs.campaignStats.moneyWeapons = XML_GetInt(stats, SAVE_STATS_MONEYWEAPONS, 0);
 	ccs.campaignStats.ufosDetected = XML_GetInt(stats, SAVE_STATS_UFOSDETECTED, 0);
 	ccs.campaignStats.alienBasesBuilt = XML_GetInt(stats, SAVE_STATS_ALIENBASESBUILT, 0);
-	/** @todo fallback for savegame compatibility */
-	if (ccs.campaignStats.alienBasesBuilt == 0)
-		ccs.campaignStats.alienBasesBuilt = AB_GetAlienBaseNumber();
 	ccs.campaignStats.ufosStored = XML_GetInt(stats, SAVE_STATS_UFOSSTORED, 0);
-	/** @todo fallback for savegame compatibility */
-	if (ccs.campaignStats.ufosStored == 0)
-		ccs.campaignStats.ufosStored = US_StoredUFOCount();
 	ccs.campaignStats.aircraftHad = XML_GetInt(stats, SAVE_STATS_AIRCRAFTHAD, 0);
-	/** @todo fallback for savegame compatibility */
-	if (ccs.campaignStats.aircraftHad == 0)
-		ccs.campaignStats.aircraftHad = LIST_Count(ccs.aircraft);
 
 	/* freeing the memory below this node */
 	mxmlDelete(stats);

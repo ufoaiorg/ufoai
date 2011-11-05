@@ -477,14 +477,13 @@ qboolean INS_LoadXML (xmlNode_t *p)
 {
 	xmlNode_t *n = XML_GetNode(p, SAVE_INSTALLATION_INSTALLATIONS);
 	xmlNode_t *s;
-	int i = 0;
 	qboolean success = qtrue;
 
 	if (!n)
 		return qfalse;
 
 	Com_RegisterConstList(saveInstallationConstants);
-	for (s = XML_GetNode(n, SAVE_INSTALLATION_INSTALLATION); s; s = XML_GetNextNode(s,n, SAVE_INSTALLATION_INSTALLATION), i++) {
+	for (s = XML_GetNode(n, SAVE_INSTALLATION_INSTALLATION); s; s = XML_GetNextNode(s,n, SAVE_INSTALLATION_INSTALLATION)) {
 		xmlNode_t *ss;
 		installation_t inst;
 		installation_t *instp;
@@ -493,8 +492,9 @@ qboolean INS_LoadXML (xmlNode_t *p)
 
 		inst.idx = XML_GetInt(s, SAVE_INSTALLATION_IDX, -1);
 		if (inst.idx < 0) {
-			/** @todo fallback code for compatibility */
-			inst.idx = i;
+			Com_Printf("Invalid installation index %i\n", inst.idx);
+			success = qfalse;
+			break;
 		}
 		inst.installationTemplate = INS_GetInstallationTemplateFromInstallationID(instID);
 		if (!inst.installationTemplate) {

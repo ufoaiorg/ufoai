@@ -2668,10 +2668,11 @@ qboolean B_LoadXML (xmlNode_t *parent)
 		ccs.numBases++;
 
 		b->idx = XML_GetInt(base, SAVE_BASES_IDX, -1);
-		/** @todo fallback code for compatibility */
-		if (b->idx == -1)
-			b->idx = i;
-
+		if (b->idx < 0) {
+			Com_Printf("Invalid base index %i\n", b->idx);
+			Com_UnregisterConstList(saveBaseConstants);
+			return qfalse;
+		}
 		b->founded = qtrue;
 		if (!Com_GetConstIntFromNamespace(SAVE_BASESTATUS_NAMESPACE, str, (int*) &b->baseStatus)) {
 			Com_Printf("Invalid base status '%s'\n", str);
@@ -2750,21 +2751,10 @@ qboolean B_LoadXML (xmlNode_t *parent)
 			}
 
 			XML_GetDate(snode, SAVE_BASES_BUILDINGTIMESTART, &building->timeStart.day, &building->timeStart.sec);
-			/** @todo fallback code for compatibility */
-			if (building->timeStart.day == 0 && building->timeStart.sec == 0)
-				building->timeStart.day = XML_GetInt(snode, SAVE_BASES_BUILDINGTIMESTART, 0);
 
 			building->buildTime = XML_GetInt(snode, SAVE_BASES_BUILDINGBUILDTIME, 0);
 			building->level = XML_GetFloat(snode, SAVE_BASES_BUILDINGLEVEL, 0);
 			XML_GetPos2(snode, SAVE_BASES_POS, building->pos);
-
-			/** @todo fallback code for compatibility */
-			if (b->map[(int)building->pos[1]][(int)building->pos[0]].building != building
-			 && b->map[(int)building->pos[0]][(int)building->pos[1]].building == building) {
-				int swap = building->pos[0];
-				building->pos[0] = building->pos[1];
-				building->pos[1] = swap;
-			}
 		}
 		ccs.numBuildings[i] = j;
 

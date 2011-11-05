@@ -30,7 +30,6 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #define SAVE_EMPLOYEE_EMPLOYEE "employee"
 #define SAVE_EMPLOYEE_IDX "IDX"
 #define SAVE_EMPLOYEE_BASEHIRED "baseHired"
-#define SAVE_EMPLOYEE_BUILDING "building"	/**< @todo remove me */
 #define SAVE_EMPLOYEE_ASSIGNED "assigned"
 #define SAVE_EMPLOYEE_NATION "nation"
 #define SAVE_EMPLOYEE_UGV "UGV"
@@ -63,7 +62,6 @@ DTD:
 <!ATTLIST employee
 	IDX			CDATA		#REQUIRED
 	baseHired	CDATA		#IMPLIED
-	building	CDATA		#IMPLIED
 	assigned	CDATA		#IMPLIED
 	nation		CDATA		#REQUIRED
 	UGV			CDATA		#IMPLIED
