@@ -1795,3 +1795,8 @@
 ( 68 124 36 ) ( 68 102 36 ) ( 68 102 20 ) tex_common/nodraw 27 8 0 -0.75 0.5 134283008 128 0
 }
 }
+// entity 24
+{
+"classname" "info_alien_start"
+"origin" "240 272 28"
+}
