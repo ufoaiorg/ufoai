@@ -121,24 +121,19 @@
 }
 // entity 2
 {
-"classname" "info_human_start"
-"origin" "240 208 28"
-}
-// entity 3
-{
 "classname" "light"
 "origin" "128 144 112"
 "color" "0.9 0.95 1"
 "light" "60"
 }
-// entity 4
+// entity 3
 {
 "classname" "light"
 "light" "180"
 "color" "0.8 0.9 1"
 "origin" "144 144 24"
 }
-// entity 5
+// entity 4
 {
 "classname" "func_group"
 // brush 0
@@ -193,14 +188,14 @@
 ( 110.976 146.048 116 ) ( 115.072 146.048 116 ) ( 115.072 141.952 116 ) tex_common/nodraw 37.5 34.49988 90 0.2560001 0.2560001 134282752 128 0
 }
 }
-// entity 6
+// entity 5
 {
 "classname" "misc_model"
 "origin" "352 120 36"
 "model" "models/objects/cars/van/van1.md2"
 "spawnflags" "255"
 }
-// entity 7
+// entity 6
 {
 "classname" "misc_model"
 "origin" "352 119 36"

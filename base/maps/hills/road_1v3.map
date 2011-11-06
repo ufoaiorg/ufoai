@@ -96,13 +96,13 @@
 }
 // brush 10
 {
-( 63.75 192 8 ) ( 119 256 8 ) ( 124 256 8 ) tex_streets/pavement001 828.0774 196.15478 -135 0.25 -0.125 0 0 0
+( 63.75 192 8 ) ( 119 256 8 ) ( 124 256 8 ) tex_streets/pavement001 828.0774 196.1548 -135 0.25 -0.125 0 0 0
 ( 128 256 4 ) ( 128 256 0 ) ( 64 192 4 ) tex_streets/pavement001 256 0 0 -0.25 0.125 0 0 0
 ( 64 192 0 ) ( 119 256 0 ) ( 55 192 0 ) tex_common/nodraw 0 64 -90 0.5 -0.25 0 128 0
 ( 119 256 8 ) ( 119 256 0 ) ( 128 256 0 ) tex_common/nodraw 0 0 90 0.5 0.25 0 128 0
 ( 119 256 0 ) ( 119 256 8 ) ( 55 192 0 ) tex_streets/pavement001 0 0 180 0.25 0.125 0 0 0
 ( -128 192 0 ) ( -128 192 8 ) ( 0 192 0 ) tex_common/nodraw 0 0 0 0.25 0.25 0 0 0
-( 64 192 4 ) ( 60 192 8 ) ( 124 256 8 ) tex_streets/pavement001 724.0774 196.15478 -135 0.25 -0.125 0 0 0
+( 64 192 4 ) ( 60 192 8 ) ( 124 256 8 ) tex_streets/pavement001 724.0774 196.1548 -135 0.25 -0.125 0 0 0
 }
 // brush 11
 {
@@ -213,24 +213,19 @@
 }
 // entity 1
 {
-"classname" "info_human_start"
-"origin" "240 208 28"
-}
-// entity 2
-{
 "classname" "light"
 "origin" "384 144 112"
 "color" "0.9 0.95 1"
 "light" "60"
 }
-// entity 3
+// entity 2
 {
 "classname" "light"
 "light" "180"
 "color" "0.8 0.9 1"
 "origin" "368 144 24"
 }
-// entity 4
+// entity 3
 {
 "classname" "func_group"
 // brush 0
