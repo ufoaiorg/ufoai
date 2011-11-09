@@ -349,7 +349,7 @@ item sniper
 	reload			10
 	reloadsound		weapons/reload-sniper
 	price			1300
-	size			30
+	size			60
 	is_primary		true
 }
 
@@ -1123,7 +1123,7 @@ item flamer
 	reload			14
 	reloadsound		weapons/reload-pistol	// @todo better sound?
 	price			1500
-	size			55
+	size			60
 	is_primary		true
 	is_heavy		true
 }
@@ -1232,7 +1232,7 @@ item rpg
 	reload			12
 	reloadsound		weapons/reload-rocket
 	price			4000
-	size			250
+	size			75
 	is_primary		true
 	is_heavy		true
 }

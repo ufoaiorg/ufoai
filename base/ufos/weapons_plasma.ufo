@@ -257,7 +257,7 @@ item plasblaster
 	reload			20
 	reloadsound		weapons/reload-rifle
 	price			3300
-	size			80
+	size			60
 	is_primary		true
 	is_heavy		true
 }
