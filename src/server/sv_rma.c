@@ -50,7 +50,18 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 /** @brief max # of recursions */
 #define RMA2_MAX_REC 64
 /** @brief max # of valid tile/position combinations */
-#define RMA2_MAX_TILEPOS 1500
+/* How to calculate this value:
+ * Take he largest map of the project, eg. +farm
+ * farm large has a size of 12x12.
+ * If we had only 'fits everywhere'-tiles of size 1x1,
+ * we'd need 12x12=144 x tiletypes(25) = 3600 (in theory).
+ * Larger tiles eg. 2x2 would reduce the positions from 144 to 11x11=121
+ * Required tiles with exactly one instance ie. "1 1" reduce both the # of tiletypes
+ * and the # of positions by their size.
+ * The neighbouring requirements of required tiles will further reduce the value.
+ * => It's best to determine a working value empirically.
+ */
+#define RMA2_MAX_TILEPOS 1700
 /** @brief tile code multiplier. For the various debug printfs we want a number that we can easily divide through (20, 50, 100,...) */
 #define TCM 50
 /** @brief the # of different tiles we can store for a gap */
