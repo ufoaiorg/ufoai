@@ -105,7 +105,7 @@ static void UI_EKGNodeDraw (uiNode_t *node)
 static void UI_EKGNodeLoading (uiNode_t *node)
 {
 	EXTRADATA(node).scaleCvarValue = 1.0f;
-	EXTRADATA(node).scrollSpeed= 0.07f;
+	EXTRADATA(node).scrollSpeed = 0.07f;
 }
 
 static const value_t properties[] = {
