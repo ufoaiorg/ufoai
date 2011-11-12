@@ -827,7 +827,7 @@ void Grid_PosToVec (const routing_t *map, const actorSizeEnum_t actorSize, const
 
 
 /**
- * @brief This function recalculates the routing in the box bounded by min and max.
+ * @brief This function recalculates the routing in and around the box bounded by min and max.
  * @sa CMod_LoadRouting
  * @sa Grid_RecalcRouting
  * @param[in] mapTiles List of tiles the current (RMA-)map is composed of
@@ -959,11 +959,11 @@ void Grid_RecalcRouting (mapTiles_t *mapTiles, routing_t *map, const char *name,
 	}
 
 	/* fit min/max into the world size */
-	max[0] = min(max[0] + 1, PATHFINDING_WIDTH - 1);
-	max[1] = min(max[1] + 1, PATHFINDING_WIDTH - 1);
-	max[2] = min(max[2] + 1, PATHFINDING_HEIGHT - 1);
+	max[0] = min(max[0], PATHFINDING_WIDTH - 1);
+	max[1] = min(max[1], PATHFINDING_WIDTH - 1);
+	max[2] = min(max[2], PATHFINDING_HEIGHT - 1);
 	for (i = 0; i < 3; i++)
-		min[i] = max(min[i] - 1, 0);
+		min[i] = max(min[i], 0);
 
 	/* We now have the dimensions, call the generic rerouting function. */
 	Grid_RecalcBoxRouting(mapTiles, map, min, max, list);
