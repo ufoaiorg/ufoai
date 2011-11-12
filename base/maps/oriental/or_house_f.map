@@ -2770,3 +2770,15 @@
 "classname" "info_alien_start"
 "origin" "240 464 28"
 }
+// entity 26
+{
+"classname" "info_alien_start"
+"origin" "464 240 28"
+"angle" "180"
+}
+// entity 27
+{
+"classname" "info_alien_start"
+"origin" "368 112 92"
+"angle" "180"
+}

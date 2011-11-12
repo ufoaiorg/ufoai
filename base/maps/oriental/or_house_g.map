@@ -672,3 +672,8 @@
 ( 224 134 74 ) ( 224 94 74 ) ( 224 94 14 ) tex_material/wood002 -40 0 90 0.25 0.25 65280 0 0
 }
 }
+// entity 13
+{
+"classname" "info_alien_start"
+"origin" "128 16 28"
+}

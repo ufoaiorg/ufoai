@@ -3687,3 +3687,14 @@
 ( 36 222 84 ) ( 36 166 84 ) ( 60 166 84 ) tex_common/nodraw 64 96 0 0.25 0.25 134282752 0 0
 }
 }
+// entity 39
+{
+"classname" "info_alien_start"
+"origin" "112 240 28"
+}
+// entity 40
+{
+"classname" "info_alien_start"
+"origin" "80 144 92"
+"angle" "-90"
+}
