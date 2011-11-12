@@ -2249,6 +2249,7 @@ base/models/weapons/bolterrifle/bolterrifle_clip.jpg | GNU General Public Licens
 base/models/weapons/bolterrifle/bolterrifle_clip.md2 | GNU General Public License 2.0 | Werner Hoehrer (hoehrer), Lukas Beyeler (Rasta) | clip model based on old version by Lukas Beyeler (Rasta), see old/ subdirectory
 base/models/weapons/bolterrifle/bolterrifle_clip_gm.png | GNU General Public License 2.0 or later | MCR | based on original UFO:AI content
 base/models/weapons/bolterrifle/bolterrifle_gm.png | GNU General Public License 2.0 or later | MCR | based on original UFO:AI content
+base/models/weapons/bolterrifle/bolterrifle_nm.png | GNU General Public License 2.0 or later | MCR | based on original UFO:AI content
 base/models/weapons/bombs/bomb1.md2 | Creative Commons Attribution-Share Alike 3.0 | Toni "TrashMan" Stani
 base/models/weapons/bombs/bomb1.png | Creative Commons Attribution-Share Alike 3.0 | Toni "TrashMan" Stani
 base/models/weapons/bombs/bomb1_gm.png | GNU General Public License 2.0 or later | MCR | based on original UFO:AI content
@@ -2262,6 +2263,7 @@ base/models/weapons/coilgun/coilgun.jpg | Creative Commons Attribution-Share Ali
 base/models/weapons/coilgun/coilgun.md2 | Creative Commons Attribution-Share Alike 3.0 | Toni "TrashMan" Stani
 base/models/weapons/coilgun/coilgun.tag | GNU General Public License 2.0 or later | Martin Gerhardy
 base/models/weapons/coilgun/coilgun_gm.png | GNU General Public License 2.0 or later | MCR | based on original UFO:AI content
+base/models/weapons/coilgun/coilgun_nm.png | GNU General Public License 2.0 or later | MCR | based on original UFO:AI content
 base/models/weapons/electrolaser/electrolaser.jpg | Creative Commons Attribution-Share Alike 3.0 | Werner Höhrer (hoehrer)
 base/models/weapons/electrolaser/electrolaser.md2 | Creative Commons Attribution-Share Alike 3.0 | Werner Höhrer (hoehrer)
 base/models/weapons/electrolaser/electrolaser.tag | GNU General Public License 2.0 or later | Martin Gerhardy
@@ -2272,6 +2274,7 @@ base/models/weapons/flamer/flamer.tag | GNU General Public License 2.0 or later 
 base/models/weapons/flamer/flamer_ammo.md2 | GNU General Public License 2.0 | Lukas "Rastaman" Beyeler
 base/models/weapons/flamer/flamer_ammo.png | GNU General Public License 2.0 | Lukas "Rastaman" Beyeler;MCR
 base/models/weapons/flamer/flamer_gm.png | GNU General Public License 2.0 or later | MCR | based on original UFO:AI content
+base/models/weapons/flamer/flamer_nm.png | GNU General Public License 2.0 or later | MCR | based on original UFO:AI content
 base/models/weapons/flare/flare.md2 | GNU General Public License 2.0 | Denis (De_Nis / tdtv / Денис)
 base/models/weapons/flare/flare.png | GNU General Public License 2.0 | Denis (De_Nis / tdtv / Денис)
 base/models/weapons/flashbang/flashbang.md2 | GNU General Public License 2.0 | Denis (De_Nis / tdtv / Денис)
@@ -2289,6 +2292,7 @@ base/models/weapons/grenl/grenl_flechette_clip.md2 | GNU General Public License 
 base/models/weapons/grenl/grenl_gm.png | GNU General Public License 2.0 or later | MCR | based on original UFO:AI content
 base/models/weapons/grenl/grenl_ic_clip.jpg | GNU General Public License 2.0 | Lukas "Rastaman" Beyeler
 base/models/weapons/grenl/grenl_ic_clip.md2 | GNU General Public License 2.0 | Lukas "Rastaman" Beyeler
+base/models/weapons/grenl/grenl_nm.png | GNU General Public License 2.0 or later | MCR | based on original UFO:AI content
 base/models/weapons/grenl/grenl_plasma_clip.jpg | GNU General Public License 2.0 | Lukas "Rastaman" Beyeler
 base/models/weapons/grenl/grenl_plasma_clip.md2 | GNU General Public License 2.0 | Lukas "Rastaman" Beyeler
 base/models/weapons/incgren/incgren.md2 | GNU General Public License 2.0 | Denis (De_Nis / tdtv / Денис)
@@ -2429,6 +2433,7 @@ base/models/weapons/shotgun/shotgun_clip.md2 | GNU General Public License 2.0 | 
 base/models/weapons/shotgun/shotgun_clip_green.jpg | GNU General Public License 2.0 | Werner Hoehrer (hoehrer), Lukas Beyeler (Rasta) | model and texture based on shotgun_clip by Lukas Beyeler (Rasta)
 base/models/weapons/shotgun/shotgun_clip_green.md2 | GNU General Public License 2.0 | Werner Hoehrer (hoehrer), Lukas Beyeler (Rasta) | model and texture based on shotgun_clip by Lukas Beyeler (Rasta)
 base/models/weapons/shotgun/shotgun_gm.png | GNU General Public License 2.0 or later | MCR | based on original UFO:AI content
+base/models/weapons/shotgun/shotgun_nm.png | GNU General Public License 2.0 or later | MCR | based on original UFO:AI content
 base/models/weapons/shotgun2/shotgun.jpg | Creative Commons Attribution-Share Alike 3.0 | Nathan : INC (Kaeau)
 base/models/weapons/shotgun2/shotgun.md2 | Creative Commons Attribution-Share Alike 3.0 | Nathan : INC (Kaeau)
 base/models/weapons/shotgun2/shotgun.tag | GNU General Public License 2.0 or later | Martin Gerhardy
@@ -2456,6 +2461,7 @@ base/models/weapons/sniper/sniper.tag | GNU General Public License 2.0 or later 
 base/models/weapons/sniper/sniper_clip.jpg | GNU General Public License 2.0 | Lukas "Rastaman" Beyeler
 base/models/weapons/sniper/sniper_clip.md2 | GNU General Public License 2.0 | Lukas "Rastaman" Beyeler
 base/models/weapons/sniper/sniper_gm.png | GNU General Public License 2.0 or later | MCR | based on original UFO:AI content
+base/models/weapons/sniper/sniper_nm.png | GNU General Public License 2.0 or later | MCR | based on original UFO:AI content
 base/models/weapons/stungren/stungren.jpg | Creative Commons Attribution-Share Alike 3.0 | Ryan Span (Winter), texture modified by Werner Hoehrer (hoehrer)
 base/models/weapons/stungren/stungren.md2 | Creative Commons Attribution-Share Alike 3.0 | Ryan A. Span ("Winter")
 base/models/weapons/stungren/stungren_gm.png | GNU General Public License 2.0 or later | MCR | based on original UFO:AI content
@@ -2473,6 +2479,7 @@ base/models/weapons/xaw95/xaw95.jpg | Creative Commons Attribution-Share Alike 3
 base/models/weapons/xaw95/xaw95.md2 | Creative Commons Attribution-Share Alike 3.0 | Toni "TrashMan" Stani
 base/models/weapons/xaw95/xaw95.tag | GNU General Public License 2.0 or later | Martin Gerhardy
 base/models/weapons/xaw95/xaw95_gm.png | GNU General Public License 2.0 or later | MCR | based on original UFO:AI content
+base/models/weapons/xaw95/xaw95_nm.png | GNU General Public License 2.0 or later | MCR | based on original UFO:AI content
 base/music/AlexFightmare.ogg | GNU General Public License 2.0 | Alex Parker
 base/music/AlexForest.ogg | Creative Commons Sampling Plus 1.0 | Alex Parker | contains sounds sourced from thefreesoundproject.com and released under the creative commons sampling plus license (1.0).   These sounds and their authors are:   Odayam sounds (night time).wav - "genghis attenborough"   winter woods junkyard.wav - "offthesky (www.offthesky.com)"
 base/music/Crystan-Battlescape01.ogg | Creative Commons Attribution-Share Alike 3.0 | Christian "Crystan" Hoffmann
