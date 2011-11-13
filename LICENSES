@@ -5867,7 +5867,9 @@ base/textures/tex_misc/box024h_nm.png | GNU General Public License 2.0 | MCR | W
 base/textures/tex_misc/boxen001.png | Public Domain | sauer2 | http://opengameart.org/content/speaker-images
 base/textures/tex_misc/cable.jpg | GNU General Public License 2.0 | OpenArena
 base/textures/tex_misc/container001.png | GNU General Public License 2.0 or later | Possum "p0ss" Hodgkin
+base/textures/tex_misc/container001_nm.png | GNU General Public License 2.0 or later | MCR | Possum "p0ss" Hodgkin
 base/textures/tex_misc/container002.png | GNU General Public License 2.0 or later | Possum "p0ss" Hodgkin
+base/textures/tex_misc/container002_nm.png | GNU General Public License 2.0 or later | MCR | Possum "p0ss" Hodgkin
 base/textures/tex_misc/container003.png | GNU General Public License 2.0 or later | Possum "p0ss" Hodgkin
 base/textures/tex_misc/container004.png | GNU General Public License 2.0 or later | FWishbringer
 base/textures/tex_misc/container006.png | GNU General Public License 2.0 | Werner Höhrer (hoehrer)
