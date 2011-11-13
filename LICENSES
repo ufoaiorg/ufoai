@@ -875,10 +875,12 @@ base/models/aliens/tamanmedium/body.jpg | GNU General Public License 2.0 | Lukas
 base/models/aliens/tamanmedium/body01.anm | GNU General Public License 2.0 | Lukas "Rastaman" Beyeler
 base/models/aliens/tamanmedium/body01.md2 | GNU General Public License 2.0 | Lukas "Rastaman" Beyeler
 base/models/aliens/tamanmedium/body01.tag | GNU General Public License 2.0 | Lukas "Rastaman" Beyeler
-base/models/aliens/tamanmedium/body_gm.png | GNU General Public License 2.0 | Lukas "Rastaman" Beyeler;MCR
+base/models/aliens/tamanmedium/body_gm.png | GNU General Public License 2.0 | MCR | Lukas "Rastaman" Beyeler
+base/models/aliens/tamanmedium/body_nm.png | GNU General Public License 2.0 | MCR | Lukas "Rastaman" Beyeler
 base/models/aliens/tamanmedium/head01.jpg | GNU General Public License 2.0 | Lukas "Rastaman" Beyeler
 base/models/aliens/tamanmedium/head01.md2 | GNU General Public License 2.0 | Lukas "Rastaman" Beyeler
-base/models/aliens/tamanmedium/head01_gm.png | GNU General Public License 2.0 | Lukas "Rastaman" Beyeler;MCR
+base/models/aliens/tamanmedium/head01_gm.png | GNU General Public License 2.0 | MCR | Lukas "Rastaman" Beyeler
+base/models/aliens/tamanmedium/head01_nm.png | GNU General Public License 2.0 | MCR | Lukas "Rastaman" Beyeler
 base/models/animals/crocodile/croc.md2 | GNU General Public License 2.0 or later | Willem Sitters
 base/models/animals/crocodile/croc.png | GNU General Public License 2.0 or later | Willem Sitters
 base/models/animals/fish2/fish.anm | GNU General Public License 2.0 or later | Willem "Sitters"
