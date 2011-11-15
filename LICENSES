@@ -5931,9 +5931,13 @@ base/textures/tex_misc/mtl_l1.jpg | GNU General Public License 2.0 | Nexuiz GPLe
 base/textures/tex_misc/mtl_l1_fx.jpg | GNU General Public License 2.0 | Nexuiz GPLed Data
 base/textures/tex_misc/office_sep01.png | GNU General Public License 2.0 or later | FWishbringer
 base/textures/tex_misc/office_sep02.png | GNU General Public License 2.0 or later | FWishbringer
+base/textures/tex_misc/office_sep02_nm.png | GNU General Public License 2.0 or later | MCR | FWishbringer
 base/textures/tex_misc/office_sep03.png | GNU General Public License 2.0 or later | FWishbringer
+base/textures/tex_misc/office_sep03_nm.png | GNU General Public License 2.0 or later | MCR | FWishbringer
 base/textures/tex_misc/office_sep04.png | GNU General Public License 2.0 or later | FWishbringer
+base/textures/tex_misc/office_sep04_nm.png | GNU General Public License 2.0 or later | MCR | FWishbringer
 base/textures/tex_misc/office_sep05.png | GNU General Public License 2.0 or later | FWishbringer
+base/textures/tex_misc/office_sep05_nm.png | GNU General Public License 2.0 or later | MCR | FWishbringer
 base/textures/tex_misc/pad.jpg | GNU General Public License 2.0 | Nexuiz GPLed Data
 base/textures/tex_misc/party_disc.png | GNU General Public License 2.0 or later | Martin Gerhardy
 base/textures/tex_misc/phone001.png | GNU General Public License 2.0 or later | Martin Gerhardy
