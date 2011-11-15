@@ -4979,6 +4979,7 @@ base/textures/tex_doors/elevator_ooo_sm.png | GNU General Public License 2.0 or 
 base/textures/tex_doors/metaldoor.jpg | GNU General Public License 2.0 | OpenArena
 base/textures/tex_doors/spind.png | GNU General Public License 2.0 | Nate Wright
 base/textures/tex_furniture/basket.jpg | GNU General Public License 2.0 or later | zark127
+base/textures/tex_furniture/basket_nm.png | GNU General Public License 2.0 or later | MCR
 base/textures/tex_furniture/bed001_b.jpg | GNU General Public License 2.0 or later
 base/textures/tex_furniture/chest004.png | GNU General Public License 2.0 or later | Martin Gerhardy
 base/textures/tex_furniture/chest004_2.jpg | GNU General Public License 2.0 or later
@@ -5568,6 +5569,7 @@ base/textures/tex_mattn/wall077_nm.png | GNU General Public License 2.0 or later
 base/textures/tex_mattn/wall078.jpg | GNU General Public License 2.0 or later | Martin Gerhardy
 base/textures/tex_mattn/wall078_nm.png | GNU General Public License 2.0 or later | Martin Gerhardy
 base/textures/tex_mattn/wall079.jpg | GNU General Public License 2.0 or later | Martin Gerhardy
+base/textures/tex_mattn/wall079_nm.png | GNU General Public License 2.0 or later | MCR
 base/textures/tex_mattn/wall080.jpg | GNU General Public License 2.0 or later | Martin Gerhardy
 base/textures/tex_mattn/wall081.jpg | GNU General Public License 2.0 or later | Martin Gerhardy
 base/textures/tex_mattn/wall081_nm.png | GNU General Public License 2.0 or later | Martin Gerhardy
