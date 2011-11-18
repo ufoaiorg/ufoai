@@ -2,6 +2,7 @@
 // entity 0
 {
 "classname" "worldspawn"
+"randomspawn" "1"
 // brush 0
 {
 ( 0 140 2 ) ( 144 268 2 ) ( 256 140 2 ) tex_nature/desert008 0 96 0 0.25 0.25 65280 0 0
@@ -338,4 +339,14 @@
 ( 256 56 4 ) ( 230 84 0 ) ( 230 84 4 ) tex_common/nodraw 0 0 0 1 1 65280 128 0
 ( 216 116 0 ) ( 230 84 4 ) ( 230 84 0 ) tex_common/nodraw 0 0 0 1 1 65280 128 0
 }
+}
+// entity 1
+{
+"classname" "info_alien_start"
+"origin" "144 176 28"
+}
+// entity 2
+{
+"classname" "info_alien_start"
+"origin" "144 816 28"
 }

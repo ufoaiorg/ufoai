@@ -2,6 +2,7 @@
 // entity 0
 {
 "classname" "worldspawn"
+"randomspawn" "1"
 // brush 0
 {
 ( 344 88 4 ) ( 320 88 4 ) ( 320 64 4 ) tex_common/nodraw 0 0 0 0.25 0.25 65280 128 0
@@ -514,4 +515,26 @@
 ( 355 88 36 ) ( 343 88 36 ) ( 343 88 20 ) tex_misc/box009 64 64 0 -0.09375 0.0625 134283008 0 0
 ( 347 88 31 ) ( 347 64 31 ) ( 343 64 20 ) tex_misc/box009 80 64 0 -0.09375 0.0625 134283008 0 0
 }
+}
+// entity 6
+{
+"classname" "info_alien_start"
+"origin" "48 176 28"
+"angle" "180"
+}
+// entity 7
+{
+"classname" "info_alien_start"
+"origin" "144 48 28"
+"angle" "-90"
+}
+// entity 8
+{
+"classname" "info_alien_start"
+"origin" "496 48 28"
+}
+// entity 9
+{
+"classname" "info_alien_start"
+"origin" "464 240 28"
 }

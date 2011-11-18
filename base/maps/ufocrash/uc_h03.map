@@ -2,6 +2,7 @@
 // entity 0
 {
 "classname" "worldspawn"
+"randomspawn" "1"
 // brush 0
 {
 ( 176 212 4 ) ( 176 276 4 ) ( 160 276 4 ) tex_common/nodraw 40 120 90 0.25 0.25 65280 128 0
@@ -3703,4 +3704,56 @@
 ( 351 376 7 ) ( 351 376 31 ) ( 346 381 31 ) tex_common/nodraw 72 26 0 0.26 0.1875 65280 128 0
 ( 351 368 31 ) ( 351 368 7 ) ( 351 376 31 ) tex_misc/barrel1 72 26 0 0.26 0.1875 65280 1024 0
 }
+}
+// entity 56
+{
+"classname" "info_alien_start"
+"origin" "80 336 28"
+"angle" "-90"
+}
+// entity 57
+{
+"classname" "info_alien_start"
+"origin" "112 368 28"
+}
+// entity 58
+{
+"classname" "info_alien_start"
+"origin" "144 304 28"
+"angle" "90"
+}
+// entity 59
+{
+"classname" "info_alien_start"
+"origin" "464 304 28"
+"angle" "-90"
+}
+// entity 60
+{
+"classname" "info_alien_start"
+"origin" "336 144 28"
+"angle" "-90"
+}
+// entity 61
+{
+"classname" "info_alien_start"
+"origin" "208 304 92"
+"angle" "90"
+}
+// entity 62
+{
+"classname" "info_alien_start"
+"origin" "368 144 92"
+"angle" "90"
+}
+// entity 63
+{
+"classname" "info_alien_start"
+"origin" "144 144 92"
+"angle" "-90"
+}
+// entity 64
+{
+"classname" "info_alien_start"
+"origin" "464 48 92"
 }

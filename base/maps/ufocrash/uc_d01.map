@@ -4,6 +4,7 @@
 "classname" "worldspawn"
 "maxlevel" "5"
 "maxteams" "2"
+"randomspawn" "1"
 // brush 0
 {
 ( 324 360 64 ) ( 232 360 64 ) ( 232 360 48 ) tex_material/s_wood001 112 144 60 0.5 -0.5 65025 0 0
@@ -888,4 +889,31 @@
 ( 292 80 32 ) ( 292 80 4 ) ( 294 82 32 ) tex_common/nodraw 112 85 0 -0.25 0.1875 134283009 128 0
 ( 324 80 4 ) ( 324 80 32 ) ( 322 82 32 ) tex_common/nodraw 112 85 0 0.25 0.1875 134283009 128 0
 }
+}
+// entity 2
+{
+"classname" "info_alien_start"
+"origin" "176 144 28"
+}
+// entity 3
+{
+"classname" "info_alien_start"
+"origin" "272 176 28"
+"angle" "90"
+}
+// entity 4
+{
+"classname" "info_alien_start"
+"origin" "176 464 28"
+}
+// entity 5
+{
+"classname" "info_alien_start"
+"origin" "400 400 28"
+}
+// entity 6
+{
+"classname" "info_alien_start"
+"origin" "80 272 28"
+"angle" "180"
 }

@@ -2,6 +2,7 @@
 // entity 0
 {
 "classname" "worldspawn"
+"randomspawn" "1"
 // brush 0
 {
 ( 1536 760 4 ) ( 1536 -8 4 ) ( 0 760 4 ) tex_terrain/dummy 40 100 180 1 1 65280 0 0
