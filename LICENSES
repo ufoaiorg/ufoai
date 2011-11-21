@@ -4827,6 +4827,7 @@ base/textures/tex_ctp1/bricks_r_3.jpg | GNU General Public License 2.0 |  | http
 base/textures/tex_ctp1/bricks_r_4.jpg | GNU General Public License 2.0 |  | http://dplogin.com/forums/index.php?topic=7836.0
 base/textures/tex_ctp1/bricks_r_5.jpg | GNU General Public License 2.0 |  | http://dplogin.com/forums/index.php?topic=7836.0
 base/textures/tex_ctp1/bricks_r_6.jpg | GNU General Public License 2.0 |  | http://dplogin.com/forums/index.php?topic=7836.0
+base/textures/tex_ctp1/bricks_r_6_nm.png | GNU General Public License 2.0 | MCR | http://dplogin.com/forums/index.php?topic=7836.0
 base/textures/tex_ctp1/bricks_t_1.jpg | GNU General Public License 2.0 |  | http://dplogin.com/forums/index.php?topic=7836.0
 base/textures/tex_ctp1/bricks_t_2.jpg | GNU General Public License 2.0 |  | http://dplogin.com/forums/index.php?topic=7836.0
 base/textures/tex_ctp1/bricks_t_4.jpg | GNU General Public License 2.0 |  | http://dplogin.com/forums/index.php?topic=7836.0
@@ -5191,6 +5192,7 @@ base/textures/tex_material/shell001.jpg | GNU General Public License 2.0 or late
 base/textures/tex_material/shell002.jpg | GNU General Public License 2.0 or later | zark127 | tex_mattn/wall058
 base/textures/tex_material/window_grey.png | GNU General Public License 2.0 or later | Nate Wright
 base/textures/tex_material/wood001.png | Public Domain | FWishbringer
+base/textures/tex_material/wood001_nm.png | Public Domain | MCR | FWishbringer
 base/textures/tex_material/wood002.png | GNU General Public License 2.0 | Nexuiz GPLed Data; MCR
 base/textures/tex_material/wood002_nm.png | GNU General Public License 2.0 | Nexuiz GPLed Data; MCR
 base/textures/tex_material/wood003.png | Public Domain | FWishbringer
@@ -5406,6 +5408,7 @@ base/textures/tex_mattn/rock005.png | GNU General Public License 2.0 or later | 
 base/textures/tex_mattn/roof001.jpg | GNU General Public License 2.0 or later | Martin Gerhardy
 base/textures/tex_mattn/roof001_nm.png | GNU General Public License 2.0 or later | Martin Gerhardy
 base/textures/tex_mattn/roof002.jpg | GNU General Public License 2.0 or later | Martin Gerhardy
+base/textures/tex_mattn/roof002_nm.png | GNU General Public License 2.0 or later | MCR | Martin Gerhardy
 base/textures/tex_mattn/roof003.jpg | GNU General Public License 2.0 or later | Martin Gerhardy
 base/textures/tex_mattn/roof004.jpg | GNU General Public License 2.0 or later | Martin Gerhardy
 base/textures/tex_mattn/roof005.jpg | GNU General Public License 2.0 or later | Martin Gerhardy
@@ -5417,6 +5420,7 @@ base/textures/tex_mattn/roof009.jpg | GNU General Public License 2.0 or later | 
 base/textures/tex_mattn/roof010.jpg | GNU General Public License 2.0 or later | Martin Gerhardy
 base/textures/tex_mattn/roof011_nm.png | GNU General Public License 2.0 or later | Martin Gerhardy
 base/textures/tex_mattn/roof012.png | GNU General Public License 2.0 or later | Martin Gerhardy
+base/textures/tex_mattn/roof012_nm.png | GNU General Public License 2.0 or later | MCR | Martin Gerhardy
 base/textures/tex_mattn/rust.jpg | GNU General Public License 2.0 or later | Martin Gerhardy
 base/textures/tex_mattn/rust2.jpg | GNU General Public License 2.0 or later | Martin Gerhardy
 base/textures/tex_mattn/sand001.jpg | GNU General Public License 2.0 or later | Martin Gerhardy
@@ -5465,6 +5469,7 @@ base/textures/tex_mattn/wall004_nm.png | GNU General Public License 2.0 or later
 base/textures/tex_mattn/wall005.jpg | GNU General Public License 2.0 or later | Martin Gerhardy
 base/textures/tex_mattn/wall005_nm.png | GNU General Public License 2.0 or later | Martin Gerhardy
 base/textures/tex_mattn/wall006.jpg | GNU General Public License 2.0 or later | Martin Gerhardy
+base/textures/tex_mattn/wall006_nm.png | GNU General Public License 2.0 or later | MCR | Martin Gerhardy
 base/textures/tex_mattn/wall007.png | GNU General Public License 2.0 or later | Martin Gerhardy
 base/textures/tex_mattn/wall007_2.png | GNU General Public License 2.0 or later | Martin Gerhardy
 base/textures/tex_mattn/wall007_3.png | GNU General Public License 2.0 or later | Martin Gerhardy
