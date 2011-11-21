@@ -1266,8 +1266,7 @@ static int RT_TraceOnePassage (RT_data_t *rtd, const place_t* from, const place_
 		const int srcFloor = from->floor;
 		const int dstFloor = RT_FLOOR(rtd->map, rtd->actorSize, ax, ay, az) + az * CELL_HEIGHT;
 		/* if we already have enough headroom, try to skip microtracing */
-		/** @todo CELL_HEIGHT can be replaced with the largest actor height. */
-		if (opening->size < CELL_HEIGHT
+		if (opening->size < ACTOR_MAX_HEIGHT
 			|| abs(srcFloor - opening->base) > PATHFINDING_MIN_STEPUP
 			|| abs(dstFloor - opening->base) > PATHFINDING_MIN_STEPUP) {
 			int stairway = RT_PlaceIsShifted(from, to);

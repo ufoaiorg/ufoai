@@ -297,6 +297,8 @@ COLLISION DETECTION
 #define PATHFINDING_HEIGHT 8
 /** @brief A cell's height in QUANT sized units */
 #define CELL_HEIGHT (UNIT_HEIGHT / QUANT)
+/** @brief The tallest actor's height in QUANT sized units */
+#define ACTOR_MAX_HEIGHT (PLAYER_HEIGHT / QUANT)
 
 /* NOTE: this only allows quadratic units */
 #define ACTOR_SIZE_INVALID 0
