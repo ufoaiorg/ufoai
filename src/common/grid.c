@@ -878,6 +878,24 @@ static void Grid_RecalcBoxRouting (mapTiles_t *mapTiles, routing_t *map, const p
 					if ((dir & 1) && x != minX && x != maxX && y != minY && y != maxY)
 						continue;
 #endif
+					/* for places outside the model box, skip dirs that can not be affected by the model */
+					if (x > max[0] && dir != 1 && dir != 5 && dir != 6)
+						continue;
+					if (y > max[1] && dir != 3 && dir != 5 && dir != 7)
+						continue;
+					if (actorSize == 1) {
+						if (x < min[0] && dir != 0 && dir != 4 && dir != 7)
+							continue;
+						if (y < min[1] && dir != 2 && dir != 4 && dir != 6)
+							continue;
+					}
+					else {
+						/* the position of 2x2 actors is their lower left cell */
+						if (x < min[0] - 1 && dir != 0 && dir != 4 && dir != 7)
+							continue;
+						if (y < min[1] - 1 && dir != 2 && dir != 4 && dir != 6)
+							continue;
+					}
 					RT_UpdateConnectionColumn(mapTiles, map, actorSize, x, y, dir, list);
 				}
 			}
