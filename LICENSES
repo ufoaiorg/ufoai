@@ -5187,6 +5187,7 @@ base/textures/tex_material/metall022.png | GNU General Public License 2.0 | MCR 
 base/textures/tex_material/metall023.png | GNU General Public License 2.0 | MCR | Nexuiz GPLed Data (metal03.tga)
 base/textures/tex_material/red_gray.png | GNU General Public License 2.0 or later | Martin Gerhardy
 base/textures/tex_material/s_wood001.png | Public Domain | FWishbringer
+base/textures/tex_material/s_wood001_nm.png | Public Domain | MCR | FWishbringer
 base/textures/tex_material/s_wood002.png | Public Domain | FWishbringer
 base/textures/tex_material/s_wood003.png | Public Domain | FWishbringer
 base/textures/tex_material/shell001.jpg | GNU General Public License 2.0 or later | zark127 | tex_mattn/wall058
