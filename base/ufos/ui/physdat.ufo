@@ -48,6 +48,16 @@ window physdata
 	}
 
 	// ==================
+	// rank
+	// ==================
+
+	image	rank_img {
+		pos "25 70"
+		size "64 64"
+		src *cvar:mn_chrrank_img
+	}
+
+	// ==================
 	// model
 	// ==================
 
@@ -58,7 +68,7 @@ window physdata
 			skin		*cvar:mn_skin
 			anim		"stand2"
 			angles		"0 70 90"
-			pos			"27 15"
+			pos			"27 20"
 			size		"191 322"
 			scale	"5 5 5"
 		}
