@@ -98,7 +98,8 @@ window inventory
 	string actorname
 	{
 		string	*cvar:mn_name
-		pos		"34 24"
+		pos			"26 25"
+		size		"165 20"
 	}
 
 	controls drag {
