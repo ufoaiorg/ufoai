@@ -883,13 +883,12 @@ static void Grid_RecalcBoxRouting (mapTiles_t *mapTiles, routing_t *map, const p
 						continue;
 					if (y > max[1] && dir != 3 && dir != 5 && dir != 7)
 						continue;
-					if (actorSize == 1) {
+					if (actorSize == ACTOR_SIZE_NORMAL) {
 						if (x < min[0] && dir != 0 && dir != 4 && dir != 7)
 							continue;
 						if (y < min[1] && dir != 2 && dir != 4 && dir != 6)
 							continue;
-					}
-					else {
+					} else {
 						/* the position of 2x2 actors is their lower left cell */
 						if (x < min[0] - 1 && dir != 0 && dir != 4 && dir != 7)
 							continue;
