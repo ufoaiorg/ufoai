@@ -835,7 +835,7 @@ window hud_mini extends hud
 	image bar_chat_bg
 	{
 		visiblewhen	"*cvar:sv_maxclients >= 2"
-		src			"minihud/bar_chat"
+		src			"althud/bar_chat"
 		pos			"977 552"
 		size		"64 64"
 	}
@@ -855,7 +855,7 @@ window hud_mini extends hud
 
 	image bar_chat_bg
 	{
-		src			"minihud/bar_chat"
+		src			"althud/bar_chat"
 		pos			"0 552"
 		size		"64 64"
 	}
