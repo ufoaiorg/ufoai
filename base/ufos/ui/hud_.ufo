@@ -58,14 +58,14 @@ component panel cmpFiremodeEntry {
 	{
 		pos "27 4"
 		size "183 25"
-		textalign ALIGN_CL
+		contentalign ALIGN_CL
 		ghost true
 	}
 	string tu
 	{
 		pos "27 32"
 		size "69 28"
-		textalign ALIGN_CC
+		contentalign ALIGN_CC
 		ghost true
 		font		"f_verysmall"
 	}
@@ -73,7 +73,7 @@ component panel cmpFiremodeEntry {
 	{
 		pos "99 32"
 		size "111 28"
-		textalign ALIGN_CC
+		contentalign ALIGN_CC
 		ghost true
 		font		"f_verysmall"
 	}
@@ -95,8 +95,8 @@ component panel cmpFiremodeEntry {
 		*node:parent.index@string = "<3>"
 
 		*node:parent.name@string = "<6>"
-		*node:parent.tu@string = "_TU: <7>"
-		*node:parent.shot@string = "_Shots: <8>"
+		*node:parent.tu@string = "<7>"
+		*node:parent.shot@string = "<8>"
 		*node:parent.tu@tooltip = "<9>"
 
 		if ( <5> eq "1" ) {
@@ -143,23 +143,61 @@ window reactionfire_listener {
  */
 window hud extends levelbuttons {
 
+	/**
+	 * This is called when the hud is initially pushed onto the stack - only called once per battlescape match
+	 */
+	confunc hudinit { }
+	/**
+	 * This is called when you select one of your actors
+	 * @param <1> the actor index
+	 */
 	confunc hudselect { }
+	/**
+	 * This is called for each actor in your team to enable the actor selection buttons
+	 * @param <1> the actor index
+	 */
 	confunc hudenable { }
+	/**
+	 * This is called for each actor slot that is not used, or when an actor died
+	 * @param <1> the actor index
+	 */
 	confunc huddisable { cmd "updateactorvalues <1> \"\" \"0\" \"1\" \"0\" \"1\" \"0\" \"1\" \"0\" \"\";" }
 
 	confunc deselect_primaryleft { }
 	confunc deselect_primaryright { }
 	confunc deselect_reloadleft { }
 	confunc deselect_reloadright { }
+	/**
+	 * This is called on a repeating loop when the selected soldier's stance
+	 * is crouched.
+	 */
 	confunc deselect_stand { }
+	/**
+	 * This is called on a repeating loop when the selected soldier's stance
+	 * is standing.
+	 */
 	confunc deselect_crouch { }
 	confunc deselect_reaction { }
 	confunc deselect_headgear { }
+
+	/**
+	 * This is called when the selected actor enters/leaves an area that allows him to interact
+	 * with the world (e.g. opening a door
+	 */
+	confunc enable_clientaction { }
+	confunc disable_clientaction { }
 
 	confunc disable_primaryleft { }
 	confunc disable_primaryright { }
 	confunc disable_reloadleft { }
 	confunc disable_reloadright { }
+	/**
+	 * These confuncs are called when the selected soldier no longer
+	 * has enough TUs to change stance. disable_stand is called if this
+	 * this condition is reached while the soldier was standing.
+	 * disable_crouch is called if this condition is reached while the
+	 * soldier was crouching.
+	 */
 	confunc disable_stand { }
 	confunc disable_crouch { }
 	confunc disable_reaction { }
@@ -184,9 +222,7 @@ window hud extends levelbuttons {
 	confunc startround { }
 	confunc endround { }
 
-	confunc openradar { cmd "ui_push radarwindow;" }
-
-	confunc unhide_chatscreen { *node:root.chatscreen@invis = false }
+	func openradar { cmd "openradar;" }
 
 	/**
 	 * @param <1> the id of the soldier (starting at 0)
@@ -256,27 +292,6 @@ window hud extends levelbuttons {
 				size		"280 30"
 			}
 		}
-	}
-}
-
-window radarwindow {
-	{
-		pos			"256 100"
-		size		"547 580"
-		dragbutton	true
-		closebutton	true
-		image		"ui/popup_alpha_tile"
-		string		"_Radar"
-	}
-
-	confunc closeradar {
-		cmd "ui_close radarwindow;"
-	}
-
-	radar hudradar
-	{
-		pos	"25 55"
-		size "500 500"
 	}
 }
 
@@ -384,9 +399,9 @@ window hud_general {
 		} elif (<1> eq "reaction") {
 			// node: "firemode" command for action <2> already called
 			if (<3> eq "l") {
-				call *node:firemode_left.elements.<2>.init_reaction(<3>)
+				call *node:firemode_left.elements.<2>.init_reaction(<4>)
 			} else {
-				call *node:firemode_right.elements.<2>.init_reaction(<3>)
+				call *node:firemode_right.elements.<2>.init_reaction(<4>)
 			}
 		} elif (<1> eq "reload") {
 		} elif (<1> eq "end") {
@@ -395,5 +410,243 @@ window hud_general {
 		} else {
 			cmd "echo firemode_listener: unknown \"<1>\" command;"
 		}
+	}
+}
+
+window hud_chat
+{
+	{
+		pos				"200 500"
+		size			"800 250"
+		image	"ui/popup_alpha_tile"
+		dragbutton	true
+		closebutton	true
+		string	"_Chat"
+		ghost true
+	}
+
+	panel allchats {
+		{
+			pos				"0 50"
+			size			"800 200"
+			layout			LAYOUT_BORDER
+			padding	18
+		}
+
+		tab selectchat {
+			{
+				align	LAYOUTALIGN_TOP
+				height	40
+				cvar	*cvar:mn_chatselect
+				onChange {
+					if ( *cvar:mn_chatselect eq "irc" ) {
+						*node:parent.ircscreen@invis = false
+						*node:parent.chatscreen@invis = true
+						cmd "irc_connect;hud_activate_irc_textentry;"
+					}
+					if ( *cvar:mn_chatselect eq "chat" ) {
+						*node:parent.ircscreen@invis = true
+						*node:parent.chatscreen@invis = false
+						cmd "hud_activate_chat_textentry;"
+					}
+				}
+			}
+
+			option chat {
+				label	"_Party chat"
+				value	"chat"
+			}
+			option irc {
+				label	"_Global lobby (IRC)"
+				value	"irc"
+			}
+		}
+
+		panel ircscreen {
+			{
+				layout			LAYOUT_BORDER
+				align			LAYOUTALIGN_MIDDLE
+				layoutMargin	5
+				padding			5
+				invis			true
+			}
+
+			panel users {
+				{
+					width			"200"
+					layout			LAYOUT_BORDER
+					align			LAYOUTALIGN_RIGHT
+					layoutMargin	5
+					padding			0
+				}
+
+				textlist list
+				{
+					lineheight	22
+					dataid		TEXT_IRCUSERS
+					rows		"27"
+					onClick		{ cmd "irc_userlist_click <lineselected>;" }
+					onRClick	{ cmd "irc_userlist_rclick <lineselected>;" }
+					onViewChange {
+						*node:parent.scroll@fullsize = <fullsize>
+						*node:parent.scroll@current = <viewpos>
+						*node:parent.scroll@viewsize = <viewsize>
+					}
+				}
+
+				vscrollbar scroll {
+					image		"ui/scrollbar_v_green"
+					align		LAYOUTALIGN_RIGHT
+					onChange 	{
+						*node:parent.list@viewpos = <current>
+					}
+				}
+			}
+
+			text irc
+			{
+				dataid		TEXT_IRCCONTENT
+				align		LAYOUTALIGN_MIDDLE
+				font		"f_verysmall"
+				rows		"10"
+				lineheight	"16"
+				padding		5
+				onViewChange {
+					*node:parent.irc_scroll@fullsize = <fullsize>
+					*node:parent.irc_scroll@viewsize = <viewsize>
+					*node:parent.irc_scroll@current = <viewpos>
+				}
+			}
+
+			vscrollbar irc_scroll {
+				image		"ui/scrollbar_v_green"
+				align		LAYOUTALIGN_RIGHT
+				onChange 	{
+					*node:parent.irc@viewpos = <current>
+				}
+			}
+
+			panel input {
+				{
+					layout			LAYOUT_PACK
+					layoutMargin	5
+					align			LAYOUTALIGN_BOTTOM
+					height			25
+				}
+
+				string say_label {
+					align		LAYOUTALIGN_LEFT
+					width		"50"
+					contentalign	ALIGN_CL
+					string		"_Say:"
+				}
+
+				textentry say {
+					align		LAYOUTALIGN_FILL
+					image		"ui/button_green_verysmall"
+					string		*cvar:irc_send_buffer
+					color 		"0 .78 0 1"
+					selectcolor	"1 1 1 1"
+					contentalign	ALIGN_CL
+					padding		8
+					font		"f_verysmall"
+					clickoutabort	true
+					onChange	{
+						cmd "irc_chanmsg;hud_activate_irc_textentry;"
+					}
+				}
+			}
+		}
+
+		panel chatscreen {
+			{
+				layout			LAYOUT_BORDER
+				align			LAYOUTALIGN_MIDDLE
+				layoutMargin	5
+				padding			5
+			}
+
+			text chat
+			{
+				dataid		TEXT_CHAT_WINDOW
+				align		LAYOUTALIGN_MIDDLE
+				font		"f_verysmall"
+				rows		"10"
+				lineheight	"16"
+				padding		5
+				onViewChange {
+					*node:parent.chat_scroll@fullsize = <fullsize>
+					*node:parent.chat_scroll@viewsize = <viewsize>
+					*node:parent.chat_scroll@current = <viewpos>
+				}
+			}
+
+			vscrollbar chat_scroll {
+				image		"ui/scrollbar_v_green"
+				align		LAYOUTALIGN_RIGHT
+				onChange 	{
+					*node:parent.chat@viewpos = <current>
+				}
+			}
+
+			panel input {
+				{
+					layout			LAYOUT_PACK
+					layoutMargin	5
+					align			LAYOUTALIGN_BOTTOM
+					height			25
+				}
+
+				string say_label {
+					align		LAYOUTALIGN_LEFT
+					width		"50"
+					contentalign	ALIGN_CL
+					string		"_Say:"
+				}
+				checkbox chat_team
+				{
+					image		"ui/checkbox_green"
+					width		"20"
+					pos			"0 4"
+					current		*cvar:mn_chat_team
+					align		LAYOUTALIGN_LEFT
+					tooltip		"_Team chat"
+				}
+
+				textentry say {
+					align		LAYOUTALIGN_FILL
+					image		"ui/button_green_verysmall"
+					string		*cvar:mn_entry
+					color 		"0 .78 0 1"
+					selectcolor	"1 1 1 1"
+					contentalign	ALIGN_CL
+					padding		8
+					font		"f_verysmall"
+					clickoutabort	true
+					onChange	{
+						if ( *cvar:mn_chat_team eq "1" ) {
+							cmd "say_team \"<cvar:mn_entry>\";"
+						} else {
+							cmd "say \"<cvar:mn_entry>\";"
+						}
+						*cvar:mn_entry = ""
+						cmd "hud_activate_chat_textentry;"
+					}
+				}
+			}
+		}
+	}
+
+	confunc hud_activate_chat_textentry {
+		call *node:root.allchats.chatscreen.input.say@edit
+	}
+
+	confunc hud_activate_irc_textentry {
+		call *node:root.allchats.ircscreen.input.say@edit
+	}
+
+	func onWindowOpened {
+		*cvar:mn_chatselect = "chat"
+		cmd "hud_activate_chat_textentry;"
 	}
 }

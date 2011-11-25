@@ -137,7 +137,7 @@ item stunrod
 	center			"3.2 0.5 -2.6"
 	scale			1.05
 	price			800
-	size			15
+	size			25
 	is_secondary	true
 	thrown			false
 	oneshot			true
@@ -217,7 +217,7 @@ item kerrblade
 	center			"6.3 0 3"
 	scale			1.0
 	price			1200
-	size			20
+	size			40
 	is_secondary	true
 	thrown			true
 	dmgtype			normal

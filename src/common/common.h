@@ -69,6 +69,12 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #    define SO_EXT "dylib"
 #  endif
 
+#elif defined ANDROID
+#  define BUILDSTRING_OS "Android"
+#  ifndef SO_EXT
+#    define SO_EXT "so"
+#  endif
+
 #else
 #  define BUILDSTRING_OS "Unknown"
 #endif
@@ -115,7 +121,7 @@ PROTOCOL
 
 /* protocol.h -- communications protocols */
 
-#define	PROTOCOL_VERSION	6
+#define	PROTOCOL_VERSION	10
 
 #define	PORT_CLIENT	27901
 #define	PORT_SERVER	27910
@@ -129,9 +135,9 @@ enum svc_ops_e {
 
 	/** the rest are private to the client and server */
 	svc_nop,
+	svc_ping,
 	svc_disconnect,
 	svc_reconnect,
-	svc_sound,
 	svc_print,					/**< [byte] id [string] null terminated string */
 	svc_stufftext,				/**< [string] stuffed into client's console buffer, should be \n terminated */
 	svc_serverdata,				/**< [long] protocol, spawncount, playernum, mapname, ... */
@@ -150,6 +156,7 @@ typedef int32_t svc_ops_t;
 enum clc_ops_e {
 	clc_bad,
 	clc_nop,
+	clc_ack,					/**< answer on a ping */
 	clc_endround,
 	clc_teaminfo,
 	clc_initactorstates,
@@ -225,6 +232,9 @@ void Cvar_WriteVariables(qFILE *f);
 
 int Com_ServerState(void);
 void Com_SetServerState(int state);
+void Com_SetRandomSeed(unsigned int seed);
+const char* Com_UnsignedIntToBinary(uint32_t x);
+const char* Com_ByteToBinary(byte x);
 
 #include "md4.h"
 char *Com_MD5File(const char *fn, int length);
@@ -276,19 +286,22 @@ void Qcommon_Init(int argc, const char **argv);
 void Qcommon_Frame(void);
 void Qcommon_Shutdown(void);
 void Com_SetGameType(void);
-
+void Com_ReadFromPipe(void);
 float Com_GrenadeTarget(const vec3_t from, const vec3_t at, float speed, qboolean launched, qboolean rolled, vec3_t v0);
-
+qboolean Com_CheckConfigStringIndex(int index);
 void Con_Print(const char *txt);
 
 /* Event timing */
 
 typedef void event_func(int now, void *data);
 typedef qboolean event_check_func(int now, void *data);
+/**
+ * @return @c true to keep the event, @c false to remove it from the queue
+ */
 typedef qboolean event_filter(int when, event_func *func, event_check_func *check, void *data);
 typedef void event_clean_func(void * data);
 void Schedule_Event(int when, event_func *func, event_check_func *check, event_clean_func *clean, void *data);
-void CL_FilterEventQueue(event_filter *filter);
+int CL_FilterEventQueue(event_filter *filter);
 
 /*
 ==============================================================

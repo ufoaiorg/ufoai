@@ -219,7 +219,7 @@ window employees
 	{
 		image		"ui/scrollbar_v_green"
 		pos			"368 175"
-		height		"560"
+		height		"564"
 		current		0
 		viewsize	15
 		fullsize	50
@@ -253,10 +253,10 @@ window employees
 	button bt_edit
 	{
 		visiblewhen "*cvar:mn_employee_hired == 1"
-		tooltip		"_Rename your employee"
+		tooltip		"_Rename employee"
 		icon		"icons/pen"
-		pos			"865 322"
-		size		"16 16"
+		pos			"850 314"
+		size		"35 35"
 		padding		0
 		onClick		{ call *node:root.name@edit }
 	}
@@ -355,7 +355,7 @@ window employees
 			{
 				pos "5 128"
 			}
-			tbar bar   { current *cvar:mn_vcls }
+			tbar bar   { current *cvar:mn_vcls image "ui/bar_skill" }
 			string lbl { string "_Close Combat:" }
 			string val { string *cvar:mn_tcls }
 		}
@@ -364,7 +364,7 @@ window employees
 			{
 				pos "5 158"
 			}
-			tbar bar   { current *cvar:mn_vhvy }
+			tbar bar   { current *cvar:mn_vhvy image "ui/bar_skill" }
 			string lbl { string "_Heavy Weapons:" }
 			string val { string *cvar:mn_thvy }
 		}
@@ -373,7 +373,7 @@ window employees
 			{
 				pos "5 188"
 			}
-			tbar bar   { current *cvar:mn_vass }
+			tbar bar   { current *cvar:mn_vass image "ui/bar_skill" }
 			string lbl { string "_Assault Weapons:" }
 			string val { string *cvar:mn_tass }
 		}
@@ -382,7 +382,7 @@ window employees
 			{
 				pos "5 218"
 			}
-			tbar bar   { current *cvar:mn_vsnp }
+			tbar bar   { current *cvar:mn_vsnp image "ui/bar_skill" }
 			string lbl { string "_Sniper Rifles:" }
 			string val { string *cvar:mn_tsnp }
 		}
@@ -391,8 +391,8 @@ window employees
 			{
 				pos "5 248"
 			}
-			tbar bar   { current *cvar:mn_vexp }
-			string lbl { string "_High-Explosives:" }
+			tbar bar   { current *cvar:mn_vexp image "ui/bar_skill" }
+			string lbl { string "_High Explosives:" }
 			string val { string *cvar:mn_texp }
 		}
 
@@ -406,10 +406,10 @@ window employees
 		}
 
 		string	missions_lbl { pos "5 318" size "180 20" string "_Missions Performed:" }
-		string	missions_val { pos "190 318" size "130 20" string *cvar:mn_chrmis textalign ALIGN_UR }
+		string	missions_val { pos "190 318" size "130 20" string *cvar:mn_chrmis contentalign ALIGN_UR }
 
 		string	kills_lbl { pos "5 338" size "180 20" string "_Enemies Killed:" }
-		string	kills_val { pos "190 338" size "130 20" string *cvar:mn_chrkillalien textalign ALIGN_UR }
+		string	kills_val { pos "190 338" size "130 20" string *cvar:mn_chrkillalien contentalign ALIGN_UR }
 	}
 
 	// ==================
@@ -422,18 +422,35 @@ window employees
 			size	"455 111"
 			image	"ui/panel_grey"
 		}
-
+		string label_people_shadow {
+			string	"_Occupation"
+			font	"f_normal_bold"
+			pos		"22 28"
+			size	"150 20"
+			color 	"0 0 0 0.7"
+			contentalign	ALIGN_UC
+		}
+		string number_people_shadow {
+			string	*cvar:mn_hirepeople
+			font	"f_normal_bold"
+			pos		"22 56"
+			size	"150 20"
+			color	"0 0 0 0.7"
+			contentalign	ALIGN_UC
+		}
 		string label_people {
 			string	"_Occupation"
-			pos		"20 48"
+			font	"f_normal_bold"
+			pos		"20 25"
 			size	"150 20"
-			textalign	ALIGN_UC
+			contentalign	ALIGN_UC
 		}
 		string number_people {
 			string	*cvar:mn_hirepeople
-			pos		"20 68"
+			font	"f_normal_bold"
+			pos		"20 53"
 			size	"150 20"
-			textalign	ALIGN_UC
+			contentalign	ALIGN_UC
 		}
 
 		custombutton icon_soldier {
@@ -441,11 +458,18 @@ window employees
 			pos		"190 28"
 			size	"42 42"
 		}
+		string number_soldier_shadow {
+			string	*cvar:mn_hiresoldiers
+			pos		"190 68"
+			size	"44 22"
+			color 	"0 0 0 0.7"
+			contentalign	ALIGN_UR
+		}
 		string number_soldier {
 			string	*cvar:mn_hiresoldiers
 			pos		"190 68"
 			size	"42 20"
-			textalign	ALIGN_UR
+			contentalign	ALIGN_UR
 		}
 
 		custombutton icon_pilot {
@@ -453,11 +477,18 @@ window employees
 			pos		"250 28"
 			size	"42 42"
 		}
+		string number_pilot_shadow {
+			string	*cvar:mn_hirepilots
+			pos		"250 68"
+			size	"44 22"
+			color 	"0 0 0 0.7"
+			contentalign	ALIGN_UR
+		}
 		string number_pilot {
 			string	*cvar:mn_hirepilots
 			pos		"250 68"
 			size	"42 20"
-			textalign	ALIGN_UR
+			contentalign	ALIGN_UR
 		}
 
 		custombutton icon_worker {
@@ -465,11 +496,18 @@ window employees
 			pos		"310 28"
 			size	"42 42"
 		}
+		string number_worker_shadow {
+			string	*cvar:mn_hireworkers
+			pos		"310 68"
+			size	"44 22"
+			color 	"0 0 0 0.7"
+			contentalign	ALIGN_UR
+		}
 		string number_worker {
 			string	*cvar:mn_hireworkers
 			pos		"310 68"
 			size	"42 20"
-			textalign	ALIGN_UR
+			contentalign	ALIGN_UR
 		}
 
 		custombutton icon_scientist {
@@ -477,11 +515,18 @@ window employees
 			pos		"370 28"
 			size	"42 42"
 		}
+		string number_scientist_shadow {
+			string	*cvar:mn_hirescientists
+			pos		"370 68"
+			size	"44 22"
+			color 	"0 0 0 0.7"
+			contentalign	ALIGN_UR
+		}
 		string number_scientist {
 			string	*cvar:mn_hirescientists
 			pos		"370 68"
 			size	"42 20"
-			textalign	ALIGN_UR
+			contentalign	ALIGN_UR
 		}
 	}
 

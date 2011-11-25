@@ -110,7 +110,7 @@ inline void compileReadProgress (void *ex, void *buffer)
 			const char progress = *(dots - 1);
 			if (progress >= '0' && progress <= '9') {
 				exec->fraction += stepWidth;
-				sidebar::JobInfo::getInstance().update();
+				sidebar::JobInfo::Instance().update();
 			}
 		}
 	}

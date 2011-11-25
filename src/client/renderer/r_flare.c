@@ -69,7 +69,7 @@ void R_CreateSurfaceFlare (mBspSurface_t *surf)
  * trace.  Flares are also faded according to the angle of their surface to the
  * view origin.
  */
-void R_DrawFlareSurfaces (mBspSurfaces_t *surfs)
+void R_DrawFlareSurfaces (const mBspSurfaces_t *surfs)
 {
 	const image_t *image;
 	int i, j, k, l, m;
@@ -118,6 +118,8 @@ void R_DrawFlareSurfaces (mBspSurfaces_t *surfs)
 			glDrawArrays(GL_QUADS, 0, l / 3);
 #endif
 			j = k = l = 0;
+
+			refdef.batchCount++;
 
 			image = f->image;
 			R_BindTexture(image->texnum);
@@ -191,6 +193,8 @@ void R_DrawFlareSurfaces (mBspSurfaces_t *surfs)
 #else
 	glDrawArrays(GL_QUADS, 0, l / 3);
 #endif
+
+	refdef.batchCount++;
 
 	R_BlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
 	R_EnableBlend(oldblend);

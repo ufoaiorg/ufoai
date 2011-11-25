@@ -77,13 +77,12 @@ ELEMENTS COMMUNICATED ACROSS THE NET
 /**
  * @brief Possible event values
  * @sa cl_parse.c for event bindings
- * @sa ev_func
  */
 typedef enum {
 	EV_NULL,
 	EV_RESET,
 	EV_START,
-	EV_ENDROUND,	/**< ends the current team's round CL_DoEndRound */
+	EV_ENDROUND,	/**< ends the current team's turn CL_DoEndRound */
 	EV_ENDROUNDANNOUNCE,
 
 	EV_RESULTS,
@@ -126,6 +125,8 @@ typedef enum {
 	EV_PARTICLE_APPEAR,
 	EV_PARTICLE_SPAWN,
 
+	EV_SOUND,
+
 	EV_DOOR_OPEN,
 	EV_DOOR_CLOSE,
 	EV_CLIENT_ACTION,
@@ -144,6 +145,7 @@ typedef enum {
 	ET_TRIGGER_HURT,
 	ET_TRIGGER_TOUCH,
 	ET_TRIGGER_RESCUE,
+	ET_TRIGGER_NEXTMAP,
 	ET_DOOR,
 	ET_DOOR_SLIDING,
 	ET_ROTATING,
@@ -157,6 +159,8 @@ typedef enum {
 	ET_SOLID,
 	ET_MESSAGE,
 
+	ET_MAX,
+
 	ENTITY_TYPE_ENSURE_32BIT = 0x7FFFFFFF
 } entity_type_t;
 
@@ -168,7 +172,7 @@ typedef enum {
 	PA_MOVE,
 	PA_STATE,
 	PA_SHOOT,
-	PA_USE_DOOR,
+	PA_USE,
 	PA_INVMOVE,
 	PA_REACT_SELECT,
 	PA_RESERVE_STATE,
@@ -261,7 +265,6 @@ typedef int32_t shoot_types_t;
 #define GET_INJURY_MULT( mind, hp, hpmax )  ((float)(hp) / (float)(hpmax) > 0.5f ? 1.0f : 1.0f + INJURY_BALANCE * ((1.0f / ((float)(hp) / (float)(hpmax) + INJURY_THRESHOLD)) -1.0f)* (float)MAX_SKILL / (float)(mind))
 /** @todo Skill-influence needs some balancing. */
 #define GET_ACC( ab, sk )   ((1 - ((float)(ab)/MAX_SKILL + (float)(sk)/MAX_SKILL) / 2))
-#define GET_TU( ab )        (min((27 + (ab) * 20/MAX_SKILL), 255))
 #define GET_MORALE( ab )        (min((100 + (ab) * 150/MAX_SKILL), 255))
 
 #define DOOR_OPEN_REVERSE 4
@@ -313,7 +316,7 @@ typedef struct gametype_s {
 
 /**
  * @brief The csi structure is the client-server-information structure
- * which contains all the UFO info needed by the server and the client.
+ * which contains all the static data needed by the server and the client.
  * @note Most of this comes from the script files
  */
 typedef struct csi_s {
@@ -352,7 +355,8 @@ typedef struct csi_s {
 	teamDef_t teamDef[MAX_TEAMDEFS];
 	int numTeamDefs;
 
-	/** the current assigned teams for this mission */
+	/** the current assigned teams for this mission
+	 * @todo this does not belong here - this is only static data that is shared */
 	const teamDef_t* alienTeams[MAX_TEAMS_PER_MISSION];
 	int numAlienTeams;
 

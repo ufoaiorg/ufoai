@@ -222,7 +222,7 @@ static int R_LoadObjModelFace (const model_t *mod, mobj_t *obj, const char *line
  */
 static void R_LoadObjModelLine (model_t *mod, mobj_t *obj, char *line)
 {
-	if (!line || line[0] == '\0')  /* don't bother */
+	if (Q_strnull(line))  /* don't bother */
 		return;
 
 	if (!strncmp(line, "v ", 2)) {  /* vertex */
@@ -276,11 +276,50 @@ static void R_LoadObjSkin (model_t *mod)
 	mAliasMesh_t *mesh = &mod->alias.meshes[0];
 
 	Com_StripExtension(mod->name, skinPath, sizeof(skinPath));
+	if (FS_CheckFile("%s.mtl", skinPath) != -1) {
+		const char *buffer;
+		byte *buf;
+		int i;
 
-	mesh->num_skins = 1;
-	mesh->skins = (mAliasSkin_t *)Mem_PoolAlloc(sizeof(mAliasSkin_t), vid_modelPool, 0);
-	mesh->skins[0].skin = R_AliasModelGetSkin(mod->name, skinPath);
-	Q_strncpyz(mesh->skins[0].name, mesh->skins[0].skin->name, sizeof(mesh->skins[0].name));
+		FS_LoadFile(va("%s.mtl", skinPath), &buf);
+
+		buffer = (const char *)buf;
+		for (;;) {
+			const char *token = Com_Parse(&buffer);
+			if (token[0] == '\0')
+				break;
+
+			if (Q_streq(token, "map_Kd")) {
+				mesh->num_skins++;
+			}
+		}
+		mesh->skins = (mAliasSkin_t *)Mem_PoolAlloc(sizeof(mAliasSkin_t) * mesh->num_skins, vid_modelPool, 0);
+
+		buffer = (const char *)buf;
+		i = 0;
+		for (;;) {
+			const char *token = Com_Parse(&buffer);
+			if (token[0] == '\0')
+				break;
+
+			if (Q_streq(token, "map_Kd")) {
+				const char *skin = Com_Parse(&buffer);
+				mAliasSkin_t *aliasSkin = &mesh->skins[i++];
+
+				Com_sprintf(skinPath, sizeof(skinPath), ".%s", skin);
+
+				aliasSkin->skin = R_AliasModelGetSkin(mod->name, skinPath);
+				Q_strncpyz(aliasSkin->name, aliasSkin->skin->name, sizeof(aliasSkin->name));
+			}
+		}
+
+		FS_FreeFile(buf);
+	} else {
+		mesh->num_skins = 1;
+		mesh->skins = (mAliasSkin_t *)Mem_PoolAlloc(sizeof(mAliasSkin_t), vid_modelPool, 0);
+		mesh->skins[0].skin = R_AliasModelGetSkin(mod->name, skinPath);
+		Q_strncpyz(mesh->skins[0].name, mesh->skins[0].skin->name, sizeof(mesh->skins[0].name));
+	}
 }
 
 /**

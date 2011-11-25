@@ -57,7 +57,6 @@ building building_entrance
 	map_name	"entrance"
 	pedia		rs_building_entrance
 	mandatory	true
-	type		entrance
 	max_count	1
 }
 

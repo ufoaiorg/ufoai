@@ -146,9 +146,9 @@ bool Face::intersectVolume (const VolumeTest& volume, const Matrix4& localToWorl
 void Face::render (Renderer& renderer, const Matrix4& localToWorld) const
 {
 	// Submit this face to the Renderer only if its shader is not filtered
-	if (GlobalFilterSystem().isVisible("texture", m_shader.getShader())) {
-		if (GlobalFilterSystem().isVisible("surfaceflags", m_shader.getFlags().getSurfaceFlags())
-				&& GlobalFilterSystem().isVisible("contentflags", m_shader.getFlags().getContentFlags())) {
+	if (GlobalFilterSystem().isVisible(FilterRule::TYPE_TEXTURE, m_shader.getShader())) {
+		if (GlobalFilterSystem().isVisible(FilterRule::TYPE_SURFACEFLAGS, m_shader.getFlags().getSurfaceFlags())
+				&& GlobalFilterSystem().isVisible(FilterRule::TYPE_CONTENTFLAGS, m_shader.getFlags().getContentFlags())) {
 			renderer.SetState(m_shader.state(), Renderer::eFullMaterials);
 			renderer.addRenderable(*this, localToWorld);
 		}
@@ -232,7 +232,6 @@ void Face::testSelect_centroid (SelectionTest& test, SelectionIntersection& best
 void Face::shaderChanged ()
 {
 	EmitTextureCoordinates();
-	Brush_textureChanged();
 	m_observer->shaderChanged();
 	planeChanged();
 	SceneChangeNotify();
@@ -257,7 +256,6 @@ void Face::texdefChanged ()
 {
 	revertTexdef();
 	EmitTextureCoordinates();
-	Brush_textureChanged();
 }
 
 void Face::GetTexdef (TextureProjection& projection) const

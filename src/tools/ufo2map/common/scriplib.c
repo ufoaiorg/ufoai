@@ -71,8 +71,6 @@ static void AddScriptToStack (const char *filename)
 	if (size == -1)
 		Sys_Error("file '%s' doesn't exist", script->filename);
 
-	Verb_Printf(VERB_LESS, "entering %s\n", script->filename);
-
 	script->line = 1;
 
 	script->script_p = script->buffer;

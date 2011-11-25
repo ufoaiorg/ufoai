@@ -1,0 +1,58 @@
+/**
+ * @brief Unittest to check texture feature
+ * Move it into the ui ufo script directory (/base/ufos/ui/), run the game, and run the command "ui_push unittest_texture"
+ */
+
+window unittest_texture
+{
+	{
+		pos "100 100"
+		size "600 500"
+		dragbutton	true
+		closebutton	true
+		string		"_Unittest texture"
+		bgcolor		"0 0 0 1"
+		timeout		1000
+	}
+
+	texture imagetest
+	{
+		pos "50 200"
+		size	"500 250"
+		bgcolor		"0.2 0.2 0.2 1"
+		src		"ranks/rank_pc"
+	}
+
+	button size1
+	{
+		pos			"50 56"
+		size		"150 20"
+		string		"10 x 100"
+		onClick {
+			*node:root.imagetest@width = 10
+			*node:root.imagetest@height = 100
+		}
+	}
+
+	button size2
+	{
+		pos			"200 56"
+		size		"150 20"
+		string		"200 x 400"
+		onClick {
+			*node:root.imagetest@width = 200
+			*node:root.imagetest@height = 400
+		}
+	}
+
+	button size3
+	{
+		pos			"350 56"
+		size		"150 20"
+		string		"500 x 250"
+		onClick {
+			*node:root.imagetest@width = 500
+			*node:root.imagetest@height = 250
+		}
+	}
+}

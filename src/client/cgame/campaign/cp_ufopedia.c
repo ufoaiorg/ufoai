@@ -976,6 +976,8 @@ static void UP_MailClientClick_f (void)
 		}
 		m = m->next;
 	}
+	ccs.numUnreadMails = -1;
+	UP_GetUnreadMails();
 }
 
 /**
@@ -983,7 +985,7 @@ static void UP_MailClientClick_f (void)
  */
 static void UP_ResearchedLinkClick_f (void)
 {
-	objDef_t *od;
+	const objDef_t *od;
 
 	if (!upCurrentTech) /* if called from console */
 		return;

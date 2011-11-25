@@ -99,6 +99,7 @@ const char *Com_GetExtension(const char *path);
 void Com_DefaultExtension(char *path, size_t len, const char *extension);
 int Com_Filter(const char *pattern, const char *text);
 char *Com_Trim(char *s);
+char *Com_ConvertToASCII7(char *s);
 char *Com_Chop(char *s);
 
 /** returns the amount of elements - not the amount of bytes */
@@ -129,10 +130,9 @@ _CRTIMP int __cdecl	_strnicmp (const char*, const char*, size_t);
 #	define Q_strncasecmp(s1, s2, n) strncasecmp((s1), (s2), (n))
 #endif
 
-static inline qboolean Q_streq(char const* const a, char const* const b)
-{
-	return strcmp(a, b) == 0;
-}
+#define Q_streq(a, b) (strcmp(a, b) == 0)
+#define Q_strnull(string) ((string) == NULL || (string)[0] == '\0')
+#define Q_strvalid(string) !Q_strnull(string)
 
 #ifndef DEBUG
 void Q_strncpyz(char *dest, const char *src, size_t destsize) __attribute__((nonnull));

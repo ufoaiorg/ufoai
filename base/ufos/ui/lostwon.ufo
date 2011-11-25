@@ -27,7 +27,7 @@ window won
 		lineheight	20
 		tabwidth	350
 		rows		"23"
-		dataid		TEXT_STANDARD
+		dataid		TEXT_LIST2
 	}
 
 	// ==================
@@ -37,8 +37,8 @@ window won
 	button bt_continue
 	{
 		string		"_Continue"
-		tooltip		"_Continue"
 		image		"ui/button_blue"
+		invis		true
 		pos			"865 700"
 		size		"128 53"
 		color		"1 1 1 0.8"
@@ -46,25 +46,24 @@ window won
 		font		"f_big"
 		onClick		{
 			*cvar:cp_mission_tryagain = 0
-			cmd "ui_pop;uforecover_check;"
-		}
-	}
-
-	confunc uforecover_check
-	{
-		if ( *cvar:mission_uforecovered == 1 ) {
-			cmd "ui_push uforecovery;"
+			cmd "ui_pop;"
 		}
 	}
 
 	func onWindowOpened
 	{
-		cmd "snd_music ufo2;"
+		if ( *cvar:sv_maxclients == 1 ) {
+			*node:root.bt_continue@invis = false
+		} else {
+			*node:root.bt_continue@invis = true
+		}
 	}
 
 	func onWindowClosed
 	{
-		cmd "cp_results 1;"
+		if ( *cvar:sv_maxclients == 1 ) {
+			cmd "cp_results 1;"
+		}
 	}
 }
 
@@ -97,7 +96,7 @@ window lost
 		lineheight	20
 		tabwidth	350
 		rows		"23"
-		dataid		TEXT_STANDARD
+		dataid		TEXT_LIST2
 	}
 
 	// ==================
@@ -108,6 +107,7 @@ window lost
 	{
 		string		"_Try again"
 		tooltip		"_Retry this mission"
+		invis		true
 		image		"ui/button_blue"
 		pos			"480 700"
 		size		"128 53"
@@ -123,7 +123,7 @@ window lost
 	button bt_continue
 	{
 		string		"_Continue"
-		tooltip		"_Continue"
+		invis		true
 		image		"ui/button_blue"
 		pos			"865 700"
 		size		"128 53"
@@ -138,12 +138,24 @@ window lost
 
 	func onWindowOpened
 	{
-		cmd "snd_music ufo1;"
+		if ( *cvar:sv_maxclients == 1 ) {
+			*node:root.bt_continue@invis = false
+			if ( *cvar:cp_mission_tryagain == 1 ) {
+				*node:root.bt_tryagain@invis = true
+			} else {
+				*node:root.bt_tryagain@invis = false
+			}
+		} else {
+			*node:root.bt_continue@invis = true
+			*node:root.bt_tryagain@invis = true
+		}
 	}
 
 	func onWindowClosed
 	{
-		cmd "cp_results 0;"
+		if ( *cvar:sv_maxclients == 1 ) {
+			cmd "cp_results 0;"
+		}
 	}
 }
 
@@ -187,7 +199,7 @@ window uforecovery
 		pos			"30 70"
 		size		"610 40"
 		font		"f_small"
-		textalign	ALIGN_UL
+		contentalign	ALIGN_UL
 	}
 
 	//
@@ -219,7 +231,7 @@ window uforecovery
 			pos			"325 30"
 			size		"290 20"
 			font		"f_small_bold"
-			textalign	ALIGN_UR
+			contentalign	ALIGN_UR
 		}
 
 		textlist ur_ufoyards
@@ -251,7 +263,7 @@ window uforecovery
 			selectcolor	"1 1 1 1"
 			lineheight	16
 			rows		"8"
-			textalign	ALIGN_UR
+			contentalign	ALIGN_UR
 			onClick		{
 				*node:root.store_panel.ur_ufoyards@lineselected = <lineselected>
 			}
@@ -441,11 +453,7 @@ window uforecovery
 		*node:root.sell_panel.cp_uforecovery_nationlist@lineselected = -1
 		*cvar:mission_recoverynation = ""
 
-		if ( *cvar:mission_uforecovered == 0 ) {
-			cmd "ui_pop;"
-		} else {
-			cmd "cp_uforecovery_sell_init; cp_uforecovery_store_init;"
-		}
+		cmd "cp_uforecovery_sell_init; cp_uforecovery_store_init;"
 	}
 
 	func onWindowClosed {

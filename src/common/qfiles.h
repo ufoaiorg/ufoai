@@ -46,7 +46,7 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 
 #define MD2_MAX_TRIANGLES	4096
 #define MD2_MAX_VERTS		2048
-#define MD2_MAX_FRAMES		512
+#define MD2_MAX_FRAMES		1024
 #define MD2_MAX_SKINS	32
 #define MD2_MAX_SKINNAME	64
 #define MD2_MAX_TAGNAME		64
@@ -385,5 +385,17 @@ typedef struct {
 	lump_t lumps[HEADER_LUMPS];	/**< the data directories */
 } dBspHeader_t;
 
+
+#define BSP_SwapHeader(header, name) { \
+	(header)->ident = LittleLong((header)->ident); \
+	(header)->version = LittleLong((header)->version); \
+	for (i = 0; i < HEADER_LUMPS; i++) { \
+		lump_t *l = &(header)->lumps[i]; \
+		l->filelen = LittleLong(l->filelen); \
+		l->fileofs = LittleLong(l->fileofs); \
+		if (l->fileofs == (uint32_t) -1) \
+			Sys_Error("Invalid bsp header found (lump overflow %i): '%s'", i, (name)); \
+	} \
+}
 
 #endif /* QFILES_H */

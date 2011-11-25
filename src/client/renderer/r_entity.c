@@ -80,21 +80,25 @@ static void R_DrawBox (const entity_t * e)
 
 		/** @todo fill one array */
 		glDrawArrays(GL_LINE_LOOP, 0, 4);
+		refdef.batchCount++;
 		points[0][2] = e->origin[2];
 		points[1][2] = e->origin[2];
 		points[2][2] = e->origin[2];
 		points[3][2] = e->origin[2];
 		glDrawArrays(GL_LINE_LOOP, 0, 4);
+		refdef.batchCount++;
 		points[0][2] = e->oldorigin[2];
 		points[1][1] = e->oldorigin[1];
 		points[2][2] = e->oldorigin[2];
 		points[3][1] = e->origin[1];
 		glDrawArrays(GL_LINES, 0, 4);
+		refdef.batchCount++;
 		points[0][0] = e->origin[0];
 		points[1][0] = e->origin[0];
 		points[2][0] = e->oldorigin[0];
 		points[3][0] = e->oldorigin[0];
 		glDrawArrays(GL_LINES, 0, 4);
+		refdef.batchCount++;
 		R_BindDefaultArray(GL_VERTEX_ARRAY);
 	}
 	glEnable(GL_TEXTURE_2D);
@@ -133,6 +137,8 @@ static void R_DrawFloor (const entity_t * e)
 	R_BindDefaultArray(GL_TEXTURE_COORD_ARRAY);
 	R_BindDefaultArray(GL_VERTEX_ARRAY);
 
+	refdef.batchCount++;
+
 	glEnable(GL_DEPTH_TEST);
 
 	R_Color(NULL);
@@ -161,6 +167,8 @@ static void R_DrawArrow (const entity_t * e)
 	glDrawArrays(GL_TRIANGLE_FAN, 0, 4);
 	R_BindDefaultArray(GL_VERTEX_ARRAY);
 
+	refdef.batchCount++;
+
 	glDisable(GL_LINE_SMOOTH);
 	glEnable(GL_TEXTURE_2D);
 
@@ -177,6 +185,7 @@ static image_t *actorIndicator;
 void R_DrawEntityEffects (void)
 {
 	int i;
+	const int mask = r_stencilshadows->integer ? RF_BLOOD : (RF_SHADOW | RF_BLOOD);
 	GLint oldDepthFunc;
 	glGetIntegerv(GL_DEPTH_FUNC, &oldDepthFunc);
 
@@ -196,7 +205,7 @@ void R_DrawEntityEffects (void)
 		glPushMatrix();
 		glMultMatrixf(e->transform.matrix);
 
-		if (r_shadows->integer && (e->flags & (RF_SHADOW | RF_BLOOD))) {
+		if (e->flags & mask) {
 			const vec3_t points[] = { { -18.0, 14.0, -28.5 }, { 10.0, 14.0, -28.5 }, { 10.0, -14.0, -28.5 }, { -18.0,
 					-14.0, -28.5 } };
 			/** @todo use default_texcoords */
@@ -214,6 +223,8 @@ void R_DrawEntityEffects (void)
 			glDrawArrays(GL_TRIANGLE_FAN, 0, 4);
 			R_BindDefaultArray(GL_TEXTURE_COORD_ARRAY);
 			R_BindDefaultArray(GL_VERTEX_ARRAY);
+
+			refdef.batchCount++;
 		}
 
 		if (e->flags & RF_ACTOR) {
@@ -221,7 +232,7 @@ void R_DrawEntityEffects (void)
 			int texnum;
 			/* draw the circles for team-members and allied troops */
 			vec4_t color = {1, 1, 1, 1};
-			vec3_t points[] = { { -size, size, -GROUND_DELTA }, { size, size, -GROUND_DELTA }, { size, -size,
+			const vec3_t points[] = { { -size, size, -GROUND_DELTA }, { size, size, -GROUND_DELTA }, { size, -size,
 					-GROUND_DELTA }, { -size, -size, -GROUND_DELTA } };
 			/** @todo use default_texcoords */
 			const vec2_t texcoords[] = { { 0.0, 1.0 }, { 1.0, 1.0 }, { 1.0, 0.0 }, { 0.0, 0.0 } };
@@ -232,8 +243,10 @@ void R_DrawEntityEffects (void)
 				Vector4Set(color, 0, 1, 0.5, 0.5);
 			else if (e->flags & RF_NEUTRAL)
 				Vector4Set(color, 1, 1, 0, 0.5);
-			else
+			else if (e->flags & RF_OPPONENT)
 				Vector4Set(color, 1, 0, 0, 0.5);
+			else
+				Vector4Set(color, 0.4, 0.4, 0.4, 0.5);
 
 			/* TODO: for some unknown reasons the following code fails on my HTC Evo and on emulator, but works on PC, so it might be GFX driver problems */
 #ifndef GL_VERSION_ES_CM_1_0
@@ -252,12 +265,16 @@ void R_DrawEntityEffects (void)
 
 			glDrawArrays(GL_TRIANGLE_FAN, 0, 4);
 
-			/* add transparency when something is covering the circle */
+			refdef.batchCount++;
+
+			/* add transparency when something is other the circle */
 			color[3] *= 0.25;
 			R_Color(color);
 			glDepthFunc(GL_GREATER);
 			glDrawArrays(GL_TRIANGLE_FAN, 0, 4);
 			glDepthFunc(oldDepthFunc);
+
+			refdef.batchCount++;
 
 			R_BindDefaultArray(GL_TEXTURE_COORD_ARRAY);
 			R_BindDefaultArray(GL_VERTEX_ARRAY);
@@ -283,27 +300,6 @@ void R_DrawEntityEffects (void)
 #endif
 		}
 		glPopMatrix();
-	}
-}
-
-/**
- * @brief Draws a list of brush model entities (inline models)
- * @param[in] ents The entity list to render (brush model entities)
- * @sa R_GetEntityLists
- * @sa R_DrawBrushModel
- */
-void R_DrawBspEntities (const entity_t *ents)
-{
-	const entity_t *e;
-
-	if (!ents)
-		return;
-
-	e = ents;
-
-	while (e) {
-		R_DrawBrushModel(e);
-		e = e->next;
 	}
 }
 
@@ -347,7 +343,7 @@ void R_DrawOpaqueMeshEntities (entity_t *ents)
 	R_DrawMeshEntities(ents);
 	if (!(refdef.rendererFlags & RDF_NOWORLDMODEL)) {
 		R_EnableLighting(NULL, qfalse);
-		R_EnableGlowMap(NULL, qfalse);
+		R_EnableGlowMap(NULL);
 	}
 }
 
@@ -423,7 +419,7 @@ void R_DrawBlendMeshEntities (entity_t *ents)
 	R_EnableBlend(qfalse);
 	if (!(refdef.rendererFlags & RDF_NOWORLDMODEL)) {
 		R_EnableLighting(NULL, qfalse);
-		R_EnableGlowMap(NULL, qfalse);
+		R_EnableGlowMap(NULL);
 	}
 }
 
@@ -451,6 +447,8 @@ static void R_DrawNullModel (const entity_t *e)
 	}
 	glDrawArrays(GL_TRIANGLE_FAN, 0, 6);
 
+	refdef.batchCount++;
+
 	VectorSet(points[0], 0, 0, 16);
 	for (i = 4; i >= 0; i--) {
 		points[i + 1][0] = 16 * cos(i * (M_PI / 2));
@@ -458,6 +456,8 @@ static void R_DrawNullModel (const entity_t *e)
 		points[i + 1][2] = 0;
 	}
 	glDrawArrays(GL_TRIANGLE_FAN, 0, 6);
+
+	refdef.batchCount++;
 
 	R_BindDefaultArray(GL_VERTEX_ARRAY);
 
@@ -550,16 +550,20 @@ static float *R_CalcTransform (entity_t * e)
 	/* do parent object transformations first */
 	if (e->tagent) {
 		/* tag transformation */
-		const float *tag = R_GetTagMatrix(e->tagent->model, e->tagname);
-		if (tag) {
-			const dMD2tag_t *taghdr = (const dMD2tag_t *) e->tagent->model->alias.tagdata;
+		const model_t *model = e->tagent->model;
+		const mAliasTagOrientation_t *current = NULL;
+		const mAliasTagOrientation_t *old = NULL;
+		const animState_t *as = &e->tagent->as;
+
+		R_GetTags(model, e->tagname, as->frame, as->oldframe, &current, &old);
+		if (current != NULL && old != NULL) {
 			float interpolated[16];
 
 			/* parent transformation */
 			mp = R_CalcTransform(e->tagent);
 
 			/* do interpolation */
-			R_InterpolateTransform(&e->tagent->as, taghdr->num_frames, tag, interpolated);
+			R_InterpolateTransform(as->backlerp, model->alias.num_frames, current, old, interpolated);
 
 			/* transform */
 			GLMatrixMultiply(mp, interpolated, mt);
@@ -620,7 +624,7 @@ void R_GetEntityLists (void)
 	if (!r_drawentities->integer)
 		return;
 
-	r_bsp_entities = r_opaque_mesh_entities = r_special_entities =
+	r_opaque_mesh_entities = r_special_entities =
 		r_blend_mesh_entities = r_null_entities = NULL;
 
 	for (i = 0; i < refdef.numEntities; i++) {
@@ -633,7 +637,7 @@ void R_GetEntityLists (void)
 		R_CalcTransform(e);
 
 		if (!e->model) {
-			if (e->flags & RF_BOX || e->flags & RF_PATH || e->flags & RF_ARROW)
+			if ((e->flags & RF_BOX) || (e->flags & RF_PATH) || (e->flags & RF_ARROW))
 				chain = &r_special_entities;
 			else
 				chain = &r_null_entities;
@@ -641,8 +645,8 @@ void R_GetEntityLists (void)
 			const image_t *skin;
 			switch (e->model->type) {
 			case mod_bsp_submodel:
-				chain = &r_bsp_entities;
-				break;
+				R_AddBspRRef(&(e->model->bsp), e->origin, e->angles, qtrue);
+				continue;
 			case mod_alias_dpm:
 			case mod_alias_md2:
 			case mod_alias_md3:
@@ -650,7 +654,7 @@ void R_GetEntityLists (void)
 				skin = R_AliasModelState(e->model, &e->as.mesh, &e->as.frame, &e->as.oldframe, &e->skinnum);
 				if (skin == NULL || skin->texnum == 0)
 					Com_Error(ERR_DROP, "Model '%s' has no skin assigned", e->model->name);
-				if (skin->has_alpha || e->flags & RF_TRANSLUCENT)
+				if (skin->has_alpha || (e->flags & RF_TRANSLUCENT))
 					chain = &r_blend_mesh_entities;
 				else
 					chain = &r_opaque_mesh_entities;

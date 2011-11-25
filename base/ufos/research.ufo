@@ -46,7 +46,7 @@
 //	pre_description {}
 //		Usage is the same as "description".
 //		The diffrence is that these entries are displayed e.g.:
-//			* A new tefchnology is proposed by out scientists (even with no obvious "prequesites")
+//			* A new technology is proposed by out scientists (even with no obvious "prequesites")
 //			* When an item has been collected, but it's not yet researched.
 // ===============
 //	require_AND { type id [amount] }
@@ -584,7 +584,7 @@ tech rs_alien_origins
 	}
 
 	time		5700
-//	image		"techs/alien_origins"
+	image		"techs/alien_origins"
 }
 
 tech rs_alien_ufo_theory
@@ -1634,6 +1634,7 @@ tech rs_weapon_laserammo_stun
 	require_AND
 	{
 		tech rs_weapon_laserammo
+		tech rs_weapon_electrolaser
 	}
 	provides	laser_ammo_stun
 	time		0
@@ -2771,11 +2772,6 @@ tech rs_nano_armour
 	require_AND
 	{
 		tech rs_alien_body_armour
-	}
-
-	require_for_production
-	{
-	    item alienmaterials 350
 	}
 
 	provides	armour_medium
@@ -4202,8 +4198,6 @@ tech rs_alien_bloodspider_autopsy
 	}
 	time	4500
 
-	mdl	"aliens/bloodspider/bloodspider"
-
 	image techs/bloodspider_autopsy
 }
 
@@ -4428,7 +4422,7 @@ tech rs_ugv_phoenix
 	producetime	400
 }
 
-// area with wheels
+// UGV with wheels
 tech rs_ugv_ares_w
 {
 	type	ugv
@@ -4451,7 +4445,7 @@ tech rs_ugv_ares_w
 tech rs_ugv_chaingun
 {
 	type	weapon
-	mdl	ugv_phoenix	// @todo fixme
+//	mdl			ares_w_turret // we do not need this here, but this is the correct model
 
 	up_chapter	equipment
 /* @todo use-me
@@ -4470,7 +4464,7 @@ tech rs_ugv_chaingun
 tech rs_ugv_chaingun_belt
 {
 	type	weapon
-	mdl	ugv_phoenix	// @todo fixme
+//	mdl	ugv_phoenix // we do not need this here
 
 	up_chapter	equipment
 /* @todo use-me

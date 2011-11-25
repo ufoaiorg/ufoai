@@ -205,7 +205,7 @@ typedef struct alienTeamGroup_s {
 	int minInterest;	/**< Minimum interest value this group should be used with. */
 	int maxInterest;	/**< Maximum interest value this group should be used with. */
 
-	teamDef_t *alienTeams[MAX_TEAMS_PER_MISSION];	/**< different alien teams available
+	const teamDef_t *alienTeams[MAX_TEAMS_PER_MISSION];	/**< different alien teams available
 													 * that will be used in mission */
 	int numAlienTeams;		/**< Number of alienTeams defined in this group. */
 } alienTeamGroup_t;
@@ -278,7 +278,6 @@ typedef struct battleParam_s {
 	const char *zoneType;							/**< Terrain type (used for texture replacement in some missions (base, ufocrash)) */
 	int aliens, civilians;			/**< number of aliens and civilians in that particular mission */
 	struct nation_s *nation;		/**< nation where the mission takes place */
-	float probability;
 } battleParam_t;
 
 /** @brief Structure with mission info needed to create results summary at menu won. */
@@ -288,7 +287,6 @@ typedef struct missionResults_s {
 	qboolean crashsite;		/**< @c true if secured UFO was crashed one. */
 	ufoType_t ufotype;		/**< Type of UFO secured during the mission. */
 	float ufoCondition;		/**< How much the UFO is damaged */
-	float winProbability;	/**< the win probability that was calculated for auto missions */
 	int itemTypes;			/**< Types of items gathered from a mission. */
 	int itemAmount;			/**< Amount of items (all) gathered from a mission. */
 	int aliensKilled;
@@ -518,10 +516,8 @@ typedef struct ccs_s {
 	installationTemplate_t installationTemplates[MAX_INSTALLATION_TEMPLATES];
 	int numInstallationTemplates;
 
-	/* A list of _all_ installations ... even unbuilt ones. */
-	installation_t installations[MAX_INSTALLATIONS];
-	/* Total number of built installations (how many are enabled). */
-	int numInstallations;
+	/* A list of _all_ installations */
+	linkedList_t* installations;
 
 	/* UFOs on geoscape */
 	aircraft_t ufos[MAX_UFOONGEOSCAPE];
@@ -558,21 +554,6 @@ typedef struct ccs_s {
 	int numAircraftTemplates;		/**< Number of aircraft templates. */
 } ccs_t;
 
-/**
- * @brief Human readable time information in the game.
- * @note Use this on runtime - please avoid for structs that get saved.
- * @sa date_t For storage & network transmitting (engine only).
- * @sa CP_DateConvertLong
- */
-typedef struct dateLong_s {
-	short year;	/**< Year in yyyy notation. */
-	byte month;	/**< Number of month (starting with 1). */
-	byte day;	/**< Number of day (starting with 1). */
-	byte hour;	/**< Hour of the day. @todo check what number-range this gives) */
-	byte min;	/**< Minute of the hour. */
-	byte sec;	/**< Second of the minute. */
-} dateLong_t;
-
 typedef struct {
 	int x, y;
 } screenPoint_t;
@@ -603,11 +584,6 @@ void CP_EndCampaign(qboolean won);
 void CP_Shutdown(void);
 void CP_ResetCampaignData(void);
 
-
-/* Date functions */
-void CP_DateConvertLong(const date_t * date, dateLong_t * dateLong);
-const char* CP_SecondConvert(int second);
-
 /* Mission related functions */
 int CP_CountMissionOnGeoscape(void);
 void CP_UpdateMissionVisibleOnGeoscape(void);
@@ -616,12 +592,11 @@ qboolean AIR_SendAircraftToMission(aircraft_t *aircraft, mission_t *mission);
 void AIR_AircraftsNotifyMissionRemoved(const mission_t *mission);
 
 void CP_UFOProceedMission(const campaign_t* campaign, aircraft_t *ufocraft);
-void CP_InitMissionResults(qboolean won, const missionResults_t *results);
 mission_t *CP_CreateNewMission(interestCategory_t category, qboolean beginNow);
 qboolean CP_ChooseMap(mission_t *mission, const vec2_t pos);
 void CP_StartSelectedMission(void);
 
-void CP_HandleNationData(float minHappiness, qboolean won, mission_t * mis, const nation_t *nation, const missionResults_t *results);
+void CP_HandleNationData(float minHappiness, mission_t * mis, const nation_t *nation, const missionResults_t *results);
 void CP_UpdateCharacterStats(const base_t *base, const aircraft_t *aircraft);
 
 /* Credits management */

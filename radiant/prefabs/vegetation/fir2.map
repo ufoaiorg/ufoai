@@ -4,8 +4,8 @@
 "classname" "worldspawn"
 // brush 0
 {
-( 0 32 88 ) ( 0 0 88 ) ( 0 0 16 ) tex_common/actorclip -0 8 0 0.5 0.5 65536 0 0
-( 32 0 88 ) ( 32 32 88 ) ( 32 32 16 ) tex_common/actorclip -0 8 0 0.5 0.5 65536 0 0
+( 0 32 88 ) ( 0 0 88 ) ( 0 0 16 ) tex_common/actorclip 0 8 0 0.5 0.5 65536 0 0
+( 32 0 88 ) ( 32 32 88 ) ( 32 32 16 ) tex_common/actorclip 0 8 0 0.5 0.5 65536 0 0
 ( 0 0 88 ) ( 32 0 88 ) ( 32 0 16 ) tex_common/actorclip 0 8 0 0.5 0.5 65536 0 0
 ( 506 32 83 ) ( 500 32 83 ) ( 500 32 81 ) tex_common/actorclip 0 8 0 0.5 0.5 65536 0 0
 ( 1216 224 0 ) ( 1248 224 0 ) ( 1216 256 0 ) tex_common/actorclip 0 0 0 0.5 0.5 65536 0 0
@@ -36,7 +36,7 @@
 "spawnflags" "255"
 "origin" "16 16 0"
 "model" "models/objects/vegi/tree02/tree2_a.md2"
-"skin" "1"
+"skin" "0"
 }
 // entity 2
 {

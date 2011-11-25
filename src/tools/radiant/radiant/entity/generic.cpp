@@ -375,10 +375,10 @@ class GenericEntityNode: public scene::Node,
 		{
 		}
 		GenericEntityNode (const GenericEntityNode& other) :
-			scene::Instantiable(other), scene::Cloneable(other), Nameable(other), Snappable(other),
-					TransformNode(other), EntityNode(other), Namespaced(other), m_contained(other.m_contained, *this,
-							InstanceSet::TransformChangedCaller(m_instances), InstanceSetEvaluateTransform<
-									GenericEntityInstance>::Caller(m_instances))
+			scene::Node(other), scene::Instantiable(other), scene::Cloneable(other), Nameable(other), Snappable(
+						other), TransformNode(other), EntityNode(other), Namespaced(other), m_contained(
+						other.m_contained, *this, InstanceSet::TransformChangedCaller(m_instances),
+						InstanceSetEvaluateTransform<GenericEntityInstance>::Caller(m_instances))
 		{
 		}
 

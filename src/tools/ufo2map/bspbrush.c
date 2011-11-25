@@ -317,7 +317,7 @@ uint32_t BrushListCalcContents (bspbrush_t *brushlist)
 	for (b = brushlist; b; b = b->next) {
 		/* if the brush is solid and all of its sides are on nodes,
 		 * it eats everything */
-		if (b->original->contentFlags & CONTENTS_SOLID && !(b->original->contentFlags & CONTENTS_PASSABLE)) {
+		if ((b->original->contentFlags & CONTENTS_SOLID) && !(b->original->contentFlags & CONTENTS_PASSABLE)) {
 			int i;
 			for (i = 0; i < b->numsides; i++)
 				if (b->sides[i].texinfo != TEXINFO_NODE)
@@ -812,45 +812,4 @@ void BrushlistCalcStats (bspbrush_t *brushlist, vec3_t mins, vec3_t maxs)
 	Verb_Printf(VERB_EXTRA, "%5i brushes\n", c_brushes);
 	Verb_Printf(VERB_EXTRA, "%5i visible faces\n", c_faces);
 	Verb_Printf(VERB_EXTRA, "%5i nonvisible faces\n", c_nonvisfaces);
-}
-
-
-/**
- * @brief writes a map with the split bsp brushes
- */
-void WriteBSPBrushMap (const char *name, const bspbrush_t *list)
-{
-	qFILE f;
-
-	/* note it */
-	Verb_Printf(VERB_LESS, "Writing %s\n", name);
-
-	/* open the map file */
-	FS_OpenFile(name, &f, FILE_WRITE);
-	if (f.f == NULL)
-		Sys_Error("Can't write %s\b", name);
-
-	FS_Printf(&f, "{\n\"classname\" \"worldspawn\"\n");
-
-	for (; list; list = list->next) {
-		const side_t *s;
-		int i;
-
-		FS_Printf(&f, "{\n");
-		for (i = 0, s = list->sides; i < list->numsides; i++, s++) {
-			winding_t *w = BaseWindingForPlane(mapplanes[s->planenum].normal, mapplanes[s->planenum].dist);
-			const dBspTexinfo_t *t = &curTile->texinfo[s->texinfo];
-
-			FS_Printf(&f, "( %i %i %i ) ", (int)w->p[0][0], (int)w->p[0][1], (int)w->p[0][2]);
-			FS_Printf(&f, "( %i %i %i ) ", (int)w->p[1][0], (int)w->p[1][1], (int)w->p[1][2]);
-			FS_Printf(&f, "( %i %i %i ) ", (int)w->p[2][0], (int)w->p[2][1], (int)w->p[2][2]);
-
-			FS_Printf(&f, "%s 0 0 0 1 1 0 %i %i\n", t->texture, t->surfaceFlags, t->value);
-			FreeWinding(w);
-		}
-		FS_Printf(&f, "}\n");
-	}
-	FS_Printf(&f, "}\n");
-
-	FS_CloseFile(&f);
 }

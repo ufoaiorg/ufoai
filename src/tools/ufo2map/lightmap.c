@@ -49,6 +49,9 @@ typedef struct {
 
 	int		texmins[2];
 	int		texsize[2];		/**< the size of the lightmap in pixel */
+
+	int step; /**< step between samples in tex2world units */
+
 	dBspSurface_t	*face;
 } lightinfo_t;
 
@@ -161,7 +164,6 @@ static void CalcLightinfoVectors (lightinfo_t *l)
 
 	tex = &curTile->texinfo[l->face->texinfo];
 
-	/* convert from float to double */
 	for (i = 0; i < 2; i++)
 		VectorCopy(tex->vecs[i], l->worldtotex[i]);
 
@@ -216,6 +218,9 @@ static void CalcLightinfoVectors (lightinfo_t *l)
 	l->surfpt = (vec3_t *)Mem_Alloc(l->numsurfpt * sizeof(vec3_t));
 	if (!l->surfpt)
 		Sys_Error("Surface too large to light ("UFO_SIZE_T")", l->numsurfpt * sizeof(*l->surfpt));
+
+	/* distance between samples */
+	l->step = 1 << config.lightquant;
 }
 
 /**
@@ -240,7 +245,7 @@ static void CalcPoints (lightinfo_t *l, float sofs, float tofs)
 	h = l->texsize[1];
 	w = l->texsize[0];
 
-	step = 1 << config.lightquant;
+	step = l->step;
 	starts = l->texmins[0] * step;
 	startt = l->texmins[1] * step;
 
@@ -353,10 +358,11 @@ void BuildLights (void)
 			intensity = 300.0;
 		color = ValueForKey(e, "_color");
 		if (color && color[0] != '\0'){
-			sscanf(color, "%f %f %f", &l->color[0], &l->color[1], &l->color[2]);
+			if (sscanf(color, "%f %f %f", &l->color[0], &l->color[1], &l->color[2]) != 3)
+				Sys_Error("Invalid _color entity property given: %s", color);
 			ColorNormalize(l->color, l->color);
 		} else
-			l->color[0] = l->color[1] = l->color[2] = 1.0;
+			VectorSet(l->color, 1.0, 1.0, 1.0);
 		l->intensity = intensity * config.entity_scale;
 		l->type = emit_point;
 
@@ -419,7 +425,8 @@ void BuildLights (void)
 
 		if (angles[0] != '\0') {
 			VectorClear(sun_angles);
-			sscanf(angles, "%f %f", &sun_angles[0], &sun_angles[1]);
+			if (sscanf(angles, "%f %f", &sun_angles[0], &sun_angles[1]) != 2)
+				Sys_Error("wrong angles values given: '%s'", angles);
 			AngleVectors(sun_angles, sun_normal, NULL, NULL);
 		}
 
@@ -526,7 +533,10 @@ static void GatherSampleSunlight (const vec3_t pos, const vec3_t normal, float *
 	if (TR_TestLineSingleTile(pos, delta, headhint))
 		return; /* occluded */
 
-	light = sun_intensity * dot * scale;
+	light = sun_intensity * dot;
+	if (light > 255)
+		light = 255;
+	light *= scale;
 
 	/* add some light to it */
 	VectorMA(sample, light, sun_color, sample);
@@ -583,7 +593,7 @@ static void GatherSampleLight (vec3_t pos, const vec3_t normal, float *sample, f
 				light = (l->intensity - dist) * dot;
 			} else {
 				/* outside the cone */
-				light = (l->intensity * 0.5 - dist) * dot;
+				light = (l->intensity * (dot2 / l->stopdot) - dist) * dot;
 			}
 			break;
 		default:
@@ -596,6 +606,8 @@ static void GatherSampleLight (vec3_t pos, const vec3_t normal, float *sample, f
 		if (TR_TestLineSingleTile(pos, l->origin, headhint))
 			continue;	/* occluded */
 
+		if (light > 255)
+			light = 255;
 		/* add some light to it */
 		VectorMA(sample, light * scale, l->color, sample);
 
@@ -709,6 +721,7 @@ void BuildVertexNormals (void)
 /**
  * @brief For Phong-shaded samples, interpolate the vertex normals for the surface in
  * question, weighting them according to their proximity to the sample position.
+ * @todo Implement it (just clones the normal of nearest vertex for now)
  */
 static void SampleNormal (const lightinfo_t *l, const vec3_t pos, vec3_t normal)
 {
@@ -740,8 +753,10 @@ static void SampleNormal (const lightinfo_t *l, const vec3_t pos, vec3_t normal)
 
 
 #define MAX_SAMPLES 5
-static const float sampleofs[MAX_SAMPLES][2] = {
-	{0.0, 0.0}, {-0.125, -0.125}, {0.125, -0.125}, {0.125, 0.125}, {-0.125, 0.125}
+#define SOFT_SAMPLES 4
+static const float sampleofs[2][MAX_SAMPLES][2] = {
+	{{0.0, 0.0}, {-0.125, -0.125}, {0.125, -0.125}, {0.125, 0.125}, {-0.125, 0.125}},
+	{{-0.66, 0.33}, {-0.33, -0.66}, {0.33, 0.66}, {0.66, -0.33},{0.0,0.0}}
 };
 
 /**
@@ -757,11 +772,12 @@ void BuildFacelights (unsigned int facenum)
 	float *sdir, *tdir;
 	vec3_t normal, binormal;
 	vec4_t tangent;
-	lightinfo_t l[MAX_SAMPLES];
+	lightinfo_t li;
 	float scale;
 	int i, j, numsamples;
 	facelight_t *fl;
 	int *headhints;
+	const int grid_type = config.soft ? 1 : 0;
 
 	if (facenum >= MAX_MAP_FACES) {
 		Com_Printf("MAX_MAP_FACES hit\n");
@@ -780,40 +796,37 @@ void BuildFacelights (unsigned int facenum)
 
 	/* lighting -extra antialiasing */
 	if (config.extrasamples)
-		numsamples = MAX_SAMPLES;
+		numsamples = config.soft ? SOFT_SAMPLES : MAX_SAMPLES;
 	else
 		numsamples = 1;
 
-	OBJZERO(l);
+	OBJZERO(li);
 
 	scale = 1.0 / numsamples; /* each sample contributes this much */
 
-	for (i = 0; i < numsamples; i++) {
-		lightinfo_t *li = &l[i];
-		li->face = face;
-		li->facedist = plane->dist;
-		VectorCopy(plane->normal, li->facenormal);
-		/* negate the normal and dist */
-		if (face->side) {
-			VectorNegate(li->facenormal, li->facenormal);
-			li->facedist = -li->facedist;
-		}
-
-		/* get the origin offset for rotating bmodels */
-		VectorCopy(face_offset[facenum], li->modelorg);
-
-		/* calculate lightmap texture mins and maxs */
-		CalcLightinfoExtents(li);
-
-		/* and the lightmap texture vectors */
-		CalcLightinfoVectors(li);
-
-		/* now generate all of the sample points */
-		CalcPoints(li, sampleofs[i][0], sampleofs[i][1]);
+	li.face = face;
+	li.facedist = plane->dist;
+	VectorCopy(plane->normal, li.facenormal);
+	/* negate the normal and dist */
+	if (face->side) {
+		VectorNegate(li.facenormal, li.facenormal);
+		li.facedist = -li.facedist;
 	}
 
+	/* get the origin offset for rotating bmodels */
+	VectorCopy(face_offset[facenum], li.modelorg);
+
+	/* calculate lightmap texture mins and maxs */
+	CalcLightinfoExtents(&li);
+
+	/* and the lightmap texture vectors */
+	CalcLightinfoVectors(&li);
+
+	/* now generate all of the sample points */
+	CalcPoints(&li, 0, 0);
+
 	fl = &facelight[config.compile_for_day][facenum];
-	fl->numsamples = l[0].numsurfpt;
+	fl->numsamples = li.numsurfpt;
 	fl->samples = (float *)Mem_Alloc(fl->numsamples * sizeof(vec3_t));
 	fl->directions = (float *)Mem_Alloc(fl->numsamples * sizeof(vec3_t));
 
@@ -827,17 +840,21 @@ void BuildFacelights (unsigned int facenum)
 		float *sample = fl->samples + i * 3;			/* accumulate lighting here */
 		float *direction = fl->directions + i * 3;		/* accumulate direction here */
 
+		if (tex->surfaceFlags & SURF_PHONG)
+			/* interpolated normal */
+			SampleNormal(&li, li.surfpt[i], normal);
+		else
+			/* or just plane normal */
+			VectorCopy(li.facenormal, normal);
+
 		for (j = 0; j < numsamples; j++) {  /* with antialiasing */
 			vec3_t pos;
 
-			if (tex->surfaceFlags & SURF_PHONG)
-				/* interpolated normal */
-				SampleNormal(&l[0], l[j].surfpt[i], normal);
-			else
-				/* or just plane normal */
-				VectorCopy(l[0].facenormal, normal);
+			/* add offset for supersampling */
+			VectorMA(li.surfpt[i], sampleofs[grid_type][j][0] * li.step, li.textoworld[0], pos);
+			VectorMA(pos, sampleofs[grid_type][j][1] * li.step, li.textoworld[1], pos);
 
-			NudgeSamplePosition(l[j].surfpt[i], normal, center, pos);
+			NudgeSamplePosition(pos, normal, center, pos);
 
 			GatherSampleLight(pos, normal, sample, direction, scale, headhints);
 		}
@@ -868,8 +885,7 @@ void BuildFacelights (unsigned int facenum)
 	}
 
 	/* free the sample positions for the face */
-	for (i = 0; i < numsamples; i++)
-		Mem_Free(l[i].surfpt);
+	Mem_Free(li.surfpt);
 }
 
 #define TGA_HEADER_SIZE 18

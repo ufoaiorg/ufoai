@@ -150,7 +150,7 @@ static inline const char *AIM_AircraftItemtypeName (const int equiptype)
  */
 static qboolean AIM_CrafttypeFilter (const base_t *base, aircraftItemType_t filterType, const technology_t *tech)
 {
-	objDef_t *item;
+	const objDef_t *item;
 	if (!base)
 		return qfalse;
 
@@ -211,7 +211,7 @@ static void AIM_UpdateAircraftItemList (const aircraftSlot_t *slot)
 	while (*currentTech) {
 		if (AIM_CrafttypeFilter(base, airequipID, *currentTech)) {
 			uiNode_t *option;
-			objDef_t *item = INVSH_GetItemByID((*currentTech)->provides);
+			const objDef_t *item = INVSH_GetItemByID((*currentTech)->provides);
 			const int amount = B_ItemInBase(item, base);
 
 			LIST_AddString(&amountList, va("%d", amount));
@@ -420,7 +420,7 @@ static void AIM_AircraftEquipMenuUpdate (void)
  */
 static int AIM_CheckTechnologyIntoSlot (const aircraftSlot_t *slot, const technology_t *tech)
 {
-	objDef_t *item;
+	const objDef_t *item;
 
 	if (!tech)
 		return AIM_LOADING_NOTECHNOLOGYSELECTED;

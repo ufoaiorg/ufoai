@@ -47,6 +47,7 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #define HEADGEAR(e) (CONTAINER(e, csi.idHeadgear))
 #define EXTENSION(e) (CONTAINER(e, csi.idExtension))
 #define HOLSTER(e) (CONTAINER(e, csi.idHolster))
+#define EQUIP(e) (CONTAINER(e, csi.idEquip))
 
 #define INVDEF(containerID) (&csi.ids[(containerID)])
 
@@ -70,13 +71,17 @@ typedef struct mapDef_s {
 	char *param;			/**< in case of ump file, the assembly to use */
 	char *description;		/**< the description to show in the menus */
 	char *size;				/**< small, medium, big */
+	char *civTeam;			/**< the civilian team to use for this map - this can also be NULL */
 
 	/* multiplayer */
 	qboolean multiplayer;	/**< is this map multiplayer ready at all */
 	int teams;				/**< multiplayer teams */
 	linkedList_t *gameTypes;	/**< gametype strings this map is useable for */
 
+
 	/* singleplayer */
+	qboolean campaign;			/**< available in campaign mode? */
+	qboolean singleplayer;		/**< is this map available in singleplayer games? */
 	int maxAliens;				/**< Number of spawning points on the map */
 	qboolean hurtAliens;		/**< hurt the aliens on spawning them - e.g. for ufocrash missions */
 
@@ -95,7 +100,17 @@ typedef struct mapDef_s {
 	char *onlose;		/**< trigger command after you've lost a battle */
 } mapDef_t;
 
+#define MapDef_ForeachCondition(var, condition) \
+	for (int var##__loopvar = 0; (var) = NULL, var##__loopvar < cls.numMDs; var##__loopvar++) \
+		if ((var) = &cls.mds[var##__loopvar], !(condition)) {} else
+
+#define MapDef_Foreach(var) MapDef_ForeachCondition(var, 1)
+#define MapDef_ForeachSingleplayer(var) MapDef_ForeachCondition(var, (var)->singleplayer)
+#define MapDef_ForeachSingleplayerCampaign(var) MapDef_ForeachCondition(var, (var)->singleplayer && (var)->campaign)
+
 mapDef_t* Com_GetMapDefinitionByID(const char *mapDefID);
-mapDef_t* Com_GetMapDefByIDX(int index);
+mapDef_t* GAME_GetMapDefByIDX(int index);
+
+extern memPool_t *cl_genericPool;
 
 #endif

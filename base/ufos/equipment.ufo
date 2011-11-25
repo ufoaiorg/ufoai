@@ -7,186 +7,69 @@
 //	campaign_player_aliens: same as 'campaign_player' for alien campaign.
 //	campaign_market_aliens: same as 'campaign_asymptotic_market' for alien campaign.
 
-//=======================
-// human campaigns
-//=======================
 
-equipment campaign_player
+//=============================
+// multiplayer auto-equip
+//=============================
+
+equipment multiplayer_initial
 {
-	item assault						1
-	item assault_ammo				12
-	item machinegun					1
-	item machinegun_ammo				12
-	item sniper						1
-	item sniper_ammo					10
-	item pistol						1
-	item pistol_ammo					10
-	item pistol2						1
-	item pistol2_ammo				10
-	item smg							1
-	item smg_ammo					10
-	item shotgun2					1
-	item shotgun_micro_ammo			12
-	item shotgun2_slug_ammo			12
-	item shotgun_micro				1
-	item flamer						1
-	item flamer_ammo					6
-	item rpg							1
-	item rpg_ammo					12
-	item grenl						1
-	item grenl_ammo					10
-	item fraggrenade					12
-	item smokegrenade				2
-	item knife						2
-	item armour_light				0
-	item medikit						2
-	item irgoggles					1
-	item flashbang					5
-	item craft_weapon_shiva			2
-	item craft_ammo_shiva_API		30
-	item craft_ammo_shiva_HEI		30
-	item craft_weapon_sparrowhawk	3
-	item craft_ammo_sparrowhawk		16
-	item craft_weapon_tr20			1
-	item craft_ammo_tr20				6
-	item craft_el_fuelpod			1
-	item craft_shield_polymer		1
-}
-
-equipment campaign_initial_market
-{
-	item assault						4
-	item assault_ammo				45
-	item machinegun					3
-	item machinegun_ammo				12
-	item sniper						3
-	item sniper_ammo					45
-	item pistol						4
-	item pistol_ammo					40
-	item pistol2						4
-	item pistol2_ammo				40
-	item smg							3
-	item smg_ammo					40
-	item shotgun2					3
-	item shotgun2_slug_ammo			40
-	item shotgun_micro				4
-	item shotgun_micro_ammo			20
-	item flamer						3
-	item flamer_ammo					40
-	item rpg							3
-	item rpg_ammo					50
-	item rpg_incendiary_ammo			20
-	item grenl						2
-	item grenl_ammo					20
-	item grenl_incendiary_ammo		10
-	item grenl_fle_ammo				10
-	item fraggrenade					40
-	item incgrenade					10
-	item smokegrenade				10
-	item knife						20
-	item irgoggles					2
-	item medikit						4
-	item flashbang					10
-	item armour_light				20
-	item craft_weapon_shiva			6
-	item craft_ammo_shiva_API		100
-	item craft_ammo_shiva_HEI		100
-	item craft_weapon_sparrowhawk	3
-	item craft_ammo_sparrowhawk		56
-	item craft_weapon_tr20			3
-	item craft_ammo_tr20				30
-	item craft_el_fuelpod			10
-	item craft_el_raven				4
-	item craft_el_targeting			2
-	item craft_shield_polymer		4
-	item base_AA51_launcher			3
-	item ugv_chaingun				20 // This has to be at least the number of ugvs (with default weapon "ugv_chaingun")
-	item ugv_chaingun_belt			40
-	aircraft craft_drop_firebird	5
-	aircraft craft_inter_stiletto	8
-	aircraft craft_inter_saracen	6
-}
-
-equipment campaign_asymptotic_market
-{
-//	item armour_lightadv			3
-	item armour_medium			3
-	item armour_power			3
-	item coilgun					2
-	item coilgun_ammo			20
-	item rpg_incendiary_ammo		10
-	item bolterrifle				3
-	item bolterrifle_ammo		30
-	item laserpistol				4
-	item laserrifle				4
-	item heavylaser				4
-	item laser_ammo			50
-	item stunrod					4
-}
-
-//=================
-// alien campaign
-// FIXME: Items are not researched at this time
-// FIXME: Armour is only for blue aliens
-//=================
-
-equipment campaign_player_aliens
-{
-	item assault				1
-	item assault_ammo		1
-	item sniper				1
-	item sniper_ammo			1
-	item pbeampistol			4
-	item pbeampistol_ammo	40
-	item smg					1
-	item smg_ammo			1
-	item shotgun				1
-	item shotgun_ammo		1
-	item flamer				1
-	item flamer_ammo			1
-	item rpg					1
-	item rpg_ammo			4
+	name "_Multiplayer"
+	item assault				10
+	item assault_ammo		13
+	item machinegun			1
+	item machinegun_ammo		2
+	item sniper				12
+	item sniper_ammo			13
+	item pistol				8
+	item pistol_ammo			25
+	item smg				    10
+	item smg_ammo			25
+	item shotgun				10
+	item shotgun_ammo		25
+	item flamer				9
+	item flamer_ammo			13
+	item irgoggles			4
+	item medikit						3
+	item rpg				    9
+	item rpg_ammo			13
+//	rpg_incendiary_ammo	13
+	item grenl				10
+	item grenl_ammo			23
+	item grenl_plasma_ammo	13
+	item bolterrifle			8
+	item bolterrifle_ammo	13
+	item laserpistol			10
+	item laserrifle			7
+	item laser_ammo		38
+//	item heavylaser			6
+//	item xaw95				2
+//	item xaw95_ammo			5
+//	item coilgun				2
+//	item coilgun_ammo		5
+//	item needlergun			2
+//	item needlergun_ammo		5
+	item plaspistol			10
+	item plaspistol_ammo		25
+	item plasrifle			6
+	item plasrifle_ammo		13
+	item plasblaster			5
+	item plasblaster_ammo	13
+	item pbeampistol			8
+	item pbeampistol_ammo	25
+	item pbeamcannon			5
+	item pbeamcannon_ammo	13
+	item pbeamrifle			5
+	item pbeamrifle_ammo		13
 	item fraggrenade			3
-	item kerrblade			1
-	item armour_light_alien	0
-}
-
-equipment campaign_market_aliens
-{
-	item assault				4
-	item assault_ammo		40
-	item sniper				3
-	item sniper_ammo			40
-	item pbeampistol			4
-	item pbeampistol_ammo	40
-	item smg					3
-	item smg_ammo			40
-	item shotgun				3
-	item shotgun_ammo		30
-	item flamer				3
-	item flamer_ammo			30
-	item rpg					3
-	item rpg_ammo			40
-	item rpg_incendiary_ammo	20
-//	item rpg_particle_ammo	10
-	item grenl				2
-	item grenl_ammo			20
-	item grenl_plasma_ammo	10
-	item bolterrifle			2
-	item bolterrifle_ammo	20
-	item laserpistol			1
-	item laserrifle			1
-	item laser_ammo		35
-	item heavylaser			1
-	item fraggrenade			40
-	item kerrblade			20
-	item irgoggles			2
-	item medikit				2
-	item stunrod				2
-	item stungrenade			10
-	item armour_light_alien	20
-	item armour_medium_alien	5
-//	item heavy_alien			1
+	item plasmagrenade		3
+	item kerrblade			2 // bulky, will rarely get into the backpack
+	item plasblade			3
+	item armour_light		10
+	item armour_medium		10
+//	item armour_heavy		5
+//	item armour_power		2
+	item smokegrenade		3
 }
 
 //=============================
@@ -195,6 +78,7 @@ equipment campaign_market_aliens
 
 equipment multiplayer_alien
 {
+	name "_Multiplayer Alien"
 	item assault				2
 	item assault_ammo		6
 	item vhs					2
@@ -273,6 +157,7 @@ equipment multiplayer_alien
 
 equipment multiplayer_phalanx
 {
+	name "_Multiplayer Phalanx"
 	item assault				2
 	item assault_ammo		6
 	item vhs					2
@@ -352,12 +237,16 @@ equipment multiplayer_phalanx
 	item armour_power		2
 }
 
-//=============================
-// multiplayer auto-equip
-//=============================
-
-equipment multiplayer_initial
+equipment mp_arifles_only
 {
+	name "_Assault Rifles Only"
+	item assault				16
+	item assault_ammo		64
+}
+
+equipment mp_no_ir
+{
+	name "_No IR Goggles"
 	item assault				10
 	item assault_ammo		13
 	item machinegun			1
@@ -372,7 +261,6 @@ equipment multiplayer_initial
 	item shotgun_ammo		25
 	item flamer				9
 	item flamer_ammo			13
-	item irgoggles			4
 	item medikit						3
 	item rpg				    9
 	item rpg_ammo			13
@@ -417,6 +305,7 @@ equipment multiplayer_initial
 
 equipment stun
 {
+	name "_Flamers/Rifles/Grenades"
 	item flamer			8
 	item flamer_ammo	16
 	item assault		8
@@ -426,4 +315,191 @@ equipment stun
 	item stungrenade	1
 	item fraggrenade	12
 	item plasmagrenade	30
+}
+
+//=======================
+// human campaigns
+//=======================
+
+equipment campaign_player
+{
+	name "_Campaign Start"
+	item assault						1
+	item assault_ammo				12
+	item machinegun					1
+	item machinegun_ammo				12
+	item sniper						1
+	item sniper_ammo					10
+	item pistol						1
+	item pistol_ammo					10
+	item pistol2						1
+	item pistol2_ammo				10
+	item smg							1
+	item smg_ammo					10
+	item shotgun2					1
+	item shotgun_micro_ammo			12
+	item shotgun2_slug_ammo			12
+	item shotgun_micro				1
+	item flamer						1
+	item flamer_ammo					6
+	item rpg							1
+	item rpg_ammo					12
+	item grenl						1
+	item grenl_ammo					10
+	item fraggrenade					12
+	item smokegrenade				2
+	item knife						2
+	item armour_light				0
+	item medikit						2
+	item irgoggles					1
+	item flashbang					5
+	item craft_weapon_shiva			2
+	item craft_ammo_shiva_API		30
+	item craft_ammo_shiva_HEI		30
+	item craft_weapon_sparrowhawk	3
+	item craft_ammo_sparrowhawk		16
+	item craft_weapon_tr20			1
+	item craft_ammo_tr20				6
+	item craft_el_fuelpod			1
+	item craft_shield_polymer		1
+}
+
+equipment campaign_initial_market
+{
+	name "_Campaign Start (Market)"
+	item assault						4
+	item assault_ammo				45
+	item machinegun					3
+	item machinegun_ammo				12
+	item sniper						3
+	item sniper_ammo					45
+	item pistol						4
+	item pistol_ammo					40
+	item pistol2						4
+	item pistol2_ammo				40
+	item smg							3
+	item smg_ammo					40
+	item shotgun2					3
+	item shotgun2_slug_ammo			40
+	item shotgun_micro				4
+	item shotgun_micro_ammo			20
+	item flamer						3
+	item flamer_ammo					40
+	item rpg							3
+	item rpg_ammo					50
+	item rpg_incendiary_ammo			20
+	item grenl						2
+	item grenl_ammo					20
+	item grenl_incendiary_ammo		10
+	item grenl_fle_ammo				10
+	item fraggrenade					40
+	item incgrenade					10
+	item smokegrenade				10
+	item knife						20
+	item irgoggles					2
+	item medikit						4
+	item flashbang					10
+	item armour_light				20
+	item craft_weapon_shiva			6
+	item craft_ammo_shiva_API		100
+	item craft_ammo_shiva_HEI		100
+	item craft_weapon_sparrowhawk	3
+	item craft_ammo_sparrowhawk		56
+	item craft_weapon_tr20			3
+	item craft_ammo_tr20				30
+	item craft_el_fuelpod			10
+	item craft_el_raven				4
+	item craft_el_targeting			2
+	item craft_shield_polymer		4
+	item base_AA51_launcher			3
+	item ugv_chaingun				20 // This has to be at least the number of ugvs (with default weapon "ugv_chaingun")
+	item ugv_chaingun_belt			40
+	aircraft craft_drop_firebird	5
+	aircraft craft_inter_stiletto	8
+	aircraft craft_inter_saracen	6
+}
+
+equipment campaign_asymptotic_market
+{
+	name "_Asymptotic Market"
+//	item armour_lightadv			3
+	item armour_medium			3
+	item armour_power			3
+	item coilgun					2
+	item coilgun_ammo			20
+	item rpg_incendiary_ammo		10
+	item bolterrifle				3
+	item bolterrifle_ammo		30
+	item laserpistol				4
+	item laserrifle				4
+	item heavylaser				4
+	item laser_ammo			50
+	item stunrod					4
+}
+
+//=================
+// alien campaign
+// FIXME: Items are not researched at this time
+// FIXME: Armour is only for blue aliens
+//=================
+
+equipment campaign_player_aliens
+{
+	name "_Alien Campaign Start (Alien Campaign)"
+	item assault				1
+	item assault_ammo		1
+	item sniper				1
+	item sniper_ammo			1
+	item pbeampistol			4
+	item pbeampistol_ammo	40
+	item smg					1
+	item smg_ammo			1
+	item shotgun				1
+	item shotgun_ammo		1
+	item flamer				1
+	item flamer_ammo			1
+	item rpg					1
+	item rpg_ammo			4
+	item fraggrenade			3
+	item kerrblade			1
+	item armour_light_alien	0
+}
+
+equipment campaign_market_aliens
+{
+	name "_Alien Campaign Start (Market)"
+	item assault				4
+	item assault_ammo		40
+	item sniper				3
+	item sniper_ammo			40
+	item pbeampistol			4
+	item pbeampistol_ammo	40
+	item smg					3
+	item smg_ammo			40
+	item shotgun				3
+	item shotgun_ammo		30
+	item flamer				3
+	item flamer_ammo			30
+	item rpg					3
+	item rpg_ammo			40
+	item rpg_incendiary_ammo	20
+//	item rpg_particle_ammo	10
+	item grenl				2
+	item grenl_ammo			20
+	item grenl_plasma_ammo	10
+	item bolterrifle			2
+	item bolterrifle_ammo	20
+	item laserpistol			1
+	item laserrifle			1
+	item laser_ammo		35
+	item heavylaser			1
+	item fraggrenade			40
+	item kerrblade			20
+	item irgoggles			2
+	item medikit				2
+	item stunrod				2
+	item stungrenade			10
+	item armour_light_alien	20
+	item armour_medium_alien	5
+//	item heavy_alien			1
 }

@@ -6,13 +6,13 @@
 uniform float OFFSET;
 uniform int BUMPMAP;
 uniform int ANIMATE;
+uniform int IS_A_MODEL;
 
 /* from includes:
 varying vec3 point;
 varying vec3 normal;
 
 attribute vec4 TANGENT;
-uniform int DYNAMICLIGHTS;
 
 attribute vec4 NEXT_FRAME_VERTS;
 attribute vec4 NEXT_FRAME_NORMALS;
@@ -27,23 +27,21 @@ varying vec3 staticLightDir;
 varying float fog;
 */
 
-
 #include "lerp_vs.glsl"
 #include "light_vs.glsl"
-#include "bump_vs.glsl"
+#include "transform_lights_vs.glsl"
 #include "fog_vs.glsl"
 
 /**
  * @brief Main.
  */
-void main(void){
-
+void main(void) {
 	if (ANIMATE > 0) {
 		lerpVertex();
 	} else {
 		Vertex = gl_Vertex;
 		Normal = gl_Normal;
-		Tangent = TANGENTS;
+		Tangent = TANGENTS; /** @todo what if tangents are disabled? */
 	}
 
 	/* MVP transform into clip space.*/
@@ -57,10 +55,7 @@ void main(void){
 
 	LightVertex();
 
-#if r_bumpmap
-	if(BUMPMAP > 0 || DYNAMICLIGHTS > 0)
-		BumpVertex();
-#endif
+	TransformLights();
 
 #if r_fog
 	FogVertex();

@@ -39,6 +39,7 @@ static int UFO_InitSuiteGame (void)
 	TEST_Init();
 	/* we need the teamdefs for spawning ai actors */
 	Com_ParseScripts(qtrue);
+	Cvar_Set("sv_threads", "0");
 
 	sv_genericPool = Mem_CreatePool("server-gametest");
 	r_state.active_texunit = &r_state.texunits[0];
@@ -80,10 +81,11 @@ static void testSpawnAndConnect (void)
 	CU_ASSERT_FALSE(svs.ge->RunFrame());
 
 	while ((e = G_EdictsGetNextInUse(e))) {
+		Com_Printf("entity %i: %s\n", cnt, e->classname);
 		cnt++;
 	}
 
-	CU_ASSERT_EQUAL(cnt, 30);
+	CU_ASSERT_EQUAL(cnt, 45);
 
 	SV_ShutdownGameProgs();
 	FS_FreeFile(buf);
@@ -133,7 +135,10 @@ static void testShooting (void)
 		/* the other tests didn't call the server shutdown function to clean up */
 		OBJZERO(*sv);
 		SV_Map(qtrue, mapName, NULL);
-		/** @todo implement the test here */
+		/** @todo equip the soldier */
+		/** @todo set the input variables -- gi.ReadFormat(format, &pos, &i, &firemode, &from); */
+		/** @todo do the shot -- G_ClientShoot(player, ent, pos, i, firemode, &mock, qtrue, from); */
+		/** @todo implement the test here - e.g. extend shot_mock_t */
 		SV_ShutdownGameProgs();
 	} else {
 		UFO_CU_FAIL_MSG(va("Map resource '%s.bsp' for test is missing.", mapName));
@@ -152,6 +157,37 @@ static int GAMETEST_GetItemCount (const edict_t *ent, containerIndex_t container
 	return count;
 }
 
+static void testVisFlags (void)
+{
+	const char *mapName = "test_game";
+	if (FS_CheckFile("maps/%s.bsp", mapName) != -1) {
+		edict_t *ent;
+		int num;
+
+		/* the other tests didn't call the server shutdown function to clean up */
+		OBJZERO(*sv);
+		SV_Map(qtrue, mapName, NULL);
+
+		num = 0;
+		ent = NULL;
+		while ((ent = G_EdictsGetNextLivingActorOfTeam(ent, TEAM_ALIEN))) {
+			const vismask_t teamMask = G_TeamToVisMask(ent->team);
+			const qboolean visible = ent->visflags & teamMask;
+			char *visFlagsBuf = Mem_StrDup(Com_UnsignedIntToBinary(ent->visflags));
+			char *teamMaskBuf = Mem_StrDup(Com_UnsignedIntToBinary(teamMask));
+			CU_ASSERT_EQUAL(ent->team, TEAM_ALIEN);
+			UFO_CU_ASSERT_TRUE_MSG(visible, va("visflags: %s, teamMask: %s", visFlagsBuf, teamMaskBuf));
+			Mem_Free(visFlagsBuf);
+			Mem_Free(teamMaskBuf);
+			num++;
+		}
+
+		SV_ShutdownGameProgs();
+		CU_ASSERT_TRUE(num > 0);
+	} else {
+		UFO_CU_FAIL_MSG(va("Map resource '%s.bsp' for test is missing.", mapName));
+	}
+}
 static void testInventoryForDiedAlien (void)
 {
 	const char *mapName = "test_game";
@@ -171,7 +207,7 @@ static void testInventoryForDiedAlien (void)
 		diedEnt = G_EdictsGetNextLivingActorOfTeam(NULL, TEAM_ALIEN);
 		CU_ASSERT_PTR_NOT_NULL_FATAL(diedEnt);
 		diedEnt->HP = 0;
-		G_ActorDieOrStun(diedEnt, NULL);
+		CU_ASSERT_TRUE(G_ActorDieOrStun(diedEnt, NULL));
 		CU_ASSERT_TRUE_FATAL(G_IsDead(diedEnt));
 
 		/* now try to collect the inventory with a second alien */
@@ -298,11 +334,15 @@ static void testInventoryWithTwoDiedAliensOnTheSameGridTile (void)
 	}
 }
 
-static void testInventoryTemoContainerLinks (void)
+static void testInventoryTempContainerLinks (void)
 {
 	const char *mapName = "test_game";
 	if (FS_CheckFile("maps/%s.bsp", mapName) != -1) {
 		edict_t* ent;
+		int nr;
+		containerIndex_t container;
+		const invList_t *ic;
+
 		/* the other tests didn't call the server shutdown function to clean up */
 		OBJZERO(*sv);
 		SV_Map(qtrue, mapName, NULL);
@@ -310,10 +350,28 @@ static void testInventoryTemoContainerLinks (void)
 
 		/* first alien that should die and drop its inventory */
 		ent = G_EdictsGetNextLivingActorOfTeam(NULL, TEAM_ALIEN);
+		nr = 0;
+		for (container = 0; container < gi.csi->numIDs; container++) {
+			if (container == gi.csi->idArmour || container == gi.csi->idFloor)
+				continue;
+			for (ic = CONTAINER(ent, container); ic; ic = ic->next)
+				nr++;
+		}
+		CU_ASSERT_TRUE(nr > 0);
+
 		CU_ASSERT_PTR_NULL(FLOOR(ent));
 		G_InventoryToFloor(ent);
 		CU_ASSERT_PTR_NOT_NULL(FLOOR(ent));
 		CU_ASSERT_PTR_EQUAL(FLOOR(G_GetFloorItemsFromPos(ent->pos)), FLOOR(ent));
+
+		nr = 0;
+		for (container = 0; container < gi.csi->numIDs; container++) {
+			if (container == gi.csi->idArmour || container == gi.csi->idFloor)
+				continue;
+			for (ic = CONTAINER(ent, container); ic; ic = ic->next)
+				nr++;
+		}
+		CU_ASSERT_EQUAL(nr, 0);
 
 		SV_ShutdownGameProgs();
 	} else {
@@ -339,13 +397,16 @@ int UFO_AddGameTests (void)
 	if (CU_ADD_TEST(GameSuite, testShooting) == NULL)
 		return CU_get_error();
 
+	if (CU_ADD_TEST(GameSuite, testVisFlags) == NULL)
+		return CU_get_error();
+
 	if (CU_ADD_TEST(GameSuite, testInventoryForDiedAlien) == NULL)
 		return CU_get_error();
 
 	if (CU_ADD_TEST(GameSuite, testInventoryWithTwoDiedAliensOnTheSameGridTile) == NULL)
 		return CU_get_error();
 
-	if (CU_ADD_TEST(GameSuite, testInventoryTemoContainerLinks) == NULL)
+	if (CU_ADD_TEST(GameSuite, testInventoryTempContainerLinks) == NULL)
 		return CU_get_error();
 
 	return CUE_SUCCESS;

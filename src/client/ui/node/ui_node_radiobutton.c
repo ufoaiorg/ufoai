@@ -65,7 +65,7 @@ static qboolean UI_RadioButtonNodeIsSelected (uiNode_t *node)
 
 /**
  * @brief Handles RadioButton draw
- * @todo need to implement image. We can't do everything with only one icon (or use nother icon)
+ * @todo need to implement image. We can't do everything with only one icon (or use another icon)
  */
 static void UI_RadioButtonNodeDraw (uiNode_t *node)
 {
@@ -95,16 +95,16 @@ static void UI_RadioButtonNodeDraw (uiNode_t *node)
 	image = UI_GetReferenceString(node, node->image);
 	if (image) {
 		const int texX = 0;
-		UI_DrawNormImageByName(pos[0], pos[1], node->size[0], node->size[1],
+		UI_DrawNormImageByName(qfalse, pos[0], pos[1], node->size[0], node->size[1],
 			texX + node->size[0], texY + node->size[1], texX, texY, image);
 	}
 
 	if (EXTRADATA(node).background) {
-		UI_DrawSpriteInBox(EXTRADATA(node).background, iconStatus, pos[0], pos[1], node->size[0], node->size[1]);
+		UI_DrawSpriteInBox(qfalse, EXTRADATA(node).background, iconStatus, pos[0], pos[1], node->size[0], node->size[1]);
 	}
 
 	if (EXTRADATA(node).icon) {
-		UI_DrawSpriteInBox(EXTRADATA(node).icon, iconStatus, pos[0], pos[1], node->size[0], node->size[1]);
+		UI_DrawSpriteInBox(EXTRADATA(node).flipIcon, EXTRADATA(node).icon, iconStatus, pos[0], pos[1], node->size[0], node->size[1]);
 	}
 }
 
@@ -163,6 +163,7 @@ static const value_t properties[] = {
 	{"cvar", V_UI_CVAR, UI_EXTRADATA_OFFSETOF(EXTRADATA_TYPE, cvar), 0},
 	/* Icon used to display the node */
 	{"icon", V_UI_SPRITEREF, UI_EXTRADATA_OFFSETOF(EXTRADATA_TYPE, icon), MEMBER_SIZEOF(EXTRADATA_TYPE, icon)},
+	{"flipicon", V_BOOL, UI_EXTRADATA_OFFSETOF(EXTRADATA_TYPE, flipIcon), MEMBER_SIZEOF(EXTRADATA_TYPE, flipIcon)},
 	/* Sprite used to display the background */
 	{"background", V_UI_SPRITEREF, UI_EXTRADATA_OFFSETOF(EXTRADATA_TYPE, background), MEMBER_SIZEOF(EXTRADATA_TYPE, background)},
 

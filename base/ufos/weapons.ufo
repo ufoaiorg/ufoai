@@ -435,7 +435,7 @@ item stungrenade_alien
 	thrown		true
 	dmgtype stun_gas
 
-	weapon_mod stungrenade
+	weapon_mod stungrenade_alien
 	{
 		firedef
 		{

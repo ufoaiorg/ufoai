@@ -22,7 +22,7 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 
 */
 
-#include "../client.h"
+#include "../cl_shared.h"
 #include "ui_main.h"
 #include "ui_internal.h"
 #include "ui_nodes.h"
@@ -46,7 +46,6 @@ static const char *const ui_sharedDataIDNames[] = {
 	"TEXT_POPUP_INFO",
 	"TEXT_AIRCRAFT_LIST",
 	"TEXT_AIRCRAFT_INFO",
-	"TEXT_CAMPAIGN_LIST",
 	"TEXT_MULTISELECTION",
 	"TEXT_PRODUCTION_LIST",
 	"TEXT_PRODUCTION_AMOUNT",
@@ -108,6 +107,7 @@ static const char *const ui_sharedDataIDNames[] = {
 	"OPTION_BASELIST",
 	"OPTION_TEAMDEFS",
 	"OPTION_PRODUCTION_REQUIREMENTS",
+	"OPTION_CAMPAIGN_LIST",
 
 	"LINESTRIP_FUNDING",
 	"LINESTRIP_COLOR"

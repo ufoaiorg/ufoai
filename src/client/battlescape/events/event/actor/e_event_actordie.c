@@ -25,8 +25,19 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #include "../../../../client.h"
 #include "../../../cl_actor.h"
 #include "../../../cl_hud.h"
+#include "../../../cl_parse.h"
 #include "../../../../renderer/r_mesh_anim.h"
 #include "e_event_actordie.h"
+
+/**
+ * @brief Some events will be delayed if they are executed in the context of a dying actor. That's why we set
+ * the @c parsedDeath value to @c true here.
+ */
+int CL_ActorDieTime (const struct eventRegister_s *self, struct dbuffer *msg, eventTiming_t *eventTiming)
+{
+	eventTiming->parsedDeath = qtrue;
+	return eventTiming->impactTime;
+}
 
 /**
  * @brief Kills an actor (all that is needed is the local entity state set to STATE_DEAD).
@@ -37,9 +48,9 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 void CL_ActorDie (const eventRegister_t *self, struct dbuffer *msg)
 {
 	le_t *le;
-	int entnum, state;
+	int entnum, state, playerNum;
 
-	NET_ReadFormat(msg, self->formatString, &entnum, &state);
+	NET_ReadFormat(msg, self->formatString, &entnum, &state, &playerNum);
 
 	/* get les */
 	le = LE_Get(entnum);
@@ -55,13 +66,13 @@ void CL_ActorDie (const eventRegister_t *self, struct dbuffer *msg)
 
 	LE_Lock(le);
 
-	/* count spotted aliens */
-	cl.numEnemiesSpotted = CL_CountVisibleEnemies();
-
 	/* set relevant vars */
 	FLOOR(le) = NULL;
 
 	le->state = state;
+
+	/* count spotted aliens */
+	cl.numEnemiesSpotted = CL_CountVisibleEnemies();
 
 	/* play animation */
 	LE_SetThink(le, NULL);
@@ -71,15 +82,22 @@ void CL_ActorDie (const eventRegister_t *self, struct dbuffer *msg)
 
 	/* Print some info about the death or stun. */
 	if (le->team == cls.team) {
-		const character_t *chr = CL_ActorGetChr(le);
-		if (chr) {
+		if (playerNum != le->pnum) {
+			const char *playerName = CL_PlayerGetName(playerNum);
 			char tmpbuf[128];
-			if (LE_IsStunned(le)) {
-				Com_sprintf(tmpbuf, lengthof(tmpbuf), _("%s was stunned\n"), chr->name);
-			} else {
-				Com_sprintf(tmpbuf, lengthof(tmpbuf), _("%s was killed\n"), chr->name);
-			}
+			Com_sprintf(tmpbuf, lengthof(tmpbuf), _("%s lost a soldier\n"), playerName);
 			HUD_DisplayMessage(tmpbuf);
+		} else {
+			const character_t *chr = CL_ActorGetChr(le);
+			if (chr) {
+				char tmpbuf[128];
+				if (LE_IsStunned(le)) {
+					Com_sprintf(tmpbuf, lengthof(tmpbuf), _("%s was stunned\n"), chr->name);
+				} else {
+					Com_sprintf(tmpbuf, lengthof(tmpbuf), _("%s was killed\n"), chr->name);
+				}
+				HUD_DisplayMessage(tmpbuf);
+			}
 		}
 	} else {
 		switch (le->team) {

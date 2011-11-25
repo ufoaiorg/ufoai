@@ -30,7 +30,7 @@ void ColourSchemeEditor::populateTree() {
 
 	ColourSchemeMap allSchemes = ColourSchemes().getSchemeList();
 
-	for (ColourSchemeMap::iterator scheme = allSchemes.begin(); scheme != allSchemes.end(); scheme++) {
+	for (ColourSchemeMap::iterator scheme = allSchemes.begin(); scheme != allSchemes.end(); ++scheme) {
 		gtk_list_store_append(_listStore, &iter);
 		gtk_list_store_set(_listStore, &iter, 0, scheme->first.c_str(), -1);
 	}
@@ -269,7 +269,7 @@ void ColourSchemeEditor::updateColourSelectors() {
 	// Cycle through all the ColourItems and save them into the registry
 	for (it = colourMap.begin(), i = 1;
 		 it != colourMap.end();
-		 it++, i++)
+		 ++it, i++)
 	{
 		GtkWidget* colourSelector = constructColourSelector(it->second, it->first);
 		gtk_box_pack_start(GTK_BOX(curVbox), colourSelector, FALSE, FALSE, 5);

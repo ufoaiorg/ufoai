@@ -1,6 +1,5 @@
 #include "FileSystem.h"
-
-#include "iarchive.h"
+#include "FileSystemModule.h"
 
 #include "AutoPtr.h"
 #include "string/string.h"
@@ -46,8 +45,6 @@ inline ArchiveModule* GetArchiveTable (ArchiveModules& archiveModules, const std
 {
 	return archiveModules.findModule(string::toLower(ext));
 }
-
-ArchiveModules& FileSystemAPI_getArchiveModules ();
 
 void FileSystem::initPK3File (const std::string& filename)
 {

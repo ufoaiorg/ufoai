@@ -30,10 +30,6 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #include "../shared/parse.h"
 
 /**
- * Collecting items functions.
- */
-
-/**
  * @brief Gets equipment definition by id.
  * @param[in] name An id taken from scripts.
  * @return Found @c equipDef_t or @c NULL if no equipment definition found.
@@ -44,7 +40,7 @@ const equipDef_t *INV_GetEquipmentDefinitionByID (const char *name)
 
 	for (i = 0; i < csi.numEDs; i++) {
 		const equipDef_t *ed = &csi.eds[i];
-		if (Q_streq(name, ed->name))
+		if (Q_streq(name, ed->id))
 			return ed;
 	}
 
@@ -98,7 +94,7 @@ qboolean INV_LoadWeapon (const invList_t *weaponList, inventory_t *inv, const in
 	int equipType;
 	invList_t *ic = NULL;
 	int i = 0;
-	objDef_t *weapon;
+	const objDef_t *weapon;
 
 	assert(weaponList);
 
@@ -107,7 +103,7 @@ qboolean INV_LoadWeapon (const invList_t *weaponList, inventory_t *inv, const in
 	/* search an ammo */
 	while (i < weapon->numAmmos && !ic) {
 		const objDef_t *ammo = weapon->ammos[i];
-		ic = INVSH_SearchInInventoryWithFilter(inv, srcContainer, NONE, NONE, ammo, equipType);
+		ic = INV_SearchInInventoryWithFilter(inv, srcContainer, ammo, equipType);
 		i++;
 	}
 	if (ic)
@@ -148,7 +144,7 @@ static void INV_InventoryList_f (void)
 
 	for (i = 0; i < csi.numODs; i++) {
 		int j;
-		objDef_t *od = INVSH_GetItemByIDX(i);
+		const objDef_t *od = INVSH_GetItemByIDX(i);
 
 		Com_Printf("Item: %s\n", od->id);
 		Com_Printf("... name          -> %s\n", od->name);
@@ -182,7 +178,7 @@ static qboolean INV_EquipmentDefSanityCheck (void)
 	for (i = 0; i < csi.numEDs; i++) {
 		const equipDef_t const *ed = &csi.eds[i];
 		/* only check definitions used for generating teams */
-		if (!Q_strstart(ed->name, "alien") && !Q_strstart(ed->name, "phalanx"))
+		if (!Q_strstart(ed->id, "alien") && !Q_strstart(ed->id, "phalanx"))
 			continue;
 
 		/* Check primary */
@@ -194,7 +190,7 @@ static qboolean INV_EquipmentDefSanityCheck (void)
 				sum += ed->numItems[j];
 		}
 		if (sum > 100) {
-			Com_Printf("INV_EquipmentDefSanityCheck: Equipment Def '%s' has a total probability for primary weapons greater than 100\n", ed->name);
+			Com_Printf("INV_EquipmentDefSanityCheck: Equipment Def '%s' has a total probability for primary weapons greater than 100\n", ed->id);
 			result = qfalse;
 		}
 
@@ -206,7 +202,7 @@ static qboolean INV_EquipmentDefSanityCheck (void)
 				sum += ed->numItems[j];
 		}
 		if (sum > 100) {
-			Com_Printf("INV_EquipmentDefSanityCheck: Equipment Def '%s' has a total probability for secondary weapons greater than 100\n", ed->name);
+			Com_Printf("INV_EquipmentDefSanityCheck: Equipment Def '%s' has a total probability for secondary weapons greater than 100\n", ed->id);
 			result = qfalse;
 		}
 
@@ -218,7 +214,7 @@ static qboolean INV_EquipmentDefSanityCheck (void)
 				sum += ed->numItems[j];
 		}
 		if (sum > 100) {
-			Com_Printf("INV_EquipmentDefSanityCheck: Equipment Def '%s' has a total probability for armours greater than 100\n", ed->name);
+			Com_Printf("INV_EquipmentDefSanityCheck: Equipment Def '%s' has a total probability for armours greater than 100\n", ed->id);
 			result = qfalse;
 		}
 
@@ -252,7 +248,7 @@ itemFilterTypes_t INV_GetFilterFromItem (const objDef_t *obj)
  * @brief Checks if the given object/item matched the given filter type.
  * @param[in] obj A pointer to an objDef_t item.
  * @param[in] filterType Filter type to check against.
- * @return qtrue if obj is in filterType
+ * @return @c true if obj is in filterType
  */
 qboolean INV_ItemMatchesFilter (const objDef_t *obj, const itemFilterTypes_t filterType)
 {
@@ -340,12 +336,15 @@ qboolean INV_ItemMatchesFilter (const objDef_t *obj, const itemFilterTypes_t fil
  * @param[in] x/y Position in the scrollable container that you want to check. Ignored if "item" is set.
  * @param[in] item The item to search. Will ignore "x" and "y" if set, it'll also search invisible items.
  * @param[in] filterType Enum definition of type (types of items for filtering purposes).
- * @return invList_t Pointer to the invList_t/item that is located at x/y or equals "item".
+ * @return @c invList_t Pointer to the invList_t/item that is located at x/y or equals "item".
  * @sa INVSH_SearchInInventory
  */
-invList_t *INVSH_SearchInInventoryWithFilter (const inventory_t* const i, const invDef_t * container, int x, int y, const objDef_t *item,  const itemFilterTypes_t filterType)
+invList_t *INV_SearchInInventoryWithFilter (const inventory_t* const i, const invDef_t * container, const objDef_t *item,  const itemFilterTypes_t filterType)
 {
 	invList_t *ic;
+
+	if (i == NULL)
+		return NULL;
 
 	if (item == NULL)
 		return NULL;

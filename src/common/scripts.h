@@ -52,26 +52,25 @@ typedef enum {
 	V_CHAR,
 	V_INT,
 	V_INT2,
-	V_FLOAT = 5,
+	V_FLOAT,
 	V_POS,
 	V_VECTOR,
 	V_COLOR,
 	V_RGBA,
-	V_STRING = 10,
+	V_STRING,
 	V_TRANSLATION_STRING,	/**< remove _ but don't translate */
 	V_LONGSTRING,			/**< not buffer safe - use this only for menu node data array values! */
 	V_ALIGN,
 	V_BLEND,
-	V_STYLE = 15,
+	V_STYLE,
 	V_FADE,
 	V_SHAPE_SMALL,			/**< space a weapon allocates in the inventory shapes, w, h */
 	V_SHAPE_BIG,			/**< inventory shape, x, y, w, h */
 	V_DMGTYPE,
-	V_DMGWEIGHT = 20,
+	V_DMGWEIGHT,
 	V_DATE,
 	V_RELABS,				/**< relative (e.g. 1.50) and absolute (e.g. +15) values */
-	V_CLIENT_HUNK,			/**< only for client side data - not handled in Com_EParseValue */
-	V_CLIENT_HUNK_STRING,	/**< same as for V_CLIENT_HUNK */
+	V_HUNK_STRING,			/**< store the string in a mem pool */
 	V_TEAM,					/**< team string to int mapper */
 	V_RACE,
 	V_UFO,					/**< @brief Valid ufo types
@@ -81,6 +80,7 @@ typedef enum {
 							 * in the ufocrash[dn].ump files */
 	V_UFOCRASHED,
 	V_AIRCRAFTTYPE,
+	V_LIST,
 
 	V_NUM_TYPES
 } valueTypes_t;
@@ -194,6 +194,8 @@ int Com_SetValueDebug(void *base, const void *set, valueTypes_t type, int ofs, s
 int Com_EParseValue(void *base, const char *token, valueTypes_t type, int ofs, size_t size);
 int Com_SetValue(void *base, const void *set, valueTypes_t type, int ofs, size_t size);
 #endif
+qboolean Com_ParseBlock(const char *name, const char **text, void *base, const value_t *values, struct memPool_s *mempool);
+qboolean Com_ParseBlockToken(const char *name, const char **text, void *base, const value_t *values, struct memPool_s *mempool, const char *token);
 void* Com_AlignPtr(const void *memory, valueTypes_t type);
 const char *Com_ValueToStr(const void *base, const valueTypes_t type, const int ofs);
 const char *Com_GetLastParseError(void);
@@ -241,6 +243,7 @@ qboolean Com_UnregisterConstList(const constListEntry_t constList[]);
 void Com_ParseScripts(qboolean onlyServer);
 const char *Com_EParse(const char **text, const char *errhead, const char *errinfo);
 const char *Com_GetRandomMapAssemblyNameForCraft(const char *craftID);
+const char *Com_GetRandomMapAssemblyNameForCrashedCraft(const char *craftID);
 ufoType_t Com_UFOShortNameToID(const char *token);
 const char* Com_UFOTypeToShortName(ufoType_t type);
 const char* Com_UFOCrashedTypeToShortName(ufoType_t type);
@@ -255,7 +258,7 @@ const char* Com_DropShipTypeToShortName(humanAircraftType_t type);
 humanAircraftType_t Com_DropShipShortNameToID(const char *token);
 void Com_GetCharacterValues(const char *teamDefition, character_t * chr);
 const char* Com_GetActorSound(teamDef_t* td, int gender, actorSound_t soundType);
-teamDef_t* Com_GetTeamDefinitionByID(const char *team);
+const teamDef_t* Com_GetTeamDefinitionByID(const char *team);
 const chrTemplate_t* Com_GetCharacterTemplateByID(const char *chrTemplate);
 
 #endif /* SCRIPTS_H */

@@ -52,7 +52,7 @@ static qboolean Touch_Breakable (edict_t *self, edict_t *activator)
 static qboolean Destroy_Breakable (edict_t *self)
 {
 	vec3_t origin;
-	int i;
+	const char *model = self->model;
 
 	VectorCenterFromMinsMaxs(self->absmin, self->absmax, origin);
 
@@ -69,33 +69,21 @@ static qboolean Destroy_Breakable (edict_t *self)
 
 	switch (self->material) {
 	case MAT_GLASS:
-		G_EventSpawnSound(self, origin, "misc/breakglass+");
+		G_EventSpawnSound(PM_ALL, qfalse, self, origin, "misc/breakglass+");
 		break;
 	case MAT_METAL:
-		G_EventSpawnSound(self, origin, "misc/breakmetal+");
+		G_EventSpawnSound(PM_ALL, qfalse, self, origin, "misc/breakmetal+");
 		break;
 	case MAT_ELECTRICAL:
-		G_EventSpawnSound(self, origin, "misc/breakelectric+");
+		G_EventSpawnSound(PM_ALL, qfalse, self, origin, "misc/breakelectric+");
 		break;
 	case MAT_WOOD:
-		G_EventSpawnSound(self, origin, "misc/breakwood+");
+		G_EventSpawnSound(PM_ALL, qfalse, self, origin, "misc/breakwood+");
 		break;
 	case MAT_MAX:
 		break;
 	}
 
-	/* unlink to update the routing */
-	gi.UnlinkEdict(self);
-	self->inuse = qfalse;
-	self->HP = 0;
-
-	/* check whether the removal changes the vis mask
-	 * for the teams that were seeing this edict */
-	for (i = 0; i < MAX_TEAMS; i++)
-		if (level.num_alive[i] && (self->visflags & i))
-			G_CheckVisTeam(i, self, qfalse, self);
-
-	G_RecalcRouting(self);
 	G_TouchEdicts(self, 10.0f);
 
 	/* destroy the door trigger */
@@ -103,8 +91,9 @@ static qboolean Destroy_Breakable (edict_t *self)
 		G_FreeEdict(self->child);
 
 	/* now we can destroy the edict completely */
-	G_EventPerish(self);
 	G_FreeEdict(self);
+
+	G_RecalcRouting(model);
 
 	return qtrue;
 }
@@ -220,7 +209,7 @@ static qboolean Door_Use (edict_t *door, edict_t *activator)
 			/* let everybody know, that the door opens */
 			G_EventDoorOpen(door);
 			if (door->noise[0] != '\0')
-				G_EventSpawnSound(door, door->origin, door->noise);
+				G_EventSpawnSound(PM_ALL, qfalse, door, door->origin, door->noise);
 		}
 	} else if (door->doorState == STATE_OPENED) {
 		door->doorState = STATE_CLOSED;
@@ -242,7 +231,7 @@ static qboolean Door_Use (edict_t *door, edict_t *activator)
 			/* let everybody know, that the door closes */
 			G_EventDoorClose(door);
 			if (door->noise[0] != '\0')
-				G_EventSpawnSound(door, door->origin, door->noise);
+				G_EventSpawnSound(PM_ALL, qfalse, door, door->origin, door->noise);
 		}
 	} else
 		return qfalse;
@@ -252,7 +241,7 @@ static qboolean Door_Use (edict_t *door, edict_t *activator)
 	Com_DPrintf(DEBUG_GAME, "Server processed door movement.\n");
 
 	/* Update path finding table */
-	G_RecalcRouting(door);
+	G_RecalcRouting(door->model);
 
 	if (activator && G_IsLivingActor(activator)) {
 		/* Check if the player appears/perishes, seen from other teams. */
@@ -303,7 +292,7 @@ static void Reset_DoorTrigger (edict_t *self, edict_t *activator)
 		G_ActorSetClientAction(activator, NULL);
 }
 
-#define FL_REVERSE	0x00000200
+#define REVERSE		0x00000200
 
 /**
  * @brief func_door (0 .5 .8) ?
@@ -328,11 +317,12 @@ void SP_func_door (edict_t *ent)
 	ent->doorState = STATE_CLOSED;
 	ent->dir = YAW;
 
-	if (ent->spawnflags & FL_REVERSE)
+	if (ent->spawnflags & REVERSE)
 		ent->dir |= DOOR_OPEN_REVERSE;
 
 	if (ent->HP)
 		ent->flags |= FL_DESTROYABLE;
+	ent->flags |= FL_CLIENTACTION;
 
 	/* spawn the trigger entity */
 	other = G_TriggerSpawn(ent);
@@ -362,7 +352,7 @@ void SP_func_door_sliding (edict_t *ent)
 	ent->solid = SOLID_BSP;
 	gi.LinkEdict(ent);
 
-	if (ent->spawnflags & FL_REVERSE)
+	if (ent->spawnflags & REVERSE)
 		ent->dir |= DOOR_OPEN_REVERSE;
 
 	if (ent->HP)

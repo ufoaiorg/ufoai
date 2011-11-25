@@ -1,8 +1,6 @@
 /**
- * @file r_model.h
- * @brief Brush model header file
- * @note d*_t structures are on-disk representations
- * @note m*_t structures are in-memory
+ * @file r_particle.h
+ * @brief Particle system header file
  */
 
 /*
@@ -28,9 +26,7 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #ifndef R_PARTICLE_H
 #define R_PARTICLE_H
 
-extern ptlArt_t r_particlesArt[MAX_PTL_ART];
 extern ptl_t r_particles[MAX_PTLS];
-extern int r_numParticlesArt;
 extern int r_numParticles;
 
 #endif

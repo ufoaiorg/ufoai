@@ -152,10 +152,9 @@ static void UI_MessageDraw (const uiNode_t *node, message_t *message, const char
 
 	/* identify the begin of a message with a mark */
 	if (lines2 >= 0) {
-		const uiSprite_t *icon;
-		icon = UI_MessageGetIcon(message);
+		const uiSprite_t *icon = UI_MessageGetIcon(message);
 		R_Color(NULL);
-		UI_DrawSpriteInBox(icon, SPRITE_STATUS_NORMAL, x - 25, y + LINEHEIGHT * lines2 - 1, 19, 19);
+		UI_DrawSpriteInBox(qfalse, icon, SPRITE_STATUS_NORMAL, x - 25, y + LINEHEIGHT * lines2 - 1, 19, 19);
 	}
 
 	/* draw the message */
@@ -251,8 +250,11 @@ static void UI_MessageListNodeDraw (uiNode_t *node)
 	}
 }
 
-static void UI_MessageListNodeMouseWheel (uiNode_t *node, qboolean down, int x, int y)
+static void UI_MessageListNodeMouseWheel (uiNode_t *node, int deltaX, int deltaY)
 {
+	qboolean down = deltaY > 0;
+	if (deltaY == 0)
+		return;
 	UI_AbstractScrollableNodeScrollY(node, (down ? 1 : -1));
 	if (node->onWheelUp && !down)
 		UI_ExecuteEventActions(node, node->onWheelUp);
@@ -288,7 +290,7 @@ void UI_RegisterMessageListNode (uiBehaviour_t *behaviour)
 	behaviour->extends = "abstractscrollable";
 	behaviour->draw = UI_MessageListNodeDraw;
 	behaviour->loading = UI_MessageListNodeLoading;
-	behaviour->mouseWheel = UI_MessageListNodeMouseWheel;
+	behaviour->scroll = UI_MessageListNodeMouseWheel;
 #ifdef DEBUG
 	Cmd_AddCommand("debug_ui_message_useallicons", UI_MessageDebugUseAllIcons_f, "Update message to use all icons");
 #endif

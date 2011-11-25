@@ -64,13 +64,7 @@ void R_ImageClearMaterials (void)
 			s = ss;
 		}
 
-		OBJZERO(*m);
-
-		m->bump = DEFAULT_BUMP;
-		m->parallax = DEFAULT_PARALLAX;
-		m->specular = DEFAULT_SPECULAR;
-		m->hardness = DEFAULT_HARDNESS;
-		m->glowscale = DEFAULT_GLOWSCALE;
+		*m = defaultMaterial;
 	}
 }
 
@@ -197,7 +191,7 @@ void R_LoadImage (const char *name, byte **pic, int *width, int *height)
 	char filenameTemp[MAX_QPATH];
 	SDL_Surface *surf;
 
-	if (!name || name[0] == '\0')
+	if (Q_strnull(name))
 		Com_Error(ERR_FATAL, "R_LoadImage: NULL name");
 
 	Com_StripExtension(name, filenameTemp, sizeof(filenameTemp));
@@ -255,88 +249,6 @@ void R_ScaleTexture (unsigned *in, int inwidth, int inheight, unsigned *out, int
 }
 
 /**
- * @brief Applies brightness and contrast to the specified image while optionally computing
- * the image's average color. Also handles image inversion and monochrome. This is
- * all munged into one function to reduce loops on level load.
- */
-void R_FilterTexture (byte *in, int width, int height, vec3_t color, imagetype_t type, int bpp)
-{
-	const float scale = 1.0 / 255.0;
-	unsigned col[3];
-	byte *p = in;
-	const byte *end = p + width * height * bpp;
-	const float brightness = type == it_lightmap ? r_modulate->value : r_brightness->value;
-	const float contrast = r_contrast->value;
-	const float saturation = r_saturation->value;
-	vec3_t intensity, luminosity, temp;
-	int j;
-	float max, d;
-
-	VectorSet(luminosity, 0.2125, 0.7154, 0.0721);
-
-	VectorClear(col);
-
-	for (; p != end; p += bpp) {
-		VectorScale(p, scale, temp);  /* convert to float */
-
-		VectorScale(temp, brightness, temp);  /* apply brightness */
-
-		max = 0.0;  /* determine brightest component */
-
-		for (j = 0; j < 3; j++) {
-			if (temp[j] > max)
-				max = temp[j];
-
-			if (temp[j] < 0.0)  /* enforcing positive values */
-				temp[j] = 0.0;
-		}
-
-		if (max > 1.0)  /* clamp without changing hue */
-			VectorScale(temp, 1.0 / max, temp);
-
-		for (j = 0; j < 3; j++) {  /* apply contrast */
-			temp[j] -= 0.5;  /* normalize to -0.5 through 0.5 */
-			temp[j] *= contrast;  /* scale */
-			temp[j] += 0.5;
-
-			if (temp[j] > 1.0)  /* clamp */
-				temp[j] = 1.0;
-			else if (temp[j] < 0)
-				temp[j] = 0;
-		}
-
-		/* finally saturation, which requires rgb */
-		d = DotProduct(temp, luminosity);
-
-		VectorSet(intensity, d, d, d);
-		VectorMix(intensity, temp, saturation, temp);
-
-		for (j = 0; j < 3; j++) {
-			temp[j] *= 255;  /* back to byte */
-
-			if (temp[j] > 255)  /* clamp */
-				temp[j] = 255;
-			else if (temp[j] < 0)
-				temp[j] = 0;
-
-			p[j] = (byte)temp[j];
-
-			if (color)  /* accumulate color */
-				col[j] += p[j];
-		}
-	}
-
-	if (color) { /* average accumulated colors */
-		int i;
-		for (i = 0; i < 3; i++)
-			col[i] /= (width * height);
-
-		for (i = 0; i < 3; i++)
-			color[i] = col[i] / 255.0;
-	}
-}
-
-/**
  * @brief Calculates the texture size that should be used to upload the texture data
  * @param[in] width The width of the source texture data
  * @param[in] height The heigt of the source texture data
@@ -364,6 +276,8 @@ void R_GetScaledTextureSize (int width, int height, int *scaledWidth, int *scale
 		*scaledHeight = 1;
 }
 
+#define R_ImageIsClamp(image) ((image)->type == it_pic || (image)->type == it_worldrelated)
+
 /**
  * @brief Uploads the opengl texture to the server
  * @param[in] data Must be in RGBA format
@@ -379,7 +293,7 @@ void R_UploadTexture (unsigned *data, int width, int height, image_t* image)
 	int i, c;
 	byte *scan;
 	const qboolean mipmap = (image->type != it_pic && image->type != it_worldrelated && image->type != it_chars);
-	const qboolean clamp = (image->type == it_pic || image->type == it_worldrelated);
+	const qboolean clamp = R_ImageIsClamp(image);
 
 	/* scan the texture for any non-255 alpha */
 	c = width * height;
@@ -399,10 +313,10 @@ void R_UploadTexture (unsigned *data, int width, int height, image_t* image)
 
 	/* some images need very little attention (pics, fonts, etc..) */
 	if (!mipmap && scaledWidth == width && scaledHeight == height) {
-		/* no mipmapping for these images - just use GL_NEAREST here to not waste memory */
-		glTexParameterf(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_NEAREST);
-		glTexParameterf(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_NEAREST);
-		R_TextureConvertNativePixelFormat(data, scaledWidth, scaledHeight, 1);
+		/* no mipmapping for these images to save memory */
+		/* TODO: check if GL_NEAREST will give any speed advantage on Android */
+		glTexParameterf(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR);
+		glTexParameterf(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
 		glTexImage2D(GL_TEXTURE_2D, 0, samples, scaledWidth, scaledHeight, 0, GL_RGBA, GL_NATIVE_TEXTURE_PIXELFORMAT_ALPHA, data);
 		return;
 	}
@@ -413,10 +327,6 @@ void R_UploadTexture (unsigned *data, int width, int height, image_t* image)
 	} else {
 		scaled = data;
 	}
-
-	/* and filter */
-	if (image->type == it_effect || image->type == it_world || image->type == it_material || image->type == it_skin)
-		R_FilterTexture((byte*)scaled, scaledWidth, scaledHeight, NULL, image->type, 4);
 
 	/* and mipmapped */
 	if (mipmap) {
@@ -456,6 +366,32 @@ void R_UploadTexture (unsigned *data, int width, int height, image_t* image)
 
 	if (scaled != data)
 		Mem_Free(scaled);
+}
+
+void R_TextureDisableWrapping (const image_t *image)
+{
+	if (!R_ImageIsClamp(image))
+		return;
+
+	glBindTexture(GL_TEXTURE_2D, image->texnum);
+	R_CheckError();
+	glTexParameterf(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_CLAMP_TO_EDGE);
+	R_CheckError();
+	glTexParameterf(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_CLAMP_TO_EDGE);
+	R_CheckError();
+}
+
+void R_TextureEnableWrapping (const image_t *image)
+{
+	if (!R_ImageIsClamp(image))
+		return;
+
+	glBindTexture(GL_TEXTURE_2D, image->texnum);
+	R_CheckError();
+	glTexParameterf(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_REPEAT);
+	R_CheckError();
+	glTexParameterf(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_REPEAT);
+	R_CheckError();
 }
 
 /**
@@ -587,7 +523,7 @@ image_t *R_LoadImageData (const char *name, byte * pic, int width, int height, i
 	}
 	image = &r_images[i];
 	OBJZERO(*image);
-	memcpy(&image->material, &defaultMaterial, sizeof(material_t));
+	image->material = defaultMaterial;
 	image->has_alpha = qfalse;
 	image->type = type;
 	image->width = width;
@@ -619,6 +555,28 @@ image_t *R_LoadImageData (const char *name, byte * pic, int width, int height, i
 	}
 	R_GetDownsampledImageDimensions(image->name, &image->width, &image->height);
 	return image;
+}
+
+image_t* R_RenderToTexture (const char *name, int x, int y, int w, int h)
+{
+	image_t *img = R_GetImage(name);
+	const qboolean dimensionDiffer = img != NULL && img->width != w && img->height != h;
+	if (img == NULL || dimensionDiffer) {
+		if (dimensionDiffer) {
+			R_DeleteImage(img);
+		}
+		byte* buf = Mem_PoolAlloc(w * h * 4, vid_imagePool, 0);
+		img = R_LoadImageData(name, buf, w, h, it_effect);
+		Mem_Free(buf);
+	}
+
+	glFlush();
+	glReadBuffer(GL_BACK);
+	R_SelectTexture(&texunit_diffuse);
+	R_BindTexture(img->texnum);
+	glCopyTexImage2D(GL_TEXTURE_2D, 0, GL_RGBA, x, y, w, h, 0);
+
+	return img;
 }
 
 /**
@@ -685,20 +643,41 @@ image_t *R_FindImage (const char *pname, imagetype_t type)
 	return image;
 }
 
-qboolean R_ImageExists (const char *pname)
+/**
+ * @brief Searches for an image in the image array
+ * @param[in] name The name of the image relative to pics/
+ * @note name may not be null and has to be longer than 4 chars
+ * @return NULL on error or image_t pointer on success
+ * @sa R_FindImage
+ */
+const image_t *R_FindPics (const char *name)
+{
+	const image_t *image = R_FindImage(va("pics/%s", name), it_pic);
+	if (image == r_noTexture)
+		return NULL;
+	return image;
+}
+
+qboolean R_ImageExists (const char *pname, ...)
 {
 	char const* const* const types = Img_GetImageTypes();
 	int i;
+	char filename[MAX_QPATH];
+	va_list ap;
+
+	va_start(ap, pname);
+	Q_vsnprintf(filename, sizeof(filename), pname, ap);
+	va_end(ap);
 
 	for (i = 0; types[i]; i++) {
-		if (FS_CheckFile("%s.%s", pname, types[i]) != -1)
+		if (FS_CheckFile("%s.%s", filename, types[i]) != -1)
 			return qtrue;
 	}
 	return qfalse;
 }
 
 /**
- * @brief Free the image and its normalmap (if there is one)
+ * @brief Free the image and its assigned maps (roughness, normal, specular, glow - if there are any)
  * @param image The image that should be freed
  */
 void R_FreeImage (image_t *image)
@@ -817,8 +796,11 @@ void R_TextureMode (const char *string)
 		return;
 	}
 
+	r_config.gl_filter_min = mode->minimize;
+	r_config.gl_filter_max = mode->maximize;
+
 	for (i = 0, image = r_images; i < r_numImages; i++, image++) {
-		if (image->type == it_chars || image->type == it_pic || image->type == it_wrappic)
+		if (image->type == it_pic || image->type == it_worldrelated || image->type == it_chars)
 			continue; /* no mipmaps */
 
 		R_BindTexture(image->texnum);

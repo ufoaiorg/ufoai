@@ -827,15 +827,15 @@
 // entity 4
 {
 "classname" "info_player_start"
-"angle" "315"
 "team" "2"
 "origin" "80 240 28"
+"angle" "315"
 }
 // entity 5
 {
 "classname" "info_alien_start"
-"angle" "315"
 "origin" "304 304 28"
+"angle" "315"
 }
 // entity 6
 {
@@ -846,14 +846,14 @@
 // entity 7
 {
 "classname" "info_alien_start"
-"angle" "315"
 "origin" "80 80 28"
+"angle" "315"
 }
 // entity 8
 {
 "classname" "info_alien_start"
-"angle" "270"
 "origin" "272 80 28"
+"angle" "270"
 }
 // entity 9
 {
@@ -864,14 +864,14 @@
 // entity 10
 {
 "classname" "info_alien_start"
-"angle" "180"
 "origin" "144 304 28"
+"angle" "180"
 }
 // entity 11
 {
 "classname" "info_alien_start"
-"angle" "315"
 "origin" "432 48 28"
+"angle" "315"
 }
 // entity 12
 {

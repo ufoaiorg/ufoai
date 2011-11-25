@@ -1,3 +1,4 @@
+#include "../sidebar.h"
 #include "EntityInspector.h"
 #include "PropertyEditorFactory.h"
 #include "AddPropertyDialog.h"
@@ -133,8 +134,9 @@ bool EntityInspector::_testDeleteKey (gpointer userData)
 		if (attr != NULL)
 			return !attr->mandatory;
 		return true;
-	} else
-		return false;
+	}
+
+	return false;
 }
 
 void EntityInspector::_onCopyKey (gpointer data, gpointer userData)
@@ -232,19 +234,19 @@ void EntityInspector::createContextMenu ()
 void EntityInspector::postUndo()
 {
 	// Now rescan the selection and update the stores
-	getInstance().requestIdleCallback();
+	Instance().requestIdleCallback();
 }
 
 void EntityInspector::postRedo()
 {
 	// Now rescan the selection and update the stores
-	getInstance().requestIdleCallback();
+	Instance().requestIdleCallback();
 }
 
 // Return the singleton EntityInspector instance, creating it if it is not yet
 // created. Single-threaded design.
 
-EntityInspector& EntityInspector::getInstance ()
+EntityInspector& EntityInspector::Instance ()
 {
 	static EntityInspector _instance;
 	return _instance;
@@ -252,11 +254,17 @@ EntityInspector& EntityInspector::getInstance ()
 
 // Return the Gtk widget for the EntityInspector dialog.
 
-GtkWidget* EntityInspector::getWidget ()
+GtkWidget* EntityInspector::getWidget () const
 {
 	gtk_widget_show_all(_widget);
 	return _widget;
 }
+
+const std::string EntityInspector::getTitle() const
+{
+	return _("Entityinspector");
+}
+
 
 // Create the dialog pane
 
@@ -414,17 +422,17 @@ void EntityInspector::onGtkIdle ()
 void EntityInspector::keyValueChanged ()
 {
 	// Redraw the entity inspector GUI
-	getInstance().requestIdleCallback();
+	Instance().requestIdleCallback();
 
 	// Set the map modified flag
-	if (getInstance()._selectedEntity != NULL)
+	if (Instance()._selectedEntity != NULL)
 		GlobalMap().setModified(true);
 }
 
 // Selection changed callback
-void EntityInspector::selectionChanged ()
+void EntityInspector::selectionChanged (scene::Instance& instance, bool isComponent)
 {
-	getInstance().requestIdleCallback();
+	Instance().requestIdleCallback();
 }
 
 namespace {

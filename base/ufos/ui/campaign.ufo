@@ -2,8 +2,7 @@
 // CAMPAIGN MENU
 // ==================
 
-window campaigns
-{
+window campaigns {
 	/** @todo Remove me */
 	{ } // empty properties to fix parsing problem with "image" token (behaviour or property?)
 
@@ -11,75 +10,78 @@ window campaigns
 	// background
 	// ==================
 
-	image background
-	{
-		src	"background/options_bg"
+	image background {
+		src			"background/options_bg"
 	}
 
-	string version
-	{
-		string	*cvar:version
-		pos	"10 744"
+	string version {
+		string		*cvar:version
+		pos			"10 744"
 	}
 
-	string c_headline
-	{
-		string	"_Campaigns"
-		pos	"640 80"
-		font	"f_big"
+	string c_headline {
+		string		"_Campaigns"
+		pos			"640 80"
+		font		"f_big"
 	}
 
 	// ==================
 	// buttons
 	// ==================
-	cmpMenuButton c_button_start
-	{
-		pos	"80 170"
-		onClick	{ cmd "cp_start;" }
-		string	"_Start campaign"
+	cmpMenuButton c_button_start {
+		pos			"80 170"
+		string		"_Start campaign"
+		tooltip		"_Start a new singleplayer campaign."
+
+		onClick	{
+			cmd "cp_start  <cvar:cp_campaign>;"
+		}
 	}
 
-	cmpMenuButton button_load
-	{
+	cmpMenuButton button_load {
 		string		"_Load"
 		pos			"80 240"
-		onClick		{ cmd "ui_push load;" }
+		onClick	{
+			cmd "ui_push load;"
+		}
 	}
 
-	cmpMenuButton button_continue
-	{
-		visiblewhen "exists *cvar:mn_lastsave"
-
+	cmpMenuButton button_continue {
 		string		"_Continue"
-		tooltip		"_Load last saved game or continue playing"
+		tooltip		"_Load last saved game or continue playing."
 		pos			"640 380"
-		onClick		{ cmd "game_continue;" }
+		invis		true
+		onClick	{
+			cmd "game_continue;"
+		}
 	}
 
-	cmpMenuButton c_button_exit
-	{
-		pos	"80 470"
-		onClick	{ cmd "ui_pop;" }
-		string	"_Back"
+	cmpMenuButton c_button_exit {
+		string		"_Back"
+		pos			"80 470"
+		onClick	{
+			cmd "ui_pop;"
+		}
 	}
 
-	textlist campaignlist
-	{
-		pos		"500 140"
-		size	"400 120"
-		lineheight	"20"
-		dataid		TEXT_CAMPAIGN_LIST
-		onClick	{ cmd "campaignlist_click <lineselected>;" }
-		color	"0.60 0.60 0.60 1"
+	optionlist campaignlist {
+		dataid		OPTION_CAMPAIGN_LIST
+		cvar		*cvar:cp_campaign
+		pos			"500 140"
+		size		"400 120"
+		color		"0.60 0.60 0.60 1"
 		selectcolor	"1 1 1 1"
-		rows	"6"
+		padding		6
+
+		onChange {
+			cmd "cp_getdescription <cvar:cp_campaign>;"
+		}
 		onViewChange	{
 			*node:root.campaignlist_scroll@fullsize = <fullsize>
 			*node:root.campaignlist_scroll@current = <viewpos>
 			*node:root.campaignlist_scroll@viewsize = <viewsize>
 		}
 	}
-
 	vscrollbar campaignlist_scroll {
 		image		"ui/scrollbar_v_green"
 		pos			"905 140"
@@ -88,7 +90,9 @@ window campaigns
 		viewsize	6
 		fullsize	6
 		hidewhenunused true
-		onChange	{ *node:root.campaignlist@viewpos = <current> }
+		onChange	{
+			*node:root.campaignlist@viewpos = <current>
+		}
 	}
 
 	text campaign_desc
@@ -104,7 +108,6 @@ window campaigns
 			*node:root.campaign_desc_scroll@viewsize = <viewsize>
 		}
 	}
-
 	vscrollbar campaign_desc_scroll {
 		image		"ui/scrollbar_v_green"
 		pos			"923 320"
@@ -120,7 +123,16 @@ window campaigns
 
 	func onWindowOpened
 	{
-		cmd "game_setmode;cp_getcampaigns;"
+		if ( ! exists *cvar:cp_campaign ) {
+			*cvar:cp_campaign = "main"
+		}
+		if ( exists *cvar:mn_lastsave ) {
+			*node:root.button_continue@invis = false
+		} else {
+			*node:root.button_continue@invis = true
+		}
+
+		cmd "game_setmode;cp_getcampaigns;cp_getdescription <cvar:cp_campaign>;"
 	}
 }
 
@@ -152,6 +164,7 @@ window campaign_main
 	cmpMenuButton button_continue
 	{
 		string		"_Continue"
+		tooltip		"_Leave this menu and continue playing."
 		pos			"640 170"
 		onClick		{ cmd "game_continue;" }
 	}
@@ -181,7 +194,13 @@ window campaign_main
 	{
 		string		"_Exit"
 		pos			"640 520"
-		onClick		{ cmd "game_exit;" }
+		onClick {
+			if ( *cvar:mn_fastexit == 1 ) {
+				cmd "game_exit;"
+			} else {
+				cmd "ui_push popup_exit_confirmation;"
+			}
+		}
 	}
 }
 
@@ -211,9 +230,8 @@ window quickload
 	cmpPopupButton button_go
 	{
 		string		"_Load"
-		tooltip		"_Reload the last automatically saved campaign state"
 		pos			"266 188"
-		onClick		{ cmd "ui_pop;game_quickload;" }
+		onClick		{ cmd "ui_pop;game_quickload;" *cvar:mn_fastexit = 1; }
 	}
 }
 
@@ -247,7 +265,7 @@ window load
 		string		"_Load"
 		pos			"610 170"
 		size		"310 30"
-		textalign	ALIGN_UC
+		contentalign	ALIGN_UC
 		font		"f_big"
 	}
 
@@ -264,9 +282,9 @@ window load
 		font		"f_verysmall"
 		color		"0 .78 0 1"
 		selectcolor	"1 1 1 1"
-		textalign	ALIGN_CL
+		contentalign	ALIGN_CL
 		padding		8
-		onClick		{ cmd "game_load slot0; game_timestop;" }
+		onClick		{ cmd "game_load slot0; game_timestop;" *cvar:mn_fastexit = 1; }
 	}
 	button slot1
 	{
@@ -277,9 +295,9 @@ window load
 		font		"f_verysmall"
 		color		"0 .78 0 1"
 		selectcolor	"1 1 1 1"
-		textalign	ALIGN_CL
+		contentalign	ALIGN_CL
 		padding		8
-		onClick		{ cmd "game_load slot1; game_timestop;" }
+		onClick		{ cmd "game_load slot1; game_timestop;" *cvar:mn_fastexit = 1; }
 	}
 	button slot2
 	{
@@ -290,9 +308,9 @@ window load
 		font		"f_verysmall"
 		color		"0 .78 0 1"
 		selectcolor	"1 1 1 1"
-		textalign	ALIGN_CL
+		contentalign	ALIGN_CL
 		padding		8
-		onClick		{ cmd "game_load slot2; game_timestop;" }
+		onClick		{ cmd "game_load slot2; game_timestop;" *cvar:mn_fastexit = 1; }
 	}
 	button slot3
 	{
@@ -303,9 +321,9 @@ window load
 		font		"f_verysmall"
 		color		"0 .78 0 1"
 		selectcolor	"1 1 1 1"
-		textalign	ALIGN_CL
+		contentalign	ALIGN_CL
 		padding		8
-		onClick		{ cmd "game_load slot3; game_timestop;" }
+		onClick		{ cmd "game_load slot3; game_timestop;" *cvar:mn_fastexit = 1; }
 	}
 	button slot4
 	{
@@ -316,9 +334,9 @@ window load
 		font		"f_verysmall"
 		color		"0 .78 0 1"
 		selectcolor	"1 1 1 1"
-		textalign	ALIGN_CL
+		contentalign	ALIGN_CL
 		padding		8
-		onClick		{ cmd "game_load slot4; game_timestop;" }
+		onClick		{ cmd "game_load slot4; game_timestop;" *cvar:mn_fastexit = 1; }
 	}
 	button slot5
 	{
@@ -329,9 +347,9 @@ window load
 		font		"f_verysmall"
 		color		"0 .78 0 1"
 		selectcolor	"1 1 1 1"
-		textalign	ALIGN_CL
+		contentalign	ALIGN_CL
 		padding		8
-		onClick		{ cmd "game_load slot5; game_timestop;" }
+		onClick		{ cmd "game_load slot5; game_timestop;" *cvar:mn_fastexit = 1; }
 	}
 	button slot6
 	{
@@ -342,9 +360,9 @@ window load
 		font		"f_verysmall"
 		color		"0 .78 0 1"
 		selectcolor	"1 1 1 1"
-		textalign	ALIGN_CL
+		contentalign	ALIGN_CL
 		padding		8
-		onClick		{ cmd "game_load slot6; game_timestop;" }
+		onClick		{ cmd "game_load slot6; game_timestop;" *cvar:mn_fastexit = 1; }
 	}
 	button slot7
 	{
@@ -355,9 +373,9 @@ window load
 		font		"f_verysmall"
 		color		"0 .78 0 1"
 		selectcolor	"1 1 1 1"
-		textalign	ALIGN_CL
+		contentalign	ALIGN_CL
 		padding		8
-		onClick		{ cmd "game_load slot7; game_timestop;" }
+		onClick		{ cmd "game_load slot7; game_timestop;" *cvar:mn_fastexit = 1; }
 	}
 
 	// ==================
@@ -420,7 +438,7 @@ window save
 		string		"_Save"
 		pos			"610 170"
 		size		"310 30"
-		textalign	ALIGN_UC
+		contentalign	ALIGN_UC
 		font		"f_big"
 	}
 
@@ -436,11 +454,11 @@ window save
 		image		"ui/button_green_verysmall"
 		color		"0 .78 0 1"
 		selectcolor	"1 1 1 1"
-		textalign	ALIGN_CL
+		contentalign	ALIGN_CL
 		padding		8
 		font		"f_verysmall"
 		onClick		{ cmd "game_savenamecleanup 0;" }
-		onChange		{ cmd "game_save slot0 *mn_slot0;game_comments 0;" }
+		onChange	{ cmd "game_save slot0 *mn_slot0; game_comments 0;" *cvar:mn_fastexit = 1; }
 		onAbort		{ cmd "game_comments 0;" }
 		clickoutabort	true
 	}
@@ -452,11 +470,11 @@ window save
 		image		"ui/button_green_verysmall"
 		color		"0 .78 0 1"
 		selectcolor	"1 1 1 1"
-		textalign	ALIGN_CL
+		contentalign	ALIGN_CL
 		padding		8
 		font		"f_verysmall"
 		onClick		{ cmd "game_savenamecleanup 1;" }
-		onChange	{ cmd "game_save slot1 *mn_slot1;game_comments 1;" }
+		onChange	{ cmd "game_save slot1 *mn_slot1; game_comments 1;" *cvar:mn_fastexit = 1; }
 		onAbort		{ cmd "game_comments 1;" }
 		clickoutabort	true
 	}
@@ -468,11 +486,11 @@ window save
 		image		"ui/button_green_verysmall"
 		color		"0 .78 0 1"
 		selectcolor	"1 1 1 1"
-		textalign	ALIGN_CL
+		contentalign	ALIGN_CL
 		padding		8
 		font		"f_verysmall"
 		onClick		{ cmd "game_savenamecleanup 2;" }
-		onChange	{ cmd "game_save slot2 *mn_slot2;game_comments 2;" }
+		onChange	{ cmd "game_save slot2 *mn_slot2; game_comments 2;" *cvar:mn_fastexit = 1; }
 		onAbort		{ cmd "game_comments 2;" }
 		clickoutabort	true
 	}
@@ -484,11 +502,11 @@ window save
 		image		"ui/button_green_verysmall"
 		color		"0 .78 0 1"
 		selectcolor	"1 1 1 1"
-		textalign	ALIGN_CL
+		contentalign	ALIGN_CL
 		padding		8
 		font		"f_verysmall"
 		onClick		{ cmd "game_savenamecleanup 3;" }
-		onChange	{ cmd "game_save slot3 *mn_slot3;game_comments 3;" }
+		onChange	{ cmd "game_save slot3 *mn_slot3; game_comments 3;" *cvar:mn_fastexit = 1; }
 		onAbort		{ cmd "game_comments 3;" }
 		clickoutabort	true
 	}
@@ -500,11 +518,11 @@ window save
 		image		"ui/button_green_verysmall"
 		color		"0 .78 0 1"
 		selectcolor	"1 1 1 1"
-		textalign	ALIGN_CL
+		contentalign	ALIGN_CL
 		padding		8
 		font		"f_verysmall"
 		onClick		{ cmd "game_savenamecleanup 4;" }
-		onChange	{ cmd "game_save slot4 *mn_slot4;game_comments 4;" }
+		onChange	{ cmd "game_save slot4 *mn_slot4; game_comments 4;" *cvar:mn_fastexit = 1; }
 		onAbort		{ cmd "game_comments 4;" }
 		clickoutabort	true
 	}
@@ -516,11 +534,11 @@ window save
 		image		"ui/button_green_verysmall"
 		color		"0 .78 0 1"
 		selectcolor	"1 1 1 1"
-		textalign	ALIGN_CL
+		contentalign	ALIGN_CL
 		padding		8
 		font		"f_verysmall"
 		onClick		{ cmd "game_savenamecleanup 5;" }
-		onChange	{ cmd "game_save slot5 *mn_slot5;game_comments 5;" }
+		onChange	{ cmd "game_save slot5 *mn_slot5; game_comments 5;" *cvar:mn_fastexit = 1; }
 		onAbort		{ cmd "game_comments 5;" }
 		clickoutabort	true
 	}
@@ -532,11 +550,11 @@ window save
 		image		"ui/button_green_verysmall"
 		color		"0 .78 0 1"
 		selectcolor	"1 1 1 1"
-		textalign	ALIGN_CL
+		contentalign	ALIGN_CL
 		padding		8
 		font		"f_verysmall"
 		onClick		{ cmd "game_savenamecleanup 6;" }
-		onChange	{ cmd "game_save slot6 *mn_slot6;game_comments 6;" }
+		onChange	{ cmd "game_save slot6 *mn_slot6; game_comments 6;" *cvar:mn_fastexit = 1; }
 		onAbort		{ cmd "game_comments 6;" }
 		clickoutabort	true
 	}
@@ -548,11 +566,11 @@ window save
 		image		"ui/button_green_verysmall"
 		color		"0 .78 0 1"
 		selectcolor	"1 1 1 1"
-		textalign	ALIGN_CL
+		contentalign	ALIGN_CL
 		padding		8
 		font		"f_verysmall"
 		onClick		{ cmd "game_savenamecleanup 7;" }
-		onChange	{ cmd "game_save slot7 *mn_slot7;game_comments 7;" }
+		onChange	{ cmd "game_save slot7 *mn_slot7; game_comments 7;" *cvar:mn_fastexit = 1; }
 		onAbort		{ cmd "game_comments 7;" }
 		clickoutabort	true
 	}
@@ -572,6 +590,7 @@ window save
 	{
 		cmd "game_comments;"
 	}
+
 }
 
 // ==================
@@ -599,7 +618,7 @@ window lostgame
 		pos			"12 20"
 		size		"1000 35"
 		font		"f_menubig"
-		textalign	ALIGN_UC
+		contentalign	ALIGN_UC
 		color		"0 0.8 0 1"
 	}
 
@@ -609,7 +628,7 @@ window lostgame
 		pos			"814 750"
 		size		"200 20"
 		font		"f_verysmall"
-		textalign	ALIGN_UR
+		contentalign	ALIGN_UR
 		color		"0 0.8 0 0.9"
 		ghost		true
 	}
@@ -629,7 +648,7 @@ window lostgame
 		dataid	TEXT_STANDARD
 		color		"0 0.8 0 0.9"
 		bgcolor		"0.2 0.2 0.2 0.4"
-		textalign	ALIGN_UC
+		contentalign	ALIGN_UC
 		pos			"30 600"
 		size		"960 140"
 		lineheight	"20"
@@ -675,7 +694,7 @@ window endgame
 		pos			"12 20"
 		size		"1000 35"
 		font		"f_menubig"
-		textalign	ALIGN_UC
+		contentalign	ALIGN_UC
 		color		"0 0.8 0 1"
 	}
 
@@ -685,7 +704,7 @@ window endgame
 		pos			"814 750"
 		size		"200 20"
 		font		"f_verysmall"
-		textalign	ALIGN_UR
+		contentalign	ALIGN_UR
 		color		"0 0.8 0 0.9"
 		ghost		true
 		onClick {
@@ -707,7 +726,7 @@ window endgame
 		dataid		TEXT_STANDARD
 		color		"0 0.8 0 0.9"
 		bgcolor		"0.2 0.2 0.2 0.4"
-		textalign	ALIGN_UC
+		contentalign	ALIGN_UC
 		pos			"30 500"
 		size		"960 240"
 		lineheight	"20"
@@ -734,5 +753,42 @@ window endgame
 
 	func onWindowOpened {
 		cmd "music_stop;snd_music Crystan-WinGame;"
+	}
+}
+
+// ========================
+// POPUP EXIT CONFIRMATION
+// ========================
+window popup_exit_confirmation
+{
+	{
+		string		"_Exit Campaign Confirmation"
+		image		"ui/popup_alpha_tile"
+		pos			"264 262"
+		size		"486 247"
+		dragbutton	true
+		closebutton	true
+	}
+	string exit_confirmation_label
+	{
+		string		"_You will lose all your campaign progress."
+		pos			"26 58"
+		size		"450 60"
+	}
+	cmpPopupButton bt_quit
+	{
+		tooltip		"_Exit current campaign and return to main menu."
+		string		"_Quit anyway"
+		pos			"28 188"
+		onClick		{
+						cmd "ui_pop;"
+						cmd "game_exit;"
+					}
+	}
+	cmpCancelButton bt_dontquit
+	{
+		tooltip		"_Do not quit."
+		pos			"285 188"
+		onClick		{ cmd "ui_pop;" }
 	}
 }

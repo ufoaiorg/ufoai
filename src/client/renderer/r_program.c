@@ -38,6 +38,13 @@ void R_UseProgram  (r_program_t *prog)
 	if (!qglUseProgram || r_state.active_program == prog)
 		return;
 
+	if (!r_state.active_program)
+		refdef.FFPToShaderCount++;
+	else if (!prog)
+		refdef.shaderToFFPCount++;
+	else
+		refdef.shaderToShaderCount++;
+
 	r_state.active_program = prog;
 
 	if (prog) {
@@ -248,9 +255,10 @@ void R_ShutdownPrograms (void)
 
 /**
  * @brief Prefixes shader string (out) with in.
+ * @param[in] name The name of the shader.
  * @param[in] in The string to prefix onto the shader string (out).
  * @param[in,out] out The shader string (initially was the whole shader file).
- * @param[in,out] len The amount of space left in the buffer pointed to by *out (why on earth is it done this way?!)
+ * @param[in,out] len The amount of space left in the buffer pointed to by *out.
  * @return strlen(in)
  */
 static size_t R_PreprocessShaderAddToShaderBuf (const char *name, const char *in, char **out, size_t *len)
@@ -262,10 +270,23 @@ static size_t R_PreprocessShaderAddToShaderBuf (const char *name, const char *in
 	return inLength;
 }
 
-static size_t R_InitializeShader (const char *name, char *out, size_t len)
+/**
+ * @brief Prefixes the shader string with user settings and the video hardware manufacturer.
+ *
+ * The shader needs to know the rendered width & height, the glsl version, and
+ * the hardware manufacturer.
+ * @param[in] type The type of shader, currently either GL_VERTEX_SHADER or GL_FRAGMENT_SHADER.
+ * @param[in] name The name of the shader.
+ * @param[in,out] out
+ * @param[in,out] len The amount of space left in the buffer pointed to by *out.
+ * @return The number of characters prefixed to the shader string.
+ */
+static size_t R_InitializeShader (const GLenum type, const char *name, char *out, size_t len)
 {
 	size_t initialChars = 0;
 	const char *hwHack, *defines;
+	/* in the format GLSL compiler expects it -- e.g. 110 for version 1.10 */
+	const int shaderVersion = (int)(r_glsl_version->value * 100 + 0.1);
 
 	switch (r_config.hardwareType) {
 	case GLHW_ATI:
@@ -277,8 +298,10 @@ static size_t R_InitializeShader (const char *name, char *out, size_t len)
 	case GLHW_NVIDIA:
 		hwHack = "#ifndef NVIDIA\n#define NVIDIA\n#endif\n";
 		break;
-	case GLHW_GENERIC:
 	case GLHW_MESA:
+		hwHack = "#ifndef MESA\n#define MESA\n#endif\n";
+		break;
+	case GLHW_GENERIC:
 		hwHack = NULL;
 		break;
 	default:
@@ -289,14 +312,14 @@ static size_t R_InitializeShader (const char *name, char *out, size_t len)
 	 * Prefix "#version xxx" onto shader string.
 	 * This causes GLSL compiler to compile to that version.
 	 */
-	defines = va("#version %d\n", r_glsl_version->integer);
+	defines = va("#version %d\n", shaderVersion);
 	initialChars += R_PreprocessShaderAddToShaderBuf(name, defines, &out, &len);
 
 	/*
 	 * Prefix "#define glslxxx" onto shader string.
 	 * This named constant is used to setup shader code to match the desired GLSL spec.
 	 */
-	defines = va("#define glsl%d\n", r_glsl_version->integer);
+	defines = va("#define glsl%d\n", shaderVersion);
 	initialChars += R_PreprocessShaderAddToShaderBuf(name, defines, &out, &len);
 
 	/* Define r_width.*/
@@ -311,180 +334,244 @@ static size_t R_InitializeShader (const char *name, char *out, size_t len)
 		initialChars += R_PreprocessShaderAddToShaderBuf(name, hwHack, &out, &len);
 	}
 
+	if (GL_VERTEX_SHADER == type) {
+		/* Define 'in_qualifier as 'attribute' & 'out_qualifier' as 'varying' if GLSL v1.10, otherwise define them as 'in' and 'out' respectively.*/
+		initialChars += R_PreprocessShaderAddToShaderBuf(name, "#ifndef glsl110\n#define in_qualifier in\n#define out_qualifier out\n#else\n#define in_qualifier attribute\n#define out_qualifier varying\n#endif\n", &out, &len);
+	} else if (GL_FRAGMENT_SHADER == type) {
+		/* Define 'texture2D' as 'texture', as texture2D was deprecated (replaced with 'texture') as of GLSL v1.30.*/
+		initialChars += R_PreprocessShaderAddToShaderBuf(name, "#ifndef glsl110\n#define texture2D texture\n#endif\n", &out, &len);
+		/* Define 'in_qualifier as 'varying' if GLSL v1.10, otherwise define it as 'in'.*/
+		initialChars += R_PreprocessShaderAddToShaderBuf(name, "#ifndef glsl110\n#define in_qualifier in\n#else\n#define in_qualifier varying\n#endif\n", &out, &len);
+	}
+
 	return initialChars;
 }
 
 /**
- * @brief Does our own preprocessing to the shader file, before the
- * GLSL implementation calls its preprocessor.
+ * @brief Do our own preprocessing to the shader file, before the
+ * GLSL implementation calls it's preprocessor.
+ *
+ * #if/#endif pairs, #unroll, #endunroll, #include, #replace are handled by our
+ * preprocessor, not the GLSL implementation's preprocessor (except #include which may
+ * also be handled by the implementation's preprocessor).  #if operates off
+ * of the value of a cvar interpreted as a bool. Note the GLSL implementation
+ * preprocessor handles #ifdef and #ifndef, not #if.
+ * @param[in] name The file name of the shader (e.g. "world_fs.glsl").
+ * @param[in] in The non-preprocessed shader string.
+ * @param[in,out] out The preprocessed shader string, NULL if we don't want to write to it.
+ * @param[in,out] remainingOutChars The number of characters left in the out buffer.
+ * @param[in] nested If true, parsing a part of #if clause, so #else and #endif tokens are allowed
+ * @param[in] inElse If true, parsing an #else clause and shouldn't expect another #else
+ * @return The number of characters added to the buffer pointed to by out.
  */
-static size_t R_PreprocessShader (const char *name, const char *in, char *out, int len)
+static size_t R_PreprocessShaderR (const char *name, const char **inPtr, char *out, long *remainingOutChars, qboolean nested, qboolean inElse)
 {
-	byte *buffer;
-	size_t i = 0;
+	const size_t INITIAL_REMAINING_OUT_CHARS = (size_t)*remainingOutChars;
+	/* Keep looping till we reach the end of the shader string, or a parsing error.*/
+	while (**inPtr) {
+		if ('#' == **inPtr) {
+			qboolean endBlockToken;
+			(*inPtr)++;
 
-	while (*in) {
-		if (!strncmp(in, "#include", 8)) {
-			char path[MAX_QPATH];
-			byte *buf;
-			size_t inc_len;
-			in += 8;
-			Com_sprintf(path, sizeof(path), "shaders/%s", Com_Parse(&in));
+			endBlockToken = !strncmp(*inPtr, "endif", 5);
 
-			if (FS_LoadFile(path, &buf) == -1) {
-				Com_Printf("Failed to resolve #include: %s.\n", path);
-				continue;
+			if (!strncmp(*inPtr, "else", 4)) {
+				if (inElse) {
+					/* Error in shader! Print a message saying our preprocessor failed parsing.*/
+					Com_Error(ERR_DROP, "R_PreprocessShaderR: #else without #if: %s", name);
+				}
+				endBlockToken = qtrue;
 			}
 
-			inc_len = R_PreprocessShader(name, (const char *)buf, out, len);
-			len -= inc_len;
-			out += inc_len;
-			FS_FreeFile(buf);
-		}
-
-		/** Handle #if here, not #ifndef or #ifdef.*/
-		if (!strncmp(in, "#if", 3) && strncmp(in, "#ifndef", 7) && strncmp(in, "#ifdef", 6)) {
-			float f;
-			qboolean elseclause = qfalse;
-
-			in += 3;
-
-			f = Cvar_GetValue(Com_Parse(&in));
-
-			while (*in) {
-				if (!strncmp(in, "#endif", 6)) {
-					in += 6;
-					break;
+			if (endBlockToken) {
+				if (!nested) {
+					/* Error in shader! Print a message saying our preprocessor failed parsing.*/
+					Com_Error(ERR_DROP, "R_PreprocessShaderR: Unmatched #endif/#else: %s", name);
 				}
+				/* Whoever called us will have to deal with closing the block */
+				return (INITIAL_REMAINING_OUT_CHARS - (size_t)*remainingOutChars);
+			}
 
-				if (!strncmp(in, "#else", 5)) {
-					in += 5;
-					elseclause = qtrue;
-				}
+			if (!strncmp((*inPtr), "if ", 3)) {
+				/* The line looks like "#if r_postprocess".*/
+				float f = 0.0f;
+				(*inPtr) += 3;
+				/* Get the corresponding cvar value.*/
+				f = Cvar_GetValue(Com_Parse(inPtr));
+				if (f) { /* Condition is true, recursively preprocess #if block, and skip over #else block, if any */
+					int size = R_PreprocessShaderR(name, inPtr, out, remainingOutChars, qtrue, qfalse);
+					if (out) out += size;
 
-				len--;
-				if (len < 0) {
-					Com_Error(ERR_DROP, "R_PreprocessShader: Overflow: %s", name);
-				}
-
-				if ((f && !elseclause) || (!f && elseclause)) {
-					if (!strncmp(in, "#unroll", 7)) {  /* loop unrolling */
-						int j, z;
-						size_t subLength = 0;
-
-						buffer = (byte *)Mem_PoolAlloc(SHADER_BUF_SIZE, vid_imagePool, 0);
-
-						in += 7;
-						z = Cvar_GetValue(Com_Parse(&in));
-
-						while (*in) {
-							if (!strncmp(in, "#endunroll", 10)) {
-								in += 10;
-								break;
-							}
-
-							buffer[subLength++] = *in++;
-
-							if (subLength >= SHADER_BUF_SIZE)
-								Com_Error(ERR_FATAL, "R_PreprocessShader: Overflow in shader loading '%s'", name);
-						}
-
-						for (j = 0; j < z; j++) {
-							int l;
-							for (l = 0; l < subLength; l++) {
-								if (buffer[l] == '$') {
-									Com_sprintf(out, subLength - l, "%d", j);
-									out += (j / 10) + 1;
-									i += (j / 10) + 1;
-									len -= (j / 10) + 1;
-								} else {
-									*out++ = buffer[l];
-									i++;
-									len--;
-								}
-								if (len < 0)
-									Com_Error(ERR_FATAL, "R_PreprocessShader: Overflow in shader loading '%s'", name);
-							}
-						}
-
-						Mem_Free(buffer);
-					} else {
-						*out++ = *in++;
-						i++;
+					if (!strncmp((*inPtr), "else", 4)) {/* Preprocess and skip #else block */
+						(*inPtr) +=4 ;
+						R_PreprocessShaderR(name, inPtr, (char*)0, remainingOutChars, qtrue, qtrue);
 					}
-				} else
-					in++;
-			}
-
-			if (!*in) {
-				Com_Error(ERR_DROP, "R_PreprocessShader: Unterminated conditional: %s", name);
-			}
-		}
-
-
-		if (!strncmp(in, "#unroll", 7)) {  /* loop unrolling */
-			int j, z;
-			size_t subLength = 0;
-
-			buffer = (byte *)Mem_PoolAlloc(SHADER_BUF_SIZE, vid_imagePool, 0);
-
-			in += 7;
-			z = Cvar_GetValue(Com_Parse(&in));
-
-			while (*in) {
-				if (!strncmp(in, "#endunroll", 10)) {
-					in += 10;
-					break;
-				}
-
-				buffer[subLength++] = *in++;
-				if (subLength >= SHADER_BUF_SIZE)
-					Com_Error(ERR_FATAL, "R_PreprocessShader: Overflow in shader loading '%s'", name);
-			}
-
-			for (j = 0; j < z; j++) {
-				int l;
-				for (l = 0; l < subLength; l++) {
-					if (buffer[l] == '$') {
-						Com_sprintf(out, subLength - l, "%d", j);
-						out += (j / 10) + 1;
-						i += (j / 10) + 1;
-						len -= (j / 10) + 1;
-					} else {
-						*out++ = buffer[l];
-						i++;
-						len--;
+				} else {
+					/* The cvar was false, don't add to out. Lets look and see if we hit a #else, or #endif.*/
+					R_PreprocessShaderR(name, inPtr, (char*)0, remainingOutChars, qtrue, qfalse);
+					if (!strncmp((*inPtr), "else", 4)) {
+						int size;
+						/* All right, we want to add this to out.*/
+						(*inPtr) +=4 ;
+						size = R_PreprocessShaderR(name, inPtr, out, remainingOutChars, qtrue, qtrue);
+						if (out) out += size;
 					}
-					if (len < 0)
-						Com_Error(ERR_FATAL, "R_PreprocessShader: Overflow in shader loading '%s'", name);
+				}
+				/* skip #endif, if any (could also get here by unexpected EOF */
+				if (!strncmp((*inPtr), "endif", 5))
+					(*inPtr) +=5 ;
+			} else if (!strncmp((*inPtr), "ifndef", 6) || !strncmp((*inPtr), "ifdef", 5)) { /* leave those for GLSL compiler, but follow #else/#endif nesting */
+				int size;
+				if (out) {
+					if (*remainingOutChars <= 0)
+						Com_Error(ERR_FATAL, "R_PreprocessShaderR: Overflow in shader loading '%s'", name);
+					*out++ = '#';
+					(*remainingOutChars)--;
+				}
+
+				size = R_PreprocessShaderR(name, inPtr, out, remainingOutChars, qtrue, qfalse);
+				if (out) out += size;
+
+				if (!strncmp((*inPtr), "else", 4)) {
+					if (out) {
+						if (*remainingOutChars <= 0)
+							Com_Error(ERR_FATAL, "R_PreprocessShaderR: Overflow in shader loading '%s'", name);
+						*out++ = '#';
+						(*remainingOutChars)--;
+					}
+					size = R_PreprocessShaderR(name, inPtr, out, remainingOutChars, qtrue, qtrue);
+					if (out) out += size;
+				}
+
+				if (out) {
+					if (*remainingOutChars <= 0)
+						Com_Error(ERR_FATAL, "R_PreprocessShaderR: Overflow in shader loading '%s'", name);
+					*out++ = '#';
+					(*remainingOutChars)--;
+				}
+
+			} else if (!strncmp((*inPtr), "include", 7)) {
+				char path[MAX_QPATH];
+				byte *buf = (byte*)0;
+				const char* bufAsChar = (const char*)0;
+				const char** bufAsCharPtr = (const char**)0;
+				(*inPtr) += 8;
+				Com_sprintf(path, sizeof(path), "shaders/%s", Com_Parse(inPtr));
+				if (FS_LoadFile(path, &buf) == -1) {
+					Com_Printf("Failed to resolve #include: %s.\n", path);
+					continue;
+				}
+				bufAsChar = (const char*)buf;
+				bufAsCharPtr = &bufAsChar;
+				if (out) {
+					out += R_PreprocessShaderR(name, bufAsCharPtr, out, remainingOutChars, nested, qfalse);
+				} else {
+					R_PreprocessShaderR(name, bufAsCharPtr, out, remainingOutChars, nested, qfalse);
+				}
+				FS_FreeFile(buf);
+			} else if (!strncmp((*inPtr), "unroll", 6)) {
+				/* loop unrolling */
+				int j = 0,
+					z = 0;
+				size_t subLength = 0;
+				byte* buffer = (byte*)Mem_PoolAlloc(SHADER_BUF_SIZE, vid_imagePool, 0);
+				(*inPtr) += 6;
+				z = Cvar_GetValue(Com_Parse(inPtr));
+				while (*(*inPtr)) {
+					if (!strncmp((*inPtr), "#endunroll", 10)) {
+						(*inPtr) += 10;
+						break;
+					}
+					buffer[subLength++] = *(*inPtr)++;
+					if (subLength >= SHADER_BUF_SIZE)
+						Com_Error(ERR_FATAL, "R_PreprocessShaderR: Overflow in shader loading '%s'", name);
+				}
+				if (out) {
+					for (; j < z; j++) {
+						int l = 0;
+						for (; l < subLength; l++) {
+							if (buffer[l] == '$') {
+								byte insertedLen = (j / 10) + 1;
+								if (!Com_sprintf(out, (size_t)*remainingOutChars, "%d", j))
+									Com_Error(ERR_FATAL, "R_PreprocessShaderR: Overflow in shader loading '%s'", name);
+								out += insertedLen;
+								(*remainingOutChars) -= insertedLen;
+							} else {
+								if (*remainingOutChars <= 0)
+									Com_Error(ERR_FATAL, "R_PreprocessShaderR: Overflow in shader loading '%s'", name);
+								*out++ = buffer[l];
+								(*remainingOutChars)--;
+							}
+						}
+					}
+				}
+				Mem_Free(buffer);
+			} else if (!strncmp((*inPtr), "replace", 7)) {
+				int r = 0;
+				(*inPtr) += 8;
+				r = Cvar_GetValue(Com_Parse(inPtr));
+				if (out) {
+					byte insertedLen = 0;
+					if (!Com_sprintf(out, (size_t)*remainingOutChars, "%d", r))
+						Com_Error(ERR_FATAL, "R_PreprocessShaderR: Overflow in shader loading '%s'", name);
+					insertedLen = (r / 10) + 1;
+					out += insertedLen;
+					(*remainingOutChars) -= insertedLen;
+				}
+			} else {
+				/* general case is to copy so long as the buffer has room */
+				if (out) {
+					if (*remainingOutChars <= 0)
+						Com_Error(ERR_FATAL, "R_PreprocessShaderR: Overflow in shader loading '%s'", name);
+					*out++ = '#';
+					(*remainingOutChars)--;
 				}
 			}
-
-			Mem_Free(buffer);
+		} else {
+			/* general case is to copy so long as the buffer has room */
+			if (out) {
+				if (*remainingOutChars <= 0)
+					Com_Error(ERR_FATAL, "R_PreprocessShaderR: Overflow in shader loading '%s'", name);
+				*out++ = *(*inPtr);
+				(*remainingOutChars)--;
+			}
+			(*inPtr)++;
 		}
-
-		if (!strncmp(in, "#replace", 8)) {
-			int r;
-			in += 8;
-			r = Cvar_GetValue(Com_Parse(&in));
-			Com_sprintf(out, len, "%d", r);
-			out += (r / 10) + 1;
-			len -= (r / 10) + 1;
-		}
-
-		/* general case is to copy so long as the buffer has room */
-
-		len--;
-		if (len < 0)
-			Com_Error(ERR_FATAL, "R_PreprocessShader: Overflow in shader loading '%s'", name);
-		*out++ = *in++;
-		i++;
 	}
-	return i;
+	/* Return the number of characters added to the buffer.*/
+	return (INITIAL_REMAINING_OUT_CHARS - *remainingOutChars);
 }
 
+/**
+ * @brief Do our own preprocessing to the shader file, before the
+ * GLSL implementation calls it's preprocessor.
+ *
+ * #if/#endif pairs, #unroll, #endunroll, #include, #replace are handled by our
+ * preprocessor, not the GLSL implementation's preprocessor (except #include which may
+ * also be handled by the implementation's preprocessor).  #if operates off
+ * of the value of a cvar interpreted as a bool. Note the GLSL implementation
+ * preprocessor handles #ifdef and #ifndef, not #if.
+ * @param[in] name The file name of the shader (e.g. "world_fs.glsl").
+ * @param[in] in The non-preprocessed shader string.
+ * @param[in,out] out The preprocessed shader string, NULL if we don't want to write to it.
+ * @param[in,out] remainingOutChars The number of characters left in the out buffer.
+ * @return The number of characters added to the buffer pointed to by out.
+ */
+static size_t R_PreprocessShader (const char *name, const char *in, char *out, size_t *remainingOutChars)
+{
+	long remainingOutCharsAsLong = *remainingOutChars;
+	size_t numCharactersAddedToOutBuffer = R_PreprocessShaderR(name, &in, out, &remainingOutCharsAsLong, qfalse, qfalse);
+	*remainingOutChars = remainingOutCharsAsLong;
+	return numCharactersAddedToOutBuffer;
+}
 
-static r_shader_t *R_LoadShader (GLenum type, const char *name)
+/**
+ * @brief Reads/Preprocesses/Compiles the specified shader into a program.
+ * @param[in] type The type of shader, currently either GL_VERTEX_SHADER or GL_FRAGMENT_SHADER.
+ * @param[in] name The file name of the shader to load from ./base/shaders/ (e.g. "world_fs.glsl").
+ * @return A structure used as a handle to the compiled shader (program).
+ */
+static r_shader_t *R_LoadShader (const GLenum type, const char *name)
 {
 	r_shader_t *sh;
 	char path[MAX_QPATH], *src[1];
@@ -511,11 +598,11 @@ static r_shader_t *R_LoadShader (GLenum type, const char *name)
 
 	srcBuf = source = (char *)Mem_PoolAlloc(bufLength, vid_imagePool, 0);
 
-	initializeLength = R_InitializeShader(name, srcBuf, bufLength);
+	initializeLength = R_InitializeShader(type, name, srcBuf, bufLength);
 	srcBuf += initializeLength;
 	bufLength -= initializeLength;
 
-	R_PreprocessShader(name, (const char *)buf, srcBuf, bufLength);
+	R_PreprocessShader(name, (const char *)buf, srcBuf, &bufLength);
 	FS_FreeFile(buf);
 
 	src[0] = source;
@@ -576,6 +663,10 @@ r_program_t *R_LoadProgram (const char *name, programInitFunc_t init, programUse
 	r_program_t *prog;
 	unsigned e;
 	int i;
+
+	/* shaders are deactivated */
+	if (!r_programs->integer)
+		return NULL;
 
 	/* search existing one */
 	for (i = 0; i < MAX_PROGRAMS; i++) {
@@ -639,6 +730,8 @@ r_program_t *R_LoadProgram (const char *name, programInitFunc_t init, programUse
 	return prog;
 }
 
+extern vec2_t fogRange;
+
 static void R_InitWorldProgram (r_program_t *prog)
 {
 	R_ProgramParameter1i("SAMPLER0", 0);
@@ -653,17 +746,35 @@ static void R_InitWorldProgram (r_program_t *prog)
 	R_ProgramParameter1i("SPECULARMAP", 0);
 	R_ProgramParameter1i("ANIMATE", 0);
 
-	R_ProgramParameter1f("HARDNESS", DEFAULT_HARDNESS);
-	R_ProgramParameter1f("SPECULAR", DEFAULT_SPECULAR);
-	R_ProgramParameter1f("BUMP", DEFAULT_BUMP);
-	R_ProgramParameter1f("PARALLAX", DEFAULT_PARALLAX);
+	R_ProgramParameter1f("HARDNESS", defaultMaterial.hardness);
+	R_ProgramParameter1f("SPECULAR", defaultMaterial.specular);
+	R_ProgramParameter1f("BUMP", defaultMaterial.bump);
+	R_ProgramParameter1f("PARALLAX", defaultMaterial.parallax);
 	if (r_postprocess->integer)
-		R_ProgramParameter1f("GLOWSCALE", DEFAULT_GLOWSCALE);
+		R_ProgramParameter1f("GLOWSCALE", defaultMaterial.glowscale);
+	if (r_fog->integer) {
+		if (r_state.fog_enabled) {
+			R_ProgramParameter3fv("FOGCOLOR", refdef.fogColor);
+			R_ProgramParameter1f("FOGDENSITY", refdef.fogColor[3]);
+			R_ProgramParameter2fv("FOGRANGE", fogRange);
+		} else {
+			R_ProgramParameter1f("FOGDENSITY", 0.0f);
+		}
+	}
 }
 
 static void R_UseWorldProgram (r_program_t *prog)
 {
 	/*R_ProgramParameter1i("LIGHTS", refdef.numLights);*/
+	if (r_fog->integer) {
+		if (r_state.fog_enabled) {
+			R_ProgramParameter3fv("FOGCOLOR", refdef.fogColor);
+			R_ProgramParameter1f("FOGDENSITY", refdef.fogColor[3]);
+			R_ProgramParameter2fv("FOGRANGE", fogRange);
+		} else {
+			R_ProgramParameter1f("FOGDENSITY", 0.0f);
+		}
+	}
 }
 
 static void R_InitWarpProgram (r_program_t *prog)
@@ -677,6 +788,15 @@ static void R_InitWarpProgram (r_program_t *prog)
 		R_ProgramParameter1f("GLOWSCALE", 0.0);
 	}
 	R_ProgramParameter4fv("OFFSET", offset);
+	if (r_fog->integer) {
+		if (r_state.fog_enabled) {
+			R_ProgramParameter3fv("FOGCOLOR", refdef.fogColor);
+			R_ProgramParameter1f("FOGDENSITY", refdef.fogColor[3]);
+			R_ProgramParameter2fv("FOGRANGE", fogRange);
+		} else {
+			R_ProgramParameter1f("FOGDENSITY", 0.0f);
+		}
+	}
 }
 
 static void R_UseWarpProgram (r_program_t *prog)
@@ -685,6 +805,15 @@ static void R_UseWarpProgram (r_program_t *prog)
 
 	offset[0] = offset[1] = refdef.time / 8.0;
 	R_ProgramParameter4fv("OFFSET", offset);
+	if (r_fog->integer) {
+		if (r_state.fog_enabled) {
+			R_ProgramParameter3fv("FOGCOLOR", refdef.fogColor);
+			R_ProgramParameter1f("FOGDENSITY", refdef.fogColor[3]);
+			R_ProgramParameter2fv("FOGRANGE", fogRange);
+		} else {
+			R_ProgramParameter1f("FOGDENSITY", 0.0f);
+		}
+	}
 }
 
 static void R_InitGeoscapeProgram (r_program_t *prog)
@@ -808,11 +937,6 @@ void R_InitPrograms (void)
 	OBJZERO(r_state.shaders);
 	OBJZERO(r_state.programs);
 
-	/* shaders are deactivated - don't try to load them - some cards
-	 * even have problems with this */
-	if (!r_programs->integer)
-		return;
-
 	r_state.world_program = R_LoadProgram("world", R_InitWorldProgram, R_UseWorldProgram);
 	r_state.warp_program = R_LoadProgram("warp", R_InitWarpProgram, R_UseWarpProgram);
 	r_state.geoscape_program = R_LoadProgram("geoscape", R_InitGeoscapeProgram, NULL);
@@ -820,6 +944,13 @@ void R_InitPrograms (void)
 	r_state.convolve_program = R_LoadProgram("convolve" DOUBLEQUOTE(FILTER_SIZE), R_InitConvolveProgram, R_UseConvolveProgram);
 	r_state.atmosphere_program = R_LoadProgram("atmosphere", R_InitAtmosphereProgram, NULL);
 	r_state.simple_glow_program = R_LoadProgram("simple_glow", R_InitSimpleGlowProgram, NULL);
+
+	if (!(r_state.world_program && r_state.warp_program && r_state.geoscape_program && r_state.combine2_program
+		&& r_state.convolve_program && r_state.atmosphere_program && r_state.simple_glow_program)) {
+		Com_Printf("disabled shaders because they failed to compile\n");
+		Cvar_Set("r_programs", "0");
+		r_programs->modified = qfalse;
+	}
 }
 
 /**

@@ -105,9 +105,6 @@ typedef struct reserveShot_s {
 	int TUs;
 } reserveShot_t;
 
-static int hudTime;
-static char hudText[256];
-
 /**
  * @brief Displays a message on the hud.
  * @sa UI_DisplayNotice
@@ -409,6 +406,8 @@ static void HUD_DisplayFiremodeEntry (const char* callback, const le_t* actor, c
 	qboolean status;
 	const fireDef_t *fd;
 	const char *tooltip;
+	const char *fireDefTUs;
+	const char *ammoAmount;
 	char id[32];
 
 	if (index < ammo->numFiredefs[weapFdsIdx]) {
@@ -432,17 +431,19 @@ static void HUD_DisplayFiremodeEntry (const char* callback, const le_t* actor, c
 
 	/* unique identifier of the action */
 	/* @todo use this id as action callback instead of hand and index (we can extend it with any other soldier action we need (open door, reload...)) */
-	Q_strncpyz(id, va("fire_hand%c_i%i", ACTOR_GET_HAND_CHAR(hand), index), sizeof(id));
+	Com_sprintf(id, sizeof(id), "fire_hand%c_i%i", ACTOR_GET_HAND_CHAR(hand), index);
+	fireDefTUs = va(_("TU: %i"), fd->time);
+	ammoAmount = va(_("Shots: %i"), fd->ammo);
 
-	UI_ExecuteConfunc("%s firemode %s %c %i %i %i \"%s\" %i %i \"%s\"", callback, id, ACTOR_GET_HAND_CHAR(hand),
-			fd->fdIdx, fd->reaction, status, _(fd->name), fd->time, fd->ammo, tooltip);
+	UI_ExecuteConfunc("%s firemode %s %c %i %i %i \"%s\" \"%s\" \"%s\" \"%s\"", callback, id, ACTOR_GET_HAND_CHAR(hand),
+			fd->fdIdx, fd->reaction, status, _(fd->name), fireDefTUs, ammoAmount, tooltip);
 
 	/* Display checkbox for reaction firemode */
 	if (fd->reaction) {
 		character_t* chr = CL_ActorGetChr(actor);
 		const qboolean active = THIS_FIREMODE(&chr->RFmode, hand, fd->fdIdx);
 		/* Change the state of the checkbox. */
-		UI_ExecuteConfunc("%s reaction %s %i", callback, id, active);
+		UI_ExecuteConfunc("%s reaction %s %c %i", callback, id, ACTOR_GET_HAND_CHAR(hand), active);
 	}
 }
 
@@ -1229,7 +1230,7 @@ static int HUD_UpdateActorMove (const le_t *actor)
 	return actor->actorMoveLength;
 }
 
-static void HUD_UpdateActorCvar (le_t *actor, const char *cvarPrefix)
+static void HUD_UpdateActorCvar (const le_t *actor, const char *cvarPrefix)
 {
 	const invList_t* invList;
 	const char *animName;
@@ -1433,10 +1434,6 @@ void HUD_Update (void)
 		Cvar_SetValue("mn_moralemax", 100);
 		Cvar_SetValue("mn_stun", 0);
 	}
-
-	/* display special message */
-	if (cl.time < hudTime)
-		UI_RegisterText(TEXT_STANDARD, hudText);
 }
 
 /**
@@ -1540,6 +1537,8 @@ void HUD_InitUI (const char *optionWindowName, qboolean popAll)
 		Cvar_Set("cl_hud", "hud_default");
 	}
 	UI_InitStack(cl_hud->string, optionWindowName, popAll, qtrue);
+
+	UI_ExecuteConfunc("hudinit");
 }
 
 /**

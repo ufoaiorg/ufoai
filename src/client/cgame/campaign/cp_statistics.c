@@ -43,6 +43,7 @@ void CP_StatsUpdate_f (void)
 	const campaign_t *campaign = ccs.curCampaign;
 	const salary_t *salary = &campaign->salaries;
 	aircraft_t *aircraft;
+	installation_t *inst;
 
 	/* delete buffer */
 	OBJZERO(statsBuffer);
@@ -63,8 +64,8 @@ void CP_StatsUpdate_f (void)
 	/* installations */
 	pos += (strlen(pos) + 1);
 	UI_RegisterText(TEXT_STATS_INSTALLATIONS, pos);
-	for (i = 0; i < ccs.numInstallations; i++) {
-		const installation_t *inst = &ccs.installations[i];
+
+	INS_Foreach(inst) {
 		Q_strcat(pos, va("%s\n", inst->name), (ptrdiff_t)(&statsBuffer[MAX_STATS_BUFFER] - pos));
 	}
 
@@ -162,6 +163,7 @@ qboolean STATS_SaveXML (xmlNode_t *parent)
 	XML_AddIntValue(stats, SAVE_STATS_MISSIONSLOST, ccs.campaignStats.missionsLost);
 	XML_AddIntValue(stats, SAVE_STATS_BASESBUILT, ccs.campaignStats.basesBuilt);
 	XML_AddIntValue(stats, SAVE_STATS_BASESATTACKED, ccs.campaignStats.basesAttacked);
+	XML_AddIntValue(stats, SAVE_STATS_INSTALLATIONSBUILT, ccs.campaignStats.installationsBuilt);
 	XML_AddIntValue(stats, SAVE_STATS_INTERCEPTIONS, ccs.campaignStats.interceptions);
 	XML_AddIntValue(stats, SAVE_STATS_SOLDIERSLOST, ccs.campaignStats.soldiersLost);
 	XML_AddIntValue(stats, SAVE_STATS_SOLDIERSNEW, ccs.campaignStats.soldiersNew);
@@ -199,6 +201,7 @@ qboolean STATS_LoadXML (xmlNode_t *parent)
 	ccs.campaignStats.missionsLost = XML_GetInt(stats, SAVE_STATS_MISSIONSLOST, 0);
 	ccs.campaignStats.basesBuilt = XML_GetInt(stats, SAVE_STATS_BASESBUILT, 0);
 	ccs.campaignStats.basesAttacked = XML_GetInt(stats, SAVE_STATS_BASESATTACKED, 0);
+	ccs.campaignStats.installationsBuilt = XML_GetInt(stats, SAVE_STATS_INSTALLATIONSBUILT, 0);
 	ccs.campaignStats.interceptions = XML_GetInt(stats, SAVE_STATS_INTERCEPTIONS, 0);
 	ccs.campaignStats.soldiersLost = XML_GetInt(stats, SAVE_STATS_SOLDIERSLOST, 0);
 	ccs.campaignStats.soldiersNew = XML_GetInt(stats, SAVE_STATS_SOLDIERSNEW, 0);
@@ -211,17 +214,8 @@ qboolean STATS_LoadXML (xmlNode_t *parent)
 	ccs.campaignStats.moneyWeapons = XML_GetInt(stats, SAVE_STATS_MONEYWEAPONS, 0);
 	ccs.campaignStats.ufosDetected = XML_GetInt(stats, SAVE_STATS_UFOSDETECTED, 0);
 	ccs.campaignStats.alienBasesBuilt = XML_GetInt(stats, SAVE_STATS_ALIENBASESBUILT, 0);
-	/* fallback for savegame compatibility */
-	if (ccs.campaignStats.alienBasesBuilt == 0)
-		ccs.campaignStats.alienBasesBuilt = AB_GetAlienBaseNumber();
 	ccs.campaignStats.ufosStored = XML_GetInt(stats, SAVE_STATS_UFOSSTORED, 0);
-	/* fallback for savegame compatibility */
-	if (ccs.campaignStats.ufosStored == 0)
-		ccs.campaignStats.ufosStored = US_StoredUFOCount();
 	ccs.campaignStats.aircraftHad = XML_GetInt(stats, SAVE_STATS_AIRCRAFTHAD, 0);
-	/* fallback for savegame compatibility */
-	if (ccs.campaignStats.aircraftHad == 0)
-		ccs.campaignStats.aircraftHad = LIST_Count(ccs.aircraft);
 
 	/* freeing the memory below this node */
 	mxmlDelete(stats);

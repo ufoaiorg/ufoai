@@ -24,11 +24,16 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 
 #include "s_music.h"
 #include "s_local.h"
+#include "../cl_shared.h"	/* cl_genericPool */
 #include "../../shared/parse.h"
 #include "../../ports/system.h"
 #include "../../common/filesys.h"	/* for MAX_QPATH */
 #include "../../common/common.h"	/* for many */
-#include "../client.h"	/* for cl_genericPool */
+#include "../cl_renderer.h"
+#include "../cl_video.h"
+#include "../battlescape/cl_camera.h"
+#include "../battlescape/cl_localentity.h"
+#include "../battlescape/cl_battlescape.h"
 
 enum {
 	MUSIC_MAIN,
@@ -137,7 +142,7 @@ static void M_Start (const char *file)
 	int size;
 	SDL_RWops *rw;
 
-	if (!file || file[0] == '\0')
+	if (Q_strnull(file))
 		return;
 
 	if (!s_env.initialized) {
@@ -270,7 +275,7 @@ static void M_Change_f (void)
 		return;
 	}
 
-	if (category != MUSIC_BATTLESCAPE && cls.state == ca_active) {
+	if (category != MUSIC_BATTLESCAPE && CL_OnBattlescape()) {
 		Com_DPrintf(DEBUG_SOUND, "Not changing music to %s - we are in Battlescape\n", type);
 		return;
 	}

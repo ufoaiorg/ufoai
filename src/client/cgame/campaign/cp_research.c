@@ -34,6 +34,7 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #include "cp_capacity.h"
 #include "cp_research.h"
 #include "cp_popup.h"
+#include "cp_time.h"
 #include "save/save_research.h"
 
 #define TECH_HASH_SIZE 64
@@ -485,7 +486,7 @@ void RS_InitTree (const campaign_t *campaign, qboolean load)
 	int i, j;
 	technology_t *tech;
 	byte found;
-	objDef_t *od;
+	const objDef_t *od;
 
 	/* Add links to technologies. */
 	for (i = 0, od = csi.ods; i < csi.numODs; i++, od++) {
@@ -526,7 +527,7 @@ void RS_InitTree (const campaign_t *campaign, qboolean load)
 		case RS_ARMOUR:
 			found = qfalse;
 			for (j = 0; j < csi.numODs; j++) {	/* j = item index */
-				objDef_t *item = INVSH_GetItemByIDX(j);
+				const objDef_t *item = INVSH_GetItemByIDX(j);
 
 				/* This item has been 'provided' -> get the correct data. */
 				if (Q_streq(tech->provides, item->id)) {
@@ -1080,13 +1081,13 @@ void RS_ResetTechs (void)
  */
 static const value_t valid_tech_vars[] = {
 	{"name", V_TRANSLATION_STRING, offsetof(technology_t, name), 0},
-	{"provides", V_CLIENT_HUNK_STRING, offsetof(technology_t, provides), 0},
-	{"event", V_CLIENT_HUNK_STRING, offsetof(technology_t, finishedResearchEvent), 0},
+	{"provides", V_HUNK_STRING, offsetof(technology_t, provides), 0},
+	{"event", V_HUNK_STRING, offsetof(technology_t, finishedResearchEvent), 0},
 	{"delay", V_INT, offsetof(technology_t, delay), MEMBER_SIZEOF(technology_t, delay)},
 	{"producetime", V_INT, offsetof(technology_t, produceTime), MEMBER_SIZEOF(technology_t, produceTime)},
 	{"time", V_FLOAT, offsetof(technology_t, time), MEMBER_SIZEOF(technology_t, time)},
-	{"image", V_CLIENT_HUNK_STRING, offsetof(technology_t, image), 0},
-	{"mdl", V_CLIENT_HUNK_STRING, offsetof(technology_t, mdl), 0},
+	{"image", V_HUNK_STRING, offsetof(technology_t, image), 0},
+	{"mdl", V_HUNK_STRING, offsetof(technology_t, mdl), 0},
 
 	{NULL, 0, 0, 0}
 };
@@ -1099,8 +1100,8 @@ static const value_t valid_techmail_vars[] = {
 	{"to", V_TRANSLATION_STRING, offsetof(techMail_t, to), 0},
 	{"subject", V_TRANSLATION_STRING, offsetof(techMail_t, subject), 0},
 	{"date", V_TRANSLATION_STRING, offsetof(techMail_t, date), 0},
-	{"icon", V_CLIENT_HUNK_STRING, offsetof(techMail_t, icon), 0},
-	{"model", V_CLIENT_HUNK_STRING, offsetof(techMail_t, model), 0},
+	{"icon", V_HUNK_STRING, offsetof(techMail_t, icon), 0},
+	{"model", V_HUNK_STRING, offsetof(techMail_t, model), 0},
 
 	{NULL, 0, 0, 0}
 };
@@ -1115,7 +1116,6 @@ static const value_t valid_techmail_vars[] = {
  */
 void RS_ParseTechnologies (const char *name, const char **text)
 {
-	const value_t *vp;
 	technology_t *tech;
 	unsigned hash;
 	const char *errhead = "RS_ParseTechnologies: unexpected end of file.";
@@ -1439,27 +1439,8 @@ void RS_ParseTechnologies (const char *name, const char **text)
 				if (!*text || *token == '}')
 					return;
 				do {
-					for (vp = valid_techmail_vars; vp->string; vp++)
-						if (Q_streq(token, vp->string)) {
-							/* found a definition */
-							token = Com_EParse(text, errhead, name);
-							if (!*text)
-								return;
+					Com_ParseBlockToken(name, text, mail, valid_techmail_vars, cp_campaignPool, token);
 
-							switch (vp->type) {
-							case V_TRANSLATION_STRING:
-								token++;	/**< Remove first char (i.e. we assume it's the "_") */
-							case V_CLIENT_HUNK_STRING:
-								Mem_PoolStrDupTo(token, (char**) ((char*)mail + (int)vp->ofs), cp_campaignPool, 0);
-								break;
-							case V_NULL:
-								Com_Printf("RS_ParseTechnologies Error: - no buffer for technologies - V_NULL not allowed (token: '%s') entry: '%s'\n", token, name);
-								break;
-							default:
-								Com_EParseValue(mail, token, vp->type, vp->ofs, vp->size);
-							}
-							break;
-						}
 					/* grab the next entry */
 					token = Com_EParse(text, errhead, name);
 					if (!*text)
@@ -1469,32 +1450,7 @@ void RS_ParseTechnologies (const char *name, const char **text)
 				if (mail->model == NULL)
 					mail->model = "characters/navarre";
 			} else {
-				for (vp = valid_tech_vars; vp->string; vp++)
-					if (Q_streq(token, vp->string)) {
-						/* found a definition */
-						token = Com_EParse(text, errhead, name);
-						if (!*text)
-							return;
-
-						if (!vp->ofs)
-							break;
-						switch (vp->type) {
-						case V_TRANSLATION_STRING:
-							if (*token == '_')
-								token++;
-						case V_CLIENT_HUNK_STRING:
-							Mem_PoolStrDupTo(token, (char**) ((char*)tech + (int)vp->ofs), cp_campaignPool, 0);
-							break;
-						case V_NULL:
-							Com_Printf("RS_ParseTechnologies Error: - no buffer for technologies - V_NULL not allowed (token: '%s') entry: '%s'\n", token, name);
-							break;
-						default:
-							Com_EParseValue(tech, token, vp->type, vp->ofs, vp->size);
-						}
-						break;
-					}
-				/** @todo escape "type weapon/tech/etc.." here */
-				if (!vp->string)
+				if (!Com_ParseBlockToken(name, text, tech, valid_tech_vars, cp_campaignPool, token))
 					Com_Printf("RS_ParseTechnologies: unknown token \"%s\" ignored (entry %s)\n", token, name);
 			}
 		}
@@ -1585,7 +1541,7 @@ technology_t *RS_GetTechByID (const char *id)
 	unsigned hash;
 	technology_t *tech;
 
-	if (!id || id[0] == '\0')
+	if (Q_strnull(id))
 		return NULL;
 
 	hash = Com_HashKey(id, TECH_HASH_SIZE);

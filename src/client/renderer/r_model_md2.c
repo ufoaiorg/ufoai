@@ -33,74 +33,73 @@ MD2 ALIAS MODELS
 
 static void R_ModLoadTags (model_t * mod, void *buffer, int bufSize)
 {
-	dMD2tag_t *pintag, *pheader;
+	dMD2tag_t *pintag;
 	int version;
-	int i, j, size;
-	float *inmat, *outmat;
-	int read;
+	int i, j;
+	float *inmat;
+	dMD2tag_t pheader;
+	mAliasTag_t *pouttag;
 
 	pintag = (dMD2tag_t *) buffer;
 
 	version = LittleLong(pintag->version);
 	if (version != TAG_VERSION)
-		Com_Error(ERR_FATAL, "R_ModLoadTags: %s has wrong version number (%i should be %i)",
-				mod->alias.tagname, version, TAG_VERSION);
-
-	size = LittleLong(pintag->ofs_extractend);
-	mod->alias.tagdata = Mem_PoolAlloc(size, vid_modelPool, 0);
-	pheader = (dMD2tag_t *)mod->alias.tagdata;
+		Com_Error(ERR_FATAL, "R_ModLoadTags: tag has wrong version number (%i should be %i)", version, TAG_VERSION);
 
 	/* byte swap the header fields and sanity check */
-	for (i = 0; i < (int)sizeof(dMD2tag_t) / 4; i++)
-		((int *) pheader)[i] = LittleLong(((int *) buffer)[i]);
+	pheader.ident = LittleLong(pintag->ident);
+	pheader.version = LittleLong(pintag->version);
+	pheader.num_tags = LittleLong(pintag->num_tags);
+	pheader.num_frames = LittleLong(pintag->num_frames);
+	pheader.ofs_names = LittleLong(pintag->ofs_names);
+	pheader.ofs_tags = LittleLong(pintag->ofs_tags);
+	pheader.ofs_end = LittleLong(pintag->ofs_end);
+	pheader.ofs_extractend = LittleLong(pintag->ofs_extractend);
 
-	if (pheader->num_tags <= 0)
-		Com_Error(ERR_FATAL, "R_ModLoadTags: tag file %s has no tags", mod->alias.tagname);
+	if (pheader.num_tags <= 0)
+		Com_Error(ERR_FATAL, "R_ModLoadTags: tag file for %s has no tags", mod->name);
 
-	if (pheader->num_frames <= 0)
-		Com_Error(ERR_FATAL, "R_ModLoadTags: tag file %s has no frames", mod->alias.tagname);
-
-	/* load tag names */
-	memcpy((char *) pheader + pheader->ofs_names, (char *) pintag + pheader->ofs_names, pheader->num_tags * MD2_MAX_SKINNAME);
+	if (pheader.num_frames <= 0)
+		Com_Error(ERR_FATAL, "R_ModLoadTags: tag file for %s has no frames", mod->name);
 
 	/* load tag matrices */
-	inmat = (float *) ((byte *) pintag + pheader->ofs_tags);
-	outmat = (float *) ((byte *) pheader + pheader->ofs_tags);
+	inmat = (float *) ((byte *) pintag + pheader.ofs_tags);
 
-	if (bufSize != pheader->ofs_end)
+	if (bufSize != pheader.ofs_end)
 		Com_Error(ERR_FATAL, "R_ModLoadTags: tagfile %s is broken - expected: %i, offsets tell us to read: %i",
-			mod->alias.tagname, bufSize, pheader->ofs_end);
+			mod->name, bufSize, pheader.ofs_end);
 
-	if (pheader->num_frames != mod->alias.num_frames)
+	if (pheader.num_frames != mod->alias.num_frames)
 		Com_Printf("R_ModLoadTags: found %i frames in %s but model has %i frames\n",
-			pheader->num_frames, mod->alias.tagname, mod->alias.num_frames);
+			pheader.num_frames, mod->name, mod->alias.num_frames);
 
-	if (pheader->ofs_names != 32)
-		Com_Error(ERR_FATAL, "R_ModLoadTags: invalid ofs_name for tagfile %s", mod->alias.tagname);
-	if (pheader->ofs_tags != pheader->ofs_names + (pheader->num_tags * 64))
-		Com_Error(ERR_FATAL, "R_ModLoadTags: invalid ofs_tags for tagfile %s", mod->alias.tagname);
+	if (pheader.ofs_names != 32)
+		Com_Error(ERR_FATAL, "R_ModLoadTags: invalid ofs_name in tagfile for %s", mod->name);
+	if (pheader.ofs_tags != pheader.ofs_names + (pheader.num_tags * 64))
+		Com_Error(ERR_FATAL, "R_ModLoadTags: invalid ofs_tags for tagfile %s", mod->name);
 	/* (4 * 3) * 4 bytes (int) */
-	if (pheader->ofs_end != pheader->ofs_tags + (pheader->num_tags * pheader->num_frames * 48))
-		Com_Error(ERR_FATAL, "R_ModLoadTags: invalid ofs_end for tagfile %s", mod->alias.tagname);
+	if (pheader.ofs_end != pheader.ofs_tags + (pheader.num_tags * pheader.num_frames * 48))
+		Com_Error(ERR_FATAL, "R_ModLoadTags: invalid ofs_end for tagfile %s", mod->name);
 	/* (4 * 4) * 4 bytes (int) */
-	if (pheader->ofs_extractend != pheader->ofs_tags + (pheader->num_tags * pheader->num_frames * 64))
-		Com_Error(ERR_FATAL, "R_ModLoadTags: invalid ofs_extractend for tagfile %s", mod->alias.tagname);
+	if (pheader.ofs_extractend != pheader.ofs_tags + (pheader.num_tags * pheader.num_frames * 64))
+		Com_Error(ERR_FATAL, "R_ModLoadTags: invalid ofs_extractend for tagfile %s", mod->name);
 
-	for (i = 0; i < pheader->num_tags * pheader->num_frames; i++) {
-		for (j = 0; j < 4; j++) {
-			*outmat++ = LittleFloat(*inmat++);
-			*outmat++ = LittleFloat(*inmat++);
-			*outmat++ = LittleFloat(*inmat++);
-			*outmat++ = 0.0;
+	mod->alias.num_tags = pheader.num_tags;
+	pouttag = mod->alias.tags = (mAliasTag_t *)Mem_PoolAlloc(sizeof(mAliasTag_t) * mod->alias.num_tags, vid_modelPool, 0);
+
+	for (j = 0; j < pheader.num_tags; j++, pouttag++) {
+		mAliasTagOrientation_t *pouttagorient = mod->alias.tags[j].orient = (mAliasTagOrientation_t *)Mem_PoolAlloc(sizeof(mAliasTagOrientation_t) * mod->alias.num_frames, vid_modelPool, 0);
+		memcpy(pouttag->name, (char *) pintag + pheader.ofs_names + j * MD2_MAX_SKINNAME, sizeof(pouttag->name));
+		for (i = 0; i < pheader.num_frames; i++, pouttagorient++) {
+			int k;
+			for (k = 0; k < 3; k++) {
+				pouttagorient->axis[k][0] = LittleFloat(*inmat++);
+				pouttagorient->axis[k][1] = LittleFloat(*inmat++);
+				pouttagorient->axis[k][2] = LittleFloat(*inmat++);
+			}
+			VectorSet(pouttagorient->origin, LittleFloat(*inmat++), LittleFloat(*inmat++), LittleFloat(*inmat++));
 		}
-		outmat--;
-		*outmat++ = 1.0;
 	}
-
-	read = (byte *)outmat - (byte *)pheader;
-	if (read != size)
-		Com_Error(ERR_FATAL, "R_ModLoadTags: read: %i expected: %i - tags: %i, frames: %i (should be %i)",
-			read, size, pheader->num_tags, pheader->num_frames, mod->alias.num_frames);
 }
 
 /**
@@ -148,10 +147,6 @@ static void R_ModLoadAliasMD2MeshUnindexed (model_t *mod, const dMD2Model_t *md2
 			/** @todo Should we check skin image versus this size? */
 			outMesh->skinWidth = LittleLong(md2->skinwidth);
 			outMesh->skinHeight = LittleLong(md2->skinheight);
-
-			if (outMesh->skinHeight <= 0 || outMesh->skinWidth <= 0)
-				Com_Error(ERR_DROP, "model %s has invalid skin dimensions '%d x %d'",
-						mod->name, outMesh->skinHeight, outMesh->skinWidth);
 		} else {
 			/* load the skins */
 			outMesh->num_skins = LittleLong(md2->num_skins);
@@ -167,11 +162,11 @@ static void R_ModLoadAliasMD2MeshUnindexed (model_t *mod, const dMD2Model_t *md2
 
 			outMesh->skinWidth = LittleLong(md2->skinwidth);
 			outMesh->skinHeight = LittleLong(md2->skinheight);
-
-			if (outMesh->skinHeight <= 0 || outMesh->skinWidth <= 0)
-				Com_Error(ERR_DROP, "model %s has invalid skin dimensions '%d x %d'",
-						mod->name, outMesh->skinHeight, outMesh->skinWidth);
 		}
+
+		if (outMesh->skinHeight <= 0 || outMesh->skinWidth <= 0)
+			Com_Error(ERR_DROP, "model %s has invalid skin dimensions '%d x %d'",
+					mod->name, outMesh->skinHeight, outMesh->skinWidth);
 	} else {
 		/* skin data must be the same for the lod meshes */
 		outMesh->num_skins = mod->alias.meshes[0].num_skins;
@@ -504,8 +499,8 @@ static void R_ModLoadLevelOfDetailData (model_t* mod, qboolean loadNormals)
 void R_ModLoadAliasMD2Model (model_t *mod, byte *buffer, int bufSize, qboolean loadNormals)
 {
 	dMD2Model_t *md2;
-	byte *tagbuf = NULL, *animbuf = NULL;
-	size_t l;
+	byte *tagbuf = NULL;
+	char tagname[MAX_QPATH];
 
 	/* get the disk data */
 	md2 = (dMD2Model_t *) buffer;
@@ -523,30 +518,15 @@ void R_ModLoadAliasMD2Model (model_t *mod, byte *buffer, int bufSize, qboolean l
 	R_ModLoadAliasMD2Mesh(mod, md2, bufSize, loadNormals);
 
 	/* load the tags */
-	Q_strncpyz(mod->alias.tagname, mod->name, sizeof(mod->alias.tagname));
-	/* strip model extension and set the extension to tag */
-	l = strlen(mod->alias.tagname) - 4;
-	strcpy(&(mod->alias.tagname[l]), ".tag");
+	Com_StripExtension(mod->name, tagname, sizeof(tagname));
+	Com_DefaultExtension(tagname, sizeof(tagname), ".tag");
 
 	/* try to load the tag file */
-	if (FS_CheckFile("%s", mod->alias.tagname) != -1) {
+	if (FS_CheckFile("%s", tagname) != -1) {
 		/* load the tags */
-		const int size = FS_LoadFile(mod->alias.tagname, &tagbuf);
+		const int size = FS_LoadFile(tagname, &tagbuf);
 		R_ModLoadTags(mod, tagbuf, size);
 		FS_FreeFile(tagbuf);
-	}
-
-	/* load the animations */
-	Q_strncpyz(mod->alias.animname, mod->name, sizeof(mod->alias.animname));
-	l = strlen(mod->alias.animname) - 4;
-	strcpy(&(mod->alias.animname[l]), ".anm");
-
-	/* try to load the animation file */
-	if (FS_CheckFile("%s", mod->alias.animname) != -1) {
-		/* load the tags */
-		FS_LoadFile(mod->alias.animname, &animbuf);
-		R_ModLoadAnims(&mod->alias, (const char *)animbuf);
-		FS_FreeFile(animbuf);
 	}
 
 	R_ModLoadLevelOfDetailData(mod, loadNormals);

@@ -29,7 +29,9 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #include "node/ui_node_window.h"
 #include "node/ui_node_battlescape.h"
 
-#include "../client.h"
+#include "../cl_video.h"
+#include "../input/cl_input.h"
+#include "../input/cl_keys.h"
 
 #define WINDOWEXTRADATA(node) UI_EXTRADATA(node, windowExtraData_t)
 #define WINDOWEXTRADATACONST(node)  UI_EXTRADATACONST(node, windowExtraData_t)

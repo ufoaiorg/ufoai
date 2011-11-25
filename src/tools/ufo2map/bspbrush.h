@@ -54,6 +54,5 @@ void FreeBrush(bspbrush_t *brushes);
 void FreeBrushList(bspbrush_t *brushes);
 uint32_t BrushListCalcContents(bspbrush_t *brushlist);
 void BrushlistCalcStats(bspbrush_t *brushlist, vec3_t mins, vec3_t maxs);
-void WriteBSPBrushMap(const char *name, const bspbrush_t *list);
 
 #endif /* UFO2MAP_BSPBRUSH_H */

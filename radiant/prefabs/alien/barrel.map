@@ -1,0 +1,57 @@
+
+// entity 0
+{
+"classname" "worldspawn"
+"ambient_day" "0.15 0.15 0.15"
+"_color" "0.37 0.59 0.37"
+// brush 0
+{
+( 31 32 42.5 ) ( 31 0 42.5 ) ( -1 32 42.5 ) tex_common/lightclip 40 0 0 0.025 0.025
+( 0 0 4 ) ( 32 0 4 ) ( 0 32 4 ) tex_common/lightclip 0 0 0 0.025 0.025
+( 0.5 16 -128 ) ( 2 22 -128 ) ( 0.5 16 0 ) tex_common/lightclip 0 0 0 0.025 0.025
+( 2 22 -128 ) ( 5 26.5 -128 ) ( 2 22 0 ) tex_common/lightclip 0 0 0 0.025 0.025
+( 5 26.5 -128 ) ( 9.5 29.5 -128 ) ( 5 26.5 0 ) tex_common/lightclip 0 0 0 0.025 0.025
+( 9.5 29.5 -128 ) ( 16 31 -128 ) ( 9.5 29.5 0 ) tex_common/lightclip 0 0 0 0.025 0.025
+( 16 31 -128 ) ( 22 29.5 -128 ) ( 16 31 0 ) tex_common/lightclip 0 0 0 0.025 0.025
+( 22 29.5 -128 ) ( 26.5 26.5 -128 ) ( 22 29.5 0 ) tex_common/lightclip 0 0 0 0.025 0.025
+( 26.5 26.5 -128 ) ( 29.5 22 -128 ) ( 26.5 26.5 0 ) tex_common/lightclip 0 0 0 0.025 0.025
+( 29.5 22 -128 ) ( 31 16 -128 ) ( 29.5 22 0 ) tex_common/lightclip 0 0 0 0.025 0.025
+( 31 16 -128 ) ( 30 11 -128 ) ( 31 16 0 ) tex_common/lightclip 0 0 0 0.025 0.025
+( 30 11 -128 ) ( 26.5 5.5 -128 ) ( 30 11 0 ) tex_common/lightclip 0 0 0 0.025 0.025
+( 26.5 5.5 -128 ) ( 22 2.5 -128 ) ( 26.5 5.5 0 ) tex_common/lightclip 0 0 0 0.025 0.025
+( 22 2.5 -128 ) ( 16 1 -128 ) ( 22 2.5 0 ) tex_common/lightclip 0 0 0 0.025 0.025
+( 16 1 -128 ) ( 10.5 2 -128 ) ( 16 1 0 ) tex_common/lightclip 0 0 0 0.025 0.025
+( 10.5 2 -128 ) ( 5 5.5 -128 ) ( 10.5 2 0 ) tex_common/lightclip 0 0 0 0.025 0.025
+( 5 5.5 -128 ) ( 2 10 -128 ) ( 5 5.5 0 ) tex_common/lightclip 0 0 0 0.025 0.025
+( 2 10 -128 ) ( 0.5 16 -128 ) ( 2 10 0 ) tex_common/lightclip 0 0 0 0.025 0.025
+}
+// brush 1
+{
+( 31 32 42.5 ) ( 31 0 42.5 ) ( -1 32 42.5 ) tex_common/weaponclip 40 0 0 0.025 0.025
+( 0 0 4 ) ( 32 0 4 ) ( 0 32 4 ) tex_common/weaponclip 0 0 0 0.025 0.025
+( 0.5 16 -128 ) ( 2 22 -128 ) ( 0.5 16 0 ) tex_common/weaponclip 0 0 0 0.025 0.025
+( 2 22 -128 ) ( 5 26.5 -128 ) ( 2 22 0 ) tex_common/weaponclip 0 0 0 0.025 0.025
+( 5 26.5 -128 ) ( 9.5 29.5 -128 ) ( 5 26.5 0 ) tex_common/weaponclip 0 0 0 0.025 0.025
+( 9.5 29.5 -128 ) ( 16 31 -128 ) ( 9.5 29.5 0 ) tex_common/weaponclip 0 0 0 0.025 0.025
+( 16 31 -128 ) ( 22 29.5 -128 ) ( 16 31 0 ) tex_common/weaponclip 0 0 0 0.025 0.025
+( 22 29.5 -128 ) ( 26.5 26.5 -128 ) ( 22 29.5 0 ) tex_common/weaponclip 0 0 0 0.025 0.025
+( 26.5 26.5 -128 ) ( 29.5 22 -128 ) ( 26.5 26.5 0 ) tex_common/weaponclip 0 0 0 0.025 0.025
+( 29.5 22 -128 ) ( 31 16 -128 ) ( 29.5 22 0 ) tex_common/weaponclip 0 0 0 0.025 0.025
+( 31 16 -128 ) ( 30 11 -128 ) ( 31 16 0 ) tex_common/weaponclip 0 0 0 0.025 0.025
+( 30 11 -128 ) ( 26.5 5.5 -128 ) ( 30 11 0 ) tex_common/weaponclip 0 0 0 0.025 0.025
+( 26.5 5.5 -128 ) ( 22 2.5 -128 ) ( 26.5 5.5 0 ) tex_common/weaponclip 0 0 0 0.025 0.025
+( 22 2.5 -128 ) ( 16 1 -128 ) ( 22 2.5 0 ) tex_common/weaponclip 0 0 0 0.025 0.025
+( 16 1 -128 ) ( 10.5 2 -128 ) ( 16 1 0 ) tex_common/weaponclip 0 0 0 0.025 0.025
+( 10.5 2 -128 ) ( 5 5.5 -128 ) ( 10.5 2 0 ) tex_common/weaponclip 0 0 0 0.025 0.025
+( 5 5.5 -128 ) ( 2 10 -128 ) ( 5 5.5 0 ) tex_common/weaponclip 0 0 0 0.025 0.025
+( 2 10 -128 ) ( 0.5 16 -128 ) ( 2 10 0 ) tex_common/weaponclip 0 0 0 0.025 0.025
+}
+}
+// entity 1
+{
+"classname" "misc_model"
+"model" "models/objects/alien/barrel/barrel.md2"
+"origin" "16 16 4"
+"spawnflags" "255"
+"skin" "0"
+}

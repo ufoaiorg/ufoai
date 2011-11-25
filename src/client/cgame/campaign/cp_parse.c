@@ -75,7 +75,6 @@ static void CP_ParseAlienTeam (const char *name, const char **text)
 {
 	const char *errhead = "CP_ParseAlienTeam: unexpected end of file (alienteam ";
 	const char *token;
-	const value_t *vp;
 	int i;
 	alienTeamCategory_t *alienCategory;
 
@@ -161,20 +160,8 @@ static void CP_ParseAlienTeam (const char *name, const char **text)
 			do {
 				token = Com_EParse(text, errhead, name);
 
-				/* check for some standard values */
-				for (vp = alien_group_vals; vp->string; vp++)
-					if (Q_streq(token, vp->string)) {
-						/* found a definition */
-						token = Com_EParse(text, errhead, name);
-						if (!*text)
-							break;
-
-						Com_EParseValue(group, token, vp->type, vp->ofs, vp->size);
-						break;
-					}
-
-				if (!vp->string) {
-					teamDef_t *teamDef;
+				if (!Com_ParseBlockToken(name, text, group, alien_group_vals, cp_campaignPool, token)) {
+					const teamDef_t *teamDef;
 					if (!*text || *token == '}')
 						break;
 
@@ -327,49 +314,14 @@ static const value_t salary_vals[] = {
  * @param[in] name Name or ID of the found character skill and ability definition
  * @param[in] text The text of the nation node
  * @param[out] s Pointer to the campaign salaries data structure to parse into
- * @param[in] campaignID Current campaign id (idx)
  * @note Example:
  * <code>salary {
  *  soldier_base 3000
  * }</code>
  */
-static void CP_ParseSalary (const char *name, const char **text, salary_t *s, const char* campaignID)
+static void CP_ParseSalary (const char *name, const char **text, salary_t *s)
 {
-	const char *errhead = "CP_ParseSalary: unexpected end of file ";
-	const value_t *vp;
-	const char *token;
-
-	/* get it's body */
-	token = Com_Parse(text);
-
-	if (!*text || *token != '{') {
-		Com_Printf("CP_ParseSalary: salary def without body ignored\n");
-		return;
-	}
-
-	do {
-		token = Com_EParse(text, errhead, name);
-		if (!*text)
-			break;
-		if (*token == '}')
-			break;
-
-		/* check for some standard values */
-		for (vp = salary_vals; vp->string; vp++)
-			if (Q_streq(token, vp->string)) {
-				/* found a definition */
-				token = Com_EParse(text, errhead, name);
-				if (!*text)
-					return;
-
-				Com_EParseValue(s, token, vp->type, vp->ofs, vp->size);
-				break;
-			}
-		if (!vp->string) {
-			Com_Printf("CP_ParseSalary: unknown token \"%s\" ignored (campaignID %s)\n", token, campaignID);
-			Com_EParse(text, errhead, name);
-		}
-	} while (*text);
+	Com_ParseBlock(name, text, s, salary_vals, cp_campaignPool);
 }
 
 /* =========================================================== */
@@ -408,7 +360,6 @@ static void CP_ParseCampaign (const char *name, const char **text)
 {
 	const char *errhead = "CP_ParseCampaign: unexpected end of file (campaign ";
 	campaign_t *cp;
-	const value_t *vp;
 	const char *token;
 	int i;
 	salary_t *s;
@@ -479,24 +430,16 @@ static void CP_ParseCampaign (const char *name, const char **text)
 			break;
 
 		/* check for some standard values */
-		for (vp = campaign_vals; vp->string; vp++)
-			if (Q_streq(token, vp->string)) {
-				/* found a definition */
-				token = Com_EParse(text, errhead, name);
-				if (!*text)
-					return;
-
-				Com_EParseValue(cp, token, vp->type, vp->ofs, vp->size);
-				break;
-			}
-		if (Q_streq(token, "salary")) {
-			CP_ParseSalary(token, text, s, cp->id);
+		if (Com_ParseBlockToken(name, text, cp, campaign_vals, NULL, token)) {
+			continue;
+		} else if (Q_streq(token, "salary")) {
+			CP_ParseSalary(token, text, s);
 		} else if (Q_streq(token, "events")) {
 			token = Com_EParse(text, errhead, name);
 			if (!*text)
 				return;
 			cp->events = CP_GetEventsByID(token);
-		} else if (!vp->string) {
+		} else {
 			Com_Printf("CP_ParseCampaign: unknown token \"%s\" ignored (campaign %s)\n", token, name);
 			Com_EParse(text, errhead, name);
 		}

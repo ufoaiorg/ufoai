@@ -27,6 +27,6 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #define R_ARRAY_H
 
 void R_ResetArrayState(void);
-void R_SetArrayState(const struct model_s *mod);
+void R_SetArrayState(const struct mBspModel_s *bsp);
 
 #endif

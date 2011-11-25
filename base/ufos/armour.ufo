@@ -6,10 +6,6 @@
 
 	protection ("dmgweight" values)
 		See "damagetypes" below (the ones without the "_").
-		normal_steelblade - is here for the combat knife
-		normal_monomolecularblade - is here for the kerrblade (and similar monomolecular weapons)
-			It ensures that the superior tech blades are much better against armour
-			and keeps the kerrblade scary.
 
 	rating	("dmgtype" values)
 		See "damagetypes" below (the ones with the "_").
@@ -23,36 +19,32 @@
 
 damagetypes standard
 {
-	"_normal"
+	"_normal" // Most often for phalanx weapons
 	"normal_light"
-	"normal_spray"
+	"normal_spray" // Shotguns and other weapons that spray several bullets
 	"normal_medium"
 	"normal_heavy"
-	"normal_power"
-	"normal_steelblade"
-	"normal_monomolecularblade"
+	"normal_steelblade" // Combat knife
+	"normal_monomolecularblade" // Kerrblade and similar blades to ensure superior tech better against armour
 	"_blast"
-	"_fire"
-	"fire_light"
+	"_fire" // Incendiary grenades only for now
+	"fire_light" // Currently unused, but may be useful for future if fire on map is implemented
 	"fire_medium"
-	"fire_heavy"
-	"fire_flamer"
-	"_shock"
+	"fire_heavy" // Currently unused
+	"fire_flamer" // Flamethrower only for now
+	"_shock" // Flashbang grenade only for now
 	"_laser"
 	"laser_light"
 	"laser_medium"
 	"laser_heavy"
-	"laser_power"
 	"_plasma"
 	"plasma_light"
 	"plasma_medium"
 	"plasma_heavy"
-	"plasma_power"
 	"_particlebeam"
 	"particlebeam_light"
 	"particlebeam_medium"
 	"particlebeam_heavy"
-	"particlebeam_power"
 	"_stun_electro"
 	"_stun_gas"
 }
@@ -61,7 +53,6 @@ damagetypes standard
 // PHALANX ARMOURS
 // =======================
 
-//weights 100
 item armour_light
 {
 	name		"_Combat Armour"
@@ -72,9 +63,9 @@ item armour_light
 	scale		0.7
 	price		1400
 	size		60
+	weight		100
 	armourpath	"light"
 	useable		phalanx
-	//TODO: TU penalty value. No support for this yet.
 
 	protection {
 		normal_light		20
@@ -122,7 +113,6 @@ item armour_light
 	}
 }
 
-//weights 100
 item armour_lightadv
 {
 	name		"_Advanced Combat Armour"
@@ -133,9 +123,9 @@ item armour_lightadv
 	scale		0.7
 	price		1600
 	size		60
+	weight		100
 	useable		phalanx
 	armourpath	"lightadv"
-	//TODO: TU penalty value. No support for this yet.
 
 	protection {
 		normal_light		25
@@ -183,7 +173,6 @@ item armour_lightadv
 	}
 }
 
-//weights 120
 item armour_medium
 {
 	name		"_Nanocomposite Armour"
@@ -194,9 +183,9 @@ item armour_medium
 	scale		0.7
 	price		7500
 	size		120
+	weight		120
 	useable		phalanx
 	armourpath	"medium"
-	//TODO: TU penalty value. No support for this yet.
 
 	protection {
 		normal_light		31
@@ -244,8 +233,6 @@ item armour_medium
 	}
 }
 
-
-//weights ???
 item armour_power
 {
 	name		"_Power Armour"
@@ -256,9 +243,9 @@ item armour_power
 	scale		0.7
 	price		32000
 	size		150
+	weight		140
 	useable		phalanx
 	armourpath	"power"
-	//TODO: TU penalty value. No support for this yet.
 
 	protection {
 		normal_light		41
@@ -315,10 +302,10 @@ item armour_power
 //	shape		"0 0 3 4"
 //	center		"0 0 -5"
 //	scale		0.7
+//	weight		130
 //	price		32000
 //	useable		phalanx
 //	armourpath	"medium2"
-//	//TODO: TU penalty value. No support for this yet.
 //
 //	protection {
 //		normal_light		25
@@ -374,9 +361,9 @@ item armour_power
 //	center		"0 0 -5"
 //	scale		0.7
 //	price		32000
+//	weight		140
 //	useable		phalanx
 //	armourpath	"power2"
-//	//TODO: TU penalty value. No support for this yet.
 //
 //	protection {
 //		normal_light	25
@@ -432,9 +419,9 @@ item armour_power
 //	center		"0 0 -5"
 //	scale		0.7
 //	price		32000
+//	weight		150
 //	useable		phalanx
 //	armourpath	"power3"
-//	//TODO: TU penalty value. No support for this yet.
 //
 //	protection {
 //		normal_light	25
@@ -484,7 +471,6 @@ item armour_power
 // ALIEN ARMOURS
 // =======================
 
-//weights 100
 item armour_light_alien
 {
 	name		"_Alien Body Armour"
@@ -494,10 +480,10 @@ item armour_light_alien
 	center		"0 0 -5"
 	scale		0.7
 	price		1400
+	weight		100
 	size		50
 	useable		alien
 	armourpath	"light"
-	//TODO: TU penalty value. No support for this yet.
 
 	protection {
 		normal_light	20
@@ -545,7 +531,6 @@ item armour_light_alien
 	}
 }
 
-//weights 120
 item armour_medium_alien
 {
 	name		"_Medium Alien Armour"
@@ -555,10 +540,10 @@ item armour_medium_alien
 	center		"0 0 -5"
 	scale		0.7
 	price		7500
+	weight		120
 	size		75
 	useable		alien
 	armourpath	"medium"
-	//TODO: TU penalty value. No support for this yet.
 
 	protection {
 		normal_light	31

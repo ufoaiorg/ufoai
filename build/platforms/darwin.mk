@@ -61,3 +61,4 @@ XVID_LIBS                ?= -lxvidcore
 endif
 
 uforadiant_LDFLAGS       += -headerpad_max_install_names
+ufoded_LDFLAGS           += -headerpad_max_install_names

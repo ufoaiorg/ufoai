@@ -31,7 +31,7 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 
 renderer_threadstate_t r_threadstate;
 
-#define THREAD_SLEEP_INTERVAL 100
+#define THREAD_SLEEP_INTERVAL 5
 
 int R_RunThread (void *p)
 {

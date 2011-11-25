@@ -26,9 +26,6 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #include "r_particle.h"
 #include "r_draw.h"
 
-ptlArt_t r_particlesArt[MAX_PTL_ART];
-int r_numParticlesArt;
-
 ptl_t r_particles[MAX_PTLS];
 int r_numParticles;
 
@@ -153,6 +150,8 @@ static void R_DrawSprite (const ptl_t * p)
 		glDrawArrays(GL_TRIANGLE_FAN, 0, 4);
 		R_BindDefaultArray(GL_VERTEX_ARRAY);
 		R_BindDefaultArray(GL_TEXTURE_COORD_ARRAY);
+
+		refdef.batchCount++;
 	}
 }
 
@@ -211,6 +210,8 @@ static void R_DrawPtlLine (const ptl_t * p)
 	R_BindArray(GL_VERTEX_ARRAY, GL_FLOAT, points);
 	glDrawArrays(GL_LINE_STRIP, 0, 2);
 	R_BindDefaultArray(GL_VERTEX_ARRAY);
+
+	refdef.batchCount++;
 
 	R_Color(NULL);
 

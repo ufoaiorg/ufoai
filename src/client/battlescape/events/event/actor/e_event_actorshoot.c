@@ -28,51 +28,53 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #include "../../../../renderer/r_mesh_anim.h"
 #include "e_event_actorshoot.h"
 
-int CL_ActorDoShootTime (const eventRegister_t *self, struct dbuffer *msg, const int dt)
+/**
+ * @brief Decides if following events should be delayed. If the projectile has a speed value assigned, the
+ * delay is relative to the distance the projectile flies. There are other fire definition related options
+ * that might delay the execution of further events.
+ */
+int CL_ActorDoShootTime (const eventRegister_t *self, struct dbuffer *msg, eventTiming_t *eventTiming)
 {
-#if 0
-	const fireDef_t	*fd;
-	static int impactTime;
+	const fireDef_t *fd;
 	int flags, dummy;
 	int objIdx, surfaceFlags;
-	objDef_t *obj;
+	const objDef_t *obj;
 	int weap_fds_idx, fd_idx;
 	shoot_types_t shootType;
 	vec3_t muzzle, impact;
-
-	if (impactTime < cl.time)
-		impactTime = cl.time;
+	int eventTime = eventTiming->shootTime;
 
 	/* read data */
-	NET_ReadFormat(msg, self->formatString, &dummy, &dummy, &objIdx, &weap_fds_idx, &fd_idx, &shootType, &flags, &surfaceFlags, &muzzle, &impact, &dummy);
+	NET_ReadFormat(msg, self->formatString, &dummy, &dummy, &dummy, &objIdx, &weap_fds_idx, &fd_idx, &shootType, &flags,
+			&surfaceFlags, &muzzle, &impact, &dummy);
 
 	obj = INVSH_GetItemByIDX(objIdx);
 	fd = FIRESH_GetFiredef(obj, weap_fds_idx, fd_idx);
 
 	if (!(flags & SF_BOUNCED)) {
 		/* shooting */
-		if (fd->speed && !CL_OutsideMap(impact, UNIT_SIZE * 10)) {
-			impactTime = shootTime + 1000 * VectorDist(muzzle, impact) / fd->speed;
+		if (fd->speed > 0.0 && !CL_OutsideMap(impact, UNIT_SIZE * 10)) {
+			eventTiming->impactTime = eventTiming->shootTime + 1000 * VectorDist(muzzle, impact) / fd->speed;
 		} else {
-			impactTime = shootTime;
+			eventTiming->impactTime = eventTiming->shootTime;
 		}
 		if (cl.actTeam != cls.team)
-			nextTime = impactTime + 1400;
+			eventTiming->nextTime = eventTiming->impactTime + 1400;
 		else
-			nextTime = impactTime + 400;
-		if (fd->delayBetweenShots)
-			shootTime += 1000 / fd->delayBetweenShots;
+			eventTiming->nextTime = eventTiming->impactTime + 400;
+		if (fd->delayBetweenShots > 0.0)
+			eventTiming->shootTime += 1000 / fd->delayBetweenShots;
 	} else {
 		/* only a bounced shot */
-		eventTime = impactTime;
-		if (fd->speed) {
-			impactTime += 1000 * VectorDist(muzzle, impact) / fd->speed;
-			nextTime = impactTime;
+		eventTime = eventTiming->impactTime;
+		if (fd->speed > 0.0) {
+			eventTiming->impactTime += 1000 * VectorDist(muzzle, impact) / fd->speed;
+			eventTiming->nextTime = eventTiming->impactTime;
 		}
 	}
-#else
-	return cl.time;
-#endif
+	eventTiming->parsedDeath = qfalse;
+
+	return eventTime;
 }
 
 /**
@@ -89,7 +91,6 @@ static void CL_ActorGetMuzzle (const le_t* actor, vec3_t muzzle, shoot_types_t s
 {
 	const struct model_s *model;
 	const char *tag;
-	const float *shooterTag, *muzzleTag;
 	float matrix[16], mc[16], modifiedMatrix[16];
 	const objDef_t* od;
 	const invList_t *invlistWeapon;
@@ -115,21 +116,18 @@ static void CL_ActorGetMuzzle (const le_t* actor, vec3_t muzzle, shoot_types_t s
 		Com_Error(ERR_DROP, "Model for item %s is not precached", od->id);
 
 	/* not every weapon has a muzzle tag assigned */
-	muzzleTag = R_GetTagMatrix(model, "tag_muzzle");
-	if (!muzzleTag)
+	if (R_GetTagIndexByName(model, "tag_muzzle") == -1)
 		return;
 
-	shooterTag = R_GetTagMatrix(actor->model1, tag);
-	if (!shooterTag)
+	if (!R_GetTagMatrix(actor->model1, tag, 0, modifiedMatrix))
 		Com_Error(ERR_DROP, "Could not find tag %s for actor model %s", tag, actor->model1->name);
 
 	GLMatrixAssemble(actor->origin, actor->angles, mc);
 
-	memcpy(modifiedMatrix, shooterTag, sizeof(modifiedMatrix));
 	modifiedMatrix[12] = -modifiedMatrix[12];
 	GLMatrixMultiply(mc, modifiedMatrix, matrix);
 
-	memcpy(modifiedMatrix, muzzleTag, sizeof(modifiedMatrix));
+	R_GetTagMatrix(model, "tag_muzzle", 0, modifiedMatrix);
 	modifiedMatrix[12] = -modifiedMatrix[12];
 	GLMatrixMultiply(matrix, modifiedMatrix, mc);
 
@@ -183,11 +181,8 @@ void CL_ActorDoShoot (const eventRegister_t *self, struct dbuffer *msg)
 	LE_AddProjectile(fd, flags, muzzle, impact, normal, leVictim);
 
 	/* start the sound */
-	if ((first || !fd->soundOnce) && fd->fireSound[0] && !(flags & SF_BOUNCED))
+	if ((first || !fd->soundOnce) && fd->fireSound != NULL && !(flags & SF_BOUNCED))
 		S_LoadAndPlaySample(fd->fireSound, muzzle, fd->fireAttenuation, SND_VOLUME_WEAPONS);
-
-	if (fd->irgoggles)
-		refdef.rendererFlags |= RDF_IRGOGGLES;
 
 	/* do actor related stuff */
 	if (!leShooter)
@@ -212,7 +207,13 @@ void CL_ActorDoShoot (const eventRegister_t *self, struct dbuffer *msg)
 	} else if (IS_SHOT_LEFT(shootType)) {
 		R_AnimChange(&leShooter->as, leShooter->model1, LE_GetAnim("shoot", leShooter->left, leShooter->right, leShooter->state));
 		R_AnimAppend(&leShooter->as, leShooter->model1, LE_GetAnim("stand", leShooter->left, leShooter->right, leShooter->state));
-	} else if (!IS_SHOT_HEADGEAR(shootType)) {
+	} else if (IS_SHOT_HEADGEAR(shootType)) {
+		if (fd->irgoggles) {
+			leShooter->state |= RF_IRGOGGLESSHOT;
+			if (leShooter->selected)
+				refdef.rendererFlags |= RDF_IRGOGGLES;
+		}
+	} else {
 		/* no animation for headgear (yet) */
 		Com_Error(ERR_DROP, "CL_ActorDoShoot: Invalid shootType given (entnum: %i, shootType: %i).\n", shootType, shooterEntnum);
 	}

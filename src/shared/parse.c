@@ -66,6 +66,24 @@ void Com_EnableFunctionScriptToken (qboolean enable)
 }
 
 /**
+ * @brief Counts the tokens in the given buffer that the Com_Parse function would extract
+ * @param[in] buffer The buffer to count the tokens in
+ * @return The amount of tokens in the given buffer
+ */
+int Com_CountTokensInBuffer (const char *buffer)
+{
+	const char *text = buffer;
+	int n = 0;
+	for (;;) {
+		Com_Parse(&text);
+		if (!text)
+			break;
+		n++;
+	}
+	return n;
+}
+
+/**
  * @brief Parse a token out of a string
  * @param data_p Pointer to a string which is to be parsed
  * @pre @c data_p is expected to be null-terminated

@@ -188,7 +188,7 @@ class IndexPointer
 					return !operator==(other);
 				}
 
-				iterator operator+ (std::size_t i)
+				iterator operator+ (std::size_t i) const
 				{
 					return m_iter + i;
 				}

@@ -23,9 +23,7 @@ const std::string Node::getName() const
 	if (_xmlNode) {
 		return std::string( reinterpret_cast<const char*>(_xmlNode->name) );
 	}
-	else {
-		return "";
-	}
+	return "";
 }
 
 // Return a NodeList of all children of this node

@@ -103,10 +103,10 @@ qboolean Com_GetConstInt (const char *name, int *value)
  */
 qboolean Com_GetConstIntFromNamespace (const char *space, const char *variable, int *value)
 {
-	if (!variable || variable[0] == '\0')
+	if (Q_strnull(variable))
 		return qfalse;
 
-	if (!space || space[0] == '\0')
+	if (Q_strnull(space))
 		return Com_GetConstInt(variable, value);
 
 	return Com_GetConstInt(va("%s::%s", space, variable), value);
@@ -325,31 +325,31 @@ const char *const vt_names[] = {
 	"char",
 	"int",
 	"int2",
-	"float", /* 5 */
+	"float",
 	"pos",
 	"vector",
 	"color",
 	"rgba",
-	"string", /* 10 */
+	"string",
 	"translation_string",
 	"longstring",
 	"align",
 	"blend",
-	"style", /* 15 */
+	"style",
 	"fade",
 	"shapes",
 	"shapeb",
 	"dmgtype",
-	"dmgweight", /* 20 */
+	"dmgweight",
 	"date",
 	"relabs",
-	"client_hunk",
-	"client_hunk_string",
+	"hunk_string",
 	"team",
 	"race",
 	"ufo",
 	"ufocrashed",
-	"aircrafttype"
+	"aircrafttype",
+	"list"
 };
 CASSERT(lengthof(vt_names) == V_NUM_TYPES);
 
@@ -398,13 +398,13 @@ static const size_t vt_sizes[] = {
 	sizeof(byte),	/* V_DMGWEIGHT */
 	0,	/* V_DATE */
 	sizeof(float),	/* V_RELABS */
-	0,	/* V_CLIENT_HUNK */
-	0,	/* V_CLIENT_HUNK_STRING */
+	0,	/* V_HUNK_STRING */
 	sizeof(int),		/* V_TEAM */
 	sizeof(racetypes_t),		/* V_RACE */
 	sizeof(ufoType_t),	/* V_UFO */
 	sizeof(ufoType_t),	/* V_UFOCRASHED */
-	sizeof(humanAircraftType_t)		/* V_AIRCRAFTTYPE */
+	sizeof(humanAircraftType_t),		/* V_AIRCRAFTTYPE */
+	0					/* V_LIST */
 };
 CASSERT(lengthof(vt_sizes) == V_NUM_TYPES);
 
@@ -433,13 +433,13 @@ static const size_t vt_aligns[] = {
 	sizeof(byte),	/* V_DMGWEIGHT */
 	sizeof(date_t),	/* V_DATE */
 	sizeof(float),	/* V_RELABS */
-	0,	/* V_CLIENT_HUNK */
-	sizeof(char),	/* V_CLIENT_HUNK_STRING */
+	sizeof(char),	/* V_HUNK_STRING */
 	sizeof(int),		/* V_TEAM */
 	sizeof(racetypes_t),		/* V_RACE */
 	sizeof(ufoType_t),	/* V_UFO */
 	sizeof(ufoType_t),	/* V_UFOCRASHED */
-	sizeof(humanAircraftType_t)		/* V_AIRCRAFTTYPE */
+	sizeof(humanAircraftType_t),		/* V_AIRCRAFTTYPE */
+	sizeof(void*)
 };
 CASSERT(lengthof(vt_aligns) == V_NUM_TYPES);
 
@@ -509,9 +509,8 @@ int Com_ParseValue (void *base, const char *token, valueTypes_t type, int ofs, s
 	}
 
 	switch (type) {
-	case V_CLIENT_HUNK_STRING:
-	case V_CLIENT_HUNK:
-		snprintf(parseErrorMessage, sizeof(parseErrorMessage), "V_CLIENT_HUNK and V_CLIENT_HUNK_STRING are not parsed here");
+	case V_HUNK_STRING:
+		snprintf(parseErrorMessage, sizeof(parseErrorMessage), "V_HUNK_STRING is not parsed here");
 		return RESULT_ERROR;
 
 	case V_NULL:
@@ -1193,8 +1192,7 @@ const char *Com_ValueToStr (const void *base, const valueTypes_t type, const int
 	case V_NULL:
 		return 0;
 
-	case V_CLIENT_HUNK:
-	case V_CLIENT_HUNK_STRING:
+	case V_HUNK_STRING:
 		if (b == NULL)
 			return "(null)";
 		else
@@ -1402,6 +1400,83 @@ const char *Com_ValueToStr (const void *base, const valueTypes_t type, const int
 	}
 }
 
+qboolean Com_ParseBlockToken (const char *name, const char **text, void *base, const value_t *values, struct memPool_s *mempool, const char *token)
+{
+	const value_t *v;
+	const char *errhead = "Com_ParseBlockToken: unexpected end of file (";
+
+	for (v = values; v->string; v++)
+		if (Q_streq(token, v->string)) {
+			/* found a definition */
+			token = Com_EParse(text, errhead, name);
+			if (!*text)
+				return qfalse;
+
+			switch (v->type) {
+			case V_TRANSLATION_STRING:
+				if (mempool == NULL) {
+					if (Com_EParseValue(base, token, v->type, v->ofs, v->size) == -1)
+						Com_Printf("Com_ParseBlockToken: Wrong size for value %s\n", v->string);
+					break;
+				} else {
+					if (*token == '_')
+						token++;
+					/* fall through */
+				}
+			case V_HUNK_STRING:
+				Mem_PoolStrDupTo(token, (char**) ((char*)base + (int)v->ofs), mempool, 0);
+				break;
+			case V_LIST: {
+				byte *listPos = (byte*) base + (int)v->ofs;
+				linkedList_t **list = (linkedList_t **)(listPos);
+				assert(*list == NULL);
+				do {
+					token = Com_EParse(text, errhead, name);
+					if (!*text)
+						break;
+					if (*token == '}')
+						break;
+					LIST_AddString(list, token);
+				} while (*text);
+				break;
+			}
+			default:
+				if (Com_EParseValue(base, token, v->type, v->ofs, v->size) == -1)
+					Com_Printf("Com_ParseBlockToken: Wrong size for value %s\n", v->string);
+				break;
+			}
+			break;
+		}
+
+	return v->string != NULL;
+}
+
+qboolean Com_ParseBlock (const char *name, const char **text, void *base, const value_t *values, struct memPool_s *mempool)
+{
+	const char *errhead = "Com_ParseBlock: unexpected end of file (";
+	const char *token;
+
+	/* get name/id */
+	token = Com_Parse(text);
+
+	if (!*text || *token != '{') {
+		Com_Printf("Com_ParseBlock: block \"%s\" without body ignored\n", name);
+		return qfalse;
+	}
+
+	do {
+		/* get the name type */
+		token = Com_EParse(text, errhead, name);
+		if (!*text)
+			break;
+		if (*token == '}')
+			break;
+		if (!Com_ParseBlockToken(name, text, base, values, mempool, token))
+			Com_Printf("Com_ParseBlock: unknown token '%s' ignored (%s)\n", token, name);
+	} while (*text);
+
+	return qtrue;
+}
 
 /*
 ==============================================================================
@@ -1435,6 +1510,7 @@ static const value_t od_vals[] = {
 	{"model", V_STRING, offsetof(objDef_t, model), 0},
 	{"image", V_STRING, offsetof(objDef_t, image), 0},
 	{"type", V_STRING, offsetof(objDef_t, type), 0},
+	{"reloadsound", V_STRING, offsetof(objDef_t, reloadSound), 0},
 	{"animationindex", V_CHAR, offsetof(objDef_t, animationIndex), MEMBER_SIZEOF(objDef_t, animationIndex)},
 	{"shape", V_SHAPE_SMALL, offsetof(objDef_t, shape), MEMBER_SIZEOF(objDef_t, shape)},
 	{"scale", V_FLOAT, offsetof(objDef_t, scale), MEMBER_SIZEOF(objDef_t, scale)},
@@ -1449,7 +1525,9 @@ static const value_t od_vals[] = {
 	{"oneshot", V_BOOL, offsetof(objDef_t, oneshot), MEMBER_SIZEOF(objDef_t, oneshot)},
 	{"deplete", V_BOOL, offsetof(objDef_t, deplete), MEMBER_SIZEOF(objDef_t, deplete)},
 	{"reload", V_INT, offsetof(objDef_t, reload), MEMBER_SIZEOF(objDef_t, reload)},
+	{"reloadattenuation", V_FLOAT, offsetof(objDef_t, reloadAttenuation), MEMBER_SIZEOF(objDef_t, reloadAttenuation)},
 	{"size", V_INT, offsetof(objDef_t, size), MEMBER_SIZEOF(objDef_t, size)},
+	{"weight", V_INT, offsetof(objDef_t, weight), MEMBER_SIZEOF(objDef_t, weight)},
 	{"price", V_INT, offsetof(objDef_t, price), MEMBER_SIZEOF(objDef_t, price)},
 	{"productioncost", V_INT, offsetof(objDef_t, productionCost), MEMBER_SIZEOF(objDef_t, productionCost)},
 	{"useable", V_TEAM, offsetof(objDef_t, useable), MEMBER_SIZEOF(objDef_t, useable)},
@@ -1488,13 +1566,13 @@ static const value_t od_vals[] = {
 static const value_t fdps[] = {
 	{"name", V_TRANSLATION_STRING, offsetof(fireDef_t, name), 0},
 	{"shotorg", V_POS, offsetof(fireDef_t, shotOrg), MEMBER_SIZEOF(fireDef_t, shotOrg)},
-	{"projtl", V_STRING, offsetof(fireDef_t, projectile), 0},
-	{"impact", V_STRING, offsetof(fireDef_t, impact), 0},
-	{"hitbody", V_STRING, offsetof(fireDef_t, hitBody), 0},
-	{"firesnd", V_STRING, offsetof(fireDef_t, fireSound), 0},
-	{"impsnd", V_STRING, offsetof(fireDef_t, impactSound), 0},
-	{"bodysnd", V_STRING, offsetof(fireDef_t, hitBodySound), 0},
-	{"bncsnd", V_STRING, offsetof(fireDef_t, bounceSound), 0},
+	{"projtl", V_HUNK_STRING, offsetof(fireDef_t, projectile), 0},
+	{"impact", V_HUNK_STRING, offsetof(fireDef_t, impact), 0},
+	{"hitbody", V_HUNK_STRING, offsetof(fireDef_t, hitBody), 0},
+	{"firesnd", V_HUNK_STRING, offsetof(fireDef_t, fireSound), 0},
+	{"impsnd", V_HUNK_STRING, offsetof(fireDef_t, impactSound), 0},
+	{"bodysnd", V_HUNK_STRING, offsetof(fireDef_t, hitBodySound), 0},
+	{"bncsnd", V_HUNK_STRING, offsetof(fireDef_t, bounceSound), 0},
 	{"fireattenuation", V_FLOAT, offsetof(fireDef_t, fireAttenuation), MEMBER_SIZEOF(fireDef_t, fireAttenuation)},
 	{"impactattenuation", V_FLOAT, offsetof(fireDef_t, impactAttenuation), MEMBER_SIZEOF(fireDef_t, impactAttenuation)},
 	{"throughwall", V_INT, offsetof(fireDef_t, throughWall), MEMBER_SIZEOF(fireDef_t, throughWall)},
@@ -1521,9 +1599,8 @@ static const value_t fdps[] = {
 };
 
 
-static void Com_ParseFire (const char *name, const char **text, fireDef_t * fd)
+static qboolean Com_ParseFire (const char *name, const char **text, fireDef_t * fd)
 {
-	const value_t *fdp;
 	const char *errhead = "Com_ParseFire: unexpected end of file";
 	const char *token;
 
@@ -1532,34 +1609,23 @@ static void Com_ParseFire (const char *name, const char **text, fireDef_t * fd)
 
 	if (!*text || *token != '{') {
 		Com_Printf("Com_ParseFire: fire definition \"%s\" without body ignored\n", name);
-		return;
+		return qfalse;
 	}
 
 	do {
 		token = Com_EParse(text, errhead, name);
 		if (!*text)
-			return;
+			return qtrue;
 		if (*token == '}')
-			return;
+			return qtrue;
 
-		for (fdp = fdps; fdp->string; fdp++)
-			if (!Q_strcasecmp(token, fdp->string)) {
-				/* found a definition */
-				token = Com_EParse(text, errhead, name);
-				if (!*text)
-					return;
-
-				Com_EParseValue(fd, token, fdp->type, fdp->ofs, fdp->size);
-				break;
-			}
-
-		if (!fdp->string) {
+		if (!Com_ParseBlockToken(name, text, fd, fdps, com_genericPool, token)) {
 			if (Q_streq(token, "skill")) {
 				int skill;
 
 				token = Com_EParse(text, errhead, name);
 				if (!*text)
-					return;
+					return qfalse;
 
 				for (skill = ABILITY_NUM_TYPES; skill < SKILL_NUM_TYPES; skill++)
 					if (Q_streq(skillNames[skill], token)) {
@@ -1571,12 +1637,12 @@ static void Com_ParseFire (const char *name, const char **text, fireDef_t * fd)
 			} else if (Q_streq(token, "range")) {
 				token = Com_EParse(text, errhead, name);
 				if (!*text)
-					return;
+					return qfalse;
 				fd->range = atof(token) * UNIT_SIZE;
 			} else if (Q_streq(token, "splrad")) {
 				token = Com_EParse(text, errhead, name);
 				if (!*text)
-					return;
+					return qfalse;
 				fd->splrad = atof(token) * UNIT_SIZE;
 			} else
 				Com_Printf("Com_ParseFire: unknown token \"%s\" ignored (weapon %s)\n", token, name);
@@ -1591,6 +1657,13 @@ static void Com_ParseFire (const char *name, const char **text, fireDef_t * fd)
 
 	if (fd->weaponSkill < ABILITY_NUM_TYPES)
 		Com_Printf("Com_ParseFire: firedef for weapon \"%s\" doesn't have a skill set\n", name);
+
+	if (fd->name == NULL) {
+		Com_Printf("firedef without name\n");
+		return qfalse;
+	}
+
+	return qtrue;
 }
 
 
@@ -1724,14 +1797,12 @@ static void Com_ParseFireDefition (objDef_t *od, const char *name, const char *t
 static void Com_ParseItem (const char *name, const char **text)
 {
 	const char *errhead = "Com_ParseItem: unexpected end of file (weapon ";
-	const value_t *val;
 	objDef_t *od;
 	const char *token;
 	int i;
 
 	/* search for items with same name */
-	od = INVSH_GetItemByIDSilent(name);
-	if (od != NULL) {
+	if (INVSH_GetItemByIDSilent(name) != NULL) {
 		Com_Printf("Com_ParseItem: weapon def \"%s\" with same name found, second ignored\n", name);
 		return;
 	}
@@ -1747,6 +1818,8 @@ static void Com_ParseItem (const char *name, const char **text)
 
 	/* default is no craftitem */
 	od->craftitem.type = MAX_ACITEMS;
+	od->reloadAttenuation = SOUND_ATTN_IDLE;
+	Q_strncpyz(od->reloadSound, "weapons/reload-pistol", sizeof(od->reloadSound));
 
 	Q_strncpyz(od->id, name, sizeof(od->id));
 	if (od->id[0] == '\0')
@@ -1770,19 +1843,7 @@ static void Com_ParseItem (const char *name, const char **text)
 		if (*token == '}')
 			break;
 
-		for (val = od_vals; val->string; val++) {
-			if (!Q_strcasecmp(token, val->string)) {
-				/* parse a value */
-				token = Com_EParse(text, errhead, name);
-				if (!*text)
-					break;
-
-				if (Com_EParseValue(od, token, val->type, val->ofs, val->size) == -1)
-					Com_Printf("Com_ParseItem: Wrong size for value %s\n", val->string);
-				break;
-			}
-		}
-		if (!val->string) {
+		if (!Com_ParseBlockToken(name, text, od, od_vals, NULL, token)) {
 			if (Q_streq(token, "craftweapon")) {
 				/* parse a value */
 				token = Com_EParse(text, errhead, name);
@@ -1838,6 +1899,9 @@ static void Com_ParseItem (const char *name, const char **text)
 	if (od->thrown && od->deplete && od->oneshot && od->ammo) {
 		Sys_Error("Item %s has invalid parameters\n", od->id);
 	}
+
+	if (od->reloadAttenuation < SOUND_ATTN_NONE || od->reloadAttenuation > SOUND_ATTN_MAX)
+		Com_Printf("Com_ParseItem: weapon \"%s\" has an invalid reload sound attenuation value set\n", od->id);
 }
 
 
@@ -1872,10 +1936,7 @@ static const value_t idps[] = {
 
 static void Com_ParseInventory (const char *name, const char **text)
 {
-	const char *errhead = "Com_ParseInventory: unexpected end of file (inventory ";
 	invDef_t *id;
-	const value_t *idp;
-	const char *token;
 	int i;
 
 	/* search for containers with same name */
@@ -1894,19 +1955,14 @@ static void Com_ParseInventory (const char *name, const char **text)
 	}
 
 	/* initialize the inventory definition */
-	id = &csi.ids[csi.numIDs++];
+	id = &csi.ids[csi.numIDs];
 	OBJZERO(*id);
 
-	Q_strncpyz(id->name, name, sizeof(id->name));
-
-	/* get it's body */
-	token = Com_Parse(text);
-
-	if (!*text || *token != '{') {
-		Com_Printf("Com_ParseInventory: inventory def \"%s\" without body ignored\n", name);
-		csi.numIDs--;
+	if (!Com_ParseBlock(name, text, id, idps, NULL))
 		return;
-	}
+
+	csi.numIDs++;
+	Q_strncpyz(id->name, name, sizeof(id->name));
 
 	/* Special IDs for container. These are also used elsewhere, so be careful. */
 	if (Q_streq(name, "right")) {
@@ -1946,29 +2002,6 @@ static void Com_ParseInventory (const char *name, const char **text)
 	if (id->id != -1) {
 		Com_Printf("...%3i: %s\n", id->id, name);
 	}
-
-	do {
-		token = Com_EParse(text, errhead, name);
-		if (!*text)
-			return;
-		if (*token == '}')
-			return;
-
-		for (idp = idps; idp->string; idp++)
-			if (!Q_strcasecmp(token, idp->string)) {
-				/* found a definition */
-				token = Com_EParse(text, errhead, name);
-				if (!*text)
-					return;
-
-				Com_EParseValue(id, token, idp->type, idp->ofs, idp->size);
-				break;
-			}
-
-		if (!idp->string)
-			Com_Printf("Com_ParseInventory: unknown token \"%s\" ignored (inventory %s)\n", token, name);
-
-	} while (*text);
 }
 
 
@@ -1998,8 +2031,9 @@ const char *const name_strings[NAME_NUM_TYPES] = {
 
 /** @brief Valid equipment definition values from script files. */
 static const value_t equipment_definition_vals[] = {
-	{"mininterest", V_INT, offsetof(equipDef_t, minInterest), 0},
-	{"maxinterest", V_INT, offsetof(equipDef_t, maxInterest), 0},
+	{"mininterest", V_INT, offsetof(equipDef_t, minInterest), MEMBER_SIZEOF(equipDef_t, minInterest)},
+	{"maxinterest", V_INT, offsetof(equipDef_t, maxInterest), MEMBER_SIZEOF(equipDef_t, maxInterest)},
+	{"name", V_TRANSLATION_STRING, offsetof(equipDef_t, name), 0},
 
 	{NULL, 0, 0, 0}
 };
@@ -2009,12 +2043,11 @@ static void Com_ParseEquipment (const char *name, const char **text)
 	const char *errhead = "Com_ParseEquipment: unexpected end of file (equipment ";
 	equipDef_t *ed;
 	const char *token;
-	const value_t *vp;
 	int i, n;
 
 	/* search for equipments with same name */
 	for (i = 0; i < csi.numEDs; i++)
-		if (Q_streq(name, csi.eds[i].name))
+		if (Q_streq(name, csi.eds[i].id))
 			break;
 
 	if (i < csi.numEDs) {
@@ -2029,7 +2062,8 @@ static void Com_ParseEquipment (const char *name, const char **text)
 	ed = &csi.eds[csi.numEDs++];
 	OBJZERO(*ed);
 
-	Q_strncpyz(ed->name, name, sizeof(ed->name));
+	Q_strncpyz(ed->id, name, sizeof(ed->id));
+	ed->name = ed->id;
 
 	/* get it's body */
 	token = Com_Parse(text);
@@ -2045,22 +2079,12 @@ static void Com_ParseEquipment (const char *name, const char **text)
 		if (!*text || *token == '}')
 			return;
 
-		for (vp = equipment_definition_vals; vp->string; vp++)
-			if (Q_streq(token, vp->string)) {
-				/* found a definition */
-				token = Com_EParse(text, errhead, name);
-				if (!*text)
-					return;
-				Com_EParseValue(ed, token, vp->type, vp->ofs, vp->size);
-				break;
-			}
-
-		if (!vp->string) {
+		if (!Com_ParseBlockToken(name, text, ed, equipment_definition_vals, com_genericPool, token)) {
 			if (Q_streq(token, "item")) {
-				objDef_t *od;
+				const objDef_t *od;
 				token = Com_EParse(text, errhead, name);
 				if (!*text || *token == '}')
-					Sys_Error("Invalid item token in equipment definition: %s", ed->name);
+					Sys_Error("Invalid item token in equipment definition: %s", ed->id);
 
 				od = INVSH_GetItemByID(token);
 				if (od) {
@@ -2082,7 +2106,7 @@ static void Com_ParseEquipment (const char *name, const char **text)
 				humanAircraftType_t type;
 				token = Com_EParse(text, errhead, name);
 				if (!*text || *token == '}')
-					Sys_Error("Invalid aircraft token in equipment definition: %s", ed->name);
+					Sys_Error("Invalid aircraft token in equipment definition: %s", ed->id);
 
 				type = Com_DropShipShortNameToID(token);
 				token = Com_EParse(text, errhead, name);
@@ -2097,7 +2121,7 @@ static void Com_ParseEquipment (const char *name, const char **text)
 				if (n)
 					ed->numAircraft[type] = n;
 			} else {
-				Sys_Error("unknown token in equipment in definition %s: '%s'", ed->name, token);
+				Sys_Error("unknown token in equipment in definition %s: '%s'", ed->id, token);
 			}
 		}
 	} while (*text);
@@ -2217,14 +2241,16 @@ const char* Com_GetActorSound (teamDef_t* td, int gender, actorSound_t soundType
  * found in the teamDef array
  * @param[in] team The team id (given in ufo-script files)
  */
-teamDef_t* Com_GetTeamDefinitionByID (const char *team)
+const teamDef_t* Com_GetTeamDefinitionByID (const char *team)
 {
 	int i;
 
 	/* get team definition */
-	for (i = 0; i < csi.numTeamDefs; i++)
-		if (Q_streq(team, csi.teamDef[i].id))
-			return &csi.teamDef[i];
+	for (i = 0; i < csi.numTeamDefs; i++) {
+		const teamDef_t *t = &csi.teamDef[i];
+		if (Q_streq(team, t->id))
+			return t;
+	}
 
 	Com_Printf("Com_GetTeamDefinitionByID: could not find team definition for '%s' in team definitions\n", team);
 	return NULL;
@@ -2536,7 +2562,6 @@ static void Com_ParseTeam (const char *name, const char **text)
 	const char *errhead = "Com_ParseTeam: unexpected end of file (team ";
 	const char *token;
 	int i;
-	const value_t *v;
 
 	/* check for additions to existing name categories */
 	for (i = 0, td = csi.teamDef; i < csi.numTeamDefs; i++, td++)
@@ -2582,20 +2607,9 @@ static void Com_ParseTeam (const char *name, const char **text)
 		if (*token == '}')
 			break;
 
-		for (v = teamDefValues; v->string; v++)
-			if (Q_streq(token, v->string)) {
-				/* found a definition */
-				token = Com_EParse(text, errhead, name);
-				if (!*text)
-					return;
-
-				Com_EParseValue(td, token, v->type, v->ofs, v->size);
-				break;
-			}
-
-		if (!v->string) {
+		if (!Com_ParseBlockToken(name, text, td, teamDefValues, NULL, token)) {
 			if (Q_streq(token, "onlyWeapon")) {
-				objDef_t *od;
+				const objDef_t *od;
 				token = Com_EParse(text, errhead, name);
 				if (!*text)
 					return;
@@ -2684,19 +2698,8 @@ static const value_t ugvValues[] = {
  */
 static void Com_ParseUGVs (const char *name, const char **text)
 {
-	const char *errhead = "Com_ParseUGVs: unexpected end of file (ugv ";
-	const char *token;
-	const value_t *v;
 	ugv_t *ugv;
 	int i;
-
-	/* get name list body body */
-	token = Com_Parse(text);
-
-	if (!*text || *token != '{') {
-		Com_Printf("Com_ParseUGVs: ugv \"%s\" without body ignored\n", name);
-		return;
-	}
 
 	for (i = 0; i < csi.numUGV; i++) {
 		if (Q_streq(name, csi.ugvs[i].id)) {
@@ -2705,37 +2708,20 @@ static void Com_ParseUGVs (const char *name, const char **text)
 		}
 	}
 
-	/* parse ugv */
 	if (csi.numUGV >= MAX_UGV) {
 		Com_Printf("Com_ParseUGVs: Too many UGV descriptions, '%s' ignored.\n", name);
 		return;
 	}
 
+	/* parse ugv */
 	ugv = &csi.ugvs[csi.numUGV];
 	OBJZERO(*ugv);
-	ugv->id = Mem_PoolStrDup(name, com_genericPool, 0);
-	ugv->idx = csi.numUGV;
-	csi.numUGV++;
 
-	do {
-		/* get the name type */
-		token = Com_EParse(text, errhead, name);
-		if (!*text)
-			break;
-		if (*token == '}')
-			break;
-		for (v = ugvValues; v->string; v++)
-			if (Q_streq(token, v->string)) {
-				/* found a definition */
-				token = Com_EParse(text, errhead, name);
-				if (!*text)
-					return;
-				Com_EParseValue(ugv, token, v->type, v->ofs, v->size);
-				break;
-			}
-			if (!v->string)
-				Com_Printf("Com_ParseUGVs: unknown token \"%s\" ignored (ugv %s)\n", token, name);
-	} while (*text);
+	if (Com_ParseBlock(name, text, ugv, ugvValues, NULL)) {
+		ugv->id = Mem_PoolStrDup(name, com_genericPool, 0);
+		ugv->idx = csi.numUGV;
+		csi.numUGV++;
+	}
 }
 
 /**
@@ -2808,8 +2794,8 @@ TERRAIN PARSERS
 static terrainType_t *terrainTypesHash[TERRAIN_HASH_SIZE];
 
 static const value_t terrainTypeValues[] = {
-	{"footstepsound", V_STRING, offsetof(terrainType_t, footStepSound), 0},
-	{"particle", V_STRING, offsetof(terrainType_t, particle), 0},
+	{"footstepsound", V_HUNK_STRING, offsetof(terrainType_t, footStepSound), 0},
+	{"particle", V_HUNK_STRING, offsetof(terrainType_t, particle), 0},
 	{"footstepvolume", V_FLOAT, offsetof(terrainType_t, footStepVolume), 0},
 	{"bouncefraction", V_FLOAT, offsetof(terrainType_t, bounceFraction), 0},
 
@@ -2843,11 +2829,7 @@ const terrainType_t* Com_GetTerrainType (const char *textureName)
  */
 static void Com_ParseTerrain (const char *name, const char **text)
 {
-	const char *errhead = "Com_ParseTerrain: unexpected end of file (terrain ";
-	const char *token;
 	terrainType_t *t;
-	const value_t *v;
-	unsigned hash;
 
 	/* check for additions to existing name categories */
 	if (Com_GetTerrainType(name) != NULL) {
@@ -2855,49 +2837,19 @@ static void Com_ParseTerrain (const char *name, const char **text)
 		return;
 	}
 
-	/* get name list body body */
-	token = Com_Parse(text);
-	if (!*text || *token != '{') {
-		Com_Printf("Com_ParseTerrain: terrain def \"%s\" without body ignored\n", name);
-		return;
-	}
-
 	t = (terrainType_t *)Mem_PoolAlloc(sizeof(*t), com_genericPool, 0);
-	t->texture = Mem_PoolStrDup(name, com_genericPool, 0);
-	hash = Com_HashKey(name, TERRAIN_HASH_SIZE);
-	/* link in terrainTypesHash[hash] should be NULL on the first run */
-	t->hash_next = terrainTypesHash[hash];
-	terrainTypesHash[hash] = t;
 	t->footStepVolume = SND_VOLUME_FOOTSTEPS;
 	t->bounceFraction = 1.0f;
 
-	do {
-		/* get the name type */
-		token = Com_EParse(text, errhead, name);
-		if (!*text)
-			break;
-		if (*token == '}')
-			break;
-
-		for (v = terrainTypeValues; v->string; v++)
-			if (Q_streq(token, v->string)) {
-				/* found a definition */
-				token = Com_EParse(text, errhead, name);
-				if (!*text)
-					return;
-				switch (v->type) {
-				case V_STRING:
-					Mem_PoolStrDupTo(token, (char**) ((char*)t + (int)v->ofs), com_genericPool, 0);
-					break;
-				default:
-					Com_EParseValue(t, token, v->type, v->ofs, v->size);
-					break;
-				}
-				break;
-			}
-		if (!v->string)
-			Com_Printf("Unknown token '%s' in terrain parsing\n", token);
-	} while (*text);
+	if (Com_ParseBlock(name, text, t, terrainTypeValues, com_genericPool)) {
+		const unsigned hash = Com_HashKey(name, TERRAIN_HASH_SIZE);
+		t->texture = Mem_PoolStrDup(name, com_genericPool, 0);
+		/* link in terrainTypesHash[hash] should be NULL on the first run */
+		t->hash_next = terrainTypesHash[hash];
+		terrainTypesHash[hash] = t;
+	} else {
+		Mem_Free(t);
+	}
 }
 
 /*
@@ -2917,7 +2869,6 @@ static void Com_ParseGameTypes (const char *name, const char **text)
 	const char *errhead = "Com_ParseGameTypes: unexpected end of file (gametype ";
 	const char *token;
 	int i;
-	const value_t *v;
 	gametype_t* gt;
 	cvarlist_t* cvarlist;
 
@@ -2949,18 +2900,7 @@ static void Com_ParseGameTypes (const char *name, const char **text)
 			if (*token == '}')
 				break;
 
-			for (v = gameTypeValues; v->string; v++)
-				if (Q_streq(token, v->string)) {
-					/* found a definition */
-					token = Com_EParse(text, errhead, name);
-					if (!*text)
-						return;
-
-					Com_EParseValue(gt, token, v->type, v->ofs, v->size);
-					break;
-				}
-
-			if (!v->string) {
+			if (!Com_ParseBlockToken(name, text, gt, gameTypeValues, NULL, token)) {
 				if (*token != '{')
 					Sys_Error("Com_ParseGameTypes: gametype \"%s\" without cvarlist\n", name);
 
@@ -3087,6 +3027,26 @@ MAIN SCRIPT PARSING FUNCTION
 const char *Com_GetRandomMapAssemblyNameForCraft (const char *craftID)
 {
 	return va("+%s", craftID);
+}
+
+/**
+ * @todo implement this in a better way
+ */
+const char *Com_GetRandomMapAssemblyNameForCrashedCraft (const char *craftID)
+{
+	if (Q_streq(craftID, "craft_drop_firebird"))
+		return "+craft_crash_drop_firebird";
+	else if (Q_streq(craftID, "craft_drop_raptor"))
+		return "+craft_crash_drop_raptor";
+	else if (Q_streq(craftID, "craft_inter_dragon"))
+		return "+craft_crash_inter_dragon";
+	else if (Q_streq(craftID, "craft_inter_saracen"))
+		return "+craft_crash_inter_saracen";
+	else if (Q_streq(craftID, "craft_inter_starchaser"))
+		return "+craft_crash_inter_starchaser";
+	else
+		/** @todo other tiles does not yet exist */
+		return "+craft_crash_drop_firebird";
 }
 
 /**
@@ -3229,7 +3189,7 @@ static void Com_AddObjectLinks (void)
 		if (od->numWeapons == 0 && (od->weapon || od->craftitem.type <= AC_ITEM_WEAPON)) {
 			/* this is a weapon, an aircraft weapon, or a base defence system */
 			for (n = 0; n < csi.numODs; n++) {
-				objDef_t *weapon = INVSH_GetItemByIDX(n);
+				const objDef_t *weapon = INVSH_GetItemByIDX(n);
 				for (m = 0; m < weapon->numWeapons; m++) {
 					if (weapon->weapons[m] == od) {
 						assert(od->numAmmos <= MAX_AMMOS_PER_OBJDEF);

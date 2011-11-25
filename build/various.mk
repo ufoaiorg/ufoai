@@ -26,9 +26,6 @@ doxygen-docs:
 deb:
 	$(Q)debuild binary
 
-pdf-manual:
-	$(Q)$(MAKE) -C src/docs/tex
-
 license-generate:
 	$(Q)python contrib/licenses/generate.py
 

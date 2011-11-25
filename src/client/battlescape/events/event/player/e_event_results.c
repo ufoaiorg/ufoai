@@ -26,6 +26,11 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #include "../../../../cgame/cl_game.h"
 #include "e_event_results.h"
 
+int CL_ParseResultsTime (const struct eventRegister_s *self, struct dbuffer *msg, eventTiming_t *eventTiming)
+{
+	return eventTiming->nextTime + 1400;
+}
+
 /**
  * @brief Reads mission result data from server
  * @sa EV_RESULTS
@@ -41,6 +46,7 @@ void CL_ParseResults (const eventRegister_t *self, struct dbuffer *msg)
 	/* the first dimension contains the attacker team, the second the victim team */
 	int num_kills[MAX_TEAMS][MAX_TEAMS];
 	int num_stuns[MAX_TEAMS][MAX_TEAMS];
+	qboolean nextmap;
 
 	OBJZERO(num_spawned);
 	OBJZERO(num_alive);
@@ -56,6 +62,7 @@ void CL_ParseResults (const eventRegister_t *self, struct dbuffer *msg)
 
 	/* get winning team */
 	winner = NET_ReadByte(msg);
+	nextmap = NET_ReadByte(msg);
 
 	if (cls.team > num)
 		Com_Error(ERR_DROP, "Team number %d too high (only %d teams)", cls.team, num);
@@ -76,5 +83,5 @@ void CL_ParseResults (const eventRegister_t *self, struct dbuffer *msg)
 		for (j = 0; j < num; j++)
 			num_stuns[i][j] = NET_ReadByte(msg);
 
-	GAME_HandleResults(msg, winner, num_spawned, num_alive, num_kills, num_stuns);
+	GAME_HandleResults(msg, winner, num_spawned, num_alive, num_kills, num_stuns, nextmap);
 }

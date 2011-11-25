@@ -501,6 +501,7 @@ static qboolean CIN_ROQ_DecodeChunk (cinematic_t *cin)
 		case ROQ_SOUND_MONO:
 			if (!cin->noSound)
 				CIN_ROQ_DecodeSoundMono(cin, ROQCIN.data);
+			break;
 		case ROQ_SOUND_STEREO:
 			if (!cin->noSound)
 				CIN_ROQ_DecodeSoundStereo(cin, ROQCIN.data);

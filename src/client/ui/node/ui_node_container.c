@@ -83,16 +83,16 @@ static const invList_t *dragInfoIC;
 /**
  * @brief Searches if there is an item at location (x/y) in a scrollable container. You can also provide an item to search for directly (x/y is ignored in that case).
  * @note x = x-th item in a row, y = row. i.e. x/y does not equal the "grid" coordinates as used in those containers.
- * @param[in] node Context node
+ * @param[in] container The container to get the item from
  * @param[in] item Item requested
  * @param[in] filterType Filter used.
  * @todo Remove filter it is not a generic concept, and here it mean nothing
  * @return invList_t Pointer to the invList_t/item that is located at x/y or equals "item".
  * @sa INVSH_SearchInInventory
  */
-static invList_t *UI_ContainerNodeGetExistingItem (const uiNode_t *node, objDef_t *item, const itemFilterTypes_t filterType)
+static invList_t *UI_ContainerNodeGetExistingItem (const invDef_t *container, const objDef_t *item, const itemFilterTypes_t filterType)
 {
-	return INVSH_SearchInInventoryWithFilter(ui_inventory, EXTRADATACONST(node).container, NONE, NONE, item, filterType);
+	return INV_SearchInInventoryWithFilter(ui_inventory, container, item, filterType);
 }
 
 static inline qboolean UI_IsScrollContainerNode (const uiNode_t* const node)
@@ -123,7 +123,7 @@ void UI_ContainerNodeUpdateEquipment (inventory_t *inv, const equipDef_t *ed)
 	assert(MAX_CONTAINERS >= FILTER_AIRCRAFT);
 
 	for (i = 0; i < csi.numODs; i++) {
-		objDef_t *od = INVSH_GetItemByIDX(i);
+		const objDef_t *od = INVSH_GetItemByIDX(i);
 		/* Don't allow to show unuseable items. */
 		if (!GAME_ItemIsUseable(od))
 			continue;
@@ -161,7 +161,7 @@ void UI_ContainerNodeUpdateEquipment (inventory_t *inv, const equipDef_t *ed)
  */
 void UI_DrawItem (uiNode_t *node, const vec3_t org, const item_t *item, int x, int y, const vec3_t scale, const vec4_t color)
 {
-	objDef_t *od = item->t;
+	const objDef_t *od = item->t;
 	vec4_t col;
 	vec3_t origin;
 
@@ -208,14 +208,14 @@ void UI_DrawItem (uiNode_t *node, const vec3_t org, const item_t *item, int x, i
 
 		/* Draw the image. */
 		R_Color(color);
-		UI_DrawNormImageByName(origin[0], origin[1], imgWidth, imgHeight, 0, 0, 0, 0, od->image);
+		UI_DrawNormImageByName(qfalse, origin[0], origin[1], imgWidth, imgHeight, 0, 0, 0, 0, od->image);
 		R_Color(NULL);
 	} else {
 		uiModel_t *model = NULL;
 		const char *modelName = GAME_GetModelForItem(od, &model);
 
 		/* no model definition in the tech struct, not in the fallback object definition */
-		if (modelName == NULL || modelName[0] == '\0') {
+		if (Q_strnull(modelName)) {
 			Com_Printf("UI_DrawItem: No model given for item: '%s'\n", od->id);
 			return;
 		}
@@ -259,7 +259,7 @@ void UI_DrawItem (uiNode_t *node, const vec3_t org, const item_t *item, int x, i
  */
 static void UI_GetItemTooltip (item_t item, char *tooltipText, size_t stringMaxLength)
 {
-	objDef_t *weapon;
+	const objDef_t *weapon;
 
 	assert(item.t);
 
@@ -401,7 +401,7 @@ static void UI_ContainerNodeDrawFreeSpace (uiNode_t *node, inventory_t *inv)
 static void UI_ContainerNodeLoaded (uiNode_t* const node)
 {
 	const char *name;
-	invDef_t *container;
+	const invDef_t *container;
 
 	/** @todo find a better way to add more equip node, without this hack */
 	name = node->name;
@@ -441,7 +441,6 @@ static const vec3_t scale = {3.5, 3.5, 3.5};
 static const vec4_t colorDefault = {1, 1, 1, 1};
 static const vec4_t colorLoadable = {0.5, 1, 0.5, 1};
 static const vec4_t colorDisabled = {0.5, 0.5, 0.5, 1};
-static const vec4_t colorDisabledHiden = {0.5, 0.5, 0.5, 0.5};
 static const vec4_t colorDisabledLoadable = {0.5, 0.25, 0.25, 1.0};
 static const vec4_t colorPreview = { 0.5, 0.5, 1, 1 };	/**< Make the preview item look bluish */
 
@@ -450,7 +449,7 @@ static const vec4_t colorPreview = { 0.5, 0.5, 1, 1 };	/**< Make the preview ite
  * @param node Context node
  * @param highlightType Current selected object
  */
-static void UI_ContainerNodeDrawSingle (uiNode_t *node, objDef_t *highlightType)
+static void UI_ContainerNodeDrawSingle (uiNode_t *node, const objDef_t *highlightType)
 {
 	vec4_t color;
 	vec3_t pos;
@@ -516,7 +515,7 @@ static void UI_ContainerNodeDrawSingle (uiNode_t *node, objDef_t *highlightType)
 /**
  * @brief Draw a grip container
  */
-static void UI_ContainerNodeDrawGrid (uiNode_t *node, objDef_t *highlightType)
+static void UI_ContainerNodeDrawGrid (uiNode_t *node, const objDef_t *highlightType)
 {
 	const invList_t *ic;
 	vec3_t pos;
@@ -589,7 +588,7 @@ static void UI_ContainerNodeDrawDropPreview (uiNode_t *target)
  */
 static void UI_ContainerNodeDraw (uiNode_t *node)
 {
-	objDef_t *highlightType = NULL;
+	const objDef_t *highlightType = NULL;
 
 	if (!EXTRADATA(node).container)
 		return;
@@ -634,9 +633,13 @@ static void UI_ContainerNodeDraw (uiNode_t *node)
 static invList_t *UI_ContainerNodeGetItemAtPosition (const uiNode_t* const node, int mouseX, int mouseY, int* contX, int* contY)
 {
 	invList_t *result = NULL;
+
+	if (!ui_inventory)
+		return NULL;
+
 	/* Get coordinates inside a scrollable container (if it is one). */
 	if (UI_IsScrollContainerNode(node)) {
-		assert(qfalse);
+		Sys_Error("UI_ContainerNodeGetItemAtPosition is not usable for scrollable containers!");
 	} else {
 		vec2_t nodepos;
 		int fromX, fromY;
@@ -685,11 +688,11 @@ static void UI_ContainerNodeDrawTooltip (uiNode_t *node, int x, int y)
 	}
 }
 
-static qboolean UI_ContainerNodeAddItem (invDef_t *container, invList_t *ic, containerIndex_t containerID)
+static qboolean UI_ContainerNodeAddItem (const invDef_t *container, invList_t *ic, containerIndex_t containerID)
 {
 	int px, py;
 	qboolean packed;
-	invDef_t *target = INVDEF(containerID);
+	const invDef_t *target = INVDEF(containerID);
 
 	INVSH_FindSpace(ui_inventory, &ic->item, target, &px, &py, NULL);
 	packed = INV_MoveItem(ui_inventory, target, px, py, container, ic);
@@ -708,7 +711,7 @@ void UI_ContainerNodeAutoPlaceItem (uiNode_t* node, invList_t *ic)
 	containerIndex_t target;
 	uiNode_t *targetNode;
 	qboolean ammoChanged = qfalse;
-	invDef_t *container = EXTRADATA(node).container;
+	const invDef_t *container = EXTRADATA(node).container;
 
 	/* Right click: automatic item assignment/removal. */
 	if (container->id != csi.idEquip) {
@@ -1004,7 +1007,7 @@ static qboolean UI_ContainerNodeDNDFinished (uiNode_t *source, qboolean isDroppe
 			const invDef_t *targetContainer = EXTRADATACONST(target).container;
 			assert(targetContainer);
 			if (UI_IsScrollContainerNode(source)) {
-				fItem = UI_ContainerNodeGetExistingItem(source, dragItem->t, MAX_FILTERTYPES);
+				fItem = UI_ContainerNodeGetExistingItem(sourceContainer, dragItem->t, MAX_FILTERTYPES);
 			} else
 				fItem = INVSH_SearchInInventory(ui_inventory, sourceContainer, dragInfoFromX, dragInfoFromY);
 			assert(fItem);

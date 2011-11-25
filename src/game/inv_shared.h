@@ -74,20 +74,21 @@ typedef int32_t fireDefIndex_t;
 
 /** @brief this is a fire definition for our weapons/ammo */
 typedef struct fireDef_s {
-	char name[MAX_VAR];			/**< fire defintion name (translatable) */
-	char projectile[MAX_VAR];	/**< projectile particle */
-	char impact[MAX_VAR];		/**< impact particle */
-	char hitBody[MAX_VAR];		/**< hit the body particles */
-	char fireSound[MAX_VAR];	/**< the sound when a recruits fires */
-	char impactSound[MAX_VAR];	/**< the sound that is played on impact */
-	char hitBodySound[MAX_VAR];	/**< the sound that is played on hitting a body */
+	const char *name;			/**< fire defintion name (translatable) */
+	const char *projectile;	/**< projectile particle */
+	const char *impact;		/**< impact particle */
+	const char *impactSound;	/**< the sound that is played on impact */
+	const char *hitBody;		/**< hit the body particles */
+	const char *hitBodySound;	/**< the sound that is played on hitting a body */
+	const char *fireSound;	/**< the sound when a recruits fires */
+	const char *bounceSound;	/**< bouncing sound */
+
 	float fireAttenuation;		/**< attenuation of firing (less louder over distance), see S_PlaySample() */
 	float impactAttenuation;		/**< attenuation of impact (less louder over distance), see S_PlaySample() */
-	char bounceSound[MAX_VAR];	/**< bouncing sound */
 
 	/* These values are created in Com_ParseItem and Com_AddObjectLinks.
 	 * They are used for self-referencing the firedef. */
-	struct objDef_s *obj;		/**< The weapon/ammo item this fd is located in. */
+	const struct objDef_s *obj;		/**< The weapon/ammo item this fd is located in. */
 	weaponFireDefIndex_t weapFdsIdx;	/**< The index of the "weapon_mod" entry (objDef_t->fd[weapFdsIdx]) this fd is located in.
 						 ** Depending on this value you can find out via objDef_t->weapIdx[weapFdsIdx] what weapon this firemode is used for.
 						 ** This does _NOT_ equal the index of the weapon object in ods.
@@ -121,7 +122,7 @@ typedef struct fireDef_s {
 	vec2_t spldmg;			/**< G_SplashDamage(), currently we use only first value (spldmg[0]) for apply splashdamage effect */
 	float splrad;			/**< splash damage radius */
 	int weaponSkill;		/**< What weapon skill is needed to fire this weapon. */
-	int irgoggles;			/**< Is this an irgoogle? */
+	int irgoggles;			/**< Is this an irgoggle? */
 } fireDef_t;
 
 /**
@@ -252,6 +253,8 @@ typedef struct objDef_s {
 					     have, if that clip would be full. In other words, max bullets for this type of
 					     weapon with currently loaded type of ammo. */
 	int reload;			/**< Time units (TUs) for reloading the weapon. */
+	char reloadSound[MAX_VAR];	/**< Sound played when weapon is reloaded */
+	float reloadAttenuation;		/**< Attenuation of reload sound - less louder over distance - */
 	qboolean oneshot;	/**< This weapon contains its own ammo (it is loaded in the base).
 						 * "int ammo" of objDef_s defines the amount of ammo used in oneshoot weapons. */
 	qboolean deplete;	/**< This weapon useless after all ("oneshot") ammo is used up.
@@ -260,11 +263,11 @@ typedef struct objDef_s {
 	int useable;		/**< Defines which team can use this item: TEAM_*.
 						 * Used in checking the right team when filling the containers with available armour. */
 
-	struct objDef_s *ammos[MAX_AMMOS_PER_OBJDEF];		/**< List of ammo-object pointers that can be used in this one. */
+	const struct objDef_s *ammos[MAX_AMMOS_PER_OBJDEF];		/**< List of ammo-object pointers that can be used in this one. */
 	int numAmmos;			/**< Number of ammos this weapon can be used with, which is <= MAX_AMMOS_PER_OBJDEF. */
 
 	/* Firemodes (per weapon). */
-	struct objDef_s *weapons[MAX_WEAPONS_PER_OBJDEF];		/**< List of weapon-object pointers where this item can be used in.
+	const struct objDef_s *weapons[MAX_WEAPONS_PER_OBJDEF];		/**< List of weapon-object pointers where this item can be used in.
 															 * Correct index for this array can be get from fireDef_t.weapFdsIdx. or
 															 * FIRESH_FiredefForWeapon. */
 	fireDef_t fd[MAX_WEAPONS_PER_OBJDEF][MAX_FIREDEFS_PER_WEAPON];	/**< List of firemodes per weapon (the ammo can be used in). */
@@ -288,6 +291,7 @@ typedef struct objDef_s {
 	int price;			/**< Price for this item. */
 	int productionCost;	/**< Production costs for this item. */
 	int size;			/**< Size of an item, used in storage capacities. */
+	int weight;			/**< The weight of the item */
 	qboolean notOnMarket;		/**< True if this item should not be available on market. */
 } objDef_t;
 
@@ -332,8 +336,8 @@ typedef struct invDef_s {
  */
 typedef struct item_s {
 	int a;			/**< Number of ammo rounds left - see NONE_AMMO */
-	objDef_t *m;	/**< Pointer to ammo type. */
-	objDef_t *t;	/**< Pointer to weapon. */
+	const objDef_t *m;	/**< Pointer to ammo type. */
+	const objDef_t *t;	/**< Pointer to weapon. */
 	int amount;		/**< The amount of items of this type on the same x and y location in the container */
 	int rotated;	/**< If the item is currently displayed rotated (qtrue or 1) or not (qfalse or 0)
 					 * @note don't change this to anything smaller than 4 bytes - the network
@@ -349,7 +353,7 @@ typedef struct invList_s {
 	struct invList_s *next;		/**< Next entry in this list. */
 } invList_t;
 
-/** @brief inventory defintion with all its containers */
+/** @brief inventory definition with all its containers */
 typedef struct inventory_s {
 	invList_t *c[MAX_CONTAINERS];
 } inventory_t;
@@ -357,7 +361,8 @@ typedef struct inventory_s {
 #define MAX_EQUIPDEFS   64
 
 typedef struct equipDef_s {
-	char name[MAX_VAR];		/**< Name of the equipment definition */
+	char id[MAX_VAR];		/**< script id of the equipment definition */
+	const char *name;		/**< translatable name of the equipment definition */
 	int numItems[MAX_OBJDEFS];	/**< Number of item for each item type (see equipment_missions.ufo for more info) */
 	byte numItemsLoose[MAX_OBJDEFS];	/**< currently only used for weapon ammo */
 	int numAircraft[AIRCRAFTTYPE_MAX];
@@ -400,26 +405,27 @@ qboolean INV_IsArmourDef(const invDef_t* invDef);
 /* ================================ */
 
 invList_t* INVSH_HasArmour(const inventory_t *inv);
-void INVSH_InitCSI(struct csi_s * import) __attribute__((nonnull));
+void INVSH_InitCSI(const struct csi_s * import) __attribute__((nonnull));
 int INVSH_CheckToInventory(const inventory_t* const i, const objDef_t *ob, const invDef_t * container, const int x, const int y, const invList_t *ignoredItem);
 qboolean INVSH_CompareItem(const item_t *const item1, const item_t *const item2);
 void INVSH_GetFirstShapePosition(const invList_t *ic, int* const x, int* const y);
 qboolean INVSH_ExistsInInventory(const inventory_t* const inv, const invDef_t * container, const item_t * item);
 invList_t *INVSH_FindInInventory(const inventory_t* const inv, const invDef_t * container, const item_t * const );
 invList_t *INVSH_SearchInInventory(const inventory_t* const i, const invDef_t * container, const int x, const int y) __attribute__((nonnull(1)));
+invList_t *INVSH_SearchInInventoryByItem(const inventory_t* const i, const invDef_t * container, const objDef_t *item);
 void INVSH_FindSpace(const inventory_t* const inv, const item_t *item, const invDef_t * container, int * const px, int * const py, const invList_t *ignoredItem) __attribute__((nonnull(1)));
 qboolean INV_IsCraftItem(const objDef_t *obj);
 qboolean INV_IsBaseDefenceItem(const objDef_t *item);
 
-objDef_t *INVSH_GetItemByID(const char *id);
-objDef_t *INVSH_GetItemByIDX(int index);
-objDef_t *INVSH_GetItemByIDSilent(const char *id);
+const objDef_t *INVSH_GetItemByID(const char *id);
+const objDef_t *INVSH_GetItemByIDX(int index);
+const objDef_t *INVSH_GetItemByIDSilent(const char *id);
 qboolean INVSH_LoadableInWeapon(const objDef_t *od, const objDef_t *weapon);
 
-invDef_t *INVSH_GetInventoryDefinitionByID(const char *id);
+const invDef_t *INVSH_GetInventoryDefinitionByID(const char *id);
 
 #define THIS_FIREMODE(fm, HAND, fdIdx)	((fm)->hand == (HAND) && (fm)->fmIdx == (fdIdx))
-#define SANE_FIREMODE(fm)	(((fm)->hand > ACTOR_HAND_NOT_SET && (fm)->fmIdx >= 0 && (fm)->fmIdx < MAX_FIREDEFS_PER_WEAPON))
+#define SANE_FIREMODE(fm)	(((fm)->hand > ACTOR_HAND_NOT_SET && (fm)->fmIdx >= 0 && (fm)->fmIdx < MAX_FIREDEFS_PER_WEAPON && (fm)->weapon != NULL))
 
 #define INV_IsArmour(od)	(Q_streq((od)->type, "armour"))
 #define INV_IsAmmo(od)		(Q_streq((od)->type, "ammo"))

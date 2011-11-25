@@ -39,10 +39,14 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #include "../../shared/parse.h"
 #include "../../common/filesys.h"
 
+#define MAX_CGAMETYPES 16
+static cgameType_t cgameTypes[MAX_CGAMETYPES];
+static int numCGameTypes;
+
 #ifdef HARD_LINKED_CGAME
-#include "cl_game_campaign.h"
-#include "cl_game_multiplayer.h"
-#include "cl_game_skirmish.h"
+#include "campaign/cl_game_campaign.h"
+#include "multiplayer/cl_game_multiplayer.h"
+#include "skirmish/cl_game_skirmish.h"
 
 static const cgame_api_t gameTypeList[] = {
 	GetCGameMultiplayerAPI,
@@ -244,6 +248,8 @@ void GAME_AddChatMessage (const char *format, ...)
 	if (!list || list->AddChatMessage == NULL)
 		return;
 
+	S_StartLocalSample("misc/talk", SND_VOLUME_DEFAULT);
+
 	va_start(argptr, format);
 	Q_vsnprintf(string, sizeof(string), format, argptr);
 	va_end(argptr);
@@ -301,7 +307,7 @@ static void GAME_Free (void *ptr)
 	Mem_Free(ptr);
 }
 
-static const cgame_import_t* GAME_GetImportData (void)
+static const cgame_import_t* GAME_GetImportData (const cgameType_t *t)
 {
 	static cgame_import_t gameImport;
 	static cgame_import_t *cgi = NULL;
@@ -311,6 +317,7 @@ static const cgame_import_t* GAME_GetImportData (void)
 
 		cgi->csi = &csi;
 
+		/** @todo add a wrapper here that stores the cgame command and removes them on shutdown automatically */
 		cgi->Cmd_AddCommand = Cmd_AddCommand;
 		cgi->Cmd_Argc = Cmd_Argc;
 		cgi->Cmd_Args = Cmd_Args;
@@ -326,6 +333,7 @@ static const cgame_import_t* GAME_GetImportData (void)
 		cgi->LIST_ContainsString = LIST_ContainsString;
 
 		cgi->Cvar_Delete = Cvar_Delete;
+		/** @todo add a wrapper here that stores the cgame cvars and removes them on shutdown automatically */
 		cgi->Cvar_Get = Cvar_Get;
 		cgi->Cvar_GetInteger = Cvar_GetInteger;
 		cgi->Cvar_GetValue = Cvar_GetValue;
@@ -347,6 +355,7 @@ static const cgame_import_t* GAME_GetImportData (void)
 		cgi->UI_PopWindow = UI_PopWindow;
 		cgi->UI_PushWindow = UI_PushWindow;
 		cgi->UI_RegisterLinkedListText = UI_RegisterLinkedListText;
+		cgi->UI_TextScrollEnd = UI_TextScrollEnd;
 		cgi->UI_RegisterOption = UI_RegisterOption;
 		cgi->UI_RegisterText = UI_RegisterText;
 		cgi->UI_ResetData = UI_ResetData;
@@ -399,6 +408,7 @@ static const cgame_import_t* GAME_GetImportData (void)
 		cgi->GAME_GetCurrentTeam = GAME_GetCurrentTeam;
 		cgi->GAME_StrDup = GAME_StrDup;
 		cgi->GAME_AutoTeam = GAME_AutoTeam;
+		cgi->GAME_ChangeEquip = GAME_ChangeEquip;
 		cgi->GAME_GetCharacterArraySize = GAME_GetCharacterArraySize;
 		cgi->GAME_IsTeamEmpty = GAME_IsTeamEmpty;
 		cgi->GAME_LoadDefaultTeam = GAME_LoadDefaultTeam;
@@ -443,6 +453,8 @@ static const cgame_import_t* GAME_GetImportData (void)
 		cgi->XML_AddStringValue = XML_AddStringValue;
 	}
 
+	cgi->cgameType = t;
+
 	return cgi;
 }
 
@@ -470,6 +482,7 @@ void GAME_UnloadGame (void)
 {
 #ifndef HARD_LINKED_CGAME
 	if (cls.cgameLibrary) {
+		GAME_SetMode(NULL);
 		Com_Printf("Unload the cgame library\n");
 		SDL_UnloadObject(cls.cgameLibrary);
 		cls.cgameLibrary = NULL;
@@ -488,7 +501,7 @@ void GAME_SwitchCurrentSelectedMap (int step)
 
 const mapDef_t* GAME_GetCurrentSelectedMap (void)
 {
-	return Com_GetMapDefByIDX(cls.currentSelectedMap);
+	return GAME_GetMapDefByIDX(cls.currentSelectedMap);
 }
 
 int GAME_GetCurrentTeam (void)
@@ -535,13 +548,13 @@ static void UI_MapInfoGetNext (int step)
 	const mapDef_t *md;
 	int ref = cls.currentSelectedMap;
 
-	while (qtrue) {
+	for (;;) {
 		cls.currentSelectedMap += step;
 		if (cls.currentSelectedMap < 0)
 			cls.currentSelectedMap = cls.numMDs - 1;
 		cls.currentSelectedMap %= cls.numMDs;
 
-		md = Com_GetMapDefByIDX(cls.currentSelectedMap);
+		md = GAME_GetMapDefByIDX(cls.currentSelectedMap);
 
 		/* avoid infinit loop */
 		if (ref == cls.currentSelectedMap)
@@ -559,7 +572,6 @@ static void UI_MapInfoGetNext (int step)
 
 /**
  * @brief Prints the map info for the server creation dialogue
- * @todo Skip special map that start with a '.' (e.g. .baseattack)
  */
 static void UI_MapInfo (int step)
 {
@@ -589,17 +601,17 @@ static void UI_MapInfo (int step)
 		Cvar_Set("mn_svmapname", md->map);
 	}
 
-	if (FS_CheckFile("pics/maps/shots/%s.jpg", mapname) != -1)
+	if (R_ImageExists("pics/maps/shots/%s", mapname))
 		Cvar_Set("mn_mappic", va("maps/shots/%s", mapname));
 	else
 		Cvar_Set("mn_mappic", "maps/shots/default");
 
-	if (FS_CheckFile("pics/maps/shots/%s_2.jpg", mapname) != -1)
+	if (R_ImageExists("pics/maps/shots/%s_2", mapname))
 		Cvar_Set("mn_mappic2", va("maps/shots/%s_2", mapname));
 	else
 		Cvar_Set("mn_mappic2", "maps/shots/default");
 
-	if (FS_CheckFile("pics/maps/shots/%s_3.jpg", mapname) != -1)
+	if (R_ImageExists("pics/maps/shots/%s_3", mapname))
 		Cvar_Set("mn_mappic3", va("maps/shots/%s_3", mapname));
 	else
 		Cvar_Set("mn_mappic3", "maps/shots/default");
@@ -608,7 +620,8 @@ static void UI_MapInfo (int step)
 static void UI_RequestMapList_f (void)
 {
 	const char *callbackCmd;
-	int i;
+	const mapDef_t *md;
+	const qboolean multiplayer = GAME_IsMultiplayer();
 
 	if (Cmd_Argc() != 2) {
 		Com_Printf("Usage: %s <callback>\n", Cmd_Argv(0));
@@ -622,8 +635,7 @@ static void UI_RequestMapList_f (void)
 
 	Cbuf_AddText(va("%s begin;", callbackCmd));
 
-	for (i = 0; i < cls.numMDs; i++) {
-		const mapDef_t *md = Com_GetMapDefByIDX(i);
+	MapDef_ForeachCondition(md, multiplayer ? md->multiplayer : md->singleplayer) {
 		const char *preview;
 
 		/* special purpose maps are not startable without the specific context */
@@ -671,6 +683,7 @@ static void UI_PreviousMap_f (void)
 static void UI_SelectMap_f (void)
 {
 	const char *mapname;
+	const mapDef_t *md;
 	int i;
 
 	if (Cmd_Argc() != 2) {
@@ -682,21 +695,23 @@ static void UI_SelectMap_f (void)
 		return;
 
 	mapname = Cmd_Argv(1);
+	i = 0;
 
-	for (i = 0; i < cls.numMDs; i++) {
-		const mapDef_t *md = Com_GetMapDefByIDX(i);
+	MapDef_Foreach(md) {
+		i++;
 		if (!Q_streq(md->map, mapname))
 			continue;
-		cls.currentSelectedMap = i;
+		cls.currentSelectedMap = i - 1;
 		UI_MapInfo(0);
 		return;
 	}
 
-	for (i = 0; i < cls.numMDs; i++) {
-		const mapDef_t *md = Com_GetMapDefByIDX(i);
+	i = 0;
+	MapDef_Foreach(md) {
+		i++;
 		if (!Q_streq(md->id, mapname))
 			continue;
-		cls.currentSelectedMap = i;
+		cls.currentSelectedMap = i - 1;
 		UI_MapInfo(0);
 		return;
 	}
@@ -704,30 +719,18 @@ static void UI_SelectMap_f (void)
 	Com_Printf("Could not find map %s\n", mapname);
 }
 
-typedef struct cgameType_s {
-	char id[MAX_VAR];		/**< the id is also the file basename */
-	char window[MAX_VAR];	/**< the ui window id where this game type should become active for */
-	char name[MAX_VAR];		/**< translatable ui name */
-} cgameType_t;
-
-#define MAX_CGAMETYPES 16
-static cgameType_t cgameTypes[MAX_CGAMETYPES];
-static int numCGameTypes;
-
 /** @brief Valid equipment definition values from script files. */
 static const value_t cgame_vals[] = {
 	{"window", V_STRING, offsetof(cgameType_t, window), 0},
 	{"name", V_STRING, offsetof(cgameType_t, name), 0},
+	{"equipmentlist", V_LIST, offsetof(cgameType_t, equipmentList), 0},
 
 	{NULL, 0, 0, 0}
 };
 
 void GAME_ParseModes (const char *name, const char **text)
 {
-	const char *errhead = "GAME_ParseModes: unexpected end of file (cgame ";
-	cgameType_t *ed;
-	const char *token;
-	const value_t *vp;
+	cgameType_t *cgame;
 	int i;
 
 	/* search for equipments with same name */
@@ -744,39 +747,12 @@ void GAME_ParseModes (const char *name, const char **text)
 		Sys_Error("GAME_ParseModes: MAX_CGAMETYPES exceeded\n");
 
 	/* initialize the equipment definition */
-	ed = &cgameTypes[numCGameTypes++];
-	OBJZERO(*ed);
+	cgame = &cgameTypes[numCGameTypes++];
+	OBJZERO(*cgame);
 
-	Q_strncpyz(ed->id, name, sizeof(ed->id));
+	Q_strncpyz(cgame->id, name, sizeof(cgame->id));
 
-	/* get it's body */
-	token = Com_Parse(text);
-
-	if (!*text || *token != '{') {
-		Com_Printf("GAME_ParseModes: cgame def \"%s\" without body ignored\n", name);
-		numCGameTypes--;
-		return;
-	}
-
-	do {
-		token = Com_EParse(text, errhead, name);
-		if (!*text || *token == '}')
-			return;
-
-		for (vp = cgame_vals; vp->string; vp++)
-			if (Q_streq(token, vp->string)) {
-				/* found a definition */
-				token = Com_EParse(text, errhead, name);
-				if (!*text)
-					return;
-				Com_EParseValue(ed, token, vp->type, vp->ofs, vp->size);
-				break;
-			}
-
-		if (!vp->string) {
-			Sys_Error("unknown token in cgame definition %s: '%s'", ed->id, token);
-		}
-	} while (*text);
+	Com_ParseBlock(name, text, cgame, cgame_vals, NULL);
 }
 
 #ifndef HARD_LINKED_CGAME
@@ -802,8 +778,9 @@ static qboolean GAME_LoadGame (const char *path, const char *name)
 }
 #endif
 
-static const cgame_export_t *GAME_GetCGameAPI (const char *name)
+static const cgame_export_t *GAME_GetCGameAPI (const cgameType_t *t)
 {
+	const char *name = t->id;
 #ifndef HARD_LINKED_CGAME
 	cgame_api_t GetCGameAPI;
 	const char *path;
@@ -835,7 +812,16 @@ static const cgame_export_t *GAME_GetCGameAPI (const char *name)
 	}
 #endif
 
-	return GetCGameAPI(GAME_GetImportData());
+	/* sanity checks */
+	if (!LIST_IsEmpty(t->equipmentList)) {
+		const char *equipID;
+		LIST_ForeachConst(t->equipmentList, char, equipID) {
+			if (INV_GetEquipmentDefinitionByID(equipID) == NULL)
+				Sys_Error("Could not find the equipDef '%s' in the cgame mode: '%s'", equipID, name);
+		}
+	}
+
+	return GetCGameAPI(GAME_GetImportData(t));
 }
 
 static const cgame_export_t *GAME_GetCGameAPI_ (const cgameType_t *t)
@@ -843,7 +829,7 @@ static const cgame_export_t *GAME_GetCGameAPI_ (const cgameType_t *t)
 #ifdef HARD_LINKED_CGAME
 	cgameMenu = t->window;
 #endif
-	return GAME_GetCGameAPI(t->id);
+	return GAME_GetCGameAPI(t);
 }
 
 /**
@@ -877,32 +863,16 @@ static void GAME_SetMode_f (void)
 	Com_Printf("GAME_SetMode_f: Mode '%s' not found\n", modeName);
 }
 
-static qboolean GAME_IsArmourUseableForTeam (const objDef_t *od, const teamDef_t *teamDef)
-{
-	if (teamDef != NULL && teamDef->armour && INV_IsArmour(od)) {
-		if (CHRSH_IsTeamDefAlien(teamDef))
-			return od->useable == TEAM_ALIEN;
-		else if (teamDef->race == RACE_PHALANX_HUMAN)
-			return od->useable == TEAM_PHALANX;
-		else if (teamDef->race == RACE_CIVILIAN)
-			return od->useable == TEAM_CIVILIAN;
-		else
-			return qfalse;
-	}
-
-	return qtrue;
-}
-
 qboolean GAME_ItemIsUseable (const objDef_t *od)
 {
 	const cgame_export_t *list = GAME_GetCurrentType();
 
 	if (INV_IsArmour(od)) {
 		const char *teamDefID = GAME_GetTeamDef();
-		const teamDef_t *teamDef = Com_GetTeamDefinitionByID((teamDefID));
+		const teamDef_t *teamDef = Com_GetTeamDefinitionByID(teamDefID);
 
 		/* Don't allow armour for other teams */
-		if (!GAME_IsArmourUseableForTeam(od, teamDef))
+		if (teamDef != NULL && !CHRSH_IsArmourUseableForTeam(od, teamDef))
 			return qfalse;
 	}
 
@@ -923,11 +893,11 @@ qboolean GAME_ItemIsUseable (const objDef_t *od)
  * @param numStunned The amount of stunned actors for all teams. The first dimension contains
  * the attacker team, the second the victim team
  */
-void GAME_HandleResults (struct dbuffer *msg, int winner, int *numSpawned, int *numAlive, int numKilled[][MAX_TEAMS], int numStunned[][MAX_TEAMS])
+void GAME_HandleResults (struct dbuffer *msg, int winner, int *numSpawned, int *numAlive, int numKilled[][MAX_TEAMS], int numStunned[][MAX_TEAMS], qboolean nextmap)
 {
 	const cgame_export_t *list = GAME_GetCurrentType();
 	if (list)
-		list->Results(msg, winner, numSpawned, numAlive, numKilled, numStunned);
+		list->Results(msg, winner, numSpawned, numAlive, numKilled, numStunned, nextmap);
 	else
 		CL_Drop();
 }
@@ -958,14 +928,20 @@ static void GAME_NetSendInventory (struct dbuffer *buf, const inventory_t *i)
 	const invList_t *ic;
 
 	for (container = 0; container < csi.numIDs; container++) {
-		for (ic = i->c[container]; ic; ic = ic->next)
+		if (INVDEF(container)->temp)
+			continue;
+		for (ic = i->c[container]; ic; ic = ic->next) {
 			nr++;
+		}
 	}
 
 	NET_WriteShort(buf, nr);
 	for (container = 0; container < csi.numIDs; container++) {
-		for (ic = i->c[container]; ic; ic = ic->next)
+		if (INVDEF(container)->temp)
+			continue;
+		for (ic = i->c[container]; ic; ic = ic->next) {
 			GAME_NetSendItem(buf, ic->item, container, ic->x, ic->y);
+		}
 	}
 }
 
@@ -1033,10 +1009,19 @@ static void GAME_SendCurrentTeamSpawningInfo (struct dbuffer * buf, chrList_t *t
 	Com_DPrintf(DEBUG_CLIENT, "GAME_SendCurrentTeamSpawningInfo: Upload information about %i soldiers to server\n", team->num);
 	for (i = 0; i < team->num; i++) {
 		character_t *chr = team->chr[i];
+		inventory_t *i = &chr->i;
+		containerIndex_t container;
+
+		/* unlink all temp containers */
+		for (container = 0; container < csi.numIDs; container++) {
+			if (!INVDEF(container)->temp)
+				continue;
+			i->c[container] = NULL;
+		}
 
 		GAME_NetSendCharacter(buf, chr);
 
-		GAME_NetSendInventory(buf, &chr->i);
+		GAME_NetSendInventory(buf, i);
 	}
 }
 
@@ -1054,7 +1039,7 @@ const char* GAME_GetTeamDef (void)
 	return teamDefID;
 }
 
-static qboolean GAME_Spawn (void)
+static qboolean GAME_Spawn (chrList_t *chrList)
 {
 	const size_t size = GAME_GetCharacterArraySize();
 	int i;
@@ -1072,8 +1057,8 @@ static qboolean GAME_Spawn (void)
 	}
 
 	for (i = 0; i < size; i++)
-		cl.chrList.chr[i] = chrDisplayList.chr[i];
-	cl.chrList.num = chrDisplayList.num;
+		chrList->chr[i] = chrDisplayList.chr[i];
+	chrList->num = chrDisplayList.num;
 
 	return qtrue;
 }
@@ -1087,7 +1072,6 @@ static qboolean GAME_Spawn (void)
 void GAME_StartBattlescape (qboolean isTeamPlay)
 {
 	const cgame_export_t *list = GAME_GetCurrentType();
-	qboolean spawnStatus;
 
 	Cvar_SetValue("cl_onbattlescape", 1.0);
 
@@ -1096,23 +1080,6 @@ void GAME_StartBattlescape (qboolean isTeamPlay)
 		list->StartBattlescape(isTeamPlay);
 	} else {
 		HUD_InitUI(NULL, qtrue);
-	}
-
-	/* this callback is responsible to set up the cl.chrList */
-	if (list && list->Spawn)
-		spawnStatus = list->Spawn();
-	else
-		spawnStatus = GAME_Spawn();
-
-	Com_Printf("Used inventory slots: %i\n", cls.i.GetUsedSlots(&cls.i));
-
-	if (spawnStatus && cl.chrList.num > 0) {
-		struct dbuffer *msg;
-
-		/* send team info */
-		msg = new_dbuffer();
-		GAME_SendCurrentTeamSpawningInfo(msg, &cl.chrList);
-		NET_WriteMsg(cls.netStream, msg);
 	}
 }
 
@@ -1124,9 +1091,10 @@ void GAME_StartBattlescape (qboolean isTeamPlay)
 static void GAME_InitializeBattlescape (chrList_t *team)
 {
 	int i;
+	const size_t size = lengthof(cl.teamList);
 	const cgame_export_t *list = GAME_GetCurrentType();
 
-	for (i = 0; i < lengthof(cl.teamList); i++) {
+	for (i = 0; i < size; i++) {
 		UI_ExecuteConfunc("huddisable %i", i);
 	}
 
@@ -1139,10 +1107,34 @@ static void GAME_InitializeBattlescape (chrList_t *team)
  */
 void GAME_SpawnSoldiers (void)
 {
+	const cgame_export_t *list = GAME_GetCurrentType();
+	qboolean spawnStatus;
+	chrList_t *chrList = &cl.chrList;
+
+	/* this callback is responsible to set up the teamlist */
+	if (list && list->Spawn)
+		spawnStatus = list->Spawn(chrList);
+	else
+		spawnStatus = GAME_Spawn(chrList);
+
+	Com_Printf("Used inventory slots: %i\n", cls.i.GetUsedSlots(&cls.i));
+
+	if (spawnStatus && cl.chrList.num > 0) {
+		struct dbuffer *msg;
+
+		/* send team info */
+		msg = new_dbuffer();
+		GAME_SendCurrentTeamSpawningInfo(msg, chrList);
+		NET_WriteMsg(cls.netStream, msg);
+	}
+}
+
+void GAME_StartMatch (void)
+{
 	if (cl.chrList.num > 0) {
 		struct dbuffer *msg = new_dbuffer();
 		NET_WriteByte(msg, clc_stringcmd);
-		NET_WriteString(msg, "spawn\n");
+		NET_WriteString(msg, "startmatch\n");
 		NET_WriteMsg(cls.netStream, msg);
 
 		GAME_InitializeBattlescape(&cl.chrList);
@@ -1256,12 +1248,11 @@ const char* GAME_GetModelForItem (const objDef_t *od, uiModel_t** uiModel)
 
 mapDef_t* Com_GetMapDefinitionByID (const char *mapDefID)
 {
-	int i;
+	mapDef_t *md;;
 
 	assert(mapDefID);
 
-	for (i = 0; i < cls.numMDs; i++) {
-		mapDef_t *md = Com_GetMapDefByIDX(i);
+	MapDef_Foreach(md) {
 		if (Q_streq(md->id, mapDefID))
 			return md;
 	}
@@ -1270,9 +1261,66 @@ mapDef_t* Com_GetMapDefinitionByID (const char *mapDefID)
 	return NULL;
 }
 
-mapDef_t* Com_GetMapDefByIDX (int index)
+mapDef_t* GAME_GetMapDefByIDX (int index)
 {
 	return &cls.mds[index];
+}
+
+/**
+ * @brief Changed the given cvar to the next/prev equipment definition
+ */
+const equipDef_t *GAME_ChangeEquip (const linkedList_t *equipmentList, changeEquipType_t changeType, const char *equipID)
+{
+	const equipDef_t *ed;
+
+	if (LIST_IsEmpty(equipmentList)) {
+		int index;
+		ed = INV_GetEquipmentDefinitionByID(equipID);
+		index = ed - csi.eds;
+
+		switch (changeType) {
+		case BACKWARD:
+			index--;
+			if (index < 0)
+				index = csi.numEDs - 1;
+			break;
+		case FORWARD:
+			index++;
+			if (index >= csi.numEDs)
+				index = 0;
+			break;
+		default:
+			break;
+		}
+		ed = &csi.eds[index];
+	} else {
+		const linkedList_t *entry = LIST_ContainsString(equipmentList, equipID);
+		if (entry == NULL) {
+			equipID = (const char *)equipmentList->data;
+		} else if (changeType == FORWARD) {
+			equipID = (const char *)(entry->next != NULL ? entry->next->data : equipmentList->data);
+		} else if (changeType == BACKWARD) {
+			const char *tmp;
+			const char *new = NULL;
+			const char *prev = NULL;
+			LIST_ForeachConst(equipmentList, char, tmp) {
+				if (Q_streq(tmp, equipID)) {
+					if (prev != NULL) {
+						new = prev;
+						break;
+					}
+				}
+				prev = tmp;
+				new = tmp;
+			}
+			equipID = new;
+		}
+		ed = INV_GetEquipmentDefinitionByID(equipID);
+		if (ed == NULL)
+			Com_Error(ERR_DROP, "Could not find the equipment definition for '%s'", equipID);
+	}
+
+	return ed;
 }
 
 /**

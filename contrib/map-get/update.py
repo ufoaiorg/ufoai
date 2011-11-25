@@ -168,7 +168,7 @@ def main(argv=None):
     branch = options.branch
     if branch == "auto":
         branch = mapsync.get_branch()
-    repository = os.path.join(options.repository, branch)
+    repository = options.repository + "/" + branch
 
     print repository
 

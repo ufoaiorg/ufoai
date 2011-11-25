@@ -24,8 +24,10 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 */
 
 #include "cl_menu.h"
-#include "client.h"
+#include "cl_shared.h"
+#include "input/cl_keys.h"
 #include "ui/ui_main.h"
+#include "ui/ui_input.h"
 #include "ui/ui_nodes.h"
 #include "ui/ui_popup.h"
 #include "ui/node/ui_node_abstractnode.h"
@@ -43,15 +45,53 @@ static inline void CLMN_AddBindings (linkedList_t **list, char **bindings)
 }
 
 /**
+ * @brief Adds UI Keybindings to the list for the Keylist UI
+ * @param[in,out] list Linked list of strings to add to
+ */
+static inline void CLMN_AddUIBindings (linkedList_t **list)
+{
+	int i;
+
+	for (i = 0; i < UI_GetKeyBindingCount(); i++) {
+		const uiKeyBinding_t* binding = UI_GetKeyBindingByIndex(i);
+
+		if (binding == NULL)
+			continue;
+		if (binding->inherited)
+			continue;
+		if (!Q_strvalid(binding->description))
+			continue;
+
+		LIST_AddString(list, va("%s\t%s", Key_KeynumToString(binding->key), _(binding->description)));
+	}
+}
+
+/**
  * @brief Prints a list of tab and newline separated string to keylist char array that hold the key and the command desc
  */
 static void CLMN_InitKeyList_f (void)
 {
 	linkedList_t *list = NULL;
 
+	LIST_AddString(&list, _("^BGlobal bindings"));
+	LIST_AddString(&list, "");
 	CLMN_AddBindings(&list, keyBindings);
+	LIST_AddString(&list, "");
+	LIST_AddString(&list, "");
+	LIST_AddString(&list, _("^BMenu bindings"));
+	LIST_AddString(&list, "");
 	CLMN_AddBindings(&list, menuKeyBindings);
+	LIST_AddString(&list, "");
+	LIST_AddString(&list, "");
+	LIST_AddString(&list, _("^BBattlescape bindings"));
+	LIST_AddString(&list, "");
 	CLMN_AddBindings(&list, battleKeyBindings);
+
+	LIST_AddString(&list, "");
+	LIST_AddString(&list, "");
+	LIST_AddString(&list, _("^BUI bindings"));
+	LIST_AddString(&list, "");
+	CLMN_AddUIBindings(&list);
 
 	UI_RegisterLinkedListText(TEXT_LIST, list);
 }

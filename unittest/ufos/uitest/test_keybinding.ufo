@@ -1,0 +1,55 @@
+/**
+ * @brief Unittest for UI bindings
+ */
+
+window test_keybinding_super
+{
+	{
+	}
+
+
+	string test2 {
+		pos		"200 90"
+		string	"t2"
+	}
+
+	button binded2 {
+		onClick {
+			*node:parent.test2@color = "0 1 0 1"
+		}
+	}
+
+}
+
+window test_keybinding extends test_keybinding_super
+{
+	{
+		pos "100 100"
+		size "340 400"
+		dragbutton	true
+		closebutton	true
+		string		"_Unittest keybinding"
+		bgcolor		"0 0 0 1"
+	}
+
+	string test1 {
+		pos		"200 60"
+		string	"t1"
+	}
+
+	button binded1 {
+		onClick {
+			*node:parent.test1@color = "0 1 0 1"
+		}
+	}
+
+	func onWindowOpened {
+		cmd "bindui a test_keybinding.binded1;"
+		cmd "bindui b test_keybinding_super.binded2;"
+		cmd "press a;press b;"
+	}
+
+	func onWindowClosed {
+		// @todo we should have command to remove binding?
+	}
+}

@@ -119,13 +119,13 @@ static void UI_SelectBoxNodeDraw (uiNode_t *node)
 	selBoxY = nodepos[1] + SELECTBOX_SPACER;
 
 	/* left border */
-	UI_DrawNormImage(nodepos[0], nodepos[1], SELECTBOX_SIDE_WIDTH, node->size[1],
+	UI_DrawNormImage(qfalse, nodepos[0], nodepos[1], SELECTBOX_SIDE_WIDTH, node->size[1],
 		SELECTBOX_SIDE_WIDTH, SELECTBOX_DEFAULT_HEIGHT, 0.0f, 0.0f, image);
 	/* stretched middle bar */
-	UI_DrawNormImage(nodepos[0] + SELECTBOX_SIDE_WIDTH, nodepos[1], node->size[0]-SELECTBOX_SIDE_WIDTH-SELECTBOX_RIGHT_WIDTH, node->size[1],
+	UI_DrawNormImage(qfalse, nodepos[0] + SELECTBOX_SIDE_WIDTH, nodepos[1], node->size[0]-SELECTBOX_SIDE_WIDTH-SELECTBOX_RIGHT_WIDTH, node->size[1],
 		12.0f, SELECTBOX_DEFAULT_HEIGHT, 7.0f, 0.0f, image);
 	/* right border (arrow) */
-	UI_DrawNormImage(nodepos[0] + node->size[0] - SELECTBOX_RIGHT_WIDTH, nodepos[1], SELECTBOX_DEFAULT_HEIGHT, node->size[1],
+	UI_DrawNormImage(qfalse, nodepos[0] + node->size[0] - SELECTBOX_RIGHT_WIDTH, nodepos[1], SELECTBOX_DEFAULT_HEIGHT, node->size[1],
 		12.0f + SELECTBOX_RIGHT_WIDTH, SELECTBOX_DEFAULT_HEIGHT, 12.0f, 0.0f, image);
 
 	/* draw the label for the current selected option */
@@ -185,15 +185,15 @@ static void UI_SelectBoxNodeDrawOverWindow (uiNode_t *node)
 
 	/* drop down list */
 	/* left side */
-	UI_DrawNormImage(nodepos[0], nodepos[1] + node->size[1], SELECTBOX_SIDE_WIDTH, node->size[1] * EXTRADATA(node).count,
+	UI_DrawNormImage(qfalse, nodepos[0], nodepos[1] + node->size[1], SELECTBOX_SIDE_WIDTH, node->size[1] * EXTRADATA(node).count,
 		7.0f, 28.0f, 0.0f, 21.0f, image);
 
 	/* stretched middle bar */
-	UI_DrawNormImage(nodepos[0] + SELECTBOX_SIDE_WIDTH, nodepos[1] + node->size[1], node->size[0] -SELECTBOX_SIDE_WIDTH-SELECTBOX_RIGHT_WIDTH, node->size[1] * EXTRADATA(node).count,
+	UI_DrawNormImage(qfalse, nodepos[0] + SELECTBOX_SIDE_WIDTH, nodepos[1] + node->size[1], node->size[0] -SELECTBOX_SIDE_WIDTH-SELECTBOX_RIGHT_WIDTH, node->size[1] * EXTRADATA(node).count,
 		16.0f, 28.0f, 7.0f, 21.0f, image);
 
 	/* right side */
-	UI_DrawNormImage(nodepos[0] + node->size[0] -SELECTBOX_SIDE_WIDTH-SELECTBOX_RIGHT_WIDTH, nodepos[1] + node->size[1], SELECTBOX_SIDE_WIDTH, node->size[1] * EXTRADATA(node).count,
+	UI_DrawNormImage(qfalse, nodepos[0] + node->size[0] -SELECTBOX_SIDE_WIDTH-SELECTBOX_RIGHT_WIDTH, nodepos[1] + node->size[1], SELECTBOX_SIDE_WIDTH, node->size[1] * EXTRADATA(node).count,
 		23.0f, 28.0f, 16.0f, 21.0f, image);
 
 	/* now draw all available options for this selectbox */
@@ -216,16 +216,16 @@ static void UI_SelectBoxNodeDrawOverWindow (uiNode_t *node)
 		selBoxY += node->size[1];
 	}
 	/* left side */
-	UI_DrawNormImage(nodepos[0], selBoxY - SELECTBOX_SPACER, SELECTBOX_SIDE_WIDTH, SELECTBOX_BOTTOM_HEIGHT,
+	UI_DrawNormImage(qfalse, nodepos[0], selBoxY - SELECTBOX_SPACER, SELECTBOX_SIDE_WIDTH, SELECTBOX_BOTTOM_HEIGHT,
 		7.0f, 32.0f, 0.0f, 28.0f, image);
 
 	/* stretched middle bar */
-	UI_DrawNormImage(nodepos[0] + SELECTBOX_SIDE_WIDTH, selBoxY - SELECTBOX_SPACER, node->size[0] - SELECTBOX_SIDE_WIDTH - SELECTBOX_RIGHT_WIDTH,
+	UI_DrawNormImage(qfalse, nodepos[0] + SELECTBOX_SIDE_WIDTH, selBoxY - SELECTBOX_SPACER, node->size[0] - SELECTBOX_SIDE_WIDTH - SELECTBOX_RIGHT_WIDTH,
 			SELECTBOX_BOTTOM_HEIGHT,
 		16.0f, 32.0f, 7.0f, 28.0f, image);
 
 	/* right bottom side */
-	UI_DrawNormImage(nodepos[0] + node->size[0] - SELECTBOX_SIDE_WIDTH - SELECTBOX_RIGHT_WIDTH, selBoxY - SELECTBOX_SPACER,
+	UI_DrawNormImage(qfalse, nodepos[0] + node->size[0] - SELECTBOX_SIDE_WIDTH - SELECTBOX_RIGHT_WIDTH, selBoxY - SELECTBOX_SPACER,
 		SELECTBOX_SIDE_WIDTH, SELECTBOX_BOTTOM_HEIGHT,
 		23.0f, 32.0f, 16.0f, 28.0f, image);
 }

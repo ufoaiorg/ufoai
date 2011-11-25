@@ -27,11 +27,6 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #include "r_entity.h"
 #include "r_state.h"
 
-#define LIGHT_RADIUS_FACTOR 80.0
-
-
-/** @todo - merge this stuff into the new lighitng system using r_light_t objects */
-static light_t r_lightsArray[MAX_GL_LIGHTS];
 static sustain_t r_sustainArray[MAX_GL_LIGHTS];
 
 void R_AddLight (const vec3_t origin, float radius, const vec3_t color)
@@ -41,14 +36,19 @@ void R_AddLight (const vec3_t origin, float radius, const vec3_t color)
 	if (!r_lights->integer)
 		return;
 
-	if (refdef.numLights == MAX_GL_LIGHTS)
+	if (refdef.numDynamicLights == MAX_GL_LIGHTS)
 		return;
 
-	i = refdef.numLights++;
+	i = refdef.numDynamicLights++;
 
-	VectorCopy(origin, r_lightsArray[i].origin);
-	r_lightsArray[i].radius = radius;
-	VectorCopy(color, r_lightsArray[i].color);
+	VectorCopy(origin, refdef.dynamicLights[i].origin);
+	refdef.dynamicLights[i].radius = radius;
+	VectorCopy(color, refdef.dynamicLights[i].color);
+
+	Com_DPrintf(DEBUG_RENDERER, "added dynamic light, color (%f, %f, %f) position (%f, %f, %f)  radius=%f\n",
+		color[0], color[1], color[2],
+		origin[0], origin[1], origin[2],
+		radius);
 }
 
 /**
@@ -105,59 +105,82 @@ static void R_AddSustainedLights (void)
 	}
 }
 
-static vec3_t lights_offset;
-
-/**
- * Light sources must be translated for bsp submodel entities.
- */
-void R_ShiftLights (const vec3_t offset)
-{
-	VectorCopy(offset, lights_offset);
-}
-
+/* currently, this func processes only the world lights */
 void R_EnableLights (void)
 {
 	light_t *l;
 	vec4_t position;
 	vec4_t diffuse;
 	int i;
+	int maxLights = r_dynamic_lights->integer;
+	vec4_t blackColor = {0.0, 0.0, 0.0, 1.0};
+
+	/* with the current blending model, lighting breaks FFP world render */
+	if (!r_programs->integer) {
+		glDisable(GL_LIGHTING);
+		return;
+	}
 
 	R_AddSustainedLights();
 
 	position[3] = diffuse[3] = 1.0;
 
-	for (i = 0, l = r_lightsArray; i < refdef.numLights; i++, l++) {
-		VectorSubtract(l->origin, lights_offset, position);
+	/* Light #0 is reserved for the Sun, which is already factored into lightmaps */
+	glLightf(GL_LIGHT0, GL_CONSTANT_ATTENUATION, MIN_GL_CONSTANT_ATTENUATION);
+	glLightfv(GL_LIGHT0, GL_DIFFUSE, blackColor);
+	glLightfv(GL_LIGHT0, GL_AMBIENT, blackColor);
+	glLightfv(GL_LIGHT0, GL_SPECULAR, blackColor);
+	glDisable(GL_LIGHT0);
+
+	for (i = 1, l = refdef.dynamicLights; i <= refdef.numDynamicLights && i < maxLights && i < MAX_GL_LIGHTS; i++, l++) {
+		VectorCopy(l->origin, position);
 		glLightfv(GL_LIGHT0 + i, GL_POSITION, position);
 		VectorCopy(l->color, diffuse);
 		glLightfv(GL_LIGHT0 + i, GL_DIFFUSE, diffuse);
-		glLightf(GL_LIGHT0 + i, GL_CONSTANT_ATTENUATION, l->radius * LIGHT_RADIUS_FACTOR);
+		glLightf(GL_LIGHT0 + i, GL_CONSTANT_ATTENUATION, MIN_GL_CONSTANT_ATTENUATION);
+		glLightf(GL_LIGHT0 + i, GL_QUADRATIC_ATTENUATION, 16.0 / (l->radius * l->radius));
+		glEnable(GL_LIGHT0 + i);
 	}
 
-	for (; i < MAX_GL_LIGHTS; i++)  /* disable the rest */
-		glLightf(GL_LIGHT0 + i, GL_CONSTANT_ATTENUATION, 0.0);
+	for (; i < MAX_GL_LIGHTS; i++) {  /* disable the rest */
+		glLightf(GL_LIGHT0 + i, GL_CONSTANT_ATTENUATION, MIN_GL_CONSTANT_ATTENUATION);
+		glLightfv(GL_LIGHT0 + i, GL_DIFFUSE, blackColor);
+		glDisable(GL_LIGHT0 + i);
+	}
+	glEnable(GL_LIGHTING);
 }
 
-void R_AddLightsource (const r_light_t *source)
+void R_AddStaticLight (const vec3_t origin, float radius, const vec3_t color)
 {
-	if (r_state.numActiveLights >= MAX_DYNAMIC_LIGHTS) {
-		Com_Printf("Failed to add lightsource: MAX_DYNAMIC_LIGHTS exceeded\n");
+	light_t *l;
+	if (r_state.numStaticLights >= MAX_STATIC_LIGHTS) {
+		Com_Printf("Failed to add lightsource: MAX_STATIC_LIGHTS exceeded\n");
 		return;
 	}
 
-	Com_Printf("added light, ambient=%f\n", source->ambientColor[0]);
+	Com_DPrintf(DEBUG_RENDERER, "added static light, color (%f, %f, %f) position (%f, %f, %f)  radius=%f\n",
+		color[0], color[1], color[2],
+		origin[0], origin[1], origin[2],
+		radius);
 
-	r_state.dynamicLights[r_state.numActiveLights++] = *source;
+	l = &r_state.staticLights[r_state.numStaticLights++];
+
+	VectorCopy(origin, l->origin);
+	VectorCopy(color, l->color);
+	l->color[3] = 1.0; /* needed if we pass this light as parameter to glLightxxx() */
+	l->radius = radius;
 }
 
-void R_ClearActiveLights (void)
+void R_ClearStaticLights (void)
 {
 	int i;
+	vec4_t blackColor = {0.0, 0.0, 0.0, 1.0};
 
-	r_state.numActiveLights = 0;
+	r_state.numStaticLights = 0;
 	glDisable(GL_LIGHTING);
-	for (i = 0; i < r_dynamic_lights->integer; i++) {
-		glLightf(GL_LIGHT0 + i, GL_CONSTANT_ATTENUATION, 0.0);
+	for (i = 0; i < MAX_GL_LIGHTS; i++) {
+		glLightf(GL_LIGHT0 + i, GL_CONSTANT_ATTENUATION, MIN_GL_CONSTANT_ATTENUATION);
+		glLightfv(GL_LIGHT0 + i, GL_DIFFUSE, blackColor);
 		glDisable(GL_LIGHT0 + i);
 	}
 }
@@ -170,14 +193,7 @@ void R_ClearActiveLights (void)
  * by a separate, low-priority thread that constantly looped
  * through all the entities and updated their light lists,
  * while the high-priority rendering thread just used the most
- * up to date version available.  The current version isn't really
- * thread-safe because it uses a global variable, which is needed
- * due to the way that the standard qsort() function works, but
- * this would be easy to fix if we used our own sorting algorithm,
- * which we should probably do anyway, since qsort() isn't actually
- * likely to be very efficient given that the ordering of the list
- * isn't likely to change very much between calls.  Bubble sort
- * would probably be faster on average.
+ * up to date version available.
  *
  * In the long run, it would probably be highly beneficial to
  * separate the rendering of the world from the updating of the
@@ -204,47 +220,89 @@ void R_ClearActiveLights (void)
  * must be done in real-time (ie. rendering) from things which
  * won't be noticable to the user if they happen a bit slower, or
  * are updated a bit less often.  */
-
-
-/* global variable - NOT THREAD SAFE */
-static vec3_t origin;
-
-static inline int R_LightDistCompare (const void *a, const void *b)
-{
-	const r_light_t *light1 = *(const r_light_t * const *)a;
-	const r_light_t *light2 = *(const r_light_t * const *)b;
-	return
-		light1->loc[3] == 0 ? -1 :
-		light2->loc[3] == 0 ?  1 :
-		VectorDistSqr(light1->loc, origin) - VectorDistSqr(light2->loc, origin);
-}
-
-static inline void R_SortLightList_qsort (r_light_t **list)
-{
-	qsort(list, r_state.numActiveLights, sizeof(*list), &R_LightDistCompare);
-}
-
 /**
- * @todo qsort may not be the best thing to use here,
- * given that the ordering of the list usually won't change
- * much (if at all) between calls.  Something like bubble-sort
- * might actually be more efficient in practice.
+ * @brief Adds light to the entity's lights list, sorted by distance
+ * @note Since list is very small (8 elements), insertion sort is used - it beats qsort and other fancy algos in case of a small list
+ * and allows a better integration with other parts of code.
+ * @param[in] ent The entity for which light is added
+ * @param[in] light The light itself
+ * @param[in] distSqr Squared distance from entity's origin to the light
+ * @sa R_UpdateLightList
  */
-static void R_SortLightList (r_light_t **list, vec3_t v)
+static void R_AddLightToEntity (entity_t *ent, const light_t *light, const float distSqr)
 {
-	VectorCopy(v, origin);
-	R_SortLightList_qsort(list);
-}
+	int i;
+	const light_t **el = ent->lights;
+	/* we have to use the offset from accumulated transform matrix, because origin is relative to attachment point for submodels */
+	const vec_t *pos = ent->transform.matrix + 12; /* type system hack, sorry */
 
-void R_UpdateLightList (entity_t *ent)
-{
-	if (ent->numLights > r_state.numActiveLights)
-		ent->numLights = 0;
+	for (i = 0; i < ent->numLights; i++) {
+		if (i == MAX_ENTITY_LIGHTS)
+			return;
+		if (distSqr < VectorDistSqr((el[i]->origin), pos)) { /** @todo will caching VectorDistSqr() results improve the rendering speed? */
+			/* found more distant light, push it down the list and insert this one*/
+			if (i + 1 == MAX_ENTITY_LIGHTS) {
+				/* shortcut in case light we are replacing is the last light possible; also acts as the overflow guard */
+				el[i] = light;
+				return;
+			}
 
-	while (ent->numLights < r_state.numActiveLights) {
-		ent->lights[ent->numLights] = &r_state.dynamicLights[ent->numLights];
-		ent->numLights++;
+			while (i < ent->numLights) {
+				const light_t *tmp = el[i];
+				el[i++] = light;
+				light = tmp;
+			}
+
+			break;
+		}
 	}
 
-	R_SortLightList(ent->lights, ent->origin);
+	if (i == MAX_ENTITY_LIGHTS)
+		return;
+
+	el[i++] = light;
+	ent->numLights = i;
+}
+
+/** @todo bad implementation -- copying light pointers every frame is a very wrong idea
+ * @brief Recalculate active lights list for the given entity
+ * @note to accelerate math, the diagonal of aabb is used to approximate max distance from entity's origin to its most distant point
+ * while this is a gross exaggeration for many models, the sole purpose of it is to be used for filtering out distant lights,
+ * so nothing is broken by it.
+ * @param[in] ent Entity to recalculate lights for
+ * @sa R_AddLightToEntity
+ */
+void R_UpdateLightList (entity_t *ent)
+{
+	int i;
+	/* we have to use the offset from accumulated transform matrix, because origin is relative to attachment point for submodels */
+	const vec_t *pos = ent->transform.matrix + 12; /* type system hack, sorry */
+	vec3_t diametralVec; /** < conservative estimate of entity's bounding sphere diameter, in vector form */
+	float diameter; /** < value of this entity's diameter (approx) */
+
+	VectorSubtract(ent->maxs, ent->mins, diametralVec); /** @todo what if origin is NOT inside aabb? then this estimate will not be conservative enough */
+	diameter = VectorLength(diametralVec);
+
+	ent->numLights = 0; /* clear the list of lights */
+
+	for (i = 0; i < r_state.numStaticLights; i++) {
+		light_t *light = &r_state.staticLights[i];
+		const float distSqr = VectorDistSqr(pos, light->origin);
+
+		if (distSqr > (diameter + light->radius) * (diameter + light->radius))
+			continue;
+
+		R_AddLightToEntity(ent, light, distSqr);
+	}
+
+	/* add dynamic lights, too */
+	for (i = 0; i < refdef.numDynamicLights; i++) {
+		light_t *light = &refdef.dynamicLights[i];
+		const float distSqr = VectorDistSqr(pos, light->origin);
+
+		if (distSqr > (diameter + light->radius) * (diameter + light->radius))
+			continue;
+
+		R_AddLightToEntity(ent, light, distSqr);
+	}
 }

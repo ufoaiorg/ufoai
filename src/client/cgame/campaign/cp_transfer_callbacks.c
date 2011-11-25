@@ -44,8 +44,6 @@ CASSERT(lengthof(transferTypeIDs) == TRANS_TYPE_MAX);
 /** @todo move this into ccs_t */
 static transferData_t td;
 
-/** @brief Max values for transfer factors. */
-static const int MAX_TR_FACTORS = 500;
 /** @brief number of entries on menu */
 static const int MAX_TRANSLIST_MENU_ENTRIES = 21;
 
@@ -1183,7 +1181,7 @@ static void TR_SelectBase_f (void)
 
 static void TR_RemoveItemFromCargoList (base_t *base, transferData_t *transferData, int num)
 {
-	int i, cnt;
+	int i, cnt = 0;
 
 	for (i = 0; i < csi.numODs; i++) {
 		const objDef_t *od = INVSH_GetItemByIDX(i);

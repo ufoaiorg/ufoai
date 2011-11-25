@@ -366,10 +366,9 @@ qboolean AB_LoadXML (xmlNode_t *p)
 		alienBase_t base;
 
 		base.idx = XML_GetInt(s, SAVE_ALIENBASE_IDX, -1);
-		/* fallback code for compatibility */
-		if (base.idx == -1) {
-			Com_Printf("No IDX defined for Alienbase %d. This must be an old save.\n", i);
-			base.idx = i;
+		if (base.idx < 0) {
+			Com_Printf("Invalid or no IDX defined for Alienbase %d.\n", i);
+			return qfalse;
 		}
 		if (!XML_GetPos2(s, SAVE_ALIENBASE_POS, base.pos)) {
 			Com_Printf("Position is invalid for Alienbase (idx %d)\n", base.idx);

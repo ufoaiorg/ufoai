@@ -24,6 +24,19 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 
 #include "g_local.h"
 
+const equipDef_t *G_GetEquipDefByID (const char *equipID)
+{
+	int i;
+	const equipDef_t *ed;
+
+	for (i = 0, ed = gi.csi->eds; i < gi.csi->numEDs; i++, ed++)
+		if (Q_streq(equipID, ed->id))
+			return ed;
+
+	gi.DPrintf("Could not find the equipment with the id: '%s'\n", equipID);
+	return NULL;
+}
+
 /**
  * @brief Callback to G_GetEdictFromPos() for given position, used to get items from position.
  * @param[in] pos A position for which items are wanted.
@@ -65,7 +78,7 @@ qboolean G_InventoryRemoveItemByID (const char *itemID, edict_t *ent, containerI
 {
 	invList_t *ic = CONTAINER(ent, container);
 	while (ic) {
-		objDef_t *item = ic->item.t;
+		const objDef_t *item = ic->item.t;
 		if (item != NULL && Q_streq(item->id, itemID)) {
 			/* remove the virtual item to update the inventory lists */
 			if (!game.i.RemoveFromInventory(&game.i, &ent->chr.i, INVDEF(container), ic))
@@ -127,7 +140,7 @@ qboolean G_AddItemToFloor (const pos3_t pos, const char *itemID)
 {
 	edict_t *floor;
 	item_t item = {NONE_AMMO, NULL, NULL, 0, 0};
-	objDef_t *od = INVSH_GetItemByIDSilent(itemID);
+	const objDef_t *od = INVSH_GetItemByIDSilent(itemID);
 	if (!od) {
 		gi.DPrintf("Could not find item '%s'\n", itemID);
 		return qfalse;
@@ -170,7 +183,7 @@ static qboolean G_InventoryPlaceItemAdjacent (edict_t *ent)
 		} else {
 			/* destroy this edict (send this event to all clients that see the edict) */
 			G_EventPerish(floorAdjacent);
-			floorAdjacent->visflags = 0;
+			G_VisFlagsReset(floorAdjacent);
 		}
 
 		INVSH_FindSpace(&floorAdjacent->i, &ic->item, INVDEF(gi.csi->idFloor), &x, &y, ic);
@@ -232,7 +245,7 @@ void G_InventoryToFloor (edict_t *ent)
 	} else {
 		/* destroy this edict (send this event to all clients that see the edict) */
 		G_EventPerish(floor);
-		floor->visflags = 0;
+		G_VisFlagsReset(floor);
 	}
 
 	/* drop items */
@@ -286,7 +299,7 @@ void G_InventoryToFloor (edict_t *ent)
  * @sa CL_NetReceiveItem
  * @sa EV_INV_TRANSFER
  */
-void G_ReadItem (item_t *item, invDef_t **container, int *x, int *y)
+void G_ReadItem (item_t *item, const invDef_t **container, int *x, int *y)
 {
 	int t, m;
 	containerIndex_t containerID;
@@ -345,6 +358,8 @@ void G_SendInventory (unsigned int playerMask, const edict_t *ent)
 		return;
 
 	for (container = 0; container < gi.csi->numIDs; container++) {
+		if (!G_IsItem(ent) && INVDEF(container)->temp)
+			continue;
 		for (ic = CONTAINER(ent, container); ic; ic = ic->next)
 			nr++;
 	}
@@ -355,10 +370,13 @@ void G_SendInventory (unsigned int playerMask, const edict_t *ent)
 
 	G_EventInventoryAdd(ent, playerMask, nr);
 	for (container = 0; container < gi.csi->numIDs; container++) {
+		if (!G_IsItem(ent) && INVDEF(container)->temp)
+			continue;
 		for (ic = CONTAINER(ent, container); ic; ic = ic->next) {
 			/* send a single item */
 			assert(ic->item.t);
 			G_WriteItem(&ic->item, INVDEF(container), ic->x, ic->y);
 		}
 	}
+	gi.EndEvents();
 }

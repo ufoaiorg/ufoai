@@ -114,9 +114,6 @@ SurfaceInspector::SurfaceInspector () :
 	GlobalRegistry().addKeyObserver(this, RKEY_ENABLE_TEXTURE_LOCK);
 	GlobalRegistry().addKeyObserver(this, RKEY_DEFAULT_TEXTURE_SCALE);
 
-	// Register self to the SelSystem to get notified upon selection changes.
-	GlobalSelectionSystem().addObserver(this);
-
 	GlobalEventManager().addCommand("FitTexture", MemberCaller<SurfaceInspector, &SurfaceInspector::fitTexture> (*this));
 	GlobalEventManager().addCommand("CopyShader", FreeCaller<selection::algorithm::pickShaderFromSelection> ());
 	GlobalEventManager().addCommand("PasteShader", FreeCaller<selection::algorithm::pasteShaderToSelection> ());
@@ -185,7 +182,7 @@ void SurfaceInspector::connectEvents ()
 	g_signal_connect(G_OBJECT(_applyTex.natural), "clicked", G_CALLBACK(doUpdate), this);
 	g_signal_connect(G_OBJECT(_defaultTexScale), "value-changed", G_CALLBACK(onDefaultScaleChanged), this);
 
-	for (ManipulatorMap::iterator i = _manipulators.begin(); i != _manipulators.end(); i++) {
+	for (ManipulatorMap::iterator i = _manipulators.begin(); i != _manipulators.end(); ++i) {
 		GtkWidget* smaller = *(i->second.smaller);
 		GtkWidget* larger = *(i->second.larger);
 
@@ -551,6 +548,8 @@ SurfaceInspector& SurfaceInspector::Instance ()
 void SurfaceInspector::emitShader ()
 {
 	std::string shaderName = gtk_entry_get_text(GTK_ENTRY(_shaderEntry));
+	if (shaderName.empty())
+		return;
 
 	// Apply it to the selection
 	UndoableCommand undo("textureNameSetSelected " + shaderName);
@@ -623,6 +622,18 @@ void SurfaceInspector::updateTexDef ()
 	gtk_entry_set_text(GTK_ENTRY(_manipulators[ROTATION].value), string::toString(texdef._rotate).c_str());
 }
 
+void SurfaceInspector::onGtkIdle ()
+{
+	// Perform the pending update
+	update();
+}
+
+void SurfaceInspector::queueUpdate ()
+{
+	// Request an idle callback to perform the update when GTK is idle
+	requestIdleCallback();
+}
+
 void SurfaceInspector::update ()
 {
 	bool valueSensitivity = (_selectionInfo.totalCount > 0);
@@ -665,15 +676,12 @@ void SurfaceInspector::update ()
 	}
 	updateFlags();
 	updateFlagButtons();
-
-	// Update the TexTool instance as well
-	ui::TexTool::Instance().draw();
 }
 
 // Gets notified upon selection change
-void SurfaceInspector::selectionChanged ()
+void SurfaceInspector::selectionChanged (scene::Instance& instance, bool isComponent)
 {
-	update();
+	queueUpdate();
 }
 
 void SurfaceInspector::saveToRegistry ()
@@ -701,9 +709,24 @@ void SurfaceInspector::fitTexture ()
 	}
 }
 
-GtkWidget* SurfaceInspector::getWidget ()
+GtkWidget* SurfaceInspector::getWidget () const
 {
 	return _dialogVBox;
+}
+
+const std::string SurfaceInspector::getTitle() const
+{
+	return _("_Surfaces");
+}
+
+void SurfaceInspector::switchPage (int pageIndex)
+{
+	if (pageIndex == _pageIndex) {
+		// Register self to the SelSystem to get notified upon selection changes.
+		GlobalSelectionSystem().addObserver(this);
+		update();
+	} else
+		GlobalSelectionSystem().removeObserver(this);
 }
 
 void SurfaceInspector::shaderSelectionChanged (const std::string& shaderName)

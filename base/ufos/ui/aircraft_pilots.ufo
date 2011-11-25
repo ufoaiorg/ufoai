@@ -53,8 +53,8 @@ window aircraft_pilots extends iaircraft
 	model aircraft
 	{
 		src			*cvar:mn_aircraft_model
-		pos			"478 107"
-		size		"529 260"
+		pos			"478 106"
+		size		"529 261"
 		origin		"-45 25 0"
 		angles		"160 20 -120"
 		autoscale	true
@@ -94,7 +94,7 @@ window aircraft_pilots extends iaircraft
 		string		*cvar:mn_pilot_name
 		pos			"480 185"
 		size		"200 20"
-		textalign	ALIGN_UL
+		contentalign	ALIGN_UL
 	}
 
 	// ==================
@@ -102,7 +102,7 @@ window aircraft_pilots extends iaircraft
 	// ==================
 
 	image	rank_img {
-		pos "378 465"
+		pos "378 463"
 		size "50 50"
 		src *cvar:mn_chrrank_img
 	}
@@ -115,9 +115,10 @@ window aircraft_pilots extends iaircraft
 			anim	"stand2"
 			angles	"0 70 90"
 			scale	"5.5 5.5 5.5"
-			pos		"378 465"
-			size	"167 278"
+			pos		"377 463"
+			size	"168 283"
 			origin	"0 -35 0"
+			omega	"0 -1 0"
 		}
 
 		model head
@@ -211,47 +212,41 @@ window aircraft_pilots extends iaircraft
 	}
 
 	cmpPilotSelect actor_select0 {
-		pos "38 470"
+		pos "38 462"
 	}
 
 	cmpPilotSelect actor_select1 {
-		pos "38 505"
+		pos	"38 497"
 	}
 
-	cmpPilotSelect actor_select2
-	{
-		pos			"38 540"
+	cmpPilotSelect actor_select2 {
+		pos	"38 532"
 	}
 
-	cmpPilotSelect actor_select3
-	{
-		pos			"38 575"
+	cmpPilotSelect actor_select3 {
+		pos	"38 567"
 	}
 
-	cmpPilotSelect actor_select4
-	{
-		pos			"38 610"
+	cmpPilotSelect actor_select4 {
+		pos	"38 602"
 	}
 
-	cmpPilotSelect actor_select5
-	{
-		pos			"38 645"
+	cmpPilotSelect actor_select5 {
+		pos	"38 637"
 	}
 
-	cmpPilotSelect actor_select6
-	{
-		pos			"38 680"
+	cmpPilotSelect actor_select6 {
+		pos	"38 672"
 	}
 
-	cmpPilotSelect actor_select7
-	{
-		pos			"38 715"
+	cmpPilotSelect actor_select7 {
+		pos	"38 707"
 	}
 
 	vscrollbar scroll_employees
 	{
 		image	"ui/scrollbar_v_green"
-		pos "310 463"	height	"282"
+		pos "310 462"	height	"283"
 		current 0
 		viewsize 8
 		fullsize 50

@@ -27,6 +27,17 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #include "e_event_entappear.h"
 #include "../../../../../common/grid.h"
 
+int CL_EntAppearTime (const struct eventRegister_s *self, struct dbuffer *msg, eventTiming_t *eventTiming)
+{
+	if (eventTiming->parsedDeath) { /* drop items after death (caused by impact) */
+		return eventTiming->impactTime + 400;
+	} else if (eventTiming->impactTime > cl.time) { /* item thrown on the ground */
+		return eventTiming->impactTime + 75;
+	}
+
+	return eventTiming->nextTime;
+}
+
 /**
  * @brief Let an entity appear - like an item on the ground that just got visible
  * @sa EV_ENT_APPEAR

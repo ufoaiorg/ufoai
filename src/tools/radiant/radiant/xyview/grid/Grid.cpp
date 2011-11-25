@@ -97,7 +97,7 @@ class GridManager: public IGridManager, public RegistryKeyObserver, public Prefe
 
 		void registerCommands ()
 		{
-			for (GridItemMap::iterator i = _gridItems.begin(); i != _gridItems.end(); i++) {
+			for (GridItemMap::iterator i = _gridItems.begin(); i != _gridItems.end(); ++i) {
 				std::string toggleName = "SetGrid";
 				toggleName += i->first; // Makes "SetGrid" to "SetGrid64", for example
 				GridItem& gridItem = i->second;
@@ -113,7 +113,7 @@ class GridManager: public IGridManager, public RegistryKeyObserver, public Prefe
 		{
 			ComboBoxValueList returnValue;
 
-			for (GridItemMap::iterator i = _gridItems.begin(); i != _gridItems.end(); i++) {
+			for (GridItemMap::iterator i = _gridItems.begin(); i != _gridItems.end(); ++i) {
 				returnValue.push_back(i->first);
 			}
 
@@ -187,7 +187,7 @@ class GridManager: public IGridManager, public RegistryKeyObserver, public Prefe
 
 		void gridChanged ()
 		{
-			for (GridItemMap::iterator i = _gridItems.begin(); i != _gridItems.end(); i++) {
+			for (GridItemMap::iterator i = _gridItems.begin(); i != _gridItems.end(); ++i) {
 				std::string toggleName = "SetGrid";
 				toggleName += i->first; // Makes "SetGrid" to "SetGrid64", for example
 				GridItem& gridItem = i->second;

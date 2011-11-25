@@ -22,7 +22,6 @@ See the GNU General Public License for more details.
 You should have received a copy of the GNU General Public License
 along with this program; if not, write to the Free Software
 Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
-
 */
 
 #include "../../cl_shared.h"
@@ -101,26 +100,25 @@ static void UR_DialogInit_f (void)
 
 	Q_strncpyz(ufoID, Cmd_Argv(1), sizeof(ufoID));
 
-	if (Cmd_Argc() >= 3) {
+	if (Cmd_Argc() >= 3)
 		cond = atof(Cmd_Argv(2));
-	}
 
 	ufoCraft = AIR_GetAircraft(ufoID);
 
-	/* Put relevant info into missionResults array. */
-	ccs.missionResults.recovery = qtrue;
-	ccs.missionResults.ufoCondition = cond;
-	ccs.missionResults.crashsite = (cond < 1);
-	ccs.missionResults.ufotype = ufoCraft->ufotype;
-	/* Prepare related cvars. */
-	Cvar_SetValue("mission_uforecovered", 1);	/* This is used in menus to enable UFO Recovery nodes. */
 	/* Fill ufoRecovery structure */
 	OBJZERO(ufoRecovery);
 	ufoRecovery.ufoTemplate = ufoCraft;
 	ufoRecovery.condition = cond;
 	ufoRecovery.sortedColumn = ORDER_NATION;
 
-	Cvar_Set("mn_uforecovery_actualufo", UFO_MissionResultToString());
+	if (ufoCraft) {
+		if (cond < 1.0)
+			Cvar_Set("mn_uforecovery_actualufo", va(_("\nSecured crashed %s (%.0f%%)\n"), UFO_AircraftToIDOnGeoscape(ufoCraft), cond * 100));
+		else
+			Cvar_Set("mn_uforecovery_actualufo", va(_("\nSecured landed %s\n"), UFO_AircraftToIDOnGeoscape(ufoCraft)));
+
+		UI_PushWindow("uforecovery", NULL, NULL);
+	}
 }
 
 /**
@@ -130,7 +128,7 @@ static void UR_DialogInit_f (void)
  */
 static void UR_DialogInitStore_f (void)
 {
-	int i;
+	installation_t *installation;
 	int count = 0;
 	linkedList_t *recoveryYardName = NULL;
 	linkedList_t *recoveryYardCapacity = NULL;
@@ -141,12 +139,8 @@ static void UR_DialogInitStore_f (void)
 		return;
 
 	/* Check how many bases can store this UFO. */
-	for (i = 0; i < ccs.numInstallations; i++) {
-		const installation_t *installation = INS_GetFoundedInstallationByIDX(i);
+	INS_Foreach(installation) {
 		const capacities_t *capacity;
-
-		if (!installation)
-			continue;
 
 		capacity = &installation->ufoCapacity;
 		if (capacity->max > 0 && capacity->max > capacity->cur) {
@@ -157,7 +151,6 @@ static void UR_DialogInitStore_f (void)
 		}
 	}
 
-	Cvar_Set("mn_uforecovery_actualufo", UFO_MissionResultToString());
 	if (count == 0) {
 		/* No UFO base with proper conditions, show a hint and disable list. */
 		LIST_AddString(&recoveryYardName, _("No free UFO yard available."));
@@ -177,9 +170,8 @@ static void UR_DialogInitStore_f (void)
  */
 static void UR_DialogStartStore_f (void)
 {
-	installation_t *UFOYard = NULL;
+	installation_t *installation;
 	int idx;
-	int i;
 	int count = 0;
 	date_t date;
 
@@ -190,33 +182,26 @@ static void UR_DialogStartStore_f (void)
 
 	idx = atoi(Cmd_Argv(1));
 
-	for (i = 0; i < ccs.numInstallations; i++) {
-		installation_t *installation = INS_GetFoundedInstallationByIDX(i);
-
-		if (!installation)
-			continue;
-
+	INS_Foreach(installation) {
 		if (installation->ufoCapacity.max <= 0
 		 || installation->ufoCapacity.max <= installation->ufoCapacity.cur)
 			continue;
 
-		if (count == idx) {
-			UFOYard = installation;
+		if (count == idx)
 			break;
-		}
 		count++;
 	}
 
-	if (!UFOYard)
+	if (!installation)
 		return;
 
 	Com_sprintf(cp_messageBuffer, lengthof(cp_messageBuffer), _("Recovered %s from the battlefield. UFO is being transported to %s."),
-			UFO_TypeToName(ufoRecovery.ufoTemplate->ufotype), UFOYard->name);
+			UFO_AircraftToIDOnGeoscape(ufoRecovery.ufoTemplate), installation->name);
 	MS_AddNewMessage(_("UFO Recovery"), cp_messageBuffer, qfalse, MSG_STANDARD, NULL);
 	date = ccs.date;
 	date.day += (int) RECOVERY_DELAY;
 
-	US_StoreUFO(ufoRecovery.ufoTemplate, UFOYard, date, ufoRecovery.condition);
+	US_StoreUFO(ufoRecovery.ufoTemplate, installation, date, ufoRecovery.condition);
 	UR_DialogRecoveryDone();
 }
 
@@ -500,8 +485,7 @@ static void UR_DialogStartSell_f (void)
 	} else
 #endif
 	{
-		Com_sprintf(cp_messageBuffer, sizeof(cp_messageBuffer), _("Recovered %s from the battlefield. UFO sold to nation %s, gained %i credits."), UFO_TypeToName(
-				ufoRecovery.ufoTemplate->ufotype), _(nation->name), price);
+		Com_sprintf(cp_messageBuffer, sizeof(cp_messageBuffer), _("Recovered %s from the battlefield. UFO sold to nation %s, gained %i credits."), UFO_AircraftToIDOnGeoscape(ufoRecovery.ufoTemplate), _(nation->name), price);
 	}
 	MS_AddNewMessage(_("UFO Recovery"), cp_messageBuffer, qfalse, MSG_STANDARD, NULL);
 	CP_UpdateCredits(ccs.credits + price);

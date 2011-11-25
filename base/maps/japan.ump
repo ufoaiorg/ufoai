@@ -389,7 +389,7 @@ tileset fillers "0 10"
 /* the game engine sometime fail to create this assembly
 http://ufoai.ninex.info:8010/builders/unittests/builds/244/steps/test%20MapDefTests/logs/stdio
 */
-assembly big
+assembly large
 {
 size "10 5"
 title         "_Harvester"

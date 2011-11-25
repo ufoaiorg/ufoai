@@ -37,24 +37,39 @@ BRUSH MODELS
 
 #define BACKFACE_EPSILON 0.01
 
+#define MAX_BSPS_TO_RENDER 1024
+
+typedef struct bspRenderRef_s {
+	const mBspModel_t *bsp;
+	vec3_t origin;
+	vec3_t angles;
+} bspRenderRef_t;
+
+static bspRenderRef_t bspRRefs[MAX_BSPS_TO_RENDER];
+static int numBspRRefs;
 
 /**
- * @brief Returns true if the specified bounding box is completely culled by the
- * view frustum, false otherwise.
+ * @brief Returns whether if the specified bounding box is completely culled by the
+ * view frustum (PSIDE_BACK), completely not culled (PSIDE_FRONT) or split by it (PSIDE_BOTH)
  * @param[in] mins The mins of the bounding box
  * @param[in] maxs The maxs of the bounding box
  */
-static qboolean R_CullBox (const vec3_t mins, const vec3_t maxs)
+static int R_CullBox (const vec3_t mins, const vec3_t maxs)
 {
 	int i;
+	int cullState = 0;
 
 	if (r_nocull->integer)
-		return qfalse;
+		return PSIDE_FRONT;
 
-	for (i = lengthof(r_locals.frustum) - 1; i >= 0; i--)
-		if (TR_BoxOnPlaneSide(mins, maxs, &r_locals.frustum[i]) == PSIDE_BACK)
-			return qtrue;
-	return qfalse;
+	for (i = lengthof(r_locals.frustum) - 1; i >= 0; i--) {
+		int planeSide = TR_BoxOnPlaneSide(mins, maxs, &r_locals.frustum[i]);
+		if (planeSide == PSIDE_BACK)
+			return PSIDE_BACK; /* completely culled away */
+		cullState |= planeSide;
+	}
+
+	return cullState;
 }
 
 
@@ -109,109 +124,8 @@ qboolean R_CullBspModel (const entity_t *e)
 		VectorAdd(e->origin, e->model->maxs, maxs);
 	}
 
-	return R_CullBox(mins, maxs);
+	return R_CullBox(mins, maxs) == PSIDE_BACK;
 }
-
-/**
- * @brief Renders all the surfaces that belongs to an inline bsp model entity
- * @param[in] e The inline bsp model entity
- * @param[in] modelorg relative to viewpoint
- */
-static void R_DrawBspModelSurfaces (const entity_t *e, const vec3_t modelorg)
-{
-	int i;
-	mBspSurface_t *surf;
-
-	/* temporarily swap the view frame so that the surface drawing
-	 * routines pickup only the bsp model's surfaces */
-	const int f = r_locals.frame;
-	r_locals.frame = -1;
-
-	surf = &e->model->bsp.surfaces[e->model->bsp.firstmodelsurface];
-
-	for (i = 0; i < e->model->bsp.nummodelsurfaces; i++, surf++) {
-		/** @todo This leads to unrendered backfaces for e.g. doors */
-#if 0
-		float dot;
-		/* find which side of the surf we are on  */
-		if (AXIAL(surf->plane))
-			dot = modelorg[surf->plane->type] - surf->plane->dist;
-		else
-			dot = DotProduct(modelorg, surf->plane->normal) - surf->plane->dist;
-
-		if (((surf->flags & MSURF_PLANEBACK) && (dot < -BACKFACE_EPSILON)) ||
-			(!(surf->flags & MSURF_PLANEBACK) && (dot > BACKFACE_EPSILON)))
-#endif
-			/* visible flag for rendering */
-			surf->frame = r_locals.frame;
-	}
-
-	R_DrawOpaqueSurfaces(e->model->bsp.opaque_surfaces);
-
-	R_DrawOpaqueWarpSurfaces(e->model->bsp.opaque_warp_surfaces);
-
-	R_DrawAlphaTestSurfaces(e->model->bsp.alpha_test_surfaces);
-
-	R_EnableBlend(qtrue);
-
-	R_DrawMaterialSurfaces(e->model->bsp.material_surfaces);
-
-	R_DrawFlareSurfaces(e->model->bsp.flare_surfaces);
-
-	R_EnableFog(qfalse);
-
-	R_DrawBlendSurfaces(e->model->bsp.blend_surfaces);
-
-	R_DrawBlendWarpSurfaces(e->model->bsp.blend_warp_surfaces);
-
-	R_EnableFog(qtrue);
-
-	R_EnableBlend(qfalse);
-
-	/* undo the swap */
-	r_locals.frame = f;
-}
-
-/**
- * @brief Draws a brush model
- * @param[in] e The inline bsp model entity
- * @note E.g. a func_breakable or func_door
- */
-void R_DrawBrushModel (const entity_t * e)
-{
-	/* relative to viewpoint */
-	vec3_t modelorg;
-
-	/* set the relative origin, accounting for rotation if necessary */
-	VectorSubtract(refdef.viewOrigin, e->origin, modelorg);
-	if (VectorNotEmpty(e->angles)) {
-		vec3_t rotationMatrix[3];
-		VectorCreateRotationMatrix(e->angles, rotationMatrix);
-		VectorRotatePoint(modelorg, rotationMatrix);
-	}
-
-	R_ShiftLights(e->origin);
-
-	glPushMatrix();
-
-	glTranslatef(e->origin[0], e->origin[1], e->origin[2]);
-	glRotatef(e->angles[YAW], 0, 0, 1);
-	glRotatef(e->angles[PITCH], 0, 1, 0);
-	glRotatef(e->angles[ROLL], 1, 0, 0);
-
-	R_DrawBspModelSurfaces(e, modelorg);
-
-	/* show model bounding box */
-	if (r_showbox->integer) {
-		const model_t *model = e->model;
-		R_DrawBoundingBox(model->mins, model->maxs);
-	}
-
-	glPopMatrix();
-
-	R_ShiftLights(vec3_origin);
-}
-
 
 /*
 =============================================================
@@ -256,6 +170,8 @@ void R_DrawBspNormals (int tile)
 		if (k > r_state.array_size - 512) {
 			glDrawArrays(GL_LINES, 0, k / 3);
 			k = 0;
+
+			refdef.batchCount++;
 		}
 
 		for (j = 0; j < surf->numedges; j++) {
@@ -274,32 +190,29 @@ void R_DrawBspNormals (int tile)
 
 	glDrawArrays(GL_LINES, 0, k / 3);
 
+	refdef.batchCount++;
+
 	R_EnableTexture(&texunit_diffuse, qtrue);
 
 	R_Color(NULL);
 }
 
 /**
- * @brief Recurse down the bsp tree and mark surfaces that are visible (not culled and in front)
+ * @brief Recurse down the bsp tree and mark all surfaces as visible (if in front)
  * for being rendered
  * @sa R_DrawWorld
  * @sa R_RecurseWorld
- * @param[in] node The bsp node to check
+ * @sa R_RecursiveWorldNode
+ * @param[in] node The bsp node to mark
  * @param[in] tile The maptile (map assembly)
  */
-static void R_RecursiveWorldNode (const mBspNode_t * node, int tile)
+static void R_RecursiveVisibleWorldNode (const mBspNode_t * node, int tile)
 {
-	int i, side, sidebit;
+	int i, sidebit;
 	mBspSurface_t *surf;
 	float dot;
 
-	if (node->contents == CONTENTS_SOLID)
-		return;					/* solid */
-
-	if (R_CullBox(node->minmaxs, node->minmaxs + 3))
-		return;					/* culled out */
-
-	/* if a leaf node, draw stuff */
+	/* if a leaf node, nothing to mark */
 	if (node->contents > CONTENTS_NODE)
 		return;
 
@@ -317,15 +230,10 @@ static void R_RecursiveWorldNode (const mBspNode_t * node, int tile)
 	}
 
 	if (dot >= 0) {
-		side = 0;
 		sidebit = 0;
 	} else {
-		side = 1;
 		sidebit = MSURF_PLANEBACK;
 	}
-
-	/* recurse down the children, front side first */
-	R_RecursiveWorldNode(node->children[side], tile);
 
 	surf = r_mapTiles[tile]->bsp.surfaces + node->firstsurface;
 	for (i = 0; i < node->numsurfaces; i++, surf++) {
@@ -334,8 +242,72 @@ static void R_RecursiveWorldNode (const mBspNode_t * node, int tile)
 			surf->frame = r_locals.frame;
 	}
 
-	/* recurse down the back side */
-	R_RecursiveWorldNode(node->children[!side], tile);
+	/* recurse down the children */
+	R_RecursiveVisibleWorldNode(node->children[0], tile);
+	R_RecursiveVisibleWorldNode(node->children[1], tile);
+}
+
+/**
+ * @brief Recurse down the bsp tree and mark surfaces that are visible (not culled and in front)
+ * for being rendered
+ * @sa R_DrawWorld
+ * @sa R_RecurseWorld
+ * @sa R_RecursiveVisibleWorldNode
+ * @param[in] node The bsp node to check
+ * @param[in] tile The maptile (map assembly)
+ */
+static void R_RecursiveWorldNode (const mBspNode_t * node, int tile)
+{
+	int i, sidebit;
+	int cullState;
+	mBspSurface_t *surf;
+	float dot;
+
+	/* if a leaf node, nothing to mark */
+	if (node->contents > CONTENTS_NODE)
+		return;
+
+	cullState = R_CullBox(node->minmaxs, node->minmaxs + 3);
+
+	if (cullState == PSIDE_BACK)
+		return;					/* culled out */
+
+	/* pathfinding nodes are invalid here */
+	assert(node->plane);
+
+	/* node is just a decision point, so go down the appropriate sides
+	 * find which side of the node we are on */
+	if (r_isometric->integer) {
+		dot = -DotProduct(r_locals.forward, node->plane->normal);
+	} else if (!AXIAL(node->plane)) {
+		dot = DotProduct(refdef.viewOrigin, node->plane->normal) - node->plane->dist;
+	} else {
+		dot = refdef.viewOrigin[node->plane->type] - node->plane->dist;
+	}
+
+	if (dot >= 0) {
+		sidebit = 0;
+	} else {
+		sidebit = MSURF_PLANEBACK;
+	}
+
+	surf = r_mapTiles[tile]->bsp.surfaces + node->firstsurface;
+	for (i = 0; i < node->numsurfaces; i++, surf++) {
+		/* visible (front) side */
+		if ((surf->flags & MSURF_PLANEBACK) == sidebit)
+			surf->frame = r_locals.frame;
+	}
+
+	/* recurse down the children */
+	if (cullState == PSIDE_FRONT) {
+		/* completely inside the frustum - no need to do any further checks */
+		R_RecursiveVisibleWorldNode(node->children[0], tile);
+		R_RecursiveVisibleWorldNode(node->children[1], tile);
+	} else {
+		/* partially clipped by frustum - recurse to do finer checks */
+		R_RecursiveWorldNode(node->children[0], tile);
+		R_RecursiveWorldNode(node->children[1], tile);
+	}
 }
 
 /**
@@ -394,4 +366,174 @@ void R_GetLevelSurfaceLists (void)
 			R_RecurseWorld(bspModel->nodes + header->headnode, tile);
 		}
 	}
+}
+
+/*
+=============================================================
+Deferred rendering
+=============================================================
+*/
+
+void R_ClearBspRRefs (void)
+{
+	numBspRRefs = 0;
+}
+
+/**
+ * @brief Adds bsp render references
+ * @note If forceVisibility is set, will mark the surfaces of the given bsp model as visible for this frame.
+ * @param[in] model The bsp model to add to the render chain
+ * @param[in] origin
+ * @param[in] angles
+ * @param[in] forceVisibility force model to be fully visible
+ */
+void R_AddBspRRef (const mBspModel_t *model, const vec3_t origin, const vec3_t angles, const qboolean forceVisibility)
+{
+	bspRenderRef_t *bspRR;
+
+	if (numBspRRefs >= MAX_BSPS_TO_RENDER) {
+		Com_Printf("Cannot add BSP model rendering reference: MAX_BSPS_TO_RENDER exceeded\n");
+		return;
+	}
+
+	if (!model) {
+		Com_Printf("R_AddBspRRef: null model!\n");
+		return;
+	}
+
+	bspRR = &bspRRefs[numBspRRefs++];
+
+	bspRR->bsp = model;
+	VectorCopy(origin, bspRR->origin);
+	VectorCopy(angles, bspRR->angles);
+
+	if (forceVisibility) {
+		int i;
+		mBspSurface_t *surf = &model->surfaces[model->firstmodelsurface];
+
+		for (i = 0; i < model->nummodelsurfaces; i++, surf++) {
+			/* visible flag for rendering */
+			surf->frame = r_locals.frame;
+		}
+	}
+}
+
+typedef void (*drawSurfaceFunc)(const mBspSurfaces_t *surfs);
+
+/**
+ * @param[in] drawFunc The function pointer to the surface draw function
+ */
+static void R_RenderBspRRefs (drawSurfaceFunc drawFunc, surfaceArrayType_t surfType)
+{
+	int i;
+	for (i = 0; i < numBspRRefs; i++) {
+		const bspRenderRef_t const *bspRR = &bspRRefs[i];
+		const mBspModel_t const *bsp = bspRR->bsp;
+
+		if (!bsp->sorted_surfaces[surfType]->count)
+			continue;
+
+		/* This is required to find the tile (world) bsp model to which arrays belong (submodels do not own arrays, but use world model ones) */
+		R_SetArrayState(&r_mapTiles[bsp->maptile]->bsp);
+
+		glPushMatrix();
+
+		glTranslatef(bspRR->origin[0], bspRR->origin[1], bspRR->origin[2]);
+		glRotatef(bspRR->angles[YAW], 0, 0, 1);
+		glRotatef(bspRR->angles[PITCH], 0, 1, 0);
+		glRotatef(bspRR->angles[ROLL], 1, 0, 0);
+
+		drawFunc(bsp->sorted_surfaces[surfType]);
+
+		/** @todo make it work again */
+#if 0
+		/* show model bounding box */
+		if (r_showbox->integer) {
+			const model_t *model = bspRR->bsp;
+			R_DrawBoundingBox(model->mins, model->maxs);
+		}
+#endif
+
+		glPopMatrix();
+	}
+
+	/* and restore array pointers */
+	R_ResetArrayState();
+}
+
+/**
+ * @brief Draw all simple opaque bsp surfaces with multitexture enabled and light enabled
+ */
+void R_RenderOpaqueBspRRefs (void)
+{
+	R_EnableTexture(&texunit_lightmap, qtrue);
+	R_EnableLighting(r_state.world_program, qtrue);
+
+	R_RenderBspRRefs(R_DrawSurfaces, S_OPAQUE);
+
+	R_EnableLighting(NULL, qfalse);
+	R_EnableGlowMap(NULL);
+	R_EnableTexture(&texunit_lightmap, qfalse);
+}
+
+/**
+ * @brief Draw all warped opaque bsp surfaces via warp shader
+ */
+void R_RenderOpaqueWarpBspRRefs (void)
+{
+	R_EnableWarp(r_state.warp_program, qtrue);
+
+	R_RenderBspRRefs(R_DrawSurfaces, S_OPAQUE_WARP);
+
+	R_EnableWarp(NULL, qfalse);
+	R_EnableGlowMap(NULL);
+}
+
+void R_RenderAlphaTestBspRRefs (void)
+{
+	R_EnableAlphaTest(qtrue);
+	R_EnableLighting(r_state.world_program, qtrue);
+
+	R_RenderBspRRefs(R_DrawSurfaces, S_ALPHA_TEST);
+
+	R_EnableLighting(NULL, qfalse);
+	R_EnableGlowMap(NULL);
+	R_EnableAlphaTest(qfalse);
+}
+
+void R_RenderMaterialBspRRefs (void)
+{
+	R_RenderBspRRefs(R_DrawMaterialSurfaces, S_MATERIAL);
+}
+
+void R_RenderFlareBspRRefs (void)
+{
+	R_RenderBspRRefs(R_DrawFlareSurfaces, S_FLARE);
+}
+
+/**
+ * @brief Draw all translucent bsp surfaces with multitexture enabled and blend enabled
+ */
+void R_RenderBlendBspRRefs (void)
+{
+	assert(r_state.blend_enabled);
+	R_EnableTexture(&texunit_lightmap, qtrue);
+
+	R_RenderBspRRefs(R_DrawSurfaces, S_BLEND);
+
+	R_EnableTexture(&texunit_lightmap, qfalse);
+}
+
+/**
+ * @brief Draw all warped translucent bsp surfaces via warp shader and with blend enabled
+ */
+void R_RenderBlendWarpBspRRefs (void)
+{
+	assert(r_state.blend_enabled);
+	R_EnableWarp(r_state.warp_program, qtrue);
+
+	R_RenderBspRRefs(R_DrawSurfaces, S_BLEND_WARP);
+
+	R_EnableWarp(NULL, qfalse);
+	R_EnableGlowMap(NULL);
 }

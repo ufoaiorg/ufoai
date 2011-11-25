@@ -103,6 +103,7 @@ cvar_t *m_rage;
 cvar_t *m_rage_stop;
 cvar_t *m_panic_stop;
 
+cvar_t *g_endlessaliens;
 cvar_t *g_reaction_fair;
 cvar_t *g_ailua;
 cvar_t *g_aidebug;
@@ -115,7 +116,7 @@ cvar_t *flood_msgs;
 cvar_t *flood_persecond;
 cvar_t *flood_waitdelay;
 
-cvar_t *difficulty;
+cvar_t *g_difficulty;
 
 static const int TAG_INVENTORY = 2389;
 
@@ -163,7 +164,7 @@ static void G_Init (void)
 	sv_maxsoldiersperplayer = gi.Cvar_Get("sv_maxsoldiersperplayer", "8", CVAR_ARCHIVE | CVAR_SERVERINFO | CVAR_LATCH, "How many soldiers one player is able to control in a given team");
 	/* enable moralestates in multiplayer */
 	sv_enablemorale = gi.Cvar_Get("sv_enablemorale", "1", CVAR_ARCHIVE | CVAR_SERVERINFO | CVAR_LATCH, "Enable morale behaviour for actors");
-	sv_roundtimelimit = gi.Cvar_Get("sv_roundtimelimit", "0", CVAR_SERVERINFO, "Timelimit in seconds for multiplayer rounds");
+	sv_roundtimelimit = gi.Cvar_Get("sv_roundtimelimit", "90", CVAR_ARCHIVE | CVAR_SERVERINFO, "Timelimit in seconds for multiplayer rounds");
 	sv_roundtimelimit->modified = qfalse;
 	sv_maxentities = gi.Cvar_Get("sv_maxentities", "1024", CVAR_LATCH, NULL);
 
@@ -221,9 +222,10 @@ static void G_Init (void)
 	m_rage_stop = gi.Cvar_Get("m_rage_stop", "2.0", CVAR_LATCH|CVAR_NOSET, NULL);
 	m_panic_stop = gi.Cvar_Get("m_panic_stop", "1.0", CVAR_LATCH|CVAR_NOSET, NULL);
 
-	g_reaction_fair = gi.Cvar_Get("g_reaction_fair", "1", CVAR_LATCH | CVAR_SERVERINFO, "Enable or disable fair reaction fire mode");
+	g_endlessaliens = gi.Cvar_Get("g_endlessaliens", "0", CVAR_LATCH|CVAR_SERVERINFO, "Spawn endless aliens");
+	g_reaction_fair = gi.Cvar_Get("g_reaction_fair", "1", CVAR_LATCH|CVAR_SERVERINFO, "Enable or disable fair reaction fire mode");
 	g_ailua = gi.Cvar_Get("g_ailua", "0", 0, "Activate or deactivate the LUA AI");
-	g_aidebug = gi.Cvar_Get("g_aidebug", "0", CVAR_DEVELOPER, "All AI actors are visible");
+	g_aidebug = gi.Cvar_Get("g_aidebug", "0", CVAR_DEVELOPER|CVAR_CHEAT, "All AI actors are visible");
 	g_drawtraces = gi.Cvar_Get("g_drawtraces", "0", CVAR_DEVELOPER, "All traces will be rendered");
 	g_nodamage = gi.Cvar_Get("g_nodamage", "0", CVAR_DEVELOPER|CVAR_CHEAT, "No damage in developer mode");
 	g_notu = gi.Cvar_Get("g_notu", "0", CVAR_DEVELOPER|CVAR_CHEAT, "No TU costs while moving around (e.g. for map testing)");
@@ -235,7 +237,7 @@ static void G_Init (void)
 	flood_persecond = gi.Cvar_Get("flood_persecond", "4", 0, NULL);
 	flood_waitdelay = gi.Cvar_Get("flood_waitdelay", "10", 0, "Delay until someone is unlocked from talking again");
 
-	difficulty = gi.Cvar_Get("difficulty", "0", CVAR_NOSET, "Difficulty level");
+	g_difficulty = gi.Cvar_Get("g_difficulty", "0", CVAR_NOSET, "Singleplayer difficulty level");
 
 	game.sv_maxentities = sv_maxentities->integer;
 	game.sv_maxplayersperteam = sv_maxplayersperteam->integer;
@@ -304,7 +306,7 @@ game_export_t *GetGameAPI (game_import_t * import)
 	globals.ClientUserinfoChanged = G_ClientUserinfoChanged;
 	globals.ClientDisconnect = G_ClientDisconnect;
 	globals.ClientBegin = G_ClientBegin;
-	globals.ClientSpawn = G_ClientSpawn;
+	globals.ClientStartMatch = G_ClientStartMatch;
 	globals.ClientCommand = G_ClientCommand;
 	globals.ClientAction = G_ClientAction;
 	globals.ClientEndRound = G_ClientEndRound;

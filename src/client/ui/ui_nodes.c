@@ -70,6 +70,7 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #include "node/ui_node_text2.h"
 #include "node/ui_node_textlist.h"
 #include "node/ui_node_textentry.h"
+#include "node/ui_node_texture.h"
 #include "node/ui_node_keybinding.h"
 #include "node/ui_node_todo.h"
 #include "node/ui_node_vscrollbar.h"
@@ -132,6 +133,7 @@ static const registerFunction_t registerFunctions[] = {
 	UI_RegisterText2Node,
 	UI_RegisterTextEntryNode,
 	UI_RegisterTextListNode,
+	UI_RegisterTextureNode,
 	UI_RegisterTodoNode,
 	UI_RegisterVideoNode,
 	UI_RegisterVScrollbarNode,
@@ -186,7 +188,7 @@ qboolean UI_CheckVisibility (uiNode_t *node)
  */
 const char* UI_GetPath (const uiNode_t* node)
 {
-	static char result[MAX_VAR];
+	static char result[512];
 	const uiNode_t* nodes[8];
 	int i = 0;
 
@@ -311,15 +313,15 @@ uiNode_t* UI_GetNodeByPath (const char* path)
 	uiNode_t* node = NULL;
 	const value_t *property;
 	UI_ReadNodePath(path, NULL, &node, &property);
-	/** @todo FIXME warning if it return a peroperty */
+	/** @todo FIXME warning if it return a property */
 	return node;
 }
 
 /**
- * @brief Allocate a node into the UI memory (do notr call behaviour->new)
+ * @brief Allocate a node into the UI memory (do not call behaviour->new)
  * @note It's not a dynamic memory allocation. Please only use it at the loading time
  * @todo Assert out when we are not in parsing/loading stage
- * @param[in] name Name of the new node, else NULL if we dont want to edit it.
+ * @param[in] name Name of the new node, else NULL if we don't want to edit it.
  * @param[in] type Name of the node behavior
  * @param[in] isDynamic Allocate a node in static or dynamic memory
  */
@@ -346,7 +348,6 @@ static uiNode_t* UI_AllocNodeWithoutNew (const char* name, const char* type, qbo
 		memset(node, 0, nodeSize);
 	} else {
 		node = (uiNode_t*)Mem_PoolAlloc(nodeSize, ui_dynPool, 0);
-		memset(node, 0, nodeSize);
 		node->dynamic = qtrue;
 	}
 
@@ -374,15 +375,15 @@ static uiNode_t* UI_AllocNodeWithoutNew (const char* name, const char* type, qbo
  * @brief Allocate a node into the UI memory
  * @note It's not a dynamic memory allocation. Please only use it at the loading time
  * @todo Assert out when we are not in parsing/loading stage
- * @param[in] name Name of the new node, else NULL if we dont want to edit it.
+ * @param[in] name Name of the new node, else NULL if we don't want to edit it.
  * @param[in] type Name of the node behavior
  * @param[in] isDynamic Allocate a node in static or dynamic memory
  */
 uiNode_t* UI_AllocNode (const char* name, const char* type, qboolean isDynamic)
 {
-	uiNode_t* node = UI_AllocNodeWithoutNew (name, type, isDynamic);
+	uiNode_t* node = UI_AllocNodeWithoutNew(name, type, isDynamic);
 
-	/* allocate memories */
+	/* allocate memory */
 	if (node->dynamic && node->behaviour->newNode)
 		node->behaviour->newNode(node);
 
@@ -564,7 +565,7 @@ void UI_DeleteNode (uiNode_t* node)
 
 	UI_DeleteAllChild(node);
 	if (node->firstChild != NULL) {
-		Com_Printf("UI_DeleteNode: Node '%s' contain static nodes. We can't delete it.", UI_GetPath(node));
+		Com_Printf("UI_DeleteNode: Node '%s' contain static nodes. We can't delete it.\n", UI_GetPath(node));
 		return;
 	}
 
@@ -655,7 +656,7 @@ static const int virtualFunctions[] = {
 	offsetof(uiBehaviour_t, leftClick),
 	offsetof(uiBehaviour_t, rightClick),
 	offsetof(uiBehaviour_t, middleClick),
-	offsetof(uiBehaviour_t, mouseWheel),
+	offsetof(uiBehaviour_t, scroll),
 	offsetof(uiBehaviour_t, mouseMove),
 	offsetof(uiBehaviour_t, mouseDown),
 	offsetof(uiBehaviour_t, mouseUp),

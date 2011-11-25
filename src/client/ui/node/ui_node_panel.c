@@ -89,6 +89,30 @@ static void UI_TopDownFlowLayout (uiNode_t *node, int margin)
 }
 
 /**
+ * @brief Create a left-right flow layout with child of the node.
+ * Child position is automatically set, child width don't change
+ * and child height is set according to node width and padding
+ * @param[in,out] node The panel node to render the children for
+ * @param[in] margin The margin between all children nodes in their x-position of the panel
+ */
+static void UI_LeftRightFlowLayout (uiNode_t *node, int margin)
+{
+	const int height = node->size[1] - node->padding - node->padding;
+	int positionX = node->padding;
+	uiNode_t *child = node->firstChild;
+	vec2_t newSize = {0, height};
+
+	while (child) {
+		newSize[0] = child->size[0];
+		UI_NodeSetSize(child, newSize);
+		child->pos[0] = positionX;
+		child->pos[1] = node->padding;
+		positionX += child->size[0] + margin;
+		child = child->next;
+	}
+}
+
+/**
  * @brief Create a border layout with child of the node.
  * Child with BORDERLAYOUT_TOP and BORDERLAYOUT_BOTTOM num
  * are first positioned, there height do not change but the width fill
@@ -392,6 +416,9 @@ static void UI_PanelNodeDoLayout (uiNode_t *node)
 	case LAYOUT_TOP_DOWN_FLOW:
 		UI_TopDownFlowLayout(node, EXTRADATA(node).layoutMargin);
 		break;
+	case LAYOUT_LEFT_RIGHT_FLOW:
+		UI_LeftRightFlowLayout(node, EXTRADATA(node).layoutMargin);
+		break;
 	case LAYOUT_BORDER:
 		UI_BorderLayout(node, EXTRADATA(node).layoutMargin);
 		break;
@@ -409,6 +436,7 @@ static void UI_PanelNodeDoLayout (uiNode_t *node)
 		break;
 	default:
 		Com_Printf("UI_PanelNodeDoLayout: layout '%d' unsupported.", EXTRADATA(node).layout);
+		break;
 	}
 
 	localBehaviour->super->doLayout(node);
@@ -505,6 +533,7 @@ void UI_RegisterPanelNode (uiBehaviour_t *behaviour)
 	Com_RegisterConstInt("LAYOUTALIGN_FILL", LAYOUTALIGN_FILL);
 
 	Com_RegisterConstInt("LAYOUT_TOP_DOWN_FLOW", LAYOUT_TOP_DOWN_FLOW);
+	Com_RegisterConstInt("LAYOUT_LEFT_RIGHT_FLOW", LAYOUT_LEFT_RIGHT_FLOW);
 	Com_RegisterConstInt("LAYOUT_BORDER", LAYOUT_BORDER);
 	Com_RegisterConstInt("LAYOUT_PACK", LAYOUT_PACK);
 	Com_RegisterConstInt("LAYOUT_STAR", LAYOUT_STAR);

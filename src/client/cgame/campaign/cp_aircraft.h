@@ -249,12 +249,14 @@ qboolean AIR_Delete(struct base_s *base, const aircraft_t *aircraft);
 	AIR_Foreach(var) \
 		if (!AIR_IsAircraftOfBase(var, (base))) continue; else
 
+#define AIR_ForeachSorted(var, sorter, userdata, sortedlist) LIST_ForeachSorted(ccs.aircraft, aircraft_t, var, sorter, userdata, sortedlist)
+
 aircraft_t* AIR_GetFirstFromBase(const struct base_s *base);
 
 qboolean AIR_BaseHasAircraft(const struct base_s *base);
 int AIR_BaseCountAircraft(const struct base_s *base);
 int AIR_GetAircraftIDXInBase(const aircraft_t* aircraft);
-aircraft_t *AIR_GetAircraftFromBaseByIDXSafe(struct base_s *base, int index);
+aircraft_t *AIR_GetAircraftFromBaseByIDXSafe(const struct base_s *base, int index);
 const char *AIR_AircraftStatusToName(const aircraft_t *aircraft);
 qboolean AIR_IsAircraftInBase(const aircraft_t *aircraft);
 qboolean AIR_IsAircraftOnGeoscape(const aircraft_t const *aircraft);

@@ -45,14 +45,15 @@ void G_ActorUseDoor (edict_t *actor, edict_t *door)
 {
 	edict_t *closeActor = NULL;
 
-	G_ClientUseEdict(G_PLAYER_FROM_ENT(actor), actor, door);
+	if (!G_ClientUseEdict(G_PLAYER_FROM_ENT(actor), actor, door))
+		return;
 
 	/* end this loop here, for the AI this is a) not interesting,
 	 * and b) could result in endless loops */
 	if (G_IsAI(actor))
 		return;
 
-	while ((closeActor = G_FindRadius(closeActor, door->origin, UNIT_SIZE * 3, ET_ACTOR))) {
+	while ((closeActor = G_FindRadius(closeActor, door->origin, UNIT_SIZE * 3, ET_NULL))) {
 		/* check whether the door is still reachable (this might have
 		 * changed due to the rotation) or whether an actor can reach it now */
 		G_TouchTriggers(closeActor);
@@ -97,6 +98,7 @@ void G_ActorSetClientAction (edict_t *actor, edict_t *ent)
 	if (actor->clientAction == ent)
 		return;
 
+	assert(ent == NULL || (ent->flags & FL_CLIENTACTION));
 	actor->clientAction = ent;
 	if (ent == NULL) {
 		G_EventResetClientAction(actor);
@@ -282,12 +284,65 @@ void G_ActorSetMaxs (edict_t* ent)
 }
 
 /**
+ * @brief Calculates the TU penalty when the given actor is wearing armour
+ * @param[in] ent The actor to calculate the TU penalty for
+ * @return The amount of TU that should be used as penalty, @c 0 if the actor does not wear any armour
+ * @note The armour weight only adds penalty if its weight is big enough.
+ */
+static int G_ActorGetArmourTUPenalty (const edict_t *ent)
+{
+	const invList_t *invList = ARMOUR(ent);
+	const objDef_t *armour;
+	int penalty;
+	int weightToCausePenalty = 100;
+	int actorPower;
+	float factorPower;
+
+	if (ARMOUR(ent) == NULL)
+		return 0;
+
+	armour = invList->item.t;
+	if (armour->weight >= weightToCausePenalty)
+		penalty = (armour->weight - weightToCausePenalty - 1) / 10;
+	else
+		penalty = 0;
+
+	actorPower = ent->chr.score.skills[ABILITY_POWER] * 10 / MAX_SKILL;
+	if (actorPower <= 2)
+		factorPower = 2.0F;
+	else if (actorPower <= 5)
+		factorPower = 1.0F;
+	else if (actorPower <= 7)
+		factorPower = 0.5F;
+	else
+		factorPower = 0.25F;
+
+	penalty *= factorPower;
+
+	return penalty;
+}
+
+int G_ActorCalculateMaxTU (const edict_t *ent)
+{
+	const int currentMaxHP = (MIN_TU + (ent->chr.score.skills[ABILITY_SPEED]) * 20 / MAX_SKILL) - G_ActorGetArmourTUPenalty(ent);
+	return min(currentMaxHP, 255);
+}
+
+static inline int G_ActorGetTU (const edict_t *ent)
+{
+	if (G_IsDazed(ent))
+		return 0;
+
+	return G_ActorCalculateMaxTU(ent);
+}
+
+/**
  * @brief Set time units for the given edict. Based on speed skills
  * @param ent The actor edict
  */
 void G_ActorGiveTimeUnits (edict_t *ent)
 {
-	const int tus = G_IsDazed(ent) ? 0 : GET_TU(ent->chr.score.skills[ABILITY_SPEED]);
+	const int tus = G_ActorGetTU(ent);
 	G_ActorSetTU(ent, tus);
 	G_RemoveDazed(ent);
 }
@@ -447,13 +502,14 @@ qboolean G_ActorDieOrStun (edict_t * ent, edict_t *attacker)
 		state = G_ActorDie(ent, attacker);
 	else
 		state = G_ActorStun(ent, attacker);
-	ent->solid = SOLID_NOT;
 
 	/* no state change performed? */
 	if (!state) {
 		Com_Printf("State wasn't changed\n");
 		return qfalse;
 	}
+
+	ent->solid = SOLID_NOT;
 
 	/* send death */
 	G_EventActorDie(ent);
@@ -622,7 +678,6 @@ qboolean G_ActorInvMove (edict_t *ent, const invDef_t * from, invList_t *fItem, 
 		G_EventInventoryReload(INV_IsFloorDef(to) ? floor : ent, mask, &item, to, ic);
 
 		if (ia == IA_RELOAD) {
-			gi.EndEvents();
 			return qtrue;
 		} else { /* ia == IA_RELOAD_SWAP */
 			item.a = NONE_AMMO;
@@ -663,6 +718,7 @@ qboolean G_ActorInvMove (edict_t *ent, const invDef_t * from, invList_t *fItem, 
 			 * on the original amount. Otherwise they would end in a different amount of items as the server (+1) */
 			G_EventInventoryAdd(floor, G_VisToPM(floor->visflags), 1);
 			G_WriteItem(&fItemBackup.item, to, tx, ty);
+			gi.EndEvents();
 			/* Couldn't remove it before because that would remove the le from the client and would cause battlescape to crash
 			 * when trying to add back the swapped ammo above */
 			if (ia == IA_RELOAD_SWAP)
@@ -671,6 +727,7 @@ qboolean G_ActorInvMove (edict_t *ent, const invDef_t * from, invList_t *fItem, 
 	} else {
 		G_EventInventoryAdd(ent, G_TeamToPM(ent->team), 1);
 		G_WriteItem(&item, to, tx, ty);
+		gi.EndEvents();
 	}
 
 	G_ReactionFireUpdate(ent, ent->chr.RFmode.fmIdx, ent->chr.RFmode.hand, ent->chr.RFmode.weapon);
@@ -684,9 +741,9 @@ qboolean G_ActorInvMove (edict_t *ent, const invDef_t * from, invList_t *fItem, 
 		if (INV_IsRightDef(to) || INV_IsLeftDef(to)) {
 			G_EventInventoryAdd(ent, mask, 1);
 			G_WriteItem(&item, to, tx, ty);
+			gi.EndEvents();
 		}
 	}
-	gi.EndEvents();
 
 	return qtrue;
 }
@@ -701,10 +758,10 @@ void G_ActorReload (edict_t* ent, const invDef_t *invDef)
 {
 	invList_t *ic;
 	invList_t *icFinal;
-	objDef_t *weapon;
+	const objDef_t *weapon;
 	int tu;
 	containerIndex_t containerID;
-	invDef_t *bestContainer;
+	const invDef_t *bestContainer;
 
 	/* search for clips and select the one that is available easily */
 	icFinal = NULL;

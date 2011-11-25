@@ -10,6 +10,7 @@ window ufopedia extends objectinfo
 		dragbutton	true
 		closebutton	true
 		image		"ui/popup_alpha_tile"
+		color		"1.0 0.75 0 1"
 		string		*cvar:mn_uptitle
 		modal		true				// we can't click out
 	}
@@ -21,8 +22,8 @@ window ufopedia extends objectinfo
 	panel summary
 	{
 		{
-			pos		"22 92"
-			size	"307 588"
+			pos		"22 88"
+			size	"314 593"
 			image	"ui/panel_green"
 			layout	LAYOUT_BORDER
 			padding	10
@@ -35,7 +36,7 @@ window ufopedia extends objectinfo
 			align		LAYOUTALIGN_MIDDLE
 			font		"f_small"
 			color		"0 .78 0 1"
-			selectcolor	"1 1 1 1"
+			selectcolor		"1 1 1 1"
 			onChange
 			{
 				cmd "ufopedia_click <cvar:up_summary_selection>;"
@@ -66,13 +67,13 @@ window ufopedia extends objectinfo
 	{
 		{
 			pos		"343 55"
-			size	"655 625"
+			size	"638 626"
 		}
 
 		panel navigation_panel
 		{
-			pos		"0 32"
-			size	"637 593"
+			pos		"0 34"
+			size	"638 592"
 			image	"ui/panel_green_tab"
 		}
 
@@ -80,25 +81,33 @@ window ufopedia extends objectinfo
 		{
 			{
 				cvar	*cvar:ufopedia_content
-				pos		"1 0"
-				size	"628 43"
+				pos		"0 2"
+				size	"638 36"
 				onChange { cmd "update_ufopedia_layout;" }
-			}
-
-			option description
-			{
-				label	"_Description"
-				value	"description"
 			}
 			option preresearch
 			{
 				label	"_Pre-Research Report"
 				value	"preresearch"
+//				icon	"icons/tab_preresearch"
+			}
+			option description
+			{
+				label	"_Description"
+				value	"description"
+//				icon	"icons/tab_description"
 			}
 			option stats
 			{
 				label	"_Statistics"
 				value	"stats"
+//				icon	"icons/tab_statistics"
+			}
+			option bigpicture
+			{
+				label	"_The Big Picture"
+				value	"bigpicture"
+//				icon	"icons/tab_bigpicture"
 			}
 		}
 
@@ -109,31 +118,109 @@ window ufopedia extends objectinfo
 		image image_top
 		{
 			src		*cvar:mn_upimage_top
-			pos			"425 55"
-			size		"175 600"
+			pos			"420 42"
+			size		"185 422"
+			preventratio true
+		}
+		image image_top2
+		{
+			src		*cvar:mn_upimage_top2
+			pos			"420 42"
+			size		"185 422"
 			preventratio	true
 		}
-
+		panel decoration_panel
+		{
+			pos		"420 42"
+			size	"185 187"
+			image	"ui/panel_green_slim"
+		}
 		model mdl_top
 		{
 			src			*cvar:mn_upmodel_top
-			angles		"0 0 120"
-			pos			"425 55"
-			size		"175 175"
+			angles		"0 0 90"
+			pos			"422 44"
+			size		"182 182"
 			autoscale	true
+			omega		"0 10 0"
 			rotatewithmouse	true
 		}
-
+		panel decoration_panel2
+		{
+			pos		"420 230"
+			size	"185 135"
+			image	"ui/panel_green_slim"
+		}
+		// ammo models
 		model mdl_bottom
 		{
 			src			*cvar:mn_upmodel_bottom
-			angles		"0 0 120"
-			pos			"460 250"
-			size		"112 112"
+			angles		"0 0 90"
+			pos			"422 290"
+			size		"60 60"
 			autoscale	true
+			omega		"0 -10 0"
 			rotatewithmouse	true
 		}
-
+		model mdl_bottom2
+		{
+			src			*cvar:mn_upmodel_bottom
+			angles		"0 0 90"
+			pos			"483 240"
+			size		"60 60"
+			autoscale	true
+			omega		"0 0 10"
+			rotatewithmouse	true
+		}
+		model mdl_bottom3
+		{
+			src			*cvar:mn_upmodel_bottom
+			angles		"0 0 90"
+			pos			"544 290"
+			size		"60 60"
+			autoscale	true
+			omega		"0 10 0"
+			rotatewithmouse	true
+		}
+		panel main_panel_small
+		{
+			pos		"8 42"
+			size	"410 575"
+			image	"ui/panel_green_slim"
+		}
+		panel main_panel_large
+		{
+			pos		"8 42"
+			size	"597 575"
+			image	"ui/panel_green_slim"
+		}
+		// The Big Picture picture and model
+		image image_bigpicture
+		{
+			src		*cvar:mn_upimage_top
+			pos			"10 43"
+			size		"594 573"
+			preventratio	true
+			contentalign 	ALIGN_CC
+		}
+		model mdl_bigpicture
+		{
+			src			*cvar:mn_upmodel_top
+			angles		"0 25 90"
+			pos			"10 43"
+			size		"594 573"
+			autoscale	true
+			omega		"0 -9 0"
+			rotatewithmouse	true
+		}
+/*	// for future purposes
+		panel decoration_panel3
+		{
+			pos		"420 366"
+			size	"185 99"
+			image	"ui/panel_green_slim"
+		}
+*/
 		// ==================
 		// text and info
 		// ==================
@@ -141,10 +228,10 @@ window ufopedia extends objectinfo
 		text2 ufopedia
 		{
 			dataid		TEXT_UFOPEDIA
-			pos			"14 50"
-			size		"406 570"
+			pos			"15 47"
+			size		"410 568"
 			font		"f_small"
-			lineheight	18
+			lineheight	20
 			tabwidth	100
 			onViewChange
 			{
@@ -157,8 +244,8 @@ window ufopedia extends objectinfo
 		vscrollbar ufopedia_scroll
 		{
 			image		"ui/scrollbar_v_green"
-			pos			"608 42"
-			height		"573"
+			pos			"609 42"
+			height		"575"
 			current		0
 			viewsize	26
 			fullsize	50
@@ -168,11 +255,11 @@ window ufopedia extends objectinfo
 		text description
 		{
 			dataid		TEXT_ITEMDESCRIPTION
-			pos			"10 60"
-			size		"390 400"
+			pos			"15 47"
+			size		"405 570"
 			lineheight	20
-			tabwidth	230
-			rows		20
+			tabwidth	260
+			rows		28
 			onViewChange	{
 				*node:parent.description_scroll@fullsize = <fullsize>
 				*node:parent.description_scroll@current = <viewpos>
@@ -183,8 +270,8 @@ window ufopedia extends objectinfo
 		vscrollbar description_scroll
 		{
 			image		"ui/scrollbar_v_green"
-			pos			"405 45"
-			height		"573"
+			pos			"406 42"
+			height		"575"
 			current		0
 			viewsize	20
 			fullsize	20
@@ -194,25 +281,26 @@ window ufopedia extends objectinfo
 		panel requirement
 		{
 			{
-				pos		"430 476"
-				size	"166 128"
+				pos		"420 466"
+				size	"185 150"
 				image	"ui/panel_green_slim"
 			}
 			string label
 			{
-				pos "5 5"
+				pos "8 6"
 				size "120 20"
+				color		"1.0 0.75 0 1"
 				font	"f_small"
-				string "_Requirement:"
+				string "_Requirement(s):"
 			}
 			textlist techtree
 			{
 				dataid		TEXT_UFOPEDIA_REQUIREMENT
-				pos			"5 31"
+				pos			"15 40"
 				size		"156 92"
 				font		"f_verysmall"
 				color		"0 .78 0 1"
-				selectcolor	"0 .78 0 1"
+				selectcolor	"1 1 1 1"
 				onChange		{ cmd "techtree_click <lineselected>;" }
 				onViewChange
 				{
@@ -270,7 +358,7 @@ window ufopedia extends objectinfo
 			string	*cvar:mn_linkname
 			pos		"140 0"
 			size	"190 16"
-			textalign	ALIGN_CC
+			contentalign	ALIGN_CC
 			font	"f_small"
 		}
 
@@ -308,7 +396,7 @@ window ufopedia extends objectinfo
 			string	*cvar:mn_firemodename
 			pos		"140 20"
 			size	"190 16"
-			textalign	ALIGN_CC
+			contentalign	ALIGN_CC
 			font	"f_small"
 		}
 
@@ -324,18 +412,30 @@ window ufopedia extends objectinfo
 
 	confunc update_ufopedia_layout
 	{
-
 		// is right column not empty?
 		*cvar:mn_rightpanel = 0
-		if ( *cvar:mn_upimage_top ne "" ) { *cvar:mn_rightpanel = 1 }
-		if ( *cvar:mn_upmodel_top ne "" ) { *cvar:mn_rightpanel = 1 }
-		if ( *cvar:mn_upmodel_bottom ne "" ) { *cvar:mn_rightpanel = 1 }
+		if ( *cvar:mn_upimage_top ne "" ) {
+			*cvar:mn_rightpanel = 1
+		}
+		if ( *cvar:mn_upimage_top2 ne "" ) {
+			*cvar:mn_rightpanel = 1
+		}
+		if ( *cvar:mn_upmodel_top ne "" ) {
+			*cvar:mn_rightpanel = 1
+			cmd "del mn_upimage_top2;"
+			*node:root.content.decoration_panel@invis = false
+		}
+		if ( *cvar:mn_upmodel_bottom ne "" ) {
+			*cvar:mn_rightpanel = 1
+			*node:root.content.decoration_panel2@invis = false
+		}
+
 		if ( *cvar:mn_uprequirement ne "" ) { *cvar:mn_rightpanel = 1 }
 
 		// invalidate techtree selection
 		*node:root.content.requirement.techtree@lineselected = -1
 
-		// update tab
+		// update tabs
 		if ( *cvar:mn_uppreavailable == 1 ) {
 			*node:root.content.navigation.preresearch@invis = false
 		} else {
@@ -345,6 +445,25 @@ window ufopedia extends objectinfo
 				*cvar:ufopedia_content = "description"
 			}
 		}
+
+		// we do show the bigpicture tab for models and pictures
+		if ( *cvar:mn_upmodel_top ne "" ) {
+			*node:root.content.navigation.bigpicture@invis = false
+		}
+		if ( *cvar:mn_upimage_top ne "" ) {
+			*node:root.content.navigation.bigpicture@invis = false
+		}
+
+/* TODO: make this work:
+	// we do not want to show the bigpicture tab for ammo models,
+	// but here we are just not showing it if the tech displayed has an ammo model
+		if ( *cvar:mn_upmodel_bottom ne "" ) {
+			if ( *cvar:mn_upmodel_top ne "" ) {
+				*node:root.content.navigation.bigpicture@invis = true
+			}
+		}
+*/
+
 		if ( *cvar:mn_upmetadata == 1 ) {
 			*node:root.content.navigation.stats@invis = false
 		} else {
@@ -362,10 +481,20 @@ window ufopedia extends objectinfo
 			*node:root.content.description_scroll@invis = true
 			*node:root.content.requirement@invis = false
 			*node:root.itemdescription@invis = true
+			*node:root.content.image_top@invis = false
+			*node:root.content.image_top2@invis = true
+			*node:root.content.image_bigpicture@invis = true
+			*node:root.content.mdl_bigpicture@invis = true
+
 			if ( *cvar:mn_rightpanel == 1 ) {
-				*node:root.content.ufopedia@width = 406
+				*node:root.content.ufopedia@width = 400
+				*node:root.content.main_panel_small@invis = false
+				*node:root.content.main_panel_large@invis = true
 			} else {
 				*node:root.content.ufopedia@width = 583
+				*node:root.content.main_panel_small@invis = true
+				*node:root.content.main_panel_large@invis = false
+				*node:root.content.navigation.bigpicture@invis = true
 			}
 			*cvar:mn_uppretext = 0
 			cmd "mn_upupdate;"
@@ -376,27 +505,92 @@ window ufopedia extends objectinfo
 			*node:root.content.description_scroll@invis = true
 			*node:root.content.requirement@invis = false
 			*node:root.itemdescription@invis = true
+			*node:root.content.image_top@invis = true
+			*node:root.content.image_top2@invis = false
+			*node:root.content.image_bigpicture@invis = true
+			*node:root.content.mdl_bigpicture@invis = true
 			if ( *cvar:mn_rightpanel == 1 ) {
-				*node:root.content.ufopedia@width = 406
+				// special pre-research cases
+				if ( *cvar:mn_upimage_top eq "techs/bloodspider_autopsy" ) {
+					*cvar:mn_upimage_top2 = "techs/bloodspider_dead"
+					delete *cvar:mn_upimage_top
+				}
+				if ( *cvar:mn_upimage_top eq "techs/shevaar_autopsy" ) {
+					*cvar:mn_upimage_top2 = "techs/shevaar_dead"
+					delete *cvar:mn_upimage_top
+				}
+				if ( *cvar:mn_upimage_top eq "techs/taman_autopsy" ) {
+					*cvar:mn_upimage_top2 = "techs/taman_dead"
+					delete *cvar:mn_upimage_top
+				}
+				if ( *cvar:mn_upimage_top eq "techs/ortnok_autopsy" ) {
+					*cvar:mn_upimage_top2 = "techs/ortnok_dead"
+					delete *cvar:mn_upimage_top
+				}
+				if ( *cvar:mn_upimage_top ne "" ) {
+					*cvar:mn_upimage_top2 = *cvar:mn_upimage_top
+				}
+				*node:root.content.ufopedia@width = 400
+				*node:root.content.main_panel_small@invis = false
+				*node:root.content.main_panel_large@invis = true
 			} else {
 				*node:root.content.ufopedia@width = 583
+				*node:root.content.main_panel_small@invis = true
+				*node:root.content.main_panel_large@invis = false
+				*node:root.content.navigation.bigpicture@invis = true
 			}
 			*cvar:mn_uppretext = 1
 			cmd "mn_upupdate;"
 		} elif ( *cvar:ufopedia_content eq "stats" ) {
 			*node:root.content.ufopedia@invis = true
-			*node:root.content.ufopedia_scroll@invis = true
+			// just because it looks better
+			*node:root.content.ufopedia_scroll@invis = false
 			*node:root.content.description@invis = false
-			*node:root.content.description_scroll@invis = false
-			*node:root.content.requirement@invis = true
+			*node:root.content.description_scroll@invis = true
+			*node:root.content.requirement@invis = false
 			*node:root.itemdescription@invis = false
+			*node:root.content.main_panel_small@invis = false
+			*node:root.content.main_panel_large@invis = true
+			*node:root.content.image_top@invis = false
+			*node:root.content.image_top2@invis = true
+			*node:root.content.image_bigpicture@invis = true
+			*node:root.content.mdl_bigpicture@invis = true
+		} elif ( *cvar:ufopedia_content eq "bigpicture" ) {
+			*node:root.content.ufopedia@invis = true
+			// just because it looks better
+			*node:root.content.ufopedia_scroll@invis = false
+			*node:root.content.description@invis = true
+			*node:root.content.description_scroll@invis = true
+			*node:root.content.requirement@invis = true
+			*node:root.itemdescription@invis = true
+			*node:root.content.main_panel_small@invis = true
+			*node:root.content.main_panel_large@invis = false
+			*node:root.content.decoration_panel@invis = true
+			*node:root.content.decoration_panel2@invis = true
+			*node:root.content.image_top@invis = true
+			*node:root.content.image_top2@invis = true
+			*node:root.content.image_bigpicture@invis = false
+			*node:root.content.mdl_bigpicture@invis = false
 		}
 
 		// we only show requirements if they are needed
 		if ( *cvar:mn_uprequirement eq "" ) {
 			*node:root.content.requirement@invis = true
 		}
-
+		// we only show deco panels if they are needed
+		if ( *cvar:mn_upmodel_top eq "" ) {
+			*node:root.content.decoration_panel@invis = true
+		}
+		if ( *cvar:mn_upmodel_bottom eq "" ) {
+			*node:root.content.decoration_panel2@invis = true
+		}
+		// we only show the image if it is needed
+		if ( *cvar:mn_upimage_top eq "" ) {
+			*node:root.content.image_top@invis = true
+		}
+		if ( *cvar:mn_upimage_top2 eq "" ) {
+			*node:root.content.image_top2@invis = true
+		}
 		cmd "del mn_rightpanel;"
 	}
 

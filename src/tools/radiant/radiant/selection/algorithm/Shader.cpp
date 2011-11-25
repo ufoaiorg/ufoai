@@ -50,7 +50,7 @@ class UniqueFaceShaderFinder
 		void operator() (FaceInstance& face) const
 		{
 
-			std::string foundShader = face.getFace().GetShader();
+			const std::string& foundShader = face.getFace().GetShader();
 
 			if (foundShader != "$NONE" && _shader != "$NONE" && _shader != foundShader) {
 				throw AmbiguousShaderException(foundShader);
@@ -76,14 +76,14 @@ std::string getShaderFromSelection ()
 			try {
 				// Go through all the selected brushes and their faces
 				Scene_ForEachSelectedBrush_ForEachFaceInstance(GlobalSceneGraph(), UniqueFaceShaderFinder(faceShader));
-			} catch (AmbiguousShaderException a) {
+			} catch (AmbiguousShaderException &a) {
 				faceShader = "";
 			}
 		} else {
 			// Try to get the unique shader from the faces
 			try {
 				g_SelectedFaceInstances.foreach(UniqueFaceShaderFinder(faceShader));
-			} catch (AmbiguousShaderException a) {
+			} catch (AmbiguousShaderException &a) {
 				faceShader = "";
 			}
 		}
@@ -124,7 +124,7 @@ inline void applyClipboardToTexturable (Texturable& target, bool entireBrush)
 		if (source.isFace()) {
 			if (target.isFace() && entireBrush) {
 				// Copy Face >> Whole Brush
-				for (Brush::const_iterator i = target.brush->begin(); i != target.brush->end(); i++) {
+				for (Brush::const_iterator i = target.brush->begin(); i != target.brush->end(); ++i) {
 					applyClipboardShaderToFace(*(*i));
 				}
 			} else if (target.isFace() && !entireBrush) {
@@ -154,7 +154,7 @@ void pasteShader (SelectionTest& test, bool entireBrush)
 
 	SceneChangeNotify();
 	// Update the Texture Tools
-	ui::SurfaceInspector::Instance().update();
+	ui::SurfaceInspector::Instance().queueUpdate();
 }
 
 /** greebo: This applies the clipboard to the visited faces.
@@ -194,7 +194,7 @@ void pasteShaderToSelection ()
 
 	SceneChangeNotify();
 	// Update the Texture Tools
-	ui::SurfaceInspector::Instance().update();
+	ui::SurfaceInspector::Instance().queueUpdate();
 }
 
 void pasteShaderNaturalToSelection ()
@@ -216,7 +216,7 @@ void pasteShaderNaturalToSelection ()
 
 	SceneChangeNotify();
 	// Update the Texture Tools
-	ui::SurfaceInspector::Instance().update();
+	ui::SurfaceInspector::Instance().queueUpdate();
 }
 
 void pickShaderFromSelection ()
@@ -227,7 +227,7 @@ void pickShaderFromSelection ()
 		try {
 			Face& sourceFace = getLastSelectedFace();
 			GlobalShaderClipboard().setSource(sourceFace);
-		} catch (InvalidSelectionException e) {
+		} catch (InvalidSelectionException &e) {
 			gtkutil::errorDialog(_("Can't copy Shader. Couldn't retrieve face."));
 		}
 	} else {
@@ -273,8 +273,9 @@ Vector2 getSelectedFaceShaderSize ()
 		// Get the last selected face instance from the global
 		FaceInstance& faceInstance = g_SelectedFaceInstances.last();
 
-		returnValue[0] = faceInstance.getFace().getShader().width();
-		returnValue[1] = faceInstance.getFace().getShader().height();
+		const FaceShader& shader = faceInstance.getFacePtr()->getShader();
+		returnValue[0] = shader.width();
+		returnValue[1] = shader.height();
 	}
 
 	return returnValue;
@@ -540,8 +541,9 @@ class ShaderReplacer: public BrushInstanceVisitor
 		// BrushInstanceVisitor implementation
 		virtual void visit (FaceInstance& face) const
 		{
-			if (face.getFace().getShader().getShader() == _find) {
-				face.getFace().SetShader(_replace);
+			Face& f = face.getFace();
+			if (f.getShader().getShader() == _find) {
+				f.SetShader(_replace);
 				_counter++;
 			}
 		}
@@ -549,6 +551,9 @@ class ShaderReplacer: public BrushInstanceVisitor
 
 int findAndReplaceShader (const std::string& find, const std::string& replace, bool selectedOnly)
 {
+	if (find.empty() || replace.empty())
+		return 0;
+
 	std::string command("textureFindReplace");
 	command += "-find " + find + " -replace " + replace;
 	UndoableCommand undo(command);

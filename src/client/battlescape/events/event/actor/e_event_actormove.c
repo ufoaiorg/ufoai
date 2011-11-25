@@ -26,12 +26,19 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #include "../../../cl_localentity.h"
 #include "e_event_actormove.h"
 
-int CL_ActorDoMoveTime (const eventRegister_t *self, struct dbuffer *msg, const int dt)
+/**
+ * @brief Decides if following events should be delayed. The delay is the amount of time the actor needs to walk
+ * from the start to the end pos.
+ */
+int CL_ActorDoMoveTime (const eventRegister_t *self, struct dbuffer *msg, eventTiming_t *eventTiming)
 {
-#if 0
 	le_t *le;
 	int number, i;
-	int time = cl.time;
+	int time = 0;
+	int pathLength;
+	byte crouchingState;
+	pos3_t pos, oldPos;
+	const int eventTime = eventTiming->nextTime;
 
 	number = NET_ReadShort(msg);
 	/* get le */
@@ -39,16 +46,27 @@ int CL_ActorDoMoveTime (const eventRegister_t *self, struct dbuffer *msg, const 
 	if (!le)
 		LE_NotFoundError(number);
 
-	for (i = 0; i < le->pathLength; i++) {
-		const dvec_t dvec = le->dvtab[i];
-		const byte dir = getDVdir(dvec);
-		time += LE_ActorGetStepTime(le, dir, le->pathPos);
-	}
+	pathLength = NET_ReadByte(msg);
 
-	return time;
-#else
-	return cl.time;
-#endif
+	/* Also skip the final position */
+	NET_ReadByte(msg);
+	NET_ReadByte(msg);
+	NET_ReadByte(msg);
+
+	VectorCopy(le->pos, pos);
+	crouchingState = LE_IsCrouched(le) ? 1 : 0;
+
+	for (i = 0; i < pathLength; i++) {
+		const dvec_t dvec = NET_ReadShort(msg);
+		const byte dir = getDVdir(dvec);
+		VectorCopy(pos, oldPos);
+		PosAddDV(pos, crouchingState, dvec);
+		time += LE_ActorGetStepTime(le, pos, oldPos, dir, NET_ReadShort(msg));
+		NET_ReadShort(msg);
+	}
+	eventTiming->nextTime += time + 400;
+
+	return eventTime;
 }
 
 /**
@@ -61,9 +79,18 @@ int CL_ActorDoMoveTime (const eventRegister_t *self, struct dbuffer *msg, const 
 void CL_ActorDoMove (const eventRegister_t *self, struct dbuffer *msg)
 {
 	le_t *le;
-	int number, i, newPathLength;
+	int i;
+	const int number = NET_ReadShort(msg);
+	const int newPathLength = NET_ReadByte(msg);
 
-	number = NET_ReadShort(msg);
+	/* skip empty routes */
+	if (newPathLength == 0) {
+		NET_ReadByte(msg);
+		NET_ReadByte(msg);
+		NET_ReadByte(msg);
+		return;
+	}
+
 	/* get le */
 	le = LE_Get(number);
 	if (!le)
@@ -78,7 +105,6 @@ void CL_ActorDoMove (const eventRegister_t *self, struct dbuffer *msg)
 
 	/* lock this le for other events, the corresponding unlock is in LE_DoEndPathMove() */
 	LE_Lock(le);
-	newPathLength = NET_ReadByte(msg);
 	if (le->pathLength > 0) {
 		if (le->pathLength == le->pathPos) {
 			LE_DoEndPathMove(le);
@@ -104,7 +130,7 @@ void CL_ActorDoMove (const eventRegister_t *self, struct dbuffer *msg)
 		le->pathContents[i] = NET_ReadShort(msg);
 	}
 
-	if (VectorCompare(le->newPos, le->oldPos))
+	if (VectorCompare(le->newPos, le->pos))
 		Com_Error(ERR_DROP, "start and end pos are the same");
 
 	/* activate PathMove function */

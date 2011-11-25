@@ -280,7 +280,7 @@ window hhud extends hud
 			color			"0 0 0 1"
 			bgcolor			".7 .7 .52 .5"
 			font			"f_veryverysmall"
-			textalign		ALIGN_CC
+			contentalign		ALIGN_CC
 		}
 
 		/* Arrow left of the firemode reservation */
@@ -299,7 +299,7 @@ window hhud extends hud
 			size			"120 12"
 			color			".7 .7 .52 1"
 			font			"f_verysmall"
-			textalign		ALIGN_CL
+			contentalign		ALIGN_CL
 		}
 
 		/* Arrow left of the crouch reservation */
@@ -318,23 +318,18 @@ window hhud extends hud
 			size			"120 12"
 			color			".7 .7 .52 1"
 			font			"f_verysmall"
-			textalign		ALIGN_CL
+			contentalign		ALIGN_CL
 		}
 
 		/* Health bar */
-		image health_border
-		{
-			src			"hhud/status_border"
-			pos			"550 71"
-			size		"256 16"
-		}
 		bar health
 		{
-			pos			"551 72"
-			size		"164 7"
+			pos			"550 70"
+			size		"166 9"
 			color		".1875 .65625 .164 1"
 			border		1
-			bordercolor	".7 .7 .52 1"
+			bordercolor	"1 1 .75 1"
+			padding		1
 			current		*cvar:mn_hp
 			tooltip *cvar:mn_hp
 			max			*cvar:mn_hpmax
@@ -342,21 +337,15 @@ window hhud extends hud
 		}
 
 		/* Time units bar */
-/*		image tu_border
-		{
-			src			"hhud/status_border"
-			pos			"550 87"
-			size		"256 16"
-		}*/
 		bar tu
 		{
-			pos			"551 88"
-			size		"164 9"
+			pos			"550 88"
+			size		"166 9"
 			color		".371 .7734 .832 1"
 			border		1
 			padding		1
 //			bordercolor	".7 .7 .52 1"
-			bordercolor	"1 0 0 1"
+			bordercolor	"1 1 .75 1"
 			current		*cvar:mn_tu
 			tooltip		*cvar:mn_tu
 			max			*cvar:mn_tumax
@@ -366,22 +355,16 @@ window hhud extends hud
 		/* Morale bar */
 		bar morale
 		{
-			pos			"551 104"
-			size		"164 7"
+			pos			"550 104"
+			size		"166 9"
 			color		".65625 .65625 .164 1"
 			border		1
-			bordercolor	".7 .7 .52 1"
+			padding		1
+			bordercolor	"1 1 .75 1"
 			current		*cvar:mn_morale
 			tooltip		*cvar:mn_morale
 			max			*cvar:mn_moralemax
 			disabled	true
-		}
-		image morale_border
-		{
-			src			"hhud/status_border"
-			pos			"550 103"
-			size		"256 16"
-			excluderect	{ pos "0 0"	size "256 16" }
 		}
 
 		/* Left weapon panel */
@@ -617,38 +600,38 @@ window hhud extends hud
 
 		cmpSoldierPanel sld0
 		{
-		pos "27 5"
+			pos "27 5"
 		}
 		cmpSoldierPanel sld1
 		{
-		pos "72 5"
+			pos "72 5"
 		}
 		cmpSoldierPanel sld2
 		{
-		pos "117 5"
+			pos "117 5"
 		}
 		cmpSoldierPanel sld3
 		{
-		pos "162 5"
+			pos "162 5"
 		}
 		cmpSoldierPanel sld4
 		{
-		pos "207 5"
+			pos "207 5"
 		}
 
 		cmpSoldierPanel sld5
 		{
-		pos "252 5"
+			pos "252 5"
 		}
 
 		cmpSoldierPanel sld6
 		{
-		pos "297 5"
+			pos "297 5"
 		}
 
 		cmpSoldierPanel sld7
 		{
-		pos "342 5"
+			pos "342 5"
 		}
 	}
 
@@ -658,12 +641,9 @@ window hhud extends hud
 
 	func onWindowOpened
 	{
-		cmd "debug_ui 1;"
 		// missed currently
-//		*node:root.chatscreen@invis = true
 		cmd "music_change battlescape;"
 //		call *node:root.right.show_rightweapon
-		*cvar:mn_showchatbuttons = 0
 		*cvar:rf_reserve = 0
 		*cvar:inv_opened = false
 		*cvar:i = 0;
@@ -679,6 +659,27 @@ window hhud extends hud
 		delete *cvar:i
 
 		cmd "hudselect 0;"
+	}
+
+	image bar_chat_bg
+	{
+		visiblewhen	"*cvar:sv_maxclients >= 2"
+		src			"hud/bar_chat"
+		pos			"959 152"
+		size		"64 64"
+	}
+
+	image button_chat
+	{
+		visiblewhen	"*cvar:sv_maxclients >= 2"
+		tooltip		"_Chat messages"
+		src			"hud/event_log"
+		pos			"985 160"
+		texl		"0 0"
+		texh		"32 36"
+		onClick {
+			cmd "ui_push hud_chat;"
+		}
 	}
 
 	func onScriptLoaded {

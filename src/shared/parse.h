@@ -35,6 +35,7 @@ extern "C" {
 #include "ufotypes.h"
 
 const char *Com_Parse(const char **data_p);
+int Com_CountTokensInBuffer(const char *buffer);
 void Com_UnParseLastToken(void);
 qboolean Com_ParsedTokenIsQuoted(void);
 void Com_EnableFunctionScriptToken(qboolean enable);

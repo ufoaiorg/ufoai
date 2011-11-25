@@ -30,10 +30,10 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 
 const image_t *UI_LoadImage(const char *name);
 
-void UI_DrawNormImage(float x, float y, float w, float h, float sh, float th, float sl, float tl, const image_t *image);
-const image_t *UI_DrawNormImageByName(float x, float y, float w, float h, float sh, float th, float sl, float tl, const char *name);
+void UI_DrawNormImage(qboolean flip, float x, float y, float w, float h, float sh, float th, float sl, float tl, const image_t *image);
+const image_t *UI_DrawNormImageByName(qboolean flip, float x, float y, float w, float h, float sh, float th, float sl, float tl, const char *name);
 
-void UI_DrawPanel(const vec2_t pos, const vec2_t size, const char *texture, int texX, int texY, const int panelDef[6]);
+void UI_DrawPanel(const vec2_t pos, const vec2_t size, const char *texture, int texX, int texY, const int panelDef[7]);
 void UI_DrawFill(int x, int y, int w, int h, const vec4_t color);
 int UI_DrawStringInBox(const char *fontID, align_t align, int x, int y, int width, int height, const char *text, longlines_t method);
 int UI_DrawString(const char *fontID, align_t align, int x, int y, int absX, int maxWidth, const int lineHeight, const char *c, int box_height, int scroll_pos, int *cur_line, qboolean increaseLine, longlines_t method);

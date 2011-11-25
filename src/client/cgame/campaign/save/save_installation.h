@@ -27,6 +27,7 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 
 #define SAVE_INSTALLATION_INSTALLATIONS "installations"
 #define SAVE_INSTALLATION_INSTALLATION "installation"
+#define SAVE_INSTALLATION_IDX "idx"
 #define SAVE_INSTALLATION_TEMPLATEID "templateid"
 #define SAVE_INSTALLATION_NAME "name"
 #define SAVE_INSTALLATION_POS "pos"
@@ -53,6 +54,7 @@ DTD:
 <!ELEMENT installations installation*>
 <!ELEMENT installation pos batteries?>
 <!ATTLIST installation
+	idx				CDATA		#REQUIRED
 	templateid		CDATA		#REQUIRED
 	name			CDATA		#IMPLIED
 	status			(construction,

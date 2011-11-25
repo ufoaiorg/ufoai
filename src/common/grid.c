@@ -827,7 +827,7 @@ void Grid_PosToVec (const routing_t *map, const actorSizeEnum_t actorSize, const
 
 
 /**
- * @brief This function recalculates the routing in the box bounded by min and max.
+ * @brief This function recalculates the routing in and around the box bounded by min and max.
  * @sa CMod_LoadRouting
  * @sa Grid_RecalcRouting
  * @param[in] mapTiles List of tiles the current (RMA-)map is composed of
@@ -836,7 +836,7 @@ void Grid_PosToVec (const routing_t *map, const actorSizeEnum_t actorSize, const
  * @param[in] max The upper extents of the box to recalc routing for
  * @param[in] list The local models list (a local model has a name starting with * followed by the model number)
  */
-void Grid_RecalcBoxRouting (mapTiles_t *mapTiles, routing_t *map, const pos3_t min, const pos3_t max, const char **list)
+static void Grid_RecalcBoxRouting (mapTiles_t *mapTiles, routing_t *map, const pos3_t min, const pos3_t max, const char **list)
 {
 	int x, y, z, actorSize, dir;
 
@@ -878,6 +878,23 @@ void Grid_RecalcBoxRouting (mapTiles_t *mapTiles, routing_t *map, const pos3_t m
 					if ((dir & 1) && x != minX && x != maxX && y != minY && y != maxY)
 						continue;
 #endif
+					/* for places outside the model box, skip dirs that can not be affected by the model */
+					if (x > max[0] && dir != 1 && dir != 5 && dir != 6)
+						continue;
+					if (y > max[1] && dir != 3 && dir != 5 && dir != 7)
+						continue;
+					if (actorSize == ACTOR_SIZE_NORMAL) {
+						if (x < min[0] && dir != 0 && dir != 4 && dir != 7)
+							continue;
+						if (y < min[1] && dir != 2 && dir != 4 && dir != 6)
+							continue;
+					} else {
+						/* the position of 2x2 actors is their lower left cell */
+						if (x < min[0] - 1 && dir != 0 && dir != 4 && dir != 7)
+							continue;
+						if (y < min[1] - 1 && dir != 2 && dir != 4 && dir != 6)
+							continue;
+					}
 					RT_UpdateConnectionColumn(mapTiles, map, actorSize, x, y, dir, list);
 				}
 			}
@@ -959,11 +976,11 @@ void Grid_RecalcRouting (mapTiles_t *mapTiles, routing_t *map, const char *name,
 	}
 
 	/* fit min/max into the world size */
-	max[0] = min(max[0] + 1, PATHFINDING_WIDTH - 1);
-	max[1] = min(max[1] + 1, PATHFINDING_WIDTH - 1);
-	max[2] = min(max[2] + 1, PATHFINDING_HEIGHT - 1);
+	max[0] = min(max[0], PATHFINDING_WIDTH - 1);
+	max[1] = min(max[1], PATHFINDING_WIDTH - 1);
+	max[2] = min(max[2], PATHFINDING_HEIGHT - 1);
 	for (i = 0; i < 3; i++)
-		min[i] = max(min[i] - 1, 0);
+		min[i] = max(min[i], 0);
 
 	/* We now have the dimensions, call the generic rerouting function. */
 	Grid_RecalcBoxRouting(mapTiles, map, min, max, list);

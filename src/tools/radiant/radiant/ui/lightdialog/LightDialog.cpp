@@ -37,7 +37,6 @@ namespace ui
 		static const std::string _defaultIntensity = "100";
 		static const int _maxIntensity = 400;
 		static const int _minIntensity = 1;
-		static const int _maxIntensityLength = 3;
 	}
 
 	LightDialog::LightDialog () :

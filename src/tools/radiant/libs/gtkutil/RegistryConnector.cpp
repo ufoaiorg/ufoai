@@ -74,7 +74,7 @@ void RegistryConnector::exportKey (GtkObject* obj, const std::string& registryKe
 
 void RegistryConnector::importValues ()
 {
-	for (ObjectKeyMap::iterator i = _objectKeyMap.begin(); i != _objectKeyMap.end(); i++) {
+	for (ObjectKeyMap::iterator i = _objectKeyMap.begin(); i != _objectKeyMap.end(); ++i) {
 		// Call the importer method with the GtkObject and the registryKey
 		importKey(i->first, i->second);
 	}
@@ -82,7 +82,7 @@ void RegistryConnector::importValues ()
 
 void RegistryConnector::exportValues ()
 {
-	for (ObjectKeyMap::iterator i = _objectKeyMap.begin(); i != _objectKeyMap.end(); i++) {
+	for (ObjectKeyMap::iterator i = _objectKeyMap.begin(); i != _objectKeyMap.end(); ++i) {
 		// Call the export method that takes care of the specific GtkObject type
 		exportKey(i->first, i->second);
 	}

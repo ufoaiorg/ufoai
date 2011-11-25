@@ -158,7 +158,7 @@ class PreferenceTreeGroup: public PreferenceGroup
 
 			// Return the last item in the list, except the case there is none
 			if (i != _prefPages.begin()) {
-				i--;
+				--i;
 				PrefPage* pagePtr = &(*i);
 				return pagePtr;
 			}
@@ -173,7 +173,7 @@ void PrefsDlg::addConstructor (PreferenceConstructor* constructor)
 
 void PrefsDlg::callConstructors (PreferenceTreeGroup& preferenceGroup)
 {
-	for (PreferenceConstructorList::iterator i = _constructors.begin(); i != _constructors.end(); i++) {
+	for (PreferenceConstructorList::iterator i = _constructors.begin(); i != _constructors.end(); ++i) {
 		PreferenceConstructor* constructor = *i;
 		if (constructor != NULL) {
 			constructor->constructPreferencePage(preferenceGroup);

@@ -5,20 +5,20 @@
 // brush 0
 {
 ( 222 32 4 ) ( 222 28 4 ) ( 242 28 4 ) tex_common/nodraw 229 26 0 0.375 0.375 65282 128 0
-( 242 28 6 ) ( 222 28 6 ) ( 222 32 6 ) tex_material/s_wood003 229 26 0 0.375 0.375 65282 0 0
-( 28 200 6 ) ( 28 200 4 ) ( 34 206 4 ) tex_material/s_wood003 143 240 0 0.375 0.375 65282 0 0
-( 28 200 4 ) ( 28 200 6 ) ( 30 172 6 ) tex_material/s_wood003 229 240 0 0.375 0.375 65282 0 0
-( 36 180 6 ) ( 36 180 4 ) ( 30 172 4 ) tex_material/s_wood003 229 240 0 0.375 0.375 65282 0 0
-( 36 180 4 ) ( 36 180 6 ) ( 34 206 6 ) tex_material/s_wood003 229 240 0 0.375 0.375 65282 0 0
+( 242 28 6 ) ( 222 28 6 ) ( 222 32 6 ) tex_material/s_wood003 458 52 0 0.1875 0.1875 65282 0 0
+( 28 200 6 ) ( 28 200 4 ) ( 34 206 4 ) tex_material/s_wood003 286 480 0 0.1875 0.1875 65282 0 0
+( 28 200 4 ) ( 28 200 6 ) ( 30 172 6 ) tex_material/s_wood003 458 480 0 0.1875 0.1875 65282 0 0
+( 36 180 6 ) ( 36 180 4 ) ( 30 172 4 ) tex_material/s_wood003 458 480 0 0.1875 0.1875 65282 0 0
+( 36 180 4 ) ( 36 180 6 ) ( 34 206 6 ) tex_material/s_wood003 458 480 0 0.1875 0.1875 65282 0 0
 }
 // brush 1
 {
 ( 222 32 4 ) ( 222 28 4 ) ( 242 28 4 ) tex_common/nodraw 63 202 90 0.375 0.375 65282 128 0
-( 242 28 6 ) ( 222 28 6 ) ( 222 32 6 ) tex_material/s_wood003 63 202 90 0.375 0.375 65282 0 0
-( 214 26 6 ) ( 214 26 4 ) ( 208 32 4 ) tex_material/s_wood003 181 240 0 0.375 0.375 65282 0 0
-( 214 26 4 ) ( 214 26 6 ) ( 242 28 6 ) tex_material/s_wood003 53 240 0 -0.375 0.375 65282 0 0
-( 234 34 6 ) ( 234 34 4 ) ( 242 28 4 ) tex_material/s_wood003 53 240 0 -0.375 0.375 65282 0 0
-( 234 34 4 ) ( 234 34 6 ) ( 208 32 6 ) tex_material/s_wood003 53 240 0 -0.375 0.375 65282 0 0
+( 242 28 6 ) ( 222 28 6 ) ( 222 32 6 ) tex_material/s_wood003 126 404 90 0.1875 0.1875 65282 0 0
+( 214 26 6 ) ( 214 26 4 ) ( 208 32 4 ) tex_material/s_wood003 362 480 0 0.1875 0.1875 65282 0 0
+( 214 26 4 ) ( 214 26 6 ) ( 242 28 6 ) tex_material/s_wood003 106 480 0 -0.1875 0.1875 65282 0 0
+( 234 34 6 ) ( 234 34 4 ) ( 242 28 4 ) tex_material/s_wood003 106 480 0 -0.1875 0.1875 65282 0 0
+( 234 34 4 ) ( 234 34 6 ) ( 208 32 6 ) tex_material/s_wood003 106 480 0 -0.1875 0.1875 65282 0 0
 }
 // brush 2
 {
@@ -94,38 +94,38 @@
 "classname" "misc_model"
 "origin" "62 96 18"
 "model" "models/objects/vegi/bush/bush01.md2"
-"spawnflags" "255"
 "angles" "0 -76.8 0"
+"spawnflags" "255"
 }
 // entity 3
 {
 "classname" "misc_model"
 "origin" "96 128 36"
 "model" "models/objects/vegi/bush/bush01.md2"
-"spawnflags" "255"
 "angles" "0 -90 0"
+"spawnflags" "255"
 }
 // entity 4
 {
 "classname" "misc_model"
 "origin" "150 50 22"
 "model" "models/objects/vegi/bush/bush01.md2"
-"spawnflags" "255"
 "angles" "0 -90 0"
+"spawnflags" "255"
 }
 // entity 5
 {
 "classname" "misc_model"
 "origin" "188 108 16"
 "model" "models/objects/vegi/bush/bush01.md2"
-"spawnflags" "255"
 "angles" "0 -90 0"
+"spawnflags" "255"
 }
 // entity 6
 {
 "classname" "misc_model"
 "origin" "98 192 18"
 "model" "models/objects/vegi/bush/bush01.md2"
-"spawnflags" "255"
 "angles" "0 -90 0"
+"spawnflags" "255"
 }

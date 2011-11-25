@@ -85,9 +85,11 @@ void CL_ViewLoadMedia (void)
 			Com_sprintf(loadingMessages, sizeof(loadingMessages), _("loading %s"), name);
 		}
 		SCR_DrawLoading(loadingPercent, loadingMessages);
-		cl.model_draw[i] = R_RegisterModelShort(name);
-		if (!cl.model_draw[i])
+		cl.model_draw[i] = R_FindModel(name);
+		if (!cl.model_draw[i]) {
+			Cmd_ExecuteString("fs_info\n");
 			Com_Error(ERR_DROP, "Could not load model '%s'\n", name);
+		}
 
 		/* initialize clipping for bmodels */
 		if (name[0] == '*')
@@ -150,12 +152,12 @@ static float CL_PrecacheCharacterModels (float alreadyLoadedPercent)
 				list = list->next;
 				/* register body */
 				Com_sprintf(model, sizeof(model), "%s/%s", path, list->data);
-				if (!R_RegisterModelShort(model))
+				if (!R_FindModel(model))
 					Com_Printf("Com_PrecacheCharacterModels: Could not register model %s\n", model);
 				list = list->next;
 				/* register head */
 				Com_sprintf(model, sizeof(model), "%s/%s", path, list->data);
-				if (!R_RegisterModelShort(model))
+				if (!R_FindModel(model))
 					Com_Printf("Com_PrecacheCharacterModels: Could not register model %s\n", model);
 
 				/* skip skin */
@@ -165,7 +167,7 @@ static float CL_PrecacheCharacterModels (float alreadyLoadedPercent)
 				list = list->next;
 
 				alreadyLoadedPercent += percent / (td->numModels[j] * csi.numTeamDefs * NAME_LAST);
-				SCR_DrawPrecacheScreen(qtrue, alreadyLoadedPercent);
+				SCR_DrawLoadingScreen(qtrue, alreadyLoadedPercent);
 			}
 		}
 	/* some genders may not have models - ensure that we do the wanted percent step */
@@ -191,13 +193,13 @@ void CL_ViewPrecacheModels (void)
 		const objDef_t *od = INVSH_GetItemByIDX(i);
 
 		alreadyLoadedPercent += percent / csi.numODs;
-		SCR_DrawPrecacheScreen(qtrue, alreadyLoadedPercent);
+		SCR_DrawLoadingScreen(qtrue, alreadyLoadedPercent);
 
 		if (od->type[0] == '\0' || od->isDummy)
 			continue;
 
 		if (od->model[0] != '\0') {
-			cls.modelPool[i] = R_RegisterModelShort(od->model);
+			cls.modelPool[i] = R_FindModel(od->model);
 			if (cls.modelPool[i])
 				Com_DPrintf(DEBUG_CLIENT, "CL_PrecacheModels: Registered object model: '%s' (%i)\n", od->model, i);
 		}
@@ -207,7 +209,7 @@ void CL_ViewPrecacheModels (void)
 	 * otherwise they would be freed with every map change */
 	R_SwitchModelMemPoolTag();
 
-	SCR_DrawPrecacheScreen(qfalse, 100.f);
+	SCR_DrawLoadingScreen(qfalse, 100.f);
 }
 
 /**
@@ -255,6 +257,10 @@ void CL_ViewRender (void)
 {
 	refdef.brushCount = 0;
 	refdef.aliasCount = 0;
+	refdef.batchCount = 0;
+	refdef.FFPToShaderCount = 0;
+	refdef.shaderToShaderCount = 0;
+	refdef.shaderToFFPCount = 0;
 
 	if (cls.state != ca_active)
 		return;

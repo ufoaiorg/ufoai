@@ -38,6 +38,7 @@ window main
 		{
 			onClick	{ cmd "ui_push singleplayer;" }
 			string	"_Single-player"
+			tooltip	"_Choose between Campaign or Skirmish mode."
 		}
 
 		cmpMenuButton button_multiplayer
@@ -67,9 +68,9 @@ window main
 
 	cmpMenuButton button_exit
 	{
-		pos	"640 520"
-		onClick	{ cmd "quit;" }
-		string	"_Exit"
+		pos			"640 520"
+		onClick		{ cmd "quit;" }
+		string		"_Exit"
 	}
 
 	func onWindowOpened
@@ -122,7 +123,7 @@ window checkcvars
 		image		"ui/button_green_verysmall"
 		color		"0 .78 0 1"
 		selectcolor	"1 1 1 1"
-		textalign	ALIGN_CL
+		contentalign	ALIGN_CL
 		padding		8
 		font		"f_verysmall"
 		pos			"170 82"
@@ -258,6 +259,7 @@ window popup_tipoftheday
 		pos			"38 456"
 		size		"496 247"
 		dragbutton	true
+		closebutton	true
 		image		"ui/popup_alpha_tile"
 		string		"_Tip of the day"
 	}

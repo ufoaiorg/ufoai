@@ -69,11 +69,10 @@ typedef struct client_static_s {
 	char servername[MAX_VAR];		/**< name of server from original connect */
 	char serverport[16];			/**< port the server is running at */
 	int connectTime;				/**< for connection retransmits */
+	int reconnectTime;				/**< time until the reconnect to a server is triggered */
 	int waitingForStart;			/**< waiting for EV_START or timeout */
 
 	struct net_stream *netStream;
-
-	int challenge;				/**< from the server to use for connecting */
 
 	/** needs to be here, because server can be shutdown, before we see the ending screen */
 	int team;			/**< the team you are in @sa TEAM_CIVILIAN, TEAM_ALIEN */
@@ -111,10 +110,6 @@ typedef struct client_static_s {
 } client_static_t;
 
 extern client_static_t cls;
-
-extern memPool_t *cl_genericPool;
-extern memPool_t *cl_ircSysPool;
-extern memPool_t *cl_soundSysPool;
 
 /*============================================================================= */
 

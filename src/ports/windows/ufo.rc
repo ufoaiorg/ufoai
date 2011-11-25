@@ -9,6 +9,11 @@
 # define PATH_UFOICON_FILE "ufo.ico"
 # define PATH_UFODEDICON_FILE "ufoded.ico"
 #endif
+#ifdef UFO_REVISION
+# define VER_FILEVERSION_STR UFO_REVISION
+#else
+# define VER_FILEVERSION_STR ""
+#endif
 
 1 RT_MANIFEST DISCARDABLE PATH_MANIFEST_FILE
 101 ICON DISCARDABLE PATH_UFOICON_FILE
@@ -18,8 +23,10 @@ VS_VERSION_INFO VERSIONINFO
 FILEVERSION 2,4,0,0
 FILEFLAGSMASK 0x17L
 #ifdef DEBUG
+# define VER_SPECIAL_STR "Debug"
 	FILEFLAGS 0x3L
 #else
+# define VER_SPECIAL_STR "Release"
 	FILEFLAGS 0x2L
 #endif
 FILEOS 0x4L
@@ -33,11 +40,13 @@ BEGIN
 			VALUE "Comments", "http://ufoai.sf.net"
 			VALUE "CompanyName", "UFO:Alien Invasion Team"
 			VALUE "FileDescription", "UFO:Alien Invasion"
+			VALUE "FileVersion", VER_FILEVERSION_STR
 			VALUE "InternalName", "ufoai"
 			VALUE "LegalCopyright", "Copyright (C) 2002-2011"
 			VALUE "OriginalFilename", "ufo.exe"
 			VALUE "ProductName", "UFO:AI"
-			VALUE "ProductVersion", "Release"
+			VALUE "ProductVersion", "2.4.0.0"
+			VALUE "SpecialBuild", VER_SPECIAL_STR
 		END
 	END
 	BLOCK "VarFileInfo"

@@ -192,7 +192,7 @@ namespace ui
 			std::string name = gtkutil::TreeModel::getSelectedString(self->_selection, 0);
 			Entity_createFromSelection(name, self->_lastPoint);
 			gtk_widget_hide(self->_widget);
-		} catch (EntityCreationException e) {
+		} catch (EntityCreationException &e) {
 			gtkutil::errorDialog(e.what());
 		}
 	}

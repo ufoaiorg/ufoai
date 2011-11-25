@@ -35,6 +35,41 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #include "../shared/mutex.h"
 
 #define ASSEMBLE_THREADS 2
+/** @brief print some debugging info */
+#define PRINT_RMA_PROGRESS 0
+/** @brief place the biggest 'required' tiles first. Helps oriental a lot, but is bad for village. */
+#define SORT_BY_SIZE 1
+/** @brief display a character graphic of the tiles placed when RMA2 reaches a dead end. */
+#define DISPLAY_THE_MAP 0
+#if DISPLAY_THE_MAP
+#define DISPLAY_THE_MAP_ON_FAILURE 1
+#else
+#define DISPLAY_THE_MAP_ON_FAILURE 0
+#endif
+
+/** @brief max # of recursions */
+#define RMA2_MAX_REC 64
+/** @brief max # of valid tile/position combinations */
+/* How to calculate this value:
+ * Take he largest map of the project, eg. +farm
+ * farm large has a size of 12x12.
+ * If we had only 'fits everywhere'-tiles of size 1x1,
+ * we'd need 12x12=144 x tiletypes(25) = 3600 (in theory).
+ * Larger tiles eg. 2x2 would reduce the positions from 144 to 11x11=121
+ * Required tiles with exactly one instance ie. "1 1" reduce both the # of tiletypes
+ * and the # of positions by their size.
+ * The neighbouring requirements of required tiles will further reduce the value.
+ * => It's best to determine a working value empirically.
+ */
+#define RMA2_MAX_TILEPOS 1700
+/** @brief tile code multiplier. For the various debug printfs we want a number that we can easily divide through (20, 50, 100,...) */
+#define TCM 50
+/** @brief the # of different tiles we can store for a gap */
+#define GAPS 25
+/** @brief array of working random tile positions, 50 recursions */
+static short posTileList[RMA2_MAX_REC][RMA2_MAX_TILEPOS];
+/** @brief for every x/y we can store the tiles that can cover that place here */
+static short gapList[MAX_RANDOM_MAP_HEIGHT][MAX_RANDOM_MAP_HEIGHT][GAPS + 1];
 static SDL_sem *mapSem;
 static SDL_cond *mapCond;
 static threads_mutex_t *mapLock;
@@ -103,13 +138,158 @@ static unsigned long tileMask (const char chr)
 	Com_Error(ERR_DROP, "SV_ParseMapTile: Invalid tile char '%c'", chr);
 }
 
+#if DISPLAY_THE_MAP_ON_FAILURE
+static void SV_TileMaskToString (unsigned long m, char *str)
+{
+	int i;
+	int j = 0;	/* writepos */
+
+	if (m == ALL_TILES) {
+		str[0] = '0';
+		str[1] = 0;
+		return;
+	}
+	if (m & 1) {
+		str[0] = '+';
+		 j = 1;
+	}
+	for (i = 1; i < 6; i++) {
+		if (m >> i & 1) {
+			str[j] = '0' + i;
+			j++;
+		}
+	}
+	for (i = 6; i < 32; i++) {
+		if (m >> i & 1) {
+			str[j] = 'a' - 6 + i;
+			j++;
+		}
+	}
+	str[j] = 0;
+}
+
+#define ACW 6	/* ascii cell width */
+#define ACH 3	/* ascii cell height */
+#define MMW 13	/* map max height 13 means we support 12 */
+#define MMH 13	/* map max height */
+static void SV_RmaPrintMap (const mapInfo_t *map)
+{
+	char screen[(MMH + 1) * ACH][(MMW + 1) * ACW];
+	int i, j;
+
+	assert(map->mAssembly[map->mAsm].height < MMH);
+	assert(map->mAssembly[map->mAsm].width < MMW);
+
+	/* initialize */
+	int rb = (1 + map->mAssembly[map->mAsm].width) * ACW;	/* index of right border */
+	memset(screen, ' ', sizeof(screen));
+	for (i = 0; i < MMH * ACH + 1; i++) {
+		screen[i][rb + 1] = '|';
+		screen[i][rb + 2] = 0;
+	}
+
+	/* fill in the data */
+	for (i = 0; i < map->numPlaced; i++) {
+		const mPlaced_t *mp = &map->mPlaced[i];
+		const mTile_t *tile = mp->tile;
+		int tx, ty;
+		const char *tn = tile->id + 1;
+
+		if (!strncmp(tn, "craft_", 6))
+			tn += 6;
+		for (ty = 0; ty < tile->h; ty++) {
+			for (tx = 0; tx < tile->w; tx++) {
+				if (IS_SOLID(tile->spec[ty][tx])) {
+					int cbX = ACW * (mp->x + tx);
+					int cbY = ACH * (mp->y + ty);
+					char flags[33] = {0,};
+
+					/* write the tilename */
+					for (j = 0; j < ACW - 1; j++) {
+						if (tn[j])
+							screen[cbY + ACH - 1][cbX + 1 + j] = tn[j];
+						else
+							break;
+					}
+
+					/* get the properties of that solid */
+					SV_TileMaskToString(tile->spec[ty][tx], flags);
+					/* write the flags */
+					for (j = 0; j < ACW - 1; j++) {
+						if (flags[j])
+							screen[cbY + ACH - 2][cbX + 1 + j] = flags[j];
+						else
+							break;
+					}
+
+
+					/* left border of tile */
+					if (tx > 0 && !IS_SOLID(tile->spec[ty][tx - 1])) {
+						for (j = 0; j < ACH; j++)
+							screen[cbY + j][cbX] = '!';
+					}
+					if (!IS_SOLID(tile->spec[ty][tx + 1])) {
+						for (j = 0; j < ACH; j++)
+							screen[cbY + j][cbX + ACW] = '!';
+					}
+					if (ty > 0 && !IS_SOLID(tile->spec[ty - 1][tx])) {
+						for (j = 1; j < ACW; j++)
+							screen[cbY][cbX + j] = '-';
+					}
+					if (!IS_SOLID(tile->spec[ty + 1][tx])) {
+						for (j = 1; j < ACW; j++)
+							screen[cbY + ACH][cbX + j] = '-';
+					}
+				}
+			}
+		}
+	}
+
+	/* now add the specs of the gaps */
+	int cx, cy;
+	int height = map->mAssembly[map->mAsm].height;
+	int width = map->mAssembly[map->mAsm].width;
+	for (cy = 0; cy <= height; cy++) {
+		for (cx = 0; cx <= width; cx++) {
+			if (!IS_SOLID(map->curMap[cy][cx])) {
+				const int cbX = ACW * (cx);
+				const int cbY = ACH * (cy);
+				char flags2[33] = {0,};
+
+				/* get the requirements of that gap */
+				SV_TileMaskToString(map->curMap[cy][cx], flags2);
+				/* write the flags */
+				for (j = 0; j < ACW - 1; j++) {
+					if (flags2[j])
+						screen[cbY + ACH - 2][cbX + 1 + j] = flags2[j];
+					else
+						break;
+				}
+			}
+		}
+	}
+
+	/* print it */
+	const char *underscores = "_________________________________________________________________________\n";
+	Com_Printf("\nCurrent state of the map:\n");
+	int w = ACW * (MMW - 1 - map->mAssembly[map->mAsm].width);
+	Com_Printf(underscores + w);
+	int h = ACH * (height + 1);
+	for (i = h; i >= ACH; i--)
+		Com_Printf("%s\n", screen[i] + ACW);
+	Com_Printf(underscores + w);
+}
+#endif
+
 static const mTileSet_t *SV_GetMapTileSet (const mapInfo_t *map, const char *tileSetName)
 {
 	int i;
 
-	for (i = 0; i < map->numTileSets; i++)
-		if (Q_streq(tileSetName, map->mTileSets[i].id))
-			return &map->mTileSets[i];
+	for (i = 0; i < map->numTileSets; i++) {
+		const mTileSet_t *tileSet = &map->mTileSets[i];
+		if (Q_streq(tileSetName, tileSet->id))
+			return tileSet;
+	}
 
 	return NULL;
 }
@@ -118,9 +298,11 @@ static inline const mTile_t *SV_GetMapTile (const mapInfo_t *map, const char *ti
 {
 	int i;
 
-	for (i = 0; i < map->numTiles; i++)
-		if (Q_streq(tileName, map->mTile[i].id))
-			return &map->mTile[i];
+	for (i = 0; i < map->numTiles; i++) {
+		const mTile_t *tile = &map->mTile[i];
+		if (Q_streq(tileName, tile->id))
+			return tile;
+	}
 
 	return NULL;
 }
@@ -317,10 +499,101 @@ static const char *SV_GetTileFromTileSet (const mapInfo_t *map, const char *file
 
 	tileSet = SV_GetMapTileSet(map, token);
 	if (tileSet == NULL)
-		Com_Error(ERR_DROP, "SV_GetTileFromTileSet: Could not find tileset %s 	in %s (assembly %s)", token, filename, a->id);
+		Com_Error(ERR_DROP, "SV_GetTileFromTileSet: Could not find tileset %s in %s (assembly %s)", token, filename, a->id);
 
 	random = rand() % tileSet->numTiles;
 	return tileSet->tiles[random];
+}
+
+/**
+ * @brief Parses a list of working seeds to assemble this rma assembly
+ * @param[in,out] map All we know about the map to assemble
+ * @param[in] filename The name of the .UMP file, used in error messages
+ * @param[out] a Pointer to the assembly to be initialized, must be allocated.
+ * @param[in] text The text of the ump file to parse
+ * @return @c true if it was parsed, @c false if not.
+ */
+static qboolean SV_ParseAssemblySeeds (mapInfo_t *map, const char *filename, const char **text, mAssembly_t *a)
+{
+	const char *errhead = "SV_ParseAssemblySeeds: Unexpected end of file (";
+	const char *token;
+
+	/* start parsing the block */
+	token = Com_EParse(text, errhead, filename);
+	if (!*text)
+		return qfalse;
+	if (*token != '{') {
+		Com_Printf("SV_ParseAssemblySeeds: Expected '{' for seed of assembly '%s' (%s)\n", a->id, filename);
+		return qfalse;
+	}
+
+	for (;;) {
+		token = Com_EParse(text, errhead, filename);
+		if (!*text || token[0] == '}')
+			break;
+
+		if (a->numSeeds < lengthof(a->seeds)) {
+			a->seeds[a->numSeeds++] = atoi(token);
+		} else {
+			Com_Printf("too many seeds for %s (%s) - ignore seed %s\n", a->id, filename, token);
+		}
+	}
+	return qtrue;
+}
+
+static void SV_GetTilesFromTileSet (const mapInfo_t *map, const char *filename, const char **text, mAssembly_t *a)
+{
+	const char *errhead = "SV_GetTilesFromTileSet: Unexpected end of file (";
+	const mTileSet_t *tileSet;
+	const mTile_t *tile;
+	int c, x, y, random;
+	const char *token;
+
+	/* get tileset id */
+	token = Com_EParse(text, errhead, filename);
+	if (!text)
+		Com_Error(ERR_DROP, "SV_GetTilesFromTilesSet: illegal tileset syntax in assembly '%s' in %s", a->id, filename);
+	tileSet = SV_GetMapTileSet(map, token);
+	if (tileSet == NULL)
+		Com_Error(ERR_DROP, "SV_GetTilesFromTilesSet: Could not find tileset %s in %s (assembly %s)", token, filename, a->id);
+
+	/* get min and max tileset number */
+	token = Com_EParse(text, errhead, filename);
+	if (!text || *token == '}')
+		Com_Error(ERR_DROP, "SV_GetTilesFromTilesSet: Error in assembly %s (invalid syntax for tileset %s)", filename, tileSet->id);
+	if (!strstr(token, " "))
+		Com_Error(ERR_DROP, "SV_GetTilesFromTilesSet: Error in assembly %s (min max value of tileset %s)", filename, tileSet->id);
+	sscanf(token, "%i %i", &x, &y);
+	if (x > y)
+		Com_Error(ERR_DROP, "SV_GetTilesFromTilesSet: Error in assembly %s (min is bigger than max for tileset %s)", filename, tileSet->id);
+	if (y <= 0)
+		Com_Error(ERR_DROP, "SV_GetTilesFromTilesSet: Error in assembly %s (max is <= 0 for tileset %s)", filename, tileSet->id);
+	/* set max tile numbers (increasing the max of random tiles until the required max is reached)t */
+	for (c = y; c > 0; c--) {
+		random = rand() % tileSet->numTiles;
+		tile = SV_GetMapTile(map, tileSet->tiles[random]);
+		if (tile != NULL) {
+			const ptrdiff_t i = tile - map->mTile;
+			a->max[i]++;
+		} else {
+			Com_Error(ERR_DROP, "Could not find tile: '%s' in tileset '%s' (%s)", tileSet->tiles[random], tileSet->id, filename);
+		}
+	}
+	/* set min tile numbers (increasing the min of random tiles until the required min is reached) */
+	c = x;
+	while (c > 0) {
+		random = rand() % tileSet->numTiles;
+		tile = SV_GetMapTile(map, tileSet->tiles[random]);
+		if (tile != NULL) {
+			const ptrdiff_t i = tile - map->mTile;
+			if (a->min[i] < a->max[i]) {
+				a->min[i]++;
+				c--;
+			}
+		} else {
+			Com_Error(ERR_DROP, "Could not find tile: '%s' in tileset '%s' (%s)", tileSet->tiles[random], tileSet->id, filename);
+		}
+	}
 }
 
 /**
@@ -402,6 +675,10 @@ static qboolean SV_ParseAssembly (mapInfo_t *map, const char *filename, const ch
 			sscanf(token, "%i %i", &a->width, &a->height);
 			a->size = a->width * a->height;
 			continue;
+		} else if (Q_streq(token, "seeds")) {
+			if (!SV_ParseAssemblySeeds(map, filename, text, a))
+				return qfalse;
+			continue;
 		} else if (Q_streq(token, "grid")) {
 			/* get map size */
 			token = Com_EParse(text, errhead, filename);
@@ -412,7 +689,8 @@ static qboolean SV_ParseAssembly (mapInfo_t *map, const char *filename, const ch
 			continue;
 		/* chose a tile from a tileset */
 		} else if (Q_streq(token, "tileset")) {
-			token = SV_GetTileFromTileSet(map, filename, text, a);
+			SV_GetTilesFromTileSet(map, filename, text, a);
+			continue;
 		/* fix tilename "x y" */
 		} else if (Q_streq(token, "fix")) {
 			const mTile_t *t;
@@ -525,7 +803,7 @@ static void SV_CombineAlternatives (unsigned long *mapAlts, const unsigned long 
 static void SV_ClearMap (mapInfo_t *map)
 {
 	unsigned long *mp = &map->curMap[0][0];
-	unsigned long *end = &map->curMap[MAX_RANDOM_MAP_HEIGHT - 1][MAX_RANDOM_MAP_WIDTH - 1];
+	const unsigned long *end = &map->curMap[MAX_RANDOM_MAP_HEIGHT - 1][MAX_RANDOM_MAP_WIDTH - 1];
 
 	OBJZERO(map->curRating);
 
@@ -543,7 +821,7 @@ static void SV_ClearMap (mapInfo_t *map)
  * @sa SV_AddMandatoryParts
  * @sa SV_AddRegion
  */
-static qboolean SV_FitTile (const mapInfo_t *map, mTile_t * tile, const int x, const int y)
+static qboolean SV_FitTile (const mapInfo_t *map, const mTile_t * tile, const int x, const int y)
 {
 	int tx, ty;
 	const unsigned long *spec = NULL;
@@ -609,23 +887,6 @@ static qboolean SV_TestFilled (const mapInfo_t *map)
 }
 
 /**
- * @brief Debug fuction to dump the rating of the current map.
- */
-static void SV_DumpRating (const mapInfo_t *map)
-{
-	int x, y;
-	const mAssembly_t *mAsm = &map->mAssembly[map->mAsm];
-
-	Com_Printf("Rating:\n");
-	for (y = mAsm->height; y >= 1; y--) {
-		for (x = 1; x < mAsm->width + 1; x++)
-			Com_Printf(" %2d", (int) map->curRating[y][x]);
-		Com_Printf("\n");
-	}
-	Com_Printf("\n");
-}
-
-/**
  * @brief Debug function to dump the map location of a placed tile.
  */
 static void SV_DumpPlaced (const mapInfo_t *map, int pl)
@@ -643,8 +904,7 @@ static void SV_DumpPlaced (const mapInfo_t *map, int pl)
 			const int dx = x - placed->x;
 			const int dy = y - placed->y;
 
-			if ((dx >= 0) && (dx < placed->tile->w) &&
-					(dy >= 0) && (dy < placed->tile->h) &&
+			if (dx >= 0 && dx < placed->tile->w && dy >= 0 && dy < placed->tile->h &&
 					IS_SOLID(placed->tile->spec[dy][dx]))
 				Com_Printf(" X");
 			else
@@ -653,28 +913,6 @@ static void SV_DumpPlaced (const mapInfo_t *map, int pl)
 		Com_Printf("\n");
 	}
 	Com_Printf("\n");
-}
-
-/**
- * @brief Returns the rating of the given map.
- * @return A value which roughly describes the connection quality of the map
- * @sa SV_AssembleMap
- * @sa SV_AddRegion
- * @sa SV_FitTile
- */
-static int SV_CalcRating (const mapInfo_t *map)
-{
-	int x, y, rating = 0;
-	const mAssembly_t *mAsm = &map->mAssembly[map->mAsm];
-
-	for (y = 1; y <= mAsm->height; y++)
-		for (x = 1; x <= mAsm->width; x++)
-			rating += map->curRating[y][x];
-
-	if (sv_dumpmapassembly->integer)
-		SV_DumpRating(map);
-
-	return rating;
 }
 
 /**
@@ -779,115 +1017,6 @@ static void SV_RemoveTile (mapInfo_t *map, int* idx, int* pos)
 }
 
 /**
- * @brief Tries to fit a tile in the current map.
- * @return @c true if a fitting tile was found, @c false if no tile fits.
- * @sa SV_FitTile
- * @sa SV_AddTile
- */
-static qboolean SV_PickRandomTile (mapInfo_t *map, int* idx, int* pos)
-{
-	const mAssembly_t *mAsm = &map->mAssembly[map->mAsm];
-	const int numToPlace = map->numToPlace;
-	const int mapSize = mAsm->size;
-	const int mapW = mAsm->width;
-	const int start_idx = *idx = rand() % numToPlace;
-	const int start_pos = *pos = rand() % mapSize;
-	const mToPlace_t *mToPlace = map->mToPlace;
-
-	do {
-		if (mToPlace[*idx].cnt < mToPlace[*idx].max) {
-			do {
-				const int x = (*pos) % mapW;
-				const int y = (*pos) / mapW;
-
-				if ((x % mAsm->dx == 0)
-					&& (y % mAsm->dy == 0)
-					&& SV_FitTile(map, mToPlace[*idx].tile, x, y)) {
-					return qtrue;
-				}
-
-				(*pos) += 1;
-				(*pos) %= mapSize;
-
-			} while ((*pos) != start_pos);
-		}
-
-		(*idx) += 1;
-		(*idx) %= numToPlace;
-
-	} while ((*idx) != start_idx);
-
-	return qfalse;
-}
-
-/**
- * @brief Number of test alternatives per step in SV_AddMissingTiles
- * @sa SV_AddMissingTiles
- */
-#define CHECK_ALTERNATIVES_COUNT 10
-
-/**
- * @brief Tries to fill the missing tiles of the current map.
- * @return @c false if the tiles does not fit, @c true if the map could be filled.
- * @sa SV_FitTile
- * @sa SV_AddTile
- */
-static qboolean SV_AddMissingTiles (mapInfo_t *map)
-{
-	int i;
-	int idx[CHECK_ALTERNATIVES_COUNT];
-	int pos[CHECK_ALTERNATIVES_COUNT];
-	int rating[CHECK_ALTERNATIVES_COUNT];
-	mapInfo_t backup;
-	const mAssembly_t *mAsm = &map->mAssembly[map->mAsm];
-	const int mapW = mAsm->width;
-	const int mapH = mAsm->height;
-	const mToPlace_t *mToPlace = map->mToPlace;
-
-	memcpy(&backup, map, sizeof(*map));
-	while (1) {
-		int max_rating = -mapW * mapH * 4;
-
-		/* check if the map is already filled */
-		if (SV_TestFilled(map))
-			return qtrue;
-
-		/* try some random tiles at random positions */
-		for (i = 0; i < CHECK_ALTERNATIVES_COUNT; i++) {
-			int x, y;
-			if (!SV_PickRandomTile(map, &idx[i], &pos[i])) {
-				/* remove all tiles placed by this function */
-				memcpy(map, &backup, sizeof(*map));
-				return qfalse;
-			}
-
-			x = pos[i] % mapW;
-			y = pos[i] / mapW;
-			SV_AddTile(map, mToPlace[idx[i]].tile, x, y, idx[i], pos[i]);
-
-			if (SV_TestFilled(map))
-				return qtrue;
-
-			rating[i] = SV_CalcRating(map);
-
-			if (rating[i] > max_rating)
-				max_rating = rating[i];
-
-			SV_RemoveTile(map, NULL, NULL);
-		}
-
-		for (i = 0; i < CHECK_ALTERNATIVES_COUNT; i++) {
-			if (rating[i] == max_rating) {
-				const int x = pos[i] % mapW;
-				const int y = pos[i] / mapW;
-				SV_AddTile(map, mToPlace[idx[i]].tile, x, y, idx[i], pos[i]);
-				break;
-			}
-		}
-	}
-}
-
-/**
  * @brief Prints the mapstrings as known from the ufoconsole.log
  * This can also be used to dump the progress of the RMA process.
  * @param[in,out] map All we know about the map to assemble
@@ -923,16 +1052,6 @@ static void SV_PrintMapStrings (mapInfo_t *map, char *asmMap, char *asmPos)
 	Com_Printf("tiles: %i\n", map->numPlaced);
 }
 
-#define PRINT_RMA_PROGRESS 0	/* print some debugging info */
-/* RMA2 code. Still disabled to avoid warnings */
-#define RMA2 0
-#if RMA2
-#define RMA2_MAX_REC 50		/* max # of recursions */
-#define TCM 50				/* tile code multiplier */
-#define GAPS 25				/* the # of different tiles we can store for a gap */
-static short posTileList[RMA2_MAX_REC][1000];		/* array of working random tile positions, 50 recursions */
-static short gapList[MAX_RANDOM_MAP_HEIGHT][MAX_RANDOM_MAP_HEIGHT][GAPS+1];	/* for every x/y we can store the tiles that can cover that place here */
-
 /**
  * @brief get the specs of a tile at map-x/y if it was placed where tileCode indicates
  * @param map All we know about the map to assemble
@@ -944,14 +1063,14 @@ static short gapList[MAX_RANDOM_MAP_HEIGHT][MAX_RANDOM_MAP_HEIGHT][GAPS+1];	/* f
  */
 static unsigned long SV_GapGetFlagsAtAbsPos (mapInfo_t *map, int tileCode, int mapW, int mapX, int mapY)
 {
-	int pos = tileCode / TCM;
-	int ti = tileCode % TCM;
-	int posX = pos % mapW;
-	int posY = pos / mapW;
+	const int pos = tileCode / TCM;
+	const int ti = tileCode % TCM;
+	const int posX = pos % mapW;
+	const int posY = pos / mapW;
 	const mToPlace_t *mToPlace = map->mToPlace;
-	mTile_t *tile = mToPlace[ti].tile;
+	const mTile_t *tile = mToPlace[ti].tile;
 
-	return tile->spec[mapY-posY][mapX-posX];
+	return tile->spec[mapY - posY][mapX - posX];
 }
 
 /**
@@ -967,7 +1086,7 @@ static unsigned long SV_GapGetFlagsAtAbsPos (mapInfo_t *map, int tileCode, int m
  */
 static int availableTiles[MAX_TILETYPES][2];	/* the 2nd dimension is index and count */
 
-static qboolean SV_AddMissingTiles3_r (mapInfo_t *map, int rec, int posListCnt, short myPosList[], const mTile_t *prevTile, int prevX, int prevY)
+static qboolean SV_AddMissingTiles_r (mapInfo_t *map, int rec, int posListCnt, short myPosList[], const mTile_t *prevTile, int prevX, int prevY)
 {
 	static int callCnt = 0;
 	const mAssembly_t *mAsm = &map->mAssembly[map->mAsm];
@@ -989,15 +1108,15 @@ static qboolean SV_AddMissingTiles3_r (mapInfo_t *map, int rec, int posListCnt, 
 
 	/** circle through the old list of available tile positions and store the remaining ones in the static array */
 	for (i = 0; i < posListCnt; i++) {
-		int pos = myPosList[i] / TCM;
-		int ti = myPosList[i] % TCM;
-		int x = pos % mapW;
-		int y = pos / mapW;
+		const int pos = myPosList[i] / TCM;
+		const int ti = myPosList[i] % TCM;
+		const int x = pos % mapW;
+		const int y = pos / mapW;
 
 		if (mToPlace[ti].cnt >= mToPlace[ti].max)
 			continue;
 
-		mTile_t *cTile = mToPlace[ti].tile;
+		const mTile_t *cTile = mToPlace[ti].tile;
 		qboolean ok = qfalse;
 		/** try to reduce the # of calls to SV_FitTile by checking only those gaps affected by the placement of the previous tile */
 		if (rec > 0) {	/* the first recursion doesn't have a previous tile */
@@ -1010,6 +1129,7 @@ static qboolean SV_AddMissingTiles3_r (mapInfo_t *map, int rec, int posListCnt, 
 		}
 		if (ok) {
 			/* store the posTile in our new list */
+			assert(j < RMA2_MAX_TILEPOS);
 			posTileList[rec][j] = myPosList[i];
 			j++;
 			/* store the tile index in the list of remaining tile types */
@@ -1043,22 +1163,27 @@ static qboolean SV_AddMissingTiles3_r (mapInfo_t *map, int rec, int posListCnt, 
 
 	/** if the remaining tiles are simply not enough to cover the gaps, bail */
 	for (i = 0; i < availableTilesCnt; i++) {
-		int ti = availableTiles[i][0];
-		int allowed = mToPlace[ti].max - mToPlace[ti].cnt;
-		int possible = availableTiles[i][1];
-		int remaining = min(allowed, possible);
+		const int ti = availableTiles[i][0];
+		const int allowed = mToPlace[ti].max - mToPlace[ti].cnt;
+		const int possible = availableTiles[i][1];
+		const int remaining = min(allowed, possible);
 		solids += remaining * mToPlace[ti].tile->area;
 	}
-	if (solids < gapCount)
+	if (solids < gapCount) {
+#if DISPLAY_THE_MAP_ON_FAILURE
+		SV_RmaPrintMap(map);
+		Com_Printf("out of solids\n");
+#endif
 		return qfalse;
+	}
 
 	/** check how well the remaining tiles can cover the gaps */
 	for (i = 0; i < j; i++) {
-		int pos = posTileList[rec][i] / TCM;
-		int ti = posTileList[rec][i] % TCM;
-		int x = pos % mapW;
-		int y = pos / mapW;
-		mTile_t *tile = mToPlace[ti].tile;
+		const int pos = posTileList[rec][i] / TCM;
+		const int ti = posTileList[rec][i] % TCM;
+		const int x = pos % mapW;
+		const int y = pos / mapW;
+		const mTile_t *tile = mToPlace[ti].tile;
 		int tx, ty;
 		for (ty = 0; ty < tile->h; ty++) {
 			for (tx = 0; tx < tile->w; tx++) {
@@ -1075,8 +1200,13 @@ static qboolean SV_AddMissingTiles3_r (mapInfo_t *map, int rec, int posListCnt, 
 	/** if we find a gap that NO tile can cover, bail */
 	for (y = 1; y < mAsm->height + 1; y++) {
 		for (x = 1; x < mAsm->width + 1; x++) {
-			if (gapList[x][y][0] == 0)
+			if (gapList[x][y][0] == 0) {
+#if DISPLAY_THE_MAP_ON_FAILURE
+				SV_RmaPrintMap(map);
+				Com_Printf("uncovered gap: %i/%i\n", x, y);
+#endif
 				return qfalse;
+			}
 		}
 	}
 
@@ -1107,24 +1237,33 @@ static qboolean SV_AddMissingTiles3_r (mapInfo_t *map, int rec, int posListCnt, 
 						if (line && (map->curMap[y][x] & nonLineFlags))
 							continue;
 						for (h = 1; h <= g; h++) {		/* circle through the alternatives stored for this gap */
-							int tc = gapList[x][y][h];
-							int pos = tc / TCM;
-							int ti = tc % TCM;
-							int px = pos % mapW;
-							int py = pos / mapW;
+							const int tc = gapList[x][y][h];
+							const int pos = tc / TCM;
+							const int ti = tc % TCM;
+							const int px = pos % mapW;
+							const int py = pos / mapW;
 
 							SV_AddTile(map, mToPlace[ti].tile, px, py, ti, pos);
 #if PRINT_RMA_PROGRESS
-							if (rec < 10) Com_Printf("GAPS: %i rec: %i chances: %i calls: %i\n", GAPS, rec, j, callCnt);
+							if (rec < 10)
+								Com_Printf("GAPS: %i rec: %i chances: %i calls: %i\n", GAPS, rec, j, callCnt);
 #endif
 							if (SV_TestFilled(map))
 								return qtrue;		/* this was the last tile we needed */
-							if (SV_AddMissingTiles3_r(map, rec + 1, j, posTileList[rec], mToPlace[ti].tile, px, py))
+							if (SV_AddMissingTiles_r(map, rec + 1, j, posTileList[rec], mToPlace[ti].tile, px, py))
 								return qtrue;		/* recursive placement succeeded */
-							else {					/* tile was a dead end, remove it */
-								SV_RemoveTile(map, NULL, NULL);
-								if (h >= g)
-									return qfalse;
+
+							/* tile was a dead end, remove it */
+							SV_RemoveTile(map, NULL, NULL);
+
+							if (h >= g) {
+/*
+#if DISPLAY_THE_MAP_ON_FAILURE
+								SV_RmaPrintMap(map);
+								Com_Printf("no tile works for gap\n");
+#endif
+*/
+								return qfalse;
 							}
 						}
 					}
@@ -1135,15 +1274,15 @@ static qboolean SV_AddMissingTiles3_r (mapInfo_t *map, int rec, int posListCnt, 
 
 	/** now try each of the remaining positions, that is, those that have more than GAPS alternatives. Rarely happens. */
 	for (i = 0; i < j; i++) {
-		int pos = posTileList[rec][i] / TCM;
-		int ti = posTileList[rec][i] % TCM;
-		int x = pos % mapW;
-		int y = pos / mapW;
+		const int pos = posTileList[rec][i] / TCM;
+		const int ti = posTileList[rec][i] % TCM;
+		const int x = pos % mapW;
+		const int y = pos / mapW;
 
 		SV_AddTile(map, mToPlace[ti].tile, x, y, ti, pos);
 		if (SV_TestFilled(map))
 			return qtrue;
-		if (SV_AddMissingTiles3_r(map, rec + 1, j, posTileList[rec], mToPlace[ti].tile, x, y))
+		if (SV_AddMissingTiles_r(map, rec + 1, j, posTileList[rec], mToPlace[ti].tile, x, y))
 			return qtrue;
 		else
 			SV_RemoveTile(map, NULL, NULL);
@@ -1169,26 +1308,26 @@ static qboolean SV_GapListBuild (mapInfo_t *map, int tilePosListCnt)
 	for (y = 1; y < mAsm->height + 1; y++) {
 		for (x = 1; x < mAsm->width + 1; x++)
 			if (IS_SOLID(map->curMap[y][x]))
-				gapList[x][y][0] = -1;
+				gapList[x][y][0] = -1;		/* the gap is solid already, so we don't need a counter. But we might need the info. */
 			else
 				gapList[x][y][0] = 0;		/* the counter for this pos */
 	}
 
-	/** check how well the tiles can cover the gaps */
+	/* check how well the tiles can cover the gaps */
 	int i;
 	for (i = 0; i < tilePosListCnt; i++) {
-		int pos = posTileList[0][i] / TCM;
-		int ti = posTileList[0][i] % TCM;
+		const int pos = posTileList[0][i] / TCM;
+		const int ti = posTileList[0][i] % TCM;
 		x = pos % mapW;
 		y = pos / mapW;
 		mTile_t *tile = mToPlace[ti].tile;
 		int tx, ty;
-		ty = 0;	// for a breakpoint
+		ty = 0;	/* for a breakpoint */
 		for (ty = 0; ty < tile->h; ty++) {
 			for (tx = 0; tx < tile->w; tx++) {
 				if (IS_SOLID(tile->spec[ty][tx])) {
 					gapList[x + tx][y + ty][0] += 1;
-					int cnt = gapList[x + tx][y + ty][0];	/* get the counter */
+					const int cnt = gapList[x + tx][y + ty][0];	/* get the counter */
 					if (cnt < GAPS + 1)
 						gapList[x + tx][y + ty][cnt] = posTileList[0][i];	/* remember the tilecode */
 				}
@@ -1213,39 +1352,45 @@ static qboolean SV_GapListBuild (mapInfo_t *map, int tilePosListCnt)
  * @param mapW width of the map. Needed to decode tc1
  * @param nx x of the absolute map position to investigate
  * @param nx y of the absolute map position to investigate
- * @return qtrue if no matching tile was found
+ * @return @c true if no matching tile was found
  */
 static qboolean SV_GapCheckNeighbour (mapInfo_t *map, int tc1, int mapW, int nx, int ny)
 {
-	qboolean found = qfalse;
 	if (nx < 1)
-		return qfalse;				/* map border */
+		/* map border */
+		return qfalse;
 	if (ny < 1)
 		return qfalse;
-	if (gapList[nx][ny][0] < 1)		/* no tiles cover this gap, probably map border */
+	if (nx > mapW)
 		return qfalse;
-	if (gapList[nx][ny][0] >= GAPS)	/* if there are more tiles than we stored the tc's of, */
-		return qfalse;				/* we can not evaluate this neighbour. */
+	if (ny > map->mAssembly[map->mAsm].height)
+		return qfalse;
+
+	if (gapList[nx][ny][0] < 1)
+		/* no tiles cover this gap, probably map border */
+		return qfalse;
+	if (gapList[nx][ny][0] >= GAPS)
+		/* if there are more tiles than we stored the tc's of,
+		 * we can not evaluate this neighbour. */
+		return qfalse;
 
 	qboolean flags1 = SV_GapGetFlagsAtAbsPos(map, tc1, mapW, nx, ny);
-	if (IS_SOLID(flags1))			/* nx/ny is part of tc1 itself */
+	if (IS_SOLID(flags1))
+		/* nx/ny is part of tc1 itself */
 		return qfalse;
 
 	/** circle through the tiles that cover this gap */
 	int h;
 	for (h = 1; h <= gapList[nx][ny][0]; h++) {
-		int tc2 = gapList[nx][ny][h];
-		unsigned long flags2 = SV_GapGetFlagsAtAbsPos(map, tc2, mapW, nx, ny);
+		const int tc2 = gapList[nx][ny][h];
+		const unsigned long flags2 = SV_GapGetFlagsAtAbsPos(map, tc2, mapW, nx, ny);
 
 		if (flags1 & flags2) {
-			found = qtrue;			/* found at least one tile that would work */
-			break;
+			/* found at least one tile that would work */
+			return qfalse;
 		}
 	}
-	if (!found) {
-		return qtrue; /* eliminate tile */
-	}
-	return qfalse;
+	return qtrue;
 }
 
 /**
@@ -1269,29 +1414,29 @@ static int SV_GapListReduce (mapInfo_t *map)
 
 			int g;
 			for (g = 1; g <= gapList[x][y][0]; g++) {
-				int tc1 = gapList[x][y][g];
+				const int tc1 = gapList[x][y][g];
 				if (g >= GAPS)
 					break;	/* there are more tiles than we stored the tc's of. */
 
-				/** check the neighbour to the right */
+				/* check the neighbour to the right */
 				if (SV_GapCheckNeighbour(map, tc1, mapW, x+1, y)) {
 					posTileList[1][n] = tc1;
 					n++;
 					continue;
 				}
-				/** check the neighbour to the left */
+				/* check the neighbour to the left */
 				if (SV_GapCheckNeighbour(map, tc1, mapW, x-1, y)) {
 					posTileList[1][n] = tc1;
 					n++;
 					continue;
 				}
-				/** check the upper neighbour */
+				/* check the upper neighbour */
 				if (SV_GapCheckNeighbour(map, tc1, mapW, x, y+1)) {
 					posTileList[1][n] = tc1;
 					n++;
 					continue;
 				}
-				/** check the neighbour below */
+				/* check the neighbour below */
 				if (SV_GapCheckNeighbour(map, tc1, mapW, x, y-1)) {
 					posTileList[1][n] = tc1;
 					n++;
@@ -1325,7 +1470,7 @@ static int SV_GapListReduce (mapInfo_t *map)
  * @sa SV_FitTile
  * @sa SV_AddTile
  */
-static qboolean SV_AddMissingTiles3 (mapInfo_t *map)
+static qboolean SV_AddMissingTiles (mapInfo_t *map)
 {
 	static int attempts = 0;			/* how often this function is called in the RMA process */
 	const mAssembly_t *mAsm = &map->mAssembly[map->mAsm];
@@ -1340,19 +1485,33 @@ static qboolean SV_AddMissingTiles3 (mapInfo_t *map)
 	RandomList(map->numToPlace, tilenumList);
 	attempts++;
 
-	/** build a list of all positions of the map and all the tiles that fit there */
-	int i, j, k, n = 0;
-	for (i = 0; i < mapSize; i++) {
-		int x = posList[i] % mapW;
-		int y = posList[i] / mapW;
+	/* check if the map is already filled */
+	if (SV_TestFilled(map))
+		return qtrue;
 
-		for (k = 0; k < map->numToPlace; k++) {
-			int ti = tilenumList[k];
+	/** build a list of all positions of the map and all the tiles that fit there */
+	int i, j, k, offs, num, n = 0;
+	for (i = 0; i < mapSize; i++) {
+		const int x = posList[i] % mapW;
+		const int y = posList[i] / mapW;
+
+		/* only use positions that are on the grid */
+		if (x % mAsm->dx != 0 || y % mAsm->dy != 0) {
+			continue;
+		}
+		/* if we simply test the tiles in the same sequence for each pos, we get the 'boring maps' problem */
+		/* So let's check them from a different starting point in the list each time */
+		/* Example: if we have say 20 tiles, test eg. 13-20 first, then 1-12 */
+		num = map->numToPlace;
+		offs = rand() % num;
+		for (k = offs; k < num + offs; k++) {
+			const int ti = tilenumList[k % num];
 
 			if (mToPlace[ti].cnt >= mToPlace[ti].max)
 				continue;
 			if (SV_FitTile(map, mToPlace[ti].tile, x, y)) {
 				posTileList[0][n] = posList[i] * TCM + ti;
+				assert(n < RMA2_MAX_TILEPOS);
 				n++;
 			}
 		}
@@ -1369,10 +1528,10 @@ static qboolean SV_AddMissingTiles3 (mapInfo_t *map)
 	while (eliminated) {		/* if we could eliminate one or more tiles, try again */
 		eliminated = qfalse;
 #if 0
-		/** print the posTileList */
+		/* print the posTileList */
 		for (i = 0; i < n; i++) {
-			Com_Printf("%2.i/%2.i ", posTileList[0][i]/TCM, posTileList[0][i]%TCM);
-			if (!(i%10))
+			Com_Printf("%2.i/%2.i ", posTileList[0][i] / TCM, posTileList[0][i] % TCM);
+			if (!(i % 10))
 				Com_Printf("\n");
 		}
 		Com_Printf("\n");
@@ -1380,14 +1539,14 @@ static qboolean SV_AddMissingTiles3 (mapInfo_t *map)
 		qboolean covered = SV_GapListBuild(map, n);
 
 #if 0
-		/** print the gapList */
-		int x,y;
+		/* print the gapList */
+		int x, y;
 		Com_Printf("\n");
-		for (x=0; x<mAsm->width+1; x++){
-			for (y=0; y<mAsm->height+1; y++){
+		for (x = 0; x < mAsm->width + 1; x++){
+			for (y = 0; y < mAsm->height + 1; y++){
 				int cnt = gapList[x][y][0];
 				Com_Printf("x:%i y:%i cnt:%i ",x,y,cnt);
-				for (j=0; j<=cnt+3; j++) {
+				for (j = 0; j <= cnt + 3; j++) {
 					Com_Printf("%i ", gapList[x][y][j]);
 				}
 				Com_Printf("\n");
@@ -1402,15 +1561,14 @@ static qboolean SV_AddMissingTiles3 (mapInfo_t *map)
 		if (m) {				/* the number of tilepositions to discard */
 			eliminated = qtrue;
 			for (j = 0; j < m; j++) {
-				int tc = posTileList[1][j];	/* SV_GapListReduce abuses the space for rec=1 to return it's result */
+				const int tc = posTileList[1][j];	/* SV_GapListReduce abuses the space for rec=1 to return it's result */
 				int offset = 0;
 				for (i = 0; i < n; i++) {
 					if (posTileList[0][i] == tc) {
 						offset = 1;
 						continue;
 					}
-					else
-						posTileList[0][i - offset] = posTileList[0][i];
+					posTileList[0][i - offset] = posTileList[0][i];
 				}
 				if (offset)		/* only if we actually removed the tile */
 					n--;		/* reduce the counter of posTileList */
@@ -1418,10 +1576,8 @@ static qboolean SV_AddMissingTiles3 (mapInfo_t *map)
 		}
 	}
 
-	return SV_AddMissingTiles3_r(map, 0, n, posTileList[0], NULL, 0, 0);
+	return SV_AddMissingTiles_r(map, 0, n, posTileList[0], NULL, 0, 0);
 }
-
-#endif
 
 /**
  * @brief Tries to build the map
@@ -1440,7 +1596,7 @@ static qboolean SV_AddMissingTiles3 (mapInfo_t *map)
  * @sa SV_FitTile
  * @sa SV_AddTile
  */
-static void SV_AddMapTiles (mapInfo_t *map)
+static qboolean SV_AddMapTiles (mapInfo_t *map)
 {
 	int idx;	/* index in the array of available tiles */
 	int pos;	/* index in the array of random positions */
@@ -1470,10 +1626,10 @@ static void SV_AddMapTiles (mapInfo_t *map)
 			for (; pos < mapSize; pos++) {
 				const int x = prList[pos] % mapW;
 				const int y = prList[pos] / mapW;
-				if (sv_threads->integer) {
+				if (sv_threads->integer && sv_rma->integer == 1) {
 					if (SDL_SemValue(mapSem) != 1) {
 						/* someone else beat me to it */
-						return;
+						return qtrue;
 					}
 				}
 
@@ -1505,6 +1661,10 @@ static void SV_AddMapTiles (mapInfo_t *map)
 #ifdef DEBUG
 			assert(idx == mPlaced[map->numPlaced - 1].idx);
 #endif
+#if DISPLAY_THE_MAP_ON_FAILURE
+			SV_RmaPrintMap(map);
+			Com_Printf("required tile doesn't fit\n");
+#endif
 			SV_RemoveTile(map, &idx, &pos);
 			pos++;
 		}
@@ -1516,22 +1676,30 @@ static void SV_AddMapTiles (mapInfo_t *map)
 		} else {
 			/* no more retries */
 			if (start == map->numPlaced) {
-				Com_Error(ERR_DROP, "SV_AddMapTiles: Impossible to assemble map '%s' with assembly '%s'\n",
-						map->name, mAsm->id ? mAsm->id : "");
+				if (mAsm->numSeeds == 0 || map->retryCnt > 2) {
+					Com_Error(ERR_DROP, "SV_AddMapTiles: Impossible to assemble map '%s' with assembly '%s'\n",
+							map->name, mAsm->id ? mAsm->id : "");
+				} else {
+					Com_Printf("SV_AddMapTiles: Impossible to assemble map '%s' with assembly '%s' - retry with another seed\n",
+							map->name, mAsm->id ? mAsm->id : "");
+					return qfalse;
+				}
 			}
 			SV_RemoveTile(map, &idx, &pos);
 			pos++;
 		}
 
-#if RMA2
-		if (idx == numToPlace && !SV_AddMissingTiles3(map)) {
-#else
 		if (idx == numToPlace && !SV_AddMissingTiles(map)) {
+#if DISPLAY_THE_MAP_ON_FAILURE
+			SV_RmaPrintMap(map);
+			Com_Printf("couldn't pad\n");
 #endif
 			SV_RemoveTile(map, &idx, &pos);
 			pos++;
 		}
 	}
+
+	return qtrue;
 }
 
 /**
@@ -1539,7 +1707,7 @@ static void SV_AddMapTiles (mapInfo_t *map)
  * @sa SV_AssembleMap
  * @sa SV_AddTile
  */
-static void SV_PrepareTilesToPlace (mapInfo_t *map)
+void SV_PrepareTilesToPlace (mapInfo_t *map)
 {
 	int i;
 	const mAssembly_t *mAsm = &map->mAssembly[map->mAsm];
@@ -1571,9 +1739,11 @@ static int SV_AssemblyThread (void* data)
 {
 	mapInfo_t *map = (mapInfo_t*) data;
 
-	srand(time(NULL));
+	Com_SetRandomSeed(time(NULL));
 
-	SV_AddMapTiles(map);
+	if (!SV_AddMapTiles(map)) {
+		map->retryCnt++;
+	}
 
 	/* the first thread to reach this point, gets the semaphore */
 	if (SDL_SemTryWait(mapSem) != 0)
@@ -1694,7 +1864,7 @@ static int SV_ParallelSearch (mapInfo_t *map)
  * @param[in] inherit When @c true, this is called to inherit tile definitions
  * from another ump file (no assemblies)
  */
-static void SV_ParseUMP (const char *name, mapInfo_t *map, qboolean inherit)
+void SV_ParseUMP (const char *name, mapInfo_t *map, qboolean inherit)
 {
 	char filename[MAX_QPATH];
 	byte *buf;
@@ -1763,67 +1933,21 @@ static void SV_ParseUMP (const char *name, mapInfo_t *map, qboolean inherit)
 	FS_FreeFile(buf);
 }
 
-/**
- * @brief Assembles a "random" map
- * and parses the *.ump files for assembling the "random" maps and places the 'fixed' tiles.
- * For a more detailed description of the whole algorithm see SV_AddMapTiles.
- * @param[in] name The name of the map (ump) file to parse
- * @param[in] assembly The random map assembly that should be used from the given rma
- * @param[out] asmMap The output string of the random map assembly that contains all the
- * map tiles that should be assembled. The order is the same as in the @c asmPos string.
- * Each of the map tiles in this string has a corresponding entry in the pos string, too.
- * @param[out] asmPos The pos string for the assembly. For each tile from the @c asmMap
- * string this string contains three coordinates for shifting the given tile names.
- * @sa B_AssembleMap_f
- * @sa SV_AddTile
- * @sa SV_AddMandatoryParts
- * @sa SV_ParseAssembly
- * @sa SV_ParseMapTile
- * @note Make sure to free the returned pointer
- */
-mapInfo_t* SV_AssembleMap (const char *name, const char *assembly, char *asmMap, char *asmPos)
+#if SORT_BY_SIZE
+static int cmpTileAreaSize (const void * a, const void * b)
+{
+	if (((const mToPlace_t *) a)->tile->area > ((const mToPlace_t *) b)->tile->area)
+		return -1;
+	else if (((const mToPlace_t *) a)->tile->area == ((const mToPlace_t *) b)->tile->area)
+		return 0;
+	return 1;
+}
+#endif
+
+static mapInfo_t* SV_DoMapAssemble (mapInfo_t *map, const char *assembly, char *asmMap, char *asmPos, const unsigned int seed)
 {
 	int i;
-	mAssembly_t *mAsm;
-	mapInfo_t *map;
-
-	map = Mem_AllocType(mapInfo_t);
-	Q_strncpyz(map->name, name, sizeof(map->name));
-
-	SV_ParseUMP(name, map, qfalse);
-/*	developer->integer |= DEBUG_SERVER;		crashes if used in testall.exe. cvar not initialized ? */
-
-	/* check for parsed tiles and assemblies */
-	if (!map->numTiles)
-		Com_Error(ERR_DROP, "No map tiles defined (%s)!", name);
-#ifdef DEBUG
-	else
-		Com_DPrintf(DEBUG_SERVER, "numTiles: %i\n", map->numTiles);
-#endif
-
-	if (!map->numAssemblies)
-		Com_Error(ERR_DROP, "No map assemblies defined (%s)!", name);
-#ifdef DEBUG
-	else
-		Com_DPrintf(DEBUG_SERVER, "numAssemblies: %i\n", map->numAssemblies);
-#endif
-
-	/* use random assembly, if no valid one has been specified */
-	map->mAsm = rand() % map->numAssemblies;
-
-	/* overwrite with specified, if any */
-	if (assembly && assembly[0]) {
-		for (i = 0; i < map->numAssemblies; i++)
-			if (Q_streq(assembly, map->mAssembly[i].id)) {
-				map->mAsm = i;
-				break;
-			}
-		if (i == map->numAssemblies) {
-			Com_Printf("SV_AssembleMap: Map assembly '%s' not found\n", assembly);
-		}
-	}
-
-	mAsm = &map->mAssembly[map->mAsm];
+	mAssembly_t *mAsm = &map->mAssembly[map->mAsm];
 
 	Com_DPrintf(DEBUG_SERVER, "Use assembly: '%s'\n", mAsm->id);
 
@@ -1833,6 +1957,13 @@ mapInfo_t* SV_AssembleMap (const char *name, const char *assembly, char *asmMap,
 
 	SV_PrepareTilesToPlace(map);
 
+#if SORT_BY_SIZE
+	/* This is the perfect time to sort them by size, which helps RMA a lot.
+	 * This eliminates the need for a seedlist in oriental large completely.
+	 * Unfortunately, it doesn't do that for the others. Instead, it can slow down some maps quite a bit. */
+	qsort(map->mToPlace, map->numToPlace, sizeof(mToPlace_t), cmpTileAreaSize);
+#endif
+
 	/* assemble the map */
 	map->numPlaced = 0;
 	SV_ClearMap(map);
@@ -1841,13 +1972,53 @@ mapInfo_t* SV_AssembleMap (const char *name, const char *assembly, char *asmMap,
 	for (i = 0; i < mAsm->numFixed; i++)
 		SV_AddTile(map, &map->mTile[mAsm->fT[i]], mAsm->fX[i], mAsm->fY[i], -1, -1);
 
-	if (sv_threads->integer) {
+	if (sv_threads->integer && sv_rma->integer == 1) {
+		int oldCount = map->retryCnt;
 		if (SV_ParallelSearch(map) < 0) {
+			if (oldCount < map->retryCnt && mAsm->numSeeds > 0) {
+				/* if we are allowed to restart the search with a fixed seed
+				 * from the assembly definition, do so */
+				Com_SetRandomSeed(mAsm->seeds[rand() % mAsm->numSeeds]);
+				return SV_DoMapAssemble(map, assembly, asmMap, asmPos, seed);
+			}
 			Mem_Free(map);
 			return NULL;
 		}
 	} else {
-		SV_AddMapTiles(map);
+		unsigned int seedUsed;
+
+		if (mAsm->numSeeds > 0) {
+			/* if the map has a seedlist defined, use that */
+			seedUsed = mAsm->seeds[rand() % mAsm->numSeeds];
+			if (seed) {
+				/* if a seed was passed, we are in cunit test mode */
+				if (seed >= mAsm->numSeeds)
+					/* if the given seed is outside the seedlist, assume that we already tested it and pretend that it's ok */
+					return map;
+				/* use the passed seed as an index into the seedlist */
+				seedUsed = mAsm->seeds[seed % mAsm->numSeeds];
+			}
+			Com_Printf("Picked seed: %i for <%s>\n", seedUsed, assembly);
+		} else {
+			/* no seedlist */
+			if (seed)
+				seedUsed = seed;
+			else
+				seedUsed = rand() % 50;	/* limit the possible seeds to (testable) values between 0 and 49 */
+		}
+		Com_SetRandomSeed(seedUsed);
+		Com_Printf("Using RMA%i seed: %i for <%s>\n", sv_rma->integer, seedUsed, assembly);
+
+		if (!SV_AddMapTiles(map)) {
+			map->retryCnt++;
+			if (mAsm->numSeeds > 0) {
+				/* if we are allowed to restart the search with a fixed seed
+				 * from the assembly definition, do so */
+				Com_SetRandomSeed(mAsm->seeds[seed % mAsm->numSeeds]);
+				return SV_DoMapAssemble(map, assembly, asmMap, asmPos, seed);
+			}
+			return NULL;
+		}
 	}
 
 	/* prepare map and pos strings */
@@ -1859,6 +2030,69 @@ mapInfo_t* SV_AssembleMap (const char *name, const char *assembly, char *asmMap,
 	/* generate the strings */
 	SV_PrintMapStrings(map, asmMap, asmPos);
 
-	assert(map);
+	return map;
+}
+
+/**
+ * @brief Assembles a "random" map
+ * and parses the *.ump files for assembling the "random" maps and places the 'fixed' tiles.
+ * For a more detailed description of the whole algorithm see SV_AddMapTiles.
+ * @param[in] name The name of the map (ump) file to parse
+ * @param[in] assembly The random map assembly that should be used from the given rma
+ * @param[out] asmMap The output string of the random map assembly that contains all the
+ * map tiles that should be assembled. The order is the same as in the @c asmPos string.
+ * Each of the map tiles in this string has a corresponding entry in the pos string, too.
+ * @param[out] asmPos The pos string for the assembly. For each tile from the @c asmMap
+ * string this string contains three coordinates for shifting the given tile names.
+ * @param[in] seed random seed to use (for cunit tests). If 0, the called functions can use their own seed setting.
+ * @sa B_AssembleMap_f
+ * @sa SV_AddTile
+ * @sa SV_AddMandatoryParts
+ * @sa SV_ParseAssembly
+ * @sa SV_ParseMapTile
+ * @note Make sure to free the returned pointer
+ */
+mapInfo_t* SV_AssembleMap (const char *name, const char *assembly, char *asmMap, char *asmPos, const unsigned int seed)
+{
+	mapInfo_t *map;
+
+	map = Mem_AllocType(mapInfo_t);
+	Q_strncpyz(map->name, name, sizeof(map->name));
+
+	SV_ParseUMP(name, map, qfalse);
+
+	/* check for parsed tiles and assemblies */
+	if (!map->numTiles)
+		Com_Error(ERR_DROP, "No map tiles defined (%s)!", map->name);
+#ifdef DEBUG
+	else
+		Com_DPrintf(DEBUG_SERVER, "numTiles: %i\n", map->numTiles);
+#endif
+
+	if (!map->numAssemblies)
+		Com_Error(ERR_DROP, "No map assemblies defined (%s)!", map->name);
+#ifdef DEBUG
+	else
+		Com_DPrintf(DEBUG_SERVER, "numAssemblies: %i\n", map->numAssemblies);
+#endif
+
+	/* use random assembly, if no valid one has been specified */
+	map->mAsm = rand() % map->numAssemblies;
+
+	/* overwrite with specified, if any */
+	if (assembly && assembly[0]) {
+		int i;
+		for (i = 0; i < map->numAssemblies; i++)
+			if (Q_streq(assembly, map->mAssembly[i].id)) {
+				map->mAsm = i;
+				break;
+			}
+		if (i == map->numAssemblies) {
+			Com_Printf("SV_AssembleMap: Map assembly '%s' not found\n", assembly);
+		}
+	}
+
+	SV_DoMapAssemble(map, assembly, asmMap, asmPos, seed);
+
 	return map;
 }

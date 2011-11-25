@@ -34,7 +34,7 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #include "../common/tracing.h"
 #include "../common/cvar.h"
 
-#define	GAME_API_VERSION	8
+#define	GAME_API_VERSION	10
 
 /** @brief edict->solid values */
 typedef enum {
@@ -82,6 +82,8 @@ struct edict_s {
 	edict_t *child;	/**< e.g. the trigger for this edict */
 	edict_t *owner;	/**< e.g. the door model in case of func_door */
 	int modelindex;	/**< inline model index */
+
+	const char *classname;
 };
 
 
@@ -93,7 +95,7 @@ struct edict_s {
 typedef struct {
 	/* client/server information */
 	int seed; /**< random seed */
-	csi_t *csi;
+	const csi_t *csi;
 	routing_t *routingMap;	/**< server side routing table */
 
 	/* special messages */
@@ -104,8 +106,6 @@ typedef struct {
 	void (IMPORT *DPrintf) (const char *fmt, ...) __attribute__((format(printf, 1, 2)));
 	/** sends message to only one player (don't use this to send messages to an AI player struct) */
 	void (IMPORT *PlayerPrintf) (const player_t * player, int printlevel, const char *fmt, va_list ap);
-
-	void (IMPORT *PositionedSound) (int mask, const vec3_t origin, const edict_t *ent, const char *sound);
 
 	/** configstrings hold all the index strings.
 	 * All of the current configstrings are sent to clients when
@@ -158,6 +158,7 @@ typedef struct {
 	pos_t (IMPORT *GridFall) (const routing_t * map, actorSizeEnum_t actorSize, const pos3_t pos);
 	void (IMPORT *GridPosToVec) (const routing_t * map, actorSizeEnum_t actorSize, const pos3_t pos, vec3_t vec);
 	void (IMPORT *GridRecalcRouting) (routing_t * map, const char *name, const char **list);
+	float (IMPORT *GetVisibility) (const pos3_t position);
 
 	/* filesystem functions */
 	const char *(IMPORT *FS_Gamedir) (void);
@@ -241,7 +242,7 @@ typedef struct {
 
 	qboolean (EXPORT *ClientConnect) (player_t * client, char *userinfo, size_t userinfoSize);
 	qboolean (EXPORT *ClientBegin) (player_t * client);
-	void (EXPORT *ClientSpawn) (player_t * client);
+	void (EXPORT *ClientStartMatch) (player_t * client);
 	void (EXPORT *ClientUserinfoChanged) (player_t * client, const char *userinfo);
 	void (EXPORT *ClientDisconnect) (player_t * client);
 	void (EXPORT *ClientCommand) (player_t * client);

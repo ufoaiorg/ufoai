@@ -47,6 +47,7 @@
 				<Option type="1" />
 				<Option compiler="gcc" />
 				<Option use_console_runner="0" />
+				<Option parameters="--only-RandomMapAssemblyTests" />
 				<Option projectIncludeDirsRelation="1" />
 				<Option projectLibDirsRelation="1" />
 				<Compiler>
@@ -56,6 +57,7 @@
 					<Add option="-DHAVE_VORBIS_CODEC_H" />
 					<Add option="-DHAVE_XVID_H" />
 					<Add option="-DHAVE_THEORA_THEORA_H" />
+					<Add directory="..\..\src\libs\mxml\" />
 				</Compiler>
 				<Linker>
 					<Add option="-pg -lgmon" />
@@ -110,7 +112,6 @@
 			<Add library="ogg" />
 			<Add library="theora" />
 			<Add library="xvidcore" />
-			<Add library="mxml" />
 		</Linker>
 		<Unit filename="..\..\src\client\battlescape\cl_actor.c">
 			<Option compilerVar="CC" />
@@ -136,6 +137,10 @@
 		<Unit filename="..\..\src\client\battlescape\cl_particle.c">
 			<Option compilerVar="CC" />
 		</Unit>
+		<Unit filename="..\..\src\client\battlescape\cl_radar.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="..\..\src\client\battlescape\cl_radar.h" />
 		<Unit filename="..\..\src\client\battlescape\cl_spawn.c">
 			<Option compilerVar="CC" />
 		</Unit>
@@ -154,19 +159,16 @@
 		<Unit filename="..\..\src\client\battlescape\events\e_server.c">
 			<Option compilerVar="CC" />
 		</Unit>
-		<Unit filename="..\..\src\client\battlescape\events\e_time.c">
-			<Option compilerVar="CC" />
-		</Unit>
 		<Unit filename="..\..\src\client\battlescape\events\event\actor\e_event_actoradd.c">
 			<Option compilerVar="CC" />
 		</Unit>
 		<Unit filename="..\..\src\client\battlescape\events\event\actor\e_event_actorappear.c">
 			<Option compilerVar="CC" />
 		</Unit>
-		<Unit filename="..\..\src\client\battlescape\events\event\actor\e_event_actordie.c">
+		<Unit filename="..\..\src\client\battlescape\events\event\actor\e_event_actorclientaction.c">
 			<Option compilerVar="CC" />
 		</Unit>
-		<Unit filename="..\..\src\client\battlescape\events\event\actor\e_event_actorclientaction.c">
+		<Unit filename="..\..\src\client\battlescape\events\event\actor\e_event_actordie.c">
 			<Option compilerVar="CC" />
 		</Unit>
 		<Unit filename="..\..\src\client\battlescape\events\event\actor\e_event_actormove.c">
@@ -265,6 +267,9 @@
 		<Unit filename="..\..\src\client\battlescape\events\event\world\e_event_particlespawn.c">
 			<Option compilerVar="CC" />
 		</Unit>
+		<Unit filename="..\..\src\client\battlescape\events\event\world\e_event_sound.c">
+			<Option compilerVar="CC" />
+		</Unit>
 		<Unit filename="..\..\src\client\cgame\campaign\cp_aircraft.c">
 			<Option compilerVar="CC" />
 		</Unit>
@@ -286,13 +291,13 @@
 		<Unit filename="..\..\src\client\cgame\campaign\cp_aliencont_callbacks.c">
 			<Option compilerVar="CC" />
 		</Unit>
+		<Unit filename="..\..\src\client\cgame\campaign\cp_auto_mission.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="..\..\src\client\cgame\campaign\cp_mission_callbacks.c">
+			<Option compilerVar="CC" />
+		</Unit>
 		<Unit filename="..\..\src\client\cgame\campaign\cp_base.c">
-			<Option compilerVar="CC" />
-		</Unit>
-		<Unit filename="..\..\src\client\cgame\campaign\cp_building.c">
-			<Option compilerVar="CC" />
-		</Unit>
-		<Unit filename="..\..\src\client\cgame\campaign\cp_capacity.c">
 			<Option compilerVar="CC" />
 		</Unit>
 		<Unit filename="..\..\src\client\cgame\campaign\cp_base_callbacks.c">
@@ -301,7 +306,13 @@
 		<Unit filename="..\..\src\client\cgame\campaign\cp_basedefence_callbacks.c">
 			<Option compilerVar="CC" />
 		</Unit>
+		<Unit filename="..\..\src\client\cgame\campaign\cp_building.c">
+			<Option compilerVar="CC" />
+		</Unit>
 		<Unit filename="..\..\src\client\cgame\campaign\cp_campaign.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="..\..\src\client\cgame\campaign\cp_capacity.c">
 			<Option compilerVar="CC" />
 		</Unit>
 		<Unit filename="..\..\src\client\cgame\campaign\cp_employee.c">
@@ -449,6 +460,27 @@
 		<Unit filename="..\..\src\client\cgame\campaign\missions\cp_mission_xvi.c">
 			<Option compilerVar="CC" />
 		</Unit>
+		<Unit filename="..\..\src\client\cgame\cl_game.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="..\..\src\client\cgame\campaign\cl_game_campaign.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="..\..\src\client\cgame\multiplayer\cl_game_multiplayer.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="..\..\src\client\cgame\skirmish\cl_game_skirmish.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="..\..\src\client\cgame\cl_game_team.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="..\..\src\client\cgame\multiplayer\mp_callbacks.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="..\..\src\client\cgame\multiplayer\mp_serverlist.c">
+			<Option compilerVar="CC" />
+		</Unit>
 		<Unit filename="..\..\src\client\cinematic\cl_cinematic.c">
 			<Option compilerVar="CC" />
 		</Unit>
@@ -462,18 +494,6 @@
 			<Option compilerVar="CC" />
 		</Unit>
 		<Unit filename="..\..\src\client\cl_console.c">
-			<Option compilerVar="CC" />
-		</Unit>
-		<Unit filename="..\..\src\client\cgame\cl_game.c">
-			<Option compilerVar="CC" />
-		</Unit>
-		<Unit filename="..\..\src\client\cgame\cl_game_campaign.c">
-			<Option compilerVar="CC" />
-		</Unit>
-		<Unit filename="..\..\src\client\cgame\cl_game_multiplayer.c">
-			<Option compilerVar="CC" />
-		</Unit>
-		<Unit filename="..\..\src\client\cgame\cl_game_skirmish.c">
 			<Option compilerVar="CC" />
 		</Unit>
 		<Unit filename="..\..\src\client\cl_http.c">
@@ -519,18 +539,6 @@
 			<Option compilerVar="CC" />
 		</Unit>
 		<Unit filename="..\..\src\client\input\cl_keys.c">
-			<Option compilerVar="CC" />
-		</Unit>
-		<Unit filename="..\..\src\client\cgame\multiplayer\mp_callbacks.c">
-			<Option compilerVar="CC" />
-		</Unit>
-		<Unit filename="..\..\src\client\cgame\multiplayer\mp_serverlist.c">
-			<Option compilerVar="CC" />
-		</Unit>
-		<Unit filename="..\..\src\client\cgame\cl_game_team.c">
-			<Option compilerVar="CC" />
-		</Unit>
-		<Unit filename="..\..\src\common\xml.c">
 			<Option compilerVar="CC" />
 		</Unit>
 		<Unit filename="..\..\src\client\renderer\r_array.c">
@@ -690,6 +698,9 @@
 			<Option compilerVar="CC" />
 		</Unit>
 		<Unit filename="..\..\src\client\ui\node\ui_node_image.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="..\..\src\client\ui\node\ui_node_texture.c">
 			<Option compilerVar="CC" />
 		</Unit>
 		<Unit filename="..\..\src\client\ui\node\ui_node_item.c">
@@ -902,6 +913,9 @@
 		<Unit filename="..\..\src\common\unzip.c">
 			<Option compilerVar="CC" />
 		</Unit>
+		<Unit filename="..\..\src\common\xml.c">
+			<Option compilerVar="CC" />
+		</Unit>
 		<Unit filename="..\..\src\game\chr_shared.c">
 			<Option compilerVar="CC" />
 		</Unit>
@@ -1106,6 +1120,36 @@
 			<Option compilerVar="CC" />
 		</Unit>
 		<Unit filename="..\..\src\game\q_shared.h" />
+		<Unit filename="..\..\src\libs\mxml\config.h" />
+		<Unit filename="..\..\src\libs\mxml\mxml-attr.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="..\..\src\libs\mxml\mxml-entity.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="..\..\src\libs\mxml\mxml-file.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="..\..\src\libs\mxml\mxml-index.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="..\..\src\libs\mxml\mxml-node.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="..\..\src\libs\mxml\mxml-private.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="..\..\src\libs\mxml\mxml-private.h" />
+		<Unit filename="..\..\src\libs\mxml\mxml-search.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="..\..\src\libs\mxml\mxml-set.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="..\..\src\libs\mxml\mxml-string.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="..\..\src\libs\mxml\mxml.h" />
 		<Unit filename="..\..\src\ports\windows\ufo.rc">
 			<Option compilerVar="WINDRES" />
 		</Unit>
@@ -1139,6 +1183,7 @@
 		<Unit filename="..\..\src\server\sv_rma.c">
 			<Option compilerVar="CC" />
 		</Unit>
+		<Unit filename="..\..\src\server\sv_rma.h" />
 		<Unit filename="..\..\src\server\sv_send.c">
 			<Option compilerVar="CC" />
 		</Unit>
@@ -1157,10 +1202,16 @@
 		<Unit filename="..\..\src\shared\images.c">
 			<Option compilerVar="CC" />
 		</Unit>
+		<Unit filename="..\..\src\shared\entitiesdef.c">
+			<Option compilerVar="CC" />
+		</Unit>
 		<Unit filename="..\..\src\shared\infostring.c">
 			<Option compilerVar="CC" />
 		</Unit>
 		<Unit filename="..\..\src\shared\mathlib.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="..\..\src\shared\mathlib_extra.c">
 			<Option compilerVar="CC" />
 		</Unit>
 		<Unit filename="..\..\src\shared\mutex.c">
@@ -1171,6 +1222,9 @@
 			<Option compilerVar="CC" />
 		</Unit>
 		<Unit filename="..\..\src\shared\shared.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="..\..\src\shared\stringhunk.c">
 			<Option compilerVar="CC" />
 		</Unit>
 		<Unit filename="..\..\src\shared\utf8.c">
@@ -1201,10 +1255,19 @@
 		<Unit filename="..\..\src\tests\test_mapdef.c">
 			<Option compilerVar="CC" />
 		</Unit>
+		<Unit filename="..\..\src\tests\test_mathlibextra.c">
+			<Option compilerVar="CC" />
+		</Unit>
 		<Unit filename="..\..\src\tests\test_parser.c">
 			<Option compilerVar="CC" />
 		</Unit>
+		<Unit filename="..\..\src\tests\test_events.c">
+			<Option compilerVar="CC" />
+		</Unit>
 		<Unit filename="..\..\src\tests\test_parser.h" />
+		<Unit filename="..\..\src\tests\test_renderer.c">
+			<Option compilerVar="CC" />
+		</Unit>
 		<Unit filename="..\..\src\tests\test_rma.c">
 			<Option compilerVar="CC" />
 		</Unit>
@@ -1213,6 +1276,9 @@
 			<Option compilerVar="CC" />
 		</Unit>
 		<Unit filename="..\..\src\tests\test_routing.h" />
+		<Unit filename="..\..\src\tests\test_scripts.c">
+			<Option compilerVar="CC" />
+		</Unit>
 		<Unit filename="..\..\src\tests\test_shared.c">
 			<Option compilerVar="CC" />
 		</Unit>

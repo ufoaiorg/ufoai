@@ -3,7 +3,6 @@
  * @brief "Base inventory" is one of the container nodes. It allow to see and
  * drag and drop soldier items from a base to soldier equipments.
  * @todo extend it with aircraft equipment
- * @todo Link base container with a base
  */
 
 /*
@@ -73,9 +72,9 @@ static const invList_t *dragInfoIC;
  * @return invList_t Pointer to the invList_t/item that is located at x/y or equals "item".
  * @sa INVSH_SearchInInventory
  */
-static invList_t *UI_ContainerNodeGetExistingItem (const uiNode_t *node, objDef_t *item, const itemFilterTypes_t filterType)
+static invList_t *UI_ContainerNodeGetExistingItem (const uiNode_t *node, const objDef_t *item, const itemFilterTypes_t filterType)
 {
-	return INVSH_SearchInInventoryWithFilter(ui_inventory, EXTRADATACONST(node).super.container, NONE, NONE, item, filterType);
+	return INV_SearchInInventoryWithFilter(ui_inventory, EXTRADATACONST(node).super.container, item, filterType);
 }
 
 /**
@@ -118,7 +117,7 @@ static void UI_ContainerItemIteratorNext (containerItemIterator_t *iterator)
 			qboolean isAmmo;
 			qboolean isWeapon;
 			qboolean isArmour;
-			objDef_t *obj = INVSH_GetItemByIDX(iterator->itemID);
+			const objDef_t *obj = INVSH_GetItemByIDX(iterator->itemID);
 
 			/* gameplay filter */
 			if (!GAME_ItemIsUseable(obj))
@@ -215,8 +214,6 @@ static void UI_BaseInventoryNodeUpdateScroll (uiNode_t* node)
  */
 static void UI_GetItemTooltip (item_t item, char *tooltipText, size_t stringMaxLength)
 {
-	objDef_t *weapon;
-
 	assert(item.t);
 
 	if (item.amount > 1)
@@ -245,7 +242,7 @@ static void UI_GetItemTooltip (item_t item, char *tooltipText, size_t stringMaxL
 				/* If it's ammo get the weapon names it can be used in */
 				Q_strcat(tooltipText, _("Usable in:\n"), stringMaxLength);
 				for (i = 0; i < item.t->numWeapons; i++) {
-					weapon = item.t->weapons[i];
+					const objDef_t *weapon = item.t->weapons[i];
 					if (GAME_ItemIsUseable(weapon)) {
 						Q_strcat(tooltipText, va("* %s\n", _(weapon->name)), stringMaxLength);
 					}
@@ -269,16 +266,14 @@ static const vec3_t scale = {3.5, 3.5, 3.5};
 /** @todo it may be nice to vectorise that */
 static const vec4_t colorDefault = {1, 1, 1, 1};
 static const vec4_t colorLoadable = {0.5, 1, 0.5, 1};
-static const vec4_t colorDisabled = {0.5, 0.5, 0.5, 1};
 static const vec4_t colorDisabledHiden = {0.5, 0.5, 0.5, 0.5};
 static const vec4_t colorDisabledLoadable = {0.5, 0.25, 0.25, 1.0};
-static const vec4_t colorPreview = { 0.5, 0.5, 1, 1 };	/**< Make the preview item look bluish */
 
 /**
  * @brief Draw the base inventory
  * @return The full height requested by the current view (not the node height)
  */
-static int UI_BaseInventoryNodeDrawItems (uiNode_t *node, objDef_t *highlightType)
+static int UI_BaseInventoryNodeDrawItems (uiNode_t *node, const objDef_t *highlightType)
 {
 	qboolean outOfNode = qfalse;
 	vec2_t nodepos;
@@ -292,7 +287,7 @@ static int UI_BaseInventoryNodeDrawItems (uiNode_t *node, objDef_t *highlightTyp
 	UI_ContainerItemIteratorInit(&iterator, node);
 	for (; iterator.itemID < csi.numODs; UI_ContainerItemIteratorNext(&iterator)) {
 		const int id = iterator.itemID;
-		objDef_t *obj = INVSH_GetItemByIDX(id);
+		const objDef_t *obj = INVSH_GetItemByIDX(id);
 		item_t tempItem = {1, NULL, obj, 0, 0};
 		vec3_t pos;
 		vec3_t ammopos;
@@ -301,7 +296,7 @@ static int UI_BaseInventoryNodeDrawItems (uiNode_t *node, objDef_t *highlightTyp
 		int amount;
 		const int col = items % EXTRADATA(node).columns;
 		int cellHeight = 0;
-		invList_t *icItem = iterator.itemFound;
+		const invList_t *icItem = iterator.itemFound;
 
 		/* skip items over and bellow the node view */
 		if (outOfNode || currentHeight < EXTRADATA(node).scrollY.viewPos) {
@@ -428,7 +423,7 @@ static int UI_BaseInventoryNodeDrawItems (uiNode_t *node, objDef_t *highlightTyp
 /**
  * @brief Draw the inventory of the base
  */
-static void UI_BaseInventoryNodeDraw2 (uiNode_t *node, objDef_t *highlightType)
+static void UI_BaseInventoryNodeDraw2 (uiNode_t *node, const objDef_t *highlightType)
 {
 	qboolean updateScroll = qfalse;
 	int visibleHeight = 0;
@@ -474,7 +469,7 @@ static void UI_BaseInventoryNodeDraw2 (uiNode_t *node, objDef_t *highlightType)
  */
 static void UI_BaseInventoryNodeDraw (uiNode_t *node)
 {
-	objDef_t *highlightType = NULL;
+	const objDef_t *highlightType = NULL;
 
 	if (!EXTRADATA(node).super.container)
 		return;
@@ -493,10 +488,9 @@ static void UI_BaseInventoryNodeDraw (uiNode_t *node)
 }
 
 /**
- * @note this function is a copy-paste of UI_ContainerNodeDrawItems (with remove of unneed code)
+ * @note this function is a copy-paste of UI_ContainerNodeDrawItems (with remove of unneeded code)
  */
-static invList_t *UI_BaseInventoryNodeGetItem (const uiNode_t* const node,
-	int mouseX, int mouseY, int* contX, int* contY)
+static invList_t *UI_BaseInventoryNodeGetItem (const uiNode_t* const node, int mouseX, int mouseY, int* contX, int* contY)
 {
 	qboolean outOfNode = qfalse;
 	vec2_t nodepos;
@@ -517,7 +511,7 @@ static invList_t *UI_BaseInventoryNodeGetItem (const uiNode_t* const node,
 	UI_ContainerItemIteratorInit(&iterator, node);
 	for (; iterator.itemID < csi.numODs; UI_ContainerItemIteratorNext(&iterator)) {
 		const int id = iterator.itemID;
-		objDef_t *obj = INVSH_GetItemByIDX(id);
+		const objDef_t *obj = INVSH_GetItemByIDX(id);
 		vec2_t pos;
 		vec2_t ammopos;
 		const int col = items % EXTRADATACONST(node).columns;
@@ -577,7 +571,7 @@ static invList_t *UI_BaseInventoryNodeGetItem (const uiNode_t* const node,
 		if (obj->weapon && EXTRADATACONST(node).displayAmmoOfWeapon) {
 			int ammoIdx;
 			for (ammoIdx = 0; ammoIdx < obj->numAmmos; ammoIdx++) {
-				objDef_t *objammo = obj->ammos[ammoIdx];
+				const objDef_t *objammo = obj->ammos[ammoIdx];
 
 				/* skip unusable ammo */
 				if (!GAME_ItemIsUseable(objammo))
@@ -746,9 +740,13 @@ static void UI_BaseInventoryNodeMouseUp (uiNode_t *node, int x, int y, int butto
 		UI_DNDDrop();
 	}
 }
-static void UI_BaseInventoryNodeWheel (uiNode_t *node, qboolean down, int x, int y)
+
+static void UI_BaseInventoryNodeWheel (uiNode_t *node, int deltaX, int deltaY)
 {
+	qboolean down = deltaY > 0;
 	const int delta = 20;
+	if (deltaY == 0)
+		return;
 	if (down) {
 		const int lenght = EXTRADATA(node).scrollY.fullSize - EXTRADATA(node).scrollY.viewSize;
 		if (EXTRADATA(node).scrollY.viewPos < lenght) {
@@ -807,10 +805,7 @@ static void UI_BaseInventoryNodeDNDLeave (uiNode_t *node)
  */
 static void UI_BaseInventoryNodeInit (uiNode_t *node, linkedList_t *params)
 {
-	/** ATM it should not work with the battlescape cause TU is not computed */
-	assert(!CL_BattlescapeRunning());
 }
-
 
 static const value_t properties[] = {
 	/* Display/hide weapons. */
@@ -850,7 +845,7 @@ void UI_RegisterBaseInventoryNode (uiBehaviour_t* behaviour)
 	behaviour->drawTooltip = UI_BaseInventoryNodeDrawTooltip;
 	behaviour->mouseDown = UI_BaseInventoryNodeMouseDown;
 	behaviour->mouseUp = UI_BaseInventoryNodeMouseUp;
-	behaviour->mouseWheel = UI_BaseInventoryNodeWheel;
+	behaviour->scroll = UI_BaseInventoryNodeWheel;
 	behaviour->capturedMouseMove = UI_BaseInventoryNodeCapturedMouseMove;
 	behaviour->windowOpened = UI_BaseInventoryNodeInit;
 	behaviour->loading = UI_BaseInventoryNodeLoading;

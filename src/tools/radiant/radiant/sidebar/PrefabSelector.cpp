@@ -344,15 +344,20 @@ namespace sidebar
 		return false;
 	}
 
-	GtkWidget* PrefabSelector::ConstructNotebookTab ()
+	PrefabSelector& PrefabSelector::Instance ()
 	{
 		static PrefabSelector _selector;
-		return _selector.getWidget();
+		return _selector;
 	}
 
-	GtkWidget* PrefabSelector::getWidget ()
+	GtkWidget* PrefabSelector::getWidget () const
 	{
 		return _widget;
+	}
+
+	const std::string PrefabSelector::getTitle() const
+	{
+		return std::string(_("Prefabs"));
 	}
 
 	/**

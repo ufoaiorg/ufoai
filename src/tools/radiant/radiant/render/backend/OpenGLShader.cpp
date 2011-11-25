@@ -262,8 +262,8 @@ void OpenGLShader::construct (const std::string& name)
 			state.m_sort = OpenGLState::eSortFullbright;
 		} else if (name == "$CAM_HIGHLIGHT") {
 			state.m_colour = highLightColour;
-			state.m_state = RENDER_FILL | RENDER_DEPTHTEST | RENDER_CULLFACE | RENDER_BLEND | RENDER_COLOURWRITE
-					| RENDER_DEPTHWRITE;
+			state.m_state = RENDER_FILL | RENDER_DEPTHTEST | RENDER_CULLFACE
+					| RENDER_BLEND | RENDER_COLOURWRITE;
 			state.m_sort = OpenGLState::eSortHighlight;
 			state.m_depthfunc = GL_LEQUAL;
 		} else if (name == "$CAM_OVERLAY") {

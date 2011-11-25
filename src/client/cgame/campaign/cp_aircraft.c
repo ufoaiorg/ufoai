@@ -93,43 +93,28 @@ int AIR_BaseCountAircraft (const base_t *base)
  */
 static int AIR_UpdateHangarCapForOne (const aircraft_t const *aircraftTemplate, base_t *base)
 {
-	assert(aircraftTemplate);
-	assert(aircraftTemplate == aircraftTemplate->tpl);	/* Make sure it's an aircraft template. */
+	const baseCapacities_t capType = AIR_GetCapacityByAircraftWeight(aircraftTemplate);
+	const buildingType_t buildingType = B_GetBuildingTypeByCapacity(capType);
+	int freeSpace;
 
-	if (!base)
+	if (!base || capType == MAX_CAP || buildingType == MAX_BUILDING_TYPE)
 		return AIRCRAFT_HANGAR_ERROR;
 
-	if (!AIR_AircraftAllowed(base)) {
-		Com_Printf("AIR_UpdateHangarCapForOne: base does not have any hangar - error!\n");
+	freeSpace = CAP_GetFreeCapacity(base, capType);
+	if (!B_GetBuildingStatus(base, buildingType) || freeSpace < 1) {
+		Com_Printf("AIR_UpdateHangarCapForOne: base '%s' does not have enough hangar space for '%s'!\n", base->name, aircraftTemplate->id);
 		return AIRCRAFT_HANGAR_ERROR;
 	}
 
-	if (aircraftTemplate->size >= AIRCRAFT_LARGE) {
-		int freeSpace;
-		if (!B_GetBuildingStatus(base, B_HANGAR)) {
-			Com_Printf("AIR_UpdateHangarCapForOne: base does not have big hangar - error!\n");
-			return AIRCRAFT_HANGAR_ERROR;
-		}
-		freeSpace = base->capacities[CAP_AIRCRAFT_BIG].max - base->capacities[CAP_AIRCRAFT_BIG].cur;
-		if (freeSpace > 0) {
-			base->capacities[CAP_AIRCRAFT_BIG].cur++;
-			return AIRCRAFT_HANGAR_BIG;
-		}
-	} else {
-		int freeSpace;
-		if (!B_GetBuildingStatus(base, B_SMALL_HANGAR)) {
-			Com_Printf("AIR_UpdateHangarCapForOne: base does not have small hangar - error!\n");
-			return AIRCRAFT_HANGAR_ERROR;
-		}
-		freeSpace = base->capacities[CAP_AIRCRAFT_SMALL].max - base->capacities[CAP_AIRCRAFT_SMALL].cur;
-		if (freeSpace > 0) {
-			base->capacities[CAP_AIRCRAFT_SMALL].cur++;
-			return AIRCRAFT_HANGAR_SMALL;
-		}
+	CAP_AddCurrent(base, capType, 1);
+	switch (capType) {
+	case CAP_AIRCRAFT_SMALL:
+		return AIRCRAFT_HANGAR_SMALL;
+	case CAP_AIRCRAFT_BIG:
+		return AIRCRAFT_HANGAR_BIG;
+	default:
+		return AIRCRAFT_HANGAR_ERROR;
 	}
-
-	/* No free space for this aircraft. This should never happen here. */
-	Sys_Error("AIR_UpdateHangarCapForOne: no free space!\n");
 }
 
 /**
@@ -308,9 +293,15 @@ void AII_CollectItem (aircraft_t *aircraft, const objDef_t *item, int amount)
 			return;
 		}
 	}
+
+	if (aircraft->itemTypes >= MAX_CARGO) {
+		Com_Printf("AII_CollectItem: Cannot add item to cargobay it's full!\n");
+		return;
+	}
+
 	Com_DPrintf(DEBUG_CLIENT, "AII_CollectItem: adding %s (%i) amount %i\n", item->name, item->idx, amount);
-	cargo[i].item = item;
-	cargo[i].amount = amount;
+	cargo[aircraft->itemTypes].item = item;
+	cargo[aircraft->itemTypes].amount = amount;
 	aircraft->itemTypes++;
 }
 
@@ -323,6 +314,7 @@ static void AII_CarriedItems (const le_t *soldier)
 {
 	containerIndex_t container;
 	invList_t *invList;
+	equipDef_t *ed = &ccs.eMission;
 
 	for (container = 0; container < csi.numIDs; container++) {
 		/* Items on the ground are collected as ET_ITEM */
@@ -330,16 +322,18 @@ static void AII_CarriedItems (const le_t *soldier)
 			continue;
 		for (invList = CONTAINER(soldier, container); invList; invList = invList->next) {
 			const objDef_t *item = invList->item.t;
+			const objDef_t *ammo = invList->item.m;
 			technology_t *tech = RS_GetTechForItem(item);
-			ccs.eMission.numItems[item->idx]++;
+			ed->numItems[item->idx]++;
 			RS_MarkCollected(tech);
 
 			if (!item->reload || invList->item.a == 0)
 				continue;
-			ccs.eMission.numItemsLoose[invList->item.m->idx] += invList->item.a;
-			if (ccs.eMission.numItemsLoose[invList->item.m->idx] >= item->ammo) {
-				ccs.eMission.numItemsLoose[invList->item.m->idx] -= item->ammo;
-				ccs.eMission.numItems[invList->item.m->idx]++;
+
+			ed->numItemsLoose[ammo->idx] += invList->item.a;
+			if (ed->numItemsLoose[ammo->idx] >= item->ammo) {
+				ed->numItemsLoose[ammo->idx] -= item->ammo;
+				ed->numItems[ammo->idx]++;
 			}
 			/* The guys keep their weapons (half-)loaded. Auto-reload
 			 * will happen at equip screen or at the start of next mission,
@@ -620,11 +614,11 @@ int AIR_GetRemainingRange (const aircraft_t *aircraft)
  */
 qboolean AIR_AircraftHasEnoughFuel (const aircraft_t *aircraft, const vec2_t destination)
 {
-	base_t *base;
+	const base_t *base;
 	float distance;
 
 	assert(aircraft);
-	base = (base_t *) aircraft->homebase;
+	base = aircraft->homebase;
 	assert(base);
 
 	/* Calculate the line that the aircraft should follow to go to destination */
@@ -684,7 +678,7 @@ void AIR_AircraftReturnToBase (aircraft_t *aircraft)
 int AIR_GetAircraftIDXInBase (const aircraft_t* aircraft)
 {
 	int i;
-	base_t *base;
+	const base_t *base;
 	aircraft_t *aircraftInBase;
 
 	if (!aircraft || !aircraft->homebase)
@@ -709,7 +703,7 @@ int AIR_GetAircraftIDXInBase (const aircraft_t* aircraft)
  * @return @c NULL if there is no such aircraft in the given base, or the aircraft pointer that belongs to the given index.
  * @todo Remove this! Aircraft no longer have local index per base
  */
-aircraft_t *AIR_GetAircraftFromBaseByIDXSafe (base_t* base, int index)
+aircraft_t *AIR_GetAircraftFromBaseByIDXSafe (const base_t* base, int index)
 {
 	aircraft_t *aircraft;
 	int i;
@@ -838,6 +832,7 @@ aircraft_t* AIR_NewAircraft (base_t *base, const aircraft_t *aircraftTemplate)
 	Com_DPrintf(DEBUG_CLIENT, "Setting aircraft to pos: %.0f:%.0f\n", base->pos[0], base->pos[1]);
 	Vector2Copy(base->pos, aircraft->pos);
 	RADAR_Initialise(&aircraft->radar, RADAR_AIRCRAFTRANGE, RADAR_AIRCRAFTTRACKINGRANGE, 1.0f, qfalse);
+	aircraft->radar.ufoDetectionProbability = 1;
 
 	/* Update base capacities. */
 	Com_DPrintf(DEBUG_CLIENT, "idx_sample: %i name: %s weight: %i\n", aircraft->tpl->idx, aircraft->id, aircraft->size);
@@ -852,8 +847,13 @@ aircraft_t* AIR_NewAircraft (base_t *base, const aircraft_t *aircraftTemplate)
 	return aircraft;
 }
 
+/**
+ * @brief Returns capacity type needed for an aircraft
+ * @param[in] aircraft Aircraft to check
+ */
 int AIR_GetCapacityByAircraftWeight (const aircraft_t *aircraft)
 {
+	assert(aircraft);
 	switch (aircraft->size) {
 	case AIRCRAFT_SMALL:
 		return CAP_AIRCRAFT_SMALL;
@@ -1428,14 +1428,14 @@ static const value_t aircraft_vals[] = {
 	{"nogeoscape", V_BOOL, offsetof(aircraft_t, notOnGeoscape), MEMBER_SIZEOF(aircraft_t, notOnGeoscape)},
 	{"interestlevel", V_INT, offsetof(aircraft_t, ufoInterestOnGeoscape), MEMBER_SIZEOF(aircraft_t, ufoInterestOnGeoscape)},
 
-	{"image", V_CLIENT_HUNK_STRING, offsetof(aircraft_t, image), 0},
-	{"model", V_CLIENT_HUNK_STRING, offsetof(aircraft_t, model), 0},
+	{"image", V_HUNK_STRING, offsetof(aircraft_t, image), 0},
+	{"model", V_HUNK_STRING, offsetof(aircraft_t, model), 0},
 	/* price for selling/buying */
 	{"price", V_INT, offsetof(aircraft_t, price), MEMBER_SIZEOF(aircraft_t, price)},
 	/* this is needed to let the buy and sell screen look for the needed building */
 	/* to place the aircraft in */
 	{"productioncost", V_INT, offsetof(aircraft_t, productionCost), MEMBER_SIZEOF(aircraft_t, productionCost)},
-	{"building", V_CLIENT_HUNK_STRING, offsetof(aircraft_t, building), 0},
+	{"building", V_HUNK_STRING, offsetof(aircraft_t, building), 0},
 
 	{NULL, 0, 0, 0}
 };
@@ -1450,7 +1450,6 @@ void AIR_ParseAircraft (const char *name, const char **text, qboolean assignAirc
 {
 	const char *errhead = "AIR_ParseAircraft: unexpected end of file (aircraft ";
 	aircraft_t *aircraftTemplate;
-	const value_t *vp;
 	const char *token;
 	int i;
 	technology_t *tech;
@@ -1655,24 +1654,8 @@ void AIR_ParseAircraft (const char *name, const char **text, qboolean assignAirc
 				continue;
 			}
 			/* check for some standard values */
-			for (vp = aircraft_vals; vp->string; vp++)
-				if (Q_streq(token, vp->string)) {
-					/* found a definition */
-					token = Com_EParse(text, errhead, name);
-					if (!*text)
-						return;
-					switch (vp->type) {
-					case V_TRANSLATION_STRING:
-						token++;
-					case V_CLIENT_HUNK_STRING:
-						Mem_PoolStrDupTo(token, (char**) ((char*)aircraftTemplate + (int)vp->ofs), cp_campaignPool, 0);
-						break;
-					default:
-						Com_EParseValue(aircraftTemplate, token, vp->type, vp->ofs, vp->size);
-					}
-
-					break;
-				}
+			if (Com_ParseBlockToken(name, text, aircraftTemplate, aircraft_vals, cp_campaignPool, token))
+				continue;
 
 			if (Q_streq(token, "type")) {
 				token = Com_EParse(text, errhead, name);
@@ -1717,33 +1700,17 @@ void AIR_ParseAircraft (const char *name, const char **text, qboolean assignAirc
 						aircraftTemplate->stats[AIR_STATS_FUELSIZE] = (int) (2.0f * (float)SECONDS_PER_HOUR * aircraftTemplate->stats[AIR_STATS_FUELSIZE]) /
 							((float) aircraftTemplate->stats[AIR_STATS_SPEED]);
 					} else {
-						for (vp = aircraft_param_vals; vp->string; vp++)
-							if (Q_streq(token, vp->string)) {
-								/* found a definition */
-								token = Com_EParse(text, errhead, name);
-								if (!*text)
-									return;
-								switch (vp->type) {
-								case V_TRANSLATION_STRING:
-									token++;
-								case V_CLIENT_HUNK_STRING:
-									Mem_PoolStrDupTo(token, (char**) ((char*)aircraftTemplate + (int)vp->ofs), cp_campaignPool, 0);
-									break;
-								default:
-									Com_EParseValue(aircraftTemplate, token, vp->type, vp->ofs, vp->size);
-								}
-								break;
-							}
+						if (!Com_ParseBlockToken(name, text, aircraftTemplate, aircraft_param_vals, cp_campaignPool, token))
+							Com_Printf("AIR_ParseAircraft: Ignoring unknown param value '%s'\n", token);
 					}
-					if (!vp->string)
-						Com_Printf("AIR_ParseAircraft: Ignoring unknown param value '%s'\n", token);
 				} while (*text); /* dummy condition */
-			} else if (!vp->string) {
+			} else {
 				Com_Printf("AIR_ParseAircraft: unknown token \"%s\" ignored (aircraft %s)\n", token, name);
 				Com_EParse(text, errhead, name);
 			}
 		} /* assignAircraftItems */
 	} while (*text);
+
 	if (aircraftTemplate->productionCost == 0)
 		aircraftTemplate->productionCost = aircraftTemplate->price;
 
@@ -2358,6 +2325,7 @@ static qboolean AIR_SaveAircraftXML (xmlNode_t *p, const aircraft_t* const aircr
 
 	node = XML_AddNode(p, SAVE_AIRCRAFT_AIRCRAFT);
 
+	XML_AddInt(node, SAVE_AIRCRAFT_IDX, aircraft->idx);
 	XML_AddString(node, SAVE_AIRCRAFT_ID, aircraft->id);
 	XML_AddString(node, SAVE_AIRCRAFT_NAME, aircraft->name);
 
@@ -2428,14 +2396,9 @@ static qboolean AIR_SaveAircraftXML (xmlNode_t *p, const aircraft_t* const aircr
 	if (isUfo)
 		return qtrue;
 
-	XML_AddInt(node, SAVE_AIRCRAFT_IDX, aircraft->idx);
-
-	XML_AddIntValue(node, SAVE_AIRCRAFT_RADAR_RANGE, aircraft->radar.range);
-	XML_AddIntValue(node, SAVE_AIRCRAFT_RADAR_TRACKINGRANGE, aircraft->radar.trackingRange);
 	XML_AddInt(node, SAVE_AIRCRAFT_HANGAR, aircraft->hangar);
 
 	subnode = XML_AddNode(node, SAVE_AIRCRAFT_AIRCRAFTTEAM);
-
 	LIST_Foreach(aircraft->acTeam, employee_t, employee) {
 		xmlNode_t *ssnode = XML_AddNode(subnode, SAVE_AIRCRAFT_MEMBER);
 		XML_AddInt(ssnode, SAVE_AIRCRAFT_TEAM_UCN, employee->chr.ucn);
@@ -2578,6 +2541,13 @@ static qboolean AIR_LoadAircraftXML (xmlNode_t *p, aircraft_t *craft)
 	tmpInt = XML_GetInt(p, SAVE_AIRCRAFT_HOMEBASE, MAX_BASES);
 	craft->homebase = (tmpInt != MAX_BASES) ? B_GetBaseByIDX(tmpInt) : NULL;
 
+	craft->idx = XML_GetInt(p, SAVE_AIRCRAFT_IDX, -1);
+	if (craft->idx < 0) {
+		Com_Printf("Invalid (or no) aircraft index %i\n", craft->idx);
+		Com_UnregisterConstList(saveAircraftConstants);
+		return qfalse;
+	}
+
 	Com_RegisterConstList(saveAircraftConstants);
 
 	statusId = XML_GetString(p, SAVE_AIRCRAFT_STATUS);
@@ -2607,15 +2577,9 @@ static qboolean AIR_LoadAircraftXML (xmlNode_t *p, aircraft_t *craft)
 	Q_strncpyz(craft->name, s, sizeof(craft->name));
 
 	s = XML_GetString(p, SAVE_AIRCRAFT_MISSIONID);
-	if (s[0] == '\0' && !craft->homebase) {
-		Com_Printf("Error: UFO '%s' is not linked to any mission\n", craft->id);
-		Com_UnregisterConstList(saveAircraftConstants);
-		return qfalse;
-	}
 	craft->missionID = Mem_PoolStrDup(s, cp_campaignPool, 0);
 
 	if (!craft->homebase) {
-		craft->idx = ccs.numUFOs;
 		/* detection id and time */
 		craft->detectionIdx = XML_GetInt(p, SAVE_AIRCRAFT_DETECTIONIDX, 0);
 		XML_GetDate(p, SAVE_AIRCRAFT_LASTSPOTTED_DATE, &craft->lastSpotted.day, &craft->lastSpotted.sec);
@@ -2664,9 +2628,6 @@ static qboolean AIR_LoadAircraftXML (xmlNode_t *p, aircraft_t *craft)
 	if (!craft->homebase)
 		return qtrue;
 
-	craft->idx = XML_GetInt(p, SAVE_AIRCRAFT_IDX, -1);
-	if (craft->idx == -1)
-		return qfalse;
 	craft->hangar = XML_GetInt(p, SAVE_AIRCRAFT_HANGAR, 0);
 
 	snode = XML_GetNode(p, SAVE_AIRCRAFT_AIRCRAFTTEAM);
@@ -2686,9 +2647,9 @@ static qboolean AIR_LoadAircraftXML (xmlNode_t *p, aircraft_t *craft)
 	else
 		AIR_SetPilot(craft, NULL);
 
+	RADAR_Initialise(&craft->radar, RADAR_AIRCRAFTRANGE, RADAR_AIRCRAFTTRACKINGRANGE, 1.0f, qfalse);
 	RADAR_InitialiseUFOs(&craft->radar);
-	craft->radar.range = XML_GetInt(p, SAVE_AIRCRAFT_RADAR_RANGE, 0);
-	craft->radar.trackingRange = XML_GetInt(p, SAVE_AIRCRAFT_RADAR_TRACKINGRANGE, 0);
+	craft->radar.ufoDetectionProbability = 1;
 
 	/* itemcargo */
 	snode = XML_GetNode(p, SAVE_AIRCRAFT_CARGO);
@@ -2807,11 +2768,12 @@ static qboolean AIR_PostLoadInitMissions (void)
 {
 	qboolean success = qtrue;
 	aircraft_t *aircraft;
+	aircraft_t *prevUfo;
 	aircraft_t *ufo;
 
 	/* PHALANX aircraft */
 	AIR_Foreach(aircraft) {
-		if (!aircraft->missionID || aircraft->missionID[0] == '\0')
+		if (Q_strnull(aircraft->missionID))
 			continue;
 		aircraft->mission = CP_GetMissionByID(aircraft->missionID);
 		if (!aircraft->mission) {
@@ -2824,17 +2786,27 @@ static qboolean AIR_PostLoadInitMissions (void)
 	}
 
 	/* UFOs */
-	ufo = NULL;
-	while ((ufo = UFO_GetNext(ufo)) != NULL) {
-		if (!ufo->missionID || ufo->missionID[0] == '\0')
+	/**
+	 * @todo UFO_RemoveFromGeoscape call doesn't notify other systems (aircraft, base defences, sam sites, radar)
+	 * about the removal of the UFO. Destroying UFOs should get a dedicated function with all necessary notify-callbacks called
+	 */
+	prevUfo = NULL;
+	while ((ufo = UFO_GetNext(prevUfo)) != NULL) {
+		if (Q_strnull(ufo->missionID)) {
+			Com_Printf("Warning: %s (idx: %i) has no mission assigned, removing it\n", ufo->name, ufo->idx);
+			UFO_RemoveFromGeoscape(ufo);
 			continue;
+		}
 		ufo->mission = CP_GetMissionByID(ufo->missionID);
 		if (!ufo->mission) {
-			Com_Printf("UFO %s (idx: %i) is linked to an invalid mission: %s\n", ufo->name, ufo->idx, ufo->missionID);
-			success = qfalse;
+			Com_Printf("Warning: %s (idx: %i) is linked to an invalid mission %s, removing it\n", ufo->name, ufo->idx, ufo->missionID);
+			UFO_RemoveFromGeoscape(ufo);
+			continue;
 		}
+		ufo->mission->ufo = ufo;
 		Mem_Free(ufo->missionID);
 		ufo->missionID = NULL;
+		prevUfo = ufo;
 	}
 
 	return success;

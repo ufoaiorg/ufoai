@@ -212,7 +212,6 @@ static picoModel_t *_md2_load (PM_PARAMS_LOAD)
 	md2St_t *texCoord;
 	md2Frame_t *frame;
 	md2Triangle_t *triangle;
-	md2XyzNormal_t *vertex;
 
 	picoByte_t *bb;
 	picoModel_t *picoModel;
@@ -221,7 +220,7 @@ static picoModel_t *_md2_load (PM_PARAMS_LOAD)
 	picoColor_t color;
 
 	int numIndexes, numVerts;
-	double isw, ish;
+	double isw;
 	int tempIndex[MD2_MAX_TRIANGLES * 3];
 	int tempSTIndex[MD2_MAX_TRIANGLES * 3];
 	int indRemap[MD2_MAX_TRIANGLES * 3];
@@ -357,7 +356,6 @@ static picoModel_t *_md2_load (PM_PARAMS_LOAD)
 	_pico_set_color(color, 255, 255, 255, 255);
 
 	isw = 1.0 / (double)md2->skinWidth;
-	ish = 1.0 / (double)md2->skinHeight;
 
 	/* load triangle lists */
 	triangle = (md2Triangle_t *) ((picoByte_t *) bb + md2->ofsTris);
@@ -406,7 +404,6 @@ static picoModel_t *_md2_load (PM_PARAMS_LOAD)
 		outIndex[i] = outIndex[indRemap[i]];
 	}
 
-	vertex = (md2XyzNormal_t*) ((picoByte_t*) (frame->verts));
 	for (j = 0; j < numIndexes; j++) {
 		const int index = outIndex[j];
 		picoVec3_t xyz, normal;

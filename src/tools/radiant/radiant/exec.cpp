@@ -210,7 +210,8 @@ static void exec_spawn_process (ExecCmd *e, GSpawnChildSetupFunc child_setup)
 		g_debug("exec_spawn_process - child [%d] exitcode [%d]\n", e->pid, e->exit_code);
 #endif
 	} else {
-		g_warning("exec_spawn_process - failed to spawn process [%d] [%s]\n", err->code, err->message);
+		if (err != NULL)
+			g_warning("exec_spawn_process - failed to spawn process [%d] [%s]\n", err->code, err->message);
 		exec_cmd_set_state(e, FAILED);
 		if (err != NULL)
 			g_error_free(err);
@@ -428,7 +429,7 @@ void exec_run (Exec *ex)
 	exec_cmd_list = g_list_remove(exec_cmd_list, ex);
 	g_list_free(piped);
 	exec_set_outcome(ex);
-	sidebar::JobInfo::getInstance().update();
+	sidebar::JobInfo::Instance().update();
 }
 
 void exec_stop (Exec *e)

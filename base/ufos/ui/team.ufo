@@ -26,7 +26,7 @@ window game_team_edit extends objectinfo
 	string s_backpack
 	{
 		pos "852 25"
-		textalign ALIGN_UC
+		contentalign ALIGN_UC
 		string	"_Backpack"
 		color "0 0.6 0 1"
 		size "160 25"
@@ -35,7 +35,7 @@ window game_team_edit extends objectinfo
 	string s_left
 	{
 		pos "852 150"
-		textalign ALIGN_UC
+		contentalign ALIGN_UC
 		string	"_Left Hand"
 		color "0 0.6 0 1"
 		size "160 25"
@@ -44,7 +44,7 @@ window game_team_edit extends objectinfo
 	string s_right
 	{
 		pos "530 150"
-		textalign ALIGN_UC
+		contentalign ALIGN_UC
 		string	"_Right Hand"
 		color "0 0.6 0 1"
 		size "160 25"
@@ -53,7 +53,7 @@ window game_team_edit extends objectinfo
 	string s_extension
 	{
 		pos "530 76"
-		textalign ALIGN_UC
+		contentalign ALIGN_UC
 		string	"_Extension"
 		color "0 0.6 0 1"
 		size "160 25"
@@ -62,7 +62,7 @@ window game_team_edit extends objectinfo
 	string s_headgear
 	{
 		pos "620 76"
-		textalign ALIGN_UC
+		contentalign ALIGN_UC
 		string	"_Headgear"
 		color "0 0.6 0 1"
 		size "160 25"
@@ -71,7 +71,7 @@ window game_team_edit extends objectinfo
 	string s_holster
 	{
 		pos "852 245"
-		textalign ALIGN_UC
+		contentalign ALIGN_UC
 		string	"_Holster"
 		color "0 0.6 0 1"
 		size "160 25"
@@ -80,7 +80,7 @@ window game_team_edit extends objectinfo
 	string s_belt
 	{
 		pos "530 245"
-		textalign ALIGN_UC
+		contentalign ALIGN_UC
 		string	"_Belt"
 		color "0 0.6 0 1"
 		size "160 25"
@@ -206,7 +206,7 @@ window game_team_edit extends objectinfo
 		string	*cvar:mn_name0
 		pos		"90 13"
 		size	"270 40"
-		textalign ALIGN_CL
+		contentalign ALIGN_CL
 		onClick { cmd "game_actorselect 0;" }
 	}
 	string txt_actor1
@@ -214,7 +214,7 @@ window game_team_edit extends objectinfo
 		string	*cvar:mn_name1
 		pos		"90 54"
 		size	"270 40"
-		textalign ALIGN_CL
+		contentalign ALIGN_CL
 		onClick { cmd "game_actorselect 1;" }
 	}
 	string txt_actor2
@@ -222,7 +222,7 @@ window game_team_edit extends objectinfo
 		string	*cvar:mn_name2
 		pos		"90 95"
 		size	"270 40"
-		textalign ALIGN_CL
+		contentalign ALIGN_CL
 		onClick { cmd "game_actorselect 2;" }
 	}
 	string txt_actor3
@@ -230,7 +230,7 @@ window game_team_edit extends objectinfo
 		string	*cvar:mn_name3
 		pos		"90 136"
 		size	"270 40"
-		textalign ALIGN_CL
+		contentalign ALIGN_CL
 		onClick { cmd "game_actorselect 3;" }
 	}
 	string txt_actor4
@@ -238,7 +238,7 @@ window game_team_edit extends objectinfo
 		string	*cvar:mn_name4
 		pos		"90 177"
 		size	"270 40"
-		textalign ALIGN_CL
+		contentalign ALIGN_CL
 		onClick { cmd "game_actorselect 4;" }
 	}
 	string txt_actor5
@@ -246,7 +246,7 @@ window game_team_edit extends objectinfo
 		string	*cvar:mn_name5
 		pos		"90 218"
 		size	"270 40"
-		textalign ALIGN_CL
+		contentalign ALIGN_CL
 		onClick { cmd "game_actorselect 5;" }
 	}
 	string txt_actor6
@@ -254,7 +254,7 @@ window game_team_edit extends objectinfo
 		string	*cvar:mn_name6
 		pos		"90 259"
 		size	"270 40"
-		textalign ALIGN_CL
+		contentalign ALIGN_CL
 		onClick { cmd "game_actorselect 6;" }
 	}
 	string txt_actor7
@@ -262,7 +262,7 @@ window game_team_edit extends objectinfo
 		string	*cvar:mn_name7
 		pos		"90 300"
 		size	"270 40"
-		textalign ALIGN_CL
+		contentalign ALIGN_CL
 		onClick { cmd "game_actorselect 7;" }
 	}
 
@@ -342,7 +342,7 @@ window game_team_edit extends objectinfo
 			string	*cvar:mn_itemname
 			pos		"10 6"
 			size	"330 20"
-			textalign	ALIGN_UC
+			contentalign	ALIGN_UC
 		}
 
 		item itemmodel
@@ -408,7 +408,7 @@ window game_team_edit extends objectinfo
 			string	*cvar:mn_linkname
 			pos		"140 290"
 			size	"190 16"
-			textalign	ALIGN_CC
+			contentalign	ALIGN_CC
 			font	"f_small"
 		}
 
@@ -446,7 +446,7 @@ window game_team_edit extends objectinfo
 			string	*cvar:mn_firemodename
 			pos		"140 314"
 			size	"190 16"
-			textalign	ALIGN_CC
+			contentalign	ALIGN_CC
 			font	"f_small"
 		}
 
@@ -509,7 +509,7 @@ window game_team_edit extends objectinfo
 			{
 				pos "4 157"
 			}
-			tbar bar   { current *cvar:mn_vcls }
+			tbar bar   { current *cvar:mn_vcls image "ui/bar_skill" }
 			string lbl { string "_Close Combat:" }
 			string val { string *cvar:mn_tcls }
 		}
@@ -518,7 +518,7 @@ window game_team_edit extends objectinfo
 			{
 				pos "4 192"
 			}
-			tbar bar   { current *cvar:mn_vhvy }
+			tbar bar   { current *cvar:mn_vhvy image "ui/bar_skill" }
 			string lbl { string "_Heavy Weapons:" }
 			string val { string *cvar:mn_thvy }
 		}
@@ -527,7 +527,7 @@ window game_team_edit extends objectinfo
 			{
 				pos "4 227"
 			}
-			tbar bar   { current *cvar:mn_vass }
+			tbar bar   { current *cvar:mn_vass image "ui/bar_skill" }
 			string lbl { string "_Assault Weapons:" }
 			string val { string *cvar:mn_tass }
 		}
@@ -536,7 +536,7 @@ window game_team_edit extends objectinfo
 			{
 				pos "4 262"
 			}
-			tbar bar   { current *cvar:mn_vsnp }
+			tbar bar   { current *cvar:mn_vsnp image "ui/bar_skill" }
 			string lbl { string "_Sniper Rifles:" }
 			string val { string *cvar:mn_tsnp }
 		}
@@ -545,7 +545,7 @@ window game_team_edit extends objectinfo
 			{
 				pos "4 297"
 			}
-			tbar bar   { current *cvar:mn_vexp }
+			tbar bar   { current *cvar:mn_vexp image "ui/bar_skill" }
 			string lbl { string "_High-Explosives:" }
 			string val { string *cvar:mn_texp }
 		}
@@ -769,10 +769,10 @@ window game_team_save_popup
 		image		"ui/button_green_verysmall"
 		color		"0 .78 0 1"
 		selectcolor	"1 1 1 1"
-		textalign	ALIGN_CL
+		contentalign	ALIGN_CL
 		padding		8
 		font		"f_verysmall"
-		pos			"50 130"
+		pos			"50 53"
 		size		"256 34"
 		string		*cvar:mn_slot0
 		onChange		{ cmd "game_saveteam 0;ui_pop;" }
@@ -783,10 +783,10 @@ window game_team_save_popup
 		image		"ui/button_green_verysmall"
 		color		"0 .78 0 1"
 		selectcolor	"1 1 1 1"
-		textalign	ALIGN_CL
+		contentalign	ALIGN_CC
 		padding		8
 		font		"f_verysmall"
-		pos			"50 165"
+		pos			"50 88"
 		size		"256 34"
 		string		*cvar:mn_slot1
 		onChange	{ cmd "game_saveteam 1;ui_pop;" }
@@ -797,10 +797,10 @@ window game_team_save_popup
 		image		"ui/button_green_verysmall"
 		color		"0 .78 0 1"
 		selectcolor	"1 1 1 1"
-		textalign	ALIGN_CL
+		contentalign	ALIGN_CC
 		padding		8
 		font		"f_verysmall"
-		pos			"50 200"
+		pos			"50 123"
 		size		"256 34"
 		string		*cvar:mn_slot2
 		onChange	{ cmd "game_saveteam 2;ui_pop;" }
@@ -811,10 +811,10 @@ window game_team_save_popup
 		image		"ui/button_green_verysmall"
 		color		"0 .78 0 1"
 		selectcolor	"1 1 1 1"
-		textalign	ALIGN_CL
+		contentalign	ALIGN_CC
 		padding		8
 		font		"f_verysmall"
-		pos			"50 235"
+		pos			"50 158"
 		size		"256 34"
 		string		*cvar:mn_slot3
 		onChange	{ cmd "game_saveteam 3;ui_pop;" }
@@ -825,10 +825,10 @@ window game_team_save_popup
 		image		"ui/button_green_verysmall"
 		color		"0 .78 0 1"
 		selectcolor	"1 1 1 1"
-		textalign	ALIGN_CL
+		contentalign	ALIGN_CC
 		padding		8
 		font		"f_verysmall"
-		pos			"50 270"
+		pos			"50 193"
 		size		"256 34"
 		string		*cvar:mn_slot4
 		onChange	{ cmd "game_saveteam 4;ui_pop;" }
@@ -839,10 +839,10 @@ window game_team_save_popup
 		image		"ui/button_green_verysmall"
 		color		"0 .78 0 1"
 		selectcolor	"1 1 1 1"
-		textalign	ALIGN_CL
+		contentalign	ALIGN_CC
 		padding		8
 		font		"f_verysmall"
-		pos			"50 305"
+		pos			"50 228"
 		size		"256 34"
 		string		*cvar:mn_slot5
 		onChange	{ cmd "game_saveteam 5;ui_pop;" }
@@ -853,10 +853,10 @@ window game_team_save_popup
 		image		"ui/button_green_verysmall"
 		color		"0 .78 0 1"
 		selectcolor	"1 1 1 1"
-		textalign	ALIGN_CL
+		contentalign	ALIGN_CC
 		padding		8
 		font		"f_verysmall"
-		pos			"50 340"
+		pos			"50 263"
 		size		"256 34"
 		string		*cvar:mn_slot6
 		onChange	{ cmd "game_saveteam 6;ui_pop;" }
@@ -867,13 +867,69 @@ window game_team_save_popup
 		image		"ui/button_green_verysmall"
 		color		"0 .78 0 1"
 		selectcolor	"1 1 1 1"
-		textalign	ALIGN_CL
+		contentalign	ALIGN_CC
 		padding		8
 		font		"f_verysmall"
-		pos			"50 375"
+		pos			"50 298"
 		size		"256 34"
 		string		*cvar:mn_slot7
 		onChange	{ cmd "game_saveteam 7;ui_pop;" }
+	}
+
+	textentry slot_team8
+	{
+		image		"ui/button_green_verysmall"
+		color		"0 .78 0 1"
+		selectcolor	"1 1 1 1"
+		contentalign	ALIGN_CC
+		padding		8
+		font		"f_verysmall"
+		pos			"50 333"
+		size		"256 34"
+		string		*cvar:mn_slot8
+		onChange	{ cmd "game_saveteam 8;ui_pop;" }
+	}
+
+	textentry slot_team9
+	{
+		image		"ui/button_green_verysmall"
+		color		"0 .78 0 1"
+		selectcolor	"1 1 1 1"
+		contentalign	ALIGN_CC
+		padding		8
+		font		"f_verysmall"
+		pos			"50 368"
+		size		"256 34"
+		string		*cvar:mn_slot9
+		onChange	{ cmd "game_saveteam 9;ui_pop;" }
+	}
+
+	textentry slot_team10
+	{
+		image		"ui/button_green_verysmall"
+		color		"0 .78 0 1"
+		selectcolor	"1 1 1 1"
+		contentalign	ALIGN_CC
+		padding		8
+		font		"f_verysmall"
+		pos			"50 403"
+		size		"256 34"
+		string		*cvar:mn_slot10
+		onChange	{ cmd "game_saveteam 10;ui_pop;" }
+	}
+
+	textentry slot_team11
+	{
+		image		"ui/button_green_verysmall"
+		color		"0 .78 0 1"
+		selectcolor	"1 1 1 1"
+		contentalign	ALIGN_CC
+		padding		8
+		font		"f_verysmall"
+		pos			"50 438"
+		size		"256 34"
+		string		*cvar:mn_slot11
+		onChange	{ cmd "game_saveteam 11;ui_pop;" }
 	}
 
 	func onWindowClosed

@@ -32,13 +32,18 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #include "e_event_actorappear.h"
 #include "../../../../../common/grid.h"
 
-int CL_ActorAppearTime (const eventRegister_t *self, struct dbuffer *msg, const int dt)
+/**
+ * @brief Decides if following events should be delayed
+ */
+int CL_ActorAppearTime (const eventRegister_t *self, struct dbuffer *msg, eventTiming_t *eventTiming)
 {
-#if 0
-	nextTime += 600;
-#else
-	return cl.time + 600;
-#endif
+	const int eventTime = eventTiming->nextTime;
+
+	/* delay following events */
+	if (cl.actTeam != cls.team)
+		eventTiming->nextTime += 600;
+
+	return eventTime;
 }
 
 /**
@@ -99,7 +104,7 @@ void CL_ActorAppear (const eventRegister_t *self, struct dbuffer *msg)
 
 	/* get the info */
 	NET_ReadFormat(msg, self->formatString,
-			&le->team, &teamDefID, &le->gender, &le->pnum, &le->pos,
+			&le->team, &teamDefID, &le->gender, &le->ucn, &le->pnum, &le->pos,
 			&le->angle, &le->right, &le->left,
 			&modelnum1, &modelnum2, &le->skinnum,
 			&le->state, &le->fieldSize,

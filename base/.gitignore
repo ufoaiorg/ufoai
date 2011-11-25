@@ -1,5 +1,5 @@
 /*.pk3
-/game.dll
-/game.dylib
-/game.so
+/*.dll
+/*.dylib
+/*.so
 /i18n

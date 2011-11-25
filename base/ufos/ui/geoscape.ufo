@@ -159,7 +159,7 @@ window geoscape
 			string		*cvar:mn_mapdaytime
 			pos			"31 304"
 			size		"195 20"
-			textalign	ALIGN_UC
+			contentalign	ALIGN_UC
 		}
 
 		text description
@@ -199,7 +199,7 @@ window geoscape
 			string		"*cvar:mn_mapdate *cvar:mn_maptime"
 			pos			"31 30"
 			size		"195 20"
-			textalign	ALIGN_UC
+			contentalign	ALIGN_UC
 			color		"1 1 1 1"
 			font		"f_small"
 		}
@@ -219,7 +219,7 @@ window geoscape
 			pos			"112 54"
 			size		"100 25"
 			font		"f_small"
-			textalign	ALIGN_UR
+			contentalign	ALIGN_UR
 		}
 
 		panel time_panel {
@@ -229,9 +229,11 @@ window geoscape
 			}
 
 			func faster {
+				*cvar:mn_fastexit = 0;
 				cmd "game_timefast;"
 			}
 			func slower {
+				*cvar:mn_fastexit = 0;
 				cmd "game_timeslow;"
 			}
 
@@ -242,8 +244,8 @@ window geoscape
 				icon		"icons/speed_stop"
 				pos			"48 10"
 				size		"20 20"
-				onChange	{ cmd "game_settimeid <value>;" }
-				onWheelUp	{ cmd "game_timefast;" }
+				onChange	{ *cvar:mn_fastexit = 0; cmd "game_settimeid <value>;" }
+				onWheelUp	{ *cvar:mn_fastexit = 0; cmd "game_timefast;" }
 				onWheelDown	{ cmd "game_timeslow;" }
 			}
 
@@ -254,7 +256,7 @@ window geoscape
 				icon		"icons/speed_dot"
 				pos			"68 10"
 				size		"20 20"
-				onChange	{ cmd "game_settimeid <value>;" }
+				onChange	{ *cvar:mn_fastexit = 0; cmd "game_settimeid <value>;" }
 				onWheelUp	{ cmd "game_timefast;" }
 				onWheelDown	{ cmd "game_timeslow;" }
 			}
@@ -266,7 +268,7 @@ window geoscape
 				icon		"icons/speed_play1"
 				pos			"88 10"
 				size		"20 20"
-				onChange	{ cmd "game_settimeid <value>;" }
+				onChange	{ *cvar:mn_fastexit = 0; cmd "game_settimeid <value>;" }
 				onWheelUp	{ cmd "game_timefast;" }
 				onWheelDown	{ cmd "game_timeslow;" }
 			}
@@ -279,7 +281,7 @@ window geoscape
 				icon		"icons/speed_dot"
 				pos			"108 10"
 				size		"20 20"
-				onChange	{ cmd "game_settimeid <value>;" }
+				onChange	{ *cvar:mn_fastexit = 0; cmd "game_settimeid <value>;" }
 				onWheelUp	{ cmd "game_timefast;" }
 				onWheelDown	{ cmd "game_timeslow;" }
 			}
@@ -291,7 +293,7 @@ window geoscape
 				icon		"icons/speed_play2"
 				pos			"128 10"
 				size		"20 20"
-				onChange	{ cmd "game_settimeid <value>;" }
+				onChange	{ *cvar:mn_fastexit = 0; cmd "game_settimeid <value>;" }
 				onWheelUp	{ cmd "game_timefast;" }
 				onWheelDown	{ cmd "game_timeslow;" }
 			}
@@ -303,7 +305,7 @@ window geoscape
 				icon		"icons/speed_dot"
 				pos			"148 10"
 				size		"20 20"
-				onChange	{ cmd "game_settimeid <value>;" }
+				onChange	{ *cvar:mn_fastexit = 0; cmd "game_settimeid <value>;" }
 				onWheelUp	{ cmd "game_timefast;" }
 				onWheelDown	{ cmd "game_timeslow;" }
 			}
@@ -316,7 +318,7 @@ window geoscape
 				icon		"icons/speed_dot"
 				pos			"168 10"
 				size		"20 20"
-				onChange	{ cmd "game_settimeid <value>;" }
+				onChange	{ *cvar:mn_fastexit = 0; cmd "game_settimeid <value>;" }
 				onWheelUp	{ cmd "game_timefast;" }
 				onWheelDown	{ cmd "game_timeslow;" }
 			}
@@ -328,7 +330,7 @@ window geoscape
 				icon		"icons/speed_play3"
 				pos			"188 10"
 				size		"20 20"
-				onChange	{ cmd "game_settimeid <value>;" }
+				onChange	{ *cvar:mn_fastexit = 0; cmd "game_settimeid <value>;" }
 				onWheelUp	{ cmd "game_timefast;" }
 				onWheelDown	{ cmd "game_timeslow;" }
 			}
@@ -338,7 +340,7 @@ window geoscape
 				string		*cvar:mn_timelapse
 				pos			"31 32"
 				size		"195 20"
-				textalign	ALIGN_UC
+				contentalign	ALIGN_UC
 				color		"0 .78 0 1"
 			}
 
@@ -412,6 +414,27 @@ window geoscape
 				clickdelay	100
 				onClick		{ cmd "map_zoom out" }
 			}
+
+			// geoscape camera functions
+			func cam_up {
+				cmd "map_scroll up;"
+			}
+			func cam_left {
+				cmd "map_scroll left;"
+			}
+			func cam_right {
+				cmd "map_scroll right;"
+			}
+			func cam_down {
+				cmd "map_scroll down;"
+			}
+			func zoom_in {
+				cmd "map_zoom in;"
+			}
+			func zoom_out {
+				cmd "map_zoom out;"
+			}
+
 		}
 
 		// ==================
@@ -481,7 +504,6 @@ window geoscape
 		button bt_ufopedia
 		{
 			string		"_UFOpaedia"
-			tooltip		"_Open UFOpaedia"
 			pos			"41 665"
 			size		"175 34"
 			color		"0 0.5 0 1"
@@ -495,7 +517,6 @@ window geoscape
 		button bt_installation
 		{
 			string		"_Create installation"
-			tooltip		"_Create installation"
 			color		"0 0.5 0 1"
 			pos			"41 700"
 			size		"175 34"
@@ -655,15 +676,16 @@ window geoscape
 			cmd "messagesystem_changemode;"
 		}
 	}
+
 }
 
 // ========================================================================
 // POPUPS (GEOSCAPE)
 // ========================================================================
 
-// ==================
+// ======================
 // POPUP INTERCEPT READY
-// ==================
+// ======================
 
 window popup_intercept_ready
 {
@@ -820,30 +842,6 @@ window popup_baseattack
 		cmd "ui_removelistener equipment@onWindowClosed <path:this>"
 	}
 
-	cmpPopupButton bt_auto_go
-	{
-		string		"_Auto mission"
-		tooltip		"_Automatically finish mission"
-		pos			"259 241"
-		onClick		{
-			if ( *node:root.liftcrafts@current > 0 ) {
-				cmd "air_liftall;"
-			}
-			if ( *node:root.killaliens@current > 0 ) {
-				cmd "aliencont_killall;"
-			}
-			if ( *node:root.powerdown@current > 0 ) {
-				cmd "pwr_down;"
-			}
-			if ( *node:root.equip@current > 0 ) {
-				cmd "ui_addlistener equipment@onWindowClosed <path:root>.listen_automission;"
-				cmd "ui_push equipment;"
-			} else {
-				cmd "cp_mission_autogo;"
-			}
-		}
-	}
-
 	func listen_mission
 	{
 		cmd "game_go;"
@@ -853,7 +851,8 @@ window popup_baseattack
 	{
 		string		"_Enter"
 		tooltip		"_Enter the battlefield"
-		pos			"74 241"
+		pos			"290 241"
+
 		onClick		{
 			if ( *node:root.liftcrafts@current > 0 ) {
 				cmd "air_liftall;"
@@ -911,8 +910,8 @@ window popup_newbase
 	{
 		tooltip		"_Rename your base"
 		icon		"icons/pen"
-		pos			"26 78"
-		size		"16 16"
+		pos			"21 65"
+		size		"35 35"
 		padding		0
 		onClick		{ call *node:root.name@edit }
 	}
@@ -975,7 +974,7 @@ window popup_newinstallation_type
 		string		"_Build Time"
 		pos			"226 50"
 		size		"130 20"
-		textalign	ALIGN_UR
+		contentalign	ALIGN_UR
 		font		"f_normal"
 	}
 	string cost_label
@@ -983,7 +982,7 @@ window popup_newinstallation_type
 		string		"_Cost"
 		pos			"356 50"
 		size		"100 20"
-		textalign	ALIGN_UR
+		contentalign	ALIGN_UR
 		font		"f_normal"
 	}
 
@@ -1010,7 +1009,7 @@ window popup_newinstallation_type
 		string		*cvar:mn_installation_radartower_buildtime
 		pos			"256 78"
 		size		"100 20"
-		textalign	ALIGN_UR
+		contentalign	ALIGN_UR
 		font		"f_small"
 	}
 	string radar_cost
@@ -1018,7 +1017,7 @@ window popup_newinstallation_type
 		string		*cvar:mn_installation_radartower_cost
 		pos			"356 78"
 		size		"100 20"
-		textalign	ALIGN_UR
+		contentalign	ALIGN_UR
 		font		"f_small"
 	}
 	zone click_radar
@@ -1052,7 +1051,7 @@ window popup_newinstallation_type
 		string		*cvar:mn_installation_samsite_buildtime
 		pos			"256 98"
 		size		"100 20"
-		textalign	ALIGN_UR
+		contentalign	ALIGN_UR
 		font		"f_small"
 	}
 	string sam_cost
@@ -1060,7 +1059,7 @@ window popup_newinstallation_type
 		string		*cvar:mn_installation_samsite_cost
 		pos			"356 98"
 		size		"100 20"
-		textalign	ALIGN_UR
+		contentalign	ALIGN_UR
 		font		"f_small"
 	}
 	zone click_sam
@@ -1094,7 +1093,7 @@ window popup_newinstallation_type
 		string		*cvar:mn_installation_ufoyard_buildtime
 		pos			"256 118"
 		size		"100 20"
-		textalign	ALIGN_UR
+		contentalign	ALIGN_UR
 		font		"f_small"
 	}
 	string ufoyard_cost
@@ -1102,7 +1101,7 @@ window popup_newinstallation_type
 		string		*cvar:mn_installation_ufoyard_cost
 		pos			"356 118"
 		size		"100 20"
-		textalign	ALIGN_UR
+		contentalign	ALIGN_UR
 		font		"f_small"
 	}
 	zone click_ufoyard
@@ -1142,7 +1141,7 @@ window popup_newinstallation_type
 		string		"_0 day"
 		pos			"256 138"
 		size		"100 20"
-		textalign	ALIGN_UR
+		contentalign	ALIGN_UR
 		font		"f_small"
 	}
 	string base_cost
@@ -1150,7 +1149,7 @@ window popup_newinstallation_type
 		string		*cvar:mn_base_cost
 		pos			"356 138"
 		size		"100 20"
-		textalign	ALIGN_UR
+		contentalign	ALIGN_UR
 		font		"f_small"
 	}
 	zone click_base
@@ -1186,7 +1185,6 @@ window popup_newinstallation_type
 	cmpPopupButton bt_close
 	{
 		string		"_Close"
-		tooltip		"_Close this dialogue"
 		pos			"297 188"
 		onClick		{ cmd "ui_pop;" }
 	}
@@ -1261,7 +1259,7 @@ window popup_newinstallation
 		string		"_Name:"
 		pos			"25 60"
 		size		"120 25"
-		textalign	ALIGN_CL
+		contentalign	ALIGN_CL
 	}
 	textentry name
 	{
@@ -1370,7 +1368,7 @@ window popup_installationstatus
 		string		"_Name:"
 		pos			"25 60"
 		size		"120 25"
-		textalign	ALIGN_CL
+		contentalign	ALIGN_CL
 	}
 	textentry name
 	{
@@ -1399,7 +1397,6 @@ window popup_installationstatus
 	cmpPopupButton bt_back
 	{
 		string		"_Close"
-		tooltip		"_Close this dialogue"
 		pos			"295 150"
 		onClick		{ cmd "ui_pop;mn_mapaction_reset;" }
 	}

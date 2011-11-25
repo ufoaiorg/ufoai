@@ -27,6 +27,7 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #include "bspfile.h"
 #include "scriplib.h"
 #include "../bsp.h"
+#include <errno.h>
 
 /**
  * @brief Compress the routing data of a map
@@ -207,10 +208,7 @@ static void SwapBSPFile (void)
 	}
 }
 
-
-static dBspHeader_t *header;
-
-static uint32_t CopyLump (int lumpIdx, void *dest, size_t size)
+static uint32_t CopyLump (const dBspHeader_t *header, int lumpIdx, void *dest, size_t size)
 {
 	const lump_t *lump = &header->lumps[lumpIdx];
 	const uint32_t length = lump->filelen;
@@ -221,7 +219,7 @@ static uint32_t CopyLump (int lumpIdx, void *dest, size_t size)
 	if (length % size)
 		Sys_Error("LoadBSPFile: odd lump size");
 
-	memcpy(dest, (byte *)header + ofs, length);
+	memcpy(dest, (const byte *)header + ofs, length);
 
 	return length / size;
 }
@@ -229,10 +227,11 @@ static uint32_t CopyLump (int lumpIdx, void *dest, size_t size)
 /**
  * @sa WriteBSPFile
  */
-void LoadBSPFile (const char *filename)
+dMapTile_t *LoadBSPFile (const char *filename)
 {
 	int size;
 	unsigned int i;
+	dBspHeader_t *header;
 
 	/* Create this shortcut to mapTiles[0] */
 	curTile = &mapTiles.mapTiles[0];
@@ -245,40 +244,40 @@ void LoadBSPFile (const char *filename)
 		Sys_Error("'%s' doesn't exist", filename);
 
 	/* swap the header */
-	for (i = 0; i < sizeof(dBspHeader_t) / 4; i++)
-		((int *)header)[i] = LittleLong(((int *)header)[i]);
+	BSP_SwapHeader(header, filename);
 
 	if (header->ident != IDBSPHEADER)
 		Sys_Error("%s is not a IBSP file", filename);
 	if (header->version != BSPVERSION)
 		Sys_Error("%s is version %i, not %i", filename, header->version, BSPVERSION);
 
-	curTile->nummodels = CopyLump(LUMP_MODELS, curTile->models, sizeof(dBspModel_t));
-	curTile->numvertexes = CopyLump(LUMP_VERTEXES, curTile->vertexes, sizeof(dBspVertex_t));
-	curTile->numplanes = CopyLump(LUMP_PLANES, curTile->planes, sizeof(dBspPlane_t));
-	curTile->numleafs = CopyLump(LUMP_LEAFS, curTile->leafs, sizeof(dBspLeaf_t));
-	curTile->numnormals = CopyLump(LUMP_NORMALS, curTile->normals, sizeof(dBspNormal_t));
-	curTile->numnodes = CopyLump(LUMP_NODES, curTile->nodes, sizeof(dBspNode_t));
-	curTile->numtexinfo = CopyLump(LUMP_TEXINFO, curTile->texinfo, sizeof(dBspTexinfo_t));
-	curTile->numfaces = CopyLump(LUMP_FACES, curTile->faces, sizeof(dBspSurface_t));
-	curTile->numleafbrushes = CopyLump(LUMP_LEAFBRUSHES, curTile->leafbrushes, sizeof(curTile->leafbrushes[0]));
-	curTile->numsurfedges = CopyLump(LUMP_SURFEDGES, curTile->surfedges, sizeof(curTile->surfedges[0]));
-	curTile->numedges = CopyLump(LUMP_EDGES, curTile->edges, sizeof(dBspEdge_t));
-	curTile->numbrushes = CopyLump(LUMP_BRUSHES, curTile->dbrushes, sizeof(dBspBrush_t));
-	curTile->numbrushsides = CopyLump(LUMP_BRUSHSIDES, curTile->brushsides, sizeof(dBspBrushSide_t));
-	curTile->routedatasize = CopyLump(LUMP_ROUTING, curTile->routedata, 1);
-	curTile->lightdatasize[LIGHTMAP_NIGHT] = CopyLump(LUMP_LIGHTING_NIGHT, curTile->lightdata[LIGHTMAP_NIGHT], 1);
-	curTile->lightdatasize[LIGHTMAP_DAY] = CopyLump(LUMP_LIGHTING_DAY, curTile->lightdata[LIGHTMAP_DAY], 1);
-	curTile->entdatasize = CopyLump(LUMP_ENTITIES, curTile->entdata, 1);
+	curTile->nummodels = CopyLump(header, LUMP_MODELS, curTile->models, sizeof(dBspModel_t));
+	curTile->numvertexes = CopyLump(header, LUMP_VERTEXES, curTile->vertexes, sizeof(dBspVertex_t));
+	curTile->numplanes = CopyLump(header, LUMP_PLANES, curTile->planes, sizeof(dBspPlane_t));
+	curTile->numleafs = CopyLump(header, LUMP_LEAFS, curTile->leafs, sizeof(dBspLeaf_t));
+	curTile->numnormals = CopyLump(header, LUMP_NORMALS, curTile->normals, sizeof(dBspNormal_t));
+	curTile->numnodes = CopyLump(header, LUMP_NODES, curTile->nodes, sizeof(dBspNode_t));
+	curTile->numtexinfo = CopyLump(header, LUMP_TEXINFO, curTile->texinfo, sizeof(dBspTexinfo_t));
+	curTile->numfaces = CopyLump(header, LUMP_FACES, curTile->faces, sizeof(dBspSurface_t));
+	curTile->numleafbrushes = CopyLump(header, LUMP_LEAFBRUSHES, curTile->leafbrushes, sizeof(curTile->leafbrushes[0]));
+	curTile->numsurfedges = CopyLump(header, LUMP_SURFEDGES, curTile->surfedges, sizeof(curTile->surfedges[0]));
+	curTile->numedges = CopyLump(header, LUMP_EDGES, curTile->edges, sizeof(dBspEdge_t));
+	curTile->numbrushes = CopyLump(header, LUMP_BRUSHES, curTile->dbrushes, sizeof(dBspBrush_t));
+	curTile->numbrushsides = CopyLump(header, LUMP_BRUSHSIDES, curTile->brushsides, sizeof(dBspBrushSide_t));
+	curTile->routedatasize = CopyLump(header, LUMP_ROUTING, curTile->routedata, 1);
+	curTile->lightdatasize[LIGHTMAP_NIGHT] = CopyLump(header, LUMP_LIGHTING_NIGHT, curTile->lightdata[LIGHTMAP_NIGHT], 1);
+	curTile->lightdatasize[LIGHTMAP_DAY] = CopyLump(header, LUMP_LIGHTING_DAY, curTile->lightdata[LIGHTMAP_DAY], 1);
+	curTile->entdatasize = CopyLump(header, LUMP_ENTITIES, curTile->entdata, 1);
 
 	/* Because the tracing functions use cBspBrush_t and not dBspBrush_t,
 	 * copy data from curTile->dbrushes into curTile->cbrushes */
 	OBJZERO(curTile->brushes);
 	for (i = 0; i < curTile->numbrushes; i++) {
+		dBspBrush_t *dbrush = &curTile->dbrushes[i];
 		cBspBrush_t *brush = &curTile->brushes[i];
-		brush->firstbrushside = brush->firstbrushside;
-		brush->numsides = brush->numsides;
-		brush->contentFlags = brush->contentFlags;
+		brush->firstbrushside = dbrush->firstbrushside;
+		brush->numsides = dbrush->numsides;
+		brush->contentFlags = dbrush->contentFlags;
 	}
 
 	/* everything has been copied out */
@@ -286,6 +285,8 @@ void LoadBSPFile (const char *filename)
 
 	/* swap everything */
 	SwapBSPFile();
+
+	return curTile;
 }
 
 /**
@@ -295,10 +296,15 @@ void LoadBSPFile (const char *filename)
 static inline void AddLump (qFILE *bspfile, dBspHeader_t *header, int lumpnum, void *data, int len)
 {
 	lump_t *lump;
+	long offset;
 
 	lump = &header->lumps[lumpnum];
 
-	lump->fileofs = LittleLong(ftell(bspfile->f));
+	offset = ftell(bspfile->f);
+	if (offset == -1) {
+		Sys_Error("Overflow in AddLump for lump %i (%s) %s", lumpnum, bspfile->name, strerror(errno));
+	}
+	lump->fileofs = LittleLong(offset);
 	lump->filelen = LittleLong(len);
 	/* 4 byte align */
 	FS_Write(data, (len + 3) &~ 3, bspfile);
@@ -477,18 +483,10 @@ static entity_t* ParseEntity (void)
  */
 void ParseEntities (void)
 {
-	int subdivide;
-
 	num_entities = 0;
 	ParseFromMemory(curTile->entdata, curTile->entdatasize);
 
 	while (ParseEntity() != NULL) {
-	}
-
-	subdivide = atoi(ValueForKey(&entities[0], "subdivide"));
-	if (subdivide >= 256 && subdivide <= 2048) {
-		Verb_Printf(VERB_EXTRA, "Using subdivide %d from worldspawn.\n", subdivide);
-		config.subdivideSize = subdivide;
 	}
 }
 
@@ -572,7 +570,8 @@ void GetVectorFromString (const char *value, vec3_t vec)
 
 		/* scanf into doubles, then assign, so it is vec_t size independent */
 		v1 = v2 = v3 = 0;
-		sscanf(value, "%lf %lf %lf", &v1, &v2, &v3);
+		if (sscanf(value, "%lf %lf %lf", &v1, &v2, &v3) != 3)
+			Sys_Error("invalid vector statement given: '%s'", value);
 		VectorSet(vec, v1, v2, v3);
 	} else
 		VectorClear(vec);

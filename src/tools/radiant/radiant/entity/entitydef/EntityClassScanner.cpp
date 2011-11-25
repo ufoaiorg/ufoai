@@ -31,7 +31,7 @@ void EntityClassScannerUFO::parseFlags (EntityClass *e, const char **text)
  * @note opposed to old parsing code this adds attributes for all definitions,
  * not only for the ones that get special treatment in gui.
  */
-void EntityClassScannerUFO::parseAttribute (EntityClass *e, entityKeyDef_t *keydef)
+void EntityClassScannerUFO::parseAttribute (EntityClass *e, const entityKeyDef_t *keydef)
 {
 	const bool mandatory = (keydef->flags & ED_MANDATORY);
 	/* we use attribute key as its type, only for some types this is really used */
@@ -72,7 +72,7 @@ void EntityClassScannerUFO::parseAttribute (EntityClass *e, entityKeyDef_t *keyd
  * @param entityDef parsed definition information to use
  * @return a new entity class or 0 if something was wrong with definition
  */
-EntityClass *EntityClassScannerUFO::initFromDefinition (entityDef_t *definition)
+EntityClass *EntityClassScannerUFO::initFromDefinition (const entityDef_t *definition)
 {
 	g_debug("Creating entity class for entity definition '%s'\n", definition->classname);
 
@@ -81,34 +81,34 @@ EntityClass *EntityClassScannerUFO::initFromDefinition (entityDef_t *definition)
 	e->m_name = definition->classname;
 
 	for (int idx = 0; idx < definition->numKeyDefs; idx++) {
-		entityKeyDef_t keydef = definition->keyDefs[idx];
-		const std::string keyName = keydef.name;
+		const entityKeyDef_t *keydef = &definition->keyDefs[idx];
+		const std::string keyName = keydef->name;
 
 		if (keyName == "color") {
 			//not using _color as this is a valid attribute flag
 			// grab the color, reformat as texture name
-			const int r = sscanf(keydef.desc, "%f %f %f", &e->color[0], &e->color[1], &e->color[2]);
+			const int r = sscanf(keydef->desc, "%f %f %f", &e->color[0], &e->color[1], &e->color[2]);
 			if (r != 3) {
 				g_message("Invalid color token given\n");
 				return 0;
 			}
 		} else if (keyName == "size") {
 			e->fixedsize = true;
-			const int r = sscanf(keydef.desc, "%f %f %f %f %f %f", &e->mins[0], &e->mins[1], &e->mins[2], &e->maxs[0],
+			const int r = sscanf(keydef->desc, "%f %f %f %f %f %f", &e->mins[0], &e->mins[1], &e->mins[2], &e->maxs[0],
 					&e->maxs[1], &e->maxs[2]);
 			if (r != 6) {
 				g_message("Invalid size token given\n");
 				return 0;
 			}
 		} else if (keyName == "description") {
-			e->m_comments = keydef.desc;
+			e->m_comments = keydef->desc;
 		} else if (keyName == "spawnflags") {
-			if (keydef.flags & ED_ABSTRACT) {
+			if (keydef->flags & ED_ABSTRACT) {
 				/* there are two keydefs, abstract holds the valid levelflags, the other one default value and type */
-				const char *flags = keydef.desc;
+				const char *flags = keydef->desc;
 				parseFlags(e, &flags);
 			} else {
-				parseAttribute(e, &keydef);
+				parseAttribute(e, keydef);
 			}
 		} else if (keyName == "classname") {
 			/* ignore, read from head */
@@ -116,11 +116,11 @@ EntityClass *EntityClassScannerUFO::initFromDefinition (entityDef_t *definition)
 		} else if (keyName == "model") {
 			/** @todo what does that modelpath stuff do? it does not read anything from keydef */
 			e->m_modelpath = os::standardPath(e->m_modelpath);
-			const bool mandatory = (keydef.flags & ED_MANDATORY);
+			const bool mandatory = (keydef->flags & ED_MANDATORY);
 			EntityClass_insertAttribute(*e, "model", EntityClassAttribute("model", "model", mandatory));
 		} else {
 			/* all other keys are valid attribute keys */
-			parseAttribute(e, &keydef);
+			parseAttribute(e, keydef);
 		}
 	}
 
@@ -166,6 +166,7 @@ void EntityClassScannerUFO::scanFile (EntityClassCollector& collector)
 				ED_GetLastError());
 		gtkutil::errorDialog(buffer);
 		free(entities);
+		ED_Free();
 		return;
 	}
 	for (int i = 0; i < numEntityDefs; i++) {
@@ -174,4 +175,5 @@ void EntityClassScannerUFO::scanFile (EntityClassCollector& collector)
 			collector.insert(e);
 	}
 	free(entities);
+	ED_Free();
 }

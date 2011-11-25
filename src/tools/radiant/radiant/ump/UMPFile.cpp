@@ -36,7 +36,7 @@ namespace map
 			if (map.find(getBase()) == std::string::npos)
 				return (UMPTile*) 0;
 			const std::string tileName = getTileName(map);
-			for (UMPTileIterator i = _umpTiles.begin(); i != _umpTiles.end(); i++) {
+			for (UMPTileIterator i = _umpTiles.begin(); i != _umpTiles.end(); ++i) {
 				UMPTile& tile = *i;
 				if (tile.getTileName(getBase()) == tileName)
 					return &tile;
@@ -62,10 +62,10 @@ namespace map
 
 				os << "base " << _base << std::endl;
 
-				for (UMPTileIterator i = _umpTiles.begin(); i != _umpTiles.end(); i++) {
+				for (UMPTileIterator i = _umpTiles.begin(); i != _umpTiles.end(); ++i) {
 					os << (*i).toString(_base);
 				}
-				for (UMPAssemblyIterator i = _umpAssenblies.begin(); i != _umpAssenblies.end(); i++) {
+				for (UMPAssemblyIterator i = _umpAssenblies.begin(); i != _umpAssenblies.end(); ++i) {
 					os << (*i).toString();
 				}
 
@@ -121,7 +121,7 @@ namespace map
 				} else if (token == "tile") {
 					try {
 						parseTile(tokeniser);
-					} catch (UMPException e) {
+					} catch (UMPException &e) {
 						globalErrorStream() << _fileName << ": " << e.getMessage() << "\n";
 						return;
 					}

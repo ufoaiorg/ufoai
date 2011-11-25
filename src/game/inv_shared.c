@@ -27,7 +27,7 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 
 #include "q_shared.h"
 
-static csi_t *CSI;
+static const csi_t *CSI;
 
 /**
  * @brief Initializes client server shared data pointer. This works because the client and the server are both
@@ -36,7 +36,7 @@ static csi_t *CSI;
  * @sa G_Init
  * @sa Com_ParseScripts
  */
-void INVSH_InitCSI (csi_t * import)
+void INVSH_InitCSI (const csi_t * import)
 {
 	CSI = import;
 }
@@ -426,12 +426,12 @@ qboolean INV_IsBaseDefenceItem (const objDef_t *obj)
  * @param[in] container Container in the inventory.
  * @param[in] x/y Position in the container that you want to check.
  * @return invList_t Pointer to the invList_t/item that is located at x/y.
- * @sa INV_SearchInScrollableContainer
  */
 invList_t *INVSH_SearchInInventory (const inventory_t* const i, const invDef_t * container, const int x, const int y)
 {
 	invList_t *ic;
 
+	assert(i);
 	assert(container);
 
 	/* Only a single item. */
@@ -439,8 +439,7 @@ invList_t *INVSH_SearchInInventory (const inventory_t* const i, const invDef_t *
 		return i->c[container->id];
 
 	if (container->scroll)
-		Sys_Error("INVSH_SearchInInventory: Scrollable containers (%i:%s) are not supported by this function.\nUse INV_SearchInScrollableContainer instead!",
-				container->id, container->name);
+		Sys_Error("INVSH_SearchInInventory: Scrollable containers (%i:%s) are not supported by this function.", container->id, container->name);
 
 	/* More than one item - search for the item that is located at location x/y in this container. */
 	for (ic = i->c[container->id]; ic; ic = ic->next)
@@ -448,6 +447,28 @@ invList_t *INVSH_SearchInInventory (const inventory_t* const i, const invDef_t *
 			return ic;
 
 	/* Found nothing. */
+	return NULL;
+}
+
+/**
+ * @brief Searches if there is an item of the given type in a container.
+ * @param[in] i Pointer to the inventory where we will search.
+ * @param[in] container Container in the inventory.
+ * @return invList_t Pointer to the invList_t/item.
+ */
+invList_t *INVSH_SearchInInventoryByItem (const inventory_t* const i, const invDef_t * container, const objDef_t *item)
+{
+	invList_t *ic;
+
+	if (item == NULL)
+		return NULL;
+
+	for (ic = i->c[container->id]; ic; ic = ic->next) {
+		if (ic && item == ic->item.t)
+			return ic;
+	}
+
+	/* No matching item found. */
 	return NULL;
 }
 
@@ -507,14 +528,14 @@ void INVSH_FindSpace (const inventory_t* const inv, const item_t *item, const in
  * @param[in] id the item id in our object definition array (csi.ods)
  * @sa INVSH_GetItemByID
  */
-objDef_t *INVSH_GetItemByIDSilent (const char *id)
+const objDef_t *INVSH_GetItemByIDSilent (const char *id)
 {
 	int i;
 
 	if (!id)
 		return NULL;
 	for (i = 0; i < CSI->numODs; i++) {	/* i = item index */
-		objDef_t *item = &CSI->ods[i];
+		const objDef_t *item = &CSI->ods[i];
 		if (Q_streq(id, item->id)) {
 			return item;
 		}
@@ -525,7 +546,7 @@ objDef_t *INVSH_GetItemByIDSilent (const char *id)
 /**
  * @brief Returns the index of this item in the inventory.
  */
-objDef_t *INVSH_GetItemByIDX (int index)
+const objDef_t *INVSH_GetItemByIDX (int index)
 {
 	if (index == NONE)
 		return NULL;
@@ -541,9 +562,9 @@ objDef_t *INVSH_GetItemByIDX (int index)
  * @param[in] id the item id in our object definition array (csi.ods)
  * @sa INVSH_GetItemByIDSilent
  */
-objDef_t *INVSH_GetItemByID (const char *id)
+const objDef_t *INVSH_GetItemByID (const char *id)
 {
-	objDef_t *od = INVSH_GetItemByIDSilent(id);
+	const objDef_t *od = INVSH_GetItemByIDSilent(id);
 	if (!od)
 		Com_Printf("INVSH_GetItemByID: Item \"%s\" not found.\n", id);
 
@@ -555,10 +576,10 @@ objDef_t *INVSH_GetItemByID (const char *id)
  * @param[in] id ID or name of the inventory container to search for
  * @return @c NULL if not found
  */
-invDef_t *INVSH_GetInventoryDefinitionByID (const char *id)
+const invDef_t *INVSH_GetInventoryDefinitionByID (const char *id)
 {
 	containerIndex_t i;
-	invDef_t *container;
+	const invDef_t *container;
 
 	for (i = 0, container = CSI->ids; i < CSI->numIDs; container++, i++)
 		if (Q_streq(id, container->name))

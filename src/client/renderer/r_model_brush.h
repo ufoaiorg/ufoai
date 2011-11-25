@@ -139,15 +139,25 @@ typedef struct mBspSurfaces_s {
 	int count;
 } mBspSurfaces_t;
 
-#define opaque_surfaces			sorted_surfaces[0]
-#define opaque_warp_surfaces	sorted_surfaces[1]
-#define alpha_test_surfaces		sorted_surfaces[2]
-#define blend_surfaces			sorted_surfaces[3]
-#define blend_warp_surfaces		sorted_surfaces[4]
-#define material_surfaces		sorted_surfaces[5]
-#define flare_surfaces			sorted_surfaces[6]
+typedef enum {
+	S_OPAQUE,
+	S_OPAQUE_WARP,
+	S_ALPHA_TEST,
+	S_BLEND,
+	S_BLEND_WARP,
+	S_MATERIAL,
+	S_FLARE,
 
-#define NUM_SURFACES_ARRAYS		7
+	NUM_SURFACES_ARRAYS
+} surfaceArrayType_t;
+
+#define opaque_surfaces			sorted_surfaces[S_OPAQUE]
+#define opaque_warp_surfaces	sorted_surfaces[S_OPAQUE_WARP]
+#define alpha_test_surfaces		sorted_surfaces[S_ALPHA_TEST]
+#define blend_surfaces			sorted_surfaces[S_BLEND]
+#define blend_warp_surfaces		sorted_surfaces[S_BLEND_WARP]
+#define material_surfaces		sorted_surfaces[S_MATERIAL]
+#define flare_surfaces			sorted_surfaces[S_FLARE]
 
 #define R_SurfaceToSurfaces(surfs, surf)\
 	(surfs)->surfaces[(surfs)->count++] = surf

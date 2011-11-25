@@ -31,23 +31,27 @@ const vec3_t bytedirs[] = {
 void NET_WriteChar (struct dbuffer *buf, char c)
 {
 	dbuffer_add(buf, &c, 1);
+	Com_DPrintf(DEBUG_EVENTSYS, "char event data: %s (%i)\n", Com_ByteToBinary(c), c);
 }
 
 void NET_WriteByte (struct dbuffer *buf, byte c)
 {
 	dbuffer_add(buf, (char *)&c, 1);
+	Com_DPrintf(DEBUG_EVENTSYS, "byte event data: %s (%i)\n", Com_ByteToBinary(c), c);
 }
 
 void NET_WriteShort (struct dbuffer *buf, int c)
 {
 	unsigned short v = LittleShort(c);
 	dbuffer_add(buf, (char *)&v, 2);
+	Com_DPrintf(DEBUG_EVENTSYS, "short event data: %i\n", c);
 }
 
 void NET_WriteLong (struct dbuffer *buf, int c)
 {
 	int v = LittleLong(c);
 	dbuffer_add(buf, (char *)&v, 4);
+	Com_DPrintf(DEBUG_EVENTSYS, "long event data: %i\n", c);
 }
 
 void NET_WriteString (struct dbuffer *buf, const char *str)
@@ -56,12 +60,15 @@ void NET_WriteString (struct dbuffer *buf, const char *str)
 		dbuffer_add(buf, "", 1);
 	else
 		dbuffer_add(buf, str, strlen(str) + 1);
+	Com_DPrintf(DEBUG_EVENTSYS, "string event data: %s\n", str);
 }
 
 void NET_WriteRawString (struct dbuffer *buf, const char *str)
 {
-	if (str)
+	if (str) {
 		dbuffer_add(buf, str, strlen(str));
+		Com_DPrintf(DEBUG_EVENTSYS, "string raw event data: %s\n", str);
+	}
 }
 
 void NET_WriteCoord (struct dbuffer *buf, float f)
@@ -286,7 +293,6 @@ int NET_ReadLong (struct dbuffer *buf)
  * char *t = NET_ReadString(sb);</code>
  * The second reading uses the same data buffer for the string - so
  * s is no longer the first - but the second string
- * @note strip high bits - don't use this for utf-8 strings
  * @sa NET_ReadStringLine
  * @param[in,out] buf The input buffer to read the string data from
  * @param[out] string The output buffer to read the string into
@@ -302,8 +308,7 @@ int NET_ReadString (struct dbuffer *buf, char *string, size_t length)
 		if (c == -1 || c == 0)
 			break;
 		/* translate all format specs to avoid crash bugs */
-		/* don't allow higher ascii values */
-		if (c == '%' || c > 127)
+		if (c == '%')
 			c = '.';
 		string[l] = c;
 		l++;
@@ -327,8 +332,7 @@ int NET_ReadStringLine (struct dbuffer *buf, char *string, size_t length)
 		if (c == -1 || c == 0 || c == '\n')
 			break;
 		/* translate all format specs to avoid crash bugs */
-		/* don't allow higher ascii values */
-		if (c == '%' || c > 127)
+		if (c == '%')
 			c = '.';
 		string[l] = c;
 		l++;

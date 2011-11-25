@@ -26,7 +26,6 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 
 */
 
-
 #include "g_local.h"
 #include "../shared/parse.h"
 
@@ -72,6 +71,7 @@ static const spawn_t spawns[] = {
 	{"func_door", SP_func_door},
 	{"func_door_sliding", SP_func_door_sliding},
 	{"func_rotating", SP_func_rotating},
+	{"trigger_nextmap", SP_trigger_nextmap},
 	{"trigger_hurt", SP_trigger_hurt},
 	{"trigger_touch", SP_trigger_touch},
 	{"trigger_rescue", SP_trigger_rescue},
@@ -106,6 +106,7 @@ static const field_t fields[] = {
 	{"item", offsetof(edict_t, item), F_LSTRING, 0},
 	{"noise", offsetof(edict_t, noise), F_LSTRING, 0},
 	{"particle", offsetof(edict_t, particle), F_LSTRING, 0},
+	{"nextmap", offsetof(edict_t, nextmap), F_LSTRING, 0},
 	{"frame", offsetof(edict_t, frame), F_INT, 0},
 	{"team", offsetof(edict_t, team), F_INT, 0},
 	{"group", offsetof(edict_t, group), F_LSTRING, 0},
@@ -113,6 +114,7 @@ static const field_t fields[] = {
 	{"count", offsetof(edict_t, count), F_INT, 0},
 	{"time", offsetof(edict_t, time), F_INT, 0},
 	{"health", offsetof(edict_t, HP), F_INT, 0},
+	{"radius", offsetof(edict_t, radius), F_INT, 0},
 	{"sounds", offsetof(edict_t, sounds), F_INT, 0},
 	{"material", offsetof(edict_t, material), F_INT, 0},
 	{"light", 0, F_IGNORE, 0},
@@ -126,8 +128,8 @@ static const field_t fields[] = {
 	{"angle", offsetof(edict_t, angle), F_FLOAT, 0},
 	{"message", offsetof(edict_t, message), F_LSTRING, 0},
 
-	{"nextmap", offsetof(spawn_temp_t, nextmap), F_LSTRING, FFL_SPAWNTEMP},
 	{"randomspawn", offsetof(spawn_temp_t, randomSpawn), F_INT, FFL_SPAWNTEMP},
+	{"noequipment", offsetof(spawn_temp_t, noEquipment), F_INT, FFL_SPAWNTEMP},
 
 	{0, 0, 0, 0}
 };
@@ -314,7 +316,6 @@ static void G_FindEdictGroups (void)
  */
 void G_SpawnEntities (const char *mapname, qboolean day, const char *entities)
 {
-	edict_t *ent;
 	int entnum;
 
 	G_FreeTags(TAG_LEVEL);
@@ -329,7 +330,6 @@ void G_SpawnEntities (const char *mapname, qboolean day, const char *entities)
 
 	G_ResetClientData();
 
-	ent = NULL;
 	level.activeTeam = TEAM_NO_ACTIVE;
 	level.actualRound = 1;
 	level.hurtAliens = sv_hurtaliens->integer;
@@ -338,6 +338,7 @@ void G_SpawnEntities (const char *mapname, qboolean day, const char *entities)
 	/* parse ents */
 	entnum = 0;
 	while (1) {
+		edict_t *ent;
 		/* parse the opening brace */
 		const char *token = Com_Parse(&entities);
 		if (!entities)
@@ -345,10 +346,7 @@ void G_SpawnEntities (const char *mapname, qboolean day, const char *entities)
 		if (token[0] != '{')
 			gi.Error("ED_LoadFromFile: found %s when expecting {", token);
 
-		if (!ent)
-			ent = G_EdictsGetFirst();
-		else
-			ent = G_Spawn();
+		ent = G_Spawn();
 
 		entities = ED_ParseEdict(entities, ent);
 
@@ -679,7 +677,7 @@ static void SP_misc_mission (edict_t *ent)
 {
 	edict_t *other;
 
-	ent->classname = "mission";
+	ent->classname = "misc_mission";
 	ent->type = ET_MISSION;
 
 	/* maybe this was set to something else for multiplayer */
@@ -703,8 +701,11 @@ static void SP_misc_mission (edict_t *ent)
 	ent->think = G_MissionThink;
 	ent->nextthink = 1;
 
-	VectorSet(ent->absmax, PLAYER_WIDTH * 3, PLAYER_WIDTH * 3, PLAYER_STAND);
-	VectorSet(ent->absmin, -(PLAYER_WIDTH * 3), -(PLAYER_WIDTH * 3), PLAYER_MIN);
+	if (ent->radius <= GRID_WIDTH) {
+		ent->radius = GRID_WIDTH * 3;
+	}
+	VectorSet(ent->absmax, ent->radius, ent->radius, PLAYER_STAND);
+	VectorSet(ent->absmin, -ent->radius, -ent->radius, PLAYER_MIN);
 
 	/* spawn the trigger entity */
 	other = G_TriggerSpawn(ent);
@@ -888,8 +889,7 @@ static void SP_worldspawn (edict_t *ent)
 	ent->inuse = qtrue;
 	ent->classname = "worldspawn";
 
-	if (st.nextmap)
-		Q_strncpyz(level.nextmap, st.nextmap, sizeof(level.nextmap));
+	level.noEquipment = st.noEquipment;
 	level.randomSpawn = st.randomSpawn;
 
 	gi.ConfigString(CS_MAXCLIENTS, "%i", sv_maxclients->integer);

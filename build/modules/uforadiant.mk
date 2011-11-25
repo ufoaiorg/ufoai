@@ -192,6 +192,7 @@ $(TARGET)_SRCS      = \
 	$(RADIANT_BASE)/radiant/sidebar/surfaceinspector/surfaceinspector.cpp \
 	\
 	$(RADIANT_BASE)/radiant/sidebar/entitylist/EntityList.cpp \
+	$(RADIANT_BASE)/radiant/sidebar/entitylist/GraphTreeModel.cpp \
 	\
 	$(RADIANT_BASE)/radiant/sidebar/sidebar.cpp \
 	$(RADIANT_BASE)/radiant/sidebar/PrefabSelector.cpp \

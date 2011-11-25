@@ -43,20 +43,14 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #include "r_corona.h"
 #include "r_flare.h"
 
-void R_DrawBlendSurfaces(const mBspSurfaces_t *list);
-void R_DrawOpaqueSurfaces(const mBspSurfaces_t *surfs);
-void R_DrawOpaqueWarpSurfaces(mBspSurfaces_t *surfs);
-void R_DrawBlendWarpSurfaces(mBspSurfaces_t *surfs);
-void R_DrawAlphaTestSurfaces(mBspSurfaces_t *surfs);
-void R_DrawMaterialSurfaces(mBspSurfaces_t *surfs);
+#define MIN_GL_CONSTANT_ATTENUATION 0.01
+
+void R_DrawSurfaces (const mBspSurfaces_t *surfs);
+void R_DrawMaterialSurfaces(const mBspSurfaces_t *surfs);
 
 void R_SetSurfaceBumpMappingParameters(const mBspSurface_t *surf, const image_t *normalMap);
 
 /*==================================================== */
-
-extern cvar_t *r_brightness;
-extern cvar_t *r_contrast;
-extern cvar_t *r_saturation;
 
 extern cvar_t *r_drawworld;
 extern cvar_t *r_drawentities;
@@ -65,15 +59,19 @@ extern cvar_t *r_isometric;
 extern cvar_t *r_anisotropic;
 extern cvar_t *r_texture_lod;   /* lod_bias */
 extern cvar_t *r_materials;
+extern cvar_t *r_default_specular;
+extern cvar_t *r_default_hardness;
 extern cvar_t *r_screenshot_format;
 extern cvar_t *r_screenshot_jpeg_quality;
 extern cvar_t *r_lightmap;
 extern cvar_t *r_debug_normals;
 extern cvar_t *r_debug_tangents;
+extern cvar_t *r_debug_lights;
 extern cvar_t *r_ext_texture_compression;
 extern cvar_t *r_checkerror;
 extern cvar_t *r_showbox;
 extern cvar_t *r_shadows;
+extern cvar_t *r_stencilshadows;
 extern cvar_t *r_soften;
 extern cvar_t *r_modulate;
 extern cvar_t *r_drawbuffer;
@@ -126,7 +124,6 @@ extern rlocals_t r_locals;
 qboolean R_CullMeshModel(const entity_t *e);
 
 void R_DrawModelParticle(modelInfo_t *mi);
-void R_DrawBrushModel(const entity_t *e);
 void R_DrawBspNormals(int tile);
 qboolean R_CullBspModel(const entity_t *e);
 qboolean R_CullSphere(const vec3_t centre, const float radius, const unsigned int clipflags);
@@ -136,6 +133,17 @@ void R_DrawInitLocal(void);
 void R_DrawParticles(void);
 void R_SetupFrustum(void);
 void R_TextureConvertNativePixelFormat(void * pixels, int w, int h, int alphaUsed);
+
+void R_ClearBspRRefs(void);
+void R_AddBspRRef(const mBspModel_t *model, const vec3_t origin, const vec3_t angles, const qboolean forceVisibility);
+void R_RenderOpaqueBspRRefs(void);
+void R_RenderOpaqueWarpBspRRefs(void);
+void R_RenderAlphaTestBspRRefs(void);
+void R_RenderMaterialBspRRefs(void);
+void R_RenderFlareBspRRefs(void);
+void R_RenderBlendBspRRefs(void);
+void R_RenderBlendWarpBspRRefs(void);
+
 
 typedef enum {
 	GLHW_GENERIC,
@@ -151,8 +159,13 @@ typedef struct {
 	const char *vendorString;
 	const char *versionString;
 	const char *extensionsString;
-	/** @brief Version of GLSL guaranteed to be supported by OpenGL implementation (not necessarily the one in use). Ex: "1.10". Empty if none.*/
-	char shadingLanguageGuaranteedVersion[6];
+
+	int glVersionMajor;
+	int glVersionMinor;
+
+	int glslVersionMajor;
+	int glslVersionMinor;
+
 	int maxTextureSize;
 	int maxTextureUnits;
 	int maxTextureCoords;

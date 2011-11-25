@@ -31,16 +31,18 @@ struct uiNode_s;
 #define UI_MAX_KEYBINDING	128
 
 typedef struct uiKeyBinding_s {
-	struct uiNode_s *node;
-	const struct value_s *property;
-	int key;
-	struct uiKeyBinding_s *next;	/* next binding from the window list */
+	struct uiNode_s *node;				/**< Node target. */
+	const struct value_s *property;		/**< Property target, else NULL. */
+	int key;							/**< Keynum to catch. */
+	const char* description;			/**< Description of this binding */
+	qboolean inherited;					/**< True if this binding is inherited from another binding. */
+	struct uiKeyBinding_s *next;		/**< Next binding from the window list. */
 } uiKeyBinding_t;
 
-void UI_SetKeyBinding(const char* path, int key);
+void UI_SetKeyBinding(const char* path, int key, const char* description);
 
 /* mouse input */
-void UI_MouseWheel(qboolean down, int x, int y);
+void UI_MouseScroll(int deltaX, int deltaY);
 void UI_MouseMove(int x, int y);
 void UI_MouseDown(int x, int y, int button);
 void UI_MouseUp(int x, int y, int button);
@@ -52,6 +54,7 @@ struct uiNode_s *UI_GetHoveredNode(void);
 void UI_RequestFocus(struct uiNode_s* node);
 qboolean UI_HasFocus(const struct uiNode_s* node);
 void UI_RemoveFocus(void);
+qboolean UI_KeyRelease(unsigned int key, unsigned short unicode);
 qboolean UI_KeyPressed(unsigned int key, unsigned short unicode);
 int UI_GetKeyBindingCount(void);
 uiKeyBinding_t* UI_GetKeyBindingByIndex(int index);

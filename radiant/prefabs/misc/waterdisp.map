@@ -1,0 +1,58 @@
+
+// entity 0
+{
+"classname" "worldspawn"
+// brush 0
+{
+( 14 14.5 42 ) ( 14 1.25 42 ) ( 0 14.5 42 ) tex_common/actorclip 2 0 0 0.5 0.5
+( 15 14.5 0.25 ) ( 1 14.5 0.25 ) ( 15 14.5 0 ) tex_common/actorclip 0 0 0 0.5 0.5
+( 15 14.5 0.25 ) ( 15 14.5 0 ) ( 15 1.25 0.25 ) tex_common/actorclip 0 0 0 0.5 0.5
+( 1 1.25 0 ) ( 15 1.25 0 ) ( 1 14.5 0 ) tex_common/actorclip 0 0 0 0.5 0.5
+( 1 1.25 0 ) ( 1 1.25 0.25 ) ( 15 1.25 0 ) tex_common/actorclip 0 0 0 0.5 0.5
+( 1 1.25 0 ) ( 1 14.5 0 ) ( 1 1.25 0.25 ) tex_common/actorclip 0 0 0 0.5 0.5
+}
+// brush 1
+{
+( 14.75 14.5 28.25 ) ( 14.75 1.25 28.25 ) ( 1.5 14.5 28.25 ) tex_common/weaponclip 63.5 0 0 0.5 0.5
+( 14.5 14.5 42 ) ( 1.25 14.5 42 ) ( 14.5 14.5 0 ) tex_common/weaponclip 0 0 0 0.5 0.5
+( 14.5 14.5 42 ) ( 14.5 14.5 0 ) ( 14.5 1.25 42 ) tex_common/weaponclip 0 0 0 0.5 0.5
+( 1.25 1.25 0 ) ( 14.5 1.25 0 ) ( 1.25 14.5 0 ) tex_common/weaponclip 0 0 0 0.5 0.5
+( 1.25 1.25 0 ) ( 1.25 1.25 42 ) ( 14.5 1.25 0 ) tex_common/weaponclip 0 0 0 0.5 0.5
+( 1.25 1.25 0 ) ( 1.25 14.5 0 ) ( 1.25 1.25 42 ) tex_common/weaponclip 0 0 0 0.5 0.5
+}
+// brush 2
+{
+( 13.75 14.5 42 ) ( 13.75 1.25 42 ) ( 2 14.5 42 ) tex_common/lightclip 0 0 0 0.5 0.5
+( 13.75 13.75 42.25 ) ( 2 13.75 42.25 ) ( 13.75 13.75 30.25 ) tex_common/lightclip 0 0.5 0 0.5 0.5
+( 13.75 15.5 41.75 ) ( 13.75 15.5 29.75 ) ( 13.75 2.25 41.75 ) tex_common/lightclip 62 63.5 0 0.5 0.5
+( 2 1.25 30 ) ( 13.75 1.25 30 ) ( 2 14.5 30 ) tex_common/lightclip 0 0 0 0.5 0.5
+( 2 2.25 29.75 ) ( 2 2.25 41.75 ) ( 13.75 2.25 29.75 ) tex_common/lightclip 0 63.5 0 0.5 0.5
+( 2 1.25 30 ) ( 2 14.5 30 ) ( 2 1.25 42 ) tex_common/lightclip 0 0 0 0.5 0.5
+}
+// brush 3
+{
+( 14.75 14.5 28.25 ) ( 14.75 1.25 28.25 ) ( 1.5 14.5 28.25 ) tex_common/lightclip 63.5 0 0 0.5 0.5
+( 14.5 14.5 42 ) ( 1.25 14.5 42 ) ( 14.5 14.5 0 ) tex_common/lightclip 0 0 0 0.5 0.5
+( 14.5 14.5 42 ) ( 14.5 14.5 0 ) ( 14.5 1.25 42 ) tex_common/lightclip 0 0 0 0.5 0.5
+( 1.25 1.25 0 ) ( 14.5 1.25 0 ) ( 1.25 14.5 0 ) tex_common/lightclip 0 0 0 0.5 0.5
+( 1.25 1.25 0 ) ( 1.25 1.25 42 ) ( 14.5 1.25 0 ) tex_common/lightclip 0 0 0 0.5 0.5
+( 1.25 1.25 0 ) ( 1.25 14.5 0 ) ( 1.25 1.25 42 ) tex_common/lightclip 0 0 0 0.5 0.5
+}
+// brush 4
+{
+( 13 13.75 30 ) ( 13 2.25 30 ) ( 2.75 13.75 30 ) tex_common/lightclip 0 0 0 0.5 0.5
+( 13 13.25 30 ) ( 2.75 13.25 30 ) ( 13 13.25 28.25 ) tex_common/lightclip 0 0 0 0.5 0.5
+( 13 13.75 30 ) ( 13 13.75 28.25 ) ( 13 2.25 30 ) tex_common/lightclip 0 0 0 0.5 0.5
+( 2.75 2.25 28.25 ) ( 13 2.25 28.25 ) ( 2.75 13.75 28.25 ) tex_common/lightclip 0 0 0 0.5 0.5
+( 2.75 2.75 28.25 ) ( 2.75 2.75 30 ) ( 13 2.75 28.25 ) tex_common/lightclip 0 0 0 0.5 0.5
+( 2.75 2.25 28.25 ) ( 2.75 13.75 28.25 ) ( 2.75 2.25 30 ) tex_common/lightclip 0 0 0 0.5 0.5
+}
+}
+// entity 1
+{
+"classname" "misc_model"
+"model" "models/objects/furniture/automat/waterdisp.md2"
+"origin" "8 8 0"
+"spawnflags" "255"
+"skin" "0"
+}

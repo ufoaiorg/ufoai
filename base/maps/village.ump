@@ -7,7 +7,7 @@ base village/vil_
 // Legend:
 // ------
 // +s: street tiles (road)
-// +r: recreational tiles (fontain, park)
+// +r: recreational tiles (fountain, park)
 // +c: commercial tiles
 // +d: dummy tiles (to fill gaps)
 // +h: house tiles
@@ -293,7 +293,6 @@ a      +c     +a     +a     ac
 0      c      a      ab     0
 }
 
-
 // ---------------------------------
 tile +c04
 {
@@ -347,7 +346,7 @@ tile +craft_ufo_fighter
 0      ab      ab      0
 ac     +a      +a      ac
 ac     +a      +a      ac
-ac     +b      +a      ac
+ac     +a      +a      ac
 0      ab      ab      0
 }
 
@@ -372,14 +371,26 @@ ac      +a      +a      +a     +a     +a     ac
 ac      +a      +a      +a     +a     +a     ac
 0        b      +b      +b     +b     +b     b
 0        0       a       a      c      a     0
-
 }
 
 // *********************************
-assembly ufo_small
+
+tileset filler_01{
++d01
++d02
++d03
++d04
++d05
++d06
++d07
+}
+
+// *********************************
+assembly small
 {
 size "7 8"
 title "_Village residential"
+
 +s02 "0 4"
 +s03 "0 4"
 +s04 "0 4"
@@ -388,13 +399,7 @@ title "_Village residential"
 +s07 "0 1"
 +s08 "0 1"
 +s15 "0 2"
-+d01 "0 1"
-+d02 "0 2"
-+d03 "0 2"
-+d04 "0 2"
-+d05 "0 2"
-+d06 "0 1"
-+d07 "0 1"
+tileset filler_01 "0 21"
 +r01 "0 2"
 +r02 "0 2"
 +r03 "0 2"
@@ -445,21 +450,22 @@ assembly commercial
 {
 size "8 8"
 title "_Village commercial"
+
 +s01 "0 2"
-+s02 "0 4"
++s02 "0 5"
 +s03 "0 4"
 +s04 "0 4"
 +s05 "0 4"
 +s06 "0 4"
-+s07 "0 2"
++s07 "0 3"
 +s08 "0 2"
 +s15 "0 2"
-+d02 "0 2"
-+d03 "0 2"
-+d04 "0 2"
-+d05 "0 2"
-+d06 "0 2"
-+d07 "0 2"
++d02 "0 3"
++d03 "0 3"
++d04 "0 3"
++d05 "0 3"
++d06 "0 3"
++d07 "0 3"
 +r01 "0 1"
 +r02 "0 1"
 +r03 "0 1"
@@ -505,10 +511,10 @@ title "_Village recreational"
 }
 */
 /*
-assembly big
+assembly large
 {
 size "12 12"
-title "_Village big"
+title "_Village large"
 +s01 "0 8"
 +s02 "0 32"
 +s03 "0 32"

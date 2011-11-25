@@ -92,7 +92,15 @@ static void SV_New_f (client_t *cl)
 	if (Com_ServerState() == ss_game) {
 		int i;
 		for (i = 0; i < MAX_CONFIGSTRINGS; i++) {
-			const char *configString = SV_GetConfigString(i);
+			const char *configString;
+			/* CS_TILES and CS_POSITIONS can stretch over multiple configstrings,
+			 * so don't send the middle parts again. */
+			if (i > CS_TILES && i < CS_POSITIONS)
+				continue;
+			if (i > CS_POSITIONS && i < CS_MODELS)
+				continue;
+
+			configString = SV_GetConfigString(i);
 			if (configString[0] != '\0') {
 				struct dbuffer *msg = new_dbuffer();
 				Com_DPrintf(DEBUG_SERVER, "sending configstring %d: %s\n", i, configString);
@@ -141,19 +149,18 @@ static void SV_Begin_f (client_t *cl)
 /**
  * @sa SV_Begin_f
  */
-static void SV_Spawn_f (client_t *cl)
+static void SV_StartMatch_f (client_t *cl)
 {
-	Com_DPrintf(DEBUG_SERVER, "Spawn() from %s\n", cl->name);
+	Com_DPrintf(DEBUG_SERVER, "StartMatch() from %s\n", cl->name);
 
-	if (cl->state != cs_began) {
+	if (cl->state != cs_spawned) {
 		SV_DropClient(cl, "Invalid state\n");
 		return;
 	}
 
 	TH_MutexLock(svs.serverMutex);
-	svs.ge->ClientSpawn(cl->player);
+	svs.ge->ClientStartMatch(cl->player);
 	TH_MutexUnlock(svs.serverMutex);
-	SV_SetClientState(cl, cs_spawned);
 
 	Cbuf_InsertFromDefer();
 }
@@ -187,7 +194,7 @@ static const ucmd_t ucmds[] = {
 	/* auto issued */
 	{"new", SV_New_f},
 	{"begin", SV_Begin_f},
-	{"spawn", SV_Spawn_f},
+	{"startmatch", SV_StartMatch_f},
 
 	{"disconnect", SV_Disconnect_f},
 
@@ -238,6 +245,10 @@ void SV_ExecuteClientMessage (client_t * cl, int cmd, struct dbuffer *msg)
 	case clc_nop:
 		break;
 
+	case clc_ack:
+		cl->lastmessage = svs.realtime;
+		break;
+
 	case clc_userinfo:
 		NET_ReadString(msg, cl->userinfo, sizeof(cl->userinfo));
 		Com_DPrintf(DEBUG_SERVER, "userinfo from client: %s\n", cl->userinfo);
@@ -283,6 +294,7 @@ void SV_ExecuteClientMessage (client_t * cl, int cmd, struct dbuffer *msg)
 		svs.ge->ClientTeamInfo(cl->player);
 		TH_MutexUnlock(svs.serverMutex);
 		sv->messageBuffer = NULL;
+		SV_SetClientState(cl, cs_spawned);
 		break;
 
 	case clc_initactorstates:

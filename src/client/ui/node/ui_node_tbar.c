@@ -43,7 +43,7 @@ static void UI_TBarNodeDraw (uiNode_t *node)
 	const char* ref = UI_GetReferenceString(node, node->image);
 	float pointWidth;
 	float width;
-	if (!ref || ref[0] == '\0')
+	if (Q_strnull(ref))
 		return;
 
 	UI_GetNodeAbsPos(node, nodepos);
@@ -67,7 +67,7 @@ static void UI_TBarNodeDraw (uiNode_t *node)
 
 	width = (shx * node->size[0]) / TEXTURE_WIDTH;
 
-	UI_DrawNormImageByName(nodepos[0], nodepos[1], width, node->size[1],
+	UI_DrawNormImageByName(qfalse, nodepos[0], nodepos[1], width, node->size[1],
 		shx, EXTRADATA(node).texh[1], EXTRADATA(node).texl[0], EXTRADATA(node).texl[1], ref);
 }
 

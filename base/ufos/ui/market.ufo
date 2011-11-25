@@ -30,7 +30,7 @@ component panel cmpMarketItem
 		image		"ui/checkbox_blue"
 //		pos			"30 180"
 		pos			"0 0"
-		size		"16 16"
+		size		"22 18"
 		onChange	{ cmd "buy_autosell <node:parent@num>;" }
 	}
 
@@ -151,7 +151,7 @@ window market extends objectinfo
 	{
 		dataid		TEXT_MARKET_STORAGE
 		color		"0 .78 0 1"
-		textalign	ALIGN_CR
+		contentalign	ALIGN_CR
 		pos			"330 177"
 		rows		"22"
 		size		"40 550"
@@ -164,7 +164,7 @@ window market extends objectinfo
 	{
 		dataid		TEXT_MARKET_MARKET
 		color		"0 .78 0 1"
-		textalign	ALIGN_CR
+		contentalign	ALIGN_CR
 		pos			"406 177"
 		rows		"22"
 		size		"40 550"
@@ -177,7 +177,7 @@ window market extends objectinfo
 	{
 		dataid		TEXT_MARKET_PRICES
 		color		"0 .78 0 1"
-		textalign	ALIGN_CR
+		contentalign	ALIGN_CR
 		rows		"22"
 		size		"80 550"
 		lineheight	"25"
@@ -349,9 +349,9 @@ window market extends objectinfo
 		{
 			visiblewhen "*cvar:mn_itemtype ne \"aircraft\""	// for everything except aircraft
 			string		*cvar:mn_itemname
-			pos			"22 35"
+			pos			"22 25"
 			size		"365 20"
-			textalign	ALIGN_UC
+			contentalign	ALIGN_UC
 		}
 		string aircraftname
 		{
@@ -359,14 +359,14 @@ window market extends objectinfo
 			string		*cvar:mn_aircraftname
 			pos			"22 35"
 			size		"365 20"
-			textalign	ALIGN_UC
+			contentalign	ALIGN_UC
 		}
 
 		custombutton ufopedia_link
 		{
 			icon		"icons/bordered_magnifying_glass"
 			tooltip		"_UFOpaedia"
-			pos			"370 37"
+			pos			"370 27"
 			size		"16 16"
 			onClick		{
 				cmd "ui_addlistener ufopedia@onWindowClosed <path:root>.listen_openpedia;"
@@ -377,9 +377,10 @@ window market extends objectinfo
 		item itemmodel
 		{
 			src			*cvar:mn_item
-			pos			"12 55"
-			size		"385 200"
+			pos			"13 55"
+			size		"384 200"
 			angles		"-10 160 70"
+			omega		"0 10 0"
 			autoscale	true
 		}
 
@@ -438,7 +439,7 @@ window market extends objectinfo
 			string	*cvar:mn_linkname
 			pos		"162 390"
 			size	"190 16"
-			textalign	ALIGN_CC
+			contentalign	ALIGN_CC
 			font	"f_small"
 		}
 
@@ -476,7 +477,7 @@ window market extends objectinfo
 			string	*cvar:mn_firemodename
 			pos		"162 414"
 			size	"190 16"
-			textalign	ALIGN_CC
+			contentalign	ALIGN_CC
 			font	"f_small"
 		}
 

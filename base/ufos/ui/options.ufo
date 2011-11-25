@@ -1,6 +1,15 @@
 // =============
 // OPTIONS MENU
 // =============
+
+component string cmpMenuPageHeader {
+			pos			"55 67"
+			size		"465 35"
+			font		"f_menubig"
+			contentalign	ALIGN_CC
+			color		"0 0.5 0 1"
+}
+
 window options
 {
 	{
@@ -29,7 +38,7 @@ window options
 	// =================================================
 	cmpMenuButton button_overall
 	{
-		tooltip		"_Overall game settings like your name and language or menu settings."
+		tooltip		"_Overall game settings"
 		string		"_Overall"
 		pos			"80 170"
 		onClick
@@ -40,19 +49,18 @@ window options
 	}
 	cmpMenuButton button_video
 	{
-		tooltip		"_Video settings."
+		tooltip		"_Video settings"
 		string		"_Video"
 		pos			"80 240"
 		onClick
 		{
 			call *node:root.hidepanels
 			*node:root.options_video@invis = false
-			cmd "copy mn_vidmode vid_mode;"
 		}
 	}
 	cmpMenuButton button_sound
 	{
-		tooltip		"_Sound settings."
+		tooltip		"_Sound settings"
 		string		"_Audio"
 		pos			"80 310"
 		onClick
@@ -63,7 +71,7 @@ window options
 	}
 	cmpMenuButton button_gameplay
 	{
-		tooltip		"_Battlescape camera, gameplay and input settings."
+		tooltip		"_Battlescape camera, gameplay and input settings"
 		string		"_Gameplay"
 		pos			"80 380"
 		onClick
@@ -74,7 +82,7 @@ window options
 	}
 	cmpMenuButton button_back
 	{
-		tooltip		"_Leave the options menu."
+		tooltip		"_Leave the options menu"
 		string		"_Back"
 		pos			"80 470"
 		onClick		{ cmd "ui_pop;" }
@@ -90,24 +98,18 @@ window options
 			size		"608 768"
 		}
 
-		string overallsettings
+		cmpMenuPageHeader overallsettings
 		{
 			string		"_Overall Game Settings"
-			pos			"55 67"
-			size		"465 35"
-			font		"f_menubig"
-			textalign	ALIGN_CC
-			color		"0 0.5 0 1"
 		}
 		// ======================
 		// PLAYER'S NAME SUBMENU
 		// ======================
-		string current_name
+		string settings_name
 		{
-			tooltip		"_Your name."
 			string 		"_Name"
 			pos			"62 110"
-			size		"256 20"
+			size		"200 20"
 			color		"1.0 0.75 0 1"
 		}
 		// =====================
@@ -115,12 +117,11 @@ window options
 		// =====================
 		textentry slot_name
 		{
-			tooltip		"_Change your name."
 			string		*cvar:cl_name
 			image		"ui/button_green_verysmall"
 			color 		"0 .78 0 1"
 			selectcolor	"1 1 1 1"
-			textalign	ALIGN_CL
+			contentalign	ALIGN_CL
 			padding		8
 			font		"f_verysmall"
 			pos			"72 135"
@@ -129,16 +130,16 @@ window options
 		// =================
 		// LANGUAGE SUBMENU
 		// =================
-		string language_str
+		string settings_language
 		{
 			string		"_Language Settings"
 			pos			"287 110"
-			size		"312 20"
+			size		"200 20"
 			color		"1.0 0.75 0 1"
 		}
 		optionlist select_language
 		{
-			tooltip		"_A list of available languages. ATTENTION: Choose English for the most 'complete' language, other translations might be incomplete."
+			tooltip		"_Available languages"
 			dataid		OPTION_LANGUAGES
 			pos			"297 135"
 			cvar		*cvar:s_language
@@ -147,7 +148,7 @@ window options
 			color		"0 .78 0 1"
 			selectcolor	"1 1 1 1"
 			padding		6
-			textalign	ALIGN_CC
+			contentalign	ALIGN_CC
 			onViewchange	{
 				*node:root.options_overall.select_language_scroll@current = <viewpos>
 				*node:root.options_overall.select_language_scroll@fullsize = <fullsize>
@@ -168,11 +169,11 @@ window options
 		// =========================
 		// GEOSCAPE OPTIONS SUBMENU
 		// =========================
-		string geoscape_options
+		string settings_geoscape
 		{
 			string 		"_Geoscape Options"
 			pos			"62 415"
-			size		"256 20"
+			size		"320 20"
 			color		"1.0 0.75 0 1"
 		}
 		// ==================
@@ -180,14 +181,13 @@ window options
 		// ==================
 		string m3dmap_str
 		{
-			tooltip		"_3D or 2D geoscape."
+			tooltip		"_3D or 2D geoscape. To enable this option you have to start a new campaign first."
 			string		"_3D Geoscape:"
 			pos			"72 440"
-			size		"250 20"
+			size		"280 20"
 		}
 		checkbox m3dmap
 		{
-			tooltip		"_Use the 3D geoscape. To enable this option you have to start a new campaign first."
 			current		*cvar:cl_3dmap
 			pos			"485 440"
 			size		"20 18"
@@ -198,19 +198,19 @@ window options
 		// =====================================
 		string geocamzoommin_str
 		{
-			tooltip		"_The minimum/maximum zoom of the geoscape camera."
+			tooltip		"_The minimum/maximum zoom of the geoscape camera"
 			string		"_Min/Max Geo-Cam Zoom:"
 			pos			"72 465"
-			size		"270 20"
+			size		"280 20"
 		}
 		selectbox geocamzoom_min
 		{
 			{
-				tooltip		"_Default minimum zoom level of the geoscape camera is 1.00."
+				tooltip		"_Minimum zoom level of the geoscape camera"
 				cvar		*cvar:cl_mapzoommin
-				pos			"343 465"
+				pos			"355 465"
 				size		"75 20"
-				textalign	ALIGN_CR
+				contentalign	ALIGN_CR
 			}
 			option geocamzoom_min000
 			{
@@ -247,9 +247,9 @@ window options
 		selectbox geocamzoom_max
 		{
 			{
-				tooltip		"_Default maximum zoom level of the geoscape camera is 6.00."
+				tooltip		"_Maximum zoom level of the geoscape camera"
 				cvar		*cvar:cl_mapzoommax
-				pos			"418 465"
+				pos			"430 465"
 				size		"75 20"
 			}
 			option geocamzoom_max20
@@ -287,11 +287,11 @@ window options
 		// =====================
 		// SEVERAL TIPS SUBMENU
 		// =====================
-		string several_tips
+		string settings_tips
 		{
 			string 		"_Several Tips"
 			pos			"62 520"
-			size		"256 20"
+			size		"320 20"
 			color		"1.0 0.75 0 1"
 		}
 		// ===================
@@ -299,14 +299,13 @@ window options
 		// ===================
 		string tooltip_str
 		{
-			tooltip		"_Enable mouseover tooltips."
+			tooltip		"_Enable mouseover tooltips"
 			string		"_Tooltips:"
 			pos			"72 545"
-			size		"250 20"
+			size		"280 20"
 		}
 		checkbox tooltip
 		{
-			tooltip		"_Make me disappear."
 			current		*cvar:mn_show_tooltips
 			pos			"485 545"
 			size		"20 18"
@@ -318,14 +317,13 @@ window options
 		// ================
 		string c_tooltip_str
 		{
-			tooltip		"_Enable tooltips for the cursor."
+			tooltip		"_Enable tooltips for the cursor"
 			string		"_Cursor Tooltips:"
 			pos			"72 570"
-			size		"250 20"
+			size		"280 20"
 		}
 		checkbox c_tooltip
 		{
-			tooltip		"_Activate cursor tooltips."
 			current		*cvar:cl_show_cursor_tooltips
 			pos			"485 570"
 			size		"20 18"
@@ -336,15 +334,13 @@ window options
 		// ===============
 		string tipoftheday_string
 		{
-			tooltip		"_Enable this if you are new to UFO:AI and want to see interesting tips written by the most experienced UFO:AI players out there."
 			string		"_Show 'Tip of the Day':"
 			pos			"72 595"
-			size		"250 20"
+			size		"280 20"
 			font		"f_small"
 		}
 		checkbox tipoftheday
 		{
-			tooltip		"_Enable the 'Tip of the Day'."
 			current		*cvar:cl_showTipOfTheDay
 			pos			"485 595"
 			size		"20 18"
@@ -353,9 +349,9 @@ window options
 		// =====================
 		// MENU OPTIONS SUBMENU
 		// =====================
-		string menu_options
+		string settings_menu
 		{
-			string 		"_Menu Option(s)"
+			string 		"_Menu Options"
 			pos			"62 650"
 			size		"256 20"
 			color		"1.0 0.75 0 1"
@@ -365,14 +361,13 @@ window options
 		// ================
 		string precache_str
 		{
-			tooltip		"_Precaching of models means having faster menus."
 			string		"_Precache Models:"
 			pos			"72 675"
-			size		"250 20"
+			size		"320 20"
 		}
 		checkbox precache
 		{
-			tooltip		"_Enable precaching of models to have faster menus."
+			tooltip		"_Precaching of models means having faster menus."
 			current		*cvar:cl_precache
 			pos			"485 675"
 			size		"20 18"
@@ -389,20 +384,15 @@ window options
 			size		"608 768"
 		}
 
-		string videosettings
+		cmpMenuPageHeader videosettings
 		{
 			string		"_Video Settings"
-			pos			"55 67"
-			size		"465 35"
-			font		"f_menubig"
-			textalign	ALIGN_CC
-			color		"0 0.5 0 1"
 		}
 
 		tab video_tabs {
 			{
-				pos		"45 100"
-				size	"498 39"
+				pos		"47 100"
+				size	"483 39"
 				cvar	*cvar:mn_videotab
 				onChange {
 					if ( *cvar:mn_videotab eq "general" ) {
@@ -443,12 +433,11 @@ window options
 			// ============================
 			// RESOLUTION SETTINGS SUBMENU
 			// ============================
-			string resolution_settings
+			string settings_resolution
 			{
-				tooltip		"_Adjust resolution and display settings here."
 				string 		"_Resolution and Display Settings"
 				pos			"22 10"
-				size		"256 20"
+				size		"320 20"
 				color		"1.0 0.75 0 1"
 			}
 
@@ -471,7 +460,7 @@ window options
 					tooltip		"_Display only resolutions using this screen ratio."
 					cvar		*cvar:mn_vidratio
 					pos			"215 37"
-					size		"100 20"
+					size		"121 20"
 					onChange {	cmd "cl_setratiofilter <cvar:mn_vidratio>"	}
 				}
 				option all
@@ -515,33 +504,20 @@ window options
 			// =========================
 			selectbox select_res
 			{
-				tooltip		"_Select your desired screen resolution. ATTENTION: You might have to restart to make this work correctly."
-				cvar		*cvar:mn_vidmode
-				pos			"319 37"
+				tooltip		"_Select your desired screen resolution."
+				cvar		*cvar:vid_mode
+				pos			"340 37"
 				size		"125 20"
 				dataid		OPTION_VIDEO_RESOLUTIONS
-			}
-			// ==================
-			// SWITCH RESOLUTION
-			// ==================
-			button res_test_pic
-			{
-				tooltip		"_Switch to the selected resolution. ATTENTION: You might have to restart to make this work correctly."
-				icon		"icons/bordered_magnifying_glass"
-				pos			"446 39"
-				size		"16 16"
-				padding		0
-				onClick		{ cmd "ui_push popup_maintain_resolution;" }
 			}
 			// ===========
 			// FULLSCREEN
 			// ===========
 			string fullscreen_str
 			{
-				tooltip		"_Play UFO:AI in fullscreen- or window-mode."
 				string		"_Fullscreen:"
 				pos			"32 60"
-				size		"240 20"
+				size		"320 20"
 			}
 			checkbox fullscreen
 			{
@@ -556,14 +532,12 @@ window options
 			// ===============
 			string stretch_str
 			{
-				tooltip		"_Stretches the screen with a 4:3 ratio."
 				string		"_Stretch the Screen with a 4:3 Ratio:"
 				pos			"32 85"
 				size		"370 20"
 			}
 			checkbox stretch
 			{
-				tooltip		"_Stretch the screen to a ratio of 4:3."
 				current		*cvar:vid_strech
 				pos			"445 85"
 				size		"20 18"
@@ -572,105 +546,32 @@ window options
 			// =====================================
 			// MONITOR CALIBRATION CONTROLS SUBMENU
 			// =====================================
-			string calibration_settings
+			string settings_calibration
 			{
 				tooltip		"_Calibrate your display here."
 				string 		"_Monitor Calibration Controls"
 				pos			"22 140"
-				size		"256 20"
+				size		"320 20"
 				color		"1.0 0.75 0 1"
-			}
-			// ===========
-			// BRIGHTNESS
-			// ===========
-			string brightness_str
-			{
-				tooltip		"_Brightness sets the intensity of light emitting from your screen."
-				string		"_Brightness:"
-				pos			"32 165"
-				size		"170 20"
-			}
-			image brightness_rahmen
-			{
-				src		"ui/bar_rahmen"
-				pos			"204 167"
-			}
-			bar brightness_bar
-			{
-				current		*cvar:r_brightness
-				pos			"213 172"
-				size		"238 6"
-				color		"0 0.8 0 1"
-				max			2.0
-				onClick		{ }
-			}
-			// =========
-			// CONTRAST
-			// =========
-			string contrast_str
-			{
-				tooltip		"_Contrast means the difference in brightness between the light and dark areas of a picture."
-				string		"_Contrast:"
-				pos			"32 190"
-				size		"170 20"
-			}
-			image contrast_rahmen
-			{
-				src		"ui/bar_rahmen"
-				pos			"204 192"
-			}
-			bar contrast_bar
-			{
-				current		*cvar:r_contrast
-				pos			"213 197"
-				size		"238 6"
-				color		"0 0.8 0 1"
-				max			2.0
-				onClick		{ }
 			}
 			// ======
 			// GAMMA
 			// ======
 			string gamma_str
 			{
-				tooltip		"_The gamma value manipulates the colors. Increased gamma means basically more intense colors."
 				string		"_Gamma:"
-				pos			"32 215"
+				pos			"32 165"
 				size		"170 20"
 			}
 			image gamma_rahmen
 			{
 				src		"ui/bar_rahmen"
-				pos			"204 217"
+				pos			"208 167"
 			}
 			bar gamma_bar
 			{
 				current		*cvar:vid_gamma
-				pos			"213 222"
-				size		"238 6"
-				color		"0 0.8 0 1"
-				max			3.0
-				onClick		{ }
-			}
-			// ===========
-			// SATURATION
-			// ===========
-			string saturation_str
-			{
-				tooltip		"_The saturation value manipulates the colors. Increased saturation means basically more intense colors."
-				string		"_Saturation:"
-				pos			"32 240"
-				size		"170 20"
-			}
-			image saturation_rahmen
-			{
-				src		"ui/bar_rahmen"
-				pos			"204 242"
-			}
-			bar saturation_bar
-			{
-				current		*cvar:r_saturation
-				pos			"213 247"
+				pos			"217 172"
 				size		"238 6"
 				color		"0 0.8 0 1"
 				max			3.0
@@ -679,7 +580,7 @@ window options
 			// ============================
 			// SCREENSHOT SETTINGS SUBMENU
 			// ============================
-			string screenshot_settings
+			string settings_screenshot
 			{
 				tooltip		"_The default key to make screenshots is F12."
 				string 		"_Screenshot Settings"
@@ -692,7 +593,6 @@ window options
 			// ========================
 			string jpeg_quality_str
 			{
-				tooltip		"_Here you can set the quality of jpeg screenshots."
 				string		"_jpeg Quality:"
 				pos			"32 345"
 				size		"170 20"
@@ -700,12 +600,12 @@ window options
 			image jpeg_quality_rahmen
 			{
 				src		"ui/bar_rahmen"
-				pos			"204 347"
+				pos			"208 347"
 			}
 			bar jpeg_quality_bar
 			{
 				current		*cvar:r_screenshot_jpeg_quality
-				pos			"213 352"
+				pos			"217 352"
 				size		"238 6"
 				color		"0 0.8 0 1"
 				max			100
@@ -719,14 +619,13 @@ window options
 				tooltip		"_The file format used for compressing and saving your screenshots."
 				string		"_Screenshot Format:"
 				pos			"32 370"
-				size		"170 20"
+				size		"320 20"
 			}
 			selectbox screenshot_format
 			{
 				{
-					tooltip		"_png and tga are lossless graphic formats, which will save your screenshots in highest possible quality, filesize will grow tough. You should prefer png, because of the better compression resulting in smaller filesizes than tga. jpg will be the best format if small filesizes are your priority."
 					cvar		*cvar:r_screenshot_format
-					pos			"319 370"
+					pos			"340 370"
 					size		"125 20"
 				}
 				option screenshot_format_jpeg
@@ -748,12 +647,11 @@ window options
 			// ==============================
 			// OTHER DISPLAY OPTIONS SUBMENU
 			// ==============================
-			string other_display_settings
+			string settings_display_other
 			{
-				tooltip		"_Adjust other settings here."
 				string 		"_Other Display Settings"
 				pos			"22 440"
-				size		"256 20"
+				size		"320 20"
 				color		"1.0 0.75 0 1"
 			}
 
@@ -762,10 +660,9 @@ window options
 			// ============================
 			string fps_str
 			{
-				tooltip		"_See how many frames per second are rendered."
 				string		"_Show FPS:"
 				pos			"32 465"
-				size		"240 20"
+				size		"320 20"
 			}
 			checkbox fps
 			{
@@ -784,7 +681,7 @@ window options
 				tooltip		"_Do not play the intro movie when starting the game."
 				string		"_Hold Back Intro Video:"
 				pos			"32 490"
-				size		"240 20"
+				size		"320 20"
 			}
 			checkbox intro
 			{
@@ -809,13 +706,12 @@ window options
 			// =========================
 			// TEXTURE SETTINGS SUBMENU
 			// =========================
-			string texture_settings
+			string settins_h_texture
 			{
-				tooltip		"_Adjust various texture settings here."
+				size		"320 20"
+				color		"1.0 0.75 0 1"
 				string 		"_Texture Settings"
 				pos			"22 10"
-				size		"256 20"
-				color		"1.0 0.75 0 1"
 			}
 			// =======================
 			// TEXTURE RESOLUTION CAP
@@ -832,7 +728,7 @@ window options
 				{
 					tooltip		"_Low means a maximum of 256x256 pixel texture resolution. Extreme means up to 8192x8192 pixel."
 					cvar		*cvar:r_maxtexres
-					pos			"319 37"
+					pos			"340 37"
 					size		"125 20"
 				}
 				option low_value {
@@ -869,15 +765,14 @@ window options
 				tooltip		"_Sets the texture filtering and mipmapping method."
 				string		"_Filtering:"
 				pos			"32 60"
-				size		"250 20"
+				size		"150 20"
 			}
 			selectbox texmode_box
 			{
 				{
-					tooltip		"_Sets the texture filtering and mipmapping method."
 					cvar		*cvar:r_texturemode
 					pos			"169 62"
-					size		"275 20"
+					size		"296 20"
 				}
 
 				option low_value {
@@ -914,11 +809,10 @@ window options
 				tooltip		"_Enable texture compression for better memory performance, disable for better rendering quality."
 				string		"_Compression:"
 				pos			"32 85"
-				size		"250 20"
+				size		"320 20"
 			}
 			checkbox compression
 			{
-				tooltip		"_Enable texture compression."
 				current		*cvar:r_ext_texture_compression
 				pos			"445 85"
 				size		"20 18"
@@ -936,7 +830,6 @@ window options
 			}
 			checkbox lod
 			{
-				tooltip		"_Enable high texture detail."
 				current		*cvar:r_texture_lod
 				pos			"445 110"
 				size		"20 18"
@@ -950,14 +843,13 @@ window options
 				tooltip		"_The degree or ratio of anisotropic filtering. High ratios will make distant textures appear more sharp. Very high ratios are only recommended when playing in high resolutions."
 				string		"_Anisotropy Level:"
 				pos			"32 135"
-				size		"250 20"
+				size		"320 20"
 			}
 			string aniso_value
 			{
-				tooltip		"_Current value."
 				string		*cvar:r_anisotropic
 				pos			"420 135"
-				size		"100 20"
+				size		"32 20"
 			}
 			/** @todo update max with GL max anisotropic */
 			spinner aniso_change
@@ -974,9 +866,8 @@ window options
 			// ========================
 			// OPENGL SETTINGS SUBMENU
 			// ========================
-			string opengl_settings
+			string settings_opengl
 			{
-				tooltip		"_Adjust various OpenGL settings here."
 				string 		"_OpenGL Settings"
 				pos			"22 165"
 				size		"256 20"
@@ -992,6 +883,8 @@ window options
 				pos			"32 190"
 				size		"240 20"
 			}
+			// THIS IS DISABLED UNTIL OUR SHADERS SUPPORTS THIS - see https://sourceforge.net/tracker/index.php?func=detail&aid=3341366&group_id=157793&atid=805242
+			/*
 			selectbox glsl_ver
 			{
 				{
@@ -1030,7 +923,7 @@ window options
 					label   "4.10"
 					value   "4.10"
 				}
-			}
+			}*/
 			checkbox glsl
 			{
 				tooltip		"_Enable OpenGL GLSL Shaders. Disable this if you experience graphical problems. ATTENTION: May require restart to take effect."
@@ -1051,7 +944,6 @@ window options
 			}
 			checkbox vbo
 			{
-				tooltip		"_Enable Vertex Buffers for better 3D performance (requires OpenGL capable hardware)."
 				current		*cvar:r_vertexbuffers
 				pos			"445 215"
 				size		"20 18"
@@ -1072,11 +964,10 @@ window options
 				tooltip		"_Choose between 0-4 Multisample Buffers. Higher values will provide better antialiasing and will enhance picture quality."
 				string		*cvar:r_multisample
 				pos			"360 240"
-				size		"100 20"
+				size		"24 20"
 			}
 			spinner samplebuf_change
 			{
-				tooltip		"_Change the amount of multisample buffers."
 				current		*cvar:r_multisample
 				image		"ui/spinner_blue"
 				pos			"388 240"
@@ -1089,11 +980,10 @@ window options
 				tooltip		"_Set to '0' to turn v-sync off (faster). Set to '1' or higher to turn v-sync on (better quality)."
 				string		*cvar:r_swapinterval
 				pos			"420 240"
-				size		"100 20"
+				size		"20 20"
 			}
 			spinner swapinterval_change
 			{
-				tooltip		"_Change the swap interval."
 				current		*cvar:r_swapinterval
 				image		"ui/spinner_blue"
 				pos			"448 240"
@@ -1122,9 +1012,8 @@ window options
 			// ==================================
 			// LIGHT AND SHADOW SETTINGS SUBMENU
 			// ==================================
-			string light_shadow_settings
+			string settings_light_shadow
 			{
-				tooltip		"_Adjust various light and shadow settings here."
 				string 		"_Light and Shadow"
 				pos			"22 295"
 				size		"256 20"
@@ -1142,7 +1031,6 @@ window options
 			}
 			checkbox light
 			{
-				tooltip		"_Enable real-time lighting."
 				current		*cvar:r_lights
 				pos			"385 320"
 				size		"20 18"
@@ -1150,7 +1038,6 @@ window options
 			}
 			string dynamiclights_value
 			{
-				tooltip		"_Current value."
 				string		*cvar:r_dynamic_lights
 				pos			"420 320"
 				size		"100 20"
@@ -1162,7 +1049,7 @@ window options
 				image		"ui/spinner_blue"
 				pos			"448 320"
 				min			0
-				max			16
+				max			8
 				delta		1
 			}
 			// ====================
@@ -1173,7 +1060,7 @@ window options
 				tooltip		"_Also known as bumpmapping."
 				string		"_Texture Normalmapping:"
 				pos			"32 345"
-				size		"240 20"
+				size		"320 20"
 			}
 			checkbox bumpmapping
 			{
@@ -1186,6 +1073,7 @@ window options
 			// ========
 			// SHADOWS
 			// ========
+			/*
 			string shadows_str
 			{
 				tooltip		"_At the moment these are just drop-shadows."
@@ -1201,6 +1089,7 @@ window options
 				size		"20 18"
 				image		"ui/checkbox_blue"
 			}
+			*/
 			// ===============================
 			// LIGHTMAP RESOLUTION BLOCK SIZE
 			// ===============================
@@ -1216,7 +1105,7 @@ window options
 				{
 					tooltip		"_Low means a maximum lightmap resolution of 512x512 pixel. High means up to 2048x2048 pixel."
 					cvar		*cvar:r_maxlightmap
-					pos			"319 397"
+					pos			"339 397"
 					size		"125 20"
 				}
 				option low_value {
@@ -1244,18 +1133,17 @@ window options
 				tooltip		"_Changing this would scale the lightmap brightness."
 				string		"_Lightmap Scale:"
 				pos			"32 420"
-				size		"150 20"
+				size		"320 20"
 			}
 			image lightmap_rahmen
 			{
 				src		"ui/bar_rahmen"
-				pos			"204 422"
+				pos			"208 447"
 			}
 			bar lightmap_bar
 			{
-				tooltip		"_Changing this would scale the lightmap brightness."
 				current		*cvar:r_modulate
-				pos			"213 427"
+				pos			"217 452"
 				size		"238 6"
 				color		"0 .8 0 1"
 				max			4.0
@@ -1268,19 +1156,18 @@ window options
 			{
 				tooltip		"_Amount of light emitting from the sun and shining on the earth."
 				string		"_Geo Ambient Lighting:"
-				pos			"32 445"
-				size		"200 20"
+				pos			"32 470"
+				size		"320 20"
 			}
 			image m3dmapambient_rahmen
 			{
 				src		"ui/bar_rahmen"
-				pos			"204 447"
+				pos			"204 497"
 			}
 			bar m3dmapambient_bar
 			{
-				tooltip		"_Current amount of ambient light reaching the earth."
 				current		*cvar:cl_3dmapAmbient
-				pos			"213 452"
+				pos			"213 502"
 				size		"238 6"
 				color		"0 .8 0 1"
 				min			-1
@@ -1299,12 +1186,11 @@ window options
 			// =======================
 			// OTHER SETTINGS SUBMENU
 			// =======================
-			string othergfx_settings
+			string settings_othergfx
 			{
-				tooltip		"_Adjust various other settings here."
 				string 		"_Other"
 				pos			"22 10"
-				size		"256 20"
+				size		"320 20"
 				color		"1.0 0.75 0 1"
 			}
 			// =======
@@ -1319,7 +1205,6 @@ window options
 			}
 			checkbox flares
 			{
-				tooltip		"_Enable flares."
 				current		*cvar:r_flares
 				pos			"445 35"
 				size		"20 18"
@@ -1337,7 +1222,6 @@ window options
 			}
 			checkbox coronas
 			{
-				tooltip		"_Enable coronas."
 				current		*cvar:r_coronas
 				pos			"445 60"
 				size		"20 18"
@@ -1355,7 +1239,6 @@ window options
 			}
 			checkbox fog
 			{
-				tooltip		"_Enable fog."
 				current		*cvar:r_fog
 				pos			"445 85"
 				size		"20 18"
@@ -1373,7 +1256,6 @@ window options
 			}
 			checkbox ptlweather
 			{
-				tooltip		"_Enable weather effects."
 				current		*cvar:cl_particleweather
 				pos			"445 110"
 				size		"20 18"
@@ -1391,7 +1273,6 @@ window options
 			}
 			checkbox materialsys
 			{
-				tooltip		"_Enable the material system."
 				current		*cvar:r_materials
 				pos			"445 135"
 				size		"20 18"
@@ -1455,23 +1336,18 @@ window options
 		// ===============
 		// AUDIO SETTINGS
 		// ===============
-		string soundsettings
+		cmpMenuPageHeader soundsettings
 		{
 			string		"_Audio Settings"
-			pos			"55 67"
-			size		"465 35"
-			font		"f_menubig"
-			textalign	ALIGN_CC
-			color		"0 0.5 0 1"
 		}
 		// =======================
 		// VOLUME CONTROL SUBMENU
 		// =======================
-		string volume_str
+		string settings_volume
 		{
 			string		"_Volume Control"
 			pos			"62 110"
-			size		"240 20"
+			size		"320 20"
 			color		"1.0 0.75 0 1"
 		}
 		// =====================
@@ -1486,7 +1362,6 @@ window options
 		}
 		checkbox sound_init
 		{
-			tooltip		"_Do not turn me off."
 			current		*cvar:snd_init
 			pos			"485 135"
 			size		"20 18"
@@ -1497,7 +1372,6 @@ window options
 		// =============
 		string music_str
 		{
-			tooltip		"_Do not miss the phantastic soundtrack UFO:AI has to offer."
 			string		"_Music:"
 			pos			"72 160"
 			size		"150 20"
@@ -1505,13 +1379,12 @@ window options
 		image music_rahmen
 		{
 			src		"ui/bar_rahmen"
-			pos			"244 162"
+			pos			"248 162"
 		}
 		bar music_bar
 		{
-			tooltip		"_Current volume of the music."
 			current		*cvar:snd_music_volume
-			pos			"253 167"
+			pos			"257 167"
 			size		"238 6"
 			color		"0 .8 0 1"
 			max			128
@@ -1523,7 +1396,6 @@ window options
 		// =====================
 		string effects_str
 		{
-			tooltip		"_Do you want to hear the screams?"
 			string		"_Sound Effects:"
 			pos			"72 185"
 			size		"170 20"
@@ -1531,13 +1403,12 @@ window options
 		image effects_rahmen
 		{
 			src		"ui/bar_rahmen"
-			pos			"244 187"
+			pos			"248 187"
 		}
 		bar effects_bar
 		{
-			tooltip		"_Current volume of the sound effects."
 			current		*cvar:snd_volume
-			pos			"253 192"
+			pos			"257 192"
 			size		"238 6"
 			color		"0 .8 0 1"
 			max			1.0
@@ -1550,17 +1421,17 @@ window options
 		//
 		string menusounds_str
 		{
-			tooltip		"_You do not like click sounds?"
 			string		"_Menu Sounds:"
 			pos			"72 210"
 			size		"170 20"
 		}
 		checkbox menu_sounds_checkbox
 		{
-			pos			"485 217"
+			tooltip		"_Turn the menu sounds on or off."
+			current		*cvar:ui_sounds
+			pos			"485 210"
 			size		"20 18"
 			image		"ui/checkbox_blue"
-			current	*cvar:ui_sounds
 		}
 		//image menu_sounds_rahmen
 		//{
@@ -1580,7 +1451,7 @@ window options
 		// ============================
 		// OTHER AUDIO OPTIONS SUBMENU
 		// ============================
-		string other_sound_opt
+		string settings_sound_other
 		{
 			string		"_Advanced Audio Options"
 			pos			"62 265"
@@ -1600,7 +1471,6 @@ window options
 		selectbox rate_box
 		{
 			{
-				tooltip		"_Current sample rate frequency in kHz."
 				cvar		*cvar:snd_rate
 				pos			"359 295"
 				size		"125 20"
@@ -1648,23 +1518,18 @@ window options
 		// ==================
 		// GAMEPLAY SETTINGS
 		// ==================
-		string gameplaysettings_str
+		cmpMenuPageHeader gameplaysettings_str
 		{
 			string		"_Gameplay Settings"
-			pos			"55 67"
-			size		"465 35"
-			font		"f_menubig"
-			textalign	ALIGN_CC
-			color		"0 0.5 0 1"
 		}
 		// ====================================
 		// BATTLESCAPE CAMERA SETTINGS SUBMENU
 		// ====================================
-		string camera_str
+		string settings_camera
 		{
 			string		"_Battlescape Camera Settings"
 			pos			"62 110"
-			size		"240 20"
+			size		"320 20"
 			color		"1.0 0.75 0 1"
 		}
 		// ================================
@@ -1672,7 +1537,6 @@ window options
 		// ================================
 		string camspeed_str
 		{
-			tooltip		"_The scroll speed of the battlescape camera."
 			string		"_Scroll Speed:"
 			pos			"72 135"
 			size		"170 20"
@@ -1680,13 +1544,12 @@ window options
 		image camspeed_rahmen
 		{
 			src		"ui/bar_rahmen"
-			pos			"244 137"
+			pos			"248 137"
 		}
 		bar camspeed_bar
 		{
-			tooltip		"_Actual camera scroll speed."
 			current		*cvar:cl_cammovespeed
-			pos			"253 142"
+			pos			"257 142"
 			size		"238 6"
 			color		"0 .8 0 1"
 			min			5
@@ -1698,7 +1561,6 @@ window options
 		// ============================
 		string camrot_str
 		{
-			tooltip		"_The rotation speed of the battlescape camera."
 			string		"_Rotation Speed:"
 			pos			"72 160"
 			size		"170 20"
@@ -1706,13 +1568,12 @@ window options
 		image camrot_rahmen
 		{
 			src		"ui/bar_rahmen"
-			pos			"244 162"
+			pos			"248 162"
 		}
 		bar camrot_bar
 		{
-			tooltip		"_Actual camera rotation speed."
 			current		*cvar:cl_camrotspeed
-			pos			"253 167"
+			pos			"257 167"
 			size		"238 6"
 			color		"0 .8 0 1"
 			min			5
@@ -1732,13 +1593,12 @@ window options
 		image cammovedecel_rahmen
 		{
 			src		"ui/bar_rahmen"
-			pos			"244 187"
+			pos			"248 187"
 		}
 		bar cammovedecel_bar
 		{
-			tooltip		"_Actual camera move deceleration. Set this to a high value if you want the camera to stop abruptly when you stop camera movement."
 			current		*cvar:cl_cammoveaccel
-			pos			"253 192"
+			pos			"257 192"
 			size		"238 6"
 			color		"0 .8 0 1"
 			min			0
@@ -1750,19 +1610,18 @@ window options
 		// ============================================
 		string campitch_str
 		{
-			tooltip		"_The minimum/maximum pitch shift of the battlescape camera."
 			string		"_Minimum/Maximum Shift Pitch:"
 			pos			"72 210"
-			size		"250 20"
+			size		"270 20"
 		}
 		selectbox campitch_min
 		{
 			{
 				tooltip		"_ATTENTION: Setting minimum camera pitch shift below 15 degrees might complicate selecting and commanding your soldiers."
 				cvar		*cvar:cl_campitchmin
-				pos			"343 210"
+				pos			"355 210"
 				size		"75 20"
-				textalign	ALIGN_CR
+				contentalign	ALIGN_CR
 			}
 			option minus90degrees
 			{
@@ -1806,7 +1665,7 @@ window options
 			{
 				tooltip		"_ATTENTION: Setting maximum camera pitch shift over 90 degrees will turn your camera upside down when exceeding that point."
 				cvar		*cvar:cl_campitchmax
-				pos			"418 210"
+				pos			"430 210"
 				size		"75 20"
 			}
 			option plus45degrees
@@ -1846,17 +1705,16 @@ window options
 		// ========================================
 		string camzoom_str
 		{
-			tooltip		"_The minimum/maximum zoom of the battlescape camera."
 			string		"_Minimum/Maximum Zoom:"
 			pos			"72 235"
-			size		"250 20"
+			size		"270 20"
 		}
 		selectbox camzoom_min
 		{
 			{
 				tooltip		"_Default minimum zoom level of the battlescape camera is 0.30."
 				cvar		*cvar:cl_camzoommin
-				pos			"343 235"
+				pos			"355 235"
 				size		"75 20"
 			}
 			option zoom_min0
@@ -1901,7 +1759,7 @@ window options
 			{
 				tooltip		"_Default maximum zoom level of the battlescape camera is 3.40."
 				cvar		*cvar:cl_camzoommax
-				pos			"418 235"
+				pos			"430 235"
 				size		"75 20"
 			}
 			option zoom_max200
@@ -1949,14 +1807,14 @@ window options
 			tooltip		"_The zoom quant of the battlescape camera defines how big the difference between zoom steps will be."
 			string		"_Zoom Quant:"
 			pos			"72 260"
-			size		"170 20"
+			size		"320 20"
 		}
 		selectbox zoom_quant
 		{
 			{
 				tooltip		"_Set zoom quant to low values if you want more control, set this value higher if the zoom is too slow."
 				cvar		*cvar:cl_camzoomquant
-				pos			"418 260"
+				pos			"430 260"
 				size		"75 20"
 			}
 			option zoom_quant000
@@ -2004,11 +1862,10 @@ window options
 			tooltip		"_Isometric Mode means the 3D world will be rendered without perspective correction."
 			string		"_Isometric Mode:"
 			pos			"72 285"
-			size		"240 20"
+			size		"320 20"
 		}
 		checkbox isomode
 		{
-			tooltip		"_Enable the isometric 3D rendering mode for the battlescape."
 			current		*cvar:r_isometric
 			pos			"485 285"
 			size		"20 18"
@@ -2019,14 +1876,13 @@ window options
 		// ===============================
 		string centerview_str
 		{
-			tooltip		"_Select whether the game should automatically center the camera view at the actors on the battlescape or not."
+			tooltip		"_Center the camera view automatically at the soldier when selecting it, or at the enemy when he is shooting or appearing."
 			string		"_Center View:"
 			pos			"72 310"
-			size		"170 20"
+			size		"320 20"
 		}
 		checkbox centerview_value
 		{
-			tooltip		"_Center the camera view automatically at the soldier when selecting it, or at the enemy when he is shooting or appearing."
 			current		*cvar:cl_centerview
 			pos			"485 310"
 			size		"20 18"
@@ -2035,11 +1891,11 @@ window options
 		// ======================================
 		// BATTLESCAPE GAMEPLAY SETTINGS SUBMENU
 		// ======================================
-		string gameplaysettings
+		string settings_gameplay
 		{
 			string		"_Battlescape Gameplay Settings"
 			pos			"62 340"
-			size		"240 20"
+			size		"320 20"
 			color		"1.0 0.75 0 1"
 		}
 		// ============
@@ -2047,21 +1903,20 @@ window options
 		// ============
 		string actorsspeed_str
 		{
-			tooltip		"_Actor speed changes the speed of aliens and humans."
 			string		"_Actor Speed:"
 			pos			"72 365"
-			size		"150 20"
+			size		"170 20"
 		}
 		image actorsspeed_rahmen
 		{
 			src		"ui/bar_rahmen"
-			pos			"244 367"
+			pos			"248 367"
 		}
 		bar actorsspeed_bar
 		{
 			tooltip		"_Choose between 0-9, higher values mean higher actor speed."
 			current		*cvar:g_actorspeed
-			pos			"253 372"
+			pos			"257 372"
 			size		"238 6"
 			color		"0 .8 0 1"
 			max			9
@@ -2072,7 +1927,7 @@ window options
 		// ============================
 		string confirm_str
 		{
-			tooltip		"_Enabling this will give you a preview of your actions on the battlescape which you then have to confirm. This is a must-try-feature."
+			tooltip		"_Enabling this will give you a preview of your actions on the battlescape which you then have to confirm."
 			string		"_Confirm Actions:"
 			pos			"72 390"
 			size		"240 20"
@@ -2082,7 +1937,7 @@ window options
 			{
 				tooltip		"_'No' means all your orders on the battlescape will be executed immediately. 'Yes' means you will be prompted to confirm all of your orders before the soldier begins to execute them. 'Only for moving' means the path will be displayed before you confirm a soldier's move."
 				cvar		*cvar:confirm_actions
-				pos			"343 390"
+				pos			"350 390"
 				size		"155 20"
 			}
 			option confirm_value {
@@ -2094,7 +1949,7 @@ window options
 				value	"0"
 			}
 			option moveconfirm_value {
-				label	"_Only for moving"
+				label	"_Moving only"
 				value	"2"
 			}
 		}
@@ -2106,26 +1961,14 @@ window options
 			tooltip		"_Autostand regulates if your soldier should automatically stand up when he is getting the order to move while being crouched."
 			string		"_Autostand:"
 			pos			"72 415"
-			size		"240 20"
+			size		"320 20"
 		}
-		selectbox select_autostand
+		checkbox autostand_value
 		{
-			{
-				tooltip		"_Select 'Yes' if you want more intelligent soldiers."
-				cvar		*cvar:cl_autostand
-				pos			"343 415"
-				size		"155 20"
-			}
-			option confirm_value
-			{
-				label	"_Yes"
-				value	"1"
-			}
-			option noconfirm_value
-			{
-				label	"_No"
-				value	"0"
-			}
+			current		*cvar:cl_autostand
+			pos			"485 415"
+			size		"20 18"
+			image		"ui/checkbox_blue"
 		}
 		// ================
 		// BATTLESCAPE HUD
@@ -2141,19 +1984,18 @@ window options
 		// @note selectbox completed by the confunc add_hud_name
 		selectbox select_hud
 		{
-			tooltip		"_Available HUD for the battlescape mode."
 			cvar		*cvar:cl_hud
-			pos			"343 440"
+			pos			"350 440"
 			size		"155 20"
 		}
 		// =================================
 		// JOYSTICK/JOYPAD SETTINGS SUBMENU
 		// =================================
-		string joystick_settings_str
+		string settings_joystick
 		{
 			string		"_Joystick Settings"
 			pos			"62 495"
-			size		"240 20"
+			size		"320 20"
 			color		"1.0 0.75 0 1"
 		}
 		// ================
@@ -2161,14 +2003,12 @@ window options
 		// ================
 		string joystick_enable_str
 		{
-			tooltip		"_Enable or disable your Joystick."
 			string		"_Enable:"
 			pos			"72 520"
 			size		"240 20"
 		}
 		checkbox joystick_enable
 		{
-			tooltip		"_Enable your joystick or joypad."
 			current		*cvar:in_joystick
 			pos			"485 520"
 			size		"20 18"
@@ -2179,18 +2019,17 @@ window options
 		// ==========================
 		string joystick_str
 		{
-			tooltip		"_Select which of your joysticks or joypads you want to use."
 			string		"_Joystick or Joypad:"
 			pos			"72 545"
-			size		"150 20"
+			size		"250 20"
 		}
 		selectbox select_joystick
 		{
 			tooltip		"_Available game controllers."
 			cvar		*cvar:in_joystickNo
 			dataid		OPTION_JOYSTICKS
-			pos			"243 545"
-			size		"256 20"
+			pos			"350 545"
+			size		"155 20"
 		}
 		// ===================
 		// JOYSTICK THRESHOLD
@@ -2205,12 +2044,12 @@ window options
 		image joystick_threshold_rahmen
 		{
 			src		"ui/bar_rahmen"
-			pos			"244 572"
+			pos			"248 572"
 		}
 		bar joystick_threshold_bar
 		{
 			current		*cvar:in_joystickThreshold
-			pos			"253 577"
+			pos			"257 577"
 			size		"238 6"
 			color		"0 .8 0 1"
 			min			0.0
@@ -2222,7 +2061,6 @@ window options
 		// ===============
 		string joystick_speed_str
 		{
-			tooltip		"_Joystick speed."
 			string		"_Speed:"
 			pos			"72 595"
 			size		"150 20"
@@ -2230,12 +2068,12 @@ window options
 		image joystick_speed_rahmen
 		{
 			src		"ui/bar_rahmen"
-			pos			"244 597"
+			pos			"248 597"
 		}
 		bar joystick_speed_bar
 		{
 			current		*cvar:in_joystickSpeed
-			pos			"253 602"
+			pos			"257 602"
 			size		"238 6"
 			color		"0 .8 0 1"
 			min			5
@@ -2285,18 +2123,19 @@ window options
 			pos			"55 67"
 			size		"465 35"
 			font		"f_menubig"
-			textalign	ALIGN_CC
+			contentalign	ALIGN_CC
 			color		"0 0.79 0 1"
 		}
 		// only show the current binding - no support for changing them atm
 		text keylist
 		{
-			tooltip		"_See the key bindings."
 			dataid		TEXT_LIST
-			pos			"65 110"
-			size		"430 560"
+			pos			"55 120"
+			size		"450 575"
 			rows		"28"
 			lineheight	"20"
+			tabwidth	"120"
+			font		"f_verysmall"
 			onViewChange
 			{
 				*node:root.options_keys.keyscroll@fullsize = <fullsize>
@@ -2310,8 +2149,8 @@ window options
 		vscrollbar keyscroll
 		{
 			image		"ui/scrollbar_v_green"
-			pos			"508 110"
-			height		"560"
+			pos			"508 120"
+			height		"575"
 			current		0
 			viewsize	28
 			fullsize	50
@@ -2330,48 +2169,5 @@ window options
 		*node:root.options_video.options_general_video@invis = false
 
 		*node:root.options_overall@invis = false
-	}
-}
-// ====================
-// MAINTAIN RESOLUTION
-// ====================
-window popup_maintain_resolution
-{
-	{
-		string		"_Maintain Resolution"
-		image		"ui/popup_alpha_tile"
-		pos			"264 262"
-		size		"486 247"
-		dragbutton	true
-		closebutton	true
-	}
-	string name_label
-	{
-		string		"_Maintain the selected resolution."
-		pos			"26 58"
-		size		"450 60"
-	}
-	cmpPopupButton bt_change
-	{
-		tooltip		"_Accept the new resolution."
-		string		"_Accept"
-		pos			"112 188"
-		onClick		{ cmd "ui_pop; copy new_vidmode mn_vidmode; saveconfig config.cfg;" }
-	}
-	cmpCancelButton bt_cancel
-	{
-		tooltip		"_Use the previous resolution."
-		pos			"297 188"
-		onClick		{ cmd "ui_pop; copy new_vidmode old_vidmode;" }
-	}
-	func onWindowOpened
-	{
-		cmd "copy old_vidmode vid_mode;"
-		cmd "copy vid_mode mn_vidmode;"
-		cmd "copy new_vidmode old_vidmode;"
-	}
-	func onWindowClosed
-	{
-		cmd "copy vid_mode new_vidmode;"
 	}
 }

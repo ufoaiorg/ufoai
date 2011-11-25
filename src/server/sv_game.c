@@ -62,6 +62,14 @@ static void SV_PlayerPrintf (const player_t * player, int level, const char *fmt
 		SV_LogAdd(fmt, ap);
 }
 
+/**
+ * @brief Glue function to get the visibility from a given position
+ */
+static float SV_GetVisibility (const pos3_t position)
+{
+	return CM_GetVisibility(&sv->mapTiles, position);
+}
+
 static void SV_error (const char *fmt, ...) __attribute__((noreturn));
 /**
  * @brief Abort the server with a game error
@@ -158,7 +166,7 @@ static void SV_Configstring (int index, const char *fmt, ...)
 	char val[MAX_TOKEN_CHARS * MAX_TILESTRINGS];
 	va_list argptr;
 
-	if (index < 0 || index >= MAX_CONFIGSTRINGS)
+	if (!Com_CheckConfigStringIndex(index))
 		SV_error("configstring: bad index %i", index);
 
 	va_start(argptr, fmt);
@@ -342,6 +350,64 @@ static void SV_EndEvents (void)
 	p->buf = NULL;
 }
 
+typedef struct {
+	const char *name;
+	event_t eventNum;
+} eventNames_t;
+
+#define M(x) {#x, x}
+const eventNames_t eventNames[] = {
+	M(EV_NULL),
+	M(EV_RESET),
+	M(EV_START),
+	M(EV_ENDROUND),
+	M(EV_ENDROUNDANNOUNCE),
+
+	M(EV_RESULTS),
+	M(EV_CENTERVIEW),
+
+	M(EV_ENT_APPEAR),
+	M(EV_ENT_PERISH),
+	M(EV_ENT_DESTROY),
+	M(EV_ADD_BRUSH_MODEL),
+	M(EV_ADD_EDICT),
+
+	M(EV_ACTOR_APPEAR),
+	M(EV_ACTOR_ADD),
+	M(EV_ACTOR_TURN),
+	M(EV_ACTOR_MOVE),
+	M(EV_ACTOR_REACTIONFIRECHANGE),
+
+	M(EV_ACTOR_START_SHOOT),
+	M(EV_ACTOR_SHOOT),
+	M(EV_ACTOR_SHOOT_HIDDEN),
+	M(EV_ACTOR_THROW),
+
+	M(EV_ACTOR_DIE),
+	M(EV_ACTOR_REVITALISED),
+	M(EV_ACTOR_STATS),
+	M(EV_ACTOR_STATECHANGE),
+	M(EV_ACTOR_RESERVATIONCHANGE),
+
+	M(EV_INV_ADD),
+	M(EV_INV_DEL),
+	M(EV_INV_AMMO),
+	M(EV_INV_RELOAD),
+	M(EV_INV_TRANSFER),
+
+	M(EV_MODEL_EXPLODE),
+	M(EV_MODEL_EXPLODE_TRIGGERED),
+
+	M(EV_PARTICLE_APPEAR),
+	M(EV_PARTICLE_SPAWN),
+
+	M(EV_DOOR_OPEN),
+	M(EV_DOOR_CLOSE),
+	M(EV_CLIENT_ACTION),
+	M(EV_RESET_CLIENT_ACTION)
+};
+#undef M
+
 /**
  * @sa gi.AddEvent
  * @param[in] mask The player bitmask to send the events to. Use @c PM_ALL to send to every connected player.
@@ -349,7 +415,10 @@ static void SV_EndEvents (void)
 static void SV_AddEvent (unsigned int mask, int eType)
 {
 	pending_event_t *p = &sv->pendingEvent;
-	Com_DPrintf(DEBUG_EVENTSYS, "Event type: %i (mask %i)\n", eType, mask);
+	const int rawType = eType &~ EVENT_INSTANTLY;
+	const char *eventName = eType >= 0 ? eventNames[rawType].name : "-";
+	Com_DPrintf(DEBUG_EVENTSYS, "Event type: %s (%i - %i) (mask %s)\n", eventName,
+			rawType, eType, Com_UnsignedIntToBinary(mask));
 
 	/* finish the last event */
 	if (p->pending)
@@ -605,6 +674,8 @@ void SV_InitGameProgs (void)
 	import.GridPosToVec = Grid_PosToVec;
 	import.GridRecalcRouting = SV_RecalcRouting;
 
+	import.GetVisibility = SV_GetVisibility;
+
 	import.ModelIndex = SV_ModelIndex;
 
 	import.SetInlineModelOrientation = SV_SetInlineModelOrientation;
@@ -612,7 +683,6 @@ void SV_InitGameProgs (void)
 	import.SetModel = SV_SetModel;
 
 	import.ConfigString = SV_Configstring;
-	import.PositionedSound = SV_StartSound;
 
 	import.PointContents = SV_PointContents;
 	import.GetFootstepSound = SV_GetFootstepSound;
@@ -675,6 +745,8 @@ void SV_InitGameProgs (void)
 
 	import.seed = Sys_Milliseconds();
 	import.csi = &csi;
+
+	Com_Printf("setting game random seed to %i\n", import.seed);
 
 	/* import the server routing table */
 	import.routingMap = sv->mapData.map;

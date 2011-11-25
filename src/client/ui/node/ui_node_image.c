@@ -76,16 +76,57 @@ static void UI_ImageNodeLoaded (uiNode_t *node)
 }
 
 /**
- * @todo Center image, or use textalign property
+ * @brief Get position of a inner box inside an outer box according to align param.
+ * @todo Generic function, move it outside.
+ * @param[in] outerBoxPos Position of the top-left corner of the outer box.
+ * @param[in] outerBoxSize Size of the outer box.
+ * @param[in] innerBoxSize Size of the inner box.
+ * @param align Alignment of the inner box inside the outer box.
+ * @param[out] innerBoxPos Position of the top-left corner of the inner box.
+ */
+static void UI_ImageAlignBoxInBox (vec2_t outerBoxPos, vec2_t outerBoxSize, vec2_t innerBoxSize, align_t align, vec2_t innerBoxPos)
+{
+	switch (align % 3) {
+	case 0:	/* left */
+		innerBoxPos[0] = outerBoxPos[0];
+		break;
+	case 1:	/* middle */
+		innerBoxPos[0] = outerBoxPos[0] + (outerBoxSize[0] * 0.5) - (innerBoxSize[0] * 0.5);
+		break;
+	case 2:	/* right */
+		innerBoxPos[0] = outerBoxPos[0] + outerBoxSize[0] - innerBoxSize[0];
+		break;
+	}
+	switch (align / 3) {
+	case 0:	/* top */
+		innerBoxPos[1] = outerBoxPos[1];
+		break;
+	case 1:	/* middle */
+		innerBoxPos[1] = outerBoxPos[1] + (outerBoxSize[1] * 0.5) - (innerBoxSize[1] * 0.5);
+		break;
+	case 2:	/* bottom */
+		innerBoxPos[1] = outerBoxPos[1] + outerBoxSize[1] - innerBoxSize[1];
+		break;
+	default:
+		innerBoxPos[1] = outerBoxPos[1];
+		Com_Error(ERR_FATAL, "UI_ImageAlignBoxInBox: Align %d not supported\n", align);
+	}
+}
+
+/**
+ * @brief Draws the image node
+ * @param[in] node The UI node to draw
  */
 void UI_ImageNodeDraw (uiNode_t *node)
 {
 	vec2_t size;
 	vec2_t nodepos;
 	const image_t *image;
+	vec2_t imagepos;
+	vec2_t nodesize;
 
 	const char* imageName = UI_GetReferenceString(node, node->image);
-	if (!imageName || imageName[0] == '\0')
+	if (Q_strnull(imageName))
 		return;
 
 	image = UI_LoadImage(imageName);
@@ -106,6 +147,13 @@ void UI_ImageNodeDraw (uiNode_t *node)
 #endif
 
 	UI_GetNodeAbsPos(node, nodepos);
+	Vector2Copy(node->size, nodesize);
+	nodesize[0] -= node->padding + node->padding;
+	if (nodesize[0] < 0)
+		nodesize[0] = 0;
+	nodesize[1] -= node->padding + node->padding;
+	if (nodesize[1] < 0)
+		nodesize[1] = 0;
 
 	/** @todo code is duplicated in the ekg node code */
 	if (node->size[0] && !node->size[1]) {
@@ -115,20 +163,23 @@ void UI_ImageNodeDraw (uiNode_t *node)
 		const float scale = image->height / node->size[1];
 		Vector2Set(size, image->width / scale, node->size[1]);
 	} else {
+		Vector2Copy(nodesize, size);
+
 		if (EXTRADATA(node).preventRatio) {
 			/* maximize the image into the bounding box */
 			const float ratio = (float) image->width / (float) image->height;
-			if (node->size[1] * ratio > node->size[0]) {
-				Vector2Set(size, node->size[0], node->size[0] / ratio);
+			if (size[1] * ratio > size[0]) {
+				Vector2Set(size, size[0], size[0] / ratio);
 			} else {
-				Vector2Set(size, node->size[1] * ratio, node->size[1]);
+				Vector2Set(size, size[1] * ratio, size[1]);
 			}
-		} else {
-			Vector2Copy(node->size, size);
 		}
 	}
-	UI_DrawNormImage(nodepos[0], nodepos[1], size[0], size[1],
-		EXTRADATA(node).texh[0], EXTRADATA(node).texh[1], EXTRADATA(node).texl[0], EXTRADATA(node).texl[1], image);
+
+	UI_ImageAlignBoxInBox(nodepos, nodesize, size, node->contentAlign, imagepos);
+	UI_DrawNormImage(qfalse, imagepos[0] + node->padding, imagepos[1] + node->padding, size[0], size[1],
+			EXTRADATA(node).texh[0], EXTRADATA(node).texh[1],
+			EXTRADATA(node).texl[0], EXTRADATA(node).texl[1], image);
 
 	/** @todo convert all pic using mousefx into button.
 	 * @todo delete mousefx

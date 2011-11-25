@@ -191,12 +191,14 @@ extern char *keyBindings[K_KEY_SIZE];
 extern char *menuKeyBindings[K_KEY_SIZE];
 extern char *battleKeyBindings[K_KEY_SIZE];
 
+qboolean Key_IsDown(unsigned int key);
 void Key_SetDest(int key_dest);
 void Key_Event(unsigned int key, unsigned short unicode, qboolean down, unsigned time);
 void Key_Init(void);
 void Key_WriteBindings(const char* filename);
 const char* Key_GetBinding(const char *binding, keyBindSpace_t space);
 const char *Key_KeynumToString(int keynum);
+int Key_StringToKeynum(const char *str);
 void Key_SetBinding(int keynum, const char *binding, keyBindSpace_t space);
 
 #endif /* CLIENT_KEY_H */

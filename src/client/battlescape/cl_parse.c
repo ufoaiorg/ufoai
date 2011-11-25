@@ -42,7 +42,6 @@ static char const* const svc_strings[] =
 	"svc_nop",
 	"svc_disconnect",
 	"svc_reconnect",
-	"svc_sound",
 	"svc_print",
 	"svc_stufftext",
 	"svc_serverdata",
@@ -135,7 +134,7 @@ static void CL_ParseConfigString (struct dbuffer *msg)
 		if (refdef.ready) {
 			const unsigned int index = i - CS_MODELS;
 			assert(index != 0);
-			cl.model_draw[index] = R_RegisterModelShort(s);
+			cl.model_draw[index] = R_FindModel(s);
 			/* inline models are marked with * as first char followed by the number */
 			if (s[0] == '*')
 				cl.model_clip[index] = CM_InlineModel(cl.mapTiles, s);
@@ -154,36 +153,6 @@ static void CL_ParseConfigString (struct dbuffer *msg)
 ACTION MESSAGES
 =====================================================================
 */
-
-/**
- * @brief Parse a server sent sound package
- * @sa svc_sound
- * @sa SV_StartSound
- */
-static void CL_ParseStartSoundPacket (struct dbuffer *msg)
-{
-	vec3_t origin;
-	char sound[MAX_QPATH];
-	size_t length;
-
-	NET_ReadString(msg, sound, sizeof(sound));
-	NET_ReadPos(msg, origin);
-
-	length = strlen(sound) - 1;
-	if (sound[length] == '+') {
-		int i;
-
-		sound[length] = '\0';
-		for (i = 1; i <= 99; i++) {
-			if (FS_CheckFile("sounds/%s%02i", sound, i) == -1)
-				break;
-		}
-
-		Com_sprintf(sound + length, sizeof(sound) - length, "%02i", rand() % i + 1);
-	}
-
-	S_LoadAndPlaySample(sound, origin, SOUND_ATTN_NORM, SND_VOLUME_DEFAULT);
-}
 
 /**
  * @brief Parses the server sent data from the given buffer.
@@ -208,6 +177,13 @@ void CL_ParseServerMessage (svc_ops_t cmd, struct dbuffer *msg)
 /*		Com_Printf("svc_nop\n"); */
 		break;
 
+	case svc_ping: {
+		struct dbuffer *ack = new_dbuffer();
+		NET_WriteByte(ack, clc_ack);
+		NET_WriteMsg(cls.netStream, ack);
+		break;
+	}
+
 	case svc_disconnect:
 		NET_ReadString(msg, s, sizeof(s));
 		Com_Printf("%s\n", s);
@@ -217,10 +193,7 @@ void CL_ParseServerMessage (svc_ops_t cmd, struct dbuffer *msg)
 	case svc_reconnect:
 		NET_ReadString(msg, s, sizeof(s));
 		Com_Printf("%s\n", s);
-		CL_Disconnect();
-		CL_SetClientState(ca_connecting);
-		/* otherwise we would time out */
-		cls.connectTime = CL_Milliseconds() - 1500;
+		cls.reconnectTime = CL_Milliseconds() + 4000;
 		break;
 
 	case svc_print:
@@ -228,7 +201,6 @@ void CL_ParseServerMessage (svc_ops_t cmd, struct dbuffer *msg)
 		NET_ReadString(msg, s, sizeof(s));
 		switch (i) {
 		case PRINT_CHAT:
-			S_StartLocalSample("misc/talk", SND_VOLUME_DEFAULT);
 			GAME_AddChatMessage(s);
 			/* skip format strings */
 			if (s[0] == '^')
@@ -263,10 +235,6 @@ void CL_ParseServerMessage (svc_ops_t cmd, struct dbuffer *msg)
 		CL_ParseConfigString(msg);
 		break;
 
-	case svc_sound:
-		CL_ParseStartSoundPacket(msg);
-		break;
-
 	case svc_event:
 		CL_ParseEvent(msg);
 		break;
@@ -276,6 +244,6 @@ void CL_ParseServerMessage (svc_ops_t cmd, struct dbuffer *msg)
 		break;
 
 	default:
-		Com_Error(ERR_DROP,"CL_ParseServerMessage: Illegible server message %d", cmd);
+		Com_Error(ERR_DROP,"CL_ParseServerMessage: Illegal server message %d", cmd);
 	}
 }

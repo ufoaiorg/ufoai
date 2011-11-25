@@ -7,7 +7,10 @@
 /config.mk
 /debug-*/
 /Makefile.local
+/memory
 /release-*/
+/ufoslicer
+/ufoslicer.exe
 /testall
 /testall.exe
 /ufo
@@ -27,3 +30,6 @@ gmon.out
 /base/pics/banks/autogen*
 /base/ufos/*_autogen.ufo
 crashdump.txt
+/src/po/ufoai.c1.po
+/src/po/ufoai.c.po
+/src/po/ufoai.ufo.po

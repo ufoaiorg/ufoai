@@ -25,6 +25,15 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #ifndef E_MAIN_H_
 #define E_MAIN_H_
 
+/** @brief CL_ParseEvent timers and vars */
+typedef struct eventTiming_s {
+	int nextTime;	/**< time when the next event should be executed */
+	int shootTime;	/**< time when the shoot was fired */
+	int impactTime;	/**< time when the shoot hits the target. This is used to delay some events in case the
+					 * projectile needs some time to reach its target. */
+	qboolean parsedDeath;	/**< extra delay caused by death - @sa @c impactTime */
+} eventTiming_t;
+
 /**
  * @brief Struct that defines one particular event with all its callbacks and data.
  */
@@ -51,9 +60,9 @@ typedef struct eventRegister_s {
 	 * @brief Callback that is returning the time that is needed to execute this event
 	 * @param self A pointer to this struct
 	 * @param msg The buffer with the event data
-	 * @param dt The delta time value
+	 * @param eventTiming The delta time value
 	 */
-	int (*timeCallback)(const struct eventRegister_s *self, struct dbuffer *msg, const int dt);
+	int (*timeCallback)(const struct eventRegister_s *self, struct dbuffer *msg, eventTiming_t *eventTiming);
 
 	/**
 	 * @brief Called to determine if this event is ok to run at this point. Should check any

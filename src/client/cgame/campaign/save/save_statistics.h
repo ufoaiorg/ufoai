@@ -31,6 +31,7 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #define SAVE_STATS_MISSIONSLOST "missionsLost"
 #define SAVE_STATS_BASESBUILT "basesBuilt"
 #define SAVE_STATS_BASESATTACKED "basesAttacked"
+#define SAVE_STATS_INSTALLATIONSBUILT "installationsBuilt"
 #define SAVE_STATS_INTERCEPTIONS "interceptions"
 #define SAVE_STATS_SOLDIERSLOST "soldiersLost"
 #define SAVE_STATS_SOLDIERSNEW "soldiersNew"
@@ -58,6 +59,7 @@ DTD:
 	missionsLost				CDATA	'0'
 	basesBuilt					CDATA	'0'
 	basesAttacked				CDATA	'0'
+	installationsBuilt			CDATA	'0'
 	interceptions				CDATA	'0'
 	soldiersLost				CDATA	'0'
 	soldiersNew					CDATA	'0'

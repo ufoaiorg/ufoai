@@ -106,7 +106,7 @@ void GAME_SaveTeamState_f (void)
 
 	num = 0;
 	for (i = 0; i < chrDisplayList.num; i++) {
-		chrDisplayList.chr[num]->ucn -= (i -num);
+		chrDisplayList.chr[num]->ucn -= (i - num);
 		if (characterActive[i]) {
 			assert(chrDisplayList.chr[i] != NULL);
 			chrDisplayList.chr[num++] = chrDisplayList.chr[i];
@@ -121,7 +121,7 @@ void GAME_SaveTeamState_f (void)
 void GAME_TeamSlotComments_f (void)
 {
 	int i;
-	const int maxTeamSlots = 8;
+	const int maxTeamSlots = 12;
 
 	for (i = 0; i < maxTeamSlots; i++) {
 		/* open file */
@@ -214,6 +214,8 @@ static qboolean GAME_SaveTeam (const char *filename, const char *name)
 	header.version = LittleLong(TEAM_SAVE_FILE_VERSION);
 	header.soldiercount = LittleLong(chrDisplayList.num);
 	Q_strncpyz(header.name, name, sizeof(header.name));
+
+	Cvar_Set("mn_teamname", header.name);
 
 	snode = XML_AddNode(node, SAVE_TEAM_NODE);
 	GAME_SaveTeamInfo(snode);
@@ -403,12 +405,11 @@ void GAME_LoadTeam_f (void)
 /**
  * @brief Get the equipment definition (from script files) for the current selected team
  * and updates the equipment inventory containers
- * @todo merge parts of CL_UpdateEquipmentMenuParameters_f into this function
  */
 static void GAME_GetEquipment (void)
 {
 	const equipDef_t *edFromScript;
-	const char *teamID = Com_ValueToStr(&cl_teamnum->integer, V_TEAM, 0);
+	const char *teamID = "phalanx";
 	char equipmentName[MAX_VAR];
 	equipDef_t *ed;
 
@@ -492,6 +493,7 @@ void GAME_ActorSelect_f (void)
 
 	/* now set the cl_selected cvar to the new actor id */
 	Cvar_ForceSet("cl_selected", va("%i", chrIndex));
+	/** @todo this is campaign only - really needed here? */
 	Cvar_SetValue("mn_ucn", chr->ucn);
 
 	/* set info cvars */
@@ -527,7 +529,7 @@ static void GAME_SaveItem (xmlNode_t *p, const item_t *item, containerIndex_t co
 /**
  * @brief Save callback for savegames in XML Format
  * @param[out] p XML Node structure, where we write the information to
- * @param[in] i Pointerto the inventory to save
+ * @param[in] i Pointer to the inventory to save
  * @sa GAME_SaveItem
  * @sa GAME_LoadInventory
  */
@@ -595,7 +597,7 @@ static void GAME_LoadItem (xmlNode_t *n, item_t *item, containerIndex_t *contain
 /**
  * @brief Load callback for savegames in XML Format
  * @param[in] p XML Node structure, where we load the information from
- * @param[out] i Pointerto the inventory
+ * @param[out] i Pointer to the inventory
  * @sa GAME_SaveInventory
  * @sa GAME_LoadItem
  * @sa I_AddToInventory
@@ -610,6 +612,9 @@ static void GAME_LoadInventory (xmlNode_t *p, inventory_t *i)
 		int x, y;
 
 		GAME_LoadItem(s, &item, &container, &x, &y);
+		if (INVDEF(container)->temp)
+			Com_Error(ERR_DROP, "GAME_LoadInventory failed, tried to add '%s' to a temp container %i", item.t->id, container);
+
 		if (!cls.i.AddToInventory(&cls.i, i, &item, INVDEF(container), x, y, 1))
 			Com_Printf("Could not add item '%s' to inventory\n", item.t ? item.t->id : "NULL");
 	}
@@ -618,7 +623,7 @@ static void GAME_LoadInventory (xmlNode_t *p, inventory_t *i)
 /**
  * @brief saves a character to a given xml node
  * @param[in] p The node to which we should save the character
- * @param[in] chr The charcter we should save
+ * @param[in] chr The character we should save
  */
 qboolean GAME_SaveCharacter (xmlNode_t *p, const character_t* chr)
 {
@@ -690,7 +695,7 @@ qboolean GAME_SaveCharacter (xmlNode_t *p, const character_t* chr)
 /**
  * @brief Loads a character from a given xml node.
  * @param[in] p The node from which we should load the character.
- * @param[in] chr Pointer to the charcter we should load.
+ * @param[in] chr Pointer to the character we should load.
  */
 qboolean GAME_LoadCharacter (xmlNode_t *p, character_t *chr)
 {

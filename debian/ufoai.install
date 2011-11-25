@@ -3,3 +3,31 @@ debian/ufo           /usr/games/
 debian/ufoai.xpm     /usr/share/pixmaps
 debian/ufoai.desktop /usr/share/applications
 debian/ufoai-safe.desktop /usr/share/applications
+ufoded                /usr/lib/games/ufoai/
+debian/ufoded         /usr/games/
+debian/ufoded.xpm     /usr/share/pixmaps/
+debian/ufoded.desktop /usr/share/applications
+base/game.so          /usr/lib/games/ufoai/base
+base/0base.pk3        /usr/share/games/ufoai/base
+base/0maps.pk3        /usr/share/games/ufoai/base
+base/0materials.pk3   /usr/share/games/ufoai/base
+base/0models.pk3      /usr/share/games/ufoai/base
+base/0music.pk3       /usr/share/games/ufoai/base
+base/0pics.pk3        /usr/share/games/ufoai/base
+base/0shaders.pk3     /usr/share/games/ufoai/base
+base/0snd.pk3         /usr/share/games/ufoai/base
+base/0textures.pk3    /usr/share/games/ufoai/base
+base/0ufos.pk3        /usr/share/games/ufoai/base
+base/0videos.pk3      /usr/share/games/ufoai/base
+# don't add 0media.pk3, the fonts are added via symlinks
+base/i18n/* /usr/share/games/ufoai/base/i18n
+src/docs/tex/ufo-manual_EN.pdf /usr/share/doc/ufoai-data/
+# This is not in Debian yet
+base/media/UnDinaruBold.ttf /usr/share/games/ufoai/base/media
+# There are only the ttcs in the package
+base/media/wqy-zenhei.ttf /usr/share/games/ufoai/base/media
+ufo2map /usr/games/
+ufomodel /usr/games/
+src/tools/blender/md2tag_export.py /usr/share/blender/scripts/blender/
+contrib/scripts/bashcompletion/ufo2map /etc/bash_completion.d/ufo2map
+contrib/scripts/bashcompletion/ufomodel /etc/bash_completion.d/ufomodel

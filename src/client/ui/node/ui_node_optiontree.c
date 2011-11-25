@@ -185,7 +185,7 @@ static void UI_OptionTreeNodeDraw (uiNode_t *node)
 		R_Color(NULL);
 		if (option->firstChild) {
 			uiSprite_t *icon = OPTIONEXTRADATA(option).collapsed ? systemExpand : systemCollapse;
-			UI_DrawSpriteInBox(icon, SPRITE_STATUS_NORMAL, decX, currentY, icon->size[0], fontHeight);
+			UI_DrawSpriteInBox(OPTIONEXTRADATA(option).flipIcon, icon, SPRITE_STATUS_NORMAL, decX, currentY, icon->size[0], fontHeight);
 		}
 
 		decX += COLLAPSEBUTTON_WIDTH;
@@ -194,7 +194,8 @@ static void UI_OptionTreeNodeDraw (uiNode_t *node)
 			uiSpriteStatus_t iconStatus = SPRITE_STATUS_NORMAL;
 			if (option->disabled)
 				iconStatus = SPRITE_STATUS_DISABLED;
-			UI_DrawSpriteInBox(OPTIONEXTRADATA(option).icon, iconStatus, decX, currentY, OPTIONEXTRADATA(option).icon->size[0], fontHeight);
+			UI_DrawSpriteInBox(OPTIONEXTRADATA(option).flipIcon, OPTIONEXTRADATA(option).icon, iconStatus, decX, currentY,
+					OPTIONEXTRADATA(option).icon->size[0], fontHeight);
 			decX += OPTIONEXTRADATA(option).icon->size[0] + fontHeight / 4;
 		}
 
@@ -270,9 +271,12 @@ static void UI_OptionTreeNodeClick (uiNode_t * node, int x, int y)
 /**
  * @brief Auto scroll the list
  */
-static void UI_OptionTreeNodeMouseWheel (uiNode_t *node, qboolean down, int x, int y)
+static void UI_OptionTreeNodeMouseWheel (uiNode_t *node, int deltaX, int deltaY)
 {
+	qboolean down = deltaY > 0;
 	qboolean updated;
+	if (deltaY == 0)
+		return;
 	updated = UI_SetScroll(&EXTRADATA(node).scrollY, EXTRADATA(node).scrollY.viewPos + (down ? 1 : -1), -1, -1);
 	if (EXTRADATA(node).onViewChange && updated)
 		UI_ExecuteEventActions(node, EXTRADATA(node).onViewChange);
@@ -362,7 +366,7 @@ void UI_RegisterOptionTreeNode (uiBehaviour_t *behaviour)
 	behaviour->extends = "abstractoption";
 	behaviour->draw = UI_OptionTreeNodeDraw;
 	behaviour->leftClick = UI_OptionTreeNodeClick;
-	behaviour->mouseWheel = UI_OptionTreeNodeMouseWheel;
+	behaviour->scroll = UI_OptionTreeNodeMouseWheel;
 	behaviour->loading = UI_OptionTreeNodeLoading;
 	behaviour->loaded = UI_OptionTreeNodeLoaded;
 	behaviour->properties = properties;

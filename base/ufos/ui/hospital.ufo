@@ -60,33 +60,7 @@ window hospital
 	// Base header
 	// ==================
 
-	string base_name
-	{
-		tooltip	"_Name of this base"
-		string	*cvar:mn_base_title
-		pos	"60 30"
-		size "500 32"
-		textalign	ALIGN_CL
-		padding	8
-		font	"f_big"
-	}
-
-	string txt_credits_caption
-	{
-		string		"_CREDITS"
-		pos			"675 30"
-		size		"100 30"
-		font		"f_big"
-	}
-
-	string txt_credits
-	{
-		tooltip		"_Organisation capital"
-		string		*cvar:mn_credits
-		pos			"780 30"
-		size		"130 30"
-		font		"f_big"
-		textalign	ALIGN_UR
+	cmpBaseHeader baseHeader {
 	}
 
 	custombutton bt_continue
@@ -500,7 +474,7 @@ window hospital_employee
 		{
 			pos "690 312"
 		}
-		tbar bar   { current *cvar:mn_vcls }
+		tbar bar   { current *cvar:mn_vcls image "ui/bar_skill" }
 		string lbl { string "_Close Combat:" }
 		string val { string *cvar:mn_tcls }
 	}
@@ -509,7 +483,7 @@ window hospital_employee
 		{
 			pos "690 342"
 		}
-		tbar bar   { current *cvar:mn_vhvy }
+		tbar bar   { current *cvar:mn_vhvy image "ui/bar_skill" }
 		string lbl { string "_Heavy Weapons:" }
 		string val { string *cvar:mn_thvy }
 	}
@@ -518,7 +492,7 @@ window hospital_employee
 		{
 			pos "690 372"
 		}
-		tbar bar   { current *cvar:mn_vass }
+		tbar bar   { current *cvar:mn_vass image "ui/bar_skill" }
 		string lbl { string "_Assault Weapons:" }
 		string val { string *cvar:mn_tass }
 	}
@@ -527,7 +501,7 @@ window hospital_employee
 		{
 			pos "690 402"
 		}
-		tbar bar   { current *cvar:mn_vsnp }
+		tbar bar   { current *cvar:mn_vsnp image "ui/bar_skill" }
 		string lbl { string "_Sniper Rifles:" }
 		string val { string *cvar:mn_tsnp }
 	}
@@ -536,7 +510,7 @@ window hospital_employee
 		{
 			pos "690 432"
 		}
-		tbar bar   { current *cvar:mn_vexp }
+		tbar bar   { current *cvar:mn_vexp image "ui/bar_skill" }
 		string lbl { string "_High-Explosives:" }
 		string val { string *cvar:mn_texp }
 	}

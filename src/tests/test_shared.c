@@ -29,12 +29,14 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 
 void TEST_Shutdown (void)
 {
+	SV_Shutdown("test shutdown", qfalse);
 	FS_Shutdown();
 	Cmd_Shutdown();
 	Cvar_Shutdown();
 	Mem_Shutdown();
 	Com_Shutdown();
 	Cbuf_Shutdown();
+	NET_Shutdown();
 
 	com_aliasSysPool = NULL;
 	com_cmdSysPool = NULL;
@@ -83,10 +85,16 @@ void TEST_Init (void)
 	FS_AddGameDirectory("./unittest", qfalse);
 	Swap_Init();
 	SV_Init();
+	NET_Init();
+
+	FS_ExecAutoexec();
 
 	OBJZERO(csi);
 
 	Com_SetExceptionCallback(Test_RunError);
+
+	http_timeout = Cvar_Get("noname", "", 0, NULL);
+	http_proxy = Cvar_Get("noname", "", 0, NULL);
 }
 
 

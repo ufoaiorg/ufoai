@@ -154,7 +154,7 @@ static void UI_TabNodeClick (uiNode_t * node, int x, int y)
 static inline void UI_TabNodeDrawPlain (const char *image, int x, int y, int width, ui_tabStatus_t type)
 {
 	/* Hack sl=1 to not use the pixel on the left border on the texture (create graphic bug) */
-	UI_DrawNormImageByName(x, y, width, TILE_HEIGHT, TILE_WIDTH + TILE_SIZE * 0, TILE_HEIGHT + TILE_SIZE * type,
+	UI_DrawNormImageByName(qfalse, x, y, width, TILE_HEIGHT, TILE_WIDTH + TILE_SIZE * 0, TILE_HEIGHT + TILE_SIZE * type,
 		1 + TILE_SIZE * 0, 0 + TILE_SIZE * type, image);
 }
 
@@ -168,7 +168,7 @@ static inline void UI_TabNodeDrawPlain (const char *image, int x, int y, int wid
  */
 static inline void UI_TabNodeDrawJunction (const char *image, int x, int y, ui_tabStatus_t leftType, ui_tabStatus_t rightType)
 {
-	UI_DrawNormImageByName(x, y, TILE_WIDTH, TILE_HEIGHT, TILE_WIDTH + TILE_SIZE * (1 + rightType), TILE_HEIGHT + TILE_SIZE * leftType,
+	UI_DrawNormImageByName(qfalse, x, y, TILE_WIDTH, TILE_HEIGHT, TILE_WIDTH + TILE_SIZE * (1 + rightType), TILE_HEIGHT + TILE_SIZE * leftType,
 		0 + TILE_SIZE * (1 + rightType), 0 + TILE_SIZE * leftType, image);
 }
 
@@ -260,7 +260,7 @@ static void UI_TabNodeDraw (uiNode_t *node)
 			if (status == UI_TAB_DISABLED) {
 				iconStatus = SPRITE_STATUS_DISABLED;
 			}
-			UI_DrawSpriteInBox(OPTIONEXTRADATA(option).icon, iconStatus, currentX, pos[1], OPTIONEXTRADATA(option).icon->size[0], TILE_HEIGHT);
+			UI_DrawSpriteInBox(OPTIONEXTRADATA(option).flipIcon, OPTIONEXTRADATA(option).icon, iconStatus, currentX, pos[1], OPTIONEXTRADATA(option).icon->size[0], TILE_HEIGHT);
 			textPos += OPTIONEXTRADATA(option).icon->size[0];
 		}
 

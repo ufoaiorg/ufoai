@@ -191,7 +191,7 @@ static char* HTTP_GetURLInternal (const char *url)
 	curl_easy_setopt(dl.curl, CURLOPT_MAXREDIRS, 5);
 	curl_easy_setopt(dl.curl, CURLOPT_WRITEHEADER, &dl);
 	curl_easy_setopt(dl.curl, CURLOPT_HEADERFUNCTION, HTTP_Header);
-	curl_easy_setopt(dl.curl, CURLOPT_USERAGENT, Cvar_GetString("version"));
+	curl_easy_setopt(dl.curl, CURLOPT_USERAGENT, GAME_TITLE" "UFO_VERSION);
 	curl_easy_setopt(dl.curl, CURLOPT_URL, dl.URL);
 	curl_easy_setopt(dl.curl, CURLOPT_NOSIGNAL, 1);
 

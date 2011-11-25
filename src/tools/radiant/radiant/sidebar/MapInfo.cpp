@@ -27,8 +27,6 @@
 #include "MapInfo.h"
 #include "radiant_i18n.h"
 
-#include "iselection.h"
-#include "signal/isignal.h"
 #include "eclasslib.h"
 #include "scenelib.h"
 #include "gtkutil/dialog.h"
@@ -134,7 +132,7 @@ namespace sidebar
 		return _vboxEntityBreakdown;
 	}
 
-	MapInfo& MapInfo::getInstance ()
+	MapInfo& MapInfo::Instance ()
 	{
 		static MapInfo _instance;
 		return _instance;
@@ -164,19 +162,5 @@ namespace sidebar
 
 		gtk_list_store_append(_infoStore, &iter);
 		gtk_list_store_set(_infoStore, &iter, 0, _("Total Entities"), 1, GlobalRadiant().getCounter(counterEntities).get(), -1);
-	}
-
-	void MapInfo::selectionChanged (const Selectable& selectable)
-	{
-		getInstance().update();
-	}
-
-	/**
-	 * @sa MapInfo_Destroy
-	 */
-	void MapInfo_Construct (void)
-	{
-		typedef MemberCaller1<MapInfo, const Selectable&, &MapInfo::selectionChanged> MapInfoSelectionChangedCaller;
-		GlobalSelectionSystem().addSelectionChangeCallback(MapInfoSelectionChangedCaller(MapInfo::getInstance()));
 	}
 }

@@ -90,13 +90,14 @@ static kbutton_t in_turnleft, in_turnright, in_shiftleft, in_shiftright;
 static kbutton_t in_shiftup, in_shiftdown;
 static kbutton_t in_zoomin, in_zoomout;
 static kbutton_t in_turnup, in_turndown;
-
 static kbutton_t in_pantilt;
 
 /**
- * @brief
+ * @brief Handles the catch of a @c kbutton_t state
  * @sa IN_KeyUp
  * @sa CL_GetKeyMouseState
+ * @note Called from console callbacks with two parameters, the
+ * key and the milliseconds when the key was released
  */
 static void IN_KeyDown (kbutton_t * b)
 {
@@ -137,9 +138,12 @@ static void IN_KeyDown (kbutton_t * b)
 }
 
 /**
- * @brief
+ * @brief Handles the release of a @c kbutton_t state
  * @sa IN_KeyDown
  * @sa CL_GetKeyMouseState
+ * @note Called from console callbacks with two parameters, the
+ * key and the milliseconds when the key was released
+ * @param[in,out] b the button state to
  */
 static void IN_KeyUp (kbutton_t * b)
 {
@@ -175,9 +179,9 @@ static void IN_KeyUp (kbutton_t * b)
 	c = Cmd_Argv(2);
 	uptime = atoi(c);
 	if (uptime)
-		b->msec += uptime - b->downtime;
+		b->msec = uptime - b->downtime;
 	else
-		b->msec += 10;
+		b->msec = 10;
 
 	/* now up */
 	b->state = 0;
@@ -214,6 +218,16 @@ static void IN_TurnDownDown_f (void)
 static void IN_TurnDownUp_f (void)
 {
 	IN_KeyUp(&in_turndown);
+}
+static void IN_PanTiltDown_f (void)
+{
+	if (mouseSpace != MS_WORLD)
+		return;
+	IN_KeyDown(&in_pantilt);
+}
+static void IN_PanTiltUp_f (void)
+{
+	IN_KeyUp(&in_pantilt);
 }
 static void IN_ShiftLeftDown_f (void)
 {
@@ -285,21 +299,24 @@ static void CL_LevelDown_f (void)
 	Cvar_SetValue("cl_worldlevel", (cl_worldlevel->integer > 0) ? cl_worldlevel->integer - 1 : 0);
 }
 
-
 static void CL_ZoomInQuant_f (void)
 {
-	if (mouseSpace == MS_UI)
-		UI_MouseWheel(qfalse, mousePosX, mousePosY);
-	else
-		CL_CameraZoomIn();
+	CL_CameraZoomIn();
 }
 
 static void CL_ZoomOutQuant_f (void)
 {
-	if (mouseSpace == MS_UI)
-		UI_MouseWheel(qtrue, mousePosX, mousePosY);
-	else
-		CL_CameraZoomOut();
+	CL_CameraZoomOut();
+}
+
+static void CL_WheelDown_f (void)
+{
+	UI_MouseScroll(0, 1);
+}
+
+static void CL_WheelUp_f (void)
+{
+	UI_MouseScroll(0, -1);
 }
 
 /**
@@ -326,13 +343,16 @@ static void CL_ActionDown_f (void)
 {
 	if (mouseSpace != MS_WORLD)
 		return;
-	CL_ActorActionMouse();
+	IN_KeyDown(&in_pantilt);
 }
 
 static void CL_ActionUp_f (void)
 {
+	IN_KeyUp(&in_pantilt);
 	if (mouseSpace == MS_UI)
 		return;
+	if (in_pantilt.msec < 250)
+		CL_ActorActionMouse();
 	mouseSpace = MS_NULL;
 }
 
@@ -477,7 +497,6 @@ float CL_GetKeyMouseState (int dir)
 
 /**
  * @brief Called every frame to parse the input
- * @note The geoscape zooming code is in UI_MouseWheel too
  * @sa CL_Frame
  */
 static void IN_Parse (void)
@@ -521,7 +540,7 @@ static inline void IN_PrintKey (const SDL_Event* event, int down)
 /**
  * @brief Translate the keys to ufo keys
  */
-static void IN_TranslateKey (SDL_keysym *keysym, unsigned int *ascii, unsigned short *unicode)
+static void IN_TranslateKey (const SDL_keysym *keysym, unsigned int *ascii, unsigned short *unicode)
 {
 	switch (keysym->sym) {
 	case SDLK_KP9:
@@ -785,15 +804,6 @@ void IN_Frame (void)
 	while (SDL_PollEvent(&event)) {
 		switch (event.type) {
 		case SDL_MOUSEBUTTONDOWN:
-			in_pantilt.state = 0;
-			switch (event.button.button) {
-			case SDL_BUTTON_MIDDLE:
-				mouse_buttonstate = K_MOUSE3;
-				in_pantilt.state = 1;
-				break;
-			}
-			if (in_pantilt.state)
-				break;
 		case SDL_MOUSEBUTTONUP:
 			switch (event.button.button) {
 			case SDL_BUTTON_LEFT:
@@ -801,7 +811,6 @@ void IN_Frame (void)
 				break;
 			case SDL_BUTTON_MIDDLE:
 				mouse_buttonstate = K_MOUSE3;
-				in_pantilt.state = 0;
 				break;
 			case SDL_BUTTON_RIGHT:
 				mouse_buttonstate = K_MOUSE2;
@@ -833,10 +842,13 @@ void IN_Frame (void)
 
 		case SDL_KEYDOWN:
 			IN_PrintKey(&event, 1);
-			if (event.key.keysym.mod & KMOD_ALT && event.key.keysym.sym == SDLK_RETURN) {
+#ifndef _WIN32
+			if ((event.key.keysym.mod & KMOD_ALT) && event.key.keysym.sym == SDLK_RETURN) {
 				SDL_Surface *surface = SDL_GetVideoSurface();
-				if (!SDL_WM_ToggleFullScreen(surface))
-					Com_Printf("IN_Frame: Could not toggle fullscreen mode\n");
+				if (!SDL_WM_ToggleFullScreen(surface)) {
+					int flags = surface->flags ^= SDL_FULLSCREEN;
+					SDL_SetVideoMode(surface->w, surface->h, 0, flags);
+				}
 
 				if (surface->flags & SDL_FULLSCREEN) {
 					Cvar_SetValue("vid_fullscreen", 1);
@@ -848,15 +860,16 @@ void IN_Frame (void)
 				vid_fullscreen->modified = qfalse; /* we just changed it with SDL. */
 				break; /* ignore this key */
 			}
+#endif
 
-			if (event.key.keysym.mod & KMOD_CTRL && event.key.keysym.sym == SDLK_g) {
+			if ((event.key.keysym.mod & KMOD_CTRL) && event.key.keysym.sym == SDLK_g) {
 				SDL_GrabMode gm = SDL_WM_GrabInput(SDL_GRAB_QUERY);
 				Cvar_SetValue("vid_grabmouse", (gm == SDL_GRAB_ON) ? 0 : 1);
 				break; /* ignore this key */
 			}
 
 			/* console key is hardcoded, so the user can never unbind it */
-			if (event.key.keysym.mod & KMOD_SHIFT && event.key.keysym.sym == SDLK_ESCAPE) {
+			if ((event.key.keysym.mod & KMOD_SHIFT) && event.key.keysym.sym == SDLK_ESCAPE) {
 				Con_ToggleConsole_f();
 				break;
 			}
@@ -894,6 +907,24 @@ void IN_Frame (void)
 }
 
 /**
+ * Simulate press of a key with a command.
+ */
+static void CL_PressKey_f (void)
+{
+	unsigned int keyNum;
+
+	if (Cmd_Argc() != 2) {
+		Com_Printf("Usage: %s <key> : simulate press of a key\n", Cmd_Argv(0));
+		return;
+	}
+
+	keyNum = Key_StringToKeynum(Cmd_Argv(1));
+	/* @todo unicode value is wrong */
+	IN_EventEnqueue(keyNum, '?', qtrue);
+	IN_EventEnqueue(keyNum, '?', qfalse);
+}
+
+/**
  * @sa CL_InitLocal
  */
 void IN_Init (void)
@@ -913,6 +944,8 @@ void IN_Init (void)
 	Cmd_AddCommand("-turnup", IN_TurnUpUp_f, NULL);
 	Cmd_AddCommand("+turndown", IN_TurnDownDown_f, N_("Tilt battlescape camera down"));
 	Cmd_AddCommand("-turndown", IN_TurnDownUp_f, NULL);
+	Cmd_AddCommand("+pantilt", IN_PanTiltDown_f, N_("Move battlescape camera"));
+	Cmd_AddCommand("-pantilt", IN_PanTiltUp_f, NULL);
 	Cmd_AddCommand("+shiftleft", IN_ShiftLeftDown_f, N_("Move battlescape camera left"));
 	Cmd_AddCommand("-shiftleft", IN_ShiftLeftUp_f, NULL);
 	Cmd_AddCommand("+shiftright", IN_ShiftRightDown_f, N_("Move battlescape camera right"));
@@ -932,6 +965,8 @@ void IN_Init (void)
 	Cmd_AddCommand("-middlemouse", CL_MiddleClickUp_f, NULL);
 	Cmd_AddCommand("+rightmouse", CL_RightClickDown_f, N_("Right mouse button click (menu)"));
 	Cmd_AddCommand("-rightmouse", CL_RightClickUp_f, NULL);
+	Cmd_AddCommand("wheelupmouse", CL_WheelUp_f, N_("Mouse wheel up"));
+	Cmd_AddCommand("wheeldownmouse", CL_WheelDown_f, N_("Mouse wheel down"));
 	Cmd_AddCommand("+select", CL_SelectDown_f, N_("Select objects/Walk to a square/In fire mode, fire etc"));
 	Cmd_AddCommand("-select", CL_SelectUp_f, NULL);
 	Cmd_AddCommand("+action", CL_ActionDown_f, N_("Walk to a square/In fire mode, cancel action"));
@@ -945,6 +980,8 @@ void IN_Init (void)
 	Cmd_AddCommand("leveldown", CL_LevelDown_f, N_("Slice through terrain at a lower level"));
 	Cmd_AddCommand("zoominquant", CL_ZoomInQuant_f, N_("Zoom in"));
 	Cmd_AddCommand("zoomoutquant", CL_ZoomOutQuant_f, N_("Zoom out"));
+
+	Cmd_AddCommand("press", CL_PressKey_f, N_("Press a key from a command"));
 
 	mousePosX = mousePosY = 0.0;
 

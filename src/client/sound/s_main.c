@@ -23,6 +23,7 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 
 */
 
+#include "../client.h"
 #include "s_main.h"
 #include "s_local.h"
 #include "s_music.h"
@@ -41,6 +42,9 @@ cvar_t *snd_volume;
 cvar_t *snd_distance_scale;
 static cvar_t *snd_init;
 static cvar_t *snd_rate;
+static cvar_t *snd_chunkbufsize;
+
+memPool_t *cl_soundSysPool;
 
 /* I know this decl shouldn't be here (Duke). Interim solution...*/
 extern s_sample_t *stdSoundPool[MAX_SOUNDIDS];
@@ -149,7 +153,7 @@ static int S_CompleteSounds (const char *partial, const char **match)
 {
 	const char *filename;
 	int matches = 0;
-	char *localMatch[MAX_COMPLETE];
+	const char *localMatch[MAX_COMPLETE];
 	size_t len = strlen(partial);
 	const char *soundExtensions[] = SAMPLE_TYPES;
 	const char **extension = soundExtensions;
@@ -161,13 +165,12 @@ static int S_CompleteSounds (const char *partial, const char **match)
 		Com_sprintf(pattern, sizeof(pattern), "sound/**.%s", *extension);
 		FS_BuildFileList(pattern);
 		while ((filename = FS_NextFileFromFileList(pattern)) != NULL) {
-			char fileWithPath[MAX_OSPATH];
-			Com_sprintf(fileWithPath, sizeof(fileWithPath), "%s", filename + 6);
+			const char *fileWithPath = filename + 6;
 			if (!len) {
 				Com_Printf("%s\n", fileWithPath);
 			} else if (!strncmp(partial, fileWithPath, len)) {
 				Com_Printf("%s\n", fileWithPath);
-				localMatch[matches++] = strdup(fileWithPath);
+				localMatch[matches++] = fileWithPath;
 				if (matches >= MAX_COMPLETE)
 					break;
 			}
@@ -176,9 +179,7 @@ static int S_CompleteSounds (const char *partial, const char **match)
 		extension++;
 	}
 
-	returnValue = Cmd_GenericCompleteFunction(len, match, matches, (const char **)localMatch);
-	while (--matches >= 0)
-		free(localMatch[matches]);
+	returnValue = Cmd_GenericCompleteFunction(len, match, matches, localMatch);
 	return returnValue;
 }
 
@@ -206,9 +207,12 @@ void S_Init (void)
 		return;
 	}
 
+	cl_soundSysPool = Mem_CreatePool("Client: Sound system");
+
 	snd_distance_scale = Cvar_Get("snd_distance_scale", "0.1", 0, "Sound distance scale");
 	snd_volume = Cvar_Get("snd_volume", "0.7", CVAR_ARCHIVE, "Sound volume - default is 0.7");
 	snd_rate = Cvar_Get("snd_rate", "44100", CVAR_ARCHIVE, "Hz value for sound renderer - default is 44100");
+	snd_chunkbufsize = Cvar_Get("snd_chunkbufsize", "1024", CVAR_ARCHIVE, "The sound buffer chunk size");
 	/* set volumes to be changed so they are applied again for next sound/music playing */
 	/** @todo implement the volume change for already loaded sample chunks */
 	snd_volume->modified = qtrue;
@@ -227,7 +231,7 @@ void S_Init (void)
 	Com_Printf("SDL_mixer version: %d.%d.%d\n", version.major, version.minor, version.patch);
 	Com_Printf("... requested audio rate: %i\n", snd_rate->integer);
 
-	if (Mix_OpenAudio(snd_rate->integer, MIX_DEFAULT_FORMAT, MIX_DEFAULT_CHANNELS, 1024) == -1) {
+	if (Mix_OpenAudio(snd_rate->integer, MIX_DEFAULT_FORMAT, MIX_DEFAULT_CHANNELS, snd_chunkbufsize->integer) == -1) {
 		Com_Printf("S_Init: %s\n", Mix_GetError());
 		return;
 	}
@@ -287,7 +291,7 @@ void S_Shutdown (void)
 	else
 		SDL_QuitSubSystem(SDL_INIT_AUDIO);
 
-	Mem_FreeTag(cl_soundSysPool, 0);
+	Mem_DeletePool(cl_soundSysPool);
 
 	Cmd_RemoveCommand("snd_play");
 	Cmd_RemoveCommand("snd_restart");

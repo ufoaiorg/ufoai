@@ -110,7 +110,7 @@ void R_UseMaterial (const material_t *material)
 	if (r_state.active_material == material)
 		return;
 
-	if (!r_state.bumpmap_enabled)
+	if (!r_state.active_normalmap)
 		return;
 
 	if (material)
@@ -344,22 +344,28 @@ qboolean R_EnableLighting (r_program_t *program, qboolean enable)
 
 /**
  * @brief Enable or disable realtime dynamic lighting
- * @param ent The entity to enable/disable lighting for
+ * @param lights The lights to enable
+ * @param numLights The amount of lights in the given lights list
  * @param enable Whether to turn realtime lighting on or off
  */
-void R_EnableDynamicLights (const entity_t *ent, qboolean enable)
+void R_EnableModelLights (const light_t **lights, int numLights, qboolean enable)
 {
 	int i, j;
 	int maxLights = r_dynamic_lights->integer;
+	const vec4_t sunDirection = {0.0, 0.0, 1.0, 0.0}; /* works only with shader, not the FFP */
+	vec4_t blackColor = {0.0, 0.0, 0.0, 1.0};
 
-	if (!enable || !r_state.lighting_enabled || r_state.numActiveLights == 0 || !ent) {
+	assert(numLights <= MAX_GL_LIGHTS);
+
+	if (!enable || !r_state.lighting_enabled) {
 		if (r_state.lighting_enabled)
-			R_ProgramParameter1i("DYNAMICLIGHTS", 0);
-		if (!r_state.bumpmap_enabled && r_state.dynamic_lighting_enabled)
+			R_ProgramParameter1i("IS_A_MODEL", 0);
+		if (!r_state.active_normalmap && r_state.dynamic_lighting_enabled)
 			R_DisableAttribute("TANGENTS");
 		glDisable(GL_LIGHTING);
-		for (i = 0; i < maxLights; i++) {
-			glLightf(GL_LIGHT0 + i, GL_CONSTANT_ATTENUATION, 0.0);
+		for (i = 0; i < MAX_GL_LIGHTS; i++) {
+			glLightf(GL_LIGHT0 + i, GL_CONSTANT_ATTENUATION, MIN_GL_CONSTANT_ATTENUATION);
+			glLightfv(GL_LIGHT0 + i, GL_DIFFUSE, blackColor);
 			glDisable(GL_LIGHT0 + i);
 		}
 
@@ -370,37 +376,51 @@ void R_EnableDynamicLights (const entity_t *ent, qboolean enable)
 	r_state.dynamic_lighting_enabled = qtrue;
 
 	R_EnableAttribute("TANGENTS");
-	R_ProgramParameter1i("DYNAMICLIGHTS", 1);
+	R_ProgramParameter1i("IS_A_MODEL", 1);
 
 	R_UseMaterial(&defaultMaterial);
 
 	glEnable(GL_LIGHTING);
 
-	for (i = 0, j = 0; i < maxLights && (i + j) < ent->numLights; i++) {
-		const r_light_t *l = ent->lights[i + j];
-		if (!l->enabled) {
-			j++;
-			continue;
-		}
+	/* Light #0 is reserved for the Sun */
+	glEnable(GL_LIGHT0);
+	glLightf(GL_LIGHT0, GL_CONSTANT_ATTENUATION, 1.0);
+	glLightf(GL_LIGHT0, GL_LINEAR_ATTENUATION, 0.0);
+	glLightf(GL_LIGHT0, GL_QUADRATIC_ATTENUATION, 0.0);
 
-		glEnable(GL_LIGHT0 + i);
-		glLightf(GL_LIGHT0 + i, GL_CONSTANT_ATTENUATION, l->constantAttenuation);
-		glLightf(GL_LIGHT0 + i, GL_LINEAR_ATTENUATION, l->linearAttenuation);
-		glLightf(GL_LIGHT0 + i, GL_QUADRATIC_ATTENUATION, l->quadraticAttenuation);
+	glLightfv(GL_LIGHT0, GL_POSITION, sunDirection);
+	glLightfv(GL_LIGHT0, GL_AMBIENT, refdef.ambientColor);
+	glLightfv(GL_LIGHT0, GL_DIFFUSE, refdef.sunDiffuseColor);
+	glLightfv(GL_LIGHT0, GL_SPECULAR, refdef.sunSpecularColor);
 
-		glLightfv(GL_LIGHT0 + i, GL_POSITION, l->loc);
-		glLightfv(GL_LIGHT0 + i, GL_AMBIENT, l->ambientColor);
-		glLightfv(GL_LIGHT0 + i, GL_DIFFUSE, l->diffuseColor);
-		glLightfv(GL_LIGHT0 + i, GL_SPECULAR, l->specularColor);
+	j = 1;
+	for (i = 0; j < MAX_GL_LIGHTS && j <= maxLights && i < numLights; i++) {
+		const light_t *l = lights[i];
+		vec4_t position;
+
+		glEnable(GL_LIGHT0 + j);
+		glLightf(GL_LIGHT0 + j, GL_CONSTANT_ATTENUATION, MIN_GL_CONSTANT_ATTENUATION);
+		glLightf(GL_LIGHT0 + j, GL_LINEAR_ATTENUATION, 0);
+		glLightf(GL_LIGHT0 + j, GL_QUADRATIC_ATTENUATION, 16.0 / (l->radius * l->radius));
+
+		VectorCopy(l->origin, position);
+		position[3] = 1.0; /* spot light */
+		glLightfv(GL_LIGHT0 + j, GL_POSITION, position);
+		glLightfv(GL_LIGHT0 + j, GL_AMBIENT, blackColor);
+		glLightfv(GL_LIGHT0 + j, GL_DIFFUSE, l->color);
+		glLightfv(GL_LIGHT0 + j, GL_SPECULAR, blackColor);
+
+		j++;
 	}
 
 	/* if there aren't enough active lights, turn off the rest */
-	while (i < maxLights) {
-		glDisable(GL_LIGHT0 + i);
-		glLightf(GL_LIGHT0 + i, GL_CONSTANT_ATTENUATION, 0.0);
-		glLightf(GL_LIGHT0 + i, GL_LINEAR_ATTENUATION, 0.0);
-		glLightf(GL_LIGHT0 + i, GL_QUADRATIC_ATTENUATION, 0.0);
-		i++;
+	while (j < MAX_GL_LIGHTS) {
+		glDisable(GL_LIGHT0 + j);
+		glLightf(GL_LIGHT0 + j, GL_CONSTANT_ATTENUATION, MIN_GL_CONSTANT_ATTENUATION);
+		glLightf(GL_LIGHT0 + j, GL_LINEAR_ATTENUATION, 0.0);
+		glLightf(GL_LIGHT0 + j, GL_QUADRATIC_ATTENUATION, 0.0);
+		glLightfv(GL_LIGHT0 + j, GL_DIFFUSE, blackColor);
+		j++;
 	}
 }
 
@@ -445,7 +465,7 @@ void R_EnableAnimation (const mAliasMesh_t *mesh, float backlerp, qboolean enabl
  * @note Don't forget to bind the deluxe map, too.
  * @sa R_BindDeluxemapTexture
  */
-void R_EnableBumpmap (const image_t *normalmap, qboolean enable)
+void R_EnableBumpmap (const image_t *normalmap)
 {
 	if (!r_state.lighting_enabled)
 		return;
@@ -453,24 +473,29 @@ void R_EnableBumpmap (const image_t *normalmap, qboolean enable)
 	if (!r_bumpmap->value)
 		return;
 
-	if (enable)
-		R_BindNormalmapTexture(normalmap->texnum);
-
-	if (r_state.bumpmap_enabled == enable)
+	if (r_state.active_normalmap == normalmap)
 		return;
 
-	r_state.bumpmap_enabled = enable;
+	if (!normalmap) {
+		/* disable bump mapping */
+		R_DisableAttribute("TANGENTS");
+		R_ProgramParameter1i("BUMPMAP", 0);
 
-	if (enable) {  /* toggle state */
-		assert(normalmap);
+		r_state.active_normalmap = normalmap;
+		return;
+	}
+
+	if (!r_state.active_normalmap) {
+		/* enable bump mapping */
 		R_EnableAttribute("TANGENTS");
 		R_ProgramParameter1i("BUMPMAP", 1);
 		/* default material to use if no material gets loaded */
 		R_UseMaterial(&defaultMaterial);
-	} else {
-		R_DisableAttribute("TANGENTS");
-		R_ProgramParameter1i("BUMPMAP", 0);
 	}
+
+	R_BindNormalmapTexture(normalmap->texnum);
+
+	r_state.active_normalmap = normalmap;
 }
 
 void R_EnableWarp (r_program_t *program, qboolean enable)
@@ -561,6 +586,8 @@ void R_EnableShell (qboolean enable)
 #define FOG_START	300.0
 #define FOG_END		2500.0
 
+vec2_t fogRange = {FOG_START, FOG_END};
+
 void R_EnableFog (qboolean enable)
 {
 	if (!r_fog->integer || r_state.fog_enabled == enable)
@@ -568,17 +595,26 @@ void R_EnableFog (qboolean enable)
 
 	r_state.fog_enabled = qfalse;
 
+	/* This is ugly. Shaders could be enabled or disabled between this and rendering call, so we have to setup both FFP and GLSL */
 	if (enable) {
-		if ((refdef.weather & WEATHER_FOG) || r_fog->integer == 2) {
+		if (((refdef.weather & WEATHER_FOG) && r_fog->integer) || r_fog->integer == 2) {
 			r_state.fog_enabled = qtrue;
 
 			glFogfv(GL_FOG_COLOR, refdef.fogColor);
-			glFogf(GL_FOG_DENSITY, 1.0);
+			glFogf(GL_FOG_DENSITY, refdef.fogColor[3]);
 			glEnable(GL_FOG);
+
+			if (r_programs->integer && (r_state.active_program == r_state.world_program || r_state.active_program == r_state.warp_program)) {
+				R_ProgramParameter3fv("FOGCOLOR", refdef.fogColor);
+				R_ProgramParameter1f("FOGDENSITY", refdef.fogColor[3]);
+				R_ProgramParameter2fv("FOGRANGE", fogRange);
+			}
 		}
 	} else {
 		glFogf(GL_FOG_DENSITY, 0.0);
 		glDisable(GL_FOG);
+		if (r_programs->integer && (r_state.active_program == r_state.world_program || r_state.active_program == r_state.warp_program))
+			R_ProgramParameter1f("FOGDENSITY", 0.0f);
 	}
 }
 
@@ -630,24 +666,22 @@ static void R_UpdateGlowBufferBinding (void)
 #endif
 }
 
-void R_EnableGlowMap (const image_t *image, qboolean enable)
+void R_EnableGlowMap (const image_t *image)
 {
 	if (!r_postprocess->integer)
 		return;
 
-	if (enable && image != NULL)
+	if (image)
 		R_BindTextureForTexUnit(image->texnum, &texunit_glowmap);
 
-	if (!enable && r_state.glowmap_enabled == enable && r_state.active_program == lastProgram)
+	/** @todo Is the following condition correct or not? Either fix it or write the comment why it should be done that way */
+	if (!image && r_state.glowmap_enabled == !!image && r_state.active_program == lastProgram)
 		return;
 
-	if (image == NULL)
-		enable = qfalse;
-
-	r_state.glowmap_enabled = enable;
+	r_state.glowmap_enabled = !!image;
 
 	/* Shouldn't render glow without GLSL, so enable simple program for it */
-	if (enable) {
+	if (image) {
 		if (!r_state.active_program)
 			R_UseProgram(r_state.simple_glow_program);
 	} else {
@@ -819,21 +853,13 @@ void R_Setup2D (void)
 
 	glDisable(GL_DEPTH_TEST);
 
+	glDisable(GL_LIGHTING);
+
 	/* disable render-to-framebuffer */
 	R_EnableRenderbuffer(qfalse);
 
 	R_CheckError();
 }
-
-/* global ambient lighting */
-static const vec4_t ambient = {
-	0.0, 0.0, 0.0, 1.0
-};
-
-/* material reflection */
-static const vec4_t material = {
-	1.0, 1.0, 1.0, 1.0
-};
 
 void R_SetDefaultState (void)
 {
@@ -891,14 +917,18 @@ void R_SetDefaultState (void)
 	glFogf(GL_FOG_START, FOG_START);
 	glFogf(GL_FOG_END, FOG_END);
 
+	/* stencil test parameters */
+	glStencilFunc(GL_GEQUAL, 1, 0xff);
+	glStencilOp(GL_KEEP, GL_KEEP, GL_INCR);
+
 	/* polygon offset parameters */
 	glPolygonOffset(1, 1);
 
 	/* alpha blend parameters */
 	R_BlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
 
-	/* make sure no dynamic lights are active */
-	R_ClearActiveLights();
+	/* remove leftover lights */
+	R_ClearStaticLights();
 
 	/* reset gl error state */
 	R_CheckError();
@@ -909,7 +939,7 @@ void R_TexEnv (GLenum mode)
 	if (mode == r_state.active_texunit->texenv)
 		return;
 
-	glTexEnvf(GL_TEXTURE_ENV, GL_TEXTURE_ENV_MODE, mode);
+	glTexEnvi(GL_TEXTURE_ENV, GL_TEXTURE_ENV_MODE, mode);
 	r_state.active_texunit->texenv = mode;
 }
 

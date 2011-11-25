@@ -65,9 +65,6 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 
 #define SAVE_AIRCRAFT_PILOTUCN "pilotUCN"
 
-#define SAVE_AIRCRAFT_RADAR_RANGE "radarRange"
-#define SAVE_AIRCRAFT_RADAR_TRACKINGRANGE "radarTrackingrange"
-
 #define SAVE_AIRCRAFT_CARGO "cargo"
 
 #define SAVE_AIRCRAFT_ITEM "item"

@@ -203,6 +203,19 @@ static const keyName_t keyNames[] = {
 
 	{NULL, 0}
 };
+#undef M
+
+/**
+ * @brief Checks whether a given key is currently pressed
+ * @param[in] key The key to check, @sa @c keyNum_t
+ * @return @c true if the key is pressed, @c false otherwise
+ */
+qboolean Key_IsDown (unsigned int key)
+{
+	if (key >= K_KEY_SIZE)
+		return qfalse;
+	return keyDown[key];
+}
 
 /*
 ==============================================================================
@@ -439,11 +452,11 @@ static void Key_Console (int key, int unicode)
  * the K_* names are matched up.
  * @sa Key_KeynumToString
  */
-static int Key_StringToKeynum (const char *str)
+int Key_StringToKeynum (const char *str)
 {
 	const keyName_t *kn;
 
-	if (!str || str[0] == '\0')
+	if (Q_strnull(str))
 		return -1;
 
 	/* single char? */
@@ -616,8 +629,7 @@ static void Key_Unbindall_f (void)
  */
 static void Key_Bind_f (void)
 {
-	int i, c, b;
-	char cmd[1024];
+	int c, b;
 
 	c = Cmd_Argc();
 
@@ -639,22 +651,15 @@ static void Key_Bind_f (void)
 		return;
 	}
 
-	/* copy the rest of the command line */
-	cmd[0] = '\0';					/* start out with a null string */
-	for (i = 2; i < c; i++) {
-		Q_strcat(cmd, Cmd_Argv(i), sizeof(cmd));
-		if (i != (c - 1))
-			Q_strcat(cmd, " ", sizeof(cmd));
-	}
 
 	if (Q_streq(Cmd_Argv(0), "bindui"))
-		UI_SetKeyBinding(cmd, b);
+		UI_SetKeyBinding(Cmd_Argv(2), b, Cmd_Argv(3));
 	else if (Q_streq(Cmd_Argv(0), "bindmenu"))
-		Key_SetBinding(b, cmd, KEYSPACE_UI);
+		Key_SetBinding(b, Cmd_Argv(2), KEYSPACE_UI);
 	else if (Q_streq(Cmd_Argv(0), "bindbattle"))
-		Key_SetBinding(b, cmd, KEYSPACE_BATTLE);
+		Key_SetBinding(b, Cmd_Argv(2), KEYSPACE_BATTLE);
 	else
-		Key_SetBinding(b, cmd, KEYSPACE_GAME);
+		Key_SetBinding(b, Cmd_Argv(2), KEYSPACE_GAME);
 }
 
 /**
@@ -704,15 +709,18 @@ void Key_WriteBindings (const char* filename)
 
 	for (i = 0; i < UI_GetKeyBindingCount(); i++) {
 		const char *path;
-		uiKeyBinding_t*binding = UI_GetKeyBindingByIndex (i);
+		uiKeyBinding_t*binding = UI_GetKeyBindingByIndex(i);
+
 		if (binding->node == NULL)
+			continue;
+		if (binding->inherited)
 			continue;
 		if (binding->property == NULL)
 			path = va("%s", UI_GetPath(binding->node));
 		else
 			path = va("%s@%s", UI_GetPath(binding->node), binding->property->string);
 
-		if (FS_Printf(&f, "bindui %s \"%s\"\n", Key_KeynumToString(binding->key), path) < 0)
+		if (FS_Printf(&f, "bindui %s \"%s\" \"%s\"\n", Key_KeynumToString(binding->key), path, binding->description ? binding->description : "") < 0)
 			deleteFile = qtrue;
 	}
 
@@ -850,8 +858,10 @@ void Key_Event (unsigned int key, unsigned short unicode, qboolean down, unsigne
 
 	/* any key (except F1-F12) during the sequence mode will bring up the menu */
 
-	if (cls.keyDest == key_game && down) {
-		if (UI_KeyPressed(key, unicode))
+	if (cls.keyDest == key_game) {
+		if (down && UI_KeyPressed(key, unicode))
+			return;
+		else if (!down && UI_KeyRelease(key, unicode))
 			return;
 	}
 

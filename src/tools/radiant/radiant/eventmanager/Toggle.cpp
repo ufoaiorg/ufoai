@@ -29,7 +29,7 @@ void Toggle::updateWidgets() {
 
 	for (ToggleWidgetList::iterator i = _toggleWidgets.begin();
 		 i != _toggleWidgets.end();
-		 i++)
+		 ++i)
 	{
 		GtkWidget* widget = *i;
 		if (GTK_IS_TOGGLE_TOOL_BUTTON(widget)) {

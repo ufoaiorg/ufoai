@@ -22,15 +22,14 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 
 */
 
-#include "../client.h"
+#include "../cl_shared.h"
+#include "../input/cl_keys.h"
 #include "node/ui_node_window.h"
 #include "ui_tooltip.h"
 #include "ui_nodes.h"
 #include "ui_parse.h"
 #include "ui_render.h"
 #include "ui_input.h"
-
-#include "../client.h" /* gettext _() */
 
 static const vec4_t tooltipBG = { 0.0f, 0.0f, 0.0f, 0.7f };
 static const vec4_t tooltipColor = { 0.0f, 0.8f, 0.0f, 1.0f };
@@ -43,7 +42,7 @@ int UI_DrawTooltip (const char *string, int x, int y, int maxWidth)
 	const char *font = "f_small";
 	int height = 0, width = 0;
 
-	if (!string || string[0] == '\0' || !font)
+	if (Q_strnull(string) || !font)
 		return 0;
 
 	R_FontTextSize(font, string, maxWidth, LONGLINES_WRAP, &width, &height, NULL, NULL);

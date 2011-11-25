@@ -79,12 +79,28 @@ static void UI_BattlescapeNodeClose (uiNode_t *node)
 	UI_SetRenderRect(0, 0, 0, 0);
 }
 
+/**
+ * @brief Called when user request scrolling on the battlescape.
+ */
+static void UI_BattlescapeNodeScroll (uiNode_t *node, int deltaX, int deltaY)
+{
+	while (deltaY < 0) {
+		CL_CameraZoomIn();
+		deltaY++;
+	}
+	while (deltaY > 0) {
+		CL_CameraZoomOut();
+		deltaY--;
+	}
+}
+
 void UI_RegisterBattlescapeNode (uiBehaviour_t *behaviour)
 {
 	behaviour->name = "battlescape";
 	behaviour->loading = UI_BattlescapeNodeLoading;
 	behaviour->windowOpened = UI_BattlescapeNodeInit;
 	behaviour->windowClosed = UI_BattlescapeNodeClose;
+	behaviour->scroll = UI_BattlescapeNodeScroll;
 	behaviour->sizeChanged = UI_BattlescapeNodeSizeChanged;
 	behaviour->draw = UI_BattlescapeNodeDraw;
 	ui_battleScapeBehaviour = behaviour;

@@ -276,7 +276,7 @@ static void SVCmd_ShowAll_f (void)
 	/* Make everything visible to anyone who can't already see it */
 	while ((ent = G_EdictsGetNextInUse(ent))) {
 		G_AppearPerishEvent(~G_VisToPM(ent->visflags), 1, ent, NULL);
-		ent->visflags |= ~ent->visflags;
+		G_VisFlagsAdd(ent, ~ent->visflags);
 	}
 	gi.DPrintf("All items and creatures revealed to all sides\n");
 }
@@ -314,6 +314,28 @@ static void SVCmd_ActorInvList_f (void)
 		G_InvList_f(player);
 	}
 }
+
+static void SVCmd_ListEdicts_f (void)
+{
+	edict_t *ent = NULL;
+	int i = 0;
+	Com_Printf("number | entnum | mapnum | type | inuse | pnum | team | size |  HP | state | classname      | model/ptl             | pos\n");
+	while ((ent = G_EdictsGetNext(ent))) {
+		char buf[128];
+		const char *model;
+		if (ent->type == ET_PARTICLE)
+			model = ent->particle;
+		else if (ent->model)
+			model = ent->model;
+		else
+			model = "no mdl";
+		Com_sprintf(buf, sizeof(buf), "#%5i | #%5i | #%5i | %4i | %5i | %4i | %4i | %4i | %3i | %5i | %14s | %21s | %i:%i:%i",
+				i, ent->number, ent->mapNum, ent->type, ent->inuse, ent->pnum, ent->team, ent->fieldSize,
+				ent->HP, ent->state, ent->classname, model, ent->pos[0], ent->pos[1], ent->pos[2]);
+		Com_Printf("%s\n", buf);
+		i++;
+	}
+}
 #endif
 
 /**
@@ -346,6 +368,8 @@ void G_ServerCommand (void)
 		SVCmd_AddItem_f();
 	else if (Q_strcasecmp(cmd, "debug_actorinvlist") == 0)
 		SVCmd_ActorInvList_f();
+	else if (Q_strcasecmp(cmd, "debug_listedicts") == 0)
+		SVCmd_ListEdicts_f();
 #endif
 	else
 		gi.DPrintf("Unknown server command \"%s\"\n", cmd);

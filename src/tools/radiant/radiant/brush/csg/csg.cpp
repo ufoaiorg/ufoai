@@ -395,7 +395,9 @@ class BrushSplitByPlaneSelected: public scene::Graph::Walker
 								if (newFace != 0 && m_split != eFront) {
 									newFace->flipWinding();
 								}
-								newFace->SetFlags(flags);
+								if (newFace != 0) {
+									newFace->SetFlags(flags);
+								}
 								fragment->removeEmptyFaces();
 								ASSERT_MESSAGE(!fragment->empty(), "brush left with no faces after split");
 

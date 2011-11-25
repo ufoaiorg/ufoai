@@ -3,15 +3,16 @@
 // ==================
 
 component spinner cmp_t_spinner
-		{
-			tooltip		"_Add/Remove item to transfer cargo"
-			image		"ui/spinner_blue"
-			onChange	{
-				*cvar:tline = <node:parent.trans_list@viewpos>
-				*cvar:tline = ( *cvar:tline + *node:this@num )
-				cmd "trans_list_click <cvar:tline> <lastdiff>;"
-			}
-		}
+{
+	tooltip		"_Add/Remove item to transfer cargo, hold SHIFT for speed increase."
+	image		"ui/spinner_blue"
+	shiftincreasefactor	10.0
+	onChange	{
+		*cvar:tline = <node:parent.trans_list@viewpos>
+		*cvar:tline = ( *cvar:tline + *node:this@num )
+		cmd "trans_list_click <cvar:tline> <lastdiff>;"
+	}
+}
 
 window transfer
 {
@@ -61,18 +62,22 @@ window transfer
 		option item {
 			label	"_Equipment"
 			value	"item"
+			icon	"icons/tab_equipment"
 		}
 		option employee {
 			label	"_Employees"
 			value	"employee"
+			icon	"icons/tab_employees"
 		}
 		option alien {
 			label	"_Aliens"
 			value	"alien"
+			icon	"icons/tab_aliens"
 		}
 		option aircraft {
 			label	"_Aircraft"
 			value	"aircraft"
+			icon	"icons/tab_aircraft"
 		}
 	}
 
@@ -107,7 +112,7 @@ window transfer
 			string		"_Amount/Transfer"
 			pos			"300 18"
 			size		"200 25"
-			textalign	ALIGN_UC
+			contentalign	ALIGN_UC
 			font		"f_small_bold"
 		}
 
@@ -138,7 +143,7 @@ window transfer
 			pos			"350 41"
 			size		"50 525"
 			lineheight	"25"
-			textalign	ALIGN_CR
+			contentalign	ALIGN_CR
 			onViewChange	{
 				*node:root.itemlist.trans_list@viewpos = <viewpos>
 				*node:root.itemlist.trans_list_transfered@viewpos = <viewpos>
@@ -155,7 +160,7 @@ window transfer
 			pos			"425 41"
 			size		"50 525"
 			lineheight	"25"
-			textalign	ALIGN_CR
+			contentalign	ALIGN_CR
 			onViewChange	{
 				*node:root.itemlist.trans_list@viewpos = <viewpos>
 				*node:root.itemlist.trans_list_amount@viewpos = <viewpos>
@@ -169,7 +174,7 @@ window transfer
 		vscrollbar trans_list_scroll {
 			image		"ui/scrollbar_v_green"
 			pos			"510 43"
-			height		"521"
+			height		"520"
 			hidewhenunused	true
 			onChange	{
 				*node:root.itemlist.trans_list_scroll@current = <current>
@@ -179,7 +184,6 @@ window transfer
 				cmd "trans_list_scroll <cvar:mn_itemtype> <current>;"
 			}
 		}
-
 
 		cmp_t_spinner t_spinner0
 		{
@@ -230,7 +234,6 @@ window transfer
 		{
 			pos			"485 318"
 		}
-
 		cmp_t_spinner t_spinner12
 		{
 			pos			"485 343"
@@ -345,7 +348,7 @@ window transfer
 			pos			"320 16"
 			size		"50 225"
 			lineheight	"25"
-			textalign	ALIGN_CR
+			contentalign	ALIGN_CR
 			onViewChange	{
 				*node:root.transfer_cargolist.trans_cargolist@viewpos = <viewpos>
 				*node:root.transfer_cargolist.trans_cargolist_scroll@fullsize = <fullsize>
@@ -387,7 +390,7 @@ window transfer
 			string		"_Destination base"
 			pos			"64 22"
 			size		"288 20"
-			textalign	ALIGN_UC
+			contentalign	ALIGN_UC
 			color		"0.7 0.7 0.7 1"
 			font		"f_small"
 		}

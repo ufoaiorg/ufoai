@@ -286,8 +286,6 @@ static void SEQ_Render3D (sequenceContext_t *context)
 	seqEnt_t *se;
 	int i;
 
-	refdef.brushCount = 0;
-	refdef.aliasCount = 0;
 	refdef.numEntities = 0;
 	refdef.mapTiles = cl.mapTiles;
 
@@ -610,13 +608,13 @@ static int SEQ_ExecutePrecache (sequenceContext_t *context, const char *name, co
 	if (Q_streq(name, "models")) {
 		while (*data) {
 			Com_DPrintf(DEBUG_CLIENT, "Precaching model: %s\n", data);
-			R_RegisterModelShort(data);
+			R_FindModel(data);
 			data += strlen(data) + 1;
 		}
 	} else if (Q_streq(name, "pics")) {
 		while (*data) {
 			Com_DPrintf(DEBUG_CLIENT, "Precaching image: %s\n", data);
-			R_RegisterImage(data);
+			R_FindPics(data);
 			data += strlen(data) + 1;
 		}
 	} else
@@ -687,8 +685,12 @@ static int SEQ_ExecuteModel (sequenceContext_t *context, const char *name, const
 			if (Q_streq(data, "model")) {
 				data += strlen(data) + 1;
 				Com_DPrintf(DEBUG_CLIENT, "Registering model: %s\n", data);
-				se->model = R_RegisterModelShort(data);
+				se->model = R_FindModel(data);
+				if (se->model == NULL)
+					se->inuse = qfalse;
 			} else if (Q_streq(data, "anim")) {
+				if (se->model == NULL)
+					Com_Error(ERR_FATAL, "could not change the animation - no model loaded yet");
 				data += strlen(data) + 1;
 				Com_DPrintf(DEBUG_CLIENT, "Change anim to: %s\n", data);
 				R_AnimChange(&se->as, se->model, data);
@@ -763,7 +765,7 @@ static int SEQ_Execute2Dobj (sequenceContext_t *context, const char *name, const
 				switch (vp->type) {
 				case V_TRANSLATION_STRING:
 					data++;
-				case V_CLIENT_HUNK_STRING:
+				case V_HUNK_STRING:
 					Mem_PoolStrDupTo(data, (char**) ((char*)s2d + (int)vp->ofs), cl_genericPool, 0);
 					break;
 

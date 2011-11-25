@@ -75,6 +75,7 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #define EXTENSION(e)  (CONTAINER(e, gi.csi->idExtension))
 #define HEADGEAR(e)  (CONTAINER(e, gi.csi->idHeadgear))
 #define FLOOR(e) (CONTAINER(e, gi.csi->idFloor))
+#define EQUIP(e) (CONTAINER(e, gi.csi->idEquip))
 
 #define INVDEF(containerID) (&gi.csi->ids[(containerID)])
 
@@ -83,6 +84,8 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #define ACTOR_VIS_50	0.5
 #define ACTOR_VIS_10	0.1
 #define ACTOR_VIS_0		0.0
+
+#define MIN_TU				27
 
 #define G_FreeTags(tag) gi.FreeTags((tag), __FILE__, __LINE__)
 #define G_TagMalloc(size, tag) gi.TagMalloc((size), (tag), __FILE__, __LINE__)
@@ -109,28 +112,31 @@ typedef struct {
 						 * calculated through framenum * SERVER_FRAME_SECONDS */
 
 	char mapname[MAX_QPATH];	/**< the server name (base1, etc) */
-	char nextmap[MAX_QPATH];	/**< @todo Spawn the new map after the current one was ended */
+	char *mapEndCommand;
 	qboolean routed;
 	qboolean day;
 	qboolean hurtAliens;
+	qboolean nextMapSwitch;		/**< trigger the nextmap command when ending the match */
 
 	/* intermission state */
 	float intermissionTime;		/**< the seconds to wait until the game will be closed.
 								 * This value is relative to @c level.time
 								 * @sa G_MatchDoEnd */
 	int winningTeam;			/**< the team that won this match */
-	float roundstartTime;		/**< the time the team started the round */
+	float roundstartTime;		/**< the time the team started the turn */
 
-	/* round statistics */
+	/* turn statistics */
 	int numplayers;
 	int activeTeam;
 	int nextEndRound;
-	int actualRound;	/**< the current running round counter */
+	int actualRound;	/**< the current running turn counter */
 
 	pathing_t *pathingMap;	/**< This is where the data for TUS used to move and actor locations go */
 
 	int randomSpawn;	/**< can be set via worldspawn to force random spawn point order for each team */
+	int noEquipment;	/**< can be set via worldspawn to force the players to collect their equipment in the map */
 
+	int initialAlienActorsSpawned;
 	byte num_alive[MAX_TEAMS];		/**< the number of alive actors per team */
 	byte num_spawned[MAX_TEAMS];	/**< the number of spawned actors per team */
 	byte num_spawnpoints[MAX_TEAMS];	/**< the number of spawn points in the map per team */
@@ -146,8 +152,8 @@ typedef struct {
  */
 typedef struct {
 	/* world vars */
-	char *nextmap;	/**< the next map that is started after the current one has finished */
 	int randomSpawn;	/**< spawn the actors on random spawnpoints */
+	int noEquipment;	/**< spawn the actors with no equipment - must be collected in the map */
 } spawn_temp_t;
 
 /** @brief used in shot probability calculations (pseudo shots) */
@@ -180,8 +186,12 @@ extern game_export_t globals;
 /** @note This check also includes the IsStunned check - see the STATE_* bitmasks */
 #define G_IsDead(ent)			G_IsState(ent, STATE_DEAD)
 #define G_IsActor(ent)			((ent)->type == ET_ACTOR || (ent)->type == ET_ACTOR2x2)
+#define G_IsTriggerNextMap(ent)	((ent)->type == ET_TRIGGER_NEXTMAP)
+#define G_IsItem(ent)			((ent)->type == ET_ITEM)
+#define G_IsDoor(ent)			((ent)->type == ET_DOOR || (ent)->type == ET_DOOR_SLIDING)
+
 #define G_IsBreakable(ent)		((ent)->flags & FL_DESTROYABLE)
-#define G_IsBrushModel(ent)		((ent)->type == ET_BREAKABLE || (ent)->type == ET_DOOR || (ent)->type == ET_DOOR_SLIDING || (ent)->type == ET_ROTATING)
+#define G_IsBrushModel(ent)		((ent)->type == ET_BREAKABLE || G_IsDoor(ent) || (ent)->type == ET_ROTATING)
 /** @note Every none solid (none-bmodel) edict that is visible for the client */
 #define G_IsVisibleOnBattlefield(ent)	(G_IsActor((ent)) || (ent)->type == ET_ITEM || (ent)->type == ET_PARTICLE)
 #define G_IsAI(ent)				(G_PLAYER_FROM_ENT((ent))->pers.ai)
@@ -283,6 +293,7 @@ extern cvar_t *m_rage;
 extern cvar_t *m_rage_stop;
 extern cvar_t *m_panic_stop;
 
+extern cvar_t *g_endlessaliens;
 extern cvar_t *g_reaction_fair;
 extern cvar_t *g_ailua;
 extern cvar_t *g_aidebug;
@@ -296,7 +307,7 @@ extern cvar_t *flood_msgs;
 extern cvar_t *flood_persecond;
 extern cvar_t *flood_waitdelay;
 
-extern cvar_t *difficulty;
+extern cvar_t *g_difficulty;
 
 /* fields are needed for spawning from the entity string */
 #define FFL_SPAWNTEMP		1
@@ -307,10 +318,11 @@ void G_SendPlayerStats(const player_t *player);
 
 /* g_inventory.c */
 void G_WriteItem(const item_t *item, const invDef_t *container, int x, int y);
-void G_ReadItem(item_t *item, invDef_t **container, int *x, int *y);
+void G_ReadItem(item_t *item, const invDef_t **container, int *x, int *y);
 void G_InventoryToFloor(edict_t *ent);
 qboolean G_AddItemToFloor(const pos3_t pos, const char *itemID);
 edict_t *G_GetFloorItemsFromPos(const pos3_t pos);
+const equipDef_t *G_GetEquipDefByID(const char *equipID);
 
 /* g_morale */
 void G_MoraleBehaviour(int team);
@@ -325,6 +337,7 @@ int G_ActorGetTUForReactionFire(const edict_t *ent);
 int G_ActorUsableTUs(const edict_t *ent);
 int G_ActorGetReservedTUs(const edict_t *ent);
 void G_ActorCheckRevitalise(edict_t *ent);
+int G_ActorCalculateMaxTU(const edict_t *ent);
 
 /* g_mission.c */
 qboolean G_MissionTouch(edict_t *self, edict_t *activator);
@@ -350,6 +363,8 @@ edict_t *G_SpawnParticle(const vec3_t origin, int spawnflags, const char *partic
 void G_FreeEdict(edict_t *e);
 qboolean G_UseEdict(edict_t *ent, edict_t* activator);
 edict_t *G_GetEdictFromPos(const pos3_t pos, const entity_type_t type);
+edict_t *G_GetLivingActorFromPos(const pos3_t pos);
+edict_t *G_GetEdictFromPosExcluding(const pos3_t pos, const int n, ...);
 void G_TakeDamage(edict_t *ent, int damage);
 trace_t G_Trace(const vec3_t start, const vec3_t end, const edict_t * passent, int contentmask);
 qboolean G_TestLineWithEnts(const vec3_t start, const vec3_t end);
@@ -362,12 +377,16 @@ void G_ReactionFireReset(int team);
 qboolean G_ReactionFireCanBeEnabled(const edict_t *ent);
 qboolean G_ReactionFireSetDefault(edict_t *ent);
 void G_ReactionFireUpdate(edict_t *ent, fireDefIndex_t fmIdx, actorHands_t hand, const objDef_t *od);
+qboolean G_ReserveReactionFireTUs(edict_t *ent);
 qboolean G_ReactionFireOnMovement(edict_t *target);
 void G_ReactionFireEndTurn(void);
 
 void G_CompleteRecalcRouting(void);
-void G_RecalcRouting(const edict_t * ent);
+void G_RecalcRouting(const char *model);
 void G_GenerateEntList(const char *entList[MAX_EDICTS]);
+
+/** @todo make this a byte */
+typedef unsigned int vismask_t;
 
 #include "g_events.h"
 
@@ -375,7 +394,7 @@ void G_GenerateEntList(const char *entList[MAX_EDICTS]);
 #define VIS_APPEAR	1
 #define VIS_PERISH	2
 
-/** the visibile changed - if it was visible - it's (the edict) now invisible */
+/** the visibility changed - if it was visible - it's (the edict) now invisible */
 #define VIS_CHANGE	1
 /** actor visible? */
 #define VIS_YES		2
@@ -432,7 +451,7 @@ void G_ResetClientData(void);
 void G_ClientCommand(player_t * player);
 void G_ClientUserinfoChanged(player_t * player, const char *userinfo);
 qboolean G_ClientBegin(player_t * player);
-void G_ClientSpawn(player_t * player);
+void G_ClientStartMatch(player_t * player);
 qboolean G_ClientConnect(player_t * player, char *userinfo, size_t userinfoSize);
 void G_ClientDisconnect(player_t * player);
 
@@ -447,13 +466,12 @@ qboolean G_ActorInvMove(edict_t *ent, const invDef_t * from, invList_t *fItem, c
 void G_ClientStateChange(const player_t* player, edict_t* ent, int reqState, qboolean checkaction);
 int G_ActorDoTurn(edict_t * ent, byte dir);
 
-edict_t *G_GetActorFromPos(const pos3_t pos);
-
 void G_SendInvisible(const player_t *player);
 void G_GiveTimeUnits(int team);
 
 void G_AppearPerishEvent(unsigned int player_mask, qboolean appear, edict_t * check, const edict_t *ent);
-unsigned int G_VisToPM(unsigned int vis_mask);
+unsigned int G_VisToPM(vismask_t vis_mask);
+vismask_t G_PMToVis(unsigned int playerMask);
 void G_SendInventory(unsigned int player_mask, const edict_t * ent);
 unsigned int G_TeamToPM(int team);
 
@@ -472,7 +490,11 @@ void G_InvList_f(const player_t *player);
 /* g_vis.c */
 qboolean G_FrustumVis(const edict_t *from, const vec3_t point);
 float G_ActorVis(const vec3_t from, const edict_t *check, qboolean full);
-void G_ClearVisFlags(int team);
+void G_VisFlagsClear(int team);
+void G_VisFlagsAdd(edict_t *ent, vismask_t visMask);
+void G_VisFlagsSwap(edict_t *ent, vismask_t visMask);
+void G_VisFlagsReset(edict_t *ent);
+void G_VisMakeEverythingVisible(void);
 int G_CheckVis(edict_t *check, qboolean perish);
 int G_CheckVisPlayer(player_t* player, qboolean perish);
 int G_TestVis(const int team, edict_t * check, int flags);
@@ -483,6 +505,7 @@ qboolean G_ClientShoot(const player_t *player, edict_t* ent, const pos3_t at, sh
 
 /* g_ai.c */
 void AI_Init(void);
+void AI_CheckRespawn(int team);
 extern edict_t *ai_waypointList;
 void G_AddToWayPointList(edict_t *ent);
 void AI_Run(void);
@@ -505,9 +528,12 @@ edict_t* G_TriggerSpawn(edict_t *owner);
 qboolean G_TriggerRemoveFromList(edict_t *self, edict_t *activator);
 qboolean G_TriggerIsInList(edict_t *self, edict_t *activator);
 void G_TriggerAddToList(edict_t *self, edict_t *activator);
+void SP_trigger_nextmap(edict_t *ent);
 void SP_trigger_hurt(edict_t *ent);
 void SP_trigger_touch(edict_t *ent);
 void SP_trigger_rescue(edict_t *ent);
+
+void Think_NextMapTrigger(edict_t *self);
 
 /* g_func.c */
 void SP_func_rotating(edict_t *ent);
@@ -519,6 +545,7 @@ void SP_func_breakable(edict_t *ent);
 edict_t* G_EdictsInit(void);
 void G_EdictsReset(void);
 edict_t* G_EdictsGetNewEdict(void);
+edict_t* G_EdictDuplicate(const edict_t *edict);
 int G_EdictsGetNumber(const edict_t* ent);
 qboolean G_EdictsIsValidNum(const int idx);
 edict_t* G_EdictsGetByNum(const int num);
@@ -527,7 +554,8 @@ edict_t* G_EdictsGetNext(edict_t* lastEnt);
 edict_t* G_EdictsGetNextInUse(edict_t* lastEnt);
 edict_t* G_EdictsGetNextActor(edict_t* lastEnt);
 edict_t* G_EdictsGetNextLivingActor(edict_t* lastEnt);
-edict_t* G_EdictsGetNextLivingActorOfTeam (edict_t* lastEnt, const int team);
+edict_t* G_EdictsGetNextLivingActorOfTeam(edict_t* lastEnt, const int team);
+edict_t* G_EdictsGetTriggerNextMaps(edict_t* lastEnt);
 
 /** Functions to handle single edicts, trying to encapsulate edict->pos in the first place. */
 void G_EdictCalcOrigin(edict_t* ent);
@@ -549,7 +577,7 @@ typedef enum {
 /** @brief actor movement */
 typedef struct {
 	int			contentFlags[MAX_DVTAB];
-	int			visflags[MAX_DVTAB];
+	vismask_t	visflags[MAX_DVTAB];
 	byte		steps;
 	int			currentStep;
 } moveinfo_t;
@@ -584,7 +612,7 @@ struct player_s {
 	/* private to game */
 	qboolean spawned;			/**< already spawned? */
 	qboolean began;				/**< the player sent his 'begin' already */
-	qboolean roundDone;			/**< ready to end his round */
+	qboolean roundDone;			/**< ready to end his turn */
 
 	int reactionLeftover;		/**< Minimum TU left over by reaction fire */
 	qboolean autostand;			/**< autostand for long walks */
@@ -593,17 +621,21 @@ struct player_s {
 };
 
 /**
- * @brief not the first on the team
- * @sa groupMaster and groupChain
- */
-#define FL_GROUPSLAVE	0x00000008
-/**
  * @brief If an edict is destroyable (like ET_BREAKABLE, ET_DOOR [if health set]
  * or maybe a ET_MISSION [if health set])
  * @note e.g. misc_mission, func_breakable, func_door
  * @note If you mark an edict as breakable, you have to provide a destroy callback, too
  */
 #define FL_DESTROYABLE	0x00000004
+/**
+ * @brief not the first on the team
+ * @sa groupMaster and groupChain
+ */
+#define FL_GROUPSLAVE	0x00000008
+/**
+ * @brief Edict flag to indicate, that the edict can be used in the context of a client action
+ */
+#define FL_CLIENTACTION	0x00000010
 /**
  * @brief Trigger the edict at spawn.
  */
@@ -640,6 +672,7 @@ struct edict_s {
 	edict_t *child;	/**< e.g. the trigger for this edict */
 	edict_t *owner;	/**< e.g. the door model in case of func_door */
 	int modelindex;	/**< inline model index */
+	const char *classname;
 
 	/*================================ */
 	/* don't change anything above here - the server expects the fields in that order */
@@ -653,7 +686,7 @@ struct edict_s {
 
 	const edict_t *link;		/**< can be used to store another edict that e.g. interacts with the current one */
 	entity_type_t type;
-	int visflags;				/**< bitmask of teams that can see this edict */
+	vismask_t visflags;			/**< bitmask of teams that can see this edict */
 
 	int contentFlags;			/**< contents flags of the brush the actor is walking in */
 
@@ -693,16 +726,17 @@ struct edict_s {
 	character_t chr;
 
 	int spawnflags;	/**< set via mapeditor */
-	const char *classname;
 
 	float angle;	/**< entity yaw - (0-360 degree) set via mapeditor - sometimes used for movement direction,
 					 * then -1=up; -2=down is used additionally */
 
+	int radius;					/**< this is used to extend the bounding box of a trigger_touch for e.g. misc_mission */
 	int speed;					/**< speed of entities - e.g. rotating or actors */
 	const char *target;			/**< name of the entity to trigger or move towards - this name is stored in the target edicts targetname value */
 	const char *targetname;		/**< name pointed to by target - see the target of the parent edict */
 	const char *item;			/**< the item id that must be placed to e.g. the func_mission to activate the use function */
 	const char *particle;
+	const char *nextmap;
 	const char *message;		/**< misc_message */
 	const char *noise;			/**< sounds - e.g. for func_door */
 	edictMaterial_t material;	/**< material value (e.g. for func_breakable) */

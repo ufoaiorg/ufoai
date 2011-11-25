@@ -14,7 +14,7 @@ component radiobutton buttonActorEquip
 component string txtActorEquip
 {
 	size	"270 40"
-	textalign ALIGN_CL
+	contentalign ALIGN_CL
 }
 
 window equipment extends objectinfo
@@ -34,7 +34,7 @@ window equipment extends objectinfo
 	string s_backpack
 	{
 		pos "852 25"
-		textalign ALIGN_UC
+		contentalign ALIGN_UC
 		string	"_Backpack"
 		color "0 0.6 0 1"
 		size "160 25"
@@ -43,7 +43,7 @@ window equipment extends objectinfo
 	string s_left
 	{
 		pos "852 150"
-		textalign ALIGN_UC
+		contentalign ALIGN_UC
 		string	"_Left Hand"
 		color "0 0.6 0 1"
 		size "160 25"
@@ -52,7 +52,7 @@ window equipment extends objectinfo
 	string s_right
 	{
 		pos "530 150"
-		textalign ALIGN_UC
+		contentalign ALIGN_UC
 		string	"_Right Hand"
 		color "0 0.6 0 1"
 		size "160 25"
@@ -61,7 +61,7 @@ window equipment extends objectinfo
 	string s_extension
 	{
 		pos "530 76"
-		textalign ALIGN_UC
+		contentalign ALIGN_UC
 		string	"_Extension"
 		color "0 0.6 0 1"
 		size "160 25"
@@ -70,7 +70,7 @@ window equipment extends objectinfo
 	string s_headgear
 	{
 		pos "620 76"
-		textalign ALIGN_UC
+		contentalign ALIGN_UC
 		string	"_Headgear"
 		color "0 0.6 0 1"
 		size "160 25"
@@ -79,7 +79,7 @@ window equipment extends objectinfo
 	string s_holster
 	{
 		pos "852 245"
-		textalign ALIGN_UC
+		contentalign ALIGN_UC
 		string	"_Holster"
 		color "0 0.6 0 1"
 		size "160 25"
@@ -88,7 +88,7 @@ window equipment extends objectinfo
 	string s_belt
 	{
 		pos "530 245"
-		textalign ALIGN_UC
+		contentalign ALIGN_UC
 		string	"_Belt"
 		color "0 0.6 0 1"
 		size "160 25"
@@ -312,7 +312,7 @@ window equipment extends objectinfo
 			string	*cvar:mn_itemname
 			pos		"10 6"
 			size	"330 20"
-			textalign	ALIGN_UC
+			contentalign	ALIGN_UC
 		}
 
 		item itemmodel
@@ -378,7 +378,7 @@ window equipment extends objectinfo
 			string	*cvar:mn_linkname
 			pos		"140 290"
 			size	"190 16"
-			textalign	ALIGN_CC
+			contentalign	ALIGN_CC
 			font	"f_small"
 		}
 
@@ -416,7 +416,7 @@ window equipment extends objectinfo
 			string	*cvar:mn_firemodename
 			pos		"140 314"
 			size	"190 16"
-			textalign	ALIGN_CC
+			contentalign	ALIGN_CC
 			font	"f_small"
 		}
 
@@ -586,8 +586,8 @@ window equipment extends objectinfo
 	{
 		tooltip		"_Rename your unit"
 		icon		"icons/pen"
-		pos			"780 24"
-		size		"16 16"
+		pos			"775 11"
+		size		"35 35"
 		padding		0
 		onClick		{ call *node:parent.name@edit }
 	}

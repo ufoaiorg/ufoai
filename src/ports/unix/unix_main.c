@@ -195,7 +195,7 @@ static void _backtrace (FILE *crash, void * const *buffer, int size)
 
 	for (x = 0; x < size; x++) {
 		struct file_match match = {.address = buffer[x]};
-		bfd_vma addr;
+		unsigned long addr;
 		const char * file = NULL;
 		const char * func = NULL;
 		unsigned line = 0;

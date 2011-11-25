@@ -67,9 +67,7 @@ typedef struct model_s {
 
 /*============================================================================ */
 
-void R_ModClearAll(void);
 void R_ModModellist_f(void);
-void R_ModDrawNullModel(entity_t *e);
 image_t* R_AliasModelState(const model_t *mod, int *mesh, int *frame, int *oldFrame, int *skin);
 image_t* R_AliasModelGetSkin(const char *modelFileName, const char *skin);
 void R_DrawAliasModel(entity_t *e);
@@ -79,12 +77,13 @@ int R_ModAllocateActorSkin(const char* name);
 void R_LoadActorSkinsFromModel(mAliasMesh_t *outMesh, image_t * defaultSkin);
 qboolean R_UseActorSkin(void);
 
+model_t *R_FindModel(const char *name);
+model_t *R_GetModel(const char *name);
+model_t *R_AllocModelSlot(void);
+
 /** @brief The world model(s) */
 extern model_t *r_mapTiles[MAX_MAPTILES];
 extern int r_numMapTiles;
-
-extern model_t r_models[MAX_MOD_KNOWN];
-extern int r_numModels;
 
 extern model_t r_modelsInline[MAX_MOD_KNOWN];
 extern int r_numModelsInline;

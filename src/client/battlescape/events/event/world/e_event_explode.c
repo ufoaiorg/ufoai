@@ -27,6 +27,14 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #include "e_event_explode.h"
 
 /**
+ * @brief Decides when the explode event should get executed. This in the impact time.
+ */
+int CL_ExplodeTime (const struct eventRegister_s *self, struct dbuffer *msg, eventTiming_t *eventTiming)
+{
+	return eventTiming->impactTime;
+}
+
+/**
  * @note e.g. func_breakable or func_door with health
  * @sa EV_MODEL_EXPLODE
  */
@@ -38,6 +46,8 @@ void CL_Explode (const eventRegister_t *self, struct dbuffer *msg)
 		LE_NotFoundError(entnum);
 
 	le->inuse = qfalse;
+	if (le->modelnum1 > 0)
+		cl.model_clip[le->modelnum1] = NULL;
 
 	/* Recalc the client routing table because this le (and the inline model) is now gone */
 	CL_RecalcRouting(le);

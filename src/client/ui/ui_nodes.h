@@ -86,7 +86,7 @@ typedef struct uiNode_s {
 
 	/* other attributes */
 	/** @todo needs cleanup */
-	int textalign;				/**< Alignment to draw text */
+	int contentAlign;			/**< Content alignment inside nodes */
 	char* text;					/**< Text we want to display */
 	const char* font;			/**< Font to draw text */
 	const char* image;
@@ -158,7 +158,7 @@ typedef struct uiBehaviour_s {
 	void (*leftClick)(uiNode_t *node, int x, int y);		/**< left mouse click event in the node */
 	void (*rightClick)(uiNode_t *node, int x, int y);		/**< right mouse button click event in the node */
 	void (*middleClick)(uiNode_t *node, int x, int y);	/**< middle mouse button click event in the node */
-	void (*mouseWheel)(uiNode_t *node, qboolean down, int x, int y);	/**< mouse wheel event in the node */
+	void (*scroll)(uiNode_t *node, int deltaX, int deltaY);	/**< mouse wheel event in the node */
 	void (*mouseMove)(uiNode_t *node, int x, int y);
 	void (*mouseDown)(uiNode_t *node, int x, int y, int button);	/**< mouse button down event in the node */
 	void (*mouseUp)(uiNode_t *node, int x, int y, int button);	/**< mouse button up event in the node */
@@ -192,6 +192,7 @@ typedef struct uiBehaviour_s {
 	void (*focusGained)(uiNode_t *node);
 	void (*focusLost)(uiNode_t *node);
 	qboolean (*keyPressed)(uiNode_t *node, unsigned int key, unsigned short unicode);
+	qboolean (*keyReleased)(uiNode_t *node, unsigned int key, unsigned short unicode);
 
 	/* Planned */
 #if 0

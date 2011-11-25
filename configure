@@ -149,7 +149,11 @@ makefile_local() {
 }
 
 check_header_cc() {
-	( echo "#include <${1}>" | ${CROSS}${CC} ${CFLAGS} -o /dev/null -xc -c - 2> /dev/null ) && echo "1" || echo ""
+	if [ -n "${2}" ]; then
+		( echo "#include <${1}>" | ${CROSS}${CC} ${CFLAGS} $(pkg-config --cflags ${2}) -o /dev/null -xc -c - 2> /dev/null ) && echo "1" || echo ""
+	else
+		( echo "#include <${1}>" | ${CROSS}${CC} ${CFLAGS} -o /dev/null -xc -c - 2> /dev/null ) && echo "1" || echo ""
+	fi
 }
 
 check_header() {
@@ -157,7 +161,7 @@ check_header() {
 	HAVE=HAVE_`echo ${HEADER%.*} | sed 's,/,_,g' | tr '[a-z]' '[A-Z]'`_H
 	VALUE=`get_var $HAVE`
 	if [ "$VALUE" != "no" ]; then
-		set_var $HAVE `check_header_cc $1`
+		set_var $HAVE `check_header_cc $1 $2`
 		add_to_config_h $HAVE "Found $1" "Could not find $1" $2
 		add_to_makefile_local $HAVE
 	else
@@ -317,6 +321,10 @@ check_path_characters
 
 # uforadiant is disabled by default
 set_var "uforadiant_DISABLE" "yes"
+# memory module is disabled by default
+set_var "memory_DISABLE" "yes"
+# ufoslicer module is disabled by default
+set_var "ufoslicer_DISABLE" "yes"
 
 while [ $# -gt 0 ]; do
 	case "$1" in

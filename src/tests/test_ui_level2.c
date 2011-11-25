@@ -257,6 +257,15 @@ static void testVideo (void)
 }
 
 /**
+ * @brief test key binding
+ * @todo unfortunately we can't use "bindui" or "press" commands in tests.
+ */
+static void testBinding (void)
+{
+	//UFO_ExecuteTestWindow("test_keybinding");
+}
+
+/**
  * @brief test if we can parse all samples
  */
 static void testSamples (void)
@@ -295,8 +304,9 @@ int UFO_AddUILevel2Tests (void)
 		return CU_get_error();
 	if (CU_ADD_TEST(UISuite, testVideo) == NULL)
 		return CU_get_error();
+	if (CU_ADD_TEST(UISuite, testBinding) == NULL)
+		return CU_get_error();
 	if (CU_ADD_TEST(UISuite, testSamples) == NULL)
 		return CU_get_error();
-
 	return CUE_SUCCESS;
 }

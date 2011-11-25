@@ -42,10 +42,10 @@ void R_SetSurfaceBumpMappingParameters (const mBspSurface_t *surf, const image_t
 	if (normalMap && (surf->flags & MSURF_LIGHTMAP)) {
 		const image_t *image = surf->texinfo->image;
 		R_BindDeluxemapTexture(surf->deluxemap_texnum);
-		R_EnableBumpmap(normalMap, qtrue);
+		R_EnableBumpmap(normalMap);
 		R_UseMaterial(&image->material);
 	} else {
-		R_EnableBumpmap(NULL, qfalse);
+		R_EnableBumpmap(NULL);
 		R_UseMaterial(NULL);
 	}
 }
@@ -56,7 +56,6 @@ void R_SetSurfaceBumpMappingParameters (const mBspSurface_t *surf, const image_t
  */
 static void R_SetSurfaceState (const mBspSurface_t *surf)
 {
-	const model_t* mod = r_mapTiles[surf->tile];
 	image_t *image;
 
 	if (r_state.blend_enabled) {  /* alpha blend */
@@ -73,8 +72,6 @@ static void R_SetSurfaceState (const mBspSurface_t *surf)
 		R_Color(color);
 	}
 
-	R_SetArrayState(mod);
-
 	image = surf->texinfo->image;
 	R_BindTexture(image->texnum);  /* texture */
 
@@ -85,7 +82,7 @@ static void R_SetSurfaceState (const mBspSurface_t *surf)
 
 	R_SetSurfaceBumpMappingParameters(surf, image->normalmap);
 
-	R_EnableGlowMap(image->glowmap, qtrue);
+	R_EnableGlowMap(image->glowmap);
 
 	R_CheckError();
 }
@@ -97,6 +94,8 @@ static void R_SetSurfaceState (const mBspSurface_t *surf)
 static inline void R_DrawSurface (const mBspSurface_t *surf)
 {
 	glDrawArrays(GL_TRIANGLE_FAN, surf->index, surf->numedges);
+
+	refdef.batchCount++;
 
 	if (r_showbox->integer == 2)
 		R_DrawBoundingBox(surf->mins, surf->maxs);
@@ -110,103 +109,42 @@ static inline void R_DrawSurface (const mBspSurface_t *surf)
  * @sa R_DrawSurface
  * @sa R_SetSurfaceState
  */
-static void R_DrawSurfaces (const mBspSurfaces_t *surfs)
+void R_DrawSurfaces (const mBspSurfaces_t *surfs)
 {
-	int i;
+	int numSurfaces = surfs->count;
+	mBspSurface_t	**surfPtrList = surfs->surfaces;
+	const int frame = r_locals.frame;
 
-	for (i = 0; i < surfs->count; i++) {
-		if (surfs->surfaces[i]->frame != r_locals.frame)
+	int lastLightMap = 0, lastDeluxeMap = 0;
+	image_t *lastTexture = NULL;
+	uint32_t lastFlags = ~0;
+
+	while (numSurfaces--) {
+		const mBspSurface_t *surf = *surfPtrList++;
+		mBspTexInfo_t *texInfo;
+		int texFlags;
+		if (surf->frame != frame)
 			continue;
 
-		R_SetSurfaceState(surfs->surfaces[i]);
-		R_DrawSurface(surfs->surfaces[i]);
+		/** @todo integrate it better with R_SetSurfaceState - maybe cache somewhere in the mBspSurface_t ? */
+		texInfo = surf->texinfo;
+		texFlags  = texInfo->flags & (SURF_BLEND33 | SURF_BLEND66 | MSURF_LIGHTMAP); /* should match flags that affect R_SetSurfaceState behavior */
+		if (texInfo->image != lastTexture || surf->lightmap_texnum != lastLightMap || surf->deluxemap_texnum != lastDeluxeMap || texFlags != lastFlags) {
+			lastTexture = texInfo->image;
+			lastLightMap = surf->lightmap_texnum;
+			lastDeluxeMap = surf->deluxemap_texnum;
+			lastFlags = texFlags;
+			R_SetSurfaceState(surf);
+		}
+
+		R_DrawSurface(surf);
 	}
 
 	/* reset state */
-	if (r_state.bumpmap_enabled)
-		R_EnableBumpmap(NULL, qfalse);
+	if (r_state.active_normalmap)
+		R_EnableBumpmap(NULL);
 
-	R_EnableGlowMap(NULL, qfalse);
-
-	/* and restore array pointers */
-	R_ResetArrayState();
+	R_EnableGlowMap(NULL);
 
 	R_Color(NULL);
-}
-
-/**
- * @brief Draw the surface chain with multitexture enabled and light enabled
- * @sa R_DrawBlendSurfaces
- */
-void R_DrawOpaqueSurfaces (const mBspSurfaces_t *surfs)
-{
-	if (!surfs->count)
-		return;
-
-	R_EnableTexture(&texunit_lightmap, qtrue);
-
-	R_EnableLighting(r_state.world_program, qtrue);
-	R_DrawSurfaces(surfs);
-	R_EnableLighting(NULL, qfalse);
-	R_EnableGlowMap(NULL, qfalse);
-	R_EnableTexture(&texunit_lightmap, qfalse);
-}
-
-/**
- * @brief Draw the surfaces via warp shader
- * @sa R_DrawBlendWarpSurfaces
- */
-void R_DrawOpaqueWarpSurfaces (mBspSurfaces_t *surfs)
-{
-	if (!surfs->count)
-		return;
-
-	R_EnableWarp(r_state.warp_program, qtrue);
-	R_DrawSurfaces(surfs);
-	R_EnableWarp(NULL, qfalse);
-	R_EnableGlowMap(NULL, qfalse);
-}
-
-void R_DrawAlphaTestSurfaces (mBspSurfaces_t *surfs)
-{
-	if (!surfs->count)
-		return;
-
-	R_EnableAlphaTest(qtrue);
-	R_EnableLighting(r_state.world_program, qtrue);
-	R_DrawSurfaces(surfs);
-	R_EnableLighting(NULL, qfalse);
-	R_EnableGlowMap(NULL, qfalse);
-	R_EnableAlphaTest(qfalse);
-}
-
-/**
- * @brief Draw the surface chain with multitexture enabled and blend enabled
- * @sa R_DrawOpaqueSurfaces
- */
-void R_DrawBlendSurfaces (const mBspSurfaces_t *surfs)
-{
-	if (!surfs->count)
-		return;
-
-	assert(r_state.blend_enabled);
-	R_EnableTexture(&texunit_lightmap, qtrue);
-	R_DrawSurfaces(surfs);
-	R_EnableTexture(&texunit_lightmap, qfalse);
-}
-
-/**
- * @brief Draw the alpha surfaces via warp shader and with blend enabled
- * @sa R_DrawOpaqueWarpSurfaces
- */
-void R_DrawBlendWarpSurfaces (mBspSurfaces_t *surfs)
-{
-	if (!surfs->count)
-		return;
-
-	assert(r_state.blend_enabled);
-	R_EnableWarp(r_state.warp_program, qtrue);
-	R_DrawSurfaces(surfs);
-	R_EnableWarp(NULL, qfalse);
-	R_EnableGlowMap(NULL, qfalse);
 }

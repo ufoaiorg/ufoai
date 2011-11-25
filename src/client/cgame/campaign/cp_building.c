@@ -112,13 +112,13 @@ buildingType_t B_GetBuildingTypeByBuildingID (const char *buildingID)
  * to the appropriate values in the corresponding struct
  */
 static const value_t valid_building_vars[] = {
-	{"map_name", V_CLIENT_HUNK_STRING, offsetof(building_t, mapPart), 0},	/**< Name of the map file for generating basemap. */
+	{"map_name", V_HUNK_STRING, offsetof(building_t, mapPart), 0},	/**< Name of the map file for generating basemap. */
 	{"max_count", V_INT, offsetof(building_t, maxCount), MEMBER_SIZEOF(building_t, maxCount)},	/**< How many building of the same type allowed? */
 	{"level", V_FLOAT, offsetof(building_t, level), MEMBER_SIZEOF(building_t, level)},	/**< building level */
 	{"name", V_TRANSLATION_STRING, offsetof(building_t, name), 0},	/**< The displayed building name. */
-	{"pedia", V_CLIENT_HUNK_STRING, offsetof(building_t, pedia), 0},	/**< The pedia-id string for the associated pedia entry. */
+	{"pedia", V_HUNK_STRING, offsetof(building_t, pedia), 0},	/**< The pedia-id string for the associated pedia entry. */
 	{"status", V_INT, offsetof(building_t, buildingStatus), MEMBER_SIZEOF(building_t, buildingStatus)},	/**< The current status of the building. */
-	{"image", V_CLIENT_HUNK_STRING, offsetof(building_t, image), 0},	/**< Identifies the image for the building. */
+	{"image", V_HUNK_STRING, offsetof(building_t, image), 0},	/**< Identifies the image for the building. */
 	{"size", V_POS, offsetof(building_t, size), MEMBER_SIZEOF(building_t, size)},	/**< Building size. */
 	{"fixcosts", V_INT, offsetof(building_t, fixCosts), MEMBER_SIZEOF(building_t, fixCosts)},	/**< Cost to build. */
 	{"varcosts", V_INT, offsetof(building_t, varCosts), MEMBER_SIZEOF(building_t, varCosts)},	/**< Costs that will come up by using the building. */
@@ -127,10 +127,10 @@ static const value_t valid_building_vars[] = {
 	{"capacity", V_INT, offsetof(building_t, capacity), MEMBER_SIZEOF(building_t, capacity)},	/**< A size value that is used by many buildings in a different way. */
 
 	/*event handler functions */
-	{"onconstruct", V_CLIENT_HUNK_STRING, offsetof(building_t, onConstruct), 0}, /**< Event handler. */
-	{"ondestroy", V_CLIENT_HUNK_STRING, offsetof(building_t, onDestroy), 0}, /**< Event handler. */
-	{"onenable", V_CLIENT_HUNK_STRING, offsetof(building_t, onEnable), 0}, /**< Event handler. */
-	{"ondisable", V_CLIENT_HUNK_STRING, offsetof(building_t, onDisable), 0}, /**< Event handler. */
+	{"onconstruct", V_HUNK_STRING, offsetof(building_t, onConstruct), 0}, /**< Event handler. */
+	{"ondestroy", V_HUNK_STRING, offsetof(building_t, onDestroy), 0}, /**< Event handler. */
+	{"onenable", V_HUNK_STRING, offsetof(building_t, onEnable), 0}, /**< Event handler. */
+	{"ondisable", V_HUNK_STRING, offsetof(building_t, onDisable), 0}, /**< Event handler. */
 	{"mandatory", V_BOOL, offsetof(building_t, mandatory), MEMBER_SIZEOF(building_t, mandatory)}, /**< Automatically construct this building when a base is set up. Must also set the pos-flag. */
 	{NULL, 0, 0, 0}
 };
@@ -150,7 +150,6 @@ void B_ParseBuildings (const char *name, const char **text, qboolean link)
 {
 	building_t *building;
 	technology_t *techLink;
-	const value_t *vp;
 	const char *errhead = "B_ParseBuildings: unexpected end of file (names ";
 	const char *token;
 
@@ -215,28 +214,7 @@ void B_ParseBuildings (const char *name, const char **text, qboolean link)
 					if (!*text)
 						return;
 				} else {
-					for (vp = valid_building_vars; vp->string; vp++)
-						if (Q_streq(token, vp->string)) {
-							/* found a definition */
-							token = Com_EParse(text, errhead, name);
-							if (!*text)
-								return;
-
-							switch (vp->type) {
-							case V_NULL:
-								break;
-							case V_TRANSLATION_STRING:
-								token++;
-							case V_CLIENT_HUNK_STRING:
-								Mem_PoolStrDupTo(token, (char**) ((char*)building + (int)vp->ofs), cp_campaignPool, 0);
-								break;
-							default:
-								Com_EParseValue(building, token, vp->type, vp->ofs, vp->size);
-								break;
-							}
-							break;
-						}
-					if (!vp->string)
+					if (!Com_ParseBlockToken(name, text, building, valid_building_vars, cp_campaignPool, token))
 						Com_Printf("B_ParseBuildings: unknown token \"%s\" ignored (building %s)\n", token, name);
 				}
 			}
@@ -308,15 +286,18 @@ qboolean B_BuildingScriptSanityCheck (void)
  * @brief Returns the building in the global building-types list that has the unique name buildingID.
  * @param[in] buildingName The unique id of the building (building_t->id).
  * @return building_t If a building was found it is returned, if no id was give the current building is returned, otherwise->NULL.
+ * @todo make the returned pointer const
  */
 building_t *B_GetBuildingTemplate (const char *buildingName)
 {
 	int i = 0;
 
 	assert(buildingName);
-	for (i = 0; i < ccs.numBuildingTemplates; i++)
-		if (Q_streq(ccs.buildingTemplates[i].id, buildingName))
-			return &ccs.buildingTemplates[i];
+	for (i = 0; i < ccs.numBuildingTemplates; i++) {
+		building_t *template = &ccs.buildingTemplates[i];
+		if (Q_streq(template->id, buildingName))
+			return template;
+	}
 
 	Com_Printf("Building %s not found\n", buildingName);
 	return NULL;

@@ -406,15 +406,15 @@ class MiscParticleNode: public scene::Node,
 		}
 
 		MiscParticleNode (EntityClass* eclass) :
-			m_contained(eclass, *this, InstanceSet::TransformChangedCaller(m_instances), InstanceSetEvaluateTransform<
-					MiscParticleInstance>::Caller(m_instances))
+			m_contained(eclass, *this, InstanceSet::TransformChangedCaller(m_instances),
+						InstanceSetEvaluateTransform<MiscParticleInstance>::Caller(m_instances))
 		{
 		}
 		MiscParticleNode (const MiscParticleNode& other) :
-				scene::Instantiable(other), scene::Cloneable(other), Nameable(other), Snappable(other),
-					TransformNode(other), EntityNode(other), Namespaced(other), m_contained(other.m_contained, *this,
-							InstanceSet::TransformChangedCaller(m_instances), InstanceSetEvaluateTransform<
-									MiscParticleInstance>::Caller(m_instances))
+			scene::Node(other), scene::Instantiable(other), scene::Cloneable(other), Nameable(other), Snappable(
+						other), TransformNode(other), EntityNode(other), Namespaced(other), m_contained(
+						other.m_contained, *this, InstanceSet::TransformChangedCaller(m_instances),
+						InstanceSetEvaluateTransform<MiscParticleInstance>::Caller(m_instances))
 		{
 		}
 

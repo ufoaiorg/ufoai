@@ -25,64 +25,7 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 
 */
 
-#include <SDL/SDL_endian.h>
 #include "../common/common.h"
-
-/* can't just use function pointers, or dll linkage can */
-/* mess up when common is included in multiple places */
-static float (*_BigFloat)(float l);
-static float (*_LittleFloat)(float l);
-
-short BigShort (uint16_t l)
-{
-	return SDL_SwapBE16(l);
-}
-short LittleShort (uint16_t l)
-{
-	return SDL_SwapLE16(l);
-}
-int BigLong (uint32_t l)
-{
-	return SDL_SwapBE32(l);
-}
-int LittleLong (uint32_t l)
-{
-	return SDL_SwapLE32(l);
-}
-float BigFloat (float l)
-{
-	return _BigFloat(l);
-}
-float LittleFloat (float l)
-{
-	return _LittleFloat(l);
-}
-
-/**
- * @sa FloatNoSwap
- */
-static float FloatSwap (float f)
-{
-	union float_u {
-		float f;
-		byte b[4];
-	} dat1, dat2;
-
-	dat1.f = f;
-	dat2.b[0] = dat1.b[3];
-	dat2.b[1] = dat1.b[2];
-	dat2.b[2] = dat1.b[1];
-	dat2.b[3] = dat1.b[0];
-	return dat2.f;
-}
-
-/**
- * @sa FloatSwap
- */
-static float FloatNoSwap (float f)
-{
-	return f;
-}
 
 void Swap_Init (void)
 {
@@ -102,14 +45,10 @@ void Swap_Init (void)
 #if SDL_BYTEORDER == SDL_BIG_ENDIAN
 		Sys_Error("SDL was compiled in big endian mode");
 #endif
-		_BigFloat = FloatSwap;
-		_LittleFloat = FloatNoSwap;
 	} else {
 		Com_Printf("found big endian system\n");
 #if SDL_BYTEORDER == SDL_LIL_ENDIAN
 		Sys_Error("SDL was compiled in little endian mode");
 #endif
-		_BigFloat = FloatNoSwap;
-		_LittleFloat = FloatSwap;
 	}
 }

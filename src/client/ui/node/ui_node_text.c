@@ -41,7 +41,7 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 
 static void UI_TextUpdateCache(uiNode_t *node);
 
-static void UI_TextValidateCache (uiNode_t *node)
+void UI_TextValidateCache (uiNode_t *node, textUpdateCache_t update)
 {
 	int v;
 	if (EXTRADATA(node).dataID == TEXT_NULL || node->text != NULL)
@@ -49,7 +49,7 @@ static void UI_TextValidateCache (uiNode_t *node)
 
 	v = UI_GetDataVersion(EXTRADATA(node).dataID);
 	if (v != EXTRADATA(node).versionId) {
-		UI_TextUpdateCache(node);
+		update(node);
 	}
 }
 
@@ -82,7 +82,7 @@ void UI_TextScrollEnd (const char* nodePath)
 		return;
 	}
 
-	UI_TextValidateCache(node);
+	UI_TextValidateCache(node, UI_TextUpdateCache);
 
 	if (EXTRADATA(node).super.scrollY.fullSize > EXTRADATA(node).super.scrollY.viewSize) {
 		EXTRADATA(node).super.scrollY.viewPos = EXTRADATA(node).super.scrollY.fullSize - EXTRADATA(node).super.scrollY.viewSize;
@@ -191,7 +191,7 @@ static void UI_TextNodeDrawText (uiNode_t* node, const char *text, const linkedL
 	colorSelectedHover[3] = node->selectedColor[3];
 
 	/* fix position of the start of the draw according to the align */
-	switch (node->textalign % 3) {
+	switch (node->contentAlign % 3) {
 	case 0:	/* left */
 		break;
 	case 1:	/* middle */
@@ -287,7 +287,7 @@ static void UI_TextNodeDrawText (uiNode_t* node, const char *text, const linkedL
 					tabwidth = 0;
 
 				if (tabwidth != 0)
-					UI_DrawString(font, node->textalign, x1, y, x1, tabwidth - 1, EXTRADATA(node).lineHeight, cur, viewSizeY, EXTRADATA(node).super.scrollY.viewPos, &fullSizeY, qfalse, LONGLINES_PRETTYCHOP);
+					UI_DrawString(font, node->contentAlign, x1, y, x1, tabwidth - 1, EXTRADATA(node).lineHeight, cur, viewSizeY, EXTRADATA(node).super.scrollY.viewPos, &fullSizeY, qfalse, LONGLINES_PRETTYCHOP);
 
 				/* next */
 				x1 += tabwidth;
@@ -309,7 +309,7 @@ static void UI_TextNodeDrawText (uiNode_t* node, const char *text, const linkedL
 					R_FontTextSize (font, cur, width, EXTRADATA(node).longlines, NULL, NULL, &lines, NULL);
 					fullSizeY += lines;
 				} else
-					UI_DrawString(font, node->textalign, x1, y, x, width, EXTRADATA(node).lineHeight, cur, viewSizeY, EXTRADATA(node).super.scrollY.viewPos, &fullSizeY, qtrue, EXTRADATA(node).longlines);
+					UI_DrawString(font, node->contentAlign, x1, y, x, width, EXTRADATA(node).lineHeight, cur, viewSizeY, EXTRADATA(node).super.scrollY.viewPos, &fullSizeY, qtrue, EXTRADATA(node).longlines);
 			}
 		}
 
@@ -433,8 +433,11 @@ static void UI_TextNodeRightClick (uiNode_t * node, int x, int y)
 
 /**
  */
-static void UI_TextNodeMouseWheel (uiNode_t *node, qboolean down, int x, int y)
+static void UI_TextNodeMouseWheel (uiNode_t *node, int deltaX, int deltaY)
 {
+	qboolean down = deltaY > 0;
+	if (deltaY == 0)
+		return;
 	UI_AbstractScrollableNodeScrollY(node, (down ? 1 : -1));
 	if (node->onWheelUp && !down)
 		UI_ExecuteEventActions(node, node->onWheelUp);
@@ -499,7 +502,7 @@ static const value_t properties[] = {
 	 * TEXT_BUILDING_INFO, TEXT_RESEARCH, TEXT_RESEARCH_INFO, TEXT_POPUP,
 	 * TEXT_POPUP_INFO, TEXT_AIRCRAFT_LIST, TEXT_AIRCRAFT, TEXT_AIRCRAFT_INFO,
 	 * TEXT_MESSAGESYSTEM, TEXT_CAMPAIGN_LIST, TEXT_MULTISELECTION.
-	 * There are more IDs in use - see ui_data.h for and up-to-date list.
+	 * There are more IDs in use - see ui_data.h for an up-to-date list.
 	 * Display a shared content registered by the client code.
 	 */
 	{"dataid", V_UI_DATAID, UI_EXTRADATA_OFFSETOF(textExtraData_t, dataID), MEMBER_SIZEOF(textExtraData_t, dataID)},
@@ -537,7 +540,7 @@ void UI_RegisterTextNode (uiBehaviour_t *behaviour)
 	behaviour->draw = UI_TextNodeDraw;
 	behaviour->leftClick = UI_TextNodeClick;
 	behaviour->rightClick = UI_TextNodeRightClick;
-	behaviour->mouseWheel = UI_TextNodeMouseWheel;
+	behaviour->scroll = UI_TextNodeMouseWheel;
 	behaviour->mouseMove = UI_TextNodeMouseMove;
 	behaviour->loading = UI_TextNodeLoading;
 	behaviour->loaded = UI_TextNodeLoaded;

@@ -48,9 +48,6 @@ image_t *r_warpTexture;
 
 static cvar_t *r_maxtexres;
 
-cvar_t *r_brightness;
-cvar_t *r_contrast;
-cvar_t *r_saturation;
 cvar_t *r_drawentities;
 cvar_t *r_drawworld;
 cvar_t *r_nocull;
@@ -62,6 +59,7 @@ cvar_t *r_screenshot_jpeg_quality;
 cvar_t *r_lightmap;
 cvar_t *r_debug_normals;
 cvar_t *r_debug_tangents;
+cvar_t *r_debug_lights;
 static cvar_t *r_deluxemap;
 cvar_t *r_ext_texture_compression;
 static cvar_t *r_ext_s3tc_compression;
@@ -71,10 +69,13 @@ static cvar_t *r_texturemode;
 static cvar_t *r_texturealphamode;
 static cvar_t *r_texturesolidmode;
 cvar_t *r_materials;
+cvar_t *r_default_specular;
+cvar_t *r_default_hardness;
 cvar_t *r_checkerror;
 cvar_t *r_drawbuffer;
 cvar_t *r_driver;
 cvar_t *r_shadows;
+cvar_t *r_stencilshadows;
 cvar_t *r_soften;
 cvar_t *r_modulate;
 cvar_t *r_swapinterval;
@@ -184,6 +185,9 @@ void R_SetupFrustum (void)
 static inline void R_Clear (void)
 {
 	glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
+	/* clear the stencil bit if shadows are enabled */
+	if (r_stencilshadows->integer)
+		glClear(GL_STENCIL_BUFFER_BIT);
 	R_CheckError();
 	glDepthFunc(GL_LEQUAL);
 	R_CheckError();
@@ -198,7 +202,8 @@ static inline void R_Clear (void)
 static inline void R_ClearScene (void)
 {
 	/* lights and coronas are populated as ents are added */
-	refdef.numEntities = refdef.numLights = refdef.numCoronas = 0;
+	refdef.numEntities = refdef.numDynamicLights = refdef.numCoronas = 0;
+	R_ClearBspRRefs();
 }
 
 /**
@@ -207,15 +212,6 @@ static inline void R_ClearScene (void)
  */
 void R_BeginFrame (void)
 {
-	/* change modes if necessary */
-	if (vid_mode->modified || vid_fullscreen->modified || vid_strech->modified) {
-#if defined(_WIN32) || defined(__APPLE__) || defined(ANDROID)
-		VID_Restart_f();
-#else
-		R_SetMode();
-#endif
-	}
-
 	if (Com_IsRenderModified()) {
 		Com_Printf("Modified render related cvars\n");
 		if (Cvar_PendingCvars(CVAR_R_PROGRAMS))
@@ -312,52 +308,50 @@ void R_RenderFrame (void)
 
 		R_CheckError();
 
+		for (tile = 0; tile < r_numMapTiles; tile++) {
+			const model_t *mapTile = r_mapTiles[tile];
+			const mBspModel_t *bsp = &mapTile->bsp;
+
+			R_AddBspRRef(bsp, vec3_origin, vec3_origin, qfalse);
+		}
+
 		R_GetEntityLists();
 
 		R_EnableFog(qtrue);
-		for (tile = 0; tile < r_numMapTiles; tile++) {
-			const model_t *mapTile = r_mapTiles[tile];
-			const mBspModel_t *bsp = &mapTile->bsp;
 
-
-			R_DrawOpaqueSurfaces(bsp->opaque_surfaces);
-			R_DrawOpaqueWarpSurfaces(bsp->opaque_warp_surfaces);
-
-			R_DrawAlphaTestSurfaces(bsp->alpha_test_surfaces);
-
-			R_EnableBlend(qtrue);
-			R_DrawMaterialSurfaces(bsp->material_surfaces);
-			R_EnableBlend(qfalse);
-		}
-
+		R_RenderOpaqueBspRRefs();
+		R_RenderOpaqueWarpBspRRefs();
 		R_DrawOpaqueMeshEntities(r_opaque_mesh_entities);
-		/** @todo Remove R_DrawBspEntities; it breaks rendering order. Should add all bsp entities to surface lists instead */
-		R_DrawBspEntities(r_bsp_entities);
+
+		R_RenderAlphaTestBspRRefs();
 
 		R_EnableBlend(qtrue);
+		R_RenderMaterialBspRRefs();
+
 		R_EnableFog(qfalse);
-		for (tile = 0; tile < r_numMapTiles; tile++) {
-			const model_t *mapTile = r_mapTiles[tile];
-			const mBspModel_t *bsp = &mapTile->bsp;
 
-			R_DrawBlendSurfaces(bsp->blend_surfaces);
-			R_DrawBlendWarpSurfaces(bsp->blend_warp_surfaces);
-		}
-
+		R_RenderBlendBspRRefs();
+		R_RenderBlendWarpBspRRefs();
 		R_DrawBlendMeshEntities(r_blend_mesh_entities);
 
-		for (tile = 0; tile < r_numMapTiles; tile++) {
-			const model_t *mapTile = r_mapTiles[tile];
-			const mBspModel_t *bsp = &mapTile->bsp;
+		R_EnableFog(qtrue);
+		R_RenderFlareBspRRefs();
+		R_EnableFog(qfalse);
 
-			R_EnableFog(qtrue);
-			R_DrawFlareSurfaces(bsp->flare_surfaces);
+		if (r_debug_lights->integer) {
+			int i;
 
-			R_EnableFog(qfalse);
-
-			R_DrawCoronas();
+			for (i = 0; i < r_state.numStaticLights; i++) {
+				const light_t *l = &r_state.staticLights[i];
+				R_AddCorona(l->origin, l->radius, l->color);
+			}
+			for (i = 0; i < refdef.numDynamicLights; i++) {
+				const light_t *l = &refdef.dynamicLights[i];
+				R_AddCorona(l->origin, l->radius, l->color);
+			}
 		}
 
+		R_DrawCoronas();
 		R_EnableBlend(qfalse);
 
 		for (tile = 0; tile < r_numMapTiles; tile++) {
@@ -373,9 +367,23 @@ void R_RenderFrame (void)
 
 		R_GetEntityLists();
 
+		R_RenderOpaqueBspRRefs();
+		R_RenderOpaqueWarpBspRRefs();
 		R_DrawOpaqueMeshEntities(r_opaque_mesh_entities);
-		R_DrawBspEntities(r_bsp_entities);
+		R_RenderAlphaTestBspRRefs();
+
+		R_EnableBlend(qtrue);
+
+		R_RenderMaterialBspRRefs();
+
+		R_RenderBlendBspRRefs();
+		R_RenderBlendWarpBspRRefs();
 		R_DrawBlendMeshEntities(r_blend_mesh_entities);
+
+		R_RenderFlareBspRRefs();
+
+		R_EnableBlend(qfalse);
+
 		R_Color(NULL);
 		R_DrawSpecialEntities(r_special_entities);
 		R_DrawNullEntities(r_null_entities);
@@ -472,7 +480,7 @@ static qboolean R_CvarCheckLights (cvar_t *cvar)
 
 static qboolean R_CvarCheckDynamicLights (cvar_t *cvar)
 {
-	if (!r_lights->integer){
+	if (!r_lights->integer) {
 		if (cvar->integer != 0) {
 			Com_Printf("No lighting activated\n");
 			Cvar_SetValue(cvar->name, 0);
@@ -480,7 +488,7 @@ static qboolean R_CvarCheckDynamicLights (cvar_t *cvar)
 		}
 		return qfalse;
 	}
-	return Cvar_AssertValue(cvar, 1, r_config.maxLights, qtrue);
+	return Cvar_AssertValue(cvar, 1, r_config.maxLights - 1, qtrue);
 }
 
 static qboolean R_CvarPrograms (cvar_t *cvar)
@@ -497,20 +505,22 @@ static qboolean R_CvarPrograms (cvar_t *cvar)
 
 /**
  * @brief Callback that is called when the r_glsl_version cvar is changed,
- *         probably by the user changing the listbox; updates integer component
- *         of r_glsl_version Cvar.
- * @param cvarName [in] The cvar name
- * @param oldValue [in] The old value of the cvar
- * @param newValue [in] The new value of the cvar
  */
-static void R_CvarGLSLVersionChangeListener (const char *cvarName, const char *oldValue, const char *newValue)
+static qboolean R_CvarGLSLVersionCheck (cvar_t *cvar)
 {
-	int glslVersionMajor;
-	int glslVersionMinor;
-	/* Get the major version and minor version from the user's new setting (e.g. 1.10).*/
-	sscanf(newValue, "%1d%*1c%d", &glslVersionMajor, &glslVersionMinor);
-	/* Changing the string component should be done by the listbox, we need to change the integer component.*/
-	Cvar_FindVar("r_glsl_version")->integer = glslVersionMajor * 100 + glslVersionMinor;
+	int glslVersionMajor, glslVersionMinor;
+	sscanf(cvar->string, "%d.%d", &glslVersionMajor, &glslVersionMinor);
+	if (glslVersionMajor > r_config.glslVersionMajor) {
+		Cvar_Reset(cvar);
+		return qfalse;
+	}
+
+	if (glslVersionMajor == r_config.glslVersionMajor && glslVersionMinor > r_config.glslVersionMinor) {
+		Cvar_Reset(cvar);
+		return qfalse;
+	}
+
+	return qtrue;
 }
 
 static qboolean R_CvarPostProcess (cvar_t *cvar)
@@ -538,10 +548,15 @@ static void R_RegisterSystemVars (void)
 	r_threads = Cvar_Get("r_threads", "0", CVAR_ARCHIVE, "Activate threads for the renderer");
 
 	r_materials = Cvar_Get("r_materials", "1", CVAR_ARCHIVE, "Activate material subsystem");
+	r_default_specular = Cvar_Get("r_default_specular", "0.2", CVAR_R_CONTEXT, "Default specular exponent");
+	r_default_hardness = Cvar_Get("r_default_hardness", "0.2", CVAR_R_CONTEXT, "Default specular brightness");
+	Cvar_RegisterChangeListener("r_default_specular", R_UpdateDefaultMaterial);
+	Cvar_RegisterChangeListener("r_default_hardness", R_UpdateDefaultMaterial);
 	r_checkerror = Cvar_Get("r_checkerror", "0", CVAR_ARCHIVE, "Check for opengl errors");
-	r_shadows = Cvar_Get("r_shadows", "1", CVAR_ARCHIVE, "Activate or deactivate shadows");
+	r_shadows = Cvar_Get("r_shadows", "1", CVAR_ARCHIVE, "Multiplier for the alpha of the shadows");
+	r_stencilshadows = Cvar_Get("r_stencilshadows", "0", CVAR_ARCHIVE, "Activate or deactivate stencil shadows");
 	r_maxtexres = Cvar_Get("r_maxtexres", "2048", CVAR_ARCHIVE | CVAR_R_IMAGES, "The maximum texture resolution UFO should use");
-	r_texturemode = Cvar_Get("r_texturemode", "GL_LINEAR_MIPMAP_NEAREST", CVAR_ARCHIVE, "change the filtering and mipmapping for textures");
+	r_texturemode = Cvar_Get("r_texturemode", "GL_LINEAR_MIPMAP_LINEAR", CVAR_ARCHIVE, "change the filtering and mipmapping for textures");
 	r_texturealphamode = Cvar_Get("r_texturealphamode", "GL_RGBA", CVAR_ARCHIVE, NULL);
 	r_texturesolidmode = Cvar_Get("r_texturesolidmode", "GL_RGB", CVAR_ARCHIVE, NULL);
 	r_wire = Cvar_Get("r_wire", "0", 0, "Draw the scene in wireframe mode");
@@ -554,6 +569,7 @@ static void R_RegisterSystemVars (void)
 	r_debug_normals->modified = qfalse;
 	r_debug_tangents = Cvar_Get("r_debug_tangents", "0", CVAR_R_PROGRAMS, "Draw tangent, bitangent, and normal dotted with light dir as RGB espectively");
 	r_debug_tangents->modified = qfalse;
+	r_debug_lights = Cvar_Get("r_debug_lights", "0", CVAR_ARCHIVE, "Draw active light sources");
 	r_ext_texture_compression = Cvar_Get("r_ext_texture_compression", "0", CVAR_ARCHIVE | CVAR_R_CONTEXT, NULL);
 	r_ext_nonpoweroftwo = Cvar_Get("r_ext_nonpoweroftwo", "1", CVAR_ARCHIVE, "Enable or disable the non power of two extension");
 	r_ext_s3tc_compression = Cvar_Get("r_ext_s3tc_compression", "1", CVAR_ARCHIVE, "Also see r_ext_texture_compression");
@@ -587,9 +603,6 @@ static void R_RegisterSystemVars (void)
  */
 static void R_RegisterImageVars (void)
 {
-	r_brightness = Cvar_Get("r_brightness", "1.0", CVAR_ARCHIVE | CVAR_R_IMAGES, "Brightness for images");
-	r_contrast = Cvar_Get("r_contrast", "1.5", CVAR_ARCHIVE | CVAR_R_IMAGES, "Contrast for images");
-	r_saturation = Cvar_Get("r_saturation", "1.0", CVAR_ARCHIVE | CVAR_R_IMAGES, "Saturation for images");
 	if (r_config.hardwareType == GLHW_NVIDIA)
 		r_modulate = Cvar_Get("r_modulate", "1.0", CVAR_ARCHIVE | CVAR_R_IMAGES, "Scale lightmap values");
 	else
@@ -706,7 +719,7 @@ static inline uintptr_t R_GetProcAddress (const char *functionName)
 	return (uintptr_t)SDL_GL_GetProcAddress(functionName);
 }
 
-static inline uintptr_t R_GetProcAddressExt (const char *functionName)
+static uintptr_t R_GetProcAddressExt (const char *functionName)
 {
 	const char *s = strstr(functionName, "###");
 	if (s == NULL) {
@@ -773,6 +786,8 @@ static inline qboolean R_CheckExtension (const char *extension)
 	return found;
 }
 
+#define R_CheckGLVersion(max, min) (r_config.glVersionMajor > max || (r_config.glVersionMajor == max && r_config.glVersionMinor >= min))
+
 /**
  * @brief Check and load all needed and supported opengl extensions
  * @sa R_Init
@@ -782,27 +797,16 @@ static qboolean R_InitExtensions (void)
 	GLenum err;
 	int tmpInteger;
 
-	/* Used as place holders in storing GLSL guaranteed version.*/
-	int glslVersionMajor;
-	char glslVersionMinor[3];
-	int glslVersionMinorInt;
-
-	/* Used to check OpenGL version.*/
-	int glVersionMajor;
-	int glVersionMinor;
-
 	/* Get OpenGL version.*/
-	glVersionMajor = 1;
-	glVersionMinor = 0;
-	if(sscanf(r_config.versionString, "%d.%d", &glVersionMajor, &glVersionMinor) != 2) {
+	if(sscanf(r_config.versionString, "%d.%d", &r_config.glVersionMajor, &r_config.glVersionMinor) != 2) {
 		const char * versionNumbers = r_config.versionString; /* GLES reports version as "OpenGL ES 1.1", so we must skip non-numeric symbols first */
 		while(*versionNumbers && strchr("0123456789", *versionNumbers) == NULL) {
 			versionNumbers ++;
 		}
 		if( *versionNumbers )
-			sscanf(versionNumbers, "%d.%d", &glVersionMajor, &glVersionMinor);
+			sscanf(versionNumbers, "%d.%d", &r_config.glVersionMajor, &r_config.glVersionMinor);
 	}
-	Com_Printf("OpenGL version detected as: %d.%d", glVersionMajor, glVersionMinor);
+	Com_Printf("OpenGL version detected: %d.%d", r_config.glVersionMajor, r_config.glVersionMinor);
 
 	/* multitexture */
 	qglActiveTexture = NULL;
@@ -896,8 +900,11 @@ static qboolean R_InitExtensions (void)
 			Com_Printf("ignoring GL_ARB_texture_non_power_of_two\n");
 		}
 	} else {
-		/** @todo does opengl 2.0 and later really expose the above extension? the npot support is a must since 2.0 */
-		r_config.nonPowerOfTwo = qfalse;
+		if (R_CheckGLVersion(2, 0)) {
+			r_config.nonPowerOfTwo = r_ext_nonpoweroftwo->integer == 1;
+		} else {
+			r_config.nonPowerOfTwo = qfalse;
+		}
 	}
 
 	/* anisotropy */
@@ -958,11 +965,15 @@ static qboolean R_InitExtensions (void)
 		qglDisableVertexAttribArray = (DisableVertexAttribArray_t)R_GetProcAddress("glDisableVertexAttribArray");
 		qglVertexAttribPointer = (VertexAttribPointer_t)R_GetProcAddress("glVertexAttribPointer");
 	}
-	if (R_CheckExtension("GL_ARB_shading_language_100") || glVersionMajor >= 2) {
-		/* The GL_ARB_shading_language_100 extension was added to core specification since OpenGL 2.0; it is ideally listed in the extensions for backwards compatibility.  If it isn't there and OpenGL > v2.0 then enable shaders as the implementation supports the shading language!*/
-		Com_Printf("GLSL version guaranteed to be supported by OpenGL implementation postfixed by vender supplied info: %s\n", (const char *)glGetString(GL_SHADING_LANGUAGE_VERSION));
-		sscanf((const char *)glGetString(GL_SHADING_LANGUAGE_VERSION), "%d%*1c%2s", &glslVersionMajor, glslVersionMinor);
-		snprintf(r_config.shadingLanguageGuaranteedVersion, sizeof(r_config.shadingLanguageGuaranteedVersion), "%d.%s", glslVersionMajor, glslVersionMinor);
+
+	if (R_CheckExtension("GL_ARB_shading_language_100") || r_config.glVersionMajor >= 2) {
+		/* The GL_ARB_shading_language_100 extension was added to core specification since OpenGL 2.0;
+		 * it is ideally listed in the extensions for backwards compatibility.  If it isn't there and OpenGL > v2.0
+		 * then enable shaders as the implementation supports the shading language!*/
+		const char *shadingVersion = (const char *)glGetString(GL_SHADING_LANGUAGE_VERSION);
+		sscanf(shadingVersion, "%d.%d", &r_config.glslVersionMajor, &r_config.glslVersionMinor);
+		Com_Printf("GLSL version guaranteed to be supported by OpenGL implementation postfixed by vender supplied info: %i.%i\n",
+				r_config.glslVersionMajor, r_config.glslVersionMinor);
 	} else {
 		/* The shading language is not supported.*/
 		Com_Printf("GLSL shaders unsupported by OpenGL implementation.\n");
@@ -1027,15 +1038,8 @@ static qboolean R_InitExtensions (void)
 	r_programs->modified = qfalse;
 	Cvar_SetCheckFunction("r_programs", R_CvarPrograms);
 
-	/* Set up the string component of r_glsl_version.*/
 	r_glsl_version = Cvar_Get("r_glsl_version", "1.10", CVAR_ARCHIVE | CVAR_R_PROGRAMS, "GLSL Version");
-	r_glsl_version->modified = qfalse;
-	/* Set up the integer component of r_glsl_version.*/
-	sscanf(r_glsl_version->string, "%1d%*1c%d", &glslVersionMajor, &glslVersionMinorInt);
-	r_glsl_version->integer = glslVersionMajor * 100 + glslVersionMinorInt;
-	Com_Printf("GLSL version setting on startup: %s\n", r_glsl_version->string);
-	/* Set up a change listener so that both components of r_glsl_version will be updated when the string is changed (e.g. The user selects a different choice in the listbox of the options).*/
-	Cvar_RegisterChangeListener("r_glsl_version", R_CvarGLSLVersionChangeListener);
+	Cvar_SetCheckFunction("r_glsl_version", R_CvarGLSLVersionCheck);
 
 	r_postprocess = Cvar_Get("r_postprocess", "1", CVAR_ARCHIVE | CVAR_R_PROGRAMS, "Activate postprocessing shader effects");
 	Cvar_SetCheckFunction("r_postprocess", R_CvarPostProcess);
@@ -1104,7 +1108,7 @@ static qboolean R_InitExtensions (void)
 		}
 	}
 
-	if (r_config.maxTextureSize > 4096 && R_ImageExists(va("pics/geoscape/%s/map_earth_season_00", "high"))) {
+	if (r_config.maxTextureSize > 4096 && R_ImageExists("pics/geoscape/%s/map_earth_season_00", "high")) {
 		Q_strncpyz(r_config.lodDir, "high", sizeof(r_config.lodDir));
 		Com_Printf("Using high resolution globe textures as requested.\n");
 	} else if (r_config.maxTextureSize > 2048 && R_ImageExists("pics/geoscape/med/map_earth_season_00")) {
@@ -1199,7 +1203,7 @@ static inline void R_VerifyDriver (void)
 		r_config.hardwareType = GLHW_NVIDIA;
 	} else if (R_SearchForVendor("ATI") || R_SearchForVendor("Advanced Micro Devices") || R_SearchForVendor("AMD")) {
 		r_config.hardwareType = GLHW_ATI;
-	} else if (R_SearchForVendor("mesa")) {
+	} else if (R_SearchForVendor("mesa") || R_SearchForVendor("gallium") || R_SearchForVendor("nouveau")) {
 		r_config.hardwareType = GLHW_MESA;
 	} else {
 		r_config.hardwareType = GLHW_GENERIC;
@@ -1217,7 +1221,7 @@ qboolean R_Init (void)
 	/* some config default values */
 	r_config.gl_solid_format = GL_RGB;
 	r_config.gl_alpha_format = GL_RGBA;
-	r_config.gl_filter_min = GL_LINEAR_MIPMAP_NEAREST;
+	r_config.gl_filter_min = GL_LINEAR_MIPMAP_LINEAR;
 	r_config.gl_filter_max = GL_LINEAR;
 	r_config.maxTextureSize = 256;
 
@@ -1250,6 +1254,7 @@ qboolean R_Init (void)
 	R_SphereInit();
 	R_FontInit();
 	R_InitFBObjects();
+	R_UpdateDefaultMaterial("","","");
 
 	R_CheckError();
 

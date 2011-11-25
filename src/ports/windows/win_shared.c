@@ -289,6 +289,48 @@ void Sys_Quit (void)
 }
 
 #ifdef COMPILE_MAP
+/**
+ * @brief Coloring Windows cli output
+ * @param[in] text <display this text.>
+ * @param[in] fgColor <bitmask for foreground color. FOREGROUND_BLUE, FOREGROUND_GREEN, FOREGROUND_RED, FOREGROUND_INTENSITY and combinations (yellow = green | red).>
+ * @param[in] toStdOut <true write to stdout. false == stderr.>
+ */
+static void Sys_ColoredOutput (const char *text, unsigned int fgColor, qboolean toStdOut)
+{
+	/* paint this colors (gray on black). */
+	unsigned int cliPaintColor = FOREGROUND_BLUE | FOREGROUND_GREEN | FOREGROUND_RED;
+	/* store default current colors. */
+	unsigned int cliCurColor = cliPaintColor;
+	CONSOLE_SCREEN_BUFFER_INFO cliInfo;
+	DWORD handle = toStdOut ? STD_OUTPUT_HANDLE : STD_ERROR_HANDLE;
+	HANDLE console = GetStdHandle(handle);
+
+	if (GetConsoleScreenBufferInfo(console, &cliInfo)) {
+		/* store current colors. */
+		cliCurColor = cliInfo.wAttributes;
+		/* is BACKGROUND == FOREGROUND */
+		if (cliCurColor == (fgColor << 4)) {
+			/* your fgColor on black background. */
+			cliPaintColor = fgColor;
+		} else {
+			/* remove foreground color. */
+			cliPaintColor = cliCurColor >> 4;
+			cliPaintColor <<= 4;
+			/* set foreground color. */
+			cliPaintColor |= fgColor;
+		}
+	}
+
+	SetConsoleTextAttribute(console, cliPaintColor);
+	if (toStdOut)
+		fprintf(stdout, "%s\n", text);
+	else
+		fprintf(stderr, "Error: %s\n", text);
+	SetConsoleTextAttribute(console, cliCurColor);
+
+	CloseHandle(console);
+}
+
 void Sys_Error (const char *error, ...)
 {
 	va_list argptr;
@@ -298,7 +340,8 @@ void Sys_Error (const char *error, ...)
 	Q_vsnprintf(text, sizeof(text), error, argptr);
 	va_end(argptr);
 
-	MessageBox(NULL, text, "Error!", MB_OK + MB_ICONEXCLAMATION);
+	/* red text to stderr. */
+	Sys_ColoredOutput(text, FOREGROUND_RED | FOREGROUND_INTENSITY, qfalse);
 
 	ExitProcess(1);
 }
@@ -411,7 +454,7 @@ void Sys_Sleep (int milliseconds)
  */
 int Sys_Setenv (const char *name, const char *value)
 {
-	size_t n = strlen(name)+strlen(value)+2;
+	const size_t n = strlen(name) + strlen(value) + 2;
 	char *str = (char *)malloc(n); /* do not convert this to allocation from managed pool, using malloc is intentional */
 
 	strcat(strcat(strcpy(str, name), "="), value);
@@ -422,5 +465,9 @@ int Sys_Setenv (const char *name, const char *value)
 }
 
 void Sys_InitSignals (void)
+{
+}
+
+void Sys_Mkfifo (const char *ospath, qFILE *f)
 {
 }

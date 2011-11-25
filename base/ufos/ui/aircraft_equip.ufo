@@ -67,8 +67,8 @@ window aircraft_equip extends iaircraft
 	model aircraftequip
 	{
 		src		*cvar:mn_aircraft_model
-		pos		"482 106"
-		size	"522 259"
+		pos		"478 106"
+		size	"529 261"
 		angles	"0 0 180"
 		autoscale	true
 	}
@@ -89,15 +89,15 @@ window aircraft_equip extends iaircraft
 			pos			"14 20"
 			size		"224 25"
 			font		"f_big"
-			textalign	ALIGN_CC
+			contentalign	ALIGN_CC
 		}
 
 		string airequip_item_name
 		{
 			string		"*cvar:mn_itemname"
-			pos			"14 56"
-			size		"225 20"
-			textalign	ALIGN_CC
+			pos			"14 55"
+			size		"224 20"
+			contentalign	ALIGN_CC
 		}
 
 		model mdl_top
@@ -105,16 +105,16 @@ window aircraft_equip extends iaircraft
 			src	"*cvar:mn_upmodel_top"
 			autoscale	true
 			pos		"14 76"
-			size	"225 96"
-			angles	"-120 120 -30"
+			size	"225 100"
+			angles	"-120 110 -25"
 		}
 
 		text description
 		{
 			dataid		TEXT_ITEMDESCRIPTION
 			pos			"14 182"
-			size		"204 85"
-			tabwidth	130
+			size		"224 85"
+			tabwidth	120
 			font		"f_verysmall"
 			onViewChange {
 				*node:parent.description_scroll@fullsize = <fullsize>
@@ -140,7 +140,7 @@ window aircraft_equip extends iaircraft
 			pos			"19 269"
 			size		"215 32"
 			padding		0
-			textalign	ALIGN_UC
+			contentalign	ALIGN_UC
 			font		"f_small"
 			color		"1 0 0 1"
 			onClick		{ cmd "ui_close popup;" }
@@ -194,7 +194,7 @@ window aircraft_equip extends iaircraft
 			pos			"14 20"
 			size		"264 25"
 			font		"f_big"
-			textalign	ALIGN_CC
+			contentalign	ALIGN_CC
 		}
 
 		selectbox craftitemtypeselector
@@ -232,7 +232,7 @@ window aircraft_equip extends iaircraft
 			dataid		TEXT_LIST
 			cvar		*cvar:mn_aircraft_item_selected
 			pos			"15 87"
-			size		"215 215"
+			size		"225 215"
 			lineheight	"20"
 			color		"0 .78 0 1"
 			selectcolor	"1 1 1 1"
@@ -253,7 +253,7 @@ window aircraft_equip extends iaircraft
 			ghost		true
 			pos			"234 87"
 			size		"25 215"
-			textalign	ALIGN_CR
+			contentalign	ALIGN_CR
 			lineheight	"20"
 			color		"0 .78 0 1"
 			selectcolor	"1 1 1 1"
@@ -333,7 +333,7 @@ window aircraft_equip extends iaircraft
 		size		"275 20"
 		font		"f_small"
 		color		"0 .78 0 1"
-		textalign	ALIGN_CL
+		contentalign	ALIGN_CC
 		ghost		true
 	}
 
@@ -344,7 +344,7 @@ window aircraft_equip extends iaircraft
 		size		"275 20"
 		font		"f_small"
 		color		"0 .78 0 1"
-		textalign	ALIGN_CL
+		contentalign	ALIGN_CL
 		ghost		true
 	}
 
@@ -376,7 +376,7 @@ window aircraft_equip extends iaircraft
 		tooltip	"_Select this slot"
 		src		"ui/button_square"
 		mousefx	true
-		pos		"909 201"
+		pos		"909 205"
 		texl	"0 0"
 		texh	"64 64"
 		onClick	{ cmd "airequip_select slot 1;" }
@@ -384,7 +384,7 @@ window aircraft_equip extends iaircraft
 	model airequip_model_slot1
 	{
 		src	"*cvar:mn_aircraft_item_model_slot1"
-		pos		"911 203"
+		pos		"911 207"
 		size	"60 60"
 		autoscale	true
 		excluderect { pos	"0 0"	size	"60 60" }
@@ -433,7 +433,7 @@ window aircraft_equip extends iaircraft
 		tooltip	"_Select this slot"
 		src		"ui/button_square"
 		mousefx	true
-		pos		"709 281"
+		pos		"709 287"
 		texl	"0 0"
 		texh	"64 64"
 		onClick	{ cmd "airequip_select slot 4;" }
@@ -441,7 +441,7 @@ window aircraft_equip extends iaircraft
 	model airequip_model_slot4
 	{
 		src	"*cvar:mn_aircraft_item_model_slot4"
-		pos		"711 283"
+		pos		"711 289"
 		size	"60 60"
 		autoscale	true
 		excluderect { pos	"0 0"	size	"60 60" }

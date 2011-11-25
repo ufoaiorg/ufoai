@@ -61,7 +61,7 @@ component panel hud_phone_firemodeentry {
 	{
 		pos "5 5"
 		size "490 60"
-		textalign ALIGN_CL
+		contentalign ALIGN_CL
 		ghost true
 		font "f_verybig"
 		color	"0 0 0 1"
@@ -88,7 +88,7 @@ component panel hud_phone_firemodeentry {
 	{
 		pos "210 70"
 		size "80 70"
-		textalign ALIGN_CC
+		contentalign ALIGN_CC
 		ghost true
 		font "f_verybig"
 		color	"0 0 0 1"
@@ -97,7 +97,7 @@ component panel hud_phone_firemodeentry {
 	{
 		pos "250 70"
 		size "250 70"
-		textalign ALIGN_CC
+		contentalign ALIGN_CC
 		ghost true
 		font "f_verybig"
 		color	"0 0 0 1"
@@ -322,7 +322,7 @@ window hud_phone extends hud
 				color	"0 0 0 1"
 				pos	"10 10"
 				size	"173 22"
-				textalign	ALIGN_CC
+				contentalign	ALIGN_CC
 				font	"f_normal_bold"
 				ghost	true
 			}
@@ -359,7 +359,7 @@ window hud_phone extends hud
 				color	"0 0 0 1"
 				pos	"10 10"
 				size	"173 22"
-				textalign	ALIGN_CC
+				contentalign	ALIGN_CC
 				font	"f_normal_bold"
 				ghost	true
 			}
@@ -418,7 +418,7 @@ window hud_phone extends hud
 				color	"0 0 0 1"
 				pos	"10 10"
 				size	"173 22"
-				textalign	ALIGN_CC
+				contentalign	ALIGN_CC
 				font	"f_normal_bold"
 				ghost	true
 			}
@@ -711,121 +711,6 @@ window hud_phone extends hud
 	}
 
 	// ==================
-	// CHAT BUTTONS
-	// ==================
-
-	// the name must be the same in all huds
-	text chatscreen
-	{
-		dataid		TEXT_CHAT_WINDOW
-		pos			"130 70"
-		size		"690 48"
-		font		"f_verysmall"
-		rows		"3"
-		lineheight	"16"
-		padding		5
-		bordercolor	"0.5 0.5 0.5 1"
-		border		2
-		bgcolor		"0 0.1 0 0.8"
-	}
-
-	panel chat {
-		{
-			visiblewhen	"*cvar:sv_maxclients >= 2"
-			pos		"768 64"
-			size	"256 463"	/* popup height 335+64*2*/
-			ghost	true
-			align	LAYOUTALIGN_RIGHT
-		}
-
-		image bar_chat_bg
-		{
-			src		"hud/bar_chat"
-			pos			"192 0"
-			size		"64 64"
-		}
-		image bar_chat_all
-		{
-			visiblewhen	"*cvar:mn_showchatbuttons == 1"
-
-			tooltip		"_Chat"
-			src		"hud/button_chat"
-			pos			"176 12"
-			size		"32 32"
-			texl		"0 0"
-			texh		"32 32"
-			onClick		{ cmd "messagesay;" }
-		}
-		image bar_chat_team
-		{
-			visiblewhen	"*cvar:mn_showchatbuttons == 1"
-			tooltip		"_Teamchat"
-			src		"hud/button_chat"
-			pos			"138 12"
-			size		"32 32"
-			texl		"32 0"
-			texh		"64 32"
-			onClick		{ cmd "messagesayteam;" }
-		}
-		image bar_chat_show
-		{
-			visiblewhen	"*cvar:mn_showchatbuttons == 1"
-			tooltip		"_Show chat history"
-			src		"hud/button_chat"
-			pos			"100 12"
-			size		"32 32"
-			texl		"64 0"
-			texh		"96 32"
-			onMouseLeave			{
-				*node:root.chatscreen@size = "690 48"
-				*node:root.chatscreen@rows = "3"
-				*node:root@timeout = 10000
-			}
-			onMouseEnter			{
-				*node:root.chatscreen@size = "690 400"
-				*node:root.chatscreen@rows = "25"
-				*node:root@timeout = 0
-				*node:root.chatscreen@invis = false
-			}
-		}
-
-		image button_chat
-		{
-			tooltip		"_Chat messages"
-			src		"hud/event_log"
-			pos			"217 6"
-			texl		"0 0"
-			texh		"32 36"
-			onMouseEnter {
-				*node:this@texl	= "0 36"
-				*node:this@texh	= "32 72"
-			}
-			onMouseLeave {
-				*node:this@texl	= "0 0"
-				*node:this@texh	= "32 36"
-			}
-			onClick		{
-				if ( *cvar:mn_showchatbuttons != 0 ) {
-					*node:parent.bar_chat_bg@src = "hud/bar_chat"
-					*node:parent.bar_chat_bg@pos = "192 0"
-					*node:parent.bar_chat_bg@size = "64 64"
-					*cvar:mn_showchatbuttons = 0
-				} else {
-					*node:parent.bar_chat_bg@src = "hud/bar_chat_choice"
-					*node:parent.bar_chat_bg@pos = "0 0"
-					*node:parent.bar_chat_bg@size = "256 64"
-					*cvar:mn_showchatbuttons = 1
-				}
-			}
-		}
-	}
-
-	func onEvent
-	{
-		*node:root.chatscreen@invis = true
-	}
-
-	// ==================
 	// override "hud" confunc
 	// ==================
 
@@ -875,7 +760,9 @@ window hud_phone extends hud
 	// ==================
 
 	confunc startround { }
-	confunc endround { }
+	confunc endround {
+		cmd "hud_movemode;"
+	}
 
 	// "RESERVATION FOR SHOT" BUTTON
 	confunc reserve_shot_clear { }
@@ -896,11 +783,9 @@ window hud_phone extends hud
 
 	func onWindowOpened
 	{
-		*node:root.chatscreen@invis = true
 		*cvar:mn_control_mode = ""
 		call *node:root.update_control_mode
 		cmd "music_change battlescape;"
-		*cvar:mn_showchatbuttons = 0
 	}
 
 	func onScriptLoaded {

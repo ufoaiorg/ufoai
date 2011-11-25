@@ -33,7 +33,6 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 /** @brief Model that have more than one part (top and down part of an aircraft) */
 typedef struct uiModel_s {
 	char *id;
-	char *need;
 	char *anim;	/**< animation to run for this model */
 	char *parent;	/**< parent model id */
 	char *tag;	/**< the tag the model should placed onto */
@@ -52,6 +51,7 @@ typedef struct modelExtraData_s {
 	char *oldRefValue;	/**< used for storing old reference values */
 	vec3_t angles;
 	vec3_t origin;
+	vec3_t omega;
 	vec3_t scale;
 	const char* skin;
 	const char* model;

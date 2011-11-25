@@ -27,7 +27,7 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #include "e_event_endroundannounce.h"
 
 /**
- * @brief Announces that a player ends his round
+ * @brief Announces that a player ends his turn
  * @param[in] self Pointer to the event structure that is currently executed
  * @param[in] msg The message buffer to read from
  * @sa CL_DoEndRound

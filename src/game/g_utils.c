@@ -46,6 +46,25 @@ void G_FreeEdict (edict_t *ent)
 }
 
 /**
+ * @brief Searches an actor at the given grid location.
+ * @param pos The grid location to look for an edict.
+ * @return @c NULL if nothing was found, otherwise the actor located at the given grid position.
+ */
+edict_t *G_GetLivingActorFromPos (const pos3_t pos)
+{
+	edict_t *ent = NULL;
+
+	while ((ent = G_EdictsGetNextLivingActor(ent))) {
+		if (!VectorCompare(pos, ent->pos))
+			continue;
+
+		return ent;
+	}
+	/* nothing found at this pos */
+	return NULL;
+}
+
+/**
  * @brief Searches an edict of the given type at the given grid location.
  * @param pos The grid location to look for an edict.
  * @param type The type of the edict to look for or @c -1 to look for any type in the search.
@@ -53,15 +72,50 @@ void G_FreeEdict (edict_t *ent)
  */
 edict_t *G_GetEdictFromPos (const pos3_t pos, const entity_type_t type)
 {
-	edict_t *floor = NULL;
+	edict_t *ent = NULL;
 
-	while ((floor = G_EdictsGetNextInUse(floor))) {
-		if (type > ET_NULL && floor->type != type)
+	while ((ent = G_EdictsGetNextInUse(ent))) {
+		if (type > ET_NULL && ent->type != type)
 			continue;
-		if (!VectorCompare(pos, floor->pos))
+		if (!VectorCompare(pos, ent->pos))
 			continue;
 
-		return floor;
+		return ent;
+	}
+	/* nothing found at this pos */
+	return NULL;
+}
+
+/**
+ * @brief Searches an edict that is not of the given types at the given grid location.
+ * @param pos The grid location to look for an edict.
+ * @param n The amount of given entity_type_t values that are given via variadic arguments to this function.
+ * @return @c NULL if nothing was found, otherwise the entity located at the given grid position.
+ */
+edict_t *G_GetEdictFromPosExcluding (const pos3_t pos, const int n, ...)
+{
+	edict_t *ent = NULL;
+	entity_type_t types[ET_MAX];
+	va_list ap;
+	int i;
+
+	assert(n > 0);
+	assert(n < sizeof(types));
+
+	va_start(ap, n);
+
+	for (i = 0; i < n; i++) {
+		types[i] = va_arg(ap, entity_type_t);
+	}
+
+	while ((ent = G_EdictsGetNextInUse(ent))) {
+		for (i = 0; i < n; i++)
+			if (ent->type == types[i])
+				break;
+		if (i != n)
+			continue;
+		if (VectorCompare(pos, ent->pos))
+			return ent;
 	}
 	/* nothing found at this pos */
 	return NULL;
@@ -438,13 +492,13 @@ void G_GenerateEntList (const char *entList[MAX_EDICTS])
  * @sa G_CompleteRecalcRouting
  * @sa Grid_RecalcRouting
  */
-void G_RecalcRouting (const edict_t * ent)
+void G_RecalcRouting (const char* model)
 {
 	const char *entList[MAX_EDICTS];
 	/* generate entity list */
 	G_GenerateEntList(entList);
 	/* recalculate routing */
-	gi.GridRecalcRouting(gi.routingMap, ent->model, entList);
+	gi.GridRecalcRouting(gi.routingMap, model, entList);
 }
 
 /**
@@ -456,7 +510,7 @@ void G_CompleteRecalcRouting (void)
 
 	while ((ent = G_EdictsGetNextInUse(ent)))
 		if (IS_BMODEL(ent))
-			G_RecalcRouting(ent);
+			G_RecalcRouting(ent->model);
 }
 
 /**

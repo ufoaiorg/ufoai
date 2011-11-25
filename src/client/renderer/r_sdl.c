@@ -72,6 +72,8 @@ qboolean Rimp_Init (void)
 
 	Com_Printf("\n------- video initialization -------\n");
 
+	OBJZERO(r_sdl_config);
+
 	if (r_driver->string[0] != '\0') {
 		Com_Printf("using driver: %s\n", r_driver->string);
 		SDL_GL_LoadLibrary(r_driver->string);
@@ -100,13 +102,17 @@ qboolean Rimp_Init (void)
 		if (r_sdl_config.modes) {
 			char buf[4096] = "";
 			Q_strcat(buf, "I: Available resolutions:", sizeof(buf));
-			for (r_sdl_config.numModes = 0; r_sdl_config.modes[r_sdl_config.numModes]; r_sdl_config.numModes++) {
-				const char *modeStr = va(" %ix%i",
-						r_sdl_config.modes[r_sdl_config.numModes]->w,
-						r_sdl_config.modes[r_sdl_config.numModes]->h);
-				Q_strcat(buf, modeStr, sizeof(buf));
+			if (r_sdl_config.modes == (SDL_Rect **)-1) {
+				Com_Printf("%s any resolution is supported\n", buf);
+			} else {
+				for (r_sdl_config.numModes = 0; r_sdl_config.modes[r_sdl_config.numModes]; r_sdl_config.numModes++) {
+					const int w = r_sdl_config.modes[r_sdl_config.numModes]->w;
+					const int h = r_sdl_config.modes[r_sdl_config.numModes]->h;
+					const char *modeStr = va(" %ix%i", w, h);
+					Q_strcat(buf, modeStr, sizeof(buf));
+				}
+				Com_Printf("%s (%i)\n", buf, r_sdl_config.numModes);
 			}
-			Com_Printf("%s (%i)\n", buf, r_sdl_config.numModes);
 		} else {
 			Com_Printf("I: Could not get list of available resolutions\n");
 		}
@@ -159,7 +165,8 @@ qboolean R_InitGraphics (const viddefContext_t *context)
 	int i;
 	SDL_Surface* screen = NULL;
 
-	SDL_GL_SetAttribute(SDL_GL_STENCIL_SIZE, 1);
+	SDL_GL_SetAttribute(SDL_GL_STENCIL_SIZE, 8);
+	SDL_GL_SetAttribute(SDL_GL_DEPTH_SIZE, 24);
 	SDL_GL_SetAttribute(SDL_GL_DOUBLEBUFFER, 1);
 
 	/* valid values are between 0 and 4 */

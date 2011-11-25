@@ -1,0 +1,10 @@
+/*
+ * mapcycle for UFO:AI server
+ * format:
+ * ---------------
+ * [mapname] [day|night] [gametype]
+ */
+
+farm day 2on2
++italy day 2on2
++mart day 2on2

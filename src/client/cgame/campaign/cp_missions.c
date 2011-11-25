@@ -20,7 +20,6 @@ See the GNU General Public License for more details.
 You should have received a copy of the GNU General Public License
 along with this program; if not, write to the Free Software
 Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
-
 */
 
 #include "../../cl_shared.h"
@@ -34,10 +33,12 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #include "cp_alienbase.h"
 #include "cp_alien_interest.h"
 #include "cp_missions.h"
+#include "cp_mission_triggers.h"
 #include "cp_time.h"
 #include "cp_xvi.h"
 #include "save/save_missions.h"
 #include "save/save_interest.h"
+#include "cp_mission_callbacks.h"
 
 /** Maximum number of loops to choose a mission position (to avoid infinite loops) */
 const int MAX_POS_LOOP = 10;
@@ -206,7 +207,7 @@ static qboolean CP_IsAlienEquipmentSelectable (const mission_t *mission, const e
 		return qfalse;
 
 	LIST_Foreach(equipPack, const char, name) {
-		if (Q_strstart(equip->name, name))
+		if (Q_strstart(equip->id, name))
 			return qtrue;
 	}
 
@@ -246,7 +247,7 @@ static void CP_SetAlienEquipmentByInterest (const mission_t *mission, linkedList
 		const equipDef_t *ed = &csi.eds[i];
 		if (CP_IsAlienEquipmentSelectable(mission, ed, equipPack)) {
 			if (availableEquipDef == randomNum) {
-				Com_sprintf(battleParameters->alienEquipment, sizeof(battleParameters->alienEquipment), "%s", ed->name);
+				Com_sprintf(battleParameters->alienEquipment, sizeof(battleParameters->alienEquipment), "%s", ed->id);
 				break;
 			} else
 				availableEquipDef++;
@@ -292,7 +293,9 @@ static void CP_CreateCivilianTeam (const mission_t *mission, battleParam_t *para
 
 	nation = MAP_GetNation(mission->pos);
 	param->nation = nation;
-	if (nation) {
+	if (mission->mapDef->civTeam != NULL) {
+		Q_strncpyz(param->civTeam, mission->mapDef->civTeam, sizeof(param->civTeam));
+	} else if (nation) {
 		/** @todo There should always be a nation, no? Otherwise the mission was placed wrong. */
 		Q_strncpyz(param->civTeam, nation->id, sizeof(param->civTeam));
 	} else {
@@ -315,6 +318,7 @@ void CP_CreateBattleParameters (mission_t *mission, battleParam_t *param, const 
 	const byte *color;
 
 	assert(mission->posAssigned);
+	assert(mission->mapDef);
 
 	MIS_CreateAlienTeam(mission, param);
 	CP_CreateCivilianTeam(mission, param);
@@ -325,9 +329,8 @@ void CP_CreateBattleParameters (mission_t *mission, battleParam_t *param, const 
 		param->param = NULL;
 	}
 
-	param->probability = frand();
 	param->mission = mission;
-	color = MAP_GetColor(mission->pos, MAPTYPE_TERRAIN);
+	color = MAP_GetColor(mission->pos, MAPTYPE_TERRAIN, NULL);
 	zoneType = MAP_GetTerrainType(color);
 	param->zoneType = zoneType; /* store to terrain type for texture replacement */
 	/* Is there a UFO to recover ? */
@@ -361,8 +364,7 @@ void CP_CreateBattleParameters (mission_t *mission, battleParam_t *param, const 
 	/* Set random map aircraft if this is a random map */
 	if (mission->mapDef->map[0] == '+') {
 		if (mission->category == INTERESTCATEGORY_RESCUE) {
-			/** @todo add function to return the crashed craft names as they are used in the rescue.ump */
-			Cvar_Set("rm_crashed", Com_GetRandomMapAssemblyNameForCraft(mission->data.aircraft->id));
+			Cvar_Set("rm_crashed", Com_GetRandomMapAssemblyNameForCrashedCraft(mission->data.aircraft->id));
 		} else {
 			Cvar_Set("rm_crashed", "");
 		}
@@ -464,42 +466,6 @@ const char* CP_MissionToTypeString (const mission_t *mission)
 #ifdef DEBUG
 /**
  * @brief Return Name of the category of a mission.
- */
-static const char* CP_MissionCategoryToName (interestCategory_t category)
-{
-	switch (category) {
-	case INTERESTCATEGORY_NONE:
-		return "None";
-	case INTERESTCATEGORY_RECON:
-		return "Recon Mission";
-	case INTERESTCATEGORY_TERROR_ATTACK:
-		return "Terror mission";
-	case INTERESTCATEGORY_BASE_ATTACK:
-		return "Base attack";
-	case INTERESTCATEGORY_BUILDING:
-		return "Building Base or Subverting Government";
-	case INTERESTCATEGORY_SUPPLY:
-		return "Supply base";
-	case INTERESTCATEGORY_XVI:
-		return "XVI propagation";
-	case INTERESTCATEGORY_INTERCEPT:
-		return "Interception";
-	case INTERESTCATEGORY_HARVEST:
-		return "Harvest";
-	case INTERESTCATEGORY_ALIENBASE:
-		return "Alien base discovered";
-	case INTERESTCATEGORY_RESCUE:
-		return "Rescue mission";
-	case INTERESTCATEGORY_MAX:
-		return "Unknown mission category";
-	}
-
-	/* Can't reach this point */
-	return "";
-}
-
-/**
- * @brief Return Name of the category of a mission.
  * @note Not translated yet - only for console usage
  */
 static const char* CP_MissionStageToName (const missionStage_t stage)
@@ -582,22 +548,25 @@ const char* MAP_GetMissionModel (const mission_t *mission)
 		return "geoscape/ufocrash";
 
 	if (mission->mapDef->storyRelated && mission->category != INTERESTCATEGORY_ALIENBASE)
-		/** @todo Should be a special story related mission model */
-		return "geoscape/mission";
+		return "geoscape/icon_story";
 
 	Com_DPrintf(DEBUG_CLIENT, "Mission is %s, %d\n", mission->id, mission->category);
 	switch (mission->category) {
-	/** @todo each category should have a its own model */
 	case INTERESTCATEGORY_RESCUE:
-	case INTERESTCATEGORY_RECON:
-	case INTERESTCATEGORY_XVI:
-	case INTERESTCATEGORY_HARVEST:
-	case INTERESTCATEGORY_TERROR_ATTACK:
+		return "geoscape/icon_rescue";
 	case INTERESTCATEGORY_BUILDING:
-		return "geoscape/mission";
+		return "geoscape/icon_build_alien_base";
 	case INTERESTCATEGORY_ALIENBASE:
 		/** @todo we have two different alienbase models */
 		return "geoscape/alienbase";
+	case INTERESTCATEGORY_RECON:
+		return "geoscape/icon_recon";
+	case INTERESTCATEGORY_XVI:
+		return "geoscape/icon_xvi";
+	case INTERESTCATEGORY_HARVEST:
+		return "geoscape/icon_harvest";
+	case INTERESTCATEGORY_TERROR_ATTACK:
+		return "geoscape/icon_terror";
 	/* Should not be reached, these mission categories are not drawn on geoscape */
 	case INTERESTCATEGORY_BASE_ATTACK:
 		return "geoscape/base2";
@@ -619,7 +588,7 @@ static missionDetectionStatus_t CP_CheckMissionVisibleOnGeoscape (const mission_
 {
 	/* This function could be called before position of the mission is defined */
 	if (!mission->posAssigned)
-		return qfalse;
+		return MISDET_CANT_BE_DETECTED;
 
 	if (mission->crashed)
 		return MISDET_ALWAYS_DETECTED;
@@ -822,7 +791,7 @@ void CP_UFORemoveFromGeoscape (mission_t *mission, qboolean destroyed)
 		mission_t *removedMission;
 
 		/* remove UFO from radar and update idx of ufo in radar array */
-		RADAR_NotifyUFORemoved(mission->ufo, destroyed);
+		RADAR_NotifyUFORemoved(mission->ufo, qtrue);
 
 		/* Update UFO idx */
 		MIS_Foreach(removedMission) {
@@ -835,7 +804,7 @@ void CP_UFORemoveFromGeoscape (mission_t *mission, qboolean destroyed)
 	} else if (mission->ufo->detected && !RADAR_CheckRadarSensored(mission->ufo->pos)) {
 		/* maybe we use a high speed time: UFO was detected, but flied out of radar
 		 * range since last calculation, and mission is spawned outside radar range */
-		RADAR_NotifyUFORemoved(mission->ufo, destroyed);
+		RADAR_NotifyUFORemoved(mission->ufo, qfalse);
 	}
 }
 
@@ -945,7 +914,6 @@ void CP_MissionStageEnd (const campaign_t* campaign, mission_t *mission)
 
 	/* Crash mission is on the map for too long: aliens die or go away. End mission */
 	if (mission->crashed) {
-		/** @todo wouldn't that mean that we've won the battle? but in fact we did nothing, no? */
 		CP_MissionIsOver(mission);
 		return;
 	}
@@ -1102,7 +1070,12 @@ void CP_MissionEndActions (mission_t *mission, aircraft_t *aircraft, qboolean wo
 }
 
 /**
- * @sa CP_GameAutoGo
+ * @brief Closing actions after fighting a battle
+ * @param[in] campaign The capmaign we play
+ * @param[in, out] mission The mission the battle was on
+ * @param[in] battleParameters Parameters of the battle
+ * @param[in] if PHALANX won
+ * @note both manual and automatic missions call this through won/lost UI screen
  */
 void CP_MissionEnd (const campaign_t *campaign, mission_t* mission, const battleParam_t* battleParameters, qboolean won)
 {
@@ -1122,9 +1095,16 @@ void CP_MissionEnd (const campaign_t *campaign, mission_t* mission, const battle
 	}
 
 	/* add the looted goods to base storage and market */
+	/**
+	 * @todo find out why this black-magic with inventory is needed and clean up
+	 * @sa CP_StartSelectedMission
+	 * @sa AM_Go
+	 */
 	base->storage = ccs.eMission;
 
-	CP_HandleNationData(campaign->minhappiness, won, mission, battleParameters->nation, &ccs.missionResults);
+	won ? ccs.campaignStats.missionsWon++ : ccs.campaignStats.missionsLost++;
+
+	CP_HandleNationData(campaign->minhappiness, mission, battleParameters->nation, &ccs.missionResults);
 	CP_CheckLostCondition(campaign);
 
 	/* update the character stats */
@@ -1154,6 +1134,7 @@ void CP_MissionEnd (const campaign_t *campaign, mission_t* mission, const battle
 		/* The aircraft can be safely sent to its homebase without losing aliens */
 	}
 
+	CP_ExecuteMissionTrigger(mission, won);
 	CP_MissionEndActions(mission, aircraft, won);
 }
 
@@ -1585,7 +1566,7 @@ void CP_SpawnNewMissions (void)
 
 		/* Increase the alien's interest in supplying their bases for this cycle.
 		 * The more bases, the greater their interest in supplying them. */
-		CP_ChangeIndividualInterest(AB_GetAlienBaseNumber() * 0.1f, INTERESTCATEGORY_SUPPLY);
+		INT_ChangeIndividualInterest(AB_GetAlienBaseNumber() * 0.1f, INTERESTCATEGORY_SUPPLY);
 
 		/* Calculate the amount of missions to be spawned this cycle.
 		 * Note: This is a function over css.overallInterest. It looks like this:
@@ -1626,9 +1607,8 @@ void CP_InitializeSpawningDelay (void)
 #ifdef DEBUG
 /**
  * @brief Debug function for creating a mission.
- * @note called with debug_addmission
  */
-static void CP_SpawnNewMissions_f (void)
+static void MIS_SpawnNewMissions_f (void)
 {
 	int category, type = 0;
 	mission_t *mission;
@@ -1636,7 +1616,7 @@ static void CP_SpawnNewMissions_f (void)
 	if (Cmd_Argc() < 2) {
 		Com_Printf("Usage: %s <category> [<type>]\n", Cmd_Argv(0));
 		for (category = INTERESTCATEGORY_RECON; category < INTERESTCATEGORY_MAX; category++) {
-			Com_Printf("...%i: %s", category, CP_MissionCategoryToName(category));
+			Com_Printf("...%i: %s", category, INT_InterestCategoryToName(category));
 			if (category == INTERESTCATEGORY_RECON)
 				Com_Printf(" <0:Random, 1:Aerial, 2:Ground>");
 			else if (category == INTERESTCATEGORY_BUILDING)
@@ -1729,7 +1709,7 @@ static void CP_SpawnNewMissions_f (void)
 /**
  * @brief Changes the map for an already spawned mission
  */
-static void CP_MissionSetMap_f (void)
+static void MIS_MissionSetMap_f (void)
 {
 	mapDef_t *mapDef;
 	mission_t *mission;
@@ -1748,9 +1728,9 @@ static void CP_MissionSetMap_f (void)
 
 /**
  * @brief List all current mission to console.
- * @note Use with debug_listmission
+ * @note Use with debug_missionlist
  */
-static void CP_MissionList_f (void)
+static void MIS_MissionList_f (void)
 {
 	qboolean noMission = qtrue;
 	mission_t *mission;
@@ -1758,7 +1738,7 @@ static void CP_MissionList_f (void)
 	MIS_Foreach(mission) {
 		Com_Printf("mission: '%s'\n", mission->id);
 		Com_Printf("...category %i. '%s' -- stage %i. '%s'\n", mission->category,
-			CP_MissionCategoryToName(mission->category), mission->stage, CP_MissionStageToName(mission->stage));
+			INT_InterestCategoryToName(mission->category), mission->stage, CP_MissionStageToName(mission->stage));
 		Com_Printf("...mapDef: '%s'\n", mission->mapDef ? mission->mapDef->id : "No mapDef defined");
 		Com_Printf("...location: '%s'\n", mission->location);
 		Com_Printf("...start (day = %i, sec = %i), ends (day = %i, sec = %i)\n",
@@ -1776,9 +1756,9 @@ static void CP_MissionList_f (void)
 
 /**
  * @brief Debug function for deleting all mission in global array.
- * @note called with debug_delmissions
+ * @note called with debug_missionsdel
  */
-static void CP_DeleteMissions_f (void)
+static void MIS_DeleteMissions_f (void)
 {
 	mission_t *mission;
 
@@ -1792,42 +1772,13 @@ static void CP_DeleteMissions_f (void)
 			UFO_RemoveFromGeoscape(ccs.ufos);
 	}
 }
-
-/**
- * @brief List alien interest values.
- * @sa function called with debug_listinterest
- */
-static void CP_AlienInterestList_f (void)
-{
-	int i;
-
-	Com_Printf("Overall interest: %i\n", ccs.overallInterest);
-	Com_Printf("Individual interest:\n");
-
-	for (i = 0; i < INTERESTCATEGORY_MAX; i++)
-		Com_Printf("...%i. %s -- %i\n", i, CP_MissionCategoryToName(i), ccs.interest[i]);
-}
-
-/**
- * @brief Debug callback to set overall interest level
- * Called: debug_setinterest <interestlevel>
- */
-static void CP_SetAlienInterest_f (void)
-{
-	if (Cmd_Argc() < 2) {
-		Com_Printf("Usage: %s <interestlevel>\n", Cmd_Argv(0));
-		return;
-	}
-
-	ccs.overallInterest = max(0, atoi(Cmd_Argv(1)));
-}
 #endif
 
 /**
  * @brief Save callback for savegames in XML Format
  * @param[out] parent XML Node structure, where we write the information to
  */
-qboolean CP_SaveMissionsXML (xmlNode_t *parent)
+qboolean MIS_SaveXML (xmlNode_t *parent)
 {
 	xmlNode_t *missionsNode = XML_AddNode(parent, SAVE_MISSIONS);
 	mission_t *mission;
@@ -1839,10 +1790,8 @@ qboolean CP_SaveMissionsXML (xmlNode_t *parent)
 
 		XML_AddInt(missionNode, SAVE_MISSIONS_MISSION_IDX, mission->idx);
 		XML_AddString(missionNode, SAVE_MISSIONS_ID, mission->id);
-		if (mission->mapDef) {
+		if (mission->mapDef)
 			XML_AddString(missionNode, SAVE_MISSIONS_MAPDEF_ID, mission->mapDef->id);
-			XML_AddInt(missionNode, SAVE_MISSIONS_MAPDEFTIMES, mission->mapDef->timesAlreadyUsed);
-		}
 		XML_AddBool(missionNode, SAVE_MISSIONS_ACTIVE, mission->active);
 		XML_AddBool(missionNode, SAVE_MISSIONS_POSASSIGNED, mission->posAssigned);
 		XML_AddBool(missionNode, SAVE_MISSIONS_CRASHED, mission->crashed);
@@ -1890,8 +1839,6 @@ qboolean CP_SaveMissionsXML (xmlNode_t *parent)
 		XML_AddDate(missionNode, SAVE_MISSIONS_STARTDATE, mission->startDate.day, mission->startDate.sec);
 		XML_AddDate(missionNode, SAVE_MISSIONS_FINALDATE, mission->finalDate.day, mission->finalDate.sec);
 		XML_AddPos2(missionNode, SAVE_MISSIONS_POS, mission->pos);
-		if (mission->ufo)
-			XML_AddShort(missionNode, SAVE_MISSIONS_UFO, UFO_GetGeoscapeIDX(mission->ufo));
 		XML_AddBoolValue(missionNode, SAVE_MISSIONS_ONGEOSCAPE, mission->onGeoscape);
 	}
 	Com_UnregisterConstList(saveInterestConstants);
@@ -1904,7 +1851,7 @@ qboolean CP_SaveMissionsXML (xmlNode_t *parent)
  * @brief Load callback for savegames in XML Format
  * @param[in] parent XML Node structure, where we get the information from
  */
-qboolean CP_LoadMissionsXML (xmlNode_t *parent)
+qboolean MIS_LoadXML (xmlNode_t *parent)
 {
 	xmlNode_t *missionNode;
 	xmlNode_t *node;
@@ -1917,12 +1864,12 @@ qboolean CP_LoadMissionsXML (xmlNode_t *parent)
 			node = XML_GetNextNode(node, missionNode, SAVE_MISSIONS_MISSION)) {
 		const char *name;
 		mission_t mission;
-		int ufoIdx;
 		qboolean defaultAssigned = qfalse;
 		const char *categoryId = XML_GetString(node, SAVE_MISSIONS_CATEGORY);
 		const char *stageId = XML_GetString(node, SAVE_MISSIONS_STAGE);
 
 		OBJZERO(mission);
+
 		Q_strncpyz(mission.id, XML_GetString(node, SAVE_MISSIONS_ID), sizeof(mission.id));
 		mission.idx = XML_GetInt(node, SAVE_MISSIONS_MISSION_IDX, 0);
 		if (mission.idx <= 0) {
@@ -1930,17 +1877,17 @@ qboolean CP_LoadMissionsXML (xmlNode_t *parent)
 			success = qfalse;
 			break;
 		}
+
 		name = XML_GetString(node, SAVE_MISSIONS_MAPDEF_ID);
 		if (name && name[0] != '\0') {
 			mission.mapDef = Com_GetMapDefinitionByID(name);
 			if (!mission.mapDef) {
-				Com_Printf("......mapdef \"%s\" doesn't exist.\n", name);
-				success = qfalse;
-				break;
+				Com_Printf("Warning: mapdef \"%s\" for mission \"%s\" doesn't exist. Removing mission!\n", name, mission.id);
+				continue;
 			}
-			mission.mapDef->timesAlreadyUsed = XML_GetInt(node, SAVE_MISSIONS_MAPDEFTIMES, 0);
-		} else
+		} else {
 			mission.mapDef = NULL;
+		}
 
 		if (!Com_GetConstIntFromNamespace(SAVE_INTERESTCAT_NAMESPACE, categoryId, (int*) &mission.category)) {
 			Com_Printf("Invalid mission category '%s'\n", categoryId);
@@ -1980,7 +1927,7 @@ qboolean CP_LoadMissionsXML (xmlNode_t *parent)
 			if (mission.stage == STAGE_MISSION_GOTO || mission.stage == STAGE_INTERCEPT) {
 				const int installationIdx = XML_GetInt(node, SAVE_MISSIONS_INSTALLATIONINDEX, BYTES_NONE);
 				if (installationIdx != BYTES_NONE) {
-					installation_t *installation = INS_GetInstallationByIDX(installationIdx);
+					installation_t *installation = INS_GetByIDX(installationIdx);
 					if (installation)
 						mission.data.installation = installation;
 					else {
@@ -2028,12 +1975,6 @@ qboolean CP_LoadMissionsXML (xmlNode_t *parent)
 		XML_GetDate(node, SAVE_MISSIONS_FINALDATE, &mission.finalDate.day, &mission.finalDate.sec);
 		XML_GetPos2(node, SAVE_MISSIONS_POS, mission.pos);
 
-		ufoIdx = XML_GetInt(node, SAVE_MISSIONS_UFO, -1);
-		if (ufoIdx <= -1 || ufoIdx >= lengthof(ccs.ufos))
-			mission.ufo = NULL;
-		else
-			mission.ufo = UFO_GetByIDX(ufoIdx);
-
 		mission.crashed = XML_GetBool(node, SAVE_MISSIONS_CRASHED, qfalse);
 		mission.onGeoscape = XML_GetBool(node, SAVE_MISSIONS_ONGEOSCAPE, qfalse);
 
@@ -2055,13 +1996,12 @@ qboolean CP_LoadMissionsXML (xmlNode_t *parent)
  */
 void MIS_InitStartup (void)
 {
+	MIS_InitCallbacks();
 #ifdef DEBUG
-	Cmd_AddCommand("debug_missionsetmap", CP_MissionSetMap_f, "Changes the map for a spawned mission");
-	Cmd_AddCommand("debug_missionadd", CP_SpawnNewMissions_f, "Add a new mission");
-	Cmd_AddCommand("debug_missiondeleteall", CP_DeleteMissions_f, "Remove all missions from global array");
-	Cmd_AddCommand("debug_missionlist", CP_MissionList_f, "Debug function to show all missions");
-	Cmd_AddCommand("debug_interestlist", CP_AlienInterestList_f, "Debug function to show alien interest values");
-	Cmd_AddCommand("debug_interestset", CP_SetAlienInterest_f, "Set overall interest level.");
+	Cmd_AddCommand("debug_missionsetmap", MIS_MissionSetMap_f, "Changes the map for a spawned mission");
+	Cmd_AddCommand("debug_missionadd", MIS_SpawnNewMissions_f, "Add a new mission");
+	Cmd_AddCommand("debug_missiondeleteall", MIS_DeleteMissions_f, "Remove all missions from global array");
+	Cmd_AddCommand("debug_missionlist", MIS_MissionList_f, "Debug function to show all missions");
 #endif
 }
 
@@ -2072,12 +2012,11 @@ void MIS_Shutdown (void)
 {
 	LIST_Delete(&ccs.missions);
 
+	MIS_ShutdownCallbacks();
 #ifdef DEBUG
 	Cmd_RemoveCommand("debug_missionsetmap");
 	Cmd_RemoveCommand("debug_missionadd");
 	Cmd_RemoveCommand("debug_missiondeleteall");
 	Cmd_RemoveCommand("debug_missionlist");
-	Cmd_RemoveCommand("debug_interestlist");
-	Cmd_RemoveCommand("debug_interestset");
 #endif
 }

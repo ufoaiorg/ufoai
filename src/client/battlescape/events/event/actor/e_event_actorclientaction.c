@@ -25,12 +25,13 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #include "../../../../client.h"
 #include "../../../cl_localentity.h"
 #include "e_event_actorclientaction.h"
+#include "../../../../ui/ui_main.h"
 
 /**
  * @brief Reads the entity number for client interaction
  * @sa EV_CLIENT_ACTION
  * @sa Touch_DoorTrigger
- * @sa CL_ActorUseDoor
+ * @sa CL_ActorUse
  * @todo Hud should have a button that should be activated now
  */
 void CL_ActorClientAction (const eventRegister_t *self, struct dbuffer *msg)
@@ -50,6 +51,8 @@ void CL_ActorClientAction (const eventRegister_t *self, struct dbuffer *msg)
 	le->clientAction = LE_Get(actionEntityNumber);
 	if (!le->clientAction)
 		LE_NotFoundError(actionEntityNumber);
+
+	UI_ExecuteConfunc("enable_clientaction");
 
 	Com_DPrintf(DEBUG_CLIENT, "CL_ActorClientAction: Set entity number: %i (for actor with entnum %i)\n",
 			actionEntityNumber, number);

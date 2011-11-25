@@ -16,6 +16,7 @@ item needlergun
 	scale			1.2
 	ammo			12
 	reload			15
+	reloadsound		weapons/reload-nail
 	price			5000
 	size			45
 	is_primary		true
@@ -36,6 +37,7 @@ item needlerheavy
 	scale			0.8
 	ammo			16
 	reload			19
+	reloadsound		weapons/reload-nail
 	price			5000
 	size			45
 	is_primary		true

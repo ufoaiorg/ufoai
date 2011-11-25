@@ -91,7 +91,7 @@ void CAP_RemoveAircraftExceedingCapacity (base_t* base, baseCapacities_t capacit
 		aircraft_t *aircraft = (aircraft_t*)LIST_GetByIdx(awayAircraft, randomNum);
 		/* No base can hold this aircraft */
 		UFO_NotifyPhalanxAircraftRemoved(aircraft);
-		if (!MapIsWater(MAP_GetColor(aircraft->pos, MAPTYPE_TERRAIN)))
+		if (!MapIsWater(MAP_GetColor(aircraft->pos, MAPTYPE_TERRAIN, NULL)))
 			CP_SpawnRescueMission(aircraft, NULL);
 		else {
 			/* Destroy the aircraft and everything onboard - the aircraft pointer
@@ -161,7 +161,7 @@ void CAP_RemoveItemsExceedingCapacity (base_t *base)
 			/* items are destroyed. We guess that all items of a given type are stored in the same location
 			 *	=> destroy all items of this type */
 			const int idx = objIdx[randNumber];
-			objDef_t *od = INVSH_GetItemByIDX(idx);
+			const objDef_t *od = INVSH_GetItemByIDX(idx);
 			B_UpdateStorageAndCapacity(base, od, -B_ItemInBase(od, base), qfalse, qfalse);
 		}
 		REMOVE_ELEM(objIdx, randNumber, num);
@@ -196,6 +196,50 @@ void CAP_UpdateStorageCap (base_t *base)
 
 	/* UGV takes room in storage capacity */
 	CAP_AddCurrent(base, CAP_ITEMS, UGV_SIZE * E_CountHired(base, EMPL_ROBOT));
+}
+
+/**
+ * @brief Sets the maximal capacity on a base
+ * @param[in,out] base The base to set capacity at
+ * @param[in] capacity Capacity type
+ * @param[in] value New maximal capacity value
+ */
+void CAP_SetMax (base_t* base, baseCapacities_t capacity, int value)
+{
+	base->capacities[capacity].max = max(0, value);
+}
+
+/**
+ * @brief Changes the maximal capacity on a base
+ * @param[in,out] base The base to set capacity at
+ * @param[in] capacity Capacity type
+ * @param[in] value Capacity to add to the maximal capacity value (negative to decrease)
+ */
+void CAP_AddMax (base_t* base, baseCapacities_t capacity, int value)
+{
+	base->capacities[capacity].max = max(0, base->capacities[capacity].max + value);
+}
+
+/**
+ * @brief Sets the current (used) capacity on a base
+ * @param[in,out] base The base to set capacity at
+ * @param[in] capacity Capacity type
+ * @param[in] value New current (used) capacity value
+ */
+void CAP_SetCurrent (base_t* base, baseCapacities_t capacity, int value)
+{
+	base->capacities[capacity].cur = max(0, value);
+}
+
+/**
+ * @brief Changes the current (used) capacity on a base
+ * @param[in,out] base The base to set capacity at
+ * @param[in] capacity Capacity type
+ * @param[in] value Capacity to add to the current (used) capacity value (negative to decrease)
+ */
+void CAP_AddCurrent (base_t* base, baseCapacities_t capacity, int value)
+{
+	base->capacities[capacity].cur = max(0, base->capacities[capacity].cur + value);
 }
 
 /**

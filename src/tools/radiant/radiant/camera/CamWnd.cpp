@@ -267,9 +267,14 @@ CamWnd::CamWnd() :
 
 	g_signal_connect(G_OBJECT(m_gl_widget), "scroll_event", G_CALLBACK(wheelmove_scroll), this);
 
-	AddSceneChangeCallback(CamWndUpdate(*this));
+	GlobalSceneGraph().addSceneObserver(this);
 
 	GlobalEventManager().connect(GTK_OBJECT(m_gl_widget));
+}
+
+void CamWnd::onSceneGraphChange ()
+{
+	update();
 }
 
 void CamWnd::jumpToObject(SelectionTest& selectionTest) {
@@ -510,6 +515,9 @@ void CamWnd::draw() {
 }
 
 CamWnd::~CamWnd() {
+	// Subscribe to the global scene graph update
+	GlobalSceneGraph().removeSceneObserver(this);
+
 	if (m_bFreeMove) {
 		disableFreeMove();
 	}

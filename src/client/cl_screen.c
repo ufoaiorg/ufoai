@@ -42,6 +42,7 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #include "battlescape/cl_hud.h"
 #include "renderer/r_main.h"
 #include "renderer/r_draw.h"
+#include "renderer/r_local.h"
 #include "ui/ui_main.h"
 #include "ui/ui_draw.h"
 #include "ui/ui_nodes.h"
@@ -67,7 +68,7 @@ static char cursorImage[MAX_QPATH];
  */
 static void SCR_DrawString (int x, int y, const char *string)
 {
-	if (!string || string[0] == '\0')
+	if (Q_strnull(string))
 		return;
 
 	Con_DrawString(string, x, y, strlen(string));
@@ -93,7 +94,7 @@ static void SCR_DrawLoadingBar (int x, int y, int w, int h, int percent)
  * @param[in] string Draw the loading string - if the scripts are not parsed, this is
  * not possible, so use qfalse for very early calls
  */
-void SCR_DrawPrecacheScreen (qboolean string, int percent)
+void SCR_DrawLoadingScreen (qboolean string, int percent)
 {
 	const image_t *image;
 
@@ -228,7 +229,6 @@ static void SCR_TouchPics (void)
 		cursorImage[0] = '\0';
 }
 
-static const vec4_t cursorBG = { 0.0f, 0.0f, 0.0f, 0.7f };
 /**
  * @brief Draws the 3D-cursor in battlemode and the icons/info next to it.
  */
@@ -410,7 +410,14 @@ void SCR_UpdateScreen (void)
 		if (CL_OnBattlescape())
 			SCR_DrawString(viddef.context.width - 20 - con_fontWidth * 30, 80, va("brushes: %6i alias: %6i\n", refdef.brushCount, refdef.aliasCount));
 		else
-			SCR_DrawString(viddef.context.width - 20 - con_fontWidth * 14, 80, va("alias: %6i\n", refdef.aliasCount));
+			SCR_DrawString(viddef.context.width - 20 - con_fontWidth * 30, 80, va("alias: %6i\n", refdef.aliasCount));
+
+		SCR_DrawString(viddef.context.width - 20 - con_fontWidth * 30, 80 + con_fontHeight, va("batches: %6i\n", refdef.batchCount));
+		if (r_programs->integer) {
+			SCR_DrawString(viddef.context.width - 20 - con_fontWidth * 30, 80 + con_fontHeight * 2, va("FFP->shader switches:    %6i\n", refdef.FFPToShaderCount));
+			SCR_DrawString(viddef.context.width - 20 - con_fontWidth * 30, 80 + con_fontHeight * 3, va("shader->shader switches: %6i\n", refdef.shaderToShaderCount));
+			SCR_DrawString(viddef.context.width - 20 - con_fontWidth * 30, 80 + con_fontHeight * 4, va("shader->FFP switches:    %6i\n", refdef.shaderToFFPCount));
+		}
 	}
 
 	SCR_DrawCursor();
@@ -426,7 +433,7 @@ void SCR_Init (void)
 	scr_conspeed = Cvar_Get("scr_conspeed", "3", 0, "Console open/close speed");
 	scr_consize = Cvar_Get("scr_consize", "1.0", 0, "Console size");
 	scr_rspeed = Cvar_Get("r_speeds", "0", CVAR_ARCHIVE, "Show some rendering stats");
-	scr_cursor = Cvar_Get("cursor", "1", CVAR_ARCHIVE, "Which cursor should be shown - 0-9");
+	scr_cursor = Cvar_Get("cursor", "1", 0, "Which cursor should be shown - 0-9");
 	scr_showcursor = Cvar_Get("scr_showcursor", "1", 0, "Show/hide mouse cursor- 0-1");
 
 	/* register our commands */

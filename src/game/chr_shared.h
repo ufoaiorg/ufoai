@@ -25,9 +25,6 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #ifndef GAME_CHR_SHARED_H
 #define GAME_CHR_SHARED_H
 
-#define MAX_CHARACTER_TEMPLATES	24
-#define MAX_TEMPLATES_PER_TEAM	16
-
 typedef enum {
 	KILLED_ENEMIES,		/**< Killed enemies */
 	KILLED_CIVILIANS,	/**< Civilians, animals */
@@ -73,7 +70,6 @@ typedef struct chrTemplate_s {
  *   increase the counter multiple times."
  */
 typedef struct chrScoreMission_s {
-
 	/* Movement counts. */
 	int movedNormal;
 	int movedCrouched;
@@ -81,7 +77,7 @@ typedef struct chrScoreMission_s {
 	/* Kills & stuns */
 	/** @todo use existing code */
 	int kills[KILLED_NUM_TYPES];	/**< Count of kills (aliens, civilians, teammates) */
-	int stuns[KILLED_NUM_TYPES];	/**< Count of stuns(aliens, civilians, teammates) */
+	int stuns[KILLED_NUM_TYPES];	/**< Count of stuns (aliens, civilians, teammates) */
 
 	/* Hits/Misses */
 	int fired[SKILL_NUM_TYPES];				/**< Count of fired "firemodes" (i.e. the count of how many times the soldier started shooting) */
@@ -137,14 +133,14 @@ typedef struct chrFiremodeSettings_s {
  * @sa CL_ActorReserveTUs
  */
 typedef struct chrReservations_s {
-	/* Reaction fire reservation (for current round and next enemy round) */
+	/* Reaction fire reservation (for current turn and next enemy turn) */
 	int reaction;	/**< Did the player activate RF with a usable firemode?
 					 * (And at the same time storing the TU-costs of this firemode) */
 
-	/* Crouch reservation (for current round)	*/
+	/* Crouch reservation (for current turn)	*/
 	int crouch;	/**< Did the player reserve TUs for crouching (or standing up)? Depends exclusively on TU_CROUCH. */
 
-	/* Shot reservation (for current round) */
+	/* Shot reservation (for current turn) */
 	int shot;	/**< If non-zero we reserved a shot in this turn. */
 	chrFiremodeSettings_t shotSettings;	/**< Stores what type of firemode & weapon
 										 * (and hand) was used for "shot" reservation. */
@@ -234,10 +230,10 @@ typedef struct teamDef_s {
 
 	qboolean armour;	/**< Does this team use armour. */
 	qboolean weapons;	/**< Does this team use weapons. */
-	struct objDef_s *onlyWeapon;	/**< ods[] index - If this team is not able to use 'normal' weapons, we have to assign a weapon to it
+	const struct objDef_s *onlyWeapon;	/**< ods[] index - If this team is not able to use 'normal' weapons, we have to assign a weapon to it
 							 * The default value is NONE for every 'normal' actor - but e.g. bloodspiders only have
 							 * the ability to melee attack their victims. They get a weapon assigned with several
-							 * bloodspider melee attack firedefitions */
+							 * bloodspider melee attack firedefinitions */
 
 	actorSizeEnum_t size;	/**< What size is this unit on the field (1=1x1 or 2=2x2)? */
 	char hitParticle[MAX_VAR]; /**< Particle id of what particle effect should be spawned if a unit of this type is hit. */
@@ -273,7 +269,7 @@ typedef struct character_s {
 
 	inventory_t i;			/**< Inventory definition. */
 
-	teamDef_t *teamDef;			/**< Pointer to team definition. */
+	const teamDef_t *teamDef;			/**< Pointer to team definition. */
 	int gender;				/**< Gender index. */
 	chrReservations_t reservedTus;	/** < Stores the reserved TUs for actions. @sa See chrReserveSettings_t for more. */
 	chrFiremodeSettings_t RFmode;	/** < Stores the firemode to be used for reaction fire (if the fireDef allows that) See also reaction_firemode_type_t */
@@ -288,5 +284,6 @@ const char *CHRSH_CharGetBody(const character_t* const chr) __attribute__((nonnu
 const char *CHRSH_CharGetHead(const character_t* const chr) __attribute__((nonnull));
 qboolean CHRSH_IsTeamDefAlien(const teamDef_t* const td) __attribute__((nonnull));
 qboolean CHRSH_IsTeamDefRobot(const teamDef_t* const td) __attribute__((nonnull));
+qboolean CHRSH_IsArmourUseableForTeam(const objDef_t *od, const teamDef_t *teamDef);
 
 #endif

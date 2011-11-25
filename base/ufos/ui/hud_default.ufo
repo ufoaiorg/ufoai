@@ -291,7 +291,7 @@ window hud_default extends hud
 				string		*cvar:mn_hovered_tu
 				pos			"105 35"
 				size		"40 20"
-				textalign	ALIGN_UR
+				contentalign	ALIGN_UR
 			}
 
 			bar timeall
@@ -329,7 +329,7 @@ window hud_default extends hud
 				string		*cvar:mn_hovered_hp
 				pos			"105 50"
 				size		"40 20"
-				textalign	ALIGN_UR
+				contentalign	ALIGN_UR
 			}
 
 			bar health
@@ -357,7 +357,7 @@ window hud_default extends hud
 				string		*cvar:mn_hovered_morale
 				pos			"105 65"
 				size		"40 20"
-				textalign	ALIGN_UR
+				contentalign	ALIGN_UR
 			}
 
 			bar morale
@@ -531,7 +531,7 @@ window hud_default extends hud
 			tooltip	"_Click to cycle through spotted enemies"
 			pos		"8 11"
 			size	"48 34"
-			textalign	ALIGN_CC
+			contentalign	ALIGN_CC
 			onClick	{ cmd "nextalien;" }
 		}
 	}
@@ -586,7 +586,7 @@ window hud_default extends hud
 			string	*cvar:mn_ammoright
 			pos		"17 112"
 			size	"65 20"
-			textalign	ALIGN_UC
+			contentalign	ALIGN_UC
 		}
 
 		container right
@@ -652,7 +652,7 @@ window hud_default extends hud
 			string	*cvar:mn_ammoleft
 			pos		"171 112"
 			size	"65 20"
-			textalign	ALIGN_UC
+			contentalign	ALIGN_UC
 		}
 
 		container left
@@ -732,7 +732,7 @@ window hud_default extends hud
 			string	*cvar:mn_tu
 			pos		"82 11"
 			size	"40 20"
-			textalign	ALIGN_UR
+			contentalign	ALIGN_UR
 		}
 
 		string hp
@@ -740,7 +740,7 @@ window hud_default extends hud
 			string	*cvar:mn_hp
 			pos		"82 25"
 			size	"40 20"
-			textalign	ALIGN_UR
+			contentalign	ALIGN_UR
 		}
 
 		//todo: make this into a "zone" node (which currently doesn't seem to support tooltips) See also menu_althud.
@@ -806,7 +806,7 @@ window hud_default extends hud
 			string	*cvar:mn_morale
 			pos		"82 38"
 			size	"40 20"
-			textalign	ALIGN_UR
+			contentalign	ALIGN_UR
 		}
 
 		bar morale
@@ -837,16 +837,40 @@ window hud_default extends hud
 	panel popup {
 		{
 			pos		"977 129"
-			size	"47 335"
+			size	"47 399"
 			align	LAYOUTALIGN_RIGHT
 			excluderect { pos	"0 95"	size	"8 33" }
 			excluderect { pos	"0 223"	size	"16 16" }
 		}
 
+		image background_chat
+		{
+			visiblewhen	"*cvar:sv_maxclients >= 2"
+			src			"hud/bar_chat"
+			pos			"0 0"
+			texl		"16 0"
+			texh		"64 64"
+			size		"64 64"
+			ghost		true
+		}
+
+		image button_chat
+		{
+			visiblewhen	"*cvar:sv_maxclients >= 2"
+			tooltip		"_Chat messages"
+			src			"hud/event_log"
+			pos			"10 8"
+			texl		"0 0"
+			texh		"32 36"
+			onClick {
+				cmd "ui_push hud_chat;"
+			}
+		}
+
 		image background
 		{
 			src	"hud/bar_popup"
-			pos		"0 0"
+			pos		"0 64"
 			size	"47 335"
 			texh	"47 335"
 			ghost	true
@@ -857,7 +881,7 @@ window hud_default extends hud
 			tooltip	"_Options"
 			src	"hud/buttons1"
 			mousefx true
-			pos		"6 10"
+			pos		"6 74"
 			texl	"165 0"
 			texh	"201 75"
 			onClick	{ cmd "ui_pop;" }
@@ -868,7 +892,7 @@ window hud_default extends hud
 			tooltip	"_Physical stats of this soldier"
 			src	"hud/buttons1"
 			mousefx true
-			pos		"6 137"
+			pos		"6 201"
 			texl	"202 0"
 			texh	"238 75"
 			onClick	{ cmd "ui_push hudphysdat;" }
@@ -879,126 +903,11 @@ window hud_default extends hud
 			tooltip	"_Inventory"
 			src	"hud/buttons1"
 			mousefx true
-			pos		"6 247"
+			pos		"6 311"
 			texl	"128 0"
 			texh	"164 75"
 			onClick	{ call *node:root.showinventory }
 		}
-	}
-
-	// ==================
-	// CHAT BUTTONS
-	// ==================
-
-	// the name must be the same in all huds
-	text chatscreen
-	{
-		dataid		TEXT_CHAT_WINDOW
-		pos			"130 70"
-		size		"690 48"
-		font		"f_verysmall"
-		rows		"3"
-		lineheight	"16"
-		padding		5
-		bordercolor	"0.5 0.5 0.5 1"
-		border		2
-		bgcolor		"0 0.1 0 0.8"
-	}
-
-	panel chat {
-		{
-			visiblewhen	"*cvar:sv_maxclients >= 2"
-			pos		"768 64"
-			size	"256 463"	/* popup height 335+64*2*/
-			ghost	true
-			align	LAYOUTALIGN_RIGHT
-		}
-
-		image bar_chat_bg
-		{
-			src		"hud/bar_chat"
-			pos			"192 0"
-			size		"64 64"
-		}
-		image bar_chat_all
-		{
-			visiblewhen	"*cvar:mn_showchatbuttons == 1"
-
-			tooltip		"_Chat"
-			src		"hud/button_chat"
-			pos			"176 12"
-			size		"32 32"
-			texl		"0 0"
-			texh		"32 32"
-			onClick		{ cmd "messagesay;" }
-		}
-		image bar_chat_team
-		{
-			visiblewhen	"*cvar:mn_showchatbuttons == 1"
-			tooltip		"_Teamchat"
-			src		"hud/button_chat"
-			pos			"138 12"
-			size		"32 32"
-			texl		"32 0"
-			texh		"64 32"
-			onClick		{ cmd "messagesayteam;" }
-		}
-		image bar_chat_show
-		{
-			visiblewhen	"*cvar:mn_showchatbuttons == 1"
-			tooltip		"_Show chat history"
-			src		"hud/button_chat"
-			pos			"100 12"
-			size		"32 32"
-			texl		"64 0"
-			texh		"96 32"
-			onMouseLeave			{
-				*node:root.chatscreen@size = "690 48"
-				*node:root.chatscreen@rows = "3"
-				*node:root@timeout = 10000
-			}
-			onMouseEnter			{
-				*node:root.chatscreen@size = "690 400"
-				*node:root.chatscreen@rows = "25"
-				*node:root@timeout = 0
-				*node:root.chatscreen@invis = false
-			}
-		}
-
-		image button_chat
-		{
-			tooltip		"_Chat messages"
-			src		"hud/event_log"
-			pos			"217 6"
-			texl		"0 0"
-			texh		"32 36"
-			onMouseEnter {
-				*node:this@texl	= "0 36"
-				*node:this@texh	= "32 72"
-			}
-			onMouseLeave {
-				*node:this@texl	= "0 0"
-				*node:this@texh	= "32 36"
-			}
-			onClick		{
-				if ( *cvar:mn_showchatbuttons != 0 ) {
-					*node:parent.bar_chat_bg@src = "hud/bar_chat"
-					*node:parent.bar_chat_bg@pos = "192 0"
-					*node:parent.bar_chat_bg@size = "64 64"
-					*cvar:mn_showchatbuttons = 0
-				} else {
-					*node:parent.bar_chat_bg@src = "hud/bar_chat_choice"
-					*node:parent.bar_chat_bg@pos = "0 0"
-					*node:parent.bar_chat_bg@size = "256 64"
-					*cvar:mn_showchatbuttons = 1
-				}
-			}
-		}
-	}
-
-	func onEvent
-	{
-		*node:root.chatscreen@invis = true
 	}
 
 	// ==================
@@ -1008,13 +917,22 @@ window hud_default extends hud
 	confunc crouch_checkbox_disable {
 		*node:root.left.bt_crouch_reservation@disabled = true
 	}
-	confunc crouch_checkbox_clear	{
+	confunc crouch_checkbox_clear {
 		*node:root.left.bt_crouch_reservation@disabled = false
 		*node:root.left.bt_crouch_reservation@current = 0
 	}
-	confunc crouch_checkbox_check	{
+	confunc crouch_checkbox_check {
 		*node:root.left.bt_crouch_reservation@disabled = false
 		*node:root.left.bt_crouch_reservation@current = 1
+	}
+
+	confunc hudinit {
+		*cvar:i = 0
+		while ( *cvar:i < 8 ) {
+			*node:root.team_selection.buttonList.bt_actor<cvar:i>@disabled = true
+			*cvar:i = ( *cvar:i + 1 )
+		}
+		delete *cvar:i
 	}
 
 	confunc hudselect {
@@ -1059,6 +977,7 @@ window hud_default extends hud
 	confunc endround
 	{
 		*node:root.next.bt_nextround@disabled = true
+		cmd "hud_movemode;"
 	}
 
 	// "RESERVATION FOR SHOT" BUTTON
@@ -1122,9 +1041,7 @@ window hud_default extends hud
 
 	func onWindowOpened
 	{
-		*node:root.chatscreen@invis = true
 		cmd "music_change battlescape;"
-		*cvar:mn_showchatbuttons = 0
 	}
 
 	func onScriptLoaded {

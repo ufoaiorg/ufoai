@@ -46,7 +46,7 @@ component panel cmpNamedBar {
 	string	val {
 		pos "265 0"
 		size "150 20"
-		textalign ALIGN_UR
+		contentalign ALIGN_UR
 	}
 }
 
@@ -106,8 +106,8 @@ window team extends iaircraft
 	model aircraft
 	{
 		src			*cvar:mn_aircraft_model
-		pos			"478 107"
-		size		"529 260"
+		pos			"478 106"
+		size		"529 261"
 		origin		"-45 25 0"
 		angles		"160 20 -120"
 		autoscale	true
@@ -125,7 +125,7 @@ window team extends iaircraft
 		string		*cvar:mn_hired
 		pos			"619 107"
 		size		"62 20"
-		textalign	ALIGN_UR
+		contentalign	ALIGN_UR
 	}
 
 	func listen_close_equipment
@@ -138,8 +138,8 @@ window team extends iaircraft
 	button bt_equipsoldiers
 	{
 		string "_Equip soldiers"
-		pos		"483 129"
-		size	"198 43"
+		pos		"482 129"
+		size	"198 40"
 		image	"ui/button_blue"
 		onClick	{
 			*cvar:cl_selected2 = <cvar:cl_selected>
@@ -243,46 +243,40 @@ window team extends iaircraft
 	}
 
 	cmpSoldierSelect actor_select0 {
-		pos "38 470"
+		pos "38 462"
 	}
 
 	cmpSoldierSelect actor_select1 {
-		pos "38 505"
+		pos "38 497"
 	}
 
-	cmpSoldierSelect actor_select2
-	{
-		pos			"38 540"
+	cmpSoldierSelect actor_select2 {
+		pos	"38 532"
 	}
 
-	cmpSoldierSelect actor_select3
-	{
-		pos			"38 575"
+	cmpSoldierSelect actor_select3 {
+		pos	"38 567"
 	}
 
-	cmpSoldierSelect actor_select4
-	{
-		pos			"38 610"
+	cmpSoldierSelect actor_select4 {
+		pos	"38 602"
 	}
 
-	cmpSoldierSelect actor_select5
-	{
-		pos			"38 645"
+	cmpSoldierSelect actor_select5 {
+		pos	"38 637"
 	}
 
-	cmpSoldierSelect actor_select6
-	{
-		pos			"38 680"
+	cmpSoldierSelect actor_select6 {
+		pos	"38 672"
 	}
 
-	cmpSoldierSelect actor_select7
-	{
-		pos			"38 715"
+	cmpSoldierSelect actor_select7 {
+		pos	"38 707"
 	}
 	vscrollbar scroll_employees
 	{
 		image	"ui/scrollbar_v_green"
-		pos "310 463"	height	"282"
+		pos "310 462"	height	"283"
 		current 0
 		viewsize 8
 		fullsize 50
@@ -311,7 +305,7 @@ window team extends iaircraft
 	}
 
 	image	rank_img {
-		pos "8 10"
+		pos "8 8"
 		size "50 50"
 		src *cvar:mn_chrrank_img
 	}
@@ -324,9 +318,10 @@ window team extends iaircraft
 			anim	"stand2"
 			angles	"0 70 90"
 			scale	"5.5 5.5 5.5"
-			pos		"8 10"
-			size	"167 278"
+			pos		"6 6"
+			size	"168 283"
 			origin	"0 -35 0"
+			omega	"0 1 0"
 		}
 
 		model head
@@ -350,14 +345,14 @@ window team extends iaircraft
 		}
 	}
 
-	string	name { pos "10 245" size "165 20" string *cvar:mn_name }
-	string	rank_lbl { pos "10 265" size "165 20" string *cvar:mn_chrrank }
+	string	name { pos "8 247" size "165 20" string *cvar:mn_name }
+	string	rank_lbl { pos "8 267" size "165 20" string *cvar:mn_chrrank }
 	}
 
 	tab actor_stat {
 		{
-			pos		"212 12"
-			size	"432 39"
+			pos		"209 11"
+			size	"438 39"
 			cvar	*cvar:mn_actor_stat
 			onChange {
 				cmd "select_actor_stat <cvar:mn_actor_stat>;"
@@ -494,19 +489,19 @@ window team extends iaircraft
 		src *cvar:mn_chrrank_img
 	}
 
-	string	rank_lbl { pos "10 85" size "420 20" string *cvar:mn_chrrank textalign ALIGN_UC font "f_normal_bold" }
+	string	rank_lbl { pos "10 85" size "420 20" string *cvar:mn_chrrank contentalign ALIGN_UC font "f_normal_bold" }
 
 	string	missions_lbl { pos "12 150" size "200 20" string "_Missions performed:" }
-	string	missions_val { pos "212 150" size "150 20" string *cvar:mn_chrmis textalign ALIGN_UR }
+	string	missions_val { pos "212 150" size "150 20" string *cvar:mn_chrmis contentalign ALIGN_UR }
 
 	string	kills_lbl { pos "12 170" size "200 20" string "_Enemies killed:" }
-	string	kills_val { pos "212 170" size "150 20" string *cvar:mn_chrkillalien textalign ALIGN_UR }
+	string	kills_val { pos "212 170" size "150 20" string *cvar:mn_chrkillalien contentalign ALIGN_UR }
 
 	string	civ_lbl { pos "12 190" size "200 20" string "_Civilians killed:" }
-	string	civ_val { pos "212 190" size "150 20" string *cvar:mn_chrkillcivilian textalign ALIGN_UR }
+	string	civ_val { pos "212 190" size "150 20" string *cvar:mn_chrkillcivilian contentalign ALIGN_UR }
 
 	string	team_lbl { pos "12 210" size "200 20" string "_Our team killed:" }
-	string	team_val { pos "212 210" size "150 20" string *cvar:mn_chrkillteam textalign ALIGN_UR }
+	string	team_val { pos "212 210" size "150 20" string *cvar:mn_chrkillteam contentalign ALIGN_UR }
 
 	}
 

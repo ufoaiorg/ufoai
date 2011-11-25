@@ -22,7 +22,6 @@ See the GNU General Public License for more details.
 You should have received a copy of the GNU General Public License
 along with this program; if not, write to the Free Software
 Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
-
 */
 
 #include "../../cl_shared.h"
@@ -205,7 +204,6 @@ int US_UFOsInStorage (const aircraft_t *ufoTemplate, const installation_t *insta
 void US_RemoveUFOsExceedingCapacity (installation_t *installation)
 {
 	const capacities_t *ufoCap;
-	storedUFO_t *lastUfo = NULL;
 	storedUFO_t *ufo;
 
 	if (!installation)
@@ -217,12 +215,9 @@ void US_RemoveUFOsExceedingCapacity (installation_t *installation)
 		if (ufoCap->cur <= ufoCap->max)
 			break;
 		if (ufo->installation != installation) {
-			lastUfo = ufo;
 			continue;
 		}
 		US_RemoveStoredUFO(ufo);
-		/* this ufo is removed from the list, continue iterating from the last */
-		ufo = lastUfo;
 	}
 }
 
@@ -301,24 +296,22 @@ qboolean US_SaveXML (xmlNode_t *p)
  */
 qboolean US_LoadXML (xmlNode_t *p)
 {
-	int i; /**< @todo this is for old saves now only */
 	xmlNode_t *node, *snode;
 
 	node = XML_GetNode(p, SAVE_UFORECOVERY_STOREDUFOS);
 
 	Com_RegisterConstList(saveStoredUFOConstants);
-	for (i = 0, snode = XML_GetNode(node, SAVE_UFORECOVERY_UFO); snode;
-			snode = XML_GetNextNode(snode, node, SAVE_UFORECOVERY_UFO), i++) {
+	for (snode = XML_GetNode(node, SAVE_UFORECOVERY_UFO); snode;
+			snode = XML_GetNextNode(snode, node, SAVE_UFORECOVERY_UFO)) {
 		const char *id = XML_GetString(snode, SAVE_UFORECOVERY_STATUS);
 		storedUFO_t ufo;
 		int statusIDX;
 
 		/* ufo->idx */
 		ufo.idx = XML_GetInt(snode, SAVE_UFORECOVERY_UFOIDX, -1);
-		/* fallback code for compatibility */
-		if (ufo.idx == -1) {
-			Com_Printf("No IDX defined for stored UFO %d. This must be an old save.\n", i);
-			ufo.idx = i;
+		if (ufo.idx < 0) {
+			Com_Printf("Invalid or no IDX defined for stored UFO.\n");
+			continue;
 		}
 		/* ufo->status */
 		if (!Com_GetConstIntFromNamespace(SAVE_STOREDUFOSTATUS_NAMESPACE, id, &statusIDX)) {
@@ -327,7 +320,7 @@ qboolean US_LoadXML (xmlNode_t *p)
 		}
 		ufo.status = statusIDX;
 		/* ufo->installation */
-		ufo.installation = INS_GetFoundedInstallationByIDX(XML_GetInt(snode, SAVE_UFORECOVERY_INSTALLATIONIDX, MAX_INSTALLATIONS));
+		ufo.installation = INS_GetByIDX(XML_GetInt(snode, SAVE_UFORECOVERY_INSTALLATIONIDX, -1));
 		if (!ufo.installation) {
 			Com_Printf("UFO has no/invalid installation assigned\n");
 			continue;
@@ -407,11 +400,11 @@ static void US_StoreUFO_f (void)
 	installationIDX = atoi(Cmd_Argv(2));
 
 	/* Get The UFO Yard */
-	if (installationIDX < 0 || installationIDX >= MAX_INSTALLATIONS) {
+	if (installationIDX < 0) {
 		Com_Printf("US_StoreUFO_f: Invalid Installation index.\n");
 		return;
 	}
-	installation = INS_GetFoundedInstallationByIDX(installationIDX);
+	installation = INS_GetByIDX(installationIDX);
 	if (!installation) {
 		Com_Printf("US_StoreUFO_f: There is no Installation: idx=%i.\n", installationIDX);
 		return;

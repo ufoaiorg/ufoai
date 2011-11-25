@@ -45,7 +45,6 @@
 #include "igamemanager.h"
 #include "ifiletypes.h"
 #include "preferencesystem.h"
-#include "brush/TexDef.h"
 #include "ibrush.h"
 #include "iimage.h"
 #include "iregistry.h"
@@ -88,7 +87,6 @@
 #include "model.h"
 
 #include "sidebar/sidebar.h"
-#include "sidebar/MapInfo.h"
 #include "sidebar/texturebrowser.h"
 
 #include "modulesystem/modulesmap.h"
@@ -263,7 +261,6 @@ class Radiant
 			GlobalFiletypes().addType("sound", "ogg", filetype_t("OGG sound files", "*.ogg"));
 
 			GlobalMap().Construct();
-			sidebar::MapInfo_Construct();
 			MainFrame_Construct();
 			GlobalCamera().construct();
 			GlobalXYWnd().construct();

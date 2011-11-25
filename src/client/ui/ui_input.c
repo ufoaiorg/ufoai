@@ -241,15 +241,35 @@ uiKeyBinding_t* UI_GetKeyBindingByIndex (int index)
 }
 
 /**
+ * @brief Set a binding from a key to a node to active.
+ *
+ * This command create a relation between a key and a node.
+ *
+ * The relation is stored to the node (to display the shortcut into tooltip)
+ * and to parent window of the node (to faster search of all available shortcuts).
+ *
+ * The storage on the node is not a list, then if there is more than one shortcut
+ * to a node we can't display all shortcut to tooltip, but the binding will still
+ * work.
+ *
+ * If the parent window is inherited, the binding is dup to others extend
+ * windows and the relation is flagged as "inherited".
+ *
+ * @param path Path to a node, or a node mathod
+ * @param key The key number to use (see for example the K_* names are matched up.)
+ * @param inherited True if this binding is inherited from another binding.
+ *
  * @todo check: only one binding per nodes
  * @todo check: key per window must be unique
  * @todo check: key used into UI_KeyPressed can't be used
  */
-void UI_SetKeyBinding (const char* path, int key)
+static void UI_SetKeyBindingEx (const char* path, int key, const char* description, qboolean inherited)
 {
 	uiNode_t *node;
 	uiKeyBinding_t *binding;
 	const value_t *property = NULL;
+	int windowId;
+	char newPath[256];
 
 	UI_ReadNodePath(path, NULL, &node, &property);
 	if (node == NULL) {
@@ -265,8 +285,45 @@ void UI_SetKeyBinding (const char* path, int key)
 	binding->node = node;
 	binding->property = property;
 	binding->key = key;
+	binding->inherited = inherited;
 	node->key = binding;
+
+	if (Q_strnull(description))
+		Com_Printf("Warning: Empty description for UI keybinding: %s (%s)\n", path, Key_KeynumToString(key));
+	else
+		binding->description = Mem_PoolStrDup(description, ui_dynPool, 0);;
+
 	UI_WindowNodeRegisterKeyBinding(node->root, binding);
+
+	/* search and update windows extend node->root */
+	for (windowId = 0; windowId < ui_global.numWindows; windowId++) {
+		uiNode_t *window = ui_global.windows[windowId];
+
+		/* skip window which are not direct extends of the main window */
+		if (window->super != node->root)
+			continue;
+
+		/* create a new patch from the new windows */
+		newPath[0] = '\0';
+		Q_strcat(newPath, window->name, sizeof(newPath));
+		Q_strcat(newPath, path + strlen(node->root->name), sizeof(newPath));
+		UI_SetKeyBindingEx(newPath, key, description, qtrue);
+	}
+}
+
+/**
+ * @brief Set a binding from a key to a node to active.
+ *
+ * @param path Path to a node, or a node mathod
+ * @param key The key number to use (see for example the K_* names are matched up.)
+ *
+ * @todo check: only one binding per nodes?
+ * @todo check: key per window must be unique
+ * @todo check: key used into UI_KeyPressed can't be used
+ */
+void UI_SetKeyBinding (const char* path, int key, const char* description)
+{
+	UI_SetKeyBindingEx(path, key, description, qfalse);
 }
 
 /**
@@ -304,6 +361,23 @@ static qboolean UI_KeyPressedInWindow (unsigned int key, const uiNode_t *window)
 		Com_Printf("UI_KeyPressedInWindow: @%s not supported.", binding->property->string);
 
 	return qtrue;
+}
+
+/**
+ * @brief Called by the client when the user released a key
+ * @param[in] key key code, either K_ value or lowercase ascii
+ * @param[in] unicode translated meaning of keypress in unicode
+ * @return qtrue, if we used the event
+ */
+qboolean UI_KeyRelease (unsigned int key, unsigned short unicode)
+{
+	/* translate event into the node with focus */
+	if (focusNode && focusNode->behaviour->keyReleased) {
+		if (focusNode->behaviour->keyReleased(focusNode, key, unicode))
+			return qtrue;
+	}
+
+	return qfalse;
 }
 
 /**
@@ -518,7 +592,7 @@ void UI_MouseMove (int x, int y)
 	}
 }
 
-#define UI_IsMouseInvalidate (oldMousePosX == -1)
+#define UI_IsMouseInvalidate() (oldMousePosX == -1)
 
 /**
  * @brief Is called every time one clicks on a window/screen. Then checks if anything needs to be executed in the area of the click
@@ -530,7 +604,7 @@ void UI_MouseMove (int x, int y)
 static void UI_LeftClick (int x, int y)
 {
 	qboolean disabled;
-	if (UI_IsMouseInvalidate)
+	if (UI_IsMouseInvalidate())
 		return;
 
 	/* send it to the captured mouse node */
@@ -570,7 +644,7 @@ static void UI_LeftClick (int x, int y)
 static void UI_RightClick (int x, int y)
 {
 	qboolean disabled;
-	if (UI_IsMouseInvalidate)
+	if (UI_IsMouseInvalidate())
 		return;
 
 	/* send it to the captured mouse node */
@@ -598,7 +672,7 @@ static void UI_RightClick (int x, int y)
 static void UI_MiddleClick (int x, int y)
 {
 	qboolean disabled;
-	if (UI_IsMouseInvalidate)
+	if (UI_IsMouseInvalidate())
 		return;
 
 	/* send it to the captured mouse node */
@@ -625,36 +699,34 @@ static void UI_MiddleClick (int x, int y)
  * @sa UI_LeftClick
  * @sa UI_RightClick
  * @sa UI_MiddleClick
- * @sa CL_ZoomInQuant
- * @sa CL_ZoomOutQuant
  */
-void UI_MouseWheel (qboolean down, int x, int y)
+void UI_MouseScroll (int deltaX, int deltaY)
 {
 	uiNode_t *node;
 
 	/* send it to the captured mouse node */
 	if (capturedNode) {
-		if (capturedNode->behaviour->mouseWheel)
-			capturedNode->behaviour->mouseWheel(capturedNode, down, x, y);
+		if (capturedNode->behaviour->scroll)
+			capturedNode->behaviour->scroll(capturedNode, deltaX, deltaY);
 		return;
 	}
 
 	node = hoveredNode;
 
 	while (node) {
-		if (node->behaviour->mouseWheel) {
-			node->behaviour->mouseWheel(node, down, x, y);
+		if (node->behaviour->scroll) {
+			node->behaviour->scroll(node, deltaX, deltaY);
 			break;
 		} else {
-			if (node->onWheelUp && !down) {
+			if (node->onWheelUp && deltaY < 0) {
 				UI_ExecuteEventActions(node, node->onWheelUp);
 				break;
 			}
-			if (node->onWheelDown && down) {
+			if (node->onWheelDown && deltaY > 0) {
 				UI_ExecuteEventActions(node, node->onWheelDown);
 				break;
 			}
-			if (node->onWheel) {
+			if (node->onWheel && deltaY != 0) {
 				UI_ExecuteEventActions(node, node->onWheel);
 				break;
 			}
@@ -668,8 +740,6 @@ void UI_MouseWheel (qboolean down, int x, int y)
  * @sa UI_LeftClick
  * @sa UI_RightClick
  * @sa UI_MiddleClick
- * @sa CL_ZoomInQuant
- * @sa CL_ZoomOutQuant
  */
 void UI_MouseDown (int x, int y, int button)
 {
@@ -705,8 +775,6 @@ void UI_MouseDown (int x, int y, int button)
  * @sa UI_LeftClick
  * @sa UI_RightClick
  * @sa UI_MiddleClick
- * @sa CL_ZoomInQuant
- * @sa CL_ZoomOutQuant
  */
 void UI_MouseUp (int x, int y, int button)
 {

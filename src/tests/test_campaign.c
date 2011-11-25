@@ -35,6 +35,8 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #include "../client/cgame/campaign/cp_overlay.h"
 #include "../client/cgame/campaign/cp_ufo.h"
 #include "../client/cgame/campaign/cp_time.h"
+#include "../client/cgame/campaign/cp_alien_interest.h"
+#include "../client/cgame/campaign/cp_auto_mission.h"
 
 static const int TAG_INVENTORY = 1538;
 
@@ -130,15 +132,12 @@ static int UFO_CleanSuiteCampaign (void)
 static installation_t* CreateInstallation (const char *name, const vec2_t pos)
 {
 	const installationTemplate_t *installationTemplate = INS_GetInstallationTemplateFromInstallationID("ufoyard");
-	installation_t *installation = INS_GetFirstUnfoundedInstallation();
+	installation_t *installation;
 
 	CU_ASSERT_PTR_NOT_NULL_FATAL(installationTemplate);
 
+	installation = INS_Build(installationTemplate, pos, name);
 	CU_ASSERT_PTR_NOT_NULL_FATAL(installation);
-
-	CU_ASSERT_FALSE(installation->founded);
-
-	INS_SetUpInstallation(installation, installationTemplate, pos, name);
 	CU_ASSERT_EQUAL(installation->installationStatus, INSTALLATION_UNDER_CONSTRUCTION);
 
 	/* fake the build time */
@@ -172,7 +171,6 @@ static base_t* CreateBase (const char *name, const vec2_t pos)
 static void testAircraftHandling (void)
 {
 	const vec2_t destination = { 10, 10 };
-	campaign_t *campaign;
 	base_t *base;
 	aircraft_t *aircraft;
 	aircraft_t *newAircraft;
@@ -183,8 +181,6 @@ static void testAircraftHandling (void)
 	int newFound;
 
 	ResetCampaignData();
-
-	campaign = GetCampaign();
 
 	base = CreateBase("unittestaircraft", destination);
 	CU_ASSERT_PTR_NOT_NULL_FATAL(base);
@@ -325,12 +321,9 @@ static void testBaseBuilding (void)
 {
 	vec2_t pos = {0, 0};
 	base_t *base;
-	campaign_t *campaign;
 	employeeType_t type;
 
 	ResetCampaignData();
-
-	campaign = GetCampaign();
 
 	ccs.credits = 10000000;
 
@@ -351,61 +344,50 @@ static void testBaseBuilding (void)
 
 static void testAutoMissions (void)
 {
+	const vec2_t pos = {-73.2, 18.5};
+	base_t *base;
 	missionResults_t result;
 	battleParam_t battleParameters;
-	aircraft_t* aircraft = ccs.aircraftTemplates;
+	aircraft_t* aircraft;
 	mission_t *mission;
 	campaign_t *campaign;
-	employee_t *pilot, *e1, *e2;
 
 	ResetCampaignData();
+
+	campaign = GetCampaign();
+	CU_ASSERT_TRUE_FATAL(campaign != NULL);
 
 	OBJZERO(result);
 	OBJZERO(battleParameters);
 
-	mission = CP_CreateNewMission(INTERESTCATEGORY_RECON, qfalse);
-	campaign = GetCampaign();
-	CU_ASSERT_TRUE_FATAL(campaign != NULL);
+	ccs.overallInterest = 36;
+	INT_ResetAlienInterest();
 
-	CU_ASSERT_PTR_NOT_NULL(aircraft);
+	base = CreateBase("unittestautomission", pos);
+	CU_ASSERT_PTR_NOT_NULL_FATAL(base);
+
+	AIR_ForeachFromBase(aircraft, base) {
+		if (AIR_GetTeamSize(aircraft) > 0)
+			break;
+	}
+	CU_ASSERT_PTR_NOT_NULL_FATAL(aircraft);
+	CU_ASSERT_TRUE(AIR_GetTeamSize(aircraft) > 0);
+
+	mission = CP_CreateNewMission(INTERESTCATEGORY_RECON, qfalse);
+	Vector2Copy(pos, mission->pos);
+	mission->posAssigned = qtrue;
+	mission->mapDef = Com_GetMapDefinitionByID("farm2");
 	CU_ASSERT_PTR_NOT_NULL(mission);
 
-	pilot = E_CreateEmployee(EMPL_PILOT, NULL, NULL);
-	CU_ASSERT_PTR_NOT_NULL(pilot);
-	AIR_SetPilot(aircraft, pilot);
+	CP_CreateBattleParameters(mission, &battleParameters, aircraft);
+	AM_Go(mission, aircraft, campaign, &battleParameters, &result);
 
-	e1 = E_CreateEmployee(EMPL_SOLDIER, NULL, NULL);
-	CU_ASSERT_TRUE(AIR_AddToAircraftTeam(aircraft, e1));
-	e2 = E_CreateEmployee(EMPL_SOLDIER, NULL, NULL);
-	CU_ASSERT_TRUE(AIR_AddToAircraftTeam(aircraft, e2));
-
-	CU_ASSERT_EQUAL(AIR_GetTeamSize(aircraft), 2);
-
-	battleParameters.probability = -1.0;
-
-	CP_GameAutoGo(mission, aircraft, campaign, &battleParameters, &result);
-
-	CU_ASSERT_EQUAL(result.won, battleParameters.probability < result.winProbability);
-
-	CU_ASSERT_TRUE(AIR_SetPilot(aircraft, NULL));
-	CU_ASSERT_PTR_NULL(AIR_GetPilot(aircraft));
-
-	CU_ASSERT_TRUE(AIR_RemoveEmployee(e1, aircraft));
-	CU_ASSERT_EQUAL(AIR_GetTeamSize(aircraft), 1);
-
-	CU_ASSERT_TRUE(AIR_RemoveEmployee(e2, aircraft));
-	CU_ASSERT_EQUAL(AIR_GetTeamSize(aircraft), 0);
-
-	CU_ASSERT_TRUE(E_DeleteEmployee(e2));
-	CU_ASSERT_TRUE(E_DeleteEmployee(pilot));
-	CU_ASSERT_TRUE(E_DeleteEmployee(e1));
-
-	CU_ASSERT_EQUAL(E_CountUnhired(EMPL_SOLDIER), 0);
-	CU_ASSERT_EQUAL(E_CountUnhired(EMPL_PILOT), 0);
+	CU_ASSERT_TRUE(result.won);
 }
 
 static void testTransferItem (void)
 {
+	const campaign_t *campaign = GetCampaign();
 	const vec2_t pos = {0, 0};
 	const vec2_t posTarget = {51, 0};
 	base_t *base, *targetBase;
@@ -419,9 +401,9 @@ static void testTransferItem (void)
 	CU_ASSERT_PTR_NOT_NULL_FATAL(base);
 	/* make sure that we get all buildings in our second base, too.
 	 * This is needed for starting a transfer */
-	ccs.campaignStats.basesBuilt = 0;
 	targetBase = CreateBase("unittesttransferitemtargetbase", posTarget);
 	CU_ASSERT_PTR_NOT_NULL_FATAL(targetBase);
+	B_SetUpFirstBase(campaign, targetBase);
 
 	od = INVSH_GetItemByID("assault");
 	CU_ASSERT_PTR_NOT_NULL_FATAL(od);
@@ -545,7 +527,6 @@ static void testResearch (void)
 	technology_t *laserTech;
 	technology_t *heavyLaserTech;
 	base_t *base;
-	campaign_t *campaign;
 	employee_t *employee;
 
 	ResetCampaignData();
@@ -555,7 +536,6 @@ static void testResearch (void)
 	CU_ASSERT_PTR_NOT_NULL_FATAL(laserTech);
 	heavyLaserTech = RS_GetTechByID("rs_weapon_heavylaser");
 	CU_ASSERT_PTR_NOT_NULL_FATAL(heavyLaserTech);
-	campaign = GetCampaign();
 
 	base = CreateBase("unittestbase", pos);
 
@@ -756,17 +736,22 @@ static void testDisassembly (void)
 static void testMap (void)
 {
 	vec2_t pos;
+	qboolean coast = qfalse;
 
 	ResetCampaignData();
 
 	Vector2Set(pos, -51, 0);
-	CU_ASSERT_TRUE(MapIsWater(MAP_GetColor(pos, MAPTYPE_TERRAIN)));
+	CU_ASSERT_TRUE(MapIsWater(MAP_GetColor(pos, MAPTYPE_TERRAIN, NULL)));
 
 	Vector2Set(pos, 51, 0);
-	CU_ASSERT_TRUE(!MapIsWater(MAP_GetColor(pos, MAPTYPE_TERRAIN)));
+	CU_ASSERT_TRUE(!MapIsWater(MAP_GetColor(pos, MAPTYPE_TERRAIN, NULL)));
 
 	Vector2Set(pos, 20, 20);
-	CU_ASSERT_TRUE(MapIsWater(MAP_GetColor(pos, MAPTYPE_TERRAIN)));
+	CU_ASSERT_TRUE(MapIsWater(MAP_GetColor(pos, MAPTYPE_TERRAIN, NULL)));
+
+	Vector2Set(pos, -45, 2.5);
+	CU_ASSERT_TRUE(!MapIsWater(MAP_GetColor(pos, MAPTYPE_TERRAIN, &coast)));
+	CU_ASSERT_TRUE(coast);
 }
 
 static void testAirFight (void)
@@ -1158,9 +1143,8 @@ static void testBuildingConstruction (void)
 	/* day 0 has special meaning! */
 	/* if building->startTime is 0 no buildTime checks done! */
 	ccs.date.day++;
-	ccs.campaignStats.basesBuilt = 1;
-
-	base = CreateBase("unittestbuildingconstruction", pos);
+	base = CreateBase("unittestbuildingconstruction1", pos);
+	base = CreateBase("unittestbuildingconstruction2", pos);
 	CU_ASSERT_PTR_NOT_NULL_FATAL(base);
 
 	/* base should have exactly one building: entrance */
@@ -1251,6 +1235,107 @@ static void test3090011 (void)
 	UFO_CU_ASSERT_TRUE_MSG(success, error);
 }
 
+static qboolean skipTest (const mapDef_t *md)
+{
+	const char *map = md->id;
+	return Q_streq(map, "baseattack") || Q_streq(map, "rescue") || Q_streq(map, "alienbase");
+}
+
+static void testTerrorMissions (void)
+{
+	city_t *city;
+	ufoType_t ufoType;
+	int numUfoTypes;
+	ufoType_t ufoTypes[UFO_MAX];
+	mapDef_t *md;
+
+	ResetCampaignData();
+
+	/* Set overall interest level so every UFO can be used for missions */
+	for (ufoType = UFO_SCOUT; ufoType < UFO_MAX; ufoType++) {
+		const aircraft_t *ufo = UFO_GetByType(ufoType);
+
+		if (!ufo)
+			continue;
+
+		ccs.overallInterest = max(ccs.overallInterest, ufo->ufoInterestOnGeoscape);
+	}
+
+	/* Search without UFO */
+	LIST_Foreach(ccs.cities, city_t, city) {
+		mission_t mission;
+		OBJZERO(mission);
+		UFO_CU_ASSERT_TRUE_MSG(CP_ChooseMap(&mission, city->pos), va("could not find a map for city %s", city->id));
+	}
+
+	/* Search with UFOs available for Terror missions */
+	numUfoTypes = CP_TerrorMissionAvailableUFOs(NULL, ufoTypes);
+	for (ufoType = 0; ufoType < numUfoTypes; ufoType++) {
+		mission_t mission;
+		aircraft_t *ufo = UFO_AddToGeoscape(ufoTypes[ufoType], NULL, &mission);
+
+		OBJZERO(mission);
+		mission.ufo = ufo;
+		CU_ASSERT_PTR_NOT_NULL_FATAL(ufo);
+		ufo->mission = &mission;
+
+		LIST_Foreach(ccs.cities, city_t, city) {
+			mission.mapDef = NULL;
+#ifdef TEST_BIGUFOS
+			UFO_CU_ASSERT_TRUE_MSG(CP_ChooseMap(&mission, city->pos), va("could not find map for city %s with ufo: %s", city->id, ufo->id));
+#else
+			CP_ChooseMap(&mission, city->pos);
+#endif
+		}
+
+		UFO_RemoveFromGeoscape(ufo);
+	}
+
+	MapDef_ForeachSingleplayerCampaign(md) {
+		/* skip mapDefs that were used */
+		if (md->timesAlreadyUsed > 0)
+			continue;
+		/* skip special mapDefs */
+		if (skipTest(md))
+			continue;
+		/* skip mapDefs which don't support UFO types that do terror missions */
+		if (!LIST_IsEmpty(md->ufos)) {
+			qboolean found = qfalse;
+			for (ufoType = 0; ufoType < numUfoTypes; ufoType++) {
+				const aircraft_t *ufo = UFO_GetByType(ufoTypes[ufoType]);
+
+				if (!ufo)
+					continue;
+
+				if (LIST_ContainsString(md->ufos, ufo->id)) {
+					found = qtrue;
+					break;
+				}
+			}
+			if (!found)
+				continue;
+		}
+		UFO_CU_ASSERT_MSG(va("%s wasn't used", md->id));
+	}
+}
+
+static void testRandomPosMissions (void)
+{
+	const mapDef_t *md;
+
+	ResetCampaignData();
+
+	MapDef_ForeachSingleplayerCampaign(md) {
+		if (!skipTest(md)) {
+			mission_t mission;
+			qboolean result;
+			OBJZERO(mission);
+			result = CP_GetRandomPosOnGeoscapeWithParameters(mission.pos, md->terrains, md->cultures, md->populations, NULL);
+			UFO_CU_ASSERT_TRUE_MSG(result, va("could not find a mission for mapdef %s", md->id));
+		}
+	}
+}
+
 int UFO_AddCampaignTests (void)
 {
 	/* add a suite to the registry */
@@ -1260,9 +1345,6 @@ int UFO_AddCampaignTests (void)
 		return CU_get_error();
 
 	/* add the tests to the suite */
-	if (CU_ADD_TEST(campaignSuite, testAutoMissions) == NULL)
-		return CU_get_error();
-
 	if (CU_ADD_TEST(campaignSuite, testBaseBuilding) == NULL)
 		return CU_get_error();
 
@@ -1273,6 +1355,9 @@ int UFO_AddCampaignTests (void)
 		return CU_get_error();
 
 	if (CU_ADD_TEST(campaignSuite, testEmployeeHandling) == NULL)
+		return CU_get_error();
+
+	if (CU_ADD_TEST(campaignSuite, testAutoMissions) == NULL)
 		return CU_get_error();
 
 	if (CU_ADD_TEST(campaignSuite, testTransferItem) == NULL)
@@ -1339,6 +1424,12 @@ int UFO_AddCampaignTests (void)
 		return CU_get_error();
 
 	if (CU_ADD_TEST(campaignSuite, test3090011) == NULL)
+		return CU_get_error();
+
+	if (CU_ADD_TEST(campaignSuite, testTerrorMissions) == NULL)
+		return CU_get_error();
+
+	if (CU_ADD_TEST(campaignSuite, testRandomPosMissions) == NULL)
 		return CU_get_error();
 
 	return CUE_SUCCESS;

@@ -70,7 +70,7 @@ std::string UMPSystem::getUMPFilename (const std::string& map)
 	if (i != _umpFileMap.end())
 		return i->second;
 
-	for (UMPFilesIterator i = _umpFiles.begin(); i != _umpFiles.end(); i++) {
+	for (UMPFilesIterator i = _umpFiles.begin(); i != _umpFiles.end(); ++i) {
 		try {
 			map::ump::UMPFile umpFile(*i);
 			if (!umpFile.load()) {

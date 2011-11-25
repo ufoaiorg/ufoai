@@ -45,7 +45,7 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #define B_GetBuildingIDX(base, building) ((ptrdiff_t)((building) - ccs.buildings[base->idx]))
 #define B_GetBaseIDX(base) ((ptrdiff_t)((base) - ccs.bases))
 
-static void B_PackInitialEquipment(aircraft_t *aircraft, const equipDef_t *ed);
+static void B_InitialEquipment(aircraft_t *aircraft, const equipDef_t *ed);
 
 /**
  * @brief Returns the neighbourhood of a building
@@ -909,7 +909,7 @@ static void B_MoveAircraftOnGeoscapeToOtherBases (const base_t *base)
 			if (!moved) {
 				/* No base can hold this aircraft */
 				UFO_NotifyPhalanxAircraftRemoved(aircraft);
-				if (!MapIsWater(MAP_GetColor(aircraft->pos, MAPTYPE_TERRAIN))) {
+				if (!MapIsWater(MAP_GetColor(aircraft->pos, MAPTYPE_TERRAIN, NULL))) {
 					CP_SpawnRescueMission(aircraft, NULL);
 				} else {
 					/* Destroy the aircraft and everything onboard - the aircraft pointer
@@ -1103,41 +1103,6 @@ static void B_AddBuildingToBasePos (base_t *base, const building_t const *buildi
 }
 
 /**
- * @brief Prepares initial equipment for first base at the beginning of the campaign.
- * @param[in] base Pointer to first base.
- * @param[in] assignInitialAircraft aircraft on which the soldiers (to equip) are
- * @param[in] ed Initial equipment definition
- * @param[in] edTarget storage to put items to
- * @sa B_BuildBase_f
- * @todo Make sure all equipment including soldiers equipment is added to capacity.cur.
- */
-static void B_InitialEquipment (base_t *base, aircraft_t *assignInitialAircraft, const equipDef_t *ed, equipDef_t *edTarget)
-{
-	int i, price = 0;
-
-	assert(base);
-	assert(edTarget);
-
-	/* Initial soldiers and their equipment. */
-	if (assignInitialAircraft) {
-		B_PackInitialEquipment(assignInitialAircraft, ed);
-	} else {
-		for (i = 0; i < csi.numODs; i++)
-			edTarget->numItems[i] += ed->numItems[i] / 5;
-	}
-
-	/* Pay for the initial equipment as well as update storage capacity. */
-	for (i = 0; i < csi.numODs; i++) {
-		const objDef_t *od = INVSH_GetItemByIDX(i);
-		price += edTarget->numItems[i] * od->price;
-		CAP_AddCurrent(base, CAP_ITEMS, edTarget->numItems[i] * od->size);
-	}
-
-	/* Finally update credits. */
-	CP_UpdateCredits(ccs.credits - price);
-}
-
-/**
  * @brief builds a base from template
  * @param[out] base The base to build
  * @param[in] templateName Templated used for building. If @c NULL no template
@@ -1236,7 +1201,7 @@ void B_SetUpFirstBase (const campaign_t *campaign, base_t* base)
 			Com_Error(ERR_DROP, "B_SetUpFirstBase: Hiring pilot failed.");
 		/* Assign and equip soldiers on Dropships */
 		AIR_AssignInitial(aircraft);
-		B_InitialEquipment(base, aircraft, equipDef, &base->storage);
+		B_InitialEquipment(aircraft, equipDef);
 	}
 	if (B_GetBuildingStatus(base, B_SMALL_HANGAR)) {
 		const char *stiletto = Com_DropShipTypeToShortName(INTERCEPTOR_STILETTO);
@@ -1264,7 +1229,7 @@ int B_GetInstallationLimit (void)
 			limit++;
 	}
 
-	return min(MAX_INSTALLATIONS, limit * MAX_INSTALLATIONS_PER_BASE);
+	return limit * MAX_INSTALLATIONS_PER_BASE;
 }
 
 /**
@@ -1292,10 +1257,13 @@ base_t *B_Build (const campaign_t *campaign, const vec2_t pos, const char *name)
 	if (!campaign)
 		Com_Error(ERR_DROP, "You can only build a base in an active campaign");
 
+	if (!base)
+		Com_Error(ERR_DROP, "Cannot build more bases");
+
 	B_SetName(base, name);
 	Vector2Copy(pos, base->pos);
 
-	base->idx = B_GetBaseIDX(base);
+	base->idx = ccs.campaignStats.basesBuilt;
 	base->founded = qtrue;
 
 	/* increase this early because a lot of functions rely on this
@@ -1491,7 +1459,7 @@ void B_DrawBuilding (const building_t* building)
 	if (building->buildingStatus < B_STATUS_UNDER_CONSTRUCTION && building->fixCosts)
 		Com_sprintf(buildingText, sizeof(buildingText), _("Costs:\t%i c\n"), building->fixCosts);
 
-	if (building->buildingStatus == B_STATUS_UNDER_CONSTRUCTION)
+	if (building->buildingStatus == B_STATUS_UNDER_CONSTRUCTION || building->buildingStatus == B_STATUS_NOT_SET)
 		Q_strcat(buildingText, va(ngettext("%i Day to build\n", "%i Days to build\n", building->buildTime), building->buildTime), sizeof(buildingText));
 
 	if (building->varCosts)
@@ -1901,33 +1869,35 @@ static void CL_SwapSkills (chrList_t *team)
 }
 
 /**
- * @brief Assigns initial soldier equipment for the first base
- * @todo Move this function to a better place - has nothing to do with bases anymore
+ * @brief Prepares initial equipment for initial team the beginning of the campaign.
+ * @param[in,out] aircraft aircraft on which the soldiers (to equip) are
+ * @param[in] ed Initial equipment definition
  */
-static void B_PackInitialEquipment (aircraft_t *aircraft, const equipDef_t *ed)
+static void B_InitialEquipment (aircraft_t *aircraft, const equipDef_t *ed)
 {
-	base_t *base = aircraft->homebase;
+	base_t *homebase;
 	chrList_t chrListTemp;
 	employee_t *employee;
 
-	if (!aircraft)
-		return;
+	assert(aircraft);
+	homebase = aircraft->homebase;
+	assert(homebase);
+	assert(ed);
 
 	chrListTemp.num = 0;
 	LIST_Foreach(aircraft->acTeam, employee_t, employee) {
 		character_t *chr = &employee->chr;
+
 		/* pack equipment */
-		Com_DPrintf(DEBUG_CLIENT, "B_PackInitialEquipment: Packing initial equipment for %s.\n", chr->name);
+		Com_DPrintf(DEBUG_CLIENT, "B_InitialEquipment: Packing initial equipment for %s.\n", chr->name);
 		cls.i.EquipActor(&cls.i, &chr->i, ed, chr->teamDef);
 		chrListTemp.chr[chrListTemp.num] = chr;
 		chrListTemp.num++;
 	}
 
-	if (base) {
-		AIR_MoveEmployeeInventoryIntoStorage(aircraft, &base->storage);
-		CAP_UpdateStorageCap(base);
-	}
+	AIR_MoveEmployeeInventoryIntoStorage(aircraft, &homebase->storage);
 	CL_SwapSkills(&chrListTemp);
+	CAP_UpdateStorageCap(homebase);
 }
 
 /**
@@ -2010,6 +1980,7 @@ static void B_BaseList_f (void)
 		Com_Printf("Misc  Lab Quar Stor Work Hosp Hang Cont SHgr UHgr SUHg Powr  Cmd AMtr Entr Miss Lasr  Rdr Team\n");
 		for (j = 0; j < MAX_BUILDING_TYPE; j++)
 			Com_Printf("  %i  ", B_GetBuildingStatus(base, j));
+		Com_Printf("\n");
 		Com_Printf("Base pos %.02f:%.02f\n", base->pos[0], base->pos[1]);
 		Com_Printf("Base map:\n");
 		for (row = 0; row < BASE_SIZE; row++) {
@@ -2497,7 +2468,7 @@ void B_SaveBaseSlotsXML (const baseWeapon_t *weapons, const int numWeapons, xmlN
 	for (i = 0; i < numWeapons; i++) {
 		xmlNode_t *sub = XML_AddNode(node, SAVE_BASES_WEAPON);
 		AII_SaveOneSlotXML(sub, &weapons[i].slot, qtrue);
-		XML_AddBoolValue(sub, SAVE_BASES_AUTOFIRE, weapons[i].autofire);
+		XML_AddBool(sub, SAVE_BASES_AUTOFIRE, weapons[i].autofire);
 		if (weapons[i].target)
 			XML_AddInt(sub, SAVE_BASES_TARGET, weapons[i].target->idx);
 	}
@@ -2523,20 +2494,22 @@ qboolean B_SaveStorageXML (xmlNode_t *parent, const equipDef_t equip)
 	}
 	return qtrue;
 }
+
 /**
  * @brief Save callback for saving in xml format.
  * @param[out] parent XML Node structure, where we write the information to
  */
 qboolean B_SaveXML (xmlNode_t *parent)
 {
-	xmlNode_t * bases;
+	xmlNode_t *bases;
 	base_t *b;
 
 	bases = XML_AddNode(parent, SAVE_BASES_BASES);
 	b = NULL;
 	while ((b = B_GetNext(b)) != NULL) {
-		int k;
-		xmlNode_t * act_base, *node;
+		int row;
+		xmlNode_t *act_base;
+		xmlNode_t *node;
 		building_t *building;
 
 		if (!b->founded) {
@@ -2547,25 +2520,24 @@ qboolean B_SaveXML (xmlNode_t *parent)
 		Com_RegisterConstList(saveBaseConstants);
 
 		act_base = XML_AddNode(bases, SAVE_BASES_BASE);
+		XML_AddInt(act_base, SAVE_BASES_IDX, b->idx);
 		XML_AddString(act_base, SAVE_BASES_NAME, b->name);
 		XML_AddPos3(act_base, SAVE_BASES_POS, b->pos);
 		XML_AddString(act_base, SAVE_BASES_BASESTATUS, Com_GetConstVariable(SAVE_BASESTATUS_NAMESPACE, b->baseStatus));
 		XML_AddFloat(act_base, SAVE_BASES_ALIENINTEREST, b->alienInterest);
-		if (b->aircraftCurrent)
-			XML_AddInt(act_base, SAVE_BASES_CURRENTAIRCRAFTIDX, AIR_GetAircraftIDXInBase(b->aircraftCurrent));
 
 		/* building space */
 		node = XML_AddNode(act_base, SAVE_BASES_BUILDINGSPACE);
-		for (k = 0; k < BASE_SIZE; k++) {
-			int l;
-			for (l = 0; l < BASE_SIZE; l++) {
+		for (row = 0; row < BASE_SIZE; row++) {
+			int column;
+			for (column = 0; column < BASE_SIZE; column++) {
 				xmlNode_t * snode = XML_AddNode(node, SAVE_BASES_BUILDING);
 				/** @todo save it as vec2t if needed, also it's opposite */
-				XML_AddInt(snode, SAVE_BASES_X, k);
-				XML_AddInt(snode, SAVE_BASES_Y, l);
-				if (b->map[k][l].building)
-					XML_AddInt(snode, SAVE_BASES_BUILDINGINDEX, B_GetBuildingAt(b, l, k)->idx);
-				XML_AddBoolValue(snode, SAVE_BASES_BLOCKED, B_IsTileBlocked(b, l, k));
+				XML_AddInt(snode, SAVE_BASES_X, row);
+				XML_AddInt(snode, SAVE_BASES_Y, column);
+				if (B_GetBuildingAt(b, column, row))
+					XML_AddInt(snode, SAVE_BASES_BUILDINGINDEX, B_GetBuildingAt(b, column, row)->idx);
+				XML_AddBoolValue(snode, SAVE_BASES_BLOCKED, B_IsTileBlocked(b, column, row));
 			}
 		}
 		/* buildings */
@@ -2583,7 +2555,7 @@ qboolean B_SaveXML (xmlNode_t *parent)
 			XML_AddString(snode, SAVE_BASES_BUILDINGSTATUS, Com_GetConstVariable(SAVE_BUILDINGSTATUS_NAMESPACE, building->buildingStatus));
 			XML_AddDate(snode, SAVE_BASES_BUILDINGTIMESTART, building->timeStart.day, building->timeStart.sec);
 			XML_AddInt(snode, SAVE_BASES_BUILDINGBUILDTIME, building->buildTime);
-			XML_AddFloat(snode, SAVE_BASES_BUILDINGLEVEL, building->level);
+			XML_AddFloatValue(snode, SAVE_BASES_BUILDINGLEVEL, building->level);
 			XML_AddPos2(snode, SAVE_BASES_POS, building->pos);
 		}
 		/* base defences */
@@ -2656,7 +2628,7 @@ qboolean B_LoadStorageXML (xmlNode_t *parent, equipDef_t *equip)
 	xmlNode_t *node;
 	for (node = XML_GetNode(parent, SAVE_BASES_ITEM); node; node = XML_GetNextNode(node, parent, SAVE_BASES_ITEM)) {
 		const char *s = XML_GetString(node, SAVE_BASES_ODS_ID);
-		objDef_t *od = INVSH_GetItemByID(s);
+		const objDef_t *od = INVSH_GetItemByID(s);
 
 		if (!od) {
 			Com_Printf("B_Load: Could not find item '%s'\n", s);
@@ -2689,14 +2661,18 @@ qboolean B_LoadXML (xmlNode_t *parent)
 	Com_RegisterConstList(saveBaseConstants);
 	for (base = XML_GetNode(bases, SAVE_BASES_BASE), i = 0; i < MAX_BASES && base; i++, base = XML_GetNextNode(base, bases, SAVE_BASES_BASE)) {
 		xmlNode_t * node, * snode;
-		int aircraftIdxInBase;
 		base_t *const b = B_GetBaseByIDX(i);
 		const char *str = XML_GetString(base, SAVE_BASES_BASESTATUS);
 		int j;
 
 		ccs.numBases++;
 
-		b->idx = B_GetBaseIDX(b);
+		b->idx = XML_GetInt(base, SAVE_BASES_IDX, -1);
+		if (b->idx < 0) {
+			Com_Printf("Invalid base index %i\n", b->idx);
+			Com_UnregisterConstList(saveBaseConstants);
+			return qfalse;
+		}
 		b->founded = qtrue;
 		if (!Com_GetConstIntFromNamespace(SAVE_BASESTATUS_NAMESPACE, str, (int*) &b->baseStatus)) {
 			Com_Printf("Invalid base status '%s'\n", str);
@@ -2707,16 +2683,7 @@ qboolean B_LoadXML (xmlNode_t *parent)
 		Q_strncpyz(b->name, XML_GetString(base, SAVE_BASES_NAME), sizeof(b->name));
 		XML_GetPos3(base, SAVE_BASES_POS, b->pos);
 		b->alienInterest = XML_GetFloat(base, SAVE_BASES_ALIENINTEREST, 0.0);
-
-		aircraftIdxInBase = XML_GetInt(base, SAVE_BASES_CURRENTAIRCRAFTIDX, AIRCRAFT_INBASE_INVALID);
-		if (aircraftIdxInBase != AIRCRAFT_INBASE_INVALID) {
-			/* aircraft are not yet loaded! */
-			/** @todo this must be set after the aircraft are loaded */
-			/*b->aircraftCurrent = &b->aircraft[aircraftIdxInBase];*/
-			b->aircraftCurrent = NULL;
-		} else {
-			b->aircraftCurrent = NULL;
-		}
+		b->aircraftCurrent = NULL;
 
 		/* building space*/
 		node = XML_GetNode(base, SAVE_BASES_BUILDINGSPACE);
@@ -2746,6 +2713,7 @@ qboolean B_LoadXML (xmlNode_t *parent)
 		for (j = 0, snode = XML_GetNode(node, SAVE_BASES_BUILDING); snode; snode = XML_GetNextNode(snode, node, SAVE_BASES_BUILDING), j++) {
 			const int buildId = XML_GetInt(snode, SAVE_BASES_BUILDING_PLACE, MAX_BUILDINGS);
 			building_t *building;
+			const building_t *buildingTemplate;
 			char buildingType[MAX_VAR];
 
 			if (buildId >= MAX_BUILDINGS) {
@@ -2761,11 +2729,11 @@ qboolean B_LoadXML (xmlNode_t *parent)
 				return qfalse;
 			}
 
-			building = B_GetBuildingTemplate(buildingType);
-			if (!building)
+			buildingTemplate = B_GetBuildingTemplate(buildingType);
+			if (!buildingTemplate)
 				continue;
 
-			ccs.buildings[i][buildId] = *building;
+			ccs.buildings[i][buildId] = *buildingTemplate;
 			building = B_GetBuildingByIDX(i, buildId);
 			building->idx = B_GetBuildingIDX(b, building);
 			if (building->idx != buildId) {
@@ -2783,21 +2751,10 @@ qboolean B_LoadXML (xmlNode_t *parent)
 			}
 
 			XML_GetDate(snode, SAVE_BASES_BUILDINGTIMESTART, &building->timeStart.day, &building->timeStart.sec);
-			/** @todo fallback code for compatibility */
-			if (building->timeStart.day == 0 && building->timeStart.sec == 0)
-				building->timeStart.day = XML_GetInt(snode, SAVE_BASES_BUILDINGTIMESTART, 0);
 
 			building->buildTime = XML_GetInt(snode, SAVE_BASES_BUILDINGBUILDTIME, 0);
 			building->level = XML_GetFloat(snode, SAVE_BASES_BUILDINGLEVEL, 0);
 			XML_GetPos2(snode, SAVE_BASES_POS, building->pos);
-
-			/** @todo fallback code for compatibility */
-			if (b->map[(int)building->pos[1]][(int)building->pos[0]].building != building
-			 && b->map[(int)building->pos[0]][(int)building->pos[1]].building == building) {
-				int swap = building->pos[0];
-				building->pos[0] = building->pos[1];
-				building->pos[1] = swap;
-			}
 		}
 		ccs.numBuildings[i] = j;
 

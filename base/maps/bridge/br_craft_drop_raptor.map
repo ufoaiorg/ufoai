@@ -6,6 +6,7 @@
 "maxteams" "2"
 "saturation" "0.6"
 "brightness" "0.8"
+"randomspawn" "1"
 // brush 0
 {
 ( -512 -1960 -32 ) ( -330 -1960 -32 ) ( -512 -1192 -32 ) tex_common/nodraw 32 0 0 1 1 65280 0 0

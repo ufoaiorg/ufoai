@@ -64,8 +64,8 @@ static qboolean SAV_GameActionsAfterLoad (void)
 {
 	qboolean result = qtrue;
 
-	result = result && B_PostLoadInit();
 	result = result && AIR_PostLoadInit();
+	result = result && B_PostLoadInit();
 	result = result && PR_PostLoadInit();
 
 	/* Make sure the date&time is displayed when loading. */
@@ -406,6 +406,10 @@ static void SAV_GameReadGameComment (const int idx)
 		if (FS_Read(&header, sizeof(header), &f) != sizeof(header))
 			Com_Printf("Warning: Savefile header may be corrupted\n");
 
+		header.compressed = LittleLong(header.compressed);
+		header.version = LittleLong(header.version);
+		header.xmlSize = LittleLong(header.xmlSize);
+
 		if (!SAV_VerifyHeader(&header))
 			Com_Printf("Savegame header for slot%d is corrupted!\n", idx);
 		else
@@ -640,8 +644,8 @@ void SAV_Init (void)
 	static saveSubsystems_t pr_subsystemXML = {"production", PR_SaveXML, PR_LoadXML};
 	static saveSubsystems_t air_subsystemXML = {"aircraft", AIR_SaveXML, AIR_LoadXML};
 	static saveSubsystems_t ab_subsystemXML = {"alien base", AB_SaveXML, AB_LoadXML};
-	static saveSubsystems_t int_subsystemXML = {"interest", CP_SaveInterestsXML, CP_LoadInterestsXML};
-	static saveSubsystems_t mis_subsystemXML = {"mission", CP_SaveMissionsXML, CP_LoadMissionsXML};
+	static saveSubsystems_t int_subsystemXML = {"interest", INT_SaveXML, INT_LoadXML};
+	static saveSubsystems_t mis_subsystemXML = {"mission", MIS_SaveXML, MIS_LoadXML};
 	static saveSubsystems_t ms_subsystemXML = {"messagesystem", MS_SaveXML, MS_LoadXML};
 	static saveSubsystems_t stats_subsystemXML = {"stats", STATS_SaveXML, STATS_LoadXML};
 	static saveSubsystems_t na_subsystemXML = {"nations", NAT_SaveXML, NAT_LoadXML};
@@ -667,8 +671,8 @@ void SAV_Init (void)
 	SAV_AddSubsystem(&air_subsystemXML);
 	SAV_AddSubsystem(&ab_subsystemXML);
 	SAV_AddSubsystem(&int_subsystemXML);
-	SAV_AddSubsystem(&mis_subsystemXML);
 	SAV_AddSubsystem(&ins_subsystemXML);
+	SAV_AddSubsystem(&mis_subsystemXML);
 	SAV_AddSubsystem(&us_subsystemXML);
 	SAV_AddSubsystem(&pr_subsystemXML);
 	SAV_AddSubsystem(&ms_subsystemXML);
@@ -678,9 +682,10 @@ void SAV_Init (void)
 	SAV_AddSubsystem(&xvi_subsystemXML);
 	SAV_AddSubsystem(&mso_subsystemXML);
 
-	Cmd_AddCommand("game_quickloadinit", SAV_GameQuickLoadInit_f, "Check whether there is a quicksave at all");
-	Cmd_AddCommand("game_quicksave", SAV_GameQuickSave_f, N_("Saves to the quick save slot"));
-	Cmd_AddCommand("game_quickload", SAV_GameQuickLoad_f, "Loads the quick save slot");
+	/* Check whether there is a quicksave at all */
+	Cmd_AddCommand("game_quickloadinit", SAV_GameQuickLoadInit_f, "Load the game from the quick save slot.");
+	Cmd_AddCommand("game_quicksave", SAV_GameQuickSave_f, "Save to the quick save slot.");
+	Cmd_AddCommand("game_quickload", SAV_GameQuickLoad_f, "Load the game from the quick save slot.");
 	Cmd_AddCommand("game_save", SAV_GameSave_f, "Saves to a given filename");
 	Cmd_AddCommand("game_load", SAV_GameLoad_f, "Loads a given filename");
 	Cmd_AddCommand("game_comments", SAV_GameReadGameComments_f, "Loads the savegame names");

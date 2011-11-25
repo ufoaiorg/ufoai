@@ -6,6 +6,10 @@
 }
 {
 	material tex_nature/dirt002
+	hardness 0.01
+	parallax 1.0
+	specular 1.0
+	bump 1.0
 	{
 		texture tex_nature/desert004
 		terrain 5.2 10.0
@@ -14,15 +18,22 @@
 }
 {
 	material tex_nature/desert003
+	hardness 0.01
+	parallax 1.0
+	specular 1.0
+	bump 1.0
 	{
 		texture 	tex_nature/dirt002
 		terrain   8.0 10.0
 		lightmap
-
 	}
 }
 {
 	material tex_nature/desert004
+	hardness 0.01
+	parallax 1.0
+	specular 1.0
+	bump 1.0
 	{
 		texture   tex_nature/desert001
 		terrain   5.5 8.0

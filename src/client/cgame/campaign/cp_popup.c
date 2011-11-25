@@ -302,6 +302,15 @@ static void CL_PopupAircraftClick_f (void)
 POPUP_INTERCEPT
 ========================================*/
 
+static int AIR_SortByDistance (linkedList_t *aircraftEntry1, linkedList_t *aircraftEntry2, const void *userData)
+{
+	const vec_t* pos = (const vec_t*)userData;
+	const aircraft_t *aircraft1 = (const aircraft_t*)aircraftEntry1->data;
+	const aircraft_t *aircraft2 = (const aircraft_t*)aircraftEntry2->data;
+
+	return GetDistanceOnGlobe(aircraft1->pos, pos) - GetDistanceOnGlobe(aircraft2->pos, pos);
+}
+
 /**
  * @brief Display the popup_mission
  * @sa CL_DisplayPopupAircraft
@@ -309,6 +318,7 @@ POPUP_INTERCEPT
 void CL_DisplayPopupInterceptMission (mission_t* mission)
 {
 	linkedList_t *aircraftList = NULL;
+	linkedList_t *aircraftListSorted;
 	aircraft_t *aircraft;
 
 	if (!mission)
@@ -320,7 +330,7 @@ void CL_DisplayPopupInterceptMission (mission_t* mission)
 	/* Create the list of aircraft, and write the text to display in popup */
 	popupIntercept.numAircraft = 0;
 
-	AIR_Foreach(aircraft) {
+	AIR_ForeachSorted(aircraft, AIR_SortByDistance, mission->pos, aircraftListSorted) {
 		const int teamSize = AIR_GetTeamSize(aircraft);
 
 		if (aircraft->status == AIR_CRASHED)
@@ -340,6 +350,7 @@ void CL_DisplayPopupInterceptMission (mission_t* mission)
 				break;
 		}
 	}
+	LIST_Delete(&aircraftListSorted);
 
 	if (popupIntercept.numAircraft)
 		UI_RegisterLinkedListText(TEXT_AIRCRAFT_LIST, aircraftList);
@@ -361,10 +372,11 @@ void CL_DisplayPopupInterceptMission (mission_t* mission)
 void CL_DisplayPopupInterceptUFO (aircraft_t* ufo)
 {
 	linkedList_t *aircraftList = NULL;
+	linkedList_t *aircraftListSorted;
 	linkedList_t *baseList = NULL;
 	aircraft_t *aircraft;
 	base_t *base;
-	int installationIdx;
+	installation_t *installation;
 
 	if (!ufo)
 		return;
@@ -375,7 +387,7 @@ void CL_DisplayPopupInterceptUFO (aircraft_t* ufo)
 	/* Create the list of aircraft, and write the text to display in popup */
 	popupIntercept.numAircraft = 0;
 
-	AIR_Foreach(aircraft) {
+	AIR_ForeachSorted(aircraft, AIR_SortByDistance, ufo->pos, aircraftListSorted) {
 		if (AIR_CanIntercept(aircraft)) {
 			char aircraftListText[256] = "";
 			/* don't show aircraft with no weapons or no ammo, or crafts that
@@ -402,6 +414,7 @@ void CL_DisplayPopupInterceptUFO (aircraft_t* ufo)
 				break;
 		}
 	}
+	LIST_Delete(&aircraftListSorted);
 
 	base = NULL;
 	while ((base = B_GetNext(base)) != NULL) {
@@ -416,11 +429,7 @@ void CL_DisplayPopupInterceptUFO (aircraft_t* ufo)
 	else
 		UI_RegisterText(TEXT_AIRCRAFT_LIST, _("No craft available, no pilot assigned, or no weapon or ammo equipped."));
 
-	for (installationIdx = 0; installationIdx < ccs.numInstallations; installationIdx++) {
-		const installation_t const *installation = INS_GetFoundedInstallationByIDX(installationIdx);
-		if (!installation)
-			continue;
-
+	INS_Foreach(installation) {
 		/* Check if the installation should be displayed in base list
 		 * don't check range because maybe UFO will get closer */
 		if (AII_InstallationCanShoot(installation))
@@ -545,12 +554,7 @@ static void CL_PopupInterceptBaseClick_f (void)
 
 	installation = NULL;
 	if (num >= 0) { /* don't try to find an installation if we already found the right base */
-		int installationIdx;
-		for (installationIdx = 0; installationIdx < MAX_INSTALLATIONS; installationIdx++) {
-			installation = INS_GetFoundedInstallationByIDX(installationIdx);
-			if (!installation)
-				continue;
-
+		INS_Foreach(installation) {
 			/* Check if the installation should be displayed in base list */
 			if (AII_InstallationCanShoot(installation)) {
 				num--;
@@ -560,7 +564,6 @@ static void CL_PopupInterceptBaseClick_f (void)
 			}
 		}
 	}
-
 
 	if (!atLeastOneBase && !num) {
 		/* no base in list: no error message

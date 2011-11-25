@@ -22,21 +22,15 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 
 */
 
-#include <math.h>
-
 #include "ui_node_radar.h"
 #include "ui_node_abstractnode.h"
 #include "../ui_render.h"
-#include "../ui_timer.h"
-#include "../ui_windows.h"
 #include "../ui_main.h"
 #include "../ui_input.h"
 
 #include "../../client.h"
-#include "../../battlescape/cl_localentity.h"
-#include "../../battlescape/cl_hud.h"
+#include "../../battlescape/cl_hud.h" /* cl_worldlevel cvar */
 #include "../../renderer/r_draw.h"
-#include "../../renderer/r_misc.h"
 #include "../../../shared/parse.h"
 
 /** @brief Each maptile must have an entry in the images array */
@@ -88,9 +82,10 @@ static void UI_FreeRadarImages (void)
 	int i, j;
 
 	for (i = 0; i < radar.numImages; i++) {
-		Mem_Free(radar.images[i].name);
-		for (j = 0; j < radar.images[i].maxlevel; j++)
-			Mem_Free(radar.images[i].path[j]);
+		hudRadarImage_t *image = &radar.images[i];
+		Mem_Free(image->name);
+		for (j = 0; j < image->maxlevel; j++)
+			Mem_Free(image->path[j]);
 	}
 	OBJZERO(radar);
 }
@@ -506,59 +501,10 @@ static void UI_RadarNodeDrawActor (const le_t *le, const vec3_t pos)
 	UI_RadarNodeDrawArrays(color, coords, vertices, image);
 }
 
-#if 0
-/**
- * @todo We can merge actor and items draw function
- */
-static void UI_RadarNodeDrawItem (const le_t *le, const vec3_t pos)
-{
-	float coords[4 * 2];
-	short vertices[4 * 2];
-	vec4_t color;
-	int i;
-	const float size = 10;
-	const int tileSize = 28;
-	int tilePos = 96;
-	const image_t *image;
-
-	image = UI_LoadImage("ui/radar");
-	if (image == NULL)
-		return;
-
-	/* a 0,0 centered square */
-	vertices[0] = - size;
-	vertices[1] = + size;
-	vertices[2] = + size;
-	vertices[3] = + size;
-	vertices[4] = + size;
-	vertices[5] = - size;
-	vertices[6] = - size;
-	vertices[7] = - size;
-	coords[0] = (tilePos) / 128.0f;
-	coords[1] = (5 + tileSize) / 128.0f;
-	coords[2] = (tilePos + tileSize) / 128.0f;
-	coords[3] = (5 + tileSize) / 128.0f;
-	coords[4] = (tilePos + tileSize) / 128.0f;
-	coords[5] = (5) / 128.0f;
-	coords[6] = (tilePos) / 128.0f;
-	coords[7] = (5) / 128.0f;
-
-	/* affine transformation */
-	for (i = 0; i < 8; i += 2) {
-		vertices[i + 0] += pos[0];
-		vertices[i + 1] += pos[1];
-	}
-
-	UI_RadarNodeGetActorColor(le, color);
-	Vector4Set(color, 0, 1, 0, color[3]);
-}
-#endif
-
 /*#define RADARSIZE_DEBUG*/
 
 /**
  * @sa CMod_GetMapSize
- * @todo Show frustum view area for actors (@sa FrustumVis)
  * @note we only need to handle the 2d plane and can ignore the z level
  * @param[in] node Node description of the radar
  */
@@ -626,7 +572,7 @@ static void UI_RadarNodeDraw (uiNode_t *node)
 		imagePos[0] = radar.x + mapCoefX * (tile->mapX - cl.mapData->mapMin[0]);
 		imagePos[1] = radar.y + mapCoefY * (tile->mapY - cl.mapData->mapMin[1]);
 
-		UI_DrawNormImageByName(imagePos[0], imagePos[1],
+		UI_DrawNormImageByName(qfalse, imagePos[0], imagePos[1],
 				mapCoefX * tile->mapWidth, mapCoefY * tile->mapHeight,
 				0, 0, 0, 0, tile->path[maxlevel]);
 #ifdef RADARSIZE_DEBUG
@@ -658,9 +604,6 @@ static void UI_RadarNodeDraw (uiNode_t *node)
 			UI_RadarNodeDrawActor(le, itempos);
 			break;
 		case ET_ITEM:
-#if 0
-			UI_RadarNodeDrawItem(le, itempos);
-#endif
 			break;
 		default:
 			break;
@@ -717,115 +660,21 @@ static void UI_RadarNodeMouseUp (uiNode_t *node, int x, int y, int button)
 		UI_MouseRelease();
 }
 
-/**
- * Return the rect where the radarmap should be, when we generate radar images
- * @param[out] x X position of the rect in the frame buffer (from bottom-to-top according to the screen)
- * @param[out] y Y position of the rect in the frame buffer (from bottom-to-top according to the screen)
- * @param[out] width Width of the rect in the frame buffer (from bottom-to-top according to the screen)
- * @param[out] height Height of the rect in the frame buffer (from bottom-to-top according to the screen)
- * @todo fix that function, map is not well captured
- */
-static void UI_GetRadarMapInFrameBuffer(int *x, int *y, int *width, int *height)
+static void UI_RadarWindowedClosed (uiNode_t *node)
 {
-	/* Coefficient come from metric (Bunker map, and game with resolution 1024x1024) == 0.350792947 */
-	static const float magicCoef =  0.351f;
-	const float mapWidth = cl.mapData->mapMax[0] - cl.mapData->mapMin[0];
-	const float mapHeight = cl.mapData->mapMax[1] - cl.mapData->mapMin[1];
-
-	/* compute width and height with the same round error on both sides */
-	/** @todo viddef.context should be removed */
-	const int x2 = (viddef.context.width / 2) + (mapWidth * magicCoef * 0.5);
-	const int y2 = (viddef.context.height / 2) + (mapHeight * magicCoef * 0.5) + 1;
-	*x = (viddef.context.width / 2) - (mapWidth * magicCoef * 0.5);
-	*y = (viddef.context.height / 2) - (mapHeight * magicCoef * 0.5);
-	*width = (x2 - *x);
-	*height = (y2 - *y);
 }
 
-static void UI_GenPreviewRadarMap_f (void)
+static void UI_RadarWindowedOpened (uiNode_t *node, linkedList_t *params)
 {
-	int x, y, width, height;
-	/* map to screen */
-	UI_GetRadarMapInFrameBuffer(&x, &y, &width, &height);
-
-	/* from screen to virtual screen */
-	x /= viddef.rx;
-	width /= viddef.rx;
-	y /= viddef.ry;
-	height /= viddef.ry;
-	y = viddef.virtualHeight - y - height;
-
-	UI_ExecuteConfunc("mn_radarhud_setmapborder %d %d %d %d", x, y, width, height);
-}
-
-/**
- * Take a screen shot of the map with the position of the radar
- *
- * We add 1 pixel into the border to easy check the result:
- * the screen shot must have a border of 1 black pixel
- */
-static void UI_GenRadarMap_f (void)
-{
-	const int border = 0;
-	const char *mapName = Cvar_GetString("sv_mapname");
-
-	const int level = Cvar_GetInteger("cl_worldlevel");
-	const char *filename = NULL;
-	int x, y, width, height;
-
-	UI_GetRadarMapInFrameBuffer(&x, &y, &width, &height);
-	if (mapName)
-		filename = va("%s_%i", mapName, level + 1);
-	R_ScreenShot(x - border, y - border, width + border * 2, height + border * 2, filename, NULL);
-}
-
-static void UI_GenAllRadarMap (uiNode_t *node, uiTimer_t *timer)
-{
-	int level = (timer->calledTime - 1) / 2;
-	int mode = (timer->calledTime - 1) % 2;
-
-	if (level >= cl.mapMaxLevel) {
-		Cbuf_AddText("ui_genallradarmaprelease");
-		return;
-	}
-
-	if (mode == 0)
-		Cvar_SetValue("cl_worldlevel", level);
-	else
-		Cmd_ExecuteString("ui_genradarmap");
-}
-
-uiTimer_t* timer;
-
-/**
- * @todo allow to call UI_TimerRelease into timer callback
- */
-static void UI_GenAllRadarMapRelease_f (void) {
-	UI_TimerRelease(timer);
-	UI_ExecuteConfunc("mn_radarhud_reinit");
-}
-
-/**
- * Take all screenshots from lower to upper map level.
- * Use a timer to delay each capture
- */
-static void UI_GenAllRadarMap_f (void)
-{
-	const int delay = 1000;
-	timer = UI_AllocTimer(NULL, delay, UI_GenAllRadarMap);
-	UI_TimerStart(timer);
 }
 
 void UI_RegisterRadarNode (uiBehaviour_t *behaviour)
 {
 	behaviour->name = "radar";
 	behaviour->draw = UI_RadarNodeDraw;
+	behaviour->windowOpened = UI_RadarWindowedOpened;
+	behaviour->windowClosed = UI_RadarWindowedClosed;
 	behaviour->mouseDown = UI_RadarNodeMouseDown;
 	behaviour->mouseUp = UI_RadarNodeMouseUp;
 	behaviour->capturedMouseMove = UI_RadarNodeCapturedMouseMove;
-
-	Cmd_AddCommand("ui_genpreviewradarmap", UI_GenPreviewRadarMap_f, NULL);
-	Cmd_AddCommand("ui_genradarmap", UI_GenRadarMap_f, NULL);
-	Cmd_AddCommand("ui_genallradarmap", UI_GenAllRadarMap_f, NULL);
-	Cmd_AddCommand("ui_genallradarmaprelease", UI_GenAllRadarMapRelease_f, NULL);
 }

@@ -131,6 +131,87 @@ edict_t* G_TriggerSpawn (edict_t *owner)
 }
 
 /**
+ * @brief Next map trigger that is going to get active once all opponents are killed
+ * @sa SP_trigger_nextmap
+ */
+static qboolean Touch_NextMapTrigger (edict_t *self, edict_t *activator)
+{
+	if (activator != NULL && activator->team == self->team) {
+		char command[MAX_VAR];
+		self->inuse = qfalse;
+		G_ClientPrintf(G_PLAYER_FROM_ENT(activator), PRINT_HUD, _("Switching map!\n"));
+		Com_sprintf(command, sizeof(command), "map %s %s\n",
+				level.day ? "day" : "night", self->nextmap);
+		level.mapEndCommand = (char *)G_TagMalloc(strlen(command) + 1, TAG_GAME);
+		Q_strncpyz(level.mapEndCommand, command, strlen(command));
+
+		level.nextMapSwitch = qtrue;
+		G_MatchEndTrigger(self->team, 0);
+	}
+	return qtrue;
+}
+
+/**
+ * @brief Register this think function once you would like to end the match
+ * This think function will register the touch callback and spawns the particles for
+ * the client to see the next map trigger.
+ */
+void Think_NextMapTrigger (edict_t *self)
+{
+	vec3_t center;
+	pos3_t centerPos;
+
+	VectorCenterFromMinsMaxs(self->absmin, self->absmax, center);
+
+	/* spawn the particle to mark the trigger */
+	G_SpawnParticle(center, self->spawnflags, self->particle);
+	VecToPos(center, centerPos);
+	G_EventCenterViewAt(PM_ALL, centerPos);
+
+	gi.BroadcastPrintf(PRINT_HUD, _("You are now ready to switch the map"));
+
+	self->touch = Touch_NextMapTrigger;
+	self->think = NULL;
+}
+
+void SP_trigger_nextmap (edict_t *ent)
+{
+	/* only used in single player */
+	if (sv_maxclients->integer > 1) {
+		G_FreeEdict(ent);
+		return;
+	}
+
+	if (!ent->particle) {
+		gi.DPrintf("particle isn't set for %s\n", ent->classname);
+		G_FreeEdict(ent);
+		return;
+	}
+	if (!ent->nextmap) {
+		gi.DPrintf("nextmap isn't set for %s\n", ent->classname);
+		G_FreeEdict(ent);
+		return;
+	}
+
+	if (Q_streq(ent->nextmap, level.mapname)) {
+		gi.DPrintf("nextmap loop detected\n");
+		G_FreeEdict(ent);
+		return;
+	}
+
+	ent->classname = "trigger_nextmap";
+	ent->type = ET_TRIGGER_NEXTMAP;
+
+	ent->solid = SOLID_TRIGGER;
+	gi.SetModel(ent, ent->model);
+
+	ent->reset = NULL;
+	ent->child = NULL;
+
+	gi.LinkEdict(ent);
+}
+
+/**
  * @brief Hurt trigger
  * @sa SP_trigger_hurt
  */
@@ -197,13 +278,14 @@ static qboolean Touch_TouchTrigger (edict_t *self, edict_t *activator)
 		return qfalse;
 	}
 
-	if (!self->owner->use) {
-		gi.DPrintf("Owner of %s doesn't have a use function\n", self->classname);
-		G_FreeEdict(self);
-		return qfalse;
-	}
-
-	if (!(self->spawnflags & TRIGGER_TOUCH_ONCE) || self->touchedNext == NULL) {
+	if (self->owner->flags & FL_CLIENTACTION) {
+		G_ActorSetClientAction(activator, self->owner);
+	} else if (!(self->spawnflags & TRIGGER_TOUCH_ONCE) || self->touchedNext == NULL) {
+		if (!self->owner->use) {
+			gi.DPrintf("Owner of %s doesn't have a use function\n", self->classname);
+			G_FreeEdict(self);
+			return qfalse;
+		}
 		G_UseEdict(self->owner, activator);
 	}
 
@@ -213,7 +295,9 @@ static qboolean Touch_TouchTrigger (edict_t *self, edict_t *activator)
 static void Reset_TouchTrigger (edict_t *self, edict_t *activator)
 {
 	/* fire the use function on leaving the trigger area */
-	if ((self->spawnflags & TRIGGER_TOUCH_ONCE) && self->touchedNext == NULL)
+	if (activator != NULL && (self->owner->flags & FL_CLIENTACTION))
+		G_ActorSetClientAction(activator, NULL);
+	else if ((self->spawnflags & TRIGGER_TOUCH_ONCE) && self->touchedNext == NULL)
 		G_UseEdict(self->owner, activator);
 }
 
@@ -274,12 +358,19 @@ static void Reset_RescueTrigger (edict_t *self, edict_t *activator)
  */
 void SP_trigger_rescue (edict_t *ent)
 {
+	/* only used in single player */
+	if (sv_maxclients->integer > 1) {
+		G_FreeEdict(ent);
+		return;
+	}
+
 	ent->classname = "trigger_rescue";
 	ent->type = ET_TRIGGER_RESCUE;
 
 	ent->solid = SOLID_TRIGGER;
 	gi.SetModel(ent, ent->model);
 
+	ent->spawnflags |= 0xFF;
 	ent->touch = Touch_RescueTrigger;
 	ent->reset = Reset_RescueTrigger;
 	ent->child = NULL;

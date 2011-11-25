@@ -39,8 +39,13 @@ void R_ModLoadAnims (mAliasModel_t *mod, const char *buffer)
 	mAliasAnim_t *anim;
 	int n;
 
-	for (n = 0, text = buffer; text; n++)
-		Com_Parse(&text);
+	/* count the animations */
+	n = Com_CountTokensInBuffer(buffer);
+
+	if ((n % 4) != 0)
+		Com_Error(ERR_DROP, "invalid syntax: %s", mod->animname);
+
+	/* each animation definition is made out of 4 tokens */
 	n /= 4;
 	if (n > MAX_ANIMS)
 		n = MAX_ANIMS;
@@ -88,7 +93,7 @@ void R_ModLoadAnims (mAliasModel_t *mod, const char *buffer)
 		/* add it */
 		mod->num_anims++;
 		anim++;
-	} while (mod->num_anims < MAX_ANIMS);
+	} while (mod->num_anims < n);
 }
 
 
@@ -307,6 +312,9 @@ void R_ModCalcUniqueNormalsAndTangents (mAliasMesh_t *mesh, int nFrames, float s
 	int sharedTris[MAX_ALIAS_VERTS];
 	int numVerts = 0;
 
+	if (numIndexes >= MAX_ALIAS_VERTS)
+		Com_Error(ERR_DROP, "model %s has too many tris", mesh->name);
+
 	newIndexArray = (int32_t *)Mem_PoolAlloc(sizeof(int32_t) * numIndexes, vid_modelPool, 0);
 
 	/* calculate per-triangle surface normals */
@@ -495,13 +503,15 @@ void R_ModCalcUniqueNormalsAndTangents (mAliasMesh_t *mesh, int nFrames, float s
 
 image_t* R_AliasModelGetSkin (const char *modelFileName, const char *skin)
 {
+	image_t* result;
 	if (skin[0] != '.')
-		return R_FindImage(skin, it_skin);
+		result = R_FindImage(skin, it_skin);
 	else {
 		char path[MAX_QPATH];
-		Com_ReplaceFilename(modelFileName, skin, path, sizeof(path));
-		return R_FindImage(path, it_skin);
+		Com_ReplaceFilename(modelFileName, skin + 1, path, sizeof(path));
+		result = R_FindImage(path, it_skin);
 	}
+	return result;
 }
 
 image_t* R_AliasModelState (const model_t *mod, int *mesh, int *frame, int *oldFrame, int *skin)

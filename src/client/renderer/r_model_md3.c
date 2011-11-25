@@ -105,21 +105,19 @@ void R_ModLoadAliasMD3Model (model_t *mod, byte *buffer, int bufSize)
 	/* load the tags */
 	if (mod->alias.num_tags) {
 		pintag = (const dmd3tag_t *)((const byte *)md3 + LittleLong(md3->ofs_tags));
-		pouttag = mod->alias.tags = (mAliasTag_t *)Mem_PoolAlloc(sizeof(mAliasTag_t) * mod->alias.num_frames * mod->alias.num_tags, vid_modelPool, 0);
+		pouttag = mod->alias.tags = (mAliasTag_t *)Mem_PoolAlloc(sizeof(mAliasTag_t) * mod->alias.num_tags, vid_modelPool, 0);
 
-		for (i = 0; i < mod->alias.num_frames; i++) {
-			for (l = 0; l < mod->alias.num_tags; l++, pintag++, pouttag++) {
-				memcpy(pouttag->name, pintag->name, MD3_MAX_PATH);
+		/** @todo the tag loading is broken - the order is different in the md3 file */
+		for (l = 0; l < mod->alias.num_tags; l++, pouttag++, pintag++) {
+			mAliasTagOrientation_t *orient = pouttag->orient = (mAliasTagOrientation_t *)Mem_PoolAlloc(sizeof(mAliasTagOrientation_t) * mod->alias.num_frames, vid_modelPool, 0);
+			memcpy(pouttag->name, pintag->name, MD3_MAX_PATH);
+			for (i = 0; i < mod->alias.num_frames; i++, orient++) {
 				for (j = 0; j < 3; j++) {
-					pouttag->orient.origin[j] = LittleFloat(pintag->orient.origin[j]);
-					pouttag->orient.axis[0][j] = LittleFloat(pintag->orient.axis[0][j]);
-					pouttag->orient.axis[1][j] = LittleFloat(pintag->orient.axis[1][j]);
-					pouttag->orient.axis[2][j] = LittleFloat(pintag->orient.axis[2][j]);
+					orient->origin[j] = LittleFloat(pintag->orient.origin[j]);
+					orient->axis[0][j] = LittleFloat(pintag->orient.axis[0][j]);
+					orient->axis[1][j] = LittleFloat(pintag->orient.axis[1][j]);
+					orient->axis[2][j] = LittleFloat(pintag->orient.axis[2][j]);
 				}
-				/*Com_Printf("X: (%f %f %f) Y: (%f %f %f) Z: (%f %f %f)\n",
-					pouttag->orient.axis[0][0], pouttag->orient.axis[0][1], pouttag->orient.axis[0][2],
-					pouttag->orient.axis[1][0], pouttag->orient.axis[1][1], pouttag->orient.axis[1][2],
-					pouttag->orient.axis[2][0], pouttag->orient.axis[2][1], pouttag->orient.axis[2][2]); */
 			}
 		}
 	}
@@ -159,10 +157,10 @@ void R_ModLoadAliasMD3Model (model_t *mod, byte *buffer, int bufSize)
 		pinskin = (const dmd3skin_t *)((const byte *)pinmesh + LittleLong(pinmesh->ofs_skins));
 		poutmesh->skins = (mAliasSkin_t *)Mem_PoolAlloc(sizeof(mAliasSkin_t) * poutmesh->num_skins, vid_modelPool, 0);
 
-		for (j = 0; j < mod->alias.meshes[i].num_skins; j++) {
-			mod->alias.meshes[i].skins[j].skin = R_AliasModelGetSkin(mod->name, pinskin->name);
-			Q_strncpyz(mod->alias.meshes[i].skins[j].name,
-				mod->alias.meshes[i].skins[j].skin->name, MODEL_MAX_PATH);
+		for (j = 0; j < poutmesh->num_skins; j++) {
+			mAliasSkin_t *modelSkin = &poutmesh->skins[j];
+			modelSkin->skin = R_AliasModelGetSkin(mod->name, pinskin->name);
+			Q_strncpyz(modelSkin->name, modelSkin->skin->name, MODEL_MAX_PATH);
 		}
 
 		/* load the indexes */
@@ -205,6 +203,9 @@ void R_ModLoadAliasMD3Model (model_t *mod, byte *buffer, int bufSize)
 				poutvert->normal[2] = cos(lng);
 			}
 		}
+
+		R_ModCalcUniqueNormalsAndTangents(poutmesh, mod->alias.num_frames, 0.5);
+
 		pinmesh = (const dmd3mesh_t *)((const byte *)pinmesh + LittleLong(pinmesh->meshsize));
 
 		R_ModLoadArrayData(&mod->alias, poutmesh, qtrue);

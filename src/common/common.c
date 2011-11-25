@@ -47,6 +47,7 @@ cvar_t *http_proxy;
 cvar_t *http_timeout;
 static const char *consoleLogName = "ufoconsole.log";
 static cvar_t *logfile_active; /* 1 = buffer log, 2 = flush after each print */
+static cvar_t *com_pipefile; /* name of the pipe to send commands to */
 cvar_t *sv_dedicated;
 #ifndef DEDICATED_ONLY
 static cvar_t *cl_maxfps;
@@ -60,6 +61,7 @@ cvar_t* sys_affinity;
 cvar_t* sys_os;
 
 static qFILE logfile;
+static qFILE pipefile;
 
 struct memPool_s *com_aliasSysPool;
 struct memPool_s *com_cmdSysPool;
@@ -467,6 +469,10 @@ void Com_Error (int code, const char *fmt, ...)
 		NET_Wait(0);
 
 		FS_CloseFile(&logfile);
+		if (pipefile.f != NULL) {
+			FS_CloseFile(&pipefile);
+			FS_RemoveFile(va("%s/%s", FS_Gamedir(), pipefile.name));
+		}
 
 		CL_Shutdown();
 		Qcommon_Shutdown();
@@ -506,6 +512,10 @@ void Com_Quit (void)
 	/* send an receive net messages a last time */
 	NET_Wait(0);
 	FS_CloseFile(&logfile);
+	if (pipefile.f != NULL) {
+		FS_CloseFile(&pipefile);
+		FS_RemoveFile(va("%s/%s", FS_Gamedir(), pipefile.name));
+	}
 	Sys_Quit();
 }
 
@@ -852,6 +862,26 @@ static void Com_GameTypeList_f (void)
 	}
 }
 
+/**
+ * @param[in] index The index of the config string array
+ * @note Some config strings are using one value over multiple config string
+ * slots. These may not be accessed directly.
+ */
+qboolean Com_CheckConfigStringIndex (int index)
+{
+	if (index < 0 || index >= MAX_CONFIGSTRINGS)
+		return qfalse;
+
+	/* CS_TILES and CS_POSITIONS can stretch over multiple configstrings,
+	 * so don't access the middle parts. */
+	if (index > CS_TILES && index < CS_POSITIONS)
+		return qfalse;
+	if (index > CS_POSITIONS && index < CS_MODELS)
+		return qfalse;
+
+	return qtrue;
+}
+
 #ifdef DEBUG
 /**
  * @brief Prints some debugging help to the game console
@@ -896,6 +926,7 @@ static const debugLevel_t debugLevels[] = {
 	{"DEBUG_CLIENT", DEBUG_CLIENT},
 	{"DEBUG_EVENTSYS", DEBUG_EVENTSYS},
 	{"DEBUG_PATHING", DEBUG_PATHING},
+	{"DEBUG_ROUTING", DEBUG_ROUTING},
 	{"DEBUG_SERVER", DEBUG_SERVER},
 	{"DEBUG_GAME", DEBUG_GAME},
 	{"DEBUG_RENDERER", DEBUG_RENDERER},
@@ -977,6 +1008,45 @@ void Com_WriteConfigToFile (const char *filename)
 	Com_Printf("Wrote %s.\n", filename);
 }
 
+void Com_SetRandomSeed (unsigned int seed)
+{
+	srand(seed);
+	/*Com_Printf("setting random seed to %i\n", seed);*/
+}
+
+const char* Com_ByteToBinary (byte x)
+{
+	static char buf[9];
+	int cnt, mask = 1 << 7;
+	char *b = buf;
+
+	for (cnt = 1; cnt <= 8; ++cnt) {
+		*b++ = ((x & mask) == 0) ? '0' : '1';
+		x <<= 1;
+		if (cnt == 8)
+			*b++ = '\0';
+	}
+
+	return buf;
+}
+
+const char* Com_UnsignedIntToBinary (uint32_t x)
+{
+	static char buf[37];
+	int cnt, mask = 1 << 31;
+	char *b = buf;
+
+	for (cnt = 1; cnt <= 32; ++cnt) {
+		*b++ = ((x & mask) == 0) ? '0' : '1';
+		x <<= 1;
+		if (cnt % 8 == 0 && cnt != 32)
+			*b++ = ' ';
+		if (cnt == 32)
+			*b++ = '\0';
+	}
+
+	return buf;
+}
 
 /**
  * @brief Write the config file to a specific name
@@ -1029,7 +1099,7 @@ void Qcommon_Init (int argc, const char **argv)
 	Sys_InitSignals();
 
 	/* random seed */
-	srand(time(NULL));
+	Com_SetRandomSeed(time(NULL));
 
 	com_aliasSysPool = Mem_CreatePool("Common: Alias system for commands and enums");
 	com_cmdSysPool = Mem_CreatePool("Common: Command system");
@@ -1154,6 +1224,11 @@ void Qcommon_Init (int argc, const char **argv)
 		SCR_EndLoadingPlaque();
 	}
 
+	com_pipefile = Cvar_Get("com_pipefile", "", CVAR_ARCHIVE, "Filename of the pipe that is used to send commands to the game");
+	if (com_pipefile->string[0] != '\0') {
+		FS_CreateOpenPipeFile(com_pipefile->string, &pipefile);
+	}
+
 	CL_InitAfter();
 
 	/* Check memory integrity */
@@ -1179,6 +1254,22 @@ void Qcommon_Init (int argc, const char **argv)
 
 	Com_Printf("====== UFO Initialized ======\n");
 	Com_Printf("=============================\n");
+}
+
+/**
+ * @brief Read whatever is in com_pipefile, if anything, and execute it
+ */
+void Com_ReadFromPipe (void)
+{
+	char buffer[MAX_STRING_CHARS] = { "" };
+	int read;
+
+	if (pipefile.f == NULL)
+		return;
+
+	read = FS_Read2(buffer, sizeof(buffer), &pipefile, qfalse);
+	if (read > 0)
+		Cmd_ExecuteString(buffer);
 }
 
 static void tick_timer (int now, void *data)
@@ -1328,10 +1419,11 @@ static struct event* Dequeue_Event (int now)
  * @param filter Pointer to the filter function.
  *  When called with event info, it should return true if the event is to be kept.
  */
-void CL_FilterEventQueue (event_filter *filter)
+int CL_FilterEventQueue (event_filter *filter)
 {
 	struct event *event = event_queue;
 	struct event *prev = NULL;
+	int filtered = 0;
 
 	assert(filter);
 
@@ -1354,7 +1446,10 @@ void CL_FilterEventQueue (event_filter *filter)
 		if (freeme->clean != NULL)
 			freeme->clean(freeme->data);
 		Mem_Free(freeme);
+		filtered++;
 	}
+
+	return filtered;
 }
 
 /**

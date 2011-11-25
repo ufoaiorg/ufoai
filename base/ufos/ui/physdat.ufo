@@ -48,6 +48,16 @@ window physdata
 	}
 
 	// ==================
+	// rank
+	// ==================
+
+	image	rank_img {
+		pos "25 70"
+		size "64 64"
+		src *cvar:mn_chrrank_img
+	}
+
+	// ==================
 	// model
 	// ==================
 
@@ -58,9 +68,9 @@ window physdata
 			skin		*cvar:mn_skin
 			anim		"stand2"
 			angles		"0 70 90"
-			pos			"27 73"
-			size		"188 263"
-			autoscale	true
+			pos			"27 20"
+			size		"191 322"
+			scale	"5 5 5"
 		}
 
 		model head
@@ -115,7 +125,7 @@ window physdata
 			{
 				pos "220 166"
 			}
-			tbar bar   { current *cvar:mn_vcls }
+			tbar bar   { current *cvar:mn_vcls image "ui/bar_skill" }
 			string lbl { string "_Close Combat:" }
 			string val { string *cvar:mn_tcls }
 		}
@@ -124,7 +134,7 @@ window physdata
 			{
 				pos "220 198"
 			}
-			tbar bar   { current *cvar:mn_vhvy }
+			tbar bar   { current *cvar:mn_vhvy image "ui/bar_skill" }
 			string lbl { string "_Heavy Weapons:" }
 			string val { string *cvar:mn_thvy }
 		}
@@ -133,7 +143,7 @@ window physdata
 			{
 				pos "220 230"
 			}
-			tbar bar   { current *cvar:mn_vass }
+			tbar bar   { current *cvar:mn_vass image "ui/bar_skill" }
 			string lbl { string "_Assault Weapons:" }
 			string val { string *cvar:mn_tass }
 		}
@@ -142,7 +152,7 @@ window physdata
 			{
 				pos "220 262"
 			}
-			tbar bar   { current *cvar:mn_vsnp }
+			tbar bar   { current *cvar:mn_vsnp image "ui/bar_skill" }
 			string lbl { string "_Sniper Rifles:" }
 			string val { string *cvar:mn_tsnp }
 		}
@@ -151,7 +161,7 @@ window physdata
 			{
 				pos "220 296"
 			}
-			tbar bar   { current *cvar:mn_vexp }
+			tbar bar   { current *cvar:mn_vexp image "ui/bar_skill" }
 			string lbl { string "_High-Explosives:" }
 			string val { string *cvar:mn_texp }
 		}
@@ -165,7 +175,7 @@ window physdata
 		string		*cvar:mn_hp
 		pos			"415 373"
 		size		"50 20"
-		textalign	ALIGN_UC
+		contentalign	ALIGN_UC
 	}
 	ekg hp
 	{
@@ -179,7 +189,7 @@ window physdata
 		string		*cvar:mn_morale
 		pos			"415 413"
 		size		"50 20"
-		textalign	ALIGN_UC
+		contentalign	ALIGN_UC
 	}
 	ekg morale
 	{

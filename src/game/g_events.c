@@ -25,16 +25,33 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #include "g_local.h"
 
 /**
- * @brief Spawns a sound for all connected clients (that will be spatialized
- * on the client side)
+ * @brief Spawns a sound (that will be spatialized on the client side)
  * @param ent The edict that is causing the sound
  * @param origin The origin of the sound
- * @param sound The sound file, path relative to sounds/. If there is a + at the end
+ * @param sound The sound file, path relative to sounds/. If there is a + at the end the client will
+ * choose a random sound. See the event function for more information.
  * of the path, a random sound will be taken.
  */
-void G_EventSpawnSound (const edict_t* ent, const vec3_t origin, const char *sound)
+void G_EventSpawnSound (unsigned int playerMask, qboolean instant, const edict_t* ent, const vec3_t origin, const char *sound)
 {
-	gi.PositionedSound(PM_ALL, origin, ent, sound);
+	gi.AddEvent(playerMask, EV_SOUND | (instant ? EVENT_INSTANTLY : 0));
+	gi.WriteShort(ent->number);
+
+	/* use the entity origin unless it is a bmodel or explicitly specified */
+	if (!origin) {
+		if (ent->solid == SOLID_BSP) {
+			vec3_t origin_v;
+			VectorCenterFromMinsMaxs(ent->mins, ent->maxs, origin_v);
+			VectorAdd(ent->origin, origin_v, origin_v);
+			gi.WritePos(origin);
+		} else {
+			gi.WritePos(vec3_origin);
+		}
+	} else {
+		gi.WritePos(origin);
+	}
+	gi.WriteString(sound);
+	gi.EndEvents();
 }
 
 /**
@@ -48,6 +65,7 @@ void G_EventActorTurn (const edict_t* ent)
 	gi.AddEvent(G_VisToPM(ent->visflags), EV_ACTOR_TURN);
 	gi.WriteShort(ent->number);
 	gi.WriteByte(ent->dir);
+	gi.EndEvents();
 }
 
 /**
@@ -59,6 +77,8 @@ void G_EventActorDie (const edict_t* ent)
 	gi.AddEvent(G_VisToPM(ent->visflags), EV_ACTOR_DIE);
 	gi.WriteShort(ent->number);
 	gi.WriteShort(ent->state);
+	gi.WriteByte(ent->pnum);
+	gi.EndEvents();
 }
 
 /**
@@ -70,6 +90,7 @@ void G_EventActorRevitalise (const edict_t* ent)
 	gi.AddEvent(G_VisToPM(ent->visflags), EV_ACTOR_REVITALISED);
 	gi.WriteShort(ent->number);
 	gi.WriteShort(ent->state);
+	gi.EndEvents();
 }
 
 /**
@@ -103,6 +124,7 @@ void G_EventInventoryDelete (const edict_t* ent, int playerMask, const invDef_t*
 	gi.WriteByte(invDef->id);
 	gi.WriteByte(x);
 	gi.WriteByte(y);
+	gi.EndEvents();
 }
 
 /**
@@ -117,6 +139,7 @@ void G_EventInventoryAdd (const edict_t* ent, int playerMask, int itemAmount)
 	gi.AddEvent(playerMask, EV_INV_ADD);
 	gi.WriteShort(ent->number);
 	gi.WriteShort(itemAmount);
+	/* do not end the pending events here - this is just a header, the items are following */
 }
 
 /**
@@ -125,8 +148,10 @@ void G_EventInventoryAdd (const edict_t* ent, int playerMask, int itemAmount)
  */
 void G_EventPerish (const edict_t* ent)
 {
+	assert(ent->inuse);
 	gi.AddEvent(G_VisToPM(ent->visflags), EV_ENT_PERISH);
 	gi.WriteShort(ent->number);
+	gi.EndEvents();
 }
 
 /**
@@ -135,8 +160,10 @@ void G_EventPerish (const edict_t* ent)
  */
 void G_EventDestroyEdict (const edict_t* ent)
 {
+	assert(ent->inuse);
 	gi.AddEvent(PM_ALL, EV_ENT_DESTROY);
 	gi.WriteShort(ent->number);
+	gi.EndEvents();
 }
 
 /**
@@ -159,6 +186,7 @@ void G_EventInventoryAmmo (const edict_t* ent, const objDef_t* ammo, int amount,
 	/* x and y value */
 	gi.WriteByte(0);
 	gi.WriteByte(0);
+	gi.EndEvents();
 }
 
 /**
@@ -168,13 +196,14 @@ void G_EventInventoryAmmo (const edict_t* ent, const objDef_t* ammo, int amount,
  * @param shootType The type of the shoot
  * @param at The grid position to target to
  */
-void G_EventStartShoot (const edict_t* ent, int visMask, shoot_types_t shootType, const pos3_t at)
+void G_EventStartShoot (const edict_t* ent, vismask_t visMask, shoot_types_t shootType, const pos3_t at)
 {
 	gi.AddEvent(G_VisToPM(visMask), EV_ACTOR_START_SHOOT);
 	gi.WriteShort(ent->number);
 	gi.WriteByte(shootType);
 	gi.WriteGPos(ent->pos);
 	gi.WriteGPos(at);
+	gi.EndEvents();
 }
 
 /**
@@ -183,13 +212,14 @@ void G_EventStartShoot (const edict_t* ent, int visMask, shoot_types_t shootType
  * @param fd The firedefinition to use for the shoot
  * @param firstShoot Is this the first shoot
  */
-void G_EventShootHidden (int visMask, const fireDef_t* fd, qboolean firstShoot)
+void G_EventShootHidden (vismask_t visMask, const fireDef_t* fd, qboolean firstShoot)
 {
 	gi.AddEvent(~G_VisToPM(visMask), EV_ACTOR_SHOOT_HIDDEN);
 	gi.WriteByte(firstShoot);
 	gi.WriteShort(fd->obj->idx);
 	gi.WriteByte(fd->weapFdsIdx);
 	gi.WriteByte(fd->fdIdx);
+	gi.EndEvents();
 }
 
 /**
@@ -204,7 +234,7 @@ void G_EventShootHidden (int visMask, const fireDef_t* fd, qboolean firstShoot)
  * @param from The position the entity shoots from
  * @param impact The impact world vector for the shot
  */
-void G_EventShoot (const edict_t* ent, int visMask, const fireDef_t* fd, qboolean firstShoot, shoot_types_t shootType, int flags, const trace_t* trace, const vec3_t from, const vec3_t impact)
+void G_EventShoot (const edict_t* ent, vismask_t visMask, const fireDef_t* fd, qboolean firstShoot, shoot_types_t shootType, int flags, const trace_t* trace, const vec3_t from, const vec3_t impact)
 {
 	const edict_t *targetEdict = trace->ent;
 
@@ -224,6 +254,7 @@ void G_EventShoot (const edict_t* ent, int visMask, const fireDef_t* fd, qboolea
 	gi.WritePos(from);
 	gi.WritePos(impact);
 	gi.WriteDir(trace->plane.normal);
+	gi.EndEvents();
 }
 
 void G_EventReactionFireChange (const edict_t* ent)
@@ -256,6 +287,7 @@ void G_EventParticleSpawn (int playerMask, const char *name, int levelFlags, con
 	gi.WritePos(v);
 	gi.WritePos(a);
 	gi.WriteString(name);
+	gi.EndEvents();
 }
 
 void G_EventActorFall (const edict_t* ent)
@@ -269,6 +301,7 @@ void G_EventActorFall (const edict_t* ent)
 	gi.WriteByte(makeDV(DIRECTION_FALL, ent->pos[2]));
 	gi.WriteShort(GRAVITY);
 	gi.WriteShort(0);
+	gi.EndEvents();
 }
 
 /**
@@ -279,6 +312,7 @@ void G_EventActorFall (const edict_t* ent)
 void G_EventSetClientAction (const edict_t *ent)
 {
 	assert(ent->clientAction);
+	assert(ent->clientAction->flags & FL_CLIENTACTION);
 
 	/* tell the hud to show the door buttons */
 	gi.AddEvent(G_TeamToPM(ent->team), EV_CLIENT_ACTION);
@@ -294,8 +328,10 @@ void G_EventSetClientAction (const edict_t *ent)
  */
 void G_EventResetClientAction (const edict_t* ent)
 {
-	gi.AddEvent(G_PlayerToPM(G_PLAYER_FROM_ENT(ent)), EV_RESET_CLIENT_ACTION);
+	const int playerMask = G_PlayerToPM(G_PLAYER_FROM_ENT(ent));
+	gi.AddEvent(playerMask, EV_RESET_CLIENT_ACTION);
 	gi.WriteShort(ent->number);
+	gi.EndEvents();
 }
 
 void G_EventActorStats (const edict_t* ent, int playerMask)
@@ -306,16 +342,18 @@ void G_EventActorStats (const edict_t* ent, int playerMask)
 	gi.WriteShort(ent->HP);
 	gi.WriteByte(ent->STUN);
 	gi.WriteByte(ent->morale);
+	gi.EndEvents();
 }
 
 /**
- * @brief End of round event for the current active team
+ * @brief End of turn event for the current active team
  * @note This event is send to every connected client
  */
 void G_EventEndRound (void)
 {
 	gi.AddEvent(PM_ALL, EV_ENDROUND);
 	gi.WriteByte(level.activeTeam);
+	gi.EndEvents();
 }
 
 void G_EventInventoryReload (const edict_t* ent, int playerMask, const item_t* item, const invDef_t* invDef, const invList_t* ic)
@@ -327,6 +365,7 @@ void G_EventInventoryReload (const edict_t* ent, int playerMask, const item_t* i
 	gi.WriteByte(invDef->id);
 	gi.WriteByte(ic->x);
 	gi.WriteByte(ic->y);
+	gi.EndEvents();
 }
 
 /**
@@ -337,7 +376,7 @@ void G_EventInventoryReload (const edict_t* ent, int playerMask, const item_t* i
  * @param[in] position The current position
  * @param[in] velocity The velocity of the throw
  */
-void G_EventThrow (int visMask, const fireDef_t *fd, float dt, byte flags, const vec3_t position, const vec3_t velocity)
+void G_EventThrow (vismask_t visMask, const fireDef_t *fd, float dt, byte flags, const vec3_t position, const vec3_t velocity)
 {
 	gi.AddEvent(G_VisToPM(visMask), EV_ACTOR_THROW);
 	gi.WriteShort(dt * 1000);
@@ -347,6 +386,7 @@ void G_EventThrow (int visMask, const fireDef_t *fd, float dt, byte flags, const
 	gi.WriteByte(flags);
 	gi.WritePos(position);
 	gi.WritePos(velocity);
+	gi.EndEvents();
 }
 
 /**
@@ -360,6 +400,7 @@ void G_EventSendEdict (const edict_t *ent)
 	gi.WriteByte(ent->type);
 	gi.WritePos(ent->absmin);
 	gi.WritePos(ent->absmax);
+	gi.EndEvents();
 }
 
 void G_EventSendState (unsigned int playerMask, const edict_t *ent)
@@ -369,6 +410,7 @@ void G_EventSendState (unsigned int playerMask, const edict_t *ent)
 	gi.AddEvent(playerMask & ~G_TeamToPM(ent->team), EV_ACTOR_STATECHANGE);
 	gi.WriteShort(ent->number);
 	gi.WriteShort(ent->state & STATE_PUBLIC);
+	gi.EndEvents();
 }
 
 /**
@@ -377,8 +419,18 @@ void G_EventSendState (unsigned int playerMask, const edict_t *ent)
  */
 void G_EventCenterView (const edict_t *ent)
 {
-	gi.AddEvent(G_VisToPM(ent->visflags), EV_CENTERVIEW);
-	gi.WriteGPos(ent->pos);
+	G_EventCenterViewAt(G_VisToPM(ent->visflags), ent->pos);
+}
+
+/**
+ * @brief Centers the view for all clients that are seeing the given edict on the world position of the edict
+ * @param[in] ent The edict to use the position from
+ */
+void G_EventCenterViewAt (int playerMask, const pos3_t pos)
+{
+	gi.AddEvent(playerMask, EV_CENTERVIEW);
+	gi.WriteGPos(pos);
+	gi.EndEvents();
 }
 
 /**
@@ -395,6 +447,7 @@ void G_EventActorAdd (unsigned int playerMask, const edict_t *ent)
 	gi.WriteGPos(ent->pos);
 	gi.WriteShort(ent->state & STATE_PUBLIC);
 	gi.WriteByte(ent->fieldSize);
+	gi.EndEvents();
 }
 
 /**
@@ -408,6 +461,7 @@ void G_EventSendParticle (unsigned int playerMask, const edict_t *ent)
 	gi.WriteShort(ent->number);
 	gi.WriteShort(ent->spawnflags);
 	gi.WriteString(ent->particle);
+	gi.EndEvents();
 }
 
 /**
@@ -423,6 +477,7 @@ void G_EventEdictAppear (unsigned int playerMask, const edict_t *ent)
 	gi.WriteShort(ent->number);
 	gi.WriteByte(ent->type);
 	gi.WriteGPos(ent->pos);
+	gi.EndEvents();
 }
 
 void G_EventActorAppear (unsigned int playerMask, const edict_t *check, const edict_t *ent)
@@ -436,6 +491,7 @@ void G_EventActorAppear (unsigned int playerMask, const edict_t *check, const ed
 	gi.WriteByte(check->team);
 	gi.WriteByte(check->chr.teamDef ? check->chr.teamDef->idx : NONE);
 	gi.WriteByte(check->chr.gender);
+	gi.WriteShort(check->chr.ucn);
 	gi.WriteByte(check->pnum);
 	gi.WriteGPos(check->pos);
 	gi.WriteByte(check->dir);
@@ -457,9 +513,11 @@ void G_EventActorAppear (unsigned int playerMask, const edict_t *check, const ed
 	gi.WriteShort(check->body);
 	gi.WriteShort(check->head);
 	gi.WriteByte(check->chr.skin);
+	/* strip the server private states */
 	gi.WriteShort(check->state & STATE_PUBLIC);
 	gi.WriteByte(check->fieldSize);
-	gi.WriteByte(GET_TU(check->chr.score.skills[ABILITY_SPEED]));
+	/* get the max values for TU and morale */
+	gi.WriteByte(G_ActorCalculateMaxTU(check));
 	gi.WriteByte(min(MAX_SKILL, GET_MORALE(check->chr.score.skills[ABILITY_MIND])));
 	gi.WriteShort(check->chr.maxHP);
 
@@ -476,8 +534,10 @@ void G_EventActorAppear (unsigned int playerMask, const edict_t *check, const ed
  */
 void G_EventEdictPerish (unsigned int playerMask, const edict_t *ent)
 {
+	assert(ent->inuse);
 	gi.AddEvent(playerMask, EV_ENT_PERISH);
 	gi.WriteShort(ent->number);
+	gi.EndEvents();
 }
 
 void G_EventActorStateChange (unsigned int playerMask, const edict_t *ent)
@@ -485,6 +545,7 @@ void G_EventActorStateChange (unsigned int playerMask, const edict_t *ent)
 	gi.AddEvent(playerMask, EV_ACTOR_STATECHANGE);
 	gi.WriteShort(ent->number);
 	gi.WriteShort(ent->state);
+	gi.EndEvents();
 }
 
 void G_EventAddBrushModel (unsigned int playerMask, const edict_t *ent)
@@ -500,6 +561,7 @@ void G_EventAddBrushModel (unsigned int playerMask, const edict_t *ent)
 	gi.WriteShort(ent->speed);
 	gi.WriteByte(ent->angle);
 	gi.WriteByte(ent->dir);
+	gi.EndEvents();
 }
 
 void G_EventEndRoundAnnounce (const player_t *player)
@@ -507,12 +569,14 @@ void G_EventEndRoundAnnounce (const player_t *player)
 	gi.AddEvent(PM_ALL, EV_ENDROUNDANNOUNCE | EVENT_INSTANTLY);
 	gi.WriteByte(player->num);
 	gi.WriteByte(player->pers.team);
+	gi.EndEvents();
 }
 
 void G_EventStart (const player_t *player, qboolean teamplay)
 {
 	gi.AddEvent(G_PlayerToPM(player), EV_START | EVENT_INSTANTLY);
 	gi.WriteByte(teamplay);
+	gi.EndEvents();
 }
 
 void G_EventReset (const player_t *player, int activeTeam)
@@ -520,28 +584,35 @@ void G_EventReset (const player_t *player, int activeTeam)
 	gi.AddEvent(G_PlayerToPM(player), EV_RESET | EVENT_INSTANTLY);
 	gi.WriteByte(player->pers.team);
 	gi.WriteByte(activeTeam);
+	gi.EndEvents();
 }
 
 void G_EventDoorOpen (const edict_t *door)
 {
 	gi.AddEvent(PM_ALL, EV_DOOR_OPEN);
 	gi.WriteShort(door->number);
+	gi.EndEvents();
 }
 
 void G_EventDoorClose (const edict_t *door)
 {
 	gi.AddEvent(PM_ALL, EV_DOOR_CLOSE);
 	gi.WriteShort(door->number);
+	gi.EndEvents();
 }
 
 void G_EventModelExplodeTriggered (const edict_t *ent)
 {
+	assert(ent->inuse);
 	gi.AddEvent(PM_ALL, EV_MODEL_EXPLODE_TRIGGERED);
 	gi.WriteShort(ent->number);
+	gi.EndEvents();
 }
 
 void G_EventModelExplode (const edict_t *ent)
 {
+	assert(ent->inuse);
 	gi.AddEvent(PM_ALL, EV_MODEL_EXPLODE);
 	gi.WriteShort(ent->number);
+	gi.EndEvents();
 }

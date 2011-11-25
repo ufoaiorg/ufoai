@@ -349,6 +349,7 @@ void UI_NodeSetPropertyFromRAW (uiNode_t* node, const value_t *property, const v
 			break;
 		default:
 			*(const byte **) mem = (const byte*) rawValue;
+			break;
 		}
 	} else if (property->type == V_UI_ACTION) {
 		*(const uiAction_t**) mem = (const uiAction_t*) rawValue;
@@ -421,6 +422,17 @@ qboolean UI_NodeSetProperty (uiNode_t* node, const value_t *property, const char
 				UI_FreeStringProperty(*(void**)b);
 				*(char**) b = Mem_PoolStrDup(value, ui_dynStringPool, 0);
 				node->behaviour->propertyChanged(node, property);
+				return qtrue;
+			}
+		}
+		break;
+
+	case V_UI:
+		switch ((int)property->type) {
+		case V_UI_SPRITEREF:
+			{
+				uiSprite_t* sprite = UI_GetSpriteByName(value);
+				*(const uiSprite_t**) b = sprite;
 				return qtrue;
 			}
 		}
@@ -711,7 +723,7 @@ static void UI_AbstractNodePropertyChanged (uiNode_t *node, const value_t *prope
 static void UI_AbstractNodeCallRemovaAllChild (uiNode_t *node, const uiCallContext_t *context)
 {
 	if (UI_GetParamNumber(context) != 0) {
-		Com_Printf("UI_AbstractNodeCallRemovaAllChild: Invalide number of param\n");
+		Com_Printf("UI_AbstractNodeCallRemovaAllChild: Invalid number of parameters\n");
 		return;
 	}
 	UI_DeleteAllChild(node);
@@ -725,7 +737,7 @@ static void UI_AbstractNodeCallCreateChild (uiNode_t *node, const uiCallContext_
 	const char *type;
 
 	if (UI_GetParamNumber(context) != 2) {
-		Com_Printf("UI_AbstractNodeCallCreateChild: Invalide number of param\n");
+		Com_Printf("UI_AbstractNodeCallCreateChild: Invalid number of parameters\n");
 		return;
 	}
 
@@ -740,7 +752,7 @@ static void UI_AbstractNodeCallCreateChild (uiNode_t *node, const uiCallContext_
 	}
 
 	if (child == NULL) {
-		Com_Printf("UI_AbstractNodeCallCreateChild: Impossible de create the node\n");
+		Com_Printf("UI_AbstractNodeCallCreateChild: Impossible to create the node\n");
 		return;
 	}
 
@@ -750,7 +762,7 @@ static void UI_AbstractNodeCallCreateChild (uiNode_t *node, const uiCallContext_
 static void UI_AbstractNodeCallDelete (uiNode_t *node, const uiCallContext_t *context)
 {
 	if (UI_GetParamNumber(context) != 0) {
-		Com_Printf("UI_AbstractNodeCallDelete: Invalide number of param\n");
+		Com_Printf("UI_AbstractNodeCallDelete: Invalid number of parameters\n");
 		return;
 	}
 	UI_DeleteNode(node);
@@ -827,7 +839,7 @@ static const value_t properties[] = {
 	/* Text color the node will use when something is selected. */
 	{"selectcolor", V_COLOR, offsetof(uiNode_t, selectedColor), MEMBER_SIZEOF(uiNode_t, selectedColor)},
 	/* Alignement of the text into the node, or elements into blocks. */
-	{"textalign", V_UI_ALIGN, offsetof(uiNode_t, textalign), MEMBER_SIZEOF(uiNode_t, textalign)},
+	{"contentalign", V_UI_ALIGN, offsetof(uiNode_t, contentAlign), MEMBER_SIZEOF(uiNode_t, contentAlign)},
 	/* When <code>invis</code> property is false (default value), this condition say if the node is visible or not. It use a script expression. */
 	{"visiblewhen", V_UI_IF, offsetof(uiNode_t, visibilityCondition), 0},
 

@@ -1,0 +1,139 @@
+
+// entity 0
+{
+"classname" "worldspawn"
+"ambient_day" "0.15 0.15 0.15"
+"randomspawn" "1"
+// brush 0
+{
+( 0 32 11 ) ( 32 32 12 ) ( 0 32 12 ) tex_common/actorclip 0 0 0 0.5 0.5
+( 32 27 6 ) ( 32 26 12 ) ( 32 32 12 ) tex_common/actorclip 0 0 0 0.5 0.5
+( 0 26 6 ) ( 0 32 12 ) ( 0 26 12 ) tex_common/actorclip 0 0 0 0.5 0.5
+( 0 26 6 ) ( 32 26 6 ) ( 0 30 6 ) tex_common/actorclip 0 0 0 0.5 0.5
+( -324 27 6 ) ( -324 29 7 ) ( -452 27 6 ) tex_common/actorclip 0 0 0 0.5 0.5
+( -324 29 7 ) ( -324 31 9 ) ( -452 29 7 ) tex_common/actorclip 0 0 0 0.5 0.5
+( 0 31 9 ) ( 32 32 11 ) ( 0 32 11 ) tex_common/actorclip 0 0 0 0.5 0.5
+( 0 20 12 ) ( 32 20 12 ) ( 0 20 8 ) tex_common/actorclip 0 0 0 0.5 0.5
+( -324 20 11 ) ( -324 21 9 ) ( -452 20 11 ) tex_common/actorclip 0 0 0 0.5 0.5
+( -324 21 9 ) ( -324 23 7 ) ( -452 21 9 ) tex_common/actorclip 0 0 0 0.5 0.5
+( 0 23 7 ) ( 32 25 6 ) ( 0 25 6 ) tex_common/actorclip 0 0 0 0.5 0.5
+( 0 26 18 ) ( 32 26 18 ) ( 0 22 18 ) tex_common/actorclip 0 0 0 0.5 0.5
+( -324 25 18 ) ( -324 23 17 ) ( -452 25 18 ) tex_common/actorclip 0 0 0 0.5 0.5
+( -324 23 17 ) ( -324 21 15 ) ( -452 23 17 ) tex_common/actorclip 0 0 0 0.5 0.5
+( 0 21 15 ) ( 32 20 13 ) ( 0 20 13 ) tex_common/actorclip 0 0 0 0.5 0.5
+( -324 32 13 ) ( -324 31 15 ) ( -452 32 13 ) tex_common/actorclip 0 0 0 0.5 0.5
+( -324 31 15 ) ( -324 29 17 ) ( -452 31 15 ) tex_common/actorclip 0 0 0 0.5 0.5
+( 0 29 17 ) ( 32 27 18 ) ( 0 27 18 ) tex_common/actorclip 0 0 0 0.5 0.5
+}
+// brush 1
+{
+( 15 14 42 ) ( 17 11 42 ) ( 15 11 42 ) tex_common/actorclip 0 0 0 0.5 0.5
+( 17 14 32 ) ( 17 14 42 ) ( 15 14 42 ) tex_common/actorclip 0 0 0 0.5 0.5
+( 17 14 32 ) ( 17 11 42 ) ( 17 14 42 ) tex_common/actorclip 0 0 0 0.5 0.5
+( 17 11 30 ) ( 17 14 32 ) ( 15 14 32 ) tex_common/actorclip 0 0 0 0.5 0.5
+( 17 11 30 ) ( 15 11 42 ) ( 17 11 42 ) tex_common/actorclip 0 0 0 0.5 0.5
+( 15 14 42 ) ( 15 11 42 ) ( 15 14 32 ) tex_common/actorclip 0 0 0 0.5 0.5
+}
+// brush 2
+{
+( 18 34 45 ) ( 18 -16 45 ) ( 14 34 45 ) tex_common/actorclip 0 0 0 0.5 0.5
+( 18 20 45 ) ( 14 20 45 ) ( 18 20 41 ) tex_common/actorclip 0 0 0 0.5 0.5
+( 18 34 45 ) ( 18 34 41 ) ( 18 -16 45 ) tex_common/actorclip 0 0 0 0.5 0.5
+( 14 -16 42 ) ( 18 -16 42 ) ( 14 34 42 ) tex_common/actorclip 0 0 0 0.5 0.5
+( 14 -9 41 ) ( 14 -9 45 ) ( 18 -9 41 ) tex_common/actorclip 0 0 0 0.5 0.5
+( 14 -16 41 ) ( 14 34 41 ) ( 14 -16 45 ) tex_common/actorclip 0 0 0 0.5 0.5
+}
+// brush 3
+{
+( 0 32 11 ) ( 32 32 12 ) ( 0 32 12 ) tex_common/lightclip 0 0 0 0.5 0.5
+( 32 27 6 ) ( 32 26 12 ) ( 32 32 12 ) tex_common/lightclip 0 0 0 0.5 0.5
+( 0 26 6 ) ( 0 32 12 ) ( 0 26 12 ) tex_common/lightclip 0 0 0 0.5 0.5
+( 0 26 6 ) ( 32 26 6 ) ( 0 30 6 ) tex_common/lightclip 0 0 0 0.5 0.5
+( -324 27 6 ) ( -324 29 7 ) ( -452 27 6 ) tex_common/lightclip 0 0 0 0.5 0.5
+( -324 29 7 ) ( -324 31 9 ) ( -452 29 7 ) tex_common/lightclip 0 0 0 0.5 0.5
+( 0 31 9 ) ( 32 32 11 ) ( 0 32 11 ) tex_common/lightclip 0 0 0 0.5 0.5
+( 0 20 12 ) ( 32 20 12 ) ( 0 20 8 ) tex_common/lightclip 0 0 0 0.5 0.5
+( -324 20 11 ) ( -324 21 9 ) ( -452 20 11 ) tex_common/lightclip 0 0 0 0.5 0.5
+( -324 21 9 ) ( -324 23 7 ) ( -452 21 9 ) tex_common/lightclip 0 0 0 0.5 0.5
+( 0 23 7 ) ( 32 25 6 ) ( 0 25 6 ) tex_common/lightclip 0 0 0 0.5 0.5
+( 0 26 18 ) ( 32 26 18 ) ( 0 22 18 ) tex_common/lightclip 0 0 0 0.5 0.5
+( -324 25 18 ) ( -324 23 17 ) ( -452 25 18 ) tex_common/lightclip 0 0 0 0.5 0.5
+( -324 23 17 ) ( -324 21 15 ) ( -452 23 17 ) tex_common/lightclip 0 0 0 0.5 0.5
+( 0 21 15 ) ( 32 20 13 ) ( 0 20 13 ) tex_common/lightclip 0 0 0 0.5 0.5
+( -324 32 13 ) ( -324 31 15 ) ( -452 32 13 ) tex_common/lightclip 0 0 0 0.5 0.5
+( -324 31 15 ) ( -324 29 17 ) ( -452 31 15 ) tex_common/lightclip 0 0 0 0.5 0.5
+( 0 29 17 ) ( 32 27 18 ) ( 0 27 18 ) tex_common/lightclip 0 0 0 0.5 0.5
+}
+// brush 4
+{
+( 14 -25 32 ) ( 18 -22 20 ) ( 14 -22 20 ) tex_common/lightclip 0 0 0 0.5 0.5
+( 18 -22 20 ) ( 18 -20 21 ) ( 14 -20 21 ) tex_common/lightclip 0 0 0 0.5 0.5
+( 18 -25 32 ) ( 18 -20 21 ) ( 18 -22 20 ) tex_common/lightclip 0 0 0 0.5 0.5
+( 18 -23 31 ) ( 14 -20 21 ) ( 18 -20 21 ) tex_common/lightclip 0 0 0 0.5 0.5
+( 14 -23 31 ) ( 18 -25 32 ) ( 14 -25 32 ) tex_common/lightclip 0 0 0 0.5 0.5
+( 14 -22 20 ) ( 14 -20 21 ) ( 14 -25 32 ) tex_common/lightclip 0 0 0 0.5 0.5
+}
+// brush 5
+{
+( 14 -16 45 ) ( 18 -25 32 ) ( 14 -25 32 ) tex_common/lightclip 0 0 0 0.5 0.5
+( 18 -16 45 ) ( 14 -16 41 ) ( 18 -16 41 ) tex_common/lightclip 0 0 0 0.5 0.5
+( 18 -16 45 ) ( 18 -23 31 ) ( 18 -25 32 ) tex_common/lightclip 0 0 0 0.5 0.5
+( 18 -16 41 ) ( 14 -23 31 ) ( 18 -23 31 ) tex_common/lightclip 0 0 0 0.5 0.5
+( 18 -23 31 ) ( 14 -25 32 ) ( 18 -25 32 ) tex_common/lightclip 0 0 0 0.5 0.5
+( 14 -16 45 ) ( 14 -25 32 ) ( 14 -23 31 ) tex_common/lightclip 0 0 0 0.5 0.5
+}
+// brush 6
+{
+( 18 34 45 ) ( 18 -16 45 ) ( 14 34 45 ) tex_common/lightclip 0 0 0 0.5 0.5
+( 18 32 45 ) ( 14 32 45 ) ( 18 32 41 ) tex_common/lightclip 0 0 0 0.5 0.5
+( 18 34 45 ) ( 18 34 41 ) ( 18 -16 45 ) tex_common/lightclip 0 0 0 0.5 0.5
+( 14 -16 41 ) ( 18 -16 41 ) ( 14 34 41 ) tex_common/lightclip 0 0 0 0.5 0.5
+( 14 -16 41 ) ( 14 -16 45 ) ( 18 -16 41 ) tex_common/lightclip 0 0 0 0.5 0.5
+( 14 -16 41 ) ( 14 34 41 ) ( 14 -16 45 ) tex_common/lightclip 0 0 0 0.5 0.5
+}
+// brush 7
+{
+( 14 15 42 ) ( 18 10 42 ) ( 14 10 42 ) tex_common/lightclip 0 0 0 0.5 0.5
+( 18 20 9 ) ( 18 15 42 ) ( 14 15 42 ) tex_common/lightclip 0 0 0 0.5 0.5
+( 18 15 9 ) ( 18 10 42 ) ( 18 20 9 ) tex_common/lightclip 0 0 0 0.5 0.5
+( 18 20 9 ) ( 14 15 9 ) ( 18 15 9 ) tex_common/lightclip 0 0 0 0.5 0.5
+( 18 15 9 ) ( 14 10 42 ) ( 18 10 42 ) tex_common/lightclip 0 0 0 0.5 0.5
+( 14 15 42 ) ( 14 10 42 ) ( 14 20 9 ) tex_common/lightclip 0 0 0 0.5 0.5
+}
+// brush 8
+{
+( 14 -22 20 ) ( 18 15 9 ) ( 14 15 9 ) tex_common/lightclip 0 0 0 0.5 0.5
+( 14 -20 21 ) ( 18 -22 20 ) ( 14 -22 20 ) tex_common/lightclip 0 0 0 0.5 0.5
+( 18 -22 20 ) ( 18 15 11 ) ( 18 15 9 ) tex_common/lightclip 0 0 0 0.5 0.5
+( 18 -20 21 ) ( 14 15 11 ) ( 18 15 11 ) tex_common/lightclip 0 0 0 0.5 0.5
+( 14 15 9 ) ( 18 15 11 ) ( 14 15 11 ) tex_common/lightclip 0 0 0 0.5 0.5
+( 14 -22 20 ) ( 14 15 11 ) ( 14 -20 21 ) tex_common/lightclip 0 0 0 0.5 0.5
+}
+// brush 9
+{
+( 17 15 23 ) ( 15 15 23 ) ( 15 19 23 ) tex_common/actorclip 0 0 0 0.5 0.5
+( 17 19 9 ) ( 15 19 23 ) ( 15 19 9 ) tex_common/actorclip 0 0 0 0.5 0.5
+( 17 15 9 ) ( 17 15 23 ) ( 17 19 23 ) tex_common/actorclip 0 0 0 0.5 0.5
+( 17 15 9 ) ( 15 19 9 ) ( 15 15 9 ) tex_common/actorclip 0 0 0 0.5 0.5
+( 17 15 23 ) ( 15 15 9 ) ( 15 15 23 ) tex_common/actorclip 0 0 0 0.5 0.5
+( 15 19 23 ) ( 15 15 9 ) ( 15 19 9 ) tex_common/actorclip 0 0 0 0.5 0.5
+}
+// brush 10
+{
+( 17 11 30 ) ( 15 14 32 ) ( 17 14 32 ) tex_common/actorclip 0 0 0 0.5 0.5
+( 17 19 23 ) ( 17 14 32 ) ( 15 14 32 ) tex_common/actorclip 0 0 0 0.5 0.5
+( 17 11 30 ) ( 17 14 32 ) ( 17 15 23 ) tex_common/actorclip 0 0 0 0.5 0.5
+( 17 15 23 ) ( 15 19 23 ) ( 15 15 23 ) tex_common/actorclip 0 0 0 0.5 0.5
+( 17 15 23 ) ( 15 11 30 ) ( 17 11 30 ) tex_common/actorclip 0 0 0 0.5 0.5
+( 15 19 23 ) ( 15 14 32 ) ( 15 15 23 ) tex_common/actorclip 0 0 0 0.5 0.5
+}
+}
+// entity 1
+{
+"classname" "misc_model"
+"model" "models/objects/alien/pstation/pstation03.md2"
+"origin" "16 26 12"
+"spawnflags" "255"
+"skin" "0"
+"angles" "0 -90 0"
+}

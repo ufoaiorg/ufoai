@@ -32,7 +32,7 @@ window buildings
 	basemap thebasemap
 	{
 		pos			"0 96"
-		size		"725 672"
+		size		"721 672"
 	}
 
 	cmpBaseHeader baseHeader {
@@ -41,14 +41,17 @@ window buildings
 	textlist buildings
 	{
 		dataid		TEXT_BUILDINGS
-		pos			"760 120"
-		size		"210 570"
+		pos			"767 120"
+		size		"209 570"
 		lineheight	30
 		color		"0 .78 0 1"
 		selectcolor	"1 1 1 1"
 		rows		"19"
 		longlines	LONGLINES_PRETTYCHOP
-		onClick		{ cmd "buildings_click <lineselected>;" }
+		contentalign	ALIGN_CC
+		onClick		{
+			cmd "buildings_click <lineselected>;"
+		}
 		onViewChange {
 			*node:root.buildings_scroll@fullsize = <fullsize>
 			*node:root.buildings_scroll@current = <viewpos>
@@ -86,13 +89,15 @@ window buildings
 			}
 		}
 	}
+
 	string txt_preview
 	{
 		string		"_Building preview"
-		tooltip		"_Open/close Building preview window"
 		pos			"800 700"
 		size		"180 20"
-		onClick		{ call *node:root.building_preview@toggle }
+		onClick		{
+			call *node:root.building_preview@toggle
+		}
 	}
 
 	confunc mn_buildings_reset
@@ -109,77 +114,81 @@ window buildings
 	{
 		cmd "building_init;"
 		call *node:root.mn_buildings_reset
-		if ( *node:root.building_preview@current == 1 ) {
-			cmd "ui_push_child popup_buildingpreview buildings;"
-		}
-
+		cmd "ui_push_child popup_buildingpreview buildings;"
 	}
 
 	func onWindowClosed
 	{
 		cmd "reset_building_current 0;"
 	}
-
 }
+
+// =============================
+// POPUP WINDOW BUILDINGPREVIEW
+//==============================
 
 window popup_buildingpreview
 {
 	{
-		pos			"38 456"
-		size		"526 237"
+		pos			"15 500"
+		size		"650 245"
 		dragbutton	true
 		closebutton	true
 		image		"ui/popup_alpha_tile"
 		string		"_Building preview"
 	}
 
-	// ==================
-	// content
-	// ==================
+	panel infopanel {
+		{
+			pos			"20 50"
+			size		"300 180"
+			border		2
+			bordercolor "0 1 0 0"
+		}
+		string title_building
+		{
+			string		*cvar:mn_building_name
+			pos			"5 5"
+			size		"290 25"
+			font		"f_normal_bold"
+		}
+
+		text buildinginfo
+		{
+			pos			"5 40"
+			size		"290 80"
+			lineheight	20
+			tabwidth	140
+			dataid		TEXT_BUILDING_INFO
+			rows		4
+		}
+
+		string status_building
+		{
+			string		*cvar:mn_building_status
+			pos			"5 140"
+			size		"260 20"
+			font		"f_small"
+		}
+
+
+		custombutton ufopedia_link
+		{
+			icon		"icons/bordered_magnifying_glass"
+			tooltip		"_UFOpaedia"
+			pos			"270 140"
+			size		"16 16"
+			onClick		{ cmd "building_ufopedia;" }
+		}
+	}
 
 	image building_pic
 	{
 		src		*cvar:mn_building_image
 		preventratio	true
-		pos			"350 58"
-		size		"150 154"
-		bgcolor		"0 0.08 0 1"
-	}
-
-	string title_building
-	{
-		string		*cvar:mn_building_name
-		pos			"30 58"
-		size		"300 25"
-		font		"f_normal"
-	}
-
-	string status_building
-	{
-		string		*cvar:mn_building_status
-		pos			"30 190"
-		size		"260 20"
-		font		"f_small"
-	}
-
-	/* text using tabbed text */
-	text buildinginfo
-	{
-		pos			"30 100"
-		size		"300 80"
-		lineheight	20
-		tabwidth	140
-		dataid		TEXT_BUILDING_INFO
-		rows		"4"
-	}
-
-	custombutton ufopedia_link
-	{
-		icon		"icons/bordered_magnifying_glass"
-		tooltip		"_UFOpaedia"
-		pos			"320 190"
-		size		"16 16"
-		onClick		{ cmd "building_ufopedia;" }
+		pos			"330 60"
+		size		"300 150"
+		contentalign	ALIGN_CR
 	}
 
 	func onWindowClosed

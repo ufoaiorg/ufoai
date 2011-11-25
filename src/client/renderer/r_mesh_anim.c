@@ -24,6 +24,7 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 */
 
 #include "r_local.h"
+#include "r_mesh.h"
 #include "r_mesh_anim.h"
 
 #define LOOPNEXT(x) ((x + 1 < MAX_ANIMLIST) ? x + 1 : 0)
@@ -126,8 +127,15 @@ void R_AnimChange (animState_t * as, const model_t * mod, const char *name)
 {
 	const mAliasAnim_t *anim;
 
-	if (!mod || !mod->alias.num_anims)
+	if (!mod) {
+		Com_Printf("R_AnimChange: No model given (%s)\n", name);
 		return;
+	}
+
+	if (!mod->alias.num_anims) {
+		Com_Printf("R_AnimChange: Model with no animations (%s) (model: %s)\n", name, mod->name);
+		return;
+	}
 
 	/* get animation */
 	anim = R_AnimGet(mod, name);
@@ -151,8 +159,6 @@ void R_AnimChange (animState_t * as, const model_t * mod, const char *name)
 		as->change = qtrue;
 	} else {
 		/* next animation */
-		as->ladd = LOOPNEXT(as->lcur);
-
 		if (anim->time < as->time)
 			as->time = anim->time;
 		/* don't change to the same animation */
@@ -211,9 +217,10 @@ void R_AnimRun (animState_t * as, const model_t * mod, int msec)
 		}
 	}
 
-	as->backlerp = 1.0 - (float) as->dt / as->time;
+	/* condition check to avoid rapid "flickering" between last two frames with certain animations. */
+	if (as->lcur != as->ladd)
+		as->backlerp = 1.0 - (float) as->dt / as->time;
 }
-
 
 /**
  * @brief Get the current running animation for a model
@@ -239,48 +246,4 @@ const char *R_AnimGetName (const animState_t * as, const model_t * mod)
 
 	anim = R_AnimGetAliasAnim(mod, as);
 	return anim->name;
-}
-
-/**
- * @brief Interpolate the transform for a model places on a tag of another model
- * @param[out] interpolated This is an array of 16 floats
- * @param[in] tag Transformation matrix for a tagged model
- * @param[in,out] as The animation state
- * @param[in] numframes The max frames of the tag data
- */
-void R_InterpolateTransform (animState_t * as, int numframes, const float *tag, float *interpolated)
-{
-	const float *current, *old;
-	float bl, fl;
-	int i;
-
-	/* range check */
-	if (as->frame >= numframes || as->frame < 0)
-		as->frame = 0;
-	if (as->oldframe >= numframes || as->oldframe < 0)
-		as->oldframe = 0;
-
-	/* calc relevant values */
-	current = tag + as->frame * 16;
-	old = tag + as->oldframe * 16;
-	bl = as->backlerp;
-	fl = 1.0 - as->backlerp;
-
-	/* right on a frame? */
-	if (bl == 0.0) {
-		memcpy(interpolated, current, sizeof(float) * 16);
-		return;
-	}
-	if (bl == 1.0) {
-		memcpy(interpolated, old, sizeof(float) * 16);
-		return;
-	}
-
-	/* interpolate */
-	for (i = 0; i < 16; i++)
-		interpolated[i] = fl * current[i] + bl * old[i];
-
-	/* normalize */
-	for (i = 0; i < 3; i++)
-		VectorNormalizeFast(interpolated + i * 4);
 }

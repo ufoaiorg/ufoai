@@ -124,6 +124,16 @@ edict_t* G_EdictsGetNext (edict_t* lastEnt)
 		return ent;
 }
 
+edict_t* G_EdictDuplicate (const edict_t *edict)
+{
+	edict_t *duplicate = G_EdictsGetNewEdict();
+	if (duplicate == NULL)
+		return NULL;
+	memcpy(duplicate, edict, sizeof(*edict));
+	duplicate->number = G_EdictsGetNumber(duplicate);
+	return duplicate;
+}
+
 /**
  * @brief Find an entity that is not in use
  */
@@ -158,6 +168,21 @@ edict_t* G_EdictsGetNextInUse (edict_t* lastEnt)
 
 	while ((ent = G_EdictsGetNext(ent))) {
 		if (ent->inuse)
+			break;
+	}
+	return ent;
+}
+
+/**
+ * @brief Iterator through all the trigger_nextmap edicts
+ * @param lastEnt The entity found in the previous iteration; if NULL, we start at the beginning
+ */
+edict_t* G_EdictsGetTriggerNextMaps (edict_t* lastEnt)
+{
+	edict_t* ent = lastEnt;
+
+	while ((ent = G_EdictsGetNextInUse(ent))) {
+		if (G_IsTriggerNextMap(ent))
 			break;
 	}
 	return ent;

@@ -141,64 +141,182 @@ menu_model ugv_phoenix
 	need	"ugv_phoenix_turret"
 }
 
-// ============== Dropship Firebird =========================
+
+///////////////
+// DROPSHIPS //
+///////////////
+
+// ============== Firebird Dropship =========================
+
 menu_model drop_firebird_top
 {
 	model	"aircraft/drop_firebird/firebird_top"
+}
+menu_model drop_firebird_top_closed
+{
+	model	"aircraft/drop_firebird/firebird_top_closed"
 }
 menu_model drop_firebird
 {
 	model	"aircraft/drop_firebird/firebird"
 	need	"drop_firebird_top"
 }
-
-// ============== Dropship Herakles =========================
-menu_model drop_herakles_pod
+menu_model drop_firebird_flying
 {
-	model	"aircraft/drop_herakles/herakles_pod"
+	model	"aircraft/drop_firebird/firebird_flying"
+	need	"drop_firebird_top_closed"
 }
 
+// ============== Herakles Dropship =========================
+
+menu_model drop_herakles_ammobox
+{
+	model	"aircraft/drop_herakles/ammobox"
+}
+menu_model drop_herakles_extinguiser
+{
+	model	"aircraft/drop_herakles/extinguiser"
+}
+menu_model drop_herakles_pod_int
+{
+	model	"aircraft/drop_herakles/herakles_int"
+}
+menu_model drop_herakles_pod_top
+{
+	model	"aircraft/drop_herakles/herakles_int_top"
+}
+menu_model drop_herakles_pod_back
+{
+	model	"aircraft/drop_herakles/herakles_pod_back"
+}
+menu_model drop_herakles_pod
+{
+	model	"aircraft/drop_herakles/herakles_int"
+	need	"drop_herakles_pod_top"
+}
+menu_model drop_herakles_pod2
+{
+	model	"aircraft/drop_herakles/herakles_pod_back"
+	need	"drop_herakles_pod"
+}
 menu_model drop_herakles
 {
 	model	"aircraft/drop_herakles/herakles_carryall"
-	need	"drop_herakles_pod"
+	need	"drop_herakles_pod2"
+}
+menu_model drop_herakles_solo_flying
+{
+	model	"aircraft/drop_herakles/herakles_carryall"
+}
+menu_model drop_herakles_pod_flying
+{
+	model	"aircraft/drop_herakles/herakles_pod"
+}
+menu_model drop_herakles_flying
+{
+	model	"aircraft/drop_herakles/herakles_carryall"
+	need	"drop_herakles_pod_flying"
 }
 
-// ============== Dropship Raptor =========================
+// ============== Raptor Dropship =========================
+
+menu_model drop_raptor_gear
+{
+	model	"aircraft/drop_raptor/drop_raptor_gear"
+}
 menu_model drop_raptor
+{
+	model	"aircraft/drop_raptor/drop_raptor_landed"
+	need	"drop_raptor_gear"
+}
+menu_model drop_raptor_flying_lq
 {
 	model	"aircraft/drop_raptor/drop_raptor_low"
 }
-
-// ============== Stingray Interceptor ======================
-menu_model inter_stingray
+menu_model drop_raptor_flying
 {
-	model	"aircraft/inter_stingray/stingray_landed"
+	model	"aircraft/drop_raptor/drop_raptor"
 }
 
-// ============== Saracen Interceptor ======================
-menu_model inter_saracen
-{
-	model	"aircraft/inter_saracen/saracen"
-}
+
+//////////////////
+// INTERCEPTORS //
+//////////////////
 
 // ============== Dragon Interceptor ======================
+
+menu_model inter_dragon_gear
+{
+	model	"aircraft/inter_dragon/inter_dragon_gear"
+}
 menu_model inter_dragon
+{
+	model	"aircraft/inter_dragon/inter_dragon"
+	need	"inter_dragon_gear"
+}
+menu_model inter_dragon_flying
 {
 	model	"aircraft/inter_dragon/inter_dragon"
 }
 
+// ============== Saracen Interceptor ======================
+
+menu_model inter_saracen
+{
+	model	"aircraft/inter_saracen/saracen"
+}
+menu_model inter_saracen_flying
+{
+	model	"aircraft/inter_saracen/saracen_flying"
+}
+
 // ============== Starchaser Interceptor ======================
+
+menu_model inter_starchaser_gear
+{
+	model	"aircraft/inter_starchaser/starchaser_gear"
+}
 menu_model inter_starchaser
+{
+	model	"aircraft/inter_starchaser/starchaser_folded"
+	need	"inter_starchaser_gear"
+}
+menu_model inter_starchaser_flying
 {
 	model	"aircraft/inter_starchaser/starchaser"
 }
 
 // ============== Stiletto Interceptor =====================
+
+menu_model inter_stiletto_gear
+{
+	model	"aircraft/inter_stiletto/stiletto_gear"
+}
 menu_model inter_stiletto
 {
 	model	"aircraft/inter_stiletto/stiletto"
+	need	"inter_stiletto_gear"
 }
+menu_model inter_stiletto_flying
+{
+	model	"aircraft/inter_stiletto/stiletto"
+}
+
+// ============== Stingray Interceptor ======================
+
+menu_model inter_stingray
+{
+	model	"aircraft/inter_stingray/stingray_landed"
+}
+menu_model inter_stingray_flying
+{
+	model	"aircraft/inter_stingray/stingray_flying"
+}
+
+
+//////////
+// UFOS //
+//////////
 
 // ============== UFO Carrier ======================
 menu_model ufo_carrier

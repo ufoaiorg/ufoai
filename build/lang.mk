@@ -28,8 +28,6 @@ update-po-uforadiant: po-check
 		$(SRCDIR)/tools/radiant/libs/*/*.h \
 		$(SRCDIR)/tools/radiant/libs/*/*.cpp \
 		$(SRCDIR)/tools/radiant/include/*.h \
-		$(SRCDIR)/tools/radiant/plugins/*/*.cpp \
-		$(SRCDIR)/tools/radiant/plugins/*/*.h \
 		$(SRCDIR)/tools/radiant/radiant/*/*.cpp \
 		$(SRCDIR)/tools/radiant/radiant/*/*.h \
 		$(SRCDIR)/tools/radiant/radiant/*.cpp \

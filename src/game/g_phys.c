@@ -38,21 +38,21 @@ void G_PhysicsStep (edict_t *ent)
 	 */
 	if (ent->moveinfo.currentStep < ent->moveinfo.steps) {
 		const int contentFlags = ent->contentFlags;
-		const int visflags = ent->moveinfo.visflags[ent->moveinfo.currentStep];
+		const vismask_t visflags = ent->moveinfo.visflags[ent->moveinfo.currentStep];
 		/* Send the sound effect to everyone how's not seeing the actor */
 		if (!G_IsCrouched(ent)) {
 			if (contentFlags & CONTENTS_WATER) {
 				if (ent->moveinfo.contentFlags[ent->moveinfo.currentStep] & CONTENTS_WATER) {
 					/* looks like we already are in the water */
 					/* send water moving sound */
-					gi.PositionedSound(~G_VisToPM(visflags), ent->origin, ent, "footsteps/water_under");
+					G_EventSpawnSound(~G_VisToPM(visflags), qtrue, ent, ent->origin, "footsteps/water_under");
 				} else {
 					/* send water entering sound */
-					gi.PositionedSound(~G_VisToPM(visflags), ent->origin, ent, "footsteps/water_in");
+					G_EventSpawnSound(~G_VisToPM(visflags), qtrue, ent, ent->origin, "footsteps/water_in");
 				}
 			} else if (ent->contentFlags & CONTENTS_WATER) {
 				/* send water leaving sound */
-				gi.PositionedSound(~G_VisToPM(visflags), ent->origin, ent, "footsteps/water_out");
+				G_EventSpawnSound(~G_VisToPM(visflags), qtrue, ent, ent->origin, "footsteps/water_out");
 			} else {
 				trace_t trace;
 				vec3_t from, to;
@@ -66,7 +66,7 @@ void G_PhysicsStep (edict_t *ent)
 				if (trace.surface) {
 					const char *snd = gi.GetFootstepSound(trace.surface->name);
 					if (snd)
-						gi.PositionedSound(~G_VisToPM(visflags), ent->origin, ent, snd);
+						G_EventSpawnSound(~G_VisToPM(visflags), qtrue, ent, ent->origin, snd);
 				}
 			}
 		}

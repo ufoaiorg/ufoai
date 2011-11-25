@@ -26,16 +26,26 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #include "../../../cl_localentity.h"
 #include "e_event_actorthrow.h"
 
-int CL_ActorDoThrowTime (const eventRegister_t *self, struct dbuffer *msg, const int dt)
+/**
+ * @brief Decides if following events should be delayed
+ */
+int CL_ActorDoThrowTime (const eventRegister_t *self, struct dbuffer *msg, eventTiming_t *eventTiming)
 {
-	const int t = NET_ReadShort(msg);
-	return cl.time + t;
+	const int eventTime = eventTiming->nextTime;
+
+	/* the delay is encoded in the message already */
+	eventTiming->nextTime += NET_ReadShort(msg);
+	eventTiming->impactTime = eventTiming->shootTime = eventTiming->nextTime;
+	eventTiming->parsedDeath = qfalse;
+
+	return eventTime;
 }
 
 /**
  * @brief Throw item with actor.
  * @param[in] self Pointer to the event structure that is currently executed
  * @param[in] msg The netchannel message
+ * @sa EV_ACTOR_THROW
  */
 void CL_ActorDoThrow (const eventRegister_t *self, struct dbuffer *msg)
 {
@@ -60,7 +70,7 @@ void CL_ActorDoThrow (const eventRegister_t *self, struct dbuffer *msg)
 	LE_AddGrenade(fd, flags, muzzle, v0, dtime, NULL);
 
 	/* start the sound */
-	if (fd->fireSound[0] && !(flags & SF_BOUNCED)) {
+	if (fd->fireSound != NULL && !(flags & SF_BOUNCED)) {
 		S_LoadAndPlaySample(fd->fireSound, muzzle, SOUND_ATTN_IDLE, SND_VOLUME_DEFAULT);
 	}
 }

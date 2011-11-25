@@ -3,6 +3,7 @@
 
 #include "XMLFilter.h"
 #include "ifilter.h"
+#include "iradiant.h"
 #include "xmlutil/Node.h"
 
 #include <set>
@@ -18,7 +19,7 @@ namespace filters
  */
 
 class BasicFilterSystem
-: public FilterSystem
+: public FilterSystem, RadiantEventListener
 {
 	// Hashtable of available filters, indexed by name
 	typedef std::map<std::string, XMLFilter> FilterTable;
@@ -78,8 +79,10 @@ public:
 	void setFilterState(const std::string& filter, bool state);
 
 	// Query whether an item is visible or filtered out
-	bool isVisible(const std::string& item, const std::string& name);
-	bool isVisible (const std::string& item, int flags);
+	bool isVisible(const FilterRule::Type type, const std::string& name);
+	bool isVisible(const FilterRule::Type type, int flags);
+	// Query whether an entity is visible or filtered out
+	bool isEntityVisible(const FilterRule::Type type, const Entity& entity);
 
 	// Whether this filter is read-only and can't be changed
 	bool filterIsReadOnly(const std::string& filter);
@@ -98,6 +101,9 @@ public:
 
 	// Applies the ruleset and replaces the previous one for a given filter.
 	bool setFilterRules(const std::string& filter, const FilterRules& ruleSet);
+
+	void onRadiantStartup();
+	void onRadiantShutdown();
 
 	void init();
 	void shutdown();

@@ -614,7 +614,7 @@ static void R_LoadBspVertexArrays (model_t *mod)
 			mod->bsp.lmtexcoords[coordind + 1] = t;
 
 			/* normal vectors */
-			if (surf->texinfo->flags & SURF_PHONG && VectorNotEmpty(vert->normal))
+			if ((surf->texinfo->flags & SURF_PHONG) && VectorNotEmpty(vert->normal))
 				normal = vert->normal; /* phong shaded */
 			else
 				normal = surf->normal; /* per plane */
@@ -930,15 +930,11 @@ static void R_ModAddMapTile (const char *name, qboolean day, int sX, int sY, int
 	dBspHeader_t *header;
 	const int lightingLump = day ? LUMP_LIGHTING_DAY : LUMP_LIGHTING_NIGHT;
 
-	/* get new model */
-	if (r_numModels < 0 || r_numModels >= MAX_MOD_KNOWN)
-		Com_Error(ERR_DROP, "R_ModAddMapTile: r_numModels >= MAX_MOD_KNOWN");
-
 	if (r_numMapTiles < 0 || r_numMapTiles >= MAX_MAPTILES)
 		Com_Error(ERR_DROP, "R_ModAddMapTile: Too many map tiles");
 
 	/* alloc model and tile */
-	r_worldmodel = &r_models[r_numModels++];
+	r_worldmodel = R_AllocModelSlot();
 	r_mapTiles[r_numMapTiles++] = r_worldmodel;
 	OBJZERO(*r_worldmodel);
 	Com_sprintf(r_worldmodel->name, sizeof(r_worldmodel->name), "maps/%s.bsp", name);
@@ -950,6 +946,7 @@ static void R_ModAddMapTile (const char *name, qboolean day, int sX, int sY, int
 
 	/* init */
 	r_worldmodel->type = mod_bsp;
+	r_worldmodel->bsp.maptile = r_numMapTiles - 1;
 
 	/* prepare shifting */
 	VectorSet(shift, sX * UNIT_SIZE, sY * UNIT_SIZE, sZ * UNIT_SIZE);
@@ -963,8 +960,7 @@ static void R_ModAddMapTile (const char *name, qboolean day, int sX, int sY, int
 	/* swap all the lumps */
 	mod_base = (byte *) header;
 
-	for (i = 0; i < (int)sizeof(dBspHeader_t) / 4; i++)
-		((int *) header)[i] = LittleLong(((int *) header)[i]);
+	BSP_SwapHeader(header, r_worldmodel->name);
 
 	/* load into heap */
 	R_ModLoadVertexes(&header->lumps[LUMP_VERTEXES]);
@@ -1026,7 +1022,7 @@ void R_ModBeginLoading (const char *tiles, qboolean day, const char *pos, const 
 	assert(mapName);
 
 	/* clear any lights leftover in the active list from previous maps */
-	R_ClearActiveLights();
+	R_ClearStaticLights();
 
 	/* init */
 	R_BeginBuildingLightmaps();

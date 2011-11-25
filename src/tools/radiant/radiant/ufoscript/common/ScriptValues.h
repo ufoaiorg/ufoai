@@ -63,7 +63,7 @@ namespace scripts
 
 			virtual ~ScriptValues ();
 
-			ScriptValueVector getScriptValues ();
+			ScriptValueVector getScriptValues () const;
 
 			void addScriptValue (ScriptValue value);
 

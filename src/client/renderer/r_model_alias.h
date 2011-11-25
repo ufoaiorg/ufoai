@@ -62,14 +62,29 @@ typedef struct mAliasFrame_s {
 	mAliasBoneMatrix_t	*boneMatrix;
 } mAliasFrame_t;
 
+/**
+ * The translation and rotation values for one frame of a tag
+ */
 typedef struct mAliasTagOrientation_s {
+	/** the translation vector */
 	vec3_t origin;
-	float axis[3][3];
+	/** the rotation vectors */
+	vec3_t axis[3];
 } mAliasTagOrientation_t;
 
+/**
+ * A tag is a reference point that allows us to place other (child-)meshes to that
+ * particular location.
+ *
+ * The tag has a rotation and a translation vector on a per-frame base. This allows
+ * us to place e.g. weapons onto the tag_rweapon tag of a character model and also
+ * move this weapon while the character models moves its arm.
+ */
 typedef struct mAliasTag_s {
-	char	name[MODEL_MAX_PATH];
-	mAliasTagOrientation_t	orient;
+	/** the tagname */
+	char name[MODEL_MAX_PATH];
+	/** a list of rotation and translation vectors for each frame */
+	mAliasTagOrientation_t *orient;
 } mAliasTag_t;
 
 typedef	struct mAliasSkin_s {
@@ -134,7 +149,9 @@ typedef	struct	mAliasModel_s {
 	int		curFrame;
 	int		oldFrame;
 
+	/** amount of different tags for the model */
 	int		num_tags;
+	/** a list of tags */
 	mAliasTag_t	*tags;
 
 	int		num_meshes;
@@ -148,10 +165,6 @@ typedef	struct	mAliasModel_s {
 	int num_anims;
 	mAliasAnim_t *animdata;
 	int curAnim;
-
-	/** tag data */
-	char tagname[MAX_QPATH];
-	void *tagdata;
 } mAliasModel_t;
 
 void R_ModLoadAnims(mAliasModel_t *mod, const char *buffer);

@@ -40,8 +40,6 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #define EXTRADATA(node) UI_EXTRADATA(node, EXTRADATA_TYPE)
 #define EXTRADATACONST(node) UI_EXTRADATACONST(node, EXTRADATA_TYPE)
 
-static void UI_TextUpdateCache(uiNode_t *node);
-
 static void UI_TextNodeGenerateLineSplit (uiNode_t *node)
 {
 	const char *data;
@@ -93,18 +91,6 @@ static void UI_TextNodeGenerateLineSplit (uiNode_t *node)
 	}
 
 	Mem_Free(buffer);
-}
-
-static void UI_TextValidateCache (uiNode_t *node)
-{
-	int v;
-	if (EXTRADATA(node).super.dataID == TEXT_NULL || node->text != NULL)
-		return;
-
-	v = UI_GetDataVersion(EXTRADATA(node).super.dataID);
-	if (v != EXTRADATA(node).super.versionId) {
-		UI_TextUpdateCache(node);
-	}
 }
 
 /**
@@ -184,7 +170,7 @@ static void UI_TextNodeDrawText (uiNode_t* node, const linkedList_t* list, qbool
 	width = node->size[0] - node->padding - node->padding;
 
 	/* fix position of the start of the draw according to the align */
-	switch (node->textalign % 3) {
+	switch (node->contentAlign % 3) {
 	case 0:	/* left */
 		break;
 	case 1:	/* middle */
@@ -229,7 +215,7 @@ static void UI_TextNodeDrawText (uiNode_t* node, const linkedList_t* list, qbool
 				R_FontTextSize (font, cur, width, EXTRADATA(node).super.longlines, NULL, NULL, &lines, NULL);
 				fullSizeY += lines;
 			} else
-				UI_DrawString(font, node->textalign, x1, y, x, width, EXTRADATA(node).super.lineHeight, cur, viewSizeY, EXTRADATA(node).super.super.scrollY.viewPos, &fullSizeY, qtrue, EXTRADATA(node).super.longlines);
+				UI_DrawString(font, node->contentAlign, x1, y, x, width, EXTRADATA(node).super.lineHeight, cur, viewSizeY, EXTRADATA(node).super.super.scrollY.viewPos, &fullSizeY, qtrue, EXTRADATA(node).super.longlines);
 		}
 
 		list = list->next;
@@ -270,7 +256,7 @@ static void UI_TextNodeDraw (uiNode_t *node)
 {
 	const uiSharedData_t *shared;
 
-	UI_TextValidateCache(node);
+	UI_TextValidateCache(node, UI_TextUpdateCache);
 
 	if (EXTRADATA(node).super.dataID == TEXT_NULL && node->text != NULL) {
 		UI_TextNodeDrawText(node, EXTRADATA(node).lineSplit, qfalse);
@@ -327,8 +313,11 @@ static void UI_TextNodeRightClick (uiNode_t * node, int x, int y)
 		UI_ExecuteEventActions(node, node->onRightClick);
 }
 
-static void UI_TextNodeMouseWheel (uiNode_t *node, qboolean down, int x, int y)
+static void UI_TextNodeMouseWheel (uiNode_t *node, int deltaX, int deltaY)
 {
+	qboolean down = deltaY > 0;
+	if (deltaY == 0)
+		return;
 	UI_AbstractScrollableNodeScrollY(node, (down ? 1 : -1));
 	if (node->onWheelUp && !down)
 		UI_ExecuteEventActions(node, node->onWheelUp);
@@ -397,7 +386,7 @@ void UI_RegisterText2Node (uiBehaviour_t *behaviour)
 	behaviour->draw = UI_TextNodeDraw;
 	behaviour->leftClick = UI_TextNodeClick;
 	behaviour->rightClick = UI_TextNodeRightClick;
-	behaviour->mouseWheel = UI_TextNodeMouseWheel;
+	behaviour->scroll = UI_TextNodeMouseWheel;
 	behaviour->mouseMove = UI_TextNodeMouseMove;
 	behaviour->loading = UI_TextNodeLoading;
 	behaviour->loaded = UI_TextNodeLoaded;

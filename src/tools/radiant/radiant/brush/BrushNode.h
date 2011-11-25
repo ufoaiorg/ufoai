@@ -27,7 +27,7 @@
 #include "ibrush.h"
 #include "editable.h"
 
-#include "brushtokens.h"
+#include "BrushTokens.h"
 #include "Brush.h"
 #include "BrushInstance.h"
 
@@ -90,11 +90,10 @@ class BrushNode: public scene::Node,
 		}
 		// Copy Constructor
 		BrushNode (const BrushNode& other) :
-			scene::Instantiable(other), scene::Cloneable(other), Nameable(other), Snappable(other),
-					TransformNode(other), MapImporter(other), MapExporter(other), m_brush(other.m_brush, *this,
-							InstanceSetEvaluateTransform<BrushInstance>::Caller(m_instances),
-							InstanceSet::BoundsChangedCaller(m_instances)), m_mapImporter(m_brush), m_mapExporter(
-							m_brush)
+				scene::Node(other), scene::Instantiable(other), scene::Cloneable(other), Nameable(other), Snappable(
+						other), TransformNode(other), MapImporter(other), MapExporter(other), IBrushNode(other), m_brush(
+						other.m_brush, *this, InstanceSetEvaluateTransform<BrushInstance>::Caller(m_instances),
+						InstanceSet::BoundsChangedCaller(m_instances)), m_mapImporter(m_brush), m_mapExporter(m_brush)
 		{
 		}
 

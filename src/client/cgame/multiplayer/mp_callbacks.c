@@ -128,7 +128,7 @@ static void CL_Rcon_f (void)
 		else
 			port = DOUBLEQUOTE(PORT_SERVER);
 
-		s = cgi->NET_Connect(rcon_address->string, port);
+		s = cgi->NET_Connect(rcon_address->string, port, NULL);
 		if (s) {
 			cgi->NET_OOB_Printf(s, "%s", message);
 			cgi->NET_StreamSetCallback(s, &CL_RconCallback);
@@ -216,7 +216,7 @@ static void CL_TeamNum_f (void)
 		i = TEAM_DEFAULT;
 	}
 
-	if (!Q_streq(cgi->Cmd_Argv(0), "teamnum_dec")) {
+	if (Q_streq(cgi->Cmd_Argv(0), "teamnum_dec")) {
 		for (i--; i > TEAM_CIVILIAN; i--) {
 			if (GAME_MP_SetTeamNum(i))
 				break;
@@ -295,4 +295,8 @@ void MP_CallbacksShutdown (void)
 	cgi->Cmd_RemoveCommand("disconnect");
 	cgi->Cmd_RemoveCommand("connect");
 	cgi->Cmd_RemoveCommand("reconnect");
+
+	cgi->Cvar_Delete("rcon_password");
+	cgi->Cvar_Delete("rcon_address");
+	cgi->Cvar_Delete("password");
 }

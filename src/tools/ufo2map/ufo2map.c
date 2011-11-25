@@ -409,17 +409,22 @@ static void U2M_Parameter (int argc, const char **argv)
 		} else if (Q_streq(argv[i], "-nobackclip")) {
 			Verb_Printf(VERB_LESS, "nobackclip = true\n");
 			config.nobackclip = qtrue;
-		} else if (Q_streq(argv[i],"-extra")) {
+		} else if (Q_streq(argv[i], "-extra")) {
 			config.extrasamples = qtrue;
 			Verb_Printf(VERB_LESS, "extrasamples = true\n");
-		} else if (Q_streq(argv[i],"-quant")) {
+		} else if (Q_streq(argv[i], "-soft")) {
+			config.extrasamples = qtrue;
+			config.soft = qtrue;
+			Verb_Printf(VERB_LESS, "extrasamples = true\n");
+			Verb_Printf(VERB_LESS, "soft = true\n");
+		} else if (Q_streq(argv[i], "-quant")) {
 			config.lightquant = (byte)atoi(argv[i + 1]);
 			if (config.lightquant < 1 || config.lightquant > 6) {
 				config.lightquant = 4;
 				Verb_Printf(VERB_LESS, "lightquant must be between 1 and 6\n");
 			}
 			i++;
-		} else if (Q_streq(argv[i],"-scale")) {
+		} else if (Q_streq(argv[i], "-scale")) {
 			config.brightness = atof(argv[i + 1]);
 			i++;
 		} else if (Q_streq(argv[i], "-saturation")) {
@@ -430,11 +435,11 @@ static void U2M_Parameter (int argc, const char **argv)
 			config.contrast = atof(argv[i + 1]);
 			Verb_Printf(VERB_LESS, "contrast at %f\n", config.contrast);
 			i++;
-		} else if (Q_streq(argv[i],"-surface")) {
+		} else if (Q_streq(argv[i], "-surface")) {
 			config.surface_scale *= atof(argv[i + 1]);
 			Verb_Printf(VERB_LESS, "surface light scaling at %f\n", config.surface_scale);
 			i++;
-		} else if (Q_streq(argv[i],"-entity")) {
+		} else if (Q_streq(argv[i], "-entity")) {
 			config.entity_scale *= atof(argv[i + 1]);
 			Verb_Printf(VERB_LESS, "entity light scaling at %f\n", config.entity_scale);
 			i++;
@@ -542,7 +547,7 @@ int main (int argc, const char **argv)
 {
 	char bspFilename[MAX_OSPATH];
 	double begin, start, end;
-	long size;
+	long size = 0;
 
 	OBJZERO(config);
 	/* init thread state */
@@ -603,11 +608,10 @@ int main (int argc, const char **argv)
 
 		UnparseEntities();
 
-		WriteBSPFile(bspFilename);
+		size = WriteBSPFile(bspFilename);
 	} else if (config.exportLightmaps) {
 		LoadBSPFile(bspFilename);
 		ExportLightmaps(bspFilename);
-		size = 0;
 	} else if (config.performMapCheck || config.fixMap) {
 		LoadMapFile(mapFilename);
 		/* level flags must be fixed before mixed face contents, or they swamp the

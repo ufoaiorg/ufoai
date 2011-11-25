@@ -62,27 +62,30 @@ static uiSprite_t* UI_AutoGenerateSprite (const char* name)
 {
 	uiSprite_t* sprite = NULL;
 	const char* suffix[SPRITE_STATUS_MAX] = {"", "_hovered", "_disabled", "_clicked"};
+	char basePicNameBuf[MAX_QPATH];
+	const image_t *pic;
 	int i;
 
-	const char *picName = name;
-	const image_t *pic = UI_LoadImage(picName);
+	Q_strncpyz(basePicNameBuf, name, sizeof(basePicNameBuf));
+
+	pic = UI_LoadImage(basePicNameBuf);
 	if (pic == NULL)
 		return NULL;
 
-	sprite = UI_AllocStaticSprite(name);
-	sprite->image[SPRITE_STATUS_NORMAL] = UI_AllocStaticString(picName, 0);
+	sprite = UI_AllocStaticSprite(basePicNameBuf);
+	sprite->image[SPRITE_STATUS_NORMAL] = UI_AllocStaticString(basePicNameBuf, 0);
 	sprite->size[0] = pic->width;
 	sprite->size[1] = pic->height;
 	for (i = 1; i < SPRITE_STATUS_MAX; i++) {
-		picName = va("%s%s", name, suffix[i]);
-		pic = UI_LoadImage(picName);
+		char picNameBuf[MAX_QPATH];
+		Com_sprintf(picNameBuf, sizeof(picNameBuf), "%s%s", basePicNameBuf, suffix[i]);
+		pic = UI_LoadImage(picNameBuf);
 		if (pic != NULL)
-			sprite->image[i] = UI_AllocStaticString(picName, 0);
+			sprite->image[i] = UI_AllocStaticString(picNameBuf, 0);
 	}
 	return sprite;
 }
 
-#ifdef DEBUG
 /**
  * @brief Check if an sprite name exists
  * @param[in] name Name of the sprite
@@ -99,7 +102,6 @@ static qboolean UI_SpriteExists (const char* name)
 	}
 	return qfalse;
 }
-#endif
 
 /**
  * @brief Return an sprite by is name
@@ -111,9 +113,8 @@ uiSprite_t* UI_GetSpriteByName (const char* name)
 {
 	int i;
 	for (i = 0; i < ui_global.numSprites; i++) {
-		if (strncmp(name, ui_global.sprites[i].name, MEMBER_SIZEOF(uiSprite_t, name)) != 0)
-			continue;
-		return &ui_global.sprites[i];
+		if (Q_streq(name, ui_global.sprites[i].name))
+			return &ui_global.sprites[i];
 	}
 	return UI_AutoGenerateSprite(name);
 }
@@ -127,10 +128,10 @@ uiSprite_t* UI_GetSpriteByName (const char* name)
 uiSprite_t* UI_AllocStaticSprite (const char* name)
 {
 	uiSprite_t* result;
-	/** @todo understand why we must hide this assert in release build with mingw */
-#ifdef DEBUG
-	assert(!UI_SpriteExists(name));
-#endif
+
+	if (UI_SpriteExists(name))
+		Com_Error(ERR_FATAL, "UI_AllocStaticSprite: \"%s\" sprite already allocated. Check your scripts.", name);
+
 	if (ui_global.numSprites >= UI_MAX_SPRITES)
 		Com_Error(ERR_FATAL, "UI_AllocStaticSprite: UI_MAX_SPRITES hit");
 
@@ -151,7 +152,7 @@ uiSprite_t* UI_AllocStaticSprite (const char* name)
  * @param[in] sizeY Height of the bounded box
  * @todo use named const for status
  */
-void UI_DrawSpriteInBox (const uiSprite_t* sprite, uiSpriteStatus_t status, int posX, int posY, int sizeX, int sizeY)
+void UI_DrawSpriteInBox (qboolean flip, const uiSprite_t* sprite, uiSpriteStatus_t status, int posX, int posY, int sizeX, int sizeY)
 {
 	int texX;
 	int texY;
@@ -192,7 +193,7 @@ void UI_DrawSpriteInBox (const uiSprite_t* sprite, uiSpriteStatus_t status, int 
 		R_Color(color);
 	}
 
-	UI_DrawNormImageByName(posX, posY, sprite->size[0], sprite->size[1],
+	UI_DrawNormImageByName(flip, posX, posY, sprite->size[0], sprite->size[1],
 		texX + sprite->size[0], texY + sprite->size[1], texX, texY, image);
 	if (sprite->blend)
 		R_Color(NULL);

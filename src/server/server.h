@@ -80,6 +80,7 @@ typedef struct {
 	struct client_s *clients;	/**< [sv_maxclients->value]; */
 	int lastHeartbeat;			/**< time where the last heartbeat was send to the master server
 								 * Set to a huge negative value to send immmediately */
+	int lastPing;
 	qboolean abandon;			/**< shutdown server when all clients disconnect and don't accept new connections */
 	qboolean killserver;		/**< will initiate shutdown once abandon is set */
 	threads_mutex_t *serverMutex;
@@ -110,7 +111,8 @@ typedef struct {
 	struct cBspModel_s *models[MAX_MODELS];
 
 	qboolean endgame;
-	qboolean started;			/**< set when the match has started - no further connections are allowed in this case */
+	qboolean spawned;			/**< set when the actors have spawned - no further connections are allowed in this case */
+	qboolean started;			/**< set when the match has started */
 
 	char configstrings[MAX_CONFIGSTRINGS][MAX_TOKEN_CHARS];
 
@@ -158,7 +160,7 @@ typedef struct client_s {
 	player_t *player;			/**< game client structure */
 	char name[32];				/**< extracted from userinfo, high bits masked */
 	int messagelevel;			/**< for filtering printed messages */
-	int lastconnect;
+	int lastmessage;			/**< when packet was last received */
 	char peername[256];
 	struct net_stream *stream;
 } client_t;
@@ -167,6 +169,7 @@ extern serverInstanceStatic_t svs;		/**< persistant server instance info */
 extern serverInstanceGame_t * sv;			/**< server data per game/map */
 
 extern cvar_t *sv_mapname;
+extern cvar_t *sv_rma;
 extern cvar_t *sv_public;			/**< should heartbeats be sent? (only for public servers) */
 extern cvar_t *sv_dumpmapassembly;
 extern cvar_t *sv_threads;	/**< run the game lib threaded */
@@ -194,7 +197,6 @@ void SV_MapcycleClear(void);
 void SV_Map(qboolean day, const char *levelstring, const char *assembly);
 
 void SV_Multicast(int mask, struct dbuffer *msg);
-void SV_StartSound(int mask, const vec3_t origin, const edict_t *entity, const char* sound);
 void SV_ClientCommand(client_t *client, const char *fmt, ...) __attribute__((format(printf,2,3)));
 void SV_ClientPrintf(client_t * cl, int level, const char *fmt, ...) __attribute__((format(printf,3,4)));
 void SV_BroadcastPrintf(int level, const char *fmt, ...) __attribute__((format(printf,2,3)));

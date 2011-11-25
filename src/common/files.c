@@ -38,10 +38,25 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 
 /** counter for opened files - used to check against missing close calls */
 static int fs_openedFiles;
-
 static filelink_t *fs_links;
-
 static searchpath_t *fs_searchpaths;
+
+void FS_CreateOpenPipeFile (const char *filename, qFILE *f)
+{
+	if (fs_searchpaths == NULL) {
+		Sys_Error("Filesystem call made without initialization");
+	}
+
+	OBJZERO(*f);
+
+	Q_strncpyz(f->name, filename, sizeof(f->name));
+	Sys_Mkfifo(va("%s/%s", FS_Gamedir(), filename), f);
+
+	if (f->f != NULL) {
+		Com_Printf("created pipe %s\n", filename);
+		fs_openedFiles++;
+	}
+}
 
 /**
  * @brief Called to find where to write a file (savegames, etc)
@@ -171,14 +186,13 @@ int FS_OpenFile (const char *filename, qFILE *file, filemode_t mode)
 	/* check for links first */
 	for (link = fs_links; link; link = link->next) {
 		if (!strncmp(filename, link->from, link->fromlength)) {
+			int length;
 			Com_sprintf(netpath, sizeof(netpath), "%s%s", link->to, filename + link->fromlength);
-			file->f = fopen(netpath, "rb");
-			if (file->f) {
-				fs_openedFiles++;
-				return FS_FileLength(file);
-			}
-			Com_Printf("linked file could not be opened: %s\n", netpath);
-			return -1;
+			length = FS_OpenFile(netpath, file, mode);
+			Q_strncpyz(file->name, filename, sizeof(file->name));
+			if (length == -1)
+				Com_Printf("linked file could not be opened: %s\n", netpath);
+			return length;
 		}
 	}
 
@@ -317,7 +331,7 @@ int FS_CheckFile (const char *fmt, ...)
  * @sa FS_LoadFile
  * @sa FS_OpenFile
  */
-int FS_Read (void *buffer, int len, qFILE * f)
+int FS_Read2 (void *buffer, int len, qFILE *f, qboolean failOnEmptyRead)
 {
 	int block, remaining;
 	int read;
@@ -350,8 +364,10 @@ int FS_Read (void *buffer, int len, qFILE * f)
 			/* we might have been trying to read from a CD */
 			if (!tries)
 				tries = 1;
-			else
+			else if (failOnEmptyRead)
 				Sys_Error("FS_Read: 0 bytes read");
+			else
+				return len - remaining;
 		}
 
 		if (read == -1)
@@ -362,6 +378,11 @@ int FS_Read (void *buffer, int len, qFILE * f)
 		buf += read;
 	}
 	return len;
+}
+
+int FS_Read (void *buffer, int len, qFILE * f)
+{
+	return FS_Read2(buffer, len, f, qtrue);
 }
 
 /**
@@ -841,9 +862,17 @@ void FS_InitFilesystem (qboolean writeToHomeDir)
 
 	FS_AddGameDirectory("./" BASEDIRNAME, !writeToHomeDir);
 	FS_AddHomeAsGameDirectory(BASEDIRNAME, writeToHomeDir);
+#ifdef COMPILE_UFO
+	const char *fsGameDir = Cvar_GetString("fs_gamedir");
+	if (Q_strvalid(fsGameDir)) {
+		FS_AddGameDirectory(va("./%s", fsGameDir), !writeToHomeDir);
+		FS_AddHomeAsGameDirectory(fsGameDir, writeToHomeDir);
+	}
+#endif
 
 #ifdef COMPILE_UFO
 	FS_InitCommandsAndCvars();
+	Cbuf_AddText("exec filesystem.cfg\n");
 #endif
 
 	Com_Printf("using %s for writing\n", FS_Gamedir());
@@ -1158,6 +1187,13 @@ char *FS_NextScriptHeader (const char *files, const char **name, const char **te
 
 	if (!text) {
 		*lastList = 0;
+
+		/* free the old file */
+		if (lBuffer) {
+			FS_FreeFile(lBuffer);
+			lBuffer = NULL;
+		}
+
 		return NULL;
 	}
 

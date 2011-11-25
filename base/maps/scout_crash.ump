@@ -1,0 +1,67 @@
+// *********************************
+// SCOUT CRASH
+// *********************************
+
+base scout_crash/sc_
+
+// Tiletypes:
+// ----------
+// +: tile contains something
+// a: normal tile.
+// b: dropship tile.
+
+// ---------------------------------
+// Firebird dropship
+tile +craft_drop_firebird
+{
+5 4
+0      0       0       0       0
+0      +b      +b      +b      0
+0      +b      +b      +b      0
+0      0       0       0       0
+}
+
+// ---------------------------------
+// Herakles dropship
+tile +craft_drop_herakles
+{
+5 4
+0      0       0       0       0
+0      +b      +b      +b      0
+0      +b      +b      +b      0
+0      0       0       0       0
+}
+
+// ---------------------------------
+// Raptor dropship
+tile +craft_drop_raptor
+{
+5 4
+0      0       0       0       0
+0      +b      +b      +b      0
+0      +b      +b      +b      0
+0      0       0       0       0
+}
+
+// ---------------------------------
+// Main tile
+tile +main
+{
+10 7
+0      0       0       0       0       0       0       0       0       0
+0      +a      +a      +a      +a      +a      +a      +a      +a      0
+0      +a      +a      +a      +a      +a      +a      +a      +a      0
+0      +a      +a      +a      +a      +a      +a      +a      +a      0
+0      +a      +a      +a      +a      +a      b       b       b       0
+0      +a      +a      +a      +a      +a      b       b       b       0
+0      0       0       0       0       0       0       0       0       0
+}
+
+assembly standard
+{
+size "8 5"
+grid "1 1"
+
++main "1 1"
+*rm_drop +craft_drop_firebird "1 1"
+}

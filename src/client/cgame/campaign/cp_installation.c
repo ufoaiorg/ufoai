@@ -51,29 +51,26 @@ installationType_t INS_GetType (const installation_t *installation)
 }
 
 /**
- * @brief Array bound check for the installation index.
- * @param[in] instIdx  Instalation's index
- * @return Pointer to the installation corresponding to instIdx.
+ * @brief Get number of installations
  */
-installation_t* INS_GetInstallationByIDX (int instIdx)
+int INS_GetCount (void)
 {
-	if (instIdx < 0 || instIdx >= MAX_INSTALLATIONS)
-		return NULL;
-
-	return &ccs.installations[instIdx];
+	return LIST_Count(ccs.installations);
 }
 
 /**
- * @brief Array bound check for the installation index.
- * @param[in] instIdx  Instalation's index
- * @return Pointer to the installation corresponding to instIdx if installation is founded, NULL else.
+ * @brief Get installation by it's index.
+ * @param[in] idx Instalation's index
+ * @return Pointer to the installation corresponding to idx or @c NULL if not found.
  */
-installation_t* INS_GetFoundedInstallationByIDX (int instIdx)
+installation_t* INS_GetByIDX (int idx)
 {
-	installation_t *installation = INS_GetInstallationByIDX(instIdx);
+	installation_t *installation;
 
-	if (installation && installation->founded)
-		return installation;
+	INS_Foreach(installation) {
+		if (installation->idx == idx)
+			return installation;
+	}
 
 	return NULL;
 }
@@ -97,58 +94,36 @@ const installationTemplate_t* INS_GetInstallationTemplateFromInstallationID (con
 }
 
 /**
- * @brief Setup new installation
- * @param[in,out] installation Pointer to the installation to set up
+ * @brief Build a new installation
  * @param[in] installationTemplate Template pointer
  * @param[in] pos Position on Globe to build at
  * @param[in] name The name of the installation - might already be in utf-8
- * @sa INS_NewInstallation
  */
-void INS_SetUpInstallation (installation_t* installation, const installationTemplate_t *installationTemplate, const vec2_t pos, const char *name)
+installation_t* INS_Build (const installationTemplate_t *installationTemplate, const vec2_t pos, const char *name)
 {
+	installation_t installation;
 	const int newInstallationAlienInterest = 1.0f;
 
-	Vector2Copy(pos, installation->pos);
+	OBJZERO(installation);
 
-	installation->idx = INS_GetInstallationIDX(installation);
-	installation->founded = qtrue;
-	installation->installationStatus = INSTALLATION_UNDER_CONSTRUCTION;
-	installation->installationTemplate = installationTemplate;
-	installation->buildStart = ccs.date.day;
-	Q_strncpyz(installation->name, name, sizeof(installation->name));
+	Vector2Copy(pos, installation.pos);
+	Q_strncpyz(installation.name, name, sizeof(installation.name));
+	installation.idx = ccs.campaignStats.installationsBuilt;
+	installation.installationStatus = INSTALLATION_UNDER_CONSTRUCTION;
+	installation.installationTemplate = installationTemplate;
+	installation.buildStart = ccs.date.day;
 
 	/* a new installation is not discovered (yet) */
-	installation->alienInterest = newInstallationAlienInterest;
+	installation.alienInterest = newInstallationAlienInterest;
 
 	/* intialise hit points */
-	installation->installationDamage = installation->installationTemplate->maxDamage;
+	installation.installationDamage = installation.installationTemplate->maxDamage;
 
-	/* Reset UFO Yard capacities. */
-	installation->ufoCapacity.max = 0;
-	installation->ufoCapacity.cur = 0;
-	/* Reset Batteries */
-	installation->numBatteries = 0;
 	/* Reset Radar */
-	RADAR_Initialise(&(installation->radar), 0.0f, 0.0f, 0.0f, qfalse);
+	RADAR_Initialise(&(installation.radar), 0.0f, 0.0f, 0.0f, qfalse);
 
-	ccs.numInstallations++;
-	ccs.campaignStats.installationsBuild++;
-	ccs.mapAction = MA_NONE;
-}
-
-/**
- * @brief Get first not yet founded installation.
- * @returns installation Pointer to the first unfounded installation
- * @note it returns NULL if installation limit has reached
- */
-installation_t *INS_GetFirstUnfoundedInstallation (void)
-{
-	const int maxInstallations = B_GetInstallationLimit();
-
-	if (ccs.numInstallations >= maxInstallations)
-		return NULL;
-
-	return INS_GetInstallationByIDX(ccs.numInstallations);
+	ccs.campaignStats.installationsBuilt++;
+	return (installation_t*)(LIST_Add(&ccs.installations, (void*)&installation, sizeof(installation)))->data;
 }
 
 /**
@@ -157,13 +132,8 @@ installation_t *INS_GetFirstUnfoundedInstallation (void)
  */
 void INS_DestroyInstallation (installation_t *installation)
 {
-	storedUFO_t *ufo;
-
 	if (!installation)
 		return;
-	if (!installation->founded)
-		return;
-
 	/* Disable radar */
 	RADAR_UpdateInstallationRadarCoverage(installation, 0, 0);
 	/* Destroy stored UFOs */
@@ -171,19 +141,13 @@ void INS_DestroyInstallation (installation_t *installation)
 		installation->ufoCapacity.max = 0;
 		US_RemoveUFOsExceedingCapacity(installation);
 	}
-
 	CP_MissionNotifyInstallationDestroyed(installation);
 
 	Com_sprintf(cp_messageBuffer, sizeof(cp_messageBuffer), _("Installation %s was destroyed."), installation->name);
 	MSO_CheckAddNewMessage(NT_INSTALLATION_DESTROY, _("Installation destroyed"), cp_messageBuffer, qfalse, MSG_CONSTRUCTION, NULL);
 
-	REMOVE_ELEM_ADJUST_IDX(ccs.installations, installation->idx, ccs.numInstallations);
-	/* Correct UFO store positions */
-	US_Foreach(ufo) {
-		if (ufo->installation >= installation)
-			ufo->installation--;
-	}
-	Cvar_Set("mn_installation_count", va("%i", ccs.numInstallations));
+	LIST_Remove(&ccs.installations, installation);
+	Cvar_Set("mn_installation_count", va("%i", INS_GetCount()));
 }
 
 /**
@@ -191,12 +155,11 @@ void INS_DestroyInstallation (installation_t *installation)
  */
 installation_t *INS_GetCurrentSelectedInstallation (void)
 {
-	int i;
+	installation_t *installation;
 
-	for (i = 0; i < MAX_INSTALLATIONS; i++) {
-		installation_t *ins = INS_GetInstallationByIDX(i);
-		if (ins->selected)
-			return ins;
+	INS_Foreach(installation) {
+		if (installation->selected)
+			return installation;
 	}
 
 	return NULL;
@@ -209,17 +172,10 @@ installation_t *INS_GetCurrentSelectedInstallation (void)
  */
 void INS_SetCurrentSelectedInstallation (const installation_t *installation)
 {
-	int i;
+	installation_t *ins;
 
-	for (i = 0; i < MAX_INSTALLATIONS; i++) {
-		installation_t *ins = INS_GetInstallationByIDX(i);
-		if (ins == installation) {
-			ins->selected = qtrue;
-			if (!ins->founded)
-				Com_Error(ERR_DROP, "The installation you are trying to select is not founded yet");
-		} else
-			ins->selected = qfalse;
-	}
+	INS_Foreach(ins)
+		ins->selected = (ins == installation);
 
 	if (installation) {
 		B_SetCurrentSelectedBase(NULL);
@@ -243,8 +199,6 @@ static void INS_FinishInstallation (installation_t *installation)
 		Com_Error(ERR_DROP, "INS_FinishInstallation: No Installation.\n");
 	if (!installation->installationTemplate)
 		Com_Error(ERR_DROP, "INS_FinishInstallation: No Installation template.\n");
-	if (!installation->founded)
-		Com_Error(ERR_DROP, "INS_FinishInstallation: Finish a not founded Installation?\n");
 	if (installation->installationStatus != INSTALLATION_UNDER_CONSTRUCTION) {
 		Com_DPrintf(DEBUG_CLIENT, "INS_FinishInstallation: Installation is not being built.\n");
 		return;
@@ -261,7 +215,6 @@ static void INS_FinishInstallation (installation_t *installation)
 }
 
 #ifdef DEBUG
-
 /**
  * @brief Just lists all installations with their data
  * @note called with debug_listinstallation
@@ -270,19 +223,11 @@ static void INS_FinishInstallation (installation_t *installation)
  */
 static void INS_InstallationList_f (void)
 {
-	int i;
+	installation_t *installation;
 
-	for (i = 0; i < ccs.numInstallations; i++) {
-		const installation_t *installation = INS_GetInstallationByIDX(i);
-
-		if (!installation->founded) {
-			Com_Printf("Installation idx %i not founded\n\n", i);
-			continue;
-		}
-
+	INS_Foreach(installation) {
 		Com_Printf("Installation idx %i\n", installation->idx);
 		Com_Printf("Installation name %s\n", installation->name);
-		Com_Printf("Installation founded %i\n", installation->founded);
 		Com_Printf("Installation pos %.02f:%.02f\n", installation->pos[0], installation->pos[1]);
 		Com_Printf("Installation Alien interest %f\n", installation->alienInterest);
 
@@ -305,27 +250,22 @@ static void INS_InstallationList_f (void)
  */
 static void INS_ConstructionFinished_f (void)
 {
-	int i;
+	installation_t *ins;
 	int idx = -1;
 
 	if (Cmd_Argc() == 2) {
 		idx = atoi(Cmd_Argv(1));
-		if (idx < 0 || idx >= MAX_INSTALLATIONS) {
+		if (idx < 0) {
 			Com_Printf("Usage: %s [installationIDX]\nWithout parameter it builds up all.\n", Cmd_Argv(0));
 			return;
 		}
 	}
 
-	for (i = 0; i < ccs.numInstallations; i++) {
-		installation_t *ins;
-
-		if (idx >= 0 && i != idx)
+	INS_Foreach(ins) {
+		if (idx >= 0 && ins->idx != idx)
 			continue;
 
-		ins = INS_GetInstallationByIDX(i);
-
-		if (ins && ins->founded)
-			INS_FinishInstallation(ins);
+		INS_FinishInstallation(ins);
 	}
 }
 #endif
@@ -337,17 +277,9 @@ static void INS_ConstructionFinished_f (void)
  **/
 installation_t *INS_GetFirstUFOYard (qboolean free)
 {
-	int i;
+	installation_t *installation;
 
-	for (i = 0; i < ccs.numInstallations; i++) {
-		installation_t *installation = INS_GetFoundedInstallationByIDX(i);
-
-		if (!installation)
-			continue;
-
-		if (INS_GetType(installation) != INSTALLATION_UFOYARD)
-			continue;
-
+	INS_ForeachOfType(installation, INSTALLATION_UFOYARD) {
 		if (free && installation->ufoCapacity.cur >= installation->ufoCapacity.max)
 			continue;
 
@@ -359,7 +291,6 @@ installation_t *INS_GetFirstUFOYard (qboolean free)
 
 /**
  * @brief Resets console commands.
- * @sa UI_ResetMenus
  */
 void INS_InitStartup (void)
 {
@@ -370,18 +301,26 @@ void INS_InitStartup (void)
 }
 
 /**
+ * @brief Closing operations for installations subsystem
+ */
+void INS_Shutdown (void)
+{
+	LIST_Delete(&ccs.installations);
+#ifdef DEBUG
+	Cmd_RemoveCommand("debug_listinstallation");
+	Cmd_RemoveCommand("debug_finishinstallation");
+#endif
+}
+
+/**
  * @brief Check if some installation are build.
  * @note Daily called.
  */
 void INS_UpdateInstallationData (void)
 {
-	int instIdx;
+	installation_t *installation;
 
-	for (instIdx = 0; instIdx < MAX_INSTALLATIONS; instIdx++) {
-		installation_t *installation = INS_GetFoundedInstallationByIDX(instIdx);
-		if (!installation)
-			continue;
-
+	INS_Foreach(installation) {
 		if (installation->installationStatus == INSTALLATION_UNDER_CONSTRUCTION
 		 && installation->buildStart
 		 && installation->buildStart + installation->installationTemplate->buildTime <= ccs.date.day) {
@@ -402,8 +341,8 @@ static const value_t installation_vals[] = {
 	{"max_batteries", V_INT, offsetof(installationTemplate_t, maxBatteries), MEMBER_SIZEOF(installationTemplate_t, maxBatteries)},
 	{"max_ufo_stored", V_INT, offsetof(installationTemplate_t, maxUFOsStored), MEMBER_SIZEOF(installationTemplate_t, maxUFOsStored)},
 	{"max_damage", V_INT, offsetof(installationTemplate_t, maxDamage), MEMBER_SIZEOF(installationTemplate_t, maxDamage)},
-	{"model", V_CLIENT_HUNK_STRING, offsetof(installationTemplate_t, model), 0},
-	{"image", V_CLIENT_HUNK_STRING, offsetof(installationTemplate_t, image), 0},
+	{"model", V_HUNK_STRING, offsetof(installationTemplate_t, model), 0},
+	{"image", V_HUNK_STRING, offsetof(installationTemplate_t, image), 0},
 
 	{NULL, 0, 0, 0}
 };
@@ -420,7 +359,6 @@ void INS_ParseInstallations (const char *name, const char **text)
 	installationTemplate_t *installation;
 	const char *errhead = "INS_ParseInstallations: unexpected end of file (names ";
 	const char *token;
-	const value_t *vp;
 	int i;
 
 	/* get id list body */
@@ -465,30 +403,8 @@ void INS_ParseInstallations (const char *name, const char **text)
 			break;
 
 		/* check for some standard values */
-		for (vp = installation_vals; vp->string; vp++)
-			if (Q_streq(token, vp->string)) {
-				/* found a definition */
-				token = Com_EParse(text, errhead, name);
-				if (!*text)
-					return;
-
-				switch (vp->type) {
-				case V_TRANSLATION_STRING:
-					if (token[0] == '_')
-						token++;
-				case V_CLIENT_HUNK_STRING:
-					Mem_PoolStrDupTo(token, (char**) ((char*)installation + (int)vp->ofs), cp_campaignPool, 0);
-					break;
-				default:
-					if (Com_EParseValue(installation, token, vp->type, vp->ofs, vp->size) == -1)
-						Com_Printf("INS_ParseInstallations: Wrong size for value %s\n", vp->string);
-					break;
-				}
-				break;
-			}
-
-		/* other values */
-		if (!vp->string) {
+		if (!Com_ParseBlockToken(name, text, installation, installation_vals, cp_campaignPool, token)) {
+			/* other values */
 			if (Q_streq(token, "cost")) {
 				char cvarname[MAX_VAR] = "mn_installation_";
 
@@ -524,20 +440,17 @@ void INS_ParseInstallations (const char *name, const char **text)
  */
 qboolean INS_SaveXML (xmlNode_t *p)
 {
-	int i;
 	xmlNode_t *n;
+	installation_t *inst;
+
 	n = XML_AddNode(p, SAVE_INSTALLATION_INSTALLATIONS);
-
 	Com_RegisterConstList(saveInstallationConstants);
-	for (i = 0; i < ccs.numInstallations; i++) {
-		const installation_t *inst = INS_GetInstallationByIDX(i);
+	INS_Foreach(inst) {
 		xmlNode_t *s, *ss;
-
-		if (!inst->founded)
-			continue;
 
 		s = XML_AddNode(n, SAVE_INSTALLATION_INSTALLATION);
 		XML_AddString(s, SAVE_INSTALLATION_TEMPLATEID, inst->installationTemplate->id);
+		XML_AddInt(s, SAVE_INSTALLATION_IDX, inst->idx);
 		XML_AddString(s, SAVE_INSTALLATION_NAME, inst->name);
 		XML_AddPos3(s, SAVE_INSTALLATION_POS, inst->pos);
 		XML_AddString(s, SAVE_INSTALLATION_STATUS, Com_GetConstVariable(SAVE_INSTALLATIONSTATUS_NAMESPACE, inst->installationStatus));
@@ -562,75 +475,78 @@ qboolean INS_SaveXML (xmlNode_t *p)
  */
 qboolean INS_LoadXML (xmlNode_t *p)
 {
-	xmlNode_t *s;
 	xmlNode_t *n = XML_GetNode(p, SAVE_INSTALLATION_INSTALLATIONS);
-	int i;
+	xmlNode_t *s;
 	qboolean success = qtrue;
 
 	if (!n)
 		return qfalse;
 
 	Com_RegisterConstList(saveInstallationConstants);
-	for (i = 0, s = XML_GetNode(n, SAVE_INSTALLATION_INSTALLATION); s && i < MAX_INSTALLATIONS; s = XML_GetNextNode(s,n, SAVE_INSTALLATION_INSTALLATION), i++) {
+	for (s = XML_GetNode(n, SAVE_INSTALLATION_INSTALLATION); s; s = XML_GetNextNode(s,n, SAVE_INSTALLATION_INSTALLATION)) {
 		xmlNode_t *ss;
-		installation_t *inst = INS_GetInstallationByIDX(i);
+		installation_t inst;
+		installation_t *instp;
 		const char *instID = XML_GetString(s, SAVE_INSTALLATION_TEMPLATEID);
 		const char *instStat = XML_GetString(s, SAVE_INSTALLATION_STATUS);
 
-		inst->idx = INS_GetInstallationIDX(inst);
-		inst->founded = qtrue;
-
-		inst->installationTemplate = INS_GetInstallationTemplateFromInstallationID(instID);
-		if (!inst->installationTemplate) {
+		inst.idx = XML_GetInt(s, SAVE_INSTALLATION_IDX, -1);
+		if (inst.idx < 0) {
+			Com_Printf("Invalid installation index %i\n", inst.idx);
+			success = qfalse;
+			break;
+		}
+		inst.installationTemplate = INS_GetInstallationTemplateFromInstallationID(instID);
+		if (!inst.installationTemplate) {
 			Com_Printf("Could not find installation template '%s'\n", instID);
 			success = qfalse;
 			break;
 		}
 
-		if (!Com_GetConstIntFromNamespace(SAVE_INSTALLATIONSTATUS_NAMESPACE, instStat, (int*) &inst->installationStatus)) {
+		if (!Com_GetConstIntFromNamespace(SAVE_INSTALLATIONSTATUS_NAMESPACE, instStat, (int*) &inst.installationStatus)) {
 			Com_Printf("Invalid installation status '%s'\n", instStat);
 			success = qfalse;
 			break;
 		}
 
-		Q_strncpyz(inst->name, XML_GetString(s, SAVE_INSTALLATION_NAME), sizeof(inst->name));
-		XML_GetPos3(s, SAVE_INSTALLATION_POS, inst->pos);
+		Q_strncpyz(inst.name, XML_GetString(s, SAVE_INSTALLATION_NAME), sizeof(inst.name));
+		XML_GetPos3(s, SAVE_INSTALLATION_POS, inst.pos);
 
-		inst->installationDamage = XML_GetInt(s, SAVE_INSTALLATION_DAMAGE, 0);
-		inst->alienInterest = XML_GetFloat(s, SAVE_INSTALLATION_ALIENINTEREST, 0.0);
-		inst->buildStart = XML_GetInt(s, SAVE_INSTALLATION_BUILDSTART, 0);
+		inst.installationDamage = XML_GetInt(s, SAVE_INSTALLATION_DAMAGE, 0);
+		inst.alienInterest = XML_GetFloat(s, SAVE_INSTALLATION_ALIENINTEREST, 0.0);
+		inst.buildStart = XML_GetInt(s, SAVE_INSTALLATION_BUILDSTART, 0);
 
 		/* Radar */
-		RADAR_InitialiseUFOs(&inst->radar);
-		RADAR_Initialise(&(inst->radar), 0.0f, 0.0f, 1.0f, qtrue);
-		if (inst->installationStatus == INSTALLATION_WORKING) {
-			RADAR_UpdateInstallationRadarCoverage(inst, inst->installationTemplate->radarRange, inst->installationTemplate->trackingRange);
+		RADAR_InitialiseUFOs(&inst.radar);
+		RADAR_Initialise(&(inst.radar), 0.0f, 0.0f, 1.0f, qtrue);
+		if (inst.installationStatus == INSTALLATION_WORKING) {
+			RADAR_UpdateInstallationRadarCoverage(&inst, inst.installationTemplate->radarRange, inst.installationTemplate->trackingRange);
 			/* UFO Yard */
-			inst->ufoCapacity.max = inst->installationTemplate->maxUFOsStored;
+			inst.ufoCapacity.max = inst.installationTemplate->maxUFOsStored;
 		} else {
-			inst->ufoCapacity.max = 0;
+			inst.ufoCapacity.max = 0;
 		}
-		inst->ufoCapacity.cur = 0;
+		inst.ufoCapacity.cur = 0;
 
 		/* read battery slots */
-		BDEF_InitialiseInstallationSlots(inst);
 		ss = XML_GetNode(s, SAVE_INSTALLATION_BATTERIES);
 		if (!ss) {
 			Com_Printf("INS_LoadXML: Batteries not defined!\n");
 			success = qfalse;
 			break;
 		}
-		inst->numBatteries = XML_GetInt(ss, SAVE_INSTALLATION_NUM, 0);
-		if (inst->numBatteries > inst->installationTemplate->maxBatteries) {
+		inst.numBatteries = XML_GetInt(ss, SAVE_INSTALLATION_NUM, 0);
+		if (inst.numBatteries > inst.installationTemplate->maxBatteries) {
 			Com_Printf("Installation has more batteries than possible, using upper bound\n");
-			inst->numBatteries = inst->installationTemplate->maxBatteries;
+			inst.numBatteries = inst.installationTemplate->maxBatteries;
 		}
-		B_LoadBaseSlotsXML(inst->batteries, inst->numBatteries, ss);
 
-		ccs.numInstallations++;
+		instp = (installation_t*)(LIST_Add(&ccs.installations, (void*)&inst, sizeof(inst)))->data;
+		BDEF_InitialiseInstallationSlots(instp);
+		B_LoadBaseSlotsXML(instp->batteries, instp->numBatteries, ss);
 	}
 	Com_UnregisterConstList(saveInstallationConstants);
-	Cvar_Set("mn_installation_count", va("%i", ccs.numInstallations));
+	Cvar_Set("mn_installation_count", va("%i", INS_GetCount()));
 
 	return success;
 }

@@ -9,8 +9,7 @@
 /**
  * @brief Main.
  */
-void main(void){
-
+void main(void) {
 	/* MVP transform into clip space.*/
 	gl_Position = ftransform();
 

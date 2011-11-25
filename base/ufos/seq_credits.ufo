@@ -737,7 +737,7 @@ sequence credits
 	}
 	2dobj copyright
 	{
-		text	"_Copyright 2004-2010 by UFO: AI Team"
+		text	"_Copyright 2004-2011 by UFO: AI Team"
 		pos		"512 736"	align	uc
 		color	"1 1 1 0"	fade	"0 0 0 1"
 	}

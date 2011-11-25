@@ -54,7 +54,8 @@ static void UI_BarNodeDraw (uiNode_t *node)
 	if (node->state && !EXTRADATA(node).readOnly) {
 		Vector4Copy(node->color, color);
 	} else {
-		VectorScale(node->color, 0.8, color);
+		const float scale = EXTRADATA(node).noHover ? 1.0 : 0.8;
+		VectorScale(node->color, scale, color);
 		color[3] = node->color[3];
 	}
 
@@ -81,6 +82,7 @@ static void UI_BarNodeDraw (uiNode_t *node)
 		break;
 	default:
 		Com_Printf("UI_BarNodeDraw: Orientation %d not supported\n", EXTRADATA(node).orientation);
+		break;
 	}
 }
 
@@ -128,6 +130,7 @@ static void UI_BarNodeCapturedMouseMove (uiNode_t *node, int x, int y)
 		default:
 			frac = 0;
 			Com_Printf("UI_BarNodeCapturedMouseMove: Orientation %d not supported\n", EXTRADATA(node).orientation);
+			break;
 		}
 		Cvar_SetValue(&var[6], min + frac * (max - min));
 	}
@@ -172,9 +175,13 @@ static const value_t properties[] = {
 	 */
 	{"direction", V_ALIGN, UI_EXTRADATA_OFFSETOF(barExtraData_t, orientation), MEMBER_SIZEOF(barExtraData_t, orientation)},
 	/**
-	 *  if true, the user can't edit the content
+	 * if true, the user can't edit the content
 	 */
 	{"readonly", V_BOOL, UI_EXTRADATA_OFFSETOF(barExtraData_t, readOnly),  MEMBER_SIZEOF(barExtraData_t, readOnly)},
+	/**
+	 * there is no hover effect if this is true
+	 */
+	{"nohover", V_BOOL, UI_EXTRADATA_OFFSETOF(barExtraData_t, noHover),  MEMBER_SIZEOF(barExtraData_t, noHover)},
 
 	{NULL, V_NULL, 0, 0}
 };

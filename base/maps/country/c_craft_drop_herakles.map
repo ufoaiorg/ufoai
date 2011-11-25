@@ -361,26 +361,26 @@
 // entity 1
 {
 "classname" "info_civilian_start"
-"angle" "270"
 "origin" "688 144 28"
+"angle" "270"
 }
 // entity 2
 {
 "classname" "info_civilian_start"
-"angle" "45"
 "origin" "464 432 28"
+"angle" "45"
 }
 // entity 3
 {
 "classname" "info_civilian_start"
-"angle" "135"
 "origin" "48 176 28"
+"angle" "135"
 }
 // entity 4
 {
 "classname" "info_human_start"
-"angle" "315"
 "origin" "496 80 28"
+"angle" "315"
 }
 // entity 5
 {
@@ -403,14 +403,14 @@
 // entity 8
 {
 "classname" "info_human_start"
-"angle" "180"
 "origin" "336 432 28"
+"angle" "180"
 }
 // entity 9
 {
 "classname" "info_human_start"
-"angle" "135"
 "origin" "272 368 28"
+"angle" "135"
 }
 // entity 10
 {
@@ -430,8 +430,8 @@
 // entity 13
 {
 "classname" "info_human_start"
-"angle" "135"
 "origin" "560 400 28"
+"angle" "135"
 }
 // entity 14
 {
@@ -454,14 +454,14 @@
 // entity 17
 {
 "classname" "info_human_start"
-"angle" "-90"
 "origin" "656 112 28"
+"angle" "-90"
 }
 // entity 18
 {
 "classname" "info_human_start"
-"angle" "270"
 "origin" "368 80 28"
+"angle" "270"
 }
 // entity 19
 {
@@ -552,11 +552,11 @@
 "team" "1"
 // brush 0
 {
-( 256 160 64 ) ( 128 160 64 ) ( 256 320 64 ) tex_common/trigger 0 0 0 0.25 0.25
-( 640 160 96 ) ( 640 320 96 ) ( 640 160 0 ) tex_common/trigger 0 0 0 0.25 0.25
-( 256 160 64 ) ( 256 160 -32 ) ( 128 160 64 ) tex_common/trigger 0 0 0 0.25 0.25
-( 128 320 0 ) ( 128 160 0 ) ( 256 320 0 ) tex_common/trigger 0 0 0 0.25 0.25
-( 128 320 0 ) ( 128 320 96 ) ( 128 160 0 ) tex_common/trigger 0 0 0 0.25 0.25
-( 128 320 0 ) ( 256 320 0 ) ( 128 320 96 ) tex_common/trigger 0 0 0 0.25 0.25
+( 256 160 64 ) ( 128 160 64 ) ( 256 320 64 ) tex_common/trigger 0 0 0 0.25 0.25 0 0 0
+( 640 160 96 ) ( 640 320 96 ) ( 640 160 0 ) tex_common/trigger 0 0 0 0.25 0.25 0 0 0
+( 256 160 64 ) ( 256 160 -32 ) ( 128 160 64 ) tex_common/trigger 0 0 0 0.25 0.25 0 0 0
+( 128 320 0 ) ( 128 160 0 ) ( 256 320 0 ) tex_common/trigger 0 0 0 0.25 0.25 0 0 0
+( 128 320 0 ) ( 128 320 96 ) ( 128 160 0 ) tex_common/trigger 0 0 0 0.25 0.25 0 0 0
+( 128 320 0 ) ( 256 320 0 ) ( 128 320 96 ) tex_common/trigger 0 0 0 0.25 0.25 0 0 0
 }
 }

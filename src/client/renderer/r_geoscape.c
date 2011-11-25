@@ -91,6 +91,8 @@ void R_DrawFlatGeoscape (int x, int y, int w, int h, float p, float cx, float cy
 	R_BindTexture(gl->texnum);
 	glDrawArrays(GL_TRIANGLE_FAN, 0, 4);
 
+	refdef.batchCount++;
+
 	/* draw night map */
 	gl = R_FindImage(va("pics/geoscape/%s_night", map), it_wrappic);
 	/* maybe the campaign map doesn't have a night image */
@@ -117,6 +119,8 @@ void R_DrawFlatGeoscape (int x, int y, int w, int h, float p, float cx, float cy
 		R_SelectTexture(&texunit_diffuse);
 		glDrawArrays(GL_TRIANGLE_FAN, 0, 4);
 
+		refdef.batchCount++;
+
 		R_SelectTexture(&texunit_lightmap);
 		R_BindArray(GL_TEXTURE_COORD_ARRAY, GL_FLOAT, geoscape_texcoords);
 
@@ -132,6 +136,8 @@ void R_DrawFlatGeoscape (int x, int y, int w, int h, float p, float cx, float cy
 		/* draw day image */
 		R_BindTexture(gl->texnum);
 		glDrawArrays(GL_TRIANGLE_FAN, 0, 4);
+
+		refdef.batchCount++;
 	}
 
 	/* draw XVI image */
@@ -147,6 +153,8 @@ void R_DrawFlatGeoscape (int x, int y, int w, int h, float p, float cx, float cy
 
 		glDrawArrays(GL_TRIANGLE_FAN, 0, 4);
 
+		refdef.batchCount++;
+
 		R_EnableTexture(&texunit_lightmap, qfalse);
 	}
 
@@ -154,6 +162,8 @@ void R_DrawFlatGeoscape (int x, int y, int w, int h, float p, float cx, float cy
 	if (overlayRadar) {
 		R_BindTexture(r_radarTexture->texnum);
 		glDrawArrays(GL_TRIANGLE_FAN, 0, 4);
+
+		refdef.batchCount++;
 	}
 
 	/* and restore them */
@@ -177,7 +187,7 @@ void R_Draw2DMapMarkers (const vec2_t screenPos, float direction, const char *mo
 	VectorCopy(vec3_origin, position);
 	VectorCopy(vec3_origin, angles);
 
-	mi.model = R_RegisterModelShort(model);
+	mi.model = R_FindModel(model);
 	if (!mi.model) {
 		Com_Printf("Could not find model '%s'\n", model);
 		return;
@@ -244,7 +254,7 @@ void R_Draw3DMapMarkers (int x, int y, int w, int h, const vec3_t rotate, const 
 	VectorCopy(vec3_origin, position);
 	VectorCopy(vec3_origin, angles);
 
-	mi.model = R_RegisterModelShort(model);
+	mi.model = R_FindModel(model);
 	if (!mi.model) {
 		Com_Printf("Could not find model '%s'\n", model);
 		return;
@@ -388,6 +398,8 @@ static void R_DrawStarfield (int texnum, const vec3_t pos, const vec3_t rotate, 
 	glDrawArrays(GL_QUADS, 0, 24);
 #endif
 
+	refdef.batchCount++;
+
 	/* restore previous matrix */
 	glPopMatrix();
 }
@@ -395,10 +407,10 @@ static void R_DrawStarfield (int texnum, const vec3_t pos, const vec3_t rotate, 
 /**
  * @brief rotate a planet (sun or moon) with respect to the earth
  */
-static inline void RotateCelestialBody (const vec4_t v, vec4_t * r, const vec3_t rotate, const vec3_t earthPos, const float celestialDist)
+static inline void R_RotateCelestialBody (const vec4_t v, vec4_t r, const vec3_t rotate, const vec3_t earthPos, const float celestialDist)
 {
 	vec4_t v1;
-	vec4_t v2;
+	vec3_t v2;
 	vec3_t rotationAxis;
 
 	VectorSet(v2, v[1], v[0], v[2]);
@@ -407,7 +419,7 @@ static inline void RotateCelestialBody (const vec4_t v, vec4_t * r, const vec3_t
 	VectorSet(rotationAxis, 0, 1, 0);
 	RotatePointAroundVector(v2, rotationAxis, v1, -rotate[YAW]);
 
-	Vector4Set((*r), earthPos[0] + celestialDist * v2[1], earthPos[1] + celestialDist * v2[0], -celestialDist * v2[2], 0);
+	Vector4Set(r, earthPos[0] + celestialDist * v2[1], earthPos[1] + celestialDist * v2[0], -celestialDist * v2[2], 0);
 }
 
 
@@ -423,7 +435,7 @@ static inline void RotateCelestialBody (const vec4_t v, vec4_t * r, const vec3_t
  * @sa R_DrawFlatGeoscape
  * @sa R_SphereGenerate
  */
-void R_Draw3DGlobe (int x, int y, int w, int h, int day, int second, const vec3_t rotate, float zoom, const char *map, qboolean disableSolarRender, float ambient, qboolean overlayNation, qboolean overlayXVI, qboolean overlayRadar, image_t *r_xviTexture, image_t *r_radarTexture)
+void R_Draw3DGlobe (int x, int y, int w, int h, int day, int second, const vec3_t rotate, float zoom, const char *map, qboolean disableSolarRender, float ambient, qboolean overlayNation, qboolean overlayXVI, qboolean overlayRadar, image_t *r_xviTexture, image_t *r_radarTexture, qboolean renderNationGlow)
 {
 	/* globe scaling */
 	const float fullscale = zoom / STANDARD_3D_ZOOM;
@@ -495,7 +507,7 @@ void R_Draw3DGlobe (int x, int y, int w, int h, int day, int second, const vec3_
 	Vector4Set(antiSunPos, -cos(p) * sqrta, sin(p) * sqrta, -a, 0);
 
 	/* Rotate the sun in the relative frame of player view, to get sun location */
-	RotateCelestialBody(sunPos, &sunLoc, rotate, earthPos, 1.0);
+	R_RotateCelestialBody(sunPos, sunLoc, rotate, earthPos, 1.0);
 	/* load sun texture image */
 	sun = R_FindImage(va("pics/geoscape/%s_sun", map), it_wrappic);
 	sunOverlay = R_FindImage(va("pics/geoscape/%s_sun_overlay", map), it_pic);
@@ -513,7 +525,7 @@ void R_Draw3DGlobe (int x, int y, int w, int h, int day, int second, const vec3_
 	 * about 24.9 h, and we must take day into account to avoid moon to "jump"
 	 * every time the day is changing) */
 	VectorSet(moonLoc, cos(m) * sqrta, -sin(m) * sqrta, a);
-	RotateCelestialBody(moonLoc, &moonLoc, rotate, earthPos, celestialDist);
+	R_RotateCelestialBody(moonLoc, moonLoc, rotate, earthPos, celestialDist);
 
 	/* free last month's texture image */
 	if (r_globeEarth.season != currSeason) {
@@ -621,16 +633,18 @@ void R_Draw3DGlobe (int x, int y, int w, int h, int day, int second, const vec3_
 
 		R_SphereRender(&r_globeEarth, earthPos, rotate, fullscale, sunPos);
 
-		/* draw glowing borders */
-		r_globeEarth.overlay = R_FindImage(va("pics/geoscape/%s_nations_overlay_glow", map), it_wrappic);
-		if (r_globeEarth.overlay == r_noTexture)
-			Com_Error(ERR_FATAL, "Could not load geoscape nation overlay glow image");
+		if (renderNationGlow) {
+			/* draw glowing borders */
+			r_globeEarth.overlay = R_FindImage(va("pics/geoscape/%s_nations_overlay_glow", map), it_wrappic);
+			if (r_globeEarth.overlay == r_noTexture)
+				Com_Error(ERR_FATAL, "Could not load geoscape nation overlay glow image");
 
-		R_DrawBuffers(2);
-		glDisable(GL_LIGHTING);
-		R_SphereRender(&r_globeEarth, earthPos, rotate, fullscale, sunPos);
-		glEnable(GL_LIGHTING);
-		R_DrawBuffers(1);
+			R_DrawBuffers(2);
+			glDisable(GL_LIGHTING);
+			R_SphereRender(&r_globeEarth, earthPos, rotate, fullscale, sunPos);
+			glEnable(GL_LIGHTING);
+			R_DrawBuffers(1);
+		}
 
 		r_globeEarth.overlay = NULL;
 	}
@@ -673,6 +687,8 @@ static inline void R_DrawQuad (void)
 	R_BindArray(GL_TEXTURE_COORD_ARRAY, GL_FLOAT, texcoord);
 
 	glDrawArrays(GL_TRIANGLE_FAN, 0, 4);
+
+	refdef.batchCount++;
 
 	R_BindDefaultArray(GL_TEXTURE_COORD_ARRAY);
 	R_BindDefaultArray(GL_VERTEX_ARRAY);

@@ -6,6 +6,7 @@ tutorial gameplay
 
 sequence tut_gameplay
 {
+	music 		"Crystan-Tutorial"
 	// ==============================================
 	// precache the screenshots
 	precache pics
@@ -301,6 +302,7 @@ sequence tut_gameplay
 		color	"1 1 1 1"
 		font	"f_big"
 	}
+	music "van_theme"
 	wait 300
 
 	rem gameplay_pic8a
@@ -328,6 +330,7 @@ tutorial tacticalmission
 
 sequence tut_tacticalmission
 {
+	music 		"Crystan-Tutorial"
 	// ==============================================
 	// just precaching the background image
 	precache pics
@@ -752,9 +755,11 @@ sequence tut_tacticalmission
 		color	"1 1 1 1"
 		font	"f_big"
 	}
+	music "van_theme"
 	wait 5
 	rem end_round_hover
 	rem switch_end_round_text
+	music "van_theme"
 
 	// ==============================================
 	// end of tutorial - remove background, too
@@ -774,6 +779,7 @@ tutorial skirmish
 
 sequence tut_skirmish
 {
+	music 		"Crystan-Tutorial"
 	// ==============================================
 	// precaching screenshot
 	precache pics
@@ -1026,6 +1032,7 @@ sequence tut_skirmish
 		color	"1 1 1 1"
 		font	"f_big"
 	}
+	music "van_theme"
 	wait 5
 	rem or_text
 	rem exit_text
@@ -1045,6 +1052,7 @@ tutorial multiplayer
 
 sequence tut_multiplayer
 {
+	music 		"Crystan-Tutorial"
 	// ==============================================
 	// just precaching the background image
 	precache pics
@@ -1088,6 +1096,7 @@ sequence tut_multiplayer
 		font	"f_normal"
 	}
 
+	music "van_theme"
 	wait 20
 
 	rem timeout_text

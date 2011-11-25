@@ -140,6 +140,7 @@ extern const byte dvleft[CORE_DIRECTIONS];
 #define Vector4Copy(src,dest)       ((dest)[0]=(src)[0],(dest)[1]=(src)[1],(dest)[2]=(src)[2],(dest)[3]=(src)[3])
 #define Vector2Clear(a)            ((a)[0]=(a)[1]=0)
 #define VectorClear(a)          ((a)[0]=(a)[1]=(a)[2]=0)
+#define VectorInside(vec,mins,maxs) (vec[0] >= mins[0] && vec[0] <= maxs[0] && vec[1] >= mins[1] && vec[1] <= maxs[1] && vec[2] >= mins[2] && vec[2] <= maxs[2])
 #define Vector4Clear(a)          ((a)[0]=(a)[1]=(a)[2]=(a)[3]=0)
 #define VectorNegate(src,dest)       ((dest)[0]=-(src)[0],(dest)[1]=-(src)[1],(dest)[2]=-(src)[2])
 #define VectorSet(v, x, y, z)   ((v)[0]=(x), (v)[1]=(y), (v)[2]=(z))
@@ -168,17 +169,17 @@ extern const byte dvleft[CORE_DIRECTIONS];
  * three informations into a short value:
  * - the direction where he came from
  * - the z-level he came from
- * - *how* he moved. There are three special crouching condiditions
+ * - *how* he moved. There are three special crouching conditions
  * -- autocrouch: standing upright in the previous cell, now crouch and stay crouched
- * -- autocrouched: being already autochrouched in the previous cell, stand up if you get the chance
+ * -- autocrouched: being already autocrouched in the previous cell, stand up if you get the chance
  * -- autodive: we can stand in both cells, but there is just a small hole in the wall between them
  */
 typedef short dvec_t;
 #define DV_FLAGS_BIT_SHIFT	4	/**< This is the bit shift needed to store the 'how' component of a DV value */
 #define DV_DIR_BIT_SHIFT	8	/**< This is the bit shift needed to store the dir component of a DV value */
-#define DV_Z_BIT_MASK		0x0007	/**< The mask to retreive the z component of a  DV value */
-#define DV_FLAGS_BIT_MASK	0x00F0	/**< The mask to retreive the 'how' component of a  DV value */
-#define DV_DIR_BIT_MASK		0xFF00	/**< The mask to retreive the dir component of a  DV value */
+#define DV_Z_BIT_MASK		0x0007	/**< The mask to retrieve the z component of a  DV value */
+#define DV_FLAGS_BIT_MASK	0x00F0	/**< The mask to retrieve the 'how' component of a  DV value */
+#define DV_DIR_BIT_MASK		0xFF00	/**< The mask to retrieve the dir component of a  DV value */
 
 #define DV_FLAG_AUTOCROUCH		0x01
 #define DV_FLAG_AUTOCROUCHED	0x02
@@ -227,11 +228,13 @@ float VectorAngleBetween(const vec3_t vec1, const vec3_t vec2);
 
 void VecToAngles(const vec3_t vec, vec3_t angles);
 
-void Print2Vector(const vec2_t v);
-void Print3Vector(const vec3_t v);
+void Print2Vector(const vec2_t v, const char *text);
+void Print3Vector(const vec3_t v, const char *text);
 
 void VecToPolar(const vec3_t v, vec2_t a);
 void PolarToVec(const vec2_t a, vec3_t v);
+
+void CalculateMinsMaxs(const vec3_t angles, const vec3_t mins, const vec3_t maxs, const vec3_t origin, vec3_t absmin, vec3_t absmax);
 
 void VectorCreateRotationMatrix(const vec3_t angles, vec3_t matrix[3]);
 void VectorRotatePoint(vec3_t point, vec3_t matrix[3]);

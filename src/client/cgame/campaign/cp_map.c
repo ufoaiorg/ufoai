@@ -203,12 +203,15 @@ static void MAP_MultiSelectExecuteAction_f (void)
 		MAP_ResetAction();
 		B_SelectBase(B_GetFoundedBaseByIDX(id));
 		break;
-	case MULTISELECT_TYPE_INSTALLATION:	/* Select a installation */
-		if (id >= ccs.numInstallations)
-			break;
-		MAP_ResetAction();
-		INS_SelectInstallation(INS_GetFoundedInstallationByIDX(id));
+	case MULTISELECT_TYPE_INSTALLATION: {
+		/* Select an installation */
+		installation_t *ins = INS_GetByIDX(id);
+		if (ins) {
+			MAP_ResetAction();
+			INS_SelectInstallation(ins);
+		}
 		break;
+	}
 	case MULTISELECT_TYPE_MISSION: {
 		mission_t *mission = MAP_GetSelectedMission();
 		/* Select a mission */
@@ -216,7 +219,7 @@ static void MAP_MultiSelectExecuteAction_f (void)
 			CL_DisplayPopupInterceptMission(mission);
 			return;
 		}
-		MAP_SelectMission(MAP_GetMissionByIDX(id));
+		mission = MAP_SelectMission(MAP_GetMissionByIDX(id));
 		if (multiSelection) {
 			/* if we come from a multiSelection menu, no need to open twice this popup to go to mission */
 			CL_DisplayPopupInterceptMission(mission);
@@ -279,9 +282,9 @@ qboolean MAP_MapClick (uiNode_t* node, int x, int y)
 	aircraft_t *aircraft;
 	aircraft_t *ufo;
 	base_t *base;
-	int i;
 	vec2_t pos;
 	mission_t *tempMission;
+	installation_t *installation;
 
 	/* get map position */
 	if (cl_3dmap->integer)
@@ -293,7 +296,7 @@ qboolean MAP_MapClick (uiNode_t* node, int x, int y)
 	case MA_NEWBASE:
 		/* new base construction */
 		/** @todo make this a function in cp_base.c - B_BuildBaseAtPos */
-		if (!MapIsWater(MAP_GetColor(pos, MAPTYPE_TERRAIN))) {
+		if (!MapIsWater(MAP_GetColor(pos, MAPTYPE_TERRAIN, NULL))) {
 			if (B_GetCount() < MAX_BASES) {
 				Vector2Copy(pos, ccs.newBasePos);
 				CP_GameTimeStop();
@@ -305,14 +308,11 @@ qboolean MAP_MapClick (uiNode_t* node, int x, int y)
 		}
 		break;
 	case MA_NEWINSTALLATION:
-		if (!MapIsWater(MAP_GetColor(pos, MAPTYPE_TERRAIN))) {
-			if (ccs.numInstallations < MAX_INSTALLATIONS) {
-				Vector2Copy(pos, ccs.newBasePos);
-				CP_GameTimeStop();
-				UI_PushWindow("popup_newinstallation", NULL, NULL);
-				return qtrue;
-			}
-			return qfalse;
+		if (!MapIsWater(MAP_GetColor(pos, MAPTYPE_TERRAIN, NULL))) {
+			Vector2Copy(pos, ccs.newBasePos);
+			CP_GameTimeStop();
+			UI_PushWindow("popup_newinstallation", NULL, NULL);
+			return qtrue;
 		}
 		break;
 	case MA_UFORADAR:
@@ -350,12 +350,11 @@ qboolean MAP_MapClick (uiNode_t* node, int x, int y)
 	}
 
 	/* Get selected installations */
-	for (i = 0; i < MAX_INSTALLATIONS && multiSelect.nbSelect < MULTISELECT_MAXSELECT; i++) {
-		const installation_t *installation = INS_GetFoundedInstallationByIDX(i);
-		if (!installation)
-			continue;
+	INS_Foreach(installation) {
+		if (multiSelect.nbSelect >= MULTISELECT_MAXSELECT)
+			break;
 		if (MAP_IsMapPositionSelected(node, installation->pos, x, y))
-			MAP_MultiSelectListAddItem(MULTISELECT_TYPE_INSTALLATION, i, _("Installation"), installation->name);
+			MAP_MultiSelectListAddItem(MULTISELECT_TYPE_INSTALLATION, installation->idx, _("Installation"), installation->name);
 	}
 
 	/* Get selected ufos */
@@ -488,7 +487,7 @@ static qboolean MAP_3DMapToScreen (const uiNode_t* node, const vec2_t pos, int *
  * node. Otherwise returns qfalse.
  * @sa MAP_3DMapToScreen
  */
-qboolean MAP_MapToScreen (const uiNode_t* node, const vec2_t pos, int *x, int *y)
+static qboolean MAP_MapToScreen (const uiNode_t* node, const vec2_t pos, int *x, int *y)
 {
 	float sx;
 
@@ -541,7 +540,7 @@ qboolean MAP_AllMapToScreen (const uiNode_t* node, const vec2_t pos, int *x, int
  * @param[in] model The name of the model of the marker.
  * @param[in] skin Number of modelskin to draw on marker
  */
-void MAP_Draw3DMarkerIfVisible (const uiNode_t* node, const vec2_t pos, float theta, const char *model, int skin)
+static void MAP_Draw3DMarkerIfVisible (const uiNode_t* node, const vec2_t pos, float theta, const char *model, int skin)
 {
 	if (cl_3dmap->integer) {
 		R_Draw3DMapMarkers(ccs.mapPos[0], ccs.mapPos[1], ccs.mapSize[0], ccs.mapSize[1], ccs.angles, pos, theta, GLOBE_RADIUS, model, skin);
@@ -1128,7 +1127,7 @@ static void MAP_GetGeoscapeAngle (float *vector)
 	int numBases = B_GetCount();
 
 	/* If the value of maxEventIdx is too big or to low, restart from begining */
-	maxEventIdx = numMissions + numBases + ccs.numInstallations - 1;
+	maxEventIdx = numMissions + numBases + INS_GetCount() - 1;
 	base = NULL;
 	while ((base = B_GetNext(base)) != NULL) {
 		aircraft_t *aircraft;
@@ -1184,13 +1183,10 @@ static void MAP_GetGeoscapeAngle (float *vector)
 	counter += numBases;
 
 	/* Cycle through installations */
-	if (centerOnEventIdx < ccs.numInstallations + counter) {
-		int instIdx;
-		for (instIdx = 0; instIdx < MAX_INSTALLATIONS; instIdx++) {
-			const installation_t *inst = INS_GetFoundedInstallationByIDX(instIdx);
-			if (!inst)
-				continue;
+	if (centerOnEventIdx < INS_GetCount() + counter) {
+		installation_t *inst;
 
+		INS_Foreach(inst) {
 			if (counter == centerOnEventIdx) {
 				MAP_ConvertObjectPositionToGeoscapePosition(vector, inst->pos);
 				return;
@@ -1198,7 +1194,7 @@ static void MAP_GetGeoscapeAngle (float *vector)
 			counter++;
 		}
 	}
-	counter += ccs.numInstallations;
+	counter += INS_GetCount();
 
 	/* Cycle through aircraft (only those present on geoscape) */
 	AIR_Foreach(aircraft) {
@@ -1529,7 +1525,8 @@ static void MAP_DrawMapOneBase (const uiNode_t* node, const base_t *base,
  * @param[in] aircraft Pointer to the aircraft to draw for
  * @note if max health (AIR_STATS_DAMAGE) <= 0 no healthbar drawn
  */
-static void MAP_DrawAircraftHealthBar (const uiNode_t* node, const aircraft_t *aircraft) {
+static void MAP_DrawAircraftHealthBar (const uiNode_t* node, const aircraft_t *aircraft)
+{
 	const vec4_t bordercolor = {1, 1, 1, 1};
 	const int width = 8 * ccs.zoom;
 	const int height = 1 * ccs.zoom * 0.9;
@@ -1682,6 +1679,8 @@ static const char *MAP_GetAircraftText (char *buffer, size_t size, const aircraf
 		const float distance = GetDistanceOnGlobe(aircraft->pos, aircraft->aircraftTarget->pos);
 		Com_sprintf(buffer, size, _("Name:\t%s (%i/%i)\n"), aircraft->name, AIR_GetTeamSize(aircraft), aircraft->maxTeamSize);
 		Q_strcat(buffer, va(_("Status:\t%s\n"), AIR_AircraftStatusToName(aircraft)), size);
+		if (aircraft->stats[AIR_STATS_DAMAGE] > 0)
+			Q_strcat(buffer, va(_("Health:\t%3.0f%%\n"), (double)aircraft->damage * 100 / aircraft->stats[AIR_STATS_DAMAGE]), size);
 		Q_strcat(buffer, va(_("Distance to target:\t\t%.0f\n"), distance), size);
 		Q_strcat(buffer, va(_("Speed:\t%i km/h\n"), AIR_AircraftMenuStatsValues(aircraft->stats[AIR_STATS_SPEED], AIR_STATS_SPEED)), size);
 		Q_strcat(buffer, va(_("Fuel:\t%i/%i\n"), AIR_AircraftMenuStatsValues(aircraft->fuel, AIR_STATS_FUELSIZE),
@@ -1690,6 +1689,8 @@ static const char *MAP_GetAircraftText (char *buffer, size_t size, const aircraf
 	} else {
 		Com_sprintf(buffer, size, _("Name:\t%s (%i/%i)\n"), aircraft->name, AIR_GetTeamSize(aircraft), aircraft->maxTeamSize);
 		Q_strcat(buffer, va(_("Status:\t%s\n"), AIR_AircraftStatusToName(aircraft)), size);
+		if (aircraft->stats[AIR_STATS_DAMAGE] > 0)
+			Q_strcat(buffer, va(_("Health:\t%3.0f%%\n"), (double)aircraft->damage * 100 / aircraft->stats[AIR_STATS_DAMAGE]), size);
 		Q_strcat(buffer, va(_("Speed:\t%i km/h\n"), AIR_AircraftMenuStatsValues(aircraft->stats[AIR_STATS_SPEED], AIR_STATS_SPEED)), size);
 		Q_strcat(buffer, va(_("Fuel:\t%i/%i\n"), AIR_AircraftMenuStatsValues(aircraft->fuel, AIR_STATS_FUELSIZE),
 			AIR_AircraftMenuStatsValues(aircraft->stats[AIR_STATS_FUELSIZE], AIR_STATS_FUELSIZE)), size);
@@ -1757,12 +1758,13 @@ void MAP_UpdateGeoscapeDock (void)
  */
 static void MAP_DrawMapMarkers (const uiNode_t* node)
 {
-	int x, y, i, installationIdx, idx;
+	int x, y, i, idx;
 	const char* font;
 	aircraft_t *ufo;
 	aircraft_t *aircraft;
 	base_t *base;
 	mission_t *mission;
+	installation_t *installation;
 
 	const vec4_t white = {1.f, 1.f, 1.f, 0.7f};
 	qboolean showXVI = qfalse;
@@ -1789,10 +1791,7 @@ static void MAP_DrawMapMarkers (const uiNode_t* node)
 	}
 
 	/* draw installations */
-	for (installationIdx = 0; installationIdx < MAX_INSTALLATIONS; installationIdx++) {
-		const installation_t *installation = INS_GetFoundedInstallationByIDX(installationIdx);
-		if (!installation)
-			continue;
+	INS_Foreach(installation) {
 		MAP_DrawMapOneInstallation(node, installation, oneUFOVisible, font);
 	}
 
@@ -1952,7 +1951,7 @@ void MAP_DrawMap (const uiNode_t* node, const campaign_t *campaign)
 		R_Draw3DGlobe(ccs.mapPos[0], ccs.mapPos[1], ccs.mapSize[0], ccs.mapSize[1],
 				ccs.date.day, ccs.date.sec, ccs.angles, ccs.zoom, campaign->map, disableSolarRender,
 				cl_3dmapAmbient->value, MAP_IsNationOverlayActivated(), MAP_IsXVIOverlayActivated(),
-				MAP_IsRadarOverlayActivated(), r_xviTexture, r_radarTexture);
+				MAP_IsRadarOverlayActivated(), r_xviTexture, r_radarTexture, cl_3dmap->integer != 2);
 
 		MAP_DrawMapMarkers(node);
 
@@ -2067,15 +2066,18 @@ void MAP_SelectAircraft (aircraft_t* aircraft)
 }
 
 /**
- * @brief Selected the specified mission
+ * @brief Select the specified mission
+ * @param[in] mission Pointer to the mission to select
+ * @return pointer to the selected mission
  */
-void MAP_SelectMission (mission_t* mission)
+mission_t* MAP_SelectMission (mission_t* mission)
 {
 	if (!mission || MAP_IsMissionSelected(mission))
-		return;
+		return MAP_GetSelectedMission();
 	MAP_ResetAction();
 	ccs.mapAction = MA_INTERCEPT;
 	MAP_SetSelectedMission(mission);
+	return MAP_GetSelectedMission();
 }
 
 /**
@@ -2132,7 +2134,7 @@ void MAP_NotifyAircraftRemoved (const aircraft_t* aircraft)
 nation_t* MAP_GetNation (const vec2_t pos)
 {
 	int i;
-	const byte* color = MAP_GetColor(pos, MAPTYPE_NATIONS);
+	const byte* color = MAP_GetColor(pos, MAPTYPE_NATIONS, NULL);
 #ifdef PARANOID
 	Com_DPrintf(DEBUG_CLIENT, "MAP_GetNation: color value for %.0f:%.0f is r:%i, g:%i, b: %i\n", pos[0], pos[1], color[0], color[1], color[2]);
 #endif
@@ -2229,9 +2231,9 @@ static const char* MAP_GetPopulationType (const byte* color)
  * @param[in] pos Map Coordinates to get the terrain type from
  * @return returns the zone name
  */
-static inline const char* MAP_GetTerrainTypeByPos (const vec2_t pos)
+static inline const char* MAP_GetTerrainTypeByPos (const vec2_t pos, qboolean *coast)
 {
-	const byte* color = MAP_GetColor(pos, MAPTYPE_TERRAIN);
+	const byte* color = MAP_GetColor(pos, MAPTYPE_TERRAIN, coast);
 	return MAP_GetTerrainType(color);
 }
 
@@ -2243,7 +2245,7 @@ static inline const char* MAP_GetTerrainTypeByPos (const vec2_t pos)
  */
 static inline const char* MAP_GetCultureTypeByPos (const vec2_t pos)
 {
-	const byte* color = MAP_GetColor(pos, MAPTYPE_CULTURE);
+	const byte* color = MAP_GetColor(pos, MAPTYPE_CULTURE, NULL);
 	return MAP_GetCultureType(color);
 }
 
@@ -2255,7 +2257,7 @@ static inline const char* MAP_GetCultureTypeByPos (const vec2_t pos)
  */
 static inline const char* MAP_GetPopulationTypeByPos (const vec2_t pos)
 {
-	const byte* color = MAP_GetColor(pos, MAPTYPE_POPULATION);
+	const byte* color = MAP_GetColor(pos, MAPTYPE_POPULATION, NULL);
 	return MAP_GetPopulationType(color);
 }
 
@@ -2267,7 +2269,7 @@ static inline const char* MAP_GetPopulationTypeByPos (const vec2_t pos)
  */
 int MAP_GetCivilianNumberByPosition (const vec2_t pos)
 {
-	const byte* color = MAP_GetColor(pos, MAPTYPE_POPULATION);
+	const byte* color = MAP_GetColor(pos, MAPTYPE_POPULATION, NULL);
 
 	if (MapIsWater(color))
 		Com_Error(ERR_DROP, "MAP_GetPopulationType: Trying to get number of civilian in a position on water");
@@ -2293,11 +2295,13 @@ int MAP_GetCivilianNumberByPosition (const vec2_t pos)
  */
 void MAP_PrintParameterStringByPos (const vec2_t pos)
 {
-	const char *terrainType = MAP_GetTerrainTypeByPos(pos);
+	qboolean coast = qfalse;
+	const char *terrainType = MAP_GetTerrainTypeByPos(pos, &coast);
 	const char *cultureType = MAP_GetCultureTypeByPos(pos);
 	const char *populationType = MAP_GetPopulationTypeByPos(pos);
 
-	Com_Printf ("      (Terrain: %s, Culture: %s, Population: %s)\n", terrainType, cultureType, populationType);
+	Com_Printf ("      (Terrain: %s, Culture: %s, Population: %s, Coast: %s)\n",
+			terrainType, cultureType, populationType, coast ? "true" : "false");
 }
 
 /**
@@ -2343,17 +2347,20 @@ qboolean MAP_IsNight (const vec2_t pos)
  * @param[in] type determine the map to get the color from (there are different masks)
  * one for the climazone (bases made use of this - there are grass, ice and desert
  * base tiles available) and one for the nations
+ * @param[out] coast The function will set this to true if the given position is a coast line.
+ * This can be @c NULL if you are not interested in this fact.
  * @return Returns the color value at given position.
  * @note terrainPic, culturePic and populationPic are pointers to an rgba image in memory
  * @sa MAP_GetTerrainType
  * @sa MAP_GetCultureType
  * @sa MAP_GetPopulationType
  */
-byte *MAP_GetColor (const vec2_t pos, mapType_t type)
+const byte *MAP_GetColor (const vec2_t pos, mapType_t type, qboolean *coast)
 {
 	int x, y;
 	int width, height;
-	byte *mask;
+	const byte *mask;
+	const byte* color;
 
 	switch (type) {
 	case MAPTYPE_TERRAIN:
@@ -2402,7 +2409,36 @@ byte *MAP_GetColor (const vec2_t pos, mapType_t type)
 	/* terrainWidth is the width of the image */
 	/* this calculation returns the pixel in col x and in row y */
 	assert(4 * (x + y * width) < width * height * 4);
-	return mask + 4 * (x + y * width);
+	color = mask + 4 * (x + y * width);
+	if (coast != NULL) {
+		if (MapIsWater(color)) {
+			*coast = qfalse;
+		} else {
+			/* only check four directions */
+			const int gap = 4;
+			if (x > gap) {
+				const byte* coastCheck = mask + 4 * ((x - gap) + y * width);
+				*coast = MapIsWater(coastCheck);
+			}
+			if (!*coast && x < width - 1 - gap) {
+				const byte* coastCheck = mask + 4 * ((x + gap) + y * width);
+				*coast = MapIsWater(coastCheck);
+			}
+
+			if (!*coast) {
+				if (y > gap) {
+					const byte* coastCheck = mask + 4 * (x + (y - gap) * width);
+					*coast = MapIsWater(coastCheck);
+				}
+				if (!*coast && y < height - 1 - gap) {
+					const byte* coastCheck = mask + 4 * (x + (y + gap) * width);
+					*coast = MapIsWater(coastCheck);
+				}
+			}
+		}
+	}
+
+	return color;
 }
 
 /**
@@ -2436,14 +2472,15 @@ base_t* MAP_PositionCloseToBase (const vec2_t pos)
  */
 qboolean MAP_PositionFitsTCPNTypes (const vec2_t pos, const linkedList_t* terrainTypes, const linkedList_t* cultureTypes, const linkedList_t* populationTypes, const linkedList_t* nations)
 {
-	const char *terrainType = MAP_GetTerrainTypeByPos(pos);
+	qboolean coast = qfalse;
+	const char *terrainType = MAP_GetTerrainTypeByPos(pos, &coast);
 	const char *cultureType = MAP_GetCultureTypeByPos(pos);
 	const char *populationType = MAP_GetPopulationTypeByPos(pos);
 
-	if (MapIsWater(MAP_GetColor(pos, MAPTYPE_TERRAIN)))
+	if (MapIsWater(MAP_GetColor(pos, MAPTYPE_TERRAIN, NULL)))
 		return qfalse;
 
-	if (!terrainTypes || LIST_ContainsString(terrainTypes, terrainType)) {
+	if (!terrainTypes || LIST_ContainsString(terrainTypes, terrainType) || (coast && LIST_ContainsString(terrainTypes, "coast"))) {
 		if (!cultureTypes || LIST_ContainsString(cultureTypes, cultureType)) {
 			if (!populationTypes || LIST_ContainsString(populationTypes, populationType)) {
 				const nation_t *nationAtPos = MAP_GetNation(pos);

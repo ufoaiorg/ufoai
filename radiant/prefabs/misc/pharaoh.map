@@ -1,0 +1,95 @@
+
+// entity 0
+{
+"classname" "worldspawn"
+"maxlevel" "4"
+// brush 0
+{
+( -41 17 89 ) ( -41 1 89 ) ( -69 17 89 ) tex_common/weaponclip 37 5 0 1 1 65280 0 0
+( -40 11 93 ) ( -68 11 93 ) ( -40 11 -3 ) tex_common/weaponclip 36 61 0 1 1 65280 0 0
+( 22 16 94 ) ( 22 16 -2 ) ( 22 0 94 ) tex_common/weaponclip 60 62 0 1 1 65280 0 0
+( -68 0 0 ) ( -40 0 0 ) ( -68 16 0 ) tex_common/weaponclip 36 4 0 1 1 65280 0 0
+( -69 1 -2 ) ( -69 1 94 ) ( -41 1 -2 ) tex_common/weaponclip 37 62 0 1 1 65280 0 0
+( 0 0 -2 ) ( 0 16 -2 ) ( 0 0 94 ) tex_common/weaponclip 60 62 0 1 1 65280 0 0
+}
+// brush 1
+{
+( 24 16 77 ) ( 24 2 77 ) ( 0 16 77 ) tex_common/lightclip 8 8 0 0.5 0.5
+( 23 16 50 ) ( -1 16 50 ) ( 23 16 48 ) tex_common/lightclip 10 60 0 0.5 0.5
+( 24 16 50 ) ( 24 16 48 ) ( 24 2 50 ) tex_common/lightclip 56 60 0 0.5 0.5
+( 1 2 60 ) ( 25 2 60 ) ( 1 16 60 ) tex_common/lightclip 6 8 0 0.5 0.5
+( -1 0 48 ) ( -1 0 50 ) ( 23 0 48 ) tex_common/lightclip 10 60 0 0.5 0.5
+( -2 2 48 ) ( -2 16 48 ) ( -2 2 50 ) tex_common/lightclip 56 60 0 0.5 0.5
+}
+// brush 2
+{
+( 16 1538 92 ) ( 16 -144 92 ) ( 7 1538 92 ) tex_common/lightclip 8 8 0 0.5 0.5
+( 14 11 75 ) ( 5 11 75 ) ( 14 11 60 ) tex_common/lightclip 12 30 0 0.5 0.5
+( 15 1679 75 ) ( 15 1679 60 ) ( 15 -3 75 ) tex_common/lightclip 30 30 0 0.5 0.5
+( 7 -1642 77 ) ( 16 -1642 77 ) ( 7 40 77 ) tex_common/lightclip 8 20 0 0.5 0.5
+( 6 0 60 ) ( 6 0 75 ) ( 15 0 60 ) tex_common/lightclip 10 30 0 0.5 0.5
+( 7 -144 75 ) ( 7 1538 75 ) ( 7 -144 90 ) tex_common/lightclip 56 60 0 0.5 0.5
+}
+// brush 3
+{
+( 13 11 96 ) ( 13 0 96 ) ( 10 11 96 ) tex_common/lightclip 10 8 0 0.5 0.5
+( 13 3 98 ) ( 10 3 98 ) ( 13 3 92 ) tex_common/lightclip 10 0 0 0.5 0.5
+( 13 11 96 ) ( 13 11 90 ) ( 13 0 96 ) tex_common/lightclip 56 60 0 0.5 0.5
+( 11 0 92 ) ( 14 0 92 ) ( 11 11 92 ) tex_common/lightclip 8 8 0 0.5 0.5
+( 10 0 90 ) ( 10 0 96 ) ( 13 0 90 ) tex_common/lightclip 10 60 0 0.5 0.5
+( 9 0 90 ) ( 9 11 90 ) ( 9 0 96 ) tex_common/lightclip 56 60 0 0.5 0.5
+}
+// brush 4
+{
+( 20 16 60 ) ( 20 0 60 ) ( 4 16 60 ) tex_common/lightclip 8 8 0 0.5 0.5
+( 19 12 58 ) ( 3 12 58 ) ( 19 12 26 ) tex_common/lightclip 10 60 0 0.5 0.5
+( 20 16 58 ) ( 20 16 26 ) ( 20 0 58 ) tex_common/lightclip 56 60 0 0.5 0.5
+( 4 0 29 ) ( 20 0 29 ) ( 4 16 29 ) tex_common/lightclip 8 8 0 0.5 0.5
+( 3 1 26 ) ( 3 1 58 ) ( 19 1 26 ) tex_common/lightclip 10 60 0 0.5 0.5
+( 3 1 26 ) ( 3 17 26 ) ( 3 1 58 ) tex_common/lightclip 54 60 0 0.5 0.5
+}
+// brush 5
+{
+( 19 12 29 ) ( 19 0 29 ) ( 12 12 29 ) tex_common/lightclip 58 8 0 0.5 0.5
+( 19 8 32 ) ( 12 8 32 ) ( 19 8 5 ) tex_common/lightclip 58 6 0 0.5 0.5
+( 19 12 26 ) ( 19 12 -1 ) ( 19 0 26 ) tex_common/lightclip 56 58 0 0.5 0.5
+( 12 0 8 ) ( 19 0 8 ) ( 12 12 8 ) tex_common/lightclip 58 8 0 0.5 0.5
+( 11 2 0 ) ( 11 2 27 ) ( 18 2 0 ) tex_common/lightclip 60 60 0 0.5 0.5
+( 13 2 2 ) ( 13 14 2 ) ( 13 2 29 ) tex_common/lightclip 52 0 0 0.5 0.5
+}
+// brush 6
+{
+( 11 12 29 ) ( 11 0 29 ) ( 4 12 29 ) tex_common/lightclip 10 8 0 0.5 0.5
+( 10 8 33 ) ( 3 8 33 ) ( 10 8 6 ) tex_common/lightclip 12 8 0 0.5 0.5
+( 10 14 27 ) ( 10 14 0 ) ( 10 2 27 ) tex_common/lightclip 52 60 0 0.5 0.5
+( 4 0 8 ) ( 11 0 8 ) ( 4 12 8 ) tex_common/lightclip 10 8 0 0.5 0.5
+( 3 2 0 ) ( 3 2 27 ) ( 10 2 0 ) tex_common/lightclip 12 60 0 0.5 0.5
+( 4 0 0 ) ( 4 12 0 ) ( 4 0 27 ) tex_common/lightclip 56 60 0 0.5 0.5
+}
+// brush 7
+{
+( 11 8 8 ) ( 11 0 8 ) ( 6 8 8 ) tex_common/lightclip 8 8 0 0.5 0.5
+( 10 14 8 ) ( 5 14 8 ) ( 10 14 2 ) tex_common/lightclip 10 0 0 0.5 0.5
+( 10 9 6 ) ( 10 9 0 ) ( 10 1 6 ) tex_common/lightclip 54 60 0 0.5 0.5
+( 6 0 2 ) ( 11 0 2 ) ( 6 8 2 ) tex_common/lightclip 8 8 0 0.5 0.5
+( 5 1 0 ) ( 5 1 6 ) ( 10 1 0 ) tex_common/lightclip 10 60 0 0.5 0.5
+( 5 0 0 ) ( 5 8 0 ) ( 5 0 6 ) tex_common/lightclip 56 60 0 0.5 0.5
+}
+// brush 8
+{
+( 18 14 8 ) ( 18 0 8 ) ( 13 14 8 ) tex_common/lightclip 8 8 0 0.5 0.5
+( 18 14 8 ) ( 13 14 8 ) ( 18 14 2 ) tex_common/lightclip 8 0 0 0.5 0.5
+( 17 14 6 ) ( 17 14 0 ) ( 17 0 6 ) tex_common/lightclip 56 60 0 0.5 0.5
+( 13 0 2 ) ( 18 0 2 ) ( 13 14 2 ) tex_common/lightclip 8 8 0 0.5 0.5
+( 12 1 0 ) ( 12 1 6 ) ( 17 1 0 ) tex_common/lightclip 10 60 0 0.5 0.5
+( 13 1 2 ) ( 13 15 2 ) ( 13 1 8 ) tex_common/lightclip 54 0 0 0.5 0.5
+}
+}
+// entity 1
+{
+"classname" "misc_model"
+"origin" "11 8 48"
+"model" "models/objects/statues/pharaoh/pharaoh.md2"
+"angles" "0 -180 0"
+"spawnflags" "255"
+}

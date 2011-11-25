@@ -50,6 +50,22 @@ static void CL_NetReceiveItem (struct dbuffer *buf, item_t *item, containerIndex
 }
 
 /**
+ * @brief Decides if following events should be delayed.
+ */
+int CL_InvAddTime (const struct eventRegister_s *self, struct dbuffer *msg, eventTiming_t *eventTiming)
+{
+	if (eventTiming->parsedDeath) { /* drop items after death (caused by impact) */
+		/* EV_INV_ADD messages are the last events sent after a death */
+		eventTiming->parsedDeath = qfalse;
+		return eventTiming->impactTime + 400;
+	} else if (eventTiming->impactTime > cl.time) { /* item thrown on the ground */
+		return eventTiming->impactTime + 75;
+	}
+
+	return eventTiming->nextTime;
+}
+
+/**
  * @sa CL_InvDel
  * @sa G_SendInventory
  * @sa EV_INV_ADD
@@ -61,7 +77,7 @@ void CL_InvAdd (const eventRegister_t *self, struct dbuffer *msg)
 	int nr = NET_ReadShort(msg);
 
 	if (!le)
-		Com_Error(ERR_DROP, "InvAdd message ignored... LE not found\n");
+		LE_NotFoundError(number);
 
 	le->removeNextFrame = qfalse;
 
@@ -71,8 +87,12 @@ void CL_InvAdd (const eventRegister_t *self, struct dbuffer *msg)
 		int x, y;
 		CL_NetReceiveItem(msg, &item, &container, &x, &y);
 
-		if (LE_IsItem(le) && container != csi.idFloor)
-			Com_Error(ERR_DROP, "InvAdd for ET_ITEM but target container is not the floor but %i", container);
+		if (LE_IsItem(le)) {
+			if (container != csi.idFloor)
+				Com_Error(ERR_DROP, "InvAdd for ET_ITEM but target container is not the floor but %i", container);
+		} else if (INVDEF(container)->temp) {
+			Com_Error(ERR_DROP, "InvAdd for %i to temp container %i", le->type, container);
+		}
 
 		if (cls.i.AddToInventory(&cls.i, &le->i, &item, INVDEF(container), x, y, item.amount) == NULL)
 			Com_Error(ERR_DROP, "InvAdd failed - could not add %i item(s) of %s to container %i",

@@ -99,45 +99,14 @@ static const value_t tutValues[] = {
 void TUT_ParseTutorials (const char *name, const char **text)
 {
 	tutorial_t *t;
-	const char *errhead = "TUT_ParseTutorials: unexpected end of file (tutorial ";
-	const char *token;
-	const value_t *v;
-
-	/* get name list body body */
-	token = Com_Parse(text);
-
-	if (!*text || *token != '{') {
-		Com_Printf("TUT_ParseTutorials: tutorial \"%s\" without body ignored\n", name);
-		return;
-	}
 
 	/* parse tutorials */
 	if (numTutorials >= MAX_TUTORIALS) {
 		Com_Printf("Too many tutorials, '%s' ignored.\n", name);
-		numTutorials = MAX_TUTORIALS;
 		return;
 	}
-
 	t = &tutorials[numTutorials++];
 	OBJZERO(*t);
-	do {
-		/* get the name type */
-		token = Com_EParse(text, errhead, name);
-		if (!*text)
-			break;
-		if (*token == '}')
-			break;
-		for (v = tutValues; v->string; v++)
-			if (Q_streq(token, v->string)) {
-				/* found a definition */
-				token = Com_EParse(text, errhead, name);
-				if (!*text)
-					return;
 
-				Com_EParseValue(t, token, v->type, v->ofs, v->size);
-				break;
-			}
-		if (!v->string)
-			Com_Printf("TUT_ParseTutorials: unknown token \"%s\" ignored (tutorial %s)\n", token, name);
-	} while (*text);
+	Com_ParseBlock(name, text, t, tutValues, NULL);
 }

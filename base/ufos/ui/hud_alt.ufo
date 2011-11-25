@@ -641,7 +641,7 @@ window hud_alt extends hud
 			string		*cvar:mn_hp
 			pos			"113 301"
 			size		"40 20"
-			textalign	ALIGN_UC
+			contentalign	ALIGN_UC
 			tooltip		"_Health"
 		}
 		string str_tu
@@ -649,7 +649,7 @@ window hud_alt extends hud
 			string		*cvar:mn_tu
 			pos			"141 301"
 			size		"40 20"
-			textalign	ALIGN_UC
+			contentalign	ALIGN_UC
 			tooltip		"_TUs"
 		}
 		string str_morale
@@ -657,8 +657,16 @@ window hud_alt extends hud
 			string		*cvar:mn_morale
 			pos			"170 301"
 			size		"40 20"
-			textalign	ALIGN_UC
+			contentalign	ALIGN_UC
 			tooltip		"_Morale"
+		}
+		string str_tu_reserved
+		{
+			string		*cvar:mn_tureserved
+			pos			"200 301"
+			size		"40 20"
+			contentalign	ALIGN_UC
+			tooltip		"_TUs reserved"
 		}
 
 		image bt_reaction_a
@@ -791,7 +799,7 @@ window hud_alt extends hud
 		{
 			tooltip		"_Switch to right hand weapon"
 			icon		"icons/next"
-			pos			"196 400"
+			pos			"212 400"
 			size		"16 16"
 			padding		0
 			/** @todo we should not use hud_switchfiremodelist */
@@ -803,7 +811,7 @@ window hud_alt extends hud
 		{
 			tooltip		"_Switch to left hand weapon"
 			icon		"icons/prev"
-			pos			"212 400"
+			pos			"196 400"
 			size		"16 16"
 			padding		0
 			/** @todo we should not use hud_switchfiremodelist */
@@ -813,119 +821,45 @@ window hud_alt extends hud
 		}
 	}
 
-	// ==================
-	// CHAT BUTTONS
-	// ==================
-
-	// the name must be the same in all huds
-	text chatscreen
+	image bar_chat_bg
 	{
-		dataid		TEXT_CHAT_WINDOW
-		pos			"130 70"
-		size		"690 48"
-		font		"f_verysmall"
-		rows		"3"
-		lineheight	"16"
-		padding		5
-		bordercolor	"0.5 0.5 0.5 1"
-		border		2
-		bgcolor		"0 0.1 0 0.8"
+		visiblewhen	"*cvar:sv_maxclients >= 2"
+		src			"althud/bar_chat"
+		pos			"977 552"
+		size		"64 64"
 	}
 
-	panel chat {
-		{
-			visiblewhen	"*cvar:sv_maxclients >= 2"
-			pos		"0 6"
-			size	"256 64"
-			ghost	true
-			align	LAYOUTALIGN_LEFT
-		}
-
-		image bar_chat_bg
-		{
-			src		"althud/bar_chat"
-			pos			"0 0"
-			size		"64 64"
-		}
-		image bar_chat_all
-		{
-			visiblewhen	"*cvar:mn_showchatbuttons == 1"
-
-			tooltip		"_Chat"
-			src		"hud/button_chat"
-			pos			"130 12"
-			size		"32 32"
-			texl		"0 0"
-			texh		"32 32"
-			onClick		{ cmd "messagesay;" }
-		}
-		image bar_chat_team
-		{
-			visiblewhen	"*cvar:mn_showchatbuttons == 1"
-			tooltip		"_Teamchat"
-			src		"hud/button_chat"
-			pos			"90 12"
-			size		"32 32"
-			texl		"32 0"
-			texh		"64 32"
-			onClick		{ cmd "messagesayteam;" }
-		}
-		image bar_chat_show
-		{
-			visiblewhen	"*cvar:mn_showchatbuttons == 1"
-			tooltip		"_Show chat history"
-			src		"hud/button_chat"
-			pos			"50 12"
-			size		"32 32"
-			texl		"64 0"
-			texh		"96 32"
-			onMouseLeave			{
-				*node:root.chatscreen@size = "690 48"
-				*node:root.chatscreen@rows = "3"
-				*node:root@timeout = 10000
-			}
-			onMouseEnter			{
-				*node:root.chatscreen@size = "690 400"
-				*node:root.chatscreen@rows = "25"
-				*node:root@timeout = 0
-				*node:root.chatscreen@invis = false
-			}
-		}
-
-		image button_chat
-		{
-			tooltip		"_Chat messages"
-			src		"hud/event_log"
-			pos			"9 6"
-			texl		"0 0"
-			texh		"32 36"
-			onMouseEnter {
-				*node:this@texl	= "0 36"
-				*node:this@texh	= "32 72"
-			}
-			onMouseLeave {
-				*node:this@texl	= "0 0"
-				*node:this@texh	= "32 36"
-			}
-			onClick		{
-				if ( *cvar:mn_showchatbuttons != 0 ) {
-					*node:parent.bar_chat_bg@image = "hud/bar_chat"
-					*node:parent.bar_chat_bg@pos = "0 0"
-					*node:parent.bar_chat_bg@size = "64 64"
-					*cvar:mn_showchatbuttons = 0
-				} else {
-					*node:parent.bar_chat_bg@image = "althud/bar_chat_choice"
-					*node:parent.bar_chat_bg@pos = "0 0"
-					*node:parent.bar_chat_bg@size = "256 64"
-					*cvar:mn_showchatbuttons = 1
-				}
-			}
+	image button_chat
+	{
+		visiblewhen	"*cvar:sv_maxclients >= 2"
+		tooltip		"_Chat messages"
+		src			"hud/event_log"
+		pos			"985 560"
+		texl		"0 0"
+		texh		"32 36"
+		onClick {
+			cmd "ui_push hud_chat;"
 		}
 	}
 
-	func onEvent
+	image bar_chat_bg
 	{
-		*node:root.chatscreen@invis = true
+		src			"althud/bar_chat"
+		pos			"0 552"
+		size		"64 64"
+	}
+
+	image button_chat
+	{
+		visiblewhen	"*cvar:sv_maxclients >= 2"
+		tooltip		"_Chat messages"
+		src			"hud/event_log"
+		pos			"8 560"
+		texl		"0 0"
+		texh		"32 36"
+		onClick {
+			cmd "ui_push hud_chat;"
+		}
 	}
 
 	panel lowerright {
@@ -978,7 +912,7 @@ window hud_alt extends hud
 			string		*cvar:cl_worldlevel
 			pos			"1 49"
 			size		"40 20"
-			textalign	ALIGN_CC
+			contentalign	ALIGN_CC
 		}
 	}
 
@@ -1022,7 +956,7 @@ window hud_alt extends hud
 			pos			"78 13"
 			size	    "48 34"
 			onClick		{ cmd "nextalien;" }
-			textalign	ALIGN_CC
+			contentalign	ALIGN_CC
 		}
 		image nextround
 		{
@@ -1093,6 +1027,7 @@ window hud_alt extends hud
 	confunc endround
 	{
 		*node:root.upperright.nextround@image = "althud/buttons_althud1g"
+		cmd "hud_movemode;"
 	}
 
 	confunc deselect_primaryleft { *node:root.right.bt_primaryleft@image		= "althud/buttons_althud1" }
@@ -1161,10 +1096,8 @@ window hud_alt extends hud
 
 	func onWindowOpened
 	{
-		*node:root.chatscreen@invis = true
 		cmd "music_change battlescape;"
 		call *node:root.right.show_rightweapon
-		*cvar:mn_showchatbuttons = 0
 	}
 
 	func onScriptLoaded {

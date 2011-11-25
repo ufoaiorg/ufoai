@@ -41,7 +41,7 @@ static void UI_EKGNodeDraw (uiNode_t *node)
 	const image_t *image;
 
 	const char* imageName = UI_GetReferenceString(node, node->image);
-	if (!imageName || imageName[0] == '\0')
+	if (Q_strnull(imageName))
 		return;
 
 	UI_GetNodeAbsPos(node, nodepos);
@@ -94,7 +94,7 @@ static void UI_EKGNodeDraw (uiNode_t *node)
 				Vector2Copy(node->size, size);
 			}
 		}
-		UI_DrawNormImage(nodepos[0], nodepos[1], size[0], size[1],
+		UI_DrawNormImage(qfalse, nodepos[0], nodepos[1], size[0], size[1],
 				EXTRADATA(node).super.texh[0], EXTRADATA(node).super.texh[1], EXTRADATA(node).super.texl[0], EXTRADATA(node).super.texl[1], image);
 	}
 }
@@ -105,7 +105,7 @@ static void UI_EKGNodeDraw (uiNode_t *node)
 static void UI_EKGNodeLoading (uiNode_t *node)
 {
 	EXTRADATA(node).scaleCvarValue = 1.0f;
-	EXTRADATA(node).scrollSpeed= 0.07f;
+	EXTRADATA(node).scrollSpeed = 0.07f;
 }
 
 static const value_t properties[] = {

@@ -1,11 +1,12 @@
-// ==================
-// Some components for the main user interface
-// ==================
+// =======================================
+// COMPONENTS FOR THE MAIN USER INTERFACE
+// =======================================
 
 /**
  * Big green button used in all main menu UI
- * We should only use it into the main UI (outside game)
+ * We should only use it for the main UI (outside game)
  */
+
 component button cmpMenuButton
 {
 	size "256 64"
@@ -45,7 +46,7 @@ component panel cmpDefNamedTbar
 	string	val {
 		pos "190 0"
 		size "130 20"
-		textalign ALIGN_UR
+		contentalign ALIGN_UR
 	}
 }
 
@@ -75,9 +76,9 @@ component panel cmpMapSlot
 		color 		"0 .78 0 1"
 		string		*cvar:mn_svmapname
 		selectcolor	"1 1 1 1"
-		textalign	ALIGN_CL
+		contentalign	ALIGN_CC
 		padding		8
-		font		"f_verysmall"
+		font		"f_small"
 		pos			"32 0"
 		size		"256 34"
 		disabled	true
@@ -109,6 +110,7 @@ component panel cmpMapSlot
 /**
  * Header for the base. Used in all baseview screens
  */
+
 component panel cmpDefBaseHeader {
 	{
 		pos "0 0"
@@ -130,9 +132,10 @@ component panel cmpDefBaseHeader {
 		pos			"780 30"
 		size		"130 30"
 		font		"f_big"
-		textalign	ALIGN_UR
+		contentalign	ALIGN_UR
 	}
-	custombutton bt_back
+
+	custombutton bt_back_to_baseview
 	{
 		tooltip		"_Back to baseview"
 		background	"buttons/big_blue"
@@ -141,6 +144,7 @@ component panel cmpDefBaseHeader {
 		icon		"icons/return"
 		onClick		{ cmd "ui_pop;" }
 	}
+
 }
 
 component cmpDefBaseHeader cmpBaseHeader
@@ -149,17 +153,63 @@ component cmpDefBaseHeader cmpBaseHeader
 		pos "0 0"
 	}
 
-	string base_name
+	textentry name
 	{
 		string		*cvar:mn_base_title
 		tooltip		"_Name of this base"
 		pos			"60 30"
 		size		"500 32"
-		textalign	ALIGN_CL
-		padding		8
 		font		"f_big"
+		onChange {
+			// stores the value of the cvar in the base structure
+			cmd	"base_changename"
+		}
+	}
+
+	zone wz_base
+	{
+		pos	"25 25"
+		size	"606 46"
+		onWheelUp	{ cmd "ui_pop; mn_base_next;" }
+		onWheelDown	{ cmd "ui_pop; mn_base_prev;" }
+	}
+
+	button bt_edit
+	{
+		tooltip	"_Rename your base"
+		icon	"icons/pen"
+		pos	"565 27"
+		size "35 35"
+		padding 0
+		onClick
+		{
+			call *node:parent.name@edit
+		}
+	}
+
+	custombutton prev_base
+	{
+		tooltip	"_Switch to the previous base"
+		icon	"icons/prev"
+		pos		"30 30"
+		size	"30 30"
+		onClick	{ cmd "ui_pop; mn_base_prev;" }
+		onWheelUp	{ cmd "ui_pop; mn_base_next;" }
+		onWheelDown	{ cmd "ui_pop; mn_base_prev;" }
+	}
+
+	custombutton next_base
+	{
+		tooltip	"_Switch to the next base"
+		icon	"icons/next"
+		pos		"600 30"
+		size	"30 30"
+		onClick	{ cmd "ui_pop; mn_base_next;" }
+		onWheelUp	{ cmd "ui_pop; mn_base_next;" }
+		onWheelDown	{ cmd "ui_pop; mn_base_prev;" }
 	}
 }
+
 
 /**
  * button on popups
@@ -220,7 +270,7 @@ component panel cmpMapPanel
 	{
 		string		"_Map Name:"
 		pos			"10 155"
-		size		"256 20"
+		size		"220 20"
 	}
 	cmpMapSlot mapSlot
 	{
@@ -236,7 +286,7 @@ component panel cmpMapPanel
 	{
 		string		"_Daytime Version:"
 		pos			"10 200"
-		size		"280 20"
+		size		"220 20"
 	}
 
 	selectbox daynight_box
@@ -283,9 +333,9 @@ component panel cmpTeamPanel
 		pos			"0 50"
 		size		"420 550"
 	}
-	// ==================
-	// slots
-	// ==================
+	// ================
+	// save team slots
+	// ================
 
 	/**
 	 * @param[in] <1> id of the slot
@@ -302,12 +352,12 @@ component panel cmpTeamPanel
 		image		"ui/button_green_verysmall"
 		color		"0 .78 0 1"
 		selectcolor	"1 1 1 1"
-		textalign	ALIGN_CL
+		contentalign	ALIGN_CC
 		padding		8
 		font		"f_verysmall"
 		disabled	true
-		pos			"85 30"
-		size		"256 34"
+		pos			"0 100"
+		size		"200 34"
 		string		*cvar:mn_slot0
 		onClick		{ cmd "game_loadteam 0;ui_push game_team_edit;" }
 	}
@@ -317,12 +367,12 @@ component panel cmpTeamPanel
 		image		"ui/button_green_verysmall"
 		color		"0 .78 0 1"
 		selectcolor	"1 1 1 1"
-		textalign	ALIGN_CL
+		contentalign	ALIGN_CC
 		padding		8
 		font		"f_verysmall"
 		disabled	true
-		pos			"85 65"
-		size		"256 34"
+		pos			"0 135"
+		size		"200 34"
 		string		*cvar:mn_slot1
 		onClick		{ cmd "game_loadteam 1;ui_push game_team_edit;" }
 	}
@@ -332,12 +382,12 @@ component panel cmpTeamPanel
 		image		"ui/button_green_verysmall"
 		color		"0 .78 0 1"
 		selectcolor	"1 1 1 1"
-		textalign	ALIGN_CL
+		contentalign	ALIGN_CC
 		padding		8
 		font		"f_verysmall"
 		disabled	true
-		pos			"85 100"
-		size		"256 34"
+		pos			"0 170"
+		size		"200 34"
 		string		*cvar:mn_slot2
 		onClick		{ cmd "game_loadteam 2;ui_push game_team_edit;" }
 	}
@@ -347,12 +397,12 @@ component panel cmpTeamPanel
 		image		"ui/button_green_verysmall"
 		color		"0 .78 0 1"
 		selectcolor	"1 1 1 1"
-		textalign	ALIGN_CL
+		contentalign	ALIGN_CC
 		padding		8
 		font		"f_verysmall"
 		disabled	true
-		pos			"85 135"
-		size		"256 34"
+		pos			"0 205"
+		size		"200 34"
 		string		*cvar:mn_slot3
 		onClick		{ cmd "game_loadteam 3;ui_push game_team_edit;" }
 	}
@@ -362,12 +412,12 @@ component panel cmpTeamPanel
 		image		"ui/button_green_verysmall"
 		color		"0 .78 0 1"
 		selectcolor	"1 1 1 1"
-		textalign	ALIGN_CL
+		contentalign	ALIGN_CC
 		padding		8
 		font		"f_verysmall"
 		disabled	true
-		pos			"85 170"
-		size		"256 34"
+		pos			"0 240"
+		size		"200 34"
 		string		*cvar:mn_slot4
 		onClick		{ cmd "game_loadteam 4;ui_push game_team_edit;" }
 	}
@@ -377,27 +427,29 @@ component panel cmpTeamPanel
 		image		"ui/button_green_verysmall"
 		color		"0 .78 0 1"
 		selectcolor	"1 1 1 1"
-		textalign	ALIGN_CL
+		contentalign	ALIGN_CC
 		padding		8
 		font		"f_verysmall"
 		disabled	true
-		pos			"85 205"
-		size		"256 34"
+		pos			"0 275"
+		size		"200 34"
 		string		*cvar:mn_slot5
 		onClick		{ cmd "game_loadteam 5;ui_push game_team_edit;" }
 	}
+
+	// Second row
 
 	button slot_team6
 	{
 		image		"ui/button_green_verysmall"
 		color		"0 .78 0 1"
 		selectcolor	"1 1 1 1"
-		textalign	ALIGN_CL
+		contentalign	ALIGN_CC
 		padding		8
 		font		"f_verysmall"
 		disabled	true
-		pos			"85 240"
-		size		"256 34"
+		pos			"240 100"
+		size		"200 34"
 		string		*cvar:mn_slot6
 		onClick		{ cmd "game_loadteam 6;ui_push game_team_edit;" }
 	}
@@ -407,14 +459,74 @@ component panel cmpTeamPanel
 		image		"ui/button_green_verysmall"
 		color		"0 .78 0 1"
 		selectcolor	"1 1 1 1"
-		textalign	ALIGN_CL
+		contentalign	ALIGN_CC
 		padding		8
 		font		"f_verysmall"
 		disabled	true
-		pos			"85 275"
-		size		"256 34"
+		pos			"240 135"
+		size		"200 34"
 		string		*cvar:mn_slot7
 		onClick		{ cmd "game_loadteam 7;ui_push game_team_edit;" }
+	}
+
+	button slot_team8
+	{
+		image		"ui/button_green_verysmall"
+		color		"0 .78 0 1"
+		selectcolor	"1 1 1 1"
+		contentalign	ALIGN_CC
+		padding		8
+		font		"f_verysmall"
+		disabled	true
+		pos			"240 170"
+		size		"200 34"
+		string		*cvar:mn_slot8
+		onClick		{ cmd "game_loadteam 8;ui_push game_team_edit;" }
+	}
+
+	button slot_team9
+	{
+		image		"ui/button_green_verysmall"
+		color		"0 .78 0 1"
+		selectcolor	"1 1 1 1"
+		contentalign	ALIGN_CC
+		padding		8
+		font		"f_verysmall"
+		disabled	true
+		pos			"240 205"
+		size		"200 34"
+		string		*cvar:mn_slot9
+		onClick		{ cmd "game_loadteam 9;ui_push game_team_edit;" }
+	}
+
+	button slot_team10
+	{
+		image		"ui/button_green_verysmall"
+		color		"0 .78 0 1"
+		selectcolor	"1 1 1 1"
+		contentalign	ALIGN_CC
+		padding		8
+		font		"f_verysmall"
+		disabled	true
+		pos			"240 240"
+		size		"200 34"
+		string		*cvar:mn_slot10
+		onClick		{ cmd "game_loadteam 10;ui_push game_team_edit;" }
+	}
+
+	button slot_team11
+	{
+		image		"ui/button_green_verysmall"
+		color		"0 .78 0 1"
+		selectcolor	"1 1 1 1"
+		contentalign	ALIGN_CC
+		padding		8
+		font		"f_verysmall"
+		disabled	true
+		pos			"240 275"
+		size		"200 34"
+		string		*cvar:mn_slot11
+		onClick		{ cmd "game_loadteam 11;ui_push game_team_edit;" }
 	}
 
 	// ==================
@@ -423,8 +535,8 @@ component panel cmpTeamPanel
 
 	button button_new
 	{
-		pos	"85 320"
-		size "256 40"
+		pos	"0 40"
+		size "200 40"
 		tooltip	"_Generate a new random team"
 		onClick	{ cmd "game_autoteam;ui_push game_team_edit;" }
 		image	"ui/button_green_small"
@@ -436,8 +548,8 @@ component panel cmpTeamPanel
 
 	button button_save
 	{
-		pos	"85 370"
-		size "256 40"
+		pos	"240 40"
+		size "200 40"
 		tooltip	"_Save the current team"
 		onClick	{ cmd "ui_push game_team_save_popup;" }
 		image	"ui/button_green_small"
@@ -450,14 +562,81 @@ component panel cmpTeamPanel
 	string team_str
 	{
 		string	"_Team:"
-		pos	"85 420"
+		pos			"10 0"
+		size		"200 20"
+		tooltip		"_Select which side you want to play with."
 	}
 
 	selectbox team_box
 	{
-		pos		"200 420"
+		pos		"240 0"
 		size	"200 20"
+		color	"0.6 0.6 0.6 0.3"
 		cvar	*cvar:cl_teamdef
 		dataid	OPTION_TEAMDEFS
+	}
+}
+
+
+// ===============================
+// POPUP KEYINFO AND GENERAL HELP
+// ===============================
+
+window popup_keyinfo
+{
+	{
+		string		"_Keyinfo and General Help"
+		image		"ui/popup_alpha_tile"
+		pos			"239 12"
+		size		"536 747"
+		dragbutton	true
+		closebutton	true
+	}
+
+	string keyinfo_label
+	{
+		font		"f_verysmall_bold"
+		string		*cvar:mn_keyinfo_label_string
+		contentalign	ALIGN_CC
+		pos			"20 58"
+		size		"498 20"
+	}
+
+	func onWindowOpened {
+		if ( *cvar:mn_base_count > 0 ) { *cvar:mn_keyinfo_label_string = "_Visit our forums and join the community at http://ninex.ufoai.info." }
+		else { *cvar:mn_keyinfo_label_string = "_Note: Campaign-specific keybindings visible in Campaign mode only." }
+		cmd "mn_init_keylist;"
+	}
+
+	func onWindowClosed {
+		delete *cvar:mn_keyinfo_label_string
+	}
+
+	// only show the current binding - no support for changing them atm
+	text keyinfolist
+	{
+		dataid		TEXT_LIST
+		pos			"30 112"
+		size		"473 620"
+		rows		"31"
+		lineheight	"20"
+		tabwidth	"120"
+		font		"f_verysmall"
+		onViewChange
+		{
+			*node:root.keyinfoscroll@current = <viewpos>
+			*node:root.keyinfoscroll@fullsize = <fullsize>
+			*node:root.keyinfoscroll@viewsize = <viewsize>
+		}
+	}
+	vscrollbar keyinfoscroll
+	{
+		image		"ui/scrollbar_v_green"
+		pos			"504 112"
+		height		"620"
+		current		0
+		viewsize	31
+		fullsize	50
+		onChange	{ *node:root.keyinfolist@viewpos = <current> }
 	}
 }

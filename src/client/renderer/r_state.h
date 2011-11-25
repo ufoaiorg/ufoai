@@ -30,6 +30,7 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #include "r_material.h"
 #include "r_framebuffer.h"
 #include "r_light.h"
+#include "r_image.h"
 
 /* vertex arrays are used for many things */
 #define GL_ARRAY_LENGTH_CHUNK 4096
@@ -100,9 +101,8 @@ typedef struct rstate_s {
 	gltexunit_t *active_texunit;
 
 	/* lights */
-	r_light_t dynamicLights[MAX_DYNAMIC_LIGHTS];
-	int numActiveLights;
-
+	light_t staticLights[MAX_STATIC_LIGHTS];
+	int numStaticLights;
 
 	/* framebuffer objects*/
 	r_framebuffer_t *renderBuffer;
@@ -138,7 +138,6 @@ typedef struct rstate_s {
 	qboolean alpha_test_enabled;
 	qboolean stencil_test_enabled;
 	qboolean lighting_enabled;
-	qboolean bumpmap_enabled;
 	qboolean warp_enabled;
 	qboolean fog_enabled;
 	qboolean blur_enabled;
@@ -149,6 +148,8 @@ typedef struct rstate_s {
 	qboolean roughnessmap_enabled;
 	qboolean animation_enabled;
 	qboolean renderbuffer_enabled; /**< renderbuffer vs screen as render target*/
+
+	const struct image_s *active_normalmap;
 } rstate_t;
 
 extern rstate_t r_state;
@@ -179,14 +180,14 @@ void R_EnableBlend(qboolean enable);
 void R_EnableAlphaTest(qboolean enable);
 void R_EnableColorArray(qboolean enable);
 qboolean R_EnableLighting(r_program_t *program, qboolean enable);
-void R_EnableBumpmap(const struct image_s *normalmap, qboolean enable);
+void R_EnableBumpmap(const struct image_s *normalmap);
 void R_EnableWarp(r_program_t *program, qboolean enable);
 void R_EnableBlur(r_program_t *program, qboolean enable, r_framebuffer_t *source, r_framebuffer_t *dest, int dir);
 void R_EnableShell(qboolean enable);
 void R_EnableFog(qboolean enable);
 void R_EnableDrawAsGlow(qboolean enable);
-void R_EnableGlowMap(const struct image_s *image, qboolean enable);
-void R_EnableDynamicLights(const struct entity_s *ent, qboolean enable);
+void R_EnableGlowMap(const struct image_s *image);
+void R_EnableModelLights(const light_t **lights, int numLights, qboolean enable);
 void R_EnableSpecularMap(const struct image_s *image, qboolean enable);
 void R_EnableRoughnessMap(const struct image_s *image, qboolean enable);
 void R_EnableAnimation(const struct mAliasMesh_s *mesh, float backlerp, qboolean enable);

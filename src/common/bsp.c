@@ -614,7 +614,6 @@ static void CMod_LoadEntityString (mapTile_t *tile, mapData_t *mapData, const by
 	const char *es;
 	char keyname[256];
 	vec3_t v;
-	cBspModel_t *model = NULL;
 
 	if (!l)
 		Com_Error(ERR_DROP, "CMod_LoadEntityString: No lump given");
@@ -628,6 +627,7 @@ static void CMod_LoadEntityString (mapTile_t *tile, mapData_t *mapData, const by
 	/* merge entitystring information */
 	es = (const char *) (base + l->fileofs);
 	while (1) {
+		cBspModel_t *model = NULL;
 		/* parse the opening brace */
 		token = Com_Parse(&es);
 		if (!es)
@@ -696,10 +696,11 @@ static void CMod_LoadEntityString (mapTile_t *tile, mapData_t *mapData, const by
  */
 static void CMod_LoadLighting (mapTile_t *tile, const byte *base, const lump_t * l)
 {
-#if 0
+	if (l->filelen == 0)
+		return;
+
 	tile->lightdata = Mem_PoolAlloc(l->filelen, com_cmodelSysPool, 0);
 	memcpy(tile->lightdata, base + l->fileofs, l->filelen);
-#endif
 }
 
 /**
@@ -811,8 +812,7 @@ static void CM_AddMapTile (const char *name, const qboolean day, const int sX, c
 	checksum = LittleLong(Com_BlockChecksum(buf, length));
 
 	header = *(dBspHeader_t *) buf;
-	for (i = 0; i < sizeof(header) / 4; i++)
-		((int *) &header)[i] = LittleLong(((int *) &header)[i]);
+	BSP_SwapHeader(&header, filename);
 
 	if (header.version != BSPVERSION)
 		Com_Error(ERR_DROP, "CM_AddMapTile: %s has wrong version number (%i should be %i)", name, header.version, BSPVERSION);
@@ -1071,4 +1071,28 @@ cBspModel_t * CM_SetInlineModelOrientation (mapTiles_t *mapTiles, const char *na
 	VectorCopy(angles, model->angles);
 
 	return model;
+}
+
+/**
+ * @brief Checks how well a position is visible
+ * @return a visibility factor. @c 1.0 means fully visible, @c 0.0 means hardly visible because the
+ * given position is in the darkness
+ */
+float CM_GetVisibility (const mapTiles_t *mapTiles, const pos3_t position)
+{
+	int i;
+
+	for (i = 0; i < mapTiles->numTiles; i++) {
+		const mapTile_t *tile = &mapTiles->mapTiles[i];
+		if (VectorInside(position, tile->wpMins, tile->wpMaxs)) {
+			if (tile->lightdata == NULL)
+				return 1.0f;
+			/** @todo implement me */
+			return 1.0f;
+		}
+	}
+
+	/* point is outside of any loaded tile */
+	Com_Printf("given point %i:%i:%i is not inside of any loaded tile\n", position[0], position[1], position[2]);
+	return 1.0f;
 }

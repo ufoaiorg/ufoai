@@ -947,14 +947,14 @@ static int RT_TraceOpening (RT_data_t *rtd, const vec3_t start, const vec3_t end
  * @param[out] hi_val Actual height of the top of the found passage.
  * @return The new z value of the actor after traveling in this direction from the starting location.
  */
-static int RT_FindOpening (RT_data_t *rtd, place_t* from, const int ax, const int ay, const int bottom, const int top, int *lo_val, int *hi_val)
+static int RT_FindOpening (RT_data_t *rtd, const place_t* from, const int ax, const int ay, const int bottom, const int top, int *lo_val, int *hi_val)
 {
 	vec3_t start, end;
 	pos3_t pos;
 	int temp_z;
 
 	const int endfloor = RT_FLOOR(rtd->map, rtd->actorSize, ax, ay, from->cell[2]) + from->cell[2] * CELL_HEIGHT;
-	const int hifloor = max (endfloor, bottom);
+	const int hifloor = max(endfloor, bottom);
 
 	if (debugTrace)
 		Com_Printf("ef:%i t:%i b:%i\n", endfloor, top, bottom);
@@ -1049,7 +1049,7 @@ static int RT_FindOpening (RT_data_t *rtd, place_t* from, const int ax, const in
  * @param[out] opening descriptor of the opening found, if any
  * @return The change in floor height in QUANT units because of the additional trace.
 */
-static int RT_MicroTrace (RT_data_t *rtd, place_t* from, const int ax, const int ay, const int az, const int stairwaySituation, opening_t* opening)
+static int RT_MicroTrace (RT_data_t *rtd, const place_t* from, const int ax, const int ay, const int az, const int stairwaySituation, opening_t* opening)
 {
 	/* OK, now we have a viable shot across.  Run microstep tests now. */
 	/* Now calculate the stepup at the floor using microsteps. */
@@ -1243,7 +1243,7 @@ static int RT_MicroTrace (RT_data_t *rtd, place_t* from, const int ax, const int
  * @param[out] opening descriptor of the opening found, if any
  * @return The size in QUANT units of the detected opening.
  */
-static int RT_TraceOnePassage (RT_data_t *rtd, place_t* from, place_t* to, opening_t* opening)
+static int RT_TraceOnePassage (RT_data_t *rtd, const place_t* from, const place_t* to, opening_t* opening)
 {
 	int hi; /**< absolute ceiling of the passage found. */
 	const int z = from->cell[2];
@@ -1253,7 +1253,7 @@ static int RT_TraceOnePassage (RT_data_t *rtd, place_t* from, place_t* to, openi
 	const int ax = to->cell[0];
 	const int ay = to->cell[1];
 
-	az = RT_FindOpening(rtd, from, ax, ay, lower, upper, &opening->base, &hi);
+	RT_FindOpening(rtd, from, ax, ay, lower, upper, &opening->base, &hi);
 	/* calc opening found so far and set stepup */
 	opening->size = hi - opening->base;
 	az = to->floorZ;
@@ -1266,11 +1266,10 @@ static int RT_TraceOnePassage (RT_data_t *rtd, place_t* from, place_t* to, openi
 		const int srcFloor = from->floor;
 		const int dstFloor = RT_FLOOR(rtd->map, rtd->actorSize, ax, ay, az) + az * CELL_HEIGHT;
 		/* if we already have enough headroom, try to skip microtracing */
-		/** @todo CELL_HEIGHT can be replaced with the largest actor height. */
-		if (opening->size < CELL_HEIGHT
+		if (opening->size < ACTOR_MAX_HEIGHT
 			|| abs(srcFloor - opening->base) > PATHFINDING_MIN_STEPUP
 			|| abs(dstFloor - opening->base) > PATHFINDING_MIN_STEPUP) {
-			int stairway = RT_PlaceIsShifted(from,to);
+			int stairway = RT_PlaceIsShifted(from, to);
 			/* This returns the total opening height, as the
 			 * microtrace may reveal more passage height from the foot space. */
 			const int bonusSize = RT_MicroTrace(rtd, from, ax, ay, az, stairway, opening);
@@ -1332,7 +1331,7 @@ static void RT_TracePassage (RT_data_t *rtd, const int x, const int y, const int
 	int aboveCeil, lowCeil;
 	/** we don't need the cell below the adjacent cell because we should have already checked it */
 	place_t from, to, above;
-	place_t* placeToCheck = NULL;
+	const place_t* placeToCheck = NULL;
 
 	RT_PlaceInit(rtd->map, rtd->actorSize, &from, x, y, z);
 	RT_PlaceInit(rtd->map, rtd->actorSize, &to, ax, ay, z);
@@ -1360,8 +1359,7 @@ static void RT_TracePassage (RT_data_t *rtd, const int x, const int y, const int
 	 */
 	if (RT_PlaceIsUsable(&to) && RT_PlaceDoesIntersectEnough(&from, &to)) {
 		placeToCheck = &to;
-	}
-	else if (z < PATHFINDING_HEIGHT - 1) {
+	} else if (z < PATHFINDING_HEIGHT - 1) {
 		RT_PlaceInit(rtd->map, rtd->actorSize, &above, ax, ay, z + 1);
 		if (RT_PlaceIsUsable(&above) && RT_PlaceDoesIntersectEnough(&from, &above)) {
 			placeToCheck = &above;

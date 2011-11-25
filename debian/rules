@@ -56,7 +56,7 @@ build-indep: stamps/build-indep
 stamps/build-indep: config.status
 	dh_testdir
 
-	$(MAKE) $(MAKEFLAGS) installer-pre pdf-manual
+	$(MAKE) $(MAKEFLAGS) installer-pre
 
 	mkdir -p stamps
 	touch $@
@@ -75,9 +75,7 @@ really_clean:
 	rm -rf stamps
 
 	[ ! -f Makefile ] || $(MAKE) clean
-	$(MAKE) -C src/docs/tex clean
-	# WARNING: building maps takes ages
-	# find base/maps -name '*.bsp' | xargs --no-run-if-empty rm
+	find base/maps -name '*.bsp' | xargs --no-run-if-empty rm
 	-rm -f base/*.pk3
 	-rm -f Makefile config.h config.log config.status
 	-rm -rf base/i18n
@@ -90,14 +88,14 @@ clean: really_clean unpatch
 install-arch: stamps/build-arch
 	dh_testdir
 	dh_testroot
-	dh_clean -k
+	dh_prep
 	dh_installdirs
 	dh_install
 
 install-indep: stamps/build-indep
 	dh_testdir
 	dh_testroot
-	dh_clean -k
+	dh_prep
 	dh_installdirs
 	dh_install
 
@@ -128,7 +126,7 @@ binary-arch: install-arch
 	dh_installmime
 	dh_installman
 	dh_link
-	dh_strip -a --dbg-package=ufoai-dbg
+	dh_strip -a
 	dh_compress -X.pdf
 	dh_fixperms
 	dh_installdeb

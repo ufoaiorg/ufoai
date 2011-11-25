@@ -7,6 +7,7 @@
 #include "Face.h"
 #include "generic/referencecounted.h"
 #include "../plugin.h"
+#include "../sidebar/surfaceinspector/surfaceinspector.h"
 
 /// \brief Returns true if 'self' takes priority when building brush b-rep.
 inline bool plane3_inside (const Plane3& self, const Plane3& other)
@@ -130,6 +131,9 @@ void Brush::planeChanged ()
 void Brush::shaderChanged ()
 {
 	planeChanged();
+
+	// Queue an UI update of the texture tools
+	ui::SurfaceInspector::Instance().queueUpdate();
 }
 
 void Brush::evaluateBRep () const
@@ -724,7 +728,7 @@ bool Brush::hasVisibleMaterial () const
 	// Traverse the faces
 	for (Faces::const_iterator i = m_faces.begin(); i != m_faces.end(); ++i)
 	{
-		if (GlobalFilterSystem().isVisible("texture", (*i)->getShader().m_shader))
+		if (GlobalFilterSystem().isVisible(FilterRule::TYPE_TEXTURE, (*i)->getShader().m_shader))
 		{
 			return true; // return true on first visible material
 		}
@@ -800,8 +804,8 @@ void Brush::buildBRep ()
 {
 	bool degenerate = buildWindings();
 
-	Vector3 colourVertexVec = ColourSchemes().getColourVector3("brush_vertices");
-	const Colour4b colour_vertex(int(colourVertexVec[0] * 255), int(colourVertexVec[1] * 255), int(colourVertexVec[2]
+	static Vector3 colourVertexVec = ColourSchemes().getColourVector3("brush_vertices");
+	static const Colour4b colour_vertex(int(colourVertexVec[0] * 255), int(colourVertexVec[1] * 255), int(colourVertexVec[2]
 			* 255), 255);
 
 	std::size_t faces_size = 0;
@@ -989,17 +993,3 @@ void Brush::buildBRep ()
 
 double Brush::m_maxWorldCoord = 0;
 Shader* Brush::m_state_point;
-
-#include "signal/signal.h"
-
-static Signal0 g_brushTextureChangedCallbacks;
-
-void Brush_addTextureChangedCallback (const SignalHandler& handler)
-{
-	g_brushTextureChangedCallbacks.connectLast(handler);
-}
-
-void Brush_textureChanged ()
-{
-	g_brushTextureChangedCallbacks();
-}

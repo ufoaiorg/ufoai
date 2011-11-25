@@ -320,7 +320,7 @@ entity worldspawn {
 	optional {
 		maxteams		"Max. teams for multiplayer"
 		maxlevel		"Highest selectable level [1-8]"
-		nextmap			"The map that should be started after this one was finished"
+		noequipment		"Don't spawn the actors with equipment assigned, it must be collected in the map"
 		randomspawn		"Use random spawn positions for the actors to spawn them - activate by setting this to 1"
 		light_night		"Controls sunlight intensity. All positive values are valid, values from 80 to 300 typically produce good results."
 		angles_night	"Controls sunlight direction, specified as pitch and yaw in degrees, e.g. -80 220."
@@ -353,6 +353,8 @@ entity worldspawn {
 		color_day		"V_FLOAT 3"
 		light_night		"V_INT"
 		light_day		"V_INT"
+		randomspawn		"V_INT"
+		noequipment		"V_INT"
 	}
 
 	default {
@@ -374,10 +376,13 @@ entity worldspawn {
 	}
 
 	range {
-		angles_day	"-90 - 90"
-		angles_day	"0 - 360"
-		ambient_day	"0.0 - 1.0"
-		maxlevel	"1 2 3 4 5 6 7 8"
+		angles_day		"-90 - 360"
+		angles_night	"-90 - 360"
+		ambient_day		"0.0 - 1.0"
+		ambient_night	"0.0 - 1.0"
+		randomspawn		"0 - 1"
+		noequipment		"0 - 1"
+		maxlevel		"1 2 3 4 5 6 7 8"
 	}
 }
 
@@ -421,14 +426,15 @@ entity misc_mission {
 	spawnflags	"level1 level2 level3 level4 level5 level6 level7 level8"
 	optional {
 		particle	"Display a particle"
-		item		"Item that must be placed here to trigger the target (e.g. a bomb that will blast the target entity)"
+		item		"Item that must be placed here to trigger the target (e.g. a bomb that will blast the target entity, valid bombs are e.g. bomb1 and bomb2)"
 		time		"If set the entity has to be occupied x rounds to win the mission"
-		radius		"If the entity has to be occupied this defines the radius that is needed"
+		radius		"If the entity has to be occupied this defines the radius that is needed. The value is given in world units. This means that one grid tile is 32 units."
 		health		"If set the entity has to be destroyed to win the mission - otherwise it just has to be reached (see time)"
 		group		"Allows you to group mission entities - e.g. you have to occupy them all for x rounds to win the match"
 		target		"The target that is triggered once the round time was hit - target trigger must have targetname set"
 		message		"A message that is show when the mission is completed"
 		targetname	"The id of this entity"
+		team		"The id of the team this mission is for (1 = Phalanx, 7 = Aliens, 1-6 multiplayer teams)"
 	}
 
 	mandatory {
@@ -438,10 +444,12 @@ entity misc_mission {
 
 	type {
 		origin	"V_FLOAT 3"
+		team	"V_INT"
 	}
 
 	default {
 		spawnflags	"255"
+		team		"1"
 	}
 }
 
@@ -588,6 +596,29 @@ entity trigger_touch {
 
 	mandatory {
 		target		"Target entity - target entity must have targetname set (to the value given here)"
+	}
+}
+
+entity trigger_nextmap {
+	description	"Any entity on the given team that touches this (once active) will trigger the map change to the nextmap. The spawnflags define the levels the spawned particle is visible on. Only used in singleplayer games."
+	spawnflags	"level1 level2 level3 level4 level5 level6 level7 level8"
+
+	optional {
+		targetname	"The id of this entity"
+	}
+
+	mandatory {
+		nextmap		"The map to start once this trigger is touched"
+		particle	"The particle that indicates the activity of this trigger"
+		team		"The team number that this trigger serves as a next map trigger"
+	}
+
+	type {
+		team	"UNSIGNED V_INT"
+	}
+
+	default {
+		team	"1"
 	}
 }
 

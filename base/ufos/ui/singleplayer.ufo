@@ -68,6 +68,7 @@ window singleplayer
 	cmpMenuButton button_back
 	{
 		string		"_Back"
+		tooltip		"_Back to the main menu."
 		pos			"640 520"
 		onClick		{ cmd "ui_pop;" }
 	}
@@ -105,6 +106,7 @@ window singleplayermission
 	cmpMenuButton button_continue
 	{
 		string		"_Continue"
+		tooltip		"_Go back to the battlescape."
 		pos			"640 170"
 		onClick		{ cmd "ui_pop;" }
 	}
@@ -112,6 +114,7 @@ window singleplayermission
 	cmpMenuButton button_abort
 	{
 		string		"_Abort"
+		tooltip		"_Abort this battlescape mission."
 		pos			"640 240"
 		onClick		{ cmd "game_abort;" }
 	}
@@ -119,6 +122,7 @@ window singleplayermission
 	cmpMenuButton button_retry
 	{
 		string		"_Retry"
+		tooltip		"_Retry this battlescape mission."
 		pos			"640 310"
 		onClick		{ cmd "game_go;" }
 	}
@@ -126,14 +130,56 @@ window singleplayermission
 	cmpMenuButton button_options
 	{
 		string		"_Options"
+		tooltip		"_Enter the game options menu."
 		pos			"640 380"
 		onClick		{ cmd "ui_push options;" }
 	}
 
-	cmpMenuButton button_exit
+	cmpMenuButton button_exit_battlescape
 	{
 		string		"_Exit"
+		tooltip		"_You will lose all your progress."
 		pos			"640 520"
-		onClick		{ cmd "game_exit;ui_pop;" }
+		onClick		{ cmd "check_if_in_campaign_mode;" }
+	}
+
+	confunc check_if_in_campaign_mode
+	{
+		if ( *cvar:mn_base_count > 0 ) { cmd "ui_push popup_exit_campaign_confirmation;" }
+		else { cmd "game_exit;" }
+	}
+}
+
+// ========================
+// POPUP EXIT CONFIRMATION
+// ========================
+window popup_exit_campaign_confirmation
+{
+	{
+		string		"_Exit Campaign Confirmation"
+		image		"ui/popup_alpha_tile"
+		pos			"264 262"
+		size		"486 247"
+		dragbutton	true
+		closebutton	true
+	}
+	string exit_confirmation_label
+	{
+		string		"_You will lose all your campaign progress."
+		pos			"26 58"
+		size		"450 60"
+	}
+	cmpPopupButton bt_quit
+	{
+		tooltip		"_Exit current campaign and return to main menu."
+		string		"_Quit"
+		pos			"28 188"
+		onClick		{ cmd "game_exit;" }
+	}
+	cmpCancelButton bt_dontquit
+	{
+		tooltip		"_Do not quit."
+		pos			"285 188"
+		onClick		{ cmd "ui_pop;" }
 	}
 }

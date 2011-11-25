@@ -67,7 +67,6 @@
 #include "../map/map.h"
 #include "../render/OpenGLRenderSystem.h"
 #include "../select.h"
-#include "../brush/TexDef.h"
 #include "../brush/TextureProjection.h"
 #include "../brush/brushmanip.h"
 #include "../plugin.h"
@@ -86,6 +85,8 @@ TextureBrowser::TextureBrowser () :
 	_glWidget(false), m_texture_scroll(NULL), m_heightChanged(true), m_originInvalid(true), m_scrollAdjustment(
 			TextureBrowser_scrollChanged, this), m_rmbSelected(false), m_resizeTextures(true)
 {
+	createWidget();
+
 	GlobalRegistry().addKeyObserver(this, RKEY_TEXTURES_HIDE_UNUSED);
 	GlobalRegistry().addKeyObserver(this, RKEY_TEXTURES_HIDE_INVALID);
 	GlobalRegistry().addKeyObserver(this, RKEY_TEXTURES_UNIFORM_SIZE);
@@ -976,11 +977,14 @@ GtkWidget* TextureBrowser::createToolBar ()
 	return GTK_WIDGET(textureToolbar);
 }
 
-GtkWidget* TextureBrowser::getWidget ()
+GtkWidget* TextureBrowser::getWidget () const
 {
-	if (_widget == NULL)
-		createWidget();
 	return _widget;
+}
+
+const std::string TextureBrowser::getTitle() const
+{
+	return _("Textures");
 }
 
 void TextureBrowser::showAll ()

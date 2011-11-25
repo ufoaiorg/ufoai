@@ -3,6 +3,7 @@
 {
 "classname" "worldspawn"
 "maxlevel" "4"
+"randomspawn" "1"
 // brush 0
 {
 ( -480 196 0 ) ( -480 256 0 ) ( -544 156 0 ) tex_common/actorclip 32 0 0 1 1 65536 0 0
@@ -15,7 +16,7 @@
 // brush 1
 {
 ( -480 196 0 ) ( -480 256 0 ) ( -544 156 0 ) tex_common/actorclip 32 0 0 1 1 65536 0 0
-( 660 144 36 ) ( 660 138 36 ) ( 658 138 36 ) tex_common/actorclip 32 0 0 1 1 65536 0 0
+( 660 144 40 ) ( 660 138 40 ) ( 658 138 40 ) tex_common/actorclip 32 0 0 1 1 65536 0 0
 ( 416 92 44 ) ( 584 92 44 ) ( 584 92 -12 ) tex_common/actorclip 32 0 0 1 1 65536 0 0
 ( 34 98 40 ) ( 34 106 40 ) ( 34 106 4 ) tex_common/actorclip 0 0 0 1 1 65536 0 0
 ( 38 162 20 ) ( 34 162 20 ) ( 34 162 16 ) tex_common/actorclip 32 0 0 1 1 65536 0 0
@@ -186,7 +187,7 @@
 // brush 20
 {
 ( -480 196 0 ) ( -480 256 0 ) ( -544 156 0 ) tex_common/nodraw 24 48 0 0.5 0.5 65280 128 0
-( -608 256 4 ) ( -480 256 4 ) ( -608 204 4 ) tex_nature/desert004 128 192 0 0.5 0.5 65280 0 0
+( -608 256 4 ) ( -480 256 4 ) ( -608 204 4 ) tex_nature/desert004 256 384 0 0.25 0.25 65280 0 0
 ( 512 512 -64 ) ( 512 0 -64 ) ( 512 512 64 ) tex_common/nodraw 0 0 0 0.25 0.25 65280 0 0
 ( 512 0 -64 ) ( 256 0 -64 ) ( 512 0 64 ) tex_common/nodraw 0 0 0 0.25 0.25 65280 0 0
 ( 0 0 -64 ) ( 0 512 -64 ) ( 0 0 64 ) tex_common/nodraw 0 0 0 0.25 0.25 65280 0 0
@@ -381,4 +382,21 @@
 ( 668 96 72 ) ( 516 96 72 ) ( 516 96 68 ) tex_misc/bungalow2 43 70.99968 90 0.8 0.3 65280 0 0
 ( 40 98 72 ) ( 40 94 72 ) ( 40 94 68 ) tex_misc/bungalow2 43 153.3333 90 0.8 0.3 65280 0 0
 }
+}
+// entity 1
+{
+"classname" "info_alien_start"
+"origin" "432 144 28"
+}
+// entity 2
+{
+"classname" "info_alien_start"
+"origin" "48 208 28"
+"angle" "45"
+}
+// entity 3
+{
+"classname" "info_alien_start"
+"origin" "176 48 28"
+"angle" "-90"
 }

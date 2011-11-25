@@ -29,6 +29,8 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #include "../shared/utf8.h"
 #include "../shared/shared.h"
 #include "../shared/infostring.h"
+#include "../shared/stringhunk.h"
+#include "../shared/entitiesdef.h"
 #include "../ports/system.h"
 #include "test_generic.h"
 
@@ -39,7 +41,6 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 static int UFO_InitSuiteGeneric (void)
 {
 	TEST_Init();
-	NET_Init();
 	return 0;
 }
 
@@ -52,6 +53,51 @@ static int UFO_CleanSuiteGeneric (void)
 	TEST_Shutdown();
 	NET_Shutdown();
 	return 0;
+}
+
+static void STRHUNK_VisitorTestEntry (const char *string)
+{
+	CU_ASSERT_STRING_EQUAL(string, "Test");
+}
+
+static void STRHUNK_VisitorTestEntry2 (const char *string)
+{
+	CU_ASSERT_STRING_EQUAL(string, "T");
+}
+
+static void testStringHunks (void)
+{
+	stringHunk_t *hunk = STRHUNK_Create(20);
+	CU_ASSERT_TRUE(STRHUNK_Add(hunk, "Test"));
+	CU_ASSERT_EQUAL(STRHUNK_Size(hunk), 1);
+	CU_ASSERT_EQUAL(STRHUNK_GetFreeSpace(hunk), 15);
+	STRHUNK_Visit(hunk, STRHUNK_VisitorTestEntry);
+	STRHUNK_Delete(&hunk);
+	CU_ASSERT_PTR_EQUAL(hunk, NULL);
+
+	hunk = STRHUNK_Create(23);
+	CU_ASSERT_TRUE(STRHUNK_Add(hunk, "Test"));
+	CU_ASSERT_TRUE(STRHUNK_Add(hunk, "Test"));
+	CU_ASSERT_TRUE(STRHUNK_Add(hunk, "Test"));
+	CU_ASSERT_TRUE(STRHUNK_Add(hunk, "Test"));
+	CU_ASSERT_EQUAL(STRHUNK_Size(hunk), 4);
+	CU_ASSERT_EQUAL(STRHUNK_GetFreeSpace(hunk), 0);
+	STRHUNK_Visit(hunk, STRHUNK_VisitorTestEntry);
+
+	STRHUNK_Reset(hunk);
+	CU_ASSERT_EQUAL(STRHUNK_Size(hunk), 0);
+
+	STRHUNK_Delete(&hunk);
+	CU_ASSERT_PTR_EQUAL(hunk, NULL);
+
+	hunk = STRHUNK_Create(5);
+	CU_ASSERT_TRUE(STRHUNK_Add(hunk, "T"));
+	CU_ASSERT_FALSE(STRHUNK_Add(hunk, "Test"));
+	/* the second string is ignored */
+	CU_ASSERT_FALSE(STRHUNK_Add(hunk, "Test"));
+	CU_ASSERT_EQUAL(STRHUNK_Size(hunk), 2);
+	STRHUNK_Visit(hunk, STRHUNK_VisitorTestEntry2);
+	STRHUNK_Delete(&hunk);
 }
 
 static void testConstInt (void)
@@ -139,10 +185,14 @@ static void testConstInt (void)
 	Com_UnregisterConstList(list2);
 }
 
+static int testListSorter (linkedList_t *entry1, linkedList_t *entry2, const void *userData)
+{
+	return strcmp((const char*)entry1->data, (const char*)entry2->data);
+}
 
 static void testLinkedList (void)
 {
-	linkedList_t *list = NULL;
+	linkedList_t *list = NULL, *list2;
 	const char* data = "SomeDataForTheLinkedList";
 	const size_t length = strlen(data);
 	linkedList_t *entry;
@@ -160,6 +210,32 @@ static void testLinkedList (void)
 	CU_ASSERT_STRING_EQUAL(entry2->data, returnedData);
 	LIST_RemoveEntry(&list, entry);
 	CU_ASSERT_EQUAL(LIST_Count(list), 0);
+	CU_ASSERT_EQUAL(LIST_Count(LIST_CopyStructure(list)), 0);
+	LIST_Add(&list, (const byte*)data, length);
+	list2 = LIST_CopyStructure(list);
+	CU_ASSERT_EQUAL(LIST_Count(list2), 1);
+	LIST_Delete(&list2);
+	CU_ASSERT_EQUAL(LIST_Count(list2), 0);
+	CU_ASSERT_EQUAL(LIST_Count(list), 1);
+	LIST_Delete(&list);
+
+	LIST_AddString(&list, "test6");
+	LIST_AddString(&list, "test2");
+	LIST_AddString(&list, "test1");
+	LIST_AddString(&list, "test3");
+	LIST_AddString(&list, "test5");
+	LIST_AddString(&list, "test4");
+	LIST_AddString(&list, "test7");
+	CU_ASSERT_EQUAL(LIST_Count(list), 7);
+
+	LIST_Sort(&list, testListSorter, NULL);
+	CU_ASSERT_STRING_EQUAL(LIST_GetByIdx(list, 0), "test1");
+	CU_ASSERT_STRING_EQUAL(LIST_GetByIdx(list, 1), "test2");
+	CU_ASSERT_STRING_EQUAL(LIST_GetByIdx(list, 2), "test3");
+	CU_ASSERT_STRING_EQUAL(LIST_GetByIdx(list, 3), "test4");
+	CU_ASSERT_STRING_EQUAL(LIST_GetByIdx(list, 4), "test5");
+	CU_ASSERT_STRING_EQUAL(LIST_GetByIdx(list, 5), "test6");
+	CU_ASSERT_STRING_EQUAL(LIST_GetByIdx(list, 6), "test7");
 }
 
 static void testLinkedListIterator (void)
@@ -204,6 +280,19 @@ static void testLinkedListIteratorRemove (void)
 	}
 
 	CU_ASSERT_TRUE(LIST_IsEmpty(list));
+}
+
+static void testPrependStringList (void)
+{
+	linkedList_t *list = NULL;
+
+	LIST_PrependString(&list, "test2");
+	LIST_PrependString(&list, "test1");
+
+	CU_ASSERT_STRING_EQUAL((const char *)LIST_GetByIdx(list, 0), "test1");
+	CU_ASSERT_STRING_EQUAL((const char *)LIST_GetByIdx(list, 1), "test2");
+
+	LIST_Delete(&list);
 }
 
 static void testLinkedListStringSort (void)
@@ -366,6 +455,7 @@ static void testStringCopiers (void)
 static void testStringFunctions (void)
 {
 	char targetBuf[256];
+	char buf[16];
 	const size_t length = lengthof(targetBuf);
 
 	CU_ASSERT_FALSE(Q_strreplace("ReplaceNothing", "###", "foobar", targetBuf, length));
@@ -382,6 +472,15 @@ static void testStringFunctions (void)
 	CU_ASSERT_STRING_EQUAL(targetBuf, "foobarReplace#");
 
 	CU_ASSERT_FALSE(Q_strreplace("#ReplaceNothing#", "##", "foobar", targetBuf, length));
+
+	Q_strncpyz(buf, "foobar", sizeof(buf));
+	CU_ASSERT_STRING_EQUAL(Com_ConvertToASCII7(buf), "foobar");
+
+	buf[0] = '\177';
+	CU_ASSERT_STRING_EQUAL(Com_ConvertToASCII7(buf), ".oobar");
+
+	buf[5] = '\177';
+	CU_ASSERT_STRING_EQUAL(Com_ConvertToASCII7(buf), ".ooba.");
 }
 
 static void testHttpHelperFunctions (void)
@@ -429,6 +528,78 @@ static void testNetResolv (void)
 	CU_ASSERT_STRING_EQUAL(ipServer, "127.0.0.1");
 }
 
+static void testUnsignedIntToBinary (void)
+{
+	const char *buf = Com_UnsignedIntToBinary(3);
+	CU_ASSERT_STRING_EQUAL(buf, "00000000 00000000 00000000 00000011");
+
+	buf = Com_UnsignedIntToBinary(255);
+	CU_ASSERT_STRING_EQUAL(buf, "00000000 00000000 00000000 11111111");
+
+	buf = Com_UnsignedIntToBinary(65536);
+	CU_ASSERT_STRING_EQUAL(buf, "00000000 00000001 00000000 00000000");
+
+	buf = Com_UnsignedIntToBinary(65535);
+	CU_ASSERT_STRING_EQUAL(buf, "00000000 00000000 11111111 11111111");
+
+	buf = Com_ByteToBinary(2);
+	CU_ASSERT_STRING_EQUAL(buf, "00000010");
+
+	buf = Com_ByteToBinary(255);
+	CU_ASSERT_STRING_EQUAL(buf, "11111111");
+}
+
+static void testStringCheckFunctions (void)
+{
+	const char *strNull = NULL;
+	const char *strEmpty = "";
+	const char *strValid = "someString";
+	CU_ASSERT_TRUE(Q_strnull(strNull));
+	CU_ASSERT_TRUE(Q_strnull(strEmpty));
+	CU_ASSERT_FALSE(Q_strnull(strValid));
+	CU_ASSERT_TRUE(Q_strvalid(strValid));
+	CU_ASSERT_FALSE(Q_strvalid(strEmpty));
+	CU_ASSERT_FALSE(Q_strvalid(strNull));
+}
+
+static void testEntitiesDef (void)
+{
+	byte *fileBuffer;
+	const char *buf;
+	int i;
+	qboolean worldSpawnFound;
+
+	FS_LoadFile("ufos/entities.ufo", &fileBuffer);
+
+	buf = (const char *) fileBuffer;
+	UFO_CU_ASSERT_EQUAL_INT_MSG(ED_Parse(buf), ED_OK, ED_GetLastError());
+
+	CU_ASSERT_TRUE(numEntityDefs > 0);
+
+	worldSpawnFound = qfalse;
+	for (i = 0; i < numEntityDefs; i++) {
+		const entityDef_t* e = &entityDefs[i];
+
+		CU_ASSERT_PTR_NOT_NULL(e);
+		if (Q_streq(e->classname, "worldspawn")) {
+			int j;
+
+			worldSpawnFound = qtrue;
+
+			CU_ASSERT_TRUE(e->numKeyDefs > 10);
+			for (j = 0; j < e->numKeyDefs; j++) {
+				const entityKeyDef_t *keyDef = &e->keyDefs[j];
+				CU_ASSERT_PTR_NOT_NULL(keyDef);
+			}
+		}
+	}
+
+	CU_ASSERT_TRUE(worldSpawnFound);
+
+	FS_FreeFile(fileBuffer);
+	ED_Free();
+}
+
 int UFO_AddGenericTests (void)
 {
 	/* add a suite to the registry */
@@ -438,6 +609,9 @@ int UFO_AddGenericTests (void)
 		return CU_get_error();
 
 	/* add the tests to the suite */
+	if (CU_ADD_TEST(GenericSuite, testStringHunks) == NULL)
+		return CU_get_error();
+
 	if (CU_ADD_TEST(GenericSuite, testConstInt) == NULL)
 		return CU_get_error();
 
@@ -448,6 +622,9 @@ int UFO_AddGenericTests (void)
 		return CU_get_error();
 
 	if (CU_ADD_TEST(GenericSuite, testLinkedListIteratorRemove) == NULL)
+		return CU_get_error();
+
+	if (CU_ADD_TEST(GenericSuite, testPrependStringList) == NULL)
 		return CU_get_error();
 
 	if (CU_ADD_TEST(GenericSuite, testLinkedListStringSort) == NULL)
@@ -472,6 +649,15 @@ int UFO_AddGenericTests (void)
 		return CU_get_error();
 
 	if (CU_ADD_TEST(GenericSuite, testNetResolv) == NULL)
+		return CU_get_error();
+
+	if (CU_ADD_TEST(GenericSuite, testUnsignedIntToBinary) == NULL)
+		return CU_get_error();
+
+	if (CU_ADD_TEST(GenericSuite, testStringCheckFunctions) == NULL)
+		return CU_get_error();
+
+	if (CU_ADD_TEST(GenericSuite, testEntitiesDef) == NULL)
 		return CU_get_error();
 
 	return CUE_SUCCESS;

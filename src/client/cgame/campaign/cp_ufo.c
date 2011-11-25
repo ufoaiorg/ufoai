@@ -159,21 +159,6 @@ const char* UFO_AircraftToIDOnGeoscape (const aircraft_t *ufocraft)
 }
 
 /**
- * @brief Returns a status string for recovered ufo used to be displayed in uforecovery and mission result overview.
- * @note this actually relies on valid mission results.
- */
-const char* UFO_MissionResultToString (void)
-{
-	const char *ufoName = Com_UFOTypeToShortName(ccs.missionResults.ufotype);
-	const aircraft_t *aircraft = AIR_GetAircraft(ufoName);
-	const char *geoscapeName = UFO_AircraftToIDOnGeoscape(aircraft);
-	if (ccs.missionResults.crashsite)
-		return va(_("\nSecured crashed %s (%.0f%%)\n"), geoscapeName, ccs.missionResults.ufoCondition * 100);
-	else
-		return va(_("\nSecured landed %s\n"), geoscapeName);
-}
-
-/**
  * @brief Give a random destination to the given UFO, and make him to move there.
  * @param[in] ufocraft Pointer to the UFO which destination will be changed.
  * @sa UFO_SetRandomPos
@@ -364,8 +349,8 @@ void UFO_UpdateAlienInterestForAllBasesAndInstallations (void)
 
 	ufo = NULL;
 	while ((ufo = UFO_GetNext(ufo)) != NULL) {
-		int idx;
 		base_t *base;
+		installation_t *installation;
 
 		/* landed UFO can't detect any phalanx base or installation */
 		if (ufo->landed)
@@ -375,12 +360,8 @@ void UFO_UpdateAlienInterestForAllBasesAndInstallations (void)
 		while ((base = B_GetNext(base)) != NULL)
 			UFO_UpdateAlienInterestForOneBase(ufo, base);
 
-		for (idx = 0; idx < MAX_INSTALLATIONS; idx++) {
-			installation_t *installation = INS_GetFoundedInstallationByIDX(idx);
-			if (!installation)
-				continue;
+		INS_Foreach(installation)
 			UFO_UpdateAlienInterestForOneInstallation(ufo, installation);
-		}
 	}
 }
 
@@ -768,7 +749,7 @@ qboolean UFO_CampaignCheckEvents (void)
 	ufo = NULL;
 	while ((ufo = UFO_GetNext(ufo)) != NULL) {
 		char detectedBy[MAX_VAR] = "";
-		int installationIdx;
+		installation_t *installation;
 		float minDistance = -1;
 		/* detected tells us whether or not a UFO is detected NOW, whereas ufo->detected tells
 		 * us whether or not the UFO was detected PREVIOUSLY. */
@@ -818,11 +799,7 @@ qboolean UFO_CampaignCheckEvents (void)
 		}
 
 		/* Check if UFO is detected by a radartower */
-		for (installationIdx = 0; installationIdx < ccs.numInstallations; installationIdx++) {
-			installation_t *installation = INS_GetFoundedInstallationByIDX(installationIdx);
-			if (!installation)
-				continue;
-
+		INS_Foreach(installation) {
 			/* maybe the ufo is already detected, don't reset it */
 			if (RADAR_CheckUFOSensored(&installation->radar, installation->pos, ufo, detected | ufo->detected)) {
 				const int distance = GetDistanceOnGlobe(installation->pos, ufo->pos);
@@ -851,7 +828,7 @@ qboolean UFO_CampaignCheckEvents (void)
 				newDetection = qtrue;
 				UFO_DetectNewUFO(ufo);
 			} else if (!detected) {
-				MSO_CheckAddNewMessage(NT_UFO_SIGNAL_LOST, _("Notice"), _("Our radar has lost the tracking on a UFO"), qfalse, MSG_UFOSPOTTED, NULL);
+				MSO_CheckAddNewMessage(NT_UFO_SIGNAL_LOST, _("Notice"), _("Our radar has lost the tracking on a UFO"), qfalse, MSG_UFOLOST, NULL);
 				/* Make this UFO undetected */
 				ufo->detected = qfalse;
 				/* Notify that ufo disappeared */

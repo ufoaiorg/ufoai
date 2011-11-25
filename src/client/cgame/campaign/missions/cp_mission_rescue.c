@@ -41,6 +41,13 @@ static void CP_BeginRescueMission (mission_t *mission)
 	assert(mission->ufo);
 	mission->posAssigned = qtrue;
 
+	mission->mapDef = Com_GetMapDefinitionByID("rescue");
+	if (!mission->mapDef) {
+		CP_MissionRemove(mission);
+		Com_Error(ERR_DROP, "Could not find mapdef rescue");
+		return;
+	}
+
 	mission->ufo->landed = qtrue;
 	mission->stage = STAGE_RECON_GROUND;
 	mission->finalDate = Date_Add(ccs.date, Date_Random(minCrashDelay, crashDelay));

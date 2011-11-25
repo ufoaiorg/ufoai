@@ -2,298 +2,265 @@
 // Alien base THEME
 // *********************************
 
-base alienb/a_
 
-// Tiletypes:
-// ----------
-// +: tile contains something
-// a: normal stepable field
-// h: horizontal connection
-// v: vertical connection
-
-// 1,2,3,4: borders of whole map.
-// idea:
-//
-//    0 1 1 1 1 1 0
-//    4 + + + + + 2
-//    4 + + + + + 2
-//    4 + + + + + 2
-//    0 3 3 3 3 3 0
+// Tile Definitions
+// ----------------
+base alienb/ab_		// Prefix for each tile's .map file including path from /maps/
 
 
-// Warning: this tile is _not_ _empty_!
-tile +empty
-{
-4 4
-
-0      av     av     0
-ah     +a     +a     ah
-ah     +a     +a     ah
-0      av     av     0
-}
-
-
-///** tunnels:
-
-// vertical connection (|)
-tile +tunnel_h
-{
-4 4
-
-0      1av    1av    0
-v3     +v3    +v3    v3
-v1     +v1    +v1    v1
-0      3av    3av    0
-}
-
-// horizontal connection (-)
-tile +tunnel_v
-{
-4 4
-
-0      h2      h4      0
-ah4    +h2    +h4    ah2
-ah4    +h2    +h4    ah2
-0      h2      h4      0
-}
-
-tile +tunnel_x
-{
-4 4
-
-0      av     av     0
-ah     +a     +a     ah
-ah     +a     +a     ah
-0      av     av     0
-}
-
-///** t-connectors:
-// t-connection, missed top side
-tile +tunnel_mt
-{
-4 4
-
-0      h2      4h      0
-a4h    +2    +4    ah2
-ah     +a     +a     ah
-0      av     av     0
-}
-
-// t-connection, missed right side
-tile +tunnel_mr
-{
-4 4
-
-0      av     av1    0
-ah     +a     +3    v3
-ah     +a     +1    v1
-0      av     av3    0
-}
-
-// t-connection, missed bottom side
-tile +tunnel_mb
-{
-4 4
-
-0      av     av     0
-ah     +a     +a     ah
-ah4    +2    +4    ah2
-0      h2      h4      0
-}
-
-// t-connection, missed left side
-tile +tunnel_ml
-{
-4 4
-
-0      av1    av     0
-v3      +3    +a     ah
-v1      +1    +a     ah
-0      av3    av     0
-}
-
-///** Corners:
-
-tile +corner_tr
-{
-4 4
-0      1      av     0
-z      +3     +a     ah
-z      +vh    +4     2
-0      z      z      0
-}
-
-tile +corner_br
-{
-6 4
-0      z      z      z      z      0
-z      +vh    +h     +h     +4     ah2
-z      +1     +a     +a     +a     ah
-0      3      av     av     av     0
-}
-
-tile +corner_bl
-{
-4 4
-0      z      z      0
-4     +2      +vh    z
-ah     +a     +1     z
-0      av     3      0
-}
-
-tile +corner_tl
-{
-4 4
-0      av     1      0
-ah     +a     +3     z
-4      +2     +vh    z
-0      z      z      0
-}
-
-
-
+// Entrance
 tile +entrance
 {
-4 6
+	6 4
 
-0      av     av     0
-ah     +a     +a     ah
-ah     +a     +a     ah
-ah     +a     +a     ah
-ah     +a     +a     ah
-0      av     av     0
+	0		a		a		a		a		0
+	x		+x		+a		+a		+x		x
+	a		+a		+a		+a		+a		a
+	0		b		b		b		b		0
 }
 
-
-tile +lab
+// Hub
+tile +hub
 {
-6 4
+	6 6
 
-0   av   av   av   av  0
-ah  +a   +a   +a   +a  ah
-ah  +a   +a   +a   +a  ah
-0   av   av   av   av  0
+	0		b		b		b		b		0
+	w		+w		+a		+a		+w		w
+	w		+w		+a		+a		+w		w
+	w		+w		+a		+a		+w		w
+	w		+w		+a		+a		+w		w
+	0		a		x		a		x		0
 }
 
+// Hangar (Supply Ship)
 tile +hangar
 {
-8 8
+	6 6
 
-0   av   av   av   av   av   av  0
-ah  +a   +a   +a   +a  +a   +a  ah
-ah  +a   +a   +a   +a  +a   +a  ah
-ah  +a   +a   +a   +a  +a   +a  ah
-ah  +a   +a   +a   +a  +a   +a  ah
-ah  +a   +a   +a   +a  +a   +a  ah
-ah  +a   +a   +a   +a  +a   +a  ah
-0   av   av   av   av   av   av  0
+	0		a		x		a		a		0
+	w		+w		+a		+a		+w		w
+	w		+w		+a		+a		+w		w
+	w		+w		+a		+a		+w		w
+	w		+w		+a		+a		+w		w
+	0		a		a		a		x		0
 }
 
-// workhole device
-// the left side of the map has no entraces
+// Power core
+tile +powercore
+{
+	6 4
+
+	0		a		a		a		x		0
+	x		+x		+a		+a		+x		a
+	a		+a		+a		+a		+x		a
+	0		a		a		a		x		0
+}
+
+// Vent (right side)
+// used for closing up a hub/hangar on the right side
+tile +ventr
+{
+	4 6
+
+	0		a		a		0
+	w		+w		+a		a
+	w		+w		+a		a
+	w		+w		+a		a
+	w		+w		+a		a
+	0		a		a		0
+}
+
+// Vent (left side)
+// used for closing up a hub/hangar on the left side
+tile +ventl
+{
+	4 6
+
+	0		a		a		0
+	a		+a		+w		w
+	a		+a		+w		w
+	a		+a		+w		w
+	a		+a		+w		w
+	0		a		a		0
+}
+
+// Wormhole
 tile +wormhole
 {
-6 6
+	4 4
 
-0      av1    av     av     av     0
-v      +a3    +a     +a     +a     ah
-v      +a     +a     +a     +a     ah
-v      +a     +a     +a     +a     ah
-v      +a1    +a     +a     +a     ah
-0      av3    av     av     av     0
+	0		a		a		0
+	x		x		x		x
+	a		a		a		a
+	0		a		a		0
 }
 
-// incubation chamber
-tile +incubation_small
+// Storage (vertical: connects top and bottom)
+tile +storage_v
 {
-4 4
+	4 4
 
-0      av    av    0
-ah     +a    +a   ah
-ah     +a    +a   ah
-0      av    av    0
+	0		a		x		0
+	a		+a		+x		a
+	a		+a		+x		a
+	0		a		x		0
+}
+
+// Lab (connects top and bottom)
+tile +lab
+{
+	4 4
+
+	0		a		x		0
+	a		+a		+x		a
+	a		+a		+x		a
+	0		a		x		0
+}
+
+// Hallway, Vertical
+// Has an empty space on its left tile (hall takes up only right tiles)
+tile +hall_v1
+{
+	4 4
+
+	0		a		x		0
+	a		+a		+x		a
+	a		+a		+x		a
+	0		a		x		0
+}
+tile +hall_v2
+{
+	4 4
+
+	0		a		x		0
+	a		+a		+x		a
+	a		+a		+x		a
+	0		a		x		0
+}
+
+// Hallway, Horizontal
+// Has an empty space on its bottom tiles (hall takes up only top tiles)
+tile +hall_h1
+{
+	4 4
+
+	0		a		a		0
+	x		x		x		x
+	a		a		a		a
+	0		a		a		0
+}
+
+// Hallway, Corner (Southeast)
+// Tile connects on the right and the bottom
+tile +hall_cse1
+{
+	4 4
+
+	0		a		a		0
+	a		a		x		x
+	a		a		x		a
+	0		a		x		0
+}
+
+// Hallway, Corner (Southwest)
+// Tile connects on the left and the bottom
+tile +hall_csw1
+{
+	4 4
+
+	0		a		a		0
+	x		x		a		a
+	a		x		a		a
+	0		x		a		0
+}
+
+// Hallway, Corner (Northeast)
+// Tile connects on the right and the top
+tile +hall_cne1
+{
+	4 4
+
+	0		a		x		0
+	a		a		x		x
+	a		a		a		a
+	0		a		a		0
+}
+
+// Hallway, Corner (Northwest)
+// Tile connects on the left and the top
+tile +hall_cnw1
+{
+	4 4
+
+	0		a		x		0
+	x		x		x		a
+	a		a		a		a
+	0		a		a		0
+}
+
+// Hallway, T-junction (bottom)
+// Tile connects on the left, right and the top
+tile +hall_tbtm1
+{
+	4 4
+
+	0		a		x		0
+	x		x		x		x
+	a		a		a		a
+	0		a		a		0
+}
+
+// Hallway, T-junction (top)
+// Tile connects on the left, right and the btm
+tile +hall_ttop1
+{
+	4 4
+
+	0		a		a		0
+	x		x		x		x
+	a		a		x		a
+	0		a		x		0
+}
+
+// Hallway, 4-way junction
+// Tile connects on the top, btm, left and right
+tile +hall_4way1
+{
+	4 4
+
+	0		a		x		0
+	x		x		x		x
+	a		a		x		a
+	0		a		x		0
 }
 
 
-// ########################################
-// ########### Maps for the game ###########
-/*
-assembly alienbase1
+// Assembly definitions
+// --------------------
+
+assembly small1
 {
-size                 "12 12"
-title                "_Alienbase"
-grid                 "2 2"
+	size "14 10"
 
-fix +corner_tr       "0 0"
-fix +tunnel_mb       "2 0"
-fix +tunnel_mb       "4 0"
-fix +tunnel_mb       "6 0"
-fix +tunnel_mb       "8 0"
-fix +corner_tl       "10 0"
-fix +corner_br       "0 10"
-fix +corner_bl       "10 10"
-+empty               "0 8"
-+entrance            "1 1"
- +hangar              "1 2"
-+tunnel_h            "0 2"
-+tunnel_v            "0 2"
-+tunnel_mt           "0 3"
-+tunnel_mr           "0 3"
-+tunnel_mb           "0 3"
-+tunnel_ml           "0 3"
-+tunnel_x            "0 12"
-+lab                 "0 2"
-+wormhole            "1 1"
-+incubation_small    "0 2"
-}
-*/
+	fix +hall_cne1 "6 0"
+	fix +hall_h1 "8 0"
+	fix +hall_cnw1 "10 0"
 
-assembly alienbase1
-{
-size                 "14 10"
-// fixed tiles don`t take to calculation of assembly,
-// so it can "extend" the map without extra computing.
-title                "_Alienbase"
-grid                 "2 2"
+	fix +hall_cne1 "0 2"
+	fix +wormhole "2 2"
+	fix +hall_tbtm1 "4 2"
+	fix +hall_4way1 "6 2"
+	fix +powercore "8 2"
 
-fix +corner_tr       "0   0"
-fix +corner_tl       "14  0"
-fix +corner_br       "0  10"
-fix +corner_bl       "14 10"
+	fix +storage_v "0 4"
+	fix +lab "0 6"
+	fix +ventl "2 4"
+	fix +hub "4 4"
+	fix +hangar "8 4"
+	fix +ventr "12 4"
 
-fix +tunnel_mr       "14  2"
-fix +tunnel_mr       "14  4"
-fix +tunnel_mr       "14  6"
-fix +tunnel_mr       "14  8"
-
-fix +tunnel_mb       "2   0"
-fix +tunnel_mb       "4   0"
-fix +tunnel_mb       "6   0"
-fix +tunnel_mb       "8   0"
-
-
-fix +tunnel_mt       "4  10"
-fix +tunnel_mt       "6  10"
-fix +tunnel_mt       "8  10"
-fix +tunnel_mt       "10 10"
-fix +tunnel_mt       "12 10"
-
-
-+tunnel_mt           "0 10"
-+tunnel_mr           "0 10"
-+tunnel_mb           "0 10"
-+tunnel_ml           "0 10"
-
-
-+tunnel_h            "0 2"
-+tunnel_v            "0 2"
-+tunnel_x            "0 4"
-
-
-+entrance            "1 1"
-+empty               "0 5"
-+hangar              "1 2"
-+lab                 "1 2"
-+wormhole            "1 1"
-+incubation_small    "0 2"
+	fix +hall_cse1 "0 8"
+	fix +hall_h1 "2 8"
+	fix +entrance "4 8"
+	fix +hall_csw1 "8 8"
 }

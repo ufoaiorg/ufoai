@@ -18,7 +18,7 @@
 ( 424 736 4 ) ( 424 512 4 ) ( 424 512 -4 ) tex_common/nodraw 64 41.42859 -90 0.25 0.35 65280 0 0
 ( 512 448 4 ) ( 512 512 4 ) ( 512 512 0 ) tex_common/nodraw 64 41.42859 -90 0.25 0.35 65280 0 0
 ( 32 640 4 ) ( 128 640 4 ) ( 128 640 0 ) tex_common/nodraw 0 60 -90 0.25 0.35 65280 0 0
-( 128 640 0 ) ( 128 864 0 ) ( 512 864 0 ) tex_streets/street002 0 188 -90 0.25 0.35 65280 0 0
+( 128 640 0 ) ( 128 864 0 ) ( 512 864 0 ) tex_streets/street002 0 376 -90 0.125 0.175 65280 0 0
 ( 576 512 -4 ) ( 384 512 -4 ) ( 384 448 -4 ) tex_common/nodraw 0 60 -90 0.25 0.35 65280 0 0
 ( 0 768 -64 ) ( 768 768 -64 ) ( 0 768 64 ) tex_common/nodraw 0 0 0 1 1 65280 0 0
 }
@@ -64,7 +64,7 @@
 // brush 5
 {
 ( 576 512 -4 ) ( 384 512 -4 ) ( 384 448 -4 ) tex_common/nodraw 0 60 -90 0.25 0.35 65280 0 0
-( 128 640 0 ) ( 128 864 0 ) ( 512 864 0 ) tex_streets/street002 0 52 -90 0.25 0.35 65280 0 0
+( 128 640 0 ) ( 128 864 0 ) ( 512 864 0 ) tex_streets/street002 0 104 -90 0.125 0.175 65280 0 0
 ( 32 640 4 ) ( 128 640 4 ) ( 128 640 0 ) tex_common/nodraw 0 60 -90 0.25 0.35 65280 0 0
 ( 280 504 4 ) ( 280 728 4 ) ( 280 728 -4 ) tex_common/nodraw 64 41.42859 -90 0.25 0.35 65280 0 0
 ( 192 864 4 ) ( 192 640 4 ) ( 192 640 -4 ) tex_common/nodraw 64 41.42859 -90 0.25 0.35 65280 0 0
@@ -73,7 +73,7 @@
 // brush 6
 {
 ( 576 512 -4 ) ( 384 512 -4 ) ( 384 448 -4 ) tex_common/nodraw 27 0 0 0.35 0.25 65280 0 0
-( 128 640 0 ) ( 128 864 0 ) ( 512 864 0 ) tex_streets/street001 0 188 -90 0.25 0.35 65280 0 0
+( 128 640 0 ) ( 128 864 0 ) ( 512 864 0 ) tex_streets/street001 0 376 -90 0.125 0.175 65280 0 0
 ( 32 640 4 ) ( 128 640 4 ) ( 128 640 0 ) tex_common/nodraw 27 0 0 0.35 0.25 65280 0 0
 ( 424 512 4 ) ( 424 736 4 ) ( 424 736 -4 ) tex_common/nodraw 45.57141 0 0 0.35 0.25 65280 0 0
 ( 280 736 4 ) ( 280 512 4 ) ( 280 512 -4 ) tex_common/nodraw 45.57141 0 0 0.35 0.25 65280 0 0
@@ -139,7 +139,7 @@
 ( 384 448 4 ) ( 384 512 4 ) ( 576 512 4 ) tex_nature/grass001 0 0 0 0.5 0.5 65280 0 0
 ( 496 512 8 ) ( 584 512 8 ) ( 584 512 0 ) tex_common/nodraw 0 60 -90 0.25 0.35 65280 128 0
 ( 320 416 8 ) ( 320 776 8 ) ( 320 776 0 ) tex_common/nodraw 64 41.42859 -90 0.25 0.35 65280 128 0
-( 572 640 0 ) ( 380 640 0 ) ( 380 640 -4 ) tex_streets/street001 0 188 -90 0.25 0.35 65280 0 0
+( 572 640 0 ) ( 380 640 0 ) ( 380 640 -4 ) tex_streets/street001 0 376 -90 0.125 0.175 65280 0 0
 ( 32 776 8 ) ( 32 416 8 ) ( 32 416 0 ) tex_common/nodraw 64 41.42859 -90 0.25 0.35 65280 128 0
 }
 // brush 14
@@ -170,7 +170,7 @@
 ( 384 448 4 ) ( 576 448 4 ) ( 576 448 0 ) tex_common/nodraw 0 60 -90 0.25 0.35 65280 128 0
 ( 512 448 4 ) ( 512 512 4 ) ( 512 512 0 ) tex_common/nodraw -0 0 0 0.5 0.5 65280 0 0
 ( 384 512 4 ) ( 384 448 4 ) ( 384 448 0 ) tex_common/nodraw 64 41.42859 -90 0.25 0.35 65280 128 0
-( 572 640 0 ) ( 380 640 0 ) ( 380 640 -4 ) tex_streets/street001 0 188 -90 0.25 0.35 65280 0 0
+( 572 640 0 ) ( 380 640 0 ) ( 380 640 -4 ) tex_streets/street001 0 376 -90 0.125 0.175 65280 0 0
 }
 // brush 17
 {
@@ -402,22 +402,22 @@
 {
 "classname" "info_player_start"
 "team" "1"
-"angle" "135"
 "origin" "560 304 28"
+"angle" "135"
 }
 // entity 5
 {
 "classname" "info_player_start"
 "team" "1"
-"angle" "135"
 "origin" "336 272 28"
+"angle" "135"
 }
 // entity 6
 {
 "classname" "info_player_start"
 "team" "1"
-"angle" "135"
 "origin" "400 272 28"
+"angle" "135"
 }
 // entity 7
 {
@@ -444,99 +444,99 @@
 {
 "classname" "info_player_start"
 "team" "1"
-"angle" "180"
 "origin" "112 272 28"
+"angle" "180"
 }
 // entity 11
 {
 "classname" "info_player_start"
 "team" "1"
-"angle" "180"
 "origin" "112 336 28"
+"angle" "180"
 }
 // entity 12
 {
 "classname" "info_player_start"
 "team" "1"
-"angle" "180"
 "origin" "176 336 28"
+"angle" "180"
 }
 // entity 13
 {
 "classname" "info_player_start"
 "team" "1"
-"angle" "180"
 "origin" "208 304 28"
+"angle" "180"
 }
 // entity 14
 {
 "classname" "info_player_start"
 "team" "1"
-"angle" "180"
 "origin" "336 304 28"
+"angle" "180"
 }
 // entity 15
 {
 "classname" "info_player_start"
 "team" "1"
-"angle" "180"
 "origin" "272 272 28"
+"angle" "180"
 }
 // entity 16
 {
 "classname" "info_player_start"
 "team" "1"
-"angle" "180"
 "origin" "304 272 28"
+"angle" "180"
 }
 // entity 17
 {
 "classname" "info_player_start"
 "team" "1"
-"angle" "180"
 "origin" "592 272 28"
+"angle" "180"
 }
 // entity 18
 {
 "classname" "info_player_start"
 "team" "1"
-"angle" "180"
 "origin" "752 272 28"
+"angle" "180"
 }
 // entity 19
 {
 "classname" "info_player_start"
 "team" "1"
-"angle" "180"
 "origin" "464 336 28"
+"angle" "180"
 }
 // entity 20
 {
 "classname" "info_player_start"
 "team" "1"
-"angle" "180"
 "origin" "272 336 28"
+"angle" "180"
 }
 // entity 21
 {
 "classname" "info_player_start"
 "team" "1"
-"angle" "180"
 "origin" "240 272 28"
+"angle" "180"
 }
 // entity 22
 {
 "classname" "info_player_start"
 "team" "1"
-"angle" "180"
 "origin" "528 272 28"
+"angle" "180"
 }
 // entity 23
 {
 "classname" "info_player_start"
 "team" "1"
-"angle" "90"
 "origin" "464 304 28"
+"angle" "90"
 }
 // entity 24
 {
@@ -549,29 +549,29 @@
 {
 "classname" "info_player_start"
 "team" "1"
-"angle" "90"
 "origin" "624 336 28"
+"angle" "90"
 }
 // entity 26
 {
 "classname" "info_player_start"
 "team" "1"
-"angle" "90"
 "origin" "688 304 28"
+"angle" "90"
 }
 // entity 27
 {
 "classname" "info_player_start"
 "team" "1"
-"angle" "90"
 "origin" "720 304 28"
+"angle" "90"
 }
 // entity 28
 {
 "classname" "info_player_start"
-"angle" "90"
 "origin" "16 336 28"
 "team" "1"
+"angle" "90"
 }
 // entity 29
 {

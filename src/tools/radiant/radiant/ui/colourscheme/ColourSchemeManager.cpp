@@ -49,7 +49,7 @@ void ColourSchemeManager::dump() {
 	//globalOutputStream() << "Dump: Number of schemes: " << _colourSchemes.size();
 	globalOutputStream() << "\n";
 
-	for (ColourSchemeMap::iterator it = _colourSchemes.begin(); it != _colourSchemes.end(); it++) {
+	for (ColourSchemeMap::iterator it = _colourSchemes.begin(); it != _colourSchemes.end(); ++it) {
 		globalOutputStream() << "Dump: Schemename: " << it->first << "\n";
 
 		// Retrieve the list with all the ColourItems of this scheme
@@ -59,7 +59,7 @@ void ColourSchemeManager::dump() {
 		globalOutputStream() << "\n";
 
 		// Cycle through all the ColourItems and save them into the registry
-		for (ColourItemMap::iterator c = colourMap.begin(); c != colourMap.end(); c++) {
+		for (ColourItemMap::iterator c = colourMap.begin(); c != colourMap.end(); ++c) {
 			globalOutputStream() << "Dump: Colourname: " << c->first << ", ";
 			std::string colourValue = c->second;
 			globalOutputStream() << "Dump: Colourvalue: " << colourValue << "\n";
@@ -111,7 +111,7 @@ void ColourSchemeManager::saveScheme(const std::string& name) {
 	ColourItemMap& colourMap = _colourSchemes[name].getColourMap();
 
 	// Cycle through all the ColourItems and save them into the registry
-	for (ColourItemMap::iterator it = colourMap.begin(); it != colourMap.end(); it++) {
+	for (ColourItemMap::iterator it = colourMap.begin(); it != colourMap.end(); ++it) {
 		// Retrieve the name of the ColourItem
 		std::string name = it->first;
 
@@ -128,7 +128,7 @@ void ColourSchemeManager::saveColourSchemes() {
 	GlobalRegistry().deleteXPath("user/ui/colourschemes//colourscheme");
 
 	// Save all schemes that are stored in memory
-	for (ColourSchemeMap::iterator it = _colourSchemes.begin(); it != _colourSchemes.end(); it++) {
+	for (ColourSchemeMap::iterator it = _colourSchemes.begin(); it != _colourSchemes.end(); ++it) {
 		if (it->first != "") {
 			// Save the scheme whose name is stored in it->first
 			saveScheme(it->first);

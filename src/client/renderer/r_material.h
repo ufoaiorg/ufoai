@@ -150,8 +150,8 @@ typedef struct materialStage_s {
 
 #define DEFAULT_BUMP 1.0f
 #define DEFAULT_PARALLAX 1.0f
-#define DEFAULT_SPECULAR 1.0f
-#define DEFAULT_HARDNESS 1.0f
+#define DEFAULT_SPECULAR 0.2f
+#define DEFAULT_HARDNESS 0.2f
 #define DEFAULT_GLOWSCALE 1.0f
 
 typedef struct material_s {
@@ -169,5 +169,6 @@ typedef struct material_s {
 extern material_t defaultMaterial;
 
 void R_LoadMaterials(const char *map);
+void R_UpdateDefaultMaterial(const char *cvarName, const char *oldValue, const char *newValue);
 
 #endif

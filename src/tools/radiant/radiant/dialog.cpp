@@ -311,7 +311,7 @@ void Dialog::addCombo (GtkWidget* vbox, const std::string& name, const std::stri
 		GtkWidget* combo = gtk_combo_box_new_text();
 
 		// Add all the string values to the combo box
-		for (ComboBoxValueList::const_iterator i = valueList.begin(); i != valueList.end(); i++) {
+		for (ComboBoxValueList::const_iterator i = valueList.begin(); i != valueList.end(); ++i) {
 			// Add the current string value to the combo box
 			gtk_combo_box_append_text(GTK_COMBO_BOX(combo), i->c_str());
 		}

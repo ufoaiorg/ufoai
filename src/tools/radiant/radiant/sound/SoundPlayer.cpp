@@ -223,7 +223,7 @@ namespace sound
 			try {
 				// Create an AL sound buffer directly from the buffer in memory
 				_buffer = WavFileLoader::LoadFromStream(file.getInputStream());
-			} catch (std::runtime_error e) {
+			} catch (std::runtime_error &e) {
 				g_error("SoundPlayer: Error opening WAV file: %s\n", e.what());
 				_buffer = 0;
 			}

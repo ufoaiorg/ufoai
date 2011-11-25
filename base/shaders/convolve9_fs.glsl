@@ -3,6 +3,11 @@
  * @brief convolve9 fragment shader.
  */
 
+#ifndef glsl110
+	/** After glsl1110 this need to be explicitly declared; used by fixed functionality at the end of the OpenGL pipeline.*/
+	out vec4 gl_FragColor;
+#endif
+
 uniform sampler2D SAMPLER0;
 uniform float COEFFICIENTS[9];
 uniform vec2 OFFSETS[9];
@@ -13,8 +18,7 @@ uniform vec2 OFFSETS[9];
  * Orientation of the filter is controlled by "OFFSETS".
  * The filter itself is specified by "COEFFICIENTS".
  */
-void main(void){
-
+void main(void) {
 	vec2 inColor = gl_TexCoord[0].st;
 	vec4 outColor = vec4(0, 0, 0, 0);
 

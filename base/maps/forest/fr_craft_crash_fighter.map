@@ -5,39 +5,39 @@
 "randomspawn" "1"
 // brush 0
 {
-( 309 122 49 ) ( 332 169 49 ) ( 352 151 49 ) tex_nature/pjrock1 204.3871 154.8386 0 0.62 0.62 65280 0 0
-( 404 209 42 ) ( 364 209 42 ) ( 404 209 34 ) tex_nature/pjrock1 204.3871 0 0 0.62 0.62 65280 0 0
-( 312 145 30 ) ( 312 208 18 ) ( 344 179 43 ) tex_nature/pjrock1 204.3871 154.8386 0 0.62 0.62 65280 0 0
-( 380 128 17 ) ( 380 140 29 ) ( 384 132 25 ) tex_nature/pjrock1 204.3871 154.8386 0 0.62 0.62 65280 0 0
-( 352 116 13 ) ( 360 108 1 ) ( 356 108 1 ) tex_nature/pjrock1 204.3871 0 0 0.62 0.62 65280 0 0
-( 44 169 49 ) ( 44 181 41 ) ( 172 169 49 ) tex_nature/pjrock1 204.3871 154.8386 0 0.62 0.62 65280 0 0
-( 406 -103 6 ) ( 394 -103 -14 ) ( 406 -231 6 ) tex_nature/pjrock1 101.1613 0 0 0.62 0.62 65280 0 0
+( 309 122 49 ) ( 332 169 49 ) ( 352 151 49 ) tex_nature/pjrock1 817.5484 619.3544 0 0.155 0.155 65280 0 0
+( 404 209 42 ) ( 364 209 42 ) ( 404 209 34 ) tex_nature/pjrock1 817.5484 0 0 0.155 0.155 65280 0 0
+( 312 145 30 ) ( 312 208 18 ) ( 344 179 43 ) tex_nature/pjrock1 817.5484 619.3544 0 0.155 0.155 65280 0 0
+( 380 128 17 ) ( 380 140 29 ) ( 384 132 25 ) tex_nature/pjrock1 817.5484 619.3544 0 0.155 0.155 65280 0 0
+( 352 116 13 ) ( 360 108 1 ) ( 356 108 1 ) tex_nature/pjrock1 817.5484 0 0 0.155 0.155 65280 0 0
+( 44 169 49 ) ( 44 181 41 ) ( 172 169 49 ) tex_nature/pjrock1 817.5484 619.3544 0 0.155 0.155 65280 0 0
+( 406 -103 6 ) ( 394 -103 -14 ) ( 406 -231 6 ) tex_nature/pjrock1 404.6452 0 0 0.155 0.155 65280 0 0
 ( 157 421 2 ) ( 213 421 2 ) ( 157 493 2 ) tex_common/nodraw 12.38709 26.83862 0 0.62 0.62 65280 128 0
-( 380 160 52 ) ( 424 160 4 ) ( 380 32 52 ) tex_nature/pjrock1 101.1613 0 0 0.62 0.62 65280 0 0
-( 346 237 26 ) ( 290 161 26 ) ( 251 159 -44 ) tex_nature/pjrock16 416 0 0 1 1 65280 0 0
+( 380 160 52 ) ( 424 160 4 ) ( 380 32 52 ) tex_nature/pjrock1 404.6452 0 0 0.155 0.155 65280 0 0
+( 346 237 26 ) ( 290 161 26 ) ( 251 159 -44 ) tex_nature/pjrock16 832 0 0 0.5 0.5 65280 0 0
 }
 // brush 1
 {
-( 224 17 -214 ) ( 151 48 -15 ) ( 279 93 -21 ) tex_nature/pjrock16 0 16.66667 0 0.12 0.12 65280 1024 0
-( 76 168 -197 ) ( 133 73 -13 ) ( 5 113 -3 ) tex_nature/pjrock16 0 16.66667 0 0.12 0.12 65280 1024 0
-( -47 10 -52 ) ( 58 16 133 ) ( -18 -94 132 ) tex_nature/pjrock16 0 16.66667 0 0.12 0.12 65280 1024 0
-( -102 102 22 ) ( -105 69 36 ) ( -228 119 31 ) tex_nature/pjrock16 0 0 0 0.12 0.12 65280 1024 0
-( 33 11 0 ) ( -13 56 45 ) ( 20 40 98 ) tex_nature/pjrock16 0 16.66667 0 0.12 0.12 65280 1024 0
-( 56 211 -11 ) ( 27 213 23 ) ( 38 84 -16 ) tex_nature/pjrock16 0 16.66667 0 0.12 0.12 65280 1024 0
-( 72 57 12 ) ( 77 89 7 ) ( 96 66 9 ) tex_nature/pjrock16 0 0 0 0.12 0.12 65280 1024 0
+( 224 17 -214 ) ( 151 48 -15 ) ( 279 93 -21 ) tex_nature/pjrock16 0 33.33334 0 0.06 0.06 65280 1024 0
+( 76 168 -197 ) ( 133 73 -13 ) ( 5 113 -3 ) tex_nature/pjrock16 0 33.33334 0 0.06 0.06 65280 1024 0
+( -47 10 -52 ) ( 58 16 133 ) ( -18 -94 132 ) tex_nature/pjrock16 0 33.33334 0 0.06 0.06 65280 1024 0
+( -102 102 22 ) ( -105 69 36 ) ( -228 119 31 ) tex_nature/pjrock16 0 0 0 0.06 0.06 65280 1024 0
+( 33 11 0 ) ( -13 56 45 ) ( 20 40 98 ) tex_nature/pjrock16 0 33.33334 0 0.06 0.06 65280 1024 0
+( 56 211 -11 ) ( 27 213 23 ) ( 38 84 -16 ) tex_nature/pjrock16 0 33.33334 0 0.06 0.06 65280 1024 0
+( 72 57 12 ) ( 77 89 7 ) ( 96 66 9 ) tex_nature/pjrock16 0 0 0 0.06 0.06 65280 1024 0
 ( 157 421 2 ) ( 213 421 2 ) ( 157 493 2 ) tex_common/nodraw 0 0 0 1 1 65280 128 0
-( 100 12 12 ) ( 44 96 12 ) ( 80 56 4 ) tex_nature/pjrock16 0 0 0 0.12 0.12 65280 1024 0
+( 100 12 12 ) ( 44 96 12 ) ( 80 56 4 ) tex_nature/pjrock16 0 0 0 0.06 0.06 65280 1024 0
 }
 // brush 2
 {
-( 320 273 -214 ) ( 247 304 -15 ) ( 375 349 -21 ) tex_nature/pjrock16 0 16.66667 0 0.12 0.12 65280 1024 0
-( 168 424 -197 ) ( 225 329 -13 ) ( 97 369 -3 ) tex_nature/pjrock16 0 16.66667 0 0.12 0.12 65280 1024 0
-( 81 298 -52 ) ( 186 304 133 ) ( 110 194 132 ) tex_nature/pjrock16 0 16.66667 0 0.12 0.12 65280 1024 0
-( -10 358 22 ) ( -13 325 36 ) ( -136 375 31 ) tex_nature/pjrock16 0 0 0 0.12 0.12 65280 1024 0
-( 129 267 0 ) ( 83 312 45 ) ( 116 296 98 ) tex_nature/pjrock16 0 16.66667 0 0.12 0.12 65280 1024 0
-( 217 325 -21 ) ( 200 310 2 ) ( 203 343 -19 ) tex_nature/pjrock16 0 0 0 0.12 0.12 65280 1024 0
-( 184 499 -11 ) ( 155 501 23 ) ( 166 372 -16 ) tex_nature/pjrock16 0 16.66667 0 0.12 0.12 65280 1024 0
-( 164 313 12 ) ( 169 345 7 ) ( 188 322 9 ) tex_nature/pjrock16 0 0 0 0.12 0.12 65280 1024 0
+( 320 273 -214 ) ( 247 304 -15 ) ( 375 349 -21 ) tex_nature/pjrock16 0 33.33334 0 0.06 0.06 65280 1024 0
+( 168 424 -197 ) ( 225 329 -13 ) ( 97 369 -3 ) tex_nature/pjrock16 0 33.33334 0 0.06 0.06 65280 1024 0
+( 81 298 -52 ) ( 186 304 133 ) ( 110 194 132 ) tex_nature/pjrock16 0 33.33334 0 0.06 0.06 65280 1024 0
+( -10 358 22 ) ( -13 325 36 ) ( -136 375 31 ) tex_nature/pjrock16 0 0 0 0.06 0.06 65280 1024 0
+( 129 267 0 ) ( 83 312 45 ) ( 116 296 98 ) tex_nature/pjrock16 0 33.33334 0 0.06 0.06 65280 1024 0
+( 217 325 -21 ) ( 200 310 2 ) ( 203 343 -19 ) tex_nature/pjrock16 0 0 0 0.06 0.06 65280 1024 0
+( 184 499 -11 ) ( 155 501 23 ) ( 166 372 -16 ) tex_nature/pjrock16 0 33.33334 0 0.06 0.06 65280 1024 0
+( 164 313 12 ) ( 169 345 7 ) ( 188 322 9 ) tex_nature/pjrock16 0 0 0 0.06 0.06 65280 1024 0
 ( 157 421 2 ) ( 213 421 2 ) ( 157 493 2 ) tex_common/nodraw 0 0 0 1 1 65280 128 0
 }
 // brush 3
@@ -476,16 +476,16 @@
 // brush 51
 {
 ( 224 448 64 ) ( 224 352 64 ) ( 160 448 64 ) tex_nature/grass_mowed_dry_c 0 0 0 0.2 0.2 65280 0 0
-( 704 128 64 ) ( 576 128 64 ) ( 704 128 0 ) tex_nature/pjrock16 0 0 -45 0.2 0.2 65280 1024 0
-( 704 320 32 ) ( 704 320 0 ) ( 704 256 32 ) tex_nature/pjrock16 0 0 -45 0.2 0.2 65280 1024 0
+( 704 128 64 ) ( 576 128 64 ) ( 704 128 0 ) tex_nature/pjrock16 0 0 -45 0.1 0.1 65280 1024 0
+( 704 320 32 ) ( 704 320 0 ) ( 704 256 32 ) tex_nature/pjrock16 0 0 -45 0.1 0.1 65280 1024 0
 ( 512 288 0 ) ( 576 288 0 ) ( 512 448 0 ) tex_common/nodraw 0 0 0 1 1 65280 0 0
-( -64 64 64 ) ( -64 64 128 ) ( 64 64 64 ) tex_nature/pjrock16 0 0 -45 0.2 0.2 65280 1024 0
+( -64 64 64 ) ( -64 64 128 ) ( 64 64 64 ) tex_nature/pjrock16 0 0 -45 0.1 0.1 65280 1024 0
 ( 576 64 0 ) ( 576 128 0 ) ( 576 64 64 ) tex_nature/grass_mowed_dry_c 0 0 0 1 1 65280 0 0
-( 683 136 38 ) ( 717 104 12 ) ( 683 96 78 ) tex_nature/pjrock16 0 0 -45 0.2 0.2 65280 1024 0
-( 640 96 71 ) ( 644 44 42 ) ( 603 30 41 ) tex_nature/pjrock16 0 0 -45 0.2 0.2 65280 1024 0
-( 590 137 39 ) ( 640 137 41 ) ( 640 113 82 ) tex_nature/pjrock16 0 0 -45 0.2 0.2 65280 1024 0
-( 593 96 74 ) ( 571 96 47 ) ( 583 122 67 ) tex_nature/pjrock16 0 0 -45 0.2 0.2 65280 1024 0
-( 569 96 88 ) ( 592 57 34 ) ( 572 78 32 ) tex_nature/pjrock16 0 0 -45 0.2 0.2 65280 1024 0
+( 683 136 38 ) ( 717 104 12 ) ( 683 96 78 ) tex_nature/pjrock16 0 0 -45 0.1 0.1 65280 1024 0
+( 640 96 71 ) ( 644 44 42 ) ( 603 30 41 ) tex_nature/pjrock16 0 0 -45 0.1 0.1 65280 1024 0
+( 590 137 39 ) ( 640 137 41 ) ( 640 113 82 ) tex_nature/pjrock16 0 0 -45 0.1 0.1 65280 1024 0
+( 593 96 74 ) ( 571 96 47 ) ( 583 122 67 ) tex_nature/pjrock16 0 0 -45 0.1 0.1 65280 1024 0
+( 569 96 88 ) ( 592 57 34 ) ( 572 78 32 ) tex_nature/pjrock16 0 0 -45 0.1 0.1 65280 1024 0
 }
 // brush 52
 {
@@ -1470,121 +1470,121 @@
 // entity 7
 {
 "classname" "misc_model"
-"model" "models/objects/vegi/chestnut/chestnut_blaetter3.md2"
 "spawnflags" "252"
+"model" "models/objects/vegi/chestnut/chestnut_blaetter3.md2"
 "origin" "140 652 66"
 "skin" "3"
 }
 // entity 8
 {
 "classname" "misc_model"
-"model" "models/objects/vegi/chestnut/chestnut_blaetter2.md2"
 "spawnflags" "2"
+"model" "models/objects/vegi/chestnut/chestnut_blaetter2.md2"
 "origin" "140 652 66"
 "skin" "3"
 }
 // entity 9
 {
 "classname" "misc_model"
-"model" "models/objects/vegi/chestnut/chestnut_stamm3.md2"
 "spawnflags" "252"
+"model" "models/objects/vegi/chestnut/chestnut_stamm3.md2"
 "origin" "140 652 66"
 }
 // entity 10
 {
 "classname" "misc_model"
-"model" "models/objects/vegi/chestnut/chestnut_stamm2.md2"
 "spawnflags" "2"
+"model" "models/objects/vegi/chestnut/chestnut_stamm2.md2"
 "origin" "140 652 66"
 }
 // entity 11
 {
 "classname" "misc_model"
-"model" "models/objects/vegi/chestnut/chestnut_stamm1.md2"
 "spawnflags" "1"
+"model" "models/objects/vegi/chestnut/chestnut_stamm1.md2"
 "origin" "140 652 66"
 }
 // entity 12
 {
 "classname" "misc_model"
-"model" "models/objects/vegi/chestnut/chestnut_blaetter3.md2"
 "spawnflags" "252"
+"model" "models/objects/vegi/chestnut/chestnut_blaetter3.md2"
 "origin" "620 652 66"
 "skin" "3"
 }
 // entity 13
 {
 "classname" "misc_model"
-"model" "models/objects/vegi/chestnut/chestnut_blaetter2.md2"
 "spawnflags" "2"
+"model" "models/objects/vegi/chestnut/chestnut_blaetter2.md2"
 "origin" "620 652 66"
 "skin" "3"
 }
 // entity 14
 {
 "classname" "misc_model"
-"model" "models/objects/vegi/chestnut/chestnut_stamm3.md2"
 "spawnflags" "252"
+"model" "models/objects/vegi/chestnut/chestnut_stamm3.md2"
 "origin" "620 652 66"
 }
 // entity 15
 {
 "classname" "misc_model"
-"model" "models/objects/vegi/chestnut/chestnut_stamm2.md2"
 "spawnflags" "2"
+"model" "models/objects/vegi/chestnut/chestnut_stamm2.md2"
 "origin" "620 652 66"
 }
 // entity 16
 {
 "classname" "misc_model"
-"model" "models/objects/vegi/chestnut/chestnut_stamm1.md2"
 "spawnflags" "1"
+"model" "models/objects/vegi/chestnut/chestnut_stamm1.md2"
 "origin" "620 652 66"
 }
 // entity 17
 {
 "classname" "misc_model"
 "origin" "331.772 157.023 -170.313"
-"spawnflags" "255"
 "model" "models/objects/alien/ufo_crashed/acrash_hull_engine.md2"
+"spawnflags" "255"
 "angles" "-15.8749 9.8889 -65.1971"
 }
 // entity 18
 {
 "classname" "misc_model"
 "spawnflags" "255"
-"origin" "684 368 5"
 "model" "models/objects/alien/ufo_crashed/acrash_wing_2.md2"
+"origin" "684 368 5"
 "angles" "0 0 4.94009"
 }
 // entity 19
 {
 "classname" "misc_model"
 "spawnflags" "255"
+"model" "models/objects/alien/ufo_crashed/acrash_wing_1.md2"
 "origin" "412 592 32"
 "angles" "10 -70 -180"
-"model" "models/objects/alien/ufo_crashed/acrash_wing_1.md2"
 }
 // entity 20
 {
 "classname" "misc_model"
 "spawnflags" "255"
-"origin" "529 447 40"
 "model" "models/objects/alien/ufo_crashed/acrash_engine.md2"
+"origin" "529 447 40"
 }
 // entity 21
 {
 "classname" "misc_model"
 "spawnflags" "255"
-"origin" "164.002 508 68.0019"
 "model" "models/objects/alien/ufo_crashed/acrash_hull.md2"
+"origin" "164.002 508 68.0019"
 "angles" "11.5109 0.431331 1.98816"
 }
 // entity 22
 {
 "classname" "misc_particle"
-"particle" "fire"
 "origin" "528 401 16"
+"particle" "fire"
 "spawnflags" "255"
 }
 // entity 23
@@ -1599,16 +1599,16 @@
 "classname" "light"
 "origin" "392 580 84"
 "_color" "0 0.7 0"
-"light" "100"
 "spawnflags" "1"
+"light" "100"
 }
 // entity 25
 {
 "classname" "light"
 "origin" "224 316 52"
 "_color" "0 0.7 0"
-"light" "100"
 "spawnflags" "1"
+"light" "100"
 }
 // entity 26
 {

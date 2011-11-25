@@ -71,7 +71,7 @@ public:
 	 * the SelectionSystem upon selection change to allow updating of the
 	 * widget sensitivity.
 	 */
-	void selectionChanged();
+	void selectionChanged(scene::Instance& instance, bool isComponent);
 
 	/** greebo: The command target compatible with FreeCaller<> to connect
 	 * 			this method to the EventManager.

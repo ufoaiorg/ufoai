@@ -102,7 +102,7 @@ class Ufo2mapMetadata:
         # take the version from the more up-to-date
         timestamp = 0
         if os.path.exists(UFO2MAP):
-            version = execute("%s --version" % UFO2MAP)
+            version = execute("\"%s\" --version" % UFO2MAP)
             # format is ATM "version:1.2.5 revision:1"
             version = version.replace("version", "")
             version = version.replace("revision", "rev")

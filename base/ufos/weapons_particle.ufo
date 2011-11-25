@@ -15,6 +15,7 @@ item pbeampistol
 	scale			1.18
 	ammo			16
 	reload			14
+	reloadsound		weapons/reload-pistol
 	price			3000
 	size			20
 	is_secondary	true
@@ -100,6 +101,7 @@ item pbeamrifle
 	scale			1.1
 	ammo			12
 	reload			14
+	reloadsound		weapons/reload-rifle
 	price			4000
 	size			40
 	is_primary		true
@@ -205,6 +207,7 @@ item pbeamcannon
 	scale			1.07
 	ammo			8
 	reload			16
+	reloadsound		weapons/reload-rifle
 	price			5000
 	size			70
 	is_primary		true

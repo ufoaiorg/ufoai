@@ -31,12 +31,12 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
  * @todo use a more generic name and move it to main ui
  */
 typedef enum {
-	SPRITE_STATUS_NORMAL = 0,  //!< ICON_STATUS_NORMAL
-	SPRITE_STATUS_HOVER = 1,   //!< ICON_STATUS_HOVER
-	SPRITE_STATUS_DISABLED = 2,//!< ICON_STATUS_DISABLED
-	SPRITE_STATUS_CLICKED = 3, //!< ICON_STATUS_CLICKED
+	SPRITE_STATUS_NORMAL = 0,  /**< ICON_STATUS_NORMAL */
+	SPRITE_STATUS_HOVER = 1,   /**< ICON_STATUS_HOVER */
+	SPRITE_STATUS_DISABLED = 2,/**< ICON_STATUS_DISABLED */
+	SPRITE_STATUS_CLICKED = 3, /**< ICON_STATUS_CLICKED */
 
-	SPRITE_STATUS_MAX          //!< ICON_STATUS_MAX
+	SPRITE_STATUS_MAX          /**< ICON_STATUS_MAX */
 } uiSpriteStatus_t;
 
 typedef struct uiSprite_s {
@@ -55,6 +55,6 @@ extern const value_t ui_spriteProperties[];
 
 uiSprite_t* UI_GetSpriteByName(const char* name);
 uiSprite_t* UI_AllocStaticSprite(const char* name) __attribute__ ((warn_unused_result));
-void UI_DrawSpriteInBox(const uiSprite_t* icon, uiSpriteStatus_t status, int posX, int posY, int sizeX, int sizeY);
+void UI_DrawSpriteInBox(qboolean flip, const uiSprite_t* icon, uiSpriteStatus_t status, int posX, int posY, int sizeX, int sizeY);
 
 #endif

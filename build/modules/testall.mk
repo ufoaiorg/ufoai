@@ -14,11 +14,15 @@ $(TARGET)_LDFLAGS  += -lcunit -lpng -ljpeg $(BFD_LIBS) $(INTL_LIBS) $(SDL_TTF_LI
 $(TARGET)_SRCS      = \
 	tests/test_all.c \
 	tests/test_routing.c \
+	tests/test_events.c \
 	tests/test_generic.c \
 	tests/test_inventory.c \
 	tests/test_game.c \
 	tests/test_mapdef.c \
+	tests/test_mathlibextra.c \
 	tests/test_rma.c \
+	tests/test_renderer.c \
+	tests/test_scripts.c \
 	tests/test_shared.c \
 	tests/test_ui.c \
 	tests/test_ui_level2.c \
@@ -57,6 +61,7 @@ $(TARGET)_SRCS      = \
 	client/battlescape/cl_localentity.c \
 	client/battlescape/cl_parse.c \
 	client/battlescape/cl_particle.c \
+	client/battlescape/cl_radar.c \
 	client/battlescape/cl_ugv.c \
 	client/battlescape/cl_view.c \
 	client/battlescape/cl_spawn.c \
@@ -64,7 +69,6 @@ $(TARGET)_SRCS      = \
 	client/battlescape/events/e_main.c \
 	client/battlescape/events/e_parse.c \
 	client/battlescape/events/e_server.c \
-	client/battlescape/events/e_time.c \
 	client/battlescape/events/event/actor/e_event_actoradd.c \
 	client/battlescape/events/event/actor/e_event_actorappear.c \
 	client/battlescape/events/event/actor/e_event_actorclientaction.c \
@@ -101,6 +105,7 @@ $(TARGET)_SRCS      = \
 	client/battlescape/events/event/world/e_event_explode.c \
 	client/battlescape/events/event/world/e_event_particleappear.c \
 	client/battlescape/events/event/world/e_event_particlespawn.c \
+	client/battlescape/events/event/world/e_event_sound.c \
 	\
 	client/sound/s_music.c \
 	client/sound/s_main.c \
@@ -108,9 +113,9 @@ $(TARGET)_SRCS      = \
 	client/sound/s_sample.c \
 	\
 	client/cgame/cl_game.c \
-	client/cgame/cl_game_campaign.c \
 	client/cgame/cl_game_team.c \
 	\
+	client/cgame/campaign/cl_game_campaign.c \
 	client/cgame/campaign/cp_aircraft.c \
 	client/cgame/campaign/cp_aircraft_callbacks.c \
 	client/cgame/campaign/cp_alien_interest.c \
@@ -133,6 +138,8 @@ $(TARGET)_SRCS      = \
 	client/cgame/campaign/cp_alienbase.c \
 	client/cgame/campaign/cp_aliencont.c \
 	client/cgame/campaign/cp_aliencont_callbacks.c \
+	client/cgame/campaign/cp_auto_mission.c \
+	client/cgame/campaign/cp_mission_callbacks.c \
 	client/cgame/campaign/cp_airfight.c \
 	client/cgame/campaign/cp_campaign.c \
 	client/cgame/campaign/cp_event.c \
@@ -173,6 +180,7 @@ $(TARGET)_SRCS      = \
 	client/cgame/campaign/missions/cp_mission_supply.c \
 	client/cgame/campaign/missions/cp_mission_terror.c \
 	client/cgame/campaign/missions/cp_mission_xvi.c \
+	shared/mathlib_extra.c \
 	\
 	client/ui/ui_actions.c \
 	client/ui/ui_components.c \
@@ -235,6 +243,7 @@ $(TARGET)_SRCS      = \
 	client/ui/node/ui_node_text2.c \
 	client/ui/node/ui_node_textlist.c \
 	client/ui/node/ui_node_textentry.c \
+	client/ui/node/ui_node_texture.c \
 	client/ui/node/ui_node_todo.c \
 	client/ui/node/ui_node_vscrollbar.c \
 	client/ui/node/ui_node_window.c \
@@ -309,6 +318,8 @@ $(TARGET)_SRCS      = \
 	client/renderer/r_thread.c \
 	\
 	shared/bfd.c \
+	shared/entitiesdef.c \
+	shared/stringhunk.c \
 	shared/byte.c \
 	shared/mutex.c \
 	shared/images.c \

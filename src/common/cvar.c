@@ -143,7 +143,8 @@ qboolean Cvar_SetCheckFunction (const char *varName, qboolean (*check) (cvar_t* 
 
 /**
  * @brief Checks cvar values
- * @return true if assert
+ * @return @c true if assert isn't true and the cvar was changed to a valid value, @c false if the
+ * new value is ok and nothing was changed.
  * @param[in] cvar Cvar to check
  * @param[in] minVal The minimal value the cvar should have
  * @param[in] maxVal The maximal value the cvar should have
@@ -298,7 +299,7 @@ qboolean Cvar_Delete (const char *varName)
 	for (var = cvarVarsHash[hash]; var; var = var->hash_next) {
 		if (!Q_strcasecmp(varName, var->name)) {
 			cvarChangeListener_t *changeListener;
-			if (var->flags & (CVAR_USERINFO | CVAR_SERVERINFO | CVAR_NOSET | CVAR_LATCH)) {
+			if (var->flags != 0) {
 				Com_Printf("Can't delete the cvar '%s' - it's a special cvar\n", varName);
 				return qfalse;
 			}
@@ -368,7 +369,7 @@ cvar_t *Cvar_Get (const char *var_name, const char *var_value, int flags, const 
 
 	var = Cvar_FindVar(var_name);
 	if (var) {
-		if (!var->defaultString && flags & CVAR_CHEAT)
+		if (!var->defaultString && (flags & CVAR_CHEAT))
 			var->defaultString = Mem_PoolStrDup(var_value, com_cvarSysPool, 0);
 		var->flags |= flags;
 		if (desc) {
@@ -801,6 +802,7 @@ static void Cvar_Set_f (void)
 				break;
 			default:
 				Com_Printf("invalid flags %c given\n", arg[0]);
+				break;
 			}
 			arg++;
 		}
@@ -837,6 +839,7 @@ static void Cvar_Switch_f (void)
 				break;
 			default:
 				Com_Printf("invalid flags %c given\n", arg[0]);
+				break;
 			}
 			arg++;
 		}
@@ -1025,7 +1028,7 @@ static void Cvar_Add_f (void)
 
 	cvar = Cvar_FindVar(Cmd_Argv(1));
 	if (!cvar) {
-		Com_Printf("Cvar_Add_f: %s not exists\n", Cmd_Argv(1));
+		Com_Printf("Cvar_Add_f: %s does not exist\n", Cmd_Argv(1));
 		return;
 	}
 
@@ -1047,7 +1050,7 @@ static void Cvar_Mod_f (void)
 
 	cvar = Cvar_FindVar(Cmd_Argv(1));
 	if (!cvar) {
-		Com_Printf("Cvar_Mod_f: %s not exists\n", Cmd_Argv(1));
+		Com_Printf("Cvar_Mod_f: %s does not exist\n", Cmd_Argv(1));
 		return;
 	}
 

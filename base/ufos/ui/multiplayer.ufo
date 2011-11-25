@@ -8,11 +8,11 @@ component panel cmpAdr {
 }
 	string adr { pos "30 1" size "300 20" tooltip "_Connect to this server"
 		onClick { cmd "server_info *cvar:adr<node:parent@num>;" }
-		onRClick { cmd "del adr<node:parent@num>; check_bookmarks;" }
+		onRClick { cmd "set adr<node:parent@num> \"\"; check_bookmarks;" }
 	}
 	custombutton resetadr { pos "0 1" size "22 22" icon "icons/garbage" tooltip "_Delete this bookmark"
-		onClick { cmd "del adr<node:parent@num>; check_bookmarks;" }
-		onRClick { cmd "del adr<node:parent@num>; check_bookmarks;" }
+		onClick { cmd "set adr<node:parent@num> \"\"; check_bookmarks;" }
+		onRClick { cmd "set adr<node:parent@num> \"\"; check_bookmarks;" }
 	}
 }
 
@@ -105,8 +105,8 @@ window multiplayer_team extends abstract_multiplayer
 	cmpTeamPanel content
 	{
 		{
-			pos		"415 100"
-			size	"608 768"
+			pos		"482 100"
+			size	"480 350"
 		}
 	}
 
@@ -190,7 +190,7 @@ window serverinfo
 		size		"300 20"
 		color		"1 1 1 1"
 		font		"f_normal_bold"
-		textalign	ALIGN_CC
+		contentalign	ALIGN_CC
 	}
 	string user_list_head1
 	{
@@ -199,7 +199,7 @@ window serverinfo
 		size		"150 20"
 		color		"1 1 1 1"
 		font		"f_verysmall"
-		textalign	ALIGN_UL
+		contentalign	ALIGN_UL
 	}
 	string user_list_head2
 	{
@@ -208,7 +208,7 @@ window serverinfo
 		size		"150 20"
 		color		"1 1 1 1"
 		font		"f_verysmall"
-		textalign	ALIGN_UL
+		contentalign	ALIGN_UL
 	}
 	text user_list
 	{
@@ -256,6 +256,7 @@ window serverinfo
 		background	"buttons/large_blue"
 		pos			"26 720"
 		size		"64 37"
+		flipicon	true
 		icon		"icons/return"
 		onClick		{ cmd "ui_pop; pingservers;" }
 	}
@@ -321,7 +322,7 @@ window mp_serverbrowser extends abstract_multiplayer_join
 			string		*cvar:mn_serverliststr
 			pos			"300 7"
 			size		"150 20"
-			textalign	ALIGN_UC
+			contentalign	ALIGN_UC
 		}
 		custombutton status_dec
 		{
@@ -329,7 +330,10 @@ window mp_serverbrowser extends abstract_multiplayer_join
 			size		"16 16"
 			icon		"icons/prev"
 			onClick		{
-				*cvar:cl_serverlist = ((*cvar:cl_serverlist - 1) % 2)
+				*cvar:cl_serverlist = ((*cvar:cl_serverlist - 1) % 3)
+				if ( *cvar:cl_serverlist < 0 ) {
+					*cvar:cl_serverlist = 2
+				}
 				call *node:root.set_mn_serverliststr_from_id( *cvar:cl_serverlist )
 				cmd "pingservers refresh;"
 			}
@@ -340,7 +344,7 @@ window mp_serverbrowser extends abstract_multiplayer_join
 			size		"16 16"
 			icon		"icons/next"
 			onClick		{
-				*cvar:cl_serverlist = ((*cvar:cl_serverlist + 1) % 2)
+				*cvar:cl_serverlist = ((*cvar:cl_serverlist + 1) % 3)
 				call *node:root.set_mn_serverliststr_from_id( *cvar:cl_serverlist )
 				cmd "pingservers refresh;"
 			}
@@ -413,7 +417,7 @@ window mp_serverbrowser extends abstract_multiplayer_join
 			image		"ui/button_green_verysmall"
 			color		"0 .78 0 1"
 			selectcolor	"1 1 1 1"
-			textalign	ALIGN_CL
+			contentalign	ALIGN_CL
 			padding		8
 			font		"f_verysmall"
 			pos			"65 475"
@@ -437,7 +441,7 @@ window mp_serverbrowser extends abstract_multiplayer_join
 			image		"ui/button_green_verysmall"
 			color		"0 .78 0 1"
 			selectcolor	"1 1 1 1"
-			textalign	ALIGN_CL
+			contentalign	ALIGN_CL
 			padding		8
 			font		"f_verysmall"
 			pos			"65 540"
@@ -494,7 +498,7 @@ window mp_bookmarks extends abstract_multiplayer_join
 			color		"0 0.5 0 1"
 			pos			"15 30"
 			size		"440 35"
-			textalign	ALIGN_UC
+			contentalign	ALIGN_UC
 		}
 
 		rows lines {
@@ -549,7 +553,6 @@ window mp_bookmarks extends abstract_multiplayer_join
 
 window mp_create_server extends abstract_multiplayer
 {
-
 	tab create_natigation {
 		{
 			pos	"462 200"
@@ -594,7 +597,7 @@ window mp_create_server extends abstract_multiplayer
 			image		"ui/button_green_verysmall"
 			color 		"0 .78 0 1"
 			selectcolor	"1 1 1 1"
-			textalign	ALIGN_CL
+			contentalign	ALIGN_CL
 			padding		8
 			font		"f_verysmall"
 			pos			"245 0"
@@ -620,7 +623,7 @@ window mp_create_server extends abstract_multiplayer
 			string		*cvar:sv_gametype
 			pos			"380 40"
 			size		"80 20"
-			textalign	ALIGN_UC
+			contentalign	ALIGN_UC
 			onWheelUp	{ cmd "mp_prevgametype;" }
 			onWheelDown	{ cmd "mp_nextgametype;" }
 		}
@@ -659,7 +662,6 @@ window mp_create_server extends abstract_multiplayer
 			size		"20 18"
 			image		"ui/checkbox_blue"
 		}
-
 	}
 
 	cmpMapPanel panel_map {
@@ -711,6 +713,23 @@ window mp_create_server extends abstract_multiplayer
 			size		"20 18"
 			image		"ui/checkbox_blue"
 		}
+		// =======================
+		// ALIEN RUSH
+		// =======================
+		string alienrush_str
+		{
+			string		"_Alien rush:"
+			pos			"25 25"
+			size		"250 20"
+			tooltip		"_Enemies respawn when killed."
+		}
+		checkbox alienrush_value
+		{
+			current		*cvar:g_endlessaliens
+			pos			"350 26"
+			size		"20 18"
+			image		"ui/checkbox_blue"
+		}
 
 		// ===================
 		// MAXCLIENTS
@@ -719,21 +738,21 @@ window mp_create_server extends abstract_multiplayer
 		{
 			string		"_Max. clients:"
 			tooltip		"_Sets the max allowed clients to connect"
-			pos			"25 40"
+			pos			"25 70"
 			size		"300 20"
 		}
 		string maxclients_value
 		{
 			string		*cvar:sv_maxclients
-			pos			"335 40"
+			pos			"335 70"
 			size		"50 20"
-			textalign	ALIGN_UC
+			contentalign	ALIGN_UC
 		}
 		spinner maxclients_change
 		{
 			current		*cvar:sv_maxclients
 			image		"ui/spinner_blue"
-			pos			"390 40"
+			pos			"390 70"
 			min			2
 			max			16
 			delta		1
@@ -746,21 +765,21 @@ window mp_create_server extends abstract_multiplayer
 		{
 			string		"_Max. soldiers per team:"
 			tooltip		"_Sets the max allowed soldiers per team"
-			pos			"25 60"
+			pos			"25 90"
 			size		"300 20"
 		}
 		string maxperplayer_value
 		{
 			string		*cvar:sv_maxsoldiersperteam
-			pos			"335 60"
+			pos			"335 90"
 			size		"50 20"
-			textalign	ALIGN_UC
+			contentalign	ALIGN_UC
 		}
 		spinner maxperplayer_change
 		{
 			current		*cvar:sv_maxsoldiersperteam
 			image		"ui/spinner_blue"
-			pos			"390 60"
+			pos			"390 90"
 			min			1
 			max			8
 			delta		1
@@ -773,21 +792,21 @@ window mp_create_server extends abstract_multiplayer
 		{
 			string		"_Max. soldiers per player:"
 			tooltip		"_Sets the max allowed soldiers per player when in teamplay"
-			pos			"25 80"
+			pos			"25 110"
 			size		"300 20"
 		}
 		string maxsoldierperplayer_value
 		{
 			string		*cvar:sv_maxsoldiersperplayer
-			pos			"335 80"
+			pos			"335 110"
 			size		"50 20"
-			textalign	ALIGN_UC
+			contentalign	ALIGN_UC
 		}
 		spinner maxsoldierperplayer_change
 		{
 			current		*cvar:sv_maxsoldiersperplayer
 			image		"ui/spinner_blue"
-			pos			"390 80"
+			pos			"390 110"
 			min			1
 			max			8
 			delta		1
@@ -800,21 +819,21 @@ window mp_create_server extends abstract_multiplayer
 		string server_maxplayerperteam_str
 		{
 			string		"_Max. human players per team:"
-			pos			"25 100"
+			pos			"25 130"
 			size		"300 20"
 		}
 		string server_maxplayerperteam_value
 		{
 			string		*cvar:sv_maxplayersperteam
-			pos			"335 100"
+			pos			"335 130"
 			size		"50 20"
-			textalign	ALIGN_UC
+			contentalign	ALIGN_UC
 		}
 		spinner maxplayersperteam_change
 		{
 			current		*cvar:sv_maxplayersperteam
 			image		"ui/spinner_blue"
-			pos			"390 100"
+			pos			"390 130"
 			min			1
 			max			8
 			delta		1
@@ -827,21 +846,21 @@ window mp_create_server extends abstract_multiplayer
 		{
 			string		"_Max. AI actors:"
 			tooltip		"_Max AI actors for teamplay mode"
-			pos			"25 120"
+			pos			"25 150"
 			size		"300 20"
 		}
 		string ai_numactors_value
 		{
 			string		*cvar:ai_numactors
-			pos			"335 120"
+			pos			"335 150"
 			size		"50 20"
-			textalign	ALIGN_UC
+			contentalign	ALIGN_UC
 		}
 		spinner ai_numactors_change
 		{
 			current		*cvar:ai_numactors
 			image		"ui/spinner_blue"
-			pos			"390 120"
+			pos			"390 150"
 			min			0
 			max			8
 			delta		1
@@ -854,21 +873,21 @@ window mp_create_server extends abstract_multiplayer
 		string timelimit_str
 		{
 			string		"_Round time limit in seconds:"
-			pos			"25 140"
+			pos			"25 170"
 			size		"250 20"
 		}
 		string timelimit_value
 		{
 			string		*cvar:sv_roundtimelimit
-			pos			"335 140"
+			pos			"335 170"
 			size		"50 20"
-			textalign	ALIGN_UC
+			contentalign	ALIGN_UC
 		}
 		spinner timelimit_change
 		{
 			current		*cvar:sv_roundtimelimit
 			image		"ui/spinner_blue"
-			pos			"390 140"
+			pos			"390 170"
 			min			30
 			max			500
 			delta		5
@@ -913,7 +932,7 @@ window mp_create_server extends abstract_multiplayer
 			image		"ui/button_green_verysmall"
 			color 		"0 .78 0 1"
 			selectcolor	"1 1 1 1"
-			textalign	ALIGN_CL
+			contentalign	ALIGN_CL
 			padding		8
 			font		"f_verysmall"
 			pos			"245 75"
@@ -936,7 +955,7 @@ window mp_create_server extends abstract_multiplayer
 			image		"ui/button_green_verysmall"
 			color 		"0 .78 0 1"
 			selectcolor	"1 1 1 1"
-			textalign	ALIGN_CL
+			contentalign	ALIGN_CL
 			padding		8
 			font		"f_verysmall"
 			pos			"245 135"
@@ -957,7 +976,7 @@ window mp_create_server extends abstract_multiplayer
 		pos			"500 530"
 		size		"400 100"
 		longlines	LONGLINES_WRAP
-		textalign	ALIGN_UC
+		contentalign	ALIGN_UC
 		font		"f_small"
 		dataid		TEXT_STANDARD
 	}
@@ -999,6 +1018,7 @@ window mp_create_server extends abstract_multiplayer
 		*cvar:mn_server_config_tab = 1
 		call *node:root.mp_update_config_navigation
 		cmd "ui_resetdata TEXT_STANDARD;"
+		cmd "define g_endlessaliens 0;"
 	}
 }
 
@@ -1144,7 +1164,7 @@ window multiplayer_wait extends levelbuttons
 			color		"1 1 1 1"
 			pos			"0 5"
 			size		"415 50"
-			textalign	ALIGN_CC
+			contentalign	ALIGN_CC
 		}
 
 		panel ready {
@@ -1198,7 +1218,7 @@ window multiplayer_wait extends levelbuttons
 			color		"1 1 1 1"
 			pos			"0 5"
 			size		"415 50"
-			textalign	ALIGN_CC
+			contentalign	ALIGN_CC
 		}
 
 		text teamnum_status
@@ -1209,21 +1229,21 @@ window multiplayer_wait extends levelbuttons
 			lineheight	16
 			tabwidth	60
 			rows		2
-			textalign	ALIGN_CC
+			contentalign	ALIGN_CC
 		}
 
 		string teamnum_str
 		{
 			string		"_Team preference:"
 			pos			"25 80"
-			size		"205 20"
+			size		"195 20"
 		}
 		string teamnum_value
 		{
 			string		*cvar:cl_teamnum
-			pos			"240 80"
+			pos			"248 80"
 			size		"40 20"
-			textalign	ALIGN_UR
+			contentalign	ALIGN_UR
 		}
 		button teamnum_inc
 		{
@@ -1240,7 +1260,7 @@ window multiplayer_wait extends levelbuttons
 			visiblewhen	"*cvar:cl_ready != 1"
 			tooltip		"_Previous free team"
 			icon		"icons/prev"
-			pos			"314 82"
+			pos			"222 82"
 			size		"16 16"
 			padding		0
 			onClick		{ cmd "teamnum_dec;" }
@@ -1278,49 +1298,6 @@ window multiplayer_wait extends levelbuttons
 		}
 	}
 
-	button swap_irc_connection_status {
-		string		"_Activate IRC"
-		image		"ui/button_blue"
-		pos			"30 550"
-		size		"150 40"
-		color		"0.8 0.8 0.8 1"
-		selectcolor "1 1 1 1"
-		onClick {
-			if ( *cvar:mn_ircconnected == 1 ) {
-				cmd "irc_disconnect;"
-				*cvar:mn_ircconnected = 0
-				*node:this@string = "_Activate IRC"
-				*node:parent.swap_irc_users_visibility@disabled = true
-				*node:parent.invite_players@disabled = true
-			} else {
-				cmd "irc_connect;"
-				*cvar:mn_ircconnected = 1
-				*node:this@string = "_Deactivate IRC"
-				*node:parent.swap_irc_users_visibility@disabled = false
-				*node:parent.invite_players@disabled = false
-			}
-		}
-	}
-
-	button swap_irc_users_visibility {
-		string		"_Display IRC users"
-		image		"ui/button_blue"
-		pos			"30 600"
-		size		"150 40"
-		disabled	true
-		color		"0.8 0.8 0.8 1"
-		selectcolor "1 1 1 1"
-		onClick {
-			if ( *node:parent.allchats.ircscreen.users@invis == true ) {
-				*node:parent.allchats.ircscreen.users@invis = false
-				*node:this@string = "_Display IRC users"
-			} else {
-				*node:parent.allchats.ircscreen.users@invis = true
-				*node:this@string = "_Hide IRC users"
-			}
-		}
-	}
-
 	button invite_players {
 		string		"_Invite others"
 		image		"ui/button_blue"
@@ -1332,224 +1309,6 @@ window multiplayer_wait extends levelbuttons
 		selectcolor "1 1 1 1"
 		onClick {
 			cmd "irc_invite;"
-		}
-	}
-
-	panel allchats {
-		{
-			pos				"200 550"
-			size			"800 200"
-			layout			LAYOUT_BORDER
-			padding	18
-			image	"ui/panel_window"
-		}
-
-		tab selectchat {
-			{
-				align	LAYOUTALIGN_TOP
-				height	40
-				cvar	*cvar:mn_chatselect
-				onChange {
-					if ( *cvar:mn_chatselect eq "irc" ) {
-						*node:parent.ircscreen@invis = false
-						*node:parent.chatscreen@invis = true
-					}
-					if ( *cvar:mn_chatselect eq "chat" ) {
-						*node:parent.ircscreen@invis = true
-						*node:parent.chatscreen@invis = false
-					}
-				}
-			}
-
-			option chat {
-				label	"_Party chat"
-				value	"chat"
-			}
-			option irc {
-				label	"_Global lobby (IRC)"
-				value	"irc"
-			}
-		}
-
-		panel ircscreen {
-			{
-				layout			LAYOUT_BORDER
-				align			LAYOUTALIGN_MIDDLE
-				layoutMargin	5
-				padding			5
-				bgcolor			"0 0.1 0 0.7"
-				invis			true
-			}
-
-			panel users {
-				{
-					width			"200"
-					layout			LAYOUT_BORDER
-					align			LAYOUTALIGN_RIGHT
-					layoutMargin	5
-					padding			0
-					invis			true
-				}
-
-				textlist list
-				{
-					lineheight	22
-					dataid		TEXT_IRCUSERS
-					rows		"27"
-					onClick		{ cmd "irc_userlist_click <lineselected>;" }
-					onRClick	{ cmd "irc_userlist_rclick <lineselected>;" }
-					onViewChange {
-						*node:parent.scroll@fullsize = <fullsize>
-						*node:parent.scroll@current = <viewpos>
-						*node:parent.scroll@viewsize = <viewsize>
-					}
-				}
-
-				vscrollbar scroll {
-					image		"ui/scrollbar_v_green"
-					align		LAYOUTALIGN_RIGHT
-					onChange 	{
-						*node:parent.list@viewpos = <current>
-					}
-				}
-			}
-
-			text irc
-			{
-				dataid		TEXT_IRCCONTENT
-				align		LAYOUTALIGN_MIDDLE
-				font		"f_verysmall"
-				rows		"10"
-				lineheight	"16"
-				padding		5
-				onViewChange {
-					*node:parent.irc_scroll@fullsize = <fullsize>
-					*node:parent.irc_scroll@viewsize = <viewsize>
-					*node:parent.irc_scroll@current = <viewpos>
-				}
-			}
-
-			vscrollbar irc_scroll {
-				image		"ui/scrollbar_v_green"
-				align		LAYOUTALIGN_RIGHT
-				onChange 	{
-					*node:parent.irc@viewpos = <current>
-				}
-			}
-
-			panel input {
-				{
-					layout			LAYOUT_PACK
-					layoutMargin	5
-					align			LAYOUTALIGN_BOTTOM
-					height			25
-				}
-
-				string say_label {
-					align		LAYOUTALIGN_LEFT
-					width		"50"
-					textalign	ALIGN_CL
-					string		"_Say:"
-				}
-
-				textentry say {
-					align		LAYOUTALIGN_FILL
-					image		"ui/button_green_verysmall"
-					string		*cvar:irc_send_buffer
-					color 		"0 .78 0 1"
-					selectcolor	"1 1 1 1"
-					textalign	ALIGN_CL
-					padding		8
-					font		"f_verysmall"
-					clickoutabort	true
-					onChange	{
-						cmd "irc_chanmsg;"
-						cmd "multiplayer_ircsay_edit;"
-					}
-				}
-
-				/** @todo move it into say@onChange
-				 * But at the moment this call into that callback dont work
-				 * without an intermediat command
-				 */
-				confunc multiplayer_ircsay_edit {
-					call *node:parent.say@edit
-				}
-			}
-		}
-
-		panel chatscreen {
-			{
-				layout			LAYOUT_BORDER
-				align			LAYOUTALIGN_MIDDLE
-				layoutMargin	5
-				padding			5
-				bgcolor			"0 0.1 0 0.7"
-			}
-
-			text chat
-			{
-				dataid		TEXT_CHAT_WINDOW
-				align		LAYOUTALIGN_MIDDLE
-				font		"f_verysmall"
-				rows		"10"
-				lineheight	"16"
-				padding		5
-				onViewChange {
-					*node:parent.chat_scroll@fullsize = <fullsize>
-					*node:parent.chat_scroll@viewsize = <viewsize>
-					*node:parent.chat_scroll@current = <viewpos>
-				}
-			}
-
-			vscrollbar chat_scroll {
-				image		"ui/scrollbar_v_green"
-				align		LAYOUTALIGN_RIGHT
-				onChange 	{
-					*node:parent.chat@viewpos = <current>
-				}
-			}
-
-			panel input {
-				{
-					layout			LAYOUT_PACK
-					layoutMargin	5
-					align			LAYOUTALIGN_BOTTOM
-					height			25
-				}
-
-				string say_label {
-					align		LAYOUTALIGN_LEFT
-					width		"50"
-					textalign	ALIGN_CL
-					string		"_Say:"
-				}
-
-				textentry say {
-					align		LAYOUTALIGN_FILL
-					image		"ui/button_green_verysmall"
-					string		*cvar:mn_entry
-					color 		"0 .78 0 1"
-					selectcolor	"1 1 1 1"
-					textalign	ALIGN_CL
-					padding		8
-					font		"f_verysmall"
-					clickoutabort	true
-					onChange	{
-						cmd "say <cvar:mn_entry>"
-						*cvar:mn_entry = ""
-						cmd "multiplayer_chatsay_edit;"
-					}
-				}
-
-				/** @todo move it into say@onChange
-				 * But at the moment this call into that callback dont work
-				 * without an intermediat command
-				 */
-				confunc multiplayer_chatsay_edit {
-					call *node:parent.say@edit
-				}
-			}
 		}
 	}
 
@@ -1611,7 +1370,7 @@ window multiplayer_wait extends levelbuttons
 
 	func onWindowOpened
 	{
-		cmd "mp_selectteam_init;"
+		cmd "mp_selectteam_init;ui_push hud_chat;"
 		*cvar:mn_displaypartyinfo = 1
 		*cvar:mn_entry = ""
 		*cvar:mn_chatselect = "chat"
@@ -1654,7 +1413,7 @@ window serverpassword
 		image		"ui/button_green_verysmall"
 		color		"0 .78 0 1"
 		selectcolor	"1 1 1 1"
-		textalign	ALIGN_CL
+		contentalign	ALIGN_CL
 		padding		8
 		font		"f_verysmall"
 		pos			"66 78"
@@ -1666,7 +1425,6 @@ window serverpassword
 	button set_password
 	{
 		string		"_OK"
-		tooltip		"_Connect"
 		image		"ui/button_green_small"
 		pos			"260 170"
 		width		"200"
@@ -1674,45 +1432,6 @@ window serverpassword
 		color		"0 0.5 0 1"
 		selectcolor	"1 1 1 1"
 		onClick		{ cmd "mn_server_need_password 0;ui_pop;connect;" }
-	}
-}
-
-// ==========================
-// CHAT POPUP (IRC)
-// ==========================
-window chat_popup
-{
-	{
-		string		"_Personal message"
-		pos			"264 262"
-		size		"496 247"
-		dragbutton	true
-		closebutton	true
-		image		"ui/popup_alpha_tile"
-	}
-
-	text chatscreen
-	{
-		dataid			TEXT_CHAT_WINDOW
-		pos			"26 58"
-		size		"444 100"
-		lineheight	20
-		rows		5
-		tabwidth	150
-		font		"f_verysmall"
-	}
-
-	button enter_lobby
-	{
-		string		"_Lobby"
-		tooltip		"_Go into the lobby"
-		image		"ui/button_green_small"
-		pos			"260 170"
-		width		"200"
-		font		"f_menu"
-		color		"0 0.5 0 1"
-		selectcolor	"1 1 1 1"
-		onClick		{ cmd "ui_pop;ui_push irc;" }
 	}
 }
 

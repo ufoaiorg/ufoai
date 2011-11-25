@@ -26,8 +26,10 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #define R_ENTITY_H
 
 #define MAX_ANIMLIST	8
+#define MAX_ENTITY_LIGHTS 8
 
 #include "r_light.h"
+#include "r_lighting.h"
 
 typedef struct animState_s {
 	int frame;
@@ -80,16 +82,18 @@ typedef struct entity_s {
 
 	vec4_t shell;					/**< shell color */
 
-	r_light_t *lights[MAX_DYNAMIC_LIGHTS];		/**< dynamic lights sorted by distance */
+	const light_t *lights[MAX_ENTITY_LIGHTS];		/**< static and dynamic lights sorted by distance */
 	int numLights;
 
 	image_t *deathTexture;
+
+	lighting_t *lighting;		/**< cached static light source information */
 
 	struct entity_s *next;		/**< for chaining */
 } entity_t;
 
 /* entity chains for rendering */
-entity_t *r_bsp_entities, *r_opaque_mesh_entities;
+entity_t *r_opaque_mesh_entities;
 entity_t *r_blend_mesh_entities, *r_null_entities;
 entity_t *r_special_entities;
 
@@ -102,7 +106,6 @@ void R_EntityAddToOrigin(entity_t *ent, const vec3_t offset);
 void R_TransformForEntity(const entity_t *e, const vec3_t in, vec3_t out);
 
 void R_DrawEntityEffects(void);
-void R_DrawBspEntities(const entity_t *ents);
 void R_DrawMeshEntities(entity_t *ents);
 void R_DrawOpaqueMeshEntities(entity_t *ents);
 void R_DrawBlendMeshEntities(entity_t *ents);

@@ -27,11 +27,16 @@
 
 #include "server.h"
 #include "sv_log.h"
-#include "../common/dbuffer.h"
 #include "../shared/mutex.h"
+#include "../shared/stringhunk.h"
 
-static struct dbuffer *logBuffer;
 static threads_mutex_t *svLogMutex;
+static stringHunk_t *svLogHunk;
+
+static void SV_LogPrintOutput (const char *string)
+{
+	Com_Printf("%s", string);
+}
 
 /**
  * @brief Handle the log output from the main thread by reading the strings
@@ -39,12 +44,9 @@ static threads_mutex_t *svLogMutex;
  */
 void SV_LogHandleOutput (void)
 {
-	char buf[1024];
-	int length;
-
 	TH_MutexLock(svLogMutex);
-	while ((length = NET_ReadString(logBuffer, buf, sizeof(buf))) > 0)
-		Com_Printf("%s", buf);
+	STRHUNK_Visit(svLogHunk, SV_LogPrintOutput);
+	STRHUNK_Reset(svLogHunk);
 	TH_MutexUnlock(svLogMutex);
 }
 
@@ -59,23 +61,24 @@ void SV_LogHandleOutput (void)
 void SV_LogAdd (const char *format, va_list ap)
 {
 	char msg[1024];
+
 	Q_vsnprintf(msg, sizeof(msg), format, ap);
 
-	if (logBuffer == NULL)
-		logBuffer = new_dbuffer();
-
 	TH_MutexLock(svLogMutex);
-	dbuffer_add(logBuffer, msg, strlen(msg) + 1);
+	STRHUNK_Add(svLogHunk, msg);
 	TH_MutexUnlock(svLogMutex);
 }
 
 void SV_LogInit (void)
 {
+	const size_t svHunkSize = 32768;
 	svLogMutex = TH_MutexCreate("sv_log");
+	svLogHunk = STRHUNK_Create(svHunkSize);
 }
 
 void SV_LogShutdown (void)
 {
 	TH_MutexDestroy(svLogMutex);
 	svLogMutex = NULL;
+	STRHUNK_Delete(&svLogHunk);
 }

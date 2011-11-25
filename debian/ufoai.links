@@ -1,0 +1,14 @@
+# add links to fonts
+#From ttf-freefont
+/usr/share/fonts/truetype/freefont/FreeSans.ttf /usr/share/games/ufoai/base/media/FreeSans.ttf
+#From ttf-dejavu-core
+/usr/share/fonts/truetype/ttf-dejavu/DejaVuSans.ttf /usr/share/games/ufoai/base/media/DejaVuSans.ttf
+#From ttf-thai-tlwg
+/usr/share/fonts/truetype/thai/Loma.ttf /usr/share/games/ufoai/base/media/Loma.ttf
+/usr/share/fonts/truetype/thai/Norasi.ttf /usr/share/games/ufoai/base/media/Norasi.ttf
+#From ttf-wqy-zenhei (only ttc)
+#/usr/share/fonts/truetype/wqy/wqy-zenhei.ttf /usr/share/games/ufoai/base/media/wqy-zenhei.ttf
+#From ttf-unfonts
+/usr/share/fonts/truetype/unfonts/UnGraphicBold.ttf /usr/share/games/base/ufoai/media/UnGraphicBold.ttf
+#From ttf-umefont
+/usr/share/fonts/truetype/umefont/ume-pgo4.ttf /usr/share/games/ufoai/base/media/ume-pgo4.ttf

@@ -47,13 +47,13 @@ static uiNode_t *UI_ParseNode(uiNode_t * parent, const char **text, const char *
 
 /** @brief valid properties for a UI model definition */
 static const value_t uiModelProperties[] = {
-	{"model", V_CLIENT_HUNK_STRING, offsetof(uiModel_t, model), 0},
+	{"model", V_HUNK_STRING, offsetof(uiModel_t, model), 0},
 	{"need", V_NULL, 0, 0},
-	{"anim", V_CLIENT_HUNK_STRING, offsetof(uiModel_t, anim), 0},
+	{"anim", V_HUNK_STRING, offsetof(uiModel_t, anim), 0},
 	{"skin", V_INT, offsetof(uiModel_t, skin), sizeof(int)},
 	{"color", V_COLOR, offsetof(uiModel_t, color), sizeof(vec4_t)},
-	{"tag", V_CLIENT_HUNK_STRING, offsetof(uiModel_t, tag), 0},
-	{"parent", V_CLIENT_HUNK_STRING, offsetof(uiModel_t, parent), 0},
+	{"tag", V_HUNK_STRING, offsetof(uiModel_t, tag), 0},
+	{"parent", V_HUNK_STRING, offsetof(uiModel_t, parent), 0},
 
 	{NULL, V_NULL, 0, 0},
 };
@@ -209,7 +209,7 @@ char* UI_AllocStaticString (const char* string, int size)
 	if (size != 0) {
 		if (ui_global.curadata - ui_global.adata + size > ui_global.adataize)
 			Com_Error(ERR_FATAL, "UI_AllocString: UI memory hunk exceeded - increase the size");
-		strncpy((char *)ui_global.curadata, string, size);
+		Q_strncpyz((char *)ui_global.curadata, string, size);
 		ui_global.curadata += size;
 	} else {
 		if (ui_global.curadata - ui_global.adata + strlen(string) + 1 > ui_global.adataize)
@@ -1185,21 +1185,23 @@ qboolean UI_ParseUIModel (const char *name, const char **text)
 				token = Com_EParse(text, errhead, name);
 				if (!*text)
 					return qfalse;
+				if (model->next != NULL)
+					Sys_Error("UI_ParseUIModel: second 'need' token found in model %s", name);
 				model->next = UI_GetUIModel(token);
-				if (!model->next)
+				 if (!model->next)
 					Com_Printf("Could not find UI model %s", token);
-				model->need = Mem_PoolStrDup(token, ui_sysPool, 0);
 			}
 		} else {
 			token = Com_EParse(text, errhead, name);
 			if (!*text)
 				return qfalse;
 			switch (v->type) {
-			case V_CLIENT_HUNK_STRING:
+			case V_HUNK_STRING:
 				Mem_PoolStrDupTo(token, (char**) ((char*)model + (int)v->ofs), ui_sysPool, 0);
 				break;
 			default:
 				Com_EParseValue(model, token, v->type, v->ofs, v->size);
+				break;
 			}
 		}
 	} while (*text);

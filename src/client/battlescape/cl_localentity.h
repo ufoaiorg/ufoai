@@ -75,6 +75,7 @@ typedef struct le_s {
 
 	int team;		/**< the team number this local entity belongs to */
 	int pnum;		/**< the player number this local entity belongs to */
+	int ucn;		/**< the unique character number to match between server and client characters */
 
 	fireDefIndex_t currentSelectedFiremode;
 
@@ -133,6 +134,9 @@ typedef struct le_s {
 	int left, right, extension, headgear; /**< item indices that the actor holds in his hands */
 	actorSizeEnum_t fieldSize;				/**< ACTOR_SIZE_*
 											 * @todo future thoughts: maybe define this in team_*.ufo files instead and use le->teamdef->fieldsize */
+
+	lighting_t lighting;
+
 	teamDef_t* teamDef;
 	int gender;	/**< @sa @c nametypes_t */
 	const fireDef_t *fd;	/**< in case this is a projectile or an actor */
@@ -147,7 +151,7 @@ typedef struct le_s {
 						 * this le_t.  Used to limit to one event per le_t struct at any time. */
 } le_t;
 
-#define MAX_LOCALMODELS		512
+#define MAX_LOCALMODELS		1024
 
 /** @brief local models */
 typedef struct localModel_s {
@@ -156,6 +160,8 @@ typedef struct localModel_s {
 	char name[MAX_QPATH];	/**< the name of the model file */
 	char target[MAX_VAR];
 	char tagname[MAX_VAR];		/**< in case a tag should be used to place the model */
+	char animname[MAX_QPATH];	/**< is this an animated model */
+
 	struct localModel_s *parent;	/**< in case a tag should be used to place the model a parent local model id must be given */
 	qboolean inuse;
 
@@ -168,9 +174,9 @@ typedef struct localModel_s {
 	int skin;
 	int renderFlags;	/**< effect flags */
 	int frame;	/**< which static frame to show (this can't be used if animname is set) */
-	char animname[MAX_QPATH];	/**< is this an animated model */
 	int levelflags;
 	animState_t as;
+	lighting_t lighting;
 
 	/** is called every frame */
 	void (*think) (struct localModel_s * localModel);
@@ -202,7 +208,11 @@ int LE_ActorGetStepTime(const le_t *le, const pos3_t pos, const pos3_t oldPos, c
 #define LE_IsCivilian(le)	((le)->team == TEAM_CIVILIAN)
 #define LE_IsAlien(le)		((le)->team == TEAM_ALIEN)
 #define LE_IsPhalanx(le)	((le)->team == TEAM_PHALANX)
-#define LE_IsBrushModel(le)	((le)->type == ET_BREAKABLE || (le)->type == ET_DOOR || (le)->type == ET_ROTATING)
+#define LE_IsRotating(le)	((le)->type == ET_ROTATING)
+#define LE_IsDoor(le)		((le)->type == ET_DOOR || (le)->type == ET_DOOR_SLIDING)
+#define LE_IsBreakable(le)	((le)->type == ET_BREAKABLE)
+#define LE_IsBrushModel(le)	(LE_IsBreakable(le) || LE_IsDoor(le) || LE_IsRotating(le))
+#define LE_IsNotSolid(le)	((le)->type == ET_TRIGGER_RESCUE || (le)->type == ET_TRIGGER_NEXTMAP)
 
 /** @brief Valid indices from 1 - MAX_DEATH */
 #define LE_GetAnimationIndexForDeath(le)	((le)->state & MAX_DEATH)
@@ -233,6 +243,7 @@ qboolean LE_BrushModelAction(le_t *le, entity_t *ent);
 void CL_RecalcRouting(const le_t *le);
 void CL_CompleteRecalcRouting(void);
 
+void LE_LinkFloorContainer(le_t *le);
 qboolean LE_IsLivingAndVisibleActor(const le_t *le);
 qboolean LE_IsLivingActor(const le_t *le);
 qboolean LE_IsActor(const le_t *le);

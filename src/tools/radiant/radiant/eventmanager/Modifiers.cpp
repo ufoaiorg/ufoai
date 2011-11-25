@@ -14,11 +14,11 @@ void Modifiers::loadModifierDefinitions ()
 {
 	xml::NodeList modifiers = GlobalRegistry().findXPath("user/ui/input//modifiers");
 
-	if (modifiers.size() > 0) {
+	if (!modifiers.empty()) {
 		// Find all button definitions
 		xml::NodeList modifierList = modifiers[0].getNamedChildren("modifier");
 
-		if (modifierList.size() > 0) {
+		if (!modifierList.empty()) {
 			globalOutputStream() << "EventManager: Modifiers found: " << modifierList.size() << "\n";
 			for (unsigned int i = 0; i < modifierList.size(); i++) {
 				const std::string name = modifierList[i].getAttributeValue("name");
@@ -48,7 +48,7 @@ unsigned int Modifiers::getModifierFlags (const std::string& modifierStr)
 	string::splitBy(modifierStr, parts, "+");
 
 	// Do we have any modifiers at all?
-	if (parts.size() > 0) {
+	if (!parts.empty()) {
 		unsigned int returnValue = 0;
 
 		// Cycle through all the modifier names and construct the bitfield

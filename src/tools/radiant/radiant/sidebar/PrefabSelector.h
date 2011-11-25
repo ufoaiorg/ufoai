@@ -27,11 +27,12 @@
 
 #include <gtk/gtk.h>
 #include <string>
+#include "sidebar.h"
 
 namespace sidebar
 {
 
-	class PrefabSelector
+	class PrefabSelector : public ui::SidebarComponent
 	{
 		private:
 
@@ -67,11 +68,16 @@ namespace sidebar
 			static gboolean FilterDirectory (GtkTreeModel *model, GtkTreeIter *possibleDirectory, PrefabSelector *self);
 		public:
 
+			/** greebo: Contains the static instance of this dialog.
+			 * Constructs the instance and calls toggle() when invoked.
+			 */
+			static PrefabSelector& Instance ();
+
 			static std::string GetFullPath (const std::string& file);
 
-			static GtkWidget* ConstructNotebookTab (void);
+			GtkWidget* getWidget () const;
 
-			GtkWidget* getWidget ();
+			const std::string getTitle() const;
 	};
 }
 

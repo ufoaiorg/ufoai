@@ -42,7 +42,7 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #define RF_ARROW            0x02000000	/**< arrow, debugging only */
 
 /** the following ent flags also draw entity effects */
-#define RF_SHADOW           0x00000004	/**< shadow (when living) for this entity */
+#define RF_NO_SHADOW        0x00000004	/**< shadow (when living) for this entity */
 #define RF_BLOOD            0x00000008	/**< blood (when dead) for this entity */
 #define RF_SELECTED         0x00000010	/**< selected actor */
 #define RF_MEMBER           0x00000020	/**< actor in the same team */
@@ -51,6 +51,9 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #define RF_PULSE            0x00000100	/**< glowing entity */
 #define RF_IRGOGGLES        0x00000200	/**< this is visible if the actor uses ir goggles */
 #define RF_NEUTRAL			0x00000400	/**< actor from a neutral team */
+#define RF_SHADOW           0x00000800	/**< shadow (when living) for this entity */
+#define RF_OPPONENT         0x00001000	/**< opponent */
+#define RF_IRGOGGLESSHOT	0x00002000	/**< this is the actor that used an irgoggle */
 
 #define EARTH_RADIUS 8192.0f
 #define MOON_RADIUS 1024.0f
@@ -75,20 +78,6 @@ typedef struct corona_s {
 #define MAX_CORONAS 		128
 
 #define MAX_GL_LIGHTS 8
-
-typedef struct {
-	vec3_t origin;
-	vec4_t color;
-	vec4_t ambient;
-	float radius;
-} light_t;
-
-/** @brief sustains are light flashes which slowly decay */
-typedef struct sustain_s {
-	light_t light;
-	float time;
-	float sustain;
-} sustain_t;
 
 typedef struct {
 	model_t *model;			/**< the loaded model */
@@ -210,13 +199,19 @@ typedef struct {
 	float time;					/**< time is used to auto animate */
 	int rendererFlags;				/**< RDF_NOWORLDMODEL, etc */
 	int worldlevel;
-	int brushCount, aliasCount;
+	int brushCount, aliasCount, batchCount;
+	int FFPToShaderCount, shaderToShaderCount, shaderToFFPCount;
 
 	int weather;				/**< weather effects */
 	vec4_t fogColor;
+	vec4_t ambientColor;
+	vec4_t sunDiffuseColor;
+	vec4_t sunSpecularColor;
 
+	/* entity, dynamic lights and corona lists are repopulated each frame, don't use them as persistent */
 	int numEntities;
-	int numLights;
+	int numDynamicLights;
+	light_t dynamicLights[MAX_GL_LIGHTS];
 	int numCoronas;
 	corona_t coronas[MAX_CORONAS];
 
@@ -253,9 +248,6 @@ typedef struct renderer_threadstate_s {
 } renderer_threadstate_t;
 
 extern renderer_threadstate_t r_threadstate;
-
-struct model_s *R_RegisterModelShort(const char *name);
-const image_t *R_RegisterImage(const char *name);
 
 void R_Color(const vec4_t rgba);
 

@@ -551,18 +551,37 @@ team phalanx
 	actorsounds {
 		female {
 			hurtsound	soldiers/femalehurt01
+			hurtsound	soldiers/femalehurt02
+			hurtsound	soldiers/femalehurt03
+			hurtsound	soldiers/femalehurt04
 			deathsound	soldiers/femaledeath01
 			deathsound	soldiers/femaledeath02
 			deathsound	soldiers/femaledeath03
 			deathsound	soldiers/femaledeath04
+			deathsound	soldiers/femaledeath05
+			deathsound	soldiers/femaledeath06
 		}
 		male {
 			hurtsound 	soldiers/malehurt01
+			hurtsound 	soldiers/malehurt02
+			hurtsound 	soldiers/malehurt03
+			hurtsound 	soldiers/malehurt04
+			hurtsound 	soldiers/malehurt05
+			hurtsound 	soldiers/malehurt06
+			hurtsound 	soldiers/malehurt07
+			hurtsound 	soldiers/malehurt08
+			hurtsound 	soldiers/malehurt09
+			hurtsound 	soldiers/malehurt10
+			hurtsound 	soldiers/malehurt11
+			hurtsound 	soldiers/malehurt12
+			hurtsound 	soldiers/malehurt13
 			deathsound	soldiers/maledeath01
 			deathsound	soldiers/maledeath02
 			deathsound	soldiers/maledeath03
 			deathsound	soldiers/maledeath04
 			deathsound	soldiers/maledeath05
+			deathsound	soldiers/maledeath06
+			deathsound	soldiers/maledeath07
 		}
 	}
 	templates {
@@ -591,6 +610,149 @@ team phalanx_scientist
 	race	civilian
 
 	names {
+		female {
+			Aakriti
+			Abeba
+			Adina
+			Afra
+			Afua
+			Agnes
+			Ahalya
+			Aina
+			Aja
+			Albina
+			Alice
+			Allison
+			Amal
+			Amelia
+			An
+			Andrea
+			Anette
+			Angelica
+			Anna
+			Ansana
+			Asabi
+			Asiya
+			Ayar
+			Aza
+			Badieh
+			Bethany
+			Bianca
+			Binta
+			Carmella
+			Carmen
+			Caroline
+			Cassandra
+			Cassidy
+			Catherine
+			Chang
+			Charlotte
+			Dalila
+			Elaine
+			Eli
+			Elise
+			Eloise
+			Emma
+			Esmeralda
+			Essa
+			Evonne
+			Fadheela
+			Fathia
+			Fatima
+			Feng
+			Fola
+			Gaby
+			Geraldine
+			Gin
+			Girisha
+			Gurneet
+			Hendrika
+			Hisa
+			Hope
+			Ida
+			Ikraam
+			Irina
+			Jada
+			Jade
+			Jasminder
+			Jaspinder
+			Jessica
+			“Jia Li”
+			Julia
+			Kate
+			Katie
+			Keiko
+			Kyoko
+			Kyoumi
+			Larissa
+			Laure
+			Lauren
+			Lei
+			Leona
+			Leonora
+			Leza
+			Lillian
+			Ling
+			“Li Qin”
+			Lorena
+			Lorraine
+			Lucy
+			Magdalena
+			Manjusha
+			Marcella
+			Mareike
+			Maria
+			Mariana
+			Matsuko
+			Meike
+			Michelle
+			Mikayla
+			Mutsu
+			Nadezhda
+			Naeema
+			Nicole
+			Nini
+			Nyssa
+			Oksana
+			Olivia
+			Paige
+			Polina
+			Pranjeeta
+			Rafia
+			Rasha
+			Reem
+			Rei
+			Ruby
+			Ruhin
+			Sarah
+			Shakiko
+			Shamilya
+			Shuwei
+			Sophie
+			Soraya
+			Stephanie
+			Sudha
+			Suhayla
+			Sujitha
+			Sylvie
+			Tahlia
+			Tatijana
+			Tatu
+			Triveni
+			Ute
+			Wan
+			Xia
+			Yasmeen
+			“Yi Min”
+			Yu
+			“Yue Yan”
+			Yvonne
+			Zahraa
+			Zalika
+			Zi
+			Zola
+		}
+
 		male {
 			Abdul-Majid
 			Adham
@@ -909,6 +1071,10 @@ team phalanx_scientist
 	}
 
 	models {
+		female {
+			civilians/female scientist01 head05a 0
+			civilians/female scientist01 head04a2 0
+		}
 		male {
 			civilians/male scientist01 sci_head01 0
 			civilians/male scientist01 sci_head02a 0
@@ -921,17 +1087,37 @@ team phalanx_scientist
 	actorsounds {
 		female {
 			hurtsound	soldiers/femalehurt01
+			hurtsound	soldiers/femalehurt02
+			hurtsound	soldiers/femalehurt03
+			hurtsound	soldiers/femalehurt04
 			deathsound	soldiers/femaledeath01
 			deathsound	soldiers/femaledeath02
 			deathsound	soldiers/femaledeath03
+			deathsound	soldiers/femaledeath04
+			deathsound	soldiers/femaledeath05
+			deathsound	soldiers/femaledeath06
 		}
 		male {
 			hurtsound 	soldiers/malehurt01
+			hurtsound 	soldiers/malehurt02
+			hurtsound 	soldiers/malehurt03
+			hurtsound 	soldiers/malehurt04
+			hurtsound 	soldiers/malehurt05
+			hurtsound 	soldiers/malehurt06
+			hurtsound 	soldiers/malehurt07
+			hurtsound 	soldiers/malehurt08
+			hurtsound 	soldiers/malehurt09
+			hurtsound 	soldiers/malehurt10
+			hurtsound 	soldiers/malehurt11
+			hurtsound 	soldiers/malehurt12
+			hurtsound 	soldiers/malehurt13
 			deathsound	soldiers/maledeath01
 			deathsound	soldiers/maledeath02
 			deathsound	soldiers/maledeath03
 			deathsound	soldiers/maledeath04
 			deathsound	soldiers/maledeath05
+			deathsound	soldiers/maledeath06
+			deathsound	soldiers/maledeath07
 		}
 	}
 	templates {
@@ -1271,29 +1457,46 @@ team phalanx_pilot
 	models {
 		male {
 			pilots/male body head01 0
-			pilots/male body head01 0
-			pilots/male body head01 0
-			pilots/male body head01 0
-			pilots/male body head01 0
-			pilots/male body head01 0
 		}
+//		female {
+//			pilots/female body head01 0 //TODO: Animate the female pilot model
+//		}
 	}
 
 	actorsounds {
 		female {
 			hurtsound	soldiers/femalehurt01
+			hurtsound	soldiers/femalehurt02
+			hurtsound	soldiers/femalehurt03
+			hurtsound	soldiers/femalehurt04
 			deathsound	soldiers/femaledeath01
 			deathsound	soldiers/femaledeath02
 			deathsound	soldiers/femaledeath03
 			deathsound	soldiers/femaledeath04
+			deathsound	soldiers/femaledeath05
+			deathsound	soldiers/femaledeath06
 		}
 		male {
 			hurtsound 	soldiers/malehurt01
+			hurtsound 	soldiers/malehurt02
+			hurtsound 	soldiers/malehurt03
+			hurtsound 	soldiers/malehurt04
+			hurtsound 	soldiers/malehurt05
+			hurtsound 	soldiers/malehurt06
+			hurtsound 	soldiers/malehurt07
+			hurtsound 	soldiers/malehurt08
+			hurtsound 	soldiers/malehurt09
+			hurtsound 	soldiers/malehurt10
+			hurtsound 	soldiers/malehurt11
+			hurtsound 	soldiers/malehurt12
+			hurtsound 	soldiers/malehurt13
 			deathsound	soldiers/maledeath01
 			deathsound	soldiers/maledeath02
 			deathsound	soldiers/maledeath03
 			deathsound	soldiers/maledeath04
 			deathsound	soldiers/maledeath05
+			deathsound	soldiers/maledeath06
+			deathsound	soldiers/maledeath07
 		}
 	}
 	templates {
@@ -1636,24 +1839,33 @@ team phalanx_worker
 		male {
 			civilians/male worker01 worker01_head 0
 			civilians/male worker01 worker01_head 1
+			civilians/male worker01 worker02_head 0
+			civilians/male worker01 worker02_head 1
 		}
 	}
 
 	actorsounds {
-		female {
-			hurtsound	soldiers/femalehurt01
-			deathsound	soldiers/femaledeath01
-			deathsound	soldiers/femaledeath02
-			deathsound	soldiers/femaledeath03
-			deathsound	soldiers/femaledeath04
-		}
 		male {
 			hurtsound 	soldiers/malehurt01
+			hurtsound 	soldiers/malehurt02
+			hurtsound 	soldiers/malehurt03
+			hurtsound 	soldiers/malehurt04
+			hurtsound 	soldiers/malehurt05
+			hurtsound 	soldiers/malehurt06
+			hurtsound 	soldiers/malehurt07
+			hurtsound 	soldiers/malehurt08
+			hurtsound 	soldiers/malehurt09
+			hurtsound 	soldiers/malehurt10
+			hurtsound 	soldiers/malehurt11
+			hurtsound 	soldiers/malehurt12
+			hurtsound 	soldiers/malehurt13
 			deathsound	soldiers/maledeath01
 			deathsound	soldiers/maledeath02
 			deathsound	soldiers/maledeath03
 			deathsound	soldiers/maledeath04
 			deathsound	soldiers/maledeath05
+			deathsound	soldiers/maledeath06
+			deathsound	soldiers/maledeath07
 		}
 	}
 	templates {
@@ -1671,6 +1883,8 @@ team phalanx_ugv_phoenix
 	race	robot
 	//hit_particle none
 	name	"_Phoenix UGV"
+	// we can't assign any extra armour
+	armour	false
 
 	names {
 		neutral {
@@ -1733,6 +1947,8 @@ team phalanx_ugv_ares_w
 	race	robot
 	//hit_particle none
 	name	"_Ares W (UGV)"
+	// we can't assign any extra armour
+	armour	false
 
 	names {
 		neutral {

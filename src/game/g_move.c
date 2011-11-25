@@ -114,22 +114,6 @@ void G_MoveCalcLocal (pathing_t *pt, int team, const edict_t *movingActor, const
 }
 
 /**
- * @brief Searches an actor on the given grid position
- * @param pos The position to search an actor on
- * @return The actor or @c NULL if no actor is standing on that grid position
- */
-edict_t *G_GetActorFromPos (const pos3_t pos)
-{
-	edict_t *actor = G_GetEdictFromPos(pos, ET_ACTOR);
-	if (actor == NULL)
-		actor = G_GetEdictFromPos(pos, ET_ACTOR2x2);
-	if (actor == NULL)
-		actor = G_GetEdictFromPos(pos, ET_ACTORHIDDEN);
-
-	return actor;
-}
-
-/**
  * @brief Let an actor fall down if e.g. the func_breakable the actor was standing on was destroyed.
  * @param[in,out] ent The actor that should fall down
  * @todo Handle cases where the grid position the actor would fall to is occupied by another actor already.
@@ -182,7 +166,7 @@ static qboolean G_ActorShouldStopInMidMove (const edict_t *ent, int visState, dv
 
 			 PosAddDV(pos, tmp, dvtab[max]);
 			 max--;
-			 blockEdict = G_GetEdictFromPos(pos, ET_NULL);
+			 blockEdict = G_GetLivingActorFromPos(pos);
 
 			 if (blockEdict && G_IsBlockingMovementActor(blockEdict)) {
 				 const qboolean visible = G_IsVisibleForTeam(blockEdict, ent->team);
@@ -250,6 +234,25 @@ static void G_WriteStep (edict_t* ent, byte** stepAmount, const int dvec, const 
 	gi.WriteShort(contentFlags);
 }
 
+static int G_FillDirectionTable (dvec_t *dvtab, size_t size, byte crouchingState, pos3_t pos)
+{
+	int dvec;
+	int numdv = 0;
+	while ((dvec = gi.MoveNext(level.pathingMap, pos, crouchingState))
+			!= ROUTING_UNREACHABLE) {
+		const int oldZ = pos[2];
+		/* dvec indicates the direction traveled to get to the new cell and the original cell height. */
+		/* We are going backwards to the origin. */
+		PosSubDV(pos, crouchingState, dvec);
+		/* Replace the z portion of the DV value so we can get back to where we were. */
+		dvtab[numdv++] = setDVz(dvec, oldZ);
+		if (numdv >= size)
+			break;
+	}
+
+	return numdv;
+}
+
 /**
  * @brief Generates the client events that are send over the netchannel to move an actor
  * @param[in] player Player who is moving an actor
@@ -268,13 +271,15 @@ void G_ClientMove (const player_t * player, int visTeam, edict_t* ent, const pos
 	int status, initTU;
 	dvec_t dvtab[MAX_DVTAB];
 	int dir;
-	int dvec;
 	byte numdv, length;
 	pos3_t pos;
 	float div;
 	int oldState;
 	qboolean autoCrouchRequired = qfalse;
 	byte crouchingState;
+
+	if (VectorCompare(ent->pos, to))
+		return;
 
 	/* check if action is possible */
 	if (!G_ActionCheckForCurrentTeam(player, ent, TU_MOVE_STRAIGHT))
@@ -315,20 +320,9 @@ void G_ClientMove (const player_t * player, int visTeam, edict_t* ent, const pos
 
 	/* assemble dvec-encoded move data */
 	VectorCopy(to, pos);
-	numdv = 0;
 	initTU = ent->TU;
 
-	while ((dvec = gi.MoveNext(level.pathingMap, pos, crouchingState))
-			!= ROUTING_UNREACHABLE) {
-		const int oldZ = pos[2];
-		/* dvec indicates the direction traveled to get to the new cell and the original cell height. */
-		/* We are going backwards to the origin. */
-		PosSubDV(pos, crouchingState, dvec);
-		/* Replace the z portion of the DV value so we can get back to where we were. */
-		dvtab[numdv++] = setDVz(dvec, oldZ);
-		if (numdv >= lengthof(dvtab))
-			break;
-	}
+	numdv = G_FillDirectionTable(dvtab, lengthof(dvtab), crouchingState, pos);
 
 	/* make sure to end any other pending events - we rely on EV_ACTOR_MOVE not being active anymore */
 	gi.EndEvents();
@@ -344,6 +338,7 @@ void G_ClientMove (const player_t * player, int visTeam, edict_t* ent, const pos
 			/* A flag to see if we needed to change crouch state */
 			int crouchFlag;
 			const byte oldDir = ent->dir;
+			int dvec;
 
 			/* get next dvec */
 			numdv--;

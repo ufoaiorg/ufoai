@@ -29,6 +29,6 @@ void R_AnimAppend(animState_t *as, const struct model_s *mod, const char *name);
 void R_AnimChange(animState_t *as, const struct model_s *mod, const char *name);
 void R_AnimRun(animState_t *as, const struct model_s *mod, int msec);
 const char *R_AnimGetName(const animState_t *as, const struct model_s *mod);
-void R_InterpolateTransform(animState_t *as, int numframes, const float *tag, float *interpolated);
+void R_InterpolateTransform(float backlerp, int numframes, const mAliasTagOrientation_t *current, const mAliasTagOrientation_t *old, float *interpolated);
 
 #endif

@@ -49,14 +49,31 @@ GraphTreeModel* CompiledGraph::getTreeModel ()
 	return _treeModel;
 }
 
-void CompiledGraph::addSceneChangedCallback (const SignalHandler& handler)
-{
-	m_sceneChangedCallbacks.connectLast(handler);
+void CompiledGraph::addSceneObserver(scene::Graph::Observer* observer) {
+	if (observer != NULL) {
+		// Add the passed observer to the list
+		_sceneObservers.push_back(observer);
+	}
+}
+
+void CompiledGraph::removeSceneObserver(scene::Graph::Observer* observer) {
+	// Cycle through the list of observers and call the moved method
+	for (ObserverList::iterator i = _sceneObservers.begin(); i != _sceneObservers.end(); i++) {
+		scene::Graph::Observer* registered = *i;
+
+		if (registered == observer) {
+			_sceneObservers.erase(i++);
+			return; // Don't continue the loop, the iterator is obsolete
+		}
+	}
 }
 
 void CompiledGraph::sceneChanged ()
 {
-	m_sceneChangedCallbacks();
+	for (ObserverList::iterator i = _sceneObservers.begin(); i != _sceneObservers.end(); i++) {
+		scene::Graph::Observer* observer = *i;
+		observer->onSceneGraphChange();
+	}
 }
 
 void CompiledGraph::notifyErase (scene::Instance* instance)
@@ -148,6 +165,11 @@ void CompiledGraph::insert (scene::Instance* instance)
 
 	// Notify the graph tree model about the change
 	sceneChanged();
+
+	for (ObserverList::iterator i = _sceneObservers.begin(); i != _sceneObservers.end(); i++) {
+		(*i)->onSceneNodeInsert(*instance);
+	}
+
 	graph_tree_model_insert(_treeModel, *instance);
 }
 
@@ -157,6 +179,11 @@ void CompiledGraph::erase (scene::Instance* instance)
 
 	// Notify the graph tree model about the change
 	sceneChanged();
+
+	for (ObserverList::iterator i = _sceneObservers.begin(); i != _sceneObservers.end(); i++) {
+		(*i)->onSceneNodeErase(*instance);
+	}
+
 	graph_tree_model_erase(_treeModel, *instance);
 
 	m_instances.erase(PathConstReference(instance->path()));

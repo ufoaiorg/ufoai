@@ -1168,49 +1168,91 @@ static void AI_InitPlayer (const player_t * player, edict_t * ent, const equipDe
 		gi.DPrintf("AI_InitPlayer: unknown team AI\n");
 }
 
+static const equipDef_t* G_GetEquipmentForAISpawn (int team)
+{
+	const equipDef_t *ed;
+	/* prepare equipment */
+	if (team != TEAM_CIVILIAN) {
+		const char *equipID = gi.Cvar_String("ai_equipment");
+		ed = G_GetEquipDefByID(equipID);
+		if (ed == NULL)
+			ed = &gi.csi->eds[0];
+	} else {
+		ed = NULL;
+	}
+	return ed;
+}
+
+static edict_t* G_SpawnAIPlayer (const player_t * player, const equipDef_t *ed)
+{
+	edict_t *ent = G_ClientGetFreeSpawnPointForActorSize(player, ACTOR_SIZE_NORMAL);
+	if (!ent) {
+		gi.DPrintf("Not enough spawn points for team %i\n", player->pers.team);
+		return NULL;
+	}
+
+	/* initialize the new actor */
+	AI_InitPlayer(player, ent, ed);
+
+	G_TouchTriggers(ent);
+
+	gi.DPrintf("Spawned ai player for team %i with entnum %i\n", ent->team, ent->number);
+
+	return ent;
+}
+
 /**
  * @brief Spawn civilians and aliens
  * @param[in] player
  * @param[in] numSpawn
  * @sa AI_CreatePlayer
  */
-static void G_SpawnAIPlayer (const player_t * player, int numSpawn)
+static void G_SpawnAIPlayers (const player_t * player, int numSpawn)
 {
-	const equipDef_t *ed;
 	int i;
-	const int team = player->pers.team;
+	const equipDef_t *ed = G_GetEquipmentForAISpawn(player->pers.team);
 
-	/* prepare equipment */
-	if (team != TEAM_CIVILIAN) {
-		char name[MAX_VAR];
-		Q_strncpyz(name, gi.Cvar_String("ai_equipment"), sizeof(name));
-		for (i = 0, ed = gi.csi->eds; i < gi.csi->numEDs; i++, ed++)
-			if (Q_streq(name, ed->name))
-				break;
-		if (i == gi.csi->numEDs)
-			ed = &gi.csi->eds[0];
-	} else {
-		ed = NULL;
-	}
-
-	/* spawn players */
 	for (i = 0; i < numSpawn; i++) {
-		edict_t *ent = G_ClientGetFreeSpawnPointForActorSize(player, ACTOR_SIZE_NORMAL);
-		if (!ent) {
-			gi.DPrintf("Not enough spawn points for team %i\n", team);
+		if (G_SpawnAIPlayer(player, ed) == NULL)
 			break;
-		}
-
-		/* initialize the new actor */
-		AI_InitPlayer(player, ent, ed);
-
-		G_TouchTriggers(ent);
 	}
+
 	/* show visible actors */
-	G_ClearVisFlags(team);
+	G_VisFlagsClear(player->pers.team);
 	G_CheckVis(NULL, qfalse);
 }
 
+/**
+ * @brief If the cvar g_endlessaliens is set we will endlessly respawn aliens
+ * @note This can be used for rescue or collect missions where it is enough to do something,
+ * and then leave the map (rescue zone)
+ */
+void AI_CheckRespawn (int team)
+{
+	if (!g_endlessaliens->integer)
+		return;
+
+	if (team != TEAM_ALIEN)
+		return;
+
+	const int spawned = level.initialAlienActorsSpawned;
+	const int alive = level.num_alive[team];
+	int diff = spawned - alive;
+	const equipDef_t *ed = G_GetEquipmentForAISpawn(team);
+
+	while (diff > 0) {
+		const player_t *player = G_GetPlayerForTeam(team);
+		edict_t *ent = G_SpawnAIPlayer(player, ed);
+		if (ent == NULL)
+			break;
+
+		const int status = G_CheckVis(ent, qfalse);
+		if (!(status & VIS_CHANGE)) {
+			G_EventActorAdd(~G_VisToPM(ent->visflags), ent);
+		}
+		diff--;
+	}
+}
 
 /**
  * @brief Spawn civilians and aliens
@@ -1237,12 +1279,17 @@ player_t *AI_CreatePlayer (int team)
 			p->num = p - game.players;
 			p->pers.ai = qtrue;
 			G_SetTeamForPlayer(p, team);
-			if (p->pers.team == TEAM_CIVILIAN)
-				G_SpawnAIPlayer(p, ai_numcivilians->integer);
-			else if (sv_maxclients->integer == 1)
-				G_SpawnAIPlayer(p, ai_numaliens->integer);
-			else
-				G_SpawnAIPlayer(p, ai_numactors->integer);
+			if (p->pers.team == TEAM_CIVILIAN) {
+				G_SpawnAIPlayers(p, ai_numcivilians->integer);
+			} else {
+				if (sv_maxclients->integer == 1)
+					G_SpawnAIPlayers(p, ai_numaliens->integer);
+				else
+					G_SpawnAIPlayers(p, ai_numactors->integer);
+
+				level.initialAlienActorsSpawned = level.num_spawned[p->pers.team];
+			}
+
 			gi.DPrintf("Created AI player (team %i)\n", p->pers.team);
 			return p;
 		}

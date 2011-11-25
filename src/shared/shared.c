@@ -75,6 +75,32 @@ char *Com_Trim (char *s)
 }
 
 /**
+ * @brief Remove high character values and only keep ascii.
+ * This can be used to print utf-8 characters to the console.
+ * It will replace every high character value with a simple dot.
+ */
+char *Com_ConvertToASCII7 (char *s)
+{
+	unsigned int l;
+	const size_t length = strlen(s);
+
+	l = 0;
+	do {
+		int c = s[l];
+		if (c == '\0')
+			break;
+		/* don't allow higher ascii values */
+		if (c >= 127)
+			s[l] = '.';
+		l++;
+	} while (l < length);
+
+	s[l] = '\0';
+
+	return s;
+}
+
+/**
  * @brief Like Com_Filter, but match PATTERN against any final segment of TEXT.
  */
 static int Com_FilterAfterStar (const char *pattern, const char *text)
@@ -205,22 +231,22 @@ int Com_Filter (const char *pattern, const char *text)
 
 /**
  * @brief Replaces the filename from one path with another one
- * @param[in] fileName The full path to a filename
- * @param[in] name The filename to insert into the given full path
- * @param[out] path The target buffer
+ * @param[in] inputPath The full path to a filename
+ * @param[in] expectedFileName The filename to insert into the given full path
+ * @param[out] outputPath The target buffer
  * @param[in] size The size of the target buffer
  */
-void Com_ReplaceFilename (const char *fileName, const char *name, char *path, size_t size)
+void Com_ReplaceFilename (const char *inputPath, const char *expectedFileName, char *outputPath, size_t size)
 {
 	char *slash, *end;
 
-	Q_strncpyz(path, fileName, size);
+	Q_strncpyz(outputPath, inputPath, size);
 
-	end = path;
+	end = outputPath;
 	while ((slash = strchr(end, '/')) != 0)
 		end = slash + 1;
 
-	strcpy(end, name + 1);
+	strcpy(end, expectedFileName);
 }
 
 /**
@@ -244,9 +270,9 @@ void Com_StripExtension (const char *in, char *out, const size_t size)
 	}
 
 	if (out_ext)
-		*out_ext = 0;
+		*out_ext = '\0';
 	else
-		*out = 0;
+		*out = '\0';
 }
 
 /**

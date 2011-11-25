@@ -2,18 +2,18 @@
 // entity 0
 {
 "classname" "worldspawn"
-"maxteams" "2"
 "maxlevel" "5"
+"maxteams" "2"
 "angles_day" "-75 10"
 "angles_night" "-75 20"
 // brush 0
 {
-( 64 256 128 ) ( 64 0 128 ) ( 0 256 128 ) tex_material/s_wood003 0 0 0 0.25 0.25 65280 0 0
-( 65 256 256 ) ( 57 256 256 ) ( 65 256 0 ) tex_material/s_wood003 0 0 0 0.25 0.25 65280 0 0
-( 64 256 128 ) ( 64 256 0 ) ( 64 0 128 ) tex_material/s_wood003 0 0 0 0.25 0.25 65280 0 0
+( 64 256 128 ) ( 64 0 128 ) ( 0 256 128 ) tex_material/s_wood003 0 0 0 0.125 0.125 65280 0 0
+( 65 256 256 ) ( 57 256 256 ) ( 65 256 0 ) tex_material/s_wood003 0 0 0 0.125 0.125 65280 0 0
+( 64 256 128 ) ( 64 256 0 ) ( 64 0 128 ) tex_material/s_wood003 0 0 0 0.125 0.125 65280 0 0
 ( 64 64 0 ) ( 192 64 0 ) ( 64 256 0 ) tex_common/nodraw 0 0 0 0.25 0.25 65280 0 0
-( 57 0 0 ) ( 57 0 256 ) ( 65 0 0 ) tex_material/s_wood003 0 0 0 0.25 0.25 65280 0 0
-( 0 0 -128 ) ( 0 256 -128 ) ( 0 0 0 ) tex_material/s_wood003 0 0 0 0.25 0.25 65280 0 0
+( 57 0 0 ) ( 57 0 256 ) ( 65 0 0 ) tex_material/s_wood003 0 0 0 0.125 0.125 65280 0 0
+( 0 0 -128 ) ( 0 256 -128 ) ( 0 0 0 ) tex_material/s_wood003 0 0 0 0.125 0.125 65280 0 0
 }
 // brush 1
 {
@@ -114,16 +114,16 @@
 // entity 2
 {
 "classname" "light"
-"_color" "0.8 0.8 1"
 "light" "200"
-"origin" "72 40 62"
 "spawnflags" "1"
+"origin" "72 40 62"
+"_color" "0.8 0.8 1"
 }
 // entity 3
 {
 "classname" "light"
-"_color" "0.8 0.8 1"
 "light" "200"
-"origin" "72 216 62"
 "spawnflags" "1"
+"origin" "72 216 62"
+"_color" "0.8 0.8 1"
 }

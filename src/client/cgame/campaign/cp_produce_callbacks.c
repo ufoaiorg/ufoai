@@ -372,11 +372,11 @@ static void PR_ProductionInfo (const base_t *base)
 		} else {
 			UI_ExecuteConfunc("prod_availableselected");
 			if (PR_IsAircraftData(&selectedData)) {
-				PR_AircraftInfo(base, selectedData.data.aircraft, 0.0);
+				PR_AircraftInfo(base, selectedData.data.aircraft, PR_GetProductionHours(base, &selectedData));
 			} else if (PR_IsItemData(&selectedData)) {
-				PR_ItemProductionInfo(base, selectedData.data.item, 0.0);
+				PR_ItemProductionInfo(base, selectedData.data.item, PR_GetProductionHours(base, &selectedData));
 			} else if (PR_IsDisassemblyData(&selectedData)) {
-				PR_DisassemblyInfo(selectedData.data.ufo, 0.0);
+				PR_DisassemblyInfo(selectedData.data.ufo, PR_GetProductionHours(base, &selectedData));
 			}
 		}
 	}

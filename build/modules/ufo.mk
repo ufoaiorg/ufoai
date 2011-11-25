@@ -45,6 +45,7 @@ $(TARGET)_SRCS      = \
 	client/battlescape/cl_localentity.c \
 	client/battlescape/cl_parse.c \
 	client/battlescape/cl_particle.c \
+	client/battlescape/cl_radar.c \
 	client/battlescape/cl_ugv.c \
 	client/battlescape/cl_view.c \
 	client/battlescape/cl_spawn.c \
@@ -52,7 +53,6 @@ $(TARGET)_SRCS      = \
 	client/battlescape/events/e_main.c \
 	client/battlescape/events/e_parse.c \
 	client/battlescape/events/e_server.c \
-	client/battlescape/events/e_time.c \
 	client/battlescape/events/event/actor/e_event_actoradd.c \
 	client/battlescape/events/event/actor/e_event_actorappear.c \
 	client/battlescape/events/event/actor/e_event_actorclientaction.c \
@@ -89,6 +89,7 @@ $(TARGET)_SRCS      = \
 	client/battlescape/events/event/world/e_event_explode.c \
 	client/battlescape/events/event/world/e_event_particleappear.c \
 	client/battlescape/events/event/world/e_event_particlespawn.c \
+	client/battlescape/events/event/world/e_event_sound.c \
 	\
 	client/sound/s_music.c \
 	client/sound/s_main.c \
@@ -96,9 +97,9 @@ $(TARGET)_SRCS      = \
 	client/sound/s_sample.c \
 	\
 	client/cgame/cl_game.c \
-	client/cgame/cl_game_campaign.c \
 	client/cgame/cl_game_team.c \
 	\
+	client/cgame/campaign/cl_game_campaign.c \
 	client/cgame/campaign/cp_aircraft.c \
 	client/cgame/campaign/cp_aircraft_callbacks.c \
 	client/cgame/campaign/cp_alien_interest.c \
@@ -121,6 +122,8 @@ $(TARGET)_SRCS      = \
 	client/cgame/campaign/cp_alienbase.c \
 	client/cgame/campaign/cp_aliencont.c \
 	client/cgame/campaign/cp_aliencont_callbacks.c \
+	client/cgame/campaign/cp_auto_mission.c \
+	client/cgame/campaign/cp_mission_callbacks.c \
 	client/cgame/campaign/cp_airfight.c \
 	client/cgame/campaign/cp_campaign.c \
 	client/cgame/campaign/cp_event.c \
@@ -224,6 +227,7 @@ $(TARGET)_SRCS      = \
 	client/ui/node/ui_node_text2.c \
 	client/ui/node/ui_node_textlist.c \
 	client/ui/node/ui_node_textentry.c \
+	client/ui/node/ui_node_texture.c \
 	client/ui/node/ui_node_todo.c \
 	client/ui/node/ui_node_vscrollbar.c \
 	client/ui/node/ui_node_window.c \
@@ -300,9 +304,11 @@ $(TARGET)_SRCS      = \
 	shared/bfd.c \
 	shared/byte.c \
 	shared/mathlib.c \
+	shared/mathlib_extra.c \
 	shared/mutex.c \
 	shared/utf8.c \
 	shared/images.c \
+	shared/stringhunk.c \
 	shared/infostring.c \
 	shared/parse.c \
 	shared/shared.c \

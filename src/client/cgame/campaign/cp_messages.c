@@ -129,6 +129,9 @@ message_t *MS_AddNewMessageSound (const char *title, const char *text, qboolean 
 		ccs.numUnreadMails = -1;
 		sound = "geoscape/mail";
 		break;
+	case MSG_UFOLOST:
+		sound = "geoscape/ufolost";
+		break;
 	case MSG_UFOSPOTTED:
 		sound = "geoscape/ufospotted";
 		break;
@@ -231,6 +234,9 @@ qboolean MS_LoadXML (xmlNode_t *p)
 		int mtype;
 		char title[MAX_VAR];
 		char text[MAX_MESSAGE_TEXT];
+		char id[MAX_VAR];
+		technology_t *tech = NULL;
+		message_t *mess;
 
 		if (!Com_GetConstIntFromNamespace(SAVE_MESSAGETYPE_NAMESPACE, type, (int*) &mtype)) {
 			Com_Printf("Invalid message type '%s'\n", type);
@@ -249,24 +255,33 @@ qboolean MS_LoadXML (xmlNode_t *p)
 			mail = NULL;
 
 		/* event and not mail means, dynamic mail - we don't save or load them */
+		if (mtype == MSG_EVENT && !mail)
+			continue;
 		/** @todo is this really meant to depend on DEBUG_ALL with NO individual bit like DEBUG_MSG ?? */
-		if (!((mtype == MSG_EVENT && !mail) || (mtype == MSG_DEBUG && developer->integer != 1))) {
-			char id[MAX_VAR];
-			technology_t *tech = NULL;
-			message_t *mess;
+		if (mtype == MSG_DEBUG && developer->integer != 1)
+			continue;
 
-			Q_strncpyz(id, XML_GetString(sn, SAVE_MESSAGES_PEDIAID), sizeof(id));
-			if (id[0] != '\0')
-				tech = RS_GetTechByID(id);
-			if (!tech && (mtype == MSG_RESEARCH_PROPOSAL || mtype == MSG_RESEARCH_FINISHED)) {
-				/** No tech found drop message. */
-				continue;
-			}
-			mess = MS_AddNewMessageSound(title, text, qfalse, mtype, tech, qfalse);
-			mess->eventMail = mail;
-			XML_GetDate(sn, SAVE_MESSAGES_DATE, &mess->date.day, &mess->date.sec);
-			/* redo timestamp text after setting date */
-			MS_TimestampedText(mess->timestamp, mess, sizeof(mess->timestamp));
+		Q_strncpyz(id, XML_GetString(sn, SAVE_MESSAGES_PEDIAID), sizeof(id));
+		if (id[0] != '\0')
+			tech = RS_GetTechByID(id);
+		if (!tech && (mtype == MSG_RESEARCH_PROPOSAL || mtype == MSG_RESEARCH_FINISHED)) {
+			/** No tech found drop message. */
+			continue;
+		}
+		mess = MS_AddNewMessageSound(title, text, qfalse, mtype, tech, qfalse);
+		mess->eventMail = mail;
+		XML_GetDate(sn, SAVE_MESSAGES_DATE, &mess->date.day, &mess->date.sec);
+		/* redo timestamp text after setting date */
+		MS_TimestampedText(mess->timestamp, mess, sizeof(mess->timestamp));
+
+		if (mail) {
+			dateLong_t date;
+			char dateBuf[MAX_VAR] = "";
+
+			CP_DateConvertLong(&mess->date, &date);
+			Com_sprintf(dateBuf, sizeof(dateBuf), _("%i %s %02i"),
+				date.year, Date_GetMonthName(date.month - 1), date.day);
+			mail->date = Mem_PoolStrDup(dateBuf, cp_campaignPool, 0);
 		}
 	}
 	Com_UnregisterConstList(saveMessageConstants);

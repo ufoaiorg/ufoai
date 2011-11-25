@@ -39,7 +39,6 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 
 #include "../../client.h"
 #include "e_parse.h"
-#include "e_time.h"
 #include "e_main.h"
 
 #include "../cl_localentity.h"
@@ -152,14 +151,58 @@ static void CL_FreeBattlescapeEvent (void *data)
 	Mem_Free(event);
 }
 
+/**
+ * @return @c true to keep the event, @c false to remove it from the queue
+ */
 static qboolean CL_FilterBattlescapeEvents (int when, event_func *func, event_check_func *check, void *data)
 {
-	return (func != &CL_ExecuteBattlescapeEvent);
+	if (func == &CL_ExecuteBattlescapeEvent) {
+		const evTimes_t *event = (const evTimes_t *)data;
+		Com_Printf("Remove pending event %i\n", event->eType);
+		return qfalse;
+	}
+	return qtrue;
 }
 
-void CL_ClearBattlescapeEvents (void)
+int CL_ClearBattlescapeEvents (void)
 {
-	CL_FilterEventQueue(&CL_FilterBattlescapeEvents);
+	int filtered = CL_FilterEventQueue(&CL_FilterBattlescapeEvents);
+	CL_BlockBattlescapeEvents(qfalse);
+	return filtered;
+}
+
+/**
+ * @brief Calculates the time the event should get executed. If two events return the same time,
+ * they are going to be executed in the order the were parsed.
+ * @param[in] eType The event type
+ * @param[in,out] msg The message buffer that can be modified to get the event time
+ * @param[in,out] eventTiming The delay data for the events
+ * @return the time (in milliseconds) the event should be executed. This value is
+ * used to sort the event chain to determine which event must be executed at first.
+ * This value also ensures, that the events are executed in the correct order.
+ * E.g. @c impactTime is used to delay some events in case the projectile needs
+ * some time to reach its target.
+ */
+static int CL_GetEventTime (const event_t eType, struct dbuffer *msg, eventTiming_t *eventTiming)
+{
+	const eventRegister_t *eventData = CL_GetEvent(eType);
+	int eventTime;
+
+	/* get event time */
+	if (eventTiming->nextTime < cl.time)
+		eventTiming->nextTime = cl.time;
+	if (eventTiming->impactTime < cl.time)
+		eventTiming->impactTime = cl.time;
+
+	if (!eventData->timeCallback)
+		eventTime = eventTiming->nextTime;
+	else
+		eventTime = eventData->timeCallback(eventData, msg, eventTiming);
+
+	Com_DPrintf(DEBUG_EVENTSYS, "%s => eventTime: %i, nextTime: %i, impactTime: %i, shootTime: %i, cl.time: %i\n",
+			eventData->name, eventTime, eventTiming->nextTime, eventTiming->impactTime, eventTiming->shootTime, cl.time);
+
+	return eventTime;
 }
 
 /**
@@ -169,6 +212,7 @@ void CL_ClearBattlescapeEvents (void)
  */
 void CL_ParseEvent (struct dbuffer *msg)
 {
+	static eventTiming_t eventTiming;
 	qboolean now;
 	const eventRegister_t *eventData;
 	event_t eType = NET_ReadByte(msg);
@@ -190,16 +234,17 @@ void CL_ParseEvent (struct dbuffer *msg)
 	if (!eventData->eventCallback)
 		Com_Error(ERR_DROP, "CL_ParseEvent: no handling function for event %i", eType);
 
+	if (eType == EV_RESET)
+		OBJZERO(eventTiming);
+
 	if (now) {
 		/* log and call function */
 		CL_LogEvent(eventData);
-		Com_DPrintf(DEBUG_EVENTSYS, "event(now): %s\n", eventData->name);
+		Com_DPrintf(DEBUG_EVENTSYS, "event(now [%i]): %s\n", cl.time, eventData->name);
 		GAME_NofityEvent(eType);
 		eventData->eventCallback(eventData, msg);
 	} else {
 		evTimes_t *cur = (evTimes_t *)Mem_PoolAlloc(sizeof(*cur), cl_genericPool, 0);
-		static int lastFrame = 0;
-		const int delta = cl.time - lastFrame;
 		int when;
 
 		/* copy the buffer as first action, the event time functions can modify the buffer already */
@@ -207,10 +252,8 @@ void CL_ParseEvent (struct dbuffer *msg)
 		cur->eType = eType;
 
 		/* timestamp (msec) that is used to determine when the event should be executed */
-		when = CL_GetEventTime(cur->eType, msg, delta);
+		when = CL_GetEventTime(cur->eType, msg, &eventTiming);
 		Schedule_Event(when, &CL_ExecuteBattlescapeEvent, &CL_CheckBattlescapeEvent, &CL_FreeBattlescapeEvent, cur);
-
-		lastFrame = cl.time;
 
 		Com_DPrintf(DEBUG_EVENTSYS, "event(at %d): %s %p\n", when, eventData->name, (void*)cur);
 	}

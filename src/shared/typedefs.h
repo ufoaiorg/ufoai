@@ -130,6 +130,9 @@ typedef struct {
 
 	ipos3_t wpMins;
 	ipos3_t wpMaxs;
+
+	byte lightquant;
+	byte *lightdata;
 } mapTile_t;
 
 /**

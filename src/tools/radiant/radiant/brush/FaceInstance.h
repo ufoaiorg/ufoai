@@ -9,7 +9,6 @@
 #include "SelectableComponents.h"
 #include "VertexSelection.h"
 #include "Face.h"
-#include "selectionlib.h"
 
 typedef const Plane3* PlanePointer;
 typedef PlanePointer* PlanesIterator;
@@ -32,6 +31,7 @@ class FaceInstance
 		FaceInstance& operator= (const FaceInstance& other);
 		Face& getFace ();
 		const Face& getFace () const;
+		Face* getFacePtr () const;
 		void selectedChanged (const Selectable& selectable);
 		typedef MemberCaller1<FaceInstance, const Selectable&, &FaceInstance::selectedChanged> SelectedChangedCaller;
 

@@ -9,19 +9,13 @@
 	}
 }
 
-/* ufo1: (Supply Ship) */
-
-/* ufo1_01: Wall with Relief (Supply Ship) */
+/* Rotating fan blades for the generator cooling system (on tile st_i01) */
 {
-	material tex_ufo/ufo1_01
-	bump 3.0
-	hardness 0.7
-	parallax 1.0
-	specular 2.0
+	material tex_base/vent_round
 	{
-		envmap 0
-	}
-	{
+		texture tex_base/fan
+		blend GL_SRC_ALPHA GL_ONE
+		rotate 1.5
 		lightmap
 	}
 }

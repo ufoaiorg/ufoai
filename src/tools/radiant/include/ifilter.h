@@ -26,14 +26,22 @@ Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
 #include "string/string.h"
 #include <string>
 #include <vector>
+#include <cassert>
 
 /**
  * This structure defines a simple filtercriterion as used by the Filtersystem
  */
-struct FilterRule {
+class FilterRule
+{
+public:
+	enum Type {
+		TYPE_TEXTURE, TYPE_ENTITYCLASS, TYPE_SURFACEFLAGS, TYPE_CONTENTFLAGS, TYPE_ENTITYKEYVALUE
+	};
+	// The rule type
+	Type type;
 
-	// "texture", "entityclass", "surfaceflags" or "contentflags".
-	std::string type;
+	// The entity key, only applies for type "entitykeyvalue"
+	std::string entityKey;
 
 	// the match expression regex
 	std::string match;
@@ -45,17 +53,40 @@ struct FilterRule {
 
 	int contentflags;	// contentflags to match again
 
-	// Constructor
-	FilterRule(const std::string t, const std::string m, bool s) :
+private:
+	// Private Constructor, use the named constructors below
+	FilterRule(const Type t, const std::string& m, bool s) :
 		type(t),
 		match(m),
 		show(s)
 	{
-		if (t == "surfaceflags") {
+		if (t == TYPE_SURFACEFLAGS) {
 			surfaceflags = string::toInt(m);
-		} else if (t == "contentflags") {
+		} else if (t == TYPE_CONTENTFLAGS) {
 			contentflags = string::toInt(m);
 		}
+	}
+
+	// Alternative private constructor for the entityKeyValue type
+	FilterRule(const Type t, const std::string& key, const std::string& m,
+			bool s) :
+			type(t), entityKey(key), match(m), show(s) {
+	}
+
+public:
+	// Named constructors
+
+	// Regular constructor for the non-entitykeyvalue types
+	static FilterRule Create(const Type type, const std::string& match,
+			bool show) {
+		assert(type != TYPE_ENTITYKEYVALUE);
+		return FilterRule(type, match, show);
+	}
+
+	// Constructor for the entity key value type
+	static FilterRule CreateEntityKeyValueRule(const std::string& key,
+			const std::string& match, bool show) {
+		return FilterRule(TYPE_ENTITYKEYVALUE, key, match, show);
 	}
 };
 typedef std::vector<FilterRule> FilterRules;
@@ -69,6 +100,9 @@ struct IFilterVisitor {
 		// Visit function
 		virtual void visit(const std::string& filterName) = 0;
 };
+
+// Forward declaration
+class Entity;
 
 /** Interface for the FilterSystem.
  */
@@ -125,17 +159,31 @@ public:
 	/** Test if a given item should be visible or not, based on the currently-
 	 * active filters.
 	 *
-	 * @param item
-	 * The item to query - "texture", "entityclass", "surfaceflags" or "contentflags".
+	 * @param type
+	 * The filter type to query
 	 *
-	 * @param text
+	 * @param name
 	 * String name of the item to query.
 	 *
 	 * @returns
 	 * true if the item is visible, false otherwise.
 	 */
-	virtual bool isVisible(const std::string& item, const std::string& text) = 0;
-	virtual bool isVisible(const std::string& item, int flags) = 0;
+	virtual bool isVisible(const FilterRule::Type type, const std::string& name) = 0;
+	virtual bool isVisible(const FilterRule::Type type, int flags) = 0;
+
+	/**
+	 * Test if a given entity should be visible or not, based on the currently active filters.
+	 *
+	 * @param type
+	 * The filter type to query
+	 *
+	 * @param entity
+	 * The Entity to test
+	 *
+	 * @returns
+	 * true if the entity is visible, false otherwise.
+	 */
+	virtual bool isEntityVisible(const FilterRule::Type type, const Entity& entity) = 0;
 
 	// =====  API for Filter management and editing =====
 

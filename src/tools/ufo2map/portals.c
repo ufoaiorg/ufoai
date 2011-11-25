@@ -287,7 +287,7 @@ static void SplitNodePortals (node_t *node)
 		else if (p->nodes[1] == node)
 			side = 1;
 		else
-			Sys_Error("CutNodePortals_r: mislinked portal");
+			Sys_Error("SplitNodePortals: mislinked portal");
 		next_portal = p->next[side];
 
 		other_node = p->nodes[!side];

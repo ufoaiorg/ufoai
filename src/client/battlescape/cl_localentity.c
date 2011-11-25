@@ -53,6 +53,22 @@ static inline void LE_GenerateInlineModelList (void)
 	cl.leInlineModelList[i] = NULL;
 }
 
+static void CL_GridRecalcRouting (const le_t *le)
+{
+	/* We ALWAYS check against a model, even if it isn't in use.
+	 * An unused model is NOT included in the inline list, so it doesn't get
+	 * traced against. */
+	if (!le->model1 || le->inlineModelName[0] != '*')
+		return;
+
+	if (Com_ServerState())
+		return;
+
+	Com_DPrintf(DEBUG_ROUTING, "Rerouting le %i client side\n", le->entnum);
+
+	Grid_RecalcRouting(cl.mapTiles, cl.mapData->map, le->inlineModelName, cl.leInlineModelList);
+}
+
 /**
  * @sa G_CompleteRecalcRouting
  */
@@ -63,12 +79,10 @@ void CL_CompleteRecalcRouting (void)
 
 	LE_GenerateInlineModelList();
 
+	Com_DPrintf(DEBUG_ROUTING, "Rerouting everything client side\n");
+
 	for (i = 0, le = cl.LEs; i < cl.numLEs; i++, le++)
-		/* We ALWAYS check against a model, even if it isn't in use.
-		 * An unused model is NOT included in the inline list, so it doesn't get
-		 * traced against. */
-		if (le->model1 && le->inlineModelName[0] == '*')
-			Grid_RecalcRouting(cl.mapTiles, cl.mapData->map, le->inlineModelName, cl.leInlineModelList);
+		CL_GridRecalcRouting(le);
 }
 
 /**
@@ -78,11 +92,8 @@ void CL_CompleteRecalcRouting (void)
 void CL_RecalcRouting (const le_t* le)
 {
 	LE_GenerateInlineModelList();
-	/* We ALWAYS check against a model, even if it isn't in use.
-	 * An unused model is NOT included in the inline list, so it doesn't get
-	 * traced against. */
-	if (le->model1 && le->inlineModelName[0] == '*')
-		Grid_RecalcRouting(cl.mapTiles, cl.mapData->map, le->inlineModelName, cl.leInlineModelList);
+
+	CL_GridRecalcRouting(le);
 
 	CL_ActorConditionalMoveCalc(selActor);
 }
@@ -101,13 +112,13 @@ static void LM_AddToSceneOrder (qboolean parents)
 		if (!((1 << cl_worldlevel->integer) & lm->levelflags))
 			continue;
 
-		/* if we want to render the parents an this is a child (has a parent assigned)
+		/* if we want to render the parents and this is a child (has a parent assigned)
 		 * then skip it */
 		if (parents && lm->parent)
 			continue;
 
 		/* if we want to render the children and this is a parent (no further parent
-		 * assigned, then skip it. */
+		 * assigned), then skip it. */
 		if (!parents && lm->parent == NULL)
 			continue;
 
@@ -116,6 +127,7 @@ static void LM_AddToSceneOrder (qboolean parents)
 		assert(lm->model);
 		ent.model = lm->model;
 		ent.skinnum = lm->skin;
+		ent.lighting = &lm->lighting;
 		VectorCopy(lm->scale, ent.scale);
 
 		if (lm->parent) {
@@ -174,6 +186,18 @@ static inline localModel_t *LM_Find (int entnum)
 }
 
 /**
+ * @brief link any floor container into the actor temp floor container
+ */
+void LE_LinkFloorContainer (le_t *le)
+{
+	le_t *floor = LE_Find(ET_ITEM, le->pos);
+	if (floor)
+		FLOOR(le) = FLOOR(floor);
+	else
+		FLOOR(le) = NULL;
+}
+
+/**
  * @brief Checks whether the given le is a living actor
  * @param[in] le The local entity to perform the check for
  * @sa G_IsLivingActor
@@ -224,7 +248,7 @@ void LM_Register (void)
 
 	for (i = 0, lm = cl.LMs; i < cl.numLMs; i++, lm++) {
 		/* register the model */
-		lm->model = R_RegisterModelShort(lm->name);
+		lm->model = R_FindModel(lm->name);
 		if (lm->animname[0]) {
 			R_AnimChange(&lm->as, lm->model, lm->animname);
 			if (!lm->as.change)
@@ -245,7 +269,7 @@ localModel_t *LM_GetByID (const char *id)
 {
 	int i;
 
-	if (id == NULL || id[0] == '\0')
+	if (Q_strnull(id))
 		return NULL;
 
 	for (i = 0; i < cl.numLMs; i++) {
@@ -352,7 +376,7 @@ void LM_Think (void)
  * @param[in] anim Type of animation (for example "stand", "walk")
  * @param[in] right ods index to determine the weapon in the actors right hand
  * @param[in] left ods index to determine the weapon in the actors left hand
- * @param[in] state the actors state - e.g. STATE_CROUCHED (crounched animations)
+ * @param[in] state the actors state - e.g. STATE_CROUCHED (crouched animations)
  * have a 'c' in front of their animation definitions (see *.anm files for
  * characters)
  */
@@ -560,8 +584,6 @@ static void LE_DoPathMove (le_t *le)
  */
 void LE_DoEndPathMove (le_t *le)
 {
-	le_t *floor;
-
 	/* Verify the current position */
 	if (!VectorCompare(le->pos, le->newPos))
 		Com_Error(ERR_DROP, "LE_DoEndPathMove: Actor movement is out of sync: %i:%i:%i should be %i:%i:%i (step %i of %i) (team %i)",
@@ -574,10 +596,7 @@ void LE_DoEndPathMove (le_t *le)
 		CL_ActorConditionalMoveCalc(selActor);
 	}
 
-	/* link any floor container into the actor temp floor container */
-	floor = LE_Find(ET_ITEM, le->pos);
-	if (floor)
-		FLOOR(le) = FLOOR(floor);
+	LE_LinkFloorContainer(le);
 
 	LE_SetThink(le, LET_StartIdle);
 	LE_ExecuteThink(le);
@@ -612,6 +631,8 @@ static void LET_PathMove (le_t * le)
 	/* check for start of the next step */
 	if (cl.time < le->startTime)
 		return;
+
+	le->lighting.state = LIGHTING_DIRTY;
 
 	/* move ahead */
 	while (cl.time >= le->endTime) {
@@ -668,12 +689,12 @@ static void LET_Projectile (le_t * le)
 		CL_ParticleFree(le->ptl);
 		/* don't run the think function again */
 		le->inuse = qfalse;
-		if (le->ref1 && le->ref1[0] != '\0') {
+		if (Q_strvalid(le->ref1)) {
 			VectorCopy(le->ptl->s, impact);
 			le->ptl = CL_ParticleSpawn(le->ref1, 0, impact, bytedirs[le->angle], NULL);
 			VecToAngles(bytedirs[le->state], le->ptl->angles);
 		}
-		if (le->ref2 && le->ref2[0] != '\0') {
+		if (Q_strvalid(le->ref2)) {
 			S_LoadAndPlaySample(le->ref2, impact, le->fd->impactAttenuation, SND_VOLUME_WEAPONS);
 		}
 		if (le->ref3) {
@@ -728,14 +749,14 @@ void LE_AddProjectile (const fireDef_t *fd, int flags, const vec3_t muzzle, cons
 		le->inuse = qfalse;
 		le->ptl->size[0] = dist;
 		VectorMA(muzzle, 0.5, delta, le->ptl->s);
-		if (flags & (SF_IMPACT | SF_BODY) || (fd->splrad && !fd->bounce)) {
+		if ((flags & (SF_IMPACT | SF_BODY)) || (fd->splrad && !fd->bounce)) {
 			ptl_t *ptl = NULL;
 			const float *dir = bytedirs[le->angle];
 			if (flags & SF_BODY) {
-				if (fd->hitBodySound[0]) {
+				if (fd->hitBodySound != NULL) {
 					S_LoadAndPlaySample(fd->hitBodySound, le->origin, le->fd->impactAttenuation, SND_VOLUME_WEAPONS);
 				}
-				if (fd->hitBody[0])
+				if (fd->hitBody != NULL)
 					ptl = CL_ParticleSpawn(fd->hitBody, 0, impact, dir, NULL);
 
 				/* Spawn blood particles (if defined) if actor(-body) was hit. Even if actor is dead. */
@@ -747,10 +768,10 @@ void LE_AddProjectile (const fireDef_t *fd, int flags, const vec3_t muzzle, cons
 					CL_ActorPlaySound(leVictim, SND_HURT);
 				}
 			} else {
-				if (fd->impactSound[0]) {
+				if (fd->impactSound != NULL) {
 					S_LoadAndPlaySample(fd->impactSound, le->origin, le->fd->impactAttenuation, SND_VOLUME_WEAPONS);
 				}
-				if (fd->impact[0])
+				if (fd->impact != NULL)
 					ptl = CL_ParticleSpawn(fd->impact, 0, impact, dir, NULL);
 			}
 			if (ptl)
@@ -767,7 +788,7 @@ void LE_AddProjectile (const fireDef_t *fd, int flags, const vec3_t muzzle, cons
 		le->ref1 = fd->hitBody;
 		le->ref2 = fd->hitBodySound;
 		le->ref3 = leVictim;
-	} else if (flags & SF_IMPACT || (fd->splrad && !fd->bounce)) {
+	} else if ((flags & SF_IMPACT) || (fd->splrad && !fd->bounce)) {
 		le->ref1 = fd->impact;
 		le->ref2 = fd->impactSound;
 	} else {
@@ -787,9 +808,9 @@ void LE_AddProjectile (const fireDef_t *fd, int flags, const vec3_t muzzle, cons
  * @return the item index in the @c csi.ods array
  * @note Only call this for none empty invList_t - see FLOOR, LEFT, RIGHT and so on macros
  */
-static objDef_t *LE_BiggestItem (const invList_t *ic)
+static const objDef_t *LE_BiggestItem (const invList_t *ic)
 {
-	objDef_t *max;
+	const objDef_t *max;
 	int maxSize = 0;
 
 	for (max = ic->item.t; ic; ic = ic->next) {
@@ -880,7 +901,7 @@ void LE_AddGrenade (const fireDef_t *fd, int flags, const vec3_t muzzle, const v
 		le->ref1 = fd->hitBody;
 		le->ref2 = fd->hitBodySound;
 		le->ref3 = leVictim;
-	} else if (flags & SF_IMPACT || (fd->splrad && !fd->bounce)) {
+	} else if ((flags & SF_IMPACT) || (fd->splrad && !fd->bounce)) {
 		le->ref1 = fd->impact;
 		le->ref2 = fd->impactSound;
 	} else {
@@ -917,6 +938,18 @@ qboolean LE_BrushModelAction (le_t * le, entity_t * ent)
 		break;
 	case ET_BREAKABLE:
 		break;
+	case ET_TRIGGER_RESCUE: {
+		/**
+		 * @todo RF_BOX is not the best to render this
+		 */
+		ent->flags = RF_BOX;
+		ent->alpha = 0.2;
+		ent->model = NULL;
+		VectorCopy(le->mins, ent->mins);
+		VectorCopy(le->maxs, ent->maxs);
+		VectorSet(ent->color, 1, 1, 0);
+		break;
+	}
 	default:
 		break;
 	}
@@ -1100,6 +1133,7 @@ le_t *LE_Add (int entnum)
 void _LE_NotFoundError (const int entnum, const char *file, const int line)
 {
 	Cmd_ExecuteString("debug_listle");
+	Cmd_ExecuteString("debug_listedicts");
 	Com_Error(ERR_DROP, "LE_NotFoundError: Could not get LE with entnum %i (%s:%i)\n", entnum, file, line);
 }
 
@@ -1310,6 +1344,23 @@ static inline qboolean LE_IsOriginBrush (const le_t *const le)
 }
 
 /**
+ * @brief Adds a box that highlights the current active door
+ */
+static void LE_AddEdictHighlight (const le_t *le)
+{
+	entity_t ent;
+	const cBspModel_t *model = LE_GetClipModel(le);
+
+	OBJZERO(ent);
+
+	ent.flags = RF_BOX;
+	VectorSet(ent.color, 1, 1, 1);
+	ent.alpha = (sin(cl.time * 6.28) + 1.0) / 2.0;
+	CalculateMinsMaxs(le->angles, model->mins, model->maxs, le->origin, ent.mins, ent.maxs);
+	R_AddEntity(&ent);
+}
+
+/**
  * @sa CL_ViewRender
  * @sa CL_AddUGV
  * @sa CL_AddActor
@@ -1342,6 +1393,7 @@ void LE_AddToScene (void)
 			VectorCopy(le->angles, ent.angles);
 			ent.model = le->model1;
 			ent.skinnum = le->skinnum;
+			ent.lighting = &le->lighting;
 
 			switch (le->contents) {
 			/* Only breakables do not use their origin; func_doors and func_rotating do!!!
@@ -1360,7 +1412,6 @@ void LE_AddToScene (void)
 
 			if (LE_IsOriginBrush(le)) {
 				ent.isOriginBrushModel = qtrue;
-				VectorCopy(le->angles, ent.angles);
 				R_EntitySetOrigin(&ent, le->origin);
 				VectorCopy(le->origin, ent.oldorigin);
 			}
@@ -1375,6 +1426,11 @@ void LE_AddToScene (void)
 				break;
 			default:
 				break;
+			}
+
+			if (le->selected && le->clientAction != NULL) {
+				const le_t *action = le->clientAction;
+				LE_AddEdictHighlight(action);
 			}
 
 			/* call add function */

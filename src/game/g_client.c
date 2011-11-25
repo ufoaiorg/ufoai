@@ -121,20 +121,42 @@ player_t* G_PlayerGetNextActiveAI (player_t* lastPlayer)
 unsigned int G_TeamToPM (int team)
 {
 	player_t *p;
-	unsigned int playerMask, i;
+	unsigned int playerMask;
 
 	playerMask = 0;
 
 	/* don't handle the ai players, here */
 	p = NULL;
-	i = 0;
-	while ((p = G_PlayerGetNextActiveHuman(p))) {
-		if (team == p->pers.team)
-			playerMask |= (1 << i);
-		i++;
+	while ((p = G_PlayerGetNextHuman(p))) {
+		if (p->inuse && team == p->pers.team)
+			playerMask |= G_PlayerToPM(p);
 	}
 
 	return playerMask;
+}
+
+/**
+ * @brief Converts player mask to vis mask
+ * @param[in] playerMask The player bit mask (contains the player numbers) that
+ * is converted to a vis mask
+ * @return Returns a vis mask for all the teams of the connected players that
+ * are marked in the given @c playerMask.
+ */
+vismask_t G_PMToVis (unsigned int playerMask)
+{
+	player_t *p;
+	vismask_t visMask;
+
+	visMask = 0;
+
+	/* don't handle the ai players, here */
+	p = NULL;
+	while ((p = G_PlayerGetNextActiveHuman(p))) {
+		if (playerMask & G_PlayerToPM(p))
+			visMask |= G_TeamToVisMask(p->pers.team);
+	}
+
+	return visMask;
 }
 
 /**
@@ -144,20 +166,18 @@ unsigned int G_TeamToPM (int team)
  * @return Returns a playermask for all the teams of the connected players that
  * are marked in the given @c vis_mask.
  */
-unsigned int G_VisToPM (unsigned int vis_mask)
+unsigned int G_VisToPM (vismask_t vis_mask)
 {
 	player_t *p;
-	unsigned int playerMask, i;
+	unsigned int playerMask;
 
 	playerMask = 0;
 
 	/* don't handle the ai players, here */
-	i = 0;
 	p = NULL;
 	while ((p = G_PlayerGetNextActiveHuman(p))) {
 		if (vis_mask & G_TeamToVisMask(p->pers.team))
-			playerMask |= (1 << i);
-		i++;
+			playerMask |= G_PlayerToPM(p);
 	}
 
 	return playerMask;
@@ -211,9 +231,14 @@ void G_GiveTimeUnits (int team)
  */
 void G_AppearPerishEvent (unsigned int playerMask, qboolean appear, edict_t *check, const edict_t *ent)
 {
+	vismask_t visMaskDiff;
+
 	/* test for pointless player mask */
 	if (!playerMask)
 		return;
+
+	visMaskDiff = G_PMToVis(playerMask);
+	G_VisFlagsSwap(check, visMaskDiff);
 
 	if (appear) {
 		/* appear */
@@ -233,6 +258,10 @@ void G_AppearPerishEvent (unsigned int playerMask, qboolean appear, edict_t *che
 			G_EventSendParticle(playerMask, check);
 			break;
 
+		case ET_TRIGGER_RESCUE:
+			G_EventAddBrushModel(playerMask, check);
+			break;
+
 		default:
 			if (G_IsVisibleOnBattlefield(check))
 				gi.Error("Missing edict type %i in G_AppearPerishEvent", check->type);
@@ -240,7 +269,6 @@ void G_AppearPerishEvent (unsigned int playerMask, qboolean appear, edict_t *che
 		}
 	} else if (G_IsVisibleOnBattlefield(check)) {
 		G_EventEdictPerish(playerMask, check);
-		check->visflags = 0;
 	}
 }
 
@@ -276,7 +304,7 @@ void G_SendInvisible (const player_t* player)
 /**
  * @brief Returns the current active team to the server
  * @par If this has the value @c TEAM_NO_ACTIVE there is either no
- * living actor for any player left, or the round wasn't started yet.
+ * living actor for any player left, or the turn wasn't started yet.
  */
 int G_GetActiveTeam (void)
 {
@@ -343,7 +371,7 @@ qboolean G_ActionCheckForCurrentTeam (const player_t *player, edict_t *ent, int 
 
 	/* a generic tester if an action could be possible */
 	if (level.activeTeam != player->pers.team) {
-		G_ClientPrintf(player, PRINT_HUD, _("Can't perform action - this isn't your round!\n"));
+		G_ClientPrintf(player, PRINT_HUD, _("Can't perform action - it is not your turn!\n"));
 		return qfalse;
 	}
 
@@ -468,13 +496,9 @@ void G_ClientStateChange (const player_t* player, edict_t* ent, int reqState, qb
 		/* Disable reaction fire. */
 		G_RemoveReaction(ent);
 
-		if (G_ReactionFireSetDefault(ent) && G_ReactionFireCanBeEnabled(ent)) {
-			const int TUs = G_ActorGetTUForReactionFire(ent);
+		if (G_ReserveReactionFireTUs(ent)) {
 			/* Enable requested reaction fire. */
 			G_SetState(ent, reqState);
-			G_ActorReserveTUs(ent, TUs, ent->chr.reservedTus.shot, ent->chr.reservedTus.crouch);
-		} else {
-			G_ActorReserveTUs(ent, 0, ent->chr.reservedTus.shot, ent->chr.reservedTus.crouch);
 		}
 		break;
 	default:
@@ -497,7 +521,7 @@ qboolean G_ClientCanReload (edict_t *ent, containerIndex_t containerID)
 {
 	invList_t *ic;
 	containerIndex_t container;
-	objDef_t *weapon;
+	const objDef_t *weapon;
 
 	if (CONTAINER(ent, containerID)) {
 		weapon = CONTAINER(ent, containerID)->item.t;
@@ -528,10 +552,10 @@ void G_ClientGetWeaponFromInventory (edict_t *ent)
 {
 	invList_t *ic;
 	invList_t *icFinal;
-	invDef_t *invDef;
+	const invDef_t *invDef;
 	int tu;
 	containerIndex_t container;
-	invDef_t *bestContainer;
+	const invDef_t *bestContainer;
 
 	/* e.g. bloodspiders are not allowed to carry or collect weapons */
 	if (!ent->chr.teamDef->weapons)
@@ -574,7 +598,7 @@ void G_ClientGetWeaponFromInventory (edict_t *ent)
  * @param[in,out] actor The actor the player is using to activate the entity
  * @param[in,out] edict The entity that is to be used
  * @todo Do we have to change the trigger position here, too? I don't think this is really needed.
- * @sa CL_ActorUseDoor
+ * @sa CL_ActorUse
  * @sa G_UseEdict
  */
 qboolean G_ClientUseEdict (const player_t *player, edict_t *actor, edict_t *edict)
@@ -609,7 +633,8 @@ int G_ClientAction (player_t * player)
 	int i;
 	fireDefIndex_t firemode;
 	int from, fx, fy, to, tx, ty;
-	actorHands_t hand, fmIdx, objIdx;
+	actorHands_t hand;
+	int fmIdx, objIdx;
 	int resCrouch, resShot;
 	edict_t *ent;
 	const char *format;
@@ -663,23 +688,25 @@ int G_ClientAction (player_t * player)
 		}
 		break;
 
-	case PA_USE_DOOR:
+	case PA_USE:
 		if (ent->clientAction) {
-			edict_t *door;
+			edict_t *actionEnt;
 
 			/* read the door the client wants to open */
 			gi.ReadFormat(format, &i);
 
 			/* get the door edict */
-			door = G_EdictsGetByNum(i);
+			actionEnt = G_EdictsGetByNum(i);
 
 			/* maybe the door is no longer 'alive' because it was destroyed */
-			if (door && ent->clientAction == door) {
-				/* check whether it's part of an edict group but not the master */
-				if (door->flags & FL_GROUPSLAVE)
-					door = door->groupMaster;
+			if (actionEnt && ent->clientAction == actionEnt) {
+				if (G_IsDoor(actionEnt)) {
+					/* check whether it's part of an edict group but not the master */
+					if (actionEnt->flags & FL_GROUPSLAVE)
+						actionEnt = actionEnt->groupMaster;
 
-				G_ActorUseDoor(ent, door);
+					G_ActorUseDoor(ent, actionEnt);
+				}
 			}
 		}
 		break;
@@ -885,7 +912,7 @@ qboolean G_ClientIsReady (const player_t * player)
 
 /**
  * @brief Chose a team that should start the match
- * @param[in] player In singleplayer mode the team of this player will get the first round
+ * @param[in] player In singleplayer mode the team of this player will get the first turn
  * @sa SVCmd_StartGame_f
  */
 static void G_GetStartingTeam (const player_t* player)
@@ -948,15 +975,21 @@ static edict_t *G_ClientGetFreeSpawnPoint (const player_t * player, int spawnTyp
 		edict_t *list[MAX_EDICTS];
 		int count = 0;
 		while ((ent = G_EdictsGetNext(ent)))
-			if (ent->type == spawnType && player->pers.team == ent->team)
+			if (ent->type == spawnType && player->pers.team == ent->team) {
+				if (G_GetLivingActorFromPos(ent->pos))
+					continue;
 				list[count++] = ent;
+			}
 
 		if (count)
 			return list[rand() % count];
 	} else {
 		while ((ent = G_EdictsGetNext(ent)))
-			if (ent->type == spawnType && player->pers.team == ent->team)
+			if (ent->type == spawnType && player->pers.team == ent->team) {
+				if (G_GetLivingActorFromPos(ent->pos))
+					continue;
 				return ent;
+			}
 	}
 
 	return NULL;
@@ -1013,14 +1046,21 @@ edict_t* G_ClientGetFreeSpawnPointForActorSize (const player_t *player, const ac
 		/* Find valid actor spawn fields for this player. */
 		ent = G_ClientGetFreeSpawnPoint(player, ET_ACTORSPAWN);
 		if (ent) {
-			ent->type = ET_ACTOR;
+			edict_t *copy = G_EdictDuplicate(ent);
+			if (copy != NULL)
+				copy->type = ET_ACTOR;
+			ent = copy;
 		}
 	} else if (actorSize == ACTOR_SIZE_2x2) {
 		/* Find valid actor spawn fields for this player. */
 		ent = G_ClientGetFreeSpawnPoint(player, ET_ACTOR2x2SPAWN);
 		if (ent) {
-			ent->type = ET_ACTOR2x2;
-			ent->morale = 100;
+			edict_t *copy = G_EdictDuplicate(ent);
+			if (copy != NULL) {
+				copy->type = ET_ACTOR2x2;
+				copy->morale = 100;
+			}
+			ent = copy;
 		}
 	} else {
 		gi.Error("G_ClientGetFreeSpawnPointForActorSize: unknown fieldSize for actor edict (actorSize: %i)\n",
@@ -1065,11 +1105,13 @@ static void G_ClientReadInventory (edict_t *ent)
 	int nr = gi.ReadShort();
 
 	for (; nr-- > 0;) {
-		invDef_t *container;
+		const invDef_t *container;
 		item_t item;
 		int x, y;
 		G_ReadItem(&item, &container, &x, &y);
-		if (game.i.AddToInventory(&game.i, &ent->chr.i, &item, container, x, y, 1) == NULL)
+		if (container->temp)
+			gi.Error("G_ClientReadInventory failed, tried to add '%s' to a temp container %i", item.t->id, container->id);
+		if (!level.noEquipment && game.i.AddToInventory(&game.i, &ent->chr.i, &item, container, x, y, 1) == NULL)
 			gi.Error("G_ClientReadInventory failed, could not add item '%s' to container %i (x:%i,y:%i)",
 					item.t->id, container->id, x, y);
 	}
@@ -1129,7 +1171,7 @@ static void G_ClientSkipActorInfo (void)
 	invDef_t container;
 	item_t item;
 	int x, y;
-	invDef_t *c = &container;
+	const invDef_t *c = &container;
 
 	G_ClientReadCharacter(&ent);
 
@@ -1176,6 +1218,7 @@ void G_ClientInitActorStates (const player_t * player)
 	for (i = 0; i < length; i++) {
 		const int ucn = gi.ReadShort();
 		int saveTU;
+		int hand, fmIdx, objIdx;
 		edict_t *ent = G_ActorGetByUCN(ucn, player->pers.team);
 		if (!ent)
 			gi.Error("Could not find character on team %i with unique character number %i", player->pers.team, ucn);
@@ -1183,7 +1226,13 @@ void G_ClientInitActorStates (const player_t * player)
 		/* these state changes are not consuming any TUs */
 		saveTU = ent->TU;
 		G_ClientStateChange(player, ent, gi.ReadShort(), qfalse);
+		hand = gi.ReadShort();
+		fmIdx = gi.ReadShort();
+		objIdx = gi.ReadShort();
 		G_ActorSetTU(ent, saveTU);
+		if (objIdx != NONE) {
+			G_ReactionFireUpdate(ent, fmIdx, hand, INVSH_GetItemByIDX(objIdx));
+		}
 		G_ClientStateChangeUpdate(ent);
 	}
 }
@@ -1255,14 +1304,14 @@ static void G_ClientSendEdictsAndBrushModels (const player_t *player)
 		/* skip the world(s) in case of map assembly */
 		if (ent->type > ET_NULL) {
 			G_EventAddBrushModel(mask, ent);
-			ent->visflags |= ~ent->visflags;
+			G_VisFlagsAdd(ent, ~ent->visflags);
 		}
 	}
 }
 
 /**
  * @brief This functions starts the client
- * @sa G_ClientSpawn
+ * @sa G_ClientStartMatch
  * @sa CL_StartGame
  */
 qboolean G_ClientBegin (player_t* player)
@@ -1304,7 +1353,7 @@ qboolean G_ClientBegin (player_t* player)
  * @sa G_ClientBegin
  * @sa CL_Reset
  */
-void G_ClientSpawn (player_t * player)
+void G_ClientStartMatch (player_t * player)
 {
 	G_GetStartingTeam(player);
 
@@ -1312,9 +1361,8 @@ void G_ClientSpawn (player_t * player)
 	/* reset the data */
 	G_EventReset(player, level.activeTeam);
 
-	/** @todo this is too early - not every coop player might be 'spawned' already */
 	/* show visible actors and add invisible actor */
-	G_ClearVisFlags(player->pers.team);
+	G_VisFlagsClear(player->pers.team);
 	G_CheckVisPlayer(player, qfalse);
 	G_SendInvisible(player);
 
@@ -1323,6 +1371,11 @@ void G_ClientSpawn (player_t * player)
 
 	/* ensure that the last event is send, too */
 	gi.EndEvents();
+
+	if (sv_maxclients->integer > 1) {
+		/* ensure that we restart the round time limit */
+		sv_roundtimelimit->modified = qtrue;
+	}
 
 	/* inform all clients */
 	gi.BroadcastPrintf(PRINT_CONSOLE, "%s has taken control over team %i.\n", player->pers.netname, player->pers.team);

@@ -229,7 +229,7 @@ static void WriteToFile (const model_t *mod, const mAliasMesh_t *mesh, const cha
 	int i;
 	qFILE f;
 	uint32_t version = MDX_VERSION;
-	int32_t numIndexes, numVerts, idx;
+	int32_t numIndexes, numVerts;
 
 	Com_Printf("  \\ - writing to file '%s'\n", fileName);
 
@@ -245,12 +245,12 @@ static void WriteToFile (const model_t *mod, const mAliasMesh_t *mesh, const cha
 
 	numIndexes = LittleLong(mesh->num_tris * 3);
 	numVerts = LittleLong(mesh->num_verts);
-	FS_Write(&numVerts, sizeof(int32_t), &f);
-	FS_Write(&numIndexes, sizeof(int32_t), &f);
+	FS_Write(&numVerts, sizeof(numVerts), &f);
+	FS_Write(&numIndexes, sizeof(numIndexes), &f);
 
 	for (i = 0; i < mesh->num_tris * 3; i++) {
-		idx = LittleLong(mesh->indexes[i]);
-		FS_Write(&idx, sizeof(int32_t), &f);
+		const int32_t idx = LittleLong(mesh->indexes[i]);
+		FS_Write(&idx, sizeof(idx), &f);
 	}
 
 	FS_CloseFile(&f);

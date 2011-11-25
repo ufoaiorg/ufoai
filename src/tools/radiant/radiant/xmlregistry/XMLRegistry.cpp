@@ -99,7 +99,7 @@ void XMLRegistry::removeKeyObserver(RegistryKeyObserver* observer) {
 			_keyObservers.erase(i++);
 		}
 		else {
-			i++;
+			++i;
 		}
 	}
 }

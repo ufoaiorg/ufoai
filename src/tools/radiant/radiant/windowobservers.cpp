@@ -156,7 +156,7 @@ void GlobalWindowObservers_add (WindowObserver* observer)
 void GlobalWindowObservers_remove(WindowObserver* observer)
 {
 	for (WindowObservers::iterator i = g_window_observers.begin();
-		 i != g_window_observers.end(); i++)
+		 i != g_window_observers.end(); ++i)
 	{
 		WindowObserver* registered = (*i);
 

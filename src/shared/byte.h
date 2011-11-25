@@ -28,14 +28,37 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #ifndef __BYTE_H__
 #define __BYTE_H__
 
+#include <SDL/SDL_endian.h>
 #include "ufotypes.h"
 
-short BigShort(uint16_t l);
-short LittleShort(uint16_t l);
-int BigLong(uint32_t l);
-int LittleLong(uint32_t l);
-float BigFloat(float l);
-float LittleFloat(float l);
+#define BigShort(X) (short)SDL_SwapBE16(X)
+#define LittleShort(X) (short)SDL_SwapLE16(X)
+#define BigLong(X) (int)SDL_SwapBE32(X)
+#define LittleLong(X) (int)SDL_SwapLE32(X)
+
+typedef union {
+	float32_t f;
+	int32_t i;
+	uint32_t ui;
+} floatint_t;
+
+static inline float32_t FloatSwap (const float32_t *f)
+{
+	floatint_t out;
+
+	out.f = *f;
+	out.ui = SDL_SwapLE32(out.ui);
+
+	return out.f;
+}
+
+#if SDL_BYTEORDER == SDL_LIL_ENDIAN
+#define BigFloat(X) FloatSwap(&(X))
+#define LittleFloat(X) (X)
+#else
+#define BigFloat(X) (X)
+#define LittleFloat(X) FloatSwap(&(X))
+#endif
 
 void Swap_Init(void);
 

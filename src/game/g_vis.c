@@ -189,9 +189,8 @@ qboolean G_Vis (const int team, const edict_t *from, const edict_t *check, int f
 }
 
 /**
- * @brief test if check is visible by team (or if visibility changed?)
+ * @brief test if @c check is visible by team (or if visibility changed?)
  * @sa G_CheckVisTeam
- * @sa AI_FighterCalcBestAction
  * @param[in] team the team the edict may become visible for or perish from
  * their view
  * @param[in] check the edict we are talking about - which may become visible
@@ -206,7 +205,7 @@ int G_TestVis (const int team, edict_t * check, int flags)
 {
 	edict_t *from = NULL;
 	/* store old flag */
-	const int old = G_IsVisibleForTeam(check, team) ? 1 : 0;
+	const int old = G_IsVisibleForTeam(check, team) ? VIS_CHANGE : 0;
 
 	if (g_aidebug->integer)
 		return VIS_YES | !old;
@@ -238,8 +237,12 @@ static int G_DoTestVis (const int team, edict_t * check, qboolean perish, int pl
 	/* visibility has changed ... */
 	if (vis & VIS_CHANGE) {
 		/* swap the vis mask for the given team */
-		check->visflags ^= G_TeamToVisMask(team);
-		G_AppearPerishEvent(playerMask, vis & VIS_YES, check, ent);
+		const qboolean appear = (vis & VIS_YES) == VIS_YES;
+		if (playerMask == 0) {
+			G_VisFlagsSwap(check, G_TeamToVisMask(team));
+		} else {
+			G_AppearPerishEvent(playerMask, appear, check, ent);
+		}
 
 		/* ... to visible */
 		if (vis & VIS_YES) {
@@ -254,7 +257,7 @@ static int G_DoTestVis (const int team, edict_t * check, qboolean perish, int pl
 
 /**
  * @brief Sets visible edict on player spawn
- * @sa G_ClientSpawn
+ * @sa G_ClientStartMatch
  * @sa G_CheckVisTeam
  * @sa G_AppearPerishEvent
  */
@@ -323,6 +326,20 @@ int G_CheckVisTeamAll (const int team, qboolean perish, const edict_t *ent)
 }
 
 /**
+ * @brief Make everything visible to anyone who can't already see it
+ */
+void G_VisMakeEverythingVisible (void)
+{
+	edict_t *ent = NULL;
+	while ((ent = G_EdictsGetNextInUse(ent))) {
+		const int playerMask = G_VisToPM(ent->visflags);
+		G_AppearPerishEvent(~playerMask, qtrue, ent, NULL);
+		if (G_IsActor(ent))
+			G_SendInventory(~G_TeamToPM(ent->team), ent);
+	}
+}
+
+/**
  * @brief Check if the edict appears/perishes for the other teams. If they appear
  * for other teams, the needed information for those clients are also send in
  * @c G_CheckVisTeam resp. @c G_AppearPerishEvent
@@ -352,12 +369,28 @@ int G_CheckVis (edict_t * check, qboolean perish)
  * @brief Reset the visflags for all edicts in the global list for the
  * given team - and only for the given team
  */
-void G_ClearVisFlags (int team)
+void G_VisFlagsClear (int team)
 {
 	edict_t *ent = NULL;
-	int mask;
+	vismask_t mask;
 
 	mask = ~G_TeamToVisMask(team);
-	while ((ent = G_EdictsGetNextInUse(ent)))
+	while ((ent = G_EdictsGetNextInUse(ent))) {
 		ent->visflags &= mask;
+	}
+}
+
+void G_VisFlagsAdd (edict_t *ent, vismask_t visMask)
+{
+	ent->visflags |= visMask;
+}
+
+void G_VisFlagsReset (edict_t *ent)
+{
+	ent->visflags = 0;
+}
+
+void G_VisFlagsSwap (edict_t *ent, vismask_t visMask)
+{
+	ent->visflags ^= visMask;
 }

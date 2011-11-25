@@ -6,8 +6,10 @@
 #include "iregistry.h"
 #include "gtkutil/RegistryConnector.h"
 #include "gtkutil/TextPanel.h"
+#include "gtkutil/event/SingleIdleCallback.h"
 #include "../../ui/common/ShaderChooser.h"
 #include "../../brush/ContentsFlagsValue.h"
+#include "../sidebar.h"
 
 // Forward declarations to decrease compile times
 typedef struct _GtkSpinButton GtkSpinButton;
@@ -23,8 +25,9 @@ namespace ui {
 
 class SurfaceInspector: public RegistryKeyObserver,
 		public SelectionSystem::Observer,
-		public ShaderChooser::ChooserClient
-{
+		public ShaderChooser::ChooserClient,
+		public SidebarComponent,
+		public gtkutil::SingleIdleCallback {
 		// The actual dialog window
 		GtkWidget* _dialogVBox;
 
@@ -128,21 +131,30 @@ class SurfaceInspector: public RegistryKeyObserver,
 		 * the SelectionSystem upon selection change to allow updating of the
 		 * texture properties.
 		 */
-		void selectionChanged ();
+		void selectionChanged (scene::Instance& instance, bool isComponent);
 
 		// Updates the widgets
-		void update ();
+		void queueUpdate ();
 
 		/** greebo: Gets called upon shader selection change (during ShaderChooser display)
 		 */
 		void shaderSelectionChanged (const std::string& shaderName);
 
-		GtkWidget* getWidget ();
+		GtkWidget* getWidget () const;
+
+		const std::string getTitle() const;
+
+		void switchPage (int pageIndex);
 
 		// Executes the fit command for the selection
 		void fitTexture ();
 
+		// Idle callback, used for deferred updates
+		void onGtkIdle();
 	private:
+		// Updates the widgets (this is private, use queueUpdate() instead)
+		void update();
+
 		/** greebo: Creates a row consisting of label, value entry,
 		 * two arrow buttons and a step entry field.
 		 *

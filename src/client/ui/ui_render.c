@@ -79,7 +79,19 @@ const struct image_s *UI_LoadImage (const char *name)
 	return image;
 }
 
-void UI_DrawNormImage (float x, float y, float w, float h, float sh, float th, float sl, float tl, const image_t *image)
+/**
+ * @brief Draw a normalized (to the screen) image
+ * @param[in] x The x coordinate (normalized)
+ * @param[in] y The x coordinate (normalized)
+ * @param[in] w The width (normalized)
+ * @param[in] h The height (normalized)
+ * @param[in] sh The s part of the texture coordinate (horizontal)
+ * @param[in] th The t part of the texture coordinate (horizontal)
+ * @param[in] sl The s part of the texture coordinate (vertical)
+ * @param[in] tl The t part of the texture coordinate (vertical)
+ * @param[in] image The image to draw
+ */
+void UI_DrawNormImage (qboolean flip, float x, float y, float w, float h, float sh, float th, float sl, float tl, const image_t *image)
 {
 	float nw, nh, x1, x2, x3, x4, y1, y2, y3, y4;
 
@@ -132,6 +144,11 @@ void UI_DrawNormImage (float x, float y, float w, float h, float sh, float th, f
 	y4 = y3 = y1 + nh;
 
 	{
+		if (flip) {
+			const float tmp = sl;
+			sl = sh;
+			sh = tmp;
+		}
 		const vec2_t imageTexcoords[4] = {{sl, tl}, {sh, tl}, {sh, th}, {sl, th}};
 		const vec2_t imageVerts[4] = {{x1, y1}, {x2, y2}, {x3, y3}, {x4, y4}};
 		R_DrawImageArray(imageTexcoords, imageVerts, image);
@@ -153,7 +170,7 @@ void UI_DrawNormImage (float x, float y, float w, float h, float sh, float th, f
  * @note All these parameter are normalized to VID_NORM_WIDTH and VID_NORM_HEIGHT
  * they are adjusted in this function
  */
-const image_t *UI_DrawNormImageByName (float x, float y, float w, float h, float sh, float th, float sl, float tl, const char *name)
+const image_t *UI_DrawNormImageByName (qboolean flip, float x, float y, float w, float h, float sh, float th, float sl, float tl, const char *name)
 {
 	const struct image_s *image;
 
@@ -163,7 +180,7 @@ const image_t *UI_DrawNormImageByName (float x, float y, float w, float h, float
 		return NULL;
 	}
 
-	UI_DrawNormImage(x, y, w, h, sh, th, sl, tl, image);
+	UI_DrawNormImage(flip, x, y, w, h, sh, th, sl, tl, image);
 	return image;
 }
 
@@ -180,7 +197,7 @@ const image_t *UI_DrawNormImageByName (float x, float y, float w, float h, float
  * top height, mid height, bottom height, and margin
  * @todo can we improve the code? is it need?
  */
-void UI_DrawPanel (const vec2_t pos, const vec2_t size, const char *texture, int texX, int texY, const int panelDef[6])
+void UI_DrawPanel (const vec2_t pos, const vec2_t size, const char *texture, int texX, int texY, const int panelDef[7])
 {
 	const int leftWidth = panelDef[0];
 	const int midWidth = panelDef[1];
@@ -205,30 +222,30 @@ void UI_DrawPanel (const vec2_t pos, const vec2_t size, const char *texture, int
 		return;
 
 	/* draw top (from left to right) */
-	UI_DrawNormImage(pos[0], pos[1], leftWidth, topHeight, texX + firstPos + leftWidth, texY + firstPosY + topHeight,
+	UI_DrawNormImage(qfalse, pos[0], pos[1], leftWidth, topHeight, texX + firstPos + leftWidth, texY + firstPosY + topHeight,
 		texX + firstPos, texY + firstPosY, image);
-	UI_DrawNormImage(pos[0] + leftWidth, pos[1], size[0] - leftWidth - rightWidth, topHeight, texX + secondPos + midWidth, texY + firstPosY + topHeight,
+	UI_DrawNormImage(qfalse, pos[0] + leftWidth, pos[1], size[0] - leftWidth - rightWidth, topHeight, texX + secondPos + midWidth, texY + firstPosY + topHeight,
 		texX + secondPos, texY + firstPosY, image);
-	UI_DrawNormImage(pos[0] + size[0] - rightWidth, pos[1], rightWidth, topHeight, texX + thirdPos + rightWidth, texY + firstPosY + topHeight,
+	UI_DrawNormImage(qfalse, pos[0] + size[0] - rightWidth, pos[1], rightWidth, topHeight, texX + thirdPos + rightWidth, texY + firstPosY + topHeight,
 		texX + thirdPos, texY + firstPosY, image);
 
 	/* draw middle (from left to right) */
 	y = pos[1] + topHeight;
 	h = size[1] - topHeight - bottomHeight; /* height of middle */
-	UI_DrawNormImage(pos[0], y, leftWidth, h, texX + firstPos + leftWidth, texY + secondPosY + midHeight,
+	UI_DrawNormImage(qfalse, pos[0], y, leftWidth, h, texX + firstPos + leftWidth, texY + secondPosY + midHeight,
 		texX + firstPos, texY + secondPosY, image);
-	UI_DrawNormImage(pos[0] + leftWidth, y, size[0] - leftWidth - rightWidth, h, texX + secondPos + midWidth, texY + secondPosY + midHeight,
+	UI_DrawNormImage(qfalse, pos[0] + leftWidth, y, size[0] - leftWidth - rightWidth, h, texX + secondPos + midWidth, texY + secondPosY + midHeight,
 		texX + secondPos, texY + secondPosY, image);
-	UI_DrawNormImage(pos[0] + size[0] - rightWidth, y, rightWidth, h, texX + thirdPos + rightWidth, texY + secondPosY + midHeight,
+	UI_DrawNormImage(qfalse, pos[0] + size[0] - rightWidth, y, rightWidth, h, texX + thirdPos + rightWidth, texY + secondPosY + midHeight,
 		texX + thirdPos, texY + secondPosY, image);
 
 	/* draw bottom (from left to right) */
 	y = pos[1] + size[1] - bottomHeight;
-	UI_DrawNormImage(pos[0], y, leftWidth, bottomHeight, texX + firstPos + leftWidth, texY + thirdPosY + bottomHeight,
+	UI_DrawNormImage(qfalse, pos[0], y, leftWidth, bottomHeight, texX + firstPos + leftWidth, texY + thirdPosY + bottomHeight,
 		texX + firstPos, texY + thirdPosY, image);
-	UI_DrawNormImage(pos[0] + leftWidth, y, size[0] - leftWidth - rightWidth, bottomHeight, texX + secondPos + midWidth, texY + thirdPosY + bottomHeight,
+	UI_DrawNormImage(qfalse, pos[0] + leftWidth, y, size[0] - leftWidth - rightWidth, bottomHeight, texX + secondPos + midWidth, texY + thirdPosY + bottomHeight,
 		texX + secondPos, texY + thirdPosY, image);
-	UI_DrawNormImage(pos[0] + size[0] - bottomHeight, y, rightWidth, bottomHeight, texX + thirdPos + rightWidth, texY + thirdPosY + bottomHeight,
+	UI_DrawNormImage(qfalse, pos[0] + size[0] - bottomHeight, y, rightWidth, bottomHeight, texX + thirdPos + rightWidth, texY + thirdPosY + bottomHeight,
 		texX + thirdPos, texY + thirdPosY, image);
 }
 

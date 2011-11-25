@@ -36,6 +36,24 @@ qboolean CHRSH_IsTeamDefAlien (const teamDef_t* const td)
 		|| td->race == RACE_BLOODSPIDER || td->race == RACE_SHEVAAR;
 }
 
+qboolean CHRSH_IsArmourUseableForTeam (const objDef_t *od, const teamDef_t *teamDef)
+{
+	assert(teamDef);
+	assert(INV_IsArmour(od));
+
+	if (!teamDef->armour)
+		return qfalse;
+
+	if (CHRSH_IsTeamDefAlien(teamDef))
+		return od->useable == TEAM_ALIEN;
+	else if (teamDef->race == RACE_PHALANX_HUMAN)
+		return od->useable == TEAM_PHALANX;
+	else if (teamDef->race == RACE_CIVILIAN)
+		return od->useable == TEAM_CIVILIAN;
+
+	return qfalse;
+}
+
 /**
  * @brief Check if a team definition is a robot.
  * @param[in] td Pointer to the team definition to check.
@@ -72,14 +90,14 @@ void CHRSH_CharGenAbilitySkills (character_t * chr, qboolean multiplayer)
 			Sys_Error("CHRSH_CharGenAbilitySkills: No multiplayer character template found (soldier_mp)");
 	} else if (td->characterTemplates[0]) {
 		if (td->numTemplates > 1) {
-			int sumRate = 0;
+			float sumRate = 0.0;
 			for (i = 0; i < td->numTemplates; i++) {
 				ct = td->characterTemplates[i];
 				sumRate += ct->rate;
 			}
 			if (sumRate) {
 				const float soldierRoll = frand();
-				int curRate = 0;
+				float curRate = 0.0;
 				for (ct = td->characterTemplates[0]; ct->id; ct++) {
 					curRate += ct->rate;
 					if (curRate && soldierRoll <= (curRate / sumRate))

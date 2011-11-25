@@ -121,6 +121,7 @@ static void G_Morale (int type, const edict_t * victim, const edict_t * attacker
 			default:
 				gi.DPrintf("Undefined morale modifier type %i\n", type);
 				mod = 0;
+				break;
 			}
 			/* clamp new morale */
 			/*+0.9 to allow weapons like flamethrowers to inflict panic (typecast rounding) */
@@ -299,7 +300,7 @@ static void G_Damage (edict_t *target, const fireDef_t *fd, int damage, edict_t 
 	assert(target);
 
 	/* Breakables */
-	if (G_IsBrushModel(target)) {
+	if (G_IsBrushModel(target) && G_IsBreakable(target)) {
 		/* Breakables are immune to stun & shock damage. */
 		if (stunEl || stunGas || shock || mock)
 			return;
@@ -348,9 +349,9 @@ static void G_Damage (edict_t *target, const fireDef_t *fd, int damage, edict_t 
 	/* Apply difficulty settings. */
 	if (sv_maxclients->integer == 1) {
 		if (G_IsAlien(attacker) && !G_IsAlien(target))
-			damage *= pow(1.18, difficulty->integer);
+			damage *= pow(1.18, g_difficulty->value);
 		else if (!G_IsAlien(attacker) && G_IsAlien(target))
-			damage *= pow(1.18, -difficulty->integer);
+			damage *= pow(1.18, -g_difficulty->value);
 	}
 
 	assert(attacker->team >= 0 && attacker->team < MAX_TEAMS);
@@ -428,8 +429,10 @@ static void G_Damage (edict_t *target, const fireDef_t *fd, int damage, edict_t 
 			if (mor_panic->integer)
 				G_Morale(ML_WOUND, target, attacker, damage);
 		} else { /* medikit, etc. */
-			if (target->HP > GET_HP(target->chr.score.skills[ABILITY_POWER]))
-				target->HP = min(max(GET_HP(target->chr.score.skills[ABILITY_POWER]), 0), target->chr.maxHP);
+			const int hp = GET_HP(target->chr.score.skills[ABILITY_POWER]);
+			if (target->HP > hp) {
+				target->HP = min(max(hp, 0), target->chr.maxHP);
+			}
 		}
 		G_SendStats(target);
 	}
@@ -500,8 +503,9 @@ static void G_SplashDamage (edict_t *ent, const fireDef_t *fd, vec3_t impact, sh
 			/* check whether this actor (check) is in the field of view of the 'shooter' (ent) */
 			if (G_FrustumVis(ent, check->origin)) {
 				if (!mock) {
-					G_AppearPerishEvent(~G_VisToPM(check->visflags), qtrue, check, ent);
-					check->visflags |= ~check->visflags;
+					const unsigned int playerMask = G_TeamToPM(ent->team) ^ G_VisToPM(check->visflags);
+					G_AppearPerishEvent(playerMask, qtrue, check, ent);
+					G_VisFlagsAdd(check, G_PMToVis(playerMask));
 				}
 				continue;
 			}
@@ -548,7 +552,7 @@ static void G_SpawnItemOnFloor (const pos3_t pos, const item_t *item)
 		if (!game.i.TryAddToInventory(&game.i, &floor->chr.i, item, INVDEF(gi.csi->idFloor))) {
 			G_FreeEdict(floor);
 		} else {
-			edict_t *actor = G_GetActorFromPos(pos);
+			edict_t *actor = G_GetLivingActorFromPos(pos);
 
 			/* send the inventory */
 			G_CheckVis(floor, qtrue);
@@ -560,7 +564,7 @@ static void G_SpawnItemOnFloor (const pos3_t pos, const item_t *item)
 		if (game.i.TryAddToInventory(&game.i, &floor->chr.i, item, INVDEF(gi.csi->idFloor))) {
 			/* make it invisible to send the inventory in the below vis check */
 			G_EventPerish(floor);
-			floor->visflags = 0;
+			G_VisFlagsReset(floor);
 			G_CheckVis(floor, qtrue);
 		}
 	}
@@ -915,7 +919,7 @@ static void G_ShootSingle (edict_t *ent, const fireDef_t *fd, const vec3_t from,
 
 		if (tr.fraction < 1.0 && !fd->bounce) {
 			/* check for shooting through wall */
-			if (throughWall && tr.contentFlags & CONTENTS_SOLID) {
+			if (throughWall && (tr.contentFlags & CONTENTS_SOLID)) {
 				throughWall--;
 				Com_DPrintf(DEBUG_GAME, "Shot through wall, %i walls left.\n", throughWall);
 				/* reduce damage */

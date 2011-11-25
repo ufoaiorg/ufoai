@@ -808,7 +808,7 @@ static void TR_TestInLeaf (boxtrace_t *traceData, int32_t leafnum)
 			continue;			/* already checked this brush in another leaf */
 		b->checkcount = checkcount;
 
-		if (!(traceData->contents && b->contentFlags & traceData->contents) || (b->contentFlags & traceData->rejects))
+		if (!(traceData->contents && (b->contentFlags & traceData->contents)) || (b->contentFlags & traceData->rejects))
 			continue;
 		TR_TestBoxInBrush(traceData, b);
 		if (!traceData->trace.fraction)

@@ -29,6 +29,52 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 clientBattleScape_t cl;
 
 /**
+ * @brief Searches a local entity at the given position.
+ * @param[in] pos The grid position to search a local entity at
+ * @param[in] includingStunned Also search for stunned actors if @c true.
+ * @param[in] actor The current selected actor
+ */
+le_t* CL_BattlescapeSearchAtGridPos (const pos3_t pos, qboolean includingStunned, const le_t *actor)
+{
+	le_t *le;
+	le_t *nonActor = NULL;
+
+	/* search for an actor on this field */
+	le = NULL;
+	while ((le = LE_GetNextInUse(le))) {
+		if (actor != NULL && le == actor->clientAction) {
+			/* if the actor has a client action assigned and we click onto the actor,
+			 * we will trigger this client action */
+			if (VectorCompare(actor->pos, pos))
+				nonActor = le;
+		} else if (le != actor && LE_IsLivingAndVisibleActor(le) && (includingStunned || !LE_IsStunned(le)))
+			switch (le->fieldSize) {
+			case ACTOR_SIZE_NORMAL:
+				if (VectorCompare(le->pos, pos))
+					return le;
+				break;
+			case ACTOR_SIZE_2x2: {
+				pos3_t actor2x2[3];
+
+				VectorSet(actor2x2[0], le->pos[0] + 1, le->pos[1],     le->pos[2]);
+				VectorSet(actor2x2[1], le->pos[0],     le->pos[1] + 1, le->pos[2]);
+				VectorSet(actor2x2[2], le->pos[0] + 1, le->pos[1] + 1, le->pos[2]);
+				if (VectorCompare(le->pos, pos)
+				|| VectorCompare(actor2x2[0], pos)
+				|| VectorCompare(actor2x2[1], pos)
+				|| VectorCompare(actor2x2[2], pos))
+					return le;
+				break;
+			}
+			default:
+				Com_Error(ERR_DROP, "Grid_MoveCalc: unknown actor-size: %i!", le->fieldSize);
+		}
+	}
+
+	return nonActor;
+}
+
+/**
  * @brief Check whether we already have actors spawned on the battlefield
  * @sa CL_OnBattlescape
  * @return @c true when we are in battlefield and have soldiers spawned (game is running)
@@ -316,22 +362,21 @@ void Grid_DumpClientRoutes_f (void)
 
 char *CL_GetConfigString (int index)
 {
-	if (index < 0 || index >= MAX_CONFIGSTRINGS)
-		Com_Error(ERR_DROP, "Invalid config string index given");
+	if (!Com_CheckConfigStringIndex(index))
+		Com_Error(ERR_DROP, "invalid access to configstring array with index: %i", index);
+
 	return cl.configstrings[index];
 }
 
 int CL_GetConfigStringInteger (int index)
 {
-	if (index < 0 || index >= MAX_CONFIGSTRINGS)
-		Com_Error(ERR_DROP, "Invalid config string index given");
-	return atoi(cl.configstrings[index]);
+	return atoi(CL_GetConfigString(index));
 }
 
 char *CL_SetConfigString (int index, struct dbuffer *msg)
 {
-	if (index < 0 || index >= MAX_CONFIGSTRINGS)
-		Com_Error(ERR_DROP, "Invalid config string index given");
+	if (!Com_CheckConfigStringIndex(index))
+		Com_Error(ERR_DROP, "invalid access to configstring array with index: %i", index);
 
 	/* change the string in cl
 	 * there may be overflows in i==CS_TILES - but thats ok

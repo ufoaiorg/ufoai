@@ -32,15 +32,15 @@ mBspSurfaces_t r_material_surfaces;
 
 /** @todo load this from file, will make tweaking the game much easier */
 material_t defaultMaterial = {
-	0, /* unsigned flags; */
-	0.0f, /* float time; */
-	DEFAULT_BUMP, /* float bump; */
-	DEFAULT_PARALLAX, /* float parallax; */
-	DEFAULT_HARDNESS, /* float hardness; */
-	DEFAULT_SPECULAR, /* float specular; */
-	DEFAULT_GLOWSCALE, /* float glowscale; */
-	NULL, /* materialStage_t *stages; */
-	0 /* int num_stages; */
+	.flags = 0,
+	.time = 0.0f,
+	.bump = DEFAULT_BUMP,
+	.parallax = DEFAULT_PARALLAX,
+	.hardness = DEFAULT_HARDNESS,
+	.specular = DEFAULT_SPECULAR,
+	.glowscale = DEFAULT_GLOWSCALE,
+	.stages = NULL,
+	.num_stages = 0
 };
 
 #define UPDATE_THRESHOLD 0.02
@@ -63,7 +63,7 @@ static void R_UpdateMaterial (material_t *m)
 
 			if (moduloPhase < s->pulse.dutycycle) {
 				moduloPhase /= s->pulse.dutycycle;
-				s->pulse.dhz = (1.0 - cos(moduloPhase * (2 * M_PI)) ) / 2.0;
+				s->pulse.dhz = (1.0 - cos(moduloPhase * (2 * M_PI))) / 2.0;
 			} else {
 				s->pulse.dhz = 0;
 			}
@@ -107,6 +107,8 @@ static void R_UpdateMaterial (material_t *m)
 					if (s->image == s->anim.images[frame])
 						frame = (frame + 1) % s->anim.num_frames;
 					break;
+				default:
+					continue;
 				}
 				assert(frame >= 0);
 				assert(frame < s->anim.num_frames);
@@ -118,12 +120,19 @@ static void R_UpdateMaterial (material_t *m)
 
 static void R_StageGlow (const materialStage_t *stage)
 {
-	if (stage->image->glowmap) {
-		R_EnableGlowMap(stage->image->glowmap, qtrue);
+	image_t *glowmap;
+
+	if (stage->flags & STAGE_GLOWMAPLINK)
+		glowmap = stage->image;
+	else
+		glowmap = stage->image->glowmap;
+
+	if (glowmap) {
+		R_EnableGlowMap(glowmap);
 		if (r_state.glowmap_enabled)
 			R_ProgramParameter1f("GLOWSCALE", stage->glowscale);
 	} else {
-		R_EnableGlowMap(NULL, qfalse);
+		R_EnableGlowMap(NULL);
 	}
 }
 
@@ -133,7 +142,7 @@ static void R_StageGlow (const materialStage_t *stage)
 static void R_StageLighting (const mBspSurface_t *surf, const materialStage_t *stage)
 {
 	/* if the surface has a lightmap, and the stage specifies lighting.. */
-	if (surf->flags & MSURF_LIGHTMAP &&
+	if ((surf->flags & MSURF_LIGHTMAP) &&
 			(stage->flags & (STAGE_LIGHTMAP | STAGE_LIGHTING))) {
 		R_EnableTexture(&texunit_lightmap, qtrue);
 		R_BindLightmapTexture(surf->lightmap_texnum);
@@ -147,6 +156,8 @@ static void R_StageLighting (const mBspSurface_t *surf, const materialStage_t *s
 			R_EnableLighting(NULL, qfalse);
 		}
 	} else {
+		if (!r_state.lighting_enabled)
+			return;
 		R_EnableLighting(NULL, qfalse);
 
 		R_EnableTexture(&texunit_lightmap, qfalse);
@@ -374,7 +385,7 @@ static void R_DrawSurfaceStage (mBspSurface_t *surf, materialStage_t *stage)
 			const float *n = &r_mapTiles[surf->tile]->bsp.normals[surf->index * 3 + i * 3];
 			memcpy(&r_state.normal_array[i * 3], n, sizeof(vec3_t));
 
-			if (r_state.bumpmap_enabled) {
+			if (r_state.active_normalmap) {
 				const float *t = &r_mapTiles[surf->tile]->bsp.tangents[surf->index * 4 + i * 4];
 				memcpy(&r_state.tangent_array[i * 4], t, sizeof(vec3_t));
 			}
@@ -382,6 +393,8 @@ static void R_DrawSurfaceStage (mBspSurface_t *surf, materialStage_t *stage)
 	}
 
 	glDrawArrays(GL_TRIANGLE_FAN, 0, i);
+
+	refdef.batchCount++;
 
 	R_CheckError();
 }
@@ -392,7 +405,7 @@ static void R_DrawSurfaceStage (mBspSurface_t *surf, materialStage_t *stage)
  * throughout the iteration, so there is a concerted effort to restore the
  * state after all surface stages have been rendered.
  */
-void R_DrawMaterialSurfaces (mBspSurfaces_t *surfs)
+void R_DrawMaterialSurfaces (const mBspSurfaces_t *surfs)
 {
 	int i;
 
@@ -404,12 +417,8 @@ void R_DrawMaterialSurfaces (mBspSurfaces_t *surfs)
 
 	assert(r_state.blend_enabled);
 
-	R_EnableTexture(&texunit_lightmap, qtrue);
-
-	R_EnableLighting(r_state.world_program, qtrue);
-
-	/** @todo - integrate BSP lighting with dynamic lighting */
-	R_EnableDynamicLights(NULL, qfalse);
+	/** @todo - integrate BSP lighting with model lighting */
+	R_EnableModelLights(NULL, 0, qfalse);
 
 	R_EnableColorArray(qtrue);
 
@@ -468,11 +477,11 @@ void R_DrawMaterialSurfaces (mBspSurfaces_t *surfs)
 
 	R_EnableTexture(&texunit_lightmap, qfalse);
 
-	R_EnableBumpmap(NULL, qfalse);
+	R_EnableBumpmap(NULL);
 
 	R_EnableLighting(NULL, qfalse);
 
-	R_EnableGlowMap(NULL, qfalse);
+	R_EnableGlowMap(NULL);
 
 	R_Color(NULL);
 }
@@ -558,11 +567,6 @@ static int R_LoadAnimImages (materialStage_t *s)
 			Com_Printf("R_LoadAnimImages: Failed to resolve texture: %s\n", c);
 			return -1;
 		}
-		if (s->flags & STAGE_GLOWMAPLINK) {
-			if (image->glowmap)
-				Com_Printf("R_LoadAnimImages: overriding already existing glowmap for %s\n", image->name);
-			image->glowmap = image;
-		}
 	}
 
 	return 0;
@@ -586,7 +590,7 @@ static int R_ParseStage (materialStage_t *s, const char **buffer)
 			s->glowscale = atof(Com_Parse(buffer));
 			if (s->glowscale < 0.0) {
 				Com_Printf("R_LoadMaterials: Invalid glowscale value for %s\n", c);
-				s->glowscale = DEFAULT_GLOWSCALE;
+				s->glowscale = defaultMaterial.glowscale;
 			}
 			continue;
 		}
@@ -1014,7 +1018,7 @@ void R_LoadMaterials (const char *map)
 			m->bump = atof(Com_Parse(&buffer));
 			if (m->bump < 0.0) {
 				Com_Printf("R_LoadMaterials: Invalid bump value for %s\n", image->name);
-				m->bump = DEFAULT_BUMP;
+				m->bump = defaultMaterial.bump;
 			}
 		}
 
@@ -1022,7 +1026,7 @@ void R_LoadMaterials (const char *map)
 			m->parallax = atof(Com_Parse(&buffer));
 			if (m->parallax < 0.0) {
 				Com_Printf("R_LoadMaterials: Invalid parallax value for %s\n", image->name);
-				m->parallax = DEFAULT_PARALLAX;
+				m->parallax = defaultMaterial.parallax;
 			}
 		}
 
@@ -1030,7 +1034,7 @@ void R_LoadMaterials (const char *map)
 			m->hardness = atof(Com_Parse(&buffer));
 			if (m->hardness < 0.0) {
 				Com_Printf("R_LoadMaterials: Invalid hardness value for %s\n", image->name);
-				m->hardness = DEFAULT_HARDNESS;
+				m->hardness = defaultMaterial.hardness;
 			}
 		}
 
@@ -1038,7 +1042,7 @@ void R_LoadMaterials (const char *map)
 			m->specular = atof(Com_Parse(&buffer));
 			if (m->specular < 0.0) {
 				Com_Printf("R_LoadMaterials: Invalid specular value for %s\n", image->name);
-				m->specular = DEFAULT_SPECULAR;
+				m->specular = defaultMaterial.specular;
 			}
 		}
 
@@ -1046,13 +1050,13 @@ void R_LoadMaterials (const char *map)
 			m->glowscale = atof(Com_Parse(&buffer));
 			if (m->glowscale < 0.0) {
 				Com_Printf("R_LoadMaterials: Invalid glowscale value for %s\n", image->name);
-				m->glowscale = DEFAULT_GLOWSCALE;
+				m->glowscale = defaultMaterial.glowscale;
 			}
 		}
 
 		if (*c == '{' && inmaterial) {
 			s = (materialStage_t *)Mem_PoolAlloc(sizeof(*s), vid_imagePool, 0);
-			s->glowscale = DEFAULT_GLOWSCALE;
+			s->glowscale = defaultMaterial.glowscale;
 
 			if (R_ParseStage(s, &buffer) == -1) {
 				Mem_Free(s);
@@ -1098,4 +1102,13 @@ void R_LoadMaterials (const char *map)
 	FS_FreeFile(fileBuffer);
 
 	R_CreateMaterialData();
+}
+
+/**
+ * @brief Change listener callback for material value cvars
+ */
+void R_UpdateDefaultMaterial (const char *cvarName, const char *oldValue, const char *newValue)
+{
+	defaultMaterial.specular = r_default_specular->value;
+	defaultMaterial.hardness = r_default_hardness->value;
 }

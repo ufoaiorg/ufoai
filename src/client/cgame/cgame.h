@@ -39,11 +39,11 @@ typedef struct cgame_export_s {
 	void (EXPORT *Init) (void);
 	void (EXPORT *Shutdown) (void);
 	/** soldier spawn functions may differ between the different gametypes */
-	qboolean (EXPORT *Spawn) (void);
+	qboolean (EXPORT *Spawn) (chrList_t *chrList);
 	/** some gametypes only support special maps */
 	const mapDef_t* (EXPORT *MapInfo) (int step);
 	/** some gametypes require extra data in the results parsing (like e.g. campaign mode) */
-	void (EXPORT *Results) (struct dbuffer *msg, int, int*, int*, int[][MAX_TEAMS], int[][MAX_TEAMS]);
+	void (EXPORT *Results) (struct dbuffer *msg, int, int*, int*, int[][MAX_TEAMS], int[][MAX_TEAMS], qboolean nextmap);
 	/** check whether the given item is usable in the current game mode */
 	qboolean (EXPORT *IsItemUseable) (const objDef_t *od);
 	/** if you want to display a different model for the given object in your game mode, implement this function */
@@ -68,9 +68,24 @@ typedef struct cgame_export_s {
 	qboolean (EXPORT *HandleServerCommand) (const char *command, struct dbuffer *msg);
 } cgame_export_t;
 
+typedef struct cgameType_s {
+	char id[MAX_VAR];		/**< the id is also the file basename */
+	char window[MAX_VAR];	/**< the ui window id where this game type should become active for */
+	char name[MAX_VAR];		/**< translatable ui name */
+	linkedList_t *equipmentList; /**< the list of valid equipment definitions for this gametype - if this
+								 * is @c NULL, every equipment may be used */
+} cgameType_t;
+
+typedef enum {
+	FORWARD,
+	BACKWARD,
+	INIT
+} changeEquipType_t;
+
 /** @todo define the import interface */
 typedef struct cgame_import_s {
 	csi_t *csi;
+	const cgameType_t *cgameType;
 
 	/* UI functions */
 	void (IMPORT *UI_ExecuteConfunc) (const char *fmt, ...) __attribute__((format(printf, 1, 2)));
@@ -83,6 +98,7 @@ typedef struct cgame_import_s {
 	void (IMPORT *UI_RegisterText) (int textId, const char *text);
 	void (IMPORT *UI_ResetData) (int dataId);
 	void (IMPORT *UI_RegisterLinkedListText) (int textId, linkedList_t *text);
+	void (IMPORT *UI_TextScrollEnd) (const char* nodePath);
 	void (IMPORT *UI_TextNodeSelectLine) (uiNode_t *node, int num);
 	uiNode_t *(IMPORT *UI_PopupList) (const char *title, const char *headline, linkedList_t* entries, const char *clickAction);
 	void (IMPORT *UI_UpdateInvisOptions) (uiNode_t *option, const linkedList_t *stringList);
@@ -110,6 +126,7 @@ typedef struct cgame_import_s {
 	int (IMPORT *GAME_GetCurrentTeam) (void);
 	void* (IMPORT *GAME_StrDup) (const char *string);
 	void (IMPORT *GAME_AutoTeam) (const char *equipmentDefinitionID, int teamMembers);
+	const equipDef_t *(IMPORT *GAME_ChangeEquip) (const linkedList_t *equipmentList, changeEquipType_t changeType, const char *equipID);
 	size_t (IMPORT *GAME_GetCharacterArraySize) (void);
 	qboolean (IMPORT *GAME_IsTeamEmpty) (void);
 	qboolean (IMPORT *GAME_LoadDefaultTeam) (void);
@@ -130,7 +147,7 @@ typedef struct cgame_import_s {
 	int (IMPORT *NET_ReadByte)  (struct dbuffer *buf);
 	int (IMPORT *NET_ReadStringLine)  (struct dbuffer *buf, char *string, size_t length);
 	int (IMPORT *NET_ReadString)  (struct dbuffer *buf, char *string, size_t length);
-	struct net_stream *(IMPORT *NET_Connect)  (const char *node, const char *service);
+	struct net_stream *(IMPORT *NET_Connect)  (const char *node, const char *service, stream_onclose_func *onclose);
 	void (IMPORT *NET_StreamSetCallback)  (struct net_stream *s, stream_callback_func *func);
 	void (IMPORT *NET_OOB_Printf) (struct net_stream *s, const char *format, ...) __attribute__((format(printf,2,3)));
 	void (IMPORT *NET_OOB_Printf2) (const char *format, ...) __attribute__((format(printf,1,2)));

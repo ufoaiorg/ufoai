@@ -73,6 +73,8 @@ typedef struct production_s
 #define PR_IsDisassemblyData(data)	((data)->type == PRODUCTION_TYPE_DISASSEMBLY)
 #define PR_IsAircraftData(data)		((data)->type == PRODUCTION_TYPE_AIRCRAFT)
 #define PR_IsItemData(data)			((data)->type == PRODUCTION_TYPE_ITEM)
+#define PR_IsProductionData(data)	(!PR_IsDisassemblyData(data))
+
 #define PR_IsDisassembly(prod)		(PR_IsDisassemblyData(&(prod)->data))
 #define PR_IsAircraft(prod)			(PR_IsAircraftData(&(prod)->data))
 #define PR_IsItem(prod)				(PR_IsItemData(&(prod)->data))
@@ -123,8 +125,9 @@ int PR_RequirementsMet(int amount, const requirements_t const *reqs, struct base
 
 int PR_GetRemainingMinutes(const production_t const * prod);
 int PR_GetRemainingHours(const production_t const * prod);
+int PR_GetProductionHours(const struct base_s const *base, const productionData_t const *prodData);
 
-production_t *PR_QueueNew(struct base_s *base, const productionData_t *data, signed int amount);
+production_t *PR_QueueNew(struct base_s *base, const productionData_t const *data, signed int amount);
 void PR_QueueMove(production_queue_t *queue, int index, int dir);
 void PR_QueueDelete(struct base_s *base, production_queue_t *queue, int index);
 void PR_QueueNext(struct base_s *base);

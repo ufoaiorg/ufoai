@@ -119,9 +119,33 @@ void LIST_AddStringSorted (linkedList_t** listDest, const char* data)
 }
 
 /**
+ * @brief Adds a string as first entry to a linked list
+ * @param listDest The linked list to add the string, too. If this is @c NULL, a new list is created
+ * @param data The string to add to the list
+ * @sa LIST_AddString
+ * @todo Optimize this to not allocate memory for every entry - but use a hunk
+ */
+void LIST_PrependString (linkedList_t** listDest, const char* data)
+{
+	linkedList_t *newEntry;
+
+	/* create the list */
+	if (!*listDest) {
+		LIST_AddString(listDest, data);
+		return;
+	}
+
+	newEntry = (linkedList_t*)Mem_PoolAlloc(sizeof(*newEntry), com_genericPool, 0);
+	newEntry->next = *listDest;
+	*listDest = newEntry;
+	newEntry->data = (byte*)Mem_StrDup(data);
+}
+
+/**
  * @brief Adds an string to a new or to an already existing linked list. The string is copied here.
  * @sa LIST_Add
  * @sa LIST_RemoveEntry
+ * @see LIST_PrependString
  * @todo Optimize this to not allocate memory for every entry - but use a hunk
  */
 void LIST_AddString (linkedList_t** listDest, const char* data)
@@ -256,6 +280,118 @@ qboolean LIST_Remove (linkedList_t **list, const void *data)
 	if (l != NULL)
 		return LIST_RemoveEntry(list, l);
 	return qfalse;
+}
+
+/**
+ * @brief This is the actual sort function. Notice that it returns the new
+ * head of the list. (It has to, because the head will not
+ * generally be the same element after the sort.)
+ * @note see http://www.chiark.greenend.org.uk/~sgtatham/algorithms/listsort.html
+ */
+static linkedList_t *_LIST_Sort (linkedList_t *list, linkedListSort_t sorter, const void* userData)
+{
+	linkedList_t *p, *q, *e, *tail;
+	int insize, nmerges, psize, qsize, i;
+
+	/*
+	 * Silly special case: if `list' was passed in as NULL, return
+	 * NULL immediately.
+	 */
+	if (!list)
+		return NULL;
+
+	insize = 1;
+
+	while (1) {
+		p = list;
+		list = NULL;
+		tail = NULL;
+
+		nmerges = 0; /* count number of merges we do in this pass */
+
+		while (p) {
+			nmerges++; /* there exists a merge to be done */
+			/* step `insize' places along from p */
+			q = p;
+			psize = 0;
+			for (i = 0; i < insize; i++) {
+				psize++;
+				q = q->next;
+				if (!q)
+					break;
+			}
+
+			/* if q hasn't fallen off end, we have two lists to merge */
+			qsize = insize;
+
+			/* now we have two lists; merge them */
+			while (psize > 0 || (qsize > 0 && q)) {
+				/* decide whether next element of merge comes from p or q */
+				if (psize == 0) {
+					/* p is empty; e must come from q. */
+					e = q;
+					q = q->next;
+					qsize--;
+				} else if (qsize == 0 || !q) {
+					/* q is empty; e must come from p. */
+					e = p;
+					p = p->next;
+					psize--;
+				} else if (sorter(p, q, userData) <= 0) {
+					/* First element of p is lower (or same);
+					 * e must come from p. */
+					e = p;
+					p = p->next;
+					psize--;
+				} else {
+					/* First element of q is lower; e must come from q. */
+					e = q;
+					q = q->next;
+					qsize--;
+				}
+
+				/* add the next element to the merged list */
+				if (tail) {
+					tail->next = e;
+				} else {
+					list = e;
+				}
+				tail = e;
+			}
+
+			/* now p has stepped `insize' places along, and q has too */
+			p = q;
+		}
+		tail->next = NULL;
+
+		/* If we have done only one merge, we're finished. */
+		if (nmerges <= 1) /* allow for nmerges==0, the empty list case */
+			return list;
+
+		/* Otherwise repeat, merging lists twice the size */
+		insize *= 2;
+	}
+}
+
+void LIST_Sort (linkedList_t **list, linkedListSort_t sorter, const void* userData)
+{
+	if (LIST_IsEmpty(*list))
+		return;
+	*list = _LIST_Sort(*list, sorter, userData);
+}
+
+/**
+ * @brief Copies the list structure data - but not the content from the original list.
+ * We are only using pointers here.
+ */
+linkedList_t *LIST_CopyStructure (linkedList_t* src)
+{
+	linkedList_t *dest = NULL;
+	void *data;
+	LIST_Foreach(src, void, data) {
+		LIST_AddPointer(&dest, data);
+	}
+	return dest;
 }
 
 /**

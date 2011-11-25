@@ -9,15 +9,15 @@
 	material tex_nature/rock007
 	hardness 0.01
 	parallax 1.0
-	specular 2.0
-	bump 2.0
+	specular 1.0
+	bump 1.5
 }
 {
 	material tex_nature/rock005
 	hardness 0.01
 	parallax 1.0
-	specular 2.0
-	bump 2.0
+	specular 1.0
+	bump 1.5
 }
 {
 	material tex_nature/desert004

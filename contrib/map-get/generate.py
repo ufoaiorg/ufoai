@@ -26,7 +26,7 @@ def gen(dst, changed_maps):
     from random import choice
 
     if not os.path.exists(dst):
-        os.makedirs(dst)
+        os.makedirs(dst, 0755)
 
     if not os.access(dst, os.R_OK | os.W_OK):
         print 'Permission denied. "%s"' % argsdst
@@ -107,10 +107,12 @@ def gen(dst, changed_maps):
                 # make sure destination directory exists
                 dst_dir = os.path.split(os.path.join(dst, bspfile))[0]
                 if not os.path.exists(dst_dir):
-                    os.makedirs(dst_dir)
+                    os.makedirs(dst_dir, 0755)
 
                 data = open(bspfile).read()
-                GzipFile(os.path.join(dst, bspfile) + '.gz', 'w').write(data)
+                gzipPath = os.path.join(dst, bspfile) + '.gz'
+                GzipFile(gzipPath, 'w').write(data)
+                os.chmod(gzipPath, 0644)
             else:
                 print '%s - already up to date' % bspfile
 

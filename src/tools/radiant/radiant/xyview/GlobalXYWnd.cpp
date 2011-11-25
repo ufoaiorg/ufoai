@@ -50,7 +50,7 @@ void XYWndManager::construct() {
 
 // Free the allocated XYViews from the heap
 void XYWndManager::destroyViews() {
-	for (XYWndList::iterator i = _XYViews.begin(); i != _XYViews.end(); i++) {
+	for (XYWndList::iterator i = _XYViews.begin(); i != _XYViews.end(); ++i) {
 		// Free the view from the heap
 		XYWnd* xyView = *i;
 
@@ -181,7 +181,7 @@ bool XYWndManager::alwaysCaulkForNewBrushes() const {
 }
 
 void XYWndManager::updateAllViews() {
-	for (XYWndList::iterator i = _XYViews.begin(); i != _XYViews.end(); i++) {
+	for (XYWndList::iterator i = _XYViews.begin(); i != _XYViews.end(); ++i) {
 		XYWnd* xyview = *i;
 
 		// Pass the call
@@ -234,7 +234,7 @@ XYWnd* XYWndManager::getActiveXY() const {
 
 void XYWndManager::setOrigin(const Vector3& origin) {
 	// Cycle through the list of views and set the origin
-	for (XYWndList::iterator i = _XYViews.begin(); i != _XYViews.end(); i++) {
+	for (XYWndList::iterator i = _XYViews.begin(); i != _XYViews.end(); ++i) {
 		XYWnd* xyView = *i;
 
 		if (xyView != NULL) {
@@ -246,7 +246,7 @@ void XYWndManager::setOrigin(const Vector3& origin) {
 
 void XYWndManager::setScale(float scale) {
 	// Cycle through the list of views and set the origin
-	for (XYWndList::iterator i = _XYViews.begin(); i != _XYViews.end(); i++) {
+	for (XYWndList::iterator i = _XYViews.begin(); i != _XYViews.end(); ++i) {
 		XYWnd* xyView = *i;
 
 		if (xyView != NULL) {
@@ -258,7 +258,7 @@ void XYWndManager::setScale(float scale) {
 
 void XYWndManager::positionAllViews(const Vector3& origin) {
 	// Cycle through the list of views and set the origin
-	for (XYWndList::iterator i = _XYViews.begin(); i != _XYViews.end(); i++) {
+	for (XYWndList::iterator i = _XYViews.begin(); i != _XYViews.end(); ++i) {
 		XYWnd* xyView = *i;
 
 		if (xyView != NULL) {
@@ -306,7 +306,7 @@ void XYWndManager::toggleActiveView() {
 
 XYWnd* XYWndManager::getView(EViewType viewType) {
 	// Cycle through the list of views and get the one matching the type
-	for (XYWndList::iterator i = _XYViews.begin(); i != _XYViews.end(); i++) {
+	for (XYWndList::iterator i = _XYViews.begin(); i != _XYViews.end(); ++i) {
 		XYWnd* xyView = *i;
 
 		if (xyView != NULL) {
@@ -358,7 +358,7 @@ void XYWndManager::destroyOrthoView(XYWnd* xyWnd) {
 	if (xyWnd != NULL) {
 
 		// Remove the pointer from the list
-		for (XYWndList::iterator i = _XYViews.begin(); i != _XYViews.end(); i++) {
+		for (XYWndList::iterator i = _XYViews.begin(); i != _XYViews.end(); ++i) {
 			XYWnd* listItem = (*i);
 
 			// If the view is found, remove it from the list

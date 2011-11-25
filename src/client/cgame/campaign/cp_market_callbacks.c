@@ -56,9 +56,6 @@ static const objDef_t *currentSelectedMenuEntry;	/**< Current selected entry on 
 static int buyCat = FILTER_S_PRIMARY;	/**< Category of items in the menu.
 										 * @sa itemFilterTypes_t */
 
-/** @brief Max values for Buy/Sell factors. */
-static const int MAX_BS_FACTORS = 500;
-
 /**
  * @brief Checks whether a given aircraft should appear on the market
  * @param aircraft The aircraft to check
@@ -610,13 +607,17 @@ static void BS_BuyAircraft_f (void)
 
 	if (buyCat == FILTER_AIRCRAFT) {
 		int freeSpace;
+		if (!B_GetBuildingStatus(base, B_COMMAND)) {
+			CP_Popup(_("Note"), _("No command centre in this base.\nHangars are not functional.\n"));
+			return;
+		}
 		/* We cannot buy aircraft if there is no power in our base. */
 		if (!B_GetBuildingStatus(base, B_POWER)) {
 			CP_Popup(_("Note"), _("No power supplies in this base.\nHangars are not functional."));
 			return;
 		}
 		/* We cannot buy aircraft without any hangar. */
-		if (!B_GetBuildingStatus(base, B_HANGAR) && !B_GetBuildingStatus(base, B_SMALL_HANGAR)) {
+		if (!AIR_AircraftAllowed(base)) {
 			CP_Popup(_("Note"), _("Build a hangar first."));
 			return;
 		}

@@ -145,12 +145,12 @@ static void SV_Map_f (void)
 		Cvar_SetValue("sv_ai", 0);
 		Cvar_SetValue("sv_cheats", 1);
 		Cvar_SetValue("sv_send_edicts", 1);
-		Cvar_SetValue("g_notus", 1);
+		Cvar_SetValue("g_notu", 1);
 		Cvar_SetValue("g_nospawn", 1);
 	} else {
 		Cvar_SetValue("sv_ai", 1);
 		Cvar_SetValue("sv_send_edicts", 0);
-		Cvar_SetValue("g_notus", 0);
+		Cvar_SetValue("g_notu", 0);
 		Cvar_SetValue("g_nospawn", 0);
 	}
 
@@ -213,9 +213,14 @@ static void SV_Kick_f (void)
 static void SV_StartGame_f (void)
 {
 	client_t* cl = NULL;
-	while ((cl = SV_GetNextClient(cl)) != NULL)
-		if (cl->state != cs_free)
+	int cnt = 0;
+	while ((cl = SV_GetNextClient(cl)) != NULL) {
+		if (cl->state != cs_free) {
 			cl->player->isReady = qtrue;
+			cnt++;
+		}
+	}
+	Cvar_ForceSet("sv_maxclients", va("%i", cnt));
 }
 
 /**
@@ -236,8 +241,8 @@ static void SV_Status_f (void)
 	Com_Printf("map              : %s (%s)\n", sv->name, (SV_GetConfigStringInteger(CS_LIGHTMAP) ? "day" : "night"));
 	Com_Printf("active team      : %i\n", svs.ge->ClientGetActiveTeam());
 
-	Com_Printf("num status  name            address              \n");
-	Com_Printf("--- ------- --------------- ---------------------\n");
+	Com_Printf("num status  name            timeout        ready  address              \n");
+	Com_Printf("--- ------- --------------- -------------- ----- ---------------------\n");
 
 	cl = NULL;
 	i = 0;
@@ -257,6 +262,8 @@ static void SV_Status_f (void)
 			state = "SPAWNIN"; break;
 		case cs_began:
 			state = "BEGAN  "; break;
+		case cs_spawned:
+			state = "SPAWNED"; break;
 
 		default:
 			sprintf(state_buf, "%7i", cl->state);
@@ -265,7 +272,8 @@ static void SV_Status_f (void)
 		}
 
 		s = NET_StreamPeerToName(cl->stream, buf, sizeof(buf), qfalse);
-		Com_Printf("%3i %s %-15s %-21s\n", i, state, cl->name, s);
+		Com_Printf("%3i %s %-15s %14i %-5s %-21s\n", i, state, cl->name, cl->lastmessage,
+				cl->player->isReady ? "true" : "false", s);
 	}
 	Com_Printf("\n");
 }
@@ -526,7 +534,14 @@ static void SV_PrintConfigStrings_f (void)
 	int i;
 
 	for (i = 0; i < MAX_CONFIGSTRINGS; i++) {
-		const char *configString = SV_GetConfigString(i);
+		const char *configString;
+		/* CS_TILES and CS_POSITIONS can stretch over multiple configstrings,
+		 * so don't send the middle parts again. */
+		if (i > CS_TILES && i < CS_POSITIONS)
+			continue;
+		if (i > CS_POSITIONS && i < CS_MODELS)
+			continue;
+		configString = SV_GetConfigString(i);
 		if (configString[0] == '\0')
 			continue;
 		Com_Printf("configstring[%3i]: %s\n", i, configString);

@@ -108,9 +108,9 @@
 		<Unit filename="..\..\base\dedicated.cfg" />
 		<Unit filename="..\..\base\default.cfg" />
 		<Unit filename="..\..\base\shaders\bump_fs.glsl" />
-		<Unit filename="..\..\base\shaders\bump_vs.glsl" />
 		<Unit filename="..\..\base\shaders\light_fs.glsl" />
 		<Unit filename="..\..\base\shaders\light_vs.glsl" />
+		<Unit filename="..\..\base\shaders\transform_lights_vs.glsl" />
 		<Unit filename="..\..\base\shaders\warp_fs.glsl" />
 		<Unit filename="..\..\base\shaders\warp_vs.glsl" />
 		<Unit filename="..\..\base\ufos\aircraftmanagement.ufo" />
@@ -213,6 +213,10 @@
 			<Option compilerVar="CC" />
 		</Unit>
 		<Unit filename="..\..\src\client\battlescape\cl_camera.h" />
+		<Unit filename="..\..\src\client\battlescape\cl_radar.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="..\..\src\client\battlescape\cl_radar.h" />
 		<Unit filename="..\..\src\client\battlescape\cl_hud.c">
 			<Option compilerVar="CC" />
 		</Unit>
@@ -257,10 +261,6 @@
 			<Option compilerVar="CC" />
 		</Unit>
 		<Unit filename="..\..\src\client\battlescape\events\e_server.h" />
-		<Unit filename="..\..\src\client\battlescape\events\e_time.c">
-			<Option compilerVar="CC" />
-		</Unit>
-		<Unit filename="..\..\src\client\battlescape\events\e_time.h" />
 		<Unit filename="..\..\src\client\battlescape\events\event\actor\e_event_actoradd.c">
 			<Option compilerVar="CC" />
 		</Unit>
@@ -368,6 +368,9 @@
 		<Unit filename="..\..\src\client\battlescape\events\event\world\e_event_addbrushmodel.c">
 			<Option compilerVar="CC" />
 		</Unit>
+		<Unit filename="..\..\src\client\battlescape\events\event\world\e_event_sound.c">
+			<Option compilerVar="CC" />
+		</Unit>
 		<Unit filename="..\..\src\client\battlescape\events\event\world\e_event_addbrushmodel.h" />
 		<Unit filename="..\..\src\client\battlescape\events\event\world\e_event_addedict.c">
 			<Option compilerVar="CC" />
@@ -433,6 +436,14 @@
 			<Option compilerVar="CC" />
 		</Unit>
 		<Unit filename="..\..\src\client\cgame\campaign\cp_aliencont_callbacks.h" />
+		<Unit filename="..\..\src\client\cgame\campaign\cp_auto_mission.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="..\..\src\client\cgame\campaign\cp_auto_mission.h" />
+		<Unit filename="..\..\src\client\cgame\campaign\cp_mission_callbacks.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="..\..\src\client\cgame\campaign\cp_mission_callbacks.h" />
 		<Unit filename="..\..\src\client\cgame\campaign\cp_base.c">
 			<Option compilerVar="CC" />
 		</Unit>
@@ -652,18 +663,21 @@
 			<Option compilerVar="CC" />
 		</Unit>
 		<Unit filename="..\..\src\client\cgame\cl_game.h" />
-		<Unit filename="..\..\src\client\cgame\cl_game_campaign.c">
+		<Unit filename="..\..\src\client\cgame\campaign\cl_game_campaign.c">
 			<Option compilerVar="CC" />
 		</Unit>
-		<Unit filename="..\..\src\client\cgame\cl_game_campaign.h" />
-		<Unit filename="..\..\src\client\cgame\cl_game_multiplayer.c">
+		<Unit filename="..\..\src\client\cgame\campaign\cl_game_campaign.h" />
+		<Unit filename="..\..\src\client\cgame\multiplayer\cl_game_multiplayer.c">
 			<Option compilerVar="CC" />
 		</Unit>
-		<Unit filename="..\..\src\client\cgame\cl_game_multiplayer.h" />
-		<Unit filename="..\..\src\client\cgame\cl_game_skirmish.c">
+		<Unit filename="..\..\src\client\cgame\multiplayer\cl_game_multiplayer.h" />
+		<Unit filename="..\..\src\client\cgame\skirmish\cl_game_skirmish.c">
 			<Option compilerVar="CC" />
 		</Unit>
-		<Unit filename="..\..\src\client\cgame\cl_game_skirmish.h" />
+		<Unit filename="..\..\src\client\cgame\skirmish\cl_game_skirmish.h" />
+		<Unit filename="..\..\src\client\cgame\cl_game_team.c">
+			<Option compilerVar="CC" />
+		</Unit>
 		<Unit filename="..\..\src\client\cgame\multiplayer\mp_callbacks.c">
 			<Option compilerVar="CC" />
 		</Unit>
@@ -672,9 +686,6 @@
 			<Option compilerVar="CC" />
 		</Unit>
 		<Unit filename="..\..\src\client\cgame\multiplayer\mp_serverlist.h" />
-		<Unit filename="..\..\src\client\cgame\cl_game_team.c">
-			<Option compilerVar="CC" />
-		</Unit>
 		<Unit filename="..\..\src\client\cinematic\cl_cinematic.c">
 			<Option compilerVar="CC" />
 		</Unit>
@@ -727,6 +738,7 @@
 			<Option compilerVar="CC" />
 		</Unit>
 		<Unit filename="..\..\src\client\cl_screen.h" />
+		<Unit filename="..\..\src\client\cl_shared.h" />
 		<Unit filename="..\..\src\client\cl_team.c">
 			<Option compilerVar="CC" />
 		</Unit>
@@ -756,10 +768,6 @@
 			<Option compilerVar="CC" />
 		</Unit>
 		<Unit filename="..\..\src\client\input\cl_keys.h" />
-		<Unit filename="..\..\src\common\xml.c">
-			<Option compilerVar="CC" />
-		</Unit>
-		<Unit filename="..\..\src\common\xml.h" />
 		<Unit filename="..\..\src\client\renderer\r_array.c">
 			<Option compilerVar="CC" />
 		</Unit>
@@ -970,6 +978,10 @@
 			<Option compilerVar="CC" />
 		</Unit>
 		<Unit filename="..\..\src\client\ui\node\ui_node_image.h" />
+		<Unit filename="..\..\src\client\ui\node\ui_node_texture.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="..\..\src\client\ui\node\ui_node_texture.h" />
 		<Unit filename="..\..\src\client\ui\node\ui_node_item.c">
 			<Option compilerVar="CC" />
 		</Unit>
@@ -1248,6 +1260,10 @@
 			<Option compilerVar="CC" />
 		</Unit>
 		<Unit filename="..\..\src\common\unzip.h" />
+		<Unit filename="..\..\src\common\xml.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="..\..\src\common\xml.h" />
 		<Unit filename="..\..\src\game\chr_shared.c">
 			<Option compilerVar="CC" />
 		</Unit>
@@ -1346,6 +1362,9 @@
 		<Unit filename="..\..\src\shared\bfd.c">
 			<Option compilerVar="CC" />
 		</Unit>
+		<Unit filename="..\..\src\shared\stringhunk.c">
+			<Option compilerVar="CC" />
+		</Unit>
 		<Unit filename="..\..\src\shared\byte.c">
 			<Option compilerVar="CC" />
 		</Unit>
@@ -1362,6 +1381,10 @@
 			<Option compilerVar="CC" />
 		</Unit>
 		<Unit filename="..\..\src\shared\mathlib.h" />
+		<Unit filename="..\..\src\shared\mathlib_extra.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="..\..\src\shared\mathlib_extra.h" />
 		<Unit filename="..\..\src\shared\mutex.c">
 			<Option compilerVar="CC" />
 		</Unit>

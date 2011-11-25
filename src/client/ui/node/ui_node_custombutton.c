@@ -91,22 +91,22 @@ static void UI_CustomButtonNodeDraw (uiNode_t *node)
 	if (image) {
 		const int texX = rint(EXTRADATA(node).texl[0]);
 		texY += EXTRADATA(node).texl[1];
-		UI_DrawNormImageByName(pos[0], pos[1], node->size[0], node->size[1],
+		UI_DrawNormImageByName(qfalse, pos[0], pos[1], node->size[0], node->size[1],
 			texX + node->size[0], texY + node->size[1], texX, texY, image);
 	}
 
 	if (EXTRADATA(node).background) {
-		UI_DrawSpriteInBox(EXTRADATA(node).background, iconStatus, pos[0], pos[1], node->size[0], node->size[1]);
+		UI_DrawSpriteInBox(qfalse, EXTRADATA(node).background, iconStatus, pos[0], pos[1], node->size[0], node->size[1]);
 	}
 
 	if (EXTRADATA(node).super.icon) {
-		UI_DrawSpriteInBox(EXTRADATA(node).super.icon, iconStatus, pos[0], pos[1], node->size[0], node->size[1]);
+		UI_DrawSpriteInBox(EXTRADATA(node).super.flipIcon, EXTRADATA(node).super.icon, iconStatus, pos[0], pos[1], node->size[0], node->size[1]);
 	}
 
 	text = UI_GetReferenceString(node, node->text);
 	if (text != NULL && *text != '\0') {
 		R_Color(textColor);
-		UI_DrawStringInBox(font, node->textalign,
+		UI_DrawStringInBox(font, node->contentAlign,
 			pos[0] + node->padding, pos[1] + node->padding,
 			node->size[0] - node->padding - node->padding, node->size[1] - node->padding - node->padding,
 			text, LONGLINES_PRETTYCHOP);

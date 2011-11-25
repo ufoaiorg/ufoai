@@ -30,6 +30,7 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #include "battlescape/cl_localentity.h"
 #include "battlescape/events/e_server.h"
 #include "battlescape/cl_particle.h"
+#include "battlescape/cl_radar.h"
 #include "battlescape/cl_actor.h"
 #include "battlescape/cl_hud.h"
 #include "battlescape/cl_parse.h"
@@ -58,8 +59,6 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #include "ui/ui_font.h"
 #include "ui/ui_nodes.h"
 #include "ui/ui_parse.h"
-#include "cgame/multiplayer/mp_callbacks.h"
-#include "cgame/multiplayer/mp_serverlist.h"
 #include "cgame/cl_game_team.h"
 #include "../shared/infostring.h"
 #include "../shared/parse.h"
@@ -84,8 +83,6 @@ cvar_t *cl_teamnum;
 client_static_t cls;
 
 struct memPool_s *cl_genericPool;	/**< permanent client data - menu, fonts */
-struct memPool_s *cl_ircSysPool;	/**< irc pool */
-struct memPool_s *cl_soundSysPool;
 struct memPool_s *vid_genericPool;	/**< also holds all the static models */
 struct memPool_s *vid_imagePool;
 struct memPool_s *vid_lightPool;	/**< lightmap - wiped with every new map */
@@ -177,6 +174,24 @@ void CL_Drop (void)
 	GAME_Drop();
 }
 
+static void CL_Reconnect (void)
+{
+	if (cls.reconnectTime == 0 || cls.reconnectTime > CL_Milliseconds())
+		return;
+
+	Com_Printf("Reconnecting...\n");
+	CL_Disconnect();
+	CL_SetClientState(ca_connecting);
+	/* otherwise we would time out */
+	cls.connectTime = CL_Milliseconds() - 1500;
+}
+
+static void CL_FreeClientStream (void)
+{
+	cls.netStream = NULL;
+	Com_Printf("Client stream was closed\n");
+}
+
 /**
  * @note Only call @c CL_Connect if there is no connection yet (@c cls.netStream is @c NULL)
  * @sa CL_Disconnect
@@ -191,10 +206,10 @@ static void CL_Connect (void)
 	if (cls.servername[0] != '\0') {
 		assert(cls.serverport[0] != '\0');
 		Com_Printf("Connecting to %s %s...\n", cls.servername, cls.serverport);
-		cls.netStream = NET_Connect(cls.servername, cls.serverport);
+		cls.netStream = NET_Connect(cls.servername, cls.serverport, CL_FreeClientStream);
 	} else {
 		Com_Printf("Connecting to localhost...\n");
-		cls.netStream = NET_ConnectToLoopBack();
+		cls.netStream = NET_ConnectToLoopBack(CL_FreeClientStream);
 	}
 
 	if (cls.netStream) {
@@ -244,6 +259,8 @@ void CL_Disconnect (void)
 
 	if (cls.state < ca_connecting)
 		return;
+
+	Com_Printf("Disconnecting...\n");
 
 	/* send a disconnect message to the server */
 	if (!Com_ServerState()) {
@@ -445,6 +462,18 @@ static void CL_SpawnSoldiers_f (void)
 
 	cl.spawned = qtrue;
 	GAME_SpawnSoldiers();
+}
+
+static void CL_StartMatch_f (void)
+{
+	if (!cl.spawned)
+		return;
+
+	if (cl.started)
+		return;
+
+	cl.started = qtrue;
+	GAME_StartMatch();
 }
 
 static qboolean CL_DownloadUMPMap (const char *tiles)
@@ -662,7 +691,7 @@ static void CL_TeamDefInitMenu (void)
 		for (i = 0; i < csi.numTeamDefs; i++) {
 			const teamDef_t *td = &csi.teamDef[i];
 			if (td->race != RACE_CIVILIAN)
-				UI_AddOption(&option, td->id, _(td->name), td->id);
+				UI_AddOption(&option, td->id, va("_%s", td->name), td->id);
 		}
 		UI_RegisterOption(OPTION_TEAMDEFS, option);
 	}
@@ -680,54 +709,27 @@ static const value_t actorskin_vals[] = {
 
 static void CL_ParseActorSkin (const char *name, const char **text)
 {
-	const char *errhead = "CL_ParseActorSkin: unexpected end of file (actorskin ";
 	actorSkin_t *skin;
-	const value_t *vp;
-	const char *token;
-
-	/* get it's body */
-	token = Com_Parse(text);
-
-	if (!*text || *token != '{') {
-		Com_Printf("CL_ParseActorSkin: actorskin \"%s\" without body ignored\n", name);
-		return;
-	}
 
 	/* NOTE: first skin is special cause we don't get the skin with suffix */
-	if (Com_GetActorSkinCount() == 0) {
+	if (CL_GetActorSkinCount() == 0) {
 		if (!Q_streq(name, "default") != 0) {
 			Com_Error(ERR_DROP, "CL_ParseActorSkin: First actorskin read from script must be \"default\" skin.");
 		}
 	}
 
-	skin = Com_AllocateActorSkin(name);
+	skin = CL_AllocateActorSkin(name);
 
-	do {
-		token = Com_EParse(text, errhead, name);
-		if (!*text)
-			break;
-		if (*token == '}')
-			break;
-
-		for (vp = actorskin_vals; vp->string; vp++)
-			if (Q_streq(token, vp->string)) {
-				/* found a definition */
-				token = Com_EParse(text, errhead, name);
-				if (!*text)
-					return;
-
-				Com_EParseValue(skin, token, vp->type, vp->ofs, vp->size);
-				break;
-			}
-	} while (*text);
+	Com_ParseBlock(name, text, skin, actorskin_vals, NULL);
 }
 
 /** @brief valid mapdef descriptors */
 static const value_t mapdef_vals[] = {
 	{"description", V_TRANSLATION_STRING, offsetof(mapDef_t, description), 0},
-	{"map", V_CLIENT_HUNK_STRING, offsetof(mapDef_t, map), 0},
-	{"param", V_CLIENT_HUNK_STRING, offsetof(mapDef_t, param), 0},
-	{"size", V_CLIENT_HUNK_STRING, offsetof(mapDef_t, size), 0},
+	{"map", V_HUNK_STRING, offsetof(mapDef_t, map), 0},
+	{"param", V_HUNK_STRING, offsetof(mapDef_t, param), 0},
+	{"size", V_HUNK_STRING, offsetof(mapDef_t, size), 0},
+	{"civilianteam", V_HUNK_STRING, offsetof(mapDef_t, civTeam), 0},
 
 	{"maxaliens", V_INT, offsetof(mapDef_t, maxAliens), MEMBER_SIZEOF(mapDef_t, maxAliens)},
 	{"storyrelated", V_BOOL, offsetof(mapDef_t, storyRelated), MEMBER_SIZEOF(mapDef_t, storyRelated)},
@@ -735,9 +737,18 @@ static const value_t mapdef_vals[] = {
 
 	{"teams", V_INT, offsetof(mapDef_t, teams), MEMBER_SIZEOF(mapDef_t, teams)},
 	{"multiplayer", V_BOOL, offsetof(mapDef_t, multiplayer), MEMBER_SIZEOF(mapDef_t, multiplayer)},
+	{"singleplayer", V_BOOL, offsetof(mapDef_t, singleplayer), MEMBER_SIZEOF(mapDef_t, singleplayer)},
+	{"campaign", V_BOOL, offsetof(mapDef_t, campaign), MEMBER_SIZEOF(mapDef_t, campaign)},
 
-	{"onwin", V_CLIENT_HUNK_STRING, offsetof(mapDef_t, onwin), 0},
-	{"onlose", V_CLIENT_HUNK_STRING, offsetof(mapDef_t, onlose), 0},
+	{"onwin", V_HUNK_STRING, offsetof(mapDef_t, onwin), 0},
+	{"onlose", V_HUNK_STRING, offsetof(mapDef_t, onlose), 0},
+
+	{"ufos", V_LIST, offsetof(mapDef_t, ufos), 0},
+	{"aircraft", V_LIST, offsetof(mapDef_t, aircraft), 0},
+	{"terrains", V_LIST, offsetof(mapDef_t, terrains), 0},
+	{"populations", V_LIST, offsetof(mapDef_t, populations), 0},
+	{"cultures", V_LIST, offsetof(mapDef_t, cultures), 0},
+	{"gametypes", V_LIST, offsetof(mapDef_t, gameTypes), 0},
 
 	{NULL, 0, 0, 0}
 };
@@ -746,7 +757,6 @@ static void CL_ParseMapDefinition (const char *name, const char **text)
 {
 	const char *errhead = "Com_ParseMapDefinition: unexpected end of file (mapdef ";
 	mapDef_t *md;
-	const value_t *vp;
 	const char *token;
 
 	/* get it's body */
@@ -757,13 +767,16 @@ static void CL_ParseMapDefinition (const char *name, const char **text)
 		return;
 	}
 
-	md = Com_GetMapDefByIDX(cls.numMDs);
+	md = GAME_GetMapDefByIDX(cls.numMDs);
 	cls.numMDs++;
 	if (cls.numMDs >= lengthof(cls.mds))
 		Sys_Error("Com_ParseMapDefinition: Max mapdef hit");
 
 	OBJZERO(*md);
 	md->id = Mem_PoolStrDup(name, com_genericPool, 0);
+	md->singleplayer = qtrue;
+	md->campaign = qtrue;
+	md->multiplayer = qfalse;
 
 	do {
 		token = Com_EParse(text, errhead, name);
@@ -772,57 +785,9 @@ static void CL_ParseMapDefinition (const char *name, const char **text)
 		if (*token == '}')
 			break;
 
-		for (vp = mapdef_vals; vp->string; vp++)
-			if (Q_streq(token, vp->string)) {
-				/* found a definition */
-				token = Com_EParse(text, errhead, name);
-				if (!*text)
-					return;
-
-				switch (vp->type) {
-				default:
-					Com_EParseValue(md, token, vp->type, vp->ofs, vp->size);
-					break;
-				case V_TRANSLATION_STRING:
-					if (*token == '_')
-						token++;
-				/* fall through */
-				case V_CLIENT_HUNK_STRING:
-					Mem_PoolStrDupTo(token, (char**) ((char*)md + (int)vp->ofs), com_genericPool, 0);
-					break;
-				}
-				break;
-			}
-
-		if (!vp->string) {
-			linkedList_t **list;
-			if (Q_streq(token, "ufos")) {
-				list = &md->ufos;
-			} else if (Q_streq(token, "aircraft")) {
-				list = &md->aircraft;
-			} else if (Q_streq(token, "terrains")) {
-				list = &md->terrains;
-			} else if (Q_streq(token, "populations")) {
-				list = &md->populations;
-			} else if (Q_streq(token, "cultures")) {
-				list = &md->cultures;
-			} else if (Q_streq(token, "gametypes")) {
-				list = &md->gameTypes;
-			} else {
-				Com_Printf("Com_ParseMapDefinition: unknown token \"%s\" ignored (mapdef %s)\n", token, name);
-				continue;
-			}
-			token = Com_EParse(text, errhead, name);
-			if (!*text || *token != '{') {
-				Com_Printf("Com_ParseMapDefinition: mapdef \"%s\" has ufos, gametypes, terrains, populations or cultures block with no opening brace\n", name);
-				break;
-			}
-			do {
-				token = Com_EParse(text, errhead, name);
-				if (!*text || *token == '}')
-					break;
-				LIST_AddString(list, token);
-			} while (*text);
+		if (!Com_ParseBlockToken(name, text, md, mapdef_vals, com_genericPool, token)) {
+			Com_Printf("Com_ParseMapDefinition: unknown token \"%s\" ignored (mapdef %s)\n", token, name);
+			continue;
 		}
 	} while (*text);
 
@@ -833,6 +798,11 @@ static void CL_ParseMapDefinition (const char *name, const char **text)
 
 	if (!md->description) {
 		Com_Printf("Com_ParseMapDefinition: mapdef \"%s\" with no description\n", name);
+		cls.numMDs--;
+	}
+
+	if (md->maxAliens <= 0) {
+		Com_Printf("Com_ParseMapDefinition: mapdef \"%s\" with invalid maxAlien value\n", name);
 		cls.numMDs--;
 	}
 }
@@ -898,6 +868,14 @@ void CL_InitAfter (void)
  */
 qboolean CL_ParseClientData (const char *type, const char *name, const char **text)
 {
+#ifndef COMPILE_UNITTESTS
+	static int progressCurrent = 0;
+
+	progressCurrent++;
+	if (progressCurrent % 10 == 0)
+		SCR_DrawLoadingScreen(qfalse, min(progressCurrent * 30 / 1500, 30));
+#endif
+
 	if (Q_streq(type, "font"))
 		return UI_ParseFont(name, text);
 	else if (Q_streq(type, "tutorial"))
@@ -963,7 +941,15 @@ static void CL_ShowConfigstrings_f (void)
 	int i;
 
 	for (i = 0; i < MAX_CONFIGSTRINGS; i++) {
-		const char *configString = CL_GetConfigString(i);
+		const char *configString;
+		/* CS_TILES and CS_POSITIONS can stretch over multiple configstrings,
+		 * so don't print the middle parts */
+		if (i > CS_TILES && i < CS_POSITIONS)
+			continue;
+		if (i > CS_POSITIONS && i < CS_MODELS)
+			continue;
+
+		configString = CL_GetConfigString(i);
 		if (configString[0] == '\0')
 			continue;
 		Com_Printf("configstring[%3i]: %s\n", i, configString);
@@ -1018,6 +1004,7 @@ static void CL_InitLocal (void)
 
 	Cmd_AddCommand("precache", CL_Precache_f, "Function that is called at mapload to precache map data");
 	Cmd_AddCommand("spawnsoldiers", CL_SpawnSoldiers_f, "Spawns the soldiers for the selected teamnum");
+	Cmd_AddCommand("startmatch", CL_StartMatch_f, "Start the match once every player is ready");
 	Cmd_AddCommand("cl_configstrings", CL_ShowConfigstrings_f, "Print client configstrings to game console");
 
 	/* forward to server commands
@@ -1044,6 +1031,7 @@ static void CL_InitLocal (void)
 	IN_Init();
 	CL_ServerEventsInit();
 	CL_CameraInit();
+	CL_BattlescapeRadarInit();
 
 	CLMN_InitStartup();
 	TUT_InitStartup();
@@ -1147,6 +1135,7 @@ void CL_SetClientState (int state)
 		cls.waitingForStart = 0;
 		break;
 	case ca_connecting:
+		cls.reconnectTime = 0;
 		CL_Connect();
 		break;
 	case ca_disconnected:
@@ -1155,6 +1144,7 @@ void CL_SetClientState (int state)
 	case ca_connected:
 		/* wipe the client_state_t struct */
 		CL_ClearState();
+		Cvar_Set("cl_ready", "0");
 		break;
 	default:
 		break;
@@ -1234,14 +1224,14 @@ void CL_SlowFrame (int now, void *data)
 
 	Irc_Logic_Frame();
 
+	CL_Reconnect();
+
 	HUD_Update();
 }
 
 static void CL_InitMemPools (void)
 {
 	cl_genericPool = Mem_CreatePool("Client: Generic");
-	cl_soundSysPool = Mem_CreatePool("Client: Sound system");
-	cl_ircSysPool = Mem_CreatePool("Client: IRC system");
 }
 
 static void CL_RContextCvarChange (const char *cvarName, const char *oldValue, const char *newValue)
@@ -1294,7 +1284,7 @@ void CL_Init (void)
 	CIN_Init();
 
 	VID_Init();
-	SCR_DrawPrecacheScreen(qfalse, 0);
+	SCR_DrawLoadingScreen(qfalse, 0);
 	S_Init();
 	SCR_Init();
 

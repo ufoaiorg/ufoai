@@ -134,14 +134,22 @@ XYWnd::XYWnd () :
 	updateProjection();
 	updateModelview();
 
-	AddSceneChangeCallback(MemberCaller<XYWnd, &XYWnd::queueDraw> (*this));
+	GlobalSceneGraph().addSceneObserver(this);
 	GlobalCamera().addCameraObserver(this);
 
 	GlobalEventManager().connect(GTK_OBJECT(m_gl_widget));
 }
 
+void XYWnd::onSceneGraphChange ()
+{
+	queueDraw();
+}
+
 XYWnd::~XYWnd (void)
 {
+	// Remove <self> from the scene change callback list
+	GlobalSceneGraph().removeSceneObserver(this);
+
 	// greebo: Remove <self> as CameraObserver to the CamWindow.
 	GlobalCamera().removeCameraObserver(this);
 
@@ -1212,16 +1220,12 @@ void XYWnd::drawBlockGrid (void)
 		blockSize = string::toInt(value);
 
 	float x, y, xb, xe, yb, ye;
-	float w, h;
 	char text[32];
 
 	glDisable(GL_TEXTURE_2D);
 	glDisable(GL_TEXTURE_1D);
 	glDisable(GL_DEPTH_TEST);
 	glDisable(GL_BLEND);
-
-	w = (m_nWidth / 2 / m_fScale);
-	h = (m_nHeight / 2 / m_fScale);
 
 	Vector4 windowCoords = getWindowCoordinates();
 

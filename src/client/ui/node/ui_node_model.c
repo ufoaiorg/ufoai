@@ -40,6 +40,7 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #include "../../renderer/r_draw.h"
 #include "../../renderer/r_mesh.h"
 #include "../../renderer/r_mesh_anim.h"
+#include "../../renderer/r_model.h"
 
 #define EXTRADATA_TYPE modelExtraData_t
 #define EXTRADATA(node) UI_EXTRADATA(node, EXTRADATA_TYPE)
@@ -72,15 +73,18 @@ static void UI_ListUIModels_f (void)
 
 	/* search for UI models with same name */
 	Com_Printf("UI models: %i\n", ui_global.numModels);
-	for (i = 0; i < ui_global.numModels; i++)
-		Com_Printf("id: %s\n...model: %s\n...need: %s\n\n", ui_global.models[i].id, ui_global.models[i].model, ui_global.models[i].need);
+	for (i = 0; i < ui_global.numModels; i++) {
+		const uiModel_t *m = &ui_global.models[i];
+		const char *need = m->next != NULL ? m->next->id : "none";
+		Com_Printf("id: %s\n...model: %s\n...need: %s\n\n", m->id, m->model, need);
+	}
 }
 
 static void UI_ModelNodeDraw (uiNode_t *node)
 {
 	const char* ref = UI_GetReferenceString(node, EXTRADATA(node).model);
 	char source[MAX_VAR];
-	if (ref == NULL || ref[0] == '\0')
+	if (Q_strnull(ref))
 		source[0] = '\0';
 	else
 		Q_strncpyz(source, ref, sizeof(source));
@@ -124,7 +128,7 @@ static void UI_DrawModelNodeWithUIModel (uiNode_t *node, const char *source, mod
 		mi->backlerp = 0;
 
 		assert(model->model);
-		mi->model = R_RegisterModelShort(model->model);
+		mi->model = R_FindModel(model->model);
 		if (!mi->model) {
 			model = model->next;
 			continue;
@@ -152,7 +156,7 @@ static void UI_DrawModelNodeWithUIModel (uiNode_t *node, const char *source, mod
 				Com_Printf("UI Model: Could not get the model '%s'\n", model->parent);
 				break;
 			}
-			pmi.model = R_RegisterModelShort(parentModel->model);
+			pmi.model = R_FindModel(parentModel->model);
 			if (!pmi.model) {
 				Com_Printf("UI Model: Could not get the model '%s'\n", parentModel->model);
 				break;
@@ -261,7 +265,7 @@ void UI_DrawModelNode (uiNode_t *node, const char *source)
 	/* direct model name - no UI model definition */
 	if (!model) {
 		/* prevent the searching for a model def in the next frame */
-		mi.model = R_RegisterModelShort(source);
+		mi.model = R_FindModel(source);
 		mi.name = source;
 		if (!mi.model) {
 			Com_Printf("Could not find model '%s'\n", source);
@@ -278,6 +282,7 @@ void UI_DrawModelNode (uiNode_t *node, const char *source)
 	nodeorigin[1] += node->size[1] / 2 + EXTRADATA(node).origin[1];
 	nodeorigin[2] = EXTRADATA(node).origin[2];
 
+	VectorMA(EXTRADATA(node).angles, cls.frametime, EXTRADATA(node).omega, EXTRADATA(node).angles);
 	mi.origin = nodeorigin;
 	mi.angles = EXTRADATA(node).angles;
 	mi.scale = EXTRADATA(node).scale;
@@ -358,7 +363,7 @@ void UI_DrawModelNode (uiNode_t *node, const char *source)
 	/* draw the main model on the node */
 	R_DrawModelDirect(&mi, NULL, NULL);
 
-	/* draw all childs */
+	/* draw all children */
 	if (node->firstChild) {
 		uiNode_t *child;
 		modelInfo_t pmi = mi;
@@ -387,11 +392,11 @@ void UI_DrawModelNode (uiNode_t *node, const char *source)
 
 			/* init model name */
 			childRef = UI_GetReferenceString(child, EXTRADATA(child).model);
-			if (childRef == NULL || childRef[0] == '\0')
+			if (Q_strnull(childRef))
 				childSource[0] = '\0';
 			else
 				Q_strncpyz(childSource, childRef, sizeof(childSource));
-			mi.model = R_RegisterModelShort(childSource);
+			mi.model = R_FindModel(childSource);
 			mi.name = childSource;
 
 			/* init skin */
@@ -511,6 +516,8 @@ static const value_t properties[] = {
 	{"angles", V_VECTOR, UI_EXTRADATA_OFFSETOF(modelExtraData_t, angles), MEMBER_SIZEOF(modelExtraData_t, angles)},
 	/* Main model only. Position of the model relative to the center of the node. */
 	{"origin", V_VECTOR, UI_EXTRADATA_OFFSETOF(modelExtraData_t, origin), MEMBER_SIZEOF(modelExtraData_t, origin)},
+	/* Main model only. Rotation vector of the model. */
+	{"omega", V_VECTOR, UI_EXTRADATA_OFFSETOF(modelExtraData_t, omega), MEMBER_SIZEOF(modelExtraData_t, omega)},
 	/* Both. Scale the model */
 	{"scale", V_VECTOR, UI_EXTRADATA_OFFSETOF(modelExtraData_t, scale), MEMBER_SIZEOF(modelExtraData_t, scale)},
 	/* Submodel only. A tag name to link the model to the parent model. */

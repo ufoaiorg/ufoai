@@ -15,6 +15,7 @@ item laserpistol
 	scale			1.7
 	ammo			26
 	reload			12
+	reloadsound		weapons/reload-pistol
 	price			2000
 	size			10
 	is_secondary	true
@@ -38,6 +39,7 @@ item laserrifle
 	scale			1.26
 	ammo			16
 	reload			16
+	reloadsound		weapons/reload-rifle
 	price			2500
 	size			35
 	is_primary		true
@@ -62,6 +64,7 @@ item heavylaser
 	scale			1.15
 	ammo			6
 	reload			16
+	reloadsound		weapons/reload-rifle
 	price			4000
 	size			50
 	is_primary		true
@@ -86,6 +89,7 @@ item electrolaser
 	scale			1.26
 	ammo			16
 	reload			12
+	reloadsound		weapons/reload-rifle
 	price			1000
 	size			35
 	is_primary		true

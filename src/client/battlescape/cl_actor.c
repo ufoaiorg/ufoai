@@ -59,6 +59,7 @@ pos3_t mousePos; /**< The cell that an actor will move to when directed to move.
 static int mousePosTargettingAlign = 0;
 
 static le_t *mouseActor;
+static le_t *interactEntity;
 static pos3_t mouseLastPos;
 
 /**
@@ -94,7 +95,7 @@ const char *CL_ActorGetSkillString (const int skill)
 	const int skillLevel = skill * 10 / MAX_SKILL;
 #ifdef DEBUG
 	if (skill > MAX_SKILL) {
-		Com_Printf("CL_GetSkillString: Skill is bigger than max allowed skill value (%i/%i)\n", skill, MAX_SKILL);
+		Com_Printf("CL_GetSkillString: Skill is bigger than max allowed skill value (%i/%i).\n", skill, MAX_SKILL);
 	}
 #endif
 	switch (skillLevel) {
@@ -120,7 +121,7 @@ const char *CL_ActorGetSkillString (const int skill)
 	case 10:
 		return _("Superhuman");
 	default:
-		Com_Printf("CL_GetSkillString: Unknown skill: %i (index: %i)\n", skill, skillLevel);
+		Com_Printf("CL_GetSkillString: Unknown skill: %i (index: %i).\n", skill, skillLevel);
 		return "";
 	}
 }
@@ -177,18 +178,19 @@ static int CL_ActorGetNumber (const le_t * le)
  * @brief Returns the character information for an actor in the teamlist.
  * @param[in] le The actor to search.
  * @return A pointer to a character struct.
- * @todo We really needs a better way to sync this up.
  */
 character_t *CL_ActorGetChr (const le_t * le)
 {
-	const int actorIdx = CL_ActorGetNumber(le);
-	if (actorIdx == -1) {
-		Com_DPrintf(DEBUG_CLIENT, "CL_GetActorChr: Could not find actor in the team list - maybe already dead? (state is %i)!\n",
-				le->state);
-		return NULL;
+	int i;
+	const chrList_t *chrList = &cl.chrList;
+
+	for (i = 0; i < chrList->num; i++) {
+		character_t *chr = chrList->chr[i];
+		if (chr->ucn == le->ucn)
+			return chr;
 	}
 
-	return cl.chrList.chr[actorIdx];
+	return NULL;
 }
 
 /**
@@ -338,10 +340,9 @@ void CL_ActorAddToTeamList (le_t * le)
 	if (actorIdx == -1) {
 		/* check list length */
 		if (cl.numTeamList >= size) {
-			Com_Printf("Too many actors on the teamlist\n");
+			Com_Printf("Too many actors on the teamlist!\n");
 			return;
 		}
-		actorIdx = cl.numTeamList;
 		le->pathMap = (pathing_t *)Mem_PoolAlloc(sizeof(*le->pathMap), cl_genericPool, 0);
 		cl.teamList[cl.numTeamList] = le;
 		UI_ExecuteConfunc("hudenable %i", cl.numTeamList);
@@ -442,6 +443,16 @@ qboolean CL_ActorSelect (le_t * le)
 	selActor->selected = qtrue;
 	ui_inventory = &selActor->i;
 
+	if (le->state & RF_IRGOGGLESSHOT)
+		refdef.rendererFlags |= RDF_IRGOGGLES;
+	else
+		refdef.rendererFlags &= ~RDF_IRGOGGLES;
+
+	if (le->clientAction != NULL)
+		UI_ExecuteConfunc("enable_clientaction");
+	else
+		UI_ExecuteConfunc("disable_clientaction");
+
 	actorIdx = CL_ActorGetNumber(le);
 	if (actorIdx == -1)
 		return qfalse;
@@ -451,7 +462,7 @@ qboolean CL_ActorSelect (le_t * le)
 
 	chr = CL_ActorGetChr(le);
 	if (!chr)
-		Com_Error(ERR_DROP, "No character given for local entity");
+		Com_Error(ERR_DROP, "No character given for local entity!");
 
 	CL_UpdateCharacterValues(chr, "mn_");
 
@@ -569,7 +580,7 @@ static void CL_BuildForbiddenList (void)
 
 #ifdef PARANOID
 	if (forbiddenListLength > MAX_FORBIDDENLIST)
-		Com_Error(ERR_DROP, "CL_BuildForbiddenList: list too long");
+		Com_Error(ERR_DROP, "CL_BuildForbiddenList: list too long!");
 #endif
 }
 
@@ -655,7 +666,7 @@ int CL_ActorCheckAction (const le_t *le)
 		return qfalse;
 
 	if (cls.team != cl.actTeam) {
-		HUD_DisplayMessage(_("This isn't your round\n"));
+		HUD_DisplayMessage(_("It is not your turn!\n"));
 		return qfalse;
 	}
 
@@ -856,7 +867,7 @@ int CL_ActorGetContainerForReload (invList_t **invList, const inventory_t *inv, 
 			 * to retrieve the ammo from them than the one
 			 * we've already found. */
 			for (ic = inv->c[container]; ic; ic = ic->next) {
-				objDef_t *od = ic->item.t;
+				const objDef_t *od = ic->item.t;
 				if (INVSH_LoadableInWeapon(od, weapon) && GAME_ItemIsUseable(od)) {
 					tu = INVDEF(container)->out;
 					bestContainer = container;
@@ -879,7 +890,7 @@ void CL_ActorReload (le_t *le, containerIndex_t containerID)
 {
 	inventory_t *inv;
 	invList_t *ic;
-	objDef_t *weapon;
+	const objDef_t *weapon;
 	containerIndex_t bestContainer;
 
 	if (!CL_ActorCheckAction(le))
@@ -946,38 +957,41 @@ void CL_ActorInvMove (const le_t *le, containerIndex_t fromContainer, int fromX,
 }
 
 /**
- * @brief Opens a door.
- * @sa CL_ActorDoorAction
+ * @brief Uses the current selected entity in the battlescape. Can e.g. opens the selected door.
  * @sa G_ClientUseEdict
  */
-static void CL_ActorUseDoor (const le_t *le)
+static void CL_ActorUse (const le_t *le)
 {
 	if (!CL_ActorCheckAction(le))
 		return;
 
 	assert(le->clientAction);
 
-	MSG_Write_PA(PA_USE_DOOR, le->entnum, le->clientAction->entnum);
-	Com_DPrintf(DEBUG_CLIENT, "CL_ActorUseDoor: Use door number: %i (actor %i)\n", le->clientAction->entnum, le->entnum);
+	MSG_Write_PA(PA_USE, le->entnum, le->clientAction->entnum);
+	Com_DPrintf(DEBUG_CLIENT, "CL_ActorUse: Use door number: %i (actor %i).\n", le->clientAction->entnum, le->entnum);
 }
 
 /**
- * @brief Hud callback to open/close a door
+ * @brief Hud callback to use the current selected entity
  */
-void CL_ActorDoorAction_f (void)
+static void CL_ActorUse_f (void)
 {
-	if (!CL_ActorCheckAction(selActor))
+	le_t *actor = selActor;
+
+	if (!CL_ActorCheckAction(actor))
 		return;
 
 	/* no client action */
-	if (selActor->clientAction == NULL) {
-		Com_DPrintf(DEBUG_CLIENT, "CL_ActorDoorAction_f: No client_action set for actor with entnum %i\n", selActor->entnum);
+	if (actor->clientAction == NULL) {
+		Com_DPrintf(DEBUG_CLIENT, "CL_ActorUse_f: No client_action set for actor with entnum %i.\n", actor->entnum);
 		return;
 	}
 
-	/* Check if we should even try to send this command (no TUs left or). */
-	if (CL_ActorUsableTUs(selActor) >= TU_DOOR_ACTION)
-		CL_ActorUseDoor(selActor);
+	if (LE_IsDoor(actor->clientAction)) {
+		/* Check if we should even try to send this command (no TUs left or). */
+		if (CL_ActorUsableTUs(actor) >= TU_DOOR_ACTION)
+			CL_ActorUse(actor);
+	}
 }
 
 /**
@@ -1127,6 +1141,8 @@ void CL_ActorSelectMouse (void)
 		if (mouseActor && !mouseActor->selected && CL_ActorSelect(mouseActor)) {
 			/* Succeeded so go back into move mode. */
 			CL_ActorSetMode(selActor, M_MOVE);
+		} else if (interactEntity) {
+			CL_ActorUse(selActor);
 		} else {
 			CL_ActorMoveMouse();
 		}
@@ -1201,45 +1217,6 @@ MOUSE SCANNING
 */
 
 /**
- * @brief Searches an actor at the given position.
- * @param[in] pos The grid position to search an actor at
- * @param[in] includingStunned Also search for stunned actors if @c true.
- */
-static le_t* CL_ActorSearchAtGridPos (const pos3_t pos, qboolean includingStunned)
-{
-	le_t *le;
-
-	/* search for an actor on this field */
-	le = NULL;
-	while ((le = LE_GetNextInUse(le))) {
-		if (LE_IsLivingAndVisibleActor(le) && (includingStunned || !LE_IsStunned(le)))
-			switch (le->fieldSize) {
-			case ACTOR_SIZE_NORMAL:
-				if (VectorCompare(le->pos, pos))
-					return le;
-				break;
-			case ACTOR_SIZE_2x2: {
-				pos3_t actor2x2[3];
-
-				VectorSet(actor2x2[0], le->pos[0] + 1, le->pos[1],     le->pos[2]);
-				VectorSet(actor2x2[1], le->pos[0],     le->pos[1] + 1, le->pos[2]);
-				VectorSet(actor2x2[2], le->pos[0] + 1, le->pos[1] + 1, le->pos[2]);
-				if (VectorCompare(le->pos, pos)
-				|| VectorCompare(actor2x2[0], pos)
-				|| VectorCompare(actor2x2[1], pos)
-				|| VectorCompare(actor2x2[2], pos))
-					return le;
-				break;
-			}
-			default:
-				Com_Error(ERR_DROP, "Grid_MoveCalc: unknown actor-size: %i", le->fieldSize);
-		}
-	}
-
-	return NULL;
-}
-
-/**
  * @brief Battlescape cursor positioning.
  * @note Sets global var mouseActor to current selected le
  * @sa IN_Parse
@@ -1255,6 +1232,7 @@ qboolean CL_ActorMouseTrace (void)
 	vec3_t mapNormal, P3, P2minusP1;
 	vec3_t pA, pB, pC;
 	pos3_t testPos;
+	le_t *interactLe;
 
 	/* get cursor position as a -1 to +1 range for projection */
 	cur[0] = (mousePosX * viddef.rx - viddef.viewWidth * 0.5 - viddef.x) / (viddef.viewWidth * 0.5);
@@ -1360,7 +1338,23 @@ qboolean CL_ActorMouseTrace (void)
 	testPos[2] = restingLevel;
 	VectorCopy(testPos, mousePos);
 
-	mouseActor = CL_ActorSearchAtGridPos(mousePos, qfalse);
+	interactLe = CL_BattlescapeSearchAtGridPos(mousePos, qfalse, selActor);
+	if (interactLe != NULL && LE_IsActor(interactLe)) {
+		mouseActor = interactLe;
+		interactEntity = NULL;
+	} else if (selActor != NULL && selActor->clientAction == interactLe) {
+		interactEntity = interactLe;
+		mouseActor = NULL;
+	} else {
+		interactEntity = NULL;
+		mouseActor = NULL;
+	}
+
+	if (interactEntity != NULL) {
+		Cvar_Set("cursor", "2");
+	} else {
+		Cvar_Set("cursor", "1");
+	}
 
 	/* calculate move length */
 	if (selActor && !VectorCompare(mousePos, mouseLastPos)) {
@@ -1423,7 +1417,7 @@ qboolean CL_AddActor (le_t * le, entity_t * ent)
 
 			add.model = cls.modelPool[le->left];
 			if (!add.model)
-				Com_Error(ERR_DROP, "Actor model for left hand weapon wasn't found");
+				Com_Error(ERR_DROP, "Actor model for left hand weapon wasn't found!");
 
 			/* point to the body ent which will be added last */
 			add.tagent = R_GetFreeEntity() + 2 + addRightHandWeapon;
@@ -1439,7 +1433,7 @@ qboolean CL_AddActor (le_t * le, entity_t * ent)
 			add.alpha = le->alpha;
 			add.model = cls.modelPool[le->right];
 			if (!add.model)
-				Com_Error(ERR_DROP, "Actor model for right hand weapon wasn't found");
+				Com_Error(ERR_DROP, "Actor model for right hand weapon wasn't found!");
 
 			/* point to the body ent which will be added last */
 			add.tagent = R_GetFreeEntity() + 2;
@@ -1464,7 +1458,7 @@ qboolean CL_AddActor (le_t * le, entity_t * ent)
 	add.alpha = le->alpha;
 	add.model = le->model2;
 	if (!add.model)
-		Com_Error(ERR_DROP, "Actor model wasn't found");
+		Com_Error(ERR_DROP, "Actor model wasn't found!");
 	add.skinnum = le->skinnum;
 
 	/* point to the body ent which will be added last */
@@ -1499,6 +1493,8 @@ qboolean CL_AddActor (le_t * le, entity_t * ent)
 				ent->flags |= RF_MEMBER;
 			if (le->pnum != cl.pnum)
 				ent->flags |= RF_ALLIED;
+		} else {
+			ent->flags |= RF_OPPONENT;
 		}
 		if (le->team == TEAM_CIVILIAN)
 			ent->flags |= RF_NEUTRAL;
@@ -1555,7 +1551,7 @@ static void CL_TargetingStraight (const pos3_t fromPos, actorSizeEnum_t fromActo
 		return;
 
 	/* search for an actor at target */
-	target = CL_ActorSearchAtGridPos(toPos, qtrue);
+	target = CL_BattlescapeSearchAtGridPos(toPos, qtrue, NULL);
 
 	/* Determine the target's size. */
 	toActorSize = target
@@ -1635,7 +1631,7 @@ static void CL_TargetingGrenade (const pos3_t fromPos, actorSizeEnum_t fromActor
 		return;
 
 	/* search for an actor at target */
-	target = CL_ActorSearchAtGridPos(toPos, qtrue);
+	target = CL_BattlescapeSearchAtGridPos(toPos, qtrue, NULL);
 
 	/* Determine the target's size. */
 	toActorSize = target
@@ -2130,7 +2126,7 @@ static void CL_DumpTUs_f (void)
 	crouchingState = LE_IsCrouched(selActor) ? 1 : 0;
 	VectorCopy(selActor->pos, pos);
 
-	Com_Printf("TUs around (%i, %i, %i)\n", pos[0], pos[1], pos[2]);
+	Com_Printf("TUs around (%i, %i, %i).\n", pos[0], pos[1], pos[2]);
 
 	for (y = max(0, pos[1] - 8); y <= min(PATHFINDING_WIDTH, pos[1] + 8); y++) {
 		for (x = max(0, pos[0] - 8); x <= min(PATHFINDING_WIDTH, pos[0] + 8); x++) {
@@ -2405,26 +2401,26 @@ static void CL_ActorConfirmAction_f (void)
 
 void ACTOR_InitStartup (void)
 {
-	cl_reactionleftover = Cvar_Get("cl_reactionleftover", "0", CVAR_USERINFO | CVAR_ARCHIVE, "Minimum TU left over by reaction fire");
-	cl_autostand = Cvar_Get("cl_autostand","1", CVAR_USERINFO | CVAR_ARCHIVE, "Save accidental TU waste by allowing server to autostand before long walks");
+	cl_reactionleftover = Cvar_Get("cl_reactionleftover", "0", CVAR_USERINFO | CVAR_ARCHIVE, "Minimum TUs left over by reaction fire.");
+	cl_autostand = Cvar_Get("cl_autostand","1", CVAR_USERINFO | CVAR_ARCHIVE, "Prevent accidental wasting of TUs by allowing the actor to automatically stand up before starting long walks.");
 	confirm_actions = Cvar_Get("confirm_actions", "0", CVAR_ARCHIVE, "Confirm all actions in tactical mode");
 	cl_showactors = Cvar_Get("cl_showactors", "1", 0, "Show actors on the battlefield");
 	Cmd_AddCommand("actor_next", CL_ActorNext_f, N_("Toggle to next actor"));
 	Cmd_AddCommand("actor_select", CL_ActorSelect_f, N_("Select an actor from list"));
 	Cmd_AddCommand("actor_updatecurrent", CL_ActorUpdate_f, N_("Update an actor"));
-	Cmd_AddCommand("actor_standcrouch", CL_ActorStandCrouch_f, N_("Toggle stand/crounch"));
+	Cmd_AddCommand("actor_standcrouch", CL_ActorStandCrouch_f, N_("Toggle stand/crouch."));
 	Cmd_AddCommand("actor_useheadgear", CL_ActorUseHeadgear_f, N_("Toggle the headgear"));
-	Cmd_AddCommand("actor_dooraction", CL_ActorDoorAction_f, N_("Opens or closes a door"));
+	Cmd_AddCommand("actor_use", CL_ActorUse_f, N_("Use"));
 	Cmd_AddCommand("actor_confirmaction", CL_ActorConfirmAction_f, N_("Confirm the current action"));
-	Cmd_AddCommand("actor_nextalien", CL_NextAlienVisibleFromActor_f, N_("Toggle to next alien visible from selected actor."));
+	Cmd_AddCommand("actor_nextalien", CL_NextAlienVisibleFromActor_f, N_("Toggle to the next alien in sight of the selected actor."));
 
-	Cmd_AddCommand("nextalien", CL_NextAlien_f, N_("Toggle to next alien"));
+	Cmd_AddCommand("nextalien", CL_NextAlien_f, N_("Toggle camera to the next alien."));
 
 #ifdef DEBUG
 	Cmd_AddCommand("debug_path", CL_DebugPath_f, "Display routing data for current mouse position.");
-	Cmd_AddCommand("debug_drawblocked", CL_DisplayBlockedPaths_f, "Draws a marker for all blocked map-positions.");
-	Cmd_AddCommand("debug_movemark", CL_DumpMoveMark_f, "Triggers Grid_MoveMark in every direction at the current truePos.");
-	Cmd_AddCommand("debug_tus", CL_DumpTUs_f, "Shows a table of the TUs that would be used by the current actor to move relative to its current location");
-	Cmd_AddCommand("debug_actorinvlist", NULL, "Shows the inventory list of all actors");
+	Cmd_AddCommand("debug_drawblocked", CL_DisplayBlockedPaths_f, "Draw a marker for all blocked map-positions.");
+	Cmd_AddCommand("debug_movemark", CL_DumpMoveMark_f, "Trigger Grid_MoveMark in every direction at the current truePos.");
+	Cmd_AddCommand("debug_tus", CL_DumpTUs_f, "Show a table of the TUs that would be used by the current actor to move relative to his current location.");
+	Cmd_AddCommand("debug_actorinvlist", NULL, "Show the inventory list of all actors.");
 #endif /* DEBUG */
 }

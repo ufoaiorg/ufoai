@@ -54,6 +54,7 @@ static cvar_t *irc_logConsole;
 static cvar_t *irc_showIfNotInMenu;
 /* menu cvar */
 static cvar_t *irc_send_buffer;
+static memPool_t *cl_ircSysPool;
 
 static qboolean irc_connected;
 
@@ -256,7 +257,6 @@ typedef struct irc_server_msg_s {
 
 static struct net_stream *irc_stream;
 
-static const char IRC_QUIT_MSG[] = "ufoai.sf.net";
 static const char IRC_INVITE_FOR_A_GAME[] = "UFOAIINVITE;";
 
 static irc_channel_t ircChan;
@@ -970,10 +970,6 @@ static void Irc_Client_CmdPrivmsg (const char *prefix, const char *params, const
 			} else if (strstr(trailing, irc_nick->string)) {
 				S_StartLocalSample("misc/lobbyprivmsg", SND_VOLUME_DEFAULT);
 				GAME_AddChatMessage(va("<%s> %s\n", nick, trailing));
-				if (!Q_streq(UI_GetActiveWindowName(), "irc") && !Q_streq(UI_GetActiveWindowName(), cl_hud->string)) {
-					/* we are not in hud mode, nor in the lobby menu, use a popup */
-					UI_PushWindow("chat_popup", NULL, NULL);
-				}
 			}
 		}
 
@@ -1561,6 +1557,11 @@ Network functions
 ===============================================================
 */
 
+static void Irc_Net_StreamClose (void)
+{
+	irc_stream = NULL;
+}
+
 /**
  * @return qtrue if successful - qfalse otherwise
  * @sa Irc_Net_Disconnect
@@ -1569,7 +1570,7 @@ static qboolean Irc_Net_Connect (const char *host, const char *port)
 {
 	if (irc_stream)
 		NET_StreamFree(irc_stream);
-	irc_stream = NET_Connect(host, port);
+	irc_stream = NET_Connect(host, port, Irc_Net_StreamClose);
 	return irc_stream ? qfalse : qtrue;
 }
 
@@ -1579,7 +1580,6 @@ static qboolean Irc_Net_Connect (const char *host, const char *port)
 static qboolean Irc_Net_Disconnect (void)
 {
 	NET_StreamFree(irc_stream);
-	irc_stream = NULL;
 	return qtrue;
 }
 
@@ -1971,6 +1971,8 @@ Init and Shutdown functions
 
 void Irc_Init (void)
 {
+	cl_ircSysPool = Mem_CreatePool("Client: IRC system");
+
 	/* commands */
 	Cmd_AddCommand("irc_join", Irc_Client_Join_f, "Join an irc channel");
 	Cmd_AddCommand("irc_connect", Irc_Connect_f, "Connect to the irc network");
@@ -2018,4 +2020,6 @@ void Irc_Shutdown (void)
 {
 	if (irc_connected)
 		Irc_Logic_Disconnect("shutdown");
+
+	Mem_DeletePool(cl_ircSysPool);
 }

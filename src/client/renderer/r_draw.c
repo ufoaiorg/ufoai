@@ -176,6 +176,8 @@ void R_DrawChars (void)
 	glDrawArrays(GL_QUADS, 0, r_char_arrays.vert_index / 2);
 #endif
 
+	refdef.batchCount++;
+
 	r_char_arrays.color_index = 0;
 	r_char_arrays.texcoord_index = 0;
 	r_char_arrays.vert_index = 0;
@@ -201,7 +203,7 @@ void R_DrawFill (int x, int y, int w, int h, const vec4_t color)
 	const int g = color[1] * 255.0;
 	const int b = color[2] * 255.0;
 	const int a = color[3] * 255.0;
-	const uint32_t c = (r << 0) + (g << 8) + (b << 16) + (a << 24);
+	const uint32_t c = LittleLong((r << 0) + (g << 8) + (b << 16) + (a << 24));
 
 	if (r_fill_arrays.color_index >= lengthof(r_fill_arrays.colors))
 		return;
@@ -254,6 +256,8 @@ void R_DrawFills (void)
 #else
 	glDrawArrays(GL_QUADS, 0, r_fill_arrays.vert_index / 2);
 #endif
+
+	refdef.batchCount++;
 
 	/* and restore them */
 	R_BindDefaultArray(GL_VERTEX_ARRAY);
@@ -332,21 +336,6 @@ int R_UploadData (const char *name, byte *frame, int width, int height)
 }
 
 /**
- * @brief Searches for an image in the image array
- * @param[in] name The name of the image relative to pics/
- * @note name may not be null and has to be longer than 4 chars
- * @return NULL on error or image_t pointer on success
- * @sa R_FindImage
- */
-const image_t *R_RegisterImage (const char *name)
-{
-	const image_t *image = R_FindImage(va("pics/%s", name), it_pic);
-	if (image == r_noTexture)
-		return NULL;
-	return image;
-}
-
-/**
  * @brief Bind and draw a texture
  * @param[in] texnum The texture id (already uploaded of course)
  * @param[in] x normalized x value on the screen
@@ -395,6 +384,8 @@ const image_t *R_DrawImageArray (const vec2_t texcoords[4], const vec2_t verts[4
 
 	glDrawArrays(GL_TRIANGLE_FAN, 0, 4);
 
+	refdef.batchCount++;
+
 	/* and restore them */
 	R_BindDefaultArray(GL_TEXTURE_COORD_ARRAY);
 	R_BindDefaultArray(GL_VERTEX_ARRAY);
@@ -437,6 +428,8 @@ void R_DrawRect (int x, int y, int w, int h, const vec4_t color, float lineWidth
 	glDrawArrays(GL_LINE_LOOP, 0, 4);
 	R_BindDefaultArray(GL_VERTEX_ARRAY);
 
+	refdef.batchCount++;
+
 	glEnable(GL_TEXTURE_2D);
 	glLineWidth(1.0f);
 #ifndef GL_VERSION_ES_CM_1_0
@@ -466,6 +459,8 @@ void R_DrawCircle (float radius, const vec4_t color, float thickness, const vec3
 	glDrawArrays(GL_LINE_LOOP, 0, steps);
 	R_BindDefaultArray(GL_VERTEX_ARRAY);
 
+	refdef.batchCount++;
+
 	R_Color(NULL);
 
 	glLineWidth(1.0f);
@@ -494,6 +489,8 @@ static inline void R_Draw2DArray (int points, int *verts, GLenum mode)
 	glDrawArrays(mode, 0, points);
 	glEnable(GL_TEXTURE_2D);
 	glVertexPointer(3, GL_FLOAT, 0, r_state.vertex_array_3d);
+
+	refdef.batchCount++;
 }
 
 /**
@@ -640,6 +637,8 @@ void R_CleanupDepthBuffer (int x, int y, int width, int height)
 	R_BindArray(GL_VERTEX_ARRAY, GL_FLOAT, points);
 	glDrawArrays(GL_TRIANGLE_FAN, 0, 4);
 	R_BindDefaultArray(GL_VERTEX_ARRAY);
+
+	refdef.batchCount++;
 
 	glColorMask(GL_TRUE, GL_TRUE, GL_TRUE, GL_TRUE);
 	if (!hasDepthTest)

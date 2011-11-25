@@ -125,9 +125,6 @@ void SV_UnlinkEdict (edict_t * ent)
 	}
 
 	Com_Printf("WARNING: SV_UnlinkEntity: not found in worldSector\n");
-
-	if (ent->child)
-		SV_UnlinkEdict(ent->child);
 }
 
 /**
@@ -155,42 +152,7 @@ void SV_LinkEdict (edict_t * ent)
 	/* increase the linkcount - even for none solids */
 	ent->linkcount++;
 
-	/* expand for rotation */
-	if (ent->solid == SOLID_BSP && VectorNotEmpty(ent->angles)) {
-		vec3_t minVec, maxVec, tmpMinVec, tmpMaxVec;
-		vec3_t centerVec, halfVec, newCenterVec, newHalfVec;
-		vec3_t m[3];
-
-		/* Find the center of the extents. */
-		VectorCenterFromMinsMaxs(ent->mins, ent->maxs, centerVec);
-
-		/* Find the half height and half width of the extents. */
-		VectorSubtract(ent->maxs, centerVec, halfVec);
-
-		/* Rotate the center about the origin. */
-		VectorCreateRotationMatrix(ent->angles, m);
-		VectorRotate(m, centerVec, newCenterVec);
-		VectorRotate(m, halfVec, newHalfVec);
-
-		/* Set minVec and maxVec to bound around newCenterVec at halfVec size. */
-		VectorSubtract(newCenterVec, newHalfVec, tmpMinVec);
-		VectorAdd(newCenterVec, newHalfVec, tmpMaxVec);
-
-		/* rotation may have changed min and max of the box, so adjust it */
-		minVec[0] = min(tmpMinVec[0], tmpMaxVec[0]);
-		minVec[1] = min(tmpMinVec[1], tmpMaxVec[1]);
-		minVec[2] = min(tmpMinVec[2], tmpMaxVec[2]);
-		maxVec[0] = max(tmpMinVec[0], tmpMaxVec[0]);
-		maxVec[1] = max(tmpMinVec[1], tmpMaxVec[1]);
-		maxVec[2] = max(tmpMinVec[2], tmpMaxVec[2]);
-
-		/* Adjust the absolute mins/maxs */
-		VectorAdd(ent->origin, minVec, ent->absmin);
-		VectorAdd(ent->origin, maxVec, ent->absmax);
-	} else {  /* normal */
-		VectorAdd(ent->origin, ent->mins, ent->absmin);
-		VectorAdd(ent->origin, ent->maxs, ent->absmax);
-	}
+	CalculateMinsMaxs(ent->solid == SOLID_BSP ? ent->angles : vec3_origin, ent->mins, ent->maxs, ent->origin, ent->absmin, ent->absmax);
 
 	/* if not solid we have to set the abs mins/maxs above but don't really link it */
 	if (ent->solid == SOLID_NOT)
@@ -764,6 +726,7 @@ qboolean SV_LoadModelMinsMaxs (const char *model, int frame, vec3_t mins, vec3_t
 			FS_FreeFile(buf);
 			return qfalse;
 		}
+		break;
 	}
 
 	VectorCopy(mod->mins, mins);

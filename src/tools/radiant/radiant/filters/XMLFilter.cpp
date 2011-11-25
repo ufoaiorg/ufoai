@@ -1,6 +1,8 @@
 #include "XMLFilter.h"
 
 #include "ifilter.h"
+#include "ientity.h"
+#include "eclasslib.h"
 
 namespace filters {
 
@@ -12,7 +14,7 @@ XMLFilter::XMLFilter(const std::string& name, bool readOnly) :
 }
 
 // Test visibility of an item against all rules
-bool XMLFilter::isVisible(const std::string& item, const std::string& name) const {
+bool XMLFilter::isVisible(const FilterRule::Type type, const std::string& name) const {
 
 	// Iterate over the rules in this filter, checking if each one is a rule for
 	// the chosen item. If so, test the match expression and retrieve the visibility
@@ -25,13 +27,13 @@ bool XMLFilter::isVisible(const std::string& item, const std::string& name) cons
 		 ++ruleIter)
 	{
 		// Check the item type.
-		if (ruleIter->type != item)
+		if (ruleIter->type != type)
 			continue;
 
-		if (item == "surfaceflags") {
+		if (type == FilterRule::TYPE_SURFACEFLAGS) {
 			const int flags = string::toInt(name);
 			visible = !(flags & ruleIter->surfaceflags);
-		} else if (item == "contentflags") {
+		} else if (type == FilterRule::TYPE_CONTENTFLAGS) {
 			const int flags = string::toInt(name);
 			visible = !(flags & ruleIter->contentflags);
 		} else {
@@ -45,6 +47,32 @@ bool XMLFilter::isVisible(const std::string& item, const std::string& name) cons
 	}
 
 	// Pass back the current visibility value
+	return visible;
+}
+
+bool XMLFilter::isEntityVisible(const FilterRule::Type type, const Entity& entity) const
+{
+	bool visible = true; // default if unmodified by rules
+	const EntityClass& eclass = entity.getEntityClass();
+
+	for (FilterRules::const_iterator ruleIter = _rules.begin();
+			ruleIter != _rules.end(); ++ruleIter) {
+		if (ruleIter->type != type) {
+			continue;
+		}
+
+		if (type == FilterRule::TYPE_ENTITYCLASS) {
+			if (string::matchesWildcard(eclass.name(), ruleIter->match)) {
+				visible = ruleIter->show;
+			}
+		} else if (type == FilterRule::TYPE_ENTITYKEYVALUE) {
+			if (string::matchesWildcard(entity.getKeyValue(ruleIter->entityKey),
+					ruleIter->match)) {
+				visible = ruleIter->show;
+			}
+		}
+	}
+
 	return visible;
 }
 

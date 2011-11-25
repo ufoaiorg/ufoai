@@ -34,6 +34,8 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #define MAX_MAPPARTICLES	1024
 #define MAX_TIMEDPARTICLES 16
 
+#define PTL_INTENSITY_TO_RADIUS 256 /** @todo better scale factor: is 256 too big or not? */
+
 static cvar_t *cl_particleweather;
 
 /** @brief map particles */
@@ -63,6 +65,9 @@ typedef struct timedParticle_s {
 
 static mapParticle_t mapParticles[MAX_MAPPARTICLES];
 static timedParticle_t timedParticles[MAX_TIMEDPARTICLES];
+
+static ptlArt_t r_particlesArt[MAX_PTL_ART];
+static int r_numParticlesArt;
 
 #define	V_VECS		((1 << V_FLOAT) | (1 << V_POS) | (1 << V_VECTOR) | (1 << V_COLOR))
 #define PTL_ONLY_ONE_TYPE		(1<<31)
@@ -308,14 +313,14 @@ static inline void CL_ParticleLoadArt (ptlArt_t *a)
 				imageName = a->name;
 			else /* load several frames */
 				imageName = va("%s%c%c", a->name + 1, a->frame / 10 + '0', a->frame % 10 + '0');
-			a->art.image = R_RegisterImage(imageName);
+			a->art.image = R_FindPics(imageName);
 			if (!a->art.image)
 				Com_Printf("CL_ParticleLoadArt: Could not load image: '%s'\n", imageName);
 		}
 		break;
 	case ART_MODEL:
 		/** @todo Support the frame data from ptlArt_t for models, too */
-		a->art.model = R_RegisterModelShort(a->name);
+		a->art.model = R_FindModel(a->name);
 		break;
 	default:
 		Com_Error(ERR_DROP, "CL_ParticleLoadArt: Unknown art type\n");
@@ -691,6 +696,24 @@ static void CL_ParticleFunction (ptl_t * p, ptlCmd_t * cmd)
 	}
 }
 
+ptlDef_t *CL_ParticleGet (const char *name)
+{
+	int i;
+
+	if (!name || strlen(name) <= 0)
+		return NULL;
+
+	/* find the particle definition */
+	for (i = 0; i < numPtlDefs; i++) {
+		ptlDef_t *pd = &ptlDef[i];
+		if (Q_streq(name, pd->name)) {
+			return pd;
+		}
+	}
+
+	return NULL;
+}
+
 /**
  * @brief Spawn a new particle to the map
  * @param[in] name The id of the particle (see ptl_*.ufo script files in base/ufos)
@@ -712,16 +735,11 @@ ptl_t *CL_ParticleSpawn (const char *name, int levelFlags, const vec3_t s, const
 		return NULL;
 
 	/* find the particle definition */
-	for (i = 0; i < numPtlDefs; i++)
-		if (Q_streq(name, ptlDef[i].name))
-			break;
-
-	if (i == numPtlDefs) {
+	pd = CL_ParticleGet(name);
+	if (pd == NULL) {
 		Com_Printf("Particle definition \"%s\" not found\n", name);
 		return NULL;
 	}
-
-	pd = &ptlDef[i];
 
 	/* add the particle */
 	for (i = 0; i < r_numParticles; i++)
@@ -1007,9 +1025,9 @@ static void CL_ParticleRun2 (ptl_t *p)
 	if (VectorNotEmpty(p->lightColor)) {
 		const float intensity = 0.5 + p->lightIntensity;
 		if (p->lightSustain)
-			R_AddSustainedLight(p->s, intensity, p->lightColor, p->lightSustain);
+			R_AddSustainedLight(p->s, intensity * PTL_INTENSITY_TO_RADIUS, p->lightColor, p->lightSustain);
 		else
-			R_AddLight(p->s, intensity, p->lightColor);
+			R_AddLight(p->s, intensity * PTL_INTENSITY_TO_RADIUS, p->lightColor);
 	}
 
 	/* set the new origin */
@@ -1366,12 +1384,12 @@ static void CL_ParsePtlCmds (const char *name, const char **text)
  * @return the position of the particle in ptlDef array
  * @sa CL_ParseClientData
  */
-int CL_ParseParticle (const char *name, const char **text)
+void CL_ParseParticle (const char *name, const char **text)
 {
 	const char *errhead = "CL_ParseParticle: unexpected end of file (particle ";
 	ptlDef_t *pd;
 	const char *token;
-	int i, pos;
+	int i;
 
 	/* search for particles with same name */
 	for (i = 0; i < numPtlDefs; i++)
@@ -1380,16 +1398,14 @@ int CL_ParseParticle (const char *name, const char **text)
 
 	if (i < numPtlDefs) {
 		Com_Printf("CL_ParseParticle: particle def \"%s\" with same name found, reset first one\n", name);
-		pos = i;
 		pd = &ptlDef[i];
 	} else {
 		if (numPtlDefs < MAX_PTLDEFS - 1) {
 			/* initialize the new particle */
-			pos = numPtlDefs;
 			pd = &ptlDef[numPtlDefs++];
 		} else {
 			Com_Printf("CL_ParseParticle: max particle definitions reached - skip the current one: '%s'\n", name);
-			return -1;
+			return;
 		}
 	}
 	OBJZERO(*pd);
@@ -1403,7 +1419,7 @@ int CL_ParseParticle (const char *name, const char **text)
 		Com_Printf("CL_ParseParticle: particle def \"%s\" without body ignored\n", name);
 		if (i == numPtlDefs)
 			numPtlDefs--;
-		return -1;
+		return;
 	}
 
 	do {
@@ -1436,9 +1452,7 @@ int CL_ParseParticle (const char *name, const char **text)
 		Com_Printf("CL_ParseParticle: particle definition %s without init function ignored\n", name);
 		if (i == numPtlDefs)
 			numPtlDefs--;
-		return -1;
 	}
-	return pos;
 }
 
 /**

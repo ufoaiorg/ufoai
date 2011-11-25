@@ -39,10 +39,12 @@ static cvar_t *sv_maxsoldiersperplayer;
 static cvar_t *sv_hostname;
 /** minimum seconds between connect messages */
 static cvar_t *sv_reconnect_limit;
+static cvar_t *sv_timeout;			/* seconds without any message */
 
 cvar_t *sv_maxclients = NULL;
 cvar_t *sv_dumpmapassembly;
 cvar_t *sv_threads;
+cvar_t *sv_rma;
 /** should heartbeats be sent */
 cvar_t *sv_public;
 cvar_t *sv_mapname;
@@ -51,16 +53,15 @@ memPool_t *sv_genericPool;
 
 char *SV_GetConfigString (int index)
 {
-	if (index < 0 || index >= MAX_CONFIGSTRINGS)
-		Com_Error(ERR_FATAL, "Invalid config string index given");
+	if (!Com_CheckConfigStringIndex(index))
+		Com_Error(ERR_FATAL, "Invalid config string index given: %i", index);
+
 	return sv->configstrings[index];
 }
 
 int SV_GetConfigStringInteger (int index)
 {
-	if (index < 0 || index >= MAX_CONFIGSTRINGS)
-		Com_Error(ERR_FATAL, "Invalid config string index given");
-	return atoi(sv->configstrings[index]);
+	return atoi(SV_GetConfigString(index));
 }
 
 char *SV_SetConfigString (int index, ...)
@@ -68,8 +69,8 @@ char *SV_SetConfigString (int index, ...)
 	va_list ap;
 	const char *value;
 
-	if (index < 0 || index >= MAX_CONFIGSTRINGS)
-		Com_Error(ERR_FATAL, "Invalid config string index given");
+	if (!Com_CheckConfigStringIndex(index))
+		Com_Error(ERR_FATAL, "Invalid config string index given: %i", index);
 
 	va_start(ap, index);
 
@@ -304,7 +305,7 @@ static void SVC_DirectConnect (struct net_stream *stream)
 
 	Com_DPrintf(DEBUG_SERVER, "SVC_DirectConnect()\n");
 
-	if (sv->started) {
+	if (sv->started || sv->spawned) {
 		Com_Printf("rejected connect because match is already running\n");
 		NET_OOB_Printf(stream, "print\nGame has started already.\n");
 		return;
@@ -378,6 +379,7 @@ static void SVC_DirectConnect (struct net_stream *stream)
 
 	/* new player */
 	cl->player->inuse = qtrue;
+	cl->lastmessage = svs.realtime;
 
 	/* parse some info from the info strings */
 	strncpy(cl->userinfo, userinfo, sizeof(cl->userinfo) - 1);
@@ -391,7 +393,6 @@ static void SVC_DirectConnect (struct net_stream *stream)
 
 	SV_SetClientState(cl, cs_connected);
 
-	cl->lastconnect = svs.realtime;
 	Q_strncpyz(cl->peername, peername, sizeof(cl->peername));
 	cl->stream = stream;
 	NET_StreamSetData(stream, cl);
@@ -504,8 +505,10 @@ void SV_ReadPacket (struct net_stream *s)
 			SV_ConnectionlessPacket(s, msg);
 		else if (cl)
 			SV_ExecuteClientMessage(cl, cmd, msg);
-		else
+		else {
 			NET_StreamFree(s);
+			s = NULL;
+		}
 
 		free_dbuffer(msg);
 	}
@@ -560,12 +563,12 @@ static void Master_Heartbeat (void)
  * and that change the client state.
  * @sa SV_Spawn_f
  */
-static void SV_CheckGameStart (void)
+static void SV_CheckSpawnSoldiers (void)
 {
 	client_t *cl;
 
 	/* already started? */
-	if (sv->started)
+	if (sv->spawned)
 		return;
 
 	if (sv_maxclients->integer > 1) {
@@ -581,7 +584,7 @@ static void SV_CheckGameStart (void)
 		return;
 	}
 
-	sv->started = qtrue;
+	sv->spawned = qtrue;
 
 	cl = NULL;
 	while ((cl = SV_GetNextClient(cl)) != NULL)
@@ -589,11 +592,84 @@ static void SV_CheckGameStart (void)
 			SV_ClientCommand(cl, "spawnsoldiers\n");
 }
 
+static void SV_CheckStartMatch (void)
+{
+	client_t *cl;
+
+	if (!sv->spawned || sv->started)
+		return;
+
+	if (sv_maxclients->integer > 1) {
+		cl = NULL;
+		while ((cl = SV_GetNextClient(cl)) != NULL) {
+			/* all players must have their actors spawned */
+			if (cl->state != cs_spawned)
+				return;
+		}
+	} else if (SV_GetClient(0)->state != cs_spawned) {
+		/* in single player mode we must have received the 'spawnsoldiers' */
+		return;
+	}
+
+	sv->started = qtrue;
+
+	cl = NULL;
+	while ((cl = SV_GetNextClient(cl)) != NULL)
+		if (cl->state != cs_free)
+			SV_ClientCommand(cl, "startmatch\n");
+}
+
+#define	PING_SECONDS	5
+
+static void SV_PingPlayers (void)
+{
+	client_t *cl;
+	/* check for time wraparound */
+	if (svs.lastPing > svs.realtime)
+		svs.lastPing = svs.realtime;
+
+	if (svs.realtime - svs.lastPing < PING_SECONDS * 1000)
+		return;					/* not time to send yet */
+
+	svs.lastPing = svs.realtime;
+	cl = NULL;
+	while ((cl = SV_GetNextClient(cl)) != NULL)
+		if (cl->state != cs_free) {
+			struct dbuffer *msg = new_dbuffer();
+			NET_WriteByte(msg, svc_ping);
+			NET_WriteMsg(cl->stream, msg);
+		}
+}
+
+static void SV_CheckTimeouts (void)
+{
+	client_t *cl = NULL;
+	const int droppoint = svs.realtime - 1000 * sv_timeout->integer;
+
+	if (sv_maxclients->integer == 1)
+		return;
+
+	cl = NULL;
+	while ((cl = SV_GetNextClient(cl)) != NULL) {
+		if (cl->state == cs_free)
+			continue;
+
+		/* might be invalid across a mapchange */
+		if (cl->lastmessage > svs.realtime)
+			cl->lastmessage = svs.realtime;
+
+		if (cl->lastmessage > 0 && cl->lastmessage < droppoint)
+			SV_DropClient(cl, "timed out");
+	}
+}
+
 /**
  * @sa Qcommon_Frame
  */
 void SV_Frame (int now, void *data)
 {
+	Com_ReadFromPipe();
+
 	/* change the gametype even if no server is running (e.g. the first time) */
 	if (sv_dedicated->integer && sv_gametype->modified) {
 		Com_SetGameType();
@@ -610,15 +686,22 @@ void SV_Frame (int now, void *data)
 	}
 
 	/* if server is not active, do nothing */
-	if (!svs.initialized)
+	if (!svs.initialized) {
+#ifdef DEDICATED_ONLY
+		Com_Printf("Starting next map from the mapcycle\n");
+		SV_NextMapcycle();
+#endif
 		return;
+	}
 
 	svs.realtime = now;
 
 	/* keep the random time dependent */
 	rand();
 
-	SV_CheckGameStart();
+	SV_CheckSpawnSoldiers();
+	SV_CheckStartMatch();
+	SV_CheckTimeouts();
 
 	if (!sv_threads->integer)
 		SV_RunGameFrame();
@@ -633,6 +716,7 @@ void SV_Frame (int now, void *data)
 
 	/* send a heartbeat to the master if needed */
 	Master_Heartbeat();
+	SV_PingPlayers();
 
 	/* server is empty - so shutdown */
 	if (svs.abandon && svs.killserver)
@@ -709,7 +793,7 @@ void SV_Init (void)
 
 	SV_InitOperatorCommands();
 
-	rcon_password = Cvar_Get("rcon_password", "", 0, NULL);
+	rcon_password = Cvar_Get("rcon_password", "", CVAR_ARCHIVE, NULL);
 	Cvar_Get("sv_cheats", "0", CVAR_SERVERINFO | CVAR_LATCH, NULL);
 	Cvar_Get("sv_protocol", DOUBLEQUOTE(PROTOCOL_VERSION), CVAR_SERVERINFO | CVAR_NOSET, NULL);
 	/* this cvar will become a latched cvar when you start the server */
@@ -718,14 +802,16 @@ void SV_Init (void)
 	sv_http_downloadserver = Cvar_Get("sv_http_downloadserver", "", CVAR_ARCHIVE, "URL to a location where clients can download game content over HTTP");
 	sv_enablemorale = Cvar_Get("sv_enablemorale", "1", CVAR_ARCHIVE | CVAR_SERVERINFO | CVAR_LATCH, "Enable morale changes in multiplayer");
 	sv_maxsoldiersperteam = Cvar_Get("sv_maxsoldiersperteam", "4", CVAR_ARCHIVE | CVAR_SERVERINFO, "Max. amount of soldiers per team (see sv_maxsoldiersperplayer and sv_teamplay)");
-	sv_maxsoldiersperplayer = Cvar_Get("sv_maxsoldiersperplayer", "8", CVAR_ARCHIVE | CVAR_SERVERINFO, "Max. amount of soldiers each player can controll (see maxsoldiers and sv_teamplay)");
+	sv_maxsoldiersperplayer = Cvar_Get("sv_maxsoldiersperplayer", "8", CVAR_ARCHIVE | CVAR_SERVERINFO, "Max. amount of soldiers each player can control (see maxsoldiers and sv_teamplay)");
 	Cvar_SetCheckFunction("sv_maxsoldiersperplayer", SV_CheckMaxSoldiersPerPlayer);
 
 	sv_dumpmapassembly = Cvar_Get("sv_dumpmapassembly", "0", CVAR_ARCHIVE, "Dump map assembly information to game console");
 
 	sv_threads = Cvar_Get("sv_threads", "1", CVAR_LATCH | CVAR_ARCHIVE, "Run the server threaded");
+	sv_rma = Cvar_Get("sv_rma", "2", 0, "1 = old algorithm, 2 = new algorithm");
 	sv_public = Cvar_Get("sv_public", "1", 0, "Should heartbeats be send to the masterserver");
 	sv_reconnect_limit = Cvar_Get("sv_reconnect_limit", "3", CVAR_ARCHIVE, "Minimum seconds between connect messages");
+	sv_timeout = Cvar_Get("sv_timeout", "20", CVAR_ARCHIVE, "Seconds until a client times out");
 
 	SV_MapcycleInit();
 	SV_LogInit();

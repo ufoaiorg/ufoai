@@ -1,0 +1,89 @@
+// *********************************
+// FARM2
+// *********************************
+
+base farm2/f_
+
+// Tiletypes:
+// ----------
+// +: tile contains something
+// a: normal tile.
+// b: dropship tile.
+// c: UFO tile.
+
+// ---------------------------------
+// Firebird dropship
+tile +craft_drop_firebird
+{
+4 3
+0      0       0       0
+0      +b      +b      0
+0      0       0       0
+}
+
+// ---------------------------------
+// Herakles dropship
+tile +craft_drop_herakles
+{
+4 3
+0      0       0       0
+0      +b      +b      0
+0      0       0       0
+}
+
+// ---------------------------------
+// Raptor dropship
+tile +craft_drop_raptor
+{
+4 3
+0      0       0       0
+0      +b      +b      0
+0      0       0       0
+}
+
+// ---------------------------------
+// Scout ufo
+tile +craft_ufo_scout
+{
+4 4
+0      0       0       0
+0      +c      +c      0
+0      +c      +c      0
+0      0       0       0
+}
+
+// ---------------------------------
+// Fighter ufo
+tile +craft_ufo_fighter
+{
+4 4
+0      0       0       0
+0      +c      +c      0
+0      +c      +c      0
+0      0       0       0
+}
+
+// ---------------------------------
+// Main tile
+tile +main
+{
+6 8
+0      0       0       0       0       0
+0      +a      +a      b       b       0
+0      +a      +a      +a      +a      0
+0      +a      +a      +a      +a      0
+0      +a      +a      +a      +a      0
+0      c       c       +a      +a      0
+0      c       c       +a      +a      0
+0      0       0       0       0       0
+}
+
+assembly standard
+{
+size "4 6"
+grid "1 1"
+
++main "1 1"
+*rm_drop +craft_drop_firebird "1 1"
+*rm_ufo +craft_ufo_fighter "1 1"
+}
