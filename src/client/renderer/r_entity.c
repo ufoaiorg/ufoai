@@ -232,7 +232,7 @@ void R_DrawEntityEffects (void)
 			int texnum;
 			/* draw the circles for team-members and allied troops */
 			vec4_t color = {1, 1, 1, 1};
-			const vec3_t points[] = { { -size, size, -GROUND_DELTA }, { size, size, -GROUND_DELTA }, { size, -size,
+			vec3_t points[] = { { -size, size, -GROUND_DELTA }, { size, size, -GROUND_DELTA }, { size, -size,
 					-GROUND_DELTA }, { -size, -size, -GROUND_DELTA } };
 			/** @todo use default_texcoords */
 			const vec2_t texcoords[] = { { 0.0, 1.0 }, { 1.0, 1.0 }, { 1.0, 0.0 }, { 0.0, 0.0 } };

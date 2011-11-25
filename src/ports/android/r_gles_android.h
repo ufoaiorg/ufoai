@@ -31,8 +31,6 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #define GL_NATIVE_TEXTURE_PIXELFORMAT_ALPHA GL_UNSIGNED_SHORT_4_4_4_4
 /* #define GL_NATIVE_TEXTURE_PIXELFORMAT_ALPHA GL_UNSIGNED_SHORT_5_5_5_1 */
 
-typedef char GLchar;
-
 #ifndef APIENTRY
 #define APIENTRY
 #endif

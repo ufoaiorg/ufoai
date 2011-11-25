@@ -37,7 +37,6 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #include "node/ui_node_baseinventory.h"
 #include "node/ui_node_battlescape.h"
 #include "node/ui_node_button.h"
-#include "node/ui_node_buysellspinner.h"
 #include "node/ui_node_checkbox.h"
 #include "node/ui_node_controls.h"
 #include "node/ui_node_video.h"
@@ -97,7 +96,6 @@ static const registerFunction_t registerFunctions[] = {
 	UI_RegisterBaseMapNode,
 	UI_RegisterBattlescapeNode,
 	UI_RegisterButtonNode,
-	UI_RegisterBuySellSpinnerNode,
 	UI_RegisterCheckBoxNode,
 	UI_RegisterConFuncNode,
 	UI_RegisterContainerNode,

@@ -571,7 +571,9 @@ image_t* R_RenderToTexture (const char *name, int x, int y, int w, int h)
 	}
 
 	glFlush();
+#ifndef GL_VERSION_ES_CM_1_0
 	glReadBuffer(GL_BACK);
+#endif
 	R_SelectTexture(&texunit_diffuse);
 	R_BindTexture(img->texnum);
 	glCopyTexImage2D(GL_TEXTURE_2D, 0, GL_RGBA, x, y, w, h, 0);
