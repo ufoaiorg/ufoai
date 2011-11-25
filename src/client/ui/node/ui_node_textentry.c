@@ -147,8 +147,12 @@ static void UI_TextEntryFocusGained (uiNode_t *node)
 	Q_strncpyz(cvarValueBackup, editedCvar->string, sizeof(cvarValueBackup));
 	isAborted = qfalse;
 #ifdef ANDROID
-	SDL_ANDROID_ToggleScreenKeyboardTextInput(editedCvar->string);
-	Cvar_ForceSet(editedCvar->name, "");
+	char buf[MAX_CVAR_EDITING_LENGTH];
+	Q_strncpyz(buf, editedCvar->string, sizeof(buf));
+	SDL_ANDROID_GetScreenKeyboardTextInput(buf, sizeof(buf));
+	Cvar_ForceSet(editedCvar->name, buf);
+	UI_TextEntryNodeValidateEdition(node);
+	UI_RemoveFocus();
 #endif
 }
 
