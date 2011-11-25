@@ -660,6 +660,14 @@ window hud_alt extends hud
 			contentalign	ALIGN_UC
 			tooltip		"_Morale"
 		}
+		string str_tu_reserved
+		{
+			string		*cvar:mn_tureserved
+			pos			"200 301"
+			size		"40 20"
+			contentalign	ALIGN_UC
+			tooltip		"_TUs reserved"
+		}
 
 		image bt_reaction_a
 		{
