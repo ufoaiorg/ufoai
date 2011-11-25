@@ -115,8 +115,8 @@ if __name__ == '__main__':
 
     # fully copy subdirs
     needs = [
-        "ai", "i18n", "materials", "media", "models", "shaders", "sound", "ufos",
-        "textures/pt", "textures/tex_common", "textures/tex_lights", "textures/tex_material"]
+        "ai", "i18n", "materials", "media", "models", "shaders", "ufos", "pics", "sound/ui",
+        "textures/tex_common", "textures/tex_lights", "textures/tex_material"]
     for name in needs:
         print "Copy \"%s\"" % os.path.join(SRC_BASE, name)
         base_copy(SRC_BASE, DEST_BASE, name)
@@ -127,15 +127,6 @@ if __name__ == '__main__':
         name = os.path.join("music", name)
         print "Copy \"%s\"" % os.path.join(SRC_BASE, name)
         base_copy(SRC_BASE, DEST_BASE, name)
-
-    # few pics, but no sprites
-    ignore = set(["pics/buttons", "pics/icons", "pics/tutorial"])
-    name = "pics"
-    print "Copy \"%s\" (with filters)" % os.path.join(SRC_BASE, name)
-    base_copy(SRC_BASE, DEST_BASE, name, ignore_prefix=ignore)
-
-    # generate sprite pack
-    sprite_pack.gen_sprite_pack(DEST_BASE, 512)
 
     # few maps
     resourceset = resources.Resources()
