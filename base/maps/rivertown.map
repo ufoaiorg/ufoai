@@ -19828,7 +19828,7 @@
 // entity 291
 {
 "classname" "misc_model"
-"model" "models//objects/vehicles/bicycle/bicycle.md2"
+"model" "models/objects/vehicles/bicycle/bicycle.md2"
 "origin" "633.625 -216.25 65.75"
 "spawnflags" "254"
 "skin" "0"

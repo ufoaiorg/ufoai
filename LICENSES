@@ -711,9 +711,10 @@ base/models/aircraft/drop_herakles/wallbox.png | GNU General Public License 2.0 
 base/models/aircraft/drop_raptor/drop_raptor.md2 | GNU General Public License 2.0 or later | Willem Sitters
 base/models/aircraft/drop_raptor/drop_raptor.png | GNU General Public License 2.0 or later | Willem Sitters
 base/models/aircraft/drop_raptor/drop_raptor_gear.md2 | GNU General Public License 2.0 or later | Willem Sitters
+base/models/aircraft/drop_raptor/drop_raptor_gm.png | GNU General Public License 2.0 or later | Willem Sitters | MCR
 base/models/aircraft/drop_raptor/drop_raptor_landed.md2 | GNU General Public License 2.0 or later | Willem Sitters
 base/models/aircraft/drop_raptor/drop_raptor_low.md2 | GNU General Public License 2.0 or later | Willem Sitters
-base/models/aircraft/drop_raptor/drop_raptor_nm.png | GNU General Public License 2.0 or later | Willem Sitters
+base/models/aircraft/drop_raptor/drop_raptor_nm.png | GNU General Public License 2.0 or later | Willem Sitters;MCR
 base/models/aircraft/inter_dragon/inter_dragon.jpg | GNU General Public License 2.0 or later | Willem Sitters
 base/models/aircraft/inter_dragon/inter_dragon.md2 | GNU General Public License 2.0 or later | Willem Sitters
 base/models/aircraft/inter_dragon/inter_dragon_gear.jpg | GNU General Public License 2.0 or later | Willem Sitters
@@ -732,6 +733,9 @@ base/models/aircraft/inter_stiletto/stiletto_nm.png | GNU General Public License
 base/models/aircraft/inter_stingray/stingray.png | GNU General Public License 2.0 | David Townsend (Psawhn)
 base/models/aircraft/inter_stingray/stingray_flying.md2 | GNU General Public License 2.0 | David Townsend (Psawhn)
 base/models/aircraft/inter_stingray/stingray_landed.md2 | GNU General Public License 2.0 | David Townsend (Psawhn)
+base/models/aircraft/ufo_bomber/ufo_bomber.md2 | GNU General Public License 2.0 or later | Willem Sitters
+base/models/aircraft/ufo_bomber/ufo_bomber.png | GNU General Public License 2.0 or later | Willem Sitters
+base/models/aircraft/ufo_bomber/ufo_bomber_nm.png | GNU General Public License 2.0 or later | Willem Sitters
 base/models/aircraft/ufo_carrier/ufo_carrier.jpg | GNU General Public License 2.0 | Ryan A. Span ("Winter")
 base/models/aircraft/ufo_carrier/ufo_carrier.md2 | GNU General Public License 2.0 | Ryan A. Span ("Winter")
 base/models/aircraft/ufo_corrupter/ufo_corrupter.jpg | GNU General Public License 2.0 | Werner Höhrer (hoehrer) | Model based on the condor04.map made by SparX Beyeler, see base/maps/condor04.map
@@ -1044,8 +1048,8 @@ base/models/geoscape/missile.md2 | GNU General Public License 2.0
 base/models/geoscape/missile.png | GNU General Public License 2.0
 base/models/geoscape/missile_aa51.md2 | GNU General Public License 2.0 or later | Manuel "ghosta" Gschrey
 base/models/geoscape/missile_aa51.png | GNU General Public License 2.0 or later | Manuel "ghosta" Gschrey
-base/models/geoscape/missile_sparrow.jpg | GNU General Public License 2.0 or later | Tejay "TimberDragon" Penfold | base/models/aircraft/craft_weapon_sparrow/
 base/models/geoscape/missile_sparrow.md2 | GNU General Public License 2.0 or later | Tejay "TimberDragon" Penfold | base/models/aircraft/craft_weapon_sparrow/
+base/models/geoscape/missile_sparrow.png | GNU General Public License 2.0 or later | Tejay "TimberDragon" Penfold | base/models/aircraft/craft_weapon_sparrow/
 base/models/geoscape/missile_tr20.md2 | GNU General Public License 2.0 or later | Willem Sitters
 base/models/geoscape/missile_tr20.png | GNU General Public License 2.0 or later
 base/models/geoscape/mission.md2 | GNU General Public License 2.0 or later | Willem Sitters
@@ -1056,7 +1060,6 @@ base/models/geoscape/samlauncher.md2 | GNU General Public License 2.0 or later |
 base/models/geoscape/samlauncher.png | GNU General Public License 2.0 or later | Willem Sitters
 base/models/geoscape/ufo_bomber.md2 | GNU General Public License 2.0 or later | Willem Sitters
 base/models/geoscape/ufo_bomber.png | GNU General Public License 2.0 or later | Willem Sitters
-base/models/geoscape/ufo_bomber_nm.png | GNU General Public License 2.0 or later | Willem Sitters
 base/models/geoscape/ufo_carrier.md2 | GNU General Public License 2.0 or later | Willem Sitters
 base/models/geoscape/ufo_carrier.png | GNU General Public License 2.0 or later | Willem Sitters
 base/models/geoscape/ufo_corrupter.md2 | GNU General Public License 2.0 or later |  | Based on original model created by Werner Hoehrer (hoehrer), which was based on SparX Beyeler's map, see base/models/aircrafts/
@@ -1329,22 +1332,22 @@ base/models/objects/city/powerline/powerline_2.jpg | GNU General Public License 
 base/models/objects/city/powerline/powerline_2.md2 | GNU General Public License 2.0 or later | Martin Gerhardy
 base/models/objects/city/tombstones/ts1.md2 | GNU General Public License 2.0 or later | Willem Sitters
 base/models/objects/city/tombstones/ts1.png | GNU General Public License 2.0 or later | Willem Sitters
-base/models/objects/city/tombstones/ts1_nm.png | GNU General Public License 2.0 or later | Willem Sitters
+base/models/objects/city/tombstones/ts1_nm.png | GNU General Public License 2.0 or later | Willem Sitters;MCR
 base/models/objects/city/tombstones/ts2.md2 | GNU General Public License 2.0 or later | Willem Sitters
 base/models/objects/city/tombstones/ts2.png | GNU General Public License 2.0 or later | Willem Sitters
-base/models/objects/city/tombstones/ts2_nm.png | GNU General Public License 2.0 or later | Willem Sitters
+base/models/objects/city/tombstones/ts2_nm.png | GNU General Public License 2.0 or later | Willem Sitters;MCR
 base/models/objects/city/tombstones/ts3.md2 | GNU General Public License 2.0 or later | Willem Sitters
 base/models/objects/city/tombstones/ts3.png | GNU General Public License 2.0 or later | Willem Sitters
-base/models/objects/city/tombstones/ts3_nm.png | GNU General Public License 2.0 or later | Willem Sitters
+base/models/objects/city/tombstones/ts3_nm.png | GNU General Public License 2.0 or later | Willem Sitters;MCR
 base/models/objects/city/tombstones/ts4.md2 | GNU General Public License 2.0 or later | Willem Sitters
 base/models/objects/city/tombstones/ts4.png | GNU General Public License 2.0 or later | Willem Sitters
-base/models/objects/city/tombstones/ts4_nm.png | GNU General Public License 2.0 or later | Willem Sitters
+base/models/objects/city/tombstones/ts4_nm.png | GNU General Public License 2.0 or later | Willem Sitters;MCR
 base/models/objects/city/tombstones/ts5.md2 | GNU General Public License 2.0 or later | Willem Sitters
 base/models/objects/city/tombstones/ts5.png | GNU General Public License 2.0 or later | Willem Sitters
-base/models/objects/city/tombstones/ts5_nm.png | GNU General Public License 2.0 or later | Willem Sitters
+base/models/objects/city/tombstones/ts5_nm.png | GNU General Public License 2.0 or later | Willem Sitters;MCR
 base/models/objects/city/tombstones/ts6.md2 | GNU General Public License 2.0 or later | Willem Sitters
 base/models/objects/city/tombstones/ts6.png | GNU General Public License 2.0 or later | Willem Sitters
-base/models/objects/city/tombstones/ts6_nm.png | GNU General Public License 2.0 or later | Willem Sitters
+base/models/objects/city/tombstones/ts6_nm.png | GNU General Public License 2.0 or later | Willem Sitters;MCR
 base/models/objects/city/trafficlights/trafficlight.png | GNU General Public License 2.0 or later | Willem Sitters;MCR
 base/models/objects/city/trafficlights/trafficlight1.md2 | GNU General Public License 2.0 or later | Willem Sitters
 base/models/objects/city/trafficlights/trafficlight2.md2 | GNU General Public License 2.0 or later | Willem Sitters
@@ -1469,6 +1472,7 @@ base/models/objects/gascylinder/gascylinder.md2 | GNU General Public License 2.0
 base/models/objects/gascylinder/gascylinder.png | GNU General Public License 2.0 or later | Willem Sitters
 base/models/objects/generator/generator.md2 | GNU General Public License 2.0 or later | Willem Sitters
 base/models/objects/generator/generator.png | GNU General Public License 2.0 or later | Willem Sitters
+base/models/objects/generator/generator_gm.png | GNU General Public License 2.0 or later | Willem Sitters;MCR
 base/models/objects/heating/heating.md2 | GNU General Public License 2.0 or later | Willem Sitters
 base/models/objects/heating/heating.png | GNU General Public License 2.0 or later | Willem Sitters
 base/models/objects/hovercraft/hover_down.md2 | GNU General Public License 2.0 or later | Willem Sitters
@@ -1479,7 +1483,7 @@ base/models/objects/industrial/cond.png | GNU General Public License 2.0 or late
 base/models/objects/industrial/console/cabels.md2 | GNU General Public License 2.0 or later | Willem Sitters
 base/models/objects/industrial/console/console.md2 | GNU General Public License 2.0 or later | Willem Sitters
 base/models/objects/industrial/console/console.png | GNU General Public License 2.0 or later | Willem Sitters
-base/models/objects/industrial/console/console_gm.png | GNU General Public License 2.0 or later | MCR | Willem Sitters
+base/models/objects/industrial/console/console_gm.png | GNU General Public License 2.0 or later | Willem Sitters | MCR
 base/models/objects/industrial/fan/fan.md2 | GNU General Public License 2.0 or later | Willem Sitters
 base/models/objects/industrial/fan/fan.png | GNU General Public License 2.0 or later | Willem Sitters
 base/models/objects/industrial/lamp/lamp.md2 | Creative Commons Attribution-Share Alike 3.0 | Mateusz "velo|gfx" Górecki
@@ -1494,9 +1498,10 @@ base/models/objects/japan/mat.md2 | GNU General Public License 2.0 or later | Wi
 base/models/objects/japan/mat.png | GNU General Public License 2.0 or later | Willem Sitters
 base/models/objects/japan/stoel.md2 | GNU General Public License 2.0 or later | Willem Sitters
 base/models/objects/japan/stoel.png | GNU General Public License 2.0 or later | Willem Sitters
-base/models/objects/laserturret/laserturret.md2 | GNU General Public License 2.0 or later | Willem Sitter
-base/models/objects/laserturret/laserturret.png | GNU General Public License 2.0 or later | Willem Sitter
-base/models/objects/laserturret/laserturret_nm.png | GNU General Public License 2.0 or later | Willem Sitter
+base/models/objects/laserturret/laserturret.md2 | GNU General Public License 2.0 or later | Willem Sitters
+base/models/objects/laserturret/laserturret.png | GNU General Public License 2.0 or later | Willem Sitters
+base/models/objects/laserturret/laserturret_gm.png | GNU General Public License 2.0 or later | Willem Sitters | MCR
+base/models/objects/laserturret/laserturret_nm.png | GNU General Public License 2.0 or later | Willem Sitters;MCR
 base/models/objects/liftingcart/liftingcart.md2 | GNU General Public License 2.0 or later | Willem Sitters
 base/models/objects/liftingcart/liftingcart.png | GNU General Public License 2.0 or later | Willem Sitters
 base/models/objects/lorry/lorry.md2 | GNU General Public License 2.0 or later | Willem Sitters
@@ -2573,29 +2578,25 @@ base/pics/banks/pack2.png | GNU General Public License 2.0 or later
 base/pics/banks/pack_hud.png | GNU General Public License 2.0 or later
 base/pics/banks/pack_hud2.png | GNU General Public License 2.0 or later
 base/pics/banks/pack_message.png | GNU General Public License 2.0 or later | bayo
-base/pics/base/adrop.png | GNU General Public License 2.0 or later | Martin Gerhardy
-base/pics/base/adropl1.png | GNU General Public License 2.0 or later | Martin Gerhardy
-base/pics/base/adropl2.png | GNU General Public License 2.0 or later | Martin Gerhardy
-base/pics/base/aliencont.png | GNU General Public License 2.0 or later | Martin Gerhardy
-base/pics/base/antimatter.png | GNU General Public License 2.0 or later | Martin Gerhardy
-base/pics/base/commando.png | GNU General Public License 2.0 or later | Martin Gerhardy
-base/pics/base/drop.png | GNU General Public License 2.0 or later | Martin Gerhardy
-base/pics/base/empty.png | GNU General Public License 2.0 or later | Martin Gerhardy
-base/pics/base/entrance.png | GNU General Public License 2.0 or later | Martin Gerhardy
-base/pics/base/grid.png | GNU General Public License 2.0 or later | Martin Gerhardy
-base/pics/base/hospital.png | GNU General Public License 2.0 or later | Martin Gerhardy
-base/pics/base/intercept.png | GNU General Public License 2.0 or later | Martin Gerhardy
+base/pics/base/aliencont.png | GNU General Public License 2.0 or later | MCR
+base/pics/base/antimatter.png | GNU General Public License 2.0 or later | MCR
+base/pics/base/commando.png | GNU General Public License 2.0 or later | MCR
+base/pics/base/drop.png | GNU General Public License 2.0 or later | MCR
+base/pics/base/entrance.png | GNU General Public License 2.0 or later | MCR
+base/pics/base/grid.png | GNU General Public License 2.0 or later | MCR
+base/pics/base/hospital.png | GNU General Public License 2.0 or later | MCR
+base/pics/base/intercept.png | GNU General Public License 2.0 or later | MCR
 base/pics/base/invalid.png | GNU General Public License 2.0
-base/pics/base/lab.png | GNU General Public License 2.0 or later | Martin Gerhardy
-base/pics/base/laser.png | GNU General Public License 2.0 or later | Martin Gerhardy
-base/pics/base/missile.png | GNU General Public License 2.0 or later | Martin Gerhardy
-base/pics/base/powerplant.png | GNU General Public License 2.0 or later | Martin Gerhardy
-base/pics/base/quarters.png | GNU General Public License 2.0 or later | Martin Gerhardy
-base/pics/base/radar.png | GNU General Public License 2.0 or later | Martin Gerhardy
-base/pics/base/radar_adv.png | GNU General Public License 2.0 or later | Martin Gerhardy
-base/pics/base/storage.png | GNU General Public License 2.0 or later | Martin Gerhardy
-base/pics/base/teamroom.png | GNU General Public License 2.0 or later | Martin Gerhardy
-base/pics/base/workshop.png | GNU General Public License 2.0 or later | Martin Gerhardy
+base/pics/base/lab.png | GNU General Public License 2.0 or later | MCR
+base/pics/base/laser.png | GNU General Public License 2.0 or later | MCR
+base/pics/base/missile.png | GNU General Public License 2.0 or later | MCR
+base/pics/base/powerplant.png | GNU General Public License 2.0 or later | MCR
+base/pics/base/quarters.png | GNU General Public License 2.0 or later | MCR
+base/pics/base/radar.png | GNU General Public License 2.0 or later | MCR
+base/pics/base/radar_adv.png | GNU General Public License 2.0 or later | MCR
+base/pics/base/storage.png | GNU General Public License 2.0 or later | MCR
+base/pics/base/teamroom.png | GNU General Public License 2.0 or later | MCR
+base/pics/base/workshop.png | GNU General Public License 2.0 or later | MCR
 base/pics/buttons/big_blue.png | GNU General Public License 2.0 or later
 base/pics/buttons/big_blue2.png | GNU General Public License 2.0 or later
 base/pics/buttons/big_blue_disabled.png | GNU General Public License 2.0 or later
@@ -5870,14 +5871,21 @@ base/textures/tex_tech/comptable.jpg | GNU General Public License 2.0 or later |
 base/textures/tex_tech/comptable_gm.png | GNU General Public License 2.0 | MCR | based on base/textures/tex_tech/comptable.jpg
 base/textures/tex_tech/comptex002.png | GNU General Public License 2.0 | MCR | based on base/textures/tex_tech/comptable.jpg
 base/textures/tex_tech/comptex002_gm.png | GNU General Public License 2.0 | MCR
+base/textures/tex_tech/comptex002_nm.png | GNU General Public License 2.0 | MCR
 base/textures/tex_tech/comptex003.png | GNU General Public License 2.0 | MCR | based on base/textures/tex_tech/comptable.jpg
 base/textures/tex_tech/comptex003_gm.png | GNU General Public License 2.0 | MCR
+base/textures/tex_tech/comptex003_nm.png | GNU General Public License 2.0 | MCR
+base/textures/tex_tech/comptex005.png | GNU General Public License 2.0 | MCR | based on base/textures/tex_tech/comptable.jpg
+base/textures/tex_tech/comptex005_gm.png | GNU General Public License 2.0 | MCR
+base/textures/tex_tech/comptex005_nm.png | GNU General Public License 2.0 | MCR
 base/textures/tex_tech/cover002.png | GNU General Public License 2.0 | Nate Wright
 base/textures/tex_tech/cover003.png | GNU General Public License 2.0 | Nate Wright
 base/textures/tex_tech/cover004.png | GNU General Public License 2.0 | Nate Wright
 base/textures/tex_tech/laptop_screen.jpg | GNU General Public License 2.0 or later | Martin Gerhardy
 base/textures/tex_tech/pc_a.png | GNU General Public License 2.0 or later | nerf5000
 base/textures/tex_tech/pc_b.jpg | Public Domain
+base/textures/tex_tech/pc_d.png | GNU General Public License 2.0 or later | MCR
+base/textures/tex_tech/pc_d_gm.png | GNU General Public License 2.0 or later | MCR
 base/textures/tex_tech/radio001.png | GNU General Public License 2.0 or later
 base/textures/tex_tech/radio002.png | GNU General Public License 2.0 or later
 base/textures/tex_tech/screen1.jpg | GNU General Public License 2.0 or later | zark127
@@ -6050,6 +6058,16 @@ base/textures/tex_vehicles/gabstap_e.png | GNU General Public License 2.0 or lat
 base/textures/tex_vehicles/ship01.png | GNU General Public License 2.0 or later | Possum "p0ss" Hodgkin, Nate Wright
 base/textures/tex_vehicles/ship03.png | GNU General Public License 2.0 or later | Possum "p0ss" Hodgkin, Nate Wright
 base/textures/tex_vehicles/ship04.png | GNU General Public License 2.0 or later | Possum "p0ss" Hodgkin, Nate Wright
+base/textures/tex_vehicles/tire001_mq.png | GNU General Public License 2.0 | MCR
+base/textures/tex_vehicles/tire001_mq_nm.png | GNU General Public License 2.0 | MCR
+base/textures/tex_vehicles/tire002_mq.png | GNU General Public License 2.0 | MCR
+base/textures/tex_vehicles/tire002_mq_nm.png | GNU General Public License 2.0 | MCR
+base/textures/tex_vehicles/tire003_mq.png | GNU General Public License 2.0 | MCR
+base/textures/tex_vehicles/tire003_mq_nm.png | GNU General Public License 2.0 | MCR
+base/textures/tex_vehicles/tire004_mq.png | GNU General Public License 2.0 | MCR
+base/textures/tex_vehicles/tire004_mq_nm.png | GNU General Public License 2.0 | MCR
+base/textures/tex_vehicles/tire005_mq.png | GNU General Public License 2.0 | MCR
+base/textures/tex_vehicles/tire005_mq_nm.png | GNU General Public License 2.0 | MCR
 base/textures/tex_vehicles/tire_001.png | GNU General Public License 2.0 or later | Nate Wright
 base/textures/tex_vehicles/tire_002.png | GNU General Public License 2.0 or later | Nate Wright
 base/textures/tex_vehicles/tire_tread001.png | GNU General Public License 2.0 or later | Nate Wright
@@ -6058,7 +6076,10 @@ base/textures/tex_vehicles/truck_a.png | GNU General Public License 2.0 | Possum
 base/textures/tex_vehicles/truck_b.png | GNU General Public License 2.0 | Possum "p0ss" Hodgkin
 base/textures/tex_vehicles/truck_c.png | GNU General Public License 2.0 | MCR
 base/textures/tex_vehicles/truck_c_lq.png | GNU General Public License 2.0 | MCR
+base/textures/tex_vehicles/truck_c_lq_nm.png | GNU General Public License 2.0 | MCR
 base/textures/tex_vehicles/truck_c_mq.png | GNU General Public License 2.0 | MCR
+base/textures/tex_vehicles/truck_c_mq_nm.png | GNU General Public License 2.0 | MCR
+base/textures/tex_vehicles/truck_c_nm.png | GNU General Public License 2.0 | MCR
 base/textures/tex_vehicles/truck_d.png | GNU General Public License 2.0 | Possum "p0ss" Hodgkin
 base/videos/intro.ogm | GNU General Public License 2.0 or later | David Reeves (Destructavator)
 contrib/7th.zip |  | 2002 Iconian Fonts - Daniel Zadorozny - http://www.iconian.com/
