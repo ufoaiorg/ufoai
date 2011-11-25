@@ -696,6 +696,118 @@ window hud_mini extends hud
 		// buttons
 		// ==================
 
+		image minihud_bt_soldiers_off
+		{
+			tooltip		"_LMB:Show/RMB:Hide Soldier Panel"
+			src			"icons/off"
+			mousefx		true
+			pos			"102 472"
+			size		"16 16"
+			onClick
+			{
+				*node:root.floor@invis = false
+				*node:root.right.minihud_bt_soldiers_on@invis = false
+			}
+			onRClick
+			{
+				*node:root.floor@invis = true
+				*node:root.right.minihud_bt_soldiers_on@invis = true
+			}
+		}
+		image minihud_bt_soldiers_on
+		{
+			tooltip		"_LMB:Show/RMB:Hide Soldier Panel"
+			src			"icons/on"
+			mousefx		true
+			pos			"102 472"
+			size		"16 16"
+			onClick
+			{
+				*node:root.floor@invis = false
+				*node:root.right.minihud_bt_soldiers_on@invis = false
+			}
+			onRClick
+			{
+				*node:root.floor@invis = true
+				*node:root.right.minihud_bt_soldiers_on@invis = true
+			}
+		}
+
+
+		image minihud_bt_top_off
+		{
+			tooltip		"_LMB:Show/RMB:Hide Top Panel"
+			src			"icons/off"
+			mousefx		true
+			pos			"122 472"
+			size		"16 16"
+			onClick
+			{
+				*node:root.upperright@invis = false
+				*node:root.right.minihud_bt_top_on@invis = false
+			}
+			onRClick
+			{
+				*node:root.upperright@invis = true
+				*node:root.right.minihud_bt_top_on@invis = true
+			}
+		}
+		image minihud_bt_top_on
+		{
+			tooltip		"_LMB:Show/RMB:Hide Top Panel"
+			src			"icons/on"
+			mousefx		true
+			pos			"122 472"
+			size		"16 16"
+			onClick
+			{
+				*node:root.upperright@invis = false
+				*node:root.right.minihud_bt_top_on@invis = false
+			}
+			onRClick
+			{
+				*node:root.upperright@invis = true
+				*node:root.right.minihud_bt_top_on@invis = true
+			}
+		}
+
+		image minihud_bt_levels_off
+		{
+			tooltip		"_LMB:Show/RMB:Hide Level Controls"
+			src			"icons/off"
+			mousefx		true
+			pos			"142 472"
+			size		"16 16"
+			onClick
+			{
+				*node:root.bottomright@invis = false
+				*node:root.right.minihud_bt_levels_on@invis = false
+			}
+			onRClick
+			{
+				*node:root.bottomright@invis = true
+				*node:root.right.minihud_bt_levels_on@invis = true
+			}
+		}
+		image minihud_bt_levels_on
+		{
+			tooltip		"_LMB:Show/RMB:Hide Level Controls"
+			src			"icons/on"
+			mousefx		true
+			pos			"142 472"
+			size		"16 16"
+			onClick
+			{
+				*node:root.bottomright@invis = false
+				*node:root.right.minihud_bt_levels_on@invis = false
+			}
+			onRClick
+			{
+				*node:root.bottomright@invis = true
+				*node:root.right.minihud_bt_levels_on@invis = true
+			}
+		}
+
 		image bt_reaction_a
 		{
 			src		"althud/buttons_althud1g"
