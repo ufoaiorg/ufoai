@@ -159,6 +159,14 @@ window inventory
 		icon "icons/return"
 		onClick	{ call *node:root.hideinventory }
 	}
+
+	func onWindowOpened {
+		*cvar:inventory_window_open = 1
+	}
+
+	func onWindowClosed {
+		delete *cvar:inventory_window_open
+	}
 }
 
 // ==================

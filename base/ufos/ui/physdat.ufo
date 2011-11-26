@@ -212,6 +212,14 @@ window physdata
 		icon		"icons/return"
 		onClick		{ cmd "ui_pop;" }
 	}
+
+	func onWindowOpened {
+		*cvar:physdat_window_open = 1
+	}
+
+	func onWindowClosed {
+		delete *cvar:physdat_window_open
+	}
 }
 
 // ==================
