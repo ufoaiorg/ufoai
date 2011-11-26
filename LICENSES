@@ -1732,7 +1732,7 @@ base/models/objects/vegi/plants/plant.md2 | GNU General Public License 2.0 or la
 base/models/objects/vegi/plants/plant.png | GNU General Public License 2.0 or later | Willem Sitters | MCR
 base/models/objects/vegi/plants/plant1.md2 | GNU General Public License 2.0 or later | Willem Sitters
 base/models/objects/vegi/plants/plant1.png | GNU General Public License 2.0 or later | Willem Sitters | MCR
-base/models/objects/vegi/plants/plant1a.png | GNU General Public License 2.0 or later | based on Willem Sitters' and Titus Tscharnke's work (http://www.burningwell.org/gallery2/v/textures/plants/leavesAndBranches/)  | MCR
+base/models/objects/vegi/plants/plant1a.png | GNU General Public License 2.0 or later | based on Willem Sitters' and Titus Tscharnke's work (http://www.burningwell.org/gallery2/v/textures/plants/leavesAndBranches/) | MCR
 base/models/objects/vegi/plants/plant_a.md2 | GNU General Public License 2.0 | Daniel Holden (Yoshiboy)
 base/models/objects/vegi/plants/planta.png | GNU General Public License 2.0 or later | Willem Sitters | MCR
 base/models/objects/vegi/plants/plantb.md2 | GNU General Public License 2.0 | Daniel Holden (Yoshiboy)
@@ -2990,6 +2990,8 @@ base/pics/maps/loading/spedition.jpg | GNU General Public License 2.0 or later |
 base/pics/maps/loading/stadium.jpg | GNU General Public License 2.0 or later | Martin Gerhardy
 base/pics/maps/loading/subway.jpg | GNU General Public License 2.0 or later | Martin Gerhardy
 base/pics/maps/loading/tower.jpg | GNU General Public License 2.0 or later | Martin Gerhardy
+base/pics/maps/loading/training_a.png | GNU General Public License 2.0 or later | UFOAI team
+base/pics/maps/loading/training_b.png | GNU General Public License 2.0 or later | UFOAI team
 base/pics/maps/loading/transport.jpg | GNU General Public License 2.0 or later | Martin Gerhardy
 base/pics/maps/loading/tropic.jpg | GNU General Public License 2.0 or later
 base/pics/maps/loading/ufocrash.jpg | GNU General Public License 2.0 or later
@@ -3144,6 +3146,9 @@ base/pics/maps/shots/scout_crash_3.jpg | GNU General Public License 2.0 or later
 base/pics/maps/shots/shelter.jpg | GNU General Public License 2.0 or later
 base/pics/maps/shots/shelter_2.jpg | GNU General Public License 2.0 or later
 base/pics/maps/shots/shelter_3.jpg | GNU General Public License 2.0 or later
+base/pics/maps/shots/small_house.jpg | GNU General Public License 2.0 or later | UFOAI team
+base/pics/maps/shots/small_house_2.png | GNU General Public License 2.0 or later | UFOAI team
+base/pics/maps/shots/small_house_3.png | GNU General Public License 2.0 or later | UFOAI team
 base/pics/maps/shots/small_street.jpg | GNU General Public License 2.0 or later | MCR
 base/pics/maps/shots/small_street_2.jpg | GNU General Public License 2.0 or later | MCR
 base/pics/maps/shots/small_street_3.jpg | GNU General Public License 2.0 or later | MCR
@@ -3162,6 +3167,9 @@ base/pics/maps/shots/tower_3.jpg | GNU General Public License 2.0 or later | Mar
 base/pics/maps/shots/training_a.jpg | GNU General Public License 2.0 or later | MCR
 base/pics/maps/shots/training_a_2.jpg | GNU General Public License 2.0 or later | MCR
 base/pics/maps/shots/training_a_3.jpg | GNU General Public License 2.0 or later | MCR
+base/pics/maps/shots/training_b.jpg | GNU General Public License 2.0 or later | UFOAI team
+base/pics/maps/shots/training_b_2.png | GNU General Public License 2.0 or later | UFOAI team
+base/pics/maps/shots/training_b_3.png | GNU General Public License 2.0 or later | UFOAI team
 base/pics/maps/shots/transport.jpg | GNU General Public License 2.0 or later | Martin Gerhardy
 base/pics/maps/shots/transport_2.jpg | GNU General Public License 2.0 or later | Martin Gerhardy
 base/pics/maps/shots/transport_3.jpg | GNU General Public License 2.0 or later | Martin Gerhardy
@@ -5902,7 +5910,7 @@ base/textures/tex_misc/container004_nm.png | GNU General Public License 2.0 or l
 base/textures/tex_misc/container006.png | GNU General Public License 2.0 | Werner Höhrer (hoehrer)
 base/textures/tex_misc/container006_nm.png | GNU General Public License 2.0 or later | Zark127
 base/textures/tex_misc/container007.png | GNU General Public License 2.0 or later | FWishbringer
-base/textures/tex_misc/container007_nm.png | GNU General Public License 2.0 or later | MCR  | FWishbringer
+base/textures/tex_misc/container007_nm.png | GNU General Public License 2.0 or later | MCR | FWishbringer
 base/textures/tex_misc/container008.png | GNU General Public License 2.0 | Werner Höhrer (hoehrer)
 base/textures/tex_misc/container008_nm.png | GNU General Public License 2.0 or later | Zark127
 base/textures/tex_misc/crate001.png | GNU General Public License 2.0 | Werner Höhrer (hoehrer)
