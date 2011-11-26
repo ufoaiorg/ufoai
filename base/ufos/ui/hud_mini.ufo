@@ -29,6 +29,125 @@ window hud_mini extends hud
 	// ==================
 	// floor
 	// ==================
+	panel floor_deco {
+		{
+			pos		"256 640"
+			size	"688 128"
+			align	LAYOUTALIGN_BOTTOM
+		}
+
+		image bar_teamleft_deco
+		{
+			src		"minihud/bar_teamleft_deco"
+			pos			"0 0"
+			size		"32 128"
+		}
+
+		image bar_teambox0_deco
+		{
+			src		"minihud/bar_teambox_deco"
+			pos			"32 0"
+			size		"64 128"
+		}
+
+		image bar_teamsep1_deco
+		{
+			src		"minihud/bar_teamsep_deco"
+			pos			"96 0"
+			size		"16 128"
+		}
+		image bar_teambox1_deco
+		{
+			src		"minihud/bar_teambox_deco"
+			pos			"112 0"
+			size		"64 128"
+		}
+
+		image bar_teamsep2_deco
+		{
+			src		"minihud/bar_teamsep_deco"
+			pos			"176 0"
+			size		"16 128"
+		}
+		image bar_teambox2_deco
+		{
+			src		"minihud/bar_teambox_deco"
+			pos			"192 0"
+			size		"64 128"
+		}
+
+		image bar_teamsep3_deco
+		{
+			src		"minihud/bar_teamsep_deco"
+			pos			"256 0"
+			size		"16 128"
+		}
+		image bar_teambox3_deco
+		{
+			src		"minihud/bar_teambox_deco"
+			pos			"272 0"
+			size		"64 128"
+		}
+
+		image bar_teamsep4_deco
+		{
+			src		"minihud/bar_teamsep_deco"
+			pos			"336 0"
+			size		"16 128"
+		}
+		image bar_teambox4_deco
+		{
+			src		"minihud/bar_teambox_deco"
+			pos			"352 0"
+			size		"64 128"
+		}
+
+		image bar_teamsep5_deco
+		{
+			src		"minihud/bar_teamsep_deco"
+			pos			"416 0"
+			size		"16 128"
+		}
+		image bar_teambox5_deco
+		{
+			src		"minihud/bar_teambox_deco"
+			pos			"432 0"
+			size		"64 128"
+		}
+
+		image bar_teamsep6_deco
+		{
+			src		"minihud/bar_teamsep_deco"
+			pos			"496 0"
+			size		"16 128"
+		}
+		image bar_teambox6_deco
+		{
+			src		"minihud/bar_teambox_deco"
+			pos			"512 0"
+			size		"64 128"
+		}
+
+		image bar_teamsep7_deco
+		{
+			src		"minihud/bar_teamsep_deco"
+			pos			"576 0"
+			size		"16 128"
+		}
+		image bar_teambox7_deco
+		{
+			src		"minihud/bar_teambox_deco"
+			pos			"592 0"
+			size		"64 128"
+		}
+
+		image bar_teamright_deco
+		{
+			src		"minihud/bar_teamright_deco"
+			pos			"656 0"
+			size		"32 128"
+		}
+	}
 
 	panel floor {
 		{
@@ -39,14 +158,14 @@ window hud_mini extends hud
 
 		image bar_teamleft
 		{
-			src		"minihud/bar_teamleft"
+			src		"minihud/bar_teamleft_mini"
 			pos			"0 0"
 			size		"32 128"
 		}
 
 		image bar_teambox0
 		{
-			src		"minihud/bar_teambox"
+			src		"minihud/bar_teambox_mini"
 			pos			"32 0"
 			size		"64 128"
 			onClick		{ cmd "actor_select 0;" }
@@ -54,13 +173,13 @@ window hud_mini extends hud
 
 		image bar_teamsep1
 		{
-			src		"minihud/bar_teamsep"
+			src		"minihud/bar_teamsep_mini"
 			pos			"96 0"
 			size		"16 128"
 		}
 		image bar_teambox1
 		{
-			src		"minihud/bar_teambox"
+			src		"minihud/bar_teambox_mini"
 			pos			"112 0"
 			size		"64 128"
 			onClick		{ cmd "actor_select 1;" }
@@ -68,13 +187,13 @@ window hud_mini extends hud
 
 		image bar_teamsep2
 		{
-			src		"minihud/bar_teamsep"
+			src		"minihud/bar_teamsep_mini"
 			pos			"176 0"
 			size		"16 128"
 		}
 		image bar_teambox2
 		{
-			src		"minihud/bar_teambox"
+			src		"minihud/bar_teambox_mini"
 			pos			"192 0"
 			size		"64 128"
 			onClick		{ cmd "actor_select 2;" }
@@ -82,13 +201,13 @@ window hud_mini extends hud
 
 		image bar_teamsep3
 		{
-			src		"minihud/bar_teamsep"
+			src		"minihud/bar_teamsep_mini"
 			pos			"256 0"
 			size		"16 128"
 		}
 		image bar_teambox3
 		{
-			src		"minihud/bar_teambox"
+			src		"minihud/bar_teambox_mini"
 			pos			"272 0"
 			size		"64 128"
 			onClick		{ cmd "actor_select 3;" }
@@ -96,13 +215,13 @@ window hud_mini extends hud
 
 		image bar_teamsep4
 		{
-			src		"minihud/bar_teamsep"
+			src		"minihud/bar_teamsep_mini"
 			pos			"336 0"
 			size		"16 128"
 		}
 		image bar_teambox4
 		{
-			src		"minihud/bar_teambox"
+			src		"minihud/bar_teambox_mini"
 			pos			"352 0"
 			size		"64 128"
 			onClick		{ cmd "actor_select 4;" }
@@ -110,13 +229,13 @@ window hud_mini extends hud
 
 		image bar_teamsep5
 		{
-			src		"minihud/bar_teamsep"
+			src		"minihud/bar_teamsep_mini"
 			pos			"416 0"
 			size		"16 128"
 		}
 		image bar_teambox5
 		{
-			src		"minihud/bar_teambox"
+			src		"minihud/bar_teambox_mini"
 			pos			"432 0"
 			size		"64 128"
 			onClick		{ cmd "actor_select 5;" }
@@ -124,13 +243,13 @@ window hud_mini extends hud
 
 		image bar_teamsep6
 		{
-			src		"minihud/bar_teamsep"
+			src		"minihud/bar_teamsep_mini"
 			pos			"496 0"
 			size		"16 128"
 		}
 		image bar_teambox6
 		{
-			src		"minihud/bar_teambox"
+			src		"minihud/bar_teambox_mini"
 			pos			"512 0"
 			size		"64 128"
 			onClick		{ cmd "actor_select 6;" }
@@ -138,13 +257,13 @@ window hud_mini extends hud
 
 		image bar_teamsep7
 		{
-			src		"minihud/bar_teamsep"
+			src		"minihud/bar_teamsep_mini"
 			pos			"576 0"
 			size		"16 128"
 		}
 		image bar_teambox7
 		{
-			src		"minihud/bar_teambox"
+			src		"minihud/bar_teambox_mini"
 			pos			"592 0"
 			size		"64 128"
 			onClick		{ cmd "actor_select 7;" }
@@ -152,7 +271,7 @@ window hud_mini extends hud
 
 		image bar_teamright
 		{
-			src		"minihud/bar_teamright"
+			src		"minihud/bar_teamright_mini"
 			pos			"656 0"
 			size		"32 128"
 		}
@@ -519,6 +638,23 @@ window hud_mini extends hud
 	// right panel
 	// ==================
 
+	panel right_deco {
+		{
+			pos		"768 100"
+			size	"256 512"
+			align	LAYOUTALIGN_RIGHT
+			ghost	true
+		}
+
+		image bar_right_deco
+		{
+			src		"minihud/bar_right_deco"
+			pos			"0 0"
+			excluderect	{ pos	"0 0"	size	"96 512" }
+			excluderect	{ pos	"0 473"	size	"192 39" }
+		}
+	}
+
 	panel right {
 		{
 			pos		"768 100"
@@ -527,14 +663,13 @@ window hud_mini extends hud
 			ghost	true
 		}
 
-		image bar_right
+		image bar_right_mini
 		{
-			src		"minihud/bar_right"
+			src		"minihud/bar_right_mini"
 			pos			"0 0"
 			excluderect	{ pos	"0 0"	size	"96 512" }
 			excluderect	{ pos	"0 473"	size	"192 39" }
 		}
-
 		image bt_primaryright
 		{
 			tooltip		"_Use Item"
@@ -706,10 +841,12 @@ window hud_mini extends hud
 			onClick
 			{
 				*node:root.floor@invis = false
+				if ( *node:root.right.minihud_bt_decoration_on@invis == false ) { *node:root.floor_deco@invis = false }
 				*node:root.right.minihud_bt_soldiers_on@invis = false
 			}
 			onRClick
 			{
+				*node:root.floor_deco@invis = true
 				*node:root.floor@invis = true
 				*node:root.right.minihud_bt_soldiers_on@invis = true
 			}
@@ -724,15 +861,16 @@ window hud_mini extends hud
 			onClick
 			{
 				*node:root.floor@invis = false
+				if ( *node:root.right.minihud_bt_decoration_on@invis == false ) { *node:root.floor_deco@invis = false }
 				*node:root.right.minihud_bt_soldiers_on@invis = false
 			}
 			onRClick
 			{
+				*node:root.floor_deco@invis = true
 				*node:root.floor@invis = true
 				*node:root.right.minihud_bt_soldiers_on@invis = true
 			}
 		}
-
 
 		image minihud_bt_top_off
 		{
@@ -744,10 +882,12 @@ window hud_mini extends hud
 			onClick
 			{
 				*node:root.upperright@invis = false
+				if ( *node:root.right.minihud_bt_decoration_on@invis == false ) { *node:root.upperright_deco@invis = false }
 				*node:root.right.minihud_bt_top_on@invis = false
 			}
 			onRClick
 			{
+				*node:root.upperright_deco@invis = true
 				*node:root.upperright@invis = true
 				*node:root.right.minihud_bt_top_on@invis = true
 			}
@@ -762,10 +902,12 @@ window hud_mini extends hud
 			onClick
 			{
 				*node:root.upperright@invis = false
+				if ( *node:root.right.minihud_bt_decoration_on@invis == false ) { *node:root.upperright_deco@invis = false }
 				*node:root.right.minihud_bt_top_on@invis = false
 			}
 			onRClick
 			{
+				*node:root.upperright_deco@invis = true
 				*node:root.upperright@invis = true
 				*node:root.right.minihud_bt_top_on@invis = true
 			}
@@ -781,10 +923,12 @@ window hud_mini extends hud
 			onClick
 			{
 				*node:root.bottomright@invis = false
+				if ( *node:root.right.minihud_bt_decoration_on@invis == false ) { *node:root.bottomright_deco@invis = false }
 				*node:root.right.minihud_bt_levels_on@invis = false
 			}
 			onRClick
 			{
+				*node:root.bottomright_deco@invis = true
 				*node:root.bottomright@invis = true
 				*node:root.right.minihud_bt_levels_on@invis = true
 			}
@@ -799,14 +943,66 @@ window hud_mini extends hud
 			onClick
 			{
 				*node:root.bottomright@invis = false
+				if ( *node:root.right.minihud_bt_decoration_on@invis == false ) { *node:root.bottomright_deco@invis = false }
 				*node:root.right.minihud_bt_levels_on@invis = false
 			}
 			onRClick
 			{
+				*node:root.bottomright_deco@invis = true
 				*node:root.bottomright@invis = true
 				*node:root.right.minihud_bt_levels_on@invis = true
 			}
 		}
+
+		image minihud_bt_decoration_off
+		{
+			tooltip		"_LMB:Show/RMB:Hide decoration"
+			src			"icons/off"
+			mousefx		true
+			pos			"182 472"
+			size		"16 16"
+			onClick
+			{
+				*node:root.right_deco@invis = false
+				if ( *node:root.floor@invis == false ) { *node:root.floor_deco@invis = false }
+				if ( *node:root.upperright@invis == false ) { *node:root.upperright_deco@invis = false }
+				if ( *node:root.bottomright@invis == false ) { *node:root.bottomright_deco@invis = false }
+				*node:root.right.minihud_bt_decoration_on@invis = false
+			}
+			onRClick
+			{
+				*node:root.right_deco@invis = true
+				*node:root.floor_deco@invis = true
+				*node:root.upperright_deco@invis = true
+				*node:root.bottomright_deco@invis = true
+				*node:root.right.minihud_bt_decoration_on@invis = true
+			}
+		}
+		image minihud_bt_decoration_on
+		{
+			tooltip		"_LMB:Show/RMB:Hide decoration"
+			src			"icons/on"
+			mousefx		true
+			pos			"182 472"
+			size		"16 16"
+			onClick
+			{
+				*node:root.right_deco@invis = false
+				if ( *node:root.floor@invis == false ) { *node:root.floor_deco@invis = false }
+				if ( *node:root.upperright@invis == false ) { *node:root.upperright_deco@invis = false }
+				if ( *node:root.bottomright@invis == false ) { *node:root.bottomright_deco@invis = false }
+				*node:root.right.minihud_bt_decoration_on@invis = false
+			}
+			onRClick
+			{
+				*node:root.right_deco@invis = true
+				*node:root.floor_deco@invis = true
+				*node:root.upperright_deco@invis = true
+				*node:root.bottomright_deco@invis = true
+				*node:root.right.minihud_bt_decoration_on@invis = true
+			}
+		}
+
 
 		image bt_reaction_a
 		{
@@ -1021,6 +1217,21 @@ window hud_mini extends hud
 		}
 	}
 
+	panel bottomright_deco {
+		{
+			pos		"0 0"
+			size	"40 117"
+			align	LAYOUTALIGN_BOTTOMRIGHT
+			ghost	true
+		}
+		image bar_floor_deco
+		{
+			src		"minihud/bar_floor_deco"
+			pos			"0 0"
+			texl		"24 11"
+			size		"40 117"
+		}
+	}
 	panel bottomright {
 		{
 			pos		"0 0"
@@ -1029,9 +1240,9 @@ window hud_mini extends hud
 			ghost	true
 		}
 
-		image bar_floor
+		image bar_floor_mini
 		{
-			src		"minihud/bar_floor"
+			src		"minihud/bar_floor_mini"
 			pos			"0 0"
 			texl		"24 11"
 			size		"40 117"
@@ -1083,16 +1294,28 @@ window hud_mini extends hud
 		}
 	}
 
+	panel upperright_deco {
+		{
+			pos		"768 0"
+			size	"256 64"
+			align	LAYOUTALIGN_TOPRIGHT
+		}
+		image bar_top_deco
+		{
+			src		"minihud/bar_top_deco"
+			pos			"0 0"
+		}
+	}
+
 	panel upperright {
 		{
 			pos		"768 0"
 			size	"256 64"
 			align	LAYOUTALIGN_TOPRIGHT
 		}
-
-		image bar_top
+		image bar_top_mini
 		{
-			src		"minihud/bar_top"
+			src		"minihud/bar_top_mini"
 			pos			"0 0"
 		}
 
