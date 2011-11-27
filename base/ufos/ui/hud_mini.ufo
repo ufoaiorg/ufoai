@@ -736,7 +736,7 @@ window hud_mini extends hud
 			font		"f_verysmall"
 			color		"0 0 0 1"
 			string		*cvar:mn_name
-			pos			"109 251"
+			pos			"111 251"
 			size		"133 20"
 		}
 		string str_name
@@ -752,76 +752,76 @@ window hud_mini extends hud
 
 		string str_hp_shadow
 		{
-			font		"f_verysmall_bold"
+			font		"f_small_bold"
 			color		"0 0 0 1"
 			string		*cvar:mn_hp
-			pos			"111 301"
+			pos			"113 300"
 			size		"40 20"
 			contentalign	ALIGN_UC
 		}
 		string str_hp
 		{
-			font		"f_verysmall_bold"
+			font		"f_small_bold"
 			color		".7 0 0 1"
 			string		*cvar:mn_hp
-			pos			"112 300"
+			pos			"112 299"
 			size		"40 20"
 			contentalign	ALIGN_UC
 			tooltip		"_Health"
 		}
 		string str_morale_shadow
 		{
-			font		"f_verysmall_bold"
+			font		"f_small_bold"
 			color		"0 0 0 1"
 			string		*cvar:mn_morale
-			pos			"140 301"
+			pos			"142 300"
 			size		"40 20"
 			contentalign	ALIGN_UC
 		}
 		string str_morale
 		{
-			font		"f_verysmall_bold"
+			font		"f_small_bold"
 			color		".7 .7 0 1"
 			string		*cvar:mn_morale
-			pos			"141 300"
+			pos			"141 299"
 			size		"40 20"
 			contentalign	ALIGN_UC
 			tooltip		"_Morale"
 		}
 		string str_tu_shadow
 		{
-			font		"f_verysmall_bold"
+			font		"f_small_bold"
 			color		"0 0 0 1"
 			string		*cvar:mn_tu
-			pos			"170 301"
+			pos			"172 300"
 			size		"40 20"
 			contentalign	ALIGN_UC
 		}
 		string str_tu
 		{
-			font		"f_verysmall_bold"
+			font		"f_small_bold"
 			color		".2 .2 1 1"
 			string		*cvar:mn_tu
-			pos			"171 300"
+			pos			"171 299"
 			size		"40 20"
 			contentalign	ALIGN_UC
 			tooltip		"_TUs"
 		}
 		string str_tu_reserved_shadow
 		{
-			font		"f_verysmall_bold"
+			font		"f_small_bold"
 			color		"0 0 0 1"
 			string		*cvar:mn_tureserved
-			pos			"199 301"
+			pos			"200 300"
 			size		"40 20"
 			contentalign	ALIGN_UC
 		}
 		string str_tu_reserved
 		{
-			font		"f_verysmall_bold"
+			font		"f_small_bold"
 			color		"0 .5 0 1"
 			string		*cvar:mn_tureserved
-			pos			"200 300"
+			pos			"199 299"
 			size		"40 20"
 			contentalign	ALIGN_UC
 			tooltip		"_TUs reserved"
@@ -831,12 +831,81 @@ window hud_mini extends hud
 		// buttons
 		// ==================
 
+		// show/hide window buttons
+
+		image minihud_bt_physdat
+		{
+			tooltip		"_LMB:Show/RMB:Hide Physical Data"
+			src			"minihud/bt_physdat"
+			mousefx		true
+			pos			"102 472"
+			size		"16 16"
+			onClick
+			{
+				cmd "ui_push ahudphysdat;"
+			}
+			onRClick
+			{
+				if ( exists *cvar:physdat_window_open ) { cmd "ui_close ahudphysdat;" }
+			}
+		}
+		image minihud_bt_inventory
+		{
+			tooltip		"_LMB:Show/RMB:Hide Inventory"
+			src			"minihud/bt_inventory"
+			mousefx		true
+			pos			"122 472"
+			size		"16 16"
+			onClick
+			{
+				cmd "ui_push ahudinv;"
+			}
+			onRClick
+			{
+				if ( exists *cvar:inventory_window_open ) { cmd "ui_close ahudinv;" }
+			}
+		}
+		image minihud_bt_radar
+		{
+			tooltip		"_LMB:Show/RMB:Hide Radar"
+			src			"minihud/bt_radar"
+			mousefx		true
+			pos			"142 472"
+			size		"16 16"
+			onClick
+			{
+				cmd "ui_push radarwindow;"
+			}
+			onRClick
+			{
+				if ( exists *cvar:radar_window_open ) { cmd "ui_close radarwindow;" }
+			}
+		}
+		image minihud_bt_help
+		{
+			tooltip		"_LMB:Show/RMB:Hide Keyinfo/General Help window"
+			src			"minihud/bt_help"
+			mousefx		true
+			pos			"162 472"
+			size		"16 16"
+			onClick
+			{
+				cmd "ui_push popup_keyinfo;"
+			}
+			onRClick
+			{
+				if ( exists *cvar:help_window_open ) { cmd "ui_close popup_keyinfo;" }
+			}
+		}
+
+		// show/hide panel buttons
+
 		image minihud_bt_soldiers_off
 		{
 			tooltip		"_LMB:Show/RMB:Hide Soldier Panel"
 			src			"icons/off"
 			mousefx		true
-			pos			"102 472"
+			pos			"102 490"
 			size		"16 16"
 			onClick
 			{
@@ -856,7 +925,7 @@ window hud_mini extends hud
 			tooltip		"_LMB:Show/RMB:Hide Soldier Panel"
 			src			"icons/on"
 			mousefx		true
-			pos			"102 472"
+			pos			"102 490"
 			size		"16 16"
 			onClick
 			{
@@ -877,7 +946,7 @@ window hud_mini extends hud
 			tooltip		"_LMB:Show/RMB:Hide Top Panel"
 			src			"icons/off"
 			mousefx		true
-			pos			"122 472"
+			pos			"122 490"
 			size		"16 16"
 			onClick
 			{
@@ -897,7 +966,7 @@ window hud_mini extends hud
 			tooltip		"_LMB:Show/RMB:Hide Top Panel"
 			src			"icons/on"
 			mousefx		true
-			pos			"122 472"
+			pos			"122 490"
 			size		"16 16"
 			onClick
 			{
@@ -918,7 +987,7 @@ window hud_mini extends hud
 			tooltip		"_LMB:Show/RMB:Hide Level Controls"
 			src			"icons/off"
 			mousefx		true
-			pos			"142 472"
+			pos			"142 490"
 			size		"16 16"
 			onClick
 			{
@@ -938,7 +1007,7 @@ window hud_mini extends hud
 			tooltip		"_LMB:Show/RMB:Hide Level Controls"
 			src			"icons/on"
 			mousefx		true
-			pos			"142 472"
+			pos			"142 490"
 			size		"16 16"
 			onClick
 			{
@@ -953,13 +1022,50 @@ window hud_mini extends hud
 				*node:root.right.minihud_bt_levels_on@invis = true
 			}
 		}
-
+/*
+		image minihud_bt_musiccontrol_off
+		{
+			tooltip		"_LMB:Show/RMB:Hide Music Controls"
+			src			"icons/off"
+			mousefx		true
+			pos			"162 490"
+			size		"16 16"
+			onClick
+			{
+				*node:root.bottomright@invis = false
+				*node:root.right.minihud_bt_levels_on@invis = false
+			}
+			onRClick
+			{
+				*node:root.bottomright@invis = true
+				*node:root.right.minihud_bt_levels_on@invis = true
+			}
+		}
+		image minihud_bt_musiccontrol_on
+		{
+			tooltip		"_LMB:Show/RMB:Hide Music Controls"
+			src			"icons/on"
+			mousefx		true
+			pos			"162 490"
+			size		"16 16"
+			onClick
+			{
+				*node:root.bottomright@invis = false
+				*node:root.right.minihud_bt_levels_on@invis = false
+			}
+			onRClick
+			{
+				*node:root.bottomright@invis = true
+				*node:root.right.minihud_bt_levels_on@invis = true
+			}
+		}
+*/
 		image minihud_bt_decoration_off
 		{
 			tooltip		"_LMB:Show/RMB:Hide decoration"
 			src			"icons/off"
 			mousefx		true
-			pos			"182 472"
+			pos			"202 490"
 			size		"16 16"
 			onClick
 			{
@@ -983,7 +1089,7 @@ window hud_mini extends hud
 			tooltip		"_LMB:Show/RMB:Hide decoration"
 			src			"icons/on"
 			mousefx		true
-			pos			"182 472"
+			pos			"202 490"
 			size		"16 16"
 			onClick
 			{
@@ -1003,6 +1109,7 @@ window hud_mini extends hud
 			}
 		}
 
+		// main buttons
 
 		image bt_reaction_a
 		{
@@ -1097,13 +1204,15 @@ window hud_mini extends hud
 		string ammoright_shadow
 		{
 			string		*cvar:mn_ammoright
-			pos			"116 402"
+			font		"f_small_bold"
+			pos			"118 402"
 			size		"40 20"
 			color		"0 0 0 1"
 		}
 		string ammoright
 		{
 			string		*cvar:mn_ammoright
+			font		"f_small_bold"
 			pos			"117 401"
 			size		"40 20"
 			tooltip		"Ammo"
@@ -1111,13 +1220,15 @@ window hud_mini extends hud
 		string ammoleft_shadow
 		{
 			string		*cvar:mn_ammoleft
-			pos			"116 402"
+			font		"f_small_bold"
+			pos			"118 402"
 			size		"40 20"
 			color		"0 0 0 1"
 		}
 		string ammoleft
 		{
 			string		*cvar:mn_ammoleft
+			font		"f_small_bold"
 			pos			"117 401"
 			size		"40 20"
 			tooltip		"Ammo"
@@ -1277,20 +1388,20 @@ window hud_mini extends hud
 			}
 		}
 
-		string str_floor_shadow
+		string str_level_shadow
 		{
 			color		"0 0 0 1"
 			string		*cvar:cl_worldlevel
-			pos			"0 50"
+			pos			"14 50"
 			size		"40 20"
-			contentalign	ALIGN_CC
+			contentalign	ALIGN_CL
 		}
-		string str_floor
+		string str_level
 		{
 			string		*cvar:cl_worldlevel
-			pos			"1 49"
+			pos			"13 49"
 			size		"40 20"
-			contentalign	ALIGN_CC
+			contentalign	ALIGN_CL
 		}
 	}
 
@@ -1330,7 +1441,7 @@ window hud_mini extends hud
 		string numspotted
 		{
 			string		*cvar:mn_numaliensspotted
-			tooltip		"_Click to cycle through spotted enemies"
+			tooltip		"_Cycle through spotted enemies"
 			pos			"78 13"
 			size	    "48 34"
 			onClick		{ cmd "nextalien;" }
@@ -1338,7 +1449,7 @@ window hud_mini extends hud
 		}
 		image nextround
 		{
-			tooltip		"_Finish round"
+			tooltip		"_Finish turn"
 			src		"althud/buttons_althud1g"
 			pos			"120 11"
 			texl		"0 0"
@@ -1348,6 +1459,7 @@ window hud_mini extends hud
 		}
 		image messagelog
 		{
+			tooltip		"_Message log"
 			src		"althud/buttons_althud1g"
 			pos			"164 11"
 			texl		"43 0"
@@ -1356,6 +1468,7 @@ window hud_mini extends hud
 		}
 		image menu
 		{
+			tooltip		"_Menu"
 			src		"althud/buttons_althud1"
 			pos			"208 11"
 			texl		"86 0"
