@@ -1398,6 +1398,7 @@ window hud_mini extends hud
 		}
 		string str_level
 		{
+			tooltip		"_Current Level"
 			string		*cvar:cl_worldlevel
 			pos			"13 49"
 			size		"40 20"
