@@ -587,8 +587,8 @@ window popup_keyinfo
 	{
 		string		"_Keyinfo and General Help"
 		image		"ui/popup_alpha_tile"
-		pos			"239 12"
-		size		"536 747"
+		pos			"239 58"
+		size		"536 577"
 		dragbutton	true
 		closebutton	true
 	}
@@ -619,7 +619,7 @@ window popup_keyinfo
 	{
 		dataid		TEXT_LIST
 		pos			"30 112"
-		size		"473 620"
+		size		"473 450"
 		rows		"31"
 		lineheight	"20"
 		tabwidth	"120"
@@ -635,7 +635,7 @@ window popup_keyinfo
 	{
 		image		"ui/scrollbar_v_green"
 		pos			"504 112"
-		height		"620"
+		height		"450"
 		current		0
 		viewsize	31
 		fullsize	50
