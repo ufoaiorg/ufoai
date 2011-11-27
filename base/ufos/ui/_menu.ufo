@@ -619,8 +619,8 @@ window popup_keyinfo
 	{
 		dataid		TEXT_LIST
 		pos			"30 112"
-		size		"473 450"
-		rows		"31"
+		size		"473 440"
+		rows		"22"
 		lineheight	"20"
 		tabwidth	"120"
 		font		"f_verysmall"
