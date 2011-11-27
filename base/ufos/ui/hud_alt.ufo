@@ -504,7 +504,7 @@ window hud_alt extends hud
 		model right_actor
 		{
 			{
-				tooltip		"_Inventory and physical stats"
+				tooltip		"_LMB:Inventory/RMB:Physical Stats"
 
 				src			*cvar:mn_body
 				skin		*cvar:mn_skin
