@@ -504,7 +504,7 @@ window hud_alt extends hud
 		model right_actor
 		{
 			{
-				tooltip		"_Inventory and physical stats"
+				tooltip		"_LMB:Inventory/RMB:Physical Stats"
 
 				src			*cvar:mn_body
 				skin		*cvar:mn_skin
@@ -667,6 +667,23 @@ window hud_alt extends hud
 			size		"40 20"
 			contentalign	ALIGN_UC
 			tooltip		"_TUs reserved"
+		}
+
+		image minihud_bt_help
+		{
+			tooltip		"_LMB:Show/RMB:Hide Keyinfo/General Help window"
+			src			"minihud/bt_help"
+			mousefx		true
+			pos			"203 490"
+			size		"16 16"
+			onClick
+			{
+				cmd "ui_push popup_keyinfo;"
+			}
+			onRClick
+			{
+				if ( exists *cvar:help_window_open ) { cmd "ui_close popup_keyinfo;" }
+			}
 		}
 
 		image bt_reaction_a

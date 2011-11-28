@@ -727,6 +727,23 @@ window hud_default extends hud
 			onClick	{ cmd "hud_togglereaction;" }
 		}
 
+		image minihud_bt_help
+		{
+			tooltip		"_LMB:Show/RMB:Hide Keyinfo/General Help window"
+			src			"minihud/bt_help"
+			mousefx		true
+			pos			"46 74"
+			size		"16 16"
+			onClick
+			{
+				cmd "ui_push popup_keyinfo;"
+			}
+			onRClick
+			{
+				if ( exists *cvar:help_window_open ) { cmd "ui_close popup_keyinfo;" }
+			}
+		}
+
 		string tus
 		{
 			string	*cvar:mn_tu
@@ -889,24 +906,26 @@ window hud_default extends hud
 
 		image bt_physdata
 		{
-			tooltip	"_Physical stats of this soldier"
+			tooltip	"_LMB:Show/RMB:Hide Physical stats"
 			src	"hud/buttons1"
 			mousefx true
 			pos		"6 201"
 			texl	"202 0"
 			texh	"238 75"
 			onClick	{ cmd "ui_push hudphysdat;" }
+			onRClick	{ if ( exists *cvar:physdat_window_open ) { cmd "ui_close hudphysdat;" } }
 		}
 
 		image bt_inventory
 		{
-			tooltip	"_Inventory"
+			tooltip	"_LMB:Show/RMB:Hide Inventory"
 			src	"hud/buttons1"
 			mousefx true
 			pos		"6 311"
 			texl	"128 0"
 			texh	"164 75"
 			onClick	{ call *node:root.showinventory }
+			onRClick	{ if ( exists *cvar:inventory_window_open ) { cmd "ui_close hudinv;" } }
 		}
 	}
 
