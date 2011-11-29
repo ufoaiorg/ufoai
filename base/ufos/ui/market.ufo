@@ -16,13 +16,13 @@ component panel cmpMarketItem
 		onWheelUp	{ cmd "mn_buy <node:parent@num>;" }
 		onWheelDown	{ cmd "mn_sell <node:parent@num>;" }
 	}
-	spinner bt_buysell
-	{
-		tooltip		"_Buy and sell item"
-		image		"ui/spinner_blue"
-		pos			"346 0"
-		onChange	{ cmd "mn_buysell <node:parent@num> <lastdiff>; market_click <node:parent@num>;" }
-	}
+	//spinner bt_buysell
+	//{
+	//	tooltip		"_Buy and sell item"
+	//	image		"ui/spinner_blue"
+	//	pos			"346 0"
+	//	onChange	{ cmd "mn_buysell <node:parent@num> <lastdiff>; market_click <node:parent@num>;" }
+	//}
 	checkbox bt_autosell
 	{
 		current		0
@@ -151,9 +151,9 @@ window market extends objectinfo
 		dataid		TEXT_MARKET_STORAGE
 		color		"0 .78 0 1"
 		contentalign	ALIGN_CR
-		pos			"330 177"
+		pos			"310 177"
 		rows		"22"
-		size		"40 550"
+		size		"40 552"
 		lineheight	"25"
 		onChange	{ cmd "sync_market_scroll <lineselected> <viewpos>;market_click <lineselected>;" }
 		onWheel		{ cmd "sync_market_scroll <lineselected> <viewpos>;market_scroll <viewpos>;" }
@@ -327,6 +327,44 @@ window market extends objectinfo
 			font		"f_small"
 		}
 	}
+
+	image bt_buy1
+	{
+		src		"buttons/blue_left_market"
+		pos			"365 180"
+		size		"25 280"
+		mousefx		true
+		onClick		{ cmd "mn_buy <node:root.market@lineselected>;" }
+	}
+
+	image bt_sell1
+	{
+		src		"buttons/blue_right_market"
+		pos			"390 180"
+		size		"25 280"
+		mousefx		true
+		onClick		{ cmd "mn_sell <node:root.market@lineselected>;" }
+	}
+
+	// Split into two equal parts, so texture height won't be bigger than 256
+	image bt_buy2
+	{
+		src		"buttons/blue_left_market"
+		pos			"365 460"
+		size		"25 280"
+		mousefx		true
+		onClick		{ cmd "mn_buy <node:root.market@lineselected>;" }
+	}
+
+	image bt_sell2
+	{
+		src		"buttons/blue_right_market"
+		pos			"390 460"
+		size		"25 280"
+		mousefx		true
+		onClick		{ cmd "mn_sell <node:root.market@lineselected>;" }
+	}
+
 
 	confunc listen_openpedia {
 		cmd "market_click <node:root.market@lineselected>;"
