@@ -87,33 +87,38 @@ def base_map_copy(src, dest, name):
         grep = os.popen('grep -v "//" "' + srcfile + '" | grep "/" | grep -o "[^ ]*/[^ ]*" | grep -v \'"\'')
         count = 0
         for r in grep:
-            name = "textures/" + r.strip() + ".png"
+            name1 = "textures/" + r.strip() + ".png"
             try:
-              os.stat(name)
-              needTextures.add(name)
+              os.stat(src + "/" + name1)
+              needTextures.add(name1)
+              count = count + 1
             except Exception, e:
               pass
-            name = "textures/" + r.strip() + ".jpg"
+            name1 = "textures/" + r.strip() + ".jpg"
             try:
-              os.stat(name)
-              needTextures.add(name)
+              os.stat(src + "/" + name1)
+              needTextures.add(name1)
+              count = count + 1
             except Exception, e:
               pass
-            count = count + 1
         print "    need %d textures" % count
         destfile = os.path.join(dest, name)
         dir = os.path.dirname(destfile)
         if not os.path.exists(dir):
+            print "mkdir " + dir
             os.makedirs(dir)
+        #print srcfile + " -> " + destfile
         shutil.copy(srcfile, destfile)
         srcfile = srcfile.replace(".map", ".bsp")
         destfile = destfile.replace(".map", ".bsp")
+        #print srcfile + " -> " + destfile
         shutil.copy(srcfile, destfile)
         return
 
     sys.stderr.write("File format \"%s\" format unknown. Copy aborded.\n" % src)
 
 if __name__ == '__main__':
+    global needTextures
     print "Delete \"%s\"" % DEST_BASE
     if os.path.exists(DEST_BASE):
         shutil.rmtree(DEST_BASE)
