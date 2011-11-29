@@ -572,17 +572,18 @@ static void R_FontGenerateTexture (const font_t *font, const char *text, chunkCa
 	SDL_Rect rect = {0, 0, 0, 0};
 	char buf[BUF_SIZE];
 	static const SDL_Color color = {255, 255, 255, 0};	/* The 4th value is unused */
-	const int samples = r_config.gl_compressed_alpha_format ? r_config.gl_compressed_alpha_format : r_config.gl_alpha_format;
 	int colordepth = 32;
 
 #ifdef ANDROID
 	int pixelFormat = GL_RGBA; /* There's no GL_BGRA symbol defined in Android GLES headers */
+	const int samples = pixelFormat;
 	colordepth = 16;
 	Uint32 rmask = 0x0000f000;
 	Uint32 gmask = 0x00000f00;
 	Uint32 bmask = 0x000000f0;
 	Uint32 amask = 0x0000000f;
 #else
+	const int samples = r_config.gl_compressed_alpha_format ? r_config.gl_compressed_alpha_format : r_config.gl_alpha_format;
 	int pixelFormat = GL_BGRA;
 # if SDL_BYTEORDER == SDL_BIG_ENDIAN
 	Uint32 rmask = 0xff000000;

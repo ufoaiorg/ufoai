@@ -288,6 +288,9 @@ int R_UploadData (const char *name, byte *frame, int width, int height)
 	int samples = r_config.gl_compressed_solid_format ? r_config.gl_compressed_solid_format : r_config.gl_solid_format;
 	int i, c;
 	byte *scan;
+#ifdef GL_VERSION_ES_CM_1_0
+	samples = GL_RGBA;
+#endif
 
 	R_GetScaledTextureSize(width, height, &scaledWidth, &scaledHeight);
 

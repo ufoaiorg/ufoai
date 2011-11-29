@@ -294,6 +294,9 @@ void R_UploadTexture (unsigned *data, int width, int height, image_t* image)
 	byte *scan;
 	const qboolean mipmap = (image->type != it_pic && image->type != it_worldrelated && image->type != it_chars);
 	const qboolean clamp = R_ImageIsClamp(image);
+#ifdef GL_VERSION_ES_CM_1_0
+	samples = GL_RGBA;
+#endif
 
 	/* scan the texture for any non-255 alpha */
 	c = width * height;
@@ -317,6 +320,7 @@ void R_UploadTexture (unsigned *data, int width, int height, image_t* image)
 		/* TODO: check if GL_NEAREST will give any speed advantage on Android */
 		glTexParameterf(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR);
 		glTexParameterf(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
+		R_TextureConvertNativePixelFormat(data, scaledWidth, scaledHeight, 1);
 		glTexImage2D(GL_TEXTURE_2D, 0, samples, scaledWidth, scaledHeight, 0, GL_RGBA, GL_NATIVE_TEXTURE_PIXELFORMAT_ALPHA, data);
 		return;
 	}

@@ -24,6 +24,7 @@ import os.path
 import shutil
 import resources
 import sprite_pack
+import glob
 
 try:
     os.stat( os.curdir + "/base" )
@@ -65,11 +66,10 @@ def base_copy(src_base, dest_base, name, ignore_prefix=set([])):
         shutil.copy(src, dest)
 
 # TODO remove it from global
-resourceset = None
 needTextures = set([])
 
 def base_map_copy(src, dest, name):
-    global resourceset, needTextures
+    global needTextures
     """
         Copy maps from a base to another,
         Also move needed textures
@@ -82,16 +82,30 @@ def base_map_copy(src, dest, name):
 
     if ".map" in srcfile:
         nameId = os.path.relpath(srcfile, UFOAI_ROOT)
-        resource = resourceset.getResource(nameId)
-        print "Copy \"%s\" (only the bsp)" % resource.fileName
-        print "    need %d textures" % len(resource.useTextures)
-        for r in resource.useTextures:
-            needTextures.add(os.path.relpath(r.fileName, src))
+        print "Copy \"%s\" (only the bsp)" % nameId
+        # Extremely lame, but "resources" module which did all the job got lost somewhere
+        grep = os.popen('grep -v "//" "' + srcfile + '" | grep "/" | grep -o "[^ ]*/[^ ]*" | grep -v \'"\'')
+        count = 0
+        for r in grep:
+            name = "textures/" + r.strip() + ".png"
+            try:
+              os.stat(name)
+              needTextures.add(name)
+            except Exception, e:
+              pass
+            name = "textures/" + r.strip() + ".jpg"
+            try:
+              os.stat(name)
+              needTextures.add(name)
+            except Exception, e:
+              pass
+            count = count + 1
+        print "    need %d textures" % count
         destfile = os.path.join(dest, name)
         dir = os.path.dirname(destfile)
         if not os.path.exists(dir):
             os.makedirs(dir)
-        #shutil.copy(srcfile, destfile)
+        shutil.copy(srcfile, destfile)
         srcfile = srcfile.replace(".map", ".bsp")
         destfile = destfile.replace(".map", ".bsp")
         shutil.copy(srcfile, destfile)
@@ -105,18 +119,15 @@ if __name__ == '__main__':
         shutil.rmtree(DEST_BASE)
 
     # base
-    needs = [
-        "autoexec.cfg", "dedicated.cfg", "default.cfg", "keys.cfg",
-        "irc_motd.txt", "mapcycle.txt",
-        "safemode.cfg", "video-high.cfg", "video-low.cfg", "video-medium.cfg"]
+    needs = [f[5:] for f in glob.glob("base/*.cfg") + glob.glob("base/*.txt")]
     for name in needs:
         print "Copy \"%s\"" % os.path.join(SRC_BASE, name)
         base_copy(SRC_BASE, DEST_BASE, name)
 
     # fully copy subdirs
     needs = [
-        "ai", "i18n", "materials", "media", "models", "shaders", "ufos", "pics", "sound/ui",
-        "textures/tex_common", "textures/tex_lights", "textures/tex_material"]
+        "ai", "i18n", "materials", "media", "models", "pics", "shaders", "ufos",
+        "sound/ui", "textures/tex_common", "textures/tex_lights", "textures/tex_material" ]
     for name in needs:
         print "Copy \"%s\"" % os.path.join(SRC_BASE, name)
         base_copy(SRC_BASE, DEST_BASE, name)
@@ -128,12 +139,7 @@ if __name__ == '__main__':
         print "Copy \"%s\"" % os.path.join(SRC_BASE, name)
         base_copy(SRC_BASE, DEST_BASE, name)
 
-    # few maps
-    resourceset = resources.Resources()
-    resourceset.computeTextureUsageInMaps()
-
-    # "cemetery.ump"
-    fewmaps = ["dam.map", "lake_ice.map", "wilderness.map", "fighter_crash.map", "farm.map", "training_a.map"]
+    fewmaps = ["dam.map", "lake_ice.map", "wilderness.map", "fighter_crash.map", "training_a.map"]
     for name in fewmaps:
         name = os.path.join("maps", name)
         base_map_copy(SRC_BASE, DEST_BASE, name)
