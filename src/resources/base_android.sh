@@ -26,3 +26,4 @@ zip -r -n .png:.jpg:.ogg:.ogm ../0music.pk3 music
 rm -rf music
 zip -r -n .png:.jpg:.ogg:.ogm ../1base.pk3 *
 cd ..
+zip -r i18n.zip base/i18n
