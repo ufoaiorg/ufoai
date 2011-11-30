@@ -1,4 +1,4 @@
-#!python
+#! /usr/bin/env python
 #
 # Following code is distributed under the GNU General Public License version 2
 #
