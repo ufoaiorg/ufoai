@@ -1,4 +1,4 @@
-#!/usr/bin/python
+#! /usr/bin/env python
 
 #
 # @brief extract code structure about behaviour from .h and .c files

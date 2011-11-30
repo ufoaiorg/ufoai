@@ -1,4 +1,4 @@
-#!/usr/bin/python
+#! /usr/bin/env python
 
 # Compile src/po/*.po to base/i18n using command-line supplied "msgmerge" path
 # This is primarily for windows users. "msgmerge" is usually in the same place

@@ -1,4 +1,4 @@
-#!/usr/bin/python
+#! /usr/bin/env python
 
 #
 # @brief GUI to check UFOAI GUI. Only a viewer for the moment
