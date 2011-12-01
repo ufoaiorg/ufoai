@@ -736,7 +736,7 @@ window hud_mini extends hud
 			font		"f_verysmall"
 			color		"0 0 0 1"
 			string		*cvar:mn_name
-			pos			"111 251"
+			pos			"111 253"
 			size		"133 20"
 		}
 		string str_name
@@ -883,7 +883,7 @@ window hud_mini extends hud
 		}
 		image minihud_bt_help
 		{
-			tooltip		"_LMB:Show/RMB:Hide Keyinfo/General Help window"
+			tooltip		"_LMB:Show/RMB:Hide Keyinfo/General Help"
 			src			"minihud/bt_help"
 			mousefx		true
 			pos			"162 472"
@@ -902,7 +902,7 @@ window hud_mini extends hud
 
 		image minihud_bt_soldiers_off
 		{
-			tooltip		"_LMB:Show/RMB:Hide Soldier Panel"
+			tooltip		"_LMB:Show Soldier Panel"
 			src			"icons/off"
 			mousefx		true
 			pos			"102 490"
@@ -913,16 +913,18 @@ window hud_mini extends hud
 				if ( *node:root.right.minihud_bt_decoration_on@invis == false ) { *node:root.floor_deco@invis = false }
 				*node:root.right.minihud_bt_soldiers_on@invis = false
 			}
+
 			onRClick
 			{
 				*node:root.floor_deco@invis = true
 				*node:root.floor@invis = true
 				*node:root.right.minihud_bt_soldiers_on@invis = true
 			}
+
 		}
 		image minihud_bt_soldiers_on
 		{
-			tooltip		"_LMB:Show/RMB:Hide Soldier Panel"
+			tooltip		"_RMB:Hide Soldier Panel"
 			src			"icons/on"
 			mousefx		true
 			pos			"102 490"
@@ -943,7 +945,7 @@ window hud_mini extends hud
 
 		image minihud_bt_top_off
 		{
-			tooltip		"_LMB:Show/RMB:Hide Top Panel"
+			tooltip		"_LMB:Show Top Panel"
 			src			"icons/off"
 			mousefx		true
 			pos			"122 490"
@@ -963,7 +965,7 @@ window hud_mini extends hud
 		}
 		image minihud_bt_top_on
 		{
-			tooltip		"_LMB:Show/RMB:Hide Top Panel"
+			tooltip		"_RMB:Hide Top Panel"
 			src			"icons/on"
 			mousefx		true
 			pos			"122 490"
@@ -984,7 +986,7 @@ window hud_mini extends hud
 
 		image minihud_bt_levels_off
 		{
-			tooltip		"_LMB:Show/RMB:Hide Level Controls"
+			tooltip		"_LMB:Show Level Controls"
 			src			"icons/off"
 			mousefx		true
 			pos			"142 490"
@@ -1004,7 +1006,7 @@ window hud_mini extends hud
 		}
 		image minihud_bt_levels_on
 		{
-			tooltip		"_LMB:Show/RMB:Hide Level Controls"
+			tooltip		"_RMB:Hide Level Controls"
 			src			"icons/on"
 			mousefx		true
 			pos			"142 490"
@@ -1022,47 +1024,10 @@ window hud_mini extends hud
 				*node:root.right.minihud_bt_levels_on@invis = true
 			}
 		}
-/*
-		image minihud_bt_musiccontrol_off
-		{
-			tooltip		"_LMB:Show/RMB:Hide Music Controls"
-			src			"icons/off"
-			mousefx		true
-			pos			"162 490"
-			size		"16 16"
-			onClick
-			{
-				*node:root.bottomright@invis = false
-				*node:root.right.minihud_bt_levels_on@invis = false
-			}
-			onRClick
-			{
-				*node:root.bottomright@invis = true
-				*node:root.right.minihud_bt_levels_on@invis = true
-			}
-		}
-		image minihud_bt_musiccontrol_on
-		{
-			tooltip		"_LMB:Show/RMB:Hide Music Controls"
-			src			"icons/on"
-			mousefx		true
-			pos			"162 490"
-			size		"16 16"
-			onClick
-			{
-				*node:root.bottomright@invis = false
-				*node:root.right.minihud_bt_levels_on@invis = false
-			}
-			onRClick
-			{
-				*node:root.bottomright@invis = true
-				*node:root.right.minihud_bt_levels_on@invis = true
-			}
-		}
-*/
+
 		image minihud_bt_decoration_off
 		{
-			tooltip		"_LMB:Show/RMB:Hide decoration"
+			tooltip		"_LMB:Show Decoration"
 			src			"icons/off"
 			mousefx		true
 			pos			"202 490"
@@ -1086,7 +1051,7 @@ window hud_mini extends hud
 		}
 		image minihud_bt_decoration_on
 		{
-			tooltip		"_LMB:Show/RMB:Hide decoration"
+			tooltip		"_RMB:Hide Decoration"
 			src			"icons/on"
 			mousefx		true
 			pos			"202 490"
