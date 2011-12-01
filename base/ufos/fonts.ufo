@@ -9,40 +9,40 @@
 font f_verysmall_bold
 {
 	font	"_media/DejaVuSans.ttf"
-	size	11
+	size	16
 	style	TTF_STYLE_BOLD
 }
 
 font f_verysmall
 {
 	font	"_media/DejaVuSans.ttf"
-	size	11
+	size	16
 }
 
 font f_small_bold
 {
 	font	"_media/DejaVuSans.ttf"
-	size	14
+	size	18
 	style	TTF_STYLE_BOLD
 }
 
 font f_small
 {
 	font	"_media/DejaVuSans.ttf"
-	size	14
+	size	18
 }
 
 font f_normal_bold
 {
 	font	"_media/DejaVuSans.ttf"
-	size	18
+	size	20
 	style	TTF_STYLE_BOLD
 }
 
 font f_normal
 {
 	font	"_media/DejaVuSans.ttf"
-	size	18
+	size	20
 }
 
 font f_verybig_bold
@@ -61,7 +61,7 @@ font f_verybig
 font f_big
 {
 	font	"_media/DejaVuSans.ttf"
-	size	20
+	size	22
 }
 
 font f_menu
@@ -80,6 +80,6 @@ font f_menubig
 font f_menusmall
 {
 	font	"_media/DejaVuSans.ttf"
-	size	18
+	size	20
 	style	TTF_STYLE_BOLD
 }

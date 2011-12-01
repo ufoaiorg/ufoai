@@ -138,11 +138,11 @@ if __name__ == '__main__':
         base_copy(SRC_BASE, DEST_BASE, name)
 
     # few music
-    fewmusic = ["van_geoscape.ogg", "van_theme.ogg"]
-    for name in fewmusic:
-        name = os.path.join("music", name)
-        print "Copy \"%s\"" % os.path.join(SRC_BASE, name)
-        base_copy(SRC_BASE, DEST_BASE, name)
+    #fewmusic = ["van_geoscape.ogg", "van_theme.ogg"]
+    #for name in fewmusic:
+    #    name = os.path.join("music", name)
+    #    print "Copy \"%s\"" % os.path.join(SRC_BASE, name)
+    #    base_copy(SRC_BASE, DEST_BASE, name)
 
     fewmaps = ["dam.map", "lake_ice.map", "wilderness.map", "fighter_crash.map", "training_a.map"]
     for name in fewmaps:

@@ -42,6 +42,9 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 
 #define EXTRADATA(node) UI_EXTRADATA(node, abstractValueExtraData_t)
 
+#define TILE_SIZE 32
+#define IMG_SIZE 20
+
 static void UI_CheckBoxNodeDraw (uiNode_t* node)
 {
 	const float value = UI_GetReferenceFloat(node, EXTRADATA(node).value);
@@ -55,9 +58,9 @@ static void UI_CheckBoxNodeDraw (uiNode_t* node)
 
 	/* outer status */
 	if (node->disabled) {
-		texy = 96;
+		texy = TILE_SIZE*3;
 	} else if (node->state) {
-		texy = 32;
+		texy = TILE_SIZE;
 	} else {
 		texy = 0;
 	}
@@ -66,14 +69,14 @@ static void UI_CheckBoxNodeDraw (uiNode_t* node)
 	if (value == 0) {
 		texx = 0;
 	} else if (value > 0) {
-		texx = 32;
+		texx = TILE_SIZE;
 	} else { /* value < 0 */
-		texx = 64;
+		texx = TILE_SIZE*2;
 	}
 
 	UI_GetNodeAbsPos(node, pos);
 	UI_DrawNormImageByName(qfalse, pos[0], pos[1], node->size[0], node->size[1],
-		texx + node->size[0], texy + node->size[1], texx, texy, image);
+		texx + IMG_SIZE, texy + IMG_SIZE, texx, texy, image);
 }
 
 /**

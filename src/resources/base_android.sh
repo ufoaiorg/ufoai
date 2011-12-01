@@ -12,7 +12,6 @@ src/resources/shrink_textures.sh base_light base_light
 
 cd base_light
 cp -f ../base/android.cfg config.cfg
-cp -f ufos/android/* ufos
 zip -r -n .png:.jpg:.ogg:.ogm ../0base.pk3 *
 cd ..
 

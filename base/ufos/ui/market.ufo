@@ -5,17 +5,18 @@
 component panel cmpMarketItem
 {
 	{
-		size "425 24"
+		size "50 50"
 		onClick	{ cmd "mn_buysell <num> <lastdiff>; market_click <num>;" }
 //		onWheel		{ cmd "sync_market_scroll <lineselected> <viewpos>;market_scroll <viewpos>;" }
 	}
-	zone wz_buysell
-	{
-		pos			"302 0"
-		size		"120 24"
-		onWheelUp	{ cmd "mn_buy <node:parent@num>;" }
-		onWheelDown	{ cmd "mn_sell <node:parent@num>;" }
-	}
+	// This messes up item selection
+	//zone wz_buysell
+	//{
+	//	pos			"302 0"
+	//	size		"120 24"
+	//	onWheelUp	{ cmd "mn_buy <node:parent@num>;" }
+	//	onWheelDown	{ cmd "mn_sell <node:parent@num>;" }
+	//}
 	//spinner bt_buysell
 	//{
 	//	tooltip		"_Buy and sell item"
@@ -29,7 +30,7 @@ component panel cmpMarketItem
 		image		"ui/checkbox_blue"
 //		pos			"30 180"
 		pos			"0 0"
-		size		"22 18"
+		size		"50 50"
 		onChange	{ cmd "buy_autosell <node:parent@num>;" }
 	}
 
@@ -138,12 +139,17 @@ window market extends objectinfo
 	{
 		dataid		TEXT_MARKET_NAMES
 		color		"0 .78 0 1"
-		rows		"22"
-		lineheight	"25"
-		pos			"55 177"
-		size		"265 550"
+		rows		"11"
+		lineheight	"51"
+		pos			"45 177"
+		size		"265 565"
 		onChange	{ cmd "sync_market_scroll <lineselected> <viewpos>;market_click <lineselected>;" }
 		onWheel		{ cmd "sync_market_scroll <lineselected> <viewpos>;market_scroll <viewpos>;" }
+		onViewChange {
+			*node:root.market_scrollbar@fullsize = <fullsize>
+			*node:root.market_scrollbar@current = <viewpos>
+			*node:root.market_scrollbar@viewsize = <viewsize>
+		}
 	}
 
 	textlist market_storage
@@ -152,11 +158,16 @@ window market extends objectinfo
 		color		"0 .78 0 1"
 		contentalign	ALIGN_CR
 		pos			"310 177"
-		rows		"22"
-		size		"40 552"
-		lineheight	"25"
+		rows		"11"
+		size		"40 565"
+		lineheight	"51"
 		onChange	{ cmd "sync_market_scroll <lineselected> <viewpos>;market_click <lineselected>;" }
 		onWheel		{ cmd "sync_market_scroll <lineselected> <viewpos>;market_scroll <viewpos>;" }
+		onViewChange {
+			*node:root.market_scrollbar@fullsize = <fullsize>
+			*node:root.market_scrollbar@current = <viewpos>
+			*node:root.market_scrollbar@viewsize = <viewsize>
+		}
 	}
 
 	textlist market_market
@@ -165,11 +176,16 @@ window market extends objectinfo
 		color		"0 .78 0 1"
 		contentalign	ALIGN_CR
 		pos			"406 177"
-		rows		"22"
-		size		"40 550"
-		lineheight	"25"
+		rows		"11"
+		size		"40 565"
+		lineheight	"51"
 		onChange	{ cmd "sync_market_scroll <lineselected> <viewpos>;market_click <lineselected>;" }
 		onWheel		{ cmd "sync_market_scroll <lineselected> <viewpos>;market_scroll <viewpos>;" }
+		onViewChange {
+			*node:root.market_scrollbar@fullsize = <fullsize>
+			*node:root.market_scrollbar@current = <viewpos>
+			*node:root.market_scrollbar@viewsize = <viewsize>
+		}
 	}
 
 	textlist market_prices
@@ -177,12 +193,50 @@ window market extends objectinfo
 		dataid		TEXT_MARKET_PRICES
 		color		"0 .78 0 1"
 		contentalign	ALIGN_CR
-		rows		"22"
-		size		"80 550"
-		lineheight	"25"
-		pos			"462 177"
+		rows		"11"
+		size		"80 565"
+		lineheight	"51"
+		pos			"444 177"
 		onChange	{ cmd "sync_market_scroll <lineselected> <viewpos>;market_click <lineselected>;" }
 		onWheel		{ cmd "sync_market_scroll <lineselected> <viewpos>;market_scroll <viewpos>;" }
+		onViewChange {
+			*node:root.market_scrollbar@fullsize = <fullsize>
+			*node:root.market_scrollbar@current = <viewpos>
+			*node:root.market_scrollbar@viewsize = <viewsize>
+		}
+	}
+
+	vscrollbar market_scrollbar {
+		image		"ui/scrollbar_v_green"
+		pos			"530 175"
+		height		"565"
+		current		0
+		viewsize	13
+		fullsize	13
+		hidewhenunused true
+		onChange	{ cmd "sync_market_scroll <node:root.market@lineselected> <current>;" }
+	}
+
+	image bt_buy
+	{
+		src		"buttons/blue_left_market"
+		pos			"360 177"
+		size		"30 563"
+		mousefx		true
+		onClick		{ cmd "mn_buy <node:root.market@lineselected>;" }
+		onMouseEnter { *node:this@image = "buttons/blue_left_market_hover" }
+		onMouseLeave { *node:this@image = "buttons/blue_left_market" }
+	}
+
+	image bt_sell
+	{
+		src		"buttons/blue_right_market"
+		pos			"390 177"
+		size		"30 563"
+		mousefx		true
+		onClick		{ cmd "mn_sell <node:root.market@lineselected>;" }
+		onMouseEnter { *node:this@image = "buttons/blue_right_market_hover" }
+		onMouseLeave { *node:this@image = "buttons/blue_right_market" }
 	}
 
 	/**
@@ -209,94 +263,6 @@ window market extends objectinfo
 	 * @sa (confunc) buy_updateitem
 	 * @sa BS_UpdateItem
 	 */
-	cmpMarketItem item0
-	{
-		pos			"30 180"
-	}
-	cmpMarketItem item1
-	{
-		pos			"30 205"
-	}
-	cmpMarketItem item2
-	{
-		pos			"30 230"
-	}
-	cmpMarketItem item3
-	{
-		pos			"30 255"
-	}
-	cmpMarketItem item4
-	{
-		pos			"30 280"
-	}
-	cmpMarketItem item5
-	{
-		pos			"30 305"
-	}
-	cmpMarketItem item6
-	{
-		pos			"30 330"
-	}
-	cmpMarketItem item7
-	{
-		pos			"30 355"
-	}
-	cmpMarketItem item8
-	{
-		pos			"30 380"
-	}
-	cmpMarketItem item9
-	{
-		pos			"30 405"
-	}
-	cmpMarketItem item10
-	{
-		pos			"30 430"
-	}
-	cmpMarketItem item11
-	{
-		pos			"30 455"
-	}
-	cmpMarketItem item12
-	{
-		pos			"30 480"
-	}
-	cmpMarketItem item13
-	{
-		pos			"30 505"
-	}
-	cmpMarketItem item14
-	{
-		pos			"30 530"
-	}
-	cmpMarketItem item15
-	{
-		pos			"30 555"
-	}
-	cmpMarketItem item16
-	{
-		pos			"30 580"
-	}
-	cmpMarketItem item17
-	{
-		pos			"30 605"
-	}
-	cmpMarketItem item18
-	{
-		pos			"30 630"
-	}
-	cmpMarketItem item19
-	{
-		pos			"30 655"
-	}
-	cmpMarketItem item20
-	{
-		pos			"30 680"
-	}
-	cmpMarketItem item21
-	{
-		pos			"30 705"
-	}
 
 	panel basedescription {
 		{
@@ -327,44 +293,6 @@ window market extends objectinfo
 			font		"f_small"
 		}
 	}
-
-	image bt_buy1
-	{
-		src		"buttons/blue_left_market"
-		pos			"365 180"
-		size		"25 280"
-		mousefx		true
-		onClick		{ cmd "mn_buy <node:root.market@lineselected>;" }
-	}
-
-	image bt_sell1
-	{
-		src		"buttons/blue_right_market"
-		pos			"390 180"
-		size		"25 280"
-		mousefx		true
-		onClick		{ cmd "mn_sell <node:root.market@lineselected>;" }
-	}
-
-	// Split into two equal parts, so texture height won't be bigger than 256
-	image bt_buy2
-	{
-		src		"buttons/blue_left_market"
-		pos			"365 460"
-		size		"25 280"
-		mousefx		true
-		onClick		{ cmd "mn_buy <node:root.market@lineselected>;" }
-	}
-
-	image bt_sell2
-	{
-		src		"buttons/blue_right_market"
-		pos			"390 460"
-		size		"25 280"
-		mousefx		true
-		onClick		{ cmd "mn_sell <node:root.market@lineselected>;" }
-	}
-
 
 	confunc listen_openpedia {
 		cmd "market_click <node:root.market@lineselected>;"
@@ -397,18 +325,6 @@ window market extends objectinfo
 			pos			"22 35"
 			size		"365 20"
 			contentalign	ALIGN_UC
-		}
-
-		custombutton ufopedia_link
-		{
-			icon		"icons/bordered_magnifying_glass"
-			tooltip		"_UFOpaedia"
-			pos			"370 27"
-			size		"16 16"
-			onClick		{
-				cmd "ui_addlistener ufopedia@onWindowClosed <path:root>.listen_openpedia;"
-				cmd "market_openpedia;"
-			}
 		}
 
 		item itemmodel
@@ -451,6 +367,20 @@ window market extends objectinfo
 			}
 		}
 
+		custombutton ufopedia_link
+		{
+			image		"banks/pack1"
+			tooltip		"_UFOpaedia"
+			pos			"336 15"
+			size		"60 60"
+			texl		"1 46"
+			texh		"17 62"
+			onClick		{
+				cmd "ui_addlistener ufopedia@onWindowClosed <path:root>.listen_openpedia;"
+				cmd "market_openpedia;"
+			}
+		}
+
 		// ======================
 		// useable weapon or ammo
 		// ======================
@@ -467,7 +397,7 @@ window market extends objectinfo
 		{
 			pos		"142 390"
 			icon	"icons/prev"
-			size	"16 16"
+			size	"32 32"
 			onClick	{ cmd "mn_decreaseitem;" }
 		}
 
@@ -484,7 +414,7 @@ window market extends objectinfo
 		{
 			pos		"356 390"
 			icon	"icons/next"
-			size	"16 16"
+			size	"32 32"
 			onClick	{ cmd "mn_increaseitem;" }
 		}
 
@@ -505,7 +435,7 @@ window market extends objectinfo
 			tooltip "_Previous firemode"
 			pos		"142 414"
 			icon	"icons/prev"
-			size	"16 16"
+			size	"32 32"
 			onClick	{ cmd "mn_decreasefiremode;" }
 		}
 
@@ -523,7 +453,7 @@ window market extends objectinfo
 			tooltip "_Next firemode"
 			pos		"356 414"
 			icon	"icons/next"
-			size	"16 16"
+			size	"32 32"
 			onClick	{ cmd "mn_increasefiremode;" }
 		}
 
@@ -575,9 +505,9 @@ window market extends objectinfo
 	 * @param[in] <4> max value allowed
 	 */
 	confunc buy_updateitem {
-		*node:root.item<1>.bt_buysell@current = <2>
-		*node:root.item<1>.bt_buysell@min = <3>
-		*node:root.item<1>.bt_buysell@max = <4>
+		//*node:root.item<1>.bt_buysell@current = <2>
+		//*node:root.item<1>.bt_buysell@min = <3>
+		//*node:root.item<1>.bt_buysell@max = <4>
 	}
 
 	/**
@@ -585,14 +515,14 @@ window market extends objectinfo
 	 * @param[in] <1> row of the item
 	 */
 	confunc buy_hide {
-		*node:root.item<1>.bt_buysell@invis = true
+		//*node:root.item<1>.bt_buysell@invis = true
 	}
 	/**
 	 * @brief shows the buy/sell spinner control
 	 * @param[in] <1> row of the item
 	 */
 	confunc buy_show {
-		*node:root.item<1>.bt_buysell@invis = false
+		//*node:root.item<1>.bt_buysell@invis = false
 	}
 
 	// ==================

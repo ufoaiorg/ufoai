@@ -37,6 +37,7 @@ typedef struct customButtonExtraData_s {
 	buttonExtraData_t super;
 	struct uiSprite_s *background;
 	vec2_t texl;				/**< upper left texture coordinates */
+	vec2_t texh;				/**< lower-right texture size, if zero - equals to the UI node size plus texl. */
 } customButtonExtraData_t;
 
 #endif

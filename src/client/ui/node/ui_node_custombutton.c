@@ -90,9 +90,17 @@ static void UI_CustomButtonNodeDraw (uiNode_t *node)
 	image = UI_GetReferenceString(node, node->image);
 	if (image) {
 		const int texX = rint(EXTRADATA(node).texl[0]);
+		int texSize[2];
+		if( EXTRADATA(node).texh[0] == 0 && EXTRADATA(node).texh[1] == 0 ) {
+			texSize[0] = node->size[0];
+			texSize[1] = node->size[1];
+		} else {
+			texSize[0] = EXTRADATA(node).texh[0] - EXTRADATA(node).texl[0];
+			texSize[1] = EXTRADATA(node).texh[1] - EXTRADATA(node).texl[1];
+		}
 		texY += EXTRADATA(node).texl[1];
 		UI_DrawNormImageByName(qfalse, pos[0], pos[1], node->size[0], node->size[1],
-			texX + node->size[0], texY + node->size[1], texX, texY, image);
+			texX + texSize[0], texY + texSize[1], texX, texY, image);
 	}
 
 	if (EXTRADATA(node).background) {
@@ -117,6 +125,8 @@ static void UI_CustomButtonNodeDraw (uiNode_t *node)
 static const value_t properties[] = {
 	/* Skin position. Define the top-left position of the skin we will used from the image. Y should not be bigger than 64. To compute the high corner we use the node size. */
 	{"texl", V_POS, UI_EXTRADATA_OFFSETOF(customButtonExtraData_t, texl), MEMBER_SIZEOF(customButtonExtraData_t, texl)},
+	/* Define the lower-right pos of the skin. If zero - equals to the UI node size plus texl. This should really be a size, but it's more consistent with outher sources this way. */
+	{"texh", V_POS, UI_EXTRADATA_OFFSETOF(customButtonExtraData_t, texh), MEMBER_SIZEOF(customButtonExtraData_t, texh)},
 	/* Sprite used to display the background */
 	{"background", V_UI_SPRITEREF, UI_EXTRADATA_OFFSETOF(EXTRADATA_TYPE, background), MEMBER_SIZEOF(EXTRADATA_TYPE, background)},
 
