@@ -1,6 +1,6 @@
-// ==================
+// =====================
 // ALTERNATIVE HUD MAIN
-// ==================
+// =====================
 
 window hud_alt extends hud
 {
@@ -482,7 +482,7 @@ window hud_alt extends hud
 	}
 
 	// ==================
-	// right
+	// right panel
 	// ==================
 
 	panel right {
@@ -500,6 +500,20 @@ window hud_alt extends hud
 			excluderect	{ pos	"0 0"	size	"96 512" }
 			excluderect	{ pos	"0 473"	size	"192 39" }
 		}
+
+		// ==================
+		// rank
+		// ==================
+
+		image	rank_img {
+			pos "209 16"
+			size "32 32"
+			src *cvar:mn_chrrank_img
+		}
+
+		// ==================
+		// models
+		// ==================
 
 		model right_actor
 		{
@@ -631,9 +645,10 @@ window hud_alt extends hud
 
 		string str_name
 		{
+			font		"f_verysmall"
 			string		*cvar:mn_name
-			pos			"115 20"
-			size		"125 20"
+			pos			"110 21"
+			size		"133 20"
 		}
 
 		string str_hp
