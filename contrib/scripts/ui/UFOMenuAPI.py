@@ -1,4 +1,4 @@
-#!/usr/bin/python
+#! /usr/bin/env python
 
 #
 # @brief functions to check and update menu_*.ufo files

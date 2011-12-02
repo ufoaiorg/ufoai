@@ -1,4 +1,4 @@
-#!/usr/bin/python
+#! /usr/bin/env python
 '''
   This code is distributed under the GPLv2 licence as a contribution to the Ufo Alien Invasion project.
 

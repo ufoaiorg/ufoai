@@ -1,4 +1,4 @@
-#!/usr/bin/python
+#! /usr/bin/env python
 
 # If you have a "make" program installed, you're likely to prefer the
 # Makefile to this script, which cannot run jobs in parallel.
