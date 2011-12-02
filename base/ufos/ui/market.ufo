@@ -2,40 +2,6 @@
 // MARKET MENU
 // ==================
 
-component panel cmpMarketItem
-{
-	{
-		size "50 50"
-		onClick	{ cmd "mn_buysell <num> <lastdiff>; market_click <num>;" }
-//		onWheel		{ cmd "sync_market_scroll <lineselected> <viewpos>;market_scroll <viewpos>;" }
-	}
-	// This messes up item selection
-	//zone wz_buysell
-	//{
-	//	pos			"302 0"
-	//	size		"120 24"
-	//	onWheelUp	{ cmd "mn_buy <node:parent@num>;" }
-	//	onWheelDown	{ cmd "mn_sell <node:parent@num>;" }
-	//}
-	//spinner bt_buysell
-	//{
-	//	tooltip		"_Buy and sell item"
-	//	image		"ui/spinner_blue"
-	//	pos			"346 0"
-	//	onChange	{ cmd "mn_buysell <node:parent@num> <lastdiff>; market_click <node:parent@num>;" }
-	//}
-	checkbox bt_autosell
-	{
-		current		0
-		image		"ui/checkbox_blue"
-//		pos			"30 180"
-		pos			"0 0"
-		size		"50 50"
-		onChange	{ cmd "buy_autosell <node:parent@num>;" }
-	}
-
-}
-
 window market extends objectinfo
 {
 	/** @todo Remove me */
@@ -120,11 +86,11 @@ window market extends objectinfo
 		size		"530 568"
 		color1		"0 0.08 0 1"
 		color2		"0 0.16 0 1"
-		lineheight	25
+		lineheight	51
 	}
 
 	panel verticalline {
-		pos		"451 175"
+		pos		"448 175"
 		size	"4 565"
 		bgcolor	"0.03 0.42 0.03 1"
 	}
@@ -157,7 +123,7 @@ window market extends objectinfo
 		dataid		TEXT_MARKET_STORAGE
 		color		"0 .78 0 1"
 		contentalign	ALIGN_CR
-		pos			"310 177"
+		pos			"300 177"
 		rows		"11"
 		size		"40 565"
 		lineheight	"51"
@@ -217,10 +183,14 @@ window market extends objectinfo
 		onChange	{ cmd "sync_market_scroll <node:root.market@lineselected> <current>;" }
 	}
 
+	// ==================
+	// buy/sell buttons
+	// ==================
+
 	image bt_buy
 	{
 		src		"buttons/blue_left_market"
-		pos			"360 177"
+		pos			"350 177"
 		size		"30 563"
 		mousefx		true
 		onClick		{ cmd "mn_buy <node:root.market@lineselected>;" }
@@ -231,7 +201,7 @@ window market extends objectinfo
 	image bt_sell
 	{
 		src		"buttons/blue_right_market"
-		pos			"390 177"
+		pos			"380 177"
 		size		"30 563"
 		mousefx		true
 		onClick		{ cmd "mn_sell <node:root.market@lineselected>;" }
@@ -253,10 +223,6 @@ window market extends objectinfo
 		*node:root.market_market@viewpos = <2>
 		*node:root.market_prices@viewpos = <2>
 	}
-
-	// ==================
-	// buy/sell/autosell buttons
-	// ==================
 
 	/**
 	 * @note correct current and max values of spinners will be set via confunc
@@ -381,6 +347,16 @@ window market extends objectinfo
 			}
 		}
 
+		checkbox bt_autosell
+		{
+			current		0
+			tooltip		"_Autosell"
+			image		"ui/checkbox_blue"
+			pos			"12 15"
+			size		"60 60"
+			onChange	{ cmd "buy_autosell <node:root.market@lineselected>;market_click <node:root.market@lineselected>;" }
+		}
+
 		// ======================
 		// useable weapon or ammo
 		// ======================
@@ -397,7 +373,7 @@ window market extends objectinfo
 		{
 			pos		"142 390"
 			icon	"icons/prev"
-			size	"32 32"
+			size	"16 16"
 			onClick	{ cmd "mn_decreaseitem;" }
 		}
 
@@ -414,7 +390,7 @@ window market extends objectinfo
 		{
 			pos		"356 390"
 			icon	"icons/next"
-			size	"32 32"
+			size	"16 16"
 			onClick	{ cmd "mn_increaseitem;" }
 		}
 
@@ -435,7 +411,7 @@ window market extends objectinfo
 			tooltip "_Previous firemode"
 			pos		"142 414"
 			icon	"icons/prev"
-			size	"32 32"
+			size	"16 16"
 			onClick	{ cmd "mn_decreasefiremode;" }
 		}
 
@@ -453,7 +429,7 @@ window market extends objectinfo
 			tooltip "_Next firemode"
 			pos		"356 414"
 			icon	"icons/next"
-			size	"32 32"
+			size	"16 16"
 			onClick	{ cmd "mn_increasefiremode;" }
 		}
 
@@ -468,25 +444,25 @@ window market extends objectinfo
 	 * @param[in] <1> row of item
 	 */
 	confunc buy_autoselle {
-		*node:root.item<1>.bt_autosell@invis = false
-		*node:root.item<1>.bt_autosell@current = 1
-		*node:root.item<1>.bt_autosell@tooltip = "_Item autosell enabled"
+		*node:root.itemdescription.bt_autosell@invis = false
+		*node:root.itemdescription.bt_autosell@current = 1
+		*node:root.itemdescription.bt_autosell@tooltip = "_Item autosell enabled"
 	}
 	/**
 	 * @brief unchecks an autosell checkbox and makes it visible
 	 * @param[in] <1> row of item
 	 */
 	confunc buy_autoselld {
-		*node:root.item<1>.bt_autosell@invis = false
-		*node:root.item<1>.bt_autosell@current = 0
-		*node:root.item<1>.bt_autosell@tooltip = "_Item autosell disabled"
+		*node:root.itemdescription.bt_autosell@invis = false
+		*node:root.itemdescription.bt_autosell@current = 0
+		*node:root.itemdescription.bt_autosell@tooltip = "_Item autosell disabled"
 	}
 	/**
 	 * @brief makes an autosell checkbox invisible
 	 * @param[in] <1> row of item
 	 */
 	confunc buy_autoselli {
-		*node:root.item<1>.bt_autosell@invis = true
+		*node:root.itemdescription.bt_autosell@invis = true
 	}
 
 	/**
@@ -532,11 +508,5 @@ window market extends objectinfo
 	func onWindowOpened
 	{
 		cmd "buy_type *cvar:mn_itemtype;"
-		*cvar:i = 0
-		while ( *cvar:i < 22 ) {
-			*node:root.item<cvar:i>@num = <cvar:i>
-			*cvar:i = ( *cvar:i + 1 )
-		}
-		delete *cvar:i
 	}
 }

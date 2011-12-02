@@ -196,11 +196,6 @@ static void BS_MarketScroll_f (void)
 	assert(buyList.scroll >= 0);
 	assert(!((buyList.length > MAX_MARKET_MENU_ENTRIES && buyList.scroll >= buyList.length - MAX_MARKET_MENU_ENTRIES)));
 
-	/* now update the menu pics */
-	for (i = 0; i < MAX_MARKET_MENU_ENTRIES; i++) {
-		UI_ExecuteConfunc("buy_autoselli %i", i);
-	}
-
 	/* get item list */
 	for (i = buyList.scroll; i < buyList.length - buyList.scroll; i++) {
 		const objDef_t *od = BS_GetObjectDefition(&buyList.l[i]);
@@ -210,18 +205,8 @@ static void BS_MarketScroll_f (void)
 
 		/* Check whether the item matches the proper filter, storage in current base and market. */
 		if (od && (B_ItemInBase(od, base) > 0 || ccs.eMarket.numItems[od->idx]) && INV_ItemMatchesFilter(od, buyCat)) {
-			const technology_t *tech = RS_GetTechForItem(od);
-
 			UI_ExecuteConfunc("buy_show %i", i - buyList.scroll);
 			BS_UpdateItem(base, i - buyList.scroll);
-
-			/* autosell setting */
-			if (!RS_IsResearched_ptr(tech))
-				continue;
-			if (ccs.eMarket.autosell[od->idx])
-				UI_ExecuteConfunc("buy_autoselle %i", i - buyList.scroll);
-			else
-				UI_ExecuteConfunc("buy_autoselld %i", i - buyList.scroll);
 		}
 	}
 }
@@ -274,6 +259,22 @@ static void BS_MarketClick_f (void)
 
 	/* update selected element */
 	UI_ExecuteConfunc("buy_selectitem %i", num);
+
+	/* autosell setting */
+	UI_ExecuteConfunc("buy_autoselli");
+	if(buyCat != FILTER_AIRCRAFT && buyCat != FILTER_UGVITEM) {
+		const objDef_t *od = BS_GetObjectDefition(&buyList.l[num]);
+		const technology_t *tech = RS_GetTechForItem(od);
+		const base_t *base = B_GetCurrentSelectedBase();
+
+		if((B_ItemInBase(od, base) > 0 || ccs.eMarket.numItems[od->idx]) && INV_ItemMatchesFilter(od, buyCat) && RS_IsResearched_ptr(tech)) {
+			if (ccs.eMarket.autosell[od->idx]) {
+				UI_ExecuteConfunc("buy_autoselle");
+			} else {
+				UI_ExecuteConfunc("buy_autoselld");
+			}
+		}
+	}
 }
 
 /**
@@ -329,11 +330,6 @@ static void BS_BuyType (const base_t *base)
 	bsMarketPrices = NULL;
 	UI_ResetData(TEXT_ITEMDESCRIPTION);
 
-	/* hide autosell checkboxes by default */
-	for (i = 0; i < MAX_MARKET_MENU_ENTRIES; i++) {
-		UI_ExecuteConfunc("buy_autoselli %i", i);
-	}
-
 	switch (buyCat) {
 	case FILTER_AIRCRAFT:	/* Aircraft */
 		{
@@ -371,15 +367,7 @@ static void BS_BuyType (const base_t *base)
 			if ((B_ItemInBase(od, base) || ccs.eMarket.numItems[i])
 			 && INV_ItemMatchesFilter(od, FILTER_CRAFTITEM)) {
 				if (j >= buyList.scroll && j < MAX_MARKET_MENU_ENTRIES) {
-					const technology_t *tech = RS_GetTechForItem(od);
-
 					UI_ExecuteConfunc("buy_show %i", j - buyList.scroll);
-					if (RS_IsResearched_ptr(tech)) {
-						if (ccs.eMarket.autosell[i])
-							UI_ExecuteConfunc("buy_autoselle %i", j - buyList.scroll);
-						else
-							UI_ExecuteConfunc("buy_autoselld %i", j - buyList.scroll);
-					}
 				}
 				BS_AddToList(od->name, B_ItemInBase(od, base), ccs.eMarket.numItems[i], BS_GetItemBuyingPrice(od));
 				if (j >= MAX_BUYLIST)
@@ -437,17 +425,8 @@ static void BS_BuyType (const base_t *base)
 			/* Check whether the item matches the proper filter, storage in current base and market. */
 			if (INV_ItemMatchesFilter(od, FILTER_UGVITEM) && (B_ItemInBase(od, base) || ccs.eMarket.numItems[i])) {
 				BS_AddToList(od->name, B_ItemInBase(od, base), ccs.eMarket.numItems[i], BS_GetItemBuyingPrice(od));
-				/* Set state of Autosell button. */
 				if (j >= buyList.scroll && j < MAX_MARKET_MENU_ENTRIES) {
-					const technology_t *tech = RS_GetTechForItem(od);
-
 					UI_ExecuteConfunc("buy_show %i", j - buyList.scroll);
-					if (RS_IsResearched_ptr(tech)) {
-						if (ccs.eMarket.autosell[i])
-							UI_ExecuteConfunc("buy_autoselle %i", j - buyList.scroll);
-						else
-							UI_ExecuteConfunc("buy_autoselld %i", j - buyList.scroll);
-					}
 				}
 
 				if (j >= MAX_BUYLIST)
@@ -471,17 +450,8 @@ static void BS_BuyType (const base_t *base)
 				/* Check whether the item matches the proper filter, storage in current base and market. */
 				if ((B_ItemInBase(od, base) || ccs.eMarket.numItems[i]) && INV_ItemMatchesFilter(od, buyCat)) {
 					BS_AddToList(od->name, B_ItemInBase(od, base), ccs.eMarket.numItems[i], BS_GetItemBuyingPrice(od));
-					/* Set state of Autosell button. */
 					if (j >= buyList.scroll && j < MAX_MARKET_MENU_ENTRIES) {
-						const technology_t *tech = RS_GetTechForItem(od);
-
 						UI_ExecuteConfunc("buy_show %i", j - buyList.scroll);
-						if (RS_IsResearched_ptr(tech)) {
-							if (ccs.eMarket.autosell[i])
-								UI_ExecuteConfunc("buy_autoselle %i", j - buyList.scroll);
-							else
-								UI_ExecuteConfunc("buy_autoselld %i", j - buyList.scroll);
-						}
 					}
 
 					if (j >= MAX_BUYLIST)
@@ -908,27 +878,24 @@ static void BS_Autosell_f (void)
 	}
 
 	num = atoi(Cmd_Argv(1));
-	Com_DPrintf(DEBUG_CLIENT, "BS_Autosell_f: listnumber %i\n", num);
+	Com_Printf("BS_Autosell_f: listnumber %i\n", num);
 	if (num < 0 || num >= buyList.length)
 		return;
 
-	item = BS_GetObjectDefition(&buyList.l[num + buyList.scroll]);
+	item = BS_GetObjectDefition(&buyList.l[num]);
 	assert(item);
 
 	if (ccs.eMarket.autosell[item->idx]) {
 		ccs.eMarket.autosell[item->idx] = qfalse;
-		Com_DPrintf(DEBUG_CLIENT, "item name: %s, autosell false\n", item->name);
+		Com_Printf("item name: %s, autosell false\n", item->name);
 	} else {
 		const technology_t *tech = RS_GetTechForItem(item);
 		/* Don't allow to enable autosell for items not researched. */
 		if (!RS_IsResearched_ptr(tech))
 			return;
 		ccs.eMarket.autosell[item->idx] = qtrue;
-		Com_DPrintf(DEBUG_CLIENT, "item name: %s, autosell true\n", item->name);
+		Com_Printf("item name: %s, autosell true\n", item->name);
 	}
-
-	/* Reinit the menu. */
-	BS_BuyType(base);
 }
 
 

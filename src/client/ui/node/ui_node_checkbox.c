@@ -43,7 +43,8 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #define EXTRADATA(node) UI_EXTRADATA(node, abstractValueExtraData_t)
 
 #define TILE_SIZE 32
-#define IMG_SIZE 20
+#define IMG_SIZE_W 24
+#define IMG_SIZE_H 20
 
 static void UI_CheckBoxNodeDraw (uiNode_t* node)
 {
@@ -76,7 +77,7 @@ static void UI_CheckBoxNodeDraw (uiNode_t* node)
 
 	UI_GetNodeAbsPos(node, pos);
 	UI_DrawNormImageByName(qfalse, pos[0], pos[1], node->size[0], node->size[1],
-		texx + IMG_SIZE, texy + IMG_SIZE, texx, texy, image);
+		texx + IMG_SIZE_W, texy + IMG_SIZE_H, texx, texy, image);
 }
 
 /**
