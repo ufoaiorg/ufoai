@@ -8,29 +8,51 @@
 		anim 2 10.0
 	}
 }
-
 {
 	material tex_nature/rock005
 	hardness 0.2
 	specular 0.2
 	bump 2.0
 	{
-		texture tex_nature/rock006
-		terrain 120 192
+		texture tex_nature/rock004
+		terrain 0 24
+		lightmap
+	}
+	{
+		texture tex_nature/rock005
+		terrain 48 64
 		lightmap
 	}
 }
-
+{
+	material tex_nature/rock005
+	hardness 0.2
+	specular 0.2
+	{
+		texture tex_nature/rockyground01
+		dirtmap 0.8
+		lightmap
+	}
+}
 {
 	material tex_nature/rock006
 	hardness 0.2
 	specular 0.2
+	{
+		texture tex_nature/rockyground01
+		dirtmap 1.0
+		lightmap
+	}
 }
-
 {
 	material tex_nature/rock007
 	hardness 0.2
 	specular 0.2
+	{
+		texture tex_nature/rockyground01
+		dirtmap 1.0
+		lightmap
+	}
 }
 
 {
