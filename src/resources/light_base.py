@@ -66,6 +66,7 @@ def base_copy(src_base, dest_base, name, ignore_prefix=set([])):
         shutil.copy(src, dest)
 
 # TODO remove it from global
+global needTextures
 needTextures = set([])
 
 def base_map_copy(src, dest, name):
@@ -118,7 +119,6 @@ def base_map_copy(src, dest, name):
     sys.stderr.write("File format \"%s\" format unknown. Copy aborded.\n" % src)
 
 if __name__ == '__main__':
-    global needTextures
     print "Delete \"%s\"" % DEST_BASE
     if os.path.exists(DEST_BASE):
         shutil.rmtree(DEST_BASE)

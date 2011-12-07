@@ -1058,20 +1058,12 @@ static qboolean R_InitExtensions (void)
 	Com_Printf("max supported vertex texture units: %i\n", r_config.maxVertexTextureImageUnits);
 
 	glGetIntegerv(GL_MAX_LIGHTS, &r_config.maxLights);
-#ifdef ANDROID
-	if(r_config.maxLights < 8)
-		r_config.maxLights = 8; /* GLES spec defines minimum 8 lights */
-#endif
 	Com_Printf("max supported lights: %i\n", r_config.maxLights);
 
 	r_dynamic_lights = Cvar_Get("r_dynamic_lights", "1", CVAR_ARCHIVE | CVAR_R_PROGRAMS, "Sets max number of GL lightsources to use in shaders");
 	Cvar_SetCheckFunction("r_dynamic_lights", R_CvarCheckDynamicLights);
 
 	glGetIntegerv(GL_MAX_TEXTURE_UNITS, &r_config.maxTextureUnits);
-#ifdef ANDROID
-	if(r_config.maxTextureUnits == 0)
-		r_config.maxTextureUnits = 2; /* GLES spec defines 1, but oh well */
-#endif
 	Com_Printf("max texture units: %i\n", r_config.maxTextureUnits);
 	if (r_config.maxTextureUnits < 2)
 		Com_Error(ERR_FATAL, "You need at least 2 texture units to run "GAME_TITLE);

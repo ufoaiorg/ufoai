@@ -285,7 +285,7 @@ const char *Com_EParse (const char **text, const char *errhead, const char *erri
 	if (updateProgress) {
 		progressCurrent ++;
 		if (progressCurrent % 2000 == 0)
-			SCR_DrawLoadingScreen(qfalse, min(progressCurrent * 30 / progressTotal, 30));
+			SCR_DrawLoadingScreen(qfalse, min(progressCurrent * 10 / progressTotal, 10));
 	}
 
 	token = Com_Parse(text);
