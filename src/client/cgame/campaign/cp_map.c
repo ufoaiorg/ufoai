@@ -1126,7 +1126,7 @@ static void MAP_GetGeoscapeAngle (float *vector)
 	base_t *base;
 	int numBases = B_GetCount();
 
-	/* If the value of maxEventIdx is too big or to low, restart from begining */
+	/* If the value of maxEventIdx is too big or to low, restart from beginning */
 	maxEventIdx = numMissions + numBases + INS_GetCount() - 1;
 	base = NULL;
 	while ((base = B_GetNext(base)) != NULL) {
@@ -1156,18 +1156,17 @@ static void MAP_GetGeoscapeAngle (float *vector)
 	if (centerOnEventIdx < numMissions) {
 		mission_t *mission = NULL;
 		MIS_Foreach(mission) {
-			if (centerOnEventIdx != counter - 1)
-				break;
-			if (mission->stage != STAGE_NOT_ACTIVE && mission->stage != STAGE_OVER && mission->onGeoscape)
-				counter++;
+			if (!mission->onGeoscape)
+				continue;
+			if (counter == centerOnEventIdx) {
+				MAP_ConvertObjectPositionToGeoscapePosition(vector, mission->pos);
+				MAP_SelectMission(mission);
+				return;
+			}
+			counter++;
 		}
-		assert(mission);
-
-		MAP_ConvertObjectPositionToGeoscapePosition(vector, mission->pos);
-		MAP_SelectMission(mission);
-		return;
 	}
-	counter += numMissions;
+	counter = numMissions;
 
 	/* Cycle through bases */
 	if (centerOnEventIdx < numBases + counter) {
