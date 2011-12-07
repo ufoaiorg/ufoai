@@ -26,6 +26,7 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #include "r_error.h"
 #include "r_geoscape.h"
 #include "../../shared/images.h"
+#include "../cl_screen.h"
 
 #define MAX_IMAGEHASH 256
 static image_t *imageHash[MAX_IMAGEHASH];
@@ -294,9 +295,6 @@ void R_UploadTexture (unsigned *data, int width, int height, image_t* image)
 	byte *scan;
 	const qboolean mipmap = (image->type != it_pic && image->type != it_worldrelated && image->type != it_chars);
 	const qboolean clamp = R_ImageIsClamp(image);
-#ifdef GL_VERSION_ES_CM_1_0
-	samples = GL_RGBA;
-#endif
 
 	/* scan the texture for any non-255 alpha */
 	c = width * height;
@@ -307,6 +305,9 @@ void R_UploadTexture (unsigned *data, int width, int height, image_t* image)
 			break;
 		}
 	}
+#ifdef GL_VERSION_ES_CM_1_0
+	samples = GL_RGBA;
+#endif
 
 	R_GetScaledTextureSize(width, height, &scaledWidth, &scaledHeight);
 
@@ -768,6 +769,46 @@ void R_ShutdownImages (void)
 	OBJZERO(imageHash);
 }
 
+static void R_ReloadImageData (image_t *image)
+{
+	SDL_Surface *surf;
+	if (image == r_noTexture || !image || !image->texnum)
+		return;
+
+	surf = Img_LoadImage(image->name);
+	if (surf) {
+		glGenTextures(1, &image->texnum);
+		R_BindTexture(image->texnum);
+		glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR);
+		glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
+		R_UploadTexture((unsigned *)surf->pixels, surf->w, surf->h, image);
+		SDL_FreeSurface(surf);
+	}
+}
+
+void R_ReloadImages (void)
+{
+	int i;
+	image_t *image;
+
+	R_CheckError();
+	glEnable(GL_TEXTURE_2D);
+	/*
+	glTexEnvf(GL_TEXTURE_ENV, GL_TEXTURE_ENV_MODE, GL_MODULATE);
+	glEnable(GL_BLEND);
+	glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
+	*/
+	for (i = 0, image = r_images; i < r_numImages; i++, image++) {
+		if (i % 5 == 0) {
+			SCR_DrawLoadingScreen(qfalse, i * 100 / r_numImages);
+		}
+		R_ReloadImageData(image);
+		R_ReloadImageData(image->normalmap);
+		R_ReloadImageData(image->glowmap);
+		R_ReloadImageData(image->specularmap);
+		R_ReloadImageData(image->roughnessmap);
+	}
+}
 
 typedef struct {
 	const char *name;

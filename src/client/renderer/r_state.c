@@ -882,6 +882,7 @@ void R_SetDefaultState (void)
 	glEnableClientState(GL_VERTEX_ARRAY);
 	R_BindDefaultArray(GL_VERTEX_ARRAY);
 
+	R_EnableColorArray(qfalse);
 	R_EnableColorArray(qtrue);
 	R_BindDefaultArray(GL_COLOR_ARRAY);
 	R_EnableColorArray(qfalse);
@@ -889,6 +890,9 @@ void R_SetDefaultState (void)
 	glEnableClientState(GL_NORMAL_ARRAY);
 	R_BindDefaultArray(GL_NORMAL_ARRAY);
 	glDisableClientState(GL_NORMAL_ARRAY);
+
+	R_EnableAlphaTest(qtrue);
+	R_EnableAlphaTest(qfalse);
 
 	/* reset gl error state */
 	R_CheckError();
@@ -898,9 +902,12 @@ void R_SetDefaultState (void)
 		gltexunit_t *tex = &r_state.texunits[i];
 		tex->texture = GL_TEXTURE0 + i;
 
+		R_EnableTexture(tex, qfalse);
 		R_EnableTexture(tex, qtrue);
 
 		R_BindDefaultArray(GL_TEXTURE_COORD_ARRAY);
+		R_TexEnv(GL_REPLACE); /* reset texenv to match OpenGL state machine */
+		R_TexEnv(GL_MODULATE);
 
 		if (i > 0)  /* turn them off for now */
 			R_EnableTexture(tex, qfalse);
@@ -908,6 +915,7 @@ void R_SetDefaultState (void)
 		R_CheckError();
 	}
 
+	R_SelectTexture(&texunit_lightmap);
 	R_SelectTexture(&texunit_diffuse);
 	/* alpha test parameters */
 	glAlphaFunc(GL_GREATER, 0.01f);
@@ -925,6 +933,9 @@ void R_SetDefaultState (void)
 	glPolygonOffset(1, 1);
 
 	/* alpha blend parameters */
+	R_EnableBlend(qtrue);
+	R_EnableBlend(qfalse);
+	R_BlendFunc(GL_ONE, GL_ZERO);
 	R_BlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
 
 	/* remove leftover lights */

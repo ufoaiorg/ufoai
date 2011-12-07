@@ -25,6 +25,7 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #include "r_local.h"
 #include "r_misc.h"
 #include "r_error.h"
+#include "r_font.h"
 #include "../../shared/images.h"
 
 static const byte gridtexture[8][8] = {
@@ -54,6 +55,7 @@ void R_InitMiscTexture (void)
 		}
 	}
 	r_noTexture = R_LoadImageData("***r_notexture***", (byte *) data, 8, 8, it_effect);
+	R_UploadTexture((int *)data, 8, 8, r_noTexture);
 
 	for (x = 0; x < MISC_TEXTURE_SIZE; x++) {
 		for (y = 0; y < MISC_TEXTURE_SIZE; y++) {
@@ -64,6 +66,7 @@ void R_InitMiscTexture (void)
 		}
 	}
 	r_warpTexture = R_LoadImageData("***r_warptexture***", (byte *)data, MISC_TEXTURE_SIZE, MISC_TEXTURE_SIZE, it_effect);
+	R_UploadTexture((int *)data, MISC_TEXTURE_SIZE, MISC_TEXTURE_SIZE, r_warpTexture);
 
 	/* empty pic in the texture chain for cinematic frames */
 	R_LoadImageData("***cinematic***", NULL, VID_NORM_WIDTH, VID_NORM_HEIGHT, it_effect);
@@ -324,4 +327,24 @@ void R_DumpOpenGlState()
 
 	Com_Printf("OpenGL enabled caps: %s\n", s);
 	Com_Printf("Active texture unit: %d texnum %d texEnv mode %s color %f %f %f %f\n", activeTex - GL_TEXTURE0, activeTexId, texEnvModeStr, color[0], color[1], color[2], color[3]);
+}
+
+/**
+ * @brief Re-initializes OpenGL state machine, all textures and renderer variables, this needed when application is put to background on Android.
+ */
+void R_ReinitOpenglContext()
+{
+	R_SetDefaultState();
+	R_ShutdownPrograms();
+	R_InitPrograms();
+	R_InitMiscTexture();
+	R_ReloadImages();
+	//R_ShutdownImages();
+	//R_InitImages();
+	R_FontCleanCache();
+	//R_FontShutdown();
+	//R_FontInit();
+	R_ShutdownFBObjects();
+	R_InitFBObjects();
+	R_UpdateDefaultMaterial("","","");
 }

@@ -53,6 +53,7 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #include "../ui/node/ui_node_abstractnode.h"
 
 #include "../../common/tracing.h"
+#include "../renderer/r_misc.h"
 
 /* power of two please */
 #define MAX_KEYQ 64
@@ -901,6 +902,11 @@ void IN_Frame (void)
 			/* make sure that SDL_SetVideoMode is called again after we changed the size
 			 * otherwise the mouse will make problems */
 			vid_mode->modified = qtrue;
+			#ifdef ANDROID
+			/* On Android the OpenGL context is destroyed after we've received a resize event,
+			 * so wee need to re-init OpenGL state machine and re-upload all textures */
+			R_ReinitOpenglContext();
+			#endif
 			break;
 		}
 	}

@@ -40,5 +40,6 @@ typedef struct font_s {
 /* public */
 void R_FontListCache_f(void);
 font_t *R_GetFont(const char *name);
+void R_FontCleanCache (void);
 
 #endif

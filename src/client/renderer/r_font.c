@@ -118,7 +118,7 @@ void R_FontSetTruncationMarker (const char *marker)
 /**
  * @brief Clears font cache and frees memory associated with the cache
  */
-static void R_FontCleanCache (void)
+void R_FontCleanCache (void)
 {
 	int i;
 

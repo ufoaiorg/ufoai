@@ -269,11 +269,6 @@ void Com_RegisterConstList (const constListEntry_t constList[])
 		Com_RegisterConstInt(constList[i].name, constList[i].value);
 }
 
-/* Parsing .ufo scripts on Android is awfully slow, so we're drawing progress bar here,
-   progressTotal is an approximated current value */
-static qboolean updateProgress = qfalse;
-static int progressCurrent = 0;
-static int progressTotal = 70000;
 /**
  * @brief Parsing function that prints an error message when there is no text in the buffer
  * @sa Com_Parse
@@ -281,12 +276,6 @@ static int progressTotal = 70000;
 const char *Com_EParse (const char **text, const char *errhead, const char *errinfo)
 {
 	const char *token;
-
-	if (updateProgress) {
-		progressCurrent ++;
-		if (progressCurrent % 2000 == 0)
-			SCR_DrawLoadingScreen(qfalse, min(progressCurrent * 10 / progressTotal, 10));
-	}
 
 	token = Com_Parse(text);
 	if (!*text) {
@@ -3213,7 +3202,6 @@ void Com_ParseScripts (qboolean onlyServer)
 
 	Com_Printf("\n----------- parse scripts ----------\n");
 	SCR_DrawLoadingScreen(qfalse, 0);
-	updateProgress = qtrue;
 
 	/* reset csi basic info */
 	INVSH_InitCSI(&csi);
@@ -3286,8 +3274,6 @@ void Com_ParseScripts (qboolean onlyServer)
 	Com_Printf("...%3i equipment definitions parsed\n", csi.numEDs);
 	Com_Printf("...%3i inventory definitions parsed\n", csi.numIDs);
 	Com_Printf("...%3i team definitions parsed\n", csi.numTeamDefs);
-
-	updateProgress = qfalse;
 }
 
 int Com_GetScriptChecksum (void)
