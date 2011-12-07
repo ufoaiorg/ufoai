@@ -578,7 +578,7 @@ static void UI_ExecuteAction (const uiAction_t* action, uiCallContext_t *context
 #endif
 		context->varNumber += action->d.terminal.d1.integer;
 		if (context->varNumber >= UI_MAX_VARIABLESTACK)
-			Com_Error(ERR_FATAL, "UI_ExecuteAction: Variable stack full. UI_MAX_VARIABLESTACK hited.");
+			Com_Error(ERR_FATAL, "UI_ExecuteAction: Variable stack full. UI_MAX_VARIABLESTACK hit.");
 		break;
 
 	case EA_ASSIGN:

@@ -19,8 +19,36 @@
 }
 {
 	material tex_nature/rock005
+	hardness 0.2
+	specular 0.2
+	{
+		texture tex_nature/desert002
+		terrain 0 64
+		lightmap
+	}
+	{
+		texture tex_nature/rock005
+		terrain 96 128
+		lightmap
+	}
+}
+{
+	material tex_nature/rock005
 	specular 0.2
 	hardness 0.1
-	parallax 2.0
-	bump 2.0
+	{
+		texture tex_nature/rock007
+		dirtmap 1.0
+		lightmap
+	}
+}
+{
+	material tex_nature/rock006
+	specular 0.2
+	hardness 0.1
+	{
+		texture tex_nature/desert002
+		dirtmap 1.0
+		lightmap
+	}
 }

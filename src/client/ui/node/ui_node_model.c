@@ -246,7 +246,7 @@ static void UI_DrawModelNodeWithUIModel (uiNode_t *node, const char *source, mod
 }
 
 /**
- * @todo need to merge UI model case, and the common case (look to be a copy-pasted code)
+ * @todo need to merge UI model case, and the common case (looks to be a copy-pasted code)
  */
 void UI_DrawModelNode (uiNode_t *node, const char *source)
 {
