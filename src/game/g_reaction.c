@@ -25,6 +25,57 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 
 #include "g_local.h"
 
+#if 0		/* avoid warnings while the code is not used yet */
+#define MAX_RF_TARGETS 10
+
+typedef struct reactionFireTarget
+{
+	edict_t const *target;
+	int triggerTUs;		/* the amount of TUS of the target(!) at which the reaction takes place */
+} reactionFireTarget_t;
+
+typedef struct reactionFireTargets
+{
+	int count;
+	reactionFireTarget_t targets[MAX_RF_TARGETS];
+} reactionFireTargets_t;
+
+static void G_ReactionFireTargetsAdd (reactionFireTargets_t *rfts, const edict_t *target)
+{
+	int i;
+
+	assert(rfts);
+	assert(target);
+
+	for (i = 0; i < rfts->count; i++) {
+		if (rfts->targets[i].target == target)	/* found it ? */
+			return;
+	}
+	assert(i < MAX_RF_TARGETS);
+	rfts->targets[i].target = target;
+	rfts->targets[i].triggerTUs = target->TU;
+	rfts->count++;
+}
+
+static void G_ReactionFireTargetsRemove (reactionFireTargets_t *rfts, const edict_t *target)
+{
+	int i;
+
+	assert(rfts);
+	assert(target);
+
+	for (i = 0; i < rfts->count; i++) {
+		if (rfts->targets[i].target == target) {	/* found it ? */
+			if (i != rfts->count - 1) {				/* not the last one ? */
+				rfts->targets[i].target = rfts->targets[rfts->count - 1].target;
+				rfts->targets[i].triggerTUs = rfts->targets[rfts->count - 1].triggerTUs;
+			}
+			rfts->count--;
+		}
+	}
+}
+#endif
+
 /**
  * @brief Get the weapon firing TUs of the item in the right hand of the edict.
  * @return -1 if no firedef was found for the item or the reaction fire mode is not activated for the right hand.
