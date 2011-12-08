@@ -865,6 +865,27 @@ void R_SetDefaultState (void)
 {
 	int i;
 
+	r_state.shell_enabled = qfalse;
+	r_state.blend_enabled = qfalse;
+	r_state.color_array_enabled = qfalse;
+	r_state.alpha_test_enabled = qfalse;
+	r_state.stencil_test_enabled = qfalse;
+	r_state.lighting_enabled = qfalse;
+	r_state.warp_enabled = qfalse;
+	r_state.fog_enabled = qfalse;
+	r_state.blur_enabled = qfalse;
+	r_state.glowmap_enabled = qfalse;
+	r_state.draw_glow_enabled = qfalse;
+	r_state.dynamic_lighting_enabled = qfalse;
+	r_state.specularmap_enabled = qfalse;
+	r_state.roughnessmap_enabled = qfalse;
+	r_state.animation_enabled = qfalse;
+	r_state.renderbuffer_enabled = qfalse;
+	r_state.active_material = NULL;
+	r_state.blend_src = 0;
+	r_state.blend_dest = 0;
+	r_state.active_texunit = NULL;
+
 	glClearColor(0, 0, 0, 0);
 
 #ifndef GL_VERSION_ES_CM_1_0
@@ -872,17 +893,11 @@ void R_SetDefaultState (void)
 #endif
 
 	R_ReallocateStateArrays(GL_ARRAY_LENGTH_CHUNK);
-	R_ReallocateTexunitArray(&texunit_0, GL_ARRAY_LENGTH_CHUNK);
-	R_ReallocateTexunitArray(&texunit_1, GL_ARRAY_LENGTH_CHUNK);
-	R_ReallocateTexunitArray(&texunit_2, GL_ARRAY_LENGTH_CHUNK);
-	R_ReallocateTexunitArray(&texunit_3, GL_ARRAY_LENGTH_CHUNK);
-	R_ReallocateTexunitArray(&texunit_4, GL_ARRAY_LENGTH_CHUNK);
 
 	/* setup vertex array pointers */
 	glEnableClientState(GL_VERTEX_ARRAY);
 	R_BindDefaultArray(GL_VERTEX_ARRAY);
 
-	R_EnableColorArray(qfalse);
 	R_EnableColorArray(qtrue);
 	R_BindDefaultArray(GL_COLOR_ARRAY);
 	R_EnableColorArray(qfalse);
@@ -891,7 +906,6 @@ void R_SetDefaultState (void)
 	R_BindDefaultArray(GL_NORMAL_ARRAY);
 	glDisableClientState(GL_NORMAL_ARRAY);
 
-	R_EnableAlphaTest(qtrue);
 	R_EnableAlphaTest(qfalse);
 
 	/* reset gl error state */
@@ -901,13 +915,13 @@ void R_SetDefaultState (void)
 	for (i = 0; i < r_config.maxTextureCoords && i < MAX_GL_TEXUNITS; i++) {
 		gltexunit_t *tex = &r_state.texunits[i];
 		tex->texture = GL_TEXTURE0 + i;
+		tex->enabled = qfalse;
 
-		R_EnableTexture(tex, qfalse);
 		R_EnableTexture(tex, qtrue);
 
 		R_BindDefaultArray(GL_TEXTURE_COORD_ARRAY);
-		R_TexEnv(GL_REPLACE); /* reset texenv to match OpenGL state machine */
 		R_TexEnv(GL_MODULATE);
+		R_ReallocateTexunitArray(tex, GL_ARRAY_LENGTH_CHUNK);
 
 		if (i > 0)  /* turn them off for now */
 			R_EnableTexture(tex, qfalse);
@@ -915,7 +929,6 @@ void R_SetDefaultState (void)
 		R_CheckError();
 	}
 
-	R_SelectTexture(&texunit_lightmap);
 	R_SelectTexture(&texunit_diffuse);
 	/* alpha test parameters */
 	glAlphaFunc(GL_GREATER, 0.01f);
@@ -934,8 +947,6 @@ void R_SetDefaultState (void)
 
 	/* alpha blend parameters */
 	R_EnableBlend(qtrue);
-	R_EnableBlend(qfalse);
-	R_BlendFunc(GL_ONE, GL_ZERO);
 	R_BlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
 
 	/* remove leftover lights */

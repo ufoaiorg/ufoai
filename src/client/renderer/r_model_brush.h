@@ -236,11 +236,11 @@ typedef struct mBspModel_s {
 	float *normals;
 
 	/* vertex buffer objects */
-	unsigned int vertex_buffer;
-	unsigned int texcoord_buffer;
-	unsigned int lmtexcoord_buffer;
-	unsigned int tangent_buffer;
-	unsigned int normal_buffer;
+	GLuint vertex_buffer;
+	GLuint texcoord_buffer;
+	GLuint lmtexcoord_buffer;
+	GLuint tangent_buffer;
+	GLuint normal_buffer;
 
 	byte lightquant;
 	byte *lightdata;

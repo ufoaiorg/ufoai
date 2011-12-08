@@ -26,6 +26,7 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #include "r_misc.h"
 #include "r_error.h"
 #include "r_font.h"
+#include "r_model.h"
 #include "../../shared/images.h"
 
 static const byte gridtexture[8][8] = {
@@ -347,4 +348,42 @@ void R_ReinitOpenglContext()
 	R_ShutdownFBObjects();
 	R_InitFBObjects();
 	R_UpdateDefaultMaterial("","","");
+
+	if (qglBindBuffer) {
+		for (int tile = 0; tile < r_numMapTiles; tile++) {
+			model_t *mod = r_mapTiles[tile];
+
+			int vertind = 0, coordind = 0, tangind = 0;
+			mBspSurface_t *surf = mod->bsp.surfaces;
+
+			for (int i = 0; i < mod->bsp.numsurfaces; i++, surf++) {
+				vertind += 3 * surf->numedges;
+				coordind += 2 * surf->numedges;
+				tangind += 4 * surf->numedges;
+			}
+
+			qglGenBuffers(1, &mod->bsp.vertex_buffer);
+			qglBindBuffer(GL_ARRAY_BUFFER, mod->bsp.vertex_buffer);
+			qglBufferData(GL_ARRAY_BUFFER, vertind * sizeof(GLfloat), mod->bsp.verts, GL_STATIC_DRAW);
+
+			qglGenBuffers(1, &mod->bsp.texcoord_buffer);
+			qglBindBuffer(GL_ARRAY_BUFFER, mod->bsp.texcoord_buffer);
+			qglBufferData(GL_ARRAY_BUFFER, coordind * sizeof(GLfloat), mod->bsp.texcoords, GL_STATIC_DRAW);
+
+			qglGenBuffers(1, &mod->bsp.lmtexcoord_buffer);
+			qglBindBuffer(GL_ARRAY_BUFFER, mod->bsp.lmtexcoord_buffer);
+			qglBufferData(GL_ARRAY_BUFFER, coordind * sizeof(GLfloat), mod->bsp.lmtexcoords, GL_STATIC_DRAW);
+
+			qglGenBuffers(1, &mod->bsp.normal_buffer);
+			qglBindBuffer(GL_ARRAY_BUFFER, mod->bsp.normal_buffer);
+			qglBufferData(GL_ARRAY_BUFFER, vertind * sizeof(GLfloat), mod->bsp.normals, GL_STATIC_DRAW);
+
+			qglGenBuffers(1, &mod->bsp.tangent_buffer);
+			qglBindBuffer(GL_ARRAY_BUFFER, mod->bsp.tangent_buffer);
+			qglBufferData(GL_ARRAY_BUFFER, tangind * sizeof(GLfloat), mod->bsp.tangents, GL_STATIC_DRAW);
+		}
+
+		qglBindBuffer(GL_ARRAY_BUFFER, 0);
+	}
+
 }

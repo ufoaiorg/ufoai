@@ -783,6 +783,8 @@ static void R_ReloadImageData (image_t *image)
 		glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
 		R_UploadTexture((unsigned *)surf->pixels, surf->w, surf->h, image);
 		SDL_FreeSurface(surf);
+	} else {
+		Com_Printf("R_ReloadImageData: unable to load image %s", image->name);
 	}
 }
 
@@ -793,11 +795,6 @@ void R_ReloadImages (void)
 
 	R_CheckError();
 	glEnable(GL_TEXTURE_2D);
-	/*
-	glTexEnvf(GL_TEXTURE_ENV, GL_TEXTURE_ENV_MODE, GL_MODULATE);
-	glEnable(GL_BLEND);
-	glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
-	*/
 	for (i = 0, image = r_images; i < r_numImages; i++, image++) {
 		if (i % 5 == 0) {
 			SCR_DrawLoadingScreen(qfalse, i * 100 / r_numImages);
