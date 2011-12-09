@@ -776,16 +776,18 @@ static void R_ReloadImageData (image_t *image)
 		return;
 
 	surf = Img_LoadImage(image->name);
-	if (surf) {
-		glGenTextures(1, &image->texnum);
-		R_BindTexture(image->texnum);
-		glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR);
-		glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
-		R_UploadTexture((unsigned *)surf->pixels, surf->w, surf->h, image);
-		SDL_FreeSurface(surf);
-	} else {
+	if (!surf) {
 		Com_Printf("R_ReloadImageData: unable to load image %s", image->name);
+		surf = SDL_CreateRGBSurface(0, image->width, image->height, 32,
+					0xff000000, 0x00ff0000, 0x0000ff00, 0x000000ff);
+		SDL_FillRect(surf, NULL, 0x99ff33ff); /* A random color */
 	}
+	glGenTextures(1, &image->texnum);
+	R_BindTexture(image->texnum);
+	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR);
+	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
+	R_UploadTexture((unsigned *)surf->pixels, surf->w, surf->h, image);
+	SDL_FreeSurface(surf);
 }
 
 void R_ReloadImages (void)

@@ -340,15 +340,12 @@ void R_ReinitOpenglContext()
 	R_InitPrograms();
 	R_InitMiscTexture();
 	R_ReloadImages();
-	//R_ShutdownImages();
-	//R_InitImages();
 	R_FontCleanCache();
-	//R_FontShutdown();
-	//R_FontInit();
 	R_ShutdownFBObjects();
 	R_InitFBObjects();
 	R_UpdateDefaultMaterial("","","");
 
+	/* Re-upload the battlescape terrain geometry */
 	if (qglBindBuffer) {
 		for (int tile = 0; tile < r_numMapTiles; tile++) {
 			model_t *mod = r_mapTiles[tile];
@@ -385,5 +382,4 @@ void R_ReinitOpenglContext()
 
 		qglBindBuffer(GL_ARRAY_BUFFER, 0);
 	}
-
 }
