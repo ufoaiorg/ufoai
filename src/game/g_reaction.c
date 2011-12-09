@@ -60,14 +60,14 @@ void G_ReactionFireTargetsCreate (const edict_t *shooter)
 
 	for (i = 0; i < MAX_RF_DATA; i++) {
 		if (rfData[i].entnum == shooter->number)
-			Sys_Error("Entity already has rfData");
+			gi.Error("Entity already has rfData");
 	}
 	for (i = 0; i < MAX_RF_DATA; i++) {
 		if (rfData[i].entnum == -1)
 			rfData[i].entnum = shooter->number;
 	}
 	if (i == MAX_RF_DATA)
-		Sys_Error("Not enough rfData");
+		gi.Error("Not enough rfData");
 }
 
 static void G_ReactionFireTargetsAdd (const edict_t *shooter, const edict_t *target)
