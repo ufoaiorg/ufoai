@@ -108,7 +108,7 @@ window market extends objectinfo
 		rows		"11"
 		lineheight	"51"
 		pos			"45 177"
-		size		"265 565"
+		size		"245 565"
 		onChange	{ cmd "sync_market_scroll <lineselected> <viewpos>;market_click <lineselected>;" }
 		onWheel		{ cmd "sync_market_scroll <lineselected> <viewpos>;market_scroll <viewpos>;" }
 		onViewChange {
@@ -123,7 +123,7 @@ window market extends objectinfo
 		dataid		TEXT_MARKET_STORAGE
 		color		"0 .78 0 1"
 		contentalign	ALIGN_CR
-		pos			"300 177"
+		pos			"290 177"
 		rows		"11"
 		size		"40 565"
 		lineheight	"51"
@@ -190,8 +190,8 @@ window market extends objectinfo
 	image bt_buy
 	{
 		src		"buttons/blue_left_market"
-		pos			"350 177"
-		size		"30 563"
+		pos			"340 177"
+		size		"35 563"
 		mousefx		true
 		onClick		{ cmd "mn_buy <node:root.market@lineselected>;" }
 		onMouseEnter { *node:this@image = "buttons/blue_left_market_hover" }
@@ -201,8 +201,8 @@ window market extends objectinfo
 	image bt_sell
 	{
 		src		"buttons/blue_right_market"
-		pos			"380 177"
-		size		"30 563"
+		pos			"375 177"
+		size		"35 563"
 		mousefx		true
 		onClick		{ cmd "mn_sell <node:root.market@lineselected>;" }
 		onMouseEnter { *node:this@image = "buttons/blue_right_market_hover" }
