@@ -37,7 +37,7 @@ typedef struct reactionFireTarget
 
 typedef struct reactionFireTargets
 {
-	int entNr;
+	int entnum;
 	int count;
 	reactionFireTarget_t targets[MAX_RF_TARGETS];
 } reactionFireTargets_t;
@@ -49,7 +49,7 @@ void G_ReactionFireTargetsInit (void)
 	int i;
 
 	for (i = 0; i < MAX_RF_DATA; i++) {
-		rfData[i].entNr = -1;
+		rfData[i].entnum = -1;
 		rfData[i].count = 0;
 	}
 }
@@ -59,12 +59,12 @@ void G_ReactionFireTargetsCreate (const edict_t *shooter)
 	int i;
 
 	for (i = 0; i < MAX_RF_DATA; i++) {
-		if (rfData[i].entNr == shooter->number)
+		if (rfData[i].entnum == shooter->number)
 			Sys_Error("Entity already has rfData");
 	}
 	for (i = 0; i < MAX_RF_DATA; i++) {
-		if (rfData[i].entNr == -1)
-			rfData[i].entNr = shooter->number;
+		if (rfData[i].entnum == -1)
+			rfData[i].entnum = shooter->number;
 	}
 	if (i == MAX_RF_DATA)
 		Sys_Error("Not enough rfData");
@@ -76,7 +76,7 @@ static void G_ReactionFireTargetsAdd (const edict_t *shooter, const edict_t *tar
 	reactionFireTargets_t *rfts = NULL;
 
 	for (i = 0; i < MAX_RF_DATA; i++) {
-		if (rfData[i].entNr == shooter->number)
+		if (rfData[i].entnum == shooter->number)
 			rfts = &rfData[i];
 	}
 
@@ -99,7 +99,7 @@ static void G_ReactionFireTargetsRemove (const edict_t *shooter, const edict_t *
 	reactionFireTargets_t *rfts = NULL;
 
 	for (i = 0; i < MAX_RF_DATA; i++) {
-		if (rfData[i].entNr == shooter->number)
+		if (rfData[i].entnum == shooter->number)
 			rfts = &rfData[i];
 	}
 
