@@ -27,6 +27,7 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 
 #if 0		/* avoid warnings while the code is not used yet */
 #define MAX_RF_TARGETS 10
+#define MAX_RF_DATA 30
 
 typedef struct reactionFireTarget
 {
@@ -36,13 +37,48 @@ typedef struct reactionFireTarget
 
 typedef struct reactionFireTargets
 {
+	int entNr;
 	int count;
 	reactionFireTarget_t targets[MAX_RF_TARGETS];
 } reactionFireTargets_t;
 
-static void G_ReactionFireTargetsAdd (reactionFireTargets_t *rfts, const edict_t *target)
+static reactionFireTargets_t rfData[MAX_RF_DATA];
+
+void G_ReactionFireTargetsInit (void)
 {
 	int i;
+
+	for (i = 0; i < MAX_RF_DATA; i++) {
+		rfData[i].entNr = -1;
+		rfData[i].count = 0;
+	}
+}
+
+void G_ReactionFireTargetsCreate (const edict_t *shooter)
+{
+	int i;
+
+	for (i = 0; i < MAX_RF_DATA; i++) {
+		if (rfData[i].entNr == shooter->number)
+			Sys_Error("Entity already has rfData");
+	}
+	for (i = 0; i < MAX_RF_DATA; i++) {
+		if (rfData[i].entNr == -1)
+			rfData[i].entNr = shooter->number;
+	}
+	if (i == MAX_RF_DATA)
+		Sys_Error("Not enough rfData");
+}
+
+static void G_ReactionFireTargetsAdd (const edict_t *shooter, const edict_t *target)
+{
+	int i;
+	reactionFireTargets_t *rfts = NULL;
+
+	for (i = 0; i < MAX_RF_DATA; i++) {
+		if (rfData[i].entNr == shooter->number)
+			rfts = &rfData[i];
+	}
 
 	assert(rfts);
 	assert(target);
@@ -57,9 +93,15 @@ static void G_ReactionFireTargetsAdd (reactionFireTargets_t *rfts, const edict_t
 	rfts->count++;
 }
 
-static void G_ReactionFireTargetsRemove (reactionFireTargets_t *rfts, const edict_t *target)
+static void G_ReactionFireTargetsRemove (const edict_t *shooter, const edict_t *target)
 {
 	int i;
+	reactionFireTargets_t *rfts = NULL;
+
+	for (i = 0; i < MAX_RF_DATA; i++) {
+		if (rfData[i].entNr == shooter->number)
+			rfts = &rfData[i];
+	}
 
 	assert(rfts);
 	assert(target);
