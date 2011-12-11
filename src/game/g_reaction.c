@@ -25,9 +25,9 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 
 #include "g_local.h"
 
-#if 0		/* avoid warnings while the code is not used yet */
+#if 1		/* avoid warnings while the code is not used yet */
 #define MAX_RF_TARGETS 10
-#define MAX_RF_DATA 30
+#define MAX_RF_DATA 50
 
 typedef struct reactionFireTarget
 {
@@ -63,8 +63,10 @@ void G_ReactionFireTargetsCreate (const edict_t *shooter)
 			gi.Error("Entity already has rfData");
 	}
 	for (i = 0; i < MAX_RF_DATA; i++) {
-		if (rfData[i].entnum == -1)
+		if (rfData[i].entnum == -1) {
 			rfData[i].entnum = shooter->number;
+			break;
+		}
 	}
 	if (i == MAX_RF_DATA)
 		gi.Error("Not enough rfData");

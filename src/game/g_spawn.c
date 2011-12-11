@@ -325,6 +325,9 @@ void G_SpawnEntities (const char *mapname, qboolean day, const char *entities)
 
 	G_EdictsReset();
 
+	/* initialize reactionFire data */
+	G_ReactionFireTargetsInit();
+
 	Q_strncpyz(level.mapname, mapname, sizeof(level.mapname));
 	level.day = day;
 
@@ -482,6 +485,8 @@ static void G_ActorSpawn (edict_t *ent)
 		VectorSet(ent->maxs, PLAYER_WIDTH, PLAYER_WIDTH, PLAYER_STAND);
 	if (ent->mins[0] == 0)
 		VectorSet(ent->mins, -PLAYER_WIDTH, -PLAYER_WIDTH, PLAYER_MIN);
+
+	G_ReactionFireTargetsCreate(ent);
 }
 
 /**

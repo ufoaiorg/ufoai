@@ -380,6 +380,8 @@ void G_ReactionFireUpdate(edict_t *ent, fireDefIndex_t fmIdx, actorHands_t hand,
 qboolean G_ReserveReactionFireTUs(edict_t *ent);
 qboolean G_ReactionFireOnMovement(edict_t *target);
 void G_ReactionFireEndTurn(void);
+void G_ReactionFireTargetsInit (void);
+void G_ReactionFireTargetsCreate (const edict_t *shooter);
 
 void G_CompleteRecalcRouting(void);
 void G_RecalcRouting(const char *model);
