@@ -485,8 +485,6 @@ static void G_ActorSpawn (edict_t *ent)
 		VectorSet(ent->maxs, PLAYER_WIDTH, PLAYER_WIDTH, PLAYER_STAND);
 	if (ent->mins[0] == 0)
 		VectorSet(ent->mins, -PLAYER_WIDTH, -PLAYER_WIDTH, PLAYER_MIN);
-
-	G_ReactionFireTargetsCreate(ent);
 }
 
 /**
