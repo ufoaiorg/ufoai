@@ -95,8 +95,8 @@ component panel cmpFiremodeEntry {
 		*node:parent.index@string = "<3>"
 
 		*node:parent.name@string = "<6>"
-		*node:parent.tu@string = "<7>"
-		*node:parent.shot@string = "<8>"
+		*node:parent.tu@string = "_TU: <7>"
+		*node:parent.shot@string = "_Shots: <8>"
 		*node:parent.tu@tooltip = "<9>"
 
 		if ( <5> eq "1" ) {
