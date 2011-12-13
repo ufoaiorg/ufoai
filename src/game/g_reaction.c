@@ -67,7 +67,7 @@ void G_ReactionFireTargetsCreate (const edict_t *shooter)
 			break;
 		}
 	}
-#if 0
+#if 1
 	if (i == MAX_RF_DATA)
 		gi.Error("Not enough rfData");
 #endif
