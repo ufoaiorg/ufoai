@@ -73,7 +73,7 @@ void G_ReactionFireTargetsCreate (const edict_t *shooter)
 #endif
 }
 
-#if 0		/* avoid warnings while the code is not used yet */
+#if 1		/* avoid warnings while the code is not used yet */
 static void G_ReactionFireTargetsAdd (const edict_t *shooter, const edict_t *target)
 {
 	int i;
@@ -387,6 +387,27 @@ static qboolean G_ReactionFireIsPossible (const edict_t *ent, const edict_t *tar
 	return qtrue;
 }
 
+#if 1
+/**
+ * @brief Check whether 'target' has just triggered any new reaction fire
+ * @param[in] target The entity triggering fire
+ */
+static void G_ReactionFireTargetsUpdate (const edict_t *target)
+{
+	edict_t *shooter = NULL;
+
+	/* check all possible shooters */
+	while ((shooter = G_EdictsGetNextLivingActor(shooter))) {
+
+		/* check whether reaction fire is possible */
+		if (G_ReactionFireIsPossible(shooter, target))
+			G_ReactionFireTargetsAdd(shooter, target);
+		else
+			G_ReactionFireTargetsRemove(shooter, target);
+	}
+}
+#endif
+
 /**
  * @brief Check whether 'target' has just triggered any new reaction fire
  * @param[in] target The entity triggering fire
@@ -549,6 +570,8 @@ qboolean G_ReactionFireOnMovement (edict_t *target)
 	/* Check to see whether this triggers any reaction fire */
 	G_ReactionFireSearchTarget(target);
 
+	G_ReactionFireTargetsUpdate(target);
+
 	return fired;
 }
 
@@ -564,6 +587,8 @@ void G_ReactionFirePreShot (const edict_t *target, const int fdTime)
 
 	/* Check to see whether this triggers any reaction fire */
 	G_ReactionFireSearchTarget(target);
+
+	G_ReactionFireTargetsUpdate(target);
 
 	/* check all ents to see who wins and who loses a draw */
 	while ((ent = G_EdictsGetNextLivingActor(ent))) {
