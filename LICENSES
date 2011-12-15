@@ -5185,6 +5185,7 @@ base/textures/tex_material/wood002_nm.png | GNU General Public License 2.0 | Nex
 base/textures/tex_material/wood003.png | Public Domain | FWishbringer
 base/textures/tex_material/wood004.png | GNU General Public License 2.0 or later | Nate Wright
 base/textures/tex_material/wood004_nm.png | GNU General Public License 2.0 or later | Martin Gerhardy
+base/textures/tex_material/wood005.png | GNU General Public License 2.0 or later | Nate Wright
 base/textures/tex_material/wood006.png | GNU General Public License 2.0 | MCR
 base/textures/tex_material/wood007.png | GNU General Public License 2.0 | Nexuiz GPLed Data
 base/textures/tex_material/wood007_nm.png | GNU General Public License 2.0 | Nexuiz GPLed Data
@@ -6122,7 +6123,7 @@ base/textures/tex_nature/grass_tall_green_c.jpg | GNU General Public License 2.0
 base/textures/tex_nature/hedge001.jpg | GNU General Public License 2.0 |  | http://dplogin.com/forums/index.php?topic=7836.0  - modified by eleazar
 base/textures/tex_nature/ice001.jpg | Public Domain |  | Public Domain Golgotha
 base/textures/tex_nature/ice001_nm.png | GNU General Public License 2.0 or later | Martin Gerhardy
-base/textures/tex_nature/ice002_nm.png | GNU General Public License 2.0 or later | Martin Gerhardy
+base/textures/tex_nature/ice002.png | GNU General Public License 2.0 or later | Nobiax, Nate Wright
 base/textures/tex_nature/ice003.png | GNU General Public License 2.0 | Nexuiz GPLed Data
 base/textures/tex_nature/ice003_nm.png | GNU General Public License 2.0 or later | Martin Gerhardy
 base/textures/tex_nature/icefloor.jpg | GNU General Public License 2.0 | OpenArena
