@@ -1282,7 +1282,7 @@ item rpg_ammo
 item rpg_incendiary_ammo
 {
 	name			"_IC Rocket"
-	model			weapons/rpg/rpg_inc_ammo
+	model			weapons/rpg2/rpg_inc_ammo
 	type			ammo
 	animationindex	0
 	shape			"0 0 1 2"

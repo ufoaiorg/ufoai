@@ -361,7 +361,7 @@ particle rocket
 {
 	init
 	{
-		model  weapons/rpg/rocket
+		model  weapons/rpg2/rocket
 		tps    40.0
 		color  ".5 .5 .5 1"
 		spawn rocket_muzzle
@@ -476,8 +476,7 @@ particle rocket_inc
 {
 	init
 	{
-		model  weapons/rpg/rocket
-		model  weapons/rpg/rocket_inc
+		model  weapons/rpg2/rocket_inc
 		color  ".5 .5 .5 1"
 		tps    40.0
 	}
@@ -493,7 +492,7 @@ particle rocket_particle
 {
 	init
 	{
-		model  weapons/rpg/rocket
+		model  weapons/rpg2/rocket
 		color  ".5 .5 .5 1"
 		tps    40.0
 	}
@@ -1787,7 +1786,7 @@ particle fwl
 {
 	init
 	{
-		model  weapons/rpg/rocket
+		model  weapons/rpg2/rocket
 		color  ".5 .5 .5 1"
 		tps    80.0
 	}
@@ -1870,7 +1869,7 @@ particle incz
 {
 	init
 	{
-		model  weapons/rpg/rocket
+		model  weapons/rpg2/rocket_inc
 		color  ".5 .5 .5 1"
 		tps    80.0
 	}
