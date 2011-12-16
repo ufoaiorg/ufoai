@@ -6439,6 +6439,7 @@ base/textures/tex_streets/street013.jpg | GNU General Public License 2.0 | ghost
 base/textures/tex_streets/street11.png | GNU General Public License 2.0 | Werner Höhrer (hoehrer)
 base/textures/tex_tech/comptable.jpg | GNU General Public License 2.0 or later | zark127
 base/textures/tex_tech/comptable_gm.png | GNU General Public License 2.0 | MCR | based on base/textures/tex_tech/comptable.jpg
+base/textures/tex_tech/comptex001.png | GNU General Public License 2.0 | Nate Wright
 base/textures/tex_tech/comptex002.png | GNU General Public License 2.0 | MCR | based on base/textures/tex_tech/comptable.jpg
 base/textures/tex_tech/comptex002_gm.png | GNU General Public License 2.0 | MCR
 base/textures/tex_tech/comptex002_nm.png | GNU General Public License 2.0 | MCR
