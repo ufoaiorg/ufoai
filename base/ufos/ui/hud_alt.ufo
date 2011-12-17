@@ -949,6 +949,17 @@ window hud_alt extends hud
 			pos			"1 49"
 			size		"40 20"
 			contentalign	ALIGN_CC
+			onWheelUp
+			{
+				if (*cvar:cl_worldlevel < *cvar:cl_maxworldlevel) {
+					*cvar:cl_worldlevel = (*cvar:cl_worldlevel + 1)
+				}
+			}
+			onWheelDown	{
+				if (*cvar:cl_worldlevel > 0) {
+					*cvar:cl_worldlevel = (*cvar:cl_worldlevel - 1)
+				}
+			}
 		}
 	}
 

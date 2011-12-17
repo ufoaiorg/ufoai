@@ -1374,6 +1374,17 @@ window hud_mini extends hud
 			pos			"13 49"
 			size		"40 20"
 			contentalign	ALIGN_CL
+			onWheelUp
+			{
+				if (*cvar:cl_worldlevel < *cvar:cl_maxworldlevel) {
+					*cvar:cl_worldlevel = (*cvar:cl_worldlevel + 1)
+				}
+			}
+			onWheelDown	{
+				if (*cvar:cl_worldlevel > 0) {
+					*cvar:cl_worldlevel = (*cvar:cl_worldlevel - 1)
+				}
+			}
 		}
 	}
 
