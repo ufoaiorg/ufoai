@@ -16,9 +16,9 @@ window hud_mini extends hud
 		cmd "ui_push ahudinv;"
 	}
 
-	// ==================
-	// render rectangle
-	// ==================
+	// ===============================
+	// render rectangle (battlescape)
+	// ===============================
 	battlescape render
 	{
 		pos			"0 0"
@@ -26,9 +26,9 @@ window hud_mini extends hud
 		align		LAYOUTALIGN_FILL
 	}
 
-	// ==================
-	// floor
-	// ==================
+	// ======================
+	// floor (soldier panel)
+	// ======================
 	panel floor_deco {
 		{
 			pos		"256 640"
@@ -1202,6 +1202,8 @@ window hud_mini extends hud
 		func show_rightweapon
 		{
 			*node:root.right.right@invis = false
+			*node:root.right.switch_to_right_hand@invis = true
+			*node:root.right.switch_to_left_hand@invis = false
 			*node:root.right.ammoright_shadow@invis = false
 			*node:root.right.ammoright@invis = false
 			*node:root.right.left@invis = true
@@ -1215,6 +1217,8 @@ window hud_mini extends hud
 		func show_leftweapon
 		{
 			*node:root.right.right@invis = true
+			*node:root.right.switch_to_left_hand@invis = true
+			*node:root.right.switch_to_right_hand@invis = false
 			*node:root.right.ammoright_shadow@invis = true
 			*node:root.right.ammoright@invis = true
 			*node:root.right.left@invis = false
@@ -1251,6 +1255,8 @@ window hud_mini extends hud
 			onClick		{ call *node:root.right.show_leftweapon cmd "hud_switchfiremodelist firemode_listener l;" }
 		}
 	}
+
+// chat
 
 	image bar_chat_bg
 	{

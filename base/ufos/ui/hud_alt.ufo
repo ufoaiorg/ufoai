@@ -807,6 +807,8 @@ window hud_alt extends hud
 		func show_rightweapon
 		{
 			*node:root.right.right@invis = false
+			*node:root.right.switch_to_right_hand@invis = true
+			*node:root.right.switch_to_left_hand@invis = false
 			*node:root.right.ammoright@invis = false
 			*node:root.right.left@invis = true
 			*node:root.right.ammoleft@invis = true
@@ -818,6 +820,8 @@ window hud_alt extends hud
 		func show_leftweapon
 		{
 			*node:root.right.right@invis = true
+			*node:root.right.switch_to_left_hand@invis = true
+			*node:root.right.switch_to_right_hand@invis = false
 			*node:root.right.ammoright@invis = true
 			*node:root.right.left@invis = false
 			*node:root.right.ammoleft@invis = false
