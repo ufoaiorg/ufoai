@@ -147,6 +147,26 @@ window hud_mini extends hud
 			pos			"656 0"
 			size		"32 128"
 		}
+
+		func hudenable_floor_deco
+		{
+			*cvar:tmp = ( <1> + 1 )
+			*cvar:i = 1
+			while ( *cvar:i < *cvar:tmp ) {
+				*node:root.floor_deco.bar_teambox<cvar:i>_deco@invis = false  *node:root.floor_deco.bar_teamsep<cvar:i>_deco@invis = false
+				*cvar:i = ( *cvar:i + 1 )
+			}
+
+			while ( *cvar:tmp < 8 ) {
+				*node:root.floor_deco.bar_teambox<cvar:tmp>_deco@invis = true  *node:root.floor_deco.bar_teamsep<cvar:tmp>_deco@invis = true
+				*cvar:tmp = ( *cvar:tmp + 1 )
+			}
+
+			delete *cvar:tmp
+			delete *cvar:i
+
+			*node:root.floor_deco.bar_teamright_deco@left = ( *node:root.floor_deco.bar_teambox<1>_deco@left + *node:root.floor_deco.bar_teambox<1>_deco@width )
+		}
 	}
 
 	panel floor {
@@ -1564,6 +1584,7 @@ window hud_mini extends hud
 	confunc hudenable
 	{
 		call *node:root.floor.hudenable_floor ( <1> )
+		call *node:root.floor_deco.hudenable_floor_deco ( <1> )
 	}
 
 	// ==================
