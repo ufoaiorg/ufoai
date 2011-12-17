@@ -735,7 +735,6 @@ window hud_mini extends hud
 			disabled	true
 			tooltip		*cvar:mn_tu_tooltips
 		}
-
 		bar timereserved
 		{
 			pos			"113 275"
@@ -751,6 +750,49 @@ window hud_mini extends hud
 		// strings
 		// ==================
 
+		// level string
+		string str_level_shadow
+		{
+			color		"0 0 0 1"
+			string		*cvar:cl_worldlevel
+			pos			"198 214"
+			size		"20 20"
+			contentalign	ALIGN_CL
+		}
+		string str_level
+		{
+			tooltip		"_Current Level\nLMB:Level up/RMB:Level down\nWheel changes level also"
+			string		*cvar:cl_worldlevel
+			pos			"197 213"
+			size		"20 20"
+			contentalign	ALIGN_CL
+			onClick
+			{
+				if (*cvar:cl_worldlevel < *cvar:cl_maxworldlevel) {
+					*cvar:cl_worldlevel = (*cvar:cl_worldlevel + 1)
+				}
+			}
+			onRClick
+			{
+				if (*cvar:cl_worldlevel > 0) {
+					*cvar:cl_worldlevel = (*cvar:cl_worldlevel - 1)
+				}
+			}
+			onWheelUp
+			{
+				if (*cvar:cl_worldlevel < *cvar:cl_maxworldlevel) {
+					*cvar:cl_worldlevel = (*cvar:cl_worldlevel + 1)
+				}
+			}
+			onWheelDown
+			{
+				if (*cvar:cl_worldlevel > 0) {
+					*cvar:cl_worldlevel = (*cvar:cl_worldlevel - 1)
+				}
+			}
+		}
+
+		// name string
 		string str_name_shadow
 		{
 			font		"f_verysmall"
@@ -770,6 +812,7 @@ window hud_mini extends hud
 			onRClick	{ cmd "ui_push ahudphysdat;" }
 		}
 
+		// health string
 		string str_hp_shadow
 		{
 			font		"f_small_bold"
@@ -789,6 +832,7 @@ window hud_mini extends hud
 			contentalign	ALIGN_UC
 			tooltip		"_Health"
 		}
+		// morale string
 		string str_morale_shadow
 		{
 			font		"f_small_bold"
@@ -808,6 +852,7 @@ window hud_mini extends hud
 			contentalign	ALIGN_UC
 			tooltip		"_Morale"
 		}
+		// TUs string
 		string str_tu_shadow
 		{
 			font		"f_small_bold"
@@ -827,6 +872,7 @@ window hud_mini extends hud
 			contentalign	ALIGN_UC
 			tooltip		"_TUs"
 		}
+		// TUs reserved string
 		string str_tu_reserved_shadow
 		{
 			font		"f_small_bold"
@@ -1004,47 +1050,6 @@ window hud_mini extends hud
 			}
 		}
 
-		image minihud_bt_levels_off
-		{
-			tooltip		"_LMB:Show Level Controls"
-			src			"icons/off"
-			mousefx		true
-			pos			"142 490"
-			size		"16 16"
-			onClick
-			{
-				*node:root.bottomright@invis = false
-				if ( *node:root.right.minihud_bt_decoration_on@invis == false ) { *node:root.bottomright_deco@invis = false }
-				*node:root.right.minihud_bt_levels_on@invis = false
-			}
-			onRClick
-			{
-				*node:root.bottomright_deco@invis = true
-				*node:root.bottomright@invis = true
-				*node:root.right.minihud_bt_levels_on@invis = true
-			}
-		}
-		image minihud_bt_levels_on
-		{
-			tooltip		"_RMB:Hide Level Controls"
-			src			"icons/on"
-			mousefx		true
-			pos			"142 490"
-			size		"16 16"
-			onClick
-			{
-				*node:root.bottomright@invis = false
-				if ( *node:root.right.minihud_bt_decoration_on@invis == false ) { *node:root.bottomright_deco@invis = false }
-				*node:root.right.minihud_bt_levels_on@invis = false
-			}
-			onRClick
-			{
-				*node:root.bottomright_deco@invis = true
-				*node:root.bottomright@invis = true
-				*node:root.right.minihud_bt_levels_on@invis = true
-			}
-		}
-
 		image minihud_bt_decoration_off
 		{
 			tooltip		"_LMB:Show Decoration"
@@ -1178,6 +1183,19 @@ window hud_mini extends hud
 			onRClick	{ cmd "hud_shotreservationpopup 0;" }
 		}
 
+		// easy hand switch
+
+		panel invisible_hand
+		{
+			pos			"114 340"
+			size		"125 80"
+			onRClick	{ call *node:root.right.show_rightweapon cmd "hud_switchfiremodelist firemode_listener r;" }
+			onClick		{ call *node:root.right.show_leftweapon cmd "hud_switchfiremodelist firemode_listener l;" }
+			tooltip	"LMB:left hand/RMB:right hand"
+		}
+
+		// weapon container
+
 		container right
 		{
 			pos			"114 340"
@@ -1186,12 +1204,15 @@ window hud_mini extends hud
 		{
 			pos			"114 340"
 		}
+
+		// ammo
+
 		string ammoright_shadow
 		{
 			string		*cvar:mn_ammoright
 			font		"f_small_bold"
 			pos			"118 402"
-			size		"40 20"
+			size		"30 20"
 			color		"0 0 0 1"
 		}
 		string ammoright
@@ -1199,7 +1220,7 @@ window hud_mini extends hud
 			string		*cvar:mn_ammoright
 			font		"f_small_bold"
 			pos			"117 401"
-			size		"40 20"
+			size		"30 20"
 			tooltip		"LMB:Reload"
 			onClick		{ cmd "hud_reloadright;" }
 		}
@@ -1252,6 +1273,8 @@ window hud_mini extends hud
 			*node:root.right.bt_reloadleft@invis = false
 		}
 
+		// buttons switch hand
+
 		button switch_to_right_hand
 		{
 			tooltip		"_Switch to right hand weapon"
@@ -1278,7 +1301,7 @@ window hud_mini extends hud
 		}
 	}
 
-// chat
+	// chat
 
 	image bar_chat_bg
 	{
@@ -1321,94 +1344,7 @@ window hud_mini extends hud
 		}
 	}
 
-	panel bottomright_deco {
-		{
-			pos		"0 0"
-			size	"40 117"
-			align	LAYOUTALIGN_BOTTOMRIGHT
-			ghost	true
-		}
-		image bar_floor_deco
-		{
-			src		"minihud/bar_floor_deco"
-			pos			"0 0"
-			texl		"24 11"
-			size		"40 117"
-		}
-	}
-	panel bottomright {
-		{
-			pos		"0 0"
-			size	"40 117"
-			align	LAYOUTALIGN_BOTTOMRIGHT
-			ghost	true
-		}
-
-		image bar_floor_mini
-		{
-			src		"minihud/bar_floor_mini"
-			pos			"0 0"
-			texl		"24 11"
-			size		"40 117"
-		}
-
-		image bt_floorup
-		{
-			tooltip		"_Level up"
-			src		"althud/buttons_althud1"
-			mousefx		true
-			pos			"7 7"
-			texl		"54 74"
-			texh		"79 107"
-			onClick		{
-				if (*cvar:cl_worldlevel < *cvar:cl_maxworldlevel) {
-					*cvar:cl_worldlevel = (*cvar:cl_worldlevel + 1)
-				}
-			}
-		}
-		image bt_floordown
-		{
-			tooltip		"_Level down"
-			src		"althud/buttons_althud1"
-			mousefx		true
-			pos			"7 82"
-			texl		"81 74"
-			texh		"106 107"
-			onClick		{
-				if (*cvar:cl_worldlevel > 0) {
-					*cvar:cl_worldlevel = (*cvar:cl_worldlevel - 1)
-				}
-			}
-		}
-
-		string str_level_shadow
-		{
-			color		"0 0 0 1"
-			string		*cvar:cl_worldlevel
-			pos			"14 50"
-			size		"40 20"
-			contentalign	ALIGN_CL
-		}
-		string str_level
-		{
-			tooltip		"_Current Level"
-			string		*cvar:cl_worldlevel
-			pos			"13 49"
-			size		"40 20"
-			contentalign	ALIGN_CL
-			onWheelUp
-			{
-				if (*cvar:cl_worldlevel < *cvar:cl_maxworldlevel) {
-					*cvar:cl_worldlevel = (*cvar:cl_worldlevel + 1)
-				}
-			}
-			onWheelDown	{
-				if (*cvar:cl_worldlevel > 0) {
-					*cvar:cl_worldlevel = (*cvar:cl_worldlevel - 1)
-				}
-			}
-		}
-	}
+// Uperright panel (options, end turn, enemies)
 
 	panel upperright_deco {
 		{
