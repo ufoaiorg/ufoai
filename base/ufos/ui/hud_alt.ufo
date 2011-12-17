@@ -796,12 +796,16 @@ window hud_alt extends hud
 			string		*cvar:mn_ammoright
 			pos			"117 401"
 			size		"40 20"
+			tooltip		"LMB:Reload"
+			onClick		{ cmd "hud_reloadright;" }
 		}
 		string ammoleft
 		{
 			string		*cvar:mn_ammoleft
 			pos			"117 401"
 			size		"40 20"
+			tooltip		"LMB:Reload"
+			onClick		{ cmd "hud_reloadleft;" }
 		}
 
 		func show_rightweapon

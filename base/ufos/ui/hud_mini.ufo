@@ -634,9 +634,9 @@ window hud_mini extends hud
 		}
 	}
 
-	// ==================
-	// right panel
-	// ==================
+	// ===================
+	// right panel (main)
+	// ===================
 
 	panel right_deco {
 		{
@@ -1180,7 +1180,8 @@ window hud_mini extends hud
 			font		"f_small_bold"
 			pos			"117 401"
 			size		"40 20"
-			tooltip		"Ammo"
+			tooltip		"LMB:Reload"
+			onClick		{ cmd "hud_reloadright;" }
 		}
 		string ammoleft_shadow
 		{
@@ -1196,7 +1197,8 @@ window hud_mini extends hud
 			font		"f_small_bold"
 			pos			"117 401"
 			size		"40 20"
-			tooltip		"Ammo"
+			tooltip		"LMB:Reload"
+			onClick		{ cmd "hud_reloadleft;" }
 		}
 
 		func show_rightweapon
