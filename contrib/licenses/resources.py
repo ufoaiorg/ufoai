@@ -26,7 +26,7 @@ CACHING = False
 
 TIMESTAMP = re.compile("Date:\s+([0-9]+)\s")
 
-# TODO i dont think a cache here is need cause the Resources is itself a cache
+# TODO i dont think a cache here is need cause a resource is itself in a cache
 def get(cmd, cacheable=True):
     if cacheable and CACHING:
         h = hashlib.md5(cmd).hexdigest()
@@ -42,6 +42,13 @@ def get(cmd, cacheable=True):
         print ' written to cache: ', cmd
     return data
 
+def get_used_models(m):
+    used = []
+    file = open(m)
+    data = file.read()
+    file.close()
+
+    return re.findall("\"(models/[^\"]*)\"", data)
 
 def get_used_tex(m):
     used = []
@@ -70,6 +77,7 @@ class Resource(object):
         self.revision = None
         self.usedByMaps = set([])
         self.useTextures = set([])
+        self.useModels = set([])
         self.usedByScripts = set([])
         self.useResources = set([])
 
@@ -181,7 +189,7 @@ class Resources(object):
                     resource.usedByScripts.add(uforesource)
                     uforesource.useResources.add(resource)
 
-    def computeTextureUsageInMaps(self):
+    def computeResourceUsageInMaps(self):
         "Read maps and create relations with other resources"
 
         print 'Parse texture usage in maps...'
@@ -201,6 +209,15 @@ class Resources(object):
 
         for mapname in files:
             mapmeta = self.getResource(mapname)
+
+            for model in get_used_models(mapname):
+                mdlname = "base/" + model
+                mdlmeta = self.getResource(mdlname)
+                if mdlmeta == None:
+                    print "Warning: \"" + mdlname + "\" from map \"" + mapname + "\" does not exist"
+                    continue
+                mdlmeta.usedByMaps.add(mapmeta)
+                mapmeta.useModels.add(mdlmeta)
 
             for tex in get_used_tex(mapname):
                 texname = "base/textures/" + tex

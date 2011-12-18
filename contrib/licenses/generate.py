@@ -452,14 +452,17 @@ class Analysis(object):
             else:
                 content['extra_info'] +=  '<br />Note: Map without textures!'
 
+        if len(meta.usedByMaps) != 0:
+            list = []
+            for m in meta.usedByMaps:
+                list.append(m.fileName)
+            content['extra_info'] += '<br/><div>Used in: %s </div>' % ', '.join(list)
+
         if 'textures/' in meta.fileName and meta.isImage():
             if len(meta.usedByMaps) > 0:
-                list = []
-                for m in meta.usedByMaps:
-                    list.append(m.fileName)
-                content['extra_info'] += '<br/><div>Used in: %s </div>' % ', '.join(list)
+                pass
             elif '_nm.' in meta.fileName or '_gm.' in meta.fileName or '_sm.' in meta.fileName or '_rm.' in meta.fileName:
-                content['extra_info'] += '<br/><div>Special map - only indirectly used</div>'
+                content['extra_info'] += '<br/><div>Special textures - only indirectly used</div>'
             else:
                 content['extra_info'] += '<br/><b>UNUSED</b> (at least no map uses it)'
 
@@ -724,7 +727,7 @@ def main():
 
     # map-texture relations
     if PARSE_MAPS:
-        RESOURCES.computeTextureUsageInMaps()
+        RESOURCES.computeResourceUsageInMaps()
     if PARSE_SCRIPTS:
         RESOURCES.computeResourceUsageInUFOScripts()
 
