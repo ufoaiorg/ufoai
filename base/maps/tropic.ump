@@ -469,7 +469,7 @@ title "_Tropical drug"
 
 assembly bigufo
 {
-size "8 8"
+size "9 9"
 title "_Tropical UFO"
 
 +f01 "0 10"
