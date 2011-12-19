@@ -9,7 +9,7 @@ component cmpDefNamedTbar cmpPhysNamedTbar {
 	image bdr {
 		pos "3 18"
 	}
-	tbar		bar {
+	tbar	bar {
 		pos "5 18"
 	}
 	string	val {
@@ -32,19 +32,21 @@ window physdata
 	image bar_physdata
 	{
 		src		"hud/bar_phys"
-		pos			"0 0"
+		pos		"0 0"
 	}
 
+	string actorname_shadow
+	{
+		string	*cvar:mn_name
+		color	"0 0 0 1"
+		pos		"27 26"
+		size	"165 20"
+	}
 	string actorname
 	{
-		string		*cvar:mn_name
-		pos			"26 25"
-		size		"165 20"
-	}
-
-	controls drag {
-		pos		"10 10"
-		size	"200 50"
+		string	*cvar:mn_name
+		pos		"26 25"
+		size	"165 20"
 	}
 
 	// ==================
@@ -178,6 +180,21 @@ window physdata
 			string val { string *cvar:mn_texp }
 		}
 
+	// these cvars do just exist in campaign mode, otherwise strings are empty
+	string	missions_lbl { pos "37 445" size "180 20" string *cvar:mn_missions_label_string }
+	string	missions_val { pos "240 445" size "165 20" string *cvar:mn_chrmis contentalign ALIGN_UR }
+
+	string	kills_lbl { pos "37 465" size "180 20" string *cvar:mn_kills_label_string }
+	string	kills_val { pos "240 465" size "165 20" string *cvar:mn_chrkillalien contentalign ALIGN_UR }
+
+	// drag controls now extended over the whole window, LMB:drag, RMB:close
+	controls drag {
+		tooltip	"_LMB:Drag/RMB:Close"
+		pos		"10 10"
+		size	"492 492"
+		OnRClick { cmd "ui_pop;" }
+	}
+
 	// ==================
 	// health and morale
 	// ==================
@@ -203,6 +220,7 @@ window physdata
 	}
 	ekg hp
 	{
+		tooltip		"_EKG"
 		image		"hud/phys_ekg"
 		pos			"78 367"
 		size		"324 32"
@@ -229,6 +247,7 @@ window physdata
 	}
 	ekg morale
 	{
+		tooltip		"_Morale"
 		image		"hud/phys_mor"
 		pos			"78 406"
 		size		"324 32"
@@ -236,20 +255,13 @@ window physdata
 		scale		2.0
 	}
 
-	// these cvars do just exist in campaign mode, otherwise strings are empty
-	string	missions_lbl { pos "37 445" size "180 20" string *cvar:mn_missions_label_string }
-	string	missions_val { pos "240 445" size "165 20" string *cvar:mn_chrmis contentalign ALIGN_UR }
-
-	string	kills_lbl { pos "37 465" size "180 20" string *cvar:mn_kills_label_string }
-	string	kills_val { pos "240 465" size "165 20" string *cvar:mn_chrkillalien contentalign ALIGN_UR }
-
-
 	// ==================
 	// buttons
 	// ==================
 
 	custombutton button_exit
 	{
+		tooltip		"_Close"
 		background	"buttons/large_blue"
 		pos			"428 458"
 		size		"64 37"
@@ -268,8 +280,10 @@ window physdata
 
 	func onWindowClosed {
 		delete *cvar:physdat_window_open
-		delete *cvar:mn_missions_label_string
-		delete *cvar:mn_kills_label_string
+		if ( *cvar:mn_base_count > 0 ) {
+			delete *cvar:mn_missions_label_string
+			delete *cvar:mn_kills_label_string
+		}
 	}
 }
 
