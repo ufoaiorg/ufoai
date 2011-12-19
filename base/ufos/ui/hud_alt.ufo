@@ -796,17 +796,23 @@ window hud_alt extends hud
 			string		*cvar:mn_ammoright
 			pos			"117 401"
 			size		"40 20"
+			tooltip		"LMB:Reload"
+			onClick		{ cmd "hud_reloadright;" }
 		}
 		string ammoleft
 		{
 			string		*cvar:mn_ammoleft
 			pos			"117 401"
 			size		"40 20"
+			tooltip		"LMB:Reload"
+			onClick		{ cmd "hud_reloadleft;" }
 		}
 
 		func show_rightweapon
 		{
 			*node:root.right.right@invis = false
+			*node:root.right.switch_to_right_hand@invis = true
+			*node:root.right.switch_to_left_hand@invis = false
 			*node:root.right.ammoright@invis = false
 			*node:root.right.left@invis = true
 			*node:root.right.ammoleft@invis = true
@@ -818,6 +824,8 @@ window hud_alt extends hud
 		func show_leftweapon
 		{
 			*node:root.right.right@invis = true
+			*node:root.right.switch_to_left_hand@invis = true
+			*node:root.right.switch_to_right_hand@invis = false
 			*node:root.right.ammoright@invis = true
 			*node:root.right.left@invis = false
 			*node:root.right.ammoleft@invis = false
@@ -945,6 +953,17 @@ window hud_alt extends hud
 			pos			"1 49"
 			size		"40 20"
 			contentalign	ALIGN_CC
+			onWheelUp
+			{
+				if (*cvar:cl_worldlevel < *cvar:cl_maxworldlevel) {
+					*cvar:cl_worldlevel = (*cvar:cl_worldlevel + 1)
+				}
+			}
+			onWheelDown	{
+				if (*cvar:cl_worldlevel > 0) {
+					*cvar:cl_worldlevel = (*cvar:cl_worldlevel - 1)
+				}
+			}
 		}
 	}
 

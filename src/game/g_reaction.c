@@ -25,8 +25,8 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 
 #include "g_local.h"
 
-#if 0		/* avoid warnings while the code is not used yet */
 #define MAX_RF_TARGETS 10
+#define MAX_RF_DATA 50
 
 typedef struct reactionFireTarget
 {
@@ -36,13 +36,53 @@ typedef struct reactionFireTarget
 
 typedef struct reactionFireTargets
 {
+	int entnum;
 	int count;
 	reactionFireTarget_t targets[MAX_RF_TARGETS];
 } reactionFireTargets_t;
 
-static void G_ReactionFireTargetsAdd (reactionFireTargets_t *rfts, const edict_t *target)
+static reactionFireTargets_t rfData[MAX_RF_DATA];
+
+void G_ReactionFireTargetsInit (void)
 {
 	int i;
+
+	for (i = 0; i < MAX_RF_DATA; i++) {
+		rfData[i].entnum = -1;
+		rfData[i].count = 0;
+	}
+}
+
+void G_ReactionFireTargetsCreate (const edict_t *shooter)
+{
+	int i;
+
+	for (i = 0; i < MAX_RF_DATA; i++) {
+		if (rfData[i].entnum == shooter->number)
+			gi.Error("Entity already has rfData");
+	}
+	for (i = 0; i < MAX_RF_DATA; i++) {
+		if (rfData[i].entnum == -1) {
+			rfData[i].entnum = shooter->number;
+			break;
+		}
+	}
+#if 1
+	if (i == MAX_RF_DATA)
+		gi.Error("Not enough rfData");
+#endif
+}
+
+#if 1		/* avoid warnings while the code is not used yet */
+static void G_ReactionFireTargetsAdd (const edict_t *shooter, const edict_t *target)
+{
+	int i;
+	reactionFireTargets_t *rfts = NULL;
+
+	for (i = 0; i < MAX_RF_DATA; i++) {
+		if (rfData[i].entnum == shooter->number)
+			rfts = &rfData[i];
+	}
 
 	assert(rfts);
 	assert(target);
@@ -57,9 +97,15 @@ static void G_ReactionFireTargetsAdd (reactionFireTargets_t *rfts, const edict_t
 	rfts->count++;
 }
 
-static void G_ReactionFireTargetsRemove (reactionFireTargets_t *rfts, const edict_t *target)
+static void G_ReactionFireTargetsRemove (const edict_t *shooter, const edict_t *target)
 {
 	int i;
+	reactionFireTargets_t *rfts = NULL;
+
+	for (i = 0; i < MAX_RF_DATA; i++) {
+		if (rfData[i].entnum == shooter->number)
+			rfts = &rfData[i];
+	}
 
 	assert(rfts);
 	assert(target);
@@ -341,6 +387,27 @@ static qboolean G_ReactionFireIsPossible (const edict_t *ent, const edict_t *tar
 	return qtrue;
 }
 
+#if 1
+/**
+ * @brief Check whether 'target' has just triggered any new reaction fire
+ * @param[in] target The entity triggering fire
+ */
+static void G_ReactionFireTargetsUpdate (const edict_t *target)
+{
+	edict_t *shooter = NULL;
+
+	/* check all possible shooters */
+	while ((shooter = G_EdictsGetNextLivingActor(shooter))) {
+
+		/* check whether reaction fire is possible */
+		if (G_ReactionFireIsPossible(shooter, target))
+			G_ReactionFireTargetsAdd(shooter, target);
+		else
+			G_ReactionFireTargetsRemove(shooter, target);
+	}
+}
+#endif
+
 /**
  * @brief Check whether 'target' has just triggered any new reaction fire
  * @param[in] target The entity triggering fire
@@ -503,6 +570,8 @@ qboolean G_ReactionFireOnMovement (edict_t *target)
 	/* Check to see whether this triggers any reaction fire */
 	G_ReactionFireSearchTarget(target);
 
+	G_ReactionFireTargetsUpdate(target);
+
 	return fired;
 }
 
@@ -518,6 +587,8 @@ void G_ReactionFirePreShot (const edict_t *target, const int fdTime)
 
 	/* Check to see whether this triggers any reaction fire */
 	G_ReactionFireSearchTarget(target);
+
+	G_ReactionFireTargetsUpdate(target);
 
 	/* check all ents to see who wins and who loses a draw */
 	while ((ent = G_EdictsGetNextLivingActor(ent))) {

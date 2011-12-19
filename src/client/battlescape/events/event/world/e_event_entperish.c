@@ -63,7 +63,7 @@ void CL_EntPerish (const eventRegister_t *self, struct dbuffer *msg)
 		break;
 #ifdef DEBUG
 	case ET_ACTORHIDDEN:
-		Com_DPrintf(DEBUG_CLIENT, "CL_EntPerish: It should not happen that we perish an hidden actor\n");
+		Com_DPrintf(DEBUG_CLIENT, "CL_EntPerish: It should not happen that we perish a hidden actor\n");
 		return;
 #endif
 	case ET_PARTICLE:

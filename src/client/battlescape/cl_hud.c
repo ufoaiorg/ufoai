@@ -432,8 +432,8 @@ static void HUD_DisplayFiremodeEntry (const char* callback, const le_t* actor, c
 	/* unique identifier of the action */
 	/* @todo use this id as action callback instead of hand and index (we can extend it with any other soldier action we need (open door, reload...)) */
 	Com_sprintf(id, sizeof(id), "fire_hand%c_i%i", ACTOR_GET_HAND_CHAR(hand), index);
-	fireDefTUs = va(_("TU: %i"), fd->time);
-	ammoAmount = va(_("Shots: %i"), fd->ammo);
+	fireDefTUs = va(_("%i"), fd->time);
+	ammoAmount = va(_("%i"), fd->ammo);
 
 	UI_ExecuteConfunc("%s firemode %s %c %i %i %i \"%s\" \"%s\" \"%s\" \"%s\"", callback, id, ACTOR_GET_HAND_CHAR(hand),
 			fd->fdIdx, fd->reaction, status, _(fd->name), fireDefTUs, ammoAmount, tooltip);

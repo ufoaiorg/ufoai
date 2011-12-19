@@ -520,8 +520,7 @@ int CP_CountMissionOnGeoscape (void)
 	mission_t *mission;
 
 	MIS_Foreach(mission) {
-		/** @todo only use if (mission->onGeoscape) as we do in the mission render loop */
-		if (mission->stage != STAGE_NOT_ACTIVE && mission->stage != STAGE_OVER && mission->onGeoscape) {
+		if (mission->onGeoscape) {
 			counterVisibleMission++;
 		}
 	}

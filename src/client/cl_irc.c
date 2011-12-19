@@ -947,6 +947,7 @@ static void Irc_Client_CmdPrivmsg (const char *prefix, const char *params, const
 		if (!strncmp(trailing, IRC_INVITE_FOR_A_GAME, strlen(IRC_INVITE_FOR_A_GAME))) {
 			char serverIPAndPort[128];
 			char *port;
+			char *version;
 			Q_strncpyz(serverIPAndPort, trailing + strlen(IRC_INVITE_FOR_A_GAME), sizeof(serverIPAndPort));
 			/* values are splitted by ; */
 			port = strstr(serverIPAndPort, ";");
@@ -957,6 +958,18 @@ static void Irc_Client_CmdPrivmsg (const char *prefix, const char *params, const
 
 			/* split ip and port */
 			*port++ = '\0';
+
+			/* the version is optional */
+			version = strstr(port, ";");
+			if (version != NULL) {
+				/* split port and version */
+				*version++ = '\0';
+				if (!Q_streq(version, UFO_VERSION)) {
+					Com_DPrintf(DEBUG_CLIENT, "irc invite message from different game version received: %s (versus our version: "UFO_VERSION")\n",
+							version);
+					return;
+				}
+			}
 
 			/** get the ip and port into the menu */
 			UI_ExecuteConfunc("multiplayer_invite_server_info %s %s", serverIPAndPort, port);
@@ -1821,7 +1834,7 @@ static void Irc_GetExternalIP (const char *externalIP)
 		Com_Printf("Could not query masterserver\n");
 		return;
 	}
-	Com_sprintf(buf, sizeof(buf), "%s%s;%s", IRC_INVITE_FOR_A_GAME, externalIP, port->string);
+	Com_sprintf(buf, sizeof(buf), "%s%s;%s;%s", IRC_INVITE_FOR_A_GAME, externalIP, port->string, UFO_VERSION);
 
 	user = chan->user;
 	while (user) {

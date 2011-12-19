@@ -12,6 +12,11 @@ window radarwindow {
 	radar hudradar
 	{
 		align	LAYOUTALIGN_FILL
+
+		onRClick
+		{
+			cmd "closeradar;"
+		}
 	}
 }
 

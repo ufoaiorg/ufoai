@@ -16,9 +16,9 @@ window hud_mini extends hud
 		cmd "ui_push ahudinv;"
 	}
 
-	// ==================
-	// render rectangle
-	// ==================
+	// ===============================
+	// render rectangle (battlescape)
+	// ===============================
 	battlescape render
 	{
 		pos			"0 0"
@@ -26,9 +26,9 @@ window hud_mini extends hud
 		align		LAYOUTALIGN_FILL
 	}
 
-	// ==================
-	// floor
-	// ==================
+	// ======================
+	// floor (soldier panel)
+	// ======================
 	panel floor_deco {
 		{
 			pos		"256 640"
@@ -146,6 +146,26 @@ window hud_mini extends hud
 			src		"minihud/bar_teamright_deco"
 			pos			"656 0"
 			size		"32 128"
+		}
+
+		func hudenable_floor_deco
+		{
+			*cvar:tmp = ( <1> + 1 )
+			*cvar:i = 1
+			while ( *cvar:i < *cvar:tmp ) {
+				*node:root.floor_deco.bar_teambox<cvar:i>_deco@invis = false  *node:root.floor_deco.bar_teamsep<cvar:i>_deco@invis = false
+				*cvar:i = ( *cvar:i + 1 )
+			}
+
+			while ( *cvar:tmp < 8 ) {
+				*node:root.floor_deco.bar_teambox<cvar:tmp>_deco@invis = true  *node:root.floor_deco.bar_teamsep<cvar:tmp>_deco@invis = true
+				*cvar:tmp = ( *cvar:tmp + 1 )
+			}
+
+			delete *cvar:tmp
+			delete *cvar:i
+
+			*node:root.floor_deco.bar_teamright_deco@left = ( *node:root.floor_deco.bar_teambox<1>_deco@left + *node:root.floor_deco.bar_teambox<1>_deco@width )
 		}
 	}
 
@@ -634,9 +654,9 @@ window hud_mini extends hud
 		}
 	}
 
-	// ==================
-	// right panel
-	// ==================
+	// ===================
+	// right panel (main)
+	// ===================
 
 	panel right_deco {
 		{
@@ -715,7 +735,6 @@ window hud_mini extends hud
 			disabled	true
 			tooltip		*cvar:mn_tu_tooltips
 		}
-
 		bar timereserved
 		{
 			pos			"113 275"
@@ -731,6 +750,68 @@ window hud_mini extends hud
 		// strings
 		// ==================
 
+		// level string
+		string str_level_shadow
+		{
+			color		"0 0 0 1"
+			string		*cvar:cl_worldlevel
+			pos			"200 217"
+			size		"20 20"
+			contentalign	ALIGN_CL
+		}
+		string str_level
+		{
+			tooltip		"_Current Level\nLMB:Level up/RMB:Level down\nWheel changes level also"
+			string		*cvar:cl_worldlevel
+			pos			"199 216"
+			size		"20 20"
+			contentalign	ALIGN_CL
+			onClick
+			{
+				if (*cvar:cl_worldlevel < *cvar:cl_maxworldlevel) {
+					*cvar:cl_worldlevel = (*cvar:cl_worldlevel + 1)
+				}
+			}
+			onRClick
+			{
+				if (*cvar:cl_worldlevel > 0) {
+					*cvar:cl_worldlevel = (*cvar:cl_worldlevel - 1)
+				}
+			}
+			onWheelUp
+			{
+				if (*cvar:cl_worldlevel < *cvar:cl_maxworldlevel) {
+					*cvar:cl_worldlevel = (*cvar:cl_worldlevel + 1)
+				}
+			}
+			onWheelDown
+			{
+				if (*cvar:cl_worldlevel > 0) {
+					*cvar:cl_worldlevel = (*cvar:cl_worldlevel - 1)
+				}
+			}
+		}
+
+		// number of spotted enemies string
+		string numspotted_shadow
+		{
+			string		*cvar:mn_numaliensspotted
+			color		"0 0 0 1"
+			pos			"224 217"
+			size	    "20 20"
+			contentalign	ALIGN_CC
+		}
+		string numspotted
+		{
+			string		*cvar:mn_numaliensspotted
+			color		"1 0 0 1"
+			tooltip		"_LMB:Cycle through spotted enemies"
+			pos			"225 216"
+			size	    "20 20"
+			onClick		{ cmd "nextalien;" }
+			contentalign	ALIGN_CC
+		}
+		// name string
 		string str_name_shadow
 		{
 			font		"f_verysmall"
@@ -750,6 +831,7 @@ window hud_mini extends hud
 			onRClick	{ cmd "ui_push ahudphysdat;" }
 		}
 
+		// health string
 		string str_hp_shadow
 		{
 			font		"f_small_bold"
@@ -769,6 +851,7 @@ window hud_mini extends hud
 			contentalign	ALIGN_UC
 			tooltip		"_Health"
 		}
+		// morale string
 		string str_morale_shadow
 		{
 			font		"f_small_bold"
@@ -788,6 +871,7 @@ window hud_mini extends hud
 			contentalign	ALIGN_UC
 			tooltip		"_Morale"
 		}
+		// TUs string
 		string str_tu_shadow
 		{
 			font		"f_small_bold"
@@ -807,6 +891,7 @@ window hud_mini extends hud
 			contentalign	ALIGN_UC
 			tooltip		"_TUs"
 		}
+		// TUs reserved string
 		string str_tu_reserved_shadow
 		{
 			font		"f_small_bold"
@@ -831,6 +916,26 @@ window hud_mini extends hud
 		// buttons
 		// ==================
 
+		// next turn button
+		image nextturn
+		{
+			tooltip		"_Finish Turn"
+			src		"althud/buttons_althud1g"
+			pos			"103 208"
+			texl		"0 0"
+			texh		"40 34"
+			mousefx		true
+			onClick		{ cmd "nextround;" }
+		}
+/*
+		// rank display
+		image	rank_img {
+			pos "153 210"
+			size "32 32"
+			src *cvar:mn_chrrank_img
+			tooltip "_Rank"
+		}
+*/
 		// show/hide window buttons
 
 		image minihud_bt_physdat
@@ -984,47 +1089,6 @@ window hud_mini extends hud
 			}
 		}
 
-		image minihud_bt_levels_off
-		{
-			tooltip		"_LMB:Show Level Controls"
-			src			"icons/off"
-			mousefx		true
-			pos			"142 490"
-			size		"16 16"
-			onClick
-			{
-				*node:root.bottomright@invis = false
-				if ( *node:root.right.minihud_bt_decoration_on@invis == false ) { *node:root.bottomright_deco@invis = false }
-				*node:root.right.minihud_bt_levels_on@invis = false
-			}
-			onRClick
-			{
-				*node:root.bottomright_deco@invis = true
-				*node:root.bottomright@invis = true
-				*node:root.right.minihud_bt_levels_on@invis = true
-			}
-		}
-		image minihud_bt_levels_on
-		{
-			tooltip		"_RMB:Hide Level Controls"
-			src			"icons/on"
-			mousefx		true
-			pos			"142 490"
-			size		"16 16"
-			onClick
-			{
-				*node:root.bottomright@invis = false
-				if ( *node:root.right.minihud_bt_decoration_on@invis == false ) { *node:root.bottomright_deco@invis = false }
-				*node:root.right.minihud_bt_levels_on@invis = false
-			}
-			onRClick
-			{
-				*node:root.bottomright_deco@invis = true
-				*node:root.bottomright@invis = true
-				*node:root.right.minihud_bt_levels_on@invis = true
-			}
-		}
-
 		image minihud_bt_decoration_off
 		{
 			tooltip		"_LMB:Show Decoration"
@@ -1037,7 +1101,6 @@ window hud_mini extends hud
 				*node:root.right_deco@invis = false
 				if ( *node:root.floor@invis == false ) { *node:root.floor_deco@invis = false }
 				if ( *node:root.upperright@invis == false ) { *node:root.upperright_deco@invis = false }
-				if ( *node:root.bottomright@invis == false ) { *node:root.bottomright_deco@invis = false }
 				*node:root.right.minihud_bt_decoration_on@invis = false
 			}
 			onRClick
@@ -1045,7 +1108,6 @@ window hud_mini extends hud
 				*node:root.right_deco@invis = true
 				*node:root.floor_deco@invis = true
 				*node:root.upperright_deco@invis = true
-				*node:root.bottomright_deco@invis = true
 				*node:root.right.minihud_bt_decoration_on@invis = true
 			}
 		}
@@ -1061,7 +1123,6 @@ window hud_mini extends hud
 				*node:root.right_deco@invis = false
 				if ( *node:root.floor@invis == false ) { *node:root.floor_deco@invis = false }
 				if ( *node:root.upperright@invis == false ) { *node:root.upperright_deco@invis = false }
-				if ( *node:root.bottomright@invis == false ) { *node:root.bottomright_deco@invis = false }
 				*node:root.right.minihud_bt_decoration_on@invis = false
 			}
 			onRClick
@@ -1069,7 +1130,6 @@ window hud_mini extends hud
 				*node:root.right_deco@invis = true
 				*node:root.floor_deco@invis = true
 				*node:root.upperright_deco@invis = true
-				*node:root.bottomright_deco@invis = true
 				*node:root.right.minihud_bt_decoration_on@invis = true
 			}
 		}
@@ -1158,6 +1218,19 @@ window hud_mini extends hud
 			onRClick	{ cmd "hud_shotreservationpopup 0;" }
 		}
 
+		// easy hand switch
+
+		panel invisible_hand
+		{
+			pos			"114 340"
+			size		"125 80"
+			onRClick	{ call *node:root.right.show_rightweapon cmd "hud_switchfiremodelist firemode_listener r;" }
+			onClick		{ call *node:root.right.show_leftweapon cmd "hud_switchfiremodelist firemode_listener l;" }
+			tooltip	"LMB:left hand/RMB:right hand"
+		}
+
+		// weapon container
+
 		container right
 		{
 			pos			"114 340"
@@ -1166,12 +1239,15 @@ window hud_mini extends hud
 		{
 			pos			"114 340"
 		}
+
+		// ammo
+
 		string ammoright_shadow
 		{
 			string		*cvar:mn_ammoright
 			font		"f_small_bold"
 			pos			"118 402"
-			size		"40 20"
+			size		"30 20"
 			color		"0 0 0 1"
 		}
 		string ammoright
@@ -1179,8 +1255,9 @@ window hud_mini extends hud
 			string		*cvar:mn_ammoright
 			font		"f_small_bold"
 			pos			"117 401"
-			size		"40 20"
-			tooltip		"Ammo"
+			size		"30 20"
+			tooltip		"LMB:Reload"
+			onClick		{ cmd "hud_reloadright;" }
 		}
 		string ammoleft_shadow
 		{
@@ -1196,12 +1273,15 @@ window hud_mini extends hud
 			font		"f_small_bold"
 			pos			"117 401"
 			size		"40 20"
-			tooltip		"Ammo"
+			tooltip		"LMB:Reload"
+			onClick		{ cmd "hud_reloadleft;" }
 		}
 
 		func show_rightweapon
 		{
 			*node:root.right.right@invis = false
+			*node:root.right.switch_to_right_hand@invis = true
+			*node:root.right.switch_to_left_hand@invis = false
 			*node:root.right.ammoright_shadow@invis = false
 			*node:root.right.ammoright@invis = false
 			*node:root.right.left@invis = true
@@ -1215,6 +1295,8 @@ window hud_mini extends hud
 		func show_leftweapon
 		{
 			*node:root.right.right@invis = true
+			*node:root.right.switch_to_left_hand@invis = true
+			*node:root.right.switch_to_right_hand@invis = false
 			*node:root.right.ammoright_shadow@invis = true
 			*node:root.right.ammoright@invis = true
 			*node:root.right.left@invis = false
@@ -1225,6 +1307,8 @@ window hud_mini extends hud
 			*node:root.right.bt_reloadright@invis = true
 			*node:root.right.bt_reloadleft@invis = false
 		}
+
+		// buttons switch hand
 
 		button switch_to_right_hand
 		{
@@ -1251,6 +1335,8 @@ window hud_mini extends hud
 			onClick		{ call *node:root.right.show_leftweapon cmd "hud_switchfiremodelist firemode_listener l;" }
 		}
 	}
+
+	// chat
 
 	image bar_chat_bg
 	{
@@ -1293,83 +1379,7 @@ window hud_mini extends hud
 		}
 	}
 
-	panel bottomright_deco {
-		{
-			pos		"0 0"
-			size	"40 117"
-			align	LAYOUTALIGN_BOTTOMRIGHT
-			ghost	true
-		}
-		image bar_floor_deco
-		{
-			src		"minihud/bar_floor_deco"
-			pos			"0 0"
-			texl		"24 11"
-			size		"40 117"
-		}
-	}
-	panel bottomright {
-		{
-			pos		"0 0"
-			size	"40 117"
-			align	LAYOUTALIGN_BOTTOMRIGHT
-			ghost	true
-		}
-
-		image bar_floor_mini
-		{
-			src		"minihud/bar_floor_mini"
-			pos			"0 0"
-			texl		"24 11"
-			size		"40 117"
-		}
-
-		image bt_floorup
-		{
-			tooltip		"_Level up"
-			src		"althud/buttons_althud1"
-			mousefx		true
-			pos			"7 7"
-			texl		"54 74"
-			texh		"79 107"
-			onClick		{
-				if (*cvar:cl_worldlevel < *cvar:cl_maxworldlevel) {
-					*cvar:cl_worldlevel = (*cvar:cl_worldlevel + 1)
-				}
-			}
-		}
-		image bt_floordown
-		{
-			tooltip		"_Level down"
-			src		"althud/buttons_althud1"
-			mousefx		true
-			pos			"7 82"
-			texl		"81 74"
-			texh		"106 107"
-			onClick		{
-				if (*cvar:cl_worldlevel > 0) {
-					*cvar:cl_worldlevel = (*cvar:cl_worldlevel - 1)
-				}
-			}
-		}
-
-		string str_level_shadow
-		{
-			color		"0 0 0 1"
-			string		*cvar:cl_worldlevel
-			pos			"14 50"
-			size		"40 20"
-			contentalign	ALIGN_CL
-		}
-		string str_level
-		{
-			tooltip		"_Current Level"
-			string		*cvar:cl_worldlevel
-			pos			"13 49"
-			size		"40 20"
-			contentalign	ALIGN_CL
-		}
-	}
+// Uperright panel (music control (stop music, play next random track), message log, options)
 
 	panel upperright_deco {
 		{
@@ -1396,36 +1406,9 @@ window hud_mini extends hud
 			pos			"0 0"
 		}
 
-		string numspotted_shadow
-		{
-			string		*cvar:mn_numaliensspotted
-			color		"0 0 0 1"
-			pos			"77 14"
-			size	    "48 34"
-			contentalign	ALIGN_CC
-		}
-		string numspotted
-		{
-			string		*cvar:mn_numaliensspotted
-			tooltip		"_Cycle through spotted enemies"
-			pos			"78 13"
-			size	    "48 34"
-			onClick		{ cmd "nextalien;" }
-			contentalign	ALIGN_CC
-		}
-		image nextround
-		{
-			tooltip		"_Finish turn"
-			src		"althud/buttons_althud1g"
-			pos			"120 11"
-			texl		"0 0"
-			texh		"40 34"
-			mousefx		true
-			onClick		{ cmd "nextround;" }
-		}
 		image messagelog
 		{
-			tooltip		"_Message log"
+			tooltip		"_Message Log"
 			src		"althud/buttons_althud1g"
 			pos			"164 11"
 			texl		"43 0"
@@ -1441,6 +1424,22 @@ window hud_mini extends hud
 			texh		"126 34"
 			mousefx		true
 			onClick		{ cmd "ui_pop;" }
+		}
+		image bt_stop
+		{
+			tooltip		"_Stop Music"
+			src		"minihud/bt_stop"
+			pos			"100 12"
+			size	"32 32"
+			onClick		{ cmd	"music_stop;" }
+		}
+		image bt_forward
+		{
+			tooltip		"_Play Next Random Track"
+			src		"minihud/bt_forward"
+			pos			"130 12"
+			size	"32 32"
+			onClick		{ cmd	"music_randomtrack;" }
 		}
 	}
 
@@ -1479,11 +1478,11 @@ window hud_mini extends hud
 
 	confunc startround
 	{
-		*node:root.upperright.nextround@image = "althud/buttons_althud1"
+		*node:root.right.nextturn@image = "althud/buttons_althud1"
 	}
 	confunc endround
 	{
-		*node:root.upperright.nextround@image = "althud/buttons_althud1g"
+		*node:root.right.nextturn@image = "althud/buttons_althud1g"
 		cmd "hud_movemode;"
 	}
 
@@ -1545,6 +1544,7 @@ window hud_mini extends hud
 	confunc hudenable
 	{
 		call *node:root.floor.hudenable_floor ( <1> )
+		call *node:root.floor_deco.hudenable_floor_deco ( <1> )
 	}
 
 	// ==================

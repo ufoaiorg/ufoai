@@ -1092,6 +1092,8 @@ edict_t* G_ClientGetFreeSpawnPointForActorSize (const player_t *player, const ac
 
 	G_ActorModifyCounters(NULL, ent, 1, 0, 0);
 
+	G_ReactionFireTargetsCreate(ent);
+
 	return ent;
 }
 
