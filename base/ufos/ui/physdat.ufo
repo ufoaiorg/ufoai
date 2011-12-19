@@ -79,6 +79,18 @@ window physdata
 			skin		*cvar:mn_skin
 			tag			"tag_head"
 		}
+
+		model right_rweapon
+		{
+			src			*cvar:mn_rweapon
+			tag			"tag_rweapon"
+		}
+
+		model right_lweapon
+		{
+			src			*cvar:mn_lweapon
+			tag			"tag_lweapon"
+		}
 	}
 
 	// ==================
@@ -170,35 +182,67 @@ window physdata
 	// health and morale
 	// ==================
 
+	string hp_val_shadow
+	{
+		color "0 0 0 1"
+		font		"f_normal"
+		string		*cvar:mn_hp
+		pos			"416 370"
+		size		"50 20"
+		contentalign	ALIGN_UC
+	}
 	string hp_val
 	{
+		tooltip		"_Health"
+		color		".7 0 0 1"
+		font		"f_normal"
 		string		*cvar:mn_hp
-		pos			"415 373"
+		pos			"415 369"
 		size		"50 20"
 		contentalign	ALIGN_UC
 	}
 	ekg hp
 	{
 		image		"hud/phys_ekg"
-		pos			"78 369"
+		pos			"78 367"
 		size		"324 32"
 	}
 
+	string morale_val_shadow
+	{
+		color "0 0 0 1"
+		font		"f_normal"
+		string		*cvar:mn_morale
+		pos			"416 410"
+		size		"50 20"
+		contentalign	ALIGN_UC
+	}
 	string morale_val
 	{
+		tooltip		"_Morale"
+		color		".7 .7 0 1"
+		font		"f_normal"
 		string		*cvar:mn_morale
-		pos			"415 413"
+		pos			"415 409"
 		size		"50 20"
 		contentalign	ALIGN_UC
 	}
 	ekg morale
 	{
 		image		"hud/phys_mor"
-		pos			"78 408"
+		pos			"78 406"
 		size		"324 32"
 		scrollspeed	0.12
 		scale		2.0
 	}
+
+	// these cvars do just exist in campaign mode, otherwise strings are empty
+	string	missions_lbl { pos "37 445" size "180 20" string *cvar:mn_missions_label_string }
+	string	missions_val { pos "240 445" size "165 20" string *cvar:mn_chrmis contentalign ALIGN_UR }
+
+	string	kills_lbl { pos "37 465" size "180 20" string *cvar:mn_kills_label_string }
+	string	kills_val { pos "240 465" size "165 20" string *cvar:mn_chrkillalien contentalign ALIGN_UR }
+
 
 	// ==================
 	// buttons
@@ -215,10 +259,17 @@ window physdata
 
 	func onWindowOpened {
 		*cvar:physdat_window_open = 1
+		// if we are in campaign mode, we need these cvars
+		if ( *cvar:mn_base_count > 0 ) {
+			*cvar:mn_missions_label_string = "_Missions Performed:"
+			*cvar:mn_kills_label_string = "_Enemies Killed:"
+		}
 	}
 
 	func onWindowClosed {
 		delete *cvar:physdat_window_open
+		delete *cvar:mn_missions_label_string
+		delete *cvar:mn_kills_label_string
 	}
 }
 
