@@ -132,10 +132,6 @@ static void testMapDefsMassRMA (void)
 					if (i == 34 && !strcmp(p, "village") && !strcmp(md->param, "commercial") && !strcmp(craftIter->data, "craft_drop_raptor"))
 						continue;
 					/* I don't understand yet what's the problem here :( Just skipping (Duke, 21.12.11) */
-					if (!strcmp(p, "tower") && !strcmp(craftIter->data, "craft_drop_raptor"))
-						continue;
-					if (!strcmp(p, "tower") && !strcmp(craftIter->data, "craft_drop_herakles"))
-						continue;
 					if (!strcmp(p, "rescue") && !strcmp(craftIter->data, "craft_drop_dragon"))
 						continue;
 					if (!strcmp(p, "rescue") && !strcmp(craftIter->data, "craft_drop_raptor"))
