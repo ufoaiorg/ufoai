@@ -121,6 +121,9 @@ static void testMapDefsMassRMA (void)
 					Com_Printf("Seed: %i\n", i);
 
 					/* we have a known problem with these combinations, so skip it */
+					/* seed 20 is slow on linux (10 mins) */
+					if (i == 20 && !strcmp(p, "forest") && !strcmp(md->param, "large") && !strcmp(craftIter->data, "craft_drop_raptor"))
+						continue;
 					if (i == 27 && !strcmp(p, "forest") && !strcmp(md->param, "large") && !strcmp(craftIter->data, "craft_drop_raptor"))
 						continue;
 					if (i == 34 && !strcmp(p, "village") && !strcmp(md->param, "commercial") && !strcmp(craftIter->data, "craft_drop_raptor"))
