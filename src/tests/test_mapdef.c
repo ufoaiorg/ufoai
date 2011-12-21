@@ -86,6 +86,7 @@ static void testMapDefsMassRMA (void)
 {
 	const char *filterId = TEST_GetStringProperty("mapdef-id");
 	const mapDef_t* md;
+	int mapCount = 0;
 
 	CU_ASSERT_TRUE(cls.numMDs > 0);
 
@@ -93,6 +94,8 @@ static void testMapDefsMassRMA (void)
 		if (md->map[0] == '.')
 			continue;
 		if (filterId && strcmp(filterId, md->id) != 0)
+			continue;
+		if (++mapCount <= 0)		/* change 0 to n to skip the first n assemblies */
 			continue;
 
 		{
