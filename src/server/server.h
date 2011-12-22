@@ -170,6 +170,8 @@ extern serverInstanceGame_t * sv;			/**< server data per game/map */
 
 extern cvar_t *sv_mapname;
 extern cvar_t *sv_rma;
+/** @brief display a character graphic of the tiles placed when RMA2 reaches a dead end. */
+extern cvar_t *sv_rmadisplaythemap;
 extern cvar_t *sv_public;			/**< should heartbeats be sent? (only for public servers) */
 extern cvar_t *sv_dumpmapassembly;
 extern cvar_t *sv_threads;	/**< run the game lib threaded */

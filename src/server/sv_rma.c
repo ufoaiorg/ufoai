@@ -39,13 +39,6 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #define PRINT_RMA_PROGRESS 0
 /** @brief place the biggest 'required' tiles first. Helps oriental a lot, but is bad for village. */
 #define SORT_BY_SIZE 1
-/** @brief display a character graphic of the tiles placed when RMA2 reaches a dead end. */
-#define DISPLAY_THE_MAP 0
-#if DISPLAY_THE_MAP
-#define DISPLAY_THE_MAP_ON_FAILURE 1
-#else
-#define DISPLAY_THE_MAP_ON_FAILURE 0
-#endif
 
 /** @brief max # of recursions */
 #define RMA2_MAX_REC 64
@@ -138,7 +131,6 @@ static unsigned long tileMask (const char chr)
 	Com_Error(ERR_DROP, "SV_ParseMapTile: Invalid tile char '%c'", chr);
 }
 
-#if DISPLAY_THE_MAP_ON_FAILURE
 static void SV_TileMaskToString (unsigned long m, char *str)
 {
 	int i;
@@ -273,13 +265,12 @@ static void SV_RmaPrintMap (const mapInfo_t *map)
 	const char *underscores = "_________________________________________________________________________\n";
 	Com_Printf("\nCurrent state of the map:\n");
 	int w = ACW * (MMW - 1 - map->mAssembly[map->mAsm].width);
-	Com_Printf(underscores + w);
+	Com_Printf("%s", underscores + w);
 	int h = ACH * (height + 1);
 	for (i = h; i >= ACH; i--)
 		Com_Printf("%s\n", screen[i] + ACW);
-	Com_Printf(underscores + w);
+	Com_Printf("%s", underscores + w);
 }
-#endif
 
 static const mTileSet_t *SV_GetMapTileSet (const mapInfo_t *map, const char *tileSetName)
 {
@@ -1170,10 +1161,10 @@ static qboolean SV_AddMissingTiles_r (mapInfo_t *map, int rec, int posListCnt, s
 		solids += remaining * mToPlace[ti].tile->area;
 	}
 	if (solids < gapCount) {
-#if DISPLAY_THE_MAP_ON_FAILURE
-		SV_RmaPrintMap(map);
-		Com_Printf("out of solids\n");
-#endif
+		if (sv_rmadisplaythemap->integer) {
+			SV_RmaPrintMap(map);
+			Com_Printf("out of solids\n");
+		}
 		return qfalse;
 	}
 
@@ -1201,10 +1192,10 @@ static qboolean SV_AddMissingTiles_r (mapInfo_t *map, int rec, int posListCnt, s
 	for (y = 1; y < mAsm->height + 1; y++) {
 		for (x = 1; x < mAsm->width + 1; x++) {
 			if (gapList[x][y][0] == 0) {
-#if DISPLAY_THE_MAP_ON_FAILURE
-				SV_RmaPrintMap(map);
-				Com_Printf("uncovered gap: %i/%i\n", x, y);
-#endif
+				if (sv_rmadisplaythemap->integer) {
+					SV_RmaPrintMap(map);
+					Com_Printf("uncovered gap: %i/%i\n", x, y);
+				}
 				return qfalse;
 			}
 		}
@@ -1257,12 +1248,12 @@ static qboolean SV_AddMissingTiles_r (mapInfo_t *map, int rec, int posListCnt, s
 							SV_RemoveTile(map, NULL, NULL);
 
 							if (h >= g) {
-/*
-#if DISPLAY_THE_MAP_ON_FAILURE
-								SV_RmaPrintMap(map);
-								Com_Printf("no tile works for gap\n");
+#if 0
+								if (sv_rmadisplaythemap->integer) {
+									SV_RmaPrintMap(map);
+									Com_Printf("no tile works for gap\n");
+								}
 #endif
-*/
 								return qfalse;
 							}
 						}
@@ -1661,10 +1652,10 @@ static qboolean SV_AddMapTiles (mapInfo_t *map)
 #ifdef DEBUG
 			assert(idx == mPlaced[map->numPlaced - 1].idx);
 #endif
-#if DISPLAY_THE_MAP_ON_FAILURE
-			SV_RmaPrintMap(map);
-			Com_Printf("required tile doesn't fit\n");
-#endif
+			if (sv_rmadisplaythemap->integer) {
+				SV_RmaPrintMap(map);
+				Com_Printf("required tile doesn't fit\n");
+			}
 			SV_RemoveTile(map, &idx, &pos);
 			pos++;
 		}
@@ -1690,10 +1681,10 @@ static qboolean SV_AddMapTiles (mapInfo_t *map)
 		}
 
 		if (idx == numToPlace && !SV_AddMissingTiles(map)) {
-#if DISPLAY_THE_MAP_ON_FAILURE
-			SV_RmaPrintMap(map);
-			Com_Printf("couldn't pad\n");
-#endif
+			if (sv_rmadisplaythemap->integer) {
+				SV_RmaPrintMap(map);
+				Com_Printf("couldn't pad\n");
+			}
 			SV_RemoveTile(map, &idx, &pos);
 			pos++;
 		}

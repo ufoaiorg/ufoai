@@ -45,6 +45,7 @@ cvar_t *sv_maxclients = NULL;
 cvar_t *sv_dumpmapassembly;
 cvar_t *sv_threads;
 cvar_t *sv_rma;
+cvar_t *sv_rmadisplaythemap;
 /** should heartbeats be sent */
 cvar_t *sv_public;
 cvar_t *sv_mapname;
@@ -809,6 +810,7 @@ void SV_Init (void)
 
 	sv_threads = Cvar_Get("sv_threads", "1", CVAR_LATCH | CVAR_ARCHIVE, "Run the server threaded");
 	sv_rma = Cvar_Get("sv_rma", "2", 0, "1 = old algorithm, 2 = new algorithm");
+	sv_rmadisplaythemap = Cvar_Get("sv_rmadisplaythemap", "0", 0, "Activate rma problem output");
 	sv_public = Cvar_Get("sv_public", "1", 0, "Should heartbeats be send to the masterserver");
 	sv_reconnect_limit = Cvar_Get("sv_reconnect_limit", "3", CVAR_ARCHIVE, "Minimum seconds between connect messages");
 	sv_timeout = Cvar_Get("sv_timeout", "20", CVAR_ARCHIVE, "Seconds until a client times out");
