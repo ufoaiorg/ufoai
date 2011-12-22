@@ -125,11 +125,11 @@ static void testMapDefsMassRMA (void)
 
 					/* we have a known problem with these combinations, so skip it */
 					/* seed 20 is slow on linux (10 mins) */
-					if (i == 20 && !strcmp(p, "forest") && !strcmp(md->param, "large") && !strcmp(craftIter->data, "craft_drop_raptor"))
+					if (i == 20 && Q_streq(p, "forest") && Q_streq(md->param, "large") && Q_streq(craftIter->data, "craft_drop_raptor"))
 						continue;
-					if (i == 27 && !strcmp(p, "forest") && !strcmp(md->param, "large") && !strcmp(craftIter->data, "craft_drop_raptor"))
+					if (i == 27 && Q_streq(p, "forest") && Q_streq(md->param, "large") && Q_streq(craftIter->data, "craft_drop_raptor"))
 						continue;
-					if (i == 34 && !strcmp(p, "village") && !strcmp(md->param, "commercial") && !strcmp(craftIter->data, "craft_drop_raptor"))
+					if (i == 34 && Q_streq(p, "village") && Q_streq(md->param, "commercial") && Q_streq(craftIter->data, "craft_drop_raptor"))
 						continue;
 
 					randomMap = SV_AssembleMap(p, md->param, mapStr, posStr, i);
