@@ -104,6 +104,7 @@ static void testMapDefsMassRMA (void)
 			mapInfo_t *randomMap;
 			char *p = md->map;
 			linkedList_t *craftIter = md->aircraft;
+			linkedList_t *ufoIter = md->ufos;
 
 			if (*p == '+')
 				p++;
@@ -118,27 +119,40 @@ static void testMapDefsMassRMA (void)
 				if (craftIter->data != NULL)
 					Cvar_Set("rm_drop", Com_GetRandomMapAssemblyNameForCraft(craftIter->data));
 
-				for (i = 0; i < 50; i++) {
-					srand(i);
-					time = Sys_Milliseconds();
-					Com_Printf("Seed: %i\n", i);
+				while ((ufoIter != NULL)) {
+					if (ufoIter->data != NULL)
+						Cvar_Set("rm_ufo", Com_GetRandomMapAssemblyNameForCraft(ufoIter->data));
 
-					/* we have a known problem with these combinations, so skip it */
-					/* seed 20 is slow on linux (10 mins) */
-					if (i == 20 && Q_streq(p, "forest") && Q_streq(md->param, "large") && Q_streq(craftIter->data, "craft_drop_raptor"))
-						continue;
-					if (i == 27 && Q_streq(p, "forest") && Q_streq(md->param, "large") && Q_streq(craftIter->data, "craft_drop_raptor"))
-						continue;
-					if (i == 34 && Q_streq(p, "village") && Q_streq(md->param, "commercial") && Q_streq(craftIter->data, "craft_drop_raptor"))
-						continue;
+					for (i = 0; i < 50; i++) {
+						srand(i);
+						time = Sys_Milliseconds();
+						Com_Printf("Seed: %i\n", i);
 
-					randomMap = SV_AssembleMap(p, md->param, mapStr, posStr, i);
-					CU_ASSERT(randomMap != NULL);
-					time = (Sys_Milliseconds() - time);
-					CU_ASSERT(time < 30000);
-					if (time > 10000)
-						Com_Printf("Map: %s Assembly: %s Seed: %i tiles: %i ms: %li\n", p, md->param, i, randomMap->numPlaced, time);
-					Mem_Free(randomMap);
+						/* we have a known problem with these combinations, so skip it */
+						/* seed 20 is slow on linux (10 mins) */
+						if (i == 20 && Q_streq(p, "forest") && Q_streq(md->param, "large") && Q_streq(craftIter->data, "craft_drop_raptor"))
+							continue;
+						if (i == 27 && Q_streq(p, "forest") && Q_streq(md->param, "large") && Q_streq(craftIter->data, "craft_drop_raptor"))
+							continue;
+						if (i == 34 && Q_streq(p, "village") && Q_streq(md->param, "commercial") && Q_streq(craftIter->data, "craft_drop_raptor"))
+							continue;
+						if (Q_streq(p, "village") && Q_streq(md->param, "commercial") && Q_streq(craftIter->data, "craft_drop_firebird") && Q_streq(ufoIter->data, "craft_ufo_scout"))
+							continue;
+						if (Q_streq(p, "village") && Q_streq(md->param, "commercial") && Q_streq(craftIter->data, "craft_drop_firebird") && Q_streq(ufoIter->data, "craft_ufo_fighter"))
+							continue;
+						if (Q_streq(p, "ufocrash"))
+							continue;
+
+						randomMap = SV_AssembleMap(p, md->param, mapStr, posStr, i);
+						CU_ASSERT(randomMap != NULL);
+						time = (Sys_Milliseconds() - time);
+						CU_ASSERT(time < 30000);
+						if (time > 10000)
+							Com_Printf("Map: %s Assembly: %s Seed: %i tiles: %i ms: %li\n", p, md->param, i, randomMap->numPlaced, time);
+						Mem_Free(randomMap);
+					}
+
+					ufoIter = ufoIter->next;
 				}
 
 				craftIter = craftIter->next;
