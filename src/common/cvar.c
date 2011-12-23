@@ -422,7 +422,7 @@ static void Cvar_ExecuteChangeListener (const cvar_t* cvar)
 {
 	const cvarChangeListener_t *listener = cvar->changeListener;
 	while (listener) {
-		listener->exec(cvar->name, cvar->oldString, cvar->string);
+		listener->exec(cvar->name, cvar->oldString, cvar->string, listener->data);
 		listener = listener->next;
 	}
 }
@@ -440,24 +440,23 @@ static cvarChangeListener_t *Cvar_GetChangeListener (cvarChangeListenerFunc_t li
  * @param varName The cvar name to register the listener for
  * @param listenerFunc The listener callback to register
  */
-void Cvar_RegisterChangeListener (const char *varName, cvarChangeListenerFunc_t listenerFunc)
+cvarChangeListener_t *Cvar_RegisterChangeListener (const char *varName, cvarChangeListenerFunc_t listenerFunc)
 {
-	cvarChangeListener_t *listener;
 	cvar_t *var = Cvar_FindVar(varName);
 	if (!var) {
 		Com_Printf("Could not register change listener, cvar '%s' wasn't found\n", varName);
-		return;
+		return NULL;
 	}
 
-	listener = Cvar_GetChangeListener(listenerFunc);
 	if (!var->changeListener) {
-		var->changeListener = listener;
+		cvarChangeListener_t *l = Cvar_GetChangeListener(listenerFunc);
+		var->changeListener = l;
+		return l;
 	} else {
 		cvarChangeListener_t *l = var->changeListener;
 		while (l) {
 			if (l->exec == listenerFunc) {
-				Com_Printf("Cvar change listener already registered\n");
-				return;
+				return l;
 			}
 			l = l->next;
 		}
@@ -465,13 +464,16 @@ void Cvar_RegisterChangeListener (const char *varName, cvarChangeListenerFunc_t 
 		l = var->changeListener;
 		while (l) {
 			if (!l->next) {
+				cvarChangeListener_t *listener = Cvar_GetChangeListener(listenerFunc);
 				l->next = listener;
 				l->next->next = NULL;
-				break;
+				return listener;
 			}
 			l = l->next;
 		}
 	}
+
+	return NULL;
 }
 
 /**
