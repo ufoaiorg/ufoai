@@ -917,10 +917,69 @@ static void UI_RemoveListener_f (void)
 	UI_RemoveListener(node, property, function);
 }
 
+static void UI_CvarChangeListener (const char *cvarName, const char *oldValue, const char *newValue, void *data)
+{
+	linkedList_t *list = (linkedList_t *) data;
+	const char *confunc;
+	LIST_Foreach(list, char, confunc) {
+		UI_ExecuteConfunc("%s %s %s", confunc, oldValue, newValue);
+	}
+}
+
+static void UI_AddCvarListener_f (void)
+{
+	const char *cvarName;
+	const char *confuncName;
+	cvarChangeListener_t *l;
+
+	if (Cmd_Argc() != 3) {
+		Com_Printf("Usage: %s <cvar> <confunc>\n", Cmd_Argv(0));
+		return;
+	}
+
+	cvarName = Cmd_Argv(1);
+	confuncName = Cmd_Argv(2);
+	l = Cvar_RegisterChangeListener(cvarName, UI_CvarChangeListener);
+	LIST_AddString((linkedList_t**)&l->data, confuncName);
+}
+
+static void UI_RemoveCvarListener_f (void)
+{
+	const char *cvarName;
+	const char *confuncName;
+	cvar_t *var;
+
+	if (Cmd_Argc() != 3) {
+		Com_Printf("Usage: %s <cvar> <confunc>\n", Cmd_Argv(0));
+		return;
+	}
+
+	cvarName = Cmd_Argv(1);
+	confuncName = Cmd_Argv(2);
+
+	var = Cvar_FindVar(cvarName);
+	if (var == NULL)
+		return;
+
+	cvarChangeListener_t *l = var->changeListener;
+	while (l) {
+		if (l->exec == UI_CvarChangeListener) {
+			LIST_Remove((linkedList_t**)&l->data, confuncName);
+			if (LIST_IsEmpty((linkedList_t*)l->data)) {
+				Cvar_UnRegisterChangeListener(cvarName, UI_CvarChangeListener);
+			}
+			return;
+		}
+		l = l->next;
+	}
+}
+
 void UI_InitActions (void)
 {
 	UI_CheckActionTokenTypeSanity();
-	/** @todo rework this commands to use a script language way */
+	Cmd_AddCommand("ui_addcvarlistener", UI_AddCvarListener_f, "Add a confunc to a cvar change event");
+	Cmd_AddCommand("ui_removecvarlistener", UI_RemoveCvarListener_f, "Remove a confunc from a cvar change event");
+	/** @todo rework these commands to use a script language way */
 	Cmd_AddCommand("ui_addlistener", UI_AddListener_f, "Add a function into a node event");
 	Cmd_AddCommand("ui_removelistener", UI_RemoveListener_f, "Remove a function from a node event");
 }

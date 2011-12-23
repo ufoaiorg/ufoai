@@ -18973,12 +18973,12 @@
 }
 // brush 2107
 {
-( 104.5 258.5 188 ) ( 104.5 279 188 ) ( 144.5 258.5 188 ) tex_common/actorclip 9 0 0 0.5 0.5
-( 100 258.5 128.25 ) ( 140 258.5 128.25 ) ( 100 258.5 128 ) tex_common/actorclip 0 0 0 0.5 0.5
-( 100 258.5 128.25 ) ( 100 258.5 128 ) ( 100 279 128.25 ) tex_common/actorclip 0 0 0 0.5 0.5
-( 140 279 128 ) ( 100 279 128 ) ( 140 258.5 128 ) tex_common/actorclip 0 0 0 0.5 0.5
-( 140 279 128 ) ( 140 279 128.25 ) ( 100 279 128 ) tex_common/actorclip 0 0 0 0.5 0.5
-( 140 279 128 ) ( 140 258.5 128 ) ( 140 279 128.25 ) tex_common/actorclip 0 0 0 0.5 0.5
+( 104.5 258.5 192 ) ( 104.5 279 192 ) ( 144.5 258.5 192 ) tex_common/actorclip 9 0 0 0.5 0.5
+( 100 258.5 132.25 ) ( 140 258.5 132.25 ) ( 100 258.5 132 ) tex_common/actorclip 0 8 0 0.5 0.5
+( 100 258.5 132.25 ) ( 100 258.5 132 ) ( 100 279 132.25 ) tex_common/actorclip 0 8 0 0.5 0.5
+( 140 279 132 ) ( 100 279 132 ) ( 140 258.5 132 ) tex_common/actorclip 0 0 0 0.5 0.5
+( 140 279 132 ) ( 140 279 132.25 ) ( 100 279 132 ) tex_common/actorclip 0 8 0 0.5 0.5
+( 140 279 132 ) ( 140 258.5 132 ) ( 140 279 132.25 ) tex_common/actorclip 0 8 0 0.5 0.5
 }
 // brush 2108
 {
@@ -29615,8 +29615,8 @@
 {
 "classname" "misc_model"
 "model" "models/objects/furniture/automat/automat.md2"
-"origin" "120 267.5 128"
-"spawnflags" "255"
+"origin" "120 267.5 132"
+"spawnflags" "4"
 "skin" "0"
 "angles" "0 90 0"
 }

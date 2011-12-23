@@ -9,7 +9,7 @@ component cmpDefNamedTbar cmpPhysNamedTbar {
 	image bdr {
 		pos "3 18"
 	}
-	tbar		bar {
+	tbar	bar {
 		pos "5 18"
 	}
 	string	val {
@@ -32,19 +32,21 @@ window physdata
 	image bar_physdata
 	{
 		src		"hud/bar_phys"
-		pos			"0 0"
+		pos		"0 0"
 	}
 
+	string actorname_shadow
+	{
+		string	*cvar:mn_name
+		color	"0 0 0 1"
+		pos		"27 26"
+		size	"165 20"
+	}
 	string actorname
 	{
-		string		*cvar:mn_name
-		pos			"26 25"
-		size		"165 20"
-	}
-
-	controls drag {
-		pos		"10 10"
-		size	"200 50"
+		string	*cvar:mn_name
+		pos		"26 25"
+		size	"165 20"
 	}
 
 	// ==================
@@ -70,7 +72,8 @@ window physdata
 			angles		"0 70 90"
 			pos			"27 20"
 			size		"191 322"
-			scale	"5 5 5"
+			scale		"5 5 5"
+			omega		"0 1 0"
 		}
 
 		model head
@@ -79,12 +82,29 @@ window physdata
 			skin		*cvar:mn_skin
 			tag			"tag_head"
 		}
+
+		model right_rweapon
+		{
+			src			*cvar:mn_rweapon
+			tag			"tag_rweapon"
+		}
+
+		model right_lweapon
+		{
+			src			*cvar:mn_lweapon
+			tag			"tag_lweapon"
+		}
 	}
 
 	// ==================
 	// abilities
 	// ==================
 
+		image pwr_bar_full
+			{
+				pos "224 50"
+				src		"ui/bar_attribute_disabled"
+			}
 		cmpPhysNamedTbar pwr {
 			{
 				pos "220 32"
@@ -94,6 +114,11 @@ window physdata
 			string val { string *cvar:mn_tpwr }
 		}
 
+		image spd_bar_full
+			{
+				pos "224 82"
+				src		"ui/bar_attribute_disabled"
+			}
 		cmpPhysNamedTbar spd {
 			{
 				pos "220 64"
@@ -103,6 +128,11 @@ window physdata
 			string val { string *cvar:mn_tspd }
 		}
 
+		image acc_bar_full
+			{
+				pos "224 114"
+				src		"ui/bar_attribute_disabled"
+			}
 		cmpPhysNamedTbar acc {
 			{
 				pos "220 96"
@@ -112,6 +142,11 @@ window physdata
 			string val { string *cvar:mn_tacc }
 		}
 
+		image mnd_bar_full
+			{
+				pos "224 146"
+				src		"ui/bar_attribute_disabled"
+			}
 		cmpPhysNamedTbar mnd {
 			{
 				pos "220 128"
@@ -121,6 +156,11 @@ window physdata
 			string val { string *cvar:mn_tmnd }
 		}
 
+		image cls_bar_full
+			{
+				pos "224 184"
+				src		"ui/bar_skill_disabled"
+			}
 		cmpPhysNamedTbar cls {
 			{
 				pos "220 166"
@@ -130,6 +170,11 @@ window physdata
 			string val { string *cvar:mn_tcls }
 		}
 
+		image hvy_bar_full
+			{
+				pos "224 216"
+				src		"ui/bar_skill_disabled"
+			}
 		cmpPhysNamedTbar hvy {
 			{
 				pos "220 198"
@@ -139,6 +184,11 @@ window physdata
 			string val { string *cvar:mn_thvy }
 		}
 
+		image ass_bar_full
+			{
+				pos "224 248"
+				src		"ui/bar_skill_disabled"
+			}
 		cmpPhysNamedTbar ass {
 			{
 				pos "220 230"
@@ -148,6 +198,11 @@ window physdata
 			string val { string *cvar:mn_tass }
 		}
 
+		image snp_bar_full
+			{
+				pos "224 280"
+				src		"ui/bar_skill_disabled"
+			}
 		cmpPhysNamedTbar snp {
 			{
 				pos "220 262"
@@ -157,6 +212,11 @@ window physdata
 			string val { string *cvar:mn_tsnp }
 		}
 
+		image exp_bar_full
+			{
+				pos "224 314"
+				src		"ui/bar_skill_disabled"
+			}
 		cmpPhysNamedTbar exp {
 			{
 				pos "220 296"
@@ -166,35 +226,74 @@ window physdata
 			string val { string *cvar:mn_texp }
 		}
 
+	// these cvars do just exist in campaign mode, otherwise strings are empty
+	string	missions_lbl { pos "37 445" size "180 20" string *cvar:mn_missions_label_string }
+	string	missions_val { pos "240 445" size "165 20" string *cvar:mn_chrmis contentalign ALIGN_UR }
+
+	string	kills_lbl { pos "37 465" size "180 20" string *cvar:mn_kills_label_string }
+	string	kills_val { pos "240 465" size "165 20" string *cvar:mn_chrkillalien contentalign ALIGN_UR }
+
+	// drag controls extended over the whole window, LMB:drag, RMB:close
+	controls drag {
+		tooltip	"_LMB:Drag/RMB:Close"
+		pos		"10 10"
+		size	"492 492"
+		OnRClick { cmd "ui_pop;" }
+	}
+
 	// ==================
 	// health and morale
 	// ==================
 
+	string hp_val_shadow
+	{
+		color "0 0 0 1"
+		font		"f_normal"
+		string		*cvar:mn_hp
+		pos			"416 370"
+		size		"50 20"
+		contentalign	ALIGN_UC
+	}
 	string hp_val
 	{
+		tooltip		"_Health"
+		font		"f_normal"
 		string		*cvar:mn_hp
-		pos			"415 373"
+		pos			"415 369"
 		size		"50 20"
 		contentalign	ALIGN_UC
 	}
 	ekg hp
 	{
+		tooltip		"_EKG"
 		image		"hud/phys_ekg"
-		pos			"78 369"
+		pos			"78 367"
 		size		"324 32"
 	}
 
+	string morale_val_shadow
+	{
+		color "0 0 0 1"
+		font		"f_normal"
+		string		*cvar:mn_morale
+		pos			"416 410"
+		size		"50 20"
+		contentalign	ALIGN_UC
+	}
 	string morale_val
 	{
+		tooltip		"_Morale"
+		font		"f_normal"
 		string		*cvar:mn_morale
-		pos			"415 413"
+		pos			"415 409"
 		size		"50 20"
 		contentalign	ALIGN_UC
 	}
 	ekg morale
 	{
+		tooltip		"_Morale"
 		image		"hud/phys_mor"
-		pos			"78 408"
+		pos			"78 406"
 		size		"324 32"
 		scrollspeed	0.12
 		scale		2.0
@@ -206,6 +305,7 @@ window physdata
 
 	custombutton button_exit
 	{
+		tooltip		"_Close"
 		background	"buttons/large_blue"
 		pos			"428 458"
 		size		"64 37"
@@ -215,10 +315,19 @@ window physdata
 
 	func onWindowOpened {
 		*cvar:physdat_window_open = 1
+		// if we are in campaign mode, we need these cvars
+		if ( *cvar:mn_base_count > 0 ) {
+			*cvar:mn_missions_label_string = "_Missions Performed:"
+			*cvar:mn_kills_label_string = "_Enemies Killed:"
+		}
 	}
 
 	func onWindowClosed {
 		delete *cvar:physdat_window_open
+		if ( *cvar:mn_base_count > 0 ) {
+			delete *cvar:mn_missions_label_string
+			delete *cvar:mn_kills_label_string
+		}
 	}
 }
 

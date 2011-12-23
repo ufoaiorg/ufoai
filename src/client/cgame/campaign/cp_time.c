@@ -225,6 +225,16 @@ void CP_SetGameTime_f (void)
 }
 
 /**
+ * @brief Convert a date_t date to seconds
+ * @param[in] date The date in date_t format
+ * @return the date in seconds
+ */
+int Date_DateToSeconds (const date_t *date)
+{
+	return date->day * 86400 + date->sec;
+}
+
+/**
  * @brief Check whether the given date and time is later than current date.
  * @param[in] now Current date.
  * @param[in] compare Date to compare.

@@ -1261,7 +1261,7 @@ qboolean R_Init (void)
 	R_SphereInit();
 	R_FontInit();
 	R_InitFBObjects();
-	R_UpdateDefaultMaterial("","","");
+	R_UpdateDefaultMaterial("","","", NULL);
 
 	R_CheckError();
 
