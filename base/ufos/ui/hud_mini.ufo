@@ -904,6 +904,13 @@ window hud_mini extends hud
 		// strings
 		// ==================
 
+		image img_level
+		{
+			src			"*cvar:mn_icon_level"
+			pos			"197 221"
+			size		"16 16"
+		}
+
 		// level string
 		string str_level_shadow
 		{
@@ -915,7 +922,7 @@ window hud_mini extends hud
 		}
 		string str_level
 		{
-			tooltip		"_Current Level\nLMB:Level up/RMB:Level down\nWheel changes level also"
+			tooltip		"_Current Level\nLMB:Level up/RMB:Level down\nWheel changes level also\nKeys:Cursor Up/Down"
 			string		*cvar:cl_worldlevel
 			pos			"198 217"
 			size		"20 20"
@@ -924,24 +931,28 @@ window hud_mini extends hud
 			{
 				if (*cvar:cl_worldlevel < *cvar:cl_maxworldlevel) {
 					*cvar:cl_worldlevel = (*cvar:cl_worldlevel + 1)
+					*cvar:mn_icon_level = ("minihud/level<cvar:cl_worldlevel>")
 				}
 			}
 			onRClick
 			{
 				if (*cvar:cl_worldlevel > 0) {
 					*cvar:cl_worldlevel = (*cvar:cl_worldlevel - 1)
+					*cvar:mn_icon_level = ("minihud/level<cvar:cl_worldlevel>")
 				}
 			}
 			onWheelUp
 			{
 				if (*cvar:cl_worldlevel < *cvar:cl_maxworldlevel) {
 					*cvar:cl_worldlevel = (*cvar:cl_worldlevel + 1)
+					*cvar:mn_icon_level = ("minihud/level<cvar:cl_worldlevel>")
 				}
 			}
 			onWheelDown
 			{
 				if (*cvar:cl_worldlevel > 0) {
 					*cvar:cl_worldlevel = (*cvar:cl_worldlevel - 1)
+					*cvar:mn_icon_level = ("minihud/level<cvar:cl_worldlevel>")
 				}
 			}
 		}
@@ -1701,6 +1712,11 @@ window hud_mini extends hud
 		call *node:root.floor_deco.hudenable_floor_deco ( <1> )
 	}
 
+	confunc updatelevel
+	{
+	*cvar:mn_icon_level = ("minihud/level<cvar:cl_worldlevel>")
+	}
+
 	// ==================
 	// init function
 	// ==================
@@ -1709,6 +1725,8 @@ window hud_mini extends hud
 	{
 		cmd "music_change battlescape;"
 		call *node:root.right.show_rightweapon
+		*cvar:mn_icon_level = ("minihud/level<cvar:cl_worldlevel>")
+		cmd "ui_addcvarlistener cl_worldlevel updatelevel;"
 	}
 
 	func onScriptLoaded {
