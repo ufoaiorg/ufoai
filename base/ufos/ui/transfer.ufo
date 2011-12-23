@@ -448,12 +448,26 @@ window transfer
 	// buttons
 	// ==================
 
+
+	button bt_translist
+	{
+		string		"_List"
+		tooltip		"_List active transfers"
+		image		"ui/button_blue"
+		pos			"580 711"
+		size		"128 52"
+		color		"1 1 1 0.6"
+		selectcolor	"1 1 1 0.6"
+		font		"f_normal"
+		onClick		{ cmd "ui_push popup_transferlist;" }
+	}
+
 	button bt_starttrans
 	{
 		string		"_Transfer"
 		tooltip		"_Start the transfer"
 		image		"ui/button_blue"
-		pos			"650 711"
+		pos			"725 711"
 		size		"128 52"
 		color		"1 1 1 0.6"
 		selectcolor	"1 1 1 0.6"
@@ -466,7 +480,7 @@ window transfer
 		string		"_Cancel"
 		tooltip		"_Empty the aircraft storage"
 		image		"ui/button_blue"
-		pos			"790 711"
+		pos			"870 711"
 		size		"128 52"
 		color		"1 1 1 0.6"
 		selectcolor	"1 1 1 1"
@@ -545,6 +559,7 @@ component panel trListEntry
 {
 	{
 		size		"472 50"
+		ghost		true
 	}
 
 	string tr_from {
@@ -552,11 +567,13 @@ component panel trListEntry
 		pos			"0 0"
 		size		"75 20"
 		font		"f_small_bold"
+		ghost		true
 	}
 	string tr_srcbase {
 		pos			"80 0"
 		size		"150 25"
 		font		"f_small"
+		ghost		true
 	}
 
 	string tr_to {
@@ -564,16 +581,19 @@ component panel trListEntry
 		pos			"235 0"
 		size		"75 20"
 		font		"f_small_bold"
+		ghost		true
 	}
 	string tr_destbase {
 		pos			"315 0"
 		size		"150 25"
 		font		"f_small"
+		ghost		true
 	}
 
 	todo tr_content {
 		string		"show cargolist somehow"
 		pos			"0 25"
+		ghost		true
 	}
 
 	string tr_eta {
@@ -581,12 +601,15 @@ component panel trListEntry
 		pos			"235 25"
 		size		"75 20"
 		font		"f_small_bold"
+		ghost		true
 	}
 	string tr_arrive {
 		pos			"315 25"
 		size		"150 25"
 		font		"f_small"
+		ghost		true
 	}
+
 }
 
 window popup_transferlist
@@ -601,49 +624,37 @@ window popup_transferlist
 	}
 
 	panel tr_list {
-		{
-			pos		"20 60"
-			size	"472 382"
-			align	LAYOUTALIGN_TOP
-			layout	LAYOUT_TOP_DOWN_FLOW
+		pos		"20 60"
+		size	"477 380"
+		// only column layout works with scrolling
+		layout		LAYOUT_COLUMN
+		layoutColumns	1
 
-			onViewChange	{
-				*node:root.tr_list_scroll@fullsize = <fullsize>
-				*node:root.tr_list_scroll@current = <viewpos>
-				*node:root.tr_list_scroll@viewsize = <viewsize>
-			}
+		onViewChange	{
+			*node:root.tr_list_scroll@fullsize = <fullsize>
+			*node:root.tr_list_scroll@current = <viewpos>
+			*node:root.tr_list_scroll@viewsize = <viewsize>
 		}
 	}
 	vscrollbar tr_list_scroll {
 		image		"ui/scrollbar_v_green"
-		pos			"495 60"
-		height		"382"
-//		hidewhenunused	true
-		fullsize	9
-		viewsize	7
+		pos			"500 60"
+		height		"380"
+		hidewhenunused	true
 		onChange	{
 			*node:root.tr_list@viewpos = <current>
 		}
-	}
-	todo tr_scroll {
-		string		"fix scrolling"
-		pos			"495 422"
 	}
 
 	cmpPopupButton tr_close
 	{
 		string		"_Close"
-		pos			"168 450"
+		pos			"183 450"
 		onClick		{ cmd "ui_pop;" }
 	}
 
 	confunc tr_listclear {
 		call *node:root.tr_list@removeAllChild
-/*
-		*node:root.tr_list_scroll@fullsize = <node:root.tr_list@fullsize>
-		*node:root.tr_list_scroll@current = <node:root.tr_list@viewpos>
-		*node:root.tr_list_scroll@viewsize = <node:root.tr_list@viewsize>
-*/
 	}
 
 	confunc tr_listadd {
@@ -651,16 +662,10 @@ window popup_transferlist
 		*node:root.tr_list.trans<1>.tr_srcbase@string = <2>
 		*node:root.tr_list.trans<1>.tr_destbase@string = <3>
 		*node:root.tr_list.trans<1>.tr_arrive@string = <4>
-/*
-		*node:root.tr_list_scroll@fullsize = <node:root.tr_list@fullsize>
-		*node:root.tr_list_scroll@current = <node:root.tr_list@viewpos>
-		*node:root.tr_list_scroll@viewsize = <node:root.tr_list@viewsize>
-*/
 	}
 
 	func onWindowOpened
 	{
-		call *node:root.tr_listclear
 		cmd "trans_list;"
 	}
 }

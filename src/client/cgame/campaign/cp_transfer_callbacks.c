@@ -1517,6 +1517,7 @@ static void TR_List_f (void)
 	transfer_t *transfer;
 	int i = 0;
 
+	UI_ExecuteConfunc("tr_listclear");
 	TR_Foreach(transfer) {
 		date_t time = Date_Substract(transfer->event, ccs.date);
 
