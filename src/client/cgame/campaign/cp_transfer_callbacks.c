@@ -27,6 +27,7 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #include "cp_capacity.h"
 #include "cp_transfer.h"
 #include "cp_popup.h"
+#include "cp_time.h"
 #include "../../ui/ui_main.h"
 #include "../../ui/ui_popup.h" /* popupText */
 
@@ -1508,10 +1509,26 @@ static void TR_TransferList_Scroll_f (void)
 	}
 }
 
+/**
+ * @brief Assembles the list of transfers for the popup
+ */
+static void TR_List_f (void)
+{
+	transfer_t *transfer;
+	int i = 0;
+
+	TR_Foreach(transfer) {
+		date_t time = Date_Substract(transfer->event, ccs.date);
+
+		UI_ExecuteConfunc("tr_listadd %d \"%s\" \"%s\" \"%s\"", ++i, transfer->srcBase ? transfer->srcBase->name : "mission", transfer->destBase->name, CP_SecondConvert(Date_DateToSeconds(&time)));
+	}
+}
+
 void TR_InitCallbacks (void)
 {
 	OBJZERO(td);
 
+	Cmd_AddCommand("trans_list", TR_List_f, "Assemles the transferlist");
 	Cmd_AddCommand("trans_init", TR_Init_f, "Init function for Transfer menu");
 	Cmd_AddCommand("trans_list_scroll", TR_TransferList_Scroll_f, "Scrolls the transferlist");
 	Cmd_AddCommand("trans_close", TR_TransferClose_f, "Callback for closing Transfer Menu");
@@ -1534,6 +1551,7 @@ void TR_ShutdownCallbacks (void)
 	for (emplType = EMPL_SOLDIER; emplType < MAX_EMPL; emplType++)
 		LIST_Delete(&td.trEmployeesTmp[emplType]);
 
+	Cmd_RemoveCommand("trans_list");
 	Cmd_RemoveCommand("trans_init");
 	Cmd_RemoveCommand("trans_list_scroll");
 	Cmd_RemoveCommand("trans_close");

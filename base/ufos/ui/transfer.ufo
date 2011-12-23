@@ -536,3 +536,131 @@ window popup_transferbaselist
 		*cvar:tr_base = -1
 	}
 }
+
+// ===================
+// POPUP TRANSFER LIST
+// ===================
+
+component panel trListEntry
+{
+	{
+		size		"472 50"
+	}
+
+	string tr_from {
+		string		"_From:"
+		pos			"0 0"
+		size		"75 20"
+		font		"f_small_bold"
+	}
+	string tr_srcbase {
+		pos			"80 0"
+		size		"150 25"
+		font		"f_small"
+	}
+
+	string tr_to {
+		string		"_To:"
+		pos			"235 0"
+		size		"75 20"
+		font		"f_small_bold"
+	}
+	string tr_destbase {
+		pos			"315 0"
+		size		"150 25"
+		font		"f_small"
+	}
+
+	todo tr_content {
+		string		"show cargolist somehow"
+		pos			"0 25"
+	}
+
+	string tr_eta {
+		string		"_ETA:"
+		pos			"235 25"
+		size		"75 20"
+		font		"f_small_bold"
+	}
+	string tr_arrive {
+		pos			"315 25"
+		size		"150 25"
+		font		"f_small"
+	}
+}
+
+window popup_transferlist
+{
+	{
+		pos			"226 226"
+		size		"542 512"
+		dragbutton	true
+		image		"ui/popup_alpha_tile"
+		string		"_Actual transfers"
+		modal		true
+	}
+
+	panel tr_list {
+		{
+			pos		"20 60"
+			size	"472 382"
+			align	LAYOUTALIGN_TOP
+			layout	LAYOUT_TOP_DOWN_FLOW
+
+			onViewChange	{
+				*node:root.tr_list_scroll@fullsize = <fullsize>
+				*node:root.tr_list_scroll@current = <viewpos>
+				*node:root.tr_list_scroll@viewsize = <viewsize>
+			}
+		}
+	}
+	vscrollbar tr_list_scroll {
+		image		"ui/scrollbar_v_green"
+		pos			"495 60"
+		height		"382"
+//		hidewhenunused	true
+		fullsize	9
+		viewsize	7
+		onChange	{
+			*node:root.tr_list@viewpos = <current>
+		}
+	}
+	todo tr_scroll {
+		string		"fix scrolling"
+		pos			"495 422"
+	}
+
+	cmpPopupButton tr_close
+	{
+		string		"_Close"
+		pos			"168 450"
+		onClick		{ cmd "ui_pop;" }
+	}
+
+	confunc tr_listclear {
+		call *node:root.tr_list@removeAllChild
+/*
+		*node:root.tr_list_scroll@fullsize = <node:root.tr_list@fullsize>
+		*node:root.tr_list_scroll@current = <node:root.tr_list@viewpos>
+		*node:root.tr_list_scroll@viewsize = <node:root.tr_list@viewsize>
+*/
+	}
+
+	confunc tr_listadd {
+		call *node:root.tr_list@createChild("trans<1>", "trListEntry")
+		*node:root.tr_list.trans<1>.tr_srcbase@string = <2>
+		*node:root.tr_list.trans<1>.tr_destbase@string = <3>
+		*node:root.tr_list.trans<1>.tr_arrive@string = <4>
+/*
+		*node:root.tr_list_scroll@fullsize = <node:root.tr_list@fullsize>
+		*node:root.tr_list_scroll@current = <node:root.tr_list@viewpos>
+		*node:root.tr_list_scroll@viewsize = <node:root.tr_list@viewsize>
+*/
+	}
+
+	func onWindowOpened
+	{
+		call *node:root.tr_listclear
+		cmd "trans_list;"
+	}
+}
