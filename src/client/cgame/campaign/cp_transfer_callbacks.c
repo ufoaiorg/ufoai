@@ -1528,7 +1528,7 @@ void TR_InitCallbacks (void)
 {
 	OBJZERO(td);
 
-	Cmd_AddCommand("trans_list", TR_List_f, "Assemles the transferlist");
+	Cmd_AddCommand("trans_list", TR_List_f, "Assembles the transferlist");
 	Cmd_AddCommand("trans_init", TR_Init_f, "Init function for Transfer menu");
 	Cmd_AddCommand("trans_list_scroll", TR_TransferList_Scroll_f, "Scrolls the transferlist");
 	Cmd_AddCommand("trans_close", TR_TransferClose_f, "Callback for closing Transfer Menu");

@@ -229,7 +229,7 @@ void CP_SetGameTime_f (void)
  * @param[in] date The date in date_t format
  * @return the date in seconds
  */
-int Date_DateToSeconds(const date_t *date)
+int Date_DateToSeconds (const date_t *date)
 {
 	return date->day * 86400 + date->sec;
 }
