@@ -185,9 +185,9 @@ window inventory
 			skin	*cvar:mn_skin
 			anim	"stand_menu"
 			origin	"0 -25 0"
-			angles	"0 80 90"
+			angles	"0 82 90"
 			scale	"5 5 5"
-			pos		"170 72"
+			pos		"168 74"
 			size	"191 262"
 		}
 
