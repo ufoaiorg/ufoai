@@ -315,6 +315,12 @@ window employees
 			pos		"670 380"
 			size	"330 360"
 		}
+
+		image pwr_bar_full
+			{
+				pos "31 21"
+				src		"ui/bar_attribute_disabled"
+			}
 		cmpDefNamedTbar pwr {
 			{
 				pos "5 3"
@@ -324,6 +330,11 @@ window employees
 			string val { string *cvar:mn_tpwr }
 		}
 
+		image spd_bar_full
+			{
+				pos "31 51"
+				src		"ui/bar_attribute_disabled"
+			}
 		cmpDefNamedTbar spd {
 			{
 				pos "5 33"
@@ -333,6 +344,11 @@ window employees
 			string val { string *cvar:mn_tspd }
 		}
 
+		image acc_bar_full
+			{
+				pos "31 81"
+				src		"ui/bar_attribute_disabled"
+			}
 		cmpDefNamedTbar acc {
 			{
 				pos "5 63"
@@ -342,6 +358,11 @@ window employees
 			string val { string *cvar:mn_tacc }
 		}
 
+		image mnd_bar_full
+			{
+				pos "31 111"
+				src		"ui/bar_attribute_disabled"
+			}
 		cmpDefNamedTbar mnd {
 			{
 				pos "5 93"
@@ -351,6 +372,11 @@ window employees
 			string val { string *cvar:mn_tmnd }
 		}
 
+		image cls_bar_full
+			{
+				pos "31 146"
+				src		"ui/bar_skill_disabled"
+			}
 		cmpDefNamedTbar cls {
 			{
 				pos "5 128"
@@ -360,6 +386,11 @@ window employees
 			string val { string *cvar:mn_tcls }
 		}
 
+		image hvy_bar_full
+			{
+				pos "31 176"
+				src		"ui/bar_skill_disabled"
+			}
 		cmpDefNamedTbar hvy {
 			{
 				pos "5 158"
@@ -369,6 +400,11 @@ window employees
 			string val { string *cvar:mn_thvy }
 		}
 
+		image ass_bar_full
+			{
+				pos "31 206"
+				src		"ui/bar_skill_disabled"
+			}
 		cmpDefNamedTbar ass {
 			{
 				pos "5 188"
@@ -378,6 +414,11 @@ window employees
 			string val { string *cvar:mn_tass }
 		}
 
+		image snp_bar_full
+			{
+				pos "31 236"
+				src		"ui/bar_skill_disabled"
+			}
 		cmpDefNamedTbar snp  {
 			{
 				pos "5 218"
@@ -387,6 +428,11 @@ window employees
 			string val { string *cvar:mn_tsnp }
 		}
 
+		image exp_bar_full
+			{
+				pos "31 266"
+				src		"ui/bar_skill_disabled"
+			}
 		cmpDefNamedTbar exp  {
 			{
 				pos "5 248"
