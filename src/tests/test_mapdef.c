@@ -136,6 +136,13 @@ static void testMapDefsMassRMA (void)
 							continue;
 						if (i == 3 && Q_streq(p, "forest") && Q_streq(md->param, "large") && Q_streq(craftIter->data, "craft_drop_raptor") && Q_streq(ufoIter->data, "craft_ufo_harvester"))
 							continue;
+						/* combinations slow on linux */
+						if (i == 12 && Q_streq(p, "forest") && Q_streq(md->param, "large") && Q_streq(craftIter->data, "craft_drop_firebird") && Q_streq(ufoIter->data, "craft_ufo_harvester"))
+							continue;
+						if (i == 16 && Q_streq(p, "forest") && Q_streq(md->param, "large") && Q_streq(craftIter->data, "craft_drop_raptor") && Q_streq(ufoIter->data, "craft_ufo_harvester"))
+							continue;
+						if (i == 12 && Q_streq(p, "forest") && Q_streq(md->param, "large") && Q_streq(craftIter->data, "craft_drop_herakles") && Q_streq(ufoIter->data, "craft_ufo_harvester"))
+							continue;
 						if (i == 34 && Q_streq(p, "village") && Q_streq(md->param, "commercial") && Q_streq(craftIter->data, "craft_drop_raptor"))
 							continue;
 						if (Q_streq(p, "village") && Q_streq(md->param, "commercial") && Q_streq(craftIter->data, "craft_drop_firebird") && Q_streq(ufoIter->data, "craft_ufo_scout"))
