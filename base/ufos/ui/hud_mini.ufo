@@ -181,6 +181,9 @@ window hud_mini extends hud
 			src		"minihud/bar_teamleft_mini"
 			pos			"0 0"
 			size		"32 128"
+			onWheelUp	{ cmd "actor_next;"}
+			onWheelDown	{ cmd "actor_prev;"}
+			tooltip		"_Wheel:Select Next/Previous"
 		}
 
 		image bar_teambox0
@@ -190,7 +193,9 @@ window hud_mini extends hud
 			size		"64 128"
 			onClick		{ cmd "actor_select 0;" }
 			onRClick	{ cmd "actor_select 0;" }
-			tooltip		"_LMB/RMB:Select\nKey:1"
+			onWheelUp	{ cmd "actor_next;"}
+			onWheelDown	{ cmd "actor_prev;"}
+			tooltip		"_LMB/RMB:Select\nWheel:Select Next/Prev\nKey:1"
 		}
 
 		image bar_teamsep1
@@ -198,6 +203,9 @@ window hud_mini extends hud
 			src		"minihud/bar_teamsep_mini"
 			pos			"96 0"
 			size		"16 128"
+			onWheelUp	{ cmd "actor_next;"}
+			onWheelDown	{ cmd "actor_prev;"}
+			tooltip		"_Wheel:Select Next/Previous"
 		}
 		image bar_teambox1
 		{
@@ -206,7 +214,9 @@ window hud_mini extends hud
 			size		"64 128"
 			onClick		{ cmd "actor_select 1;" }
 			onRClick	{ cmd "actor_select 1;" }
-			tooltip		"_LMB/RMB:Select\nKey:2"
+			onWheelUp	{ cmd "actor_next;"}
+			onWheelDown	{ cmd "actor_prev;"}
+			tooltip		"_LMB/RMB:Select\nWheel:Select Next/Prev\nKey:2"
 		}
 
 		image bar_teamsep2
@@ -214,6 +224,9 @@ window hud_mini extends hud
 			src		"minihud/bar_teamsep_mini"
 			pos			"176 0"
 			size		"16 128"
+			onWheelUp	{ cmd "actor_next;"}
+			onWheelDown	{ cmd "actor_prev;"}
+			tooltip		"_Wheel:Select Next/Previous"
 		}
 		image bar_teambox2
 		{
@@ -222,7 +235,9 @@ window hud_mini extends hud
 			size		"64 128"
 			onClick		{ cmd "actor_select 2;" }
 			onRClick	{ cmd "actor_select 2;" }
-			tooltip		"_LMB/RMB:Select\nKey:3"
+			onWheelUp	{ cmd "actor_next;"}
+			onWheelDown	{ cmd "actor_prev;"}
+			tooltip		"_LMB/RMB:Select\nWheel:Select Next/Prev\nKey:3"
 		}
 
 		image bar_teamsep3
@@ -230,6 +245,9 @@ window hud_mini extends hud
 			src		"minihud/bar_teamsep_mini"
 			pos			"256 0"
 			size		"16 128"
+			onWheelUp	{ cmd "actor_next;"}
+			onWheelDown	{ cmd "actor_prev;"}
+			tooltip		"_Wheel:Select Next/Previous"
 		}
 		image bar_teambox3
 		{
@@ -238,7 +256,9 @@ window hud_mini extends hud
 			size		"64 128"
 			onClick		{ cmd "actor_select 3;" }
 			onRClick	{ cmd "actor_select 3;" }
-			tooltip		"_LMB/RMB:Select\nKey:4"
+			onWheelUp	{ cmd "actor_next;"}
+			onWheelDown	{ cmd "actor_prev;"}
+			tooltip		"_LMB/RMB:Select\nWheel:Select Next/Prev\nKey:4"
 		}
 
 		image bar_teamsep4
@@ -246,6 +266,9 @@ window hud_mini extends hud
 			src		"minihud/bar_teamsep_mini"
 			pos			"336 0"
 			size		"16 128"
+			onWheelUp	{ cmd "actor_next;"}
+			onWheelDown	{ cmd "actor_prev;"}
+			tooltip		"_Wheel:Select Next/Previous"
 		}
 		image bar_teambox4
 		{
@@ -254,7 +277,9 @@ window hud_mini extends hud
 			size		"64 128"
 			onClick		{ cmd "actor_select 4;" }
 			onRClick	{ cmd "actor_select 4;" }
-			tooltip		"_LMB/RMB:Select\nKey:5"
+			onWheelUp	{ cmd "actor_next;"}
+			onWheelDown	{ cmd "actor_prev;"}
+			tooltip		"_LMB/RMB:Select\nWheel:Select Next/Prev\nKey:5"
 		}
 
 		image bar_teamsep5
@@ -262,6 +287,9 @@ window hud_mini extends hud
 			src		"minihud/bar_teamsep_mini"
 			pos			"416 0"
 			size		"16 128"
+			onWheelUp	{ cmd "actor_next;"}
+			onWheelDown	{ cmd "actor_prev;"}
+			tooltip		"_Wheel:Select Next/Previous"
 		}
 		image bar_teambox5
 		{
@@ -270,7 +298,9 @@ window hud_mini extends hud
 			size		"64 128"
 			onClick		{ cmd "actor_select 5;" }
 			onRClick	{ cmd "actor_select 5;" }
-			tooltip		"_LMB/RMB:Select\nKey:6"
+			onWheelUp	{ cmd "actor_next;"}
+			onWheelDown	{ cmd "actor_prev;"}
+			tooltip		"_LMB/RMB:Select\nWheel:Select Next/Prev\nKey:6"
 		}
 
 		image bar_teamsep6
@@ -278,6 +308,9 @@ window hud_mini extends hud
 			src		"minihud/bar_teamsep_mini"
 			pos			"496 0"
 			size		"16 128"
+			onWheelUp	{ cmd "actor_next;"}
+			onWheelDown	{ cmd "actor_prev;"}
+			tooltip		"_Wheel:Select Next/Previous"
 		}
 		image bar_teambox6
 		{
@@ -286,7 +319,9 @@ window hud_mini extends hud
 			size		"64 128"
 			onClick		{ cmd "actor_select 6;" }
 			onRClick	{ cmd "actor_select 6;" }
-			tooltip		"_LMB/RMB:Select\nKey:7"
+			onWheelUp	{ cmd "actor_next;"}
+			onWheelDown	{ cmd "actor_prev;"}
+			tooltip		"_LMB/RMB:Select\nWheel:Select Next/Prev\nKey:7"
 		}
 
 		image bar_teamsep7
@@ -294,6 +329,9 @@ window hud_mini extends hud
 			src		"minihud/bar_teamsep_mini"
 			pos			"576 0"
 			size		"16 128"
+			onWheelUp	{ cmd "actor_next;"}
+			onWheelDown	{ cmd "actor_prev;"}
+			tooltip		"_Wheel:Select Next/Previous"
 		}
 		image bar_teambox7
 		{
@@ -302,7 +340,9 @@ window hud_mini extends hud
 			size		"64 128"
 			onClick		{ cmd "actor_select 7;" }
 			onRClick	{ cmd "actor_select 7;" }
-			tooltip		"_LMB/RMB:Select\nKey:8"
+			onWheelUp	{ cmd "actor_next;"}
+			onWheelDown	{ cmd "actor_prev;"}
+			tooltip		"_LMB/RMB:Select\nWheel:Select Next/Prev\nKey:8"
 		}
 
 		image bar_teamright
@@ -310,6 +350,9 @@ window hud_mini extends hud
 			src		"minihud/bar_teamright_mini"
 			pos			"656 0"
 			size		"32 128"
+			onWheelUp	{ cmd "actor_next;"}
+			onWheelDown	{ cmd "actor_prev;"}
+			tooltip		"_Wheel:Select Next/Previous"
 		}
 
 		string str_soldier0_shadow
@@ -475,6 +518,9 @@ window hud_mini extends hud
 			pos			"22 22"
 			size		"87 98"
 			texh		"87 98"
+			onWheelUp	{ cmd "actor_next;"}
+			onWheelDown	{ cmd "actor_prev;"}
+			tooltip		"_Wheel:Select Next/Previous"
 		}
 
 		// ==================
