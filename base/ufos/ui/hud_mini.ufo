@@ -996,9 +996,11 @@ window hud_mini extends hud
 			string		*cvar:mn_name
 			pos			"110 252"
 			size		"133 20"
-			tooltip		"_LMB:Inventory/RMB:Physical Stats"
+			tooltip		"_LMB:Inventory\nRMB:Physical Stats\nWheel:Switch Soldier"
 			onClick		{ call *node:root.showinventory }
 			onRClick	{ cmd "ui_push ahudphysdat;" }
+			onWheelUp	{ cmd "actor_next;"}
+			onWheelDown	{ cmd "actor_prev;"}
 		}
 
 		// health string
