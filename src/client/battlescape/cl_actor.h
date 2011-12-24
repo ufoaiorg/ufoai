@@ -69,6 +69,7 @@ void CL_ActorConditionalMoveCalc(le_t *le);
 qboolean CL_ActorSelect(le_t *le);
 qboolean CL_ActorSelectList(int num);
 qboolean CL_ActorSelectNext(void);
+qboolean CL_ActorSelectPrev(void);
 void CL_ActorAddToTeamList(le_t *le);
 void CL_ActorRemoveFromTeamList(le_t *le);
 void CL_ActorCleanup(le_t *le);
