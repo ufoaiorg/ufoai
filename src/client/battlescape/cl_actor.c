@@ -2371,11 +2371,13 @@ static void CL_NextAlienVisibleFromActor_f (void)
  */
 static void CL_NextAlien_f (void)
 {
-	static int lastAlien = 0;
+	int lastAlien;
 	int i;
 
-	if (lastAlien >= cl.numLEs)
-		lastAlien = 0;
+	if (cl.numLEs <= 0)
+		return;
+
+	lastAlien = max(0, min(cl.numLEs - 1, Cvar_GetValue("ui_lastalien")));
 
 	i = lastAlien;
 	do {
@@ -2387,6 +2389,37 @@ static void CL_NextAlien_f (void)
 		 && le->team != TEAM_CIVILIAN) {
 			lastAlien = i;
 			CL_ViewCenterAtGridPosition(le->pos);
+			Cvar_SetValue("ui_lastalien", lastAlien);
+			return;
+		}
+	} while (i != lastAlien);
+}
+
+/**
+ * @brief Cycles between visible aliens in reverse direction
+ * @sa CL_NextAlienVisibleFromActor_f
+ */
+static void CL_PrevAlien_f (void)
+{
+	int lastAlien;
+	int i;
+
+	if (cl.numLEs <= 0)
+		return;
+
+	lastAlien = max(0, min(cl.numLEs - 1, Cvar_GetValue("ui_lastalien")));
+
+	i = lastAlien;
+	do {
+		const le_t *le;
+		if (--i < 0)
+			i = cl.numLEs - 1;
+		le = &cl.LEs[i];
+		if (le->inuse && LE_IsLivingAndVisibleActor(le) && le->team != cls.team
+		 && le->team != TEAM_CIVILIAN) {
+			lastAlien = i;
+			CL_ViewCenterAtGridPosition(le->pos);
+			Cvar_SetValue("ui_lastalien", lastAlien);
 			return;
 		}
 	} while (i != lastAlien);
@@ -2458,7 +2491,8 @@ void ACTOR_InitStartup (void)
 	Cmd_AddCommand("actor_confirmaction", CL_ActorConfirmAction_f, N_("Confirm the current action"));
 	Cmd_AddCommand("actor_nextalien", CL_NextAlienVisibleFromActor_f, N_("Toggle to the next alien in sight of the selected actor."));
 
-	Cmd_AddCommand("nextalien", CL_NextAlien_f, N_("Toggle camera to the next alien."));
+	Cmd_AddCommand("nextalien", CL_NextAlien_f, N_("Toggle camera to the next visible alien."));
+	Cmd_AddCommand("prevalien", CL_PrevAlien_f, N_("Toggle camera to the previous visible alien."));
 
 #ifdef DEBUG
 	Cmd_AddCommand("debug_path", CL_DebugPath_f, "Display routing data for current mouse position.");
