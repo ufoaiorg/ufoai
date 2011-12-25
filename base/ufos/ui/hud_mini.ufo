@@ -530,7 +530,7 @@ window hud_mini extends hud
 		model head0
 		{
 			src			*cvar:mn_head0
-			angles		"15 60 100"
+			angles		"15 70 100"
 			autoscale	true
 			pos			"40 20"
 			size		"50 78"
@@ -539,7 +539,7 @@ window hud_mini extends hud
 		model head1
 		{
 			src			*cvar:mn_head1
-			angles		"15 60 100"
+			angles		"15 75 100"
 			autoscale	true
 			pos			"120 20"
 			size		"50 78"
@@ -548,7 +548,7 @@ window hud_mini extends hud
 		model head2
 		{
 			src			*cvar:mn_head2
-			angles		"15 60 100"
+			angles		"15 80 100"
 			autoscale	true
 			pos			"200 20"
 			size		"50 78"
@@ -557,7 +557,7 @@ window hud_mini extends hud
 		model head3
 		{
 			src			*cvar:mn_head3
-			angles		"15 60 100"
+			angles		"15 85 100"
 			autoscale	true
 			pos			"280 20"
 			size		"50 78"
@@ -566,7 +566,7 @@ window hud_mini extends hud
 		model head4
 		{
 			src			*cvar:mn_head4
-			angles		"15 60 100"
+			angles		"15 95 100"
 			autoscale	true
 			pos			"360 20"
 			size		"50 78"
@@ -575,7 +575,7 @@ window hud_mini extends hud
 		model head5
 		{
 			src			*cvar:mn_head5
-			angles		"15 60 100"
+			angles		"15 100 100"
 			autoscale	true
 			pos			"440 20"
 			size		"50 78"
@@ -584,7 +584,7 @@ window hud_mini extends hud
 		model head6
 		{
 			src			*cvar:mn_head6
-			angles		"15 60 100"
+			angles		"15 105 100"
 			autoscale	true
 			pos			"520 20"
 			size		"50 78"
@@ -593,9 +593,9 @@ window hud_mini extends hud
 		model head7
 		{
 			src			*cvar:mn_head7
-			angles		"15 60 100"
+			angles		"15 110 100"
 			autoscale	true
-			pos			"592 20"
+			pos			"600 20"
 			size		"50 78"
 			excluderect	{ pos	"0 0"	size	"50 78" }
 		}
@@ -923,6 +923,8 @@ window hud_mini extends hud
 			max			*cvar:mn_tumax
 			disabled	true
 			tooltip		*cvar:mn_tu_tooltips
+			onWheelUp	{ cmd "actor_next;"}
+			onWheelDown	{ cmd "actor_prev;"}
 		}
 		bar timeremain
 		{
@@ -933,6 +935,8 @@ window hud_mini extends hud
 			max			*cvar:mn_tumax
 			disabled	true
 			tooltip		*cvar:mn_tu_tooltips
+			onWheelUp	{ cmd "actor_next;"}
+			onWheelDown	{ cmd "actor_prev;"}
 		}
 		bar timereserved
 		{
@@ -943,6 +947,8 @@ window hud_mini extends hud
 			max			*cvar:mn_tumax
 			disabled	true
 			tooltip		*cvar:mn_tu_tooltips
+			onWheelUp	{ cmd "actor_next;"}
+			onWheelDown	{ cmd "actor_prev;"}
 		}
 
 		// level background image
@@ -1011,11 +1017,13 @@ window hud_mini extends hud
 		string numspotted
 		{
 			string		*cvar:mn_numaliensspotted
-			tooltip		"_LMB:Show next visible enemy"
+			tooltip		"_LMB:Next visible enemy\nRMB:Previous visible enemy\nWheel:Cycle visible enemies"
 			pos			"224 217"
 			size	    "20 20"
 			onClick		{ cmd "nextalien;" }
+			onRClick	{ cmd "prevalien;" }
 			onWheelUp	{ cmd "nextalien;" }
+			onWheelDown	{ cmd "prevalien;" }
 			contentalign	ALIGN_CC
 		}
 
@@ -1644,6 +1652,8 @@ window hud_mini extends hud
 			pos			"100 12"
 			size	"32 32"
 			onClick		{ cmd	"music_stop;" }
+			onMouseEnter { *node:this@image = "minihud/bt_stop_hovered" }
+			onMouseLeave { *node:this@image = "minihud/bt_stop" }
 		}
 		image bt_forward
 		{
@@ -1652,6 +1662,8 @@ window hud_mini extends hud
 			pos			"130 12"
 			size	"32 32"
 			onClick		{ cmd	"music_randomtrack;" }
+			onMouseEnter { *node:this@image = "minihud/bt_forward_hovered" }
+			onMouseLeave { *node:this@image = "minihud/bt_forward" }
 		}
 	}
 
