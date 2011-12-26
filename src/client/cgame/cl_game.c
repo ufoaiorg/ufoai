@@ -815,7 +815,7 @@ static const cgame_export_t *GAME_GetCGameAPI (const cgameType_t *t)
 	/* sanity checks */
 	if (!LIST_IsEmpty(t->equipmentList)) {
 		const char *equipID;
-		LIST_ForeachConst(t->equipmentList, char, equipID) {
+		LIST_Foreach(t->equipmentList, char const, equipID) {
 			if (INV_GetEquipmentDefinitionByID(equipID) == NULL)
 				Sys_Error("Could not find the equipDef '%s' in the cgame mode: '%s'", equipID, name);
 		}
@@ -1303,7 +1303,7 @@ const equipDef_t *GAME_ChangeEquip (const linkedList_t *equipmentList, changeEqu
 			const char *tmp;
 			const char *new = NULL;
 			const char *prev = NULL;
-			LIST_ForeachConst(equipmentList, char, tmp) {
+			LIST_Foreach(equipmentList, char const, tmp) {
 				if (Q_streq(tmp, equipID)) {
 					if (prev != NULL) {
 						new = prev;
