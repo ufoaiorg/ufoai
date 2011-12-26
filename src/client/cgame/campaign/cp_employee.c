@@ -653,14 +653,11 @@ void E_DeleteAllEmployees (base_t* base)
 	employeeType_t type;
 
 	for (type = EMPL_SOLDIER; type < MAX_EMPL; type++) {
-		employee_t *lastEmployee = NULL;
 		employee_t *employee = NULL;
 
 		E_Foreach(type, employee) {
-			if ((base == NULL || E_IsInBase(employee, base)) && E_DeleteEmployee(employee))
-				employee = lastEmployee;
-			else
-				lastEmployee = employee;
+			if (base == NULL || E_IsInBase(employee, base))
+				E_DeleteEmployee(employee);
 		}
 	}
 }

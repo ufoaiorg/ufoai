@@ -893,7 +893,6 @@ qboolean B_BuildingDestroy (building_t* building)
 static void B_MoveAircraftOnGeoscapeToOtherBases (const base_t *base)
 {
 	aircraft_t *aircraft;
-	aircraft_t *prevAircraft = NULL;
 
 	AIR_ForeachFromBase(aircraft, base) {
 		if (AIR_IsAircraftOnGeoscape(aircraft)) {
@@ -916,10 +915,8 @@ static void B_MoveAircraftOnGeoscapeToOtherBases (const base_t *base)
 					 * is no longer valid after this point */
 					AIR_DestroyAircraft(aircraft);
 				}
-				aircraft = prevAircraft;
 			}
 		}
-		prevAircraft = aircraft;
 	}
 }
 
