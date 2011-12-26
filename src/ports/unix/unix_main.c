@@ -238,9 +238,6 @@ void Sys_Backtrace (void)
 	const char *dumpFile = "crashdump.txt";
 	FILE *file = fopen(dumpFile, "w");
 	FILE *crash = file != NULL ? file : stderr;
-#ifndef HAVE_BFD_H
-	int filenumber = fileno(crash);
-#endif
 
 	fprintf(crash, "======start======\n");
 
@@ -259,7 +256,7 @@ void Sys_Backtrace (void)
 #ifdef HAVE_BFD_H
 	_backtrace(crash, symbols, i);
 #else
-	backtrace_symbols_fd(symbols, i, filenumber);
+	backtrace_symbols_fd(symbols, i, fileno(crash));
 #endif
 #endif
 
