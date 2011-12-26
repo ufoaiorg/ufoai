@@ -165,7 +165,6 @@ qboolean AIM_SelectableCraftItem (const aircraftSlot_t *slot, const technology_t
 qboolean AIM_PilotAssignedAircraft (const base_t* base, const employee_t* pilot)
 {
 	qboolean found = qfalse;
-	aircraft_t *aircraft;
 
 	AIR_ForeachFromBase(aircraft, base) {
 		if (AIR_GetPilot(aircraft) == pilot) {
@@ -401,8 +400,6 @@ static void AII_UpdateOneInstallationDelay (base_t* base, installation_t* instal
 void AII_UpdateInstallationDelay (void)
 {
 	base_t *base;
-	aircraft_t *aircraft;
-	installation_t *installation;
 	int k;
 
 	INS_Foreach(installation) {
@@ -1083,8 +1080,6 @@ void AII_RepairAircraft (void)
 	base_t *base = NULL;
 
 	while ((base = B_GetNext(base)) != NULL) {
-		aircraft_t *aircraft;
-
 		AIR_ForeachFromBase(aircraft, base) {
 			if (!AIR_IsAircraftInBase(aircraft))
 				continue;
@@ -1320,7 +1315,6 @@ static void BDEF_AutoTarget (baseWeapon_t *weapons, int maxWeapons)
 void BDEF_AutoSelectTarget (void)
 {
 	base_t *base;
-	installation_t *inst;
 
 	base = NULL;
 	while ((base = B_GetNext(base)) != NULL) {

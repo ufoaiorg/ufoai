@@ -12,11 +12,13 @@ typedef struct linkedList_s {
 typedef int (*linkedListSort_t) (linkedList_t *entry1, linkedList_t *entry2, const void *userData);
 
 /** @brief Iterates over a linked list, it's safe to delete the returned entry from the list while looping over it.
- * @note @c var must be a simple variable name, because it is also used to create the name of the internal iterator variable.
+ * @note @c var must be a simple variable name, because it is declared in the loop macro and is also used to create the name of the internal variables.
  * @note Don't try to use the internal loop variable. This variable is most likely not at the position you would expect it to be. */
 #define LIST_Foreach(list, type, var) \
-	for (linkedList_t const *var##__iter = (var = 0)?0:(list); var##__iter;) \
-		if (var = (type*)var##__iter->data, var##__iter = var##__iter->next, 0) {} else
+	for (qboolean var##__break = qfalse, var##__once = qtrue; var##__once; var##__once = qfalse) \
+		for (linkedList_t const* var##__iter = (list); !var##__break && var##__iter;) \
+			for (type* const var = (var##__break = var##__once = qtrue, (type*)var##__iter->data); var##__once; var##__break = var##__once = qfalse) \
+				if (var##__iter = var##__iter->next, qfalse) {} else
 
 /**
  * @brief Will sort the list before loop over the sorted list. Make sure the free the sortedList after you done with the loop.

@@ -350,7 +350,6 @@ void UFO_UpdateAlienInterestForAllBasesAndInstallations (void)
 	ufo = NULL;
 	while ((ufo = UFO_GetNext(ufo)) != NULL) {
 		base_t *base;
-		installation_t *installation;
 
 		/* landed UFO can't detect any phalanx base or installation */
 		if (ufo->landed)
@@ -370,7 +369,6 @@ void UFO_UpdateAlienInterestForAllBasesAndInstallations (void)
  */
 static void UFO_SearchAircraftTarget (const campaign_t* campaign, aircraft_t *ufo)
 {
-	aircraft_t *phalanxAircraft;
 	float distance = 999999.;
 
 	/* UFO never try to attack a PHALANX aircraft except if they came on earth in that aim */
@@ -749,12 +747,10 @@ qboolean UFO_CampaignCheckEvents (void)
 	ufo = NULL;
 	while ((ufo = UFO_GetNext(ufo)) != NULL) {
 		char detectedBy[MAX_VAR] = "";
-		installation_t *installation;
 		float minDistance = -1;
 		/* detected tells us whether or not a UFO is detected NOW, whereas ufo->detected tells
 		 * us whether or not the UFO was detected PREVIOUSLY. */
 		qboolean detected = qfalse;
-		aircraft_t *aircraft;
 		base_t *base;
 
 		/* don't update UFO status id UFO is landed or crashed */

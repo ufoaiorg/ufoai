@@ -48,8 +48,6 @@ int E_CountByType (employeeType_t type)
  */
 employee_t* E_GetUnhired (employeeType_t type)
 {
-	employee_t* employee;
-
 	E_Foreach(type, employee) {
 		if (!E_IsHired(employee))
 			return employee;
@@ -66,7 +64,6 @@ employee_t* E_GetUnhired (employeeType_t type)
 qboolean E_IsAwayFromBase (const employee_t *employee)
 {
 	const base_t *base;
-	aircraft_t *aircraft;
 
 	assert(employee);
 
@@ -261,8 +258,6 @@ void E_ResetEmployees (void)
  */
 employee_t* E_GetUnhiredRobot (const ugv_t *ugvType)
 {
-	employee_t *employee;
-
 	E_Foreach(EMPL_ROBOT, employee) {
 		if (!E_IsHired(employee)) {
 			/* If no type was given we return the first ugv we find. */
@@ -283,8 +278,6 @@ employee_t* E_GetUnhiredRobot (const ugv_t *ugvType)
  */
 int E_GetHiredEmployees (const base_t* const base, employeeType_t type, linkedList_t **hiredEmployees)
 {
-	employee_t *employee;
-
 	if (type >= MAX_EMPL) {
 		Com_Printf("E_GetHiredEmployees: Unknown EmployeeType: %i\n", type);
 		*hiredEmployees = NULL;
@@ -321,10 +314,11 @@ employee_t* E_GetHiredRobot (const base_t* const base, const ugv_t *ugvType)
 	E_GetHiredEmployees(base, EMPL_ROBOT, &hiredEmployees);
 
 	employee = NULL;
-	LIST_Foreach(hiredEmployees, employee_t, employee) {
-		if ((employee->ugv == ugvType || !ugvType)	/* If no type was given we return the first ugv we find. */
-		 && E_IsInBase(employee, base)) {		/* It has to be in the defined base. */
-			assert(E_IsHired(employee));
+	LIST_Foreach(hiredEmployees, employee_t, e) {
+		if ((e->ugv == ugvType || !ugvType)	/* If no type was given we return the first ugv we find. */
+		 && E_IsInBase(e, base)) {		/* It has to be in the defined base. */
+			assert(E_IsHired(e));
+			employee = e;
 			break;
 		}
 	}
@@ -361,8 +355,6 @@ static inline qboolean E_EmployeeIsUnassigned (const employee_t * employee)
  */
 employee_t* E_GetAssignedEmployee (const base_t* const base, const employeeType_t type)
 {
-	employee_t *employee;
-
 	E_Foreach(type, employee) {
 		if (!E_IsInBase(employee, base))
 			continue;
@@ -382,8 +374,6 @@ employee_t* E_GetAssignedEmployee (const base_t* const base, const employeeType_
  */
 employee_t* E_GetUnassignedEmployee (const base_t* const base, const employeeType_t type)
 {
-	employee_t *employee;
-
 	E_Foreach(type, employee) {
 		if (!E_IsInBase(employee, base))
 			continue;
@@ -527,8 +517,6 @@ qboolean E_UnhireEmployee (employee_t* employee)
  */
 void E_UnhireAllEmployees (base_t* base, employeeType_t type)
 {
-	employee_t *employee;
-
 	if (!base)
 		return;
 
@@ -653,8 +641,6 @@ void E_DeleteAllEmployees (base_t* base)
 	employeeType_t type;
 
 	for (type = EMPL_SOLDIER; type < MAX_EMPL; type++) {
-		employee_t *employee = NULL;
-
 		E_Foreach(type, employee) {
 			if (base == NULL || E_IsInBase(employee, base))
 				E_DeleteEmployee(employee);
@@ -681,8 +667,6 @@ void E_DeleteEmployeesExceedingCapacity (base_t *base)
 
 	/* do a reverse loop in order to finish by soldiers (the most important employees) */
 	for (type = MAX_EMPL - 1; type >= 0; type--) {
-		employee_t *employee;
-
 		/* UGV are not stored in Quarters */
 		if (type == EMPL_ROBOT)
 			continue;
@@ -712,7 +696,6 @@ int E_RefreshUnhiredEmployeeGlobalList (const employeeType_t type, const qboolea
 	const nation_t *happyNations[MAX_NATIONS];
 	int numHappyNations = 0;
 	int idx, nationIdx, cnt;
-	employee_t *employee;
 
 	happyNations[0] = NULL;
 	/* get a list of nations,  if excludeHappyNations is qtrue then also exclude
@@ -816,7 +799,6 @@ qboolean E_RemoveEmployeeFromBuildingOrAircraft (employee_t *employee)
 int E_CountHired (const base_t* const base, employeeType_t type)
 {
 	int count = 0;
-	employee_t *employee;
 
 	E_Foreach(type, employee) {
 		if (!E_IsHired(employee))
@@ -836,7 +818,6 @@ int E_CountHired (const base_t* const base, employeeType_t type)
 int E_CountHiredRobotByType (const base_t* const base, const ugv_t *ugvType)
 {
 	int count = 0;
-	employee_t *employee;
 
 	E_Foreach(EMPL_ROBOT, employee) {
 		if (!E_IsHired(employee))
@@ -878,7 +859,6 @@ int E_CountAllHired (const base_t* const base)
 int E_CountUnhired (employeeType_t type)
 {
 	int count = 0;
-	employee_t *employee;
 
 	E_Foreach(type, employee) {
 		if (!E_IsHired(employee))
@@ -895,7 +875,6 @@ int E_CountUnhired (employeeType_t type)
 int E_CountUnhiredRobotsByType (const ugv_t *ugvType)
 {
 	int count = 0;
-	employee_t *employee;
 
 	E_Foreach(EMPL_ROBOT, employee) {
 		if (!E_IsHired(employee) && employee->ugv == ugvType)
@@ -912,7 +891,6 @@ int E_CountUnhiredRobotsByType (const ugv_t *ugvType)
 int E_CountUnassigned (const base_t* const base, employeeType_t type)
 {
 	int count;
-	employee_t *employee;
 
 	if (!base)
 		return 0;
@@ -971,7 +949,6 @@ static void E_ListHired_f (void)
 	employeeType_t emplType;
 
 	for (emplType = 0; emplType < MAX_EMPL; emplType++) {
-		employee_t *employee;
 		E_Foreach(emplType, employee) {
 			Com_Printf("Employee: %s (ucn: %i) %s at %s\n", E_GetEmployeeString(employee->type), employee->chr.ucn,
 					employee->chr.name, employee->baseHired->name);
@@ -1015,7 +992,6 @@ static void CL_DebugNewEmployees_f (void)
  */
 employee_t* E_GetEmployeeByTypeFromChrUCN (employeeType_t type, int uniqueCharacterNumber)
 {
-	employee_t *employee = NULL;
 	E_Foreach(type, employee) {
 		if (employee->chr.ucn == uniqueCharacterNumber)
 			return employee;
@@ -1058,7 +1034,6 @@ qboolean E_SaveXML (xmlNode_t *p)
 	Com_RegisterConstList(saveEmployeeConstants);
 	for (emplType = 0; emplType < MAX_EMPL; emplType++) {
 		xmlNode_t *snode = XML_AddNode(p, SAVE_EMPLOYEE_EMPLOYEES);
-		employee_t *employee;
 
 		XML_AddString(snode, SAVE_EMPLOYEE_TYPE, Com_GetConstVariable(SAVE_EMPLOYEETYPE_NAMESPACE, emplType));
 		E_Foreach(emplType, employee) {

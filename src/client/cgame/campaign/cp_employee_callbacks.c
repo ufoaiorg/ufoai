@@ -90,7 +90,6 @@ static void E_EmployeeSelect (employee_t *employee)
 static void E_EmployeeListScroll_f (void)
 {
 	int j, cnt = 0;
-	employee_t* employee;
 	base_t *base = B_GetCurrentSelectedBase();
 
 	if (!base)
@@ -176,15 +175,15 @@ static void E_EmployeeList_f (void)
 	UI_ResetData(TEXT_LIST);
 	employeeListName = NULL;
 
-	E_Foreach(employeeCategory, employee) {
+	E_Foreach(employeeCategory, e) {
 		/* don't show employees of other bases */
-		if (E_IsHired(employee) && !E_IsInBase(employee, base))
+		if (E_IsHired(e) && !E_IsInBase(e, base))
 			continue;
 		/* don't show employees being transfered to other bases */
-		if (employee->transfer)
+		if (e->transfer)
 			continue;
-		LIST_AddPointer(&employeeListName, employee->chr.name);
-		LIST_AddPointer(&employeeList, employee);
+		LIST_AddPointer(&employeeListName, e->chr.name);
+		LIST_AddPointer(&employeeList, e);
 		employeesInCurrentList++;
 	}
 	UI_RegisterLinkedListText(TEXT_LIST, employeeListName);

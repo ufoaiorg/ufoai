@@ -279,12 +279,9 @@ static void MAP_MultiSelectExecuteAction_f (void)
  */
 qboolean MAP_MapClick (uiNode_t* node, int x, int y)
 {
-	aircraft_t *aircraft;
 	aircraft_t *ufo;
 	base_t *base;
 	vec2_t pos;
-	mission_t *tempMission;
-	installation_t *installation;
 
 	/* get map position */
 	if (cl_3dmap->integer)
@@ -1121,7 +1118,6 @@ static void MAP_GetGeoscapeAngle (float *vector)
 	int counter = 0;
 	int maxEventIdx;
 	const int numMissions = CP_CountMissionOnGeoscape();
-	aircraft_t *aircraft;
 	aircraft_t *ufo;
 	base_t *base;
 	int numBases = B_GetCount();
@@ -1130,7 +1126,6 @@ static void MAP_GetGeoscapeAngle (float *vector)
 	maxEventIdx = numMissions + numBases + INS_GetCount() - 1;
 	base = NULL;
 	while ((base = B_GetNext(base)) != NULL) {
-		aircraft_t *aircraft;
 		AIR_ForeachFromBase(aircraft, base) {
 			if (AIR_IsAircraftOnGeoscape(aircraft))
 				maxEventIdx++;
@@ -1154,7 +1149,6 @@ static void MAP_GetGeoscapeAngle (float *vector)
 
 	/* Cycle through missions */
 	if (centerOnEventIdx < numMissions) {
-		mission_t *mission = NULL;
 		MIS_Foreach(mission) {
 			if (!mission->onGeoscape)
 				continue;
@@ -1183,8 +1177,6 @@ static void MAP_GetGeoscapeAngle (float *vector)
 
 	/* Cycle through installations */
 	if (centerOnEventIdx < INS_GetCount() + counter) {
-		installation_t *inst;
-
 		INS_Foreach(inst) {
 			if (counter == centerOnEventIdx) {
 				MAP_ConvertObjectPositionToGeoscapePosition(vector, inst->pos);
@@ -1725,7 +1717,6 @@ void MAP_UpdateGeoscapeDock (void)
 {
 	char buf[512];
 	aircraft_t *ufo;
-	mission_t *mission;
 
 	UI_ExecuteConfunc("clean_geoscape_object");
 
@@ -1760,10 +1751,7 @@ static void MAP_DrawMapMarkers (const uiNode_t* node)
 	int x, y, i, idx;
 	const char* font;
 	aircraft_t *ufo;
-	aircraft_t *aircraft;
 	base_t *base;
-	mission_t *mission;
-	installation_t *installation;
 
 	const vec4_t white = {1.f, 1.f, 1.f, 0.7f};
 	qboolean showXVI = qfalse;

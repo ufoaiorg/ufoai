@@ -121,7 +121,6 @@ static void PR_UpdateProductionList (const base_t* base)
 
 	/* Then go through all object definitions ... */
 	if (produceCategory == FILTER_DISASSEMBLY) {
-		storedUFO_t *ufo;
 		/** UFOs at UFO stores */
 		US_Foreach(ufo) {
 			/* UFO is being transported */

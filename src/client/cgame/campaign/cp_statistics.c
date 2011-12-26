@@ -42,8 +42,6 @@ void CP_StatsUpdate_f (void)
 	base_t *base;
 	const campaign_t *campaign = ccs.curCampaign;
 	const salary_t *salary = &campaign->salaries;
-	aircraft_t *aircraft;
-	installation_t *inst;
 
 	/* delete buffer */
 	OBJZERO(statsBuffer);
@@ -81,7 +79,6 @@ void CP_StatsUpdate_f (void)
 
 	/* costs */
 	for (i = 0; i < MAX_EMPL; i++) {
-		employee_t *employee;
 		E_Foreach(i, employee) {
 			if (!E_IsHired(employee))
 				continue;

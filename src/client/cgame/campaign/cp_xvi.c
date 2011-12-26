@@ -187,8 +187,6 @@ int CP_GetAverageXVIRate (void)
  */
 void CP_SpreadXVI (void)
 {
-	mission_t *mission;
-
 	/* don't check if XVI spreading didn't start yet */
 	if (!CP_IsXVIResearched())
 		return;

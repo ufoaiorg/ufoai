@@ -1006,7 +1006,6 @@ int FS_BuildFileList (const char *fileList)
 			linkedList_t *list = NULL;
 			const char *wildcard = strstr(files, "**");
 			const size_t l = strlen(files) - strlen(wildcard);
-			const char *name = &findname[l + 1];
 
 			Q_strncpyz(findname, files, sizeof(findname));
 			FS_NormPath(findname);
@@ -1014,7 +1013,7 @@ int FS_BuildFileList (const char *fileList)
 			if (l > 0 && findname[l - 1] == '/')
 				findname[l - 1] = '\0';
 
-			Sys_ListFilteredFiles(search->filename, findname, name, &list);
+			Sys_ListFilteredFiles(search->filename, findname, &findname[l + 1], &list);
 
 			LIST_Foreach(list, const char, name) {
 				_AddToListBlock(&block->files, name, qfalse);

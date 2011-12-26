@@ -135,7 +135,6 @@ static void testTeamDefs (void)
 		for (k = 0; k < SND_MAX; k++) {
 			int l;
 			for (l = 0; l < NAME_LAST; l++) {
-				char *soundFile;
 				LIST_Foreach(teamDef->sounds[k][l], char, soundFile) {
 					UFO_CU_ASSERT_TRUE_MSG(TEST_CheckSound(soundFile), va("sound %s does not exist (team %s)", soundFile, teamDef->id));
 				}
@@ -148,7 +147,6 @@ static void testTeamDefsModelScriptData (void)
 {
 	int i;
 	linkedList_t *armourPaths = NULL;
-	const char *armourPath;
 
 	for (i = 0; i < csi.numTeamDefs; i++) {
 		int j;
@@ -172,7 +170,7 @@ static void testTeamDefsModelScriptData (void)
 		UFO_CU_ASSERT_TRUE_MSG(!LIST_IsEmpty(armourPaths), va("no armour definitions found for team %s - but armour is set to true",
 				teamDef->id));
 
-		LIST_Foreach(armourPaths, char, armourPath) {
+		LIST_Foreach(armourPaths, char const, armourPath) {
 			nametypes_t l;
 
 			for (l = NAME_NEUTRAL; l < NAME_LAST; l++) {
@@ -265,7 +263,6 @@ static void testNations (void)
 
 static void testAircraft (void)
 {
-	aircraft_t *aircraft;
 	AIR_Foreach(aircraft) {
 		UFO_CU_ASSERT_TRUE_MSG(TEST_CheckModel(aircraft->model), va("%s does not exist (aircraft: %s)", aircraft->model, aircraft->id));
 		UFO_CU_ASSERT_TRUE_MSG(TEST_CheckImage(aircraft->image), va("%s does not exist (aircraft: %s)", aircraft->image, aircraft->id));

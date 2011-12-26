@@ -141,7 +141,6 @@ void CP_BaseAttackStartMission (mission_t *mission)
 {
 	base_t *base = mission->data.base;
 	linkedList_t *hiredSoldiersInBase = NULL;
-	employee_t *employee;
 
 	assert(base);
 
@@ -235,7 +234,6 @@ void CP_BaseAttackStartMission (mission_t *mission)
  */
 void CP_CheckBaseAttacks (void)
 {
-	mission_t *mission;
 	MIS_Foreach(mission) {
 		if (mission->category == INTERESTCATEGORY_BASE_ATTACK && mission->stage == STAGE_BASE_ATTACK)
 			CP_BaseAttackStartMission(mission);

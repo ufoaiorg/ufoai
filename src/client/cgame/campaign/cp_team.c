@@ -154,7 +154,6 @@ static item_t CP_AddWeaponAmmo (equipDef_t * ed, item_t item)
 void CP_CleanupAircraftCrew (aircraft_t *aircraft, equipDef_t * ed)
 {
 	containerIndex_t container;
-	employee_t *employee;
 
 	assert(aircraft);
 
@@ -200,8 +199,6 @@ void CP_CleanupAircraftCrew (aircraft_t *aircraft, equipDef_t * ed)
  */
 void CP_CleanTempInventory (base_t* base)
 {
-	employee_t *employee;
-
 	E_Foreach(EMPL_SOLDIER, employee) {
 		int k;
 		for (k = 0; k < csi.numIDs; k++) {
@@ -239,7 +236,6 @@ int CP_UpdateActorAircraftVar (aircraft_t *aircraft, employeeType_t employeeType
 	size_t size;
 	int numOnAircraft;
 	const employee_t *pilot = AIR_GetPilot(aircraft);
-	employee_t *empl;
 
 	assert(aircraft);
 

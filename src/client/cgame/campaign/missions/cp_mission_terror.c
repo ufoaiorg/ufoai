@@ -105,8 +105,6 @@ static const city_t* CP_ChooseCity (void)
 
 static const mission_t* CP_TerrorInCity (const city_t *city)
 {
-	mission_t *mission;
-
 	if (!city)
 		return NULL;
 

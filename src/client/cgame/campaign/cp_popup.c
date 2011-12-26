@@ -231,7 +231,6 @@ void CL_DisplayPopupAircraft (aircraft_t* aircraft)
 
 	/* Set missions in popup_aircraft */
 	if (AIR_GetTeamSize(aircraft) > 0) {
-		mission_t *tempMission;
 		MIS_Foreach(tempMission) {
 			if (tempMission->stage == STAGE_NOT_ACTIVE || !tempMission->onGeoscape)
 				continue;
@@ -319,7 +318,6 @@ void CL_DisplayPopupInterceptMission (mission_t* mission)
 {
 	linkedList_t *aircraftList = NULL;
 	linkedList_t *aircraftListSorted;
-	aircraft_t *aircraft;
 
 	if (!mission)
 		return;
@@ -374,9 +372,7 @@ void CL_DisplayPopupInterceptUFO (aircraft_t* ufo)
 	linkedList_t *aircraftList = NULL;
 	linkedList_t *aircraftListSorted;
 	linkedList_t *baseList = NULL;
-	aircraft_t *aircraft;
 	base_t *base;
-	installation_t *installation;
 
 	if (!ufo)
 		return;
@@ -554,13 +550,15 @@ static void CL_PopupInterceptBaseClick_f (void)
 
 	installation = NULL;
 	if (num >= 0) { /* don't try to find an installation if we already found the right base */
-		INS_Foreach(installation) {
+		INS_Foreach(i) {
 			/* Check if the installation should be displayed in base list */
-			if (AII_InstallationCanShoot(installation)) {
+			if (AII_InstallationCanShoot(i)) {
 				num--;
 				atLeastOneBase = qtrue;
-				if (num < 0)
+				if (num < 0) {
+					installation = i;
 					break;
+				}
 			}
 		}
 	}

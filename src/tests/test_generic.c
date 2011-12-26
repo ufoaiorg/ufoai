@@ -241,7 +241,6 @@ static void testLinkedList (void)
 static void testLinkedListIterator (void)
 {
 	linkedList_t *list = NULL;
-	char *string;
 	int cnt;
 
 	LIST_AddString(&list, "test1");
@@ -268,7 +267,6 @@ static void testLinkedListIterator (void)
 static void testLinkedListIteratorRemove (void)
 {
 	linkedList_t *list = NULL;
-	char *string;
 
 	LIST_AddString(&list, "test1");
 	LIST_AddString(&list, "test2");

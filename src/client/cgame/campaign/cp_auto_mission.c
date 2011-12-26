@@ -136,7 +136,6 @@ static void AM_ClearBattle (autoMissionBattle_t *battle)
  */
 static void AM_FillTeamFromAircraft (autoMissionBattle_t *battle, const int teamNum, const aircraft_t *aircraft, const campaign_t *campaign)
 {
-	employee_t *employee;
 	int teamSize;
 	int unitsAlive;
 
@@ -816,7 +815,6 @@ static void AM_AlienCollect (aircraft_t *aircraft, const autoMissionBattle_t *ba
 static void AM_UpdateSurivorsAfterBattle (const autoMissionBattle_t *battle, struct aircraft_s *aircraft)
 {
 	int unit = 0;
-	employee_t *soldier;
 	int battleExperience;
 
 	assert(battle);

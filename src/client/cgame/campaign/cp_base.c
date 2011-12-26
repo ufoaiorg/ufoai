@@ -892,8 +892,6 @@ qboolean B_BuildingDestroy (building_t* building)
  */
 static void B_MoveAircraftOnGeoscapeToOtherBases (const base_t *base)
 {
-	aircraft_t *aircraft;
-
 	AIR_ForeachFromBase(aircraft, base) {
 		if (AIR_IsAircraftOnGeoscape(aircraft)) {
 			base_t *newbase = NULL;
@@ -1388,7 +1386,6 @@ building_t* B_SetBuildingByClick (base_t *base, const building_t const *building
 			if (base->baseStatus == BASE_WORKING) {
 				linkedList_t *neighbours;
 				qboolean coherent = qfalse;
-				building_t *bldg;
 
 				neighbours = B_GetNeighbours(buildingNew);
 				LIST_Foreach(neighbours, building_t, bldg) {
@@ -1874,7 +1871,6 @@ static void B_InitialEquipment (aircraft_t *aircraft, const equipDef_t *ed)
 {
 	base_t *homebase;
 	chrList_t chrListTemp;
-	employee_t *employee;
 
 	assert(aircraft);
 	homebase = aircraft->homebase;

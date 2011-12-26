@@ -172,7 +172,6 @@ static void testAircraftHandling (void)
 {
 	const vec2_t destination = { 10, 10 };
 	base_t *base;
-	aircraft_t *aircraft;
 	aircraft_t *newAircraft;
 	aircraft_t *aircraftTemplate;
 	int firstIdx;
@@ -266,7 +265,6 @@ static void testEmployeeHandling (void)
 			CU_ASSERT_PTR_NOT_NULL(e);
 		}
 		{
-			employee_t *e;
 			int cnt = 0;
 			E_Foreach(EMPL_SOLDIER, e) {
 				cnt++;
@@ -348,7 +346,6 @@ static void testAutoMissions (void)
 	base_t *base;
 	missionResults_t result;
 	battleParam_t battleParameters;
-	aircraft_t* aircraft;
 	mission_t *mission;
 	campaign_t *campaign;
 
@@ -758,7 +755,6 @@ static void testAirFight (void)
 {
 	const vec2_t destination = { 10, 10 };
 	mission_t *mission;
-	aircraft_t *aircraft;
 	aircraft_t *ufo;
 	base_t *base;
 	int i, cnt;
@@ -1102,7 +1098,6 @@ static void testHospital (void)
 	i = 0;
 	/* hurt all employees */
 	for (type = 0; type < MAX_EMPL; type++) {
-		employee_t *employee;
 		E_Foreach(type, employee) {
 			if (!E_IsHired(employee))
 				continue;
@@ -1115,7 +1110,6 @@ static void testHospital (void)
 	HOS_HospitalRun();
 
 	for (type = 0; type < MAX_EMPL; type++) {
-		employee_t *employee;
 		E_Foreach(type, employee) {
 			if (!E_IsHired(employee))
 				continue;
@@ -1243,7 +1237,6 @@ static qboolean skipTest (const mapDef_t *md)
 
 static void testTerrorMissions (void)
 {
-	city_t *city;
 	ufoType_t ufoType;
 	int numUfoTypes;
 	ufoType_t ufoTypes[UFO_MAX];

@@ -624,7 +624,6 @@ void RS_InitTree (const campaign_t *campaign, qboolean load)
 	if (load) {
 		/* when you load a savegame right after starting UFO, the aircraft in bases
 		 * and installations don't have any tech assigned */
-		aircraft_t *aircraft;
 		AIR_Foreach(aircraft) {
 			/* if you already played before loading the game, tech are already defined for templates */
 			if (!aircraft->tech)
