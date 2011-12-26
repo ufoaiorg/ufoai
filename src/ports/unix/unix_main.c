@@ -136,12 +136,7 @@ static int Sys_BacktraceLibsCallback (struct dl_phdr_info *info, size_t size, vo
 		end += info->dlpi_phdr[j].p_memsz;
 	}
 
-	/* this is terrible. */
-#if __WORDSIZE == 64
-	fprintf(crash, "[0x%lux-0x%lux] %s\n", info->dlpi_addr, info->dlpi_addr + end, info->dlpi_name);
-#else
-	fprintf(crash, "[0x%ux-0x%ux] %s\n", info->dlpi_addr, info->dlpi_addr + end, info->dlpi_name);
-#endif
+	fprintf(crash, "[0x"UFO_SIZE_T"x-0x"UFO_SIZE_T"x] %s\n", info->dlpi_addr, info->dlpi_addr + end, info->dlpi_name);
 	return 0;
 }
 
