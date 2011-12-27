@@ -144,8 +144,7 @@ static void testMapDefsMassRMA (void)
 							{ 12, "forest",   "large",      "craft_drop_firebird", "craft_ufo_harvester" },
 							{ 16, "forest",   "large",      "craft_drop_raptor",   "craft_ufo_harvester" },
 							{ 12, "forest",   "large",      "craft_drop_herakles", "craft_ufo_harvester" },
-							//{ 34, "village",  "commercial", "craft_drop_raptor",   0                     },
-							{ -1, "village",  "commercial", "craft_drop_firebird", "craft_ufo_scout"     },
+						//	{ -1, "village",  "commercial", "craft_drop_firebird", "craft_ufo_scout"     },
 							{ -1, "village",  "commercial", "craft_drop_firebird", "craft_ufo_fighter"   },
 							/* at least 18, 21 and 26 don't work on windows */
 							{ -1, "village",  "commercial", "craft_drop_raptor",   "craft_ufo_scout"     },
