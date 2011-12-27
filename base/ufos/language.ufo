@@ -1,5 +1,6 @@
 language en {
-	"_English"
+	name	"_English"
+	native	"English"
 	{
 		en.UTF-8
 		en_AU.UTF-8
@@ -33,7 +34,8 @@ language en {
 }
 
 language de {
-	"_German"
+	name	"_German"
+	native	"Deutsch"
 	{
 		de.UTF-8
 		de_DE.UTF-8
@@ -51,7 +53,8 @@ language de {
 }
 
 language pl {
-	"_Polish"
+	name	"_Polish"
+	native	"polski"
 	{
 		pl.UTF-8
 		pl_PL.UTF-8
@@ -61,7 +64,8 @@ language pl {
 }
 
 language es {
-	"_Spanish"
+	name	"_Spanish"
+	native	"español"
 	{
 		es.UTF-8
 		es_AR.UTF-8
@@ -103,7 +107,8 @@ language es {
 }
 
 language es_ES {
-	"_Spanish (Spain)"
+	name	"_Spanish (Spain)"
+	native	"español (España)"
 	{
 		es_ES.UTF-8
 		es_ES.utf8
@@ -111,7 +116,8 @@ language es_ES {
 }
 
 language cs {
-	"_Czech"
+	name	"_Czech"
+	native	"česky"
 	{
 		cs.UTF-8
 		cs_CZ.UTF-8
@@ -121,7 +127,8 @@ language cs {
 }
 
 language da {
-	"_Danish"
+	name	"_Danish"
+	native	"dansk"
 	{
 		da.UTF-8
 		da_DK.UTF-8
@@ -131,7 +138,8 @@ language da {
 }
 
 language et {
-	"_Estonian"
+	name	"_Estonian"
+	native	"eesti"
 	{
 		et.UTF-8
 		et_EE.UTF-8
@@ -141,7 +149,8 @@ language et {
 }
 
 language fi {
-	"_Finnish"
+	name	"_Finnish"
+	native	"suomi"
 	{
 		fi.UTF-8
 		fi_FI.UTF-8
@@ -151,7 +160,8 @@ language fi {
 }
 
 language fr {
-	"_French"
+	name	"_French"
+	native	"Français"
 	{
 		fr.UTF-8
 		fr_BE.UTF-8
@@ -169,7 +179,8 @@ language fr {
 }
 
 language el {
-	"_Greek"
+	name	"_Greek"
+	native	"Ελληνικά"
 	{
 		el.UTF-8
 		el_GR.UTF-8
@@ -179,7 +190,8 @@ language el {
 }
 
 language hu {
-	"_Hungarian"
+	name	"_Hungarian"
+	native	"Magyar"
 	{
 		hu.UTF-8
 		hu_HU.UTF-8
@@ -189,7 +201,8 @@ language hu {
 }
 
 language it {
-	"_Italien"
+	name	"_Italien"
+	native	"Italiano"
 	{
 		it.UTF-8
 		it_CH.UTF-8
@@ -201,7 +214,8 @@ language it {
 }
 
 language ko {
-	"_Korean"
+	name	"_Korean"
+	native	"한국어"
 	{
 		ko.UTF-8
 		ko_KO.UTF-8
@@ -211,7 +225,8 @@ language ko {
 }
 
 language nl_NL {
-	"_Dutch"
+	name	"_Dutch"
+	native	"Nederlands"
 	{
 		nl.UTF-8
 		nl_NL.UTF-8
@@ -221,7 +236,8 @@ language nl_NL {
 }
 
 language pt_BR {
-	"_Brazilian Portuguese"
+	name	"_Brazilian Portuguese"
+	native	"Português (Brasil)"
 	{
 		pt_BR.UTF-8
 		pt_BR.utf8
@@ -229,7 +245,8 @@ language pt_BR {
 }
 
 language pt {
-	"_Portuguese"
+	name	"_Portuguese"
+	native	"Português"
 	{
 		pt.UTF-8
 		pt_PT.UTF-8
@@ -239,7 +256,8 @@ language pt {
 }
 
 language ru {
-	"_Russian"
+	name	"_Russian"
+	native	"Русский"
 	{
 		ru.UTF-8
 		ru_RU.UTF8
@@ -251,7 +269,8 @@ language ru {
 }
 
 language sl {
-	"_Slovenian"
+	name	"_Slovenian"
+	native	"slovenščina"
 	{
 		sl.UTF-8
 		sl_SI.UTF-8
@@ -261,7 +280,8 @@ language sl {
 }
 
 language sv {
-	"_Swedish"
+	name	"_Swedish"
+	native	"svenska"
 	{
 		sv.UTF-8
 		sv_SE.UTF-8
@@ -273,7 +293,8 @@ language sv {
 }
 
 language th {
-	"_Thai"
+	name	"_Thai"
+	native	"ไทย"
 	{
 		th.UTF-8
 		th.uft8
@@ -283,7 +304,8 @@ language th {
 }
 
 language uk {
-	"_Ukrainian"
+	name	"_Ukrainian"
+	native	"українська"
 	{
 		uk.UTF-8
 		uk.utf8
@@ -293,7 +315,8 @@ language uk {
 }
 
 language ja {
-	"_Japanese"
+	name	"_Japanese"
+	native	"日本語"
 	{
 		ja_JP.UTF-8
 		ja_JP.utf8
@@ -301,7 +324,8 @@ language ja {
 }
 
 language zh_cn {
-	"_Chinese"
+	name	"_Chinese"
+	native	"中文"
 	{
 		zh_CN.UTF-8
 		zh_CN.utf8
@@ -309,7 +333,8 @@ language zh_cn {
 }
 
 language zh_tw {
-	"_Traditional Chinese"
+	name	"_Traditional Chinese"
+	native	"中文"		// TODO need a fix here
 	{
 		zh_TW.UTF-8
 		zh_TW.utf8
@@ -317,7 +342,8 @@ language zh_tw {
 }
 
 language bg {
-	"_Bulgarian"
+	name	"_Bulgarian"
+	native	"Български"
 	{
 		bg_BG.UTF-8
 		bg_BG.utf8
@@ -325,7 +351,8 @@ language bg {
 }
 
 language no {
-	"_Norwegian"
+	name	"_Norwegian"
+	native	"Norsk (bokmål)"
 	{
 		no.UTF-8
 		no.utf8
@@ -333,7 +360,8 @@ language no {
 }
 
 language tr {
-	"_Turkish"
+	name	"_Turkish"
+	native	"Türkçe"
 	{
 		tr.UTF-8
 		tr.utf8
@@ -341,7 +369,8 @@ language tr {
 }
 
 language none {
-	"_No language"
+	name	"_No language"
+	native	"No language"
 	{
 		C
 	}

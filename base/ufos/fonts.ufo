@@ -83,3 +83,9 @@ font f_menusmall
 	size	18
 	style	TTF_STYLE_BOLD
 }
+
+font f_language
+{
+	font	"_media/languages.ttf"
+	size	18
+}

@@ -50,6 +50,7 @@ typedef struct localeMapping_s {
 typedef struct language_s {
 	char *localeID;			/**< short locale id */
 	char *localeString;		/**< translatable locale string to show in menus */
+	char *nativeString;		/**< Name of the language in the native language itself */
 	localeMapping_t *localeMapping;	/**< mapping to real locale string for setlocale */
 	struct language_s *next;	/**< next language in this list */
 } language_t;
@@ -101,6 +102,12 @@ void CL_ParseLanguages (const char *name, const char **text)
 		return;
 	}
 
+	language = (language_t *)Mem_PoolAlloc(sizeof(*language), cl_genericPool, 0);
+	language->localeID = Mem_PoolStrDup(name, cl_genericPool, 0);
+	language->localeString = "";
+	language->nativeString = "";
+	language->localeMapping = NULL;
+
 	do {
 		/* get the name type */
 		token = Com_EParse(text, errhead, name);
@@ -124,21 +131,25 @@ void CL_ParseLanguages (const char *name, const char **text)
 				mapping->next = language->localeMapping;
 				language->localeMapping = mapping;
 			} while (*text);
-			language = NULL;
-		} else {
+		} else if (strcmp(token, "name") == 0) {
+			token = Com_EParse(text, errhead, name);
+			if (!*text || *token == '}')
+				Com_Error(ERR_FATAL, "CL_ParseLanguages: Name expected for language \"%s\".\n", name);
 			if (*token != '_') {
-				Com_Printf("CL_ParseLanguages: language: '%s' - not marked translatable (%s) - ignore it\n", name, token);
-				continue;
+				Com_Printf("CL_ParseLanguages: language: '%s' - not marked translatable (%s)\n", name, token);
 			}
-			language = (language_t *)Mem_PoolAlloc(sizeof(*language), cl_genericPool, 0);
-			language->localeID = Mem_PoolStrDup(name, cl_genericPool, 0);
-			language->localeString = Mem_PoolStrDup(token + 1, cl_genericPool, 0);
-			language->localeMapping = NULL;
-			language->next = languageList;
-			languageList = language;
-			languageCount++;
+			language->localeString = Mem_PoolStrDup(token, cl_genericPool, 0);
+		} else if (strcmp(token, "native") == 0) {
+			token = Com_EParse(text, errhead, name);
+			if (!*text || *token == '}')
+				Com_Error(ERR_FATAL, "CL_ParseLanguages: Native expected for language \"%s\".\n", name);
+			language->nativeString = Mem_PoolStrDup(token, cl_genericPool, 0);
 		}
 	} while (*text);
+
+	language->next = languageList;
+	languageList = language;
+	languageCount++;
 }
 
 /**
@@ -247,14 +258,15 @@ void CL_LanguageInit (void)
 	for (i = 0, language = languageList; i < languageCount; language = language->next, i++) {
 #ifndef DEBUG
 		/* No language option available only for DEBUG. */
-		if (!CL_LanguageTest(language->localeID))
+		if (!CL_LanguageTest(language->localeID) && !Q_streq(language->localeID, "none"))
 			continue;
 #endif
 
-		/* Test the locale first, add to list if setting given locale possible. */
-		if (CL_LanguageTest(language->localeID) || Q_streq(language->localeID, "none")) {
-			UI_AddOption(&languageOption, "", va("_%s", language->localeString), language->localeID);
-		}
+#if 0
+		UI_AddOption(&languageOption, "", language->localeString, language->localeID);
+#else
+		UI_AddOption(&languageOption, "", language->nativeString, language->localeID);
+#endif
 	}
 
 	/* sort the list, and register it to the menu */

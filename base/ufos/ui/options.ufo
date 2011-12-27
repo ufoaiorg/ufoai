@@ -141,6 +141,7 @@ window options
 		{
 			tooltip		"_Available languages"
 			dataid		OPTION_LANGUAGES
+			font		"f_language"
 			pos			"297 135"
 			cvar		*cvar:s_language
 			image		"ui/panel_green_slim"
