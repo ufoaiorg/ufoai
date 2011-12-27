@@ -48,9 +48,9 @@ typedef struct localeMapping_s {
  * from our script files
  */
 typedef struct language_s {
-	char *localeID;			/**< short locale id */
-	char *localeString;		/**< translatable locale string to show in menus */
-	char *nativeString;		/**< Name of the language in the native language itself */
+	const char *localeID;			/**< short locale id */
+	const char *localeString;		/**< translatable locale string to show in menus */
+	const char *nativeString;		/**< Name of the language in the native language itself */
 	localeMapping_t *localeMapping;	/**< mapping to real locale string for setlocale */
 	struct language_s *next;	/**< next language in this list */
 } language_t;
