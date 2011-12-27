@@ -452,19 +452,24 @@ static void SV_ListMaps_f (void)
  * @brief List for SV_CompleteServerCommand
  * @sa ServerCommand
  */
-static char const* const serverCommandList[] = {
-	"startgame", "Force the gamestart - useful for multiplayer games",
-	"addip", "The ip address is specified in dot format, and any unspecified digits will match any value, so you can specify an entire class C network with 'addip 192.246.40'",
-	"removeip", "Removeip will only remove an address specified exactly the same way. You cannot addip a subnet, then removeip a single host",
-	"listip", "Prints the current list of filters",
-	"writeip", "Dumps ips to listip.cfg so it can be executed at a later date",
-	"ai_add", "Used to add ai opponents to a game - but no civilians",
-	"win", "Call the end game function with the given team",
+struct serverCommand_t {
+	char const* name;
+	char const* description;
+};
+
+static serverCommand_t const serverCommandList[] = {
+	{ "startgame",          "Force the gamestart - useful for multiplayer games" },
+	{ "addip",              "The ip address is specified in dot format, and any unspecified digits will match any value, so you can specify an entire class C network with 'addip 192.246.40'" },
+	{ "removeip",           "Removeip will only remove an address specified exactly the same way. You cannot addip a subnet, then removeip a single host" },
+	{ "listip",             "Prints the current list of filters" },
+	{ "writeip",            "Dumps ips to listip.cfg so it can be executed at a later date" },
+	{ "ai_add",             "Used to add ai opponents to a game - but no civilians" },
+	{ "win",                "Call the end game function with the given team" },
 #ifdef DEBUG
-	"debug_showall", "Debug function: Reveal all items to all sides",
-	"debug_actorinvlist", "Debug function to show the whole inventory of all connected clients on the server",
+	{ "debug_showall",      "Debug function: Reveal all items to all sides" },
+	{ "debug_actorinvlist", "Debug function to show the whole inventory of all connected clients on the server" },
 #endif
-	NULL
+	{ 0, 0 }
 };
 
 /**
@@ -474,11 +479,11 @@ static char const* const serverCommandList[] = {
 static int SV_CompleteServerCommand (const char *partial, const char **match)
 {
 	int n = 0;
-	for (char const* const* i = serverCommandList; i[0]; i += 2) {
-		if (Cmd_GenericCompleteFunction(i[0], partial, match)) {
-			Com_Printf("[cmd] %s\n", i[0]);
-			if (*i[1])
-				Com_Printf(S_COLOR_GREEN "      %s\n", i[1]);
+	for (serverCommand_t const* i = serverCommandList; i->name; ++i) {
+		if (Cmd_GenericCompleteFunction(i->name, partial, match)) {
+			Com_Printf("[cmd] %s\n", i->name);
+			if (*i->description)
+				Com_Printf(S_COLOR_GREEN "      %s\n", i->description);
 			++n;
 		}
 	}
