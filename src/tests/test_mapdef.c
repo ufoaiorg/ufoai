@@ -103,7 +103,6 @@ static void testMapDefsMassRMA (void)
 			long time;
 			mapInfo_t *randomMap;
 			char *p = md->map;
-			linkedList_t *craftIter = md->aircraft;
 
 			if (*p == '+')
 				p++;
@@ -114,14 +113,13 @@ static void testMapDefsMassRMA (void)
 
 			sv_threads->integer = 0;
 
-			while ((craftIter != NULL)) {
-				if (craftIter->data != NULL)
-					Cvar_Set("rm_drop", Com_GetRandomMapAssemblyNameForCraft(craftIter->data));
+			LIST_Foreach(md->aircraft, char const, craft) {
+				if (craft)
+					Cvar_Set("rm_drop", Com_GetRandomMapAssemblyNameForCraft(craft));
 
-				linkedList_t *ufoIter = md->ufos;
-				while ((ufoIter != NULL)) {
-					if (ufoIter->data != NULL)
-						Cvar_Set("rm_ufo", Com_GetRandomMapAssemblyNameForCraft(ufoIter->data));
+				LIST_Foreach(md->ufos, char const, ufo) {
+					if (ufo)
+						Cvar_Set("rm_ufo", Com_GetRandomMapAssemblyNameForCraft(ufo));
 
 					for (i = 0; i < 50; i++) {
 						srand(i);
@@ -163,11 +161,11 @@ static void testMapDefsMassRMA (void)
 
 						qboolean skip = qfalse;
 						for (skip_info const* e = skip_list; e != endof(skip_list); ++e) {
-							if (e->seed >= 0 && i != e->seed)                        continue;
-							if (e->map       && !Q_streq(p,               e->map))   continue;
-							if (e->param     && !Q_streq(md->param,       e->param)) continue;
-							if (e->craft     && !Q_streq(craftIter->data, e->craft)) continue;
-							if (e->ufo       && !Q_streq(ufoIter->data,   e->ufo))   continue;
+							if (e->seed >= 0 && i != e->seed)                  continue;
+							if (e->map       && !Q_streq(p,         e->map))   continue;
+							if (e->param     && !Q_streq(md->param, e->param)) continue;
+							if (e->craft     && !Q_streq(craft,     e->craft)) continue;
+							if (e->ufo       && !Q_streq(ufo,       e->ufo))   continue;
 							skip = qtrue;
 							break;
 						}
@@ -182,11 +180,7 @@ static void testMapDefsMassRMA (void)
 							Com_Printf("Map: %s Assembly: %s Seed: %i tiles: %i ms: %li\n", p, md->param, i, randomMap->numPlaced, time);
 						Mem_Free(randomMap);
 					}
-
-					ufoIter = ufoIter->next;
 				}
-
-				craftIter = craftIter->next;
 			}
 		}
 	}
