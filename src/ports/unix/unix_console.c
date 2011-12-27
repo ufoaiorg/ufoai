@@ -74,14 +74,13 @@ static void CON_FlushIn (void)
 static void Sys_TTYDeleteCharacter (void)
 {
 	char key;
-	size_t size;
 
 	key = '\b';
-	size = write(STDOUT_FILENO, &key, 1);
+	write(STDOUT_FILENO, &key, 1);
 	key = ' ';
-	size = write(STDOUT_FILENO, &key, 1);
+	write(STDOUT_FILENO, &key, 1);
 	key = '\b';
-	size = write(STDOUT_FILENO, &key, 1);
+	write(STDOUT_FILENO, &key, 1);
 }
 
 /**
@@ -104,11 +103,11 @@ static void Sys_TTYConsoleHide (void)
  */
 static void Sys_TTYConsoleShow (void)
 {
-	size_t size = write(STDOUT_FILENO, "]", 1);
+	write(STDOUT_FILENO, "]", 1);
 	if (ttyConsoleHistory.cursor) {
 		unsigned int i;
 		for (i = 0; i < ttyConsoleHistory.cursor; i++) {
-			size = write(STDOUT_FILENO, ttyConsoleHistory.buffer + i, 1);
+			write(STDOUT_FILENO, ttyConsoleHistory.buffer + i, 1);
 		}
 	}
 }
@@ -279,7 +278,6 @@ const char *Sys_ConsoleInput (void)
 		char key;
 		int avail = read(STDIN_FILENO, &key, 1);
 		if (avail != -1) {
-			size_t size;
 			/* we have something
 			 * backspace?
 			 * NOTE TTimo testing a lot of values .. seems it's the only way to get it to work everywhere */
@@ -299,8 +297,8 @@ const char *Sys_ConsoleInput (void)
 					Q_strncpyz(text, ttyConsoleHistory.buffer, sizeof(text));
 					Sys_TTYConsoleHistoryClear(&ttyConsoleHistory);
 					key = '\n';
-					size = write(1, &key, 1);
-					size = write(1, "]", 1);
+					write(1, &key, 1);
+					write(1, "]", 1);
 					return text;
 				}
 				if (key == '\t') {
@@ -359,7 +357,7 @@ const char *Sys_ConsoleInput (void)
 			ttyConsoleHistory.buffer[ttyConsoleHistory.cursor] = key;
 			ttyConsoleHistory.cursor++;
 			/* print the current line (this is differential) */
-			size = write(STDOUT_FILENO, &key, 1);
+			write(STDOUT_FILENO, &key, 1);
 		}
 
 		return NULL;
