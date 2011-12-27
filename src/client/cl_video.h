@@ -67,7 +67,7 @@ typedef struct {
 typedef struct {
 	viddefContext_t context;
 
-	qboolean strech;		/**< currently strech mode? */
+	qboolean stretch;		/**< currently stretch mode? */
 
 	float rx;		/**< horizontal screen scale factor */
 	float ry;		/**< vertical screen scale factor */
@@ -93,7 +93,7 @@ extern memPool_t *vid_modelPool;
 extern viddef_t viddef;			/* global video state */
 
 extern cvar_t *vid_fullscreen;
-extern cvar_t *vid_strech;
+extern cvar_t *vid_stretch;
 extern cvar_t *vid_mode;
 extern cvar_t *vid_gamma;
 extern cvar_t *vid_ignoregamma;
