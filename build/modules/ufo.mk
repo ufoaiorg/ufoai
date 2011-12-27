@@ -218,6 +218,7 @@ $(TARGET)_SRCS      = \
 	client/ui/node/ui_node_string.c \
 	client/ui/node/ui_node_special.c \
 	client/ui/node/ui_node_spinner.c \
+	client/ui/node/ui_node_spinner2.c \
 	client/ui/node/ui_node_tab.c \
 	client/ui/node/ui_node_tbar.c \
 	client/ui/node/ui_node_text.c \

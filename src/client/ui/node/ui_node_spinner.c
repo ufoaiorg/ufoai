@@ -120,6 +120,10 @@ static void UI_SpinnerNodeRepeat (uiNode_t *node, uiTimer_t *timer)
 
 static void UI_SpinnerNodeDown (uiNode_t *node, int x, int y, int button)
 {
+	const qboolean disabled = node->disabled || node->parent->disabled;
+	if (disabled)
+		return;
+
 	if (button == K_MOUSE1) {
 		UI_SetMouseCapture(node);
 		UI_NodeAbsoluteToRelativePos(node, &x, &y);
@@ -132,7 +136,7 @@ static void UI_SpinnerNodeDown (uiNode_t *node, int x, int y, int button)
 
 static void UI_SpinnerNodeUp (uiNode_t *node, int x, int y, int button)
 {
-	if (button == K_MOUSE1) {
+	if (button == K_MOUSE1 && UI_GetMouseCapture() == node) {
 		UI_MouseRelease();
 	}
 }

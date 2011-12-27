@@ -757,6 +757,9 @@
 		<Unit filename="..\..\src\client\ui\node\ui_node_spinner.c">
 			<Option compilerVar="CC" />
 		</Unit>
+		<Unit filename="..\..\src\client\ui\node\ui_node_spinner2.c">
+			<Option compilerVar="CC" />
+		</Unit>
 		<Unit filename="..\..\src\client\ui\node\ui_node_string.c">
 			<Option compilerVar="CC" />
 		</Unit>

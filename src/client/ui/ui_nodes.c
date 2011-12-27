@@ -63,6 +63,7 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #include "node/ui_node_string.h"
 #include "node/ui_node_special.h"
 #include "node/ui_node_spinner.h"
+#include "node/ui_node_spinner2.h"
 #include "node/ui_node_tab.h"
 #include "node/ui_node_tbar.h"
 #include "node/ui_node_text.h"
@@ -123,6 +124,7 @@ static const registerFunction_t registerFunctions[] = {
 	UI_RegisterSequenceNode,
 	UI_RegisterSpecialNode,
 	UI_RegisterSpinnerNode,
+	UI_RegisterSpinner2Node,
 	UI_RegisterStringNode,
 	UI_RegisterTabNode,
 	UI_RegisterTBarNode,
@@ -658,6 +660,7 @@ static const int virtualFunctions[] = {
 	offsetof(uiBehaviour_t, mouseDown),
 	offsetof(uiBehaviour_t, mouseUp),
 	offsetof(uiBehaviour_t, capturedMouseMove),
+	offsetof(uiBehaviour_t, capturedMouseLost),
 	offsetof(uiBehaviour_t, loading),
 	offsetof(uiBehaviour_t, loaded),
 	offsetof(uiBehaviour_t, windowOpened),

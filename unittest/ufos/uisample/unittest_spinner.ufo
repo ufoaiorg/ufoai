@@ -1,0 +1,79 @@
+component spinner2 myFunkySpinner {
+	size "20 20"
+	background	"test/spinner"
+	topIcon	"test/spinner_top"
+	bottomIcon	"test/spinner_bottom"
+}
+
+window unittest_spinner
+{
+	{
+		pos "100 100"
+		size "340 500"
+		dragbutton	true
+		closebutton	true
+		string		"_Unittest spinner"
+		bgcolor		"0 0 0 1"
+		timeout		1000
+	}
+
+	spinner old_spinner {
+		image		"ui/spinner_blue"
+		delta		1
+		pos	"3 50"
+		min			0
+		max			20
+		current		*cvar:test_spinner
+	}
+
+	myFunkySpinner disabled_spinner {
+		pos	"20 50"
+		delta		1
+		min			0
+		max			20
+		disabled	true
+		current		*cvar:test_spinner
+	}
+
+	myFunkySpinner normal_spinner {
+		pos	"50 50"
+		disabled	false
+		delta		1
+		min			0
+		max			20
+		current		*cvar:test_spinner
+	}
+
+	myFunkySpinner min_spinner {
+		pos	"80 50"
+		disabled	false
+		delta		1
+		min			10
+		max			20
+		current		*cvar:test_spinner
+	}
+
+	myFunkySpinner max_spinner {
+		pos	"110 50"
+		disabled	false
+		delta		1
+		min			0
+		max			10
+		current		*cvar:test_spinner
+	}
+
+	string value
+	{
+		string		*cvar:test_spinner
+		pos			"140 50"
+		size		"130 30"
+	}
+
+	func onWindowOpened {
+		*cvar:test_spinner = 10
+	}
+
+	func onWindowClosed {
+		delete *cvar:test_spinner
+	}
+}

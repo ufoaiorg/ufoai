@@ -199,7 +199,7 @@ void UI_FinishInit (void)
 
 void UI_Init (void)
 {
-	cvar_t *ui_hunkSize = Cvar_Get("ui_hunksize", "2", CVAR_ARCHIVE, "UI memory hunk size in megabytes");
+	cvar_t *ui_hunkSize = Cvar_Get("ui_hunksize", "3", CVAR_ARCHIVE, "UI memory hunk size in megabytes");
 
 #ifdef DEBUG
 	ui_debug = Cvar_Get("debug_ui", "0", CVAR_DEVELOPER, "Prints node names for debugging purposes - valid values are 1 and 2");
