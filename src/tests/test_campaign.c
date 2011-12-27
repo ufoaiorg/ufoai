@@ -172,6 +172,7 @@ static void testAircraftHandling (void)
 {
 	const vec2_t destination = { 10, 10 };
 	base_t *base;
+	aircraft_t *aircraft;
 	aircraft_t *newAircraft;
 	aircraft_t *aircraftTemplate;
 	int firstIdx;
@@ -210,19 +211,19 @@ static void testAircraftHandling (void)
 	CU_ASSERT_EQUAL(newAircraft->homebase, base);
 
 	newFound = 0;
-	AIR_Foreach(aircraft) {
+	AIR_Foreach(a) {
 		/* test deletion (part 2) */
-		CU_ASSERT_NOT_EQUAL(firstIdx, aircraft->idx);
+		CU_ASSERT_NOT_EQUAL(firstIdx, a->idx);
 		/* for test addition (part 2) */
-		if (aircraft->idx == newAircraft->idx)
+		if (a->idx == newAircraft->idx)
 			newFound++;
 	}
 	/* test addition (part 2) */
 	CU_ASSERT_EQUAL(newFound, 1);
 
 	/* check if AIR_Foreach iterates through all aircraft */
-	AIR_Foreach(aircraft) {
-		AIR_DeleteAircraft(aircraft);
+	AIR_Foreach(a) {
+		AIR_DeleteAircraft(a);
 	}
 	aircraft = AIR_GetFirstFromBase(base);
 	CU_ASSERT_PTR_NULL_FATAL(aircraft);
@@ -267,6 +268,7 @@ static void testEmployeeHandling (void)
 		{
 			int cnt = 0;
 			E_Foreach(EMPL_SOLDIER, e) {
+				(void)e;
 				cnt++;
 			}
 
@@ -346,6 +348,7 @@ static void testAutoMissions (void)
 	base_t *base;
 	missionResults_t result;
 	battleParam_t battleParameters;
+	aircraft_t* aircraft;
 	mission_t *mission;
 	campaign_t *campaign;
 
@@ -363,9 +366,11 @@ static void testAutoMissions (void)
 	base = CreateBase("unittestautomission", pos);
 	CU_ASSERT_PTR_NOT_NULL_FATAL(base);
 
-	AIR_ForeachFromBase(aircraft, base) {
-		if (AIR_GetTeamSize(aircraft) > 0)
+	AIR_ForeachFromBase(a, base) {
+		if (AIR_GetTeamSize(a) > 0) {
+			aircraft = a;
 			break;
+		}
 	}
 	CU_ASSERT_PTR_NOT_NULL_FATAL(aircraft);
 	CU_ASSERT_TRUE(AIR_GetTeamSize(aircraft) > 0);
@@ -755,6 +760,7 @@ static void testAirFight (void)
 {
 	const vec2_t destination = { 10, 10 };
 	mission_t *mission;
+	aircraft_t *aircraft;
 	aircraft_t *ufo;
 	base_t *base;
 	int i, cnt;
@@ -774,7 +780,7 @@ static void testAirFight (void)
 
 	cnt = AIR_BaseCountAircraft(base);
 	i = 0;
-	AIR_ForeachFromBase(aircraft, base)
+	AIR_ForeachFromBase(a, base)
 		i++;
 	CU_ASSERT_EQUAL(i, cnt);
 

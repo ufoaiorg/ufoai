@@ -259,6 +259,7 @@ static void testLinkedListIterator (void)
 
 	list = NULL;
 	LIST_Foreach(list, char, string) {
+		(void)string;
 		/* we should not be here, because the list is empty */
 		CU_ASSERT_TRUE(qfalse);
 	}
