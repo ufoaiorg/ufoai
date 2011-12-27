@@ -160,7 +160,7 @@ static int find_matching_file (struct dl_phdr_info *info, size_t size, void *dat
 {
 #ifdef ElfW
 	typedef ElfW(Phdr) Elf_Phdr;
-	typedef ElfW(AddR) Elf_Addr;
+	typedef ElfW(Addr) Elf_Addr;
 #endif
 
 	struct file_match *match = data;
