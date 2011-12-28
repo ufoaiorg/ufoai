@@ -174,20 +174,6 @@ int UI_GetDataVersion (int textId)
 }
 
 /**
- * @brief Initializes an option with a very little set of values.
- * @param[in] option Context option
- * @param[in] label label displayed
- * @param[in] value value used when this option is selected
- */
-static void UI_InitOption (uiNode_t* option, const char* label, const char* value)
-{
-	assert(option);
-	assert(option->behaviour == ui_optionBehaviour);
-	Q_strncpyz(OPTIONEXTRADATA(option).label, label, sizeof(OPTIONEXTRADATA(option).label));
-	Q_strncpyz(OPTIONEXTRADATA(option).value, value, sizeof(OPTIONEXTRADATA(option).value));
-}
-
-/**
  * @brief Append an option to an option list.
  * @param[in,out] tree first option of the list/tree of options
  * @param[in] name name of the option (should be unique in the option list)
@@ -201,8 +187,7 @@ uiNode_t* UI_AddOption (uiNode_t** tree, const char* name, const char* label, co
 	uiNode_t *option;
 	assert(tree != NULL);
 
-	option = UI_AllocNode(name, "option", qtrue);
-	UI_InitOption(option, label, value);
+	option = UI_AllocOptionNode(name, label, value);
 
 	/* append the option */
 	last = *tree;

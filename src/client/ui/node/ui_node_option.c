@@ -99,6 +99,34 @@ static void UI_OptionPropertyChanged (uiNode_t *node, const value_t *property)
 	ui_optionBehaviour->super->propertyChanged(node, property);
 }
 
+/**
+ * @brief Initializes an option with a very little set of values.
+ * @param[in] option Context option
+ * @param[in] label label displayed
+ * @param[in] value value used when this option is selected
+ */
+static void UI_InitOption (uiNode_t* option, const char* label, const char* value)
+{
+	assert(option);
+	assert(option->behaviour == ui_optionBehaviour);
+	Q_strncpyz(OPTIONEXTRADATA(option).label, label, sizeof(OPTIONEXTRADATA(option).label));
+	Q_strncpyz(OPTIONEXTRADATA(option).value, value, sizeof(OPTIONEXTRADATA(option).value));
+}
+
+/**
+ * @brief Initializes an option with a very little set of values.
+ * @param[in] option Context option
+ * @param[in] label label displayed
+ * @param[in] value value used when this option is selected
+ */
+uiNode_t *UI_AllocOptionNode (const char* name, const char* label, const char* value)
+{
+	uiNode_t *option;
+	option = UI_AllocNode(name, "option", qtrue);
+	UI_InitOption(option, label, value);
+	return option;
+}
+
 /** @brief valid properties for options (used by selectbox, tab, optonlist and optiontree) */
 static const value_t properties[] = {
 	/**
