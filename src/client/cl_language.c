@@ -256,7 +256,6 @@ void CL_LanguageInit (void)
 	Com_DPrintf(DEBUG_CLIENT, "CL_LanguageInit: system language is: '%s'\n", systemLanguage);
 
 	for (i = 0, language = languageList; i < languageCount; language = language->next, i++) {
-		/* No language option available only for DEBUG. */
 		qboolean available;
 		available = Q_streq(language->localeID, "none") || CL_LanguageTest(language->localeID);
 		uiNode_t *option;

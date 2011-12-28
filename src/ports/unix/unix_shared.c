@@ -104,13 +104,11 @@ const char *Sys_SetLocale (const char *localeID)
 	/* set to system default */
 	setlocale(LC_ALL, "C");
 	locale = setlocale(LC_MESSAGES, localeID);
-#ifdef DEBUG
 	if (!locale) {
 		if (Sys_Setenv("LANGUAGE", localeID) != 0) {
 			locale = localeID;
 		}
 	}
-#endif
 	if (!locale) {
 		Com_DPrintf(DEBUG_CLIENT, "...could not set to language: %s\n", localeID);
 		locale = setlocale(LC_MESSAGES, "");
