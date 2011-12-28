@@ -32,6 +32,7 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 
 #define EXTRADATA_TYPE panelExtraData_t
 #define EXTRADATA(node) UI_EXTRADATA(node, EXTRADATA_TYPE)
+#define EXTRADATACONST(node) UI_EXTRADATACONST(node, EXTRADATA_TYPE)
 
 #define CORNER_SIZE 25
 #define MID_SIZE 1
@@ -466,10 +467,10 @@ static void UI_PanelNodeLoaded (uiNode_t *node)
 		UI_Invalidate(node);
 }
 
-static void UI_PanelNodeGetClientPosition (uiNode_t *node, vec2_t position)
+static void UI_PanelNodeGetClientPosition (const uiNode_t *node, vec2_t position)
 {
-	position[0] = -EXTRADATA(node).super.scrollX.viewPos;
-	position[1] = -EXTRADATA(node).super.scrollY.viewPos;
+	position[0] = -EXTRADATACONST(node).super.scrollX.viewPos;
+	position[1] = -EXTRADATACONST(node).super.scrollY.viewPos;
 }
 
 static void UI_PanelPropertyChanged (uiNode_t *node, const value_t *property)
