@@ -1,9 +1,16 @@
 /**
  * @file ui_node_spinner.c
  * @brief The spinner2 node is a vertical widget used to change a numerical value.
+ *
  * It use 3 sprites to display the node: A sprite for the background, a sprite
  * for the top button, and a sprite for a bottom button. All are displayed in the
- * center of the node.
+ * center of the node. And according to the node status and the mouse position, and
+ * displayed nornal, hovered, or disabled.
+ *
+ * This node extends spinner node and only override the draw method. Then the behaviour
+ * is the same as the spinner.
+ *
+ * @image html http://ufoai.ninex.info/wiki/images/Spinner2.svg
  */
 
 /*
