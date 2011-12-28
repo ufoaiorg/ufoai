@@ -144,14 +144,16 @@ static installation_t* CP_InterceptChooseInstallation (const mission_t *mission)
 	assert(mission);
 
 	/* Choose randomly a base depending on alienInterest values for those bases */
-	INS_Foreach(installation) {
-		sum += installation->alienInterest;
+	INS_Foreach(i) {
+		sum += i->alienInterest;
 	}
 	randomNumber = frand() * sum;
-	INS_Foreach(installation) {
-		randomNumber -= installation->alienInterest;
-		if (randomNumber < 0)
+	INS_Foreach(i) {
+		randomNumber -= i->alienInterest;
+		if (randomNumber < 0) {
+			installation = i;
 			break;
+		}
 	}
 
 	/* Make sure we have a base */

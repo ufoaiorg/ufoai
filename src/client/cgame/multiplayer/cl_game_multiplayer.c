@@ -247,7 +247,6 @@ static const mapDef_t* GAME_MP_MapInfo (int step)
 
 	if (md->gameTypes) {
 		char buf[256] = "";
-		const char *gameTypeStr;
 		LIST_Foreach(md->gameTypes, char, gameTypeStr) {
 			Q_strcat(buf, va("%s ", gameTypeStr), sizeof(buf));
 		}

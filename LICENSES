@@ -588,6 +588,7 @@ base/media/Loma.ttf | Public Domain | NECTEC, Thai Linux Working Group (TLWG) | 
 base/media/Norasi.ttf | Public Domain | NECTEC National Font Project, Thai Linux Working Group (TLWG) | ftp://linux.thai.net/pub/ThaiLinux/software/thai-ttf/
 base/media/UnDinaruBold.ttf | GNU General Public License 2.0 |  | http://kldp.net/projects/unfonts/
 base/media/UnGraphicBold.ttf | GNU General Public License 2.0 |  | http://kldp.net/projects/unfonts/
+base/media/languages.ttf | GNU General Public License 2.0 or later | UFOAI team
 base/media/ume-pgo4.ttf | see umefont-readme_license.html | Wada Laboratory, the University of Tokyo; Electronic Font Open Laboratory | http://ume-font.sourceforge.jp
 base/media/wqy-zenhei.ttf | GNU General Public License 2.0 |  | http://sourceforge.net/projects/wqy/
 base/models/aircraft/craft_arm_plate/plating.md2 | GNU General Public License 2.0 or later | Willem Sitters
@@ -3139,7 +3140,7 @@ base/pics/maps/shots/wilderness_2.jpg | GNU General Public License 2.0 or later
 base/pics/maps/shots/wilderness_3.jpg | GNU General Public License 2.0 or later
 base/pics/minihud/bar_floor_deco.png | GNU General Public License 2.0 | MCR | Based on the original menu artwork by SparX and Rasta
 base/pics/minihud/bar_floor_mini.png | GNU General Public License 2.0 | MCR | Based on the original menu artwork by SparX and Rasta
-base/pics/minihud/bar_right_deco.png | GNU General Public License 2.0 | MCR | Based on the original menu artwork by SparX and Rasta | Based on the original menu artwork by SparX and Rasta and on images from http://sourceforge.net/projects/openiconlibrary
+base/pics/minihud/bar_right_deco.png | GNU General Public License 2.0 | MCR | Based on the original menu artwork by SparX and Rasta
 base/pics/minihud/bar_right_mini.png | GNU General Public License 2.0 | MCR | Based on the original menu artwork by SparX and Rasta and on images from http://sourceforge.net/projects/openiconlibrary
 base/pics/minihud/bar_selbox.png | GNU General Public License 2.0 |  | Based on the original menu artwork by SparX and Rasta
 base/pics/minihud/bar_teambox_deco.png | GNU General Public License 2.0 | MCR | Based on the original menu artwork by SparX and Rasta
@@ -3153,12 +3154,14 @@ base/pics/minihud/bar_teamsep_mini.png | GNU General Public License 2.0 | MCR | 
 base/pics/minihud/bar_top_deco.png | GNU General Public License 2.0 | MCR | Based on the original menu artwork by SparX and Rasta
 base/pics/minihud/bar_top_mini.png | GNU General Public License 2.0 | MCR | Based on the original menu artwork by SparX and Rasta
 base/pics/minihud/bt_empty.png | GNU General Public License 2.0 | MCR | Based on the original menu artwork by SparX and Rasta
-base/pics/minihud/bt_forward.png | GNU General Public License 2.0 | MCR | Based on the original menu artwork by SparX and Rasta and on images from http://sourceforge.net/projects/openiconlibrary
+base/pics/minihud/bt_forward.png | GNU General Public License 2.0 | MCR | Based on images from http://sourceforge.net/projects/openiconlibrary
+base/pics/minihud/bt_forward_hovered.png | GNU General Public License 2.0 | MCR | Based on images from http://sourceforge.net/projects/openiconlibrary
 base/pics/minihud/bt_help.png | GNU General Public License 2.0 | MCR | Based on the original menu artwork by SparX and Rasta
 base/pics/minihud/bt_inventory.png | GNU General Public License 2.0 | MCR | Based on the original menu artwork by SparX and Rasta
 base/pics/minihud/bt_physdat.png | GNU General Public License 2.0 | MCR | Based on the original menu artwork by SparX and Rasta
 base/pics/minihud/bt_radar.png | GNU General Public License 2.0 | MCR | Based on the original menu artwork by SparX and Rasta
-base/pics/minihud/bt_stop.png | GNU General Public License 2.0 | MCR | Based on the original menu artwork by SparX and Rasta and on images from http://sourceforge.net/projects/openiconlibrary
+base/pics/minihud/bt_stop.png | GNU General Public License 2.0 | MCR | Based on images from http://sourceforge.net/projects/openiconlibrary
+base/pics/minihud/bt_stop_hovered.png | GNU General Public License 2.0 | MCR | Based on images from http://sourceforge.net/projects/openiconlibrary
 base/pics/minihud/level0.png | GNU General Public License 2.0 | MCR | Based on the original menu artwork by SparX and Rasta
 base/pics/minihud/level1.png | GNU General Public License 2.0 | MCR | Based on the original menu artwork by SparX and Rasta
 base/pics/minihud/level2.png | GNU General Public License 2.0 | MCR | Based on the original menu artwork by SparX and Rasta
@@ -4526,6 +4529,7 @@ base/textures/tex_buildings/floor_gray.jpg | GNU General Public License 2.0 | Op
 base/textures/tex_buildings/floor_gray_nm.png | GNU General Public License 2.0
 base/textures/tex_buildings/floor_se01.png | GNU General Public License 2.0 or later | FWishbringer
 base/textures/tex_buildings/floor_se02.png | GNU General Public License 2.0 or later | FWishbringer
+base/textures/tex_buildings/floor_se03.png | Creative Commons Attribution-Share Alike 3.0 Unported | Saroman | http://opengameart.org/content/stone-pavement-ground-tile
 base/textures/tex_buildings/ground_dirt1.png | Creative Commons Attribution-Share Alike 3.0 | hullbr3ach
 base/textures/tex_buildings/ind05_pipe.png | GNU General Public License 2.0 or later | Nate Wright
 base/textures/tex_buildings/ind05_pipe_nm.png | GNU General Public License 2.0 or later | Nate Wright

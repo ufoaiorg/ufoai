@@ -257,7 +257,7 @@ window hud_alt extends hud
 			src			*cvar:mn_head7
 			angles		"15 60 100"
 			autoscale	true
-			pos			"592 20"
+			pos			"600 20"
 			size		"50 78"
 			excluderect	{ pos	"0 0"	size	"50 78" }
 		}

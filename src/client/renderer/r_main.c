@@ -626,14 +626,14 @@ static void R_UpdateVidDef (const viddefContext_t *context)
 	Cvar_SetValue("vid_fullscreen", viddef.context.fullscreen);
 	Cvar_SetValue("r_multisample", viddef.context.multisample);
 	Cvar_SetValue("r_swapinterval", viddef.context.swapinterval);
-	vid_strech->modified = qfalse;
+	vid_stretch->modified = qfalse;
 	vid_fullscreen->modified = qfalse;
 	vid_mode->modified = qfalse;
 	r_multisample->modified = qfalse;
 	r_swapinterval->modified = qfalse;
 
 	/* update cache values */
-	if (viddef.strech) {
+	if (viddef.stretch) {
 		viddef.virtualWidth = VID_NORM_WIDTH;
 		viddef.virtualHeight = VID_NORM_HEIGHT;
 	} else {
@@ -669,7 +669,7 @@ qboolean R_SetMode (void)
 
 	/* not values we must restitute */
 	r_ext_texture_compression->modified = qfalse;
-	viddef.strech = vid_strech->integer;
+	viddef.stretch = vid_stretch->integer;
 
 	/* store old values if new ones will fail */
 	prev = viddef.context;

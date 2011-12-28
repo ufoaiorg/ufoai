@@ -211,19 +211,19 @@ static void testAircraftHandling (void)
 	CU_ASSERT_EQUAL(newAircraft->homebase, base);
 
 	newFound = 0;
-	AIR_Foreach(aircraft) {
+	AIR_Foreach(a) {
 		/* test deletion (part 2) */
-		CU_ASSERT_NOT_EQUAL(firstIdx, aircraft->idx);
+		CU_ASSERT_NOT_EQUAL(firstIdx, a->idx);
 		/* for test addition (part 2) */
-		if (aircraft->idx == newAircraft->idx)
+		if (a->idx == newAircraft->idx)
 			newFound++;
 	}
 	/* test addition (part 2) */
 	CU_ASSERT_EQUAL(newFound, 1);
 
 	/* check if AIR_Foreach iterates through all aircraft */
-	AIR_Foreach(aircraft) {
-		AIR_DeleteAircraft(aircraft);
+	AIR_Foreach(a) {
+		AIR_DeleteAircraft(a);
 	}
 	aircraft = AIR_GetFirstFromBase(base);
 	CU_ASSERT_PTR_NULL_FATAL(aircraft);
@@ -266,9 +266,9 @@ static void testEmployeeHandling (void)
 			CU_ASSERT_PTR_NOT_NULL(e);
 		}
 		{
-			employee_t *e;
 			int cnt = 0;
 			E_Foreach(EMPL_SOLDIER, e) {
+				(void)e;
 				cnt++;
 			}
 
@@ -366,9 +366,11 @@ static void testAutoMissions (void)
 	base = CreateBase("unittestautomission", pos);
 	CU_ASSERT_PTR_NOT_NULL_FATAL(base);
 
-	AIR_ForeachFromBase(aircraft, base) {
-		if (AIR_GetTeamSize(aircraft) > 0)
+	AIR_ForeachFromBase(a, base) {
+		if (AIR_GetTeamSize(a) > 0) {
+			aircraft = a;
 			break;
+		}
 	}
 	CU_ASSERT_PTR_NOT_NULL_FATAL(aircraft);
 	CU_ASSERT_TRUE(AIR_GetTeamSize(aircraft) > 0);
@@ -778,7 +780,7 @@ static void testAirFight (void)
 
 	cnt = AIR_BaseCountAircraft(base);
 	i = 0;
-	AIR_ForeachFromBase(aircraft, base)
+	AIR_ForeachFromBase(a, base)
 		i++;
 	CU_ASSERT_EQUAL(i, cnt);
 
@@ -1102,7 +1104,6 @@ static void testHospital (void)
 	i = 0;
 	/* hurt all employees */
 	for (type = 0; type < MAX_EMPL; type++) {
-		employee_t *employee;
 		E_Foreach(type, employee) {
 			if (!E_IsHired(employee))
 				continue;
@@ -1115,7 +1116,6 @@ static void testHospital (void)
 	HOS_HospitalRun();
 
 	for (type = 0; type < MAX_EMPL; type++) {
-		employee_t *employee;
 		E_Foreach(type, employee) {
 			if (!E_IsHired(employee))
 				continue;
@@ -1243,7 +1243,6 @@ static qboolean skipTest (const mapDef_t *md)
 
 static void testTerrorMissions (void)
 {
-	city_t *city;
 	ufoType_t ufoType;
 	int numUfoTypes;
 	ufoType_t ufoTypes[UFO_MAX];

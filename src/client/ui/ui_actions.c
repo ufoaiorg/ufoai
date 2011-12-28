@@ -920,8 +920,7 @@ static void UI_RemoveListener_f (void)
 static void UI_CvarChangeListener (const char *cvarName, const char *oldValue, const char *newValue, void *data)
 {
 	linkedList_t *list = (linkedList_t *) data;
-	const char *confunc;
-	LIST_Foreach(list, char, confunc) {
+	LIST_Foreach(list, char const, confunc) {
 		UI_ExecuteConfunc("%s %s %s", confunc, oldValue, newValue);
 	}
 }

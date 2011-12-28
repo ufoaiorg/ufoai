@@ -136,12 +136,7 @@ static int Sys_BacktraceLibsCallback (struct dl_phdr_info *info, size_t size, vo
 		end += info->dlpi_phdr[j].p_memsz;
 	}
 
-	/* this is terrible. */
-#if __WORDSIZE == 64
-	fprintf(crash, "[0x%lux-0x%lux] %s\n", info->dlpi_addr, info->dlpi_addr + end, info->dlpi_name);
-#else
-	fprintf(crash, "[0x%ux-0x%ux] %s\n", info->dlpi_addr, info->dlpi_addr + end, info->dlpi_name);
-#endif
+	fprintf(crash, "[0x"UFO_SIZE_T"x-0x"UFO_SIZE_T"x] %s\n", info->dlpi_addr, info->dlpi_addr + end, info->dlpi_name);
 	return 0;
 }
 
@@ -163,15 +158,19 @@ static char g_output[BUFFER_MAX];
 
 static int find_matching_file (struct dl_phdr_info *info, size_t size, void *data)
 {
+#ifdef ElfW
+	typedef ElfW(Phdr) Elf_Phdr;
+	typedef ElfW(Addr) Elf_Addr;
+#endif
+
 	struct file_match *match = data;
 	/* This code is modeled from Gfind_proc_info-lsb.c:callback() from libunwind */
 	long n;
-	const ElfW(Phdr) *phdr;
-	ElfW(Addr) load_base = info->dlpi_addr;
-	phdr = info->dlpi_phdr;
+	Elf_Addr const  load_base = info->dlpi_addr;
+	Elf_Phdr const *phdr      = info->dlpi_phdr;
 	for (n = info->dlpi_phnum; --n >= 0; phdr++) {
 		if (phdr->p_type == PT_LOAD) {
-			ElfW(Addr) vaddr = phdr->p_vaddr + load_base;
+			Elf_Addr vaddr = phdr->p_vaddr + load_base;
 			if (match->address >= (void*)vaddr && match->address < (void*)(vaddr + phdr->p_memsz)) {
 				/* we found a match */
 				match->file = info->dlpi_name;
@@ -239,9 +238,6 @@ void Sys_Backtrace (void)
 	const char *dumpFile = "crashdump.txt";
 	FILE *file = fopen(dumpFile, "w");
 	FILE *crash = file != NULL ? file : stderr;
-#ifndef HAVE_BFD_H
-	int filenumber = fileno(crash);
-#endif
 
 	fprintf(crash, "======start======\n");
 
@@ -260,7 +256,7 @@ void Sys_Backtrace (void)
 #ifdef HAVE_BFD_H
 	_backtrace(crash, symbols, i);
 #else
-	backtrace_symbols_fd(symbols, i, filenumber);
+	backtrace_symbols_fd(symbols, i, fileno(crash));
 #endif
 #endif
 

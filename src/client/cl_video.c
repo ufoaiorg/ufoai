@@ -33,7 +33,7 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 
 viddef_t viddef;	/* global video state; used by other modules */
 
-cvar_t *vid_strech;
+cvar_t *vid_stretch;
 cvar_t *vid_fullscreen;
 cvar_t *vid_mode;
 cvar_t *vid_grabmouse;
@@ -140,7 +140,7 @@ static qboolean CL_CvarCheckVidMode (cvar_t *cvar)
  */
 void VID_Init (void)
 {
-	vid_strech = Cvar_Get("vid_strech", "0", CVAR_ARCHIVE | CVAR_R_CONTEXT, "Backward compatibility to stretch the screen with a 4:3 ratio");
+	vid_stretch = Cvar_Get("vid_stretch", "0", CVAR_ARCHIVE | CVAR_R_CONTEXT, "Backward compatibility to stretch the screen with a 4:3 ratio");
 	vid_fullscreen = Cvar_Get("vid_fullscreen", "1", CVAR_ARCHIVE | CVAR_R_CONTEXT, "Run the game in fullscreen mode");
 	vid_mode = Cvar_Get("vid_mode", "-1", CVAR_ARCHIVE | CVAR_R_CONTEXT, "The video mode - set to -1 and use vid_width and vid_height to use a custom resolution");
 	Cvar_SetCheckFunction("vid_mode", CL_CvarCheckVidMode);

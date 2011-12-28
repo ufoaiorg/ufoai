@@ -593,7 +593,6 @@ component panel trListEntry
 	todo tr_content {
 		string		"show cargolist somehow"
 		pos			"0 25"
-		ghost		true
 	}
 
 	string tr_eta {
@@ -609,7 +608,6 @@ component panel trListEntry
 		font		"f_small"
 		ghost		true
 	}
-
 }
 
 window popup_transferlist
@@ -624,11 +622,9 @@ window popup_transferlist
 	}
 
 	panel tr_list {
-		pos		"20 60"
-		size	"477 380"
-		// only column layout works with scrolling
-		layout		LAYOUT_COLUMN
-		layoutColumns	1
+		pos			"20 60"
+		size		"477 380"
+		layout		LAYOUT_TOP_DOWN_FLOW
 
 		onViewChange	{
 			*node:root.tr_list_scroll@fullsize = <fullsize>
@@ -667,5 +663,9 @@ window popup_transferlist
 	func onWindowOpened
 	{
 		cmd "trans_list;"
+	}
+
+	func onWindowClosed {
+		call *node:root.tr_listclear
 	}
 }

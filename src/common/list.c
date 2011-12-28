@@ -387,7 +387,6 @@ void LIST_Sort (linkedList_t **list, linkedListSort_t sorter, const void* userDa
 linkedList_t *LIST_CopyStructure (linkedList_t* src)
 {
 	linkedList_t *dest = NULL;
-	void *data;
 	LIST_Foreach(src, void, data) {
 		LIST_AddPointer(&dest, data);
 	}

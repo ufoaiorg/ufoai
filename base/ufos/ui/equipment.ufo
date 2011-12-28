@@ -439,6 +439,11 @@ window equipment extends objectinfo
 			size	"350 336"
 		}
 
+		image pwr_bar_full
+			{
+				pos "30 27"
+				src		"ui/bar_attribute_disabled"
+			}
 		cmpDefNamedTbar pwr {
 			{
 				pos "4 9"
@@ -448,6 +453,11 @@ window equipment extends objectinfo
 			string val { string *cvar:mn_tpwr }
 		}
 
+		image spd_bar_full
+			{
+				pos "30 62"
+				src		"ui/bar_attribute_disabled"
+			}
 		cmpDefNamedTbar spd {
 			{
 				pos "4 44"
@@ -457,6 +467,11 @@ window equipment extends objectinfo
 			string val { string *cvar:mn_tspd }
 		}
 
+		image acc_bar_full
+			{
+				pos "30 97"
+				src		"ui/bar_attribute_disabled"
+			}
 		cmpDefNamedTbar acc {
 			{
 				pos "4 79"
@@ -466,6 +481,11 @@ window equipment extends objectinfo
 			string val { string *cvar:mn_tacc }
 		}
 
+		image mnd_bar_full
+			{
+				pos "30 132"
+				src		"ui/bar_attribute_disabled"
+			}
 		cmpDefNamedTbar mnd {
 			{
 				pos "4 114"
@@ -475,47 +495,72 @@ window equipment extends objectinfo
 			string val { string *cvar:mn_tmnd }
 		}
 
+		image cls_bar_full
+			{
+				pos "30 175"
+				src		"ui/bar_skill_disabled"
+			}
 		cmpDefNamedTbar cls {
 			{
 				pos "4 157"
 			}
-			tbar bar   { current *cvar:mn_vcls }
+			tbar bar   { current *cvar:mn_vcls image "ui/bar_skill" }
 			string lbl { string "_Close Combat:" }
 			string val { string *cvar:mn_tcls }
 		}
 
+		image hvy_bar_full
+			{
+				pos "30 210"
+				src		"ui/bar_skill_disabled"
+			}
 		cmpDefNamedTbar hvy {
 			{
 				pos "4 192"
 			}
-			tbar bar   { current *cvar:mn_vhvy }
+			tbar bar   { current *cvar:mn_vhvy image "ui/bar_skill" }
 			string lbl { string "_Heavy Weapons:" }
 			string val { string *cvar:mn_thvy }
 		}
 
+		image ass_bar_full
+			{
+				pos "30 245"
+				src		"ui/bar_skill_disabled"
+			}
 		cmpDefNamedTbar ass {
 			{
 				pos "4 227"
 			}
-			tbar bar   { current *cvar:mn_vass }
+			tbar bar   { current *cvar:mn_vass image "ui/bar_skill" }
 			string lbl { string "_Assault Weapons:" }
 			string val { string *cvar:mn_tass }
 		}
 
+		image snp_bar_full
+			{
+				pos "30 280"
+				src		"ui/bar_skill_disabled"
+			}
 		cmpDefNamedTbar snp {
 			{
 				pos "4 262"
 			}
-			tbar bar   { current *cvar:mn_vsnp }
+			tbar bar   { current *cvar:mn_vsnp image "ui/bar_skill" }
 			string lbl { string "_Sniper Rifles:" }
 			string val { string *cvar:mn_tsnp }
 		}
 
+		image exp_bar_full
+			{
+				pos "30 315"
+				src		"ui/bar_skill_disabled"
+			}
 		cmpDefNamedTbar exp {
 			{
 				pos "4 297"
 			}
-			tbar bar   { current *cvar:mn_vexp }
+			tbar bar   { current *cvar:mn_vexp image "ui/bar_skill" }
 			string lbl { string "_High-Explosives:" }
 			string val { string *cvar:mn_texp }
 		}

@@ -75,7 +75,6 @@ nation_t *NAT_GetNationByID (const char *nationID)
  */
 void NAT_UpdateHappinessForAllNations (const float minhappiness)
 {
-	mission_t *mission;
 	MIS_Foreach(mission) {
 		nation_t *nation = MAP_GetNation(mission->pos);
 		/* Difficulty modifier range is [0, 0.02f] */
@@ -353,7 +352,6 @@ static const value_t city_vals[] = {
 void CL_ParseCities (const char *name, const char **text)
 {
 	city_t newCity;
-	city_t *city;
 
 	/* search for cities with same name */
 	LIST_Foreach(ccs.cities, city_t, city) {
@@ -383,7 +381,6 @@ void CL_ParseCities (const char *name, const char **text)
 qboolean NAT_ScriptSanityCheck (void)
 {
 	int error = 0;
-	city_t *city;
 
 	/* Check if there is at least one map fitting city parameter for terror mission */
 	LIST_Foreach(ccs.cities, city_t, city) {
@@ -704,8 +701,6 @@ static void CL_NationSelect_f (void)
  */
 static void NAT_ListCities_f (void)
 {
-	city_t *city;
-
 	LIST_Foreach(ccs.cities, city_t, city) {
 		Com_Printf("City '%s' -- position (%0.1f, %0.1f)\n", city->id, city->pos[0], city->pos[1]);
 		MAP_PrintParameterStringByPos(city->pos);
@@ -757,7 +752,6 @@ void NAT_HandleBudget (const campaign_t *campaign)
 	int initialCredits = ccs.credits;
 	base_t *base;
 	const salary_t *salary = &campaign->salaries;
-	aircraft_t *aircraft;
 
 	/* Refreshes the pilot global list.  Pilots who are already hired are unchanged, but all other
 	 * pilots are replaced.  The new pilots is evenly distributed between the nations that are happy (happiness > 0). */
@@ -810,7 +804,6 @@ void NAT_HandleBudget (const campaign_t *campaign)
 	}
 
 	for (i = 0; i < MAX_EMPL; i++) {
-		employee_t *employee;
 		cost = 0;
 		E_Foreach(i, employee) {
 			if (!E_IsHired(employee))

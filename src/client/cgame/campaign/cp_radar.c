@@ -54,7 +54,6 @@ static const float RADAR_UPGRADE_MULTIPLIER = 0.4f;
 void RADAR_UpdateStaticRadarCoverage (void)
 {
 	base_t *base;
-	installation_t *installation;
 
 	/* Initialise radar range (will be filled below) */
 	CP_InitializeRadarOverlay(qtrue);
@@ -93,8 +92,6 @@ static inline void RADAR_DrawCoverage (const radar_t* radar, const vec2_t pos)
  */
 void RADAR_UpdateWholeRadarOverlay (void)
 {
-	aircraft_t *aircraft;
-
 	/* Copy Base and installation radar overlay*/
 	CP_InitializeRadarOverlay(qfalse);
 
@@ -171,8 +168,6 @@ void RADAR_DrawInMap (const uiNode_t *node, const radar_t *radar, const vec2_t p
 void RADAR_DeactivateRadarOverlay (void)
 {
 	base_t *base;
-	aircraft_t *aircraft;
-	installation_t *installation;
 
 	/* never deactivate radar if player wants it to be always turned on */
 	if (radarOverlayWasSet)
@@ -284,12 +279,9 @@ static void RADAR_NotifyUFORemovedFromOneRadar (radar_t* radar, const aircraft_t
 void RADAR_NotifyUFORemoved (const aircraft_t* ufo, qboolean destroyed)
 {
 	base_t *base;
-	installation_t *installation;
 
 	base = NULL;
 	while ((base = B_GetNext(base)) != NULL) {
-		aircraft_t *aircraft;
-
 		RADAR_NotifyUFORemovedFromOneRadar(&base->radar, ufo, destroyed);
 
 		AIR_ForeachFromBase(aircraft, base)
@@ -407,8 +399,6 @@ void RADAR_UpdateInstallationRadarCoverage (installation_t *installation, const 
 void RADAR_AddDetectedUFOToEveryRadar (const aircraft_t const *ufo)
 {
 	base_t *base = NULL;
-	aircraft_t *aircraft;
-	installation_t *installation;
 
 	AIR_Foreach(aircraft) {
 		if (!AIR_IsAircraftOnGeoscape(aircraft))
@@ -453,7 +443,6 @@ void RADAR_AddDetectedUFOToEveryRadar (const aircraft_t const *ufo)
 qboolean RADAR_CheckRadarSensored (const vec2_t pos)
 {
 	base_t *base = NULL;
-	installation_t *installation;
 
 	while ((base = B_GetNext(base)) != NULL) {
 		const float dist = GetDistanceOnGlobe(pos, base->pos);		/* Distance from base to position */

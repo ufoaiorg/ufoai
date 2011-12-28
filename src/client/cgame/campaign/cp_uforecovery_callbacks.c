@@ -128,7 +128,6 @@ static void UR_DialogInit_f (void)
  */
 static void UR_DialogInitStore_f (void)
 {
-	installation_t *installation;
 	int count = 0;
 	linkedList_t *recoveryYardName = NULL;
 	linkedList_t *recoveryYardCapacity = NULL;
@@ -170,7 +169,7 @@ static void UR_DialogInitStore_f (void)
  */
 static void UR_DialogStartStore_f (void)
 {
-	installation_t *installation;
+	installation_t *installation = NULL;
 	int idx;
 	int count = 0;
 	date_t date;
@@ -182,13 +181,14 @@ static void UR_DialogStartStore_f (void)
 
 	idx = atoi(Cmd_Argv(1));
 
-	INS_Foreach(installation) {
-		if (installation->ufoCapacity.max <= 0
-		 || installation->ufoCapacity.max <= installation->ufoCapacity.cur)
+	INS_Foreach(i) {
+		if (i->ufoCapacity.max <= 0 || i->ufoCapacity.max <= i->ufoCapacity.cur)
 			continue;
 
-		if (count == idx)
+		if (count == idx) {
+			installation = i;
 			break;
+		}
 		count++;
 	}
 

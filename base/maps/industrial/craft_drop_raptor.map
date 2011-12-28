@@ -864,3 +864,8 @@
 ( 544 672 0 ) ( 672 672 0 ) ( 544 672 96 ) tex_common/trigger 0 0 0 0.25 0.25 0 0 0
 }
 }
+// entity 15
+{
+"classname" "info_human_start"
+"origin" "624 176 32"
+}

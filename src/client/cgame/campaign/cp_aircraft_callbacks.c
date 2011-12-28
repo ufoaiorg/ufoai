@@ -185,7 +185,6 @@ void AIR_AircraftSelect (aircraft_t* aircraft)
 {
 	static char aircraftInfo[256];
 	base_t *base;
-	aircraft_t *aircraftInBase;
 	int id;
 
 	if (aircraft != NULL)
@@ -246,7 +245,6 @@ static void AIR_AircraftUpdateList_f (void)
 {
 	linkedList_t *list = NULL;
 	base_t *base = B_GetCurrentSelectedBase();
-	aircraft_t *aircraft;
 
 	AIR_ForeachFromBase(aircraft, base) {
 		LIST_AddString(&list, aircraft->name);

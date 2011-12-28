@@ -120,10 +120,14 @@ static void UI_SpinnerNodeRepeat (uiNode_t *node, uiTimer_t *timer)
 
 static void UI_SpinnerNodeDown (uiNode_t *node, int x, int y, int button)
 {
+	const qboolean disabled = node->disabled || node->parent->disabled;
+	if (disabled)
+		return;
+
 	if (button == K_MOUSE1) {
 		UI_SetMouseCapture(node);
 		UI_NodeAbsoluteToRelativePos(node, &x, &y);
-		capturedDownButton = y > BUTTON_TOP_SIZE;
+		capturedDownButton = y > (node->size[1] * 0.5);
 		UI_SpinnerNodeStep(node, capturedDownButton);
 		capturedTimer = UI_AllocTimer(node, 500, UI_SpinnerNodeRepeat);
 		UI_TimerStart(capturedTimer);
@@ -132,7 +136,7 @@ static void UI_SpinnerNodeDown (uiNode_t *node, int x, int y, int button)
 
 static void UI_SpinnerNodeUp (uiNode_t *node, int x, int y, int button)
 {
-	if (button == K_MOUSE1) {
+	if (button == K_MOUSE1 && UI_GetMouseCapture() == node) {
 		UI_MouseRelease();
 	}
 }
@@ -163,11 +167,6 @@ static void UI_SpinnerNodeWheel (uiNode_t *node, int deltaX, int deltaY)
 	UI_SpinnerNodeStep(node, down);
 }
 
-static void UI_SpinnerLoaded (uiNode_t *node)
-{
-	EXTRADATA(node).shiftIncreaseFactor = 2.0F;
-}
-
 static void UI_SpinnerNodeDraw (uiNode_t *node)
 {
 	vec2_t pos;
@@ -196,7 +195,7 @@ static void UI_SpinnerNodeDraw (uiNode_t *node)
 		if (value >= max) {
 			topTexX = TILE_SIZE;
 			topTexY = TILE_SIZE;
-		} else if (node->state && mousePosY < pos[1] + BUTTON_TOP_SIZE) {
+		} else if (node->state && mousePosY < pos[1] + node->size[1] * 0.5) {
 			topTexX = TILE_SIZE;
 			topTexY = 0;
 		} else {
@@ -207,7 +206,7 @@ static void UI_SpinnerNodeDraw (uiNode_t *node)
 		if (value <= min) {
 			bottomTexX = TILE_SIZE;
 			bottomTexY = TILE_SIZE;
-		} else if (node->state && mousePosY > pos[1] + BUTTON_TOP_SIZE) {
+		} else if (node->state && mousePosY > pos[1] + node->size[1] * 0.5) {
 			bottomTexX = TILE_SIZE;
 			bottomTexY = 0;
 		} else {
@@ -215,6 +214,10 @@ static void UI_SpinnerNodeDraw (uiNode_t *node)
 			bottomTexY = 0;
 		}
 	}
+
+	/* center the spinner */
+	pos[0] += (node->size[0] - SPINNER_WIDTH) * 0.5;
+	pos[1] += (node->size[1] - SPINNER_HEIGHT) * 0.5;
 
 	/* draw top button */
 	UI_DrawNormImageByName(qfalse, pos[0], pos[1], SPINNER_WIDTH, BUTTON_TOP_SIZE,
@@ -224,10 +227,12 @@ static void UI_SpinnerNodeDraw (uiNode_t *node)
 		bottomTexX + SPINNER_WIDTH, bottomTexY + SPINNER_HEIGHT, bottomTexX, bottomTexY + SPINNER_HEIGHT - BUTTON_BOTTOM_SIZE, image);
 }
 
-static void UI_SpinnerNodeLoaded (uiNode_t *node)
+static void UI_SpinnerNodeLoading (uiNode_t *node)
 {
 	localBehaviour->super->loaded(node);
-	/* we can't choose a size */
+
+	/* default values */
+	EXTRADATA(node).shiftIncreaseFactor = 2.0F;
 	node->size[0] = SPINNER_WIDTH;
 	node->size[1] = SPINNER_HEIGHT;
 }
@@ -260,9 +265,8 @@ void UI_RegisterSpinnerNode (uiBehaviour_t *behaviour)
 	behaviour->mouseDown = UI_SpinnerNodeDown;
 	behaviour->mouseUp = UI_SpinnerNodeUp;
 	behaviour->capturedMouseLost = UI_SpinnerNodeCapturedMouseLost;
-	behaviour->loaded = UI_SpinnerLoaded;
 	behaviour->draw = UI_SpinnerNodeDraw;
-	behaviour->loaded = UI_SpinnerNodeLoaded;
+	behaviour->loading = UI_SpinnerNodeLoading;
 	behaviour->properties = properties;
 	behaviour->extraDataSize = sizeof(EXTRADATA_TYPE);
 }

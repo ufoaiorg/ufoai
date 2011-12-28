@@ -67,8 +67,6 @@ void CP_EndRescueMission (mission_t *mission, aircraft_t *aircraft, qboolean won
 
 	assert(crashedAircraft);
 	if (won) {
-		employee_t *employee;
-
 		assert(aircraft);
 		/* Save the pilot */
 		if (crashedAircraft->pilot)

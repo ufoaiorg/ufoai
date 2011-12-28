@@ -62,7 +62,6 @@ static void HOS_UpdateMenu (void)
 	UI_ExecuteConfunc("hospital_clear");
 
 	for (type = 0, j = 0, entry = 0; type < MAX_EMPL; type++) {
-		employee_t *employee;
 		E_Foreach(type, employee) {
 			if (!E_IsInBase(employee, base))
 				continue;
@@ -183,7 +182,6 @@ static void HOS_ListClick_f (void)
 	num = atoi(Cmd_Argv(1)) + hospitalFirstEntry;
 
 	for (type = 0; type < MAX_EMPL; type++) {
-		employee_t *employee;
 		E_Foreach(type, employee) {
 			if (!E_IsInBase(employee, base))
 				continue;

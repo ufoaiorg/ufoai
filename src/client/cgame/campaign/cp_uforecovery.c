@@ -44,8 +44,6 @@ Backend functions
  */
 void UR_ProcessActive (void)
 {
-	storedUFO_t *ufo;
-
 	US_Foreach(ufo) {
 		assert(ufo->ufoTemplate);
 		assert(ufo->ufoTemplate->tech);
@@ -74,8 +72,6 @@ void UR_ProcessActive (void)
  */
 storedUFO_t* US_GetStoredUFOByIDX (const int idx)
 {
-	storedUFO_t *ufo;
-
 	US_Foreach(ufo) {
 		if (ufo->idx == idx)
 			return ufo;
@@ -180,7 +176,6 @@ void US_RemoveStoredUFO (storedUFO_t *ufo)
  */
 int US_UFOsInStorage (const aircraft_t *ufoTemplate, const installation_t *installation)
 {
-	storedUFO_t *ufo;
 	int count = 0;
 
 	US_Foreach(ufo) {
@@ -204,7 +199,6 @@ int US_UFOsInStorage (const aircraft_t *ufoTemplate, const installation_t *insta
 void US_RemoveUFOsExceedingCapacity (installation_t *installation)
 {
 	const capacities_t *ufoCap;
-	storedUFO_t *ufo;
 
 	if (!installation)
 		Com_Error(ERR_DROP, "US_RemoveUFOsExceedingCapacity: No installation given!\n");
@@ -230,7 +224,6 @@ void US_RemoveUFOsExceedingCapacity (installation_t *installation)
 storedUFO_t *US_GetClosestStoredUFO (const aircraft_t *ufoTemplate, const base_t *base)
 {
 	float minDistance = -1;
-	storedUFO_t *ufo;
 	storedUFO_t *closestUFO = NULL;
 
 	US_Foreach(ufo) {
@@ -268,7 +261,6 @@ int US_StoredUFOCount (void)
  */
 qboolean US_SaveXML (xmlNode_t *p)
 {
-	storedUFO_t *ufo;
 	xmlNode_t *node = XML_AddNode(p, SAVE_UFORECOVERY_STOREDUFOS);
 
 	Com_RegisterConstList(saveStoredUFOConstants);
@@ -359,8 +351,6 @@ qboolean US_LoadXML (xmlNode_t *p)
  */
 static void US_ListStoredUFOs_f (void)
 {
-	storedUFO_t *ufo;
-
 	US_Foreach(ufo) {
 		const base_t *prodBase = PR_ProductionBase(ufo->disassembly);
 		dateLong_t date;

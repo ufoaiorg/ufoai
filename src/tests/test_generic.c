@@ -241,7 +241,6 @@ static void testLinkedList (void)
 static void testLinkedListIterator (void)
 {
 	linkedList_t *list = NULL;
-	char *string;
 	int cnt;
 
 	LIST_AddString(&list, "test1");
@@ -260,6 +259,7 @@ static void testLinkedListIterator (void)
 
 	list = NULL;
 	LIST_Foreach(list, char, string) {
+		(void)string;
 		/* we should not be here, because the list is empty */
 		CU_ASSERT_TRUE(qfalse);
 	}
@@ -268,7 +268,6 @@ static void testLinkedListIterator (void)
 static void testLinkedListIteratorRemove (void)
 {
 	linkedList_t *list = NULL;
-	char *string;
 
 	LIST_AddString(&list, "test1");
 	LIST_AddString(&list, "test2");

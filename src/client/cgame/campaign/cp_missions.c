@@ -201,8 +201,6 @@ static void CP_SetAlienTeamByInterest (const mission_t *mission, battleParam_t *
  */
 static qboolean CP_IsAlienEquipmentSelectable (const mission_t *mission, const equipDef_t *equip, linkedList_t *equipPack)
 {
-	const char *name;
-
 	if (mission->initialOverallInterest > equip->maxInterest || mission->initialOverallInterest <= equip->minInterest)
 		return qfalse;
 
@@ -385,8 +383,6 @@ void CP_CreateBattleParameters (mission_t *mission, battleParam_t *param, const 
  */
 mission_t* CP_GetMissionByIDSilent (const char *missionId)
 {
-	mission_t *mission;
-
 	if (!missionId)
 		return NULL;
 
@@ -420,8 +416,6 @@ mission_t* CP_GetMissionByID (const char *missionId)
  */
 mission_t* MAP_GetMissionByIDX (int id)
 {
-	mission_t *mission;
-
 	MIS_Foreach(mission) {
 		if (mission->idx == id)
 			return mission;
@@ -517,7 +511,6 @@ static const char* CP_MissionStageToName (const missionStage_t stage)
 int CP_CountMissionOnGeoscape (void)
 {
 	int counterVisibleMission = 0;
-	mission_t *mission;
 
 	MIS_Foreach(mission) {
 		if (mission->onGeoscape) {
@@ -717,7 +710,6 @@ qboolean CP_CheckNewMissionDetectedOnGeoscape (void)
 	 * change DETECTION_INTERVAL without changing the way radar works) */
 	const float missionDetectionProbability = 0.000125f * DETECTION_INTERVAL;
 	qboolean newDetection = qfalse;
-	mission_t *mission;
 
 	MIS_Foreach(mission) {
 		const missionDetectionStatus_t status = CP_CheckMissionVisibleOnGeoscape(mission);
@@ -754,8 +746,6 @@ qboolean CP_CheckNewMissionDetectedOnGeoscape (void)
  */
 void CP_UpdateMissionVisibleOnGeoscape (void)
 {
-	mission_t *mission;
-
 	MIS_Foreach(mission) {
 		if (mission->onGeoscape && CP_CheckMissionVisibleOnGeoscape(mission) == MISDET_CANT_BE_DETECTED) {
 			/* remove a mission when radar is destroyed */
@@ -787,8 +777,6 @@ void CP_UFORemoveFromGeoscape (mission_t *mission, qboolean destroyed)
 	MAP_NotifyUFORemoved(mission->ufo, destroyed);
 
 	if (destroyed) {
-		mission_t *removedMission;
-
 		/* remove UFO from radar and update idx of ufo in radar array */
 		RADAR_NotifyUFORemoved(mission->ufo, qtrue);
 
@@ -869,7 +857,6 @@ qboolean CP_CheckMissionLimitedInTime (const mission_t *mission)
  */
 void CP_MissionNotifyBaseDestroyed (const base_t *base)
 {
-	mission_t *mission;
 	MIS_Foreach(mission) {
 		/* Check if this is a base attack mission attacking this base */
 		if (mission->category == INTERESTCATEGORY_BASE_ATTACK && mission->data.base) {
@@ -887,7 +874,6 @@ void CP_MissionNotifyBaseDestroyed (const base_t *base)
  */
 void CP_MissionNotifyInstallationDestroyed (const installation_t const *installation)
 {
-	mission_t *mission;
 	MIS_Foreach(mission) {
 		if (mission->category == INTERESTCATEGORY_INTERCEPT && mission->data.installation) {
 			if (mission->data.installation == installation)
@@ -1081,7 +1067,6 @@ void CP_MissionEnd (const campaign_t *campaign, mission_t* mission, const battle
 	base_t *base;
 	aircraft_t *aircraft;
 	int numberOfSoldiers = 0; /* DEBUG */
-	employee_t *employee;
 
 	if (mission->stage == STAGE_BASE_ATTACK) {
 		base = mission->data.base;
@@ -1250,7 +1235,6 @@ void CP_SpawnRescueMission (aircraft_t *aircraft, aircraft_t *ufo)
 	mission_t *mission;
 	mission_t *oldMission;
 	employee_t *pilot;
-	employee_t *employee;
 	int survivors = 0;
 
 	/* Handle events about crash */
@@ -1265,6 +1249,8 @@ void CP_SpawnRescueMission (aircraft_t *aircraft, aircraft_t *ufo)
 		const chrScoreGlobal_t *score = &chr->score;
 		/** @todo don't "kill" everyone - this should depend on luck and a little bit on the skills */
 		E_DeleteEmployee(employee);
+#else
+		(void)employee;
 #endif
 		survivors++;
 	}
@@ -1732,7 +1718,6 @@ static void MIS_MissionSetMap_f (void)
 static void MIS_MissionList_f (void)
 {
 	qboolean noMission = qtrue;
-	mission_t *mission;
 
 	MIS_Foreach(mission) {
 		Com_Printf("mission: '%s'\n", mission->id);
@@ -1759,8 +1744,6 @@ static void MIS_MissionList_f (void)
  */
 static void MIS_DeleteMissions_f (void)
 {
-	mission_t *mission;
-
 	MIS_Foreach(mission) {
 		CP_MissionRemove(mission);
 	}
@@ -1780,7 +1763,6 @@ static void MIS_DeleteMissions_f (void)
 qboolean MIS_SaveXML (xmlNode_t *parent)
 {
 	xmlNode_t *missionsNode = XML_AddNode(parent, SAVE_MISSIONS);
-	mission_t *mission;
 
 	Com_RegisterConstList(saveInterestConstants);
 	Com_RegisterConstList(saveMissionConstants);

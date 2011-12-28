@@ -355,7 +355,6 @@ static qboolean TR_CheckAircraft (const aircraft_t *aircraft, const base_t *dest
 {
 	int hangarStorage;
 	int numAircraftTransfer = 0;
-	aircraft_t *aircraftTemp;
 
 	assert(aircraft);
 	assert(destbase);
@@ -398,7 +397,6 @@ static void TR_CargoList (void)
 	linkedList_t *cargoList = NULL;
 	linkedList_t *cargoListAmount = NULL;
 	char str[128];
-	aircraft_t *aircraft;
 
 	td.trCargoCountTmp = 0;
 	OBJZERO(td.cargo);
@@ -418,8 +416,6 @@ static void TR_CargoList (void)
 	for (emplType = 0; emplType < MAX_EMPL; emplType++) {
 		switch (emplType) {
 		case EMPL_SOLDIER: {
-			employee_t *employee;
-
 			LIST_Foreach(td.trEmployeesTmp[emplType], employee_t, employee) {
 				const rank_t *rank = CL_GetRankByIdx(employee->chr.score.rank);
 
@@ -433,8 +429,6 @@ static void TR_CargoList (void)
 			break;
 		}
 		case EMPL_PILOT: {
-			employee_t *employee;
-
 			LIST_Foreach(td.trEmployeesTmp[emplType], employee_t, employee) {
 				Com_sprintf(str, lengthof(str), _("Pilot %s"), employee->chr.name);
 				LIST_AddString(&cargoList, str);
@@ -580,8 +574,6 @@ static int TR_FillEmployees (const base_t *srcbase, const base_t *destbase, link
 			switch (emplType) {
 			case EMPL_SOLDIER:
 			case EMPL_PILOT: {
-				employee_t *employee;
-
 				E_Foreach(emplType, employee) {
 					char str[128];
 
@@ -680,8 +672,6 @@ static int TR_FillAircraft (const base_t *srcbase, const base_t *destbase, linke
 {
 	int cnt = 0;
 	if (AIR_AircraftAllowed(destbase)) {
-		aircraft_t *aircraft;
-
 		AIR_ForeachFromBase(aircraft, srcbase) {
 			if (TR_AircraftListSelect(aircraft)) {
 				char str[128];
@@ -829,8 +819,6 @@ static int TR_GetTransferFactor (void)
 
 static qboolean TR_GetTransferEmployee (employeeType_t emplType, int *cnt, const base_t *base, int num)
 {
-	employee_t *employee;
-
 	E_Foreach(emplType, employee) {
 		if (!E_IsInBase(employee, base))
 			continue;
@@ -936,8 +924,6 @@ static void TR_AddEmployeeToTransferList (base_t *base, transferData_t *transfer
 				break;
 
 			if (cnt == num) {
-				employee_t *employee;
-
 				E_Foreach(emplType, employee) {
 					if (!E_IsInBase(employee, base))
 						continue;
@@ -1001,7 +987,6 @@ static void TR_AddAircraftToTransferList (base_t *base, transferData_t *transfer
 	const base_t *transferBase = transferData->transferBase;
 
 	if (AIR_AircraftAllowed(transferBase)) {
-		aircraft_t *aircraft;
 		int cnt = 0;
 
 		AIR_ForeachFromBase(aircraft, base) {
@@ -1320,7 +1305,6 @@ static void TR_RemoveAircraftFromCargoList (base_t *base, transferData_t *transf
 {
 	int i, cnt;
 	int entries = 0;
-	aircraft_t *aircraft;
 
 	for (i = 0; i < MAX_CARGO; i++) {
 		/* Count previous types on the list. */
@@ -1514,7 +1498,6 @@ static void TR_TransferList_Scroll_f (void)
  */
 static void TR_List_f (void)
 {
-	transfer_t *transfer;
 	int i = 0;
 
 	UI_ExecuteConfunc("tr_listclear");

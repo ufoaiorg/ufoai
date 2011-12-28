@@ -65,8 +65,6 @@ int INS_GetCount (void)
  */
 installation_t* INS_GetByIDX (int idx)
 {
-	installation_t *installation;
-
 	INS_Foreach(installation) {
 		if (installation->idx == idx)
 			return installation;
@@ -155,8 +153,6 @@ void INS_DestroyInstallation (installation_t *installation)
  */
 installation_t *INS_GetCurrentSelectedInstallation (void)
 {
-	installation_t *installation;
-
 	INS_Foreach(installation) {
 		if (installation->selected)
 			return installation;
@@ -172,8 +168,6 @@ installation_t *INS_GetCurrentSelectedInstallation (void)
  */
 void INS_SetCurrentSelectedInstallation (const installation_t *installation)
 {
-	installation_t *ins;
-
 	INS_Foreach(ins)
 		ins->selected = (ins == installation);
 
@@ -223,8 +217,6 @@ static void INS_FinishInstallation (installation_t *installation)
  */
 static void INS_InstallationList_f (void)
 {
-	installation_t *installation;
-
 	INS_Foreach(installation) {
 		Com_Printf("Installation idx %i\n", installation->idx);
 		Com_Printf("Installation name %s\n", installation->name);
@@ -250,7 +242,6 @@ static void INS_InstallationList_f (void)
  */
 static void INS_ConstructionFinished_f (void)
 {
-	installation_t *ins;
 	int idx = -1;
 
 	if (Cmd_Argc() == 2) {
@@ -277,8 +268,6 @@ static void INS_ConstructionFinished_f (void)
  **/
 installation_t *INS_GetFirstUFOYard (qboolean free)
 {
-	installation_t *installation;
-
 	INS_ForeachOfType(installation, INSTALLATION_UFOYARD) {
 		if (free && installation->ufoCapacity.cur >= installation->ufoCapacity.max)
 			continue;
@@ -318,8 +307,6 @@ void INS_Shutdown (void)
  */
 void INS_UpdateInstallationData (void)
 {
-	installation_t *installation;
-
 	INS_Foreach(installation) {
 		if (installation->installationStatus == INSTALLATION_UNDER_CONSTRUCTION
 		 && installation->buildStart
@@ -441,7 +428,6 @@ void INS_ParseInstallations (const char *name, const char **text)
 qboolean INS_SaveXML (xmlNode_t *p)
 {
 	xmlNode_t *n;
-	installation_t *inst;
 
 	n = XML_AddNode(p, SAVE_INSTALLATION_INSTALLATIONS);
 	Com_RegisterConstList(saveInstallationConstants);

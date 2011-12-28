@@ -104,6 +104,7 @@ char *Com_Chop(char *s);
 
 /** returns the amount of elements - not the amount of bytes */
 #define lengthof(x) (sizeof(x) / sizeof(*(x)))
+#define endof(x)    ((x) + lengthof((x)))
 #define CASSERT(x) extern int ASSERT_COMPILE[((x) != 0) * 2 - 1]
 
 char *va(const char *format, ...) __attribute__((format(printf, 1, 2)));

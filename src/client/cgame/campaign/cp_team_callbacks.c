@@ -196,7 +196,6 @@ static void CP_UpdatePilotList_f (void)
 static void CP_UpdateEquipmentMenuParameters_f (void)
 {
 	aircraft_t *aircraft;
-	aircraft_t *aircraftInBase;
 	equipDef_t unused;
 	base_t *base = B_GetCurrentSelectedBase();
 	int i;

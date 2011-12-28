@@ -47,7 +47,6 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 aircraft_t* AIR_GetFirstFromBase (const base_t *b)
 {
 	if (b) {
-		aircraft_t *aircraft;
 		AIR_ForeachFromBase(aircraft, b)
 			return aircraft;
 	}
@@ -71,7 +70,6 @@ qboolean AIR_BaseHasAircraft (const base_t *base)
  */
 int AIR_BaseCountAircraft (const base_t *base)
 {
-	aircraft_t *aircraft;
 	int count = 0;
 
 	AIR_ForeachFromBase(aircraft, base) {
@@ -125,8 +123,6 @@ static int AIR_UpdateHangarCapForOne (const aircraft_t const *aircraftTemplate, 
  */
 void AIR_UpdateHangarCapForAll (base_t *base)
 {
-	aircraft_t *aircraft;
-
 	if (!base)
 		return;
 
@@ -148,7 +144,6 @@ void AIR_UpdateHangarCapForAll (base_t *base)
 void AIR_ListAircraft_f (void)
 {
 	base_t *base = NULL;
-	aircraft_t *aircraft;
 
 	if (Cmd_Argc() == 2) {
 		int baseIdx = atoi(Cmd_Argv(1));
@@ -157,7 +152,6 @@ void AIR_ListAircraft_f (void)
 
 	AIR_Foreach(aircraft) {
 		int k;
-		employee_t *employee;
 
 		if (base && aircraft->homebase != base)
 			continue;
@@ -522,7 +516,6 @@ qboolean AIR_IsAircraftOnGeoscape (const aircraft_t const * aircraft)
 int AIR_CountTypeInBase (const base_t *base, aircraftType_t aircraftType)
 {
 	int count = 0;
-	aircraft_t *aircraft;
 
 	AIR_ForeachFromBase(aircraft, base) {
 		if (aircraft->type == aircraftType)
@@ -539,7 +532,6 @@ int AIR_CountTypeInBase (const base_t *base, aircraftType_t aircraftType)
 int AIR_CountInBaseByTemplate (const base_t *base, const aircraft_t *aircraftTemplate)
 {
 	int count = 0;
-	aircraft_t *aircraft;
 
 	AIR_ForeachFromBase(aircraft, base) {
 		if (aircraft->tpl == aircraftTemplate)
@@ -679,7 +671,6 @@ int AIR_GetAircraftIDXInBase (const aircraft_t* aircraft)
 {
 	int i;
 	const base_t *base;
-	aircraft_t *aircraftInBase;
 
 	if (!aircraft || !aircraft->homebase)
 		return AIRCRAFT_INBASE_INVALID;
@@ -705,7 +696,6 @@ int AIR_GetAircraftIDXInBase (const aircraft_t* aircraft)
  */
 aircraft_t *AIR_GetAircraftFromBaseByIDXSafe (const base_t* base, int index)
 {
-	aircraft_t *aircraft;
 	int i;
 
 	i = 0;
@@ -870,7 +860,6 @@ int AIR_GetCapacityByAircraftWeight (const aircraft_t *aircraft)
 static int AIR_GetStorageRoom (const aircraft_t *aircraft)
 {
 	int size = 0;
-	employee_t *employee;
 
 	LIST_Foreach(aircraft->acTeam, employee_t, employee) {
 		containerIndex_t container;
@@ -958,7 +947,6 @@ qboolean AIR_MoveAircraftIntoNewHomebase (aircraft_t *aircraft, base_t *base)
 {
 	base_t *oldBase;
 	baseCapacities_t capacity;
-	employee_t *employee;
 
 	assert(aircraft);
 	assert(base);
@@ -1079,7 +1067,6 @@ void AIR_DeleteAircraft (aircraft_t *aircraft)
  */
 void AIR_DestroyAircraft (aircraft_t *aircraft)
 {
-	employee_t *employee;
 	employee_t *pilot;
 
 	assert(aircraft);
@@ -1255,7 +1242,6 @@ void AIR_CampaignRun (const campaign_t* campaign, int dt, qboolean updateRadarOv
 	 * This is static because aircraft can move without radar being
 	 * updated (sa CP_CampaignRun) */
 	static qboolean radarOverlayReset = qfalse;
-	aircraft_t *aircraft;
 
 	/* Run each aircraft */
 	AIR_Foreach(aircraft) {
@@ -1313,8 +1299,6 @@ void AIR_CampaignRun (const campaign_t* campaign, int dt, qboolean updateRadarOv
  */
 aircraft_t* AIR_AircraftGetFromIDX (int aircraftIdx)
 {
-	aircraft_t* aircraft;
-
 	AIR_Foreach(aircraft) {
 		if (aircraft->idx == aircraftIdx) {
 			Com_DPrintf(DEBUG_CLIENT, "AIR_AircraftGetFromIDX: aircraft idx: %i\n",	aircraft->idx);
@@ -1721,8 +1705,6 @@ void AIR_ParseAircraft (const char *name, const char **text, qboolean assignAirc
 #ifdef DEBUG
 void AIR_ListCraftIndexes_f (void)
 {
-	aircraft_t *aircraft;
-
 	Com_Printf("globalIDX\t(Craftname)\n");
 	AIR_Foreach(aircraft) {
 		Com_Printf("%i\t(%s)\n", aircraft->idx, aircraft->name);
@@ -1768,8 +1750,6 @@ Aircraft functions related to UFOs or missions.
  */
 void AIR_AircraftsNotifyMissionRemoved (const mission_t *const mission)
 {
-	aircraft_t* aircraft;
-
 	AIR_Foreach(aircraft) {
 		if (aircraft->mission == mission)
 			AIR_AircraftReturnToBase(aircraft);
@@ -1784,7 +1764,6 @@ void AIR_AircraftsNotifyMissionRemoved (const mission_t *const mission)
 void AIR_AircraftsNotifyUFORemoved (const aircraft_t *const ufo, qboolean destroyed)
 {
 	base_t *base;
-	aircraft_t* aircraft;
 
 	assert(ufo);
 
@@ -1826,8 +1805,6 @@ void AIR_AircraftsNotifyUFORemoved (const aircraft_t *const ufo, qboolean destro
  */
 void AIR_AircraftsUFODisappear (const aircraft_t *const ufo)
 {
-	aircraft_t *aircraft;
-
 	AIR_Foreach(aircraft) {
 		if (aircraft->status == AIR_UFO && ufo == aircraft->aircraftTarget)
 			AIR_AircraftReturnToBase(aircraft);
@@ -2200,8 +2177,6 @@ employee_t* AIR_GetPilot (const aircraft_t *aircraft)
  */
 void AIR_AutoAddPilotToAircraft (const base_t* base, employee_t* pilot)
 {
-	aircraft_t *aircraft;
-
 	AIR_ForeachFromBase(aircraft, base) {
 		if (AIR_SetPilot(aircraft, pilot))
 			break;
@@ -2216,8 +2191,6 @@ void AIR_AutoAddPilotToAircraft (const base_t* base, employee_t* pilot)
  */
 void AIR_RemovePilotFromAssignedAircraft (const base_t* base, const employee_t* pilot)
 {
-	aircraft_t *aircraft;
-
 	AIR_ForeachFromBase(aircraft, base) {
 		if (AIR_GetPilot(aircraft) == pilot) {
 			AIR_SetPilot(aircraft, NULL);
@@ -2318,7 +2291,6 @@ static qboolean AIR_SaveAircraftXML (xmlNode_t *p, const aircraft_t* const aircr
 	xmlNode_t *node;
 	xmlNode_t *subnode;
 	int l;
-	employee_t *employee;
 	const employee_t *pilot;
 
 	Com_RegisterConstList(saveAircraftConstants);
@@ -2444,7 +2416,6 @@ qboolean AIR_SaveXML (xmlNode_t *parent)
 {
 	int i;
 	xmlNode_t * node, *snode;
-	aircraft_t *aircraft;
 
 	/* save phalanx aircraft */
 	snode = XML_AddNode(parent, SAVE_AIRCRAFT_PHALANX);
@@ -2767,7 +2738,6 @@ qboolean AIR_LoadXML (xmlNode_t *parent)
 static qboolean AIR_PostLoadInitMissions (void)
 {
 	qboolean success = qtrue;
-	aircraft_t *aircraft;
 	aircraft_t *prevUfo;
 	aircraft_t *ufo;
 
@@ -2940,7 +2910,6 @@ qboolean AIR_RemoveEmployee (employee_t *employee, aircraft_t *aircraft)
 	/* If no aircraft is given we search if he is in _any_ aircraft and set
 	 * the aircraft pointer to it. */
 	if (!aircraft) {
-		aircraft_t *acTemp;
 		AIR_Foreach(acTemp) {
 			if (AIR_IsEmployeeInAircraft(employee, acTemp)) {
 				aircraft = acTemp;
@@ -2975,7 +2944,6 @@ const aircraft_t *AIR_IsEmployeeInAircraft (const employee_t *employee, const ai
 
 	/* If no aircraft is given we search if he is in _any_ aircraft and return true if that's the case. */
 	if (!aircraft) {
-		aircraft_t *anyAircraft;
 		AIR_Foreach(anyAircraft) {
 			if (AIR_IsEmployeeInAircraft(employee, anyAircraft))
 				return anyAircraft;
@@ -3002,8 +2970,6 @@ const aircraft_t *AIR_IsEmployeeInAircraft (const employee_t *employee, const ai
  */
 void AIR_RemoveEmployees (aircraft_t *aircraft)
 {
-	employee_t* employee;
-
 	if (!aircraft)
 		return;
 
@@ -3044,7 +3010,6 @@ void AIR_MoveEmployeeInventoryIntoStorage (const aircraft_t *aircraft, equipDef_
 	}
 
 	for (container = 0; container < csi.numIDs; container++) {
-		employee_t *employee;
 		LIST_Foreach(aircraft->acTeam, employee_t, employee) {
 			character_t *chr = &employee->chr;
 			invList_t *ic = CONTAINER(chr, container);
@@ -3169,8 +3134,6 @@ void AIR_InitStartup (void)
  */
 void AIR_Shutdown (void)
 {
-	aircraft_t *craft;
-
 	AIR_Foreach(craft) {
 		AIR_ResetAircraftTeam(craft);
 	}

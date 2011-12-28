@@ -118,7 +118,6 @@ static void BS_MarketAircraftDescription (const aircraft_t *aircraftTemplate)
  */
 static int BS_GetStorageAmountInBase (const base_t* base, const char *aircraftID)
 {
-	aircraft_t *aircraft;
 	int storage = 0;
 
 	assert(base);
@@ -644,29 +643,28 @@ static void BS_SellAircraft_f (void)
 		const aircraft_t *aircraftTemplate = buyList.l[num].aircraft;
 		qboolean aircraftOutNote = qfalse;
 		qboolean teamNote = qfalse;
-		qboolean found = qfalse;
-		aircraft_t *aircraft;
+		aircraft_t *aircraft = NULL;
 
 		if (!aircraftTemplate)
 			return;
 
-		AIR_ForeachFromBase(aircraft, base) {
-			if (Q_streq(aircraft->id, aircraftTemplate->id)) {
-				if (AIR_GetTeamSize(aircraft) > 0) {
+		AIR_ForeachFromBase(a, base) {
+			if (Q_streq(a->id, aircraftTemplate->id)) {
+				if (AIR_GetTeamSize(a) > 0) {
 					teamNote = qtrue;
 					continue;
 				}
-				if (!AIR_IsAircraftInBase(aircraft)) {
+				if (!AIR_IsAircraftInBase(a)) {
 					/* aircraft is not in base */
 					aircraftOutNote = qtrue;
 					continue;
 				}
-				found = qtrue;
+				aircraft = a;
 				break;
 			}
 		}
 
-		if (found) {
+		if (aircraft) {
 			BS_SellAircraft(aircraft);
 
 			/* reinit the menu */

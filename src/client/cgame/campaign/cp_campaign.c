@@ -85,7 +85,6 @@ void CP_ParseCharacterData (struct dbuffer *msg)
 	static linkedList_t *updateCharacters = NULL;
 
 	if (!msg) {
-		updateCharacter_t *c;
 		LIST_Foreach(updateCharacters, updateCharacter_t, c) {
 			employee_t *employee = E_GetEmployeeFromChrUCN(c->ucn);
 			character_t* chr;
@@ -433,7 +432,6 @@ void CP_HandleNationData (float minHappiness, mission_t * mis, const nation_t *a
  */
 static void CP_CheckMissionEnd (const campaign_t* campaign)
 {
-	mission_t *mission;
 	MIS_Foreach(mission) {
 		if (CP_CheckMissionLimitedInTime(mission) && Date_LaterThan(&ccs.date, &mission->finalDate))
 			CP_MissionStageEnd(campaign, mission);
@@ -906,8 +904,6 @@ static qboolean CP_ShouldUpdateSoldierRank (const rank_t *rank, const character_
  */
 void CP_UpdateCharacterStats (const base_t *base, const aircraft_t *aircraft)
 {
-	employee_t *employee = NULL;
-
 	assert(aircraft);
 
 	/* only soldiers have stats and ranks, ugvs not */
@@ -1279,7 +1275,6 @@ static void CP_DebugChangeCharacterStats_f (void)
 {
 	int j;
 	base_t *base = B_GetCurrentSelectedBase();
-	employee_t *employee;
 
 	if (!base)
 		return;

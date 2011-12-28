@@ -50,16 +50,6 @@ window physdata
 	}
 
 	// ==================
-	// rank
-	// ==================
-
-	image	rank_img {
-		pos "25 70"
-		size "64 64"
-		src *cvar:mn_chrrank_img
-	}
-
-	// ==================
 	// model
 	// ==================
 
@@ -242,6 +232,18 @@ window physdata
 	}
 
 	// ==================
+	// rank
+	// ==================
+
+	image	rank_img {
+		pos "25 70"
+		size "64 64"
+		src *cvar:mn_chrrank_img
+		tooltip *cvar:mn_chrrank
+		OnRClick { cmd "ui_pop;" }
+	}
+
+	// ==================
 	// health and morale
 	// ==================
 
@@ -262,6 +264,7 @@ window physdata
 		pos			"415 369"
 		size		"50 20"
 		contentalign	ALIGN_UC
+		OnRClick { cmd "ui_pop;" }
 	}
 	ekg hp
 	{
@@ -288,6 +291,7 @@ window physdata
 		pos			"415 409"
 		size		"50 20"
 		contentalign	ALIGN_UC
+		OnRClick { cmd "ui_pop;" }
 	}
 	ekg morale
 	{

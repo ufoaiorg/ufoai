@@ -71,7 +71,6 @@ void HOS_HospitalRun (void)
 	employeeType_t type;
 
 	for (type = 0; type < MAX_EMPL; type++) {
-		employee_t *employee;
 		E_Foreach(type, employee) {
 			if (!E_IsHired(employee))
 				continue;
@@ -107,7 +106,6 @@ void HOS_HealAll (const base_t* const base)
 	assert(base);
 
 	for (type = 0; type < MAX_EMPL; type++) {
-		employee_t *employee;
 		E_Foreach(type, employee) {
 			if (!E_IsInBase(employee, base))
 				continue;
@@ -130,7 +128,6 @@ static void HOS_HealAll_f (void)
 		return;
 
 	for (type = 0; type < MAX_EMPL; type++) {
-		employee_t *employee;
 		E_Foreach(type, employee) {
 			if (!E_IsInBase(employee, base))
 				continue;
@@ -156,7 +153,6 @@ static void HOS_HurtAll_f (void)
 		amount = 1;
 
 	for (type = 0; type < MAX_EMPL; type++) {
-		employee_t *employee;
 		E_Foreach(type, employee) {
 			/* only those employees, that are in the current base */
 			if (!E_IsInBase(employee, base))

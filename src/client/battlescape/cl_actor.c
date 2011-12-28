@@ -534,6 +534,39 @@ qboolean CL_ActorSelectNext (void)
 	return qfalse;
 }
 
+/**
+ * @brief selects the previous actor
+ */
+qboolean CL_ActorSelectPrev (void)
+{
+	int selIndex = -1;
+	const int num = cl.numTeamList;
+	int i;
+
+	/* find index of currently selected actor */
+	for (i = 0; i < num; i++) {
+		const le_t *le = cl.teamList[i];
+		if (le && le->selected && le->inuse && !LE_IsDead(le)) {
+			selIndex = i;
+			break;
+		}
+	}
+	if (selIndex < 0)
+		return qfalse;			/* no one selected? */
+
+	/* cycle round */
+	i = selIndex;
+	while (qtrue) {
+	/*	i = (i - 1) % num; */
+		i--; if (i < 0) i = num - 1;
+		if (i == selIndex)
+			break;
+		if (CL_ActorSelectList(i))
+			return qtrue;
+	}
+	return qfalse;
+}
+
 
 /*
 ==============================================================
@@ -2204,6 +2237,16 @@ static void CL_ActorNext_f (void)
 }
 
 /**
+ * @brief Switch to the previous living soldier
+ */
+static void CL_ActorPrev_f (void)
+{
+	if (CL_BattlescapeRunning()) {
+		CL_ActorSelectPrev();
+	}
+}
+
+/**
  * @brief Selects a soldier while we are on battlescape
  */
 static void CL_ActorSelect_f (void)
@@ -2328,11 +2371,13 @@ static void CL_NextAlienVisibleFromActor_f (void)
  */
 static void CL_NextAlien_f (void)
 {
-	static int lastAlien = 0;
+	int lastAlien;
 	int i;
 
-	if (lastAlien >= cl.numLEs)
-		lastAlien = 0;
+	if (cl.numLEs <= 0)
+		return;
+
+	lastAlien = max(0, min(cl.numLEs - 1, Cvar_GetValue("ui_lastalien")));
 
 	i = lastAlien;
 	do {
@@ -2344,6 +2389,37 @@ static void CL_NextAlien_f (void)
 		 && le->team != TEAM_CIVILIAN) {
 			lastAlien = i;
 			CL_ViewCenterAtGridPosition(le->pos);
+			Cvar_SetValue("ui_lastalien", lastAlien);
+			return;
+		}
+	} while (i != lastAlien);
+}
+
+/**
+ * @brief Cycles between visible aliens in reverse direction
+ * @sa CL_NextAlienVisibleFromActor_f
+ */
+static void CL_PrevAlien_f (void)
+{
+	int lastAlien;
+	int i;
+
+	if (cl.numLEs <= 0)
+		return;
+
+	lastAlien = max(0, min(cl.numLEs - 1, Cvar_GetValue("ui_lastalien")));
+
+	i = lastAlien;
+	do {
+		const le_t *le;
+		if (--i < 0)
+			i = cl.numLEs - 1;
+		le = &cl.LEs[i];
+		if (le->inuse && LE_IsLivingAndVisibleActor(le) && le->team != cls.team
+		 && le->team != TEAM_CIVILIAN) {
+			lastAlien = i;
+			CL_ViewCenterAtGridPosition(le->pos);
+			Cvar_SetValue("ui_lastalien", lastAlien);
 			return;
 		}
 	} while (i != lastAlien);
@@ -2405,7 +2481,8 @@ void ACTOR_InitStartup (void)
 	cl_autostand = Cvar_Get("cl_autostand","1", CVAR_USERINFO | CVAR_ARCHIVE, "Prevent accidental wasting of TUs by allowing the actor to automatically stand up before starting long walks.");
 	confirm_actions = Cvar_Get("confirm_actions", "0", CVAR_ARCHIVE, "Confirm all actions in tactical mode");
 	cl_showactors = Cvar_Get("cl_showactors", "1", 0, "Show actors on the battlefield");
-	Cmd_AddCommand("actor_next", CL_ActorNext_f, N_("Toggle to next actor"));
+	Cmd_AddCommand("actor_next", CL_ActorNext_f, N_("Toggle to next living actor"));
+	Cmd_AddCommand("actor_prev", CL_ActorPrev_f, N_("Toggle to previous living actor"));
 	Cmd_AddCommand("actor_select", CL_ActorSelect_f, N_("Select an actor from list"));
 	Cmd_AddCommand("actor_updatecurrent", CL_ActorUpdate_f, N_("Update an actor"));
 	Cmd_AddCommand("actor_standcrouch", CL_ActorStandCrouch_f, N_("Toggle stand/crouch."));
@@ -2414,7 +2491,8 @@ void ACTOR_InitStartup (void)
 	Cmd_AddCommand("actor_confirmaction", CL_ActorConfirmAction_f, N_("Confirm the current action"));
 	Cmd_AddCommand("actor_nextalien", CL_NextAlienVisibleFromActor_f, N_("Toggle to the next alien in sight of the selected actor."));
 
-	Cmd_AddCommand("nextalien", CL_NextAlien_f, N_("Toggle camera to the next alien."));
+	Cmd_AddCommand("nextalien", CL_NextAlien_f, N_("Toggle camera to the next visible alien."));
+	Cmd_AddCommand("prevalien", CL_PrevAlien_f, N_("Toggle camera to the previous visible alien."));
 
 #ifdef DEBUG
 	Cmd_AddCommand("debug_path", CL_DebugPath_f, "Display routing data for current mouse position.");

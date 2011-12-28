@@ -292,7 +292,6 @@ static qboolean GAME_CP_Spawn (chrList_t *chrList)
 {
 	aircraft_t *aircraft = MAP_GetMissionAircraft();
 	base_t *base;
-	employee_t *employee;
 
 	if (!aircraft)
 		return qfalse;

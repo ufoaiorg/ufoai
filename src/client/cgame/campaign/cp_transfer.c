@@ -83,7 +83,6 @@ static void TR_EmptyTransferCargo (base_t *destination, transfer_t *transfer, qb
 				MSO_CheckAddNewMessage(NT_TRANSFER_LOST, _("Transport mission"), cp_messageBuffer, qfalse, MSG_TRANSFERFINISHED, NULL);
 			}
 			for (i = EMPL_SOLDIER; i < MAX_EMPL; i++) {
-				employee_t *employee;
 				TR_ForeachEmployee(employee, transfer, i) {
 					employee->baseHired = transfer->srcBase;	/* Restore back the original baseid. */
 					employee->transfer = qfalse;
@@ -93,7 +92,6 @@ static void TR_EmptyTransferCargo (base_t *destination, transfer_t *transfer, qb
 		} else {
 			employeeType_t i;
 			for (i = EMPL_SOLDIER; i < MAX_EMPL; i++) {
-				employee_t *employee;
 				TR_ForeachEmployee(employee, transfer, i) {
 					employee->baseHired = transfer->srcBase;	/* Restore back the original baseid. */
 					employee->transfer = qfalse;
@@ -141,8 +139,6 @@ static void TR_EmptyTransferCargo (base_t *destination, transfer_t *transfer, qb
 	 * aircraftArray should contain pointers to aircraftTemplates to avoid this problem, and be removed from
 	 * source base as soon as transfer starts */
 	if (transfer->hasAircraft && success && transfer->srcBase) {	/* Aircraft. Cannot come from mission */
-		aircraft_t *aircraft;
-
 		TR_ForeachAircraft(aircraft, transfer) {
 			if ((AIR_CalculateHangarStorage(aircraft->tpl, destination, 0) <= 0) || !AIR_MoveAircraftIntoNewHomebase(aircraft, destination)) {
 				/* No space, aircraft will be lost. */
@@ -290,7 +286,6 @@ transfer_t* TR_TransferStart (base_t *srcBase, transferData_t *transData)
 	transfer_t transfer;
 	float time;
 	int i;
-	aircraft_t *aircraft = NULL;
 
 	if (!transData->transferBase || !srcBase) {
 		Com_Printf("TR_TransferStart: No base selected!\n");
@@ -328,8 +323,6 @@ transfer_t* TR_TransferStart (base_t *srcBase, transferData_t *transData)
 	/* Note that the employee remains hired in source base during the transfer, that is
 	 * it takes Living Quarters capacity, etc, but it cannot be used anywhere. */
 	for (i = 0; i < MAX_EMPL; i++) {		/* Employees. */
-		employee_t *employee;
-
 		LIST_Foreach(transData->trEmployeesTmp[i], employee_t, employee) {
 			assert(E_IsInBase(employee, srcBase));
 
@@ -372,8 +365,6 @@ transfer_t* TR_TransferStart (base_t *srcBase, transferData_t *transData)
  */
 void TR_NotifyAircraftRemoved (const aircraft_t *aircraft)
 {
-	transfer_t *transfer;
-
 	if (!aircraft)
 		return;
 
@@ -391,8 +382,6 @@ void TR_NotifyAircraftRemoved (const aircraft_t *aircraft)
  */
 void TR_TransferRun (void)
 {
-	transfer_t *transfer;
-
 	TR_Foreach(transfer) {
 		if (Date_IsDue(&transfer->event)) {
 			assert(transfer->destBase);
@@ -410,7 +399,6 @@ static void TR_ListTransfers_f (void)
 {
 	int transIdx = -1;
 	int i = 0;
-	transfer_t *transfer;
 
 	if (Cmd_Argc() == 2) {
 		transIdx = atoi(Cmd_Argv(1));
@@ -454,8 +442,6 @@ static void TR_ListTransfers_f (void)
 
 			Com_Printf("...Carried Employee:\n");
 			for (emplType = EMPL_SOLDIER; emplType < MAX_EMPL; emplType++) {
-				employee_t *employee;
-
 				TR_ForeachEmployee(employee, transfer, emplType) {
 					if (employee->ugv) {
 						/** @todo: improve ugv listing when they're implemented */
@@ -484,8 +470,6 @@ static void TR_ListTransfers_f (void)
 		}
 		/* Transfered Aircraft */
 		if (transfer->hasAircraft) {
-			aircraft_t *aircraft;
-
 			Com_Printf("...Transfered Aircraft:\n");
 			TR_ForeachAircraft(aircraft, transfer) {
 				Com_Printf("......%s [idx: %i]\n", aircraft->id, aircraft->idx);
@@ -503,7 +487,6 @@ static void TR_ListTransfers_f (void)
  */
 qboolean TR_SaveXML (xmlNode_t *p)
 {
-	transfer_t *transfer;
 	xmlNode_t *n = XML_AddNode(p, SAVE_TRANSFER_TRANSFERS);
 
 	TR_Foreach(transfer) {
@@ -554,8 +537,6 @@ qboolean TR_SaveXML (xmlNode_t *p)
 		/* save employee */
 		if (transfer->hasEmployees) {
 			for (j = 0; j < MAX_EMPL; j++) {
-				employee_t *employee;
-
 				TR_ForeachEmployee(employee, transfer, j) {
 					xmlNode_t *ss = XML_AddNode(s, SAVE_TRANSFER_EMPLOYEE);
 					XML_AddInt(ss, SAVE_TRANSFER_UCN, employee->chr.ucn);
@@ -564,8 +545,6 @@ qboolean TR_SaveXML (xmlNode_t *p)
 		}
 		/* save aircraft */
 		if (transfer->hasAircraft) {
-			aircraft_t *aircraft;
-
 			TR_ForeachAircraft(aircraft, transfer) {
 				xmlNode_t *ss = XML_AddNode(s, SAVE_TRANSFER_AIRCRAFT);
 				XML_AddInt(ss, SAVE_TRANSFER_ID, aircraft->idx);
@@ -702,8 +681,6 @@ void TR_InitStartup (void)
  */
 void TR_Shutdown (void)
 {
-	transfer_t *transfer;
-
 	TR_Foreach(transfer) {
 		employeeType_t emplType;
 
