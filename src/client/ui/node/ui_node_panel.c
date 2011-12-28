@@ -86,6 +86,17 @@ static void UI_TopDownFlowLayout (uiNode_t *node, int margin)
 		positionY += child->size[1] + margin;
 		child = child->next;
 	}
+
+	/* fix scroll */
+	{
+		qboolean updated;
+
+		updated = UI_SetScroll(&EXTRADATA(node).super.scrollX, -1, node->size[0], node->size[0]);
+		updated = UI_SetScroll(&EXTRADATA(node).super.scrollY, -1, node->size[1], positionY + node->padding) || updated;
+		if (updated && EXTRADATA(node).super.onViewChange)
+			UI_ExecuteEventActions(node, EXTRADATA(node).super.onViewChange);
+	}
+
 }
 
 /**
