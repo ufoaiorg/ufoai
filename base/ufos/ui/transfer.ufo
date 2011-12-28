@@ -664,4 +664,8 @@ window popup_transferlist
 	{
 		cmd "trans_list;"
 	}
+
+	func onWindowClosed {
+		call *node:root.tr_listclear
+	}
 }
