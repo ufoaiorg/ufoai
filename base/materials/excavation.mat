@@ -1,3 +1,37 @@
+// the terrain and vertical dirtmap code is commented out because of this bug:
+// https://sourceforge.net/tracker/?func=detail&aid=3466160&group_id=157793&atid=805242
+// please enable this code only for debugging purposes
+
+/* terrain parameter for the rocks */
+//{
+//	material tex_nature/desert004
+//	hardness 0.2
+//	specular 0.2
+//	{
+//		texture tex_nature/desert005
+//		terrain 64 128
+//		lightmap
+//	}
+//}
+/* dirtmap for the walls of the buildings (vertical) */
+//{
+//	material tex_nature/desert003
+//	{
+//		texture tex_buildings/wall_dirt3
+//		dirtmap 1.0
+//		lightmap
+//	}
+//}
+
+/* sand dirtmap on the ancient floor */
+{
+	material tex_buildings/floor_se03
+	{
+		texture tex_nature/desert004
+		dirtmap 1.0
+		lightmap
+	}
+}
 /* land_li_yellow: big yellow light with additional flare effect (used outside) */
 {
 	material tex_lights/land_li_yellow
