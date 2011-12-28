@@ -558,7 +558,10 @@ window popup_transferbaselist
 component panel trListEntry
 {
 	{
-		size		"472 50"
+		size		"472 150"
+		ghost		true
+		border		1
+		bordercolor	"0 .78 0 1"
 		ghost		true
 	}
 
@@ -590,11 +593,6 @@ component panel trListEntry
 		ghost		true
 	}
 
-	todo tr_content {
-		string		"show cargolist somehow"
-		pos			"0 25"
-	}
-
 	string tr_eta {
 		string		"_ETA:"
 		pos			"235 25"
@@ -607,6 +605,22 @@ component panel trListEntry
 		size		"150 25"
 		font		"f_small"
 		ghost		true
+	}
+
+	optiontree tr_cargo {
+		{
+			cvar		*cvar:none
+			pos			"0 50"
+			size		"472 100"
+			color		"0 .78 0 1"
+			selectcolor	"0 .78 0 1"
+			lineHeight	18
+
+			onViewchange	{
+				*node:this@height = ((<fullsize> * <lineHeight>) + (<padding> * 2))
+				*node:parent@height = (((<fullsize> * <lineHeight>) + (<padding> * 2)) + <top>)
+			}
+		}
 	}
 }
 
@@ -627,9 +641,9 @@ window popup_transferlist
 		layout		LAYOUT_TOP_DOWN_FLOW
 
 		onViewChange	{
-			*node:root.tr_list_scroll@fullsize = <fullsize>
-			*node:root.tr_list_scroll@current = <viewpos>
-			*node:root.tr_list_scroll@viewsize = <viewsize>
+			*node:parent.tr_list_scroll@fullsize = <fullsize>
+			*node:parent.tr_list_scroll@current = <viewpos>
+			*node:parent.tr_list_scroll@viewsize = <viewsize>
 		}
 	}
 	vscrollbar tr_list_scroll {
@@ -638,7 +652,7 @@ window popup_transferlist
 		height		"380"
 		hidewhenunused	true
 		onChange	{
-			*node:root.tr_list@viewpos = <current>
+			*node:parent.tr_list@viewpos = <current>
 		}
 	}
 
@@ -653,11 +667,17 @@ window popup_transferlist
 		call *node:root.tr_list@removeAllChild
 	}
 
-	confunc tr_listadd {
+	confunc tr_listaddtransfer {
 		call *node:root.tr_list@createChild("trans<1>", "trListEntry")
 		*node:root.tr_list.trans<1>.tr_srcbase@string = <2>
 		*node:root.tr_list.trans<1>.tr_destbase@string = <3>
 		*node:root.tr_list.trans<1>.tr_arrive@string = <4>
+	}
+
+	confunc tr_listaddcargo {
+		call *node:root.tr_list.trans<1>.<2>@createChild("<3>", "option")
+		*node:root.tr_list.trans<1>.<2>.<3>@label = "<4>"
+		*node:root.tr_list.trans<1>.<2>.<3>@collapsed = true
 	}
 
 	func onWindowOpened

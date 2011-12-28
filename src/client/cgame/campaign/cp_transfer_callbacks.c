@@ -1502,9 +1502,65 @@ static void TR_List_f (void)
 
 	UI_ExecuteConfunc("tr_listclear");
 	TR_Foreach(transfer) {
+		const char *source = transfer->srcBase ? transfer->srcBase->name : "mission";
 		date_t time = Date_Substract(transfer->event, ccs.date);
 
-		UI_ExecuteConfunc("tr_listadd %d \"%s\" \"%s\" \"%s\"", ++i, transfer->srcBase ? transfer->srcBase->name : "mission", transfer->destBase->name, CP_SecondConvert(Date_DateToSeconds(&time)));
+		UI_ExecuteConfunc("tr_listaddtransfer %d \"%s\" \"%s\" \"%s\"", ++i, source, transfer->destBase->name, CP_SecondConvert(Date_DateToSeconds(&time)));
+
+		/* Items */
+		if (transfer->hasItems) {
+			int j;
+
+			UI_ExecuteConfunc("tr_listaddcargo %d \"%s\" \"%s\" \"%s\"", i, "tr_cargo", "items", _("Items"));
+			for (j = 0; j < csi.numODs; j++) {
+				const objDef_t *od = INVSH_GetItemByIDX(j);
+
+				if (transfer->itemAmount[od->idx] <= 0)
+					continue;
+
+				UI_ExecuteConfunc("tr_listaddcargo %d \"%s\" \"%s\" \"%s\"", i, "tr_cargo.items" ,od->id, va("%i %s", transfer->itemAmount[od->idx], _(od->name)));
+			}
+		}
+		/* Employee */
+		if (transfer->hasEmployees) {
+			employeeType_t emplType;
+
+			UI_ExecuteConfunc("tr_listaddcargo %d \"%s\" \"%s\" \"%s\"", i, "tr_cargo", "employee", _("Employee"));
+			for (emplType = EMPL_SOLDIER; emplType < MAX_EMPL; emplType++) {
+				TR_ForeachEmployee(employee, transfer, emplType) {
+					if (employee->ugv) {
+						/** @todo: add ugv listing when they're implemented */
+					} else {
+						UI_ExecuteConfunc("tr_listaddcargo %d \"%s\" \"%s\" \"%s\"", i, "tr_cargo.employee", va("ucn%i", employee->chr.ucn), va("%s %s", E_GetEmployeeString(employee->type), employee->chr.name));
+					}
+				}
+			}
+		}
+		/* Aliens */
+		if (transfer->hasAliens) {
+			int j;
+
+			UI_ExecuteConfunc("tr_listaddcargo %d \"%s\" \"%s\" \"%s\"", i, "tr_cargo", "aliens", _("Aliens"));
+			for (j = 0; j < csi.numTeamDefs; j++) {
+				const teamDef_t *team = &csi.teamDef[j];
+
+				if (transfer->alienAmount[j][TRANS_ALIEN_ALIVE]) {
+					UI_ExecuteConfunc("tr_listaddcargo %d \"%s\" \"%s\" \"%s\"", i, "tr_cargo.aliens", va("%s_alive", team->id), va("%i %s %s", transfer->alienAmount[j][TRANS_ALIEN_ALIVE], _("alive"), _(team->name)));
+				}
+
+				if (transfer->alienAmount[j][TRANS_ALIEN_DEAD]) {
+					UI_ExecuteConfunc("tr_listaddcargo %d \"%s\" \"%s\" \"%s\"", i, "tr_cargo.aliens", va("%s_dead", team->id), va("%i %s %s", transfer->alienAmount[j][TRANS_ALIEN_DEAD], _("dead"), _(team->name)));
+				}
+			}
+		}
+		/* Aircraft */
+		if (transfer->hasAircraft) {
+			UI_ExecuteConfunc("tr_listaddcargo %d \"%s\" \"%s\" \"%s\"", i, "tr_cargo", "aircraft", _("Aircraft"));
+
+			TR_ForeachAircraft(aircraft, transfer) {
+				UI_ExecuteConfunc("tr_listaddcargo %d \"%s\" \"%s\" \"%s\"", i, "tr_cargo.aircraft", va("craft%i", aircraft->idx), aircraft->name);
+			}
+		}
 	}
 }
 
