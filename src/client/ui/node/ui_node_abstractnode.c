@@ -169,6 +169,12 @@ void UI_NodeAbsoluteToRelativePos (const uiNode_t* node, int *x, int *y)
 	while (node) {
 		*x -= node->pos[0];
 		*y -= node->pos[1];
+
+		if (UI_NodeInstanceOf(node, "abstractscrollable")) {
+			*x += UI_EXTRADATACONST(node, abstractScrollableExtraData_t).scrollX.viewPos;
+			*y += UI_EXTRADATACONST(node, abstractScrollableExtraData_t).scrollY.viewPos;
+		}
+
 		node = node->parent;
 	}
 }
