@@ -31,6 +31,8 @@ particle bolter
 		blend  add
 		offset "0 -16 0"
 		size   "30 15"
+		lightcolor "1 1 1"
+		lightintensity 0.2
 	}
 	think
 	{
@@ -155,6 +157,8 @@ particle bullet
 //		child  muzzle_rifle
 		child  muzzle_rifle_2D
 		size   "40 40"
+		lightcolor "0.5 0.3 0.2"
+		lightintensity 0.2
 	}
 }
 
@@ -169,6 +173,8 @@ particle bullet-smg
 		offset "0 -16 0"
 		child  muzzle_gun
 		size   "20 40"
+		lightcolor "0.5 0.3 0.2"
+		lightintensity 0.2
 	}
 }
 
@@ -183,6 +189,8 @@ particle bullet-hmg
 		offset "0 -16 0"
 		child  muzzle_hmg
 		size   "40 40"
+		lightcolor "0.5 0.3 0.2"
+		lightintensity 0.2
 	}
 }
 
@@ -196,6 +204,8 @@ particle bullet-shotgun
 		blend  add
 		offset "0 -16 0"
 		size   "30 40"
+		lightcolor "0.5 0.3 0.2"
+		lightintensity 0.2
 	}
 }
 
@@ -210,6 +220,8 @@ particle bullet_sniper
 		offset "0 -16 0"
 		child  muzzle_sniper
 		size   "70 40"
+		lightcolor "0.5 0.3 0.2"
+		lightintensity 0.2
 	}
 }
 
@@ -301,6 +313,8 @@ particle flameThrower
 	init
 	{
 		spawn	fireBall
+		lightcolor "1 0.4 0.4"
+		lightintensity 0.1
 	}
 }
 
@@ -312,8 +326,6 @@ particle fireBall
 		image  sfx/explosions/explosion
 		blend  add
 		thinkfade out
-		lightcolor "1 0.4 0.4"
-		lightintensity 0.1
 		style  facing
 		tps    1
 	}
@@ -420,6 +432,8 @@ particle rocketFire
 		v      "0 0 0"
 		size   "15 15"
 		tps    4
+		lightcolor "3.0 1.0 0.2"
+		lightintensity 0.3
 	}
 	run
 	{
@@ -789,10 +803,10 @@ particle plasmaMiniPulse
 		image  sfx/weapons/plasmapulse
 		blend  add
 		style  axis
-		child  plasmaMiniPulseBall
+//		child  plasmaMiniPulseBall
 		offset "0 -16 0"
 		spawn muzzle_plasma
-		lightcolor "0 0.8 0.4"
+		lightcolor "0 0.5 1.5"
 		lightintensity 0.1
 	}
 	run
@@ -849,8 +863,8 @@ particle plasmaMiniPulseBall
 		offset "0 0 0"
 		color  "1 1 1 0.5"
 		size   "8 8"
-		lightcolor "0.3 1.0 3.0"
-		lightintensity 0.2
+		lightcolor "0.3 0.3 3.0"
+		lightintensity 0.1
 	}
 }
 
@@ -862,10 +876,10 @@ particle plasmaPulse
 		blend  add
 		style  axis
 		offset "0 0 0"
-		child plasmaPulseBall
+//		child plasmaPulseBall
 		spawn muzzle_plasma
-		lightcolor "0 0.8 0.4"
-		lightintensity 0.1
+		lightcolor "0 1.0 3.0"
+		lightintensity 0.2
 	}
 	run
 	{
@@ -1000,6 +1014,8 @@ particle plasmaBigBall
 		tps    60
 		child plasmaBallCore
 		spawn muzzle_plasma
+		lightcolor "0 1.0 3.0"
+		lightintensity 0.2
 	}
 	think
 	{
@@ -1892,8 +1908,6 @@ particle muzzle_gun
 		spawn  muzzle_gun_front
 //		spawn  muzzle_gun_side
 //		spawn  shell
-		lightcolor "0.4 0.4 1.0"
-		lightintensity 0.1
 		kill
 	}
 }
@@ -1910,6 +1924,8 @@ particle muzzle_gun_front
 		life   0.04
 		tps    1
 		size   "20 18"
+		lightcolor "3.0 1.5 0.5"
+		lightintensity 0.1
 	}
 	think { kill }
 }
@@ -1938,8 +1954,6 @@ particle muzzle_rifle
 		spawn  muzzle_rifle_front
 //		spawn  muzzle_side
 //		spawn  shell
-		lightcolor "0.4 0.4 1.0"
-		lightintensity 0.1
 		kill
 	}
 }
@@ -1952,8 +1966,6 @@ particle muzzle_rifle_2D
 	{
 		spawn  muzzle_round
 		spawn  muzzle_rifle_front
-		lightcolor "0.4 0.4 1.0"
-		lightintensity 0.1
 		kill
 	}
 }
@@ -1969,6 +1981,8 @@ particle muzzle_round
 		life   0.07
 		tps    1
 		size   "10 10"
+		lightcolor "3.0 1.5 0.5"
+		lightintensity 0.1
 	}
 	think { kill }
 }
@@ -2012,8 +2026,6 @@ particle muzzle_hmg
 //		spawn  muzzle_hmg_side
 //		spawn  shell
 		push   int 2
-		lightcolor "1 0.5 0"
-		lightintensity 0.3
 		kill
 	}
 }
@@ -2029,6 +2041,8 @@ particle muzzle_hmg_front
 		life   0.07
 		tps    1
 		size   "20 20"
+		lightcolor "3.0 1.5 0.5"
+		lightintensity 0.1
 	}
 	think { kill }
 }
@@ -2057,8 +2071,6 @@ particle muzzle_sniper
 		spawn  muzzle_sniper_1
 		spawn  muzzle_sniper_glow
 //		spawn  shell-sniper
-		lightcolor "0.4 0.4 1.0"
-		lightintensity 0.1
 		kill
 	}
 }
@@ -2075,6 +2087,8 @@ particle muzzle_sniper_1
 		tps    1
 		size   "20 20"
 		offset "5 0 0"
+		lightcolor "2.0 1.5 0.5"
+		lightintensity 0.2
 	}
 	run
 	{
@@ -2119,8 +2133,6 @@ particle muzzle_laser
 		push   int 2
 //		spawn  muzzle_laser_side
 		push   int 2
-		lightcolor "0.4 0.4 1.0"
-		lightintensity 0.1
 		kill
 	}
 }
@@ -2138,6 +2150,8 @@ particle muzzle_laser_round
 		size   "30 30"
 		offset "0 0 0"
 		v      "0 0 0"
+		lightcolor "2.0 1.0 0.5"
+		lightintensity 0.2
 	}
 	run
 	{
@@ -2178,8 +2192,6 @@ particle muzzle_plasma
 		push   int 2
 		spawn  muzzle_plasma_spiral
 		push   int 2
-		lightcolor "0.4 0.4 1.0"
-		lightintensity 0.1
 		kill
 	}
 }
@@ -2197,6 +2209,8 @@ particle muzzle_plasma_round
 		size   "30 30"
 		offset "0 0 0"
 		v      "0 0 0"
+		lightcolor "0 1.0 3.0"
+		lightintensity 0.2
 	}
 	run
 	{
@@ -2265,8 +2279,6 @@ particle muzzle_ptl
 		push   int 2
 		spawn  muzzle_ptl_cross
 		push   int 2
-		lightcolor "0.4 0.4 1.0"
-		lightintensity 0.1
 		kill
 	}
 }
@@ -2302,6 +2314,8 @@ particle muzzle_ptl_cross
 		offset "0 0 0"
 		v      "0 0 0"
 		angles "0 90 0"
+		lightcolor "0 3.0 1.0"
+		lightintensity 0.2
 	}
 	run
 	{
@@ -2337,6 +2351,8 @@ particle rocket_muzzle
 		pop    *s			// write it back into the particle structure and remove from stack
 		tps    1.0			// think per seconds to 1
 
+		lightcolor "3.0 1.5 0.5"
+		lightintensity 0.3
 		push   int 20		// push 20 to the stack
 		nspawn rocket_muzzle_smoke	// use the 20 from stack and spawn that many particles
 		push   int 20		// push 20 to the stack

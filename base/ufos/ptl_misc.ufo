@@ -33,9 +33,6 @@ particle frag_explosion
 		spawn  explosion_2
 		push	int 10
 		nspawn	smoketrail
-
-		lightcolor "0.4 0.4 1.0"
-		lightintensity 0.1
 		// lightsustain 1.0
 		kill
 	}
@@ -169,7 +166,8 @@ particle pexplosionFlame
 		add    float 1
 		pop    *tps
 
-		lightcolor "0.3 0.2 0.07"
+		lightcolor "0.5 3.0 0.5"
+		lightintensity 0.3
 	}
 	think { kill }
 }
@@ -198,7 +196,8 @@ particle pexplosionVolumetric
 		add    float 1.5
 		pop    *tps
 
-		lightcolor "0.3 0.2 0.07"
+		lightcolor "0.5 3.0 0.5"
+		lightintensity 0.3
 	}
 	think { kill }
 }
@@ -230,6 +229,8 @@ particle firetrail
 		a		"0 0 -100"
 		tps		10.0
 		life	1
+		lightcolor "3.0 1.5 0.5"
+		lightintensity 0.3
 		physics true
 		bounce true
 	}
@@ -325,7 +326,8 @@ particle explosionFlame
 		add    float 1.0
 		pop    *tps
 
-		lightcolor "0.3 0.2 0.07"
+		lightcolor "1 0.4 0.4"
+		lightintensity 0.1
 	}
 	think { kill }
 }
@@ -353,7 +355,8 @@ particle explosionFlame2
 		add    float 1.5
 		pop    *tps
 
-		lightcolor "0.3 0.2 0.07"
+		lightcolor "1 0.4 0.4"
+		lightintensity 0.1
 	}
 	think { kill }
 }
@@ -381,7 +384,8 @@ particle explosionVolumetric
 		add    float 1.2
 		pop    *tps
 
-		lightcolor "0.3 0.2 0.07"
+		lightcolor "1 0.4 0.4"
+		lightintensity 0.1
 	}
 	think { kill }
 }
@@ -408,8 +412,6 @@ particle explosionVolumetric2
 		rand   float 1.5
 		add    float 1.5
 		pop    *tps
-
-		lightcolor "0.3 0.2 0.07"
 	}
 	think { kill }
 }
