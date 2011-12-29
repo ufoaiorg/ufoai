@@ -63,6 +63,19 @@ static void R_DrawBox (const entity_t * e)
 {
 	const vec4_t color = {e->color[0], e->color[1], e->color[2], e->alpha};
 
+	if( e->deathTexture ) {
+		 /* I'll sure get blamed for reusing a deathTexture var for a generic textured box */
+		R_Color(color);
+		R_BindTexture(e->deathTexture->texnum);
+		if (VectorNotEmpty(e->mins) && VectorNotEmpty(e->maxs)) {
+			R_DrawTexturedBox(e->mins, e->maxs);
+		} else {
+			R_DrawTexturedBox(e->oldorigin, e->origin);
+		}
+		R_Color(NULL);
+		return;
+	}
+
 	glDisable(GL_TEXTURE_2D);
 
 	R_Color(color);

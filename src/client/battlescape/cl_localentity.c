@@ -943,8 +943,12 @@ qboolean LE_BrushModelAction (le_t * le, entity_t * ent)
 		 * @todo RF_BOX is not the best to render this
 		 */
 		ent->flags = RF_BOX;
-		ent->alpha = 0.2;
+		enum { PULSATE_RATE = 6000 };
+		ent->alpha = abs((Sys_Milliseconds() % PULSATE_RATE) - (PULSATE_RATE / 2)) * (0.5f / (PULSATE_RATE / 2));
 		ent->model = NULL;
+		if( ent->deathTexture == NULL ) {
+			ent->deathTexture = R_FindPics("sfx/misc/rescue");
+		}
 		VectorCopy(le->mins, ent->mins);
 		VectorCopy(le->maxs, ent->maxs);
 		VectorSet(ent->color, 1, 1, 0);
