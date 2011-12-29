@@ -57,7 +57,7 @@ void CL_AddBrushModel (const eventRegister_t *self, struct dbuffer *msg)
 	le = LE_Add(entnum);
 	assert(le);
 
-	le->rotationSpeed = speed / 100.0f;
+	le->rotationSpeed = speed;
 	le->slidingSpeed = speed;
 	le->angle = angle;
 	le->dir = dir;
