@@ -9220,7 +9220,7 @@
 {
 "classname" "func_rotating"
 "spawnflags" "252"
-"speed" "1"
+"speed" "400"
 "angle" "1"
 // brush 0
 {
@@ -9410,7 +9410,7 @@
 "classname" "func_rotating"
 "spawnflags" "252"
 "angle" "1"
-"speed" "1"
+"speed" "350"
 // brush 0
 {
 ( 168 618 152 ) ( 168 568 152 ) ( 166 568 152 ) tex_alienb/ab_metal01 0 0 0 0.125 0.125 134282240 0 0
@@ -9598,7 +9598,7 @@
 {
 "classname" "func_rotating"
 "spawnflags" "252"
-"speed" "1.2"
+"speed" "300"
 "angle" "1"
 // brush 0
 {
