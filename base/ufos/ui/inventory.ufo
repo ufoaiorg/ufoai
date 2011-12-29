@@ -202,10 +202,12 @@ window inventory
 
 	// drag controls, extended over the whole window, LMB:drag, RMB:close
 	controls drag {
-		tooltip	"_LMB:Drag/RMB:Close"
+		tooltip	"_LMB:Drag/RMB:Close\nWheel:Next/Previous Soldier"
 		pos		"10 10"
 		size	"492 492"
 		OnRClick { cmd "ui_pop;" }
+		onWheelUp	{ cmd "actor_next;"}
+		onWheelDown	{ cmd "actor_prev;"}
 	}
 
 	// ==================================================
