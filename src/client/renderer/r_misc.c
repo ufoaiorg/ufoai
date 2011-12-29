@@ -343,7 +343,7 @@ void R_ReinitOpenglContext()
 	R_FontCleanCache();
 	R_ShutdownFBObjects();
 	R_InitFBObjects();
-	R_UpdateDefaultMaterial("","","");
+	R_UpdateDefaultMaterial("", "", "", NULL);
 
 	/* Re-upload the battlescape terrain geometry */
 	if (qglBindBuffer) {
