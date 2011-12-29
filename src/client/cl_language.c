@@ -256,17 +256,15 @@ void CL_LanguageInit (void)
 	Com_DPrintf(DEBUG_CLIENT, "CL_LanguageInit: system language is: '%s'\n", systemLanguage);
 
 	for (i = 0, language = languageList; i < languageCount; language = language->next, i++) {
-#ifndef DEBUG
-		/* No language option available only for DEBUG. */
-		if (!CL_LanguageTest(language->localeID) && !Q_streq(language->localeID, "none"))
-			continue;
-#endif
-
+		qboolean available;
+		available = Q_streq(language->localeID, "none") || CL_LanguageTest(language->localeID);
+		uiNode_t *option;
 #if 0
-		UI_AddOption(&languageOption, "", language->localeString, language->localeID);
+		option = UI_AddOption(&languageOption, "", language->localeString, language->localeID);
 #else
-		UI_AddOption(&languageOption, "", language->nativeString, language->localeID);
+		option = UI_AddOption(&languageOption, "", language->nativeString, language->localeID);
 #endif
+		option->disabled = !available;
 	}
 
 	/* sort the list, and register it to the menu */

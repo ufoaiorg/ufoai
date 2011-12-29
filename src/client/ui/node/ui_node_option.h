@@ -54,5 +54,6 @@ typedef struct optionExtraData_s {
 } optionExtraData_t;
 
 int UI_OptionUpdateCache(struct uiNode_s* option);
+uiNode_t *UI_AllocOptionNode(const char* name, const char* label, const char* value);
 
 #endif

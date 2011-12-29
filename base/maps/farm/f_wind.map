@@ -805,7 +805,7 @@
 {
 "classname" "func_rotating"
 "spawnflags" "248"
-"speed" "3"
+"speed" "1000"
 "angle" "0"
 // brush 0
 {
@@ -884,7 +884,7 @@
 {
 "classname" "func_rotating"
 "spawnflags" "248"
-"speed" "3"
+"speed" "1000"
 "angle" "0"
 // brush 0
 {

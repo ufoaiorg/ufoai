@@ -169,6 +169,14 @@ void UI_NodeAbsoluteToRelativePos (const uiNode_t* node, int *x, int *y)
 	while (node) {
 		*x -= node->pos[0];
 		*y -= node->pos[1];
+
+		if (node->behaviour->getClientPosition) {
+			vec2_t clientPosition = {0, 0};
+			node->behaviour->getClientPosition(node, clientPosition);
+			*x -= clientPosition[0];
+			*y -= clientPosition[1];
+		}
+
 		node = node->parent;
 	}
 }

@@ -43,15 +43,18 @@ static int G_GetEarnedExperience (abilityskills_t skill, character_t *chr)
 		experience = 46; /** @todo Make a formula for this once strength is used in combat. */
 		break;
 	case ABILITY_SPEED:
-		experience = chr->scoreMission->movedNormal / 2 + chr->scoreMission->movedCrouched + (chr->scoreMission->firedTUs[skill] + chr->scoreMission->firedSplashTUs[skill]) / 10;
+		experience += chr->scoreMission->movedNormal / 2 + chr->scoreMission->movedCrouched;
+		/* skip skills < ABILITY_NUM_TYPES, they are abilities not real skills */
+		for (i = ABILITY_NUM_TYPES; i < SKILL_NUM_TYPES; i++)
+			experience += (chr->scoreMission->firedTUs[i] + chr->scoreMission->firedSplashTUs[i]) / 10;
 		break;
 	case ABILITY_ACCURACY:
-		for (i = 0; i < SKILL_NUM_TYPES; i++) {
+		/* skip skills < ABILITY_NUM_TYPES, they are abilities not real skills */
+		for (i = ABILITY_NUM_TYPES; i < SKILL_NUM_TYPES; i++)
 			if (i == SKILL_SNIPER)
 				experience += 30 * (chr->scoreMission->hits[i][KILLED_ENEMIES] + chr->scoreMission->hitsSplash[i][KILLED_ENEMIES]);
 			else
 				experience += 20 * (chr->scoreMission->hits[i][KILLED_ENEMIES] + chr->scoreMission->hitsSplash[i][KILLED_ENEMIES]);
-		}
 		break;
 	case ABILITY_MIND:
 		experience = 50 + 200 * chr->scoreMission->kills[KILLED_ENEMIES];

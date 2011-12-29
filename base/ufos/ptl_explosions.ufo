@@ -58,6 +58,8 @@ particle explosionDebrisBurn
 		v      "0 0 0"
 		size   "10 10"
 		tps    4
+		lightcolor "2.0 1.5 0.5"
+		lightintensity 0.1
 	}
 	run
 	{
@@ -204,6 +206,9 @@ particle explosionFireFlame
 		rand   float 0.6
 		add    float 0.8
 		pop    *tps
+
+		lightcolor "3.0 1.5 0.5"
+		lightintensity 0.2
 	}
 	run
 	{
@@ -236,6 +241,9 @@ particle explosionFireBurn
 		rand   float 0.5
 		add    float 1.0
 		pop    *tps
+		lightcolor "3.0 1.5 0.5"
+		lightintensity 0.2
+
 	}
 	run
 	{
@@ -324,6 +332,9 @@ particle explosionFlash
 		tps		10
 		v			"0 0 0"
 		life		0.3
+
+		lightcolor "0 0.0 0.0"
+		lightintensity 0.2
 	}
 	think { kill }
 }

@@ -959,16 +959,18 @@ qboolean LE_BrushModelAction (le_t * le, entity_t * ent)
 
 void LET_BrushModel (le_t *le)
 {
-	/* the speed is e.g. used to determine how fast a rotation will be */
-	if (cl.time - le->thinkDelay < le->speed[0]) {
-		le->thinkDelay = cl.time;
+	const int delay = cl.time - le->thinkDelay;
+
+	/* Updating model faster than 1000 times per second seems to be pretty much pointless */
+	if (delay < 1)
 		return;
-	}
 
 	if (le->type == ET_ROTATING) {
-		const float angle = le->angles[le->angle] + (1.0 / le->rotationSpeed);
+		const float angle = le->angles[le->angle] + 0.001 * delay * le->rotationSpeed; /* delay is in msecs, speed in degrees per second */
 		le->angles[le->angle] = (angle >= 360.0 ? angle - 360.0 : angle);
 	}
+
+	le->thinkDelay = cl.time;
 }
 
 void LMT_Init (localModel_t* localModel)

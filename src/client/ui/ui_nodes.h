@@ -179,7 +179,7 @@ typedef struct uiBehaviour_s {
 	void (*activate)(uiNode_t *node);		/**< Activate the node. Can be used without the mouse (ie. a button will execute onClick) */
 	void (*propertyChanged)(uiNode_t *node, const value_t *property);		/**< Called when a property change */
 	void (*sizeChanged)(uiNode_t *node);		/**< Called when the node size change */
-	void (*getClientPosition)(uiNode_t *node, vec2_t position);	/**< Return the position of the client zone into the node */
+	void (*getClientPosition)(const uiNode_t *node, vec2_t position);	/**< Return the position of the client zone into the node */
 
 	/* drag and drop callback */
 	qboolean (*dndEnter)(uiNode_t *node);							/**< Send to the target when we enter first, return true if we can drop the DND somewhere on the node */
