@@ -1,0 +1,414 @@
+From f693ab13ba383e9d323305ac5a0f4aaf563fc8b2 Mon Sep 17 00:00:00 2001
+From: Christian Hoffmann <crystan@users.sourceforge.net>
+Date: Tue, 8 Nov 2011 08:49:45 +0100
+Subject: [PATCH] * updated particle lighting
+
+---
+ base/ufos/ptl_explosions.ufo |   11 +++++++
+ base/ufos/ptl_misc.ufo       |   22 +++++++------
+ base/ufos/ptl_weaponsfx.ufo  |   66 ++++++++++++++++++++++++++----------------
+ 3 files changed, 64 insertions(+), 35 deletions(-)
+
+diff --git a/base/ufos/ptl_explosions.ufo b/base/ufos/ptl_explosions.ufo
+index 5baf4e5..556ac1a 100644
+--- a/base/ufos/ptl_explosions.ufo
++++ b/base/ufos/ptl_explosions.ufo
+@@ -58,6 +58,8 @@ particle explosionDebrisBurn
+		v      "0 0 0"
+		size   "10 10"
+		tps    4
++		lightcolor "2.0 1.5 0.5"
++		lightintensity 0.1
+	}
+	run
+	{
+@@ -204,6 +206,9 @@ particle explosionFireFlame
+		rand   float 0.6
+		add    float 0.8
+		pop    *tps
++
++		lightcolor "3.0 1.5 0.5"
++		lightintensity 0.2
+	}
+	run
+	{
+@@ -236,6 +241,9 @@ particle explosionFireBurn
+		rand   float 0.5
+		add    float 1.0
+		pop    *tps
++		lightcolor "3.0 1.5 0.5"
++		lightintensity 0.2
++
+	}
+	run
+	{
+@@ -324,6 +332,9 @@ particle explosionFlash
+		tps		10
+		v			"0 0 0"
+		life		0.3
++
++		lightcolor "0 0.0 0.0"
++		lightintensity 0.2
+	}
+	think { kill }
+ }
+diff --git a/base/ufos/ptl_misc.ufo b/base/ufos/ptl_misc.ufo
+index c49545b..6a8d13c 100644
+--- a/base/ufos/ptl_misc.ufo
++++ b/base/ufos/ptl_misc.ufo
+@@ -33,9 +33,6 @@ particle frag_explosion
+		spawn  explosion_2
+		push	int 10
+		nspawn	smoketrail
+-
+-		lightcolor "0.4 0.4 1.0"
+-		lightintensity 0.1
+		// lightsustain 1.0
+		kill
+	}
+@@ -169,7 +166,8 @@ particle pexplosionFlame
+		add    float 1
+		pop    *tps
+
+-		lightcolor "0.3 0.2 0.07"
++		lightcolor "0.5 3.0 0.5"
++		lightintensity 0.3
+	}
+	think { kill }
+ }
+@@ -198,7 +196,8 @@ particle pexplosionVolumetric
+		add    float 1.5
+		pop    *tps
+
+-		lightcolor "0.3 0.2 0.07"
++		lightcolor "0.5 3.0 0.5"
++		lightintensity 0.3
+	}
+	think { kill }
+ }
+@@ -230,6 +229,8 @@ particle firetrail
+		a		"0 0 -100"
+		tps		10.0
+		life	1
++		lightcolor "3.0 1.5 0.5"
++		lightintensity 0.3
+		physics true
+		bounce true
+	}
+@@ -325,7 +326,8 @@ particle explosionFlame
+		add    float 1.0
+		pop    *tps
+
+-		lightcolor "0.3 0.2 0.07"
++		lightcolor "1 0.4 0.4"
++		lightintensity 0.1
+	}
+	think { kill }
+ }
+@@ -353,7 +355,8 @@ particle explosionFlame2
+		add    float 1.5
+		pop    *tps
+
+-		lightcolor "0.3 0.2 0.07"
++		lightcolor "1 0.4 0.4"
++		lightintensity 0.1
+	}
+	think { kill }
+ }
+@@ -381,7 +384,8 @@ particle explosionVolumetric
+		add    float 1.2
+		pop    *tps
+
+-		lightcolor "0.3 0.2 0.07"
++		lightcolor "1 0.4 0.4"
++		lightintensity 0.1
+	}
+	think { kill }
+ }
+@@ -408,8 +412,6 @@ particle explosionVolumetric2
+		rand   float 1.5
+		add    float 1.5
+		pop    *tps
+-
+-		lightcolor "0.3 0.2 0.07"
+	}
+	think { kill }
+ }
+diff --git a/base/ufos/ptl_weaponsfx.ufo b/base/ufos/ptl_weaponsfx.ufo
+index 6deb436..6edc447 100644
+--- a/base/ufos/ptl_weaponsfx.ufo
++++ b/base/ufos/ptl_weaponsfx.ufo
+@@ -31,6 +31,8 @@ particle bolter
+		blend  add
+		offset "0 -16 0"
+		size   "30 15"
++		lightcolor "1 1 1"
++		lightintensity 0.2
+	}
+	think
+	{
+@@ -155,6 +157,8 @@ particle bullet
+ //		child  muzzle_rifle
+		child  muzzle_rifle_2D
+		size   "40 40"
++		lightcolor "0.5 0.3 0.2"
++		lightintensity 0.2
+	}
+ }
+
+@@ -169,6 +173,8 @@ particle bullet-smg
+		offset "0 -16 0"
+		child  muzzle_gun
+		size   "20 40"
++		lightcolor "0.5 0.3 0.2"
++		lightintensity 0.2
+	}
+ }
+
+@@ -183,6 +189,8 @@ particle bullet-hmg
+		offset "0 -16 0"
+		child  muzzle_hmg
+		size   "40 40"
++		lightcolor "0.5 0.3 0.2"
++		lightintensity 0.2
+	}
+ }
+
+@@ -196,6 +204,8 @@ particle bullet-shotgun
+		blend  add
+		offset "0 -16 0"
+		size   "30 40"
++		lightcolor "0.5 0.3 0.2"
++		lightintensity 0.2
+	}
+ }
+
+@@ -210,6 +220,8 @@ particle bullet_sniper
+		offset "0 -16 0"
+		child  muzzle_sniper
+		size   "70 40"
++		lightcolor "0.5 0.3 0.2"
++		lightintensity 0.2
+	}
+ }
+
+@@ -301,6 +313,8 @@ particle flameThrower
+	init
+	{
+		spawn	fireBall
++		lightcolor "1 0.4 0.4"
++		lightintensity 0.1
+	}
+ }
+
+@@ -312,8 +326,6 @@ particle fireBall
+		image  sfx/explosions/explosion
+		blend  add
+		thinkfade out
+-		lightcolor "1 0.4 0.4"
+-		lightintensity 0.1
+		style  facing
+		tps    1
+	}
+@@ -420,6 +432,8 @@ particle rocketFire
+		v      "0 0 0"
+		size   "15 15"
+		tps    4
++		lightcolor "3.0 1.0 0.2"
++		lightintensity 0.3
+	}
+	run
+	{
+@@ -790,10 +804,10 @@ particle plasmaMiniPulse
+		image  sfx/weapons/plasmapulse
+		blend  add
+		style  axis
+-		child  plasmaMiniPulseBall
++//		child  plasmaMiniPulseBall
+		offset "0 -16 0"
+		spawn muzzle_plasma
+-		lightcolor "0 0.8 0.4"
++		lightcolor "0 0.5 1.5"
+		lightintensity 0.1
+	}
+	run
+@@ -850,8 +864,8 @@ particle plasmaMiniPulseBall
+		offset "0 0 0"
+		color  "1 1 1 0.5"
+		size   "8 8"
+-		lightcolor "0.3 1.0 3.0"
+-		lightintensity 0.2
++		lightcolor "0.3 0.3 3.0"
++		lightintensity 0.1
+	}
+ }
+
+@@ -863,10 +877,10 @@ particle plasmaPulse
+		blend  add
+		style  axis
+		offset "0 0 0"
+-		child plasmaPulseBall
++//		child plasmaPulseBall
+		spawn muzzle_plasma
+-		lightcolor "0 0.8 0.4"
+-		lightintensity 0.1
++		lightcolor "0 1.0 3.0"
++		lightintensity 0.2
+	}
+	run
+	{
+@@ -1001,6 +1015,8 @@ particle plasmaBigBall
+		tps    60
+		child plasmaBallCore
+		spawn muzzle_plasma
++		lightcolor "0 1.0 3.0"
++		lightintensity 0.2
+	}
+	think
+	{
+@@ -1893,8 +1909,6 @@ particle muzzle_gun
+		spawn  muzzle_gun_front
+ //		spawn  muzzle_gun_side
+ //		spawn  shell
+-		lightcolor "0.4 0.4 1.0"
+-		lightintensity 0.1
+		kill
+	}
+ }
+@@ -1911,6 +1925,8 @@ particle muzzle_gun_front
+		life   0.04
+		tps    1
+		size   "20 18"
++		lightcolor "3.0 1.5 0.5"
++		lightintensity 0.1
+	}
+	think { kill }
+ }
+@@ -1939,8 +1955,6 @@ particle muzzle_rifle
+		spawn  muzzle_rifle_front
+ //		spawn  muzzle_side
+ //		spawn  shell
+-		lightcolor "0.4 0.4 1.0"
+-		lightintensity 0.1
+		kill
+	}
+ }
+@@ -1953,8 +1967,6 @@ particle muzzle_rifle_2D
+	{
+		spawn  muzzle_round
+		spawn  muzzle_rifle_front
+-		lightcolor "0.4 0.4 1.0"
+-		lightintensity 0.1
+		kill
+	}
+ }
+@@ -1970,6 +1982,8 @@ particle muzzle_round
+		life   0.07
+		tps    1
+		size   "10 10"
++		lightcolor "3.0 1.5 0.5"
++		lightintensity 0.1
+	}
+	think { kill }
+ }
+@@ -2013,8 +2027,6 @@ particle muzzle_hmg
+ //		spawn  muzzle_hmg_side
+ //		spawn  shell
+		push   int 2
+-		lightcolor "1 0.5 0"
+-		lightintensity 0.3
+		kill
+	}
+ }
+@@ -2030,6 +2042,8 @@ particle muzzle_hmg_front
+		life   0.07
+		tps    1
+		size   "20 20"
++		lightcolor "3.0 1.5 0.5"
++		lightintensity 0.1
+	}
+	think { kill }
+ }
+@@ -2058,8 +2072,6 @@ particle muzzle_sniper
+		spawn  muzzle_sniper_1
+		spawn  muzzle_sniper_glow
+ //		spawn  shell-sniper
+-		lightcolor "0.4 0.4 1.0"
+-		lightintensity 0.1
+		kill
+	}
+ }
+@@ -2076,6 +2088,8 @@ particle muzzle_sniper_1
+		tps    1
+		size   "20 20"
+		offset "5 0 0"
++		lightcolor "2.0 1.5 0.5"
++		lightintensity 0.2
+	}
+	run
+	{
+@@ -2120,8 +2134,6 @@ particle muzzle_laser
+		push   int 2
+ //		spawn  muzzle_laser_side
+		push   int 2
+-		lightcolor "0.4 0.4 1.0"
+-		lightintensity 0.1
+		kill
+	}
+ }
+@@ -2139,6 +2151,8 @@ particle muzzle_laser_round
+		size   "30 30"
+		offset "0 0 0"
+		v      "0 0 0"
++		lightcolor "2.0 1.0 0.5"
++		lightintensity 0.2
+	}
+	run
+	{
+@@ -2179,8 +2193,6 @@ particle muzzle_plasma
+		push   int 2
+		spawn  muzzle_plasma_spiral
+		push   int 2
+-		lightcolor "0.4 0.4 1.0"
+-		lightintensity 0.1
+		kill
+	}
+ }
+@@ -2198,6 +2210,8 @@ particle muzzle_plasma_round
+		size   "30 30"
+		offset "0 0 0"
+		v      "0 0 0"
++		lightcolor "0 1.0 3.0"
++		lightintensity 0.2
+	}
+	run
+	{
+@@ -2266,8 +2280,6 @@ particle muzzle_ptl
+		push   int 2
+		spawn  muzzle_ptl_cross
+		push   int 2
+-		lightcolor "0.4 0.4 1.0"
+-		lightintensity 0.1
+		kill
+	}
+ }
+@@ -2303,6 +2315,8 @@ particle muzzle_ptl_cross
+		offset "0 0 0"
+		v      "0 0 0"
+		angles "0 90 0"
++		lightcolor "0 3.0 1.0"
++		lightintensity 0.2
+	}
+	run
+	{
+@@ -2338,6 +2352,8 @@ particle rocket_muzzle
+		pop    *s			// write it back into the particle structure and remove from stack
+		tps    1.0			// think per seconds to 1
+
++		lightcolor "3.0 1.5 0.5"
++		lightintensity 0.3
+		push   int 20		// push 20 to the stack
+		nspawn rocket_muzzle_smoke	// use the 20 from stack and spawn that many particles
+		push   int 20		// push 20 to the stack
+--
+1.7.1
