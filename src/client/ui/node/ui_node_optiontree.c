@@ -353,6 +353,12 @@ static void UI_OptionTreeSetSelectedValue (uiNode_t *node, const uiCallContext_t
 	}
 }
 
+static void UI_OptionTreeNodeDoLayout (uiNode_t *node)
+{
+	UI_OptionTreeNodeUpdateCache(node);
+	node->invalidated = qfalse;
+}
+
 static const value_t properties[] = {
 	/* Call it to toggle the node status. */
 	{"setselectedvalue", V_UI_NODEMETHOD, ((size_t) UI_OptionTreeSetSelectedValue), 0},
@@ -369,6 +375,7 @@ void UI_RegisterOptionTreeNode (uiBehaviour_t *behaviour)
 	behaviour->scroll = UI_OptionTreeNodeMouseWheel;
 	behaviour->loading = UI_OptionTreeNodeLoading;
 	behaviour->loaded = UI_OptionTreeNodeLoaded;
+	behaviour->doLayout = UI_OptionTreeNodeDoLayout;
 	behaviour->properties = properties;
 	behaviour->drawItselfChild = qtrue;
 }
