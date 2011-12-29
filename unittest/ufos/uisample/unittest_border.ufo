@@ -1,0 +1,150 @@
+window unittest_border
+{
+	{
+		pos "100 100"
+		size "400 300"
+		dragbutton	true
+		closebutton	true
+		string		"_Unittest border"
+		bgcolor		"0 0 0 1"
+	}
+
+	panel panel1_empty {
+		pos "20 50"
+		size "50 50"
+		border		1
+		bordercolor "0 1 0 1"
+		bgcolor		"0.1 0.1 0.1 1"
+	}
+
+	string string1 {
+		pos "80 50"
+		size "50 50"
+		border		1
+		bordercolor "0 1 0 1"
+		bgcolor		"0.1 0.1 0.1 1"
+	}
+
+	string image1 {
+		pos "140 50"
+		size "50 50"
+		border		1
+		bordercolor "0 1 0 1"
+		bgcolor		"0.1 0.1 0.1 1"
+	}
+
+	panel panel12 {
+		{
+			pos "200 50"
+			size "50 50"
+		}
+		panel panel_ {
+			pos "0 0"
+			size "50 50"
+			border		1
+			bordercolor "1 0 0 1"
+			bgcolor		"0.1 0.1 0.1 1"
+		}
+	}
+
+	panel panel1_full {
+		{
+			pos "260 50"
+			size "50 50"
+			border		1
+			bordercolor "0 1 0 1"
+			bgcolor		"0.1 0.1 0.1 1"
+		}
+		image thing { pos "10 10" size "10 10"}
+	}
+
+	panel panel1_bigger {
+		{
+			pos "310 40"
+			size "70 70"
+		}
+		panel panel_ {
+			pos "10 10"
+			size "50 50"
+			border		1
+			bordercolor "0 1 0 1"
+			bgcolor		"0.1 0.1 0.1 1"
+		}
+	}
+
+	panel panel2_empty {
+		pos "20 110"
+		size "50 50"
+		border		2
+		bordercolor "0 1 0 1"
+		bgcolor		"0.1 0.1 0.1 1"
+	}
+
+	string string2 {
+		pos "80 110"
+		size "50 50"
+		border		2
+		bordercolor "0 1 0 1"
+		bgcolor		"0.1 0.1 0.1 1"
+	}
+
+	string image2 {
+		pos "140 110"
+		size "50 50"
+		border		2
+		bordercolor "0 1 0 1"
+		bgcolor		"0.1 0.1 0.1 1"
+	}
+
+	panel panel22 {
+		{
+			pos "200 110"
+			size "50 50"
+		}
+		panel panel_ {
+			pos "0 0"
+			size "50 50"
+			border		2
+			bordercolor "1 0 0 1"
+			bgcolor		"0.1 0.1 0.1 1"
+		}
+	}
+
+	panel panel2_full {
+		{
+			pos "260 110"
+			size "50 50"
+			border		2
+			bordercolor "0 1 0 1"
+			bgcolor		"0.1 0.1 0.1 1"
+		}
+		image thing { pos "10 10" size "10 10"}
+	}
+
+	panel panel2_bigger {
+		{
+			pos "310 100"
+			size "70 70"
+		}
+		panel panel_ {
+			pos "10 10"
+			size "50 50"
+			border		2
+			bordercolor "0 1 0 1"
+			bgcolor		"0.1 0.1 0.1 1"
+		}
+	}
+
+	string comment {
+		pos "20 180"
+		size "400 20"
+		string "Each element of a row should be drawn identically."
+	}
+
+	string comment2 {
+		pos "20 200"
+		size "400 20"
+		string "Red things are know bugs."
+	}
+
+}
