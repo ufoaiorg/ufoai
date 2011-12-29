@@ -122,6 +122,7 @@ static void testMapDefsMassRMA (void)
 						Cvar_Set("rm_ufo", Com_GetRandomMapAssemblyNameForCraft(ufo));
 
 					for (i = 0; i < 50; i++) {
+						const char *ass = NULL;
 						srand(i);
 						time = Sys_Milliseconds();
 						Com_Printf("Seed: %i\n", i);
@@ -160,7 +161,13 @@ static void testMapDefsMassRMA (void)
 						if (skip)
 							continue;
 
-						randomMap = SV_AssembleMap(p, md->param, mapStr, posStr, i);
+						/* for ufocrash map, the ufoname is the assemblyame */
+						if (!strcmp(p, "ufocrash"))
+							ass = Com_GetRandomMapAssemblyNameForCraft(ufo);
+						else
+							ass = md->param;
+
+						randomMap = SV_AssembleMap(p, ass, mapStr, posStr, i);
 						CU_ASSERT(randomMap != NULL);
 						time = (Sys_Milliseconds() - time);
 						CU_ASSERT(time < 30000);
