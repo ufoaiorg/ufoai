@@ -145,7 +145,7 @@ static void testMapDefsMassRMA (void)
 							{ 12, "forest",   "large",      "craft_drop_firebird", "craft_ufo_harvester" },
 							{ 16, "forest",   "large",      "craft_drop_raptor",   "craft_ufo_harvester" },
 							{ 12, "forest",   "large",      "craft_drop_herakles", "craft_ufo_harvester" },
-							{ -1, "ufocrash", 0,            0,                     0                     },
+						//	{ -1, "ufocrash", 0,            0,                     0                     },
 						};
 
 						qboolean skip = qfalse;
@@ -163,7 +163,7 @@ static void testMapDefsMassRMA (void)
 
 						/* for ufocrash map, the ufoname is the assemblyame */
 						if (!strcmp(p, "ufocrash"))
-							ass = Com_GetRandomMapAssemblyNameForCraft(ufo);
+							ass = Com_GetRandomMapAssemblyNameForCraft(ufo) + 1;	/* +1 = get rid of the '+' */
 						else
 							ass = md->param;
 
