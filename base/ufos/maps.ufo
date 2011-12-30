@@ -590,8 +590,6 @@ mapdef farm2
 	}
 }
 
-
-
 ////////////////////////
 // FOREST RANDOM MAPS //
 ////////////////////////
@@ -3466,6 +3464,12 @@ mapdef lake_ice_big
 	{
 		craft_drop_firebird
 	}
+
+	ufos
+	{
+		craft_ufo_fighter
+	}
+
 	terrains
 	{
 		cold
@@ -3881,7 +3885,7 @@ mapdef scout_crash
 	}
 }
 
-// SMALL HOUSE MAP //
+// SMALL_HOUSE MAP //
 
 mapdef small_house
 {
