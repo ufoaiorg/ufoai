@@ -36,6 +36,7 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 
 cvar_t *cl_le_debug;
 cvar_t *cl_trace_debug;
+cvar_t* cl_map_draw_rescue_zone;
 
 /*===========================================================================
 Local Model (LM) handling
@@ -942,16 +943,45 @@ qboolean LE_BrushModelAction (le_t * le, entity_t * ent)
 		/**
 		 * @todo RF_BOX is not the best to render this
 		 */
+		float x, y, xmax, ymax;
+		int drawFlags = 0;
+		if(cl_map_draw_rescue_zone)
+			drawFlags = cl_map_draw_rescue_zone->integer;
+
 		ent->flags = RF_BOX;
-		enum { PULSATE_RATE = 6000 };
-		ent->alpha = abs((Sys_Milliseconds() % PULSATE_RATE) - (PULSATE_RATE / 2)) * (0.5f / (PULSATE_RATE / 2));
+		enum { PULSATE_RATE = 6000, DRAW_TEXTURE = 0x1, DRAW_CIRCLES = 0x2 };
+		ent->alpha = abs((cls.realtime % PULSATE_RATE) - (PULSATE_RATE / 2)) * (0.5f / (PULSATE_RATE / 2));
 		ent->model = NULL;
-		if( ent->deathTexture == NULL ) {
+		VectorSet(ent->color, 0.5, 1, 0);
+		if( drawFlags & DRAW_TEXTURE && ent->deathTexture == NULL ) {
 			ent->deathTexture = R_FindPics("sfx/misc/rescue");
+			VectorSet(ent->color, 1, 1, 1);
 		}
 		VectorCopy(le->mins, ent->mins);
 		VectorCopy(le->maxs, ent->maxs);
-		VectorSet(ent->color, 1, 1, 0);
+
+		if( ! (drawFlags & DRAW_CIRCLES) )
+			break;
+
+		/* There should be an easier way than calculating the grid coords back from the world coords */
+		xmax = roundf(le->maxs[0]/UNIT_SIZE)*UNIT_SIZE - 0.1f;
+		for(x = roundf(le->mins[0]/UNIT_SIZE)*UNIT_SIZE; x < xmax; x += UNIT_SIZE) {
+			ymax = roundf(le->maxs[1]/UNIT_SIZE)*UNIT_SIZE - 0.1f;
+			for(y = roundf(le->mins[1]/UNIT_SIZE)*UNIT_SIZE; y < ymax; y += UNIT_SIZE) {
+				entity_t circle;
+				vec3_t pos = {x + UNIT_SIZE/4, y + UNIT_SIZE/4, le->mins[2]};
+
+				OBJZERO(circle);
+				circle.flags = RF_PATH;
+				VectorCopy(pos, circle.origin);
+				circle.oldorigin[0] = circle.oldorigin[1] = circle.oldorigin[2] = UNIT_SIZE/2;
+				VectorSet(circle.color, 0.5f, 1, 0);
+				circle.alpha = ent->alpha;
+
+				R_AddEntity(&circle);
+			}
+		}
+
 		break;
 	}
 	default:
