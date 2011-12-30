@@ -4705,7 +4705,9 @@ base/textures/tex_buildings/wall040.jpg | GNU General Public License 2.0 | Werne
 base/textures/tex_buildings/wall041.png | GNU General Public License 2.0 | OpenArena (ns_brick1.tga)
 base/textures/tex_buildings/wall042.png | GNU General Public License 2.0 | OpenArena (ns_brick2.tga)
 base/textures/tex_buildings/wall043.png | GNU General Public License 2.0 | Nexuiz GPLed Data (bricks01.tga)
+base/textures/tex_buildings/wall043_nm.png | GNU General Public License 2.0 | MCR | Nexuiz GPLed Data (bricks01.tga)
 base/textures/tex_buildings/wall044.png | GNU General Public License 2.0 | Nexuiz GPLed Data (bricks02.tga)
+base/textures/tex_buildings/wall044_nm.png | GNU General Public License 2.0 | Nexuiz GPLed Data (bricks02.tga)
 base/textures/tex_buildings/wall5_4.jpg | GNU General Public License 2.0 | Nexuiz GPLed Data
 base/textures/tex_buildings/wall_dirt1.png | Creative Commons Attribution-Share Alike 3.0 | hullbr3ach
 base/textures/tex_buildings/wall_dirt2.png | Creative Commons Attribution-Share Alike 3.0 | hullbr3ach
