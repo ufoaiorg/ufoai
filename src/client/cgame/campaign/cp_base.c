@@ -870,8 +870,6 @@ qboolean B_BuildingDestroy (building_t* building)
 		}
 	}
 
-	Cmd_ExecuteString("base_init");
-
 	/* call ondisable trigger only if building is not under construction
 	 * (we do that after base capacity has been updated) */
 	if (runDisableCommand) {
@@ -880,6 +878,8 @@ qboolean B_BuildingDestroy (building_t* building)
 	}
 	if (B_FireEvent(buildingTemplate, base, B_ONDESTROY))
 		Com_DPrintf(DEBUG_CLIENT, "B_BuildingDestroy: %s %i %i;\n",	buildingTemplate->onDestroy, base->idx, buildingType);
+
+	Cmd_ExecuteString("base_init");
 
 	return qtrue;
 }
