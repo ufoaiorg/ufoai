@@ -616,9 +616,32 @@ component panel trListEntry
 			selectcolor	"0 .78 0 1"
 			lineHeight	18
 
+			// event mimic missing dynamic nodesize feature
 			onViewchange	{
 				*node:this@height = ((<fullsize> * <lineHeight>) + (<padding> * 2))
 				*node:parent@height = (((<fullsize> * <lineHeight>) + (<padding> * 2)) + <top>)
+			}
+
+			// events mimic "ghost-wheel" functionality
+			onWheelUp {
+				*cvar:wheelpos = (*node:root.tr_list@viewpos - 1)
+				if (*cvar:wheelpos < 0) {
+					*cvar:wheelpos = 0
+				}
+
+				*node:root.tr_list@viewpos = <cvar:wheelpos>
+				*node:root.tr_list_scroll@current = <cvar:wheelpos>
+				delete *cvar:wheelpos
+			}
+			onWheelDown {
+				*cvar:wheelpos = (*node:root.tr_list@viewpos + 1)
+				if (*cvar:wheelpos > (*node:root.tr_list@fullsize - *node:root.tr_list@viewsize)) {
+					*cvar:wheelpos = (*node:root.tr_list@fullsize - *node:root.tr_list@viewsize)
+				}
+
+				*node:root.tr_list@viewpos = <cvar:wheelpos>
+				*node:root.tr_list_scroll@current = <cvar:wheelpos>
+				delete *cvar:wheelpos
 			}
 		}
 	}
