@@ -1206,7 +1206,7 @@ window hud_mini extends hud
 		}
 		image minihud_bt_help
 		{
-			tooltip		"_LMB:Show/RMB:Hide Keyinfo/General Help"
+			tooltip		"_LMB:Show/RMB:Hide Keyinfo/General Help\nKey:F4"
 			src			"minihud/bt_help"
 			mousefx		true
 			pos			"162 472"
@@ -1392,7 +1392,7 @@ window hud_mini extends hud
 
 		image minihud_bt_use_headgear
 		{
-			tooltip		"_Use headgear"
+			tooltip		"_Use Headgear"
 			src		"althud/buttons_althud1g"
 			mousefx		true
 			pos			"192 433"
@@ -1438,13 +1438,15 @@ window hud_mini extends hud
 
 		// easy hand switch
 
-		panel easy_hand_switch
+		button easy_hand_switch
 		{
 			pos			"114 340"
 			size		"125 80"
 			onRClick	{ call *node:root.right.show_rightweapon cmd "hud_switchfiremodelist firemode_listener r;" }
 			onClick		{ call *node:root.right.show_leftweapon cmd "hud_switchfiremodelist firemode_listener l;" }
-			tooltip		"_LMB:Left Hand/RMB:Right Hand"
+			onWheelUp	{ call *node:root.right.show_rightweapon cmd "hud_switchfiremodelist firemode_listener r;" }
+			onWheelDown	{ call *node:root.right.show_leftweapon cmd "hud_switchfiremodelist firemode_listener l;" }
+			tooltip		"_LMB/Wheel Down:Left Hand\nRMB/Wheel Up:Right Hand"
 		}
 
 		// weapon container
@@ -1453,11 +1455,13 @@ window hud_mini extends hud
 		{
 			pos			"114 340"
 			onRClick	{ cmd "hud_reloadright;" }
+			onWheelDown	{ call *node:root.right.show_leftweapon cmd "hud_switchfiremodelist firemode_listener l;" }
 		}
 		container left
 		{
 			pos			"114 340"
 			onRClick	{ cmd "hud_reloadleft;" }
+			onWheelUp	{ call *node:root.right.show_rightweapon cmd "hud_switchfiremodelist firemode_listener r;" }
 		}
 
 		// ammo
@@ -1476,8 +1480,9 @@ window hud_mini extends hud
 			font		"f_small"
 			pos			"117 401"
 			size		"40 20"
-			tooltip		"LMB:Reload"
+			tooltip		"_LMB:Reload\nWheel Down:Left Hand"
 			onClick		{ cmd "hud_reloadright;" }
+			onWheelDown	{ call *node:root.right.show_leftweapon cmd "hud_switchfiremodelist firemode_listener l;" }
 		}
 		string ammoleft_shadow
 		{
@@ -1493,8 +1498,9 @@ window hud_mini extends hud
 			font		"f_small"
 			pos			"117 401"
 			size		"40 20"
-			tooltip		"LMB:Reload"
+			tooltip		"_LMB:Reload\nWheel Up:Right Hand"
 			onClick		{ cmd "hud_reloadleft;" }
+			onWheelUp	{ call *node:root.right.show_rightweapon cmd "hud_switchfiremodelist firemode_listener r;" }
 		}
 
 		func show_rightweapon
@@ -1566,19 +1572,6 @@ window hud_mini extends hud
 		size		"64 64"
 	}
 
-	image button_chat
-	{
-		visiblewhen	"*cvar:sv_maxclients >= 2"
-		tooltip		"_Chat messages"
-		src			"hud/event_log"
-		pos			"985 560"
-		texl		"0 0"
-		texh		"32 36"
-		onClick {
-			cmd "ui_push hud_chat;"
-		}
-	}
-
 	image bar_chat_bg
 	{
 		src			"althud/bar_chat"
@@ -1589,7 +1582,7 @@ window hud_mini extends hud
 	image button_chat
 	{
 		visiblewhen	"*cvar:sv_maxclients >= 2"
-		tooltip		"_Chat messages"
+		tooltip		"_Chat Messages"
 		src			"hud/event_log"
 		pos			"8 560"
 		texl		"0 0"
