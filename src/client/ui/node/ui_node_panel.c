@@ -487,6 +487,33 @@ static void UI_PanelPropertyChanged (uiNode_t *node, const value_t *property)
 }
 
 /**
+ * @brief Handle mouse wheel scrolling
+ * @param[in, out] node UI node to scroll
+ * @param[in] deltaX horizontal scrolling value (not used)
+ * @param[in] deltaX vertical scrolling value
+ */
+static void UI_PanelNodeMouseWheel (uiNode_t *node, int deltaX, int deltaY)
+{
+	qboolean down = deltaY > 0;
+	qboolean updated;
+
+	if (!EXTRADATA(node).wheelScrollable || deltaY == 0)
+		return;
+
+	updated = UI_SetScroll(&EXTRADATA(node).super.scrollY, EXTRADATA(node).super.scrollY.viewPos + (down ? 1 : -1), -1, -1);
+
+	if (EXTRADATA(node).super.onViewChange && updated)
+		UI_ExecuteEventActions(node, EXTRADATA(node).super.onViewChange);
+
+	if (node->onWheelUp && !down)
+		UI_ExecuteEventActions(node, node->onWheelUp);
+	if (node->onWheelDown && down)
+		UI_ExecuteEventActions(node, node->onWheelDown);
+	if (node->onWheel)
+		UI_ExecuteEventActions(node, node->onWheel);
+}
+
+/**
  * @brief Valid properties for a panel node
  */
 static const value_t properties[] = {
@@ -512,6 +539,10 @@ static const value_t properties[] = {
 	 * Number of column use to layout children (used with LAYOUT_COLUMN)
 	 */
 	{"layoutColumns", V_INT, UI_EXTRADATA_OFFSETOF(panelExtraData_t, layoutColumns), MEMBER_SIZEOF(panelExtraData_t, layoutColumns)},
+	/**
+	 * If scrolling via mousewheel is enabled
+	 */
+	{"wheelscrollable", V_BOOL, UI_EXTRADATA_OFFSETOF(panelExtraData_t, wheelScrollable), MEMBER_SIZEOF(panelExtraData_t, wheelScrollable)},
 
 	{NULL, V_NULL, 0, 0}
 };
@@ -528,6 +559,7 @@ void UI_RegisterPanelNode (uiBehaviour_t *behaviour)
 	behaviour->doLayout = UI_PanelNodeDoLayout;
 	behaviour->getClientPosition = UI_PanelNodeGetClientPosition;
 	behaviour->propertyChanged = UI_PanelPropertyChanged;
+	behaviour->scroll = UI_PanelNodeMouseWheel;
 
 	/* @todo find a good place for this kind of initialization */
 	propertyLayoutColumns = UI_GetPropertyFromBehaviour(behaviour, "layoutColumns");

@@ -94,9 +94,10 @@ typedef enum {
  */
 typedef struct {
 	abstractScrollableExtraData_t super;
-	panelLayout_t layout;	/**< The layout manager the panel is using to render all its children */
-	int layoutMargin;		/**< The margin between all children nodes of the panel */
-	int layoutColumns;		/**< The number of columns (only used by LAYOUT_COLUMN)  */
+	panelLayout_t layout;		/**< The layout manager the panel is using to render all its children */
+	int layoutMargin;			/**< The margin between all children nodes of the panel */
+	int layoutColumns;			/**< The number of columns (only used by LAYOUT_COLUMN)  */
+	qboolean wheelScrollable;	/**< If scrolling with mouse wheel is enabled */
 } panelExtraData_t;
 
 void UI_RegisterPanelNode(struct uiBehaviour_s *behaviour);

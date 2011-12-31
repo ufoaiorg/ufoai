@@ -639,6 +639,7 @@ window popup_transferlist
 		pos			"20 60"
 		size		"477 380"
 		layout		LAYOUT_TOP_DOWN_FLOW
+		wheelscrollable	true
 
 		onViewChange	{
 			*node:parent.tr_list_scroll@fullsize = <fullsize>
