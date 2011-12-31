@@ -865,26 +865,6 @@ window hud_alt extends hud
 	{
 		visiblewhen	"*cvar:sv_maxclients >= 2"
 		src			"althud/bar_chat"
-		pos			"977 552"
-		size		"64 64"
-	}
-
-	image button_chat
-	{
-		visiblewhen	"*cvar:sv_maxclients >= 2"
-		tooltip		"_Chat messages"
-		src			"hud/event_log"
-		pos			"985 560"
-		texl		"0 0"
-		texh		"32 36"
-		onClick {
-			cmd "ui_push hud_chat;"
-		}
-	}
-
-	image bar_chat_bg
-	{
-		src			"althud/bar_chat"
 		pos			"0 552"
 		size		"64 64"
 	}
