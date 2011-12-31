@@ -851,3 +851,17 @@
 "classname" "info_human_start"
 "origin" "624 624 32"
 }
+// entity 14
+{
+"classname" "trigger_rescue"
+"team" "1"
+// brush 0
+{
+( 704 320 64 ) ( 576 320 64 ) ( 704 480 64 ) tex_common/trigger 0 0 0 0.25 0.25 0 0 0
+( 768 320 96 ) ( 768 480 96 ) ( 768 320 0 ) tex_common/trigger 0 0 0 0.25 0.25 0 0 0
+( 704 288 64 ) ( 704 288 -32 ) ( 576 288 64 ) tex_common/trigger 0 0 0 0.25 0.25 0 0 0
+( 576 480 0 ) ( 576 320 0 ) ( 704 480 0 ) tex_common/trigger 0 0 0 0.25 0.25 0 0 0
+( 576 480 0 ) ( 576 480 96 ) ( 576 320 0 ) tex_common/trigger 0 0 0 0.25 0.25 0 0 0
+( 576 480 0 ) ( 704 480 0 ) ( 576 480 96 ) tex_common/trigger 0 0 0 0.25 0.25 0 0 0
+}
+}
