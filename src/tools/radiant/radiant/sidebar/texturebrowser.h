@@ -161,9 +161,9 @@ class TextureBrowser: public RegistryKeyObserver, public PreferenceConstructor, 
 		void registerCommands();
 
 		void setOriginY(int originy);
+		void createWidget();
 	private:
 
-		void createWidget();
 		void focus(const std::string& name);
 		void selectTextureAt(int mx, int my);
 		void queueDraw();

@@ -71,6 +71,7 @@
 
 #include "../../map/AutoSaver.h"
 #include "../../sidebar/sidebar.h"
+#include "../../sidebar/texturebrowser.h"
 #include "../../sidebar/surfaceinspector/surfaceinspector.h"
 #include "../../settings/PreferenceDialog.h"
 #include "../../render/OpenGLRenderSystem.h"
@@ -149,6 +150,8 @@ void Radiant_Initialise (void)
 	Radiant_Construct(GlobalRadiantModuleServer());
 
 	g_VFSModuleObserver.realise();
+	GlobalTextureBrowser().createWidget();
+
 	// Rebuild the map path basing on the userGamePath
 	std::string newMapPath = GlobalRadiant().getFullGamePath() + "maps/";
 	g_mkdir_with_parents(newMapPath.c_str(), 0755);
