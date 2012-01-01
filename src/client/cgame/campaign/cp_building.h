@@ -79,9 +79,9 @@ typedef struct building_s {
 	struct building_s *tpl;			/**< Self link in "buildingTemplates" list. */
 	struct base_s *base;			/**< The base this building is located in. */
 
-	char *id;
+	const char *id;
 	char *name;						/**< translatable name of the building */
-	char *image, *mapPart, *pedia;
+	const char *image, *mapPart, *pedia;
 
 	vec2_t	size;
 	int fixCosts, varCosts;
