@@ -33,11 +33,6 @@ public:
 	EntityList ();
 	~EntityList ();
 
-	/** greebo: Contains the static instance. Use this
-	 * 			to access the other members
-	 */
-	static EntityList& Instance ();
-
 	GtkWidget* getWidget () const;
 
 	const std::string getTitle () const;

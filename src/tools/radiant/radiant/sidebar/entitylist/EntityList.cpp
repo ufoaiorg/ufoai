@@ -75,12 +75,6 @@ void EntityList::selectionChanged (scene::Instance& instance, bool isComponent)
 	_callbackActive = false;
 }
 
-EntityList& EntityList::Instance ()
-{
-	static EntityList _instance;
-	return _instance;
-}
-
 GtkWidget* EntityList::getWidget () const
 {
 	return _widget;
