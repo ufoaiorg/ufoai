@@ -282,7 +282,6 @@ static void B_ResetBuildingCurrent_f (void)
 static void B_BaseInit_f (void)
 {
 	int i;
-	baseCapacities_t cap;
 	base_t *base = B_GetCurrentSelectedBase();
 
 	if (!base)
@@ -345,6 +344,7 @@ static void B_BaseInit_f (void)
 	UI_ExecuteConfunc("clear_bld_space");
 	for (i = 0; i < ccs.numBuildingTemplates; i++) {
 		const building_t* b = &ccs.buildingTemplates[i];
+		baseCapacities_t cap;
 
 		/* Check if building matches one of our four types */
 		if (b->buildingType != B_QUARTERS && b->buildingType != B_STORAGE && b->buildingType != B_WORKSHOP && b->buildingType != B_LAB && b->buildingType != B_ANTIMATTER)
