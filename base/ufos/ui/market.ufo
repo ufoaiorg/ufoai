@@ -571,4 +571,10 @@ window market extends objectinfo
 		}
 		delete *cvar:i
 	}
+
+	func onWindowClosed
+	{
+		// Call base_init so that storage data can be updated
+		cmd "base_init;"
+	}
 }

@@ -281,6 +281,8 @@ static void B_ResetBuildingCurrent_f (void)
  */
 static void B_BaseInit_f (void)
 {
+	int i;
+	baseCapacities_t cap;
 	base_t *base = B_GetCurrentSelectedBase();
 
 	if (!base)
@@ -335,6 +337,39 @@ static void B_BaseInit_f (void)
 		UI_ExecuteConfunc("update_basebutton hospital false \"%s\"", _("Treat wounded soldiers and perform implant surgery"));
 	else
 		UI_ExecuteConfunc("update_basebutton hospital true \"%s\"", va(_("No %s functional in base."), _("Hospital")));
+
+	/*
+	 * Gather data on current/max space for living quarters, storage, lab and workshop
+	 * clear_bld_space ensures 0/0 data for facilities which may not exist in base
+	 */
+	UI_ExecuteConfunc("clear_bld_space");
+	for (i = 0; i < ccs.numBuildingTemplates; i++) {
+		const building_t* b = &ccs.buildingTemplates[i];
+
+		/* Check if building matches one of our four types */
+		if (b->buildingType != B_QUARTERS && b->buildingType != B_STORAGE && b->buildingType != B_WORKSHOP && b->buildingType != B_LAB && b->buildingType != B_ANTIMATTER)
+			continue;
+
+		/* only show already researched buildings */
+		if (!RS_IsResearched_ptr(b->tech))
+			continue;
+
+		cap = B_GetCapacityFromBuildingType(b->buildingType);
+		if (cap == MAX_CAP)
+			continue;
+
+		if (!B_GetNumberOfBuildingsInBaseByBuildingType(base, b->buildingType))
+			continue;
+
+		UI_ExecuteConfunc(va("show_bld_space \"%s\" \"%s\" %i %i", _(b->name), b->id, CAP_GetCurrent(base, cap), CAP_GetMax(base, cap)));
+	}
+
+
+	/*
+	 * Get the number of different employees in the base
+	 * @TODO: Get the number of injured soldiers if hospital exists
+	 */
+	UI_ExecuteConfunc(va("current_employees %i %i %i", E_CountHired(base, EMPL_SOLDIER), E_CountHired(base, EMPL_SCIENTIST), E_CountHired(base, EMPL_WORKER)));
 }
 
 /**

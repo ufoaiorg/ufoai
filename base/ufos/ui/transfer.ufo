@@ -507,6 +507,9 @@ window transfer
 	func onWindowClosed
 	{
 		cmd "trans_close;"
+
+		// Call base_init so storage data can be updated
+		cmd "base_init;"
 	}
 }
 
