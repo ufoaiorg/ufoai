@@ -361,15 +361,14 @@ static void B_BaseInit_f (void)
 		if (!B_GetNumberOfBuildingsInBaseByBuildingType(base, b->buildingType))
 			continue;
 
-		UI_ExecuteConfunc(va("show_bld_space \"%s\" \"%s\" %i %i", _(b->name), b->id, CAP_GetCurrent(base, cap), CAP_GetMax(base, cap)));
+		UI_ExecuteConfunc("show_bld_space \"%s\" \"%s\" %i %i", _(b->name), b->id, CAP_GetCurrent(base, cap), CAP_GetMax(base, cap));
 	}
-
 
 	/*
 	 * Get the number of different employees in the base
 	 * @TODO: Get the number of injured soldiers if hospital exists
 	 */
-	UI_ExecuteConfunc(va("current_employees %i %i %i", E_CountHired(base, EMPL_SOLDIER), E_CountHired(base, EMPL_SCIENTIST), E_CountHired(base, EMPL_WORKER)));
+	UI_ExecuteConfunc("current_employees %i %i %i", E_CountHired(base, EMPL_SOLDIER), E_CountHired(base, EMPL_SCIENTIST), E_CountHired(base, EMPL_WORKER));
 }
 
 /**
