@@ -33,6 +33,7 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 
 #include "../ui_nodes.h"
 #include "../ui_parse.h"
+#include "../ui_property.h"
 #include "../ui_main.h"
 #include "../ui_actions.h"
 #include "../ui_render.h"
@@ -139,8 +140,10 @@ static const value_t properties[] = {
 	 */
 
 	/* Call it to toggle the node status. */
-	{"toggle", V_UI_NODEMETHOD, ((size_t) UI_CheckBoxNodeCallActivate), 0},
-	{NULL, V_NULL, 0, 0}
+	UI_INIT_METHOD_PROPERTY("toggle", V_UI_NODEMETHOD, UI_CheckBoxNodeCallActivate),
+
+	/* end of line */
+	UI_INIT_EMPTY_PROPERTY
 };
 
 void UI_RegisterCheckBoxNode (uiBehaviour_t *behaviour)

@@ -24,6 +24,7 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 
 #include "../ui_nodes.h"
 #include "../ui_parse.h"
+#include "../ui_property.h"
 #include "../ui_render.h"
 #include "ui_node_tbar.h"
 #include "ui_node_abstractvalue.h"
@@ -73,10 +74,12 @@ static void UI_TBarNodeDraw (uiNode_t *node)
 
 static const value_t properties[] = {
 	/* @todo Need documentation */
-	{"texh", V_POS, UI_EXTRADATA_OFFSETOF(tbarExtraData_t, texh), MEMBER_SIZEOF(tbarExtraData_t, texh)},
+	UI_INIT_EXTRADATA_PROPERTY("texh", V_POS, tbarExtraData_t, texh),
 	/* @todo Need documentation */
-	{"texl", V_POS, UI_EXTRADATA_OFFSETOF(tbarExtraData_t, texl), MEMBER_SIZEOF(tbarExtraData_t, texl)},
-	{NULL, V_NULL, 0, 0}
+	UI_INIT_EXTRADATA_PROPERTY("texl", V_POS, tbarExtraData_t, texl),
+
+	/* end of line */
+	UI_INIT_EMPTY_PROPERTY
 };
 
 void UI_RegisterTBarNode (uiBehaviour_t *behaviour)

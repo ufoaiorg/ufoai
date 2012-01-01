@@ -25,6 +25,7 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 
 #include "../ui_nodes.h"
 #include "../ui_parse.h"
+#include "../ui_property.h"
 #include "../ui_render.h"
 #include "ui_node_ekg.h"
 #include "ui_node_abstractnode.h"
@@ -110,11 +111,12 @@ static void UI_EKGNodeLoading (uiNode_t *node)
 
 static const value_t properties[] = {
 	/* @todo Need documentation */
-	{"scrollspeed", V_FLOAT, UI_EXTRADATA_OFFSETOF(ekgExtraData_t, scrollSpeed), MEMBER_SIZEOF(ekgExtraData_t, scrollSpeed)},
+	UI_INIT_EXTRADATA_PROPERTY("scrollspeed", V_FLOAT, ekgExtraData_t, scrollSpeed),
 	/* @todo Need documentation */
-	{"scale", V_FLOAT, UI_EXTRADATA_OFFSETOF(ekgExtraData_t, scaleCvarValue), MEMBER_SIZEOF(ekgExtraData_t, scaleCvarValue)},
+	UI_INIT_EXTRADATA_PROPERTY("scale", V_FLOAT, ekgExtraData_t, scaleCvarValue),
 
-	{NULL, V_NULL, 0, 0}
+	/* end of line */
+	UI_INIT_EMPTY_PROPERTY
 };
 
 void UI_RegisterEKGNode (uiBehaviour_t* behaviour)

@@ -530,7 +530,9 @@ static const value_t properties[] = {
 	 * @todo delete it went its possible (need to create a textlist...)
 	 */
 	{"mousefx", V_BOOL, UI_EXTRADATA_OFFSETOF(textExtraData_t, mousefx), MEMBER_SIZEOF(textExtraData_t, mousefx)},
-	{NULL, V_NULL, 0, 0}
+
+	/* end of line */
+	UI_INIT_EMPTY_PROPERTY
 };
 
 void UI_RegisterTextNode (uiBehaviour_t *behaviour)

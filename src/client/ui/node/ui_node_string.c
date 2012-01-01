@@ -41,6 +41,7 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #include "../ui_nodes.h"
 #include "../ui_font.h"
 #include "../ui_parse.h"
+#include "../ui_property.h"
 #include "../ui_tooltip.h"
 #include "../ui_render.h"
 #include "ui_node_string.h"
@@ -114,9 +115,10 @@ static const value_t properties[] = {
 	/* What to do with text lines longer than node width. Default is to wordwrap them to make multiple lines.
 	 * It can be LONGLINES_WRAP, LONGLINES_CHOP, LONGLINES_PRETTYCHOP
 	 */
-	{"longlines", V_INT, UI_EXTRADATA_OFFSETOF(EXTRADATA_TYPE, longlines), MEMBER_SIZEOF(EXTRADATA_TYPE, longlines)},
+	UI_INIT_EXTRADATA_PROPERTY("longlines", V_INT, EXTRADATA_TYPE, longlines),
 
-	{NULL, V_NULL, 0, 0}
+	/* end of line */
+	UI_INIT_EMPTY_PROPERTY
 };
 
 void UI_RegisterStringNode (uiBehaviour_t *behaviour)

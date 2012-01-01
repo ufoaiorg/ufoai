@@ -24,6 +24,7 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 
 #include "../ui_main.h"
 #include "../ui_parse.h"
+#include "../ui_property.h"
 #include "ui_node_abstractnode.h"
 #include "ui_node_option.h"
 
@@ -132,24 +133,25 @@ static const value_t properties[] = {
 	/**
 	 * Displayed text
 	 */
-	{"label", V_STRING, UI_EXTRADATA_OFFSETOF(EXTRADATA_TYPE, label), 0},
+	UI_INIT_NOSIZE_EXTRADATA_PROPERTY("label", V_STRING, EXTRADATA_TYPE, label),
 
 	/**
 	 * Value of the option
 	 */
-	{"value", V_STRING, UI_EXTRADATA_OFFSETOF(EXTRADATA_TYPE, value), 0},
+	UI_INIT_NOSIZE_EXTRADATA_PROPERTY("value", V_STRING, EXTRADATA_TYPE, value),
 
 	/**
 	 * If true, child are not displayed
 	 */
-	{"collapsed", V_BOOL, UI_EXTRADATA_OFFSETOF(EXTRADATA_TYPE, collapsed), MEMBER_SIZEOF(EXTRADATA_TYPE, collapsed)},
+	UI_INIT_EXTRADATA_PROPERTY("collapsed", V_BOOL, EXTRADATA_TYPE, collapsed),
 
 	/* Icon used to display the node
 	 */
-	{"icon", V_UI_SPRITEREF, UI_EXTRADATA_OFFSETOF(EXTRADATA_TYPE, icon), MEMBER_SIZEOF(EXTRADATA_TYPE, icon)},
-	{"flipicon", V_BOOL, UI_EXTRADATA_OFFSETOF(EXTRADATA_TYPE, flipIcon), MEMBER_SIZEOF(EXTRADATA_TYPE, flipIcon)},
+	UI_INIT_EXTRADATA_PROPERTY("icon", V_UI_SPRITEREF, EXTRADATA_TYPE, icon),
+	UI_INIT_EXTRADATA_PROPERTY("flipicon", V_BOOL, EXTRADATA_TYPE, flipIcon),
 
-	{NULL, V_NULL, 0, 0},
+	/* end of line */
+	UI_INIT_EMPTY_PROPERTY
 };
 
 void UI_RegisterOptionNode (uiBehaviour_t *behaviour)

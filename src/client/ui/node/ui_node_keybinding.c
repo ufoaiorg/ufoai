@@ -28,6 +28,7 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #include "../ui_nodes.h"
 #include "../ui_font.h"
 #include "../ui_parse.h"
+#include "../ui_property.h"
 #include "../ui_input.h"
 #include "../ui_actions.h"
 #include "../ui_render.h"
@@ -187,10 +188,11 @@ static void UI_KeyBindingNodeLoading (uiNode_t *node)
 }
 
 static const value_t properties[] = {
-	{"keyspace", V_INT, UI_EXTRADATA_OFFSETOF(keyBindingExtraData_t, keySpace), MEMBER_SIZEOF(keyBindingExtraData_t, keySpace)},
-	{"bindingwidth", V_INT, UI_EXTRADATA_OFFSETOF(keyBindingExtraData_t, bindingWidth), MEMBER_SIZEOF(keyBindingExtraData_t, bindingWidth)},
+	UI_INIT_EXTRADATA_PROPERTY("keyspace", V_INT, keyBindingExtraData_t, keySpace),
+	UI_INIT_EXTRADATA_PROPERTY("bindingwidth", V_INT, keyBindingExtraData_t, bindingWidth),
 
-	{NULL, V_NULL, 0, 0}
+	/* end of line */
+	UI_INIT_EMPTY_PROPERTY
 };
 
 void UI_RegisterKeyBindingNode (uiBehaviour_t *behaviour)

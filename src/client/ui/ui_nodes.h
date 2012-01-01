@@ -120,14 +120,6 @@ typedef struct uiNode_s {
 #define UI_EXTRADATACONST(NODE, TYPE) (*UI_EXTRADATACONST_POINTER(NODE, const TYPE))
 
 /**
- * @brief Return the offset of an extradata node attribute
- * @param TYPE Extradata type
- * @param MEMBER Attribute name
- * @sa offsetof
- */
-#define UI_EXTRADATA_OFFSETOF(TYPE, MEMBER) ((size_t) &((TYPE *)(UI_EXTRADATA_POINTER(0, TYPE)))->MEMBER)
-
-/**
  * @brief node behaviour, how a node work
  * @sa virtualFunctions
  */

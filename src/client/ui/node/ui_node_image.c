@@ -38,6 +38,7 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 
 #include "../ui_nodes.h"
 #include "../ui_parse.h"
+#include "../ui_property.h"
 #include "../ui_render.h"
 #include "ui_node_image.h"
 #include "ui_node_abstractnode.h"
@@ -193,21 +194,22 @@ void UI_ImageNodeDraw (uiNode_t *node)
 
 static const value_t properties[] = {
 	/* Do not change the image ratio. The image will be proportionally stretched. */
-	{"preventratio", V_BOOL, UI_EXTRADATA_OFFSETOF(imageExtraData_t, preventRatio), MEMBER_SIZEOF(imageExtraData_t, preventRatio)},
+	UI_INIT_EXTRADATA_PROPERTY("preventratio", V_BOOL, imageExtraData_t, preventRatio),
 	/* Now this property do nothing. But we use it like a tag, to remember nodes we should convert into button...
 	 * @todo delete it when its possible (use more button instead of image)
 	 */
-	{"mousefx", V_BOOL, UI_EXTRADATA_OFFSETOF(imageExtraData_t, mousefx), MEMBER_SIZEOF(imageExtraData_t, mousefx)},
+	UI_INIT_EXTRADATA_PROPERTY("mousefx", V_BOOL, imageExtraData_t, mousefx),
 
 	/* Texture high. Optional. Define the higher corner of the texture we want to display. Used with texl to crop the image. */
-	{"texh", V_POS, UI_EXTRADATA_OFFSETOF(imageExtraData_t, texh), MEMBER_SIZEOF(imageExtraData_t, texh)},
+	UI_INIT_EXTRADATA_PROPERTY("texh", V_POS, imageExtraData_t, texh),
 	/* Texture low. Optional. Define the lower corner of the texture we want to display. Used with texh to crop the image. */
-	{"texl", V_POS, UI_EXTRADATA_OFFSETOF(imageExtraData_t, texl), MEMBER_SIZEOF(imageExtraData_t, texl)},
+	UI_INIT_EXTRADATA_PROPERTY("texl", V_POS, imageExtraData_t, texl),
 
 	/* Source of the image */
-	{"src", V_CVAR_OR_STRING, offsetof(uiNode_t, image), 0},
+	UI_INIT_NOSIZE_PROPERTY("src", V_CVAR_OR_STRING, uiNode_t, image),
 
-	{NULL, V_NULL, 0, 0}
+	/* end of line */
+	UI_INIT_EMPTY_PROPERTY
 };
 
 void UI_RegisterImageNode (uiBehaviour_t* behaviour)

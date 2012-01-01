@@ -33,6 +33,7 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #include "../ui_nodes.h"
 #include "../ui_font.h"
 #include "../ui_parse.h"
+#include "../ui_property.h"
 #include "../ui_input.h"
 #include "../ui_actions.h"
 #include "../ui_render.h"
@@ -330,17 +331,18 @@ static const value_t properties[] = {
 	 */
 
 	/* Custom the draw behaviour by hiding each character of the text with a star (''*''). */
-	{"ispassword", V_BOOL, UI_EXTRADATA_OFFSETOF(textEntryExtraData_t, isPassword), MEMBER_SIZEOF(textEntryExtraData_t, isPassword)},
+	UI_INIT_EXTRADATA_PROPERTY("ispassword", V_BOOL, textEntryExtraData_t, isPassword),
 	/* ustom the mouse event behaviour. When we are editing the text, if we click out of the node, the edition is aborted. Changes on
 	 * the text are canceled, and no change event are fired.
 	 */
-	{"clickoutabort", V_BOOL, UI_EXTRADATA_OFFSETOF(textEntryExtraData_t, clickOutAbort), MEMBER_SIZEOF(textEntryExtraData_t, clickOutAbort)},
+	UI_INIT_EXTRADATA_PROPERTY("clickoutabort", V_BOOL, textEntryExtraData_t, clickOutAbort),
 	/* Call it when we abort the edition */
-	{"onabort", V_UI_ACTION, UI_EXTRADATA_OFFSETOF(textEntryExtraData_t, onAbort), MEMBER_SIZEOF(textEntryExtraData_t, onAbort)},
+	UI_INIT_EXTRADATA_PROPERTY("onabort", V_UI_ACTION, textEntryExtraData_t, onAbort),
 	/* Call it to force node edition */
-	{"edit", V_UI_NODEMETHOD, ((size_t) UI_TextEntryNodeFocus), 0},
+	UI_INIT_METHOD_PROPERTY("edit", V_UI_NODEMETHOD, UI_TextEntryNodeFocus),
 
-	{NULL, V_NULL, 0, 0}
+	/* end of line */
+	UI_INIT_EMPTY_PROPERTY
 };
 
 void UI_RegisterTextEntryNode (uiBehaviour_t *behaviour)

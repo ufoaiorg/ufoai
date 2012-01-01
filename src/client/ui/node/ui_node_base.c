@@ -23,6 +23,7 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 
 #include "../ui_main.h"
 #include "../ui_parse.h"
+#include "../ui_property.h"
 #include "../ui_tooltip.h"
 #include "../ui_nodes.h"
 #include "../ui_render.h"
@@ -362,8 +363,10 @@ static void UI_BaseLayoutNodeLoading (uiNode_t *node)
 
 static const value_t properties[] = {
 	/* Identify the base, from a base ID, the node use. */
-	{"baseid", V_INT, UI_EXTRADATA_OFFSETOF(baseExtraData_t, baseid), MEMBER_SIZEOF(baseExtraData_t, baseid)},
-	{NULL, V_NULL, 0, 0}
+	UI_INIT_EXTRADATA_PROPERTY("baseid", V_INT, baseExtraData_t, baseid),
+
+	/* end of line */
+	UI_INIT_EMPTY_PROPERTY
 };
 
 void UI_RegisterAbstractBaseNode (uiBehaviour_t *behaviour)

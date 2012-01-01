@@ -218,7 +218,7 @@ void UI_Init (void)
 	ui_dynStringPool = Mem_CreatePool("Client: Dynamic string for UI");
 	ui_dynPool = Mem_CreatePool("Client: Dynamic memory for UI");
 
-	Com_Printf("Allocate %i megabytes for the ui hunk", ui_hunkSize->integer);
+	Com_Printf("Allocate %i megabytes for the ui hunk\n", ui_hunkSize->integer);
 	ui_global.adataize = ui_hunkSize->integer * 1024 * 1024;
 	ui_global.adata = (byte*)Mem_PoolAlloc(ui_global.adataize, ui_sysPool, 0);
 	ui_global.curadata = ui_global.adata;

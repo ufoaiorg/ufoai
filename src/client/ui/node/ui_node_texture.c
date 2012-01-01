@@ -33,6 +33,7 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 
 #include "../ui_nodes.h"
 #include "../ui_parse.h"
+#include "../ui_property.h"
 #include "../ui_render.h"
 #include "../../renderer/r_draw.h"
 #include "ui_node_texture.h"
@@ -72,9 +73,10 @@ static void UI_TextureNodeDraw (uiNode_t *node)
 
 static const value_t properties[] = {
 	/* Source of the texture */
-	{"src", V_CVAR_OR_STRING, offsetof(uiNode_t, image), 0},
+	UI_INIT_NOSIZE_PROPERTY("src", V_CVAR_OR_STRING, uiNode_t, image),
 
-	{NULL, V_NULL, 0, 0}
+	/* end of line */
+	UI_INIT_EMPTY_PROPERTY
 };
 
 void UI_RegisterTextureNode (uiBehaviour_t* behaviour)

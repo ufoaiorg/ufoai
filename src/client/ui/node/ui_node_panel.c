@@ -24,6 +24,7 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 
 #include "../ui_main.h"
 #include "../ui_parse.h"
+#include "../ui_property.h"
 #include "../ui_render.h"
 #include "../ui_actions.h"
 #include "ui_node_abstractnode.h"
@@ -530,21 +531,22 @@ static const value_t properties[] = {
 	 * <li>LAYOUT_STAR: Align the corner of child into the corner of the node. Child size do not change.
 	 * @image html http://ufoai.ninex.info/wiki/images/Layout.png
 	 */
-	{"layout", V_INT, UI_EXTRADATA_OFFSETOF(panelExtraData_t, layout), MEMBER_SIZEOF(panelExtraData_t, layout)},
+	UI_INIT_EXTRADATA_PROPERTY("layout", V_INT, panelExtraData_t, layout),
 	/**
 	 * Margin use to layout children (margin between children)
 	 */
-	{"layoutMargin", V_INT, UI_EXTRADATA_OFFSETOF(panelExtraData_t, layoutMargin), MEMBER_SIZEOF(panelExtraData_t, layoutMargin)},
+	UI_INIT_EXTRADATA_PROPERTY("layoutMargin", V_INT, panelExtraData_t, layoutMargin),
 	/**
 	 * Number of column use to layout children (used with LAYOUT_COLUMN)
 	 */
-	{"layoutColumns", V_INT, UI_EXTRADATA_OFFSETOF(panelExtraData_t, layoutColumns), MEMBER_SIZEOF(panelExtraData_t, layoutColumns)},
+	UI_INIT_EXTRADATA_PROPERTY("layoutColumns", V_INT, panelExtraData_t, layoutColumns),
 	/**
 	 * If scrolling via mousewheel is enabled
 	 */
-	{"wheelscrollable", V_BOOL, UI_EXTRADATA_OFFSETOF(panelExtraData_t, wheelScrollable), MEMBER_SIZEOF(panelExtraData_t, wheelScrollable)},
+	UI_INIT_EXTRADATA_PROPERTY("wheelscrollable", V_BOOL, panelExtraData_t, wheelScrollable),
 
-	{NULL, V_NULL, 0, 0}
+	/* end of line */
+	UI_INIT_EMPTY_PROPERTY
 };
 
 void UI_RegisterPanelNode (uiBehaviour_t *behaviour)

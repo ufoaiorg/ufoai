@@ -378,7 +378,8 @@ static const value_t windowNodeProperties[] = {
 	/* Invoked after all UI scripts are loaded. */
 	{"onScriptLoaded", V_UI_ACTION, UI_EXTRADATA_OFFSETOF(windowExtraData_t, onScriptLoaded), MEMBER_SIZEOF(windowExtraData_t, onScriptLoaded)},
 
-	{NULL, V_NULL, 0, 0}
+	/* end of line */
+	UI_INIT_EMPTY_PROPERTY
 };
 
 /**

@@ -25,6 +25,7 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #include "../ui_nodes.h"
 #include "../ui_input.h"
 #include "../ui_parse.h"
+#include "../ui_property.h"
 #include "../ui_actions.h"
 #include "ui_node_abstractnode.h"
 #include "ui_node_map.h"
@@ -225,12 +226,14 @@ static void UI_MapNodeLoading (uiNode_t *node)
 
 static const value_t properties[] = {
 	/* Use a right padding. */
-	{"padding-right", V_FLOAT, UI_EXTRADATA_OFFSETOF(EXTRADATA_TYPE, paddingRight), MEMBER_SIZEOF(EXTRADATA_TYPE, paddingRight)},
+	UI_INIT_EXTRADATA_PROPERTY("padding-right", V_FLOAT, EXTRADATA_TYPE, paddingRight),
 	/* Call it to zoom out of the map */
-	{"zoomin", V_UI_NODEMETHOD, ((size_t) UI_MapNodeZoomIn), 0},
+	UI_INIT_METHOD_PROPERTY("zoomin", V_UI_NODEMETHOD, UI_MapNodeZoomIn),
 	/* Call it to zoom into the map */
-	{"zoomout", V_UI_NODEMETHOD, ((size_t) UI_MapNodeZoomOut), 0},
-	{NULL, V_NULL, 0, 0}
+	UI_INIT_METHOD_PROPERTY("zoomout", V_UI_NODEMETHOD, UI_MapNodeZoomOut),
+
+	/* end of line */
+	UI_INIT_EMPTY_PROPERTY
 };
 
 void UI_RegisterMapNode (uiBehaviour_t *behaviour)

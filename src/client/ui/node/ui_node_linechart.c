@@ -88,7 +88,9 @@ static const value_t properties[] = {
 	{"displayaxes", V_BOOL, UI_EXTRADATA_OFFSETOF(lineChartExtraData_t, displayAxes), MEMBER_SIZEOF(lineChartExtraData_t, displayAxes)},
 	/* Axe color. */
 	{"axescolor", V_COLOR, UI_EXTRADATA_OFFSETOF(lineChartExtraData_t, axesColor), MEMBER_SIZEOF(lineChartExtraData_t, axesColor)},
-	{NULL, V_NULL, 0, 0}
+
+	/* end of line */
+	UI_INIT_EMPTY_PROPERTY
 };
 
 void UI_RegisterLineChartNode (uiBehaviour_t *behaviour)

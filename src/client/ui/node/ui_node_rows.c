@@ -23,6 +23,7 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 
 */
 
+#include "../ui_property.h"
 #include "../ui_render.h"
 #include "ui_node_rows.h"
 #include "ui_node_abstractnode.h"
@@ -65,14 +66,16 @@ static void UI_RowsNodeLoaded (uiNode_t *node)
 
 static const value_t properties[] = {
 	/* Background color for odd elements */
-	{"color1", V_COLOR, offsetof(uiNode_t, color), MEMBER_SIZEOF(uiNode_t, color)},
+	UI_INIT_PROPERTY("color1", V_COLOR, uiNode_t, color),
 	/* Background color for even elements */
-	{"color2", V_COLOR, offsetof(uiNode_t, selectedColor), MEMBER_SIZEOF(uiNode_t, selectedColor)},
+	UI_INIT_PROPERTY("color2", V_COLOR, uiNode_t, selectedColor),
 	/* Element height */
-	{"lineheight", V_INT, UI_EXTRADATA_OFFSETOF(rowsExtraData_t, lineHeight), MEMBER_SIZEOF(rowsExtraData_t, lineHeight)},
+	UI_INIT_EXTRADATA_PROPERTY("lineheight", V_INT, rowsExtraData_t, lineHeight),
 	/* Element number on the top of the list. It is used to scroll the node content. */
-	{"current", V_INT, UI_EXTRADATA_OFFSETOF(rowsExtraData_t, current), MEMBER_SIZEOF(rowsExtraData_t, current)},
-	{NULL, V_NULL, 0, 0}
+	UI_INIT_EXTRADATA_PROPERTY("current", V_INT, rowsExtraData_t, current),
+
+	/* end of line */
+	UI_INIT_EMPTY_PROPERTY
 };
 
 void UI_RegisterRowsNode (uiBehaviour_t *behaviour)

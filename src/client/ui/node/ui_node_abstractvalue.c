@@ -114,7 +114,9 @@ static const value_t properties[] = {
 	 * @Deprecated
 	 */
 	{"lastdiff", V_FLOAT, UI_EXTRADATA_OFFSETOF(abstractValueExtraData_t, lastdiff), MEMBER_SIZEOF(abstractValueExtraData_t, lastdiff)},
-	{NULL, V_NULL, 0, 0}
+
+	/* end of line */
+	UI_INIT_EMPTY_PROPERTY
 };
 
 void UI_RegisterAbstractValueNode (uiBehaviour_t *behaviour)

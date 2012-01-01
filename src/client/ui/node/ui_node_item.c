@@ -26,6 +26,7 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 
 #include "../ui_nodes.h"
 #include "../ui_parse.h"
+#include "../ui_property.h"
 #include "ui_node_model.h"
 #include "ui_node_item.h"
 #include "ui_node_container.h"
@@ -79,9 +80,10 @@ static void UI_ItemNodeDraw (uiNode_t *node)
 /** @brief valid properties for model */
 static const value_t properties[] = {
 	/* Display an item like a container node do it */
-	{"containerlike", V_BOOL, UI_EXTRADATA_OFFSETOF(modelExtraData_t, containerLike), MEMBER_SIZEOF(modelExtraData_t, containerLike)},
+	UI_INIT_EXTRADATA_PROPERTY("containerlike", V_BOOL, modelExtraData_t, containerLike),
 
-	{NULL, V_NULL, 0, 0}
+	/* end of line */
+	UI_INIT_EMPTY_PROPERTY
 };
 
 void UI_RegisterItemNode (uiBehaviour_t *behaviour)

@@ -30,6 +30,7 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 
 #include "../ui_nodes.h"
 #include "../ui_parse.h"
+#include "../ui_property.h"
 #include "../ui_draw.h"
 #include "../ui_actions.h"
 #include "ui_node_video.h"
@@ -98,12 +99,14 @@ static void UI_VideoNodeClose (uiNode_t *node)
 
 static const value_t properties[] = {
 	/** Source of the video. File name without prefix ./base/videos and without extension */
-	{"src", V_CVAR_OR_STRING, offsetof(uiNode_t, image), 0},
+	UI_INIT_NOSIZE_PROPERTY("src", V_CVAR_OR_STRING, uiNode_t, image),
 	/** Use or not the music from the video. */
-	{"nosound", V_BOOL, UI_EXTRADATA_OFFSETOF(EXTRADATA_TYPE, nosound), MEMBER_SIZEOF(EXTRADATA_TYPE, nosound)},
+	UI_INIT_EXTRADATA_PROPERTY("nosound", V_BOOL, EXTRADATA_TYPE, nosound),
 	/** Invoked when video end. */
-	{"onEnd", V_UI_ACTION, UI_EXTRADATA_OFFSETOF(videoExtraData_t, onEnd), MEMBER_SIZEOF(videoExtraData_t, onEnd)},
-	{NULL, V_NULL, 0, 0}
+	UI_INIT_EXTRADATA_PROPERTY("onEnd", V_UI_ACTION, EXTRADATA_TYPE, onEnd),
+
+	/* end of line */
+	UI_INIT_EMPTY_PROPERTY
 };
 
 void UI_RegisterVideoNode (uiBehaviour_t* behaviour)

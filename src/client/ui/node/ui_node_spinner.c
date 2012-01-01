@@ -25,6 +25,7 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 
 #include "../ui_nodes.h"
 #include "../ui_parse.h"
+#include "../ui_property.h"
 #include "../ui_main.h"
 #include "../ui_input.h"
 #include "../ui_timer.h"
@@ -251,9 +252,10 @@ static const value_t properties[] = {
 	/**
 	 * @brief Defines a factor that is applied to the delta value when the shift key is held down.
 	 */
-	{"shiftincreasefactor", V_FLOAT, UI_EXTRADATA_OFFSETOF(spinnerExtraData_t, shiftIncreaseFactor),  MEMBER_SIZEOF(spinnerExtraData_t, shiftIncreaseFactor)},
+	UI_INIT_EXTRADATA_PROPERTY("shiftincreasefactor", V_FLOAT, spinnerExtraData_t, shiftIncreaseFactor),
 
-	{NULL, V_NULL, 0, 0}
+	/* end of line */
+	UI_INIT_EMPTY_PROPERTY
 };
 
 void UI_RegisterSpinnerNode (uiBehaviour_t *behaviour)

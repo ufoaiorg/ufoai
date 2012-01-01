@@ -27,6 +27,7 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 
 #include "../ui_nodes.h"
 #include "../ui_parse.h"
+#include "../ui_property.h"
 #include "../ui_input.h"
 #include "../ui_timer.h"
 #include "../ui_actions.h"
@@ -89,10 +90,12 @@ static void UI_ZoneNodeLoading (uiNode_t *node)
 
 static const value_t properties[] = {
 	/* If true, the <code>onclick</code> call back is called more than one time if the user do not release the button. */
-	{"repeat", V_BOOL, UI_EXTRADATA_OFFSETOF(zoneExtraData_t, repeat), MEMBER_SIZEOF(zoneExtraData_t, repeat)},
+	UI_INIT_EXTRADATA_PROPERTY("repeat", V_BOOL, zoneExtraData_t, repeat),
 	/* Delay it is used between 2 calls of <code>onclick</code>. */
-	{"clickdelay", V_INT, UI_EXTRADATA_OFFSETOF(zoneExtraData_t, clickDelay), MEMBER_SIZEOF(zoneExtraData_t, clickDelay)},
-	{NULL, V_NULL, 0, 0}
+	UI_INIT_EXTRADATA_PROPERTY("clickdelay", V_INT, zoneExtraData_t, clickDelay),
+
+	/* end of line */
+	UI_INIT_EMPTY_PROPERTY
 };
 
 void UI_RegisterZoneNode (uiBehaviour_t *behaviour)

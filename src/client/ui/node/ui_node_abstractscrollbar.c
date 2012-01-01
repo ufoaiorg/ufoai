@@ -25,28 +25,28 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 
 */
 
-#include "../ui_nodes.h"
+#include "../ui_property.h"
 #include "ui_node_abstractscrollbar.h"
 
 #define EXTRADATA_TYPE abstractScrollbarExtraData_t
 
 static const value_t properties[] = {
 	/* Current position of the scroll. Image of the <code>viewpos</code> from <code>abstractscrollable</code> node. */
-	{"current", V_INT, UI_EXTRADATA_OFFSETOF(EXTRADATA_TYPE, pos),  MEMBER_SIZEOF(EXTRADATA_TYPE, pos)},
+	UI_INIT_EXTRADATA_PROPERTY("current", V_INT, EXTRADATA_TYPE, pos),
 	/* Image of the <code>viewsize</code> from <code>abstractscrollable</code> node. */
-	{"viewsize", V_INT, UI_EXTRADATA_OFFSETOF(EXTRADATA_TYPE, viewsize),  MEMBER_SIZEOF(EXTRADATA_TYPE, viewsize)},
+	UI_INIT_EXTRADATA_PROPERTY("viewsize", V_INT, EXTRADATA_TYPE, viewsize),
 	/* Image of the <code>fullsize</code> from <code>abstractscrollable</code> node. */
-	{"fullsize", V_INT, UI_EXTRADATA_OFFSETOF(EXTRADATA_TYPE, fullsize),  MEMBER_SIZEOF(EXTRADATA_TYPE, fullsize)},
+	UI_INIT_EXTRADATA_PROPERTY("fullsize", V_INT, EXTRADATA_TYPE, fullsize),
 
 	/* If true, hide the scroll when the position is 0 and can't change (when <code>viewsize</code> >= <code>fullsize</code>). */
-	{"hidewhenunused", V_BOOL, UI_EXTRADATA_OFFSETOF(EXTRADATA_TYPE, hideWhenUnused),  MEMBER_SIZEOF(EXTRADATA_TYPE, hideWhenUnused)},
+	UI_INIT_EXTRADATA_PROPERTY("hidewhenunused", V_BOOL, EXTRADATA_TYPE, hideWhenUnused),
 
 	/* Callback value set when before calling onChange. It is used to know the change apply by the user
 	 * @Deprecated
 	 */
-	{"lastdiff", V_INT, UI_EXTRADATA_OFFSETOF(EXTRADATA_TYPE, lastdiff),  MEMBER_SIZEOF(EXTRADATA_TYPE, lastdiff)},
+	UI_INIT_EXTRADATA_PROPERTY("lastdiff", V_INT, EXTRADATA_TYPE, lastdiff),
 
-	{NULL, V_NULL, 0, 0}
+	UI_INIT_EMPTY_PROPERTY
 };
 
 void UI_RegisterAbstractScrollbarNode (uiBehaviour_t *behaviour)

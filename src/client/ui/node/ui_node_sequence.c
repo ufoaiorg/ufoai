@@ -24,6 +24,7 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 
 #include "../ui_nodes.h"
 #include "../ui_parse.h"
+#include "../ui_property.h"
 #include "../ui_actions.h"
 #include "../ui_draw.h"
 #include "../../client.h"
@@ -107,12 +108,13 @@ static void UI_SequencePropertyChanged (uiNode_t *node, const value_t *property)
 
 static const value_t properties[] = {
 	/** Source of the video. File name without prefix ./base/videos and without extension */
-	{"src", V_CVAR_OR_STRING, offsetof(uiNode_t, image), 0},
+	UI_INIT_NOSIZE_PROPERTY("src", V_CVAR_OR_STRING, uiNode_t, image),
 
 	/** Called when the sequence end */
-	{"onend", V_UI_ACTION, UI_EXTRADATA_OFFSETOF(EXTRADATA_TYPE, onEnd), MEMBER_SIZEOF(EXTRADATA_TYPE, onEnd)},
+	UI_INIT_EXTRADATA_PROPERTY("onEnd", V_UI_ACTION, EXTRADATA_TYPE, onEnd),
 
-	{NULL, V_NULL, 0, 0}
+	/* end of line */
+	UI_INIT_EMPTY_PROPERTY
 };
 
 void UI_RegisterSequenceNode (uiBehaviour_t* behaviour)

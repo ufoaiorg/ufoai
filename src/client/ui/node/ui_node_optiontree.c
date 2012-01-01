@@ -25,6 +25,7 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 
 #include "../ui_main.h"
 #include "../ui_parse.h"
+#include "../ui_property.h"
 #include "../ui_actions.h"
 #include "../ui_font.h"
 #include "../ui_data.h"
@@ -361,9 +362,10 @@ static void UI_OptionTreeNodeDoLayout (uiNode_t *node)
 
 static const value_t properties[] = {
 	/* Call it to toggle the node status. */
-	{"setselectedvalue", V_UI_NODEMETHOD, ((size_t) UI_OptionTreeSetSelectedValue), 0},
+	UI_INIT_METHOD_PROPERTY("setselectedvalue", V_UI_NODEMETHOD, UI_OptionTreeSetSelectedValue),
 
-	{NULL, V_NULL, 0, 0}
+	/* end of line */
+	UI_INIT_EMPTY_PROPERTY
 };
 
 void UI_RegisterOptionTreeNode (uiBehaviour_t *behaviour)

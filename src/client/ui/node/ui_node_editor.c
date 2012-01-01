@@ -27,6 +27,7 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 
 #include "../ui_main.h"
 #include "../ui_parse.h"
+#include "../ui_property.h"
 #include "../ui_draw.h"
 #include "../ui_input.h"
 #include "../ui_nodes.h"
@@ -350,16 +351,18 @@ static void UI_EditorNodeExtract_f (void)
 
 static const value_t properties[] = {
 	/* start edition mode */
-	{"start", V_UI_NODEMETHOD, ((size_t) UI_EditorNodeStart), 0},
+	UI_INIT_METHOD_PROPERTY("start", V_UI_NODEMETHOD, UI_EditorNodeStart),
 	/* stop edition mode */
-	{"stop", V_UI_NODEMETHOD, ((size_t) UI_EditorNodeStop), 0},
+	UI_INIT_METHOD_PROPERTY("stop", V_UI_NODEMETHOD, UI_EditorNodeStop),
 	/* select the next node (according to the current one) */
-	{"selectnext", V_UI_NODEMETHOD, ((size_t) UI_EditorNodeSelectNext), 0},
+	UI_INIT_METHOD_PROPERTY("selectnext", V_UI_NODEMETHOD, UI_EditorNodeSelectNext),
 	/* select the parent node (according to the current one) */
-	{"selectparent", V_UI_NODEMETHOD, ((size_t) UI_EditorNodeSelectParent), 0},
+	UI_INIT_METHOD_PROPERTY("selectparent", V_UI_NODEMETHOD, UI_EditorNodeSelectParent),
 	/* select first child node (according to the current one) */
-	{"selectfirstchild", V_UI_NODEMETHOD, ((size_t) UI_EditorNodeSelectFirstChild), 0},
-	{NULL, V_NULL, 0, 0}
+	UI_INIT_METHOD_PROPERTY("selectfirstchild", V_UI_NODEMETHOD, UI_EditorNodeSelectFirstChild),
+
+	/* end of list */
+	UI_INIT_EMPTY_PROPERTY
 };
 
 void UI_RegisterEditorNode (uiBehaviour_t *behaviour)

@@ -43,6 +43,7 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #include "../ui_main.h"
 #include "../ui_sprite.h"
 #include "../ui_parse.h"
+#include "../ui_property.h"
 #include "../ui_font.h"
 #include "../ui_input.h"
 #include "../ui_render.h"
@@ -116,11 +117,12 @@ static void UI_CustomButtonNodeDraw (uiNode_t *node)
 
 static const value_t properties[] = {
 	/* Skin position. Define the top-left position of the skin we will used from the image. Y should not be bigger than 64. To compute the high corner we use the node size. */
-	{"texl", V_POS, UI_EXTRADATA_OFFSETOF(customButtonExtraData_t, texl), MEMBER_SIZEOF(customButtonExtraData_t, texl)},
+	UI_INIT_EXTRADATA_PROPERTY("texl", V_POS, EXTRADATA_TYPE, texl),
 	/* Sprite used to display the background */
-	{"background", V_UI_SPRITEREF, UI_EXTRADATA_OFFSETOF(EXTRADATA_TYPE, background), MEMBER_SIZEOF(EXTRADATA_TYPE, background)},
+	UI_INIT_EXTRADATA_PROPERTY("background", V_UI_SPRITEREF, EXTRADATA_TYPE, background),
 
-	{NULL, V_NULL, 0, 0}
+	/* end of line */
+	UI_INIT_EMPTY_PROPERTY
 };
 
 void UI_RegisterCustomButtonNode (uiBehaviour_t *behaviour)

@@ -29,6 +29,7 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #include "../ui_main.h"
 #include "../ui_actions.h"
 #include "../ui_parse.h"
+#include "../ui_property.h"
 #include "../ui_font.h"
 #include "../ui_render.h"
 #include "../ui_sprite.h"
@@ -163,10 +164,11 @@ static const value_t properties[] = {
 
 	/* Icon used to display the node
 	 */
-	{"icon", V_UI_SPRITEREF, UI_EXTRADATA_OFFSETOF(EXTRADATA_TYPE, icon), MEMBER_SIZEOF(EXTRADATA_TYPE, icon)},
-	{"flipicon", V_BOOL, UI_EXTRADATA_OFFSETOF(EXTRADATA_TYPE, flipIcon), MEMBER_SIZEOF(EXTRADATA_TYPE, flipIcon)},
+	UI_INIT_EXTRADATA_PROPERTY("icon", V_UI_SPRITEREF, EXTRADATA_TYPE, icon),
+	UI_INIT_EXTRADATA_PROPERTY("flipicon", V_BOOL, EXTRADATA_TYPE, flipIcon),
 
-	{NULL, V_NULL, 0, 0}
+	/* end of line */
+	UI_INIT_EMPTY_PROPERTY
 };
 
 

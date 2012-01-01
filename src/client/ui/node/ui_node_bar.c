@@ -26,6 +26,7 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 */
 
 #include "../ui_nodes.h"
+#include "../ui_property.h"
 #include "../ui_parse.h"
 #include "../ui_main.h"
 #include "../ui_input.h"
@@ -173,17 +174,18 @@ static const value_t properties[] = {
 	/**
 	 * Orientation of the bar. Default value "cr". Other available values are "uc", "lc", "cr", "cl"
 	 */
-	{"direction", V_ALIGN, UI_EXTRADATA_OFFSETOF(barExtraData_t, orientation), MEMBER_SIZEOF(barExtraData_t, orientation)},
+	UI_INIT_EXTRADATA_PROPERTY("direction", V_ALIGN, barExtraData_t, orientation),
 	/**
 	 * if true, the user can't edit the content
 	 */
-	{"readonly", V_BOOL, UI_EXTRADATA_OFFSETOF(barExtraData_t, readOnly),  MEMBER_SIZEOF(barExtraData_t, readOnly)},
+	UI_INIT_EXTRADATA_PROPERTY("readonly", V_BOOL, barExtraData_t, readOnly),
 	/**
 	 * there is no hover effect if this is true
 	 */
-	{"nohover", V_BOOL, UI_EXTRADATA_OFFSETOF(barExtraData_t, noHover),  MEMBER_SIZEOF(barExtraData_t, noHover)},
+	UI_INIT_EXTRADATA_PROPERTY("nohover", V_BOOL, barExtraData_t, noHover),
 
-	{NULL, V_NULL, 0, 0}
+	/* end of line */
+	UI_INIT_EMPTY_PROPERTY
 };
 
 void UI_RegisterBarNode (uiBehaviour_t *behaviour)

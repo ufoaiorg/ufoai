@@ -35,6 +35,7 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 
 #include "../ui_nodes.h"
 #include "../ui_parse.h"
+#include "../ui_property.h"
 #include "../ui_main.h"
 #include "../ui_sprite.h"
 #include "../ui_render.h"
@@ -102,19 +103,20 @@ static const value_t properties[] = {
 	/**
 	 * @brief Backround used to display the spinner. It is displayed in the center of the node.
 	 */
-	{"background", V_UI_SPRITEREF, UI_EXTRADATA_OFFSETOF(EXTRADATA_TYPE, background), MEMBER_SIZEOF(EXTRADATA_TYPE, background)},
+	UI_INIT_EXTRADATA_PROPERTY("background", V_UI_SPRITEREF, EXTRADATA_TYPE, background),
 
 	/**
 	 * @brief Top icon used to decorate the top button of the spinner. It is displayed in the center of the node.
 	 */
-	{"topIcon", V_UI_SPRITEREF, UI_EXTRADATA_OFFSETOF(EXTRADATA_TYPE, topIcon), MEMBER_SIZEOF(EXTRADATA_TYPE, topIcon)},
+	UI_INIT_EXTRADATA_PROPERTY("topIcon", V_UI_SPRITEREF, EXTRADATA_TYPE, topIcon),
 
 	/**
 	 * @brief Sprite used to decorate the bottom button of the spinner. It is displayed in the center of the node.
 	 */
-	{"bottomIcon", V_UI_SPRITEREF, UI_EXTRADATA_OFFSETOF(EXTRADATA_TYPE, bottomIcon), MEMBER_SIZEOF(EXTRADATA_TYPE, bottomIcon)},
+	UI_INIT_EXTRADATA_PROPERTY("bottomIcon", V_UI_SPRITEREF, EXTRADATA_TYPE, bottomIcon),
 
-	{NULL, V_NULL, 0, 0}
+	/* end of line */
+	UI_INIT_EMPTY_PROPERTY
 };
 
 void UI_RegisterSpinner2Node (uiBehaviour_t *behaviour)
