@@ -31,9 +31,6 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
  * FIXME rework that bad structure, move it to hunk memeory
  */
 #define LOCAL_PROPERTY_SIZE	128
-#define GLOBAL_PROPERTY_SIZE	512
-static value_t properties[GLOBAL_PROPERTY_SIZE];
-static int propertyCount;
 
 /**
  * @brief Register a property to a behaviour.
@@ -49,10 +46,9 @@ static int propertyCount;
  */
 const struct value_s *UI_RegisterNodePropertyPosSize_ (struct uiBehaviour_s *behaviour, const char* name, int type, int pos, int size)
 {
-	if (propertyCount >= GLOBAL_PROPERTY_SIZE) {
-		Com_Error(ERR_FATAL, "UI_RegisterNodePropertyPosSize_: Global property memory is full.");
-	}
-	value_t *property = &properties[propertyCount++];
+	value_t *property = UI_AllocHunkMemory(sizeof(value_t), STRUCT_MEMORY_ALIGN, qfalse);
+	if (property == NULL)
+		Com_Error(ERR_FATAL, "UI_RegisterNodePropertyPosSize_: UI memory hunk exceeded - increase the size");
 
 	if (type == V_STRING || type == V_LONGSTRING || type == V_CVAR_OR_LONGSTRING || V_CVAR_OR_STRING) {
 		size = 0;
