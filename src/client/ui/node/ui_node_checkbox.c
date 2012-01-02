@@ -139,13 +139,13 @@ void UI_RegisterCheckBoxNode (uiBehaviour_t *behaviour)
 	behaviour->loading = UI_CheckBoxNodeLoading;
 	behaviour->activate = UI_CheckBoxNodeActivate;
 
-	/* @override image
-	 * Texture used for the widget. Its a 128x128 template image with all
+	/* Texture used for the widget. Its a 128x128 template image with all
 	 * three status according to the value, and four status according to the
 	 * interaction. From left to right: unchecked, checked, and invalidate.
 	 * From top to bottom: normal, hovered by the mouse, clicked, disabled.
 	 * @image html http://ufoai.ninex.info/wiki/images/Checkbox_template.png
 	 */
+	UI_RegisterOveridedNodeProperty(behaviour, "image");
 
 	/* Call it to toggle the node status. */
 	UI_RegisterNodeMethod(behaviour, "toggle", UI_CheckBoxNodeCallActivate);

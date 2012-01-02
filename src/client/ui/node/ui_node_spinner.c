@@ -251,15 +251,16 @@ void UI_RegisterSpinnerNode (uiBehaviour_t *behaviour)
 	behaviour->loading = UI_SpinnerNodeLoading;
 	behaviour->extraDataSize = sizeof(EXTRADATA_TYPE);
 
-	/* @override size
-	 * The size of the widget is uneditable. Fixed to 15x19.
+	/* The size of the widget is uneditable. Fixed to 15x19.
 	 */
-	/* @override image
-	 * Texture used for the widget. Its a 64x64 template image with all four
+	UI_RegisterOveridedNodeProperty(behaviour, "size");
+
+	/* Texture used for the widget. Its a 64x64 template image with all four
 	 * status. The top button take the first vertical 9 pixels, the bottom
 	 * button use the last 10 pixels. See the sample image.
 	 * @image html http://ufoai.ninex.info/wiki/images/Spinner_blue.png
 	 */
+	UI_RegisterOveridedNodeProperty(behaviour, "image");
 
 	/**
 	 * @brief Defines a factor that is applied to the delta value when the shift key is held down.

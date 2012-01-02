@@ -409,8 +409,7 @@ void UI_RegisterWindowNode (uiBehaviour_t *behaviour)
 	behaviour->clone = UI_WindowNodeClone;
 	behaviour->extraDataSize = sizeof(EXTRADATA_TYPE);
 
-	/* @override image
-	 * Texture to use. The texture is a cut of 9 portions
+	/* Texture to use. The texture is a cut of 9 portions
 	 * (left, middle, right x top, middle, bottom). Between all this elements,
 	 * we use a margin of 3 pixels (purple mark into the sample).
 	 * Graphically we see only a 1 pixel margin, because, for a problem of
@@ -418,6 +417,7 @@ void UI_RegisterWindowNode (uiBehaviour_t *behaviour)
 	 * pixel near the last colored one, when we cut or stretch textures.
 	 * @image html http://ufoai.ninex.info/wiki/images/Popup_alpha_tile.png
 	 */
+	UI_RegisterOveridedNodeProperty(behaviour, "image");
 
 	/* In windows where notify messages appear (like e.g. the video options window when you have to restart the game until
 	 * the settings take effects) you can define the position of those messages with this option. */

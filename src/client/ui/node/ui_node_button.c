@@ -162,13 +162,13 @@ void UI_RegisterButtonNode (uiBehaviour_t *behaviour)
 	behaviour->loading = UI_ButtonNodeLoading;
 	behaviour->extraDataSize = sizeof(EXTRADATA_TYPE);
 
-	/* @override image
-	 * Texture used by the button. It's a normalized texture of 128x128.
+	/* Texture used by the button. It's a normalized texture of 128x128.
 	 * Normal button start at 0x0, mouse over start at 64x0, mouse click
 	 * start at 0x64 (but not yet implemented), and disabled start at 64x64.
 	 * See the image to have a usable template for this node.
 	 * @image html http://ufoai.ninex.info/wiki/images/Button_blue.png
 	 */
+	UI_RegisterOveridedNodeProperty(behaviour, "image");
 
 	/* Icon used to display the node
 	 */

@@ -156,6 +156,14 @@ const struct value_s *UI_RegisterNodePropertyPosSize_(struct uiBehaviour_s *beha
 #define UI_RegisterExtradataNodeProperty(BEHAVIOUR, NAME, TYPE, EXTRADATATYPE, ATTRIBUTE) UI_RegisterNodePropertyPosSize_(BEHAVIOUR, NAME, TYPE, UI_EXTRADATA_OFFSETOF_(EXTRADATATYPE, ATTRIBUTE), MEMBER_SIZEOF(EXTRADATATYPE, ATTRIBUTE))
 
 /**
+ * @brief Initialize a property which override an inherited property.
+ * It is yet only used for the documentation.
+ * @param BEHAVIOUR behaviour Target behaviour
+ * @param NAME Name of the property
+ */
+#define UI_RegisterOveridedNodeProperty(BEHAVIOUR, NAME) ;
+
+/**
  * @brief Register a node method to a behaviour.
  * @param behaviour Target behaviour
  * @param name Name of the property
