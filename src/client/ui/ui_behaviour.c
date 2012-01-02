@@ -28,7 +28,7 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #include "ui_parse.h"
 
 /**
- * FIXME rework that bad structure, move it to hunk memeory
+ * Size of the temporary property-list allocation (per behaviour)
  */
 #define LOCAL_PROPERTY_SIZE	128
 
@@ -60,7 +60,7 @@ const struct value_s *UI_RegisterNodePropertyPosSize_ (struct uiBehaviour_s *beh
 	property->size = size;
 
 	if (behaviour->localProperties == NULL) {
-		/** FIXME should be into hunk memory, and unlimited */
+		/* temporary memory allocation */
 		behaviour->localProperties = (const value_t **)Mem_PoolAlloc(sizeof(*behaviour->localProperties) * LOCAL_PROPERTY_SIZE, ui_sysPool, 0);
 	}
 	if (behaviour->propertyCount >= LOCAL_PROPERTY_SIZE-1) {
@@ -86,6 +86,7 @@ const struct value_s *UI_RegisterNodeMethod (struct uiBehaviour_s *behaviour, co
 
 /**
  * @brief Get a property from a behaviour or his inheritance
+ * It use a dichotomic search.
  * @param[in] behaviour Context behaviour
  * @param[in] name Property name we search
  * @return A value_t with the requested name, else NULL
@@ -93,19 +94,26 @@ const struct value_s *UI_RegisterNodeMethod (struct uiBehaviour_s *behaviour, co
 const value_t *UI_GetPropertyFromBehaviour (const uiBehaviour_t *behaviour, const char* name)
 {
 	for (; behaviour; behaviour = behaviour->super) {
-		const value_t **current;
-		if (behaviour->localProperties == NULL)
-			continue;
-		current = behaviour->localProperties;
-		while (*current) {
-			if (!Q_strcasecmp(name, (*current)->string))
-				return *current;
-			current++;
+		unsigned char min = 0;
+		unsigned char max = behaviour->propertyCount;
+
+		while (min != max) {
+			const int mid = (min + max) >> 1;
+			const int diff = strcasecmp(behaviour->localProperties[mid]->string, name);
+			assert(mid < max);
+			assert(mid >= min);
+
+			if (diff == 0)
+				return behaviour->localProperties[mid];
+
+			if (diff > 0)
+				max = mid;
+			else
+				min = mid + 1;
 		}
 	}
 	return NULL;
 }
-
 
 /** @brief position of virtual function into node behaviour */
 static const int virtualFunctions[] = {
@@ -179,6 +187,36 @@ void UI_InitializeNodeBehaviour (uiBehaviour_t* behaviour)
 
 			i++;
 		}
+	}
+
+	/* sort properties by alphabet */
+	if (behaviour->localProperties) {
+		int i = 0;
+		const value_t* previous;
+		const value_t** oldmemory = behaviour->localProperties;
+		behaviour->localProperties = UI_AllocHunkMemory(sizeof(value_t*) * (behaviour->propertyCount+1), STRUCT_MEMORY_ALIGN, qfalse);
+		if (behaviour->localProperties == NULL) {
+			Com_Error(ERR_FATAL, "UI_InitializeNodeBehaviour: UI memory hunk exceeded - increase the size");
+		}
+
+		previous = NULL;
+		for (i = 0; i < behaviour->propertyCount; i++) {
+			const value_t* better = NULL;
+			const value_t** current;
+			/* search the next element after previous */
+			for (current = oldmemory; *current != NULL; current++) {
+				if (previous != NULL && strcasecmp(previous->string, (*current)->string) >= 0) {
+					continue;
+				}
+				if (better == NULL || strcasecmp(better->string, (*current)->string) >= 0) {
+					better = *current;
+				}
+			}
+			previous = better;
+			behaviour->localProperties[i] = better;
+		}
+		behaviour->localProperties[behaviour->propertyCount] = NULL;
+		Mem_Free(oldmemory);
 	}
 
 	/* property must not overwrite another property */
