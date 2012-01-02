@@ -101,6 +101,12 @@ extern memPool_t *ui_sysPool;
 extern memPool_t *ui_dynStringPool;
 extern memPool_t *ui_dynPool;
 
+/**
+ * Alignment memory for structures
+ * @todo Remove it and use something from compiler
+ */
+#define STRUCT_MEMORY_ALIGN	8
+
 void* UI_AllocHunkMemory(size_t size, int align, qboolean reset);
 
 void UI_FinishInit(void);
