@@ -115,6 +115,25 @@ void UI_ExecuteConfunc (const char *fmt, ...)
 }
 
 /**
+ * Allocate memory from hunk managed by the UI code
+ * This memory is allocated one time, and never released.
+ * @param size Quantity of memory expected
+ * @param align Alignement of the expected memory
+ * @param reset If true initilize the memory with 0
+ * @return available memory, else NULL
+ */
+void* UI_AllocHunkMemory (size_t size, int align, qboolean reset)
+{
+	byte *memory = ALIGN_PTR(ui_global.curadata, align);
+	if (memory + size > ui_global.adata + ui_global.adataize)
+		return NULL;
+	if (reset)
+		memset(memory, 0, size);
+	ui_global.curadata = memory + size;
+	return memory;
+}
+
+/**
  * Reinit input and font
  */
 void UI_Reinit (void)

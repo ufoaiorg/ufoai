@@ -318,14 +318,12 @@ static uiNode_t* UI_AllocNodeWithoutNew (const char* name, const char* type, qbo
 	nodeSize = sizeof(*node) + behaviour->extraDataSize;
 
 	if (!isDynamic) {
-		if (ui_global.curadata + nodeSize > ui_global.adata + ui_global.adataize)
-			Com_Error(ERR_FATAL, "UI_AllocNodeWithoutNew: No more memory to allocate a new node - increase the cvar ui_hunksize");
 		/** @todo fix this hard coded '8' value */
-		ui_global.curadata = ALIGN_PTR(ui_global.curadata, 8);
-		node = (uiNode_t*) ui_global.curadata;
-		ui_global.curadata += nodeSize;
+		void *memory = UI_AllocHunkMemory(nodeSize, 8, qtrue);
+		if (memory == NULL)
+			Com_Error(ERR_FATAL, "UI_AllocNodeWithoutNew: No more memory to allocate a new node - increase the cvar ui_hunksize");
+		node = (uiNode_t*) memory;
 		ui_global.numNodes++;
-		memset(node, 0, nodeSize);
 	} else {
 		node = (uiNode_t*)Mem_PoolAlloc(nodeSize, ui_dynPool, 0);
 		node->dynamic = qtrue;

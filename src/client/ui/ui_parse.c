@@ -169,10 +169,8 @@ float* UI_AllocStaticFloat (int count)
 {
 	float *result;
 	assert(count > 0);
-	ui_global.curadata = ALIGN_PTR(ui_global.curadata, sizeof(float));
-	result = (float*) ui_global.curadata;
-	ui_global.curadata += sizeof(float) * count;
-	if (ui_global.curadata - ui_global.adata > ui_global.adataize)
+	result = UI_AllocHunkMemory(sizeof(float) * count, sizeof(float), qfalse);
+	if (result == NULL)
 		Com_Error(ERR_FATAL, "UI_AllocFloat: UI memory hunk exceeded - increase the size");
 	return result;
 }
@@ -187,10 +185,8 @@ vec4_t* UI_AllocStaticColor (int count)
 {
 	vec4_t *result;
 	assert(count > 0);
-	ui_global.curadata = ALIGN_PTR(ui_global.curadata, sizeof(vec_t));
-	result = (vec4_t*) ui_global.curadata;
-	ui_global.curadata += sizeof(vec_t) * 4 * count;
-	if (ui_global.curadata - ui_global.adata > ui_global.adataize)
+	result = UI_AllocHunkMemory(sizeof(vec_t) * 4 * count, sizeof(vec_t), qfalse);
+	if (result == NULL)
 		Com_Error(ERR_FATAL, "UI_AllocColor: UI memory hunk exceeded - increase the size");
 	return result;
 }
@@ -204,18 +200,14 @@ vec4_t* UI_AllocStaticColor (int count)
  */
 char* UI_AllocStaticString (const char* string, int size)
 {
-	char* result = (char *)ui_global.curadata;
-	ui_global.curadata = ALIGN_PTR(ui_global.curadata, sizeof(char));
-	if (size != 0) {
-		if (ui_global.curadata - ui_global.adata + size > ui_global.adataize)
-			Com_Error(ERR_FATAL, "UI_AllocString: UI memory hunk exceeded - increase the size");
-		Q_strncpyz((char *)ui_global.curadata, string, size);
-		ui_global.curadata += size;
-	} else {
-		if (ui_global.curadata - ui_global.adata + strlen(string) + 1 > ui_global.adataize)
-			Com_Error(ERR_FATAL, "UI_AllocString: UI memory hunk exceeded - increase the size");
-		ui_global.curadata += sprintf((char *)ui_global.curadata, "%s", string) + 1;
+	char* result;
+	if (size == 0) {
+		size = strlen(string) + 1;
 	}
+	result = UI_AllocHunkMemory(size, sizeof(char), qfalse);
+	if (result == NULL)
+		Com_Error(ERR_FATAL, "UI_AllocString: UI memory hunk exceeded - increase the size");
+	Q_strncpyz(result, string, size);
 	return result;
 }
 
