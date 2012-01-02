@@ -552,7 +552,7 @@ void UI_DeleteNode (uiNode_t* node)
 	/* delete all allocated properties */
 	for (behaviour = node->behaviour; behaviour; behaviour = behaviour->super) {
 		const value_t **property = behaviour->localProperties;
-		if (*property == NULL)
+		if (property == NULL)
 			continue;
 		while (*property) {
 			if (((*property)->type & V_UI_MASK) == V_UI_CVAR) {
