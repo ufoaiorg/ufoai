@@ -85,7 +85,7 @@ typedef struct entity_s {
 	const light_t *lights[MAX_ENTITY_LIGHTS];		/**< static and dynamic lights sorted by distance */
 	int numLights;
 
-	const image_t *deathTexture;
+	const image_t *texture;
 
 	lighting_t *lighting;		/**< cached static light source information */
 

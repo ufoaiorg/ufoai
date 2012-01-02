@@ -63,10 +63,9 @@ static void R_DrawBox (const entity_t * e)
 {
 	const vec4_t color = {e->color[0], e->color[1], e->color[2], e->alpha};
 
-	if (e->deathTexture) {
-		/* I'll sure get blamed for reusing a deathTexture var for a generic textured box */
+	if (e->texture) {
 		R_Color(color);
-		R_BindTexture(e->deathTexture->texnum);
+		R_BindTexture(e->texture->texnum);
 		if (VectorNotEmpty(e->mins) && VectorNotEmpty(e->maxs)) {
 			R_DrawTexturedBox(e->mins, e->maxs);
 		} else {
@@ -227,8 +226,8 @@ void R_DrawEntityEffects (void)
 			if (e->flags & RF_SHADOW) {
 				R_BindTexture(shadow->texnum);
 			} else {
-				assert(e->deathTexture);
-				R_BindTexture(e->deathTexture->texnum);
+				assert(e->texture);
+				R_BindTexture(e->texture->texnum);
 			}
 
 			R_BindArray(GL_TEXTURE_COORD_ARRAY, GL_FLOAT, texcoords);

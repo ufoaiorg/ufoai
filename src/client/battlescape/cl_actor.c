@@ -1537,7 +1537,7 @@ qboolean CL_AddActor (le_t * le, entity_t * ent)
 		const char *deathTextureName;
 		assert(le->teamDef != NULL);
 		deathTextureName = le->teamDef->deathTextureName;
-		ent->deathTexture = R_FindImage(deathTextureName, it_effect);
+		ent->texture = R_FindImage(deathTextureName, it_effect);
 	}
 
 	return qtrue;

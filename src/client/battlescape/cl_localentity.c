@@ -940,9 +940,6 @@ qboolean LE_BrushModelAction (le_t * le, entity_t * ent)
 	case ET_BREAKABLE:
 		break;
 	case ET_TRIGGER_RESCUE: {
-		/**
-		 * @todo RF_BOX is not the best to render this
-		 */
 		float x, y, xmax;
 		int drawFlags = 0;
 		if (cl_map_draw_rescue_zone)
@@ -953,8 +950,8 @@ qboolean LE_BrushModelAction (le_t * le, entity_t * ent)
 		ent->alpha = abs((cls.realtime % PULSATE_RATE) - (PULSATE_RATE / 2)) * (0.5f / (PULSATE_RATE / 2));
 		ent->model = NULL;
 		VectorSet(ent->color, 0.5, 1, 0);
-		if (drawFlags & DRAW_TEXTURE && ent->deathTexture == NULL) {
-			ent->deathTexture = R_FindPics("sfx/misc/rescue");
+		if ((drawFlags & DRAW_TEXTURE) && ent->texture == NULL) {
+			ent->texture = R_FindPics("sfx/misc/rescue");
 			VectorSet(ent->color, 1, 1, 1);
 		}
 		VectorCopy(le->mins, ent->mins);
