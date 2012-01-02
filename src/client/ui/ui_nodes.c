@@ -633,6 +633,7 @@ void UI_InitNodes (void)
 
 	/* compute list of node behaviours */
 	for (i = 0; i < NUMBER_OF_BEHAVIOURS; i++) {
+		memset(current, 0, sizeof(*current));
 		current->registration = qtrue;
 		registerFunctions[i](current);
 		current->registration = qfalse;
