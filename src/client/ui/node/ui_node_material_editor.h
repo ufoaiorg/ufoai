@@ -26,6 +26,7 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #ifndef CLIENT_UI_UI_NODE_MATERIAL_EDITOR_H
 #define CLIENT_UI_UI_NODE_MATERIAL_EDITOR_H
 
-void UI_RegisterMaterialEditorNode(uiBehaviour_t *behaviour);
+struct uiBehaviour_s;
+void UI_RegisterMaterialEditorNode(struct uiBehaviour_s *behaviour);
 
 #endif

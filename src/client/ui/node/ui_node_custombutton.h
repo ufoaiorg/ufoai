@@ -31,7 +31,7 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 /* prototype */
 struct uiSprite_s;
 
-void UI_RegisterCustomButtonNode(uiBehaviour_t *behaviour);
+void UI_RegisterCustomButtonNode(struct uiBehaviour_s *behaviour);
 
 typedef struct customButtonExtraData_s {
 	buttonExtraData_t super;

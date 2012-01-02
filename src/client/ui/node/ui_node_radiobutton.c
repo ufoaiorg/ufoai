@@ -38,7 +38,7 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #include "../ui_actions.h"
 #include "../ui_sprite.h"
 #include "../ui_parse.h"
-#include "../ui_property.h"
+#include "../ui_behaviour.h"
 #include "../ui_input.h"
 #include "../ui_render.h"
 #include "ui_node_radiobutton.h"

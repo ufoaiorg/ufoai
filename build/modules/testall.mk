@@ -183,6 +183,7 @@ $(TARGET)_SRCS      = \
 	shared/mathlib_extra.c \
 	\
 	client/ui/ui_actions.c \
+	client/ui/ui_behaviour.c \
 	client/ui/ui_components.c \
 	client/ui/ui_data.c \
 	client/ui/ui_dragndrop.c \

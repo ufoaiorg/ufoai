@@ -22,6 +22,7 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 
 */
 
+#include "ui_internal.h"
 #include "ui_dragndrop.h"
 #include "ui_input.h"
 #include "ui_sound.h"

@@ -25,6 +25,6 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #ifndef CLIENT_UI_UI_NODE_ITEM_H
 #define CLIENT_UI_UI_NODE_ITEM_H
 
-void UI_RegisterItemNode(uiBehaviour_t *behaviour);
+void UI_RegisterItemNode(struct uiBehaviour_s *behaviour);
 
 #endif

@@ -25,7 +25,7 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 
 */
 
-#include "../ui_property.h"
+#include "../ui_behaviour.h"
 #include "ui_node_abstractscrollbar.h"
 
 #define EXTRADATA_TYPE abstractScrollbarExtraData_t

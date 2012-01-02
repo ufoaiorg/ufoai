@@ -164,6 +164,7 @@ $(TARGET)_SRCS      = \
 	client/cgame/campaign/missions/cp_mission_xvi.c \
 	\
 	client/ui/ui_actions.c \
+	client/ui/ui_behaviour.c \
 	client/ui/ui_components.c \
 	client/ui/ui_data.c \
 	client/ui/ui_dragndrop.c \

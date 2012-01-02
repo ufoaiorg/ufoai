@@ -1110,6 +1110,10 @@
 			<Option compilerVar="CC" />
 		</Unit>
 		<Unit filename="..\..\src\client\ui\ui_actions.h" />
+		<Unit filename="..\..\src\client\ui\ui_behaviour.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="..\..\src\client\ui\ui_behaviour.h" />
 		<Unit filename="..\..\src\client\ui\ui_components.c">
 			<Option compilerVar="CC" />
 		</Unit>

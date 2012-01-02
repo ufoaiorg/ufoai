@@ -44,11 +44,6 @@ typedef struct uiExcludeRect_s {
 } uiExcludeRect_t;
 
 /**
- * @brief Signature of a function to bind a node method.
- */
-typedef void (*uiNodeMethod_t)(struct uiNode_s*node, const struct uiCallContext_s *context);
-
-/**
  * @brief Atomic structure used to define most of the UI
  */
 typedef struct uiNode_s {
@@ -122,83 +117,6 @@ typedef struct uiNode_s {
 #define UI_EXTRADATACONST_POINTER(NODE, TYPE) ((TYPE*)((const char*)NODE + sizeof(uiNode_t)))
 #define UI_EXTRADATACONST(NODE, TYPE) (*UI_EXTRADATACONST_POINTER(NODE, const TYPE))
 
-/**
- * @brief node behaviour, how a node work
- * @sa virtualFunctions
- */
-typedef struct uiBehaviour_s {
-	/* behaviour attributes */
-	const char* name;				/**< name of the behaviour: string type of a node */
-	const char* extends;			/**< name of the extends behaviour */
-	qboolean registration;			/**< True if we can define the behavior with registration function */
-	qboolean isVirtual;				/**< true, if the node doesn't have any position on the screen */
-	qboolean isFunction;			/**< true, if the node is a function */
-	qboolean isAbstract;			/**< true, if we can't instantiate the behaviour */
-	qboolean isInitialized;			/**< cache if we already have initialized the node behaviour */
-	qboolean focusEnabled;			/**< true if the node can win the focus (should be use when type TAB) */
-	qboolean drawItselfChild;		/**< if true, the node draw function must draw child, the core code will not do it */
-
-	const value_t** localProperties;	/**< list of properties of the node */
-	int propertyCount;				/**< number of the properties into the propertiesList. Cache value to speedup search */
-	intptr_t extraDataSize;			/**< Size of the extra data used (it come from "u" attribute) @note use intptr_t because we use the virtual inheritance function (see virtualFunctions) */
-	struct uiBehaviour_s *super;	/**< link to the extended node */
-#ifdef DEBUG
-	int count;						/**< number of node allocated */
-#endif
-
-	/* draw callback */
-	void (*draw)(uiNode_t *node);							/**< how to draw a node */
-	void (*drawTooltip)(uiNode_t *node, int x, int y);	/**< allow to draw a custom tooltip */
-	void (*drawOverWindow)(uiNode_t *node);					/**< callback to draw content over the window @sa UI_CaptureDrawOver */
-
-	/* mouse events */
-	void (*leftClick)(uiNode_t *node, int x, int y);		/**< left mouse click event in the node */
-	void (*rightClick)(uiNode_t *node, int x, int y);		/**< right mouse button click event in the node */
-	void (*middleClick)(uiNode_t *node, int x, int y);	/**< middle mouse button click event in the node */
-	void (*scroll)(uiNode_t *node, int deltaX, int deltaY);	/**< mouse wheel event in the node */
-	void (*mouseMove)(uiNode_t *node, int x, int y);
-	void (*mouseDown)(uiNode_t *node, int x, int y, int button);	/**< mouse button down event in the node */
-	void (*mouseUp)(uiNode_t *node, int x, int y, int button);	/**< mouse button up event in the node */
-	void (*capturedMouseMove)(uiNode_t *node, int x, int y);
-	void (*capturedMouseLost)(uiNode_t *node);
-
-	/* system allocation */
-	void (*loading)(uiNode_t *node);		/**< called before script initialization, initialized default values */
-	void (*loaded)(uiNode_t *node);		/**< only called one time, when node parsing was finished */
-	void (*clone)(const uiNode_t *source, uiNode_t *clone);			/**< call to initialize a cloned node */
-	void (*newNode)(uiNode_t *node);			/**< call to initialize a dynamic node */
-	void (*deleteNode)(uiNode_t *node);		/**< call to delete a dynamic node */
-
-	/* system callback */
-	void (*windowOpened)(uiNode_t *node, linkedList_t *params);			/**< Invoked when the window is added to the rendering stack */
-	void (*windowClosed)(uiNode_t *node);		/**< Invoked when the window is removed from the rendering stack */
-	void (*doLayout)(uiNode_t *node);		/**< call to update node layout */
-	void (*activate)(uiNode_t *node);		/**< Activate the node. Can be used without the mouse (ie. a button will execute onClick) */
-	void (*propertyChanged)(uiNode_t *node, const value_t *property);		/**< Called when a property change */
-	void (*sizeChanged)(uiNode_t *node);		/**< Called when the node size change */
-	void (*getClientPosition)(const uiNode_t *node, vec2_t position);	/**< Return the position of the client zone into the node */
-
-	/* drag and drop callback */
-	qboolean (*dndEnter)(uiNode_t *node);							/**< Send to the target when we enter first, return true if we can drop the DND somewhere on the node */
-	qboolean (*dndMove)(uiNode_t *node, int x, int y);			/**< Send to the target when we enter first, return true if we can drop the DND here */
-	void (*dndLeave)(uiNode_t *node);								/**< Send to the target when the DND is canceled */
-	qboolean (*dndDrop)(uiNode_t *node, int x, int y);			/**< Send to the target to finalize the drop */
-	qboolean (*dndFinished)(uiNode_t *node, qboolean isDroped);	/**< Sent to the source to finalize the drop */
-
-	/* focus and keyboard events */
-	void (*focusGained)(uiNode_t *node);
-	void (*focusLost)(uiNode_t *node);
-	qboolean (*keyPressed)(uiNode_t *node, unsigned int key, unsigned short unicode);
-	qboolean (*keyReleased)(uiNode_t *node, unsigned int key, unsigned short unicode);
-
-	/* Planned */
-#if 0
-	/* mouse move event */
-	void (*mouseEnter)(uiNode_t *node);
-	void (*mouseLeave)(uiNode_t *node);
-#endif
-} uiBehaviour_t;
-
 /* module initialization */
 void UI_InitNodes(void);
 
@@ -214,9 +132,9 @@ void UI_DeleteAllChild(uiNode_t* node);
 void UI_DeleteNode(uiNode_t* node);
 
 /* behaviours */
-uiBehaviour_t* UI_GetNodeBehaviour(const char* name) __attribute__ ((warn_unused_result));
-uiBehaviour_t* UI_GetNodeBehaviourByIndex(int index) __attribute__ ((warn_unused_result));
+/* @todo move it to main */
+struct uiBehaviour_s* UI_GetNodeBehaviour(const char* name) __attribute__ ((warn_unused_result));
+struct uiBehaviour_s* UI_GetNodeBehaviourByIndex(int index) __attribute__ ((warn_unused_result));
 int UI_GetNodeBehaviourCount(void) __attribute__ ((warn_unused_result));
-const struct value_s *UI_GetPropertyFromBehaviour(const uiBehaviour_t *behaviour, const char* name) __attribute__ ((warn_unused_result));
 
 #endif

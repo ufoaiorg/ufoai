@@ -27,7 +27,7 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 
 #include "ui_node_abstractvalue.h"
 
-void UI_RegisterTBarNode(uiBehaviour_t *behaviour);
+void UI_RegisterTBarNode(struct uiBehaviour_s *behaviour);
 
 typedef struct tbarExtraData_s {
 	abstractValueExtraData_t super;

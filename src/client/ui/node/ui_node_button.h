@@ -32,6 +32,6 @@ typedef struct buttonExtraData_s {
 	qboolean flipIcon;			/**< Flip the icon rendering (horizontal) */
 } buttonExtraData_t;
 
-void UI_RegisterButtonNode(uiBehaviour_t *behaviour);
+void UI_RegisterButtonNode(struct uiBehaviour_s *behaviour);
 
 #endif

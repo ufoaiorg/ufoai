@@ -37,6 +37,6 @@ typedef struct spinner2ExtraData_s {
 
 } spinner2ExtraData_t;
 
-void UI_RegisterSpinner2Node(uiBehaviour_t *behaviour);
+void UI_RegisterSpinner2Node(struct uiBehaviour_s *behaviour);
 
 #endif

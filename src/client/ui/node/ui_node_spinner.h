@@ -33,6 +33,6 @@ typedef struct spinnerExtraData_s {
 	float shiftIncreaseFactor;
 } spinnerExtraData_t;
 
-void UI_RegisterSpinnerNode(uiBehaviour_t *behaviour);
+void UI_RegisterSpinnerNode(struct uiBehaviour_s *behaviour);
 
 #endif

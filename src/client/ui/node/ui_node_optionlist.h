@@ -27,6 +27,6 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 
 #include "../ui_nodes.h"
 
-void UI_RegisterOptionListNode(uiBehaviour_t *behaviour);
+void UI_RegisterOptionListNode(struct uiBehaviour_s *behaviour);
 
 #endif

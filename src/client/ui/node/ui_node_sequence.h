@@ -28,7 +28,7 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #include "../ui_nodes.h"
 #include "../../cinematic/cl_sequence.h"
 
-void UI_RegisterSequenceNode(uiBehaviour_t *behaviour);
+void UI_RegisterSequenceNode(struct uiBehaviour_s *behaviour);
 
 typedef struct {
 	qboolean playing;
