@@ -157,7 +157,7 @@ static const value_t properties[] = {
 void UI_RegisterOptionNode (uiBehaviour_t *behaviour)
 {
 	behaviour->name = "option";
-	behaviour->properties = properties;
+	behaviour->oldProperties = properties;
 	behaviour->extraDataSize = sizeof(EXTRADATA_TYPE);
 	behaviour->doLayout = UI_OptionDoLayout;
 	behaviour->propertyChanged = UI_OptionPropertyChanged;

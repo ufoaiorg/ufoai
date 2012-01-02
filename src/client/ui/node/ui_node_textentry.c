@@ -354,6 +354,6 @@ void UI_RegisterTextEntryNode (uiBehaviour_t *behaviour)
 	behaviour->keyPressed = UI_TextEntryNodeKeyPressed;
 	behaviour->draw = UI_TextEntryNodeDraw;
 	behaviour->loading = UI_TextEntryNodeLoading;
-	behaviour->properties = properties;
+	behaviour->oldProperties = properties;
 	behaviour->extraDataSize = sizeof(EXTRADATA_TYPE);
 }

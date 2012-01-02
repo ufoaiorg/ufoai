@@ -192,7 +192,7 @@ void UI_RegisterBarNode (uiBehaviour_t *behaviour)
 {
 	behaviour->name = "bar";
 	behaviour->extends = "abstractvalue";
-	behaviour->properties = properties;
+	behaviour->oldProperties = properties;
 	behaviour->draw = UI_BarNodeDraw;
 	behaviour->loading = UI_BarNodeLoading;
 	behaviour->mouseDown = UI_BarNodeMouseDown;

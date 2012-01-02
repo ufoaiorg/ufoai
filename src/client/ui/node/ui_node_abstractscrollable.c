@@ -195,6 +195,6 @@ void UI_RegisterAbstractScrollableNode (uiBehaviour_t *behaviour)
 {
 	behaviour->name = "abstractscrollable";
 	behaviour->isAbstract = qtrue;
-	behaviour->properties = properties;
+	behaviour->oldProperties = properties;
 	behaviour->extraDataSize = sizeof(EXTRADATA_TYPE);
 }

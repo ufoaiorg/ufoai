@@ -43,6 +43,9 @@ typedef struct uiExcludeRect_s {
 	vec2_t pos, size;
 } uiExcludeRect_t;
 
+/**
+ * @brief Signature of a function to bind a node method.
+ */
 typedef void (*uiNodeMethod_t)(struct uiNode_s*node, const struct uiCallContext_s *context);
 
 /**
@@ -127,13 +130,16 @@ typedef struct uiBehaviour_s {
 	/* behaviour attributes */
 	const char* name;				/**< name of the behaviour: string type of a node */
 	const char* extends;			/**< name of the extends behaviour */
+	qboolean registration;			/**< True if we can define the behavior with registration function */
 	qboolean isVirtual;				/**< true, if the node doesn't have any position on the screen */
 	qboolean isFunction;			/**< true, if the node is a function */
 	qboolean isAbstract;			/**< true, if we can't instantiate the behaviour */
 	qboolean isInitialized;			/**< cache if we already have initialized the node behaviour */
 	qboolean focusEnabled;			/**< true if the node can win the focus (should be use when type TAB) */
 	qboolean drawItselfChild;		/**< if true, the node draw function must draw child, the core code will not do it */
-	const value_t* properties;		/**< list of properties of the node */
+
+	const value_t** localProperties;	/**< list of properties of the node */
+	const value_t* oldProperties;		/**< list of properties of the node, in old coding way */
 	int propertyCount;				/**< number of the properties into the propertiesList. Cache value to speedup search */
 	intptr_t extraDataSize;			/**< Size of the extra data used (it come from "u" attribute) @note use intptr_t because we use the virtual inheritance function (see virtualFunctions) */
 	struct uiBehaviour_s *super;	/**< link to the extended node */

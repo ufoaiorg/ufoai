@@ -124,7 +124,7 @@ static const value_t properties[] = {
 void UI_RegisterStringNode (uiBehaviour_t *behaviour)
 {
 	behaviour->name = "string";
-	behaviour->properties = properties;
+	behaviour->oldProperties = properties;
 	behaviour->draw = UI_StringNodeDraw;
 	behaviour->drawTooltip = UI_StringNodeDrawTooltip;
 	behaviour->loading = UI_StringNodeLoading;

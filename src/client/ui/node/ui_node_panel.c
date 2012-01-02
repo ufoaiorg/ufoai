@@ -554,7 +554,7 @@ void UI_RegisterPanelNode (uiBehaviour_t *behaviour)
 	localBehaviour = behaviour;
 	behaviour->extends = "abstractscrollable";
 	behaviour->name = "panel";
-	behaviour->properties = properties;
+	behaviour->oldProperties = properties;
 	behaviour->extraDataSize = sizeof(EXTRADATA_TYPE);
 	behaviour->draw = UI_PanelNodeDraw;
 	behaviour->loaded = UI_PanelNodeLoaded;

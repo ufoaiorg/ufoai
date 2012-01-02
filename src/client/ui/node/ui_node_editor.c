@@ -375,7 +375,7 @@ void UI_RegisterEditorNode (uiBehaviour_t *behaviour)
 	behaviour->mouseUp = UI_EditorNodeMouseUp;
 	behaviour->capturedMouseMove = UI_EditorNodeCapturedMouseMove;
 	behaviour->capturedMouseLost = UI_EditorNodeCapturedMouseLost;
-	behaviour->properties = properties;
+	behaviour->oldProperties = properties;
 
 	Cmd_AddCommand("ui_extract", UI_EditorNodeExtract_f, "Extract position and size of nodes into a file");
 	Cmd_AddParamCompleteFunction("ui_extract", UI_CompleteWithWindow);

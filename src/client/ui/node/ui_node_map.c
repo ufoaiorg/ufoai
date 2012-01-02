@@ -239,7 +239,7 @@ static const value_t properties[] = {
 void UI_RegisterMapNode (uiBehaviour_t *behaviour)
 {
 	behaviour->name = "map";
-	behaviour->properties = properties;
+	behaviour->oldProperties = properties;
 	behaviour->draw = UI_MapNodeDraw;
 	behaviour->mouseDown = UI_MapNodeMouseDown;
 	behaviour->mouseUp = UI_MapNodeMouseUp;

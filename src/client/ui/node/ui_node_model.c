@@ -553,7 +553,7 @@ void UI_RegisterModelNode (uiBehaviour_t *behaviour)
 	behaviour->newNode = UI_ModelNodeNew;
 	behaviour->deleteNode = UI_ModelNodeDelete;
 	behaviour->capturedMouseMove = UI_ModelNodeCapturedMouseMove;
-	behaviour->properties = properties;
+	behaviour->oldProperties = properties;
 	behaviour->extraDataSize = sizeof(EXTRADATA_TYPE);
 
 	Cmd_AddCommand("uimodelslist", UI_ListUIModels_f, NULL);

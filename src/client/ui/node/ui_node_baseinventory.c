@@ -853,7 +853,7 @@ void UI_RegisterBaseInventoryNode (uiBehaviour_t* behaviour)
 	behaviour->loading = UI_BaseInventoryNodeLoading;
 	behaviour->loaded = UI_BaseInventoryNodeLoaded;
 	behaviour->extraDataSize = sizeof(EXTRADATA_TYPE);
-	behaviour->properties = properties;
+	behaviour->oldProperties = properties;
 
 	behaviour->dndEnter = UI_BaseInventoryNodeDNDEnter;
 	behaviour->dndMove = UI_BaseInventoryNodeDNDMove;

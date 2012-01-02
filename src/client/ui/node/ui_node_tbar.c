@@ -87,6 +87,6 @@ void UI_RegisterTBarNode (uiBehaviour_t *behaviour)
 	behaviour->name = "tbar";
 	behaviour->extends = "abstractvalue";
 	behaviour->draw = UI_TBarNodeDraw;
-	behaviour->properties = properties;
+	behaviour->oldProperties = properties;
 	behaviour->extraDataSize = sizeof(EXTRADATA_TYPE);
 }

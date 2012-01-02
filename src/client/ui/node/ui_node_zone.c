@@ -105,6 +105,6 @@ void UI_RegisterZoneNode (uiBehaviour_t *behaviour)
 	behaviour->mouseDown = UI_ZoneNodeDown;
 	behaviour->mouseUp = UI_ZoneNodeUp;
 	behaviour->capturedMouseLost = UI_ZoneNodeCapturedMouseLost;
-	behaviour->properties = properties;
+	behaviour->oldProperties = properties;
 	behaviour->extraDataSize = sizeof(EXTRADATA_TYPE);
 }

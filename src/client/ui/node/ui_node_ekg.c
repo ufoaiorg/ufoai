@@ -125,6 +125,6 @@ void UI_RegisterEKGNode (uiBehaviour_t* behaviour)
 	behaviour->loading = UI_EKGNodeLoading;
 	behaviour->extends = "image";
 	behaviour->draw = UI_EKGNodeDraw;
-	behaviour->properties = properties;
+	behaviour->oldProperties = properties;
 	behaviour->extraDataSize = sizeof(EXTRADATA_TYPE);
 }

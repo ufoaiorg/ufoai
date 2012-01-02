@@ -179,6 +179,6 @@ void UI_RegisterButtonNode (uiBehaviour_t *behaviour)
 	behaviour->loaded = UI_ButtonNodeLoaded;
 	behaviour->leftClick = UI_ButtonNodeClick;
 	behaviour->loading = UI_ButtonNodeLoading;
-	behaviour->properties = properties;
+	behaviour->oldProperties = properties;
 	behaviour->extraDataSize = sizeof(EXTRADATA_TYPE);
 }

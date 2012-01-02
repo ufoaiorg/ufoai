@@ -202,6 +202,6 @@ void UI_RegisterKeyBindingNode (uiBehaviour_t *behaviour)
 	behaviour->keyPressed = UI_KeyBindingNodeKeyPressed;
 	behaviour->draw = UI_KeyBindingNodeDraw;
 	behaviour->loading = UI_KeyBindingNodeLoading;
-	behaviour->properties = properties;
+	behaviour->oldProperties = properties;
 	behaviour->extraDataSize = sizeof(EXTRADATA_TYPE);
 }

@@ -130,6 +130,6 @@ void UI_RegisterCustomButtonNode (uiBehaviour_t *behaviour)
 	behaviour->name = "custombutton";
 	behaviour->extends = "button";
 	behaviour->draw = UI_CustomButtonNodeDraw;
-	behaviour->properties = properties;
+	behaviour->oldProperties = properties;
 	behaviour->extraDataSize = sizeof(EXTRADATA_TYPE);
 }

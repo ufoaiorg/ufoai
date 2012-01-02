@@ -218,6 +218,6 @@ void UI_RegisterImageNode (uiBehaviour_t* behaviour)
 	behaviour->name = "image";
 	behaviour->draw = UI_ImageNodeDraw;
 	behaviour->loaded = UI_ImageNodeLoaded;
-	behaviour->properties = properties;
+	behaviour->oldProperties = properties;
 	behaviour->extraDataSize = sizeof(EXTRADATA_TYPE);
 }

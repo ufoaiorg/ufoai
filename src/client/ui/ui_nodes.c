@@ -26,6 +26,7 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #include "ui_internal.h"
 #include "ui_nodes.h"
 #include "ui_parse.h"
+#include "ui_property.h"
 #include "ui_input.h"
 
 #include "node/ui_node_abstractnode.h"
@@ -142,6 +143,67 @@ static const registerFunction_t registerFunctions[] = {
 #define NUMBER_OF_BEHAVIOURS lengthof(registerFunctions)
 
 /**
+ * FIXME rework that bad structure, move it to hunk memeory
+ */
+#define LOCAL_PROPERTY_SIZE	128
+#define GLOBAL_PROPERTY_SIZE	512
+static value_t properties[GLOBAL_PROPERTY_SIZE];
+static int propertyCount;
+
+/**
+ * @brief Register a property to a behaviour.
+ * It should not be used in the code
+ * @param behaviour Target behaviour
+ * @param name Name of the property
+ * @param type Type of the property
+ * @param pos position of the attribute (which store property memory) into the node structure
+ * @param size size of the attribute (which store property memory) into the node structure
+ * @see UI_RegisterNodeProperty
+ * @see UI_RegisterExtradataNodeProperty
+ * @return A link to the node property
+ */
+const struct value_s *UI_RegisterNodePropertyPosSize_ (struct uiBehaviour_s *behaviour, const char* name, int type, int pos, int size)
+{
+	if (propertyCount >= GLOBAL_PROPERTY_SIZE) {
+		Com_Error(ERR_FATAL, "UI_RegisterNodePropertyPosSize_: Global property memory is full.");
+	}
+	value_t *property = &properties[propertyCount++];
+
+	if (type == V_STRING || type == V_LONGSTRING || type == V_CVAR_OR_LONGSTRING || V_CVAR_OR_STRING) {
+		size = 0;
+	}
+
+	property->string = name;
+	property->type = type;
+	property->ofs = pos;
+	property->size = size;
+
+	if (behaviour->localProperties == NULL) {
+		/** FIXME should be into hunk memory, and unlimited */
+		behaviour->localProperties = (const value_t **)Mem_PoolAlloc(sizeof(*behaviour->localProperties) * LOCAL_PROPERTY_SIZE, ui_sysPool, 0);
+	}
+	if (behaviour->propertyCount >= LOCAL_PROPERTY_SIZE-1) {
+		Com_Error(ERR_FATAL, "UI_RegisterNodePropertyPosSize_: Property memory of behaviour %s is full.", behaviour->name);
+	}
+	behaviour->localProperties[behaviour->propertyCount++] = property;
+	behaviour->localProperties[behaviour->propertyCount] = NULL;
+
+	return property;
+}
+
+/**
+ * @brief Register a node method to a behaviour.
+ * @param behaviour Target behaviour
+ * @param name Name of the property
+ * @param function function to execute the node method
+ * @return A link to the node property
+ */
+const struct value_s *UI_RegisterNodeMethod (struct uiBehaviour_s *behaviour, const char* name, uiNodeMethod_t function)
+{
+	return UI_RegisterNodePropertyPosSize_(behaviour, name, V_UI_NODEMETHOD, (size_t)function, 0);
+}
+
+/**
  * @brief List of all node behaviours, indexes by nodetype num.
  */
 static uiBehaviour_t nodeBehaviourList[NUMBER_OF_BEHAVIOURS];
@@ -155,12 +217,15 @@ static uiBehaviour_t nodeBehaviourList[NUMBER_OF_BEHAVIOURS];
 const value_t *UI_GetPropertyFromBehaviour (const uiBehaviour_t *behaviour, const char* name)
 {
 	for (; behaviour; behaviour = behaviour->super) {
-		const value_t *result;
-		if (behaviour->properties == NULL)
+		const value_t **current;
+		if (behaviour->localProperties == NULL)
 			continue;
-		result = UI_FindPropertyByName(behaviour->properties, name);
-		if (result)
-			return result;
+		current = behaviour->localProperties;
+		while (*current) {
+			if (!Q_strcasecmp(name, (*current)->string))
+				return *current;
+			current++;
+		}
 	}
 	return NULL;
 }
@@ -573,12 +638,12 @@ void UI_DeleteNode (uiNode_t* node)
 
 	/* delete all allocated properties */
 	for (behaviour = node->behaviour; behaviour; behaviour = behaviour->super) {
-		const value_t *property = behaviour->properties;
-		if (property == NULL)
+		const value_t **property = behaviour->localProperties;
+		if (*property == NULL)
 			continue;
-		while (property->string != NULL) {
-			if ((property->type & V_UI_MASK) == V_UI_CVAR) {
-				void *mem = ((byte *) node + property->ofs);
+		while (*property) {
+			if (((*property)->type & V_UI_MASK) == V_UI_CVAR) {
+				void *mem = ((byte *) node + (*property)->ofs);
 				if (*(void**)mem != NULL) {
 					UI_FreeStringProperty(*(void**)mem);
 					*(void**)mem = NULL;
@@ -695,13 +760,25 @@ static void UI_InitializeNodeBehaviour (uiBehaviour_t* behaviour)
 
 	/** @todo check (when its possible) properties are ordered by name */
 	/* check and update properties data */
-	if (behaviour->properties) {
+	if (behaviour->oldProperties) {
 		int num = 0;
-		const value_t* current = behaviour->properties;
+		const value_t* current = behaviour->oldProperties;
 		while (current->string != NULL) {
 			num++;
 			current++;
 		}
+
+		/** TODO should be into hunk memory */
+		behaviour->localProperties = (const value_t **)Mem_PoolAlloc(sizeof(*(behaviour->localProperties)) * (num + 1), ui_sysPool, 0);
+		current = behaviour->oldProperties;
+		num = 0;
+		while (current->string != NULL) {
+			behaviour->localProperties[num] = current;
+			num++;
+			current++;
+		}
+		behaviour->localProperties[num] = NULL;
+
 		behaviour->propertyCount = num;
 	}
 
@@ -733,30 +810,30 @@ static void UI_InitializeNodeBehaviour (uiBehaviour_t* behaviour)
 	}
 
 	/* property must not overwrite another property */
-	if (behaviour->super && behaviour->properties) {
-		const value_t* property = behaviour->properties;
-		while (property->string != NULL) {
-			const value_t *p = UI_GetPropertyFromBehaviour(behaviour->super, property->string);
+	if (behaviour->super && behaviour->localProperties) {
+		const value_t** property = behaviour->localProperties;
+		while (*property) {
+			const value_t *p = UI_GetPropertyFromBehaviour(behaviour->super, (*property)->string);
 #if 0	/**< @todo not possible at the moment, not sure its the right way */
 			const uiBehaviour_t *b = UI_GetNodeBehaviour(current->string);
 #endif
 			if (p != NULL)
-				Com_Error(ERR_FATAL, "UI_InitializeNodeBehaviour: property '%s' from node behaviour '%s' overwrite another property", property->string, behaviour->name);
+				Com_Error(ERR_FATAL, "UI_InitializeNodeBehaviour: property '%s' from node behaviour '%s' overwrite another property", (*property)->string, behaviour->name);
 #if 0	/**< @todo not possible at the moment, not sure its the right way */
 			if (b != NULL)
-				Com_Error(ERR_FATAL, "UI_InitializeNodeBehaviour: property '%s' from node behaviour '%s' use the name of an existing node behaviour", property->string, behaviour->name);
+				Com_Error(ERR_FATAL, "UI_InitializeNodeBehaviour: property '%s' from node behaviour '%s' use the name of an existing node behaviour", (*property)->string, behaviour->name);
 #endif
 			property++;
 		}
 	}
 
 	/* Sanity: A property must not be outside the node memory */
-	if (behaviour->properties) {
+	if (behaviour->localProperties) {
 		const int size = sizeof(uiNode_t) + behaviour->extraDataSize;
-		const value_t* property = behaviour->properties;
-		while (property->string != NULL) {
-			if (property->type != V_UI_NODEMETHOD && property->ofs + property->size > size)
-				Com_Error(ERR_FATAL, "UI_InitializeNodeBehaviour: property '%s' from node behaviour '%s' is outside the node memory. The C code need a fix.", property->string, behaviour->name);
+		const value_t** property = behaviour->localProperties;
+		while (*property) {
+			if ((*property)->type != V_UI_NODEMETHOD && (*property)->ofs + (*property)->size > size)
+				Com_Error(ERR_FATAL, "UI_InitializeNodeBehaviour: property '%s' from node behaviour '%s' is outside the node memory. The C code need a fix.", (*property)->string, behaviour->name);
 			property++;
 		}
 	}
@@ -771,7 +848,9 @@ void UI_InitNodes (void)
 
 	/* compute list of node behaviours */
 	for (i = 0; i < NUMBER_OF_BEHAVIOURS; i++) {
+		current->registration = qtrue;
 		registerFunctions[i](current);
+		current->registration = qfalse;
 		current++;
 	}
 

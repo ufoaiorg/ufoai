@@ -777,130 +777,10 @@ static void UI_AbstractNodeCallDelete (uiNode_t *node, const uiCallContext_t *co
 	UI_DeleteNode(node);
 }
 
-/** @brief valid properties for a node */
-static const value_t properties[] = {
-	/* Top-left position of the node */
-	UI_INIT_PROPERTY("pos", V_POS, uiNode_t, pos),
-	/* Size of the node */
-	UI_INIT_PROPERTY("size", V_POS, uiNode_t, size),
-	/* Width of the node (see also <code>size</code>) */
-	UI_INIT_PROPERTY("width", V_FLOAT, uiNode_t, size[0]),
-	/* Height of the node (see also <code>size</code>) */
-	UI_INIT_PROPERTY("height", V_FLOAT, uiNode_t, size[1]),
-	/* Left position of the node (see also <code>pos</code>) */
-	UI_INIT_PROPERTY("left", V_FLOAT, uiNode_t, pos[0]),
-	/* Top position of the node (see also <code>pos</code>) */
-	UI_INIT_PROPERTY("top", V_FLOAT, uiNode_t, pos[1]),
-
-	/* If true, the node name is indexed into the window. We can access to the node with
-	 * the path "windowName#nodeName"
-	 */
-	UI_INIT_PROPERTY("indexed", V_BOOL, uiNode_t, indexed),
-	/* If true, the node is not displayed nor or activatable. */
-	UI_INIT_PROPERTY("invis", V_BOOL, uiNode_t, invis),
-	/* If true, the node is disabled. Few nodes support it, fell free to request an update. */
-	UI_INIT_PROPERTY("disabled", V_BOOL, uiNode_t, disabled),
-	/* If true, the node is not ''tangible''. We click through it, then it will not receive mouse event. */
-	UI_INIT_PROPERTY("ghost", V_BOOL, uiNode_t, ghost),
-	/* Border size we want to display. */
-	UI_INIT_PROPERTY("border", V_INT, uiNode_t, border),
-	/* Padding size we want to use. Few node support it. */
-	UI_INIT_PROPERTY("padding", V_INT, uiNode_t, padding),
-	/* Background color we want to display. */
-	UI_INIT_PROPERTY("bgcolor", V_COLOR, uiNode_t, bgcolor),
-	/* Border color we want to display. */
-	UI_INIT_PROPERTY("bordercolor", V_COLOR, uiNode_t, bordercolor),
-
-	/*
-	 * Used to set the position of the node when the parent use a layout manager.
-	 * Else it do nothing.
-	 * Available values are: LAYOUTALIGN_TOPLEFT, LAYOUTALIGN_TOP, LAYOUTALIGN_TOPRIGHT,
-	 * LAYOUTALIGN_LEFT, LAYOUTALIGN_MIDDLE, LAYOUTALIGN_RIGHT, LAYOUTALIGN_BOTTOMLEFT,
-	 * LAYOUTALIGN_BOTTOM, LAYOUTALIGN_BOTTOMRIGHT, LAYOUTALIGN_FILL.
-	 * Allowed value depend the layout manager used. The update to date list is into
-	 * ui_node_panel.c
-	 * @image html http://ufoai.ninex.info/wiki/images/Layout.png
-	 */
-	UI_INIT_PROPERTY("align", V_INT, uiNode_t, align),
-
-	/*
-	 * Used share an int, only used by 1 behavour
-	 * @todo move it to the right behaviour, delete it
-	 */
-	UI_INIT_PROPERTY("num", V_INT, uiNode_t, num),
-
-	/* Tooltip we want to use. */
-	UI_INIT_NOSIZE_PROPERTY("tooltip", V_CVAR_OR_LONGSTRING, uiNode_t, tooltip),
-	/* Image to use. Each behaviour use it like they want.
-	 * @todo Move it into behaviour need it.
-	 * @todo use V_REF_OF_STRING when its possible ('image' is never a cvar)
-	 */
-	UI_INIT_NOSIZE_PROPERTY("image", V_CVAR_OR_STRING, uiNode_t, image),
-	/* Text the node will display. */
-	UI_INIT_NOSIZE_PROPERTY("string", V_CVAR_OR_LONGSTRING, uiNode_t, text), /* no gettext here - this can be a cvar, too */
-	/* Text font the node will use.
-	 * @todo use V_REF_OF_STRING when its possible ('font' is never a cvar).
-	 */
-	UI_INIT_NOSIZE_PROPERTY("font", V_CVAR_OR_STRING, uiNode_t, font),
-
-	/* Text color the node will use. */
-	UI_INIT_PROPERTY("color", V_COLOR, uiNode_t, color),
-	/* Text color the node will use when something is selected. */
-	UI_INIT_PROPERTY("selectcolor", V_COLOR, uiNode_t, selectedColor),
-	/* Alignement of the text into the node, or elements into blocks. */
-	UI_INIT_PROPERTY("contentalign", V_UI_ALIGN, uiNode_t, contentAlign),
-	/* When <code>invis</code> property is false (default value),
-	 * this condition say if the node is visible or not. It use a script expression.
-	 */
-	UI_INIT_PROPERTY("visiblewhen", V_UI_IF, uiNode_t, visibilityCondition),
-
-	/* Called when the user click with left button into the node. */
-	UI_INIT_PROPERTY("onclick", V_UI_ACTION, uiNode_t, onClick),
-	/* Called when the user click with right button into the node. */
-	UI_INIT_PROPERTY("onrclick", V_UI_ACTION, uiNode_t, onRightClick),
-	/* Called when the user click with middle button into the node. */
-	UI_INIT_PROPERTY("onmclick", V_UI_ACTION, uiNode_t, onMiddleClick),
-	/* Called when the user use the mouse wheel over the node. */
-	UI_INIT_PROPERTY("onwheel", V_UI_ACTION, uiNode_t, onWheel),
-	/* Called when the user use the mouse wheel up over the node. */
-	UI_INIT_PROPERTY("onwheelup", V_UI_ACTION, uiNode_t, onWheelUp),
-	/* Called when the user use the mouse wheel down over the node. */
-	UI_INIT_PROPERTY("onwheeldown", V_UI_ACTION, uiNode_t, onWheelDown),
-	/* Called when the mouse enter over the node. */
-	UI_INIT_PROPERTY("onmouseenter", V_UI_ACTION, uiNode_t, onMouseEnter),
-	/* Called when the mouse go out of the node. */
-	UI_INIT_PROPERTY("onmouseleave", V_UI_ACTION, uiNode_t, onMouseLeave),
-	/* Called when the internal content of the nde change. Each behaviour use it how they need it.
-	 * @todo Move it where it is need.
-	 */
-	UI_INIT_PROPERTY("onchange", V_UI_ACTION, uiNode_t, onChange),
-
-	/* Special attribute only use into the node description to exclude part of the node (see also <code>ghost</code>). Rectangle position is relative to the node. */
-	UI_INIT_PROPERTY("excluderect", V_UI_EXCLUDERECT, uiNode_t, excludeRect),
-
-	/* Remove all child from the node (only dynamic allocated nodes). */
-	UI_INIT_METHOD_PROPERTY("removeallchild", V_UI_NODEMETHOD, UI_AbstractNodeCallRemovaAllChild),
-
-	/* Create a new child with name and type. */
-	UI_INIT_METHOD_PROPERTY("createchild", V_UI_NODEMETHOD, UI_AbstractNodeCallCreateChild),
-
-	/* Delete the node and remove it from his parent. */
-	UI_INIT_METHOD_PROPERTY("delete", V_UI_NODEMETHOD, UI_AbstractNodeCallDelete),
-
-	/* end of list */
-	UI_INIT_EMPTY_PROPERTY
-};
-
 void UI_RegisterAbstractNode (uiBehaviour_t *behaviour)
 {
 	behaviour->name = "abstractnode";
 	behaviour->isAbstract = qtrue;
-	behaviour->properties = properties;
-
-	propertyWidth = UI_GetPropertyFromBehaviour(behaviour, "width");
-	propertyHeight = UI_GetPropertyFromBehaviour(behaviour, "height");
-	propertySize = UI_GetPropertyFromBehaviour(behaviour, "size");
-	propertyInvis = UI_GetPropertyFromBehaviour(behaviour, "invis");
 
 	/* callbacks */
 	behaviour->dndEnter = UI_AbstractNodeDNDEnter;
@@ -915,6 +795,116 @@ void UI_RegisterAbstractNode (uiBehaviour_t *behaviour)
 	behaviour->sizeChanged = UI_AbstractNodeSizeChanged;
 	behaviour->windowOpened = UI_AbstractNodeInit;
 	behaviour->windowClosed = UI_AbstractNodeClose;
+
+	/* Top-left position of the node */
+	UI_RegisterNodeProperty(behaviour, "pos", V_POS, uiNode_t, pos);
+	/* Size of the node */
+	propertySize = UI_RegisterNodeProperty(behaviour, "size", V_POS, uiNode_t, size);
+	/* Width of the node (see also <code>size</code>) */
+	propertyWidth = UI_RegisterNodeProperty(behaviour, "width", V_FLOAT, uiNode_t, size[0]);
+	/* Height of the node (see also <code>size</code>) */
+	propertyHeight = UI_RegisterNodeProperty(behaviour, "height", V_FLOAT, uiNode_t, size[1]);
+	/* Left position of the node (see also <code>pos</code>) */
+	UI_RegisterNodeProperty(behaviour, "left", V_FLOAT, uiNode_t, pos[0]);
+	/* Top position of the node (see also <code>pos</code>) */
+	UI_RegisterNodeProperty(behaviour, "top", V_FLOAT, uiNode_t, pos[1]);
+
+	/* If true, the node name is indexed into the window. We can access to the node with
+	 * the path "windowName#nodeName"
+	 */
+	UI_RegisterNodeProperty(behaviour, "indexed", V_BOOL, uiNode_t, indexed);
+	/* If true, the node is not displayed nor or activatable. */
+	propertyInvis = UI_RegisterNodeProperty(behaviour, "invis", V_BOOL, uiNode_t, invis);
+	/* If true, the node is disabled. Few nodes support it, fell free to request an update. */
+	UI_RegisterNodeProperty(behaviour, "disabled", V_BOOL, uiNode_t, disabled);
+	/* If true, the node is not ''tangible''. We click through it, then it will not receive mouse event. */
+	UI_RegisterNodeProperty(behaviour, "ghost", V_BOOL, uiNode_t, ghost);
+	/* Border size we want to display. */
+	UI_RegisterNodeProperty(behaviour, "border", V_INT, uiNode_t, border);
+	/* Padding size we want to use. Few node support it. */
+	UI_RegisterNodeProperty(behaviour, "padding", V_INT, uiNode_t, padding);
+	/* Background color we want to display. */
+	UI_RegisterNodeProperty(behaviour, "bgcolor", V_COLOR, uiNode_t, bgcolor);
+	/* Border color we want to display. */
+	UI_RegisterNodeProperty(behaviour, "bordercolor", V_COLOR, uiNode_t, bordercolor);
+
+	/*
+	 * Used to set the position of the node when the parent use a layout manager.
+	 * Else it do nothing.
+	 * Available values are: LAYOUTALIGN_TOPLEFT, LAYOUTALIGN_TOP, LAYOUTALIGN_TOPRIGHT,
+	 * LAYOUTALIGN_LEFT, LAYOUTALIGN_MIDDLE, LAYOUTALIGN_RIGHT, LAYOUTALIGN_BOTTOMLEFT,
+	 * LAYOUTALIGN_BOTTOM, LAYOUTALIGN_BOTTOMRIGHT, LAYOUTALIGN_FILL.
+	 * Allowed value depend the layout manager used. The update to date list is into
+	 * ui_node_panel.c
+	 * @image html http://ufoai.ninex.info/wiki/images/Layout.png
+	 */
+	UI_RegisterNodeProperty(behaviour, "align", V_INT, uiNode_t, align);
+
+	/*
+	 * Used share an int, only used by 1 behavour
+	 * @todo move it to the right behaviour, delete it
+	 */
+	UI_RegisterNodeProperty(behaviour, "num", V_INT, uiNode_t, num);
+
+	/* Tooltip we want to use. */
+	UI_RegisterNodeProperty(behaviour, "tooltip", V_CVAR_OR_LONGSTRING, uiNode_t, tooltip);
+	/* Image to use. Each behaviour use it like they want.
+	 * @todo Move it into behaviour need it.
+	 * @todo use V_REF_OF_STRING when its possible ('image' is never a cvar)
+	 */
+	UI_RegisterNodeProperty(behaviour, "image", V_CVAR_OR_STRING, uiNode_t, image);
+	/* Text the node will display.
+	 */
+	UI_RegisterNodeProperty(behaviour, "string", V_CVAR_OR_LONGSTRING, uiNode_t, text);
+	/* Text font the node will use.
+	 * @todo use V_REF_OF_STRING when its possible ('font' is never a cvar).
+	 */
+	UI_RegisterNodeProperty(behaviour, "font", V_CVAR_OR_STRING, uiNode_t, font);
+
+	/* Text color the node will use. */
+	UI_RegisterNodeProperty(behaviour, "color", V_COLOR, uiNode_t, color);
+	/* Text color the node will use when something is selected. */
+	UI_RegisterNodeProperty(behaviour, "selectcolor", V_COLOR, uiNode_t, selectedColor);
+	/* Alignement of the text into the node, or elements into blocks. */
+	UI_RegisterNodeProperty(behaviour, "contentalign", V_UI_ALIGN, uiNode_t, contentAlign);
+	/* When <code>invis</code> property is false (default value);
+	 * this condition say if the node is visible or not. It use a script expression.
+	 */
+	UI_RegisterNodeProperty(behaviour, "visiblewhen", V_UI_IF, uiNode_t, visibilityCondition);
+
+	/* Called when the user click with left button into the node. */
+	UI_RegisterNodeProperty(behaviour, "onclick", V_UI_ACTION, uiNode_t, onClick);
+	/* Called when the user click with right button into the node. */
+	UI_RegisterNodeProperty(behaviour, "onrclick", V_UI_ACTION, uiNode_t, onRightClick);
+	/* Called when the user click with middle button into the node. */
+	UI_RegisterNodeProperty(behaviour, "onmclick", V_UI_ACTION, uiNode_t, onMiddleClick);
+	/* Called when the user use the mouse wheel over the node. */
+	UI_RegisterNodeProperty(behaviour, "onwheel", V_UI_ACTION, uiNode_t, onWheel);
+	/* Called when the user use the mouse wheel up over the node. */
+	UI_RegisterNodeProperty(behaviour, "onwheelup", V_UI_ACTION, uiNode_t, onWheelUp);
+	/* Called when the user use the mouse wheel down over the node. */
+	UI_RegisterNodeProperty(behaviour, "onwheeldown", V_UI_ACTION, uiNode_t, onWheelDown);
+	/* Called when the mouse enter over the node. */
+	UI_RegisterNodeProperty(behaviour, "onmouseenter", V_UI_ACTION, uiNode_t, onMouseEnter);
+	/* Called when the mouse go out of the node. */
+	UI_RegisterNodeProperty(behaviour, "onmouseleave", V_UI_ACTION, uiNode_t, onMouseLeave);
+	/* Called when the internal content of the nde change. Each behaviour use it how they need it.
+	 * @todo Move it where it is need.
+	 */
+	UI_RegisterNodeProperty(behaviour, "onchange", V_UI_ACTION, uiNode_t, onChange);
+
+	/* Special attribute only use into the node description to exclude part of the node
+	 * (see also <code>ghost</code>). Rectangle position is relative to the node. */
+	UI_RegisterNodeProperty(behaviour, "excluderect", V_UI_EXCLUDERECT, uiNode_t, excludeRect);
+
+	/* Remove all child from the node (only dynamic allocated nodes). */
+	UI_RegisterNodeMethod(behaviour, "removeallchild", UI_AbstractNodeCallRemovaAllChild);
+
+	/* Create a new child with name and type. */
+	UI_RegisterNodeMethod(behaviour, "createchild", UI_AbstractNodeCallCreateChild);
+
+	/* Delete the node and remove it from his parent. */
+	UI_RegisterNodeMethod(behaviour, "delete", UI_AbstractNodeCallDelete);
 
 	/** @todo move it into common? */
 	Com_RegisterConstInt("ALIGN_UL", ALIGN_UL);

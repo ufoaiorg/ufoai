@@ -83,6 +83,6 @@ void UI_RegisterRowsNode (uiBehaviour_t *behaviour)
 	behaviour->name = "rows";
 	behaviour->draw = UI_RowsNodeDraw;
 	behaviour->loaded = UI_RowsNodeLoaded;
-	behaviour->properties = properties;
+	behaviour->oldProperties = properties;
 	behaviour->extraDataSize = sizeof(EXTRADATA_TYPE);
 }

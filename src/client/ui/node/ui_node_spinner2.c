@@ -124,6 +124,6 @@ void UI_RegisterSpinner2Node (uiBehaviour_t *behaviour)
 	behaviour->name = "spinner2";
 	behaviour->extends = "spinner";
 	behaviour->draw = UI_Spinner2NodeDraw;
-	behaviour->properties = properties;
+	behaviour->oldProperties = properties;
 	behaviour->extraDataSize = sizeof(EXTRADATA_TYPE);
 }

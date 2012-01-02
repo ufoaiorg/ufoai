@@ -83,6 +83,6 @@ void UI_RegisterTextureNode (uiBehaviour_t* behaviour)
 {
 	behaviour->name = "texture";
 	behaviour->draw = UI_TextureNodeDraw;
-	behaviour->properties = properties;
+	behaviour->oldProperties = properties;
 	behaviour->extraDataSize = sizeof(EXTRADATA_TYPE);
 }

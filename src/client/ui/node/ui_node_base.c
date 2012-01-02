@@ -373,7 +373,7 @@ void UI_RegisterAbstractBaseNode (uiBehaviour_t *behaviour)
 {
 	behaviour->name = "abstractbase";
 	behaviour->isAbstract = qtrue;
-	behaviour->properties = properties;
+	behaviour->oldProperties = properties;
 	behaviour->loaded = UI_AbstractBaseNodeLoaded;
 	behaviour->extraDataSize = sizeof(EXTRADATA_TYPE);
 }

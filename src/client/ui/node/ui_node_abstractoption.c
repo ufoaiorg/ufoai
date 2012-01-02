@@ -149,7 +149,7 @@ void UI_RegisterAbstractOptionNode (uiBehaviour_t *behaviour)
 {
 	behaviour->name = "abstractoption";
 	behaviour->isAbstract = qtrue;
-	behaviour->properties = properties;
+	behaviour->oldProperties = properties;
 	behaviour->extraDataSize = sizeof(EXTRADATA_TYPE);
 	behaviour->drawItselfChild = qtrue;
 	behaviour->doLayout = UI_AbstractOptionDoLayout;

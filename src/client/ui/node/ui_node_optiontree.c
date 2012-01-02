@@ -378,6 +378,6 @@ void UI_RegisterOptionTreeNode (uiBehaviour_t *behaviour)
 	behaviour->loading = UI_OptionTreeNodeLoading;
 	behaviour->loaded = UI_OptionTreeNodeLoaded;
 	behaviour->doLayout = UI_OptionTreeNodeDoLayout;
-	behaviour->properties = properties;
+	behaviour->oldProperties = properties;
 	behaviour->drawItselfChild = qtrue;
 }

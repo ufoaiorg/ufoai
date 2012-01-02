@@ -122,7 +122,7 @@ void UI_RegisterSequenceNode (uiBehaviour_t* behaviour)
 	localBehaviour = behaviour;
 	behaviour->name = "sequence";
 	behaviour->draw = UI_SequenceNodeDraw;
-	behaviour->properties = properties;
+	behaviour->oldProperties = properties;
 	behaviour->windowOpened = UI_SequenceNodeInit;
 	behaviour->windowClosed = UI_SequenceNodeClose;
 	behaviour->extraDataSize = sizeof(EXTRADATA_TYPE);

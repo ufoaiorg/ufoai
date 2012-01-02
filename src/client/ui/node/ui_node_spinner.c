@@ -269,6 +269,6 @@ void UI_RegisterSpinnerNode (uiBehaviour_t *behaviour)
 	behaviour->capturedMouseLost = UI_SpinnerNodeCapturedMouseLost;
 	behaviour->draw = UI_SpinnerNodeDraw;
 	behaviour->loading = UI_SpinnerNodeLoading;
-	behaviour->properties = properties;
+	behaviour->oldProperties = properties;
 	behaviour->extraDataSize = sizeof(EXTRADATA_TYPE);
 }

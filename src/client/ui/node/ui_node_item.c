@@ -89,7 +89,7 @@ static const value_t properties[] = {
 void UI_RegisterItemNode (uiBehaviour_t *behaviour)
 {
 	behaviour->name = "item";
-	behaviour->properties = properties;
+	behaviour->oldProperties = properties;
 	behaviour->extends = "model";
 	behaviour->draw = UI_ItemNodeDraw;
 }

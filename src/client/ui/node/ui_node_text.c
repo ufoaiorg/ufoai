@@ -28,6 +28,7 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #include "../ui_font.h"
 #include "../ui_actions.h"
 #include "../ui_parse.h"
+#include "../ui_property.h"
 #include "../ui_render.h"
 #include "ui_node_text.h"
 #include "ui_node_abstractnode.h"
@@ -495,46 +496,6 @@ static void UI_TextNodeLoaded (uiNode_t *node)
 		Com_Printf("UI_TextNodeLoaded: 'textid' property of node '%s' is not set\n", UI_GetPath(node));
 }
 
-static const value_t properties[] = {
-	/* Current selected line  */
-	{"lineselected", V_INT, UI_EXTRADATA_OFFSETOF(textExtraData_t, textLineSelected), MEMBER_SIZEOF(textExtraData_t, textLineSelected)},
-	/* One of the list TEXT_STANDARD, TEXT_LIST, TEXT_UFOPEDIA, TEXT_BUILDINGS,
-	 * TEXT_BUILDING_INFO, TEXT_RESEARCH, TEXT_RESEARCH_INFO, TEXT_POPUP,
-	 * TEXT_POPUP_INFO, TEXT_AIRCRAFT_LIST, TEXT_AIRCRAFT, TEXT_AIRCRAFT_INFO,
-	 * TEXT_MESSAGESYSTEM, TEXT_CAMPAIGN_LIST, TEXT_MULTISELECTION.
-	 * There are more IDs in use - see ui_data.h for an up-to-date list.
-	 * Display a shared content registered by the client code.
-	 */
-	{"dataid", V_UI_DATAID, UI_EXTRADATA_OFFSETOF(textExtraData_t, dataID), MEMBER_SIZEOF(textExtraData_t, dataID)},
-	/* Size between two lines. Default value is 0, in this case it use a line height according to the font size. */
-	{"lineheight", V_INT, UI_EXTRADATA_OFFSETOF(textExtraData_t, lineHeight), MEMBER_SIZEOF(textExtraData_t, lineHeight)},
-	/* Bigger size of the width replacing a tab character. */
-	{"tabwidth", V_INT, UI_EXTRADATA_OFFSETOF(textExtraData_t, tabWidth), MEMBER_SIZEOF(textExtraData_t, tabWidth)},
-	/* What to do with text lines longer than node width. Default is to wordwrap them to make multiple lines.
-	 * It can be LONGLINES_WRAP, LONGLINES_CHOP, LONGLINES_PRETTYCHOP
-	 */
-	{"longlines", V_INT, UI_EXTRADATA_OFFSETOF(textExtraData_t, longlines), MEMBER_SIZEOF(textExtraData_t, longlines)},
-
-	/* Number of visible line we can display into the node height.
-	 * Currently, it translate the scrollable property <code>viewSize</code>
-	 * @todo For a smooth scroll we should split that
-	 */
-	{"rows", V_INT, UI_EXTRADATA_OFFSETOF(textExtraData_t, super.scrollY.viewSize), MEMBER_SIZEOF(textExtraData_t, super.scrollY.viewSize)},
-	/* Number of lines contained into the node.
-	 * Currently, it translate the scrollable property <code>fullSize</code>
-	 * @todo For a smooth scroll we should split that
-	 */
-	{"lines", V_INT, UI_EXTRADATA_OFFSETOF(textExtraData_t, super.scrollY.fullSize), MEMBER_SIZEOF(textExtraData_t, super.scrollY.fullSize)},
-
-	/** Highlight each node elements when the mouse move over the node.
-	 * @todo delete it went its possible (need to create a textlist...)
-	 */
-	{"mousefx", V_BOOL, UI_EXTRADATA_OFFSETOF(textExtraData_t, mousefx), MEMBER_SIZEOF(textExtraData_t, mousefx)},
-
-	/* end of line */
-	UI_INIT_EMPTY_PROPERTY
-};
-
 void UI_RegisterTextNode (uiBehaviour_t *behaviour)
 {
 	behaviour->name = "text";
@@ -546,8 +507,42 @@ void UI_RegisterTextNode (uiBehaviour_t *behaviour)
 	behaviour->mouseMove = UI_TextNodeMouseMove;
 	behaviour->loading = UI_TextNodeLoading;
 	behaviour->loaded = UI_TextNodeLoaded;
-	behaviour->properties = properties;
 	behaviour->extraDataSize = sizeof(EXTRADATA_TYPE);
+
+	/* Current selected line  */
+	UI_RegisterExtradataNodeProperty(behaviour, "lineselected", V_INT, textExtraData_t, textLineSelected);
+	/* One of the list TEXT_STANDARD, TEXT_LIST, TEXT_UFOPEDIA, TEXT_BUILDINGS,
+	 * TEXT_BUILDING_INFO, TEXT_RESEARCH, TEXT_RESEARCH_INFO, TEXT_POPUP,
+	 * TEXT_POPUP_INFO, TEXT_AIRCRAFT_LIST, TEXT_AIRCRAFT, TEXT_AIRCRAFT_INFO,
+	 * TEXT_MESSAGESYSTEM, TEXT_CAMPAIGN_LIST, TEXT_MULTISELECTION.
+	 * There are more IDs in use - see ui_data.h for an up-to-date list.
+	 * Display a shared content registered by the client code.
+	 */
+	UI_RegisterExtradataNodeProperty(behaviour, "dataid", V_UI_DATAID, textExtraData_t, dataID);
+	/* Size between two lines. Default value is 0, in this case it use a line height according to the font size. */
+	UI_RegisterExtradataNodeProperty(behaviour, "lineheight", V_INT, textExtraData_t, lineHeight);
+	/* Bigger size of the width replacing a tab character. */
+	UI_RegisterExtradataNodeProperty(behaviour, "tabwidth", V_INT, textExtraData_t, tabWidth);
+	/* What to do with text lines longer than node width. Default is to wordwrap them to make multiple lines.
+	 * It can be LONGLINES_WRAP, LONGLINES_CHOP, LONGLINES_PRETTYCHOP
+	 */
+	UI_RegisterExtradataNodeProperty(behaviour, "longlines", V_INT, textExtraData_t, longlines);
+
+	/* Number of visible line we can display into the node height.
+	 * Currently, it translate the scrollable property <code>viewSize</code>
+	 * @todo For a smooth scroll we should split that
+	 */
+	UI_RegisterExtradataNodeProperty(behaviour, "rows", V_INT, textExtraData_t, super.scrollY.viewSize);
+	/* Number of lines contained into the node.
+	 * Currently, it translate the scrollable property <code>fullSize</code>
+	 * @todo For a smooth scroll we should split that
+	 */
+	UI_RegisterExtradataNodeProperty(behaviour, "lines", V_INT, textExtraData_t, super.scrollY.fullSize);
+
+	/** Highlight each node elements when the mouse move over the node.
+	 * @todo delete it went its possible (need to create a textlist...)
+	 */
+	UI_RegisterExtradataNodeProperty(behaviour, "mousefx", V_BOOL, textExtraData_t, mousefx);
 
 	Com_RegisterConstInt("LONGLINES_WRAP", LONGLINES_WRAP);
 	Com_RegisterConstInt("LONGLINES_CHOP", LONGLINES_CHOP);

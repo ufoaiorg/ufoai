@@ -154,5 +154,5 @@ void UI_RegisterCheckBoxNode (uiBehaviour_t *behaviour)
 	behaviour->leftClick = UI_CheckBoxNodeClick;
 	behaviour->loading = UI_CheckBoxNodeLoading;
 	behaviour->activate = UI_CheckBoxNodeActivate;
-	behaviour->properties = properties;
+	behaviour->oldProperties = properties;
 }

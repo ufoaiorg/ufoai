@@ -178,6 +178,6 @@ void UI_RegisterRadioButtonNode (uiBehaviour_t *behaviour)
 	behaviour->draw = UI_RadioButtonNodeDraw;
 	behaviour->leftClick = UI_RadioButtonNodeClick;
 	behaviour->activate = UI_RadioButtonNodeActivate;
-	behaviour->properties = properties;
+	behaviour->oldProperties = properties;
 	behaviour->extraDataSize = sizeof(EXTRADATA_TYPE);
 }

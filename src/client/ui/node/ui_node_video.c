@@ -113,7 +113,7 @@ void UI_RegisterVideoNode (uiBehaviour_t* behaviour)
 {
 	behaviour->name = "video";
 	behaviour->draw = UI_VideoNodeDraw;
-	behaviour->properties = properties;
+	behaviour->oldProperties = properties;
 	behaviour->windowOpened = UI_VideoNodeInit;
 	behaviour->windowClosed = UI_VideoNodeClose;
 	behaviour->drawOverWindow = UI_VideoNodeDrawOverWindow;

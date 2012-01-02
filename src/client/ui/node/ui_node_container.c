@@ -1062,6 +1062,6 @@ void UI_RegisterContainerNode (uiBehaviour_t* behaviour)
 	behaviour->dndFinished = UI_ContainerNodeDNDFinished;
 	behaviour->dndMove = UI_ContainerNodeDNDMove;
 	behaviour->dndLeave = UI_ContainerNodeDNDLeave;
-	behaviour->properties = properties;
+	behaviour->oldProperties = properties;
 	behaviour->extraDataSize = sizeof(EXTRADATA_TYPE);
 }
