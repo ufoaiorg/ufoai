@@ -174,9 +174,9 @@ extern const char *const air_slot_type_strings[];
 /** used e.g. in our parsers */
 typedef struct value_s {
 	const char *string;
-	const valueTypes_t type;
-	const size_t ofs;
-	const size_t size;
+	valueTypes_t type;
+	size_t ofs;
+	size_t size;
 } value_t;
 
 typedef enum {
