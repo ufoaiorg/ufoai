@@ -476,6 +476,7 @@ static void UI_PanelNodeGetClientPosition (const uiNode_t *node, vec2_t position
 
 static void UI_PanelPropertyChanged (uiNode_t *node, const value_t *property)
 {
+	/** @todo move it to registration code when it is possible */
 	if (propertyPadding == NULL) {
 		propertyPadding = UI_GetPropertyFromBehaviour(node->behaviour, "padding");
 	}
