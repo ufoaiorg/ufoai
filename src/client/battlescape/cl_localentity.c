@@ -953,28 +953,28 @@ qboolean LE_BrushModelAction (le_t * le, entity_t * ent)
 		ent->alpha = abs((cls.realtime % PULSATE_RATE) - (PULSATE_RATE / 2)) * (0.5f / (PULSATE_RATE / 2));
 		ent->model = NULL;
 		VectorSet(ent->color, 0.5, 1, 0);
-		if( drawFlags & DRAW_TEXTURE && ent->deathTexture == NULL ) {
+		if (drawFlags & DRAW_TEXTURE && ent->deathTexture == NULL) {
 			ent->deathTexture = R_FindPics("sfx/misc/rescue");
 			VectorSet(ent->color, 1, 1, 1);
 		}
 		VectorCopy(le->mins, ent->mins);
 		VectorCopy(le->maxs, ent->maxs);
 
-		if( ! (drawFlags & DRAW_CIRCLES) )
+		if (!(drawFlags & DRAW_CIRCLES))
 			break;
 
 		/* There should be an easier way than calculating the grid coords back from the world coords */
-		xmax = roundf(le->maxs[0]/UNIT_SIZE)*UNIT_SIZE - 0.1f;
-		for(x = roundf(le->mins[0]/UNIT_SIZE)*UNIT_SIZE; x < xmax; x += UNIT_SIZE) {
-			ymax = roundf(le->maxs[1]/UNIT_SIZE)*UNIT_SIZE - 0.1f;
-			for(y = roundf(le->mins[1]/UNIT_SIZE)*UNIT_SIZE; y < ymax; y += UNIT_SIZE) {
+		xmax = roundf(le->maxs[0] / UNIT_SIZE) * UNIT_SIZE - 0.1f;
+		for (x = roundf(le->mins[0] / UNIT_SIZE) * UNIT_SIZE; x < xmax; x += UNIT_SIZE) {
+			ymax = roundf(le->maxs[1] / UNIT_SIZE) * UNIT_SIZE - 0.1f;
+			for (y = roundf(le->mins[1] / UNIT_SIZE) * UNIT_SIZE; y < ymax; y += UNIT_SIZE) {
 				entity_t circle;
 				vec3_t pos = {x + UNIT_SIZE/4, y + UNIT_SIZE/4, le->mins[2]};
 
 				OBJZERO(circle);
 				circle.flags = RF_PATH;
 				VectorCopy(pos, circle.origin);
-				circle.oldorigin[0] = circle.oldorigin[1] = circle.oldorigin[2] = UNIT_SIZE/2;
+				circle.oldorigin[0] = circle.oldorigin[1] = circle.oldorigin[2] = UNIT_SIZE / 2.0f;
 				VectorSet(circle.color, 0.5f, 1, 0);
 				circle.alpha = ent->alpha;
 
