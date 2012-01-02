@@ -349,22 +349,6 @@ static void UI_EditorNodeExtract_f (void)
 	Com_Printf("Window '%s' extracted.\n", Cmd_Argv(1));
 }
 
-static const value_t properties[] = {
-	/* start edition mode */
-	UI_INIT_METHOD_PROPERTY("start", V_UI_NODEMETHOD, UI_EditorNodeStart),
-	/* stop edition mode */
-	UI_INIT_METHOD_PROPERTY("stop", V_UI_NODEMETHOD, UI_EditorNodeStop),
-	/* select the next node (according to the current one) */
-	UI_INIT_METHOD_PROPERTY("selectnext", V_UI_NODEMETHOD, UI_EditorNodeSelectNext),
-	/* select the parent node (according to the current one) */
-	UI_INIT_METHOD_PROPERTY("selectparent", V_UI_NODEMETHOD, UI_EditorNodeSelectParent),
-	/* select first child node (according to the current one) */
-	UI_INIT_METHOD_PROPERTY("selectfirstchild", V_UI_NODEMETHOD, UI_EditorNodeSelectFirstChild),
-
-	/* end of list */
-	UI_INIT_EMPTY_PROPERTY
-};
-
 void UI_RegisterEditorNode (uiBehaviour_t *behaviour)
 {
 	behaviour->name = "editor";
@@ -375,7 +359,17 @@ void UI_RegisterEditorNode (uiBehaviour_t *behaviour)
 	behaviour->mouseUp = UI_EditorNodeMouseUp;
 	behaviour->capturedMouseMove = UI_EditorNodeCapturedMouseMove;
 	behaviour->capturedMouseLost = UI_EditorNodeCapturedMouseLost;
-	behaviour->oldProperties = properties;
+
+	/* start edition mode */
+	UI_RegisterNodeMethod(behaviour, "start", UI_EditorNodeStart);
+	/* stop edition mode */
+	UI_RegisterNodeMethod(behaviour, "stop", UI_EditorNodeStop);
+	/* select the next node (according to the current one) */
+	UI_RegisterNodeMethod(behaviour, "selectnext", UI_EditorNodeSelectNext);
+	/* select the parent node (according to the current one) */
+	UI_RegisterNodeMethod(behaviour, "selectparent", UI_EditorNodeSelectParent);
+	/* select first child node (according to the current one) */
+	UI_RegisterNodeMethod(behaviour, "selectfirstchild", UI_EditorNodeSelectFirstChild);
 
 	Cmd_AddCommand("ui_extract", UI_EditorNodeExtract_f, "Extract position and size of nodes into a file");
 	Cmd_AddParamCompleteFunction("ui_extract", UI_CompleteWithWindow);

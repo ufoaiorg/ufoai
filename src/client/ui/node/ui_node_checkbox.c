@@ -130,7 +130,15 @@ static void UI_CheckBoxNodeLoading (uiNode_t *node)
 {
 }
 
-static const value_t properties[] = {
+void UI_RegisterCheckBoxNode (uiBehaviour_t *behaviour)
+{
+	behaviour->name = "checkbox";
+	behaviour->extends = "abstractvalue";
+	behaviour->draw = UI_CheckBoxNodeDraw;
+	behaviour->leftClick = UI_CheckBoxNodeClick;
+	behaviour->loading = UI_CheckBoxNodeLoading;
+	behaviour->activate = UI_CheckBoxNodeActivate;
+
 	/* @override image
 	 * Texture used for the widget. Its a 128x128 template image with all
 	 * three status according to the value, and four status according to the
@@ -140,19 +148,5 @@ static const value_t properties[] = {
 	 */
 
 	/* Call it to toggle the node status. */
-	UI_INIT_METHOD_PROPERTY("toggle", V_UI_NODEMETHOD, UI_CheckBoxNodeCallActivate),
-
-	/* end of line */
-	UI_INIT_EMPTY_PROPERTY
-};
-
-void UI_RegisterCheckBoxNode (uiBehaviour_t *behaviour)
-{
-	behaviour->name = "checkbox";
-	behaviour->extends = "abstractvalue";
-	behaviour->draw = UI_CheckBoxNodeDraw;
-	behaviour->leftClick = UI_CheckBoxNodeClick;
-	behaviour->loading = UI_CheckBoxNodeLoading;
-	behaviour->activate = UI_CheckBoxNodeActivate;
-	behaviour->oldProperties = properties;
+	UI_RegisterNodeMethod(behaviour, "toggle", UI_CheckBoxNodeCallActivate);
 }

@@ -164,37 +164,31 @@ qboolean UI_AbstractScrollableNodeScrollY (uiNode_t *node, int offset)
 	return UI_AbstractScrollableNodeSetY(node, EXTRADATA(node).scrollY.viewPos + offset, -1, -1);
 }
 
-static const value_t properties[] = {
-	/* position of the vertical view (into the full number of elements the node contain) */
-	UI_INIT_EXTRADATA_PROPERTY("viewpos", V_INT, EXTRADATA_TYPE, scrollY.viewPos),
-	/* size of the vertical view (proportional to the number of elements the node can display without moving) */
-	UI_INIT_EXTRADATA_PROPERTY("viewsize", V_INT, EXTRADATA_TYPE, scrollY.viewSize),
-	/* full vertical size (proportional to the number of elements the node contain) */
-	UI_INIT_EXTRADATA_PROPERTY("fullsize", V_INT, EXTRADATA_TYPE, scrollY.fullSize),
-	/* Called when one of the properties viewpos/viewsize/fullsize change */
-	UI_INIT_EXTRADATA_PROPERTY("onviewchange", V_UI_ACTION, EXTRADATA_TYPE, onViewChange),
-
-	/* Call it to vertically scroll the document up */
-	UI_INIT_METHOD_PROPERTY("pageup", V_UI_NODEMETHOD, UI_AbstractScrollableNodePageUp),
-	/* Call it to vertically scroll the document down */
-	UI_INIT_METHOD_PROPERTY("pagedown", V_UI_NODEMETHOD, UI_AbstractScrollableNodePageDown),
-	/* Call it to vertically scroll the document up */
-	UI_INIT_METHOD_PROPERTY("moveup", V_UI_NODEMETHOD, UI_AbstractScrollableNodeMoveUp),
-	/* Call it to vertically scroll the document down */
-	UI_INIT_METHOD_PROPERTY("movedown", V_UI_NODEMETHOD, UI_AbstractScrollableNodeMoveDown),
-	/* Call it to vertically reset the scroll position to 0 */
-	UI_INIT_METHOD_PROPERTY("movehome", V_UI_NODEMETHOD, UI_AbstractScrollableNodeMoveHome),
-	/* Call it to vertically move the scroll to the end of the document */
-	UI_INIT_METHOD_PROPERTY("moveend", V_UI_NODEMETHOD, UI_AbstractScrollableNodeMoveEnd),
-
-	/* end of line */
-	UI_INIT_EMPTY_PROPERTY
-};
-
 void UI_RegisterAbstractScrollableNode (uiBehaviour_t *behaviour)
 {
 	behaviour->name = "abstractscrollable";
 	behaviour->isAbstract = qtrue;
-	behaviour->oldProperties = properties;
 	behaviour->extraDataSize = sizeof(EXTRADATA_TYPE);
+
+	/* position of the vertical view (into the full number of elements the node contain) */
+	UI_RegisterExtradataNodeProperty(behaviour, "viewpos", V_INT, EXTRADATA_TYPE, scrollY.viewPos);
+	/* size of the vertical view (proportional to the number of elements the node can display without moving) */
+	UI_RegisterExtradataNodeProperty(behaviour, "viewsize", V_INT, EXTRADATA_TYPE, scrollY.viewSize);
+	/* full vertical size (proportional to the number of elements the node contain) */
+	UI_RegisterExtradataNodeProperty(behaviour, "fullsize", V_INT, EXTRADATA_TYPE, scrollY.fullSize);
+	/* Called when one of the properties viewpos/viewsize/fullsize change */
+	UI_RegisterExtradataNodeProperty(behaviour, "onviewchange", V_UI_ACTION, EXTRADATA_TYPE, onViewChange);
+
+	/* Call it to vertically scroll the document up */
+	UI_RegisterNodeMethod(behaviour, "pageup", UI_AbstractScrollableNodePageUp);
+	/* Call it to vertically scroll the document down */
+	UI_RegisterNodeMethod(behaviour, "pagedown", UI_AbstractScrollableNodePageDown);
+	/* Call it to vertically scroll the document up */
+	UI_RegisterNodeMethod(behaviour, "moveup", UI_AbstractScrollableNodeMoveUp);
+	/* Call it to vertically scroll the document down */
+	UI_RegisterNodeMethod(behaviour, "movedown", UI_AbstractScrollableNodeMoveDown);
+	/* Call it to vertically reset the scroll position to 0 */
+	UI_RegisterNodeMethod(behaviour, "movehome", UI_AbstractScrollableNodeMoveHome);
+	/* Call it to vertically move the scroll to the end of the document */
+	UI_RegisterNodeMethod(behaviour, "moveend", UI_AbstractScrollableNodeMoveEnd);
 }

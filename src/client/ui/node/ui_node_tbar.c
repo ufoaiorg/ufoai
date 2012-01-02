@@ -72,21 +72,15 @@ static void UI_TBarNodeDraw (uiNode_t *node)
 		shx, EXTRADATA(node).texh[1], EXTRADATA(node).texl[0], EXTRADATA(node).texl[1], ref);
 }
 
-static const value_t properties[] = {
-	/* @todo Need documentation */
-	UI_INIT_EXTRADATA_PROPERTY("texh", V_POS, tbarExtraData_t, texh),
-	/* @todo Need documentation */
-	UI_INIT_EXTRADATA_PROPERTY("texl", V_POS, tbarExtraData_t, texl),
-
-	/* end of line */
-	UI_INIT_EMPTY_PROPERTY
-};
-
 void UI_RegisterTBarNode (uiBehaviour_t *behaviour)
 {
 	behaviour->name = "tbar";
 	behaviour->extends = "abstractvalue";
 	behaviour->draw = UI_TBarNodeDraw;
-	behaviour->oldProperties = properties;
 	behaviour->extraDataSize = sizeof(EXTRADATA_TYPE);
+
+	/* @todo Need documentation */
+	UI_RegisterExtradataNodeProperty(behaviour, "texh", V_POS, tbarExtraData_t, texh);
+	/* @todo Need documentation */
+	UI_RegisterExtradataNodeProperty(behaviour, "texl", V_POS, tbarExtraData_t, texl);
 }

@@ -238,7 +238,19 @@ static void UI_SpinnerNodeLoading (uiNode_t *node)
 	node->size[1] = SPINNER_HEIGHT;
 }
 
-static const value_t properties[] = {
+void UI_RegisterSpinnerNode (uiBehaviour_t *behaviour)
+{
+	localBehaviour = behaviour;
+	behaviour->name = "spinner";
+	behaviour->extends = "abstractvalue";
+	behaviour->scroll = UI_SpinnerNodeWheel;
+	behaviour->mouseDown = UI_SpinnerNodeDown;
+	behaviour->mouseUp = UI_SpinnerNodeUp;
+	behaviour->capturedMouseLost = UI_SpinnerNodeCapturedMouseLost;
+	behaviour->draw = UI_SpinnerNodeDraw;
+	behaviour->loading = UI_SpinnerNodeLoading;
+	behaviour->extraDataSize = sizeof(EXTRADATA_TYPE);
+
 	/* @override size
 	 * The size of the widget is uneditable. Fixed to 15x19.
 	 */
@@ -252,23 +264,5 @@ static const value_t properties[] = {
 	/**
 	 * @brief Defines a factor that is applied to the delta value when the shift key is held down.
 	 */
-	UI_INIT_EXTRADATA_PROPERTY("shiftincreasefactor", V_FLOAT, spinnerExtraData_t, shiftIncreaseFactor),
-
-	/* end of line */
-	UI_INIT_EMPTY_PROPERTY
-};
-
-void UI_RegisterSpinnerNode (uiBehaviour_t *behaviour)
-{
-	localBehaviour = behaviour;
-	behaviour->name = "spinner";
-	behaviour->extends = "abstractvalue";
-	behaviour->scroll = UI_SpinnerNodeWheel;
-	behaviour->mouseDown = UI_SpinnerNodeDown;
-	behaviour->mouseUp = UI_SpinnerNodeUp;
-	behaviour->capturedMouseLost = UI_SpinnerNodeCapturedMouseLost;
-	behaviour->draw = UI_SpinnerNodeDraw;
-	behaviour->loading = UI_SpinnerNodeLoading;
-	behaviour->oldProperties = properties;
-	behaviour->extraDataSize = sizeof(EXTRADATA_TYPE);
+	UI_RegisterExtradataNodeProperty(behaviour, "shiftincreasefactor", V_FLOAT, spinnerExtraData_t, shiftIncreaseFactor);
 }

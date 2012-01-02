@@ -167,36 +167,27 @@ static void UI_BarNodeLoading (uiNode_t *node)
 	EXTRADATA(node).orientation = ALIGN_CR;
 }
 
-/**
- * @brief Valid properties for a bar node
- */
-static const value_t properties[] = {
-	/**
-	 * Orientation of the bar. Default value "cr". Other available values are "uc", "lc", "cr", "cl"
-	 */
-	UI_INIT_EXTRADATA_PROPERTY("direction", V_ALIGN, barExtraData_t, orientation),
-	/**
-	 * if true, the user can't edit the content
-	 */
-	UI_INIT_EXTRADATA_PROPERTY("readonly", V_BOOL, barExtraData_t, readOnly),
-	/**
-	 * there is no hover effect if this is true
-	 */
-	UI_INIT_EXTRADATA_PROPERTY("nohover", V_BOOL, barExtraData_t, noHover),
-
-	/* end of line */
-	UI_INIT_EMPTY_PROPERTY
-};
-
 void UI_RegisterBarNode (uiBehaviour_t *behaviour)
 {
 	behaviour->name = "bar";
 	behaviour->extends = "abstractvalue";
-	behaviour->oldProperties = properties;
 	behaviour->draw = UI_BarNodeDraw;
 	behaviour->loading = UI_BarNodeLoading;
 	behaviour->mouseDown = UI_BarNodeMouseDown;
 	behaviour->mouseUp = UI_BarNodeMouseUp;
 	behaviour->capturedMouseMove = UI_BarNodeCapturedMouseMove;
 	behaviour->extraDataSize = sizeof(EXTRADATA_TYPE);
+
+	/**
+	 * Orientation of the bar. Default value "cr". Other available values are "uc", "lc", "cr", "cl"
+	 */
+	UI_RegisterExtradataNodeProperty(behaviour, "direction", V_ALIGN, barExtraData_t, orientation);
+	/**
+	 * if true, the user can't edit the content
+	 */
+	UI_RegisterExtradataNodeProperty(behaviour, "readonly", V_BOOL, barExtraData_t, readOnly);
+	/**
+	 * there is no hover effect if this is true
+	 */
+	UI_RegisterExtradataNodeProperty(behaviour, "nohover", V_BOOL, barExtraData_t, noHover);
 }

@@ -313,7 +313,17 @@ static void UI_TextEntryNodeLoading (uiNode_t *node)
 	Vector4Set(node->selectedColor, 1, 1, 1, 1);
 }
 
-static const value_t properties[] = {
+void UI_RegisterTextEntryNode (uiBehaviour_t *behaviour)
+{
+	behaviour->name = "textentry";
+	behaviour->leftClick = UI_TextEntryNodeClick;
+	behaviour->focusGained = UI_TextEntryFocusGained;
+	behaviour->focusLost = UI_TextEntryFocusLost;
+	behaviour->keyPressed = UI_TextEntryNodeKeyPressed;
+	behaviour->draw = UI_TextEntryNodeDraw;
+	behaviour->loading = UI_TextEntryNodeLoading;
+	behaviour->extraDataSize = sizeof(EXTRADATA_TYPE);
+
 	/* @override image
 	 * Texture used by the button. It's a normalized texture of 128x128.
 	 * Normal button start at 0x0, mouse over start at 64x0, mouse click
@@ -331,29 +341,13 @@ static const value_t properties[] = {
 	 */
 
 	/* Custom the draw behaviour by hiding each character of the text with a star (''*''). */
-	UI_INIT_EXTRADATA_PROPERTY("ispassword", V_BOOL, textEntryExtraData_t, isPassword),
+	UI_RegisterExtradataNodeProperty(behaviour, "ispassword", V_BOOL, textEntryExtraData_t, isPassword);
 	/* ustom the mouse event behaviour. When we are editing the text, if we click out of the node, the edition is aborted. Changes on
 	 * the text are canceled, and no change event are fired.
 	 */
-	UI_INIT_EXTRADATA_PROPERTY("clickoutabort", V_BOOL, textEntryExtraData_t, clickOutAbort),
+	UI_RegisterExtradataNodeProperty(behaviour, "clickoutabort", V_BOOL, textEntryExtraData_t, clickOutAbort);
 	/* Call it when we abort the edition */
-	UI_INIT_EXTRADATA_PROPERTY("onabort", V_UI_ACTION, textEntryExtraData_t, onAbort),
+	UI_RegisterExtradataNodeProperty(behaviour, "onabort", V_UI_ACTION, textEntryExtraData_t, onAbort);
 	/* Call it to force node edition */
-	UI_INIT_METHOD_PROPERTY("edit", V_UI_NODEMETHOD, UI_TextEntryNodeFocus),
-
-	/* end of line */
-	UI_INIT_EMPTY_PROPERTY
-};
-
-void UI_RegisterTextEntryNode (uiBehaviour_t *behaviour)
-{
-	behaviour->name = "textentry";
-	behaviour->leftClick = UI_TextEntryNodeClick;
-	behaviour->focusGained = UI_TextEntryFocusGained;
-	behaviour->focusLost = UI_TextEntryFocusLost;
-	behaviour->keyPressed = UI_TextEntryNodeKeyPressed;
-	behaviour->draw = UI_TextEntryNodeDraw;
-	behaviour->loading = UI_TextEntryNodeLoading;
-	behaviour->oldProperties = properties;
-	behaviour->extraDataSize = sizeof(EXTRADATA_TYPE);
+	UI_RegisterNodeMethod(behaviour, "edit", UI_TextEntryNodeFocus);
 }

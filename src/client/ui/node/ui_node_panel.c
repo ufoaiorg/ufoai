@@ -514,10 +514,19 @@ static void UI_PanelNodeMouseWheel (uiNode_t *node, int deltaX, int deltaY)
 		UI_ExecuteEventActions(node, node->onWheel);
 }
 
-/**
- * @brief Valid properties for a panel node
- */
-static const value_t properties[] = {
+void UI_RegisterPanelNode (uiBehaviour_t *behaviour)
+{
+	localBehaviour = behaviour;
+	behaviour->extends = "abstractscrollable";
+	behaviour->name = "panel";
+	behaviour->extraDataSize = sizeof(EXTRADATA_TYPE);
+	behaviour->draw = UI_PanelNodeDraw;
+	behaviour->loaded = UI_PanelNodeLoaded;
+	behaviour->doLayout = UI_PanelNodeDoLayout;
+	behaviour->getClientPosition = UI_PanelNodeGetClientPosition;
+	behaviour->propertyChanged = UI_PanelPropertyChanged;
+	behaviour->scroll = UI_PanelNodeMouseWheel;
+
 	/**
 	 * Select a layout manager to set position and size of child. Most of layout manager
 	 * do not move or resize child without align property set. In the image, number identify
@@ -531,41 +540,19 @@ static const value_t properties[] = {
 	 * <li>LAYOUT_STAR: Align the corner of child into the corner of the node. Child size do not change.
 	 * @image html http://ufoai.ninex.info/wiki/images/Layout.png
 	 */
-	UI_INIT_EXTRADATA_PROPERTY("layout", V_INT, panelExtraData_t, layout),
+	UI_RegisterExtradataNodeProperty(behaviour, "layout", V_INT, panelExtraData_t, layout);
 	/**
 	 * Margin use to layout children (margin between children)
 	 */
-	UI_INIT_EXTRADATA_PROPERTY("layoutMargin", V_INT, panelExtraData_t, layoutMargin),
+	propertyLayoutMargin = UI_RegisterExtradataNodeProperty(behaviour, "layoutMargin", V_INT, panelExtraData_t, layoutMargin);
 	/**
 	 * Number of column use to layout children (used with LAYOUT_COLUMN)
 	 */
-	UI_INIT_EXTRADATA_PROPERTY("layoutColumns", V_INT, panelExtraData_t, layoutColumns),
+	propertyLayoutColumns = UI_RegisterExtradataNodeProperty(behaviour, "layoutColumns", V_INT, panelExtraData_t, layoutColumns);
 	/**
 	 * If scrolling via mousewheel is enabled
 	 */
-	UI_INIT_EXTRADATA_PROPERTY("wheelscrollable", V_BOOL, panelExtraData_t, wheelScrollable),
-
-	/* end of line */
-	UI_INIT_EMPTY_PROPERTY
-};
-
-void UI_RegisterPanelNode (uiBehaviour_t *behaviour)
-{
-	localBehaviour = behaviour;
-	behaviour->extends = "abstractscrollable";
-	behaviour->name = "panel";
-	behaviour->oldProperties = properties;
-	behaviour->extraDataSize = sizeof(EXTRADATA_TYPE);
-	behaviour->draw = UI_PanelNodeDraw;
-	behaviour->loaded = UI_PanelNodeLoaded;
-	behaviour->doLayout = UI_PanelNodeDoLayout;
-	behaviour->getClientPosition = UI_PanelNodeGetClientPosition;
-	behaviour->propertyChanged = UI_PanelPropertyChanged;
-	behaviour->scroll = UI_PanelNodeMouseWheel;
-
-	/* @todo find a good place for this kind of initialization */
-	propertyLayoutColumns = UI_GetPropertyFromBehaviour(behaviour, "layoutColumns");
-	propertyLayoutMargin = UI_GetPropertyFromBehaviour(behaviour, "layoutMargin");
+	UI_RegisterExtradataNodeProperty(behaviour, "wheelscrollable", V_BOOL, panelExtraData_t, wheelScrollable);
 
 	Com_RegisterConstInt("LAYOUTALIGN_TOPLEFT", LAYOUTALIGN_TOPLEFT);
 	Com_RegisterConstInt("LAYOUTALIGN_TOP", LAYOUTALIGN_TOP);

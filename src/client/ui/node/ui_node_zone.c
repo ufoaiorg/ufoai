@@ -88,16 +88,6 @@ static void UI_ZoneNodeLoading (uiNode_t *node)
 	EXTRADATA(node).clickDelay = 1000;
 }
 
-static const value_t properties[] = {
-	/* If true, the <code>onclick</code> call back is called more than one time if the user do not release the button. */
-	UI_INIT_EXTRADATA_PROPERTY("repeat", V_BOOL, zoneExtraData_t, repeat),
-	/* Delay it is used between 2 calls of <code>onclick</code>. */
-	UI_INIT_EXTRADATA_PROPERTY("clickdelay", V_INT, zoneExtraData_t, clickDelay),
-
-	/* end of line */
-	UI_INIT_EMPTY_PROPERTY
-};
-
 void UI_RegisterZoneNode (uiBehaviour_t *behaviour)
 {
 	behaviour->name = "zone";
@@ -105,6 +95,10 @@ void UI_RegisterZoneNode (uiBehaviour_t *behaviour)
 	behaviour->mouseDown = UI_ZoneNodeDown;
 	behaviour->mouseUp = UI_ZoneNodeUp;
 	behaviour->capturedMouseLost = UI_ZoneNodeCapturedMouseLost;
-	behaviour->oldProperties = properties;
 	behaviour->extraDataSize = sizeof(EXTRADATA_TYPE);
+
+	/* If true, the <code>onclick</code> call back is called more than one time if the user do not release the button. */
+	UI_RegisterExtradataNodeProperty(behaviour, "repeat", V_BOOL, zoneExtraData_t, repeat);
+	/* Delay it is used between 2 calls of <code>onclick</code>. */
+	UI_RegisterExtradataNodeProperty(behaviour, "clickdelay", V_INT, zoneExtraData_t, clickDelay);
 }

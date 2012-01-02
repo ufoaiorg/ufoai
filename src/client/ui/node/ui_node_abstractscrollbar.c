@@ -30,29 +30,24 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 
 #define EXTRADATA_TYPE abstractScrollbarExtraData_t
 
-static const value_t properties[] = {
-	/* Current position of the scroll. Image of the <code>viewpos</code> from <code>abstractscrollable</code> node. */
-	UI_INIT_EXTRADATA_PROPERTY("current", V_INT, EXTRADATA_TYPE, pos),
-	/* Image of the <code>viewsize</code> from <code>abstractscrollable</code> node. */
-	UI_INIT_EXTRADATA_PROPERTY("viewsize", V_INT, EXTRADATA_TYPE, viewsize),
-	/* Image of the <code>fullsize</code> from <code>abstractscrollable</code> node. */
-	UI_INIT_EXTRADATA_PROPERTY("fullsize", V_INT, EXTRADATA_TYPE, fullsize),
-
-	/* If true, hide the scroll when the position is 0 and can't change (when <code>viewsize</code> >= <code>fullsize</code>). */
-	UI_INIT_EXTRADATA_PROPERTY("hidewhenunused", V_BOOL, EXTRADATA_TYPE, hideWhenUnused),
-
-	/* Callback value set when before calling onChange. It is used to know the change apply by the user
-	 * @Deprecated
-	 */
-	UI_INIT_EXTRADATA_PROPERTY("lastdiff", V_INT, EXTRADATA_TYPE, lastdiff),
-
-	UI_INIT_EMPTY_PROPERTY
-};
-
 void UI_RegisterAbstractScrollbarNode (uiBehaviour_t *behaviour)
 {
 	behaviour->name = "abstractscrollbar";
 	behaviour->isAbstract = qtrue;
-	behaviour->oldProperties = properties;
 	behaviour->extraDataSize = sizeof(EXTRADATA_TYPE);
+
+	/* Current position of the scroll. Image of the <code>viewpos</code> from <code>abstractscrollable</code> node. */
+	UI_RegisterExtradataNodeProperty(behaviour, "current", V_INT, EXTRADATA_TYPE, pos);
+	/* Image of the <code>viewsize</code> from <code>abstractscrollable</code> node. */
+	UI_RegisterExtradataNodeProperty(behaviour, "viewsize", V_INT, EXTRADATA_TYPE, viewsize);
+	/* Image of the <code>fullsize</code> from <code>abstractscrollable</code> node. */
+	UI_RegisterExtradataNodeProperty(behaviour, "fullsize", V_INT, EXTRADATA_TYPE, fullsize);
+
+	/* If true, hide the scroll when the position is 0 and can't change (when <code>viewsize</code> >= <code>fullsize</code>). */
+	UI_RegisterExtradataNodeProperty(behaviour, "hidewhenunused", V_BOOL, EXTRADATA_TYPE, hideWhenUnused);
+
+	/* Callback value set when before calling onChange. It is used to know the change apply by the user
+	 * @Deprecated
+	 */
+	UI_RegisterExtradataNodeProperty(behaviour, "lastdiff", V_INT, EXTRADATA_TYPE, lastdiff);
 }

@@ -77,19 +77,12 @@ static void UI_ItemNodeDraw (uiNode_t *node)
 	}
 }
 
-/** @brief valid properties for model */
-static const value_t properties[] = {
-	/* Display an item like a container node do it */
-	UI_INIT_EXTRADATA_PROPERTY("containerlike", V_BOOL, modelExtraData_t, containerLike),
-
-	/* end of line */
-	UI_INIT_EMPTY_PROPERTY
-};
-
 void UI_RegisterItemNode (uiBehaviour_t *behaviour)
 {
 	behaviour->name = "item";
-	behaviour->oldProperties = properties;
 	behaviour->extends = "model";
 	behaviour->draw = UI_ItemNodeDraw;
+
+	/* Display an item like a container node do it */
+	UI_RegisterExtradataNodeProperty(behaviour, "containerlike", V_BOOL, modelExtraData_t, containerLike);
 }

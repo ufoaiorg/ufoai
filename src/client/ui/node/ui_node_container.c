@@ -1038,16 +1038,6 @@ static qboolean UI_ContainerNodeDNDFinished (uiNode_t *source, qboolean isDroppe
 	return qtrue;
 }
 
-static const value_t properties[] = {
-	/* Callback value set before calling onSelect. It is used to know the item selected */
-	UI_INIT_EXTRADATA_PROPERTY("lastselectedid", V_INT, containerExtraData_t, lastSelectedId),
-	/* Callback event called when the user select an item */
-	UI_INIT_EXTRADATA_PROPERTY("onselect", V_UI_ACTION, containerExtraData_t, onSelect),
-
-	/* end of line */
-	UI_INIT_EMPTY_PROPERTY
-};
-
 void UI_RegisterContainerNode (uiBehaviour_t* behaviour)
 {
 	behaviour->name = "container";
@@ -1062,6 +1052,10 @@ void UI_RegisterContainerNode (uiBehaviour_t* behaviour)
 	behaviour->dndFinished = UI_ContainerNodeDNDFinished;
 	behaviour->dndMove = UI_ContainerNodeDNDMove;
 	behaviour->dndLeave = UI_ContainerNodeDNDLeave;
-	behaviour->oldProperties = properties;
 	behaviour->extraDataSize = sizeof(EXTRADATA_TYPE);
+
+	/* Callback value set before calling onSelect. It is used to know the item selected */
+	UI_RegisterExtradataNodeProperty(behaviour, "lastselectedid", V_INT, containerExtraData_t, lastSelectedId);
+	/* Callback event called when the user select an item */
+	UI_RegisterExtradataNodeProperty(behaviour, "onselect", V_UI_ACTION, containerExtraData_t, onSelect);
 }

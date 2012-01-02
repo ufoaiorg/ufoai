@@ -139,7 +139,6 @@ typedef struct uiBehaviour_s {
 	qboolean drawItselfChild;		/**< if true, the node draw function must draw child, the core code will not do it */
 
 	const value_t** localProperties;	/**< list of properties of the node */
-	const value_t* oldProperties;		/**< list of properties of the node, in old coding way */
 	int propertyCount;				/**< number of the properties into the propertiesList. Cache value to speedup search */
 	intptr_t extraDataSize;			/**< Size of the extra data used (it come from "u" attribute) @note use intptr_t because we use the virtual inheritance function (see virtualFunctions) */
 	struct uiBehaviour_s *super;	/**< link to the extended node */

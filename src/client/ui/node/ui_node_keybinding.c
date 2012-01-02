@@ -187,14 +187,6 @@ static void UI_KeyBindingNodeLoading (uiNode_t *node)
 	Vector4Set(node->selectedColor, 1, 1, 1, 0.5);
 }
 
-static const value_t properties[] = {
-	UI_INIT_EXTRADATA_PROPERTY("keyspace", V_INT, keyBindingExtraData_t, keySpace),
-	UI_INIT_EXTRADATA_PROPERTY("bindingwidth", V_INT, keyBindingExtraData_t, bindingWidth),
-
-	/* end of line */
-	UI_INIT_EMPTY_PROPERTY
-};
-
 void UI_RegisterKeyBindingNode (uiBehaviour_t *behaviour)
 {
 	behaviour->name = "keybinding";
@@ -202,6 +194,8 @@ void UI_RegisterKeyBindingNode (uiBehaviour_t *behaviour)
 	behaviour->keyPressed = UI_KeyBindingNodeKeyPressed;
 	behaviour->draw = UI_KeyBindingNodeDraw;
 	behaviour->loading = UI_KeyBindingNodeLoading;
-	behaviour->oldProperties = properties;
 	behaviour->extraDataSize = sizeof(EXTRADATA_TYPE);
+
+	UI_RegisterExtradataNodeProperty(behaviour, "keyspace", V_INT, keyBindingExtraData_t, keySpace);
+	UI_RegisterExtradataNodeProperty(behaviour, "bindingwidth", V_INT, keyBindingExtraData_t, bindingWidth);
 }

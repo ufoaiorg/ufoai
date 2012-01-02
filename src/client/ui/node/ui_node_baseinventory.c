@@ -808,37 +808,6 @@ static void UI_BaseInventoryNodeInit (uiNode_t *node, linkedList_t *params)
 {
 }
 
-static const value_t properties[] = {
-	/* Display/hide weapons. */
-	UI_INIT_EXTRADATA_PROPERTY("displayweapon", V_BOOL, baseInventoryExtraData_t, displayWeapon),
-	/* Display/hide ammo. */
-	UI_INIT_EXTRADATA_PROPERTY("displayammo", V_BOOL, baseInventoryExtraData_t, displayAmmo),
-	/* Display/hide out of stock items. */
-	UI_INIT_EXTRADATA_PROPERTY("displayunavailableitem", V_BOOL, baseInventoryExtraData_t, displayUnavailableItem),
-	/* Sort the list to display in stock items on top of the list. */
-	UI_INIT_EXTRADATA_PROPERTY("displayavailableontop", V_BOOL, baseInventoryExtraData_t, displayAvailableOnTop),
-	/* Display/hide ammo near weapons. */
-	UI_INIT_EXTRADATA_PROPERTY("displayammoofweapon", V_BOOL, baseInventoryExtraData_t, displayAmmoOfWeapon),
-	/* Display/hide out of stock ammo near weapons. <code>displayammoofweapon</code> must be activated first. */
-	UI_INIT_EXTRADATA_PROPERTY("displayunavailableammoofweapon", V_BOOL, baseInventoryExtraData_t, displayUnavailableAmmoOfWeapon),
-	/* Custom the number of column we must use to display items. */
-	UI_INIT_EXTRADATA_PROPERTY("columns", V_INT, baseInventoryExtraData_t, columns),
-	/* Filter items by a category. */
-	UI_INIT_EXTRADATA_PROPERTY("filter", V_INT, baseInventoryExtraData_t, filterEquipType),
-
-	/* Position of the vertical view (into the full number of elements the node contain) */
-	UI_INIT_EXTRADATA_PROPERTY("viewpos", V_INT, baseInventoryExtraData_t, scrollY.viewPos),
-	/* Size of the vertical view (proportional to the number of elements the node can display without moving) */
-	UI_INIT_EXTRADATA_PROPERTY("viewsize", V_INT, baseInventoryExtraData_t, scrollY.viewSize),
-	/* Full vertical size (proportional to the number of elements the node contain) */
-	UI_INIT_EXTRADATA_PROPERTY("fullsize", V_INT, baseInventoryExtraData_t, scrollY.fullSize),
-	/* Called when one of the properties viewpos/viewsize/fullsize change */
-	UI_INIT_EXTRADATA_PROPERTY("onviewchange", V_UI_ACTION, baseInventoryExtraData_t, onViewChange),
-
-	/* end of line */
-	UI_INIT_EMPTY_PROPERTY
-};
-
 void UI_RegisterBaseInventoryNode (uiBehaviour_t* behaviour)
 {
 	behaviour->name = "baseinventory";
@@ -852,12 +821,36 @@ void UI_RegisterBaseInventoryNode (uiBehaviour_t* behaviour)
 	behaviour->windowOpened = UI_BaseInventoryNodeInit;
 	behaviour->loading = UI_BaseInventoryNodeLoading;
 	behaviour->loaded = UI_BaseInventoryNodeLoaded;
-	behaviour->extraDataSize = sizeof(EXTRADATA_TYPE);
-	behaviour->oldProperties = properties;
-
 	behaviour->dndEnter = UI_BaseInventoryNodeDNDEnter;
 	behaviour->dndMove = UI_BaseInventoryNodeDNDMove;
 	behaviour->dndLeave = UI_BaseInventoryNodeDNDLeave;
+	behaviour->extraDataSize = sizeof(EXTRADATA_TYPE);
+
+	/* Display/hide weapons. */
+	UI_RegisterExtradataNodeProperty(behaviour, "displayweapon", V_BOOL, baseInventoryExtraData_t, displayWeapon);
+	/* Display/hide ammo. */
+	UI_RegisterExtradataNodeProperty(behaviour, "displayammo", V_BOOL, baseInventoryExtraData_t, displayAmmo);
+	/* Display/hide out of stock items. */
+	UI_RegisterExtradataNodeProperty(behaviour, "displayunavailableitem", V_BOOL, baseInventoryExtraData_t, displayUnavailableItem);
+	/* Sort the list to display in stock items on top of the list. */
+	UI_RegisterExtradataNodeProperty(behaviour, "displayavailableontop", V_BOOL, baseInventoryExtraData_t, displayAvailableOnTop);
+	/* Display/hide ammo near weapons. */
+	UI_RegisterExtradataNodeProperty(behaviour, "displayammoofweapon", V_BOOL, baseInventoryExtraData_t, displayAmmoOfWeapon);
+	/* Display/hide out of stock ammo near weapons. <code>displayammoofweapon</code> must be activated first. */
+	UI_RegisterExtradataNodeProperty(behaviour, "displayunavailableammoofweapon", V_BOOL, baseInventoryExtraData_t, displayUnavailableAmmoOfWeapon);
+	/* Custom the number of column we must use to display items. */
+	UI_RegisterExtradataNodeProperty(behaviour, "columns", V_INT, baseInventoryExtraData_t, columns);
+	/* Filter items by a category. */
+	UI_RegisterExtradataNodeProperty(behaviour, "filter", V_INT, baseInventoryExtraData_t, filterEquipType);
+
+	/* Position of the vertical view (into the full number of elements the node contain) */
+	UI_RegisterExtradataNodeProperty(behaviour, "viewpos", V_INT, baseInventoryExtraData_t, scrollY.viewPos);
+	/* Size of the vertical view (proportional to the number of elements the node can display without moving) */
+	UI_RegisterExtradataNodeProperty(behaviour, "viewsize", V_INT, baseInventoryExtraData_t, scrollY.viewSize);
+	/* Full vertical size (proportional to the number of elements the node contain) */
+	UI_RegisterExtradataNodeProperty(behaviour, "fullsize", V_INT, baseInventoryExtraData_t, scrollY.fullSize);
+	/* Called when one of the properties viewpos/viewsize/fullsize change */
+	UI_RegisterExtradataNodeProperty(behaviour, "onviewchange", V_UI_ACTION, baseInventoryExtraData_t, onViewChange);
 
 	Com_RegisterConstInt("FILTER_S_PRIMARY", FILTER_S_PRIMARY);
 	Com_RegisterConstInt("FILTER_S_SECONDARY", FILTER_S_SECONDARY);

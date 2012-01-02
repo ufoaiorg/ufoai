@@ -76,31 +76,6 @@ void UI_AbstractOptionSetCurrentValue(uiNode_t * node, const char *value)
 		UI_ExecuteEventActions(node, node->onChange);
 }
 
-static const value_t properties[] = {
-	/** Optional. Data ID we want to use. It must be an option list. It substitute to the inline options */
-	UI_INIT_EXTRADATA_PROPERTY("dataid", V_UI_DATAID, EXTRADATA_TYPE, dataId),
-	/** Optional. We can define the height of the block containing an option. */
-	UI_INIT_EXTRADATA_PROPERTY("lineheight", V_INT, EXTRADATA_TYPE, lineHeight),
-
-	/* position of the vertical view (into the full number of elements the node contain) */
-	UI_INIT_EXTRADATA_PROPERTY("viewpos", V_INT, EXTRADATA_TYPE, scrollY.viewPos),
-	/* size of the vertical view (proportional to the number of elements the node can display without moving) */
-	UI_INIT_EXTRADATA_PROPERTY("viewsize", V_INT, EXTRADATA_TYPE, scrollY.viewSize),
-	/* full vertical size (proportional to the number of elements the node contain) */
-	UI_INIT_EXTRADATA_PROPERTY("fullsize", V_INT, EXTRADATA_TYPE, scrollY.fullSize),
-
-	/* number of elements contain the node */
-	UI_INIT_EXTRADATA_PROPERTY("count", V_INT, EXTRADATA_TYPE, count),
-
-	/* Define the cvar containing the value of the current selected option */
-	UI_INIT_EXTRADATA_PROPERTY("cvar", V_UI_CVAR, EXTRADATA_TYPE, cvar),
-
-	/* Called when one of the properties viewpos/viewsize/fullsize change */
-	UI_INIT_EXTRADATA_PROPERTY("onviewchange", V_UI_ACTION, EXTRADATA_TYPE, onViewChange),
-
-	UI_INIT_EMPTY_PROPERTY
-};
-
 static void UI_AbstractOptionDoLayout (uiNode_t *node)
 {
 	uiNode_t *option = node->firstChild;
@@ -149,9 +124,29 @@ void UI_RegisterAbstractOptionNode (uiBehaviour_t *behaviour)
 {
 	behaviour->name = "abstractoption";
 	behaviour->isAbstract = qtrue;
-	behaviour->oldProperties = properties;
 	behaviour->extraDataSize = sizeof(EXTRADATA_TYPE);
 	behaviour->drawItselfChild = qtrue;
 	behaviour->doLayout = UI_AbstractOptionDoLayout;
 	abstractOptionBehaviour = behaviour;
+
+	/** Optional. Data ID we want to use. It must be an option list. It substitute to the inline options */
+	UI_RegisterExtradataNodeProperty(behaviour, "dataid", V_UI_DATAID, EXTRADATA_TYPE, dataId);
+	/** Optional. We can define the height of the block containing an option. */
+	UI_RegisterExtradataNodeProperty(behaviour, "lineheight", V_INT, EXTRADATA_TYPE, lineHeight);
+
+	/* position of the vertical view (into the full number of elements the node contain) */
+	UI_RegisterExtradataNodeProperty(behaviour, "viewpos", V_INT, EXTRADATA_TYPE, scrollY.viewPos);
+	/* size of the vertical view (proportional to the number of elements the node can display without moving) */
+	UI_RegisterExtradataNodeProperty(behaviour, "viewsize", V_INT, EXTRADATA_TYPE, scrollY.viewSize);
+	/* full vertical size (proportional to the number of elements the node contain) */
+	UI_RegisterExtradataNodeProperty(behaviour, "fullsize", V_INT, EXTRADATA_TYPE, scrollY.fullSize);
+
+	/* number of elements contain the node */
+	UI_RegisterExtradataNodeProperty(behaviour, "count", V_INT, EXTRADATA_TYPE, count);
+
+	/* Define the cvar containing the value of the current selected option */
+	UI_RegisterExtradataNodeProperty(behaviour, "cvar", V_UI_CVAR, EXTRADATA_TYPE, cvar);
+
+	/* Called when one of the properties viewpos/viewsize/fullsize change */
+	UI_RegisterExtradataNodeProperty(behaviour, "onviewchange", V_UI_ACTION, EXTRADATA_TYPE, onViewChange);
 }

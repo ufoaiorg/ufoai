@@ -99,31 +99,25 @@ static void UI_Spinner2NodeDraw (uiNode_t *node)
 		UI_DrawSpriteInBox(qfalse, EXTRADATA(node).bottomIcon, bottomStatus, pos[0], pos[1], node->size[0], node->size[1]);
 }
 
-static const value_t properties[] = {
-	/**
-	 * @brief Backround used to display the spinner. It is displayed in the center of the node.
-	 */
-	UI_INIT_EXTRADATA_PROPERTY("background", V_UI_SPRITEREF, EXTRADATA_TYPE, background),
-
-	/**
-	 * @brief Top icon used to decorate the top button of the spinner. It is displayed in the center of the node.
-	 */
-	UI_INIT_EXTRADATA_PROPERTY("topIcon", V_UI_SPRITEREF, EXTRADATA_TYPE, topIcon),
-
-	/**
-	 * @brief Sprite used to decorate the bottom button of the spinner. It is displayed in the center of the node.
-	 */
-	UI_INIT_EXTRADATA_PROPERTY("bottomIcon", V_UI_SPRITEREF, EXTRADATA_TYPE, bottomIcon),
-
-	/* end of line */
-	UI_INIT_EMPTY_PROPERTY
-};
-
 void UI_RegisterSpinner2Node (uiBehaviour_t *behaviour)
 {
 	behaviour->name = "spinner2";
 	behaviour->extends = "spinner";
 	behaviour->draw = UI_Spinner2NodeDraw;
-	behaviour->oldProperties = properties;
 	behaviour->extraDataSize = sizeof(EXTRADATA_TYPE);
+
+	/**
+	 * @brief Backround used to display the spinner. It is displayed in the center of the node.
+	 */
+	UI_RegisterExtradataNodeProperty(behaviour, "background", V_UI_SPRITEREF, EXTRADATA_TYPE, background);
+
+	/**
+	 * @brief Top icon used to decorate the top button of the spinner. It is displayed in the center of the node.
+	 */
+	UI_RegisterExtradataNodeProperty(behaviour, "topIcon", V_UI_SPRITEREF, EXTRADATA_TYPE, topIcon);
+
+	/**
+	 * @brief Sprite used to decorate the bottom button of the spinner. It is displayed in the center of the node.
+	 */
+	UI_RegisterExtradataNodeProperty(behaviour, "bottomIcon", V_UI_SPRITEREF, EXTRADATA_TYPE, bottomIcon);
 }

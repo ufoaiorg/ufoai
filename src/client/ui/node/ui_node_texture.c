@@ -71,18 +71,12 @@ static void UI_TextureNodeDraw (uiNode_t *node)
 	R_TextureDisableWrapping(image);
 }
 
-static const value_t properties[] = {
-	/* Source of the texture */
-	UI_INIT_NOSIZE_PROPERTY("src", V_CVAR_OR_STRING, uiNode_t, image),
-
-	/* end of line */
-	UI_INIT_EMPTY_PROPERTY
-};
-
 void UI_RegisterTextureNode (uiBehaviour_t* behaviour)
 {
 	behaviour->name = "texture";
 	behaviour->draw = UI_TextureNodeDraw;
-	behaviour->oldProperties = properties;
 	behaviour->extraDataSize = sizeof(EXTRADATA_TYPE);
+
+	/* Source of the texture */
+	UI_RegisterNodeProperty(behaviour, "src", V_CVAR_OR_STRING, uiNode_t, image);
 }

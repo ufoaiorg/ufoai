@@ -97,25 +97,19 @@ static void UI_VideoNodeClose (uiNode_t *node)
 	CIN_CloseCinematic(&(EXTRADATA(node).cin));
 }
 
-static const value_t properties[] = {
-	/** Source of the video. File name without prefix ./base/videos and without extension */
-	UI_INIT_NOSIZE_PROPERTY("src", V_CVAR_OR_STRING, uiNode_t, image),
-	/** Use or not the music from the video. */
-	UI_INIT_EXTRADATA_PROPERTY("nosound", V_BOOL, EXTRADATA_TYPE, nosound),
-	/** Invoked when video end. */
-	UI_INIT_EXTRADATA_PROPERTY("onEnd", V_UI_ACTION, EXTRADATA_TYPE, onEnd),
-
-	/* end of line */
-	UI_INIT_EMPTY_PROPERTY
-};
-
 void UI_RegisterVideoNode (uiBehaviour_t* behaviour)
 {
 	behaviour->name = "video";
 	behaviour->draw = UI_VideoNodeDraw;
-	behaviour->oldProperties = properties;
 	behaviour->windowOpened = UI_VideoNodeInit;
 	behaviour->windowClosed = UI_VideoNodeClose;
 	behaviour->drawOverWindow = UI_VideoNodeDrawOverWindow;
 	behaviour->extraDataSize = sizeof(EXTRADATA_TYPE);
+
+	/** Source of the video. File name without prefix ./base/videos and without extension */
+	UI_RegisterNodeProperty(behaviour, "src", V_CVAR_OR_STRING, uiNode_t, image);
+	/** Use or not the music from the video. */
+	UI_RegisterExtradataNodeProperty(behaviour, "nosound", V_BOOL, EXTRADATA_TYPE, nosound);
+	/** Invoked when video end. */
+	UI_RegisterExtradataNodeProperty(behaviour, "onEnd", V_UI_ACTION, EXTRADATA_TYPE, onEnd);
 }

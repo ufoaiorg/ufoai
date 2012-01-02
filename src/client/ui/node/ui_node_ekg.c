@@ -109,22 +109,16 @@ static void UI_EKGNodeLoading (uiNode_t *node)
 	EXTRADATA(node).scrollSpeed = 0.07f;
 }
 
-static const value_t properties[] = {
-	/* @todo Need documentation */
-	UI_INIT_EXTRADATA_PROPERTY("scrollspeed", V_FLOAT, ekgExtraData_t, scrollSpeed),
-	/* @todo Need documentation */
-	UI_INIT_EXTRADATA_PROPERTY("scale", V_FLOAT, ekgExtraData_t, scaleCvarValue),
-
-	/* end of line */
-	UI_INIT_EMPTY_PROPERTY
-};
-
 void UI_RegisterEKGNode (uiBehaviour_t* behaviour)
 {
 	behaviour->name = "ekg";
 	behaviour->loading = UI_EKGNodeLoading;
 	behaviour->extends = "image";
 	behaviour->draw = UI_EKGNodeDraw;
-	behaviour->oldProperties = properties;
 	behaviour->extraDataSize = sizeof(EXTRADATA_TYPE);
+
+	/* @todo Need documentation */
+	UI_RegisterExtradataNodeProperty(behaviour, "scrollspeed", V_FLOAT, ekgExtraData_t, scrollSpeed);
+	/* @todo Need documentation */
+	UI_RegisterExtradataNodeProperty(behaviour, "scale", V_FLOAT, ekgExtraData_t, scaleCvarValue);
 }

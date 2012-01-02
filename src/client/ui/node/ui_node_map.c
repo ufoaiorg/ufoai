@@ -223,23 +223,9 @@ static void UI_MapNodeLoading (uiNode_t *node)
 	Vector4Set(node->color, 1, 1, 1, 1);
 }
 
-
-static const value_t properties[] = {
-	/* Use a right padding. */
-	UI_INIT_EXTRADATA_PROPERTY("padding-right", V_FLOAT, EXTRADATA_TYPE, paddingRight),
-	/* Call it to zoom out of the map */
-	UI_INIT_METHOD_PROPERTY("zoomin", V_UI_NODEMETHOD, UI_MapNodeZoomIn),
-	/* Call it to zoom into the map */
-	UI_INIT_METHOD_PROPERTY("zoomout", V_UI_NODEMETHOD, UI_MapNodeZoomOut),
-
-	/* end of line */
-	UI_INIT_EMPTY_PROPERTY
-};
-
 void UI_RegisterMapNode (uiBehaviour_t *behaviour)
 {
 	behaviour->name = "map";
-	behaviour->oldProperties = properties;
 	behaviour->draw = UI_MapNodeDraw;
 	behaviour->mouseDown = UI_MapNodeMouseDown;
 	behaviour->mouseUp = UI_MapNodeMouseUp;
@@ -248,4 +234,11 @@ void UI_RegisterMapNode (uiBehaviour_t *behaviour)
 	behaviour->scroll = UI_MapNodeMouseWheel;
 	behaviour->loading = UI_MapNodeLoading;
 	behaviour->extraDataSize = sizeof(EXTRADATA_TYPE);
+
+	/* Use a right padding. */
+	UI_RegisterExtradataNodeProperty(behaviour, "padding-right", V_FLOAT, EXTRADATA_TYPE, paddingRight);
+	/* Call it to zoom out of the map */
+	UI_RegisterNodeMethod(behaviour, "zoomin", UI_MapNodeZoomIn);
+	/* Call it to zoom into the map */
+	UI_RegisterNodeMethod(behaviour, "zoomout", UI_MapNodeZoomOut);
 }

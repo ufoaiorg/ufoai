@@ -758,30 +758,6 @@ static void UI_InitializeNodeBehaviour (uiBehaviour_t* behaviour)
 	if (behaviour->isInitialized)
 		return;
 
-	/** @todo check (when its possible) properties are ordered by name */
-	/* check and update properties data */
-	if (behaviour->oldProperties) {
-		int num = 0;
-		const value_t* current = behaviour->oldProperties;
-		while (current->string != NULL) {
-			num++;
-			current++;
-		}
-
-		/** TODO should be into hunk memory */
-		behaviour->localProperties = (const value_t **)Mem_PoolAlloc(sizeof(*(behaviour->localProperties)) * (num + 1), ui_sysPool, 0);
-		current = behaviour->oldProperties;
-		num = 0;
-		while (current->string != NULL) {
-			behaviour->localProperties[num] = current;
-			num++;
-			current++;
-		}
-		behaviour->localProperties[num] = NULL;
-
-		behaviour->propertyCount = num;
-	}
-
 	/* everything inherits 'abstractnode' */
 	if (behaviour->extends == NULL && !Q_streq(behaviour->name, "abstractnode")) {
 		behaviour->extends = "abstractnode";

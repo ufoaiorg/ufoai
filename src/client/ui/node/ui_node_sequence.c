@@ -106,28 +106,21 @@ static void UI_SequencePropertyChanged (uiNode_t *node, const value_t *property)
 	localBehaviour->super->propertyChanged(node, property);
 }
 
-static const value_t properties[] = {
-	/** Source of the video. File name without prefix ./base/videos and without extension */
-	UI_INIT_NOSIZE_PROPERTY("src", V_CVAR_OR_STRING, uiNode_t, image),
-
-	/** Called when the sequence end */
-	UI_INIT_EXTRADATA_PROPERTY("onEnd", V_UI_ACTION, EXTRADATA_TYPE, onEnd),
-
-	/* end of line */
-	UI_INIT_EMPTY_PROPERTY
-};
-
 void UI_RegisterSequenceNode (uiBehaviour_t* behaviour)
 {
 	localBehaviour = behaviour;
 	behaviour->name = "sequence";
 	behaviour->draw = UI_SequenceNodeDraw;
-	behaviour->oldProperties = properties;
 	behaviour->windowOpened = UI_SequenceNodeInit;
 	behaviour->windowClosed = UI_SequenceNodeClose;
 	behaviour->extraDataSize = sizeof(EXTRADATA_TYPE);
 	behaviour->propertyChanged = UI_SequencePropertyChanged;
 	behaviour->leftClick = UI_SequenceNodeLeftClick;
 
-	propertySource = UI_GetPropertyFromBehaviour(behaviour, "src");
+	/** Source of the video. File name without prefix ./base/videos and without extension */
+	propertySource = UI_RegisterNodeProperty(behaviour, "src", V_CVAR_OR_STRING, uiNode_t, image);
+
+	/** Called when the sequence end */
+	UI_RegisterExtradataNodeProperty(behaviour, "onEnd", V_UI_ACTION, EXTRADATA_TYPE, onEnd);
+
 }

@@ -128,41 +128,32 @@ uiNode_t *UI_AllocOptionNode (const char* name, const char* label, const char* v
 	return option;
 }
 
-/** @brief valid properties for options (used by selectbox, tab, optonlist and optiontree) */
-static const value_t properties[] = {
-	/**
-	 * Displayed text
-	 */
-	UI_INIT_NOSIZE_EXTRADATA_PROPERTY("label", V_STRING, EXTRADATA_TYPE, label),
-
-	/**
-	 * Value of the option
-	 */
-	UI_INIT_NOSIZE_EXTRADATA_PROPERTY("value", V_STRING, EXTRADATA_TYPE, value),
-
-	/**
-	 * If true, child are not displayed
-	 */
-	UI_INIT_EXTRADATA_PROPERTY("collapsed", V_BOOL, EXTRADATA_TYPE, collapsed),
-
-	/* Icon used to display the node
-	 */
-	UI_INIT_EXTRADATA_PROPERTY("icon", V_UI_SPRITEREF, EXTRADATA_TYPE, icon),
-	UI_INIT_EXTRADATA_PROPERTY("flipicon", V_BOOL, EXTRADATA_TYPE, flipIcon),
-
-	/* end of line */
-	UI_INIT_EMPTY_PROPERTY
-};
-
 void UI_RegisterOptionNode (uiBehaviour_t *behaviour)
 {
 	behaviour->name = "option";
-	behaviour->oldProperties = properties;
 	behaviour->extraDataSize = sizeof(EXTRADATA_TYPE);
 	behaviour->doLayout = UI_OptionDoLayout;
 	behaviour->propertyChanged = UI_OptionPropertyChanged;
 
-	propertyCollapsed = UI_GetPropertyFromBehaviour(behaviour, "collapsed");
+	/**
+	 * Displayed text
+	 */
+	UI_RegisterExtradataNodeProperty(behaviour, "label", V_STRING, EXTRADATA_TYPE, label);
+
+	/**
+	 * Value of the option
+	 */
+	UI_RegisterExtradataNodeProperty(behaviour, "value", V_STRING, EXTRADATA_TYPE, value);
+
+	/**
+	 * If true, child are not displayed
+	 */
+	propertyCollapsed = UI_RegisterExtradataNodeProperty(behaviour, "collapsed", V_BOOL, EXTRADATA_TYPE, collapsed);
+
+	/* Icon used to display the node
+	 */
+	UI_RegisterExtradataNodeProperty(behaviour, "icon", V_UI_SPRITEREF, EXTRADATA_TYPE, icon);
+	UI_RegisterExtradataNodeProperty(behaviour, "flipicon", V_BOOL, EXTRADATA_TYPE, flipIcon);
 
 	ui_optionBehaviour = behaviour;
 }

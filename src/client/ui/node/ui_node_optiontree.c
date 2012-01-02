@@ -360,14 +360,6 @@ static void UI_OptionTreeNodeDoLayout (uiNode_t *node)
 	node->invalidated = qfalse;
 }
 
-static const value_t properties[] = {
-	/* Call it to toggle the node status. */
-	UI_INIT_METHOD_PROPERTY("setselectedvalue", V_UI_NODEMETHOD, UI_OptionTreeSetSelectedValue),
-
-	/* end of line */
-	UI_INIT_EMPTY_PROPERTY
-};
-
 void UI_RegisterOptionTreeNode (uiBehaviour_t *behaviour)
 {
 	behaviour->name = "optiontree";
@@ -378,6 +370,8 @@ void UI_RegisterOptionTreeNode (uiBehaviour_t *behaviour)
 	behaviour->loading = UI_OptionTreeNodeLoading;
 	behaviour->loaded = UI_OptionTreeNodeLoaded;
 	behaviour->doLayout = UI_OptionTreeNodeDoLayout;
-	behaviour->oldProperties = properties;
 	behaviour->drawItselfChild = qtrue;
+
+	/* Call it to toggle the node status. */
+	UI_RegisterNodeMethod(behaviour, "setselectedvalue", UI_OptionTreeSetSelectedValue);
 }

@@ -64,25 +64,19 @@ static void UI_RowsNodeLoaded (uiNode_t *node)
 	}
 }
 
-static const value_t properties[] = {
-	/* Background color for odd elements */
-	UI_INIT_PROPERTY("color1", V_COLOR, uiNode_t, color),
-	/* Background color for even elements */
-	UI_INIT_PROPERTY("color2", V_COLOR, uiNode_t, selectedColor),
-	/* Element height */
-	UI_INIT_EXTRADATA_PROPERTY("lineheight", V_INT, rowsExtraData_t, lineHeight),
-	/* Element number on the top of the list. It is used to scroll the node content. */
-	UI_INIT_EXTRADATA_PROPERTY("current", V_INT, rowsExtraData_t, current),
-
-	/* end of line */
-	UI_INIT_EMPTY_PROPERTY
-};
-
 void UI_RegisterRowsNode (uiBehaviour_t *behaviour)
 {
 	behaviour->name = "rows";
 	behaviour->draw = UI_RowsNodeDraw;
 	behaviour->loaded = UI_RowsNodeLoaded;
-	behaviour->oldProperties = properties;
 	behaviour->extraDataSize = sizeof(EXTRADATA_TYPE);
+
+	/* Background color for odd elements */
+	UI_RegisterNodeProperty(behaviour, "color1", V_COLOR, uiNode_t, color);
+	/* Background color for even elements */
+	UI_RegisterNodeProperty(behaviour, "color2", V_COLOR, uiNode_t, selectedColor);
+	/* Element height */
+	UI_RegisterExtradataNodeProperty(behaviour, "lineheight", V_INT, rowsExtraData_t, lineHeight);
+	/* Element number on the top of the list. It is used to scroll the node content. */
+	UI_RegisterExtradataNodeProperty(behaviour, "current", V_INT, rowsExtraData_t, current);
 }

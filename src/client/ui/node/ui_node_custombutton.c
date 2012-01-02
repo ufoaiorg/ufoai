@@ -115,21 +115,16 @@ static void UI_CustomButtonNodeDraw (uiNode_t *node)
 	}
 }
 
-static const value_t properties[] = {
-	/* Skin position. Define the top-left position of the skin we will used from the image. Y should not be bigger than 64. To compute the high corner we use the node size. */
-	UI_INIT_EXTRADATA_PROPERTY("texl", V_POS, EXTRADATA_TYPE, texl),
-	/* Sprite used to display the background */
-	UI_INIT_EXTRADATA_PROPERTY("background", V_UI_SPRITEREF, EXTRADATA_TYPE, background),
-
-	/* end of line */
-	UI_INIT_EMPTY_PROPERTY
-};
-
 void UI_RegisterCustomButtonNode (uiBehaviour_t *behaviour)
 {
 	behaviour->name = "custombutton";
 	behaviour->extends = "button";
 	behaviour->draw = UI_CustomButtonNodeDraw;
-	behaviour->oldProperties = properties;
 	behaviour->extraDataSize = sizeof(EXTRADATA_TYPE);
+
+	/* Skin position. Define the top-left position of the skin we will used from the image.
+	 * Y should not be bigger than 64. To compute the high corner we use the node size. */
+	UI_RegisterExtradataNodeProperty(behaviour, "texl", V_POS, EXTRADATA_TYPE, texl);
+	/* Sprite used to display the background */
+	UI_RegisterExtradataNodeProperty(behaviour, "background", V_UI_SPRITEREF, EXTRADATA_TYPE, background);
 }

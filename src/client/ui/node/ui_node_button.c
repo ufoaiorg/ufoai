@@ -153,7 +153,15 @@ static void UI_ButtonNodeLoaded (uiNode_t *node)
 #endif
 }
 
-static const value_t properties[] = {
+void UI_RegisterButtonNode (uiBehaviour_t *behaviour)
+{
+	behaviour->name = "button";
+	behaviour->draw = UI_ButtonNodeDraw;
+	behaviour->loaded = UI_ButtonNodeLoaded;
+	behaviour->leftClick = UI_ButtonNodeClick;
+	behaviour->loading = UI_ButtonNodeLoading;
+	behaviour->extraDataSize = sizeof(EXTRADATA_TYPE);
+
 	/* @override image
 	 * Texture used by the button. It's a normalized texture of 128x128.
 	 * Normal button start at 0x0, mouse over start at 64x0, mouse click
@@ -164,21 +172,6 @@ static const value_t properties[] = {
 
 	/* Icon used to display the node
 	 */
-	UI_INIT_EXTRADATA_PROPERTY("icon", V_UI_SPRITEREF, EXTRADATA_TYPE, icon),
-	UI_INIT_EXTRADATA_PROPERTY("flipicon", V_BOOL, EXTRADATA_TYPE, flipIcon),
-
-	/* end of line */
-	UI_INIT_EMPTY_PROPERTY
-};
-
-
-void UI_RegisterButtonNode (uiBehaviour_t *behaviour)
-{
-	behaviour->name = "button";
-	behaviour->draw = UI_ButtonNodeDraw;
-	behaviour->loaded = UI_ButtonNodeLoaded;
-	behaviour->leftClick = UI_ButtonNodeClick;
-	behaviour->loading = UI_ButtonNodeLoading;
-	behaviour->oldProperties = properties;
-	behaviour->extraDataSize = sizeof(EXTRADATA_TYPE);
+	UI_RegisterExtradataNodeProperty(behaviour, "icon", V_UI_SPRITEREF, EXTRADATA_TYPE, icon);
+	UI_RegisterExtradataNodeProperty(behaviour, "flipicon", V_BOOL, EXTRADATA_TYPE, flipIcon);
 }

@@ -361,21 +361,15 @@ static void UI_BaseLayoutNodeLoading (uiNode_t *node)
 	Vector4Set(node->color, 1, 1, 1, 1);
 }
 
-static const value_t properties[] = {
-	/* Identify the base, from a base ID, the node use. */
-	UI_INIT_EXTRADATA_PROPERTY("baseid", V_INT, baseExtraData_t, baseid),
-
-	/* end of line */
-	UI_INIT_EMPTY_PROPERTY
-};
-
 void UI_RegisterAbstractBaseNode (uiBehaviour_t *behaviour)
 {
 	behaviour->name = "abstractbase";
 	behaviour->isAbstract = qtrue;
-	behaviour->oldProperties = properties;
 	behaviour->loaded = UI_AbstractBaseNodeLoaded;
 	behaviour->extraDataSize = sizeof(EXTRADATA_TYPE);
+
+	/* Identify the base, from a base ID, the node use. */
+	UI_RegisterExtradataNodeProperty(behaviour, "baseid", V_INT, baseExtraData_t, baseid);
 }
 
 void UI_RegisterBaseMapNode (uiBehaviour_t *behaviour)

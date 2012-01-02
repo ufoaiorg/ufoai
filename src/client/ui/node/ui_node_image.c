@@ -192,32 +192,26 @@ void UI_ImageNodeDraw (uiNode_t *node)
 #endif
 }
 
-static const value_t properties[] = {
-	/* Do not change the image ratio. The image will be proportionally stretched. */
-	UI_INIT_EXTRADATA_PROPERTY("preventratio", V_BOOL, imageExtraData_t, preventRatio),
-	/* Now this property do nothing. But we use it like a tag, to remember nodes we should convert into button...
-	 * @todo delete it when its possible (use more button instead of image)
-	 */
-	UI_INIT_EXTRADATA_PROPERTY("mousefx", V_BOOL, imageExtraData_t, mousefx),
-
-	/* Texture high. Optional. Define the higher corner of the texture we want to display. Used with texl to crop the image. */
-	UI_INIT_EXTRADATA_PROPERTY("texh", V_POS, imageExtraData_t, texh),
-	/* Texture low. Optional. Define the lower corner of the texture we want to display. Used with texh to crop the image. */
-	UI_INIT_EXTRADATA_PROPERTY("texl", V_POS, imageExtraData_t, texl),
-
-	/* Source of the image */
-	UI_INIT_NOSIZE_PROPERTY("src", V_CVAR_OR_STRING, uiNode_t, image),
-
-	/* end of line */
-	UI_INIT_EMPTY_PROPERTY
-};
-
 void UI_RegisterImageNode (uiBehaviour_t* behaviour)
 {
 	/** @todo rename it according to the function name when its possible */
 	behaviour->name = "image";
 	behaviour->draw = UI_ImageNodeDraw;
 	behaviour->loaded = UI_ImageNodeLoaded;
-	behaviour->oldProperties = properties;
 	behaviour->extraDataSize = sizeof(EXTRADATA_TYPE);
+
+	/* Do not change the image ratio. The image will be proportionally stretched. */
+	UI_RegisterExtradataNodeProperty(behaviour, "preventratio", V_BOOL, imageExtraData_t, preventRatio);
+	/* Now this property do nothing. But we use it like a tag, to remember nodes we should convert into button...
+	 * @todo delete it when its possible (use more button instead of image)
+	 */
+	UI_RegisterExtradataNodeProperty(behaviour, "mousefx", V_BOOL, imageExtraData_t, mousefx);
+
+	/* Texture high. Optional. Define the higher corner of the texture we want to display. Used with texl to crop the image. */
+	UI_RegisterExtradataNodeProperty(behaviour, "texh", V_POS, imageExtraData_t, texh);
+	/* Texture low. Optional. Define the lower corner of the texture we want to display. Used with texh to crop the image. */
+	UI_RegisterExtradataNodeProperty(behaviour, "texl", V_POS, imageExtraData_t, texl);
+
+	/* Source of the image */
+	UI_RegisterNodeProperty(behaviour, "src", V_CVAR_OR_STRING, uiNode_t, image);
 }

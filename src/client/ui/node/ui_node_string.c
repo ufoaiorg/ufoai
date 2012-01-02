@@ -111,22 +111,16 @@ static void UI_StringNodeLoading (uiNode_t *node)
 	EXTRADATA(node).longlines = LONGLINES_PRETTYCHOP;
 }
 
-static const value_t properties[] = {
-	/* What to do with text lines longer than node width. Default is to wordwrap them to make multiple lines.
-	 * It can be LONGLINES_WRAP, LONGLINES_CHOP, LONGLINES_PRETTYCHOP
-	 */
-	UI_INIT_EXTRADATA_PROPERTY("longlines", V_INT, EXTRADATA_TYPE, longlines),
-
-	/* end of line */
-	UI_INIT_EMPTY_PROPERTY
-};
-
 void UI_RegisterStringNode (uiBehaviour_t *behaviour)
 {
 	behaviour->name = "string";
-	behaviour->oldProperties = properties;
 	behaviour->draw = UI_StringNodeDraw;
 	behaviour->drawTooltip = UI_StringNodeDrawTooltip;
 	behaviour->loading = UI_StringNodeLoading;
 	behaviour->extraDataSize = sizeof(EXTRADATA_TYPE);
+
+	/* What to do with text lines longer than node width. Default is to wordwrap them to make multiple lines.
+	 * It can be LONGLINES_WRAP, LONGLINES_CHOP, LONGLINES_PRETTYCHOP
+	 */
+	UI_RegisterExtradataNodeProperty(behaviour, "longlines", V_INT, EXTRADATA_TYPE, longlines);
 }
