@@ -125,7 +125,7 @@ typedef void (*uiNodeMethod_t)(struct uiNode_s* node, const struct uiCallContext
  * @see UI_RegisterExtradataNodeProperty
  * @return A link to the node property
  */
-const struct value_s *UI_RegisterNodePropertyPosSize_(struct uiBehaviour_s *behaviour, const char* name, int type, int pos, int size);
+const struct value_s *UI_RegisterNodePropertyPosSize_(struct uiBehaviour_s *behaviour, const char* name, int type, size_t pos, size_t size);
 
 /**
  * @brief Initialize a property

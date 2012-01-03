@@ -44,7 +44,7 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
  * @see UI_RegisterExtradataNodeProperty
  * @return A link to the node property
  */
-const struct value_s *UI_RegisterNodePropertyPosSize_ (struct uiBehaviour_s *behaviour, const char* name, int type, int pos, int size)
+const struct value_s *UI_RegisterNodePropertyPosSize_ (struct uiBehaviour_s *behaviour, const char* name, int type, size_t pos, size_t size)
 {
 	value_t *property = UI_AllocHunkMemory(sizeof(value_t), STRUCT_MEMORY_ALIGN, qfalse);
 	if (property == NULL)
