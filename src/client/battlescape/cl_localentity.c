@@ -941,13 +941,12 @@ qboolean LE_BrushModelAction (le_t * le, entity_t * ent)
 		break;
 	case ET_TRIGGER_RESCUE: {
 		float x, y, xmax;
-		int drawFlags = 0;
-		if (cl_map_draw_rescue_zone)
-			drawFlags = cl_map_draw_rescue_zone->integer;
+		const int pulsateRate = 6000;
+		const int drawFlags = cl_map_draw_rescue_zone->integer;
 
 		ent->flags = RF_BOX;
-		enum { PULSATE_RATE = 6000, DRAW_TEXTURE = 0x1, DRAW_CIRCLES = 0x2 };
-		ent->alpha = abs((cls.realtime % PULSATE_RATE) - (PULSATE_RATE / 2)) * (0.5f / (PULSATE_RATE / 2));
+		enum { DRAW_TEXTURE = 0x1, DRAW_CIRCLES = 0x2 };
+		ent->alpha = abs((cls.realtime % pulsateRate) - (pulsateRate / 2)) * (0.5f / (pulsateRate / 2));
 		ent->model = NULL;
 		VectorSet(ent->color, 0.5, 1, 0);
 		if ((drawFlags & DRAW_TEXTURE) && ent->texture == NULL) {
