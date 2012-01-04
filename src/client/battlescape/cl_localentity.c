@@ -940,16 +940,17 @@ qboolean LE_BrushModelAction (le_t * le, entity_t * ent)
 	case ET_BREAKABLE:
 		break;
 	case ET_TRIGGER_RESCUE: {
-		float x, y, xmax;
+		float x, y, z, xmax;
 		const int pulsateRate = 6000;
 		const int drawFlags = cl_map_draw_rescue_zone->integer;
 
-		ent->flags = RF_BOX;
+		ent->flags = 0; /* Do not draw anything at all, if drawFlags set to 0 */
 		enum { DRAW_TEXTURE = 0x1, DRAW_CIRCLES = 0x2 };
 		ent->alpha = abs((cls.realtime % pulsateRate) - (pulsateRate / 2)) * (0.5f / (pulsateRate / 2));
 		ent->model = NULL;
 		VectorSet(ent->color, 0.5, 1, 0);
 		if ((drawFlags & DRAW_TEXTURE) && ent->texture == NULL) {
+			ent->flags = RF_BOX;
 			ent->texture = R_FindPics("sfx/misc/rescue");
 			VectorSet(ent->color, 1, 1, 1);
 		}
@@ -960,12 +961,13 @@ qboolean LE_BrushModelAction (le_t * le, entity_t * ent)
 			break;
 
 		/* There should be an easier way than calculating the grid coords back from the world coords */
+		z = roundf(le->mins[2] / UNIT_HEIGHT) * UNIT_HEIGHT + UNIT_HEIGHT / 8.0f;
 		xmax = roundf(le->maxs[0] / UNIT_SIZE) * UNIT_SIZE - 0.1f;
 		for (x = roundf(le->mins[0] / UNIT_SIZE) * UNIT_SIZE; x < xmax; x += UNIT_SIZE) {
 			const float ymax = roundf(le->maxs[1] / UNIT_SIZE) * UNIT_SIZE - 0.1f;
 			for (y = roundf(le->mins[1] / UNIT_SIZE) * UNIT_SIZE; y < ymax; y += UNIT_SIZE) {
+				const vec3_t pos = {x + UNIT_SIZE / 4.0f, y + UNIT_SIZE / 4.0f, z};
 				entity_t circle;
-				const vec3_t pos = {x + UNIT_SIZE / 4, y + UNIT_SIZE / 4, le->mins[2]};
 
 				OBJZERO(circle);
 				circle.flags = RF_PATH;
