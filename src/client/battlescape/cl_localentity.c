@@ -943,10 +943,11 @@ qboolean LE_BrushModelAction (le_t * le, entity_t * ent)
 		float x, y, z, xmax;
 		const int pulsateRate = 6000;
 		const int drawFlags = cl_map_draw_rescue_zone->integer;
+		const float maxAlpha = 0.5f;
 
 		ent->flags = 0; /* Do not draw anything at all, if drawFlags set to 0 */
 		enum { DRAW_TEXTURE = 0x1, DRAW_CIRCLES = 0x2 };
-		ent->alpha = abs((cls.realtime % pulsateRate) - (pulsateRate / 2)) * (0.5f / (pulsateRate / 2));
+		ent->alpha = abs((cls.realtime % pulsateRate) - (pulsateRate / 2)) * (maxAlpha / (pulsateRate / 2));
 		ent->model = NULL;
 		VectorSet(ent->color, 0.5, 1, 0);
 		if ((drawFlags & DRAW_TEXTURE) && ent->texture == NULL) {
