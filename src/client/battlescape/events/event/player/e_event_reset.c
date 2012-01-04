@@ -45,6 +45,8 @@ void CL_Reset (const eventRegister_t *self, struct dbuffer *msg)
 
 	CL_CompleteRecalcRouting();
 
+	UI_ExecuteConfunc("disable_rescuezone");
+
 	if (cls.team == cl.actTeam)
 		UI_ExecuteConfunc("startround");
 	else

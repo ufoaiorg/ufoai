@@ -25,6 +25,7 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #include "../../../../client.h"
 #include "../../../cl_localentity.h"
 #include "e_event_addbrushmodel.h"
+#include "../../../../ui/ui_main.h"
 
 /**
  * @brief Register local entities for SOLID_BSP models like func_breakable or func_door
@@ -93,5 +94,9 @@ void CL_AddBrushModel (const eventRegister_t *self, struct dbuffer *msg)
 		le->contents = CONTENTS_SOLID;
 
 		CL_RecalcRouting(le);
+	}
+
+	if (le->type == ET_TRIGGER_RESCUE) {
+		UI_ExecuteConfunc("enable_rescuezone");
 	}
 }

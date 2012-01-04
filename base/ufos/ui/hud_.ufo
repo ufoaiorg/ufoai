@@ -187,6 +187,15 @@ window hud extends levelbuttons {
 	confunc enable_clientaction { }
 	confunc disable_clientaction { }
 
+	/**
+	 * This is called when a rescuezone is available in the given map
+	 */
+	confunc enable_rescuezone { }
+	/**
+	 * This is called when no rescuezone is available in the given map
+	 */
+	confunc disable_rescuezone { }
+
 	confunc disable_primaryleft { }
 	confunc disable_primaryright { }
 	confunc disable_reloadleft { }
