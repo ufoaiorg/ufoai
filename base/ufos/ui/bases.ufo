@@ -287,6 +287,16 @@ window bases
 			*node:parent.cur_employees.scientist_val@string = "<2>"
 			*node:parent.cur_employees.worker_val@string = "<3>"
 		}
+
+		/*
+		 * Show the base's aircraft (not currently used in default UI)
+		 * param1 = id (in list of aircraft in base -- not global idx)
+		 * param2 = name
+		 * param3 = aircraft template (model)
+		 * param4 = status
+		 * param5 = (1 = aircraft is in base, 0 = aircraft is not in base)
+		 */
+		confunc show_aircraft { }
 	}
 	confunc update_basebutton
 	{

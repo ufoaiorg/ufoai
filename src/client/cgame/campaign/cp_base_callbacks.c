@@ -369,6 +369,25 @@ static void B_BaseInit_f (void)
 	 * @TODO: Get the number of injured soldiers if hospital exists
 	 */
 	UI_ExecuteConfunc("current_employees %i %i %i", E_CountHired(base, EMPL_SOLDIER), E_CountHired(base, EMPL_SCIENTIST), E_CountHired(base, EMPL_WORKER));
+
+	/*
+	 * List the first five aircraft in the base if they exist
+	 */
+	if (AIR_AircraftAllowed(base)) {
+		if (AIR_BaseHasAircraft(base)) {
+			i = 0;
+			AIR_ForeachFromBase(aircraft, base) {
+				if (i > 5)
+					break;
+				/*
+				 * UI node should use global IDX to identify aircraft but it uses order of aircraft in base (i)
+				 * See @todo in cp_aircraft_callbacks.c in AIR_AircraftSelect()
+				 */
+				UI_ExecuteConfunc("show_aircraft %i \"%s\" \"%s\" \"%s\" %i", i, aircraft->name, aircraft->tpl->name, AIR_AircraftStatusToName(aircraft), AIR_IsAircraftInBase(aircraft));
+				i++;
+			}
+		}
+	}
 }
 
 /**
