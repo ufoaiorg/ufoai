@@ -296,6 +296,7 @@ window bases
 		 * param4 = status
 		 * param5 = (1 = aircraft is in base, 0 = aircraft is not in base)
 		 */
+		confunc clear_aircraft { }
 		confunc show_aircraft { }
 	}
 	confunc update_basebutton
