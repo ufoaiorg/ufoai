@@ -373,6 +373,7 @@ static void B_BaseInit_f (void)
 	/*
 	 * List the first five aircraft in the base if they exist
 	 */
+	UI_ExecuteConfunc("clear_aircraft");
 	if (AIR_AircraftAllowed(base)) {
 		if (AIR_BaseHasAircraft(base)) {
 			i = 0;
