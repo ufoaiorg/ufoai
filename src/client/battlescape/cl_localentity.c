@@ -941,15 +941,13 @@ qboolean LE_BrushModelAction (le_t * le, entity_t * ent)
 		break;
 	case ET_TRIGGER_RESCUE: {
 		float x, y, z, xmax;
-		const int pulsateRate = 6000;
 		const int drawFlags = cl_map_draw_rescue_zone->integer;
-		const float maxAlpha = 0.5f;
 
 		ent->flags = 0; /* Do not draw anything at all, if drawFlags set to 0 */
 		enum { DRAW_TEXTURE = 0x1, DRAW_CIRCLES = 0x2 };
-		ent->alpha = abs((cls.realtime % pulsateRate) - (pulsateRate / 2)) * (maxAlpha / (pulsateRate / 2));
 		ent->model = NULL;
-		VectorSet(ent->color, 0.5, 1, 0);
+		ent->alpha = 0.3f;
+		VectorSet(ent->color, 0.5f, 1.0f, 0.0f);
 		if ((drawFlags & DRAW_TEXTURE) && ent->texture == NULL) {
 			ent->flags = RF_BOX;
 			ent->texture = R_FindPics("sfx/misc/rescue");
@@ -974,7 +972,7 @@ qboolean LE_BrushModelAction (le_t * le, entity_t * ent)
 				circle.flags = RF_PATH;
 				VectorCopy(pos, circle.origin);
 				circle.oldorigin[0] = circle.oldorigin[1] = circle.oldorigin[2] = UNIT_SIZE / 2.0f;
-				VectorSet(circle.color, 0.5f, 1, 0);
+				VectorCopy(ent->color, circle.color);
 				circle.alpha = ent->alpha;
 
 				R_AddEntity(&circle);
