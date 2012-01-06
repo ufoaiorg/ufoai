@@ -28,7 +28,7 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #define CLIENT_UI_UI_INTERNAL_H
 
 #define UI_MAX_WINDOWS			128
-#define UI_MAX_COMPONENTS		64
+#define UI_MAX_COMPONENTS		128
 #define UI_MAX_WINDOWSTACK		32
 #define UI_MAX_ACTIONS			2*8192
 #define UI_MAX_VARIABLESTACK	64
