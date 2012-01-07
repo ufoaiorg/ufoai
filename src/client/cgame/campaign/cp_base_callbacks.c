@@ -384,7 +384,7 @@ static void B_BaseInit_f (void)
 				 * UI node should use global IDX to identify aircraft but it uses order of aircraft in base (i)
 				 * See @todo in cp_aircraft_callbacks.c in AIR_AircraftSelect()
 				 */
-				UI_ExecuteConfunc("show_aircraft %i \"%s\" \"%s\" \"%s\" %i", i, aircraft->name, aircraft->tpl->name, AIR_AircraftStatusToName(aircraft), AIR_IsAircraftInBase(aircraft));
+				UI_ExecuteConfunc("show_aircraft %i \"%s\" \"%s\" \"%s\" %i", i, aircraft->name, aircraft->id, AIR_AircraftStatusToName(aircraft), AIR_IsAircraftInBase(aircraft));
 				i++;
 			}
 		}
