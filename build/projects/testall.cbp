@@ -700,6 +700,9 @@
 		<Unit filename="..\..\src\client\ui\node\ui_node_image.c">
 			<Option compilerVar="CC" />
 		</Unit>
+		<Unit filename="..\..\src\client\ui\node\ui_node_data.c">
+			<Option compilerVar="CC" />
+		</Unit>
 		<Unit filename="..\..\src\client\ui\node\ui_node_texture.c">
 			<Option compilerVar="CC" />
 		</Unit>

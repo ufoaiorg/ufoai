@@ -216,6 +216,7 @@ $(TARGET)_SRCS      = \
 	client/ui/node/ui_node_container.c \
 	client/ui/node/ui_node_controls.c \
 	client/ui/node/ui_node_custombutton.c \
+	client/ui/node/ui_node_data.c \
 	client/ui/node/ui_node_editor.c \
 	client/ui/node/ui_node_ekg.c \
 	client/ui/node/ui_node_image.c \

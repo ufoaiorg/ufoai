@@ -193,6 +193,7 @@ $(TARGET)_SRCS      = \
 	client/ui/node/ui_node_battlescape.c \
 	client/ui/node/ui_node_button.c \
 	client/ui/node/ui_node_checkbox.c \
+	client/ui/node/ui_node_data.c \
 	client/ui/node/ui_node_video.c \
 	client/ui/node/ui_node_container.c \
 	client/ui/node/ui_node_controls.c \
