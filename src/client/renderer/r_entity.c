@@ -337,7 +337,7 @@ void R_DrawOpaqueMeshEntities (entity_t *ents)
 		return;
 
 	if (!(refdef.rendererFlags & RDF_NOWORLDMODEL)) {
-		R_EnableLighting(r_state.world_program, qtrue);
+		R_EnableLighting(r_state.model_program, qtrue);
 	}
 	R_DrawMeshEntities(ents);
 	if (!(refdef.rendererFlags & RDF_NOWORLDMODEL)) {
@@ -409,7 +409,7 @@ void R_DrawBlendMeshEntities (entity_t *ents)
 		return;
 
 	if (!(refdef.rendererFlags & RDF_NOWORLDMODEL)) {
-		R_EnableLighting(r_state.world_program, qtrue);
+		R_EnableLighting(r_state.model_program, qtrue);
 	}
 	R_EnableBlend(qtrue);
 
