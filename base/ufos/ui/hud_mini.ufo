@@ -26,9 +26,9 @@ window hud_mini extends hud
 		align		LAYOUTALIGN_FILL
 	}
 
-	// ======================
-	// floor (soldier panel)
-	// ======================
+	// ================================
+	// floor deco (soldier panel deco)
+	// ================================
 	panel floor_deco {
 		{
 			pos		"256 640"
@@ -169,6 +169,9 @@ window hud_mini extends hud
 		}
 	}
 
+	// ======================
+	// floor (soldier panel)
+	// ======================
 	panel floor {
 		{
 			pos		"256 640"
@@ -355,6 +358,7 @@ window hud_mini extends hud
 			tooltip		"_Wheel:Select Next/Previous"
 		}
 
+		// soldier numbers strings
 		string str_soldier0_shadow
 		{
 			pos			"91 26"
@@ -500,8 +504,8 @@ window hud_mini extends hud
 			while ( *cvar:tmp < 8 ) {
 				*node:root.floor.bar_teambox<cvar:tmp>@invis = true
 				*node:root.floor.bar_teamsep<cvar:tmp>@invis = true
-				*node:root.floor.str_soldier<cvar:i>_shadow@invis = true
-				*node:root.floor.str_soldier<cvar:i>@invis = true
+				*node:root.floor.str_soldier<cvar:tmp>_shadow@invis = true
+				*node:root.floor.str_soldier<cvar:tmp>@invis = true
 				*node:root.floor.head<cvar:tmp>@invis = true
 				*cvar:tmp = ( *cvar:tmp + 1 )
 			}
@@ -608,7 +612,7 @@ window hud_mini extends hud
 		{
 			pos			"32 90"
 			size		"66 6"
-			color		".7 0 0 0.7"
+			color		".8 0 0 0.7"
 			current		*cvar:mn_hp0
 			max			*cvar:mn_hpmax0
 			disabled	true
@@ -618,7 +622,7 @@ window hud_mini extends hud
 		{
 			pos			"32 97"
 			size		"66 6"
-			color		".7 .7 0 0.7"
+			color		".8 .8 0 0.7"
 			current		*cvar:mn_morale0
 			max			*cvar:mn_moralemax0
 			disabled	true
@@ -639,7 +643,7 @@ window hud_mini extends hud
 		{
 			pos			"112 90"
 			size		"66 6"
-			color		".7 0 0 0.7"
+			color		".8 0 0 0.7"
 			current		*cvar:mn_hp1
 			max			*cvar:mn_hpmax1
 			disabled	true
@@ -649,7 +653,7 @@ window hud_mini extends hud
 		{
 			pos			"112 97"
 			size		"66 6"
-			color		".7 .7 0 0.7"
+			color		".8 .8 0 0.7"
 			current		*cvar:mn_morale1
 			max			*cvar:mn_moralemax1
 			disabled	true
@@ -670,7 +674,7 @@ window hud_mini extends hud
 		{
 			pos			"192 90"
 			size		"66 6"
-			color		".7 0 0 0.7"
+			color		".8 0 0 0.7"
 			current		*cvar:mn_hp2
 			max			*cvar:mn_hpmax2
 			disabled	true
@@ -680,7 +684,7 @@ window hud_mini extends hud
 		{
 			pos			"192 97"
 			size		"66 6"
-			color		".7 .7 0 0.7"
+			color		".8 .8 0 0.7"
 			current		*cvar:mn_morale2
 			max			*cvar:mn_moralemax2
 			disabled	true
@@ -701,7 +705,7 @@ window hud_mini extends hud
 		{
 			pos			"272 90"
 			size		"66 6"
-			color		".7 0 0 0.7"
+			color		".8 0 0 0.7"
 			current		*cvar:mn_hp3
 			max			*cvar:mn_hpmax3
 			disabled	true
@@ -711,7 +715,7 @@ window hud_mini extends hud
 		{
 			pos			"272 97"
 			size		"66 6"
-			color		".7 .7 0 0.7"
+			color		".8 .8 0 0.7"
 			current		*cvar:mn_morale3
 			max			*cvar:mn_moralemax3
 			disabled	true
@@ -732,7 +736,7 @@ window hud_mini extends hud
 		{
 			pos			"352 90"
 			size		"66 6"
-			color		".7 0 0 0.7"
+			color		".8 0 0 0.7"
 			current		*cvar:mn_hp4
 			max			*cvar:mn_hpmax4
 			disabled	true
@@ -742,7 +746,7 @@ window hud_mini extends hud
 		{
 			pos			"352 97"
 			size		"66 6"
-			color		".7 .7 0 0.7"
+			color		".8 .8 0 0.7"
 			current		*cvar:mn_morale4
 			max			*cvar:mn_moralemax4
 			disabled	true
@@ -763,7 +767,7 @@ window hud_mini extends hud
 		{
 			pos			"432 90"
 			size		"66 6"
-			color		".7 0 0 0.7"
+			color		".8 0 0 0.7"
 			current		*cvar:mn_hp5
 			max			*cvar:mn_hpmax5
 			disabled	true
@@ -773,7 +777,7 @@ window hud_mini extends hud
 		{
 			pos			"432 97"
 			size		"66 6"
-			color		".7 .7 0 0.7"
+			color		".8 .8 0 0.7"
 			current		*cvar:mn_morale5
 			max			*cvar:mn_moralemax5
 			disabled	true
@@ -794,7 +798,7 @@ window hud_mini extends hud
 		{
 			pos			"512 90"
 			size		"66 6"
-			color		".7 0 0 0.7"
+			color		".8 0 0 0.7"
 			current		*cvar:mn_hp6
 			max			*cvar:mn_hpmax6
 			disabled	true
@@ -804,7 +808,7 @@ window hud_mini extends hud
 		{
 			pos			"512 97"
 			size		"66 6"
-			color		".7 .7 0 0.7"
+			color		".8 .8 0 0.7"
 			current		*cvar:mn_morale6
 			max			*cvar:mn_moralemax6
 			disabled	true
@@ -825,7 +829,7 @@ window hud_mini extends hud
 		{
 			pos			"592 90"
 			size		"66 6"
-			color		".7 0 0 0.7"
+			color		".8 0 0 0.7"
 			current		*cvar:mn_hp7
 			max			*cvar:mn_hpmax7
 			disabled	true
@@ -835,7 +839,7 @@ window hud_mini extends hud
 		{
 			pos			"592 97"
 			size		"66 6"
-			color		".7 .7 0 0.7"
+			color		".8 .8 0 0.7"
 			current		*cvar:mn_morale7
 			max			*cvar:mn_moralemax7
 			disabled	true
@@ -1070,7 +1074,7 @@ window hud_mini extends hud
 		string str_hp
 		{
 			font		"f_small"
-			color		".7 0 0 1"
+			color		".8 0 0 1"
 			string		*cvar:mn_hp
 			pos			"112 299"
 			size		"40 20"
@@ -1090,7 +1094,7 @@ window hud_mini extends hud
 		string str_morale
 		{
 			font		"f_small"
-			color		".7 .7 0 1"
+			color		".8 .8 0 1"
 			string		*cvar:mn_morale
 			pos			"141 299"
 			size		"40 20"
