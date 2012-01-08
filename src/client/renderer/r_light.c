@@ -80,10 +80,11 @@ void R_AddSustainedLight (const vec3_t org, float radius, const vec3_t color, fl
 }
 
 /**
- * @sa R_EnableLights
+ * @brief Updates state of sustained lights; should be called once per frame right before world rendering
+ * @sa R_RenderFrame
  * @sa R_AddSustainedLight
  */
-static void R_AddSustainedLights (void)
+void R_UpdateSustainedLights (void)
 {
 	sustain_t *s;
 	int i;
@@ -121,8 +122,6 @@ void R_EnableLights (void)
 		return;
 	}
 
-	R_AddSustainedLights();
-
 	position[3] = diffuse[3] = 1.0;
 
 	/* Light #0 is reserved for the Sun, which is already factored into lightmaps */
@@ -137,6 +136,8 @@ void R_EnableLights (void)
 		glLightfv(GL_LIGHT0 + i, GL_POSITION, position);
 		VectorCopy(l->color, diffuse);
 		glLightfv(GL_LIGHT0 + i, GL_DIFFUSE, diffuse);
+		glLightfv(GL_LIGHT0 + i, GL_AMBIENT, blackColor);
+		glLightfv(GL_LIGHT0 + i, GL_SPECULAR, blackColor);
 		glLightf(GL_LIGHT0 + i, GL_CONSTANT_ATTENUATION, MIN_GL_CONSTANT_ATTENUATION);
 		glLightf(GL_LIGHT0 + i, GL_QUADRATIC_ATTENUATION, 16.0 / (l->radius * l->radius));
 		glEnable(GL_LIGHT0 + i);
@@ -145,6 +146,8 @@ void R_EnableLights (void)
 	for (; i < MAX_GL_LIGHTS; i++) {  /* disable the rest */
 		glLightf(GL_LIGHT0 + i, GL_CONSTANT_ATTENUATION, MIN_GL_CONSTANT_ATTENUATION);
 		glLightfv(GL_LIGHT0 + i, GL_DIFFUSE, blackColor);
+		glLightfv(GL_LIGHT0 + i, GL_AMBIENT, blackColor);
+		glLightfv(GL_LIGHT0 + i, GL_SPECULAR, blackColor);
 		glDisable(GL_LIGHT0 + i);
 	}
 	glEnable(GL_LIGHTING);
@@ -171,18 +174,27 @@ void R_AddStaticLight (const vec3_t origin, float radius, const vec3_t color)
 	l->radius = radius;
 }
 
-void R_ClearStaticLights (void)
+/* If glow was enabled, disable it before calling this function, or rendering state will become incoherent */
+void R_DisableLights (void)
 {
 	int i;
 	vec4_t blackColor = {0.0, 0.0, 0.0, 1.0};
 
-	r_state.numStaticLights = 0;
-	glDisable(GL_LIGHTING);
 	for (i = 0; i < MAX_GL_LIGHTS; i++) {
 		glLightf(GL_LIGHT0 + i, GL_CONSTANT_ATTENUATION, MIN_GL_CONSTANT_ATTENUATION);
 		glLightfv(GL_LIGHT0 + i, GL_DIFFUSE, blackColor);
+		glLightfv(GL_LIGHT0 + i, GL_AMBIENT, blackColor);
+		glLightfv(GL_LIGHT0 + i, GL_SPECULAR, blackColor);
 		glDisable(GL_LIGHT0 + i);
 	}
+	glDisable(GL_LIGHTING);
+}
+
+void R_ClearStaticLights (void)
+{
+	r_state.numStaticLights = 0;
+
+	R_DisableLights();
 }
 
 /** @todo - the updating of the per-entity list of nearest

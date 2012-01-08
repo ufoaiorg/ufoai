@@ -300,7 +300,7 @@ void R_RenderFrame (void)
 			R_GetLevelSurfaceLists();
 		}
 
-		R_EnableLights();
+		R_UpdateSustainedLights();
 
 		R_CheckError();
 
