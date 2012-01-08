@@ -1757,8 +1757,7 @@ window hud_mini extends hud
 		call *node:root.floor_deco.hudenable_floor_deco ( <1> )
 	}
 
-	confunc updatelevel
-	{
+	cvarlistener cl_worldlevel {
 	*cvar:mn_icon_level = ("minihud/level<cvar:cl_worldlevel>")
 	}
 
@@ -1771,7 +1770,6 @@ window hud_mini extends hud
 		cmd "music_change battlescape;"
 		call *node:root.right.show_rightweapon
 		*cvar:mn_icon_level = ("minihud/level<cvar:cl_worldlevel>")
-		cmd "ui_addcvarlistener cl_worldlevel updatelevel;"
 	}
 
 	func onWindowClosed
