@@ -298,6 +298,15 @@ window bases
 		 */
 		confunc clear_aircraft { }
 		confunc show_aircraft { }
+
+		/*
+		 * Show a research item in the base overview (not used in default UI)
+		 * param1 = name
+		 * param2 = number of scientists working on it
+		 * param3 = percent complete
+		 */
+		confunc clear_research { }
+		confunc show_research { }
 	}
 	confunc update_basebutton
 	{

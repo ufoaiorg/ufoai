@@ -389,6 +389,29 @@ static void B_BaseInit_f (void)
 			}
 		}
 	}
+
+	/* Get the research item closest to completion in the base if it exists */
+	UI_ExecuteConfunc("clear_research");
+	if (RS_ResearchAllowed(base)) {
+		const technology_t *closestTech = NULL;
+		double finished = -1;
+		for (i = 0; i < ccs.numTechnologies; i++) {
+			const technology_t *tech = RS_GetTechByIDX(i);
+			if (!tech)
+				continue;
+			if (tech->base != base)
+				continue;
+			if (tech->statusResearch == RS_RUNNING) {
+				const double percent = (1 - tech->time / tech->overallTime) * 100;
+				if (percent > finished) {
+					finished = percent;
+					closestTech = tech;
+				}
+			}
+		}
+		if (closestTech != NULL)
+			UI_ExecuteConfunc("show_research \"%s\" %i %3.0f", closestTech->name, closestTech->scientists, finished);
+	}
 }
 
 /**
