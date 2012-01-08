@@ -25,7 +25,7 @@
 
 /* sand dirtmap on the ancient floor */
 {
-	material tex_buildings/floor_se03
+	material tex_buildings/paving001
 	{
 		texture tex_nature/desert004
 		dirtmap 1.0
