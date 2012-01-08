@@ -256,6 +256,15 @@ static void testVideo (void)
 }
 
 /**
+ * @brief test cvarlistener nodes
+ * but ATM we only check it dont crash
+ */
+static void testCvarListener (void)
+{
+	UFO_ExecuteTestWindow("test_cvarlistener");
+}
+
+/**
  * @brief test key binding
  * @todo unfortunately we can't use "bindui" or "press" commands in tests.
  */
@@ -304,6 +313,8 @@ int UFO_AddUILevel2Tests (void)
 	if (CU_ADD_TEST(UISuite, testVideo) == NULL)
 		return CU_get_error();
 	if (CU_ADD_TEST(UISuite, testBinding) == NULL)
+		return CU_get_error();
+	if (CU_ADD_TEST(UISuite, testCvarListener) == NULL)
 		return CU_get_error();
 	if (CU_ADD_TEST(UISuite, testSamples) == NULL)
 		return CU_get_error();
