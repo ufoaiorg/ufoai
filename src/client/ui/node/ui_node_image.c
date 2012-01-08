@@ -5,9 +5,9 @@
  * (mouse in/out/click...) but in this case, it is better to use nodes with a semantics (like button,
  * or checkbox).
  * @code
- * pic aircraft_return
+ * image aircraft_return
  * {
- *	image	ui/buttons_small
+ *	src	ui/buttons_small
  *	pos	"550 410"
  *	texl	"0 32"
  *	texh	"16 48"
