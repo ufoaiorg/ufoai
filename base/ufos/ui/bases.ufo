@@ -307,6 +307,14 @@ window bases
 		 */
 		confunc clear_research { }
 		confunc show_research { }
+
+		/*
+		 * Show the production item closest to completion in the base overview (not used in default UI)
+		 * param1 = name
+		 * param2 = percent complete
+		 */
+		confunc clear_production { }
+		confunc show_production { }
 	}
 	confunc update_basebutton
 	{

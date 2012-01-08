@@ -412,6 +412,16 @@ static void B_BaseInit_f (void)
 		if (closestTech != NULL)
 			UI_ExecuteConfunc("show_research \"%s\" %i %3.0f", closestTech->name, closestTech->scientists, finished);
 	}
+
+	/* Get the production item closest to completion in the base if it exists */
+	UI_ExecuteConfunc("clear_production");
+	if (PR_ProductionAllowed(base)) {
+		const production_queue_t *queue = PR_GetProductionForBase(base);
+		if (queue->numItems > 0) {
+			const production_t *production = &queue->items[0];
+			UI_ExecuteConfunc("show_production \"%s\" %3.0f", PR_GetName(&production->data), PR_GetProgress(production) * 100);
+		}
+	}
 }
 
 /**
