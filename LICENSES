@@ -370,6 +370,28 @@ base/maps/laboratory/lab_craft_ufo_scout.map | GNU General Public License 2.0 or
 base/maps/laboratory/lab_main.map | GNU General Public License 2.0 or later
 base/maps/lake_ice.map | GNU General Public License 2.0 or later | "SparX" Beyeler
 base/maps/lake_ice_big.map | GNU General Public License 2.0 or later | 'SparX' Beyeler, Martin Gerhardy
+base/maps/mansion.ump | GNU General Public License 2.0 or later | Holger Gellrich
+base/maps/mansion/mansion_coast1.map | GNU General Public License 2.0 or later | Holger Gellrich
+base/maps/mansion/mansion_coast2.map | GNU General Public License 2.0 or later | Holger Gellrich
+base/maps/mansion/mansion_coast_corner_ne.map | GNU General Public License 2.0 or later | Holger Gellrich
+base/maps/mansion/mansion_coast_corner_se.map | GNU General Public License 2.0 or later | Holger Gellrich
+base/maps/mansion/mansion_coast_corner_sw.map | GNU General Public License 2.0 or later | Holger Gellrich
+base/maps/mansion/mansion_coast_east_b.map | GNU General Public License 2.0 or later | Holger Gellrich
+base/maps/mansion/mansion_coast_east_d.map | GNU General Public License 2.0 or later | Holger Gellrich
+base/maps/mansion/mansion_coast_east_s.map | GNU General Public License 2.0 or later | Holger Gellrich
+base/maps/mansion/mansion_coast_east_u.map | GNU General Public License 2.0 or later | Holger Gellrich
+base/maps/mansion/mansion_coast_south_b.map | GNU General Public License 2.0 or later | Holger Gellrich
+base/maps/mansion/mansion_coast_south_d.map | GNU General Public License 2.0 or later | Holger Gellrich
+base/maps/mansion/mansion_coast_south_s.map | GNU General Public License 2.0 or later | Holger Gellrich
+base/maps/mansion/mansion_coast_south_u.map | GNU General Public License 2.0 or later | Holger Gellrich
+base/maps/mansion/mansion_craft_drop_empty.map | GNU General Public License 2.0 or later | Holger Gellrich
+base/maps/mansion/mansion_craft_ufo_empty.map | GNU General Public License 2.0 or later | Holger Gellrich
+base/maps/mansion/mansion_main.map | GNU General Public License 2.0 or later | Holger Gellrich
+base/maps/mansion/mansion_maingate.map | GNU General Public License 2.0 or later | Holger Gellrich
+base/maps/mansion/mansion_ocean1.map | GNU General Public License 2.0 or later | Holger Gellrich
+base/maps/mansion/mansion_ocean2.map | GNU General Public License 2.0 or later | Holger Gellrich
+base/maps/mansion/mansion_ocean3.map | GNU General Public License 2.0 or later | Holger Gellrich
+base/maps/mansion/mansion_poolhouse.map | GNU General Public License 2.0 or later | Holger Gellrich
 base/maps/mart.ump | GNU General Public License 2.0 or later
 base/maps/mart/ma_craft_drop_firebird.map | GNU General Public License 2.0 or later
 base/maps/mart/ma_craft_drop_herakles.map | GNU General Public License 2.0 or later

@@ -1308,6 +1308,50 @@ mapdef laboratory
 	}
 }
 
+/////////////////////////
+// MANSION RANDOM MAPS //
+/////////////////////////
+
+mapdef mansion
+{
+        map                     "+mansion"
+        description     ""
+        teams           3
+        multiplayer     true
+        gametypes
+        {
+		1on1
+		1on1on1
+        }
+        description	""
+        maxaliens       8
+        aircraft
+        {
+		//any
+        }
+
+        ufos
+        {
+                //any
+        }
+
+        terrains
+        {
+                coast
+        }
+
+        cultures
+        {
+                western
+        }
+
+        populations
+        {
+                urban
+		village
+        }
+}
+
 //////////////////////////
 // ORIENTAL RANDOM MAPS //
 //////////////////////////
