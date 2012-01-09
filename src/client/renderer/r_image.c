@@ -319,32 +319,6 @@ void R_UploadTexture (unsigned *data, int width, int height, image_t* image)
 		Mem_Free(scaled);
 }
 
-void R_TextureDisableWrapping (const image_t *image)
-{
-	if (!R_ImageIsClamp(image))
-		return;
-
-	glBindTexture(GL_TEXTURE_2D, image->texnum);
-	R_CheckError();
-	glTexParameterf(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_CLAMP_TO_EDGE);
-	R_CheckError();
-	glTexParameterf(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_CLAMP_TO_EDGE);
-	R_CheckError();
-}
-
-void R_TextureEnableWrapping (const image_t *image)
-{
-	if (!R_ImageIsClamp(image))
-		return;
-
-	glBindTexture(GL_TEXTURE_2D, image->texnum);
-	R_CheckError();
-	glTexParameterf(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_REPEAT);
-	R_CheckError();
-	glTexParameterf(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_REPEAT);
-	R_CheckError();
-}
-
 /**
  * @brief Applies blurring to a texture
  * @sa R_BuildLightMap

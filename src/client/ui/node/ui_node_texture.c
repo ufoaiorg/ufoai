@@ -54,7 +54,7 @@ static void UI_TextureNodeDraw (uiNode_t *node)
 	if (Q_strnull(imageName))
 		return;
 
-	image = UI_LoadImage(imageName);
+	image = UI_LoadWrappedImage(imageName);
 	if (!image)
 		return;
 
@@ -64,11 +64,7 @@ static void UI_TextureNodeDraw (uiNode_t *node)
 
 	UI_GetNodeAbsPos(node, nodepos);
 
-	R_TextureEnableWrapping(image);
-
 	UI_DrawNormImage(qfalse, nodepos[0], nodepos[1], node->size[0], node->size[1], node->size[0], node->size[1], 0, 0, image);
-
-	R_TextureDisableWrapping(image);
 }
 
 void UI_RegisterTextureNode (uiBehaviour_t* behaviour)

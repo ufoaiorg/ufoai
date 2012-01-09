@@ -80,6 +80,21 @@ const struct image_s *UI_LoadImage (const char *name)
 }
 
 /**
+ * @brief Searches for a wrapped image in the image array
+ * @param[in] name The name of the image relative to pics/
+ * @note name may not be null and has to be longer than 4 chars
+ * @return NULL on error or image_t pointer on success
+ * @sa R_FindImage
+ */
+const struct image_s *UI_LoadWrappedImage (const char *name)
+{
+	const struct image_s *image = R_FindImage(va("pics/%s", name), it_wrappic);
+	if (image == r_noTexture)
+		return NULL;
+	return image;
+}
+
+/**
  * @brief Draw a normalized (to the screen) image
  * @param[in] x The x coordinate (normalized)
  * @param[in] y The x coordinate (normalized)
