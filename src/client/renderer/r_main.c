@@ -85,7 +85,6 @@ cvar_t *r_showbox;
 cvar_t *r_threads;
 cvar_t *r_vertexbuffers;
 cvar_t *r_warp;
-cvar_t *r_lights;
 cvar_t *r_dynamic_lights;
 cvar_t *r_programs;
 cvar_t *r_quality;
@@ -465,25 +464,14 @@ static qboolean R_CvarCheckMaxLightmap (cvar_t *cvar)
 	return Cvar_AssertValue(cvar, 128, LIGHTMAP_BLOCK_WIDTH, qtrue);
 }
 
-static qboolean R_CvarCheckLights (cvar_t *cvar)
-{
-	if (r_dynamic_lights)
-		Cvar_SetValue("r_dynamic_lights", cvar->integer);
-
-	return Cvar_AssertValue(cvar, 0, 1, qtrue);
-}
-
 static qboolean R_CvarCheckDynamicLights (cvar_t *cvar)
 {
-	if (!r_lights->integer) {
-		if (cvar->integer != 0) {
-			Com_Printf("No lighting activated\n");
-			Cvar_SetValue(cvar->name, 0);
-			return qtrue;
-		}
-		return qfalse;
-	}
-	return Cvar_AssertValue(cvar, 1, r_config.maxLights - 1, qtrue);
+	float maxLights = r_config.maxLights;
+
+	if (maxLights > MAX_ENTITY_LIGHTS)
+		maxLights = MAX_ENTITY_LIGHTS;
+
+	return Cvar_AssertValue(cvar, 0, maxLights, qtrue);
 }
 
 static qboolean R_CvarPrograms (cvar_t *cvar)
@@ -581,8 +569,6 @@ static void R_RegisterSystemVars (void)
 	r_drawbuffer = Cvar_Get("r_drawbuffer", "GL_BACK", 0, NULL);
 	r_swapinterval = Cvar_Get("r_swapinterval", "0", CVAR_ARCHIVE | CVAR_R_CONTEXT, "Controls swap interval synchronization (V-Sync). Values between 0 and 2");
 	r_multisample = Cvar_Get("r_multisample", "0", CVAR_ARCHIVE | CVAR_R_CONTEXT, "Controls multisampling (anti-aliasing). Values between 0 and 4");
-	r_lights = Cvar_Get("r_lights", "1", CVAR_ARCHIVE | CVAR_R_PROGRAMS, "Activates or deactivates hardware lighting");
-	Cvar_SetCheckFunction("r_lights", R_CvarCheckLights);
 	r_warp = Cvar_Get("r_warp", "1", CVAR_ARCHIVE, "Activates or deactivates warping surface rendering");
 	r_shownormals = Cvar_Get("r_shownormals", "0", CVAR_ARCHIVE, "Show normals on bsp surfaces");
 	r_bumpmap = Cvar_Get("r_bumpmap", "1.0", CVAR_ARCHIVE | CVAR_R_PROGRAMS, "Activate bump mapping");

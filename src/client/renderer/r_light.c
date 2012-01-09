@@ -33,9 +33,6 @@ void R_AddLight (const vec3_t origin, float radius, const vec3_t color)
 {
 	int i;
 
-	if (!r_lights->integer)
-		return;
-
 	if (refdef.numDynamicLights == MAX_GL_LIGHTS)
 		return;
 
@@ -58,9 +55,6 @@ void R_AddSustainedLight (const vec3_t org, float radius, const vec3_t color, fl
 {
 	sustain_t *s;
 	int i;
-
-	if (!r_lights->integer)
-		return;
 
 	s = r_sustainArray;
 
@@ -118,6 +112,9 @@ void R_EnableWorldLights (void)
 		return;
 	}
 
+	if (!r_dynamic_lights->integer)
+		return;
+
 	for (i = 0; i < refdef.numDynamicLights && i < maxLights; i++) {
 		const light_t *light = &refdef.dynamicLights[i];
 
@@ -156,12 +153,14 @@ void R_EnableModelLights (const light_t **lights, int numLights, qboolean enable
 		if (r_state.dynamic_lighting_enabled) {
 			R_DisableAttribute("TANGENTS"); /** @todo is it a good idea? */
 
-			for (i = 0; i < maxLights; i++)
-				Vector4Set(lightParams[i], 0, 0, 0, 1);
+			if (maxLights) {
+				for (i = 0; i < maxLights; i++)
+					Vector4Set(lightParams[i], 0, 0, 0, 1);
 
-			/* Send light data to shaders */
-			R_ProgramParameter3fvs("LIGHTPOSITIONS", maxLights, (GLfloat *)lightPositions);
-			R_ProgramParameter4fvs("LIGHTPARAMS", maxLights, (GLfloat *)lightParams);
+				/* Send light data to shaders */
+				R_ProgramParameter3fvs("LIGHTPOSITIONS", maxLights, (GLfloat *)lightPositions);
+				R_ProgramParameter4fvs("LIGHTPARAMS", maxLights, (GLfloat *)lightParams);
+			}
 		}
 
 		r_state.dynamic_lighting_enabled = qfalse;
@@ -179,6 +178,9 @@ void R_EnableModelLights (const light_t **lights, int numLights, qboolean enable
 	R_UseMaterial(&defaultMaterial);
 
 	R_ProgramParameter3fv("AMBIENT", refdef.ambientColor);
+
+	if (!maxLights)
+		return;
 
 	for (i = 0; i < numLights; i++) {
 		const light_t *light = lights[i];
@@ -286,16 +288,17 @@ void R_ClearStaticLights (void)
 static void R_AddLightToEntity (entity_t *ent, const light_t *light, const float distSqr)
 {
 	int i;
+	int maxLights = r_dynamic_lights->integer;
 	const light_t **el = ent->lights;
 	/* we have to use the offset from accumulated transform matrix, because origin is relative to attachment point for submodels */
 	const vec_t *pos = ent->transform.matrix + 12; /* type system hack, sorry */
 
 	for (i = 0; i < ent->numLights; i++) {
-		if (i == MAX_ENTITY_LIGHTS)
+		if (i == maxLights)
 			return;
 		if (distSqr < VectorDistSqr((el[i]->origin), pos)) { /** @todo will caching VectorDistSqr() results improve the rendering speed? */
 			/* found more distant light, push it down the list and insert this one*/
-			if (i + 1 == MAX_ENTITY_LIGHTS) {
+			if (i + 1 == maxLights) {
 				/* shortcut in case light we are replacing is the last light possible; also acts as the overflow guard */
 				el[i] = light;
 				return;
@@ -311,7 +314,7 @@ static void R_AddLightToEntity (entity_t *ent, const light_t *light, const float
 		}
 	}
 
-	if (i == MAX_ENTITY_LIGHTS)
+	if (i == maxLights)
 		return;
 
 	el[i++] = light;
@@ -338,6 +341,9 @@ void R_UpdateLightList (entity_t *ent)
 	diameter = VectorLength(diametralVec);
 
 	ent->numLights = 0; /* clear the list of lights */
+
+	if (!r_dynamic_lights->integer)
+		return;
 
 	for (i = 0; i < refdef.numStaticLights; i++) {
 		light_t *light = &refdef.staticLights[i];

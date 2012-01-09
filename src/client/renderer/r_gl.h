@@ -38,6 +38,7 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #endif
 
 /* internally defined convenience constant */
+/* @todo sanitize those  */
 #define GL_TANGENT_ARRAY -1
 #define GL_NEXT_VERTEX_ARRAY -2
 #define GL_NEXT_NORMAL_ARRAY -3

@@ -330,7 +330,7 @@ qboolean R_EnableLighting (r_program_t *program, qboolean enable)
 	if (enable && (!program || !program->id))
 		return r_state.lighting_enabled;
 
-	if (!r_lights->integer || (r_state.lighting_enabled == enable && r_state.active_program == program))
+	if (r_state.lighting_enabled == enable && r_state.active_program == program)
 		return r_state.lighting_enabled;
 
 	r_state.lighting_enabled = enable;
