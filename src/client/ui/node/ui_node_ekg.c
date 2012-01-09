@@ -47,7 +47,7 @@ static void UI_EKGNodeDraw (uiNode_t *node)
 
 	UI_GetNodeAbsPos(node, nodepos);
 
-	image = UI_LoadImage(imageName);
+	image = UI_LoadWrappedImage(imageName);
 	if (image) {
 		const int ekgHeight = node->size[1];
 		const int ekgWidth = image->width;
