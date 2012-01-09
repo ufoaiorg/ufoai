@@ -131,13 +131,17 @@ window geoscape
 			pos			"0 0"
 		}
 
+		// =====================
+		// messagesystem button
+		// =====================
+
 		button bt_messagesystem
 		{
 			// @todo: better -more verbose- tooltip
 			tooltip		"_Open up messages"
 			padding		0
 			icon		"icons/change_height"
-			pos			"6 6"
+			pos			"5 5"
 			size		"23 23"
 			onClick	{
 				cmd "add mn_messagesystem 1;"
@@ -150,82 +154,51 @@ window geoscape
 			}
 		}
 
-		// ==================
-		// texts
-		// ==================
-
-		string daytime
-		{
-			string		*cvar:mn_mapdaytime
-			pos			"31 304"
-			size		"195 20"
-			contentalign	ALIGN_UC
-		}
-
-		text description
-		{
-			dataid		TEXT_STANDARD
-			pos			"32 154"
-			size		"172 144"
-			lineheight	18
-			tabwidth	70
-			rows		8
-			onViewChange {
-				*node:parent.description_scroll@fullsize = <fullsize>
-				*node:parent.description_scroll@current = <viewpos>
-				*node:parent.description_scroll@viewsize = <viewsize>
-			}
-		}
-
-		vscrollbar description_scroll {
-			image		"ui/scrollbar_v_green"
-			pos			"205 151"
-			height		"144"
-			current		0
-			viewsize	8
-			fullsize	8
-			hidewhenunused	true
-			onChange {
-				*node:parent.description@viewpos = <current>
-			}
-		}
-
-		// ==================
-		// time
-		// ==================
+		// =====================
+		// time and date string
+		// =====================
 
 		string date
 		{
 			string		"*cvar:mn_mapdate *cvar:mn_maptime"
-			pos			"31 30"
+			pos			"31 32"
 			size		"195 20"
 			contentalign	ALIGN_UC
 			color		"1 1 1 1"
 			font		"f_small"
 		}
 
+		// ==================
+		// credits strings
+		// ==================
+
 		string txt_credits_caption
 		{
 			string		"_CREDITS"
-			pos			"40 54"
-			size		"75 25"
+			pos			"31 58"
+			size		"97 25"
 			font		"f_small"
+			contentalign	ALIGN_CC
 		}
 
 		string txt_credits
 		{
 			string		*cvar:mn_credits
 			tooltip		"_Organisation capital"
-			pos			"112 54"
-			size		"100 25"
+			pos			"129 58"
+			size		"97 25"
 			font		"f_small"
-			contentalign	ALIGN_UR
+			contentalign	ALIGN_CC
 		}
+
+		// ==================
+		// timecontrol panel
+		// ==================
 
 		panel time_panel {
 			{
 				pos		"0 90"
-				size	"256 55"
+				size	"254 55"
 			}
 
 			func faster {
@@ -273,7 +246,6 @@ window geoscape
 				onWheelDown	{ cmd "game_timeslow;" }
 			}
 
-
 			radiobutton bt_timeplay3
 			{
 				tooltip		"_Time lapse: 20 minutes"
@@ -310,7 +282,6 @@ window geoscape
 				onWheelDown	{ cmd "game_timeslow;" }
 			}
 
-
 			radiobutton bt_timeplay6
 			{
 				tooltip		"_Time lapse: 1 day"
@@ -343,98 +314,166 @@ window geoscape
 				contentalign	ALIGN_UC
 				color		"0 .78 0 1"
 			}
-
 		}
 
-		// geoscape control buttons
+		// ====================
+		// mission description
+		// ====================
+
+		text description
+		{
+			dataid		TEXT_STANDARD
+			pos			"32 154"
+			size		"172 144"
+			lineheight	18
+			tabwidth	70
+			rows		8
+			onViewChange {
+				*node:parent.description_scroll@fullsize = <fullsize>
+				*node:parent.description_scroll@current = <viewpos>
+				*node:parent.description_scroll@viewsize = <viewsize>
+			}
+		}
+
+		vscrollbar description_scroll {
+			image		"ui/scrollbar_v_green"
+			pos			"205 151"
+			height		"144"
+			current		0
+			viewsize	8
+			fullsize	8
+			hidewhenunused	true
+			onChange {
+				*node:parent.description@viewpos = <current>
+			}
+		}
+
+		// =====================
+		// day/nighttime string
+		// =====================
+
+		string daytime
+		{
+			string		*cvar:mn_mapdaytime
+			pos			"31 306"
+			size		"195 20"
+			contentalign	ALIGN_UC
+		}
+
+		// ========================
+		// geoscape camera control
+		// ========================
 
 		panel geoscape_control {
 			{
-				pos		"48 340"
-				size	"164 164"
+				pos		"43 342"
+				size	"170 170"
 			}
 
 			image background {
 				pos		"0 0"
-				size	"164 164"
-				texh	"164 164"
+				size	"170 170"
+				texh	"170 170"
 				src	"ui/geo_miniglobe"
+			}
+
+			image globe_effect {
+				pos		"0 0"
+				size	"168 168"
+				texh	"168 168"
 			}
 
 			zone panel_scroll_up
 			{
-				pos			"52 4"
-				size		"60 30"
+				pos			"55 2"
+				size		"70 50"
 				repeat		true
 				clickdelay	100
 				onClick		{ cmd "map_scroll down;" }
+				onMouseEnter { *node:parent.globe_effect@image = "ui/geo_miniglobe_n" }
+				onMouseLeave { *node:parent.globe_effect@image = "" }
 			}
 
 			zone panel_scroll_down
 			{
-				pos			"52 134"
-				size		"60 30"
+				pos			"47 115"
+				size		"70 50"
 				repeat		true
 				clickdelay	100
 				onClick		{ cmd "map_scroll up;" }
+				onMouseEnter { *node:parent.globe_effect@image = "ui/geo_miniglobe_s" }
+				onMouseLeave { *node:parent.globe_effect@image = "" }
 			}
 
 			zone panel_scroll_left
 			{
-				pos			"2 50"
-				size		"30 60"
+				pos			"2 45"
+				size		"50 70"
 				repeat		true
 				clickdelay	100
 				onClick		{ cmd "map_scroll right;" }
+				onMouseEnter { *node:parent.globe_effect@image = "ui/geo_miniglobe_w" }
+				onMouseLeave { *node:parent.globe_effect@image = "" }
 			}
 
 			zone panel_scroll_right
 			{
-				pos			"134 50"
-				size		"30 60"
+				pos			"115 55"
+				size		"50 70"
 				repeat		true
 				clickdelay		100
 				onClick		{ cmd "map_scroll left;" }
+				onMouseEnter { *node:parent.globe_effect@image = "ui/geo_miniglobe_e" }
+				onMouseLeave { *node:parent.globe_effect@image = "" }
 			}
 
 			zone panel_zoom_in
 			{
-				pos			"56 50"
-				size		"20 60"
+				pos			"54 50"
+				size		"25 62"
 				repeat		true
 				clickdelay	100
 				onClick		{ cmd "map_zoom in" }
+				onMouseEnter { *node:parent.globe_effect@image = "ui/geo_miniglobe_in" }
+				onMouseLeave { *node:parent.globe_effect@image = "" }
 			}
 
 			zone panel_zoom_out
 			{
 				pos			"82 50"
-				size		"20 60"
+				size		"25 62"
 				repeat		true
 				clickdelay	100
 				onClick		{ cmd "map_zoom out" }
+				onMouseEnter { *node:parent.globe_effect@image = "ui/geo_miniglobe_out" }
+				onMouseLeave { *node:parent.globe_effect@image = "" }
 			}
 
 			// geoscape camera functions
 			func cam_up {
 				cmd "map_scroll up;"
+				*node:parent.globe_effect@image = "ui/geo_miniglobe_n"
 			}
 			func cam_left {
 				cmd "map_scroll left;"
+				*node:parent.globe_effect@image = "ui/geo_miniglobe_w"
 			}
 			func cam_right {
 				cmd "map_scroll right;"
+				*node:parent.globe_effect@image = "ui/geo_miniglobe_e"
 			}
 			func cam_down {
 				cmd "map_scroll down;"
+				*node:parent.globe_effect@image = "ui/geo_miniglobe_s"
 			}
 			func zoom_in {
 				cmd "map_zoom in;"
+				*node:parent.globe_effect@image = "ui/geo_miniglobe_in"
 			}
 			func zoom_out {
 				cmd "map_zoom out;"
+				*node:parent.globe_effect@image = "ui/geo_miniglobe_out"
 			}
-
 		}
 
 		// ==================
