@@ -553,8 +553,11 @@ image_t *R_FindImage (const char *pname, imagetype_t type)
 	Com_StripExtension(pname, lname, sizeof(lname));
 
 	image = R_GetImage(lname);
-	if (image)
+	if (image) {
+		if (image->type != type)
+			Com_Printf("Warning: inconsistent usage of image %s (%i != %i)\n", image->name, image->type, type);
 		return image;
+	}
 
 	if ((surf = Img_LoadImage(lname))) {
 		image = R_LoadImageData(lname, (byte *)surf->pixels, surf->w, surf->h, type);
