@@ -3709,6 +3709,12 @@ base/pics/ui/checkbox_green.png | GNU General Public License 2.0 or later | bayo
 base/pics/ui/geo_menu.png | GNU General Public License 2.0 or later | Martin Gerhardy
 base/pics/ui/geo_menu_mini.png | GNU General Public License 2.0 or later |  | Based on original menu artwork by SparX and Rasta
 base/pics/ui/geo_miniglobe.png | GNU General Public License 2.0 or later
+base/pics/ui/geo_miniglobe_e.png | GNU General Public License 2.0 or later | MCR | Based on original UFO:AI artwork (Blender rendering)
+base/pics/ui/geo_miniglobe_in.png | GNU General Public License 2.0 or later | MCR | Based on original UFO:AI artwork (Blender rendering)
+base/pics/ui/geo_miniglobe_n.png | GNU General Public License 2.0 or later | MCR | Based on original UFO:AI artwork (Blender rendering)
+base/pics/ui/geo_miniglobe_out.png | GNU General Public License 2.0 or later | MCR | Based on original UFO:AI artwork (Blender rendering)
+base/pics/ui/geo_miniglobe_s.png | GNU General Public License 2.0 or later | MCR | Based on original UFO:AI artwork (Blender rendering)
+base/pics/ui/geo_miniglobe_w.png | GNU General Public License 2.0 or later | MCR | Based on original UFO:AI artwork (Blender rendering)
 base/pics/ui/hosp_button_blue.png | GNU General Public License 2.0 or later
 base/pics/ui/hosp_button_green.png | GNU General Public License 2.0 or later
 base/pics/ui/hosp_button_light.png | GNU General Public License 2.0 or later
