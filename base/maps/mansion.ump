@@ -49,6 +49,7 @@ b      +d     +d     +d     +d     g
 }
 
 // main building, the centre of the map, build upon the ruin of an old fortress
+// contains 4x info_player_start for multiplayer team 3
 tile +main
 {
 10 7
@@ -130,7 +131,8 @@ o      +o     +c    a
 }
 
 tile +coast2
-// the coast west of the poolhouse, maybe team 3 will start here in multiplayer
+// the coast west of the poolhouse
+// contains 4x info_player_start for multiplayer team 4
 {
 3 8
 0       0      0
@@ -261,7 +263,7 @@ gu    +e     +e    +o    0
 
 // no ufo, used  for testing
 // 8 x info_alien_start
-// 8 x info_player_start for Team 2,  todo 2x info_2x2_start for Team 2
+// 8 x info_player_start for Team 2,  2x info_2x2_start for Team 2
 tile +craft_ufo_empty
 {
 6 7

@@ -2,7 +2,7 @@
 // entity 0
 {
 "classname" "worldspawn"
-"maxlevels" "8"
+"maxlevel" "8"
 // brush 0
 {
 ( 512 768 132 ) ( 512 0 132 ) ( 256 768 132 ) tex_nature/grass_mowed_green_c 0 0 0 0.25 0.25 64512 0 0
@@ -852,5 +852,4 @@
 "classname" "info_civilian_target"
 "count" "3"
 "origin" "48 592 32"
-"angle" "180"
 }
