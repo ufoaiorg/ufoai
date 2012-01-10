@@ -1227,31 +1227,9 @@ window hud_mini extends hud
 
 		// show/hide panel buttons
 
-		image minihud_bt_soldiers_off
+		image minihud_bt_soldiers
 		{
-			tooltip		"_LMB:Show Soldier Panel"
-			src			"icons/off"
-			mousefx		true
-			pos			"102 490"
-			size		"16 16"
-			onClick
-			{
-				*node:root.floor@invis = false
-				if ( *node:root.right.minihud_bt_decoration_on@invis == false ) { *node:root.floor_deco@invis = false }
-				*node:root.right.minihud_bt_soldiers_on@invis = false
-			}
-
-			onRClick
-			{
-				*node:root.floor_deco@invis = true
-				*node:root.floor@invis = true
-				*node:root.right.minihud_bt_soldiers_on@invis = true
-			}
-
-		}
-		image minihud_bt_soldiers_on
-		{
-			tooltip		"_RMB:Hide Soldier Panel"
+			tooltip		"_LMB:Show/RMB:Hide Soldier Panel"
 			src			"icons/on"
 			mousefx		true
 			pos			"102 490"
@@ -1260,39 +1238,19 @@ window hud_mini extends hud
 			{
 				*node:root.floor@invis = false
 				if ( *node:root.right.minihud_bt_decoration_on@invis == false ) { *node:root.floor_deco@invis = false }
-				*node:root.right.minihud_bt_soldiers_on@invis = false
+				*node:this@image = "icons/on"
 			}
 			onRClick
 			{
 				*node:root.floor_deco@invis = true
 				*node:root.floor@invis = true
-				*node:root.right.minihud_bt_soldiers_on@invis = true
+				*node:this@image = "icons/off"
 			}
 		}
 
-		image minihud_bt_top_off
+		image minihud_bt_top
 		{
-			tooltip		"_LMB:Show Top Panel"
-			src			"icons/off"
-			mousefx		true
-			pos			"122 490"
-			size		"16 16"
-			onClick
-			{
-				*node:root.upperright@invis = false
-				if ( *node:root.right.minihud_bt_decoration_on@invis == false ) { *node:root.upperright_deco@invis = false }
-				*node:root.right.minihud_bt_top_on@invis = false
-			}
-			onRClick
-			{
-				*node:root.upperright_deco@invis = true
-				*node:root.upperright@invis = true
-				*node:root.right.minihud_bt_top_on@invis = true
-			}
-		}
-		image minihud_bt_top_on
-		{
-			tooltip		"_RMB:Hide Top Panel"
+			tooltip		"_LMB:Show/RMB:Hide Top Panel"
 			src			"icons/on"
 			mousefx		true
 			pos			"122 490"
@@ -1301,41 +1259,19 @@ window hud_mini extends hud
 			{
 				*node:root.upperright@invis = false
 				if ( *node:root.right.minihud_bt_decoration_on@invis == false ) { *node:root.upperright_deco@invis = false }
-				*node:root.right.minihud_bt_top_on@invis = false
+				*node:this@image = "icons/on"
 			}
 			onRClick
 			{
 				*node:root.upperright_deco@invis = true
 				*node:root.upperright@invis = true
-				*node:root.right.minihud_bt_top_on@invis = true
+				*node:this@image = "icons/off"
 			}
 		}
 
-		image minihud_bt_decoration_off
+		image minihud_bt_decoration
 		{
-			tooltip		"_LMB:Show Decoration"
-			src			"icons/off"
-			mousefx		true
-			pos			"202 490"
-			size		"16 16"
-			onClick
-			{
-				*node:root.right_deco@invis = false
-				if ( *node:root.floor@invis == false ) { *node:root.floor_deco@invis = false }
-				if ( *node:root.upperright@invis == false ) { *node:root.upperright_deco@invis = false }
-				*node:root.right.minihud_bt_decoration_on@invis = false
-			}
-			onRClick
-			{
-				*node:root.right_deco@invis = true
-				*node:root.floor_deco@invis = true
-				*node:root.upperright_deco@invis = true
-				*node:root.right.minihud_bt_decoration_on@invis = true
-			}
-		}
-		image minihud_bt_decoration_on
-		{
-			tooltip		"_RMB:Hide Decoration"
+			tooltip		"_LMB:Show/RMB:Hide Decoration"
 			src			"icons/on"
 			mousefx		true
 			pos			"202 490"
@@ -1345,14 +1281,14 @@ window hud_mini extends hud
 				*node:root.right_deco@invis = false
 				if ( *node:root.floor@invis == false ) { *node:root.floor_deco@invis = false }
 				if ( *node:root.upperright@invis == false ) { *node:root.upperright_deco@invis = false }
-				*node:root.right.minihud_bt_decoration_on@invis = false
+				*node:this@image = "icons/on"
 			}
 			onRClick
 			{
 				*node:root.right_deco@invis = true
 				*node:root.floor_deco@invis = true
 				*node:root.upperright_deco@invis = true
-				*node:root.right.minihud_bt_decoration_on@invis = true
+				*node:this@image = "icons/off"
 			}
 		}
 
