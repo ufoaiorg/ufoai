@@ -617,5 +617,8 @@ window production
 	func onWindowClosed
 	{
 		delete *cvar:ui_prreq
+		// call base init function because the amount of workers, scientists and
+		// so on can also change the button state in the base view
+		cmd "base_init;"
 	}
 }
