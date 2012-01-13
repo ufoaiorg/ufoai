@@ -1704,9 +1704,13 @@ base/models/objects/vegi/chestnut/chestnut_stamm1.md2 | GNU General Public Licen
 base/models/objects/vegi/chestnut/chestnut_stamm2.md2 | GNU General Public License 2.0 | hullbr3ach
 base/models/objects/vegi/chestnut/chestnut_stamm3.md2 | GNU General Public License 2.0 | hullbr3ach
 base/models/objects/vegi/chestnut/leaves1.png | GNU General Public License 2.0 | based on Titus Tscharnke's work (http://www.burningwell.org/gallery2/v/textures/plants/leavesAndBranches/) | MCR
+base/models/objects/vegi/chestnut/leaves1_sm.png | GNU General Public License 2.0 | MCR
 base/models/objects/vegi/chestnut/leaves2.png | GNU General Public License 2.0 | based on Titus Tscharnke's work (http://www.burningwell.org/gallery2/v/textures/plants/leavesAndBranches/) | MCR
+base/models/objects/vegi/chestnut/leaves2_sm.png | GNU General Public License 2.0 | MCR
 base/models/objects/vegi/chestnut/leaves3.png | GNU General Public License 2.0 | based on Titus Tscharnke's work (http://www.burningwell.org/gallery2/v/textures/plants/leavesAndBranches/) | MCR
+base/models/objects/vegi/chestnut/leaves3_sm.png | GNU General Public License 2.0 | MCR
 base/models/objects/vegi/chestnut/leaves4.png | GNU General Public License 2.0 | based on Titus Tscharnke's work (http://www.burningwell.org/gallery2/v/textures/plants/leavesAndBranches/) | MCR
+base/models/objects/vegi/chestnut/leaves4_sm.png | GNU General Public License 2.0 | MCR
 base/models/objects/vegi/fern/fern.md2 | GNU General Public License 2.0 or later | Willem Sitters
 base/models/objects/vegi/fern/fern.png | GNU General Public License 2.0 or later | Willem Sitters;MCR
 base/models/objects/vegi/fern2/fern2.md2 | Creative Commons Attribution-Share Alike 3.0 | Yo Frankie!
