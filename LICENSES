@@ -4260,7 +4260,9 @@ base/textures/tex_base/grid2_alpha.png | GNU General Public License 2.0 or later
 base/textures/tex_base/grid_alpha.png | GNU General Public License 2.0 or later | Martin Gerhardy
 base/textures/tex_base/helipad.png | GNU General Public License 2.0 | Werner Höhrer (hoehrer)
 base/textures/tex_base/lab_floor001.png | GNU General Public License 2.0 or later | Martin Gerhardy
+base/textures/tex_base/lab_floor001_nm.png | GNU General Public License 2.0 or later | MCR
 base/textures/tex_base/lab_floor002.png | GNU General Public License 2.0 | Werner Höhrer (hoehrer) | GPL2 photo by Martin Gerhardy
+base/textures/tex_base/lab_floor002_nm.png | GNU General Public License 2.0 | MCR
 base/textures/tex_base/lab_floor003.jpg | GNU General Public License 2.0 or later | Martin Gerhardy
 base/textures/tex_base/lab_floor003_nm.png | GNU General Public License 2.0 or later | Martin Gerhardy
 base/textures/tex_base/lab_wall001.png | GNU General Public License 2.0 | Werner Höhrer (hoehrer)
