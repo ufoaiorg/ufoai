@@ -44,6 +44,10 @@ component panel cmpGeoscapeDocklet {
 	}
 }
 
+// ================
+// GEOSCAPE WINDOW
+// ================
+
 window geoscape
 {
 	// ==================
@@ -114,9 +118,9 @@ window geoscape
 
 	}
 
-	// ==================
-	// RIGHT PANEL
-	// ==================
+	// ===================
+	// RIGHT (MAIN) PANEL
+	// ===================
 
 	panel control {
 		{
@@ -389,7 +393,7 @@ window geoscape
 				size		"70 50"
 				repeat		true
 				clickdelay	100
-				onClick		{ cmd "map_scroll down;" }
+				onClick		{ cmd "map_scroll up;" }
 				onMouseEnter { *node:parent.globe_effect@image = "ui/geo_miniglobe_n" }
 				onMouseLeave { *node:parent.globe_effect@image = "" }
 			}
@@ -400,7 +404,7 @@ window geoscape
 				size		"70 50"
 				repeat		true
 				clickdelay	100
-				onClick		{ cmd "map_scroll up;" }
+				onClick		{ cmd "map_scroll down;" }
 				onMouseEnter { *node:parent.globe_effect@image = "ui/geo_miniglobe_s" }
 				onMouseLeave { *node:parent.globe_effect@image = "" }
 			}
@@ -411,7 +415,7 @@ window geoscape
 				size		"50 70"
 				repeat		true
 				clickdelay	100
-				onClick		{ cmd "map_scroll right;" }
+				onClick		{ cmd "map_scroll left;" }
 				onMouseEnter { *node:parent.globe_effect@image = "ui/geo_miniglobe_w" }
 				onMouseLeave { *node:parent.globe_effect@image = "" }
 			}
@@ -422,7 +426,7 @@ window geoscape
 				size		"50 70"
 				repeat		true
 				clickdelay		100
-				onClick		{ cmd "map_scroll left;" }
+				onClick		{ cmd "map_scroll right;" }
 				onMouseEnter { *node:parent.globe_effect@image = "ui/geo_miniglobe_e" }
 				onMouseLeave { *node:parent.globe_effect@image = "" }
 			}
