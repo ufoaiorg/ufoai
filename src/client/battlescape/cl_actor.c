@@ -118,6 +118,7 @@ const char *CL_ActorGetSkillString (const int skill)
 	case 8:
 		return _("Outstanding");
 	case 9:
+		return _("Impressive")
 	case 10:
 		return _("Superhuman");
 	default:
@@ -990,7 +991,7 @@ void CL_ActorInvMove (const le_t *le, containerIndex_t fromContainer, int fromX,
 }
 
 /**
- * @brief Uses the current selected entity in the battlescape. Can e.g. opens the selected door.
+ * @brief Uses the current selected entity in the battlescape. Can e.g. open the selected door.
  * @sa G_ClientUseEdict
  */
 static void CL_ActorUse (const le_t *le)
