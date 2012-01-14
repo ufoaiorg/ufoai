@@ -584,6 +584,7 @@ static uiAction_t *UI_ParseActionList (uiNode_t *node, const char **text, const 
 static qboolean UI_ParseExcludeRect (uiNode_t * node, const char **text, const char **token, const char *errhead)
 {
 	uiExcludeRect_t rect;
+	uiExcludeRect_t *newRect;
 
 	/* get parameters */
 	*token = Com_EParse(text, errhead, node->name);
@@ -612,22 +613,16 @@ static qboolean UI_ParseExcludeRect (uiNode_t * node, const char **text, const c
 		}
 	} while ((*token)[0] != '}');
 
-	if (ui_global.numExcludeRect >= UI_MAX_EXLUDERECTS) {
-		Com_Printf("UI_ParseExcludeRect: exluderect limit exceeded (max: %i)\n", UI_MAX_EXLUDERECTS);
+	newRect = (uiExcludeRect_t*) UI_AllocHunkMemory(sizeof(*newRect), STRUCT_MEMORY_ALIGN, qfalse);
+	if (newRect == NULL) {
+		Com_Printf("UI_ParseExcludeRect: ui hunk memory exceeded.");
 		return qfalse;
 	}
 
-	/* copy the rect into the global structure */
-	ui_global.excludeRect[ui_global.numExcludeRect] = rect;
-
-	/* link only the first element */
-	if (node->excludeRect == NULL) {
-		node->excludeRect = &ui_global.excludeRect[ui_global.numExcludeRect];
-	}
-
-	ui_global.numExcludeRect++;
-	node->excludeRectNum++;
-
+	/* move data to final memory and link to node */
+	*newRect = rect;
+	newRect->next = node->firstExcludeRect;
+	node->firstExcludeRect = newRect;
 	return qtrue;
 }
 

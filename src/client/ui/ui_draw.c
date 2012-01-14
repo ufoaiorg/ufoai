@@ -104,15 +104,16 @@ static void UI_HighlightNode (const uiNode_t *node, const vec4_t color)
 	R_Color(NULL);
 
 	/* exclude rect */
-	if (node->excludeRectNum) {
-		int i;
+	if (node->firstExcludeRect) {
+		uiExcludeRect_t *current;
 		vec4_t trans = {1, 1, 1, 1};
 		Vector4Copy(color, trans);
 		trans[3] = trans[3] / 2;
-		for (i = 0; i < node->excludeRectNum; i++) {
-			const int x = pos[0] + node->excludeRect[i].pos[0];
-			const int y = pos[1] + node->excludeRect[i].pos[1];
-			UI_DrawFill(x, y, node->excludeRect[i].size[0], node->excludeRect[i].size[1], trans);
+
+		for (current = node->firstExcludeRect; current != NULL; current = current->next) {
+			const int x = pos[0] + current->pos[0];
+			const int y = pos[1] + current->pos[1];
+			UI_DrawFill(x, y, current->size[0], current->size[1], trans);
 		}
 	}
 

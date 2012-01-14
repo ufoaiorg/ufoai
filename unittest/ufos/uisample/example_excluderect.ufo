@@ -1,0 +1,77 @@
+/**
+ * @brief Unittest to check texture feature
+ * Move it into the ui ufo script directory (/base/ufos/ui/), run the game, and run the command "ui_push unittest_excluderect"
+ */
+
+component panel cmp_unittest_excluderect {
+	pos			"0 0"
+	size		"50 50"
+	border		3
+	bordercolor	"0 0.5 0 1"
+	bgcolor "0 0.5 0 1"
+	excluderect	{ pos	"0 0"	size	"25 25" }
+	excluderect	{ pos	"25 25"	size	"25 25" }
+	onMouseEnter {
+		*node:this@bgcolor = "0 1 0 1"
+	}
+	onMouseLeave {
+		*node:this@bgcolor = "0 0.5 0 1"
+	}
+}
+
+window unittest_excluderect
+{
+	{
+		pos "100 100"
+		size "600 500"
+		dragbutton	true
+		closebutton	true
+		string		"_Unittest texture"
+		bgcolor		"0 0 0 1"
+		timeout		1000
+	}
+
+	/* excluderect */
+
+	panel foo {
+		pos			"100 100"
+		size		"50 50"
+		border		3
+		bordercolor	"0 0.5 0 1"
+		bgcolor "0 0.5 0 1"
+		excluderect	{ pos	"0 0"	size	"25 25" }
+		excluderect	{ pos	"25 25"	size	"25 25" }
+		onMouseEnter {
+			*node:this@bgcolor = "0 1 0 1"
+		}
+		onMouseLeave {
+			*node:this@bgcolor = "0 0.5 0 1"
+		}
+	}
+
+	/* component which share same list of excluderect */
+
+	cmp_unittest_excluderect foo2 {
+		pos			"200 100"
+	}
+	cmp_unittest_excluderect foo3 {
+		pos			"100 200"
+	}
+
+	/* ghost */
+
+	panel foo4 {
+		pos			"200 200"
+		size		"50 50"
+		border		3
+		bordercolor	"0 0.5 0 1"
+		bgcolor "0 0.5 0 1"
+		ghost true
+		onMouseEnter {
+			*node:this@bgcolor = "0 1 0 1"
+		}
+		onMouseLeave {
+			*node:this@bgcolor = "0 0.5 0 1"
+		}
+	}
+}

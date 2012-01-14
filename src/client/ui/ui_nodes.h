@@ -36,11 +36,13 @@ struct uiCallContext_s;
 struct uiNode_s;
 struct uiModel_s;
 
-/* exclude rect */
-#define UI_MAX_EXLUDERECTS	64
-
 typedef struct uiExcludeRect_s {
-	vec2_t pos, size;
+	/** position of the exclude rect relative to node position */
+	vec2_t pos;
+	/** size of the exclude rect */
+	vec2_t size;
+	/** next exclude rect used by the node */
+	struct uiExcludeRect_s* next;
 } uiExcludeRect_t;
 
 /**
@@ -78,9 +80,8 @@ typedef struct uiNode_s {
 	int num;					/**< used to identify child into a parent; not sure it is need @todo delete it */
 	struct uiAction_s* visibilityCondition;	/**< cvar condition to display/hide the node */
 
-	/** @todo use a linked list of excluderect? */
-	uiExcludeRect_t *excludeRect;	/**< exclude this for hover or click functions */
-	int excludeRectNum;			/**< how many consecutive exclude rects defined? */
+	/** linked list of exclude rect, which exclude node zone for hover or click functions */
+	uiExcludeRect_t *firstExcludeRect;
 
 	/* other attributes */
 	/** @todo needs cleanup */

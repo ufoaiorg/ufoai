@@ -418,17 +418,17 @@ static uiNode_t *UI_GetNodeInTreeAtPosition (uiNode_t *node, int rx, int ry)
 
 	/* disable ghost/excluderect in debug mode 2 */
 	if (UI_DebugMode() != 2) {
-		int i;
+		uiExcludeRect_t *excludeRect;
 		/* is the node tangible */
 		if (node->ghost)
 			return NULL;
 
 		/* check excluded box */
-		for (i = 0; i < node->excludeRectNum; i++) {
-			if (rx >= node->excludeRect[i].pos[0]
-			 && rx < node->excludeRect[i].pos[0] + node->excludeRect[i].size[0]
-			 && ry >= node->excludeRect[i].pos[1]
-			 && ry < node->excludeRect[i].pos[1] + node->excludeRect[i].size[1])
+		for (excludeRect = node->firstExcludeRect; excludeRect != NULL; excludeRect = excludeRect->next) {
+			if (rx >= excludeRect->pos[0]
+			 && rx < excludeRect->pos[0] + excludeRect->size[0]
+			 && ry >= excludeRect->pos[1]
+			 && ry < excludeRect->pos[1] + excludeRect->size[1])
 				return NULL;
 		}
 	}

@@ -68,8 +68,7 @@ static void UI_Memory_f (void)
 	Com_Printf("\t-Rendering window stack slot: %i\n", UI_MAX_WINDOWSTACK);
 	Com_Printf("\t-Action allocation: %i/%i\n", ui_global.numActions, UI_MAX_ACTIONS);
 	Com_Printf("\t-Model allocation: %i/%i\n", ui_global.numModels, UI_MAX_MODELS);
-	Com_Printf("\t-Exclude rect allocation: %i/%i\n", ui_global.numExcludeRect, UI_MAX_EXLUDERECTS);
-	Com_Printf("\t -Node allocation: %i\n", ui_global.numNodes);
+	Com_Printf("\t-Node allocation: %i\n", ui_global.numNodes);
 
 	Com_Printf("Memory:\n");
 	Com_Printf("\t-Action structure size: "UFO_SIZE_T" B\n", sizeof(uiAction_t));

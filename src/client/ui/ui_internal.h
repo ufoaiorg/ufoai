@@ -84,9 +84,6 @@ typedef struct uiGlobal_s {
 	uiModel_t models[UI_MAX_MODELS];
 	int numModels;
 
-	uiExcludeRect_t excludeRect[UI_MAX_EXLUDERECTS];
-	int numExcludeRect;
-
 	uiSprite_t sprites[UI_MAX_SPRITES];
 	int numSprites;
 

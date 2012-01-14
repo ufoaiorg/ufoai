@@ -895,7 +895,7 @@ void UI_RegisterAbstractNode (uiBehaviour_t *behaviour)
 
 	/* Special attribute only use into the node description to exclude part of the node
 	 * (see also <code>ghost</code>). Rectangle position is relative to the node. */
-	UI_RegisterNodeProperty(behaviour, "excluderect", V_UI_EXCLUDERECT, uiNode_t, excludeRect);
+	UI_RegisterNodeProperty(behaviour, "excluderect", V_UI_EXCLUDERECT, uiNode_t, firstExcludeRect);
 
 	/* Remove all child from the node (only dynamic allocated nodes). */
 	UI_RegisterNodeMethod(behaviour, "removeallchild", UI_AbstractNodeCallRemovaAllChild);
