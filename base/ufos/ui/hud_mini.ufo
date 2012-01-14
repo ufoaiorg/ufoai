@@ -1532,11 +1532,14 @@ window hud_mini extends hud
 			pos		"768 0"
 			size	"256 64"
 			align	LAYOUTALIGN_TOPRIGHT
+			ghost	true
 		}
 		image bar_top_deco
 		{
 			src		"minihud/bar_top_deco"
 			pos			"0 0"
+			excluderect	{ pos	"0 0"	size	"96 64" }
+			excluderect	{ pos	"0 55"	size	"256 9" }
 		}
 	}
 
@@ -1545,11 +1548,14 @@ window hud_mini extends hud
 			pos		"768 0"
 			size	"256 64"
 			align	LAYOUTALIGN_TOPRIGHT
+			ghost	true
 		}
 		image bar_top_mini
 		{
 			src		"minihud/bar_top_mini"
 			pos			"0 0"
+			excluderect	{ pos	"0 0"	size	"96 64" }
+			excluderect	{ pos	"0 55"	size	"256 9" }
 		}
 
 		image messagelog
