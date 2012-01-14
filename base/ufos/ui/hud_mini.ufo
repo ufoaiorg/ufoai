@@ -873,8 +873,8 @@ window hud_mini extends hud
 		{
 			src		"minihud/bar_right_deco"
 			pos			"0 0"
-			excluderect	{ pos	"0 0"	size	"96 512" }
-			excluderect	{ pos	"0 473"	size	"192 39" }
+			excluderect	{ pos	"0 200"	size	"96 312" }
+			excluderect	{ pos	"0 0"	size	"256 201" }
 		}
 	}
 
@@ -890,8 +890,8 @@ window hud_mini extends hud
 		{
 			src		"minihud/bar_right_mini"
 			pos			"0 0"
-			excluderect	{ pos	"0 0"	size	"96 512" }
-			excluderect	{ pos	"0 473"	size	"192 39" }
+			excluderect	{ pos	"0 200"	size	"96 312" }
+			excluderect	{ pos	"0 0"	size	"256 201" }
 		}
 		image bt_primaryright
 		{
