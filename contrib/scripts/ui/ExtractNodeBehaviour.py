@@ -5,7 +5,7 @@
 # @license Public domain
 #
 
-import os, os.path, sys
+import os, os.path, sys, re
 
 # path where exists ufo binary
 UFOAI_ROOT = os.path.realpath(os.path.dirname(__file__) + '/../../..')
@@ -56,6 +56,8 @@ class NodeBehaviour:
 			self.name = "null"
 
 	def getSuperclass(self):
+		if self.extends == None:
+			return None
 		return self.package.getBehaviour(self.extends)
 
 	def getProperty(self, propertyName):
@@ -95,7 +97,7 @@ class NodePackage:
 	def getBehaviour(self, name):
 		if name in self.behaviours:
 			return self.behaviours[name]
-		raise "Behaviour '" + name + "' not found."
+		raise Exception("Behaviour '" + str(name) + "' not found.")
 
 	def addBehaviour(self, behaviour):
 		self.behaviours[behaviour.name] = behaviour
@@ -111,42 +113,18 @@ class ExtractNodeBehaviour:
 	def getPackage(self):
 		return self.package
 
-	# @brief Extract each properties into a text according to the structure name
-	def extractProperties(self, node, filedata, structName):
-		signature = "const value_t %s[]" % structName
-		properties = filedata.split(signature)
-		properties = properties[1]
-
-		i = properties.find('{')
-		j = properties.find('};')
-		properties = properties[i+1:j]
-
-		result = {}
+	def formatPropertyComment(self, codeComment):
 		comments = []
-		override = False
-		propertyName = ""
-
-		for line in properties.splitlines():
+		for line in codeComment.splitlines():
 			line = line.strip()
 
 			if line.startswith("/*"):
 				line = line.replace('/**', '').replace('/*', '').replace('*/', '')
 				line = line.strip()
-				if line.startswith("@override"):
-					propertyName = line.replace('@override', '').strip()
-					override = True
-				else:
-					comments.append(line)
+				comments.append(line)
 				continue
 
 			if line.startswith("*/"):
-				if override:
-					element = Element(propertyName, "...")
-					element.override = True
-					element.addDoc(comments)
-					node.addProperty(element)
-					comments = []
-					override = False
 				continue
 
 			if line.startswith("*"):
@@ -160,28 +138,43 @@ class ExtractNodeBehaviour:
 					else:
 						comments[len(comments)-1] += ' ' + line
 				continue
+		return comments
 
-			i = line.find('{')
-			if i == -1:
-				continue
+	def extractProperties2(self, code):
+		result = []
+		matchProperties = "(/\*.*?\*/)?\s*(?:\w*?\s*=)?\s*(UI_Register\w*?)\((.*?)\)\s*;"
+		for data in re.findall(matchProperties, code, re.DOTALL):
+			comment, function, param = data
 
-			line = line[i+1:]
-			e = line.split(',')
+			# clean up cause it can match more than one comment
+			comment = comment.split("/*")
+			comment = "/*" + comment[len(comment)-1]
 
-			name = e[0].strip()
+			doc = self.formatPropertyComment(comment)
+			params = param.split(",")
+			name = params[1].strip()
 			if name[0] == '"':
 				name = name[1:len(name)-1]
-
 			if name == 'NULL':
 				continue
+			if function == "UI_RegisterOveridedNodeProperty":
+				element = Element(name, "...")
+				element.addDoc(doc)
+				element.override = True
+				result.append(element)
+				continue
 
-			type = e[1].strip()
+			type = ""
+			if function == "UI_RegisterNodeMethod":
+				type = "V_UI_NODEMETHOD"
+			else:
+				type = params[2].strip()
 
 			element = Element(name, type)
-			element.addDoc(comments)
-			node.addProperty(element)
-			comments = []
-			override = False
+			element.addDoc(doc)
+			result.append(element)
+
+		return result
 
 	# @brief Extract each body of registration function into a text
 	def extractRegistrationFunctions(self, filedata):
@@ -242,40 +235,55 @@ class ExtractNodeBehaviour:
 
 		return comments
 
+	def extractDataFromRegistrationFunction(self, code, doc):
+
+		props = self.extractProperties2(code)
+
+		lines = code.splitlines()
+		dic = {}
+		for l in lines:
+			l = l.replace("behaviour->", "")
+			l = l.replace(";", "")
+			e = l.split('=')
+			if len(e) != 2:
+				continue
+			v = e[1].strip()
+			if v[0] == '"':
+				v = v[1:len(v)-1]
+			dic[e[0].strip()] = v
+
+		node = NodeBehaviour()
+		node.init(dic)
+		for prop in props:
+			node.addProperty(prop)
+		if doc != None:
+			node.doc = doc
+
+		self.package.addBehaviour(node)
+
 	def extractData(self):
+		registrationFunctions = []
 		# all nodes
-		for f in os.listdir(dir):
-			if ".c" not in f:
+		for fileName in os.listdir(dir):
+			if ".c" not in fileName:
 				continue
 
-			file = open(dir + '/' + f, "rt")
+			file = open(dir + '/' + fileName, "rt")
 			data = file.read()
 			file.close()
 
-			registrationFunctions = self.extractRegistrationFunctions(data)
+			rf = self.extractRegistrationFunctions(data)
 			doc = None
-			if len(registrationFunctions) == 1:
+			if len(rf) == 1:
 				doc = self.extractHeaderComments(data)
 
-			for code in registrationFunctions:
-				lines = code.splitlines()
-				dic = {}
-				for l in lines:
-					l = l.replace("behaviour->", "")
-					l = l.replace(";", "")
-					e = l.split('=')
-					if len(e) != 2:
-						continue
-					v = e[1].strip()
-					if v[0] == '"':
-						v = v[1:len(v)-1]
-					dic[e[0].strip()] = v
+			for code in rf:
+				registrationFunctions.append((code, doc))
 
-				node = NodeBehaviour()
-				node.init(dic)
-				if 'properties' in dic:
-					props = self.extractProperties(node, data, dic['properties'])
-				if doc != None:
-					node.doc = doc
+		for data in registrationFunctions:
+			code, doc = data
+			self.extractDataFromRegistrationFunction(code, doc)
 
-				self.package.addBehaviour(node)
+if __name__ == "__main__":
+	extract = ExtractNodeBehaviour()
+	package = extract.getPackage()
