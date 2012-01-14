@@ -29,11 +29,13 @@ window hud_mini extends hud
 	// ================================
 	// floor deco (soldier panel deco)
 	// ================================
+
 	panel floor_deco {
 		{
 			pos		"256 640"
 			size	"688 128"
 			align	LAYOUTALIGN_BOTTOM
+			ghost	true
 		}
 
 		image bar_teamleft_deco
@@ -41,6 +43,7 @@ window hud_mini extends hud
 			src		"minihud/bar_teamleft_deco"
 			pos			"0 0"
 			size		"32 128"
+			ghost	true
 		}
 
 		image bar_teambox0_deco
@@ -48,6 +51,7 @@ window hud_mini extends hud
 			src		"minihud/bar_teambox_deco"
 			pos			"32 0"
 			size		"64 128"
+			ghost	true
 		}
 
 		image bar_teamsep1_deco
@@ -55,12 +59,14 @@ window hud_mini extends hud
 			src		"minihud/bar_teamsep_deco"
 			pos			"96 0"
 			size		"16 128"
+			ghost	true
 		}
 		image bar_teambox1_deco
 		{
 			src		"minihud/bar_teambox_deco"
 			pos			"112 0"
 			size		"64 128"
+			ghost	true
 		}
 
 		image bar_teamsep2_deco
@@ -68,12 +74,14 @@ window hud_mini extends hud
 			src		"minihud/bar_teamsep_deco"
 			pos			"176 0"
 			size		"16 128"
+			ghost	true
 		}
 		image bar_teambox2_deco
 		{
 			src		"minihud/bar_teambox_deco"
 			pos			"192 0"
 			size		"64 128"
+			ghost	true
 		}
 
 		image bar_teamsep3_deco
@@ -81,12 +89,14 @@ window hud_mini extends hud
 			src		"minihud/bar_teamsep_deco"
 			pos			"256 0"
 			size		"16 128"
+			ghost	true
 		}
 		image bar_teambox3_deco
 		{
 			src		"minihud/bar_teambox_deco"
 			pos			"272 0"
 			size		"64 128"
+			ghost	true
 		}
 
 		image bar_teamsep4_deco
@@ -94,12 +104,14 @@ window hud_mini extends hud
 			src		"minihud/bar_teamsep_deco"
 			pos			"336 0"
 			size		"16 128"
+			ghost	true
 		}
 		image bar_teambox4_deco
 		{
 			src		"minihud/bar_teambox_deco"
 			pos			"352 0"
 			size		"64 128"
+			ghost	true
 		}
 
 		image bar_teamsep5_deco
@@ -107,12 +119,14 @@ window hud_mini extends hud
 			src		"minihud/bar_teamsep_deco"
 			pos			"416 0"
 			size		"16 128"
+			ghost	true
 		}
 		image bar_teambox5_deco
 		{
 			src		"minihud/bar_teambox_deco"
 			pos			"432 0"
 			size		"64 128"
+			ghost	true
 		}
 
 		image bar_teamsep6_deco
@@ -120,12 +134,14 @@ window hud_mini extends hud
 			src		"minihud/bar_teamsep_deco"
 			pos			"496 0"
 			size		"16 128"
+			ghost	true
 		}
 		image bar_teambox6_deco
 		{
 			src		"minihud/bar_teambox_deco"
 			pos			"512 0"
 			size		"64 128"
+			ghost	true
 		}
 
 		image bar_teamsep7_deco
@@ -133,12 +149,14 @@ window hud_mini extends hud
 			src		"minihud/bar_teamsep_deco"
 			pos			"576 0"
 			size		"16 128"
+			ghost	true
 		}
 		image bar_teambox7_deco
 		{
 			src		"minihud/bar_teambox_deco"
 			pos			"592 0"
 			size		"64 128"
+			ghost	true
 		}
 
 		image bar_teamright_deco
@@ -146,6 +164,7 @@ window hud_mini extends hud
 			src		"minihud/bar_teamright_deco"
 			pos			"656 0"
 			size		"32 128"
+			ghost	true
 		}
 
 		func hudenable_floor_deco
@@ -172,11 +191,13 @@ window hud_mini extends hud
 	// ======================
 	// floor (soldier panel)
 	// ======================
+
 	panel floor {
 		{
 			pos		"256 640"
 			size	"688 128"
 			align	LAYOUTALIGN_BOTTOM
+			ghost	true
 		}
 
 		image bar_teamleft
@@ -187,6 +208,8 @@ window hud_mini extends hud
 			onWheelUp	{ cmd "actor_next;"}
 			onWheelDown	{ cmd "actor_prev;"}
 			tooltip		"_Wheel:Select Next/Previous"
+			excluderect	{ pos	"0 0"	size	"32 12" }
+			excluderect	{ pos	"0 0"	size	"11 128" }
 		}
 
 		image bar_teambox0
@@ -199,6 +222,7 @@ window hud_mini extends hud
 			onWheelUp	{ cmd "actor_next;"}
 			onWheelDown	{ cmd "actor_prev;"}
 			tooltip		"_LMB/RMB:Select\nWheel:Select Next/Prev\nKey:1"
+			excluderect	{ pos	"0 0"	size	"64 12" }
 		}
 
 		image bar_teamsep1
@@ -209,6 +233,7 @@ window hud_mini extends hud
 			onWheelUp	{ cmd "actor_next;"}
 			onWheelDown	{ cmd "actor_prev;"}
 			tooltip		"_Wheel:Select Next/Previous"
+			excluderect	{ pos	"0 0"	size	"16 12" }
 		}
 		image bar_teambox1
 		{
@@ -220,6 +245,7 @@ window hud_mini extends hud
 			onWheelUp	{ cmd "actor_next;"}
 			onWheelDown	{ cmd "actor_prev;"}
 			tooltip		"_LMB/RMB:Select\nWheel:Select Next/Prev\nKey:2"
+			excluderect	{ pos	"0 0"	size	"64 12" }
 		}
 
 		image bar_teamsep2
@@ -230,6 +256,7 @@ window hud_mini extends hud
 			onWheelUp	{ cmd "actor_next;"}
 			onWheelDown	{ cmd "actor_prev;"}
 			tooltip		"_Wheel:Select Next/Previous"
+			excluderect	{ pos	"0 0"	size	"16 12" }
 		}
 		image bar_teambox2
 		{
@@ -241,6 +268,7 @@ window hud_mini extends hud
 			onWheelUp	{ cmd "actor_next;"}
 			onWheelDown	{ cmd "actor_prev;"}
 			tooltip		"_LMB/RMB:Select\nWheel:Select Next/Prev\nKey:3"
+			excluderect	{ pos	"0 0"	size	"64 12" }
 		}
 
 		image bar_teamsep3
@@ -251,6 +279,7 @@ window hud_mini extends hud
 			onWheelUp	{ cmd "actor_next;"}
 			onWheelDown	{ cmd "actor_prev;"}
 			tooltip		"_Wheel:Select Next/Previous"
+			excluderect	{ pos	"0 0"	size	"16 12" }
 		}
 		image bar_teambox3
 		{
@@ -262,6 +291,7 @@ window hud_mini extends hud
 			onWheelUp	{ cmd "actor_next;"}
 			onWheelDown	{ cmd "actor_prev;"}
 			tooltip		"_LMB/RMB:Select\nWheel:Select Next/Prev\nKey:4"
+			excluderect	{ pos	"0 0"	size	"64 12" }
 		}
 
 		image bar_teamsep4
@@ -272,6 +302,7 @@ window hud_mini extends hud
 			onWheelUp	{ cmd "actor_next;"}
 			onWheelDown	{ cmd "actor_prev;"}
 			tooltip		"_Wheel:Select Next/Previous"
+			excluderect	{ pos	"0 0"	size	"16 12" }
 		}
 		image bar_teambox4
 		{
@@ -283,6 +314,7 @@ window hud_mini extends hud
 			onWheelUp	{ cmd "actor_next;"}
 			onWheelDown	{ cmd "actor_prev;"}
 			tooltip		"_LMB/RMB:Select\nWheel:Select Next/Prev\nKey:5"
+			excluderect	{ pos	"0 0"	size	"64 12" }
 		}
 
 		image bar_teamsep5
@@ -293,6 +325,7 @@ window hud_mini extends hud
 			onWheelUp	{ cmd "actor_next;"}
 			onWheelDown	{ cmd "actor_prev;"}
 			tooltip		"_Wheel:Select Next/Previous"
+			excluderect	{ pos	"0 0"	size	"16 12" }
 		}
 		image bar_teambox5
 		{
@@ -304,6 +337,7 @@ window hud_mini extends hud
 			onWheelUp	{ cmd "actor_next;"}
 			onWheelDown	{ cmd "actor_prev;"}
 			tooltip		"_LMB/RMB:Select\nWheel:Select Next/Prev\nKey:6"
+			excluderect	{ pos	"0 0"	size	"64 12" }
 		}
 
 		image bar_teamsep6
@@ -314,6 +348,7 @@ window hud_mini extends hud
 			onWheelUp	{ cmd "actor_next;"}
 			onWheelDown	{ cmd "actor_prev;"}
 			tooltip		"_Wheel:Select Next/Previous"
+			excluderect	{ pos	"0 0"	size	"16 12" }
 		}
 		image bar_teambox6
 		{
@@ -325,6 +360,7 @@ window hud_mini extends hud
 			onWheelUp	{ cmd "actor_next;"}
 			onWheelDown	{ cmd "actor_prev;"}
 			tooltip		"_LMB/RMB:Select\nWheel:Select Next/Prev\nKey:7"
+			excluderect	{ pos	"0 0"	size	"64 12" }
 		}
 
 		image bar_teamsep7
@@ -335,6 +371,7 @@ window hud_mini extends hud
 			onWheelUp	{ cmd "actor_next;"}
 			onWheelDown	{ cmd "actor_prev;"}
 			tooltip		"_Wheel:Select Next/Previous"
+			excluderect	{ pos	"0 0"	size	"16 12" }
 		}
 		image bar_teambox7
 		{
@@ -346,6 +383,7 @@ window hud_mini extends hud
 			onWheelUp	{ cmd "actor_next;"}
 			onWheelDown	{ cmd "actor_prev;"}
 			tooltip		"_LMB/RMB:Select\nWheel:Select Next/Prev\nKey:8"
+			excluderect	{ pos	"0 0"	size	"64 12" }
 		}
 
 		image bar_teamright
@@ -356,6 +394,8 @@ window hud_mini extends hud
 			onWheelUp	{ cmd "actor_next;"}
 			onWheelDown	{ cmd "actor_prev;"}
 			tooltip		"_Wheel:Select Next/Previous"
+			excluderect	{ pos	"0 0"	size	"32 12" }
+			excluderect	{ pos	"21 0"	size	"11 128" }
 		}
 
 		// soldier numbers strings
@@ -498,6 +538,9 @@ window hud_mini extends hud
 				*node:root.floor.str_soldier<cvar:i>_shadow@invis = false
 				*node:root.floor.str_soldier<cvar:i>@invis = false
 				*node:root.floor.head<cvar:i>@invis = false
+				*node:root.floor.health<cvar:i>@invis = false
+				*node:root.floor.morale<cvar:i>@invis = false
+				*node:root.floor.time<cvar:i>@invis = false
 				*cvar:i = ( *cvar:i + 1 )
 			}
 
@@ -507,6 +550,9 @@ window hud_mini extends hud
 				*node:root.floor.str_soldier<cvar:tmp>_shadow@invis = true
 				*node:root.floor.str_soldier<cvar:tmp>@invis = true
 				*node:root.floor.head<cvar:tmp>@invis = true
+				*node:root.floor.health<cvar:tmp>@invis = true
+				*node:root.floor.morale<cvar:tmp>@invis = true
+				*node:root.floor.time<cvar:tmp>@invis = true
 				*cvar:tmp = ( *cvar:tmp + 1 )
 			}
 
@@ -538,7 +584,7 @@ window hud_mini extends hud
 			autoscale	true
 			pos			"40 20"
 			size		"50 78"
-			excluderect	{ pos	"0 0"	size	"50 78" }
+			ghost		true
 		}
 		model head1
 		{
@@ -547,7 +593,7 @@ window hud_mini extends hud
 			autoscale	true
 			pos			"120 20"
 			size		"50 78"
-			excluderect	{ pos	"0 0"	size	"50 78" }
+			ghost		true
 		}
 		model head2
 		{
@@ -556,7 +602,7 @@ window hud_mini extends hud
 			autoscale	true
 			pos			"200 20"
 			size		"50 78"
-			excluderect	{ pos	"0 0"	size	"50 78" }
+			ghost		true
 		}
 		model head3
 		{
@@ -565,7 +611,7 @@ window hud_mini extends hud
 			autoscale	true
 			pos			"280 20"
 			size		"50 78"
-			excluderect	{ pos	"0 0"	size	"50 78" }
+			ghost		true
 		}
 		model head4
 		{
@@ -574,7 +620,7 @@ window hud_mini extends hud
 			autoscale	true
 			pos			"360 20"
 			size		"50 78"
-			excluderect	{ pos	"0 0"	size	"50 78" }
+			ghost		true
 		}
 		model head5
 		{
@@ -583,7 +629,7 @@ window hud_mini extends hud
 			autoscale	true
 			pos			"440 20"
 			size		"50 78"
-			excluderect	{ pos	"0 0"	size	"50 78" }
+			ghost		true
 		}
 		model head6
 		{
@@ -592,7 +638,7 @@ window hud_mini extends hud
 			autoscale	true
 			pos			"520 20"
 			size		"50 78"
-			excluderect	{ pos	"0 0"	size	"50 78" }
+			ghost		true
 		}
 		model head7
 		{
@@ -601,7 +647,7 @@ window hud_mini extends hud
 			autoscale	true
 			pos			"600 20"
 			size		"50 78"
-			excluderect	{ pos	"0 0"	size	"50 78" }
+			ghost		true
 		}
 
 		// ==================
