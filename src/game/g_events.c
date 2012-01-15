@@ -148,10 +148,7 @@ void G_EventInventoryAdd (const edict_t* ent, int playerMask, int itemAmount)
  */
 void G_EventPerish (const edict_t* ent)
 {
-	assert(ent->inuse);
-	gi.AddEvent(G_VisToPM(ent->visflags), EV_ENT_PERISH);
-	gi.WriteShort(ent->number);
-	gi.EndEvents();
+	G_EventEdictPerish(G_VisToPM(ent->visflags), ent);
 }
 
 /**
