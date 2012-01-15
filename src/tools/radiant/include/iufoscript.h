@@ -43,6 +43,7 @@ class UFOScriptSystem
 	private:
 
 		UFOScriptFiles _ufoFiles;
+		mutable bool _init;
 
 	public:
 		INTEGER_CONSTANT(Version, 1);
@@ -71,11 +72,7 @@ class UFOScriptSystem
 		/**
 		 * @return A vector with ufo filesnames
 		 */
-		virtual const UFOScriptFiles getFiles () const
-		{
-			return _ufoFiles;
-		}
-
+		const UFOScriptFiles& getFiles ();
 };
 
 class UFOScriptSystemDependencies: public GlobalFileSystemModuleRef

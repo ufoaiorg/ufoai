@@ -273,7 +273,6 @@ class Radiant
 
 			GlobalPathfindingSystem().init();
 			GlobalUFOScriptSystem()->init();
-			GlobalParticleSystem().init();
 
 			// Load the shortcuts from the registry
 			GlobalEventManager().loadAccelerators();

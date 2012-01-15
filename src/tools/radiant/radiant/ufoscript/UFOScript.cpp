@@ -74,12 +74,21 @@ const std::string UFOScriptSystem::getUFOScriptDir () const
 	return "ufos/";
 }
 
+const UFOScriptSystem::UFOScriptFiles& UFOScriptSystem::getFiles ()
+{
+	if (!_init) {
+		_init = true;
+		UFOScriptCollector collector(_ufoFiles);
+	}
+
+	return _ufoFiles;
+}
+
+
 void UFOScriptSystem::init ()
 {
 	GlobalEventManager().addCommand("EditTerrainDefinition", MemberCaller<UFOScriptSystem, &UFOScriptSystem::editTerrainDefinition> (*this));
 	GlobalEventManager().addCommand("EditMapDefinition", MemberCaller<UFOScriptSystem, &UFOScriptSystem::editMapDefinition> (*this));
-
-	UFOScriptCollector collector(_ufoFiles);
 }
 
 class UFOScriptSystemAPI
