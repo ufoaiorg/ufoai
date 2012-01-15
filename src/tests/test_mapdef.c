@@ -135,17 +135,12 @@ static void testMapDefsMassRMA (void)
 							char const* ufo;
 						} skip_info;
 #if 0
-						/* we have a known problems with these combinations, so skip them */
+						/* if we have known problems with some combinations, we can skip them */
 						skip_info const skip_list[] = {
-							/* seed 20 is slow on linux (10 mins) */
-						//	{ 20, "forest",   "large",      "craft_drop_raptor",   0                     },
-						//	{ 27, "forest",   "large",      "craft_drop_raptor",   0                     },
-						//	{  3, "forest",   "large",      "craft_drop_raptor",   "craft_ufo_harvester" },
-							/* combinations slow on linux */
-						//	{ 12, "forest",   "large",      "craft_drop_firebird", "craft_ufo_harvester" },
-						//	{ 16, "forest",   "large",      "craft_drop_raptor",   "craft_ufo_harvester" },
-						//	{ 12, "forest",   "large",      "craft_drop_herakles", "craft_ufo_harvester" },
-						//	{ -1, "ufocrash", 0,            0,                     0                     },
+							/* examples: */
+							{ 20, "forest",   "large",      "craft_drop_raptor",   0                     },
+							{ 12, "forest",   "large",      "craft_drop_herakles", "craft_ufo_harvester" },
+							{ -1, "ufocrash", 0,            0,                     0                     },
 						};
 
 						qboolean skip = qfalse;
