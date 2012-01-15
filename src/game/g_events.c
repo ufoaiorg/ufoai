@@ -534,6 +534,7 @@ void G_EventEdictPerish (unsigned int playerMask, const edict_t *ent)
 	assert(ent->inuse);
 	gi.AddEvent(playerMask, EV_ENT_PERISH);
 	gi.WriteShort(ent->number);
+	gi.WriteByte(ent->type);
 	gi.EndEvents();
 }
 
