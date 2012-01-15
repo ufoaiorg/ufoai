@@ -1283,7 +1283,8 @@ window hud_mini extends hud
 			onClick
 			{
 				*node:root.floor@invis = false
-				if ( *node:root.right.minihud_bt_decoration_on@invis == false ) { *node:root.floor_deco@invis = false }
+				if ( *cvar:mn_minihud_deco == 1 ) { *node:root.floor_deco@invis = false }
+				if ( *cvar:mn_minihud_deco == 0 ) { *node:root.floor_deco@invis = true }
 				*node:this@image = "icons/on"
 			}
 			onRClick
@@ -1304,7 +1305,8 @@ window hud_mini extends hud
 			onClick
 			{
 				*node:root.upperright@invis = false
-				if ( *node:root.right.minihud_bt_decoration_on@invis == false ) { *node:root.upperright_deco@invis = false }
+				if ( *cvar:mn_minihud_deco == 1 ) { *node:root.upperright_deco@invis = false }
+				if ( *cvar:mn_minihud_deco == 0 ) { *node:root.upperright_deco@invis = true }
 				*node:this@image = "icons/on"
 			}
 			onRClick
@@ -1328,6 +1330,7 @@ window hud_mini extends hud
 				if ( *node:root.floor@invis == false ) { *node:root.floor_deco@invis = false }
 				if ( *node:root.upperright@invis == false ) { *node:root.upperright_deco@invis = false }
 				*node:this@image = "icons/on"
+				*cvar:mn_minihud_deco = 1
 			}
 			onRClick
 			{
@@ -1335,6 +1338,7 @@ window hud_mini extends hud
 				*node:root.floor_deco@invis = true
 				*node:root.upperright_deco@invis = true
 				*node:this@image = "icons/off"
+				*cvar:mn_minihud_deco = 0
 			}
 		}
 
@@ -1762,11 +1766,14 @@ window hud_mini extends hud
 		cmd "music_change battlescape;"
 		call *node:root.right.show_rightweapon
 		*cvar:mn_icon_level = ("minihud/level<cvar:cl_worldlevel>")
+		if ( *node:root.right_deco@invis == true ) { *cvar:mn_minihud_deco = 0 }
+		elif ( *node:root.right_deco@invis == false ) { *cvar:mn_minihud_deco = 1 }
 	}
 
 	func onWindowClosed
 	{
 		delete *cvar:mn_icon_level
+		delete *cvar:mn_minihud_deco
 		if ( exists *cvar:mn_chrrank_img ) { delete *cvar:mn_chrrank_img }
 	}
 
