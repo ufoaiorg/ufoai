@@ -132,7 +132,6 @@ o      +o     +c    a
 
 tile +coast2
 // the coast west of the poolhouse
-// contains 4x info_player_start for multiplayer team 4
 {
 3 8
 0       0      0

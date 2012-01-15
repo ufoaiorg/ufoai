@@ -1094,45 +1094,21 @@
 }
 // entity 7
 {
-"classname" "info_player_start"
-"team" "4"
-"origin" "80 816 28"
+"classname" "misc_model"
+"model" "models/objects/boat/boat.md2"
+"origin" "164 664 -28"
+"spawnflags" "255"
+"skin" "0"
+"modelscale_vec" "1.5 1.5 1.5"
+"angles" "0 -30 0"
 }
 // entity 8
 {
-"classname" "info_player_start"
-"team" "4"
-"origin" "80 880 28"
-}
-// entity 9
-{
-"classname" "info_player_start"
-"team" "4"
-"origin" "144 880 28"
-}
-// entity 10
-{
-"classname" "info_player_start"
-"team" "4"
-"origin" "144 816 28"
-}
-// entity 11
-{
-"classname" "misc_model"
-"model" "models/objects/boat/boat.md2"
-"origin" "140 536 -28"
-"spawnflags" "255"
-"skin" "0"
-"modelscale_vec" "3 3 3"
-"angles" "0 -30 0"
-}
-// entity 12
-{
 "classname" "misc_model"
 "model" "models/objects/boat/engine.md2"
-"origin" "132 520 -8"
+"origin" "161 658 -17"
 "spawnflags" "255"
 "skin" "0"
-"modelscale_vec" "3 3 3"
+"modelscale_vec" "1.5 1.5 1.5"
 "angles" "0 -30 -45"
 }
