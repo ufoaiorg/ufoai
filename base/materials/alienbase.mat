@@ -27,6 +27,7 @@
 	{
 		texture tex_alienb/ab_floor02_pls
 		pulse 0.1
+		dutycycle 0.3
 	}
 }
 
