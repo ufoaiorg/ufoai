@@ -42,6 +42,10 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 
 static void UI_TextUpdateCache(uiNode_t *node);
 
+/* Used for drag&drop-like scrolling */
+static int mouseScrollX;
+static int mouseScrollY;
+
 void UI_TextValidateCache (uiNode_t *node, textUpdateCache_t update)
 {
 	int v;
@@ -496,6 +500,44 @@ static void UI_TextNodeLoaded (uiNode_t *node)
 		Com_Printf("UI_TextNodeLoaded: 'textid' property of node '%s' is not set\n", UI_GetPath(node));
 }
 
+/**
+ * @brief Track mouse down/up events to implement drag&drop-like scrolling, for touchscreen devices
+ * @sa UI_TextNodeMouseUp, UI_TextNodeCapturedMouseMove, UI_TextNodeCapturedMouseLost
+*/
+static void UI_TextNodeMouseDown(struct uiNode_s *node, int x, int y, int button)
+{
+	if( ! UI_GetMouseCapture() && button == K_MOUSE1 &&
+		EXTRADATA(node).super.scrollY.fullSize > EXTRADATA(node).super.scrollY.viewSize ) {
+		UI_SetMouseCapture(node);
+		mouseScrollX = x;
+		mouseScrollY = y;
+	}
+}
+
+static void UI_TextNodeMouseUp(struct uiNode_s *node, int x, int y, int button)
+{
+	if( UI_GetMouseCapture() == node )  /* More checks can never hurt */
+		UI_MouseRelease();
+}
+
+static void UI_TextNodeCapturedMouseMove (uiNode_t *node, int x, int y)
+{
+	/* Scroll it, yay! */
+	int lineheight = EXTRADATA(node).lineHeight;
+	if (lineheight == 0)
+		lineheight = UI_FontGetHeight(UI_GetFontFromNode(node));
+	/* We're doing only vertical scroll, that's enough for the most instances */
+	if (abs(mouseScrollY - y) >= lineheight) {
+		/* And we're reusing existing mouse whell up/down event, scrolling won't be smooth but the code is simpler */
+		if (node->behaviour->scroll)
+			node->behaviour->scroll(node, 0, mouseScrollY - y);
+		mouseScrollX = x;
+		mouseScrollY = y;
+	}
+	if (node->behaviour->mouseMove)
+		node->behaviour->mouseMove(node, x, y);
+}
+
 void UI_RegisterTextNode (uiBehaviour_t *behaviour)
 {
 	behaviour->name = "text";
@@ -505,6 +547,9 @@ void UI_RegisterTextNode (uiBehaviour_t *behaviour)
 	behaviour->rightClick = UI_TextNodeRightClick;
 	behaviour->scroll = UI_TextNodeMouseWheel;
 	behaviour->mouseMove = UI_TextNodeMouseMove;
+	behaviour->mouseDown = UI_TextNodeMouseDown;
+	behaviour->mouseUp = UI_TextNodeMouseUp;
+	behaviour->capturedMouseMove = UI_TextNodeCapturedMouseMove;
 	behaviour->loading = UI_TextNodeLoading;
 	behaviour->loaded = UI_TextNodeLoaded;
 	behaviour->extraDataSize = sizeof(EXTRADATA_TYPE);
