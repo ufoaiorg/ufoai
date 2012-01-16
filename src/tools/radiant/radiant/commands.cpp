@@ -65,6 +65,7 @@
 #include "ui/findshader/FindShader.h"
 #include "ui/about/AboutDialog.h"
 #include "ui/findbrush/findbrush.h"
+#include "ui/textureoverview/TextureOverviewDialog.h"
 #include "ui/maptools/ErrorCheckDialog.h"
 #include "ui/colourscheme/ColourSchemeEditor.h"
 #include "ui/colourscheme/ColourSchemeManager.h"
@@ -587,6 +588,11 @@ void Selection_SnapToGrid (void)
 	}
 }
 
+void TextureOverview ()
+{
+	new ui::TextureOverviewDialog;
+}
+
 void FindBrushOrEntity ()
 {
 	new ui::FindBrushDialog;
@@ -702,6 +708,7 @@ void Commands_Register ()
 
 	GlobalEventManager().addCommand("TransformDialog", FreeCaller<ui::TransformDialog::toggle> ());
 
+	GlobalEventManager().addCommand("TextureOverview", FreeCaller<TextureOverview> ());
 	GlobalEventManager().addCommand("FindBrush", FreeCaller<FindBrushOrEntity> ());
 
 	GlobalEventManager().addCommand("ToolsCheckErrors", FreeCaller<ToolsCheckErrors> ());

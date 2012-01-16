@@ -796,6 +796,7 @@
 		<Unit filename="..\..\src\tools\radiant\radiant\ui\findshader\FindShader.cpp" />
 		<Unit filename="..\..\src\tools\radiant\radiant\ui\lightdialog\LightDialog.cpp" />
 		<Unit filename="..\..\src\tools\radiant\radiant\ui\lightdialog\LightDialog.h" />
+		<Unit filename="..\..\src\tools\radiant\radiant\ui\textureoverview\TextureOverviewDialog.cpp" />
 		<Unit filename="..\..\src\tools\radiant\radiant\ui\mainframe\SplitPaneLayout.cpp" />
 		<Unit filename="..\..\src\tools\radiant\radiant\ui\mainframe\mainframe.cpp" />
 		<Unit filename="..\..\src\tools\radiant\radiant\ui\mainframe\mainframe.h" />

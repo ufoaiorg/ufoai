@@ -193,6 +193,7 @@
 		<menuItem name="levelup" caption="One level up" command="ObjectsUp" icon="arrow_up.png" />
 		<menuItem name="leveldown" caption="One level down" command="ObjectsDown" icon="arrow_down.png" />
 		<menuItem name="findbrush" caption="Find brush..." command="FindBrush" />
+		<menuItem name="findbrush" caption="Texture overview..." command="TextureOverview" />
 	</subMenu>
 
 	<subMenu name="brush" caption="B_rush">
