@@ -504,10 +504,10 @@ static void UI_TextNodeLoaded (uiNode_t *node)
  * @brief Track mouse down/up events to implement drag&drop-like scrolling, for touchscreen devices
  * @sa UI_TextNodeMouseUp, UI_TextNodeCapturedMouseMove
 */
-static void UI_TextNodeMouseDown(struct uiNode_s *node, int x, int y, int button)
+static void UI_TextNodeMouseDown (struct uiNode_s *node, int x, int y, int button)
 {
-	if( ! UI_GetMouseCapture() && button == K_MOUSE1 &&
-		EXTRADATA(node).super.scrollY.fullSize > EXTRADATA(node).super.scrollY.viewSize ) {
+	if (!UI_GetMouseCapture() && button == K_MOUSE1 &&
+		EXTRADATA(node).super.scrollY.fullSize > EXTRADATA(node).super.scrollY.viewSize) {
 		UI_SetMouseCapture(node);
 		mouseScrollX = x;
 		mouseScrollY = y;
@@ -516,7 +516,7 @@ static void UI_TextNodeMouseDown(struct uiNode_s *node, int x, int y, int button
 
 static void UI_TextNodeMouseUp(struct uiNode_s *node, int x, int y, int button)
 {
-	if( UI_GetMouseCapture() == node )  /* More checks can never hurt */
+	if (UI_GetMouseCapture() == node)  /* More checks can never hurt */
 		UI_MouseRelease();
 }
 

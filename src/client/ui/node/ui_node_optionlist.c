@@ -266,26 +266,26 @@ static void UI_OptionListNodeLoaded (uiNode_t *node)
  * @brief Track mouse down/up events to implement drag&drop-like scrolling, for touchscreen devices
  * @sa UI_OptionListNodeMouseUp, UI_OptionListNodeCapturedMouseMove
 */
-static void UI_OptionListNodeMouseDown(struct uiNode_s *node, int x, int y, int button)
+static void UI_OptionListNodeMouseDown (struct uiNode_s *node, int x, int y, int button)
 {
-	if( ! UI_GetMouseCapture() && button == K_MOUSE1 &&
-		EXTRADATA(node).scrollY.fullSize > EXTRADATA(node).scrollY.viewSize ) {
+	if (!UI_GetMouseCapture() && button == K_MOUSE1 &&
+		EXTRADATA(node).scrollY.fullSize > EXTRADATA(node).scrollY.viewSize) {
 		UI_SetMouseCapture(node);
 		mouseScrollX = x;
 		mouseScrollY = y;
 	}
 }
 
-static void UI_OptionListNodeMouseUp(struct uiNode_s *node, int x, int y, int button)
+static void UI_OptionListNodeMouseUp (struct uiNode_s *node, int x, int y, int button)
 {
-	if( UI_GetMouseCapture() == node )  /* More checks can never hurt */
+	if (UI_GetMouseCapture() == node)  /* More checks can never hurt */
 		UI_MouseRelease();
 }
 
 static void UI_OptionListNodeCapturedMouseMove (uiNode_t *node, int x, int y)
 {
-	int lineHeight =  EXTRADATA(node).lineHeight;
-	if (lineHeight == 0)
+	int lineHeight = EXTRADATA(node).lineHeight;
+	if (lineHeight  == 0)
 		lineHeight = UI_FontGetHeight(UI_GetFontFromNode(node));
 
 	/* We're doing only vertical scroll, that's enough for the most instances */
