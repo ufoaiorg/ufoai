@@ -37,17 +37,11 @@ namespace ui
 
 	private:
 
-		// Main container widget
-		GtkWidget* _widget;
-
 		// Info table list store
-		GtkListStore* _infoStore;
+		GtkListStore* _store;
 
 		// This is called to initialise the dialog window / create the widgets
 		void populateWindow ();
-
-		// Helper method to create the close button
-		GtkWidget* createButtons ();
 
 		// The callback for the buttons
 		static void onClose (GtkWidget* widget, TextureOverviewDialog* self);

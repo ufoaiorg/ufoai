@@ -285,7 +285,7 @@ static void UI_OptionListNodeMouseUp (struct uiNode_s *node, int x, int y, int b
 static void UI_OptionListNodeCapturedMouseMove (uiNode_t *node, int x, int y)
 {
 	int lineHeight = EXTRADATA(node).lineHeight;
-	if (lineHeight  == 0)
+	if (lineHeight == 0)
 		lineHeight = UI_FontGetHeight(UI_GetFontFromNode(node));
 
 	/* We're doing only vertical scroll, that's enough for the most instances */
