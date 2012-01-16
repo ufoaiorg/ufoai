@@ -31,6 +31,7 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #include "../ui_data.h"
 #include "../ui_sprite.h"
 #include "../ui_render.h"
+#include "../ui_input.h"
 #include "ui_node_abstractoption.h"
 #include "ui_node_abstractnode.h"
 #include "ui_node_optiontree.h"
@@ -50,6 +51,10 @@ static const int DEPTH_WIDTH = 25;				/**< Width between each depth level */
 
 static uiSprite_t *systemCollapse;
 static uiSprite_t *systemExpand;
+
+/* Used for drag&drop-like scrolling */
+static int mouseScrollX;
+static int mouseScrollY;
 
 /**
  * @brief Update the scroll according to the number
@@ -360,6 +365,44 @@ static void UI_OptionTreeNodeDoLayout (uiNode_t *node)
 	node->invalidated = qfalse;
 }
 
+/**
+ * @brief Track mouse down/up events to implement drag&drop-like scrolling, for touchscreen devices
+ * @sa UI_OptionTreeNodeMouseUp, UI_OptionTreeNodeCapturedMouseMove
+*/
+static void UI_OptionTreeNodeMouseDown(struct uiNode_s *node, int x, int y, int button)
+{
+	if( ! UI_GetMouseCapture() && button == K_MOUSE1 &&
+		EXTRADATA(node).scrollY.fullSize > EXTRADATA(node).scrollY.viewSize ) {
+		UI_SetMouseCapture(node);
+		mouseScrollX = x;
+		mouseScrollY = y;
+	}
+}
+
+static void UI_OptionTreeNodeMouseUp(struct uiNode_s *node, int x, int y, int button)
+{
+	if( UI_GetMouseCapture() == node )  /* More checks can never hurt */
+		UI_MouseRelease();
+}
+
+static void UI_OptionTreeNodeCapturedMouseMove (uiNode_t *node, int x, int y)
+{
+	int lineHeight = EXTRADATA(node).lineHeight;
+	if (lineHeight == 0)
+		lineHeight = UI_FontGetHeight(UI_GetFontFromNode(node));
+
+	/* We're doing only vertical scroll, that's enough for the most instances */
+	if (abs(mouseScrollY - y) >= lineHeight) {
+		/* And we're reusing existing mouse whell up/down event, scrolling won't be smooth but the code is simpler */
+		if (node->behaviour->scroll)
+			node->behaviour->scroll(node, 0, mouseScrollY - y);
+		mouseScrollX = x;
+		mouseScrollY = y;
+	}
+	if (node->behaviour->mouseMove)
+		node->behaviour->mouseMove(node, x, y);
+}
+
 void UI_RegisterOptionTreeNode (uiBehaviour_t *behaviour)
 {
 	behaviour->name = "optiontree";
@@ -367,6 +410,9 @@ void UI_RegisterOptionTreeNode (uiBehaviour_t *behaviour)
 	behaviour->draw = UI_OptionTreeNodeDraw;
 	behaviour->leftClick = UI_OptionTreeNodeClick;
 	behaviour->scroll = UI_OptionTreeNodeMouseWheel;
+	behaviour->mouseDown = UI_OptionTreeNodeMouseDown;
+	behaviour->mouseUp = UI_OptionTreeNodeMouseUp;
+	behaviour->capturedMouseMove = UI_OptionTreeNodeCapturedMouseMove;
 	behaviour->loading = UI_OptionTreeNodeLoading;
 	behaviour->loaded = UI_OptionTreeNodeLoaded;
 	behaviour->doLayout = UI_OptionTreeNodeDoLayout;

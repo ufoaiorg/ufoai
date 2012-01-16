@@ -502,7 +502,7 @@ static void UI_TextNodeLoaded (uiNode_t *node)
 
 /**
  * @brief Track mouse down/up events to implement drag&drop-like scrolling, for touchscreen devices
- * @sa UI_TextNodeMouseUp, UI_TextNodeCapturedMouseMove, UI_TextNodeCapturedMouseLost
+ * @sa UI_TextNodeMouseUp, UI_TextNodeCapturedMouseMove
 */
 static void UI_TextNodeMouseDown(struct uiNode_s *node, int x, int y, int button)
 {
@@ -522,12 +522,11 @@ static void UI_TextNodeMouseUp(struct uiNode_s *node, int x, int y, int button)
 
 static void UI_TextNodeCapturedMouseMove (uiNode_t *node, int x, int y)
 {
-	/* Scroll it, yay! */
-	int lineheight = EXTRADATA(node).lineHeight;
-	if (lineheight == 0)
-		lineheight = UI_FontGetHeight(UI_GetFontFromNode(node));
+	int lineHeight = EXTRADATA(node).lineHeight;
+	if (lineHeight == 0)
+		lineHeight = UI_FontGetHeight(UI_GetFontFromNode(node));
 	/* We're doing only vertical scroll, that's enough for the most instances */
-	if (abs(mouseScrollY - y) >= lineheight) {
+	if (abs(mouseScrollY - y) >= lineHeight) {
 		/* And we're reusing existing mouse whell up/down event, scrolling won't be smooth but the code is simpler */
 		if (node->behaviour->scroll)
 			node->behaviour->scroll(node, 0, mouseScrollY - y);
