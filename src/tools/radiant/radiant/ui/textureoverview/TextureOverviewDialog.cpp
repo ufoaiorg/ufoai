@@ -20,8 +20,13 @@ namespace ui
 {
 	namespace
 	{
-		const int DLG_DEFAULT_SIZE_X = 450;
+		const int DLG_DEFAULT_SIZE_X = 600;
 		const int DLG_DEFAULT_SIZE_Y = 300;
+
+		enum
+		{
+			TEXTUREOVERVIEW_IMAGE, TEXTUREOVERVIEW_NAME, TEXTUREOVERVIEW_COUNT, TEXTUREOVERVIEW_SIZE
+		};
 
 		class TextureCounter: public BrushInstanceVisitor
 		{
@@ -34,7 +39,8 @@ namespace ui
 			typedef TextureCountMap::const_iterator TextureCountMapConstIter;
 			mutable TextureCountMap _map;
 
-			inline void addFace (const Face& face) const
+			inline
+			void addFace (const Face& face) const
 			{
 				const std::string& shader = face.GetShader();
 				TextureCountMapIter i = _map.find(shader);
@@ -55,8 +61,10 @@ namespace ui
 			{
 				for (TextureCountMapConstIter i = _map.begin(); i != _map.end(); ++i) {
 					GtkTreeIter iter;
+					GdkPixbuf *img = NULL;
 					gtk_list_store_append(_store, &iter);
-					gtk_list_store_set(_store, &iter, 0, i->first.c_str(), 1, i->second - 1);
+					gtk_list_store_set(_store, &iter, TEXTUREOVERVIEW_IMAGE, img, TEXTUREOVERVIEW_NAME, i->first.c_str(), TEXTUREOVERVIEW_COUNT,
+							i->second, -1);
 				}
 			}
 
@@ -76,7 +84,7 @@ namespace ui
 
 	TextureOverviewDialog::TextureOverviewDialog () :
 			gtkutil::BlockingTransientWindow(_("Texture overview"), GlobalRadiant().getMainWindow()), _store(
-					gtk_list_store_new(2, G_TYPE_STRING, G_TYPE_INT))
+					gtk_list_store_new(TEXTUREOVERVIEW_SIZE, GDK_TYPE_PIXBUF, G_TYPE_STRING, G_TYPE_INT))
 	{
 		gtk_window_set_default_size(GTK_WINDOW(getWindow()), DLG_DEFAULT_SIZE_X, DLG_DEFAULT_SIZE_Y);
 		gtk_container_set_border_width(GTK_CONTAINER(getWindow()), 12);
@@ -109,13 +117,21 @@ namespace ui
 		GtkCellRenderer* rend;
 		GtkTreeViewColumn* col;
 
+		rend = gtk_cell_renderer_pixbuf_new();
+		gtk_cell_renderer_set_fixed_size(rend, 128, -1);
+		col = gtk_tree_view_column_new();
+		gtk_tree_view_append_column(GTK_TREE_VIEW(view), col);
+		gtk_tree_view_column_set_title(col, _("Image"));
+		gtk_tree_view_column_pack_start(col, rend, false);
+		gtk_tree_view_column_add_attribute(col, rend, "pixbuf", TEXTUREOVERVIEW_IMAGE);
+
 		rend = gtk_cell_renderer_text_new();
-		col = gtk_tree_view_column_new_with_attributes(_("Name"), rend, "text", 0, NULL);
-		g_object_set(G_OBJECT(rend), "weight", 700, NULL);
+		col = gtk_tree_view_column_new_with_attributes(_("Name"), rend, "text", TEXTUREOVERVIEW_NAME, NULL);
+		g_object_set(G_OBJECT(rend), "weight", 400, NULL);
 		gtk_tree_view_append_column(GTK_TREE_VIEW(view), col);
 
 		rend = gtk_cell_renderer_text_new();
-		col = gtk_tree_view_column_new_with_attributes(_("Count"), rend, "text", 1, NULL);
+		col = gtk_tree_view_column_new_with_attributes(_("Count"), rend, "text", TEXTUREOVERVIEW_COUNT, NULL);
 		gtk_tree_view_append_column(GTK_TREE_VIEW(view), col);
 
 		GtkWidget *scroll = gtkutil::ScrolledFrame(view);
