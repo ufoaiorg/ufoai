@@ -33,7 +33,7 @@ class FindAndReplaceShader :
 
 public:
 	// Constructor
-	FindAndReplaceShader(const std::string& find = "", const std::string& replace= "");
+	FindAndReplaceShader(const std::string& find = "", const std::string& replace = "");
 	~FindAndReplaceShader();
 
 	/** greebo: Shows the dialog (allocates on heap, dialog self-destructs)
