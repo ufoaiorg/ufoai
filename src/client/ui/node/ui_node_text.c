@@ -514,7 +514,7 @@ static void UI_TextNodeMouseDown (struct uiNode_s *node, int x, int y, int butto
 	}
 }
 
-static void UI_TextNodeMouseUp(struct uiNode_s *node, int x, int y, int button)
+static void UI_TextNodeMouseUp (struct uiNode_s *node, int x, int y, int button)
 {
 	if (UI_GetMouseCapture() == node)  /* More checks can never hurt */
 		UI_MouseRelease();

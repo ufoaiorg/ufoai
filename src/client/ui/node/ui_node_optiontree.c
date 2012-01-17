@@ -379,7 +379,7 @@ static void UI_OptionTreeNodeMouseDown (struct uiNode_s *node, int x, int y, int
 	}
 }
 
-static void UI_OptionTreeNodeMouseUp(struct uiNode_s *node, int x, int y, int button)
+static void UI_OptionTreeNodeMouseUp (struct uiNode_s *node, int x, int y, int button)
 {
 	if (UI_GetMouseCapture() == node)  /* More checks can never hurt */
 		UI_MouseRelease();
