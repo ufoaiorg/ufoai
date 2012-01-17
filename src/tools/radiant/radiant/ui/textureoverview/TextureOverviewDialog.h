@@ -24,6 +24,7 @@
 
 #include <gtk/gtkwidget.h>
 #include <gtk/gtkliststore.h>
+#include <gtk/gtktreeselection.h>
 #include "gtkutil/window/BlockingTransientWindow.h"
 
 namespace ui
@@ -40,11 +41,17 @@ namespace ui
 		// Info table list store
 		GtkListStore* _store;
 
+		GtkTreeSelection* _selection;
+
+		std::string _selectedTexture;
+
 		// This is called to initialise the dialog window / create the widgets
 		void populateWindow ();
 
-		// The callback for the buttons
+		// The callbacks
 		static void onClose (GtkWidget* widget, TextureOverviewDialog* self);
+		static void onFindAndReplace (GtkWidget* widget, TextureOverviewDialog* self);
+		static void onSelectionChanged (GtkWidget* widget, TextureOverviewDialog* self);
 	};
 }
 

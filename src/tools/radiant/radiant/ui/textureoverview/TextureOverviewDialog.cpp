@@ -4,7 +4,9 @@
 #include "ieventmanager.h"
 
 #include "gtkutil/ScrolledFrame.h"
+#include "gtkutil/TreeModel.h"
 #include "../../brush/BrushVisit.h"
+#include "../findshader/FindShader.h"
 
 #include <map>
 #include <string>
@@ -114,6 +116,10 @@ namespace ui
 		GtkWidget* view = gtk_tree_view_new_with_model(GTK_TREE_MODEL(_store));
 		gtk_tree_view_set_headers_visible(GTK_TREE_VIEW(view), TRUE);
 
+		// Connect up selection changed callback
+		_selection = gtk_tree_view_get_selection(GTK_TREE_VIEW(view));
+		g_signal_connect(G_OBJECT(_selection), "changed", G_CALLBACK(onSelectionChanged), this);
+
 		GtkCellRenderer* rend;
 		GtkTreeViewColumn* col;
 
@@ -142,6 +148,10 @@ namespace ui
 		gtk_widget_set_size_request(closeButton, -1, -1);
 		g_signal_connect(G_OBJECT(closeButton), "clicked", G_CALLBACK(onClose), this);
 		gtk_box_pack_end(GTK_BOX(hbox), closeButton, FALSE, FALSE, 0);
+		GtkWidget* findAndReplaceButton = gtk_button_new_from_stock(GTK_STOCK_FIND_AND_REPLACE);
+		gtk_widget_set_size_request(findAndReplaceButton, -1, -1);
+		g_signal_connect(G_OBJECT(findAndReplaceButton), "clicked", G_CALLBACK(onFindAndReplace), this);
+		gtk_box_pack_end(GTK_BOX(hbox), findAndReplaceButton, FALSE, FALSE, 0);
 		gtk_box_pack_end(GTK_BOX(dialogVBox), GTK_WIDGET(hbox), FALSE, FALSE, 0);
 
 		gtk_container_add(GTK_CONTAINER(getWindow()), dialogVBox);
@@ -154,5 +164,15 @@ namespace ui
 	{
 		// Call the DialogWindow::destroy method and remove self from heap
 		self->destroy();
+	}
+
+	void TextureOverviewDialog::onFindAndReplace (GtkWidget* widget, TextureOverviewDialog* self)
+	{
+		ui::FindAndReplaceShader(self->_selectedTexture);
+	}
+
+	void TextureOverviewDialog::onSelectionChanged (GtkWidget* widget, TextureOverviewDialog* self)
+	{
+		self->_selectedTexture = gtkutil::TreeModel::getSelectedString(self->_selection, TEXTUREOVERVIEW_NAME);
 	}
 }

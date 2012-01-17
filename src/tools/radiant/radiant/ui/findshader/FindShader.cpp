@@ -34,7 +34,7 @@ namespace ui {
 		const char* const COUNT_TEXT = N_("<b>%d</b> shader(s) replaced.");
 	}
 
-FindAndReplaceShader::FindAndReplaceShader() :
+FindAndReplaceShader::FindAndReplaceShader(const std::string& find, const std::string& replace) :
 	gtkutil::BlockingTransientWindow(_(FINDDLG_WINDOW_TITLE), GlobalRadiant().getMainWindow())
 {
 	gtk_window_set_default_size(GTK_WINDOW(getWindow()), FINDDLG_DEFAULT_SIZE_X, FINDDLG_DEFAULT_SIZE_Y);
@@ -43,6 +43,11 @@ FindAndReplaceShader::FindAndReplaceShader() :
 
 	// Create all the widgets
 	populateWindow();
+
+	if (!find.empty())
+		gtk_entry_set_text(GTK_ENTRY(_findEntry), find.c_str());
+	if (!replace.empty())
+		gtk_entry_set_text(GTK_ENTRY(_replaceEntry), replace.c_str());
 
 	// Propagate shortcuts to the main window
 	GlobalEventManager().connectDialogWindow(GTK_WINDOW(getWindow()));
