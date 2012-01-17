@@ -6,6 +6,7 @@
 #include "gtkutil/ScrolledFrame.h"
 #include "gtkutil/TreeModel.h"
 #include "../../brush/BrushVisit.h"
+#include "../../brush/brushmanip.h"
 #include "../findshader/FindShader.h"
 
 #include <map>
@@ -84,6 +85,7 @@ namespace ui
 		};
 	}
 
+	// TODO: don't let this be a BlockingTransientWindow
 	TextureOverviewDialog::TextureOverviewDialog () :
 			gtkutil::BlockingTransientWindow(_("Texture overview"), GlobalRadiant().getMainWindow()), _store(
 					gtk_list_store_new(TEXTUREOVERVIEW_SIZE, GDK_TYPE_PIXBUF, G_TYPE_STRING, G_TYPE_INT))
@@ -174,5 +176,7 @@ namespace ui
 	void TextureOverviewDialog::onSelectionChanged (GtkWidget* widget, TextureOverviewDialog* self)
 	{
 		self->_selectedTexture = gtkutil::TreeModel::getSelectedString(self->_selection, TEXTUREOVERVIEW_NAME);
+		GlobalSelectionSystem().setSelectedAllComponents(false);
+		Scene_BrushSelectByShader_Component(GlobalSceneGraph(), self->_selectedTexture);
 	}
 }
