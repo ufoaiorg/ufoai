@@ -22,6 +22,7 @@
 					<Add option="-DHAVE_VORBIS_CODEC_H" />
 					<Add option="-DHAVE_XVID_H" />
 					<Add option="-DHAVE_THEORA_THEORA_H" />
+					<Add directory="..\..\src\libs\mxml\" />
 				</Compiler>
 				<Linker>
 					<Add option="-s" />
@@ -97,6 +98,7 @@
 			<Add option="-DCOMPILE_UNITTESTS" />
 			<Add option="-DHARD_LINKED_GAME" />
 			<Add option="-DHARD_LINKED_CGAME" />
+			<Add directory="..\..\src\libs\mxml\" />
 		</Compiler>
 		<Linker>
 			<Add library="cunit" />
@@ -270,6 +272,9 @@
 		<Unit filename="..\..\src\client\battlescape\events\event\world\e_event_sound.c">
 			<Option compilerVar="CC" />
 		</Unit>
+		<Unit filename="..\..\src\client\cgame\campaign\cl_game_campaign.c">
+			<Option compilerVar="CC" />
+		</Unit>
 		<Unit filename="..\..\src\client\cgame\campaign\cp_aircraft.c">
 			<Option compilerVar="CC" />
 		</Unit>
@@ -292,9 +297,6 @@
 			<Option compilerVar="CC" />
 		</Unit>
 		<Unit filename="..\..\src\client\cgame\campaign\cp_auto_mission.c">
-			<Option compilerVar="CC" />
-		</Unit>
-		<Unit filename="..\..\src\client\cgame\campaign\cp_mission_callbacks.c">
 			<Option compilerVar="CC" />
 		</Unit>
 		<Unit filename="..\..\src\client\cgame\campaign\cp_base.c">
@@ -358,6 +360,9 @@
 			<Option compilerVar="CC" />
 		</Unit>
 		<Unit filename="..\..\src\client\cgame\campaign\cp_messages.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="..\..\src\client\cgame\campaign\cp_mission_callbacks.c">
 			<Option compilerVar="CC" />
 		</Unit>
 		<Unit filename="..\..\src\client\cgame\campaign\cp_mission_triggers.c">
@@ -463,22 +468,19 @@
 		<Unit filename="..\..\src\client\cgame\cl_game.c">
 			<Option compilerVar="CC" />
 		</Unit>
-		<Unit filename="..\..\src\client\cgame\campaign\cl_game_campaign.c">
+		<Unit filename="..\..\src\client\cgame\cl_game_team.c">
 			<Option compilerVar="CC" />
 		</Unit>
 		<Unit filename="..\..\src\client\cgame\multiplayer\cl_game_multiplayer.c">
-			<Option compilerVar="CC" />
-		</Unit>
-		<Unit filename="..\..\src\client\cgame\skirmish\cl_game_skirmish.c">
-			<Option compilerVar="CC" />
-		</Unit>
-		<Unit filename="..\..\src\client\cgame\cl_game_team.c">
 			<Option compilerVar="CC" />
 		</Unit>
 		<Unit filename="..\..\src\client\cgame\multiplayer\mp_callbacks.c">
 			<Option compilerVar="CC" />
 		</Unit>
 		<Unit filename="..\..\src\client\cgame\multiplayer\mp_serverlist.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="..\..\src\client\cgame\skirmish\cl_game_skirmish.c">
 			<Option compilerVar="CC" />
 		</Unit>
 		<Unit filename="..\..\src\client\cinematic\cl_cinematic.c">
@@ -691,6 +693,9 @@
 		<Unit filename="..\..\src\client\ui\node\ui_node_custombutton.c">
 			<Option compilerVar="CC" />
 		</Unit>
+		<Unit filename="..\..\src\client\ui\node\ui_node_data.c">
+			<Option compilerVar="CC" />
+		</Unit>
 		<Unit filename="..\..\src\client\ui\node\ui_node_editor.c">
 			<Option compilerVar="CC" />
 		</Unit>
@@ -698,9 +703,6 @@
 			<Option compilerVar="CC" />
 		</Unit>
 		<Unit filename="..\..\src\client\ui\node\ui_node_image.c">
-			<Option compilerVar="CC" />
-		</Unit>
-		<Unit filename="..\..\src\client\ui\node\ui_node_texture.c">
 			<Option compilerVar="CC" />
 		</Unit>
 		<Unit filename="..\..\src\client\ui\node\ui_node_item.c">
@@ -781,6 +783,9 @@
 		<Unit filename="..\..\src\client\ui\node\ui_node_textlist.c">
 			<Option compilerVar="CC" />
 		</Unit>
+		<Unit filename="..\..\src\client\ui\node\ui_node_texture.c">
+			<Option compilerVar="CC" />
+		</Unit>
 		<Unit filename="..\..\src\client\ui\node\ui_node_todo.c">
 			<Option compilerVar="CC" />
 		</Unit>
@@ -797,6 +802,9 @@
 			<Option compilerVar="CC" />
 		</Unit>
 		<Unit filename="..\..\src\client\ui\ui_actions.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="..\..\src\client\ui\ui_behaviour.c">
 			<Option compilerVar="CC" />
 		</Unit>
 		<Unit filename="..\..\src\client\ui\ui_components.c">
@@ -1202,10 +1210,10 @@
 		<Unit filename="..\..\src\shared\byte.c">
 			<Option compilerVar="CC" />
 		</Unit>
-		<Unit filename="..\..\src\shared\images.c">
+		<Unit filename="..\..\src\shared\entitiesdef.c">
 			<Option compilerVar="CC" />
 		</Unit>
-		<Unit filename="..\..\src\shared\entitiesdef.c">
+		<Unit filename="..\..\src\shared\images.c">
 			<Option compilerVar="CC" />
 		</Unit>
 		<Unit filename="..\..\src\shared\infostring.c">
@@ -1244,6 +1252,9 @@
 			<Option compilerVar="CC" />
 		</Unit>
 		<Unit filename="..\..\src\tests\test_dbuffer.h" />
+		<Unit filename="..\..\src\tests\test_events.c">
+			<Option compilerVar="CC" />
+		</Unit>
 		<Unit filename="..\..\src\tests\test_game.c">
 			<Option compilerVar="CC" />
 		</Unit>
@@ -1262,9 +1273,6 @@
 			<Option compilerVar="CC" />
 		</Unit>
 		<Unit filename="..\..\src\tests\test_parser.c">
-			<Option compilerVar="CC" />
-		</Unit>
-		<Unit filename="..\..\src\tests\test_events.c">
 			<Option compilerVar="CC" />
 		</Unit>
 		<Unit filename="..\..\src\tests\test_parser.h" />

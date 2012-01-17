@@ -94,7 +94,7 @@ const eventRegister_t events[] = {
 	{E(EV_CENTERVIEW), "g", CL_CenterView, NULL, NULL},
 
 	{E(EV_ENT_APPEAR), "sbg", CL_EntAppear, CL_EntAppearTime, NULL},
-	{E(EV_ENT_PERISH), "s", CL_EntPerish, NULL, NULL},
+	{E(EV_ENT_PERISH), "sb", CL_EntPerish, NULL, NULL},
 	{E(EV_ENT_DESTROY), "s", CL_EntDestroy, NULL, NULL},
 	{E(EV_ADD_BRUSH_MODEL), "bssbppsbb", CL_AddBrushModel, NULL, NULL},
 	{E(EV_ADD_EDICT), "sbpp", CL_AddEdict, NULL, NULL},

@@ -100,23 +100,6 @@ static void UI_AbstractValueClone (const uiNode_t *source, uiNode_t *clone)
 	UI_CloneCvarOrFloat(source, clone, (const float*const*)&EXTRADATACONST(source).min, (float**)&EXTRADATA(clone).min);
 }
 
-static const value_t properties[] = {
-	/* Current value of the node. It should be a cvar */
-	{"current", V_CVAR_OR_FLOAT, UI_EXTRADATA_OFFSETOF(abstractValueExtraData_t, value), 0},
-	/* Value of a positive step. Must be bigger than 1. */
-	{"delta", V_CVAR_OR_FLOAT, UI_EXTRADATA_OFFSETOF(abstractValueExtraData_t, delta), 0},
-	/* Maximum value we can set to the node. It can be a cvar. Default value is 0. */
-	{"max", V_CVAR_OR_FLOAT, UI_EXTRADATA_OFFSETOF(abstractValueExtraData_t, max), 0},
-	/* Minimum value we can set to the node. It can be a cvar. Default value is 1. */
-	{"min", V_CVAR_OR_FLOAT, UI_EXTRADATA_OFFSETOF(abstractValueExtraData_t, min), 0},
-
-	/* Callback value set when before calling onChange. It is used to know the change apply by the user
-	 * @Deprecated
-	 */
-	{"lastdiff", V_FLOAT, UI_EXTRADATA_OFFSETOF(abstractValueExtraData_t, lastdiff), MEMBER_SIZEOF(abstractValueExtraData_t, lastdiff)},
-	{NULL, V_NULL, 0, 0}
-};
-
 void UI_RegisterAbstractValueNode (uiBehaviour_t *behaviour)
 {
 	localBehaviour = behaviour;
@@ -126,6 +109,20 @@ void UI_RegisterAbstractValueNode (uiBehaviour_t *behaviour)
 	behaviour->newNode = UI_AbstractValueNew;
 	behaviour->deleteNode = UI_AbstractValueDelete;
 	behaviour->isAbstract = qtrue;
-	behaviour->properties = properties;
 	behaviour->extraDataSize = sizeof(EXTRADATA_TYPE);
+
+	/* Current value of the node. It should be a cvar */
+	UI_RegisterExtradataNodeProperty(behaviour, "current", V_CVAR_OR_FLOAT, abstractValueExtraData_t, value);
+	/* Value of a positive step. Must be bigger than 1. */
+	UI_RegisterExtradataNodeProperty(behaviour, "delta", V_CVAR_OR_FLOAT, abstractValueExtraData_t, delta);
+	/* Maximum value we can set to the node. It can be a cvar. Default value is 0. */
+	UI_RegisterExtradataNodeProperty(behaviour, "max", V_CVAR_OR_FLOAT, abstractValueExtraData_t, max);
+	/* Minimum value we can set to the node. It can be a cvar. Default value is 1. */
+	UI_RegisterExtradataNodeProperty(behaviour, "min", V_CVAR_OR_FLOAT, abstractValueExtraData_t, min);
+
+	/* Callback value set when before calling onChange. It is used to know the change apply by the user
+	 * @Deprecated
+	 */
+	UI_RegisterExtradataNodeProperty(behaviour, "lastdiff", V_FLOAT, abstractValueExtraData_t, lastdiff);
+
 }

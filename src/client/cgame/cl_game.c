@@ -420,6 +420,7 @@ static const cgame_import_t* GAME_GetImportData (const cgameType_t *t)
 
 		cgi->R_LoadImage = R_LoadImage;
 		cgi->R_SoftenTexture = R_SoftenTexture;
+		cgi->R_ImageExists = R_ImageExists;
 
 		/*cgi->S_SetSampleRepeatRate = S_SetSampleRepeatRate;*/
 		cgi->S_StartLocalSample = S_StartLocalSample;
@@ -651,7 +652,7 @@ static void UI_RequestMapList_f (void)
 		preview = md->map;
 		if (preview[0] == '+')
 			preview++;
-		if (FS_CheckFile("pics/maps/shots/%s.jpg", preview) == -1)
+		if (!R_ImageExists("pics/maps/shots/%s", preview))
 			preview = "default";
 
 		Cbuf_AddText(va("%s add \"%s\" \"%s\";", callbackCmd, md->id, preview));

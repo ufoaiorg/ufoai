@@ -5,10 +5,43 @@
 component button cmpBaseButton
 {
 	image		"ui/button_green_small"
-	size		"230 56"
+	size		"230 35"
 	color		"0 0.8 0 1"
 	selectcolor "1 1 1 1"
 	font		"f_menu"
+}
+
+component panel cmpBuildingSpace
+{
+	{
+		size	"230 25"
+	}
+	string label
+	{
+		pos				"0 0"
+		size			"140 15"
+		font			"f_verysmall"
+		color			"0 0.8 0 1"
+		contentalign	ALIGN_CL
+	}
+	string data
+	{
+		pos				"140 0"
+		size			"90 15"
+		font			"f_verysmall"
+		color			"0 0.8 0 1"
+		contentalign	ALIGN_CR
+	}
+	bar data_bar
+	{
+		pos		"4 15"
+		size	"224 5"
+		color	"0 0.8 0 1"
+		bordercolor	"0 0.8 0 1"
+		border	1
+		current	0
+		max		100
+	}
 }
 
 window bases
@@ -70,76 +103,219 @@ window bases
 			layoutMargin	6
 		}
 
-	cmpBaseButton buildings
-	{
-		string		"_Buildings"
-		tooltip		"_Build base facilities"
-		onClick		{ cmd "ui_push buildings;" }
-	}
+		cmpBaseButton buildings
+		{
+			string		"_Buildings"
+			tooltip		"_Build base facilities"
+			onClick		{ cmd "ui_push buildings;" }
+		}
 
-	cmpBaseButton aircraft
-	{
-		string		"_Aircraft"
-		tooltip		"_Aircraft management and crew equipment"
-		onClick		{ cmd "ui_push aircraft;" }
-	}
+		cmpBaseButton aircraft
+		{
+			string		"_Aircraft"
+			tooltip		"_Aircraft management and crew equipment"
+			onClick		{ cmd "ui_push aircraft;" }
+		}
 
-	cmpBaseButton buysell
-	{
-		string		"_Buy/Sell"
-		tooltip		"_Buy/Sell equipment, aircraft and UGV"
-		onClick		{ cmd "ui_push market;" }
-	}
+		cmpBaseButton buysell
+		{
+			string		"_Buy/Sell"
+			tooltip		"_Buy/Sell equipment, aircraft and UGV"
+			onClick		{ cmd "ui_push market;" }
+		}
 
-	cmpBaseButton transfer
-	{
-		string		"_Transfer"
-		tooltip		"_Transfer equipment, aircraft, UGV, aliens and employees to other bases"
-		onClick		{ cmd "ui_push transfer;" }
-	}
+		cmpBaseButton transfer
+		{
+			string		"_Transfer"
+			tooltip		"_Transfer equipment, aircraft, UGV, aliens and employees to other bases"
+			onClick		{ cmd "ui_push transfer;" }
+		}
 
-	cmpBaseButton research
-	{
-		string		"_Research"
-		tooltip		"_Research new technology"
-		onClick		{ cmd "ui_push research;" }
-	}
+		cmpBaseButton research
+		{
+			string		"_Research"
+			tooltip		"_Research new technology"
+			onClick		{ cmd "ui_push research;" }
+		}
 
-	cmpBaseButton production
-	{
-		string		"_Production"
-		tooltip		"_Produce equipment, aircraft and UGV"
-		onClick		{ cmd "ui_push production;" }
-	}
+		cmpBaseButton production
+		{
+			string		"_Production"
+			tooltip		"_Produce equipment, aircraft and UGV"
+			onClick		{ cmd "ui_push production;" }
+		}
 
-	cmpBaseButton hire
-	{
-		string		"_Employees"
-		tooltip		"_Hire or dismiss employees"
-		onClick		{ cmd "ui_push employees;" }
-	}
+		cmpBaseButton hire
+		{
+			string		"_Employees"
+			tooltip		"_Hire or dismiss employees"
+			onClick		{ cmd "ui_push employees;" }
+		}
 
-	cmpBaseButton containment
-	{
-		string		"_Containment"
-		tooltip		"_Manage captured aliens"
-		onClick		{ cmd "ui_push aliencont;" }
-	}
+		cmpBaseButton containment
+		{
+			string		"_Containment"
+			tooltip		"_Manage captured aliens"
+			onClick		{ cmd "ui_push aliencont;" }
+		}
 
-	cmpBaseButton hospital
-	{
-		string		"_Hospital"
-		tooltip		"_Treat wounded soldiers and perform implant surgery"
-		onClick		{ cmd "ui_push hospital;" }
-	}
+		cmpBaseButton hospital
+		{
+			string		"_Hospital"
+			tooltip		"_Treat wounded soldiers and perform implant surgery"
+			onClick		{ cmd "ui_push hospital;" }
+		}
 
-	cmpBaseButton summary
-	{
-		string		"_Base Summary"
-		tooltip		"_Information about this base (available storage space, production, research, etc.)"
-		onClick		{ cmd "ui_push basesummary;" }
+		cmpBaseButton summary
+		{
+			string		"_Base Summary"
+			tooltip		"_Information about this base (available storage space, production, research, etc.)"
+			onClick		{ cmd "ui_push basesummary;" }
+		}
+		panel spacer { size "230 10" }
+
+		/*
+		 * Bars indicating storage/living/lab/workshop space are added with
+		 * confunc show_bld_space
+		 */
+		panel bld_space
+		{
+			{
+				size	"230 130"
+				layout		LAYOUT_TOP_DOWN_FLOW
+				layoutMargin	1
+			}
+		}
+
+		/*
+		 * Panel showing how many soldiers, scientists and engineers are in the base
+		 */
+		panel cur_employees
+		{
+			{
+				size	"230 70"
+			}
+			image soldier
+			{
+				tooltip	"_Soldiers"
+				src	"icons/bighead_soldier"
+				pos		"0 0"
+			}
+			string soldier_val
+			{
+				tooltip	"_Soldiers"
+				pos		"40 45"
+				size	"40 15"
+				font			"f_verysmall"
+				color			"0 0.8 0 1"
+				contentalign	ALIGN_CL
+			}
+			image scientist
+			{
+				tooltip	"_Scientists"
+				src	"icons/bighead_scientist"
+				pos		"80 0"
+			}
+			string scientist_val
+			{
+				tooltip	"_Scientists"
+				pos		"120 45"
+				size	"30 15"
+				font			"f_verysmall"
+				color			"0 0.8 0 1"
+				contentalign	ALIGN_CL
+			}
+			image worker
+			{
+				tooltip	"_Workers"
+				src	"icons/bighead_worker"
+				pos		"160 0"
+			}
+			string worker_val
+			{
+				tooltip	"_Workers"
+				pos		"200 45"
+				size	"30 15"
+				font			"f_verysmall"
+				color			"0 0.8 0 1"
+				contentalign	ALIGN_CL
+			}
+		}
+
+		/*
+		 * Passes information on building space for living quarters, storage
+		 * workshop and lab.
+		 * param1 = name
+		 * param2 = type (building_lab,building_quarters,building_storage,building_workshop,building_amstorage)
+		 * param3 = current
+		 * param4 = capacity
+		 */
+		confunc show_bld_space
+		{
+			/* Don't show building space if building is not completed (max = 0) */
+			if (param4 != 0) {
+				call *node:parent.bld_space@createChild ( "<2>", "cmpBuildingSpace" )
+				*node:parent.bld_space.<2>.label@string = "<1>"
+				*node:parent.bld_space.<2>.data@string = <3>/<4>
+				*node:parent.bld_space.<2>.data_bar@current = <3>
+				*node:parent.bld_space.<2>.data_bar@max = <4>
+			}
+		}
+
+		/*
+		 * Prepare the building space indicators.
+		 * Bases which are missing a facility will not call show_bld_space.
+		 * This ensures all indicators appear even if there is no bld space.
+		 * @TODO: Make anti-matter show 0/0 if it is researched but no bld
+		 *        is present.
+		 */
+		confunc clear_bld_space
+		{
+			call *node:parent.bld_space@removeAllChild
+		}
+
+
+		/*
+		 * Current employees of a particular base
+		 * param1 = number of soldiers
+		 * param2 = number of scientists
+		 * param3 = number of workers
+		 */
+		confunc current_employees
+		{
+			*node:parent.cur_employees.soldier_val@string = "<1>"
+			*node:parent.cur_employees.scientist_val@string = "<2>"
+			*node:parent.cur_employees.worker_val@string = "<3>"
+		}
+
+		/*
+		 * Show the base's aircraft (not currently used in default UI)
+		 * param1 = id (in list of aircraft in base -- not global idx)
+		 * param2 = name
+		 * param3 = aircraft template (model)
+		 * param4 = status
+		 * param5 = (1 = aircraft is in base, 0 = aircraft is not in base)
+		 */
+		confunc clear_aircraft { }
+		confunc show_aircraft { }
+
+		/*
+		 * Show a research item in the base overview (not used in default UI)
+		 * param1 = name
+		 * param2 = number of scientists working on it
+		 * param3 = percent complete
+		 */
+		confunc clear_research { }
+		confunc show_research { }
+
+		/*
+		 * Show the production item closest to completion in the base overview (not used in default UI)
+		 * param1 = name
+		 * param2 = percent complete
+		 */
+		confunc clear_production { }
+		confunc show_production { }
 	}
-}
 	confunc update_basebutton
 	{
 		*node:root.base_buttons.<1>@disabled = <2>
@@ -149,5 +325,9 @@ window bases
 	func onWindowOpened
 	{
 		cmd "base_init;"
+	}
+	func onWindowClosed
+	{
+		cmd "clear_bld_space;"
 	}
 }

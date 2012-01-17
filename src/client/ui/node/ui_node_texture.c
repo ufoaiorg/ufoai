@@ -33,6 +33,7 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 
 #include "../ui_nodes.h"
 #include "../ui_parse.h"
+#include "../ui_behaviour.h"
 #include "../ui_render.h"
 #include "../../renderer/r_draw.h"
 #include "ui_node_texture.h"
@@ -53,7 +54,7 @@ static void UI_TextureNodeDraw (uiNode_t *node)
 	if (Q_strnull(imageName))
 		return;
 
-	image = UI_LoadImage(imageName);
+	image = UI_LoadWrappedImage(imageName);
 	if (!image)
 		return;
 
@@ -63,24 +64,15 @@ static void UI_TextureNodeDraw (uiNode_t *node)
 
 	UI_GetNodeAbsPos(node, nodepos);
 
-	R_TextureEnableWrapping(image);
-
 	UI_DrawNormImage(qfalse, nodepos[0], nodepos[1], node->size[0], node->size[1], node->size[0], node->size[1], 0, 0, image);
-
-	R_TextureDisableWrapping(image);
 }
-
-static const value_t properties[] = {
-	/* Source of the texture */
-	{"src", V_CVAR_OR_STRING, offsetof(uiNode_t, image), 0},
-
-	{NULL, V_NULL, 0, 0}
-};
 
 void UI_RegisterTextureNode (uiBehaviour_t* behaviour)
 {
 	behaviour->name = "texture";
 	behaviour->draw = UI_TextureNodeDraw;
-	behaviour->properties = properties;
 	behaviour->extraDataSize = sizeof(EXTRADATA_TYPE);
+
+	/* Source of the texture */
+	UI_RegisterNodeProperty(behaviour, "src", V_CVAR_OR_STRING, uiNode_t, image);
 }

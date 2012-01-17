@@ -375,10 +375,6 @@ static void UI_TextNodeLoaded (uiNode_t *node)
 		Com_Printf("UI_TextNodeLoaded: 'textid' property of node '%s' is not set\n", UI_GetPath(node));
 }
 
-static const value_t properties[] = {
-	{NULL, V_NULL, 0, 0}
-};
-
 void UI_RegisterText2Node (uiBehaviour_t *behaviour)
 {
 	behaviour->name = "text2";
@@ -390,6 +386,5 @@ void UI_RegisterText2Node (uiBehaviour_t *behaviour)
 	behaviour->mouseMove = UI_TextNodeMouseMove;
 	behaviour->loading = UI_TextNodeLoading;
 	behaviour->loaded = UI_TextNodeLoaded;
-	behaviour->properties = properties;
 	behaviour->extraDataSize = sizeof(EXTRADATA_TYPE);
 }

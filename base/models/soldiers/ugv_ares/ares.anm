@@ -2,11 +2,11 @@
 // name				start	end		fps
 
 death1				0		0		1
-dead1				0		0		1
+dead1				0		0		0
 death2				0		0		1
-dead2				0		0		1
+dead2				0		0		0
 death3				0		0		1
-dead3				0		0		1
+dead3				0		0		0
 
 stand0				0		0		1
 walk0				0		0		1

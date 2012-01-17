@@ -68,8 +68,7 @@ static void UI_Memory_f (void)
 	Com_Printf("\t-Rendering window stack slot: %i\n", UI_MAX_WINDOWSTACK);
 	Com_Printf("\t-Action allocation: %i/%i\n", ui_global.numActions, UI_MAX_ACTIONS);
 	Com_Printf("\t-Model allocation: %i/%i\n", ui_global.numModels, UI_MAX_MODELS);
-	Com_Printf("\t-Exclude rect allocation: %i/%i\n", ui_global.numExcludeRect, UI_MAX_EXLUDERECTS);
-	Com_Printf("\t -Node allocation: %i\n", ui_global.numNodes);
+	Com_Printf("\t-Node allocation: %i\n", ui_global.numNodes);
 
 	Com_Printf("Memory:\n");
 	Com_Printf("\t-Action structure size: "UFO_SIZE_T" B\n", sizeof(uiAction_t));
@@ -112,6 +111,25 @@ void UI_ExecuteConfunc (const char *fmt, ...)
 	Q_vsnprintf(confunc, sizeof(confunc), fmt, ap);
 	Cmd_ExecuteString(confunc);
 	va_end(ap);
+}
+
+/**
+ * Allocate memory from hunk managed by the UI code
+ * This memory is allocated one time, and never released.
+ * @param size Quantity of memory expected
+ * @param align Alignement of the expected memory
+ * @param reset If true initilize the memory with 0
+ * @return available memory, else NULL
+ */
+void* UI_AllocHunkMemory (size_t size, int align, qboolean reset)
+{
+	byte *memory = ALIGN_PTR(ui_global.curadata, align);
+	if (memory + size > ui_global.adata + ui_global.adataize)
+		return NULL;
+	if (reset)
+		memset(memory, 0, size);
+	ui_global.curadata = memory + size;
+	return memory;
 }
 
 /**
@@ -218,7 +236,7 @@ void UI_Init (void)
 	ui_dynStringPool = Mem_CreatePool("Client: Dynamic string for UI");
 	ui_dynPool = Mem_CreatePool("Client: Dynamic memory for UI");
 
-	Com_Printf("Allocate %i megabytes for the ui hunk", ui_hunkSize->integer);
+	Com_Printf("Allocate %i megabytes for the ui hunk\n", ui_hunkSize->integer);
 	ui_global.adataize = ui_hunkSize->integer * 1024 * 1024;
 	ui_global.adata = (byte*)Mem_PoolAlloc(ui_global.adataize, ui_sysPool, 0);
 	ui_global.curadata = ui_global.adata;

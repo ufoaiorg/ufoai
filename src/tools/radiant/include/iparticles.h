@@ -78,14 +78,12 @@ class IParticleSystem
 				virtual void visit (IParticleDefinition* particle) const = 0;
 		};
 
-		virtual void init() = 0;
-
 		/**
 		 * @brief Use the provided Visitor object to enumerate each registered particle
 		 */
 		virtual void foreachParticle (const Visitor& visitor) const = 0;
 
-		virtual ParticleDefinitionMap getParticleDefinitions () const = 0;
+		virtual const ParticleDefinitionMap& getParticleDefinitions () = 0;
 
 		virtual IParticleDefinition* getParticle(const std::string& particleID) = 0;
 };

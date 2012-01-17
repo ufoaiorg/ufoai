@@ -32,6 +32,6 @@ typedef struct rowsExtraData_s {
 	int current;
 } rowsExtraData_t;
 
-void UI_RegisterRowsNode(uiBehaviour_t *behaviour);
+void UI_RegisterRowsNode(struct uiBehaviour_s *behaviour);
 
 #endif

@@ -72,7 +72,7 @@ class Sidebar
 		int _currentPageIndex;
 
 		SidebarComponent &_entityInspector;
-		SidebarComponent &_entityList;
+		SidebarComponent *_entityList;
 		SidebarComponent &_textureBrowser;
 		SidebarComponent &_surfaceInspector;
 		SidebarComponent &_prefabSelector;

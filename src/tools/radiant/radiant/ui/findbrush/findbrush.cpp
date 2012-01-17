@@ -43,7 +43,7 @@ const int FINDDLG_DEFAULT_SIZE_Y = 100;
 }
 
 FindBrushDialog::FindBrushDialog () :
-	gtkutil::BlockingTransientWindow(_("Find Brush"), GlobalRadiant().getMainWindow())
+	gtkutil::BlockingTransientWindow(_("Find brush"), GlobalRadiant().getMainWindow())
 {
 	gtk_window_set_default_size(GTK_WINDOW(getWindow()), FINDDLG_DEFAULT_SIZE_X, FINDDLG_DEFAULT_SIZE_Y);
 	gtk_container_set_border_width(GTK_CONTAINER(getWindow()), 12);

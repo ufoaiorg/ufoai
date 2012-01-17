@@ -5,9 +5,9 @@
  * (mouse in/out/click...) but in this case, it is better to use nodes with a semantics (like button,
  * or checkbox).
  * @code
- * pic aircraft_return
+ * image aircraft_return
  * {
- *	image	ui/buttons_small
+ *	src	ui/buttons_small
  *	pos	"550 410"
  *	texl	"0 32"
  *	texh	"16 48"
@@ -38,6 +38,7 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 
 #include "../ui_nodes.h"
 #include "../ui_parse.h"
+#include "../ui_behaviour.h"
 #include "../ui_render.h"
 #include "ui_node_image.h"
 #include "ui_node_abstractnode.h"
@@ -191,31 +192,26 @@ void UI_ImageNodeDraw (uiNode_t *node)
 #endif
 }
 
-static const value_t properties[] = {
-	/* Do not change the image ratio. The image will be proportionally stretched. */
-	{"preventratio", V_BOOL, UI_EXTRADATA_OFFSETOF(imageExtraData_t, preventRatio), MEMBER_SIZEOF(imageExtraData_t, preventRatio)},
-	/* Now this property do nothing. But we use it like a tag, to remember nodes we should convert into button...
-	 * @todo delete it when its possible (use more button instead of image)
-	 */
-	{"mousefx", V_BOOL, UI_EXTRADATA_OFFSETOF(imageExtraData_t, mousefx), MEMBER_SIZEOF(imageExtraData_t, mousefx)},
-
-	/* Texture high. Optional. Define the higher corner of the texture we want to display. Used with texl to crop the image. */
-	{"texh", V_POS, UI_EXTRADATA_OFFSETOF(imageExtraData_t, texh), MEMBER_SIZEOF(imageExtraData_t, texh)},
-	/* Texture low. Optional. Define the lower corner of the texture we want to display. Used with texh to crop the image. */
-	{"texl", V_POS, UI_EXTRADATA_OFFSETOF(imageExtraData_t, texl), MEMBER_SIZEOF(imageExtraData_t, texl)},
-
-	/* Source of the image */
-	{"src", V_CVAR_OR_STRING, offsetof(uiNode_t, image), 0},
-
-	{NULL, V_NULL, 0, 0}
-};
-
 void UI_RegisterImageNode (uiBehaviour_t* behaviour)
 {
 	/** @todo rename it according to the function name when its possible */
 	behaviour->name = "image";
 	behaviour->draw = UI_ImageNodeDraw;
 	behaviour->loaded = UI_ImageNodeLoaded;
-	behaviour->properties = properties;
 	behaviour->extraDataSize = sizeof(EXTRADATA_TYPE);
+
+	/* Do not change the image ratio. The image will be proportionally stretched. */
+	UI_RegisterExtradataNodeProperty(behaviour, "preventratio", V_BOOL, imageExtraData_t, preventRatio);
+	/* Now this property do nothing. But we use it like a tag, to remember nodes we should convert into button...
+	 * @todo delete it when its possible (use more button instead of image)
+	 */
+	UI_RegisterExtradataNodeProperty(behaviour, "mousefx", V_BOOL, imageExtraData_t, mousefx);
+
+	/* Texture high. Optional. Define the higher corner of the texture we want to display. Used with texl to crop the image. */
+	UI_RegisterExtradataNodeProperty(behaviour, "texh", V_POS, imageExtraData_t, texh);
+	/* Texture low. Optional. Define the lower corner of the texture we want to display. Used with texh to crop the image. */
+	UI_RegisterExtradataNodeProperty(behaviour, "texl", V_POS, imageExtraData_t, texl);
+
+	/* Source of the image */
+	UI_RegisterNodeProperty(behaviour, "src", V_CVAR_OR_STRING, uiNode_t, image);
 }

@@ -32,7 +32,7 @@
 namespace ui {
 
 Sidebar::Sidebar () :
-		_entityInspector(EntityInspector::Instance()), _entityList(EntityList::Instance()), _textureBrowser(
+		_entityInspector(EntityInspector::Instance()), _entityList(new EntityList()), _textureBrowser(
 				GlobalTextureBrowser()), _surfaceInspector(ui::SurfaceInspector::Instance()), _prefabSelector(
 				sidebar::PrefabSelector::Instance()), _mapInfo(sidebar::MapInfo::Instance()), _jobInfo(sidebar::JobInfo::Instance())
 {
@@ -44,7 +44,7 @@ Sidebar::Sidebar () :
 	/* if you change the order here - make sure to also change the toggle functions tab page indices */
 	addComponent(_textureBrowser);
 	addComponent(_surfaceInspector);
-	addComponents(_("_Entities"), _entityList, _entityInspector);
+	addComponents(_("_Entities"), *_entityList, _entityInspector);
 	addComponent(_prefabSelector);
 	addComponents(_("Info"), _mapInfo, _jobInfo);
 
@@ -71,6 +71,7 @@ Sidebar::~Sidebar ()
 {
 	ui::SurfaceInspector::Instance().shutdown();
 	TextureBrowser_Destroy();
+	delete _entityList;
 }
 
 int Sidebar::addWidget(const std::string& title, GtkWidget* widget)
@@ -116,7 +117,7 @@ void Sidebar::toggleSidebar ()
 {
 	bool visible = widget_toggle_visible(_widget);
 	_entityInspector.toggleSidebar(visible, _currentPageIndex);
-	_entityList.toggleSidebar(visible, _currentPageIndex);
+	_entityList->toggleSidebar(visible, _currentPageIndex);
 	_textureBrowser.toggleSidebar(visible, _currentPageIndex);
 	_surfaceInspector.toggleSidebar(visible, _currentPageIndex);
 	_prefabSelector.toggleSidebar(visible, _currentPageIndex);
@@ -154,7 +155,7 @@ void Sidebar::showEntityInspector ()
 gboolean Sidebar::onChangePage (GtkNotebook *notebook, gpointer newPage, guint newPageIndex, Sidebar *self)
 {
 	self->_entityInspector.switchPage(newPageIndex);
-	self->_entityList.switchPage(newPageIndex);
+	self->_entityList->switchPage(newPageIndex);
 	self->_textureBrowser.switchPage(newPageIndex);
 	self->_surfaceInspector.switchPage(newPageIndex);
 	self->_prefabSelector.switchPage(newPageIndex);

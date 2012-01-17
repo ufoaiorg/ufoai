@@ -46,5 +46,6 @@ void R_CleanupDepthBuffer(int x, int y, int width, int height);
 void R_DrawBoundingBox(const vec3_t absmins, const vec3_t absmaxs);
 void R_DrawBoundingBoxBatched(const vec3_t absmins, const vec3_t absmaxs);
 void R_DrawBoundingBoxes(void);
+void R_DrawTexturedBox (const vec3_t absmins, const vec3_t absmaxs);
 
 #endif

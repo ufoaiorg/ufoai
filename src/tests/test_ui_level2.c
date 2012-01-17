@@ -26,8 +26,7 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #include "test_shared.h"
 #include "test_ui_level2.h"
 #include "../client/cl_video.h" /* vid_imagePool */
-#include "../client/ui/ui_nodes.h"
-#include "../client/ui/ui_main.h"
+#include "../client/ui/ui_internal.h"
 #include "../client/renderer/r_state.h" /* r_state */
 
 /**
@@ -257,6 +256,15 @@ static void testVideo (void)
 }
 
 /**
+ * @brief test cvarlistener nodes
+ * but ATM we only check it dont crash
+ */
+static void testCvarListener (void)
+{
+	UFO_ExecuteTestWindow("test_cvarlistener");
+}
+
+/**
  * @brief test key binding
  * @todo unfortunately we can't use "bindui" or "press" commands in tests.
  */
@@ -305,6 +313,8 @@ int UFO_AddUILevel2Tests (void)
 	if (CU_ADD_TEST(UISuite, testVideo) == NULL)
 		return CU_get_error();
 	if (CU_ADD_TEST(UISuite, testBinding) == NULL)
+		return CU_get_error();
+	if (CU_ADD_TEST(UISuite, testCvarListener) == NULL)
 		return CU_get_error();
 	if (CU_ADD_TEST(UISuite, testSamples) == NULL)
 		return CU_get_error();

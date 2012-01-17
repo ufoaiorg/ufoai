@@ -331,57 +331,6 @@ static void UI_WindowNodeClone (const uiNode_t *source, uiNode_t *clone)
 }
 
 /**
- * @brief Valid properties for a window node
- */
-static const value_t windowNodeProperties[] = {
-	/* @override image
-	 * Texture to use. The texture is a cut of 9 portions
-	 * (left, middle, right x top, middle, bottom). Between all this elements,
-	 * we use a margin of 3 pixels (purple mark into the sample).
-	 * Graphically we see only a 1 pixel margin, because, for a problem of
-	 * lossy compression of texture it's not nice to have a pure transparent
-	 * pixel near the last colored one, when we cut or stretch textures.
-	 * @image html http://ufoai.ninex.info/wiki/images/Popup_alpha_tile.png
-	 */
-
-	/* In windows where notify messages appear (like e.g. the video options window when you have to restart the game until the settings take effects) you can define the position of those messages with this option. */
-	{"noticepos", V_POS, UI_EXTRADATA_OFFSETOF(windowExtraData_t, noticePos), MEMBER_SIZEOF(windowExtraData_t, noticePos)},
-	/* Create subnode allowing to move the window when we click on the header. Updating this attribute at the runtime will change nothing. */
-	{"dragbutton", V_BOOL, UI_EXTRADATA_OFFSETOF(windowExtraData_t, dragButton), MEMBER_SIZEOF(windowExtraData_t, dragButton)},
-	/* Add a button on the top right the window to close it. Updating this attribute at the runtime will change nothing. */
-	{"closebutton", V_BOOL, UI_EXTRADATA_OFFSETOF(windowExtraData_t, closeButton), MEMBER_SIZEOF(windowExtraData_t, closeButton)},
-	/* If true, the user can't select something outside the modal window. He must first close the window. */
-	{"modal", V_BOOL, UI_EXTRADATA_OFFSETOF(windowExtraData_t, modal), MEMBER_SIZEOF(windowExtraData_t, modal)},
-	/* If true, if the user click outside the window, it will close it. */
-	{"dropdown", V_BOOL, UI_EXTRADATA_OFFSETOF(windowExtraData_t, dropdown), MEMBER_SIZEOF(windowExtraData_t, dropdown)},
-	/* If true, the user can't use ''ESC'' key to close the window. */
-	{"preventtypingescape", V_BOOL, UI_EXTRADATA_OFFSETOF(windowExtraData_t, preventTypingEscape), MEMBER_SIZEOF(windowExtraData_t, preventTypingEscape)},
-	/* If true, the window is filled according to the widescreen. */
-	{"fill", V_BOOL, UI_EXTRADATA_OFFSETOF(windowExtraData_t, fill), MEMBER_SIZEOF(windowExtraData_t, fill)},
-	/* If true, when the window size change, the window content position is updated according to the "star" layout.
-	 * @todo Need more documentation.
-	 */
-	{"starlayout", V_BOOL, UI_EXTRADATA_OFFSETOF(windowExtraData_t, starLayout), MEMBER_SIZEOF(windowExtraData_t, starLayout)},
-
-	/* This property control milliseconds between each calls of <code>onEvent</code>.
-	 * If value is 0 (the default value) nothing is called. We can change the
-	 * value at the runtime.
-	 */
-	{"timeout", V_INT,UI_EXTRADATA_OFFSETOF(windowExtraData_t, timeOut), MEMBER_SIZEOF(windowExtraData_t, timeOut)},
-
-	/* Invoked when the window is added to the rendering stack. */
-	{"onWindowOpened", V_UI_ACTION, UI_EXTRADATA_OFFSETOF(windowExtraData_t, onWindowOpened), MEMBER_SIZEOF(windowExtraData_t, onWindowOpened)},
-	/* Invoked when the window is removed from the rendering stack. */
-	{"onWindowClosed", V_UI_ACTION, UI_EXTRADATA_OFFSETOF(windowExtraData_t, onWindowClosed), MEMBER_SIZEOF(windowExtraData_t, onWindowClosed)},
-	/* Invoked periodically. See <code>timeout</code>. */
-	{"onevent", V_UI_ACTION, UI_EXTRADATA_OFFSETOF(windowExtraData_t, onTimeOut), MEMBER_SIZEOF(windowExtraData_t, onTimeOut)},
-	/* Invoked after all UI scripts are loaded (not yet implemented, ask if you need it). */
-	{"onScriptLoaded", V_UI_ACTION, UI_EXTRADATA_OFFSETOF(windowExtraData_t, onScriptLoaded), MEMBER_SIZEOF(windowExtraData_t, onScriptLoaded)},
-
-	{NULL, V_NULL, 0, 0}
-};
-
-/**
  * @brief Get the noticePosition from a window node.
  * @param node A window node
  * @return A position, else NULL if no notice position
@@ -458,6 +407,51 @@ void UI_RegisterWindowNode (uiBehaviour_t *behaviour)
 	behaviour->draw = UI_WindowNodeDraw;
 	behaviour->doLayout = UI_WindowNodeDoLayout;
 	behaviour->clone = UI_WindowNodeClone;
-	behaviour->properties = windowNodeProperties;
 	behaviour->extraDataSize = sizeof(EXTRADATA_TYPE);
+
+	/* Texture to use. The texture is a cut of 9 portions
+	 * (left, middle, right x top, middle, bottom). Between all this elements,
+	 * we use a margin of 3 pixels (purple mark into the sample).
+	 * Graphically we see only a 1 pixel margin, because, for a problem of
+	 * lossy compression of texture it's not nice to have a pure transparent
+	 * pixel near the last colored one, when we cut or stretch textures.
+	 * @image html http://ufoai.ninex.info/wiki/images/Popup_alpha_tile.png
+	 */
+	UI_RegisterOveridedNodeProperty(behaviour, "image");
+
+	/* In windows where notify messages appear (like e.g. the video options window when you have to restart the game until
+	 * the settings take effects) you can define the position of those messages with this option. */
+	UI_RegisterExtradataNodeProperty(behaviour, "noticepos", V_POS, windowExtraData_t, noticePos);
+	/* Create subnode allowing to move the window when we click on the header. Updating this attribute at the runtime will change nothing. */
+	UI_RegisterExtradataNodeProperty(behaviour, "dragbutton", V_BOOL, windowExtraData_t, dragButton);
+	/* Add a button on the top right the window to close it. Updating this attribute at the runtime will change nothing. */
+	UI_RegisterExtradataNodeProperty(behaviour, "closebutton", V_BOOL, windowExtraData_t, closeButton);
+	/* If true, the user can't select something outside the modal window. He must first close the window. */
+	UI_RegisterExtradataNodeProperty(behaviour, "modal", V_BOOL, windowExtraData_t, modal);
+	/* If true, if the user click outside the window, it will close it. */
+	UI_RegisterExtradataNodeProperty(behaviour, "dropdown", V_BOOL, windowExtraData_t, dropdown);
+	/* If true, the user can't use ''ESC'' key to close the window. */
+	UI_RegisterExtradataNodeProperty(behaviour, "preventtypingescape", V_BOOL, windowExtraData_t, preventTypingEscape);
+	/* If true, the window is filled according to the widescreen. */
+	UI_RegisterExtradataNodeProperty(behaviour, "fill", V_BOOL, windowExtraData_t, fill);
+	/* If true, when the window size change, the window content position is updated according to the "star" layout.
+	 * @todo Need more documentation.
+	 */
+	UI_RegisterExtradataNodeProperty(behaviour, "starlayout", V_BOOL, windowExtraData_t, starLayout);
+
+	/* This property control milliseconds between each calls of <code>onEvent</code>.
+	 * If value is 0 (the default value) nothing is called. We can change the
+	 * value at the runtime.
+	 */
+	UI_RegisterExtradataNodeProperty(behaviour, "timeout", V_INT,windowExtraData_t, timeOut);
+
+	/* Invoked when the window is added to the rendering stack. */
+	UI_RegisterExtradataNodeProperty(behaviour, "onWindowOpened", V_UI_ACTION, windowExtraData_t, onWindowOpened);
+	/* Invoked when the window is removed from the rendering stack. */
+	UI_RegisterExtradataNodeProperty(behaviour, "onWindowClosed", V_UI_ACTION, windowExtraData_t, onWindowClosed);
+	/* Invoked periodically. See <code>timeout</code>. */
+	UI_RegisterExtradataNodeProperty(behaviour, "onEvent", V_UI_ACTION, windowExtraData_t, onTimeOut);
+	/* Invoked after all UI scripts are loaded. */
+	UI_RegisterExtradataNodeProperty(behaviour, "onScriptLoaded", V_UI_ACTION, windowExtraData_t, onScriptLoaded);
+
 }

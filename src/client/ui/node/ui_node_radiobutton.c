@@ -38,6 +38,7 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #include "../ui_actions.h"
 #include "../ui_sprite.h"
 #include "../ui_parse.h"
+#include "../ui_behaviour.h"
 #include "../ui_input.h"
 #include "../ui_render.h"
 #include "ui_node_radiobutton.h"
@@ -153,29 +154,24 @@ static void UI_RadioButtonNodeClick (uiNode_t * node, int x, int y)
 	UI_RadioButtonNodeActivate(node);
 }
 
-static const value_t properties[] = {
-	/* Numerical value defining the radiobutton. Cvar is updated with this value when the radio button is selected. */
-	{"value", V_FLOAT, UI_EXTRADATA_OFFSETOF(EXTRADATA_TYPE, value), MEMBER_SIZEOF(EXTRADATA_TYPE, value)},
-	/* String Value defining the radiobutton. Cvar is updated with this value when the radio button is selected. */
-	{"stringValue", V_CVAR_OR_STRING, UI_EXTRADATA_OFFSETOF(EXTRADATA_TYPE, string), 0},
-
-	/* Cvar name shared with the radio button group to identify when a radio button is selected. */
-	{"cvar", V_UI_CVAR, UI_EXTRADATA_OFFSETOF(EXTRADATA_TYPE, cvar), 0},
-	/* Icon used to display the node */
-	{"icon", V_UI_SPRITEREF, UI_EXTRADATA_OFFSETOF(EXTRADATA_TYPE, icon), MEMBER_SIZEOF(EXTRADATA_TYPE, icon)},
-	{"flipicon", V_BOOL, UI_EXTRADATA_OFFSETOF(EXTRADATA_TYPE, flipIcon), MEMBER_SIZEOF(EXTRADATA_TYPE, flipIcon)},
-	/* Sprite used to display the background */
-	{"background", V_UI_SPRITEREF, UI_EXTRADATA_OFFSETOF(EXTRADATA_TYPE, background), MEMBER_SIZEOF(EXTRADATA_TYPE, background)},
-
-	{NULL, V_NULL, 0, 0}
-};
-
 void UI_RegisterRadioButtonNode (uiBehaviour_t *behaviour)
 {
 	behaviour->name = "radiobutton";
 	behaviour->draw = UI_RadioButtonNodeDraw;
 	behaviour->leftClick = UI_RadioButtonNodeClick;
 	behaviour->activate = UI_RadioButtonNodeActivate;
-	behaviour->properties = properties;
 	behaviour->extraDataSize = sizeof(EXTRADATA_TYPE);
+
+	/* Numerical value defining the radiobutton. Cvar is updated with this value when the radio button is selected. */
+	UI_RegisterExtradataNodeProperty(behaviour, "value", V_FLOAT, EXTRADATA_TYPE, value);
+	/* String Value defining the radiobutton. Cvar is updated with this value when the radio button is selected. */
+	UI_RegisterExtradataNodeProperty(behaviour, "stringValue", V_CVAR_OR_STRING, EXTRADATA_TYPE, string);
+
+	/* Cvar name shared with the radio button group to identify when a radio button is selected. */
+	UI_RegisterExtradataNodeProperty(behaviour, "cvar", V_UI_CVAR, EXTRADATA_TYPE, cvar);
+	/* Icon used to display the node */
+	UI_RegisterExtradataNodeProperty(behaviour, "icon", V_UI_SPRITEREF, EXTRADATA_TYPE, icon);
+	UI_RegisterExtradataNodeProperty(behaviour, "flipicon", V_BOOL, EXTRADATA_TYPE, flipIcon);
+	/* Sprite used to display the background */
+	UI_RegisterExtradataNodeProperty(behaviour, "background", V_UI_SPRITEREF, EXTRADATA_TYPE, background);
 }

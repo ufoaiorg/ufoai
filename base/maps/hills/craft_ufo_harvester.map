@@ -6141,22 +6141,17 @@
 }
 // entity 105
 {
-"classname" "info_human_start"
-"origin" "1264 48 28"
-}
-// entity 106
-{
 "classname" "info_alien_start"
 "origin" "80 48 28"
 }
-// entity 107
+// entity 106
 {
 "classname" "misc_model"
 "origin" "656 840 72"
 "model" "models/objects/vegi/tropic/tropic02.md2"
 "spawnflags" "254"
 }
-// entity 108
+// entity 107
 {
 "classname" "func_group"
 // brush 0
@@ -6211,14 +6206,14 @@
 ( 401.024 909.952 180 ) ( 396.928 909.952 180 ) ( 396.928 914.048 180 ) tex_common/nodraw 2.498291 50.49889 -90 0.2560001 0.2560001 134282240 128 0
 }
 }
-// entity 109
+// entity 108
 {
 "classname" "light"
 "light" "180"
 "color" "0.8 0.9 1"
 "origin" "364 908 88"
 }
-// entity 110
+// entity 109
 {
 "classname" "func_group"
 // brush 0

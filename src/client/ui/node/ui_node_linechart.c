@@ -81,20 +81,16 @@ static void UI_LineChartNodeDraw (uiNode_t *node)
 	UI_Transform(NULL, NULL, NULL);
 }
 
-static const value_t properties[] = {
-	/* Identity the shared data the node use. It must be a LINESTRIP data. */
-	{"dataid", V_UI_DATAID, UI_EXTRADATA_OFFSETOF(lineChartExtraData_t, dataId), MEMBER_SIZEOF(lineChartExtraData_t, dataId)},
-	/* If true, it display axes of the chart. */
-	{"displayaxes", V_BOOL, UI_EXTRADATA_OFFSETOF(lineChartExtraData_t, displayAxes), MEMBER_SIZEOF(lineChartExtraData_t, displayAxes)},
-	/* Axe color. */
-	{"axescolor", V_COLOR, UI_EXTRADATA_OFFSETOF(lineChartExtraData_t, axesColor), MEMBER_SIZEOF(lineChartExtraData_t, axesColor)},
-	{NULL, V_NULL, 0, 0}
-};
-
 void UI_RegisterLineChartNode (uiBehaviour_t *behaviour)
 {
 	behaviour->name = "linechart";
 	behaviour->draw = UI_LineChartNodeDraw;
-	behaviour->properties = properties;
 	behaviour->extraDataSize = sizeof(EXTRADATA_TYPE);
+
+	/* Identity the shared data the node use. It must be a LINESTRIP data. */
+	UI_RegisterExtradataNodeProperty(behaviour, "dataid", V_UI_DATAID, lineChartExtraData_t, dataId);
+	/* If true, it display axes of the chart. */
+	UI_RegisterExtradataNodeProperty(behaviour, "displayaxes", V_BOOL, lineChartExtraData_t, displayAxes);
+	/* Axe color. */
+	UI_RegisterExtradataNodeProperty(behaviour, "axescolor", V_COLOR, lineChartExtraData_t, axesColor);
 }

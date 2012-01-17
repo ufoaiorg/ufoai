@@ -142,6 +142,7 @@ typedef struct cgame_import_s {
 	/* renderer functions */
 	void (IMPORT *R_SoftenTexture) (byte *in, int width, int height, int bpp);
 	void (IMPORT *R_LoadImage) (const char *name, byte **pic, int *width, int *height);
+	qboolean (IMPORT *R_ImageExists) (const char *pname, ...) __attribute__((format(printf, 1, 2)));
 
 	struct dbuffer *(IMPORT *NET_ReadMsg)  (struct net_stream *s);
 	int (IMPORT *NET_ReadByte)  (struct dbuffer *buf);

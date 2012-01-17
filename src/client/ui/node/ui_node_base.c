@@ -23,6 +23,7 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 
 #include "../ui_main.h"
 #include "../ui_parse.h"
+#include "../ui_behaviour.h"
 #include "../ui_tooltip.h"
 #include "../ui_nodes.h"
 #include "../ui_render.h"
@@ -360,19 +361,15 @@ static void UI_BaseLayoutNodeLoading (uiNode_t *node)
 	Vector4Set(node->color, 1, 1, 1, 1);
 }
 
-static const value_t properties[] = {
-	/* Identify the base, from a base ID, the node use. */
-	{"baseid", V_INT, UI_EXTRADATA_OFFSETOF(baseExtraData_t, baseid), MEMBER_SIZEOF(baseExtraData_t, baseid)},
-	{NULL, V_NULL, 0, 0}
-};
-
 void UI_RegisterAbstractBaseNode (uiBehaviour_t *behaviour)
 {
 	behaviour->name = "abstractbase";
 	behaviour->isAbstract = qtrue;
-	behaviour->properties = properties;
 	behaviour->loaded = UI_AbstractBaseNodeLoaded;
 	behaviour->extraDataSize = sizeof(EXTRADATA_TYPE);
+
+	/* Identify the base, from a base ID, the node use. */
+	UI_RegisterExtradataNodeProperty(behaviour, "baseid", V_INT, baseExtraData_t, baseid);
 }
 
 void UI_RegisterBaseMapNode (uiBehaviour_t *behaviour)

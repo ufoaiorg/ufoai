@@ -25,6 +25,7 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 
 #include "../ui_nodes.h"
 #include "../ui_parse.h"
+#include "../ui_behaviour.h"
 #include "../ui_render.h"
 #include "ui_node_ekg.h"
 #include "ui_node_abstractnode.h"
@@ -46,7 +47,7 @@ static void UI_EKGNodeDraw (uiNode_t *node)
 
 	UI_GetNodeAbsPos(node, nodepos);
 
-	image = UI_LoadImage(imageName);
+	image = UI_LoadWrappedImage(imageName);
 	if (image) {
 		const int ekgHeight = node->size[1];
 		const int ekgWidth = image->width;
@@ -108,21 +109,16 @@ static void UI_EKGNodeLoading (uiNode_t *node)
 	EXTRADATA(node).scrollSpeed = 0.07f;
 }
 
-static const value_t properties[] = {
-	/* @todo Need documentation */
-	{"scrollspeed", V_FLOAT, UI_EXTRADATA_OFFSETOF(ekgExtraData_t, scrollSpeed), MEMBER_SIZEOF(ekgExtraData_t, scrollSpeed)},
-	/* @todo Need documentation */
-	{"scale", V_FLOAT, UI_EXTRADATA_OFFSETOF(ekgExtraData_t, scaleCvarValue), MEMBER_SIZEOF(ekgExtraData_t, scaleCvarValue)},
-
-	{NULL, V_NULL, 0, 0}
-};
-
 void UI_RegisterEKGNode (uiBehaviour_t* behaviour)
 {
 	behaviour->name = "ekg";
 	behaviour->loading = UI_EKGNodeLoading;
 	behaviour->extends = "image";
 	behaviour->draw = UI_EKGNodeDraw;
-	behaviour->properties = properties;
 	behaviour->extraDataSize = sizeof(EXTRADATA_TYPE);
+
+	/* @todo Need documentation */
+	UI_RegisterExtradataNodeProperty(behaviour, "scrollspeed", V_FLOAT, ekgExtraData_t, scrollSpeed);
+	/* @todo Need documentation */
+	UI_RegisterExtradataNodeProperty(behaviour, "scale", V_FLOAT, ekgExtraData_t, scaleCvarValue);
 }

@@ -30,6 +30,7 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 
 #include "../ui_nodes.h"
 #include "../ui_parse.h"
+#include "../ui_behaviour.h"
 #include "../ui_draw.h"
 #include "../ui_actions.h"
 #include "ui_node_video.h"
@@ -96,23 +97,19 @@ static void UI_VideoNodeClose (uiNode_t *node)
 	CIN_CloseCinematic(&(EXTRADATA(node).cin));
 }
 
-static const value_t properties[] = {
-	/** Source of the video. File name without prefix ./base/videos and without extension */
-	{"src", V_CVAR_OR_STRING, offsetof(uiNode_t, image), 0},
-	/** Use or not the music from the video. */
-	{"nosound", V_BOOL, UI_EXTRADATA_OFFSETOF(EXTRADATA_TYPE, nosound), MEMBER_SIZEOF(EXTRADATA_TYPE, nosound)},
-	/** Invoked when video end. */
-	{"onEnd", V_UI_ACTION, UI_EXTRADATA_OFFSETOF(videoExtraData_t, onEnd), MEMBER_SIZEOF(videoExtraData_t, onEnd)},
-	{NULL, V_NULL, 0, 0}
-};
-
 void UI_RegisterVideoNode (uiBehaviour_t* behaviour)
 {
 	behaviour->name = "video";
 	behaviour->draw = UI_VideoNodeDraw;
-	behaviour->properties = properties;
 	behaviour->windowOpened = UI_VideoNodeInit;
 	behaviour->windowClosed = UI_VideoNodeClose;
 	behaviour->drawOverWindow = UI_VideoNodeDrawOverWindow;
 	behaviour->extraDataSize = sizeof(EXTRADATA_TYPE);
+
+	/** Source of the video. File name without prefix ./base/videos and without extension */
+	UI_RegisterNodeProperty(behaviour, "src", V_CVAR_OR_STRING, uiNode_t, image);
+	/** Use or not the music from the video. */
+	UI_RegisterExtradataNodeProperty(behaviour, "nosound", V_BOOL, EXTRADATA_TYPE, nosound);
+	/** Invoked when video end. */
+	UI_RegisterExtradataNodeProperty(behaviour, "onEnd", V_UI_ACTION, EXTRADATA_TYPE, onEnd);
 }

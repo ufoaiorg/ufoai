@@ -8,9 +8,9 @@ showcase			0		452		22
 death1				0		27		18
 death2				28		46		18
 death3				47		59		18
-dead1				27		27		1
-dead2				46		46		1
-dead3				59		59		1
+dead1				27		27		0
+dead2				46		46		0
+dead3				59		59		0
 
 // Standing "animations" (0=nothing/grenades, 1=rifles, 2=pistol, 3=rpg)
 stand0				60		60		1

@@ -25,6 +25,7 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 
 #include "../ui_nodes.h"
 #include "../ui_parse.h"
+#include "../ui_behaviour.h"
 #include "../ui_main.h"
 #include "../ui_input.h"
 #include "../ui_timer.h"
@@ -237,25 +238,6 @@ static void UI_SpinnerNodeLoading (uiNode_t *node)
 	node->size[1] = SPINNER_HEIGHT;
 }
 
-static const value_t properties[] = {
-	/* @override size
-	 * The size of the widget is uneditable. Fixed to 15x19.
-	 */
-	/* @override image
-	 * Texture used for the widget. Its a 64x64 template image with all four
-	 * status. The top button take the first vertical 9 pixels, the bottom
-	 * button use the last 10 pixels. See the sample image.
-	 * @image html http://ufoai.ninex.info/wiki/images/Spinner_blue.png
-	 */
-
-	/**
-	 * @brief Defines a factor that is applied to the delta value when the shift key is held down.
-	 */
-	{"shiftincreasefactor", V_FLOAT, UI_EXTRADATA_OFFSETOF(spinnerExtraData_t, shiftIncreaseFactor),  MEMBER_SIZEOF(spinnerExtraData_t, shiftIncreaseFactor)},
-
-	{NULL, V_NULL, 0, 0}
-};
-
 void UI_RegisterSpinnerNode (uiBehaviour_t *behaviour)
 {
 	localBehaviour = behaviour;
@@ -267,6 +249,21 @@ void UI_RegisterSpinnerNode (uiBehaviour_t *behaviour)
 	behaviour->capturedMouseLost = UI_SpinnerNodeCapturedMouseLost;
 	behaviour->draw = UI_SpinnerNodeDraw;
 	behaviour->loading = UI_SpinnerNodeLoading;
-	behaviour->properties = properties;
 	behaviour->extraDataSize = sizeof(EXTRADATA_TYPE);
+
+	/* The size of the widget is uneditable. Fixed to 15x19.
+	 */
+	UI_RegisterOveridedNodeProperty(behaviour, "size");
+
+	/* Texture used for the widget. Its a 64x64 template image with all four
+	 * status. The top button take the first vertical 9 pixels, the bottom
+	 * button use the last 10 pixels. See the sample image.
+	 * @image html http://ufoai.ninex.info/wiki/images/Spinner_blue.png
+	 */
+	UI_RegisterOveridedNodeProperty(behaviour, "image");
+
+	/**
+	 * @brief Defines a factor that is applied to the delta value when the shift key is held down.
+	 */
+	UI_RegisterExtradataNodeProperty(behaviour, "shiftincreasefactor", V_FLOAT, spinnerExtraData_t, shiftIncreaseFactor);
 }

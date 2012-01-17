@@ -1,0 +1,102 @@
+window unittest_optiontree
+{
+	{
+		pos "100 100"
+		size "340 500"
+		dragbutton	true
+		closebutton	true
+		string		"_Unittest optiontree"
+		bgcolor		"0 0 0 1"
+		timeout		1000
+	}
+
+	optiontree tree {
+		cvar	*cvar:unittest_foo
+		pos "20 50"
+		size "240 430"
+		color		"0 .78 0 1"
+		selectcolor	"1 1 1 1"
+
+		onViewchange	{
+			*node:root.scroll@current = <viewpos>
+			*node:root.scroll@fullsize = <fullsize>
+			*node:root.scroll@viewsize = <viewsize>
+		}
+	}
+
+	vscrollbar scroll {
+		image		"ui/scrollbar_v_green"
+		pos			"270 50"
+		height		"430"
+		current		0
+		viewsize	21
+		fullsize	22
+		onChange		{
+			*node:root.tree@viewpos = <current>
+		}
+	}
+
+	string value
+	{
+		string		*cvar:unittest_foo
+		pos			"140 50"
+		size		"130 30"
+	}
+
+	func onWindowOpened {
+
+		call *node:root.tree@createchild ( "option1" , "option" )
+		*node:root.tree.option1@value = "v1"
+		*node:root.tree.option1@label = "option1"
+
+		call *node:root.tree@createchild ( "option2" , "option" )
+		*node:root.tree.option2@value = "v2"
+		*node:root.tree.option2@label = "option2"
+
+			call *node:root.tree.option2@createchild ( "option1" , "option" )
+			*node:root.tree.option2.option1@value = "v21"
+			*node:root.tree.option2.option1@label = "option1"
+
+				call *node:root.tree.option2.option1@createchild ( "option1" , "option" )
+				*node:root.tree.option2.option1.option1@value = "v211"
+				*node:root.tree.option2.option1.option1@label = "option1"
+
+				call *node:root.tree.option2.option1@createchild ( "option2" , "option" )
+				*node:root.tree.option2.option1.option2@value = "v212"
+				*node:root.tree.option2.option1.option2@label = "option2"
+
+				call *node:root.tree.option2.option1@createchild ( "option3" , "option" )
+				*node:root.tree.option2.option1.option3@value = "v213"
+				*node:root.tree.option2.option1.option3@label = "option3"
+
+					call *node:root.tree.option2.option1.option3@createchild ( "option1" , "option" )
+					*node:root.tree.option2.option1.option3.option1@value = "v2131"
+					*node:root.tree.option2.option1.option3.option1@label = "option1"
+
+					call *node:root.tree.option2.option1.option3@createchild ( "option2" , "option" )
+					*node:root.tree.option2.option1.option3.option2@value = "v2132"
+					*node:root.tree.option2.option1.option3.option2@label = "option2"
+
+					call *node:root.tree.option2.option1.option3@createchild ( "option3" , "option" )
+					*node:root.tree.option2.option1.option3.option3@value = "v2133"
+					*node:root.tree.option2.option1.option3.option3@label = "option3"
+
+			call *node:root.tree.option2@createchild ( "option2" , "option" )
+			*node:root.tree.option2.option2@value = "v22"
+			*node:root.tree.option2.option2@label = "option2"
+
+			call *node:root.tree.option2@createchild ( "option3" , "option" )
+			*node:root.tree.option2.option3@value = "v23"
+			*node:root.tree.option2.option3@label = "option3"
+
+		call *node:root.tree@createchild ( "option3" , "option" )
+		*node:root.tree.option3@value = "v3"
+		*node:root.tree.option3@label = "option3"
+	}
+
+	func onWindowClosed {
+		call *node:root.tree@removeAllChild
+		delete *cvar:unittest_foo
+	}
+
+}

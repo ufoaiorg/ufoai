@@ -29,6 +29,7 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #include "../ui_main.h"
 #include "../ui_actions.h"
 #include "../ui_parse.h"
+#include "../ui_behaviour.h"
 #include "../ui_font.h"
 #include "../ui_render.h"
 #include "../ui_sprite.h"
@@ -152,24 +153,6 @@ static void UI_ButtonNodeLoaded (uiNode_t *node)
 #endif
 }
 
-static const value_t properties[] = {
-	/* @override image
-	 * Texture used by the button. It's a normalized texture of 128x128.
-	 * Normal button start at 0x0, mouse over start at 64x0, mouse click
-	 * start at 0x64 (but not yet implemented), and disabled start at 64x64.
-	 * See the image to have a usable template for this node.
-	 * @image html http://ufoai.ninex.info/wiki/images/Button_blue.png
-	 */
-
-	/* Icon used to display the node
-	 */
-	{"icon", V_UI_SPRITEREF, UI_EXTRADATA_OFFSETOF(EXTRADATA_TYPE, icon), MEMBER_SIZEOF(EXTRADATA_TYPE, icon)},
-	{"flipicon", V_BOOL, UI_EXTRADATA_OFFSETOF(EXTRADATA_TYPE, flipIcon), MEMBER_SIZEOF(EXTRADATA_TYPE, flipIcon)},
-
-	{NULL, V_NULL, 0, 0}
-};
-
-
 void UI_RegisterButtonNode (uiBehaviour_t *behaviour)
 {
 	behaviour->name = "button";
@@ -177,6 +160,18 @@ void UI_RegisterButtonNode (uiBehaviour_t *behaviour)
 	behaviour->loaded = UI_ButtonNodeLoaded;
 	behaviour->leftClick = UI_ButtonNodeClick;
 	behaviour->loading = UI_ButtonNodeLoading;
-	behaviour->properties = properties;
 	behaviour->extraDataSize = sizeof(EXTRADATA_TYPE);
+
+	/* Texture used by the button. It's a normalized texture of 128x128.
+	 * Normal button start at 0x0, mouse over start at 64x0, mouse click
+	 * start at 0x64 (but not yet implemented), and disabled start at 64x64.
+	 * See the image to have a usable template for this node.
+	 * @image html http://ufoai.ninex.info/wiki/images/Button_blue.png
+	 */
+	UI_RegisterOveridedNodeProperty(behaviour, "image");
+
+	/* Icon used to display the node
+	 */
+	UI_RegisterExtradataNodeProperty(behaviour, "icon", V_UI_SPRITEREF, EXTRADATA_TYPE, icon);
+	UI_RegisterExtradataNodeProperty(behaviour, "flipicon", V_BOOL, EXTRADATA_TYPE, flipIcon);
 }

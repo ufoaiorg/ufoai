@@ -41,6 +41,7 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #include "../ui_nodes.h"
 #include "../ui_font.h"
 #include "../ui_parse.h"
+#include "../ui_behaviour.h"
 #include "../ui_tooltip.h"
 #include "../ui_render.h"
 #include "ui_node_string.h"
@@ -110,21 +111,16 @@ static void UI_StringNodeLoading (uiNode_t *node)
 	EXTRADATA(node).longlines = LONGLINES_PRETTYCHOP;
 }
 
-static const value_t properties[] = {
-	/* What to do with text lines longer than node width. Default is to wordwrap them to make multiple lines.
-	 * It can be LONGLINES_WRAP, LONGLINES_CHOP, LONGLINES_PRETTYCHOP
-	 */
-	{"longlines", V_INT, UI_EXTRADATA_OFFSETOF(EXTRADATA_TYPE, longlines), MEMBER_SIZEOF(EXTRADATA_TYPE, longlines)},
-
-	{NULL, V_NULL, 0, 0}
-};
-
 void UI_RegisterStringNode (uiBehaviour_t *behaviour)
 {
 	behaviour->name = "string";
-	behaviour->properties = properties;
 	behaviour->draw = UI_StringNodeDraw;
 	behaviour->drawTooltip = UI_StringNodeDrawTooltip;
 	behaviour->loading = UI_StringNodeLoading;
 	behaviour->extraDataSize = sizeof(EXTRADATA_TYPE);
+
+	/* What to do with text lines longer than node width. Default is to wordwrap them to make multiple lines.
+	 * It can be LONGLINES_WRAP, LONGLINES_CHOP, LONGLINES_PRETTYCHOP
+	 */
+	UI_RegisterExtradataNodeProperty(behaviour, "longlines", V_INT, EXTRADATA_TYPE, longlines);
 }

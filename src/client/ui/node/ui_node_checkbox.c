@@ -33,6 +33,7 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 
 #include "../ui_nodes.h"
 #include "../ui_parse.h"
+#include "../ui_behaviour.h"
 #include "../ui_main.h"
 #include "../ui_actions.h"
 #include "../ui_render.h"
@@ -133,20 +134,6 @@ static void UI_CheckBoxNodeLoading (uiNode_t *node)
 {
 }
 
-static const value_t properties[] = {
-	/* @override image
-	 * Texture used for the widget. Its a 128x128 template image with all
-	 * three status according to the value, and four status according to the
-	 * interaction. From left to right: unchecked, checked, and invalidate.
-	 * From top to bottom: normal, hovered by the mouse, clicked, disabled.
-	 * @image html http://ufoai.ninex.info/wiki/images/Checkbox_template.png
-	 */
-
-	/* Call it to toggle the node status. */
-	{"toggle", V_UI_NODEMETHOD, ((size_t) UI_CheckBoxNodeCallActivate), 0},
-	{NULL, V_NULL, 0, 0}
-};
-
 void UI_RegisterCheckBoxNode (uiBehaviour_t *behaviour)
 {
 	behaviour->name = "checkbox";
@@ -155,5 +142,15 @@ void UI_RegisterCheckBoxNode (uiBehaviour_t *behaviour)
 	behaviour->leftClick = UI_CheckBoxNodeClick;
 	behaviour->loading = UI_CheckBoxNodeLoading;
 	behaviour->activate = UI_CheckBoxNodeActivate;
-	behaviour->properties = properties;
+
+	/* Texture used for the widget. Its a 128x128 template image with all
+	 * three status according to the value, and four status according to the
+	 * interaction. From left to right: unchecked, checked, and invalidate.
+	 * From top to bottom: normal, hovered by the mouse, clicked, disabled.
+	 * @image html http://ufoai.ninex.info/wiki/images/Checkbox_template.png
+	 */
+	UI_RegisterOveridedNodeProperty(behaviour, "image");
+
+	/* Call it to toggle the node status. */
+	UI_RegisterNodeMethod(behaviour, "toggle", UI_CheckBoxNodeCallActivate);
 }

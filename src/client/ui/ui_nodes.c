@@ -42,6 +42,7 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #include "node/ui_node_video.h"
 #include "node/ui_node_container.h"
 #include "node/ui_node_custombutton.h"
+#include "node/ui_node_data.h"
 #include "node/ui_node_editor.h"
 #include "node/ui_node_ekg.h"
 #include "node/ui_node_image.h"
@@ -103,6 +104,7 @@ static const registerFunction_t registerFunctions[] = {
 	UI_RegisterControlsNode,
 	UI_RegisterCustomButtonNode,
 	UI_RegisterCvarFuncNode,
+	UI_RegisterDataNode,
 	UI_RegisterEditorNode,
 	UI_RegisterEKGNode,
 	UI_RegisterFuncNode,
@@ -146,25 +148,6 @@ static const registerFunction_t registerFunctions[] = {
  * @brief List of all node behaviours, indexes by nodetype num.
  */
 static uiBehaviour_t nodeBehaviourList[NUMBER_OF_BEHAVIOURS];
-
-/**
- * @brief Get a property from a behaviour or his inheritance
- * @param[in] behaviour Context behaviour
- * @param[in] name Property name we search
- * @return A value_t with the requested name, else NULL
- */
-const value_t *UI_GetPropertyFromBehaviour (const uiBehaviour_t *behaviour, const char* name)
-{
-	for (; behaviour; behaviour = behaviour->super) {
-		const value_t *result;
-		if (behaviour->properties == NULL)
-			continue;
-		result = UI_FindPropertyByName(behaviour->properties, name);
-		if (result)
-			return result;
-	}
-	return NULL;
-}
 
 /**
  * @brief Check the if conditions for a given node
@@ -338,14 +321,11 @@ static uiNode_t* UI_AllocNodeWithoutNew (const char* name, const char* type, qbo
 	nodeSize = sizeof(*node) + behaviour->extraDataSize;
 
 	if (!isDynamic) {
-		if (ui_global.curadata + nodeSize > ui_global.adata + ui_global.adataize)
+		void *memory = UI_AllocHunkMemory(nodeSize, STRUCT_MEMORY_ALIGN, qtrue);
+		if (memory == NULL)
 			Com_Error(ERR_FATAL, "UI_AllocNodeWithoutNew: No more memory to allocate a new node - increase the cvar ui_hunksize");
-		/** @todo fix this hard coded '8' value */
-		ui_global.curadata = ALIGN_PTR(ui_global.curadata, 8);
-		node = (uiNode_t*) ui_global.curadata;
-		ui_global.curadata += nodeSize;
+		node = (uiNode_t*) memory;
 		ui_global.numNodes++;
-		memset(node, 0, nodeSize);
 	} else {
 		node = (uiNode_t*)Mem_PoolAlloc(nodeSize, ui_dynPool, 0);
 		node->dynamic = qtrue;
@@ -439,17 +419,17 @@ static uiNode_t *UI_GetNodeInTreeAtPosition (uiNode_t *node, int rx, int ry)
 
 	/* disable ghost/excluderect in debug mode 2 */
 	if (UI_DebugMode() != 2) {
-		int i;
+		uiExcludeRect_t *excludeRect;
 		/* is the node tangible */
 		if (node->ghost)
 			return NULL;
 
 		/* check excluded box */
-		for (i = 0; i < node->excludeRectNum; i++) {
-			if (rx >= node->excludeRect[i].pos[0]
-			 && rx < node->excludeRect[i].pos[0] + node->excludeRect[i].size[0]
-			 && ry >= node->excludeRect[i].pos[1]
-			 && ry < node->excludeRect[i].pos[1] + node->excludeRect[i].size[1])
+		for (excludeRect = node->firstExcludeRect; excludeRect != NULL; excludeRect = excludeRect->next) {
+			if (rx >= excludeRect->pos[0]
+			 && rx < excludeRect->pos[0] + excludeRect->size[0]
+			 && ry >= excludeRect->pos[1]
+			 && ry < excludeRect->pos[1] + excludeRect->size[1])
 				return NULL;
 		}
 	}
@@ -574,12 +554,12 @@ void UI_DeleteNode (uiNode_t* node)
 
 	/* delete all allocated properties */
 	for (behaviour = node->behaviour; behaviour; behaviour = behaviour->super) {
-		const value_t *property = behaviour->properties;
+		const value_t **property = behaviour->localProperties;
 		if (property == NULL)
 			continue;
-		while (property->string != NULL) {
-			if ((property->type & V_UI_MASK) == V_UI_CVAR) {
-				void *mem = ((byte *) node + property->ofs);
+		while (*property) {
+			if (((*property)->type & V_UI_MASK) == V_UI_CVAR) {
+				void *mem = ((byte *) node + (*property)->ofs);
 				if (*(void**)mem != NULL) {
 					UI_FreeStringProperty(*(void**)mem);
 					*(void**)mem = NULL;
@@ -649,122 +629,6 @@ uiNode_t* UI_CloneNode (const uiNode_t* node, uiNode_t *newWindow, qboolean recu
 	return newNode;
 }
 
-/** @brief position of virtual function into node behaviour */
-static const int virtualFunctions[] = {
-	offsetof(uiBehaviour_t, draw),
-	offsetof(uiBehaviour_t, drawTooltip),
-	offsetof(uiBehaviour_t, leftClick),
-	offsetof(uiBehaviour_t, rightClick),
-	offsetof(uiBehaviour_t, middleClick),
-	offsetof(uiBehaviour_t, scroll),
-	offsetof(uiBehaviour_t, mouseMove),
-	offsetof(uiBehaviour_t, mouseDown),
-	offsetof(uiBehaviour_t, mouseUp),
-	offsetof(uiBehaviour_t, capturedMouseMove),
-	offsetof(uiBehaviour_t, capturedMouseLost),
-	offsetof(uiBehaviour_t, loading),
-	offsetof(uiBehaviour_t, loaded),
-	offsetof(uiBehaviour_t, windowOpened),
-	offsetof(uiBehaviour_t, windowClosed),
-	offsetof(uiBehaviour_t, clone),
-	offsetof(uiBehaviour_t, newNode),
-	offsetof(uiBehaviour_t, deleteNode),
-	offsetof(uiBehaviour_t, activate),
-	offsetof(uiBehaviour_t, doLayout),
-	offsetof(uiBehaviour_t, dndEnter),
-	offsetof(uiBehaviour_t, dndMove),
-	offsetof(uiBehaviour_t, dndLeave),
-	offsetof(uiBehaviour_t, dndDrop),
-	offsetof(uiBehaviour_t, dndFinished),
-	offsetof(uiBehaviour_t, focusGained),
-	offsetof(uiBehaviour_t, focusLost),
-	offsetof(uiBehaviour_t, extraDataSize),
-	offsetof(uiBehaviour_t, sizeChanged),
-	offsetof(uiBehaviour_t, propertyChanged),
-	offsetof(uiBehaviour_t, getClientPosition),
-	-1
-};
-
-/**
- * Initializes the inheritance (every node extends the abstract node)
- * @param behaviour The behaviour to initialize
- */
-static void UI_InitializeNodeBehaviour (uiBehaviour_t* behaviour)
-{
-	if (behaviour->isInitialized)
-		return;
-
-	/** @todo check (when its possible) properties are ordered by name */
-	/* check and update properties data */
-	if (behaviour->properties) {
-		int num = 0;
-		const value_t* current = behaviour->properties;
-		while (current->string != NULL) {
-			num++;
-			current++;
-		}
-		behaviour->propertyCount = num;
-	}
-
-	/* everything inherits 'abstractnode' */
-	if (behaviour->extends == NULL && !Q_streq(behaviour->name, "abstractnode")) {
-		behaviour->extends = "abstractnode";
-	}
-
-	if (behaviour->extends) {
-		int i = 0;
-		behaviour->super = UI_GetNodeBehaviour(behaviour->extends);
-		UI_InitializeNodeBehaviour(behaviour->super);
-
-		for (;;) {
-			const size_t pos = virtualFunctions[i];
-			uintptr_t superFunc;
-			uintptr_t func;
-			if (pos == -1)
-				break;
-
-			/* cache super function if we don't overwrite it */
-			superFunc = *(uintptr_t*)((byte*)behaviour->super + pos);
-			func = *(uintptr_t*)((byte*)behaviour + pos);
-			if (func == 0 && superFunc != 0)
-				*(uintptr_t*)((byte*)behaviour + pos) = superFunc;
-
-			i++;
-		}
-	}
-
-	/* property must not overwrite another property */
-	if (behaviour->super && behaviour->properties) {
-		const value_t* property = behaviour->properties;
-		while (property->string != NULL) {
-			const value_t *p = UI_GetPropertyFromBehaviour(behaviour->super, property->string);
-#if 0	/**< @todo not possible at the moment, not sure its the right way */
-			const uiBehaviour_t *b = UI_GetNodeBehaviour(current->string);
-#endif
-			if (p != NULL)
-				Com_Error(ERR_FATAL, "UI_InitializeNodeBehaviour: property '%s' from node behaviour '%s' overwrite another property", property->string, behaviour->name);
-#if 0	/**< @todo not possible at the moment, not sure its the right way */
-			if (b != NULL)
-				Com_Error(ERR_FATAL, "UI_InitializeNodeBehaviour: property '%s' from node behaviour '%s' use the name of an existing node behaviour", property->string, behaviour->name);
-#endif
-			property++;
-		}
-	}
-
-	/* Sanity: A property must not be outside the node memory */
-	if (behaviour->properties) {
-		const int size = sizeof(uiNode_t) + behaviour->extraDataSize;
-		const value_t* property = behaviour->properties;
-		while (property->string != NULL) {
-			if (property->type != V_UI_NODEMETHOD && property->ofs + property->size > size)
-				Com_Error(ERR_FATAL, "UI_InitializeNodeBehaviour: property '%s' from node behaviour '%s' is outside the node memory. The C code need a fix.", property->string, behaviour->name);
-			property++;
-		}
-	}
-
-	behaviour->isInitialized = qtrue;
-}
-
 void UI_InitNodes (void)
 {
 	int i = 0;
@@ -772,7 +636,10 @@ void UI_InitNodes (void)
 
 	/* compute list of node behaviours */
 	for (i = 0; i < NUMBER_OF_BEHAVIOURS; i++) {
+		memset(current, 0, sizeof(*current));
+		current->registration = qtrue;
 		registerFunctions[i](current);
+		current->registration = qfalse;
 		current++;
 	}
 

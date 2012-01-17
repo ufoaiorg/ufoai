@@ -34,14 +34,15 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 void CL_EntPerish (const eventRegister_t *self, struct dbuffer *msg)
 {
 	int		entnum;
+	int		type;
 	le_t	*le, *actor;
 
-	NET_ReadFormat(msg, self->formatString, &entnum);
+	NET_ReadFormat(msg, self->formatString, &entnum, &type);
 
 	le = LE_Get(entnum);
 
 	if (!le)
-		LE_NotFoundError(entnum);
+		LE_NotFoundWithTypeError(entnum, type);
 
 	switch (le->type) {
 	case ET_ITEM:

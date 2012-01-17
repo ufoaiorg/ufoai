@@ -321,6 +321,12 @@ void R_UploadTexture (unsigned *data, int width, int height, image_t* image)
 		/* TODO: check if GL_NEAREST will give any speed advantage on Android */
 		glTexParameterf(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR);
 		glTexParameterf(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
+		if (clamp) {
+			glTexParameterf(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_CLAMP_TO_EDGE);
+			R_CheckError();
+			glTexParameterf(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_CLAMP_TO_EDGE);
+			R_CheckError();
+		}
 		R_TextureConvertNativePixelFormat(data, scaledWidth, scaledHeight, 1);
 		glTexImage2D(GL_TEXTURE_2D, 0, samples, scaledWidth, scaledHeight, 0, GL_RGBA, GL_NATIVE_TEXTURE_PIXELFORMAT_ALPHA, data);
 		return;
@@ -371,32 +377,6 @@ void R_UploadTexture (unsigned *data, int width, int height, image_t* image)
 
 	if (scaled != data)
 		Mem_Free(scaled);
-}
-
-void R_TextureDisableWrapping (const image_t *image)
-{
-	if (!R_ImageIsClamp(image))
-		return;
-
-	glBindTexture(GL_TEXTURE_2D, image->texnum);
-	R_CheckError();
-	glTexParameterf(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_CLAMP_TO_EDGE);
-	R_CheckError();
-	glTexParameterf(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_CLAMP_TO_EDGE);
-	R_CheckError();
-}
-
-void R_TextureEnableWrapping (const image_t *image)
-{
-	if (!R_ImageIsClamp(image))
-		return;
-
-	glBindTexture(GL_TEXTURE_2D, image->texnum);
-	R_CheckError();
-	glTexParameterf(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_REPEAT);
-	R_CheckError();
-	glTexParameterf(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_REPEAT);
-	R_CheckError();
 }
 
 /**
@@ -610,8 +590,11 @@ image_t *R_FindImage (const char *pname, imagetype_t type)
 	Com_StripExtension(pname, lname, sizeof(lname));
 
 	image = R_GetImage(lname);
-	if (image)
+	if (image) {
+		if (image->type != type)
+			Com_Printf("Warning: inconsistent usage of image %s (%i != %i)\n", image->name, image->type, type);
 		return image;
+	}
 
 	if ((surf = Img_LoadImage(lname))) {
 		image = R_LoadImageData(lname, (byte *)surf->pixels, surf->w, surf->h, type);

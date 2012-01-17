@@ -317,7 +317,7 @@ static void BDEF_AddItem_f (void)
 	int slotIDX;
 
 	if ((!base && !installation) || (base && installation)) {
-		Com_Printf("Exiting early base and install both true or both false\n");
+		Com_Printf("Exiting early base and installation both true or both false\n");
 		return;
 	}
 
@@ -332,6 +332,18 @@ static void BDEF_AddItem_f (void)
 	if (bdefType == MAX_ACITEMS) {
 		Com_Printf("BDEF_AddItem_f: Invalid defence type.\n");
 		return;
+	}
+
+	if (slotIDX < 0) {
+		return;
+	} else {
+		int maxWeapon;
+		if (base)
+			maxWeapon = (bdefType == AC_ITEM_BASE_MISSILE) ? base->numActiveBatteries : base->numActiveLasers;
+		else
+			maxWeapon = installation->numBatteries;
+		if (slotIDX >= maxWeapon)
+			return;
 	}
 
 	slot = (installation) ? BDEF_GetInstallationSlotByIDX(installation, bdefType, slotIDX) : BDEF_GetBaseSlotByIDX(base, bdefType,slotIDX);
@@ -412,6 +424,18 @@ static void BDEF_RemoveItem_f (void)
 	if (bdefType == MAX_ACITEMS) {
 		Com_Printf("BDEF_AddItem_f: Invalid defence type.\n");
 		return;
+	}
+
+	if (slotIDX < 0) {
+		return;
+	} else {
+		int maxWeapon;
+		if (base)
+			maxWeapon = (bdefType == AC_ITEM_BASE_MISSILE) ? base->numActiveBatteries : base->numActiveLasers;
+		else
+			maxWeapon = installation->numBatteries;
+		if (slotIDX >= maxWeapon)
+			return;
 	}
 
 	slot = (installation) ? BDEF_GetInstallationSlotByIDX(installation, bdefType, slotIDX) : BDEF_GetBaseSlotByIDX(base, bdefType,slotIDX);

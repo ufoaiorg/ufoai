@@ -25,6 +25,6 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #ifndef CLIENT_UI_UI_NODE_TODO_H
 #define CLIENT_UI_UI_NODE_TODO_H
 
-void UI_RegisterTodoNode(uiBehaviour_t *behaviour);
+void UI_RegisterTodoNode(struct uiBehaviour_s *behaviour);
 
 #endif

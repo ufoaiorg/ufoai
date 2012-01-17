@@ -24,6 +24,7 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 
 #include "../ui_main.h"
 #include "../ui_parse.h"
+#include "../ui_behaviour.h"
 #include "ui_node_abstractnode.h"
 #include "ui_node_option.h"
 
@@ -127,40 +128,32 @@ uiNode_t *UI_AllocOptionNode (const char* name, const char* label, const char* v
 	return option;
 }
 
-/** @brief valid properties for options (used by selectbox, tab, optonlist and optiontree) */
-static const value_t properties[] = {
-	/**
-	 * Displayed text
-	 */
-	{"label", V_STRING, UI_EXTRADATA_OFFSETOF(EXTRADATA_TYPE, label), 0},
-
-	/**
-	 * Value of the option
-	 */
-	{"value", V_STRING, UI_EXTRADATA_OFFSETOF(EXTRADATA_TYPE, value), 0},
-
-	/**
-	 * If true, child are not displayed
-	 */
-	{"collapsed", V_BOOL, UI_EXTRADATA_OFFSETOF(EXTRADATA_TYPE, collapsed), MEMBER_SIZEOF(EXTRADATA_TYPE, collapsed)},
-
-	/* Icon used to display the node
-	 */
-	{"icon", V_UI_SPRITEREF, UI_EXTRADATA_OFFSETOF(EXTRADATA_TYPE, icon), MEMBER_SIZEOF(EXTRADATA_TYPE, icon)},
-	{"flipicon", V_BOOL, UI_EXTRADATA_OFFSETOF(EXTRADATA_TYPE, flipIcon), MEMBER_SIZEOF(EXTRADATA_TYPE, flipIcon)},
-
-	{NULL, V_NULL, 0, 0},
-};
-
 void UI_RegisterOptionNode (uiBehaviour_t *behaviour)
 {
 	behaviour->name = "option";
-	behaviour->properties = properties;
 	behaviour->extraDataSize = sizeof(EXTRADATA_TYPE);
 	behaviour->doLayout = UI_OptionDoLayout;
 	behaviour->propertyChanged = UI_OptionPropertyChanged;
 
-	propertyCollapsed = UI_GetPropertyFromBehaviour(behaviour, "collapsed");
+	/**
+	 * Displayed text
+	 */
+	UI_RegisterExtradataNodeProperty(behaviour, "label", V_STRING, EXTRADATA_TYPE, label);
+
+	/**
+	 * Value of the option
+	 */
+	UI_RegisterExtradataNodeProperty(behaviour, "value", V_STRING, EXTRADATA_TYPE, value);
+
+	/**
+	 * If true, child are not displayed
+	 */
+	propertyCollapsed = UI_RegisterExtradataNodeProperty(behaviour, "collapsed", V_BOOL, EXTRADATA_TYPE, collapsed);
+
+	/* Icon used to display the node
+	 */
+	UI_RegisterExtradataNodeProperty(behaviour, "icon", V_UI_SPRITEREF, EXTRADATA_TYPE, icon);
+	UI_RegisterExtradataNodeProperty(behaviour, "flipicon", V_BOOL, EXTRADATA_TYPE, flipIcon);
 
 	ui_optionBehaviour = behaviour;
 }

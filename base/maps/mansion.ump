@@ -1,0 +1,318 @@
+666// *********************************
+// Mediterranean  mansion
+// *********************************
+
+// Tiletypes:
+// ----------
+// +: tile contains something
+// 0: border of map
+// a: main building, the centre of the map, build upon the ruin of an old fortress
+// b: poolhouse, northwest
+// c: coast, the coastline is the border of the map in the west, south and east
+// d: dropship, north, where humans land, also team 1 for multiplayer
+// e: the eastern coast line
+// f:
+// g: main gate, northeast, maybe team 3 can start here in multiplayer
+// h:
+// o: ocean, a simple 1x1 tile to fill the gaps
+// s: the southern coast line
+// t : only used in southern and eastern coast line, it marks a tile containing a tower wich should not be
+// standing next to a corner
+// u: ufo, the landing is obviously a part of an evil plan, also maybe team 2 starts here in multiplayer
+// x:
+// z:
+
+
+base mansion/mansion_
+
+// no dropship, used  for testing
+// 8 x info_human_start
+// 8 x info_player_start for Team 1,  2x info_2x2_start for Team 1
+tile +craft_drop_empty
+{
+5 5
+0      0       0         0       0
+b      +d     +d     +d      g
+b      +d     +d     +d      g
+b      +d     +d     +d      g
+0      b       b        g        0
+}
+
+// tile +craft_drop_firebird
+// {
+// 5 5
+// 0      0       0         0       0
+// b      +d     +d     +d      g
+// b      +d     +d     +d      g
+// b      +d     +d     +d      g
+// 0      b       b        g        0
+// }
+
+// main building, the centre of the map, build upon the ruin of an old fortress
+// contains 4x info_player_start for multiplayer team 3
+tile +main
+{
+10 7
+0      b       b       b       g       g       g       g       g       0
+c      +a     +a     +a     +a     +a     +a     +a     +a     u
+c      +a     +a     +a     +a     +a     +a     +a     +a     u
+c      +a     +a     +a     +a     +a     +a     +a     u       u
+c      +a     +a     +a     +a     +a     +a     +a     u       u
+c      +a     +a     +a     +a     +a     +a     +a     u       u
+0      s       s       s       s        s        s        s       s       u
+}
+
+// poolhouse, northwest
+tile +poolhouse
+{
+8 8
+0      0       0       0       0       0       0      0
+c      +b     +b     +b     +b    d       d      0
+c      +b     +b     +b     +b    d       d      0
+c      +b     +b     +b     +b    d       d      0
+c      +b     +b     +b     +b    +b     +b    0
+c      +b     +b     +b     +b    +b     +b    0
+o      +b     +b     +b     +b    +b     +b    0
+0      o       o       c       a       a        a      0
+}
+
+// this is the main gate
+tile +maingate
+{
+9 8
+0      0       0         0       0      0        0       0       0
+d      d       +g      +g      +g     +g     +g     +g    e
+d      d       +g      +g      +g     +g     +g     +g    e
+d      d       +g      +g      +g     +g     +g     +g    e
+b      +g     +g     +g     +g     +g     +g     +g    e
+b      +g     +g     +g     +g      +g     +g     +g   e
+b      +g     +g     +g     +g     +g     +g     +g    e
+0      a       a        a       a       u         u       u      0
+}
+
+tile +ocean1
+// a simple 1x1 tile of water, empty
+{
+3 3
+0       o      0
+o      +o     o
+0      o       0
+}
+
+tile +ocean2
+// a simple 1x1 tile of water, with a rock
+{
+3 3
+0       o      0
+o      +o     o
+0      o       0
+}
+
+tile +ocean3
+// a simple 1x1 tile of water, with a  barrel
+{
+3 3
+0       o      0
+o      +o     o
+0      o       0
+}
+
+tile +coast1
+// the coast west of the main building
+{
+4 7
+0       b      b       0
+o      +o     +c    a
+o      +o     +c    a
+o      +o     +c    a
+o      +o     +c    a
+o      +o     +c    a
+0      o       c      0
+}
+
+tile +coast2
+// the coast west of the poolhouse
+{
+3 8
+0       0      0
+0      +c     b
+0      +c     b
+0      +c     b
+0      +c     b
+0      +c     b
+0      +o     b
+0      o       0
+}
+
+tile +coast_corner_sw
+// south-west corner of coastline
+{
+5 5
+0       o       c       a        0
+o      +o      +c     +s     s
+o      +o      +s     +s     s
+o      +o      +o     +o    o
+0      0        0       0       0
+}
+
+tile +coast_corner_se
+// south-east corner of coastline
+{
+5 5
+0       e       e        o       0
+s      +s      +s     +o     0
+s      +s      +s     +o     0
+o     +o      +o     +o     0
+0      0        0       0       0
+}
+
+tile +coast_corner_ne
+// north-east corner of coastline
+{
+5 4
+0      0       0      0      0
+g     +e     +e    +o    0
+g     +e     +e    +o    0
+0      e       e      o      0
+}
+
+
+tile +coast_south_b
+// part of the coast, south of the main building, no stair, tower
+{
+4 5
+0      au     au       0
+s      +s     +s    s
+s      +t     +t    s
+o      +o     +o   o
+0      0       0      0
+}
+
+tile +coast_south_d
+// part of the coast, south of the main building, with a stair down to level 1
+{
+4 5
+0      au     au      0
+s      +s     +s    s
+st     +s     +s    st
+o      +o     +o   o
+0      0       0      0
+}
+
+tile +coast_south_u
+// part of the coast, south of the main building, with a stair up to level 3
+{
+4 5
+0      au    au      0
+s      +s     +s    s
+st     +s     +s    st
+o      +o     +o   o
+0      0       0      0
+}
+
+tile +coast_south_s
+// part of the coast, south of the main building, small to fill gaps, no stair
+{
+3 5
+0      au      0
+s      +s     s
+st     +s     st
+o      +o     o
+0      0       0
+}
+
+tile +coast_east_b
+// part of the coast, east of the main building, no stair, tower
+{
+5 4
+0      e       e      o      0
+gu    +e     +t    +o    0
+gu    +e     +t    +o    0
+0      e       e      o      0
+}
+
+tile +coast_east_d
+// part of the coast, east of the main building, with a stair down to level 1
+{
+5 4
+0      e       et      o      0
+gu    +e     +e    +o    0
+gu    +e     +e    +o    0
+0      e       et      o      0
+}
+
+tile +coast_east_s
+// part of the coast, east of the main building, small to fill gaps, no stair
+{
+5 3
+0      e       et      o      0
+gu    +e     +e    +o    0
+0      e       et      o      0
+}
+
+tile +coast_east_u
+// part of the coast, east of the main building, with a stair up to level 3
+{
+5 4
+0      e       et      o      0
+gu    +e     +e    +o    0
+gu    +e     +e    +o    0
+0      e       et      o      0
+}
+
+// no ufo, used  for testing
+// 8 x info_alien_start
+// 8 x info_player_start for Team 2,  2x info_2x2_start for Team 2
+tile +craft_ufo_empty
+{
+6 7
+0      0       0         0       0      0
+0      a       +u      +u     +u    e
+0      a       +u      +u     +u    e
+a      +u     +u     +u      +u    e
+a      +u     +u     +u      +u    e
+a      +u     +u     +u      +u    e
+0      s       s        s        s       0
+}
+
+assembly testall
+{
+size "17 14"
+fix +coast1 "3 4"
+fix +coast2 "1 9"
+fix +coast_south_d "6 1"
+fix +coast_south_d "13 1"
+fix +coast_south_b "8 1"
+fix +coast_south_u "11 1"
+fix +coast_south_s "10 1"
+fix +coast_east_b "15 8"
+fix +coast_east_d "15 4"
+fix +coast_east_d "15 10"
+fix +coast_east_s "15 12"
+fix +coast_east_u "15 6"
+// fix +coast_east_u "15 12"
+fix +coast_corner_sw "3 1"
+fix +coast_corner_se "15 1"
+fix +coast_corner_ne "15 13"
+fix +main "5 4"
+fix +poolhouse "2 9"
+fix +maingate "8 9"
+fix +ocean1 "1 1"
+fix +ocean1 "2 1"
+fix +ocean1 "1 2"
+fix +ocean1 "2 2"
+fix +ocean1 "1 3"
+fix +ocean1 "2 3"
+fix +ocean1 "1 4"
+fix +ocean1 "2 4"
+fix +ocean3 "1 5"
+fix +ocean1 "2 5"
+fix +ocean1 "1 6"
+fix +ocean1 "2 6"
+fix +ocean1 "1 7"
+fix +ocean1 "2 7"
+fix +ocean1 "1 8"
+fix +ocean2 "2 8"
+fix +craft_drop_empty "6 12"
+fix +craft_ufo_empty "11 4"
+}

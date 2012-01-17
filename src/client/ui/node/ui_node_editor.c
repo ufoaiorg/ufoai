@@ -27,6 +27,7 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 
 #include "../ui_main.h"
 #include "../ui_parse.h"
+#include "../ui_behaviour.h"
 #include "../ui_draw.h"
 #include "../ui_input.h"
 #include "../ui_nodes.h"
@@ -348,20 +349,6 @@ static void UI_EditorNodeExtract_f (void)
 	Com_Printf("Window '%s' extracted.\n", Cmd_Argv(1));
 }
 
-static const value_t properties[] = {
-	/* start edition mode */
-	{"start", V_UI_NODEMETHOD, ((size_t) UI_EditorNodeStart), 0},
-	/* stop edition mode */
-	{"stop", V_UI_NODEMETHOD, ((size_t) UI_EditorNodeStop), 0},
-	/* select the next node (according to the current one) */
-	{"selectnext", V_UI_NODEMETHOD, ((size_t) UI_EditorNodeSelectNext), 0},
-	/* select the parent node (according to the current one) */
-	{"selectparent", V_UI_NODEMETHOD, ((size_t) UI_EditorNodeSelectParent), 0},
-	/* select first child node (according to the current one) */
-	{"selectfirstchild", V_UI_NODEMETHOD, ((size_t) UI_EditorNodeSelectFirstChild), 0},
-	{NULL, V_NULL, 0, 0}
-};
-
 void UI_RegisterEditorNode (uiBehaviour_t *behaviour)
 {
 	behaviour->name = "editor";
@@ -372,7 +359,17 @@ void UI_RegisterEditorNode (uiBehaviour_t *behaviour)
 	behaviour->mouseUp = UI_EditorNodeMouseUp;
 	behaviour->capturedMouseMove = UI_EditorNodeCapturedMouseMove;
 	behaviour->capturedMouseLost = UI_EditorNodeCapturedMouseLost;
-	behaviour->properties = properties;
+
+	/* start edition mode */
+	UI_RegisterNodeMethod(behaviour, "start", UI_EditorNodeStart);
+	/* stop edition mode */
+	UI_RegisterNodeMethod(behaviour, "stop", UI_EditorNodeStop);
+	/* select the next node (according to the current one) */
+	UI_RegisterNodeMethod(behaviour, "selectnext", UI_EditorNodeSelectNext);
+	/* select the parent node (according to the current one) */
+	UI_RegisterNodeMethod(behaviour, "selectparent", UI_EditorNodeSelectParent);
+	/* select first child node (according to the current one) */
+	UI_RegisterNodeMethod(behaviour, "selectfirstchild", UI_EditorNodeSelectFirstChild);
 
 	Cmd_AddCommand("ui_extract", UI_EditorNodeExtract_f, "Extract position and size of nodes into a file");
 	Cmd_AddParamCompleteFunction("ui_extract", UI_CompleteWithWindow);

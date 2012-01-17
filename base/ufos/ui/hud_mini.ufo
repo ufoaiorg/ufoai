@@ -26,14 +26,16 @@ window hud_mini extends hud
 		align		LAYOUTALIGN_FILL
 	}
 
-	// ======================
-	// floor (soldier panel)
-	// ======================
+	// ================================
+	// floor deco (soldier panel deco)
+	// ================================
+
 	panel floor_deco {
 		{
 			pos		"256 640"
 			size	"688 128"
 			align	LAYOUTALIGN_BOTTOM
+			ghost	true
 		}
 
 		image bar_teamleft_deco
@@ -41,6 +43,7 @@ window hud_mini extends hud
 			src		"minihud/bar_teamleft_deco"
 			pos			"0 0"
 			size		"32 128"
+			ghost	true
 		}
 
 		image bar_teambox0_deco
@@ -48,6 +51,7 @@ window hud_mini extends hud
 			src		"minihud/bar_teambox_deco"
 			pos			"32 0"
 			size		"64 128"
+			ghost	true
 		}
 
 		image bar_teamsep1_deco
@@ -55,12 +59,14 @@ window hud_mini extends hud
 			src		"minihud/bar_teamsep_deco"
 			pos			"96 0"
 			size		"16 128"
+			ghost	true
 		}
 		image bar_teambox1_deco
 		{
 			src		"minihud/bar_teambox_deco"
 			pos			"112 0"
 			size		"64 128"
+			ghost	true
 		}
 
 		image bar_teamsep2_deco
@@ -68,12 +74,14 @@ window hud_mini extends hud
 			src		"minihud/bar_teamsep_deco"
 			pos			"176 0"
 			size		"16 128"
+			ghost	true
 		}
 		image bar_teambox2_deco
 		{
 			src		"minihud/bar_teambox_deco"
 			pos			"192 0"
 			size		"64 128"
+			ghost	true
 		}
 
 		image bar_teamsep3_deco
@@ -81,12 +89,14 @@ window hud_mini extends hud
 			src		"minihud/bar_teamsep_deco"
 			pos			"256 0"
 			size		"16 128"
+			ghost	true
 		}
 		image bar_teambox3_deco
 		{
 			src		"minihud/bar_teambox_deco"
 			pos			"272 0"
 			size		"64 128"
+			ghost	true
 		}
 
 		image bar_teamsep4_deco
@@ -94,12 +104,14 @@ window hud_mini extends hud
 			src		"minihud/bar_teamsep_deco"
 			pos			"336 0"
 			size		"16 128"
+			ghost	true
 		}
 		image bar_teambox4_deco
 		{
 			src		"minihud/bar_teambox_deco"
 			pos			"352 0"
 			size		"64 128"
+			ghost	true
 		}
 
 		image bar_teamsep5_deco
@@ -107,12 +119,14 @@ window hud_mini extends hud
 			src		"minihud/bar_teamsep_deco"
 			pos			"416 0"
 			size		"16 128"
+			ghost	true
 		}
 		image bar_teambox5_deco
 		{
 			src		"minihud/bar_teambox_deco"
 			pos			"432 0"
 			size		"64 128"
+			ghost	true
 		}
 
 		image bar_teamsep6_deco
@@ -120,12 +134,14 @@ window hud_mini extends hud
 			src		"minihud/bar_teamsep_deco"
 			pos			"496 0"
 			size		"16 128"
+			ghost	true
 		}
 		image bar_teambox6_deco
 		{
 			src		"minihud/bar_teambox_deco"
 			pos			"512 0"
 			size		"64 128"
+			ghost	true
 		}
 
 		image bar_teamsep7_deco
@@ -133,12 +149,14 @@ window hud_mini extends hud
 			src		"minihud/bar_teamsep_deco"
 			pos			"576 0"
 			size		"16 128"
+			ghost	true
 		}
 		image bar_teambox7_deco
 		{
 			src		"minihud/bar_teambox_deco"
 			pos			"592 0"
 			size		"64 128"
+			ghost	true
 		}
 
 		image bar_teamright_deco
@@ -146,6 +164,7 @@ window hud_mini extends hud
 			src		"minihud/bar_teamright_deco"
 			pos			"656 0"
 			size		"32 128"
+			ghost	true
 		}
 
 		func hudenable_floor_deco
@@ -169,18 +188,24 @@ window hud_mini extends hud
 		}
 	}
 
+	// ======================
+	// floor (soldier panel)
+	// ======================
+
 	panel floor {
 		{
 			pos		"256 640"
 			size	"688 128"
 			align	LAYOUTALIGN_BOTTOM
+			ghost	true
 		}
 
 		image bar_teamleft
 		{
 			src		"minihud/bar_teamleft_mini"
-			pos			"0 0"
-			size		"32 128"
+			pos			"11 12"
+			texl		"11 12"
+			size		"21 116"
 			onWheelUp	{ cmd "actor_next;"}
 			onWheelDown	{ cmd "actor_prev;"}
 			tooltip		"_Wheel:Select Next/Previous"
@@ -189,8 +214,9 @@ window hud_mini extends hud
 		image bar_teambox0
 		{
 			src		"minihud/bar_teambox_mini"
-			pos			"32 0"
-			size		"64 128"
+			pos			"32 12"
+			texl		"0 12"
+			size		"64 116"
 			onClick		{ cmd "actor_select 0;" }
 			onRClick	{ cmd "actor_select 0;" }
 			onWheelUp	{ cmd "actor_next;"}
@@ -201,8 +227,9 @@ window hud_mini extends hud
 		image bar_teamsep1
 		{
 			src		"minihud/bar_teamsep_mini"
-			pos			"96 0"
-			size		"16 128"
+			pos			"96 12"
+			texl		"0 12"
+			size		"16 116"
 			onWheelUp	{ cmd "actor_next;"}
 			onWheelDown	{ cmd "actor_prev;"}
 			tooltip		"_Wheel:Select Next/Previous"
@@ -210,8 +237,9 @@ window hud_mini extends hud
 		image bar_teambox1
 		{
 			src		"minihud/bar_teambox_mini"
-			pos			"112 0"
-			size		"64 128"
+			pos			"112 12"
+			texl		"0 12"
+			size		"64 116"
 			onClick		{ cmd "actor_select 1;" }
 			onRClick	{ cmd "actor_select 1;" }
 			onWheelUp	{ cmd "actor_next;"}
@@ -222,8 +250,9 @@ window hud_mini extends hud
 		image bar_teamsep2
 		{
 			src		"minihud/bar_teamsep_mini"
-			pos			"176 0"
-			size		"16 128"
+			pos			"176 12"
+			texl		"0 12"
+			size		"16 116"
 			onWheelUp	{ cmd "actor_next;"}
 			onWheelDown	{ cmd "actor_prev;"}
 			tooltip		"_Wheel:Select Next/Previous"
@@ -231,8 +260,9 @@ window hud_mini extends hud
 		image bar_teambox2
 		{
 			src		"minihud/bar_teambox_mini"
-			pos			"192 0"
-			size		"64 128"
+			pos			"192 12"
+			texl		"0 12"
+			size		"64 116"
 			onClick		{ cmd "actor_select 2;" }
 			onRClick	{ cmd "actor_select 2;" }
 			onWheelUp	{ cmd "actor_next;"}
@@ -243,8 +273,9 @@ window hud_mini extends hud
 		image bar_teamsep3
 		{
 			src		"minihud/bar_teamsep_mini"
-			pos			"256 0"
-			size		"16 128"
+			pos			"256 12"
+			texl		"0 12"
+			size		"16 116"
 			onWheelUp	{ cmd "actor_next;"}
 			onWheelDown	{ cmd "actor_prev;"}
 			tooltip		"_Wheel:Select Next/Previous"
@@ -252,8 +283,9 @@ window hud_mini extends hud
 		image bar_teambox3
 		{
 			src		"minihud/bar_teambox_mini"
-			pos			"272 0"
-			size		"64 128"
+			pos			"272 12"
+			texl		"0 12"
+			size		"64 116"
 			onClick		{ cmd "actor_select 3;" }
 			onRClick	{ cmd "actor_select 3;" }
 			onWheelUp	{ cmd "actor_next;"}
@@ -264,8 +296,9 @@ window hud_mini extends hud
 		image bar_teamsep4
 		{
 			src		"minihud/bar_teamsep_mini"
-			pos			"336 0"
-			size		"16 128"
+			pos			"336 12"
+			texl		"0 12"
+			size		"16 116"
 			onWheelUp	{ cmd "actor_next;"}
 			onWheelDown	{ cmd "actor_prev;"}
 			tooltip		"_Wheel:Select Next/Previous"
@@ -273,8 +306,9 @@ window hud_mini extends hud
 		image bar_teambox4
 		{
 			src		"minihud/bar_teambox_mini"
-			pos			"352 0"
-			size		"64 128"
+			pos			"352 12"
+			texl		"0 12"
+			size		"64 116"
 			onClick		{ cmd "actor_select 4;" }
 			onRClick	{ cmd "actor_select 4;" }
 			onWheelUp	{ cmd "actor_next;"}
@@ -285,8 +319,9 @@ window hud_mini extends hud
 		image bar_teamsep5
 		{
 			src		"minihud/bar_teamsep_mini"
-			pos			"416 0"
-			size		"16 128"
+			pos			"416 12"
+			texl		"0 12"
+			size		"16 116"
 			onWheelUp	{ cmd "actor_next;"}
 			onWheelDown	{ cmd "actor_prev;"}
 			tooltip		"_Wheel:Select Next/Previous"
@@ -294,8 +329,9 @@ window hud_mini extends hud
 		image bar_teambox5
 		{
 			src		"minihud/bar_teambox_mini"
-			pos			"432 0"
-			size		"64 128"
+			pos			"432 12"
+			texl		"0 12"
+			size		"64 116"
 			onClick		{ cmd "actor_select 5;" }
 			onRClick	{ cmd "actor_select 5;" }
 			onWheelUp	{ cmd "actor_next;"}
@@ -306,8 +342,9 @@ window hud_mini extends hud
 		image bar_teamsep6
 		{
 			src		"minihud/bar_teamsep_mini"
-			pos			"496 0"
-			size		"16 128"
+			pos			"496 12"
+			texl		"0 12"
+			size		"16 116"
 			onWheelUp	{ cmd "actor_next;"}
 			onWheelDown	{ cmd "actor_prev;"}
 			tooltip		"_Wheel:Select Next/Previous"
@@ -315,8 +352,9 @@ window hud_mini extends hud
 		image bar_teambox6
 		{
 			src		"minihud/bar_teambox_mini"
-			pos			"512 0"
-			size		"64 128"
+			pos			"512 12"
+			texl		"0 12"
+			size		"64 116"
 			onClick		{ cmd "actor_select 6;" }
 			onRClick	{ cmd "actor_select 6;" }
 			onWheelUp	{ cmd "actor_next;"}
@@ -327,8 +365,9 @@ window hud_mini extends hud
 		image bar_teamsep7
 		{
 			src		"minihud/bar_teamsep_mini"
-			pos			"576 0"
-			size		"16 128"
+			pos			"576 12"
+			texl		"0 12"
+			size		"16 116"
 			onWheelUp	{ cmd "actor_next;"}
 			onWheelDown	{ cmd "actor_prev;"}
 			tooltip		"_Wheel:Select Next/Previous"
@@ -336,8 +375,9 @@ window hud_mini extends hud
 		image bar_teambox7
 		{
 			src		"minihud/bar_teambox_mini"
-			pos			"592 0"
-			size		"64 128"
+			pos			"592 12"
+			texl		"0 12"
+			size		"64 116"
 			onClick		{ cmd "actor_select 7;" }
 			onRClick	{ cmd "actor_select 7;" }
 			onWheelUp	{ cmd "actor_next;"}
@@ -348,13 +388,16 @@ window hud_mini extends hud
 		image bar_teamright
 		{
 			src		"minihud/bar_teamright_mini"
-			pos			"656 0"
-			size		"32 128"
+			pos			"656 12"
+			texl		"0 12"
+			texh		"21 128"
+			size		"21 116"
 			onWheelUp	{ cmd "actor_next;"}
 			onWheelDown	{ cmd "actor_prev;"}
 			tooltip		"_Wheel:Select Next/Previous"
 		}
 
+		// soldier numbers strings
 		string str_soldier0_shadow
 		{
 			pos			"91 26"
@@ -362,6 +405,7 @@ window hud_mini extends hud
 			font		"f_verysmall"
 			color		"0 0 0 1"
 			string		"1"
+			ghost		true
 		}
 		string str_soldier0
 		{
@@ -370,6 +414,7 @@ window hud_mini extends hud
 			font		"f_verysmall"
 			color		"0 0.6 0 1"
 			string		"1"
+			ghost		true
 		}
 		string str_soldier1_shadow
 		{
@@ -378,6 +423,7 @@ window hud_mini extends hud
 			font		"f_verysmall"
 			color		"0 0 0 1"
 			string		"2"
+			ghost		true
 		}
 		string str_soldier1
 		{
@@ -386,6 +432,7 @@ window hud_mini extends hud
 			font		"f_verysmall"
 			color		"0 0.6 0 1"
 			string		"2"
+			ghost		true
 		}
 		string str_soldier2_shadow
 		{
@@ -394,6 +441,7 @@ window hud_mini extends hud
 			font		"f_verysmall"
 			color		"0 0 0 1"
 			string		"3"
+			ghost		true
 		}
 		string str_soldier2
 		{
@@ -402,6 +450,7 @@ window hud_mini extends hud
 			font		"f_verysmall"
 			color		"0 0.6 0 1"
 			string		"3"
+			ghost		true
 		}
 		string str_soldier3_shadow
 		{
@@ -410,6 +459,7 @@ window hud_mini extends hud
 			font		"f_verysmall"
 			color		"0 0 0 1"
 			string		"4"
+			ghost		true
 		}
 		string str_soldier3
 		{
@@ -418,6 +468,7 @@ window hud_mini extends hud
 			font		"f_verysmall"
 			color		"0 0.6 0 1"
 			string		"4"
+			ghost		true
 		}
 		string str_soldier4_shadow
 		{
@@ -426,6 +477,7 @@ window hud_mini extends hud
 			font		"f_verysmall"
 			color		"0 0 0 1"
 			string		"5"
+			ghost		true
 		}
 		string str_soldier4
 		{
@@ -434,6 +486,7 @@ window hud_mini extends hud
 			font		"f_verysmall"
 			color		"0 0.6 0 1"
 			string		"5"
+			ghost		true
 		}
 		string str_soldier5_shadow
 		{
@@ -442,6 +495,7 @@ window hud_mini extends hud
 			font		"f_verysmall"
 			color		"0 0 0 1"
 			string		"6"
+			ghost		true
 		}
 		string str_soldier5
 		{
@@ -450,6 +504,7 @@ window hud_mini extends hud
 			font		"f_verysmall"
 			color		"0 0.6 0 1"
 			string		"6"
+			ghost		true
 		}
 		string str_soldier6_shadow
 		{
@@ -458,6 +513,7 @@ window hud_mini extends hud
 			font		"f_verysmall"
 			color		"0 0 0 1"
 			string		"7"
+			ghost		true
 		}
 		string str_soldier6
 		{
@@ -466,6 +522,7 @@ window hud_mini extends hud
 			font		"f_verysmall"
 			color		"0 0.6 0 1"
 			string		"7"
+			ghost		true
 		}
 		string str_soldier7_shadow
 		{
@@ -474,6 +531,7 @@ window hud_mini extends hud
 			font		"f_verysmall"
 			color		"0 0 0 1"
 			string		"8"
+			ghost		true
 		}
 		string str_soldier7
 		{
@@ -482,6 +540,7 @@ window hud_mini extends hud
 			font		"f_verysmall"
 			color		"0 0.6 0 1"
 			string		"8"
+			ghost		true
 		}
 
 		func hudenable_floor
@@ -494,15 +553,21 @@ window hud_mini extends hud
 				*node:root.floor.str_soldier<cvar:i>_shadow@invis = false
 				*node:root.floor.str_soldier<cvar:i>@invis = false
 				*node:root.floor.head<cvar:i>@invis = false
+				*node:root.floor.health<cvar:i>@invis = false
+				*node:root.floor.morale<cvar:i>@invis = false
+				*node:root.floor.time<cvar:i>@invis = false
 				*cvar:i = ( *cvar:i + 1 )
 			}
 
 			while ( *cvar:tmp < 8 ) {
 				*node:root.floor.bar_teambox<cvar:tmp>@invis = true
 				*node:root.floor.bar_teamsep<cvar:tmp>@invis = true
-				*node:root.floor.str_soldier<cvar:i>_shadow@invis = true
-				*node:root.floor.str_soldier<cvar:i>@invis = true
+				*node:root.floor.str_soldier<cvar:tmp>_shadow@invis = true
+				*node:root.floor.str_soldier<cvar:tmp>@invis = true
 				*node:root.floor.head<cvar:tmp>@invis = true
+				*node:root.floor.health<cvar:tmp>@invis = true
+				*node:root.floor.morale<cvar:tmp>@invis = true
+				*node:root.floor.time<cvar:tmp>@invis = true
 				*cvar:tmp = ( *cvar:tmp + 1 )
 			}
 
@@ -534,7 +599,7 @@ window hud_mini extends hud
 			autoscale	true
 			pos			"40 20"
 			size		"50 78"
-			excluderect	{ pos	"0 0"	size	"50 78" }
+			ghost		true
 		}
 		model head1
 		{
@@ -543,7 +608,7 @@ window hud_mini extends hud
 			autoscale	true
 			pos			"120 20"
 			size		"50 78"
-			excluderect	{ pos	"0 0"	size	"50 78" }
+			ghost		true
 		}
 		model head2
 		{
@@ -552,7 +617,7 @@ window hud_mini extends hud
 			autoscale	true
 			pos			"200 20"
 			size		"50 78"
-			excluderect	{ pos	"0 0"	size	"50 78" }
+			ghost		true
 		}
 		model head3
 		{
@@ -561,7 +626,7 @@ window hud_mini extends hud
 			autoscale	true
 			pos			"280 20"
 			size		"50 78"
-			excluderect	{ pos	"0 0"	size	"50 78" }
+			ghost		true
 		}
 		model head4
 		{
@@ -570,7 +635,7 @@ window hud_mini extends hud
 			autoscale	true
 			pos			"360 20"
 			size		"50 78"
-			excluderect	{ pos	"0 0"	size	"50 78" }
+			ghost		true
 		}
 		model head5
 		{
@@ -579,7 +644,7 @@ window hud_mini extends hud
 			autoscale	true
 			pos			"440 20"
 			size		"50 78"
-			excluderect	{ pos	"0 0"	size	"50 78" }
+			ghost		true
 		}
 		model head6
 		{
@@ -588,7 +653,7 @@ window hud_mini extends hud
 			autoscale	true
 			pos			"520 20"
 			size		"50 78"
-			excluderect	{ pos	"0 0"	size	"50 78" }
+			ghost		true
 		}
 		model head7
 		{
@@ -597,7 +662,7 @@ window hud_mini extends hud
 			autoscale	true
 			pos			"600 20"
 			size		"50 78"
-			excluderect	{ pos	"0 0"	size	"50 78" }
+			ghost		true
 		}
 
 		// ==================
@@ -608,7 +673,7 @@ window hud_mini extends hud
 		{
 			pos			"32 90"
 			size		"66 6"
-			color		".7 0 0 0.7"
+			color		".8 0 0 0.7"
 			current		*cvar:mn_hp0
 			max			*cvar:mn_hpmax0
 			disabled	true
@@ -618,7 +683,7 @@ window hud_mini extends hud
 		{
 			pos			"32 97"
 			size		"66 6"
-			color		".7 .7 0 0.7"
+			color		".8 .8 0 0.7"
 			current		*cvar:mn_morale0
 			max			*cvar:mn_moralemax0
 			disabled	true
@@ -639,7 +704,7 @@ window hud_mini extends hud
 		{
 			pos			"112 90"
 			size		"66 6"
-			color		".7 0 0 0.7"
+			color		".8 0 0 0.7"
 			current		*cvar:mn_hp1
 			max			*cvar:mn_hpmax1
 			disabled	true
@@ -649,7 +714,7 @@ window hud_mini extends hud
 		{
 			pos			"112 97"
 			size		"66 6"
-			color		".7 .7 0 0.7"
+			color		".8 .8 0 0.7"
 			current		*cvar:mn_morale1
 			max			*cvar:mn_moralemax1
 			disabled	true
@@ -670,7 +735,7 @@ window hud_mini extends hud
 		{
 			pos			"192 90"
 			size		"66 6"
-			color		".7 0 0 0.7"
+			color		".8 0 0 0.7"
 			current		*cvar:mn_hp2
 			max			*cvar:mn_hpmax2
 			disabled	true
@@ -680,7 +745,7 @@ window hud_mini extends hud
 		{
 			pos			"192 97"
 			size		"66 6"
-			color		".7 .7 0 0.7"
+			color		".8 .8 0 0.7"
 			current		*cvar:mn_morale2
 			max			*cvar:mn_moralemax2
 			disabled	true
@@ -701,7 +766,7 @@ window hud_mini extends hud
 		{
 			pos			"272 90"
 			size		"66 6"
-			color		".7 0 0 0.7"
+			color		".8 0 0 0.7"
 			current		*cvar:mn_hp3
 			max			*cvar:mn_hpmax3
 			disabled	true
@@ -711,7 +776,7 @@ window hud_mini extends hud
 		{
 			pos			"272 97"
 			size		"66 6"
-			color		".7 .7 0 0.7"
+			color		".8 .8 0 0.7"
 			current		*cvar:mn_morale3
 			max			*cvar:mn_moralemax3
 			disabled	true
@@ -732,7 +797,7 @@ window hud_mini extends hud
 		{
 			pos			"352 90"
 			size		"66 6"
-			color		".7 0 0 0.7"
+			color		".8 0 0 0.7"
 			current		*cvar:mn_hp4
 			max			*cvar:mn_hpmax4
 			disabled	true
@@ -742,7 +807,7 @@ window hud_mini extends hud
 		{
 			pos			"352 97"
 			size		"66 6"
-			color		".7 .7 0 0.7"
+			color		".8 .8 0 0.7"
 			current		*cvar:mn_morale4
 			max			*cvar:mn_moralemax4
 			disabled	true
@@ -763,7 +828,7 @@ window hud_mini extends hud
 		{
 			pos			"432 90"
 			size		"66 6"
-			color		".7 0 0 0.7"
+			color		".8 0 0 0.7"
 			current		*cvar:mn_hp5
 			max			*cvar:mn_hpmax5
 			disabled	true
@@ -773,7 +838,7 @@ window hud_mini extends hud
 		{
 			pos			"432 97"
 			size		"66 6"
-			color		".7 .7 0 0.7"
+			color		".8 .8 0 0.7"
 			current		*cvar:mn_morale5
 			max			*cvar:mn_moralemax5
 			disabled	true
@@ -794,7 +859,7 @@ window hud_mini extends hud
 		{
 			pos			"512 90"
 			size		"66 6"
-			color		".7 0 0 0.7"
+			color		".8 0 0 0.7"
 			current		*cvar:mn_hp6
 			max			*cvar:mn_hpmax6
 			disabled	true
@@ -804,7 +869,7 @@ window hud_mini extends hud
 		{
 			pos			"512 97"
 			size		"66 6"
-			color		".7 .7 0 0.7"
+			color		".8 .8 0 0.7"
 			current		*cvar:mn_morale6
 			max			*cvar:mn_moralemax6
 			disabled	true
@@ -825,7 +890,7 @@ window hud_mini extends hud
 		{
 			pos			"592 90"
 			size		"66 6"
-			color		".7 0 0 0.7"
+			color		".8 0 0 0.7"
 			current		*cvar:mn_hp7
 			max			*cvar:mn_hpmax7
 			disabled	true
@@ -835,7 +900,7 @@ window hud_mini extends hud
 		{
 			pos			"592 97"
 			size		"66 6"
-			color		".7 .7 0 0.7"
+			color		".8 .8 0 0.7"
 			current		*cvar:mn_morale7
 			max			*cvar:mn_moralemax7
 			disabled	true
@@ -869,8 +934,8 @@ window hud_mini extends hud
 		{
 			src		"minihud/bar_right_deco"
 			pos			"0 0"
-			excluderect	{ pos	"0 0"	size	"96 512" }
-			excluderect	{ pos	"0 473"	size	"192 39" }
+			size		"256 512"
+			ghost		true
 		}
 	}
 
@@ -885,9 +950,9 @@ window hud_mini extends hud
 		image bar_right_mini
 		{
 			src		"minihud/bar_right_mini"
-			pos			"0 0"
-			excluderect	{ pos	"0 0"	size	"96 512" }
-			excluderect	{ pos	"0 473"	size	"192 39" }
+			pos			"96 200"
+			texl		"96 200"
+			size		"160 312"
 		}
 		image bt_primaryright
 		{
@@ -1070,7 +1135,7 @@ window hud_mini extends hud
 		string str_hp
 		{
 			font		"f_small"
-			color		".7 0 0 1"
+			color		".8 0 0 1"
 			string		*cvar:mn_hp
 			pos			"112 299"
 			size		"40 20"
@@ -1090,7 +1155,7 @@ window hud_mini extends hud
 		string str_morale
 		{
 			font		"f_small"
-			color		".7 .7 0 1"
+			color		".8 .8 0 1"
 			string		*cvar:mn_morale
 			pos			"141 299"
 			size		"40 20"
@@ -1206,7 +1271,7 @@ window hud_mini extends hud
 		}
 		image minihud_bt_help
 		{
-			tooltip		"_LMB:Show/RMB:Hide Keyinfo/General Help"
+			tooltip		"_LMB:Show/RMB:Hide Keyinfo/General Help\nKey:F4"
 			src			"minihud/bt_help"
 			mousefx		true
 			pos			"162 472"
@@ -1223,31 +1288,9 @@ window hud_mini extends hud
 
 		// show/hide panel buttons
 
-		image minihud_bt_soldiers_off
+		image minihud_bt_soldiers
 		{
-			tooltip		"_LMB:Show Soldier Panel"
-			src			"icons/off"
-			mousefx		true
-			pos			"102 490"
-			size		"16 16"
-			onClick
-			{
-				*node:root.floor@invis = false
-				if ( *node:root.right.minihud_bt_decoration_on@invis == false ) { *node:root.floor_deco@invis = false }
-				*node:root.right.minihud_bt_soldiers_on@invis = false
-			}
-
-			onRClick
-			{
-				*node:root.floor_deco@invis = true
-				*node:root.floor@invis = true
-				*node:root.right.minihud_bt_soldiers_on@invis = true
-			}
-
-		}
-		image minihud_bt_soldiers_on
-		{
-			tooltip		"_RMB:Hide Soldier Panel"
+			tooltip		"_LMB:Show/RMB:Hide Soldier Panel"
 			src			"icons/on"
 			mousefx		true
 			pos			"102 490"
@@ -1255,40 +1298,21 @@ window hud_mini extends hud
 			onClick
 			{
 				*node:root.floor@invis = false
-				if ( *node:root.right.minihud_bt_decoration_on@invis == false ) { *node:root.floor_deco@invis = false }
-				*node:root.right.minihud_bt_soldiers_on@invis = false
+				if ( *cvar:mn_minihud_deco == 1 ) { *node:root.floor_deco@invis = false }
+				if ( *cvar:mn_minihud_deco == 0 ) { *node:root.floor_deco@invis = true }
+				*node:this@image = "icons/on"
 			}
 			onRClick
 			{
 				*node:root.floor_deco@invis = true
 				*node:root.floor@invis = true
-				*node:root.right.minihud_bt_soldiers_on@invis = true
+				*node:this@image = "icons/off"
 			}
 		}
 
-		image minihud_bt_top_off
+		image minihud_bt_top
 		{
-			tooltip		"_LMB:Show Top Panel"
-			src			"icons/off"
-			mousefx		true
-			pos			"122 490"
-			size		"16 16"
-			onClick
-			{
-				*node:root.upperright@invis = false
-				if ( *node:root.right.minihud_bt_decoration_on@invis == false ) { *node:root.upperright_deco@invis = false }
-				*node:root.right.minihud_bt_top_on@invis = false
-			}
-			onRClick
-			{
-				*node:root.upperright_deco@invis = true
-				*node:root.upperright@invis = true
-				*node:root.right.minihud_bt_top_on@invis = true
-			}
-		}
-		image minihud_bt_top_on
-		{
-			tooltip		"_RMB:Hide Top Panel"
+			tooltip		"_LMB:Show/RMB:Hide Top Panel"
 			src			"icons/on"
 			mousefx		true
 			pos			"122 490"
@@ -1296,42 +1320,21 @@ window hud_mini extends hud
 			onClick
 			{
 				*node:root.upperright@invis = false
-				if ( *node:root.right.minihud_bt_decoration_on@invis == false ) { *node:root.upperright_deco@invis = false }
-				*node:root.right.minihud_bt_top_on@invis = false
+				if ( *cvar:mn_minihud_deco == 1 ) { *node:root.upperright_deco@invis = false }
+				if ( *cvar:mn_minihud_deco == 0 ) { *node:root.upperright_deco@invis = true }
+				*node:this@image = "icons/on"
 			}
 			onRClick
 			{
 				*node:root.upperright_deco@invis = true
 				*node:root.upperright@invis = true
-				*node:root.right.minihud_bt_top_on@invis = true
+				*node:this@image = "icons/off"
 			}
 		}
 
-		image minihud_bt_decoration_off
+		image minihud_bt_decoration
 		{
-			tooltip		"_LMB:Show Decoration"
-			src			"icons/off"
-			mousefx		true
-			pos			"202 490"
-			size		"16 16"
-			onClick
-			{
-				*node:root.right_deco@invis = false
-				if ( *node:root.floor@invis == false ) { *node:root.floor_deco@invis = false }
-				if ( *node:root.upperright@invis == false ) { *node:root.upperright_deco@invis = false }
-				*node:root.right.minihud_bt_decoration_on@invis = false
-			}
-			onRClick
-			{
-				*node:root.right_deco@invis = true
-				*node:root.floor_deco@invis = true
-				*node:root.upperright_deco@invis = true
-				*node:root.right.minihud_bt_decoration_on@invis = true
-			}
-		}
-		image minihud_bt_decoration_on
-		{
-			tooltip		"_RMB:Hide Decoration"
+			tooltip		"_LMB:Show/RMB:Hide Decoration"
 			src			"icons/on"
 			mousefx		true
 			pos			"202 490"
@@ -1341,14 +1344,16 @@ window hud_mini extends hud
 				*node:root.right_deco@invis = false
 				if ( *node:root.floor@invis == false ) { *node:root.floor_deco@invis = false }
 				if ( *node:root.upperright@invis == false ) { *node:root.upperright_deco@invis = false }
-				*node:root.right.minihud_bt_decoration_on@invis = false
+				*node:this@image = "icons/on"
+				*cvar:mn_minihud_deco = 1
 			}
 			onRClick
 			{
 				*node:root.right_deco@invis = true
 				*node:root.floor_deco@invis = true
 				*node:root.upperright_deco@invis = true
-				*node:root.right.minihud_bt_decoration_on@invis = true
+				*node:this@image = "icons/off"
+				*cvar:mn_minihud_deco = 0
 			}
 		}
 
@@ -1392,7 +1397,7 @@ window hud_mini extends hud
 
 		image minihud_bt_use_headgear
 		{
-			tooltip		"_Use headgear"
+			tooltip		"_Use Headgear"
 			src		"althud/buttons_althud1g"
 			mousefx		true
 			pos			"192 433"
@@ -1438,13 +1443,15 @@ window hud_mini extends hud
 
 		// easy hand switch
 
-		panel easy_hand_switch
+		button easy_hand_switch
 		{
 			pos			"114 340"
 			size		"125 80"
 			onRClick	{ call *node:root.right.show_rightweapon cmd "hud_switchfiremodelist firemode_listener r;" }
 			onClick		{ call *node:root.right.show_leftweapon cmd "hud_switchfiremodelist firemode_listener l;" }
-			tooltip		"_LMB:Left Hand/RMB:Right Hand"
+			onWheelUp	{ call *node:root.right.show_rightweapon cmd "hud_switchfiremodelist firemode_listener r;" }
+			onWheelDown	{ call *node:root.right.show_leftweapon cmd "hud_switchfiremodelist firemode_listener l;" }
+			tooltip		"_LMB/Wheel Down:Left Hand\nRMB/Wheel Up:Right Hand"
 		}
 
 		// weapon container
@@ -1453,11 +1460,13 @@ window hud_mini extends hud
 		{
 			pos			"114 340"
 			onRClick	{ cmd "hud_reloadright;" }
+			onWheelDown	{ call *node:root.right.show_leftweapon cmd "hud_switchfiremodelist firemode_listener l;" }
 		}
 		container left
 		{
 			pos			"114 340"
 			onRClick	{ cmd "hud_reloadleft;" }
+			onWheelUp	{ call *node:root.right.show_rightweapon cmd "hud_switchfiremodelist firemode_listener r;" }
 		}
 
 		// ammo
@@ -1476,8 +1485,9 @@ window hud_mini extends hud
 			font		"f_small"
 			pos			"117 401"
 			size		"40 20"
-			tooltip		"LMB:Reload"
+			tooltip		"_LMB:Reload\nWheel Down:Left Hand"
 			onClick		{ cmd "hud_reloadright;" }
+			onWheelDown	{ call *node:root.right.show_leftweapon cmd "hud_switchfiremodelist firemode_listener l;" }
 		}
 		string ammoleft_shadow
 		{
@@ -1493,8 +1503,9 @@ window hud_mini extends hud
 			font		"f_small"
 			pos			"117 401"
 			size		"40 20"
-			tooltip		"LMB:Reload"
+			tooltip		"_LMB:Reload\nWheel Up:Right Hand"
 			onClick		{ cmd "hud_reloadleft;" }
+			onWheelUp	{ call *node:root.right.show_rightweapon cmd "hud_switchfiremodelist firemode_listener r;" }
 		}
 
 		func show_rightweapon
@@ -1562,26 +1573,6 @@ window hud_mini extends hud
 	{
 		visiblewhen	"*cvar:sv_maxclients >= 2"
 		src			"althud/bar_chat"
-		pos			"977 552"
-		size		"64 64"
-	}
-
-	image button_chat
-	{
-		visiblewhen	"*cvar:sv_maxclients >= 2"
-		tooltip		"_Chat messages"
-		src			"hud/event_log"
-		pos			"985 560"
-		texl		"0 0"
-		texh		"32 36"
-		onClick {
-			cmd "ui_push hud_chat;"
-		}
-	}
-
-	image bar_chat_bg
-	{
-		src			"althud/bar_chat"
 		pos			"0 552"
 		size		"64 64"
 	}
@@ -1589,7 +1580,7 @@ window hud_mini extends hud
 	image button_chat
 	{
 		visiblewhen	"*cvar:sv_maxclients >= 2"
-		tooltip		"_Chat messages"
+		tooltip		"_Chat Messages"
 		src			"hud/event_log"
 		pos			"8 560"
 		texl		"0 0"
@@ -1599,18 +1590,22 @@ window hud_mini extends hud
 		}
 	}
 
-// Uperright panel (music control (stop music, play next random track), message log, options)
+	// ===========================================================================================
+	// Uperright panel (music control (stop music, play next random track), message log, options)
+	// ===========================================================================================
 
 	panel upperright_deco {
 		{
 			pos		"768 0"
 			size	"256 64"
 			align	LAYOUTALIGN_TOPRIGHT
+			ghost	true
 		}
 		image bar_top_deco
 		{
 			src		"minihud/bar_top_deco"
-			pos			"0 0"
+			pos		"0 0"
+			ghost	true
 		}
 	}
 
@@ -1619,11 +1614,14 @@ window hud_mini extends hud
 			pos		"768 0"
 			size	"256 64"
 			align	LAYOUTALIGN_TOPRIGHT
+			ghost	true
 		}
 		image bar_top_mini
 		{
 			src		"minihud/bar_top_mini"
-			pos			"0 0"
+			pos		"96 0"
+			texl	"96 0"
+			size	"160 55"
 		}
 
 		image messagelog
@@ -1771,8 +1769,7 @@ window hud_mini extends hud
 		call *node:root.floor_deco.hudenable_floor_deco ( <1> )
 	}
 
-	confunc updatelevel
-	{
+	cvarlistener cl_worldlevel {
 	*cvar:mn_icon_level = ("minihud/level<cvar:cl_worldlevel>")
 	}
 
@@ -1785,12 +1782,14 @@ window hud_mini extends hud
 		cmd "music_change battlescape;"
 		call *node:root.right.show_rightweapon
 		*cvar:mn_icon_level = ("minihud/level<cvar:cl_worldlevel>")
-		cmd "ui_addcvarlistener cl_worldlevel updatelevel;"
+		if ( *node:root.right_deco@invis == true ) { *cvar:mn_minihud_deco = 0 }
+		elif ( *node:root.right_deco@invis == false ) { *cvar:mn_minihud_deco = 1 }
 	}
 
 	func onWindowClosed
 	{
 		delete *cvar:mn_icon_level
+		delete *cvar:mn_minihud_deco
 		if ( exists *cvar:mn_chrrank_img ) { delete *cvar:mn_chrrank_img }
 	}
 

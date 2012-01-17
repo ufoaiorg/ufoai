@@ -166,6 +166,7 @@ $(TARGET)_SRCS      = \
 	client/cgame/campaign/missions/cp_mission_xvi.c \
 	\
 	client/ui/ui_actions.c \
+	client/ui/ui_behaviour.c \
 	client/ui/ui_components.c \
 	client/ui/ui_data.c \
 	client/ui/ui_dragndrop.c \
@@ -194,6 +195,7 @@ $(TARGET)_SRCS      = \
 	client/ui/node/ui_node_battlescape.c \
 	client/ui/node/ui_node_button.c \
 	client/ui/node/ui_node_checkbox.c \
+	client/ui/node/ui_node_data.c \
 	client/ui/node/ui_node_video.c \
 	client/ui/node/ui_node_container.c \
 	client/ui/node/ui_node_controls.c \

@@ -13,6 +13,7 @@ class ParticleSystem: public IParticleSystem
 		DataBlocks _blocks;
 
 		ParticleDefinitionMap _particleDefintions;
+		bool _init;
 
 	public:
 		typedef IParticleSystem Type;
@@ -31,14 +32,9 @@ class ParticleSystem: public IParticleSystem
 	private:
 
 	public:
-
-		// this already needs the base dir initialized
-		// make sure UFOScriptSystem is initialized already
-		void init();
-
 		void foreachParticle (const Visitor& visitor) const;
 
-		ParticleDefinitionMap getParticleDefinitions () const ;
+		const ParticleDefinitionMap& getParticleDefinitions ();
 
 		IParticleDefinition* getParticle(const std::string& particleID);
 };

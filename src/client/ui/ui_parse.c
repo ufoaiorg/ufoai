@@ -169,10 +169,8 @@ float* UI_AllocStaticFloat (int count)
 {
 	float *result;
 	assert(count > 0);
-	ui_global.curadata = ALIGN_PTR(ui_global.curadata, sizeof(float));
-	result = (float*) ui_global.curadata;
-	ui_global.curadata += sizeof(float) * count;
-	if (ui_global.curadata - ui_global.adata > ui_global.adataize)
+	result = UI_AllocHunkMemory(sizeof(float) * count, sizeof(float), qfalse);
+	if (result == NULL)
 		Com_Error(ERR_FATAL, "UI_AllocFloat: UI memory hunk exceeded - increase the size");
 	return result;
 }
@@ -187,10 +185,8 @@ vec4_t* UI_AllocStaticColor (int count)
 {
 	vec4_t *result;
 	assert(count > 0);
-	ui_global.curadata = ALIGN_PTR(ui_global.curadata, sizeof(vec_t));
-	result = (vec4_t*) ui_global.curadata;
-	ui_global.curadata += sizeof(vec_t) * 4 * count;
-	if (ui_global.curadata - ui_global.adata > ui_global.adataize)
+	result = UI_AllocHunkMemory(sizeof(vec_t) * 4 * count, sizeof(vec_t), qfalse);
+	if (result == NULL)
 		Com_Error(ERR_FATAL, "UI_AllocColor: UI memory hunk exceeded - increase the size");
 	return result;
 }
@@ -204,18 +200,14 @@ vec4_t* UI_AllocStaticColor (int count)
  */
 char* UI_AllocStaticString (const char* string, int size)
 {
-	char* result = (char *)ui_global.curadata;
-	ui_global.curadata = ALIGN_PTR(ui_global.curadata, sizeof(char));
-	if (size != 0) {
-		if (ui_global.curadata - ui_global.adata + size > ui_global.adataize)
-			Com_Error(ERR_FATAL, "UI_AllocString: UI memory hunk exceeded - increase the size");
-		Q_strncpyz((char *)ui_global.curadata, string, size);
-		ui_global.curadata += size;
-	} else {
-		if (ui_global.curadata - ui_global.adata + strlen(string) + 1 > ui_global.adataize)
-			Com_Error(ERR_FATAL, "UI_AllocString: UI memory hunk exceeded - increase the size");
-		ui_global.curadata += sprintf((char *)ui_global.curadata, "%s", string) + 1;
+	char* result;
+	if (size == 0) {
+		size = strlen(string) + 1;
 	}
+	result = UI_AllocHunkMemory(size, sizeof(char), qfalse);
+	if (result == NULL)
+		Com_Error(ERR_FATAL, "UI_AllocString: UI memory hunk exceeded - increase the size");
+	Q_strncpyz(result, string, size);
 	return result;
 }
 
@@ -592,6 +584,7 @@ static uiAction_t *UI_ParseActionList (uiNode_t *node, const char **text, const 
 static qboolean UI_ParseExcludeRect (uiNode_t * node, const char **text, const char **token, const char *errhead)
 {
 	uiExcludeRect_t rect;
+	uiExcludeRect_t *newRect;
 
 	/* get parameters */
 	*token = Com_EParse(text, errhead, node->name);
@@ -620,22 +613,16 @@ static qboolean UI_ParseExcludeRect (uiNode_t * node, const char **text, const c
 		}
 	} while ((*token)[0] != '}');
 
-	if (ui_global.numExcludeRect >= UI_MAX_EXLUDERECTS) {
-		Com_Printf("UI_ParseExcludeRect: exluderect limit exceeded (max: %i)\n", UI_MAX_EXLUDERECTS);
+	newRect = (uiExcludeRect_t*) UI_AllocHunkMemory(sizeof(*newRect), STRUCT_MEMORY_ALIGN, qfalse);
+	if (newRect == NULL) {
+		Com_Printf("UI_ParseExcludeRect: ui hunk memory exceeded.");
 		return qfalse;
 	}
 
-	/* copy the rect into the global structure */
-	ui_global.excludeRect[ui_global.numExcludeRect] = rect;
-
-	/* link only the first element */
-	if (node->excludeRect == NULL) {
-		node->excludeRect = &ui_global.excludeRect[ui_global.numExcludeRect];
-	}
-
-	ui_global.numExcludeRect++;
-	node->excludeRectNum++;
-
+	/* move data to final memory and link to node */
+	*newRect = rect;
+	newRect->next = node->firstExcludeRect;
+	node->firstExcludeRect = newRect;
 	return qtrue;
 }
 

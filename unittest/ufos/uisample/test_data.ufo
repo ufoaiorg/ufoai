@@ -1,0 +1,90 @@
+/**
+ * @brief Unittest for data node
+ * Move it into the ui ufo script directory (/base/ufos/ui/), run the game, and run the command "ui_push test_data"
+ * Every thing must be green and it must not print any text or warning into the console.
+ */
+
+window test_data
+{
+	{
+		pos "100 100"
+		size "340 400"
+		dragbutton	true
+		closebutton	true
+		string		"_Unittest data node"
+		bgcolor		"0 0 0 1"
+	}
+
+	data mystring { string "foobar" }
+	data mynumber { number "1.2" }
+	data myinteger { integer "2" }
+	data mydata { }
+
+	string commonTitle {
+		pos		"20 40"
+		string	"common"
+	}
+
+	string testCommon1 {
+		pos		"20 60"
+		string	"t1"
+	}
+
+	string testCommon2 {
+		pos		"20 80"
+		string	"t2"
+	}
+
+	string testCommon3 {
+		pos		"20 100"
+		string	"t3"
+	}
+
+	string testCommon4 {
+		pos		"20 120"
+		string	"t4"
+	}
+
+	string testCommon5 {
+		pos		"20 140"
+		string	"t5"
+	}
+
+	string testCommon6 {
+		pos		"20 160"
+		string	"t6"
+	}
+
+	//
+	// Common tests
+	//
+
+	func onWindowOpened {
+
+		// read
+
+		if ( *node:this.mystring@string eq "foobar" ) { *node:root.testCommon1@color = "0 1 0 1" }
+		else { *node:root.testCommon1@color = "1 0 0 1" }
+
+		if ( *node:this.mynumber@number == 1.2 ) { *node:root.testCommon2@color = "0 1 0 1" }
+		else { *node:root.testCommon2@color = "1 0 0 1" }
+
+		if ( *node:this.myinteger@integer == 2 ) { *node:root.testCommon3@color = "0 1 0 1" }
+		else { *node:root.testCommon3@color = "1 0 0 1" }
+
+		// write
+
+		*node:this.mydata@string = "foobar_"
+		if ( *node:this.mydata@string eq "foobar_" ) { *node:root.testCommon4@color = "0 1 0 1" }
+		else { *node:root.testCommon4@color = "1 0 0 1" }
+
+		*node:this.mydata@number = 1.3
+		if ( *node:this.mydata@number == 1.3 ) { *node:root.testCommon5@color = "0 1 0 1" }
+		else { *node:root.testCommon5@color = "1 0 0 1" }
+
+		*node:this.mydata@integer = 3
+		if ( *node:this.mydata@integer == 3 ) { *node:root.testCommon6@color = "0 1 0 1" }
+		else { *node:root.testCommon6@color = "1 0 0 1" }
+	}
+
+}

@@ -281,6 +281,7 @@ static void B_ResetBuildingCurrent_f (void)
  */
 static void B_BaseInit_f (void)
 {
+	int i;
 	base_t *base = B_GetCurrentSelectedBase();
 
 	if (!base)
@@ -335,6 +336,92 @@ static void B_BaseInit_f (void)
 		UI_ExecuteConfunc("update_basebutton hospital false \"%s\"", _("Treat wounded soldiers and perform implant surgery"));
 	else
 		UI_ExecuteConfunc("update_basebutton hospital true \"%s\"", va(_("No %s functional in base."), _("Hospital")));
+
+	/*
+	 * Gather data on current/max space for living quarters, storage, lab and workshop
+	 * clear_bld_space ensures 0/0 data for facilities which may not exist in base
+	 */
+	UI_ExecuteConfunc("clear_bld_space");
+	for (i = 0; i < ccs.numBuildingTemplates; i++) {
+		const building_t* b = &ccs.buildingTemplates[i];
+		baseCapacities_t cap;
+
+		/* Check if building matches one of our four types */
+		if (b->buildingType != B_QUARTERS && b->buildingType != B_STORAGE && b->buildingType != B_WORKSHOP && b->buildingType != B_LAB && b->buildingType != B_ANTIMATTER)
+			continue;
+
+		/* only show already researched buildings */
+		if (!RS_IsResearched_ptr(b->tech))
+			continue;
+
+		cap = B_GetCapacityFromBuildingType(b->buildingType);
+		if (cap == MAX_CAP)
+			continue;
+
+		if (!B_GetNumberOfBuildingsInBaseByBuildingType(base, b->buildingType))
+			continue;
+
+		UI_ExecuteConfunc("show_bld_space \"%s\" \"%s\" %i %i", _(b->name), b->id, CAP_GetCurrent(base, cap), CAP_GetMax(base, cap));
+	}
+
+	/*
+	 * Get the number of different employees in the base
+	 * @TODO: Get the number of injured soldiers if hospital exists
+	 */
+	UI_ExecuteConfunc("current_employees %i %i %i", E_CountHired(base, EMPL_SOLDIER), E_CountHired(base, EMPL_SCIENTIST), E_CountHired(base, EMPL_WORKER));
+
+	/*
+	 * List the first five aircraft in the base if they exist
+	 */
+	UI_ExecuteConfunc("clear_aircraft");
+	if (AIR_AircraftAllowed(base)) {
+		if (AIR_BaseHasAircraft(base)) {
+			i = 0;
+			AIR_ForeachFromBase(aircraft, base) {
+				if (i > 5)
+					break;
+				/*
+				 * UI node should use global IDX to identify aircraft but it uses order of aircraft in base (i)
+				 * See @todo in cp_aircraft_callbacks.c in AIR_AircraftSelect()
+				 */
+				UI_ExecuteConfunc("show_aircraft %i \"%s\" \"%s\" \"%s\" %i", i, aircraft->name, aircraft->id, AIR_AircraftStatusToName(aircraft), AIR_IsAircraftInBase(aircraft));
+				i++;
+			}
+		}
+	}
+
+	/* Get the research item closest to completion in the base if it exists */
+	UI_ExecuteConfunc("clear_research");
+	if (RS_ResearchAllowed(base)) {
+		const technology_t *closestTech = NULL;
+		double finished = -1;
+		for (i = 0; i < ccs.numTechnologies; i++) {
+			const technology_t *tech = RS_GetTechByIDX(i);
+			if (!tech)
+				continue;
+			if (tech->base != base)
+				continue;
+			if (tech->statusResearch == RS_RUNNING) {
+				const double percent = (1 - tech->time / tech->overallTime) * 100;
+				if (percent > finished) {
+					finished = percent;
+					closestTech = tech;
+				}
+			}
+		}
+		if (closestTech != NULL)
+			UI_ExecuteConfunc("show_research \"%s\" %i %3.0f", closestTech->name, closestTech->scientists, finished);
+	}
+
+	/* Get the production item closest to completion in the base if it exists */
+	UI_ExecuteConfunc("clear_production");
+	if (PR_ProductionAllowed(base)) {
+		const production_queue_t *queue = PR_GetProductionForBase(base);
+		if (queue->numItems > 0) {
+			const production_t *production = &queue->items[0];
+			UI_ExecuteConfunc("show_production \"%s\" %3.0f", PR_GetName(&production->data), PR_GetProgress(production) * 100);
+		}
+	}
 }
 
 /**

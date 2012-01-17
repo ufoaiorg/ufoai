@@ -509,4 +509,10 @@ window market extends objectinfo
 	{
 		cmd "buy_type *cvar:mn_itemtype;"
 	}
+
+	func onWindowClosed
+	{
+		// Call base_init so that storage data can be updated
+		cmd "base_init;"
+	}
 }

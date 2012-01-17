@@ -25,6 +25,7 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 
 #include "../ui_main.h"
 #include "../ui_parse.h"
+#include "../ui_behaviour.h"
 #include "../ui_font.h"
 #include "../ui_render.h"
 #include "../ui_actions.h"
@@ -163,36 +164,31 @@ qboolean UI_AbstractScrollableNodeScrollY (uiNode_t *node, int offset)
 	return UI_AbstractScrollableNodeSetY(node, EXTRADATA(node).scrollY.viewPos + offset, -1, -1);
 }
 
-static const value_t properties[] = {
-	/* position of the vertical view (into the full number of elements the node contain) */
-	{"viewpos", V_INT, UI_EXTRADATA_OFFSETOF(EXTRADATA_TYPE, scrollY.viewPos),  MEMBER_SIZEOF(EXTRADATA_TYPE, scrollY.viewPos)},
-	/* size of the vertical view (proportional to the number of elements the node can display without moving) */
-	{"viewsize", V_INT, UI_EXTRADATA_OFFSETOF(EXTRADATA_TYPE, scrollY.viewSize),  MEMBER_SIZEOF(EXTRADATA_TYPE, scrollY.viewSize)},
-	/* full vertical size (proportional to the number of elements the node contain) */
-	{"fullsize", V_INT, UI_EXTRADATA_OFFSETOF(EXTRADATA_TYPE, scrollY.fullSize),  MEMBER_SIZEOF(EXTRADATA_TYPE, scrollY.fullSize)},
-	/* Called when one of the properties viewpos/viewsize/fullsize change */
-	{"onviewchange", V_UI_ACTION, UI_EXTRADATA_OFFSETOF(EXTRADATA_TYPE, onViewChange), MEMBER_SIZEOF(EXTRADATA_TYPE, onViewChange)},
-
-	/* Call it to vertically scroll the document up */
-	{"pageup", V_UI_NODEMETHOD, ((size_t) UI_AbstractScrollableNodePageUp), 0},
-	/* Call it to vertically scroll the document down */
-	{"pagedown", V_UI_NODEMETHOD, ((size_t) UI_AbstractScrollableNodePageDown), 0},
-	/* Call it to vertically scroll the document up */
-	{"moveup", V_UI_NODEMETHOD, ((size_t) UI_AbstractScrollableNodeMoveUp), 0},
-	/* Call it to vertically scroll the document down */
-	{"movedown", V_UI_NODEMETHOD, ((size_t) UI_AbstractScrollableNodeMoveDown), 0},
-	/* Call it to vertically reset the scroll position to 0 */
-	{"movehome", V_UI_NODEMETHOD, ((size_t) UI_AbstractScrollableNodeMoveHome), 0},
-	/* Call it to vertically move the scroll to the end of the document */
-	{"moveend", V_UI_NODEMETHOD, ((size_t) UI_AbstractScrollableNodeMoveEnd), 0},
-
-	{NULL, V_NULL, 0, 0}
-};
-
 void UI_RegisterAbstractScrollableNode (uiBehaviour_t *behaviour)
 {
 	behaviour->name = "abstractscrollable";
 	behaviour->isAbstract = qtrue;
-	behaviour->properties = properties;
 	behaviour->extraDataSize = sizeof(EXTRADATA_TYPE);
+
+	/* position of the vertical view (into the full number of elements the node contain) */
+	UI_RegisterExtradataNodeProperty(behaviour, "viewpos", V_INT, EXTRADATA_TYPE, scrollY.viewPos);
+	/* size of the vertical view (proportional to the number of elements the node can display without moving) */
+	UI_RegisterExtradataNodeProperty(behaviour, "viewsize", V_INT, EXTRADATA_TYPE, scrollY.viewSize);
+	/* full vertical size (proportional to the number of elements the node contain) */
+	UI_RegisterExtradataNodeProperty(behaviour, "fullsize", V_INT, EXTRADATA_TYPE, scrollY.fullSize);
+	/* Called when one of the properties viewpos/viewsize/fullsize change */
+	UI_RegisterExtradataNodeProperty(behaviour, "onviewchange", V_UI_ACTION, EXTRADATA_TYPE, onViewChange);
+
+	/* Call it to vertically scroll the document up */
+	UI_RegisterNodeMethod(behaviour, "pageup", UI_AbstractScrollableNodePageUp);
+	/* Call it to vertically scroll the document down */
+	UI_RegisterNodeMethod(behaviour, "pagedown", UI_AbstractScrollableNodePageDown);
+	/* Call it to vertically scroll the document up */
+	UI_RegisterNodeMethod(behaviour, "moveup", UI_AbstractScrollableNodeMoveUp);
+	/* Call it to vertically scroll the document down */
+	UI_RegisterNodeMethod(behaviour, "movedown", UI_AbstractScrollableNodeMoveDown);
+	/* Call it to vertically reset the scroll position to 0 */
+	UI_RegisterNodeMethod(behaviour, "movehome", UI_AbstractScrollableNodeMoveHome);
+	/* Call it to vertically move the scroll to the end of the document */
+	UI_RegisterNodeMethod(behaviour, "moveend", UI_AbstractScrollableNodeMoveEnd);
 }

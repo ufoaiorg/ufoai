@@ -358,8 +358,6 @@ void R_EnableModelLights (const light_t **lights, int numLights, qboolean enable
 	assert(numLights <= MAX_GL_LIGHTS);
 
 	if (!enable || !r_state.lighting_enabled) {
-		if (r_state.lighting_enabled)
-			R_ProgramParameter1i("IS_A_MODEL", 0);
 		if (!r_state.active_normalmap && r_state.dynamic_lighting_enabled)
 			R_DisableAttribute("TANGENTS");
 		glDisable(GL_LIGHTING);
@@ -376,7 +374,6 @@ void R_EnableModelLights (const light_t **lights, int numLights, qboolean enable
 	r_state.dynamic_lighting_enabled = qtrue;
 
 	R_EnableAttribute("TANGENTS");
-	R_ProgramParameter1i("IS_A_MODEL", 1);
 
 	R_UseMaterial(&defaultMaterial);
 
@@ -604,7 +601,7 @@ void R_EnableFog (qboolean enable)
 			glFogf(GL_FOG_DENSITY, refdef.fogColor[3]);
 			glEnable(GL_FOG);
 
-			if (r_programs->integer && (r_state.active_program == r_state.world_program || r_state.active_program == r_state.warp_program)) {
+			if (r_programs->integer && (r_state.active_program == r_state.world_program || r_state.active_program == r_state.model_program || r_state.active_program == r_state.warp_program)) {
 				R_ProgramParameter3fv("FOGCOLOR", refdef.fogColor);
 				R_ProgramParameter1f("FOGDENSITY", refdef.fogColor[3]);
 				R_ProgramParameter2fv("FOGRANGE", fogRange);
@@ -613,7 +610,7 @@ void R_EnableFog (qboolean enable)
 	} else {
 		glFogf(GL_FOG_DENSITY, 0.0);
 		glDisable(GL_FOG);
-		if (r_programs->integer && (r_state.active_program == r_state.world_program || r_state.active_program == r_state.warp_program))
+		if (r_programs->integer && (r_state.active_program == r_state.world_program || r_state.active_program == r_state.model_program || r_state.active_program == r_state.warp_program))
 			R_ProgramParameter1f("FOGDENSITY", 0.0f);
 	}
 }

@@ -508,36 +508,6 @@ static void UI_ModelNodeLoaded (uiNode_t *node)
 	}
 }
 
-/** @brief valid properties for model */
-static const value_t properties[] = {
-	/* Both. Name of the animation for the model */
-	{"anim", V_CVAR_OR_STRING, UI_EXTRADATA_OFFSETOF(modelExtraData_t, animation), 0},
-	/* Main model only. Point of view. */
-	{"angles", V_VECTOR, UI_EXTRADATA_OFFSETOF(modelExtraData_t, angles), MEMBER_SIZEOF(modelExtraData_t, angles)},
-	/* Main model only. Position of the model relative to the center of the node. */
-	{"origin", V_VECTOR, UI_EXTRADATA_OFFSETOF(modelExtraData_t, origin), MEMBER_SIZEOF(modelExtraData_t, origin)},
-	/* Main model only. Rotation vector of the model. */
-	{"omega", V_VECTOR, UI_EXTRADATA_OFFSETOF(modelExtraData_t, omega), MEMBER_SIZEOF(modelExtraData_t, omega)},
-	/* Both. Scale the model */
-	{"scale", V_VECTOR, UI_EXTRADATA_OFFSETOF(modelExtraData_t, scale), MEMBER_SIZEOF(modelExtraData_t, scale)},
-	/* Submodel only. A tag name to link the model to the parent model. */
-	{"tag", V_CVAR_OR_STRING, UI_EXTRADATA_OFFSETOF(modelExtraData_t, tag), 0},
-	/* Main model only. Auto compute the "better" scale for the model. The function dont work
-	 * very well at the moment because it dont check the angle and no more submodel bounding box.
-	 */
-	{"autoscale", V_BOOL, UI_EXTRADATA_OFFSETOF(modelExtraData_t, autoscale), MEMBER_SIZEOF(modelExtraData_t, autoscale)},
-	/* Main model only. Allow to change the POV of the model with the mouse (only for main model) */
-	{"rotatewithmouse", V_BOOL, UI_EXTRADATA_OFFSETOF(modelExtraData_t, rotateWithMouse), MEMBER_SIZEOF(modelExtraData_t, rotateWithMouse)},
-	/* Main model only. Clip the model with the node rect */
-	{"clipoverflow", V_BOOL, UI_EXTRADATA_OFFSETOF(modelExtraData_t, clipOverflow), MEMBER_SIZEOF(modelExtraData_t, clipOverflow)},
-	/* Source of the model. The path to the model, relative to <code>base/models</code> */
-	{"src", V_CVAR_OR_STRING, UI_EXTRADATA_OFFSETOF(modelExtraData_t, model), 0},
-	/* Both. Name of the skin for the model. */
-	{"skin", V_CVAR_OR_STRING, UI_EXTRADATA_OFFSETOF(modelExtraData_t, skin), 0},
-
-	{NULL, V_NULL, 0, 0}
-};
-
 void UI_RegisterModelNode (uiBehaviour_t *behaviour)
 {
 	localBehaviour = behaviour;
@@ -552,8 +522,32 @@ void UI_RegisterModelNode (uiBehaviour_t *behaviour)
 	behaviour->newNode = UI_ModelNodeNew;
 	behaviour->deleteNode = UI_ModelNodeDelete;
 	behaviour->capturedMouseMove = UI_ModelNodeCapturedMouseMove;
-	behaviour->properties = properties;
 	behaviour->extraDataSize = sizeof(EXTRADATA_TYPE);
+
+	/* Both. Name of the animation for the model */
+	UI_RegisterExtradataNodeProperty(behaviour, "anim", V_CVAR_OR_STRING, modelExtraData_t, animation);
+	/* Main model only. Point of view. */
+	UI_RegisterExtradataNodeProperty(behaviour, "angles", V_VECTOR, modelExtraData_t, angles);
+	/* Main model only. Position of the model relative to the center of the node. */
+	UI_RegisterExtradataNodeProperty(behaviour, "origin", V_VECTOR, modelExtraData_t, origin);
+	/* Main model only. Rotation vector of the model. */
+	UI_RegisterExtradataNodeProperty(behaviour, "omega", V_VECTOR, modelExtraData_t, omega);
+	/* Both. Scale the model */
+	UI_RegisterExtradataNodeProperty(behaviour, "scale", V_VECTOR, modelExtraData_t, scale);
+	/* Submodel only. A tag name to link the model to the parent model. */
+	UI_RegisterExtradataNodeProperty(behaviour, "tag", V_CVAR_OR_STRING, modelExtraData_t, tag);
+	/* Main model only. Auto compute the "better" scale for the model. The function dont work
+	 * very well at the moment because it dont check the angle and no more submodel bounding box.
+	 */
+	UI_RegisterExtradataNodeProperty(behaviour, "autoscale", V_BOOL, modelExtraData_t, autoscale);
+	/* Main model only. Allow to change the POV of the model with the mouse (only for main model) */
+	UI_RegisterExtradataNodeProperty(behaviour, "rotatewithmouse", V_BOOL, modelExtraData_t, rotateWithMouse);
+	/* Main model only. Clip the model with the node rect */
+	UI_RegisterExtradataNodeProperty(behaviour, "clipoverflow", V_BOOL, modelExtraData_t, clipOverflow);
+	/* Source of the model. The path to the model, relative to <code>base/models</code> */
+	UI_RegisterExtradataNodeProperty(behaviour, "src", V_CVAR_OR_STRING, modelExtraData_t, model);
+	/* Both. Name of the skin for the model. */
+	UI_RegisterExtradataNodeProperty(behaviour, "skin", V_CVAR_OR_STRING, modelExtraData_t, skin);
 
 	Cmd_AddCommand("uimodelslist", UI_ListUIModels_f, NULL);
 }

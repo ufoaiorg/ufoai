@@ -26,6 +26,7 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #include "../ui_nodes.h"
 #include "../ui_parse.h"
 #include "../ui_actions.h"
+#include "../ui_behaviour.h"
 #include "ui_node_window.h"
 #include "ui_node_special.h"
 #include "ui_node_abstractnode.h"
@@ -164,10 +165,84 @@ void UI_RegisterConFuncNode (uiBehaviour_t *behaviour)
 	behaviour->clone = UI_ConFuncNodeClone;
 }
 
+static void UI_CvarListenerNodeCallback (const char *cvarName, const char *oldValue, const char *newValue, void *data)
+{
+	linkedList_t *list = (linkedList_t *) data;
+	linkedList_t *params = NULL;
+	LIST_AddString(&params, oldValue);
+	LIST_AddString(&params, newValue);
+	while (list) {
+		uiNode_t *node = (uiNode_t *) list->data;
+		UI_ExecuteEventActionsEx(node, node->onClick, params);
+		list = list->next;
+	}
+}
+
+/**
+ * @brief Callback every time the parent window is opened (pushed into the active window stack)
+ */
+static void UI_CvarListenerNodeBind (uiNode_t *node)
+{
+	cvarChangeListener_t *l;
+	l = Cvar_RegisterChangeListener(node->name, UI_CvarListenerNodeCallback);
+	if (l == NULL) {
+		Com_Printf("Node %s is not binded: cvar %s not found\n", UI_GetPath(node), node->name);
+		return;
+	}
+	if (LIST_GetPointer((linkedList_t*)l->data, node) == NULL) {
+		LIST_AddPointer((linkedList_t**)&l->data, node);
+	}
+}
+
+/**
+ * @brief Callback every time the parent window is closed (pop from the active window stack)
+ */
+static void UI_CvarListenerNodeUnbind (uiNode_t *node)
+{
+	cvar_t *var;
+
+	var = Cvar_FindVar(node->name);
+	if (var == NULL)
+		return;
+
+	cvarChangeListener_t *l = var->changeListener;
+	while (l) {
+		if (l->exec == UI_CvarListenerNodeCallback) {
+			LIST_Remove((linkedList_t**)&l->data, node);
+			if (LIST_IsEmpty((linkedList_t*)l->data)) {
+				Cvar_UnRegisterChangeListener(node->name, UI_CvarListenerNodeCallback);
+			}
+			break;
+		}
+		l = l->next;
+	}
+}
+
+static void UI_CvarListenerNodeOpen (uiNode_t *node, linkedList_t *params)
+{
+	UI_CvarListenerNodeBind(node);
+}
+
+static void UI_CvarListenerNodeClone (const uiNode_t *source, uiNode_t *clone)
+{
+	UI_CvarListenerNodeBind(clone);
+}
+
+static void UI_CvarListenerNodeForceBind (uiNode_t *node, const uiCallContext_t *context)
+{
+	UI_CvarListenerNodeBind(node);
+}
+
 void UI_RegisterCvarFuncNode (uiBehaviour_t *behaviour)
 {
-	behaviour->name = "cvarfunc";
+	behaviour->name = "cvarlistener";
 	behaviour->extends = "special";
 	behaviour->isVirtual = qtrue;
 	behaviour->isFunction = qtrue;
+	behaviour->windowOpened = UI_CvarListenerNodeOpen;
+	behaviour->windowClosed = UI_CvarListenerNodeUnbind;
+	behaviour->deleteNode = UI_CvarListenerNodeUnbind;
+	behaviour->clone = UI_CvarListenerNodeClone;
+	/* Force to bind the node to the cvar */
+	UI_RegisterNodeMethod(behaviour, "forceBind", UI_CvarListenerNodeForceBind);
 }

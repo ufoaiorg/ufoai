@@ -25,7 +25,7 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #ifndef CLIENT_UI_UI_NODE_STRING_H
 #define CLIENT_UI_UI_NODE_STRING_H
 
-void UI_RegisterStringNode(uiBehaviour_t *behaviour);
+void UI_RegisterStringNode(struct uiBehaviour_s *behaviour);
 
 typedef struct {
 	int longlines;				/**< what to do with long lines */

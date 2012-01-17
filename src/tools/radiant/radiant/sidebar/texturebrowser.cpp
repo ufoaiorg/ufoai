@@ -85,8 +85,6 @@ TextureBrowser::TextureBrowser () :
 	_glWidget(false), m_texture_scroll(NULL), m_heightChanged(true), m_originInvalid(true), m_scrollAdjustment(
 			TextureBrowser_scrollChanged, this), m_rmbSelected(false), m_resizeTextures(true)
 {
-	createWidget();
-
 	GlobalRegistry().addKeyObserver(this, RKEY_TEXTURES_HIDE_UNUSED);
 	GlobalRegistry().addKeyObserver(this, RKEY_TEXTURES_HIDE_INVALID);
 	GlobalRegistry().addKeyObserver(this, RKEY_TEXTURES_UNIFORM_SIZE);

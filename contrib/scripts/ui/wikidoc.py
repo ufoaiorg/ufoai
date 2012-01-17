@@ -43,8 +43,9 @@ def genPropertyDoc(node, element):
 	override = ""
 	if element.override:
 		prop = element.getSuperproperty()
-		behaviour = prop.node
-		override = " (override&nbsp;[[#" + behaviour.name + "]])"
+		if prop != None:
+			behaviour = prop.node
+			override = " (override&nbsp;[[#" + behaviour.name + "]])"
 
 	result = ""
 	result += '|-\n'

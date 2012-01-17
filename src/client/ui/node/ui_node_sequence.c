@@ -24,6 +24,7 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 
 #include "../ui_nodes.h"
 #include "../ui_parse.h"
+#include "../ui_behaviour.h"
 #include "../ui_actions.h"
 #include "../ui_draw.h"
 #include "../../client.h"
@@ -105,27 +106,21 @@ static void UI_SequencePropertyChanged (uiNode_t *node, const value_t *property)
 	localBehaviour->super->propertyChanged(node, property);
 }
 
-static const value_t properties[] = {
-	/** Source of the video. File name without prefix ./base/videos and without extension */
-	{"src", V_CVAR_OR_STRING, offsetof(uiNode_t, image), 0},
-
-	/** Called when the sequence end */
-	{"onend", V_UI_ACTION, UI_EXTRADATA_OFFSETOF(EXTRADATA_TYPE, onEnd), MEMBER_SIZEOF(EXTRADATA_TYPE, onEnd)},
-
-	{NULL, V_NULL, 0, 0}
-};
-
 void UI_RegisterSequenceNode (uiBehaviour_t* behaviour)
 {
 	localBehaviour = behaviour;
 	behaviour->name = "sequence";
 	behaviour->draw = UI_SequenceNodeDraw;
-	behaviour->properties = properties;
 	behaviour->windowOpened = UI_SequenceNodeInit;
 	behaviour->windowClosed = UI_SequenceNodeClose;
 	behaviour->extraDataSize = sizeof(EXTRADATA_TYPE);
 	behaviour->propertyChanged = UI_SequencePropertyChanged;
 	behaviour->leftClick = UI_SequenceNodeLeftClick;
 
-	propertySource = UI_GetPropertyFromBehaviour(behaviour, "src");
+	/** Source of the video. File name without prefix ./base/videos and without extension */
+	propertySource = UI_RegisterNodeProperty(behaviour, "src", V_CVAR_OR_STRING, uiNode_t, image);
+
+	/** Called when the sequence end */
+	UI_RegisterExtradataNodeProperty(behaviour, "onEnd", V_UI_ACTION, EXTRADATA_TYPE, onEnd);
+
 }

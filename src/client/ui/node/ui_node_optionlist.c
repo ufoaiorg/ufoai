@@ -25,10 +25,12 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 
 #include "../ui_main.h"
 #include "../ui_parse.h"
+#include "../ui_behaviour.h"
 #include "../ui_actions.h"
 #include "../ui_font.h"
 #include "../ui_sprite.h"
 #include "../ui_render.h"
+#include "../ui_input.h"
 #include "ui_node_abstractoption.h"
 #include "ui_node_abstractnode.h"
 #include "ui_node_optionlist.h"
@@ -42,6 +44,10 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #define CORNER_SIZE 25
 #define MID_SIZE 1
 #define MARGE 3
+
+/* Used for drag&drop-like scrolling */
+static int mouseScrollX;
+static int mouseScrollY;
 
 /**
  * @brief Update the scroll according to the number
@@ -256,6 +262,44 @@ static void UI_OptionListNodeLoaded (uiNode_t *node)
 {
 }
 
+/**
+ * @brief Track mouse down/up events to implement drag&drop-like scrolling, for touchscreen devices
+ * @sa UI_OptionListNodeMouseUp, UI_OptionListNodeCapturedMouseMove
+*/
+static void UI_OptionListNodeMouseDown (struct uiNode_s *node, int x, int y, int button)
+{
+	if (!UI_GetMouseCapture() && button == K_MOUSE1 &&
+		EXTRADATA(node).scrollY.fullSize > EXTRADATA(node).scrollY.viewSize) {
+		UI_SetMouseCapture(node);
+		mouseScrollX = x;
+		mouseScrollY = y;
+	}
+}
+
+static void UI_OptionListNodeMouseUp (struct uiNode_s *node, int x, int y, int button)
+{
+	if (UI_GetMouseCapture() == node)  /* More checks can never hurt */
+		UI_MouseRelease();
+}
+
+static void UI_OptionListNodeCapturedMouseMove (uiNode_t *node, int x, int y)
+{
+	int lineHeight = EXTRADATA(node).lineHeight;
+	if (lineHeight == 0)
+		lineHeight = UI_FontGetHeight(UI_GetFontFromNode(node));
+
+	/* We're doing only vertical scroll, that's enough for the most instances */
+	if (abs(mouseScrollY - y) >= lineHeight) {
+		/* And we're reusing existing mouse whell up/down event, scrolling won't be smooth but the code is simpler */
+		if (node->behaviour->scroll)
+			node->behaviour->scroll(node, 0, mouseScrollY - y);
+		mouseScrollX = x;
+		mouseScrollY = y;
+	}
+	if (node->behaviour->mouseMove)
+		node->behaviour->mouseMove(node, x, y);
+}
+
 void UI_RegisterOptionListNode (uiBehaviour_t *behaviour)
 {
 	behaviour->name = "optionlist";
@@ -263,6 +307,9 @@ void UI_RegisterOptionListNode (uiBehaviour_t *behaviour)
 	behaviour->draw = UI_OptionListNodeDraw;
 	behaviour->leftClick = UI_OptionListNodeClick;
 	behaviour->scroll = UI_OptionListNodeMouseWheel;
+	behaviour->mouseDown = UI_OptionListNodeMouseDown;
+	behaviour->mouseUp = UI_OptionListNodeMouseUp;
+	behaviour->capturedMouseMove = UI_OptionListNodeCapturedMouseMove;
 	behaviour->loading = UI_OptionListNodeLoading;
 	behaviour->loaded = UI_OptionListNodeLoaded;
 	behaviour->drawItselfChild = qtrue;

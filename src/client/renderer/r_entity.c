@@ -63,10 +63,21 @@ static void R_DrawBox (const entity_t * e)
 {
 	const vec4_t color = {e->color[0], e->color[1], e->color[2], e->alpha};
 
+	if (e->texture) {
+		R_Color(color);
+		R_BindTexture(e->texture->texnum);
+		if (VectorNotEmpty(e->mins) && VectorNotEmpty(e->maxs)) {
+			R_DrawTexturedBox(e->mins, e->maxs);
+		} else {
+			R_DrawTexturedBox(e->oldorigin, e->origin);
+		}
+		R_Color(NULL);
+		return;
+	}
+
 	glDisable(GL_TEXTURE_2D);
 
 	R_Color(color);
-	R_EnableDrawAsGlow(qtrue);
 
 	if (VectorNotEmpty(e->mins) && VectorNotEmpty(e->maxs)) {
 		R_DrawBoundingBox(e->mins, e->maxs);
@@ -104,7 +115,6 @@ static void R_DrawBox (const entity_t * e)
 	glEnable(GL_TEXTURE_2D);
 
 	R_Color(NULL);
-	R_EnableDrawAsGlow(qfalse);
 }
 
 
@@ -115,6 +125,9 @@ static void R_DrawBox (const entity_t * e)
  */
 static void R_DrawFloor (const entity_t * e)
 {
+	GLint oldDepthFunc;
+	glGetIntegerv(GL_DEPTH_FUNC, &oldDepthFunc);
+
 	image_t *cellIndicator = R_FindImage("pics/sfx/cell", it_pic);
 	const float dx = PLAYER_WIDTH * 2;
 	const vec4_t color = {e->color[0], e->color[1], e->color[2], e->alpha};
@@ -125,8 +138,7 @@ static void R_DrawFloor (const entity_t * e)
 			+ size, e->origin[1] + dx + size, e->origin[2] }, { e->origin[0] + dx + size, e->origin[1] - size,
 			e->origin[2] }, { e->origin[0] - size, e->origin[1] - size, e->origin[2] } };
 
-	glDisable(GL_DEPTH_TEST);
-
+	/* Draw it twice, with and without depth check, so it will still be visible if obscured by a wall */
 	R_Color(color);
 	R_BindTexture(cellIndicator->texnum);
 
@@ -134,12 +146,18 @@ static void R_DrawFloor (const entity_t * e)
 	R_BindArray(GL_TEXTURE_COORD_ARRAY, GL_FLOAT, texcoords);
 	R_BindArray(GL_VERTEX_ARRAY, GL_FLOAT, points);
 	glDrawArrays(GL_TRIANGLE_FAN, 0, 4);
+
+	glDepthFunc(GL_GREATER);
+	glColor4f(color[0], color[1], color[2], color[3] * 0.25f);
+
+	glDrawArrays(GL_TRIANGLE_FAN, 0, 4);
+
+	glDepthFunc(oldDepthFunc);
+
 	R_BindDefaultArray(GL_TEXTURE_COORD_ARRAY);
 	R_BindDefaultArray(GL_VERTEX_ARRAY);
 
-	refdef.batchCount++;
-
-	glEnable(GL_DEPTH_TEST);
+	refdef.batchCount += 2;
 
 	R_Color(NULL);
 }
@@ -214,8 +232,8 @@ void R_DrawEntityEffects (void)
 			if (e->flags & RF_SHADOW) {
 				R_BindTexture(shadow->texnum);
 			} else {
-				assert(e->deathTexture);
-				R_BindTexture(e->deathTexture->texnum);
+				assert(e->texture);
+				R_BindTexture(e->texture->texnum);
 			}
 
 			R_BindArray(GL_TEXTURE_COORD_ARRAY, GL_FLOAT, texcoords);
@@ -338,7 +356,7 @@ void R_DrawOpaqueMeshEntities (entity_t *ents)
 		return;
 
 	if (!(refdef.rendererFlags & RDF_NOWORLDMODEL)) {
-		R_EnableLighting(r_state.world_program, qtrue);
+		R_EnableLighting(r_state.model_program, qtrue);
 	}
 	R_DrawMeshEntities(ents);
 	if (!(refdef.rendererFlags & RDF_NOWORLDMODEL)) {
@@ -410,7 +428,7 @@ void R_DrawBlendMeshEntities (entity_t *ents)
 		return;
 
 	if (!(refdef.rendererFlags & RDF_NOWORLDMODEL)) {
-		R_EnableLighting(r_state.world_program, qtrue);
+		R_EnableLighting(r_state.model_program, qtrue);
 	}
 	R_EnableBlend(qtrue);
 
@@ -476,6 +494,7 @@ void R_DrawSpecialEntities (const entity_t *ents)
 	e = ents;
 
 	R_EnableBlend(qtrue);
+	R_EnableDrawAsGlow(qtrue);
 
 	while (e) {
 		if (e->flags & RF_BOX) {
@@ -488,6 +507,7 @@ void R_DrawSpecialEntities (const entity_t *ents)
 		e = e->next;
 	}
 
+	R_EnableDrawAsGlow(qfalse);
 	R_EnableBlend(qfalse);
 }
 

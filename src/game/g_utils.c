@@ -361,26 +361,26 @@ void G_PrintActorStats (const edict_t *victim, const edict_t *attacker, const fi
 				}
 			}
 			if (victim->team != attacker->team) {
-				Com_sprintf(buffer, sizeof(buffer), "%s (%s) %s %s (%s) with %s of %s",
+				Com_sprintf(buffer, sizeof(buffer), "%s (%s) %s %s (%s) with %s of %s (entnum: %i)",
 					attackerName, attacker->chr.name,
 					(victim->HP == 0 ? "kills" : "stuns"),
-					victimName, victim->chr.name, fd->name, G_GetWeaponNameForFiredef(fd));
+					victimName, victim->chr.name, fd->name, G_GetWeaponNameForFiredef(fd), victim->number);
 			} else {
-				Com_sprintf(buffer, sizeof(buffer), "%s (%s) %s %s (%s) (teamkill) with %s of %s",
+				Com_sprintf(buffer, sizeof(buffer), "%s (%s) %s %s (%s) (teamkill) with %s of %s (entnum: %i)",
 					attackerName, attacker->chr.name,
 					(victim->HP == 0 ? "kills" : "stuns"),
-					victimName, victim->chr.name, fd->name, G_GetWeaponNameForFiredef(fd));
+					victimName, victim->chr.name, fd->name, G_GetWeaponNameForFiredef(fd), victim->number);
 			}
 		} else {
 			const char *attackerName = G_GetPlayerName(attacker->pnum);
-			Com_sprintf(buffer, sizeof(buffer), "%s %s %s (own team) with %s of %s",
+			Com_sprintf(buffer, sizeof(buffer), "%s %s %s (own team) with %s of %s (entnum: %i)",
 				attackerName, (victim->HP == 0 ? "kills" : "stuns"),
-				victim->chr.name, fd->name, G_GetWeaponNameForFiredef(fd));
+				victim->chr.name, fd->name, G_GetWeaponNameForFiredef(fd), victim->number);
 		}
 	} else {
 		const char *victimName = G_GetPlayerName(victim->pnum);
-		Com_sprintf(buffer, sizeof(buffer), "%s (%s) was %s",
-			victimName, victim->chr.name, (victim->HP == 0 ? "killed" : "stunned"));
+		Com_sprintf(buffer, sizeof(buffer), "%s (%s) was %s (entnum: %i)",
+			victimName, victim->chr.name, (victim->HP == 0 ? "killed" : "stunned"), victim->number);
 	}
 	G_PrintStats(buffer);
 }

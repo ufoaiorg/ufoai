@@ -27,10 +27,10 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 
 #include "../ui_nodes.h"
 
-void UI_RegisterConFuncNode(uiBehaviour_t *behaviour);
-void UI_RegisterCvarFuncNode(uiBehaviour_t *behaviour);
-void UI_RegisterFuncNode(uiBehaviour_t *behaviour);
-void UI_RegisterNullNode(uiBehaviour_t *behaviour);
-void UI_RegisterSpecialNode(uiBehaviour_t *behaviour);
+void UI_RegisterConFuncNode(struct uiBehaviour_s *behaviour);
+void UI_RegisterCvarFuncNode(struct uiBehaviour_s *behaviour);
+void UI_RegisterFuncNode(struct uiBehaviour_s *behaviour);
+void UI_RegisterNullNode(struct uiBehaviour_s *behaviour);
+void UI_RegisterSpecialNode(struct uiBehaviour_s *behaviour);
 
 #endif

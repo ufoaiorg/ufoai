@@ -266,6 +266,8 @@ $(TARGET)_SRCS      = \
 	\
 	$(RADIANT_BASE)/radiant/ui/scripteditor/UFOScriptEditor.cpp \
 	\
+	$(RADIANT_BASE)/radiant/ui/textureoverview/TextureOverviewDialog.cpp \
+	\
 	$(RADIANT_BASE)/radiant/ui/umpeditor/UMPEditor.cpp \
 	\
 	$(RADIANT_BASE)/radiant/ui/particles/ParticleEditor.cpp \

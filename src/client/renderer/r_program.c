@@ -744,7 +744,6 @@ static void R_InitWorldProgram (r_program_t *prog)
 	R_ProgramParameter1i("BUMPMAP", 0);
 	R_ProgramParameter1i("ROUGHMAP", 0);
 	R_ProgramParameter1i("SPECULARMAP", 0);
-	R_ProgramParameter1i("ANIMATE", 0);
 
 	R_ProgramParameter1f("HARDNESS", defaultMaterial.hardness);
 	R_ProgramParameter1f("SPECULAR", defaultMaterial.specular);
@@ -764,6 +763,51 @@ static void R_InitWorldProgram (r_program_t *prog)
 }
 
 static void R_UseWorldProgram (r_program_t *prog)
+{
+	/*R_ProgramParameter1i("LIGHTS", refdef.numLights);*/
+	if (r_fog->integer) {
+		if (r_state.fog_enabled) {
+			R_ProgramParameter3fv("FOGCOLOR", refdef.fogColor);
+			R_ProgramParameter1f("FOGDENSITY", refdef.fogColor[3]);
+			R_ProgramParameter2fv("FOGRANGE", fogRange);
+		} else {
+			R_ProgramParameter1f("FOGDENSITY", 0.0f);
+		}
+	}
+}
+
+static void R_InitModelProgram (r_program_t *prog)
+{
+	R_ProgramParameter1i("SAMPLER0", 0);
+	R_ProgramParameter1i("SAMPLER1", 1);
+	R_ProgramParameter1i("SAMPLER2", 2);
+	R_ProgramParameter1i("SAMPLER3", 3);
+	if (r_postprocess->integer)
+		R_ProgramParameter1i("SAMPLER4", 4);
+
+	R_ProgramParameter1i("BUMPMAP", 0);
+	R_ProgramParameter1i("ROUGHMAP", 0);
+	R_ProgramParameter1i("SPECULARMAP", 0);
+	R_ProgramParameter1i("ANIMATE", 0);
+
+	R_ProgramParameter1f("HARDNESS", defaultMaterial.hardness);
+	R_ProgramParameter1f("SPECULAR", defaultMaterial.specular);
+	R_ProgramParameter1f("BUMP", defaultMaterial.bump);
+	R_ProgramParameter1f("PARALLAX", defaultMaterial.parallax);
+	if (r_postprocess->integer)
+		R_ProgramParameter1f("GLOWSCALE", defaultMaterial.glowscale);
+	if (r_fog->integer) {
+		if (r_state.fog_enabled) {
+			R_ProgramParameter3fv("FOGCOLOR", refdef.fogColor);
+			R_ProgramParameter1f("FOGDENSITY", refdef.fogColor[3]);
+			R_ProgramParameter2fv("FOGRANGE", fogRange);
+		} else {
+			R_ProgramParameter1f("FOGDENSITY", 0.0f);
+		}
+	}
+}
+
+static void R_UseModelProgram (r_program_t *prog)
 {
 	/*R_ProgramParameter1i("LIGHTS", refdef.numLights);*/
 	if (r_fog->integer) {
@@ -938,6 +982,7 @@ void R_InitPrograms (void)
 	OBJZERO(r_state.programs);
 
 	r_state.world_program = R_LoadProgram("world", R_InitWorldProgram, R_UseWorldProgram);
+	r_state.model_program = R_LoadProgram("model", R_InitModelProgram, R_UseModelProgram);
 	r_state.warp_program = R_LoadProgram("warp", R_InitWarpProgram, R_UseWarpProgram);
 	r_state.geoscape_program = R_LoadProgram("geoscape", R_InitGeoscapeProgram, NULL);
 	r_state.combine2_program = R_LoadProgram("combine2", R_InitCombine2Program, NULL);
@@ -945,7 +990,7 @@ void R_InitPrograms (void)
 	r_state.atmosphere_program = R_LoadProgram("atmosphere", R_InitAtmosphereProgram, NULL);
 	r_state.simple_glow_program = R_LoadProgram("simple_glow", R_InitSimpleGlowProgram, NULL);
 
-	if (!(r_state.world_program && r_state.warp_program && r_state.geoscape_program && r_state.combine2_program
+	if (!(r_state.world_program && r_state.model_program && r_state.warp_program && r_state.geoscape_program && r_state.combine2_program
 		&& r_state.convolve_program && r_state.atmosphere_program && r_state.simple_glow_program)) {
 		Com_Printf("disabled shaders because they failed to compile\n");
 		Cvar_Set("r_programs", "0");

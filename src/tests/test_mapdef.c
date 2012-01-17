@@ -122,6 +122,7 @@ static void testMapDefsMassRMA (void)
 						Cvar_Set("rm_ufo", Com_GetRandomMapAssemblyNameForCraft(ufo));
 
 					for (i = 0; i < 50; i++) {
+						const char *ass = NULL;
 						srand(i);
 						time = Sys_Milliseconds();
 						Com_Printf("Seed: %i\n", i);
@@ -133,16 +134,11 @@ static void testMapDefsMassRMA (void)
 							char const* craft;
 							char const* ufo;
 						} skip_info;
-
-						/* we have a known problems with these combinations, so skip them */
+#if 0
+						/* if we have known problems with some combinations, we can skip them */
 						skip_info const skip_list[] = {
-							/* seed 20 is slow on linux (10 mins) */
+							/* examples: */
 							{ 20, "forest",   "large",      "craft_drop_raptor",   0                     },
-							{ 27, "forest",   "large",      "craft_drop_raptor",   0                     },
-							{  3, "forest",   "large",      "craft_drop_raptor",   "craft_ufo_harvester" },
-							/* combinations slow on linux */
-							{ 12, "forest",   "large",      "craft_drop_firebird", "craft_ufo_harvester" },
-							{ 16, "forest",   "large",      "craft_drop_raptor",   "craft_ufo_harvester" },
 							{ 12, "forest",   "large",      "craft_drop_herakles", "craft_ufo_harvester" },
 							{ -1, "ufocrash", 0,            0,                     0                     },
 						};
@@ -159,8 +155,14 @@ static void testMapDefsMassRMA (void)
 						}
 						if (skip)
 							continue;
+#endif
+						/* for ufocrash map, the ufoname is the assemblyame */
+						if (!strcmp(p, "ufocrash"))
+							ass = Com_GetRandomMapAssemblyNameForCraft(ufo) + 1;	/* +1 = get rid of the '+' */
+						else
+							ass = md->param;
 
-						randomMap = SV_AssembleMap(p, md->param, mapStr, posStr, i);
+						randomMap = SV_AssembleMap(p, ass, mapStr, posStr, i);
 						CU_ASSERT(randomMap != NULL);
 						time = (Sys_Milliseconds() - time);
 						CU_ASSERT(time < 30000);

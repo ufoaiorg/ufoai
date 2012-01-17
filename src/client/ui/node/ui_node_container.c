@@ -33,6 +33,7 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 
 #include "../ui_main.h"
 #include "../ui_parse.h"
+#include "../ui_behaviour.h"
 #include "../ui_actions.h"
 #include "../ui_dragndrop.h"
 #include "../ui_tooltip.h"
@@ -1037,15 +1038,6 @@ static qboolean UI_ContainerNodeDNDFinished (uiNode_t *source, qboolean isDroppe
 	return qtrue;
 }
 
-static const value_t properties[] = {
-	/* Callback value set before calling onSelect. It is used to know the item selected */
-	{"lastselectedid", V_INT, UI_EXTRADATA_OFFSETOF(containerExtraData_t, lastSelectedId),  MEMBER_SIZEOF(containerExtraData_t, lastSelectedId)},
-	/* Callback event called when the user select an item */
-	{"onselect", V_UI_ACTION, UI_EXTRADATA_OFFSETOF(containerExtraData_t, onSelect),  MEMBER_SIZEOF(containerExtraData_t, onSelect)},
-
-	{NULL, V_NULL, 0, 0}
-};
-
 void UI_RegisterContainerNode (uiBehaviour_t* behaviour)
 {
 	behaviour->name = "container";
@@ -1060,6 +1052,10 @@ void UI_RegisterContainerNode (uiBehaviour_t* behaviour)
 	behaviour->dndFinished = UI_ContainerNodeDNDFinished;
 	behaviour->dndMove = UI_ContainerNodeDNDMove;
 	behaviour->dndLeave = UI_ContainerNodeDNDLeave;
-	behaviour->properties = properties;
 	behaviour->extraDataSize = sizeof(EXTRADATA_TYPE);
+
+	/* Callback value set before calling onSelect. It is used to know the item selected */
+	UI_RegisterExtradataNodeProperty(behaviour, "lastselectedid", V_INT, containerExtraData_t, lastSelectedId);
+	/* Callback event called when the user select an item */
+	UI_RegisterExtradataNodeProperty(behaviour, "onselect", V_UI_ACTION, containerExtraData_t, onSelect);
 }

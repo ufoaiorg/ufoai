@@ -670,8 +670,8 @@ void R_DrawBoundingBoxes (void)
 	int i;
 	const int step = 3 * 8;
 	const int bboxes = r_bbox_array.bboxes_index / step;
-	const GLfloat indexes[] = { 2, 1, 0, 1, 4, 5, 1, 7, 3, 2, 7, 6, 2, 4, 0 };
-	const GLfloat indexes2[] = { 4, 6, 7 };
+	const int indexes[] = { 2, 1, 0, 1, 4, 5, 1, 7, 3, 2, 7, 6, 2, 4, 0 };
+	const int indexes2[] = { 4, 6, 7 };
 
 	if (!r_bbox_array.bboxes_index)
 		return;
@@ -686,9 +686,9 @@ void R_DrawBoundingBoxes (void)
 		const float *bbox = &r_bbox_array.bboxes[i * step];
 		R_BindArray(GL_VERTEX_ARRAY, GL_FLOAT, bbox);
 		/* Draw top and sides */
-		glDrawElements(GL_TRIANGLE_FAN, 15, GL_FLOAT, indexes);
+		glDrawElements(GL_TRIANGLE_FAN, 15, GL_UNSIGNED_INT, indexes);
 		/* Draw bottom */
-		glDrawElements(GL_TRIANGLE_FAN, 3, GL_FLOAT, indexes2);
+		glDrawElements(GL_TRIANGLE_FAN, 3, GL_UNSIGNED_INT, indexes2);
 	}
 
 	R_BindDefaultArray(GL_VERTEX_ARRAY);
@@ -724,8 +724,8 @@ void R_DrawBoundingBoxBatched (const vec3_t absmins, const vec3_t absmaxs)
 void R_DrawBoundingBox (const vec3_t absmins, const vec3_t absmaxs)
 {
 	vec3_t bbox[8];
-	const GLfloat indexes[] = { 2, 1, 0, 1, 4, 5, 1, 7, 3, 2, 7, 6, 2, 4, 0 };
-	const GLfloat indexes2[] = { 4, 6, 7 };
+	const int indexes[] = { 2, 1, 0, 1, 4, 5, 1, 7, 3, 2, 7, 6, 2, 4, 0 };
+	const int indexes2[] = { 4, 6, 7 };
 
 	R_ComputeBoundingBox(absmins, absmaxs, bbox);
 
@@ -735,12 +735,37 @@ void R_DrawBoundingBox (const vec3_t absmins, const vec3_t absmaxs)
 
 	R_BindArray(GL_VERTEX_ARRAY, GL_FLOAT, bbox);
 	/* Draw top and sides */
-	glDrawElements(GL_TRIANGLE_FAN, 15, GL_FLOAT, indexes);
+	glDrawElements(GL_TRIANGLE_STRIP, 15, GL_UNSIGNED_INT, indexes);
 	/* Draw bottom */
-	glDrawElements(GL_TRIANGLE_FAN, 3, GL_FLOAT, indexes2);
+	glDrawElements(GL_TRIANGLE_STRIP, 3, GL_UNSIGNED_INT, indexes2);
 	R_BindDefaultArray(GL_VERTEX_ARRAY);
 
 #ifndef GL_VERSION_ES_CM_1_0
 	glPolygonMode(GL_FRONT_AND_BACK, GL_FILL);
 #endif
+}
+
+/**
+ * @brief Draws the textured box, the caller should bind the texture
+ * @sa R_DrawBox
+ */
+void R_DrawTexturedBox (const vec3_t a0, const vec3_t a1)
+{
+	const GLfloat texcoords[] = { 0, 1, 0, 0, 1, 0, 1, 1, 0, 1, 0, 0, 1, 0, 1, 1, 1, 1, 1, 0, 0, 0, 0, 1, 1, 1, 1, 0, 0, 0, 0, 1, };
+	const vec3_t bbox[] = {
+					{ a0[0], a0[1], a0[2] }, { a0[0], a0[1], a1[2] }, { a1[0], a0[1], a1[2] }, { a1[0], a0[1], a0[2] },
+					{ a1[0], a1[1], a0[2] }, { a1[0], a1[1], a1[2] }, { a0[0], a1[1], a1[2] }, { a0[0], a1[1], a0[2] },
+					{ a0[0], a0[1], a0[2] }, { a0[0], a0[1], a1[2] }, { a1[0], a0[1], a1[2] }, { a1[0], a0[1], a0[2] },
+					{ a1[0], a1[1], a0[2] }, { a1[0], a1[1], a1[2] }, { a0[0], a1[1], a1[2] }, { a0[0], a1[1], a0[2] } };
+	const int indexes[] = { 0, 1, 2, 1, 2, 3, 4, 5, 6, 6, 7, 4, 2 + 8, 3 + 8, 4 + 8, 2 + 8, 5 + 8, 4 + 8, 6 + 8, 7 + 8,
+			0 + 8, 0 + 8, 1 + 8, 6 + 8, };
+
+	R_BindArray(GL_TEXTURE_COORD_ARRAY, GL_FLOAT, texcoords);
+	R_BindArray(GL_VERTEX_ARRAY, GL_FLOAT, bbox);
+
+	/* Draw sides only */
+	glDrawElements(GL_TRIANGLES, 8 * 3, GL_UNSIGNED_INT, indexes);
+
+	R_BindDefaultArray(GL_VERTEX_ARRAY);
+	R_BindDefaultArray(GL_TEXTURE_COORD_ARRAY);
 }

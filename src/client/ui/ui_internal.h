@@ -28,14 +28,16 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #define CLIENT_UI_UI_INTERNAL_H
 
 #define UI_MAX_WINDOWS			128
-#define UI_MAX_COMPONENTS		64
+#define UI_MAX_COMPONENTS		128
 #define UI_MAX_WINDOWSTACK		32
 #define UI_MAX_ACTIONS			2*8192
 #define UI_MAX_VARIABLESTACK	64
 
 #include "node/ui_node_window.h"
 #include "node/ui_node_model.h"
+#include "ui_main.h"
 #include "ui_actions.h"
+#include "ui_behaviour.h"
 #include "ui_nodes.h"
 #include "ui_sprite.h"
 #include "ui_input.h"
@@ -82,9 +84,6 @@ typedef struct uiGlobal_s {
 	uiModel_t models[UI_MAX_MODELS];
 	int numModels;
 
-	uiExcludeRect_t excludeRect[UI_MAX_EXLUDERECTS];
-	int numExcludeRect;
-
 	uiSprite_t sprites[UI_MAX_SPRITES];
 	int numSprites;
 
@@ -98,6 +97,14 @@ extern uiGlobal_t ui_global;
 extern memPool_t *ui_sysPool;
 extern memPool_t *ui_dynStringPool;
 extern memPool_t *ui_dynPool;
+
+/**
+ * Alignment memory for structures
+ * @todo Remove it and use something from compiler
+ */
+#define STRUCT_MEMORY_ALIGN	8
+
+void* UI_AllocHunkMemory(size_t size, int align, qboolean reset);
 
 void UI_FinishInit(void);
 void UI_FinishWindowsInit(void);

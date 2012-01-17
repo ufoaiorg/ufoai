@@ -27,12 +27,12 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 
 #include "../ui_nodes.h"
 
-void UI_RegisterAbstractNode(uiBehaviour_t *);
+void UI_RegisterAbstractNode(struct uiBehaviour_s *);
 
 struct uiNode_s;
 
 qboolean UI_NodeInstanceOf(const uiNode_t *node, const char* behaviourName);
-qboolean UI_NodeInstanceOfPointer(const uiNode_t *node, const uiBehaviour_t* behaviour);
+qboolean UI_NodeInstanceOfPointer(const uiNode_t *node, const struct uiBehaviour_s* behaviour);
 qboolean UI_NodeSetProperty(uiNode_t* node, const value_t *property, const char* value);
 void UI_NodeSetPropertyFromRAW(uiNode_t* node, const value_t *property, const void* rawValue, int rawType);
 float UI_GetFloatFromNodeProperty(const struct uiNode_s* node, const value_t* property);

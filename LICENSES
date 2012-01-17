@@ -370,6 +370,28 @@ base/maps/laboratory/lab_craft_ufo_scout.map | GNU General Public License 2.0 or
 base/maps/laboratory/lab_main.map | GNU General Public License 2.0 or later
 base/maps/lake_ice.map | GNU General Public License 2.0 or later | "SparX" Beyeler
 base/maps/lake_ice_big.map | GNU General Public License 2.0 or later | 'SparX' Beyeler, Martin Gerhardy
+base/maps/mansion.ump | GNU General Public License 2.0 or later | Holger Gellrich
+base/maps/mansion/mansion_coast1.map | GNU General Public License 2.0 or later | Holger Gellrich
+base/maps/mansion/mansion_coast2.map | GNU General Public License 2.0 or later | Holger Gellrich
+base/maps/mansion/mansion_coast_corner_ne.map | GNU General Public License 2.0 or later | Holger Gellrich
+base/maps/mansion/mansion_coast_corner_se.map | GNU General Public License 2.0 or later | Holger Gellrich
+base/maps/mansion/mansion_coast_corner_sw.map | GNU General Public License 2.0 or later | Holger Gellrich
+base/maps/mansion/mansion_coast_east_b.map | GNU General Public License 2.0 or later | Holger Gellrich
+base/maps/mansion/mansion_coast_east_d.map | GNU General Public License 2.0 or later | Holger Gellrich
+base/maps/mansion/mansion_coast_east_s.map | GNU General Public License 2.0 or later | Holger Gellrich
+base/maps/mansion/mansion_coast_east_u.map | GNU General Public License 2.0 or later | Holger Gellrich
+base/maps/mansion/mansion_coast_south_b.map | GNU General Public License 2.0 or later | Holger Gellrich
+base/maps/mansion/mansion_coast_south_d.map | GNU General Public License 2.0 or later | Holger Gellrich
+base/maps/mansion/mansion_coast_south_s.map | GNU General Public License 2.0 or later | Holger Gellrich
+base/maps/mansion/mansion_coast_south_u.map | GNU General Public License 2.0 or later | Holger Gellrich
+base/maps/mansion/mansion_craft_drop_empty.map | GNU General Public License 2.0 or later | Holger Gellrich
+base/maps/mansion/mansion_craft_ufo_empty.map | GNU General Public License 2.0 or later | Holger Gellrich
+base/maps/mansion/mansion_main.map | GNU General Public License 2.0 or later | Holger Gellrich
+base/maps/mansion/mansion_maingate.map | GNU General Public License 2.0 or later | Holger Gellrich
+base/maps/mansion/mansion_ocean1.map | GNU General Public License 2.0 or later | Holger Gellrich
+base/maps/mansion/mansion_ocean2.map | GNU General Public License 2.0 or later | Holger Gellrich
+base/maps/mansion/mansion_ocean3.map | GNU General Public License 2.0 or later | Holger Gellrich
+base/maps/mansion/mansion_poolhouse.map | GNU General Public License 2.0 or later | Holger Gellrich
 base/maps/mart.ump | GNU General Public License 2.0 or later
 base/maps/mart/ma_craft_drop_firebird.map | GNU General Public License 2.0 or later
 base/maps/mart/ma_craft_drop_herakles.map | GNU General Public License 2.0 or later
@@ -643,9 +665,11 @@ base/models/aircraft/drop_firebird/firebird.jpg | GNU General Public License 2.0
 base/models/aircraft/drop_firebird/firebird.md2 | GNU General Public License 2.0 | Lukas "Rastaman" Beyeler
 base/models/aircraft/drop_firebird/firebird_flying.md2 | GNU General Public License 2.0 | Lukas "Rastaman" Beyeler;MCR
 base/models/aircraft/drop_firebird/firebird_gm.png | GNU General Public License 2.0 or later | MCR
+base/models/aircraft/drop_firebird/firebird_sm.png | GNU General Public License 2.0 or later | MCR
 base/models/aircraft/drop_firebird/firebird_top.jpg | GNU General Public License 2.0 | Lukas "Rastaman" Beyeler
 base/models/aircraft/drop_firebird/firebird_top.md2 | GNU General Public License 2.0 | Lukas "Rastaman" Beyeler
 base/models/aircraft/drop_firebird/firebird_top_closed.md2 | GNU General Public License 2.0 | Lukas "Rastaman" Beyeler;MCR
+base/models/aircraft/drop_firebird/firebird_top_sm.png | GNU General Public License 2.0 | MCR
 base/models/aircraft/drop_herakles/ammobox.md2 | GNU General Public License 2.0 or later | Willem Sitters
 base/models/aircraft/drop_herakles/ammobox.png | GNU General Public License 2.0 or later | Willem Sitters
 base/models/aircraft/drop_herakles/extinguiser.md2 | GNU General Public License 2.0 or later | Willem Sitters
@@ -658,6 +682,7 @@ base/models/aircraft/drop_herakles/herakles_carryall.md2 | GNU General Public Li
 base/models/aircraft/drop_herakles/herakles_int.md2 | GNU General Public License 2.0 or later | Willem Sitters
 base/models/aircraft/drop_herakles/herakles_int.png | GNU General Public License 2.0 or later | Willem Sitters
 base/models/aircraft/drop_herakles/herakles_int_gm.png | GNU General Public License 2.0 or later | MCR
+base/models/aircraft/drop_herakles/herakles_int_sm.png | GNU General Public License 2.0 or later | MCR
 base/models/aircraft/drop_herakles/herakles_int_top.md2 | GNU General Public License 2.0 or later | Willem Sitters
 base/models/aircraft/drop_herakles/herakles_int_top.png | GNU General Public License 2.0 or later | Willem Sitters
 base/models/aircraft/drop_herakles/herakles_nm.png | GNU General Public License 2.0 or later | Willem Sitters;MCR | data_source/models/sitters/craft_drop_herakles/dropship_normal.bmp
@@ -666,6 +691,7 @@ base/models/aircraft/drop_herakles/herakles_pod_back.md2 | GNU General Public Li
 base/models/aircraft/drop_herakles/seats.md2 | GNU General Public License 2.0 or later | Willem Sitters
 base/models/aircraft/drop_herakles/seats.png | GNU General Public License 2.0 or later | Willem Sitters
 base/models/aircraft/drop_herakles/seats_2.md2 | GNU General Public License 2.0 or later | Willem Sitters
+base/models/aircraft/drop_herakles/seats_sm.png | GNU General Public License 2.0 or later | MCR | Willem Sitters
 base/models/aircraft/drop_herakles/wallbox.md2 | GNU General Public License 2.0 or later | Willem Sitters
 base/models/aircraft/drop_herakles/wallbox.png | GNU General Public License 2.0 or later | Willem Sitters
 base/models/aircraft/drop_raptor/drop_raptor.md2 | GNU General Public License 2.0 or later | Willem Sitters
@@ -851,15 +877,19 @@ base/models/aliens/taman/body01d_nm.png | GNU General Public License 2.0 | MCR |
 base/models/aliens/taman/head01.md2 | GNU General Public License 2.0 | Lukas "Rastaman" Beyeler
 base/models/aliens/taman/head01.png | GNU General Public License 2.0 | Lukas "Rastaman" Beyeler;MCR | Lukas "Rastaman" Beyeler
 base/models/aliens/taman/head01_gm.png | GNU General Public License 2.0 | MCR | Lukas "Rastaman" Beyeler
+base/models/aliens/taman/head01_nm.png | GNU General Public License 2.0 | MCR | Lukas "Rastaman" Beyeler
 base/models/aliens/taman/head02.md2 | GNU General Public License 2.0 | Lukas "Rastaman" Beyeler
 base/models/aliens/taman/head02.png | GNU General Public License 2.0 | Lukas "Rastaman" Beyeler;MCR | Lukas "Rastaman" Beyeler
 base/models/aliens/taman/head02_gm.png | GNU General Public License 2.0 | MCR | Lukas "Rastaman" Beyeler
+base/models/aliens/taman/head02_nm.png | GNU General Public License 2.0 | MCR | Lukas "Rastaman" Beyeler
 base/models/aliens/taman/head03.md2 | GNU General Public License 2.0 | Lukas "Rastaman" Beyeler
 base/models/aliens/taman/head03.png | GNU General Public License 2.0 | Lukas "Rastaman" Beyeler;MCR | Lukas "Rastaman" Beyeler
 base/models/aliens/taman/head03_gm.png | GNU General Public License 2.0 | MCR | Lukas "Rastaman" Beyeler
+base/models/aliens/taman/head03_nm.png | GNU General Public License 2.0 | MCR | Lukas "Rastaman" Beyeler
 base/models/aliens/taman/head04.md2 | GNU General Public License 2.0 | Lukas "Rastaman" Beyeler
 base/models/aliens/taman/head04.png | GNU General Public License 2.0 | Lukas "Rastaman" Beyeler;MCR | Lukas "Rastaman" Beyeler
 base/models/aliens/taman/head04_gm.png | GNU General Public License 2.0 | MCR | Lukas "Rastaman" Beyeler
+base/models/aliens/taman/head04_nm.png | GNU General Public License 2.0 | MCR | Lukas "Rastaman" Beyeler
 base/models/aliens/tamanlight/armor.jpg | GNU General Public License 2.0 | Lukas "Rastaman" Beyeler
 base/models/aliens/tamanlight/body.jpg | GNU General Public License 2.0 | Lukas "Rastaman" Beyeler
 base/models/aliens/tamanlight/body01.anm | GNU General Public License 2.0 | Lukas "Rastaman" Beyeler
@@ -1674,9 +1704,13 @@ base/models/objects/vegi/chestnut/chestnut_stamm1.md2 | GNU General Public Licen
 base/models/objects/vegi/chestnut/chestnut_stamm2.md2 | GNU General Public License 2.0 | hullbr3ach
 base/models/objects/vegi/chestnut/chestnut_stamm3.md2 | GNU General Public License 2.0 | hullbr3ach
 base/models/objects/vegi/chestnut/leaves1.png | GNU General Public License 2.0 | based on Titus Tscharnke's work (http://www.burningwell.org/gallery2/v/textures/plants/leavesAndBranches/) | MCR
+base/models/objects/vegi/chestnut/leaves1_sm.png | GNU General Public License 2.0 | MCR
 base/models/objects/vegi/chestnut/leaves2.png | GNU General Public License 2.0 | based on Titus Tscharnke's work (http://www.burningwell.org/gallery2/v/textures/plants/leavesAndBranches/) | MCR
+base/models/objects/vegi/chestnut/leaves2_sm.png | GNU General Public License 2.0 | MCR
 base/models/objects/vegi/chestnut/leaves3.png | GNU General Public License 2.0 | based on Titus Tscharnke's work (http://www.burningwell.org/gallery2/v/textures/plants/leavesAndBranches/) | MCR
+base/models/objects/vegi/chestnut/leaves3_sm.png | GNU General Public License 2.0 | MCR
 base/models/objects/vegi/chestnut/leaves4.png | GNU General Public License 2.0 | based on Titus Tscharnke's work (http://www.burningwell.org/gallery2/v/textures/plants/leavesAndBranches/) | MCR
+base/models/objects/vegi/chestnut/leaves4_sm.png | GNU General Public License 2.0 | MCR
 base/models/objects/vegi/fern/fern.md2 | GNU General Public License 2.0 or later | Willem Sitters
 base/models/objects/vegi/fern/fern.png | GNU General Public License 2.0 or later | Willem Sitters;MCR
 base/models/objects/vegi/fern2/fern2.md2 | Creative Commons Attribution-Share Alike 3.0 | Yo Frankie!
@@ -2833,6 +2867,8 @@ base/pics/icons/on.png | GNU General Public License 2.0 or later | bayo
 base/pics/icons/pen.png | GNU General Public License 2.0 | MCR | based on images from http://sourceforge.net/projects/openiconlibrary
 base/pics/icons/pen_disabled.png | GNU General Public License 2.0 | MCR | based on images from http://sourceforge.net/projects/openiconlibrary
 base/pics/icons/pen_hovered.png | GNU General Public License 2.0 | MCR | based on images from http://sourceforge.net/projects/openiconlibrary
+base/pics/icons/rescue_zone.png | GNU General Public License 2.0 | Nate Wright
+base/pics/icons/rescue_zone_hover.png | GNU General Public License 2.0 | Nate Wright
 base/pics/icons/scroll_bottom.png | GNU General Public License 2.0 | MCR | based on images from http://sourceforge.net/projects/openiconlibrary
 base/pics/icons/scroll_bottom_hovered.png | GNU General Public License 2.0 | MCR | based on images from http://sourceforge.net/projects/openiconlibrary
 base/pics/icons/scroll_top.png | GNU General Public License 2.0 | MCR | based on images from http://sourceforge.net/projects/openiconlibrary
@@ -3538,6 +3574,7 @@ base/pics/sfx/laserimpact.png | GNU General Public License 2.0 | Martin Gerhardy
 base/pics/sfx/laserimpact_small.png | GNU General Public License 2.0 | Martin Gerhardy | based on OpenArena particles
 base/pics/sfx/lightningscroll.png | GNU General Public License 2.0 | OpenArena
 base/pics/sfx/lightningscroll2.jpg | GNU General Public License 2.0 | OpenArena
+base/pics/sfx/misc/rescue.png | GNU General Public License 2.0 | pelya
 base/pics/sfx/misc/shell_00.png | Creative Commons Attribution-Share Alike 3.0 | Christian "Crystan" Hoffmann
 base/pics/sfx/misc/shell_01.png | Creative Commons Attribution-Share Alike 3.0 | Christian "Crystan" Hoffmann
 base/pics/sfx/misc/shell_02.png | Creative Commons Attribution-Share Alike 3.0 | Christian "Crystan" Hoffmann
@@ -3675,7 +3712,13 @@ base/pics/ui/checkbox_blue.png | GNU General Public License 2.0 or later | MCR |
 base/pics/ui/checkbox_green.png | GNU General Public License 2.0 or later | bayo;MCR | Source: Based on original menu artwork by SparX and Rasta and images from http://sourceforge.net/projects/openiconlibrary
 base/pics/ui/geo_menu.png | GNU General Public License 2.0 or later | Martin Gerhardy
 base/pics/ui/geo_menu_mini.png | GNU General Public License 2.0 or later |  | Based on original menu artwork by SparX and Rasta
-base/pics/ui/geo_miniglobe.png | GNU General Public License 2.0 or later
+base/pics/ui/geo_miniglobe.png | GNU General Public License 2.0 or later | MCR | Based on original UFO:AI artwork (Blender rendering)
+base/pics/ui/geo_miniglobe_e.png | GNU General Public License 2.0 or later | MCR | Based on original UFO:AI artwork (Blender rendering)
+base/pics/ui/geo_miniglobe_in.png | GNU General Public License 2.0 or later | MCR | Based on original UFO:AI artwork (Blender rendering)
+base/pics/ui/geo_miniglobe_n.png | GNU General Public License 2.0 or later | MCR | Based on original UFO:AI artwork (Blender rendering)
+base/pics/ui/geo_miniglobe_out.png | GNU General Public License 2.0 or later | MCR | Based on original UFO:AI artwork (Blender rendering)
+base/pics/ui/geo_miniglobe_s.png | GNU General Public License 2.0 or later | MCR | Based on original UFO:AI artwork (Blender rendering)
+base/pics/ui/geo_miniglobe_w.png | GNU General Public License 2.0 or later | MCR | Based on original UFO:AI artwork (Blender rendering)
 base/pics/ui/hosp_button_blue.png | GNU General Public License 2.0 or later
 base/pics/ui/hosp_button_green.png | GNU General Public License 2.0 or later
 base/pics/ui/hosp_button_light.png | GNU General Public License 2.0 or later
@@ -4221,7 +4264,9 @@ base/textures/tex_base/grid2_alpha.png | GNU General Public License 2.0 or later
 base/textures/tex_base/grid_alpha.png | GNU General Public License 2.0 or later | Martin Gerhardy
 base/textures/tex_base/helipad.png | GNU General Public License 2.0 | Werner Höhrer (hoehrer)
 base/textures/tex_base/lab_floor001.png | GNU General Public License 2.0 or later | Martin Gerhardy
+base/textures/tex_base/lab_floor001_nm.png | GNU General Public License 2.0 or later | MCR
 base/textures/tex_base/lab_floor002.png | GNU General Public License 2.0 | Werner Höhrer (hoehrer) | GPL2 photo by Martin Gerhardy
+base/textures/tex_base/lab_floor002_nm.png | GNU General Public License 2.0 | MCR
 base/textures/tex_base/lab_floor003.jpg | GNU General Public License 2.0 or later | Martin Gerhardy
 base/textures/tex_base/lab_floor003_nm.png | GNU General Public License 2.0 or later | Martin Gerhardy
 base/textures/tex_base/lab_wall001.png | GNU General Public License 2.0 | Werner Höhrer (hoehrer)
@@ -4463,8 +4508,8 @@ base/textures/tex_buildings/floor003_nm.png | GNU General Public License 2.0 or 
 base/textures/tex_buildings/floor003_sm.png | GNU General Public License 2.0 or later
 base/textures/tex_buildings/floor004.png | GNU General Public License 2.0 or later | Matthias "voller" Volmer | http://ufoai.ninex.info/forum/index.php?topic=3181.msg22120#msg22120
 base/textures/tex_buildings/floor004_nm.png | GNU General Public License 2.0 or later | Martin Gerhardy
-base/textures/tex_buildings/floor005.png | Creative Commons Attribution 3.0 Unported | Nate Wright, "bart" | http://opengameart.org/
-base/textures/tex_buildings/floor005_nm.png | Creative Commons Attribution 3.0 Unported | Nate Wright, "bart" | http://opengameart.org/
+base/textures/tex_buildings/floor005.png | Public Domain | Nobiax | http://opengameart.org/
+base/textures/tex_buildings/floor005_sm.png | Public Domain | Nobiax | http://opengameart.org/
 base/textures/tex_buildings/floor006.png | GNU General Public License 2.0 or later | shedeki
 base/textures/tex_buildings/floor006_nm.png | GNU General Public License 2.0 or later | shedeki
 base/textures/tex_buildings/floor008.png | GNU General Public License 2.0 or later | Matthias "Voller" Volmer
@@ -4705,7 +4750,9 @@ base/textures/tex_buildings/wall040.jpg | GNU General Public License 2.0 | Werne
 base/textures/tex_buildings/wall041.png | GNU General Public License 2.0 | OpenArena (ns_brick1.tga)
 base/textures/tex_buildings/wall042.png | GNU General Public License 2.0 | OpenArena (ns_brick2.tga)
 base/textures/tex_buildings/wall043.png | GNU General Public License 2.0 | Nexuiz GPLed Data (bricks01.tga)
+base/textures/tex_buildings/wall043_nm.png | GNU General Public License 2.0 | MCR | Nexuiz GPLed Data (bricks01.tga)
 base/textures/tex_buildings/wall044.png | GNU General Public License 2.0 | Nexuiz GPLed Data (bricks02.tga)
+base/textures/tex_buildings/wall044_nm.png | GNU General Public License 2.0 | Nexuiz GPLed Data (bricks02.tga)
 base/textures/tex_buildings/wall5_4.jpg | GNU General Public License 2.0 | Nexuiz GPLed Data
 base/textures/tex_buildings/wall_dirt1.png | Creative Commons Attribution-Share Alike 3.0 | hullbr3ach
 base/textures/tex_buildings/wall_dirt2.png | Creative Commons Attribution-Share Alike 3.0 | hullbr3ach
@@ -6143,7 +6190,8 @@ base/textures/tex_nature/ice003.png | GNU General Public License 2.0 | Nexuiz GP
 base/textures/tex_nature/ice003_nm.png | GNU General Public License 2.0 or later | Martin Gerhardy
 base/textures/tex_nature/icefloor.jpg | GNU General Public License 2.0 | OpenArena
 base/textures/tex_nature/jungle001.png | Public Domain | Nobiax, Nate Wright
-base/textures/tex_nature/jungle002.png | Public Domain | Nobiax, Nate Wright
+base/textures/tex_nature/jungle002.png | Public Domain | Nobiax, MCR
+base/textures/tex_nature/jungle002_sm.png | Public Domain | Nobiax
 base/textures/tex_nature/leaves1.png | GNU General Public License 2.0 |  | OpenArena
 base/textures/tex_nature/leaves2.png | GNU General Public License 2.0 |  | OpenArena
 base/textures/tex_nature/leaves3.png | GNU General Public License 2.0 |  | OpenArena
@@ -6280,11 +6328,33 @@ base/textures/tex_pics/art_japan011.png | Public Domain | MCR | http://commons.w
 base/textures/tex_pics/art_japan012.png | Public Domain | MCR | http://commons.wikimedia.org/wiki/File:Hokusai_Dragon.jpg
 base/textures/tex_pics/art_japan013.png | Public Domain | MCR | http://commons.wikimedia.org/wiki/File:Okyo_Dragon.jpg
 base/textures/tex_pics/art_japan014.png | Public Domain | MCR | http://commons.wikimedia.org/wiki/File:Amakasu_Omi_no_kami.jpg
+base/textures/tex_pics/art_mechanics001.png | GNU General Public License 2.0 | MCR | based on images from http://www.photorack.net
+base/textures/tex_pics/art_mechanics002.png | GNU General Public License 2.0 | MCR | based on images from http://www.photorack.net
+base/textures/tex_pics/art_medicine001.png | GNU General Public License 2.0 | MCR | based on images from http://www.photorack.net
+base/textures/tex_pics/art_medicine002.png | GNU General Public License 2.0 | MCR | based on images from http://www.photorack.net
+base/textures/tex_pics/art_molecules001.png | GNU General Public License 2.0 | MCR | based on images from http://www.photorack.net
+base/textures/tex_pics/art_molecules002.png | GNU General Public License 2.0 | MCR | based on images from http://www.photorack.net
+base/textures/tex_pics/art_molecules003.png | GNU General Public License 2.0 | MCR | based on images from http://www.photorack.net
+base/textures/tex_pics/art_molecules004.png | GNU General Public License 2.0 | MCR | based on images from http://www.photorack.net
+base/textures/tex_pics/art_molecules005.png | GNU General Public License 2.0 | MCR | based on images from http://www.photorack.net
 base/textures/tex_pics/art_portrait_bw_lady.jpg | GNU General Public License 2.0 | John W. Bjerk (eleazar)
 base/textures/tex_pics/art_portrait_girl001.jpg | GNU General Public License 2.0 | John W. Bjerk (eleazar)
 base/textures/tex_pics/art_portrait_madonna01.jpg | GNU General Public License 2.0 | John W. Bjerk (eleazar)
 base/textures/tex_pics/art_portrait_maiden.jpg | GNU General Public License 2.0 | John W. Bjerk (eleazar)
 base/textures/tex_pics/art_runner.jpg | GNU General Public License 2.0 | John W. Bjerk (eleazar)
+base/textures/tex_pics/art_science001.png | GNU General Public License 2.0 | MCR | based on images from http://www.photorack.net
+base/textures/tex_pics/art_science002.png | GNU General Public License 2.0 | MCR | based on images from http://www.photorack.net
+base/textures/tex_pics/art_science003.png | GNU General Public License 2.0 | MCR | based on images from http://www.photorack.net
+base/textures/tex_pics/art_science004.png | GNU General Public License 2.0 | MCR | based on images from http://www.photorack.net
+base/textures/tex_pics/art_science005.png | GNU General Public License 2.0 | MCR | based on images from http://www.photorack.net
+base/textures/tex_pics/art_science006.png | GNU General Public License 2.0 | MCR | based on images from http://www.photorack.net
+base/textures/tex_pics/art_science007.png | GNU General Public License 2.0 | MCR | based on images from http://www.photorack.net
+base/textures/tex_pics/art_science008.png | GNU General Public License 2.0 | MCR | based on images from http://www.photorack.net
+base/textures/tex_pics/art_science009.png | GNU General Public License 2.0 | MCR | based on images from http://www.photorack.net
+base/textures/tex_pics/art_science010.png | GNU General Public License 2.0 | MCR | based on images from http://www.photorack.net
+base/textures/tex_pics/art_science011.png | GNU General Public License 2.0 | MCR | based on images from http://www.photorack.net
+base/textures/tex_pics/art_science012.png | GNU General Public License 2.0 | MCR | based on images from http://www.photorack.net
+base/textures/tex_pics/art_science013.png | GNU General Public License 2.0 | MCR | based on images from http://www.photorack.net
 base/textures/tex_pics/art_textile01.jpg | GNU General Public License 2.0 | John W. Bjerk (eleazar)
 base/textures/tex_pics/art_textile01_nm.png | GNU General Public License 2.0 | MCR | John W. Bjerk (eleazar)
 base/textures/tex_pics/asia001.jpg | GNU General Public License 2.0 | John W. Bjerk (eleazar)
@@ -6727,6 +6797,8 @@ radiant/prefabs/misc/pharaoh.map | GNU General Public License 2.0 | MCR
 radiant/prefabs/misc/shop/ware10.map | GNU General Public License 2.0
 radiant/prefabs/misc/sodamachine.jpg | GNU General Public License 2.0 | MCR
 radiant/prefabs/misc/sodamachine.map | GNU General Public License 2.0 | MCR
+radiant/prefabs/misc/staircase_spiral.jpg | GNU General Public License 2.0 or later | ShipIt
+radiant/prefabs/misc/staircase_spiral.map | GNU General Public License 2.0 or later | ShipIt
 radiant/prefabs/misc/trashbin001.jpg | GNU General Public License 2.0 or later | Nate Wright
 radiant/prefabs/misc/trashbin001.map | GNU General Public License 2.0 or later | Nate Wright
 radiant/prefabs/misc/waterdisp.jpg | GNU General Public License 2.0 | MCR

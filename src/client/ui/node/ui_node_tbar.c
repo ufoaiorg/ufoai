@@ -24,6 +24,7 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 
 #include "../ui_nodes.h"
 #include "../ui_parse.h"
+#include "../ui_behaviour.h"
 #include "../ui_render.h"
 #include "ui_node_tbar.h"
 #include "ui_node_abstractvalue.h"
@@ -71,19 +72,15 @@ static void UI_TBarNodeDraw (uiNode_t *node)
 		shx, EXTRADATA(node).texh[1], EXTRADATA(node).texl[0], EXTRADATA(node).texl[1], ref);
 }
 
-static const value_t properties[] = {
-	/* @todo Need documentation */
-	{"texh", V_POS, UI_EXTRADATA_OFFSETOF(tbarExtraData_t, texh), MEMBER_SIZEOF(tbarExtraData_t, texh)},
-	/* @todo Need documentation */
-	{"texl", V_POS, UI_EXTRADATA_OFFSETOF(tbarExtraData_t, texl), MEMBER_SIZEOF(tbarExtraData_t, texl)},
-	{NULL, V_NULL, 0, 0}
-};
-
 void UI_RegisterTBarNode (uiBehaviour_t *behaviour)
 {
 	behaviour->name = "tbar";
 	behaviour->extends = "abstractvalue";
 	behaviour->draw = UI_TBarNodeDraw;
-	behaviour->properties = properties;
 	behaviour->extraDataSize = sizeof(EXTRADATA_TYPE);
+
+	/* @todo Need documentation */
+	UI_RegisterExtradataNodeProperty(behaviour, "texh", V_POS, tbarExtraData_t, texh);
+	/* @todo Need documentation */
+	UI_RegisterExtradataNodeProperty(behaviour, "texl", V_POS, tbarExtraData_t, texl);
 }

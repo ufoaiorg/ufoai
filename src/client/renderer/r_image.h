@@ -88,9 +88,6 @@ void R_GetScaledTextureSize(int width, int height, int *scaledWidth, int *scaled
 void R_ScaleTexture(unsigned *in, int inwidth, int inheight, unsigned *out, int outwidth, int outheight);
 image_t* R_RenderToTexture(const char *name, int x, int y, int w, int h);
 
-void R_TextureDisableWrapping(const image_t *image);
-void R_TextureEnableWrapping(const image_t *image);
-
 void R_ImageList_f(void);
 void R_InitImages(void);
 void R_ShutdownImages(void);

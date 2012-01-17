@@ -590,8 +590,6 @@ mapdef farm2
 	}
 }
 
-
-
 ////////////////////////
 // FOREST RANDOM MAPS //
 ////////////////////////
@@ -1310,6 +1308,50 @@ mapdef laboratory
 	}
 }
 
+/////////////////////////
+// MANSION RANDOM MAPS //
+/////////////////////////
+
+mapdef mansion
+{
+        map                     "+mansion"
+        description     ""
+        teams              4
+        multiplayer     true
+        gametypes
+        {
+		1on1
+		1on1on1
+		2on2
+        }
+        maxaliens       8
+        aircraft
+        {
+		//any
+        }
+
+        ufos
+        {
+                //any
+        }
+
+        terrains
+        {
+                coast
+        }
+
+        cultures
+        {
+                western
+        }
+
+        populations
+        {
+                urban
+		village
+        }
+}
+
 //////////////////////////
 // ORIENTAL RANDOM MAPS //
 //////////////////////////
@@ -1704,7 +1746,7 @@ mapdef ufocrash
 		craft_crash_corrupter
 		craft_crash_harvester
 		craft_crash_supply
-		craft_crash_bomber
+//		craft_crash_bomber
 	}
 
 	aircraft
@@ -3466,6 +3508,12 @@ mapdef lake_ice_big
 	{
 		craft_drop_firebird
 	}
+
+	ufos
+	{
+		craft_ufo_fighter
+	}
+
 	terrains
 	{
 		cold
@@ -3881,7 +3929,7 @@ mapdef scout_crash
 	}
 }
 
-// SMALL HOUSE MAP //
+// SMALL_HOUSE MAP //
 
 mapdef small_house
 {

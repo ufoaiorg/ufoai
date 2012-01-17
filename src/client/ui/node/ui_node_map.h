@@ -35,6 +35,6 @@ typedef struct mapExtraData_s {
 	float paddingRight;
 } mapExtraData_t;
 
-void UI_RegisterMapNode(uiBehaviour_t *behaviour);
+void UI_RegisterMapNode(struct uiBehaviour_s *behaviour);
 
 #endif

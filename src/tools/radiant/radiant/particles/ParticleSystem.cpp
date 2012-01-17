@@ -20,22 +20,14 @@ ParticleSystem::~ParticleSystem ()
 	}
 }
 
-void ParticleSystem::init() {
-	scripts::Parser parser("particle");
-	_blocks = parser.getEntries();
-	for (DataBlocks::iterator i = _blocks.begin(); i != _blocks.end(); ++i) {
-		const std::string& particleID = (*i)->getID();
-		_particleDefintions[particleID] = ParticleParser(particleID, (*i)->getData()).getParticle();
-	}
-}
-
 IParticleDefinition* ParticleSystem::getParticle (const std::string& particleID)
 {
 	if (particleID.empty())
 		return NULL;
 
-	ParticleDefinitionMap::const_iterator i = _particleDefintions.find(particleID);
-	if (i != _particleDefintions.end())
+	const ParticleDefinitionMap &p = getParticleDefinitions();
+	ParticleDefinitionMap::const_iterator i = p.find(particleID);
+	if (i != p.end())
 		return i->second;
 
 	return NULL;
@@ -48,8 +40,17 @@ void ParticleSystem::foreachParticle (const Visitor& visitor) const
 	}
 }
 
-ParticleDefinitionMap ParticleSystem::getParticleDefinitions () const
+const ParticleDefinitionMap& ParticleSystem::getParticleDefinitions ()
 {
+	if (!_init) {
+		_init = true;
+		scripts::Parser parser("particle");
+		_blocks = parser.getEntries();
+		for (DataBlocks::iterator i = _blocks.begin(); i != _blocks.end(); ++i) {
+			const std::string& particleID = (*i)->getID();
+			_particleDefintions[particleID] = ParticleParser(particleID, (*i)->getData()).getParticle();
+		}
+	}
 	return _particleDefintions;
 }
 

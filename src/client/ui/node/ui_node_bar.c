@@ -26,6 +26,7 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 */
 
 #include "../ui_nodes.h"
+#include "../ui_behaviour.h"
 #include "../ui_parse.h"
 #include "../ui_main.h"
 #include "../ui_input.h"
@@ -166,35 +167,27 @@ static void UI_BarNodeLoading (uiNode_t *node)
 	EXTRADATA(node).orientation = ALIGN_CR;
 }
 
-/**
- * @brief Valid properties for a bar node
- */
-static const value_t properties[] = {
-	/**
-	 * Orientation of the bar. Default value "cr". Other available values are "uc", "lc", "cr", "cl"
-	 */
-	{"direction", V_ALIGN, UI_EXTRADATA_OFFSETOF(barExtraData_t, orientation), MEMBER_SIZEOF(barExtraData_t, orientation)},
-	/**
-	 * if true, the user can't edit the content
-	 */
-	{"readonly", V_BOOL, UI_EXTRADATA_OFFSETOF(barExtraData_t, readOnly),  MEMBER_SIZEOF(barExtraData_t, readOnly)},
-	/**
-	 * there is no hover effect if this is true
-	 */
-	{"nohover", V_BOOL, UI_EXTRADATA_OFFSETOF(barExtraData_t, noHover),  MEMBER_SIZEOF(barExtraData_t, noHover)},
-
-	{NULL, V_NULL, 0, 0}
-};
-
 void UI_RegisterBarNode (uiBehaviour_t *behaviour)
 {
 	behaviour->name = "bar";
 	behaviour->extends = "abstractvalue";
-	behaviour->properties = properties;
 	behaviour->draw = UI_BarNodeDraw;
 	behaviour->loading = UI_BarNodeLoading;
 	behaviour->mouseDown = UI_BarNodeMouseDown;
 	behaviour->mouseUp = UI_BarNodeMouseUp;
 	behaviour->capturedMouseMove = UI_BarNodeCapturedMouseMove;
 	behaviour->extraDataSize = sizeof(EXTRADATA_TYPE);
+
+	/**
+	 * Orientation of the bar. Default value "cr". Other available values are "uc", "lc", "cr", "cl"
+	 */
+	UI_RegisterExtradataNodeProperty(behaviour, "direction", V_ALIGN, barExtraData_t, orientation);
+	/**
+	 * if true, the user can't edit the content
+	 */
+	UI_RegisterExtradataNodeProperty(behaviour, "readonly", V_BOOL, barExtraData_t, readOnly);
+	/**
+	 * there is no hover effect if this is true
+	 */
+	UI_RegisterExtradataNodeProperty(behaviour, "nohover", V_BOOL, barExtraData_t, noHover);
 }

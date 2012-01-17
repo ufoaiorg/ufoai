@@ -36,6 +36,6 @@ typedef struct radioButtonExtraData_s {
 	qboolean flipIcon;			/**< Flip the icon rendering (horizontal) */
 } radioButtonExtraData_t;
 
-void UI_RegisterRadioButtonNode(uiBehaviour_t *behaviour);
+void UI_RegisterRadioButtonNode(struct uiBehaviour_s *behaviour);
 
 #endif

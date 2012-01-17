@@ -35,6 +35,7 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 
 #include "../ui_nodes.h"
 #include "../ui_parse.h"
+#include "../ui_behaviour.h"
 #include "../ui_main.h"
 #include "../ui_sprite.h"
 #include "../ui_render.h"
@@ -98,30 +99,25 @@ static void UI_Spinner2NodeDraw (uiNode_t *node)
 		UI_DrawSpriteInBox(qfalse, EXTRADATA(node).bottomIcon, bottomStatus, pos[0], pos[1], node->size[0], node->size[1]);
 }
 
-static const value_t properties[] = {
-	/**
-	 * @brief Backround used to display the spinner. It is displayed in the center of the node.
-	 */
-	{"background", V_UI_SPRITEREF, UI_EXTRADATA_OFFSETOF(EXTRADATA_TYPE, background), MEMBER_SIZEOF(EXTRADATA_TYPE, background)},
-
-	/**
-	 * @brief Top icon used to decorate the top button of the spinner. It is displayed in the center of the node.
-	 */
-	{"topIcon", V_UI_SPRITEREF, UI_EXTRADATA_OFFSETOF(EXTRADATA_TYPE, topIcon), MEMBER_SIZEOF(EXTRADATA_TYPE, topIcon)},
-
-	/**
-	 * @brief Sprite used to decorate the bottom button of the spinner. It is displayed in the center of the node.
-	 */
-	{"bottomIcon", V_UI_SPRITEREF, UI_EXTRADATA_OFFSETOF(EXTRADATA_TYPE, bottomIcon), MEMBER_SIZEOF(EXTRADATA_TYPE, bottomIcon)},
-
-	{NULL, V_NULL, 0, 0}
-};
-
 void UI_RegisterSpinner2Node (uiBehaviour_t *behaviour)
 {
 	behaviour->name = "spinner2";
 	behaviour->extends = "spinner";
 	behaviour->draw = UI_Spinner2NodeDraw;
-	behaviour->properties = properties;
 	behaviour->extraDataSize = sizeof(EXTRADATA_TYPE);
+
+	/**
+	 * @brief Backround used to display the spinner. It is displayed in the center of the node.
+	 */
+	UI_RegisterExtradataNodeProperty(behaviour, "background", V_UI_SPRITEREF, EXTRADATA_TYPE, background);
+
+	/**
+	 * @brief Top icon used to decorate the top button of the spinner. It is displayed in the center of the node.
+	 */
+	UI_RegisterExtradataNodeProperty(behaviour, "topIcon", V_UI_SPRITEREF, EXTRADATA_TYPE, topIcon);
+
+	/**
+	 * @brief Sprite used to decorate the bottom button of the spinner. It is displayed in the center of the node.
+	 */
+	UI_RegisterExtradataNodeProperty(behaviour, "bottomIcon", V_UI_SPRITEREF, EXTRADATA_TYPE, bottomIcon);
 }

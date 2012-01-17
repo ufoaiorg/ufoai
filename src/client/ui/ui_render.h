@@ -29,6 +29,7 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #include "../cl_renderer.h"
 
 const image_t *UI_LoadImage(const char *name);
+const struct image_s *UI_LoadWrappedImage(const char *name);
 
 void UI_DrawNormImage(qboolean flip, float x, float y, float w, float h, float sh, float th, float sl, float tl, const image_t *image);
 const image_t *UI_DrawNormImageByName(qboolean flip, float x, float y, float w, float h, float sh, float th, float sl, float tl, const char *name);

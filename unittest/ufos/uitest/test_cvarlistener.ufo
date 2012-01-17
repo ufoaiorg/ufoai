@@ -1,0 +1,278 @@
+/**
+ * @brief Unittest for data node
+ * Move it into the ui ufo script directory (/base/ufos/ui/), run the game, and run the command "ui_push test_cvarlistener"
+ * Every thing must be green and it must not print any text or warning into the console.
+ */
+
+window test_cvarlistener_commontest {
+	{
+		pos "100 100"
+		size "0 0"
+	}
+
+	data count { integer "0" }
+
+	cvarlistener test_cvarlistener_cvar1 {
+		*node:root.count@integer = (*node:root.count@integer + 1)
+		*cvar:old = <1>
+		*cvar:new = <2>
+	}
+
+	func onWindowOpened {
+
+		// nothing was change
+
+		if ( *node:this.count@integer == 0) { *node:test_cvarlistener.testCommon1@color = "0 1 0 1" }
+		else { *node:test_cvarlistener.testCommon1@color = "1 0 0 1" }
+
+		// one change
+
+		*node:this.count@integer = 0
+		*cvar:test_cvarlistener_cvar1 = 1
+		if ( *node:this.count@integer == 1) { *node:test_cvarlistener.testCommon2@color = "0 1 0 1" }
+		else { *node:test_cvarlistener.testCommon2@color = "1 0 0 1" }
+
+		// more changes
+
+		*node:this.count@integer = 0
+		*cvar:test_cvarlistener_cvar1 = 2
+		*cvar:test_cvarlistener_cvar1 = 3
+		if ( *node:this.count@integer == 2) { *node:test_cvarlistener.testCommon3@color = "0 1 0 1" }
+		else { *node:test_cvarlistener.testCommon3@color = "1 0 0 1" }
+
+		// param values
+
+		if ( *cvar:old == 2) { *node:test_cvarlistener.testCommon4@color = "0 1 0 1" }
+		else { *node:test_cvarlistener.testCommon4@color = "1 0 0 1" }
+		if ( *cvar:new == 3) { *node:test_cvarlistener.testCommon5@color = "0 1 0 1" }
+		else { *node:test_cvarlistener.testCommon5@color = "1 0 0 1" }
+
+		cmd "ui_pop"
+	}
+
+	func onWindowClosed {
+		delete *cvar:old
+		delete *cvar:new
+	}
+
+}
+
+component panel test_cvarlistener_dyn {
+	cvarlistener test_cvarlistener_cvar4 {
+		*node:root.count@integer = (*node:root.count@integer + 1)
+	}
+
+	panel foo1 {
+		cvarlistener test_cvarlistener_cvar4 {
+			*node:root.count@integer = (*node:root.count@integer + 1)
+		}
+	}
+}
+
+window test_cvarlistener
+{
+	{
+		pos "100 100"
+		size "340 400"
+		dragbutton	true
+		closebutton	true
+		string		"_Unittest data node"
+		bgcolor		"0 0 0 1"
+	}
+
+
+	string commonTitle {
+		pos		"20 40"
+		string	"common"
+	}
+
+	string testCommon1 {
+		pos		"20 60"
+		string	"t1"
+	}
+
+	string testCommon2 {
+		pos		"20 80"
+		string	"t2"
+	}
+
+	string testCommon3 {
+		pos		"20 100"
+		string	"t3"
+	}
+
+	string testCommon4 {
+		pos		"20 120"
+		string	"t4"
+	}
+
+	string testCommon5 {
+		pos		"20 140"
+		string	"t5"
+	}
+
+	string listenerTitle {
+		pos		"80 40"
+		string	"Bind"
+	}
+
+	string testBind1 {
+		pos		"80 60"
+		string	"t1"
+	}
+
+	string testBind2 {
+		pos		"80 80"
+		string	"t2"
+	}
+
+	string testBind3 {
+		pos		"80 100"
+		string	"t3"
+	}
+
+	string testBind4 {
+		pos		"80 120"
+		string	"t4"
+	}
+
+	string testBind5 {
+		pos		"80 140"
+		string	"t5"
+	}
+
+	string testBind6 {
+		pos		"80 160"
+		string	"t6"
+	}
+
+	string testBind7 {
+		pos		"80 180"
+		string	"t7"
+	}
+
+	string testBind8 {
+		pos		"80 200"
+		string	"t8"
+	}
+
+	string testBind9 {
+		pos		"80 220"
+		string	"t9"
+	}
+
+	//
+	// Common tests
+	//
+
+	data count { integer "0" }
+
+	cvarlistener test_cvarlistener_cvar2 {
+		*node:root.count@integer = (*node:root.count@integer + 1)
+	}
+
+	cvarlistener test_cvarlistener_cvar3 {
+		*node:root.count@integer = (*node:root.count@integer + 1)
+	}
+
+	panel foo1 {
+		cvarlistener test_cvarlistener_cvar3 {
+			*node:root.count@integer = (*node:root.count@integer + 1)
+		}
+	}
+
+	panel foo2 {
+		cvarlistener test_cvarlistener_cvar3 {
+			*node:root.count@integer = (*node:root.count@integer + 1)
+		}
+	}
+
+	func onWindowOpened {
+		*cvar:test_cvarlistener_cvar1 = 10
+		cmd "ui_push test_cvarlistener_commontest"
+
+		// not yet binded cause cvar was created after the listener
+
+		*node:this.count@integer = 0
+		*cvar:test_cvarlistener_cvar2 = 10
+		*cvar:test_cvarlistener_cvar2 = 12
+		if ( *node:this.count@integer == 0 ) { *node:root.testBind1@color = "0 1 0 1" }
+		else { *node:root.testBind1@color = "1 0 0 1" }
+
+		// force to bind it
+
+		*node:this.count@integer = 0
+		call *node:this.test_cvarlistener_cvar2@forceBind
+		*cvar:test_cvarlistener_cvar2 = 10
+		if ( *node:this.count@integer == 1 ) { *node:root.testBind2@color = "0 1 0 1" }
+		else { *node:root.testBind2@color = "1 0 0 1" }
+
+		// deletion of the cvar break the binded (which is a lack...)
+		// to fix that problem we can use @forceBind again
+
+		*node:this.count@integer = 0
+		delete *cvar:test_cvarlistener_cvar2
+		*cvar:test_cvarlistener_cvar2 = 10
+		*cvar:test_cvarlistener_cvar2 = 12
+		if ( *node:this.count@integer == 0 ) { *node:root.testBind3@color = "0 1 0 1" }
+		else { *node:root.testBind3@color = "1 0 0 1" }
+
+		// multiple binds init
+
+		*node:this.count@integer = 0
+		*cvar:test_cvarlistener_cvar3 = 10
+		call *node:this.test_cvarlistener_cvar3@forceBind
+		call *node:this.foo1.test_cvarlistener_cvar3@forceBind
+		call *node:this.foo2.test_cvarlistener_cvar3@forceBind
+		if ( *node:this.count@integer == 0 ) { *node:root.testBind4@color = "0 1 0 1" }
+		else { *node:root.testBind4@color = "1 0 0 1" }
+
+		// test multiple bind call
+
+		*node:this.count@integer = 0
+		*cvar:test_cvarlistener_cvar3 = 12
+		if ( *node:this.count@integer == 3 ) { *node:root.testBind5@color = "0 1 0 1" }
+		else { *node:root.testBind5@color = "1 0 0 1" }
+
+		// dynamic node binding init
+
+		*node:this.count@integer = 0
+		*cvar:test_cvarlistener_cvar4 = 10
+		call *node:root@createchild ( "dyn1" , "test_cvarlistener_dyn" )
+		if ( *node:this.count@integer == 0 ) { *node:root.testBind6@color = "0 1 0 1" }
+		else { *node:root.testBind6@color = "1 0 0 1" }
+
+		// dynamic node binding call
+
+		*cvar:test_cvarlistener_cvar4 = 12
+		if ( *node:this.count@integer == 2 ) { *node:root.testBind7@color = "0 1 0 1" }
+		else { *node:root.testBind7@color = "1 0 0 1" }
+
+		// add more listener and remove old ones
+
+		*node:this.count@integer = 0
+		call *node:root@createchild ( "dyn2" , "test_cvarlistener_dyn" )
+		call *node:root.dyn1@delete
+		*cvar:test_cvarlistener_cvar4 = 10
+		if ( *node:this.count@integer == 2 ) { *node:root.testBind8@color = "0 1 0 1" }
+		else { *node:root.testBind8@color = "1 0 0 1" }
+
+		// clean up
+
+		*node:this.count@integer = 0
+		call *node:root@removeAllChild
+		*cvar:test_cvarlistener_cvar4 = 12
+		if ( *node:this.count@integer == 0 ) { *node:root.testBind9@color = "0 1 0 1" }
+		else { *node:root.testBind9@color = "1 0 0 1" }
+
+		// clean up
+	}
+
+	func onWindowClosed {
+		delete *cvar:test_cvarlistener_cvar1
+		delete *cvar:test_cvarlistener_cvar2
+		delete *cvar:test_cvarlistener_cvar3
+		delete *cvar:test_cvarlistener_cvar4
+	}
+
+}

@@ -28,6 +28,7 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #include "../ui_nodes.h"
 #include "../ui_font.h"
 #include "../ui_parse.h"
+#include "../ui_behaviour.h"
 #include "../ui_input.h"
 #include "../ui_actions.h"
 #include "../ui_render.h"
@@ -186,13 +187,6 @@ static void UI_KeyBindingNodeLoading (uiNode_t *node)
 	Vector4Set(node->selectedColor, 1, 1, 1, 0.5);
 }
 
-static const value_t properties[] = {
-	{"keyspace", V_INT, UI_EXTRADATA_OFFSETOF(keyBindingExtraData_t, keySpace), MEMBER_SIZEOF(keyBindingExtraData_t, keySpace)},
-	{"bindingwidth", V_INT, UI_EXTRADATA_OFFSETOF(keyBindingExtraData_t, bindingWidth), MEMBER_SIZEOF(keyBindingExtraData_t, bindingWidth)},
-
-	{NULL, V_NULL, 0, 0}
-};
-
 void UI_RegisterKeyBindingNode (uiBehaviour_t *behaviour)
 {
 	behaviour->name = "keybinding";
@@ -200,6 +194,8 @@ void UI_RegisterKeyBindingNode (uiBehaviour_t *behaviour)
 	behaviour->keyPressed = UI_KeyBindingNodeKeyPressed;
 	behaviour->draw = UI_KeyBindingNodeDraw;
 	behaviour->loading = UI_KeyBindingNodeLoading;
-	behaviour->properties = properties;
 	behaviour->extraDataSize = sizeof(EXTRADATA_TYPE);
+
+	UI_RegisterExtradataNodeProperty(behaviour, "keyspace", V_INT, keyBindingExtraData_t, keySpace);
+	UI_RegisterExtradataNodeProperty(behaviour, "bindingwidth", V_INT, keyBindingExtraData_t, bindingWidth);
 }

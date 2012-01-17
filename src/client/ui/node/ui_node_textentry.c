@@ -33,6 +33,7 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #include "../ui_nodes.h"
 #include "../ui_font.h"
 #include "../ui_parse.h"
+#include "../ui_behaviour.h"
 #include "../ui_input.h"
 #include "../ui_actions.h"
 #include "../ui_render.h"
@@ -324,38 +325,7 @@ static void UI_TextEntryNodeLoading (uiNode_t *node)
 	Vector4Set(node->selectedColor, 1, 1, 1, 1);
 }
 
-static const value_t properties[] = {
-	/* @override image
-	 * Texture used by the button. It's a normalized texture of 128x128.
-	 * Normal button start at 0x0, mouse over start at 64x0, mouse click
-	 * start at 0x64 (but not yet implemented), and disabled start at 64x64.
-	 * See the image to have a usable template for this node.
-	 * @image html http://ufoai.ninex.info/wiki/images/Button_blue.png
-	 */
-	/* @override onclick
-	 * Call back event called when we click on the node. If the click select the node,
-	 * it called before we start the cvar edition.
-	 */
-	/* @override onchange
-	 * Call back event (like click...) fired when the text is changed, after
-	 * validation. An abort of the edition dont fire this event.
-	 */
-
-	/* Custom the draw behaviour by hiding each character of the text with a star (''*''). */
-	{"ispassword", V_BOOL, UI_EXTRADATA_OFFSETOF(textEntryExtraData_t, isPassword), MEMBER_SIZEOF(textEntryExtraData_t, isPassword)},
-	/* ustom the mouse event behaviour. When we are editing the text, if we click out of the node, the edition is aborted. Changes on
-	 * the text are canceled, and no change event are fired.
-	 */
-	{"clickoutabort", V_BOOL, UI_EXTRADATA_OFFSETOF(textEntryExtraData_t, clickOutAbort), MEMBER_SIZEOF(textEntryExtraData_t, clickOutAbort)},
-	/* Call it when we abort the edition */
-	{"onabort", V_UI_ACTION, UI_EXTRADATA_OFFSETOF(textEntryExtraData_t, onAbort), MEMBER_SIZEOF(textEntryExtraData_t, onAbort)},
-	/* Call it to force node edition */
-	{"edit", V_UI_NODEMETHOD, ((size_t) UI_TextEntryNodeFocus), 0},
-
-	{NULL, V_NULL, 0, 0}
-};
-
-void UI_RegisterTextEntryNode (uiBehaviour_t *behaviour)
+void UI_RegisterTextEntryNode (struct uiBehaviour_s *behaviour)
 {
 	behaviour->name = "textentry";
 	behaviour->leftClick = UI_TextEntryNodeClick;
@@ -364,6 +334,34 @@ void UI_RegisterTextEntryNode (uiBehaviour_t *behaviour)
 	behaviour->keyPressed = UI_TextEntryNodeKeyPressed;
 	behaviour->draw = UI_TextEntryNodeDraw;
 	behaviour->loading = UI_TextEntryNodeLoading;
-	behaviour->properties = properties;
 	behaviour->extraDataSize = sizeof(EXTRADATA_TYPE);
+
+	/* Texture used by the button. It's a normalized texture of 128x128.
+	 * Normal button start at 0x0, mouse over start at 64x0, mouse click
+	 * start at 0x64 (but not yet implemented), and disabled start at 64x64.
+	 * See the image to have a usable template for this node.
+	 * @image html http://ufoai.ninex.info/wiki/images/Button_blue.png
+	 */
+	UI_RegisterOveridedNodeProperty(behaviour, "image");
+
+	/* Call back event called when we click on the node. If the click select the node,
+	 * it called before we start the cvar edition.
+	 */
+	UI_RegisterOveridedNodeProperty(behaviour, "onClick");
+
+	/* Call back event (like click...) fired when the text is changed, after
+	 * validation. An abort of the edition dont fire this event.
+	 */
+	UI_RegisterOveridedNodeProperty(behaviour, "onChange");
+
+	/* Custom the draw behaviour by hiding each character of the text with a star (''*''). */
+	UI_RegisterExtradataNodeProperty(behaviour, "isPassword", V_BOOL, textEntryExtraData_t, isPassword);
+	/* ustom the mouse event behaviour. When we are editing the text, if we click out of the node, the edition is aborted. Changes on
+	 * the text are canceled, and no change event are fired.
+	 */
+	UI_RegisterExtradataNodeProperty(behaviour, "clickOutAbort", V_BOOL, textEntryExtraData_t, clickOutAbort);
+	/* Call it when we abort the edition */
+	UI_RegisterExtradataNodeProperty(behaviour, "onAbort", V_UI_ACTION, textEntryExtraData_t, onAbort);
+	/* Call it to force node edition */
+	UI_RegisterNodeMethod(behaviour, "edit", UI_TextEntryNodeFocus);
 }

@@ -515,6 +515,19 @@ window hud_default extends hud
 			ghost	true
 		}
 
+		custombutton bt_rescuezone
+		{
+			tooltip	"_Show rescue zone"
+			background	"buttons/large_blue"
+			pos		"64 10"
+			size	"64 37"
+			icon	"icons/rescue_zone"
+			invis	false
+			onMouseEnter	{ *node:this@icon = "icons/rescue_zone_hover" }
+			onMouseLeave	{ *node:this@icon = "icons/rescue_zone" }
+			onClick			{ cmd "toggle_rescuezone;" }
+		}
+
 		custombutton bt_nextround
 		{
 			tooltip	"_Finish round"
@@ -999,6 +1012,34 @@ window hud_default extends hud
 		cmd "hud_movemode;"
 	}
 
+	/**
+	 * This is called when a rescuezone is available in the given map
+	 */
+	confunc enable_rescuezone
+	{
+		*node:root.next.bt_rescuezone@invis = false
+	}
+	/**
+	 * This is called when no rescuezone is available in the given map
+	 */
+	confunc disable_rescuezone
+	{
+		*node:root.next.bt_rescuezone@invis = true
+	}
+	/**
+	 * This is called by the button to show or hide the rescue zone
+	 */
+	confunc toggle_rescuezone
+	{
+		if (*cvar:cl_map_draw_rescue_zone eq 0) {
+			*cvar:cl_map_draw_rescue_zone = 2
+			*node:root.next.bt_rescuezone@tooltip = "_Hide rescue zone"
+		} else {
+			*cvar:cl_map_draw_rescue_zone = 0
+			*node:root.next.bt_rescuezone@tooltip = "_Show rescue zone"
+		}
+	}
+
 	// "RESERVATION FOR SHOT" BUTTON
 	confunc reserve_shot_clear
 	{
@@ -1061,6 +1102,9 @@ window hud_default extends hud
 	func onWindowOpened
 	{
 		cmd "music_change battlescape;"
+
+		// Hide the rescue zone on startup
+		*cvar:cl_map_draw_rescue_zone = 0
 	}
 
 	func onScriptLoaded {

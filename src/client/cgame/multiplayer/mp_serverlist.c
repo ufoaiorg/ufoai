@@ -313,7 +313,7 @@ void CL_ParseServerInfoMessage (struct dbuffer *msg, const char *hostname)
 			token++;
 
 		Com_sprintf(serverInfoText + strlen(serverInfoText), sizeof(serverInfoText) - strlen(serverInfoText), _("Map:\t%s\n"), value);
-		if (cgi->FS_CheckFile("pics/maps/shots/%s.jpg", token) != -1) {
+		if (!cgi->R_ImageExists("pics/maps/shots/%s", token)) {
 			/* store it relative to pics/ dir - not relative to game dir */
 			cgi->Cvar_Set("mn_mappic", va("maps/shots/%s", token));
 		}
