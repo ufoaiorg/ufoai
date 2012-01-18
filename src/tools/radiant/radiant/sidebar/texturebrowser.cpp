@@ -206,8 +206,7 @@ void TextureBrowser::setStatusText (const std::string& name)
 	StringOutputStream strTex(256);
 	strTex << name << " W: " << string::toString(q->width) << " H: " << string::toString(q->height);
 	shaderPtr->DecRef();
-	g_pParentWnd->SetStatusText(g_pParentWnd->m_texture_status, strTex.toString().substr(
-			GlobalTexturePrefix_get().length()));
+	g_pParentWnd->SetStatusText(g_pParentWnd->m_texture_status, shader_get_textureName(strTex.toString()));
 }
 
 void TextureBrowser::setSelectedShader (const std::string& _shader)

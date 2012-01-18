@@ -72,7 +72,7 @@ inline bool shader_is_texture (const std::string& name)
 	return shader_equal_prefix(name, GlobalTexturePrefix_get());
 }
 
-inline const std::string shader_get_textureName (const std::string& name)
+inline std::string shader_get_textureName (const std::string& name)
 {
 	return name.substr(GlobalTexturePrefix_get().length());
 }
