@@ -663,7 +663,7 @@ static void R_UpdateGlowBufferBinding (void)
 
 void R_EnableGlowMap (const image_t *image)
 {
-	if (!r_postprocess->integer)
+	if (!r_programs->integer)
 		return;
 
 	if (image)
@@ -691,7 +691,7 @@ void R_EnableGlowMap (const image_t *image)
 
 void R_EnableDrawAsGlow (qboolean enable)
 {
-	if (!r_postprocess->integer)
+	if (!r_programs->integer)
 		return;
 
 	if (r_state.draw_glow_enabled == enable && r_state.active_program == lastProgram)

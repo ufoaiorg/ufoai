@@ -36,6 +36,10 @@ uniform sampler2D SAMPLER4;
 void main(void) {
 	vec4 finalColor = vec4(0.0);
 
+	/* Sample glowmap and calculate final glow color. */
+	vec4 glow_tex = texture2D(SAMPLER4, gl_TexCoord[0].st);
+	vec3 glowcolor = glow_tex.rgb * glow_tex.a * GLOWSCALE;
+
 	/* Sample the warp texture at a time-varied offset,*/
 	vec4 warp = texture2D(SAMPLER1, gl_TexCoord[0].xy + OFFSET.xy);
 
@@ -52,10 +56,14 @@ void main(void) {
 
 #if r_postprocess
 	gl_FragData[0] = finalColor;
-	if (GLOWSCALE > 0.0) {
-		gl_FragData[1] = gl_Color * texture2D(SAMPLER4, coord) * GLOWSCALE;
+	if (GLOWSCALE > 0.01) {
+		gl_FragData[1].rgb = glowcolor;
+		gl_FragData[1].a = 1.0;
+	} else {
+		gl_FragData[1] = vec4(0,0,0,1);
 	}
 #else
-	gl_FragColor = finalColor;
+	gl_FragColor.rgb = finalColor.rgb + glowcolor;
+	gl_FragColor.a = finalColor.a;
 #endif
 }

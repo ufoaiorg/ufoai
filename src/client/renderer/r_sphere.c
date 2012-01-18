@@ -213,12 +213,10 @@ static void R_SphereShadeGLSL (const sphere_t *sphere)
 	if (sphere->normalMap)
 		R_BindTextureForTexUnit(sphere->normalMap->texnum, &texunit_2);
 
-	if (r_lights->integer) {
-		if (sphere->blendScale >= 0)
-			R_ProgramParameter1f("BLENDSCALE", sphere->blendScale);
-		if (r_postprocess->integer && sphere->glowScale >= 0)
-			R_ProgramParameter1f("GLOWSCALE", sphere->glowScale);
-	}
+	if (sphere->blendScale >= 0)
+		R_ProgramParameter1f("BLENDSCALE", sphere->blendScale);
+	if (sphere->glowScale >= 0)
+		R_ProgramParameter1f("GLOWSCALE", sphere->glowScale);
 
 	/* set up pointers */
 	R_SphereActivateTextureUnit(&texunit_1, sphere->texes);

@@ -103,6 +103,7 @@ void main(void) {
 	gl_FragData[0] = color;
 	gl_FragData[1] = hdrColor;
 #else
-	gl_FragColor = color;
+	gl_FragColor.rgb = color.rgb + hdrColor.rgb;
+	gl_FragColor.a = color.a;
 #endif
 }

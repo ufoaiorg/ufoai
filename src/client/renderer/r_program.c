@@ -738,8 +738,7 @@ static void R_InitWorldProgram (r_program_t *prog)
 	R_ProgramParameter1i("SAMPLER1", 1);
 	R_ProgramParameter1i("SAMPLER2", 2);
 	R_ProgramParameter1i("SAMPLER3", 3);
-	if (r_postprocess->integer)
-		R_ProgramParameter1i("SAMPLER4", 4);
+	R_ProgramParameter1i("SAMPLER4", 4);
 
 	R_ProgramParameter1i("BUMPMAP", 0);
 	R_ProgramParameter1i("ROUGHMAP", 0);
@@ -749,8 +748,8 @@ static void R_InitWorldProgram (r_program_t *prog)
 	R_ProgramParameter1f("SPECULAR", defaultMaterial.specular);
 	R_ProgramParameter1f("BUMP", defaultMaterial.bump);
 	R_ProgramParameter1f("PARALLAX", defaultMaterial.parallax);
-	if (r_postprocess->integer)
-		R_ProgramParameter1f("GLOWSCALE", defaultMaterial.glowscale);
+	R_ProgramParameter1f("GLOWSCALE", defaultMaterial.glowscale);
+
 	if (r_fog->integer) {
 		if (r_state.fog_enabled) {
 			R_ProgramParameter3fv("FOGCOLOR", refdef.fogColor);
@@ -782,8 +781,7 @@ static void R_InitModelProgram (r_program_t *prog)
 	R_ProgramParameter1i("SAMPLER1", 1);
 	R_ProgramParameter1i("SAMPLER2", 2);
 	R_ProgramParameter1i("SAMPLER3", 3);
-	if (r_postprocess->integer)
-		R_ProgramParameter1i("SAMPLER4", 4);
+	R_ProgramParameter1i("SAMPLER4", 4);
 
 	R_ProgramParameter1i("BUMPMAP", 0);
 	R_ProgramParameter1i("ROUGHMAP", 0);
@@ -794,8 +792,8 @@ static void R_InitModelProgram (r_program_t *prog)
 	R_ProgramParameter1f("SPECULAR", defaultMaterial.specular);
 	R_ProgramParameter1f("BUMP", defaultMaterial.bump);
 	R_ProgramParameter1f("PARALLAX", defaultMaterial.parallax);
-	if (r_postprocess->integer)
-		R_ProgramParameter1f("GLOWSCALE", defaultMaterial.glowscale);
+	R_ProgramParameter1f("GLOWSCALE", defaultMaterial.glowscale);
+
 	if (r_fog->integer) {
 		if (r_state.fog_enabled) {
 			R_ProgramParameter3fv("FOGCOLOR", refdef.fogColor);
@@ -827,10 +825,8 @@ static void R_InitWarpProgram (r_program_t *prog)
 
 	R_ProgramParameter1i("SAMPLER0", 0);
 	R_ProgramParameter1i("SAMPLER1", 1);
-	if (r_postprocess->integer) {
-		R_ProgramParameter1i("SAMPLER4", 4);
-		R_ProgramParameter1f("GLOWSCALE", 0.0);
-	}
+	R_ProgramParameter1i("SAMPLER4", 4);
+	R_ProgramParameter1f("GLOWSCALE", 0.0);
 	R_ProgramParameter4fv("OFFSET", offset);
 	if (r_fog->integer) {
 		if (r_state.fog_enabled) {
