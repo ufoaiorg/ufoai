@@ -864,6 +864,13 @@ void R_SetDefaultState (void)
 
 	glPolygonMode(GL_FRONT_AND_BACK, GL_FILL);
 
+	R_ReallocateStateArrays(GL_ARRAY_LENGTH_CHUNK);
+	R_ReallocateTexunitArray(&texunit_0, GL_ARRAY_LENGTH_CHUNK);
+	R_ReallocateTexunitArray(&texunit_1, GL_ARRAY_LENGTH_CHUNK);
+	R_ReallocateTexunitArray(&texunit_2, GL_ARRAY_LENGTH_CHUNK);
+	R_ReallocateTexunitArray(&texunit_3, GL_ARRAY_LENGTH_CHUNK);
+	R_ReallocateTexunitArray(&texunit_4, GL_ARRAY_LENGTH_CHUNK);
+
 	/* setup vertex array pointers */
 	glEnableClientState(GL_VERTEX_ARRAY);
 	R_BindDefaultArray(GL_VERTEX_ARRAY);
@@ -946,4 +953,50 @@ void R_Color (const vec4_t rgba)
 
 	glColor4fv(color);
 	R_CheckError();
+}
+
+/**
+ * @brief Reallocate arrays of GL primitives if needed
+ * @param size The new array size
+ * @note Also resets all non-default GL array bindings
+ * @sa R_ReallocateTexunitArray
+*/
+void R_ReallocateStateArrays(int size)
+{
+	if (size <= r_state.array_size)
+		return;
+	r_state.vertex_array_3d = (GLfloat *) Mem_SafeReAlloc(r_state.vertex_array_3d, size * 3 * sizeof(GLfloat));
+	r_state.vertex_array_2d = (GLshort *) Mem_SafeReAlloc(r_state.vertex_array_2d, size * 2 * sizeof(GLshort));
+	r_state.color_array = (GLfloat *) Mem_SafeReAlloc(r_state.color_array, size * 4 * sizeof(GLfloat));
+	r_state.normal_array = (GLfloat *) Mem_SafeReAlloc(r_state.normal_array, size * 3 * sizeof(GLfloat));
+	r_state.tangent_array = (GLfloat *) Mem_SafeReAlloc(r_state.tangent_array, size * 4 * sizeof(GLfloat));
+	r_state.next_vertex_array_3d = (GLfloat *) Mem_SafeReAlloc(r_state.next_vertex_array_3d, size * 3 * sizeof(GLfloat));
+	r_state.next_normal_array = (GLfloat *) Mem_SafeReAlloc(r_state.next_normal_array, size * 3 * sizeof(GLfloat));
+	r_state.next_tangent_array = (GLfloat *) Mem_SafeReAlloc(r_state.next_tangent_array, size * 4 * sizeof(GLfloat));
+	r_state.array_size = size;
+	R_BindDefaultArray(GL_VERTEX_ARRAY);
+	R_BindDefaultArray(GL_COLOR_ARRAY);
+	R_BindDefaultArray(GL_NORMAL_ARRAY);
+	R_BindDefaultArray(GL_TANGENT_ARRAY);
+	R_BindDefaultArray(GL_NEXT_VERTEX_ARRAY);
+	R_BindDefaultArray(GL_NEXT_NORMAL_ARRAY);
+	R_BindDefaultArray(GL_NEXT_TANGENT_ARRAY);
+}
+
+/**
+ * @brief Reallocate texcoord array of the specified texunit, if needed
+ * @param texunit Pointer to texunit (TODO: remove this comment as obvious and redundant)
+ * @param size The new array size
+ * @note Also resets active texunit
+ * @sa R_ReallocateStateArrays
+*/
+void R_ReallocateTexunitArray(gltexunit_t * texunit, int size)
+{
+	if (size <= texunit->array_size)
+		return;
+	texunit->texcoord_array = (GLfloat *) Mem_SafeReAlloc(texunit->texcoord_array, size * 2 * sizeof(GLfloat));
+	texunit->array_size = size;
+	if (!r_state.active_texunit)
+		r_state.active_texunit = texunit;
+	R_BindDefaultArray(GL_TEXTURE_COORD_ARRAY);
 }
