@@ -11,6 +11,7 @@ from gzip import GzipFile
 import optparse
 import mapsync
 from tempfile import mkstemp
+import socket
 
 # path where exists ufo binary
 UFOAI_ROOT = os.path.realpath(sys.path[0] + '/../..')
@@ -23,6 +24,10 @@ __version__ = '0.0.4.2'
 displayDownloadStatus = True
 displayAlreadyUpToDate = True
 
+# set timeout and retries
+socket.setdefaulttimeout(30)
+retries = 5
+
 # TODO: use os.path.join
 
 import time
@@ -32,25 +37,36 @@ def download(uri):
     import platform
     p = ' '.join([platform.platform()] + list(platform.dist()))
     request.add_header('User-Agent', 'ufoai_map-get/%s (%s)' % (mapsync.__version__, p))
-    f = urllib2.build_opener().open(request)
 
-    re = out = ''
-    t = 1
-    data = f.read(10240)
-    if not displayDownloadStatus:
-        print('Downloading ' + uri)
-    while data:
-        re+= data
-        if displayDownloadStatus and sys.stdout.isatty:
-            out = '\r%s %9ikb' % (uri, len(re) / 1024)
-            sys.stdout.write(out)
-            sys.stdout.flush()
-        t = time.time()
-        data = f.read(10240)
-        t = time.time() - t
-    f.close()
-    if displayDownloadStatus:
-        sys.stdout.write('\r%s\r' % (' '*len(out)))
+    trynum = 0
+    while trynum < retries:
+        try:
+            f = urllib2.build_opener().open(request)
+
+            re = out = ''
+            t = 1
+            data = f.read(10240)
+            if not displayDownloadStatus:
+                print('Downloading ' + uri)
+            while data:
+                re+= data
+                if displayDownloadStatus and sys.stdout.isatty:
+                    out = '\r%s %9ikb' % (uri, len(re) / 1024)
+                    sys.stdout.write(out)
+                    sys.stdout.flush()
+                t = time.time()
+                data = f.read(10240)
+                t = time.time() - t
+            f.close()
+            if displayDownloadStatus:
+                sys.stdout.write('\r%s\r' % (' '*len(out)))
+            # done. bail out of retries loop
+            trynum = retries
+        except socket.timeout:
+            print '...timeout fetching URL'
+            trynum+=1
+            if trynum >= retries:
+                raise
     return re
 
 class Object:
