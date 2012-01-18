@@ -159,8 +159,8 @@ typedef enum {
 #define material_surfaces		sorted_surfaces[S_MATERIAL]
 #define flare_surfaces			sorted_surfaces[S_FLARE]
 
-#define R_SurfaceToSurfaces(surfs, surf)\
-	(surfs)->surfaces[(surfs)->count++] = surf
+#define R_AddSurfaceToArray(array, surf)\
+	(array)->surfaces[(array)->count++] = surf
 
 #define CONTENTS_NODE -1
 #define CONTENTS_PATHFINDING_NODE -2

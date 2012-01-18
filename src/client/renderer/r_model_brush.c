@@ -670,7 +670,7 @@ static void R_SortSurfacesArrays_ (mBspSurfaces_t *surfs)
 		const ptrdiff_t texindex = surfs->surfaces[i]->texinfo->image - r_images;
 		if (texindex < 0 || texindex >= MAX_GL_TEXTURES)
 			Com_Error(ERR_FATAL, "R_SortSurfacesArrays: bogus image pointer");
-		R_SurfaceToSurfaces(r_sorted_surfaces[texindex], surfs->surfaces[i]);
+		R_AddSurfaceToArray(r_sorted_surfaces[texindex], surfs->surfaces[i]);
 	}
 
 	surfs->count = 0;
@@ -679,7 +679,7 @@ static void R_SortSurfacesArrays_ (mBspSurfaces_t *surfs)
 		mBspSurfaces_t *sorted = r_sorted_surfaces[i];
 		if (sorted && sorted->count) {
 			for (j = 0; j < sorted->count; j++)
-				R_SurfaceToSurfaces(surfs, sorted->surfaces[j]);
+				R_AddSurfaceToArray(surfs, sorted->surfaces[j]);
 
 			sorted->count = 0;
 		}
@@ -805,23 +805,23 @@ static void R_LoadSurfacesArrays_ (model_t *mod)
 		const material_t *material = &texinfo->image->material;
 		if (texinfo->flags & (SURF_BLEND33 | SURF_BLEND66)) {
 			if (texinfo->flags & SURF_WARP)
-				R_SurfaceToSurfaces(mod->bsp.blend_warp_surfaces, surf);
+				R_AddSurfaceToArray(mod->bsp.blend_warp_surfaces, surf);
 			else
-				R_SurfaceToSurfaces(mod->bsp.blend_surfaces, surf);
+				R_AddSurfaceToArray(mod->bsp.blend_surfaces, surf);
 		} else {
 			if (texinfo->flags & SURF_WARP)
-				R_SurfaceToSurfaces(mod->bsp.opaque_warp_surfaces, surf);
+				R_AddSurfaceToArray(mod->bsp.opaque_warp_surfaces, surf);
 			else if (texinfo->flags & SURF_ALPHATEST)
-				R_SurfaceToSurfaces(mod->bsp.alpha_test_surfaces, surf);
+				R_AddSurfaceToArray(mod->bsp.alpha_test_surfaces, surf);
 			else
-				R_SurfaceToSurfaces(mod->bsp.opaque_surfaces, surf);
+				R_AddSurfaceToArray(mod->bsp.opaque_surfaces, surf);
 		}
 
 		if (material->flags & STAGE_RENDER)
-			R_SurfaceToSurfaces(mod->bsp.material_surfaces, surf);
+			R_AddSurfaceToArray(mod->bsp.material_surfaces, surf);
 
 		if (material->flags & STAGE_FLARE)
-			R_SurfaceToSurfaces(mod->bsp.flare_surfaces, surf);
+			R_AddSurfaceToArray(mod->bsp.flare_surfaces, surf);
 	}
 
 	/* now sort them by texture */
