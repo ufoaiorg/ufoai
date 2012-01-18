@@ -43,6 +43,9 @@ typedef struct reactionFireTargets
 
 static reactionFireTargets_t rfData[MAX_RF_DATA];
 
+/**
+ * @brief Initialize the reaction fire table for all entities.
+ */
 void G_ReactionFireTargetsInit (void)
 {
 	int i;
@@ -53,6 +56,10 @@ void G_ReactionFireTargetsInit (void)
 	}
 }
 
+/**
+ * @brief Create a table of reaction fire targets for the given edict.
+ * @param[in] shooter The reaction firing actor
+ */
 void G_ReactionFireTargetsCreate (const edict_t *shooter)
 {
 	int i;
@@ -74,6 +81,11 @@ void G_ReactionFireTargetsCreate (const edict_t *shooter)
 }
 
 #if 1		/* avoid warnings while the code is not used yet */
+/**
+ * @brief Add a reaction fire target for the given shooter.
+ * @param[in] shooter The reaction firing actor
+ * @param[in] target The potential reaction fire victim
+ */
 static void G_ReactionFireTargetsAdd (const edict_t *shooter, const edict_t *target)
 {
 	int i;
@@ -89,7 +101,7 @@ static void G_ReactionFireTargetsAdd (const edict_t *shooter, const edict_t *tar
 
 	for (i = 0; i < rfts->count; i++) {
 		if (rfts->targets[i].target == target)	/* found it ? */
-			return;
+			return;								/* shooter already knows that target */
 	}
 	assert(i < MAX_RF_TARGETS);
 	rfts->targets[i].target = target;
@@ -97,6 +109,11 @@ static void G_ReactionFireTargetsAdd (const edict_t *shooter, const edict_t *tar
 	rfts->count++;
 }
 
+/**
+ * @brief Remove a reaction fire target for the given shooter.
+ * @param[in] shooter The reaction firing actor
+ * @param[in] target The potential reaction fire victim
+ */
 static void G_ReactionFireTargetsRemove (const edict_t *shooter, const edict_t *target)
 {
 	int i;
