@@ -1,6 +1,23 @@
 /**
  * @file g_reaction.c
  * @brief Reaction fire code
+ * Reaction fire is involved in the following situations:
+ * 1. G_ReactionFireSearchTarget() (equiv. to RFT_Update)
+ * 		called by G_ReactionFireOnMovement()
+ * 		called by G_ReactionFirePreShot()
+ * 2. G_ReactionFireTryToShoot()
+ * 		called by G_ReactionFireCheckExecution()
+ * 		called by G_ReactionFirePreShot()
+ * 		called by G_ReactionFireEndTurn()
+ * 3. G_ReactionFireCheckExecution()
+ * 		called by G_ReactionFireOnMovement()
+ * 		called by G_ReactionFirePostShot()
+ * 4. G_ReactionFirePreShot()
+ * 		called by G_ClientShoot()
+ * 5. G_ReactionFireEndTurn()
+ * 		called by G_ClientEndRound()
+ * 6. G_ReactionFireReset()
+ * 		called by G_ClientEndRound()
  */
 
 /*
