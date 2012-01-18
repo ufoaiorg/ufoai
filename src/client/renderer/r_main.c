@@ -337,8 +337,8 @@ void R_RenderFrame (void)
 		if (r_debug_lights->integer) {
 			int i;
 
-			for (i = 0; i < r_state.numStaticLights; i++) {
-				const light_t *l = &r_state.staticLights[i];
+			for (i = 0; i < refdef.numStaticLights; i++) {
+				const light_t *l = &refdef.staticLights[i];
 				R_AddCorona(l->origin, l->radius, l->color);
 			}
 			for (i = 0; i < refdef.numDynamicLights; i++) {

@@ -152,10 +152,89 @@ void R_EnableWorldLights (void)
 	glEnable(GL_LIGHTING);
 }
 
+/**
+ * @brief Enable or disable realtime dynamic lighting for models
+ * @param lights The lights to enable
+ * @param numLights The amount of lights in the given lights list
+ * @param enable Whether to turn realtime lighting on or off
+ */
+void R_EnableModelLights (const light_t **lights, int numLights, qboolean enable)
+{
+	int i, j;
+	int maxLights = r_dynamic_lights->integer;
+	const vec4_t sunDirection = {0.0, 0.0, 1.0, 0.0}; /* works only with shader, not the FFP */
+	vec4_t blackColor = {0.0, 0.0, 0.0, 1.0};
+
+	assert(numLights <= MAX_GL_LIGHTS);
+
+	if (!enable || !r_state.lighting_enabled) {
+		if (!r_state.active_normalmap && r_state.dynamic_lighting_enabled)
+			R_DisableAttribute("TANGENTS");
+		glDisable(GL_LIGHTING);
+		for (i = 0; i < MAX_GL_LIGHTS; i++) {
+			glLightf(GL_LIGHT0 + i, GL_CONSTANT_ATTENUATION, MIN_GL_CONSTANT_ATTENUATION);
+			glLightfv(GL_LIGHT0 + i, GL_DIFFUSE, blackColor);
+			glDisable(GL_LIGHT0 + i);
+		}
+
+		r_state.dynamic_lighting_enabled = qfalse;
+		return;
+	}
+
+	r_state.dynamic_lighting_enabled = qtrue;
+
+	R_EnableAttribute("TANGENTS");
+
+	R_UseMaterial(&defaultMaterial);
+
+	glEnable(GL_LIGHTING);
+
+	/* Light #0 is reserved for the Sun */
+	glEnable(GL_LIGHT0);
+	glLightf(GL_LIGHT0, GL_CONSTANT_ATTENUATION, 1.0);
+	glLightf(GL_LIGHT0, GL_LINEAR_ATTENUATION, 0.0);
+	glLightf(GL_LIGHT0, GL_QUADRATIC_ATTENUATION, 0.0);
+
+	glLightfv(GL_LIGHT0, GL_POSITION, sunDirection);
+	glLightfv(GL_LIGHT0, GL_AMBIENT, refdef.ambientColor);
+	glLightfv(GL_LIGHT0, GL_DIFFUSE, refdef.sunDiffuseColor);
+	glLightfv(GL_LIGHT0, GL_SPECULAR, refdef.sunSpecularColor);
+
+	j = 1;
+	for (i = 0; j < MAX_GL_LIGHTS && j <= maxLights && i < numLights; i++) {
+		const light_t *l = lights[i];
+		vec4_t position;
+
+		glEnable(GL_LIGHT0 + j);
+		glLightf(GL_LIGHT0 + j, GL_CONSTANT_ATTENUATION, MIN_GL_CONSTANT_ATTENUATION);
+		glLightf(GL_LIGHT0 + j, GL_LINEAR_ATTENUATION, 0);
+		glLightf(GL_LIGHT0 + j, GL_QUADRATIC_ATTENUATION, 16.0 / (l->radius * l->radius));
+
+		VectorCopy(l->origin, position);
+		position[3] = 1.0; /* spot light */
+		glLightfv(GL_LIGHT0 + j, GL_POSITION, position);
+		glLightfv(GL_LIGHT0 + j, GL_AMBIENT, blackColor);
+		glLightfv(GL_LIGHT0 + j, GL_DIFFUSE, l->color);
+		glLightfv(GL_LIGHT0 + j, GL_SPECULAR, blackColor);
+
+		j++;
+	}
+
+	/* if there aren't enough active lights, turn off the rest */
+	while (j < MAX_GL_LIGHTS) {
+		glDisable(GL_LIGHT0 + j);
+		glLightf(GL_LIGHT0 + j, GL_CONSTANT_ATTENUATION, MIN_GL_CONSTANT_ATTENUATION);
+		glLightf(GL_LIGHT0 + j, GL_LINEAR_ATTENUATION, 0.0);
+		glLightf(GL_LIGHT0 + j, GL_QUADRATIC_ATTENUATION, 0.0);
+		glLightfv(GL_LIGHT0 + j, GL_DIFFUSE, blackColor);
+		j++;
+	}
+}
+
 void R_AddStaticLight (const vec3_t origin, float radius, const vec3_t color)
 {
 	light_t *l;
-	if (r_state.numStaticLights >= MAX_STATIC_LIGHTS) {
+	if (refdef.numStaticLights >= MAX_STATIC_LIGHTS) {
 		Com_Printf("Failed to add lightsource: MAX_STATIC_LIGHTS exceeded\n");
 		return;
 	}
@@ -165,7 +244,7 @@ void R_AddStaticLight (const vec3_t origin, float radius, const vec3_t color)
 		origin[0], origin[1], origin[2],
 		radius);
 
-	l = &r_state.staticLights[r_state.numStaticLights++];
+	l = &refdef.staticLights[refdef.numStaticLights++];
 
 	VectorCopy(origin, l->origin);
 	VectorCopy(color, l->color);
@@ -191,7 +270,7 @@ void R_DisableLights (void)
 
 void R_ClearStaticLights (void)
 {
-	r_state.numStaticLights = 0;
+	refdef.numStaticLights = 0;
 
 	R_DisableLights();
 }
@@ -296,8 +375,8 @@ void R_UpdateLightList (entity_t *ent)
 
 	ent->numLights = 0; /* clear the list of lights */
 
-	for (i = 0; i < r_state.numStaticLights; i++) {
-		light_t *light = &r_state.staticLights[i];
+	for (i = 0; i < refdef.numStaticLights; i++) {
+		light_t *light = &refdef.staticLights[i];
 		const float distSqr = VectorDistSqr(pos, light->origin);
 
 		if (distSqr > (diameter + light->radius) * (diameter + light->radius))
