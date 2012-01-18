@@ -26,9 +26,9 @@
 uniform vec4 OFFSET;
 uniform float GLOWSCALE;
 
-uniform sampler2D SAMPLER0;
-uniform sampler2D SAMPLER1;
-uniform sampler2D SAMPLER4;
+uniform sampler2D SAMPLER_DIFFUSE;
+uniform sampler2D SAMPLER_WARP;
+uniform sampler2D SAMPLER_GLOWMAP;
 
 /**
  * @brief Main.
@@ -37,17 +37,17 @@ void main(void) {
 	vec4 finalColor = vec4(0.0);
 
 	/* Sample glowmap and calculate final glow color. */
-	vec4 glow_tex = texture2D(SAMPLER4, gl_TexCoord[0].st);
+	vec4 glow_tex = texture2D(SAMPLER_GLOWMAP, gl_TexCoord[0].st);
 	vec3 glowcolor = glow_tex.rgb * glow_tex.a * GLOWSCALE;
 
 	/* Sample the warp texture at a time-varied offset,*/
-	vec4 warp = texture2D(SAMPLER1, gl_TexCoord[0].xy + OFFSET.xy);
+	vec4 warp = texture2D(SAMPLER_WARP, gl_TexCoord[0].xy + OFFSET.xy);
 
 	/* and derive a diffuse texcoord based on the warp data,*/
 	vec2 coord = vec2(gl_TexCoord[0].x + warp.z, gl_TexCoord[0].y + warp.w);
 
 	/* sample the diffuse texture, factoring in primary color as well.*/
-	finalColor = gl_Color * texture2D(SAMPLER0, coord);
+	finalColor = gl_Color * texture2D(SAMPLER_DIFFUSE, coord);
 
 #if r_fog
 	/* Add fog.*/

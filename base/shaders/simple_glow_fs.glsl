@@ -22,14 +22,14 @@
 #endif
 
 /** Diffuse. */
-uniform sampler2D SAMPLER0;
+uniform sampler2D SAMPLER_DIFFUSE;
 /** Glowmap. */
-uniform sampler2D SAMPLER1;
+uniform sampler2D SAMPLER_GLOWMAP;
 uniform float GLOWSCALE;
 
 void main(void) {
-	vec4 diffuse_tex = texture2D(SAMPLER0, gl_TexCoord[0].st);
-	vec4 glow_tex = texture2D(SAMPLER1, gl_TexCoord[0].st);
+	vec4 diffuse_tex = texture2D(SAMPLER_DIFFUSE, gl_TexCoord[0].st);
+	vec4 glow_tex = texture2D(SAMPLER_GLOWMAP, gl_TexCoord[0].st);
 
 	vec3 glowcolor = glow_tex.rgb * glow_tex.a * GLOWSCALE;
 

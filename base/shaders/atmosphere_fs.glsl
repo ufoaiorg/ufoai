@@ -36,9 +36,9 @@ in_qualifier vec3 lightVec;
 in_qualifier vec3 eyeVec;
 
 /** Diffuse.*/
-uniform sampler2D SAMPLER0;
+uniform sampler2D SAMPLER_DIFFUSE;
 /** Normalmap.*/
-uniform sampler2D SAMPLER2;
+uniform sampler2D SAMPLER_NORMALMAP;
 
 uniform float GLOWSCALE;
 uniform vec4 DEFAULTCOLOR;
@@ -64,10 +64,10 @@ void fresnelRefract(vec3 L, vec3 N, float n1, float n2,
 }
 
 void main() {
-	vec3 diffuseColor = texture2D(SAMPLER0, tex).rgb;
+	vec3 diffuseColor = texture2D(SAMPLER_DIFFUSE, tex).rgb;
 	vec3 V = vec3(normalize(eyeVec).rgb);
 	vec3 L = vec3(normalize(lightVec).rgb);
-	vec3 N = vec3(normalize(texture2D(SAMPLER2, tex).rgb * 2.0 - 1.0).rgb);
+	vec3 N = vec3(normalize(texture2D(SAMPLER_NORMALMAP, tex).rgb * 2.0 - 1.0).rgb);
 	/* calculate reflections/refractions */
 	vec3 Rvec;
 	vec3 Tvec;

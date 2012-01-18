@@ -82,7 +82,7 @@ vec4 IlluminateFragment(void) {
 
 #if r_bumpmap
 	if (BUMPMAP > 0) {
-		vec4 normalMap = texture2D(SAMPLER3, coords);
+		vec4 normalMap = texture2D(SAMPLER_NORMALMAP, coords);
 		N = vec3((normalize(normalMap.xyz) * 2.0 - vec3(1.0)));
 		N.xy *= BUMP;
 		if (PARALLAX > 0.0) {
@@ -92,10 +92,10 @@ vec4 IlluminateFragment(void) {
 	}
 #endif
 
-	vec4 diffuse = texture2D(SAMPLER0, coords);
+	vec4 diffuse = texture2D(SAMPLER_DIFFUSE, coords);
 	vec4 specular;
 	if (SPECULARMAP > 0) {
-		specular = texture2D(SAMPLER1, coords);
+		specular = texture2D(SAMPLER_SPECULAR, coords);
 	} else {
 		specular = vec4(HARDNESS, HARDNESS, HARDNESS, SPECULAR);
 	}
@@ -105,7 +105,7 @@ vec4 IlluminateFragment(void) {
 	float R_2 = 0.0;
 	float NdotV = 0.0;
 	if (ROUGHMAP > 0) {
-		roughness = texture2D(SAMPLER2, coords);
+		roughness = texture2D(SAMPLER_ROUGHMAP, coords);
 		/* scale reflectance to a more useful range */
 		roughness.r = clamp(roughness.r, 0.05, 0.95);
 		roughness.g *= 3.0;

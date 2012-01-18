@@ -734,11 +734,11 @@ extern vec2_t fogRange;
 
 static void R_InitWorldProgram (r_program_t *prog)
 {
-	R_ProgramParameter1i("SAMPLER0", 0);
-	R_ProgramParameter1i("SAMPLER1", 1);
-	R_ProgramParameter1i("SAMPLER2", 2);
-	R_ProgramParameter1i("SAMPLER3", 3);
-	R_ProgramParameter1i("SAMPLER4", 4);
+	R_ProgramParameter1i("SAMPLER_DIFFUSE", 0);
+	R_ProgramParameter1i("SAMPLER_LIGHTMAP", 1);
+	R_ProgramParameter1i("SAMPLER_DELUXEMAP", 2);
+	R_ProgramParameter1i("SAMPLER_NORMALMAP", 3);
+	R_ProgramParameter1i("SAMPLER_GLOWMAP", 4);
 
 	R_ProgramParameter1i("BUMPMAP", 0);
 	R_ProgramParameter1i("ROUGHMAP", 0);
@@ -777,11 +777,11 @@ static void R_UseWorldProgram (r_program_t *prog)
 
 static void R_InitModelProgram (r_program_t *prog)
 {
-	R_ProgramParameter1i("SAMPLER0", 0);
-	R_ProgramParameter1i("SAMPLER1", 1);
-	R_ProgramParameter1i("SAMPLER2", 2);
-	R_ProgramParameter1i("SAMPLER3", 3);
-	R_ProgramParameter1i("SAMPLER4", 4);
+	R_ProgramParameter1i("SAMPLER_DIFFUSE", 0);
+	R_ProgramParameter1i("SAMPLER_SPECULAR", 1);
+	R_ProgramParameter1i("SAMPLER_ROUGHMAP", 2);
+	R_ProgramParameter1i("SAMPLER_NORMALMAP", 3);
+	R_ProgramParameter1i("SAMPLER_GLOWMAP", 4);
 
 	R_ProgramParameter1i("BUMPMAP", 0);
 	R_ProgramParameter1i("ROUGHMAP", 0);
@@ -823,9 +823,9 @@ static void R_InitWarpProgram (r_program_t *prog)
 {
 	static vec4_t offset;
 
-	R_ProgramParameter1i("SAMPLER0", 0);
-	R_ProgramParameter1i("SAMPLER1", 1);
-	R_ProgramParameter1i("SAMPLER4", 4);
+	R_ProgramParameter1i("SAMPLER_DIFFUSE", 0);
+	R_ProgramParameter1i("SAMPLER_WARP", 1);
+	R_ProgramParameter1i("SAMPLER_GLOWMAP", 4);
 	R_ProgramParameter1f("GLOWSCALE", 0.0);
 	R_ProgramParameter4fv("OFFSET", offset);
 	if (r_fog->integer) {
@@ -862,9 +862,9 @@ static void R_InitGeoscapeProgram (r_program_t *prog)
 	static vec4_t cityLightColor = {1.0, 1.0, 0.8, 1.0};
 	static vec2_t uvScale = {2.0, 1.0};
 
-	R_ProgramParameter1i("SAMPLER0", 0);
-	R_ProgramParameter1i("SAMPLER1", 1);
-	R_ProgramParameter1i("SAMPLER2", 2);
+	R_ProgramParameter1i("SAMPLER_DIFFUSE", 0);
+	R_ProgramParameter1i("SAMPLER_BLEND", 1);
+	R_ProgramParameter1i("SAMPLER_NORMALMAP", 2);
 
 	R_ProgramParameter4fv("DEFAULTCOLOR", defaultColor);
 	R_ProgramParameter4fv("CITYLIGHTCOLOR", cityLightColor);
@@ -941,8 +941,8 @@ static void R_InitAtmosphereProgram (r_program_t *prog)
 	static vec4_t defaultColor = {0.0, 0.0, 0.0, 1.0};
 	static vec2_t uvScale = {2.0, 1.0};
 
-	R_ProgramParameter1i("SAMPLER0", 0);
-	R_ProgramParameter1i("SAMPLER2", 2);
+	R_ProgramParameter1i("SAMPLER_DIFFUSE", 0);
+	R_ProgramParameter1i("SAMPLER_NORMALMAP", 2);
 
 	R_ProgramParameter4fv("DEFAULTCOLOR", defaultColor);
 	R_ProgramParameter2fv("UVSCALE", uvScale);
@@ -950,8 +950,8 @@ static void R_InitAtmosphereProgram (r_program_t *prog)
 
 static void R_InitSimpleGlowProgram (r_program_t *prog)
 {
-	R_ProgramParameter1i("SAMPLER0", 0);
-	R_ProgramParameter1i("SAMPLER1", 4);
+	R_ProgramParameter1i("SAMPLER_DIFFUSE", 0);
+	R_ProgramParameter1i("SAMPLER_GLOWMAP", 4);
 	R_ProgramParameter1f("GLOWSCALE", 1.0);
 }
 

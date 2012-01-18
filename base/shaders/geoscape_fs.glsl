@@ -33,11 +33,11 @@ in_qualifier vec3 eyeVec;
 #endif
 
 /** Diffuse.*/
-uniform sampler2D SAMPLER0;
+uniform sampler2D SAMPLER_DIFFUSE;
 /** Blend.*/
-uniform sampler2D SAMPLER1;
+uniform sampler2D SAMPLER_BLEND;
 /** Normalmap.*/
-uniform sampler2D SAMPLER2;
+uniform sampler2D SAMPLER_NORMALMAP;
 
 uniform float BLENDSCALE;
 uniform float GLOWSCALE;
@@ -64,8 +64,8 @@ float fresnelReflect(in float cos_a) {
 
 void main(void) {
 	/* blend textures smoothly */
-	vec3 diffuseColorA = texture2D(SAMPLER0, tex).rgb;
-	vec3 diffuseColorB = texture2D(SAMPLER1, tex).rgb;
+	vec3 diffuseColorA = texture2D(SAMPLER_DIFFUSE, tex).rgb;
+	vec3 diffuseColorB = texture2D(SAMPLER_BLEND, tex).rgb;
 	vec4 diffuseColor;
 	diffuseColor.rgb = ((1.0 - BLENDSCALE) * diffuseColorA) + (BLENDSCALE * diffuseColorB);
 	diffuseColor.a = 1.0;
@@ -73,13 +73,13 @@ void main(void) {
 	/* calculate diffuse reflections */
 	vec3 V = vec3(normalize(eyeVec).rgb);
 	vec3 L = vec3(normalize(lightVec).rgb);
-	vec3 N = vec3(normalize(texture2D(SAMPLER2, tex).rgb * 2.0 - 1.0).rgb);
+	vec3 N = vec3(normalize(texture2D(SAMPLER_NORMALMAP, tex).rgb * 2.0 - 1.0).rgb);
 	float NdotL = clamp(dot(N, L), 0.0, 1.0);
 	vec4 reflectColor = diffuseColor * diffuseLight * NdotL;
 
 	/* calculate specular reflections */
 	float RdotL = clamp(dot(reflect(-L, N), V), 0.0, 1.0);
-	float gloss = texture2D(SAMPLER2, tex).a;
+	float gloss = texture2D(SAMPLER_NORMALMAP, tex).a;
 	/* NOTE: this "d" here is a hack to compensate for the fact
 	 * that we're using orthographic projection.
 	 */
@@ -88,7 +88,7 @@ void main(void) {
 	vec4 specularColor = (d * d * fresnel * fresnel) * gloss * pow(RdotL, specularExp) * specularLight;
 
 	/* calculate night illumination */
-	float diffuseNightColor = texture2D(SAMPLER0, tex).a;
+	float diffuseNightColor = texture2D(SAMPLER_DIFFUSE, tex).a;
 	float NdotL2 = clamp(dot(N, normalize(lightVec2)), 0.0, 1.0);
 	vec4 nightColor = diffuseLight2 * CITYLIGHTCOLOR * diffuseNightColor * NdotL2;
 
