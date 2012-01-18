@@ -908,6 +908,8 @@ static qboolean R_InitExtensions (void)
 		qglDeleteBuffers = (DeleteBuffers_t)R_GetProcAddress("glDeleteBuffers");
 		qglBindBuffer = (BindBuffer_t)R_GetProcAddress("glBindBuffer");
 		qglBufferData = (BufferData_t)R_GetProcAddress("glBufferData");
+		glGetIntegerv(GL_MAX_ELEMENTS_VERTICES, &r_config.maxVertexBufferSize);
+		Com_Printf("using GL_ARB_vertex_buffer_object\nmax vertex buffer size: %i\n", r_config.maxVertexBufferSize);
 	}
 
 	/* glsl vertex and fragment shaders and programs */
