@@ -1,9 +1,13 @@
-ufoai (2.4-dev) intrepid; urgency=low
+ufoai (2.4-dev-2~git213d00dc) oneiric; urgency=low
 
   [ Martin Gerhardy ]
   * Changed package layout to only support three main packages (client, server, editor)
 
- -- Martin Gerhardy <martin.gerhardy@gmail.com>  Tue, 15 Oct 2011 08:35:00 -0100
+  [ Sander van Grieken ]
+  * Fixed Build-Depends to include tex packages, python2.7, gtk+ xcb
+  * fix removal of Makefile on clean
+
+ -- Sander van Grieken <sander@outrightsolutions.nl>  Tue, 17 Jan 2012 17:56:28 +0200
 
 ufoai (2.4-dev-1) intrepid; urgency=low
 
