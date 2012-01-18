@@ -223,7 +223,7 @@ static qboolean G_ActorHasWorkingFireModeSet (const edict_t *actor)
  * @return @c true if TUs for reaction fire were reserved, @c false if the reservation was set
  * back to @c 0
  */
-qboolean G_ReserveReactionFireTUs (edict_t *ent)
+qboolean G_ReactionFireSettingsReserveTUs (edict_t *ent)
 {
 	if (G_ReactionFireSetDefault(ent) && G_ReactionFireCanBeEnabled(ent)) {
 		const int TUs = G_ActorGetTUForReactionFire(ent);
@@ -261,7 +261,7 @@ void G_ReactionFireUpdate (edict_t *ent, fireDefIndex_t fmIdx, actorHands_t hand
 
 	/* If reaction fire is active, update the reserved TUs */
 	if (G_IsReaction(ent)) {
-		G_ReserveReactionFireTUs(ent);
+		G_ReactionFireSettingsReserveTUs(ent);
 	}
 }
 
