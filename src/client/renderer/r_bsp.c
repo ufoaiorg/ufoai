@@ -468,7 +468,7 @@ void R_RenderOpaqueBspRRefs (void)
 {
 	R_EnableTexture(&texunit_lightmap, qtrue);
 	R_EnableLighting(r_state.world_program, qtrue);
-	R_EnableLights();
+	R_EnableWorldLights();
 
 	R_RenderBspRRefs(R_DrawSurfaces, S_OPAQUE);
 
@@ -495,7 +495,7 @@ void R_RenderAlphaTestBspRRefs (void)
 {
 	R_EnableAlphaTest(qtrue);
 	R_EnableLighting(r_state.world_program, qtrue);
-	R_EnableLights();
+	R_EnableWorldLights();
 
 	R_RenderBspRRefs(R_DrawSurfaces, S_ALPHA_TEST);
 

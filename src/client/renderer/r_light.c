@@ -106,8 +106,7 @@ void R_UpdateSustainedLights (void)
 	}
 }
 
-/* currently, this func processes only the world lights */
-void R_EnableLights (void)
+void R_EnableWorldLights (void)
 {
 	light_t *l;
 	vec4_t position;
