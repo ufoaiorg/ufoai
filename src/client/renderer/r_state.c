@@ -342,6 +342,54 @@ qboolean R_EnableLighting (r_program_t *program, qboolean enable)
 	return r_state.lighting_enabled;
 }
 
+void R_SetupSpotLight (int index, const light_t *light)
+{
+	const vec4_t blackColor = {0.0, 0.0, 0.0, 1.0};
+	vec4_t position;
+
+	if (!r_programs->integer || !r_dynamic_lights->integer)
+		return;
+
+	if (index < 0 || index >= r_dynamic_lights->integer)
+		return;
+
+	index += GL_LIGHT1; /* light 0 is used for global illumination */
+
+	glEnable(index);
+	glLightf(index, GL_CONSTANT_ATTENUATION, MIN_GL_CONSTANT_ATTENUATION);
+	glLightf(index, GL_LINEAR_ATTENUATION, 0);
+	glLightf(index, GL_QUADRATIC_ATTENUATION, 16.0 / (light->radius * light->radius));
+
+	VectorCopy(light->origin, position);
+	position[3] = 1.0; /* spot light */
+
+	glLightfv(index, GL_POSITION, position);
+	glLightfv(index, GL_AMBIENT, blackColor);
+	glLightfv(index, GL_DIFFUSE, light->color);
+	glLightfv(index, GL_SPECULAR, blackColor);
+}
+
+void R_DisableSpotLight (int index)
+{
+	const vec4_t blackColor = {0.0, 0.0, 0.0, 1.0};
+
+	if (!r_programs->integer || !r_dynamic_lights)
+		return;
+
+	if (index < 0 || index >= MAX_GL_LIGHTS - 1)
+		return;
+
+	index += GL_LIGHT1; /* light 0 is used for global illumination */
+
+	glDisable(index);
+	glLightf(index, GL_CONSTANT_ATTENUATION, MIN_GL_CONSTANT_ATTENUATION);
+	glLightf(index, GL_LINEAR_ATTENUATION, 0.0);
+	glLightf(index, GL_QUADRATIC_ATTENUATION, 0.0);
+	glLightfv(index, GL_AMBIENT, blackColor);
+	glLightfv(index, GL_DIFFUSE, blackColor);
+	glLightfv(index, GL_SPECULAR, blackColor);
+}
+
 /**
  * @brief Enables animation using keyframe interpolation on the GPU
  * @param mesh The mesh to animate
