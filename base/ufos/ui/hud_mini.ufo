@@ -470,6 +470,7 @@ window hud_mini extends hud
 			color		"0 0 0 1"
 			string		"1"
 			ghost		true
+			visiblewhen	"*cvar:mn_hp0 > 0"
 		}
 		string str_soldier0
 		{
@@ -479,6 +480,7 @@ window hud_mini extends hud
 			color		"1 1 1 1"
 			string		"1"
 			ghost		true
+			visiblewhen	"*cvar:mn_hp0 > 0"
 		}
 		string str_soldier1_shadow
 		{
@@ -488,6 +490,7 @@ window hud_mini extends hud
 			color		"0 0 0 1"
 			string		"2"
 			ghost		true
+			visiblewhen	"*cvar:mn_hp1 > 0"
 		}
 		string str_soldier1
 		{
@@ -497,6 +500,7 @@ window hud_mini extends hud
 			color		"0 0.6 0 1"
 			string		"2"
 			ghost		true
+			visiblewhen	"*cvar:mn_hp1 > 0"
 		}
 		string str_soldier2_shadow
 		{
@@ -506,6 +510,7 @@ window hud_mini extends hud
 			color		"0 0 0 1"
 			string		"3"
 			ghost		true
+			visiblewhen	"*cvar:mn_hp2 > 0"
 		}
 		string str_soldier2
 		{
@@ -515,6 +520,7 @@ window hud_mini extends hud
 			color		"0 0.6 0 1"
 			string		"3"
 			ghost		true
+			visiblewhen	"*cvar:mn_hp2 > 0"
 		}
 		string str_soldier3_shadow
 		{
@@ -524,6 +530,7 @@ window hud_mini extends hud
 			color		"0 0 0 1"
 			string		"4"
 			ghost		true
+			visiblewhen	"*cvar:mn_hp3 > 0"
 		}
 		string str_soldier3
 		{
@@ -533,6 +540,7 @@ window hud_mini extends hud
 			color		"0 0.6 0 1"
 			string		"4"
 			ghost		true
+			visiblewhen	"*cvar:mn_hp3 > 0"
 		}
 		string str_soldier4_shadow
 		{
@@ -542,6 +550,7 @@ window hud_mini extends hud
 			color		"0 0 0 1"
 			string		"5"
 			ghost		true
+			visiblewhen	"*cvar:mn_hp4 > 0"
 		}
 		string str_soldier4
 		{
@@ -551,6 +560,7 @@ window hud_mini extends hud
 			color		"0 0.6 0 1"
 			string		"5"
 			ghost		true
+			visiblewhen	"*cvar:mn_hp4 > 0"
 		}
 		string str_soldier5_shadow
 		{
@@ -560,6 +570,7 @@ window hud_mini extends hud
 			color		"0 0 0 1"
 			string		"6"
 			ghost		true
+			visiblewhen	"*cvar:mn_hp5 > 0"
 		}
 		string str_soldier5
 		{
@@ -569,6 +580,7 @@ window hud_mini extends hud
 			color		"0 0.6 0 1"
 			string		"6"
 			ghost		true
+			visiblewhen	"*cvar:mn_hp5 > 0"
 		}
 		string str_soldier6_shadow
 		{
@@ -578,6 +590,7 @@ window hud_mini extends hud
 			color		"0 0 0 1"
 			string		"7"
 			ghost		true
+			visiblewhen	"*cvar:mn_hp6 > 0"
 		}
 		string str_soldier6
 		{
@@ -587,6 +600,7 @@ window hud_mini extends hud
 			color		"0 0.6 0 1"
 			string		"7"
 			ghost		true
+			visiblewhen	"*cvar:mn_hp6 > 0"
 		}
 		string str_soldier7_shadow
 		{
@@ -596,6 +610,7 @@ window hud_mini extends hud
 			color		"0 0 0 1"
 			string		"8"
 			ghost		true
+			visiblewhen	"*cvar:mn_hp7 > 0"
 		}
 		string str_soldier7
 		{
@@ -605,6 +620,7 @@ window hud_mini extends hud
 			color		"0 0.6 0 1"
 			string		"8"
 			ghost		true
+			visiblewhen	"*cvar:mn_hp7 > 0"
 		}
 
 		func hudenable_floor
@@ -757,7 +773,7 @@ window hud_mini extends hud
 		{
 			pos			"32 104"
 			size		"66 6"
-			color		".2 .2 1 0.7"
+			color		".2 .2 1 0.9"
 			current		*cvar:mn_tu0
 			max			*cvar:mn_tumax0
 			disabled	true
@@ -788,7 +804,7 @@ window hud_mini extends hud
 		{
 			pos			"112 104"
 			size		"66 6"
-			color		".2 .2 1 0.7"
+			color		".2 .2 1 0.9"
 			current		*cvar:mn_tu1
 			max			*cvar:mn_tumax1
 			disabled	true
@@ -819,7 +835,7 @@ window hud_mini extends hud
 		{
 			pos			"192 104"
 			size		"66 6"
-			color		".2 .2 1 0.7"
+			color		".2 .2 1 0.9"
 			current		*cvar:mn_tu2
 			max			*cvar:mn_tumax2
 			disabled	true
@@ -850,7 +866,7 @@ window hud_mini extends hud
 		{
 			pos			"272 104"
 			size		"66 6"
-			color		".2 .2 1 0.7"
+			color		".2 .2 1 0.9"
 			current		*cvar:mn_tu3
 			max			*cvar:mn_tumax3
 			disabled	true
@@ -881,7 +897,7 @@ window hud_mini extends hud
 		{
 			pos			"352 104"
 			size		"66 6"
-			color		".2 .2 1 0.7"
+			color		".2 .2 1 0.9"
 			current		*cvar:mn_tu4
 			max			*cvar:mn_tumax4
 			disabled	true
@@ -912,7 +928,7 @@ window hud_mini extends hud
 		{
 			pos			"432 104"
 			size		"66 6"
-			color		".2 .2 1 0.7"
+			color		".2 .2 1 0.9"
 			current		*cvar:mn_tu5
 			max			*cvar:mn_tumax5
 			disabled	true
@@ -943,7 +959,7 @@ window hud_mini extends hud
 		{
 			pos			"512 104"
 			size		"66 6"
-			color		".2 .2 1 0.7"
+			color		".2 .2 1 0.9"
 			current		*cvar:mn_tu6
 			max			*cvar:mn_tumax6
 			disabled	true
@@ -974,7 +990,7 @@ window hud_mini extends hud
 		{
 			pos			"592 104"
 			size		"66 6"
-			color		".2 .2 1 0.7"
+			color		".2 .2 1 0.9"
 			current		*cvar:mn_tu7
 			max			*cvar:mn_tumax7
 			disabled	true
@@ -982,9 +998,9 @@ window hud_mini extends hud
 		}
 	}
 
-	// ===================
-	// Right panel (main)
-	// ===================
+	// ============================
+	// Right panel (Main Controls)
+	// ============================
 
 	panel right_deco {
 		{
@@ -1011,13 +1027,68 @@ window hud_mini extends hud
 			ghost	true
 		}
 
-		image bar_right_mini
+		// inside of the main panel
+		image mini_enemy_disabled
 		{
-			src		"minihud/bar_right_mini"
+			src			"minihud/mini_enemy_disabled"
+			pos			"96 200"
+			texl		"96 200"
+			size		"160 312"
+			ghost		true
+			visiblewhen		"*cvar:mn_numaliensspotted == 0"
+		}
+
+		image mini_enemy
+		{
+			src			"minihud/mini_enemy"
+			pos			"96 200"
+			texl		"96 200"
+			size		"160 312"
+			ghost		true
+			visiblewhen		"*cvar:mn_numaliensspotted >= 1"
+		}
+
+		image mini_civilian
+		{
+			// this is currently disabled as it requires a code change
+			src			"minihud/mini_civilian_disabled"
 			pos			"96 200"
 			texl		"96 200"
 			size		"160 312"
 		}
+
+		image mini_level
+		{
+			src			"minihud/mini_level"
+			pos			"96 200"
+			texl		"96 200"
+			size		"160 312"
+		}
+
+		image mini_name
+		{
+			src			"minihud/mini_name"
+			pos			"96 200"
+			texl		"96 200"
+			size		"160 312"
+		}
+
+		image mini_info
+		{
+			src			"minihud/mini_info"
+			pos			"96 200"
+			texl		"96 200"
+			size		"160 312"
+		}
+
+		image mini_hand
+		{
+			src			"minihud/mini_hand"
+			pos			"96 200"
+			texl		"96 200"
+			size		"160 312"
+		}
+
 		image bt_primaryright
 		{
 			tooltip		"_Use Item"
@@ -1047,7 +1118,7 @@ window hud_mini extends hud
 		{
 			pos			"113 271"
 			size		"126 8"
-			color		".15 .15 .75 0.8"
+			color		".15 .15 .75 .9"
 			current		*cvar:mn_tu
 			max			*cvar:mn_tumax
 			disabled	true
@@ -1059,7 +1130,7 @@ window hud_mini extends hud
 		{
 			pos			"113 271"
 			size		"126 8"
-			color		".2 .2 1 0.8"
+			color		".2 .2 1 .9"
 			current		*cvar:mn_turemain
 			max			*cvar:mn_tumax
 			disabled	true
@@ -1071,7 +1142,7 @@ window hud_mini extends hud
 		{
 			pos			"113 275"
 			size		"126 4"
-			color		"0 .5 0 0.8"
+			color		"0 .5 0 .9"
 			current		*cvar:mn_tureserved
 			max			*cvar:mn_tumax
 			disabled	true
@@ -1084,7 +1155,7 @@ window hud_mini extends hud
 		image img_level
 		{
 			src		"*cvar:mn_icon_level"
-			pos		"197 221"
+			pos		"155 218"
 			size	"16 16"
 			ghost	true
 		}
@@ -1094,18 +1165,19 @@ window hud_mini extends hud
 		{
 			color			"0 0 0 1"
 			string			*cvar:cl_worldlevel
-			pos				"199 218"
-			size			"20 20"
-			contentalign	ALIGN_CL
+			pos				"155 218"
+			size			"30 20"
+			contentalign	ALIGN_CR
 			ghost			true
 		}
 		string str_level
 		{
+			color			"0 1 0 1"
 			tooltip		"_Current Level\nLMB:Level up/RMB:Level down\nWheel:Level Up/Down\nKeys:Cursor Up/Down"
 			string		*cvar:cl_worldlevel
-			pos			"198 217"
-			size		"20 20"
-			contentalign	ALIGN_CL
+			pos			"154 217"
+			size		"30 20"
+			contentalign	ALIGN_CR
 			onClick
 			{
 				if (*cvar:cl_worldlevel < *cvar:cl_maxworldlevel) {
@@ -1137,10 +1209,12 @@ window hud_mini extends hud
 			onMouseEnter {
 				*node:root.right.str_level_shadow@font = "f_small_bold"
 				*node:this@font = "f_small_bold"
+				*node:root.right.mini_level@image = "minihud/mini_level_hovered"
 			}
 			onMouseLeave {
 				*node:root.right.str_level_shadow@font = "f_small"
 				*node:this@font = "f_small"
+				*node:root.right.mini_level@image = "minihud/mini_level"
 			}
 		}
 
@@ -1153,6 +1227,7 @@ window hud_mini extends hud
 			size			"20 20"
 			contentalign	ALIGN_CC
 			ghost			true
+			visiblewhen		"*cvar:mn_numaliensspotted >= 1"
 		}
 		string numspotted
 		{
@@ -1160,6 +1235,7 @@ window hud_mini extends hud
 			tooltip		"_LMB:Next visible enemy\nRMB:Previous visible enemy\nWheel:Cycle visible enemies"
 			pos			"224 217"
 			size	    "20 20"
+			visiblewhen		"*cvar:mn_numaliensspotted >= 1"
 			onClick		{ cmd "nextalien;" }
 			onRClick	{ cmd "prevalien;" }
 			onWheelUp	{ cmd "nextalien;" }
@@ -1167,10 +1243,12 @@ window hud_mini extends hud
 			onMouseEnter {
 				*node:root.right.numspotted_shadow@font = "f_small_bold"
 				*node:this@font = "f_small_bold"
+				*node:root.right.mini_enemy@image = "minihud/mini_enemy_hovered"
 			}
 			onMouseLeave {
 				*node:root.right.numspotted_shadow@font = "f_small"
 				*node:this@font = "f_small"
+				*node:root.right.mini_enemy@image = "minihud/mini_enemy"
 			}
 			contentalign	ALIGN_CC
 		}
@@ -1208,6 +1286,12 @@ window hud_mini extends hud
 			onRClick	{ cmd "ui_push ahudphysdat;" }
 			onWheelUp	{ cmd "actor_next;"}
 			onWheelDown	{ cmd "actor_prev;"}
+			onMouseEnter {
+				*node:root.right.mini_name@image = "minihud/mini_name_hovered"
+			}
+			onMouseLeave {
+				*node:root.right.mini_name@image = "minihud/mini_name"
+			}
 		}
 
 		// health string
@@ -1234,11 +1318,13 @@ window hud_mini extends hud
 				*node:root.right.str_hp_shadow@font = "f_small_bold"
 				*node:this@font = "f_small_bold"
 				*node:root.floor.health<cvar:mn_selected_soldier>@color = ".9 0 0 1"
+				*node:root.right.mini_info@image = "minihud/mini_info_hovered"
 			}
 			onMouseLeave {
 				*node:root.right.str_hp_shadow@font = "f_small"
 				*node:this@font = "f_small"
 				*node:root.floor.health<cvar:mn_selected_soldier>@color = ".8 0 0 .7"
+				*node:root.right.mini_info@image = "minihud/mini_info"
 			}
 		}
 		// morale string
@@ -1251,6 +1337,7 @@ window hud_mini extends hud
 			size			"40 20"
 			contentalign	ALIGN_UC
 			ghost			true
+			visiblewhen		"*cvar:mn_morale >= 1"
 		}
 		string str_morale
 		{
@@ -1261,15 +1348,18 @@ window hud_mini extends hud
 			size			"40 20"
 			contentalign	ALIGN_UC
 			tooltip			"_Morale"
+			visiblewhen		"*cvar:mn_morale >= 1"
 			onMouseEnter {
 				*node:root.right.str_morale_shadow@font = "f_small_bold"
 				*node:this@font = "f_small_bold"
 				*node:root.floor.morale<cvar:mn_selected_soldier>@color = ".85 .85 0 1"
+				*node:root.right.mini_info@image = "minihud/mini_info_hovered"
 			}
 			onMouseLeave {
 				*node:root.right.str_morale_shadow@font = "f_small"
 				*node:this@font = "f_small"
 				*node:root.floor.morale<cvar:mn_selected_soldier>@color = ".8 .8 0 0.7"
+				*node:root.right.mini_info@image = "minihud/mini_info"
 			}
 		}
 		// TUs string
@@ -1282,6 +1372,7 @@ window hud_mini extends hud
 			size			"40 20"
 			contentalign	ALIGN_UC
 			ghost			true
+			visiblewhen		"*cvar:mn_tu >= 1"
 		}
 		string str_tu
 		{
@@ -1292,15 +1383,18 @@ window hud_mini extends hud
 			size			"40 20"
 			contentalign	ALIGN_UC
 			tooltip			"_TUs"
+			visiblewhen		"*cvar:mn_tu >= 1"
 			onMouseEnter {
 				*node:root.right.str_tu_shadow@font = "f_small_bold"
 				*node:this@font = "f_small_bold"
 				*node:root.floor.time<cvar:mn_selected_soldier>@color = ".25 .25 1 1"
+				*node:root.right.mini_info@image = "minihud/mini_info_hovered"
 			}
 			onMouseLeave {
 				*node:root.right.str_tu_shadow@font = "f_small"
 				*node:this@font = "f_small"
 				*node:root.floor.time<cvar:mn_selected_soldier>@color = ".2 .2 1 0.7"
+				*node:root.right.mini_info@image = "minihud/mini_info"
 			}
 		}
 		// TUs reserved string
@@ -1313,6 +1407,7 @@ window hud_mini extends hud
 			size			"40 20"
 			contentalign	ALIGN_UC
 			ghost			true
+			visiblewhen		"*cvar:mn_tureserved >= 1"
 		}
 		string str_tu_reserved
 		{
@@ -1323,13 +1418,16 @@ window hud_mini extends hud
 			size			"40 20"
 			contentalign	ALIGN_UC
 			tooltip			"_TUs reserved"
+			visiblewhen		"*cvar:mn_tureserved >= 1"
 			onMouseEnter {
 				*node:root.right.str_tu_reserved_shadow@font = "f_small_bold"
 				*node:this@font = "f_small_bold"
+				*node:root.right.mini_info@image = "minihud/mini_info_hovered"
 			}
 			onMouseLeave {
 				*node:root.right.str_tu_reserved_shadow@font = "f_small"
 				*node:this@font = "f_small"
+				*node:root.right.mini_info@image = "minihud/mini_info"
 			}
 		}
 
@@ -1428,8 +1526,12 @@ window hud_mini extends hud
 			onClick
 			{
 				*node:root.floor@invis = false
-				if ( *cvar:mn_minihud_deco == 1 ) { *node:root.floor_deco@invis = false }
-				if ( *cvar:mn_minihud_deco == 0 ) { *node:root.floor_deco@invis = true }
+				if ( *cvar:mn_minihud_deco == 1 ) {
+					*node:root.floor_deco@invis = false
+				}
+				if ( *cvar:mn_minihud_deco == 0 ) {
+					*node:root.floor_deco@invis = true
+				}
 				*node:this@image = "icons/on"
 			}
 			onRClick
@@ -1437,6 +1539,16 @@ window hud_mini extends hud
 				*node:root.floor_deco@invis = true
 				*node:root.floor@invis = true
 				*node:this@image = "icons/off"
+			}
+			onMouseEnter
+			{
+				if ( *node:root.floor@invis == false ) { *node:this@image = "icons/on_hovered" }
+				else { *node:this@image = "icons/off_hovered" }
+			}
+			onMouseLeave
+			{
+				if ( *node:root.floor@invis == false ) { *node:this@image = "icons/on" }
+				else { *node:this@image = "icons/off" }
 			}
 		}
 
@@ -1460,6 +1572,16 @@ window hud_mini extends hud
 				*node:root.upperright@invis = true
 				*node:this@image = "icons/off"
 			}
+			onMouseEnter
+			{
+				if ( *node:root.upperright@invis == false ) { *node:this@image = "icons/on_hovered" }
+				else { *node:this@image = "icons/off_hovered" }
+			}
+			onMouseLeave
+			{
+				if ( *node:root.upperright@invis == false ) { *node:this@image = "icons/on" }
+				else { *node:this@image = "icons/off" }
+			}
 		}
 
 		image minihud_bt_decoration
@@ -1467,7 +1589,7 @@ window hud_mini extends hud
 			tooltip		"_LMB:Show/RMB:Hide Decoration"
 			src			"icons/on"
 			mousefx		true
-			pos			"202 490"
+			pos			"203 490"
 			size		"16 16"
 			onClick
 			{
@@ -1476,6 +1598,13 @@ window hud_mini extends hud
 				if ( *node:root.upperright@invis == false ) { *node:root.upperright_deco@invis = false }
 				*node:this@image = "icons/on"
 				*cvar:mn_minihud_deco = 1
+				// we close the windows (if open) so the decoration change can update
+				if ( exists *cvar:physdat_window_open ) {
+					cmd "ui_close ahudphysdat;"
+					}
+				if ( exists *cvar:inventory_window_open ) {
+					cmd "ui_close ahudinv;"
+					}
 			}
 			onRClick
 			{
@@ -1484,6 +1613,23 @@ window hud_mini extends hud
 				*node:root.upperright_deco@invis = true
 				*node:this@image = "icons/off"
 				*cvar:mn_minihud_deco = 0
+				// we close the windows (if open) so the decoration change can update
+				if ( exists *cvar:physdat_window_open ) {
+					cmd "ui_close ahudphysdat;"
+				}
+				if ( exists *cvar:inventory_window_open ) {
+					cmd "ui_close ahudinv;"
+				}
+			}
+			onMouseEnter
+			{
+				if ( *cvar:mn_minihud_deco == 1 ) { *node:this@image = "icons/on_hovered" }
+				else { *node:this@image = "icons/off_hovered" }
+			}
+			onMouseLeave
+			{
+				if ( *cvar:mn_minihud_deco == 1 ) { *node:this@image = "icons/on" }
+				else { *node:this@image = "icons/off" }
 			}
 		}
 
@@ -1582,6 +1728,12 @@ window hud_mini extends hud
 			onWheelUp	{ call *node:root.right.show_rightweapon cmd "hud_switchfiremodelist firemode_listener r;" }
 			onWheelDown	{ call *node:root.right.show_leftweapon cmd "hud_switchfiremodelist firemode_listener l;" }
 			tooltip		"_LMB/Wheel Down:Left Hand\nRMB/Wheel Up:Right Hand"
+			onMouseEnter {
+				*node:root.right.mini_hand@image = "minihud/mini_hand_hovered"
+			}
+			onMouseLeave {
+				*node:root.right.mini_hand@image = "minihud/mini_hand"
+			}
 		}
 
 		// weapon container
@@ -1591,15 +1743,27 @@ window hud_mini extends hud
 			pos			"114 340"
 			onRClick	{ cmd "hud_reloadright;" }
 			onWheelDown	{ call *node:root.right.show_leftweapon cmd "hud_switchfiremodelist firemode_listener l;" }
+			onMouseEnter {
+				*node:root.right.mini_hand@image = "minihud/mini_hand_hovered"
+			}
+			onMouseLeave {
+				*node:root.right.mini_hand@image = "minihud/mini_hand"
+			}
 		}
 		container left
 		{
 			pos			"114 340"
 			onRClick	{ cmd "hud_reloadleft;" }
 			onWheelUp	{ call *node:root.right.show_rightweapon cmd "hud_switchfiremodelist firemode_listener r;" }
+			onMouseEnter {
+				*node:root.right.mini_hand@image = "minihud/mini_hand_hovered"
+			}
+			onMouseLeave {
+				*node:root.right.mini_hand@image = "minihud/mini_hand"
+			}
 		}
 
-		// ammo
+		// ammostrings
 
 		string ammoright_shadow
 		{
@@ -1622,10 +1786,12 @@ window hud_mini extends hud
 			onMouseEnter {
 				*node:root.right.ammoright_shadow@font = "f_small_bold"
 				*node:this@font = "f_small_bold"
+				*node:root.right.mini_hand@image = "minihud/mini_hand_hovered"
 			}
 			onMouseLeave {
 				*node:root.right.ammoright_shadow@font = "f_small"
 				*node:this@font = "f_small"
+				*node:root.right.mini_hand@image = "minihud/mini_hand"
 			}
 		}
 		string ammoleft_shadow
@@ -1649,10 +1815,12 @@ window hud_mini extends hud
 			onMouseEnter {
 				*node:root.right.ammoleft_shadow@font = "f_small_bold"
 				*node:this@font = "f_small_bold"
+				*node:root.right.mini_hand@image = "minihud/mini_hand_hovered"
 			}
 			onMouseLeave {
 				*node:root.right.ammoleft_shadow@font = "f_small"
 				*node:this@font = "f_small"
+				*node:root.right.mini_hand@image = "minihud/mini_hand"
 			}
 		}
 
@@ -1687,7 +1855,7 @@ window hud_mini extends hud
 			*node:root.right.bt_reloadleft@invis = false
 		}
 
-		// buttons switch hand
+		// switch hand buttons
 
 		button switch_to_right_hand
 		{
@@ -1700,6 +1868,12 @@ window hud_mini extends hud
 			onWheelUp	{ call *node:root.right.show_rightweapon cmd "hud_switchfiremodelist firemode_listener r;" }
 			onWheelDown	{ call *node:root.right.show_leftweapon cmd "hud_switchfiremodelist firemode_listener l;" }
 			onClick		{ call *node:root.right.show_rightweapon cmd "hud_switchfiremodelist firemode_listener r;" }
+			onMouseEnter {
+				*node:root.right.mini_hand@image = "minihud/mini_hand_hovered"
+			}
+			onMouseLeave {
+				*node:root.right.mini_hand@image = "minihud/mini_hand"
+			}
 		}
 		button switch_to_left_hand
 		{
@@ -1712,10 +1886,16 @@ window hud_mini extends hud
 			onWheelUp	{ call *node:root.right.show_rightweapon cmd "hud_switchfiremodelist firemode_listener r;" }
 			onWheelDown	{ call *node:root.right.show_leftweapon cmd "hud_switchfiremodelist firemode_listener l;" }
 			onClick		{ call *node:root.right.show_leftweapon cmd "hud_switchfiremodelist firemode_listener l;" }
+			onMouseEnter {
+				*node:root.right.mini_hand@image = "minihud/mini_hand_hovered"
+			}
+			onMouseLeave {
+				*node:root.right.mini_hand@image = "minihud/mini_hand"
+			}
 		}
 	}
 
-	// chat
+	// chat button (just visible in multiplayer mode)
 
 	image bar_chat_bg
 	{
@@ -1930,10 +2110,6 @@ window hud_mini extends hud
 	*cvar:mn_icon_level = ("minihud/level<cvar:cl_worldlevel>")
 	}
 
-	confunc glownumber
-	{
-	}
-
 	// ==================
 	// init function
 	// ==================
@@ -1946,6 +2122,7 @@ window hud_mini extends hud
 		if ( *node:root.right_deco@invis == true ) { *cvar:mn_minihud_deco = 0 }
 		elif ( *node:root.right_deco@invis == false ) { *cvar:mn_minihud_deco = 1 }
 		*cvar:mn_selected_soldier = 0
+		*cvar:mn_minihud_enabled = 1
 	}
 
 	func onWindowClosed
@@ -1954,6 +2131,7 @@ window hud_mini extends hud
 		delete *cvar:mn_minihud_deco
 		if ( exists *cvar:mn_chrrank_img ) { delete *cvar:mn_chrrank_img }
 		delete *cvar:mn_selected_soldier
+		delete *cvar:mn_minihud_enabled
 	}
 
 	func onScriptLoaded {
