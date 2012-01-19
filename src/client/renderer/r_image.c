@@ -623,12 +623,12 @@ qboolean R_ImageExists (const char *pname, ...)
  * @brief Returns an index of the image pointer in the r_images linked list, as if r_images would be a plain contiguous array
  * @param image The image pointer
  */
-int R_GetImageIndex(image_t *imagePtr)
+int R_GetImageIndex (image_t *imagePtr)
 {
 	imageArray_t *images;
 
 	for (images = &r_images; images; images = images->next) {
-		if( imagePtr >= &images->images[0] && imagePtr <= &images->images[IMAGE_ARRAY_SIZE - 1] )
+		if (imagePtr >= &images->images[0] && imagePtr <= &images->images[IMAGE_ARRAY_SIZE - 1])
 			return imagePtr - &images->images[0];
 	}
 
@@ -639,11 +639,11 @@ int R_GetImageIndex(image_t *imagePtr)
  * @brief Returns an image pointer from the r_images linked list, as if r_images would be a plain contiguous array
  * @param i The image index inside r_images
  */
-image_t *R_GetImageAtIndex(int i)
+image_t *R_GetImageAtIndex (int i)
 {
 	imageArray_t *images;
 
-	if(i >= r_numImages || i < 0)
+	if (i >= r_numImages || i < 0)
 		return NULL;
 
 	for (images = &r_images; i >= IMAGE_ARRAY_SIZE; i -= IMAGE_ARRAY_SIZE)
