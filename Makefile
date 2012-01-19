@@ -51,7 +51,7 @@ endef
 $(foreach TARGET,$(TARGETS),$(eval $(call INCLUDE_RULE,$(TARGET))))
 
 .PHONY: clean
-clean: $(addprefix clean-,$(TARGETS))
+clean: $(addprefix clean-,$(TARGETS)) clean-docs
 
 .PHONY: distclean
 distclean: clean
