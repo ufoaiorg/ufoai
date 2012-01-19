@@ -5,8 +5,8 @@
 window inventory
 {
 	{
-		pos "256 96"
-		size "512 512"
+		pos			"256 96"
+		size		"512 512"
 	}
 
 	func hideinventory
@@ -18,9 +18,15 @@ window inventory
 	// background
 	// ==================
 
+	image bar_inventory_deco
+	{
+		src	"hud/bar_inventory_deco"
+		pos		"0 0"
+	}
+
 	image bar_inventory
 	{
-		src	"hud/bar_inventory"
+		src	"hud/bar_inventory_mini"
 		pos		"0 0"
 	}
 
@@ -240,6 +246,13 @@ window inventory
 
 	func onWindowOpened {
 		*cvar:inventory_window_open = 1
+		// we need the ability to hide the deco just for the MiniHUD
+		if ( *cvar:mn_minihud_enabled == 1 ) {
+			if ( *cvar:mn_minihud_deco == 0 ) { *node:root.bar_inventory_deco@invis = true }
+			else { *node:root.bar_inventory_deco@invis = false }
+			// the physdat window will automatically be closed if open
+			if ( *cvar:physdat_window_open == 1 ) { cmd "ui_close ahudphysdat;" }
+		}
 	}
 
 	func onWindowClosed {
