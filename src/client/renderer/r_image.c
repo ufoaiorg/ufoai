@@ -39,6 +39,12 @@ typedef struct imageArray_s {
 imageArray_t r_images;
 int r_numImages;
 
+/* Wicked for()-loop to go through all images in the r_images linked list. Parameters are: (int i, image_t *image, imageArray_t *imageArray) */
+#define FOR_EACH_IMAGE(i, image, imageArray) \
+	for (i = 0, imageArray = &r_images, image = &imageArray->images[0]; i < r_numImages; i++, image++, \
+			i % IMAGE_ARRAY_SIZE ? 0 : (image = (imageArray = imageArray->next) ? &imageArray->images[0] : NULL))
+
+
 /* generic environment map */
 image_t *r_envmaptextures[MAX_ENVMAPTEXTURES];
 
@@ -54,23 +60,21 @@ image_t *r_flaretextures[NUM_FLARETEXTURES];
 void R_ImageClearMaterials (void)
 {
 	int i;
+	image_t *image;
 	imageArray_t *images;
 
 	/* clear previously loaded materials */
-	for (images = &r_images; images; images = images->next) {
-		for (i = 0; i < IMAGE_ARRAY_SIZE; i++) {
-			image_t *image = &images->images[i];
-			material_t *m = &image->material;
-			materialStage_t *s = m->stages;
+	FOR_EACH_IMAGE(i, image, images) {
+		material_t *m = &image->material;
+		materialStage_t *s = m->stages;
 
-			while (s) {  /* free the stages chain */
-				materialStage_t *ss = s->next;
-				Mem_Free(s);
-				s = ss;
-			}
-
-			*m = defaultMaterial;
+		while (s) {  /* free the stages chain */
+			materialStage_t *ss = s->next;
+			Mem_Free(s);
+			s = ss;
 		}
+
+		*m = defaultMaterial;
 	}
 }
 
@@ -88,9 +92,7 @@ void R_ImageList_f (void)
 	texels = 0;
 	cnt = 0;
 
-	/* Wicked for()-loop to go through all images in the r_images linked list. Anyway is's prettier than additional if() inside the loop */
-	for (i = 0, images = &r_images, image = &images->images[0]; i < r_numImages; i++, image++,
-			i % IMAGE_ARRAY_SIZE ? 0 : (image = (images = images->next) ? &images->images[0] : NULL)) {
+	FOR_EACH_IMAGE(i, image, images) {
 		const char *type;
 		if (!image->texnum)
 			continue;
@@ -447,8 +449,7 @@ image_t *R_LoadImageData (const char *name, byte * pic, int width, int height, i
 	}
 
 	/* find a free image_t, using a wicked for()-loop */
-	for (i = 0, images = &r_images, image = &images->images[0]; i < r_numImages; i++, image++,
-			i % IMAGE_ARRAY_SIZE ? 0 : (image = (images = images->next) ? &images->images[0] : NULL)) {
+	FOR_EACH_IMAGE(i, image, images) {
 		if (!image->texnum)
 			break;
 	}
@@ -686,8 +687,7 @@ void R_FreeWorldImages (void)
 
 	R_CheckError();
 	/* Wicked for()-loop (tm) */
-	for (i = 0, images = &r_images, image = &images->images[0]; i < r_numImages; i++, image++,
-			i % IMAGE_ARRAY_SIZE ? 0 : (image = (images = images->next) ? &images->images[0] : NULL)) {
+	FOR_EACH_IMAGE(i, image, images) {
 		if (image->type < it_world)
 			continue;			/* keep them */
 
@@ -735,8 +735,7 @@ void R_ShutdownImages (void)
 
 	R_CheckError();
 	/* Wicked for()-loop (tm) */
-	for (i = 0, images = &r_images, image = &images->images[0]; i < r_numImages; i++, image++,
-			i % IMAGE_ARRAY_SIZE ? 0 : (image = (images = images->next) ? &images->images[0] : NULL)) {
+	FOR_EACH_IMAGE(i, image, images) {
 		if (!image->texnum)
 			continue;			/* free image_t slot */
 		R_DeleteImage(image);
@@ -783,8 +782,7 @@ void R_TextureMode (const char *string)
 	r_config.gl_filter_max = mode->maximize;
 
 	/* Wicked for()-loop (tm) */
-	for (i = 0, images = &r_images, image = &images->images[0]; i < r_numImages; i++, image++,
-			i % IMAGE_ARRAY_SIZE ? 0 : (image = (images = images->next) ? &images->images[0] : NULL)) {
+	FOR_EACH_IMAGE(i, image, images) {
 		if (image->type == it_pic || image->type == it_worldrelated || image->type == it_chars)
 			continue; /* no mipmaps */
 
