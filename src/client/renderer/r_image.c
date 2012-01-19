@@ -30,7 +30,13 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #define MAX_IMAGEHASH 256
 static image_t *imageHash[MAX_IMAGEHASH];
 
-image_t r_images[MAX_GL_TEXTURES];
+#define IMAGE_ARRAY_SIZE 128
+typedef struct imageArray_s {
+	image_t images[IMAGE_ARRAY_SIZE];
+	struct imageArray_s *next;
+} imageArray_t;
+
+imageArray_t r_images;
 int r_numImages;
 
 /* generic environment map */
@@ -48,21 +54,23 @@ image_t *r_flaretextures[NUM_FLARETEXTURES];
 void R_ImageClearMaterials (void)
 {
 	int i;
-	const size_t length = lengthof(r_images);
+	imageArray_t *images;
 
 	/* clear previously loaded materials */
-	for (i = 0; i < length; i++) {
-		image_t *image = &r_images[i];
-		material_t *m = &image->material;
-		materialStage_t *s = m->stages;
+	for (images = &r_images; images; images = images->next) {
+		for (i = 0; i < IMAGE_ARRAY_SIZE; i++) {
+			image_t *image = &images->images[i];
+			material_t *m = &image->material;
+			materialStage_t *s = m->stages;
 
-		while (s) {  /* free the stages chain */
-			materialStage_t *ss = s->next;
-			Mem_Free(s);
-			s = ss;
+			while (s) {  /* free the stages chain */
+				materialStage_t *ss = s->next;
+				Mem_Free(s);
+				s = ss;
+			}
+
+			*m = defaultMaterial;
 		}
-
-		*m = defaultMaterial;
 	}
 }
 
@@ -73,13 +81,16 @@ void R_ImageList_f (void)
 {
 	int i, cnt;
 	image_t *image;
+	imageArray_t *images;
 	int texels;
 
 	Com_Printf("------------------\n");
 	texels = 0;
 	cnt = 0;
 
-	for (i = 0, image = r_images; i < r_numImages; i++, image++) {
+	/* Wicked for()-loop to go through all images in the r_images linked list. Anyway is's prettier than additional if() inside the loop */
+	for (i = 0, images = &r_images, image = &images->images[0]; i < r_numImages; i++, image++,
+			i % IMAGE_ARRAY_SIZE ? 0 : (image = (images = images->next) ? &images->images[0] : NULL)) {
 		const char *type;
 		if (!image->texnum)
 			continue;
@@ -416,6 +427,7 @@ image_t *R_GetImage (const char *name)
 image_t *R_LoadImageData (const char *name, byte * pic, int width, int height, imagetype_t type)
 {
 	image_t *image;
+	imageArray_t *images;
 	int i;
 	size_t len;
 	unsigned hash;
@@ -434,19 +446,23 @@ image_t *R_LoadImageData (const char *name, byte * pic, int width, int height, i
 		return image;
 	}
 
-	/* find a free image_t */
-	for (i = 0, image = r_images; i < r_numImages; i++, image++)
+	/* find a free image_t, using a wicked for()-loop */
+	for (i = 0, images = &r_images, image = &images->images[0]; i < r_numImages; i++, image++,
+			i % IMAGE_ARRAY_SIZE ? 0 : (image = (images = images->next) ? &images->images[0] : NULL)) {
 		if (!image->texnum)
 			break;
+	}
 
 	if (i == r_numImages) {
-		if (r_numImages >= MAX_GL_TEXTURES) {
-			R_ImageList_f();
-			Com_Error(ERR_DROP, "R_LoadImageData: MAX_GL_TEXTURES hit");
+		/* Did we run out of space in the current array? Add a new array chunk */
+		if (r_numImages % IMAGE_ARRAY_SIZE == 0) {
+			for (images = &r_images; images->next;)
+				images = images->next;
+			images->next = Mem_AllocType(imageArray_t);
+			image = &images->next->images[0];
 		}
 		r_numImages++;
 	}
-	image = &r_images[i];
 	OBJZERO(*image);
 	image->material = defaultMaterial;
 	image->has_alpha = qfalse;
@@ -604,6 +620,39 @@ qboolean R_ImageExists (const char *pname, ...)
 }
 
 /**
+ * @brief Returns an index of the image pointer in the r_images linked list, as if r_images would be a plain contiguous array
+ * @param image The image pointer
+ */
+int R_GetImageIndex(image_t *imagePtr)
+{
+	imageArray_t *images;
+
+	for (images = &r_images; images; images = images->next) {
+		if( imagePtr >= &images->images[0] && imagePtr <= &images->images[IMAGE_ARRAY_SIZE - 1] )
+			return imagePtr - &images->images[0];
+	}
+
+	return -1;
+}
+
+/**
+ * @brief Returns an image pointer from the r_images linked list, as if r_images would be a plain contiguous array
+ * @param i The image index inside r_images
+ */
+image_t *R_GetImageAtIndex(int i)
+{
+	imageArray_t *images;
+
+	if(i >= r_numImages || i < 0)
+		return NULL;
+
+	for (images = &r_images; i >= IMAGE_ARRAY_SIZE; i -= IMAGE_ARRAY_SIZE)
+		images = images->next;
+
+	return &images->images[i];
+}
+
+/**
  * @brief Free the image and its assigned maps (roughness, normal, specular, glow - if there are any)
  * @param image The image that should be freed
  */
@@ -633,9 +682,12 @@ void R_FreeWorldImages (void)
 {
 	int i;
 	image_t *image;
+	imageArray_t *images;
 
 	R_CheckError();
-	for (i = 0, image = r_images; i < r_numImages; i++, image++) {
+	/* Wicked for()-loop (tm) */
+	for (i = 0, images = &r_images, image = &images->images[0]; i < r_numImages; i++, image++,
+			i % IMAGE_ARRAY_SIZE ? 0 : (image = (images = images->next) ? &images->images[0] : NULL)) {
 		if (image->type < it_world)
 			continue;			/* keep them */
 
@@ -679,9 +731,12 @@ void R_ShutdownImages (void)
 {
 	int i;
 	image_t *image;
+	imageArray_t *images;
 
 	R_CheckError();
-	for (i = 0, image = r_images; i < r_numImages; i++, image++) {
+	/* Wicked for()-loop (tm) */
+	for (i = 0, images = &r_images, image = &images->images[0]; i < r_numImages; i++, image++,
+			i % IMAGE_ARRAY_SIZE ? 0 : (image = (images = images->next) ? &images->images[0] : NULL)) {
 		if (!image->texnum)
 			continue;			/* free image_t slot */
 		R_DeleteImage(image);
@@ -708,6 +763,7 @@ void R_TextureMode (const char *string)
 {
 	int i;
 	image_t *image;
+	imageArray_t *images;
 	const size_t size = lengthof(gl_texture_modes);
 	const glTextureMode_t *mode;
 
@@ -726,7 +782,9 @@ void R_TextureMode (const char *string)
 	r_config.gl_filter_min = mode->minimize;
 	r_config.gl_filter_max = mode->maximize;
 
-	for (i = 0, image = r_images; i < r_numImages; i++, image++) {
+	/* Wicked for()-loop (tm) */
+	for (i = 0, images = &r_images, image = &images->images[0]; i < r_numImages; i++, image++,
+			i % IMAGE_ARRAY_SIZE ? 0 : (image = (images = images->next) ? &images->images[0] : NULL)) {
 		if (image->type == it_pic || image->type == it_worldrelated || image->type == it_chars)
 			continue; /* no mipmaps */
 

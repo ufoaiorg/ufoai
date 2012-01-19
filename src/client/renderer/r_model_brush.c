@@ -659,15 +659,12 @@ static void R_LoadBspVertexArrays (model_t *mod)
 	}
 }
 
-/** @brief temporary space for sorting surfaces by texture index */
-static mBspSurfaces_t *r_sorted_surfaces[MAX_GL_TEXTURES];
-
-static void R_SortSurfacesArrays_ (mBspSurfaces_t *surfs)
+static void R_SortSurfacesArrays_ (mBspSurfaces_t *surfs, mBspSurfaces_t **r_sorted_surfaces)
 {
 	int i, j;
 
 	for (i = 0; i < surfs->count; i++) {
-		const ptrdiff_t texindex = surfs->surfaces[i]->texinfo->image - r_images;
+		const int texindex = R_GetImageIndex(surfs->surfaces[i]->texinfo->image);
 		if (texindex < 0 || texindex >= MAX_GL_TEXTURES)
 			Com_Error(ERR_FATAL, "R_SortSurfacesArrays: bogus image pointer");
 		R_AddSurfaceToArray(r_sorted_surfaces[texindex], surfs->surfaces[i]);
@@ -694,6 +691,7 @@ static void R_SortSurfacesArrays (const model_t *mod)
 {
 	const mBspSurface_t *surf, *s;
 	int i, ns;
+	mBspSurfaces_t **r_sorted_surfaces = (mBspSurfaces_t **) Mem_Alloc(r_numImages * sizeof(mBspSurfaces_t *));
 
 	/* resolve the start surface and total surface count */
 	if (mod->type == mod_bsp) {  /*  world model */
@@ -704,14 +702,13 @@ static void R_SortSurfacesArrays (const model_t *mod)
 		ns = mod->bsp.nummodelsurfaces;
 	}
 
-	OBJZERO(r_sorted_surfaces);
-
 	/* allocate the per-texture surfaces arrays and determine counts */
 	for (i = 0, surf = s; i < ns; i++, surf++) {
-		mBspSurfaces_t *surfs = r_sorted_surfaces[surf->texinfo->image - r_images];
+		int index = R_GetImageIndex(surf->texinfo->image);
+		mBspSurfaces_t *surfs = r_sorted_surfaces[index];
 		if (!surfs) {  /* allocate it */
 			surfs = (mBspSurfaces_t *)Mem_PoolAlloc(sizeof(*surfs), vid_modelPool, 0);
-			r_sorted_surfaces[surf->texinfo->image - r_images] = surfs;
+			r_sorted_surfaces[index] = surfs;
 		}
 
 		surfs->count++;
@@ -729,7 +726,7 @@ static void R_SortSurfacesArrays (const model_t *mod)
 	/* sort the model's surfaces arrays into the per-texture arrays */
 	for (i = 0; i < NUM_SURFACES_ARRAYS; i++) {
 		if (mod->bsp.sorted_surfaces[i]->count) {
-			R_SortSurfacesArrays_(mod->bsp.sorted_surfaces[i]);
+			R_SortSurfacesArrays_(mod->bsp.sorted_surfaces[i], r_sorted_surfaces);
 			Com_DPrintf(DEBUG_RENDERER, "%i: #%i surfaces\n", i, mod->bsp.sorted_surfaces[i]->count);
 		}
 	}
@@ -743,6 +740,8 @@ static void R_SortSurfacesArrays (const model_t *mod)
 			Mem_Free(surfs);
 		}
 	}
+
+	Mem_Free(r_sorted_surfaces);
 }
 
 static void R_LoadSurfacesArrays_ (model_t *mod)

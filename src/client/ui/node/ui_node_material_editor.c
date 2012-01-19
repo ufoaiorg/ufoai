@@ -94,7 +94,7 @@ static int UI_MaterialEditorNodeGetImageCount (uiNode_t *node)
 
 	for (i = 0; i < r_numImages; i++) {
 #ifndef ANYIMAGES
-		const image_t *image = &r_images[i];
+		const image_t *image = R_GetImageAtIndex(i);
 		/* filter */
 		if (image->type != it_world)
 			continue;
@@ -146,7 +146,7 @@ static void UI_MaterialEditorNodeDraw (uiNode_t *node)
 
 	/* display images */
 	for (i = 0; i < r_numImages; i++) {
-		image_t *image = &r_images[i];
+		image_t *image = R_GetImageAtIndex(i);
 		vec2_t imagepos;
 
 #ifndef ANYIMAGES
@@ -220,7 +220,7 @@ static int UI_MaterialEditorNodeGetImageAtPosition (uiNode_t *node, int x, int y
 	for (i = 0; i < r_numImages; i++) {
 #ifndef ANYIMAGES
 		/* filter */
-		image_t *image = &r_images[i];
+		image_t *image = R_GetImageAtIndex(i);
 		if (image->type != it_world)
 			continue;
 
@@ -338,7 +338,7 @@ static void UI_MaterialEditorMouseDown (uiNode_t *node, int x, int y, int button
 	/** @note here we use "num" to cache the selected image id. We can reuse it on the script with "<num>" */
 	/* have we selected a new image? */
 	if (node->num != id) {
-		image_t *image = &r_images[id];
+		image_t *image = R_GetImageAtIndex(id);
 		UI_MaterialEditorUpdate(image, NULL);
 
 		node->num = id;
@@ -443,7 +443,7 @@ static void UI_MaterialEditorChangeValue_f (void)
 	var = Cmd_Argv(3);
 	value = Cmd_Argv(4);
 
-	image = &r_images[id];
+	image = R_GetImageAtIndex(id);
 
 	stageType = UI_MaterialEditorNameToStage(var);
 	if (stageType == -1) {
@@ -504,7 +504,7 @@ static void UI_MaterialEditorSelectStage_f (void)
 		return;
 	}
 
-	image = &r_images[id];
+	image = R_GetImageAtIndex(id);
 
 	stageID = atoi(Cmd_Argv(2));
 	if (stageID < 0 || stageID >= image->material.num_stages) {
@@ -532,7 +532,7 @@ static void UI_MaterialEditorRemoveStage_f (void)
 		return;
 	}
 
-	image = &r_images[id];
+	image = R_GetImageAtIndex(id);
 
 	stageID = atoi(Cmd_Argv(2));
 	if (stageID < 0 || stageID >= image->material.num_stages) {
@@ -573,7 +573,7 @@ static void UI_MaterialEditorNewStage_f (void)
 		return;
 	}
 
-	m = &r_images[id].material;
+	m = &R_GetImageAtIndex(id)->material;
 	s = (materialStage_t *)Mem_PoolAlloc(sizeof(*s), vid_imagePool, 0);
 	m->num_stages++;
 
@@ -587,7 +587,7 @@ static void UI_MaterialEditorNewStage_f (void)
 		ss->next = s;
 	}
 
-	UI_MaterialEditorUpdate(&r_images[id], s);
+	UI_MaterialEditorUpdate(R_GetImageAtIndex(id), s);
 }
 
 void UI_RegisterMaterialEditorNode (uiBehaviour_t *behaviour)
