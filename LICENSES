@@ -2739,9 +2739,13 @@ base/pics/hud/bar_floor.png | GNU General Public License 2.0
 base/pics/hud/bar_head.png | GNU General Public License 2.0
 base/pics/hud/bar_infoscreen.png | GNU General Public License 2.0
 base/pics/hud/bar_inventory.png | GNU General Public License 2.0
+base/pics/hud/bar_inventory_deco.png | GNU General Public License 2.0 | MCR
+base/pics/hud/bar_inventory_mini.png | GNU General Public License 2.0 | MCR
 base/pics/hud/bar_leftweapon.png | GNU General Public License 2.0
 base/pics/hud/bar_nextround.png | GNU General Public License 2.0
 base/pics/hud/bar_phys.png | GNU General Public License 2.0
+base/pics/hud/bar_phys_deco.png | GNU General Public License 2.0
+base/pics/hud/bar_phys_mini.png | GNU General Public License 2.0
 base/pics/hud/bar_popup.png | GNU General Public License 2.0
 base/pics/hud/bar_rightweapon.png | GNU General Public License 2.0
 base/pics/hud/bar_teammember.png | GNU General Public License 2.0
@@ -2862,8 +2866,10 @@ base/pics/icons/mapselection_clicked.png | Public Domain | bayo | SVG from data_
 base/pics/icons/notify_notice.png | GNU General Public License 2.0 or later
 base/pics/icons/notify_pause.png | GNU General Public License 2.0 or later
 base/pics/icons/notify_sound.png | GNU General Public License 2.0 or later
-base/pics/icons/off.png | GNU General Public License 2.0 or later | bayo
+base/pics/icons/off.png | GNU General Public License 2.0 or later | MCR | bayo
+base/pics/icons/off_hovered.png | GNU General Public License 2.0 or later | MCR | bayo
 base/pics/icons/on.png | GNU General Public License 2.0 or later | bayo
+base/pics/icons/on_hovered.png | GNU General Public License 2.0 or later | MCR | bayo
 base/pics/icons/pen.png | GNU General Public License 2.0 | MCR | based on images from http://sourceforge.net/projects/openiconlibrary
 base/pics/icons/pen_disabled.png | GNU General Public License 2.0 | MCR | based on images from http://sourceforge.net/projects/openiconlibrary
 base/pics/icons/pen_hovered.png | GNU General Public License 2.0 | MCR | based on images from http://sourceforge.net/projects/openiconlibrary
@@ -3206,6 +3212,19 @@ base/pics/minihud/level4.png | GNU General Public License 2.0 | MCR | Based on t
 base/pics/minihud/level5.png | GNU General Public License 2.0 | MCR | Based on the original menu artwork by SparX and Rasta
 base/pics/minihud/level6.png | GNU General Public License 2.0 | MCR | Based on the original menu artwork by SparX and Rasta
 base/pics/minihud/level7.png | GNU General Public License 2.0 | MCR | Based on the original menu artwork by SparX and Rasta
+base/pics/minihud/mini_civilian.png | GNU General Public License 2.0 | MCR | Based on the original menu artwork by SparX and Rasta
+base/pics/minihud/mini_civilian_disabled.png | GNU General Public License 2.0 | MCR | Based on the original menu artwork by SparX and Rasta
+base/pics/minihud/mini_enemy.png | GNU General Public License 2.0 | MCR | Based on the original menu artwork by SparX and Rasta
+base/pics/minihud/mini_enemy_disabled.png | GNU General Public License 2.0 | MCR | Based on the original menu artwork by SparX and Rasta
+base/pics/minihud/mini_enemy_hovered.png | GNU General Public License 2.0 | MCR | Based on the original menu artwork by SparX and Rasta
+base/pics/minihud/mini_hand.png | GNU General Public License 2.0 | MCR | Based on the original menu artwork by SparX and Rasta
+base/pics/minihud/mini_hand_hovered.png | GNU General Public License 2.0 | MCR | Based on the original menu artwork by SparX and Rasta
+base/pics/minihud/mini_info.png | GNU General Public License 2.0 | MCR | Based on the original menu artwork by SparX and Rasta
+base/pics/minihud/mini_info_hovered.png | GNU General Public License 2.0 | MCR | Based on the original menu artwork by SparX and Rasta
+base/pics/minihud/mini_level.png | GNU General Public License 2.0 | MCR | Based on the original menu artwork by SparX and Rasta
+base/pics/minihud/mini_level_hovered.png | GNU General Public License 2.0 | MCR | Based on the original menu artwork by SparX and Rasta
+base/pics/minihud/mini_name.png | GNU General Public License 2.0 | MCR | Based on the original menu artwork by SparX and Rasta
+base/pics/minihud/mini_name_hovered.png | GNU General Public License 2.0 | MCR | Based on the original menu artwork by SparX and Rasta
 base/pics/nations/africa.png | GNU General Public License 2.0 | John W. Bjerk (eleazar)
 base/pics/nations/africa2.png | GNU General Public License 2.0 | UlteriorMotives
 base/pics/nations/asia.png | GNU General Public License 2.0 | John W. Bjerk (eleazar)
