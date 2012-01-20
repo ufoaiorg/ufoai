@@ -3,6 +3,7 @@
 {
 "classname" "worldspawn"
 "maxlevel" "8"
+"randomspawn" "1"
 // brush 0
 {
 ( 359 656 64 ) ( 340 656 64 ) ( 340 660 64 ) tex_mattn/wall079 0 11 0 0.22 0.26 65280 0 0
@@ -2501,4 +2502,10 @@
 ( 252 632 4 ) ( 252 632 64 ) ( 292 632 4 ) tex_nature/rock007 0 0 0 0.15 0.15 256 0 0
 ( 256 730 262 ) ( 256 731 262 ) ( 256 730 285 ) tex_common/nodraw 0 0 0 0.15 0.15 256 0 0
 }
+}
+// entity 10
+{
+"classname" "info_alien_start"
+"origin" "272 688 156"
+"angle" "90"
 }

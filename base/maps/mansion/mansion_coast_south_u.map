@@ -3,6 +3,7 @@
 {
 "classname" "worldspawn"
 "maxlevel" "8"
+"randomspawn" "1"
 // brush 0
 {
 ( 504 317 256 ) ( 512 317 256 ) ( 504 272 256 ) tex_common/actorclip 0 0 90 0.5 0.5 130560 0 0
@@ -2538,4 +2539,10 @@
 ( 224 479 60 ) ( 224 479 188 ) ( 226 479 60 ) tex_common/origin 0 0 0 0.15 0.15 16777216 0 0
 ( 224 479 60 ) ( 224 481 60 ) ( 224 479 188 ) tex_common/origin 0 0 0 0.15 0.15 16777216 0 0
 }
+}
+// entity 14
+{
+"classname" "info_alien_start"
+"origin" "240 656 156"
+"angle" "90"
 }

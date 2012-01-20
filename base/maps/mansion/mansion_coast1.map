@@ -3,6 +3,7 @@
 {
 "classname" "worldspawn"
 "maxlevel" "8"
+"randomspawn" "1"
 // brush 0
 {
 ( 816 1376 128 ) ( 879 1314 128 ) ( 807 1369.25 128 ) tex_nature/rock007 0 0 0 0.15 0.15 512 4096 0
