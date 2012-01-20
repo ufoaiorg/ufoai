@@ -4,8 +4,9 @@
 
 window won
 {
-	/** @todo Remove me */
-	{ } // empty properties to fix parsing problem with "image" token (behaviour or property?)
+	{
+		preventtypingescape	true
+	}
 
 	// ==================
 	// background
@@ -73,8 +74,11 @@ window won
 
 window lost
 {
-	/** @todo Remove me */
-	{ } // empty properties to fix parsing problem with "image" token (behaviour or property?)
+
+	{
+		preventtypingescape	true
+	}
+
 
 	// ==================
 	// background
