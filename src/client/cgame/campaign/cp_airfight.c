@@ -361,7 +361,7 @@ void AIRFIGHT_ExecuteActions (const campaign_t* campaign, aircraft_t* shooter, a
  * @note This function is called when @c aircraft is destroyed.
  * @sa AIRFIGHT_ActionsAfterAirfight
  */
-static void AIRFIGHT_RemoveProjectileAimingAircraft (const aircraft_t * aircraft)
+void AIRFIGHT_RemoveProjectileAimingAircraft (const aircraft_t * aircraft)
 {
 	aircraftProjectile_t *projectile;
 	int idx = 0;

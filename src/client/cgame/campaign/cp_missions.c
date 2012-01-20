@@ -775,6 +775,7 @@ void CP_UFORemoveFromGeoscape (mission_t *mission, qboolean destroyed)
 	/* Notications */
 	AIR_AircraftsNotifyUFORemoved(mission->ufo, destroyed);
 	MAP_NotifyUFORemoved(mission->ufo, destroyed);
+	AIRFIGHT_RemoveProjectileAimingAircraft(mission->ufo);
 
 	if (destroyed) {
 		/* remove UFO from radar and update idx of ufo in radar array */
