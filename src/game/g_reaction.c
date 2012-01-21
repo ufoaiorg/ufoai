@@ -653,7 +653,7 @@ qboolean G_ReactionFireOnMovement (edict_t *target)
 /**
  * @brief Called when 'target' is about to shoot, this forces a 'draw' to decide who gets the first shot
  * @param[in] target The entity about to shoot
- * @param[in] fdTime The TU of the shoot
+ * @param[in] fdTime The TU of the shot
  * @sa G_ClientShoot
  */
 void G_ReactionFirePreShot (const edict_t *target, const int fdTime)
@@ -668,29 +668,38 @@ void G_ReactionFirePreShot (const edict_t *target, const int fdTime)
 	/* check all ents to see who wins and who loses a draw */
 	while ((ent = G_EdictsGetNextLivingActor(ent))) {
 		int entTUs;
+		qboolean fired = qfalse;
 
-		if (!ent->reactionTarget)
-			continue;
-
-		/* check this ent hasn't already lost the draw */
-		if (ent->reactionNoDraw)
-			continue;
-
-		/* can't reaction fire if no TUs to fire */
 		entTUs = G_ReactionFireGetTUsForItem(ent, target, RIGHT(ent));
-		if (entTUs < 0) {
-			ent->reactionTarget = NULL;
-			continue;
-		}
-
-		/* see who won */
-		if (entTUs >= fdTime) {
-			/* target wins, so delay ent */
-			/* ent can't lose the TU battle again */
-			ent->reactionNoDraw = qtrue;
+		if (entTUs > RF2) {		/* will not happen; it's like commenting it out, but keep compiler happy */
+			if (G_ReactionFireTargetsExpired(ent, target, entTUs)) {
+				ent->reactionTarget = target;
+				fired |= G_ReactionFireTryToShoot(ent);
+			}
 		} else {
-			/* ent wins so take the shot */
-			G_ReactionFireTryToShoot(ent);
+			if (!ent->reactionTarget)
+				continue;
+
+			/* check this ent hasn't already lost the draw */
+			if (ent->reactionNoDraw)
+				continue;
+
+			/* can't reaction fire if no TUs to fire */
+			entTUs = G_ReactionFireGetTUsForItem(ent, target, RIGHT(ent));
+			if (entTUs < 0) {
+				ent->reactionTarget = NULL;
+				continue;
+			}
+
+			/* see who won */
+			if (entTUs >= fdTime) {
+				/* target wins, so delay ent */
+				/* ent can't lose the TU battle again */
+				ent->reactionNoDraw = qtrue;
+			} else {
+				/* ent wins so take the shot */
+				G_ReactionFireTryToShoot(ent);
+			}
 		}
 	}
 }
