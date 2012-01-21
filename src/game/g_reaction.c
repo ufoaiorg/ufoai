@@ -41,6 +41,8 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 
 #include "g_local.h"
 
+/* set RF2 to 1 to enable new RF mode. Set it to 100 to disable. */
+#define RF2 100
 #define MAX_RF_TARGETS 10
 #define MAX_RF_DATA 50
 
@@ -153,6 +155,38 @@ static void G_ReactionFireTargetsRemove (const edict_t *shooter, const edict_t *
 		}
 	}
 }
+
+/**
+ * @brief Check if the given shooter is ready to reaction fire at the given target.
+ * @param[in] shooter The reaction firing actor
+ * @param[in] target The potential reaction fire victim
+ * @param[in] tusNeeded The TUs the shooter will need for the shot
+ */
+static qboolean G_ReactionFireTargetsExpired (const edict_t *shooter, const edict_t *target, const int tusNeeded)
+{
+	int i;
+	reactionFireTargets_t *rfts = NULL;
+
+	for (i = 0; i < MAX_RF_DATA; i++) {
+		if (rfData[i].entnum == shooter->number) {
+			rfts = &rfData[i];
+			break;
+		}
+	}
+
+	if (!rfts)
+		return qfalse;	/* the shooter doesn't aim at anything */
+
+	assert(target);
+
+	for (i = 0; i < rfts->count; i++) {
+		if (rfts->targets[i].target == target)	/* found it ? */
+			return rfts->targets[i].triggerTUs + tusNeeded >= target->TU;
+	}
+
+	return qfalse;	/* the shooter doesn't aim at this target */
+}
+
 #endif
 
 /**
@@ -576,14 +610,22 @@ static qboolean G_ReactionFireCheckExecution (const edict_t *target)
 
 	/* check all possible shooters */
 	while ((ent = G_EdictsGetNextLivingActor(ent))) {
-		if (ent->reactionTarget) {
-			const int reactionTargetTU = ent->reactionTarget->TU;
-			const int reactionTU = ent->reactionTUs;
-			const qboolean timeout = g_reaction_fair->integer == 0 || reactionTargetTU < reactionTU;
-			/* check whether target has changed (i.e. the player is making a move with a
-			 * different entity) or whether target is out of time. */
-			if (ent->reactionTarget != target || timeout)
+		int tus = G_ReactionFireGetTUsForItem(ent, target, RIGHT(ent));
+		if (tus > RF2) {		/* will not happen; it's like commenting it out, but keep compiler happy */
+			if (G_ReactionFireTargetsExpired(ent, target, tus)) {
+				ent->reactionTarget = target;
 				fired |= G_ReactionFireTryToShoot(ent);
+			}
+		} else {
+			if (ent->reactionTarget) {
+				const int reactionTargetTU = ent->reactionTarget->TU;
+				const int reactionTU = ent->reactionTUs;
+				const qboolean timeout = g_reaction_fair->integer == 0 || reactionTargetTU < reactionTU;
+				/* check whether target has changed (i.e. the player is making a move with a
+				 * different entity) or whether target is out of time. */
+				if (ent->reactionTarget != target || timeout)
+					fired |= G_ReactionFireTryToShoot(ent);
+			}
 		}
 	}
 	return fired;
