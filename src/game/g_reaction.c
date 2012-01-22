@@ -659,7 +659,7 @@ qboolean G_ReactionFireOnMovement (edict_t *target)
  */
 void G_ReactionFirePreShot (const edict_t *target, const int fdTime)
 {
-	edict_t *ent = NULL;
+	edict_t *shooter = NULL;
 
 	/* Check to see whether this triggers any reaction fire */
 	G_ReactionFireSearchTarget(target);
@@ -667,39 +667,39 @@ void G_ReactionFirePreShot (const edict_t *target, const int fdTime)
 	G_ReactionFireTargetsUpdate(target);
 
 	/* check all ents to see who wins and who loses a draw */
-	while ((ent = G_EdictsGetNextLivingActor(ent))) {
+	while ((shooter = G_EdictsGetNextLivingActor(shooter))) {
 		int entTUs;
 		qboolean fired = qfalse;
 
-		entTUs = G_ReactionFireGetTUsForItem(ent, target, RIGHT(ent));
+		entTUs = G_ReactionFireGetTUsForItem(shooter, target, RIGHT(shooter));
 		if (entTUs > RF2) {		/* will not happen; it's like commenting it out, but keep compiler happy */
-			if (G_ReactionFireTargetsExpired(ent, target, entTUs, fdTime)) {
-				ent->reactionTarget = target;
-				fired |= G_ReactionFireTryToShoot(ent);
+			if (G_ReactionFireTargetsExpired(shooter, target, entTUs, fdTime)) {
+				shooter->reactionTarget = target;
+				fired |= G_ReactionFireTryToShoot(shooter);
 			}
 		} else {
-			if (!ent->reactionTarget)
+			if (!shooter->reactionTarget)
 				continue;
 
-			/* check this ent hasn't already lost the draw */
-			if (ent->reactionNoDraw)
+			/* check this shooter hasn't already lost the draw */
+			if (shooter->reactionNoDraw)
 				continue;
 
 			/* can't reaction fire if no TUs to fire */
-			entTUs = G_ReactionFireGetTUsForItem(ent, target, RIGHT(ent));
+			entTUs = G_ReactionFireGetTUsForItem(shooter, target, RIGHT(shooter));
 			if (entTUs < 0) {
-				ent->reactionTarget = NULL;
+				shooter->reactionTarget = NULL;
 				continue;
 			}
 
 			/* see who won */
 			if (entTUs >= fdTime) {
-				/* target wins, so delay ent */
-				/* ent can't lose the TU battle again */
-				ent->reactionNoDraw = qtrue;
+				/* target wins, so delay shooter */
+				/* shooter can't lose the TU battle again */
+				shooter->reactionNoDraw = qtrue;
 			} else {
-				/* ent wins so take the shot */
-				G_ReactionFireTryToShoot(ent);
+				/* shooter wins so take the shot */
+				G_ReactionFireTryToShoot(shooter);
 			}
 		}
 	}
