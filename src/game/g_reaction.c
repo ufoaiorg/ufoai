@@ -160,9 +160,10 @@ static void G_ReactionFireTargetsRemove (const edict_t *shooter, const edict_t *
  * @brief Check if the given shooter is ready to reaction fire at the given target.
  * @param[in] shooter The reaction firing actor
  * @param[in] target The potential reaction fire victim
- * @param[in] tusNeeded The TUs the shooter will need for the shot
+ * @param[in] tusShooter The TUs the shooter will need for the shot
+ * @param[in] tusTarget The TUs the target will need for the shot, 0 for just moving
  */
-static qboolean G_ReactionFireTargetsExpired (const edict_t *shooter, const edict_t *target, const int tusNeeded)
+static qboolean G_ReactionFireTargetsExpired (const edict_t *shooter, const edict_t *target, const int tusShooter, const int tusTarget)
 {
 	int i;
 	reactionFireTargets_t *rfts = NULL;
@@ -181,7 +182,7 @@ static qboolean G_ReactionFireTargetsExpired (const edict_t *shooter, const edic
 
 	for (i = 0; i < rfts->count; i++) {
 		if (rfts->targets[i].target == target)	/* found it ? */
-			return rfts->targets[i].triggerTUs + tusNeeded >= target->TU;
+			return rfts->targets[i].triggerTUs + tusShooter <= target->TU + tusShooter;
 	}
 
 	return qfalse;	/* the shooter doesn't aim at this target */
@@ -612,7 +613,7 @@ static qboolean G_ReactionFireCheckExecution (const edict_t *target)
 	while ((ent = G_EdictsGetNextLivingActor(ent))) {
 		int tus = G_ReactionFireGetTUsForItem(ent, target, RIGHT(ent));
 		if (tus > RF2) {		/* will not happen; it's like commenting it out, but keep compiler happy */
-			if (G_ReactionFireTargetsExpired(ent, target, tus)) {
+			if (G_ReactionFireTargetsExpired(ent, target, tus, 0)) {
 				ent->reactionTarget = target;
 				fired |= G_ReactionFireTryToShoot(ent);
 			}
@@ -672,7 +673,7 @@ void G_ReactionFirePreShot (const edict_t *target, const int fdTime)
 
 		entTUs = G_ReactionFireGetTUsForItem(ent, target, RIGHT(ent));
 		if (entTUs > RF2) {		/* will not happen; it's like commenting it out, but keep compiler happy */
-			if (G_ReactionFireTargetsExpired(ent, target, entTUs)) {
+			if (G_ReactionFireTargetsExpired(ent, target, entTUs, fdTime)) {
 				ent->reactionTarget = target;
 				fired |= G_ReactionFireTryToShoot(ent);
 			}
@@ -727,7 +728,7 @@ void G_ReactionFireEndTurn (void)
 	while ((ent = G_EdictsGetNextLivingActor(ent))) {
 		if (!ent->reactionTarget)
 			continue;
-
+		assert("I bet this never happens" == NULL);
 		G_ReactionFireTryToShoot(ent);
 	}
 }
