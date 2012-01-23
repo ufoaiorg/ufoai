@@ -121,14 +121,14 @@ struct uiNode_s; /**< @todo remove this once the uiNode_t usage is cleaned up */
 /**
  * @brief The length of a single mission spawn cycle
  */
-#define DELAY_BETWEEN_MISSION_SPAWNING 		4
+#define DELAY_BETWEEN_MISSION_SPAWNING 		8
 
 /**
  * @brief The minimum and maximum amount of missions per mission cycle.
  * @note some of the missions can be non-occurrence missions.
  */
 #define MINIMUM_MISSIONS_PER_CYCLE 			5
-#define MAXIMUM_MISSIONS_PER_CYCLE 			40
+#define MAXIMUM_MISSIONS_PER_CYCLE 			25
 
 /**
  * @brief The probability that any new alien mission will be a non-occurrence mission.
