@@ -98,7 +98,6 @@ void G_ReactionFireTargetsCreate (const edict_t *shooter)
 #endif
 }
 
-#if 1		/* avoid warnings while the code is not used yet */
 /**
  * @brief Add a reaction fire target for the given shooter.
  * @param[in] shooter The reaction firing actor
@@ -188,7 +187,6 @@ static qboolean G_ReactionFireTargetsExpired (const edict_t *shooter, const edic
 	return qfalse;	/* the shooter doesn't aim at this target */
 }
 
-#endif
 
 /**
  * @brief Get the weapon firing TUs of the item in the right hand of the edict.
@@ -455,7 +453,6 @@ static qboolean G_ReactionFireIsPossible (const edict_t *ent, const edict_t *tar
 	return qtrue;
 }
 
-#if 1
 /**
  * @brief Check whether 'target' has just triggered any new reaction fire
  * @param[in] target The entity triggering fire
@@ -474,7 +471,6 @@ static void G_ReactionFireTargetsUpdate (const edict_t *target)
 			G_ReactionFireTargetsRemove(shooter, target);
 	}
 }
-#endif
 
 /**
  * @brief Check whether 'target' has just triggered any new reaction fire
