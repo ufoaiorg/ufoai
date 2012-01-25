@@ -554,39 +554,39 @@ static qboolean G_ReactionFireShoot (const player_t *player, edict_t *shooter, c
 
 /**
  * @brief Resolve the reaction fire for an entity, this checks that the entity can fire and then takes the shot
- * @param[in] ent The entity to resolve reaction fire for
+ * @param[in] shooter The entity to resolve reaction fire for
  * @param[in] target The victim of the reaction fire
  * @return true if the entity fired (or would have fired if mock), false otherwise
  */
-static qboolean G_ReactionFireTryToShoot (edict_t *ent, const edict_t *target)
+static qboolean G_ReactionFireTryToShoot (edict_t *shooter, const edict_t *target)
 {
 	qboolean tookShot;
 
-	/* check whether this ent has a reaction fire queued */
-	assert(ent->reactionTarget);
+	/* check for valid target */
+	assert(target);
 
-	/* ent can't take a reaction shot if it's not possible - and check that
+	/* shooter can't take a reaction shot if it's not possible - and check that
 	 * the target is still alive */
-	if (!G_ReactionFireIsPossible(ent, ent->reactionTarget)) {
-		ent->reactionTarget = NULL;
+	if (!G_ReactionFireIsPossible(shooter, target)) {
+		shooter->reactionTarget = NULL;
 		return qfalse;
 	}
 
 	/* take the shot */
-	tookShot = G_ReactionFireShoot(G_PLAYER_FROM_ENT(ent), ent, ent->reactionTarget->pos, ST_RIGHT_REACTION, ent->chr.RFmode.fmIdx);
+	tookShot = G_ReactionFireShoot(G_PLAYER_FROM_ENT(shooter), shooter, target->pos, ST_RIGHT_REACTION, shooter->chr.RFmode.fmIdx);
 
 	if (tookShot) {
 		/* clear any shakenness */
-		G_RemoveShaken(ent);
+		G_RemoveShaken(shooter);
 
 		/* check whether further reaction fire is possible */
-		if (G_ReactionFireIsPossible(ent, ent->reactionTarget)){
-			/* see how quickly ent can fire (if it can fire at all) */
-			const int tus = G_ReactionFireGetTUsForItem(ent, ent->reactionTarget, RIGHT(ent));
+		if (G_ReactionFireIsPossible(shooter, target)){
+			/* see how quickly shooter can fire (if it can fire at all) */
+			const int tus = G_ReactionFireGetTUsForItem(shooter, target, RIGHT(shooter));
 			if (tus >= 0) {
 				/* An enemy getting reaction shot gets more time before
 				 * reaction fire is repeated. */
-				ent->reactionTUs = max(0, ent->reactionTarget->TU - tus);
+				shooter->reactionTUs = max(0, target->TU - tus);
 			}
 		}
 	}
