@@ -457,7 +457,7 @@ static qboolean G_ReactionFireIsPossible (const edict_t *ent, const edict_t *tar
  * @brief Check whether 'target' has just triggered any new reaction fire
  * @param[in] target The entity triggering fire
  */
-static void G_ReactionFireTargetsUpdate (const edict_t *target)
+static void G_ReactionFireTargetsUpdateAll (const edict_t *target)
 {
 	edict_t *shooter = NULL;
 
@@ -642,7 +642,7 @@ qboolean G_ReactionFireOnMovement (edict_t *target)
 	/* Check to see whether this triggers any reaction fire */
 	G_ReactionFireSearchTarget(target);
 
-	G_ReactionFireTargetsUpdate(target);
+	G_ReactionFireTargetsUpdateAll(target);
 
 	return fired;
 }
@@ -660,7 +660,7 @@ void G_ReactionFirePreShot (const edict_t *target, const int fdTime)
 	/* Check to see whether this triggers any reaction fire */
 	G_ReactionFireSearchTarget(target);
 
-	G_ReactionFireTargetsUpdate(target);
+	G_ReactionFireTargetsUpdateAll(target);
 
 	/* check all ents to see who wins and who loses a draw */
 	while ((shooter = G_EdictsGetNextLivingActor(shooter))) {
