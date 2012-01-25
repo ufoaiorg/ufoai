@@ -555,9 +555,10 @@ static qboolean G_ReactionFireShoot (const player_t *player, edict_t *shooter, c
 /**
  * @brief Resolve the reaction fire for an entity, this checks that the entity can fire and then takes the shot
  * @param[in] ent The entity to resolve reaction fire for
+ * @param[in] target The victim of the reaction fire
  * @return true if the entity fired (or would have fired if mock), false otherwise
  */
-static qboolean G_ReactionFireTryToShoot (edict_t *ent)
+static qboolean G_ReactionFireTryToShoot (edict_t *ent, const edict_t *target)
 {
 	qboolean tookShot;
 
@@ -611,7 +612,7 @@ static qboolean G_ReactionFireCheckExecution (const edict_t *target)
 		if (tus > RF2) {		/* will not happen; it's like commenting it out, but keep compiler happy */
 			if (G_ReactionFireTargetsExpired(ent, target, tus, 0)) {
 				ent->reactionTarget = target;
-				fired |= G_ReactionFireTryToShoot(ent);
+				fired |= G_ReactionFireTryToShoot(ent, target);
 			}
 		} else {
 			if (ent->reactionTarget) {
@@ -621,7 +622,7 @@ static qboolean G_ReactionFireCheckExecution (const edict_t *target)
 				/* check whether target has changed (i.e. the player is making a move with a
 				 * different entity) or whether target is out of time. */
 				if (ent->reactionTarget != target || timeout)
-					fired |= G_ReactionFireTryToShoot(ent);
+					fired |= G_ReactionFireTryToShoot(ent, target);
 			}
 		}
 	}
@@ -671,7 +672,7 @@ void G_ReactionFirePreShot (const edict_t *target, const int fdTime)
 		if (entTUs > RF2) {		/* will not happen; it's like commenting it out, but keep compiler happy */
 			if (G_ReactionFireTargetsExpired(shooter, target, entTUs, fdTime)) {
 				shooter->reactionTarget = target;
-				fired |= G_ReactionFireTryToShoot(shooter);
+				fired |= G_ReactionFireTryToShoot(shooter, target);
 			}
 		} else {
 			if (!shooter->reactionTarget)
@@ -695,7 +696,7 @@ void G_ReactionFirePreShot (const edict_t *target, const int fdTime)
 				shooter->reactionNoDraw = qtrue;
 			} else {
 				/* shooter wins so take the shot */
-				G_ReactionFireTryToShoot(shooter);
+				G_ReactionFireTryToShoot(shooter, shooter->reactionTarget);
 			}
 		}
 	}
@@ -725,7 +726,7 @@ void G_ReactionFireEndTurn (void)
 		if (!ent->reactionTarget)
 			continue;
 	/*	assert("I bet this never happens" == NULL);	*/
-		G_ReactionFireTryToShoot(ent);
+		G_ReactionFireTryToShoot(ent, ent->reactionTarget);
 	}
 }
 
