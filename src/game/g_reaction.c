@@ -603,26 +603,26 @@ static qboolean G_ReactionFireTryToShoot (edict_t *shooter, const edict_t *targe
  */
 static qboolean G_ReactionFireCheckExecution (const edict_t *target)
 {
-	edict_t *ent = NULL;
+	edict_t *shooter = NULL;
 	qboolean fired = qfalse;
 
 	/* check all possible shooters */
-	while ((ent = G_EdictsGetNextLivingActor(ent))) {
-		int tus = G_ReactionFireGetTUsForItem(ent, target, RIGHT(ent));
+	while ((shooter = G_EdictsGetNextLivingActor(shooter))) {
+		int tus = G_ReactionFireGetTUsForItem(shooter, target, RIGHT(shooter));
 		if (tus > RF2) {		/* will not happen; it's like commenting it out, but keep compiler happy */
-			if (G_ReactionFireTargetsExpired(ent, target, tus, 0)) {
-				ent->reactionTarget = target;
-				fired |= G_ReactionFireTryToShoot(ent, target);
+			if (G_ReactionFireTargetsExpired(shooter, target, tus, 0)) {
+				shooter->reactionTarget = target;
+				fired |= G_ReactionFireTryToShoot(shooter, target);
 			}
 		} else {
-			if (ent->reactionTarget) {
-				const int reactionTargetTU = ent->reactionTarget->TU;
-				const int reactionTU = ent->reactionTUs;
+			if (shooter->reactionTarget) {
+				const int reactionTargetTU = shooter->reactionTarget->TU;
+				const int reactionTU = shooter->reactionTUs;
 				const qboolean timeout = g_reaction_fair->integer == 0 || reactionTargetTU < reactionTU;
 				/* check whether target has changed (i.e. the player is making a move with a
 				 * different entity) or whether target is out of time. */
-				if (ent->reactionTarget != target || timeout)
-					fired |= G_ReactionFireTryToShoot(ent, target);
+				if (shooter->reactionTarget != target || timeout)
+					fired |= G_ReactionFireTryToShoot(shooter, target);
 			}
 		}
 	}
