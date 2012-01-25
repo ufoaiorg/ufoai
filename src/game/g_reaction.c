@@ -131,7 +131,7 @@ static void G_ReactionFireTargetsAdd (const edict_t *shooter, const edict_t *tar
  * @param[in] shooter The reaction firing actor
  * @param[in] target The potential reaction fire victim
  */
-static void G_ReactionFireTargetsRemove (const edict_t *shooter, const edict_t *target)
+static void G_ReactionFireTargetsRemove (edict_t *shooter, const edict_t *target)
 {
 	int i;
 	reactionFireTargets_t *rfts = NULL;
@@ -153,6 +153,8 @@ static void G_ReactionFireTargetsRemove (const edict_t *shooter, const edict_t *
 			rfts->count--;
 		}
 	}
+	/* support the legacy RF code */
+	shooter->reactionTarget = NULL;
 }
 
 /**
@@ -568,7 +570,7 @@ static qboolean G_ReactionFireTryToShoot (edict_t *shooter, const edict_t *targe
 	/* shooter can't take a reaction shot if it's not possible - and check that
 	 * the target is still alive */
 	if (!G_ReactionFireIsPossible(shooter, target)) {
-		shooter->reactionTarget = NULL;
+		G_ReactionFireTargetsRemove(shooter, target);
 		return qfalse;
 	}
 
