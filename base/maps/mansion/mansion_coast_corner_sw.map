@@ -5569,6 +5569,6 @@
 "classname" "misc_model"
 "model" "models/objects/vegi/bush/bush01.md2"
 "origin" "619 441 146"
-"spawnflags" "255"
+"spawnflags" "252"
 "skin" "0"
 }

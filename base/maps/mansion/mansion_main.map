@@ -29038,7 +29038,7 @@
 // entity 173
 {
 "classname" "info_civilian_start"
-"origin" "464 944 348"
+"origin" "432 944 348"
 "angle" "90"
 }
 // entity 174
@@ -31389,7 +31389,7 @@
 // entity 257
 {
 "classname" "misc_model"
-"spawnflags" "252"
+"spawnflags" "224"
 "origin" "559 944 352"
 "model" "models/objects/furniture/flowerpot2/flowerpot2.md2"
 }
