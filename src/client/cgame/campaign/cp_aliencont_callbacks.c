@@ -200,9 +200,9 @@ static void AC_UpdateMenu (const base_t *base)
 					if (containment[i].amountAlive > 0 || containment[i].amountDead > 0) {
 						/* Generate a list entry. */
 						if (RS_IsResearched_ptr(tech)) {
-							Cvar_Set(va("mn_ac_statusstr%i", j), _("Already researched"));
+							Cvar_Set(va("mn_ac_statusstr%i", j), _("Researched"));
 						} else {
-							Cvar_Set(va("mn_ac_statusstr%i", j), _("Needs autopsy!"));
+							Cvar_Set(va("mn_ac_statusstr%i", j), _("Awaiting autopsy"));
 							if (!containment[i].amountDead) {
 								UI_ExecuteConfunc("aliencontkill %i", j);
 							} else {
