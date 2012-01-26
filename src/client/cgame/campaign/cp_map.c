@@ -2035,7 +2035,7 @@ void MAP_ResetAction (void)
 }
 
 /**
- * @brief Select the specified ufo in geoscape
+ * @brief Select the specified ufo on the geoscape
  */
 void MAP_SelectUFO (aircraft_t* ufo)
 {
@@ -2044,7 +2044,7 @@ void MAP_SelectUFO (aircraft_t* ufo)
 }
 
 /**
- * @brief Select the specified aircraft in geoscape
+ * @brief Select the specified aircraft on the geoscape
  */
 void MAP_SelectAircraft (aircraft_t* aircraft)
 {
