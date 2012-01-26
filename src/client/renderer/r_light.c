@@ -147,7 +147,7 @@ void R_EnableModelLights (const light_t **lights, int numLights, qboolean enable
 	int maxLights = r_dynamic_lights->integer;
 	const vec4_t sunDirection = {0.0, 0.0, 1.0, 0.0}; /* works only with shader, not the FFP */
 
-	assert(numLights < MAX_GL_LIGHTS - 1); /* light 0 is reserved */
+	assert(numLights < MAX_GL_LIGHTS); /* light 0 is reserved */
 
 	if (!enable || !r_state.lighting_enabled) {
 		if (!r_state.active_normalmap && r_state.dynamic_lighting_enabled)
