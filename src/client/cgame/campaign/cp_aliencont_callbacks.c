@@ -86,8 +86,7 @@ static void AC_OpenUFOpedia_f (void)
 		return;
 	}
 
-	if (RS_IsResearched_ptr(tech))
-		UP_OpenWith(tech->id);
+	UP_OpenWith(tech->id);
 }
 
 
