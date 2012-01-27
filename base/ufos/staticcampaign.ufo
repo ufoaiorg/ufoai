@@ -1,0 +1,73 @@
+staticcampaign small {
+	mission vil_shannon
+	{
+		mapdef		"+village"
+		pos			"9 52"
+	}
+
+	stage intro
+	{
+		set first
+		{
+			delay		"0 1 0"
+			frame		"0 3 0"
+			missions	"vil_grenchen"
+			number		1
+			quota		0
+		}
+		set terror_only
+		{
+			needed		first
+			delay		"0 0 1"
+			frame		"0 10 0"
+			expire		"0 3 0"
+			missions	"or_tabelbala italy japan oriental vil_lille vil_albany"
+			quota		4
+			nextstage	ufos_are_coming
+		}
+		set stop
+		{
+			needed		terror_only
+			delay		"0 20 0"
+			endstage	intro
+		}
+	}
+
+	stage ufos_are_coming
+	{
+		set crashed_and_landed
+		{
+			delay		"0 0 1"
+			frame		"0 10 0"
+			expire		"0 3 0"
+			missions	"transport mine construction farm office or_asyut"
+			quota		4
+			nextstage	invasion
+		}
+		set stop
+		{
+			needed		crashed_and_landed
+			delay		"0 110 0"
+			endstage	ufos_are_coming
+		}
+	}
+
+	stage invasion
+	{
+		set baseinvasion
+		{
+			delay		"0 0 1"
+			frame		"0 10 0"
+			expire		"0 3 0"
+			missions	"baseattack"
+			quota		4
+			nextstage	alienbase
+		}
+		set stop
+		{
+			needed		baseinvasion
+			delay		"0 110 0"
+			commands	"mn_push enddemo;"
+		}
+	}
+}

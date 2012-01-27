@@ -26,7 +26,29 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #include "../../client.h"
 #include "../cl_game.h"
 #include "../campaign/cp_cgame_callbacks.h"
+#include "../campaign/cp_campaign.h"
 #include "cl_game_staticcampaign.h"
+#include "scp_missions.h"
+#include "scp_parse.h"
+#include "scp_shared.h"
+
+staticCampaignData_t* scd;
+
+static void GAME_SCP_InitStartup (void)
+{
+	GAME_CP_InitStartup();
+
+	ccs.missionSpawn = SCP_SpawnNewMissions;
+	scd = Mem_Alloc(sizeof(*scd));
+
+	SCP_Parse();
+}
+
+static void GAME_SCP_Shutdown (void)
+{
+	GAME_CP_Shutdown();
+	Mem_Free(scd);
+}
 
 #ifndef HARD_LINKED_CGAME
 const cgame_export_t *GetCGameAPI (const cgame_import_t *import)
@@ -40,8 +62,8 @@ const cgame_export_t *GetCGameStaticCampaignAPI (const cgame_import_t *import)
 
 	e.name = "Static Campaign mode";
 	e.menu = "staticcampaigns";
-	e.Init = GAME_CP_InitStartup;
-	e.Shutdown = GAME_CP_Shutdown;
+	e.Init = GAME_SCP_InitStartup;
+	e.Shutdown = GAME_SCP_Shutdown;
 	e.Spawn = GAME_CP_Spawn;
 	e.Results = GAME_CP_Results;
 	e.IsItemUseable = GAME_CP_ItemIsUseable;

@@ -364,6 +364,8 @@ typedef enum mapAction_s {
 	MA_UFORADAR				/**< ufos are in our radar */
 } mapAction_t;
 
+typedef void (*missionSpawnFunction_t) (void);
+
 /**
  * @brief client campaign structure
  * @sa csi_t
@@ -552,6 +554,8 @@ typedef struct ccs_s {
 
 	aircraft_t aircraftTemplates[MAX_AIRCRAFT];		/**< Available aircraft types/templates/samples. */
 	int numAircraftTemplates;		/**< Number of aircraft templates. */
+
+	missionSpawnFunction_t missionSpawn;
 } ccs_t;
 
 typedef struct {
