@@ -154,6 +154,8 @@ $(TARGET)_SRCS      = \
 	client/cgame/campaign/cp_popup.c \
 	client/cgame/campaign/cp_fightequip_callbacks.c \
 	\
+	client/cgame/staticcampaign/cl_game_staticcampaign.c \
+	\
 	client/cgame/campaign/missions/cp_mission_baseattack.c \
 	client/cgame/campaign/missions/cp_mission_buildbase.c \
 	client/cgame/campaign/missions/cp_mission_harvest.c \
