@@ -136,11 +136,6 @@ window campaigns {
 	}
 }
 
-window staticcampaigns extends campaigns {
-	/** @todo Remove me */
-	{ } // empty properties to fix parsing problem with "image" token (behaviour or property?)
-}
-
 window campaign_main
 {
 	/** @todo Remove me */
