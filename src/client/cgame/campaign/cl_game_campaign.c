@@ -26,6 +26,7 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #include "../../client.h"
 #include "../cl_game.h"
 #include "cp_cgame_callbacks.h"
+#include "cl_game_campaign.h"
 
 #ifndef HARD_LINKED_CGAME
 const cgame_export_t *GetCGameAPI (const cgame_import_t *import)
