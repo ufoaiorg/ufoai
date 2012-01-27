@@ -105,6 +105,7 @@ $(TARGET)_SRCS      = \
 	client/cgame/campaign/cp_base_callbacks.c \
 	client/cgame/campaign/cp_basedefence_callbacks.c \
 	client/cgame/campaign/cp_building.c \
+	client/cgame/campaign/cp_cgame_callbacks.c \
 	client/cgame/campaign/cp_capacity.c \
 	client/cgame/campaign/cp_hospital.c \
 	client/cgame/campaign/cp_hospital_callbacks.c \
