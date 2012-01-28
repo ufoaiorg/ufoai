@@ -269,25 +269,6 @@ static qboolean G_ActorHasWorkingFireModeSet (const edict_t *actor)
 }
 
 /**
- * @brief Set the reaction fire TU reservation for an actor
- * @param[in,out] ent The actor edict to set the TUs for
- * @return @c true if TUs for reaction fire were reserved, @c false if the reservation was set
- * back to @c 0
- */
-qboolean G_ReactionFireSettingsReserveTUs (edict_t *ent)
-{
-	if (G_ReactionFireSetDefault(ent) && G_ReactionFireCanBeEnabled(ent)) {
-		const int TUs = G_ActorGetTUForReactionFire(ent);
-		/* Enable requested reaction fire. */
-		G_ActorReserveTUs(ent, TUs, ent->chr.reservedTus.shot, ent->chr.reservedTus.crouch);
-		return qtrue;
-	}
-
-	G_ActorReserveTUs(ent, 0, ent->chr.reservedTus.shot, ent->chr.reservedTus.crouch);
-	return qfalse;
-}
-
-/**
  * @brief Updates the reaction fire settings in case something was moved into a hand or from a hand
  * that would make the current settings invalid
  * @param[in,out] ent The actor edict to check the settings for
@@ -333,7 +314,7 @@ static qboolean G_ActorHasEnoughTUsReactionFire (const edict_t *ent)
  * @return @c true if the needed settings could have been made or settings are
  * already valid, @c false otherwise.
  */
-qboolean G_ReactionFireSetDefault (edict_t *ent)
+static qboolean G_ReactionFireSetDefault (edict_t *ent)
 {
 	const objDef_t *weapon;
 	const invList_t *invList;
@@ -368,7 +349,7 @@ qboolean G_ReactionFireSetDefault (edict_t *ent)
  * @param[in] ent The actor to check
  * @return @c true if the actor is allowed to activate it, @c false otherwise
  */
-qboolean G_ReactionFireCanBeEnabled (const edict_t *ent)
+static qboolean G_ReactionFireCanBeEnabled (const edict_t *ent)
 {
 	/* check ent is a suitable shooter */
 	if (!ent->inuse || !G_IsLivingActor(ent))
@@ -397,6 +378,25 @@ qboolean G_ReactionFireCanBeEnabled (const edict_t *ent)
 	}
 
 	return qtrue;
+}
+
+/**
+ * @brief Set the reaction fire TU reservation for an actor
+ * @param[in,out] ent The actor edict to set the TUs for
+ * @return @c true if TUs for reaction fire were reserved, @c false if the reservation was set
+ * back to @c 0
+ */
+qboolean G_ReactionFireSettingsReserveTUs (edict_t *ent)
+{
+	if (G_ReactionFireSetDefault(ent) && G_ReactionFireCanBeEnabled(ent)) {
+		const int TUs = G_ActorGetTUForReactionFire(ent);
+		/* Enable requested reaction fire. */
+		G_ActorReserveTUs(ent, TUs, ent->chr.reservedTus.shot, ent->chr.reservedTus.crouch);
+		return qtrue;
+	}
+
+	G_ActorReserveTUs(ent, 0, ent->chr.reservedTus.shot, ent->chr.reservedTus.crouch);
+	return qfalse;
 }
 
 /**
