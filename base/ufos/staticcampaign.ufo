@@ -21,7 +21,7 @@ staticcampaign small {
 
 	mission italy
 	{
-		pos			"-18 40"
+		pos			"-16 40"
 	}
 
 	mission japan
