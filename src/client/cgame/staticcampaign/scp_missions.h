@@ -31,5 +31,6 @@
 
 void SCP_SpawnNewMissions(void);
 void SCP_CampaignActivateFirstStage(void);
+void SCP_CampaignProgress(void);
 
 #endif

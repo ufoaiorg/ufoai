@@ -29,7 +29,6 @@
 #include "scp_shared.h"
 
 static const value_t mission_vals[] = {
-	{"mapdef", V_STRING, offsetof(staticMission_t, mapDef), 0},
 	{"pos", V_POS, offsetof(staticMission_t, pos), 0},
 
 	{NULL, 0, 0, 0}
@@ -102,11 +101,8 @@ static void SCP_ParseMission (const char *name, const char **text)
 
 	} while (*text);
 
-	if (!ms->mapDef) {
-		Com_Printf("SCP_ParseMission: missing mapdef for '%s'\n", ms->id);
-		scd->numMissions--;
-	} else if (!Com_GetMapDefinitionByID(ms->mapDef)) {
-		Com_Printf("SCP_ParseMission: invalid mapdef (%s) for '%s'\n", ms->mapDef, ms->id);
+	if (!Com_GetMapDefinitionByID(ms->id)) {
+		Com_Printf("SCP_ParseMission: invalid mapdef for '%s'\n", ms->id);
 		scd->numMissions--;
 	}
 }

@@ -128,11 +128,11 @@ static void SCP_CampaignAddMission (setState_t *set)
 	actMis_t *mis;
 
 	/* add mission */
-	if (scd->numMissions >= MAX_ACTMISSIONS) {
+	if (scd->numActiveMissions >= MAX_ACTMISSIONS) {
 		Com_Printf("SCP_CampaignAddMission: Too many active missions!\n");
 		return;
 	}
-	mis = &scd->mission[scd->numMissions++];
+	mis = &scd->activeMissions[scd->numActiveMissions++];
 	OBJZERO(*mis);
 
 	/* set relevant info */
@@ -149,9 +149,9 @@ static void SCP_CampaignAddMission (setState_t *set)
 	}
 
 	mission_t * mission = CP_CreateNewMission(INTERESTCATEGORY_TERROR_ATTACK, qtrue);
-	mission->mapDef = Com_GetMapDefinitionByID(mis->def->mapDef);
+	mission->mapDef = Com_GetMapDefinitionByID(mis->def->id);
 	if (!mission->mapDef) {
-		Com_Printf("SCP_CampaignAddMission: Could not get the mapdef '%s'\n", mis->def->mapDef);
+		Com_Printf("SCP_CampaignAddMission: Could not get the mapdef '%s'\n", mis->def->id);
 		CP_MissionRemove(mission);
 		return;
 	}
@@ -163,17 +163,16 @@ static void SCP_CampaignAddMission (setState_t *set)
 
 static void SCP_CampaignRemoveMission (actMis_t *mis)
 {
-	int i, num;
-
-	num = mis - scd->mission;
-	if (num >= scd->numMissions) {
-		Com_Printf("SCP_CampaignRemoveMission: Can't remove mission.\n");
+	int i;
+	const int num = mis - scd->activeMissions;
+	if (num >= scd->numActiveMissions) {
+		Com_Printf("SCP_CampaignRemoveMission: Can't remove activeMissions.\n");
 		return;
 	}
 
-	scd->numMissions--;
-	for (i = num; i < scd->numMissions; i++)
-		scd->mission[i] = scd->mission[i + 1];
+	scd->numActiveMissions--;
+	for (i = num; i < scd->numActiveMissions; i++)
+		scd->activeMissions[i] = scd->activeMissions[i + 1];
 }
 
 void SCP_SpawnNewMissions (void)
@@ -198,7 +197,7 @@ void SCP_SpawnNewMissions (void)
 	}
 
 	/* let missions expire */
-	for (i = 0, mis = scd->mission; i < scd->numMissions; i++, mis++) {
+	for (i = 0, mis = scd->activeMissions; i < scd->numActiveMissions; i++, mis++) {
 		if (mis->expire.day && Date_LaterThan(&ccs.date, &mis->expire)) {
 			SCP_CampaignRemoveMission(mis);
 		}
@@ -208,4 +207,36 @@ void SCP_SpawnNewMissions (void)
 void SCP_CampaignActivateFirstStage (void)
 {
 	SCP_CampaignActivateStage("intro");
+}
+
+void SCP_CampaignProgress (void)
+{
+	actMis_t *mission;
+
+	MIS_Foreach(m) {
+		if (m->active) {
+			int i;
+			for (i = 0; i < scd->numActiveMissions; i++) {
+				if (Q_streq(scd->activeMissions[i].def->id, m->mapDef->id)) {
+					mission = &scd->activeMissions[i];
+					break;
+				}
+			}
+
+			if (i == scd->numActiveMissions) {
+				Com_Printf("SCP_CampaignProgress: Could not find an active mission\n");
+				return;
+			}
+
+			break;
+		}
+	}
+
+	/* campaign effects */
+	mission->cause->done++;
+	if (mission->cause->done >= mission->cause->def->quota)
+		SCP_CampaignExecute(mission->cause);
+
+	/* remove activeMissions from list */
+	SCP_CampaignRemoveMission(mission);
 }

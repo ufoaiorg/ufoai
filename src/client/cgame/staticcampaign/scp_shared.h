@@ -74,9 +74,8 @@ typedef struct stageState_s
 
 typedef struct staticMission_s
 {
-	char id[MAX_VAR];
-	char mapDef[MAX_VAR];
-	vec2_t pos;
+	char id[MAX_VAR];		/**< script id and mapdef id */
+	vec2_t pos;				/**< the polor coordinates the mission should get placed at */
 } staticMission_t;
 
 typedef struct actMis_s
@@ -89,13 +88,19 @@ typedef struct actMis_s
 typedef struct staticCampaignData_s {
 	int numStageSets;
 	stageSet_t stageSets[MAX_STAGESETS];
+
 	int numStages;
 	stage_t stages[MAX_STAGES];
+
 	stageState_t stage[MAX_STAGES];
 	setState_t set[MAX_STAGESETS];
-	actMis_t mission[MAX_ACTMISSIONS];
-	staticMission_t missions[256];
+
+	int numActiveMissions;
+	actMis_t activeMissions[MAX_ACTMISSIONS];
+
 	int numMissions;
+	staticMission_t missions[256];
+
 	stage_t *testStage;
 	qboolean initialized;
 } staticCampaignData_t;

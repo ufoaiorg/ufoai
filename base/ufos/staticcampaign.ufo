@@ -1,37 +1,31 @@
 staticcampaign small {
-	mission africa
+	mission africa_large
 	{
-		mapdef		"africa_large"
-		pos			"-82 89"
+		pos			"-29 24"
 	}
 
 	mission village
 	{
-		mapdef		village
 		pos			"9 52"
 	}
 
 	mission bunker
 	{
-		mapdef		bunker
-		pos			"-82 89"
+		pos			"113 44"
 	}
 
 	mission farm2
 	{
-		mapdef		farm2
-		pos			"116 52"
+		pos			"87 31"
 	}
 
 	mission italy
 	{
-		mapdef		italy
 		pos			"-18 40"
 	}
 
 	mission japan
 	{
-		mapdef		japan
 		pos			"-141 40"
 	}
 
@@ -41,7 +35,7 @@ staticcampaign small {
 		{
 			delay		"0 1 0"
 			frame		"0 3 0"
-			missions	"africa"
+			missions	"africa_large"
 			number		1
 			quota		0
 		}

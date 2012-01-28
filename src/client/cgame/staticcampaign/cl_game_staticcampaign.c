@@ -61,6 +61,13 @@ static void GAME_SCP_Frame (void)
 	GAME_CP_Frame();
 }
 
+static void GAME_SCP_Results (struct dbuffer *msg, int winner, int *numSpawned, int *numAlive, int numKilled[][MAX_TEAMS], int numStunned[][MAX_TEAMS], qboolean nextmap)
+{
+	GAME_CP_Results(msg, winner, numSpawned, numAlive, numKilled, numStunned, nextmap);
+
+	SCP_CampaignProgress();
+}
+
 #ifndef HARD_LINKED_CGAME
 const cgame_export_t *GetCGameAPI (const cgame_import_t *import)
 #else
@@ -76,7 +83,7 @@ const cgame_export_t *GetCGameStaticCampaignAPI (const cgame_import_t *import)
 	e.Init = GAME_SCP_InitStartup;
 	e.Shutdown = GAME_SCP_Shutdown;
 	e.Spawn = GAME_CP_Spawn;
-	e.Results = GAME_CP_Results;
+	e.Results = GAME_SCP_Results;
 	e.IsItemUseable = GAME_CP_ItemIsUseable;
 	e.GetModelForItem = GAME_CP_GetItemModel;
 	e.GetEquipmentDefinition = GAME_CP_GetEquipmentDefinition;
