@@ -4898,7 +4898,6 @@ base/textures/tex_ctp1/bricks_t_6.jpg | GNU General Public License 2.0 |  | http
 base/textures/tex_ctp1/bricks_w_1.jpg | GNU General Public License 2.0 |  | http://dplogin.com/forums/index.php?topic=7836.0
 base/textures/tex_ctp1/bricks_y_1.jpg | GNU General Public License 2.0 |  | http://dplogin.com/forums/index.php?topic=7836.0
 base/textures/tex_ctp1/ceiling_w_1.jpg | GNU General Public License 2.0 |  | http://dplogin.com/forums/index.php?topic=7836.0
-base/textures/tex_ctp1/cliff_b_1.jpg | GNU General Public License 2.0 |  | http://dplogin.com/forums/index.php?topic=7836.0
 base/textures/tex_ctp1/concrete_b_1.jpg | GNU General Public License 2.0 |  | http://dplogin.com/forums/index.php?topic=7836.0
 base/textures/tex_ctp1/concrete_b_2.jpg | GNU General Public License 2.0 |  | http://dplogin.com/forums/index.php?topic=7836.0
 base/textures/tex_ctp1/concrete_g_1.jpg | GNU General Public License 2.0 |  | http://dplogin.com/forums/index.php?topic=7836.0
@@ -5178,7 +5177,6 @@ base/textures/tex_lights/proto_lightblue.jpg | GNU General Public License 2.0 | 
 base/textures/tex_lights/stoplights01.png | GNU General Public License 2.0 or later | Nate Wright
 base/textures/tex_lights/stoplights01_nm.png | GNU General Public License 2.0 or later | Nate Wright
 base/textures/tex_lights/wsupprt1_12.jpg | GNU General Public License 2.0 | OpenArena
-base/textures/tex_material/blend_grunge01.png | GNU General Public License 2.0 or later | Nate Wright
 base/textures/tex_material/blue_gray.png | GNU General Public License 2.0 or later | Martin Gerhardy
 base/textures/tex_material/c_black.jpg | GNU General Public License 2.0 | Werner Höhrer (hoehrer)
 base/textures/tex_material/c_blue.jpg | GNU General Public License 2.0 | Werner Höhrer (hoehrer)
@@ -5201,7 +5199,6 @@ base/textures/tex_material/conc01.png | GNU General Public License 2.0 or later 
 base/textures/tex_material/conc01_nm.png | GNU General Public License 2.0 or later | Nate Wright
 base/textures/tex_material/conc02.png | GNU General Public License 2.0 or later | Nate Wright
 base/textures/tex_material/conc02_nm.png | GNU General Public License 2.0 or later | Nate Wright
-base/textures/tex_material/concholes01_g.png | GNU General Public License 2.0 or later | Nate Wright
 base/textures/tex_material/green_gray.png | GNU General Public License 2.0 or later | Martin Gerhardy
 base/textures/tex_material/metal001.png | GNU General Public License 2.0 or later | Nate Wright
 base/textures/tex_material/metal001_nm.png | GNU General Public License 2.0 or later | Nate Wright
