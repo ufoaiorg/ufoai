@@ -30,5 +30,6 @@
 #include "../campaign/cp_campaign.h"
 
 void SCP_SpawnNewMissions(void);
+void SCP_CampaignActivateFirstStage(void);
 
 #endif

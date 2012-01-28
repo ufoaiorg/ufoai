@@ -44,13 +44,19 @@ static void SCP_ParseMission (const char *name, const char **text)
 	int i;
 	size_t writtenBytes;
 
+	token = Com_Parse(text);
+	if (token[0] == '\0' || text[0] == '\0') {
+		Com_Printf("SCP_ParseMission: mission def \"%s\" without name ignored\n", name);
+		return;
+	}
+
 	/* search for missions with same name */
 	for (i = 0; i < scd->numMissions; i++)
-		if (Q_streq(name, scd->missions[i].mapDef))
+		if (Q_streq(token, scd->missions[i].id))
 			break;
 
 	if (i < scd->numMissions) {
-		Com_Printf("SCP_ParseMission: mission def \"%s\" with same name found, second ignored\n", name);
+		Com_Printf("SCP_ParseMission: mission def \"%s\" with same name found, second ignored\n", token);
 		return;
 	}
 
@@ -58,19 +64,19 @@ static void SCP_ParseMission (const char *name, const char **text)
 	ms = &scd->missions[scd->numMissions++];
 	OBJZERO(*ms);
 
-	Q_strncpyz(ms->mapDef, name, sizeof(ms->mapDef));
+	Q_strncpyz(ms->id, token, sizeof(ms->id));
 
 	/* get it's body */
 	token = Com_Parse(text);
 
 	if (text[0] == '\0' || !Q_streq(token, "{")) {
-		Com_Printf("SCP_ParseMission: mission def \"%s\" without body ignored\n", name);
+		Com_Printf("SCP_ParseMission: mission def \"%s\" without body ignored\n", ms->id);
 		scd->numMissions--;
 		return;
 	}
 
 	do {
-		token = Com_EParse(text, errhead, name);
+		token = Com_EParse(text, errhead, ms->id);
 		if (text[0] == '\0')
 			break;
 		if (token[0] == '}')
@@ -79,22 +85,30 @@ static void SCP_ParseMission (const char *name, const char **text)
 		for (vp = mission_vals; vp->string; vp++)
 			if (Q_streq(token, vp->string)) {
 				/* found a definition */
-				token = Com_EParse(text, errhead, name);
+				token = Com_EParse(text, errhead, ms->id);
 				if (text[0] == '\0')
 					return;
 
 				if (vp->ofs) {
 					Com_ParseValue(ms, token, vp->type, vp->ofs, vp->size, &writtenBytes);
 				} else {
-					Com_Printf("unknown token '%s'\n", token);
+					Com_Printf("SCP_ParseMission: unknown token '%s'\n", token);
 				}
 				break;
 			}
 
 		if (!vp->string)
-			Com_Printf("SCP_ParseMission: unknown token \"%s\" ignored (mission %s)\n", token, name);
+			Com_Printf("SCP_ParseMission: unknown token \"%s\" ignored (mission %s)\n", token, ms->id);
 
 	} while (*text);
+
+	if (!ms->mapDef) {
+		Com_Printf("SCP_ParseMission: missing mapdef for '%s'\n", ms->id);
+		scd->numMissions--;
+	} else if (!Com_GetMapDefinitionByID(ms->mapDef)) {
+		Com_Printf("SCP_ParseMission: invalid mapdef (%s) for '%s'\n", ms->mapDef, ms->id);
+		scd->numMissions--;
+	}
 }
 
 static const value_t stageset_vals[] = {
@@ -129,13 +143,13 @@ static void SCP_ParseStageSet (const char *name, const char **text)
 	/* get it's body */
 	token = Com_Parse(text);
 	if (text[0] == '\0' || !Q_streq(token, "{")) {
-		Com_Printf("SCP_ParseStageSet: stageset def \"%s\" without body ignored\n", name);
+		Com_Printf("SCP_ParseStageSet: stageset def \"%s\" without body ignored\n", sp->name);
 		scd->numStageSets--;
 		return;
 	}
 
 	do {
-		token = Com_EParse(text, errhead, name);
+		token = Com_EParse(text, errhead, sp->name);
 		if (!*text)
 			break;
 		if (token[0] == '}')
@@ -145,7 +159,7 @@ static void SCP_ParseStageSet (const char *name, const char **text)
 		for (vp = stageset_vals; vp->string; vp++)
 			if (Q_streq(token, vp->string)) {
 				/* found a definition */
-				token = Com_EParse(text, errhead, name);
+				token = Com_EParse(text, errhead, sp->name);
 				if (!*text)
 					return;
 
@@ -157,7 +171,7 @@ static void SCP_ParseStageSet (const char *name, const char **text)
 
 		/* get mission set */
 		if (Q_streq(token, "missions")) {
-			token = Com_EParse(text, errhead, name);
+			token = Com_EParse(text, errhead, sp->name);
 			if (!*text)
 				return;
 			Q_strncpyz(missionstr, token, sizeof(missionstr));
@@ -171,18 +185,18 @@ static void SCP_ParseStageSet (const char *name, const char **text)
 					break;
 
 				for (j = 0; j < scd->numMissions; j++)
-					if (Q_streq(token, scd->missions[j].mapDef)) {
+					if (Q_streq(token, scd->missions[j].id)) {
 						sp->missions[sp->numMissions++] = j;
 						break;
 					}
 
 				if (j == scd->numMissions)
-					Com_Printf("SCP_ParseStageSet: unknown mission \"%s\" ignored (stageset %s)\n", token, name);
+					Com_Printf("SCP_ParseStageSet: unknown mission \"%s\" ignored (stageset %s)\n", token, sp->name);
 			} while (misp && sp->numMissions < MAX_SETMISSIONS);
 			continue;
 		}
 
-		Com_Printf("SCP_ParseStageSet: unknown token \"%s\" ignored (stageset %s)\n", token, name);
+		Com_Printf("SCP_ParseStageSet: unknown token \"%s\" ignored (stageset %s)\n", token, sp->name);
 	} while (*text);
 }
 
@@ -193,43 +207,49 @@ static void SCP_ParseStage (const char *name, const char **text)
 	const char *token;
 	int i;
 
-	/* search for campaigns with same name */
-	for (i = 0; i < scd->numStages; i++)
-		if (Q_streq(name, scd->stages[i].name))
-			break;
-
-	if (i < scd->numStages) {
-		Com_Printf("SCP_ParseStage: stage def \"%s\" with same name found, second ignored\n", name);
+	token = Com_Parse(text);
+	if (token[0] == '\0' || text[0] == '\0') {
+		Com_Printf("SCP_ParseStage: stage def \"%s\" without name ignored\n", name);
 		return;
 	}
 
-	/* get it's body */
-	token = Com_Parse(text);
-	if (text[0] == '\0' || !Q_streq(token, "{")) {
-		Com_Printf("SCP_ParseStage: stage def \"%s\" without body ignored\n", name);
+	/* search for campaigns with same name */
+	for (i = 0; i < scd->numStages; i++)
+		if (Q_streq(token, scd->stages[i].name))
+			break;
+
+	if (i < scd->numStages) {
+		Com_Printf("SCP_ParseStage: stage def \"%s\" with same name found, second ignored\n", token);
 		return;
 	}
 
 	/* initialize the stage */
 	sp = &scd->stages[scd->numStages++];
 	OBJZERO(*sp);
-	Q_strncpyz(sp->name, name, sizeof(sp->name));
+	Q_strncpyz(sp->name, token, sizeof(sp->name));
+
+	/* get it's body */
+	token = Com_Parse(text);
+	if (text[0] == '\0' || !Q_streq(token, "{")) {
+		Com_Printf("SCP_ParseStage: stage def \"%s\" without body ignored\n", sp->name);
+		scd->numStages--;
+		return;
+	}
+
 	sp->first = scd->numStageSets;
 
-	Com_Printf("stage: %s\n", name);
-
 	do {
-		token = Com_EParse(text, errhead, name);
+		token = Com_EParse(text, errhead, sp->name);
 		if (text[0] == '\0')
 			break;
 		if (token[0] == '}')
 			break;
 
 		if (Q_streq(token, "set")) {
-			token = Com_EParse(text, errhead, name);
+			token = Com_EParse(text, errhead, sp->name);
 			SCP_ParseStageSet(token, text);
 		} else
-			Com_Printf("SCP_ParseStage: unknown token \"%s\" ignored (stage %s)\n", token, name);
+			Com_Printf("SCP_ParseStage: unknown token \"%s\" ignored (stage %s)\n", token, sp->name);
 	} while (*text);
 
 	sp->num = scd->numStageSets - sp->first;
@@ -261,7 +281,7 @@ static void SCP_ParseStaticCampaignData (const char *name, const char **text)
 		} else if (Q_streq(token, "stage")) {
 			SCP_ParseStage(name, text);
 		} else {
-			Com_Printf("unknown token '%s'\n", token);
+			Com_Printf("SCP_ParseStaticCampaignData: unknown token '%s'\n", token);
 		}
 	} while (*text);
 }

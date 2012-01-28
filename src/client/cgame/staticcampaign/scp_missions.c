@@ -25,6 +25,7 @@
 
 #include "scp_missions.h"
 #include "../campaign/cp_time.h"
+#include "../campaign/cp_missions.h"
 #include "scp_shared.h"
 #include "../../../common/binaryexpressionparser.h"
 
@@ -33,7 +34,7 @@ static qboolean SCP_StageSetDone (const char *name)
 	setState_t *set;
 	int i;
 
-	for (i = 0, set = &scd->_set[scd->testStage->first]; i < scd->testStage->num; i++, set++)
+	for (i = 0, set = &scd->set[scd->testStage->first]; i < scd->testStage->num; i++, set++)
 		if (Q_streq(name, set->def->name))
 			return set->done >= set->def->quota;
 
@@ -47,8 +48,9 @@ static void SCP_CampaignActivateStageSets (stage_t *stage)
 	int i;
 
 	scd->testStage = stage;
-	for (i = 0, set = &scd->_set[stage->first]; i < stage->num; i++, set++)
+	for (i = 0, set = &scd->set[stage->first]; i < stage->num; i++, set++)
 		if (!set->active && !set->done && !set->num) {
+			const date_t zero = {0, 0};
 			/* check needed sets */
 			if (set->def->needed[0] && !BEP_Evaluate(set->def->needed, SCP_StageSetDone))
 				continue;
@@ -56,7 +58,7 @@ static void SCP_CampaignActivateStageSets (stage_t *stage)
 			/* activate it */
 			set->active = qtrue;
 			set->start = Date_Add(ccs.date, set->def->delay);
-			set->event = Date_Add(set->start, Date_Random(set->start, set->def->frame));
+			set->event = Date_Add(set->start, Date_Random(zero, set->def->frame));
 		}
 }
 
@@ -69,16 +71,16 @@ static stageState_t *SCP_CampaignActivateStage (const char *name)
 	for (i = 0, stage = scd->stages; i < scd->numStages; i++, stage++) {
 		if (Q_streq(stage->name, name)) {
 			/* add it to the list */
-			state = &scd->_stage[i];
+			state = &scd->stage[i];
 			state->active = qtrue;
 			state->def = stage;
 			state->start = ccs.date;
 
 			/* add stage sets */
 			for (j = stage->first; j < stage->first + stage->num; j++) {
-				OBJZERO(scd->_set[j]);
-				scd->_set[j].stage = &stage[j];
-				scd->_set[j].def = &scd->stageSets[j];
+				OBJZERO(scd->set[j]);
+				scd->set[j].stage = &stage[j];
+				scd->set[j].def = &scd->stageSets[j];
 			}
 
 			/* activate stage sets */
@@ -96,7 +98,7 @@ static void SCP_CampaignEndStage (const char *name)
 	stageState_t *state;
 	int i;
 
-	for (i = 0, state = scd->_stage; i < scd->numStages; i++, state++)
+	for (i = 0, state = scd->stage; i < scd->numStages; i++, state++)
 		if (Q_streq(state->def->name, name)) {
 			state->active = qfalse;
 			return;
@@ -136,11 +138,6 @@ static void SCP_CampaignAddMission (setState_t *set)
 	/* set relevant info */
 	mis->def = &scd->missions[set->def->missions[(int) (set->def->numMissions * frand())]];
 	mis->cause = set;
-	if (set->def->expire.day)
-		mis->expire = Date_Add(ccs.date, set->def->expire);
-
-	mis->realPos[0] = mis->def->pos[0];
-	mis->realPos[1] = mis->def->pos[1];
 
 	/* prepare next event (if any) */
 	set->num++;
@@ -151,8 +148,17 @@ static void SCP_CampaignAddMission (setState_t *set)
 		set->event = Date_Add(ccs.date, Date_Random(minTime, set->def->frame));
 	}
 
-	/* stop time */
-	CP_GameTimeStop();
+	mission_t * mission = CP_CreateNewMission(INTERESTCATEGORY_TERROR_ATTACK, qtrue);
+	mission->mapDef = Com_GetMapDefinitionByID(mis->def->mapDef);
+	if (!mission->mapDef) {
+		Com_Printf("SCP_CampaignAddMission: Could not get the mapdef '%s'\n", mis->def->mapDef);
+		CP_MissionRemove(mission);
+		return;
+	}
+	Vector2Copy(mis->def->pos, mission->pos);
+	mission->posAssigned = qtrue;
+	CP_TerrorMissionStart(mission);
+	mission->finalDate = mis->expire;
 }
 
 static void SCP_CampaignRemoveMission (actMis_t *mis)
@@ -177,10 +183,10 @@ void SCP_SpawnNewMissions (void)
 	int i, j;
 
 	/* check campaign events */
-	for (i = 0, stage = scd->_stage; i < scd->numStages; i++, stage++) {
+	for (i = 0, stage = scd->stage; i < scd->numStages; i++, stage++) {
 		setState_t *set;
 		if (stage->active) {
-			for (j = 0, set = &set[stage->def->first]; j < stage->def->num; j++, set++)
+			for (j = 0, set = &scd->set[stage->def->first]; j < stage->def->num; j++, set++)
 				if (set->active && set->event.day && Date_LaterThan(&ccs.date, &set->event)) {
 					if (set->def->numMissions) {
 						SCP_CampaignAddMission(set);
@@ -194,14 +200,12 @@ void SCP_SpawnNewMissions (void)
 	/* let missions expire */
 	for (i = 0, mis = scd->mission; i < scd->numMissions; i++, mis++) {
 		if (mis->expire.day && Date_LaterThan(&ccs.date, &mis->expire)) {
-			/* ok, waiting and not doing a mission will costs money */
-#if 0
-			int lose = mis->def->civilians * mis->def->cr_civilian;
-			CL_UpdateCredits(ccs.credits - lose);
-			Com_sprintf(text, sizeof(text), _("The mission expired and %i civilians died\\You've lost %i $"), mis->def->civilians, lose);
-			MN_Popup(_("Notice"), text);
-#endif
 			SCP_CampaignRemoveMission(mis);
 		}
 	}
+}
+
+void SCP_CampaignActivateFirstStage (void)
+{
+	SCP_CampaignActivateStage("intro");
 }

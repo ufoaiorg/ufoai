@@ -39,13 +39,13 @@ typedef struct stageSet_s
 	char nextstage[MAX_VAR];
 	char endstage[MAX_VAR];
 	char cmds[MAX_VAR];
+	int number;
+	int quota;
+	int missions[MAX_SETMISSIONS];
 	date_t delay;
 	date_t frame;
 	date_t expire;
-	int number;
-	int quota;
 	byte numMissions;
-	int missions[MAX_SETMISSIONS];
 } stageSet_t;
 
 typedef struct stage_s
@@ -58,22 +58,23 @@ typedef struct setState_s
 {
 	stageSet_t *def;
 	stage_t *stage;
-	byte active;
 	date_t start;
 	date_t event;
 	int num;
 	int done;
+	byte active;
 } setState_t;
 
 typedef struct stageState_s
 {
 	stage_t *def;
-	byte active;
 	date_t start;
+	byte active;
 } stageState_t;
 
 typedef struct staticMission_s
 {
+	char id[MAX_VAR];
 	char mapDef[MAX_VAR];
 	vec2_t pos;
 } staticMission_t;
@@ -83,7 +84,6 @@ typedef struct actMis_s
 	staticMission_t *def;
 	setState_t *cause;
 	date_t expire;
-	vec2_t realPos;
 } actMis_t;
 
 typedef struct staticCampaignData_s {
@@ -91,12 +91,13 @@ typedef struct staticCampaignData_s {
 	stageSet_t stageSets[MAX_STAGESETS];
 	int numStages;
 	stage_t stages[MAX_STAGES];
-	stageState_t _stage[MAX_STAGES];
-	setState_t _set[MAX_STAGESETS];
+	stageState_t stage[MAX_STAGES];
+	setState_t set[MAX_STAGESETS];
 	actMis_t mission[MAX_ACTMISSIONS];
 	staticMission_t missions[256];
 	int numMissions;
 	stage_t *testStage;
+	qboolean initialized;
 } staticCampaignData_t;
 
 extern staticCampaignData_t* scd;

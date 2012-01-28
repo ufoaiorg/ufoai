@@ -1,8 +1,38 @@
 staticcampaign small {
-	mission vil_shannon
+	mission africa
 	{
-		mapdef		"+village"
+		mapdef		"africa_large"
+		pos			"-82 89"
+	}
+
+	mission village
+	{
+		mapdef		village
 		pos			"9 52"
+	}
+
+	mission bunker
+	{
+		mapdef		bunker
+		pos			"-82 89"
+	}
+
+	mission farm2
+	{
+		mapdef		farm2
+		pos			"116 52"
+	}
+
+	mission italy
+	{
+		mapdef		italy
+		pos			"-18 40"
+	}
+
+	mission japan
+	{
+		mapdef		japan
+		pos			"-141 40"
 	}
 
 	stage intro
@@ -11,7 +41,7 @@ staticcampaign small {
 		{
 			delay		"0 1 0"
 			frame		"0 3 0"
-			missions	"vil_grenchen"
+			missions	"africa"
 			number		1
 			quota		0
 		}
@@ -21,7 +51,7 @@ staticcampaign small {
 			delay		"0 0 1"
 			frame		"0 10 0"
 			expire		"0 3 0"
-			missions	"or_tabelbala italy japan oriental vil_lille vil_albany"
+			missions	"italy japan village"
 			quota		4
 			nextstage	ufos_are_coming
 		}
@@ -40,8 +70,8 @@ staticcampaign small {
 			delay		"0 0 1"
 			frame		"0 10 0"
 			expire		"0 3 0"
-			missions	"transport mine construction farm office or_asyut"
-			quota		4
+			missions	"bunker farm2"
+			quota		2
 			nextstage	invasion
 		}
 		set stop

@@ -40,14 +40,25 @@ static void GAME_SCP_InitStartup (void)
 
 	ccs.missionSpawn = SCP_SpawnNewMissions;
 	scd = Mem_Alloc(sizeof(*scd));
-
-	SCP_Parse();
 }
 
 static void GAME_SCP_Shutdown (void)
 {
 	GAME_CP_Shutdown();
 	Mem_Free(scd);
+}
+
+static void GAME_SCP_Frame (void)
+{
+	if (!scd->initialized && CP_IsRunning()) {
+		SCP_Parse();
+
+		SCP_CampaignActivateFirstStage();
+
+		scd->initialized = qtrue;
+	}
+
+	GAME_CP_Frame();
 }
 
 #ifndef HARD_LINKED_CGAME
@@ -73,7 +84,7 @@ const cgame_export_t *GetCGameStaticCampaignAPI (const cgame_import_t *import)
 	e.IsTeamKnown = GAME_CP_TeamIsKnown;
 	e.Drop = GAME_CP_Drop;
 	e.InitializeBattlescape = GAME_CP_InitializeBattlescape;
-	e.RunFrame = GAME_CP_Frame;
+	e.RunFrame = GAME_SCP_Frame;
 	e.GetTeamDef = GAME_CP_GetTeamDef;
 
 	cgImport = import;
