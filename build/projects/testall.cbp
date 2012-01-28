@@ -272,6 +272,15 @@
 		<Unit filename="..\..\src\client\battlescape\events\event\world\e_event_sound.c">
 			<Option compilerVar="CC" />
 		</Unit>
+		<Unit filename="..\..\src\client\cgame\staticcampaign\cl_game_staticcampaign.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="..\..\src\client\cgame\staticcampaign\scp_missions.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="..\..\src\client\cgame\staticcampaign\scp_parse.c">
+			<Option compilerVar="CC" />
+		</Unit>
 		<Unit filename="..\..\src\client\cgame\campaign\cl_game_campaign.c">
 			<Option compilerVar="CC" />
 		</Unit>
@@ -862,6 +871,9 @@
 			<Option compilerVar="CC" />
 		</Unit>
 		<Unit filename="..\..\src\common\bsp.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="..\..\src\common\binaryexpressionparser.c">
 			<Option compilerVar="CC" />
 		</Unit>
 		<Unit filename="..\..\src\common\cmd.c">

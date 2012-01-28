@@ -408,6 +408,15 @@
 			<Option compilerVar="CC" />
 		</Unit>
 		<Unit filename="..\..\src\client\battlescape\events\event\world\e_event_particlespawn.h" />
+		<Unit filename="..\..\src\client\cgame\staticcampaign\cl_game_staticcampaign.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="..\..\src\client\cgame\staticcampaign\scp_missions.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="..\..\src\client\cgame\staticcampaign\scp_parse.c">
+			<Option compilerVar="CC" />
+		</Unit>
 		<Unit filename="..\..\src\client\cgame\campaign\cp_aircraft.c">
 			<Option compilerVar="CC" />
 		</Unit>
@@ -1191,6 +1200,9 @@
 		</Unit>
 		<Unit filename="..\..\src\client\ui\ui_windows.h" />
 		<Unit filename="..\..\src\common\bsp.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="..\..\src\common\binaryexpressionparser.c">
 			<Option compilerVar="CC" />
 		</Unit>
 		<Unit filename="..\..\src\common\cmd.c">
