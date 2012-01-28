@@ -377,7 +377,7 @@ void G_ReactionFireReset(int team);
 void G_ReactionFireUpdate(edict_t *ent, fireDefIndex_t fmIdx, actorHands_t hand, const objDef_t *od);
 qboolean G_ReactionFireSettingsReserveTUs(edict_t *ent);
 qboolean G_ReactionFireOnMovement(edict_t *target);
-void G_ReactionFireEndTurn(void);
+void G_ReactionFireOnEndTurn(void);
 void G_ReactionFireTargetsInit (void);
 void G_ReactionFireTargetsCreate (const edict_t *shooter);
 

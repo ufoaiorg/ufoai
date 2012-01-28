@@ -14,7 +14,7 @@
  *				calls	G_ReactionFireCheckExecution()
  *						calls	G_ReactionFireTryToShoot()
  * 3. G_ClientEndRound()
- *		calls	G_ReactionFireEndTurn()
+ *		calls	G_ReactionFireOnEndTurn()
  *				calls	G_ReactionFireTryToShoot()
  *		calls	G_ReactionFireReset()
  */
@@ -722,7 +722,7 @@ void G_ReactionFirePostShot (edict_t *target)
  * @brief Called at the end of turn, all outstanding reaction fire is resolved
  * @sa G_ClientEndRound
  */
-void G_ReactionFireEndTurn (void)
+void G_ReactionFireOnEndTurn (void)
 {
 	edict_t *ent = NULL;
 
