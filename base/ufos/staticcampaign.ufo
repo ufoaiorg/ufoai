@@ -6,7 +6,7 @@ staticcampaign small {
 
 	mission village
 	{
-		pos			"9 52"
+		pos			"1 52"
 	}
 
 	mission bunker
@@ -65,6 +65,7 @@ staticcampaign small {
 			frame		"0 10 0"
 			expire		"0 3 0"
 			missions	"bunker farm2"
+			ufos		6
 			quota		2
 			nextstage	invasion
 		}
@@ -83,15 +84,16 @@ staticcampaign small {
 			delay		"0 0 1"
 			frame		"0 10 0"
 			expire		"0 3 0"
-			missions	"baseattack"
+			missions	"alienbase"
 			quota		4
+			ufos		10
 			nextstage	alienbase
 		}
 		set stop
 		{
 			needed		baseinvasion
 			delay		"0 110 0"
-			commands	"mn_push enddemo;"
+			commands	"echo TODO;"
 		}
 	}
 }

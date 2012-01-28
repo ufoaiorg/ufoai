@@ -48,18 +48,30 @@ static void SCP_CampaignActivateStageSets (stage_t *stage)
 	int i;
 
 	scd->testStage = stage;
-	for (i = 0, set = &scd->set[stage->first]; i < stage->num; i++, set++)
+	for (i = 0, set = &scd->set[stage->first]; i < stage->num; i++, set++) {
 		if (!set->active && !set->done && !set->num) {
 			const date_t zero = {0, 0};
+			int i;
 			/* check needed sets */
-			if (set->def->needed[0] && !BEP_Evaluate(set->def->needed, SCP_StageSetDone))
+			if (set->def->needed[0] != '\0' && !BEP_Evaluate(set->def->needed, SCP_StageSetDone))
 				continue;
 
+			Com_Printf("activate stage set '%s'\n", set->def->name);
 			/* activate it */
 			set->active = qtrue;
 			set->start = Date_Add(ccs.date, set->def->delay);
 			set->event = Date_Add(set->start, Date_Random(zero, set->def->frame));
+			for (i = 0; i < set->def->ufos; i++) {
+				const float r = frand();
+				interestCategory_t category = INTERESTCATEGORY_TERROR_ATTACK;
+				if (r > 0.9f)
+					category = INTERESTCATEGORY_BASE_ATTACK;
+				else if (r > 0.6f)
+					category = INTERESTCATEGORY_INTERCEPT;
+				CP_CreateNewMission(category, qtrue);
+			}
 		}
+	}
 }
 
 static stageState_t *SCP_CampaignActivateStage (const char *name)
@@ -67,6 +79,8 @@ static stageState_t *SCP_CampaignActivateStage (const char *name)
 	stage_t *stage;
 	stageState_t *state;
 	int i, j;
+
+	Com_Printf("activate stage '%s'\n", name);
 
 	for (i = 0, stage = scd->stages; i < scd->numStages; i++, stage++) {
 		if (Q_streq(stage->name, name)) {
@@ -123,21 +137,47 @@ static void SCP_CampaignExecute (setState_t *set)
 	SCP_CampaignActivateStageSets(set->stage);
 }
 
+
+static staticMission_t* SCP_GetMission_r (setState_t *set, int defIndex, int run)
+{
+	const int misIndex = set->def->missions[defIndex];
+	staticMission_t *mis = &scd->missions[misIndex];
+	if (mis->count && run < set->def->numMissions) {
+		Com_Printf("mission: %s already used: %i\n", mis->id, run);
+		defIndex++;
+		defIndex %= set->def->numMissions;
+		return SCP_GetMission_r(set, defIndex, ++run);
+	}
+	return mis;
+}
+
+static staticMission_t* SCP_GetMission (setState_t *set)
+{
+	const int defIndex = (int) (set->def->numMissions * frand());
+	return SCP_GetMission_r(set, defIndex, 0);
+}
+
 static void SCP_CampaignAddMission (setState_t *set)
 {
 	actMis_t *mis;
 
 	/* add mission */
 	if (scd->numActiveMissions >= MAX_ACTMISSIONS) {
-		Com_Printf("SCP_CampaignAddMission: Too many active missions!\n");
 		return;
 	}
-	mis = &scd->activeMissions[scd->numActiveMissions++];
+
+	mis = &scd->activeMissions[scd->numActiveMissions];
 	OBJZERO(*mis);
 
 	/* set relevant info */
-	mis->def = &scd->missions[set->def->missions[(int) (set->def->numMissions * frand())]];
+	mis->def = SCP_GetMission(set);
+	if (mis->def == NULL) {
+		return;
+	}
 	mis->cause = set;
+
+	if (set->def->expire.day)
+		mis->expire = Date_Add(ccs.date, set->def->expire);
 
 	/* prepare next event (if any) */
 	set->num++;
@@ -159,6 +199,8 @@ static void SCP_CampaignAddMission (setState_t *set)
 	mission->posAssigned = qtrue;
 	CP_TerrorMissionStart(mission);
 	mission->finalDate = mis->expire;
+
+	scd->numActiveMissions++;
 }
 
 static void SCP_CampaignRemoveMission (actMis_t *mis)
@@ -185,7 +227,7 @@ void SCP_SpawnNewMissions (void)
 	for (i = 0, stage = scd->stage; i < scd->numStages; i++, stage++) {
 		setState_t *set;
 		if (stage->active) {
-			for (j = 0, set = &scd->set[stage->def->first]; j < stage->def->num; j++, set++)
+			for (j = 0, set = &scd->set[stage->def->first]; j < stage->def->num; j++, set++) {
 				if (set->active && set->event.day && Date_LaterThan(&ccs.date, &set->event)) {
 					if (set->def->numMissions) {
 						SCP_CampaignAddMission(set);
@@ -193,6 +235,7 @@ void SCP_SpawnNewMissions (void)
 						SCP_CampaignExecute(set);
 					}
 				}
+			}
 		}
 	}
 
@@ -234,6 +277,7 @@ void SCP_CampaignProgress (void)
 
 	/* campaign effects */
 	mission->cause->done++;
+	mission->def->count++;
 	if (mission->cause->done >= mission->cause->def->quota)
 		SCP_CampaignExecute(mission->cause);
 

@@ -59,6 +59,11 @@ static void SCP_ParseMission (const char *name, const char **text)
 		return;
 	}
 
+	if (scd->numMissions >= MAX_STATIC_MISSIONS) {
+		Com_Printf("SCP_ParseMission: Too many missions, ignore '%s'\n", token);
+		return;
+	}
+
 	/* initialize the menu */
 	ms = &scd->missions[scd->numMissions++];
 	OBJZERO(*ms);
@@ -114,6 +119,7 @@ static const value_t stageset_vals[] = {
 	{"expire", V_DATE, offsetof(stageSet_t, expire), 0},
 	{"number", V_INT, offsetof(stageSet_t, number), MEMBER_SIZEOF(stageSet_t, number)},
 	{"quota", V_INT, offsetof(stageSet_t, quota), MEMBER_SIZEOF(stageSet_t, quota)},
+	{"ufos", V_INT, offsetof(stageSet_t, ufos), MEMBER_SIZEOF(stageSet_t, ufos)},
 	{"nextstage", V_STRING, offsetof(stageSet_t, nextstage), 0},
 	{"endstage", V_STRING, offsetof(stageSet_t, endstage), 0},
 	{"commands", V_STRING, offsetof(stageSet_t, cmds), 0},

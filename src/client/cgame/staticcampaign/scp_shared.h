@@ -31,6 +31,7 @@
 #define MAX_SETMISSIONS	16
 #define MAX_STAGESETS	256
 #define MAX_STAGES		64
+#define MAX_STATIC_MISSIONS 256
 
 typedef struct stageSet_s
 {
@@ -40,7 +41,9 @@ typedef struct stageSet_s
 	char endstage[MAX_VAR];
 	char cmds[MAX_VAR];
 	int number;
-	int quota;
+	int quota;				/**< missions that must be done before the
+							 * next stage of this set is going to get activated */
+	int ufos;				/**< ufos that are spawned if this stageset is activated */
 	int missions[MAX_SETMISSIONS];
 	date_t delay;
 	date_t frame;
@@ -76,6 +79,7 @@ typedef struct staticMission_s
 {
 	char id[MAX_VAR];		/**< script id and mapdef id */
 	vec2_t pos;				/**< the polor coordinates the mission should get placed at */
+	int count;
 } staticMission_t;
 
 typedef struct actMis_s
@@ -99,7 +103,7 @@ typedef struct staticCampaignData_s {
 	actMis_t activeMissions[MAX_ACTMISSIONS];
 
 	int numMissions;
-	staticMission_t missions[256];
+	staticMission_t missions[MAX_STATIC_MISSIONS];
 
 	stage_t *testStage;
 	qboolean initialized;
