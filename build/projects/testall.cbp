@@ -317,6 +317,9 @@
 		<Unit filename="..\..\src\client\cgame\campaign\cp_capacity.c">
 			<Option compilerVar="CC" />
 		</Unit>
+		<Unit filename="..\..\src\client\cgame\campaign\cp_cgame_callbacks.c">
+			<Option compilerVar="CC" />
+		</Unit>
 		<Unit filename="..\..\src\client\cgame\campaign\cp_employee.c">
 			<Option compilerVar="CC" />
 		</Unit>
