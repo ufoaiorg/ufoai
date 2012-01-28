@@ -154,6 +154,10 @@ $(TARGET)_SRCS      = \
 	client/cgame/campaign/cp_popup.c \
 	client/cgame/campaign/cp_fightequip_callbacks.c \
 	\
+	client/cgame/staticcampaign/cl_game_staticcampaign.c \
+	client/cgame/staticcampaign/scp_missions.c \
+	client/cgame/staticcampaign/scp_parse.c \
+	\
 	client/cgame/campaign/missions/cp_mission_baseattack.c \
 	client/cgame/campaign/missions/cp_mission_buildbase.c \
 	client/cgame/campaign/missions/cp_mission_harvest.c \
@@ -234,6 +238,7 @@ $(TARGET)_SRCS      = \
 	client/ui/node/ui_node_window.c \
 	client/ui/node/ui_node_zone.c \
 	\
+	common/binaryexpressionparser.c \
 	common/cmd.c \
 	common/http.c \
 	common/ioapi.c \

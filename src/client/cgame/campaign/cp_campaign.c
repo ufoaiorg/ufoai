@@ -587,7 +587,7 @@ void CP_CampaignRun (campaign_t *campaign)
 			/* every day */
 			INS_UpdateInstallationData();
 			HOS_HospitalRun();
-			CP_SpawnNewMissions();
+			ccs.missionSpawn();
 			CP_SpreadXVI();
 			NAT_UpdateHappinessForAllNations(campaign->minhappiness);
 			AB_BaseSearchedByNations();
@@ -1254,6 +1254,8 @@ void CP_ResetCampaignData (void)
 	E_ResetEmployees();
 
 	OBJZERO(ccs);
+
+	ccs.missionSpawn = CP_SpawnNewMissions;
 
 	/* Collect and count Alien team definitions. */
 	for (i = 0; i < csi.numTeamDefs; i++) {

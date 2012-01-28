@@ -1,0 +1,99 @@
+staticcampaign small {
+	mission africa_large
+	{
+		pos			"-29 24"
+	}
+
+	mission village
+	{
+		pos			"1 52"
+	}
+
+	mission bunker
+	{
+		pos			"113 44"
+	}
+
+	mission farm2
+	{
+		pos			"87 31"
+	}
+
+	mission italy
+	{
+		pos			"-16 40"
+	}
+
+	mission japan
+	{
+		pos			"-141 40"
+	}
+
+	stage intro
+	{
+		set first
+		{
+			delay		"0 1 0"
+			frame		"0 3 0"
+			missions	"africa_large"
+			number		1
+			quota		0
+		}
+		set terror_only
+		{
+			needed		first
+			delay		"0 0 1"
+			frame		"0 10 0"
+			expire		"0 3 0"
+			missions	"italy japan village"
+			quota		4
+			nextstage	ufos_are_coming
+		}
+		set stop
+		{
+			needed		terror_only
+			delay		"0 20 0"
+			endstage	intro
+		}
+	}
+
+	stage ufos_are_coming
+	{
+		set crashed_and_landed
+		{
+			delay		"0 0 1"
+			frame		"0 10 0"
+			expire		"0 3 0"
+			missions	"bunker farm2"
+			ufos		6
+			quota		2
+			nextstage	invasion
+		}
+		set stop
+		{
+			needed		crashed_and_landed
+			delay		"0 110 0"
+			endstage	ufos_are_coming
+		}
+	}
+
+	stage invasion
+	{
+		set baseinvasion
+		{
+			delay		"0 0 1"
+			frame		"0 10 0"
+			expire		"0 3 0"
+			missions	"alienbase"
+			quota		4
+			ufos		10
+			nextstage	alienbase
+		}
+		set stop
+		{
+			needed		baseinvasion
+			delay		"0 110 0"
+			commands	"echo TODO;"
+		}
+	}
+}
