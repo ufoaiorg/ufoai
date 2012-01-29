@@ -131,7 +131,7 @@ static void SCP_CampaignExecute (setState_t *set)
 		SCP_CampaignEndStage(set->def->endstage);
 
 	if (set->def->cmds[0] != '\0')
-		Cbuf_AddText(set->def->cmds);
+		Cmd_ExecuteString(set->def->cmds);
 
 	/* activate new sets in old stage */
 	SCP_CampaignActivateStageSets(set->stage);
