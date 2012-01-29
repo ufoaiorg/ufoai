@@ -1802,18 +1802,14 @@ base/models/soldiers/female/body.md2 | GNU General Public License 2.0 or later |
 base/models/soldiers/female/body.png | GNU General Public License 2.0 or later | Origin
 base/models/soldiers/female/body.tag | GNU General Public License 2.0 or later | Origin
 base/models/soldiers/female/body_nm.png | GNU General Public License 2.0 or later | Origin
-base/models/soldiers/female/head01a.md2 | GNU General Public License 2.0 or later | Origin
+base/models/soldiers/female/head01.md2 | GNU General Public License 2.0 or later | Origin
 base/models/soldiers/female/head01a.png | GNU General Public License 2.0 or later | Origin
-base/models/soldiers/female/head01b.md2 | GNU General Public License 2.0 or later | Origin
-base/models/soldiers/female/head01c.md2 | GNU General Public License 2.0 or later | Origin
-base/models/soldiers/female/head02a.md2 | GNU General Public License 2.0 or later | Origin
-base/models/soldiers/female/head02b.md2 | GNU General Public License 2.0 or later | Origin
-base/models/soldiers/female/head03a.md2 | GNU General Public License 2.0 or later | Origin
-base/models/soldiers/female/head03b.md2 | GNU General Public License 2.0 or later | Origin
+base/models/soldiers/female/head02.md2 | GNU General Public License 2.0 or later | Julius Krischan Makowka
+base/models/soldiers/female/head02a.png | GNU General Public License 2.0 or later | Julius Krischan Makowka;Nate Wright
+base/models/soldiers/female/head03.md2 | GNU General Public License 2.0 or later | Origin;Nate Wright
+base/models/soldiers/female/head03a.png | GNU General Public License 2.0 or later | Origin;Nate Wright
 base/models/soldiers/female/head04.md2 | GNU General Public License 3.0 or later | MakeHuman;Nate Wright
-base/models/soldiers/female/head04a.md2 | GNU General Public License 2.0 or later | Origin
 base/models/soldiers/female/head04a.png | GNU General Public License 3.0 or later | MakeHuman;Nate Wright
-base/models/soldiers/female/head04b.md2 | GNU General Public License 2.0 or later | Origin
 base/models/soldiers/female/head05.md2 | GNU General Public License 3.0 or later | MakeHuman;Nate Wright
 base/models/soldiers/female/head05a.png | GNU General Public License 3.0 or later | MakeHuman;Nate Wright
 base/models/soldiers/female/head06.md2 | GNU General Public License 3.0 or later | MakeHuman;Nate Wright
@@ -1842,23 +1838,21 @@ base/models/soldiers/femalelight/body.md2 | GNU General Public License 2.0 or la
 base/models/soldiers/femalelight/body.png | GNU General Public License 2.0 or later | Origin
 base/models/soldiers/femalelight/body.tag | GNU General Public License 2.0 or later | Origin
 base/models/soldiers/femalelight/body_nm.png | GNU General Public License 2.0 or later | Origin
-base/models/soldiers/femalelight/head01a.md2 | GNU General Public License 2.0 or later | Origin
+base/models/soldiers/femalelight/head01.md2 | GNU General Public License 2.0 or later | Origin
 base/models/soldiers/femalelight/head01a.png | GNU General Public License 2.0 or later | Origin
 base/models/soldiers/femalelight/head01a_nm.png | GNU General Public License 2.0 or later | Origin
-base/models/soldiers/femalelight/head01b.md2 | GNU General Public License 2.0 or later | Origin
-base/models/soldiers/femalelight/head01c.md2 | GNU General Public License 2.0 or later | Origin
-base/models/soldiers/femalelight/head02a.md2 | GNU General Public License 2.0 or later | Origin
-base/models/soldiers/femalelight/head02b.md2 | GNU General Public License 2.0 or later | Origin
-base/models/soldiers/femalelight/head03a.md2 | GNU General Public License 2.0 or later | Origin
-base/models/soldiers/femalelight/head03b.md2 | GNU General Public License 2.0 or later | Origin
-base/models/soldiers/femalelight/head04.md2 | GNU General Public License 3.0 or later | MakeHuman;Nate Wright
-base/models/soldiers/femalelight/head04a.md2 | GNU General Public License 2.0 or later | Origin
-base/models/soldiers/femalelight/head04a.png | GNU General Public License 3.0 or later | MakeHuman;Nate Wright
-base/models/soldiers/femalelight/head04b.md2 | GNU General Public License 2.0 or later | Origin
-base/models/soldiers/femalelight/head05.md2 | GNU General Public License 3.0 or later | MakeHuman;Nate Wright
-base/models/soldiers/femalelight/head05a.png | GNU General Public License 3.0 or later | MakeHuman;Nate Wright
-base/models/soldiers/femalelight/head06.md2 | GNU General Public License 3.0 or later | MakeHuman;Nate Wright
-base/models/soldiers/femalelight/head06a.png | GNU General Public License 3.0 or later | MakeHuman;Nate Wright
+base/models/soldiers/femalelight/head02.md2 | GNU General Public License 2.0 or later | Julius Krischan Makowka;Origin
+base/models/soldiers/femalelight/head02a.png | GNU General Public License 2.0 or later | Julius Krischan Makowka;Origin
+base/models/soldiers/femalelight/head02a_nm.png | GNU General Public License 2.0 or later | Origin;Nate Wright
+base/models/soldiers/femalelight/head03.md2 | GNU General Public License 2.0 or later | Origin;Nate Wright
+base/models/soldiers/femalelight/head03a.png | GNU General Public License 2.0 or later | Origin;Nate Wright
+base/models/soldiers/femalelight/head03a_nm.png | GNU General Public License 2.0 or later | Origin;Nate Wright
+base/models/soldiers/femalelight/head04.md2 | GNU General Public License 3.0 or later | MakeHuman;Origin;Nate Wright
+base/models/soldiers/femalelight/head04a.png | GNU General Public License 3.0 or later | MakeHuman;Origin;Nate Wright
+base/models/soldiers/femalelight/head05.md2 | GNU General Public License 3.0 or later | MakeHuman;Origin;Nate Wright
+base/models/soldiers/femalelight/head05a.png | GNU General Public License 3.0 or later | MakeHuman;Origin;Nate Wright
+base/models/soldiers/femalelight/head06.md2 | GNU General Public License 3.0 or later | MakeHuman;Origin;Nate Wright
+base/models/soldiers/femalelight/head06a.png | GNU General Public License 3.0 or later | MakeHuman;Origin;Nate Wright
 base/models/soldiers/femalelightadv/body.anm | GNU General Public License 2.0 | Lukas "Rastaman" Beyeler
 base/models/soldiers/femalelightadv/body.jpg | GNU General Public License 2.0 | John W. Bjerk (eleazar)
 base/models/soldiers/femalelightadv/body.md2 | GNU General Public License 2.0 | Lukas "Rastaman" Beyeler
@@ -1909,18 +1903,12 @@ base/models/soldiers/femalemedium/body.md2 | GNU General Public License 2.0 or l
 base/models/soldiers/femalemedium/body.png | GNU General Public License 2.0 or later | Origin
 base/models/soldiers/femalemedium/body.tag | GNU General Public License 2.0 or later | Origin
 base/models/soldiers/femalemedium/body_nm.png | GNU General Public License 2.0 or later | Origin
-base/models/soldiers/femalemedium/head01a.md2 | GNU General Public License 2.0 or later | Origin
-base/models/soldiers/femalemedium/head01b.md2 | GNU General Public License 2.0 or later | Origin
-base/models/soldiers/femalemedium/head02a.md2 | GNU General Public License 2.0 or later | Origin
-base/models/soldiers/femalemedium/head02b.md2 | GNU General Public License 2.0 or later | Origin
-base/models/soldiers/femalemedium/head03a.md2 | GNU General Public License 2.0 or later | Origin
-base/models/soldiers/femalemedium/head03b.md2 | GNU General Public License 2.0 or later | Origin
-base/models/soldiers/femalemedium/head04a.md2 | GNU General Public License 2.0 or later | Origin
-base/models/soldiers/femalemedium/head04b.md2 | GNU General Public License 2.0 or later | Origin
-base/models/soldiers/femalemedium/head04c.md2 | GNU General Public License 2.0 or later | Origin
-base/models/soldiers/femalemedium/head05a.md2 | GNU General Public License 2.0 or later | Origin
-base/models/soldiers/femalemedium/head05b.md2 | GNU General Public License 2.0 or later | Origin
-base/models/soldiers/femalemedium/head05c.md2 | GNU General Public License 2.0 or later | Origin
+base/models/soldiers/femalemedium/head01.md2 | GNU General Public License 2.0 or later | Origin
+base/models/soldiers/femalemedium/head02.md2 | GNU General Public License 2.0 or later | Origin
+base/models/soldiers/femalemedium/head03.md2 | GNU General Public License 2.0 or later | Origin
+base/models/soldiers/femalemedium/head04.md2 | GNU General Public License 2.0 or later | Origin
+base/models/soldiers/femalemedium/head05.md2 | GNU General Public License 2.0 or later | Origin
+base/models/soldiers/femalemedium/head06.md2 | GNU General Public License 2.0 or later | Origin
 base/models/soldiers/femalemedium/helmet.png | GNU General Public License 2.0 or later | Origin
 base/models/soldiers/femalemedium/helmet_nm.png | GNU General Public License 2.0 or later | Origin
 base/models/soldiers/femalepower/body.anm | GNU General Public License 2.0 or later | Origin
@@ -1928,28 +1916,28 @@ base/models/soldiers/femalepower/body.md2 | GNU General Public License 2.0 or la
 base/models/soldiers/femalepower/body.png | GNU General Public License 2.0 or later | Origin
 base/models/soldiers/femalepower/body.tag | GNU General Public License 2.0 or later | Origin
 base/models/soldiers/femalepower/body_nm.png | GNU General Public License 2.0 or later | Origin
-base/models/soldiers/femalepower/head01a.md2 | GNU General Public License 2.0 or later | Origin
+base/models/soldiers/femalepower/head01.md2 | GNU General Public License 2.0 or later | Origin
 base/models/soldiers/femalepower/head01a.png | GNU General Public License 2.0 or later | Origin
 base/models/soldiers/femalepower/head01a_nm.png | GNU General Public License 2.0 or later | Origin
+base/models/soldiers/femalepower/head02.md2 | GNU General Public License 2.0 or later | Origin
+base/models/soldiers/femalepower/head03.md2 | GNU General Public License 2.0 or later | Origin
+base/models/soldiers/femalepower/head04.md2 | GNU General Public License 2.0 or later | Origin
+base/models/soldiers/femalepower/head05.md2 | GNU General Public License 2.0 or later | Origin
+base/models/soldiers/femalepower/head06.md2 | GNU General Public License 2.0 or later | Origin
 base/models/soldiers/male/body.anm | GNU General Public License 2.0 or later | Origin
 base/models/soldiers/male/body.md2 | GNU General Public License 2.0 or later | Origin
 base/models/soldiers/male/body.png | GNU General Public License 2.0 or later | Origin
 base/models/soldiers/male/body.tag | GNU General Public License 2.0 or later | Origin
 base/models/soldiers/male/body_nm.png | GNU General Public License 2.0 or later | Origin
-base/models/soldiers/male/head01.png | GNU General Public License 2.0 or later | Origin
-base/models/soldiers/male/head01a.md2 | GNU General Public License 2.0 or later | Origin
-base/models/soldiers/male/head01b.md2 | GNU General Public License 2.0 or later | Origin
-base/models/soldiers/male/head02a.md2 | GNU General Public License 2.0 or later | Origin
-base/models/soldiers/male/head02b.md2 | GNU General Public License 2.0 or later | Origin
-base/models/soldiers/male/head03a.md2 | GNU General Public License 2.0 or later | Origin
-base/models/soldiers/male/head03b.md2 | GNU General Public License 2.0 or later | Origin
-base/models/soldiers/male/head04a.md2 | GNU General Public License 2.0 or later | Origin
-base/models/soldiers/male/head04b.md2 | GNU General Public License 2.0 or later | Origin
-base/models/soldiers/male/head04c.md2 | GNU General Public License 2.0 or later | Origin
-base/models/soldiers/male/head05a.md2 | GNU General Public License 2.0 or later | Origin
-base/models/soldiers/male/head05b.md2 | GNU General Public License 2.0 or later | Origin
-base/models/soldiers/male/head05c.md2 | GNU General Public License 2.0 or later | Origin
-base/models/soldiers/male/head06a.md2 | GNU General Public License 2.0 or later | Origin
+base/models/soldiers/male/head01.md2 | GNU General Public License 2.0 or later | Origin
+base/models/soldiers/male/head01a.png | GNU General Public License 2.0 or later | Origin
+base/models/soldiers/male/head01b.png | GNU General Public License 2.0 or later | Origin;Nate Wright
+base/models/soldiers/male/head01c.png | GNU General Public License 2.0 or later | Origin;Nate Wright
+base/models/soldiers/male/head01d.png | GNU General Public License 2.0 or later | Origin;Nate Wright
+base/models/soldiers/male/head02.md2 | GNU General Public License 3.0 or later | MakeHuman;Nate Wright
+base/models/soldiers/male/head02a.png | GNU General Public License 3.0 or later | MakeHuman;Nate Wright
+base/models/soldiers/male/head03.md2 | GNU General Public License 3.0 or later | MakeHuman;Nate Wright
+base/models/soldiers/male/head03a.png | GNU General Public License 3.0 or later | MakeHuman;Nate Wright
 base/models/soldiers/malehybrid/body.jpg | GNU General Public License 2.0 or later | Migel
 base/models/soldiers/malehybrid/body_arctic.jpg | GNU General Public License 2.0 or later | Migel
 base/models/soldiers/malehybrid/body_cccp.jpg | GNU General Public License 2.0 or later | Migel
@@ -1978,19 +1966,15 @@ base/models/soldiers/malelight/body.anm | GNU General Public License 2.0 or late
 base/models/soldiers/malelight/body.md2 | GNU General Public License 2.0 or later | Origin
 base/models/soldiers/malelight/body.png | GNU General Public License 2.0 or later | Origin
 base/models/soldiers/malelight/body.tag | GNU General Public License 2.0 or later | Origin
-base/models/soldiers/malelight/head01a.md2 | GNU General Public License 2.0 or later | Origin
+base/models/soldiers/malelight/head01.md2 | GNU General Public License 2.0 or later | Origin
 base/models/soldiers/malelight/head01a.png | GNU General Public License 2.0 or later | Origin
-base/models/soldiers/malelight/head01b.md2 | GNU General Public License 2.0 or later | Origin
-base/models/soldiers/malelight/head02a.md2 | GNU General Public License 2.0 or later | Origin
-base/models/soldiers/malelight/head02b.md2 | GNU General Public License 2.0 or later | Origin
-base/models/soldiers/malelight/head03a.md2 | GNU General Public License 2.0 or later | Origin
-base/models/soldiers/malelight/head03b.md2 | GNU General Public License 2.0 or later | Origin
-base/models/soldiers/malelight/head04a.md2 | GNU General Public License 2.0 or later | Origin
-base/models/soldiers/malelight/head04b.md2 | GNU General Public License 2.0 or later | Origin
-base/models/soldiers/malelight/head04c.md2 | GNU General Public License 2.0 or later | Origin
-base/models/soldiers/malelight/head05a.md2 | GNU General Public License 2.0 or later | Origin
-base/models/soldiers/malelight/head05b.md2 | GNU General Public License 2.0 or later | Origin
-base/models/soldiers/malelight/head05c.md2 | GNU General Public License 2.0 or later | Origin
+base/models/soldiers/malelight/head01b.png | GNU General Public License 2.0 or later | Origin;Nate Wright
+base/models/soldiers/malelight/head01c.png | GNU General Public License 2.0 or later | Origin;Nate Wright
+base/models/soldiers/malelight/head01d.png | GNU General Public License 2.0 or later | Origin;Nate Wright
+base/models/soldiers/malelight/head02.md2 | GNU General Public License 3.0 or later | MakeHuman;Origin;Nate Wright
+base/models/soldiers/malelight/head02a.png | GNU General Public License 3.0 or later | MakeHuman;Origin;Nate Wright
+base/models/soldiers/malelight/head03.md2 | GNU General Public License 3.0 or later | MakeHuman;Origin;Nate Wright
+base/models/soldiers/malelight/head03a.png | GNU General Public License 3.0 or later | MakeHuman;Origin;Nate Wright
 base/models/soldiers/malelightadv/body.anm | GNU General Public License 2.0 | Lukas "Rastaman" Beyeler
 base/models/soldiers/malelightadv/body.jpg | GNU General Public License 2.0 | John W. Bjerk (eleazar)
 base/models/soldiers/malelightadv/body.md2 | GNU General Public License 2.0 | Lukas "Rastaman" Beyeler
@@ -2045,26 +2029,20 @@ base/models/soldiers/malemedium/body.anm | GNU General Public License 2.0 or lat
 base/models/soldiers/malemedium/body.md2 | GNU General Public License 2.0 or later | Origin
 base/models/soldiers/malemedium/body.png | GNU General Public License 2.0 or later | Origin
 base/models/soldiers/malemedium/body.tag | GNU General Public License 2.0 or later | Origin
-base/models/soldiers/malemedium/head01a.md2 | GNU General Public License 2.0 or later | Origin
-base/models/soldiers/malemedium/head01b.md2 | GNU General Public License 2.0 or later | Origin
-base/models/soldiers/malemedium/head02a.md2 | GNU General Public License 2.0 or later | Origin
-base/models/soldiers/malemedium/head02b.md2 | GNU General Public License 2.0 or later | Origin
-base/models/soldiers/malemedium/head03a.md2 | GNU General Public License 2.0 or later | Origin
-base/models/soldiers/malemedium/head03b.md2 | GNU General Public License 2.0 or later | Origin
-base/models/soldiers/malemedium/head04a.md2 | GNU General Public License 2.0 or later | Origin
-base/models/soldiers/malemedium/head04b.md2 | GNU General Public License 2.0 or later | Origin
-base/models/soldiers/malemedium/head04c.md2 | GNU General Public License 2.0 or later | Origin
-base/models/soldiers/malemedium/head05a.md2 | GNU General Public License 2.0 or later | Origin
-base/models/soldiers/malemedium/head05b.md2 | GNU General Public License 2.0 or later | Origin
-base/models/soldiers/malemedium/head05c.md2 | GNU General Public License 2.0 or later | Origin
+base/models/soldiers/malemedium/head01.md2 | GNU General Public License 2.0 or later | Origin
+base/models/soldiers/malemedium/head02.md2 | GNU General Public License 2.0 or later | Origin
+base/models/soldiers/malemedium/head03.md2 | GNU General Public License 2.0 or later | Origin
 base/models/soldiers/malemedium/helmet.png | GNU General Public License 2.0 or later | Origin
 base/models/soldiers/malemedium/helmet_nm.png | GNU General Public License 2.0 or later | Origin
 base/models/soldiers/malepower/body.anm | GNU General Public License 2.0 or later | Origin
 base/models/soldiers/malepower/body.md2 | GNU General Public License 2.0 or later | Origin
 base/models/soldiers/malepower/body.png | GNU General Public License 2.0 or later | Origin
 base/models/soldiers/malepower/body.tag | GNU General Public License 2.0 or later | Origin
-base/models/soldiers/malepower/head01a.md2 | GNU General Public License 2.0 or later | Origin
+base/models/soldiers/malepower/head01.md2 | GNU General Public License 2.0 or later | Origin
 base/models/soldiers/malepower/head01a.png | GNU General Public License 2.0 or later | Origin
+base/models/soldiers/malepower/head01a_nm.png | GNU General Public License 2.0 or later | Origin
+base/models/soldiers/malepower/head02.md2 | GNU General Public License 2.0 or later | Origin
+base/models/soldiers/malepower/head03.md2 | GNU General Public License 2.0 or later | Origin
 base/models/soldiers/ugv_ares/ares.anm | GNU General Public License 2.0 or later | Willem "Sitters"
 base/models/soldiers/ugv_ares/ares_h.md2 | GNU General Public License 2.0 or later | Willem Sitters
 base/models/soldiers/ugv_ares/ares_h.png | GNU General Public License 2.0 or later | Willem Sitters

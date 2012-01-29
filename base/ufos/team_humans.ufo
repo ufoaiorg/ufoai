@@ -522,29 +522,21 @@ team phalanx
 
 	models {
 		female {
-			soldiers/female body head01a 0 // White Female with brown hair & pigtail
-			soldiers/female body head01b 0 // White Female with freckles, brown hair, pigtail & glasses
-			soldiers/female body head01c 0 // White Female with freckles, brown hair, pigtail & glasses Camouflage
-			soldiers/female body head02a 0 // Chinese Female
-			soldiers/female body head02b 0 // Chinese Female with blue glasses Camouflage
-			soldiers/female body head03a 0 // White Female with long blond hair
-			soldiers/female body head03b 0 // White Female with long blond hair & black glasses
-			soldiers/female body head04a 0 // Black Female with ponytail
-			soldiers/female body head04b 0 // Black Female with ponytail & green glasses
+			soldiers/female body head01 0 // White Female with long dark brown hair
+			soldiers/female body head02 0 // Latino Female with black pigtails
+			soldiers/female body head03 0 // White Female with red hair, bun and sports cap
+			soldiers/female body head04 0 // Black Female with short black hair
+			soldiers/female body head05 0 // Black Female with thick cornrows
+			soldiers/female body head06 0 // Asian Female with chin-length hair pulled back
 		}
 
 		male {
-			soldiers/male body head01a 0 // White Male with brown hair
-			soldiers/male body head01b 0 // White Male with brown hair & green glasses Camouflage
-			soldiers/male body head02a 0 // White Male with brown hair & beard
-			soldiers/male body head02b 0 // White Male with brown hair, beard & glasses Camouflage
-			soldiers/male body head03a 0 // White Male with black hair & cigar
-			soldiers/male body head03b 0 // White Male with blond hair & grey glasses
-			soldiers/male body head04a 0 // Chinese Male with beard Camouflage
-			soldiers/male body head04b 0 // Chinese Male with beard
-			soldiers/male body head04c 0 // Chinese Male with beard & dark yellow glasses Camouflage
-			soldiers/male body head05a 0 // Black Male with short hair
-			soldiers/male body head05b 0 // Black Male with green glasses Camouflage
+			soldiers/male body head01 0 // White Male with short grey hair
+			soldiers/male body head01 1 // White Male with beard
+			soldiers/male body head01 2 // Black Male with goatee
+			soldiers/male body head01 3 // Black Male with short black hair
+			soldiers/male body head02 0 // Latino Male with messy black and grey hair
+			soldiers/male body head03 0 // Asian Male with nearly shaved head
 		}
 	}
 
