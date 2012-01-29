@@ -25,6 +25,7 @@
 
 #include "scp_parse.h"
 #include "../../cl_shared.h"
+#include "../campaign/cp_campaign.h"
 #include "../../../shared/parse.h"
 #include "scp_shared.h"
 
@@ -106,9 +107,19 @@ static void SCP_ParseMission (const char *name, const char **text)
 
 	} while (*text);
 
-	if (!Com_GetMapDefinitionByID(ms->id)) {
+	mapDef_t *mapDef = Com_GetMapDefinitionByID(ms->id);
+	if (mapDef == NULL) {
 		Com_Printf("SCP_ParseMission: invalid mapdef for '%s'\n", ms->id);
 		scd->numMissions--;
+		return;
+	}
+
+	if (Vector2Empty(ms->pos)) {
+		if (!CP_GetRandomPosOnGeoscapeWithParameters(ms->pos, mapDef->terrains, mapDef->cultures, mapDef->populations, NULL)) {
+			Com_Printf("SCP_ParseMission: could not find a valid position for '%s'\n", ms->id);
+			scd->numMissions--;
+			return;
+		}
 	}
 }
 

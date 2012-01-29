@@ -60,122 +60,98 @@ staticcampaign small {
 
 	mission spedition
 	{
-		pos			"-141 40"
 	}
 
 	mission subway
 	{
-		pos			"-141 40"
 	}
 
 	mission gasstation
 	{
-		pos			"-141 40"
 	}
 
 	mission tower
 	{
-		pos			"-141 40"
 	}
 
 	mission military_convoy
 	{
-		pos			"-141 40"
 	}
 
 	mission rivertown
 	{
-		pos			"-141 40"
 	}
 
 	mission stadium
 	{
-		pos			"-141 40"
 	}
 
 	mission druglord
 	{
-		pos			"-141 40"
 	}
 
 	mission office
 	{
-		pos			"-141 40"
 	}
 
 	mission lake_ice
 	{
-		pos			"-141 40"
 	}
 
 	mission fighter_crash
 	{
-		pos			"-141 40"
 	}
 
 	mission construction
 	{
-		pos			"-141 40"
 	}
 
 	mission oriental_large
 	{
-		pos			"-141 40"
 	}
 
 	mission frozen_alienlandingindustrial
 	{
-		pos			"-141 40"
 	}
 
 	mission resort
 	{
-		pos			"-141 40"
 	}
 
 	mission tropic_river
 	{
-		pos			"-141 40"
 	}
 
 	mission city_disco
 	{
-		pos			"-141 40"
 	}
 
 	mission oriental_mosque
 	{
-		pos			"-141 40"
 	}
 
 	mission frozen_industrial
 	{
-		pos			"-141 40"
 	}
 
 	mission harbour
 	{
-		pos			"-141 40"
 	}
 
 	mission eaglenest
 	{
-		pos			"-141 40"
 	}
 
 	mission corrupter_crash
 	{
-		pos			"-141 40"
 	}
 
 	mission bungalow
 	{
-		pos			"-141 40"
 	}
 
 	mission small_house
 	{
-		pos			"-141 40"
 	}
 
 	stage intro
