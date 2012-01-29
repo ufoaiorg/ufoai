@@ -66,7 +66,7 @@ static void SCP_ParseMission (const char *name, const char **text)
 	}
 
 	/* initialize the menu */
-	ms = &scd->missions[scd->numMissions++];
+	ms = &scd->missions[scd->numMissions];
 	OBJZERO(*ms);
 
 	Q_strncpyz(ms->id, token, sizeof(ms->id));
@@ -76,7 +76,6 @@ static void SCP_ParseMission (const char *name, const char **text)
 
 	if (text[0] == '\0' || !Q_streq(token, "{")) {
 		Com_Printf("SCP_ParseMission: mission def \"%s\" without body ignored\n", ms->id);
-		scd->numMissions--;
 		return;
 	}
 
@@ -110,17 +109,17 @@ static void SCP_ParseMission (const char *name, const char **text)
 	mapDef_t *mapDef = Com_GetMapDefinitionByID(ms->id);
 	if (mapDef == NULL) {
 		Com_Printf("SCP_ParseMission: invalid mapdef for '%s'\n", ms->id);
-		scd->numMissions--;
 		return;
 	}
 
 	if (Vector2Empty(ms->pos)) {
 		if (!CP_GetRandomPosOnGeoscapeWithParameters(ms->pos, mapDef->terrains, mapDef->cultures, mapDef->populations, NULL)) {
 			Com_Printf("SCP_ParseMission: could not find a valid position for '%s'\n", ms->id);
-			scd->numMissions--;
 			return;
 		}
 	}
+
+	scd->numMissions++;
 }
 
 static const value_t stageset_vals[] = {
