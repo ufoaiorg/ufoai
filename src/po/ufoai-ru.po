@@ -3,7 +3,7 @@ msgstr ""
 "Project-Id-Version: UFO Alien Invasion\n"
 "Report-Msgid-Bugs-To: tlh2000@users.sourceforge.net\n"
 "POT-Creation-Date: 2011-11-04 17:13+0700\n"
-"PO-Revision-Date: 2011-11-04 17:45+0700\n"
+"PO-Revision-Date: 2012-01-29 18:21+0700\n"
 "Last-Translator: Kostia (Kildor) Romanov <kostia@ngs.ru>\n"
 "Language-Team: \n"
 "MIME-Version: 1.0\n"
@@ -87,9 +87,8 @@ msgstr "Подтвердить текущее действие"
 msgid "mail_ufo_shot_down"
 msgstr ""
 
-#, fuzzy
 msgid "Toggle camera to the next alien."
-msgstr "Переключение между пришельцами в области видимости"
+msgstr "Показать следующего видимого пришельца."
 
 msgid "Alien Activity Reported -- %s"
 msgstr "Cообщение об активности пришельцев: '%s'"
@@ -4469,7 +4468,7 @@ msgid "Roundtime:\t%s\n"
 msgstr "Время хода:\t%s\n"
 
 msgid "Accuracy Attribute"
-msgstr "Параметр: Точность"
+msgstr "Параметр: Меткость"
 
 #, c-format
 msgid "Max. players per team:\t%s\n"
@@ -5229,9 +5228,8 @@ msgstr ""
 "\n"
 "Вооружение: 1 средний узел подвески (нос)"
 
-#, fuzzy
 msgid "^BBattlescape bindings"
-msgstr "Настройки камеры на поле боя"
+msgstr "^BНастройки поля боя"
 
 msgid "drop_herakles_txt"
 msgstr ""
@@ -5780,16 +5778,14 @@ msgstr "Недостаточно ЕВ для активации режима о�
 msgid "bloodspider_notes_pre_txt"
 msgstr "Предварительная информация по исследованию отсутствует"
 
-#, fuzzy
 msgid "3 minutes left until forced turn end.\n"
-msgstr "До принудительного завершения раунда осталось 3 минуты\n"
+msgstr "До принудительного завершения раунда осталось 3 минуты.\n"
 
 msgid "Alien Autopsy - Bloodspider"
 msgstr "Вскрытие пришельца - Кровосос"
 
-#, fuzzy
 msgid "1 minute left until forced turn end.\n"
-msgstr "До принудительного завершения раунда осталась минута\n"
+msgstr "До принудительного завершения раунда осталась минута.\n"
 
 msgid "bloodspider_autopsy_txt"
 msgstr ""
@@ -5813,9 +5809,8 @@ msgstr ""
 "\n"
 "д-р Коннор"
 
-#, fuzzy
 msgid "15 seconds left until forced turn end.\n"
-msgstr "До принудительного завершения раунда осталось 15 секунд\n"
+msgstr "До принудительного завершения раунда осталось 15 секунд.\n"
 
 msgid "bloodspider_autopsy_pre_txt"
 msgstr ""
@@ -8929,7 +8924,7 @@ msgid "Equipment Order Received -- %s"
 msgstr "%s: получен заказ на оборудование"
 
 msgid "Accuracy:"
-msgstr "Точность:"
+msgstr "Меткость:"
 
 msgid "Construction Finished -- %s"
 msgstr "%s: строительство объекта завершено"
@@ -8967,7 +8962,6 @@ msgstr "эксперт"
 msgid "High-Explosives:"
 msgstr "Взрывное дело:"
 
-#, fuzzy
 msgid "It is not your turn!\n"
 msgstr "Сейчас не ваш ход!\n"
 
@@ -9620,25 +9614,20 @@ msgstr "base_attack"
 msgid "INBOX (with unread mails)"
 msgstr "Входящие (есть непрочитанные письма)"
 
-#, fuzzy
 msgid "Aliens captured"
-msgstr "Пришельцев захвачено:\t%i\n"
+msgstr "Пришельцев захвачено"
 
 msgid "INBOX"
 msgstr "Входящие"
 
-#, fuzzy
 msgid "PHALANX friendly fire losses"
-msgstr "Солдат ФАЛАНКС убито союзниками:\t%i\n"
+msgstr "Солдат ФАЛАНКС убито союзниками"
 
 msgid "Statistics"
 msgstr "Статистика"
 
-#, fuzzy
 msgid "Civilians saved"
-msgstr ""
-"Гражданских спасено:\t%i\n"
-"\n"
+msgstr "Гражданских спасено"
 
 msgid "Organisation statistics"
 msgstr "Отношения с правительствами"
@@ -10023,7 +10012,7 @@ msgid "Hire - Right click to remove"
 msgstr "Нанять — правый клик, чтобы удалить"
 
 msgid "Accuracy"
-msgstr "Точность"
+msgstr "Меткость"
 
 msgid "Rename employee"
 msgstr "Переименовать персонал"
@@ -10031,7 +10020,6 @@ msgstr "Переименовать персонал"
 msgid "Small"
 msgstr "Малый"
 
-#, fuzzy
 msgid "High Explosives:"
 msgstr "Взрывное дело:"
 
@@ -10223,7 +10211,7 @@ msgid "%s ammo-less weapon\n"
 msgstr "%s оружие, не требующее зарядов\n"
 
 msgid "Use headgear"
-msgstr "Одеть на голову"
+msgstr "Надеть на голову"
 
 msgid "Update the GUI with the selected item"
 msgstr "Обновить графический интерфейс с учетом выбранных предметов"
@@ -10243,9 +10231,8 @@ msgstr "Может потребоваться перезапуск игры дл
 msgid "Chat messages"
 msgstr "Сообщения чата"
 
-#, fuzzy
 msgid "^BUI bindings"
-msgstr "Сочетания клавиш"
+msgstr "^BСочетания клавиш"
 
 msgid "Level up"
 msgstr "Уровнем выше"
@@ -11356,7 +11343,6 @@ msgstr "грандиозно"
 msgid "Are you ready?"
 msgstr "Вы готовы?"
 
-#, fuzzy
 msgid "Toggle stand/crouch."
 msgstr "Переключение положений присесть/встать"
 
@@ -11369,9 +11355,9 @@ msgstr "Ходьба"
 msgid "Invite players that are online in the lobby"
 msgstr "Пригласить игроков, которые на связи с холлом"
 
-#, fuzzy, c-format
+#, c-format
 msgid "TU: %i"
-msgstr "%s: %i"
+msgstr "TU: %i"
 
 msgid "Enter server password"
 msgstr "Введите пароль сервера"
@@ -11421,9 +11407,9 @@ msgstr "загрузка %s"
 msgid "Go into the lobby"
 msgstr "Пойти в холл"
 
-#, fuzzy, c-format
+#, c-format
 msgid "%s lost a soldier\n"
-msgstr "%s заряжено\n"
+msgstr "%s потерял солдата\n"
 
 msgid "You received a invitation to take part of a multiplayer game. Hit the connect button to connect to the server"
 msgstr "Вы получили приглашение к участию в сетевой игре. Нажмите кнопку подключения для соединения с сервером"
@@ -11685,9 +11671,8 @@ msgstr "Сигнал потерян"
 msgid "Advanced"
 msgstr "Детальный"
 
-#, fuzzy
 msgid "PHALANX soldiers killed by Aliens"
-msgstr "Солдат ФАЛАНКС убито пришельцами:\t%i\n"
+msgstr "Солдат ФАЛАНКС убито пришельцами"
 
 msgid "Resolution and Display Settings"
 msgstr "Разрешение и настройки дисплея"
@@ -12570,9 +12555,8 @@ msgstr ""
 msgid "Key Bindings"
 msgstr "Сочетания клавиш"
 
-#, fuzzy
 msgid "End current turn."
-msgstr "Завершить текущий раунд"
+msgstr "Завершить текущий раунд."
 
 msgid "Workers (ready/all):"
 msgstr "Рабочие (свободны/всего)"
@@ -12707,9 +12691,8 @@ msgstr "Груз потерян"
 msgid "Abort this battlescape mission."
 msgstr "Прервать эту операцию."
 
-#, fuzzy
 msgid "Civilians killed by Aliens"
-msgstr "Гражданских убито пришельцами:\t%i\n"
+msgstr "Гражданских убито пришельцами"
 
 msgid "Retry this battlescape mission."
 msgstr "Переиграть эту операцию."
@@ -12757,7 +12740,6 @@ msgstr "Начать игру"
 msgid "Laboratory space (used/all): %i/%i"
 msgstr "Место в лабораториях (занято/всего): %i/%i"
 
-#, fuzzy
 msgid "Return to the main menu."
 msgstr "Вернуться в главное меню."
 
@@ -12982,9 +12964,8 @@ msgstr "Сохранить отряд"
 msgid "Chicago"
 msgstr "Чикаго"
 
-#, fuzzy
 msgid "Add/Remove item to transfer cargo, hold SHIFT for speed increase."
-msgstr "Добавить/Убрать предмет для транспортировки"
+msgstr "Добавить/Убрать предмет для транспортировки, для увеличения скорости зажмите клавишу [Shift]"
 
 msgid "Cotonou"
 msgstr "Котону"
@@ -13032,7 +13013,7 @@ msgid "Kyoto"
 msgstr "Киото"
 
 msgid "The Big Picture"
-msgstr ""
+msgstr "Большая картинка"
 
 msgid "Longyearbyen"
 msgstr "Лонгиербиен"
@@ -13423,9 +13404,8 @@ msgstr "%s: Недостаточно денег для производства"
 msgid "25mm Flechette Grenades"
 msgstr "25мм иглогранаты"
 
-#, fuzzy
 msgid "Toggle to the next alien in sight of the selected actor."
-msgstr "Переключиться на следующего пришельца, видимого выбранным солдатом"
+msgstr "Переключиться на следующего пришельца, видимого выбранным солдатом."
 
 msgid "25mm PB Grenades"
 msgstr "25мм плазменные гранаты"
@@ -13483,7 +13463,6 @@ msgstr ""
 "\n"
 "Финансирование текущего месяца:\t%d"
 
-#, fuzzy
 msgid "D-F Cartridge Stun"
 msgstr "Фтор-дейтериевый картридж"
 
@@ -13566,9 +13545,8 @@ msgstr "Сураттхани"
 msgid "Minigun Magazine"
 msgstr "Лента для многоствольного пулемёта"
 
-#, fuzzy
 msgid "Campaign Start"
-msgstr "Кампании"
+msgstr "Начать кампанию"
 
 msgid "Shotgun"
 msgstr "Дробовик"
