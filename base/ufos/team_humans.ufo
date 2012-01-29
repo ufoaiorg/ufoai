@@ -538,6 +538,7 @@ team phalanx
 			soldiers/male body head02 0 // Latino Male with messy black and grey hair
 			soldiers/male body head03 0 // Asian Male with nearly shaved head
 			soldiers/male body head04 0 // Asian Male with cap
+			soldiers/male body head05 0 // White Male with crop-top haircut
 		}
 	}
 
