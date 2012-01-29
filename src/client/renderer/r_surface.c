@@ -112,7 +112,7 @@ static inline void R_DrawSurface (const mBspSurface_t *surf)
 void R_DrawSurfaces (const mBspSurfaces_t *surfs)
 {
 	int numSurfaces = surfs->count;
-	mBspSurface_t	**surfPtrList = surfs->surfaces;
+	mBspSurface_t **surfPtrList = surfs->surfaces;
 	const int frame = r_locals.frame;
 
 	int lastLightMap = 0, lastDeluxeMap = 0;
@@ -128,7 +128,7 @@ void R_DrawSurfaces (const mBspSurfaces_t *surfs)
 
 		/** @todo integrate it better with R_SetSurfaceState - maybe cache somewhere in the mBspSurface_t ? */
 		texInfo = surf->texinfo;
-		texFlags  = texInfo->flags & (SURF_BLEND33 | SURF_BLEND66 | MSURF_LIGHTMAP); /* should match flags that affect R_SetSurfaceState behavior */
+		texFlags = texInfo->flags & (SURF_BLEND33 | SURF_BLEND66 | MSURF_LIGHTMAP); /* should match flags that affect R_SetSurfaceState behavior */
 		if (texInfo->image != lastTexture || surf->lightmap_texnum != lastLightMap || surf->deluxemap_texnum != lastDeluxeMap || texFlags != lastFlags) {
 			lastTexture = texInfo->image;
 			lastLightMap = surf->lightmap_texnum;
