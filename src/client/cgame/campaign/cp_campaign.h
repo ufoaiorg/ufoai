@@ -282,6 +282,7 @@ typedef struct battleParam_s {
 
 /** @brief Structure with mission info needed to create results summary at menu won. */
 typedef struct missionResults_s {
+	const mission_t *mission;
 	qboolean won;
 	qboolean recovery;		/**< @c true if player secured a UFO (landed or crashed). */
 	qboolean crashsite;		/**< @c true if secured UFO was crashed one. */

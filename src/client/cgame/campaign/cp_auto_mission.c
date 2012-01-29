@@ -899,6 +899,7 @@ void AM_Go (mission_t *mission, aircraft_t *aircraft, const campaign_t *campaign
 	results->ownSurvived = autoBattle.nUnits[AUTOMISSION_TEAM_TYPE_PLAYER];
 	results->aliensSurvived = autoBattle.nUnits[AUTOMISSION_TEAM_TYPE_ALIEN];
 	results->civiliansSurvived = autoBattle.nUnits[AUTOMISSION_TEAM_TYPE_CIVILIAN];
+	results->mission = mission;
 
 	/**
 	 * @todo find out why this black-magic with inventory is needed and clean up

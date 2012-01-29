@@ -194,6 +194,7 @@ void GAME_CP_Results (struct dbuffer *msg, int winner, int *numSpawned, int *num
 	const qboolean won = (winner == cls.team);
 	missionResults_t *results;
 	aircraft_t *aircraft = MAP_GetMissionAircraft();
+	const battleParam_t *bp = &ccs.battleParameters;
 
 	CP_ParseCharacterData(msg);
 
@@ -243,6 +244,7 @@ void GAME_CP_Results (struct dbuffer *msg, int winner, int *numSpawned, int *num
 	ccs.aliensKilled += aliensKilled;
 
 	results = &ccs.missionResults;
+	results->mission = bp->mission;
 
 	if (nextmap) {
 		assert(won);

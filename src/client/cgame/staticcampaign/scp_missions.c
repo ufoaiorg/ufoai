@@ -200,6 +200,7 @@ static void SCP_CampaignAddMission (setState_t *set)
 	mission->posAssigned = qtrue;
 	CP_TerrorMissionStart(mission);
 	mission->finalDate = mis->expire;
+	mis->mission = mission;
 
 	Com_Printf("spawned map '%s'\n", mis->def->id);
 
@@ -258,24 +259,18 @@ void SCP_CampaignActivateFirstStage (void)
 void SCP_CampaignProgress (const missionResults_t *results)
 {
 	actMis_t *mission;
+	int i;
 
-	MIS_Foreach(m) {
-		if (m->active) {
-			int i;
-			for (i = 0; i < scd->numActiveMissions; i++) {
-				if (Q_streq(scd->activeMissions[i].def->id, m->mapDef->id)) {
-					mission = &scd->activeMissions[i];
-					break;
-				}
-			}
-
-			if (i == scd->numActiveMissions) {
-				Com_Printf("SCP_CampaignProgress: Could not find an active mission\n");
-				return;
-			}
-
+	for (i = 0; i < scd->numActiveMissions; i++) {
+		mission = &scd->activeMissions[i];
+		if (mission->mission == results->mission) {
 			break;
 		}
+	}
+
+	if (i == scd->numActiveMissions) {
+		Com_Printf("SCP_CampaignProgress: Could not find an active mission\n");
+		return;
 	}
 
 	/* campaign effects */
