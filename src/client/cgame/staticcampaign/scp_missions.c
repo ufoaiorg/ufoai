@@ -92,9 +92,10 @@ static stageState_t *SCP_CampaignActivateStage (const char *name)
 
 			/* add stage sets */
 			for (j = stage->first; j < stage->first + stage->num; j++) {
-				OBJZERO(scd->set[j]);
-				scd->set[j].stage = &stage[j];
-				scd->set[j].def = &scd->stageSets[j];
+				setState_t *set = &scd->set[j];
+				OBJZERO(*set);
+				set->stage = stage;
+				set->def = &scd->stageSets[j];
 			}
 
 			/* activate stage sets */
