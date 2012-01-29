@@ -528,6 +528,7 @@ team phalanx
 			soldiers/female body head04 0 // Black Female with short black hair
 			soldiers/female body head05 0 // Black Female with thick cornrows
 			soldiers/female body head06 0 // Asian Female with chin-length hair pulled back
+			soldiers/female body head07 0 // Black Female with shaved head
 		}
 
 		male {
