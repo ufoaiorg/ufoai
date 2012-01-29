@@ -39,7 +39,7 @@ typedef struct stageSet_s
 	char needed[MAX_VAR];
 	char nextstage[MAX_VAR];
 	char endstage[MAX_VAR];
-	char cmds[MAX_VAR];
+	char cmds[MAX_VAR];		/**< script commands to execute when stageset gets activated */
 	int number;
 	int quota;				/**< missions that must be done before the
 							 * next stage of this set is going to get activated */
@@ -47,25 +47,26 @@ typedef struct stageSet_s
 	int missions[MAX_SETMISSIONS];
 	date_t delay;
 	date_t frame;
-	date_t expire;
-	byte numMissions;
+	date_t expire;			/**< date when this mission will expire and will be removed from geoscape */
+	byte numMissions;		/**< number of missions in this set */
 } stageSet_t;
 
 typedef struct stage_s
 {
-	char name[MAX_VAR];
-	int first, num;
+	char name[MAX_VAR];	/**< stage name */
+	int first;			/**< index of the first entry in the stageset array */
+	int num;			/**< the amount of stagesets that are part of this stage */
 } stage_t;
 
 typedef struct setState_s
 {
 	stageSet_t *def;
 	stage_t *stage;
-	date_t start;
+	date_t start;		/**< date when the set was activated */
 	date_t event;
 	int num;
-	int done;
-	byte active;
+	int done;			/**< how many mission out of the mission pool are already done */
+	byte active;		/**< is this set active? */
 } setState_t;
 
 typedef struct stageState_s
@@ -87,6 +88,7 @@ typedef struct actMis_s
 	staticMission_t *def;
 	setState_t *cause;
 	date_t expire;
+	mission_t *mission;
 } actMis_t;
 
 typedef struct staticCampaignData_s {
