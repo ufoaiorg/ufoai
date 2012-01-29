@@ -922,6 +922,51 @@ mapdef frozen_small
 	}
 }
 
+/////////////////////////
+// HARBOUR RANDOM MAPS //
+/////////////////////////
+
+mapdef mm_harbour
+{
+	map			"+mm_harbour"
+	description	"_Harbour."
+	size		"small"
+	teams		4
+	multiplayer	false
+	maxaliens	16
+	campaign	false // TODO: activate once tested
+	aircraft
+	{
+		craft_drop_firebird
+		craft_drop_raptor
+		craft_drop_herakles
+	}
+
+	ufos
+	{
+		craft_ufo_supply
+		craft_ufo_scout
+		craft_ufo_fighter
+		craft_ufo_harvester
+	}
+
+	terrains
+	{
+		coast
+	}
+
+	cultures
+	{
+	}
+
+	populations
+	{
+		urban
+		suburban
+		village
+	}
+}
+
 ///////////////////////
 // HILLS RANDOM MAPS //
 ///////////////////////
