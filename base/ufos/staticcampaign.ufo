@@ -8,21 +8,6 @@ staticcampaign small {
 		pos			"-29 24"
 	}
 
-	mission village
-	{
-		pos			"1 52"
-	}
-
-	mission bunker
-	{
-		pos			"113 44"
-	}
-
-	mission farm2
-	{
-		pos			"87 31"
-	}
-
 	mission italy
 	{
 		pos			"-16 40"
@@ -37,27 +22,6 @@ staticcampaign small {
 	{
 		pos			"-141 40"
 	}
-
-	mission mine
-	{
-		pos			"87 31"
-	}
-
-	mission mart
-	{
-		pos			"-16 40"
-	}
-
-	mission estate
-	{
-		pos			"-141 40"
-	}
-
-	mission dam
-	{
-		pos			"-16 40"
-	}
-
 
 	stage intro
 	{
