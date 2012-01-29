@@ -750,6 +750,7 @@ static void R_LoadSurfacesArrays_ (model_t *mod)
 	int i, ns;
 
 	/* allocate the surfaces array structures */
+	/** @todo only one allocation should be used here - allocate the whole array with one Mem_PoolAlloc call */
 	for (i = 0; i < NUM_SURFACES_ARRAYS; i++)
 		mod->bsp.sorted_surfaces[i] = (mBspSurfaces_t *)Mem_PoolAlloc(sizeof(mBspSurfaces_t), vid_modelPool, 0);
 
