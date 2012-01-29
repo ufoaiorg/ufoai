@@ -14131,7 +14131,7 @@
 // entity 40
 {
 "classname" "misc_model"
-"model" "models//objects/vegi/water_lily2/lily.md2"
+"model" "models/objects/vegi/water_lily2/lily.md2"
 "origin" "594 480 40"
 "spawnflags" "254"
 "skin" "0"
@@ -14139,7 +14139,7 @@
 // entity 41
 {
 "classname" "misc_model"
-"model" "models//objects/vegi/water_lily/lily_bloom.md2"
+"model" "models/objects/vegi/water_lily/lily_bloom.md2"
 "origin" "595 477 40"
 "spawnflags" "254"
 "skin" "0"
@@ -14178,7 +14178,7 @@
 // entity 43
 {
 "classname" "misc_model"
-"model" "models//objects/vegi/water_lily2/lily.md2"
+"model" "models/objects/vegi/water_lily2/lily.md2"
 "origin" "450 440 40"
 "spawnflags" "254"
 "skin" "0"
@@ -14187,7 +14187,7 @@
 // entity 44
 {
 "classname" "misc_model"
-"model" "models//objects/vegi/water_lily/lily_bloom.md2"
+"model" "models/objects/vegi/water_lily/lily_bloom.md2"
 "origin" "447 439 40"
 "spawnflags" "254"
 "skin" "0"
@@ -14196,7 +14196,7 @@
 // entity 45
 {
 "classname" "misc_model"
-"model" "models//objects/vegi/water_lily2/lily.md2"
+"model" "models/objects/vegi/water_lily2/lily.md2"
 "origin" "648 343 40"
 "spawnflags" "254"
 "skin" "0"
@@ -14205,7 +14205,7 @@
 // entity 46
 {
 "classname" "misc_model"
-"model" "models//objects/vegi/water_lily/lily_bloom.md2"
+"model" "models/objects/vegi/water_lily/lily_bloom.md2"
 "origin" "651 344 40"
 "spawnflags" "254"
 "skin" "0"
@@ -25038,7 +25038,7 @@
 // entity 93
 {
 "classname" "misc_model"
-"model" "models//objects/city/bench/bench_s.md2"
+"model" "models/objects/city/bench/bench_s.md2"
 "origin" "710.375 642 67.25"
 "spawnflags" "254"
 "skin" "0"
@@ -25048,7 +25048,7 @@
 // entity 94
 {
 "classname" "misc_model"
-"model" "models//objects/city/bench/bench_s.md2"
+"model" "models/objects/city/bench/bench_s.md2"
 "origin" "424 638 68.25"
 "spawnflags" "254"
 "skin" "0"

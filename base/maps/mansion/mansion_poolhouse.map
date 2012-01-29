@@ -15891,7 +15891,7 @@
 // entity 92
 {
 "classname" "misc_model"
-"model" "models//objects/airpipe/airpipe.md2"
+"model" "models/objects/airpipe/airpipe.md2"
 "origin" "705.5 1260.76 36"
 "spawnflags" "1"
 "skin" "0"
@@ -15900,7 +15900,7 @@
 // entity 93
 {
 "classname" "misc_model"
-"model" "models//objects/airpipe/airpipe.md2"
+"model" "models/objects/airpipe/airpipe.md2"
 "origin" "892.5 1260.76 31.125"
 "spawnflags" "1"
 "skin" "0"
@@ -15933,7 +15933,7 @@
 // entity 95
 {
 "classname" "misc_model"
-"model" "models//objects/city/waste/bag.md2"
+"model" "models/objects/city/waste/bag.md2"
 "origin" "691 1241 5"
 "spawnflags" "1"
 "skin" "0"
@@ -15941,7 +15941,7 @@
 // entity 96
 {
 "classname" "misc_model"
-"model" "models//objects/construct/generator/generator.md2"
+"model" "models/objects/construct/generator/generator.md2"
 "origin" "707 1293 4"
 "spawnflags" "1"
 "skin" "0"
@@ -15950,7 +15950,7 @@
 // entity 97
 {
 "classname" "misc_model"
-"model" "models//objects/gascylinder/gascylinder.md2"
+"model" "models/objects/gascylinder/gascylinder.md2"
 "origin" "875 1242 30"
 "spawnflags" "129"
 "skin" "0"
@@ -15960,7 +15960,7 @@
 // entity 98
 {
 "classname" "misc_model"
-"model" "models//objects/furniture/locker/locker2.md2"
+"model" "models/objects/furniture/locker/locker2.md2"
 "origin" "266.875 1040.26 4.25"
 "spawnflags" "1"
 "skin" "0"
@@ -15969,7 +15969,7 @@
 // entity 99
 {
 "classname" "misc_model"
-"model" "models//objects/furniture/locker/locker2.md2"
+"model" "models/objects/furniture/locker/locker2.md2"
 "origin" "282.375 1040.26 4.25"
 "spawnflags" "1"
 "skin" "0"

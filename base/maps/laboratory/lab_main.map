@@ -13726,7 +13726,7 @@
 "angles" "0 -90 0"
 "skin" "0"
 "spawnflags" "6"
-"model" "models//objects/firehose/firehose.md2"
+"model" "models/objects/firehose/firehose.md2"
 }
 // entity 223
 {

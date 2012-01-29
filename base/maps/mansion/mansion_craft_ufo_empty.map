@@ -8637,7 +8637,7 @@
 // entity 108
 {
 "classname" "misc_model"
-"model" "models//objects/furniture/locker/locker2.md2"
+"model" "models/objects/furniture/locker/locker2.md2"
 "origin" "211.615 272 68.25"
 "spawnflags" "2"
 "skin" "0"
@@ -8646,7 +8646,7 @@
 // entity 109
 {
 "classname" "misc_model"
-"model" "models//objects/furniture/locker/locker2.md2"
+"model" "models/objects/furniture/locker/locker2.md2"
 "origin" "211.74 290.375 68.25"
 "spawnflags" "2"
 "skin" "0"
@@ -8655,7 +8655,7 @@
 // entity 110
 {
 "classname" "misc_model"
-"model" "models//objects/furniture/locker/locker2.md2"
+"model" "models/objects/furniture/locker/locker2.md2"
 "origin" "211.615 472 68.25"
 "spawnflags" "2"
 "skin" "0"
@@ -8664,7 +8664,7 @@
 // entity 111
 {
 "classname" "misc_model"
-"model" "models//objects/furniture/locker/locker2.md2"
+"model" "models/objects/furniture/locker/locker2.md2"
 "origin" "211.74 490.375 68.25"
 "spawnflags" "2"
 "skin" "0"

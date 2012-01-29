@@ -21053,7 +21053,7 @@
 // entity 117
 {
 "classname" "misc_model"
-"model" "models//objects/rubbish/oil_can.md2"
+"model" "models/objects/rubbish/oil_can.md2"
 "origin" "384 480 4.5"
 "spawnflags" "1"
 "skin" "0"
@@ -21062,7 +21062,7 @@
 // entity 118
 {
 "classname" "misc_model"
-"model" "models//objects/construct/generator_big/generator.md2"
+"model" "models/objects/construct/generator_big/generator.md2"
 "origin" "376 416 12"
 "spawnflags" "1"
 "skin" "0"
@@ -21072,7 +21072,7 @@
 // entity 119
 {
 "classname" "misc_model"
-"model" "models//objects/city/fountain/fountain2.md2"
+"model" "models/objects/city/fountain/fountain2.md2"
 "origin" "1359 176 132.375"
 "spawnflags" "252"
 "skin" "0"
@@ -21403,7 +21403,7 @@
 // entity 126
 {
 "classname" "misc_model"
-"model" "models//objects/industrial/valve/valve.md2"
+"model" "models/objects/industrial/valve/valve.md2"
 "spawnflags" "2"
 "angles" "90 0 -90"
 "origin" "1360 176 96"
