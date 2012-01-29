@@ -200,6 +200,8 @@ static void SCP_CampaignAddMission (setState_t *set)
 	CP_TerrorMissionStart(mission);
 	mission->finalDate = mis->expire;
 
+	Com_Printf("spawned map '%s'\n", mis->def->id);
+
 	scd->numActiveMissions++;
 }
 
@@ -252,7 +254,7 @@ void SCP_CampaignActivateFirstStage (void)
 	SCP_CampaignActivateStage("intro");
 }
 
-void SCP_CampaignProgress (void)
+void SCP_CampaignProgress (const missionResults_t *results)
 {
 	actMis_t *mission;
 
@@ -278,8 +280,11 @@ void SCP_CampaignProgress (void)
 	/* campaign effects */
 	mission->cause->done++;
 	mission->def->count++;
+	Com_Printf("finished map '%s'\n", mission->def->id);
 	if (mission->cause->done >= mission->cause->def->quota)
 		SCP_CampaignExecute(mission->cause);
+	else
+		Com_Printf("%i missions left to do\n", mission->cause->def->quota - mission->cause->done);
 
 	/* remove activeMissions from list */
 	SCP_CampaignRemoveMission(mission);

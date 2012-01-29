@@ -914,6 +914,10 @@ void AM_Go (mission_t *mission, aircraft_t *aircraft, const campaign_t *campaign
 		AM_AlienCollect(aircraft, &autoBattle);
 
 	MIS_InitResultScreen(results);
+	if (ccs.missionResultCallback) {
+		ccs.missionResultCallback(results);
+	}
+
 	AM_DisplayResults(&autoBattle);
 	AM_CleanBattleParameters(&autoBattle);
 }

@@ -196,14 +196,31 @@ static void SCP_ParseStageSet (const char *name, const char **text)
 				if (!misp)
 					break;
 
-				for (j = 0; j < scd->numMissions; j++)
+				for (j = 0; j < scd->numMissions; j++) {
 					if (Q_streq(token, scd->missions[j].id)) {
 						sp->missions[sp->numMissions++] = j;
 						break;
 					}
+				}
 
-				if (j == scd->numMissions)
-					Com_Printf("SCP_ParseStageSet: unknown mission \"%s\" ignored (stageset %s)\n", token, sp->name);
+				if (j == scd->numMissions) {
+					const mapDef_t *mapDef = Com_GetMapDefinitionByID(token);
+					if (mapDef != NULL) {
+						if (j < MAX_STATIC_MISSIONS - 1) {
+							/* we don't need and mission definition in the scripts if we just would like to link a mapdef */
+							staticMission_t *mis = &scd->missions[j];
+							OBJZERO(*mis);
+							Q_strncpyz(mis->id, token, sizeof(mis->id));
+							if (!CP_GetRandomPosOnGeoscapeWithParameters(mis->pos, mapDef->terrains, mapDef->cultures, mapDef->populations, NULL)) {
+								Com_Printf("SCP_ParseMission: could not find a valid position for '%s'\n", mis->id);
+								continue;
+							}
+							sp->missions[sp->numMissions++] = scd->numMissions++;
+						}
+					} else {
+						Com_Printf("SCP_ParseStageSet: unknown mission \"%s\" ignored (stageset %s)\n", token, sp->name);
+					}
+				}
 			} while (misp && sp->numMissions < MAX_SETMISSIONS);
 			continue;
 		}

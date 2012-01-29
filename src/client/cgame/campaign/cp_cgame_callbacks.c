@@ -272,6 +272,9 @@ void GAME_CP_Results (struct dbuffer *msg, int winner, int *numSpawned, int *num
 	results->civiliansSurvived = civiliansSurvived;
 
 	MIS_InitResultScreen(results);
+	if (ccs.missionResultCallback) {
+		ccs.missionResultCallback(results);
+	}
 
 	UI_InitStack("geoscape", "campaign_main", qtrue, qtrue);
 

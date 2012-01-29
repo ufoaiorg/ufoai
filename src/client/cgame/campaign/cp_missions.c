@@ -1580,7 +1580,7 @@ void CP_InitializeSpawningDelay (void)
 {
 	ccs.lastMissionSpawnedDelay = DELAY_BETWEEN_MISSION_SPAWNING;
 
-	ccs.missionSpawn();
+	ccs.missionSpawnCallback();
 }
 
 

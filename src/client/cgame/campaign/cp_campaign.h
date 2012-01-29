@@ -365,6 +365,7 @@ typedef enum mapAction_s {
 } mapAction_t;
 
 typedef void (*missionSpawnFunction_t) (void);
+typedef void (*missionResultFunction_t) (const missionResults_t *results);
 
 /**
  * @brief client campaign structure
@@ -555,7 +556,8 @@ typedef struct ccs_s {
 	aircraft_t aircraftTemplates[MAX_AIRCRAFT];		/**< Available aircraft types/templates/samples. */
 	int numAircraftTemplates;		/**< Number of aircraft templates. */
 
-	missionSpawnFunction_t missionSpawn;
+	missionSpawnFunction_t missionSpawnCallback;
+	missionResultFunction_t missionResultCallback;
 } ccs_t;
 
 typedef struct {
