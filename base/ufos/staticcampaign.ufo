@@ -1,3 +1,7 @@
+//
+// delay is given in year, day, hour
+//
+
 staticcampaign small {
 	mission africa_large
 	{
@@ -24,7 +28,152 @@ staticcampaign small {
 		pos			"-16 40"
 	}
 
-	mission japan
+	mission japan_large
+	{
+		pos			"-141 40"
+	}
+
+	mission japan_small
+	{
+		pos			"-141 40"
+	}
+
+	mission mine
+	{
+		pos			"87 31"
+	}
+
+	mission mart
+	{
+		pos			"-16 40"
+	}
+
+	mission estate
+	{
+		pos			"-141 40"
+	}
+
+	mission dam
+	{
+		pos			"-16 40"
+	}
+
+	mission spedition
+	{
+		pos			"-141 40"
+	}
+
+	mission subway
+	{
+		pos			"-141 40"
+	}
+
+	mission gasstation
+	{
+		pos			"-141 40"
+	}
+
+	mission tower
+	{
+		pos			"-141 40"
+	}
+
+	mission military_convoy
+	{
+		pos			"-141 40"
+	}
+
+	mission rivertown
+	{
+		pos			"-141 40"
+	}
+
+	mission stadium
+	{
+		pos			"-141 40"
+	}
+
+	mission druglord
+	{
+		pos			"-141 40"
+	}
+
+	mission office
+	{
+		pos			"-141 40"
+	}
+
+	mission lake_ice
+	{
+		pos			"-141 40"
+	}
+
+	mission fighter_crash
+	{
+		pos			"-141 40"
+	}
+
+	mission construction
+	{
+		pos			"-141 40"
+	}
+
+	mission oriental_large
+	{
+		pos			"-141 40"
+	}
+
+	mission frozen_alienlandingindustrial
+	{
+		pos			"-141 40"
+	}
+
+	mission resort
+	{
+		pos			"-141 40"
+	}
+
+	mission tropic_river
+	{
+		pos			"-141 40"
+	}
+
+	mission city_disco
+	{
+		pos			"-141 40"
+	}
+
+	mission oriental_mosque
+	{
+		pos			"-141 40"
+	}
+
+	mission frozen_industrial
+	{
+		pos			"-141 40"
+	}
+
+	mission harbour
+	{
+		pos			"-141 40"
+	}
+
+	mission eaglenest
+	{
+		pos			"-141 40"
+	}
+
+	mission corrupter_crash
+	{
+		pos			"-141 40"
+	}
+
+	mission bungalow
+	{
+		pos			"-141 40"
+	}
+
+	mission small_house
 	{
 		pos			"-141 40"
 	}
@@ -33,8 +182,9 @@ staticcampaign small {
 	{
 		set first
 		{
-			delay		"0 1 0"
+			delay		"0 0 10"
 			frame		"0 3 0"
+			expire		"0 6 0"
 			missions	"africa_large"
 			number		1
 			quota		0
@@ -42,16 +192,48 @@ staticcampaign small {
 		set terror_only
 		{
 			needed		first
-			delay		"0 0 1"
-			frame		"0 10 0"
-			expire		"0 3 0"
-			missions	"italy japan village"
+			delay		"0 5 12"
+			frame		"0 9 0"
+			expire		"0 8 0"
+			missions	"italy japan_large village mine mart estate"
+			number		11
+			quota		6
+		}
+		set soldier_terror
+		{
+			needed		terror_only
+			delay		"0 10 7"
+			frame		"0 15 0"
+			expire		"0 45 0"
+			missions	"bunker japan_small dam spedition stadium druglord tower"
+			number		7
+			quota		7
+			ufos		2
+		}
+		set landed_ships
+		{
+			needed		soldier_terror
+			delay		"0 5 2"
+			frame		"0 6 0"
+			expire		"0 5 0"
+			missions	"frozen_industrial rivertown farm2 frozen_alienlandingindustrial"
 			quota		4
+			ufos		1
+		}
+		set ultimate_terror
+		{
+			needed		soldier_terror
+			delay		"0 15 7"
+			frame		"0 6 0"
+			expire		"0 5 0"
+			missions	"oriental_large small_house subway gasstation tower village military_convoy"
+			quota		7
 			nextstage	ufos_are_coming
+			ufos		2
 		}
 		set stop
 		{
-			needed		terror_only
+			needed		ultimate_terror
 			delay		"0 20 0"
 			endstage	intro
 		}
@@ -59,40 +241,66 @@ staticcampaign small {
 
 	stage ufos_are_coming
 	{
+		set first_coming
+		{
+			delay		"0 2 7"
+			frame		"0 12 0"
+			expire		"0 5 0"
+			missions	"fighter_crash"
+			quota		1
+			ufos		4
+		}
 		set crashed_and_landed
 		{
+			needed		first_coming
 			delay		"0 0 1"
 			frame		"0 10 0"
-			expire		"0 3 0"
-			missions	"bunker farm2"
-			ufos		6
-			quota		2
+			expire		"0 8 0"
+			missions	"construction office harbour resort bungalow tropic_river city_disco"
+			quota		6
 			nextstage	invasion
+			ufos		2
 		}
-		set stop
+		set stop_coming
 		{
 			needed		crashed_and_landed
-			delay		"0 110 0"
+			delay		"0 11 0"
 			endstage	ufos_are_coming
 		}
 	}
 
 	stage invasion
 	{
-		set baseinvasion
+		set first_invasion
 		{
-			delay		"0 0 1"
+			delay		"0 5 1"
 			frame		"0 10 0"
-			expire		"0 3 0"
-			missions	"alienbase"
-			quota		4
-			ufos		10
+			expire		"0 7 0"
+			missions	"africa_large eaglenest lake_ice corrupter_crash oriental_mosque"
+			quota		6
 			nextstage	alienbase
 		}
-		set stop
+		set stop_invasion
 		{
-			needed		baseinvasion
-			delay		"0 110 0"
+			needed		first_invasion
+			delay		"0 11 0"
+			endstage	invasion
+		}
+	}
+
+	stage alienbase
+	{
+		set first_alienbase
+		{
+			delay		"0 11 0"
+			missions	"corrupter_crash"
+			quota		1
+		}
+		set stop_alienbase
+		{
+			needed		first_alienbase
+			delay		"0 12 0"
+			endstage	alienbase
 			commands	"echo TODO;"
 		}
 	}
