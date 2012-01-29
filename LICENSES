@@ -1938,6 +1938,8 @@ base/models/soldiers/male/head02.md2 | GNU General Public License 3.0 or later |
 base/models/soldiers/male/head02a.png | GNU General Public License 3.0 or later | MakeHuman;Nate Wright
 base/models/soldiers/male/head03.md2 | GNU General Public License 3.0 or later | MakeHuman;Nate Wright
 base/models/soldiers/male/head03a.png | GNU General Public License 3.0 or later | MakeHuman;Nate Wright
+base/models/soldiers/male/head04.md2 | GNU General Public License 3.0 or later | MakeHuman;Nate Wright
+base/models/soldiers/male/head04a.png | GNU General Public License 3.0 or later | MakeHuman;Nate Wright
 base/models/soldiers/malehybrid/body.jpg | GNU General Public License 2.0 or later | Migel
 base/models/soldiers/malehybrid/body_arctic.jpg | GNU General Public License 2.0 or later | Migel
 base/models/soldiers/malehybrid/body_cccp.jpg | GNU General Public License 2.0 or later | Migel
@@ -1975,6 +1977,8 @@ base/models/soldiers/malelight/head02.md2 | GNU General Public License 3.0 or la
 base/models/soldiers/malelight/head02a.png | GNU General Public License 3.0 or later | MakeHuman;Origin;Nate Wright
 base/models/soldiers/malelight/head03.md2 | GNU General Public License 3.0 or later | MakeHuman;Origin;Nate Wright
 base/models/soldiers/malelight/head03a.png | GNU General Public License 3.0 or later | MakeHuman;Origin;Nate Wright
+base/models/soldiers/malelight/head04.md2 | GNU General Public License 3.0 or later | MakeHuman;Origin;Nate Wright
+base/models/soldiers/malelight/head04a.png | GNU General Public License 3.0 or later | MakeHuman;Origin;Nate Wright
 base/models/soldiers/malelightadv/body.anm | GNU General Public License 2.0 | Lukas "Rastaman" Beyeler
 base/models/soldiers/malelightadv/body.jpg | GNU General Public License 2.0 | John W. Bjerk (eleazar)
 base/models/soldiers/malelightadv/body.md2 | GNU General Public License 2.0 | Lukas "Rastaman" Beyeler
