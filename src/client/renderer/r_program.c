@@ -33,6 +33,14 @@
 
 #define SHADER_BUF_SIZE 16384
 
+typedef enum {SHQ_LOW, SHQ_MID, SHQ_HIGH, SHQ_NUM} shaderQualityLevel_t;
+
+const char *shaderQualityLevelNames[SHQ_NUM][2] = {
+	{"world","model"},
+	{"world","model"},
+	{"world","model"}
+};
+
 void R_UseProgram  (r_program_t *prog)
 {
 	if (!qglUseProgram || r_state.active_program == prog)
@@ -977,8 +985,8 @@ void R_InitPrograms (void)
 	OBJZERO(r_state.shaders);
 	OBJZERO(r_state.programs);
 
-	r_state.world_program = R_LoadProgram("world", R_InitWorldProgram, R_UseWorldProgram);
-	r_state.model_program = R_LoadProgram("model", R_InitModelProgram, R_UseModelProgram);
+	r_state.world_program = R_LoadProgram(shaderQualityLevelNames[r_quality->integer][0], R_InitWorldProgram, R_UseWorldProgram);
+	r_state.model_program = R_LoadProgram(shaderQualityLevelNames[r_quality->integer][1], R_InitModelProgram, R_UseModelProgram);
 	r_state.warp_program = R_LoadProgram("warp", R_InitWarpProgram, R_UseWarpProgram);
 	r_state.geoscape_program = R_LoadProgram("geoscape", R_InitGeoscapeProgram, NULL);
 	r_state.combine2_program = R_LoadProgram("combine2", R_InitCombine2Program, NULL);
