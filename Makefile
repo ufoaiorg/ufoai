@@ -79,7 +79,7 @@ ifneq ($(1),$($(1)_FILE))
 $(1): $($(1)_FILE)
 endif
 
-$($(1)_FILE): $(BUILDDIR)/$(1)/.dirs $(foreach DEP,$($(1)_DEPS),$($(DEP)_FILE)) $($(1)_OBJS)
+$($(1)_FILE): $(BUILDDIR)/$(1)/.dirs build/modules/$(1).mk $(foreach DEP,$($(1)_DEPS),$($(DEP)_FILE)) $($(1)_OBJS)
 	@echo '===> LD [$$@]'
 	$(Q)$(CROSS)$($(1)_LINKER) $($(1)_OBJS) $($(1)_LDFLAGS) $(LDFLAGS) -o $($(1)_FILE)
 
