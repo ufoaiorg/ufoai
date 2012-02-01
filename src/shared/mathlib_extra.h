@@ -106,4 +106,16 @@ double FpCurve1D_u_out(double fpVal, double mEffect, double cntPnt);
 /* Function curves "fpVal" AWAY FROM 0.0, toward 1.0f or -1.0f */
 double FpCurve1D_s_out(double fpVal, double mEffect);
 
+/** These are floating-point curves where the input can start at 0.f but
+* has no upper limit.  The output will always be within 0.f and +- 1.f.
+* They may be used for newer alien interest code, air combat, and other stuff.
+* If they need to be used often, the (float) based functions should of course be
+* faster than the ones that use (double)s.
+*/
+float FpUcurve_f(const float inpVal, const float hard);
+double FpUcurve_d(const double inpVal, const double hard);
+
+float FpUcurveSc_f(const float inpVal, const float hard, const float scale);
+double FpUcurveSc_d(const double inpVal, const double hard, const double scale);
+
 #endif
