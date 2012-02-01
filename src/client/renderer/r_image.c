@@ -238,7 +238,7 @@ void R_GetScaledTextureSize (int width, int height, int *scaledWidth, int *scale
 		*scaledHeight = 1;
 }
 
-#define R_ImageIsClamp(image) ((image)->type == it_pic || (image)->type == it_worldrelated)
+#define R_IsClampedImageType(type) ((type) == it_pic || (type) == it_worldrelated)
 
 /**
  * @brief Uploads the opengl texture to the server
@@ -255,7 +255,7 @@ void R_UploadTexture (unsigned *data, int width, int height, image_t* image)
 	int i, c;
 	byte *scan;
 	const qboolean mipmap = (image->type != it_pic && image->type != it_worldrelated && image->type != it_chars);
-	const qboolean clamp = R_ImageIsClamp(image);
+	const qboolean clamp = R_IsClampedImageType(image->type);
 
 	/* scan the texture for any non-255 alpha */
 	c = width * height;
@@ -545,8 +545,9 @@ image_t *R_FindImage (const char *pname, imagetype_t type)
 
 	image = R_GetImage(lname);
 	if (image) {
-		if (image->type != type)
-			Com_Printf("Warning: inconsistent usage of image %s (%i != %i)\n", image->name, image->type, type);
+		/* Warn if game tries to use same image with different texture mapping modes */
+		if (R_IsClampedImageType(image->type) != R_IsClampedImageType(type)) /** @todo should also check the mipmapping */
+			Com_Printf("Warning: inconsistent usage of image %s (%i,%i)\n", image->name, image->type, type);
 		return image;
 	}
 
