@@ -287,3 +287,30 @@ double XMath_CurveUnlScaled_d (const double inpVal, const double hard, const dou
 	return (double) ( (inpVal >= 0.0) ? (inpVal * (hard+inpVal) / (scale + (hard*inpVal) + (inpVal*inpVal)))
 					: (inpVal * (hard-inpVal) / (scale - (hard*inpVal) + (inpVal*inpVal))) );
 }
+
+void XMath_RcBuffInit (xMathRcBufferF_t *rcbuff, const float inpRate, const float inpPass)
+{
+	rcbuff->rate = inpRate;
+	rcbuff->passRate = fmin(1.f, fmax(inpPass, 0.f)) * inpRate;
+	rcbuff->buffer = 0.f;
+	rcbuff->input = 0.f;
+	rcbuff->passFactorB = exp(-2.0f * (float) M_PI * rcbuff->passRate / inpRate);
+	rcbuff->passFactorA = 1.0f - rcbuff->passFactorB;
+}
+void XMath_RcBuffInput (xMathRcBufferF_t *rcbuff, const float inpVal)
+{
+	rcbuff->input = inpVal;
+}
+float XMath_RcBuffGetOutput (const xMathRcBufferF_t *rcbuff)
+{
+	return rcbuff->buffer;
+}
+void XMath_RcBuffTick(xMathRcBufferF_t *rcbuff)
+{
+	rcbuff->buffer = (float) (rcbuff->passFactorA*rcbuff->input + rcbuff->passFactorB*rcbuff->buffer + (float) DENORM);
+}
+void XMath_RcBuffForceBuffer(xMathRcBufferF_t *rcbuff, const float inpForceVal)
+{
+	rcbuff->buffer = inpForceVal;
+	rcbuff->input = inpForceVal;
+}

@@ -118,4 +118,28 @@ double XMath_CurveUnlFixed_d(const double inpVal, const double hard);
 float XMath_CurveUnlScaled_f(const float inpVal, const float hard, const float scale);
 double XMath_CurveUnlScaled_d(const double inpVal, const double hard, const double scale);
 
+/**
+ * @brief An RC-style low-pass filter structure.
+ *
+ * Although filters similar to this are used in audio DSP on audio samples, this
+ * structure is adapted a bit so it can be used for smooth transitions of values for all
+ * kinds of purposes, including angles, vectors, etc.  An example use would be for air combat,
+ * so that when an aircraft tries to change direction in mid-air, it doesn't change all the way
+ * to a new, intended direction of movement instantaneously (it has intertia and air drag, etc.),
+ * but instead gradually changes velocity to eventually reach a new target direction of movement,
+ */
+typedef struct xMathRcBufferF_s {
+	float rate;			/**< How many times things are ran (ticks) per second. */
+	float passRate;		/**< Determines how much affect is applied during a tick(), can be from 0.f to 1.f. */
+	float input;		/**< When it comes time for a tick(), this is the input value that will be used. */
+	float buffer;		/**< Buffer value which should not be discarded between ticks. */
+	float passFactorA;	/**< Used during a tick() to calculate the end-result value. */
+	float passFactorB;	/**< Used during a tick() to calculate the end-result value. */
+} xMathRcBufferF_t;
+void XMath_RcBuffInit(xMathRcBufferF_t *rcbuff, const float inpRate, const float inpPass);
+void XMath_RcBuffInput(xMathRcBufferF_t *rcbuff, const float inpVal);
+float XMath_RcBuffGetOutput(const xMathRcBufferF_t *rcbuff);
+void XMath_RcBuffTick(xMathRcBufferF_t *rcbuff);
+void XMath_RcBuffForceBuffer(xMathRcBufferF_t *rcbuff, const float inpForceVal);
+
 #endif
