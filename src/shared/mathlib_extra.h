@@ -112,10 +112,10 @@ double FpCurve1D_s_out(double fpVal, double mEffect);
 * If they need to be used often, the (float) based functions should of course be
 * faster than the ones that use (double)s.
 */
-float FpUcurve_f(const float inpVal, const float hard);
-double FpUcurve_d(const double inpVal, const double hard);
+float XMath_CurveUnlFixed_f(const float inpVal, const float hard);
+double XMath_CurveUnlFixed_d(const double inpVal, const double hard);
 
-float FpUcurveSc_f(const float inpVal, const float hard, const float scale);
-double FpUcurveSc_d(const double inpVal, const double hard, const double scale);
+float XMath_CurveUnlScaled_f(const float inpVal, const float hard, const float scale);
+double XMath_CurveUnlScaled_d(const double inpVal, const double hard, const double scale);
 
 #endif

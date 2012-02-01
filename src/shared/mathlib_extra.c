@@ -238,10 +238,10 @@ double FpCurve1D_s_out (double fpVal, double mEffect)
  * approach of inpVal toward +1.f or -1,f.
  * @return The altered value, between -1.f and 1.f.
  */
-float FpUcurve_f(const float inpVal, const float hard)
+float XMath_CurveUnlFixed_f (const float inpVal, const float hard)
 {
-	return (float) ( inpVal >= 0.f ? (inpVal * (hard+inpVal) / (1.f + (hard*inpVal) + (inpVal*inpVal))) :
-					(inpVal * (hard-inpVal) / (1.f - (hard*inpVal) + (inpVal*inpVal))) );
+	return (float) ( (inpVal >= 0.f) ? (inpVal * (hard+inpVal) / (1.f + (hard*inpVal) + (inpVal*inpVal)))
+					: (inpVal * (hard-inpVal) / (1.f - (hard*inpVal) + (inpVal*inpVal))) );
 }
 
 /**
@@ -252,25 +252,10 @@ float FpUcurve_f(const float inpVal, const float hard)
  * approach of inpVal toward +1.f or -1,f.
  * @return The altered value, between -1.f and 1.f.
  */
-double FpUcurve_d(const double inpVal, const double hard)
+double XMath_CurveUnlFixed_d (const double inpVal, const double hard)
 {
-	return (double) ( inpVal >= 0.0 ? (inpVal * (hard+inpVal) / (1.0 + (hard*inpVal) + (inpVal*inpVal))) :
-					(inpVal * (hard-inpVal) / (1.0 - (hard*inpVal) + (inpVal*inpVal))) );
-}
-
-/**
- * @brief Takes a (float) of any value and outputs a value from -1.f to +1.f, along a curve, so that as the input
- * value gets farther from 0.0f it slows down and never quite gets to +1.f or -1.f.
- * @param[in] inpVal The original input value.
- * @param[in] hard The steepness or slope of the curve, valid values are 0.f to +inf.  Higher values mean a more rapid
- * @param[in] scale An additional scaling factor that can affect the shape of the sloped curve of potential output values.
- * approach of inpVal toward +1.f or -1,f.
- * @return The altered value, between -1.f and 1.f.
- */
-float FpUcurveSc_f(const float inpVal, const float hard, const float scale)
-{
-	return (float) ( inpVal >= 0.f ? (inpVal * (hard+inpVal) / (scale + (hard*inpVal) + (inpVal*inpVal))) :
-					(inpVal * (hard-inpVal) / (scale - (hard*inpVal) + (inpVal*inpVal))) );
+	return (double) ( (inpVal >= 0.0) ? (inpVal * (hard+inpVal) / (1.0 + (hard*inpVal) + (inpVal*inpVal)))
+					: (inpVal * (hard-inpVal) / (1.0 - (hard*inpVal) + (inpVal*inpVal))) );
 }
 
 /**
@@ -282,8 +267,23 @@ float FpUcurveSc_f(const float inpVal, const float hard, const float scale)
  * approach of inpVal toward +1.f or -1,f.
  * @return The altered value, between -1.f and 1.f.
  */
-double FpUcurveSc_d(const double inpVal, const double hard, const double scale)
+float XMath_CurveUnlScaled_f (const float inpVal, const float hard, const float scale)
 {
-	return (double) ( inpVal >= 0.0 ? (inpVal * (hard+inpVal) / (scale + (hard*inpVal) + (inpVal*inpVal))) :
-					(inpVal * (hard-inpVal) / (scale - (hard*inpVal) + (inpVal*inpVal))) );
+	return (float) ( (inpVal >= 0.f) ? (inpVal * (hard+inpVal) / (scale + (hard*inpVal) + (inpVal*inpVal)))
+					: (inpVal * (hard-inpVal) / (scale - (hard*inpVal) + (inpVal*inpVal))) );
+}
+
+/**
+ * @brief Takes a (float) of any value and outputs a value from -1.f to +1.f, along a curve, so that as the input
+ * value gets farther from 0.0f it slows down and never quite gets to +1.f or -1.f.
+ * @param[in] inpVal The original input value.
+ * @param[in] hard The steepness or slope of the curve, valid values are 0.f to +inf.  Higher values mean a more rapid
+ * @param[in] scale An additional scaling factor that can affect the shape of the sloped curve of potential output values.
+ * approach of inpVal toward +1.f or -1,f.
+ * @return The altered value, between -1.f and 1.f.
+ */
+double XMath_CurveUnlScaled_d (const double inpVal, const double hard, const double scale)
+{
+	return (double) ( (inpVal >= 0.0) ? (inpVal * (hard+inpVal) / (scale + (hard*inpVal) + (inpVal*inpVal)))
+					: (inpVal * (hard-inpVal) / (scale - (hard*inpVal) + (inpVal*inpVal))) );
 }
