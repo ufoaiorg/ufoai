@@ -694,13 +694,8 @@ static void R_SortSurfacesArrays (const model_t *mod)
 	mBspSurfaces_t **r_sorted_surfaces = (mBspSurfaces_t **) Mem_Alloc(r_numImages * sizeof(mBspSurfaces_t *));
 
 	/* resolve the start surface and total surface count */
-	if (mod->type == mod_bsp) {  /*  world model */
-		s = mod->bsp.surfaces;
-		ns = mod->bsp.numsurfaces;
-	} else {  /* submodels */
-		s = &mod->bsp.surfaces[mod->bsp.firstmodelsurface];
-		ns = mod->bsp.nummodelsurfaces;
-	}
+	s = &mod->bsp.surfaces[mod->bsp.firstmodelsurface];
+	ns = mod->bsp.nummodelsurfaces;
 
 	/* allocate the per-texture surfaces arrays and determine counts */
 	for (i = 0, surf = s; i < ns; i++, surf++) {
@@ -755,13 +750,8 @@ static void R_LoadSurfacesArrays_ (model_t *mod)
 		mod->bsp.sorted_surfaces[i] = (mBspSurfaces_t *)Mem_PoolAlloc(sizeof(mBspSurfaces_t), vid_modelPool, 0);
 
 	/* resolve the start surface and total surface count */
-	if (mod->type == mod_bsp) {  /* world model */
-		s = mod->bsp.surfaces;
-		ns = mod->bsp.numsurfaces;
-	} else {  /* submodels */
-		s = &mod->bsp.surfaces[mod->bsp.firstmodelsurface];
-		ns = mod->bsp.nummodelsurfaces;
-	}
+	s = &mod->bsp.surfaces[mod->bsp.firstmodelsurface];
+	ns = mod->bsp.nummodelsurfaces;
 
 	/* determine the maximum counts for each rendered type in order to
 	 * allocate only what is necessary for the specified model */
@@ -914,6 +904,54 @@ static void R_SetupSubmodels (void)
 }
 
 /**
+ @brief Sets up surface range for the world model
+ @note Depends on ufo2map to store all world model surfaces before submodel ones
+ */
+static void R_SetupWorldModel (void)
+{
+	int surfCount = r_worldmodel->bsp.numsurfaces;
+	/* first NUM_REGULAR_MODELS submodels are the models of the different levels, don't care about them */
+	int i = NUM_REGULAR_MODELS;
+
+#ifdef DEBUG
+	/* validate surface allocation by submodels by checking the surface array range they are using */
+	/* start with inverted range to simplify code */
+	int first = surfCount, last = -1; /* @note range is [,) */
+	for (; i < r_worldmodel->bsp.numsubmodels; i++) {
+		const mBspHeader_t *sub = &r_worldmodel->bsp.submodels[i];
+		int firstFace = sub->firstface;
+		int lastFace = firstFace + sub->numfaces;
+
+		if (lastFace <= firstFace)
+			continue; /* empty submodel, ignore it */
+
+		if (last >= 0 && (firstFace > last || lastFace < first))
+			Com_Printf("Warning: submodels may not combine to contigous range in the surface array, some world geometry could be missing as a result (submodel %i)\n", i);
+
+		if (firstFace < first)
+			first = firstFace;
+
+		if (lastFace > last)
+			last = lastFace;
+
+		Com_DPrintf(DEBUG_RENDERER, "Submodel %i, range %i..%i\n", i, firstFace, lastFace - 1);
+	}
+	surfCount = first;
+
+	if (last >= 0 && last != r_worldmodel->bsp.numsurfaces)
+		Com_Printf("Warning: %i surfaces are lost, some world geometry could be missing as a result\n", r_worldmodel->bsp.numsurfaces - last);
+#else
+	/* take a shortcut: assume that first submodel surfaces begin exactly after world model ones */
+	if (i < r_worldmodel->bsp.numsubmodels)
+		surfCount = r_worldmodel->bsp.submodels[i].firstface;
+#endif
+	Com_DPrintf(DEBUG_RENDERER, "World model, range 0..%i\n", surfCount - 1);
+
+	r_worldmodel->bsp.firstmodelsurface = 0;
+	r_worldmodel->bsp.nummodelsurfaces = surfCount;
+}
+
+/**
  * @sa CM_AddMapTile
  * @sa R_ModBeginLoading
  * @param[in] name The name of the map. Relative to maps/ and without extension
@@ -976,6 +1014,7 @@ static void R_ModAddMapTile (const char *name, qboolean day, int sX, int sY, int
 	R_ModLoadSubmodels(&header->lumps[LUMP_MODELS]);
 
 	R_SetupSubmodels();
+	R_SetupWorldModel();
 
 	R_LoadBspVertexArrays(r_worldmodel);
 
