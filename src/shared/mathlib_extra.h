@@ -126,7 +126,9 @@ double XMath_CurveUnlScaled_d(const double inpVal, const double hard, const doub
  * kinds of purposes, including angles, vectors, etc.  An example use would be for air combat,
  * so that when an aircraft tries to change direction in mid-air, it doesn't change all the way
  * to a new, intended direction of movement instantaneously (it has intertia and air drag, etc.),
- * but instead gradually changes velocity to eventually reach a new target direction of movement,
+ * but instead gradually changes velocity to eventually reach a new target direction of movement.
+ * Note that this filter should not have its pass rate changed frequently, if you need a filter that
+ * has a rapidly changing pass rate, please consider the xMathRcDynBufferF_s filter.
  */
 typedef struct xMathRcBufferF_s {
 	float rate;			/**< How many times things are ran (ticks) per second. */
@@ -143,5 +145,35 @@ void XMath_RcBuffTick(xMathRcBufferF_t *rcbuff);
 void XMath_RcBuffForceBuffer(xMathRcBufferF_t *rcbuff, const float inpForceVal);
 void XMath_RcBuffChangeRate(xMathRcBufferF_t *rcbuff, const float inpRate);
 void XMath_RcBuffChangePassRate(xMathRcBufferF_t *rcbuff, const float inpPass);
+
+/**
+ * @brief An RC-style low-pass filter structure supporting a dynamic pass rate that can change frequently.
+ *
+ * Although filters similar to this are used in audio DSP on audio samples, this
+ * structure is adapted a bit so it can be used for smooth transitions of values for all
+ * kinds of purposes, including angles, vectors, etc.  An example use would be for air combat,
+ * so that when an aircraft tries to change direction in mid-air, it doesn't change all the way
+ * to a new, intended direction of movement instantaneously (it has intertia and air drag, etc.),
+ * but instead gradually changes velocity to eventually reach a new target direction of movement.
+ * Note that if you want a more simple filter that doesn't change pass rate too often, you may want to
+ * consider the xMathRcBufferF_s filter instead.
+ */
+typedef struct xMathRcDynBufferF_s {
+	float rate;			/**< How many times things are ran (ticks) per second. */
+	float passRateHigh;	/**< Determines how much affect is applied during a tick(), can be from 0.f to 1.f. This is the maximum pass rate. */
+	float passRateLow;	/**< Determines how much affect is applied during a tick(), can be from 0.f to 1.f. This is the minimum pass rate. */
+	float input;		/**< When it comes time for a tick(), this is the input value that will be used. */
+	float buffer;		/**< Buffer value which should not be discarded between ticks. */
+	float passLevel;	/**< Value from 0.f to 1.f that determines how 'open' the filter is, or where the pass rate is between min and max pass rates. */
+	float passFactorAhi;	/**< Used during a tick() to calculate the end-result value. (Max pass rate.) */
+	float passFactorBhi;	/**< Used during a tick() to calculate the end-result value. (Max pass rate.) */
+	float passFactorAlo;	/**< Used during a tick() to calculate the end-result value. (Min pass rate.) */
+	float passFactorBlo;	/**< Used during a tick() to calculate the end-result value. (Min pass rate.) */
+	float passFactorAcurrent;	/**< Used during a tick() to calculate the end-result value. (Current pass rate, as set by "passLevel" value.) */
+	float passFactorBcurrent;	/**< Used during a tick() to calculate the end-result value. (Current pass rate, as set by "passLevel" value.) */
+} xMathRcDynBufferF_t;
+void XMath_RcDynBuffInit(xMathRcDynBufferF_t *rcbuff, const float inpRate, const float inpPassMin, const float inpPassMax);
+void XMath_RcDynBuffInput(xMathRcDynBufferF_t *rcbuff, const float inpVal);
+void XMath_RcDynBuffSetDynamic(xMathRcDynBufferF_t *rcbuff, const float dynVal);
 
 #endif

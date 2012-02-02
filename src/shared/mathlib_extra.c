@@ -400,3 +400,69 @@ void XMath_RcBuffChangePassRate (xMathRcBufferF_t *rcbuff, const float inpPass)
 	rcbuff->passFactorB = (float) calculatedFactor;
 	rcbuff->passFactorA = (float) (1.0 - calculatedFactor);
 }
+
+/**
+ * @brief Initializes (or resets) a xMathRcDynBufferF_t structure, this must be done at least once
+ * for any xMathRcBufferF_t instance before it can be used.
+ *
+ * @param[in] rcbuff The xMathRcBufferF_t instance to set up or reset.
+ * @param[in] inpRate The number of times per second that each "tick" is expected to run.
+ * @param[in] inpPassMin A ratio value from 0.f to 1.f which determines how much effect the filter has.
+ * This means that a value of 0.5f sets the filter pass to half the rate or "inpRate" value.
+ * This is the minimum or 'bottom' value.
+ * @param[in] inpPassMax A ratio value from 0.f to 1.f which determines how much effect the filter has.
+ * This means that a value of 0.5f sets the filter pass to half the rate or "inpRate" value.
+ * This is the maximum or 'top' value.
+ */
+void XMath_RcDynBuffInit (xMathRcDynBufferF_t *rcbuff, const float inpRate, const float inpPassMin, const float inpPassMax)
+{
+	rcbuff->rate = fmax(inpRate, (float) DENORM);
+	rcbuff->passRateLow = fmin(1.f, fmax(inpPassMin, (float) DENORM));
+	rcbuff->passRateHigh = fmin(1.f, fmax(inpPassMax, (float) DENORM));
+	rcbuff->buffer = 0.f;
+	rcbuff->input = 0.f;
+
+	/* The rate factors are calculated with double precision, for better accuracy, before being stored in (float)s. */
+	const double passRatioH = (double) rcbuff->passRateHigh * 0.50 * (double) rcbuff->rate;
+	const double calculatedFactorH = (double) ( exp(-2.0 * (double) M_PI * passRatioH / (double) rcbuff->rate) );
+	rcbuff->passFactorBhi = (float) calculatedFactorH;
+	rcbuff->passFactorAhi = (float) (1.0 - calculatedFactorH);
+
+	const double passRatioL = (double) rcbuff->passRateLow * 0.50 * (double) rcbuff->rate;
+	const double calculatedFactorL = (double) ( exp(-2.0 * (double) M_PI * passRatioL / (double) rcbuff->rate) );
+	rcbuff->passFactorBlo = (float) calculatedFactorL;
+	rcbuff->passFactorAlo = (float) (1.0 - calculatedFactorL);
+
+	/* Default setting is half-way open, at 0.5f. */
+	rcbuff->passLevel = 0.5f;
+	const float passLevInv = 1.0f - rcbuff->passLevel;
+	rcbuff->passFactorAcurrent = 0.5f * ( (rcbuff->passFactorAlo * passLevInv) + (rcbuff->passFactorAhi * rcbuff->passLevel) );
+	rcbuff->passFactorBcurrent = 0.5f * ( (rcbuff->passFactorBlo * passLevInv) + (rcbuff->passFactorBhi * rcbuff->passLevel) );
+}
+/**
+ * @brief Inputs the target (float) value that the output will gradually head toward.
+ * Note that this can be set more than once, or even not at all, between each tick,
+ * without causing issues.
+ *
+ * @param[in] rcbuff The filter instance to set the input for.
+ * @param[in] inpVal The target value, to be input into the buffer.
+ */
+void XMath_RcDynBuffInput (xMathRcDynBufferF_t *rcbuff, const float inpVal)
+{
+	rcbuff->input = inpVal;
+}
+/**
+ * @brief Sets how 'open' the filter is, or where the pass rate is between the min and max pass rates.
+ *
+ * @param[in] rcbuff The buffer instance to work with.
+ * @param[in] dynVal The new value for how open the filter is.
+ * @note This is designed to be capable of being changed mid-stream, it will NOT reset the buffer or input values.  This can
+ * be set fairly frequently.
+ */
+void XMath_RcDynBuffSetDynamic (xMathRcDynBufferF_t *rcbuff, const float dynVal)
+{
+	rcbuff->passLevel = fmin(1.0f, fmax(0.f, dynVal));
+	const float passLevInv = 1.0f - rcbuff->passLevel;
+	rcbuff->passFactorAcurrent = 0.5f * ( (rcbuff->passFactorAlo * passLevInv) + (rcbuff->passFactorAhi * rcbuff->passLevel) );
+	rcbuff->passFactorBcurrent = 0.5f * ( (rcbuff->passFactorBlo * passLevInv) + (rcbuff->passFactorBhi * rcbuff->passLevel) );
+}
