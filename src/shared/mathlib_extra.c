@@ -299,12 +299,16 @@ double XMath_CurveUnlScaled_d (const double inpVal, const double hard, const dou
  */
 void XMath_RcBuffInit (xMathRcBufferF_t *rcbuff, const float inpRate, const float inpPass)
 {
-	rcbuff->rate = inpRate;
-	rcbuff->passRate = fmin(1.f, fmax(inpPass, 0.f)) * 0.50f * inpRate;
+	rcbuff->rate = fmax(inpRate, (float) DENORM);
+	rcbuff->passRate = fmin(1.f, fmax(inpPass, (float) DENORM));
 	rcbuff->buffer = 0.f;
 	rcbuff->input = 0.f;
-	rcbuff->passFactorB = exp(-2.0f * (float) M_PI * rcbuff->passRate / inpRate);
-	rcbuff->passFactorA = 1.0f - rcbuff->passFactorB;
+
+	/* The rate factors are calculated with double precision, for better accuracy, before being stored in (float)s. */
+	const double passRatio = (double) rcbuff->passRate * 0.50 * (double) rcbuff->rate;
+	const double calculatedFactor = (double) ( exp(-2.0 * (double) M_PI * passRatio / (double) rcbuff->rate) );
+	rcbuff->passFactorB = (float) calculatedFactor;
+	rcbuff->passFactorA = (float) (1.0 - calculatedFactor);
 }
 /**
  * @brief Inputs the target (float) value that the output will gradually head toward.
@@ -356,4 +360,43 @@ void XMath_RcBuffForceBuffer (xMathRcBufferF_t *rcbuff, const float inpForceVal)
 {
 	rcbuff->buffer = inpForceVal;
 	rcbuff->input = inpForceVal;
+}
+/**
+ * @brief Changes the rate at which the filter will expect a tick per second.  This function does NOT
+ * reset buffers or input values, so it can be used mid-stream while the buffer is in use.
+ *
+ * @param[in] rcbuff The xMathRcBufferF_t instance to update.
+ * @param[in] inpRate The number of times per second that each "tick" is expected to run.
+ * @note Please don't run this function on a buffer too often, escpecially if many buffers are in use at
+ * the time, as it could really slow down the program.
+ */
+void XMath_RcBuffChangeRate (xMathRcBufferF_t *rcbuff, const float inpRate)
+{
+	rcbuff->rate = fmax(inpRate, (float) DENORM);
+
+	/* The rate factors are calculated with double precision, for better accuracy, before being stored in (float)s. */
+	const double passRatio = (double) rcbuff->passRate * 0.50 * (double) rcbuff->rate;
+	const double calculatedFactor = (double) ( exp(-2.0 * (double) M_PI * passRatio / (double) rcbuff->rate) );
+	rcbuff->passFactorB = (float) calculatedFactor;
+	rcbuff->passFactorA = (float) (1.0 - calculatedFactor);
+}
+/**
+ * @brief Changes the pass rate ratio, for how much effect is applied by the filter.  This function does NOT
+ * reset buffers or input values, so it can be used mid-stream while the buffer is in use.
+ *
+ * @param[in] rcbuff The xMathRcBufferF_t instance to update.
+ * @param[in] inpPass A ratio value from 0.f to 1.f which determines how much effect the filter has.
+ * This means that a value of 0.5f sets the filter pass to half the rate or "inpRate" value.
+ * @note Please don't run this function on a buffer too often, escpecially if many buffers are in use at
+ * the time, as it could really slow down the program.
+ */
+void XMath_RcBuffChangePassRate (xMathRcBufferF_t *rcbuff, const float inpPass)
+{
+	rcbuff->passRate = fmin(1.f, fmax(inpPass, (float) DENORM));
+
+	/* The rate factors are calculated with double precision, for better accuracy, before being stored in (float)s. */
+	const double passRatio = (double) rcbuff->passRate * 0.50 * (double) rcbuff->rate;
+	const double calculatedFactor = (double) ( exp(-2.0 * (double) M_PI * passRatio / (double) rcbuff->rate) );
+	rcbuff->passFactorB = (float) calculatedFactor;
+	rcbuff->passFactorA = (float) (1.0 - calculatedFactor);
 }

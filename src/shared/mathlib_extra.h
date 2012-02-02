@@ -141,5 +141,7 @@ void XMath_RcBuffInput(xMathRcBufferF_t *rcbuff, const float inpVal);
 float XMath_RcBuffGetOutput(const xMathRcBufferF_t *rcbuff);
 void XMath_RcBuffTick(xMathRcBufferF_t *rcbuff);
 void XMath_RcBuffForceBuffer(xMathRcBufferF_t *rcbuff, const float inpForceVal);
+void XMath_RcBuffChangeRate(xMathRcBufferF_t *rcbuff, const float inpRate);
+void XMath_RcBuffChangePassRate(xMathRcBufferF_t *rcbuff, const float inpPass);
 
 #endif
