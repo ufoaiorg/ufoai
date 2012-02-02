@@ -288,28 +288,71 @@ double XMath_CurveUnlScaled_d (const double inpVal, const double hard, const dou
 					: (inpVal * (hard-inpVal) / (scale - (hard*inpVal) + (inpVal*inpVal))) );
 }
 
+/**
+ * @brief Initializes (or resets) a xMathRcBufferF_t structure, this must be done at least once
+ * for any xMathRcBufferF_t instance before it can be used.
+ *
+ * @param[in] rcbuff The xMathRcBufferF_t instance to set up or reset.
+ * @param[in] inpRate The number of times per second that each "tick" is expected to run.
+ * @param[in] inpPass A ratio value from 0.f to 1.f which determines how much effect the filter has.
+ * This means that a value of 0.5f sets the filter pass to half the rate or "inpRate" value.
+ */
 void XMath_RcBuffInit (xMathRcBufferF_t *rcbuff, const float inpRate, const float inpPass)
 {
 	rcbuff->rate = inpRate;
-	rcbuff->passRate = fmin(1.f, fmax(inpPass, 0.f)) * inpRate;
+	rcbuff->passRate = fmin(1.f, fmax(inpPass, 0.f)) * 0.50f * inpRate;
 	rcbuff->buffer = 0.f;
 	rcbuff->input = 0.f;
 	rcbuff->passFactorB = exp(-2.0f * (float) M_PI * rcbuff->passRate / inpRate);
 	rcbuff->passFactorA = 1.0f - rcbuff->passFactorB;
 }
+/**
+ * @brief Inputs the target (float) value that the output will gradually head toward.
+ * Note that this can be set more than once, or even not at all, between each tick,
+ * without causing issues.
+ *
+ * @param[in] rcbuff The filter instance to set the input for.
+ * @param[in] inpVal The target value, to be input into the buffer.
+ */
 void XMath_RcBuffInput (xMathRcBufferF_t *rcbuff, const float inpVal)
 {
 	rcbuff->input = inpVal;
 }
+/**
+ * @brief Gets the buffered output value of the ilter.
+ * Note that this can be ran more than once, or even not at all, between each tick,
+ * without causing issues.
+ *
+ * @param[in] rcbuff The filter instance to set the input for.
+ * @return The buffered output value.
+ */
 float XMath_RcBuffGetOutput (const xMathRcBufferF_t *rcbuff)
 {
 	return rcbuff->buffer;
 }
-void XMath_RcBuffTick(xMathRcBufferF_t *rcbuff)
+/**
+ * @brief Runs the filter.  This needs to be called a number of times per second equal to the
+ * rate value set when the filter was initialized, no more, no less.
+ *
+ * @param[in] rcbuff The filter instance to set the input for.
+ * @note If this makes the program run too slow, please consider lowering the rate value when setting up the filter.
+ */
+void XMath_RcBuffTick (xMathRcBufferF_t *rcbuff)
 {
 	rcbuff->buffer = (float) (rcbuff->passFactorA*rcbuff->input + rcbuff->passFactorB*rcbuff->buffer + (float) DENORM);
 }
-void XMath_RcBuffForceBuffer(xMathRcBufferF_t *rcbuff, const float inpForceVal)
+/**
+ * @brief Forces the buffer to a new value, essentially eliminating the usefulness of the filter temporarily,
+ * by resetting the buffer without changing the rate or pass rate.  This is useful for certain situations, but if
+ * this function is used too often on a filter it results in a waste of CPU usage because the filter is ran with each
+ * tick but not really doing anything useful if it is always being reset.
+ *
+ * @param[in] rcbuff The filter instance to set the input for.
+ * @param[in] inpForceVal The new value to reset and force the buffer to.  This can be 0.f or any other (float) value.
+ * @note This also resets the input target value for the filter.  If you don't want this, you will need to call the
+ * XMath_RcBuffInput() function afterward.
+ */
+void XMath_RcBuffForceBuffer (xMathRcBufferF_t *rcbuff, const float inpForceVal)
 {
 	rcbuff->buffer = inpForceVal;
 	rcbuff->input = inpForceVal;
