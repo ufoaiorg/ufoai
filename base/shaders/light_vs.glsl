@@ -5,7 +5,6 @@
 
 out_qualifier vec3 point;
 out_qualifier vec3 normal;
-out_qualifier vec3 ambientLight;
 
 /**
  * @brief LightVertex.
@@ -17,7 +16,4 @@ void LightVertex(void) {
 
 	/* Pass the color through as well.*/
 	gl_FrontColor = gl_Color;
-
-	/* To avoid GL light settings being read in fragment shader */
-	ambientLight = gl_LightSource[0].ambient.rgb; /* All ambient lighting is passed through light #0, which is the only global light (sun, etc) */
 }

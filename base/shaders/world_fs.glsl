@@ -43,8 +43,6 @@ in_qualifier vec4 lightDirs[R_DYNAMIC_LIGHTS];
 in_qualifier vec4 lightParams[R_DYNAMIC_LIGHTS];
 #endif
 
-in_qualifier vec3 ambientLight;
-
 #include "light_fs.glsl"
 #include "bump_fs.glsl"
 #include "fog_fs.glsl"

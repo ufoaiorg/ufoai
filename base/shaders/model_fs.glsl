@@ -23,6 +23,7 @@ uniform int ROUGHMAP;
 uniform int SPECULARMAP;
 uniform int IS_A_MODEL;
 uniform float GLOWSCALE;
+uniform vec3 AMBIENT;
 
 /** Diffuse texture.*/
 uniform sampler2D SAMPLER_DIFFUSE;
@@ -43,8 +44,6 @@ const vec3 negHalf = vec3(-0.5);
 in_qualifier vec4 lightDirs[R_DYNAMIC_LIGHTS];
 in_qualifier vec4 lightParams[R_DYNAMIC_LIGHTS];
 #endif
-
-in_qualifier vec3 ambientLight;
 
 #include "bump_fs.glsl"
 #include "fog_fs.glsl"

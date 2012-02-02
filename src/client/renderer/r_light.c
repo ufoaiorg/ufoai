@@ -170,6 +170,8 @@ void R_EnableModelLights (const light_t **lights, int numLights, qboolean enable
 
 	R_UseMaterial(&defaultMaterial);
 
+	R_ProgramParameter3fv("AMBIENT", refdef.ambientColor);
+
 	glEnable(GL_LIGHTING);
 
 	/* Light #0 is reserved for the Sun */
@@ -179,7 +181,6 @@ void R_EnableModelLights (const light_t **lights, int numLights, qboolean enable
 	glLightf(GL_LIGHT0, GL_QUADRATIC_ATTENUATION, 0.0);
 
 	glLightfv(GL_LIGHT0, GL_POSITION, sunDirection);
-	glLightfv(GL_LIGHT0, GL_AMBIENT, refdef.ambientColor);
 	glLightfv(GL_LIGHT0, GL_DIFFUSE, refdef.sunDiffuseColor);
 	glLightfv(GL_LIGHT0, GL_SPECULAR, refdef.sunSpecularColor);
 

@@ -116,7 +116,7 @@ vec4 IlluminateFragment(void) {
 	}
 
 	/* add ambient light */
-	totalColor += diffuse.rgb * diffuse.a * ambientLight;
+	totalColor += diffuse.rgb * diffuse.a * AMBIENT; /* FIXME: why it should depend on diffuse alpha? */
 
 	/* do per-light calculations */
 #unroll r_dynamic_lights
