@@ -1378,7 +1378,9 @@ mapdef mansion
 
         ufos
         {
-                //any
+        craft_ufo_fighter
+		craft_ufo_scout
+		craft_ufo_harvester
         }
 
         terrains
