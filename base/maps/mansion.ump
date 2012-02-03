@@ -2,6 +2,8 @@
 // Mediterranean  mansion
 // *********************************
 
+// by Holger 'ShipIt' Gellrich
+
 // Tiletypes:
 // ----------
 // +: tile contains something
@@ -258,21 +260,6 @@ tile +coast_east_u
 gu    +e     +e    +o    0
 gu    +e     +e    +o    0
 0     e      et    o     0
-}
-
-// no ufo, used  for testing
-// 8 x info_alien_start
-// 8 x info_player_start for Team 2,  2x info_2x2_start for Team 2
-tile +craft_ufo_empty
-{
-6 7
-0      0      0       0       0      0
-0      a      +u      +u      +u     e
-0      a      +u      +u      +u     e
-a      +u     +u      +u      +u     e
-a      +u     +u      +u      +u     e
-a      +u     +u      +u      +u     e
-0      s      s       s       s      0
 }
 
 tile +craft_ufo_scout
