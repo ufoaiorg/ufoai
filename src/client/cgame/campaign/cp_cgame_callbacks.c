@@ -404,9 +404,12 @@ void GAME_CP_CharacterCvars (const character_t *chr)
 		Com_sprintf(buf, sizeof(buf), _("Rank: %s"), _(rank->name));
 		Cvar_Set("mn_chrrank", buf);
 		Cvar_Set("mn_chrrank_img", rank->image);
+		Com_sprintf(buf, sizeof(buf), _("%s "), _(rank->name));
+		Cvar_Set("mn_chrrankprefix", buf);
 	} else {
 		Cvar_Set("mn_chrrank_img", "");
 		Cvar_Set("mn_chrrank", "");
+		Cvar_Set("mn_chrrankprefix", "");
 	}
 
 	Cvar_Set("mn_chrmis", va("%i", chr->score.assignedMissions));

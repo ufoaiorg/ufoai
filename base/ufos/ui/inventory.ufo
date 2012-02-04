@@ -166,18 +166,18 @@ window inventory
 		size "76 25"
 	}
 
-	string actorname_shadow
+	string name_and_rank_shadow
 	{
-		string	*cvar:mn_name
+		string	*cvar:mn_rank_and_name
 		pos		"27 26"
-		size	"165 20"
+		size	"265 20"
 		color	"0 0 0 1"
 	}
-	string actorname
+	string name_and_rank
 	{
-		string	*cvar:mn_name
+		string	*cvar:mn_rank_and_name
 		pos		"26 25"
-		size	"165 20"
+		size	"265 20"
 	}
 
 	// ==================
@@ -244,8 +244,13 @@ window inventory
 		onClick	{ call *node:root.hideinventory }
 	}
 
+	cvarlistener mn_name {
+	*cvar:mn_rank_and_name = ("<cvar:mn_chrrankprefix><cvar:mn_name>")
+	}
+
 	func onWindowOpened {
 		*cvar:inventory_window_open = 1
+		*cvar:mn_rank_and_name = ("<cvar:mn_chrrankprefix><cvar:mn_name>")
 		// we need the ability to hide the deco just for the MiniHUD
 		if ( *cvar:mn_minihud_enabled == 1 ) {
 			if ( *cvar:mn_minihud_deco == 0 ) { *node:root.bar_inventory_deco@invis = true }
@@ -257,6 +262,7 @@ window inventory
 
 	func onWindowClosed {
 		delete *cvar:inventory_window_open
+		delete *cvar:mn_rank_and_name
 	}
 }
 
