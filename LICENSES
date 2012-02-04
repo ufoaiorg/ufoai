@@ -2325,14 +2325,14 @@ base/models/weapons/grenl/grenl.md2 | GNU General Public License 2.0 | Lukas "Ra
 base/models/weapons/grenl/grenl.tag | GNU General Public License 2.0 or later | Martin Gerhardy
 base/models/weapons/grenl/grenl_clip.md2 | GNU General Public License 2.0 | Lukas "Rastaman" Beyeler
 base/models/weapons/grenl/grenl_clip2.md2 | GNU General Public License 2.0 | Lukas "Rastaman" Beyeler
-base/models/weapons/grenl/grenl_flechette_clip.jpg | GNU General Public License 2.0 | Lukas "Rastaman" Beyeler
 base/models/weapons/grenl/grenl_flechette_clip.md2 | GNU General Public License 2.0 | Lukas "Rastaman" Beyeler
+base/models/weapons/grenl/grenl_flechette_clip.png | GNU General Public License 2.0 | Lukas "Rastaman" Beyeler
 base/models/weapons/grenl/grenl_gm.png | GNU General Public License 2.0 or later | MCR | based on original UFO:AI content
-base/models/weapons/grenl/grenl_ic_clip.jpg | GNU General Public License 2.0 | Lukas "Rastaman" Beyeler
 base/models/weapons/grenl/grenl_ic_clip.md2 | GNU General Public License 2.0 | Lukas "Rastaman" Beyeler
+base/models/weapons/grenl/grenl_ic_clip.png | GNU General Public License 2.0 | Lukas "Rastaman" Beyeler
 base/models/weapons/grenl/grenl_nm.png | GNU General Public License 2.0 or later | MCR | based on original UFO:AI content
-base/models/weapons/grenl/grenl_plasma_clip.jpg | GNU General Public License 2.0 | Lukas "Rastaman" Beyeler
 base/models/weapons/grenl/grenl_plasma_clip.md2 | GNU General Public License 2.0 | Lukas "Rastaman" Beyeler
+base/models/weapons/grenl/grenl_plasma_clip.png | GNU General Public License 2.0 | Lukas "Rastaman" Beyeler
 base/models/weapons/incgren/incgren.md2 | GNU General Public License 2.0 | Denis (De_Nis / tdtv / Денис)
 base/models/weapons/incgren/incgren.png | GNU General Public License 2.0 | Denis (De_Nis / tdtv / Денис)
 base/models/weapons/irgoggles/irgoggles.jpg | Creative Commons Attribution-Share Alike 3.0 | Werner Höhrer (hoehrer)
