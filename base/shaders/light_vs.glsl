@@ -11,9 +11,9 @@ out_qualifier vec3 normal;
  */
 void LightVertex(void) {
 	/* Pass the interpolated normal and position along for dynamic lights.*/
-	normal = normalize(gl_NormalMatrix * Normal);
+	normal = normalize(vec3(gl_NormalMatrix * Normal));
 	point = vec3(gl_ModelViewMatrix * Vertex);
 
 	/* Pass the color through as well.*/
-	gl_FrontColor = gl_Color;
+	/* gl_FrontColor = gl_Color; */
 }

@@ -52,17 +52,16 @@ in_qualifier vec4 lightParams[R_DYNAMIC_LIGHTS];
  */
 void main(void) {
 	vec4 finalColor = vec4(0.0);
-	vec3 lightmap = vec3(0.0);
+	vec3 light = vec3(0.0);
 	/* These two should be declared in this scope for developer tools to work */
 	vec3 deluxemap = vec3(0.0);
 	vec4 normalmap = vec4(0.0);
 
 	/* use Phong lighting (ie. legacy rendering code) */
 	vec2 offset = vec2(0.0);
-	vec3 bump = vec3(1.0);
 
 	/* lightmap contains pre-computed incoming light color */
-	lightmap = texture2D(SAMPLER_LIGHTMAP, gl_TexCoord[1].st).rgb;
+	light = texture2D(SAMPLER_LIGHTMAP, gl_TexCoord[1].st).rgb;
 
 #if r_bumpmap
 	if (BUMPMAP > 0) {
@@ -76,18 +75,18 @@ void main(void) {
 
 		/* Resolve parallax offset and bump mapping.*/
 		offset = BumpTexcoord(normalmap.a);
-		bump = BumpFragment(deluxemap, normalmap.rgb);
+		light *= BumpFragment(deluxemap, normalmap.rgb);
 	}
 #endif
 
 	/* Sample the diffuse texture, honoring the parallax offset.*/
 	vec4 diffuse = texture2D(SAMPLER_DIFFUSE, gl_TexCoord[0].st + offset);
 
-	/* Factor in bump mapping.*/
-	diffuse.rgb *= bump;
-
 	/* Otherwise, add to lightmap.*/
-	finalColor = LightFragment(diffuse, lightmap);
+	light = clamp(light + LightFragment(), 0.0, 1.8);
+
+	finalColor.rgb = diffuse.rgb * light;
+	finalColor.a = diffuse.a;
 
 #if r_fog
 	/* Add fog.*/
