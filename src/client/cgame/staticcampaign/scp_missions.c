@@ -26,6 +26,7 @@
 #include "scp_missions.h"
 #include "../campaign/cp_time.h"
 #include "../campaign/cp_missions.h"
+#include "../campaign/cp_map.h"
 #include "scp_shared.h"
 #include "../../../common/binaryexpressionparser.h"
 
@@ -161,6 +162,8 @@ static staticMission_t* SCP_GetMission (setState_t *set)
 static void SCP_CampaignAddMission (setState_t *set)
 {
 	actMis_t *mis;
+	mission_t * mission;
+	const nation_t *nation;
 
 	/* add mission */
 	if (scd->numActiveMissions >= MAX_ACTMISSIONS) {
@@ -189,7 +192,7 @@ static void SCP_CampaignAddMission (setState_t *set)
 		set->event = Date_Add(ccs.date, Date_Random(minTime, set->def->frame));
 	}
 
-	mission_t * mission = CP_CreateNewMission(INTERESTCATEGORY_TERROR_ATTACK, qtrue);
+	mission = CP_CreateNewMission(INTERESTCATEGORY_TERROR_ATTACK, qtrue);
 	mission->mapDef = Com_GetMapDefinitionByID(mis->def->id);
 	if (!mission->mapDef) {
 		Com_Printf("SCP_CampaignAddMission: Could not get the mapdef '%s'\n", mis->def->id);
@@ -198,6 +201,12 @@ static void SCP_CampaignAddMission (setState_t *set)
 	}
 	Vector2Copy(mis->def->pos, mission->pos);
 	mission->posAssigned = qtrue;
+	nation = MAP_GetNation(mission->pos);
+	if (nation) {
+		Com_sprintf(mission->location, sizeof(mission->location), "%s", _(nation->name));
+	} else {
+		Com_sprintf(mission->location, sizeof(mission->location), "%s", _("No nation"));
+	}
 	CP_TerrorMissionStart(mission);
 	mission->finalDate = mis->expire;
 	mis->mission = mission;

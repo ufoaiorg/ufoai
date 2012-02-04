@@ -395,6 +395,11 @@ qboolean NAT_ScriptSanityCheck (void)
 			Com_Printf("...... city '%s' has no name\n", city->id);
 		}
 
+		if (MapIsWater(MAP_GetColor(city->pos, MAPTYPE_TERRAIN, NULL))) {
+			error++;
+			Com_Printf("...... city '%s' has a position in the water\n", city->id);
+		}
+
 		numTypes = CP_TerrorMissionAvailableUFOs(NULL, ufoTypes);
 
 		MapDef_ForeachSingleplayerCampaign(md) {

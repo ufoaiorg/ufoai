@@ -1409,6 +1409,16 @@ qboolean CP_GetRandomPosOnGeoscapeWithParameters (vec2_t pos, const linkedList_t
 	return qtrue;
 }
 
+const city_t * CP_GetCity (const char *id)
+{
+	LIST_Foreach(ccs.cities, city_t, city) {
+		if (Q_streq(city->id, id))
+			return city;
+	}
+
+	return NULL;
+}
+
 int CP_GetSalaryAdministrative (const salary_t *salary)
 {
 	int i, costs;

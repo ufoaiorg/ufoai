@@ -101,8 +101,21 @@ static void SCP_ParseMission (const char *name, const char **text)
 				break;
 			}
 
-		if (!vp->string)
-			Com_Printf("SCP_ParseMission: unknown token \"%s\" ignored (mission %s)\n", token, ms->id);
+		if (!vp->string) {
+			if (Q_streq(token, "city")) {
+				const city_t *city;
+				token = Com_EParse(text, errhead, ms->id);
+				if (text[0] == '\0')
+					return;
+				city = CP_GetCity(token);
+				if (city == NULL)
+					Com_Printf("SCP_ParseMission: unknown city \"%s\" ignored (mission %s)\n", token, ms->id);
+				else
+					Vector2Copy(city->pos, ms->pos);
+			} else {
+				Com_Printf("SCP_ParseMission: unknown token \"%s\" ignored (mission %s)\n", token, ms->id);
+			}
+		}
 
 	} while (*text);
 

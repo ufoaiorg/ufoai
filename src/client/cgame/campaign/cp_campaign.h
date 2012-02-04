@@ -614,6 +614,8 @@ void CP_UpdateCredits(int credits);
 void CP_ParseCharacterData(struct dbuffer *msg);
 qboolean CP_CheckNextStageDestination(const campaign_t* campaign, aircraft_t *ufo);
 
+const city_t * CP_GetCity(const char *id);
+
 aircraft_t* AIR_NewAircraft(base_t * base, const aircraft_t *aircraftTemplate);
 
 void CP_GetRandomPosOnGeoscape(vec2_t pos, qboolean noWater);
