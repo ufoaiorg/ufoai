@@ -619,6 +619,7 @@ static qboolean AM_CheckFire (autoMissionBattle_t *battle, autoUnit_t *currUnit,
 			battle->results->aliensSurvived--;
 			battle->results->aliensKilled++;
 			break;
+		case AUTOMISSION_TEAM_TYPE_CIVILIAN:
 			battle->results->civiliansSurvived--;
 			battle->results->civiliansKilledFriendlyFire++;
 			break;
