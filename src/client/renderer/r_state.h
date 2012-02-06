@@ -34,7 +34,6 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 
 /* vertex arrays are used for many things */
 #define GL_ARRAY_LENGTH_CHUNK 4096
-
 extern const vec2_t default_texcoords[4];
 
 /** @brief texunits maintain multitexture state */
@@ -44,7 +43,7 @@ typedef struct gltexunit_s {
 	GLint texnum;		/**< e.g 123 */
 	GLenum texenv;		/**< e.g. GL_MODULATE */
 	GLfloat *texcoord_array;
-	/* Size of the above array - it's dynamically reallocated */
+	/* Size of the array above - it's dynamically reallocated */
 	int array_size;
 } gltexunit_t;
 
@@ -91,7 +90,7 @@ typedef struct rstate_s {
 	GLfloat *next_normal_array;
 	GLfloat *next_tangent_array;
 
-	/* Size of all above arrays - it's dynamically reallocated */
+	/* Size of all arrays above - it's dynamically reallocated */
 	int array_size;
 
 	/* multitexture texunits */
@@ -99,10 +98,6 @@ typedef struct rstate_s {
 
 	/* texunit in use */
 	gltexunit_t *active_texunit;
-
-	/* lights */
-	light_t staticLights[MAX_STATIC_LIGHTS];
-	int numStaticLights;
 
 	/* framebuffer objects*/
 	r_framebuffer_t *renderBuffer;
@@ -188,9 +183,10 @@ void R_EnableShell(qboolean enable);
 void R_EnableFog(qboolean enable);
 void R_EnableDrawAsGlow(qboolean enable);
 void R_EnableGlowMap(const struct image_s *image);
-void R_EnableModelLights(const light_t **lights, int numLights, qboolean enable);
 void R_EnableSpecularMap(const struct image_s *image, qboolean enable);
 void R_EnableRoughnessMap(const struct image_s *image, qboolean enable);
+void R_SetupSpotLight(int index, const light_t *light);
+void R_DisableSpotLight(int index);
 void R_EnableAnimation(const struct mAliasMesh_s *mesh, float backlerp, qboolean enable);
 
 void R_UseMaterial (const material_t *material);

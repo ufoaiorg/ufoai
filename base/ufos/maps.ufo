@@ -922,6 +922,52 @@ mapdef frozen_small
 	}
 }
 
+/////////////////////////
+// HARBOUR RANDOM MAPS //
+/////////////////////////
+
+mapdef mm_harbour
+{
+	map			"+mm_harbour"
+	description	"_Harbour."
+	param		"am"
+	size		"small"
+	teams		4
+	multiplayer	false
+	maxaliens	16
+	campaign	false // TODO: activate once tested
+	aircraft
+	{
+		craft_drop_firebird
+		craft_drop_raptor
+		craft_drop_herakles
+	}
+
+	ufos
+	{
+		craft_ufo_supply
+		craft_ufo_scout
+		craft_ufo_fighter
+		craft_ufo_harvester
+	}
+
+	terrains
+	{
+		coast
+	}
+
+	cultures
+	{
+	}
+
+	populations
+	{
+		urban
+		suburban
+		village
+	}
+}
+
 ///////////////////////
 // HILLS RANDOM MAPS //
 ///////////////////////
@@ -1314,42 +1360,44 @@ mapdef laboratory
 
 mapdef mansion
 {
-        map                     "+mansion"
-        description     ""
-        teams              4
-        multiplayer     true
-        gametypes
-        {
+    map				"+mansion"
+    description		""
+    teams			4
+    multiplayer		true
+    gametypes
+    {
 		1on1
 		1on1on1
 		2on2
-        }
-        maxaliens       8
-        aircraft
-        {
+    }
+    maxaliens		8
+    aircraft
+    {
 		//any
-        }
+    }
 
-        ufos
-        {
-                //any
-        }
+    ufos
+    {
+	    craft_ufo_fighter
+		craft_ufo_scout
+		craft_ufo_harvester
+    }
 
-        terrains
-        {
-                coast
-        }
+    terrains
+    {
+		coast
+    }
 
-        cultures
-        {
-                western
-        }
+    cultures
+    {
+		western
+    }
 
-        populations
-        {
-                urban
+    populations
+    {
+		urban
 		village
-        }
+    }
 }
 
 //////////////////////////
@@ -2988,6 +3036,54 @@ mapdef city_train
 	ufos
 	{
 		craft_ufo_fighter
+	}
+
+	terrains
+	{
+		grass
+		tropical
+		desert
+	}
+
+	cultures
+	{
+		//any
+	}
+
+	populations
+	{
+		suburban
+		urban
+	}
+}
+
+// CORRUPTER_CRASH MAP //
+
+mapdef corrupter_crash
+{
+	map				"corrupter_crash"
+	description		"_A crashed UFO-Corrupter."
+	multiplayer		true
+	teams			2
+	campaign		false // TODO: activate once the corrupter is available in the campaign
+	gametypes {
+		1on1
+		1on1on1
+		2on2
+		2on2on2
+		coop2
+		coop3
+		coop4
+	}
+	maxaliens		12
+
+	aircraft
+	{
+	}
+
+	ufos
+	{
+		craft_ufo_corrupter
 	}
 
 	terrains

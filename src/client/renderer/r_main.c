@@ -88,6 +88,7 @@ cvar_t *r_warp;
 cvar_t *r_lights;
 cvar_t *r_dynamic_lights;
 cvar_t *r_programs;
+cvar_t *r_quality;
 /** @brief The GLSL version being used (not necessarily a supported version by the OpenGL implementation). Stored as a c-string and integer.*/
 cvar_t *r_glsl_version;
 cvar_t *r_postprocess;
@@ -341,8 +342,8 @@ void R_RenderFrame (void)
 		if (r_debug_lights->integer) {
 			int i;
 
-			for (i = 0; i < r_state.numStaticLights; i++) {
-				const light_t *l = &r_state.staticLights[i];
+			for (i = 0; i < refdef.numStaticLights; i++) {
+				const light_t *l = &refdef.staticLights[i];
 				R_AddCorona(l->origin, l->radius, l->color);
 			}
 			for (i = 0; i < refdef.numDynamicLights; i++) {
@@ -501,6 +502,11 @@ static qboolean R_CvarPrograms (cvar_t *cvar)
 
 	Cvar_SetValue(cvar->name, 0);
 	return qtrue;
+}
+
+static qboolean R_CvarQuality (cvar_t *cvar)
+{
+	return Cvar_AssertValue(cvar, 0, 2, qtrue);
 }
 
 /**
@@ -938,6 +944,8 @@ static qboolean R_InitExtensions (void)
 		qglDeleteBuffers = (DeleteBuffers_t)R_GetProcAddress("glDeleteBuffers");
 		qglBindBuffer = (BindBuffer_t)R_GetProcAddress("glBindBuffer");
 		qglBufferData = (BufferData_t)R_GetProcAddress("glBufferData");
+		glGetIntegerv(GL_MAX_ELEMENTS_VERTICES, &r_config.maxVertexBufferSize);
+		Com_Printf("using GL_ARB_vertex_buffer_object\nmax vertex buffer size: %i\n", r_config.maxVertexBufferSize);
 	}
 
 	/* glsl vertex and fragment shaders and programs */
@@ -1044,6 +1052,10 @@ static qboolean R_InitExtensions (void)
 	r_programs = Cvar_Get("r_programs", "1", CVAR_ARCHIVE | CVAR_R_PROGRAMS, "Use GLSL shaders");
 	r_programs->modified = qfalse;
 	Cvar_SetCheckFunction("r_programs", R_CvarPrograms);
+
+	r_quality = Cvar_Get("r_quality", "1", CVAR_ARCHIVE | CVAR_R_PROGRAMS, "Shader quality (0-2)");
+	r_quality->modified = qfalse;
+	Cvar_SetCheckFunction("r_quality", R_CvarQuality);
 
 	r_glsl_version = Cvar_Get("r_glsl_version", "1.10", CVAR_ARCHIVE | CVAR_R_PROGRAMS, "GLSL Version");
 	Cvar_SetCheckFunction("r_glsl_version", R_CvarGLSLVersionCheck);

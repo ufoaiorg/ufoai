@@ -13,11 +13,11 @@
 }
 // brush 1
 {
-( 448 420 66 ) ( 448 416 66 ) ( 448 416 64 ) tex_common/actorclip 0 0 0 0.5 0.5 65536 0 0
-( 480 416 4 ) ( 480 668 4 ) ( 480 668 0 ) tex_common/actorclip 0 0 0 0.5 0.5 65536 0 0
-( 448 480 62 ) ( 480 480 62 ) ( 480 480 58 ) tex_common/actorclip 0 0 0 0.5 0.5 65536 0 0
+( 448 480 64 ) ( 448 480 56 ) ( 448 552 4 ) tex_common/actorclip 0 0 0 0.5 0.5 65536 0 0
+( 480 552 4 ) ( 480 480 56 ) ( 480 480 64 ) tex_common/actorclip 0 0 0 0.5 0.5 65536 0 0
+( 480 480 64 ) ( 480 480 56 ) ( 448 480 56 ) tex_common/actorclip 0 0 0 0.5 0.5 65536 0 0
 ( 448 552 0 ) ( 480 552 0 ) ( 480 552 4 ) tex_common/actorclip 0 0 0 0.5 0.5 65536 0 0
-( 448 212 0 ) ( 320 212 0 ) ( 320 96 0 ) tex_common/actorclip 0 0 0 0.5 0.5 65536 0 0
+( 480 552 0 ) ( 448 480 56 ) ( 480 480 56 ) tex_common/actorclip 0 0 0 0.5 0.5 65536 0 0
 ( 448 552 4 ) ( 480 552 4 ) ( 480 480 64 ) tex_common/actorclip 0 0 0 0.5 0.5 65536 0 0
 }
 // brush 2
@@ -2169,12 +2169,4 @@
 ( 218 512 6 ) ( 216 512 6 ) ( 216 510 6 ) tex_common/nodraw 17 17 0 0.35 0.35 65280 128 0
 ( 214 510 52 ) ( 214 512 52 ) ( 216 512 52 ) tex_material/wood001 17 17 0 0.35 0.35 65280 0 0
 }
-}
-// entity 12
-{
-"classname" "misc_model"
-"origin" "184 480 38"
-"model" "models/animals/cow/cow.md2"
-"spawnflags" "1"
-"anim" "idle"
 }

@@ -957,7 +957,7 @@ qboolean LE_BrushModelAction (le_t * le, entity_t * ent)
 		VectorCopy(le->maxs, ent->maxs);
 
 		if (!(drawFlags & DRAW_CIRCLES))
-			break;
+			return qfalse;
 
 		/* There should be an easier way than calculating the grid coords back from the world coords */
 		z = roundf(le->mins[2] / UNIT_HEIGHT) * UNIT_HEIGHT + UNIT_HEIGHT / 8.0f;
@@ -979,7 +979,8 @@ qboolean LE_BrushModelAction (le_t * le, entity_t * ent)
 			}
 		}
 
-		break;
+		/* no other rendering entities should be added for the local entity */
+		return qfalse;
 	}
 	default:
 		break;

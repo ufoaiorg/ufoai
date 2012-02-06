@@ -159,6 +159,7 @@ void R_AnimChange (animState_t * as, const model_t * mod, const char *name)
 		as->change = qtrue;
 	} else {
 		/* next animation */
+		as->ladd = LOOPNEXT(as->lcur);
 		if (anim->time < as->time)
 			as->time = anim->time;
 		/* don't change to the same animation */
@@ -217,9 +218,7 @@ void R_AnimRun (animState_t * as, const model_t * mod, int msec)
 		}
 	}
 
-	/* condition check to avoid rapid "flickering" between last two frames with certain animations. */
-	if (as->lcur != as->ladd)
-		as->backlerp = 1.0 - (float) as->dt / as->time;
+	as->backlerp = 1.0 - (float) as->dt / as->time;
 }
 
 /**

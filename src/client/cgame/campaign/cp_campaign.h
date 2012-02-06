@@ -121,14 +121,14 @@ struct uiNode_s; /**< @todo remove this once the uiNode_t usage is cleaned up */
 /**
  * @brief The length of a single mission spawn cycle
  */
-#define DELAY_BETWEEN_MISSION_SPAWNING 		4
+#define DELAY_BETWEEN_MISSION_SPAWNING 		8
 
 /**
  * @brief The minimum and maximum amount of missions per mission cycle.
  * @note some of the missions can be non-occurrence missions.
  */
 #define MINIMUM_MISSIONS_PER_CYCLE 			5
-#define MAXIMUM_MISSIONS_PER_CYCLE 			40
+#define MAXIMUM_MISSIONS_PER_CYCLE 			25
 
 /**
  * @brief The probability that any new alien mission will be a non-occurrence mission.
@@ -282,6 +282,7 @@ typedef struct battleParam_s {
 
 /** @brief Structure with mission info needed to create results summary at menu won. */
 typedef struct missionResults_s {
+	const mission_t *mission;
 	qboolean won;
 	qboolean recovery;		/**< @c true if player secured a UFO (landed or crashed). */
 	qboolean crashsite;		/**< @c true if secured UFO was crashed one. */
@@ -363,6 +364,9 @@ typedef enum mapAction_s {
 	MA_BASEATTACK,			/**< base attacking */
 	MA_UFORADAR				/**< ufos are in our radar */
 } mapAction_t;
+
+typedef void (*missionSpawnFunction_t) (void);
+typedef void (*missionResultFunction_t) (const missionResults_t *results);
 
 /**
  * @brief client campaign structure
@@ -552,6 +556,9 @@ typedef struct ccs_s {
 
 	aircraft_t aircraftTemplates[MAX_AIRCRAFT];		/**< Available aircraft types/templates/samples. */
 	int numAircraftTemplates;		/**< Number of aircraft templates. */
+
+	missionSpawnFunction_t missionSpawnCallback;
+	missionResultFunction_t missionResultCallback;
 } ccs_t;
 
 typedef struct {
@@ -606,6 +613,8 @@ void CP_UpdateCredits(int credits);
 /* Other functions */
 void CP_ParseCharacterData(struct dbuffer *msg);
 qboolean CP_CheckNextStageDestination(const campaign_t* campaign, aircraft_t *ufo);
+
+const city_t * CP_GetCity(const char *id);
 
 aircraft_t* AIR_NewAircraft(base_t * base, const aircraft_t *aircraftTemplate);
 

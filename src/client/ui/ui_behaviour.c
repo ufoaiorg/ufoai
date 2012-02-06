@@ -99,7 +99,7 @@ const value_t *UI_GetPropertyFromBehaviour (const uiBehaviour_t *behaviour, cons
 
 		while (min != max) {
 			const int mid = (min + max) >> 1;
-			const int diff = strcasecmp(behaviour->localProperties[mid]->string, name);
+			const int diff = Q_strcasecmp(behaviour->localProperties[mid]->string, name);
 			assert(mid < max);
 			assert(mid >= min);
 
@@ -205,10 +205,10 @@ void UI_InitializeNodeBehaviour (uiBehaviour_t* behaviour)
 			const value_t** current;
 			/* search the next element after previous */
 			for (current = oldmemory; *current != NULL; current++) {
-				if (previous != NULL && strcasecmp(previous->string, (*current)->string) >= 0) {
+				if (previous != NULL && Q_strcasecmp(previous->string, (*current)->string) >= 0) {
 					continue;
 				}
-				if (better == NULL || strcasecmp(better->string, (*current)->string) >= 0) {
+				if (better == NULL || Q_strcasecmp(better->string, (*current)->string) >= 0) {
 					better = *current;
 				}
 			}

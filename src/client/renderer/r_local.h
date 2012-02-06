@@ -85,6 +85,7 @@ extern cvar_t *r_maxlightmap;
 extern cvar_t *r_warp;
 extern cvar_t *r_lights;
 extern cvar_t *r_programs;
+extern cvar_t *r_quality;
 extern cvar_t *r_glsl_version;
 extern cvar_t *r_postprocess;
 extern cvar_t *r_shownormals;
@@ -170,6 +171,7 @@ typedef struct {
 	int maxTextureUnits;
 	int maxTextureCoords;
 	int maxVertexAttribs;
+	int maxVertexBufferSize;
 	int maxLights;
 	int maxDrawBuffers;
 	int maxRenderbufferSize;

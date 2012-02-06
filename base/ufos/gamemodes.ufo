@@ -16,6 +16,11 @@ cgame campaigns {
 	name "_Campaign"
 }
 
+cgame staticcampaigns {
+	window	"staticcampaigns"
+	name "_Static Campaign"
+}
+
 cgame skirmish {
 	window	"skirmish"
 	name "_Skirmish"

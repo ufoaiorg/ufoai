@@ -23,17 +23,18 @@ uniform int ROUGHMAP;
 uniform int SPECULARMAP;
 uniform int IS_A_MODEL;
 uniform float GLOWSCALE;
+uniform vec3 AMBIENT;
 
 /** Diffuse texture.*/
-uniform sampler2D SAMPLER0;
+uniform sampler2D SAMPLER_DIFFUSE;
 /** Specularmap.*/
-uniform sampler2D SAMPLER1;
+uniform sampler2D SAMPLER_SPECULAR;
 /** Roughnessmap.*/
-uniform sampler2D SAMPLER2;
+uniform sampler2D SAMPLER_ROUGHMAP;
 /** Normalmap.*/
-uniform sampler2D SAMPLER3;
+uniform sampler2D SAMPLER_NORMALMAP;
 /** Glowmap.*/
-uniform sampler2D SAMPLER4;
+uniform sampler2D SAMPLER_GLOWMAP;
 
 const vec3 two = vec3(2.0);
 const vec3 negHalf = vec3(-0.5);
@@ -43,8 +44,6 @@ const vec3 negHalf = vec3(-0.5);
 in_qualifier vec4 lightDirs[R_DYNAMIC_LIGHTS];
 in_qualifier vec4 lightParams[R_DYNAMIC_LIGHTS];
 #endif
-
-in_qualifier vec3 ambientLight;
 
 #include "bump_fs.glsl"
 #include "fog_fs.glsl"
@@ -81,7 +80,7 @@ void main(void) {
 #endif
 
 #if r_normalmap
-	vec3 n = normalize(2.0 * (texture2D(SAMPLER3, gl_TexCoord[0].st).rgb - 0.5));
+	vec3 n = normalize(2.0 * (texture2D(SAMPLER_NORMALMAP, gl_TexCoord[0].st).rgb - 0.5));
 	finalColor.rgb = finalColor.rgb * 0.01 + (1.0 - dot(n, normalize(lightDirs[0].xyz))) * 0.5 * vec3(1.0);
 	finalColor.a = 1.0;
 #endif
@@ -89,13 +88,17 @@ void main(void) {
 #if r_postprocess
 	gl_FragData[0] = finalColor;
 	if (GLOWSCALE > 0.01) {
-		vec4 glowcolor = texture2D(SAMPLER4, gl_TexCoord[0].st);
+		vec4 glowcolor = texture2D(SAMPLER_GLOWMAP, gl_TexCoord[0].st);
 		gl_FragData[1].rgb = glowcolor.rgb * glowcolor.a * GLOWSCALE;
 		gl_FragData[1].a = 1.0;
 	} else {
-		gl_FragData[1] = vec4(0,0,0,0);
+		gl_FragData[1] = vec4(0,0,0,1);
 	}
 #else
+	if (GLOWSCALE > 0.01) {
+		vec4 glowcolor = texture2D(SAMPLER_GLOWMAP, gl_TexCoord[0].st);
+		finalColor.rgb += glowcolor.rgb * glowcolor.a * GLOWSCALE;
+	}
 	gl_FragColor = finalColor;
 #endif
 }

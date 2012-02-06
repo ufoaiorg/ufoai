@@ -1,9 +1,3 @@
-msgid "Autocannon Module"
-msgstr "Autokanon Module"
-
-msgid "mail_mission_summary"
-msgstr "bericht_missie_samenvatting <NOGDOEN>"
-
 # #-#-#-#-#  ufoai.c1.po (PACKAGE VERSION)  #-#-#-#-#
 # SOME DESCRIPTIVE TITLE.
 # Copyright (C) YEAR The UFO:AI team
@@ -15,8 +9,8 @@ msgstr ""
 "Project-Id-Version: UFO Alien Invasion\n"
 "Report-Msgid-Bugs-To: tlh2000@users.sourceforge.net\n"
 "POT-Creation-Date: 2011-11-04 17:13+0700\n"
-"PO-Revision-Date: 2010-10-10 21:37+0100\n"
-"Last-Translator: Peter Verhage <pverha10@cis.hzeeland.nl>\n"
+"PO-Revision-Date: 2012-01-23 13:04+0200\n"
+"Last-Translator: Sander van Grieken <sander@outrightsolutions.nl>\n"
 "Language-Team: Dutch <pverha10@cis.hzeeland.nl>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
@@ -26,23 +20,29 @@ msgstr ""
 "X-Poedit-Language: Dutch\n"
 "X-Poedit-Basepath: ../\n"
 
+msgid "Autocannon Module"
+msgstr "Autokanon Module"
+
+msgid "mail_mission_summary"
+msgstr "bericht_missie_samenvatting <NOGDOEN>"
+
 msgid "Alien Base Discovered -- %s"
 msgstr "Buitenaardse Basis Ontdekt -- %s"
 
 msgid "Mediocre"
-msgstr "Middelmatig"
+msgstr "Slecht"
 
 msgid "mail_alien_base_discovered"
 msgstr "Meneer, onze mensen hebben de locatie gevonden van een grote buitenaardse installatie op aarde in het grondgebied dat hoort bij %s. Deze installatie is een serieuze bedreiging voor PHALANX en de mensheid in het algemeen. We moeten het zo spoedig mogelijk vernietigen."
 
 msgid "Competent"
-msgstr "Vrij Goed"
+msgstr "Redelijk"
 
 msgid "Lost Radar Tracking -- %s"
 msgstr "Radar Signaal Verloren -- %s"
 
 msgid "Very Good"
-msgstr "Erg Goed"
+msgstr "Prima"
 
 msgid "mail_lost_radar_tracking"
 msgstr "bericht_radar_signaal_verloren <NOGDOEN>"
@@ -63,9 +63,8 @@ msgid "You cannot reload this unknown item.\n"
 msgstr "U kunt dit onbekende onderdeel niet herladen.\n"
 
 msgid "mail_from_col_falkland"
-msgstr "Col. Ingrid Falkland, Spionage Afdeling, PHALANX, Atlantische Operaties Commando"
+msgstr "Kol. Ingrid Falkland, Inlichtingen Afdeling, PHALANX, Atlantische Operaties Commando"
 
-#, fuzzy
 msgid "Toggle to next actor"
 msgstr "Wissel naar de volgende soldaat"
 
@@ -91,7 +90,6 @@ msgstr "Bevestig de huidige actie"
 msgid "mail_ufo_shot_down"
 msgstr "bericht_ufo_neergeschoten <NOGDOEN>"
 
-#, fuzzy
 msgid "Toggle camera to the next alien."
 msgstr "Wissel naar de volgende buitenaardse"
 
@@ -105,7 +103,7 @@ msgid "mail_alien_activity_reported"
 msgstr ""
 "Goedemorgen, Meneer.\n"
 "\n"
-"We hebben bevestigde signaleringen van levende buitenaardsen in %s. Burgers zijn in gevaar; Ik stel voor dat we er direct troepen naartoe sturen. Veel geluk en goede jacht.\n"
+"We hebben levende buitenaardsen gesignaleerd in %s. Burgers zijn in gevaar; Ik stel voor dat we er direct troepen naartoe sturen. Veel geluk en goede jacht.\n"
 "\n"
 "Met vriendelijke groeten,\n"
 "\n"
@@ -129,7 +127,7 @@ msgid "New Aircraft Arrived -- %s"
 msgstr "Nieuw Vliegtuig Aangekomen -- %s"
 
 msgid "Reserve TUs for firing/using."
-msgstr "Reserveer TE's voor vuren/gebruiken."
+msgstr "Reserveer TE's voor vuren/gebruik."
 
 msgid "mail_new_aircraft_arrived"
 msgstr "bericht_nieuw_vliegtuig_aangekomen <NOGDOEN>"
@@ -140,7 +138,7 @@ msgstr "Geen TE's over na het schot."
 msgid "Aircraft Lost Target -- %s"
 msgstr "Vliegtuig Heeft Het Doel Verloren -- %s"
 
-#, fuzzy, c-format
+#, c-format
 msgid "Shots: %i"
 msgstr "Schoten: %i"
 
@@ -150,18 +148,14 @@ msgstr ""
 "\n"
 "-- LUCHTCOM"
 
-#, fuzzy
 msgid "Weapon cannot be reloaded."
-msgstr ""
-"Dit wapen kan niet worden afgevuurd\n"
-"enkelhandig.\n"
+msgstr "Dit wapen kan niet worden herladen."
 
 msgid "Aircraft Ready -- %s"
 msgstr "Vliegtuig Klaar -- %s"
 
-#, fuzzy
 msgid "Not enough TUs for reloading weapon."
-msgstr "Onvoldoende TE's om op te staan."
+msgstr "Onvoldoende TE's om wapen te herladen."
 
 msgid "mail_aircraft_ready"
 msgstr ""
@@ -200,7 +194,7 @@ msgstr "Onvoldoende TE's over om te reserveren voor sluipen/opstaan."
 
 msgid "mail_aircraft_landed"
 msgstr ""
-"Overste, %s is geland op %s. Het wordt nu %s. Geschatte werktijd voor dit vliegtuig voordat ze weer kan opsteigen is %s uur.\n"
+"Overste, %s is geland op %s. Het wordt nu %s. Geschatte werktijd voor dit vliegtuig voordat ze weer kan opstijgen is %s uur.\n"
 "\n"
 "-- LUCHTCOM"
 
@@ -240,14 +234,14 @@ msgid ""
 "Morale  %i\n"
 "%s %i (%i TU left)\n"
 msgstr ""
-"Moraal  %i\n"
+"Moreell  %i\n"
 "%s %i (%i TE over)\n"
 
 msgid "1on1on1"
 msgstr "1 tegen 1 tegen 1"
 
 msgid "Currently panics!\n"
-msgstr "Is nu panisch!\n"
+msgstr "Is flink in paniek!\n"
 
 msgid "2on2"
 msgstr "2 tegen 2"
@@ -262,8 +256,8 @@ msgid ""
 "This weapon cannot be fired\n"
 "one handed.\n"
 msgstr ""
-"Dit wapen kan niet worden afgevuurd\n"
-"enkelhandig.\n"
+"Dit wapen kan niet enkelhandig\n"
+"worden afgevuurd\n"
 
 msgid "3on3"
 msgstr "3 tegen 3"
@@ -285,13 +279,13 @@ msgid "4on4"
 msgstr "4 tegen 4"
 
 msgid "Reload the weapon in the soldiers right hand"
-msgstr "Herlaadt het wapen in de rechterhand van de soldaat"
+msgstr "Herlaad het wapen in de rechterhand van de soldaat"
 
 msgid "4on4on4"
 msgstr "4 tegen 4 tegen 4"
 
 msgid "Toggle reaction fire"
-msgstr "Wissel tussen reactievuren"
+msgstr "Wissel reactievuur"
 
 msgid "Coop 2 players"
 msgstr "2 Spelers samen"
@@ -304,14 +298,13 @@ msgid "Coop 3 players"
 msgstr "3 Spelers samen"
 
 msgid "loading models..."
-msgstr "laadt modellen..."
+msgstr "laden modellen..."
 
 msgid "Coop 4 players"
 msgstr "4 Spelers samen"
 
-#, fuzzy
 msgid "It is not your turn!"
-msgstr "Dit is niet uw ronde\n"
+msgstr "Het is niet uw ronde!"
 
 msgid "Radar Tower"
 msgstr "Radar Toren"
@@ -321,7 +314,7 @@ msgid "Enemy spotted: %s!"
 msgstr "Vijand gesignaleerd: %s!"
 
 msgid "The radar tower is an unmanned, expendable installation that can be placed anywhere in the world to boost our detection range. It is cheap to build and highly useful, but its camouflage is not very effective. Alien craft may detect the active scanning and attempt to destroy the tower once they find it. It is recommended that radar towers be protected with SAM sites."
-msgstr "De radartoren is een onbemande, vervangbare installatie die overal geplaatst kunnen worden in de wereld om ons detectiebereik te vergroten. Het is goedkoop om te bouwen en zeer nuttig, maar de camouflage is niet erg effectief. Buitenaards ruimtetuig kan detecteren de actieve scannen en poging om de toren te vernietigen zodra ze het vinden. Het wordt aanbevolen dat de radar torens worden beschermd met SAM-sites."
+msgstr "De Radar Toren is een onbemande, vervangbare installatie die overal geplaatst kunnen worden in de wereld om ons detectiebereik te vergroten. Het is goedkoop om te bouwen en zeer nuttig, maar de camouflage is niet erg effectief. Buitenaards ruimtetuig kan de scan detecteren en pogen de toren te vernietigen zodra ze het vinden. Het wordt aangeraden dat de radar torens worden beschermd met Luchtafweergeschut."
 
 msgid "Civilian spotted!\n"
 msgstr "Burger gesignaleerd!\n"
@@ -333,9 +326,8 @@ msgstr "UFO Opslag"
 msgid "%s was stunned\n"
 msgstr "%s werd verdoofd\n"
 
-#, fuzzy
 msgid "The UFO Yard is a camouflaged storage field for captured UFOs. It can be placed anywhere in the world to store captured UFOs for dismantling and research, and can transfer UFOs to other Yards. UFOs stored in a Yard can be researched and/or dismantled from any PHALANX base with appropriate facilities, but these activities proceed more slowly the further away the UFO Yard is from the base."
-msgstr "De UFO Yard is een gecamoufleerd opslag veld voor gevangen UFO's. Het kan overal geplaatst worden in de wereld die gevangen UFO's voor demontage en onderzoek op te slaan, en kan UFO's overbrengen naar andere werven. UFO's worden opgeslagen in een Yard kunnen worden onderzocht en / of gedemonteerd van een falanx voet met de nodige voorzieningen, maar deze activiteiten gaat langzamer hoe verder weg de UFO Yard is vanaf de basis."
+msgstr "De UFO Werf is een gecamoufleerd opslag veld voor veroverde UFO's. Het kan overal in de wereld geplaatst worden om veroverde UFO's voor demontage en onderzoek op te slaan, en kan UFO's overbrengen naar andere werven. UFO's worden opgeslagen in een Werf kunnen worden onderzocht en/of gedemonteerd van een PHALANX basis met de nodige voorzieningen, maar deze activiteiten gaan langzamer hoe verder weg de UFO Werf van de basis is."
 
 msgid "A civilian was stunned.\n"
 msgstr "Een burger werd verdoofd.\n"
@@ -347,7 +339,7 @@ msgid "An alien was stunned.\n"
 msgstr "Een buitenaardse werd verdoofd.\n"
 
 msgid "The SAM site is an unmanned, expendable installation that can be placed anywhere in the world to automatically engage detected UFOs with surface-to-air missiles. It is cheap to build and highly useful, but its camouflage is not very effective. Alien craft may detect the missile launches and attempt to destroy the site once they find it. The SAM site is sturdy but will succumb to repeated bombing. Missile reloads are delivered free to our sites by UN forces."
-msgstr "De SAM site is een onbemande, vervangbare installatie die overal geplaatst kan worden in de wereld om automatisch gedetecteerde UFO's aan te vallen met oppervlakte-naar-lucht raketten. Het is goedkoop om te bouwen en zeer nuttig, maar de camouflage is niet erg effectief. Buitenaardse voertuigen detecteren de raketlanceringen en doen een poging om de site te vernietigen zodra ze deze vinden. De SAM site is stevig, maar zal bezwijken aan herhaalde bombardementen. Raketten worden gratis door VN-troepen geleverd aan onze sites."
+msgstr "Het Luchtafweergeschut is een onbemande, vervangbare installatie die overal geplaatst kan worden in de wereld om automatisch gedetecteerde UFO's aan te vallen met luchtdoel raketten. Het is goedkoop om te bouwen en zeer nuttig, maar de camouflage is niet erg effectief. Buitenaardse voertuigen detecteren de raketlanceringen en doen een poging om de site te vernietigen zodra ze deze vinden. Het Luchtafweergeschut is stevig, maar zal bezwijken onder herhaalde bombardementen. Raketten worden gratis door VN-troepen geleverd aan onze sites."
 
 msgid "A soldier was stunned.\n"
 msgstr "Een soldaat werd verdoofd.\n"
@@ -490,7 +482,7 @@ msgid "No operational hangars at that base."
 msgstr "Geen werkende hangars in die basis."
 
 msgid "Ukrainian"
-msgstr "Ukraïns"
+msgstr "Oekraïens"
 
 msgid "Insufficient free crew quarter space at that base."
 msgstr "Onvoldoende vrije verblijfruimte in die basis."
@@ -504,13 +496,12 @@ msgstr "Die basis ligt voorbij het bereik van dit vliegtuig."
 msgid "Chinese"
 msgstr "Chinees"
 
-#, fuzzy, c-format
+#, c-format
 msgid "Craft %s has refueled at %s."
-msgstr "Vliegtuig %s heeft bijgetankt op basis %s."
+msgstr "Vliegtuig %s is volgetankt op %s."
 
-#, fuzzy
 msgid "Traditional Chinese"
-msgstr "Verdere Dank Aan"
+msgstr "Traditioneel Chinees"
 
 msgid "Assign one or more soldiers to this aircraft first."
 msgstr "Wijs eerst één of meerdere soldaten toe aan dit vliegtuig."
@@ -518,9 +509,9 @@ msgstr "Wijs eerst één of meerdere soldaten toe aan dit vliegtuig."
 msgid "Bulgarian"
 msgstr "Bulgaars"
 
-#, fuzzy, c-format
+#, c-format
 msgid "Craft %s has not enough fuel to intercept UFO: fly back to %s."
-msgstr "Vliegtuig %s heeft bijgetankt op basis %s."
+msgstr "Vliegtuig %s heeft niet genoeg brandstof om UFO te onderscheppen: vlieg terug naar %s."
 
 msgid "Norwegian"
 msgstr "Noorweegs"
@@ -534,9 +525,8 @@ msgstr ""
 "\n"
 "Vliegtuig kan niet worden gestart.\n"
 
-#, fuzzy
 msgid "Turkish"
-msgstr "Tunis"
+msgstr "Turks"
 
 #, c-format
 msgid "Speed:\t%i km/h\n"
@@ -549,17 +539,15 @@ msgstr "Geen Taal"
 msgid "Operational range:\t%i km\n"
 msgstr "Werkzaam bereik:\t%i km\n"
 
-#, fuzzy
 msgid "A suburb that has received a visit from a Harvester."
-msgstr "Een Afrikaanse buitenwijk die bezocht is door een Oogster."
+msgstr "Een buitenwijk die bezocht is door een Oogster."
 
 #, c-format
 msgid "Armour:\t%i on 1\n"
 msgstr "Pantser:\t%i van 1\n"
 
-#, fuzzy
 msgid "A suburb that has been visited by an UFO."
-msgstr "Een Afrikaanse buitenwijk die bezocht is door een Oogster."
+msgstr "Een buitenwijk die bezocht is door een UFO."
 
 #, c-format
 msgid "A UFO is shooting at %s"
@@ -577,18 +565,17 @@ msgstr "Een kleine UFO is neergestort in een mijngebied."
 msgid "You've lost the battle"
 msgstr "U hebt de slag verloren"
 
-#, fuzzy
 msgid "Some houses in the desert."
-msgstr "Enkele huizen in de woestijn"
+msgstr "Enkele huizen in de woestijn."
 
 msgid "You cannot process aliens yet. Alien Containment not ready in this base."
 msgstr "U kunt nog geen buitenaardsen verwerken. Buitenaardsen Quarantaine nog niet klaar in deze basis."
 
 msgid "An alien Harvester has crashed in the wastelands."
-msgstr "Een buitenaardse Oogster is neergestort in de woestenij."
+msgstr "Een buitenaardse Oogster is neergestort in de woesternij."
 
 msgid "You don't have enough space in Alien Containment. Some aliens got killed."
-msgstr "U heeft onvoldoende ruimte in de Buitenaardsen Quarantaine. Enkele buitenaardsen zijn doodgegaan."
+msgstr "U heeft onvoldoende ruimte in de Buitenaardsen Quarantaine. Enkele buitenaardsen zijn de pijp uitgegaan."
 
 msgid "A farm in a rural area. Lots of land to cover, but few obstacles to impair line of sight."
 msgstr "Een boerderij in een plattelandsgebied. Veel land om te bestrijken, maar weinig obstakels om het zicht te beperken."
@@ -603,16 +590,14 @@ msgid "Free slot"
 msgstr "Vrij vak"
 
 msgid "Aliens are up to no good in this sparsely populated forest region."
-msgstr "De buitenaardsen hebben geen goede bedoelingen in dit dunbevolkte bosgebied."
+msgstr "De buitenaardsen hebben snode plannen in dit dunbevolkte bosgebied."
 
 msgid "You've won the battle"
 msgstr "U hebt de slag gewonnen"
 
-#, fuzzy
 msgid "UFO crashed in this sparsely populated forest region."
-msgstr "De buitenaardsen hebben geen goede bedoelingen in dit dunbevolkte bosgebied."
+msgstr "UFO neergestort in dit dunbevolkte bosgebied."
 
-#, fuzzy
 msgid "Collected alien bodies"
 msgstr "Verzamelde dode buitenaardse lichamen"
 
@@ -638,9 +623,8 @@ msgstr "Uit"
 msgid "Industrial theme."
 msgstr "Industrieel thema."
 
-#, fuzzy
 msgid "You must build next to existing buildings."
-msgstr "Ga naar inkoop/verkoop menu zonder het gebouw te vernietigen"
+msgstr "U moet naast bestaande gebouwen bouwen."
 
 msgid "A classic eastern suburban area."
 msgstr "Een klassieke oosterse buitenwijk."
@@ -652,7 +636,7 @@ msgstr[0] "%i Dag om te bouwen\n"
 msgstr[1] "%i Dagen om te bouwen\n"
 
 msgid "A laboratory where they examined found UFO wreck tiles."
-msgstr "Een laboratorium, waar ze teruggevonden vergane UFO tegels onderzochten."
+msgstr "Een laboratorium waar ze gevonden UFO wrakstukken onderzochten."
 
 #, c-format
 msgid "Needs:\t%s\n"
@@ -664,18 +648,16 @@ msgstr "Een buitenwijk van een oriëntaals gebied."
 msgid "No aircraft in this base - You first have to purchase or transfer an aircraft\n"
 msgstr "Geen vliegtuig in deze basis - U moet eerst een vliegtuig kopen of overbrengen\n"
 
-#, fuzzy
 msgid "Crashed UFO in oriental suburban district."
-msgstr "Een behoorlijk ouderwetse buitenwijk."
+msgstr "Neergestorte UFO in een oriëntaalse buitenwijk."
 
-#, fuzzy
 msgid "Antimatter (current/max):"
-msgstr "Antimaterie Opslag"
+msgstr "Antimaterie (huidig/max)"
 
 msgid "A cleared stretch of land in the middle of the jungle."
 msgstr "Een ontgonnen stuk land in het midden van het oerwoud."
 
-#, fuzzy, c-format
+#, c-format
 msgid "Construction of %s building finished in %s."
 msgstr "Bouw van %s gebouw voltooid in basis %s."
 
@@ -687,23 +669,21 @@ msgid "By selling %s you gathered %i credits."
 msgstr "Door de verkoop van %s heeft u %i,- geïncasseerd."
 
 msgid "UFO Crashsite."
-msgstr "De plaats waar een UFO neergestort is."
+msgstr "Plaats waar een UFO neergestort is."
 
-#, fuzzy, c-format
+#, c-format
 msgid "Not enough storage space in %s. %s"
 msgstr "Onvoldoende opslagruimte in basis %s. %s"
 
-#, fuzzy
 msgid "A peaceful neighbourhood on the outskirts of a centre of population."
 msgstr "Een vredige buurt aan de rand van een bevolkt gebied."
 
-#, fuzzy, c-format
+#, c-format
 msgid "%s does not have Antimatter Storage Facility. %i units of antimatter got removed."
 msgstr "Basis %s heeft geen Antimaterie Opslag Faciliteit. %i eenheden Antimaterie verwijderd."
 
-#, fuzzy
 msgid "Cemetery terror mission."
-msgstr "Wildernis terreur missie."
+msgstr "Kerkhof terreur missie."
 
 #, c-format
 msgid "Base #%i"
@@ -716,28 +696,26 @@ msgid "You've reached the base limit."
 msgstr "U hebt uw basis limiet bereikt."
 
 msgid "A place where people come to relax and mingle."
-msgstr "Een plaats waar mensen komen om te ontspannen en samen te zijn."
+msgstr "Een plaats waar mensen komen om te ontspannen en te flikflooien."
 
 #, c-format
 msgid "A new base has been built: %s"
-msgstr "Een nieuwe bais is gebouwd: %s"
+msgstr "Een nieuwe basis is gebouwd: %s"
 
-#, fuzzy
 msgid "An office complex under construction."
 msgstr "Een kantorencomplex in aanbouw."
 
 msgid "Not enough credits to set up a new base."
-msgstr "Onvoldoende geld om een nieuwe basis te maken."
+msgstr "Onvoldoende krediet om een nieuwe basis te maken."
 
 msgid "A tropical area where several suspected criminals have made their homes."
-msgstr "Een tropisch gebied, waar een aantal verdachte criminelen een huis hebben."
+msgstr "Een tropisch gebied, waar een aantal vermoedde criminelen hun thuis hebben."
 
 msgid "Buy or produce at least one aircraft first."
-msgstr "Koop of produceer eerst minimaal 1 vliegtuig."
+msgstr "Koop of produceer eerst minimaal één vliegtuig."
 
-#, fuzzy
 msgid "A small estate in the mountains."
-msgstr "Een klein kantoor in een bergachtig gebied."
+msgstr "Een klein landhuis in een bergachtig gebied."
 
 #, fuzzy
 msgid "Buy/Sell equipment, aircraft and UGV"
@@ -768,7 +746,7 @@ msgid "Workshop"
 msgstr "Werkplaats"
 
 msgid "A shelter that was built to house people in times of major disasters. Some internal blast doors may have been closed."
-msgstr "Een opvangplaats die gebouwd was om mensen een onderkomen te bieden in geval van grote rampen. Sommige gepantserde deuren kunnen gesloten zijn."
+msgstr "Een opvangplaats dat gebouwd is om mensen een onderkomen te bieden in geval van grote rampen. Sommige gepantserde deuren kunnen gesloten zijn."
 
 msgid "Living Quarters"
 msgstr "Verblijfruimten"
@@ -785,14 +763,12 @@ msgstr "Een stadion gebruikt voor diverse recreatieve activiteiten."
 msgid "Hospital"
 msgstr "Ziekenboeg"
 
-#, fuzzy
 msgid "An office complex in the centre of town."
-msgstr "Een kantorencomplex in het centrum van een stad."
+msgstr "Een kantorencomplex in het stadscentrum."
 
 msgid "Destroy Entrance"
 msgstr "Vernietig Ingang"
 
-#, fuzzy
 msgid "An industrial area, used for loading and unloading goods."
 msgstr "Een industrieel gebied, gebruikt voor het laden en lossen van goederen."
 
@@ -800,13 +776,13 @@ msgid "You can't destroy this building! It is the only connection to other build
 msgstr ""
 
 msgid "A small bungalow."
-msgstr ""
+msgstr "Een kleine bungalow."
 
 msgid ""
 "If you destroy this hangar, you will also destroy the aircraft inside.\n"
 "Are you sure you want to destroy this building?"
 msgstr ""
-"Als u deze hangar vernietigd, zult u ook het vliegtuig erin vernietigen.\n"
+"Als u deze hangar vernietigt, zult u ook het vliegtuig aldaar vernietigen.\n"
 "Weet u zeker dat u dit gebouw wilt vernietigen?"
 
 msgid "A bunker used in a previous conflict."
@@ -815,9 +791,8 @@ msgstr "Een bunker uit een vorig conflict."
 msgid "Go to hangar without destroying building"
 msgstr "Ga naar de hangar zonder het gebouw te vernietigen"
 
-#, fuzzy
 msgid "A small industry city area."
-msgstr "Een klein industrieel gebied."
+msgstr "Een klein industrieel stadsgebied."
 
 msgid "Destroy the building"
 msgstr "Vernietig het gebouw"
@@ -828,24 +803,22 @@ msgstr "Een hydroelektrische dam, die wordt bedreigd door buitenaardse aanvaller
 msgid "Go to transfer menu without destroying the building"
 msgstr "Ga naar het overdrachtmenu zonder het gebouw te vernietigen"
 
-#, fuzzy
 msgid "A small village."
-msgstr "Een klein dorp in Engeland."
+msgstr "Een klein dorp."
 
 msgid ""
 "If you destroy this Quarters, every employee inside will be killed.\n"
 "Are you sure you want to destroy this building?"
 msgstr ""
-"Als u deze verblijfruimte vernietigd, zal elke medewerker erin worden gedood.\n"
+"Als u deze verblijfruimte vernietigt, zal elke medewerker aldaar worden gedood.\n"
 "Weet u zeker dat u dit gebouw wilt vernietigen?"
 
 msgid "An estate owned by rich and influential people."
-msgstr "Een landgoed van rijke invloedrijke mensen."
+msgstr "Een landgoed van rijke en invloedrijke mensen."
 
 msgid "Go to hiring menu without destroying building"
-msgstr "Ga naar het inhuur menu onder het gebouw te vernietigen"
+msgstr "Ga naar het inhuur menu zonder het gebouw te vernietigen"
 
-#, fuzzy
 msgid "An excavation site that has fallen under alien attack."
 msgstr "Een opgravingsgebied dat aangevallen wordt door buitenaardsen."
 
@@ -853,7 +826,7 @@ msgid ""
 "If you destroy this Storage, every items inside will be destroyed.\n"
 "Are you sure you want to destroy this building?"
 msgstr ""
-"Als u deze Opslag vernietigd, zullen alle onderdelen die erin zitten worden vernietigd.\n"
+"Als u deze Opslag vernietigt, zullen alle onderdelen die erin zitten ook worden vernietigd.\n"
 "Weet u zeker dat u dit gebouw wilt vernietigen?"
 
 msgid "A ferry."
@@ -863,7 +836,7 @@ msgid "Go to buy/sell menu without destroying building"
 msgstr "Ga naar inkoop/verkoop menu zonder het gebouw te vernietigen"
 
 msgid "A fuel depot the aliens try to destroy."
-msgstr "Een brandstof opslag die de buitenaardsen willen vernietigen."
+msgstr "Een brandstof opslag die de buitenaardsen proberen te vernietigen."
 
 msgid "Are you sure you want to destroy this building?"
 msgstr "Weet u zeker dat u dit gebouw wilt vernietigen?"
@@ -926,16 +899,15 @@ msgstr "Een behoorlijk ouderwetse buitenwijk."
 msgid "%s\t\t\t\t\t\t%d\t\t\t\t%1.2f%%\n"
 msgstr "%s\t\t\t\t\t\t%d\t\t\t\t%1.2f%%\n"
 
-#, fuzzy
 msgid "A crashed Scout UFO."
-msgstr "Een neergestorte UFO Scout"
+msgstr "Een neergestorte Verkenner UFO."
 
-#, fuzzy, c-format
+#, c-format
 msgid "%i: empty"
-msgstr "Vak %i:\tleeg"
+msgstr "%i: leeg"
 
 msgid "A subway station in a suburban part of town."
-msgstr "Een metro station in een buitenwijk van een stad."
+msgstr "Een metrostation in een buitenwijk van een stad."
 
 msgid "Installing"
 msgstr "Installeert"
@@ -956,17 +928,16 @@ msgid "An alien base."
 msgstr "Een buitenaardse basis."
 
 msgid "You've lost your bases and don't have enough money to build new ones."
-msgstr "U bent uw basisssen verloren en u hebt onvoldoende geld om nieuwe te bouwen."
+msgstr "U bent uw bases verloren en u hebt onvoldoende geld om nieuwe te bouwen."
 
 msgid "Base is under attack."
 msgstr "Basis wordt aangevallen."
 
 msgid "Under your command, PHALANX operations have consistently failed to protect nations. The UN, highly unsatisfied with your performance, has decided to remove you from command and subsequently disbands the PHALANX project as an effective task force. No further attempts at global cooperation are made. Earth's nations each try to stand alone against the aliens, and eventually fall one by one."
-msgstr "Onder uw commando heeft de PHALANX operatie consequent gefaald in het beschermen van landen. De VN, hoogst ontevreden over uw effectiviteit, heeft besloten om u uit uw functie te ontheffen, alle PHALANX projecten te beindigen en de eenheden te ontslaan. PHALANX is niet langer een effectieve werkgroep. Er zijn geen verdere stappen ondernomen om wereldwijd samen te werken. De landen van de aarde proberen individueel weerstand te bieden aan de buitenaardsen en worden stuk voor stuk verslagen."
+msgstr "Onder uw commando heeft de PHALANX operatie consequent gefaald in het beschermen van landen. De VN, hoogst ontevreden over uw effectiviteit, heeft besloten om u uit uw functie te ontheffen, alle PHALANX projecten te beindigen en de eenheden te ontslaan. PHALANX is niet langer een effectieve werkgroep. Er zijn geen verdere stappen ondernomen om wereldwijd samen te werken. De landen van de aarde proberen individueel weerstand te bieden aan de buitenaardsen en worden uiteindelijk stuk voor stuk verslagen."
 
-#, fuzzy
 msgid "Rescue mission."
-msgstr "Automatische missie"
+msgstr "Reddingsmissie."
 
 #, c-format
 msgid ""
@@ -974,7 +945,7 @@ msgid ""
 "for inspirational gallantry in the face of overwhelming odds.\n"
 msgstr ""
 "%s is postuum de rang van %s toegekend\n"
-"voor voorbeeldige dapperheid tegenover overweldigende aantallen.\n"
+"voor voorbeeldige dapperheid in overmachtssituaties.\n"
 
 msgid "Training Zone: Alpha"
 msgstr ""
@@ -985,9 +956,8 @@ msgstr "Soldaat"
 msgid "Training Zone: Bravo"
 msgstr ""
 
-#, fuzzy
 msgid "Worker"
-msgstr "Werker"
+msgstr "Ingenieur"
 
 msgid "Cross"
 msgstr "Kruis"
@@ -1002,8 +972,8 @@ msgid ""
 "You don't have enough quarters for your employees.\n"
 "Build more quarters."
 msgstr ""
-"U heeft niet genoeg kamers voor uw medewerkers.\n"
-"Bouw meer kamers."
+"U heeft niet genoeg verblijfruimte voor uw medewerkers.\n"
+"Bouw meer verblijfruimten."
 
 msgid "Rifleman"
 msgstr "Infanterist"
@@ -1059,57 +1029,32 @@ msgstr "Dit onderdeel zal verwijderd zijn over %i uur.\n"
 msgid "Warrant Officer"
 msgstr "Dekofficier"
 
-#, fuzzy
 msgid "No ammo needed"
-msgstr "Geen onderdeel gekozen"
+msgstr "Geen munitie nodig"
 
 msgid "WO"
 msgstr "DO"
 
-#, fuzzy
 msgid "No item selected."
-msgstr "Geen onderdeel gekozen"
+msgstr "Geen onderdeel gekozen."
 
 msgid "Senior Warrant Officer"
 msgstr "Senior Dekofficier"
 
 msgid "Technology requested is not yet completed."
-msgstr ""
+msgstr "De gevraagde technologie is nog niet compleet."
 
 msgid "SWO"
 msgstr "SDO"
 
-#, fuzzy
 msgid "Equip a weapon first."
-msgstr ""
-"Commander,\n"
-"\n"
-"I have made a thorough examination of the devices found during the alien autopsies we've performed. I believe we're now ready to present our conclusions.\n"
-"\n"
-"From our investigation of tissue growth and scarring around the alien larynx, we conclude that these artifacts are surgically implanted in an alien's throat at a very early age. Somewhere during adolescence, the child-sized device is removed and an adult version is implanted.\n"
-"\n"
-"We've examined several different possibilities for the device's function, from food preprocessors to suicide equipment, but the obvious answer turned out to be the correct one. It is some kind of respirator, allowing the aliens to survive in our atmosphere, and possibly other atmospheres as well. Every organic specimen we've autopsied has carried one of these devices, all with the same basic functionality, implying that their constant operation is either required for survival on the alien homeworld or that we are seeing only specimens which are intended for frequent planetary operations. Certainly external breathing apparatus would be easier and more economical to use if these specimens were only intended to take short trips into hostile atmospheres.\n"
-"\n"
-"The device itself consists of a sophisticated filter stretched across the subject's windpipe, and two small spherical tanks positioned on either side of the brainstem, connected to the windpipe by a small metal tube. These tanks are filled with a gas mixture compressed into a liquid state, functioning much like a scuba diver's oxygen bottles. The filter mechanism is semi-intelligent; it scrupulously removes all elements that are harmful to the subject, but allows beneficial elements to pass through. The tanks are refilled by way of a small mechanical navel at the back of the alien's neck.\n"
-"\n"
-"An examination of the tanks' contents has given us our first accurate data on the alien atmosphere. We now have several mixtures on record that we believe will be able to support various alien lifeforms in our Containment unit. A few of the mixtures are nitrogen-oxygen compounds, very similar to our own, but others don't contain any oxygen at all. If all of these mixtures are actively used by one or more alien species, some of our enemies seem to breathe an atmosphere of almost pure methane.\n"
-"\n"
-"The vastly different mixtures are actually giving us a bit of a puzzle. Surely it would be more economical to use segregated crews than to force these species to coexist in the same place?\n"
-"\n"
-"Future questions aside, I'm well pleased with our present results. We can now store aliens in our Containment unit for prolonged periods of time -- they will no longer suffocate when their atmosphere tanks run out. This usually happens after 24 hours without replenishment, so no delays should be afforded when we manage to capture a specimen.\n"
-"\n"
-"My team and I are all looking forward to finally getting our hands on a live one, Commander.\n"
-"\n"
-"Sincerely,\n"
-"\n"
-"Dr. Connor"
+msgstr "Graag eerst een wapen uitrusten."
 
 msgid "Second Lieutenant"
 msgstr "Tweede Luitenant"
 
-#, fuzzy
 msgid "Unknown problem."
-msgstr "Onbekend - onbruikbaar"
+msgstr "Onbekend probleem."
 
 msgid "2Lt"
 msgstr "2ᵉ Lt"
@@ -1149,7 +1094,7 @@ msgid "Major"
 msgstr "Majoor"
 
 msgid "Not enough credits to set up a new installation."
-msgstr "Onvoldoende geld om een nieuwe installatie te maken."
+msgstr "Onvoldoende krediet om een nieuwe installatie te maken."
 
 msgid "Maj"
 msgstr "Maj."
@@ -1207,12 +1152,12 @@ msgstr "Afstand tot doel:\t\t%.0f\n"
 msgid "production"
 msgstr "productie"
 
-#, fuzzy, c-format
+#, c-format
 msgid "Speed: %i km/h\n"
-msgstr "Snelheid:\t%i km/u\n"
+msgstr "Snelheid: %i km/u\n"
 
 msgid "nations_happiness"
-msgstr "Blijheid van het land"
+msgstr "Tevredenheid van het land"
 
 msgid "Select the desired location of the new base on the map.\n"
 msgstr "Kies de gewenste plats van de nieuwe basis op de kaart.\n"
@@ -1229,7 +1174,6 @@ msgstr "UFO Activiteit"
 msgid "UFO in radar range\n"
 msgstr "UFO binnen radar bereik\n"
 
-#, fuzzy
 msgid "missions"
 msgstr "Missies"
 
@@ -1240,7 +1184,7 @@ msgstr "%s is succesvol geïnstalleerd in installatie %s."
 msgid "The Revolutionary Countries"
 msgstr "De Revolutionaire Landen"
 
-#, fuzzy, c-format
+#, c-format
 msgid "%s was successfully removed from aircraft %s at %s."
 msgstr "%s is succesvol verwijdered van vliegtuig %s in basis %s."
 
@@ -1272,13 +1216,12 @@ msgstr "Onvoldoende opslagruimte"
 msgid "New Africa"
 msgstr "Nieuw Afrika"
 
-#, fuzzy
 msgid ""
 "No command centre in this base.\n"
 "Hangars are not functional.\n"
 msgstr ""
-"Geen energiebronnen in deze basis.\n"
-"Hangars werken niet."
+"Geen commandocentrum in deze basis.\n"
+"Hangars werken niet.\n"
 
 msgid "Russia"
 msgstr "Rusland"
@@ -1294,13 +1237,13 @@ msgid ""
 "Not enough credits.\n"
 msgstr ""
 "U kunt dit vliegtuig niet kopen.\n"
-"Onvoldoende geld.\n"
+"Onvoldoende krediet.\n"
 
 msgid "Antimatter"
 msgstr "Antimaterie"
 
 msgid "You can't sell an aircraft that is not in base"
-msgstr "U kunt geen vliegtuig verkopen die niet op een basis staat"
+msgstr "U kunt geen vliegtuig verkopen die niet in een basis staat"
 
 msgid "Alien Breathing Apparatus"
 msgstr "Buitenaards Adem Apparaat"
@@ -1311,7 +1254,6 @@ msgstr "Installatie verwijderd"
 msgid "Alien Materials"
 msgstr "Buitenaardse Materialen"
 
-#, fuzzy
 msgid "aircraft_refueled"
 msgstr ""
 "Overste, %s heeft %s en is klaar voor actie.\n"
@@ -1333,9 +1275,8 @@ msgstr "Installatie vernietigd"
 msgid "Base Facilities"
 msgstr "Basis Faciliteiten"
 
-#, fuzzy
 msgid "research_halted"
-msgstr "Onderzoek voltooid"
+msgstr "Onderzoek stopgezet"
 
 msgid "Research Reports"
 msgstr "Onderzoeksrapporten"
@@ -1350,10 +1291,10 @@ msgid "production_failed"
 msgstr "Productie mislukt"
 
 msgid "Alien Artifacts"
-msgstr "Buitenaardse Vondsten"
+msgstr "Buitenaardse Relikwiën"
 
 msgid "nation_happiness_changed"
-msgstr "Land heeft blijheid veranderd"
+msgstr "Land heeft tevredenheid veranderd"
 
 msgid "Autopsies & Observation"
 msgstr "Lijkschouwingen & Observatie"
@@ -1443,9 +1384,8 @@ msgstr ""
 "\n"
 "--Cdr. Navarre"
 
-#, fuzzy
 msgid "Aliens killed"
-msgstr "Buitenaardsen gedood\t%i\n"
+msgstr "Buitenaardsen gedood"
 
 msgid "antimatter_txt"
 msgstr ""
@@ -1465,11 +1405,8 @@ msgstr ""
 "\n"
 "--Cdr. Navarre"
 
-#, fuzzy
 msgid "Alien survivors"
-msgstr ""
-"Buitenaardse overlevenden\t%i\n"
-"\n"
+msgstr "Buitenaardse overlevenden"
 
 msgid "antimatter_extra_txt"
 msgstr ""
@@ -1491,9 +1428,8 @@ msgstr ""
 "\n"
 "--Cdr. Navarre"
 
-#, fuzzy
 msgid "PHALANX soldiers missing in action"
-msgstr "PHALANX soldaten vermist\t%i\n"
+msgstr "PHALANX soldaten vermist"
 
 msgid "antimatter_pre_txt"
 msgstr ""
@@ -1503,11 +1439,8 @@ msgstr ""
 "\n"
 "--Cdr. Navarre"
 
-#, fuzzy
 msgid "PHALANX survivors"
-msgstr ""
-"PHALANX overlevenden\t%i\n"
-"\n"
+msgstr "PHALANX overlevenden"
 
 msgid "antimatter_extra_pre_txt"
 msgstr ""
@@ -1517,16 +1450,14 @@ msgstr ""
 "\n"
 "--Cdr. Navarre"
 
-#, fuzzy
 msgid "Civilians killed by friendly fire"
-msgstr "Burgers gedood door eigen vuur\t%i\n"
+msgstr "Burgers gedood door eigen vuur"
 
 msgid "Live Alien"
 msgstr "Levende Buitenaardse"
 
-#, fuzzy
 msgid "Gathered items (types/all)"
-msgstr "Verzamelde onderdelen (typen/alle)\t%i/%i\n"
+msgstr "Verzamelde onderdelen (typen/alle)"
 
 msgid "alien_live_txt"
 msgstr ""
@@ -1543,7 +1474,7 @@ msgstr ""
 "Dr. Connor"
 
 msgid "Landed UFO"
-msgstr "Gelandde UFO"
+msgstr "Gelande UFO"
 
 msgid "alien_live_pre_txt"
 msgstr ""
@@ -1630,12 +1561,12 @@ msgid ""
 "   - The UFO:AI development team"
 msgstr ""
 "Gefeliciteerd! U heb het einde bereikt van de UFO: AI campagne.\n"
-"Dit is niet het einde. Het spel blijft in ontwikkeling.\n"
+"Toch, dit is niet echt het einde. Het spel blijft continu in ontwikkeling.\n"
 "De campagne zal worden uitgebreid met nieuwe missies, nieuwe vijanden, nieuwe UFO's, nieuwe door de speler bestuurbare toestellen en meer onderzoek.\n"
 "\n"
 "U kunt meehelpen om dit mogelijk te maken! Bezoek onze fora of IRC kanaal om uit te vinden\n"
 "wat u kunt doen om het spel af te maken. U kunt ook gewoon langskomen\n"
-"en over het spel praten, of andere spelers vinden voor een spel met meerdere spelers.\n"
+"en over het spel praten, of andere spelers vinden voor een multiplayer spel.\n"
 "\n"
 "Dank u wel voor het spelen, we hopen u snel terug te zien.\n"
 "\n"
@@ -1810,16 +1741,16 @@ msgstr ""
 "\n"
 "With kind regards,Col. Falkland"
 
-#, fuzzy, c-format
+#, c-format
 msgid "Paid %i credits to: %s"
-msgstr "%i,- betaald aan piloten"
+msgstr "%i,- betaald aan %s"
 
 msgid "The Universal Serum"
 msgstr "Het Universele Serum"
 
-#, fuzzy, c-format
+#, c-format
 msgid "Paid %i credits for upkeep of %s"
-msgstr "%i,- betaald aan onderhoud van basis %s"
+msgstr "%i,- betaald aan onderhoud van %s"
 
 msgid "universal_serum_txt"
 msgstr ""
@@ -2142,17 +2073,17 @@ msgstr ""
 "\n"
 "None."
 
-#, fuzzy, c-format
+#, c-format
 msgid "Not enough free storage space in %s. Production postponed."
-msgstr "Onvoldoende vrije opslagruimte in basis %s. Productie uitgesteld.\n"
+msgstr "Onvoldoende vrije opslagruimte in basis %s. Productie uitgesteld."
 
 #, fuzzy
 msgid "vhs_assault_txt"
 msgstr "vhs_assault_txt"
 
-#, fuzzy, c-format
+#, c-format
 msgid "Not enough free storage space in %s. Disassembling postponed."
-msgstr "Onvoldoende vrije opslagruimte in basis %s. Ontmanteling uitgesteld.\n"
+msgstr "Onvoldoende vrije opslagruimte in basis %s. Ontmanteling uitgesteld."
 
 msgid "assault_txt"
 msgstr ""
@@ -2367,9 +2298,9 @@ msgstr ""
 "\n"
 "Along with sniper rifles and grenades, this is one of the few standard-issue human weapons that are fully effective against robotic aliens."
 
-#, fuzzy, c-format
+#, c-format
 msgid "Disassembly time: %ih\n"
-msgstr "Ontmantelingstijd\t%iu\n"
+msgstr "Ontmantelingstijd:%iu\n"
 
 msgid "rpg_ammo_txt"
 msgstr ""
@@ -2445,17 +2376,16 @@ msgstr ""
 "\n"
 "None."
 
-#, fuzzy
 msgid "Not enough materials"
-msgstr "Onvoldoende materiaal!"
+msgstr "Onvoldoende materiaal"
 
 #, fuzzy
 msgid "xaw95_txt"
 msgstr "xaw95_txt"
 
-#, fuzzy, c-format
+#, c-format
 msgid "You don't have enough material to produce all (%i) additional items. Only %i could be added."
-msgstr "U hebt onvoldoende materiaal om alle (%i) onderdelen te maken. Productie zal voortgang vinden met een lager aantal (%i)."
+msgstr "U hebt onvoldoende materiaal om alle (%i) extra onderdelen te maken. Productie zal doorgaan met een lager aantal (%i)."
 
 msgid "xaw95_pre_txt"
 msgstr "<TODO>"
@@ -2467,9 +2397,8 @@ msgstr "Niet genoeg werkplaatsen"
 msgid "bombkit1_txt"
 msgstr "bombkit1_txt"
 
-#, fuzzy
 msgid "You don't have the materials needed for producing this item.\n"
-msgstr "U hebt onvoldoende grondstoffen om dit onderdeel te produceren."
+msgstr "U hebt onvoldoende grondstoffen om dit onderdeel te produceren.\n"
 
 msgid "bombkit1_pre_txt"
 msgstr "<TODO>"
@@ -2513,9 +2442,8 @@ msgstr ""
 msgid "shotgun_txt"
 msgstr "shotgun_txt"
 
-#, fuzzy
 msgid "Research halted"
-msgstr "Onderzoek voltooid"
+msgstr "Onderzoek stopgezet"
 
 msgid "Electromagnetic Rifle"
 msgstr "Elektromagnetisch Geweer"
@@ -2608,15 +2536,12 @@ msgstr ""
 "\n"
 "None."
 
-#, fuzzy
 msgid "Status: under research"
 msgstr "Status: Wordt onderzocht"
 
-#, fuzzy
 msgid "Monomolecular Blades"
 msgstr "Enkelmoleculaire Messen"
 
-#, fuzzy
 msgid "Status: research paused"
 msgstr "Status: Onderzoek gepauzeerd"
 
@@ -2634,7 +2559,6 @@ msgstr ""
 "\n"
 "--Cdr. Navarre"
 
-#, fuzzy
 msgid "Status: research finished"
 msgstr "Status: Onderzoek voltooid"
 
@@ -3124,7 +3048,7 @@ msgid "%s\t%s\n"
 msgstr "%s\t%s\n"
 
 msgid "Alien Artifact - Kerrblade"
-msgstr "Buitenaardse Vondst - Kerr-zwaard"
+msgstr "Buitenaards Relikwie - Kerr-zwaard"
 
 #, c-format
 msgid "%s\t%i\n"
@@ -3401,7 +3325,7 @@ msgid "Aug"
 msgstr "Aug"
 
 msgid "Alien Artifact - Plasma Pistol"
-msgstr "Buitenaardse Vondst - Plasma Pistool"
+msgstr "Buitenaards Relikwie - Plasma Pistool"
 
 msgid "Oct"
 msgstr "Okt"
@@ -3441,9 +3365,9 @@ msgid "Transport mission"
 msgstr "Transport missie"
 
 msgid "Alien Artifact - Plasma Blaster"
-msgstr "Buitenaardse Vondst - Plasma Mitrailleur"
+msgstr "Buitenaards Relikwie - Plasma Mitrailleur"
 
-#, fuzzy, c-format
+#, c-format
 msgid "%s does not have Living Quarters, employees got unhired!"
 msgstr "Basis %s heeft geen Verblijfruimten, medewerkers zijn ontslagen!"
 
@@ -3461,9 +3385,9 @@ msgstr ""
 "\n"
 "--Cdr. Navarre"
 
-#, fuzzy, c-format
+#, c-format
 msgid "%s does not have enough Alien Containment space, some Aliens are removed!"
-msgstr "Basis %s heeft geen Buitenaardsen Quarantaine, Buitenaardsen zijn verwijderd!"
+msgstr "Basis %s heeft geen Quarantaine, sommige buitenaardsen zijn verwijderd!"
 
 msgid "plasblaster_pre_txt"
 msgstr ""
@@ -3473,16 +3397,16 @@ msgstr ""
 "\n"
 "--Cdr. Navarre"
 
-#, fuzzy, c-format
+#, c-format
 msgid "Transport mission started, cargo is being transported to %s"
-msgstr "Transport missie begonnen, vracht wordt vervoerd naar basis %s"
+msgstr "Transportmissie begonnen, vracht wordt verscheepd naar %s"
 
 msgid "Alien Artifact - Plasma Blade"
-msgstr "Buitenaardse Vondst - Plasma Mes"
+msgstr "Buitenaards Relikwie - Plasma Mes"
 
-#, fuzzy, c-format
+#, c-format
 msgid "Transport mission ended, unloading cargo in %s"
-msgstr "Transport missie beëindigd, vracht wordt uitgeladen in basis %s"
+msgstr "Overdrachtsmissie beëindigd, vracht wordt uitgeladen in %s"
 
 msgid "plasblade_txt"
 msgstr ""
@@ -3517,7 +3441,7 @@ msgid "Not enough space"
 msgstr "Onvoldoende ruimte"
 
 msgid "Alien Artifact - Plasma Grenade"
-msgstr "Buitenaardse Vondst - Plasma Granaat"
+msgstr "Buitenaards Relikwie - Plasma Granaat"
 
 msgid ""
 "Destination base does not have enough\n"
@@ -3567,7 +3491,7 @@ msgstr ""
 "verplaatst naar een andere basis.\n"
 
 msgid "Alien Artifact - Plasma Rifle"
-msgstr "Buitenaardse Vondst - Plasma Geweer"
+msgstr "Buitenaards Relikwie - Plasma Geweer"
 
 msgid ""
 "Destination base does not have enough space\n"
@@ -3605,11 +3529,8 @@ msgstr ""
 "\n"
 "--Cdr. Navarre"
 
-#, fuzzy
 msgid "Destination base does not have enough space in hangars.\n"
-msgstr ""
-"Doelbasis heeft onvoldoende ruimte\n"
-"in de hangars.\n"
+msgstr "Doelbasis heeft onvoldoende ruimte in de hangars.\n"
 
 msgid "Needler Gun"
 msgstr "Spijkergeweer"
@@ -3646,9 +3567,8 @@ msgstr ""
 "\n"
 "--Cdr. Navarre"
 
-#, fuzzy
 msgid "Transfer is not possible - the base doesn't have a working Storage."
-msgstr "Overdracht niet mogelijk - de basis heeft geen Opslag."
+msgstr "Overdracht niet mogelijk - de basis heeft geen functionerende Opslag."
 
 msgid "Heavy Needler Gun"
 msgstr "Zwaar Spijkergeweer"
@@ -3960,9 +3880,9 @@ msgstr ""
 "\n"
 "None."
 
-#, fuzzy, c-format
+#, c-format
 msgid "Our radar detected a new UFO near %s"
-msgstr "Onze radar heeft een nieuwe UFO gesignaleerd"
+msgstr "Onze radar heeft een nieuwe UFO gesignaleerd vlak bij %s"
 
 msgid "smokegren_txt"
 msgstr ""
@@ -4208,7 +4128,7 @@ msgid "Weapon for base defence system\n"
 msgstr "Wapen voor basisverdedigingssysteem\n"
 
 msgid "Alien Artifact - Particle Beam Pistol"
-msgstr "Buitenaardse Vondst - Deeltjesstraal Pistool"
+msgstr "Buitenaards Relikwie - Deeltjesstraal Pistool"
 
 #, c-format
 msgid "%s:\t%i %%\n"
@@ -4246,10 +4166,10 @@ msgstr ""
 
 #, c-format
 msgid "Required Hangar:\t%s\n"
-msgstr ""
+msgstr "Vereiste Hangar:\t%s\n"
 
 msgid "Alien Artifact - Particle Beam Cannon"
-msgstr "Buitenaardse Vondst - Deeltjesstraal Kanon"
+msgstr "Buitenaards Relikwie - Deeltjesstraal Kanon"
 
 #, c-format
 msgid ""
@@ -4293,7 +4213,7 @@ msgid "(complete)"
 msgstr "Vrij Goed"
 
 msgid "Alien Artifact - Particle Beam Rifle"
-msgstr "Buitenaardse Vondst - Deeltjesstraal Geweer"
+msgstr "Buitenaards Relikwie - Deeltjesstraal Geweer"
 
 #, c-format
 msgid "^BProposal: %s\t%i %s %02i\n"
@@ -4423,9 +4343,9 @@ msgstr ""
 "\n"
 "None."
 
-#, fuzzy, c-format
+#, c-format
 msgid "Recovered %s from the battlefield. UFO is being transported to %s."
-msgstr "%s opgehaald uit het slagveld. UFO wordt vervoerd naar basis %s."
+msgstr "%s geborgen uit het slagveld. UFO wordt vervoerd naar basis %s."
 
 #, fuzzy
 msgid "advanced_combat_armour_txt"
@@ -4433,7 +4353,7 @@ msgstr "advanced_combat_armour_txt"
 
 #, c-format
 msgid "Sold previously recovered %s from %s to nation %s, gained %i credits."
-msgstr "%s van %s opgehaald uit het slagveld verkocht aan land %s, %i,- ontvangen."
+msgstr "%s van %s geborgen uit het slagveld verkocht aan land %s, %i,- ontvangen."
 
 msgid "nano_armour_txt"
 msgstr ""
@@ -4455,7 +4375,7 @@ msgstr ""
 
 #, c-format
 msgid "Your base: %s has been destroyed! All employees killed and all equipment destroyed."
-msgstr "Uw basis: %s is vernietigd! Alle medewerkers gedood en alle apparatuur vernietigd."
+msgstr "Uw basis: %s is vernietigd! Alle medewerkers zijn gedood en alle apparatuur is vernietigd."
 
 msgid "nano_armour_pre_txt"
 msgstr ""
@@ -4500,9 +4420,8 @@ msgstr ""
 "\n"
 "--Cdr. Navarre"
 
-#, fuzzy
 msgid "You've ended your turn.\n"
-msgstr "U hebt de ronde beëindigd\n"
+msgstr "U hebt de ronde beëindigd.\n"
 
 msgid "alien_medium_armour_txt"
 msgstr ""
@@ -4531,9 +4450,9 @@ msgstr ""
 "\n"
 "--Cdr. Navarre"
 
-#, fuzzy, c-format
+#, c-format
 msgid "Enemies killed:\t%i"
-msgstr "Vijanden gedood\t%i\n"
+msgstr "Vijanden gedood\t%i"
 
 msgid "Blast Damage Type"
 msgstr "Ontploffingsschade Type"
@@ -4588,7 +4507,7 @@ msgid "Operating system:\t%s\n"
 msgstr "Besturingssysteem:\t%s\n"
 
 msgid "Particle Beam Damage Type"
-msgstr "Deeltjesstraalschade Type"
+msgstr "Deeltjesstraal Schade Type"
 
 #, c-format
 msgid "Roundtime:\t%s\n"
@@ -4616,13 +4535,13 @@ msgid "Max. soldiers per team:\t%s\n"
 msgstr "Max. aantal soldaten per team:\t%s\n"
 
 msgid "High-Explosives Proficiency"
-msgstr "Zware Explosieven Specialisatie"
+msgstr "Zware Explosieven Bekwaamheid"
 
 msgid "All bookmark slots are used - please removed unused entries and repeat this step"
 msgstr "Alle bladwijzers zijn gebruikt - verwijder alstublieft ongebruikte en herhaal deze stap"
 
 msgid "Heavy Weapons Proficiency"
-msgstr "Zware Wapens Specialisatie"
+msgstr "Zware Wapens Bekwaamheid"
 
 msgid ""
 "The game was a draw!\n"
@@ -4646,10 +4565,10 @@ msgid "Better luck next time"
 msgstr "Volgende keer beter"
 
 msgid "Sniper Rifles Proficiency"
-msgstr "Sluipschutter Geweren Bedrevenheid"
+msgstr "Sluipschutter Bekwaamheid"
 
 msgid "Show/hide ufoconsole."
-msgstr ""
+msgstr "Toon/verberg ufoconsole"
 
 msgid "Speed Attribute"
 msgstr "Snelheidskenmerk"
@@ -4965,9 +4884,9 @@ msgstr ""
 "\n"
 "None."
 
-#, fuzzy, c-format
+#, c-format
 msgid "%s. No detailed info available.\n"
-msgstr "Geen beschrijving beschikbaar."
+msgstr "%s. Geen gedetailleerde beschrijving beschikbaar.\n"
 
 msgid "b_lab_txt"
 msgstr ""
@@ -5260,7 +5179,7 @@ msgstr ""
 "None."
 
 msgid "This change requires a restart"
-msgstr "Deze verandering vergt een herstart"
+msgstr "Deze verandering vereist een herstart"
 
 msgid "b_antimatter_txt"
 msgstr ""
@@ -5293,7 +5212,7 @@ msgstr ""
 "None."
 
 msgid "^BGlobal bindings"
-msgstr ""
+msgstr "^BGlobale bindingen"
 
 msgid "drop_firebird_txt"
 msgstr ""
@@ -5339,9 +5258,8 @@ msgstr ""
 "\n"
 "None."
 
-#, fuzzy
 msgid "^BBattlescape bindings"
-msgstr "Verplaats slagveld camera naar links"
+msgstr "^BSlagveld bindingen"
 
 #, fuzzy
 msgid "drop_herakles_txt"
@@ -5367,9 +5285,8 @@ msgstr "Kantel slagveld camera naar boven"
 msgid "drop_raptor_pre_txt"
 msgstr "<TODO>"
 
-#, fuzzy
 msgid "Move battlescape camera"
-msgstr "Verplaats slagveld camera naar links"
+msgstr "Verplaats slagveld camera"
 
 msgid "inter_stiletto_txt"
 msgstr ""
@@ -5512,7 +5429,7 @@ msgstr ""
 "--Cdr. Navarre"
 
 msgid "Mouse wheel up"
-msgstr ""
+msgstr "Muiswiel omhoog"
 
 msgid "inter_starchaser_pre_txt"
 msgstr ""
@@ -5640,9 +5557,8 @@ msgstr "Sluit het venster"
 msgid "ufo_carrier_txt"
 msgstr "<NOGDOEN>"
 
-#, fuzzy
 msgid "Soldier entered the rescue zone\n"
-msgstr "Buitenaardsen zijn doelzone binnengegaan\n"
+msgstr "Soldaat is reddingszone binnengegaan\n"
 
 msgid "ufo_carrier_pre_txt"
 msgstr "<TODO>"
@@ -5694,9 +5610,8 @@ msgstr ""
 "\n"
 "--Cdr. Navarre"
 
-#, fuzzy
 msgid "Can't perform action - it is not your turn!\n"
-msgstr "Kon actie niet uitvoeren - dit is niet uw ronde!\n"
+msgstr "Kan actie niet uitvoeren - dit is niet uw ronde!\n"
 
 msgid "ufo_gunboat_txt"
 msgstr ""
@@ -5732,14 +5647,13 @@ msgid ""
 "Soldier is dazed!\n"
 "Enemy used flashbang!\n"
 msgstr ""
-"Soldaat is versuft!\n"
+"Soldaat is de kluts kwijt!\n"
 "Vijand heeft een flitsgranaat gebruikt!\n"
 
 #, fuzzy
 msgid "ufo_ripper_txt"
 msgstr "<NOGDOEN>"
 
-#, fuzzy
 msgid "Can't perform action - object not activatable!\n"
 msgstr "Kan actie niet uitvoeren - object kan niet worden geactiveerd!\n"
 
@@ -5791,43 +5705,39 @@ msgstr "ufo_bomber_txt"
 
 #, c-format
 msgid "%s panics!\n"
-msgstr "%s is panisch!\n"
+msgstr "%s is in paniek!\n"
 
 msgid "ufo_mothership_pre_txt"
 msgstr "<TODO>"
 
 #, c-format
 msgid "%s is consumed by mad rage!\n"
-msgstr "%s heeft een woede aanval!\n"
+msgstr "%s wordt gek van woedel!\n"
 
 msgid "Live Specimen - Bloodspider"
 msgstr "Levend Exemplaar - Bloedspin"
 
-#, fuzzy
 msgid "No reaction fire enabled weapon.\n"
-msgstr "Geen reactie vuur"
+msgstr "Wapen ondersteunt geen reactievuur.\n"
 
 #, fuzzy
 msgid "bloodspider_notes_txt"
 msgstr "bloodspider_notes_txt"
 
-#, fuzzy
 msgid "Not enough TUs left for activating reaction fire.\n"
-msgstr "Onvoldoende TE's om op te staan."
+msgstr "Onvoldoende TE's om reactievuur te activeren.\n"
 
 msgid "bloodspider_notes_pre_txt"
 msgstr "<TODO>"
 
-#, fuzzy
 msgid "3 minutes left until forced turn end.\n"
-msgstr "over 3 minuten wordt de ronde geforceerd beëindigd\n"
+msgstr "over 3 minuten wordt de ronde geforceerd beëindigd.\n"
 
 msgid "Alien Autopsy - Bloodspider"
-msgstr "Buitenaardse Lijkschouwing - Bloedspin"
+msgstr "Buitenaards Lijk - Bloedspin"
 
-#, fuzzy
 msgid "1 minute left until forced turn end.\n"
-msgstr "over 1 minuut wordt de ronde geforceerd beëindigd\n"
+msgstr "over 1 minuut wordt de ronde geforceerd beëindigd.\n"
 
 msgid "bloodspider_autopsy_txt"
 msgstr ""
@@ -5851,9 +5761,8 @@ msgstr ""
 "\n"
 "Dr. Connor"
 
-#, fuzzy
 msgid "15 seconds left until forced turn end.\n"
-msgstr "over 15 seconden wordt de ronde geforceerd beëindigd\n"
+msgstr "over 15 seconden wordt de ronde geforceerd beëindigd.\n"
 
 msgid "bloodspider_autopsy_pre_txt"
 msgstr ""
@@ -5869,7 +5778,7 @@ msgid "Switching map!\n"
 msgstr ""
 
 msgid "Alien Autopsy - Ortnok"
-msgstr "Buitenaardse Lijkschouwing - Ortnok"
+msgstr "Buitenaards Lijk - Ortnok"
 
 msgid "human"
 msgstr "mens"
@@ -5977,7 +5886,7 @@ msgid "Small cemetery"
 msgstr "Klein kerkhof"
 
 msgid "Alien Autopsy - Taman"
-msgstr "Buitenaardse Lijkschouwing - Taman"
+msgstr "Buitenaards Lijk - Taman"
 
 msgid "Community_centre"
 msgstr "Wijkgebouw"
@@ -6060,7 +5969,7 @@ msgstr ""
 "Dr. Connor"
 
 msgid "Eaglenest"
-msgstr "Kraaiennest"
+msgstr "Adelaarsnest"
 
 msgid "taman_autopsy_pre_txt"
 msgstr ""
@@ -6089,7 +5998,7 @@ msgid "Alien landing - Snow"
 msgstr "Buitenaardse landing - Sneeuw"
 
 msgid "Alien Autopsy - Shevaar"
-msgstr "Buitenaardse Lijkschouwing - Shevaar"
+msgstr "Buitenaards Lijk - Shevaar"
 
 msgid "Alien landing - Industrial"
 msgstr "Buitenaardse landing - Industrieel"
@@ -6130,9 +6039,8 @@ msgstr ""
 "\n"
 "Dr. Connor"
 
-#, fuzzy
 msgid "Multiplayer Deathmatch"
-msgstr "Meerdere spelers Deathmatch"
+msgstr "Multiplayer Deathmatch"
 
 msgid "shevaar_autopsy_extra_txt"
 msgstr ""
@@ -6213,14 +6121,13 @@ msgid "ugv_phoenix_pre_txt"
 msgstr "<TODO>"
 
 msgid "Oriental medium"
-msgstr "Oriëntaals middel"
+msgstr "Oriëntaals middelgroot"
 
 msgid "Ares W (UGV)"
 msgstr "Ares W (OGV)"
 
-#, fuzzy
 msgid "Rescue mission"
-msgstr "Automatische missie"
+msgstr "Reddingsmissie"
 
 msgid "ugv_ares_w_txt"
 msgstr "<NOGDOEN>"
@@ -6258,23 +6165,21 @@ msgid "ugv_chaingun_belt_pre_txt"
 msgstr "<TODO>"
 
 msgid "Firebird-class Dropship"
-msgstr "Firebird-klasse Vliegtuig"
+msgstr "Firebird-klasse Landingsvliegtuig"
 
 #, fuzzy
 msgid "ugv_weapon_autocannon_txt"
 msgstr "ugv_weapon_autocannon_txt"
 
 msgid "Herakles-class Heavy Lifter"
-msgstr "Herakles-klasse Zwaar Heftoestel"
+msgstr "Herakles-klasse Zwaar Transport"
 
 msgid "ugv_weapon_autocannon_pre_txt"
 msgstr "By: Cdr. Paul Navarre, R&D: Engineering Division, PHALANX, Atlantic Operations Command"
 
-#, fuzzy
 msgid "Raptor-class Combat Transport"
-msgstr "Raptor-class Combat Transport"
+msgstr "Raptor-klasse Gevechtstransport"
 
-#, fuzzy
 msgid "'Raven' ECM Unit"
 msgstr "'Raven' ECM Eenheid"
 
@@ -6466,9 +6371,8 @@ msgstr ""
 "\n"
 "--Cdr. Navarre"
 
-#, fuzzy
 msgid "UFO - Gunboat"
-msgstr "UFO - Verkenner"
+msgstr "UFO - Kanonneerboot"
 
 msgid "craft_alien_detection_pre_txt"
 msgstr ""
@@ -6522,9 +6426,8 @@ msgstr ""
 "\n"
 "--Cdr. Navarre"
 
-#, fuzzy
 msgid "UFO - Ripper"
-msgstr "UFO - Versnipperaar"
+msgstr "UFO - Ripper"
 
 msgid "craft_weapon_alc_txt"
 msgstr ""
@@ -6679,7 +6582,6 @@ msgstr "SHIVA 20mm API Kogels"
 msgid "'Sparrowhawk' AA Missile Rack"
 msgstr "'Sparrowhawk' Luchtafweerraket-rek"
 
-#, fuzzy
 msgid "Raven ECM Unit"
 msgstr "Raven ECM Eenheid"
 
@@ -6828,7 +6730,7 @@ msgstr ""
 "None."
 
 msgid "Polymer Aircraft Armour"
-msgstr "Polimeer Vliegtuig Bepantsering"
+msgstr "Polymeer Vliegtuig Bepantsering"
 
 msgid "craft_ammo_tr20_txt"
 msgstr ""
@@ -6902,9 +6804,8 @@ msgstr ""
 "\n"
 "--Cdr. Navarre"
 
-#, fuzzy
 msgid "Base-Defence Laser Turret"
-msgstr "Laser Afweer"
+msgstr "Laser Afweergeschut"
 
 msgid "craft_electronics_targeting_txt"
 msgstr ""
@@ -7072,7 +6973,7 @@ msgid "news_new_twist_alt_txt"
 msgstr "news_new_twist_alt_txt"
 
 msgid "Missile Battery"
-msgstr "Raketten Batterij"
+msgstr "Raket Batterij"
 
 msgid "The Enemy On Earth"
 msgstr "De Vijand Op Aarde"
@@ -7153,9 +7054,9 @@ msgstr ""
 
 msgid "standard_campaign_txt"
 msgstr ""
-"Dit is het één speler, militair-getinte invasie-scenario. De speler neemt het commando op zich van Project PHALANX, het antwoord van de aarde op de buitenaardse bedreiging en u kunt door een dynamisch spel spelen met zowel behoorlijke willekeurige elementen en een sterk aanwezig verhaal.\n"
+"Dit is het één speler, militair-getinte invasie-scenario. De speler neemt het commando op zich van Project PHALANX, het antwoord van de aarde op de buitenaardse bedreiging. Deze spelmodus is dynamisch, en bevat willekeurige elementen en een sterk aanwezig verhaal.\n"
 "\n"
-"Deze campagne is beschikbaar op diverse moeilijkheidsgraden. Deze optie stelt de Standaard moeilijkheidsgraad voor en wordt aanbevolen voor spelers die het spel voor de eerste keer spelen en van een uitdaging houden."
+"Deze campagne is beschikbaar op diverse moeilijkheidsgraden. Deze optie adviseert de Standaard moeilijkheidsgraad en wordt aanbevolen voor spelers die het spel voor de eerste keer spelen en van een uitdaging houden."
 
 msgid "enemy_on_earth_pre_txt"
 msgstr ""
@@ -7239,7 +7140,7 @@ msgid "Mumbai"
 msgstr "Bombay"
 
 msgid "The Enemy On Earth - Revisited"
-msgstr "De Vijand Op Aarde - Nogmaals"
+msgstr "De Vijand Op Aarde - Gereviseerd"
 
 msgid "Cayenne"
 msgstr "Cayenne"
@@ -7293,9 +7194,8 @@ msgstr ""
 msgid "Abuja"
 msgstr "Abuja"
 
-#, fuzzy
 msgid "Orbital UFO Activity"
-msgstr "Oriëntaals UFO"
+msgstr "UFO Activiteit in de Ruimte"
 
 msgid "Adana"
 msgstr "Adana"
@@ -7420,7 +7320,7 @@ msgid "Bamako"
 msgstr "Bamako"
 
 msgid "Contributing Programmers"
-msgstr "Meewerkende Programmeurs"
+msgstr "Donerende Programmeurs"
 
 msgid "Bangalore"
 msgstr "Bangalore"
@@ -7772,7 +7672,7 @@ msgid "Hangzhou"
 msgstr "Hangzhou"
 
 msgid "Switch view level via left mouseclick"
-msgstr "Wissel zichtnivo met de linkermuisknop"
+msgstr "Wissel nivo met de linkermuisknop"
 
 msgid "Hanover"
 msgstr "Hanover"
@@ -7795,9 +7695,8 @@ msgstr "Kies soldaten door op ze te klikken"
 msgid "Ho Chi Minh City"
 msgstr "Ho Chi Minh City"
 
-#, fuzzy
 msgid "Or via the keys 1-8 or Tab"
-msgstr "Of met de toetsen 1-8"
+msgstr "Of met de toetsen 1-8 of Tab"
 
 msgid "Houston"
 msgstr "Houston"
@@ -7808,9 +7707,8 @@ msgstr "Fysieke statistieken"
 msgid "Ibadan"
 msgstr "Ibadan"
 
-#, fuzzy
 msgid "Stats bars: movement, health and morale"
-msgstr "Statistiekenbalk: beweging en gezondheid"
+msgstr "Statistiekenbalk: beweging, gezondheid, moreel"
 
 msgid "Iloilo City"
 msgstr "Iloilo City"
@@ -7834,7 +7732,7 @@ msgid "Iqaluit"
 msgstr "Iqaluit"
 
 msgid "Reload weapon"
-msgstr "Herlaadt wapen"
+msgstr "Herlaad wapen"
 
 msgid "Islamabad"
 msgstr "Islamabad"
@@ -7875,16 +7773,14 @@ msgstr "Beëindig ronde"
 msgid "Kaesong"
 msgstr "Kaesong"
 
-#, fuzzy
 msgid "How to play skirmish"
-msgstr "Hoe een spel te spelen met meerdere spelers"
+msgstr "Hoe een schermutseling spel te spelen"
 
 msgid "Kandahar"
 msgstr "Kandahar"
 
-#, fuzzy
 msgid "Skirmish tutorial"
-msgstr "Schermutseling"
+msgstr "Schermutseling uitleg"
 
 msgid "Kano"
 msgstr "Kano"
@@ -7895,9 +7791,8 @@ msgstr "Schermutseling is een snel spel."
 msgid "Kansas City"
 msgstr "Kansas City"
 
-#, fuzzy
 msgid "Equipment selection"
-msgstr "Teamselectie"
+msgstr "Uitrusting keuze"
 
 msgid "Karachi"
 msgstr "Karachi"
@@ -7934,14 +7829,14 @@ msgid ""
 "Select dropship\n"
 "(if possible for current map)"
 msgstr ""
-"Selecteer dropship\n"
+"Selecteer landings vliegtuig\n"
 "(Indien mogelijk voor de huidige kaart)"
 
 msgid "Kolkata"
 msgstr "Calcutta"
 
 msgid "Select map to play"
-msgstr "Kies de kaart om op te spelen"
+msgstr "Kies de kaart om te spelen"
 
 msgid "Koulikoro"
 msgstr "Koulikoro"
@@ -7952,9 +7847,8 @@ msgstr "En..."
 msgid "Kuala Lumpur"
 msgstr "Kuala Lumpur"
 
-#, fuzzy
 msgid "Start the game!"
-msgstr "Start spel"
+msgstr "Start spel!"
 
 msgid "Kuwait City"
 msgstr "Koeweit"
@@ -7966,19 +7860,19 @@ msgid "Lagos"
 msgstr "Lagos"
 
 msgid "Exit to main menu"
-msgstr "Verlaat naar het hoofdmenu"
+msgstr "Naar het hoofdmenu"
 
 msgid "Lanzhou"
 msgstr "Lanzhou"
 
 msgid "How to play multiplayer"
-msgstr "Hoe een spel te spelen met meerdere spelers"
+msgstr "Hoe een multiplayer spel te spelen"
 
 msgid "Las Vegas"
 msgstr "Las Vegas"
 
 msgid "Make sure that you've opened the TCP port 27910 in your firewall settings"
-msgstr "Wees er zeker van dat TCP poort 27910 open staat in uw vuurmuur instellingen"
+msgstr "Wees er zeker van dat TCP poort 27910 open staat in uw firewall instellingen"
 
 msgid "Leipzig"
 msgstr "Leipzig"
@@ -7989,7 +7883,6 @@ msgstr "U moet verbinden met de lobby en wachten op uitnodigingen of begin uw ei
 msgid "Lilongwe"
 msgstr "Lilongwe"
 
-#, fuzzy
 msgid "While you are connected to the lobby you can play singleplayer until someone invites you"
 msgstr "Terwijl u bent verbonden met de lobby kunt u singleplayer spelen totdat iemand u uitnodigt"
 
@@ -7997,13 +7890,13 @@ msgid "Livingstone"
 msgstr "Livingstone"
 
 msgid "As a server admin you should consider setting a round time limit."
-msgstr "Als een server admin moet je overwegen om een ronde tijd te beperken."
+msgstr "Als een server admin zou u moeten overwegen om de ronde tijd te beperken."
 
 msgid "Lobamba"
 msgstr "Lobamba"
 
 msgid "Urban"
-msgstr "Stads"
+msgstr "Stedelijk"
 
 msgid "London"
 msgstr "Londen"
@@ -8087,13 +7980,13 @@ msgid "Manzini"
 msgstr "Manzini"
 
 msgid "Assemble and save different teams for multiplayer matches - 4 player teams, 8 player teams and so on. This way you can quickly load the right one for a fast match."
-msgstr "Maak en sla verschillende teams op voor spelen met meerdere spelers - 4 speler-teams, 8 speler-teams enzovoorts. Op deze manier kunt u snel de goede kiezen voor een snelle wedstrijd."
+msgstr "Maak en sla verschillende teams op voor multiplayer spelen - 4 speler-teams, 8 speler-teams enzovoorts. Op deze manier kunt u snel het juiste team kiezen voor een snelle start."
 
 msgid "Maracaibo"
 msgstr "Maracaibo"
 
 msgid "With multiplayer teams, make sure your best soldiers are at the top of the team list. When the soldier limit is lower than the amount of soldiers in your team, the soldiers at the top of the list will be used for the game."
-msgstr "Met teams voor meerdere spelers, verzekert u zich ervan dat uw beste soldaten bovenaan de teamlijst staan. Als de soldatenlimiet lager is dan het aantal soldaten in uw team, zullen de soldaten bovenaan de lijst gebruikt worden voor het spel."
+msgstr "Met multiplayer teams, zorg dat uw beste soldaten bovenaan de teamlijst staan. Als de soldatenlimiet lager is dan het aantal soldaten in uw team, zullen de soldaten bovenaan de lijst gebruikt worden voor het spel."
 
 msgid "Marseille"
 msgstr "Marseille"
@@ -8105,14 +7998,13 @@ msgid "Mashhad"
 msgstr "Mashhad"
 
 msgid "When using Reaction Fire, remember that you can set which fire mode to use by enabling the corresponding check box on the fire mode panel."
-msgstr "Als u Reactievuur gebruikt, vergeet niet dat u de vuurmodus kunen aangeven door deze aan te klikken in het vuur modus paneel."
+msgstr "Als u Reactievuur gebruikt, vergeet niet dat u de vuurmodus kunt aangeven door deze aan te klikken in het vuur modus paneel."
 
 msgid "Medan"
 msgstr "Medan"
 
-#, fuzzy
 msgid "Remember to give your soldiers a varying array of weapons; you never know when a certain weapon may come in handy."
-msgstr "Vergeet niet om uw soldaten een wisselend arsenaal aan wapens geeft, u weet maar nooit welk wapen handig kan zijn."
+msgstr "Vergeet niet dat u uw soldaten een wisselend arsenaal aan wapens geeft, u weet maar nooit welk wapen handig kan zijn."
 
 msgid "Memphis"
 msgstr "Memphis"
@@ -8129,7 +8021,6 @@ msgstr "Vergeet niet om uw soldaten te voorzien van pantser."
 msgid "Mexico City"
 msgstr "Mexico-Stad"
 
-#, fuzzy
 msgid "You can use a flashbang to deactivate your opponents' Reaction Fire mode or to take all of his remaining Time Units (TUs) from his next round."
 msgstr "U kunt een flitsgranaat gebruiken om het Reactievuur van uw tegenstanders uit te schakelen of om alle Tijd Eenheden (TE's) voor de volgende ronde te ontnemen."
 
@@ -8137,14 +8028,13 @@ msgid "Milan"
 msgstr "Milaan"
 
 msgid "In multiplayer, you can chat by pressing [k] (to all), [l] (team members only), or by pressing the chat buttons on the HUD."
-msgstr "Met meerdere spelers, kunt u kletsen door [k] (naar allen), [l] (alleen teamleden) te drukken, of door chat knoppen op de HUD te klikken."
+msgstr "In multiplayer, kunt u chatten door [k] (naar allen), [l] (alleen teamleden) te drukken, of door chat knoppen op de HUD te klikken."
 
 msgid "Minsk"
 msgstr "Minsk"
 
-#, fuzzy
 msgid "To make a soldier face a certain direction (i.e. to turn him/her) place the cursor and press the right mouse button or the [Ctrl] key. This will cost you Time Units (TUs)."
-msgstr "Om er zeker van te zijn dat een soldaat in een bepaalde richting kijkt (om hem/haar om te draaien) plaats de aanwijzer en klik met de rechtermuisknop of de [Ctrl] toets. Dit kost u Tijd Eenheden (TE's)."
+msgstr "Om er voor te zorgen dat een soldaat in een bepaalde richting kijkt (dus om hem/haar om te draaien) plaats de aanwijzer in de gewenste kijkrichting en klik met de rechtermuisknop of de [Ctrl] toets. Dit kost u Tijd Eenheden (TE's)."
 
 msgid "Monterrey"
 msgstr "Monterrey"
@@ -8155,23 +8045,20 @@ msgstr "Gebruik [Backspace] om de deuren te openen."
 msgid "Montreal"
 msgstr "Montreal"
 
-#, fuzzy
 msgid "Be sure to hire as many scientists as you can. The better you know your enemy, the easier he is to defeat."
-msgstr "Huur zoveel mogelijk onderzoekers in. Hoe eerder u uw vijand kent, hoe makkelijker het is om 'm te verslaan."
+msgstr "Huur zoveel mogelijk onderzoekers in. Hoe eerder u uw vijand kent, hoe makkelijker het is om hem te verslaan."
 
 msgid "Multan"
 msgstr "Multan"
 
-#, fuzzy
 msgid "Be sure to hire as many workers as you can. The faster your production lines, the sooner you can access better equipment and resupplies."
-msgstr "Huur zoveel mogelijk ingenieurs in. Hoe sneller uw productielijnen, hoe sneller u betere uitrusting krijgt en aanvullingen."
+msgstr "Huur zoveel mogelijk ingenieurs in. Hoe sneller uw productielijnen, hoe sneller u toegang tot betere uitrusting krijgt en nieuwe voorraden."
 
 msgid "Murmansk"
 msgstr "Moermansk"
 
-#, fuzzy
 msgid "Be sure to visit our website, http://ufoai.sourceforge.net/, and drop by our community channel, #ufoai on irc.freenode.net."
-msgstr "Breng een bezoek aan onze website, http://ufoai.sf.net/ en kom naar ons gemeenschapskanaal, #ufoai op irc.freenode.net."
+msgstr "Breng eens een bezoek aan onze website, http://ufoai.sourceforge.net en kom naar onze IRC chatroom, #ufoai op irc.freenode.net."
 
 msgid "Nagpur"
 msgstr "Nagpur"
@@ -8182,22 +8069,20 @@ msgstr "Vergeet niet dat u een actief Commando Centrum nodig heeft om intercepti
 msgid "Nakhon Ratchasima"
 msgstr "Nakhon Ratchasima"
 
-#, fuzzy
 msgid "Never pass up an opportunity to capture a live alien, even one of a species you have already researched."
-msgstr "Grijp altijd de mogelijkheid aan om een levende buitenaardse gevangen te nemen, zelfs als u ze al heeft onderzocht."
+msgstr "Grijp altijd de mogelijkheid aan om een levende buitenaardse gevangen te nemen, zelfs als u al onderzoek heeft verricht op dat bepaalde ras."
 
 msgid "Nanjing"
 msgstr "Nanjing"
 
 msgid "Watch your back! Your soldiers can only see enemies in an arc in front of them."
-msgstr "Let op achter u! Uw soldaten kunnen alleen vijanden zien in een boog voor ze."
+msgstr "Let op achter u! Uw soldaten kunnen alleen vijanden zien in de kijkrichting."
 
 msgid "Nantes"
 msgstr "Nantes"
 
-#, fuzzy
 msgid "Building a workshop and off-base installations UFO yards allows you to disassemble UFOs."
-msgstr "Bouw een werkplaats en UFO hangars om UFO's te kunnen ontmantelen."
+msgstr "Bouw een werkplaats en een of meer UFO hangars om UFO's te kunnen ontmantelen."
 
 msgid "Nashville"
 msgstr "Nashville"
@@ -8221,7 +8106,7 @@ msgid "Niamey"
 msgstr "Niamey"
 
 msgid "Use [x] to cycle through the Reaction Fire settings: none, one shot, multiple shots."
-msgstr "Gebruik [x] om door verschillende Reactievuren te wisselen: geen, één schot, meerdere schoten."
+msgstr "Gebruik [x] om door verschillende Reactievuur modi te wisselen: geen, één schot, meerdere schoten."
 
 msgid "Nizhny Novgorod"
 msgstr "Nizhny Novgorod"
@@ -8244,30 +8129,26 @@ msgstr "Als u weinig Tijd Eenheden (TE's) en gevaarlijke vijanden heeft, kunt u 
 msgid "Omdurman"
 msgstr "Omdurman"
 
-#, fuzzy
 msgid "Use a fast soldier with pistols, one handed melee weapons, grenades, flashbangs and medikits as a medic."
-msgstr "Gebruik een snelle soldaat met pistolen, enkelhandige gemengde wapens, granaten, flitsgranaten en EHBO-koffer."
+msgstr "Gebruik een snelle soldaat met pistolen, enkelhandige steekwapens, (flits)granaten en EHBO koffer als veldarts."
 
 msgid "Osaka"
 msgstr "Osaka"
 
-#, fuzzy
 msgid "Building a hospital allows you to heal your soldiers faster for their next mission."
 msgstr "Bouw een ziekenboeg om uw soldaten sneller te kunnen genezen voor hun volgende missie."
 
 msgid "Ottawa"
 msgstr "Ottawa"
 
-#, fuzzy
 msgid "Plasma grenades do the most damage, while frag grenades have a slightly longer throwing range."
-msgstr "Plasma granaten doen het meeste schade, maar fragmentatie granaten kunnen bruikbaar zijn, omdat ze iets verder gegooid kunnen worden."
+msgstr "Plasma granaten doen het meeste schade, terwijl fragmentatie granaten verder weg gegooid kunnen worden."
 
 msgid "Palembang"
 msgstr "Palembang"
 
-#, fuzzy
 msgid "Keep soldiers close, so that they can support each other (heal each other, shoot when one runs out of Time Units (TUs)). Keep a wall between them at the end of your turn, so that they can't be killed with a single grenade."
-msgstr "Houdt soldaten dicht bij elkaar, zodat ze elkaar kunnen ondersteunen (elkaar genezen, schieten als een ander zonder Tijd Eenheden (TE's) zit). Houdt een muur tussen ze aan het einde van een beurt, zodat ze niet met één granaat kunnen worden gedood."
+msgstr "Houd soldaten dicht bij elkaar, zodat ze elkaar kunnen ondersteunen (elkaar genezen, schieten als een ander zonder Tijd Eenheden (TE's) zit). Houd een muur tussen ze aan het einde van een beurt, zodat ze niet met één granaat kunnen worden gedood."
 
 msgid "Paris"
 msgstr "Parijs"
@@ -8285,19 +8166,19 @@ msgid "Perm"
 msgstr "Perm"
 
 msgid "Reaction Fire can drain your Time Units (TUs) to 0. If you turn off Reaction Fire, you cannot turn it back on without enough Time Units (TU). You can, however, leave it on. Try not to adjust zeroed units until you're sure."
-msgstr "Reactievuur kan uw Tijd Eenheden (TE's) verminderen tot 0. Als u Reactievuur uitzet, kunt u het niet meer aanzetten als u niet genoeg Tijd Eenheden (TE's) heeft. U kunt het wel aanlaten. Probeer eenheden met nul niet aan te passen tot u er zeker van bent."
+msgstr "Reactievuur kan uw Tijd Eenheden (TE's) verminderen tot 0. Als u Reactievuur uitzet, kunt u het niet meer aanzetten als u niet genoeg Tijd Eenheden (TE's) heeft. U kunt het wel aan laten staan. Probeer eenheden met nul TE niet aan te passen tot u er zeker van bent."
 
 msgid "Petropavlovsk-Kamchatsky"
 msgstr "Petropavlovsk-Kamchatsky"
 
 msgid "Air Burst from the Grenade Launcher lets you explode those grenades in a specific place. Very useful when targetting something near the edge of the map, or on a ledge."
-msgstr "Luchtschoten van een Granaatwerper laat u granaten op een bepaalde plaats exploderen. Erg bruikbaar als u iets aan de rand van een kaart of op een randje probeert te raken."
+msgstr "Luchtschoten van een Granaatwerper laat granaten op een bepaalde plaats exploderen. Erg handig als u iets aan de rand van een kaart of op een randje probeert te raken."
 
 msgid "Phnom Penh"
 msgstr "Phnom-Penh"
 
 msgid "When throwing grenades, try to avoid straight throws along the grid. With at least a little bit of an angle, the chances of bouncing it back at yourself becomes much less on a 'missed' throw."
-msgstr "Als u granaten gooit, probeer dan niet recht langs de kaartlijnen te gooien. De kans dat deze terugstuitert als hij szijn doel mist is een stuk kleiner als de granaat iets schuin op de kaart wordt gegooid."
+msgstr "Als u granaten gooit, probeer dan niet recht langs de kaartlijnen te gooien. De kans dat deze terugstuitert als het zijn doel mist is een stuk kleiner als de granaat ietwat schuin op de kaart wordt gegooid."
 
 msgid "Pittsburgh"
 msgstr "Pittsburgh"
@@ -8326,15 +8207,14 @@ msgstr "U kunt [spatie] gebruiken om tussen alle aardbol onderdelen te wisselen.
 msgid "Puebla"
 msgstr "Puebla"
 
-#, fuzzy
 msgid "You can accelerate/decelerate time on the geoscape by using the mouse wheel, the time buttons, or by pressing [-], [+/=]. Alternatively you can press [n] and [m]. [backspace] will stop the flow of time."
-msgstr "U kunt de tijd versnellen/vertragen door in het aardbol aanzicht het muiswieltje te gebruiken op de tijdknopen, of door [-], [+/=] te drukken. U kunt ook [n] en [m] drukken. [backspace] zal de tijd stoppen."
+msgstr "U kunt de tijd versnellen/vertragen door in het aardbol scherm het muiswieltje te gebruiken op de tijdknopen, of door [-], [+/=] te drukken. U kunt ook [n] en [m] drukken. [backspace] zal de tijd stoppen."
 
 msgid "Pune"
 msgstr "Pune"
 
 msgid "Be sure to equip your interceptor with weapons before launching it."
-msgstr "Vergeet niet om uw interceptievliegtuig van wapens te voorzien voor het te lanceren."
+msgstr "Vergeet niet om uw interceptievliegtuig van wapens te voorzien voordat u het op pad stuurt."
 
 msgid "Pyongyang"
 msgstr "Pyongyang"
@@ -8346,34 +8226,31 @@ msgid "Quebec City"
 msgstr "Québec"
 
 msgid "Your attacked aircraft may flee to one of your bases to avoid being destroyed by UFOs."
-msgstr "Uw aangevallen vliegtuig kan vluchten naar één van uw basissen om te voorkomen dat het door een UFO wordt vernietigd."
+msgstr "Uw aangevallen vliegtuig zou kunnen vluchten naar één van uw bases om te voorkomen dat het door een UFO wordt vernietigd."
 
 msgid "Quezon City"
 msgstr "Quezon City"
 
-#, fuzzy
 msgid "Build an alien containment to be able to imprison live aliens."
-msgstr "Bouw een buitenaardsen Quarantaine om levende buitenaardsen gevangen te kunnen nemen."
+msgstr "Bouw een Quarantaine om levende buitenaardsen gevangen te kunnen nemen."
 
 msgid "Raleigh"
 msgstr "Raleigh"
 
-#, fuzzy
 msgid "Spotted enemies: While on a ground mission you can press [Space] to cycle through all spotted enemies. Pressing [t] will draw a line to each enemy the selected soldier can see."
 msgstr "Gesignaleerde vijanden: Zolang u bezig bent met een grondmissie kunt u [Spatie] drukken om langs alle gesignaleerde vijanden te gaan. Op [t] drukken trekt een lijn tussen de geselecteerde soldaat en elke vijand die hij/zij kan zien."
 
 msgid "Recife"
 msgstr "Recife"
 
-#, fuzzy
 msgid "You can use the right mouse button in the soldier equipment screen to equip or unequip weapons, ammo and armour. This only works in the base, not in the tactical missions where such an action would cost TUs."
-msgstr "U kunt de rechtermuisknop gebruiken in het uitrustingsscherm om wapens, munitie en pantser toe te wijzen of af te nemen. Dit werkt alleen in de basis uitrusting, niet wanneer u op een tactische missie bent waarbij deze acties TE's kosten."
+msgstr "U kunt de rechter muisknop gebruiken in het uitrustingsscherm om wapens, munitie en pantser toe te wijzen of af te nemen. Dit werkt alleen in de basis uitrusting, niet wanneer u op een tactische missie bent, wanneer deze acties TE's kosten."
 
 msgid "Rio de Janeiro"
 msgstr "Rio de Janeiro"
 
 msgid "You should ensure that not too many civilians lose their lives. Otherwise you might lose the game sooner than you'd expect."
-msgstr "Zorg ervoor dat niet teveel burgers het leven laten. Anders kunt u het spel wel eens eerder verliezen dan u denkt."
+msgstr "Zorg ervoor dat niet teveel burgers het loodje leggen. Anders kunt u het spel wel eens eerder verliezen dan u verwacht."
 
 msgid "Rockhampton"
 msgstr "Rockhampton"
@@ -8391,26 +8268,25 @@ msgid "Sacramento"
 msgstr "Sacramento"
 
 msgid "Consider launching interceptors to catch a faster UFO when it's really close to your base to avoid the chase and so that your interceptors are already in weapons range when they launch."
-msgstr "Overweeg om een interceptievliegtuig te lanceren om een snellere UFO te vangen, zodra deze erg dicht bij uw basis is, om te voorkomen dat u een achtervolging inzet en ze reeds binnen het bereik van uw wapens zijn."
+msgstr "Overweeg om een interceptievliegtuig te lanceren om een snellere UFO te vangen zodra deze erg dicht bij uw basis is, om te voorkomen dat u een lange achtervolging inzet en dat ze meteen binnen het bereik van uw wapens zijn."
 
 msgid "Saint Petersburg"
 msgstr "Sint Petersburg"
 
 msgid "Consider stunning the civilians during Terror Site missions to keep them from running around. Aliens also seem to prefer killing conscious civilians rather than unconscious ones."
-msgstr "Overweeg om burgers te verdoven tijdens een Terreur missie om ervoor te zorgen dat ze niet rondrennen. Buitenaardsen lijken ook liever burgers bij bewustzijn te vermoorden, dan tijdens bewusteloze burgers."
+msgstr "Overweeg om burgers te verdoven tijdens een Terreur missie om ervoor te zorgen dat ze niet rondrennen. Buitenaardsen lijken ook liever burgers bij bewustzijn te vermoorden dan bewusteloze burgers."
 
 msgid "Samara"
 msgstr "Samara"
 
 msgid "Don't forget to install missiles launchers and missiles in your missile batteries."
-msgstr "Vergeet niet om raketlanceerders en raketten in uw raketbatterijen te doen."
+msgstr "Vergeet niet om raketlanceerders en raketten in uw raketbatterijen te plaatsen."
 
 msgid "San Antonio"
 msgstr "San Antonio"
 
-#, fuzzy
 msgid "Can't remember who has the medikit in their backpack? Press [i] for inventory and then [1] to [8] to cycle through your troops."
-msgstr "Vergeten wie de EHBO doos in de rugzak heeft? Druk [i] voor uitrusting en dan [1] tot [8] om door uw troepen te zoeken."
+msgstr "Vergeten wie de EHBO koffer in de rugzak heeft? Druk [i] voor uitrusting en dan [1] tot [8] om door uw troepen te bladeren."
 
 msgid "San Francisco"
 msgstr "San Francisco"
@@ -8421,22 +8297,20 @@ msgstr "Om een snelle UFO te onderscheppen, stuurt u onderscheppingsvliegtuigen 
 msgid "San Marino"
 msgstr "San Marino"
 
-#, fuzzy
 msgid "To quickly buy or sell items, hover over the arrows and roll your mousewheel."
-msgstr "Om snel onderdelen te kopen/verkopen, zet uw cursor over de pijltjes en rol met uw muiswieltje."
+msgstr "Om snel onderdelen te kopen/verkopen, zet uw muiscursor over de pijltjes en rol met uw muiswieltje."
 
 msgid "Santa Cruz de la Sierra"
 msgstr "Santa Cruz de la Sierra"
 
-#, fuzzy
 msgid "Beware of friendly fire! While lobbing a grenade at an enemy who snuck up on your troops might be an easy kill, chances are you'll do the aliens' work for them. The same can be said about bullets, make sure once the enemy is dead you wont be shooting your own troops behind him."
-msgstr "Let goed op vriendelijk vuur! Het kan het eenvoudigste zijn om een granaat te werpen naar de vijand die naar uw troepen is geslopen, maar als u niet voorzichtig bent, doet u het werk van de buitenaardsen voor ze. Het is hetzelfde met kogels, vergewis u ervan, dat zodra uw vijand dood is, u niet uw eigen persoon neerschiet aan de andere kant."
+msgstr "Let goed op eigen vuur! Het kan soms verleidelijk zijn om een granaat te werpen naar de vijand die dicht bij uw troepen is geslopen, maar als u niet voorzichtig bent, doet u het werk van de buitenaardsen voor ze. Hetzelfde geldt voor kogels. Zorg dat zodra uw vijand dood is, u niet uw eigen soldaten achter de vijand neerschiet."
 
 msgid "Santiago de Cuba"
 msgstr "Santiago de Cuba"
 
 msgid "Remember to check your research and production queues often! A good arsenal is an active arsenal!"
-msgstr "Herinner u om uw wachtrijen van onderzoek en productie vaak te controleren! Een goed arsenaal is een actief arsenaal!"
+msgstr "Vergeet niet om uw onderzoeks- en productie-wachtrijen vaak te controleren! Een goed arsenaal is een actief arsenaal!"
 
 msgid "Sao Jose dos Campos"
 msgstr "Sao Jose dos Campos"
@@ -8447,9 +8321,8 @@ msgstr "De aanwezigheid van levende burgers betekent waarschijnlijk, dat er geen
 msgid "Sarajevo"
 msgstr "Sarajevo"
 
-#, fuzzy
 msgid "Watch the health of your soldiers; do not let them die. Experienced soldiers are more efficient in missions than new recruits."
-msgstr "Kijk goed naar de gezondheid van uw soldaten, laat ze niet sterven. Doorgewinterde soldaten zijn veel efficiënter in missies, dan nieuwe recruten."
+msgstr "Let goed op de gezondheid van uw soldaten, laat ze niet sterven. Doorgewinterde soldaten zijn veel efficiënter in missies dan nieuwe recruten."
 
 msgid "Seattle"
 msgstr "Seattle"
@@ -8478,9 +8351,8 @@ msgstr ""
 msgid "Siem Reap"
 msgstr "Siem Reap"
 
-#, fuzzy
 msgid "CREDITS"
-msgstr "KREDIETEN"
+msgstr "KREDIET"
 
 msgid "Singapore"
 msgstr "Singapore"
@@ -8533,23 +8405,20 @@ msgstr "Bezichtiging:"
 msgid "Surat"
 msgstr "Surat"
 
-#, fuzzy
 msgid "Map Name:"
-msgstr "Kaart naam:"
+msgstr "Kaartnaam:"
 
 msgid "Suva"
 msgstr "Suva"
 
-#, fuzzy
 msgid "Daytime Version:"
 msgstr "Dag versie:"
 
 msgid "Tabriz"
 msgstr "Tabriz"
 
-#, fuzzy
 msgid "Select whether you want to play at day- or nighttime."
-msgstr "Kies met welke zijde u wilt spelen"
+msgstr "Kies of u bij dag of nacht wilt spelen."
 
 msgid "Tamale"
 msgstr "Tamale"
@@ -8584,9 +8453,8 @@ msgstr "Team:"
 msgid "Tianjin"
 msgstr "Tianjin"
 
-#, fuzzy
 msgid "Select which side you want to play with."
-msgstr "Kies met welke zijde u wilt spelen"
+msgstr "Kies met welke zijde u wilt spelen."
 
 msgid "Tirana"
 msgstr "Tirana"
@@ -8645,9 +8513,8 @@ msgstr "Soldaten uitrusting"
 msgid "Warsaw"
 msgstr "Warschau"
 
-#, fuzzy
 msgid "Rename aircraft"
-msgstr "Kies vliegtuig"
+msgstr "Hernoem vliegtuig"
 
 msgid "Whitehorse"
 msgstr "Whitehorse"
@@ -8658,16 +8525,14 @@ msgstr "Gekozen onderdeel:"
 msgid "Wollongong"
 msgstr "Wollongong"
 
-#, fuzzy
 msgid "Equip this item"
-msgstr "Voorzie deze soldaat van uitrusting"
+msgstr "Item naar uitrusting"
 
 msgid "Wuhan"
 msgstr "Wuhan"
 
-#, fuzzy
 msgid "Remove this item"
-msgstr "Verwijder dit afweersysteem"
+msgstr "Item uit uitrusting"
 
 msgid "Xining"
 msgstr "Xining"
@@ -8717,40 +8582,35 @@ msgstr "Zürich"
 msgid "Team Members:"
 msgstr "Teamleden:"
 
-#, fuzzy
 msgid "Multiplayer Alien"
-msgstr "Meerdere spelers"
+msgstr "Multiplayer buitenaardsen"
 
 msgid "Start Aircraft"
 msgstr "Start het vliegtuig"
 
-#, fuzzy
 msgid "Assault Rifles Only"
-msgstr "Bestormingsgeweer"
+msgstr "Alleen Bestormingsgeweren"
 
 msgid "Call back"
 msgstr "Herroep"
 
 msgid "Flamers/Rifles/Grenades"
-msgstr ""
+msgstr "Vlammenwerpers/Geweren/Granaten"
 
-#, fuzzy
 msgid "Add/remove this pilot"
-msgstr "Voeg deze soldaat toe/haal deze soldaat weg"
+msgstr "Toevoegen/Verwijderen piloot"
 
 msgid "Campaign Start (Market)"
 msgstr ""
 
-#, fuzzy
 msgid "Pilot is assigned to another craft"
-msgstr "Piloot in vliegtuig"
+msgstr "Piloot is toegewezen aan een ander vliegtuig"
 
 msgid "Alien Campaign Start (Alien Campaign)"
 msgstr ""
 
-#, fuzzy
 msgid "A pilot is already assigned to this craft"
-msgstr "Geen munitie toegewezen aan dit wapen."
+msgstr "Er is al een piloot toegewezen aan dit vliegtuig"
 
 msgid "mail_from_un"
 msgstr "SecGen. Mahouf Serra, Verenigde Naties, New York\""
@@ -8761,9 +8621,8 @@ msgstr "Wijs een piloot toe aan dit vliegtuig"
 msgid "2084 Mar 21"
 msgstr "2084 Mrt 21"
 
-#, fuzzy
 msgid "Remove pilot from this craft"
-msgstr "Verwijder onderdeel van het vak"
+msgstr "Verwijder piloot uit dit vliegtuig"
 
 msgid "mail_prolog"
 msgstr ""
@@ -8775,7 +8634,7 @@ msgstr ""
 "\n"
 "Zodra u uw eerste basis hebt gevestigd, moet u uw soldaten voorbereiden. De rekruten die we aan PHALANX hebben toegewezen moeten in uw vliegtuig worden geplaatst, en daarna worden uitgerust voor de aanval.\n"
 "\n"
-"Zorg goed voor ze, Overste. We rekenen op u en bidden voor u.\n"
+"Zorg goed voor ze, Overste. We rekenen op u.\n"
 "\n"
 "Dat is alles. Veel succes en goede jacht."
 
@@ -8785,16 +8644,14 @@ msgstr "Voorzie deze soldaat van uitrusting"
 msgid "Alien died"
 msgstr "Buitenaardse overleden"
 
-#, fuzzy
 msgid "Soldier is assigned to another craft"
-msgstr "Soldaat in vliegtuig"
+msgstr "Soldaat is toegewezen aan een ander vliegtuig"
 
 msgid "Recovery Report -- %s"
 msgstr "Bergingsrapport -- %s"
 
-#, fuzzy
 msgid "No more soldiers can be assigned to this craft"
-msgstr "Geen munitie toegewezen aan dit wapen."
+msgstr "Maximaal aantal soldaten voor dit vliegtuig bereikt"
 
 msgid "mail_alien_ufo_recovered"
 msgstr ""
@@ -8876,35 +8733,33 @@ msgstr "Missie Samenvatting -- %s"
 msgid "Assault Weapons:"
 msgstr "Aanvalswapens:"
 
+# geen precieze vertaling, weet ik, maar matcht beter met de lijst als geheel
 msgid "Average"
-msgstr "Redelijk"
+msgstr "Matig"
 
 msgid "Sniper Rifles:"
-msgstr "Sluipschutter Geweren:"
+msgstr "Sluipschutter:"
 
 msgid "Highly Proficient"
-msgstr "Geweldig"
+msgstr "Erg Goed"
 
 msgid "High-Explosives:"
 msgstr "Zware Explosieven:"
 
-#, fuzzy
 msgid "It is not your turn!\n"
-msgstr "Dit is niet uw ronde\n"
+msgstr "Dit is niet uw ronde!\n"
 
 msgid "Missions performed:"
-msgstr "Voltooid aantal missies:"
+msgstr "Aantal voltooide missies:"
 
-#, fuzzy
 msgid "Select an actor from list"
 msgstr "Kies een soldaat van de lijst"
 
 msgid "Enemies killed:"
 msgstr "Vijanden Gedood:"
 
-#, fuzzy
 msgid "Use"
-msgstr "Gebruikers"
+msgstr "Gebruik"
 
 msgid "Civilians killed:"
 msgstr "Burgers gedood:"
@@ -8928,16 +8783,14 @@ msgstr "Overgebleven TE's: %i"
 msgid "Kill this alien"
 msgstr "Dood deze buitenaardse"
 
-#, fuzzy
 msgid "No weapon."
-msgstr "%s wapen met\n"
+msgstr "Geen wapen."
 
 msgid "Start autopsy"
 msgstr "Start lijkschouwing"
 
-#, fuzzy
 msgid "No reload possible, you don't have backup ammo."
-msgstr "Herladen niet mogelijk voor de linkerhand, is al volledig geladen."
+msgstr "Herladen niet mogelijk, u heeft geen reservemunitie."
 
 msgid "Alive:"
 msgstr "Levend:"
@@ -8983,9 +8836,8 @@ msgstr ""
 msgid "Base capacity:"
 msgstr "Basis capaciteit"
 
-#, fuzzy
 msgid "Update cvars from actor from list"
-msgstr "Kies een soldaat van de lijst"
+msgstr "Bijwerken cvars van soldaat uit de lijst"
 
 msgid "Kill all aliens in this base"
 msgstr "Dood alle buitenaardsen in deze basis"
@@ -9069,7 +8921,7 @@ msgstr "Verwijder wapen uit het gekozen vak"
 
 #, fuzzy
 msgid "A soldier was revitalised.\n"
-msgstr "Een soldaat werd gedood.\n"
+msgstr "A soldier was revitalised.\n"
 
 #, fuzzy
 msgid "Stores"
@@ -9087,7 +8939,7 @@ msgstr "Erg Moeilijk"
 msgid "Surface to Air defences"
 msgstr "Grond naar Lucht afweer"
 
-#, fuzzy, c-format
+#, c-format
 msgid ""
 "%s\n"
 "\n"
@@ -9102,21 +8954,20 @@ msgstr ""
 "%s\n"
 "\n"
 "Ras: %s\n"
-"Rekruten: %i %s, %i %s, %i %s\n"
+"Rekruten: %i %s, %i %s, %i %s, %i %s\n"
 "Krediet: %ic\n"
 "Moeilijkheidsgraad: %s\n"
-"Min. blijheid van landen: %i %%\n"
+"Min. tevredenheid van landen: %i %%\n"
 "Max. toegestane schuld: %ic\n"
 "%s\n"
 
 msgid "Name:"
 msgstr "Naam:"
 
-#, fuzzy
 msgid "pilot"
 msgid_plural "pilots"
-msgstr[0] "Piloot"
-msgstr[1] "Piloot"
+msgstr[0] "piloot"
+msgstr[1] "piloten"
 
 msgid "Targetted UFO:"
 msgstr "UFO doelwit:"
@@ -9130,7 +8981,6 @@ msgstr "Tijd nodig om te bouwen:"
 msgid "enroute to mission"
 msgstr "onderweg naar missie"
 
-#, fuzzy
 msgid "Autofire"
 msgstr "Automatisch vuur"
 
@@ -9162,9 +9012,8 @@ msgstr "Bouw basis faciliteiten"
 msgid "Insufficient fuel."
 msgstr "Onvoldoende brandstof."
 
-#, fuzzy
 msgid "Buy/Sell"
-msgstr "Verkoop"
+msgstr "Koop/Verkoop"
 
 msgid "Aircraft started"
 msgstr "Vliegtuig gestart"
@@ -9196,7 +9045,7 @@ msgid "You've captured new aliens."
 msgstr "U hebt nieuwe buitenaardsen gevangen genomen."
 
 msgid "Base Summary"
-msgstr "Basis Samenvatting"
+msgstr "Samenvatting"
 
 msgid "None"
 msgstr "Geen"
@@ -9207,7 +9056,6 @@ msgstr "Informatie over deze basis (beschikbare opslagruimte, productie, onderzo
 msgid "Not set"
 msgstr "Niet gezet"
 
-#, fuzzy
 msgid "Open/close Building preview window"
 msgstr "Open/sluit Gebouw bezichtigingsvenster"
 
@@ -9215,7 +9063,7 @@ msgid "Not operational, depends on"
 msgstr "Niet operationeel, afhankelijk van"
 
 msgid "Building preview"
-msgstr "Gebouw bezichtiging"
+msgstr "Gebouw bekijken"
 
 #, c-format
 msgid "Costs:\t%i c\n"
@@ -9243,7 +9091,7 @@ msgstr[0] "%i verzameld onderdeel"
 msgstr[1] "%i verzamelde onderdelen"
 
 msgid "Start a new singleplayer campaign."
-msgstr ""
+msgstr "Start een nieuwe Campagne."
 
 #, c-format
 msgid "%s has been destroyed by an antimatter storage breach."
@@ -9254,18 +9102,16 @@ msgstr "Laden"
 
 #, c-format
 msgid "A new base has been built: %s (nation: %s)"
-msgstr "Een nieuwe bais is gebouwd: %s (land: %s)"
+msgstr "Een nieuwe basis is gebouwd: %s (land: %s)"
 
 msgid "Continue"
 msgstr "Ga door"
 
-#, fuzzy
 msgid "Aircraft management and crew equipment"
-msgstr "Vliegtuig uitrusting"
+msgstr "Vliegtuig beheer en troepen uitrusting"
 
-#, fuzzy
 msgid "Load last saved game or continue playing."
-msgstr "Laadt het laatst opgeslagen spel of ga door met spelen"
+msgstr "Laad het laatst opgeslagen spel of ga door met spelen"
 
 #, fuzzy, c-format
 msgid "No %s functional in base."
@@ -9277,24 +9123,21 @@ msgstr "Terug"
 msgid "Research new technology"
 msgstr "Onderzoek nieuwe technologie"
 
-#, fuzzy
 msgid "Leave this menu and continue playing."
-msgstr "Laadt het laatst opgeslagen spel of ga door met spelen"
+msgstr "Verlaat dit menu en ga door met spelen."
 
-#, fuzzy
 msgid "Hire or dismiss employees"
-msgstr "Huur werknemers in"
+msgstr "Inhuur werknemers"
 
 msgid "Options"
 msgstr "Opties"
 
 msgid "Treat wounded soldiers and perform implant surgery"
-msgstr "Behandel de gewonde soldaten en pas implantatenchirurgie toe"
+msgstr "Behandel de gewonde soldaten en pas implantaatchirurgie toe"
 
 msgid "Exit"
 msgstr "Einde"
 
-#, fuzzy
 msgid "You can't destroy the entrance of the base!"
 msgstr "U kunt de ingang van de basis niet vernietigen!"
 
@@ -9323,26 +9166,26 @@ msgid "Go to storage"
 msgstr "Ga naar opslag"
 
 msgid "Thank you for playing UFO:Alien Invasion"
-msgstr "Dank u voor het spelen van UFO: Buitenaardsen Invasie"
+msgstr "Dank u voor het spelen van UFO: Alien Invasion"
 
 msgid "Base is under attack, you can't access this building !"
 msgstr "Basis wordt aangevallen, u kunt dit gebouw niet bereiken!"
 
 msgid "Exit Campaign Confirmation"
-msgstr ""
+msgstr "Bevestig Campagne Verlaten"
 
 #, c-format
 msgid "Building %s is not finished yet, and is needed to use building %s."
 msgstr "Gebouw %s is nog niet klaar, en is nodig om gebouw %s te kunnen gebruiken."
 
 msgid "You will lose all your campaign progress."
-msgstr ""
+msgstr "U zult alle niet-opgeslagen campagne voortgang verliezen."
 
 msgid "^BAircraft\n"
 msgstr "^BVliegtuig\n"
 
 msgid "Exit current campaign and return to main menu."
-msgstr ""
+msgstr "Verlaat huidige campagne en keer terug naar het hoofdmenu."
 
 msgid "day"
 msgid_plural "days"
@@ -9350,13 +9193,13 @@ msgstr[0] "dag"
 msgstr[1] "dagen"
 
 msgid "Quit anyway"
-msgstr ""
+msgstr "Toch stoppen"
 
 msgid "^BResearch\t\t\t\t\t\tScientists\t\t\t\tPercent\n"
 msgstr "^BOnderzoek\t\t\t\t\t\tOnderzoekers\t\t\t\tPercentage\n"
 
 msgid "Do not quit."
-msgstr ""
+msgstr "Niet stoppen."
 
 msgid "Working"
 msgstr "Werkt"
@@ -9371,7 +9214,7 @@ msgid "Backpack"
 msgstr "Rugzak"
 
 msgid "You have failed in your charter to protect Earth. Our home and our people have fallen to the alien infection. Only a handful of people on Earth remain human, and the remaining few no longer have a chance to stem the tide. Your command is no more; PHALANX is no longer able to operate as a functioning unit. Nothing stands between the aliens and total victory."
-msgstr "U hebt gefaald in uw doel om de aarde te beschermen. Onze planeet en onze mensen zijn onderdoor gegaan onder de buitenaardse infectie. Slechts een handvol mensen op aarde zijn nog menselijk, en de weinigen die nog over zijn hebben geen kans om het tij te keren. Uw commando is niet langer; PHALANX kan niet langer functioneren. Er is niets meer dat staat tussen de buitenaardsen en een complete overwinning."
+msgstr "U hebt gefaald in uw doel om de aarde te beschermen. Onze planeet en onze mensen zijn ten onder gegaan aan de buitenaardse infestatie. Slechts een handvol mensen op aarde zijn nog menselijk, en de weinigen die nog over zijn hebben geen kans meer om het tij te keren. Uw leiderschap is ten einde; PHALANX kan niet langer functioneren. Er is niets meer dat de buitenaardsen een complete overwinning in de weg staat."
 
 msgid "Left Hand"
 msgstr "Linkerhand"
@@ -9385,7 +9228,6 @@ msgstr "Rechterhand"
 msgid "Pilot"
 msgstr "Piloot"
 
-#, fuzzy
 msgid "Extension"
 msgstr "Uitbreiding"
 
@@ -9427,10 +9269,10 @@ msgid "Heavy"
 msgstr "Zwaar"
 
 msgid "Ammo not usable with current weapon."
-msgstr ""
+msgstr "Munitie niet bruikbaar met huidig wapen."
 
 msgid "Misc"
-msgstr "Divers"
+msgstr "Diversen"
 
 msgid "Installation destroyed"
 msgstr "Installatie vernietigd"
@@ -9478,9 +9320,9 @@ msgstr ""
 msgid "Object Info"
 msgstr "Voorwerp Informatie"
 
-#, fuzzy, c-format
+#, c-format
 msgid "Health:\t%3.0f%%\n"
-msgstr "Gezondheid:"
+msgstr "Gezondheid:\t%3.0f%%\n"
 
 msgid "Rename your unit"
 msgstr "Hernoem uw eenheid"
@@ -9498,14 +9340,14 @@ msgstr "Kies ufo of missie op de kaart\n"
 msgid "Open up messages"
 msgstr "Open berichten"
 
-#, fuzzy, c-format
+#, c-format
 msgid "%s was successfully installed at %s."
 msgstr "%s is succesvol geïnstalleerd in basis %s."
 
 msgid "Pause"
 msgstr "Pauze"
 
-#, fuzzy, c-format
+#, c-format
 msgid "%s was successfully removed from %s."
 msgstr "%s is succesvol verwijderd van basis %s."
 
@@ -9555,9 +9397,8 @@ msgstr "Interval: 5 dagen"
 msgid "production_queue_empty"
 msgstr "Productie wachtrij leeg"
 
-#, fuzzy
 msgid "Message settings"
-msgstr "Pauze/bericht instellingen"
+msgstr "Bericht instellingen"
 
 msgid "transfer_started"
 msgstr "Overdracht begonnen"
@@ -9572,32 +9413,26 @@ msgstr "bericht_overdracht_ontvangen <NOGDOEN>"
 msgid "Mailclient"
 msgstr "E-mail programma"
 
-#, fuzzy
 msgid "base_attack"
-msgstr "Aanval van een basis"
+msgstr "Aanval op een basis"
 
 msgid "INBOX (with unread mails)"
 msgstr "POSTVAK IN (met ongelezen berichten)"
 
-#, fuzzy
 msgid "Aliens captured"
-msgstr "Buitenaardsen gevangen genomen\t%i\n"
+msgstr "Buitenaardsen gevangen genomen"
 
 msgid "INBOX"
 msgstr "POSTVAK IN"
 
-#, fuzzy
 msgid "PHALANX friendly fire losses"
-msgstr "PHALANX doden door eigen vuur\t%i\n"
+msgstr "PHALANX doden door eigen vuur"
 
 msgid "Statistics"
 msgstr "Statistieken"
 
-#, fuzzy
 msgid "Civilians saved"
-msgstr ""
-"Burgers gered\t%i\n"
-"\n"
+msgstr "Burgers gered"
 
 msgid "Organisation statistics"
 msgstr "Statistieken van de organisatie"
@@ -9610,17 +9445,16 @@ msgstr "Maak installatie"
 
 #, c-format
 msgid "Go on a rescue mission at %s to save your soldiers, some of whom may still be alive."
-msgstr ""
+msgstr "Ga op reddingsmissie in %s om uw soldaten te redden. Er zouden overlevenden kunnen zijn."
 
 msgid "Highlight nation borders"
 msgstr "Toon landsgrenzen"
 
-#, fuzzy
 msgid "Crashed"
-msgstr "Neergestorte UFO"
+msgstr "Neergestort"
 
 msgid "Show radar range"
-msgstr "Laat radar bereik zien"
+msgstr "Toon radar bereik"
 
 msgid "Angry"
 msgstr "Woedend"
@@ -9641,7 +9475,7 @@ msgid "Go to Options"
 msgstr "Ga naar Opties"
 
 msgid "Nation changed happiness"
-msgstr "Land heeft blijheid veranderd"
+msgstr "Land heeft tevredenheid veranderd"
 
 msgid "Ready"
 msgstr "Klaar"
@@ -9689,19 +9523,19 @@ msgstr ""
 msgid "Base is under attack"
 msgstr "Basis wordt aangevallen"
 
-#, fuzzy, c-format
+#, c-format
 msgid "Not enough credits to finish production in %s."
-msgstr "Onvoldoende geld om de productie te voltooien in basis %s.\n"
+msgstr "Onvoldoende geld om de productie te voltooien op %s."
 
 msgid "Go to soldier equipment screen before the battle"
 msgstr "Ga naar soldaatuitrusting vóór het gevecht"
 
-#, fuzzy, c-format
+#, c-format
 msgid "The production of %s at %s has finished."
-msgstr "De productie van %s is voltooid."
+msgstr "De productie van %s in %s is voltooid."
 
 msgid "Kill aliens in container"
-msgstr "Dood alle buitenaardsen in houder"
+msgstr "Dood alle buitenaardsen in quarantaine"
 
 #, c-format
 msgid "Costs per item\t%i c\n"
@@ -9710,9 +9544,9 @@ msgstr "Kosten per onderdeel\t%i c\n"
 msgid "Not implemented"
 msgstr "Niet geïmplementeerd"
 
-#, fuzzy, c-format
+#, c-format
 msgid "Stored at: %s\n"
-msgstr "Status:\t%s\n"
+msgstr "Opgeslagen in:%s\n"
 
 #, fuzzy
 msgid "Lift aircraft"
@@ -9761,21 +9595,18 @@ msgstr "Onderzocht op geen enkele basis."
 msgid "Type"
 msgstr "Type"
 
-#, fuzzy
 msgid "Progress: not available."
 msgstr "Voortgang: Niet beschikbaar."
 
 msgid "Build Time"
 msgstr "Bouwtijd"
 
-#, fuzzy
 msgid "Status: research topic currently paused."
 msgstr "Status: Onderzoek gepauzeerd"
 
 msgid "Cost"
 msgstr "Kosten"
 
-#, fuzzy
 msgid "Status: unknown technology"
 msgstr "Status: Onbekende technologie"
 
@@ -9792,13 +9623,13 @@ msgid "Nothing to research"
 msgstr "Niets te onderzoeken"
 
 msgid "Installation limit reached. Build more bases."
-msgstr "Installatielimiet bereikt. Bouw meer basissen."
+msgstr "Installatielimiet bereikt. Bouw meer bases."
 
 msgid "Nothing to save yet."
 msgstr "Nog niets om te bewaren."
 
 msgid "Base limit reached."
-msgstr "Basis limit bereikt."
+msgstr "Basis limiet bereikt."
 
 msgid "Error loading game."
 msgstr "Fout bij laden van het spel."
@@ -9876,25 +9707,25 @@ msgstr "Nov"
 msgid "Aircraft:"
 msgstr "Vliegtuig:"
 
-#, fuzzy, c-format
+#, c-format
 msgid "%s does not have Storage, items are removed!"
 msgstr "Basis %s heeft geen Opslag, onderdelen zijn verwijderd!"
 
 msgid "Base:"
 msgstr "Basis:"
 
-#, fuzzy, c-format
+#, c-format
 msgid "%s does not have enough free space. Aircraft is lost!"
 msgstr "Basis %s heeft onvoldoende vrije ruimte in de hangars. Vliegtuig is verloren gegaan!"
 
 msgid "Surface-to-air missile site:"
-msgstr "Grond-naar-lucht raketinstallatie:"
+msgstr "Luchtafweer raketinstallatie:"
 
-#, fuzzy, c-format
+#, c-format
 msgid "(can host %i live alien)"
 msgid_plural "(can host %i live aliens)"
-msgstr[0] "(kan %i buitenaardse in leven houden)\n"
-msgstr[1] "(kan %i buitenaardsen in leven houden)\n"
+msgstr[0] "(kan %i buitenaardse in quarantaine houden)"
+msgstr[1] "(kan %i buitenaardsen in quarantaine houden)"
 
 msgid "Select aircraft"
 msgstr "Kies vliegtuig"
@@ -9938,9 +9769,9 @@ msgstr "Opslag is leeg."
 msgid "Description:"
 msgstr "Omschrijving:"
 
-#, fuzzy, c-format
+#, c-format
 msgid "Alive %s"
-msgstr "Levend:"
+msgstr "Levend %s"
 
 msgid "Geoscape options"
 msgstr "Aardoverzicht opties"
@@ -9966,36 +9797,31 @@ msgstr "3D"
 msgid "You can transfer aircraft - this base has a Hangar.\n"
 msgstr "U kunt vliegtuigen overbrengen - deze basis heeft een Hangar.\n"
 
-#, fuzzy
 msgid "Employee is away"
-msgstr "Werknemers"
+msgstr "Werknemer is pleite"
 
 #, c-format
 msgid "A UFO is flying toward %s"
 msgstr "Een UFO vliegt richting %s"
 
-#, fuzzy
 msgid "Unhire - Right click to remove"
-msgstr "Wel/Niet inhuren - Rechtsklik om te verwijderen"
+msgstr "Ontslaan - Rechtsklik om te verwijderen"
 
 msgid "Cruising speed"
 msgstr "Kruissnelheid"
 
-#, fuzzy
 msgid "Hire - Right click to remove"
-msgstr "Wel/Niet inhuren - Rechtsklik om te verwijderen"
+msgstr "Inhuren - Rechtsklik om te verwijderen"
 
 msgid "Accuracy"
 msgstr "Nauwkeurigheid"
 
-#, fuzzy
 msgid "Rename employee"
-msgstr "Hernoem uw werknemer"
+msgstr "Hernoem werknemer"
 
 msgid "Small"
 msgstr "Klein"
 
-#, fuzzy
 msgid "High Explosives:"
 msgstr "Zware Explosieven:"
 
@@ -10003,7 +9829,7 @@ msgid "Error - could not find building"
 msgstr "Fout - kon gebouw niet vinden"
 
 msgid "Missions Performed:"
-msgstr "Voltooid Aantal Missies:"
+msgstr "Uitgevoerde Missies:"
 
 #, c-format
 msgid "Ammo:\t%i\n"
@@ -10016,9 +9842,8 @@ msgstr "Vijanden Gedood:"
 msgid "%s:\t+%i %%\n"
 msgstr "%s:\t+%i %%\n"
 
-#, fuzzy
 msgid "Occupation"
-msgstr "Bezigheid"
+msgstr "In gebruik"
 
 #, c-format
 msgid "%s:\t%i\n"
@@ -10034,7 +9859,7 @@ msgid "Scientists"
 msgstr "Onderzoekers"
 
 msgid "No pre-research description available."
-msgstr "Geen vooronderzoekstitel beschikbaar"
+msgstr "Geen voor-onderzoek beschrijving beschikbaar"
 
 msgid "Unused"
 msgstr "Ongebruikt"
@@ -10046,15 +9871,15 @@ msgstr "Betr: %s\t%i %s %02i\n"
 msgid "Heavily wounded"
 msgstr "Zwaar gewond"
 
-#, fuzzy, c-format
+#, c-format
 msgid "%s was transfered to %s."
-msgstr "%s is gepromoveerd naar %s.\n"
+msgstr "%s is overgedragen aan %s."
 
 msgid "Medium wounds"
 msgstr "Gewond"
 
 msgid "No free UFO yard available."
-msgstr "Geen vrije ufo werf beschikbaar."
+msgstr "Geen vrije UFO werf beschikbaar."
 
 msgid "Slightly wounded"
 msgstr "Licht gewond"
@@ -10067,23 +9892,21 @@ msgid "Scroll up"
 msgstr "Blader omhoog"
 
 msgid "Error saving team. Nothing to save yet."
-msgstr "Fout bij opslaan van team. Nog niet om op te slaan."
+msgstr "Fout bij opslaan van team. Nog niets om op te slaan."
 
 msgid "Scroll down"
 msgstr "Blader omlaag"
 
-#, fuzzy, c-format
+#, c-format
 msgid "%s ended his turn (team %i).\n"
-msgstr "%s beëindigde zijn ronde (team %i)\n"
+msgstr "%s beëindigde zijn ronde (team %i).\n"
 
 msgid "Implants"
 msgstr "Implantaten"
 
-#, fuzzy, c-format
+#, c-format
 msgid "Team survivors:\t%i"
-msgstr ""
-"Team overlevenden\t%i\n"
-"\n"
+msgstr "Team overlevenden:\t%i"
 
 msgid "Check to use this firemode for reaction fire"
 msgstr "Vink aan om deze vuurmodus te gebruiken voor reactievuur"
@@ -10103,9 +9926,8 @@ msgstr ""
 "IP\t%s\n"
 "\n"
 
-#, fuzzy
 msgid "Party chat"
-msgstr "Activeer chat"
+msgstr "Algemene chat"
 
 #, c-format
 msgid "Gametype:\t%s\n"
@@ -10118,17 +9940,15 @@ msgstr "Wereldwijde lobby (IRC)"
 msgid "Network protocol:\t%s\n"
 msgstr "Netwerkprotocol:\t%s\n"
 
-#, fuzzy
 msgid "Say:"
-msgstr "S:"
+msgstr "Zeg:"
 
 #, c-format
 msgid "Max. teams allowed in this map:\t%s\n"
 msgstr "Max. aantal teams toegestaan op deze kaart:\t%s\n"
 
-#, fuzzy
 msgid "Team chat"
-msgstr "Teamchat"
+msgstr "Team chat"
 
 #, c-format
 msgid "Password protected:\t%s\n"
@@ -10163,9 +9983,8 @@ msgstr "vhs_assault_txt"
 msgid "TUs remaining"
 msgstr "TE's over"
 
-#, fuzzy
 msgid "^BDamage type:\tProtection:\n"
-msgstr "Type:\tBeveiliging:\n"
+msgstr "^BSchadetype:\tBescherming:\n"
 
 msgid "TUs reserved"
 msgstr "TE's gereserveerd"
@@ -10209,9 +10028,8 @@ msgstr "Deze verandering vergt misschien een herstart"
 msgid "Chat messages"
 msgstr "Chat berichten"
 
-#, fuzzy
 msgid "^BUI bindings"
-msgstr "Laat toetsbindingen zien"
+msgstr "Toon toetsbindingen zien"
 
 msgid "Level up"
 msgstr "Nivo omhoog"
@@ -10238,7 +10056,7 @@ msgid "Right mouse button click (menu)"
 msgstr "Rechtermuisknopklik (menu)"
 
 msgid "Multiple-shot reaction fire"
-msgstr "Meerdere schoten reactievuur"
+msgstr "Meerschots reactievuur"
 
 msgid "Walk to a square/In fire mode, cancel action"
 msgstr "Loop naar een vierkant/In vuur modus, verhinder actie"
@@ -10259,18 +10077,17 @@ msgstr "Munitie: %i\n"
 msgid "One-shot reaction fire (not possible)"
 msgstr "Enkel schot reactievuur (niet mogelijk)"
 
-#, fuzzy, c-format
+#, c-format
 msgid "Key %s already bound"
-msgstr "Team is al in gebruik"
+msgstr "Toets %s is al in gebruik"
 
 msgid "No reaction fire"
 msgstr "Geen reactie vuur"
 
 #, c-format
 msgid "Key: %s"
-msgstr "Sleutel: %s"
+msgstr "Toets: %s"
 
-#, fuzzy
 msgid "Alternative HUD"
 msgstr "Alternatieve HUD"
 
@@ -10286,7 +10103,6 @@ msgstr "Kon actie niet uitvoeren - persoon is dood!\n"
 msgid "Level 2"
 msgstr "Nivo 2"
 
-#, fuzzy
 msgid "Currently shaken, won't let their guard down.\n"
 msgstr "Momenteel geschokt, teveel op z'n hoede.\n"
 
@@ -10318,16 +10134,14 @@ msgstr "%s is momenteel geschokt.\n"
 msgid "Level 7"
 msgstr "Nivo 7"
 
-#, fuzzy
 msgid "4 minutes left until forced turn end.\n"
-msgstr "over 4 minuten wordt de ronde geforceerd beëindigd\n"
+msgstr "over 4 minuten wordt de ronde geforceerd beëindigd.\n"
 
 msgid "Level 8"
 msgstr "Nivo 8"
 
-#, fuzzy
 msgid "30 seconds left until forced turn end.\n"
-msgstr "over 30 seconden wordt de ronde geforceerd beëindigd\n"
+msgstr "over 30 seconden wordt de ronde geforceerd beëindigd.\n"
 
 msgid "Primary fire mode"
 msgstr "Primaire vuur modus"
@@ -10342,18 +10156,17 @@ msgid "No"
 msgstr "Nee"
 
 msgid "Multiple-shot reaction fire (Not possible)"
-msgstr "Meerdere schoten reactievuur (Onmogelijk)"
+msgstr "Meerdere schoten reactievuur (Niet mogelijk)"
 
 msgid "Bridge"
 msgstr "Brug"
 
 msgid "One-shot reaction fire (Not possible)"
-msgstr "Enkel schot reactievuur (Onmogelijk)"
+msgstr "Enkel schot reactievuur (Niet mogelijk)"
 
 msgid "Construction"
 msgstr "Bouw"
 
-#, fuzzy
 msgid "Original HUD"
 msgstr "Originele HUD"
 
@@ -10366,9 +10179,8 @@ msgstr "Opnieuw initialiseren"
 msgid "Industrial"
 msgstr "Industrieel"
 
-#, fuzzy
 msgid "Preview"
-msgstr "Bezichtiging:"
+msgstr "Voorbeeld"
 
 msgid "Gasstation"
 msgstr "Tankstation"
@@ -10390,30 +10202,24 @@ msgstr "Militair convooi"
 msgid "RESERVED"
 msgstr ""
 
-#, fuzzy
 msgid "Oriental large"
 msgstr "Oriëntaals groot"
 
-#, fuzzy
 msgid "Single shot"
 msgstr "Enkel Schot"
 
-#, fuzzy
 msgid "Tower"
-msgstr "Radar Toren"
+msgstr "Toren"
 
-#, fuzzy
 msgid "Multiple shots"
-msgstr "Meerdere spelers Samen"
+msgstr "Meerdere schoten"
 
 msgid "Tropical UFO"
 msgstr "Tropische UFO"
 
-#, fuzzy
 msgid "Crouch reserved"
-msgstr "TE's gereserveerd"
+msgstr "Sluipen gereserveerd"
 
-#, fuzzy
 msgid "Village large"
 msgstr "Dorp groot"
 
@@ -10423,9 +10229,8 @@ msgstr ""
 msgid "Herakles D"
 msgstr "Herakles D"
 
-#, fuzzy
 msgid "Shots: <8>"
-msgstr "Schoten: %i"
+msgstr "Schoten: <8>"
 
 msgid "Stiletto I"
 msgstr "Stiletto I"
@@ -10436,15 +10241,14 @@ msgstr "Opnieuw laden"
 msgid "Dragon"
 msgstr "Dragon"
 
-#, fuzzy
 msgid "No ammo"
-msgstr "Geen onderdeel gekozen"
+msgstr "Geen munitie"
 
 msgid "Stingray"
 msgstr "Stingray"
 
 msgid "No more ammo"
-msgstr ""
+msgstr "Geen munitie meer"
 
 msgid "Fighter U"
 msgstr "Gevechtsvliegtuig U"
@@ -10452,9 +10256,8 @@ msgstr "Gevechtsvliegtuig U"
 msgid "Phone HUD"
 msgstr ""
 
-#, fuzzy
 msgid "Gunboat U"
-msgstr "Gunboat U"
+msgstr "Kanonneerboot U"
 
 msgid "Floor"
 msgstr "Grond"
@@ -10492,16 +10295,14 @@ msgstr "Gebruikers"
 msgid "Fuel Pod"
 msgstr "Brandstof Behuizing"
 
-#, fuzzy
 msgid "Name is already in use"
-msgstr "Team is al in gebruik"
+msgstr "Naam is al in gebruik"
 
 msgid "Alien Propulsion"
 msgstr "Buitenaardse Voortstuwing"
 
-#, fuzzy
 msgid "Your name is already in use or is invalid."
-msgstr "Team is al in gebruik"
+msgstr "Uw naam is al in gebruik of ongeldig"
 
 msgid "normal"
 msgstr "normaal"
@@ -10580,7 +10381,7 @@ msgid "Abidjan"
 msgstr "Abidjan"
 
 msgid "Recover"
-msgstr "Berg"
+msgstr "Bergen"
 
 msgid "Addis Ababa"
 msgstr "Addis Abeba"
@@ -10597,9 +10398,8 @@ msgstr "Land:"
 msgid "Anchorage"
 msgstr "Anchorage"
 
-#, fuzzy
 msgid "Sort nations by name"
-msgstr "gaat terug naar basis"
+msgstr "Sorteer landen op naam"
 
 msgid "Antwerp"
 msgstr "Antwerpen"
@@ -10611,7 +10411,7 @@ msgid "Assis"
 msgstr "Assis"
 
 msgid "Sort nations by price"
-msgstr "Sorteer naties op prijs"
+msgstr "Sorteer landen op prijs"
 
 msgid "Atlanta"
 msgstr "Atlanta"
@@ -10623,14 +10423,13 @@ msgid "Baltimore"
 msgstr "Baltimore"
 
 msgid "Sort nations by relation"
-msgstr "Sorteer naties op relatie"
+msgstr "Sorteer landen op relatie"
 
 msgid "Bangkok"
 msgstr "Bangkok"
 
-#, fuzzy
 msgid "Selected nation:"
-msgstr "Gekozen onderdeel:"
+msgstr "Gekozen land:"
 
 msgid "Batticaloa"
 msgstr "Batticaloa"
@@ -10678,7 +10477,7 @@ msgid "Calgary"
 msgstr "Calgary"
 
 msgid "Choose between Campaign or Skirmish mode."
-msgstr ""
+msgstr "Kies tussen Campagne of Schermutseling mode."
 
 msgid "Cardiff"
 msgstr "Cardiff"
@@ -10780,7 +10579,7 @@ msgid "Graz"
 msgstr "Graz"
 
 msgid "Close window"
-msgstr "Sluit het venster"
+msgstr "Sluit venster"
 
 msgid "Guatemala City"
 msgstr "Guatemala-Stad"
@@ -10798,13 +10597,13 @@ msgid "Hanoi"
 msgstr "Hanoi"
 
 msgid "Other"
-msgstr "Other"
+msgstr "Overig"
 
 msgid "Hat Yai"
 msgstr "Hat Yai"
 
 msgid "UGV items"
-msgstr "OGV onderdelen"
+msgstr "OGV"
 
 msgid "Hong Kong"
 msgstr "Hong Kong"
@@ -10977,13 +10776,13 @@ msgid "Minneapolis"
 msgstr "Minneapolis"
 
 msgid "Apply"
-msgstr "Pas toe"
+msgstr "Toepassen"
 
 msgid "Montevideo"
 msgstr "Montevideo"
 
 msgid "Apply changes"
-msgstr "Pas veranderingen toe"
+msgstr "Toepassen veranderingen"
 
 msgid "Munich"
 msgstr "München"
@@ -11000,35 +10799,38 @@ msgstr "Waarschuwingstypes:"
 msgid "Nanning"
 msgstr "Nanning"
 
-#, fuzzy
 msgid ""
 "Enable or disable messages being displayed for all notification types.\n"
 "Left click enables all notifications, right click disables."
-msgstr "Activeer of deactiveer zichtbare berichten voor alle berichttypes.\\nLinksklik activeert alle berichten, rechtsklik deactiveert ze."
+msgstr ""
+"Activeer of deactiveer zichtbare berichten voor alle berichttypes.\n"
+"Linker muisknop activeert alle berichten, rechter muisknop deactiveert."
 
 msgid "Naypyidaw"
 msgstr "Naypyidaw"
 
-#, fuzzy
 msgid ""
 "Enable or disable pause for all notification types\n"
 "Pause can't be enabled without notification\n"
 "Left click enables pause for all, right click disables."
-msgstr "Activeer of deactiveer pauze voor alle berichttypes\\nPauze kan niet worden geactiveerd zonder bericht\\nLinksklik activeert pauze voor alles, rechtsklik deactiveert het."
+msgstr ""
+"Activeer of deactiveer pauze voor alle berichttypes\n"
+"Pauze kan niet worden geactiveerd zonder bericht\n"
+"Linker muisknop activeert pauze voor alles, rechter muisknop deactiveert."
 
 msgid "New Delhi"
 msgstr "New Delhi"
 
-#, fuzzy
 msgid ""
 "Enable or disable sounds being played for all notification types.\n"
 "Left click enables all sounds, right click disables."
-msgstr "Activeer of deactiveer geluiden die worden afgespeeld voor alle berichttypes.\\nLinksklik activeert alle geluiden, rechtsklik deactiveert ze."
+msgstr ""
+"Activeer of deactiveer geluiden die worden afgespeeld voor alle berichttypes.\n"
+"Linker muisknop activeert alle geluiden, rechten muisknop deactiveert."
 
 msgid "Norilsk"
 msgstr "Norilsk"
 
-#, fuzzy
 msgid "Connect to this server"
 msgstr "Verbindt naar de foyer"
 
@@ -11095,9 +10897,8 @@ msgstr "Verlaat Serverbrowser"
 msgid "Regina"
 msgstr "Regina"
 
-#, fuzzy
 msgid "Add server to bookmarks"
-msgstr "Verwijder deze bladwijzer"
+msgstr "Toevoegen server bladwijzer"
 
 msgid "Rome"
 msgstr "Rome"
@@ -11121,7 +10922,7 @@ msgid "San Jose"
 msgstr "San José"
 
 msgid "Invalid"
-msgstr ""
+msgstr "Ongeldig"
 
 msgid "Santiago"
 msgstr "Santiago"
@@ -11139,7 +10940,7 @@ msgid "Seoul"
 msgstr "Seoul"
 
 msgid "Connect to IP"
-msgstr "Verbindt naar IP"
+msgstr "Verbindt met IP"
 
 msgid "Shenyang"
 msgstr "Shenyang"
@@ -11199,9 +11000,8 @@ msgstr "Buitenaardsen"
 msgid "Thimphu"
 msgstr "Thimphu"
 
-#, fuzzy
 msgid "Enemies respawn when killed."
-msgstr "Vijanden Gedood:"
+msgstr "Vijanden herverschijnen na doding."
 
 msgid "Tiraspol"
 msgstr "Tiraspol"
@@ -11264,20 +11064,19 @@ msgid "Round time limit in seconds:"
 msgstr "Rondetijd limiet in seconden:"
 
 msgid "Multiplayer"
-msgstr "Meerdere spelers"
+msgstr "Multiplayer"
 
 msgid "Make this server public:"
 msgstr "Maak deze server publiekelijk beschikbaar:"
 
-#, fuzzy
 msgid "No IR Goggles"
-msgstr "IR kijker"
+msgstr "Geen IR kijkers"
 
 msgid "Server-Password:"
 msgstr "Server-Wachtwoord:"
 
 msgid "Asymptotic Market"
-msgstr ""
+msgstr "Asymptotische markt"
 
 msgid "RCON-Password:"
 msgstr "RCON-Wachtwoord:"
@@ -11291,9 +11090,8 @@ msgstr "Start server"
 msgid "mail_from_paul_navarre"
 msgstr "Cd. Paul Navarre, R&D: Ingenieursdivisie, PHALANX, Atlantische Operaties Commando"
 
-#, fuzzy
 msgid "Players connected"
-msgstr "Geen spelers verbonden\n"
+msgstr "Verbonden spelers"
 
 msgid "mail_alien_ufo_crashed"
 msgstr ""
@@ -11331,30 +11129,26 @@ msgstr "Forceer start"
 msgid "mail_new_base_ready"
 msgstr "bericht_nieuwe_basis_klaar <NOGDOEN>"
 
-#, fuzzy
 msgid "Start the game even if not all teams is ready or have joined"
 msgstr "Start het spel, zelfs als niet alle teams verbonden zijn"
 
 msgid "Poor"
-msgstr "Slecht"
+msgstr "Beroerd"
 
 msgid "Finish the teamselection and start the game"
 msgstr "Beëindig de teamselectie en begin het spel"
 
 msgid "Outstanding"
-msgstr "Buitengewoon"
+msgstr "Uitmuntend"
 
-#, fuzzy
 msgid "Are you ready?"
 msgstr "Bent u klaar?"
 
-#, fuzzy
 msgid "Toggle stand/crouch."
 msgstr "Wissel staan/sluipen"
 
-#, fuzzy
 msgid "Invite others"
-msgstr "Sitters"
+msgstr "Nodig anderen uit"
 
 msgid "Walk"
 msgstr "Loop"
@@ -11362,7 +11156,7 @@ msgstr "Loop"
 msgid "Invite players that are online in the lobby"
 msgstr "Spelers uitnodigen die online zijn in de lobby"
 
-#, fuzzy, c-format
+#, c-format
 msgid "TU: %i"
 msgstr "TE: %i"
 
@@ -11379,9 +11173,8 @@ msgstr "Wachtwoord:"
 msgid "Reserving TUs for shooting not possible."
 msgstr "Reserveren van TE's voor schieten niet mogelijk."
 
-#, fuzzy
 msgid "Game invitation"
-msgstr "Hernoem installatie"
+msgstr "Spel uitnodiging"
 
 #, c-format
 msgid ""
@@ -11395,9 +11188,8 @@ msgstr ""
 "- Gereserveerd:  %i\n"
 "- Resterend: %i\n"
 
-#, fuzzy
 msgid "Server info"
-msgstr "Basis info"
+msgstr "Server info"
 
 msgid ""
 "Can't perform action:\n"
@@ -11406,22 +11198,20 @@ msgstr ""
 "Kan deze actie niet uitvoeren:\n"
 "munitie is niet beschikbaar.\n"
 
-#, fuzzy
 msgid "Show server information"
-msgstr "Gebruikersinformatie"
+msgstr "Toon server informatie"
 
 #, c-format
 msgid "loading %s"
-msgstr "laadt %s"
+msgstr "laden %s"
 
 msgid "Go into the lobby"
 msgstr "Ga naar de foyer"
 
-#, fuzzy, c-format
+#, c-format
 msgid "%s lost a soldier\n"
-msgstr "%s geladen\n"
+msgstr "%s verloor een soldaat\n"
 
-#, fuzzy
 msgid "You received a invitation to take part of a multiplayer game. Hit the connect button to connect to the server"
 msgstr "U ontving een uitnodiging om een deel te nemen in een multiplayer spel. Druk op de knop Connect om verbinding te maken met de server"
 
@@ -11434,34 +11224,30 @@ msgstr "Beëindig Spel"
 msgid "Your round started!\n"
 msgstr "Uw ronde is begonnen!\n"
 
-#, fuzzy
 msgid "Overall game settings"
-msgstr "Spel instellingen"
+msgstr "Algemene spelinstellingen"
 
 msgid "Human"
 msgstr "Mens"
 
-#, fuzzy
 msgid "Overall"
-msgstr "alle"
+msgstr "Algemeen"
 
 msgid "ON RED ALERT"
 msgstr "ALARMFASE 1"
 
-#, fuzzy
 msgid "Video settings"
-msgstr "Video instellingen"
+msgstr "Beeld instellingen"
 
 msgid "ready to drop soldiers"
 msgstr "klaar om soldaten af te leveren"
 
 msgid "Video"
-msgstr "Video"
+msgstr "Beeld"
 
 msgid "Notice"
 msgstr "Bericht"
 
-#, fuzzy
 msgid "Sound settings"
 msgstr "Geluid instellingen"
 
@@ -11469,65 +11255,56 @@ msgstr "Geluid instellingen"
 msgid "Craft %s is low on fuel and must return to base."
 msgstr "Vliegtuig %s heeft bijna geen brandstof meer en moet terugkeren naar de basis."
 
-#, fuzzy
 msgid "Audio"
-msgstr "Actie"
+msgstr "Geluid"
 
 #, c-format
 msgid "Fuel:\t%i/%i\n"
 msgstr "Brandstof:\t%i/%i\n"
 
-#, fuzzy
 msgid "Battlescape camera, gameplay and input settings"
-msgstr "Verplaats slagveld camera naar links"
+msgstr "Slagveld camera, spel- en invoer instellingen"
 
 msgid "UFO interception successful -- UFO lost to sea."
 msgstr "UFO onderschepping succesvol -- UFO verloren op zee."
 
-#, fuzzy
 msgid "Leave the options menu"
-msgstr "Verlaat het opties-menu."
+msgstr "Verlaat het opties-menu"
 
 msgid "Needs autopsy!"
 msgstr "Lijkschouwing nodig!"
 
-#, fuzzy
 msgid "Overall Game Settings"
-msgstr "Spel instellingen"
+msgstr "Algemene Spelinstellingen"
 
 msgid "Construction finished"
 msgstr "Bouw voltooid"
 
-#, fuzzy
 msgid "Language Settings"
-msgstr "Pauze/bericht instellingen"
+msgstr "Taal Instellingen"
 
 #, c-format
 msgid "Running costs:\t%i c\n"
 msgstr "Operationele kosten:\t%i c\n"
 
-#, fuzzy
 msgid "Available languages"
-msgstr "Beschikbare afweer:"
+msgstr "Beschikbare talen"
 
 msgid "Building finished"
 msgstr "Gebouw klaar"
 
-#, fuzzy
 msgid "Geoscape Options"
-msgstr "Aardoverzicht opties"
+msgstr "Aardoverzicht Opties"
 
 msgid "Home"
 msgstr "PHALANX hoofdkwartier"
 
 msgid "3D or 2D geoscape. To enable this option you have to start a new campaign first."
-msgstr ""
+msgstr "3D of 2D aarde scherm. Om deze optie aan te zetten moet u eerst een nieuwe campagne starten."
 
-#, fuzzy
 msgid "No Hangar functional in base."
-msgstr "Geen Hangar in deze basis.\n"
+msgstr "Geen Hangar in deze basis."
 
-#, fuzzy
 msgid "3D Geoscape:"
 msgstr "3D Aardbol:"
 
@@ -11535,23 +11312,20 @@ msgstr "3D Aardbol:"
 msgid "Produce equipment, aircraft and UGV"
 msgstr "Maak vliegtuig"
 
-#, fuzzy
 msgid "The minimum/maximum zoom of the geoscape camera"
-msgstr "Kantel slagveld camera naar boven"
+msgstr "Het minimale/maximale zoomnivo van de aardoverzicht camera"
 
-#, fuzzy
 msgid "Base is under attack, you can't destroy buildings!"
 msgstr "Basis wordt aangevallen, u kunt geen gebouwen vernietigen!"
 
 msgid "Min/Max Geo-Cam Zoom:"
-msgstr ""
+msgstr "Min/Max Aarde-Cam Zoom:"
 
 msgid "Destroy"
 msgstr "Vernietig"
 
-#, fuzzy
 msgid "Minimum zoom level of the geoscape camera"
-msgstr "Standaard maximum vergrotingsniveau van de geoscope camer a is 6.00."
+msgstr "Minimaal zoomniveau van de aarde camera"
 
 msgid "Destroy Storage"
 msgstr "Vernietig Opslag"
@@ -11573,13 +11347,11 @@ msgstr[1] ""
 "Bouw van gebouw zal voltooid zijn over %i dagen.\n"
 "Wacht met het binnengaan."
 
-#, fuzzy
 msgid "Maximum zoom level of the geoscape camera"
-msgstr "Standaard maximum vergrotingsniveau van de geoscope camer a is 6.00."
+msgstr "Maximaal zoomniveau van de aarde camera"
 
-#, fuzzy
 msgid "^BAliens\n"
-msgstr "Buitenaardsen"
+msgstr "^BBuitenaardsen\n"
 
 msgid "2.0"
 msgstr "2,0"
@@ -11592,7 +11364,7 @@ msgid "4.00"
 msgstr "4,00"
 
 msgid "You've gone too far into debt."
-msgstr "U bent te ver in de schulden gekomen."
+msgstr "U bent te diep in de schulden gekomen."
 
 msgid "6.00"
 msgstr "6,00"
@@ -11618,20 +11390,17 @@ msgstr "Dit vak is voor %s of kleinere onderdelen."
 msgid "12.00"
 msgstr "12,00"
 
-#, fuzzy
 msgid "No slot selected."
-msgstr "Geen onderdeel gekozen"
+msgstr "Geen vak gekozen"
 
-#, fuzzy
 msgid "Several Tips"
-msgstr "Basis info"
+msgstr "Tips"
 
 msgid "Ok"
 msgstr "Ok"
 
-#, fuzzy
 msgid "Enable mouseover tooltips"
-msgstr "Activeert muisaanwijzer hulpballonnen"
+msgstr "Activeer muisaanwijzer hulpballonnen"
 
 #, c-format
 msgid "A new installation has been built: %s (nation: %s)"
@@ -11643,32 +11412,28 @@ msgstr "Hulpballonnen:"
 msgid "Forget it"
 msgstr "Laat maar"
 
-#, fuzzy
 msgid "Enable tooltips for the cursor"
-msgstr "activeer of deactiveer het afspelen van een geluid"
+msgstr "Activeer hulpballonnen"
 
 #, c-format
 msgid "Name:\t%s (%i/%i)\n"
 msgstr "Naam:\t%s (%i/%i)\n"
 
-#, fuzzy
 msgid "Cursor Tooltips:"
-msgstr "Muisaanwijzer hulpballonnen:"
+msgstr "Muisaanwijzer Hulpballonnen:"
 
 msgid "Select the desired location of the new installation on the map.\n"
 msgstr "Kies de gewenste plaats van de nieuwe installatie op de kaart.\n"
 
-#, fuzzy
 msgid "Show 'Tip of the Day':"
-msgstr "Laat tip van de dag zien:"
+msgstr "Laat 'Tip van de dag' zien:"
 
-#, fuzzy, c-format
+#, c-format
 msgid "%s was successfully removed, starting installation of %s into aircraft %s at %s"
 msgstr "%s is succesvol verwijderd, begin van installatie van %s op vliegtuig %s in basis %s"
 
-#, fuzzy
 msgid "Menu Options"
-msgstr "Opties"
+msgstr "Menu Opties"
 
 msgid ""
 "You cannot buy this item.\n"
@@ -11679,51 +11444,44 @@ msgstr ""
 "Er is onvoldoende ruimte in opslag.\n"
 "Bouw meer opslag faciliteiten."
 
-#, fuzzy
 msgid "Precache Models:"
-msgstr "Laadt modellen voor:"
+msgstr "Vooraf laden Modellen:"
 
 msgid "installation_installed"
 msgstr "Installatie geïnstalleerd"
 
-#, fuzzy
 msgid "Precaching of models means having faster menus."
-msgstr "Laadt modellen voor (snellere menu's)"
+msgstr "Vooraf laden modellen (snellere menu's)"
 
 msgid "research_new_proposed"
 msgstr "Nieuw onderzoeksvoorstel"
 
-#, fuzzy
 msgid "Video Settings"
-msgstr "Video instellingen"
+msgstr "Beeld Instellingen"
 
 msgid "nation_unhappy"
 msgstr "Land niet blij"
 
-#, fuzzy
 msgid "General"
-msgstr "Algemene Ondersteuning"
+msgstr "Algemeen"
 
 msgid "ufo_signal_lost"
 msgstr "UFO signaal verloren"
 
-#, fuzzy
 msgid "Advanced"
-msgstr "Geavanceerde Radar"
+msgstr "Geavanceerd"
 
-#, fuzzy
 msgid "PHALANX soldiers killed by Aliens"
-msgstr "PHALANX soldaten gedood door Buitenaardsen\t%i\n"
+msgstr "PHALANX soldaten gedood door Buitenaardsen"
 
 msgid "Resolution and Display Settings"
 msgstr "Resolutie en scherminstellingen"
 
-#, fuzzy
 msgid "Crashed aircraft"
-msgstr "Kies vliegtuig"
+msgstr "Neergestort vliegtuig"
 
 msgid "The resolution (x*y) in pixel which UFO:AI should use."
-msgstr ""
+msgstr "De resolutie (x*y) in pixels."
 
 #, c-format
 msgid "Defence of base: %s successful!"
@@ -11736,29 +11494,27 @@ msgid "Upset"
 msgstr "Ontevreden"
 
 msgid "Display only resolutions using this screen ratio."
-msgstr "Geef alleen resoluties weer met deze scherm verhouding."
+msgstr "Geef alleen resoluties weer met deze schermverhouding."
 
 #, c-format
 msgid "Nation %s changed happiness to %s"
-msgstr "Land %s is naar %s gegaan"
+msgstr "Tevredenheid Land %s is naar %s gegaan"
 
-#, fuzzy
 msgid "All ratios"
-msgstr "Installaties"
+msgstr "Alle verhoudingen"
 
 #, c-format
 msgid "Paid %i credits for administrative overhead."
 msgstr "%i,- betaald aan voor administratieve lasten."
 
-#, fuzzy
 msgid "Others"
-msgstr "Other"
+msgstr "Anderen"
 
 msgid "Change homebase\n"
 msgstr "Wijzig thuisbasis\n"
 
 msgid "Select your desired screen resolution."
-msgstr ""
+msgstr "Kies uw gewenste schermresolutie"
 
 msgid "Hangars not ready"
 msgstr "Hangars niet klaar"
@@ -11766,32 +11522,29 @@ msgstr "Hangars niet klaar"
 msgid "Fullscreen:"
 msgstr "Volledig scherm:"
 
-#, fuzzy, c-format
+#, c-format
 msgid "Not enough free hangar space in %s. Production postponed."
-msgstr "Onvoldoende vrije ruimte in de hangar op basis %s. Productie uitgesteld.\n"
+msgstr "Onvoldoende vrije ruimte in de hangar op basis %s. Productie uitgesteld."
 
 msgid "Play UFO:AI in fullscreen."
-msgstr "Speel UFO:AI in volledig scherm."
+msgstr "Speel UFO:AI schermvullend."
 
 #, c-format
 msgid "Item size\t%i\n"
 msgstr "Onderdeelgrootte\t%i\n"
 
-#, fuzzy
 msgid "Stretch the Screen with a 4:3 Ratio:"
 msgstr "Rek het scherm op met een verhouding van 4:3:"
 
-#, fuzzy
 msgid "You don't have the materials needed for producing more of this item.\n"
-msgstr "U hebt onvoldoende grondstoffen om dit onderdeel te produceren."
+msgstr "U hebt onvoldoende grondstoffen om dit onderdeel te produceren.\n"
 
 msgid "Calibrate your display here."
-msgstr "Selecteer de gewenste schermresolutie. LET OP: U zou kunnen hebben om opnieuw op te starten om deze correct te laten werken."
+msgstr "Kalibreer uw scherm hier"
 
 msgid "Production started"
 msgstr "Productie begonnen"
 
-#, fuzzy
 msgid "Monitor Calibration Controls"
 msgstr "Monitor Kalibratie Bediening"
 
@@ -11808,13 +11561,11 @@ msgstr "Onderzocht op deze basis"
 msgid "The default key to make screenshots is F12."
 msgstr "De standaardtoets om schermafdrukken te maken is F12."
 
-#, fuzzy
 msgid "Status: not possible to research"
-msgstr "Status: Wordt onderzocht"
+msgstr "Status: Onderzoek niet mogelijk"
 
-#, fuzzy
 msgid "Screenshot Settings"
-msgstr "Video instellingen"
+msgstr "Screenshot Instellingen"
 
 msgid ""
 "The research on this item is not yet possible.\n"
@@ -11842,9 +11593,8 @@ msgstr "Schermafdruk Formaat:"
 msgid "Base (%s):\t%i c\n"
 msgstr "Basis (%s):\t%i c\n"
 
-#, fuzzy
 msgid "Other Display Settings"
-msgstr "Spel instellingen"
+msgstr "Overige Scherminstellingen"
 
 msgid "5 sec"
 msgstr "5 sec"
@@ -11856,47 +11606,45 @@ msgid "Jan"
 msgstr "Jan"
 
 msgid "Display the number of rendered frames per second."
-msgstr ""
+msgstr "Toon het aantal getekende beelden per seconde."
 
 msgid "Sep"
 msgstr "Sep"
 
 msgid "Do not play the intro movie when starting the game."
-msgstr ""
+msgstr "Speel het introfilmpje niet."
 
-#, fuzzy, c-format
+#, c-format
 msgid "%s does not have Alien Containment, Aliens are removed!"
 msgstr "Basis %s heeft geen Buitenaardsen Quarantaine, Buitenaardsen zijn verwijderd!"
 
 msgid "Hold Back Intro Video:"
-msgstr ""
+msgstr "Intro video niet afspelen:"
 
 msgid "Destination base does not have an Antimatter Storage.\n"
 msgstr "Doelbasis heeft geen Antimaterie Opslag.\n"
 
 msgid "Default is to play the intro video just once at the first game start."
-msgstr ""
+msgstr "Standaard wordt het intro filmpje alleen bij de eerste keer starten afgespeeld."
 
 msgid "Pilot in aircraft"
 msgstr "Piloot in vliegtuig"
 
-#, fuzzy
 msgid "Texture Settings"
-msgstr "Video instellingen"
+msgstr "Texture Instellingen"
 
-#, fuzzy, c-format
+#, c-format
 msgid "Corpse of %s"
-msgstr "Lijk van %s (%i beschikbaar)"
+msgstr "Lijk van %s"
 
 msgid "Sets the maximum size for textures and caps resolutions higher than that value."
-msgstr ""
+msgstr "Specificeert de maximale grootte van textures en beperkt resoluties groter dan die waarde."
 
 msgid "Transfer is not possible - the base doesn't have an Alien Containment."
 msgstr "Overdracht is niet mogelijk - de basis heeft geen Buitenaardsen Quarantaine."
 
-#, fuzzy
 msgid "Resolution Cap:"
-msgstr "Resolutie:"
+msgstr "Resolutie Beperking:"
 
 msgid "You can transfer employees - this base has Living Quarters.\n"
 msgstr "U kunt medewerkers overbrengen - deze basis heeft Verblijfruimten.\n"
@@ -11910,12 +11658,11 @@ msgstr "Geen Hangar in deze basis.\n"
 msgid "Low"
 msgstr "Laag"
 
-#, fuzzy
 msgid "ECM"
 msgstr "ECM"
 
 msgid "Medium"
-msgstr "Matig"
+msgstr "Gemiddeld"
 
 msgid "Unknown aircraft size"
 msgstr "Onbekende vliegtuig grootte"
@@ -11935,7 +11682,7 @@ msgid "Max. soldiers:\t%i\n"
 msgstr "Max. aantal soldaten:\t%i\n"
 
 msgid "Sets the texture filtering and mipmapping method."
-msgstr ""
+msgstr "Instelling voor texture filter en mipmapping methode."
 
 #, c-format
 msgid "Proposal: %s\t%i %s %02i\n"
@@ -11944,23 +11691,21 @@ msgstr "Voorstel: %s\t%i %s %02i\n"
 msgid "Filtering:"
 msgstr "Filters:"
 
-#, fuzzy, c-format
+#, c-format
 msgid ""
 "\n"
 "Secured crashed %s (%.0f%%)\n"
 msgstr ""
 "\n"
-"Neergestorte %s beveiligd\n"
+"Neergestorte %s beveiligd (%.0f%%)\n"
 
-#, fuzzy
 msgid "No filtering, no mipmaps"
 msgstr "Geen filters, geen mipmaps"
 
-#, fuzzy, c-format
+#, c-format
 msgid "Base '%s' is under attack!"
-msgstr "Basis wordt aangevallen"
+msgstr "Basis %s wordt aangevallen!"
 
-#, fuzzy
 msgid "Bilinear filtering, no mipmaps"
 msgstr "Bilineair filter, geen mipmaps"
 
@@ -11975,35 +11720,33 @@ msgid "Team %d"
 msgstr "Team %d"
 
 msgid "Bilinear filtering, mipmaps"
-msgstr ""
+msgstr "Bilinear filter, mipmaps"
 
 #, c-format
 msgid "Dedicated server:\t%s\n"
 msgstr "Toegewijde server:\t%s\n"
 
 msgid "Trilinear filtering, mipmaps"
-msgstr ""
+msgstr "Trilinear filter, mipmaps"
 
 #, c-format
 msgid "Max. soldiers per player:\t%s\n"
 msgstr "Max. aantal soldaten per speler:\t%s\n"
 
 msgid "Bilinear filtering, trilinear filtering, mipmaps"
-msgstr ""
+msgstr "Bilinear filter, trilinear filter, mipmaps"
 
 msgid "You won the game!"
 msgstr "U hebt het spel gewonnen!"
 
 msgid "Enable texture compression for better memory performance, disable for better rendering quality."
-msgstr ""
+msgstr "Aanzetten texture compressie voor betere busperformance, uitzetten voor betere renderkwaliteit, of als uw videokaart hier problemen mee heeft."
 
-#, fuzzy
 msgid "skill_explosive"
-msgstr "Explosief"
+msgstr "Explosieven"
 
-#, fuzzy
 msgid "Compression:"
-msgstr "Afbeeldingen comprimeren:"
+msgstr "Compressie:"
 
 #, c-format
 msgid "Time units:\t%i\n"
@@ -12011,7 +11754,7 @@ msgstr "Tijd eenheden:\t%i\n"
 
 #, fuzzy
 msgid "Texture Level-of-Detail. Enabling this might result in some blurry textures if you zoom out a little bit."
-msgstr "Textuur Niveau-van-Detail. Als u dit aanzet, krijgt u wat wazige textuur als u wat uitzoomt."
+msgstr "Textuur Nivo-van-Detail. Als u dit aanzet, krijgt u wat wazige textuur als u wat uitzoomt."
 
 #, c-format
 msgid "Action:\t%s\n"
@@ -12022,38 +11765,35 @@ msgid "LoD:"
 msgstr "NvD:"
 
 msgid "Target your shot to the ground"
-msgstr "Schiet het schot naar de grond"
+msgstr "Mik het schot naar de grond"
 
 msgid "The degree or ratio of anisotropic filtering. High ratios will make distant textures appear more sharp. Very high ratios are only recommended when playing in high resolutions."
 msgstr ""
 
 #, c-format
 msgid "Loading Map [%s]"
-msgstr "Laadt Kaart [%s]"
+msgstr "Laden Kaart [%s]"
 
-#, fuzzy
 msgid "Anisotropy Level:"
-msgstr "Afbeeldingen anisotropisch nivo:"
+msgstr "Anisotropisch Nivo:"
 
 msgid "Move battlescape camera forward"
 msgstr "Verplaats slagveld camera naar voren"
 
 msgid "Very high values are only recommended when playing in very high screen resolutions."
-msgstr ""
+msgstr "Zeer hoge waarden zijn alleen aan te raden voor zeer hoge schermresoluties."
 
-#, fuzzy
 msgid "Mouse wheel down"
-msgstr "Sluit het venster"
+msgstr "Muiswiel omlaag"
 
-#, fuzzy
 msgid "OpenGL Settings"
-msgstr "Video instellingen"
+msgstr "OpenGL Instellingen"
 
-#, fuzzy, c-format
+#, c-format
 msgid "%3.1f day left"
 msgid_plural "%3.1f days left"
-msgstr[0] "%i dag te gaan"
-msgstr[1] "%i dagen te gaan"
+msgstr[0] "%3.1f dag te gaan"
+msgstr[1] "%3.1f dagen te gaan"
 
 msgid "OpenGL GLSL Shaders are available only if your graphics-card driver fully supports OpenGL 2.0+ and will enhance UFO:AI using advanced shading techniques."
 msgstr ""
@@ -12061,19 +11801,18 @@ msgstr ""
 msgid "Drag to move window"
 msgstr "Versleep om het venster te verplaatsen"
 
-#, fuzzy
 msgid "GLSL Shaders:"
-msgstr "GLSL shaders:"
+msgstr "GLSL Shaders:"
 
 msgid "Can't perform action - not an actor!\n"
-msgstr "Kon acite niet uitvoeren - geen persoon!\n"
+msgstr "Kon actie niet uitvoeren - geen actor!\n"
 
 msgid "Sets the OpenGL Shader Version.  See: http://pastebin.com/QjmRus4S"
 msgstr ""
 
 #, c-format
 msgid "Flood protection: You can't talk for %d seconds.\n"
-msgstr ""
+msgstr "Vloedbescherming: U kunt niet chatten voor %d seconden.\n"
 
 msgid "Enable OpenGL GLSL Shaders. Disable this if you experience graphical problems. ATTENTION: May require restart to take effect."
 msgstr ""
@@ -12084,13 +11823,11 @@ msgstr "Buitenaardsen zijn doelzone binnengegaan\n"
 msgid "Vertex Buffers are submitting extensible arrays of vertex attributes to be mapped into the GPU for fast drawing."
 msgstr ""
 
-#, fuzzy
 msgid "No fire mode selected for reaction fire.\n"
-msgstr "Vink aan om deze vuurmodus te gebruiken voor reactievuur"
+msgstr "Geen vuurmodus geselecteerd voor reactievuur.\n"
 
-#, fuzzy
 msgid "Vertex Buffers:"
-msgstr "Hoekpunt buffers:"
+msgstr "Vertex Buffers:"
 
 msgid "Current active team hit the max round time\n"
 msgstr "Huidig geactiveerde team heeft de maximum rondetijd bereikt\n"
@@ -12101,9 +11838,8 @@ msgstr ""
 msgid "Africa"
 msgstr "Afrika"
 
-#, fuzzy
 msgid "Multisample Buffers / Swap Interval:"
-msgstr "Multibemonster buffers:"
+msgstr "Multibemonster buffers/Wisselinterval:"
 
 msgid "Druglord"
 msgstr "Drugsbaron"
@@ -12112,7 +11848,7 @@ msgid "Choose between 0-4 Multisample Buffers. Higher values will provide better
 msgstr ""
 
 msgid "Multiplayer Coop"
-msgstr "Meerdere spelers Samen"
+msgstr "Multiplayer Samen"
 
 msgid "Set to '0' to turn v-sync off (faster). Set to '1' or higher to turn v-sync on (better quality)."
 msgstr ""
@@ -12133,14 +11869,13 @@ msgid "Village commercial"
 msgstr "Dorp winkelgebied"
 
 msgid "Enable post processing shader effects. ATTENTION: May require restart to take effect."
-msgstr ""
+msgstr "Aanzetten shader nabewerkingseffecten. OPGELET: U moet waarschijnlijk het spel opnieuw starten."
 
 msgid "Raptor"
 msgstr "Raptor"
 
-#, fuzzy
 msgid "Light and Shadow"
-msgstr "Rechterhand"
+msgstr "Licht en Schaduw"
 
 msgid "Starchaser"
 msgstr "Starchaser"
@@ -12151,11 +11886,9 @@ msgstr ""
 msgid "Harvester U"
 msgstr "Oogster U"
 
-#, fuzzy
 msgid "Realtime Lighting / Max Dynamic Lights:"
-msgstr "Directe belichting:"
+msgstr "Realtime belichting/Max dynamische lichten:"
 
-#, fuzzy
 msgid "Ripper U"
 msgstr "Ripper U"
 
@@ -12166,17 +11899,16 @@ msgid "Shiva Rotary Cannon"
 msgstr "Shiva Roterend Kanon"
 
 msgid "Also known as bumpmapping."
-msgstr ""
+msgstr "Ook wel bekend als bumpmapping"
 
 msgid "Particle Beam Weapon"
 msgstr "Deeltjes Straal Wapen"
 
-#, fuzzy
 msgid "Texture Normalmapping:"
-msgstr "Afbeeldingen comprimeren:"
+msgstr "Texture normaalmap:"
 
 msgid "AA51 missile launcher"
-msgstr "AA51 raket lanceerder"
+msgstr "AA51 raketwerper"
 
 msgid "Enable normal-/bumpmapping. ATTENTION: Realtime lighting must be turned on for normalmapping to work."
 msgstr ""
@@ -12188,7 +11920,7 @@ msgid "At the moment these are just drop-shadows."
 msgstr "Op dit moment zijn dit slechts valschaduwen."
 
 msgid "Medium Alien Armour"
-msgstr "Gemiddeld Buitendaardse Pantser"
+msgstr "Gemiddeld Buitendaards Pantser"
 
 msgid "Shadows:"
 msgstr "Schaduwen:"
@@ -12196,9 +11928,8 @@ msgstr "Schaduwen:"
 msgid "Advanced Radar"
 msgstr "Geavanceerde Radar"
 
-#, fuzzy
 msgid "Enable shadows."
-msgstr "Geluid aan:"
+msgstr "Schaduwen:"
 
 msgid "Standard Campaign"
 msgstr "Standaard Campagne"
@@ -12209,9 +11940,8 @@ msgstr ""
 msgid "Amsterdam"
 msgstr "Amsterdam"
 
-#, fuzzy
 msgid "Lightmap Block Size:"
-msgstr "Belichting blokgrootte:"
+msgstr "Belichtingsmap Blokgrootte:"
 
 msgid "Aarhus"
 msgstr "Århus"
@@ -12223,59 +11953,55 @@ msgid "Ahmedabad"
 msgstr "Ahmedabad"
 
 msgid "Changing this would scale the lightmap brightness."
-msgstr ""
+msgstr "Instelling voor het opschalen van lichtmap helderheid."
 
 msgid "Ankara"
 msgstr "Ankara"
 
-#, fuzzy
 msgid "Lightmap Scale:"
-msgstr "Belichtingsschaal:"
+msgstr "Belichtingsmap Schaal:"
 
 msgid "Asuncion"
 msgstr "Asuncion"
 
 msgid "Amount of light emitting from the sun and shining on the earth."
-msgstr ""
+msgstr "Hoeveelheid licht afkomstig van de zon."
 
 msgid "Bandung"
 msgstr "Bandung"
 
-#, fuzzy
 msgid "Geo Ambient Lighting:"
-msgstr "Directe belichting:"
+msgstr "Aarde omgevingsbelichting:"
 
 msgid "Belfast"
 msgstr "Belfast"
 
 msgid "Flares are used to display light reflection effects. Flare visibility is calculated according to the angle of the surface emitting the light."
-msgstr ""
+msgstr "Gloed wordt gebruikt voor lichtreflectie effecten. Gloed zichtbaarheid is afhankelijk van de invalshoek van het licht."
 
 msgid "Bloemfontein"
 msgstr "Bloemfontein"
 
-#, fuzzy
 msgid "Flares:"
-msgstr "Moeilijk"
+msgstr "Gloed:"
 
 msgid "Brisbane"
 msgstr "Brisbane"
 
 msgid "Coronas are soft, alpha-blended, rounded polygons."
-msgstr ""
+msgstr "Coronas zijn zachte, halftransparante, afgeronde polygonen."
 
 msgid "Cairo"
 msgstr "Caïro"
 
-#, fuzzy
 msgid "Coronas:"
-msgstr "Contrast:"
+msgstr "Coronas:"
 
 msgid "Charlotte"
 msgstr "Charlotte"
 
 msgid "Fog does not relate to any weather effect here, but when enabled distant textures on the battlescape are faded out."
-msgstr ""
+msgstr "Mist is onafhankelijk van weereffecten, maar als het aangevinkt is worden elementen verder weg van de camera minder zichtbaar."
 
 msgid "Chongjin"
 msgstr "Chongjin"
@@ -12287,12 +12013,11 @@ msgid "Conakry"
 msgstr "Conakry"
 
 msgid "Weather effects like rain or snow."
-msgstr ""
+msgstr "Weereffecten zoals regen of sneeuw."
 
 msgid "Dallas"
 msgstr "Dallas"
 
-#, fuzzy
 msgid "Weather Effects:"
 msgstr "Weereffecten:"
 
@@ -12300,117 +12025,103 @@ msgid "Detroit"
 msgstr "Detroit"
 
 msgid "The material system is used to display texture animations, effects like rotating or stretching or scrolling textures and manipulate rendering through applying special material properties like specularity or hardness to defined textures."
-msgstr ""
+msgstr "Het materiaalsysteem wordt gebruikt voor texture animaties, effecten als rotatie of oprekking, en beïnvloedt het optekenen door het toepassen van speciale materiaaleigenschappen zoals speculariteit of hardheid op bepaalde textures."
 
 msgid "Dublin"
 msgstr "Dublin"
 
-#, fuzzy
 msgid "Material System:"
-msgstr "Materiaal bewerker"
+msgstr "Materiaal Systeem:"
 
 msgid "Enugu"
 msgstr "Enugu"
 
-#, fuzzy
 msgid "Switch to low video settings"
-msgstr "Wissel naar de vorige basis"
+msgstr "Wissel naar lage beeldinstellingen"
 
 msgid "Geneva"
 msgstr "Geneva"
 
-#, fuzzy
 msgid "Switch to medium video settings"
-msgstr "Wissel naar de vorige basis"
+msgstr "Wissel naar medium beeldinstellingen"
 
 msgid "Guadalajara"
 msgstr "Guadalajara"
 
-#, fuzzy
 msgid "Switch to very high video settings"
-msgstr "Wissel naar wapen in de rechterhand"
+msgstr "Wissel naar hoge beeldinstellingen"
 
 msgid "Hanga Roa"
 msgstr "Hanga Roa"
 
-#, fuzzy
 msgid "Audio Settings"
-msgstr "Video instellingen"
+msgstr "Geluidsinstellingen"
 
 msgid "Hobart"
 msgstr "Hobart"
 
-#, fuzzy
 msgid "Enable or disable sound."
-msgstr "activeer of deactiveer het afspelen van een geluid"
+msgstr "Activeer of deactiveer het afspelen van geluid."
 
 msgid "Incheon"
 msgstr "Incheon"
 
-#, fuzzy
 msgid "Enable Audio:"
 msgstr "Geluid aan:"
 
 msgid "Istanbul"
 msgstr "Istanbul"
 
-#, fuzzy
 msgid "Sound Effects:"
-msgstr "Effecten:"
+msgstr "Geluidseffecten:"
 
 msgid "Johor Bahru"
 msgstr "Johor Bahru"
 
-#, fuzzy
 msgid "Menu Sounds:"
-msgstr "Gewond"
+msgstr "Menugeluiden:"
 
 msgid "Kanpur"
 msgstr "Kanpur"
 
-#, fuzzy
 msgid "Turn the menu sounds on or off."
-msgstr "Schakel reactie-vuur in of uit"
+msgstr "Schakel menugeluiden in of uit."
 
 msgid "Kiev"
 msgstr "Kiëv"
 
 msgid "Advanced Audio Options"
-msgstr ""
+msgstr "Geavanceerde Geluid Opties"
 
 msgid "Krakow"
 msgstr "Krakow"
 
 msgid "The sample rate frequency in kHz. Use higher values for better sound quality."
-msgstr ""
+msgstr "De bemonsteringsfrequentie ik kHz."
 
 msgid "La Paz"
 msgstr "La Paz"
 
-#, fuzzy
 msgid "Audio Sample Rate:"
-msgstr "Bemonsteringssnelheid geluid:"
+msgstr "Bemonsteringsfrequentie geluid:"
 
 msgid "Ljubljana"
 msgstr "Ljubljana"
 
-#, fuzzy
 msgid "Restart the sound-engine and apply your settings."
-msgstr "Herstart het geluid om de instellingen te wijzigen"
+msgstr "Herstart de geluidsmodule en activeer instellingen"
 
 msgid "Lucknow"
 msgstr "Lucknow"
 
-#, fuzzy
 msgid "Gameplay Settings"
-msgstr "Verplaats slagveld camera naar links"
+msgstr "Spel Instellingen"
 
 msgid "Macau"
 msgstr "Macau"
 
-#, fuzzy
 msgid "Battlescape Camera Settings"
-msgstr "Verplaats slagveld camera naar links"
+msgstr "Slagveld Camera Instellingen"
 
 msgid "Malmo"
 msgstr "Malmö"
@@ -12428,12 +12139,11 @@ msgid "Mendoza"
 msgstr "Mendoza"
 
 msgid "The move deceleration of the battlescape camera. Lower this value if you want smoother camera movement, increase it if you want cameramovement to decelerate faster or stop immediately."
-msgstr ""
+msgstr "De schuifversnelling van de slagveld camera. Lager betekent vloeiender bewegingen. Verhoog deze waarde als u wilt dat de camera sneller stopt, of onmiddelijk moet stoppen."
 
 msgid "Monaco"
 msgstr "Monaco"
 
-#, fuzzy
 msgid "Move Deceleration:"
 msgstr "Bewegingsversnelling:"
 
@@ -12441,39 +12151,37 @@ msgid "Nagoya"
 msgstr "Nagoya"
 
 msgid "Minimum/Maximum Shift Pitch:"
-msgstr ""
+msgstr "Minimale/Maximale Kantelhoek:"
 
 msgid "Naples"
 msgstr "Napels"
 
 msgid "ATTENTION: Setting minimum camera pitch shift below 15 degrees might complicate selecting and commanding your soldiers."
-msgstr ""
+msgstr "OPGELET: Een kantelhoek van minder dan 15 graden zou het selecteren en besturen van uw soldaten lastig kunnen maken."
 
 msgid "Nice"
 msgstr "Nice"
 
 msgid "ATTENTION: Setting maximum camera pitch shift over 90 degrees will turn your camera upside down when exceeding that point."
-msgstr ""
+msgstr "OPGELET: Een kantelhoek van meer dan 90 graden zet de camera ondersteboven voorbij dat punt."
 
 msgid "Omsk"
 msgstr "Omsk"
 
 msgid "Minimum/Maximum Zoom:"
-msgstr ""
+msgstr "Minimale/Maximale Zoom:"
 
 msgid "Patna"
 msgstr "Patna"
 
-#, fuzzy
 msgid "Default minimum zoom level of the battlescape camera is 0.30."
-msgstr "Kantel slagveld camera naar boven"
+msgstr "Standaar minimum zoom nivo van de slagveld camera is 0.30."
 
 msgid "Phoenix"
 msgstr "Phoenix"
 
-#, fuzzy
 msgid "Default maximum zoom level of the battlescape camera is 3.40."
-msgstr "Kantel slagveld camera naar boven"
+msgstr "Standaar maximum zoom nivo van de slagveld camera is 3.40."
 
 msgid "Providence"
 msgstr "Providence"
@@ -12484,9 +12192,8 @@ msgstr ""
 msgid "Quetzaltenango"
 msgstr "Quetzaltenango"
 
-#, fuzzy
 msgid "Zoom Quant:"
-msgstr "Zoom uit"
+msgstr "Zoom Stapgrootte:"
 
 msgid "Riverside"
 msgstr "Riverside"
@@ -12498,7 +12205,7 @@ msgid "Salzburg"
 msgstr "Salzburg"
 
 msgid "Isometric Mode means the 3D world will be rendered without perspective correction."
-msgstr ""
+msgstr "Isometrische Mode betekent dat de 3D wereld wordt getekend zonder perspectief."
 
 msgid "San Salvador"
 msgstr "San Salvador"
@@ -12510,34 +12217,31 @@ msgid "Saskatoon"
 msgstr "Saskatoon"
 
 msgid "Center the camera view automatically at the soldier when selecting it, or at the enemy when he is shooting or appearing."
-msgstr ""
+msgstr "Centreer de camera automatisch op de soldaat bij het selecteren, of bij de vijand als die schiet of verschijnt."
 
 msgid "Shillong"
 msgstr "Shillong"
 
-#, fuzzy
 msgid "Center View:"
 msgstr "Centreer zicht:"
 
 msgid "Srinagar"
 msgstr "Srinagar"
 
-#, fuzzy
 msgid "Battlescape Gameplay Settings"
-msgstr "Verplaats slagveld camera naar links"
+msgstr "Slagveld spelinstellingen"
 
 msgid "Suez"
 msgstr "Suez"
 
-#, fuzzy
 msgid "Actor Speed:"
-msgstr "Snelheid van karakter:"
+msgstr "Snelheid persoon:"
 
 msgid "Taiyuan"
 msgstr "Taiyuan"
 
 msgid "Choose between 0-9, higher values mean higher actor speed."
-msgstr ""
+msgstr "Kies tussen 0-9, hogere waarden betekenen hogere snelheid."
 
 msgid "Tehran"
 msgstr "Teheran"
@@ -12555,34 +12259,31 @@ msgid "Vaduz"
 msgstr "Vaduz"
 
 msgid "'No' means all your orders on the battlescape will be executed immediately. 'Yes' means you will be prompted to confirm all of your orders before the soldier begins to execute them. 'Only for moving' means the path will be displayed before you confirm a soldier's move."
-msgstr ""
+msgstr "'Nee' betekent dat alle orders direct worden uitgevoerd. 'Ja' betekent dat u eerst de orders moet bevestigen voordat ze door de soldaat worden uitgevoerd. 'Alleen voor verplaatsen' betekent dat het pad wordt afgebeeld voordat de verplaatsing wordt bevestigd."
 
 msgid "Washington"
 msgstr "Washington"
 
-#, fuzzy
 msgid "Moving only"
-msgstr "Hong Kong"
+msgstr "Alleen bewegen"
 
 msgid "Yakutsk"
 msgstr "Jakoetsk"
 
 msgid "Autostand regulates if your soldier should automatically stand up when he is getting the order to move while being crouched."
-msgstr ""
+msgstr "Automatisch Opstaan geeft aan of uw soldaat eerst opstaat als hij de opdracht krijgt zich te verplaatsen."
 
 msgid "Yokohama"
 msgstr "Yokohama"
 
-#, fuzzy
 msgid "Autostand:"
-msgstr "Automatisch opstaan"
+msgstr "Automatisch opstaan:"
 
-#, fuzzy
 msgid "Multiplayer Phalanx"
-msgstr "Meerdere spelers"
+msgstr "Multiplayer Phalanx"
 
 msgid "Select the Head-Up-Display for the battlescape."
-msgstr ""
+msgstr "Kies de Head-Up-Display (HUD) voor het slagveld."
 
 msgid "Alien Campaign Start (Market)"
 msgstr ""
@@ -12590,33 +12291,29 @@ msgstr ""
 msgid "HUD Design:"
 msgstr "HUD Ontwerp:"
 
-#, fuzzy
 msgid "mail_stunned_alien_died"
-msgstr "bericht_nieuwe_basis_klaar <NOGDOEN>"
+msgstr "mail_stunned_alien_died <NOGDOEN>"
 
-#, fuzzy
 msgid "Joystick Settings"
-msgstr "Joystick instellingen:"
+msgstr "Joystick Instellingen"
 
 msgid "Production Finished -- %s"
 msgstr "Productie Voltooid -- %s"
 
-#, fuzzy
 msgid "Enable:"
-msgstr "Activeer alles"
+msgstr "Aanzetten:"
 
 msgid "mail_transfer_received"
 msgstr "bericht_overdracht_ontvangen <NOGDOEN>"
 
-#, fuzzy
 msgid "Joystick or Joypad:"
-msgstr "Joystick:"
+msgstr "Joystick of Joypad:"
 
 msgid "mail_base_attack_report"
 msgstr "bericht_basis_aanval_rapport <NOGDOEN>"
 
 msgid "Available game controllers."
-msgstr ""
+msgstr "Beschikbare game controllers."
 
 msgid "Unknown alien race"
 msgstr "Onbekend buitenaards ras"
@@ -12634,9 +12331,8 @@ msgstr "Drempel:"
 msgid "Reserve %i TUs for crouching/standing up."
 msgstr "Reserveer %i TE's voor sluipen/opstaan."
 
-#, fuzzy
 msgid "Show Keys"
-msgstr "Laat toetsbindingen zien"
+msgstr "Toon toetsen"
 
 msgid ""
 "Can't perform action:\n"
@@ -12645,20 +12341,17 @@ msgstr ""
 "Kan actie niet uitvoeren:\n"
 "geen munitie meer.\n"
 
-#, fuzzy
 msgid "Key Bindings"
-msgstr "Laat toetsbindingen zien"
+msgstr "Toetsbindingen"
 
-#, fuzzy
 msgid "End current turn."
-msgstr "Beëindigd huidige ronde"
+msgstr "Beëindigd huidige ronde."
 
 msgid "Workers (ready/all):"
-msgstr "Medewerkers (klaar/allen):"
+msgstr "Medewerkers (actief/allen):"
 
-#, fuzzy
 msgid "A civilian was revitalised.\n"
-msgstr "Een burger werd gedood.\n"
+msgstr "Een burger werd bij bewustzijn gebracht.\n"
 
 msgid "Workshop capacity:"
 msgstr "Werkplaats capaciteit:"
@@ -12710,9 +12403,8 @@ msgstr[1] "%i onderdelen zijn verkocht voor %i,-"
 msgid "Increase priority"
 msgstr "Verhoog prioriteit"
 
-#, fuzzy
 msgid "Transfer equipment, vehicles, aliens and employees to other bases"
-msgstr "Overdracht apparatuur, vliegtuigen, UGV, buitenaardsen en werknemers naar andere bases"
+msgstr "Versturen apparatuur, voertuigen, buitenaardsen en werknemers naar andere bases"
 
 msgid "Decrease priority"
 msgstr "Verlaag prioriteit"
@@ -12720,9 +12412,8 @@ msgstr "Verlaag prioriteit"
 msgid "Destroy Hangar"
 msgstr "Vernietig Hangar"
 
-#, fuzzy
 msgid "Requirements"
-msgstr "Geen benodigdheden"
+msgstr "Benodigdheden"
 
 msgid "Destroy building"
 msgstr "Vernietig gebouw"
@@ -12750,9 +12441,8 @@ msgstr "Onderdelen"
 msgid "Show research proposal"
 msgstr "Laat onderzoeksvoorstel zien"
 
-#, fuzzy
 msgid "This item is too heavy for the selected slot."
-msgstr "Verwijder wapen uit het gekozen vak"
+msgstr "Dit item is te zwaar voor het gekozen vak."
 
 msgid "Switch to another base"
 msgstr "Wissel naar een andere basis"
@@ -12767,16 +12457,14 @@ msgstr "Basis Info"
 msgid "ETA:\t%sh\n"
 msgstr "Aankomst:\t%sh\n"
 
-#, fuzzy
 msgid "Back to the main menu."
-msgstr "Verlaat naar het hoofdmenu"
+msgstr "Terugkeren naar het hoofdmenu."
 
 msgid "Medium weight"
 msgstr "Gemiddeld gewicht"
 
-#, fuzzy
 msgid "Go back to the battlescape."
-msgstr "Kantel slagveld camera naar boven"
+msgstr "Ga terug naar het slagveld."
 
 #, fuzzy
 msgid "aircraft_cannotrefuel"
@@ -12791,24 +12479,20 @@ msgstr "Breek af"
 msgid "transfer_lost"
 msgstr "Overdracht verloren gegaan"
 
-#, fuzzy
 msgid "Abort this battlescape mission."
-msgstr "Kantel slagveld camera naar boven"
+msgstr "Afbreken missie."
 
-#, fuzzy
 msgid "Civilians killed by Aliens"
-msgstr "Burgers gedood door Buitenaardsen\t%i\n"
+msgstr "Burgers om zeep gebracht door Buitenaardsen"
 
-#, fuzzy
 msgid "Retry this battlescape mission."
-msgstr "Probeer deze missie opnieuw"
+msgstr "Probeer deze missie opnieuw."
 
 msgid "Giving up"
 msgstr "Opgevend"
 
-#, fuzzy
 msgid "Enter the game options menu."
-msgstr "Verlaat het opties-menu."
+msgstr "Ga naar het spelopties menu."
 
 #, fuzzy
 msgid "credit"
@@ -12817,19 +12501,18 @@ msgstr[0] "krediet"
 msgstr[1] "kredieten"
 
 msgid "You will lose all your progress."
-msgstr ""
+msgstr "U zult uw voortgang kwijt raken."
 
 #, c-format
 msgid "%s%s (%i/%i)\t%s\t%s"
 msgstr "%s%s (%i/%i)\t%s\t%s"
 
-#, fuzzy
 msgid "Quit"
-msgstr "Quito"
+msgstr "Afsluiten"
 
-#, fuzzy, c-format
+#, c-format
 msgid "The disassembling of %s at %s has finished."
-msgstr "De ontmanteling van %s is voltooid."
+msgstr "De ontmanteling van %s op %s is voltooid."
 
 msgid "<1>"
 msgstr ""
@@ -12841,26 +12524,22 @@ msgstr ""
 "U kunt geen verdere onderdelen in de wachtrij zeten.\n"
 "Bouw meer werkplaatsen.\n"
 
-#, fuzzy
 msgid "Start Game"
 msgstr "Start spel"
 
 #, c-format
 msgid "Laboratory space (used/all): %i/%i"
-msgstr "Laboratorium ruimte (gebruikt/alles): %i/%i"
+msgstr "Lab ruimte (gebruikt/alles): %i/%i"
 
-#, fuzzy
 msgid "Return to the main menu."
-msgstr "Verlaat naar het hoofdmenu"
+msgstr "Terugkeren naar het hoofdmenu"
 
 msgid "Missing an artifact"
-msgstr "Mist een vondst"
+msgstr "Mist een relikwie"
 
-#, fuzzy
 msgid "Skirmish Game Settings"
-msgstr "Schermutseling-spel instellingen"
+msgstr "Schermutseling spelinstellingen"
 
-#, fuzzy
 msgid "QuickSave"
 msgstr "Snel Opslaan"
 
@@ -12872,51 +12551,46 @@ msgid "Max. allowed debts: %ic\n"
 msgstr "Max. toegestane schuld: %ic\n"
 
 msgid "Select the UFO that should be used (only possible if available for that map)."
-msgstr ""
+msgstr "Kiesde UFO die gebruikt moet worden (alleen mogelijk als beschikbaar voor die kaart)"
 
 msgid "May"
 msgstr "Mei"
 
 msgid "Dropship:"
-msgstr ""
+msgstr "Landingsvliegtuig:"
 
-#, fuzzy
 msgid "The destination base no longer exists! Transfer carge was lost, personnel has been discharged."
-msgstr "De doelbasis bestaat niet meer! Overdracht goederen zijn verloren gegaan, personeel ontslagen."
+msgstr "De doelbasis bestaat niet meer! Overdracht goederen zijn verloren gegaan, personeel is ontslagen."
 
 msgid "Select the dropship that should be used (only possible if available for that map)."
-msgstr ""
+msgstr "Kies het landingsvliegtuig dat gebruikt moet worden (alleen mogelijk als beschikbaar voor die kaart)"
 
 msgid "Destination base does not have any hangar."
 msgstr "Doelbasis heeft geen hangar."
 
-#, fuzzy
 msgid "Equipment of your team."
-msgstr "Bewaar uw team"
+msgstr "Uitrusting van uw team."
 
 msgid "No target base selected"
 msgstr "Geen doelbasis gekozen"
 
-#, fuzzy
 msgid "Equipment AI Team."
-msgstr "Uitrusting"
+msgstr "Uitrusting KI Team."
 
 msgid "Our radar has lost the tracking on a UFO"
-msgstr "Onze radar is een UFO kwijtgeraakt"
+msgstr "Onze radar heeft contact met een UFO verloren"
 
-#, fuzzy
 msgid "The maximum of AI actors for this game."
-msgstr "Maximum aantal computerspelers voor dit spel"
+msgstr "Maximum aantal computerspelers voor dit spel."
 
 #, c-format
 msgid "Cost:\t%i c\n"
 msgstr "Kosten:\t%i c\n"
 
-#, fuzzy
 msgid "Max. Soldiers:"
-msgstr "Max. aantal soldaten:\t%i\n"
+msgstr "Max. aantal soldaten:"
 
-#, fuzzy, c-format
+#, c-format
 msgid ""
 "FROM: %s\n"
 "TO: %s\n"
@@ -12924,19 +12598,16 @@ msgid ""
 msgstr ""
 "VAN: %s\n"
 "AAN: %s\n"
-"DATUM: %s\n"
-"ONDERWERP: %s%s\n"
+"DATUM: %s"
 
-#, fuzzy
 msgid "Sets the maximum amount of soldiers."
-msgstr "Herkies de huidige soldaat"
+msgstr "Specificeer het maximale aantal soldaten."
 
 msgid "UFO Recovery"
 msgstr "UFO Berging"
 
-#, fuzzy
 msgid "UGVs:"
-msgstr "Onbemand Grondvoertuig"
+msgstr "OGVs:"
 
 msgid "Assemble a team first"
 msgstr "Maak eerst een team"
@@ -12956,7 +12627,7 @@ msgid "skill_close"
 msgstr "skill_close"
 
 msgid "Bases"
-msgstr "Basissen"
+msgstr "Bases"
 
 msgid "Ammunition"
 msgstr "Munitie"
@@ -12964,9 +12635,8 @@ msgstr "Munitie"
 msgid "Installations"
 msgstr "Installaties"
 
-#, fuzzy
 msgid "^BMenu bindings"
-msgstr "Laat toetsbindingen zien"
+msgstr "^BMenu toetsbindingen"
 
 msgid "Costs"
 msgstr "Kosten"
@@ -13024,35 +12694,31 @@ msgid "Scout U"
 msgstr "Verkenner U"
 
 msgid "Node editor"
-msgstr "Punten bewerker"
+msgstr "Knooppunt bewerker"
 
 msgid "Carrier U"
 msgstr "Drager U"
 
-#, fuzzy
 msgid "Capture a node"
-msgstr "Vastleggen modus"
+msgstr "Vastleggen knooppunt"
 
 msgid "Alien Aircraft Plating"
 msgstr "Buitenaardse Vliegtuig Beplating"
 
-#, fuzzy
 msgid "Select parent node"
-msgstr "Kies deze zone"
+msgstr "Kies ouder knooppunt"
 
 msgid "Advanced Combat Armour"
-msgstr "Geavanceerde Gevechtspantser"
+msgstr "Geavanceerd Gevechtspantser"
 
-#, fuzzy
 msgid "Select first child node"
-msgstr "Kies deze zone"
+msgstr "Kies eerste kind-knooppunt"
 
 msgid "Very Hard Campaign"
 msgstr "Erg Moeilijke Campagne"
 
-#, fuzzy
 msgid "Select next node"
-msgstr "Kies deze zone"
+msgstr "Kies volgend knooppunt"
 
 msgid "Dakar"
 msgstr "Dakar"
@@ -13075,9 +12741,8 @@ msgstr "Huidig venster"
 msgid "Berne"
 msgstr "Berne"
 
-#, fuzzy
 msgid "Current node:"
-msgstr "Huidige basis:"
+msgstr "Huidig knooppunt:"
 
 msgid "Buenos Aires"
 msgstr "Buenos Aires"
@@ -13088,23 +12753,20 @@ msgstr "Bewaar uw team"
 msgid "Chicago"
 msgstr "Chicago"
 
-#, fuzzy
 msgid "Add/Remove item to transfer cargo, hold SHIFT for speed increase."
-msgstr "Selecteer de basis om naartoe te verplaatsen"
+msgstr "Toevoegen/Verwijderen object aan transportlading, gebruikt SHIFT voor grotere hoeveelheden."
 
 msgid "Cotonou"
 msgstr "Cotonou"
 
-#, fuzzy
 msgid "Amount/Transfer"
-msgstr "verplaats"
+msgstr "Hoeveelheid/Verplaats"
 
 msgid "Doha"
 msgstr "Doha"
 
-#, fuzzy
 msgid "Destination base"
-msgstr "gaat terug naar basis"
+msgstr "Doelbasis"
 
 msgid "Frankfurt am Main"
 msgstr "Frankfurt am Main"
@@ -13133,28 +12795,26 @@ msgstr "Kies een basis om buitenaardse lichamen in te bergen:"
 msgid "Kathmandu"
 msgstr "Kathmandu"
 
-#, fuzzy
 msgid "Pre-Research Report"
-msgstr "Onderzoeksrapporten"
+msgstr "Pre-onderzoeksrapport"
 
 msgid "Kyoto"
 msgstr "Kioto"
 
 msgid "The Big Picture"
-msgstr ""
+msgstr "Het Grote Plaatje"
 
 msgid "Longyearbyen"
 msgstr "Longyearbyen"
 
-#, fuzzy
 msgid "Requirement(s):"
-msgstr "Geen benodigdheden"
+msgstr "Benodigdheden:"
 
 msgid "Makati City"
 msgstr "Makati City"
 
 msgid "Medikit"
-msgstr "EHBO doos"
+msgstr "EHBO koffer"
 
 msgid "Mbabane"
 msgstr "Mbabane"
@@ -13178,7 +12838,7 @@ msgid "Ouagadougou"
 msgstr "Ouagadougou"
 
 msgid "Scan"
-msgstr "Aftasten"
+msgstr "Scan"
 
 msgid "Port Moresby"
 msgstr "Port Moresby"
@@ -13252,15 +12912,14 @@ msgstr "Goed"
 msgid "Snap Shot"
 msgstr "Snel Schot"
 
-#, fuzzy
 msgid "No reload possible, already fully loaded."
-msgstr "Herladen niet mogelijk voor de linkerhand, is al volledig geladen."
+msgstr "Herladen niet mogelijk, is al volledig geladen."
 
 msgid "Cannonade"
 msgstr "Artillerievuur"
 
 msgid "Toggle reservation for crouching."
-msgstr "Wissel tussen reservering voor sluipen."
+msgstr "Wissel reservering voor sluipen."
 
 msgid "Precision Shot"
 msgstr "Precisieschot"
@@ -13278,7 +12937,7 @@ msgid "Assault Rifle Magazine"
 msgstr "Bestormingsgeweer Magazijn"
 
 msgid "You've defeated the enemy, but did poorly, and many civialians were killed"
-msgstr ""
+msgstr "Je hebt de vijand verslagen, maar op nogal incapabele wijze, en er zijn veel burgers omgekomen"
 
 msgid "3-Round Burst"
 msgstr "3-Schots Salvo"
@@ -13331,12 +12990,12 @@ msgid "Sniper Rifle"
 msgstr "Sluipschutter Geweer"
 
 msgid "Pleased"
-msgstr "Veraangenaamd"
+msgstr "Tevreden"
 
 msgid "Sniper Rifle Magazine"
 msgstr "Sluipschutter Geweer Magazijn"
 
-#, fuzzy, c-format
+#, c-format
 msgid "Production queue for %s is empty"
 msgstr "Productiewachtrij voor basis %s is leeg"
 
@@ -13399,10 +13058,10 @@ msgid "..."
 msgstr "..."
 
 msgid "Riot Shotgun"
-msgstr "Riot Shotgun"
+msgstr "Rel Jachtgeweer"
 
 msgid "Toggles the hud radar mode"
-msgstr "Wissel tussen de hud radar modi"
+msgstr "Wissel de hud radar modus"
 
 msgid "Saboted Slugs"
 msgstr "Gelaagde Kogels"
@@ -13423,7 +13082,7 @@ msgid "Tropical river"
 msgstr "Tropische rivier"
 
 msgid "Flechette Shells"
-msgstr "Flechette Kogels"
+msgstr "Flechette Munitie"
 
 msgid "Corrupter U"
 msgstr "Corrumpeerder U"
@@ -13489,37 +13148,37 @@ msgid "Manila"
 msgstr "Manila"
 
 msgid "Snap Shot - Airburst"
-msgstr "Snel Schot - Luchtschot"
+msgstr "Snel - Luchtschot"
 
 msgid "Namangan"
 msgstr "Namangan"
 
 msgid "Aimed Shot - Airburst"
-msgstr "Gericht Schot - Luchtschot"
+msgstr "Gericht - Luchtschot"
 
 msgid "Peshawar"
 msgstr "Peshawar"
 
 msgid "3-Round Burst - Airburst"
-msgstr "3-Schots Salvo - Luchtschot"
+msgstr "3-Schots - Luchtschot"
 
 msgid "Sabha"
 msgstr "Sabha"
 
 msgid "Snap Shot - Timed"
-msgstr "Snel Schot - Vertraagd"
+msgstr "Snel - Vertraagd"
 
 msgid "Sitka"
 msgstr "Sitka"
 
 msgid "Aimed Shot - Timed"
-msgstr "Gericht Schot - Vertraagd"
+msgstr "Gericht - Vertraagd"
 
 msgid "Tijuana"
 msgstr "Tijuana"
 
 msgid "3-Round Burst - Timed"
-msgstr "3-Schots Salvo - Vertraagd"
+msgstr "3-Schots - Vertraagd"
 
 msgid "Yekaterinburg"
 msgstr "Jekaterinenburg"
@@ -13533,9 +13192,8 @@ msgstr "Onvoldoende Geld -- %s"
 msgid "25mm Flechette Grenades"
 msgstr "25mm Flechette Granaten"
 
-#, fuzzy
 msgid "Toggle to the next alien in sight of the selected actor."
-msgstr "Wissel naar de volgende zichtbare buitenaardse voor de gekozen persoon."
+msgstr "Wissel naar de volgende voor de huidige persoon zichtbare buitenaardse."
 
 msgid "25mm PB Grenades"
 msgstr "25mm PB Granaten"
@@ -13566,9 +13224,9 @@ msgstr "Niet genoeg verblijven"
 msgid "Electro Laser"
 msgstr "Elektro Laser"
 
-#, fuzzy, c-format
+#, c-format
 msgid "%s was successfully installed into aircraft %s at %s."
-msgstr "%s is succesvol geïnstalleerd op vliegtuig %s in basis %s."
+msgstr "%s is succesvol geïnstalleerd in vliegtuig %s op basis %s."
 
 msgid "D-F Cartridge"
 msgstr "D-F Houder"
@@ -13579,9 +13237,8 @@ msgstr "Oogstmissie"
 msgid "Wave Fire"
 msgstr "Golfschot"
 
-#, fuzzy
 msgid "Components:\n"
-msgstr "Componenten:"
+msgstr "Componenten:\n"
 
 msgid "Pulsed Fire"
 msgstr "Pulsschot"
@@ -13594,16 +13251,14 @@ msgstr ""
 "\n"
 "Budget deze maand:\t%d"
 
-#, fuzzy
 msgid "D-F Cartridge Stun"
-msgstr "D-F Houder"
+msgstr "D-F Houder Verdoof"
 
 msgid "Living Quarters empty."
 msgstr "Verblijfruimten leeg."
 
-#, fuzzy
 msgid "Stun Shot"
-msgstr "Snel Schot"
+msgstr "Verdoof Schot"
 
 #, c-format
 msgid "%s\t%i %s %02i\n"
@@ -13618,9 +13273,8 @@ msgstr "Tweehandig"
 msgid "Monomolecular Knife"
 msgstr "Enkelmoleculair Mes"
 
-#, fuzzy
 msgid "Soldier left the rescue zone\n"
-msgstr "Kies deze zone"
+msgstr "Soldaat verlaat reddingszone\n"
 
 msgid "Stun Rod"
 msgstr "Verdovingsstaaf"
@@ -13640,7 +13294,6 @@ msgstr "Dubbele Lading"
 msgid "Accra"
 msgstr "Accra"
 
-#, fuzzy
 msgid "Bludgeon"
 msgstr "Ploertendoder"
 
@@ -13665,7 +13318,6 @@ msgstr "Plasma Zwaard"
 msgid "Miami"
 msgstr "Miami"
 
-#, fuzzy
 msgid "Lock"
 msgstr "Sluit"
 
@@ -13681,9 +13333,8 @@ msgstr "Surat Thani"
 msgid "Minigun Magazine"
 msgstr "M134 Magazijn"
 
-#, fuzzy
 msgid "Campaign Start"
-msgstr "Campagne"
+msgstr "Campagne Start"
 
 msgid "Shotgun"
 msgstr "Jachtgeweer"
@@ -13713,9 +13364,9 @@ msgstr "Wijzig thuisbasis van vliegtuig"
 msgid "XAW95 Magazine"
 msgstr "XAW95 Magazijn"
 
-#, fuzzy, c-format
+#, c-format
 msgid "%s does not have Antimatter Storage, antimatter are removed!"
-msgstr "Basis %s heeft geen Opslag, onderdelen zijn verwijderd!"
+msgstr "Basis %s heeft geen Antimaterie Opslag, onderdelen zijn verwijderd!"
 
 msgid "10-Round Burst"
 msgstr "10-Schots Salvo"
@@ -13727,9 +13378,8 @@ msgstr "Servernaam:\t%s\n"
 msgid "Particle Beam Pistol"
 msgstr "Deeltjesstraal Pistool"
 
-#, fuzzy
 msgid "2 minutes left until forced turn end.\n"
-msgstr "over 2 minuten wordt de ronde geforceerd beëindigd\n"
+msgstr "over 2 minuten wordt de ronde geforceerd beëindigd.\n"
 
 msgid "Pistol Particle Accelerator"
 msgstr "Deeltjesversneller Pistool"
@@ -13771,9 +13421,8 @@ msgstr "U moet %s inhuren om gebouw %s te kunnen gebruiken."
 msgid "Unrestricted Blast"
 msgstr "Onbegrensde Ontploffing"
 
-#, fuzzy
 msgid "Status: this research topic is currently being processed in laboratories"
-msgstr "Status: Onderzoek gepauzeerd"
+msgstr "Status: dit onderzoek is momenteel in behandeling in een laboratorium"
 
 msgid "Plasma Pistol"
 msgstr "Plasma Pistool"
@@ -13782,7 +13431,7 @@ msgid "Tilt battlescape camera down"
 msgstr "Kantel slagveld camera naar beneden"
 
 msgid "Plasma Pistol Charger"
-msgstr "Plasma Pistool Lader"
+msgstr "Plasma Pistool Accu"
 
 msgid "Barcelona"
 msgstr "Barcelona"
@@ -13794,7 +13443,7 @@ msgid "Novosibirsk"
 msgstr "Novosibirsk"
 
 msgid "Plasma Rifle Charger"
-msgstr "Plasma Geweer Lader"
+msgstr "Plasma Geweer Accu"
 
 msgid "idle"
 msgstr "doet niets"
@@ -14566,6 +14215,7 @@ msgstr "Ipoh"
 #~ msgstr "Schichtgeweer Magazijn"
 
 #~ msgid "%d day\n"
+
 #~ msgid_plural "%d days\n"
 #~ msgstr[0] "%d dag\n"
 #~ msgstr[1] "%d dagen\n"
@@ -15279,6 +14929,7 @@ msgstr "Ipoh"
 #~ msgstr "Repeteervuur"
 
 #~ msgid "Healing of %s completed - %i active healing left\n"
+
 #~ msgid_plural "Healing of %s completed - %i active healings left\n"
 #~ msgstr[0] "Genezing van %s volledig - %i actieve verpleegde over\n"
 #~ msgstr[1] "Genezing van %s volledig - %i actieve verpleegden over\n"

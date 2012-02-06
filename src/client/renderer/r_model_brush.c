@@ -631,7 +631,7 @@ static void R_LoadBspVertexArrays (model_t *mod)
 		}
 	}
 
-	R_ReallocateStateArrays(vertind/3);
+	R_ReallocateStateArrays(vertind / 3);
 
 	if (qglBindBuffer) {
 		/* and also the vertex buffer objects */
@@ -659,18 +659,15 @@ static void R_LoadBspVertexArrays (model_t *mod)
 	}
 }
 
-/** @brief temporary space for sorting surfaces by texture index */
-static mBspSurfaces_t *r_sorted_surfaces[MAX_GL_TEXTURES];
-
-static void R_SortSurfacesArrays_ (mBspSurfaces_t *surfs)
+static void R_SortSurfacesArrays_ (mBspSurfaces_t *surfs, mBspSurfaces_t **r_sorted_surfaces)
 {
 	int i, j;
 
 	for (i = 0; i < surfs->count; i++) {
-		const ptrdiff_t texindex = surfs->surfaces[i]->texinfo->image - r_images;
+		const int texindex = R_GetImageIndex(surfs->surfaces[i]->texinfo->image);
 		if (texindex < 0 || texindex >= MAX_GL_TEXTURES)
 			Com_Error(ERR_FATAL, "R_SortSurfacesArrays: bogus image pointer");
-		R_SurfaceToSurfaces(r_sorted_surfaces[texindex], surfs->surfaces[i]);
+		R_AddSurfaceToArray(r_sorted_surfaces[texindex], surfs->surfaces[i]);
 	}
 
 	surfs->count = 0;
@@ -679,7 +676,7 @@ static void R_SortSurfacesArrays_ (mBspSurfaces_t *surfs)
 		mBspSurfaces_t *sorted = r_sorted_surfaces[i];
 		if (sorted && sorted->count) {
 			for (j = 0; j < sorted->count; j++)
-				R_SurfaceToSurfaces(surfs, sorted->surfaces[j]);
+				R_AddSurfaceToArray(surfs, sorted->surfaces[j]);
 
 			sorted->count = 0;
 		}
@@ -694,24 +691,19 @@ static void R_SortSurfacesArrays (const model_t *mod)
 {
 	const mBspSurface_t *surf, *s;
 	int i, ns;
+	mBspSurfaces_t **r_sorted_surfaces = (mBspSurfaces_t **) Mem_Alloc(r_numImages * sizeof(mBspSurfaces_t *));
 
 	/* resolve the start surface and total surface count */
-	if (mod->type == mod_bsp) {  /*  world model */
-		s = mod->bsp.surfaces;
-		ns = mod->bsp.numsurfaces;
-	} else {  /* submodels */
-		s = &mod->bsp.surfaces[mod->bsp.firstmodelsurface];
-		ns = mod->bsp.nummodelsurfaces;
-	}
-
-	OBJZERO(r_sorted_surfaces);
+	s = &mod->bsp.surfaces[mod->bsp.firstmodelsurface];
+	ns = mod->bsp.nummodelsurfaces;
 
 	/* allocate the per-texture surfaces arrays and determine counts */
 	for (i = 0, surf = s; i < ns; i++, surf++) {
-		mBspSurfaces_t *surfs = r_sorted_surfaces[surf->texinfo->image - r_images];
+		int index = R_GetImageIndex(surf->texinfo->image);
+		mBspSurfaces_t *surfs = r_sorted_surfaces[index];
 		if (!surfs) {  /* allocate it */
 			surfs = (mBspSurfaces_t *)Mem_PoolAlloc(sizeof(*surfs), vid_modelPool, 0);
-			r_sorted_surfaces[surf->texinfo->image - r_images] = surfs;
+			r_sorted_surfaces[index] = surfs;
 		}
 
 		surfs->count++;
@@ -729,7 +721,7 @@ static void R_SortSurfacesArrays (const model_t *mod)
 	/* sort the model's surfaces arrays into the per-texture arrays */
 	for (i = 0; i < NUM_SURFACES_ARRAYS; i++) {
 		if (mod->bsp.sorted_surfaces[i]->count) {
-			R_SortSurfacesArrays_(mod->bsp.sorted_surfaces[i]);
+			R_SortSurfacesArrays_(mod->bsp.sorted_surfaces[i], r_sorted_surfaces);
 			Com_DPrintf(DEBUG_RENDERER, "%i: #%i surfaces\n", i, mod->bsp.sorted_surfaces[i]->count);
 		}
 	}
@@ -743,6 +735,8 @@ static void R_SortSurfacesArrays (const model_t *mod)
 			Mem_Free(surfs);
 		}
 	}
+
+	Mem_Free(r_sorted_surfaces);
 }
 
 static void R_LoadSurfacesArrays_ (model_t *mod)
@@ -751,17 +745,13 @@ static void R_LoadSurfacesArrays_ (model_t *mod)
 	int i, ns;
 
 	/* allocate the surfaces array structures */
+	/** @todo only one allocation should be used here - allocate the whole array with one Mem_PoolAlloc call */
 	for (i = 0; i < NUM_SURFACES_ARRAYS; i++)
 		mod->bsp.sorted_surfaces[i] = (mBspSurfaces_t *)Mem_PoolAlloc(sizeof(mBspSurfaces_t), vid_modelPool, 0);
 
 	/* resolve the start surface and total surface count */
-	if (mod->type == mod_bsp) {  /* world model */
-		s = mod->bsp.surfaces;
-		ns = mod->bsp.numsurfaces;
-	} else {  /* submodels */
-		s = &mod->bsp.surfaces[mod->bsp.firstmodelsurface];
-		ns = mod->bsp.nummodelsurfaces;
-	}
+	s = &mod->bsp.surfaces[mod->bsp.firstmodelsurface];
+	ns = mod->bsp.nummodelsurfaces;
 
 	/* determine the maximum counts for each rendered type in order to
 	 * allocate only what is necessary for the specified model */
@@ -805,23 +795,23 @@ static void R_LoadSurfacesArrays_ (model_t *mod)
 		const material_t *material = &texinfo->image->material;
 		if (texinfo->flags & (SURF_BLEND33 | SURF_BLEND66)) {
 			if (texinfo->flags & SURF_WARP)
-				R_SurfaceToSurfaces(mod->bsp.blend_warp_surfaces, surf);
+				R_AddSurfaceToArray(mod->bsp.blend_warp_surfaces, surf);
 			else
-				R_SurfaceToSurfaces(mod->bsp.blend_surfaces, surf);
+				R_AddSurfaceToArray(mod->bsp.blend_surfaces, surf);
 		} else {
 			if (texinfo->flags & SURF_WARP)
-				R_SurfaceToSurfaces(mod->bsp.opaque_warp_surfaces, surf);
+				R_AddSurfaceToArray(mod->bsp.opaque_warp_surfaces, surf);
 			else if (texinfo->flags & SURF_ALPHATEST)
-				R_SurfaceToSurfaces(mod->bsp.alpha_test_surfaces, surf);
+				R_AddSurfaceToArray(mod->bsp.alpha_test_surfaces, surf);
 			else
-				R_SurfaceToSurfaces(mod->bsp.opaque_surfaces, surf);
+				R_AddSurfaceToArray(mod->bsp.opaque_surfaces, surf);
 		}
 
 		if (material->flags & STAGE_RENDER)
-			R_SurfaceToSurfaces(mod->bsp.material_surfaces, surf);
+			R_AddSurfaceToArray(mod->bsp.material_surfaces, surf);
 
 		if (material->flags & STAGE_FLARE)
-			R_SurfaceToSurfaces(mod->bsp.flare_surfaces, surf);
+			R_AddSurfaceToArray(mod->bsp.flare_surfaces, surf);
 	}
 
 	/* now sort them by texture */
@@ -914,6 +904,54 @@ static void R_SetupSubmodels (void)
 }
 
 /**
+ @brief Sets up surface range for the world model
+ @note Depends on ufo2map to store all world model surfaces before submodel ones
+ */
+static void R_SetupWorldModel (void)
+{
+	int surfCount = r_worldmodel->bsp.numsurfaces;
+	/* first NUM_REGULAR_MODELS submodels are the models of the different levels, don't care about them */
+	int i = NUM_REGULAR_MODELS;
+
+#ifdef DEBUG
+	/* validate surface allocation by submodels by checking the surface array range they are using */
+	/* start with inverted range to simplify code */
+	int first = surfCount, last = -1; /* @note range is [,) */
+	for (; i < r_worldmodel->bsp.numsubmodels; i++) {
+		const mBspHeader_t *sub = &r_worldmodel->bsp.submodels[i];
+		int firstFace = sub->firstface;
+		int lastFace = firstFace + sub->numfaces;
+
+		if (lastFace <= firstFace)
+			continue; /* empty submodel, ignore it */
+
+		if (last >= 0 && (firstFace > last || lastFace < first))
+			Com_Printf("Warning: submodels may not combine to contigous range in the surface array, some world geometry could be missing as a result (submodel %i)\n", i);
+
+		if (firstFace < first)
+			first = firstFace;
+
+		if (lastFace > last)
+			last = lastFace;
+
+		Com_DPrintf(DEBUG_RENDERER, "Submodel %i, range %i..%i\n", i, firstFace, lastFace - 1);
+	}
+	surfCount = first;
+
+	if (last >= 0 && last != r_worldmodel->bsp.numsurfaces)
+		Com_Printf("Warning: %i surfaces are lost, some world geometry could be missing as a result\n", r_worldmodel->bsp.numsurfaces - last);
+#else
+	/* take a shortcut: assume that first submodel surfaces begin exactly after world model ones */
+	if (i < r_worldmodel->bsp.numsubmodels)
+		surfCount = r_worldmodel->bsp.submodels[i].firstface;
+#endif
+	Com_DPrintf(DEBUG_RENDERER, "World model, range 0..%i\n", surfCount - 1);
+
+	r_worldmodel->bsp.firstmodelsurface = 0;
+	r_worldmodel->bsp.nummodelsurfaces = surfCount;
+}
+
+/**
  * @sa CM_AddMapTile
  * @sa R_ModBeginLoading
  * @param[in] name The name of the map. Relative to maps/ and without extension
@@ -976,6 +1014,7 @@ static void R_ModAddMapTile (const char *name, qboolean day, int sX, int sY, int
 	R_ModLoadSubmodels(&header->lumps[LUMP_MODELS]);
 
 	R_SetupSubmodels();
+	R_SetupWorldModel();
 
 	R_LoadBspVertexArrays(r_worldmodel);
 

@@ -506,43 +506,8 @@
 ( 228 82 5 ) ( 284 82 5 ) ( 284 109 -4 ) tex_misc/straw 256 46 11 0.174996 0.174996 65280 2048 0
 ( 228 68 48 ) ( 284 68 48 ) ( 284 52 25 ) tex_misc/straw 160 164 11 0.174996 0.174996 65280 2048 0
 }
-// brush 54
-{
-( 256 192 32 ) ( 256 224 32 ) ( 256 192 64 ) tex_common/actorclip 32 0 0 1 1 65536 0 0
-( 288 256 64 ) ( 288 256 32 ) ( 288 224 64 ) tex_common/actorclip 0 0 0 1 1 65536 0 0
-( 256 192 32 ) ( 256 192 64 ) ( 320 192 32 ) tex_common/actorclip 0 0 0 1 1 65536 0 0
-( 288 256 64 ) ( 224 256 64 ) ( 288 256 32 ) tex_common/actorclip 32 0 0 1 1 65536 0 0
-( 192 288 0 ) ( 256 288 0 ) ( 192 320 0 ) tex_common/actorclip 32 0 0 1 1 65536 0 0
-( 256 320 64 ) ( 256 288 64 ) ( 192 320 64 ) tex_common/actorclip 32 0 0 1 1 65536 0 0
-}
-// brush 55
-{
-( 192 288 32 ) ( 192 320 32 ) ( 192 288 64 ) tex_common/actorclip 0 0 0 1 1 65536 0 0
-( 256 320 64 ) ( 256 320 32 ) ( 256 288 64 ) tex_common/actorclip 0 0 0 1 1 65536 0 0
-( 192 288 32 ) ( 192 288 64 ) ( 256 288 32 ) tex_common/actorclip 0 0 0 1 1 65536 0 0
-( 256 320 64 ) ( 192 320 64 ) ( 256 320 32 ) tex_common/actorclip 0 0 0 1 1 65536 0 0
-( 192 288 0 ) ( 256 288 0 ) ( 192 320 0 ) tex_common/actorclip 0 0 0 1 1 65536 0 0
-( 256 320 64 ) ( 256 288 64 ) ( 192 320 64 ) tex_common/actorclip 0 0 0 1 1 65536 0 0
-}
 }
 // entity 1
-{
-"classname" "misc_model"
-"origin" "268 220 36"
-"model" "models/animals/cow/cow.md2"
-"anim" "mampf1"
-"spawnflags" "255"
-"angles" "0 90 0"
-}
-// entity 2
-{
-"classname" "misc_model"
-"origin" "224 310 36"
-"model" "models/animals/cow/cow.md2"
-"anim" "idle"
-"spawnflags" "255"
-}
-// entity 3
 {
 "classname" "misc_model"
 "origin" "154 64 40"

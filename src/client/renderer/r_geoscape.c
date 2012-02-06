@@ -598,6 +598,7 @@ void R_Draw3DGlobe (int x, int y, int w, int h, int day, int second, const vec3_
 	r_globeEarthAtmosphere.texture = R_FindImage(va("pics/geoscape/%s_atmosphere", map), it_wrappic);
 
 	/* Draw earth atmosphere */
+	/** @todo render atmosphere glow even when postprocessing is disabled */
 	if (r_programs->integer && r_postprocess->integer) {
 		r_globeEarthAtmosphere.normalMap = r_globeEarth.normalMap;
 		r_globeEarthAtmosphere.glowScale = 1.0;

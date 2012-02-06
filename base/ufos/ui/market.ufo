@@ -288,7 +288,7 @@ window market extends objectinfo
 		{
 			visiblewhen "*cvar:mn_itemtype eq \"aircraft\""	// Only for aircraft.
 			string		*cvar:mn_aircraftname
-			pos			"22 35"
+			pos			"22 25"
 			size		"365 20"
 			contentalign	ALIGN_UC
 		}

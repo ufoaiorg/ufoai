@@ -7,7 +7,24 @@
  * Indicates that gl_FragData is written to, not gl_FragColor.
  * #extension needs to be placed before all non preprocessor code.
  */
-#extension GL_ARB_draw_buffers : enable
+#if r_postprocess
+	/*
+	 * Indicates that gl_FragData is written to, not gl_FragColor.
+	 * #extension needs to be placed before all non preprocessor code.
+	 */
+	#extension GL_ARB_draw_buffers : enable
+#endif
+
+#ifndef glsl110
+	#if r_postprocess
+		/** After glsl1110 this need to be explicitly declared; used by fixed functionality at the end of the OpenGL pipeline.*/
+		out vec4 gl_FragData[2];
+	#else
+		/** After glsl1110 this need to be explicitly declared; used by fixed functionality at the end of the OpenGL pipeline.*/
+		out vec4 gl_FragColor;
+	#endif
+#endif
+
 
 in_qualifier vec2 tex;
 
@@ -18,15 +35,10 @@ in_qualifier vec4 specularLight;
 in_qualifier vec3 lightVec;
 in_qualifier vec3 eyeVec;
 
-#ifndef glsl110
-	/** After glsl1110 this need to be explicitly declared; used by fixed functionality at the end of the OpenGL pipeline.*/
-	out vec4 gl_FragData[2];
-#endif
-
 /** Diffuse.*/
-uniform sampler2D SAMPLER0;
+uniform sampler2D SAMPLER_DIFFUSE;
 /** Normalmap.*/
-uniform sampler2D SAMPLER2;
+uniform sampler2D SAMPLER_NORMALMAP;
 
 uniform float GLOWSCALE;
 uniform vec4 DEFAULTCOLOR;
@@ -52,10 +64,10 @@ void fresnelRefract(vec3 L, vec3 N, float n1, float n2,
 }
 
 void main() {
-	vec4 diffuseColor = texture2D(SAMPLER0, tex);
+	vec3 diffuseColor = texture2D(SAMPLER_DIFFUSE, tex).rgb;
 	vec3 V = vec3(normalize(eyeVec).rgb);
 	vec3 L = vec3(normalize(lightVec).rgb);
-	vec3 N = vec3(normalize(texture2D(SAMPLER2, tex).rgb * 2.0 - 1.0).rgb);
+	vec3 N = vec3(normalize(texture2D(SAMPLER_NORMALMAP, tex).rgb * 2.0 - 1.0).rgb);
 	/* calculate reflections/refractions */
 	vec3 Rvec;
 	vec3 Tvec;
@@ -70,18 +82,23 @@ void main() {
 	float LNdotV = clamp(dot(reflect(-L, N), V), 0.0, 1.0);
 	float VdotL = clamp(((dot(L, -V) + 1.0) / 2.0), 0.0, 1.0);
 
-	vec4 ambient = vec4(0.05, 0.05, 0.05, 0.05);
+	vec3 ambient = vec3(0.05, 0.05, 0.05);
 
 	/* calculate reflections */
-	vec4 reflectColor = diffuseColor * (ambient + pow(NdotL, 4.0) * (TdotV + MTdotV) + 0.2 * pow(VdotL, 16.0));
+	vec3 reflectColor = diffuseColor * (ambient + pow(NdotL, 4.0) * (TdotV + MTdotV) + 0.2 * pow(VdotL, 16.0));
 
 	float d = clamp(pow(1.0 + dot(V, L), 0.4), 0.0, 1.0);
-	vec4 specularColor = d * RdotV * pow(LNdotV, specularExp) * specularLight;
+	vec3 specularColor = d * RdotV * pow(LNdotV, specularExp) * specularLight.rgb;
 
-	vec4 hdrColor = GLOWSCALE * (0.4 * reflectColor + 1.0 * specularColor);
-	hdrColor.a = 1.0;
+	vec3 hdrColor = GLOWSCALE * (0.4 * reflectColor + 1.0 * specularColor);
 
 	/* calculate final color */
+#if r_postprocess
 	gl_FragData[0] = DEFAULTCOLOR;
-	gl_FragData[1] = hdrColor;
+	gl_FragData[1].rgb = hdrColor;
+	gl_FragData[1].a = 1.0;
+#else
+	gl_FragColor.rgb = DEFAULTCOLOR.rgb + hdrColor;
+	gl_FragColor.a = DEFAULTCOLOR.a;
+#endif
 }

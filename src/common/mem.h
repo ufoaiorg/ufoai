@@ -79,6 +79,7 @@ typedef struct memPool_s {
 #define Mem_PoolAlloc(size,pool,tagNum)					_Mem_Alloc((size),qtrue,(pool),(tagNum),__FILE__,__LINE__)
 #define Mem_PoolAllocExt(size,zeroFill,pool,tagNum)		_Mem_Alloc((size),(zeroFill),(pool),(tagNum),__FILE__,__LINE__)
 #define Mem_ReAlloc(ptr,size)							_Mem_ReAlloc((ptr),(size),__FILE__,__LINE__)
+#define Mem_SafeReAlloc(ptr, size)						((ptr) ? Mem_ReAlloc(ptr, size) : Mem_Alloc(size))
 
 #define Mem_Dup(in,size)								_Mem_PoolDup((in),(size),com_genericPool,0,__FILE__,__LINE__)
 #define Mem_StrDup(in)									_Mem_PoolStrDup((in),com_genericPool,0,__FILE__,__LINE__)

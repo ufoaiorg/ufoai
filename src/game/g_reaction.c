@@ -1,6 +1,22 @@
 /**
  * @file g_reaction.c
  * @brief Reaction fire code
+ * Reaction fire is involved in the following situations:
+ * 1. G_ReactionFireOnMovement()
+ *		calls	G_ReactionFireCheckExecution()
+ *				calls	G_ReactionFireTryToShoot()
+ *		calls	G_ReactionFireSearchTarget() (equiv. to RFT_Update)
+ * 2. G_ClientShoot()
+ *		calls	G_ReactionFirePreShot()
+ *				calls	G_ReactionFireSearchTarget()
+ *				calls	G_ReactionFireTryToShoot()
+ *		calls	G_ReactionFirePostShot()
+ *				calls	G_ReactionFireCheckExecution()
+ *						calls	G_ReactionFireTryToShoot()
+ * 3. G_ClientEndRound()
+ *		calls	G_ReactionFireEndTurn()
+ *				calls	G_ReactionFireTryToShoot()
+ *		calls	G_ReactionFireReset()
  */
 
 /*
@@ -25,6 +41,8 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 
 #include "g_local.h"
 
+/* set RF2 to 1 to enable new RF mode. Set it to 100 to disable. */
+#define RF2 100
 #define MAX_RF_TARGETS 10
 #define MAX_RF_DATA 50
 
@@ -43,6 +61,9 @@ typedef struct reactionFireTargets
 
 static reactionFireTargets_t rfData[MAX_RF_DATA];
 
+/**
+ * @brief Initialize the reaction fire table for all entities.
+ */
 void G_ReactionFireTargetsInit (void)
 {
 	int i;
@@ -53,6 +74,10 @@ void G_ReactionFireTargetsInit (void)
 	}
 }
 
+/**
+ * @brief Create a table of reaction fire targets for the given edict.
+ * @param[in] shooter The reaction firing actor
+ */
 void G_ReactionFireTargetsCreate (const edict_t *shooter)
 {
 	int i;
@@ -73,7 +98,11 @@ void G_ReactionFireTargetsCreate (const edict_t *shooter)
 #endif
 }
 
-#if 1		/* avoid warnings while the code is not used yet */
+/**
+ * @brief Add a reaction fire target for the given shooter.
+ * @param[in] shooter The reaction firing actor
+ * @param[in] target The potential reaction fire victim
+ */
 static void G_ReactionFireTargetsAdd (const edict_t *shooter, const edict_t *target)
 {
 	int i;
@@ -89,7 +118,7 @@ static void G_ReactionFireTargetsAdd (const edict_t *shooter, const edict_t *tar
 
 	for (i = 0; i < rfts->count; i++) {
 		if (rfts->targets[i].target == target)	/* found it ? */
-			return;
+			return;								/* shooter already knows that target */
 	}
 	assert(i < MAX_RF_TARGETS);
 	rfts->targets[i].target = target;
@@ -97,7 +126,12 @@ static void G_ReactionFireTargetsAdd (const edict_t *shooter, const edict_t *tar
 	rfts->count++;
 }
 
-static void G_ReactionFireTargetsRemove (const edict_t *shooter, const edict_t *target)
+/**
+ * @brief Remove a reaction fire target for the given shooter.
+ * @param[in] shooter The reaction firing actor
+ * @param[in] target The potential reaction fire victim
+ */
+static void G_ReactionFireTargetsRemove (edict_t *shooter, const edict_t *target)
 {
 	int i;
 	reactionFireTargets_t *rfts = NULL;
@@ -119,8 +153,42 @@ static void G_ReactionFireTargetsRemove (const edict_t *shooter, const edict_t *
 			rfts->count--;
 		}
 	}
+	/* support the legacy RF code */
+	shooter->reactionTarget = NULL;
 }
-#endif
+
+/**
+ * @brief Check if the given shooter is ready to reaction fire at the given target.
+ * @param[in] shooter The reaction firing actor
+ * @param[in] target The potential reaction fire victim
+ * @param[in] tusShooter The TUs the shooter will need for the shot
+ * @param[in] tusTarget The TUs the target will need for the shot, 0 for just moving
+ */
+static qboolean G_ReactionFireTargetsExpired (const edict_t *shooter, const edict_t *target, const int tusShooter, const int tusTarget)
+{
+	int i;
+	reactionFireTargets_t *rfts = NULL;
+
+	for (i = 0; i < MAX_RF_DATA; i++) {
+		if (rfData[i].entnum == shooter->number) {
+			rfts = &rfData[i];
+			break;
+		}
+	}
+
+	if (!rfts)
+		return qfalse;	/* the shooter doesn't aim at anything */
+
+	assert(target);
+
+	for (i = 0; i < rfts->count; i++) {
+		if (rfts->targets[i].target == target)	/* found it ? */
+			return rfts->targets[i].triggerTUs + tusShooter <= target->TU + tusShooter;
+	}
+
+	return qfalse;	/* the shooter doesn't aim at this target */
+}
+
 
 /**
  * @brief Get the weapon firing TUs of the item in the right hand of the edict.
@@ -201,25 +269,6 @@ static qboolean G_ActorHasWorkingFireModeSet (const edict_t *actor)
 }
 
 /**
- * @brief Set the reaction fire TU reservation for an actor
- * @param[in,out] ent The actor edict to set the TUs for
- * @return @c true if TUs for reaction fire were reserved, @c false if the reservation was set
- * back to @c 0
- */
-qboolean G_ReserveReactionFireTUs (edict_t *ent)
-{
-	if (G_ReactionFireSetDefault(ent) && G_ReactionFireCanBeEnabled(ent)) {
-		const int TUs = G_ActorGetTUForReactionFire(ent);
-		/* Enable requested reaction fire. */
-		G_ActorReserveTUs(ent, TUs, ent->chr.reservedTus.shot, ent->chr.reservedTus.crouch);
-		return qtrue;
-	}
-
-	G_ActorReserveTUs(ent, 0, ent->chr.reservedTus.shot, ent->chr.reservedTus.crouch);
-	return qfalse;
-}
-
-/**
  * @brief Updates the reaction fire settings in case something was moved into a hand or from a hand
  * that would make the current settings invalid
  * @param[in,out] ent The actor edict to check the settings for
@@ -244,7 +293,7 @@ void G_ReactionFireUpdate (edict_t *ent, fireDefIndex_t fmIdx, actorHands_t hand
 
 	/* If reaction fire is active, update the reserved TUs */
 	if (G_IsReaction(ent)) {
-		G_ReserveReactionFireTUs(ent);
+		G_ReactionFireSettingsReserveTUs(ent);
 	}
 }
 
@@ -265,7 +314,7 @@ static qboolean G_ActorHasEnoughTUsReactionFire (const edict_t *ent)
  * @return @c true if the needed settings could have been made or settings are
  * already valid, @c false otherwise.
  */
-qboolean G_ReactionFireSetDefault (edict_t *ent)
+static qboolean G_ReactionFireSetDefault (edict_t *ent)
 {
 	const objDef_t *weapon;
 	const invList_t *invList;
@@ -300,7 +349,7 @@ qboolean G_ReactionFireSetDefault (edict_t *ent)
  * @param[in] ent The actor to check
  * @return @c true if the actor is allowed to activate it, @c false otherwise
  */
-qboolean G_ReactionFireCanBeEnabled (const edict_t *ent)
+static qboolean G_ReactionFireCanBeEnabled (const edict_t *ent)
 {
 	/* check ent is a suitable shooter */
 	if (!ent->inuse || !G_IsLivingActor(ent))
@@ -329,6 +378,25 @@ qboolean G_ReactionFireCanBeEnabled (const edict_t *ent)
 	}
 
 	return qtrue;
+}
+
+/**
+ * @brief Set the reaction fire TU reservation for an actor
+ * @param[in,out] ent The actor edict to set the TUs for
+ * @return @c true if TUs for reaction fire were reserved, @c false if the reservation was set
+ * back to @c 0
+ */
+qboolean G_ReactionFireSettingsReserveTUs (edict_t *ent)
+{
+	if (G_ReactionFireSetDefault(ent) && G_ReactionFireCanBeEnabled(ent)) {
+		const int TUs = G_ActorGetTUForReactionFire(ent);
+		/* Enable requested reaction fire. */
+		G_ActorReserveTUs(ent, TUs, ent->chr.reservedTus.shot, ent->chr.reservedTus.crouch);
+		return qtrue;
+	}
+
+	G_ActorReserveTUs(ent, 0, ent->chr.reservedTus.shot, ent->chr.reservedTus.crouch);
+	return qfalse;
 }
 
 /**
@@ -387,12 +455,11 @@ static qboolean G_ReactionFireIsPossible (const edict_t *ent, const edict_t *tar
 	return qtrue;
 }
 
-#if 1
 /**
  * @brief Check whether 'target' has just triggered any new reaction fire
  * @param[in] target The entity triggering fire
  */
-static void G_ReactionFireTargetsUpdate (const edict_t *target)
+static void G_ReactionFireTargetsUpdateAll (const edict_t *target)
 {
 	edict_t *shooter = NULL;
 
@@ -406,7 +473,6 @@ static void G_ReactionFireTargetsUpdate (const edict_t *target)
 			G_ReactionFireTargetsRemove(shooter, target);
 	}
 }
-#endif
 
 /**
  * @brief Check whether 'target' has just triggered any new reaction fire
@@ -490,38 +556,39 @@ static qboolean G_ReactionFireShoot (const player_t *player, edict_t *shooter, c
 
 /**
  * @brief Resolve the reaction fire for an entity, this checks that the entity can fire and then takes the shot
- * @param[in] ent The entity to resolve reaction fire for
+ * @param[in] shooter The entity to resolve reaction fire for
+ * @param[in] target The victim of the reaction fire
  * @return true if the entity fired (or would have fired if mock), false otherwise
  */
-static qboolean G_ReactionFireTryToShoot (edict_t *ent)
+static qboolean G_ReactionFireTryToShoot (edict_t *shooter, const edict_t *target)
 {
 	qboolean tookShot;
 
-	/* check whether this ent has a reaction fire queued */
-	assert(ent->reactionTarget);
+	/* check for valid target */
+	assert(target);
 
-	/* ent can't take a reaction shot if it's not possible - and check that
+	/* shooter can't take a reaction shot if it's not possible - and check that
 	 * the target is still alive */
-	if (!G_ReactionFireIsPossible(ent, ent->reactionTarget)) {
-		ent->reactionTarget = NULL;
+	if (!G_ReactionFireIsPossible(shooter, target)) {
+		G_ReactionFireTargetsRemove(shooter, target);
 		return qfalse;
 	}
 
 	/* take the shot */
-	tookShot = G_ReactionFireShoot(G_PLAYER_FROM_ENT(ent), ent, ent->reactionTarget->pos, ST_RIGHT_REACTION, ent->chr.RFmode.fmIdx);
+	tookShot = G_ReactionFireShoot(G_PLAYER_FROM_ENT(shooter), shooter, target->pos, ST_RIGHT_REACTION, shooter->chr.RFmode.fmIdx);
 
 	if (tookShot) {
 		/* clear any shakenness */
-		G_RemoveShaken(ent);
+		G_RemoveShaken(shooter);
 
 		/* check whether further reaction fire is possible */
-		if (G_ReactionFireIsPossible(ent, ent->reactionTarget)){
-			/* see how quickly ent can fire (if it can fire at all) */
-			const int tus = G_ReactionFireGetTUsForItem(ent, ent->reactionTarget, RIGHT(ent));
+		if (G_ReactionFireIsPossible(shooter, target)){
+			/* see how quickly shooter can fire (if it can fire at all) */
+			const int tus = G_ReactionFireGetTUsForItem(shooter, target, RIGHT(shooter));
 			if (tus >= 0) {
 				/* An enemy getting reaction shot gets more time before
 				 * reaction fire is repeated. */
-				ent->reactionTUs = max(0, ent->reactionTarget->TU - tus);
+				shooter->reactionTUs = max(0, target->TU - tus);
 			}
 		}
 	}
@@ -538,19 +605,27 @@ static qboolean G_ReactionFireTryToShoot (edict_t *ent)
  */
 static qboolean G_ReactionFireCheckExecution (const edict_t *target)
 {
-	edict_t *ent = NULL;
+	edict_t *shooter = NULL;
 	qboolean fired = qfalse;
 
 	/* check all possible shooters */
-	while ((ent = G_EdictsGetNextLivingActor(ent))) {
-		if (ent->reactionTarget) {
-			const int reactionTargetTU = ent->reactionTarget->TU;
-			const int reactionTU = ent->reactionTUs;
-			const qboolean timeout = g_reaction_fair->integer == 0 || reactionTargetTU < reactionTU;
-			/* check whether target has changed (i.e. the player is making a move with a
-			 * different entity) or whether target is out of time. */
-			if (ent->reactionTarget != target || timeout)
-				fired |= G_ReactionFireTryToShoot(ent);
+	while ((shooter = G_EdictsGetNextLivingActor(shooter))) {
+		int tus = G_ReactionFireGetTUsForItem(shooter, target, RIGHT(shooter));
+		if (tus > RF2) {		/* will not happen; it's like commenting it out, but keep compiler happy */
+			if (G_ReactionFireTargetsExpired(shooter, target, tus, 0)) {
+				shooter->reactionTarget = target;
+				fired |= G_ReactionFireTryToShoot(shooter, target);
+			}
+		} else {
+			if (shooter->reactionTarget) {
+				const int reactionTargetTU = shooter->reactionTarget->TU;
+				const int reactionTU = shooter->reactionTUs;
+				const qboolean timeout = g_reaction_fair->integer == 0 || reactionTargetTU < reactionTU;
+				/* check whether target has changed (i.e. the player is making a move with a
+				 * different entity) or whether target is out of time. */
+				if (shooter->reactionTarget != target || timeout)
+					fired |= G_ReactionFireTryToShoot(shooter, target);
+			}
 		}
 	}
 	return fired;
@@ -570,7 +645,7 @@ qboolean G_ReactionFireOnMovement (edict_t *target)
 	/* Check to see whether this triggers any reaction fire */
 	G_ReactionFireSearchTarget(target);
 
-	G_ReactionFireTargetsUpdate(target);
+	G_ReactionFireTargetsUpdateAll(target);
 
 	return fired;
 }
@@ -578,44 +653,53 @@ qboolean G_ReactionFireOnMovement (edict_t *target)
 /**
  * @brief Called when 'target' is about to shoot, this forces a 'draw' to decide who gets the first shot
  * @param[in] target The entity about to shoot
- * @param[in] fdTime The TU of the shoot
+ * @param[in] fdTime The TU of the shot
  * @sa G_ClientShoot
  */
 void G_ReactionFirePreShot (const edict_t *target, const int fdTime)
 {
-	edict_t *ent = NULL;
+	edict_t *shooter = NULL;
 
 	/* Check to see whether this triggers any reaction fire */
 	G_ReactionFireSearchTarget(target);
 
-	G_ReactionFireTargetsUpdate(target);
+	G_ReactionFireTargetsUpdateAll(target);
 
 	/* check all ents to see who wins and who loses a draw */
-	while ((ent = G_EdictsGetNextLivingActor(ent))) {
+	while ((shooter = G_EdictsGetNextLivingActor(shooter))) {
 		int entTUs;
+		qboolean fired = qfalse;
 
-		if (!ent->reactionTarget)
-			continue;
-
-		/* check this ent hasn't already lost the draw */
-		if (ent->reactionNoDraw)
-			continue;
-
-		/* can't reaction fire if no TUs to fire */
-		entTUs = G_ReactionFireGetTUsForItem(ent, target, RIGHT(ent));
-		if (entTUs < 0) {
-			ent->reactionTarget = NULL;
-			continue;
-		}
-
-		/* see who won */
-		if (entTUs >= fdTime) {
-			/* target wins, so delay ent */
-			/* ent can't lose the TU battle again */
-			ent->reactionNoDraw = qtrue;
+		entTUs = G_ReactionFireGetTUsForItem(shooter, target, RIGHT(shooter));
+		if (entTUs > RF2) {		/* will not happen; it's like commenting it out, but keep compiler happy */
+			if (G_ReactionFireTargetsExpired(shooter, target, entTUs, fdTime)) {
+				shooter->reactionTarget = target;
+				fired |= G_ReactionFireTryToShoot(shooter, target);
+			}
 		} else {
-			/* ent wins so take the shot */
-			G_ReactionFireTryToShoot(ent);
+			if (!shooter->reactionTarget)
+				continue;
+
+			/* check this shooter hasn't already lost the draw */
+			if (shooter->reactionNoDraw)
+				continue;
+
+			/* can't reaction fire if no TUs to fire */
+			entTUs = G_ReactionFireGetTUsForItem(shooter, target, RIGHT(shooter));
+			if (entTUs < 0) {
+				shooter->reactionTarget = NULL;
+				continue;
+			}
+
+			/* see who won */
+			if (entTUs >= fdTime) {
+				/* target wins, so delay shooter */
+				/* shooter can't lose the TU battle again */
+				shooter->reactionNoDraw = qtrue;
+			} else {
+				/* shooter wins so take the shot */
+				G_ReactionFireTryToShoot(shooter, shooter->reactionTarget);
+			}
 		}
 	}
 }
@@ -643,8 +727,8 @@ void G_ReactionFireEndTurn (void)
 	while ((ent = G_EdictsGetNextLivingActor(ent))) {
 		if (!ent->reactionTarget)
 			continue;
-
-		G_ReactionFireTryToShoot(ent);
+	/*	assert("I bet this never happens" == NULL);	*/
+		G_ReactionFireTryToShoot(ent, ent->reactionTarget);
 	}
 }
 

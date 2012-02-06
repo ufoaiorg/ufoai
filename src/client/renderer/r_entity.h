@@ -26,7 +26,7 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #define R_ENTITY_H
 
 #define MAX_ANIMLIST	8
-#define MAX_ENTITY_LIGHTS 8
+#define MAX_ENTITY_LIGHTS 7
 
 #include "r_light.h"
 #include "r_lighting.h"

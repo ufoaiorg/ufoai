@@ -587,7 +587,7 @@ void CP_CampaignRun (campaign_t *campaign)
 			/* every day */
 			INS_UpdateInstallationData();
 			HOS_HospitalRun();
-			CP_SpawnNewMissions();
+			ccs.missionSpawnCallback();
 			CP_SpreadXVI();
 			NAT_UpdateHappinessForAllNations(campaign->minhappiness);
 			AB_BaseSearchedByNations();
@@ -1255,6 +1255,8 @@ void CP_ResetCampaignData (void)
 
 	OBJZERO(ccs);
 
+	ccs.missionSpawnCallback = CP_SpawnNewMissions;
+
 	/* Collect and count Alien team definitions. */
 	for (i = 0; i < csi.numTeamDefs; i++) {
 		teamDef_t *td = &csi.teamDef[i];
@@ -1405,6 +1407,16 @@ qboolean CP_GetRandomPosOnGeoscapeWithParameters (vec2_t pos, const linkedList_t
 	assert(pos[1] <= 90);
 
 	return qtrue;
+}
+
+const city_t * CP_GetCity (const char *id)
+{
+	LIST_Foreach(ccs.cities, city_t, city) {
+		if (Q_streq(city->id, id))
+			return city;
+	}
+
+	return NULL;
 }
 
 int CP_GetSalaryAdministrative (const salary_t *salary)

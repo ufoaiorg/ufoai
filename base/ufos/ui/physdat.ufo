@@ -29,9 +29,15 @@ window physdata
 	// background
 	// ==================
 
-	image bar_physdata
+	image bar_physdata_deco
 	{
-		src		"hud/bar_phys"
+		src		"hud/bar_phys_deco"
+		pos		"0 0"
+	}
+
+	image bar_physdata_mini
+	{
+		src		"hud/bar_phys_mini"
 		pos		"0 0"
 	}
 
@@ -325,6 +331,13 @@ window physdata
 		if ( *cvar:mn_base_count > 0 ) {
 			*cvar:mn_missions_label_string = "_Missions Performed:"
 			*cvar:mn_kills_label_string = "_Enemies Killed:"
+		}
+		// we need the ability to hide the deco just for the MiniHUD
+		if ( *cvar:mn_minihud_enabled == 1 ) {
+			if ( *cvar:mn_minihud_deco == 0 ) { *node:root.bar_physdata_deco@invis = true }
+			else { *node:root.bar_physdata_deco@invis = false }
+			// the inventory window will automatically be closed if open
+			if ( *cvar:inventory_window_open == 1 ) { cmd "ui_close ahudinv;" }
 		}
 	}
 

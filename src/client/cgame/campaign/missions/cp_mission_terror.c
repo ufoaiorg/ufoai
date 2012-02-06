@@ -87,7 +87,6 @@ void CP_TerrorMissionStart (mission_t *mission)
 	CP_MissionAddToGeoscape(mission, qfalse);
 }
 
-
 /**
  * @brief Choose a city for terror mission.
  * @return chosen city in ccs.cities
@@ -98,9 +97,9 @@ static const city_t* CP_ChooseCity (void)
 		const int randnumber = rand() % ccs.numCities;
 
 		return (city_t*) LIST_GetByIdx(ccs.cities, randnumber);
-	} else {
-		return NULL;
 	}
+
+	return NULL;
 }
 
 static const mission_t* CP_TerrorInCity (const city_t *city)

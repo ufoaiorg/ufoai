@@ -1278,14 +1278,6 @@
 }
 // entity 18
 {
-"classname" "misc_model"
-"origin" "280 544 38"
-"model" "models/animals/cow/cow.md2"
-"anim" "idle"
-"spawnflags" "1"
-}
-// entity 19
-{
 "classname" "info_civilian_start"
 "origin" "464 240 32"
 "angle" "-90"

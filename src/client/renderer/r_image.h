@@ -79,7 +79,6 @@ typedef struct image_s {
 #define MAX_GL_DELUXEMAPS	256
 #define MAX_GL_FRAMEBUFFERS	256
 
-extern image_t r_images[MAX_GL_TEXTURES];
 extern int r_numImages;
 
 void R_UploadTexture(unsigned *data, int width, int height, image_t* image);
@@ -107,6 +106,8 @@ image_t *R_FindImage(const char *pname, imagetype_t type);
 const image_t *R_FindPics(const char *name);
 
 qboolean R_ImageExists(const char *pname, ...) __attribute__((format(printf, 1, 2)));
+image_t *R_GetImageAtIndex(int i);
+int R_GetImageIndex(image_t *image);
 
 #define MAX_ENVMAPTEXTURES 2
 extern image_t *r_envmaptextures[MAX_ENVMAPTEXTURES];

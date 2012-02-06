@@ -57,6 +57,7 @@ stamps/build-indep: config.status
 	dh_testdir
 
 	$(MAKE) $(MAKEFLAGS) installer-pre
+	$(MAKE) manual
 
 	mkdir -p stamps
 	touch $@
@@ -77,7 +78,7 @@ really_clean:
 	[ ! -f Makefile ] || $(MAKE) clean
 	find base/maps -name '*.bsp' | xargs --no-run-if-empty rm
 	-rm -f base/*.pk3
-	-rm -f Makefile config.h config.log config.status
+	-rm -f config.h config.log config.status
 	-rm -rf base/i18n
 	-rm -rf debian/files debian/substvars
 

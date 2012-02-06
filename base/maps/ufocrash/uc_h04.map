@@ -1933,15 +1933,6 @@
 ( 128 256 16 ) ( 70 256 16 ) ( 70 256 12 ) tex_common/nodraw 128 0 0 0.5 0.5 65280 128 0
 ( 224 232 4 ) ( 224 128 4 ) ( 224 128 0 ) tex_common/nodraw 128 0 0 0.5 0.5 65280 128 0
 }
-// brush 216
-{
-( 222 488 44 ) ( 222 472 44 ) ( 166 488 44 ) tex_common/actorclip 40 0 0 0.25 0.25 65536 0 0
-( 216 488 16 ) ( 160 488 16 ) ( 216 488 8 ) tex_common/actorclip 0 32 0 0.25 0.25 65536 0 0
-( 216 488 16 ) ( 216 488 8 ) ( 216 472 16 ) tex_common/actorclip 0 32 0 0.25 0.25 65536 0 0
-( 160 472 4 ) ( 216 472 4 ) ( 160 488 4 ) tex_common/actorclip 0 0 0 0.25 0.25 65536 0 0
-( 160 472 8 ) ( 160 472 16 ) ( 216 472 8 ) tex_common/actorclip 0 32 0 0.25 0.25 65536 0 0
-( 160 472 8 ) ( 160 488 8 ) ( 160 472 16 ) tex_common/actorclip 0 32 0 0.25 0.25 65536 0 0
-}
 }
 // entity 1
 {
@@ -2269,21 +2260,13 @@
 }
 // entity 12
 {
-"classname" "misc_model"
-"origin" "184 480 38"
-"model" "models/animals/cow/cow.md2"
-"anim" "idle"
-"spawnflags" "1"
-}
-// entity 13
-{
 "classname" "light"
 "origin" "184 120 64"
 "_color" "1 1 1"
 "spawnflags" "1"
 "light" "120"
 }
-// entity 14
+// entity 13
 {
 "classname" "light"
 "origin" "104 120 64"
@@ -2291,7 +2274,7 @@
 "spawnflags" "1"
 "light" "120"
 }
-// entity 15
+// entity 14
 {
 "classname" "light"
 "origin" "104 288 64"
@@ -2299,7 +2282,7 @@
 "spawnflags" "1"
 "light" "120"
 }
-// entity 16
+// entity 15
 {
 "classname" "light"
 "origin" "184 288 64"
@@ -2307,7 +2290,7 @@
 "spawnflags" "1"
 "light" "120"
 }
-// entity 17
+// entity 16
 {
 "classname" "light"
 "origin" "568 504 56"
@@ -2315,7 +2298,7 @@
 "spawnflags" "1"
 "light" "120"
 }
-// entity 18
+// entity 17
 {
 "classname" "light"
 "origin" "568 584 56"
@@ -2323,7 +2306,7 @@
 "spawnflags" "1"
 "light" "120"
 }
-// entity 19
+// entity 18
 {
 "classname" "light"
 "origin" "184 480 64"
@@ -2331,7 +2314,7 @@
 "spawnflags" "1"
 "light" "120"
 }
-// entity 20
+// entity 19
 {
 "classname" "light"
 "origin" "104 480 64"
@@ -2339,7 +2322,7 @@
 "spawnflags" "1"
 "light" "120"
 }
-// entity 21
+// entity 20
 {
 "classname" "light"
 "origin" "392 544 136"
@@ -2347,7 +2330,7 @@
 "spawnflags" "1"
 "light" "120"
 }
-// entity 22
+// entity 21
 {
 "classname" "light"
 "origin" "560 544 136"
@@ -2355,7 +2338,7 @@
 "spawnflags" "1"
 "light" "120"
 }
-// entity 23
+// entity 22
 {
 "classname" "light"
 "origin" "392 504 56"
@@ -2363,7 +2346,7 @@
 "spawnflags" "1"
 "light" "120"
 }
-// entity 24
+// entity 23
 {
 "classname" "light"
 "origin" "392 584 56"
@@ -2371,58 +2354,58 @@
 "spawnflags" "1"
 "light" "120"
 }
-// entity 25
+// entity 24
 {
 "classname" "info_alien_start"
 "origin" "144 432 108"
 }
-// entity 26
+// entity 25
 {
 "classname" "info_alien_start"
 "origin" "144 144 108"
 "angle" "180"
 }
-// entity 27
+// entity 26
 {
 "classname" "info_alien_start"
 "origin" "368 592 92"
 "angle" "-90"
 }
-// entity 28
+// entity 27
 {
 "classname" "info_alien_start"
 "origin" "400 480 92"
 }
-// entity 29
+// entity 28
 {
 "classname" "info_alien_start"
 "origin" "432 496 28"
 "angle" "180"
 }
-// entity 30
+// entity 29
 {
 "classname" "info_alien_start"
 "origin" "496 688 28"
 }
-// entity 31
+// entity 30
 {
 "classname" "info_alien_start"
 "origin" "272 464 28"
 "angle" "-90"
 }
-// entity 32
+// entity 31
 {
 "classname" "info_alien_start"
 "origin" "48 80 28"
 "angle" "-90"
 }
-// entity 33
+// entity 32
 {
 "classname" "info_alien_start"
 "origin" "240 624 28"
 "angle" "90"
 }
-// entity 34
+// entity 33
 {
 "classname" "info_alien_start"
 "origin" "688 336 28"

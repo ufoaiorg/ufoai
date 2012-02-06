@@ -177,6 +177,11 @@ namespace ui
 	{
 		self->_selectedTexture = gtkutil::TreeModel::getSelectedString(self->_selection, TEXTUREOVERVIEW_NAME);
 		GlobalSelectionSystem().setSelectedAllComponents(false);
-		Scene_BrushSelectByShader_Component(GlobalSceneGraph(), self->_selectedTexture);
+		GlobalSelectionSystem().setSelectedAll(false);
+		if (GlobalSelectionSystem().Mode() == SelectionSystem::eComponent) {
+			Scene_BrushSelectByShader_Component(GlobalSceneGraph(), self->_selectedTexture);
+		} else {
+			Scene_BrushSelectByShader(GlobalSceneGraph(), self->_selectedTexture);
+		}
 	}
 }

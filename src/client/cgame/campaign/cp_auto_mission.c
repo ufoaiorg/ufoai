@@ -619,6 +619,7 @@ static qboolean AM_CheckFire (autoMissionBattle_t *battle, autoUnit_t *currUnit,
 			battle->results->aliensSurvived--;
 			battle->results->aliensKilled++;
 			break;
+		case AUTOMISSION_TEAM_TYPE_CIVILIAN:
 			battle->results->civiliansSurvived--;
 			battle->results->civiliansKilledFriendlyFire++;
 			break;
@@ -899,6 +900,7 @@ void AM_Go (mission_t *mission, aircraft_t *aircraft, const campaign_t *campaign
 	results->ownSurvived = autoBattle.nUnits[AUTOMISSION_TEAM_TYPE_PLAYER];
 	results->aliensSurvived = autoBattle.nUnits[AUTOMISSION_TEAM_TYPE_ALIEN];
 	results->civiliansSurvived = autoBattle.nUnits[AUTOMISSION_TEAM_TYPE_CIVILIAN];
+	results->mission = mission;
 
 	/**
 	 * @todo find out why this black-magic with inventory is needed and clean up
@@ -914,6 +916,10 @@ void AM_Go (mission_t *mission, aircraft_t *aircraft, const campaign_t *campaign
 		AM_AlienCollect(aircraft, &autoBattle);
 
 	MIS_InitResultScreen(results);
+	if (ccs.missionResultCallback) {
+		ccs.missionResultCallback(results);
+	}
+
 	AM_DisplayResults(&autoBattle);
 	AM_CleanBattleParameters(&autoBattle);
 }

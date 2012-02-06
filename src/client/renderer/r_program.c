@@ -33,6 +33,14 @@
 
 #define SHADER_BUF_SIZE 16384
 
+typedef enum {SHQ_LOW, SHQ_MID, SHQ_HIGH, SHQ_NUM} shaderQualityLevel_t;
+
+const char *shaderQualityLevelNames[SHQ_NUM][2] = {
+	{"world","model"},
+	{"world","model"},
+	{"world","model"}
+};
+
 void R_UseProgram  (r_program_t *prog)
 {
 	if (!qglUseProgram || r_state.active_program == prog)
@@ -734,12 +742,11 @@ extern vec2_t fogRange;
 
 static void R_InitWorldProgram (r_program_t *prog)
 {
-	R_ProgramParameter1i("SAMPLER0", 0);
-	R_ProgramParameter1i("SAMPLER1", 1);
-	R_ProgramParameter1i("SAMPLER2", 2);
-	R_ProgramParameter1i("SAMPLER3", 3);
-	if (r_postprocess->integer)
-		R_ProgramParameter1i("SAMPLER4", 4);
+	R_ProgramParameter1i("SAMPLER_DIFFUSE", 0);
+	R_ProgramParameter1i("SAMPLER_LIGHTMAP", 1);
+	R_ProgramParameter1i("SAMPLER_DELUXEMAP", 2);
+	R_ProgramParameter1i("SAMPLER_NORMALMAP", 3);
+	R_ProgramParameter1i("SAMPLER_GLOWMAP", 4);
 
 	R_ProgramParameter1i("BUMPMAP", 0);
 	R_ProgramParameter1i("ROUGHMAP", 0);
@@ -749,8 +756,8 @@ static void R_InitWorldProgram (r_program_t *prog)
 	R_ProgramParameter1f("SPECULAR", defaultMaterial.specular);
 	R_ProgramParameter1f("BUMP", defaultMaterial.bump);
 	R_ProgramParameter1f("PARALLAX", defaultMaterial.parallax);
-	if (r_postprocess->integer)
-		R_ProgramParameter1f("GLOWSCALE", defaultMaterial.glowscale);
+	R_ProgramParameter1f("GLOWSCALE", defaultMaterial.glowscale);
+
 	if (r_fog->integer) {
 		if (r_state.fog_enabled) {
 			R_ProgramParameter3fv("FOGCOLOR", refdef.fogColor);
@@ -778,12 +785,11 @@ static void R_UseWorldProgram (r_program_t *prog)
 
 static void R_InitModelProgram (r_program_t *prog)
 {
-	R_ProgramParameter1i("SAMPLER0", 0);
-	R_ProgramParameter1i("SAMPLER1", 1);
-	R_ProgramParameter1i("SAMPLER2", 2);
-	R_ProgramParameter1i("SAMPLER3", 3);
-	if (r_postprocess->integer)
-		R_ProgramParameter1i("SAMPLER4", 4);
+	R_ProgramParameter1i("SAMPLER_DIFFUSE", 0);
+	R_ProgramParameter1i("SAMPLER_SPECULAR", 1);
+	R_ProgramParameter1i("SAMPLER_ROUGHMAP", 2);
+	R_ProgramParameter1i("SAMPLER_NORMALMAP", 3);
+	R_ProgramParameter1i("SAMPLER_GLOWMAP", 4);
 
 	R_ProgramParameter1i("BUMPMAP", 0);
 	R_ProgramParameter1i("ROUGHMAP", 0);
@@ -794,8 +800,8 @@ static void R_InitModelProgram (r_program_t *prog)
 	R_ProgramParameter1f("SPECULAR", defaultMaterial.specular);
 	R_ProgramParameter1f("BUMP", defaultMaterial.bump);
 	R_ProgramParameter1f("PARALLAX", defaultMaterial.parallax);
-	if (r_postprocess->integer)
-		R_ProgramParameter1f("GLOWSCALE", defaultMaterial.glowscale);
+	R_ProgramParameter1f("GLOWSCALE", defaultMaterial.glowscale);
+
 	if (r_fog->integer) {
 		if (r_state.fog_enabled) {
 			R_ProgramParameter3fv("FOGCOLOR", refdef.fogColor);
@@ -825,12 +831,10 @@ static void R_InitWarpProgram (r_program_t *prog)
 {
 	static vec4_t offset;
 
-	R_ProgramParameter1i("SAMPLER0", 0);
-	R_ProgramParameter1i("SAMPLER1", 1);
-	if (r_postprocess->integer) {
-		R_ProgramParameter1i("SAMPLER4", 4);
-		R_ProgramParameter1f("GLOWSCALE", 0.0);
-	}
+	R_ProgramParameter1i("SAMPLER_DIFFUSE", 0);
+	R_ProgramParameter1i("SAMPLER_WARP", 1);
+	R_ProgramParameter1i("SAMPLER_GLOWMAP", 4);
+	R_ProgramParameter1f("GLOWSCALE", 0.0);
 	R_ProgramParameter4fv("OFFSET", offset);
 	if (r_fog->integer) {
 		if (r_state.fog_enabled) {
@@ -866,9 +870,9 @@ static void R_InitGeoscapeProgram (r_program_t *prog)
 	static vec4_t cityLightColor = {1.0, 1.0, 0.8, 1.0};
 	static vec2_t uvScale = {2.0, 1.0};
 
-	R_ProgramParameter1i("SAMPLER0", 0);
-	R_ProgramParameter1i("SAMPLER1", 1);
-	R_ProgramParameter1i("SAMPLER2", 2);
+	R_ProgramParameter1i("SAMPLER_DIFFUSE", 0);
+	R_ProgramParameter1i("SAMPLER_BLEND", 1);
+	R_ProgramParameter1i("SAMPLER_NORMALMAP", 2);
 
 	R_ProgramParameter4fv("DEFAULTCOLOR", defaultColor);
 	R_ProgramParameter4fv("CITYLIGHTCOLOR", cityLightColor);
@@ -945,8 +949,8 @@ static void R_InitAtmosphereProgram (r_program_t *prog)
 	static vec4_t defaultColor = {0.0, 0.0, 0.0, 1.0};
 	static vec2_t uvScale = {2.0, 1.0};
 
-	R_ProgramParameter1i("SAMPLER0", 0);
-	R_ProgramParameter1i("SAMPLER2", 2);
+	R_ProgramParameter1i("SAMPLER_DIFFUSE", 0);
+	R_ProgramParameter1i("SAMPLER_NORMALMAP", 2);
 
 	R_ProgramParameter4fv("DEFAULTCOLOR", defaultColor);
 	R_ProgramParameter2fv("UVSCALE", uvScale);
@@ -954,8 +958,8 @@ static void R_InitAtmosphereProgram (r_program_t *prog)
 
 static void R_InitSimpleGlowProgram (r_program_t *prog)
 {
-	R_ProgramParameter1i("SAMPLER0", 0);
-	R_ProgramParameter1i("SAMPLER1", 4);
+	R_ProgramParameter1i("SAMPLER_DIFFUSE", 0);
+	R_ProgramParameter1i("SAMPLER_GLOWMAP", 4);
 	R_ProgramParameter1f("GLOWSCALE", 1.0);
 }
 
@@ -981,8 +985,8 @@ void R_InitPrograms (void)
 	OBJZERO(r_state.shaders);
 	OBJZERO(r_state.programs);
 
-	r_state.world_program = R_LoadProgram("world", R_InitWorldProgram, R_UseWorldProgram);
-	r_state.model_program = R_LoadProgram("model", R_InitModelProgram, R_UseModelProgram);
+	r_state.world_program = R_LoadProgram(shaderQualityLevelNames[r_quality->integer][0], R_InitWorldProgram, R_UseWorldProgram);
+	r_state.model_program = R_LoadProgram(shaderQualityLevelNames[r_quality->integer][1], R_InitModelProgram, R_UseModelProgram);
 	r_state.warp_program = R_LoadProgram("warp", R_InitWarpProgram, R_UseWarpProgram);
 	r_state.geoscape_program = R_LoadProgram("geoscape", R_InitGeoscapeProgram, NULL);
 	r_state.combine2_program = R_LoadProgram("combine2", R_InitCombine2Program, NULL);

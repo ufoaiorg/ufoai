@@ -342,83 +342,52 @@ qboolean R_EnableLighting (r_program_t *program, qboolean enable)
 	return r_state.lighting_enabled;
 }
 
-/**
- * @brief Enable or disable realtime dynamic lighting
- * @param lights The lights to enable
- * @param numLights The amount of lights in the given lights list
- * @param enable Whether to turn realtime lighting on or off
- */
-void R_EnableModelLights (const light_t **lights, int numLights, qboolean enable)
+void R_SetupSpotLight (int index, const light_t *light)
 {
-	int i, j;
-	int maxLights = r_dynamic_lights->integer;
-	const vec4_t sunDirection = {0.0, 0.0, 1.0, 0.0}; /* works only with shader, not the FFP */
-	vec4_t blackColor = {0.0, 0.0, 0.0, 1.0};
+	const vec4_t blackColor = {0.0, 0.0, 0.0, 1.0};
+	vec4_t position;
 
-	assert(numLights <= MAX_GL_LIGHTS);
-
-	if (!enable || !r_state.lighting_enabled) {
-		if (!r_state.active_normalmap && r_state.dynamic_lighting_enabled)
-			R_DisableAttribute("TANGENTS");
-		glDisable(GL_LIGHTING);
-		for (i = 0; i < MAX_GL_LIGHTS; i++) {
-			glLightf(GL_LIGHT0 + i, GL_CONSTANT_ATTENUATION, MIN_GL_CONSTANT_ATTENUATION);
-			glLightfv(GL_LIGHT0 + i, GL_DIFFUSE, blackColor);
-			glDisable(GL_LIGHT0 + i);
-		}
-
-		r_state.dynamic_lighting_enabled = qfalse;
+	if (!r_programs->integer || !r_dynamic_lights->integer)
 		return;
-	}
 
-	r_state.dynamic_lighting_enabled = qtrue;
+	if (index < 0 || index >= r_dynamic_lights->integer)
+		return;
 
-	R_EnableAttribute("TANGENTS");
+	index += GL_LIGHT1; /* light 0 is used for global illumination */
 
-	R_UseMaterial(&defaultMaterial);
+	glEnable(index);
+	glLightf(index, GL_CONSTANT_ATTENUATION, MIN_GL_CONSTANT_ATTENUATION);
+	glLightf(index, GL_LINEAR_ATTENUATION, 0);
+	glLightf(index, GL_QUADRATIC_ATTENUATION, 16.0 / (light->radius * light->radius));
 
-	glEnable(GL_LIGHTING);
+	VectorCopy(light->origin, position);
+	position[3] = 1.0; /* spot light */
 
-	/* Light #0 is reserved for the Sun */
-	glEnable(GL_LIGHT0);
-	glLightf(GL_LIGHT0, GL_CONSTANT_ATTENUATION, 1.0);
-	glLightf(GL_LIGHT0, GL_LINEAR_ATTENUATION, 0.0);
-	glLightf(GL_LIGHT0, GL_QUADRATIC_ATTENUATION, 0.0);
+	glLightfv(index, GL_POSITION, position);
+	glLightfv(index, GL_AMBIENT, blackColor);
+	glLightfv(index, GL_DIFFUSE, light->color);
+	glLightfv(index, GL_SPECULAR, blackColor);
+}
 
-	glLightfv(GL_LIGHT0, GL_POSITION, sunDirection);
-	glLightfv(GL_LIGHT0, GL_AMBIENT, refdef.ambientColor);
-	glLightfv(GL_LIGHT0, GL_DIFFUSE, refdef.sunDiffuseColor);
-	glLightfv(GL_LIGHT0, GL_SPECULAR, refdef.sunSpecularColor);
+void R_DisableSpotLight (int index)
+{
+	const vec4_t blackColor = {0.0, 0.0, 0.0, 1.0};
 
-	j = 1;
-	for (i = 0; j < MAX_GL_LIGHTS && j <= maxLights && i < numLights; i++) {
-		const light_t *l = lights[i];
-		vec4_t position;
+	if (!r_programs->integer || !r_dynamic_lights)
+		return;
 
-		glEnable(GL_LIGHT0 + j);
-		glLightf(GL_LIGHT0 + j, GL_CONSTANT_ATTENUATION, MIN_GL_CONSTANT_ATTENUATION);
-		glLightf(GL_LIGHT0 + j, GL_LINEAR_ATTENUATION, 0);
-		glLightf(GL_LIGHT0 + j, GL_QUADRATIC_ATTENUATION, 16.0 / (l->radius * l->radius));
+	if (index < 0 || index >= MAX_GL_LIGHTS - 1)
+		return;
 
-		VectorCopy(l->origin, position);
-		position[3] = 1.0; /* spot light */
-		glLightfv(GL_LIGHT0 + j, GL_POSITION, position);
-		glLightfv(GL_LIGHT0 + j, GL_AMBIENT, blackColor);
-		glLightfv(GL_LIGHT0 + j, GL_DIFFUSE, l->color);
-		glLightfv(GL_LIGHT0 + j, GL_SPECULAR, blackColor);
+	index += GL_LIGHT1; /* light 0 is used for global illumination */
 
-		j++;
-	}
-
-	/* if there aren't enough active lights, turn off the rest */
-	while (j < MAX_GL_LIGHTS) {
-		glDisable(GL_LIGHT0 + j);
-		glLightf(GL_LIGHT0 + j, GL_CONSTANT_ATTENUATION, MIN_GL_CONSTANT_ATTENUATION);
-		glLightf(GL_LIGHT0 + j, GL_LINEAR_ATTENUATION, 0.0);
-		glLightf(GL_LIGHT0 + j, GL_QUADRATIC_ATTENUATION, 0.0);
-		glLightfv(GL_LIGHT0 + j, GL_DIFFUSE, blackColor);
-		j++;
-	}
+	glDisable(index);
+	glLightf(index, GL_CONSTANT_ATTENUATION, MIN_GL_CONSTANT_ATTENUATION);
+	glLightf(index, GL_LINEAR_ATTENUATION, 0.0);
+	glLightf(index, GL_QUADRATIC_ATTENUATION, 0.0);
+	glLightfv(index, GL_AMBIENT, blackColor);
+	glLightfv(index, GL_DIFFUSE, blackColor);
+	glLightfv(index, GL_SPECULAR, blackColor);
 }
 
 /**
@@ -665,7 +634,7 @@ static void R_UpdateGlowBufferBinding (void)
 
 void R_EnableGlowMap (const image_t *image)
 {
-	if (!r_postprocess->integer)
+	if (!r_programs->integer)
 		return;
 
 	if (image)
@@ -693,7 +662,7 @@ void R_EnableGlowMap (const image_t *image)
 
 void R_EnableDrawAsGlow (qboolean enable)
 {
-	if (!r_postprocess->integer)
+	if (!r_programs->integer)
 		return;
 
 	if (r_state.draw_glow_enabled == enable && r_state.active_program == lastProgram)
@@ -891,6 +860,13 @@ void R_SetDefaultState (void)
 
 	R_ReallocateStateArrays(GL_ARRAY_LENGTH_CHUNK);
 
+	R_ReallocateStateArrays(GL_ARRAY_LENGTH_CHUNK);
+	R_ReallocateTexunitArray(&texunit_0, GL_ARRAY_LENGTH_CHUNK);
+	R_ReallocateTexunitArray(&texunit_1, GL_ARRAY_LENGTH_CHUNK);
+	R_ReallocateTexunitArray(&texunit_2, GL_ARRAY_LENGTH_CHUNK);
+	R_ReallocateTexunitArray(&texunit_3, GL_ARRAY_LENGTH_CHUNK);
+	R_ReallocateTexunitArray(&texunit_4, GL_ARRAY_LENGTH_CHUNK);
+
 	/* setup vertex array pointers */
 	glEnableClientState(GL_VERTEX_ARRAY);
 	R_BindDefaultArray(GL_VERTEX_ARRAY);
@@ -981,20 +957,24 @@ void R_Color (const vec4_t rgba)
 	R_CheckError();
 }
 
-#define Mem_ReAllocCheck(ptr, size) ((ptr) ? Mem_ReAlloc(ptr, size) : Mem_Alloc(size))
-
+/**
+ * @brief Reallocate arrays of GL primitives if needed
+ * @param size The new array size
+ * @note Also resets all non-default GL array bindings
+ * @sa R_ReallocateTexunitArray
+*/
 void R_ReallocateStateArrays(int size)
 {
-	if( size <= r_state.array_size )
+	if (size <= r_state.array_size)
 		return;
-	r_state.vertex_array_3d = (GLfloat *) Mem_ReAllocCheck( r_state.vertex_array_3d, size * 3 * sizeof(GLfloat) );
-	r_state.vertex_array_2d = (GLshort *) Mem_ReAllocCheck( r_state.vertex_array_2d, size * 2 * sizeof(GLshort) );
-	r_state.color_array = (GLfloat *) Mem_ReAllocCheck( r_state.color_array, size * 4 * sizeof(GLfloat) );
-	r_state.normal_array = (GLfloat *) Mem_ReAllocCheck( r_state.normal_array, size * 3 * sizeof(GLfloat) );
-	r_state.tangent_array = (GLfloat *) Mem_ReAllocCheck( r_state.tangent_array, size * 4 * sizeof(GLfloat) );
-	r_state.next_vertex_array_3d = (GLfloat *) Mem_ReAllocCheck( r_state.next_vertex_array_3d, size * 3 * sizeof(GLfloat) );
-	r_state.next_normal_array = (GLfloat *) Mem_ReAllocCheck( r_state.next_normal_array, size * 3 * sizeof(GLfloat) );
-	r_state.next_tangent_array = (GLfloat *) Mem_ReAllocCheck( r_state.next_tangent_array, size * 4 * sizeof(GLfloat) );
+	r_state.vertex_array_3d = (GLfloat *) Mem_SafeReAlloc(r_state.vertex_array_3d, size * 3 * sizeof(GLfloat));
+	r_state.vertex_array_2d = (GLshort *) Mem_SafeReAlloc(r_state.vertex_array_2d, size * 2 * sizeof(GLshort));
+	r_state.color_array = (GLfloat *) Mem_SafeReAlloc(r_state.color_array, size * 4 * sizeof(GLfloat));
+	r_state.normal_array = (GLfloat *) Mem_SafeReAlloc(r_state.normal_array, size * 3 * sizeof(GLfloat));
+	r_state.tangent_array = (GLfloat *) Mem_SafeReAlloc(r_state.tangent_array, size * 4 * sizeof(GLfloat));
+	r_state.next_vertex_array_3d = (GLfloat *) Mem_SafeReAlloc(r_state.next_vertex_array_3d, size * 3 * sizeof(GLfloat));
+	r_state.next_normal_array = (GLfloat *) Mem_SafeReAlloc(r_state.next_normal_array, size * 3 * sizeof(GLfloat));
+	r_state.next_tangent_array = (GLfloat *) Mem_SafeReAlloc(r_state.next_tangent_array, size * 4 * sizeof(GLfloat));
 	r_state.array_size = size;
 	R_BindDefaultArray(GL_VERTEX_ARRAY);
 	R_BindDefaultArray(GL_COLOR_ARRAY);
@@ -1005,13 +985,20 @@ void R_ReallocateStateArrays(int size)
 	R_BindDefaultArray(GL_NEXT_TANGENT_ARRAY);
 }
 
+/**
+ * @brief Reallocate texcoord array of the specified texunit, if needed
+ * @param texunit Pointer to texunit (TODO: remove this comment as obvious and redundant)
+ * @param size The new array size
+ * @note Also resets active texunit
+ * @sa R_ReallocateStateArrays
+*/
 void R_ReallocateTexunitArray(gltexunit_t * texunit, int size)
 {
-	if( size <= texunit->array_size )
+	if (size <= texunit->array_size)
 		return;
-	texunit->texcoord_array = (GLfloat *) Mem_ReAllocCheck( texunit->texcoord_array, size * 2 * sizeof(GLfloat) );
+	texunit->texcoord_array = (GLfloat *) Mem_SafeReAlloc(texunit->texcoord_array, size * 2 * sizeof(GLfloat));
 	texunit->array_size = size;
-	if( !r_state.active_texunit )
+	if (!r_state.active_texunit)
 		r_state.active_texunit = texunit;
 	R_BindDefaultArray(GL_TEXTURE_COORD_ARRAY);
 }

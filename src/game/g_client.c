@@ -496,7 +496,7 @@ void G_ClientStateChange (const player_t* player, edict_t* ent, int reqState, qb
 		/* Disable reaction fire. */
 		G_RemoveReaction(ent);
 
-		if (G_ReserveReactionFireTUs(ent)) {
+		if (G_ReactionFireSettingsReserveTUs(ent)) {
 			/* Enable requested reaction fire. */
 			G_SetState(ent, reqState);
 		}

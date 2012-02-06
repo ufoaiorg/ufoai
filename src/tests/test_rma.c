@@ -202,8 +202,9 @@ static void testNewSeedlists (void)
 		srand(i);
 		time = Sys_Milliseconds();
 		Com_Printf("Seed: %i\n", i);
-		Cvar_Set("rm_drop", Com_GetRandomMapAssemblyNameForCraft("craft_drop_raptor"));
-		randomMap = SV_AssembleMap("village", "commercial", mapStr, posStr, i);
+		Cvar_Set("rm_drop", Com_GetRandomMapAssemblyNameForCraft("craft_drop_herakles"));
+		Cvar_Set("rm_ufo", Com_GetRandomMapAssemblyNameForCraft("craft_ufo_fighter"));
+		randomMap = SV_AssembleMap("mm_harbour", "mini", mapStr, posStr, i);
 #if 0
 		randomMap = SV_AssembleMap("forest", "large", mapStr, posStr, i);
 #endif

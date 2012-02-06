@@ -2344,6 +2344,8 @@ void B_DumpAircraftToHomeBase (aircraft_t *aircraft)
  */
 void B_AircraftReturnedToHomeBase (aircraft_t* aircraft)
 {
+	/* AA Missiles should miss */
+	AIRFIGHT_RemoveProjectileAimingAircraft(aircraft);
 	/* Reset UFO sensored on radar */
 	RADAR_InitialiseUFOs(&aircraft->radar);
 	/* Reload weapons */

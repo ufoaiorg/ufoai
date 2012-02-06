@@ -212,6 +212,11 @@ typedef struct {
 	int numEntities;
 	int numDynamicLights;
 	light_t dynamicLights[MAX_GL_LIGHTS];
+
+	/* static lights (populated when loading the world) */
+	light_t staticLights[MAX_STATIC_LIGHTS];
+	int numStaticLights;
+
 	int numCoronas;
 	corona_t coronas[MAX_CORONAS];
 

@@ -10,10 +10,8 @@
 {
 	material tex_lights/land_li_yellow
 	{
-		{
 			flare 2
-			size.s 2.5
+			scale.s 2.5
 			color 1.0 1.0 0.7
-		}
 	}
 }
