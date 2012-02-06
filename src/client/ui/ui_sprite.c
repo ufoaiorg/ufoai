@@ -150,9 +150,11 @@ uiSprite_t* UI_AllocStaticSprite (const char* name)
  * @param[in] posY Absolute Y position of the top-left corner
  * @param[in] sizeX Width of the bounded box
  * @param[in] sizeY Height of the bounded box
+ * @param[in] flip Flip the sprite horizontally
+ * @param[in] stretch Stretch or shrink the sprite to the sizeX/sizeY
  * @todo use named const for status
  */
-void UI_DrawSpriteInBox (qboolean flip, const uiSprite_t* sprite, uiSpriteStatus_t status, int posX, int posY, int sizeX, int sizeY)
+void UI_DrawSprite (const uiSprite_t* sprite, uiSpriteStatus_t status, int posX, int posY, int sizeX, int sizeY, qboolean flip, qboolean stretch)
 {
 	int texX;
 	int texY;
@@ -184,17 +186,36 @@ void UI_DrawSpriteInBox (qboolean flip, const uiSprite_t* sprite, uiSpriteStatus
 	if (!image)
 		return;
 
-	posX += (sizeX - sprite->size[0]) / 2;
-	posY += (sizeY - sprite->size[1]) / 2;
-
 	if (sprite->blend) {
 		const vec_t *color;
 		color = sprite->color[status];
 		R_Color(color);
 	}
+	if (!stretch) {
+		posX += (sizeX - sprite->size[0]) / 2;
+		posY += (sizeY - sprite->size[1]) / 2;
+		sizeX = sprite->size[0];
+		sizeY = sprite->size[1];
+	}
 
-	UI_DrawNormImageByName(flip, posX, posY, sprite->size[0], sprite->size[1],
+	UI_DrawNormImageByName(flip, posX, posY, sizeX, sizeY,
 		texX + sprite->size[0], texY + sprite->size[1], texX, texY, image);
 	if (sprite->blend)
 		R_Color(NULL);
+}
+
+/**
+ * @param[in] flip Flip the sprite horizontally
+ * @param[in] status The state of the sprite node
+ * @param[in] sprite Context sprite
+ * @param[in] posX Absolute X position of the top-left corner
+ * @param[in] posY Absolute Y position of the top-left corner
+ * @param[in] sizeX Width of the bounded box
+ * @param[in] sizeY Height of the bounded box
+ * @todo use named const for status
+ * @todo the sprite param should come first, not the flip param
+ */
+void UI_DrawSpriteInBox (qboolean flip, const uiSprite_t* sprite, uiSpriteStatus_t status, int posX, int posY, int sizeX, int sizeY)
+{
+	UI_DrawSprite (sprite, status, posX, posY, sizeX, sizeY, flip, qfalse);
 }

@@ -132,7 +132,7 @@ if __name__ == '__main__':
     # fully copy subdirs
     needs = [
         "ai", "i18n", "materials", "media", "models", "pics", "shaders", "ufos",
-        "sound/ui", "textures/tex_common", "textures/tex_lights", "textures/tex_material" ]
+        "textures/tex_common", "textures/tex_lights", "textures/tex_material" ] # "sound/ui"
     for name in needs:
         print "Copy \"%s\"" % os.path.join(SRC_BASE, name)
         base_copy(SRC_BASE, DEST_BASE, name)

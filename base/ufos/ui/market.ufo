@@ -2,6 +2,41 @@
 // MARKET MENU
 // ==================
 
+component panel cmpMarketItem
+{
+	{
+		size "70 51"
+	}
+	image bt_buy
+	{
+		src		"buttons/blue_left"
+		pos			"0 0"
+		size		"35 51"
+		mousefx		true
+		onClick		{
+			*cvar:tmp = ( <node:parent@num> + <node:root.market@viewpos> )
+			cmd "sync_market_scroll <cvar:tmp> <node:root.market@viewpos>; market_click <cvar:tmp>; mn_buy <cvar:tmp>;"
+			delete *cvar:tmp
+		}
+		onMouseEnter { *node:this@image = "buttons/blue_left_hover" }
+		onMouseLeave { *node:this@image = "buttons/blue_left" }
+	}
+	image bt_sell
+	{
+		src		"buttons/blue_right"
+		pos			"35 0"
+		size		"35 51"
+		mousefx		true
+		onClick		{
+			*cvar:tmp = ( <node:parent@num> + <node:root.market@viewpos> )
+			cmd "sync_market_scroll <cvar:tmp> <node:root.market@viewpos>; market_click <cvar:tmp>; mn_sell <cvar:tmp>;"
+			delete *cvar:tmp
+		}
+		onMouseEnter { *node:this@image = "buttons/blue_right_hover" }
+		onMouseLeave { *node:this@image = "buttons/blue_right" }
+	}
+}
+
 window market extends objectinfo
 {
 	/** @todo Remove me */
@@ -187,26 +222,60 @@ window market extends objectinfo
 	// buy/sell buttons
 	// ==================
 
-	image bt_buy
+	cmpMarketItem item0
 	{
-		src		"buttons/blue_left_market"
 		pos			"340 177"
-		size		"35 563"
-		mousefx		true
-		onClick		{ cmd "mn_buy <node:root.market@lineselected>;" }
-		onMouseEnter { *node:this@image = "buttons/blue_left_market_hover" }
-		onMouseLeave { *node:this@image = "buttons/blue_left_market" }
+		num			0
 	}
-
-	image bt_sell
+	cmpMarketItem item1
 	{
-		src		"buttons/blue_right_market"
-		pos			"375 177"
-		size		"35 563"
-		mousefx		true
-		onClick		{ cmd "mn_sell <node:root.market@lineselected>;" }
-		onMouseEnter { *node:this@image = "buttons/blue_right_market_hover" }
-		onMouseLeave { *node:this@image = "buttons/blue_right_market" }
+		pos			"340 228"
+		num			1
+	}
+	cmpMarketItem item2
+	{
+		pos			"340 279"
+		num			2
+	}
+	cmpMarketItem item3
+	{
+		pos			"340 330"
+		num			3
+	}
+	cmpMarketItem item4
+	{
+		pos			"340 381"
+		num			4
+	}
+	cmpMarketItem item5
+	{
+		pos			"340 432"
+		num			5
+	}
+	cmpMarketItem item6
+	{
+		pos			"340 483"
+		num			6
+	}
+	cmpMarketItem item7
+	{
+		pos			"340 534"
+		num			7
+	}
+	cmpMarketItem item8
+	{
+		pos			"340 585"
+		num			8
+	}
+	cmpMarketItem item9
+	{
+		pos			"340 636"
+		num			9
+	}
+	cmpMarketItem item10
+	{
+		pos			"340 687"
+		num			10
 	}
 
 	/**
@@ -222,6 +291,9 @@ window market extends objectinfo
 		*node:root.market_storage@viewpos = <2>
 		*node:root.market_market@viewpos = <2>
 		*node:root.market_prices@viewpos = <2>
+		*node:root.market_scrollbar@fullsize = <node:root.market@fullsize>
+		*node:root.market_scrollbar@current = <node:root.market@viewpos>
+		*node:root.market_scrollbar@viewsize = <node:root.market@viewsize>
 	}
 
 	/**
@@ -335,12 +407,11 @@ window market extends objectinfo
 
 		custombutton ufopedia_link
 		{
-			image		"banks/pack1"
+			icon		"icons/bordered_magnifying_glass"
 			tooltip		"_UFOpaedia"
 			pos			"336 15"
 			size		"60 60"
-			texl		"1 46"
-			texh		"17 62"
+			stretch		true
 			onClick		{
 				cmd "ui_addlistener ufopedia@onWindowClosed <path:root>.listen_openpedia;"
 				cmd "market_openpedia;"

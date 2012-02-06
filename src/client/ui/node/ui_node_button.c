@@ -109,8 +109,8 @@ static void UI_ButtonNodeDraw (uiNode_t *node)
 		int size = node->size[1] - node->padding - node->padding;
 		if (size < EXTRADATA(node).icon->size[0])
 			size = EXTRADATA(node).icon->size[0];
-		UI_DrawSpriteInBox(EXTRADATA(node).flipIcon, EXTRADATA(node).icon, iconStatus, pos[0] + node->padding, pos[1] + node->padding, size,
-				node->size[1] - node->padding - node->padding);
+		UI_DrawSprite(EXTRADATA(node).icon, iconStatus, pos[0] + node->padding, pos[1] + node->padding, size,
+				node->size[1] - node->padding - node->padding, EXTRADATA(node).flipIcon, EXTRADATA(node).stretch);
 		iconPadding = size + node->padding;
 	}
 
@@ -174,4 +174,5 @@ void UI_RegisterButtonNode (uiBehaviour_t *behaviour)
 	 */
 	UI_RegisterExtradataNodeProperty(behaviour, "icon", V_UI_SPRITEREF, EXTRADATA_TYPE, icon);
 	UI_RegisterExtradataNodeProperty(behaviour, "flipicon", V_BOOL, EXTRADATA_TYPE, flipIcon);
+	UI_RegisterExtradataNodeProperty(behaviour, "stretch", V_BOOL, EXTRADATA_TYPE, stretch);
 }

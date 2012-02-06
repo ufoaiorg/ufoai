@@ -30,6 +30,7 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 typedef struct buttonExtraData_s {
 	struct uiSprite_s *icon;	/**< Link to an icon */
 	qboolean flipIcon;			/**< Flip the icon rendering (horizontal) */
+	qboolean stretch;			/**< Stretch the icon to the size of the button */
 } buttonExtraData_t;
 
 void UI_RegisterButtonNode(struct uiBehaviour_s *behaviour);
