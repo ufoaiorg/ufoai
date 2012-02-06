@@ -539,7 +539,7 @@ window options
 			}
 			checkbox stretch
 			{
-				current		*cvar:vid_strech
+				current		*cvar:vid_stretch
 				pos			"445 85"
 				size		"20 18"
 				image		"ui/checkbox_blue"
