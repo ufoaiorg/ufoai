@@ -39,12 +39,12 @@ debtar: clean
 	dh_testdir
 	tar -zcf ../$(DEBTGZ) debian/
 
-config.status:
+config.h:
 	dh_testdir
 	./configure $(CONFIGUREFLAGS)
 
 build-arch: stamps/build-arch
-stamps/build-arch: config.status
+stamps/build-arch: config.h
 	dh_testdir
 
 	$(MAKE) $(MAKEFLAGS)
@@ -53,7 +53,7 @@ stamps/build-arch: config.status
 	touch $@
 
 build-indep: stamps/build-indep
-stamps/build-indep: config.status
+stamps/build-indep: config.h
 	dh_testdir
 
 	$(MAKE) $(MAKEFLAGS) installer-pre
@@ -78,7 +78,7 @@ really_clean:
 	[ ! -f Makefile ] || $(MAKE) clean
 	find base/maps -name '*.bsp' | xargs --no-run-if-empty rm
 	-rm -f base/*.pk3
-	-rm -f config.h config.log config.status
+	-rm -f config.h config.log
 	-rm -rf base/i18n
 	-rm -rf debian/files debian/substvars
 
