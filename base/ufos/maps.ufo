@@ -930,7 +930,7 @@ mapdef mm_harbour
 {
 	map			"+mm_harbour"
 	description	"_Harbour."
-	param		"am"
+	param		"test3"
 	size		"small"
 	teams		4
 	multiplayer	false
