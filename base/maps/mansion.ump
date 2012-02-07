@@ -300,6 +300,9 @@ a      +u      +u       +u     +u     e
 }
 
 tile +craft_ufo_scout
+// 8 x info_player_start for team 2
+// 2 x info_2x2_start for team 2
+// 3 x info_alien_start
 {
 6 7
 0      0       0        0      0      0
@@ -312,6 +315,9 @@ a      +u      +u       +u     +u     e
 }
 
 tile +craft_ufo_fighter
+// 8 x info_player_start for team 2
+// 2 x info_2x2_start for team 2
+// 3 x info_alien_start
 {
 6 7
 0      0       0        0      0      0
@@ -324,6 +330,24 @@ a      +u      +u       +u     +u     e
 }
 
 tile +craft_ufo_harvester
+// 8 x info_player_start for team 2
+// 2 x info_2x2_start for team 2
+// 3 x info_alien_start
+{
+6 7
+0      0       0        0      0      0
+0      a       +u       +u     +u     e
+0      a       +u       +u     +u     e
+a      +u      +u       +u     +u     e
+a      +u      +u       +u     +u     e
+a      +u      +u       +u     +u     e
+0      s       s        s      s      0
+}
+
+tile +craft_ufo_supply
+// 8 x info_player_start for team 2
+// 2 x info_2x2_start for team 2
+// 3 x info_alien_start
 {
 6 7
 0      0       0        0      0      0

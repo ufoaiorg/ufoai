@@ -1383,6 +1383,7 @@ mapdef mansion
 	    craft_ufo_fighter
 		craft_ufo_scout
 		craft_ufo_harvester
+		craft_ufo_supply
     }
 
     terrains
