@@ -426,6 +426,7 @@ size "7 7"
 +m2_01 "0 1"
 
 *rm_drop +craft_drop_firebird "1 1"
+*rm_ufo +craft_ufo_scout "1 1"
 }
 
 assembly area
