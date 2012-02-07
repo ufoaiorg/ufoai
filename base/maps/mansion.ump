@@ -27,9 +27,7 @@
 
 base mansion/mansion_
 
-// no dropship, used  for testing
-// 8 x info_human_start
-// 8 x info_player_start for Team 1,  2x info_2x2_start for Team 1
+// this is the basement for all mansion_craft_drop_*
 tile +craft_drop_empty
 {
 5 5
@@ -40,15 +38,41 @@ b      +d     +d      +d      g
 0      b       b      g       0
 }
 
-// tile +craft_drop_firebird
-// {
-// 5 5
-// 0      0       0     0       0
-// b      +d     +d     +d      g
-// b      +d     +d     +d      g
-// b      +d     +d     +d      g
-// 0      b       b     g       0
-// }
+// 8 x info_human_start
+// 8 x info_player_start for Team 1,  2x info_2x2_start for Team 1
+tile +craft_drop_firebird
+{
+5 5
+0      0       0     0       0
+b      +d     +d     +d      g
+b      +d     +d     +d      g
+b      +d     +d     +d      g
+0      b       b     g       0
+}
+
+// 8 x info_human_start
+// 8 x info_player_start for Team 1,  2x info_2x2_start for Team 1
+tile +craft_drop_herakles
+{
+5 5
+0      0       0     0       0
+b      +d     +d     +d      g
+b      +d     +d     +d      g
+b      +d     +d     +d      g
+0      b       b     g       0
+}
+
+// 8 x info_human_start
+// 8 x info_player_start for Team 1,  2x info_2x2_start for Team 1
+tile +craft_drop_raptor
+{
+5 5
+0      0       0     0       0
+b      +d     +d     +d      g
+b      +d     +d     +d      g
+b      +d     +d     +d      g
+0      b       b     g       0
+}
 
 // main building, the centre of the map, build upon the ruin of an old fortress
 // contains 4x info_player_start for multiplayer team 3
@@ -350,6 +374,7 @@ fix +ocean1 "2 7"
 fix +ocean1 "1 8"
 fix +ocean2 "2 8"
 fix +craft_drop_empty "6 12"
+fix *rm_drop +craft_drop_firebird "6 12"
 fix +craft_ufo_empty "11 4"
 fix *rm_ufo +craft_ufo_scout "11 4"
 }

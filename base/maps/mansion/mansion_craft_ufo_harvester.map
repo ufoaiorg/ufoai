@@ -6182,7 +6182,7 @@
 "classname" "misc_particle"
 "origin" "886 981 209"
 "spawnflags" "252"
-"particle" "fire"
+"particle" "crashsite_fire"
 }
 // entity 112
 {
@@ -6190,12 +6190,12 @@
 "light" "200"
 "spawnflags" "1"
 "_color" "1 0.3 0"
-"origin" "886 981 237"
+"origin" "862 1221 189"
 }
 // entity 113
 {
 "classname" "misc_particle"
-"particle" "camping_fire"
+"particle" "crashsite_fire"
 "origin" "816 1008 148"
 "spawnflags" "252"
 }
@@ -6204,7 +6204,7 @@
 "classname" "light"
 "light" "170"
 "_color" "1 0.2 0"
-"origin" "816 1009 180"
+"origin" "800 1009 180"
 "spawnflags" "1"
 }
 // entity 115
@@ -6218,9 +6218,11 @@
 // entity 116
 {
 "classname" "misc_sound"
-"origin" "816 1008 148"
+"origin" "848 1008 260"
 "noise" "ambience/firesoft.wav"
 "spawnflags" "252"
+"attenuation" "2.5"
+"volume" "0.5"
 }
 // entity 117
 {
@@ -6240,7 +6242,7 @@
 {
 "classname" "misc_particle"
 "origin" "864 1216 164"
-"particle" "fire"
+"particle" "crashsite_fire"
 "spawnflags" "252"
 }
 // entity 120
@@ -6318,4 +6320,12 @@
 ( 580 864 264 ) ( 608 864 264 ) ( 608 828 264 ) tex_material/c_gray050 0 1.95937e-014 -90 0.5 0.5 61440 0 0
 ( 608 828 262 ) ( 608 864 262 ) ( 580 864 262 ) tex_common/nodraw 0 1.95937e-014 -90 0.5 0.5 61440 0 0
 }
+}
+// entity 121
+{
+"classname" "light"
+"light" "200"
+"spawnflags" "1"
+"_color" "1 0.3 0"
+"origin" "886 981 237"
 }
