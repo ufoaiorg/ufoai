@@ -145,7 +145,7 @@ window market extends objectinfo
 		pos			"45 177"
 		size		"245 565"
 		onChange	{ cmd "sync_market_scroll <lineselected> <viewpos>;market_click <lineselected>;" }
-		onWheel		{ cmd "sync_market_scroll <lineselected> <viewpos>;market_scroll <viewpos>;" }
+		onWheel		{ cmd "sync_market_scroll <lineselected> <viewpos>;" }
 		onViewChange {
 			*node:root.market_scrollbar@fullsize = <fullsize>
 			*node:root.market_scrollbar@current = <viewpos>
@@ -163,7 +163,7 @@ window market extends objectinfo
 		size		"40 565"
 		lineheight	"51"
 		onChange	{ cmd "sync_market_scroll <lineselected> <viewpos>;market_click <lineselected>;" }
-		onWheel		{ cmd "sync_market_scroll <lineselected> <viewpos>;market_scroll <viewpos>;" }
+		onWheel		{ cmd "sync_market_scroll <lineselected> <viewpos>;" }
 		onViewChange {
 			*node:root.market_scrollbar@fullsize = <fullsize>
 			*node:root.market_scrollbar@current = <viewpos>
@@ -181,7 +181,7 @@ window market extends objectinfo
 		size		"40 565"
 		lineheight	"51"
 		onChange	{ cmd "sync_market_scroll <lineselected> <viewpos>;market_click <lineselected>;" }
-		onWheel		{ cmd "sync_market_scroll <lineselected> <viewpos>;market_scroll <viewpos>;" }
+		onWheel		{ cmd "sync_market_scroll <lineselected> <viewpos>;" }
 		onViewChange {
 			*node:root.market_scrollbar@fullsize = <fullsize>
 			*node:root.market_scrollbar@current = <viewpos>
@@ -199,7 +199,7 @@ window market extends objectinfo
 		lineheight	"51"
 		pos			"444 177"
 		onChange	{ cmd "sync_market_scroll <lineselected> <viewpos>;market_click <lineselected>;" }
-		onWheel		{ cmd "sync_market_scroll <lineselected> <viewpos>;market_scroll <viewpos>;" }
+		onWheel		{ cmd "sync_market_scroll <lineselected> <viewpos>;" }
 		onViewChange {
 			*node:root.market_scrollbar@fullsize = <fullsize>
 			*node:root.market_scrollbar@current = <viewpos>

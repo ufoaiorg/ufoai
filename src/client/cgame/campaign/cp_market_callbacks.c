@@ -32,7 +32,7 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 
 #define MAX_BUYLIST		64
 
-#define MAX_MARKET_MENU_ENTRIES 22
+#define MAX_MARKET_MENU_ENTRIES 30 // Not relevant, the market list is scrollable, and may contain unlimited amount of items
 
 /**
  * @brief An entry in the buylist.
@@ -174,45 +174,7 @@ static void BS_UpdateItem (const base_t *base, int itemNum)
 }
 
 /**
- * @brief
- * @sa BS_MarketClick_f
- * @sa BS_AddToList
- */
-static void BS_MarketScroll_f (void)
-{
-	int i;
-	base_t *base = B_GetCurrentSelectedBase();
-
-	if (!base || buyCat >= MAX_FILTERTYPES || buyCat < 0)
-		return;
-
-	if (Cmd_Argc() < 2) {
-		Com_Printf("Usage: %s <scrollpos>\n", Cmd_Argv(0));
-		return;
-	}
-
-	buyList.scroll = atoi(Cmd_Argv(1));
-	assert(buyList.scroll >= 0);
-	assert(!((buyList.length > MAX_MARKET_MENU_ENTRIES && buyList.scroll >= buyList.length - MAX_MARKET_MENU_ENTRIES)));
-
-	/* get item list */
-	for (i = buyList.scroll; i < buyList.length - buyList.scroll; i++) {
-		const objDef_t *od = BS_GetObjectDefition(&buyList.l[i]);
-
-		if (i >= MAX_MARKET_MENU_ENTRIES)
-			break;
-
-		/* Check whether the item matches the proper filter, storage in current base and market. */
-		if (od && (B_ItemInBase(od, base) > 0 || ccs.eMarket.numItems[od->idx]) && INV_ItemMatchesFilter(od, buyCat)) {
-			UI_ExecuteConfunc("buy_show %i", i - buyList.scroll);
-			BS_UpdateItem(base, i - buyList.scroll);
-		}
-	}
-}
-
-/**
  * @brief Select one entry on the list.
- * @sa BS_MarketScroll_f
  * @sa BS_AddToList
  */
 static void BS_MarketClick_f (void)
@@ -548,7 +510,6 @@ static void BS_BuyType_f (void)
 	BS_BuyType(base);
 	buyList.scroll = 0;
 	UI_ExecuteConfunc("sync_market_scroll 0 %d", buyList.scroll);
-	UI_ExecuteConfunc("market_scroll %d", buyList.scroll);
 	UI_ExecuteConfunc("market_click 0");
 }
 
@@ -902,7 +863,6 @@ void BS_InitCallbacks(void)
 {
 	Cmd_AddCommand("buy_type", BS_BuyType_f, NULL);
 	Cmd_AddCommand("market_click", BS_MarketClick_f, "Click function for buy menu text node");
-	Cmd_AddCommand("market_scroll", BS_MarketScroll_f, "Scroll function for buy menu");
 	Cmd_AddCommand("mn_buysell", BS_BuySellItem_f, NULL);
 	Cmd_AddCommand("mn_buy", BS_BuyItem_f, NULL);
 	Cmd_AddCommand("mn_sell", BS_SellItem_f, NULL);
@@ -917,7 +877,6 @@ void BS_ShutdownCallbacks(void)
 {
 	Cmd_RemoveCommand("buy_type");
 	Cmd_RemoveCommand("market_click");
-	Cmd_RemoveCommand("market_scroll");
 	Cmd_RemoveCommand("mn_buysell");
 	Cmd_RemoveCommand("mn_buy");
 	Cmd_RemoveCommand("mn_sell");
