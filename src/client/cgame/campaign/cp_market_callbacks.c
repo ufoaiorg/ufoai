@@ -32,7 +32,7 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 
 #define MAX_BUYLIST		64
 
-#define MAX_MARKET_MENU_ENTRIES 30 // Not relevant, the market list is scrollable, and may contain unlimited amount of items
+#define MAX_MARKET_MENU_ENTRIES 30 /* Not relevant, the market list is scrollable, and may contain unlimited amount of items */
 
 /**
  * @brief An entry in the buylist.
