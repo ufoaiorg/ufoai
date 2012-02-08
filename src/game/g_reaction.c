@@ -162,7 +162,6 @@ static void G_ReactionFireTargetsRemove (edict_t *shooter, const edict_t *target
  * @brief Check if the given shooter is ready to reaction fire at the given target.
  * @param[in] shooter The reaction firing actor
  * @param[in] target The potential reaction fire victim
- * @param[in] tusShooter The TUs the shooter will need for the shot
  * @param[in] tusTarget The TUs the target will need for the shot, 0 for just moving
  */
 static qboolean G_ReactionFireTargetsExpired (const edict_t *shooter, const edict_t *target, const int tusTarget)
