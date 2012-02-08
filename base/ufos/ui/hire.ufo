@@ -1,5 +1,5 @@
 // ==================
-// HIRE MENU
+// EMPLOYEES MENU
 // ==================
 
 component checkbox cmpSelect
@@ -633,6 +633,7 @@ window employees
 
 	func onWindowOpened
 	{
+		*cvar:mn_lastsubmenu = "employees"
 		*node:root.employee_list@viewpos = 0
 		*node:root.employee_list@lineselected = 0
 		*node:root.scroll@current = 0

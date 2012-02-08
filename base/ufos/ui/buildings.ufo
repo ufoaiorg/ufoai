@@ -115,6 +115,7 @@ window buildings
 		cmd "building_init;"
 		call *node:root.mn_buildings_reset
 		cmd "ui_push_child popup_buildingpreview buildings;"
+		*cvar:mn_lastsubmenu = "buildings"
 	}
 
 	func onWindowClosed

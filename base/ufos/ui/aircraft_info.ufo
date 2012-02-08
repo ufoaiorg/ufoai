@@ -192,5 +192,6 @@ window aircraft extends iaircraft
 		// jump to line 1
 		cmd "mn_select_aircraft 0;"
 		cmd "mn_select_aircraft <cvar:mn_aircraft_id>;"
+		*cvar:mn_lastsubmenu = "aircraft"
 	}
 }
