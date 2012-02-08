@@ -945,9 +945,9 @@ mapdef mm_harbour
 
 	ufos
 	{
-		craft_ufo_supply
+//		craft_ufo_supply
 		craft_ufo_scout
-		craft_ufo_fighter
+//		craft_ufo_fighter
 		craft_ufo_harvester
 	}
 
