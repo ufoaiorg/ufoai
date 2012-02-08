@@ -49,7 +49,7 @@ typedef enum autoMission_teamType_s {
 
 /**
  * @brief One unit (soldier/alien/civilian) of the autobattle
- * @TODO add attack and defence scores
+ * @todo add attack and defence scores
  */
 typedef struct autoUnit_s {
 	int idx;
