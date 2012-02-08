@@ -196,9 +196,9 @@ static qboolean Door_Use (edict_t *door, edict_t *activator)
 		/* change rotation/origin and relink */
 		if (door->type == ET_DOOR) {
 			if (door->dir & DOOR_OPEN_REVERSE)
-				door->angles[door->dir] -= DOOR_ROTATION_ANGLE;
+				door->angles[door->dir & 3] -= DOOR_ROTATION_ANGLE;
 			else
-				door->angles[door->dir] += DOOR_ROTATION_ANGLE;
+				door->angles[door->dir & 3] += DOOR_ROTATION_ANGLE;
 		} else if (door->type == ET_DOOR_SLIDING) {
 			Door_SlidingUse(door);
 		}
@@ -217,9 +217,9 @@ static qboolean Door_Use (edict_t *door, edict_t *activator)
 		/* change rotation and relink */
 		if (door->type == ET_DOOR) {
 			if (door->dir & DOOR_OPEN_REVERSE)
-				door->angles[door->dir] += DOOR_ROTATION_ANGLE;
+				door->angles[door->dir & 3] += DOOR_ROTATION_ANGLE;
 			else
-				door->angles[door->dir] -= DOOR_ROTATION_ANGLE;
+				door->angles[door->dir & 3] -= DOOR_ROTATION_ANGLE;
 		} else if (door->type == ET_DOOR_SLIDING) {
 			Door_SlidingUse(door);
 		}
