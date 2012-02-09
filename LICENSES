@@ -3191,7 +3191,11 @@ base/pics/minihud/bar_floor_mini.png | GNU General Public License 2.0 | MCR | Ba
 base/pics/minihud/bar_right_deco.png | GNU General Public License 2.0 | MCR | Based on the original menu artwork by SparX and Rasta
 base/pics/minihud/bar_right_mini.png | GNU General Public License 2.0 | MCR | Based on the original menu artwork by SparX and Rasta and on images from http://sourceforge.net/projects/openiconlibrary
 base/pics/minihud/bar_selbox.png | GNU General Public License 2.0 |  | Based on the original menu artwork by SparX and Rasta
+base/pics/minihud/bar_selbox_hovered.png | GNU General Public License 2.0 |  | Based on the original menu artwork by SparX and Rasta
 base/pics/minihud/bar_teambox_deco.png | GNU General Public License 2.0 | MCR | Based on the original menu artwork by SparX and Rasta
+base/pics/minihud/bar_teambox_disabled.png | GNU General Public License 2.0 | MCR | Based on the original menu artwork by SparX and Rasta
+base/pics/minihud/bar_teambox_full.png | GNU General Public License 2.0 | MCR | Based on the original menu artwork by SparX and Rasta
+base/pics/minihud/bar_teambox_hovered.png | GNU General Public License 2.0 | MCR | Based on the original menu artwork by SparX and Rasta
 base/pics/minihud/bar_teambox_mini.png | GNU General Public License 2.0 | MCR | Based on the original menu artwork by SparX and Rasta
 base/pics/minihud/bar_teamleft_deco.png | GNU General Public License 2.0 | MCR | Based on the original menu artwork by SparX and Rasta
 base/pics/minihud/bar_teamleft_mini.png | GNU General Public License 2.0 | MCR | Based on the original menu artwork by SparX and Rasta
