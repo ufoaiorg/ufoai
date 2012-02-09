@@ -21050,3 +21050,15 @@
 ( 937 743 68 ) ( 937 743 90 ) ( 950 741 90 ) tex_furniture/textil006 63.79297 25.60938 180 0.01562506 0.1562502 65024 0 0
 }
 }
+// entity 202
+{
+"classname" "info_2x2_start"
+"origin" "64 992 92"
+"team" "4"
+}
+// entity 203
+{
+"classname" "info_2x2_start"
+"origin" "64 800 92"
+"team" "4"
+}

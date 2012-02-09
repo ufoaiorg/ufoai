@@ -1137,3 +1137,27 @@
 "team" "4"
 "origin" "80 816 28"
 }
+// entity 13
+{
+"classname" "info_player_start"
+"team" "4"
+"origin" "112 880 28"
+}
+// entity 14
+{
+"classname" "info_player_start"
+"team" "4"
+"origin" "112 816 28"
+}
+// entity 15
+{
+"classname" "info_player_start"
+"team" "4"
+"origin" "80 848 28"
+}
+// entity 16
+{
+"classname" "info_player_start"
+"team" "4"
+"origin" "144 848 28"
+}
