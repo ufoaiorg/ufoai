@@ -78,7 +78,7 @@ static uiNode_t* capturedNode;
 static qboolean UI_FocusExecuteActionNode (void)
 {
 #if 0	/**< @todo need a cleanup */
-	if (mouseSpace != MS_UI)
+	if (IN_GetMouseSpace() != MS_UI)
 		return qfalse;
 
 	if (UI_GetMouseCapture())
@@ -126,7 +126,7 @@ static qboolean UI_FocusNextActionNode (void)
 #if 0	/**< @todo need a cleanup */
 	static int i = UI_MAX_WINDOWSTACK + 1;	/* to cycle between all windows */
 
-	if (mouseSpace != MS_UI)
+	if (IN_GetMouseSpace() != MS_UI)
 		return qfalse;
 
 	if (UI_GetMouseCapture())

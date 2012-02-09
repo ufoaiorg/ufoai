@@ -31,8 +31,10 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 
 typedef enum {
 	MS_NULL,
-	MS_UI,		/**< we are over some menu node */
-	MS_WORLD		/**< we are in tactical mode */
+	MS_UI,			/**< we are over some menu node */
+	MS_WORLD,		/**< we are in tactical mode */
+
+	MS_MAX
 } mouseSpace_t;
 
 typedef enum {
@@ -49,9 +51,12 @@ typedef enum {
 extern int mouseSpace;
 extern int mousePosX, mousePosY;
 
+#define IN_GetMouseSpace() mouseSpace
+
 void IN_Init(void);
 void IN_Frame(void);
 void IN_SendKeyEvents(void);
+void IN_SetMouseSpace(mouseSpace_t mouseSpace);
 
 void IN_EventEnqueue(unsigned int key, unsigned short, qboolean down);
 float CL_GetKeyMouseState(int dir);
