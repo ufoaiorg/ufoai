@@ -48,7 +48,7 @@ typedef enum {
 #define STATE_ROT		4
 #define STATE_TILT		5
 
-extern int mouseSpace;
+extern mouseSpace_t mouseSpace;
 extern int mousePosX, mousePosY;
 
 #define IN_GetMouseSpace() mouseSpace

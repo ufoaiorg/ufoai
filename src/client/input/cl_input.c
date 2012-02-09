@@ -45,6 +45,7 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #include "../battlescape/cl_localentity.h"
 #include "../battlescape/cl_hud.h"
 #include "../cl_console.h"
+#include "../cl_screen.h"
 #include "../battlescape/cl_actor.h"
 #include "../battlescape/cl_view.h"
 #include "../battlescape/cl_parse.h"
@@ -69,7 +70,7 @@ static int keyq_tail = 0;
 static cvar_t *in_debug;
 cvar_t *cl_isometric;
 
-int mouseSpace;
+mouseSpace_t mouseSpace;
 int mousePosX, mousePosY;
 static int oldMousePosX, oldMousePosY;
 
@@ -924,8 +925,24 @@ static void CL_PressKey_f (void)
 	IN_EventEnqueue(keyNum, '?', qfalse);
 }
 
+typedef struct cursorChange_s {
+	mouseSpace_t prevSpace;
+	int cursor;
+} cursorChange_t;
+
+static cursorChange_t cursorChange;
+
 void IN_SetMouseSpace (mouseSpace_t mspace)
 {
+	if (mspace != MS_NULL) {
+		if (mspace != cursorChange.prevSpace) {
+			SCR_ChangeCursor(cursorChange.cursor);
+		}
+	}
+	if (mouseSpace != MS_NULL && mouseSpace != cursorChange.prevSpace) {
+		cursorChange.prevSpace = mouseSpace;
+		cursorChange.cursor = Cvar_GetValue("cursor");
+	}
 	mouseSpace = mspace;
 }
 

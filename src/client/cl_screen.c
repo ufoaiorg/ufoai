@@ -429,7 +429,8 @@ void SCR_UpdateScreen (void)
 
 void SCR_ChangeCursor (int cursor)
 {
-	Cvar_SetValue("cursor", cursor);
+	if (cursor > 0)
+		Cvar_SetValue("cursor", cursor);
 }
 
 /**
@@ -441,6 +442,8 @@ void SCR_Init (void)
 	scr_consize = Cvar_Get("scr_consize", "1.0", 0, "Console size");
 	scr_rspeed = Cvar_Get("r_speeds", "0", CVAR_ARCHIVE, "Show some rendering stats");
 	scr_cursor = Cvar_Get("cursor", "1", 0, "Which cursor should be shown - 0-9");
+	/** @todo remove me - but this was an archive cvar once */
+	scr_cursor->flags = 0;
 	scr_showcursor = Cvar_Get("scr_showcursor", "1", 0, "Show/hide mouse cursor- 0-1");
 
 	/* register our commands */
