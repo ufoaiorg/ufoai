@@ -24,10 +24,10 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #ifndef R_SDL_H
 #define R_SDL_H
 
+typedef int rect_t[2];
+
 typedef struct r_sdl_config_s {
-	SDL_VideoInfo videoInfo;
-	SDL_PixelFormat pixelFormat;
-	SDL_Rect **modes;
+	rect_t *modes;
 	int numModes;
 } r_sdl_config_t;
 

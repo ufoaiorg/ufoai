@@ -90,8 +90,8 @@ qboolean VID_GetModeInfo (int modeIndex, vidmode_t *modeInfo)
 	} else if (modeIndex < VID_GetModeNums()) {
 		int width, height;
 		if (r_sdl_config.numModes > 0) {
-			width = r_sdl_config.modes[modeIndex]->w;
-			height = r_sdl_config.modes[modeIndex]->h;
+			width = r_sdl_config.modes[modeIndex][0];
+			height = r_sdl_config.modes[modeIndex][1];
 		} else {
 			width = vid_modes[modeIndex].width;
 			height = vid_modes[modeIndex].height;
