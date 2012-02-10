@@ -33,14 +33,25 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
  * @sa G_UpdateCharacterSkills
  * @sa G_GetMaxExperiencePerMission
  */
-static int G_GetEarnedExperience (abilityskills_t skill, character_t *chr)
+static int G_GetEarnedExperience (abilityskills_t skill, edict_t *ent)
 {
+	character_t *chr = &ent->chr;
+
 	int experience = 0;
 	abilityskills_t i;
 
 	switch (skill) {
 	case ABILITY_POWER:
 		experience = 46; /** @todo Make a formula for this once strength is used in combat. */
+		/* if soldier gets a TU impact from the armour, it trains power by moving around in heavy armour */
+		/* the training goes faster if the TU impact is higher, up to a limit */
+		int penalty = G_ActorGetArmourTUPenalty(ent);
+		if (penalty == 0)
+			break;
+		int moving = chr->scoreMission->movedNormal / 2 + chr->scoreMission->movedCrouched;
+		penalty = min(penalty, 2);
+		moving = min(moving, 200);
+		experience += max(168 * moving / 200, 0);
 		break;
 	case ABILITY_SPEED:
 		experience += chr->scoreMission->movedNormal / 2 + chr->scoreMission->movedCrouched;
@@ -88,19 +99,19 @@ static int G_GetEarnedExperience (abilityskills_t skill, character_t *chr)
  * @sa G_GetEarnedExperience
  * @note Explanation of the values here:
  * There is a maximum speed at which skills may rise over the course of 100 missions (the predicted career length of a veteran soldier).
- * For example, POWER will, at best, rise 10 points over 100 missions. If the soldier gets max XP every time.
+ * For example, POWER will, at best, rise 20 points over 100 missions. If the soldier gets max XP every time.
  * Because the increase is given as experience^0.6, that means that the maximum XP cap x per mission is given as
- * log 10 / log x = 0.6
- * log x = log 10 / 0.6
- * x = 10 ^ (log 10 / 0.6)
- * x = 46
+ * log 20 / log x = 0.6
+ * log x = log 20 / 0.6
+ * x = 10 ^ (log 20 / 0.6)
+ * x = 214
  * The division by 100 happens in G_UpdateCharacterSkills
  */
 static int G_CharacterGetMaxExperiencePerMission (const abilityskills_t skill)
 {
 	switch (skill) {
 	case ABILITY_POWER:
-		return 46;
+		return 214;
 	case ABILITY_SPEED:
 		return 91;
 	case ABILITY_ACCURACY:
@@ -131,8 +142,10 @@ static int G_CharacterGetMaxExperiencePerMission (const abilityskills_t skill)
  * @sa G_UpdateCharacterScore
  * @sa G_UpdateHitScore
  */
-static void G_UpdateCharacterSkills (character_t *chr)
+static void G_UpdateCharacterSkills (edict_t *ent)
 {
+	character_t *chr = &ent->chr;
+
 	abilityskills_t i = 0;
 	unsigned int maxXP, gainedXP, totalGainedXP;
 
@@ -143,7 +156,7 @@ static void G_UpdateCharacterSkills (character_t *chr)
 	totalGainedXP = 0;
 	for (i = 0; i < SKILL_NUM_TYPES; i++) {
 		maxXP = G_CharacterGetMaxExperiencePerMission(i);
-		gainedXP = G_GetEarnedExperience(i, chr);
+		gainedXP = G_GetEarnedExperience(i, ent);
 
 		gainedXP = min(gainedXP, maxXP);
 		chr->score.experience[i] += gainedXP;
@@ -238,7 +251,7 @@ static void G_MatchSendResults (int team, qboolean nextmap)
 	/* Calculate new scores/skills for the soldiers. */
 	while ((ent = G_EdictsGetNextLivingActor(ent))) {
 		if (!G_IsAI(ent))
-			G_UpdateCharacterSkills(&ent->chr);
+			G_UpdateCharacterSkills(ent);
 		else if (ent->team == team)
 			attacker = ent;
 	}

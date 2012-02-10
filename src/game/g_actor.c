@@ -289,7 +289,7 @@ void G_ActorSetMaxs (edict_t* ent)
  * @return The amount of TU that should be used as penalty, @c 0 if the actor does not wear any armour
  * @note The armour weight only adds penalty if its weight is big enough.
  */
-static int G_ActorGetArmourTUPenalty (const edict_t *ent)
+int G_ActorGetArmourTUPenalty (const edict_t *ent)
 {
 	const invList_t *invList = ARMOUR(ent);
 	const objDef_t *armour;
