@@ -151,6 +151,12 @@ void Copy (void)
 	}
 }
 
+void Cut (void)
+{
+	Copy();
+	selection::algorithm::deleteSelection();
+}
+
 void Paste (void)
 {
 	if (GlobalSelectionSystem().areFacesSelected()) {
@@ -673,6 +679,7 @@ void Commands_Register ()
 
 	GlobalEventManager().addCommand("Undo", FreeCaller<Undo> ());
 	GlobalEventManager().addCommand("Redo", FreeCaller<Redo> ());
+	GlobalEventManager().addCommand("Cut", FreeCaller<Cut> ());
 	GlobalEventManager().addCommand("Copy", FreeCaller<Copy> ());
 	GlobalEventManager().addCommand("Paste", FreeCaller<Paste> ());
 	GlobalEventManager().addCommand("PasteToCamera", FreeCaller<PasteToCamera> ());

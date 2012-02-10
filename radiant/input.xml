@@ -46,6 +46,7 @@
 		<shortcut command="SaveMap" key="S" modifiers="CONTROL" />
 		<shortcut command="Undo" key="Z" modifiers="CONTROL" />
 		<shortcut command="Redo" key="Y" modifiers="CONTROL" />
+		<shortcut command="Cut" key="X" modifiers="CONTROL" />
 		<shortcut command="Copy" key="C" modifiers="CONTROL" />
 		<shortcut command="Paste" key="V" modifiers="CONTROL" />
 		<shortcut command="PasteToCamera" key="V" modifiers="ALT" />

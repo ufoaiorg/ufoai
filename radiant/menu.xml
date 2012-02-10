@@ -21,6 +21,7 @@
 		<menuItem name="undo" caption="_Undo" command="Undo" />
 		<menuItem name="redo" caption="_Redo" command="Redo" />
 		<menuSeparator />
+		<menuItem name="cut" caption="_Cut" command="Cut" />
 		<menuItem name="copy" caption="_Copy" command="Copy" />
 		<menuItem name="paste" caption="_Paste" command="Paste" />
 		<menuItem name="pasteToCamera" caption="P_aste to Camera" command="PasteToCamera" />
