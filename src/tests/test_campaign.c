@@ -25,6 +25,7 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #include "test_shared.h"
 #include "test_campaign.h"
 #include "../client/client.h"
+#include "../client/cgame/cl_game.h"
 #include "../client/renderer/r_state.h" /* r_state */
 #include "../client/ui/ui_main.h"
 #include "../client/cgame/campaign/cp_campaign.h"
@@ -83,6 +84,8 @@ static void ResetCampaignData (void)
 
 	MAP_Shutdown();
 	MAP_Init(campaign->map);
+
+	ccs.curCampaign = campaign;
 }
 
 /**
@@ -102,9 +105,12 @@ static int UFO_InitSuiteCampaign (void)
 	r_state.active_texunit = &r_state.texunits[0];
 	R_FontInit();
 	UI_Init();
+	GAME_InitStartup();
 
 	OBJZERO(cls);
 	Com_ParseScripts(qfalse);
+
+	Cmd_ExecuteString("game_setmode campaigns");
 
 	Cmd_AddCommand("msgoptions_set", Cmd_Dummy_f, NULL);
 
