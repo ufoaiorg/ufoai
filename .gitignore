@@ -33,3 +33,8 @@ crashdump.txt
 /src/po/ufoai.c1.po
 /src/po/ufoai.c.po
 /src/po/ufoai.ufo.po
+*~
+/src/docs/tex/ufo-manual_EN.log
+/debian/*.log
+/debian/ufoai-uforadiant
+/stamps
