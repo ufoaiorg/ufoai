@@ -231,7 +231,6 @@ static void E_ChangeName_f (void)
 
 /**
  * @brief Fill employeeList with a list of employees in the current base (i.e. they are hired and not transferred)
- * @note Depends on cls.displayHeavyEquipmentList to be set correctly.
  * @sa E_GetEmployeeByMenuIndex - It is used to get a specific entry from the generated employeeList.
  */
 int E_GenerateHiredEmployeesList (const base_t *base)
@@ -241,7 +240,6 @@ int E_GenerateHiredEmployeesList (const base_t *base)
 	return employeesInCurrentList;
 }
 
-
 /**
  * @brief Find an hired or free employee by the menu index
  * @param[in] num The index from the hire menu screen (index inemployeeList).
@@ -250,7 +248,6 @@ employee_t* E_GetEmployeeByMenuIndex (int num)
 {
 	return (employee_t*)LIST_GetByIdx(employeeList, num);
 }
-
 
 /**
  * @brief This removes an employee from the global list so that
