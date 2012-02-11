@@ -348,10 +348,6 @@ void GAME_CP_Drop (void)
 
 void GAME_CP_Frame (void)
 {
-	/* don't run the campaign in console mode */
-	if (cls.keyDest == key_console)
-		return;
-
 	if (!CP_IsRunning())
 		return;
 

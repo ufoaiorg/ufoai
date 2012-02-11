@@ -1250,6 +1250,10 @@ void GAME_Frame (void)
 {
 	const cgame_export_t *list;
 
+	/* don't run the cgame in console mode */
+	if (cls.keyDest == key_console)
+		return;
+
 	list = GAME_GetCurrentType();
 	if (list && list->RunFrame != NULL)
 		list->RunFrame();
