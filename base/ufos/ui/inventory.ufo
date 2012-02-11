@@ -275,7 +275,6 @@ window inventory
 
 	func onWindowClosed {
 		delete *cvar:inventory_window_open
-		delete *cvar:mn_rank_and_name
 	}
 }
 
