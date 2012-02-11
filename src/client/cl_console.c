@@ -192,7 +192,7 @@ void Con_CheckResize (void)
 	short tbuf[CON_TEXTSIZE];
 	const int width = (viddef.context.width >> con_fontShift);
 
-	if (width == con.lineWidth)
+	if (width < 1 || width == con.lineWidth)
 		return;
 
 	oldWidth = con.lineWidth;
