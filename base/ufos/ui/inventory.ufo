@@ -268,9 +268,9 @@ window inventory
 		if ( *cvar:mn_minihud_enabled == 1 ) {
 			if ( *cvar:mn_minihud_deco == 0 ) { *node:root.bar_inventory_deco@invis = true }
 			else { *node:root.bar_inventory_deco@invis = false }
-			// the physdat window will automatically be closed if open
-			if ( *cvar:physdat_window_open == 1 ) { cmd "ui_close ahudphysdat;" }
 		}
+		// the physdat window will automatically be closed if open
+		if ( *cvar:physdat_window_open == 1 ) { cmd "ui_close ahudphysdat;" }
 	}
 
 	func onWindowClosed {
