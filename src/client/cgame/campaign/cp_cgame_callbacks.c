@@ -21,6 +21,7 @@
  Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
  */
 
+#include "../../cl_shared.h"
 #include "cp_cgame_callbacks.h"
 #include "cp_campaign.h"
 #include "cp_missions.h"
@@ -191,7 +192,7 @@ void GAME_CP_Results (struct dbuffer *msg, int winner, int *numSpawned, int *num
 	int ownSurvived, ownKilled, ownStunned;
 	int aliensSurvived, aliensKilled, aliensStunned;
 	int civiliansSurvived, civiliansKilled, civiliansStunned;
-	const int currentTeam = cls.team;
+	const int currentTeam = cgi->GAME_GetCurrentTeam();
 	const qboolean won = (winner == currentTeam);
 	missionResults_t *results;
 	aircraft_t *aircraft = MAP_GetMissionAircraft();
@@ -286,7 +287,7 @@ void GAME_CP_Results (struct dbuffer *msg, int winner, int *numSpawned, int *num
 	else
 		UI_PushWindow("lost", NULL, NULL);
 
-	CL_Disconnect();
+	cgi->CL_Disconnect();
 	SV_Shutdown("Mission end", qfalse);
 }
 
@@ -343,7 +344,7 @@ void GAME_CP_Drop (void)
 	UI_InitStack("geoscape", "campaign_main", qtrue, qtrue);
 
 	SV_Shutdown("Mission end", qfalse);
-	CL_Disconnect();
+	cgi->CL_Disconnect();
 }
 
 void GAME_CP_Frame (float secondsSinceLastFrame)

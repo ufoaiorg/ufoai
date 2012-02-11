@@ -24,7 +24,6 @@
 #ifndef CP_CGAME_CALLBACKS_H
 #define CP_CGAME_CALLBACKS_H
 
-#include "../../client.h"
 #include "../cl_game.h"
 
 const cgame_import_t *cgImport;

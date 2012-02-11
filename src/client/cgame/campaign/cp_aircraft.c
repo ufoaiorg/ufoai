@@ -26,7 +26,7 @@ along with this program; if not, write to the Free Software
 Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 */
 
-#include "../../client.h" /* cls, le_t */
+#include "../../client.h" /* le_t */
 #include "../../ui/ui_main.h"
 #include "../../../shared/parse.h"
 #include "cp_campaign.h"
@@ -388,7 +388,7 @@ void AII_CollectingItems (aircraft_t *aircraft, int won)
 				invList_t *item = ARMOUR(le);
 				if (item)
 					AII_CollectItem(aircraft, item->item.t, 1);
-			} else if (le->team == cls.team && !LE_IsDead(le)) {
+			} else if (le->team == cgi->GAME_GetCurrentTeam() && !LE_IsDead(le)) {
 				/* Finally, the living actor from our team. */
 				AII_CarriedItems(le);
 			}
@@ -2923,7 +2923,7 @@ qboolean AIR_RemoveEmployee (employee_t *employee, aircraft_t *aircraft)
 	Com_DPrintf(DEBUG_CLIENT, "AIR_RemoveEmployee: base: %i - aircraft->idx: %i\n",
 		aircraft->homebase ? aircraft->homebase->idx : -1, aircraft->idx);
 
-	cls.i.DestroyInventory(&cls.i, &employee->chr.i);
+	cgi->INV_DestroyInventory(&employee->chr.i);
 	return LIST_Remove(&aircraft->acTeam, employee);
 }
 

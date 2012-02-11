@@ -452,6 +452,9 @@ static const cgame_import_t* GAME_GetImportData (const cgameType_t *t)
 		/*cgi->S_SetSampleRepeatRate = S_SetSampleRepeatRate;*/
 		cgi->S_StartLocalSample = S_StartLocalSample;
 
+		cgi->CL_GenerateCharacter = CL_GenerateCharacter;
+		cgi->CL_OnBattlescape = CL_OnBattlescape;
+
 		cgi->INV_GetEquipmentDefinitionByID = INV_GetEquipmentDefinitionByID;
 		cgi->INV_DestroyInventory = GAME_DestroyInventory;
 		cgi->INV_EquipActor = GAME_EquipActor;

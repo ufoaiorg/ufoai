@@ -517,6 +517,7 @@ static inline qboolean CP_IsBudgetDue (const dateLong_t *oldDate, const dateLong
 void CP_CampaignRun (campaign_t *campaign, float secondsSinceLastFrame)
 {
 	/* advance time */
+	ccs.frametime = secondsSinceLastFrame;
 	ccs.timer += secondsSinceLastFrame * ccs.gameTimeScale;
 
 	UP_GetUnreadMails();

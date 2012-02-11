@@ -22,7 +22,7 @@ along with this program; if not, write to the Free Software
 Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 */
 
-#include "../../client.h" /* cls.frametime */
+#include "../../cl_shared.h"
 #include "../../renderer/r_image.h"
 #include "../../renderer/r_framebuffer.h"
 #include "../../renderer/r_draw.h"
@@ -1830,7 +1830,7 @@ static void MAP_DrawMapMarkers (const uiNode_t* node)
 	}
 
 	if (ccs.gameTimeScale > 0)
-		maxInterpolationPoints = floor(1.0f / (cls.frametime * (float)ccs.gameTimeScale));
+		maxInterpolationPoints = floor(1.0f / (ccs.frametime * (float)ccs.gameTimeScale));
 	else
 		maxInterpolationPoints = 0;
 

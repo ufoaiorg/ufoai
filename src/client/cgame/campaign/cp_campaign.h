@@ -395,6 +395,7 @@ typedef struct ccs_s {
 	qboolean XVIShowMap;			/**< means that PHALANX has a map of XVI - @see CP_IsXVIResearched */
 	qboolean breathingMailSent;		/**< status flag indicating that mail about died aliens due to missing breathing tech was sent */
 	float timer;
+	float frametime;
 
 	vec3_t angles;			/**< 3d geoscape rotation */
 	vec2_t center;			/**< latitude and longitude of the point we're looking at on earth */
@@ -573,8 +574,8 @@ extern cvar_t *cp_start_employees;
 
 #define MAX_CREDITS 10000000
 
-struct cgame_import_s;
-extern const struct cgame_import_s *cgi;
+#include "../cgame.h"
+extern const cgame_import_t *cgi;
 
 /* Campaign functions */
 void CP_InitStartup(const struct cgame_import_s *import);

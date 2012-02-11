@@ -22,7 +22,7 @@ along with this program; if not, write to the Free Software
 Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 */
 
-#include "../../client.h" /* CL_OnBattlescape */
+#include "../../cl_shared.h"
 #include "../cl_game.h" /* GAME_ReloadMode */
 #include "../../ui/ui_main.h"
 #include "../../ui/ui_popup.h" /* popupText */
@@ -482,7 +482,7 @@ static void SAV_GameContinue_f (void)
 {
 	const char *error = NULL;
 
-	if (CL_OnBattlescape()) {
+	if (cgi->CL_OnBattlescape()) {
 		UI_PopWindow(qfalse);
 		return;
 	}
@@ -564,7 +564,7 @@ qboolean SAV_QuickSave (void)
 	char *error = NULL;
 	qboolean result;
 
-	if (CL_OnBattlescape())
+	if (cgi->CL_OnBattlescape())
 		return qfalse;
 
 	result = SAV_GameSave("slotquick", _("QuickSave"), &error);
@@ -612,7 +612,7 @@ static void SAV_GameQuickLoad_f (void)
 {
 	const char *error = NULL;
 
-	if (CL_OnBattlescape()) {
+	if (cgi->CL_OnBattlescape()) {
 		Com_Printf("Could not load the campaign while you are on the battlefield\n");
 		return;
 	}
