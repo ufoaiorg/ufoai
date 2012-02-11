@@ -309,6 +309,31 @@ static void GAME_Free (void *ptr)
 	Mem_Free(ptr);
 }
 
+static void GAME_DestroyInventory (inventory_t * const i)
+{
+	cls.i.DestroyInventory(&cls.i, i);
+}
+
+static void GAME_EquipActor (inventory_t* const inv, const equipDef_t *ed, const teamDef_t* td)
+{
+	cls.i.EquipActor(&cls.i, inv, ed, td);
+}
+
+static void GAME_EquipActorMelee (inventory_t* const inv, const teamDef_t* td)
+{
+	cls.i.EquipActorMelee(&cls.i, inv, td);
+}
+
+static void GAME_EquipActorRobot (inventory_t* const inv, const objDef_t* weapon)
+{
+	cls.i.EquipActorRobot(&cls.i, inv, weapon);
+}
+
+static qboolean GAME_RemoveFromInventory (inventory_t* const i, const invDef_t * container, invList_t *fItem)
+{
+	return cls.i.RemoveFromInventory(&cls.i, i, container, fItem);
+}
+
 static const cgame_import_t* GAME_GetImportData (const cgameType_t *t)
 {
 	static cgame_import_t gameImport;
@@ -428,6 +453,11 @@ static const cgame_import_t* GAME_GetImportData (const cgameType_t *t)
 		cgi->S_StartLocalSample = S_StartLocalSample;
 
 		cgi->INV_GetEquipmentDefinitionByID = INV_GetEquipmentDefinitionByID;
+		cgi->INV_DestroyInventory = GAME_DestroyInventory;
+		cgi->INV_EquipActor = GAME_EquipActor;
+		cgi->INV_EquipActorMelee = GAME_EquipActorMelee;
+		cgi->INV_EquipActorRobot = GAME_EquipActorRobot;
+		cgi->INV_RemoveFromInventory = GAME_RemoveFromInventory;
 
 		cgi->Sys_Error = Sys_Error;
 

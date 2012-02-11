@@ -224,6 +224,11 @@ typedef struct cgame_import_s {
 	const char* (IMPORT *Com_GetRandomMapAssemblyNameForCraft) (const char *craftID);
 
 	const equipDef_t *(IMPORT *INV_GetEquipmentDefinitionByID) (const char *name);
+	void (IMPORT *INV_DestroyInventory) (inventory_t* const i) __attribute__((nonnull(1)));
+	void (IMPORT *INV_EquipActor) (inventory_t* const inv, const equipDef_t *ed, const teamDef_t* td);
+	void (IMPORT *INV_EquipActorMelee) (inventory_t* const inv, const teamDef_t* td);
+	void (IMPORT *INV_EquipActorRobot) (inventory_t* const inv, const objDef_t* weapon);
+	qboolean (IMPORT *INV_RemoveFromInventory) (inventory_t* const i, const invDef_t * container, invList_t *fItem);
 } cgame_import_t;
 
 const cgame_export_t *GetCGameAPI(const cgame_import_t *import);
