@@ -54,6 +54,8 @@ private:
 	// The window position tracker
 	gtkutil::WindowPosition _windowPosition;
 
+	bool _stripTextureDir;
+
 public:
 	/** greebo: Construct the dialog window and its contents.
 	 *
@@ -62,7 +64,7 @@ public:
 	 *               Also, the initially selected shader will be read from
 	 *               this field at startup.
 	 */
-	ShaderChooser(ChooserClient* client, GtkWindow* parent, GtkWidget* targetEntry = NULL);
+	ShaderChooser(ChooserClient* client, GtkWindow* parent, GtkWidget* targetEntry = NULL, bool stripTextureDir = false);
 
 	/** greebo: Gets called upon shader selection change
 	 */

@@ -6,6 +6,7 @@
 #include "texturelib.h"
 #include "gtkutil/window/PersistentTransientWindow.h"
 #include "string/string.h"
+#include "shaderlib.h"
 #include "gtk/gtk.h"
 #include "gdk/gdkkeysyms.h"
 
@@ -20,12 +21,13 @@ namespace ui {
 	}
 
 // Construct the dialog
-ShaderChooser::ShaderChooser(ChooserClient* client, GtkWindow* parent, GtkWidget* targetEntry) :
+ShaderChooser::ShaderChooser(ChooserClient* client, GtkWindow* parent, GtkWidget* targetEntry, bool stripTextureDir) :
 	gtkutil::BlockingTransientWindow(_(LABEL_TITLE), parent),
 	_client(client),
 	_parent(parent),
 	_targetEntry(targetEntry),
-	_selector(this, SHADER_PREFIXES)
+	_selector(this, SHADER_PREFIXES),
+	_stripTextureDir(stripTextureDir)
 {
 	if (_targetEntry != NULL) {
 		_initialShader = std::string(gtk_entry_get_text(GTK_ENTRY(_targetEntry)));
@@ -78,7 +80,10 @@ GtkWidget* ShaderChooser::createButtons() {
 
 void ShaderChooser::shaderSelectionChanged(const std::string& shaderName, GtkListStore* listStore) {
 	if (_targetEntry != NULL) {
-		gtk_entry_set_text(GTK_ENTRY(_targetEntry), shaderName.c_str());
+		const char *value = shaderName.c_str();
+		if (_stripTextureDir)
+			value += GlobalTexturePrefix_get().size();
+		gtk_entry_set_text(GTK_ENTRY(_targetEntry), value);
 	}
 
 	// Propagate the call up to the client (e.g. SurfaceInspector)

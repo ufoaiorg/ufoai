@@ -30,6 +30,8 @@
 #include "debugging/debugging.h"
 
 #include "ui/mainframe/mainframe.h"
+#include "ui/common/ShaderChooser.h"
+#include "gtkutil/IconTextButton.h"
 
 #include <stdlib.h>
 
@@ -287,14 +289,37 @@ GtkWidget* Dialog::addSpinner (GtkWidget* vbox, const std::string& name, const s
 
 GtkWidget* Dialog::addTextureEntry (GtkWidget* vbox, const std::string& name, const std::string& registryKey)
 {
-	// Create a new row containing an input field
-	DialogEntryRow row(DialogEntryRow_new(name));
+	GtkWidget* hbox = gtk_hbox_new(false, 0);
 
+	GtkWidget* alignment = gtk_alignment_new(0.0, 0.5, 0.0, 0.0);
+	gtk_container_add(GTK_CONTAINER(alignment), hbox);
+
+	GtkEntry* entry = DialogEntry_new();
 	// Connect the registry key to the newly created input field
-	_registryConnector.connectGtkObject(GTK_OBJECT(row.m_entry), registryKey);
-	GlobalTextureEntryCompletion::instance().connect(GTK_ENTRY(row.m_entry));
+	_registryConnector.connectGtkObject(GTK_OBJECT(entry), registryKey);
+	GlobalTextureEntryCompletion::instance().connect(entry);
+
+	// Create the icon button to open the ShaderChooser
+	GtkWidget* selectShaderButton = gtkutil::IconTextButton("", gtkutil::getLocalPixbuf("folder16.png"), false);
+	// Override the size request
+	gtk_widget_set_size_request(selectShaderButton, -1, -1);
+	g_signal_connect(G_OBJECT(selectShaderButton), "clicked", G_CALLBACK(onTextureSelect), entry);
+
+	gtk_box_pack_start(GTK_BOX(hbox), GTK_WIDGET(entry), true, true, 0);
+	gtk_box_pack_start(GTK_BOX(hbox), selectShaderButton, false, false, 0);
+
+	gtk_widget_show_all(alignment);
+
+	DialogEntryRow row(DialogEntryRow(GTK_WIDGET(DialogRow_new(name, alignment)), entry));
 	DialogVBox_packRow(GTK_VBOX(vbox), row.m_row);
 	return row.m_row;
+
+}
+
+void Dialog::onTextureSelect (GtkWidget* button, GtkEntry* entry)
+{
+	// Construct the modal dialog, self-destructs on close
+	new ui::ShaderChooser(NULL, GlobalRadiant().getMainWindow(), GTK_WIDGET(entry), true);
 }
 
 // greebo: Adds a PathEntry to choose files or directories (depending on the given boolean)

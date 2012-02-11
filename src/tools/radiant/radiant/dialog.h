@@ -103,7 +103,11 @@ typedef std::list<std::string> ComboBoxValueList;
 
 class Dialog
 {
+	private:
 		GtkWindow* m_window;
+
+		static void onTextureSelect (GtkWidget* button, GtkEntry* entry);
+
 	protected:
 		gtkutil::RegistryConnector _registryConnector;
 	public:
