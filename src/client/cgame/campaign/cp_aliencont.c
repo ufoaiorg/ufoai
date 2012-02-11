@@ -24,7 +24,7 @@ along with this program; if not, write to the Free Software
 Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 */
 
-#include "../../client.h" /* le_t */
+#include "../../cl_shared.h"
 #include "cp_campaign.h"
 #include "cp_capacity.h"
 #include "cp_aliencont_callbacks.h"
@@ -124,28 +124,6 @@ void AL_FillInContainment (base_t *base)
 		counter++;
 	}
 	CAP_SetCurrent(base, CAP_ALIENS, 0);
-}
-
-/**
- * @brief Collecting stunned aliens and alien bodies after the mission.
- * @param[in] aircraft Pointer to the aircraft with cargo.
- * @sa CL_ParseResults
- * @sa CP_GameAutoGo
- */
-void AL_CollectingAliens (aircraft_t *aircraft)
-{
-	le_t *le = NULL;
-
-	while ((le = LE_GetNextInUse(le))) {
-		if (LE_IsActor(le) && LE_IsAlien(le)) {
-			assert(le->teamDef);
-
-			if (LE_IsStunned(le))
-				AL_AddAlienTypeToAircraftCargo(aircraft, le->teamDef, 1, qfalse);
-			else if (LE_IsDead(le))
-				AL_AddAlienTypeToAircraftCargo(aircraft, le->teamDef, 1, qtrue);
-		}
-	}
 }
 
 /**

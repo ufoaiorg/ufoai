@@ -344,6 +344,57 @@ static int GAME_GetNextUniqueCharacterNumber (void)
 	return cls.nextUniqueCharacterNumber;
 }
 
+static void GAME_CollectItems (void *data, int won, void (*item)(void*, const objDef_t*, int), void (*ammo) (void *, const invList_t *), void (*ownitems) (const inventory_t *))
+{
+	le_t *le = NULL;
+	while ((le = LE_GetNextInUse(le))) {
+		/* Winner collects everything on the floor, and everything carried
+		 * by surviving actors. Loser only gets what their living team
+		 * members carry. */
+		if (LE_IsItem(le)) {
+			if (won) {
+				invList_t *i;
+				for (i = FLOOR(le); i; i = i->next) {
+					item(data, i->item.t, 1);
+					if (i->item.t->reload && i->item.a > 0)
+						ammo(data, i);
+				}
+			}
+		} else if (LE_IsActor(le)) {
+			/* The items are already dropped to floor and are available
+			 * as ET_ITEM if the actor is dead; or the actor is not ours. */
+			/* First of all collect armour of dead or stunned actors (if won). */
+			if (won && LE_IsDead(le)) {
+				invList_t *i = ARMOUR(le);
+				if (i)
+					item(data, i->item.t, 1);
+			} else if (le->team == cls.team && !LE_IsDead(le)) {
+				/* Finally, the living actor from our team. */
+				ownitems(&le->i);
+			}
+		}
+	}
+}
+
+/**
+ * @brief Collecting stunned and dead alien bodies after the mission.
+ */
+static void GAME_CollectAliens (void *data, void (*collect)(void*, const teamDef_t*, int, qboolean))
+{
+	le_t *le = NULL;
+
+	while ((le = LE_GetNextInUse(le))) {
+		if (LE_IsActor(le) && LE_IsAlien(le)) {
+			assert(le->teamDef);
+
+			if (LE_IsStunned(le))
+				collect(data, le->teamDef, 1, qfalse);
+			else if (LE_IsDead(le))
+				collect(data, le->teamDef, 1, qtrue);
+		}
+	}
+}
+
 static const cgame_import_t* GAME_GetImportData (const cgameType_t *t)
 {
 	static cgame_import_t gameImport;
@@ -467,6 +518,9 @@ static const cgame_import_t* GAME_GetImportData (const cgameType_t *t)
 
 		cgi->SetNextUniqueCharacterNumber = GAME_SetNextUniqueCharacterNumber;
 		cgi->GetNextUniqueCharacterNumber = GAME_GetNextUniqueCharacterNumber;
+
+		cgi->CollectItems = GAME_CollectItems;
+		cgi->CollectAliens = GAME_CollectAliens;
 
 		cgi->INV_GetEquipmentDefinitionByID = INV_GetEquipmentDefinitionByID;
 		cgi->INV_DestroyInventory = GAME_DestroyInventory;

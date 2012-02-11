@@ -229,6 +229,9 @@ typedef struct cgame_import_s {
 	void (IMPORT *SetNextUniqueCharacterNumber) (int ucn);
 	int (IMPORT *GetNextUniqueCharacterNumber) (void);
 
+	void (IMPORT *CollectItems) (void *target, int won, void (*item)(void*, const objDef_t*, int), void (*ammo) (void *, const invList_t *), void (*ownitems) (const inventory_t *));
+	void (IMPORT *CollectAliens) (void *data, void (*collect)(void*, const teamDef_t*, int, qboolean));
+
 	const equipDef_t *(IMPORT *INV_GetEquipmentDefinitionByID) (const char *name);
 	void (IMPORT *INV_DestroyInventory) (inventory_t* const i) __attribute__((nonnull(1)));
 	void (IMPORT *INV_EquipActor) (inventory_t* const inv, const equipDef_t *ed, const teamDef_t* td);

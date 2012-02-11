@@ -53,7 +53,6 @@ typedef struct aliensCont_s {
  */
 
 void AL_FillInContainment(struct base_s *base);
-void AL_CollectingAliens(struct aircraft_s *aircraft);
 void AL_AddAliens(struct aircraft_s *aircraft);
 void AL_RemoveAliens(struct base_s *base, const teamDef_t *alienType, int amount, const alienCalcType_t action);
 const teamDef_t* AL_GetAlienTeamDef(int alienTeamDefIdx);

@@ -26,7 +26,7 @@ along with this program; if not, write to the Free Software
 Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 */
 
-#include "../../client.h" /* le_t */
+#include "../../cl_shared.h"
 #include "../../ui/ui_main.h"
 #include "../../../shared/parse.h"
 #include "cp_campaign.h"
@@ -256,8 +256,9 @@ static equipDef_t eTempEq;		/**< Used to count ammo in magazines. */
  * @param[in] aircraft Pointer to aircraft used in this mission.
  * @sa AII_CollectingItems
  */
-static void AII_CollectingAmmo (aircraft_t *aircraft, const invList_t *magazine)
+static void AII_CollectingAmmo (void *data, const invList_t *magazine)
 {
+	aircraft_t *aircraft = (aircraft_t *)data;
 	/* Let's add remaining ammo to market. */
 	eTempEq.numItemsLoose[magazine->item.m->idx] += magazine->item.a;
 	if (eTempEq.numItemsLoose[magazine->item.m->idx] >= magazine->item.t->ammo) {
@@ -297,6 +298,11 @@ void AII_CollectItem (aircraft_t *aircraft, const objDef_t *item, int amount)
 	cargo[aircraft->itemTypes].item = item;
 	cargo[aircraft->itemTypes].amount = amount;
 	aircraft->itemTypes++;
+}
+
+static inline void AII_CollectItem_ (void *data, const objDef_t *item, int amount)
+{
+	AII_CollectItem((aircraft_t *)data, item, amount);
 }
 
 /**
@@ -350,7 +356,6 @@ static void AII_CarriedItems (const inventory_t *soldierInventory)
 void AII_CollectingItems (aircraft_t *aircraft, int won)
 {
 	int i, j;
-	le_t *le = NULL;
 	itemsTmp_t *cargo;
 	itemsTmp_t prevItemCargo[MAX_CARGO];
 	int prevItemTypes;
@@ -367,33 +372,8 @@ void AII_CollectingItems (aircraft_t *aircraft, int won)
 	cargo = aircraft->itemcargo;
 	aircraft->itemTypes = 0;
 
-	while ((le = LE_GetNextInUse(le))) {
-		/* Winner collects everything on the floor, and everything carried
-		 * by surviving actors. Loser only gets what their living team
-		 * members carry. */
-		if (LE_IsItem(le)) {
-			if (won) {
-				invList_t *item;
-				for (item = FLOOR(le); item; item = item->next) {
-					AII_CollectItem(aircraft, item->item.t, 1);
-					if (item->item.t->reload && item->item.a > 0)
-						AII_CollectingAmmo(aircraft, item);
-				}
-			}
-		} else if (LE_IsActor(le)) {
-			/* The items are already dropped to floor and are available
-			 * as ET_ITEM if the actor is dead; or the actor is not ours. */
-			/* First of all collect armour of dead or stunned actors (if won). */
-			if (won && LE_IsDead(le)) {
-				invList_t *item = ARMOUR(le);
-				if (item)
-					AII_CollectItem(aircraft, item->item.t, 1);
-			} else if (le->team == cgi->GAME_GetCurrentTeam() && !LE_IsDead(le)) {
-				/* Finally, the living actor from our team. */
-				AII_CarriedItems(&le->i);
-			}
-		}
-	}
+	cgi->CollectItems(aircraft, won, AII_CollectItem_, AII_CollectingAmmo, AII_CarriedItems);
+
 	/* Fill the missionResults array. */
 	ccs.missionResults.itemTypes = aircraft->itemTypes;
 	for (i = 0; i < aircraft->itemTypes; i++)

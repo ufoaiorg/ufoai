@@ -175,6 +175,11 @@ static void GAME_CP_Start_f (void)
 	Cbuf_AddText("seq_start intro\n");
 }
 
+static inline void AL_AddAlienTypeToAircraftCargo_ (void *data, const teamDef_t *teamDef, int amount, qboolean dead)
+{
+	AL_AddAlienTypeToAircraftCargo((aircraft_t *) data, teamDef, amount, dead);
+}
+
 /**
  * @brief After a mission was finished this function is called
  * @param msg The network message buffer
@@ -241,7 +246,7 @@ void GAME_CP_Results (struct dbuffer *msg, int winner, int *numSpawned, int *num
 	AII_CollectingItems(aircraft, won);
 	if (won)
 		/* Collect aliens from the battlefield. */
-		AL_CollectingAliens(aircraft);
+		cgi->CollectAliens(aircraft, AL_AddAlienTypeToAircraftCargo_);
 
 	ccs.aliensKilled += aliensKilled;
 
