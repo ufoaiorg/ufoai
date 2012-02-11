@@ -1130,8 +1130,11 @@ static void GAME_InitializeBattlescape (chrList_t *team)
 		UI_ExecuteConfunc("huddisable %i", i);
 	}
 
-	if (list && list->InitializeBattlescape)
-		list->InitializeBattlescape(team);
+	if (list && list->InitializeBattlescape) {
+		struct dbuffer *msg = list->InitializeBattlescape(team);
+		if (msg != NULL)
+			NET_WriteMsg(cls.netStream, msg);
+	}
 }
 
 /**

@@ -368,7 +368,7 @@ const char* GAME_CP_GetTeamDef (void)
  * @brief Changes some actor states for a campaign game
  * @param team The team to change the states for
  */
-void GAME_CP_InitializeBattlescape (const chrList_t *team)
+struct dbuffer *GAME_CP_InitializeBattlescape (const chrList_t *team)
 {
 	int i;
 	struct dbuffer *msg = new_dbuffer();
@@ -384,7 +384,8 @@ void GAME_CP_InitializeBattlescape (const chrList_t *team)
 		NET_WriteShort(msg, chr->RFmode.fmIdx);
 		NET_WriteShort(msg, chr->RFmode.weapon != NULL ? chr->RFmode.weapon->idx : NONE);
 	}
-	NET_WriteMsg(cls.netStream, msg);
+
+	return msg;
 }
 
 equipDef_t *GAME_CP_GetEquipmentDefinition (void)
