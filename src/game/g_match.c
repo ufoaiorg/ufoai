@@ -50,8 +50,9 @@ static int G_GetEarnedExperience (abilityskills_t skill, edict_t *ent)
 			break;
 		int moving = chr->scoreMission->movedNormal / 2 + chr->scoreMission->movedCrouched;
 		penalty = min(penalty, 2);
-		moving = min(moving, 200);
-		experience += max(168 * moving / 200, 0);
+		int training = penalty * moving;
+		training = min(training, 200);
+		experience += max(168 * training / 200, 0);
 		break;
 	case ABILITY_SPEED:
 		experience += chr->scoreMission->movedNormal / 2 + chr->scoreMission->movedCrouched;
