@@ -301,10 +301,10 @@ void AII_CollectItem (aircraft_t *aircraft, const objDef_t *item, int amount)
 
 /**
  * @brief Process items carried by soldiers.
- * @param[in] soldier Pointer to le_t being a soldier from our team.
+ * @param[in] soldierInventory Pointer to inventory from a soldier of our team.
  * @sa AII_CollectingItems
  */
-static void AII_CarriedItems (const le_t *soldier)
+static void AII_CarriedItems (const inventory_t *soldierInventory)
 {
 	containerIndex_t container;
 	invList_t *invList;
@@ -314,7 +314,7 @@ static void AII_CarriedItems (const le_t *soldier)
 		/* Items on the ground are collected as ET_ITEM */
 		if (INVDEF(container)->temp)
 			continue;
-		for (invList = CONTAINER(soldier, container); invList; invList = invList->next) {
+		for (invList = soldierInventory->c[container]; invList; invList = invList->next) {
 			const objDef_t *item = invList->item.t;
 			const objDef_t *ammo = invList->item.m;
 			technology_t *tech = RS_GetTechForItem(item);
@@ -390,7 +390,7 @@ void AII_CollectingItems (aircraft_t *aircraft, int won)
 					AII_CollectItem(aircraft, item->item.t, 1);
 			} else if (le->team == cgi->GAME_GetCurrentTeam() && !LE_IsDead(le)) {
 				/* Finally, the living actor from our team. */
-				AII_CarriedItems(le);
+				AII_CarriedItems(&le->i);
 			}
 		}
 	}
