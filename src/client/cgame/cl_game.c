@@ -334,6 +334,16 @@ static qboolean GAME_RemoveFromInventory (inventory_t* const i, const invDef_t *
 	return cls.i.RemoveFromInventory(&cls.i, i, container, fItem);
 }
 
+static void GAME_SetNextUniqueCharacterNumber (int ucn)
+{
+	cls.nextUniqueCharacterNumber = ucn;
+}
+
+static int GAME_GetNextUniqueCharacterNumber (void)
+{
+	return cls.nextUniqueCharacterNumber;
+}
+
 static const cgame_import_t* GAME_GetImportData (const cgameType_t *t)
 {
 	static cgame_import_t gameImport;
@@ -454,6 +464,9 @@ static const cgame_import_t* GAME_GetImportData (const cgameType_t *t)
 
 		cgi->CL_GenerateCharacter = CL_GenerateCharacter;
 		cgi->CL_OnBattlescape = CL_OnBattlescape;
+
+		cgi->SetNextUniqueCharacterNumber = GAME_SetNextUniqueCharacterNumber;
+		cgi->GetNextUniqueCharacterNumber = GAME_GetNextUniqueCharacterNumber;
 
 		cgi->INV_GetEquipmentDefinitionByID = INV_GetEquipmentDefinitionByID;
 		cgi->INV_DestroyInventory = GAME_DestroyInventory;
