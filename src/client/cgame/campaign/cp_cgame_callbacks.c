@@ -191,7 +191,8 @@ void GAME_CP_Results (struct dbuffer *msg, int winner, int *numSpawned, int *num
 	int ownSurvived, ownKilled, ownStunned;
 	int aliensSurvived, aliensKilled, aliensStunned;
 	int civiliansSurvived, civiliansKilled, civiliansStunned;
-	const qboolean won = (winner == cls.team);
+	const int currentTeam = cls.team;
+	const qboolean won = (winner == currentTeam);
 	missionResults_t *results;
 	aircraft_t *aircraft = MAP_GetMissionAircraft();
 	const battleParam_t *bp = &ccs.battleParameters;
@@ -203,14 +204,14 @@ void GAME_CP_Results (struct dbuffer *msg, int winner, int *numSpawned, int *num
 	civiliansSurvived = civiliansKilled = civiliansStunned = 0;
 
 	for (i = 0; i < MAX_TEAMS; i++) {
-		if (i == cls.team)
+		if (i == currentTeam)
 			ownSurvived = numAlive[i];
 		else if (i == TEAM_CIVILIAN)
 			civiliansSurvived = numAlive[i];
 		else
 			aliensSurvived += numAlive[i];
 		for (j = 0; j < MAX_TEAMS; j++)
-			if (j == cls.team) {
+			if (j == currentTeam) {
 				ownKilled += numKilled[i][j];
 				ownStunned += numStunned[i][j]++;
 			} else if (j == TEAM_CIVILIAN) {
@@ -251,12 +252,12 @@ void GAME_CP_Results (struct dbuffer *msg, int winner, int *numSpawned, int *num
 		results->aliensKilled += aliensKilled;
 		results->aliensStunned += aliensStunned;
 		results->aliensSurvived += aliensSurvived;
-		results->ownKilled += ownKilled - numKilled[cls.team][cls.team] - numKilled[TEAM_CIVILIAN][cls.team];
+		results->ownKilled += ownKilled - numKilled[currentTeam][currentTeam] - numKilled[TEAM_CIVILIAN][currentTeam];
 		results->ownStunned += ownStunned;
-		results->ownKilledFriendlyFire += numKilled[cls.team][cls.team] + numKilled[TEAM_CIVILIAN][cls.team];
+		results->ownKilledFriendlyFire += numKilled[currentTeam][currentTeam] + numKilled[TEAM_CIVILIAN][currentTeam];
 		results->ownSurvived += ownSurvived;
 		results->civiliansKilled += civiliansKilled;
-		results->civiliansKilledFriendlyFire += numKilled[cls.team][TEAM_CIVILIAN] + numKilled[TEAM_CIVILIAN][TEAM_CIVILIAN];
+		results->civiliansKilledFriendlyFire += numKilled[currentTeam][TEAM_CIVILIAN] + numKilled[TEAM_CIVILIAN][TEAM_CIVILIAN];
 		results->civiliansSurvived += civiliansSurvived;
 		return;
 	}
@@ -265,12 +266,12 @@ void GAME_CP_Results (struct dbuffer *msg, int winner, int *numSpawned, int *num
 	results->aliensKilled = aliensKilled;
 	results->aliensStunned = aliensStunned;
 	results->aliensSurvived = aliensSurvived;
-	results->ownKilled = ownKilled - numKilled[cls.team][cls.team] - numKilled[TEAM_CIVILIAN][cls.team];
+	results->ownKilled = ownKilled - numKilled[currentTeam][currentTeam] - numKilled[TEAM_CIVILIAN][currentTeam];
 	results->ownStunned = ownStunned;
-	results->ownKilledFriendlyFire = numKilled[cls.team][cls.team] + numKilled[TEAM_CIVILIAN][cls.team];
+	results->ownKilledFriendlyFire = numKilled[currentTeam][currentTeam] + numKilled[TEAM_CIVILIAN][currentTeam];
 	results->ownSurvived = ownSurvived;
 	results->civiliansKilled = civiliansKilled;
-	results->civiliansKilledFriendlyFire = numKilled[cls.team][TEAM_CIVILIAN] + numKilled[TEAM_CIVILIAN][TEAM_CIVILIAN];
+	results->civiliansKilledFriendlyFire = numKilled[currentTeam][TEAM_CIVILIAN] + numKilled[TEAM_CIVILIAN][TEAM_CIVILIAN];
 	results->civiliansSurvived = civiliansSurvived;
 
 	MIS_InitResultScreen(results);
