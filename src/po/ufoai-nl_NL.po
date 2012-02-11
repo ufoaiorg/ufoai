@@ -9,7 +9,7 @@ msgstr ""
 "Project-Id-Version: UFO Alien Invasion\n"
 "Report-Msgid-Bugs-To: tlh2000@users.sourceforge.net\n"
 "POT-Creation-Date: 2011-11-04 17:13+0700\n"
-"PO-Revision-Date: 2012-02-05 21:45+0100\n"
+"PO-Revision-Date: 2012-02-11 15:35+0100\n"
 "Last-Translator: Sander van Grieken <sander@outrightsolutions.nl>\n"
 "Language-Team: Dutch <pverha10@cis.hzeeland.nl>\n"
 "MIME-Version: 1.0\n"
@@ -236,7 +236,7 @@ msgid ""
 "Morale  %i\n"
 "%s %i (%i TU left)\n"
 msgstr ""
-"Moreell  %i\n"
+"Moreel  %i\n"
 "%s %i (%i TE over)\n"
 
 msgid "1on1on1"
@@ -328,7 +328,7 @@ msgid "%s was stunned\n"
 msgstr "%s werd verdoofd\n"
 
 msgid "The UFO Yard is a camouflaged storage field for captured UFOs. It can be placed anywhere in the world to store captured UFOs for dismantling and research, and can transfer UFOs to other Yards. UFOs stored in a Yard can be researched and/or dismantled from any PHALANX base with appropriate facilities, but these activities proceed more slowly the further away the UFO Yard is from the base."
-msgstr "De UFO Werf is een gecamoufleerd opslag veld voor veroverde UFO's. Het kan overal in de wereld geplaatst worden om veroverde UFO's voor demontage en onderzoek op te slaan, en kan UFO's overbrengen naar andere werven. UFO's worden opgeslagen in een Werf kunnen worden onderzocht en/of gedemonteerd van een PHALANX basis met de nodige voorzieningen, maar deze activiteiten gaan langzamer hoe verder weg de UFO Werf van de basis is."
+msgstr "De UFO Werf is een gecamoufleerde opslagplaats voor veroverde UFO's. Het kan overal in de wereld geplaatst worden om veroverde UFO's voor demontage en onderzoek op te slaan. U kunt UFO's overbrengen naar andere werven. UFO's die in een werf zijn opgeslagen kunnen worden onderzocht en/of gedemonteerd vanuit een PHALANX basis met de nodige voorzieningen, maar deze activiteiten gaan langzamer als de werf verder van de basis vandaan ligt."
 
 msgid "A civilian was stunned.\n"
 msgstr "Een burger werd verdoofd.\n"
@@ -1656,7 +1656,7 @@ msgstr ""
 "Dr. Connor"
 
 msgid "Happy"
-msgstr "Blij"
+msgstr "Gelukkig"
 
 msgid "Alien Communication"
 msgstr "Buitenaardse Communicatie"
@@ -6101,7 +6101,7 @@ msgid "Small eastern park."
 msgstr "Klein oosters park."
 
 msgid "Phoenix UGV"
-msgstr "Phoenix UGV"
+msgstr "Fenix OGV"
 
 msgid "Mart"
 msgstr "Markt"
@@ -6442,7 +6442,7 @@ msgid "UFO - Bomber"
 msgstr "UFO - Bommenwerper"
 
 msgid "SHIVA Rotary Cannon"
-msgstr "SHIVA Draaiend Kanon"
+msgstr "SHIVA Roterend Kanon"
 
 msgid "UFO - Carrier"
 msgstr "UFO - Vliegdekschip"
@@ -6575,7 +6575,7 @@ msgid "SHIVA 20mm API Rounds"
 msgstr "SHIVA 20mm API Kogels"
 
 msgid "'Sparrowhawk' AA Missile Rack"
-msgstr "'Sparrowhawk' Luchtafweerraket-rek"
+msgstr "'Sparrowhawk' Raket Houder"
 
 msgid "Raven ECM Unit"
 msgstr "Raven ECM Eenheid"
@@ -6908,7 +6908,7 @@ msgstr ""
 "--Cdr. Navarre"
 
 msgid "stun_electro"
-msgstr "Electrolaser"
+msgstr "electrolaser"
 
 msgid "Political Situation Before The Invasion"
 msgstr "Politieke Situatie Voor De Invasie"
@@ -8978,9 +8978,8 @@ msgstr "Koop/Verkoop"
 msgid "Aircraft started"
 msgstr "Vliegtuig gestart"
 
-#, fuzzy
 msgid "Transfer equipment, aircraft, UGV, aliens and employees to other bases"
-msgstr "Overdracht apparatuur, vliegtuigen, UGV, buitenaardsen en werknemers naar andere bases"
+msgstr "Overdracht apparatuur, vliegtuigen, OGV, buitenaardsen en werknemers naar andere bases"
 
 #, c-format
 msgid "Weapons:\t%i on %i\n"
@@ -9846,7 +9845,7 @@ msgstr "Licht gewond"
 
 #, c-format
 msgid "Recovered %s from the battlefield. UFO sold to nation %s, gained %i credits."
-msgstr "%s opgehaald uit het slagveld. UFO verkocht aan land %s, %i,- aan poen opgestreken."
+msgstr "%s geborgen uit het slagveld. UFO verkocht aan land %s, %i,- aan poen opgestreken."
 
 msgid "Scroll up"
 msgstr "Blader omhoog"
@@ -10279,9 +10278,8 @@ msgstr "laser"
 msgid "Retry with your changed name"
 msgstr "Probeer opnieuw met uw gewijzigde naam"
 
-#, fuzzy
 msgid "stun_gas"
-msgstr "stun_gas"
+msgstr "verdovingsgas"
 
 msgid "Not connected"
 msgstr "Niet verbonden"
@@ -11451,7 +11449,7 @@ msgid "Resolution:"
 msgstr "Resolutie:"
 
 msgid "Upset"
-msgstr "Ontevreden"
+msgstr "Pissig"
 
 msgid "Display only resolutions using this screen ratio."
 msgstr "Geef alleen resoluties weer met deze schermverhouding."
@@ -12133,13 +12131,13 @@ msgid "Patna"
 msgstr "Patna"
 
 msgid "Default minimum zoom level of the battlescape camera is 0.30."
-msgstr "Standaar minimum zoom niveau van de slagveld camera is 0.30."
+msgstr "Standaard minimum zoom niveau van de slagveld camera is 0.30."
 
 msgid "Phoenix"
-msgstr "Phoenix"
+msgstr "Fenix"
 
 msgid "Default maximum zoom level of the battlescape camera is 3.40."
-msgstr "Standaar maximum zoom niveau van de slagveld camera is 3.40."
+msgstr "Standaard maximum zoom niveau van de slagveld camera is 3.40."
 
 msgid "Providence"
 msgstr "Providence"
@@ -12447,7 +12445,7 @@ msgid "Retry this battlescape mission."
 msgstr "Probeer deze missie opnieuw."
 
 msgid "Giving up"
-msgstr "Opgevend"
+msgstr "Moedeloos"
 
 msgid "Enter the game options menu."
 msgstr "Ga naar het spelopties menu."
@@ -12660,7 +12658,7 @@ msgid "Capture a node"
 msgstr "Vastleggen knooppunt"
 
 msgid "Alien Aircraft Plating"
-msgstr "Buitenaardse Vliegtuig Beplating"
+msgstr "Buitenaardse Vliegtuig Bepantsering"
 
 msgid "Select parent node"
 msgstr "Kies ouder knooppunt"
@@ -13242,7 +13240,7 @@ msgid "Stun Charge"
 msgstr "Verdovingslading"
 
 msgid "Sparrowhawk AA Missile Rack"
-msgstr "Sparrowhawk AA Raket Houder"
+msgstr "Sparrowhawk Raket Houder"
 
 msgid "Double Charge"
 msgstr "Dubbele Lading"
@@ -13275,7 +13273,7 @@ msgid "Miami"
 msgstr "Miami"
 
 msgid "Lock"
-msgstr "Sluit"
+msgstr "Vergrendel"
 
 msgid "Punta Arenas"
 msgstr "Punta Arenas"
@@ -13297,7 +13295,7 @@ msgstr "Jachtgeweer"
 
 #, c-format
 msgid "Morale  %i | Reserved TUs: %i\n"
-msgstr "Moraal  %i | Gereserveerde TE's: %i\n"
+msgstr "Moreel  %i | Gereserveerde TE's: %i\n"
 
 msgid "Double Shot"
 msgstr "Dubbel Schot"
