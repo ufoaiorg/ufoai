@@ -332,7 +332,7 @@ window physdata
 			*cvar:mn_missions_label_string = "_Missions Performed:"
 			*cvar:mn_kills_label_string = "_Enemies Killed:"
 		}
-		// we need the ability to hide the deco just for the MiniHUD
+		// the ability to hide the deco is needed for the MiniHUD only
 		if ( *cvar:mn_minihud_enabled == 1 ) {
 			if ( *cvar:mn_minihud_deco == 0 ) { *node:root.bar_physdata_deco@invis = true }
 			else { *node:root.bar_physdata_deco@invis = false }
