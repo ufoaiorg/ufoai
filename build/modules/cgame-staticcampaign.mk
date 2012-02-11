@@ -23,6 +23,8 @@ ifneq ($(HARD_LINKED_CGAME),1)
 		shared/parse.c \
 		shared/infostring.c \
 		\
+		common/binaryexpressionparser.c \
+		\
 		game/q_shared.c \
 		game/chr_shared.c \
 		game/inv_shared.c \
