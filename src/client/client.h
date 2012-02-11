@@ -101,9 +101,6 @@ typedef struct client_static_s {
 	actorSkin_t actorSkins[MAX_ACTORSKINNAME];
 	unsigned int numActorSkins;
 
-	/** Map definitions */
-	mapDef_t mds[MAX_MAPDEFS];
-	int numMDs;
 #ifndef HARD_LINKED_CGAME
 	void *cgameLibrary;
 #endif
