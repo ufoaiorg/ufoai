@@ -346,7 +346,7 @@ void GAME_CP_Drop (void)
 	CL_Disconnect();
 }
 
-void GAME_CP_Frame (void)
+void GAME_CP_Frame (float secondsSinceLastFrame)
 {
 	if (!CP_IsRunning())
 		return;
@@ -355,7 +355,7 @@ void GAME_CP_Frame (void)
 		return;
 
 	/* advance time */
-	CP_CampaignRun(ccs.curCampaign);
+	CP_CampaignRun(ccs.curCampaign, secondsSinceLastFrame);
 }
 
 const char* GAME_CP_GetTeamDef (void)

@@ -978,12 +978,10 @@ static void testCampaignRun (void)
 
 	BS_InitMarket(campaign);
 
-	cls.frametime = 1;
-
 	startDay = ccs.date.day;
 	for (i = 0; i < seconds; i++) {
 		ccs.gameTimeScale = 1;
-		CP_CampaignRun(campaign);
+		CP_CampaignRun(campaign, 1);
 	}
 	CU_ASSERT_EQUAL(ccs.date.day - startDay, days);
 
@@ -1071,8 +1069,6 @@ static void testCampaignDateHandling (void)
 
 	BS_InitMarket(campaign);
 
-	cls.frametime = 1;
-
 	/* one hour till month change */
 	ccs.date.day = 30;
 	ccs.date.sec = 23 * 60 * 60;
@@ -1080,7 +1076,7 @@ static void testCampaignDateHandling (void)
 	ccs.gameLapse = 7;
 	ccs.paid = qtrue;
 	CP_UpdateTime();
-	CP_CampaignRun(campaign);
+	CP_CampaignRun(campaign, 1);
 	CU_ASSERT_FALSE(ccs.paid);
 	CU_ASSERT_TRUE(CP_IsTimeStopped());
 

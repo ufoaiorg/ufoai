@@ -40,7 +40,7 @@ void GAME_CP_CharacterCvars(const character_t *chr);
 qboolean GAME_CP_TeamIsKnown(const teamDef_t *teamDef);
 void GAME_CP_Drop(void);
 struct dbuffer *GAME_CP_InitializeBattlescape(const chrList_t *team);
-void GAME_CP_Frame(void);
+void GAME_CP_Frame(float secondsSinceLastFrame);
 const char* GAME_CP_GetTeamDef(void);
 
 #endif

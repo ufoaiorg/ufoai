@@ -22,7 +22,7 @@ along with this program; if not, write to the Free Software
 Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 */
 
-#include "../../client.h" /* cls */
+#include "../../client.h" /* cls.nextUniqueCharacterNumber */
 #include "../../ui/ui_main.h"
 #include "../cgame.h"
 #include "cp_campaign.h"
@@ -514,10 +514,10 @@ static inline qboolean CP_IsBudgetDue (const dateLong_t *oldDate, const dateLong
  * @sa B_UpdateBaseData
  * @sa AIR_CampaignRun
  */
-void CP_CampaignRun (campaign_t *campaign)
+void CP_CampaignRun (campaign_t *campaign, float secondsSinceLastFrame)
 {
 	/* advance time */
-	ccs.timer += cls.frametime * ccs.gameTimeScale;
+	ccs.timer += secondsSinceLastFrame * ccs.gameTimeScale;
 
 	UP_GetUnreadMails();
 

@@ -584,7 +584,7 @@ void CP_ParseCampaignData(void);
 void CP_ReadCampaignData(const campaign_t *campaign);
 qboolean CP_IsRunning(void);
 
-void CP_CampaignRun(campaign_t *campaign);
+void CP_CampaignRun(campaign_t *campaign, float secondsSinceLastFrame);
 void CP_CheckLostCondition(const campaign_t *campaign);
 void CP_EndCampaign(qboolean won);
 

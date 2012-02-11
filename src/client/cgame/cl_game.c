@@ -1259,7 +1259,7 @@ void GAME_Frame (void)
 
 	list = GAME_GetCurrentType();
 	if (list && list->RunFrame != NULL)
-		list->RunFrame();
+		list->RunFrame(cls.frametime);
 }
 
 /**
