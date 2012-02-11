@@ -127,14 +127,13 @@ static void AIM_AircraftStart_f (void)
  */
 static int CL_EquipSoldierState (const aircraft_t * aircraft)
 {
-	if (!AIR_IsAircraftInBase(aircraft)) {
+	if (!AIR_IsAircraftInBase(aircraft))
 		return SOLDIER_EQUIP_MENU_BUTTON_NO_AIRCRAFT_IN_BASE;
-	} else {
-		if (E_CountHired(aircraft->homebase, EMPL_SOLDIER) <= 0)
-			return SOLDIER_EQUIP_MENU_BUTTON_NO_SOLDIES_AVAILABLE;
-		else
-			return SOLDIER_EQUIP_MENU_BUTTON_OK;
-	}
+
+	if (E_CountHired(aircraft->homebase, EMPL_SOLDIER) <= 0)
+		return SOLDIER_EQUIP_MENU_BUTTON_NO_SOLDIES_AVAILABLE;
+
+	return SOLDIER_EQUIP_MENU_BUTTON_OK;
 }
 
 /**
