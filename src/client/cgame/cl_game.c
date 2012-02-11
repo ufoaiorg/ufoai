@@ -471,7 +471,6 @@ static const cgame_import_t* GAME_GetImportData (const cgameType_t *t)
 		cgi->Com_ServerState = Com_ServerState;
 		cgi->Com_Printf = Com_Printf;
 		cgi->Com_DPrintf = Com_DPrintf;
-		cgi->Com_Parse = Com_Parse;
 		cgi->Com_Error = Com_Error;
 		cgi->Com_DropShipTypeToShortName = Com_DropShipTypeToShortName;
 		cgi->Com_UFOCrashedTypeToShortName = Com_UFOCrashedTypeToShortName;

@@ -214,7 +214,6 @@ typedef struct cgame_import_s {
 	void (IMPORT *Sys_Error) (const char *error, ...) __attribute__((noreturn, format(printf, 1, 2)));
 	int (IMPORT *Com_ServerState) (void);
 	void (IMPORT *Com_SetGameType) (void);
-	const char *(IMPORT *Com_Parse) (const char *data_p[]);
 	void (IMPORT *Com_Error) (int code, const char *fmt, ...) __attribute__((noreturn, format(printf, 2, 3)));
 	void (IMPORT *Com_Printf) (const char *msg, ...) __attribute__((format(printf, 1, 2)));
 	void (IMPORT *Com_DPrintf) (int level, const char *msg, ...) __attribute__((format(printf, 2, 3)));

@@ -25,6 +25,7 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 
 #include "../../cl_shared.h"
 #include "../cl_game.h"
+#include "../../../shared/parse.h"
 #include "../../ui/ui_data.h"
 #include "../../../shared/infostring.h"
 #include "mp_serverlist.h"
@@ -336,11 +337,11 @@ void CL_ParseServerInfoMessage (struct dbuffer *msg, const char *hostname)
 		userInfoText[0] = '\0';
 		do {
 			int team;
-			token = cgi->Com_Parse(&users);
+			token = Com_Parse(&users);
 			if (!users)
 				break;
 			team = atoi(token);
-			token = cgi->Com_Parse(&users);
+			token = Com_Parse(&users);
 			if (!users)
 				break;
 			Com_sprintf(userInfoText + strlen(userInfoText), sizeof(userInfoText) - strlen(userInfoText), "%s\t%i\n", token, team);
@@ -387,7 +388,7 @@ static void CL_QueryMasterServerThread (const char *responseBuf)
 	serverListBuf = responseBuf;
 
 	Com_DPrintf(DEBUG_CLIENT, "masterserver response: %s\n", serverListBuf);
-	token = cgi->Com_Parse(&serverListBuf);
+	token = Com_Parse(&serverListBuf);
 
 	num = atoi(token);
 	if (num >= MAX_SERVERLIST) {
@@ -396,14 +397,14 @@ static void CL_QueryMasterServerThread (const char *responseBuf)
 	}
 	for (i = 0; i < num; i++) {
 		/* host */
-		token = cgi->Com_Parse(&serverListBuf);
+		token = Com_Parse(&serverListBuf);
 		if (!*token || !serverListBuf) {
 			cgi->Com_Printf("Could not finish the masterserver response parsing\n");
 			break;
 		}
 		Q_strncpyz(node, token, sizeof(node));
 		/* port */
-		token = cgi->Com_Parse(&serverListBuf);
+		token = Com_Parse(&serverListBuf);
 		if (!*token || !serverListBuf) {
 			cgi->Com_Printf("Could not finish the masterserver response parsing\n");
 			break;
