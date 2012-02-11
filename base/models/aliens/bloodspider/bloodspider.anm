@@ -6,14 +6,14 @@
 
 // name				start	end	fps
 
-walk0				0	32	22
-walk1				0	32	22
-walk2				0	32	22
-walk3				0	32	22
-cwalk0				0	32	22
-cwalk1				0	32	22
-cwalk2				0	32	22
-cwalk3				0	32	22
+walk0				0	32	50
+walk1				0	32	50
+walk2				0	32	50
+walk3				0	32	50
+cwalk0				0	32	50
+cwalk1				0	32	50
+cwalk2				0	32	50
+cwalk3				0	32	50
 
 panic0				33	34	1
 
