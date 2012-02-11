@@ -47,6 +47,10 @@ class PrefPage : public PreferencesPage
 			return m_dialog.addEntry(m_vbox, name, registryKey);
 		}
 
+		GtkWidget* appendTextureEntry(const std::string& name, const std::string& registryKey) {
+			return m_dialog.addTextureEntry(m_vbox, name, registryKey);
+		}
+
 		/* greebo: greebo: This adds a horizontal slider to the internally referenced VBox and connects
 		 * it to the given registryKey. */
 		void appendSlider (const std::string& name, const std::string& registryKey, bool draw_value, double value,

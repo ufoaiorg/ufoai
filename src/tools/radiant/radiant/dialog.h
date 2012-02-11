@@ -152,6 +152,7 @@ class Dialog
 		// greebo: Adds an GtkSpinner with the given caption <name>, bounds <lower> and <upper> and connects it to the <registryKey>
 		GtkWidget* addSpinner (GtkWidget* vbox, const std::string& name, const std::string& registryKey, double lower,
 				double upper, int fraction);
+		GtkWidget* addTextureEntry (GtkWidget* vbox, const std::string& name, const std::string& registryKey);
 		// greebo: Adds a PathEntry to choose files or directories (depending on the given boolean)
 		GtkWidget* addPathEntry (GtkWidget* vbox, const std::string& name, const std::string& registryKey,
 				bool browseDirectories);

@@ -6,6 +6,7 @@
 #include "iselection.h"
 #include "preferencesystem.h"
 #include "stringio.h"
+#include "shaderlib.h"
 
 #include "../ui/mainframe/mainframe.h"
 #include "../brush/csg/csg.h"
@@ -17,7 +18,8 @@ const std::string RKEY_CLIPPER_USE_CAULK = "user/ui/clipper/useCaulk";
 }
 
 BrushClipper::BrushClipper () :
-	_movingClip(NULL), _switch(false), _useCaulk(false), _caulkShader("textures/tex_common/nodraw")
+		_movingClip(NULL), _switch(false), _useCaulk(GlobalRegistry().getBool(RKEY_CLIPPER_USE_CAULK)), _caulkShader(
+				GlobalRegistry().get(RKEY_CLIPPER_CAULK_SHADER))
 {
 	GlobalRegistry().addKeyObserver(this, RKEY_CLIPPER_USE_CAULK);
 	GlobalRegistry().addKeyObserver(this, RKEY_CLIPPER_CAULK_SHADER);
@@ -35,7 +37,7 @@ BrushClipper::BrushClipper () :
 void BrushClipper::keyChanged (const std::string& changedKey, const std::string& newValue)
 {
 	_caulkShader = GlobalRegistry().get(RKEY_CLIPPER_CAULK_SHADER);
-	_useCaulk = (GlobalRegistry().get(RKEY_CLIPPER_USE_CAULK) == "1");
+	_useCaulk = GlobalRegistry().getBool(RKEY_CLIPPER_USE_CAULK);
 }
 
 void BrushClipper::constructPreferencePage (PreferenceGroup& group)
@@ -43,7 +45,7 @@ void BrushClipper::constructPreferencePage (PreferenceGroup& group)
 	PreferencesPage* page = group.createPage(_("Clipper"), _("Clipper Tool Settings"));
 
 	page->appendCheckBox("", _("Clipper tool uses caulk"), RKEY_CLIPPER_USE_CAULK);
-	page->appendEntry(_("Caulk shader name"), RKEY_CLIPPER_CAULK_SHADER);
+	page->appendTextureEntry(_("Caulk texture name"), RKEY_CLIPPER_CAULK_SHADER);
 }
 
 EViewType BrushClipper::getViewType () const
@@ -78,7 +80,7 @@ void BrushClipper::setMovingClip (ClipPoint* clipPoint)
 
 const std::string BrushClipper::getShader () const
 {
-	return (_useCaulk) ? _caulkShader : GlobalTextureBrowser().getSelectedShader();
+	return (_useCaulk) ? GlobalTexturePrefix_get() + _caulkShader : GlobalTextureBrowser().getSelectedShader();
 }
 
 // greebo: Cycles through the three possible clip points and returns the nearest to point (for selectiontest)

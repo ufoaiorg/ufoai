@@ -41,6 +41,7 @@
 #include "gtkutil/entry.h"
 #include "gtkutil/image.h"
 #include "gtkutil/filechooser.h"
+#include "textureentry.h"
 
 #include "os/path.h"
 
@@ -48,7 +49,7 @@ GtkEntry* DialogEntry_new ()
 {
 	GtkEntry* entry = GTK_ENTRY(gtk_entry_new());
 	gtk_widget_show(GTK_WIDGET(entry));
-	widget_set_size(GTK_WIDGET(entry), 64, 0);
+	widget_set_size(GTK_WIDGET(entry), 200, 0);
 	return entry;
 }
 
@@ -280,6 +281,18 @@ GtkWidget* Dialog::addSpinner (GtkWidget* vbox, const std::string& name, const s
 	// Connect the registry key to the newly created input field
 	_registryConnector.connectGtkObject(GTK_OBJECT(row.m_spin), registryKey);
 
+	DialogVBox_packRow(GTK_VBOX(vbox), row.m_row);
+	return row.m_row;
+}
+
+GtkWidget* Dialog::addTextureEntry (GtkWidget* vbox, const std::string& name, const std::string& registryKey)
+{
+	// Create a new row containing an input field
+	DialogEntryRow row(DialogEntryRow_new(name));
+
+	// Connect the registry key to the newly created input field
+	_registryConnector.connectGtkObject(GTK_OBJECT(row.m_entry), registryKey);
+	GlobalTextureEntryCompletion::instance().connect(GTK_ENTRY(row.m_entry));
 	DialogVBox_packRow(GTK_VBOX(vbox), row.m_row);
 	return row.m_row;
 }
