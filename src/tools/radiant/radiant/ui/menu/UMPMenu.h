@@ -1,7 +1,7 @@
 #ifndef UMPMENU_H_
 #define UMPMENU_H_
 
-#include <glib/gtypes.h>
+#include <glib.h>
 
 typedef struct _GtkMenuItem GtkMenuItem;
 

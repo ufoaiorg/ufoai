@@ -27,7 +27,7 @@
 #if !defined(INCLUDED_OS_DIR_H)
 #define INCLUDED_OS_DIR_H
 
-#include <glib/gdir.h>
+#include <glib.h>
 
 typedef GDir Directory;
 
