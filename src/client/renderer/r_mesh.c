@@ -172,6 +172,7 @@ void R_GetTags (const model_t* mod, const char* tagName, int currentFrame, int o
 		*current = NULL;
 		*old = NULL;
 		Com_Printf("Could not get tags for tag %s of model %s\n", tagName, mod->name);
+		return;
 	}
 	*current = R_GetTagOrientByFrame(mod, index, currentFrame);
 	*old = R_GetTagOrientByFrame(mod, index, oldFrame);
