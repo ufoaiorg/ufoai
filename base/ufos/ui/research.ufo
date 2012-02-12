@@ -13,7 +13,7 @@ component panel cmpResearchItem {
 		pos			"0 0"
 		size		"16 16"
 		padding		0
-		onClick { }
+		onClick		{ cmd "mn_show_ufopedia;" }
 	}
 
 	string txt_item	{
