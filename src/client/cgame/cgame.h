@@ -258,8 +258,6 @@ typedef struct cgame_import_s {
 	void (IMPORT *INV_EquipActorRobot) (inventory_t* const inv, const objDef_t* weapon);
 	qboolean (IMPORT *INV_RemoveFromInventory) (inventory_t* const i, const invDef_t * container, invList_t *fItem);
 
-	const objDef_t *(IMPORT *INVSH_GetItemByID) (const char *id);
-	const objDef_t *(IMPORT *INVSH_GetItemByIDX) (int index);
 	void (IMPORT *INV_ItemDescription) (const objDef_t *od);
 } cgame_import_t;
 
