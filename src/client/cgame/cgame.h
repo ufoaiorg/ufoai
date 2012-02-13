@@ -105,7 +105,7 @@ typedef struct cgame_import_s {
 	void (IMPORT *HUD_InitUI) (const char *optionWindowName, qboolean popAll);
 	void (IMPORT *HUD_DisplayMessage) (const char *text);
 	struct uiNode_s *(IMPORT *UI_GetOption) (int dataId);
-	void (IMPORT *UI_SortOptions) (uiNode_t **first);
+	void (IMPORT *UI_SortOptions) (struct uiNode_s **first);
 
 	void (IMPORT *LIST_AddString) (linkedList_t** listDest, const char* data);
 	const linkedList_t* (IMPORT *LIST_ContainsString) (const linkedList_t* list, const char* string);
