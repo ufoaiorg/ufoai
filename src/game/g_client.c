@@ -621,7 +621,7 @@ qboolean G_ClientUseEdict (const player_t *player, edict_t *actor, edict_t *edic
 }
 
 /**
- * @brief The client sent us a message that he did something. We now execute the related fucntion(s) adn notify him if neccessary.
+ * @brief The client sent us a message that he did something. We now execute the related function(s) and notify him if necessary.
  * @param[in] player The player to execute the action for (the actor belongs to this player)
  * @note a client action will also send the server side edict number to determine the actor
  */
