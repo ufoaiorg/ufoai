@@ -10,6 +10,7 @@
 #include "../client/client.h"
 #include "../client/renderer/r_state.h" /* r_state */
 #include "../client/ui/ui_main.h"
+#include "../client/ui/ui_behaviour.h"
 #include "../client/cgame/campaign/cp_campaign.h"
 #include "../client/cgame/campaign/cp_map.h"
 #include "../client/cgame/campaign/cp_hospital.h"
