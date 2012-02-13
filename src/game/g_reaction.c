@@ -621,7 +621,7 @@ static qboolean G_ReactionFireCheckExecution (const edict_t *target)
 			if (shooter->reactionTarget) {
 				const int reactionTargetTU = shooter->reactionTarget->TU;
 				const int reactionTU = shooter->reactionTUs;
-				const qboolean timeout = g_reaction_fair->integer == 0 || reactionTargetTU < reactionTU;
+				const qboolean timeout = reactionTargetTU < reactionTU;
 				/* check whether target has changed (i.e. the player is making a move with a
 				 * different entity) or whether target is out of time. */
 				if (shooter->reactionTarget != target || timeout)

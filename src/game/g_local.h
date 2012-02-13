@@ -294,7 +294,6 @@ extern cvar_t *m_rage_stop;
 extern cvar_t *m_panic_stop;
 
 extern cvar_t *g_endlessaliens;
-extern cvar_t *g_reaction_fair;
 extern cvar_t *g_ailua;
 extern cvar_t *g_aidebug;
 extern cvar_t *g_drawtraces;
