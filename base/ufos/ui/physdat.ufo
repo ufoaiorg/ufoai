@@ -1,6 +1,6 @@
-// ==================
-// PHYSDATA BASE MENU
-// ==================
+// ============================
+// BATTLESCAPE PHYSDATA WINDOW
+// ============================
 
 component cmpDefNamedTbar cmpPhysNamedTbar {
 	/** @todo Remove me */
@@ -235,8 +235,8 @@ window physdata
 		pos		"10 10"
 		size	"492 492"
 		OnRClick { cmd "ui_pop;" }
-		onWheelUp	{ cmd "actor_next;"}
-		onWheelDown	{ cmd "actor_prev;"}
+		onWheelUp	{ cmd "actor_next;" }
+		onWheelDown	{ cmd "actor_prev;" }
 	}
 
 	// ==================
@@ -343,6 +343,7 @@ window physdata
 
 	func onWindowClosed {
 		delete *cvar:physdat_window_open
+		// these cvars exist in campaign mode only
 		if ( *cvar:mn_base_count > 0 ) {
 			delete *cvar:mn_missions_label_string
 			delete *cvar:mn_kills_label_string
@@ -356,19 +357,6 @@ window physdata
 
 window hudphysdat extends physdata
 {
-	zone bt_physdata
-	{
-		pos			"983 266"
-		size		"36 75"
-		onClick		{ cmd "ui_pop;" }
-	}
-
-	zone bt_inventory
-	{
-		pos			"983 376"
-		size		"36 75"
-		onClick		{ cmd "ui_pop;" }
-	}
 }
 
 // ==================
@@ -377,12 +365,4 @@ window hudphysdat extends physdata
 
 window ahudphysdat extends physdata
 {
-	zone zone_clickright
-	{
-		tooltip		"_Inventory and physical stats"
-		pos			"878 84"
-		size		"130 265"
-		onClick		{ cmd "ui_pop;" }
-		onRClick		{ cmd "ui_pop;" }
-	}
 }

@@ -1,6 +1,6 @@
-// ==================
-// INVENTORY BASE MENU
-// ==================
+// =============================
+// BATTLESCAPE INVENTORY WINDOW
+// =============================
 
 window inventory
 {
@@ -166,36 +166,20 @@ window inventory
 		size "76 25"
 	}
 
-	string rank_shadow
+	string rank_and_name_shadow
 	{
-		string	*cvar:mn_chrrankprefix
+		string	*cvar:mn_rank_and_name
 		pos		"27 26"
 		size	"260 20"
 		color	"0 0 0 1"
 		contentalign	ALIGN_CL
 	}
-	string rank
+	string rank_and_name
 	{
-		string	*cvar:mn_chrrankprefix
+		string	*cvar:mn_rank_and_name
 		pos		"26 25"
 		size	"260 20"
 		contentalign	ALIGN_CL
-	}
-
-	string name_shadow
-	{
-		string	*cvar:mn_name
-		pos		"27 26"
-		size	"260 20"
-		color	"0 0 0 1"
-		contentalign	ALIGN_CR
-	}
-	string name
-	{
-		string	*cvar:mn_name
-		pos		"26 25"
-		size	"260 20"
-		contentalign	ALIGN_CR
 	}
 
 	// ==================
@@ -230,8 +214,8 @@ window inventory
 		pos		"10 10"
 		size	"492 492"
 		OnRClick { cmd "ui_pop;" }
-		onWheelUp	{ cmd "actor_next;"}
-		onWheelDown	{ cmd "actor_prev;"}
+		onWheelUp	{ cmd "actor_next;" }
+		onWheelDown	{ cmd "actor_prev;" }
 	}
 
 	// ==================================================
@@ -264,6 +248,12 @@ window inventory
 
 	func onWindowOpened {
 		*cvar:inventory_window_open = 1
+		// check if we are in campaign mode or not (the rank is just available in campaign)
+		if ( *cvar:mn_base_count > 0 ) {
+			*cvar:mn_rank_and_name = "<cvar:mn_chrrankprefix><cvar:mn_name>"
+		} else {
+			*cvar:mn_rank_and_name = "<cvar:mn_name>"
+		}
 		// the ability to hide the deco is needed for the MiniHUD only
 		if ( *cvar:mn_minihud_enabled == 1 ) {
 			if ( *cvar:mn_minihud_deco == 0 ) { *node:root.bar_inventory_deco@invis = true }
@@ -273,8 +263,27 @@ window inventory
 		if ( *cvar:physdat_window_open == 1 ) { cmd "ui_close ahudphysdat;" }
 	}
 
+	// here both cvarlisteners are needed to correctly update mn_rank_and_name
+	cvarlistener mn_name {
+		// check if we are in campaign mode or not (the rank is just available in campaign)
+		if ( *cvar:mn_base_count > 0 ) {
+			*cvar:mn_rank_and_name = "<cvar:mn_chrrankprefix><cvar:mn_name>"
+		} else {
+			*cvar:mn_rank_and_name = "<cvar:mn_name>"
+		}
+	}
+	cvarlistener mn_chrrankprefix {
+		// check if we are in campaign mode or not (the rank is just available in campaign)
+		if ( *cvar:mn_base_count > 0 ) {
+			*cvar:mn_rank_and_name = "<cvar:mn_chrrankprefix><cvar:mn_name>"
+		} else {
+			*cvar:mn_rank_and_name = "<cvar:mn_name>"
+		}
+	}
+
 	func onWindowClosed {
 		delete *cvar:inventory_window_open
+		delete *cvar:mn_rank_and_name
 	}
 }
 
@@ -284,19 +293,6 @@ window inventory
 
 window hudinv extends inventory
 {
-	zone bt_physdata
-	{
-		pos		"983 266"
-		size	"36 75"
-		onClick	{ call *node:root.hideinventory }
-	}
-
-	zone bt_inventory
-	{
-		pos		"983 376"
-		size	"36 75"
-		onClick	{ call *node:root.hideinventory }
-	}
 }
 
 // ==================
@@ -305,12 +301,4 @@ window hudinv extends inventory
 
 window ahudinv extends inventory
 {
-	zone zone_clickright
-	{
-		tooltip "_Inventory and physical stats"
-		pos     "878 84"
-		size    "130 265"
-		onClick   { call *node:root.hideinventory }
-		onRClick  { call *node:root.hideinventory }
-	}
 }
