@@ -728,8 +728,11 @@ void G_ReactionFireOnEndTurn (void)
 	while ((ent = G_EdictsGetNextLivingActor(ent))) {
 		if (!ent->reactionTarget)
 			continue;
+		G_ReactionFireTargetsRemove(ent, ent->reactionTarget);
+		ent->reactionTarget = NULL;
 	/*	assert("I bet this never happens" == NULL);	*/
-		G_ReactionFireTryToShoot(ent, ent->reactionTarget);
+	/* we explicitely do nothing at end of turn
+		G_ReactionFireTryToShoot(ent, ent->reactionTarget); */
 	}
 }
 
