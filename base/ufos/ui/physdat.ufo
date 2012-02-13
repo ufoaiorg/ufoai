@@ -331,6 +331,9 @@ window physdata
 		if ( *cvar:mn_base_count > 0 ) {
 			*cvar:mn_missions_label_string = "_Missions Performed:"
 			*cvar:mn_kills_label_string = "_Enemies Killed:"
+		} else {
+			if ( exists *cvar:mn_chrmis ) { delete *cvar:mn_chrmis }
+			if ( exists *cvar:mn_chrkillalien ) { delete *cvar:mn_chrkillalien }
 		}
 		// the ability to hide the deco is needed for the MiniHUD only
 		if ( *cvar:mn_minihud_enabled == 1 ) {
