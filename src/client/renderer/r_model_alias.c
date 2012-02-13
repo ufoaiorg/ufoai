@@ -311,7 +311,9 @@ void R_ModCalcUniqueNormalsAndTangents (mAliasMesh_t *mesh, int nFrames, float s
 	int indRemap[MAX_ALIAS_VERTS];
 	int sharedTris[MAX_ALIAS_VERTS];
 	int numVerts = 0;
-
+#ifdef ANDROID
+	smoothness = 0.001f; /* This saves around 25 Mb RAM on Android in battlescape, at the expense of uglier models */
+#endif
 	if (numIndexes >= MAX_ALIAS_VERTS)
 		Com_Error(ERR_DROP, "model %s has too many tris", mesh->name);
 
