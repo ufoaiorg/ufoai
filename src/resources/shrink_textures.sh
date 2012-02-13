@@ -44,5 +44,28 @@ find . -name "*.png" -o -name "*.jpg" -o -name "*.tga" | while read IMG; do
 		convert "$IMG" -filter Cubic -resize $PERCENT% "$OUTDIR/$IMG-$$"
 		mv -f "$OUTDIR/$IMG-$$" "$OUTDIR/$IMG"
 		echo "`echo $IMG | sed 's@[.]png\|[.]jpg\|[.]tga@@' | sed 's@./@@'`" $W $H >> "$OUTDIR/downsampledimages.txt"
+	else
+		NPOTH=true
+		NPOTW=true
+		POTW=$W
+		POTH=$H
+		for Q in 16384 8192 4096 2048 1024 512 256 128 64 32 16 8 4 2 1; do
+			if [ "$H" = "$Q" ]; then
+				NPOTH=false
+			fi
+			if [ "$W" = "$Q" ]; then
+				NPOTW=false
+			fi
+			if [ "$H" -le "$Q" ]; then
+				POTH=$Q
+			fi
+			if [ "$W" -le "$Q" ]; then
+				POTW=$Q
+			fi
+		done
+		if $NPOTH || $NPOTW; then
+			echo $IMG $W x $H - resizing to $POTW x $POTH to make it POT, because there is a bug in sources I could not fix, when drawing NPOT images in Android
+			convert "$IMG" -filter Cubic -resize ${POTW}x${POTH}\! "$OUTDIR/$IMG-$$"
+		fi
 	fi
 done
