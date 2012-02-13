@@ -449,6 +449,7 @@ static const cgame_import_t* GAME_GetImportData (const cgameType_t *t)
 		cgi->UI_ResetData = UI_ResetData;
 		cgi->UI_UpdateInvisOptions = UI_UpdateInvisOptions;
 		cgi->UI_GetOption = UI_GetOption;
+		cgi->UI_SortOptions = UI_SortOptions;
 		/*gi->UI_TextNodeSelectLine = UI_TextNodeSelectLine;*/
 
 		cgi->NET_StreamSetCallback = NET_StreamSetCallback;
@@ -476,6 +477,10 @@ static const cgame_import_t* GAME_GetImportData (const cgameType_t *t)
 		cgi->Com_UFOCrashedTypeToShortName = Com_UFOCrashedTypeToShortName;
 		cgi->Com_UFOTypeToShortName = Com_UFOTypeToShortName;
 		cgi->Com_GetRandomMapAssemblyNameForCraft = Com_GetRandomMapAssemblyNameForCraft;
+		cgi->Com_RegisterConstList = Com_RegisterConstList;
+		cgi->Com_UnregisterConstList = Com_UnregisterConstList;
+		cgi->Com_GetConstVariable = Com_GetConstVariable;
+		cgi->Com_GetConstIntFromNamespace = Com_GetConstIntFromNamespace;
 		cgi->Com_SetGameType = Com_SetGameType;
 
 		cgi->SV_ShutdownWhenEmpty = SV_ShutdownWhenEmpty;
@@ -528,6 +533,10 @@ static const cgame_import_t* GAME_GetImportData (const cgameType_t *t)
 		cgi->INV_EquipActorRobot = GAME_EquipActorRobot;
 		cgi->INV_RemoveFromInventory = GAME_RemoveFromInventory;
 
+		cgi->INV_ItemDescription = INV_ItemDescription;
+		cgi->INVSH_GetItemByID = INVSH_GetItemByID;
+		cgi->INVSH_GetItemByIDX = INVSH_GetItemByIDX;
+
 		cgi->Sys_Error = Sys_Error;
 
 		cgi->HUD_InitUI = HUD_InitUI;
@@ -553,6 +562,21 @@ static const cgame_import_t* GAME_GetImportData (const cgameType_t *t)
 		cgi->XML_AddShortValue = XML_AddShortValue;
 		cgi->XML_AddString = XML_AddString;
 		cgi->XML_AddStringValue = XML_AddStringValue;
+
+		cgi->XML_GetBool = XML_GetBool;
+		cgi->XML_GetInt = XML_GetInt;
+		cgi->XML_GetShort = XML_GetShort;
+		cgi->XML_GetLong = XML_GetLong;
+		cgi->XML_GetString = XML_GetString;
+		cgi->XML_GetFloat = XML_GetFloat;
+		cgi->XML_GetDouble = XML_GetDouble;
+		cgi->XML_GetPos2 = XML_GetPos2;
+		cgi->XML_GetNextPos2 = XML_GetNextPos2;
+		cgi->XML_GetPos3 = XML_GetPos3;
+		cgi->XML_GetNextPos3 = XML_GetNextPos3;
+		cgi->XML_GetDate = XML_GetDate;
+		cgi->XML_GetNode = XML_GetNode;
+		cgi->XML_GetNextNode = XML_GetNextNode;
 	}
 
 	cgi->cgameType = t;
