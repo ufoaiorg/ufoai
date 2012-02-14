@@ -155,7 +155,7 @@ static void R_GetDownsampledImageDimensions(const char * name, int *width, int *
 	const char * search;
 	int w, h;
 
-	if( !r_downsampledImages ) {
+	if (!r_downsampledImages) {
 		byte *buf;
 		int len;
 
@@ -171,24 +171,24 @@ static void R_GetDownsampledImageDimensions(const char * name, int *width, int *
 		}
 	}
 
-	search = strstr(r_downsampledImages, name);
-	if( !search )
-		return;
-	if( search != r_downsampledImages && (search - 1)[0] != '\n' )
-		return;
-	search += strlen(name);
-	if( search[0] != ' ' )
-		return;
-	search++;
-	w = atoi(search);
-	search = strstr(search, " ");
-	if( !search )
-		return;
-	search++;
-	h = atoi(search);
-	if( w && h ) {
-		*width = w;
-		*height = h;
+	for (search = strstr(r_downsampledImages, name); search; search = strstr(search + 1, name)) {
+		if (search != r_downsampledImages && (search - 1)[0] != '\n')
+			continue;
+		search += strlen(name);
+		if (search[0] != ' ')
+			continue;
+		search++;
+		w = atoi(search);
+		search = strchr(search, ' ');
+		if (!search)
+			continue;
+		search++;
+		h = atoi(search);
+		if (w && h) {
+			*width = w;
+			*height = h;
+			return;
+		}
 	}
 }
 
