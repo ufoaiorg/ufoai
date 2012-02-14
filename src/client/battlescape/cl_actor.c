@@ -42,6 +42,7 @@ static cvar_t *confirm_actions;
 static cvar_t *cl_autostand;
 static cvar_t *cl_showactors;
 static cvar_t *cl_reactionleftover;
+pathing_t LE_ActorPathMap;
 
 /* public */
 le_t *selActor;
@@ -344,7 +345,6 @@ void CL_ActorAddToTeamList (le_t * le)
 			Com_Printf("Too many actors on the teamlist!\n");
 			return;
 		}
-		le->pathMap = (pathing_t *)Mem_PoolAlloc(sizeof(*le->pathMap), cl_genericPool, 0);
 		cl.teamList[cl.numTeamList] = le;
 		UI_ExecuteConfunc("hudenable %i", cl.numTeamList);
 		cl.numTeamList++;
@@ -357,9 +357,6 @@ void CL_ActorAddToTeamList (le_t * le)
 
 void CL_ActorCleanup (le_t *le)
 {
-	if (le->pathMap)
-		Mem_Free(le->pathMap);
-	le->pathMap = NULL;
 	cls.i.DestroyInventory(&cls.i, &le->i);
 }
 
@@ -680,7 +677,7 @@ void CL_ActorConditionalMoveCalc (le_t *le)
 	CL_BuildForbiddenList();
 	if (le && le->selected) {
 		const byte crouchingState = LE_IsCrouched(le) ? 1 : 0;
-		Grid_MoveCalc(cl.mapData->map, le->fieldSize, le->pathMap, le->pos, crouchingState, MAX_ROUTE, forbiddenList, forbiddenListLength);
+		Grid_MoveCalc(cl.mapData->map, le->fieldSize, &LE_ActorPathMap, le->pos, crouchingState, MAX_ROUTE, forbiddenList, forbiddenListLength);
 		CL_ActorResetMoveLength(le);
 	}
 }
@@ -718,7 +715,7 @@ int CL_ActorCheckAction (const le_t *le)
 static byte CL_ActorMoveLength (const le_t *le, const pos3_t to)
 {
 	const byte crouchingState = LE_IsCrouched(le) ? 1 : 0;
-	const byte length = Grid_MoveLength(le->pathMap, to, crouchingState, qfalse);
+	const byte length = Grid_MoveLength(&LE_ActorPathMap, to, crouchingState, qfalse);
 	return length;
 }
 
@@ -760,7 +757,7 @@ static qboolean CL_ActorTraceMove (const pos3_t to)
 
 	Com_DPrintf(DEBUG_PATHING, "Starting pos: (%i, %i, %i).\n", pos[0], pos[1], pos[2]);
 
-	while ((dvec = Grid_MoveNext(selActor->pathMap, pos, crouchingState)) != ROUTING_UNREACHABLE) {
+	while ((dvec = Grid_MoveNext(&LE_ActorPathMap, pos, crouchingState)) != ROUTING_UNREACHABLE) {
 		length = CL_ActorMoveLength(selActor, pos);
 		PosSubDV(pos, crouchingState, dvec); /* We are going backwards to the origin. */
 		Com_DPrintf(DEBUG_PATHING, "Next pos: (%i, %i, %i, %i) [%i].\n", pos[0], pos[1], pos[2], crouchingState, dvec);
@@ -794,7 +791,7 @@ static void CL_ActorMaximumMove (const pos3_t to, const le_t *le, pos3_t pos)
 
 	VectorCopy(to, pos);
 
-	while ((dvec = Grid_MoveNext(le->pathMap, pos, crouchingState)) != ROUTING_UNREACHABLE) {
+	while ((dvec = Grid_MoveNext(&LE_ActorPathMap, pos, crouchingState)) != ROUTING_UNREACHABLE) {
 		const byte length2 = CL_ActorMoveLength(le, pos);
 		if (length2 <= tus)
 			return;
@@ -1974,7 +1971,7 @@ static qboolean CL_AddPathingBox (pos3_t pos, qboolean addUnreachableCells)
 	int base; /* The floor relative to this cell */
 
 	const byte crouchingState = LE_IsCrouched(selActor) ? 1 : 0;
-	const int TUneed = Grid_MoveLength(selActor->pathMap, pos, crouchingState, qfalse);
+	const int TUneed = Grid_MoveLength(&LE_ActorPathMap, pos, crouchingState, qfalse);
 	const int TUhave = CL_ActorUsableTUs(selActor);
 	if (!addUnreachableCells && TUhave < TUneed)
 		return qfalse;
@@ -2137,7 +2134,7 @@ static void CL_DumpMoveMark_f (void)
 	developer->integer |= DEBUG_PATHING;
 
 	CL_BuildForbiddenList();
-	Grid_MoveCalc(cl.mapData->map, ACTOR_GET_FIELDSIZE(selActor), selActor->pathMap, truePos, crouchingState, MAX_ROUTE, forbiddenList, forbiddenListLength);
+	Grid_MoveCalc(cl.mapData->map, ACTOR_GET_FIELDSIZE(selActor), &LE_ActorPathMap, truePos, crouchingState, MAX_ROUTE, forbiddenList, forbiddenListLength);
 
 	developer->integer ^= DEBUG_PATHING;
 
@@ -2165,11 +2162,11 @@ static void CL_DumpTUs_f (void)
 	for (y = max(0, pos[1] - 8); y <= min(PATHFINDING_WIDTH, pos[1] + 8); y++) {
 		for (x = max(0, pos[0] - 8); x <= min(PATHFINDING_WIDTH, pos[0] + 8); x++) {
 			VectorSet(loc, x, y, pos[2]);
-			Com_Printf("%3i ", Grid_MoveLength(selActor->pathMap, loc, crouchingState, qfalse));
+			Com_Printf("%3i ", Grid_MoveLength(&LE_ActorPathMap, loc, crouchingState, qfalse));
 		}
 		Com_Printf("\n");
 	}
-	Com_Printf("TUs at (%i, %i, %i) = %i\n", pos[0], pos[1], pos[2], Grid_MoveLength(selActor->pathMap, pos, crouchingState, qfalse));
+	Com_Printf("TUs at (%i, %i, %i) = %i\n", pos[0], pos[1], pos[2], Grid_MoveLength(&LE_ActorPathMap, pos, crouchingState, qfalse));
 }
 
 /**

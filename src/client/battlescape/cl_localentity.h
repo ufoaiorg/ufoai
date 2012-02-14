@@ -141,15 +141,15 @@ typedef struct le_s {
 	int gender;	/**< @sa @c nametypes_t */
 	const fireDef_t *fd;	/**< in case this is a projectile or an actor */
 
-	pathing_t *pathMap;	/**< This is where the data for TUS used to move and actor
-								 * locations go - only available for human controlled actors */
-
 	/** is called before adding a le to scene */
 	localEntitiyAddFunc_t addFunc;
 
 	qboolean locked;	/**< true if there is an event going on involving
 						 * this le_t.  Used to limit to one event per le_t struct at any time. */
 } le_t;
+
+extern pathing_t LE_ActorPathMap;	/**< This is where the data for TUS used to move and actor
+									 * locations go - only available for human controlled actors */
 
 #define MAX_LOCALMODELS		1024
 
