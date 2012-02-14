@@ -22,7 +22,7 @@ along with this program; if not, write to the Free Software
 Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 */
 
-#include "../../client.h" /* cls */
+#include "../../cl_shared.h"
 #include "../../ui/ui_main.h"
 #include "../cgame.h"
 #include "cp_campaign.h"
@@ -514,10 +514,11 @@ static inline qboolean CP_IsBudgetDue (const dateLong_t *oldDate, const dateLong
  * @sa B_UpdateBaseData
  * @sa AIR_CampaignRun
  */
-void CP_CampaignRun (campaign_t *campaign)
+void CP_CampaignRun (campaign_t *campaign, float secondsSinceLastFrame)
 {
 	/* advance time */
-	ccs.timer += cls.frametime * ccs.gameTimeScale;
+	ccs.frametime = secondsSinceLastFrame;
+	ccs.timer += secondsSinceLastFrame * ccs.gameTimeScale;
 
 	UP_GetUnreadMails();
 
@@ -717,7 +718,7 @@ qboolean CP_LoadXML (xmlNode_t *parent)
 	CP_UpdateCredits(XML_GetLong(campaignNode, SAVE_CAMPAIGN_CREDITS, 0));
 	ccs.paid = XML_GetBool(campaignNode, SAVE_CAMPAIGN_PAID, qfalse);
 
-	cls.nextUniqueCharacterNumber = XML_GetInt(campaignNode, SAVE_CAMPAIGN_NEXTUNIQUECHARACTERNUMBER, 0);
+	cgi->SetNextUniqueCharacterNumber(XML_GetInt(campaignNode, SAVE_CAMPAIGN_NEXTUNIQUECHARACTERNUMBER, 0));
 
 	XML_GetDate(campaignNode, SAVE_CAMPAIGN_DATE, &ccs.date.day, &ccs.date.sec);
 
@@ -786,7 +787,7 @@ qboolean CP_SaveXML (xmlNode_t *parent)
 	XML_AddDate(campaign, SAVE_CAMPAIGN_DATE, ccs.date.day, ccs.date.sec);
 	XML_AddLong(campaign, SAVE_CAMPAIGN_CREDITS, ccs.credits);
 	XML_AddShort(campaign, SAVE_CAMPAIGN_PAID, ccs.paid);
-	XML_AddShortValue(campaign, SAVE_CAMPAIGN_NEXTUNIQUECHARACTERNUMBER, cls.nextUniqueCharacterNumber);
+	XML_AddShortValue(campaign, SAVE_CAMPAIGN_NEXTUNIQUECHARACTERNUMBER, cgi->GetNextUniqueCharacterNumber());
 
 	XML_AddIntValue(campaign, SAVE_CAMPAIGN_CIVILIANSKILLED, ccs.civiliansKilled);
 	XML_AddIntValue(campaign, SAVE_CAMPAIGN_ALIENSKILLED, ccs.aliensKilled);
@@ -853,7 +854,7 @@ void CP_StartSelectedMission (void)
 
 	/* if we retry a mission we have to drop from the current game before */
 	SV_Shutdown("Server quit.", qfalse);
-	CL_Disconnect();
+	cgi->CL_Disconnect();
 
 	CP_CreateBattleParameters(mis, battleParam, aircraft);
 	CP_SetMissionVars(mis, battleParam);

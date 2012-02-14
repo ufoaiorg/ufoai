@@ -22,7 +22,7 @@ along with this program; if not, write to the Free Software
 Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 */
 
-#include "../../client.h"
+#include "../../cl_shared.h"
 #include "../../cl_inventory.h"
 #include "cp_auto_mission.h"
 #include "cp_campaign.h"
@@ -49,7 +49,7 @@ typedef enum autoMission_teamType_s {
 
 /**
  * @brief One unit (soldier/alien/civilian) of the autobattle
- * @TODO add attack and defence scores
+ * @todo add attack and defence scores
  */
 typedef struct autoUnit_s {
 	int idx;
@@ -220,15 +220,15 @@ static void AM_FillTeamFromAircraft (autoMissionBattle_t *battle, const int team
 static void AM_CreateUnitChr (autoUnit_t *unit, const teamDef_t *teamDef, const equipDef_t *ed)
 {
 	unit->chr = Mem_PoolAlloc(sizeof(character_t), cp_campaignPool, 0);
-	CL_GenerateCharacter(unit->chr, teamDef->id);
+	cgi->CL_GenerateCharacter(unit->chr, teamDef->id);
 
 	if (ed) {
 		/* Pack equipment. */
 		if (teamDef->weapons)
-			cls.i.EquipActor(&cls.i, &unit->chr->i, ed, teamDef);
+			cgi->INV_EquipActor(&unit->chr->i, ed, teamDef);
 		else if (teamDef->onlyWeapon)
 			/* actor cannot handle weapons but a particular item */
-			cls.i.EquipActorMelee(&cls.i, &unit->chr->i, teamDef);
+			cgi->INV_EquipActorMelee(&unit->chr->i, teamDef);
 	}
 }
 
@@ -241,7 +241,7 @@ static void AM_CreateUnitChr (autoUnit_t *unit, const teamDef_t *teamDef, const 
  */
 static void AM_DestroyUnitChr (autoUnit_t *unit)
 {
-	cls.i.DestroyInventory(&cls.i, &unit->chr->i);
+	cgi->INV_DestroyInventory(&unit->chr->i);
 	Mem_Free(unit->chr);
 }
 

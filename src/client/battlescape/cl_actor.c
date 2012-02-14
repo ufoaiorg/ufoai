@@ -30,6 +30,7 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #include "cl_parse.h"
 #include "cl_particle.h"
 #include "cl_view.h"
+#include "../cl_screen.h"
 #include "../ui/ui_main.h"
 #include "../ui/node/ui_node_container.h"
 #include "../renderer/r_entity.h"
@@ -816,7 +817,7 @@ void CL_ActorStartMove (le_t * le, const pos3_t to)
 	byte length;
 	pos3_t toReal;
 
-	if (mouseSpace != MS_WORLD)
+	if (IN_GetMouseSpace() != MS_WORLD)
 		return;
 
 	if (!CL_ActorCheckAction(le))
@@ -858,7 +859,7 @@ void CL_ActorShoot (const le_t * le, const pos3_t at)
 {
 	int type;
 
-	if (mouseSpace != MS_WORLD)
+	if (IN_GetMouseSpace() != MS_WORLD)
 		return;
 
 	if (!CL_ActorCheckAction(le))
@@ -1043,7 +1044,7 @@ void CL_ActorTurnMouse (void)
 	vec3_t directionVector;
 	dvec_t dvec;
 
-	if (mouseSpace != MS_WORLD)
+	if (IN_GetMouseSpace() != MS_WORLD)
 		return;
 
 	if (!CL_ActorCheckAction(selActor))
@@ -1089,12 +1090,12 @@ static void CL_ActorStandCrouch_f (void)
 static void CL_ActorUseHeadgear_f (void)
 {
 	invList_t* headgear;
-	const int tmpMouseSpace = mouseSpace;
+	const int tmpMouseSpace = IN_GetMouseSpace();
 
 	/* this can be executed by a click on a hud button
 	 * but we need MS_WORLD mouse space to let the shooting
 	 * function work */
-	mouseSpace = MS_WORLD;
+	IN_SetMouseSpace(MS_WORLD);
 
 	if (!CL_ActorCheckAction(selActor))
 		return;
@@ -1110,7 +1111,7 @@ static void CL_ActorUseHeadgear_f (void)
 	CL_ActorSetMode(selActor, M_MOVE);
 
 	/* restore old mouse space */
-	mouseSpace = tmpMouseSpace;
+	IN_SetMouseSpace(tmpMouseSpace);
 }
 
 /*
@@ -1162,7 +1163,7 @@ static void CL_ActorMoveMouse (void)
  */
 void CL_ActorSelectMouse (void)
 {
-	if (mouseSpace != MS_WORLD || !selActor)
+	if (IN_GetMouseSpace() != MS_WORLD || !selActor)
 		return;
 
 	switch (selActor->actorMode) {
@@ -1231,7 +1232,7 @@ void CL_ActorSelectMouse (void)
  */
 void CL_ActorActionMouse (void)
 {
-	if (!selActor || mouseSpace != MS_WORLD)
+	if (!selActor || IN_GetMouseSpace() != MS_WORLD)
 		return;
 
 	if (CL_ActorFireModeActivated(selActor->actorMode)) {
@@ -1382,9 +1383,9 @@ qboolean CL_ActorMouseTrace (void)
 	}
 
 	if (interactEntity != NULL) {
-		Cvar_Set("cursor", "2");
+		SCR_ChangeCursor(2);
 	} else {
-		Cvar_Set("cursor", "1");
+		SCR_ChangeCursor(1);
 	}
 
 	/* calculate move length */
@@ -1904,7 +1905,7 @@ void CL_ActorTargetAlign_f (void)
  */
 void CL_AddTargeting (void)
 {
-	if (mouseSpace != MS_WORLD || !selActor)
+	if (IN_GetMouseSpace() != MS_WORLD || !selActor)
 		return;
 
 	switch (selActor->actorMode) {
@@ -2205,7 +2206,7 @@ static void CL_DebugPath_f (void)
 	int dir;
 	dir = 3;
 
-	if (mouseSpace != MS_WORLD)
+	if (IN_GetMouseSpace() != MS_WORLD)
 		return;
 
 	RT_DebugSpecial(cl.mapTiles, cl.mapData->map, actorSize, x, y, dir, cl.leInlineModelList);

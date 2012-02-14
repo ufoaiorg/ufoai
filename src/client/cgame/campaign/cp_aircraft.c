@@ -26,7 +26,7 @@ along with this program; if not, write to the Free Software
 Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 */
 
-#include "../../client.h" /* cls, le_t */
+#include "../../cl_shared.h"
 #include "../../ui/ui_main.h"
 #include "../../../shared/parse.h"
 #include "cp_campaign.h"
@@ -256,8 +256,9 @@ static equipDef_t eTempEq;		/**< Used to count ammo in magazines. */
  * @param[in] aircraft Pointer to aircraft used in this mission.
  * @sa AII_CollectingItems
  */
-static void AII_CollectingAmmo (aircraft_t *aircraft, const invList_t *magazine)
+static void AII_CollectingAmmo (void *data, const invList_t *magazine)
 {
+	aircraft_t *aircraft = (aircraft_t *)data;
 	/* Let's add remaining ammo to market. */
 	eTempEq.numItemsLoose[magazine->item.m->idx] += magazine->item.a;
 	if (eTempEq.numItemsLoose[magazine->item.m->idx] >= magazine->item.t->ammo) {
@@ -299,12 +300,17 @@ void AII_CollectItem (aircraft_t *aircraft, const objDef_t *item, int amount)
 	aircraft->itemTypes++;
 }
 
+static inline void AII_CollectItem_ (void *data, const objDef_t *item, int amount)
+{
+	AII_CollectItem((aircraft_t *)data, item, amount);
+}
+
 /**
  * @brief Process items carried by soldiers.
- * @param[in] soldier Pointer to le_t being a soldier from our team.
+ * @param[in] soldierInventory Pointer to inventory from a soldier of our team.
  * @sa AII_CollectingItems
  */
-static void AII_CarriedItems (const le_t *soldier)
+static void AII_CarriedItems (const inventory_t *soldierInventory)
 {
 	containerIndex_t container;
 	invList_t *invList;
@@ -314,7 +320,7 @@ static void AII_CarriedItems (const le_t *soldier)
 		/* Items on the ground are collected as ET_ITEM */
 		if (INVDEF(container)->temp)
 			continue;
-		for (invList = CONTAINER(soldier, container); invList; invList = invList->next) {
+		for (invList = soldierInventory->c[container]; invList; invList = invList->next) {
 			const objDef_t *item = invList->item.t;
 			const objDef_t *ammo = invList->item.m;
 			technology_t *tech = RS_GetTechForItem(item);
@@ -350,7 +356,6 @@ static void AII_CarriedItems (const le_t *soldier)
 void AII_CollectingItems (aircraft_t *aircraft, int won)
 {
 	int i, j;
-	le_t *le = NULL;
 	itemsTmp_t *cargo;
 	itemsTmp_t prevItemCargo[MAX_CARGO];
 	int prevItemTypes;
@@ -367,33 +372,8 @@ void AII_CollectingItems (aircraft_t *aircraft, int won)
 	cargo = aircraft->itemcargo;
 	aircraft->itemTypes = 0;
 
-	while ((le = LE_GetNextInUse(le))) {
-		/* Winner collects everything on the floor, and everything carried
-		 * by surviving actors. Loser only gets what their living team
-		 * members carry. */
-		if (LE_IsItem(le)) {
-			if (won) {
-				invList_t *item;
-				for (item = FLOOR(le); item; item = item->next) {
-					AII_CollectItem(aircraft, item->item.t, 1);
-					if (item->item.t->reload && item->item.a > 0)
-						AII_CollectingAmmo(aircraft, item);
-				}
-			}
-		} else if (LE_IsActor(le)) {
-			/* The items are already dropped to floor and are available
-			 * as ET_ITEM if the actor is dead; or the actor is not ours. */
-			/* First of all collect armour of dead or stunned actors (if won). */
-			if (won && LE_IsDead(le)) {
-				invList_t *item = ARMOUR(le);
-				if (item)
-					AII_CollectItem(aircraft, item->item.t, 1);
-			} else if (le->team == cls.team && !LE_IsDead(le)) {
-				/* Finally, the living actor from our team. */
-				AII_CarriedItems(le);
-			}
-		}
-	}
+	cgi->CollectItems(aircraft, won, AII_CollectItem_, AII_CollectingAmmo, AII_CarriedItems);
+
 	/* Fill the missionResults array. */
 	ccs.missionResults.itemTypes = aircraft->itemTypes;
 	for (i = 0; i < aircraft->itemTypes; i++)
@@ -2923,7 +2903,7 @@ qboolean AIR_RemoveEmployee (employee_t *employee, aircraft_t *aircraft)
 	Com_DPrintf(DEBUG_CLIENT, "AIR_RemoveEmployee: base: %i - aircraft->idx: %i\n",
 		aircraft->homebase ? aircraft->homebase->idx : -1, aircraft->idx);
 
-	cls.i.DestroyInventory(&cls.i, &employee->chr.i);
+	cgi->INV_DestroyInventory(&employee->chr.i);
 	return LIST_Remove(&aircraft->acTeam, employee);
 }
 

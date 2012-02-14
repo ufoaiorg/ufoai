@@ -595,7 +595,7 @@ inline const std::string NewBrushDragGetTexture (void)
 {
 	const std::string& selectedTexture = GlobalTextureBrowser().getSelectedShader();
 	if (GlobalXYWnd().alwaysCaulkForNewBrushes())
-		return GlobalXYWnd().getCaulkTexture();
+		return GlobalTexturePrefix_get() + GlobalXYWnd().getCaulkTexture();
 	return selectedTexture;
 }
 

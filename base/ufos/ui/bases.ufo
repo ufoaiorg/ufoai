@@ -266,7 +266,7 @@ window bases
 		 * Prepare the building space indicators.
 		 * Bases which are missing a facility will not call show_bld_space.
 		 * This ensures all indicators appear even if there is no bld space.
-		 * @TODO: Make anti-matter show 0/0 if it is researched but no bld
+		 * @todo: Make anti-matter show 0/0 if it is researched but no bld
 		 *        is present.
 		 */
 		confunc clear_bld_space

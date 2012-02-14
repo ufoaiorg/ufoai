@@ -57,9 +57,9 @@ typedef struct cgame_export_s {
 	/** called on errors */
 	void (EXPORT *Drop) (void);
 	/** called after the team spawn messages where send, can e.g. be used to set initial actor states */
-	void (EXPORT *InitializeBattlescape) (const chrList_t *team);
+	struct dbuffer *(EXPORT *InitializeBattlescape) (const chrList_t *team);
 	/** callback that is executed every frame */
-	void (EXPORT *RunFrame) (void);
+	void (EXPORT *RunFrame) (float secondsSinceLastFrame);
 	void (EXPORT *EndRoundAnnounce) (int playerNum, int team);
 	void (EXPORT *StartBattlescape) (qboolean isTeamPlay);
 	const char* (EXPORT *GetTeamDef) (void);
@@ -90,21 +90,22 @@ typedef struct cgame_import_s {
 	/* UI functions */
 	void (IMPORT *UI_ExecuteConfunc) (const char *fmt, ...) __attribute__((format(printf, 1, 2)));
 	void (IMPORT *UI_PopWindow) (qboolean all);
-	uiNode_t* (IMPORT *UI_PushWindow) (const char *name, const char *parentName, linkedList_t *params);
+	struct uiNode_s* (IMPORT *UI_PushWindow) (const char *name, const char *parentName, linkedList_t *params);
 	void (IMPORT *UI_InitStack) (const char* activeMenu, const char* mainMenu, qboolean popAll, qboolean pushActive);
 	void (IMPORT *UI_Popup) (const char *title, const char *format, ...);
-	uiNode_t* (IMPORT *UI_AddOption) (uiNode_t** tree, const char* name, const char* label, const char* value);
-	void (IMPORT *UI_RegisterOption) (int dataId, uiNode_t *option);
+	struct uiNode_s* (IMPORT *UI_AddOption) (struct uiNode_s** tree, const char* name, const char* label, const char* value);
+	void (IMPORT *UI_RegisterOption) (int dataId, struct uiNode_s *option);
 	void (IMPORT *UI_RegisterText) (int textId, const char *text);
 	void (IMPORT *UI_ResetData) (int dataId);
 	void (IMPORT *UI_RegisterLinkedListText) (int textId, linkedList_t *text);
 	void (IMPORT *UI_TextScrollEnd) (const char* nodePath);
-	void (IMPORT *UI_TextNodeSelectLine) (uiNode_t *node, int num);
-	uiNode_t *(IMPORT *UI_PopupList) (const char *title, const char *headline, linkedList_t* entries, const char *clickAction);
-	void (IMPORT *UI_UpdateInvisOptions) (uiNode_t *option, const linkedList_t *stringList);
+	void (IMPORT *UI_TextNodeSelectLine) (struct uiNode_s *node, int num);
+	struct uiNode_s *(IMPORT *UI_PopupList) (const char *title, const char *headline, linkedList_t* entries, const char *clickAction);
+	void (IMPORT *UI_UpdateInvisOptions) (struct uiNode_s *option, const linkedList_t *stringList);
 	void (IMPORT *HUD_InitUI) (const char *optionWindowName, qboolean popAll);
 	void (IMPORT *HUD_DisplayMessage) (const char *text);
-	uiNode_t *(IMPORT *UI_GetOption) (int dataId);
+	struct uiNode_s *(IMPORT *UI_GetOption) (int dataId);
+	void (IMPORT *UI_SortOptions) (struct uiNode_s **first);
 
 	void (IMPORT *LIST_AddString) (linkedList_t** listDest, const char* data);
 	const linkedList_t* (IMPORT *LIST_ContainsString) (const linkedList_t* list, const char* string);
@@ -183,6 +184,21 @@ typedef struct cgame_import_s {
 	void (IMPORT *XML_AddIntValue) (xmlNode_t *parent, const char *name, int value);
 	void (IMPORT *XML_AddLongValue) (xmlNode_t *parent, const char *name, long value);
 
+	qboolean (IMPORT *XML_GetBool) (xmlNode_t *parent, const char *name, const qboolean defaultval);
+	int (IMPORT *XML_GetInt) (xmlNode_t *parent, const char *name, const int defaultval);
+	short (IMPORT *XML_GetShort) (xmlNode_t *parent, const char *name, const short defaultval);
+	long (IMPORT *XML_GetLong) (xmlNode_t *parent, const char *name, const long defaultval);
+	const char * (IMPORT *XML_GetString) (xmlNode_t *parent, const char *name);
+	float (IMPORT *XML_GetFloat) (xmlNode_t *parent, const char *name, const float defaultval);
+	double (IMPORT *XML_GetDouble) (xmlNode_t *parent, const char *name, const double defaultval);
+	xmlNode_t * (IMPORT *XML_GetPos2) (xmlNode_t *parent, const char *name, vec2_t pos);
+	xmlNode_t * (IMPORT *XML_GetNextPos2) (xmlNode_t *actual, xmlNode_t *parent, const char *name, vec2_t pos);
+	xmlNode_t * (IMPORT *XML_GetPos3) (xmlNode_t *parent, const char *name, vec3_t pos);
+	xmlNode_t * (IMPORT *XML_GetNextPos3) (xmlNode_t *actual, xmlNode_t *parent, const char *name, vec3_t pos);
+	xmlNode_t * (IMPORT *XML_GetDate) (xmlNode_t *parent, const char *name, int *day, int *sec);
+	xmlNode_t * (IMPORT *XML_GetNode) (xmlNode_t *parent, const char *name);
+	xmlNode_t * (IMPORT *XML_GetNextNode) (xmlNode_t *current, xmlNode_t *parent, const char *name);
+
 	/* filesystem functions */
 	int (IMPORT *FS_LoadFile) (const char *path, byte **buffer);
 	void (IMPORT *FS_FreeFile) (void *buffer);
@@ -214,7 +230,6 @@ typedef struct cgame_import_s {
 	void (IMPORT *Sys_Error) (const char *error, ...) __attribute__((noreturn, format(printf, 1, 2)));
 	int (IMPORT *Com_ServerState) (void);
 	void (IMPORT *Com_SetGameType) (void);
-	const char *(IMPORT *Com_Parse) (const char *data_p[]);
 	void (IMPORT *Com_Error) (int code, const char *fmt, ...) __attribute__((noreturn, format(printf, 2, 3)));
 	void (IMPORT *Com_Printf) (const char *msg, ...) __attribute__((format(printf, 1, 2)));
 	void (IMPORT *Com_DPrintf) (int level, const char *msg, ...) __attribute__((format(printf, 2, 3)));
@@ -222,8 +237,28 @@ typedef struct cgame_import_s {
 	const char* (IMPORT *Com_UFOCrashedTypeToShortName) (ufoType_t type);
 	const char* (IMPORT *Com_UFOTypeToShortName) (ufoType_t type);
 	const char* (IMPORT *Com_GetRandomMapAssemblyNameForCraft) (const char *craftID);
+	void (IMPORT *Com_RegisterConstList) (const constListEntry_t constList[]);
+	qboolean (IMPORT *Com_UnregisterConstList) (const constListEntry_t constList[]);
+	const char* (IMPORT *Com_GetConstVariable) (const char *space, int value);
+	qboolean (IMPORT *Com_GetConstIntFromNamespace) (const char *space, const char *variable, int *value);
+
+	void (IMPORT *CL_GenerateCharacter) (character_t *chr, const char *teamDefName);
+	qboolean (IMPORT *CL_OnBattlescape) (void);
+
+	void (IMPORT *SetNextUniqueCharacterNumber) (int ucn);
+	int (IMPORT *GetNextUniqueCharacterNumber) (void);
+
+	void (IMPORT *CollectItems) (void *target, int won, void (*item)(void*, const objDef_t*, int), void (*ammo) (void *, const invList_t *), void (*ownitems) (const inventory_t *));
+	void (IMPORT *CollectAliens) (void *data, void (*collect)(void*, const teamDef_t*, int, qboolean));
 
 	const equipDef_t *(IMPORT *INV_GetEquipmentDefinitionByID) (const char *name);
+	void (IMPORT *INV_DestroyInventory) (inventory_t* const i) __attribute__((nonnull(1)));
+	void (IMPORT *INV_EquipActor) (inventory_t* const inv, const equipDef_t *ed, const teamDef_t* td);
+	void (IMPORT *INV_EquipActorMelee) (inventory_t* const inv, const teamDef_t* td);
+	void (IMPORT *INV_EquipActorRobot) (inventory_t* const inv, const objDef_t* weapon);
+	qboolean (IMPORT *INV_RemoveFromInventory) (inventory_t* const i, const invDef_t * container, invList_t *fItem);
+
+	void (IMPORT *INV_ItemDescription) (const objDef_t *od);
 } cgame_import_t;
 
 const cgame_export_t *GetCGameAPI(const cgame_import_t *import);

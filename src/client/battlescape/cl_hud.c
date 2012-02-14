@@ -1371,7 +1371,7 @@ static void HUD_UpdateActor (le_t *actor)
 	} else {
 		/* If the mouse is outside the world, and we haven't placed the cursor in pend
 		 * mode already */
-		if (mouseSpace != MS_WORLD && actor->actorMode < M_PEND_MOVE)
+		if (IN_GetMouseSpace() != MS_WORLD && actor->actorMode < M_PEND_MOVE)
 			actor->actorMoveLength = ROUTING_NOT_REACHABLE;
 		time = HUD_UpdateActorMove(actor);
 	}

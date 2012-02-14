@@ -1,6 +1,6 @@
-// ==================
-// PHYSDATA BASE MENU
-// ==================
+// ============================
+// BATTLESCAPE PHYSDATA WINDOW
+// ============================
 
 component cmpDefNamedTbar cmpPhysNamedTbar {
 	/** @todo Remove me */
@@ -235,8 +235,8 @@ window physdata
 		pos		"10 10"
 		size	"492 492"
 		OnRClick { cmd "ui_pop;" }
-		onWheelUp	{ cmd "actor_next;"}
-		onWheelDown	{ cmd "actor_prev;"}
+		onWheelUp	{ cmd "actor_next;" }
+		onWheelDown	{ cmd "actor_prev;" }
 	}
 
 	// ==================
@@ -331,18 +331,22 @@ window physdata
 		if ( *cvar:mn_base_count > 0 ) {
 			*cvar:mn_missions_label_string = "_Missions Performed:"
 			*cvar:mn_kills_label_string = "_Enemies Killed:"
+		} else {
+			if ( exists *cvar:mn_chrmis ) { delete *cvar:mn_chrmis }
+			if ( exists *cvar:mn_chrkillalien ) { delete *cvar:mn_chrkillalien }
 		}
-		// we need the ability to hide the deco just for the MiniHUD
+		// the ability to hide the deco is needed for the MiniHUD only
 		if ( *cvar:mn_minihud_enabled == 1 ) {
 			if ( *cvar:mn_minihud_deco == 0 ) { *node:root.bar_physdata_deco@invis = true }
 			else { *node:root.bar_physdata_deco@invis = false }
-			// the inventory window will automatically be closed if open
-			if ( *cvar:inventory_window_open == 1 ) { cmd "ui_close ahudinv;" }
 		}
+		// the inventory window will automatically be closed if open
+		if ( *cvar:inventory_window_open == 1 ) { cmd "ui_close ahudinv;" }
 	}
 
 	func onWindowClosed {
 		delete *cvar:physdat_window_open
+		// these cvars exist in campaign mode only
 		if ( *cvar:mn_base_count > 0 ) {
 			delete *cvar:mn_missions_label_string
 			delete *cvar:mn_kills_label_string
@@ -356,19 +360,6 @@ window physdata
 
 window hudphysdat extends physdata
 {
-	zone bt_physdata
-	{
-		pos			"983 266"
-		size		"36 75"
-		onClick		{ cmd "ui_pop;" }
-	}
-
-	zone bt_inventory
-	{
-		pos			"983 376"
-		size		"36 75"
-		onClick		{ cmd "ui_pop;" }
-	}
 }
 
 // ==================
@@ -377,12 +368,4 @@ window hudphysdat extends physdata
 
 window ahudphysdat extends physdata
 {
-	zone zone_clickright
-	{
-		tooltip		"_Inventory and physical stats"
-		pos			"878 84"
-		size		"130 265"
-		onClick		{ cmd "ui_pop;" }
-		onRClick		{ cmd "ui_pop;" }
-	}
 }

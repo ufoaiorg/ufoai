@@ -96,10 +96,6 @@ void CP_StartMissionMap (mission_t* mission, const battleParam_t *battleParamete
 
 	assert(mission->mapDef->map);
 
-	/** @note set the mapZone - this allows us to replace the ground texture
-	 * with the suitable terrain texture - just use tex_terrain/dummy for the
-	 * brushes you want the terrain textures on
-	 * @sa Mod_LoadTexinfo */
 	refdef.mapZone = battleParameters->zoneType;
 
 	/* base attack maps starts with a dot */

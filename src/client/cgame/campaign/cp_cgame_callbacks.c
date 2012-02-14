@@ -21,6 +21,7 @@
  Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
  */
 
+#include "../../cl_shared.h"
 #include "cp_cgame_callbacks.h"
 #include "cp_campaign.h"
 #include "cp_missions.h"
@@ -174,6 +175,11 @@ static void GAME_CP_Start_f (void)
 	Cbuf_AddText("seq_start intro\n");
 }
 
+static inline void AL_AddAlienTypeToAircraftCargo_ (void *data, const teamDef_t *teamDef, int amount, qboolean dead)
+{
+	AL_AddAlienTypeToAircraftCargo((aircraft_t *) data, teamDef, amount, dead);
+}
+
 /**
  * @brief After a mission was finished this function is called
  * @param msg The network message buffer
@@ -191,7 +197,8 @@ void GAME_CP_Results (struct dbuffer *msg, int winner, int *numSpawned, int *num
 	int ownSurvived, ownKilled, ownStunned;
 	int aliensSurvived, aliensKilled, aliensStunned;
 	int civiliansSurvived, civiliansKilled, civiliansStunned;
-	const qboolean won = (winner == cls.team);
+	const int currentTeam = cgi->GAME_GetCurrentTeam();
+	const qboolean won = (winner == currentTeam);
 	missionResults_t *results;
 	aircraft_t *aircraft = MAP_GetMissionAircraft();
 	const battleParam_t *bp = &ccs.battleParameters;
@@ -203,14 +210,14 @@ void GAME_CP_Results (struct dbuffer *msg, int winner, int *numSpawned, int *num
 	civiliansSurvived = civiliansKilled = civiliansStunned = 0;
 
 	for (i = 0; i < MAX_TEAMS; i++) {
-		if (i == cls.team)
+		if (i == currentTeam)
 			ownSurvived = numAlive[i];
 		else if (i == TEAM_CIVILIAN)
 			civiliansSurvived = numAlive[i];
 		else
 			aliensSurvived += numAlive[i];
 		for (j = 0; j < MAX_TEAMS; j++)
-			if (j == cls.team) {
+			if (j == currentTeam) {
 				ownKilled += numKilled[i][j];
 				ownStunned += numStunned[i][j]++;
 			} else if (j == TEAM_CIVILIAN) {
@@ -239,7 +246,7 @@ void GAME_CP_Results (struct dbuffer *msg, int winner, int *numSpawned, int *num
 	AII_CollectingItems(aircraft, won);
 	if (won)
 		/* Collect aliens from the battlefield. */
-		AL_CollectingAliens(aircraft);
+		cgi->CollectAliens(aircraft, AL_AddAlienTypeToAircraftCargo_);
 
 	ccs.aliensKilled += aliensKilled;
 
@@ -251,12 +258,12 @@ void GAME_CP_Results (struct dbuffer *msg, int winner, int *numSpawned, int *num
 		results->aliensKilled += aliensKilled;
 		results->aliensStunned += aliensStunned;
 		results->aliensSurvived += aliensSurvived;
-		results->ownKilled += ownKilled - numKilled[cls.team][cls.team] - numKilled[TEAM_CIVILIAN][cls.team];
+		results->ownKilled += ownKilled - numKilled[currentTeam][currentTeam] - numKilled[TEAM_CIVILIAN][currentTeam];
 		results->ownStunned += ownStunned;
-		results->ownKilledFriendlyFire += numKilled[cls.team][cls.team] + numKilled[TEAM_CIVILIAN][cls.team];
+		results->ownKilledFriendlyFire += numKilled[currentTeam][currentTeam] + numKilled[TEAM_CIVILIAN][currentTeam];
 		results->ownSurvived += ownSurvived;
 		results->civiliansKilled += civiliansKilled;
-		results->civiliansKilledFriendlyFire += numKilled[cls.team][TEAM_CIVILIAN] + numKilled[TEAM_CIVILIAN][TEAM_CIVILIAN];
+		results->civiliansKilledFriendlyFire += numKilled[currentTeam][TEAM_CIVILIAN] + numKilled[TEAM_CIVILIAN][TEAM_CIVILIAN];
 		results->civiliansSurvived += civiliansSurvived;
 		return;
 	}
@@ -265,12 +272,12 @@ void GAME_CP_Results (struct dbuffer *msg, int winner, int *numSpawned, int *num
 	results->aliensKilled = aliensKilled;
 	results->aliensStunned = aliensStunned;
 	results->aliensSurvived = aliensSurvived;
-	results->ownKilled = ownKilled - numKilled[cls.team][cls.team] - numKilled[TEAM_CIVILIAN][cls.team];
+	results->ownKilled = ownKilled - numKilled[currentTeam][currentTeam] - numKilled[TEAM_CIVILIAN][currentTeam];
 	results->ownStunned = ownStunned;
-	results->ownKilledFriendlyFire = numKilled[cls.team][cls.team] + numKilled[TEAM_CIVILIAN][cls.team];
+	results->ownKilledFriendlyFire = numKilled[currentTeam][currentTeam] + numKilled[TEAM_CIVILIAN][currentTeam];
 	results->ownSurvived = ownSurvived;
 	results->civiliansKilled = civiliansKilled;
-	results->civiliansKilledFriendlyFire = numKilled[cls.team][TEAM_CIVILIAN] + numKilled[TEAM_CIVILIAN][TEAM_CIVILIAN];
+	results->civiliansKilledFriendlyFire = numKilled[currentTeam][TEAM_CIVILIAN] + numKilled[TEAM_CIVILIAN][TEAM_CIVILIAN];
 	results->civiliansSurvived = civiliansSurvived;
 
 	MIS_InitResultScreen(results);
@@ -285,7 +292,7 @@ void GAME_CP_Results (struct dbuffer *msg, int winner, int *numSpawned, int *num
 	else
 		UI_PushWindow("lost", NULL, NULL);
 
-	CL_Disconnect();
+	cgi->CL_Disconnect();
 	SV_Shutdown("Mission end", qfalse);
 }
 
@@ -342,15 +349,11 @@ void GAME_CP_Drop (void)
 	UI_InitStack("geoscape", "campaign_main", qtrue, qtrue);
 
 	SV_Shutdown("Mission end", qfalse);
-	CL_Disconnect();
+	cgi->CL_Disconnect();
 }
 
-void GAME_CP_Frame (void)
+void GAME_CP_Frame (float secondsSinceLastFrame)
 {
-	/* don't run the campaign in console mode */
-	if (cls.keyDest == key_console)
-		return;
-
 	if (!CP_IsRunning())
 		return;
 
@@ -358,7 +361,7 @@ void GAME_CP_Frame (void)
 		return;
 
 	/* advance time */
-	CP_CampaignRun(ccs.curCampaign);
+	CP_CampaignRun(ccs.curCampaign, secondsSinceLastFrame);
 }
 
 const char* GAME_CP_GetTeamDef (void)
@@ -371,7 +374,7 @@ const char* GAME_CP_GetTeamDef (void)
  * @brief Changes some actor states for a campaign game
  * @param team The team to change the states for
  */
-void GAME_CP_InitializeBattlescape (const chrList_t *team)
+struct dbuffer *GAME_CP_InitializeBattlescape (const chrList_t *team)
 {
 	int i;
 	struct dbuffer *msg = new_dbuffer();
@@ -387,7 +390,8 @@ void GAME_CP_InitializeBattlescape (const chrList_t *team)
 		NET_WriteShort(msg, chr->RFmode.fmIdx);
 		NET_WriteShort(msg, chr->RFmode.weapon != NULL ? chr->RFmode.weapon->idx : NONE);
 	}
-	NET_WriteMsg(cls.netStream, msg);
+
+	return msg;
 }
 
 equipDef_t *GAME_CP_GetEquipmentDefinition (void)

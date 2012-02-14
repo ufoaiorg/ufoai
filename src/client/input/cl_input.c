@@ -45,6 +45,7 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #include "../battlescape/cl_localentity.h"
 #include "../battlescape/cl_hud.h"
 #include "../cl_console.h"
+#include "../cl_screen.h"
 #include "../battlescape/cl_actor.h"
 #include "../battlescape/cl_view.h"
 #include "../battlescape/cl_parse.h"
@@ -70,7 +71,7 @@ static int keyq_tail = 0;
 static cvar_t *in_debug;
 cvar_t *cl_isometric;
 
-int mouseSpace;
+mouseSpace_t mouseSpace;
 int mousePosX, mousePosY;
 static int oldMousePosX, oldMousePosY;
 
@@ -222,7 +223,7 @@ static void IN_TurnDownUp_f (void)
 }
 static void IN_PanTiltDown_f (void)
 {
-	if (mouseSpace != MS_WORLD)
+	if (IN_GetMouseSpace() != MS_WORLD)
 		return;
 	IN_KeyDown(&in_pantilt);
 }
@@ -325,16 +326,16 @@ static void CL_WheelUp_f (void)
  */
 static void CL_SelectDown_f (void)
 {
-	if (mouseSpace != MS_WORLD)
+	if (IN_GetMouseSpace() != MS_WORLD)
 		return;
 	CL_ActorSelectMouse();
 }
 
 static void CL_SelectUp_f (void)
 {
-	if (mouseSpace == MS_UI)
+	if (IN_GetMouseSpace() == MS_UI)
 		return;
-	mouseSpace = MS_NULL;
+	IN_SetMouseSpace(MS_NULL);
 }
 
 /**
@@ -342,7 +343,7 @@ static void CL_SelectUp_f (void)
  */
 static void CL_ActionDown_f (void)
 {
-	if (mouseSpace != MS_WORLD)
+	if (IN_GetMouseSpace() != MS_WORLD)
 		return;
 	IN_KeyDown(&in_pantilt);
 }
@@ -350,11 +351,11 @@ static void CL_ActionDown_f (void)
 static void CL_ActionUp_f (void)
 {
 	IN_KeyUp(&in_pantilt);
-	if (mouseSpace == MS_UI)
+	if (IN_GetMouseSpace() == MS_UI)
 		return;
 	if (in_pantilt.msec < 250)
 		CL_ActorActionMouse();
-	mouseSpace = MS_NULL;
+	IN_SetMouseSpace(MS_NULL);
 }
 
 /**
@@ -362,17 +363,17 @@ static void CL_ActionUp_f (void)
  */
 static void CL_TurnDown_f (void)
 {
-	if (mouseSpace == MS_UI)
+	if (IN_GetMouseSpace() == MS_UI)
 		return;
-	if (mouseSpace == MS_WORLD)
+	if (IN_GetMouseSpace() == MS_WORLD)
 		CL_ActorTurnMouse();
 }
 
 static void CL_TurnUp_f (void)
 {
-	if (mouseSpace == MS_UI)
+	if (IN_GetMouseSpace() == MS_UI)
 		return;
-	mouseSpace = MS_NULL;
+	IN_SetMouseSpace(MS_NULL);
 }
 
 /**
@@ -400,7 +401,7 @@ static void CL_HudRadarUp_f (void)
  */
 static void CL_RightClickDown_f (void)
 {
-	if (mouseSpace == MS_UI) {
+	if (IN_GetMouseSpace() == MS_UI) {
 		UI_MouseDown(mousePosX, mousePosY, K_MOUSE2);
 	}
 }
@@ -410,7 +411,7 @@ static void CL_RightClickDown_f (void)
  */
 static void CL_RightClickUp_f (void)
 {
-	if (mouseSpace == MS_UI) {
+	if (IN_GetMouseSpace() == MS_UI) {
 		UI_MouseUp(mousePosX, mousePosY, K_MOUSE2);
 	}
 }
@@ -420,7 +421,7 @@ static void CL_RightClickUp_f (void)
  */
 static void CL_MiddleClickDown_f (void)
 {
-	if (mouseSpace == MS_UI) {
+	if (IN_GetMouseSpace() == MS_UI) {
 		UI_MouseDown(mousePosX, mousePosY, K_MOUSE3);
 	}
 }
@@ -430,7 +431,7 @@ static void CL_MiddleClickDown_f (void)
  */
 static void CL_MiddleClickUp_f (void)
 {
-	if (mouseSpace == MS_UI) {
+	if (IN_GetMouseSpace() == MS_UI) {
 		UI_MouseUp(mousePosX, mousePosY, K_MOUSE3);
 	}
 }
@@ -440,7 +441,7 @@ static void CL_MiddleClickUp_f (void)
  */
 static void CL_LeftClickDown_f (void)
 {
-	if (mouseSpace == MS_UI) {
+	if (IN_GetMouseSpace() == MS_UI) {
 		UI_MouseDown(mousePosX, mousePosY, K_MOUSE1);
 	}
 }
@@ -450,7 +451,7 @@ static void CL_LeftClickDown_f (void)
  */
 static void CL_LeftClickUp_f (void)
 {
-	if (mouseSpace == MS_UI) {
+	if (IN_GetMouseSpace() == MS_UI) {
 		UI_MouseUp(mousePosX, mousePosY, K_MOUSE1);
 	}
 }
@@ -502,11 +503,11 @@ float CL_GetKeyMouseState (int dir)
  */
 static void IN_Parse (void)
 {
-	mouseSpace = MS_NULL;
+	IN_SetMouseSpace(MS_NULL);
 
 	/* standard menu and world mouse handling */
 	if (UI_IsMouseOnWindow()) {
-		mouseSpace = MS_UI;
+		IN_SetMouseSpace(MS_UI);
 		return;
 	}
 
@@ -518,7 +519,7 @@ static void IN_Parse (void)
 
 	if (CL_ActorMouseTrace()) {
 		/* mouse is in the world */
-		mouseSpace = MS_WORLD;
+		IN_SetMouseSpace(MS_WORLD);
 	}
 }
 
@@ -928,6 +929,27 @@ static void CL_PressKey_f (void)
 	/* @todo unicode value is wrong */
 	IN_EventEnqueue(keyNum, '?', qtrue);
 	IN_EventEnqueue(keyNum, '?', qfalse);
+}
+
+typedef struct cursorChange_s {
+	mouseSpace_t prevSpace;
+	int cursor;
+} cursorChange_t;
+
+static cursorChange_t cursorChange;
+
+void IN_SetMouseSpace (mouseSpace_t mspace)
+{
+	if (mspace != MS_NULL) {
+		if (mspace != cursorChange.prevSpace) {
+			SCR_ChangeCursor(cursorChange.cursor);
+		}
+	}
+	if (mouseSpace != MS_NULL && mouseSpace != cursorChange.prevSpace) {
+		cursorChange.prevSpace = mouseSpace;
+		cursorChange.cursor = Cvar_GetValue("cursor");
+	}
+	mouseSpace = mspace;
 }
 
 /**

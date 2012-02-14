@@ -309,6 +309,92 @@ static void GAME_Free (void *ptr)
 	Mem_Free(ptr);
 }
 
+static void GAME_DestroyInventory (inventory_t * const i)
+{
+	cls.i.DestroyInventory(&cls.i, i);
+}
+
+static void GAME_EquipActor (inventory_t* const inv, const equipDef_t *ed, const teamDef_t* td)
+{
+	cls.i.EquipActor(&cls.i, inv, ed, td);
+}
+
+static void GAME_EquipActorMelee (inventory_t* const inv, const teamDef_t* td)
+{
+	cls.i.EquipActorMelee(&cls.i, inv, td);
+}
+
+static void GAME_EquipActorRobot (inventory_t* const inv, const objDef_t* weapon)
+{
+	cls.i.EquipActorRobot(&cls.i, inv, weapon);
+}
+
+static qboolean GAME_RemoveFromInventory (inventory_t* const i, const invDef_t * container, invList_t *fItem)
+{
+	return cls.i.RemoveFromInventory(&cls.i, i, container, fItem);
+}
+
+static void GAME_SetNextUniqueCharacterNumber (int ucn)
+{
+	cls.nextUniqueCharacterNumber = ucn;
+}
+
+static int GAME_GetNextUniqueCharacterNumber (void)
+{
+	return cls.nextUniqueCharacterNumber;
+}
+
+static void GAME_CollectItems (void *data, int won, void (*item)(void*, const objDef_t*, int), void (*ammo) (void *, const invList_t *), void (*ownitems) (const inventory_t *))
+{
+	le_t *le = NULL;
+	while ((le = LE_GetNextInUse(le))) {
+		/* Winner collects everything on the floor, and everything carried
+		 * by surviving actors. Loser only gets what their living team
+		 * members carry. */
+		if (LE_IsItem(le)) {
+			if (won) {
+				invList_t *i;
+				for (i = FLOOR(le); i; i = i->next) {
+					item(data, i->item.t, 1);
+					if (i->item.t->reload && i->item.a > 0)
+						ammo(data, i);
+				}
+			}
+		} else if (LE_IsActor(le)) {
+			/* The items are already dropped to floor and are available
+			 * as ET_ITEM if the actor is dead; or the actor is not ours. */
+			/* First of all collect armour of dead or stunned actors (if won). */
+			if (won && LE_IsDead(le)) {
+				invList_t *i = ARMOUR(le);
+				if (i)
+					item(data, i->item.t, 1);
+			} else if (le->team == cls.team && !LE_IsDead(le)) {
+				/* Finally, the living actor from our team. */
+				ownitems(&le->i);
+			}
+		}
+	}
+}
+
+/**
+ * @brief Collecting stunned and dead alien bodies after the mission.
+ */
+static void GAME_CollectAliens (void *data, void (*collect)(void*, const teamDef_t*, int, qboolean))
+{
+	le_t *le = NULL;
+
+	while ((le = LE_GetNextInUse(le))) {
+		if (LE_IsActor(le) && LE_IsAlien(le)) {
+			assert(le->teamDef);
+
+			if (LE_IsStunned(le))
+				collect(data, le->teamDef, 1, qfalse);
+			else if (LE_IsDead(le))
+				collect(data, le->teamDef, 1, qtrue);
+		}
+	}
+}
+
 static const cgame_import_t* GAME_GetImportData (const cgameType_t *t)
 {
 	static cgame_import_t gameImport;
@@ -363,6 +449,7 @@ static const cgame_import_t* GAME_GetImportData (const cgameType_t *t)
 		cgi->UI_ResetData = UI_ResetData;
 		cgi->UI_UpdateInvisOptions = UI_UpdateInvisOptions;
 		cgi->UI_GetOption = UI_GetOption;
+		cgi->UI_SortOptions = UI_SortOptions;
 		/*gi->UI_TextNodeSelectLine = UI_TextNodeSelectLine;*/
 
 		cgi->NET_StreamSetCallback = NET_StreamSetCallback;
@@ -385,12 +472,15 @@ static const cgame_import_t* GAME_GetImportData (const cgameType_t *t)
 		cgi->Com_ServerState = Com_ServerState;
 		cgi->Com_Printf = Com_Printf;
 		cgi->Com_DPrintf = Com_DPrintf;
-		cgi->Com_Parse = Com_Parse;
 		cgi->Com_Error = Com_Error;
 		cgi->Com_DropShipTypeToShortName = Com_DropShipTypeToShortName;
 		cgi->Com_UFOCrashedTypeToShortName = Com_UFOCrashedTypeToShortName;
 		cgi->Com_UFOTypeToShortName = Com_UFOTypeToShortName;
 		cgi->Com_GetRandomMapAssemblyNameForCraft = Com_GetRandomMapAssemblyNameForCraft;
+		cgi->Com_RegisterConstList = Com_RegisterConstList;
+		cgi->Com_UnregisterConstList = Com_UnregisterConstList;
+		cgi->Com_GetConstVariable = Com_GetConstVariable;
+		cgi->Com_GetConstIntFromNamespace = Com_GetConstIntFromNamespace;
 		cgi->Com_SetGameType = Com_SetGameType;
 
 		cgi->SV_ShutdownWhenEmpty = SV_ShutdownWhenEmpty;
@@ -427,7 +517,23 @@ static const cgame_import_t* GAME_GetImportData (const cgameType_t *t)
 		/*cgi->S_SetSampleRepeatRate = S_SetSampleRepeatRate;*/
 		cgi->S_StartLocalSample = S_StartLocalSample;
 
+		cgi->CL_GenerateCharacter = CL_GenerateCharacter;
+		cgi->CL_OnBattlescape = CL_OnBattlescape;
+
+		cgi->SetNextUniqueCharacterNumber = GAME_SetNextUniqueCharacterNumber;
+		cgi->GetNextUniqueCharacterNumber = GAME_GetNextUniqueCharacterNumber;
+
+		cgi->CollectItems = GAME_CollectItems;
+		cgi->CollectAliens = GAME_CollectAliens;
+
 		cgi->INV_GetEquipmentDefinitionByID = INV_GetEquipmentDefinitionByID;
+		cgi->INV_DestroyInventory = GAME_DestroyInventory;
+		cgi->INV_EquipActor = GAME_EquipActor;
+		cgi->INV_EquipActorMelee = GAME_EquipActorMelee;
+		cgi->INV_EquipActorRobot = GAME_EquipActorRobot;
+		cgi->INV_RemoveFromInventory = GAME_RemoveFromInventory;
+
+		cgi->INV_ItemDescription = INV_ItemDescription;
 
 		cgi->Sys_Error = Sys_Error;
 
@@ -454,6 +560,21 @@ static const cgame_import_t* GAME_GetImportData (const cgameType_t *t)
 		cgi->XML_AddShortValue = XML_AddShortValue;
 		cgi->XML_AddString = XML_AddString;
 		cgi->XML_AddStringValue = XML_AddStringValue;
+
+		cgi->XML_GetBool = XML_GetBool;
+		cgi->XML_GetInt = XML_GetInt;
+		cgi->XML_GetShort = XML_GetShort;
+		cgi->XML_GetLong = XML_GetLong;
+		cgi->XML_GetString = XML_GetString;
+		cgi->XML_GetFloat = XML_GetFloat;
+		cgi->XML_GetDouble = XML_GetDouble;
+		cgi->XML_GetPos2 = XML_GetPos2;
+		cgi->XML_GetNextPos2 = XML_GetNextPos2;
+		cgi->XML_GetPos3 = XML_GetPos3;
+		cgi->XML_GetNextPos3 = XML_GetNextPos3;
+		cgi->XML_GetDate = XML_GetDate;
+		cgi->XML_GetNode = XML_GetNode;
+		cgi->XML_GetNextNode = XML_GetNextNode;
 	}
 
 	cgi->cgameType = t;
@@ -498,13 +619,13 @@ void GAME_SwitchCurrentSelectedMap (int step)
 	cls.currentSelectedMap += step;
 
 	if (cls.currentSelectedMap < 0)
-		cls.currentSelectedMap = cls.numMDs - 1;
-	cls.currentSelectedMap %= cls.numMDs;
+		cls.currentSelectedMap = csi.numMDs - 1;
+	cls.currentSelectedMap %= csi.numMDs;
 }
 
 const mapDef_t* GAME_GetCurrentSelectedMap (void)
 {
-	return GAME_GetMapDefByIDX(cls.currentSelectedMap);
+	return Com_GetMapDefByIDX(cls.currentSelectedMap);
 }
 
 int GAME_GetCurrentTeam (void)
@@ -554,10 +675,10 @@ static void UI_MapInfoGetNext (int step)
 	for (;;) {
 		cls.currentSelectedMap += step;
 		if (cls.currentSelectedMap < 0)
-			cls.currentSelectedMap = cls.numMDs - 1;
-		cls.currentSelectedMap %= cls.numMDs;
+			cls.currentSelectedMap = csi.numMDs - 1;
+		cls.currentSelectedMap %= csi.numMDs;
 
-		md = GAME_GetMapDefByIDX(cls.currentSelectedMap);
+		md = Com_GetMapDefByIDX(cls.currentSelectedMap);
 
 		/* avoid infinit loop */
 		if (ref == cls.currentSelectedMap)
@@ -585,7 +706,7 @@ static void UI_MapInfo (int step)
 	if (!list)
 		return;
 
-	if (!cls.numMDs)
+	if (!csi.numMDs)
 		return;
 
 	UI_MapInfoGetNext(step);
@@ -631,7 +752,7 @@ static void UI_RequestMapList_f (void)
 		return;
 	}
 
-	if (!cls.numMDs)
+	if (!csi.numMDs)
 		return;
 
 	callbackCmd = Cmd_Argv(1);
@@ -694,7 +815,7 @@ static void UI_SelectMap_f (void)
 		return;
 	}
 
-	if (!cls.numMDs)
+	if (!csi.numMDs)
 		return;
 
 	mapname = Cmd_Argv(1);
@@ -1100,8 +1221,11 @@ static void GAME_InitializeBattlescape (chrList_t *team)
 		UI_ExecuteConfunc("huddisable %i", i);
 	}
 
-	if (list && list->InitializeBattlescape)
-		list->InitializeBattlescape(team);
+	if (list && list->InitializeBattlescape) {
+		struct dbuffer *msg = list->InitializeBattlescape(team);
+		if (msg != NULL)
+			NET_WriteMsg(cls.netStream, msg);
+	}
 }
 
 /**
@@ -1220,9 +1344,13 @@ void GAME_Frame (void)
 {
 	const cgame_export_t *list;
 
+	/* don't run the cgame in console mode */
+	if (cls.keyDest == key_console)
+		return;
+
 	list = GAME_GetCurrentType();
 	if (list && list->RunFrame != NULL)
-		list->RunFrame();
+		list->RunFrame(cls.frametime);
 }
 
 /**
@@ -1246,26 +1374,6 @@ const char* GAME_GetModelForItem (const objDef_t *od, uiModel_t** uiModel)
 	if (uiModel != NULL)
 		*uiModel = NULL;
 	return od->model;
-}
-
-mapDef_t* Com_GetMapDefinitionByID (const char *mapDefID)
-{
-	mapDef_t *md;;
-
-	assert(mapDefID);
-
-	MapDef_Foreach(md) {
-		if (Q_streq(md->id, mapDefID))
-			return md;
-	}
-
-	Com_DPrintf(DEBUG_CLIENT, "Com_GetMapDefinition: Could not find mapdef with id: '%s'\n", mapDefID);
-	return NULL;
-}
-
-mapDef_t* GAME_GetMapDefByIDX (int index)
-{
-	return &cls.mds[index];
 }
 
 /**

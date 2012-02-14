@@ -1,7 +1,7 @@
 #ifndef SINGLEIDLECALLBACK_H_
 #define SINGLEIDLECALLBACK_H_
 
-#include <glib/gmain.h>
+#include <glib.h>
 
 #include <iostream>
 

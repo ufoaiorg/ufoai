@@ -88,7 +88,7 @@ static void testMapDefsMassRMA (void)
 	const mapDef_t* md;
 	int mapCount = 0;
 
-	CU_ASSERT_TRUE(cls.numMDs > 0);
+	CU_ASSERT_TRUE(csi.numMDs > 0);
 
 	MapDef_Foreach(md) {
 		if (md->map[0] == '.')
@@ -193,7 +193,7 @@ static void testMapDefStatistic (void)
 	const char *filterId = TEST_GetStringProperty("mapdef-id");
 	const mapDef_t* md;
 
-	CU_ASSERT_TRUE(cls.numMDs > 0);
+	CU_ASSERT_TRUE(csi.numMDs > 0);
 
 	MapDef_Foreach(md) {
 		if (md->map[0] == '.')
@@ -252,7 +252,7 @@ static void testMapDefsSingleplayer (void)
 	const char *filterId = TEST_GetStringProperty("mapdef-id");
 	const mapDef_t* md;
 
-	CU_ASSERT_TRUE(cls.numMDs > 0);
+	CU_ASSERT_TRUE(csi.numMDs > 0);
 
 	MapDef_Foreach(md) {
 		if (md->map[0] == '.')
@@ -284,7 +284,7 @@ static void testMapDefsMultiplayer (void)
 	char userinfo[MAX_INFO_STRING];
 	const mapDef_t* md;
 
-	CU_ASSERT_TRUE(cls.numMDs > 0);
+	CU_ASSERT_TRUE(csi.numMDs > 0);
 
 	Cvar_Set("sv_maxclients", "2");
 

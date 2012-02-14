@@ -107,6 +107,7 @@ void XYWndManager::constructPreferencePage(PreferenceGroup& group) {
 	page->appendCheckBox("", _("Show Window Outline"), RKEY_SHOW_OUTLINE);
 	page->appendCheckBox("", _("Show Workzone"), RKEY_SHOW_WORKZONE);
 	page->appendCheckBox("", _("Always caulk for new brushes"), RKEY_ALWAYS_CAULK_FOR_NEW_BRUSHES);
+	page->appendTextureEntry(_("Caulk texture name"), RKEY_CAULK_TEXTURE);
 }
 
 // Load/Reload the values from the registry

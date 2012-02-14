@@ -213,7 +213,7 @@ void TextureBrowser::setSelectedShader (const std::string& _shader)
 {
 	shader = _shader;
 	if (shader.empty())
-		shader = "textures/tex_common/nodraw";
+		shader = GlobalTexturePrefix_get() + "tex_common/nodraw";
 	setStatusText(shader);
 	focus(shader);
 }

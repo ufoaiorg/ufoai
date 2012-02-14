@@ -63,6 +63,7 @@ static cvar_t *scr_cursor;
 static cvar_t *scr_showcursor;
 
 static char cursorImage[MAX_QPATH];
+
 /**
  * @sa Font_DrawString
  */
@@ -214,7 +215,7 @@ static void SCR_TouchPics (void)
 {
 	if (scr_cursor->integer) {
 		if (scr_cursor->integer > 9 || scr_cursor->integer < 0)
-			Cvar_SetValue("cursor", 1);
+			SCR_ChangeCursor(1);
 
 		R_FindImage("pics/cursors/wait", it_pic);
 		R_FindImage("pics/cursors/ducked", it_pic);
@@ -224,6 +225,7 @@ static void SCR_TouchPics (void)
 		if (!R_FindImage(cursorImage, it_pic)) {
 			Com_Printf("SCR_TouchPics: Could not register cursor: %s\n", cursorImage);
 			cursorImage[0] = '\0';
+			SCR_ChangeCursor(1);
 		}
 	} else
 		cursorImage[0] = '\0';
@@ -261,7 +263,7 @@ static void SCR_DrawCursor (void)
 		if (image)
 			R_DrawImage(mousePosX - image->width / 2, mousePosY - image->height / 2, image);
 
-		if (mouseSpace == MS_WORLD && CL_BattlescapeRunning()) {
+		if (IN_GetMouseSpace() == MS_WORLD && CL_BattlescapeRunning()) {
 			HUD_UpdateCursor();
 		}
 	} else {
@@ -425,6 +427,12 @@ void SCR_UpdateScreen (void)
 	R_EndFrame();
 }
 
+void SCR_ChangeCursor (int cursor)
+{
+	if (cursor > 0)
+		Cvar_SetValue("cursor", cursor);
+}
+
 /**
  * @sa CL_Init
  */
@@ -434,6 +442,8 @@ void SCR_Init (void)
 	scr_consize = Cvar_Get("scr_consize", "1.0", 0, "Console size");
 	scr_rspeed = Cvar_Get("r_speeds", "0", CVAR_ARCHIVE, "Show some rendering stats");
 	scr_cursor = Cvar_Get("cursor", "1", 0, "Which cursor should be shown - 0-9");
+	/** @todo remove me - but this was an archive cvar once */
+	scr_cursor->flags = 0;
 	scr_showcursor = Cvar_Get("scr_showcursor", "1", 0, "Show/hide mouse cursor- 0-1");
 
 	/* register our commands */

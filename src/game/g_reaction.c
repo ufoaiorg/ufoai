@@ -14,7 +14,7 @@
  *				calls	G_ReactionFireCheckExecution()
  *						calls	G_ReactionFireTryToShoot()
  * 3. G_ClientEndRound()
- *		calls	G_ReactionFireEndTurn()
+ *		calls	G_ReactionFireOnEndTurn()
  *				calls	G_ReactionFireTryToShoot()
  *		calls	G_ReactionFireReset()
  */
@@ -102,8 +102,9 @@ void G_ReactionFireTargetsCreate (const edict_t *shooter)
  * @brief Add a reaction fire target for the given shooter.
  * @param[in] shooter The reaction firing actor
  * @param[in] target The potential reaction fire victim
+ * @param[in] tusForShot The TUs neededfor the shot
  */
-static void G_ReactionFireTargetsAdd (const edict_t *shooter, const edict_t *target)
+static void G_ReactionFireTargetsAdd (const edict_t *shooter, const edict_t *target, const int tusForShot)
 {
 	int i;
 	reactionFireTargets_t *rfts = NULL;
@@ -122,7 +123,7 @@ static void G_ReactionFireTargetsAdd (const edict_t *shooter, const edict_t *tar
 	}
 	assert(i < MAX_RF_TARGETS);
 	rfts->targets[i].target = target;
-	rfts->targets[i].triggerTUs = target->TU;
+	rfts->targets[i].triggerTUs = target->TU + tusForShot;
 	rfts->count++;
 }
 
@@ -161,10 +162,9 @@ static void G_ReactionFireTargetsRemove (edict_t *shooter, const edict_t *target
  * @brief Check if the given shooter is ready to reaction fire at the given target.
  * @param[in] shooter The reaction firing actor
  * @param[in] target The potential reaction fire victim
- * @param[in] tusShooter The TUs the shooter will need for the shot
  * @param[in] tusTarget The TUs the target will need for the shot, 0 for just moving
  */
-static qboolean G_ReactionFireTargetsExpired (const edict_t *shooter, const edict_t *target, const int tusShooter, const int tusTarget)
+static qboolean G_ReactionFireTargetsExpired (const edict_t *shooter, const edict_t *target, const int tusTarget)
 {
 	int i;
 	reactionFireTargets_t *rfts = NULL;
@@ -183,7 +183,7 @@ static qboolean G_ReactionFireTargetsExpired (const edict_t *shooter, const edic
 
 	for (i = 0; i < rfts->count; i++) {
 		if (rfts->targets[i].target == target)	/* found it ? */
-			return rfts->targets[i].triggerTUs + tusShooter <= target->TU + tusShooter;
+			return rfts->targets[i].triggerTUs <= target->TU + tusTarget;
 	}
 
 	return qfalse;	/* the shooter doesn't aim at this target */
@@ -465,12 +465,13 @@ static void G_ReactionFireTargetsUpdateAll (const edict_t *target)
 
 	/* check all possible shooters */
 	while ((shooter = G_EdictsGetNextLivingActor(shooter))) {
-
 		/* check whether reaction fire is possible */
-		if (G_ReactionFireIsPossible(shooter, target))
-			G_ReactionFireTargetsAdd(shooter, target);
-		else
+		if (G_ReactionFireIsPossible(shooter, target)) {
+			const int TUs = G_ActorGetTUForReactionFire(shooter);
+			G_ReactionFireTargetsAdd(shooter, target, TUs);
+		} else {
 			G_ReactionFireTargetsRemove(shooter, target);
+		}
 	}
 }
 
@@ -612,7 +613,7 @@ static qboolean G_ReactionFireCheckExecution (const edict_t *target)
 	while ((shooter = G_EdictsGetNextLivingActor(shooter))) {
 		int tus = G_ReactionFireGetTUsForItem(shooter, target, RIGHT(shooter));
 		if (tus > RF2) {		/* will not happen; it's like commenting it out, but keep compiler happy */
-			if (G_ReactionFireTargetsExpired(shooter, target, tus, 0)) {
+			if (G_ReactionFireTargetsExpired(shooter, target, 0)) {
 				shooter->reactionTarget = target;
 				fired |= G_ReactionFireTryToShoot(shooter, target);
 			}
@@ -620,7 +621,7 @@ static qboolean G_ReactionFireCheckExecution (const edict_t *target)
 			if (shooter->reactionTarget) {
 				const int reactionTargetTU = shooter->reactionTarget->TU;
 				const int reactionTU = shooter->reactionTUs;
-				const qboolean timeout = g_reaction_fair->integer == 0 || reactionTargetTU < reactionTU;
+				const qboolean timeout = reactionTargetTU < reactionTU;
 				/* check whether target has changed (i.e. the player is making a move with a
 				 * different entity) or whether target is out of time. */
 				if (shooter->reactionTarget != target || timeout)
@@ -672,7 +673,7 @@ void G_ReactionFirePreShot (const edict_t *target, const int fdTime)
 
 		entTUs = G_ReactionFireGetTUsForItem(shooter, target, RIGHT(shooter));
 		if (entTUs > RF2) {		/* will not happen; it's like commenting it out, but keep compiler happy */
-			if (G_ReactionFireTargetsExpired(shooter, target, entTUs, fdTime)) {
+			if (G_ReactionFireTargetsExpired(shooter, target, fdTime)) {
 				shooter->reactionTarget = target;
 				fired |= G_ReactionFireTryToShoot(shooter, target);
 			}
@@ -719,7 +720,7 @@ void G_ReactionFirePostShot (edict_t *target)
  * @brief Called at the end of turn, all outstanding reaction fire is resolved
  * @sa G_ClientEndRound
  */
-void G_ReactionFireEndTurn (void)
+void G_ReactionFireOnEndTurn (void)
 {
 	edict_t *ent = NULL;
 
@@ -727,8 +728,11 @@ void G_ReactionFireEndTurn (void)
 	while ((ent = G_EdictsGetNextLivingActor(ent))) {
 		if (!ent->reactionTarget)
 			continue;
+		G_ReactionFireTargetsRemove(ent, ent->reactionTarget);
+		ent->reactionTarget = NULL;
 	/*	assert("I bet this never happens" == NULL);	*/
-		G_ReactionFireTryToShoot(ent, ent->reactionTarget);
+	/* we explicitely do nothing at end of turn
+		G_ReactionFireTryToShoot(ent, ent->reactionTarget); */
 	}
 }
 

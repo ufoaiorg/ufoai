@@ -370,27 +370,35 @@ base/maps/laboratory/lab_craft_ufo_scout.map | GNU General Public License 2.0 or
 base/maps/laboratory/lab_main.map | GNU General Public License 2.0 or later
 base/maps/lake_ice.map | GNU General Public License 2.0 or later | "SparX" Beyeler
 base/maps/lake_ice_big.map | GNU General Public License 2.0 or later | 'SparX' Beyeler, Martin Gerhardy
-base/maps/mansion.ump | GNU General Public License 2.0 or later | Holger Gellrich
-base/maps/mansion/mansion_coast1.map | GNU General Public License 2.0 or later | Holger Gellrich
-base/maps/mansion/mansion_coast2.map | GNU General Public License 2.0 or later | Holger Gellrich
-base/maps/mansion/mansion_coast_corner_ne.map | GNU General Public License 2.0 or later | Holger Gellrich
-base/maps/mansion/mansion_coast_corner_se.map | GNU General Public License 2.0 or later | Holger Gellrich
-base/maps/mansion/mansion_coast_corner_sw.map | GNU General Public License 2.0 or later | Holger Gellrich
-base/maps/mansion/mansion_coast_east_b.map | GNU General Public License 2.0 or later | Holger Gellrich
-base/maps/mansion/mansion_coast_east_d.map | GNU General Public License 2.0 or later | Holger Gellrich
-base/maps/mansion/mansion_coast_east_s.map | GNU General Public License 2.0 or later | Holger Gellrich
-base/maps/mansion/mansion_coast_east_u.map | GNU General Public License 2.0 or later | Holger Gellrich
-base/maps/mansion/mansion_coast_south_b.map | GNU General Public License 2.0 or later | Holger Gellrich
-base/maps/mansion/mansion_coast_south_d.map | GNU General Public License 2.0 or later | Holger Gellrich
-base/maps/mansion/mansion_coast_south_s.map | GNU General Public License 2.0 or later | Holger Gellrich
-base/maps/mansion/mansion_coast_south_u.map | GNU General Public License 2.0 or later | Holger Gellrich
-base/maps/mansion/mansion_craft_drop_empty.map | GNU General Public License 2.0 or later | Holger Gellrich
-base/maps/mansion/mansion_main.map | GNU General Public License 2.0 or later | Holger Gellrich
-base/maps/mansion/mansion_maingate.map | GNU General Public License 2.0 or later | Holger Gellrich
-base/maps/mansion/mansion_ocean1.map | GNU General Public License 2.0 or later | Holger Gellrich
-base/maps/mansion/mansion_ocean2.map | GNU General Public License 2.0 or later | Holger Gellrich
-base/maps/mansion/mansion_ocean3.map | GNU General Public License 2.0 or later | Holger Gellrich
-base/maps/mansion/mansion_poolhouse.map | GNU General Public License 2.0 or later | Holger Gellrich
+base/maps/mansion.ump | GNU General Public License 2.0 or later | Holger 'ShipIt' Gellrich
+base/maps/mansion/mansion_coast1.map | GNU General Public License 2.0 or later | Holger 'ShipIt' Gellrich
+base/maps/mansion/mansion_coast2.map | GNU General Public License 2.0 or later | Holger 'ShipIt' Gellrich
+base/maps/mansion/mansion_coast_corner_ne.map | GNU General Public License 2.0 or later | Holger 'ShipIt' Gellrich
+base/maps/mansion/mansion_coast_corner_se.map | GNU General Public License 2.0 or later | Holger 'ShipIt' Gellrich
+base/maps/mansion/mansion_coast_corner_sw.map | GNU General Public License 2.0 or later | Holger 'ShipIt' Gellrich
+base/maps/mansion/mansion_coast_east_b.map | GNU General Public License 2.0 or later | Holger 'ShipIt' Gellrich
+base/maps/mansion/mansion_coast_east_d.map | GNU General Public License 2.0 or later | Holger 'ShipIt' Gellrich
+base/maps/mansion/mansion_coast_east_s.map | GNU General Public License 2.0 or later | Holger 'ShipIt' Gellrich
+base/maps/mansion/mansion_coast_east_u.map | GNU General Public License 2.0 or later | Holger 'ShipIt' Gellrich
+base/maps/mansion/mansion_coast_south_b.map | GNU General Public License 2.0 or later | Holger 'ShipIt' Gellrich
+base/maps/mansion/mansion_coast_south_d.map | GNU General Public License 2.0 or later | Holger 'ShipIt' Gellrich
+base/maps/mansion/mansion_coast_south_s.map | GNU General Public License 2.0 or later | Holger 'ShipIt' Gellrich
+base/maps/mansion/mansion_coast_south_u.map | GNU General Public License 2.0 or later | Holger 'ShipIt' Gellrich
+base/maps/mansion/mansion_craft_drop_empty.map | GNU General Public License 2.0 or later | Holger 'ShipIt' Gellrich
+base/maps/mansion/mansion_craft_drop_firebird.map | GNU General Public License 2.0 or later | Holger 'ShipIt' Gellrich
+base/maps/mansion/mansion_craft_drop_herakles.map | GNU General Public License 2.0 or later | Holger 'ShipIt' Gellrich
+base/maps/mansion/mansion_craft_drop_raptor.map | GNU General Public License 2.0 or later | Holger 'ShipIt' Gellrich
+base/maps/mansion/mansion_craft_ufo_empty.map | GNU General Public License 2.0 or later | Holger 'ShipIt' Gellrich
+base/maps/mansion/mansion_craft_ufo_fighter.map | GNU General Public License 2.0 or later | Holger 'ShipIt' Gellrich
+base/maps/mansion/mansion_craft_ufo_harvester.map | GNU General Public License 2.0 or later | Holger 'ShipIt' Gellrich
+base/maps/mansion/mansion_craft_ufo_scout.map | GNU General Public License 2.0 or later | Holger 'ShipIt' Gellrich
+base/maps/mansion/mansion_craft_ufo_supply.map | GNU General Public License 2.0 or later | Holger 'ShipIt' Gellrich
+base/maps/mansion/mansion_main.map | GNU General Public License 2.0 or later | Holger 'ShipIt' Gellrich
+base/maps/mansion/mansion_maingate.map | GNU General Public License 2.0 or later | Holger 'ShipIt' Gellrich
+base/maps/mansion/mansion_ocean1.map | GNU General Public License 2.0 or later | Holger 'ShipIt' Gellrich
+base/maps/mansion/mansion_ocean2.map | GNU General Public License 2.0 or later | Holger 'ShipIt' Gellrich
+base/maps/mansion/mansion_ocean3.map | GNU General Public License 2.0 or later | Holger 'ShipIt' Gellrich
+base/maps/mansion/mansion_poolhouse.map | GNU General Public License 2.0 or later | Holger 'ShipIt' Gellrich
 base/maps/mart.ump | GNU General Public License 2.0 or later
 base/maps/mart/ma_craft_drop_firebird.map | GNU General Public License 2.0 or later
 base/maps/mart/ma_craft_drop_herakles.map | GNU General Public License 2.0 or later
@@ -3183,14 +3191,15 @@ base/pics/minihud/bar_floor_mini.png | GNU General Public License 2.0 | MCR | Ba
 base/pics/minihud/bar_right_deco.png | GNU General Public License 2.0 | MCR | Based on the original menu artwork by SparX and Rasta
 base/pics/minihud/bar_right_mini.png | GNU General Public License 2.0 | MCR | Based on the original menu artwork by SparX and Rasta and on images from http://sourceforge.net/projects/openiconlibrary
 base/pics/minihud/bar_selbox.png | GNU General Public License 2.0 |  | Based on the original menu artwork by SparX and Rasta
+base/pics/minihud/bar_selbox_hovered.png | GNU General Public License 2.0 |  | Based on the original menu artwork by SparX and Rasta
 base/pics/minihud/bar_teambox_deco.png | GNU General Public License 2.0 | MCR | Based on the original menu artwork by SparX and Rasta
+base/pics/minihud/bar_teambox_disabled.png | GNU General Public License 2.0 | MCR | Based on the original menu artwork by SparX and Rasta
+base/pics/minihud/bar_teambox_full.png | GNU General Public License 2.0 | MCR | Based on the original menu artwork by SparX and Rasta
+base/pics/minihud/bar_teambox_hovered.png | GNU General Public License 2.0 | MCR | Based on the original menu artwork by SparX and Rasta
 base/pics/minihud/bar_teambox_mini.png | GNU General Public License 2.0 | MCR | Based on the original menu artwork by SparX and Rasta
 base/pics/minihud/bar_teamleft_deco.png | GNU General Public License 2.0 | MCR | Based on the original menu artwork by SparX and Rasta
-base/pics/minihud/bar_teamleft_mini.png | GNU General Public License 2.0 | MCR | Based on the original menu artwork by SparX and Rasta
 base/pics/minihud/bar_teamright_deco.png | GNU General Public License 2.0 | MCR | Based on the original menu artwork by SparX and Rasta
-base/pics/minihud/bar_teamright_mini.png | GNU General Public License 2.0 | MCR | Based on the original menu artwork by SparX and Rasta
 base/pics/minihud/bar_teamsep_deco.png | GNU General Public License 2.0 | MCR | Based on the original menu artwork by SparX and Rasta
-base/pics/minihud/bar_teamsep_mini.png | GNU General Public License 2.0 | MCR | Based on the original menu artwork by SparX and Rasta
 base/pics/minihud/bar_top_deco.png | GNU General Public License 2.0 | MCR | Based on the original menu artwork by SparX and Rasta
 base/pics/minihud/bar_top_mini.png | GNU General Public License 2.0 | MCR | Based on the original menu artwork by SparX and Rasta
 base/pics/minihud/bt_empty.png | GNU General Public License 2.0 | MCR | Based on the original menu artwork by SparX and Rasta
@@ -6810,8 +6819,8 @@ radiant/prefabs/misc/pharaoh.map | GNU General Public License 2.0 | MCR
 radiant/prefabs/misc/shop/ware10.map | GNU General Public License 2.0
 radiant/prefabs/misc/sodamachine.jpg | GNU General Public License 2.0 | MCR
 radiant/prefabs/misc/sodamachine.map | GNU General Public License 2.0 | MCR
-radiant/prefabs/misc/staircase_spiral.jpg | GNU General Public License 2.0 or later | ShipIt
-radiant/prefabs/misc/staircase_spiral.map | GNU General Public License 2.0 or later | ShipIt
+radiant/prefabs/misc/staircase_spiral.jpg | GNU General Public License 2.0 or later | Holger 'ShipIt' Gellrich
+radiant/prefabs/misc/staircase_spiral.map | GNU General Public License 2.0 or later | Holger 'ShipIt' Gellrich
 radiant/prefabs/misc/trashbin001.jpg | GNU General Public License 2.0 or later | Nate Wright
 radiant/prefabs/misc/trashbin001.map | GNU General Public License 2.0 or later | Nate Wright
 radiant/prefabs/misc/waterdisp.jpg | GNU General Public License 2.0 | MCR

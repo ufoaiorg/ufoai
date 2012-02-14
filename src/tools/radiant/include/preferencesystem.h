@@ -61,6 +61,8 @@ public:
 	 */
 	virtual GtkWidget* appendEntry(const std::string& name, const std::string& registryKey) = 0;
 
+	virtual GtkWidget* appendTextureEntry(const std::string& name, const std::string& registryKey) = 0;
+
 	/* greebo: Appends an entry field with spinner buttons which retrieves its value from the given
 	 * RegistryKey. The lower and upper values have to be passed as well.
 	 */

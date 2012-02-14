@@ -189,7 +189,7 @@ void G_ClientEndRound (player_t * player)
 	}
 
 	/* clear any remaining reaction fire */
-	G_ReactionFireEndTurn();
+	G_ReactionFireOnEndTurn();
 
 	/* let all the invisible players perish now */
 	G_CheckVisTeamAll(level.activeTeam, qtrue, NULL);

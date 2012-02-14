@@ -286,9 +286,9 @@ static void testMapDef (void)
 	}
 
 	CU_ASSERT_PTR_NULL(md);
-	UFO_CU_ASSERT_EQUAL_INT_MSG_FATAL(i, cls.numMDs, va("only looped over %i mapdefs, but expected %i", i, cls.numMDs));
+	UFO_CU_ASSERT_EQUAL_INT_MSG_FATAL(i, csi.numMDs, va("only looped over %i mapdefs, but expected %i", i, csi.numMDs));
 
-	i = cls.numMDs;
+	i = csi.numMDs;
 
 	MapDef_ForeachCondition(md, !md->singleplayer || !md->campaign) {
 		i--;
@@ -296,7 +296,7 @@ static void testMapDef (void)
 	}
 
 	CU_ASSERT_PTR_NULL(md);
-	CU_ASSERT_NOT_EQUAL(i, cls.numMDs);
+	CU_ASSERT_NOT_EQUAL(i, csi.numMDs);
 
 	MapDef_ForeachSingleplayerCampaign(md) {
 		i--;

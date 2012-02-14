@@ -106,7 +106,7 @@ item assault_ammo
 		}
 		firedef
 		{
-			name		"_Aimed shot"
+			name		"_Aimed Shot"
 			skill		assault
 			projtl		bullet
 			impact		bulletImpact
@@ -194,7 +194,7 @@ item assault_ammo
 		}
 		firedef
 		{
-			name		"_Aimed shot"
+			name		"_Aimed Shot"
 			skill		assault
 			projtl		bullet
 			impact		bulletImpact

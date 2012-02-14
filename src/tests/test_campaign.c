@@ -25,6 +25,7 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #include "test_shared.h"
 #include "test_campaign.h"
 #include "../client/client.h"
+#include "../client/cgame/cl_game.h"
 #include "../client/renderer/r_state.h" /* r_state */
 #include "../client/ui/ui_main.h"
 #include "../client/cgame/campaign/cp_campaign.h"
@@ -83,6 +84,8 @@ static void ResetCampaignData (void)
 
 	MAP_Shutdown();
 	MAP_Init(campaign->map);
+
+	ccs.curCampaign = campaign;
 }
 
 /**
@@ -102,9 +105,12 @@ static int UFO_InitSuiteCampaign (void)
 	r_state.active_texunit = &r_state.texunits[0];
 	R_FontInit();
 	UI_Init();
+	GAME_InitStartup();
 
 	OBJZERO(cls);
 	Com_ParseScripts(qfalse);
+
+	Cmd_ExecuteString("game_setmode campaigns");
 
 	Cmd_AddCommand("msgoptions_set", Cmd_Dummy_f, NULL);
 
@@ -978,12 +984,10 @@ static void testCampaignRun (void)
 
 	BS_InitMarket(campaign);
 
-	cls.frametime = 1;
-
 	startDay = ccs.date.day;
 	for (i = 0; i < seconds; i++) {
 		ccs.gameTimeScale = 1;
-		CP_CampaignRun(campaign);
+		CP_CampaignRun(campaign, 1);
 	}
 	CU_ASSERT_EQUAL(ccs.date.day - startDay, days);
 
@@ -1071,8 +1075,6 @@ static void testCampaignDateHandling (void)
 
 	BS_InitMarket(campaign);
 
-	cls.frametime = 1;
-
 	/* one hour till month change */
 	ccs.date.day = 30;
 	ccs.date.sec = 23 * 60 * 60;
@@ -1080,7 +1082,7 @@ static void testCampaignDateHandling (void)
 	ccs.gameLapse = 7;
 	ccs.paid = qtrue;
 	CP_UpdateTime();
-	CP_CampaignRun(campaign);
+	CP_CampaignRun(campaign, 1);
 	CU_ASSERT_FALSE(ccs.paid);
 	CU_ASSERT_TRUE(CP_IsTimeStopped());
 

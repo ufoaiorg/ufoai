@@ -24,7 +24,6 @@
 #ifndef CP_CGAME_CALLBACKS_H
 #define CP_CGAME_CALLBACKS_H
 
-#include "../../client.h"
 #include "../cl_game.h"
 
 const cgame_import_t *cgImport;
@@ -39,8 +38,8 @@ equipDef_t *GAME_CP_GetEquipmentDefinition(void);
 void GAME_CP_CharacterCvars(const character_t *chr);
 qboolean GAME_CP_TeamIsKnown(const teamDef_t *teamDef);
 void GAME_CP_Drop(void);
-void GAME_CP_InitializeBattlescape(const chrList_t *team);
-void GAME_CP_Frame(void);
+struct dbuffer *GAME_CP_InitializeBattlescape(const chrList_t *team);
+void GAME_CP_Frame(float secondsSinceLastFrame);
 const char* GAME_CP_GetTeamDef(void);
 
 #endif

@@ -58,7 +58,6 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
  * single base map tile */
 #define BASE_TILE_SIZE 512
 #define BASE_TILE_UNITS (BASE_TILE_SIZE / UNIT_SIZE)
-#define BASE_MAX_WORLDLEVEL 6
 
 #define BASE_INITIALINTEREST 1.0
 

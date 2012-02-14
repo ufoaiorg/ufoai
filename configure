@@ -321,10 +321,6 @@ check_path_characters
 
 # uforadiant is disabled by default
 set_var "uforadiant_DISABLE" "yes"
-# memory module is disabled by default
-set_var "memory_DISABLE" "yes"
-# ufoslicer module is disabled by default
-set_var "ufoslicer_DISABLE" "yes"
 
 while [ $# -gt 0 ]; do
 	case "$1" in

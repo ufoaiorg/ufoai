@@ -294,7 +294,6 @@ extern cvar_t *m_rage_stop;
 extern cvar_t *m_panic_stop;
 
 extern cvar_t *g_endlessaliens;
-extern cvar_t *g_reaction_fair;
 extern cvar_t *g_ailua;
 extern cvar_t *g_aidebug;
 extern cvar_t *g_drawtraces;
@@ -338,6 +337,7 @@ int G_ActorUsableTUs(const edict_t *ent);
 int G_ActorGetReservedTUs(const edict_t *ent);
 void G_ActorCheckRevitalise(edict_t *ent);
 int G_ActorCalculateMaxTU(const edict_t *ent);
+int G_ActorGetArmourTUPenalty(const edict_t *ent);
 
 /* g_mission.c */
 qboolean G_MissionTouch(edict_t *self, edict_t *activator);
@@ -377,7 +377,7 @@ void G_ReactionFireReset(int team);
 void G_ReactionFireUpdate(edict_t *ent, fireDefIndex_t fmIdx, actorHands_t hand, const objDef_t *od);
 qboolean G_ReactionFireSettingsReserveTUs(edict_t *ent);
 qboolean G_ReactionFireOnMovement(edict_t *target);
-void G_ReactionFireEndTurn(void);
+void G_ReactionFireOnEndTurn(void);
 void G_ReactionFireTargetsInit (void);
 void G_ReactionFireTargetsCreate (const edict_t *shooter);
 

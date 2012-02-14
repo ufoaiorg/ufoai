@@ -23,7 +23,7 @@ along with this program; if not, write to the Free Software
 Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 */
 
-#include "../../client.h" /* cls */
+#include "../../cl_shared.h"
 #include "../cl_game.h" /* GAME_GetTeamDef */
 #include "../cl_game_team.h" /* character xml loading */
 #include "cp_campaign.h"
@@ -464,7 +464,7 @@ void E_ResetEmployee (employee_t *employee)
 	/* Remove employee from building (and tech/production). */
 	E_RemoveEmployeeFromBuildingOrAircraft(employee);
 	/* Destroy the inventory of the employee (carried items will remain in base->storage) */
-	cls.i.DestroyInventory(&cls.i, &employee->chr.i);
+	cgi->INV_DestroyInventory(&employee->chr.i);
 }
 
 /**
@@ -587,7 +587,7 @@ employee_t* E_CreateEmployee (employeeType_t type, const nation_t *nation, const
 		Com_Error(ERR_DROP, "Unknown employee type\n");
 	}
 
-	CL_GenerateCharacter(&employee.chr, teamDefName);
+	cgi->CL_GenerateCharacter(&employee.chr, teamDefName);
 	employee.chr.score.rank = CL_GetRankIdx(rank);
 
 	Com_DPrintf(DEBUG_CLIENT, "Generate character for type: %i\n", type);

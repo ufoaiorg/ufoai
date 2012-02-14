@@ -92,28 +92,37 @@ qboolean Rimp_Init (void)
 
 	info = SDL_GetVideoInfo();
 	if (info) {
+		SDL_VideoInfo videoInfo;
+		SDL_PixelFormat pixelFormat;
+		SDL_Rect **modes;
 		Com_Printf("I: desktop depth: %ibpp\n", info->vfmt->BitsPerPixel);
 		r_config.videoMemory = info->video_mem;
 		Com_Printf("I: video memory: %i\n", r_config.videoMemory);
-		memcpy(&r_sdl_config.pixelFormat, info->vfmt, sizeof(r_sdl_config.pixelFormat));
-		memcpy(&r_sdl_config.videoInfo, info, sizeof(r_sdl_config.videoInfo));
-		r_sdl_config.videoInfo.vfmt = &r_sdl_config.pixelFormat;
-		r_sdl_config.modes = SDL_ListModes(r_sdl_config.videoInfo.vfmt, SDL_OPENGL | SDL_FULLSCREEN);
-		if (r_sdl_config.modes) {
+		memcpy(&pixelFormat, info->vfmt, sizeof(pixelFormat));
+		memcpy(&videoInfo, info, sizeof(videoInfo));
+		videoInfo.vfmt = &pixelFormat;
+		modes = SDL_ListModes(videoInfo.vfmt, SDL_OPENGL | SDL_FULLSCREEN);
+		if (modes) {
 			char buf[4096] = "";
 			Q_strcat(buf, "I: Available resolutions:", sizeof(buf));
-			if (r_sdl_config.modes == (SDL_Rect **)-1) {
+			if (modes == (SDL_Rect **)-1) {
 				Com_Printf("%s any resolution is supported\n", buf);
+				r_sdl_config.modes = NULL;
 			} else {
-				for (r_sdl_config.numModes = 0; r_sdl_config.modes[r_sdl_config.numModes]; r_sdl_config.numModes++) {
-					const int w = r_sdl_config.modes[r_sdl_config.numModes]->w;
-					const int h = r_sdl_config.modes[r_sdl_config.numModes]->h;
-					const char *modeStr = va(" %ix%i", w, h);
+				int i;
+				for (r_sdl_config.numModes = 0; modes[r_sdl_config.numModes]; r_sdl_config.numModes++);
+
+				r_sdl_config.modes = Mem_AllocExt(sizeof(rect_t) * r_sdl_config.numModes, qfalse);
+				for (i = 0; i < r_sdl_config.numModes; i++) {
+					r_sdl_config.modes[i][0] = modes[i]->w;
+					r_sdl_config.modes[i][1] = modes[i]->h;
+					const char *modeStr = va(" %ix%i", r_sdl_config.modes[i][0], r_sdl_config.modes[i][1]);
 					Q_strcat(buf, modeStr, sizeof(buf));
 				}
 				Com_Printf("%s (%i)\n", buf, r_sdl_config.numModes);
 			}
 		} else {
+			r_sdl_config.modes = NULL;
 			Com_Printf("I: Could not get list of available resolutions\n");
 		}
 	} else {

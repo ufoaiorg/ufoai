@@ -23,7 +23,7 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 
 */
 
-#include "../../client.h"
+#include "../../cl_shared.h"
 #include "../cl_game.h"
 #include "../campaign/cp_cgame_callbacks.h"
 #include "../campaign/cp_campaign.h"
@@ -49,7 +49,7 @@ static void GAME_SCP_Shutdown (void)
 	Mem_Free(scd);
 }
 
-static void GAME_SCP_Frame (void)
+static void GAME_SCP_Frame (float secondsSinceLastFrame)
 {
 	if (!scd->initialized && CP_IsRunning()) {
 		SCP_Parse();
@@ -59,7 +59,7 @@ static void GAME_SCP_Frame (void)
 		scd->initialized = qtrue;
 	}
 
-	GAME_CP_Frame();
+	GAME_CP_Frame(secondsSinceLastFrame);
 }
 
 #ifndef HARD_LINKED_CGAME

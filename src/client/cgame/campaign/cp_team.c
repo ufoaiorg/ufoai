@@ -23,7 +23,7 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 
 */
 
-#include "../../client.h" /* cls */
+#include "../../cl_shared.h"
 #include "../../cl_team.h"
 #include "cp_campaign.h"
 #include "cp_team.h"
@@ -165,7 +165,7 @@ void CP_CleanupAircraftCrew (aircraft_t *aircraft, equipDef_t * ed)
 		if (employee->ugv) {
 			/* Check if there is a weapon and add it if there isn't. */
 			if (!RIGHT(chr) || !RIGHT(chr)->item.t)
-				cls.i.EquipActorRobot(&cls.i, &chr->i, INVSH_GetItemByID(employee->ugv->weapon));
+				cgi->INV_EquipActorRobot(&chr->i, INVSH_GetItemByID(employee->ugv->weapon));
 		}
 	}
 
@@ -184,7 +184,7 @@ void CP_CleanupAircraftCrew (aircraft_t *aircraft, equipDef_t * ed)
 					ic->item = CP_AddWeaponAmmo(ed, ic->item);
 				} else {
 					/* Drop ammo used for reloading and sold carried weapons. */
-					if (!cls.i.RemoveFromInventory(&cls.i, &chr->i, INVDEF(container), ic))
+					if (!cgi->INV_RemoveFromInventory(&chr->i, INVDEF(container), ic))
 						Com_Error(ERR_DROP, "Could not remove item from inventory");
 				}
 			}
@@ -220,7 +220,7 @@ void CP_CleanTempInventory (base_t* base)
 	if (!base)
 		return;
 
-	cls.i.DestroyInventory(&cls.i, &base->bEquipment);
+	cgi->INV_DestroyInventory(&base->bEquipment);
 }
 
 /**

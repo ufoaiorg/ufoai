@@ -24,7 +24,7 @@ along with this program; if not, write to the Free Software
 Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 */
 
-#include "../../client.h" /* cl, cls */
+#include "../../cl_shared.h"
 #include "../../cl_inventory.h" /* INV_GetEquipmentDefinitionByID */
 #include "../../ui/ui_main.h"
 #include "../../ui/ui_popup.h" /* popupText */
@@ -606,9 +606,6 @@ qboolean B_AssembleMap (const base_t *base)
 			Q_strcat(coords, va("%i %i %i ", col * BASE_TILE_UNITS, (BASE_SIZE - row - 1) * BASE_TILE_UNITS, 0), sizeof(coords));
 		}
 	}
-
-	/* set maxlevel for base attacks */
-	cl.mapMaxLevel = BASE_MAX_WORLDLEVEL;
 
 	SAV_QuickSave();
 
@@ -1885,7 +1882,7 @@ static void B_InitialEquipment (aircraft_t *aircraft, const equipDef_t *ed)
 
 		/* pack equipment */
 		Com_DPrintf(DEBUG_CLIENT, "B_InitialEquipment: Packing initial equipment for %s.\n", chr->name);
-		cls.i.EquipActor(&cls.i, &chr->i, ed, chr->teamDef);
+		cgi->INV_EquipActor(&chr->i, ed, chr->teamDef);
 		chrListTemp.chr[chrListTemp.num] = chr;
 		chrListTemp.num++;
 	}

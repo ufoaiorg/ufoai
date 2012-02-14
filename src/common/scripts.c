@@ -3190,6 +3190,110 @@ static void Com_AddObjectLinks (void)
 	}
 }
 
+/** @brief valid mapdef descriptors */
+static const value_t mapdef_vals[] = {
+	{"description", V_TRANSLATION_STRING, offsetof(mapDef_t, description), 0},
+	{"map", V_HUNK_STRING, offsetof(mapDef_t, map), 0},
+	{"param", V_HUNK_STRING, offsetof(mapDef_t, param), 0},
+	{"size", V_HUNK_STRING, offsetof(mapDef_t, size), 0},
+	{"civilianteam", V_HUNK_STRING, offsetof(mapDef_t, civTeam), 0},
+
+	{"maxaliens", V_INT, offsetof(mapDef_t, maxAliens), MEMBER_SIZEOF(mapDef_t, maxAliens)},
+	{"storyrelated", V_BOOL, offsetof(mapDef_t, storyRelated), MEMBER_SIZEOF(mapDef_t, storyRelated)},
+	{"hurtaliens", V_BOOL, offsetof(mapDef_t, hurtAliens), MEMBER_SIZEOF(mapDef_t, hurtAliens)},
+
+	{"teams", V_INT, offsetof(mapDef_t, teams), MEMBER_SIZEOF(mapDef_t, teams)},
+	{"multiplayer", V_BOOL, offsetof(mapDef_t, multiplayer), MEMBER_SIZEOF(mapDef_t, multiplayer)},
+	{"singleplayer", V_BOOL, offsetof(mapDef_t, singleplayer), MEMBER_SIZEOF(mapDef_t, singleplayer)},
+	{"campaign", V_BOOL, offsetof(mapDef_t, campaign), MEMBER_SIZEOF(mapDef_t, campaign)},
+
+	{"onwin", V_HUNK_STRING, offsetof(mapDef_t, onwin), 0},
+	{"onlose", V_HUNK_STRING, offsetof(mapDef_t, onlose), 0},
+
+	{"ufos", V_LIST, offsetof(mapDef_t, ufos), 0},
+	{"aircraft", V_LIST, offsetof(mapDef_t, aircraft), 0},
+	{"terrains", V_LIST, offsetof(mapDef_t, terrains), 0},
+	{"populations", V_LIST, offsetof(mapDef_t, populations), 0},
+	{"cultures", V_LIST, offsetof(mapDef_t, cultures), 0},
+	{"gametypes", V_LIST, offsetof(mapDef_t, gameTypes), 0},
+
+	{NULL, 0, 0, 0}
+};
+
+static void Com_ParseMapDefinition (const char *name, const char **text)
+{
+	const char *errhead = "Com_ParseMapDefinition: unexpected end of file (mapdef ";
+	mapDef_t *md;
+	const char *token;
+
+	/* get it's body */
+	token = Com_Parse(text);
+
+	if (!*text || *token != '{') {
+		Com_Printf("Com_ParseMapDefinition: mapdef \"%s\" without body ignored\n", name);
+		return;
+	}
+
+	md = Com_GetMapDefByIDX(csi.numMDs);
+	csi.numMDs++;
+	if (csi.numMDs >= lengthof(csi.mds))
+		Sys_Error("Com_ParseMapDefinition: Max mapdef hit");
+
+	OBJZERO(*md);
+	md->id = Mem_PoolStrDup(name, com_genericPool, 0);
+	md->singleplayer = qtrue;
+	md->campaign = qtrue;
+	md->multiplayer = qfalse;
+
+	do {
+		token = Com_EParse(text, errhead, name);
+		if (!*text)
+			break;
+		if (*token == '}')
+			break;
+
+		if (!Com_ParseBlockToken(name, text, md, mapdef_vals, com_genericPool, token)) {
+			Com_Printf("Com_ParseMapDefinition: unknown token \"%s\" ignored (mapdef %s)\n", token, name);
+			continue;
+		}
+	} while (*text);
+
+	if (!md->map) {
+		Com_Printf("Com_ParseMapDefinition: mapdef \"%s\" with no map\n", name);
+		csi.numMDs--;
+	}
+
+	if (!md->description) {
+		Com_Printf("Com_ParseMapDefinition: mapdef \"%s\" with no description\n", name);
+		csi.numMDs--;
+	}
+
+	if (md->maxAliens <= 0) {
+		Com_Printf("Com_ParseMapDefinition: mapdef \"%s\" with invalid maxAlien value\n", name);
+		csi.numMDs--;
+	}
+}
+
+mapDef_t* Com_GetMapDefByIDX (int index)
+{
+	return &csi.mds[index];
+}
+
+mapDef_t* Com_GetMapDefinitionByID (const char *mapDefID)
+{
+	mapDef_t *md;;
+
+	assert(mapDefID);
+
+	MapDef_Foreach(md) {
+		if (Q_streq(md->id, mapDefID))
+			return md;
+	}
+
+	Com_DPrintf(DEBUG_CLIENT, "Com_GetMapDefinition: Could not find mapdef with id: '%s'\n", mapDefID);
+	return NULL;
+}
+
 /**
  * @sa CL_ParseClientData
  * @sa CL_ParseScriptFirst
@@ -3238,6 +3342,8 @@ void Com_ParseScripts (qboolean onlyServer)
 			Com_ParseUGVs(name, &text);
 		else if (Q_streq(type, "chrtemplate"))
 			Com_ParseCharacterTemplate(name, &text);
+		else if (Q_streq(type, "mapdef"))
+			Com_ParseMapDefinition(name, &text);
 		else if (!onlyServer)
 			CL_ParseClientData(type, name, &text);
 	}

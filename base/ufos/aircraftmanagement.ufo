@@ -5,7 +5,7 @@
 //
 //	model - Model that is displayed on geoscape. For menu models see the research.ufo file.
 //	size - Maximum number of employees aboard.
-//	size - 1 for small aircraft (stored in small and large hangars), 2 for large aircraft (stored in large hangar)
+//	size - 1 for small aircraft (stored in small hangar), 2 for large aircraft (stored in large hangar)
 //	slot {}	- Any number of entries. Parameters can be the following :
 //		type		- The type of item this slot can contain (See "type "in "craftitem" below)
 //		position	- Slot's position on the aircraft. See cl_aircraft.c for available values.

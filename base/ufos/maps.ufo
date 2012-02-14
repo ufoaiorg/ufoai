@@ -930,7 +930,7 @@ mapdef mm_harbour
 {
 	map			"+mm_harbour"
 	description	"_Harbour."
-	param		"am"
+	param		"test3"
 	size		"small"
 	teams		4
 	multiplayer	false
@@ -945,10 +945,11 @@ mapdef mm_harbour
 
 	ufos
 	{
-		craft_ufo_supply
+//		craft_ufo_supply
 		craft_ufo_scout
-		craft_ufo_fighter
-		craft_ufo_harvester
+//		craft_ufo_fighter
+// harvester should have it's own assembly
+//		craft_ufo_harvester
 	}
 
 	terrains
@@ -1373,7 +1374,9 @@ mapdef mansion
     maxaliens		8
     aircraft
     {
-		//any
+		craft_drop_firebird
+		craft_drop_herakles
+		craft_drop_raptor
     }
 
     ufos
@@ -1381,6 +1384,7 @@ mapdef mansion
 	    craft_ufo_fighter
 		craft_ufo_scout
 		craft_ufo_harvester
+		craft_ufo_supply
     }
 
     terrains
