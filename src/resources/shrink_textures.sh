@@ -64,8 +64,11 @@ find . -name "*.png" -o -name "*.jpg" -o -name "*.tga" | while read IMG; do
 			fi
 		done
 		if $NPOTH || $NPOTW; then
-			echo $IMG $W x $H - resizing to $POTW x $POTH to make it POT, because there is a bug in sources I could not fix, when drawing NPOT images in Android
+			echo $IMG $W x $H - resizing to $POTW x $POTH, because there is Android-specific bug with non-power-of-two textures which I could not fix
+			mkdir -p "`dirname $OUTDIR/$IMG`"
 			convert "$IMG" -filter Cubic -resize ${POTW}x${POTH}\! "$OUTDIR/$IMG-$$"
+			mv -f "$OUTDIR/$IMG-$$" "$OUTDIR/$IMG"
+			echo "`echo $IMG | sed 's@[.]png\|[.]jpg\|[.]tga@@' | sed 's@./@@'`" $W $H >> "$OUTDIR/downsampledimages.txt"
 		fi
 	fi
 done
