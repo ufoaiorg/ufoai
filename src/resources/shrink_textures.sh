@@ -64,6 +64,10 @@ find . -name "*.png" -o -name "*.jpg" -o -name "*.tga" | while read IMG; do
 			fi
 		done
 		if $NPOTH || $NPOTW; then
+			if [ "$POTW.$POTH" = "512.512" ]; then # Avoid worst-case scenario
+				POTW=256
+				POTH=256
+			fi
 			echo $IMG $W x $H - resizing to $POTW x $POTH, because there is Android-specific bug with non-power-of-two textures which I could not fix
 			mkdir -p "`dirname $OUTDIR/$IMG`"
 			convert "$IMG" -filter Cubic -resize ${POTW}x${POTH}\! "$OUTDIR/$IMG-$$"
