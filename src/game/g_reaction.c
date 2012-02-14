@@ -465,7 +465,9 @@ static void G_ReactionFireTargetsUpdateAll (const edict_t *target)
 
 	/* check all possible shooters */
 	while ((shooter = G_EdictsGetNextLivingActor(shooter))) {
-		/* check whether reaction fire is possible */
+		if (!G_IsReaction(shooter))
+			continue;
+		/* check whether reaction fire is possible (friend/foe, LoS */
 		if (G_ReactionFireIsPossible(shooter, target)) {
 			const int TUs = G_ActorGetTUForReactionFire(shooter);
 			G_ReactionFireTargetsAdd(shooter, target, TUs);
