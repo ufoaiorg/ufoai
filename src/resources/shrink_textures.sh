@@ -21,6 +21,15 @@ OUTDIR=`cd $OUTDIR && pwd`
 
 echo Reading from $DIR, writing to $OUTDIR
 
+getNearestPowerOfTwo () {
+	for Q in 1 2 4 8 16 32 64 128 256 512 1024 2048 4096 8192; do
+		if [ "$1" -le "$Q" ]; then
+			echo "$Q"
+			return
+		fi
+	done
+}
+
 cd "$DIR"
 rm -f "$OUTDIR/downsampledimages.txt"
 find . -name "*.png" -o -name "*.jpg" -o -name "*.tga" | while read IMG; do
@@ -39,31 +48,23 @@ find . -name "*.png" -o -name "*.jpg" -o -name "*.tga" | while read IMG; do
 			TARGET=512 # Convert to 512x256 or 256x512, many UI elements are narrow like that, and the earth image won't look ugly
 		fi
 		PERCENT=`echo "scale=20; $TARGET * 100 / $MAX" | bc`
-		echo $IMG $W x $H - resizing to $TARGET x `expr $TARGET '*' 1000 / $RATIO` by $PERCENT%
+		TARGET2=`expr $TARGET '*' 1000 / $RATIO`
+		if [ $H -gt $W ] ; then
+			POTH=$TARGET
+			POTW=`getNearestPowerOfTwo $TARGET2`
+		else
+			POTW=$TARGET
+			POTH=`getNearestPowerOfTwo $TARGET2`
+		fi
+		echo $IMG $W x $H - resizing to $POTW x $POTH
 		mkdir -p "`dirname $OUTDIR/$IMG`"
-		convert "$IMG" -filter Cubic -resize $PERCENT% "$OUTDIR/$IMG-$$"
+		convert "$IMG" -filter Cubic -resize ${POTW}x${POTH}\! "$OUTDIR/$IMG-$$"
 		mv -f "$OUTDIR/$IMG-$$" "$OUTDIR/$IMG"
 		echo "`echo $IMG | sed 's@[.]png\|[.]jpg\|[.]tga@@' | sed 's@./@@'`" $W $H >> "$OUTDIR/downsampledimages.txt"
 	else
-		NPOTH=true
-		NPOTW=true
-		POTW=$W
-		POTH=$H
-		for Q in 16384 8192 4096 2048 1024 512 256 128 64 32 16 8 4 2 1; do
-			if [ "$H" = "$Q" ]; then
-				NPOTH=false
-			fi
-			if [ "$W" = "$Q" ]; then
-				NPOTW=false
-			fi
-			if [ "$H" -le "$Q" ]; then
-				POTH=$Q
-			fi
-			if [ "$W" -le "$Q" ]; then
-				POTW=$Q
-			fi
-		done
-		if $NPOTH || $NPOTW; then
+		POTH=`getNearestPowerOfTwo $H`
+		POTW=`getNearestPowerOfTwo $W`
+		if [ "$POTH" '!=' "$H" -o "$POTW" '!=' "$W" ]; then
 			if [ "$POTW.$POTH" = "512.512" ]; then # Avoid worst-case scenario
 				POTW=256
 				POTH=256
