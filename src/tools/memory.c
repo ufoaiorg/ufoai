@@ -19,6 +19,7 @@
 #include "../client/cgame/campaign/cp_overlay.h"
 #include "../client/cgame/campaign/cp_ufo.h"
 #include "../client/cgame/campaign/cp_time.h"
+#include "../client/battlescape/cl_battlescape.h"
 #include "../client/cgame/campaign/cp_alien_interest.h"
 
 #define STRUCTFORMAT "%24s"
@@ -74,6 +75,8 @@ int main (void)
 	TYPESIZE(chrTemplate_t);
 	TYPESIZE(client_t);
 	TYPESIZE(client_static_t);
+	TYPESIZE(clientBattleScape_t);
+	TYPESIZE(clientinfo_t);
 	TYPESIZE(components_t);
 	TYPESIZE(csi_t);
 	TYPESIZE(cvar_t);
@@ -86,6 +89,7 @@ int main (void)
 	TYPESIZE(image_t);
 	TYPESIZE(inventory_t);
 	TYPESIZE(inventoryInterface_t);
+	TYPESIZE(le_t);
 	TYPESIZE(lighting_t);
 	TYPESIZE(localModel_t);
 	TYPESIZE(mAliasModel_t);
