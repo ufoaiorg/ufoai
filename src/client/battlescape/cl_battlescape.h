@@ -79,6 +79,8 @@ typedef struct clientBattleScape_s {
 
 	mapData_t *mapData;
 
+	pathing_t pathMap;		/**< This is where the data for TUS used to move and actor locations go */
+
 	mapTiles_t *mapTiles;
 
 	chrList_t chrList;	/**< the list of characters that are used as team in the currently running tactical mission */
