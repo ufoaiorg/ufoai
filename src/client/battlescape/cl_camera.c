@@ -36,10 +36,14 @@ static vec3_t routeFrom, routeDelta;
 static float routeDist;
 
 const float MIN_ZOOM = 0.5;
+#ifdef ANDROID
+const float MAX_ZOOM = 16.0; /* Too far zoom will cause the game to run terribly slow on low-end devices */
+#else
 const float MAX_ZOOM = 32.0;
+#endif
 
-#define MIN_CAMROT_SPEED	50
-#define MIN_CAMROT_ACCEL	50
+#define MIN_CAMROT_SPEED	5
+#define MIN_CAMROT_ACCEL	5
 #define MAX_CAMROT_SPEED	1000
 #define MAX_CAMROT_ACCEL	1000
 #define MIN_CAMMOVE_SPEED	150
@@ -49,7 +53,7 @@ const float MAX_ZOOM = 32.0;
 #define LEVEL_MIN			0.05
 #define LEVEL_SPEED			3.0
 #define ZOOM_SPEED			2.0
-#define MIN_CAMZOOM_QUANT	0.05
+#define MIN_CAMZOOM_QUANT	0.001
 #define MAX_CAMZOOM_QUANT	1.0
 
 static cvar_t *cl_camrotspeed;
