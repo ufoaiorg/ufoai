@@ -859,8 +859,6 @@ void R_SetDefaultState (void)
 #endif
 
 	R_ReallocateStateArrays(GL_ARRAY_LENGTH_CHUNK);
-
-	R_ReallocateStateArrays(GL_ARRAY_LENGTH_CHUNK);
 	R_ReallocateTexunitArray(&texunit_0, GL_ARRAY_LENGTH_CHUNK);
 	R_ReallocateTexunitArray(&texunit_1, GL_ARRAY_LENGTH_CHUNK);
 	R_ReallocateTexunitArray(&texunit_2, GL_ARRAY_LENGTH_CHUNK);

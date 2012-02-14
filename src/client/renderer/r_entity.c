@@ -250,7 +250,7 @@ void R_DrawEntityEffects (void)
 			int texnum;
 			/* draw the circles for team-members and allied troops */
 			vec4_t color = {1, 1, 1, 1};
-			vec3_t points[] = { { -size, size, -GROUND_DELTA }, { size, size, -GROUND_DELTA }, { size, -size,
+			const vec3_t points[] = { { -size, size, -GROUND_DELTA }, { size, size, -GROUND_DELTA }, { size, -size,
 					-GROUND_DELTA }, { -size, -size, -GROUND_DELTA } };
 			/** @todo use default_texcoords */
 			const vec2_t texcoords[] = { { 0.0, 1.0 }, { 1.0, 1.0 }, { 1.0, 0.0 }, { 0.0, 0.0 } };
@@ -267,7 +267,6 @@ void R_DrawEntityEffects (void)
 				Vector4Set(color, 0.4, 0.4, 0.4, 0.5);
 
 			/* TODO: for some unknown reasons the following code fails on my HTC Evo and on emulator, but works on PC, so it might be GFX driver problems */
-#ifndef GL_VERSION_ES_CM_1_0
 			if (e->flags & RF_SELECTED)
 				texnum = selectedActorIndicator->texnum;
 			else
@@ -299,23 +298,6 @@ void R_DrawEntityEffects (void)
 
 			R_Color(NULL);
 			R_EnableDrawAsGlow(qfalse);
-#else
-			R_EnableTexture(&texunit_diffuse, qfalse);
-			points[0][0] = 0;
-			points[0][1] = 0;
-			color[3] = 0.7; /* Line thickness is ignored on Android, so the circle is rather slim - make it brighter */
-			R_DrawCircle(size, color, 2, points[0]);
-			if (e->flags & RF_SELECTED)
-				R_DrawCircle(size-3, color, 2, points[0]);
-			/* add transparency when something is covering the circle */
-			color[3] *= 0.4;
-			glDepthFunc(GL_GREATER);
-			R_DrawCircle(size, color, 2, points[0]);
-			if (e->flags & RF_SELECTED)
-				R_DrawCircle(size-3, color, 2, points[0]);
-			glDepthFunc(oldDepthFunc);
-			R_EnableTexture(&texunit_diffuse, qtrue);
-#endif
 		}
 		glPopMatrix();
 	}
