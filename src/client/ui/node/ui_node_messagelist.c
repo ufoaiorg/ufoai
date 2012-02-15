@@ -46,6 +46,10 @@ static const int LINEHEIGHT	= 20;
 
 static const int DATETIME_COLUUI_SIZE = 180;
 
+/* Used for drag&drop-like scrolling */
+static int mouseScrollX;
+static int mouseScrollY;
+
 /**
  * @return Number of lines need to display this message
  */
@@ -284,6 +288,51 @@ static void UI_MessageListNodeLoading (uiNode_t *node)
 	Vector4Set(node->color, 1.0, 1.0, 1.0, 1.0);
 }
 
+/**
+ * @brief Track mouse down/up events to implement drag&drop-like scrolling, for touchscreen devices
+ * @sa UI_TextNodeMouseUp, UI_TextNodeCapturedMouseMove
+*/
+static void UI_MessageListNodeMouseDown (struct uiNode_s *node, int x, int y, int button)
+{
+	if (!UI_GetMouseCapture() && button == K_MOUSE1 &&
+		EXTRADATA(node).scrollY.fullSize > EXTRADATA(node).scrollY.viewSize) {
+		UI_SetMouseCapture(node);
+		mouseScrollX = x;
+		mouseScrollY = y;
+	}
+}
+
+static void UI_MessageListNodeMouseUp (struct uiNode_s *node, int x, int y, int button)
+{
+	if (UI_GetMouseCapture() == node)  /* More checks can never hurt */
+		UI_MouseRelease();
+}
+
+static void UI_MessageListNodeCapturedMouseMove (uiNode_t *node, int x, int y)
+{
+	const int lineHeight = node->behaviour->getCellHeight(node);
+	const int deltaY = (mouseScrollY - y) / lineHeight;
+	/* We're doing only vertical scroll, that's enough for the most instances */
+	if (abs(mouseScrollY - y) >= lineHeight) {
+		UI_AbstractScrollableNodeScrollY(node, deltaY);
+		/* @todo not accurate */
+		mouseScrollX = x;
+		mouseScrollY = y;
+	}
+	if (node->behaviour->mouseMove)
+		node->behaviour->mouseMove(node, x, y);
+}
+
+/**
+ * @brief Return size of the cell, which is the size (in virtual "pixel") which represent 1 in the scroll values.
+ * Here we guess the widget can scroll pixel per pixel.
+ * @return Size in pixel.
+ */
+static int UI_MessageListNodeGetCellHeight (uiNode_t *node)
+{
+	return LINEHEIGHT;
+}
+
 void UI_RegisterMessageListNode (uiBehaviour_t *behaviour)
 {
 	behaviour->name = "messagelist";
@@ -291,6 +340,11 @@ void UI_RegisterMessageListNode (uiBehaviour_t *behaviour)
 	behaviour->draw = UI_MessageListNodeDraw;
 	behaviour->loading = UI_MessageListNodeLoading;
 	behaviour->scroll = UI_MessageListNodeMouseWheel;
+	behaviour->mouseDown = UI_MessageListNodeMouseDown;
+	behaviour->mouseUp = UI_MessageListNodeMouseUp;
+	behaviour->capturedMouseMove = UI_MessageListNodeCapturedMouseMove;
+	behaviour->getCellHeight = UI_MessageListNodeGetCellHeight;
+
 #ifdef DEBUG
 	Cmd_AddCommand("debug_ui_message_useallicons", UI_MessageDebugUseAllIcons_f, "Update message to use all icons");
 #endif
