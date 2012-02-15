@@ -284,12 +284,8 @@ static void UI_OptionListNodeMouseUp (struct uiNode_s *node, int x, int y, int b
 
 static void UI_OptionListNodeCapturedMouseMove (uiNode_t *node, int x, int y)
 {
-	int lineHeight = EXTRADATA(node).lineHeight;
-	int deltaY;
-	if (lineHeight == 0)
-		lineHeight = UI_FontGetHeight(UI_GetFontFromNode(node));
-	deltaY = (mouseScrollY - y) / lineHeight;
-
+	const int lineHeight = node->behaviour->getCellHeight(node);
+	const int deltaY = (mouseScrollY - y) / lineHeight;
 	/* We're doing only vertical scroll, that's enough for the most instances */
 	if (deltaY != 0) {
 		qboolean updated;
@@ -304,6 +300,19 @@ static void UI_OptionListNodeCapturedMouseMove (uiNode_t *node, int x, int y)
 		node->behaviour->mouseMove(node, x, y);
 }
 
+/**
+ * @brief Return size of the cell, which is the size (in virtual "pixel") which represent 1 in the scroll values.
+ * Here we guess the widget can scroll pixel per pixel.
+ * @return Size in pixel.
+ */
+static int UI_OptionListGetCellHeight (uiNode_t *node)
+{
+	int lineHeight = EXTRADATA(node).lineHeight;
+	if (lineHeight == 0)
+		lineHeight = UI_FontGetHeight(UI_GetFontFromNode(node));
+	return lineHeight;
+}
+
 void UI_RegisterOptionListNode (uiBehaviour_t *behaviour)
 {
 	behaviour->name = "optionlist";
@@ -316,5 +325,6 @@ void UI_RegisterOptionListNode (uiBehaviour_t *behaviour)
 	behaviour->capturedMouseMove = UI_OptionListNodeCapturedMouseMove;
 	behaviour->loading = UI_OptionListNodeLoading;
 	behaviour->loaded = UI_OptionListNodeLoaded;
+	behaviour->getCellHeight = UI_OptionListGetCellHeight;
 	behaviour->drawItselfChild = qtrue;
 }

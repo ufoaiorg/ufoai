@@ -522,11 +522,8 @@ static void UI_TextNodeMouseUp (struct uiNode_s *node, int x, int y, int button)
 
 static void UI_TextNodeCapturedMouseMove (uiNode_t *node, int x, int y)
 {
-	int lineHeight = EXTRADATA(node).lineHeight;
-	int deltaY;
-	if (lineHeight == 0)
-		lineHeight = UI_FontGetHeight(UI_GetFontFromNode(node));
-	deltaY = (mouseScrollY - y) / lineHeight;
+	const int lineHeight = node->behaviour->getCellHeight(node);
+	const int deltaY = (mouseScrollY - y) / lineHeight;
 	/* We're doing only vertical scroll, that's enough for the most instances */
 	if (abs(mouseScrollY - y) >= lineHeight) {
 		UI_AbstractScrollableNodeScrollY(node, deltaY);
@@ -536,6 +533,19 @@ static void UI_TextNodeCapturedMouseMove (uiNode_t *node, int x, int y)
 	}
 	if (node->behaviour->mouseMove)
 		node->behaviour->mouseMove(node, x, y);
+}
+
+/**
+ * @brief Return size of the cell, which is the size (in virtual "pixel") which represent 1 in the scroll values.
+ * Here we guess the widget can scroll pixel per pixel.
+ * @return Size in pixel.
+ */
+static int UI_TextNodeGetCellHeight (uiNode_t *node)
+{
+	int lineHeight = EXTRADATA(node).lineHeight;
+	if (lineHeight == 0)
+		lineHeight = UI_FontGetHeight(UI_GetFontFromNode(node));
+	return lineHeight;
 }
 
 void UI_RegisterTextNode (uiBehaviour_t *behaviour)
@@ -553,6 +563,7 @@ void UI_RegisterTextNode (uiBehaviour_t *behaviour)
 	behaviour->loading = UI_TextNodeLoading;
 	behaviour->loaded = UI_TextNodeLoaded;
 	behaviour->extraDataSize = sizeof(EXTRADATA_TYPE);
+	behaviour->getCellHeight = UI_TextNodeGetCellHeight;
 
 	/* Current selected line  */
 	UI_RegisterExtradataNodeProperty(behaviour, "lineselected", V_INT, textExtraData_t, textLineSelected);

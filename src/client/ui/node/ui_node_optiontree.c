@@ -387,12 +387,8 @@ static void UI_OptionTreeNodeMouseUp (struct uiNode_s *node, int x, int y, int b
 
 static void UI_OptionTreeNodeCapturedMouseMove (uiNode_t *node, int x, int y)
 {
-	int lineHeight = EXTRADATA(node).lineHeight;
-	int deltaY;
-	if (lineHeight == 0)
-		lineHeight = UI_FontGetHeight(UI_GetFontFromNode(node));
-	deltaY = (mouseScrollY - y) / lineHeight;
-
+	const int lineHeight = node->behaviour->getCellHeight(node);
+	const int deltaY = (mouseScrollY - y) / lineHeight;
 	/* We're doing only vertical scroll, that's enough for the most instances */
 	if (deltaY != 0) {
 		qboolean updated;
@@ -405,6 +401,19 @@ static void UI_OptionTreeNodeCapturedMouseMove (uiNode_t *node, int x, int y)
 	}
 	if (node->behaviour->mouseMove)
 		node->behaviour->mouseMove(node, x, y);
+}
+
+/**
+ * @brief Return size of the cell, which is the size (in virtual "pixel") which represent 1 in the scroll values.
+ * Here we guess the widget can scroll pixel per pixel.
+ * @return Size in pixel.
+ */
+static int UI_OptionTreeNodeGetCellHeight (uiNode_t *node)
+{
+	int lineHeight = EXTRADATA(node).lineHeight;
+	if (lineHeight == 0)
+		lineHeight = UI_FontGetHeight(UI_GetFontFromNode(node));
+	return lineHeight;
 }
 
 void UI_RegisterOptionTreeNode (uiBehaviour_t *behaviour)
@@ -420,6 +429,7 @@ void UI_RegisterOptionTreeNode (uiBehaviour_t *behaviour)
 	behaviour->loading = UI_OptionTreeNodeLoading;
 	behaviour->loaded = UI_OptionTreeNodeLoaded;
 	behaviour->doLayout = UI_OptionTreeNodeDoLayout;
+	behaviour->getCellHeight = UI_OptionTreeNodeGetCellHeight;
 	behaviour->drawItselfChild = qtrue;
 
 	/* Call it to toggle the node status. */
