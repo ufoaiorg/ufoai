@@ -388,14 +388,18 @@ static void UI_OptionTreeNodeMouseUp (struct uiNode_s *node, int x, int y, int b
 static void UI_OptionTreeNodeCapturedMouseMove (uiNode_t *node, int x, int y)
 {
 	int lineHeight = EXTRADATA(node).lineHeight;
+	int deltaY;
 	if (lineHeight == 0)
 		lineHeight = UI_FontGetHeight(UI_GetFontFromNode(node));
+	deltaY = (mouseScrollY - y) / lineHeight;
 
 	/* We're doing only vertical scroll, that's enough for the most instances */
-	if (abs(mouseScrollY - y) >= lineHeight) {
-		/* And we're reusing existing mouse whell up/down event, scrolling won't be smooth but the code is simpler */
-		if (node->behaviour->scroll)
-			node->behaviour->scroll(node, 0, mouseScrollY - y);
+	if (deltaY != 0) {
+		qboolean updated;
+		updated = UI_SetScroll(&EXTRADATA(node).scrollY, EXTRADATA(node).scrollY.viewPos + deltaY, -1, -1);
+		if (EXTRADATA(node).onViewChange && updated)
+			UI_ExecuteEventActions(node, EXTRADATA(node).onViewChange);
+		/* @todo not accurate */
 		mouseScrollX = x;
 		mouseScrollY = y;
 	}

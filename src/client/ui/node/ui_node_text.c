@@ -523,13 +523,14 @@ static void UI_TextNodeMouseUp (struct uiNode_s *node, int x, int y, int button)
 static void UI_TextNodeCapturedMouseMove (uiNode_t *node, int x, int y)
 {
 	int lineHeight = EXTRADATA(node).lineHeight;
+	int deltaY;
 	if (lineHeight == 0)
 		lineHeight = UI_FontGetHeight(UI_GetFontFromNode(node));
+	deltaY = (mouseScrollY - y) / lineHeight;
 	/* We're doing only vertical scroll, that's enough for the most instances */
 	if (abs(mouseScrollY - y) >= lineHeight) {
-		/* And we're reusing existing mouse whell up/down event, scrolling won't be smooth but the code is simpler */
-		if (node->behaviour->scroll)
-			node->behaviour->scroll(node, 0, mouseScrollY - y);
+		UI_AbstractScrollableNodeScrollY(node, deltaY);
+		/* @todo not accurate */
 		mouseScrollX = x;
 		mouseScrollY = y;
 	}
