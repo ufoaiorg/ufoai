@@ -589,7 +589,7 @@ window game_team_edit extends objectinfo
 			}
 		}
 		option abilities {
-			label	"_Actor Abilities"
+			label	"_Soldier Abilities"
 			value	"0"
 		}
 		option weaponinfo {
