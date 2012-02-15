@@ -324,18 +324,62 @@ static void CL_WheelUp_f (void)
 /**
  * @brief Left mouse click
  */
+static int CL_SelectDown_MouseX, CL_SelectDown_MouseY, CL_SelectDown_ProcessMouse, CL_SelectDown_MouseWasMoved;
+enum { MOUSE_SCROLL_TRIGGER_X = 1024 / 12, MOUSE_SCROLL_TRIGGER_Y = 768 / 12 };
+
 static void CL_SelectDown_f (void)
 {
 	if (IN_GetMouseSpace() != MS_WORLD)
 		return;
-	CL_ActorSelectMouse();
+	CL_SelectDown_MouseX = mousePosX;
+	CL_SelectDown_MouseY = mousePosY;
+	CL_SelectDown_ProcessMouse = 1;
+	CL_SelectDown_MouseWasMoved = 0;
 }
 
 static void CL_SelectUp_f (void)
 {
+	CL_SelectDown_ProcessMouse = 0;
+	if (CL_SelectDown_MouseWasMoved) {
+		in_shiftleft.state = 0;
+		in_shiftright.state = 0;
+		in_shiftup.state = 0;
+		in_shiftdown.state = 0;
+	}
+	if (!CL_SelectDown_MouseWasMoved && IN_GetMouseSpace() == MS_WORLD)
+		CL_ActorSelectMouse();
+	CL_SelectDown_MouseWasMoved = 0;
 	if (IN_GetMouseSpace() == MS_UI)
 		return;
 	IN_SetMouseSpace(MS_NULL);
+}
+
+static void CL_SelectDown_ProcessMouseMovement (void)
+{
+	if (!CL_SelectDown_ProcessMouse)
+		return;
+
+	if (!CL_SelectDown_MouseWasMoved &&
+		(abs(CL_SelectDown_MouseX - mousePosX) > MOUSE_SCROLL_TRIGGER_X ||
+		 abs(CL_SelectDown_MouseY - mousePosY) > MOUSE_SCROLL_TRIGGER_Y))
+		CL_SelectDown_MouseWasMoved = 1;
+
+	if (mousePosX - CL_SelectDown_MouseX > MOUSE_SCROLL_TRIGGER_X)
+		in_shiftleft.state = 1;
+	else
+		in_shiftleft.state = 0;
+	if (mousePosX - CL_SelectDown_MouseX < -MOUSE_SCROLL_TRIGGER_X)
+		in_shiftright.state = 1;
+	else
+		in_shiftright.state = 0;
+	if (mousePosY - CL_SelectDown_MouseY > MOUSE_SCROLL_TRIGGER_Y)
+		in_shiftup.state = 1;
+	else
+		in_shiftup.state = 0;
+	if (mousePosY - CL_SelectDown_MouseY < -MOUSE_SCROLL_TRIGGER_Y)
+		in_shiftdown.state = 1;
+	else
+		in_shiftdown.state = 0;
 }
 
 /**
@@ -781,6 +825,8 @@ void IN_Frame (void)
 	IN_Parse();
 
 	IN_JoystickMove();
+
+	CL_SelectDown_ProcessMouseMovement();
 
 	if (vid_grabmouse->modified) {
 		vid_grabmouse->modified = qfalse;
