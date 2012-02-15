@@ -429,6 +429,13 @@ static qboolean G_ReactionFireIsPossible (const edict_t *ent, const edict_t *tar
 	if (!G_IsShaken(ent) && !G_IsReaction(ent))
 		return qfalse;
 
+	/* check ent has weapon in RF hand */
+	/* @todo Should this situation even happen when G_IsReaction(ent) is true? */
+	if (!ACTOR_GET_INV(ent, ent->chr.RFmode.hand)) {
+		gi.Error("Reaction fire enabled but no weapon for hand");
+		return qfalse;
+	}
+
 	if (!G_IsVisibleForTeam(target, ent->team))
 		return qfalse;
 
@@ -465,8 +472,6 @@ static void G_ReactionFireTargetsUpdateAll (const edict_t *target)
 
 	/* check all possible shooters */
 	while ((shooter = G_EdictsGetNextLivingActor(shooter))) {
-		if (!G_IsReaction(shooter))
-			continue;
 		/* check whether reaction fire is possible (friend/foe, LoS */
 		if (G_ReactionFireIsPossible(shooter, target)) {
 			const int TUs = G_ActorGetTUForReactionFire(shooter);
