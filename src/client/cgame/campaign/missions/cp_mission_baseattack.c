@@ -141,6 +141,7 @@ void CP_BaseAttackStartMission (mission_t *mission)
 {
 	base_t *base = mission->data.base;
 	linkedList_t *hiredSoldiersInBase = NULL;
+	int soldiers;
 
 	assert(base);
 
@@ -196,12 +197,19 @@ void CP_BaseAttackStartMission (mission_t *mission)
 		return;
 	}
 
+	UI_ExecuteConfunc("soldierlist_clear");
+	soldiers = 0;
 	LIST_Foreach(hiredSoldiersInBase, employee_t, employee) {
+		const rank_t *rank = CL_GetRankByIdx(employee->chr.score.rank);
+
 		if (E_IsAwayFromBase(employee))
 			continue;
-		AIR_AddToAircraftTeam(&baseAttackFakeAircraft, employee);
+		UI_ExecuteConfunc("soldierlist_add %d \"%s %s\"", employee->chr.ucn, (rank) ? _(rank->shortname) : "", employee->chr.name);
+		if (soldiers < 1)
+			UI_ExecuteConfunc("team_select_ucn %d", employee->chr.ucn);
+		soldiers++;
 	}
-	if (AIR_GetTeamSize(&baseAttackFakeAircraft) == 0) {
+	if (soldiers == 0) {
 		Com_DPrintf(DEBUG_CLIENT, "CP_BaseAttackStartMission: Base '%s' has no soldiers at home: it can't defend itself. Destroy base.\n", base->name);
 		CP_BaseAttackMissionDestroyBase(mission);
 		return;

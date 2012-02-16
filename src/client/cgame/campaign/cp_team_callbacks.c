@@ -324,6 +324,46 @@ static void CP_AssignSoldier_f (void)
 	Cbuf_AddText(va("team_select %i %i\n", num - relativeId, relativeId));
 }
 
+/**
+ * @brief Adds or removes a soldier to/from an aircraft using his/her UCN as reference.
+ */
+static void CP_TEAM_AssignSoldierByUCN_f (void)
+{
+	base_t *base = B_GetCurrentSelectedBase();
+	aircraft_t *aircraft;
+	int ucn;
+	const employeeType_t employeeType = EMPL_SOLDIER;
+	employee_t *employee;
+
+	/* check syntax */
+	if (Cmd_Argc() < 1 ) {
+		Com_Printf("Usage: %s <ucn>\n", Cmd_Argv(0));
+		return;
+	}
+
+	ucn = atoi(Cmd_Argv(1));
+	if (ucn < 0)
+		return;
+
+	aircraft = base->aircraftCurrent;
+	if (!aircraft)
+		return;
+
+	employee = E_GetEmployeeFromChrUCN(ucn);
+	if (!employee)
+		Com_Error(ERR_DROP, "CP_TEAM_SelectActorByUCN_f: No employee with UCN %i", ucn);
+
+	if (AIR_IsEmployeeInAircraft(employee, aircraft))
+		AIR_RemoveEmployee(employee, aircraft);
+	else
+		AIR_AddToAircraftTeam(aircraft, employee);
+
+	CP_UpdateActorAircraftVar(aircraft, employeeType);
+	Cvar_SetValue("cpteam_size", AIR_GetTeamSize(aircraft));
+	UI_ExecuteConfunc("aircraft_status_change");
+	UI_ExecuteConfunc("soldierlist_update %i %i", ucn, AIR_IsEmployeeInAircraft(employee, aircraft) != NULL);
+}
+
 static void CP_ActorPilotSelect_f (void)
 {
 	employee_t *employee;
@@ -405,6 +445,41 @@ static void CP_ActorTeamSelect_f (void)
 	UI_ExecuteConfunc("update_soldier_list %i %i", soldierListSize, soldierListPos);
 }
 
+/**
+ * @brief Selects a soldier by his/her Unique Character Number on team UI
+ */
+static void CP_TEAM_SelectActorByUCN_f (void)
+{
+	employee_t *employee;
+	character_t *chr;
+	int ucn;
+	base_t *base = B_GetCurrentSelectedBase();
+
+	if (!base)
+		return;
+
+	/* check syntax */
+	if (Cmd_Argc() < 1) {
+		Com_Printf("Usage: %s <ucn>\n", Cmd_Argv(0));
+		return;
+	}
+
+	ucn = atoi(Cmd_Argv(1));
+	if (ucn < 0) {
+		UI_ExecuteConfunc("reset_character_cvars");
+		return;
+	}
+
+	employee = E_GetEmployeeFromChrUCN(ucn);
+	if (!employee)
+		Com_Error(ERR_DROP, "CP_TEAM_SelectActorByUCN_f: No employee with UCN %i", ucn);
+
+	chr = &employee->chr;
+
+	/* set info cvars */
+	CL_UpdateCharacterValues(chr, "mn_");
+}
+
 #ifdef DEBUG
 static void CP_TeamListDebug_f (void)
 {
@@ -442,6 +517,9 @@ void CP_TEAM_InitCallbacks (void)
 	Cmd_AddCommand("pilot_hire", CP_AssignPilot_f, "Add/remove already hired pilot to an aircraft");
 	Cmd_AddCommand("team_select", CP_ActorTeamSelect_f, "Select a soldier in the team creation menu");
 	Cmd_AddCommand("pilot_select", CP_ActorPilotSelect_f, "Select a pilot in the team creation menu");
+
+	Cmd_AddCommand("team_select_ucn", CP_TEAM_SelectActorByUCN_f, "Select a soldier in the team menu by his/her UCN");
+	Cmd_AddCommand("team_assign_ucn", CP_TEAM_AssignSoldierByUCN_f, "Add/remove soldier to the aircraft");
 #ifdef DEBUG
 	Cmd_AddCommand("debug_teamlist", CP_TeamListDebug_f, "Debug function to show all hired and assigned teammembers");
 #endif
@@ -452,6 +530,9 @@ void CP_TEAM_InitCallbacks (void)
 
 void CP_TEAM_ShutdownCallbacks (void)
 {
+	Cmd_RemoveCommand("team_assign_ucn");
+	Cmd_RemoveCommand("team_select_ucn");
+
 	Cmd_RemoveCommand("team_updateequip");
 	Cmd_RemoveCommand("update_soldier_list");
 	Cmd_RemoveCommand("update_pilot_list");
