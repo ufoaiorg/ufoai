@@ -69,7 +69,8 @@ static void RS_UpdateInfo (const base_t* base)
 	int type;
 
 	/* reset cvars */
-	Cvar_Set("mn_research_imagetop", "");
+	Cvar_Set("mn_research_image", "");
+	Cvar_Set("mn_research_model", "");
 	Cvar_Set("mn_researchitemname", "");
 	Cvar_Set("mn_researchitem", "");
 	UI_ResetData(TEXT_STANDARD);
@@ -92,11 +93,19 @@ static void RS_UpdateInfo (const base_t* base)
 		CAP_GetCurrent(base, CAP_LABSPACE), CAP_GetMax(base, CAP_LABSPACE));
 	Cvar_Set("mn_research_labs", tmpbuf);
 
+	/* Store laboratory limits cvars */
+	Cvar_SetValue("mn_max_labspace", CAP_GetMax(base, CAP_LABSPACE));
+	Cvar_SetValue("mn_current_labspace", CAP_GetCurrent(base, CAP_LABSPACE));
+
 	/* Display scientists amounts. */
 	Com_sprintf(tmpbuf, sizeof(tmpbuf), _("Scientists (available/all): %i/%i"),
 		E_CountUnassigned(base, EMPL_SCIENTIST),
 		E_CountHired(base, EMPL_SCIENTIST));
 	Cvar_Set("mn_research_scis", tmpbuf);
+
+	/* Store scientist limits cvars */
+	Cvar_SetValue("mn_scientists_hired", E_CountHired(base, EMPL_SCIENTIST));
+	Cvar_SetValue("mn_scientists_available", E_CountUnassigned(base, EMPL_SCIENTIST));
 
 	Cvar_Set("mn_research_selbase", _("Not researched in any base."));
 
@@ -104,7 +113,7 @@ static void RS_UpdateInfo (const base_t* base)
 	if (tech->scientists > 0) {
 		assert(tech->base);
 		if (tech->base != base)
-			Cvar_Set("mn_research_selbase", va(_("Researched in %s"), tech->base->name));
+			Cvar_Set("mn_research_selbase", va(_("Researched in %s."), tech->base->name));
 		else
 			Cvar_Set("mn_research_selbase", _("Researched in this base."));
 	}
@@ -131,7 +140,7 @@ static void RS_UpdateInfo (const base_t* base)
 		break;
 	case RS_PAUSED:
 		Cvar_Set("mn_research_selstatus", _("Status: research paused"));
-		Cvar_Set("mn_research_selstatus_long", _("Status: research topic currently paused."));
+		Cvar_Set("mn_research_selstatus_long", _("Status: research topic currently paused"));
 		break;
 	case RS_FINISH:
 		Cvar_Set("mn_research_selstatus", _("Status: research finished"));
@@ -141,7 +150,7 @@ static void RS_UpdateInfo (const base_t* base)
 		if (tech->statusCollected && !tech->statusResearchable) {
 			/** @sa RS_UpdateData -> "--" */
 			Cvar_Set("mn_research_selstatus", _("Status: not possible to research"));
-			Cvar_Set("mn_research_selstatus_long", _("Status: We don't currently have all the materials or background knowledge needed to research this topic."));
+			Cvar_Set("mn_research_selstatus_long", _("Status: the materials or background knowledge needed to research this topic are not available yet"));
 		} else {
 			Cvar_Set("mn_research_selstatus", _("Status: unknown technology"));
 			Cvar_Set("mn_research_selstatus_long", _("Status: unknown technology"));
@@ -153,7 +162,13 @@ static void RS_UpdateInfo (const base_t* base)
 
 	/* Set image cvar. */
 	if (tech->image)
-		Cvar_Set("mn_research_imagetop", tech->image);
+		Cvar_Set("mn_research_image", tech->image);
+
+	/* Set model cvar. */
+	if (tech->mdl)
+		Cvar_Set("mn_research_model", tech->mdl);
+	else
+		Cvar_Set("mn_research_model", "");
 }
 
 /**
@@ -806,10 +821,10 @@ static void CL_ResearchType_f (void)
 	/** @todo wrong computation: researchListLength doesn't say if there are research on this base */
 	if (!researchListLength) {
 		UI_PopWindow(qfalse);
-		CP_Popup(_("Notice"), _("Nothing to research"));
+		CP_Popup(_("Notice"), _("Nothing to research."));
 	} else if (!B_GetBuildingStatus(base, B_LAB)) {
 		UI_PopWindow(qfalse);
-		CP_Popup(_("Notice"), _("Build a laboratory first"));
+		CP_Popup(_("Notice"), _("Build a laboratory first."));
 	}
 }
 /**

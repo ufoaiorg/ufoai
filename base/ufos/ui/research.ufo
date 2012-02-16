@@ -1,6 +1,6 @@
-// ==================
-// RESEARCH MENU
-// ==================
+// ===================
+// BASE RESEARCH MENU
+// ===================
 
 component panel cmpResearchItem {
 	{
@@ -14,6 +14,7 @@ component panel cmpResearchItem {
 		size		"16 16"
 		padding		0
 		onClick		{ cmd "research_select <node:parent@num>;" cmd "mn_show_ufopedia;" }
+		tooltip		"_Open UFOPaedia"
 	}
 
 	string txt_item	{
@@ -39,7 +40,7 @@ component panel cmpResearchItem {
 	}
 
 	spinner bt_rs_change {
-		tooltip		"_Add and remove scientist"
+		tooltip		"_Add/Remove scientist"
 		image		"ui/spinner_blue"
 		pos			"450 0"
 		min			0
@@ -53,6 +54,9 @@ component panel cmpResearchItem {
 	}
 }
 
+// ================
+// RESEARCH WINDOW
+// ================
 
 window research
 {
@@ -79,50 +83,14 @@ window research
 		lineheight	25
 	}
 
+	// ======================
+	// Techlist Panel (left)
+	// ======================
+
 	panel techlist {
 		pos			"29 93"
 		size		"587 597"
 		image		"ui/panel_grey_green_large2"
-	}
-
-	panel infopanel {
-		pos			"645 93"
-		size		"353 660"
-		image		"ui/panel_grey_green_large"
-	}
-
-	// ==================
-	// buttons
-	// ==================
-
-	custombutton bt_start
-	{
-		tooltip		"_Start research"
-		background	"buttons/big_blue"
-		icon		"icons/research_start"
-		pos			"725 674"
-		size		"59 55"
-		onClick		{ cmd "mn_start_research;" }
-	}
-
-	custombutton bt_stop
-	{
-		tooltip		"_Stop research"
-		background	"buttons/big_blue"
-		icon		"icons/research_stop"
-		pos			"795 674"
-		size		"59 55"
-		onClick		{ cmd "mn_stop_research;" }
-	}
-
-	custombutton bt_pedia
-	{
-		tooltip		"_Show research proposal"
-		background	"buttons/big_blue"
-		icon		"icons/mail"
-		pos			"865 674"
-		size		"59 55"
-		onClick		{ cmd "mn_show_ufopedia;" }
 	}
 
 	// ==================
@@ -360,98 +328,201 @@ window research
 		pos	"50 638"
 	}
 
-	// ==================
-	// Research infos related to the base
-	// ==================
-	string txt_base_name
-	{
-		string		"_Base Info"
-		pos			"675 115"
-		size		"290 18"
-		longlines	LONGLINES_PRETTYCHOP
+	// ===================
+	// Info Panel (right)
+	// ===================
+
+	panel infopanel {
+		pos			"645 93"
+		size		"352 660"
+		image		"ui/panel_grey_green_large"
 	}
 
-	// Free labs in the selected base
+	// ===================================
+	// Research infos related to the base
+	// ===================================
+
+	string str_base_info
+	{
+		string		"_Base Research Info"
+		pos			"663 115"
+		size		"317 18"
+		font		"f_small_bold"
+		longlines	LONGLINES_PRETTYCHOP
+		contentalign	ALIGN_CC
+	}
+
+	// free labs in the selected base
 	string txt_base_labs
 	{
 		string		*cvar:mn_research_labs
-		pos			"685 135"
-		size		"290 18"
+		font		"f_verysmall"
+		pos			"663 135"
+		size		"317 18"
 		longlines	LONGLINES_PRETTYCHOP
 		color		"0 .78 0 1"
+		contentalign	ALIGN_CC
+	}
+	image labspace_img
+	{
+		pos			"693 152"
+		src		"ui/bar_rahmen"
+	}
+	bar labspace_bar
+	{
+		pos			"703 157"
+		current		*cvar:mn_current_labspace
+		size		"268 6"
+		color		"0 .8 0 1"
+		max			*cvar:mn_max_labspace
+		ghost		true
 	}
 
-	// Free scientists in base
+	// free scientists in base
 	string txt_base_scis
 	{
 		string		*cvar:mn_research_scis
-		pos			"685 155"
-		size		"290 18"
+		font		"f_verysmall"
+		pos			"663 170"
+		size		"317 18"
 		longlines	LONGLINES_PRETTYCHOP
 		color		"0 .78 0 1"
+		contentalign	ALIGN_CC
+	}
+	image occ_scientists_img
+	{
+		pos			"693 187"
+		src		"ui/bar_rahmen"
+	}
+	bar occ_scientists_bar
+	{
+		pos			"703 192"
+		current		*cvar:mn_scientists_available
+		size		"268 6"
+		color		"0 .8 0 1"
+		max			*cvar:mn_scientists_hired
+		ghost		true
 	}
 
-	// ==================
+	// =========================================================
 	// Informations on research progress and technology details
-	// ==================
+	// =========================================================
 
 	string txt_selected_name
 	{
 		string		*cvar:mn_research_selname
-		pos			"675 190"
-		size		"300 18"
+		pos			"663 215"
+		size		"317 18"
+		font		"f_small_bold"
 		longlines	LONGLINES_PRETTYCHOP
+		contentalign	ALIGN_CC
 	}
 
-//	pic image_top
-//	{
-//		image		*cvar:mn_research_imagetop
-//		pos			"730 235"
-//		size		"220 380"
-//		preventratio	true
-//	}
-
+	// research status
 	string txt_selected_status
 	{
 		string		*cvar:mn_research_selstatus
+		font		"f_verysmall"
 		tooltip		*cvar:mn_research_selstatus_long
-		pos			"685 210"
+		pos			"663 235"
+		size		"317 18"
 		color		"0 .78 0 1"
 		longlines	LONGLINES_PRETTYCHOP
-		size		"290 24"
+		contentalign	ALIGN_CC
 	}
 
-	//The base this research item is researched in
+	// research image
+	image image_top
+	{
+		image		*cvar:mn_research_image
+		pos			"663 260"
+		size		"317 350"
+		preventratio	true
+		contentalign	ALIGN_CC
+	}
+
+	// research model
+	model mdl_top
+	{
+		src			*cvar:mn_research_model
+		angles		"0 0 90"
+		pos			"663 260"
+		size		"317 350"
+		autoscale	true
+		omega		"0 -3 0"
+		rotatewithmouse	true
+	}
+
+	// the base this research item is researched in
 	string txt_selected_base
 	{
 		string		*cvar:mn_research_selbase
-		pos			"675 615"
+		font		"f_verysmall"
+		pos			"663 615"
 		color		"0 .78 0 1"
-		size		"290 18"
+		size		"317 18"
+		contentalign	ALIGN_CC
 	}
 
+	//
 	string txt_selected_time
 	{
 		string		*cvar:mn_research_seltime
-		pos			"675 635"
+		font		"f_verysmall"
+		pos			"663 635"
 		color		"0 .78 0 1"
-		size		"290 18"
+		size		"317 18"
+		contentalign	ALIGN_CC
 	}
 	image progress_img
 	{
 		visiblewhen	"*cvar:mn_research_seltimebar != 0"
-		pos			"684 657"
+		pos			"693 652"
 		src		"ui/bar_rahmen"
 	}
 	bar progress_bar
 	{
 		visiblewhen	"*cvar:mn_research_seltimebar != 0"
-		pos			"694 662"
+		pos			"703 657"
 		current		*cvar:mn_research_seltimebar
-		size		"238 6"
+		size		"268 6"
 		color		"0 .8 0 1"
 		max			100
 		ghost		true
+	}
+
+	// ==================
+	// buttons
+	// ==================
+
+	custombutton bt_start
+	{
+		tooltip		"_Start research"
+		background	"buttons/big_blue"
+		icon		"icons/research_start"
+		pos			"725 674"
+		size		"59 55"
+		onClick		{ cmd "mn_start_research;" }
+	}
+
+	custombutton bt_stop
+	{
+		tooltip		"_Stop research"
+		background	"buttons/big_blue"
+		icon		"icons/research_stop"
+		pos			"795 674"
+		size		"59 55"
+		onClick		{ cmd "mn_stop_research;" }
+	}
+
+	custombutton bt_pedia
+	{
+		tooltip		"_Show research proposal"
+		background	"buttons/big_blue"
+		icon		"icons/mail"
+		pos			"865 674"
+		size		"59 55"
+		onClick		{ cmd "mn_show_ufopedia;" }
 	}
 
 	// ==================
