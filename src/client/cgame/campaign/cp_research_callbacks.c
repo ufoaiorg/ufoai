@@ -167,8 +167,6 @@ static void RS_UpdateInfo (const base_t* base)
 	/* Set model cvar. */
 	if (tech->mdl)
 		Cvar_Set("mn_research_model", tech->mdl);
-	else
-		Cvar_Set("mn_research_model", "");
 }
 
 /**
