@@ -464,7 +464,7 @@ window research
 		contentalign	ALIGN_CC
 	}
 
-	//
+	// the progress of the selected research topic in percent
 	string txt_selected_time
 	{
 		string		*cvar:mn_research_seltime
@@ -549,5 +549,20 @@ window research
 		// call base init function because the amount of workers, scientists and
 		// so on can also change the button state in the base view
 		cmd "base_init;"
+		// delete research window related cvars
+		if ( exists *cvar:mn_research_image ) { delete *cvar:mn_research_image }
+		if ( exists *cvar:mn_research_model ) { delete *cvar:mn_research_model }
+		if ( exists *cvar:mn_research_selname ) { delete *cvar:mn_research_selname }
+		if ( exists *cvar:mn_research_selstatus ) { delete *cvar:mn_research_selstatus }
+		if ( exists *cvar:mn_research_selstatus_long ) { delete *cvar:mn_research_selstatus_long }
+		if ( exists *cvar:mn_research_selbase ) { delete *cvar:mn_research_selbase }
+		if ( exists *cvar:mn_research_seltime ) { delete *cvar:mn_research_seltime }
+		if ( exists *cvar:mn_research_seltimebar ) { delete *cvar:mn_research_seltimebar }
+		if ( exists *cvar:mn_research_labs ) { delete *cvar:mn_research_labs }
+		if ( exists *cvar:mn_current_labspace ) { delete *cvar:mn_current_labspace }
+		if ( exists *cvar:mn_max_labspace ) { delete *cvar:mn_max_labspace }
+		if ( exists *cvar:mn_research_scis ) { delete *cvar:mn_research_scis }
+		if ( exists *cvar:mn_scientists_available ) { delete *cvar:mn_scientists_available }
+		if ( exists *cvar:mn_scientists_hired ) { delete *cvar:mn_scientists_hired }
 	}
 }
