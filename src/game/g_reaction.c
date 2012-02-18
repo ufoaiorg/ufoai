@@ -432,7 +432,9 @@ static qboolean G_ReactionFireIsPossible (const edict_t *ent, const edict_t *tar
 	/* check ent has weapon in RF hand */
 	/* @todo Should this situation even happen when G_IsReaction(ent) is true? */
 	if (!ACTOR_GET_INV(ent, ent->chr.RFmode.hand)) {
-		gi.Error("Reaction fire enabled but no weapon for hand");
+		/* print character info if this happens, for now */
+		gi.DPrintf("Reaction fire enabled but no weapon for hand (name=%s,hand=%i,fmIdx=%i)\n",
+				ent->chr.name, ent->chr.RFmode.hand, ent->chr.RFmode.fmIdx);
 		return qfalse;
 	}
 
