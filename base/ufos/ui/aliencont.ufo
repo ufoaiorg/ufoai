@@ -127,7 +127,7 @@ window aliencont
 	panel ac {
 		{
 			pos "11 92"
-			size "670 606"
+			size "670 608"
 			image	"ui/panel_grey_green_large"
 		}
 
@@ -136,7 +136,7 @@ window aliencont
 				pos				"25 25"
 				num				0
 			}
-			string name			{ string *cvar:mn_ac_name0 }
+			string name			{ string *cvar:mn_ac_name0 font "f_small_bold" }
 			string status		{ string *cvar:mn_ac_statusstr0 }
 			bar tech_progress	{ current *cvar:mn_ac_progress0 }
 		}
@@ -146,7 +146,7 @@ window aliencont
 				pos				"345  25"
 				num				1
 			}
-			string name			{ string *cvar:mn_ac_name1 }
+			string name			{ string *cvar:mn_ac_name1 font "f_small_bold" }
 			string status		{ string *cvar:mn_ac_statusstr1 }
 			bar tech_progress	{ current *cvar:mn_ac_progress1 }
 		}
@@ -156,7 +156,7 @@ window aliencont
 				pos				"25 120"
 				num				2
 			}
-			string name			{ string *cvar:mn_ac_name2 }
+			string name			{ string *cvar:mn_ac_name2 font "f_small_bold" }
 			string status		{ string *cvar:mn_ac_statusstr2 }
 			bar tech_progress	{ current *cvar:mn_ac_progress2 }
 		}
@@ -166,7 +166,7 @@ window aliencont
 				pos				"345 120"
 				num				3
 			}
-			string name			{ string *cvar:mn_ac_name3 }
+			string name			{ string *cvar:mn_ac_name3 font "f_small_bold" }
 			string status		{ string *cvar:mn_ac_statusstr3 }
 			bar tech_progress	{ current *cvar:mn_ac_progress3 }
 		}
@@ -176,7 +176,7 @@ window aliencont
 				pos				"25 215"
 				num				4
 			}
-			string name			{ string *cvar:mn_ac_name4 }
+			string name			{ string *cvar:mn_ac_name4 font "f_small_bold" }
 			string status		{ string *cvar:mn_ac_statusstr4 }
 			bar tech_progress	{ current *cvar:mn_ac_progress4 }
 		}
@@ -186,7 +186,7 @@ window aliencont
 				pos				"345 215"
 				num				5
 			}
-			string name			{ string *cvar:mn_ac_name5 }
+			string name			{ string *cvar:mn_ac_name5 font "f_small_bold" }
 			string status		{ string *cvar:mn_ac_statusstr5 }
 			bar tech_progress	{ current *cvar:mn_ac_progress5 }
 		}
@@ -196,7 +196,7 @@ window aliencont
 				pos				"25 310"
 				num				6
 			}
-			string name			{ string *cvar:mn_ac_name6 }
+			string name			{ string *cvar:mn_ac_name6 font "f_small_bold" }
 			string status		{ string *cvar:mn_ac_statusstr6 }
 			bar tech_progress	{ current *cvar:mn_ac_progress6 }
 		}
@@ -206,7 +206,7 @@ window aliencont
 				pos				"345 310"
 				num				7
 			}
-			string name			{ string *cvar:mn_ac_name7 }
+			string name			{ string *cvar:mn_ac_name7 font "f_small_bold" }
 			string status		{ string *cvar:mn_ac_statusstr7 }
 			bar tech_progress	{ current *cvar:mn_ac_progress7 }
 		}
@@ -216,7 +216,7 @@ window aliencont
 				pos				"25 405"
 				num				8
 			}
-			string name			{ string *cvar:mn_ac_name8 }
+			string name			{ string *cvar:mn_ac_name8 font "f_small_bold" }
 			string status		{ string *cvar:mn_ac_statusstr8 }
 			bar tech_progress	{ current *cvar:mn_ac_progress8 }
 		}
@@ -226,7 +226,7 @@ window aliencont
 				pos				"345 405"
 				num				9
 			}
-			string name			{ string *cvar:mn_ac_name9 }
+			string name			{ string *cvar:mn_ac_name9 font "f_small_bold" }
 			string status		{ string *cvar:mn_ac_statusstr9 }
 			bar tech_progress	{ current *cvar:mn_ac_progress9 }
 		}
@@ -236,7 +236,7 @@ window aliencont
 				pos				"25 500"
 				num				10
 			}
-			string name			{ string *cvar:mn_ac_name10 }
+			string name			{ string *cvar:mn_ac_name10 font "f_small_bold" }
 			string status		{ string *cvar:mn_ac_statusstr10 }
 			bar tech_progress	{ current *cvar:mn_ac_progress10 }
 		}
@@ -246,7 +246,7 @@ window aliencont
 				pos				"345 500"
 				num				11
 			}
-			string name			{ string *cvar:mn_ac_name11 }
+			string name			{ string *cvar:mn_ac_name11 font "f_small_bold" }
 			string status		{ string *cvar:mn_ac_statusstr11 }
 			bar tech_progress	{ current *cvar:mn_ac_progress11 }
 		}
@@ -259,7 +259,7 @@ window aliencont
 	panel alc_alien_panel
 	{
 		{
-			pos		"730 90"
+			pos		"730 92"
 			size	"280 520"
 			image	"ui/panel_grey_green_large"
 		}
@@ -269,7 +269,7 @@ window aliencont
 			string		*cvar:mn_al_alientype
 			pos			"20 424"
 			size		"240 20"
-			font		"f_small"
+			font		"f_small_bold"
 			contentalign	ALIGN_CC
 		}
 
@@ -279,11 +279,8 @@ window aliencont
 			pos				"21 23"
 			size			"239 397"
 			preventratio	true
+			contentalign	ALIGN_CC
 		}
-
-		// ==================
-		// alien info
-		// ==================
 
 		// ==================
 		// alive alien amount
@@ -336,7 +333,7 @@ window aliencont
 
 	panel baseinfo {
 		{
-			pos		"728 626"
+			pos		"730 626"
 			size	"280 134"
 			image	"ui/panel_grey_green_large"
 		}
