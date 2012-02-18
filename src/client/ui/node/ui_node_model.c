@@ -258,7 +258,7 @@ void UI_DrawModelNode (uiNode_t *node, const char *source)
 
 	assert(UI_NodeInstanceOf(node, "model"));			/**< We use model extradata */
 
-	if (source[0] == '\0')
+	if (!source || source[0] == '\0')
 		return;
 
 	model = UI_GetUIModel(source);
