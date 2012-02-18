@@ -179,6 +179,7 @@ void CP_BaseAttackStartMission (mission_t *mission)
 	E_GetHiredEmployees(base, EMPL_SOLDIER, &hiredSoldiersInBase);
 
 	/* Fill the fake aircraft */
+	LIST_Delete(&baseAttackFakeAircraft.acTeam);
 	OBJZERO(baseAttackFakeAircraft);
 	baseAttackFakeAircraft.homebase = base;
 	/* needed for transfer of alien corpses */
