@@ -1591,7 +1591,7 @@ window hud_mini extends hud
 		// next turn button
 		image nextturn
 		{
-			tooltip		"_Finish Turn\nKey:e"
+			tooltip		"_End round"
 			src			"althud/buttons_althud1g"
 			pos			"103 208"
 			texl		"0 0"

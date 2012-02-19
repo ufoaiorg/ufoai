@@ -697,7 +697,7 @@ int CL_ActorCheckAction (const le_t *le)
 		return qfalse;
 
 	if (cls.team != cl.actTeam) {
-		HUD_DisplayMessage(_("It is not your turn!\n"));
+		HUD_DisplayMessage(_("It is not your turn!"));
 		return qfalse;
 	}
 

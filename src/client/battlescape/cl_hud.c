@@ -406,8 +406,6 @@ static void HUD_DisplayFiremodeEntry (const char* callback, const le_t* actor, c
 	qboolean status;
 	const fireDef_t *fd;
 	const char *tooltip;
-	const char *fireDefTUs;
-	const char *ammoAmount;
 	char id[32];
 
 	if (index < ammo->numFiredefs[weapFdsIdx]) {
@@ -432,11 +430,9 @@ static void HUD_DisplayFiremodeEntry (const char* callback, const le_t* actor, c
 	/* unique identifier of the action */
 	/* @todo use this id as action callback instead of hand and index (we can extend it with any other soldier action we need (open door, reload...)) */
 	Com_sprintf(id, sizeof(id), "fire_hand%c_i%i", ACTOR_GET_HAND_CHAR(hand), index);
-	fireDefTUs = va(_("%i"), fd->time);
-	ammoAmount = va(_("%i"), fd->ammo);
 
-	UI_ExecuteConfunc("%s firemode %s %c %i %i %i \"%s\" \"%s\" \"%s\" \"%s\"", callback, id, ACTOR_GET_HAND_CHAR(hand),
-			fd->fdIdx, fd->reaction, status, _(fd->name), fireDefTUs, ammoAmount, tooltip);
+	UI_ExecuteConfunc("%s firemode %s %c %i %i %i \"%s\" \"%i\" \"%i\" \"%s\"", callback, id, ACTOR_GET_HAND_CHAR(hand),
+			fd->fdIdx, fd->reaction, status, _(fd->name), fd->time, fd->ammo, tooltip);
 
 	/* Display checkbox for reaction firemode */
 	if (fd->reaction) {
@@ -1566,7 +1562,7 @@ void HUD_InitStartup (void)
 	Cmd_AddCommand("hud_selectreactionfiremode", HUD_SelectReactionFiremode_f, "Change/Select firemode used for reaction fire.");
 	Cmd_AddCommand("hud_listfiremodes", HUD_DisplayFiremodes_f, "Display a list of firemodes for a weapon+ammo.");
 	Cmd_AddCommand("hud_listactions", HUD_DisplayActions_f, "Display a list of action from the selected soldier.");
-	Cmd_AddCommand("hud_getactorcvar", HUD_ActorGetCvarData_f, N_("Update cvars from actor from list"));
+	Cmd_AddCommand("hud_getactorcvar", HUD_ActorGetCvarData_f, "Update cvars from actor from list");
 
 	/** @note We can't check the value at startup cause scripts are not yet loaded */
 	cl_hud = Cvar_Get("cl_hud", "hud_default", CVAR_ARCHIVE | CVAR_LATCH, "Current selected HUD");
