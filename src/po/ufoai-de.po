@@ -1,3 +1,22 @@
+# 2006-09-02 13:50
+msgid ""
+msgstr ""
+"Project-Id-Version: UFO Alien Invasion\n"
+"Report-Msgid-Bugs-To: tlh2000@users.sourceforge.net\n"
+"POT-Creation-Date: 2012-02-19 08:12+0100\n"
+"PO-Revision-Date: 2012-02-19 08:13+0100\n"
+"Last-Translator: Martin Gerhardy <tlh2000@users.sourceforge.net>\n"
+"Language-Team: \n"
+"Language: \n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"X-Poedit-Country: GERMANY\n"
+"X-Poedit-SourceCharset: utf-8\n"
+"Plural-Forms: nplurals=2; plural=n != 1;\n"
+"X-Poedit-Language: German\n"
+"X-Poedit-Basepath: ../\n"
+
 msgid "Autocannon Module"
 msgstr "Autokanonen Magazin"
 
@@ -109,9 +128,8 @@ msgstr "Kampfmesser"
 msgid "Stun Shot"
 msgstr "Betäubungsschuss"
 
-#, fuzzy
 msgid "D-F Cartridge Stun"
-msgstr "D-F Patrone"
+msgstr "D-F Betäubungspatrone"
 
 msgid "Pulsed Fire"
 msgstr "Pulsfeuer"
@@ -329,16 +347,14 @@ msgstr ""
 msgid "Pre-Research Report"
 msgstr "Forschungsantrag"
 
-#, fuzzy
 msgid "Actual transfers"
-msgstr "Transfer"
+msgstr "Transfers"
 
-#, fuzzy
 msgid "To:"
-msgstr "T:"
+msgstr "An:"
 
 msgid "From:"
-msgstr ""
+msgstr "Von:"
 
 msgid "Choose a base to host alien bodies:"
 msgstr "Wähle eine Basis zum Lagern der außerirdischen Körper:"
@@ -352,9 +368,8 @@ msgstr "Flugzeug entladen"
 msgid "Start the transfer"
 msgstr "Starte Transfer"
 
-#, fuzzy
 msgid "List active transfers"
-msgstr "Starte Transfer"
+msgstr "Aktive Transfers anzeigen"
 
 msgid "List"
 msgstr ""
@@ -471,9 +486,8 @@ msgstr "UFO:"
 msgid "Skirmish Game Settings"
 msgstr "Einstellungen Einzelgefecht"
 
-#, fuzzy
 msgid "Return to the main menu."
-msgstr "Zurück zum Hauptmenü"
+msgstr "Zurück zum Hauptmenü."
 
 msgid "Start Game"
 msgstr "Spiel beginnen"
@@ -523,11 +537,9 @@ msgstr "Basisinformationen"
 msgid "Switch to another base"
 msgstr "Zu einer anderen Basis wechseln"
 
-#, fuzzy
 msgid "Add/Remove scientist"
 msgstr "Forscher hinzufügen und entfernen"
 
-#, fuzzy
 msgid "Open UFOPaedia"
 msgstr "UFOpedia öffnen"
 
@@ -561,9 +573,8 @@ msgstr "Werkstattkapazität:"
 msgid "Workers (ready/all):"
 msgstr "Arbeiter (bereit/alle):"
 
-#, fuzzy
 msgid "Assemble defend team"
-msgstr "Zuerst ein Team zusammenstellen"
+msgstr "Stelle ein Team zusammen"
 
 msgid "Disable Power Plant"
 msgstr "Kraftwerk abschalten"
@@ -577,20 +588,17 @@ msgstr "Töte alle Außerirdischen in Isolationskammer"
 msgid "Base is under attack"
 msgstr "Basis wird angegriffen"
 
-#, fuzzy
 msgid "Equip"
-msgstr "Ausrüstung"
+msgstr "Ausrüsten"
 
-#, fuzzy
 msgid "Assemble Team"
-msgstr "Zuerst ein Team zusammenstellen"
+msgstr "Stelle ein Team zusammen"
 
-#, fuzzy
 msgid "Add/remove soldier to the team"
 msgstr "Soldat hinzufügen/entfernen"
 
 msgid "EKG"
-msgstr ""
+msgstr "EKG"
 
 msgid "Key Bindings"
 msgstr "Tastenbelegungen"
@@ -999,7 +1007,6 @@ msgstr "Menü-Modelle im Speicher vorhalten (schnellere Menüs)"
 msgid "Precache Models:"
 msgstr "Modelle im Speicher vorhalten:"
 
-#, fuzzy
 msgid "Menu Options"
 msgstr "Menü Optionen"
 
@@ -1009,16 +1016,14 @@ msgstr "Zeige Tipp des Tages:"
 msgid "Cursor Tooltips:"
 msgstr "Cursor Tooltips:"
 
-#, fuzzy
 msgid "Enable tooltips for the cursor"
-msgstr "Aktiviere Schnellhilfe für den Mauszeiger."
+msgstr "Aktiviere Tooltips für den Mauszeiger."
 
 msgid "Tooltips:"
 msgstr "Tooltips:"
 
-#, fuzzy
 msgid "Enable mouseover tooltips"
-msgstr "Schnellhilfe einschalten"
+msgstr "Tooltips einschalten"
 
 msgid "Several Tips"
 msgstr "Verschiedene Hinweise"
@@ -1055,9 +1060,8 @@ msgstr "Standard: Minimal-Zoom-Level ist 1.00."
 msgid "Min/Max Geo-Cam Zoom:"
 msgstr "Minimaler/Maximaler Kamera-Zoom für den Welt-Bildschirm:"
 
-#, fuzzy
 msgid "The minimum/maximum zoom of the geoscape camera"
-msgstr "Minimaler/Maximaler Zoom für die Weltbildschirm-Kamera."
+msgstr "Minimaler/Maximaler Zoom für die Weltbildschirm-Kamera"
 
 msgid "3D Geoscape:"
 msgstr "3D Geoscape:"
@@ -1069,9 +1073,8 @@ msgstr "Benutze den 3-dimensionalen Weltbild-Bildschirm. Wenn neu oder re-aktivi
 msgid "Geoscape Options"
 msgstr "Geoscape Optionen"
 
-#, fuzzy
 msgid "Available languages"
-msgstr "Verfügbare Ausrüstung:"
+msgstr "Verfügbare Sprachen"
 
 msgid "Language Settings"
 msgstr "Spracheinstellungen"
@@ -1079,32 +1082,27 @@ msgstr "Spracheinstellungen"
 msgid "Overall Game Settings"
 msgstr "Allgemeine Spieleinstellungen"
 
-#, fuzzy
 msgid "Leave the options menu"
-msgstr "Optionsmenü verlassen."
+msgstr "Optionsmenü verlassen"
 
-#, fuzzy
 msgid "Battlescape camera, gameplay and input settings"
-msgstr "Schlachtfeld-Kamera, Spiel- und Eingabe-Einstellungen."
+msgstr "Schlachtfeld-Kamera, Spiel- und Eingabe-Einstellungen"
 
 msgid "Audio"
 msgstr "Audio"
 
-#, fuzzy
 msgid "Sound settings"
-msgstr "Soundeinstellungen."
+msgstr "Soundeinstellungen"
 
 msgid "Video"
 msgstr "Video"
 
-#, fuzzy
 msgid "Video settings"
-msgstr "Grafikeinstellungen."
+msgstr "Grafikeinstellungen"
 
 msgid "Overall"
 msgstr "Allgemein"
 
-#, fuzzy
 msgid "Overall game settings"
 msgstr "Allgemeine Spieleinstellungen"
 
@@ -1607,9 +1605,8 @@ msgstr "Nachladen"
 msgid "Play Next Random Track"
 msgstr ""
 
-#, fuzzy
 msgid "Stop Music"
-msgstr "Musik"
+msgstr "Musik stoppen"
 
 msgid "Menu"
 msgstr ""
@@ -1618,11 +1615,9 @@ msgstr ""
 msgid "Message Log"
 msgstr "Nachrichteneinstellungen"
 
-#, fuzzy
 msgid "Chat Messages"
 msgstr "Chatnachrichten"
 
-#, fuzzy
 msgid "Use Headgear"
 msgstr "Kopfausrüstung benutzen"
 
@@ -1645,12 +1640,6 @@ msgstr ""
 
 msgid "LMB:Show/RMB:Hide Physical Data"
 msgstr ""
-
-#, fuzzy
-msgid ""
-"Finish Turn\n"
-"Key:e"
-msgstr "Runde beenden"
 
 msgid ""
 "LMB:Reload\n"
@@ -1761,9 +1750,8 @@ msgstr "Einzelschuss-Reaktionsfeuer (nicht möglich)"
 msgid "Multiple-shot reaction fire (Not possible)"
 msgstr "Mehrfachschuss-Reaktionsfeuer (nicht möglich)"
 
-#, fuzzy
 msgid "Hide rescue zone"
-msgstr "Soldat in der Rettungszone angekommen\n"
+msgstr "Rettungszone nicht mehr anzeigen"
 
 msgid "LMB:Show/RMB:Hide Inventory"
 msgstr ""
@@ -1775,9 +1763,8 @@ msgstr "Biosignale des Soldaten"
 msgid "Primary fire mode"
 msgstr "Primärer Feuermodus"
 
-#, fuzzy
 msgid "Show rescue zone"
-msgstr "Soldat hat Rettungszone verlassen\n"
+msgstr "Rettungszone anzeigen"
 
 msgid "Level 8"
 msgstr "Stufe 8"
@@ -1888,7 +1875,6 @@ msgstr "Chat"
 msgid "Shots: <8>"
 msgstr "Schüsse: <8>"
 
-#, fuzzy
 msgid "TU: <7>"
 msgstr "ZE: <7>"
 
@@ -1928,7 +1914,6 @@ msgstr "Gegner getötet:"
 msgid "Missions Performed:"
 msgstr "Einsätze absolviert:"
 
-#, fuzzy
 msgid "High Explosives:"
 msgstr "Explosivwaffen:"
 
@@ -2142,7 +2127,6 @@ msgstr "Einheit umbenennen"
 msgid "Object Info"
 msgstr "Objektinformationen"
 
-#, fuzzy
 msgid "Soldier Abilities"
 msgstr "Fähigkeiten"
 
@@ -8952,9 +8936,8 @@ msgstr "Eine Ausgrabungsstätte die unter einem Alienangriff leidet."
 msgid "An estate owned by rich and influential people."
 msgstr "Ein Anwesen von reichen und einflussreichen Leuten"
 
-#, fuzzy
 msgid "A small village."
-msgstr "Ein kleines Dorf in England."
+msgstr "Ein kleines Dorf."
 
 msgid "A hydroelectricity dam that is threatened by the alien invaders."
 msgstr "Ein Wasserkraftwerk, das durch außerirdische Eindringlinge bedroht ist."
@@ -8970,7 +8953,7 @@ msgid "A bunker used in a previous conflict."
 msgstr "Bunker aus einem vorherigem Konflikt."
 
 msgid "A small bungalow."
-msgstr ""
+msgstr "Ein kleiner Bungalow."
 
 msgid "An industrial area, used for loading and unloading goods."
 msgstr "Ein industrieeller Warenumschlagplatz."
@@ -9048,7 +9031,7 @@ msgid "UFO landed in hills area."
 msgstr "UFO in hügeliger Ebene gelandet."
 
 msgid "Harbour."
-msgstr ""
+msgstr "Hafen."
 
 msgid "An underpopulated area in a cold region."
 msgstr "Unbewohntes Areal in einer kalten Region."
@@ -9228,9 +9211,8 @@ msgstr "1 on 1"
 msgid "Skirmish"
 msgstr "Einzelgefecht"
 
-#, fuzzy
 msgid "Static Campaign"
-msgstr "Starte Kampagne"
+msgstr "Statische Kampagne"
 
 msgid "Campaign"
 msgstr "Kampagne"
@@ -9501,9 +9483,8 @@ msgstr ""
 msgid "Campaign Start (Market)"
 msgstr ""
 
-#, fuzzy
 msgid "Campaign Start"
-msgstr "Kampagne"
+msgstr "Kampagne starten"
 
 msgid "Flamers/Rifles/Grenades"
 msgstr ""
@@ -11339,29 +11320,23 @@ msgstr ""
 msgid "Current active team hit the max round time\n"
 msgstr "Die maximale Rundenzeit wurde erreicht\n"
 
-#, fuzzy
 msgid "15 seconds left until forced turn end.\n"
-msgstr "15 Sekunden bis die Runde zwangsbeendet wird\n"
+msgstr "15 Sekunden bis die Runde zwangsbeendet wird.\n"
 
-#, fuzzy
 msgid "30 seconds left until forced turn end.\n"
-msgstr "30 Sekunden bis die Runde zwangsbeendet wird\n"
+msgstr "30 Sekunden bis die Runde zwangsbeendet wird.\n"
 
-#, fuzzy
 msgid "1 minute left until forced turn end.\n"
-msgstr "1 Minute bis die Runde zwangsbeendet wird\n"
+msgstr "1 Minute bis die Runde zwangsbeendet wird.\n"
 
-#, fuzzy
 msgid "2 minutes left until forced turn end.\n"
-msgstr "2 Minuten bis die Runde zwangsbeendet wird\n"
+msgstr "2 Minuten bis die Runde zwangsbeendet wird.\n"
 
-#, fuzzy
 msgid "3 minutes left until forced turn end.\n"
-msgstr "3 Minuten bis die Runde zwangsbeendet wird\n"
+msgstr "3 Minuten bis die Runde zwangsbeendet wird.\n"
 
-#, fuzzy
 msgid "4 minutes left until forced turn end.\n"
-msgstr "4 Minuten bis die Runde zwangsbeendet wird\n"
+msgstr "4 Minuten bis die Runde zwangsbeendet wird.\n"
 
 msgid "Not enough TUs left for activating reaction fire.\n"
 msgstr "Nicht genügend ZE, um Reaktionsfeuer zu aktivieren.\n"
@@ -11433,7 +11408,6 @@ msgstr "Sie können weitere %d Sekunden nicht sprechen\n"
 msgid "Currently shaken, won't let their guard down.\n"
 msgstr "Unter Schock, nimmt keine Befehle entgegen.\n"
 
-#, fuzzy
 msgid "Can't perform action - it is not your turn!\n"
 msgstr "Sie sind nicht dran!\n"
 
@@ -11507,9 +11481,6 @@ msgid "%3.1f day left"
 msgid_plural "%3.1f days left"
 msgstr[0] "%3.1f Tag übrig"
 msgstr[1] "%3.1f Tage übrig"
-
-msgid "Press a key from a command"
-msgstr ""
 
 msgid "Slice through terrain at a lower level"
 msgstr "Schnitt durch nächst tiefere Ebene"
@@ -11587,17 +11558,11 @@ msgstr "Lade Einsatzgebiet [%s]"
 msgid "Downloading [%s]"
 msgstr "lade herunter [%s]"
 
-#, fuzzy
-msgid "^BUI bindings"
-msgstr "Tastenbelegungen"
-
-#, fuzzy
 msgid "^BBattlescape bindings"
-msgstr "Schlachtfeld-Kamera-Einstellungen"
+msgstr "Tastenbelegungen (Schlachtfeld)"
 
-#, fuzzy
 msgid "^BMenu bindings"
-msgstr "Tastenbelegungen"
+msgstr "Tastenbelegungen (Menü)"
 
 msgid "^BGlobal bindings"
 msgstr ""
@@ -11626,9 +11591,6 @@ msgstr "..."
 
 msgid "Server closed connection"
 msgstr "Server hat die Verbindung geschlossen"
-
-msgid "Update the GUI with the selected item"
-msgstr ""
 
 msgid "Unknown - not useable"
 msgstr "Unbekannte Technologie - nicht benutzbar"
@@ -11862,13 +11824,12 @@ msgstr "Setze die Anzahl der Soldaten pro Spieler niedriger als die Soldaten pro
 msgid "Settings doesn't make sense"
 msgstr "Einstellungen ergeben keinen Sinn"
 
-#, fuzzy, c-format
+#, c-format
 msgid "%s ended his turn (team %i).\n"
-msgstr "%s hat seine Runde beendet (Team %i)\n"
+msgstr "%s hat seine Runde beendet (Team %i).\n"
 
-#, fuzzy
 msgid "You've ended your turn.\n"
-msgstr "Sie haben Ihre Runde beendet\n"
+msgstr "Sie haben Ihre Runde beendet.\n"
 
 msgid "Error saving team. Check free disk space!"
 msgstr "Fehler beim Speichern des Teams. Überprüfen Sie, ob sie genügend Speicherplatz haben."
@@ -12106,9 +12067,8 @@ msgstr ""
 msgid "alive"
 msgstr "Lebendig:"
 
-#, fuzzy
 msgid "Employee"
-msgstr "Angestellte"
+msgstr "Angestellter"
 
 msgid "No power supplies in this base.\n"
 msgstr "Kein Kraftwerk in dieser Basis.\n"
@@ -12505,13 +12465,11 @@ msgstr "Keine Kampagne aktiv."
 msgid "Error decompressing data"
 msgstr "Fehler beim Extrahieren der Daten"
 
-#, fuzzy
 msgid "Build a laboratory first."
-msgstr "Zuerst muss ein Forschungslabor gebaut werden"
+msgstr "Zuerst muss ein Forschungslabor gebaut werden."
 
-#, fuzzy
 msgid "Nothing to research."
-msgstr "Nichts zu erforschen"
+msgstr "Nichts zu erforschen."
 
 msgid "No research proposal available for this project."
 msgstr "Kein Forschungsantrag für dieses Projekt vorhanden."
@@ -12541,9 +12499,8 @@ msgstr "Nicht zugewiesene Forscher"
 msgid "Status: unknown technology"
 msgstr "Status: Unbekannte Technologie"
 
-#, fuzzy
 msgid "Status: the materials or background knowledge needed to research this topic are not available yet"
-msgstr "Status: Wir haben noch nicht genügend Materialien oder Hintergrundwissen für dieses Forschungsprojekt.  "
+msgstr "Status: Wir haben noch nicht genügend Materialien oder Hintergrundwissen für dieses Forschungsprojekt"
 
 msgid "Status: not possible to research"
 msgstr "Status: Kann nicht erforscht werden"
@@ -12551,7 +12508,6 @@ msgstr "Status: Kann nicht erforscht werden"
 msgid "Status: research finished"
 msgstr "Status: Forschung abgeschlossen"
 
-#, fuzzy
 msgid "Status: research topic currently paused"
 msgstr "Status: Forschung unterbrochen"
 
@@ -12574,9 +12530,9 @@ msgstr "Fortschritt: %.1f%%"
 msgid "Researched in this base."
 msgstr "Wird in dieser Basis erforscht."
 
-#, fuzzy, c-format
+#, c-format
 msgid "Researched in %s."
-msgstr "Wird in %s erforscht"
+msgstr "Wird in %s erforscht."
 
 msgid "Not researched in any base."
 msgstr "Wird in keiner Basis erforscht."
@@ -12949,55 +12905,38 @@ msgstr "Gelandetes UFO"
 msgid "Crashed aircraft"
 msgstr "Abgestürztes Flugzeug"
 
-#, fuzzy
 msgid "Gathered items (types/all)"
-msgstr "Sichergestellte Gegenstände: (Typ/Alle)\t%i/%i\n"
+msgstr "Sichergestellte Gegenstände: (Typ/Alle)"
 
-#, fuzzy
 msgid "Civilians saved"
-msgstr ""
-"Zivilisten gerettet\t%i\n"
-"\n"
+msgstr "Zivilisten gerettet"
 
-#, fuzzy
 msgid "Civilians killed by friendly fire"
-msgstr "Durch PHALANX getötete Zivilisten\t%i\n"
+msgstr "Durch PHALANX getötete Zivilisten"
 
-#, fuzzy
 msgid "Civilians killed by Aliens"
-msgstr "Durch Außerirdische getötete Zivilisten\t%i\n"
+msgstr "Durch Außerirdische getötete Zivilisten"
 
-#, fuzzy
 msgid "PHALANX survivors"
-msgstr ""
-"PHALANX Überlebende\t%i\n"
-"\n"
+msgstr "PHALANX Überlebende"
 
-#, fuzzy
 msgid "PHALANX friendly fire losses"
-msgstr "PHALANX Verluste durch Friendlyfire\t%i\n"
+msgstr "PHALANX Verluste durch Friendlyfire"
 
-#, fuzzy
 msgid "PHALANX soldiers missing in action"
-msgstr "Im Kampf vermisste PHALANX Soldaten\t%i\n"
+msgstr "Im Kampf vermisste PHALANX Soldaten"
 
-#, fuzzy
 msgid "PHALANX soldiers killed by Aliens"
-msgstr "Durch Aliens getötete PHALANX Soldaten\t%i\n"
+msgstr "Durch Aliens getötete PHALANX Soldaten"
 
-#, fuzzy
 msgid "Alien survivors"
-msgstr ""
-"überlebende Aliens\t%i\n"
-"\n"
+msgstr "überlebende Aliens"
 
-#, fuzzy
 msgid "Aliens captured"
-msgstr "Außerirdische gefangen\t%i\n"
+msgstr "Außerirdische gefangen"
 
-#, fuzzy
 msgid "Aliens killed"
-msgstr "Außerirdische getötet\t%i\n"
+msgstr "Außerirdische getötet"
 
 msgid "Your dropship is not near the landing zone"
 msgstr "Das Einsatzschiff ist nicht nahe einer Landungszone"
@@ -13877,7 +13816,6 @@ msgstr "Bereits %i-mal in der Basis"
 msgid "Not set"
 msgstr "Nicht platziert"
 
-#, fuzzy
 msgid "Collected alien bodies"
 msgstr "Gesammelte tote Außerirdische"
 
@@ -13897,9 +13835,8 @@ msgstr "Freier Slot"
 msgid "Awaiting autopsy"
 msgstr "Starte Autopsie"
 
-#, fuzzy
 msgid "Researched"
-msgstr "Forschung"
+msgstr "Erforscht"
 
 msgid "You've captured new aliens."
 msgstr "Es wurden neue Außerirdische gefangen genommen."
@@ -14123,9 +14060,9 @@ msgstr "%s wurde getötet\n"
 msgid "%s was stunned\n"
 msgstr "%s wurde betäubt\n"
 
-#, fuzzy, c-format
+#, c-format
 msgid "%s lost a soldier\n"
-msgstr "%s geladen\n"
+msgstr "%s hat einen Soldaten verloren\n"
 
 msgid "Civilian spotted!\n"
 msgstr "Zivilist gesichtet!\n"
@@ -14137,13 +14074,8 @@ msgstr "Gegner gesichtet!\n"
 msgid "Enemy spotted: %s!"
 msgstr "Gegner gesichtet: %s!"
 
-#, fuzzy
 msgid "End current turn."
-msgstr "Runde beenden"
-
-#, fuzzy
-msgid "It is not your turn!"
-msgstr "Dies ist nicht Ihre Runde"
+msgstr "Runde beenden."
 
 msgid "Awaiting game start"
 msgstr "Warte auf Spielstart"
@@ -14210,10 +14142,6 @@ msgstr "Keine Munition!\n"
 
 msgid "No item in hand.\n"
 msgstr "Keinen Gegenstand in der Hand\n"
-
-#, fuzzy
-msgid "Update cvars from actor from list"
-msgstr "Einen Soldaten aus der Liste auswählen"
 
 msgid "Currently panics!\n"
 msgstr "In Panik!\n"
@@ -14333,10 +14261,6 @@ msgstr "Waffe kann nicht nachgeladen werden."
 msgid "No weapon."
 msgstr "Keine Waffe."
 
-#, fuzzy, c-format
-msgid "%i"
-msgstr "%i c"
-
 msgid "No remaining TUs left after shot."
 msgstr "Keine weiteren Zeiteinheiten nach dem Schuss verfügbar."
 
@@ -14376,13 +14300,11 @@ msgstr "Automatisches Aufstehen"
 msgid "Crouch walk"
 msgstr "Geduckt gehen"
 
-#, fuzzy
 msgid "Toggle camera to the previous visible alien."
-msgstr "Zum nächsten Außerirdischen"
+msgstr "Zum vorherigen Außerirdischen wechseln."
 
-#, fuzzy
 msgid "Toggle camera to the next visible alien."
-msgstr "Zum nächsten Außerirdischen"
+msgstr "Zum nächsten Außerirdischen wechseln."
 
 #, fuzzy
 msgid "Toggle to the next alien in sight of the selected actor."
@@ -14391,16 +14313,14 @@ msgstr "Wechsle zum nächsten sichtbaren Außerirdischen des gewählten Akteurs.
 msgid "Confirm the current action"
 msgstr "Aktuelle Aktion bestätigten"
 
-#, fuzzy
 msgid "Use"
-msgstr "Spieler"
+msgstr "Benutzen"
 
 msgid "Toggle the headgear"
 msgstr "Kopfausrüstung umschalten"
 
-#, fuzzy
 msgid "Toggle stand/crouch."
-msgstr "Umschalten zwischen stehend/kniend"
+msgstr "Umschalten zwischen stehend/kniend."
 
 msgid "Update an actor"
 msgstr "Variablen für Soldaten erneuern"
@@ -14408,13 +14328,11 @@ msgstr "Variablen für Soldaten erneuern"
 msgid "Select an actor from list"
 msgstr "Einen Soldaten aus der Liste auswählen"
 
-#, fuzzy
 msgid "Toggle to previous living actor"
-msgstr "Zum nächsten Soldaten"
+msgstr "Zum vorherigen Soldaten wechseln"
 
-#, fuzzy
 msgid "Toggle to next living actor"
-msgstr "Zum nächsten Soldaten"
+msgstr "Zum nächsten Soldaten wechseln"
 
 msgid "Unknown alien race"
 msgstr "Unbekannte Alienrasse"
@@ -14422,16 +14340,14 @@ msgstr "Unbekannte Alienrasse"
 msgid "You cannot reload this unknown item.\n"
 msgstr "Dieser unbekannte Gegenstand kann nicht nachgeladen werden.\n"
 
-#, fuzzy
-msgid "It is not your turn!\n"
-msgstr "Sie sind nicht dran\n"
+msgid "It is not your turn!"
+msgstr "Dies ist nicht Ihre Runde!"
 
 msgid "Superhuman"
 msgstr "Übernatürlich"
 
-#, fuzzy
 msgid "Impressive"
-msgstr "Texturkompression:"
+msgstr "Beindruckend"
 
 msgid "Outstanding"
 msgstr "Außerordentlich"
@@ -14460,24 +14376,25 @@ msgstr "Mittelmäßig"
 msgid "Poor"
 msgstr "Schlecht"
 
-# 2006-09-02 13:50
-msgid ""
-msgstr ""
-"Project-Id-Version: UFO Alien Invasion\n"
-"Report-Msgid-Bugs-To: tlh2000@users.sourceforge.net\n"
-"POT-Creation-Date: 2012-02-19 07:27+0100\n"
-"PO-Revision-Date: 2011-07-30 09:06+0100\n"
-"Last-Translator: Martin Gerhardy <tlh2000@users.sourceforge.net>\n"
-"Language-Team: \n"
-"Language: \n"
-"MIME-Version: 1.0\n"
-"Content-Type: text/plain; charset=UTF-8\n"
-"Content-Transfer-Encoding: 8bit\n"
-"X-Poedit-Country: GERMANY\n"
-"X-Poedit-SourceCharset: utf-8\n"
-"Plural-Forms: nplurals=2; plural=n != 1;\n"
-"X-Poedit-Language: German\n"
-"X-Poedit-Basepath: ../\n"
+#, fuzzy
+#~ msgid ""
+#~ "Finish Turn\n"
+#~ "Key:e"
+#~ msgstr "Runde beenden"
+
+#~ msgid "^BUI bindings"
+#~ msgstr "Tastenbelegungen (Menü)"
+
+#, fuzzy
+#~ msgid "Update cvars from actor from list"
+#~ msgstr "Einen Soldaten aus der Liste auswählen"
+
+#, fuzzy
+#~ msgid "%i"
+#~ msgstr "%i c"
+
+#~ msgid "It is not your turn!\n"
+#~ msgstr "Sie sind nicht dran!\n"
 
 #, fuzzy
 #~ msgid "Shots: %i"
