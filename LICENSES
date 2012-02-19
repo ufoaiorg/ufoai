@@ -6161,6 +6161,7 @@ base/textures/tex_nature/desert007.png | GNU General Public License 2.0 |  | dat
 base/textures/tex_nature/desert007_nm.png | GNU General Public License 2.0 | MCR
 base/textures/tex_nature/desert008.png | GNU General Public License 2.0 |  | data_source/images/textures/ground/dirt_b_4.xcf.bz2
 base/textures/tex_nature/desert008_nm.png | GNU General Public License 2.0 | MCR
+base/textures/tex_nature/desert009.png | Public Domain | yughues | OpenGameArt, pattern_45
 base/textures/tex_nature/dirt.png | GNU General Public License 2.0 | OpenArena
 base/textures/tex_nature/dirt001.png | GNU General Public License 2.0 or later | Martin Gerhardy
 base/textures/tex_nature/dirt001_nm.png | GNU General Public License 2.0 | MCR
