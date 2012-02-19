@@ -3581,9 +3581,14 @@ base/pics/sfx/explosions/flashbang_a15.png | GNU General Public License 2.0 | Lo
 base/pics/sfx/explosions/flashbang_a16.png | GNU General Public License 2.0 | Lord Havoc;MCR
 base/pics/sfx/explosions/flashbang_a17.png | GNU General Public License 2.0 | Lord Havoc;MCR
 base/pics/sfx/explosions/flashbang_a18.png | GNU General Public License 2.0 | Lord Havoc;MCR
-base/pics/sfx/explosions/greenplas_00.png |  | Mikolaj Konarski (bandobraz)
-base/pics/sfx/explosions/greenplas_01.png | GNU General Public License 2.0 | Martin Gerhardy | based on OpenArena particle effects (bfg, blue teleport and lighting)
-base/pics/sfx/explosions/greenplas_07.png |  | Mikolaj Konarski (bandobraz)
+base/pics/sfx/explosions/greenplas_00.png | GNU General Public License 2.0 | Lord Havoc;MCR
+base/pics/sfx/explosions/greenplas_01.png | GNU General Public License 2.0 | Lord Havoc;MCR
+base/pics/sfx/explosions/greenplas_02.png | GNU General Public License 2.0 | Lord Havoc;MCR
+base/pics/sfx/explosions/greenplas_03.png | GNU General Public License 2.0 | Lord Havoc;MCR
+base/pics/sfx/explosions/greenplas_04.png | GNU General Public License 2.0 | Lord Havoc;MCR
+base/pics/sfx/explosions/greenplas_05.png | GNU General Public License 2.0 | Lord Havoc;MCR
+base/pics/sfx/explosions/greenplas_06.png | GNU General Public License 2.0 | Lord Havoc;MCR
+base/pics/sfx/explosions/greenplas_07.png | GNU General Public License 2.0 | Lord Havoc;MCR
 base/pics/sfx/fireball.jpg | Public Domain |  | Public Domain Golgotha
 base/pics/sfx/flame1.png | GNU General Public License 2.0 | OpenArena
 base/pics/sfx/flame2.png | GNU General Public License 2.0 | OpenArena
