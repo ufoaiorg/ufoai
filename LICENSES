@@ -3600,7 +3600,7 @@ base/pics/sfx/flame7.png | GNU General Public License 2.0 | OpenArena
 base/pics/sfx/flame8.png | GNU General Public License 2.0 | OpenArena
 base/pics/sfx/flare_blue.jpg | Public Domain |  | Public Domain Golgotha
 base/pics/sfx/flare_red.jpg | Public Domain |  | Public Domain Golgotha
-base/pics/sfx/greenball.png |  | Mikolaj Konarski (bandobraz)
+base/pics/sfx/greenball.png | GNU General Public License 2.0 | Lord Havoc;MCR
 base/pics/sfx/greenplasbeam.png | GNU General Public License 2.0 or later | Martin Gerhardy
 base/pics/sfx/greenplasmaball.png | Creative Commons Attribution-Share Alike 3.0 | Christian "Crystan" Hoffmann
 base/pics/sfx/heal.png | Creative Commons Attribution-Share Alike 3.0 | Christian "Crystan" Hoffmann
@@ -3619,7 +3619,7 @@ base/pics/sfx/plasmadust.png | Creative Commons Attribution-Share Alike 3.0 | Ch
 base/pics/sfx/powerup_flare3.jpg | Public Domain |  | Public Domain Golgotha
 base/pics/sfx/rain.png | Creative Commons Attribution-Share Alike 3.0 | Christian "Crystan" Hoffmann
 base/pics/sfx/shadow.png | Creative Commons Attribution-Share Alike 3.0 | Christian "Crystan" Hoffmann
-base/pics/sfx/smoke.png | GNU General Public License 2.0 |  | OpenAreana
+base/pics/sfx/smoke.png | GNU General Public License 2.0 |  | OpenArena
 base/pics/sfx/smoke/smoke_00.png | Creative Commons Attribution-Share Alike 3.0 | Patrick Raynor
 base/pics/sfx/smoke/smoke_01.png | Creative Commons Attribution-Share Alike 3.0 | Patrick Raynor
 base/pics/sfx/smoke/smoke_02.png | Creative Commons Attribution-Share Alike 3.0 | Patrick Raynor
@@ -3631,6 +3631,7 @@ base/pics/sfx/smoke_00.png | Creative Commons Attribution-Share Alike 3.0 | Patr
 base/pics/sfx/smoke_01.png | Creative Commons Attribution-Share Alike 3.0 | Patrick Raynor
 base/pics/sfx/smoke_02.png | Creative Commons Attribution-Share Alike 3.0 | Patrick Raynor
 base/pics/sfx/smoke_03.png | Creative Commons Attribution-Share Alike 3.0 | Patrick Raynor
+base/pics/sfx/smoke_gren.png | Creative Commons Attribution-Share Alike 3.0 | Patrick Raynor;MCR | based on base/pics/sfx/smoke_00
 base/pics/sfx/smoke_particle.jpg | Public Domain |  | Public Domain Golgotha
 base/pics/sfx/smoke_puff1.jpg | Public Domain |  | Public Domain Golgotha
 base/pics/sfx/smoke_puff2.jpg | Public Domain |  | Public Domain Golgotha
