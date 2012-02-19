@@ -1679,11 +1679,6 @@ msgid "LMB:Show/RMB:Hide Physical Data"
 msgstr ""
 
 msgid ""
-"Finish Turn\n"
-"Key:e"
-msgstr ""
-
-msgid ""
 "LMB:Reload\n"
 "Wheel Up:Right Hand"
 msgstr ""
@@ -6890,9 +6885,6 @@ msgid_plural "%3.1f days left"
 msgstr[0] ""
 msgstr[1] ""
 
-msgid "Press a key from a command"
-msgstr ""
-
 msgid "Slice through terrain at a lower level"
 msgstr ""
 
@@ -6967,9 +6959,6 @@ msgstr ""
 msgid "Downloading [%s]"
 msgstr ""
 
-msgid "^BUI bindings"
-msgstr ""
-
 msgid "^BBattlescape bindings"
 msgstr ""
 
@@ -7002,9 +6991,6 @@ msgid "..."
 msgstr ""
 
 msgid "Server closed connection"
-msgstr ""
-
-msgid "Update the GUI with the selected item"
 msgstr ""
 
 msgid "Unknown - not useable"
@@ -9417,9 +9403,6 @@ msgstr ""
 msgid "End current turn."
 msgstr ""
 
-msgid "It is not your turn!"
-msgstr ""
-
 msgid "Awaiting game start"
 msgstr ""
 
@@ -9477,9 +9460,6 @@ msgid ""
 msgstr ""
 
 msgid "No item in hand.\n"
-msgstr ""
-
-msgid "Update cvars from actor from list"
 msgstr ""
 
 msgid "Currently panics!\n"
@@ -9583,10 +9563,6 @@ msgstr ""
 msgid "No weapon."
 msgstr ""
 
-#, c-format
-msgid "%i"
-msgstr ""
-
 msgid "No remaining TUs left after shot."
 msgstr ""
 
@@ -9662,7 +9638,7 @@ msgstr ""
 msgid "You cannot reload this unknown item.\n"
 msgstr ""
 
-msgid "It is not your turn!\n"
+msgid "It is not your turn!"
 msgstr ""
 
 msgid "Superhuman"
@@ -9708,7 +9684,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: tlh2000@users.sourceforge.net\n"
-"POT-Creation-Date: 2012-02-19 07:27+0100\n"
+"POT-Creation-Date: 2012-02-19 08:14+0100\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
