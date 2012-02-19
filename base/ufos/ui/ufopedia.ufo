@@ -453,6 +453,26 @@ window ufopedia extends objectinfo
 		if ( *cvar:mn_upimage_top ne "" ) {
 			*node:root.content.navigation.bigpicture@invis = false
 		}
+		// reset mn_upimage_top2
+		if ( exists *cvar:mn_upimage_top2 ) {
+			 delete *cvar:mn_upimage_top2
+		}
+		// special pre-research cases
+		if ( *cvar:mn_upimage_top eq "techs/bloodspider_dead" ) {
+			*cvar:mn_upimage_top2 = "techs/bloodspider_autopsy"
+		}
+		if ( *cvar:mn_upimage_top eq "techs/shevaar_dead" ) {
+			*cvar:mn_upimage_top2 = "techs/shevaar_autopsy"
+		}
+		if ( *cvar:mn_upimage_top eq "techs/taman_dead" ) {
+			*cvar:mn_upimage_top2 = "techs/taman_autopsy"
+		}
+		if ( *cvar:mn_upimage_top eq "techs/ortnok_dead" ) {
+			*cvar:mn_upimage_top2 = "techs/ortnok_autopsy"
+		}
+		if ( *cvar:mn_upimage_top2 eq "" ) {
+			*cvar:mn_upimage_top2 = *cvar:mn_upimage_top
+		}
 
 /* TODO: make this work:
 	// we do not want to show the bigpicture tab for ammo models,
@@ -481,11 +501,16 @@ window ufopedia extends objectinfo
 			*node:root.content.description_scroll@invis = true
 			*node:root.content.requirement@invis = false
 			*node:root.itemdescription@invis = true
-			*node:root.content.image_top@invis = false
-			*node:root.content.image_top2@invis = true
+
+			if ( *node:root.content.navigation.preresearch@invis == true ) {
+				*node:root.content.image_top@invis = false
+				*node:root.content.image_top2@invis = true
+			} else {
+				*node:root.content.image_top@invis = true
+				*node:root.content.image_top2@invis = false
+			}
 			*node:root.content.image_bigpicture@invis = true
 			*node:root.content.mdl_bigpicture@invis = true
-
 			if ( *cvar:mn_rightpanel == 1 ) {
 				*node:root.content.ufopedia@width = 400
 				*node:root.content.main_panel_small@invis = false
@@ -505,31 +530,11 @@ window ufopedia extends objectinfo
 			*node:root.content.description_scroll@invis = true
 			*node:root.content.requirement@invis = false
 			*node:root.itemdescription@invis = true
-			*node:root.content.image_top@invis = true
-			*node:root.content.image_top2@invis = false
+			*node:root.content.image_top@invis = false
+			*node:root.content.image_top2@invis = true
 			*node:root.content.image_bigpicture@invis = true
 			*node:root.content.mdl_bigpicture@invis = true
 			if ( *cvar:mn_rightpanel == 1 ) {
-				// special pre-research cases
-				if ( *cvar:mn_upimage_top eq "techs/bloodspider_autopsy" ) {
-					*cvar:mn_upimage_top2 = "techs/bloodspider_dead"
-					delete *cvar:mn_upimage_top
-				}
-				if ( *cvar:mn_upimage_top eq "techs/shevaar_autopsy" ) {
-					*cvar:mn_upimage_top2 = "techs/shevaar_dead"
-					delete *cvar:mn_upimage_top
-				}
-				if ( *cvar:mn_upimage_top eq "techs/taman_autopsy" ) {
-					*cvar:mn_upimage_top2 = "techs/taman_dead"
-					delete *cvar:mn_upimage_top
-				}
-				if ( *cvar:mn_upimage_top eq "techs/ortnok_autopsy" ) {
-					*cvar:mn_upimage_top2 = "techs/ortnok_dead"
-					delete *cvar:mn_upimage_top
-				}
-				if ( *cvar:mn_upimage_top ne "" ) {
-					*cvar:mn_upimage_top2 = *cvar:mn_upimage_top
-				}
 				*node:root.content.ufopedia@width = 400
 				*node:root.content.main_panel_small@invis = false
 				*node:root.content.main_panel_large@invis = true
