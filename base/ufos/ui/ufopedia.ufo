@@ -501,7 +501,7 @@ window ufopedia extends objectinfo
 			*node:root.content.description_scroll@invis = true
 			*node:root.content.requirement@invis = false
 			*node:root.itemdescription@invis = true
-
+			// autopsy is finished
 			if ( *node:root.content.navigation.preresearch@invis == true ) {
 				*node:root.content.image_top@invis = false
 				*node:root.content.image_top2@invis = true
@@ -572,6 +572,10 @@ window ufopedia extends objectinfo
 			*node:root.content.main_panel_large@invis = false
 			*node:root.content.decoration_panel@invis = true
 			*node:root.content.decoration_panel2@invis = true
+			// autopsy is finished
+			if ( *node:root.content.navigation.preresearch@invis == false ) {
+				*node:root.content.image_bigpicture@src = *cvar:mn_upimage_top2
+			}
 			*node:root.content.image_top@invis = true
 			*node:root.content.image_top2@invis = true
 			*node:root.content.image_bigpicture@invis = false
