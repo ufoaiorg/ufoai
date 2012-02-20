@@ -575,6 +575,8 @@ window ufopedia extends objectinfo
 			// autopsy is finished
 			if ( *node:root.content.navigation.preresearch@invis == false ) {
 				*node:root.content.image_bigpicture@src = *cvar:mn_upimage_top2
+			} else {
+				*node:root.content.image_bigpicture@src = *cvar:mn_upimage_top
 			}
 			*node:root.content.image_top@invis = true
 			*node:root.content.image_top2@invis = true
