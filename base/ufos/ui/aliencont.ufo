@@ -1,45 +1,85 @@
+// ============================
+// BASE ALIEN CONTAINMENU MENU
+// ============================
+
 // ======================
-// ALIEN CONTAINMENU MENU
+// Alien Image Component
 // ======================
+
+	component image cmpAlienImage
+	{
+		src			*cvar:mn_al_alienimage
+		pos				"18 19"
+		size			"279 626"
+		preventratio	true
+		contentalign	ALIGN_CC
+	}
+
+// ===========================
+// Aliencontainment Component
+// ===========================
 
 component image cmpAlienContainment {
 	{
 		src				"ui/hosp_button_green"
 		onClick			{ cmd "aliencont_click <num>;" }
 		onRClick		{ cmd "aliencont_pedia <num>;" }
+		onMouseEnter {
+			if ( *node:this@src == "ui/hosp_button_green" ) {
+				*node:this@src = "ui/hosp_button_light"
+			}
+		}
+		onMouseLeave {
+			if ( *node:this@src == "ui/hosp_button_light" ) {
+				*node:this@src = "ui/hosp_button_green"
+			}
+		}
+		tooltip			"_LMB:Select\nRMB:Show UFOpaedia"
 	}
-	button icon			{
-		pos		"247  11"
+	button icon {
+		pos		"247 11"
 		size	"40 40"
 		padding	0
 		icon 	"icons/alien_unused"
 	}
 	zone kill_zone		{
-		pos			"247  11"
+		pos			"247 11"
 		size		"40 40"
 		tooltip		"_Kill this alien"
 		onClick		{ cmd "aliencont_killone <node:parent@num>;" }
+		onMouseEnter {
+			*node:parent.icon@icon = "icons/alien_kill_hovered"
+		}
+		onMouseLeave {
+			*node:parent.icon@icon = "icons/alien_kill"
+		}
 	}
-	zone autopsy_zone	{
+	zone autopsy_zone {
 		pos			"247  11"
 		size		"40 40"
 		tooltip		"_Start autopsy"
 		onClick		{ cmd "aliencont_research <node:parent@num>;" }
+		onMouseEnter {
+			*node:parent.icon@icon = "icons/alien_surgery_hovered"
+		}
+		onMouseLeave {
+			*node:parent.icon@icon = "icons/alien_surgery"
+		}
 	}
-	string name			{
-		pos			"15  10"
+	string name {
+		pos			"15 10"
 		color		"1 1 1 1"
 		size		"220 16"
 		ghost		true
 	}
 	string status {
-		pos			"15  35"
+		pos			"15 35"
 		color		"1 1 1 1"
 		size		"220 16"
 		ghost		true
 	}
-	bar tech_progress	{
-		pos			"22  65"
+	bar tech_progress {
+		pos			"22 65"
 		size		"263 6"
 		color		"0 .8 0 1"
 		max			"100"
@@ -142,18 +182,19 @@ window aliencont
 
 	}
 
-		// ========================
-		// kill live aliens button
-		// ========================
+	// ==========================
+	// kill living aliens button
+	// ==========================
 
-		custombutton bt_alc_killaliens
-		{
-			tooltip		"_Kill all aliens in this base"
-			pos			"275 165"
-			size		"64 64"
-			icon		"icons/killalien"
-			onClick		{ cmd "aliencont_killall;" }
-		}
+	custombutton bt_alc_killaliens
+	{
+		tooltip		"_Kill all aliens in this base"
+		pos			"275 165"
+		size		"64 64"
+		icon		"icons/killalien"
+		onClick		{ cmd "aliencont_killall;" }
+		visiblewhen	"*cvar:mn_al_capacity > 0"
+	}
 
 	// ==============================
 	// alien info window (top right)
@@ -264,7 +305,7 @@ window aliencont
 		*node:root.ac.ac<1>.icon@tooltip = "_Kill this alien"
 		*node:root.ac.ac<1>@image = "ui/hosp_button_light"
 
-		/* hide_autopsy */
+		/* hide autopsy */
 		*node:root.ac.ac<1>.kill_zone@invis = false
 		*node:root.ac.ac<1>.autopsy_zone@invis = true
 	}
@@ -382,9 +423,9 @@ window aliencont
 
 	}
 
-	// ================================================================================
-	// alien info
-	// ================================================================================
+	// ==========================
+	// Right Panel (Alien image)
+	// ==========================
 
 	panel alc_alien_panel
 	{
@@ -394,14 +435,7 @@ window aliencont
 			image	"ui/panel_grey_green_large"
 		}
 
-		image image
-		{
-			src			*cvar:mn_al_alienimage
-			pos				"18 19"
-			size			"279 626"
-			preventratio	true
-			contentalign	ALIGN_CC
-		}
+		cmpAlienImage ai { }
 
 	}
 
