@@ -81,17 +81,12 @@ static void CLMN_InitKeyList_f (void)
 	LIST_AddString(&list, _("^BMenu bindings"));
 	LIST_AddString(&list, "");
 	CLMN_AddBindings(&list, menuKeyBindings);
+	CLMN_AddUIBindings(&list);
 	LIST_AddString(&list, "");
 	LIST_AddString(&list, "");
 	LIST_AddString(&list, _("^BBattlescape bindings"));
 	LIST_AddString(&list, "");
 	CLMN_AddBindings(&list, battleKeyBindings);
-
-	LIST_AddString(&list, "");
-	LIST_AddString(&list, "");
-	LIST_AddString(&list, _("^BUI bindings"));
-	LIST_AddString(&list, "");
-	CLMN_AddUIBindings(&list);
 
 	UI_RegisterLinkedListText(TEXT_LIST, list);
 }

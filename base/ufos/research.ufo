@@ -4198,7 +4198,7 @@ tech rs_alien_bloodspider_autopsy
 	}
 	time	4500
 
-	image techs/bloodspider_autopsy
+	image techs/bloodspider_dead
 }
 
 tech rs_weapon_bloodspider
@@ -4257,7 +4257,7 @@ tech rs_alien_ortnok_autopsy
 	}
 	time	3500
 
-	image	techs/ortnok_autopsy
+	image	techs/ortnok_dead
 }
 
 // TAMAN
@@ -4301,7 +4301,7 @@ tech rs_alien_taman_autopsy
 	}
 	time	3500
 
-	image	techs/taman_autopsy
+	image	techs/taman_dead
 }
 
 // SHEVAAR
@@ -4345,7 +4345,7 @@ tech rs_alien_shevaar_autopsy
 	}
 	time	3500
 
-	image	techs/shevaar_autopsy
+	image	techs/shevaar_dead
 }
 
 // HOVERNET

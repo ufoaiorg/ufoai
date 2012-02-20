@@ -100,6 +100,10 @@ typedef struct uiBehaviour_s {
 	qboolean (*keyPressed)(struct uiNode_s *node, unsigned int key, unsigned short unicode);
 	qboolean (*keyReleased)(struct uiNode_s *node, unsigned int key, unsigned short unicode);
 
+	/* cell size */
+	int (*getCellWidth)(struct uiNode_s *node);
+	int (*getCellHeight)(struct uiNode_s *node);
+
 	/* Planned */
 #if 0
 	/* mouse move event */

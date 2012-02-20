@@ -603,7 +603,7 @@ window equipment extends objectinfo
 			}
 		}
 		option abilities {
-			label	"_Actor Abilities"
+			label	"_Soldier Abilities"
 			value	"0"
 		}
 		option weaponinfo {
@@ -631,7 +631,7 @@ window equipment extends objectinfo
 	{
 		tooltip		"_Rename your unit"
 		icon		"icons/pen"
-		pos			"775 11"
+		pos			"781 16"
 		size		"35 35"
 		padding		0
 		onClick		{ call *node:parent.name@edit }
@@ -643,10 +643,9 @@ window equipment extends objectinfo
 			src		*cvar:mn_body
 			skin	*cvar:mn_skin
 			anim	"stand_menu"
-			angles	"0 70 90"
+			angles	"0 105 90"
 			scale	"5 5 5"
-
-			pos		"676 69"
+			pos		"675 75"
 			size	"197 258"
 			origin	"0 -30 0"
 		}

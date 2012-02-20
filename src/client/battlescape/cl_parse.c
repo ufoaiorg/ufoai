@@ -97,8 +97,6 @@ static void CL_ParseClientinfo (unsigned int player)
 	clientinfo_t *ci = &cl.clientinfo[player];
 	const char *s = CL_GetConfigString(CS_PLAYERNAMES + player);
 
-	Q_strncpyz(ci->cinfo, s, sizeof(ci->cinfo));
-
 	/* isolate the player's name */
 	Q_strncpyz(ci->name, s, sizeof(ci->name));
 }

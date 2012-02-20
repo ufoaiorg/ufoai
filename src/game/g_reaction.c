@@ -228,7 +228,7 @@ static int G_ReactionFireGetTUsForItem (const edict_t *ent, const edict_t *targe
 }
 
 /**
- * @brief Checks whether the actor has a reaction fire enabled weapon in on of his hands.
+ * @brief Checks whether the actor has a reaction fire enabled weapon in one of his hands.
  * @param[in] ent The actor to check the weapons for
  * @return @c NULL if no actor has not reaction fire enabled weapons, the fire definition otherwise.
  */
@@ -429,6 +429,15 @@ static qboolean G_ReactionFireIsPossible (const edict_t *ent, const edict_t *tar
 	if (!G_IsShaken(ent) && !G_IsReaction(ent))
 		return qfalse;
 
+	/* check ent has weapon in RF hand */
+	/* @todo Should this situation even happen when G_IsReaction(ent) is true? */
+	if (!ACTOR_GET_INV(ent, ent->chr.RFmode.hand)) {
+		/* print character info if this happens, for now */
+		gi.DPrintf("Reaction fire enabled but no weapon for hand (name=%s,hand=%i,fmIdx=%i)\n",
+				ent->chr.name, ent->chr.RFmode.hand, ent->chr.RFmode.fmIdx);
+		return qfalse;
+	}
+
 	if (!G_IsVisibleForTeam(target, ent->team))
 		return qfalse;
 
@@ -465,7 +474,7 @@ static void G_ReactionFireTargetsUpdateAll (const edict_t *target)
 
 	/* check all possible shooters */
 	while ((shooter = G_EdictsGetNextLivingActor(shooter))) {
-		/* check whether reaction fire is possible */
+		/* check whether reaction fire is possible (friend/foe, LoS */
 		if (G_ReactionFireIsPossible(shooter, target)) {
 			const int TUs = G_ActorGetTUForReactionFire(shooter);
 			G_ReactionFireTargetsAdd(shooter, target, TUs);

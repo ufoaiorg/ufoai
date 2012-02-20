@@ -27,7 +27,6 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 
 typedef struct {
 	char name[MAX_VAR];
-	char cinfo[MAX_VAR];
 } clientinfo_t;
 
 /**
@@ -78,6 +77,8 @@ typedef struct clientBattleScape_s {
 	qboolean started;		/**< match already started? */
 
 	mapData_t *mapData;
+
+	pathing_t pathMap;		/**< This is where the data for TUS used to move and actor locations go */
 
 	mapTiles_t *mapTiles;
 

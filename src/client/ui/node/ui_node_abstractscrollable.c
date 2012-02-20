@@ -164,11 +164,24 @@ qboolean UI_AbstractScrollableNodeScrollY (uiNode_t *node, int offset)
 	return UI_AbstractScrollableNodeSetY(node, EXTRADATA(node).scrollY.viewPos + offset, -1, -1);
 }
 
+/**
+ * @brief Return size of the cell, which is the size (in virtual "pixel") which represente 1 in the scroll values.
+ * Here expect the widget can scroll pixel per pixel.
+ * @return Size in pixel.
+ */
+static int UI_AbstractScrollableGetCellSize (uiNode_t *node)
+{
+	return 1;
+}
+
 void UI_RegisterAbstractScrollableNode (uiBehaviour_t *behaviour)
 {
 	behaviour->name = "abstractscrollable";
 	behaviour->isAbstract = qtrue;
 	behaviour->extraDataSize = sizeof(EXTRADATA_TYPE);
+	behaviour->getCellWidth = UI_AbstractScrollableGetCellSize;
+	behaviour->getCellHeight = UI_AbstractScrollableGetCellSize;
+
 
 	/* position of the vertical view (into the full number of elements the node contain) */
 	UI_RegisterExtradataNodeProperty(behaviour, "viewpos", V_INT, EXTRADATA_TYPE, scrollY.viewPos);

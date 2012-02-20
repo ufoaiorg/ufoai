@@ -120,6 +120,26 @@ uiNode_t* UI_AbstractOptionGetFirstOption (uiNode_t * node)
 	}
 }
 
+/**
+ * @brief Return size of the cell, which is the size (in virtual "pixel") which represente 1 in the scroll values.
+ * Here expect the widget can scroll pixel per pixel.
+ * @return Size in pixel.
+ */
+static int UI_AbstractOptionGetCellWidth (uiNode_t *node)
+{
+	return 1;
+}
+
+/**
+ * @brief Return size of the cell, which is the size (in virtual "pixel") which represent 1 in the scroll values.
+ * Here we guess the widget can scroll pixel per pixel.
+ * @return Size in pixel.
+ */
+static int UI_AbstractOptionGetCellHeight (uiNode_t *node)
+{
+	return 1;
+}
+
 void UI_RegisterAbstractOptionNode (uiBehaviour_t *behaviour)
 {
 	behaviour->name = "abstractoption";
@@ -128,6 +148,8 @@ void UI_RegisterAbstractOptionNode (uiBehaviour_t *behaviour)
 	behaviour->drawItselfChild = qtrue;
 	behaviour->doLayout = UI_AbstractOptionDoLayout;
 	abstractOptionBehaviour = behaviour;
+	behaviour->getCellWidth = UI_AbstractOptionGetCellWidth;
+	behaviour->getCellHeight = UI_AbstractOptionGetCellHeight;
 
 	/** Optional. Data ID we want to use. It must be an option list. It substitute to the inline options */
 	UI_RegisterExtradataNodeProperty(behaviour, "dataid", V_UI_DATAID, EXTRADATA_TYPE, dataId);

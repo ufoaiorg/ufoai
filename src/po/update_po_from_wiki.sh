@@ -18,10 +18,10 @@ url="http://ufoai.ninex.info"
 wiki_url="/wiki/index.php/List_of_msgid/"
 chapters="Research Armour Equipment Buildings Aircraft Aircraft_Equipment UGVs UGV_Equipment Aliens Campaigns Story Mail_Headers Mail_Bodies"
 index="List_of_msgid_"${language}
-input_file="ufoai-"$language".po"
-output_file=updated_${language}.po
-log_file=updated_${language}.log
-debug=0
+input_file="ufoai-"$language".po"	# temporary file used -- downloaded from wiki
+output_file=updated_${language}.po	# name of the output file (contains updated strings)
+log_file=updated_${language}.log	# name of the log file
+debug=0			#set to 1 if you want the log file to be more verbose
 onlyDescription=1	#set to 0 if you want to update also name of the items
 elseenglish=1
 
@@ -168,7 +168,7 @@ clean_html()
 	END=`wc -l downloaded_page_${language0}.tmp | $sed_soft 's/^[ \t]*//g' | cut -d " " -f 1`
 	$sed_soft $BEGIN','$END'd' downloaded_page_${language0}.tmp |
 	$sed_soft 's/(Extra:.*researched)[ \t]*//g;s/[ \t]*(End Extra)//g' |
-	$sed_soft ':a;N;$!ba;s/\n//g;s/^[ \t]*//g;s/[ \t]*$//g;s/&amp;/\&/g;s/&nbsp;/ /g;s/\s\+$//;s/<br \/>//g;s/<b>//g;s/<\/b>//g;s/<hr \/>//g;s/<\/p>/<p>/g;s/<i>//g;s/<\/i>//g;s/<\/h1>/<p>/g;s/<\/h2>/<p>/g;s/<\/h3>/<p>/g;s/<\/h4>/<p>/g;s/<dd>/<p>/g;s/<dl>/<p>/g;s/<\/dd>/<p>/g;s/<\/dl>/<p>/g;s/[ \t]*<p>[ \t]*/<p>/g;s/:/: /g;s/[ \t][ \t]*/ /g;s/class=\"image\"/><p></g;s/<\/span>//g' > downloaded_page_${language0}
+	$sed_soft ':a;N;$!ba;s/\n//g;s/^[ \t]*//g;s/[ \t]*$//g;s/&amp;/\&/g;s/&#160;/ /g;s/&nbsp;/ /g;s/\s\+$//;s/<br \/>//g;s/<b>//g;s/<\/b>//g;s/<hr \/>//g;s/<\/p>/<p>/g;s/<i>//g;s/<\/i>//g;s/<\/h1>/<p>/g;s/<\/h2>/<p>/g;s/<\/h3>/<p>/g;s/<\/h4>/<p>/g;s/<dd>/<p>/g;s/<dl>/<p>/g;s/<\/dd>/<p>/g;s/<\/dl>/<p>/g;s/[ \t]*<p>[ \t]*/<p>/g;s/:/: /g;s/[ \t][ \t]*/ /g;s/class=\"image\"/><p></g;s/<\/span>//g' > downloaded_page_${language0}
 	rm -f downloaded_page_${language0}.tmp
 
 }
@@ -279,8 +279,8 @@ update_one_sentence()
 	$awk_soft 'BEGIN {FS="]";RS="<p>"}
 		$0 ~ /^[ \t]*$/ {next}
 		test && ($0 ~ /^\[/ || $0 ~ /<.*>/) {exit}
-		$0 ~ /^\['$english'\]/ || test == 1 {
-			gsub(/^\['$english'\][ \t]*/,"")
+		$0 ~ /\['$english'\]/ || test == 1 {
+			gsub(/.*\['$english'\][ \t]*<\/a>/,"")
 			gsub(/[ \t]*$/,"")
 			if (test && test2) {
 				printf "\\n"
@@ -390,7 +390,65 @@ update_txt()
 	return $?
 }
 
+create_language_file()
+{
+# Generation of a file 'Language_List_${language0}' which contains the available languages (and their position) for each array of the wiki index.
+# Every line describe one tabular in ${index} file (there should be one tabular for each element of ${chapter}) :
+#	The first number of a line is the first line of ${index} file of the tabular containing all strings in all languages
+#	The second number is the line of ${index} file which indicates the end of the previous tabular
+#	Then, all languages translated in the tabular is written, in the order of column appearance
 
+	if [ -f Language_List_${language0} ]
+	then
+		rm Language_List_${language0}
+		touch Language_List_${language0}
+	fi
+	declare -i id=0
+	declare -i language_test=0
+	declare -i last_line_check=0
+	declare list_language
+
+	while read ll_line
+	do
+		id=${id}+1
+		if [[ "$ll_line" = *"en (source)"* ]]
+		then
+			language_test=1
+			continue
+		fi
+
+		if [ "${language_test}" -eq 1 ]
+		then
+			declare temp_string=$ll_line
+			temp_string=`echo "$temp_string" | cut -d ">" -f 2`
+			temp_string=`echo "$temp_string" | cut -d "<" -f 1`
+			list_language=${list_language}${temp_string}
+		fi
+
+		if [[ "${language_test}" -eq 1 ]] && [[ "$ll_line" = *"th><"* ]]
+		then
+			printf ${id}" " >> Language_List_${language0}
+			language_test=0
+			last_line_check=1
+		fi
+
+		if [[ "${last_line_check}" -eq 1 ]] && [[ "$ll_line" = *"table>"* ]]
+		then
+			echo ${id}" en"$list_language >> Language_List_${language0}
+			list_language=""
+			last_line_check=0
+		fi
+	done < ${index}
+
+	echo "Creating Language_List_${language0} : done." >> $log_file
+	if [[ "$debug" = "1" ]]
+	then
+		printf "__________________________________________\n\n" >> $log_file
+		echo "Language_List_${language0} contains :" >> $log_file
+		cat Language_List_${language0} >> $log_file
+		printf "__________________________________________\n\n" >> $log_file
+	fi
+}
 
 
 # Creation of the log file
@@ -421,27 +479,7 @@ for i in `echo $chapters`; do
 	rm ${i}"_"${language}
 done
 
-# Generation of a file 'Language_List_${language0}' which contains the available languages (and their position) for each array of the wiki index.
-$awk_soft ' BEGIN {FS="</th><th>"}
-	$0 ~ /^<th> msgid <\/th><th> status <\/th><th> en / {
-		if (begin > 0) {print begin" "NR-1" en"language}
-		begin=NR
-		language=""
-		for (i=4; i<=NF; i++) {language=language$i}
-		gsub (/[ \t][ \t]*/," ",language)
-		}
-	END {print begin" "NR" en"language}
-' ${index} > Language_List_${language0}
-echo "Creating Language_List_${language0} : done." >> $log_file
-if [[ "$debug" = "1" ]]
-then
-	printf "__________________________________________\n\n" >> $log_file
-	echo "Language_List_${language0} contains :" >> $log_file
-	cat Language_List_${language0} >> $log_file
-	printf "__________________________________________\n\n" >> $log_file
-fi
-
-
+create_language_file
 
 
 # Declaration of the integer variables which will be used.
@@ -594,7 +632,7 @@ if [[ $? -eq 0 ]]
 then
 	clean_html
 
-	for english in "mail_alien_ufo_crashed" "mail_alien_ufo_recovered" "mail_aircraft_landed" "mail_aircraft_bingo_fuel" "mail_aircraft_ready" "mail_aircraft_lost_target" "mail_aircraft_new_at_base" "mail_aircraft_lost_target" "mail_alien_activity_reported" "mail_alien_ufo_downed" "mail_alien_response_too_late" "mail_alien_new_radar_contact" "mail_alien_lost_radar_contact" "mail_alien_base_discovered" "mail_general_mission_summary" "mail_general_base_attack_report" "mail_general_new_base" "mail_general_construction_finished" "mail_general_equipment_received" "mail_general_transfer_received" "mail_general_ufo_in_hangar" "mail_general_monthly_report" "mail_production_finished" "mail_production_not_enough_resources" "mail_production_not_enough_money" "mail_prolog" "mail_stunned_alien_died"
+	for english in "mail_stunned_alien_died" "mail_prolog" "mail_alien_ufo_crashed" "mail_alien_ufo_recovered" "mail_aircraft_landed" "mail_aircraft_bingo_fuel" "mail_aircraft_ready" "mail_aircraft_lost_target" "mail_aircraft_new_at_base" "mail_aircraft_lost_target" "mail_alien_activity_reported" "mail_alien_ufo_downed" "mail_alien_response_too_late" "mail_alien_new_radar_contact" "mail_alien_lost_radar_contact" "mail_alien_base_discovered" "mail_general_mission_summary" "mail_general_base_attack_report" "mail_general_new_base" "mail_general_construction_finished" "mail_general_equipment_received" "mail_general_transfer_received" "mail_general_ufo_in_hangar" "mail_general_monthly_report" "mail_production_finished" "mail_production_not_enough_resources" "mail_production_not_enough_money" "mail_prolog" "mail_stunned_alien_died"
 	do
 		update_one_sentence "1"
 	done
@@ -680,6 +718,7 @@ do
 			# There are (for now...) 2 types of descriptions : the email-type and the others.
 			# For email type texts, we want to download 2 sections.
 			# For other descriptions, we want only 1 section.
+
 				clean_html
 				if [[ $pre_txt -eq 1 ]]
 				then

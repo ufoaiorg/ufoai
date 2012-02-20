@@ -148,6 +148,8 @@ static const int virtualFunctions[] = {
 	offsetof(uiBehaviour_t, sizeChanged),
 	offsetof(uiBehaviour_t, propertyChanged),
 	offsetof(uiBehaviour_t, getClientPosition),
+	offsetof(uiBehaviour_t, getCellWidth),
+	offsetof(uiBehaviour_t, getCellHeight),
 	-1
 };
 

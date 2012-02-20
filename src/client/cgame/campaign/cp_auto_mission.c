@@ -889,6 +889,11 @@ void AM_Go (mission_t *mission, aircraft_t *aircraft, const campaign_t *campaign
 	assert(aircraft);
 	assert(aircraft->homebase);
 
+	if (mission && mission->mapDef && mission->mapDef->storyRelated) {
+		Com_Printf("Story-related mission cannot be done via automission\n");
+		return;
+	}
+
 	AM_ClearBattle(&autoBattle);
 	autoBattle.results = results;
 	AM_FillTeamFromAircraft(&autoBattle, 0, aircraft, campaign);

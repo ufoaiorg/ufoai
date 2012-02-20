@@ -80,6 +80,151 @@ window aliencont
 		*node:root.bt_alc_killaliens@disabled = true
 	}
 
+	// =======================
+	// info window (top left)
+	// =======================
+
+	panel baseinfo {
+		{
+			pos		"11 93"
+			size	"333 145"
+			image	"ui/panel_grey_green_large"
+		}
+
+		// ==================
+		// base info
+		// ==================
+
+		string txt_base_info
+		{
+			string		"_Live Alien Containment Info"
+			pos			"19 25"
+			size		"296 20"
+			font		"f_small_bold"
+			contentalign	ALIGN_CC
+		}
+
+		// ===================
+		// aliencont capacity
+		// ===================
+
+		string txt_alc_limit_prefix
+		{
+			string		"_Base capacity:"
+			pos			"37 49"
+			size		"265 20"
+			font		"f_small"
+			contentalign	ALIGN_CL
+		}
+
+		string txt_alc_limit
+		{
+			string		"*cvar:mn_al_capacity / *cvar:mn_al_capacity_max"
+			pos			"37 49"
+			size		"265 20"
+			font		"f_small"
+			contentalign	ALIGN_CR
+		}
+		image alc_img
+		{
+			pos			"40 66"
+			src		"ui/bar_rahmen"
+		}
+		bar alc_bar
+		{
+			pos			"50 71"
+			current		*cvar:mn_al_capacity
+			size		"250 6"
+			color		"0 .8 0 1"
+			max			*cvar:mn_al_capacity_max
+			ghost		true
+		}
+
+	}
+
+		// ========================
+		// kill live aliens button
+		// ========================
+
+		custombutton bt_alc_killaliens
+		{
+			tooltip		"_Kill all aliens in this base"
+			pos			"275 165"
+			size		"64 64"
+			icon		"icons/killalien"
+			onClick		{ cmd "aliencont_killall;" }
+		}
+
+	// ==============================
+	// alien info window (top right)
+	// ==============================
+
+	panel raceinfo {
+		{
+			pos		"347 93"
+			size	"333 145"
+			image	"ui/panel_grey_green_large"
+		}
+
+		// ==================
+		// race info
+		// ==================
+
+		string txt_race_info
+		{
+			string		*cvar:mn_al_alientype
+			pos			"19 25"
+			size		"296 20"
+			font		"f_small_bold"
+			contentalign	ALIGN_CC
+		}
+
+		// ==================
+		// alive alien amount
+		// ==================
+
+		string txt_alc_alive
+		{
+			string		"_Alive:"
+			pos			"50 49"
+			size		"100 20"
+			font		"f_small"
+		}
+
+		string txt_alc_alive_v
+		{
+			string		*cvar:mn_al_alive
+			tooltip		"_amount on this base (all)"
+			pos			"160 49"
+			size		"125 20"
+			font		"f_small"
+			contentalign	ALIGN_UR
+		}
+
+		// ==================
+		// dead alien amount
+		// ==================
+
+		string txt_alc_dead
+		{
+			string		"_Dead:"
+			pos			"50 74"
+			size		"100 20"
+			font		"f_small"
+		}
+
+		string txt_alc_dead_v
+		{
+			string		*cvar:mn_al_dead
+			tooltip		"_amount on this base (all)"
+			pos			"160 74"
+			size		"125 20"
+			font		"f_small"
+			contentalign	ALIGN_UR
+		}
+
+	}
+
 	// ==================
 	// main window
 	// ==================
@@ -87,7 +232,7 @@ window aliencont
 	confunc aliencont_clear
 	{
 		*cvar:i = 0
-		while ( *cvar:i < 12 ) {
+		while ( *cvar:i < 10 ) {
 			*node:root.ac.ac<cvar:i>@image = "ui/hosp_button_green"
 			*node:root.ac.ac<cvar:i>.icon@icon = "icons/alien_unused"
 			*node:root.ac.ac<cvar:i>.kill_zone@invis = true
@@ -124,10 +269,14 @@ window aliencont
 		*node:root.ac.ac<1>.autopsy_zone@invis = true
 	}
 
+	// ==============================
+	// Alien Containment Slots Panel
+	// ==============================
+
 	panel ac {
 		{
-			pos "11 92"
-			size "670 606"
+			pos "11 245"
+			size "670 513"
 			image	"ui/panel_grey_green_large"
 		}
 
@@ -136,7 +285,7 @@ window aliencont
 				pos				"25 25"
 				num				0
 			}
-			string name			{ string *cvar:mn_ac_name0 }
+			string name			{ string *cvar:mn_ac_name0 font "f_small_bold" }
 			string status		{ string *cvar:mn_ac_statusstr0 }
 			bar tech_progress	{ current *cvar:mn_ac_progress0 }
 		}
@@ -146,7 +295,7 @@ window aliencont
 				pos				"345  25"
 				num				1
 			}
-			string name			{ string *cvar:mn_ac_name1 }
+			string name			{ string *cvar:mn_ac_name1 font "f_small_bold" }
 			string status		{ string *cvar:mn_ac_statusstr1 }
 			bar tech_progress	{ current *cvar:mn_ac_progress1 }
 		}
@@ -156,7 +305,7 @@ window aliencont
 				pos				"25 120"
 				num				2
 			}
-			string name			{ string *cvar:mn_ac_name2 }
+			string name			{ string *cvar:mn_ac_name2 font "f_small_bold" }
 			string status		{ string *cvar:mn_ac_statusstr2 }
 			bar tech_progress	{ current *cvar:mn_ac_progress2 }
 		}
@@ -166,7 +315,7 @@ window aliencont
 				pos				"345 120"
 				num				3
 			}
-			string name			{ string *cvar:mn_ac_name3 }
+			string name			{ string *cvar:mn_ac_name3 font "f_small_bold" }
 			string status		{ string *cvar:mn_ac_statusstr3 }
 			bar tech_progress	{ current *cvar:mn_ac_progress3 }
 		}
@@ -176,7 +325,7 @@ window aliencont
 				pos				"25 215"
 				num				4
 			}
-			string name			{ string *cvar:mn_ac_name4 }
+			string name			{ string *cvar:mn_ac_name4 font "f_small_bold" }
 			string status		{ string *cvar:mn_ac_statusstr4 }
 			bar tech_progress	{ current *cvar:mn_ac_progress4 }
 		}
@@ -186,7 +335,7 @@ window aliencont
 				pos				"345 215"
 				num				5
 			}
-			string name			{ string *cvar:mn_ac_name5 }
+			string name			{ string *cvar:mn_ac_name5 font "f_small_bold" }
 			string status		{ string *cvar:mn_ac_statusstr5 }
 			bar tech_progress	{ current *cvar:mn_ac_progress5 }
 		}
@@ -196,7 +345,7 @@ window aliencont
 				pos				"25 310"
 				num				6
 			}
-			string name			{ string *cvar:mn_ac_name6 }
+			string name			{ string *cvar:mn_ac_name6 font "f_small_bold" }
 			string status		{ string *cvar:mn_ac_statusstr6 }
 			bar tech_progress	{ current *cvar:mn_ac_progress6 }
 		}
@@ -206,7 +355,7 @@ window aliencont
 				pos				"345 310"
 				num				7
 			}
-			string name			{ string *cvar:mn_ac_name7 }
+			string name			{ string *cvar:mn_ac_name7 font "f_small_bold" }
 			string status		{ string *cvar:mn_ac_statusstr7 }
 			bar tech_progress	{ current *cvar:mn_ac_progress7 }
 		}
@@ -216,7 +365,7 @@ window aliencont
 				pos				"25 405"
 				num				8
 			}
-			string name			{ string *cvar:mn_ac_name8 }
+			string name			{ string *cvar:mn_ac_name8 font "f_small_bold" }
 			string status		{ string *cvar:mn_ac_statusstr8 }
 			bar tech_progress	{ current *cvar:mn_ac_progress8 }
 		}
@@ -226,30 +375,11 @@ window aliencont
 				pos				"345 405"
 				num				9
 			}
-			string name			{ string *cvar:mn_ac_name9 }
+			string name			{ string *cvar:mn_ac_name9 font "f_small_bold" }
 			string status		{ string *cvar:mn_ac_statusstr9 }
 			bar tech_progress	{ current *cvar:mn_ac_progress9 }
 		}
 
-		cmpAlienContainment ac10 {
-			{
-				pos				"25 500"
-				num				10
-			}
-			string name			{ string *cvar:mn_ac_name10 }
-			string status		{ string *cvar:mn_ac_statusstr10 }
-			bar tech_progress	{ current *cvar:mn_ac_progress10 }
-		}
-
-		cmpAlienContainment ac11 {
-			{
-				pos				"345 500"
-				num				11
-			}
-			string name			{ string *cvar:mn_ac_name11 }
-			string status		{ string *cvar:mn_ac_statusstr11 }
-			bar tech_progress	{ current *cvar:mn_ac_progress11 }
-		}
 	}
 
 	// ================================================================================
@@ -259,132 +389,20 @@ window aliencont
 	panel alc_alien_panel
 	{
 		{
-			pos		"730 90"
-			size	"280 520"
+			pos		"700 93"
+			size	"314 665"
 			image	"ui/panel_grey_green_large"
-		}
-
-		string race
-		{
-			string		*cvar:mn_al_alientype
-			pos			"20 424"
-			size		"240 20"
-			font		"f_small"
-			contentalign	ALIGN_CC
 		}
 
 		image image
 		{
 			src			*cvar:mn_al_alienimage
-			pos				"21 23"
-			size			"239 397"
+			pos				"18 19"
+			size			"279 626"
 			preventratio	true
+			contentalign	ALIGN_CC
 		}
 
-		// ==================
-		// alien info
-		// ==================
-
-		// ==================
-		// alive alien amount
-		// ==================
-
-		string txt_alc_alive
-		{
-			string		"_Alive:"
-			pos			"25 445"
-			size		"100 20"
-			font		"f_small"
-		}
-
-		string txt_alc_alive_v
-		{
-			string		*cvar:mn_al_alive
-			tooltip		"_amount on this base (all)"
-			pos			"130 445"
-			size		"125 20"
-			font		"f_small"
-			contentalign	ALIGN_UR
-		}
-
-		// ==================
-		// dead alien amount
-		// ==================
-
-		string txt_alc_dead
-		{
-			string		"_Dead:"
-			pos			"25 470"
-			size		"100 20"
-			font		"f_small"
-		}
-
-		string txt_alc_dead_v
-		{
-			string		*cvar:mn_al_dead
-			tooltip		"_amount on this base (all)"
-			pos			"130 470"
-			size		"125 20"
-			font		"f_small"
-			contentalign	ALIGN_UR
-		}
-	}
-
-	// ================================================================================
-	// info window (bottom)
-	// ================================================================================
-
-	panel baseinfo {
-		{
-			pos		"728 626"
-			size	"280 134"
-			image	"ui/panel_grey_green_large"
-		}
-
-		// ==================
-		// base info
-		// ==================
-
-		string txt_base_info
-		{
-			string		"_Base info"
-			pos			"23 25"
-			size		"200 20"
-			font		"f_small_bold"
-		}
-
-		// ==================
-		// aliencont capacity
-		// ==================
-
-		string txt_alc_limit
-		{
-			string		"_Base capacity:"
-			pos			"45 49"
-			size		"150 20"
-			font		"f_small"
-		}
-
-		string txt_alc_limit_v
-		{
-			string		"*cvar:mn_al_capacity / *cvar:mn_al_capacity_max"
-			pos			"45 69"
-			size		"150 20"
-			font		"f_small"
-		}
-	}
-
-	// ================================================================================
-	// buttons
-	// ================================================================================
-
-	custombutton bt_alc_killaliens
-	{
-		tooltip		"_Kill all aliens in this base"
-		pos			"915 674"
-		size		"64 64"
-		icon		"icons/killalien"
-		onClick		{ cmd "aliencont_killall;" }
 	}
 
 	// ================================================================================

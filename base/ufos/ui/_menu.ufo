@@ -120,7 +120,7 @@ component panel cmpDefBaseHeader {
 	string txt_credits_caption
 	{
 		string		"_CREDITS"
-		pos			"675 30"
+		pos			"675 32"
 		size		"100 30"
 		font		"f_big"
 	}
@@ -129,7 +129,7 @@ component panel cmpDefBaseHeader {
 	{
 		tooltip		"_Organisation capital"
 		string		*cvar:mn_credits
-		pos			"780 30"
+		pos			"780 32"
 		size		"130 30"
 		font		"f_big"
 		contentalign	ALIGN_UR
@@ -157,8 +157,8 @@ component cmpDefBaseHeader cmpBaseHeader
 	{
 		string		*cvar:mn_base_title
 		tooltip		"_Name of this base"
-		pos			"60 30"
-		size		"500 32"
+		pos			"60 32"
+		size		"500 30"
 		font		"f_big"
 		onChange {
 			// stores the value of the cvar in the base structure
@@ -178,7 +178,7 @@ component cmpDefBaseHeader cmpBaseHeader
 	{
 		tooltip	"_Rename your base"
 		icon	"icons/pen"
-		pos	"565 27"
+		pos	"565 30"
 		size "35 35"
 		padding 0
 		onClick

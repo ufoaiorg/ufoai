@@ -3027,7 +3027,7 @@ void AIR_MoveEmployeeInventoryIntoStorage (const aircraft_t *aircraft, equipDef_
  * @sa AIR_RemoveEmployee
  * @sa AIR_AddToAircraftTeam
  */
-static qboolean AIR_AddEmployee (employee_t *employee, aircraft_t *aircraft)
+qboolean AIR_AddEmployee (employee_t *employee, aircraft_t *aircraft)
 {
 	if (!employee || !aircraft)
 		return qfalse;

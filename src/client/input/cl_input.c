@@ -1055,7 +1055,7 @@ void IN_Init (void)
 	Cmd_AddCommand("zoominquant", CL_ZoomInQuant_f, N_("Zoom in"));
 	Cmd_AddCommand("zoomoutquant", CL_ZoomOutQuant_f, N_("Zoom out"));
 
-	Cmd_AddCommand("press", CL_PressKey_f, N_("Press a key from a command"));
+	Cmd_AddCommand("press", CL_PressKey_f, "Press a key from a command");
 
 	mousePosX = mousePosY = 0.0;
 
