@@ -150,6 +150,7 @@ window market extends objectinfo
 			*node:root.market_scrollbar@fullsize = <fullsize>
 			*node:root.market_scrollbar@current = <viewpos>
 			*node:root.market_scrollbar@viewsize = <viewsize>
+			cmd "sync_market_scroll <lineselected> <viewpos>;"
 		}
 	}
 
@@ -168,6 +169,7 @@ window market extends objectinfo
 			*node:root.market_scrollbar@fullsize = <fullsize>
 			*node:root.market_scrollbar@current = <viewpos>
 			*node:root.market_scrollbar@viewsize = <viewsize>
+			cmd "sync_market_scroll <lineselected> <viewpos>;"
 		}
 	}
 
@@ -186,6 +188,7 @@ window market extends objectinfo
 			*node:root.market_scrollbar@fullsize = <fullsize>
 			*node:root.market_scrollbar@current = <viewpos>
 			*node:root.market_scrollbar@viewsize = <viewsize>
+			cmd "sync_market_scroll <lineselected> <viewpos>;"
 		}
 	}
 
@@ -204,6 +207,7 @@ window market extends objectinfo
 			*node:root.market_scrollbar@fullsize = <fullsize>
 			*node:root.market_scrollbar@current = <viewpos>
 			*node:root.market_scrollbar@viewsize = <viewsize>
+			cmd "sync_market_scroll <lineselected> <viewpos>;"
 		}
 	}
 

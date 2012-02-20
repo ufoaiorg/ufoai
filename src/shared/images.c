@@ -310,7 +310,16 @@ static SDL_Surface* Img_LoadTypedImage (char const* name, char const* type)
 	if ((len = FS_LoadFile(path, &buf)) != -1) {
 		if ((rw = SDL_RWFromMem(buf, len))) {
 			if ((surf = IMG_LoadTyped_RW(rw, 0, (char*)(uintptr_t)type))) {
+#ifdef ANDROID
+				/* TODO: this code fails to convert 8-bit palette surface to the RGBA32 for some totally unknown reasons, maybe the error is inside SDL_image lib? */
+				s = SDL_CreateRGBSurface(0, surf->w, surf->h, 32,
+						format.Rmask, format.Gmask, format.Bmask, format.Amask);
+				SDL_SetColorKey(surf, 0, 0);
+				SDL_SetAlpha(surf, 0, 255);
+				SDL_BlitSurface(surf, NULL, s, NULL);
+#else
 				s = SDL_ConvertSurface(surf, &format, 0);
+#endif
 				SDL_FreeSurface(surf);
 			}
 			SDL_FreeRW(rw);
