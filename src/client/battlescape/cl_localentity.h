@@ -148,9 +148,6 @@ typedef struct le_s {
 						 * this le_t.  Used to limit to one event per le_t struct at any time. */
 } le_t;
 
-extern pathing_t LE_ActorPathMap;	/**< This is where the data for TUS used to move and actor
-									 * locations go - only available for human controlled actors */
-
 #define MAX_LOCALMODELS		1024
 
 /** @brief local models */

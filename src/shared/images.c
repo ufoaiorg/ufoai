@@ -51,7 +51,7 @@ static SDL_PixelFormat format = {
 	.Gshift = 16,  /**< gshift */
 	.Bshift = 8,  /**< bshift */
 	.Ashift = 0,  /**< ashift */
-#if (SDL_BYTEORDER == SDL_BIG_ENDIAN) || defined(ANDROID)
+#if (SDL_BYTEORDER == SDL_BIG_ENDIAN)
 	.Rmask = 0xff000000,
 	.Gmask = 0x00ff0000,
 	.Bmask = 0x0000ff00,
@@ -310,19 +310,7 @@ static SDL_Surface* Img_LoadTypedImage (char const* name, char const* type)
 	if ((len = FS_LoadFile(path, &buf)) != -1) {
 		if ((rw = SDL_RWFromMem(buf, len))) {
 			if ((surf = IMG_LoadTyped_RW(rw, 0, (char*)(uintptr_t)type))) {
-#ifdef ANDROID
-				/* TODO: ugly, but works somehow */
-				if( surf->format->Amask ) {
-					s = SDL_ConvertSurface(surf, &format, 0);
-				} else {
-					s = SDL_CreateRGBSurface(0, surf->w, surf->h, 32,
-							0xff000000, 0x00ff0000, 0x0000ff00, 0x000000ff);
-					if(s)
-						SDL_BlitSurface(surf, NULL, s, NULL);
-				}
-#else
 				s = SDL_ConvertSurface(surf, &format, 0);
-#endif
 				SDL_FreeSurface(surf);
 			}
 			SDL_FreeRW(rw);

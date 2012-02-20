@@ -210,7 +210,7 @@ r_framebuffer_t * R_CreateFramebuffer (int width, int height, int ntextures, qbo
 
 #ifdef GL_VERSION_ES_CM_1_0
 	buf->pixelFormat = GL_RGBA;
-	buf->byteFormat = GL_NATIVE_TEXTURE_PIXELFORMAT_ALPHA; /* GL_UNSIGNED_SHORT_5_5_5_1 will give 1-bit alpha but more colorspace */
+	buf->byteFormat = GL_NATIVE_TEXTURE_PIXELFORMAT_ALPHA;
 #else
 	buf->pixelFormat = halfFloat ? GL_RGBA16F_ARB : GL_RGBA8;
 	buf->byteFormat = halfFloat ? GL_HALF_FLOAT_ARB : GL_UNSIGNED_BYTE;
