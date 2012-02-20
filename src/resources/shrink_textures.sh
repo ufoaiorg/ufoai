@@ -56,24 +56,26 @@ find . -name "*.png" -o -name "*.jpg" -o -name "*.tga" | while read IMG; do
 			POTW=$TARGET
 			POTH=`getNearestPowerOfTwo $TARGET2`
 		fi
-		echo $IMG $W x $H - resizing to $POTW x $POTH
+		echo "$IMG $W x $H - resizing to $POTW x $POTH"
 		mkdir -p "`dirname $OUTDIR/$IMG`"
-		convert "$IMG" -filter Cubic -resize ${POTW}x${POTH}\! "$OUTDIR/$IMG-$$"
-		mv -f "$OUTDIR/$IMG-$$" "$OUTDIR/$IMG"
+		mogrify "$IMG" -filter Cubic -resize ${POTW}x${POTH}\! -type TrueColorMatte
 		echo "`echo $IMG | sed 's@[.]png\|[.]jpg\|[.]tga@@' | sed 's@./@@'`" $W $H >> "$OUTDIR/downsampledimages.txt"
 	else
-		POTH=`getNearestPowerOfTwo $H`
-		POTW=`getNearestPowerOfTwo $W`
-		if [ "$POTH" '!=' "$H" -o "$POTW" '!=' "$W" ]; then
-			if [ "$POTW.$POTH" = "512.512" ]; then # Avoid worst-case scenario
-				POTW=256
-				POTH=256
-			fi
-			echo $IMG $W x $H - resizing to $POTW x $POTH, because there is Android-specific bug with non-power-of-two textures which I could not fix
-			mkdir -p "`dirname $OUTDIR/$IMG`"
-			convert "$IMG" -filter Cubic -resize ${POTW}x${POTH}\! "$OUTDIR/$IMG-$$"
-			mv -f "$OUTDIR/$IMG-$$" "$OUTDIR/$IMG"
-			echo "`echo $IMG | sed 's@[.]png\|[.]jpg\|[.]tga@@' | sed 's@./@@'`" $W $H >> "$OUTDIR/downsampledimages.txt"
+#		POTH=`getNearestPowerOfTwo $H`
+#		POTW=`getNearestPowerOfTwo $W`
+#		if [ "$POTH" '!=' "$H" -o "$POTW" '!=' "$W" ]; then
+#			if [ "$POTW.$POTH" = "512.512" ]; then # Avoid worst-case scenario
+#				POTW=256
+#				POTH=256
+#			fi
+#			echo $IMG $W x $H - resizing to $POTW x $POTH, because there is Android-specific bug with non-power-of-two textures which I could not fix
+#			mkdir -p "`dirname $OUTDIR/$IMG`"
+#			mogrify "$IMG" -filter Cubic -resize ${POTW}x${POTH}\! -type TrueColorMatte
+#			echo "`echo $IMG | sed 's@[.]png\|[.]jpg\|[.]tga@@' | sed 's@./@@'`" $W $H >> "$OUTDIR/downsampledimages.txt"
+#		else
+		if echo "$IMG" | grep '[.]png$' > /dev/null ; then
+			echo "$IMG $W x $H - converting to 32-bit PNG, Android code fails miserably on images with palette for no reason"
+			mogrify "$IMG" -type TrueColorMatte
 		fi
 	fi
 done
