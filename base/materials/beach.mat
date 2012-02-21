@@ -1,0 +1,50 @@
+{
+	material tex_nature/desert007
+	{
+		texture tex_nature/sand
+		dirtmap 1.0
+		lightmap
+	}
+	{
+		texture tex_nature/sand
+		terrain 76 96
+		lightmap
+	}
+	{
+		texture tex_nature/grass
+		terrain 96 132
+		lightmap
+	}
+	{
+		texture tex_nature/water_dark
+		tape 4 1 58
+		lightmap
+    }
+}
+
+{
+	material tex_misc/container001
+	{
+		texture tex_material/metall013
+		dirtmap 1.0
+		lightmap
+	}
+}
+
+{
+	material tex_misc/container007
+	{
+		texture tex_material/metall013
+		dirtmap 1.0
+		lightmap
+	}
+}
+
+{
+	material tex_misc/container008
+	{
+		texture tex_material/metall013
+		dirtmap 1.0
+		lightmap
+	}
+}

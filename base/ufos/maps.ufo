@@ -160,6 +160,47 @@ mapdef africa_small
 }
 
 /////////////////////////////
+// BEACH RANDOM MAPS ////////
+/////////////////////////////
+
+mapdef beach
+{
+	map				"+beach"
+	description		""
+	campaign		false
+	multiplayer		false
+	hurtaliens		true
+	maxaliens		8
+
+	aircraft
+	{
+		//any
+	}
+
+	ufos
+	{
+		craft_crash_scout
+	}
+
+	terrains
+	{
+		desert
+		tropical
+		coast
+	}
+
+	cultures
+	{
+		//any
+	}
+
+	populations
+	{
+		nopopulation
+	}
+}
+
+/////////////////////////////
 // BOMBER_CITY RANDOM MAPS //
 /////////////////////////////
 

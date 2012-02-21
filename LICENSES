@@ -38,6 +38,17 @@ base/maps/b/radar.map | GNU General Public License 2.0 or later | Martin Gerhard
 base/maps/b/radar_adv.map | GNU General Public License 2.0 or later | Martin Gerhardy
 base/maps/b/storage.map | GNU General Public License 2.0 or later | "SparX" Beyeler
 base/maps/b/workshop.map | GNU General Public License 2.0 or later | Martin Gerhardy
+base/maps/beach.ump | GNU General Public License 2.0 or later | Holger 'ShipIt' Gellrich
+base/maps/beach/beach_a.map | GNU General Public License 2.0 or later | Holger 'ShipIt' Gellrich
+base/maps/beach/beach_a_1.map | GNU General Public License 2.0 or later | Holger 'ShipIt' Gellrich
+base/maps/beach/beach_b.map | GNU General Public License 2.0 or later | Holger 'ShipIt' Gellrich
+base/maps/beach/beach_b_1.map | GNU General Public License 2.0 or later | Holger 'ShipIt' Gellrich
+base/maps/beach/beach_b_2.map | GNU General Public License 2.0 or later | Holger 'ShipIt' Gellrich
+base/maps/beach/beach_b_3.map | GNU General Public License 2.0 or later | Holger 'ShipIt' Gellrich
+base/maps/beach/beach_c.map | GNU General Public License 2.0 or later | Holger 'ShipIt' Gellrich
+base/maps/beach/beach_c_1.map | GNU General Public License 2.0 or later | Holger 'ShipIt' Gellrich
+base/maps/beach/beach_craft_crash_scout.map | GNU General Public License 2.0 or later | Holger 'ShipIt' Gellrich
+base/maps/beach/beach_w_1.map | GNU General Public License 2.0 or later | Holger 'ShipIt' Gellrich
 base/maps/bomber_city.ump | GNU General Public License 2.0 or later
 base/maps/bomber_city/bc_craft_drop_firebird.map | GNU General Public License 2.0 or later
 base/maps/bomber_city/bc_craft_drop_herakles.map | GNU General Public License 2.0 or later

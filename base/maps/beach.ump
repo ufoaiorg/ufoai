@@ -1,0 +1,134 @@
+// *********************************
+// beach
+// *********************************
+
+// by Holger 'ShipIt' Gellrich
+
+base beach/beach_
+
+// Tiletypes:
+// ----------
+// + : tile contains something
+// a : connects Z = 60
+// b : connects Z = 92
+// c : connects Z = 128
+// o : ocean
+// w : a wall to prevent the player from looking between the water and the ground
+
+tile +craft_crash_scout
+	// Z = 0 -> 88
+	// 3 x info_alien_start
+{
+4 4
+0      b      b		0
+a      +a     +a	a
+o      +o     +o	o
+0      ow     ow	0
+}
+
+tile +a
+	// Z = 0 -> 88
+	// a blueprint for all +a tiles
+{
+3 4
+0      b      0
+a      +a     a
+o      +o     o
+0      ow     0
+}
+
+tile +a_1
+	// Z = 0 -> 88
+	// there is a green shimmering part of the wreck in the water and some bubbles
+{
+3 4
+0      b      0
+a      +a     a
+o      +o     o
+0      ow     0
+}
+
+tile +b
+	// Z = 88 -> 132
+	// a blueprint for all +b tiles
+{
+3 3
+0      c      0
+b      +b     b
+0      a      0
+}
+
+tile +b_1
+	// Z = 88 -> 132
+	// a wheel of a medieval cannon, wheat and a barricade of alien boxes
+{
+3 3
+0      c      0
+b      +b     b
+0      a      0
+}
+
+tile +b_2
+	// Z = 88 -> 132
+	// a container
+{
+3 3
+0      c      0
+b      +b     b
+0      a      0
+}
+
+tile +b_3
+	// Z = 88 -> 132
+	// a barricade - rusty stair, box, waste bags
+{
+3 3
+0      c      0
+b      +b     b
+0      a      0
+}
+
+tile +c
+	// Z = 132
+	// a blueprint for all +c tiles
+{
+3 3
+0      d      0
+c      +c     c
+0      b      0
+}
+
+tile +c_1
+	// Z = 132
+	// with 3 palms
+{
+3 3
+0      d      0
+c      +c     c
+0      b      0
+}
+
+tile +w_1
+	// from backwards
+{
+3 3
+0      o      0
+w      +w     w
+0      0      0
+}
+
+
+assembly default
+{
+size "4 5"
++a 		"1 1"
++a_1	"1 1"
++b 		"1 1"
++b_1	"1 1"
++b_2	"1 1"
++b_3	"1 1"
++c 		"1 3"
++c_1	"1 3"
++w_1	"4 4"
+*rm_ufo +craft_crash_scout "1 1"
+}
