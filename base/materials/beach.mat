@@ -16,6 +16,11 @@
 		lightmap
 	}
 	{
+		texture tex_nature/grass001
+		terrain 135 155
+		lightmap
+	}
+	{
 		texture tex_nature/water_dark
 		tape 4 1 58
 		lightmap

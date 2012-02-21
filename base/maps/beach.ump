@@ -14,6 +14,7 @@ base beach/beach_
 // c : connects Z = 128
 // o : ocean
 // w : a wall to prevent the player from looking between the water and the ground
+// z : should not be defined, used to place tiles at the border of the map
 
 tile +craft_crash_scout
 	// Z = 0 -> 88
@@ -45,6 +46,28 @@ tile +a_1
 0      b      0
 a      +a     a
 o      +o     o
+0      ow     0
+}
+
+tile +a_leftside
+	// Z = 0 -> 88
+	// the border of the waterline on the 'left' side
+{
+3 4
+0      b      0
+z      +a     a
+z      +o     o
+0      ow     0
+}
+
+tile +a_rightside
+	// Z = 0 -> 88
+	// the border of the waterline on the 'right' side
+{
+3 4
+0      b      0
+a      +a     z
+o      +o     z
 0      ow     0
 }
 
@@ -108,27 +131,51 @@ c      +c     c
 0      b      0
 }
 
+tile +c_2
+	// Z = 132
+	// with a funeral pyre
+{
+3 3
+0      d      0
+c      +c     c
+0      b      0
+}
+
+tile +c_3
+	// Z = 132
+	// with a small hill for hiding ands some plants
+{
+3 3
+0      d      0
+c      +c     c
+0      b      0
+}
+
 tile +w_1
 	// from backwards
 {
 3 3
 0      o      0
 w      +w     w
-0      0      0
+0      z      0
 }
 
 
 assembly default
 {
-size "4 5"
-+a 		"1 1"
-+a_1	"1 1"
-+b 		"1 1"
+size "5 5"
++a	 	"0 2"
++a_1	"0 1"
++a_leftside		"1 1"
++a_rightside	"1 1"
++b 		"1 3"
 +b_1	"1 1"
 +b_2	"1 1"
 +b_3	"1 1"
 +c 		"1 3"
 +c_1	"1 3"
-+w_1	"4 4"
++c_2	"1 1"
++c_3	"1 1"
++w_1	"5 5"
 *rm_ufo +craft_crash_scout "1 1"
 }
