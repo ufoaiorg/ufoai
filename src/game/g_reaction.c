@@ -191,6 +191,34 @@ static qboolean G_ReactionFireTargetsExpired (const edict_t *shooter, const edic
 
 
 /**
+ * @brief Increase the triggertime for the next RF shot (after a reaction fire at the given target).
+ * @param[in] shooter The reaction firing actor
+ * @param[in] target The potential reaction fire victim
+ * @param[in] tusShot The TUs the shooter will need for the next shot
+ */
+static void G_ReactionFireTargetsAdvance (const edict_t *shooter, const edict_t *target, const int tusShot)
+{
+	int i;
+	reactionFireTargets_t *rfts = NULL;
+
+	for (i = 0; i < MAX_RF_DATA; i++) {
+		if (rfData[i].entnum == shooter->number) {
+			rfts = &rfData[i];
+			break;
+		}
+	}
+
+	assert(rfts);
+	assert(target);
+
+	for (i = 0; i < rfts->count; i++) {
+		if (rfts->targets[i].target == target)	/* found it ? */
+			rfts->targets[i].triggerTUs += tusShot;
+	}
+}
+
+
+/**
  * @brief Get the weapon firing TUs of the item in the right hand of the edict.
  * @return -1 if no firedef was found for the item or the reaction fire mode is not activated for the right hand.
  * @todo why only right hand?
@@ -669,46 +697,54 @@ qboolean G_ReactionFireOnMovement (edict_t *target)
 void G_ReactionFirePreShot (const edict_t *target, const int fdTime)
 {
 	edict_t *shooter = NULL;
+	qboolean repeat = qtrue;
 
 	/* Check to see whether this triggers any reaction fire */
 	G_ReactionFireSearchTarget(target);
 
 	G_ReactionFireTargetsUpdateAll(target);
 
-	/* check all ents to see who wins and who loses a draw */
-	while ((shooter = G_EdictsGetNextLivingActor(shooter))) {
-		int entTUs;
-		qboolean fired = qfalse;
+	/* if any reaction fire occurs, we have to loop through all entities again to allow
+	 * multiple (fast) RF snat shots before a (slow) aimed shot from the target occurs (only RF2). */
+	while (repeat) {
+		repeat = qfalse;
+		/* check all ents to see who wins and who loses a draw */
+		while ((shooter = G_EdictsGetNextLivingActor(shooter))) {
+			int entTUs;
 
-		entTUs = G_ReactionFireGetTUsForItem(shooter, target, RIGHT(shooter));
-		if (entTUs > RF2) {		/* will not happen; it's like commenting it out, but keep compiler happy */
-			if (G_ReactionFireTargetsExpired(shooter, target, fdTime)) {
-				shooter->reactionTarget = target;
-				fired |= G_ReactionFireTryToShoot(shooter, target);
-			}
-		} else {
-			if (!shooter->reactionTarget)
-				continue;
-
-			/* check this shooter hasn't already lost the draw */
-			if (shooter->reactionNoDraw)
-				continue;
-
-			/* can't reaction fire if no TUs to fire */
 			entTUs = G_ReactionFireGetTUsForItem(shooter, target, RIGHT(shooter));
-			if (entTUs < 0) {
-				shooter->reactionTarget = NULL;
-				continue;
-			}
-
-			/* see who won */
-			if (entTUs >= fdTime) {
-				/* target wins, so delay shooter */
-				/* shooter can't lose the TU battle again */
-				shooter->reactionNoDraw = qtrue;
+			if (entTUs > RF2) {		/* will not happen; it's like commenting it out, but keep compiler happy */
+				if (G_ReactionFireTargetsExpired(shooter, target, fdTime)) {
+					shooter->reactionTarget = target;
+					if (G_ReactionFireTryToShoot(shooter, target)) {
+						repeat = qtrue;
+						G_ReactionFireTargetsAdvance(shooter, target, fdTime);
+					}
+				}
 			} else {
-				/* shooter wins so take the shot */
-				G_ReactionFireTryToShoot(shooter, shooter->reactionTarget);
+				if (!shooter->reactionTarget)
+					continue;
+
+				/* check this shooter hasn't already lost the draw */
+				if (shooter->reactionNoDraw)
+					continue;
+
+				/* can't reaction fire if no TUs to fire */
+				entTUs = G_ReactionFireGetTUsForItem(shooter, target, RIGHT(shooter));
+				if (entTUs < 0) {
+					shooter->reactionTarget = NULL;
+					continue;
+				}
+
+				/* see who won */
+				if (entTUs >= fdTime) {
+					/* target wins, so delay shooter */
+					/* shooter can't lose the TU battle again */
+					shooter->reactionNoDraw = qtrue;
+				} else {
+					/* shooter wins so take the shot */
+					G_ReactionFireTryToShoot(shooter, shooter->reactionTarget);
+				}
 			}
 		}
 	}
