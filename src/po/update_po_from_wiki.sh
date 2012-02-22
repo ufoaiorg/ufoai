@@ -299,7 +299,7 @@ update_one_sentence()
 
 update_news()
 {
-# Procedure to update the description of $english (only for news). Takes 2 parameters as input : $1 is the number of <h3> title where the description begins (it will read until next <h3> or any unknown flag, such as the printfooter), and $2 is the total number of <h4> title you want to read inside the part designed by $1.
+# Procedure to update the description of $english (only for news). Takes 3 parameters as input : $1 is the number of h1 section where the text is written, $2 is the number of <h3> title where the description begins (it will read until next <h3> or any unknown flag, such as the printfooter), and $3 is the total number of <h4> title you want to read inside the part designed by $2.
 	set_BEGIN_END "1"
 	if [ ${BEGIN} -gt 1 ]
 	then
@@ -310,7 +310,7 @@ update_news()
 			h3 == news && $0 ~ /<h4>/ {
 				h4++
 				if (h4>max_h4) {exit}
-				match($0,/<h4> <span class="mw-headline">/)
+				match($0,/">[ ]*/)
 				$0=substr($0,RSTART+RLENGTH,length($0)-RSTART-RLENGTH+1);
 				if (h4>1) {$0="\\n\n\\n\n"$0}
 				gsub (/[ \t]*$/,":")
@@ -381,6 +381,24 @@ update_txt()
 			line++
 			already_written_test=1;
 			exit_test=0}
+	' downloaded_page_${language0} |
+	$sed_soft 's/[[:space:]]*<.*>[[:space:]]*//g;/^[[:space:]]*$/d;s/^[ \t]*//g;s/\"/\\\"/g' |
+	$awk_soft '{printf "'$END'i\"%s\"\n",$0}' |
+	$sed_soft 's/\\/\\\\/g' >> sed_commands_${language0}
+
+	apply_sed $english
+	return $?
+}
+
+update_campaign()
+{
+	set_BEGIN_END "1"
+	$awk_soft 'BEGIN {already_written_test=0;RS="<p>"}
+		$0 ~ /mw-content-ltr/ {next}
+		$0 ~ /<!-- NewPP limit/ {exit}
+		{ if (already_written_test == 0) {already_written_test = 1}
+		else {$0="\\n\n"$0}
+		printf "%s",$0 }
 	' downloaded_page_${language0} |
 	$sed_soft 's/[[:space:]]*<.*>[[:space:]]*//g;/^[[:space:]]*$/d;s/^[ \t]*//g;s/\"/\\\"/g' |
 	$awk_soft '{printf "'$END'i\"%s\"\n",$0}' |
@@ -568,11 +586,28 @@ then
 fi
 printf "__________________________________________\n\n" >> $log_file
 
+# We set the variable default_pre_txt to the text to write for *_pre_txt if not on the wiki.
+english="default_pre_txt"
+download_description $english
+if [ $? -eq 0 ]
+then
+	clean_html
+	default_pre_txt=`$awk_soft 'BEGIN {already_written_test=0;RS="<p>"}
+		$0 ~ /mw-content-ltr/ {next}
+		$0 ~ /<!-- NewPP limit/ {exit}
+		{ printf "%s",$0 }
+	' downloaded_page_${language0} |
+	$sed_soft 's/[[:space:]]*<.*>[[:space:]]*//g;/^[[:space:]]*$/d;s/^[ \t]*//g;s/\"/\\\"/g'`
+fi
+if [ "$default_pre_txt" = "" ]
+then
+	default_pre_txt="<TODO>"
+fi
+
 base_sentence="intro_sentence"
 i=1
 english=$base_sentence$i
 download_description $english
-
 if [[ $? -eq 0 ]]
 then
 	clean_html
@@ -626,6 +661,22 @@ then
 	fi
 fi
 
+
+for english in "standard_campaign_txt" "hard_campaign_txt" "veryhard_campaign_txt" "easy_campaign_txt" "veryeasy_campaign_txt"
+do
+	download_description $english
+	if [[ $? -eq 0 ]]
+	then
+		clean_html
+		update_campaign
+	fi
+done
+
+if [[ "$debug" = "1" ]]
+then
+	echo "Checking campaign : done." >> $log_file
+fi
+
 english="mail_aircraft_landed"
 download_description $english
 if [[ $? -eq 0 ]]
@@ -640,23 +691,6 @@ then
 	then
 		echo "Checking mail bodies : done." >> $log_file
 	fi
-fi
-
-# We set the variable default_pre_txt to the text to write for *_pre_txt if not on the wiki.
-english="default_pre_txt"
-download_description $english
-if [ $? -eq 0 ]
-then
-	clean_html
-	default_pre_txt=`$awk_soft 'BEGIN {RS="<p>"}
-		$0 ~ /</ {exit}
-		$0 !~ /^[ \t]*$/ {printf "%s",$0}
-    ' downloaded_page_${language0} |
-	$sed_soft 's/[[:space:]]*<.*>[[:space:]]*//g;s/^[ \t]*//g;s/\"/\\\"/g'`
-fi
-if [ "$default_pre_txt" = "" ]
-then
-	default_pre_txt="<TODO>"
 fi
 
 
