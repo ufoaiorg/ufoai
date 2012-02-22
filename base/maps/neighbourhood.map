@@ -4862,7 +4862,7 @@
 // entity 1
 {
 "classname" "info_alien_start"
-"origin" "-112 -48 28"
+"origin" "304 272 92"
 }
 // entity 2
 {
@@ -5812,4 +5812,59 @@
 "origin" "0 -905 96"
 "model" "models/objects/cars/van/van1t.md2"
 "spawnflags" "254"
+}
+// entity 14
+{
+"classname" "info_human_start"
+"origin" "336 816 92"
+}
+// entity 15
+{
+"classname" "info_human_start"
+"origin" "272 816 92"
+}
+// entity 16
+{
+"classname" "info_human_start"
+"origin" "272 880 92"
+}
+// entity 17
+{
+"classname" "info_human_start"
+"origin" "336 880 92"
+}
+// entity 18
+{
+"classname" "info_human_start"
+"origin" "208 816 92"
+}
+// entity 19
+{
+"classname" "info_human_start"
+"origin" "144 816 92"
+}
+// entity 20
+{
+"classname" "info_human_start"
+"origin" "144 880 92"
+}
+// entity 21
+{
+"classname" "info_human_start"
+"origin" "208 880 92"
+}
+// entity 22
+{
+"classname" "info_2x2_start"
+"origin" "32 800 92"
+}
+// entity 23
+{
+"classname" "info_2x2_start"
+"origin" "64 896 92"
+}
+// entity 24
+{
+"classname" "info_alien_start"
+"origin" "-112 -48 28"
 }
