@@ -23,7 +23,10 @@ component image cmpAlienContainment {
 	{
 		src				"ui/hosp_button_green"
 		onClick			{ cmd "aliencont_click <num>;" }
-		onRClick		{ cmd "aliencont_pedia <num>;" }
+		onRClick {
+			cmd "aliencont_click <num>;"
+			cmd "aliencont_pedia <num>;"
+		}
 		onMouseEnter {
 			if ( *node:this@src == "ui/hosp_button_green" ) {
 				*node:this@src = "ui/hosp_button_light"
