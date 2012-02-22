@@ -32,7 +32,7 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
  * @brief Maximal entries in aliencont menu.
  * @sa MAX_TEAMDEFS
  */
-#define MAX_AC_MENU_ENTRIES 12
+#define MAX_AC_MENU_ENTRIES 10
 
 /** Statics for menu. */
 static const aliensCont_t* aliencontCurrent;		/**< Current selected Alien Containment. */
