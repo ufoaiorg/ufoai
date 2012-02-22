@@ -448,7 +448,7 @@ static void TR_ListTransfers_f (void)
 						Com_Printf("......ugv: %s [ucn: %i]\n", employee->ugv->id, employee->chr.ucn);
 					} else {
 						Com_Printf("......%s (%s) / %s [ucn: %i]\n", employee->chr.name,
-							E_GetEmployeeString(employee->type),
+							E_GetEmployeeString(employee->type, 1),
 							(employee->nation) ? employee->nation->id : "(nonation)",
 							employee->chr.ucn);
 						if (!E_IsHired(employee))

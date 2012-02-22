@@ -448,7 +448,7 @@ static void TR_CargoList (void)
 			if (!emplCount)
 				break;
 
-			LIST_AddString(&cargoList, E_GetEmployeeString(emplType));
+			LIST_AddString(&cargoList, E_GetEmployeeString(emplType, emplCount));
 			LIST_AddString(&cargoListAmount, va("%i", emplCount));
 			td.cargo[td.trCargoCountTmp].type = CARGO_TYPE_EMPLOYEE;
 			td.trCargoCountTmp++;
@@ -586,9 +586,9 @@ static int TR_FillEmployees (const base_t *srcbase, const base_t *destbase, link
 
 					if (emplType == EMPL_SOLDIER) {
 						const rank_t *rank = CL_GetRankByIdx(employee->chr.score.rank);
-						Com_sprintf(str, sizeof(str), "%s %s %s", E_GetEmployeeString(emplType), rank->shortname, employee->chr.name);
+						Com_sprintf(str, sizeof(str), "%s %s %s", E_GetEmployeeString(emplType, 1), rank->shortname, employee->chr.name);
 					} else {
-						Com_sprintf(str, sizeof(str), "%s %s", E_GetEmployeeString(emplType), employee->chr.name);
+						Com_sprintf(str, sizeof(str), "%s %s", E_GetEmployeeString(emplType, 1), employee->chr.name);
 					}
 
 					TR_AddListEntry(names, str, amounts, 1, transfers, -1);
@@ -607,7 +607,7 @@ static int TR_FillEmployees (const base_t *srcbase, const base_t *destbase, link
 				if (hired <= 0)
 					break;
 
-				TR_AddListEntry(names, E_GetEmployeeString(emplType), amounts, hired, transfers, trCount);
+				TR_AddListEntry(names, E_GetEmployeeString(emplType, hired), amounts, hired, transfers, trCount);
 				cnt++;
 				break;
 			}
@@ -1531,7 +1531,7 @@ static void TR_List_f (void)
 					if (employee->ugv) {
 						/** @todo: add ugv listing when they're implemented */
 					} else {
-						UI_ExecuteConfunc("tr_listaddcargo %d \"%s\" \"%s\" \"%s\"", i, "tr_cargo.employee", va("ucn%i", employee->chr.ucn), va("%s %s", E_GetEmployeeString(employee->type), employee->chr.name));
+						UI_ExecuteConfunc("tr_listaddcargo %d \"%s\" \"%s\" \"%s\"", i, "tr_cargo.employee", va("ucn%i", employee->chr.ucn), va("%s %s", E_GetEmployeeString(employee->type, 1), employee->chr.name));
 					}
 				}
 			}

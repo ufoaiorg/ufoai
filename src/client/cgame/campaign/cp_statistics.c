@@ -91,7 +91,7 @@ void CP_StatsUpdate_f (void)
 	pos += (strlen(pos) + 1);
 	UI_RegisterText(TEXT_STATS_EMPLOYEES, pos);
 	for (i = 0; i < MAX_EMPL; i++) {
-		Q_strcat(pos, va(_("%s\t%i\n"), E_GetEmployeeString(i), hired[i]), (ptrdiff_t)(&statsBuffer[MAX_STATS_BUFFER] - pos));
+		Q_strcat(pos, va(_("%s\t%i\n"), E_GetEmployeeString(i, hired[i]), hired[i]), (ptrdiff_t)(&statsBuffer[MAX_STATS_BUFFER] - pos));
 	}
 
 	/* costs - second part */

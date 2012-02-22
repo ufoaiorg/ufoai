@@ -193,19 +193,19 @@ qboolean E_MoveIntoNewBase (employee_t *employee, base_t *newBase)
  * @param type employeeType_t value
  * @return translated employee string
  */
-const char* E_GetEmployeeString (employeeType_t type)
+const char* E_GetEmployeeString (employeeType_t type, int n)
 {
 	switch (type) {
 	case EMPL_SOLDIER:
-		return _("Soldier");
+		return ngettext("Soldier", "Soldiers", n);
 	case EMPL_SCIENTIST:
-		return _("Scientist");
+		return ngettext("Scientist", "Scientists", n);
 	case EMPL_WORKER:
-		return _("Worker");
+		return ngettext("Worker", "Workers", n);
 	case EMPL_PILOT:
-		return _("Pilot");
+		return ngettext("Pilot", "Pilots", n);
 	case EMPL_ROBOT:
-		return _("UGV");
+		return ngettext("UGV", "UGVS", n);
 	default:
 		Com_Error(ERR_DROP, "Unknown employee type '%i'\n", type);
 	}
@@ -950,7 +950,7 @@ static void E_ListHired_f (void)
 
 	for (emplType = 0; emplType < MAX_EMPL; emplType++) {
 		E_Foreach(emplType, employee) {
-			Com_Printf("Employee: %s (ucn: %i) %s at %s\n", E_GetEmployeeString(employee->type), employee->chr.ucn,
+			Com_Printf("Employee: %s (ucn: %i) %s at %s\n", E_GetEmployeeString(employee->type, 1), employee->chr.ucn,
 					employee->chr.name, employee->baseHired->name);
 			if (employee->type != emplType)
 				Com_Printf("Warning: EmployeeType mismatch: %i != %i\n", emplType, employee->type);

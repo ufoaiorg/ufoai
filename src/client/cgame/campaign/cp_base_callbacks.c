@@ -756,12 +756,12 @@ static void B_CheckBuildingStatusForMenu_f (void)
 		/* all buildings are OK: employees must be missing */
 		if (building->buildingType == B_WORKSHOP && E_CountHired(base, EMPL_WORKER) <= 0) {
 			Com_sprintf(popupText, sizeof(popupText), _("You need to recruit %s to use building %s."),
-				E_GetEmployeeString(EMPL_WORKER), _(building->name));
+				E_GetEmployeeString(EMPL_WORKER, 2), _(building->name));
 			CP_Popup(_("Notice"), popupText);
 			return;
 		} else if (building->buildingType == B_LAB && E_CountHired(base, EMPL_SCIENTIST) <= 0) {
 			Com_sprintf(popupText, sizeof(popupText), _("You need to recruit %s to use building %s."),
-				E_GetEmployeeString(EMPL_SCIENTIST), _(building->name));
+				E_GetEmployeeString(EMPL_SCIENTIST, 2), _(building->name));
 			CP_Popup(_("Notice"), popupText);
 			return;
 		}
@@ -805,7 +805,7 @@ static void BaseSummary_Init (const base_t *base)
 	Q_strcat(textInfoBuffer, _("^BEmployees\n"), sizeof(textInfoBuffer));
 	for (emplType = 0; emplType < MAX_EMPL; emplType++) {
 		tmp = E_CountHired(base, emplType);
-		Q_strcat(textInfoBuffer, va("\t%s:\t\t\t\t%i\n", E_GetEmployeeString(emplType), tmp), sizeof(textInfoBuffer));
+		Q_strcat(textInfoBuffer, va("\t%s:\t\t\t\t%i\n", E_GetEmployeeString(emplType, tmp), tmp), sizeof(textInfoBuffer));
 	}
 
 	Q_strcat(textInfoBuffer, "\n", sizeof(textInfoBuffer));
