@@ -1403,7 +1403,7 @@ mapdef laboratory
 mapdef mansion
 {
     map				"+mansion"
-    description		""
+    description		"_+mansion"
     teams			4
     multiplayer		true
     gametypes
