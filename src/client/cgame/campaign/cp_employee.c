@@ -577,14 +577,14 @@ employee_t* E_CreateEmployee (employeeType_t type, const nation_t *nation, const
 		break;
 	case EMPL_ROBOT:
 		if (!ugvType)
-			Com_Error(ERR_DROP, "CL_GenerateCharacter: no type given for generation of EMPL_ROBOT employee.");
+			Com_Error(ERR_DROP, "E_CreateEmployee: no type given for generation of EMPL_ROBOT employee.");
 
 		rank = "ugv";
 
 		Com_sprintf(teamDefName, sizeof(teamDefName), "%s%s", teamID, ugvType->actors);
 		break;
 	default:
-		Com_Error(ERR_DROP, "Unknown employee type\n");
+		Com_Error(ERR_DROP, "E_CreateEmployee: Unknown employee type\n");
 	}
 
 	cgi->CL_GenerateCharacter(&employee.chr, teamDefName);
