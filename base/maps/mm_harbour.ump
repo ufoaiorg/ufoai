@@ -479,6 +479,18 @@ a     +a    a    m
 	// 3x2 tile, at Z = 4
 	// completely off, unusable
 
+assembly test
+{
+title "_Test"
+size "3 3"
++a_01  "0 1"
++a_02  "0 1"
++a_03  "0 1"
++a_04  "0 1"
++a_05  "0 1"
++a_06  "0 1"
+*rm_drop +craft_drop_firebird "1 1"
+}
 
 assembly area
 {
