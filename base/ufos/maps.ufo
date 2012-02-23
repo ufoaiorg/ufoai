@@ -970,6 +970,7 @@ mapdef frozen_small
 mapdef mm_harbour
 {
 	map			"+mm_harbour"
+	param       "harbour"
 	description	"_An important container harbour is attacked by alien invaders."
 	size		"large"
 	teams		2
@@ -980,8 +981,8 @@ mapdef mm_harbour
 	aircraft
 	{
 		craft_drop_firebird
-		craft_drop_raptor
-		craft_drop_herakles
+//		craft_drop_raptor
+//		craft_drop_herakles
 	}
 
 	ufos
