@@ -970,12 +970,12 @@ mapdef frozen_small
 mapdef mm_harbour
 {
 	map			"+mm_harbour"
-	description	"_Harbour."
-	param		"test3"
-	size		"small"
-	teams		4
+	description	"_An important container harbour is attacked by alien invaders."
+	size		"large"
+	teams		2
 	multiplayer	false
 	maxaliens	16
+	civilianteam	worker
 	campaign	false // TODO: activate once tested
 	aircraft
 	{
@@ -1403,7 +1403,7 @@ mapdef laboratory
 mapdef mansion
 {
     map				"+mansion"
-    description		"_+mansion"
+    description		"_A mansion near the coast."
     teams			4
     multiplayer		true
     gametypes
