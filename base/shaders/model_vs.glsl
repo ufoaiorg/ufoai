@@ -1,12 +1,11 @@
 /**
  * @file world_vs.glsl
- * @brief Default battlescape vertex shader.
+ * @brief Default battlescape model vertex shader.
  */
 
 uniform float OFFSET;
 uniform int BUMPMAP;
 uniform int ANIMATE;
-uniform int IS_A_MODEL;
 
 /* from includes:
 varying vec3 point;

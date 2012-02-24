@@ -3,24 +3,16 @@
  * @brief Medium quality battlescape fragment shader.
  */
 
-#ifndef glsl110
-	#if r_postprocess
-		/*
-		 * Indicates that gl_FragData is written to, not gl_FragColor.
-		 * #extension needs to be placed before all non preprocessor code.
-		 */
-		#extension GL_ARB_draw_buffers : enable
-		/** After glsl1110 this need to be explicitly declared; used by fixed functionality at the end of the OpenGL pipeline.*/
-		out vec4 gl_FragData[2];
-	#else
-		/** After glsl1110 this need to be explicitly declared; used by fixed functionality at the end of the OpenGL pipeline.*/
-		out vec4 gl_FragColor;
-	#endif
+#if r_postprocess
+	/*
+	 * Indicates that gl_FragData is written to, not gl_FragColor.
+	 * #extension needs to be placed before all non preprocessor code.
+	 */
+	#extension GL_ARB_draw_buffers : enable
 #endif
 
 uniform int BUMPMAP;
 uniform int SPECULARMAP;
-uniform float GLOWSCALE;
 
 /** Diffuse texture.*/
 uniform sampler2D SAMPLER_DIFFUSE;
@@ -30,8 +22,6 @@ uniform sampler2D SAMPLER_LIGHTMAP;
 uniform sampler2D SAMPLER_DELUXEMAP;
 /** Normalmap.*/
 uniform sampler2D SAMPLER_NORMALMAP;
-/** Glowmap.*/
-uniform sampler2D SAMPLER_GLOWMAP;
 
 const vec3 two = vec3(2.0);
 const vec3 negHalf = vec3(-0.5);
@@ -45,6 +35,7 @@ in_qualifier vec4 lightParams[R_DYNAMIC_LIGHTS];
 #include "light_fs.glsl"
 #include "bump_fs.glsl"
 #include "fog_fs.glsl"
+#include "write_fragment_fs.glsl"
 
 /**
  * @brief main
@@ -112,20 +103,5 @@ void main(void) {
 	}
 #endif
 
-#if r_postprocess
-	gl_FragData[0] = finalColor;
-	if (GLOWSCALE > 0.01) {
-		vec4 glowcolor = texture2D(SAMPLER_GLOWMAP, gl_TexCoord[0].st);
-		gl_FragData[1].rgb = glowcolor.rgb * glowcolor.a * GLOWSCALE;
-		gl_FragData[1].a = 1.0;
-	} else {
-		gl_FragData[1] = vec4(0,0,0,1);
-	}
-#else
-	if (GLOWSCALE > 0.01) {
-		vec4 glowcolor = texture2D(SAMPLER_GLOWMAP, gl_TexCoord[0].st);
-		finalColor.rgb += glowcolor.rgb * glowcolor.a * GLOWSCALE;
-	}
-	gl_FragColor = finalColor;
-#endif
+	writeFragment(finalColor);
 }
