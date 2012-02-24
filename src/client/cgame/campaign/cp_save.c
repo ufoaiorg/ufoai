@@ -575,8 +575,8 @@ qboolean SAV_QuickSave (void)
 }
 
 /**
- * @brief Checks whether there is a quicksave file at all - otherwise close
- * the quickload menu
+ * @brief Checks whether there is a quicksave file and opens the quickload menu if there is one
+ * @note This does not work while we are in the battlescape
  */
 static void SAV_GameQuickLoadInit_f (void)
 {
