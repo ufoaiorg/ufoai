@@ -123,20 +123,26 @@ void R_UseMaterial (const material_t *material)
 		R_ProgramParameter1f("BUMP", b);
 	last_b = b;
 
-	p = r_state.active_material->parallax * r_parallax->value;
-	if (p != last_p)
-		R_ProgramParameter1f("PARALLAX", p);
-	last_p = p;
+	if (r_state.active_program != r_state.world_program || r_quality->integer > 0) {
+		p = r_state.active_material->parallax * r_parallax->value;
+		if (p != last_p)
+			R_ProgramParameter1f("PARALLAX", p);
+		last_p = p;
 
-	h = r_state.active_material->hardness * r_hardness->value;
-	if (h != last_h)
-		R_ProgramParameter1f("HARDNESS", h);
-	last_h = h;
+		h = r_state.active_material->hardness * r_hardness->value;
+		if (h != last_h)
+			R_ProgramParameter1f("HARDNESS", h);
+		last_h = h;
 
-	s = r_state.active_material->specular * r_specular->value;
-	if (s != last_s)
-		R_ProgramParameter1f("SPECULAR", s);
-	last_s = s;
+		s = r_state.active_material->specular * r_specular->value;
+		if (s != last_s)
+			R_ProgramParameter1f("SPECULAR", s);
+		last_s = s;
+	} else {
+		last_p = -1;
+		last_h = -1;
+		last_s = -1;
+	}
 }
 
 void R_BindArray (GLenum target, GLenum type, const void *array)
@@ -155,7 +161,8 @@ void R_BindArray (GLenum target, GLenum type, const void *array)
 		glNormalPointer(type, 0, array);
 		break;
 	case GL_TANGENT_ARRAY:
-		R_AttributePointer("TANGENTS", 4, array);
+		if (r_state.active_program != r_state.world_program || r_quality->integer > 0)
+			R_AttributePointer("TANGENTS", 4, array);
 		break;
 	case GL_NEXT_VERTEX_ARRAY:
 		R_AttributePointer("NEXT_FRAME_VERTS", 3, array);
@@ -444,7 +451,8 @@ void R_EnableBumpmap (const image_t *normalmap)
 
 	if (!normalmap) {
 		/* disable bump mapping */
-		R_DisableAttribute("TANGENTS");
+		if (r_state.active_program != r_state.world_program || r_quality->integer > 0)
+			R_DisableAttribute("TANGENTS");
 		R_ProgramParameter1i("BUMPMAP", 0);
 
 		r_state.active_normalmap = normalmap;
@@ -453,7 +461,8 @@ void R_EnableBumpmap (const image_t *normalmap)
 
 	if (!r_state.active_normalmap) {
 		/* enable bump mapping */
-		R_EnableAttribute("TANGENTS");
+		if (r_state.active_program != r_state.world_program || r_quality->integer > 0)
+			R_EnableAttribute("TANGENTS");
 		R_ProgramParameter1i("BUMPMAP", 1);
 		/* default material to use if no material gets loaded */
 		R_UseMaterial(&defaultMaterial);
