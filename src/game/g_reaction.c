@@ -123,7 +123,7 @@ static void G_ReactionFireTargetsAdd (const edict_t *shooter, const edict_t *tar
 	}
 	assert(i < MAX_RF_TARGETS);
 	rfts->targets[i].target = target;
-	rfts->targets[i].triggerTUs = target->TU + tusForShot;
+	rfts->targets[i].triggerTUs = target->TU - tusForShot;
 	rfts->count++;
 }
 
@@ -504,7 +504,9 @@ static void G_ReactionFireTargetsUpdateAll (const edict_t *target)
 	while ((shooter = G_EdictsGetNextLivingActor(shooter))) {
 		/* check whether reaction fire is possible (friend/foe, LoS */
 		if (G_ReactionFireIsPossible(shooter, target)) {
-			const int TUs = G_ActorGetTUForReactionFire(shooter);
+			const int TUs = G_ReactionFireGetTUsForItem(shooter, target, RIGHT(shooter));
+			if (TUs < 0)
+				continue;	/* no suitable weapon */
 			G_ReactionFireTargetsAdd(shooter, target, TUs);
 		} else {
 			G_ReactionFireTargetsRemove(shooter, target);
