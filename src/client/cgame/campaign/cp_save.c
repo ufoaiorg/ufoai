@@ -582,6 +582,10 @@ static void SAV_GameQuickLoadInit_f (void)
 {
 	qFILE f;
 
+	if (cgi->CL_OnBattlescape()) {
+		return;
+	}
+
 	FS_OpenFile(va("save/slotquick.%s", SAVEGAME_EXTENSION), &f, FILE_READ);
 	if (f.f || f.z) {
 		UI_PushWindow("quickload", NULL, NULL);
