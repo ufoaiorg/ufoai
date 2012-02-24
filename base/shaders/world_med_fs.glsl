@@ -35,6 +35,7 @@ in_qualifier vec4 lightParams[R_DYNAMIC_LIGHTS];
 #include "light_fs.glsl"
 #include "bump_fs.glsl"
 #include "fog_fs.glsl"
+#include "world_devtools_fs.glsl"
 #include "write_fragment_fs.glsl"
 
 /**
@@ -44,8 +45,8 @@ void main(void) {
 	vec4 finalColor = vec4(0.0);
 	vec3 light = vec3(0.0);
 	/* These two should be declared in this scope for developer tools to work */
-	vec3 deluxemap = vec3(0.0);
-	vec4 normalmap = vec4(0.0);
+	vec3 deluxemap = vec3(0.0, 0.0, 1.0);
+	vec4 normalmap = vec4(0.0, 0.0, 1.0, 0.5);
 
 	/* use Phong lighting (ie. legacy rendering code) */
 	vec2 offset = vec2(0.0);
@@ -83,25 +84,8 @@ void main(void) {
 	finalColor = FogFragment(finalColor);
 #endif
 
-/* Developer tools */
-
-#if r_normalmap
-	vec3 n = normalize(2.0 * (texture2D(SAMPLER_NORMALMAP, gl_TexCoord[0].st).rgb - 0.5));
-	finalColor.rgb = finalColor.rgb * 0.01 + (1.0 - dot(n, normalize(lightDirs[0].xyz))) * 0.5 * vec3(1.0);
-	finalColor.a = 1.0;
-#endif
-
-#if r_lightmap
-	finalColor.rgb = finalColor.rgb * 0.01 + lightmap;
-	finalColor.a = 1.0;
-#endif
-
-#if r_deluxemap
-	if (BUMPMAP > 0) {
-		finalColor.rgb = finalColor.rgb * 0.01 + deluxemap;
-		finalColor.a = 1.0;
-	}
-#endif
+	/* Developer tools, if enabled */
+	finalColor = ApplyDeveloperTools(finalColor, normalmap.rgb, light, deluxemap);
 
 	writeFragment(finalColor);
 }

@@ -37,6 +37,7 @@ in_qualifier vec4 lightParams[R_DYNAMIC_LIGHTS];
 #include "bump_fs.glsl"
 #include "fog_fs.glsl"
 #include "cook-torrance_fs.glsl"
+#include "model_devtools_fs.glsl"
 #include "write_fragment_fs.glsl"
 
 /**
@@ -57,23 +58,8 @@ void main(void) {
 	finalColor = FogFragment(finalColor);
 #endif
 
-/* Developer tools */
-
-#if r_debug_normals
-	finalColor.rgb = finalColor.rgb * 0.01 + (1.0 - dot(vec3(0.0, 0.0, 1.0), normalize(lightDirs[0].xyz))) * 0.5 * vec3(1.0);
-	finalColor.a = 1.0;
-#endif
-
-#if r_debug_tangents
-	finalColor.rgb = finalColor.rgb * 0.01 + (1.0 - normalize(lightDirs[0].xyz)) * 0.5;
-	finalColor.a = 1.0;
-#endif
-
-#if r_normalmap
-	vec3 n = normalize(2.0 * (texture2D(SAMPLER_NORMALMAP, gl_TexCoord[0].st).rgb - 0.5));
-	finalColor.rgb = finalColor.rgb * 0.01 + (1.0 - dot(n, normalize(lightDirs[0].xyz))) * 0.5 * vec3(1.0);
-	finalColor.a = 1.0;
-#endif
+	/* Developer tools, if enabled */
+	finalColor = ApplyDeveloperTools(finalColor, lightDirs[0].xyz, texture2D(SAMPLER_NORMALMAP, gl_TexCoord[0].st).rgb);
 
 	writeFragment(finalColor);
 }
