@@ -11,13 +11,14 @@ uniform int ANIMATE;
 varying vec3 point;
 varying vec3 normal;
 
-attribute vec4 TANGENT;
-
 attribute vec4 NEXT_FRAME_VERTS;
 attribute vec4 NEXT_FRAME_NORMALS;
 attribute vec4 NEXT_FRAME_TANGENTS;
 uniform float TIME;
-varying vec4 Tangent;
+
+vec4 Vertex;
+vec3 Normal;
+vec4 Tangent;
 
 varying vec3 eyedir;
 varying vec3 lightDirs[];

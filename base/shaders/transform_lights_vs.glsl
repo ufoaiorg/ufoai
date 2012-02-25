@@ -3,8 +3,6 @@
  * @brief Transform lights to the tangent space. Requires light_vs.glsl and lerp_vs.glsl.
  */
 
-in_qualifier vec4 TANGENT;
-
 out_qualifier vec3 eyedir;
 
 #define R_DYNAMIC_LIGHTS #replace r_dynamic_lights

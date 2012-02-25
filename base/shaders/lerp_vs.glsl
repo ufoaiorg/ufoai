@@ -9,9 +9,9 @@ in_qualifier vec4 TANGENTS;
 in_qualifier vec4 NEXT_FRAME_TANGENTS;
 uniform float TIME;
 
-out_qualifier vec4 Vertex;
-out_qualifier vec3 Normal;
-out_qualifier vec4 Tangent;
+vec4 Vertex;
+vec3 Normal;
+vec4 Tangent;
 
 void lerpVertex(void) {
 	Vertex = mix(vec4(NEXT_FRAME_VERTS, 1.0), gl_Vertex, TIME);
