@@ -535,12 +535,13 @@ size "4 7"
 +s2_02	"0 1"	//2 - 2		2x1		ship middle part with a container
 +s3_01	"0 1"	//2 - 2		2x1		ship front part
 +m2_01	"0 1"	//2 - 2		2x1		m+w a stair down and a wooden landing stage
-+a_01	"0 3"	//1 - 3		1x1		a single container
-+a_02	"0 3"	//1 - 3		1x1		a single container
-+a_03	"0 3"	//1 - 3		1x1		a single container
-+a_04	"0 3"	//1 - 3		1x1		a single container
-+a_05	"0 3"	//1 - 3		1x1		a single container
-+a_06	"0 3"	//1 - 3		1x1		2x2 containers
++a_01	"0 2"	//1 - 2		1x1		a single container
++a_02	"0 2"	//1 - 2		1x1		a single container
++a_03	"0 2"	//1 - 2		1x1		a single container
++a_04	"0 2"	//1 - 2		1x1		a single container
++a_05	"0 2"	//1 - 2		1x1		a single container
++a_06	"0 2"	//1 - 2		1x1		2x2 containers
++a_07	"0 2"	//1 - 1		1x1		2x2 containers
 *rm_drop +craft_drop_firebird "1 1"
 }
 
