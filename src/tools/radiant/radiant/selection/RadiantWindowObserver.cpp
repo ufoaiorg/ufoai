@@ -92,7 +92,6 @@ void RadiantWindowObserver::onMouseDown (const WindowVector& position, GdkEventB
 			g_mouseMovedCallback.insert(MouseEventCallback(ManipulateObserver::MouseMovedCaller(_manipulateObserver)));
 			g_mouseUpCallback.insert(MouseEventCallback(ManipulateObserver::MouseUpCaller(_manipulateObserver)));
 		} else {
-			// Call the mouseDown method of the selector class
 			// Call the mouseDown method of the selector class, this covers all of the other events
 			_selectObserver.mouseDown(devicePosition);
 
