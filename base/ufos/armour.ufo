@@ -26,6 +26,7 @@ damagetypes standard
 	"normal_heavy"
 	"normal_steelblade" // Combat knife
 	"normal_monomolecularblade" // Kerrblade and similar blades to ensure superior tech better against armour
+	"normal_needle" // Needler and heavy Needler (very small damage, but large number of shots and high pierce).
 	"_blast"
 	"_fire" // Incendiary grenades only for now
 	"fire_light" // Currently unused, but may be useful for future if fire on map is implemented
@@ -75,6 +76,7 @@ item armour_light
 
 		normal_steelblade			10
 		normal_monomolecularblade	5
+		normal_needle		0
 
 		blast				25
 
@@ -135,6 +137,7 @@ item armour_lightadv
 
 		normal_steelblade			18
 		normal_monomolecularblade	12
+		normal_needle		4
 
 		blast				25
 
@@ -195,6 +198,7 @@ item armour_medium
 
 		normal_steelblade		20
 		normal_monomolecularblade	12
+		normal_needle		7
 
 		blast				38
 
@@ -255,6 +259,7 @@ item armour_power
 
 		normal_steelblade			25
 		normal_monomolecularblade	19
+		normal_needle		10
 
 		blast				49
 
@@ -314,6 +319,7 @@ item armour_power
 //
 //		normal_steelblade			40
 //		normal_monomolecularblade	10
+//		normal_needle		7
 //
 //		blast				15
 //
@@ -372,6 +378,7 @@ item armour_power
 //
 //		normal_steelblade			40
 //		normal_monomolecularblade	10
+//		normal_needle		7
 //
 //		blast			15
 //
@@ -430,6 +437,7 @@ item armour_power
 //
 //		normal_steelblade			40
 //		normal_monomolecularblade	10
+//		normal_needle		8
 //
 //		blast			15
 //
@@ -493,6 +501,7 @@ item armour_light_alien
 
 		normal_steelblade			10
 		normal_monomolecularblade	5
+		normal_needle		0
 
 		blast			25
 
@@ -553,6 +562,7 @@ item armour_medium_alien
 
 		normal_steelblade			20
 		normal_monomolecularblade	12
+		normal_needle		7
 
 		blast			38
 

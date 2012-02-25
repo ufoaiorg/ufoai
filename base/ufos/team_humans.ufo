@@ -2122,6 +2122,7 @@ team phalanx_ugv_phoenix
 
 		normal_steelblade 10
 		normal_monomolecularblade 5
+		normal_needle 5
 
 		blast -16
 
@@ -2186,6 +2187,7 @@ team phalanx_ugv_ares_w
 
 		normal_steelblade 10
 		normal_monomolecularblade 5
+		normal_needle 5
 
 		blast -16
 

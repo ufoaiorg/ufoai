@@ -96,6 +96,7 @@ team taman
 
 		normal_steelblade 1
 		normal_monomolecularblade 0
+		normal_needle -2
 
 		blast -12
 
@@ -210,6 +211,7 @@ team ortnok
 
 		normal_steelblade 8
 		normal_monomolecularblade 4
+		normal_needle 3
 
 		blast 10
 
@@ -313,6 +315,7 @@ team shevaar
 
 		normal_steelblade 6
 		normal_monomolecularblade 3
+		normal_needle 2
 
 		blast 10
 
@@ -414,6 +417,7 @@ team bloodspider
 
 		normal_steelblade 10
 		normal_monomolecularblade 5
+		normal_needle 7
 
 		blast -16
 
