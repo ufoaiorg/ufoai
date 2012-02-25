@@ -804,6 +804,9 @@ static void R_InitModelProgram (r_program_t *prog)
 	R_ProgramParameter1f("BUMP", defaultMaterial.bump);
 	R_ProgramParameter1f("PARALLAX", defaultMaterial.parallax);
 	R_ProgramParameter1f("GLOWSCALE", defaultMaterial.glowscale);
+	R_ProgramParameter1f("OFFSET", 0.0);
+
+	R_ProgramParameter3fv("AMBIENT", refdef.ambientColor);
 
 	if (r_fog->integer) {
 		if (r_state.fog_enabled) {
@@ -819,6 +822,10 @@ static void R_InitModelProgram (r_program_t *prog)
 static void R_UseModelProgram (r_program_t *prog)
 {
 	/*R_ProgramParameter1i("LIGHTS", refdef.numLights);*/
+
+	R_ProgramParameter1f("OFFSET", 0.0);
+	R_ProgramParameter3fv("AMBIENT", refdef.ambientColor);
+
 	if (r_fog->integer) {
 		if (r_state.fog_enabled) {
 			R_ProgramParameter3fv("FOGCOLOR", refdef.fogColor);

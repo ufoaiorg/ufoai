@@ -21,6 +21,7 @@ vec4 Vertex;
 vec3 Normal;
 vec4 Tangent;
 
+#include "fog_vs.glsl"
 #include "light_vs.glsl"
 
 /**
@@ -41,8 +42,8 @@ void main(void) {
 	gl_TexCoord[0] = gl_MultiTexCoord0 + OFFSET;
 	gl_TexCoord[1] = gl_MultiTexCoord1 + OFFSET;
 
-	LightVertex();/*
+	LightVertex();
 #if r_fog
 	FogVertex();
-#endif*/
+#endif
 }

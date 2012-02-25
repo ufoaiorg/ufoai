@@ -3,6 +3,7 @@
  * @brief Fog fragment shader.
  */
 
+#if r_fog
 in_qualifier float fog;
 uniform vec3 FOGCOLOR;
 
@@ -12,3 +13,4 @@ uniform vec3 FOGCOLOR;
 vec4 FogFragment(vec4 inColor) {
 	return vec4(mix(inColor.rgb, FOGCOLOR, fog), inColor.a);
 }
+#endif
