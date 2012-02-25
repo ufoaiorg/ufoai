@@ -103,11 +103,19 @@ m      +w       x
 
 // common tiles -----------------------------------------------------
 
+tile +a_00
+	// tile definition:  testall:  buildcheck:
+	// this should be a required / fixed tile for faster assembling
+{
+3 3
+0      a      0
+a     +a      m
+0      x      0
+}
+
 tile +a_01
 	// tile definition:  testall:  buildcheck:
 	// a single container : blue, heading north, location centered, concludes north
-	// 1 x info_human_start
-	// 1 x info_alien_start
 {
 3 3
 0      a      0
@@ -309,12 +317,23 @@ a     +a     am
 0      a     0
 }
 
+tile +a_21
+	// tile definition:  testall:  buildcheck:
+	// the dry dock
+{
+4 5
+0     a     a    0
+a     +a    +a   m
+a     +a    +a   m
+a     +a    a    m
+0     a     a    0
+}
 
 // pier -------------------------------------------------------------
 
 tile +m2_01
 	// -tile definition: done  -testall: included -buildcheck:
-	// mole, with a stair down and a wooden pier
+	// mole, with a stair down and a wooden landing stage
 {
 4 3
 0     m     0     0
@@ -365,7 +384,7 @@ a     +m      w
 
 tile +m_05
 	// -tile definition: done  -testall: included -buildcheck:
-	// mole, with a gate for the dry dock (this is where the scout lands, methinks)
+	// mole, with a gate for the dry dock
 {
 3 3
 0      m      0
@@ -432,6 +451,18 @@ a    +a   +a   +a   mxyz
 0    a    a    a    0
 }
 
+// Interceptors -----------------------------------------------------
+
+// tile inter_saracen
+	// tile definition:  testall:  buildcheck:
+	// 3x2 tile, at Z = 4
+	// completely off, unusable
+
+// tile inter_stiletto
+	// tile definition:  testall:  buildcheck:
+	// 3x2 tile, at Z = 4
+	// completely off, unusable
+
 // UFOs -------------------------------------------------------------
 
 tile +craft_ufo_harvester
@@ -447,18 +478,6 @@ a  +m  +w  +w  +w  +w   w
 0   mx  wn  w   w   w   0
 }
 
-tile +craft_ufo_scout
-	// tile definition:  testall:  buildcheck:
-	// 8 x info_alien_start
-{
-4 5
-0     a     a    0
-a     +a    +a   m
-a     +a    +a   m
-a     +a    a    m
-0     a     a    0
-}
-
 // tile +craft_ufo_fighter
 	// tile definition:  testall:  buildcheck:
 	// 2x3 tile, at Z=4
@@ -469,19 +488,139 @@ a     +a    a    m
 	// 4x3 tile, at Z=4
 	// completely off, unusable
 
-// tile inter_saracen
-	// tile definition:  testall:  buildcheck:
-	// 3x2 tile, at Z = 4
-	// completely off, unusable
+// tilesets -----------------------------------------------
 
-// tile inter_stiletto
-	// tile definition:  testall:  buildcheck:
-	// 3x2 tile, at Z = 4
-	// completely off, unusable
+tileset area_a
+{
+	+a_03
+	+a_05
+	+a_07
+	+a_09
+	+a_11
+	+a_13
+	+a_15
+	+a_19
+}
+
+tileset area_b
+{
+	+a_04
+	+a_06
+	+a_08
+	+a_10
+	+a_12
+	+a_14
+	+a_17
+	+a_18
+}
+
+tileset area_c
+{
+	+a_01
+	+a_02
+	+a_16
+	+a_20
+}
+
+// assemblies -------------------------------------------------------
+
+assembly harbour
+{
+title "_Harbour"
+size "4 7"
++a_00	"1 1"
++s1_01	"0 1"	//2 - 2		2x1		ship rear part
++s1_02	"0 1"	//4 - 4		2x2		the ship's bridge
++s2_01	"0 1"	//2 - 2		2x1		ship middle part empty
++s2_02	"0 1"	//2 - 2		2x1		ship middle part with a container
++s3_01	"0 1"	//2 - 2		2x1		ship front part
++m2_01	"0 1"	//2 - 2		2x1		m+w a stair down and a wooden landing stage
++a_01	"0 3"	//1 - 3		1x1		a single container
++a_02	"0 3"	//1 - 3		1x1		a single container
++a_03	"0 3"	//1 - 3		1x1		a single container
++a_04	"0 3"	//1 - 3		1x1		a single container
++a_05	"0 3"	//1 - 3		1x1		a single container
++a_06	"0 3"	//1 - 3		1x1		2x2 containers
+*rm_drop +craft_drop_firebird "1 1"
+}
+
+assembly area
+{
+title "_Area"
+size "7 7"
++a_01  "0 3"	//1 - 3
++a_02  "0 3"	//1 - 3
++a_03  "0 3"	//1 - 3
++a_04  "0 3"	//1 - 3
++a_05  "0 3"	//1 - 3
++a_06  "0 3"	//1 - 3
++a_07  "0 3"	//1 - 3
++a_08  "0 3"	//1 - 3
++a_09  "0 1"	//1 - 1
++a_10  "0 1"	//2 - 2
++a_11  "0 3"	//1 - 3
++a_12  "0 3"	//1 - 3
++a_13  "0 3"	//1 - 3
++a_14  "0 3"	//1 - 3
++a_15  "0 3"	//1 - 3
++a_16  "0 1"	//2 - 2
++a_17  "0 3"	//2 - 6
++a_18  "0 3"	//1 - 3
++a_19  "0 1"	//2 - 2
++a_20  "0 1"	//2 - 2
++a_21	"1 1"	//5 - 5		2x3		dry dock
+*rm_drop +craft_drop_firebird "1 1"		//5 - 5
+}
 
 assembly test
 {
 title "_Test"
+size "8 8"
+tileset area_a "0 1"
+tileset area_b "0 1"
+tileset area_c "0 1"
++s1_01	"0 1"	//2 - 2		2x1		ship rear part
++s1_02	"0 1"	//4 - 4		2x2		the ship's bridge
++s2_01	"0 2"	//2 - 4		2x1		ship middle part empty
++s2_02	"0 2"	//2 - 4		2x1		ship middle part with a container
++s3_01	"0 2"	//2 - 2		2x1		ship front part
++w_01	"0 8"	//1 - 8		1x1		water
++w_02	"0 1"	//1 - 1		1x1		water with bouy
++m2_01	"0 1"	//2 - 2		2x1		m+w a stair down and a wooden landing stage
++m_01	"0 1"	//2 - 2		2x1		a stair down to the water
++m_02	"0 1"	//1 - 1		1x1		two lamps and a small handrail
++m_03	"0 1"	//1 - 1		1x1		with like a pier pointing east
++m_04	"0 1"	//1 - 1		1x1		with a constriction
++m_05	"0 1"	//1 - 1		1x1		with a gate for the dry dock
++m_06	"0 1"	//2 - 2		2x1		a+m, a ramp down to the water
++m_07	"0 1"	//1 - 1		1x1		a stair down to the water
++a_01	"0 3"	//1 - 3		1x1		a single container
++a_02	"0 3"	//1 - 3		1x1		a single container
++a_03	"0 3"	//1 - 3		1x1		a single container
++a_04	"0 3"	//1 - 3		1x1		a single container
++a_05	"0 3"	//1 - 3		1x1		a single container
++a_06	"0 3"	//1 - 3		1x1		2x2 containers
++a_07	"0 3"	//1 - 3		1x1		2x2 containers
++a_08	"0 3"	//1 - 3		1x1		some boxes and crates
++a_09	"0 1"	//1 - 1		1x1		plain
++a_10	"0 1"	//2 - 2		2x1		crane
++a_11	"0 3"	//1 - 3		1x1		a single container
++a_12	"0 3"	//1 - 3		1x1		a single container
++a_13	"0 3"	//1 - 3		1x1		two container side by side
++a_14	"0 3"	//1 - 3		1x1		three containers
++a_15	"0 3"	//1 - 3		1x1		hole with water
++a_16	"0 1"	//2 - 2		2x1		crane
++a_17	"0 3"	//2 - 6		1x2		four containers, boxes and crates
++a_18	"0 3"	//1 - 3		1x1		2x2 containers
++a_19	"0 1"	//2 - 2		1x2		crane
++a_20	"0 1"	//2 - 2		1x2		crane
++a_21	"1 1"	//5 - 5		2x3		dry dock
+*rm_drop +craft_drop_firebird "1 1"		//5 - 5
+}
+
+assembly mini
+{
+title "_mini"
 size "3 3"
 +a_01  "0 1"
 +a_02  "0 1"
@@ -490,75 +629,4 @@ size "3 3"
 +a_05  "0 1"
 +a_06  "0 1"
 *rm_drop +craft_drop_firebird "1 1"
-}
-
-assembly area
-{
-title "_Area"
-size "9 7"
-+a_01  "0 3"	//1 - 3
-+a_02  "0 3"	//1 - 3
-+a_03  "0 3"	//1 - 3
-+a_04  "0 3"	//1 - 3
-+a_05  "0 3"	//1 - 3
-+a_06  "0 3"	//1 - 3
-+a_07  "0 3"	//1 - 3
-+a_08  "0 3"	//1 - 3
-+a_09  "0 1"	//1 - 1
-+a_10  "0 1"	//2 - 2
-+a_11  "0 3"	//1 - 3
-+a_12  "0 3"	//1 - 3
-+a_13  "0 3"	//1 - 3
-+a_14  "0 3"	//1 - 3
-+a_15  "0 3"	//1 - 3
-+a_16  "0 1"	//2 - 2
-+a_17  "0 3"	//2 - 6
-+a_18  "0 3"	//1 - 3
-+a_19  "0 1"	//2 - 2
-+a_20  "0 1"	//2 - 2
-*rm_ufo +craft_ufo_scout "1 1"		//3 - 3
-*rm_drop +craft_drop_firebird "1 1"		//5 - 5
-}
-
-assembly harbour
-{
-title "_Harbour"
-size "10 8"
-+s1_01 "0 1"	//2 - 2
-+s1_02 "0 1"	//4 - 4
-+s2_01 "0 2"	//2 - 4
-+s2_02 "0 2"	//2 - 4
-+s3_01 "0 2"	//2 - 2
-+w_01  "0 8"	//1 - 8
-+w_02  "0 1"	//1 - 1
-+m2_01 "0 1"	//2 - 2
-+m_01  "0 1"	//1 - 1
-+m_02  "0 1"	//1 - 1
-+m_03  "0 1"	//1 - 1
-+m_04  "0 1"	//1 - 1
-+m_05  "0 1"	//1 - 1
-+m_06  "0 1"	//2 - 1
-+m_07  "0 1"	//1 - 1
-+a_01  "0 3"	//1 - 3
-+a_02  "0 3"	//1 - 3
-+a_03  "0 3"	//1 - 3
-+a_04  "0 3"	//1 - 3
-+a_05  "0 3"	//1 - 3
-+a_06  "0 3"	//1 - 3
-+a_07  "0 3"	//1 - 3
-+a_08  "0 3"	//1 - 3
-+a_09  "0 1"	//1 - 1
-+a_10  "0 1"	//2 - 2
-+a_11  "0 3"	//1 - 3
-+a_12  "0 3"	//1 - 3
-+a_13  "0 3"	//1 - 3
-+a_14  "0 3"	//1 - 3
-+a_15  "0 3"	//1 - 3
-+a_16  "0 1"	//2 - 2
-+a_17  "0 3"	//2 - 6
-+a_18  "0 3"	//1 - 3
-+a_19  "0 1"	//2 - 2
-+a_20  "0 1"	//2 - 2
-*rm_ufo +craft_ufo_scout "1 1"		//3 - 3
-*rm_drop +craft_drop_firebird "1 1"		//5 - 5
 }

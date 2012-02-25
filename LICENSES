@@ -426,6 +426,7 @@ base/maps/military_convoy/mc_craft_drop_raptor.map | GNU General Public License 
 base/maps/military_convoy/mc_main.map | GNU General Public License 2.0 or later | Martin Gerhardy   Maciej Wierzbicki
 base/maps/mine.map | GNU General Public License 2.0 or later
 base/maps/mm_harbour.ump | GNU General Public License 2.0 or later | Martin "mameister" Meister; Holger 'ShipIt' Gellrich
+base/maps/mm_harbour/mh_a_00.map | GNU General Public License 2.0 or later | Martin "mameister" Meister; Holger 'ShipIt' Gellrich
 base/maps/mm_harbour/mh_a_01.map | GNU General Public License 2.0 or later | Martin "mameister" Meister
 base/maps/mm_harbour/mh_a_02.map | GNU General Public License 2.0 or later | Martin "mameister" Meister
 base/maps/mm_harbour/mh_a_03.map | GNU General Public License 2.0 or later | Martin "mameister" Meister
@@ -446,12 +447,12 @@ base/maps/mm_harbour/mh_a_17.map | GNU General Public License 2.0 or later | Mar
 base/maps/mm_harbour/mh_a_18.map | GNU General Public License 2.0 or later | Martin "mameister" Meister
 base/maps/mm_harbour/mh_a_19.map | GNU General Public License 2.0 or later | Martin "mameister" Meister
 base/maps/mm_harbour/mh_a_20.map | GNU General Public License 2.0 or later | Martin "mameister" Meister
+base/maps/mm_harbour/mh_a_21.map | GNU General Public License 2.0 or later | Martin "mameister" Meister; Holger 'ShipIt' Gellrich
 base/maps/mm_harbour/mh_craft_drop_firebird.map | GNU General Public License 2.0 or later | Martin "mameister" Meister
 base/maps/mm_harbour/mh_craft_drop_herakles.map | GNU General Public License 2.0 or later | Martin "mameister" Meister
 base/maps/mm_harbour/mh_craft_drop_raptor.map | GNU General Public License 2.0 or later | Martin "mameister" Meister
 base/maps/mm_harbour/mh_craft_ufo_fighter.map | GNU General Public License 2.0 or later | Martin "mameister" Meister
 base/maps/mm_harbour/mh_craft_ufo_harvester.map | GNU General Public License 2.0 or later | Martin "mameister" Meister
-base/maps/mm_harbour/mh_craft_ufo_scout.map | GNU General Public License 2.0 or later | Martin "mameister" Meister
 base/maps/mm_harbour/mh_craft_ufo_supply.map | GNU General Public License 2.0 or later | Martin "mameister" Meister
 base/maps/mm_harbour/mh_inter_saracen.map | GNU General Public License 2.0 or later | Martin "mameister" Meister
 base/maps/mm_harbour/mh_inter_stiletto.map | GNU General Public License 2.0 or later | Martin "mameister" Meister

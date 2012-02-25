@@ -3,9 +3,8 @@
 {
 "classname" "worldspawn"
 "subdivide" "64"
-"maxteams" "2"
 "angles_night" "-75 20"
-"maxlevel" "6"
+"maxlevel" "8"
 "angles_day" "-75 10"
 "randomspawn" "1"
 // brush 0

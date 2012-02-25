@@ -2,18 +2,17 @@
 // entity 0
 {
 "classname" "worldspawn"
-"maxteams" "2"
-"maxlevel" "6"
+"maxlevel" "8"
 "angles_day" "-75 10"
 "angles_night" "-75 20"
 "randomspawn" "1"
 // brush 0
 {
-( 56 248 6 ) ( 56 -8 6 ) ( -8 248 6 ) tex_nature/water_dark 0 0 0 1 1 65280 8 0
-( 208 256 134 ) ( 0 256 134 ) ( 208 256 6 ) tex_nature/water_dark 0 0 0 1 1 65280 8 0
-( 256 256 136 ) ( 256 256 8 ) ( 256 80 136 ) tex_nature/water_dark 0 0 0 1 1 65280 8 0
-( 24 0 -56 ) ( 88 0 -56 ) ( 24 256 -56 ) tex_common/nodraw 0 0 0 1 1 65280 128 0
-( 8 0 8 ) ( 8 0 136 ) ( 216 0 8 ) tex_nature/water_dark 0 0 0 1 1 65280 8 0
-( 0 80 8 ) ( 0 256 8 ) ( 0 80 136 ) tex_nature/water_dark 0 0 0 1 1 65280 8 0
+( 56 248 4 ) ( 56 -8 4 ) ( -8 248 4 ) tex_nature/water_dark 0 0 0 1 1 65312 8 0
+( 208 256 134 ) ( 0 256 134 ) ( 208 256 6 ) tex_nature/water_dark 0 0 0 1 1 65312 0 0
+( 256 256 136 ) ( 256 256 8 ) ( 256 80 136 ) tex_nature/water_dark 0 0 0 1 1 65312 0 0
+( 24 0 -64 ) ( 88 0 -64 ) ( 24 256 -64 ) tex_common/nodraw 0 0 0 1 1 65312 128 0
+( 8 0 8 ) ( 8 0 136 ) ( 216 0 8 ) tex_common/nodraw 0 0 0 1 1 65312 0 0
+( 0 80 8 ) ( 0 256 8 ) ( 0 80 136 ) tex_nature/water_dark 0 0 0 1 1 65312 0 0
 }
 }
