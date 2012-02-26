@@ -2,14 +2,14 @@ msgid ""
 msgstr ""
 "Project-Id-Version: UFO Alien Invasion\n"
 "Report-Msgid-Bugs-To: tlh2000@users.sourceforge.net\n"
-"POT-Creation-Date: 2012-02-23 19:34-0600\n"
+"POT-Creation-Date: 2012-02-26 11:29+0700\n"
 "PO-Revision-Date: 2012-02-23 19:33-0600\n"
 "Last-Translator: DarkRain <darkrainx@users.sourceforge.net>\n"
 "Language-Team: \n"
-"Language: \n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
+"Language: \n"
 "X-Poedit-SourceCharset: utf-8\n"
 "Plural-Forms: nplurals=2; plural=(n != 1)\n"
 "X-Poedit-Basepath: ../\n"
@@ -134,17 +134,22 @@ msgstr "Mercado"
 msgid "Military convoy"
 msgstr "Convoy militar"
 
-#: ../base/maps/mm_harbour.ump:484
-msgid "Test"
-msgstr "Prueba"
+#: ../base/maps/mm_harbour.ump:529
+msgid "Harbour"
+msgstr "Puerto"
 
-#: ../base/maps/mm_harbour.ump:497
+#: ../base/maps/mm_harbour.ump:550
 msgid "Area"
 msgstr "Área"
 
-#: ../base/maps/mm_harbour.ump:525
-msgid "Harbour"
-msgstr "Puerto"
+#: ../base/maps/mm_harbour.ump:578
+msgid "Test"
+msgstr "Prueba"
+
+#: ../base/maps/mm_harbour.ump:624
+#, fuzzy
+msgid "mini"
+msgstr "Xining"
 
 #: ../base/maps/oriental.ump:464
 msgid "Oriental small"
@@ -436,59 +441,59 @@ msgstr "Sistema de Defensa - Torreta Láser"
 msgid "normal"
 msgstr "Normal"
 
-#: ../base/ufos/armour.ufo:29
+#: ../base/ufos/armour.ufo:30
 msgid "blast"
 msgstr "Explosión"
 
-#: ../base/ufos/armour.ufo:30
+#: ../base/ufos/armour.ufo:31
 msgid "fire"
 msgstr "Fuego"
 
-#: ../base/ufos/armour.ufo:35
+#: ../base/ufos/armour.ufo:36
 msgid "shock"
 msgstr "Shock"
 
-#: ../base/ufos/armour.ufo:36
+#: ../base/ufos/armour.ufo:37
 msgid "laser"
 msgstr "Láser"
 
-#: ../base/ufos/armour.ufo:40
+#: ../base/ufos/armour.ufo:41
 msgid "plasma"
 msgstr "Plasma"
 
-#: ../base/ufos/armour.ufo:44
+#: ../base/ufos/armour.ufo:45
 msgid "particlebeam"
 msgstr "Flujo de Partículas"
 
-#: ../base/ufos/armour.ufo:48
+#: ../base/ufos/armour.ufo:49
 msgid "stun_electro"
 msgstr "Aturdir"
 
-#: ../base/ufos/armour.ufo:49
+#: ../base/ufos/armour.ufo:50
 msgid "stun_gas"
 msgstr "Gas Aturdidor"
 
-#: ../base/ufos/armour.ufo:58
+#: ../base/ufos/armour.ufo:59
 msgid "Combat Armour"
 msgstr "Armadura de Combate"
 
-#: ../base/ufos/armour.ufo:118
+#: ../base/ufos/armour.ufo:120
 msgid "Advanced Combat Armour"
 msgstr "Armadura de Combate Avanzada"
 
-#: ../base/ufos/armour.ufo:178
+#: ../base/ufos/armour.ufo:181
 msgid "Nanocomposite Armour"
 msgstr "Armadura de Nanocompuesto"
 
-#: ../base/ufos/armour.ufo:238
+#: ../base/ufos/armour.ufo:242
 msgid "Power Armour"
 msgstr "Armadura Servoasistida"
 
-#: ../base/ufos/armour.ufo:476
+#: ../base/ufos/armour.ufo:484
 msgid "Alien Body Armour"
 msgstr "Armadura Alienígena"
 
-#: ../base/ufos/armour.ufo:536
+#: ../base/ufos/armour.ufo:545
 msgid "Medium Alien Armour"
 msgstr "Armadura Alienígena Semireforzada"
 
@@ -3441,7 +3446,7 @@ msgstr[0] "Piloto"
 msgstr[1] "Pilotos"
 
 #: ../base/ufos/medals.ufo:46 ../base/ufos/team_humans.ufo:2103
-#: ../base/ufos/team_humans.ufo:2167 client/cgame/campaign/cp_employee.c:208
+#: ../base/ufos/team_humans.ufo:2168 client/cgame/campaign/cp_employee.c:208
 msgid "UGV"
 msgid_plural "UGVS"
 msgstr[0] "VTNT"
@@ -8043,7 +8048,7 @@ msgstr "<TODO>"
 msgid "ugv_phoenix_pre_txt"
 msgstr "No existe información disponible previa a la investigación."
 
-#: ../base/ufos/research.ufo:4432 ../base/ufos/team_humans.ufo:2161
+#: ../base/ufos/research.ufo:4432 ../base/ufos/team_humans.ufo:2162
 msgid "Ares W (UGV)"
 msgstr "Ares R (VTNT)"
 
@@ -9639,15 +9644,15 @@ msgstr "CCCP"
 msgid "Taman"
 msgstr "Taman"
 
-#: ../base/ufos/team_aliens.ufo:131
+#: ../base/ufos/team_aliens.ufo:132
 msgid "Ortnok"
 msgstr "Ortnok"
 
-#: ../base/ufos/team_aliens.ufo:245
+#: ../base/ufos/team_aliens.ufo:247
 msgid "Shevaar"
 msgstr "Shevaar"
 
-#: ../base/ufos/team_aliens.ufo:348
+#: ../base/ufos/team_aliens.ufo:351
 msgid "Bloodspider"
 msgstr "Araña Sanguinaria"
 
@@ -9655,7 +9660,7 @@ msgstr "Araña Sanguinaria"
 msgid "Phalanx"
 msgstr "Phalanx"
 
-#: ../base/ufos/team_humans.ufo:2170
+#: ../base/ufos/team_humans.ufo:2171
 msgid "Ares W"
 msgstr "Ares R"
 
@@ -13236,7 +13241,28 @@ msgstr "Bomba"
 msgid "Needler Gun Magazine"
 msgstr "Cargador de Aguijoneador"
 
-#: ../base/ufos/weapons_aliens.ufo:64 ../base/ufos/weapons_aliens.ufo:134
+#: ../base/ufos/weapons_aliens.ufo:64 ../base/ufos/weapons_aliens.ufo:137
+#, fuzzy
+msgid "Short Burst"
+msgstr "Ráfaga de 5 Disparos"
+
+#: ../base/ufos/weapons_aliens.ufo:87 ../base/ufos/weapons_aliens.ufo:160
+msgid "Cannonade"
+msgstr "Cañonazo"
+
+#: ../base/ufos/weapons_aliens.ufo:110 ../base/ufos/weapons_aliens.ufo:183
+#, fuzzy
+msgid "Needle Stream"
+msgstr "Siguiente equipo disponible"
+
+#: ../base/ufos/weapons_human.ufo:6
+msgid "Assault Rifle"
+msgstr "Rifle de Asalto"
+
+#: ../base/ufos/weapons_human.ufo:27
+msgid "Assault Rifle Magazine"
+msgstr "Cargador de Rifle de Asalto"
+
 #: ../base/ufos/weapons_human.ufo:43 ../base/ufos/weapons_human.ufo:133
 #: ../base/ufos/weapons_human.ufo:374 ../base/ufos/weapons_human.ufo:462
 #: ../base/ufos/weapons_human.ufo:549 ../base/ufos/weapons_human.ufo:656
@@ -13246,22 +13272,6 @@ msgstr "Cargador de Aguijoneador"
 #: ../base/ufos/weapons_plasma.ufo:150 ../base/ufos/weapons_plasma.ufo:284
 msgid "Snap Shot"
 msgstr "Disparo Rápido"
-
-#: ../base/ufos/weapons_aliens.ufo:86 ../base/ufos/weapons_aliens.ufo:156
-msgid "Cannonade"
-msgstr "Cañonazo"
-
-#: ../base/ufos/weapons_aliens.ufo:109 ../base/ufos/weapons_aliens.ufo:179
-msgid "Precision Shot"
-msgstr "Disparo de Precisión"
-
-#: ../base/ufos/weapons_human.ufo:6
-msgid "Assault Rifle"
-msgstr "Rifle de Asalto"
-
-#: ../base/ufos/weapons_human.ufo:27
-msgid "Assault Rifle Magazine"
-msgstr "Cargador de Rifle de Asalto"
 
 #: ../base/ufos/weapons_human.ufo:64 ../base/ufos/weapons_human.ufo:154
 #: ../base/ufos/weapons_human.ufo:570 ../base/ufos/weapons_human.ufo:677
@@ -16077,12 +16087,12 @@ msgid "Error saving game."
 msgstr "Error al guardar el juego."
 
 #: client/cgame/campaign/cp_save.c:470 client/cgame/campaign/cp_save.c:494
-#: client/cgame/campaign/cp_save.c:622
+#: client/cgame/campaign/cp_save.c:626
 msgid "Error loading game."
 msgstr "Error al cargar el juego."
 
 #: client/cgame/campaign/cp_save.c:471 client/cgame/campaign/cp_save.c:495
-#: client/cgame/campaign/cp_save.c:623
+#: client/cgame/campaign/cp_save.c:627
 #: client/cgame/multiplayer/mp_callbacks.c:62 client/cl_irc.c:1218
 #: client/cl_irc.c:1450 client/cl_main.c:539 client/cl_main.c:543
 #: client/cl_main.c:567
@@ -16093,19 +16103,19 @@ msgstr "Error"
 msgid "QuickSave"
 msgstr "Guardado Rápido"
 
-#: client/cgame/campaign/cp_save.c:604
+#: client/cgame/campaign/cp_save.c:608
 msgid "Campaign was successfully saved."
 msgstr "Se ha guardado exitosamente la campaña."
 
-#: client/cgame/campaign/cp_save.c:604
+#: client/cgame/campaign/cp_save.c:608
 msgid "Quicksave"
 msgstr "Guardado Rápido"
 
-#: client/cgame/campaign/cp_save.c:625
+#: client/cgame/campaign/cp_save.c:629
 msgid "Campaign loaded"
 msgstr "Campaña cargada"
 
-#: client/cgame/campaign/cp_save.c:625
+#: client/cgame/campaign/cp_save.c:629
 msgid "Quicksave campaign was successfully loaded."
 msgstr "El juego guardado automáticamente se ha cargado con éxito."
 
@@ -17557,6 +17567,9 @@ msgstr "alienígena"
 #: po/OTHER_STRINGS:6
 msgid "Take a screenshot"
 msgstr "Tomar una captura de pantalla"
+
+#~ msgid "Precision Shot"
+#~ msgstr "Disparo de Precisión"
 
 #~ msgid "Mole test"
 #~ msgstr "Ensayo del muelle"
