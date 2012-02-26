@@ -420,7 +420,7 @@ void G_ClientMove (const player_t * player, int visTeam, edict_t* ent, const pos
 				status = G_CheckVisTeamAll(ent->team, qfalse, ent);
 
 				/* Set ent->TU because the reaction code relies on ent->TU being accurate. */
-				G_ActorSetTU(ent, max(0, initTU - usedTUs));
+				G_ActorSetTU(ent, initTU - usedTUs);
 
 				clientAction = ent->clientAction;
 				oldState = ent->state;
@@ -473,7 +473,7 @@ void G_ClientMove (const player_t * player, int visTeam, edict_t* ent, const pos
 		if (g_notu != NULL && g_notu->integer)
 			G_ActorSetTU(ent, initTU);
 		else
-			G_ActorSetTU(ent, max(0, initTU - usedTUs));
+			G_ActorSetTU(ent, initTU - usedTUs);
 
 		G_SendStats(ent);
 

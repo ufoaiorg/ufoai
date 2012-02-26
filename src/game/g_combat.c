@@ -1252,7 +1252,7 @@ qboolean G_ClientShoot (const player_t * player, edict_t* ent, const pos3_t at, 
 	if (!mock) {
 		/* send TUs if ent still alive */
 		if (ent->inuse && !G_IsDead(ent)) {
-			G_ActorSetTU(ent, max(ent->TU - fd->time, 0));
+			G_ActorSetTU(ent, ent->TU - fd->time);
 			G_SendStats(ent);
 		}
 
