@@ -149,3 +149,12 @@ const eventRegister_t *CL_GetEvent (const event_t eType)
 
 	Com_Error(ERR_DROP, "Could not get format string for event type %i", eType);
 }
+
+int CL_GetNextTime (const eventRegister_t *event, eventTiming_t *eventTiming, int nextTime)
+{
+	if (nextTime < eventTiming->nextTime) {
+		Com_DPrintf(DEBUG_EVENTSYS, "CL_GetNextTime: nexttime is invalid (%i/%i): %s\n", nextTime, eventTiming->nextTime, event->name);
+		return eventTiming->nextTime;
+	}
+	return nextTime;
+}
