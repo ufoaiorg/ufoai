@@ -76,6 +76,7 @@ typedef struct client_static_s {
 
 	/** needs to be here, because server can be shutdown, before we see the ending screen */
 	int team;			/**< the team you are in @sa TEAM_CIVILIAN, TEAM_ALIEN */
+	int teamSaveSlotIndex;	/**< currently loaded team slot, -1 if no team slot was loaded */
 
 	int currentSelectedMap;	/**< current selected multiplayer or skirmish map */
 

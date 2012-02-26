@@ -38,7 +38,6 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #define TEAM_SAVE_FILE_VERSION 4
 
 static inventory_t game_inventory;
-
 static qboolean characterActive[MAX_ACTIVETEAM];
 
 typedef struct teamSaveFileHeader_s {
@@ -63,6 +62,7 @@ void GAME_AutoTeam (const char *equipmentDefinitionID, int teamMembers)
 {
 	const equipDef_t *ed = INV_GetEquipmentDefinitionByID(equipmentDefinitionID);
 	const char *teamDefID = GAME_GetTeamDef();
+	cls.teamSaveSlotIndex = NO_TEAM_SLOT_LOADED;
 
 	GAME_GenerateTeam(teamDefID, ed, teamMembers);
 }
@@ -377,9 +377,20 @@ static qboolean GAME_LoadTeam (const char *filename)
 	return qtrue;
 }
 
-qboolean GAME_LoadDefaultTeam (void)
+qboolean GAME_LoadDefaultTeam (qboolean force)
 {
-	return GAME_LoadTeam("save/team0.mpt");
+	if (cls.teamSaveSlotIndex == NO_TEAM_SLOT_LOADED) {
+		if (!force)
+			return qfalse;
+		cls.teamSaveSlotIndex = 0;
+	}
+
+	if (GAME_LoadTeam(va("save/team%i.mpt", cls.teamSaveSlotIndex)) && !GAME_IsTeamEmpty()) {
+		return qtrue;
+	}
+
+	cls.teamSaveSlotIndex = NO_TEAM_SLOT_LOADED;
+	return qfalse;
 }
 
 /**
@@ -399,7 +410,11 @@ void GAME_LoadTeam_f (void)
 
 	/* first try to load the xml file, if this does not succeed, try the old file */
 	Com_sprintf(filename, sizeof(filename), "save/team%i.mpt", index);
-	GAME_LoadTeam(filename);
+	if (GAME_LoadTeam(filename) && !GAME_IsTeamEmpty()) {
+		cls.teamSaveSlotIndex = index;
+	} else {
+		cls.teamSaveSlotIndex = NO_TEAM_SLOT_LOADED;
+	}
 }
 
 /**

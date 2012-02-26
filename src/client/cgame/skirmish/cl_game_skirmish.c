@@ -78,6 +78,10 @@ static void GAME_SK_Start_f (void)
 	const mapDef_t *md;
 
 	if (cgi->GAME_IsTeamEmpty()) {
+		cgi->GAME_LoadDefaultTeam(qfalse);
+	}
+
+	if (cgi->GAME_IsTeamEmpty()) {
 		unsigned int i;
 		/** @todo make the teamdef configurable */
 		const char *ugvTeamDefID = "phalanx_ugv_phoenix";

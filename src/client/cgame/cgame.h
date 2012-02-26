@@ -130,7 +130,7 @@ typedef struct cgame_import_s {
 	const equipDef_t *(IMPORT *GAME_ChangeEquip) (const linkedList_t *equipmentList, changeEquipType_t changeType, const char *equipID);
 	size_t (IMPORT *GAME_GetCharacterArraySize) (void);
 	qboolean (IMPORT *GAME_IsTeamEmpty) (void);
-	qboolean (IMPORT *GAME_LoadDefaultTeam) (void);
+	qboolean (IMPORT *GAME_LoadDefaultTeam) (qboolean force);
 	void (IMPORT *GAME_SetServerInfo) (const char *server, const char *serverport);
 	void (IMPORT *GAME_AppendTeamMember) (int memberIndex, const char *teamDefID, const equipDef_t *ed);
 	void (IMPORT *GAME_ReloadMode) (void);

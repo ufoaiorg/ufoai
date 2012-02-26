@@ -58,7 +58,7 @@ static void CL_Connect_f (void)
 		Q_strncpyz(serverport, selectedServer->service, sizeof(serverport));
 	}
 
-	if (cgi->GAME_IsTeamEmpty() && !cgi->GAME_LoadDefaultTeam()) {
+	if (cgi->GAME_IsTeamEmpty() && !cgi->GAME_LoadDefaultTeam(qtrue)) {
 		cgi->UI_Popup(_("Error"), "%s", _("Assemble a team first"));
 		return;
 	}
