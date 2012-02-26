@@ -48,7 +48,7 @@ int CL_ActorShootHiddenTime (const eventRegister_t *self, struct dbuffer *msg, e
 		/* impact right away - we don't see it at all
 		 * bouncing is not needed here, too (we still don't see it) */
 		eventTiming->impactTime = eventTiming->shootTime;
-		eventTiming->nextTime = eventTiming->shootTime + 1400;
+		eventTiming->nextTime = max(eventTiming->nextTime, eventTiming->shootTime + 1400);
 		if (fd->delayBetweenShots > 0.0)
 			eventTiming->shootTime += 1000 / fd->delayBetweenShots;
 	}

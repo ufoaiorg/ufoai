@@ -59,9 +59,9 @@ int CL_ActorDoShootTime (const eventRegister_t *self, struct dbuffer *msg, event
 			eventTiming->impactTime = eventTiming->shootTime;
 		}
 		if (cl.actTeam != cls.team)
-			eventTiming->nextTime = eventTiming->impactTime + 1400;
+			eventTiming->nextTime = max(eventTiming->nextTime, eventTiming->impactTime + 1400);
 		else
-			eventTiming->nextTime = eventTiming->impactTime + 400;
+			eventTiming->nextTime = max(eventTiming->nextTime, eventTiming->impactTime + 400);
 		if (fd->delayBetweenShots > 0.0)
 			eventTiming->shootTime += 1000 / fd->delayBetweenShots;
 	} else {
@@ -69,7 +69,7 @@ int CL_ActorDoShootTime (const eventRegister_t *self, struct dbuffer *msg, event
 		eventTime = eventTiming->impactTime;
 		if (fd->speed > 0.0) {
 			eventTiming->impactTime += 1000 * VectorDist(muzzle, impact) / fd->speed;
-			eventTiming->nextTime = eventTiming->impactTime;
+			eventTiming->nextTime = max(eventTiming->nextTime, eventTiming->impactTime);
 		}
 	}
 	eventTiming->parsedDeath = qfalse;
