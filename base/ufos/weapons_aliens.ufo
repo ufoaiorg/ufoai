@@ -63,21 +63,21 @@ item needlergun_ammo
 		{
 			name		"_Short Burst"
 			skill		assault
-			projtl		bolter
-			impact		bolterImpact
+			projtl		bullet-hmg
+			impact		bulletImpact
 			hitbody		null
 			firesnd		weapons/bullet-needler
 			impsnd		impact/nail-impact
 			bodysnd 	impact/nail-bodyimpact
 			speed		2000
-			spread		"1.5 1.5"
+			spread		"1.5 1.6"
 			crouch		0.8
 			range		250
 			shots		30
 			delaybetweenshots	25
 			ammo		10
 			time		12
-			damage		"10 2"
+			damage		"9 2"
 			dmgweight	normal_needle
 			reaction	true
 		}
@@ -86,22 +86,22 @@ item needlergun_ammo
 		{
 			name		"_Cannonade"
 			skill		assault
-			projtl		bolter
-			impact		bolterImpact
+			projtl		bullet-hmg
+			impact		bulletImpact
 			hitbody		null
 			firesnd		weapons/bullet-needlerheavy
 			impsnd		impact/nail-impact
 			bodysnd 	impact/nail-bodyimpact
 			sndonce		true
 			speed		2000
-			spread		"2.0 2.0"
+			spread		"2.0 2.2"
 			crouch		0.8
 			range		250
 			shots		90
 			delaybetweenshots	25
 			ammo		30
 			time		17
-			damage		"10 2"
+			damage		"9 2"
 			dmgweight	normal_needle
 			reaction	true
 		}
@@ -109,22 +109,22 @@ item needlergun_ammo
 		{
 			name		"_Needle Stream"
 			skill		assault
-			projtl		bolter
-			impact		bolterImpact
+			projtl		bullet-hmg
+			impact		bulletImpact
 			hitbody		null
 			firesnd		weapons/bullet-needlerheavy
 			impsnd		impact/nail-impact
 			bodysnd 	impact/nail-bodyimpact
 			sndonce		true
 			speed		2000
-			spread		"2.0 3.1"
+			spread		"2.0 5.8"
 			crouch		0.8
 			range		250
 			shots		120
 			delaybetweenshots	25
 			ammo		40
 			time		22
-			damage		"10 2"
+			damage		"9 2"
 			dmgweight	normal_needle
 			reaction	true
 		}
@@ -136,21 +136,21 @@ item needlergun_ammo
 		{
 			name		"_Short Burst"
 			skill		assault
-			projtl		bolter
-			impact		bolterImpact
+			projtl		bullet-hmg
+			impact		bulletImpact
 			hitbody		null
 			firesnd		weapons/bullet-needler
 			impsnd		impact/nail-impact
 			bodysnd 	impact/nail-bodyimpact
 			speed		2000
-			spread		"1.3 1.3"
+			spread		"1.3 1.5"
 			crouch		0.8
 			range		250
 			shots		30
 			delaybetweenshots	40
 			ammo		10
 			time		15
-			damage		"12 3"
+			damage		"12 2"
 			dmgweight	normal_needle
 			reaction	true
 		}
@@ -159,22 +159,22 @@ item needlergun_ammo
 		{
 			name		"_Cannonade"
 			skill		assault
-			projtl		bolter
-			impact		bolterImpact
+			projtl		bullet-hmg
+			impact		bulletImpact
 			hitbody		null
 			firesnd		weapons/bullet-needlerheavy
 			impsnd		impact/nail-impact
 			bodysnd 	impact/nail-bodyimpact
 			sndonce		true
 			speed		2000
-			spread		"1.8 1.8"
+			spread		"1.8 2.1"
 			crouch		0.8
 			range		250
 			shots		105
 			delaybetweenshots	40
 			ammo		35
 			time		20
-			damage		"12 3"
+			damage		"12 2"
 			dmgweight	normal_needle
 			reaction	true
 		}
@@ -182,22 +182,22 @@ item needlergun_ammo
 		{
 			name		"_Needle Stream"
 			skill		assault
-			projtl		bolter
-			impact		bolterImpact
+			projtl		bullet-hmg
+			impact		bulletImpact
 			hitbody		null
 			firesnd		weapons/bullet-needlerheavy
 			impsnd		impact/nail-impact
 			bodysnd 	impact/nail-bodyimpact
 			sndonce		true
 			speed		2000
-			spread		"1.8 3.2"
+			spread		"1.8 8.6"
 			crouch		0.8
 			range		250
 			shots		150
 			delaybetweenshots	40
 			ammo		50
 			time		26
-			damage		"12 3"
+			damage		"12 2"
 			dmgweight	normal_needle
 			reaction	true
 		}
