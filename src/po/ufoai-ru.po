@@ -3,7 +3,7 @@ msgstr ""
 "Project-Id-Version: UFO Alien Invasion\n"
 "Report-Msgid-Bugs-To: tlh2000@users.sourceforge.net\n"
 "POT-Creation-Date: 2012-02-26 11:29+0700\n"
-"PO-Revision-Date: 2012-02-26 12:20+0700\n"
+"PO-Revision-Date: 2012-02-26 19:43+0700\n"
 "Last-Translator: Kostia (Kildor) Romanov <kostia@ngs.ru>\n"
 "Language-Team: \n"
 "MIME-Version: 1.0\n"
@@ -13182,9 +13182,8 @@ msgid "EKG"
 msgstr "ЭКГ"
 
 #: ../base/ufos/ui/popup_baseattack.ufo:19
-#, fuzzy
 msgid "Add/remove soldier to the team"
-msgstr "Добавить/убрать этого солдата"
+msgstr "Добавить/убрать этого солдата из команды"
 
 #: ../base/ufos/ui/popup_baseattack.ufo:39
 #, fuzzy
@@ -13505,9 +13504,8 @@ msgid "List"
 msgstr "Лт"
 
 #: ../base/ufos/ui/transfer.ufo:455
-#, fuzzy
 msgid "List active transfers"
-msgstr "Начать трансферт"
+msgstr "Показать активные трансферты"
 
 #: ../base/ufos/ui/transfer.ufo:468
 msgid "Start the transfer"
@@ -13526,19 +13524,16 @@ msgid "Choose a base to host alien bodies:"
 msgstr "Выберите базу для хранения тел пришельцев:"
 
 #: ../base/ufos/ui/transfer.ufo:572
-#, fuzzy
 msgid "From:"
-msgstr "Туман:"
+msgstr "Из:"
 
 #: ../base/ufos/ui/transfer.ufo:586
-#, fuzzy
 msgid "To:"
-msgstr "T:"
+msgstr "На:"
 
 #: ../base/ufos/ui/transfer.ufo:660
-#, fuzzy
 msgid "Actual transfers"
-msgstr "Пересылка"
+msgstr "Текущие трансферты"
 
 #: ../base/ufos/ui/ufopedia.ufo:90
 msgid "Pre-Research Report"
@@ -13635,20 +13630,18 @@ msgstr "Магазин для игольника"
 
 #: ../base/ufos/weapons_aliens.ufo:64
 #: ../base/ufos/weapons_aliens.ufo:137
-#, fuzzy
 msgid "Short Burst"
-msgstr "Очередь в пять патронов"
+msgstr "Короткая очередь"
 
 #: ../base/ufos/weapons_aliens.ufo:87
 #: ../base/ufos/weapons_aliens.ufo:160
 msgid "Cannonade"
-msgstr "канонада"
+msgstr "Канонада"
 
 #: ../base/ufos/weapons_aliens.ufo:110
 #: ../base/ufos/weapons_aliens.ufo:183
-#, fuzzy
 msgid "Needle Stream"
-msgstr "Следующая свободная команда"
+msgstr "Поток игл"
 
 #: ../base/ufos/weapons_human.ufo:6
 msgid "Assault Rifle"
@@ -13673,7 +13666,7 @@ msgstr "Магазин штурмовой винтовки"
 #: ../base/ufos/weapons_plasma.ufo:150
 #: ../base/ufos/weapons_plasma.ufo:284
 msgid "Snap Shot"
-msgstr "навскидку"
+msgstr "Навскидку"
 
 #: ../base/ufos/weapons_human.ufo:64
 #: ../base/ufos/weapons_human.ufo:154
@@ -13685,7 +13678,7 @@ msgstr "навскидку"
 #: ../base/ufos/weapons_human.ufo:1753
 #: ../base/ufos/weapons_human.ufo:2017
 msgid "3-Round Burst"
-msgstr "очередь х3"
+msgstr "Очередь х3"
 
 #: ../base/ufos/weapons_human.ufo:87
 #: ../base/ufos/weapons_human.ufo:176
@@ -13698,7 +13691,7 @@ msgstr "очередь х3"
 #: ../base/ufos/weapons_plasma.ufo:216
 #: ../base/ufos/weapons_ugv.ufo:105
 msgid "Full-Auto"
-msgstr "автоматический"
+msgstr "Очередь"
 
 #: ../base/ufos/weapons_human.ufo:109
 #: ../base/ufos/weapons_human.ufo:197
@@ -13713,7 +13706,7 @@ msgstr "автоматический"
 #: ../base/ufos/weapons_plasma.ufo:64
 #: ../base/ufos/weapons_plasma.ufo:172
 msgid "Aimed Shot"
-msgstr "прицельно"
+msgstr "Прицельно"
 
 #: ../base/ufos/weapons_human.ufo:223
 msgid "Machine Gun"
@@ -13731,7 +13724,7 @@ msgstr "Очередь в пять патронов"
 #: ../base/ufos/weapons_multiplayer.ufo:96
 #: ../base/ufos/weapons_multiplayer.ufo:326
 msgid "Full-Auto Sweep"
-msgstr "Очередь"
+msgstr "Очередь на подавление"
 
 #: ../base/ufos/weapons_human.ufo:337
 msgid "Sniper Rifle"
@@ -13788,7 +13781,7 @@ msgstr "Патроны с подкалиберными пулями"
 #: ../base/ufos/weapons_human.ufo:1733
 #: ../base/ufos/weapons_multiplayer.ufo:163
 msgid "Single Shot"
-msgstr "одиночными"
+msgstr "Одиночными"
 
 #: ../base/ufos/weapons_human.ufo:948
 msgid "Micro Shotgun"
@@ -13810,11 +13803,11 @@ msgstr "Баллон С90"
 
 #: ../base/ufos/weapons_human.ufo:1150
 msgid "Candlelight"
-msgstr "огненная струя"
+msgstr "Огненная струя"
 
 #: ../base/ufos/weapons_human.ufo:1171
 msgid "Inferno"
-msgstr "пекло"
+msgstr "Пекло"
 
 #: ../base/ufos/weapons_human.ufo:1192
 msgid "Inferno Sweep"
@@ -13844,13 +13837,13 @@ msgstr "25мм фугасные гранаты"
 #: ../base/ufos/weapons_human.ufo:1549
 #: ../base/ufos/weapons_human.ufo:1792
 msgid "Snap Shot - Airburst"
-msgstr "бегло - детонация"
+msgstr "Бегло - детонация"
 
 #: ../base/ufos/weapons_human.ufo:1394
 #: ../base/ufos/weapons_human.ufo:1575
 #: ../base/ufos/weapons_human.ufo:1818
 msgid "Aimed Shot - Airburst"
-msgstr "точно - детонация"
+msgstr "Точно - детонация"
 
 #: ../base/ufos/weapons_human.ufo:1420
 #: ../base/ufos/weapons_human.ufo:1601
@@ -13862,13 +13855,13 @@ msgstr "3х серия - детонация"
 #: ../base/ufos/weapons_human.ufo:1627
 #: ../base/ufos/weapons_human.ufo:1868
 msgid "Snap Shot - Timed"
-msgstr "бегло с таймером"
+msgstr "Бегло с таймером"
 
 #: ../base/ufos/weapons_human.ufo:1474
 #: ../base/ufos/weapons_human.ufo:1655
 #: ../base/ufos/weapons_human.ufo:1895
 msgid "Aimed Shot - Timed"
-msgstr "точно с таймером"
+msgstr "Точно с таймером"
 
 #: ../base/ufos/weapons_human.ufo:1502
 #: ../base/ufos/weapons_human.ufo:1683
@@ -13942,11 +13935,11 @@ msgstr "Электроразрядный парализатор"
 
 #: ../base/ufos/weapons_melee.ufo:151
 msgid "Stun Charge"
-msgstr "парализующий разряд"
+msgstr "Парализующий разряд"
 
 #: ../base/ufos/weapons_melee.ufo:169
 msgid "Double Charge"
-msgstr "двойной разряд"
+msgstr "Двойной разряд"
 
 #: ../base/ufos/weapons_melee.ufo:187
 msgid "Bludgeon"
@@ -13958,7 +13951,7 @@ msgstr "Керр-клинок"
 
 #: ../base/ufos/weapons_melee.ufo:247
 msgid "Slash"
-msgstr "рубящий удар"
+msgstr "Рубящий удар"
 
 #: ../base/ufos/weapons_melee.ufo:272
 msgid "Plasma Blade"
@@ -13982,7 +13975,7 @@ msgstr "Дробовик"
 
 #: ../base/ufos/weapons_multiplayer.ufo:187
 msgid "Double Shot"
-msgstr "дуплет"
+msgstr "Дуплет"
 
 #: ../base/ufos/weapons_multiplayer.ufo:216
 msgid "VHS Assault Rifle"
@@ -13999,7 +13992,7 @@ msgstr "Магазин пулемёта XAW-95"
 #: ../base/ufos/weapons_multiplayer.ufo:279
 #: ../base/ufos/weapons_ugv.ufo:81
 msgid "10-Round Burst"
-msgstr "очередь х10"
+msgstr "Очередь х10"
 
 #: ../base/ufos/weapons_particle.ufo:6
 msgid "Particle Beam Pistol"
@@ -14016,7 +14009,7 @@ msgstr "Ускоритель частиц лучевого пистолета"
 #: ../base/ufos/weapons_plasma.ufo:194
 #: ../base/ufos/weapons_plasma.ufo:331
 msgid "Burst"
-msgstr "очередями"
+msgstr "Очередями"
 
 #: ../base/ufos/weapons_particle.ufo:91
 msgid "Particle Beam Rifle"
@@ -14064,7 +14057,7 @@ msgstr "Батарея плазменного бластера"
 
 #: ../base/ufos/weapons_plasma.ufo:307
 msgid "Ball"
-msgstr "плазмошар"
+msgstr "Плазмошар"
 
 #: ../base/ufos/weapons_ugv.ufo:44
 msgid "Chaingun"
@@ -14111,9 +14104,8 @@ msgid "Outstanding"
 msgstr "грандиозно"
 
 #: client/battlescape/cl_actor.c:122
-#, fuzzy
 msgid "Impressive"
-msgstr "Сжатие:"
+msgstr "впечатляюще"
 
 #: client/battlescape/cl_actor.c:124
 msgid "Superhuman"
@@ -14133,12 +14125,10 @@ msgid "Unknown alien race"
 msgstr "Пришелец неизвестной расы"
 
 #: client/battlescape/cl_actor.c:2482
-#, fuzzy
 msgid "Toggle to next living actor"
 msgstr "Переключиться на следующего солдата"
 
 #: client/battlescape/cl_actor.c:2483
-#, fuzzy
 msgid "Toggle to previous living actor"
 msgstr "Переключиться на следующего солдата"
 
@@ -14159,9 +14149,8 @@ msgid "Toggle the headgear"
 msgstr "Пристегнуть на голову"
 
 #: client/battlescape/cl_actor.c:2488
-#, fuzzy
 msgid "Use"
-msgstr "Пользователи"
+msgstr "Использовать"
 
 #: client/battlescape/cl_actor.c:2489
 msgid "Confirm the current action"
@@ -14172,12 +14161,10 @@ msgid "Toggle to the next alien in sight of the selected actor."
 msgstr "Переключиться на следующего пришельца, видимого выбранным солдатом."
 
 #: client/battlescape/cl_actor.c:2492
-#, fuzzy
 msgid "Toggle camera to the next visible alien."
 msgstr "Показать следующего видимого пришельца."
 
 #: client/battlescape/cl_actor.c:2493
-#, fuzzy
 msgid "Toggle camera to the previous visible alien."
 msgstr "Переключение между пришельцами в области видимости."
 
@@ -14843,14 +14830,12 @@ msgid "You've captured new aliens."
 msgstr "Вы захватили пришельца нового вида."
 
 #: client/cgame/campaign/cp_aliencont_callbacks.c:202
-#, fuzzy
 msgid "Researched"
-msgstr "Исследования"
+msgstr "Исследовано"
 
 #: client/cgame/campaign/cp_aliencont_callbacks.c:204
-#, fuzzy
 msgid "Awaiting autopsy"
-msgstr "Начать вскрытие"
+msgstr "Ожидает вскрытия"
 
 #: client/cgame/campaign/cp_aliencont_callbacks.c:227
 msgid "Free slot"
@@ -15413,16 +15398,15 @@ msgid "Rank: %s"
 msgstr "Звание: %s"
 
 #: client/cgame/campaign/cp_cgame_callbacks.c:411
-#, fuzzy, c-format
+#, c-format
 msgid "%s "
-msgstr "%s"
+msgstr "%s "
 
 #: client/cgame/campaign/cp_employee.c:200
-#, fuzzy
 msgid "Soldier"
 msgid_plural "Soldiers"
 msgstr[0] "Солдат"
-msgstr[1] "Солдат"
+msgstr[1] "Солдата"
 msgstr[2] "Солдат"
 
 #: client/cgame/campaign/cp_employee.c:397
@@ -16451,7 +16435,7 @@ msgid "Not researched in any base."
 msgstr "Не исследуется ни на одной базе."
 
 #: client/cgame/campaign/cp_research_callbacks.c:116
-#, fuzzy, c-format
+#, c-format
 msgid "Researched in %s."
 msgstr "Исследуется на базе %s"
 
@@ -16482,9 +16466,8 @@ msgid "Status: research paused"
 msgstr "Состояние: исследование приостановлено"
 
 #: client/cgame/campaign/cp_research_callbacks.c:143
-#, fuzzy
 msgid "Status: research topic currently paused"
-msgstr "Состояние: исследование ременно приостановлено"
+msgstr "Состояние: исследование временно приостановлено"
 
 #: client/cgame/campaign/cp_research_callbacks.c:146
 #: client/cgame/campaign/cp_research_callbacks.c:147
@@ -16496,7 +16479,6 @@ msgid "Status: not possible to research"
 msgstr "Состояние: невозможно исследовать"
 
 #: client/cgame/campaign/cp_research_callbacks.c:153
-#, fuzzy
 msgid "Status: the materials or background knowledge needed to research this topic are not available yet"
 msgstr "Статус: мы не имеем всех необходимых материалов или знаний нужных для этого исследования."
 
@@ -16540,14 +16522,12 @@ msgid "No research proposal available for this project."
 msgstr "Предварительная заявка на исследование по данному проекту не доступна."
 
 #: client/cgame/campaign/cp_research_callbacks.c:822
-#, fuzzy
 msgid "Nothing to research."
-msgstr "Исследовать нечего"
+msgstr "Нечего исследовать."
 
 #: client/cgame/campaign/cp_research_callbacks.c:825
-#, fuzzy
 msgid "Build a laboratory first."
-msgstr "Сначала необходимо построить лабораторию"
+msgstr "Сначала необходимо построить лабораторию."
 
 #: client/cgame/campaign/cp_save.c:186
 msgid "Error decompressing data"
@@ -17079,7 +17059,6 @@ msgid "No power supplies in this base.\n"
 msgstr "На этой базе нет энергетических мощностей.\n"
 
 #: client/cgame/campaign/cp_transfer_callbacks.c:1528
-#, fuzzy
 msgid "Employee"
 msgstr "Персонал"
 
