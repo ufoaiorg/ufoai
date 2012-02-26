@@ -100,7 +100,7 @@ void G_ReactionFireTargetsCreate (const edict_t *shooter)
  * @brief Add a reaction fire target for the given shooter.
  * @param[in] shooter The reaction firing actor
  * @param[in] target The potential reaction fire victim
- * @param[in] tusForShot The TUs neededfor the shot
+ * @param[in] tusForShot The TUs needed for the shot
  */
 static void G_ReactionFireTargetsAdd (const edict_t *shooter, const edict_t *target, const int tusForShot)
 {
@@ -556,7 +556,7 @@ static void G_ReactionFireSearchTarget (const edict_t *target)
  * @param[in] at Position to fire on.
  * @param[in] type What type of shot this is (left, right reaction-left etc...).
  * @param[in] firemode The firemode index of the ammo for the used weapon (objDef.fd[][x])  .
- * @return qtrue if everthing went ok (i.e. the shot(s) where fired ok), otherwise qfalse.
+ * @return qtrue if everything went ok (i.e. the shot(s) where fired ok), otherwise qfalse.
  * @sa G_ClientShoot
  */
 static qboolean G_ReactionFireShoot (const player_t *player, edict_t *shooter, const pos3_t at, shoot_types_t type, fireDefIndex_t firemode)
@@ -648,7 +648,8 @@ static qboolean G_ReactionFireCheckExecution (const edict_t *target)
 
 	/* check all possible shooters */
 	while ((shooter = G_EdictsGetNextLivingActor(shooter))) {
-		if (g_reactionnew->integer) {
+		const int tus = G_ReactionFireGetTUsForItem(shooter, target, RIGHT(shooter));
+		if (tus > 1 && g_reactionnew->integer) {
 			if (G_ReactionFireTargetsExpired(shooter, target, 0)) {
 				shooter->reactionTarget = target;
 				fired |= G_ReactionFireTryToShoot(shooter, target);
@@ -704,12 +705,13 @@ void G_ReactionFirePreShot (const edict_t *target, const int fdTime)
 	G_ReactionFireTargetsUpdateAll(target);
 
 	/* if any reaction fire occurs, we have to loop through all entities again to allow
-	 * multiple (fast) RF snat shots before a (slow) aimed shot from the target occurs (only RF2). */
+	 * multiple (fast) RF snap shots before a (slow) aimed shot from the target occurs (only if g_reactionnew is set to 1). */
 	while (repeat) {
 		repeat = qfalse;
 		/* check all ents to see who wins and who loses a draw */
 		while ((shooter = G_EdictsGetNextLivingActor(shooter))) {
-			if (g_reactionnew->integer) {
+			int entTUs = G_ReactionFireGetTUsForItem(shooter, target, RIGHT(shooter));
+			if (entTUs > 1 && g_reactionnew->integer) {
 				if (G_ReactionFireTargetsExpired(shooter, target, fdTime)) {
 					shooter->reactionTarget = target;
 					if (G_ReactionFireTryToShoot(shooter, target)) {
@@ -718,8 +720,6 @@ void G_ReactionFirePreShot (const edict_t *target, const int fdTime)
 					}
 				}
 			} else {
-				int entTUs;
-
 				if (!shooter->reactionTarget)
 					continue;
 
@@ -728,7 +728,6 @@ void G_ReactionFirePreShot (const edict_t *target, const int fdTime)
 					continue;
 
 				/* can't reaction fire if no TUs to fire */
-				entTUs = G_ReactionFireGetTUsForItem(shooter, target, RIGHT(shooter));
 				if (entTUs < 0) {
 					shooter->reactionTarget = NULL;
 					continue;
@@ -773,9 +772,8 @@ void G_ReactionFireOnEndTurn (void)
 			continue;
 		G_ReactionFireTargetsRemove(ent, ent->reactionTarget);
 		ent->reactionTarget = NULL;
-	/*	assert("I bet this never happens" == NULL);	*/
-	/* we explicitely do nothing at end of turn
-		G_ReactionFireTryToShoot(ent, ent->reactionTarget); */
+		/* we explicitly do nothing at end of turn */
+		/* G_ReactionFireTryToShoot(ent, ent->reactionTarget); */
 	}
 }
 
