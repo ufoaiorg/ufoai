@@ -41,8 +41,6 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 
 #include "g_local.h"
 
-/* set RF2 to 1 to enable new RF mode. Set it to 100 to disable. */
-#define RF2 100
 #define MAX_RF_TARGETS 10
 #define MAX_RF_DATA 50
 
@@ -650,8 +648,7 @@ static qboolean G_ReactionFireCheckExecution (const edict_t *target)
 
 	/* check all possible shooters */
 	while ((shooter = G_EdictsGetNextLivingActor(shooter))) {
-		int tus = G_ReactionFireGetTUsForItem(shooter, target, RIGHT(shooter));
-		if (tus > RF2) {		/* will not happen; it's like commenting it out, but keep compiler happy */
+		if (g_reactionnew->integer) {
 			if (G_ReactionFireTargetsExpired(shooter, target, 0)) {
 				shooter->reactionTarget = target;
 				fired |= G_ReactionFireTryToShoot(shooter, target);
@@ -712,10 +709,7 @@ void G_ReactionFirePreShot (const edict_t *target, const int fdTime)
 		repeat = qfalse;
 		/* check all ents to see who wins and who loses a draw */
 		while ((shooter = G_EdictsGetNextLivingActor(shooter))) {
-			int entTUs;
-
-			entTUs = G_ReactionFireGetTUsForItem(shooter, target, RIGHT(shooter));
-			if (entTUs > RF2) {		/* will not happen; it's like commenting it out, but keep compiler happy */
+			if (g_reactionnew->integer) {
 				if (G_ReactionFireTargetsExpired(shooter, target, fdTime)) {
 					shooter->reactionTarget = target;
 					if (G_ReactionFireTryToShoot(shooter, target)) {
@@ -724,6 +718,8 @@ void G_ReactionFirePreShot (const edict_t *target, const int fdTime)
 					}
 				}
 			} else {
+				int entTUs;
+
 				if (!shooter->reactionTarget)
 					continue;
 
