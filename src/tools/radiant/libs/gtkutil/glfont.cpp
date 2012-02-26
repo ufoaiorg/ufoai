@@ -41,6 +41,8 @@ GLFont glfont_create (const std::string& font_string)
 
 		pango_font_metrics_unref(font_metrics);
 	} else {
+		globalErrorStream() << "Failed to initialize font " << font_string << "\n";
+		pango_font_description_free(font_desc);
 		return GLFont(-1, -1);
 	}
 
@@ -49,6 +51,8 @@ GLFont glfont_create (const std::string& font_string)
 	// fix for pango/gtkglext metrix bug
 	if (font_height > 16)
 		font_height = 16;
+
+	globalOutputStream() << "Use font " << font_string << "\n";
 
 	return GLFont(font_list_base, font_height);
 }
