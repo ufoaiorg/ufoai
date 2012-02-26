@@ -135,6 +135,7 @@ static void CL_ExecuteBattlescapeEvent (int now, void *data)
 		if (!eventData->eventCallback)
 			Com_Error(ERR_DROP, "Event %i doesn't have a callback", event->eType);
 
+		GAME_NofityEvent(event->eType);
 		eventData->eventCallback(eventData, event->msg);
 	} else {
 		Com_DPrintf(DEBUG_EVENTSYS, "event(not executed): %s %p\n", eventData->name, (void*)event);
