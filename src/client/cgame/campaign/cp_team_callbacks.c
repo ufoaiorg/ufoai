@@ -199,6 +199,7 @@ static void CP_UpdateEquipmentMenuParameters_f (void)
 	equipDef_t unused;
 	base_t *base = B_GetCurrentSelectedBase();
 	int i;
+	size_t size;
 
 	if (!base)
 		return;
@@ -218,7 +219,8 @@ static void CP_UpdateEquipmentMenuParameters_f (void)
 	/** @todo Skip EMPL_ROBOT (i.e. ugvs) for now . */
 	CP_UpdateActorAircraftVar(aircraft, EMPL_SOLDIER);
 
-	for (i = 0; i < MAX_ACTIVETEAM; i++) {
+	size = lengthof(chrDisplayList.chr);
+	for (i = 0; i < size; i++) {
 		if (i < chrDisplayList.num)
 			UI_ExecuteConfunc("equipenable %i", i);
 		else
