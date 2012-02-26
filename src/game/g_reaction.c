@@ -181,7 +181,7 @@ static qboolean G_ReactionFireTargetsExpired (const edict_t *shooter, const edic
 
 	for (i = 0; i < rfts->count; i++) {
 		if (rfts->targets[i].target == target)	/* found it ? */
-			return rfts->targets[i].triggerTUs <= target->TU + tusTarget;
+			return rfts->targets[i].triggerTUs >= target->TU - tusTarget;
 	}
 
 	return qfalse;	/* the shooter doesn't aim at this target */
@@ -211,7 +211,7 @@ static void G_ReactionFireTargetsAdvance (const edict_t *shooter, const edict_t 
 
 	for (i = 0; i < rfts->count; i++) {
 		if (rfts->targets[i].target == target)	/* found it ? */
-			rfts->targets[i].triggerTUs += tusShot;
+			rfts->targets[i].triggerTUs -= tusShot;
 	}
 }
 
