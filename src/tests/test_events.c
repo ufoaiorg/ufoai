@@ -68,6 +68,68 @@ static void testEvents (void)
 	CU_ASSERT_EQUAL(CL_ClearBattlescapeEvents(), lengthof(events));
 }
 
+scheduleEvent_t* Dequeue_Event(int now);
+
+static qboolean delayCheck (int now, void *data)
+{
+	static qboolean check = qfalse;
+	const qboolean ret = check;
+
+	if (!check) {
+		check = qtrue;
+	}
+
+	return ret;
+}
+
+static void testScheduler (void)
+{
+	scheduleEvent_t *one, *two, *three, *four, *five, *e;
+
+	three = Schedule_Event(4, NULL, NULL, NULL, "three");
+	CU_ASSERT_EQUAL_FATAL(three->next, NULL);
+
+	four = Schedule_Event(4, NULL, NULL, NULL, "four");
+	CU_ASSERT_EQUAL_FATAL(three->next, four);
+	CU_ASSERT_EQUAL_FATAL(four->next, NULL);
+
+	five = Schedule_Event(4, NULL, NULL, NULL, "five");
+	CU_ASSERT_EQUAL_FATAL(three->next, four);
+	CU_ASSERT_EQUAL_FATAL(four->next, five);
+	CU_ASSERT_EQUAL_FATAL(five->next, NULL);
+
+	one = Schedule_Event(3, NULL, delayCheck, NULL, "one");
+	CU_ASSERT_EQUAL_FATAL(one->next, three);
+	CU_ASSERT_EQUAL_FATAL(three->next, four);
+	CU_ASSERT_EQUAL_FATAL(four->next, five);
+	CU_ASSERT_EQUAL_FATAL(five->next, NULL);
+
+	two = Schedule_Event(3, NULL, NULL, NULL, "two");
+	CU_ASSERT_EQUAL_FATAL(one->next, two);
+	CU_ASSERT_EQUAL_FATAL(two->next, three);
+	CU_ASSERT_EQUAL_FATAL(three->next, four);
+	CU_ASSERT_EQUAL_FATAL(four->next, five);
+	CU_ASSERT_EQUAL_FATAL(five->next, NULL);
+
+	e = Dequeue_Event(1);
+	CU_ASSERT_EQUAL(e, NULL);
+	e = Dequeue_Event(2);
+	CU_ASSERT_EQUAL(e, NULL);
+	/* one is delayed via check function - so we get the 2nd event at the first dequeue here */
+	e = Dequeue_Event(3);
+	CU_ASSERT_EQUAL_FATAL(e, two);
+	/* now we are ready for the 1st event */
+	e = Dequeue_Event(5);
+	CU_ASSERT_EQUAL_FATAL(e, one);
+	/* the remaining events are in order */
+	e = Dequeue_Event(5);
+	CU_ASSERT_EQUAL_FATAL(e, three);
+	e = Dequeue_Event(5);
+	CU_ASSERT_EQUAL_FATAL(e, four);
+	e = Dequeue_Event(5);
+	CU_ASSERT_EQUAL_FATAL(e, five);
+}
+
 int UFO_AddEventsTests (void)
 {
 	/* add a suite to the registry */
@@ -80,6 +142,9 @@ int UFO_AddEventsTests (void)
 		return CU_get_error();
 
 	if (CU_ADD_TEST(EventsSuite, testEvents) == NULL)
+		return CU_get_error();
+
+	if (CU_ADD_TEST(EventsSuite, testScheduler) == NULL)
 		return CU_get_error();
 
 	return CUE_SUCCESS;

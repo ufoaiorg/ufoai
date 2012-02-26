@@ -300,7 +300,17 @@ typedef qboolean event_check_func(int now, void *data);
  */
 typedef qboolean event_filter(int when, event_func *func, event_check_func *check, void *data);
 typedef void event_clean_func(void * data);
-void Schedule_Event(int when, event_func *func, event_check_func *check, event_clean_func *clean, void *data);
+
+typedef struct event_s {
+	int when;
+	event_func *func;
+	event_check_func *check;
+	event_clean_func *clean;
+	void *data;
+	struct event_s *next;
+} scheduleEvent_t;
+
+scheduleEvent_t *Schedule_Event(int when, event_func *func, event_check_func *check, event_clean_func *clean, void *data);
 int CL_FilterEventQueue(event_filter *filter);
 
 /*

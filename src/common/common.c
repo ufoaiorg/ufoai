@@ -71,16 +71,7 @@ struct memPool_s *com_fileSysPool;
 struct memPool_s *com_genericPool;
 struct memPool_s *com_networkPool;
 
-struct event {
-	int when;
-	event_func *func;
-	event_check_func *check;
-	event_clean_func *clean;
-	void *data;
-	struct event *next;
-};
-
-static struct event *event_queue = NULL;
+static scheduleEvent_t *event_queue = NULL;
 
 #define TIMER_CHECK_INTERVAL 100
 #define TIMER_CHECK_LAG 3
@@ -1361,9 +1352,12 @@ static void Schedule_Timer (cvar_t *freq, event_func *func, event_check_func *ch
  *  function or func will be called, but never both.
  * @param data Arbitrary data to be passed to the check and event functions.
  */
-void Schedule_Event (int when, event_func *func, event_check_func *check, event_clean_func *clean, void *data)
+scheduleEvent_t *Schedule_Event (int when, event_func *func, event_check_func *check, event_clean_func *clean, void *data)
 {
-	struct event *event = (struct event *)Mem_PoolAlloc(sizeof(*event), com_genericPool, 0);
+#ifdef DEBUG
+	scheduleEvent_t *i;
+#endif
+	scheduleEvent_t *event = (scheduleEvent_t *)Mem_PoolAlloc(sizeof(*event), com_genericPool, 0);
 	event->when = when;
 	event->func = func;
 	event->check = check;
@@ -1374,7 +1368,7 @@ void Schedule_Event (int when, event_func *func, event_check_func *check, event_
 		event->next = event_queue;
 		event_queue = event;
 	} else {
-		struct event *e = event_queue;
+		scheduleEvent_t *e = event_queue;
 		while (e->next && e->next->when <= when)
 			e = e->next;
 		event->next = e->next;
@@ -1382,21 +1376,24 @@ void Schedule_Event (int when, event_func *func, event_check_func *check, event_
 	}
 
 #ifdef DEBUG
-	for (event = event_queue; event && event->next; event = event->next)
-		if (event->when > event->next->when)
+	for (i = event_queue; i && i->next; i = i->next)
+		if (i->when > i->next->when)
 			abort();
 #endif
+
+	return event;
 }
 
+scheduleEvent_t* Dequeue_Event(int now);
 /**
  * @brief Finds and returns the first event in the event_queue that is due.
  *  If the event has a check function, we check to see if the event can be run now, and skip it if not (even if it is due).
  * @return Returns a pointer to the event, NULL if none found.
  */
-static struct event* Dequeue_Event (int now)
+scheduleEvent_t* Dequeue_Event (int now)
 {
-	struct event *event = event_queue;
-	struct event *prev = NULL;
+	scheduleEvent_t *event = event_queue;
+	scheduleEvent_t *prev = NULL;
 
 	while (event && event->when <= now) {
 		if (event->check == NULL || event->check(now, event->data)) {
@@ -1421,15 +1418,15 @@ static struct event* Dequeue_Event (int now)
  */
 int CL_FilterEventQueue (event_filter *filter)
 {
-	struct event *event = event_queue;
-	struct event *prev = NULL;
+	scheduleEvent_t *event = event_queue;
+	scheduleEvent_t *prev = NULL;
 	int filtered = 0;
 
 	assert(filter);
 
 	while (event) {
 		qboolean keep = filter(event->when, event->func, event->check, event->data);
-		struct event *freeme = event;
+		scheduleEvent_t *freeme = event;
 
 		if (keep) {
 			prev = event;
@@ -1463,7 +1460,7 @@ int CL_FilterEventQueue (event_filter *filter)
 void Qcommon_Frame (void)
 {
 	int time_to_next;
-	static struct event *event;
+	static scheduleEvent_t *event;
 
 	/* an ERR_DROP was thrown */
 	if (setjmp(abortframe))
