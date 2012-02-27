@@ -464,44 +464,7 @@ x    +a   +a   +a   am
 0    a    a    a    0
 }
 
-// Interceptors -----------------------------------------------------
-
-// tile inter_saracen
-	// tile definition:  testall:  buildcheck:
-	// 3x2 tile, at Z = 4
-	// completely off, unusable
-
-// tile inter_stiletto
-	// tile definition:  testall:  buildcheck:
-	// 3x2 tile, at Z = 4
-	// completely off, unusable
-
-// UFOs -------------------------------------------------------------
-
-tile +craft_ufo_harvester
-	// tile definition:  testall:  buildcheck:
-	// lands on the water surface
-	// there is no way out or in ?
-{
-7 5
-0   mz  wp  w   w   w   0
-a  +m  +w  +w  +w  +w   w
-a  +m  +w  +w  +w  +w   w
-a  +m  +w  +w  +w  +w   w
-0   mx  wn  w   w   w   0
-}
-
-// tile +craft_ufo_fighter
-	// tile definition:  testall:  buildcheck:
-	// 2x3 tile, at Z=4
-	// completely off, unusable
-
-// tile +craft_ufo_supply
-	// tile definition:  testall:  buildcheck:
-	// 4x3 tile, at Z=4
-	// completely off, unusable
-
-// tilesets -----------------------------------------------
+// tilesets ---------------------------------------------------------
 
 tileset area_a
 {
