@@ -981,17 +981,13 @@ mapdef mm_harbour
 	aircraft
 	{
 		craft_drop_firebird
-//		craft_drop_raptor
-//		craft_drop_herakles
+		craft_drop_raptor
+		craft_drop_herakles
 	}
 
 	ufos
 	{
-//		craft_ufo_supply
-		craft_ufo_scout
-//		craft_ufo_fighter
-// harvester should have it's own assembly
-//		craft_ufo_harvester
+		// any
 	}
 
 	terrains
@@ -1001,6 +997,7 @@ mapdef mm_harbour
 
 	cultures
 	{
+		// any
 	}
 
 	populations
