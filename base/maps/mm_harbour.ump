@@ -539,7 +539,7 @@ assembly harbour
 {
 title "_Harbour"
 size "5 7"
-//+a_00	"1 1"
++a_00	"1 1"
 +s1_01	"0 1"	//2 - 2		2x1		ship rear part
 +s1_02	"0 1"	//4 - 4		2x2		the ship's bridge
 +s2_01	"0 1"	//2 - 2		2x1		ship middle part empty
