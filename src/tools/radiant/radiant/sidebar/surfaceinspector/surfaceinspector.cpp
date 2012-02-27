@@ -65,6 +65,7 @@ const char* LABEL_NATURAL = _("Natural");
 const char* LABEL_DEFAULT_SCALE = _("Default Scale:");
 const char* LABEL_TEXTURE_LOCK = _("Texture Lock");
 
+const std::string RKEY_TEXTURES_SKIPCOMMON = "user/ui/textures/skipCommon";
 const std::string RKEY_ENABLE_TEXTURE_LOCK = "user/ui/brush/textureLock";
 const std::string RKEY_DEFAULT_TEXTURE_SCALE = "user/ui/textures/defaultTextureScale";
 
@@ -553,7 +554,7 @@ void SurfaceInspector::emitShader ()
 
 	// Apply it to the selection
 	UndoableCommand undo("textureNameSetSelected " + shaderName);
-	Select_SetShader(shaderName);
+	Select_SetShader(shaderName, GlobalRegistry().getBool(RKEY_TEXTURES_SKIPCOMMON));
 
 	// Update the TexTool instance as well
 	ui::TexTool::Instance().draw();

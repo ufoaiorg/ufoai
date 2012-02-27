@@ -47,12 +47,12 @@
 
 #include "selection/algorithm/SelectionPolicies.h"
 
-void Select_SetShader (const std::string& shader)
+void Select_SetShader (const std::string& shader, bool skipCommon)
 {
 	if (GlobalSelectionSystem().Mode() != SelectionSystem::eComponent) {
-		Scene_BrushSetShader_Selected(GlobalSceneGraph(), shader);
+		Scene_BrushSetShader_Selected(GlobalSceneGraph(), shader, skipCommon);
 	}
-	Scene_BrushSetShader_Component_Selected(GlobalSceneGraph(), shader);
+	Scene_BrushSetShader_Component_Selected(GlobalSceneGraph(), shader, skipCommon);
 }
 
 inline void Select_FlipAxis (int axis)

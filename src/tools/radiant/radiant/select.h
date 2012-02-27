@@ -36,6 +36,6 @@ void Selection_Rotatez ();
 void Selection_MoveDown ();
 void Selection_MoveUp ();
 
-void Select_SetShader (const std::string& shader);
+void Select_SetShader (const std::string& shader, bool skipCommon = false);
 
 #endif

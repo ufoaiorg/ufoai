@@ -77,6 +77,7 @@ const std::string RKEY_TEXTURES_HIDE_INVALID = "user/ui/textures/browser/hideInv
 const std::string RKEY_TEXTURES_UNIFORM_SIZE = "user/ui/textures/browser/uniformSize";
 const std::string RKEY_TEXTURES_THUMBNAIL_SCALE = "user/ui/textures/browser/thumbnailScale";
 const std::string RKEY_TEXTURES_LICENSE_PATH = "user/ui/textures/browser/licensepath";
+const std::string RKEY_TEXTURES_SKIPCOMMON = "user/ui/textures/skipCommon";
 }
 
 static void TextureBrowser_scrollChanged (void* data, gdouble value);
@@ -563,7 +564,7 @@ void TextureBrowser::selectTextureAt (int mx, int my)
 
 		if (!m_rmbSelected) {
 			UndoableCommand undo("textureNameSetSelected");
-			Select_SetShader(shader->getName());
+			Select_SetShader(shader->getName(), GlobalRegistry().getBool(RKEY_TEXTURES_SKIPCOMMON));
 		}
 	}
 }
@@ -1031,6 +1032,7 @@ void TextureBrowser_Construct ()
 
 	GlobalEventManager().addRegistryToggle("ShowInUse", RKEY_TEXTURES_HIDE_UNUSED);
 	GlobalEventManager().addRegistryToggle("ShowInvalid", RKEY_TEXTURES_HIDE_INVALID);
+	GlobalEventManager().addRegistryToggle("SkipCommon", RKEY_TEXTURES_SKIPCOMMON);
 
 	GlobalShaderSystem().attach(g_ShadersObserver);
 }

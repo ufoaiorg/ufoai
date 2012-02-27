@@ -58,8 +58,8 @@ void Scene_BrushSetFlags_Selected (scene::Graph& graph, const ContentsFlagsValue
 void Scene_BrushSetFlags_Component_Selected (scene::Graph& graph, const ContentsFlagsValue& flags);
 void Scene_BrushGetFlags_Selected (scene::Graph& graph, ContentsFlagsValue& flags);
 void Scene_BrushGetFlags_Component_Selected (scene::Graph& graph, ContentsFlagsValue& flags);
-void Scene_BrushSetShader_Selected (scene::Graph& graph, const std::string& name);
-void Scene_BrushSetShader_Component_Selected (scene::Graph& graph, const std::string& name);
+void Scene_BrushSetShader_Selected (scene::Graph& graph, const std::string& name, bool skipCommon = false);
+void Scene_BrushSetShader_Component_Selected (scene::Graph& graph, const std::string& name, bool skipCommon = false);
 void Scene_BrushSelectByShader (scene::Graph& graph, const std::string& shader);
 void Scene_BrushSelectByShader_Component (scene::Graph& graph, const std::string& name);
 void Scene_BrushFacesSelectByShader_Component (scene::Graph& graph, const std::string& shader);

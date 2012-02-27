@@ -97,27 +97,31 @@ void Scene_BrushSetFlags_Component_Selected (scene::Graph& graph, const Contents
 
 class FaceSetShader
 {
-		const std::string& m_name;
+		const std::string& _name;
+		bool _skipCommon;
 	public:
-		FaceSetShader (const std::string& name) :
-			m_name(name)
+		FaceSetShader (const std::string& name, bool skipCommon) :
+			_name(name), _skipCommon(skipCommon)
 		{
 		}
 		void operator() (Face& face) const
 		{
-			face.SetShader(m_name);
+			if (_skipCommon && string::startsWith(face.GetShader(), GlobalTexturePrefix_get() + "tex_common/")) {
+				return;
+			}
+			face.SetShader(_name);
 		}
 };
 
-void Scene_BrushSetShader_Selected (scene::Graph& graph, const std::string& name)
+void Scene_BrushSetShader_Selected (scene::Graph& graph, const std::string& name, bool skipCommon)
 {
-	Scene_ForEachSelectedBrush_ForEachFace(graph, FaceSetShader(name));
+	Scene_ForEachSelectedBrush_ForEachFace(graph, FaceSetShader(name, skipCommon));
 	SceneChangeNotify();
 }
 
-void Scene_BrushSetShader_Component_Selected (scene::Graph& graph, const std::string& name)
+void Scene_BrushSetShader_Component_Selected (scene::Graph& graph, const std::string& name, bool skipCommon)
 {
-	Scene_ForEachSelectedBrushFace(FaceSetShader(name));
+	Scene_ForEachSelectedBrushFace(FaceSetShader(name, skipCommon));
 	SceneChangeNotify();
 }
 

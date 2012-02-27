@@ -67,6 +67,7 @@
 		</grid>
 
 		<textures>
+			<skipCommon value="0" />
 			<defaultTextureScale value="0.5" />
 			<quality value="3" />
 			<mode value="5" />
@@ -206,6 +207,7 @@
 				<toolbutton name="showall" action="ShowAllTextures" tooltip="Show all" icon="texwindow_showall.png"/>
 				<toggletoolbutton name="showinuse" action="ShowInUse" tooltip="Hide Unused" icon="texwindow_hideunused.png"/>
 				<toggletoolbutton name="showinvalid" action="ShowInvalid" tooltip="Hide Invalid" icon="texwindow_hideinvalid.png"/>
+				<toggletoolbutton name="skipcommon" action="SkipCommon" tooltip="Skip common textures" icon="texwindow_skipcommon.png"/>
 			<separator/>
 				<toolbutton name="findandreplace" action="FindReplaceTextures" tooltip="Find &amp; Replace" icon="texwindow_findandreplace.png"/>
 		</toolbar>
