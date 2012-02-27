@@ -939,7 +939,7 @@ void R_Color (const vec4_t rgba)
  * @note Also resets all non-default GL array bindings
  * @sa R_ReallocateTexunitArray
 */
-void R_ReallocateStateArrays(int size)
+void R_ReallocateStateArrays (int size)
 {
 	if (size <= r_state.array_size)
 		return;
@@ -968,7 +968,7 @@ void R_ReallocateStateArrays(int size)
  * @note Also resets active texunit
  * @sa R_ReallocateStateArrays
 */
-void R_ReallocateTexunitArray(gltexunit_t * texunit, int size)
+void R_ReallocateTexunitArray (gltexunit_t * texunit, int size)
 {
 	if (size <= texunit->array_size)
 		return;
