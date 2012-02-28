@@ -2,14 +2,14 @@ msgid ""
 msgstr ""
 "Project-Id-Version: UFO Alien Invasion\n"
 "Report-Msgid-Bugs-To: tlh2000@users.sourceforge.net\n"
-"POT-Creation-Date: 2012-02-26 11:29+0700\n"
-"PO-Revision-Date: 2012-02-23 19:33-0600\n"
+"POT-Creation-Date: 2012-02-28 14:58-0600\n"
+"PO-Revision-Date: 2012-02-28 14:16-0600\n"
 "Last-Translator: DarkRain <darkrainx@users.sourceforge.net>\n"
 "Language-Team: \n"
+"Language: \n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"Language: \n"
 "X-Poedit-SourceCharset: utf-8\n"
 "Plural-Forms: nplurals=2; plural=(n != 1)\n"
 "X-Poedit-Basepath: ../\n"
@@ -134,22 +134,21 @@ msgstr "Mercado"
 msgid "Military convoy"
 msgstr "Convoy militar"
 
-#: ../base/maps/mm_harbour.ump:529
+#: ../base/maps/mm_harbour.ump:506
 msgid "Harbour"
 msgstr "Puerto"
 
-#: ../base/maps/mm_harbour.ump:550
+#: ../base/maps/mm_harbour.ump:532
 msgid "Area"
 msgstr "Área"
 
-#: ../base/maps/mm_harbour.ump:578
+#: ../base/maps/mm_harbour.ump:560
 msgid "Test"
 msgstr "Prueba"
 
-#: ../base/maps/mm_harbour.ump:624
-#, fuzzy
+#: ../base/maps/mm_harbour.ump:607
 msgid "mini"
-msgstr "Xining"
+msgstr "Mini"
 
 #: ../base/maps/oriental.ump:464
 msgid "Oriental small"
@@ -2952,7 +2951,7 @@ msgstr "Campaña"
 
 #: ../base/ufos/gamemodes.ufo:21
 msgid "Static Campaign"
-msgstr "Campaña Estática"
+msgstr "Campaña Fija"
 
 #: ../base/ufos/gamemodes.ufo:26
 msgid "Skirmish"
@@ -3013,11 +3012,11 @@ msgstr "La torre de radar es una instalación menor sin personal que puede const
 #: ../base/ufos/installation.ufo:23 ../base/ufos/ui/geoscape.ufo:998
 #: ../base/ufos/ui/lostwon.ufo:227
 msgid "UFO Yard"
-msgstr "Corral para OVNIs"
+msgstr "Almacén para OVNI"
 
 #: ../base/ufos/installation.ufo:33
 msgid "The UFO Yard is a camouflaged storage field for captured UFOs. It can be placed anywhere in the world to store captured UFOs for dismantling and research, and can transfer UFOs to other Yards. UFOs stored in a Yard can be researched and/or dismantled from any PHALANX base with appropriate facilities, but these activities proceed more slowly the further away the UFO Yard is from the base."
-msgstr "El Corral para OVNIs es un campo camuflado para el almacenamiento de los OVNIs capturados. Puede ser construido en cualquier parte del globo para almacenar los OVNIS capturados para su investigación y desmantelamiento, y puede transferir OVNIs a otros Corrales. Los OVNIs elmacenados en un Corral pueden ser investigados y/o desmantelados desde cualquier base de PHALANX con las instalaciones adecuadas, pero estas acciones se llevan a cabo de manera más lenta mientras más lejos este el Corral para OVNIS de la base"
+msgstr "El Almacén para OVNI es un campo camuflado para el almacenamiento de los OVNI capturados. Puede ser construido en cualquier parte del globo para almacenar los OVNI capturados para su investigación y desmantelamiento, y puede transferir OVNI a otros Corrales. Los OVNI elmacenados en un Corral pueden ser investigados y/o desmantelados desde cualquier base de PHALANX con las instalaciones adecuadas, pero estas acciones se llevan a cabo de manera más lenta mientras más lejos este el Corral para OVNI de la base"
 
 #: ../base/ufos/installation.ufo:38 ../base/ufos/ui/geoscape.ufo:956
 msgid "SAM Site"
@@ -3025,7 +3024,7 @@ msgstr "Silo MTA"
 
 #: ../base/ufos/installation.ufo:48
 msgid "The SAM site is an unmanned, expendable installation that can be placed anywhere in the world to automatically engage detected UFOs with surface-to-air missiles. It is cheap to build and highly useful, but its camouflage is not very effective. Alien craft may detect the missile launches and attempt to destroy the site once they find it. The SAM site is sturdy but will succumb to repeated bombing. Missile reloads are delivered free to our sites by UN forces."
-msgstr "El silo MTA es una instalación menor sin personal que puede construirse en cualquier parte del globo para atacar automáticamente a los OVNIs detectados con Misiles Tierra-Aire. Es barato y muy útil, pero su camuflaje no es muy efectivo. Las naves alienígenas podrían detectar el lanzamiento de los misiles e intentar destruir el silo una vez que lo encuentren. El silo MTA es resistente pero caerá ante bombardeos persistentes. Los misiles de recarga son llevados gratuitamente a nuestros silos por las tropas de las Naciones Unidas."
+msgstr "El silo MTA es una instalación menor sin personal que puede construirse en cualquier parte del globo para atacar automáticamente a los OVNI detectados con Misiles Tierra-Aire. Es barato y muy útil, pero su camuflaje no es muy efectivo. Las naves alienígenas podrían detectar el lanzamiento de los misiles e intentar destruir el silo una vez que lo encuentren. El silo MTA es resistente pero caerá ante bombardeos persistentes. Los misiles de recarga son llevados gratuitamente a nuestros silos por las tropas de las Naciones Unidas."
 
 #: ../base/ufos/language.ufo:2
 msgid "English"
@@ -3159,7 +3158,7 @@ msgstr "Lugar del choque OVNI"
 msgid "A Bomber has landed in the middle of a city."
 msgstr "Un Bombardero ha aterrizado en medio de una ciudad."
 
-#: ../base/ufos/maps.ufo:268 ../base/ufos/maps.ufo:3402
+#: ../base/ufos/maps.ufo:268 ../base/ufos/maps.ufo:3399
 msgid "A small UFO has crashed in this mining region."
 msgstr "Un pequeño OVNI se ha estrellado en esta región minera."
 
@@ -3202,224 +3201,224 @@ msgstr "Zona de baja población en una región helada."
 msgid "An important container harbour is attacked by alien invaders."
 msgstr "Un importante puerto de carga es atacado por invasores alienígenas."
 
-#: ../base/ufos/maps.ufo:1022 ../base/ufos/maps.ufo:1067
-#: ../base/ufos/maps.ufo:1109
+#: ../base/ufos/maps.ufo:1019 ../base/ufos/maps.ufo:1064
+#: ../base/ufos/maps.ufo:1106
 msgid "UFO landed in hills area."
 msgstr "Aterrizaje OVNI en una zona montañosa."
 
-#: ../base/ufos/maps.ufo:1156 ../base/ufos/maps.ufo:1200
+#: ../base/ufos/maps.ufo:1153 ../base/ufos/maps.ufo:1197
 msgid "Industrial theme."
 msgstr "Sitio industrial"
 
-#: ../base/ufos/maps.ufo:1247 ../base/ufos/maps.ufo:1297
-#: ../base/ufos/maps.ufo:2446
+#: ../base/ufos/maps.ufo:1244 ../base/ufos/maps.ufo:1294
+#: ../base/ufos/maps.ufo:2443
 msgid "A classic eastern suburban area."
 msgstr "Una típica área suburbana occidental."
 
-#: ../base/ufos/maps.ufo:1350
+#: ../base/ufos/maps.ufo:1347
 msgid "A laboratory where they examined found UFO wreck tiles."
-msgstr "Un laboratorio donde se examinaban algunos restos de OVNIs."
+msgstr "Un laboratorio donde se examinaban algunos restos OVNI."
 
-#: ../base/ufos/maps.ufo:1407
+#: ../base/ufos/maps.ufo:1404
 msgid "A mansion near the coast."
 msgstr "Una mansión cerca de la costa."
 
-#: ../base/ufos/maps.ufo:1458 ../base/ufos/maps.ufo:1498
-#: ../base/ufos/maps.ufo:1581
+#: ../base/ufos/maps.ufo:1455 ../base/ufos/maps.ufo:1495
+#: ../base/ufos/maps.ufo:1578
 msgid "A suburban district of an oriental area."
 msgstr "Un distrito suburbano de una región oriental."
 
-#: ../base/ufos/maps.ufo:1540
+#: ../base/ufos/maps.ufo:1537
 msgid "Crashed UFO in oriental suburban district."
 msgstr "OVNI caído en un distrito suburbano de una región oriental."
 
-#: ../base/ufos/maps.ufo:1624 ../base/ufos/maps.ufo:1664
-#: ../base/ufos/maps.ufo:1705
+#: ../base/ufos/maps.ufo:1621 ../base/ufos/maps.ufo:1661
+#: ../base/ufos/maps.ufo:1702
 msgid "A cleared stretch of land in the middle of the jungle."
 msgstr "Un claro a la mitad de la selva."
 
-#: ../base/ufos/maps.ufo:1746 ../base/ufos/maps.ufo:1786
+#: ../base/ufos/maps.ufo:1743 ../base/ufos/maps.ufo:1783
 msgid "A river runs through this piece of jungle."
 msgstr "Hay un río que corre a travez de esta parte de la selva."
 
-#: ../base/ufos/maps.ufo:1832
+#: ../base/ufos/maps.ufo:1829
 msgid "UFO Crashsite."
 msgstr "Lugar del choque OVNI"
 
-#: ../base/ufos/maps.ufo:1864 ../base/ufos/maps.ufo:1906
-#: ../base/ufos/maps.ufo:1947 ../base/ufos/maps.ufo:1990
+#: ../base/ufos/maps.ufo:1861 ../base/ufos/maps.ufo:1903
+#: ../base/ufos/maps.ufo:1944 ../base/ufos/maps.ufo:1987
 msgid "A peaceful neighbourhood on the outskirts of a centre of population."
 msgstr "Un barrio pacifico a las afueras de un centro de población."
 
-#: ../base/ufos/maps.ufo:2037
+#: ../base/ufos/maps.ufo:2034
 msgid "Cemetery terror mission."
 msgstr "Misión de terror en un cementerio"
 
-#: ../base/ufos/maps.ufo:2078 ../base/ufos/maps.ufo:3061
+#: ../base/ufos/maps.ufo:2075 ../base/ufos/maps.ufo:3058
 msgid "A small neighbourhood in a warm urban region."
 msgstr "Un pequeño vecindario urbano en una región templada."
 
-#: ../base/ufos/maps.ufo:2130
+#: ../base/ufos/maps.ufo:2127
 msgid "A place where people come to relax and mingle."
 msgstr "Un lugar a donde la gente viene a relajarse y convivir."
 
-#: ../base/ufos/maps.ufo:2182
+#: ../base/ufos/maps.ufo:2179
 msgid "An office complex under construction."
 msgstr "Un complejo de oficinas en construcción."
 
-#: ../base/ufos/maps.ufo:2234
+#: ../base/ufos/maps.ufo:2231
 msgid "A tropical area where several suspected criminals have made their homes."
 msgstr "Una región tropical donde varios presuntos criminales han hecho sus hogares."
 
-#: ../base/ufos/maps.ufo:2299
+#: ../base/ufos/maps.ufo:2296
 msgid "A small estate in the mountains."
 msgstr "Una pequeña finca en las montañas."
 
-#: ../base/ufos/maps.ufo:2340
+#: ../base/ufos/maps.ufo:2337
 msgid "A place where citizens come to replenish their vehicles' fuel supply."
 msgstr "Una estación de gasolina."
 
-#: ../base/ufos/maps.ufo:2393
+#: ../base/ufos/maps.ufo:2390
 msgid "A small office in a mountainous region."
 msgstr "Una pequeña oficina en una región montañosa."
 
-#: ../base/ufos/maps.ufo:2501
+#: ../base/ufos/maps.ufo:2498
 msgid "A kind of communal gathering centre annex foraging facility, known as a supermarket."
 msgstr "Un supermercado."
 
-#: ../base/ufos/maps.ufo:2556
+#: ../base/ufos/maps.ufo:2553
 msgid "A military convoy has caught the eye of the aliens."
 msgstr "Un convoy militar ha llamado la atención de los alienígenas."
 
-#: ../base/ufos/maps.ufo:2608
+#: ../base/ufos/maps.ufo:2605
 msgid "A shelter that was built to house people in times of major disasters. Some internal blast doors may have been closed."
 msgstr "Un refugio construido para situaciones de emergencia. Algunas puertas pueden estar bloqueadas."
 
-#: ../base/ufos/maps.ufo:2661
+#: ../base/ufos/maps.ufo:2658
 msgid "A small industrial area."
 msgstr "Una pequeña zona industrial."
 
-#: ../base/ufos/maps.ufo:2714
+#: ../base/ufos/maps.ufo:2711
 msgid "A stadium used for various recreational events."
 msgstr "Un estadio utilizado para eventos recreativos."
 
-#: ../base/ufos/maps.ufo:2768
+#: ../base/ufos/maps.ufo:2765
 msgid "An office complex in the centre of town."
 msgstr "Un complejo de oficinas en el centro de la ciudad."
 
-#: ../base/ufos/maps.ufo:2823
+#: ../base/ufos/maps.ufo:2820
 msgid "An industrial area, used for loading and unloading goods."
 msgstr "Una zona industrial, usada para carga y descarga de bienes."
 
-#: ../base/ufos/maps.ufo:2873 ../base/ufos/maps.ufo:2918
+#: ../base/ufos/maps.ufo:2870 ../base/ufos/maps.ufo:2915
 msgid "A small bungalow."
 msgstr "Una pequeña cabaña."
 
-#: ../base/ufos/maps.ufo:2965
+#: ../base/ufos/maps.ufo:2962
 msgid "A bunker used in a previous conflict."
 msgstr "Un refugio subterráneo usado en un conflicto anterior."
 
-#: ../base/ufos/maps.ufo:3016
+#: ../base/ufos/maps.ufo:3013
 msgid "A small industry city area."
 msgstr "Una pequeña zona industrial."
 
-#: ../base/ufos/maps.ufo:3111
+#: ../base/ufos/maps.ufo:3108
 msgid "A crashed UFO-Corrupter."
 msgstr "Un OVNI - Corruptor caído."
 
-#: ../base/ufos/maps.ufo:3159
+#: ../base/ufos/maps.ufo:3156
 msgid "A hydroelectricity dam that is threatened by the alien invaders."
 msgstr "Una central hidroeléctrica amenazada por los invasores alienígenas."
 
-#: ../base/ufos/maps.ufo:3208
+#: ../base/ufos/maps.ufo:3205
 msgid "A small village."
 msgstr "Una pequeña villa."
 
-#: ../base/ufos/maps.ufo:3256
+#: ../base/ufos/maps.ufo:3253
 msgid "An estate owned by rich and influential people."
 msgstr "Una finca de gente rica e influyente."
 
-#: ../base/ufos/maps.ufo:3302
+#: ../base/ufos/maps.ufo:3299
 msgid "An excavation site that has fallen under alien attack."
 msgstr "Un sitio de excavación que ha sido atacado por los alienígenas."
 
-#: ../base/ufos/maps.ufo:3353
+#: ../base/ufos/maps.ufo:3350
 msgid "A ferry."
 msgstr "Un transbordador."
 
-#: ../base/ufos/maps.ufo:3452
+#: ../base/ufos/maps.ufo:3449
 msgid "A fuel depot the aliens try to destroy."
 msgstr "Un almacén de combustible que los alienígenas intentan destruir."
 
-#: ../base/ufos/maps.ufo:3493
+#: ../base/ufos/maps.ufo:3490
 msgid "A depot with the name 'The Gate' where secret technology is stored."
 msgstr "Un almacén llamado \"The Gate\" donde se resguarda tecnología secreta"
 
-#: ../base/ufos/maps.ufo:3541
+#: ../base/ufos/maps.ufo:3538
 msgid "A local harbour."
 msgstr "Un puerto local."
 
-#: ../base/ufos/maps.ufo:3599 ../base/ufos/maps.ufo:3635
+#: ../base/ufos/maps.ufo:3596 ../base/ufos/maps.ufo:3632
 msgid "A small settlement in winter."
 msgstr "Un pequeño asentamiento invernal."
 
-#: ../base/ufos/maps.ufo:3683
+#: ../base/ufos/maps.ufo:3680
 msgid "An old mine."
 msgstr "Una vieja mina."
 
-#: ../base/ufos/maps.ufo:3736
+#: ../base/ufos/maps.ufo:3733
 msgid "An office complex on the outskirts of town."
 msgstr "Un complejo de oficinas a las afueras de la ciudad."
 
-#: ../base/ufos/maps.ufo:3783 ../base/ufos/maps.ufo:3830
+#: ../base/ufos/maps.ufo:3780 ../base/ufos/maps.ufo:3827
 msgid "An urban district in an oriental region."
 msgstr "Zona urbana de una región oriental."
 
-#: ../base/ufos/maps.ufo:3879
+#: ../base/ufos/maps.ufo:3876
 msgid "Underground pipe construction site."
 msgstr "Zona de construcción de una tubería subterránea."
 
-#: ../base/ufos/maps.ufo:3926
+#: ../base/ufos/maps.ufo:3923
 msgid "A luxurious vacation resort."
 msgstr "Un lujoso sitio vacacional."
 
-#: ../base/ufos/maps.ufo:3976
+#: ../base/ufos/maps.ufo:3973
 msgid "A rather old-fashioned suburban district."
 msgstr "Un antiguo distrito suburbano."
 
-#: ../base/ufos/maps.ufo:4040
+#: ../base/ufos/maps.ufo:4037
 msgid "A crashed Scout UFO."
 msgstr "Un OVNI explorador caído"
 
-#: ../base/ufos/maps.ufo:4125
+#: ../base/ufos/maps.ufo:4122
 msgid "A subway station in a suburban part of town."
 msgstr "Una estación del metro en una zona suburbana de la ciudad."
 
-#: ../base/ufos/maps.ufo:4168
+#: ../base/ufos/maps.ufo:4165
 msgid "A suburban district."
 msgstr "Un distrito suburbano."
 
-#: ../base/ufos/maps.ufo:4216
+#: ../base/ufos/maps.ufo:4213
 msgid "Wilderness terror mission."
 msgstr "Misión de terror en el desierto"
 
-#: ../base/ufos/maps.ufo:4267
+#: ../base/ufos/maps.ufo:4264
 msgid "An alien base."
 msgstr "Una base alienígena"
 
-#: ../base/ufos/maps.ufo:4288
+#: ../base/ufos/maps.ufo:4285
 msgid "Base is under attack."
 msgstr "Base bajo ataque"
 
-#: ../base/ufos/maps.ufo:4300
+#: ../base/ufos/maps.ufo:4297
 msgid "Rescue mission."
 msgstr "Misión de rescate"
 
-#: ../base/ufos/maps.ufo:4330
+#: ../base/ufos/maps.ufo:4327
 msgid "Training Zone: Alpha"
 msgstr "Zona de Entrenamiento: Alfa"
 
-#: ../base/ufos/maps.ufo:4347
+#: ../base/ufos/maps.ufo:4344
 msgid "Training Zone: Bravo"
 msgstr "Zona de Entrenamiento: Bravo"
 
@@ -3557,19 +3556,19 @@ msgstr "Cnel"
 
 #: ../base/ufos/msgcategories.ufo:7
 msgid "install_equipment"
-msgstr "Instalar Equipo"
+msgstr "Aeronaves"
 
 #: ../base/ufos/msgcategories.ufo:16
 msgid "installation_construction"
-msgstr "Construcción de la Instalación"
+msgstr "Construcción de Instalaciones"
 
 #: ../base/ufos/msgcategories.ufo:23
 msgid "research"
-msgstr "investigación"
+msgstr "Investigación"
 
 #: ../base/ufos/msgcategories.ufo:30
 msgid "production"
-msgstr "producción"
+msgstr "Producción"
 
 #: ../base/ufos/msgcategories.ufo:37
 msgid "nations_happiness"
@@ -3577,7 +3576,7 @@ msgstr "Actitud de las Naciones"
 
 #: ../base/ufos/msgcategories.ufo:44
 msgid "transfer"
-msgstr "transferir"
+msgstr "Transferencias"
 
 #: ../base/ufos/msgcategories.ufo:53
 msgid "ufo_activity"
@@ -3585,11 +3584,11 @@ msgstr "Actividad OVNI"
 
 #: ../base/ufos/msgcategories.ufo:60
 msgid "missions"
-msgstr "misiones"
+msgstr "Misiones"
 
 #: ../base/ufos/nations.ufo:28
 msgid "The Revolutionary Countries"
-msgstr "Países Revolucionarios"
+msgstr "Los Países Revolucionarios"
 
 #: ../base/ufos/nations.ufo:41
 msgid "United America"
@@ -3597,15 +3596,15 @@ msgstr "América Unida"
 
 #: ../base/ufos/nations.ufo:54
 msgid "The Greater European Union"
-msgstr "La Más Grande Unión Europea"
+msgstr "La Gran Unión Europea"
 
 #: ../base/ufos/nations.ufo:67
 msgid "The Asian Republic"
-msgstr "República Asiática"
+msgstr "La República Asiática"
 
 #: ../base/ufos/nations.ufo:80
 msgid "The Middle-Eastern Alliance"
-msgstr "Alianza del Medio Oriente"
+msgstr "La Alianza del Medio Oriente"
 
 #: ../base/ufos/nations.ufo:93
 msgid "New Africa"
@@ -4042,7 +4041,7 @@ msgstr ""
 "\n"
 "Encargarse de estas bases ha de ser una de nuestras máximas prioridades. Propongo que enviemos un equipo fuertemente armado para hacerles una visita, una especie de misión de reconocimiento en fuerza. Necesitamos más información sobre el diseño y el propósito de la base, y el mejor modo para lograrlo es capturarla. Deberíamos eliminar a todos los alienígenas del emplazamiento y, una vez que hubiéramos asegurado el área y rescatado todo lo necesario, destruir completamente la instalación. Esto debería constituir un contratiempo significativo para las operaciones alienígenas y restringir -si no detener- la propagación del virus XVI en la zona.\n"
 "\n"
-"Por supuesto, esta operación será altamente peligrosa. La base está situada justo en el centro de un punto caliente de la infección, por lo que toda la zona es territorio hostil. Podemos encontrar defensas anti-aéreas y OVNIs dedicados a la defensa de la base. Ciertamente se requerirá una fuerte escolta. Y... hay algo peor.\n"
+"Por supuesto, esta operación será altamente peligrosa. La base está situada justo en el centro de un punto caliente de la infección, por lo que toda la zona es territorio hostil. Podemos encontrar defensas anti-aéreas y OVNI dedicados a la defensa de la base. Ciertamente se requerirá una fuerte escolta. Y... hay algo peor.\n"
 "\n"
 "Las imágenes por satélite y los aviones de reconocimiento parecen indicar que los humanos infectados están cooperando activamente con los alienígenas. Es bastante probable que nuestra unidad se enfrente a humanos hostiles durante el asalto. Esto puede no sentar bien a todos, pero si ellos abren fuego contra nuestras tropas, debemos estar preparados para responder del mismo modo.\n"
 "\n"
@@ -7137,7 +7136,7 @@ msgstr ""
 "\n"
 "Comandante, adjunto los planos completos para nuestro nuevo Sistema de Radar Avanzado. Hemos logrado integrar completamente las tecnologías de detección alienígena y humana, controladas por un paquete de software completamente interactivo diseñado especialmente para administrar la nueva instalación.\n"
 "\n"
-"Nuestra mayor innovación ha sido sincronizar la tecnología alienígena de sensores de gravedad con nuestro software de detección. Lo cual añade un nuevo espectro a nuestra capacidad de radar, permitiéndonos rastrear OVNIs con una confiabilidad con la que solo podíamos soñar hace unos meses. Una base con esta instalación puede detectar al enemigo con mayor antelación, a una mayor distancia, y rastrearlo por más tiempo con menor riesgo de perder contacto.\n"
+"Nuestra mayor innovación ha sido sincronizar la tecnología alienígena de sensores de gravedad con nuestro software de detección. Lo cual añade un nuevo espectro a nuestra capacidad de radar, permitiéndonos rastrear OVNI con una confiabilidad con la que solo podíamos soñar hace unos meses. Una base con esta instalación puede detectar al enemigo con mayor antelación, a una mayor distancia, y rastrearlo por más tiempo con menor riesgo de perder contacto.\n"
 "\n"
 "Aunque no podemos usar este nuevo equipo con nuestras torres de radar existentes, es posible integrar algunos de los avances más sencillos en nuestras anteriores instalaciones a un costo mínimo. Me he permitido autorizar la realización de estas mejoras durante el próximo ciclo de mantenimiento. Puede esperar un aumento de la capacidad de detección y rastreo de nuestras instalaciones, Comandante.\n"
 "\n"
@@ -7238,7 +7237,7 @@ msgstr ""
 "\n"
 "Este procedimiento no le dará tiempo de escapar al personal que se encuentre atrapado en el interior, pero este es el precio que tendremos que pagar si queremos tener alguna oportunidad de salvar el resto de la base.\n"
 "\n"
-"Para entender cuan peligrosa es esta instalación, construir un Almacén de Antimateria en una de nuestras bases requerirá que listemos dicha base en el registro de emplazamientos nucleares de la ONU. A plena capacidad -10 gramos de antimateria- un solo almacén contendrá el equivalente a casi medio megatón de TNT. aunque esto no es mucho comparado con armas termonucleares modernas, es suficiente para incinerar a cenizas todo al interior de la base en menos de un segundo. Es difícil 'explotar' antimateria, pero bajo las circunstancias equivocadas, puede ocurrir.\n"
+"Para entender cuan peligrosa es esta instalación, construir un Almacén de Antimateria en una de nuestras bases requerirá que listemos dicha base en el registro de emplazamientos nucleares de las Naciones Unidas. A plena capacidad -10 gramos de antimateria- un solo almacén contendrá el equivalente a casi medio megatón de TNT. aunque esto no es mucho comparado con armas termonucleares modernas, es suficiente para incinerar a cenizas todo al interior de la base en menos de un segundo. Es difícil 'explotar' antimateria, pero bajo las circunstancias equivocadas, puede ocurrir.\n"
 "\n"
 "Aunque no ocurra una explosión, una pérdida de contención resultaría en la aniquilación de la antimateria almacenada con la materia normal del sistema de contención. Si hubiera una falla en el casco exterior en este punto, la explosión de radiación gama y partículas de alta velocidad resultante acabaría con toda la vida en el área. La base sería envenenada y quedaría inhabitable por varios siglos.\n"
 "\n"
@@ -7247,7 +7246,7 @@ msgstr ""
 "\n"
 "Creo que ya he recalcado que esta instalación debe ser la mas fuertemente defendida en cualquier base de PHALANX, teniendo prioridad incluso sobre el Centro de Comando. Perder el CC sería un golpe, pero puede ser reconstruido. El costo sería insignificante comparado con el armagedón que resultaría de un incidente en el Almacén de Antimateria.\n"
 "\n"
-"Aunque esta instalación será esencial para nuestro éxito continuado en esta guerra, será costosa de construir y operar dada la avanzada tecnología y materiales necesarios. Puede ser necesario demorar su construcción hasta que tengamos la certeza que nuestro presupuesto puede estirarse lo suficiente.\n"
+"Aunque esta instalación será esencial para nuestro éxito continuado en esta guerra, será costosa de construir y operar dada la avanzada tecnología y materiales necesarios. Puede ser necesario demorar su construcción hasta que tengamos la certeza de que nuestro presupuesto puede estirarse lo suficiente.\n"
 "\n"
 "Habiendo dicho esto, hasta que construyamos una de estas instalaciones, seremos completamente incapaces de almacenar o utilizar la antimateria recuperada. No podemos simplemente apilar un montón de tanques explosivos alienígenas, inestables, y posiblemente dañados de nivel nuclear. Todo lo que encontremos tendrá que ser destruido como medida de seguridad.\n"
 "\n"
@@ -8886,7 +8885,7 @@ msgstr ""
 "\n"
 "El costo fue alto. Las zonas conquistadas de la India eran eriales, el país no tenia gobierno desde el ataque nuclear de Nueva Delhi y la hambruna empezaba a atacar a la población. Se empezó a ceder tierras sin valor a otras naciones y a conceder la independencia a varias pequeñas regiones a lo largo de las fronteras. Las restantes naciones de la Comunidad iniciaron la inmensa tarea de reconstruir la India, pero varios abandonaron el proyecto y la propia comunidad en favor de otras crecientes superpotencias.\n"
 "\n"
-"La reconstrucción de la India eventualmente unió a la Comunidad en una gran nación, que explotaba su posición geográfica alrededor del océano Índico y el sur del Pacífico para gravar a los barcos que atravesaban sus aguas. La navegación de la Comunidad, por su parte, estaba libre de este impuesto y llegando pronto a dominar en el mercado competitivo. Mas tarde, con el final de los carteles de diamante en África, la Comunidad se apropió de muchas minas sin dueño dentro de su propio territorio y las explotó comercialmente al máximo.\n"
+"La reconstrucción de la India eventualmente unió a la Comunidad en una gran nación, que explotaba su posición geográfica alrededor del océano Índico y el sur del Pacífico para gravar a los barcos que atravesaban sus aguas. La navegación de la Comunidad, por su parte, estaba libre de este impuesto, llegando pronto a dominar en el mercado competitivo. Mas tarde, con el final de los carteles de diamante en África, la Comunidad se apropió de muchas minas sin dueño dentro de su propio territorio y las explotó comercialmente al máximo.\n"
 "\n"
 "Hoy en día, la Comunidad de Naciones es mas conocida como 'Comunidad de Oceanía' o simplemente 'Oceanía'. Desde su inicio han aceptado a varios países fuera de la Comunidad, notablemente Madagascar, Zimbabue e Indonesia, afianzando su control sobre las aguas de Oceanía. Aunque todavía no puede competir económicamente con las naciones más ricas, se ha creado su propio nicho, y está bastante feliz de prosperar en él.\n"
 "\n"
@@ -9164,7 +9163,7 @@ msgstr ""
 "\n"
 "3) Nuestra red de satélites está completamente expuesta y podría ser borrada del mapa en un instante. Existen líneas terrestres de emergencia, pero solo para uso militar. Si la red es atacada, la comunicación entre los centros de comando de PHALANX y el personal de campo -- aeronaves y equipos tácticos -- se verá interrumpida.\n"
 "\n"
-"4) No hay duda de que existen naves alienígenas moviéndose en órbita, transportando material y OVNIs entre la Tierra y el planeta natal alienígena, y en este momento no hay nada que podamos hacer para detenerlas.\n"
+"4) No hay duda de que existen naves alienígenas moviéndose en órbita, transportando material y OVNI entre la Tierra y el planeta natal alienígena, y en este momento no hay nada que podamos hacer para detenerlas.\n"
 "\n"
 "Esto nos lleva a una sola conclusión: El espacio alrededor de la Tierra ya no está bajo nuestro control. La única razón por la que la humanidad mantiene alguna capacidad espacial es porque los alienígenas han decidido no destruirla aun.\n"
 "\n"
@@ -9452,7 +9451,7 @@ msgstr "Presiona el botón de inicio o de misión automática para combatir a lo
 
 #: ../base/ufos/seq_tutorials.ufo:299
 msgid "For further instructions watch the tactical mission tutorial"
-msgstr "Para más instrucciones revisa la tutoría de misión táctica"
+msgstr "Para más instrucciones revisa el tutorial de la misión táctica"
 
 #: ../base/ufos/seq_tutorials.ufo:327
 msgid "Tactical mission"
@@ -9460,7 +9459,7 @@ msgstr "Misión táctica"
 
 #: ../base/ufos/seq_tutorials.ufo:346
 msgid "Tactical mission tutorial"
-msgstr "Tutorías de la misión táctica"
+msgstr "Tutoriales de la misión táctica"
 
 #: ../base/ufos/seq_tutorials.ufo:389
 msgid "Switch view level via left mouseclick"
@@ -9538,7 +9537,7 @@ msgstr "Como jugar un tiroteo"
 
 #: ../base/ufos/seq_tutorials.ufo:791
 msgid "Skirmish tutorial"
-msgstr "Tutorías del modo 'Tiroteo'"
+msgstr "Tutoriales del modo 'Tiroteo'"
 
 #: ../base/ufos/seq_tutorials.ufo:802
 msgid "Skirmish is type of fast game."
@@ -9742,7 +9741,7 @@ msgstr "¡Cuida tu espalda! Tus soldados solo pueden ver a los enemigos en un ar
 
 #: ../base/ufos/tips.ufo:24
 msgid "Building a workshop and off-base installations UFO yards allows you to disassemble UFOs."
-msgstr "Construir un taller y la instalación exterior de un corral para OVNIs te permite desensamblar OVNIs."
+msgstr "Construir un taller y la instalación exterior de un corral para OVNI te permite desensamblar OVNI."
 
 #: ../base/ufos/tips.ufo:25
 msgid "You can make soldiers crouch to better protect them from enemy fire. But remember that crouching and standing up cost Time Units (TUs), and moving while crouched costs more TUs than walking normally."
@@ -9834,11 +9833,11 @@ msgstr "Asegúrate de equipar a tus interceptores con armas antes de lanzarlos."
 
 #: ../base/ufos/tips.ufo:47
 msgid "Remember that items will slow an aircraft down. To intercept fast UFOs, you may prefer to send several lightly equipped aircraft."
-msgstr "Recuerda que el equipo adicional reduce la velocidad de una aeronave. Para interceptar OVNIs muy rápidos, tal vez prefieras enviar a varias aeronaves con equipo ligero."
+msgstr "Recuerda que el equipo adicional reduce la velocidad de una aeronave. Para interceptar OVNI muy rápidos, tal vez prefieras enviar a varias aeronaves con equipo ligero."
 
 #: ../base/ufos/tips.ufo:48
 msgid "Your attacked aircraft may flee to one of your bases to avoid being destroyed by UFOs."
-msgstr "Si tus aeronaves son atacadas pueden huir hacia una de tus bases para evitar ser destruidas por los OVNIs."
+msgstr "Si tus aeronaves son atacadas pueden huir hacia una de tus bases para evitar ser destruidas por los OVNI."
 
 #: ../base/ufos/tips.ufo:49
 msgid "Build an alien containment to be able to imprison live aliens."
@@ -10295,7 +10294,7 @@ msgstr "Iniciar autopsia"
 
 #: ../base/ufos/ui/aliencont.ufo:143
 msgid "Live Alien Containment Info"
-msgstr "Información Alienígenas Vivos en Contención"
+msgstr "Alienígenas Vivos en Contención"
 
 #: ../base/ufos/ui/aliencont.ufo:156
 msgid "Base capacity:"
@@ -10603,7 +10602,7 @@ msgstr "Salir de la campaña actual y regresar al menú principal."
 
 #: ../base/ufos/ui/campaign.ufo:787
 msgid "Quit anyway"
-msgstr "Salir de todas formas"
+msgstr "Salir"
 
 #: ../base/ufos/ui/campaign.ufo:796 ../base/ufos/ui/singleplayer.ufo:181
 msgid "Do not quit."
@@ -10885,7 +10884,7 @@ msgstr "Nuevo sitio MTA"
 
 #: ../base/ufos/ui/geoscape.ufo:1262
 msgid "New UFO yard"
-msgstr "Nuevo corral para OVNIs"
+msgstr "Nuevo Almacén para OVNI"
 
 #: ../base/ufos/ui/geoscape.ufo:1275
 msgid "Installation Status"
@@ -11632,7 +11631,7 @@ msgstr "Escoge entre los modos de Campaña o Tiroteo."
 
 #: ../base/ufos/ui/main.ufo:59 ../base/ufos/ui/tutorials.ufo:21
 msgid "Tutorials"
-msgstr "Tutorías"
+msgstr "Tutoriales"
 
 #: ../base/ufos/ui/main.ufo:65
 msgid "Credits"
@@ -13242,18 +13241,16 @@ msgid "Needler Gun Magazine"
 msgstr "Cargador de Aguijoneador"
 
 #: ../base/ufos/weapons_aliens.ufo:64 ../base/ufos/weapons_aliens.ufo:137
-#, fuzzy
 msgid "Short Burst"
-msgstr "Ráfaga de 5 Disparos"
+msgstr "Ráfaga Corta"
 
 #: ../base/ufos/weapons_aliens.ufo:87 ../base/ufos/weapons_aliens.ufo:160
 msgid "Cannonade"
 msgstr "Cañonazo"
 
 #: ../base/ufos/weapons_aliens.ufo:110 ../base/ufos/weapons_aliens.ufo:183
-#, fuzzy
 msgid "Needle Stream"
-msgstr "Siguiente equipo disponible"
+msgstr "Ráfaga de Agujas"
 
 #: ../base/ufos/weapons_human.ufo:6
 msgid "Assault Rifle"
@@ -14752,7 +14749,7 @@ msgstr "^BAlienígenas\n"
 
 #: client/cgame/campaign/cp_base_callbacks.c:825
 msgid "^BBuildings\t\t\t\t\t\tCapacity\t\t\t\tAmount\n"
-msgstr "^BInstalaciones\t\t\t\t\t\tCapacidad\t\t\t\t#\n"
+msgstr "^BInstalaciones\t\t\t\t\t\tCapacidad\t\t\t\tNumero\n"
 
 #: client/cgame/campaign/cp_base_callbacks.c:847
 msgid "day"
@@ -14762,7 +14759,7 @@ msgstr[1] "días"
 
 #: client/cgame/campaign/cp_base_callbacks.c:857
 msgid "^BProduction\t\t\t\t\t\tQuantity\t\t\t\tPercent\n"
-msgstr "^BProducción\t\t\t\t\t\tCantidad\t\t\t\t%%\n"
+msgstr "^BProducción\t\t\t\t\t\tCantidad\t\t\t\tAvance\n"
 
 #: client/cgame/campaign/cp_base_callbacks.c:864
 #, c-format
@@ -14776,7 +14773,7 @@ msgstr "Ninguno(a)\n"
 
 #: client/cgame/campaign/cp_base_callbacks.c:873
 msgid "^BResearch\t\t\t\t\t\tScientists\t\t\t\tPercent\n"
-msgstr "^BInvestigación\t\t\t\t\t\tCientíficos\t\t\t\t%%\n"
+msgstr "^BInvestigación\t\t\t\t\t\tCientíficos\t\t\t\tAvance\n"
 
 #: client/cgame/campaign/cp_base_callbacks.c:878
 #, c-format
@@ -15324,29 +15321,23 @@ msgstr "No puedes vender una aeronave que no se encuentra en su base"
 
 #: client/cgame/campaign/cp_messageoptions.c:36
 msgid "installation_installed"
-msgstr "Instalación completada"
+msgstr "Equipo instalado"
 
 #: client/cgame/campaign/cp_messageoptions.c:37
 msgid "installation_removed"
-msgstr "Instalación removida"
+msgstr "Equipo removido"
 
 #: client/cgame/campaign/cp_messageoptions.c:38
 msgid "installation_replaced"
-msgstr "Instalación reemplazada"
+msgstr "Equipo reemplazado"
 
 #: client/cgame/campaign/cp_messageoptions.c:39
 msgid "aircraft_refueled"
-msgstr ""
-"Comandante, la nave %s a sido %s y está lista para la acción.\n"
-"\n"
-"-- COMAIR"
+msgstr "Carga de combustible completa"
 
 #: client/cgame/campaign/cp_messageoptions.c:40
 msgid "aircraft_cannotrefuel"
-msgstr ""
-"Comandante, la nave %s ha agotado su tiempo de vuelo. Sólo le queda suficiente combustible para regresar a la base %s. La misión ha sido abortada.\n"
-"\n"
-"-- COMAIR"
+msgstr "No se puede cargar combustible"
 
 #: client/cgame/campaign/cp_messageoptions.c:41
 msgid "installation_build_started"
@@ -15354,7 +15345,7 @@ msgstr "Construcción iniciada"
 
 #: client/cgame/campaign/cp_messageoptions.c:42
 msgid "installation_build_finished"
-msgstr "Construcción completada"
+msgstr "Construcción terminada"
 
 #: client/cgame/campaign/cp_messageoptions.c:43
 msgid "installation_destroyed"
@@ -15382,15 +15373,15 @@ msgstr "Producción completada"
 
 #: client/cgame/campaign/cp_messageoptions.c:49
 msgid "production_failed"
-msgstr "La producción ha fallado"
+msgstr "Producción fallida"
 
 #: client/cgame/campaign/cp_messageoptions.c:50
 msgid "production_queue_empty"
-msgstr "La linea de producción está vacía"
+msgstr "Linea de producción vacía"
 
 #: client/cgame/campaign/cp_messageoptions.c:51
 msgid "nation_happiness_changed"
-msgstr "La actitud de la nación ha cambiado"
+msgstr "Cambio en la actitud de una nación"
 
 #: client/cgame/campaign/cp_messageoptions.c:52
 msgid "nation_unhappy"
@@ -15402,15 +15393,15 @@ msgstr "Nación complacida"
 
 #: client/cgame/campaign/cp_messageoptions.c:54
 msgid "transfer_started"
-msgstr "Se ha iniciado la transferencia"
+msgstr "Transferencia iniciada"
 
 #: client/cgame/campaign/cp_messageoptions.c:55
 msgid "transfer_completed_success"
-msgstr "Transferencia completada exitosamente"
+msgstr "Transferencia completada"
 
 #: client/cgame/campaign/cp_messageoptions.c:56
 msgid "transfer_lost"
-msgstr "Se han perdido los bienes transferidos"
+msgstr "Transferencia perdida"
 
 #: client/cgame/campaign/cp_messageoptions.c:57
 msgid "transfer_aliens_defered"
@@ -15418,15 +15409,15 @@ msgstr "Transferencia de alienígenas pospuesta"
 
 #: client/cgame/campaign/cp_messageoptions.c:58
 msgid "transfer_uforecovery_finished"
-msgstr "Se ha completado la transferencia del OVNI recuperado."
+msgstr "Transferencia de OVNI completa"
 
 #: client/cgame/campaign/cp_messageoptions.c:59
 msgid "ufo_spotted"
-msgstr "Se ha detectado un OVNI"
+msgstr "OVNI detectado"
 
 #: client/cgame/campaign/cp_messageoptions.c:60
 msgid "ufo_signal_lost"
-msgstr "Se ha perdido el rastro del OVNI"
+msgstr "Contacto OVNI perdido"
 
 #: client/cgame/campaign/cp_messageoptions.c:61
 msgid "ufo_attacking"
@@ -15434,7 +15425,7 @@ msgstr "Ataque OVNI"
 
 #: client/cgame/campaign/cp_messageoptions.c:62
 msgid "base_attack"
-msgstr "Ataque a la base"
+msgstr "Base bajo ataque"
 
 #: client/cgame/campaign/cp_messages.c:45
 #, c-format
@@ -15505,7 +15496,7 @@ msgid ""
 msgstr ""
 "¡Felicidades! Has completado la campaña de UFO:AI.\n"
 "Sin embargo, este no es el fin del camino, El juego aún está en desarrollo.\n"
-"La campaña será extendida con nuevas misiones, nuevos enemigos, nuevos OVNIs, nuevas aeronaves y más investigación.\n"
+"La campaña será extendida con nuevas misiones, nuevos enemigos, nuevos OVNI, nuevas aeronaves y más investigación.\n"
 "\n"
 "¡Y TÚ puedes ayudar a que eso pase! Visita nuestro foro o el canal IRC para saber\n"
 "como puedes ayudar a terminar este juego. O puedes simplemente\n"
@@ -16031,7 +16022,7 @@ msgstr "Falta un artefacto"
 
 #: client/cgame/campaign/cp_research_callbacks.c:317
 msgid "Unresearchable collected items"
-msgstr "Objetos recuperados que aún no es posible investigar"
+msgstr "Objetos capturados que no es posible investigar"
 
 #: client/cgame/campaign/cp_research_callbacks.c:570
 msgid "This item is currently under research in another base."
@@ -16590,11 +16581,11 @@ msgstr "Empleado"
 
 #: client/cgame/campaign/cp_transfer_callbacks.c:1548
 msgid "alive"
-msgstr "con vida:"
+msgstr "espécimen(es):"
 
 #: client/cgame/campaign/cp_transfer_callbacks.c:1552
 msgid "dead"
-msgstr "sin vida:"
+msgstr "cuerpo(s):"
 
 #: client/cgame/campaign/cp_ufo.c:406 client/cgame/campaign/cp_ufo.c:816
 #, c-format
@@ -16839,7 +16830,7 @@ msgstr ""
 
 #: client/cgame/campaign/cp_uforecovery_callbacks.c:155
 msgid "No free UFO yard available."
-msgstr "Ningún corral para OVNIs está disponible."
+msgstr "Ningún Almacén para OVNI está disponible."
 
 #: client/cgame/campaign/cp_uforecovery_callbacks.c:198
 #, c-format
@@ -17034,11 +17025,11 @@ msgstr "Protegido por clave:\t%s\n"
 msgid "All bookmark slots are used - please removed unused entries and repeat this step"
 msgstr "Todos los marcadores están ocupados - por favor elimina las entradas no utilizadas y repite este paso"
 
-#: client/cgame/skirmish/cl_game_skirmish.c:182
+#: client/cgame/skirmish/cl_game_skirmish.c:186
 msgid "Game Drawn!"
 msgstr "¡Empate!"
 
-#: client/cgame/skirmish/cl_game_skirmish.c:182
+#: client/cgame/skirmish/cl_game_skirmish.c:186
 msgid ""
 "The game was a draw!\n"
 "\n"
@@ -17048,7 +17039,7 @@ msgstr ""
 "\n"
 "No hay sobrevivientes de ningún bando."
 
-#: client/cgame/skirmish/cl_game_skirmish.c:195
+#: client/cgame/skirmish/cl_game_skirmish.c:199
 #, c-format
 msgid ""
 "Enemies killed:\t\t%i\n"
@@ -17065,19 +17056,19 @@ msgstr ""
 "Civiles asesinados:\t\t%i\n"
 "Civiles asesinados por el enemigo:\t\t%i\n"
 
-#: client/cgame/skirmish/cl_game_skirmish.c:204
+#: client/cgame/skirmish/cl_game_skirmish.c:208
 msgid "Congratulations"
 msgstr "Felicidades"
 
-#: client/cgame/skirmish/cl_game_skirmish.c:204
+#: client/cgame/skirmish/cl_game_skirmish.c:208
 msgid "You won the game!"
 msgstr "¡Has ganado!"
 
-#: client/cgame/skirmish/cl_game_skirmish.c:206
+#: client/cgame/skirmish/cl_game_skirmish.c:210
 msgid "Better luck next time"
 msgstr "Suerte para la próxima"
 
-#: client/cgame/skirmish/cl_game_skirmish.c:206
+#: client/cgame/skirmish/cl_game_skirmish.c:210
 msgid "You've lost the game!"
 msgstr "¡Has perdido!"
 
@@ -17508,15 +17499,15 @@ msgstr "%s esta loco de rabia!\n"
 msgid "%s is currently shaken.\n"
 msgstr "%s Esta actualmente conmocionado.\n"
 
-#: game/g_reaction.c:394
+#: game/g_reaction.c:392
 msgid "No reaction fire enabled weapon.\n"
 msgstr "No hay un arma que pueda ser usada para reacción de disparo.\n"
 
-#: game/g_reaction.c:399
+#: game/g_reaction.c:397
 msgid "No fire mode selected for reaction fire.\n"
 msgstr "No se ha seleccionado un modo de disparo para la reacción de disparo.\n"
 
-#: game/g_reaction.c:404
+#: game/g_reaction.c:402
 msgid "Not enough TUs left for activating reaction fire.\n"
 msgstr "No hay suficientes UTs para activar la reacción de disparo.\n"
 
