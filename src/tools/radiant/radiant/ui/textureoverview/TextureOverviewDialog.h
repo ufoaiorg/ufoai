@@ -25,11 +25,11 @@
 #include <gtk/gtkwidget.h>
 #include <gtk/gtkliststore.h>
 #include <gtk/gtktreeselection.h>
-#include "gtkutil/window/BlockingTransientWindow.h"
+#include "gtkutil/window/PersistentTransientWindow.h"
 
 namespace ui
 {
-	class TextureOverviewDialog: public gtkutil::BlockingTransientWindow
+	class TextureOverviewDialog: public gtkutil::PersistentTransientWindow
 	{
 
 	public:
