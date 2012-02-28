@@ -288,11 +288,11 @@
 // brush 31
 {
 ( 336 248 4 ) ( 336 -8 4 ) ( 272 248 4 ) tex_nature/water_dark 0 0 0 1 1 65312 8 0
-( 64 256 132 ) ( 96 256 132 ) ( 64 256 134 ) tex_nature/water_dark 0 0 0 1 1 65312 8 0
+( 64 256 132 ) ( 96 256 132 ) ( 64 256 134 ) tex_nature/water_dark 0 0 0 1 1 65312 0 0
 ( 272 0 -64 ) ( 336 0 -64 ) ( 272 256 -64 ) tex_common/nodraw 0 0 0 0.25 0.25 65312 8 0
-( 256 0 -122 ) ( 256 0 6 ) ( 320 0 -122 ) tex_nature/water_dark 0 0 0 1 1 65312 8 0
+( 256 0 -122 ) ( 256 0 6 ) ( 320 0 -122 ) tex_nature/water_dark 0 0 0 1 1 65312 0 0
 ( 64 152 84 ) ( 64 184 84 ) ( 64 152 86 ) tex_common/nodraw 0 0 0 0.25 0.25 65312 8 0
-( 512 256 134 ) ( 512 256 -10 ) ( 512 64 134 ) tex_nature/water_dark 0 0 0 1 1 65312 8 0
+( 512 256 134 ) ( 512 256 -10 ) ( 512 64 134 ) tex_nature/water_dark 0 0 0 1 1 65312 0 0
 }
 // brush 32
 {
@@ -537,7 +537,7 @@
 {
 "classname" "misc_particle"
 "particle" "corona"
-"origin" "76 216 64"
+"origin" "76 216 62"
 "spawnflags" "511"
 "targetname" "-2"
 }
@@ -545,7 +545,7 @@
 {
 "classname" "misc_particle"
 "particle" "corona"
-"origin" "76 104 64"
+"origin" "76 104 62"
 "spawnflags" "511"
 "targetname" "-3"
 }
