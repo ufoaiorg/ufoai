@@ -60,7 +60,7 @@ typedef struct stage_s
 
 typedef struct setState_s
 {
-	stageSet_t *def;
+	const stageSet_t *def;
 	stage_t *stage;
 	date_t start;		/**< date when the set was activated */
 	date_t event;
