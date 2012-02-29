@@ -31,10 +31,17 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #define MAX_SAVESUBSYSTEMS 32
 #define SAVE_FILE_VERSION 4
 
+typedef struct saveSubsystems_s {
+	const char *name;
+	qboolean (*save) (xmlNode_t *parent);	/**< return false if saving failed */
+	qboolean (*load) (xmlNode_t *parent);	/**< return false if loading failed */
+} saveSubsystems_t;
+
 #include <zlib.h>
 
 qboolean SAV_QuickSave(void);
 void SAV_Init(void);
+qboolean SAV_AddSubsystem(saveSubsystems_t *subsystem);
 
 /* and now the save and load prototypes for every subsystem */
 qboolean B_SaveXML(xmlNode_t *parent);

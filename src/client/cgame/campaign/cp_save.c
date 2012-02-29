@@ -45,12 +45,6 @@ typedef struct saveFileHeader_s {
 	uint32_t xmlSize;
 } saveFileHeader_t;
 
-typedef struct saveSubsystems_s {
-	const char *name;
-	qboolean (*save) (xmlNode_t *parent);	/**< return false if saving failed */
-	qboolean (*load) (xmlNode_t *parent);	/**< return false if loading failed */
-} saveSubsystems_t;
-
 static saveSubsystems_t saveSubsystems[MAX_SAVESUBSYSTEMS];
 static int saveSubsystemsAmount;
 static cvar_t* save_compressed;
@@ -507,7 +501,7 @@ static void SAV_GameContinue_f (void)
  * @note The order is _not_ important
  * @sa SAV_Init
  */
-static qboolean SAV_AddSubsystem (saveSubsystems_t *subsystem)
+qboolean SAV_AddSubsystem (saveSubsystems_t *subsystem)
 {
 	if (saveSubsystemsAmount >= MAX_SAVESUBSYSTEMS)
 		return qfalse;
