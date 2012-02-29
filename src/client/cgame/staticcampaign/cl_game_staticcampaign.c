@@ -31,24 +31,8 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #include "scp_missions.h"
 #include "scp_parse.h"
 #include "scp_shared.h"
-#include "save/save_staticcampaign.h"
 
 staticCampaignData_t* scd;
-
-static qboolean SCP_Save (xmlNode_t *parent)
-{
-	return qfalse;
-}
-
-static qboolean SCP_Load (xmlNode_t *parent)
-{
-	xmlNode_t *node;
-	node = XML_GetNode(parent, SAVE_STATICCAMPAIGN);
-	if (!node) {
-		return qfalse;
-	}
-	return qtrue;
-}
 
 static void GAME_SCP_InitStartup (void)
 {

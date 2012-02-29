@@ -32,5 +32,7 @@
 void SCP_SpawnNewMissions(void);
 void SCP_CampaignActivateFirstStage(void);
 void SCP_CampaignProgress(const missionResults_t *results);
+qboolean SCP_Save(xmlNode_t *parent);
+qboolean SCP_Load(xmlNode_t *parent);
 
 #endif

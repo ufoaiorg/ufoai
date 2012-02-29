@@ -26,6 +26,10 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #define SAVE_MISSIONS_H
 
 #define SAVE_STATICCAMPAIGN "staticcampaign"
+#define SAVE_STATICCAMPAIGN_STAGE "stage"
+#define SAVE_STATICCAMPAIGN_STAGENAME "name"
+#define SAVE_STATICCAMPAIGN_SETSTATE "setstate"
+#define SAVE_STATICCAMPAIGN_SETSTATENAME "name"
 
 #endif
 
