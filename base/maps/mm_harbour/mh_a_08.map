@@ -249,7 +249,7 @@
 "classname" "misc_model"
 "origin" "455 297 135"
 "model" "models/objects/vehicles/forktruck/forktruck.md2"
-"spawnflags" "252"
+"spawnflags" "255"
 "angles" "0 2.50448e-006 0"
 }
 // entity 4
