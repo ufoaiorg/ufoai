@@ -54,6 +54,7 @@ typedef struct saveSubsystems_s {
 static saveSubsystems_t saveSubsystems[MAX_SAVESUBSYSTEMS];
 static int saveSubsystemsAmount;
 static cvar_t* save_compressed;
+static cvar_t *cl_lastsave;
 
 /**
  * @brief Perform actions after loading a game for single player campaign
@@ -696,4 +697,5 @@ void SAV_Init (void)
 	Cmd_AddCommand("game_continue", SAV_GameContinue_f, "Continue with the last saved game");
 	Cmd_AddCommand("game_savenamecleanup", SAV_GameSaveNameCleanup_f, "Remove the date string from mn_slotX cvars");
 	save_compressed = Cvar_Get("save_compressed", "1", CVAR_ARCHIVE, "Save the savefiles compressed if set to 1");
+	cl_lastsave = Cvar_Get("cl_lastsave", "", CVAR_ARCHIVE, "Last saved slot - use for the continue-campaign function");
 }

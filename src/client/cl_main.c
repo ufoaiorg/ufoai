@@ -68,8 +68,6 @@ cvar_t *cl_fps;
 cvar_t *cl_leshowinvis;
 cvar_t *cl_selected;
 
-cvar_t *cl_lastsave;
-
 static cvar_t *cl_connecttimeout; /* multiplayer connection timeout value (ms) */
 
 static cvar_t *cl_introshown;
@@ -886,7 +884,6 @@ static void CL_InitLocal (void)
 	cl_log_battlescape_events = Cvar_Get("cl_log_battlescape_events", "1", 0, "Log all battlescape events to events.log");
 	cl_selected = Cvar_Get("cl_selected", "0", CVAR_NOSET, "Current selected soldier");
 	cl_connecttimeout = Cvar_Get("cl_connecttimeout", "25000", CVAR_ARCHIVE, "Connection timeout for multiplayer connects");
-	cl_lastsave = Cvar_Get("cl_lastsave", "", CVAR_ARCHIVE, "Last saved slot - use for the continue-campaign function");
 	/* userinfo */
 	cl_name = Cvar_Get("cl_name", Sys_GetCurrentUser(), CVAR_USERINFO | CVAR_ARCHIVE, "Playername");
 	cl_teamnum = Cvar_Get("cl_teamnum", "1", CVAR_USERINFO | CVAR_ARCHIVE, "Preferred teamnum for multiplayer teamplay games");
