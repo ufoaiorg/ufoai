@@ -866,8 +866,8 @@
 // entity 3
 {
 "classname" "info_human_start"
-"origin" "16 336 156"
-"angle" "90"
+"origin" "144 368 160"
+"angle" "-1.4033e-014"
 }
 // entity 4
 {
@@ -878,8 +878,8 @@
 // entity 5
 {
 "classname" "info_human_start"
-"origin" "16 176 156"
-"angle" "180"
+"origin" "144 336 160"
+"angle" "-1.4033e-014"
 }
 // entity 6
 {
