@@ -970,6 +970,7 @@ mapdef frozen_small
 mapdef harbour2
 {
 	map			"+harbour2"
+	param		"harbour"
 	description	"_An important container harbour is attacked by alien invaders."
 	size		"large"
 	multiplayer	true
