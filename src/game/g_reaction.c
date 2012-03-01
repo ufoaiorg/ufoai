@@ -652,7 +652,10 @@ static qboolean G_ReactionFireCheckExecution (const edict_t *target)
 		if (tus > 1 && g_reactionnew->integer) {
 			if (G_ReactionFireTargetsExpired(shooter, target, 0)) {
 				shooter->reactionTarget = target;
-				fired |= G_ReactionFireTryToShoot(shooter, target);
+				if (G_ReactionFireTryToShoot(shooter, target)) {
+					G_ReactionFireTargetsAdvance(shooter, target, tus);
+					fired |= qtrue;
+				}
 			}
 		} else {
 			if (shooter->reactionTarget) {
