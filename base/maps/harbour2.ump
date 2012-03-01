@@ -28,7 +28,6 @@ base harbour2/mh_
 // ships ------------------------------------------------------------
 
 tile +s1_01
-	// -tile definition: done  -testall: included -buildcheck:
 	// ship rear part
 {
 4 3
@@ -38,7 +37,6 @@ a    +m   +r    x
 }
 
 tile +s1_02
-	// -tile definition: done  -testall: included -buildcheck:
 	// ship rear part, including the bridge and a middle part with a container
 {
 4 4
@@ -49,7 +47,6 @@ a    +m   +r    x
 }
 
 tile +s2_01
-	// -tile definition: done  -testall: included -buildcheck:
 	// ship middle part, empty
 {
 4 3
@@ -60,7 +57,6 @@ a     +m   +s    x
 
 
 tile +s2_02
-	// -tile definition: done  -testall: included -buildcheck:
 	// ship middle part, with a container
 {
 4 3
@@ -70,7 +66,6 @@ a     +m   +s    x
 }
 
 tile +s3_01
-	// -tile definition: done  -testall: included -buildcheck:
 	// ship front part
 {
 4 3
@@ -82,8 +77,7 @@ a     +m   +t    x
 // water ------------------------------------------------------------
 
 tile +w_01
-	// -tile definition: done  -testall: included -buildcheck:
-	// water, empty, surface Z = 6
+	// water, empty
 {
 3 3
 0      wt       0
@@ -92,8 +86,7 @@ m      +w       x
 }
 
 tile +w_02
-	// -tile definition: done  -testall: included -buildcheck:
-	// water, with a bouy, surface Z = -2
+	// water, with a bouy
 {
 3 3
 0      wt       0
@@ -104,7 +97,6 @@ m      +w       x
 // common tiles -----------------------------------------------------
 
 tile +a_00
-	// tile definition:  testall:  buildcheck:
 	// this should be a required / fixed tile for faster assembling
 {
 3 3
@@ -114,7 +106,6 @@ a     +a      m
 }
 
 tile +a_01
-	// tile definition:  testall:  buildcheck:
 	// a single container : blue, heading north
 {
 3 3
@@ -124,7 +115,6 @@ a     +a      am
 }
 
 tile +a_02
-	// tile definition:  testall:  buildcheck:
 	// a single container : blue, heading east
 {
 3 3
@@ -134,7 +124,6 @@ a     +a      am
 }
 
 tile +a_03
-	// tile definition:  testall:  buildcheck:
 	// three containers, some boxes and crates are used to climb up
 {
 3 4
@@ -145,7 +134,6 @@ a     +a      am
 }
 
 tile +a_04
-	// tile definition:  testall:  buildcheck:
 	// a single container : red, heading north
 {
 3 3
@@ -155,7 +143,6 @@ a     +a      am
 }
 
 tile +a_05
-	// tile definition:  testall:  buildcheck:
 	// four containers : red/blue, heading north
 {
 4 3
@@ -164,8 +151,7 @@ a     +a      +a    am
 0      a      a     0
 }
 tile +a_06
-	// tile definition:  testall:  buildcheck:
-	// 2 x 2 containers : red/blue sorted, heading east, location centered, concludes east + north
+	// 2 x 2 containers : red/blue sorted, heading east
 {
 4 3
 0      a      a     0
@@ -174,8 +160,7 @@ a     +a      +a    am
 }
 
 tile +a_07
-	// tile definition:  testall:  buildcheck:
-	// 2 x 2 containers : red/blue mixed, heading east, location centered, concludes east + north
+	// 2 x 2 containers : red/blue mixed, heading east
 {
 3 3
 0      a      0
@@ -184,7 +169,6 @@ a     +a      am
 }
 
 tile +a_08
-	// tile definition:  testall:  buildcheck:
 	// blue barrels, some boxes and crates, a forklift
 {
 4 4
@@ -195,7 +179,6 @@ a      a      +a    am
 }
 
 tile +a_09
-	// tile -definition: done -testall:  -buildcheck:
 	// waste conainer, scrap metal
 {
 4 4
@@ -206,8 +189,7 @@ a      +a     +a    am
 }
 
 tile +a_10
-	// tile definition:  testall:  buildcheck:
-	// a crane : heading west, location centered, concludes east
+	// a crane : heading west, a truck trailer and crates
 {
 5 3
 0      a      a     a     0
@@ -216,7 +198,6 @@ a      +a     +a    +a    am
 }
 
 tile +a_11
-	// tile definition:  testall:  buildcheck:
 	// two trucks, a truck mounted crane, pile of woods
 {
 4 6
@@ -229,8 +210,7 @@ a     +a      +a    am
 }
 
 tile +a_12
-	// tile definition:  testall:  buildcheck:
-	// a single container : red, heading north
+	// a single container, red, heading north
 {
 3 3
 0      a      0
@@ -239,8 +219,7 @@ a     +a      am
 }
 
 tile +a_13
-	// tile definition:  testall:  buildcheck:
-	// two containers side by side : blue, heading east, location centered, concludes east + north
+	// two containers side by side : blue, heading east
 {
 3 3
 0      a      0
@@ -249,8 +228,7 @@ a     +a      am
 }
 
 tile +a_14
-	// tile definition:  testall:  buildcheck:
-	// three containers as triangle : red, heading north, location centered, concludes east + north
+	// three containers as triangle, red, heading north
 {
 3 3
 0      a      0
@@ -259,7 +237,6 @@ a     +a      am
 }
 
 tile +a_15
-	// tile definition:  testall:  buildcheck:
 	// a hole with water
 {
 3 3
@@ -269,8 +246,7 @@ a     +a      am
 }
 
 tile +a_16
-	// tile definition:  testall:  buildcheck:
-	// a crane : heading east, location centered, concludes centered
+	// a crane : heading east, planks
 {
 4 4
 0      0      a     0
@@ -280,8 +256,7 @@ a     +a     +a     am
 }
 
 tile +a_17
-	// tile definition:  testall:  buildcheck:
-	// four containers : red + blue, heading east, location centered, concludes centered
+	// four containers : red + blue, heading east
 	// boxes and crates to climb up
 {
 4 4
@@ -292,7 +267,6 @@ a     +a      +a    am
 }
 
 tile +a_18
-	// tile definition:  testall:  buildcheck:
 	// 9 containers, some cable reels
 {
 3 5
@@ -304,7 +278,6 @@ a     +a      am
 }
 
 tile +a_19
-	// tile definition:  testall:  buildcheck:
 	// a crane : heading north, with a container, washing machines, cars
 {
 4 4
@@ -315,8 +288,7 @@ a     +a     +a    am
 }
 
 tile +a_20
-	// tile definition:  testall:  buildcheck:
-	// a crane : heading south, location centered, concludes centered
+	// a crane : heading south, 'flameable' barrels, some blockers
 {
 3 4
 0      a     0
@@ -326,8 +298,7 @@ a     +a     am
 }
 
 tile +a_21
-	// tile definition:  testall:  buildcheck:
-	// the dry dock, needs m_05
+	// dry dock with the hoovercraft
 {
 5 5
 0     a     a    0     0
@@ -338,7 +309,6 @@ a     +a    +a   m     0
 }
 
 tile +a_22
-	// tile definition:  testall:  buildcheck:
 	// a pile of gravel
 {
 4 4
@@ -351,7 +321,6 @@ a     +a    +a   am
 // pier -------------------------------------------------------------
 
 tile +m2_01
-	// -tile definition: done  -testall: included -buildcheck:
 	// mole, with a stair down and a wooden landing stage
 {
 4 3
@@ -361,7 +330,6 @@ a     +m    +w    x
 }
 
 tile +m_01
-	// -tile definition: done  -testall: included -buildcheck:
 	// mole, with a stair down to the water
 	// stair leads down from north to south, opposed to +m_05
 {
@@ -372,7 +340,6 @@ a     +m      w
 }
 
 tile +m_02
-	// -tile definition: done  -testall: included -buildcheck:
 	// mole, with two lamps and a small handrail
 {
 3 3
@@ -382,7 +349,6 @@ a     +m      w
 }
 
 tile +m_03
-	// -tile definition: done  -testall: included -buildcheck:
 	// mole, with like a pier pointing east
 {
 3 3
@@ -392,7 +358,6 @@ a     +m      w
 }
 
 tile +m_04
-	// -tile definition: done  -testall: included -buildcheck:
 	// mole, with a constriction
 {
 3 3
@@ -402,7 +367,6 @@ a     +m      w
 }
 
 tile +m_05
-	// tile definition:  testall:  buildcheck:
 	// mole, with a stair down to the water
 	// stair leads down from south to north, opposed to +m_01
 {
@@ -413,7 +377,6 @@ a     +m      w
 }
 
 tile +m_06
-	// -tile definition: done -testall:  -buildcheck:
 	// a ramp down to the water
 {
 4 3
@@ -422,11 +385,12 @@ a     +a     +m     w
 0      a      m     0
 }
 
-//Dropships ---------------------------------------------------------
+// dropships --------------------------------------------------------
 
 tile +craft_drop_firebird
-	// tile definition:  testall:  buildcheck:
 	// 8 x info_human_start
+	// 2 x info_2x2_start
+	// 8 x info_player_start for team 1
 {
 4 5
 0    a     a     0
@@ -437,7 +401,9 @@ x    +a    +a    am
 }
 
 tile +craft_drop_herakles
-	// tile definition:  testall:  buildcheck:
+	// 8 x info_human_start
+	// 2 x info_2x2_start
+	// 8 x info_player_start for team 1
 {
 4 5
 0    a    a    0
@@ -448,7 +414,9 @@ x    +a   +a   am
 }
 
 tile +craft_drop_raptor
-	// tile definition:  testall:  buildcheck:
+	// 8 x info_human_start
+	// 2 x info_2x2_start
+	// 8 x info_player_start for team 1
 {
 5 5
 0    a    a    a    0
@@ -470,47 +438,12 @@ a     +a      m
 0      a      0
 }
 
-// tilesets ---------------------------------------------------------
-
-tileset area_a
-{
-	+a_03
-	+a_05
-	+a_07
-	+a_09
-	+a_11
-	+a_13
-	+a_15
-	+a_19
-}
-
-tileset area_b
-{
-	+a_04
-	+a_06
-	+a_08
-	+a_10
-	+a_12
-	+a_14
-	+a_17
-	+a_18
-}
-
-tileset area_c
-{
-	+a_01
-	+a_02
-	+a_16
-	+a_20
-	+a_22
-}
-
 // assemblies -------------------------------------------------------
 
 assembly harbour
 {
 title "_Harbour"
-size "7 7"
+size "8 7"
 +a_00	"1 1"   //1 - 1     1x1     required tile, only use once!
 +s1_01	"0 1"	//2 - 2		2x1		ship rear part
 +s1_02	"0 1"	//4 - 4		2x2		the ship's bridge
@@ -528,18 +461,18 @@ size "7 7"
 +m_06	"0 1"	//2 - 2		2x1		a+m, a ramp down to the water
 +a_01	"0 1"	//1 - 2		1x1		a single container
 +a_02	"0 1"	//1 - 2		1x1		a single container
-+a_03	"0 1"	//2 - 2		1x1		three containers, boxes and crates
-+a_04	"0 1"	//1 - 2		1x1		a single container
-+a_05	"0 1"	//2 - 4		2x1		four containers
-+a_06	"0 1"	//2 - 4		2x1		2x4 containers
-+a_07	"0 1"	//1 - 2		1x1		2x2 containers
++a_03	"0 1"	//1 - 1		1x1		three containers, boxes and crates
++a_04	"0 1"	//1 - 1		1x1		a single container
++a_05	"0 1"	//2 - 2		2x1		four containers
++a_06	"0 1"	//2 - 2		2x1		2x4 containers
++a_07	"0 1"	//1 - 1		1x1		2x2 containers
 +a_08	"0 1"	//3 - 3		2x2		some boxes and crates, a forklift
 +a_09	"0 1"	//3 - 3		2x2		waste conainer, scrap metal
 +a_10	"0 1"	//3 - 3		3x1		crane, heading west
 +a_11	"0 1"	//8 - 8		2x4		two trucks, a truck mounted crane, pile of woods
-+a_12	"0 2"	//1 - 2		1x1		a single container
-+a_13	"0 1"	//1 - 2		1x1		two container side by side
-+a_14	"0 1"	//1 - 2		1x1		three containers
++a_12	"0 1"	//1 - 1		1x1		a single container
++a_13	"0 1"	//1 - 1		1x1		two container side by side
++a_14	"0 1"	//1 - 1		1x1		three containers
 +a_15	"0 1"	//1 - 1		1x1		hole with water
 +a_16	"0 1"	//3 - 3		2x2		crane, planks
 +a_17	"0 1"	//3 - 3		2x2		six containers, boxes and crates
@@ -552,91 +485,45 @@ size "7 7"
 multiplayer +team2
 }
 
-assembly area
+assembly pier
 {
-title "_Area"
-size "7 7"
-+a_01  "0 3"	//1 - 3
-+a_02  "0 3"	//1 - 3
-+a_03  "0 2"	//2 - 4
-+a_04  "0 3"	//1 - 3
-+a_05  "0 2"	//2 - 4
-+a_06  "0 3"	//1 - 3
-+a_07  "0 3"	//1 - 3
-+a_08  "0 3"	//1 - 3
-+a_09  "0 1"	//1 - 1
-+a_10  "0 1"	//2 - 2
-+a_11  "0 3"	//1 - 3
-+a_12  "0 3"	//1 - 3
-+a_13  "0 3"	//1 - 3
-+a_14  "0 3"	//1 - 3
-+a_15  "0 3"	//1 - 3
-+a_16  "0 1"	//2 - 2
-+a_17  "0 3"	//2 - 6
-+a_18  "0 3"	//1 - 3
-+a_19  "0 1"	//2 - 2
-+a_20  "0 1"	//2 - 2
-+a_21	"0 1"	//5 - 5		2x3		dry dock
-+a_22	"0 1"	//4 - 4		2x2		a pile of gravel
-*rm_drop +craft_drop_firebird "1 1"		//5 - 5
-}
-
-assembly test
-{
-title "_Test"
-size "9 8"
-tileset area_a "0 1"
-tileset area_b "0 1"
-tileset area_c "0 1"
+title "_Pier"
+size "8 7"
 +s1_01	"0 1"	//2 - 2		2x1		ship rear part
-+s1_02	"0 1"	//4 - 4		2x2		the ship's bridge
-+s2_01	"0 2"	//2 - 4		2x1		ship middle part empty
-+s2_02	"0 2"	//2 - 4		2x1		ship middle part with a container
++s1_02	"1 1"	//4 - 4		2x2		the ship's bridge
++s2_01	"0 2"	//2 - 2		2x1		ship middle part empty
++s2_02	"0 2"	//2 - 2		2x1		ship middle part with a container
 +s3_01	"0 2"	//2 - 2		2x1		ship front part
-+w_01	"0 8"	//1 - 8		1x1		water
++w_01	"0 7"	//1 - 1		1x1		water
 +w_02	"0 1"	//1 - 1		1x1		water with bouy
-+m2_01	"0 1"	//2 - 2		2x1		m+w a stair down and a wooden landing stage
++m2_01	"0 1"	//2 - 1		2x1		m+w a stair down and a wooden landing stage
 +m_01	"0 1"	//2 - 2		2x1		a stair down to the water
 +m_02	"0 1"	//1 - 1		1x1		two lamps and a small handrail
 +m_03	"0 1"	//1 - 1		1x1		with like a pier pointing east
 +m_04	"0 1"	//1 - 1		1x1		with a constriction
 +m_05	"0 1"	//1 - 1		1x1		a stair down to the water
 +m_06	"0 1"	//2 - 2		2x1		a+m, a ramp down to the water
-+a_00	"1 1"   //1 - 1     1x1     required tile, only use once!
-+a_01	"0 3"	//1 - 3		1x1		a single container
-+a_02	"0 3"	//1 - 3		1x1		a single container
-+a_03	"0 2"	//2 - 4		1x2		three containers, boxes and crates
-+a_04	"0 3"	//1 - 3		1x1		a single container
-+a_05	"0 2"	//2 - 4		2x1		four containers
-+a_06	"0 2"	//2 - 4		2x1		4x2 containers
-+a_07	"0 3"	//1 - 3		1x1		2x2 containers
-+a_08	"0 3"	//3 - 9		2x2		some boxes and crates, a forklift
++a_01	"0 1"	//1 - 2		1x1		a single container
++a_02	"0 1"	//1 - 2		1x1		a single container
++a_03	"0 1"	//1 - 1		1x1		three containers, boxes and crates
++a_04	"0 1"	//1 - 1		1x1		a single container
++a_05	"0 1"	//2 - 2		2x1		four containers
++a_06	"0 1"	//2 - 2		2x1		2x4 containers
++a_07	"0 1"	//1 - 1		1x1		2x2 containers
++a_08	"0 1"	//3 - 3		2x2		some boxes and crates, a forklift
 +a_09	"0 1"	//3 - 3		2x2		waste conainer, scrap metal
-+a_10	"0 1"	//3 - 3		3x1		crane, heading west
-+a_11	"0 1"	//6 - 6		2x4		two trucks, a truck mounted crane, pile of woods
-+a_12	"0 3"	//1 - 3		1x1		a single container
-+a_13	"0 3"	//1 - 3		1x1		two container side by side
-+a_14	"0 3"	//1 - 3		1x1		three containers
-+a_15	"0 3"	//1 - 3		1x1		hole with water
++a_10	"0 1"	//3 - 3		3x1		crane, heading west, a truck trailer and crates
++a_11	"0 1"	//8 - 8		2x4		two trucks, a truck mounted crane, pile of woods
++a_12	"0 1"	//1 - 1		1x1		a single container
++a_13	"0 1"	//1 - 1		1x1		two container side by side
++a_14	"0 1"	//1 - 1		1x1		three containers
++a_15	"0 1"	//1 - 1		1x1		hole with water
 +a_16	"0 1"	//3 - 3		2x2		crane, planks
-+a_17	"0 3"	//3 - 9		1x2		six containers, boxes and crates
-+a_18	"0 2"	//3 - 6		1x1		9 containers, 1 container has doors
++a_17	"0 1"	//3 - 3		2x2		six containers, boxes and crates
++a_18	"0 1"	//3 - 3		1x1		9 containers
 +a_19	"0 1"	//4 - 4		2x2		crane, with a container, washing machines, cars
-+a_20	"0 1"	//2 - 2		1x2		crane, with barrels
 +a_21	"0 1"	//7 - 7		2x3		a + m, dry dock
 +a_22	"0 1"	//4 - 4		2x2		a pile of gravel
-*rm_drop +craft_drop_firebird "1 1"		//3 - 3
-}
-
-assembly mini
-{
-title "_mini"
-size "3 3"
-+a_01  "0 1"
-+a_02  "0 1"
-+a_03  "0 1"
-+a_04  "0 1"
-+a_05  "0 1"
-+a_06  "0 1"
 *rm_drop +craft_drop_firebird "1 1"
+multiplayer +team2
 }
