@@ -967,9 +967,9 @@ mapdef frozen_small
 // HARBOUR RANDOM MAPS //
 /////////////////////////
 
-mapdef mm_harbour
+mapdef harbour2
 {
-	map			"+mm_harbour"
+	map			"+harbour2"
 	param       "harbour"
 	description	"_An important container harbour is attacked by alien invaders."
 	size		"large"

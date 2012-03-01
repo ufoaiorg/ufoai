@@ -22,7 +22,7 @@
 // x : do not define!, it is used to place a tile at the border of the map
 
 
-base mm_harbour/mh_
+base harbour2/mh_
 
 
 // ships ------------------------------------------------------------
