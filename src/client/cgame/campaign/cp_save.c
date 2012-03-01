@@ -52,7 +52,6 @@ static cvar_t *cl_lastsave;
 
 /**
  * @brief Perform actions after loading a game for single player campaign
- * @note error parameter not used actually
  * @sa SAV_GameLoad
  */
 static qboolean SAV_GameActionsAfterLoad (void)
@@ -201,7 +200,7 @@ qboolean SAV_GameLoad (const char *file, const char **error)
 	}
 	Mem_Free(buf);
 
-	/* doing a subsystem run ;) */
+	/* doing a subsystem run */
 	GAME_ReloadMode();
 	node = XML_GetNode(topNode, SAVE_ROOTNODE);
 	if (!node) {

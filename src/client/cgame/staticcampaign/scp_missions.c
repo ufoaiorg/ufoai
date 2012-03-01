@@ -28,6 +28,7 @@
 #include "../campaign/cp_missions.h"
 #include "../campaign/cp_map.h"
 #include "scp_shared.h"
+#include "scp_parse.h"
 #include "../../../common/binaryexpressionparser.h"
 #include "save/save_staticcampaign.h"
 
@@ -299,72 +300,91 @@ void SCP_CampaignProgress (const missionResults_t *results)
 
 qboolean SCP_Save (xmlNode_t *parent)
 {
-#if 0
+	stageState_t *stage;
+	actMis_t *mis;
 	int i;
 
 	xmlNode_t *scdNode = XML_AddNode(parent, SAVE_STATICCAMPAIGN);
 
-	for (i = 0; i < scd->numStages; i++) {
-		stage_t *stage = &scd->stages[i];
-		xmlNode_t *stageNode = XML_AddNode(scdNode, SAVE_STATICCAMPAIGN_STAGE);
-		XML_AddString(stageNode, SAVE_STATICCAMPAIGN_STAGENAME, stage->name);
+	/* check campaign events */
+	for (i = 0, stage = scd->stage; i < scd->numStages; i++, stage++) {
+		if (stage->active) {
+			setState_t *set;
+			int j;
 
-		// TODO:
+			xmlNode_t *stageNode = XML_AddNode(scdNode, SAVE_STATICCAMPAIGN_STAGE);
+			XML_AddString(stageNode, SAVE_STATICCAMPAIGN_STAGENAME, stage->def->name);
+			XML_AddDate(stageNode, SAVE_STATICCAMPAIGN_STAGEDATE, stage->start.day, stage->start.sec);
+
+			/* write all sets */
+			for (j = 0, set = &scd->set[stage->def->first]; j < stage->def->num; j++, set++) {
+				xmlNode_t *setStateNode = XML_AddNode(stageNode, SAVE_STATICCAMPAIGN_SETSTATE);
+
+				XML_AddString(setStateNode, SAVE_STATICCAMPAIGN_SETSTATENAME, set->def->name);
+				XML_AddBool(setStateNode, SAVE_STATICCAMPAIGN_SETSTATEACTIVE, set->active);
+				XML_AddInt(setStateNode, SAVE_STATICCAMPAIGN_SETSTATEDONE, set->done);
+				XML_AddDate(setStateNode, SAVE_STATICCAMPAIGN_SETSTATESTARTDATE, set->start.day, set->start.sec);
+				XML_AddDate(setStateNode, SAVE_STATICCAMPAIGN_SETSTATEEVENTDATE, set->event.day, set->event.sec);
+			}
+		}
 	}
-#endif
-	return qfalse;
+
+	for (i = 0, mis = scd->activeMissions; i < scd->numActiveMissions; i++, mis++) {
+		xmlNode_t *actMisNode = XML_AddNode(scdNode, SAVE_STATICCAMPAIGN_ACTIVEMISSION);
+		XML_AddString(actMisNode, SAVE_STATICCAMPAIGN_STAGESETNAME, mis->cause->def->name);
+		XML_AddString(actMisNode, SAVE_STATICCAMPAIGN_MISSIONID, mis->mission->id);
+		XML_AddString(actMisNode, SAVE_STATICCAMPAIGN_MISSIONNAME, mis->def->id);
+		XML_AddDate(actMisNode, SAVE_STATICCAMPAIGN_MISSIONEXPIREDATE, mis->expire.day, mis->expire.sec);
+	}
+
+	return qtrue;
 }
 
 qboolean SCP_Load (xmlNode_t *parent)
 {
-#if 0
 	xmlNode_t *node;
 	xmlNode_t *snode;
-
-	OBJZERO(*scd);
 
 	node = XML_GetNode(parent, SAVE_STATICCAMPAIGN);
 	if (!node) {
 		return qfalse;
 	}
 
+	SCP_Parse();
+
 	/* read static campaign data */
 	for (snode = XML_GetNode(node, SAVE_STATICCAMPAIGN_STAGE); snode;
 			snode = XML_GetNextNode(snode, node, SAVE_STATICCAMPAIGN_STAGE)) {
+		xmlNode_t *stateNode;
 		const char *id = XML_GetString(snode, SAVE_STATICCAMPAIGN_STAGENAME);
 		stageState_t *state = SCP_CampaignActivateStage(id);
 		if (!state) {
-			Com_Printf("......unable to load campaign, unknown stage '%s'\n", id);
+			Com_Printf("......error: unable to load campaign, unknown stage '%s'\n", id);
 			return qfalse;
 		}
 
-		XML_GetDate(node, SAVE_STATICCAMPAIGN_STAGEDATE, &state->start.day, &state->start.sec);
+		XML_GetDate(snode, SAVE_STATICCAMPAIGN_STAGEDATE, &state->start.day, &state->start.sec);
 		int num = 0;
-		for (snode = XML_GetNode(node, SAVE_STATICCAMPAIGN_SETSTATE); snode;
-				snode = XML_GetNextNode(snode, node, SAVE_STATICCAMPAIGN_SETSTATE)) {
+		for (stateNode = XML_GetNode(snode, SAVE_STATICCAMPAIGN_SETSTATE); stateNode;
+				stateNode = XML_GetNextNode(stateNode, snode, SAVE_STATICCAMPAIGN_SETSTATE)) {
 			num++;
 			setState_t *set;
 			int j;
-			const char *name = XML_GetString(snode, SAVE_STATICCAMPAIGN_SETSTATENAME);
+			const char *name = XML_GetString(stateNode, SAVE_STATICCAMPAIGN_SETSTATENAME);
 			for (j = 0, set = &scd->set[state->def->first]; j < state->def->num; j++, set++)
 				if (Q_streq(name, set->def->name))
 					break;
 			if (j >= state->def->num) {
-				Com_Printf("......warning: Set '%s' not found (%i/%i)\n", name, num, state->def->num);
+				Com_Printf("......error: Set '%s' not found (%i/%i)\n", name, num, state->def->num);
 				return qfalse;
 			}
 
-			if (!set->def->numMissions) {
-				Com_Printf("......warning: Set with no missions (%s)\n", set->def->name);
-				return qfalse;
-			}
+			set->active = XML_GetBool(stateNode, SAVE_STATICCAMPAIGN_SETSTATEACTIVE, qfalse);
+			set->num = XML_GetInt(stateNode, SAVE_STATICCAMPAIGN_SETSTATENUM, 0);
+			set->done = XML_GetInt(stateNode, SAVE_STATICCAMPAIGN_SETSTATEDONE, 0);
 
-			set->active = XML_GetBool(node, SAVE_STATICCAMPAIGN_SETSTATEACTIVE, qfalse);
-			set->num = XML_GetInt(node, SAVE_STATICCAMPAIGN_SETSTATENUM, 0);
-			set->done = XML_GetInt(node, SAVE_STATICCAMPAIGN_SETSTATEDONE, 0);
-
-			XML_GetDate(node, SAVE_STATICCAMPAIGN_SETSTATESTARTDATE, &set->start.day, &set->start.sec);
-			XML_GetDate(node, SAVE_STATICCAMPAIGN_SETSTATEEVENTDATE, &set->event.day, &set->event.sec);
+			XML_GetDate(stateNode, SAVE_STATICCAMPAIGN_SETSTATESTARTDATE, &set->start.day, &set->start.sec);
+			XML_GetDate(stateNode, SAVE_STATICCAMPAIGN_SETSTATEEVENTDATE, &set->event.day, &set->event.sec);
 		}
 
 		if (num != state->def->num)
@@ -385,13 +405,12 @@ qboolean SCP_Load (xmlNode_t *parent)
 				break;
 			}
 		if (j >= scd->numStageSets) {
-			Com_Printf("......warning: Stage set '%s' not found\n", name);
+			Com_Printf("......error: Stage set '%s' not found\n", name);
 			return qfalse;
 		}
 
 		/* get mission definition */
 		name = XML_GetString(snode, SAVE_STATICCAMPAIGN_MISSIONNAME);
-
 		for (j = 0; j < scd->numMissions; j++)
 			if (Q_streq(name, scd->missions[j].id)) {
 				mis->def = &scd->missions[j];
@@ -400,14 +419,20 @@ qboolean SCP_Load (xmlNode_t *parent)
 
 		/* ignore incomplete info */
 		if (!mis->cause || !mis->def) {
-			Com_Printf("......warning: Incomplete mission info for mission %s\n", name);
+			Com_Printf("......error: Incomplete mission info for mission %s\n", name);
+			return qfalse;
+		}
+
+		name = XML_GetString(snode, SAVE_STATICCAMPAIGN_MISSIONID);
+		mis->mission = CP_GetMissionByIDSilent(name);
+		if (!mis->mission) {
+			Com_Printf("......error: Could not find mission for %s\n", name);
 			return qfalse;
 		}
 
 		/* read time */
-		XML_GetDate(node, SAVE_STATICCAMPAIGN_MISSIONEXPIREDATE, &mis->expire.day, &mis->expire.sec);
+		XML_GetDate(snode, SAVE_STATICCAMPAIGN_MISSIONEXPIREDATE, &mis->expire.day, &mis->expire.sec);
 	}
-#endif
 
 	return qtrue;
 }
