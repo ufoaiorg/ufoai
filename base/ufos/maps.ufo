@@ -977,7 +977,7 @@ mapdef mm_harbour
 	multiplayer	false
 	maxaliens	16
 	civilianteam	worker
-	campaign	false // TODO: activate once tested
+	campaign	true
 	aircraft
 	{
 		craft_drop_firebird
