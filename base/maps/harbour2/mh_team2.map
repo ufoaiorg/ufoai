@@ -1,0 +1,102 @@
+
+// entity 0
+{
+"classname" "worldspawn"
+"maxlevel" "8"
+"angles_day" "-75 10"
+"angles_night" "-75 20"
+"randomspawn" "1"
+// brush 0
+{
+( 64 256 132 ) ( 64 0 132 ) ( 0 256 132 ) tex_buildings/concrete007 0 0 0 0.25 0.25 65280 0 0
+( 64 256 132 ) ( 0 256 132 ) ( 64 256 4 ) tex_buildings/concrete008 0 0 0 0.25 0.25 65280 0 0
+( 256 256 132 ) ( 256 256 4 ) ( 256 0 132 ) tex_common/nodraw 0 0 0 0.25 0.25 65280 0 0
+( 16 0 -64 ) ( 80 0 -64 ) ( 16 256 -64 ) tex_common/nodraw 0 0 0 0.25 0.25 65280 0 0
+( 0 0 4 ) ( 0 0 132 ) ( 64 0 4 ) tex_buildings/concrete008 0 0 0 0.25 0.25 65280 0 0
+( 0 0 4 ) ( 0 256 4 ) ( 0 0 132 ) tex_buildings/concrete008 0 0 0 0.25 0.25 65280 0 0
+}
+}
+// entity 1
+{
+"classname" "info_2x2_start"
+"origin" "64 64 156"
+"angle" "180"
+"team" "2"
+}
+// entity 2
+{
+"classname" "info_2x2_start"
+"origin" "64 192 156"
+"angle" "180"
+"team" "2"
+}
+// entity 3
+{
+"classname" "info_player_start"
+"team" "2"
+"origin" "48 112 156"
+"angle" "180"
+}
+// entity 4
+{
+"classname" "info_player_start"
+"team" "2"
+"origin" "48 144 156"
+"angle" "180"
+}
+// entity 5
+{
+"classname" "info_player_start"
+"team" "2"
+"origin" "144 112 156"
+"angle" "180"
+}
+// entity 6
+{
+"classname" "info_player_start"
+"team" "2"
+"origin" "144 144 156"
+"angle" "180"
+}
+// entity 7
+{
+"classname" "info_player_start"
+"team" "2"
+"origin" "208 112 156"
+"angle" "180"
+}
+// entity 8
+{
+"classname" "info_player_start"
+"team" "2"
+"origin" "208 144 156"
+"angle" "180"
+}
+// entity 9
+{
+"classname" "info_player_start"
+"team" "2"
+"origin" "208 208 156"
+"angle" "90"
+}
+// entity 10
+{
+"classname" "info_player_start"
+"team" "2"
+"origin" "208 48 156"
+"angle" "-90"
+}
+// entity 11
+{
+"classname" "info_player_start"
+"team" "2"
+"origin" "144 208 156"
+"angle" "90"
+}
+// entity 12
+{
+"classname" "info_player_start"
+"team" "2"
+"origin" "144 48 156"
+"angle" "-90"
+}

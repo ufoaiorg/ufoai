@@ -290,32 +290,33 @@ base/maps/harbour2/mh_a_08.map | GNU General Public License 2.0 or later | Marti
 base/maps/harbour2/mh_a_09.map | GNU General Public License 2.0 or later | Martin "mameister" Meister; Holger 'ShipIt' Gellrich
 base/maps/harbour2/mh_a_10.map | GNU General Public License 2.0 or later | Martin "mameister" Meister; Holger 'ShipIt' Gellrich
 base/maps/harbour2/mh_a_11.map | GNU General Public License 2.0 or later | Martin "mameister" Meister; Holger 'ShipIt' Gellrich
-base/maps/harbour2/mh_a_12.map | GNU General Public License 2.0 or later | Martin "mameister" Meister
-base/maps/harbour2/mh_a_13.map | GNU General Public License 2.0 or later | Martin "mameister" Meister
-base/maps/harbour2/mh_a_14.map | GNU General Public License 2.0 or later | Martin "mameister" Meister
-base/maps/harbour2/mh_a_15.map | GNU General Public License 2.0 or later | Martin "mameister" Meister
-base/maps/harbour2/mh_a_16.map | GNU General Public License 2.0 or later | Martin "mameister" Meister
-base/maps/harbour2/mh_a_17.map | GNU General Public License 2.0 or later | Martin "mameister" Meister
-base/maps/harbour2/mh_a_18.map | GNU General Public License 2.0 or later | Martin "mameister" Meister
-base/maps/harbour2/mh_a_19.map | GNU General Public License 2.0 or later | Martin "mameister" Meister
-base/maps/harbour2/mh_a_20.map | GNU General Public License 2.0 or later | Martin "mameister" Meister
+base/maps/harbour2/mh_a_12.map | GNU General Public License 2.0 or later | Martin "mameister" Meister; Holger 'ShipIt' Gellrich
+base/maps/harbour2/mh_a_13.map | GNU General Public License 2.0 or later | Martin "mameister" Meister; Holger 'ShipIt' Gellrich
+base/maps/harbour2/mh_a_14.map | GNU General Public License 2.0 or later | Martin "mameister" Meister; Holger 'ShipIt' Gellrich
+base/maps/harbour2/mh_a_15.map | GNU General Public License 2.0 or later | Martin "mameister" Meister; Holger 'ShipIt' Gellrich
+base/maps/harbour2/mh_a_16.map | GNU General Public License 2.0 or later | Martin "mameister" Meister; Holger 'ShipIt' Gellrich
+base/maps/harbour2/mh_a_17.map | GNU General Public License 2.0 or later | Martin "mameister" Meister; Holger 'ShipIt' Gellrich
+base/maps/harbour2/mh_a_18.map | GNU General Public License 2.0 or later | Martin "mameister" Meister; Holger 'ShipIt' Gellrich
+base/maps/harbour2/mh_a_19.map | GNU General Public License 2.0 or later | Martin "mameister" Meister; Holger 'ShipIt' Gellrich
+base/maps/harbour2/mh_a_20.map | GNU General Public License 2.0 or later | Martin "mameister" Meister; Holger 'ShipIt' Gellrich
 base/maps/harbour2/mh_a_21.map | GNU General Public License 2.0 or later | Martin "mameister" Meister; Holger 'ShipIt' Gellrich
 base/maps/harbour2/mh_a_22.map | GNU General Public License 2.0 or later | Holger 'ShipIt' Gellrich
 base/maps/harbour2/mh_craft_drop_firebird.map | GNU General Public License 2.0 or later | Martin "mameister" Meister; Holger 'ShipIt' Gellrich
 base/maps/harbour2/mh_craft_drop_herakles.map | GNU General Public License 2.0 or later | Martin "mameister" Meister; Holger 'ShipIt' Gellrich
 base/maps/harbour2/mh_craft_drop_raptor.map | GNU General Public License 2.0 or later | Martin "mameister" Meister; Holger 'ShipIt' Gellrich
 base/maps/harbour2/mh_m2_01.map | GNU General Public License 2.0 or later | Martin "mameister" Meister; Holger 'ShipIt' Gellrich
-base/maps/harbour2/mh_m_01.map | GNU General Public License 2.0 or later | Martin "mameister" Meister
-base/maps/harbour2/mh_m_02.map | GNU General Public License 2.0 or later | Martin "mameister" Meister
-base/maps/harbour2/mh_m_03.map | GNU General Public License 2.0 or later | Martin "mameister" Meister
-base/maps/harbour2/mh_m_04.map | GNU General Public License 2.0 or later | Martin "mameister" Meister
-base/maps/harbour2/mh_m_05.map | GNU General Public License 2.0 or later | Martin "mameister" Meister
-base/maps/harbour2/mh_m_06.map | GNU General Public License 2.0 or later | Martin "mameister" Meister
+base/maps/harbour2/mh_m_01.map | GNU General Public License 2.0 or later | Martin "mameister" Meister; Holger 'ShipIt' Gellrich
+base/maps/harbour2/mh_m_02.map | GNU General Public License 2.0 or later | Martin "mameister" Meister; Holger 'ShipIt' Gellrich
+base/maps/harbour2/mh_m_03.map | GNU General Public License 2.0 or later | Martin "mameister" Meister; Holger 'ShipIt' Gellrich
+base/maps/harbour2/mh_m_04.map | GNU General Public License 2.0 or later | Martin "mameister" Meister; Holger 'ShipIt' Gellrich
+base/maps/harbour2/mh_m_05.map | GNU General Public License 2.0 or later | Martin "mameister" Meister; Holger 'ShipIt' Gellrich
+base/maps/harbour2/mh_m_06.map | GNU General Public License 2.0 or later | Martin "mameister" Meister; Holger 'ShipIt' Gellrich
 base/maps/harbour2/mh_s1_01.map | GNU General Public License 2.0 or later | Martin "mameister" Meister; Holger 'ShipIt' Gellrich
 base/maps/harbour2/mh_s1_02.map | GNU General Public License 2.0 or later | Martin "mameister" Meister; Holger 'ShipIt' Gellrich
 base/maps/harbour2/mh_s2_01.map | GNU General Public License 2.0 or later | Martin "mameister" Meister; Holger 'ShipIt' Gellrich
 base/maps/harbour2/mh_s2_02.map | GNU General Public License 2.0 or later | Martin "mameister" Meister; Holger 'ShipIt' Gellrich
 base/maps/harbour2/mh_s3_01.map | GNU General Public License 2.0 or later | Martin "mameister" Meister; Holger 'ShipIt' Gellrich
+base/maps/harbour2/mh_team2.map | GNU General Public License 2.0 or later | Holger 'ShipIt' Gellrich
 base/maps/harbour2/mh_w_01.map | GNU General Public License 2.0 or later | Martin "mameister" Meister; Holger 'ShipIt' Gellrich
 base/maps/harbour2/mh_w_02.map | GNU General Public License 2.0 or later | Martin "mameister" Meister; Holger 'ShipIt' Gellrich
 base/maps/hills/craft_drop_firebird.map | GNU General Public License 2.0 or later | Kostia "Kildor" Romanov

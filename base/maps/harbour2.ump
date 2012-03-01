@@ -293,7 +293,7 @@ a     +a      +a    am
 
 tile +a_18
 	// tile definition:  testall:  buildcheck:
-	// 9 containers
+	// 9 containers, some cable reels
 {
 3 5
 0      a      0
@@ -428,12 +428,12 @@ tile +craft_drop_firebird
 	// tile definition:  testall:  buildcheck:
 	// 8 x info_human_start
 {
-3 5
-0    a    0
-x    +a   am
-x    +a   am
-x    +a   am
-0    a    0
+4 5
+0    a     a     0
+x    +a    +a    am
+x    +a    +a    am
+x    +a    +a    am
+0    a     a     0
 }
 
 tile +craft_drop_herakles
@@ -456,6 +456,18 @@ x    +a   +a   +a   am
 x    +a   +a   +a   am
 x    +a   +a   +a   am
 0    a    a    a    0
+}
+
+// muliplayer tiles -------------------------------------------------
+
+tile +team2
+	// 2 x info_2x2_start for team 2
+	// 10 x info_player_start_start for team 2
+{
+3 3
+0      a      0
+a     +a      m
+0      a      0
 }
 
 // tilesets ---------------------------------------------------------
@@ -537,6 +549,7 @@ size "7 7"
 +a_21	"0 1"	//7 - 7		2x3		a + m, dry dock
 +a_22	"0 1"	//4 - 4		2x2		a pile of gravel
 *rm_drop +craft_drop_firebird "1 1"
+multiplayer +team2
 }
 
 assembly area
