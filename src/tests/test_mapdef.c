@@ -131,6 +131,8 @@ static void testMapDefsMassRMA (void)
 						ufo = (const char *) (iter->data);
 					if (ufo)
 						Cvar_Set("rm_ufo", Com_GetRandomMapAssemblyNameForCraft(ufo));
+					else
+						Cvar_Set("rm_ufo", "");
 
 					for (i = 0; i < 50; i++) {
 						const char *ass = NULL;
