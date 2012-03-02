@@ -114,10 +114,21 @@ static void testMapDefsMassRMA (void)
 			sv_threads->integer = 0;
 
 			LIST_Foreach(md->aircraft, char const, craft) {
+				linkedList_t *iter;
+				const char *ufo = NULL;
+				qboolean didItOnce = qfalse;
+
 				if (craft)
 					Cvar_Set("rm_drop", Com_GetRandomMapAssemblyNameForCraft(craft));
 
-				LIST_Foreach(md->ufos, char const, ufo) {
+				/* This is tricky. Some maps don't have any ufo on them and thus in the mapdef.
+				 * That would cause a LIST_Foreach macro to never run it's body. That's why this
+				 * for-loop seems to have two termination conditions. In fact, we have to manually
+				 * exit the for-loop if we ran it just once (without ufos).
+				 */
+				for (iter = md->ufos; iter || !didItOnce; iter = iter->next) {
+					if (iter)
+						ufo = (const char *) (iter->data);
 					if (ufo)
 						Cvar_Set("rm_ufo", Com_GetRandomMapAssemblyNameForCraft(ufo));
 
@@ -170,6 +181,9 @@ static void testMapDefsMassRMA (void)
 							Com_Printf("Map: %s Assembly: %s Seed: %i tiles: %i ms: %li\n", p, md->param, i, randomMap->numPlaced, time);
 						Mem_Free(randomMap);
 					}
+					didItOnce = qtrue;
+					if (!iter)
+						break;
 				}
 			}
 		}
