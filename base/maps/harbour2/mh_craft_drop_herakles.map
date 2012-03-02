@@ -377,20 +377,12 @@
 // entity 10
 {
 "classname" "misc_model"
-"origin" "210 428 176"
-"model" "models/aircraft/drop_herakles/herakles_top.md2"
-"spawnflags" "254"
-"angles" "0 -90 0"
-}
-// entity 11
-{
-"classname" "misc_model"
 "model" "models/aircraft/drop_herakles/herakles_int.md2"
 "origin" "210 346 190"
 "spawnflags" "255"
 "angles" "0 90 0"
 }
-// entity 12
+// entity 11
 {
 "classname" "misc_model"
 "model" "models/aircraft/drop_herakles/herakles_int_top.md2"
@@ -398,7 +390,7 @@
 "spawnflags" "248"
 "angles" "0 90 0"
 }
-// entity 13
+// entity 12
 {
 "classname" "misc_model"
 "model" "models/aircraft/drop_herakles/seats.md2"
@@ -406,7 +398,7 @@
 "spawnflags" "7"
 "angles" "0 90 0"
 }
-// entity 14
+// entity 13
 {
 "classname" "misc_model"
 "model" "models/aircraft/drop_herakles/seats_2.md2"
@@ -414,7 +406,7 @@
 "spawnflags" "7"
 "angles" "0 90 0"
 }
-// entity 15
+// entity 14
 {
 "classname" "misc_model"
 "model" "models/aircraft/drop_herakles/herakles_pod_back.md2"
@@ -422,7 +414,7 @@
 "spawnflags" "255"
 "angles" "0 90 0"
 }
-// entity 16
+// entity 15
 {
 "classname" "trigger_rescue"
 "team" "1"
@@ -436,13 +428,13 @@
 ( 128 448 146 ) ( 128 576 146 ) ( 128 448 242 ) tex_common/trigger 0 8 0 0.25 0.25 63488 0 0
 }
 }
-// entity 17
+// entity 16
 {
 "classname" "info_human_start"
 "origin" "368 656 156"
 "angle" "-1.4033e-014"
 }
-// entity 18
+// entity 17
 {
 "classname" "func_group"
 // brush 0
@@ -518,7 +510,7 @@
 ( 482 32 168 ) ( 482 64 168 ) ( 482 32 264 ) tex_misc/box008 201.1428 0.0001220703 0 0.109375 0.109375 65280 0 0
 }
 }
-// entity 19
+// entity 18
 {
 "classname" "func_group"
 // brush 0
@@ -594,52 +586,52 @@
 ( 450 128 168 ) ( 450 160 168 ) ( 450 128 264 ) tex_misc/box008 91.42932 0.0001220703 0 0.1093751 0.109375 65280 0 0
 }
 }
-// entity 20
+// entity 19
 {
 "classname" "info_player_start"
 "team" "1"
 "origin" "400 496 156"
 }
-// entity 21
+// entity 20
 {
 "classname" "info_player_start"
 "team" "1"
 "origin" "400 208 156"
 }
-// entity 22
+// entity 21
 {
 "classname" "info_player_start"
 "team" "1"
 "origin" "400 592 156"
 "angle" "90"
 }
-// entity 23
+// entity 22
 {
 "classname" "info_player_start"
 "team" "1"
 "origin" "368 48 156"
 "angle" "-90"
 }
-// entity 24
+// entity 23
 {
 "classname" "info_player_start"
 "team" "1"
 "origin" "400 464 156"
 }
-// entity 25
+// entity 24
 {
 "classname" "info_player_start"
 "team" "1"
 "origin" "400 176 156"
 }
-// entity 26
+// entity 25
 {
 "classname" "info_player_start"
 "team" "1"
 "origin" "240 48 156"
 "angle" "-90"
 }
-// entity 27
+// entity 26
 {
 "classname" "info_player_start"
 "team" "1"
