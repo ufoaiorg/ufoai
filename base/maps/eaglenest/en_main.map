@@ -7319,7 +7319,7 @@
 "classname" "misc_model"
 "origin" "850 718 88"
 "model" "models/objects/vegi/fir/fir.md2"
-"angles" "0 0 2.50448e-006"
+"angles" "0 0 0"
 "spawnflags" "254"
 }
 // entity 21

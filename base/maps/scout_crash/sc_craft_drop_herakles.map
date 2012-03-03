@@ -442,7 +442,7 @@
 "origin" "308 146 30"
 "model" "models/aircraft/drop_herakles/herakles_top.md2"
 "spawnflags" "254"
-"angles" "0 2.50448e-06 0"
+"angles" "0 0 0"
 }
 // entity 15
 {

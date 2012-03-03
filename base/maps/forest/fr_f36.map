@@ -641,7 +641,7 @@
 {
 "classname" "misc_model"
 "origin" "446.55 277.162 6.04388"
-"angles" "1.00042e-005 -60 -3"
+"angles" "0 -60 -3"
 "skin" "0"
 "spawnflags" "255"
 "model" "models/objects/vegi/fern2/fern2_lrg.md2"

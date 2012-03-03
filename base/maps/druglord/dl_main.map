@@ -11992,7 +11992,7 @@
 "classname" "misc_model"
 "origin" "440 42.875 28"
 "modelscale_vec" "1.5 1.5 1.5"
-"angles" "0 90 1.00179e-005"
+"angles" "0 90 0"
 "skin" "0"
 "spawnflags" "255"
 "model" "models/objects/furniture/coffeemaker/coffeemaker.md2"
@@ -12010,7 +12010,7 @@
 {
 "classname" "misc_model"
 "origin" "1361.38 1736.38 26.8821"
-"angles" "5.91708e-007 30 90"
+"angles" "0 30 90"
 "skin" "0"
 "spawnflags" "255"
 "model" "models/weapons/pistol/pistol.md2"
@@ -12019,7 +12019,7 @@
 {
 "classname" "misc_model"
 "origin" "1346.9 918.775 -49.5"
-"angles" "6.83245e-007 2.50448e-006 1.00179e-005"
+"angles" "0 0 0"
 "skin" "0"
 "spawnflags" "255"
 "model" "models/objects/vegi/plant_hang/plant2.md2"

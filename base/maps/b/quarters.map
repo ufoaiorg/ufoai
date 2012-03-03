@@ -6956,7 +6956,7 @@
 "model" "models/objects/furniture/locker/locker2.md2"
 "origin" "367 432 70"
 "spawnflags" "2"
-"angles" "0 2.50448e-06 0"
+"angles" "0 0 0"
 }
 // entity 95
 {

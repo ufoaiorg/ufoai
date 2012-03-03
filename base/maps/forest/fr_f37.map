@@ -283,7 +283,7 @@
 "origin" "28 228 2"
 "model" "models/objects/vegi/fir/fir.md2"
 "skin" "1"
-"angles" "0 2.50448e-006 0"
+"angles" "0 0 0"
 "modelscale_vec" "0.5 0.5 0.5"
 }
 // entity 3
@@ -317,7 +317,7 @@
 "spawnflags" "255"
 "model" "models/objects/vegi/tropic/tropic01.md2"
 "origin" "86 160 14"
-"angles" "4.65334e-007 -90 10.7429"
+"angles" "0 -90 10.7429"
 }
 // entity 7
 {

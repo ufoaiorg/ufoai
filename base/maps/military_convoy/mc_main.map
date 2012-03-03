@@ -8773,7 +8773,7 @@
 "classname" "misc_model"
 "origin" "2422 80 64"
 "model" "models/objects/tent/tent.md2"
-"angles" "6.83245e-007 -90 2.50448e-006"
+"angles" "0 -90 0"
 "spawnflags" "254"
 }
 // entity 110

@@ -7,10 +7,10 @@
 // brush 0
 {
 ( 128 384 0 ) ( 768 380 0 ) ( 768 384 0 ) tex_common/nodraw 0 0 -90 0.5 0.5 65280 0 0
-( 128 384 8 ) ( 768 384 8 ) ( 768 380 8 ) tex_streets/street004 31.99997 0 -3.508355e-15 0.4999999 0.5 65280 0 0
+( 128 384 8 ) ( 768 384 8 ) ( 768 380 8 ) tex_streets/street004 31.99997 0 -0 0.4999999 0.5 65280 0 0
 ( 128 384 8 ) ( 132 380 8 ) ( 132 380 0 ) tex_streets/street004 0 0 90 0.4999999 -0.5 65280 0 0
 ( 132 380 0 ) ( 768 380 8 ) ( 768 380 0 ) tex_streets/street004 31.99997 0 0 0.4999999 0.5 65280 0 0
-( 768 384 8 ) ( 768 380 0 ) ( 768 380 8 ) tex_streets/street004 15.99994 1.567548e-14 -3.508355e-15 0.4999999 0.5 65280 0 0
+( 768 384 8 ) ( 768 380 0 ) ( 768 380 8 ) tex_streets/street004 15.99994 0 -0 0.4999999 0.5 65280 0 0
 ( 128 384 8 ) ( 768 384 0 ) ( 768 384 8 ) tex_streets/street004 31.99997 0 0 0.4999999 0.5 65280 0 0
 }
 // brush 1
@@ -316,7 +316,7 @@
 "model" "models/aircraft/drop_herakles/herakles_int.md2"
 "origin" "346 206 44"
 "spawnflags" "255"
-"angles" "0 2.50448e-06 0"
+"angles" "0 0 0"
 }
 // entity 11
 {
@@ -324,7 +324,7 @@
 "model" "models/aircraft/drop_herakles/herakles_int_top.md2"
 "origin" "346 206 44"
 "spawnflags" "254"
-"angles" "0 2.50448e-06 0"
+"angles" "0 0 0"
 }
 // entity 12
 {
@@ -332,7 +332,7 @@
 "model" "models/aircraft/drop_herakles/seats.md2"
 "origin" "346 206 44"
 "spawnflags" "1"
-"angles" "0 2.50448e-06 0"
+"angles" "0 0 0"
 }
 // entity 13
 {
@@ -340,7 +340,7 @@
 "model" "models/aircraft/drop_herakles/seats_2.md2"
 "origin" "346 206 44"
 "spawnflags" "1"
-"angles" "0 2.50448e-06 0"
+"angles" "0 0 0"
 }
 // entity 14
 {
@@ -348,7 +348,7 @@
 "model" "models/aircraft/drop_herakles/herakles_pod_back.md2"
 "origin" "346 206 44"
 "spawnflags" "255"
-"angles" "0 2.50448e-06 0"
+"angles" "0 0 0"
 }
 // entity 15
 {

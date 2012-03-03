@@ -2532,7 +2532,7 @@
 "classname" "misc_model"
 "spawnflags" "255"
 "model" "models/objects/vegi/tree03/tree03.md2"
-"angles" "1.41064e-008 -56 2"
+"angles" "0 -56 2"
 "origin" "309.496 450.312 1.87747"
 }
 // entity 12
@@ -2863,7 +2863,7 @@
 "classname" "misc_model"
 "origin" "434 484 20"
 "model" "models/objects/vegi/fern/fern.md2"
-"angles" "-1.47034 26.0588 -3.19311e-009"
+"angles" "-1.47034 26.0588 -0"
 "spawnflags" "1023"
 }
 // entity 52

@@ -839,7 +839,7 @@
 "origin" "448 406 224"
 "model" "models/aircraft/ufo_scout/ufo_scout_upper.md2"
 "spawnflags" "254"
-"angles" "1.00179e-005 -180 71.8564"
+"angles" "0 -180 71.8564"
 }
 // entity 8
 {
@@ -1932,7 +1932,7 @@
 {
 "classname" "info_alien_start"
 "origin" "272 272 61"
-"angle" "-1.4033e-014"
+"angle" "-0"
 }
 // entity 27
 {
