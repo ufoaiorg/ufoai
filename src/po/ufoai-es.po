@@ -2,18 +2,18 @@ msgid ""
 msgstr ""
 "Project-Id-Version: UFO Alien Invasion\n"
 "Report-Msgid-Bugs-To: tlh2000@users.sourceforge.net\n"
-"POT-Creation-Date: 2012-02-28 14:58-0600\n"
-"PO-Revision-Date: 2012-02-28 14:16-0600\n"
+"POT-Creation-Date: 2012-03-03 09:05-0600\n"
+"PO-Revision-Date: 2012-03-03 09:03-0600\n"
 "Last-Translator: DarkRain <darkrainx@users.sourceforge.net>\n"
 "Language-Team: \n"
-"Language: \n"
+"Language: es\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=2; plural=(n != 1);\n"
+"X-Generator: Pootle 2.1.6\n"
 "X-Poedit-SourceCharset: utf-8\n"
-"Plural-Forms: nplurals=2; plural=(n != 1)\n"
 "X-Poedit-Basepath: ../\n"
-"X-Poedit-Language: Spanish\n"
 
 #: ../base/maps/africa.ump:225 ../base/maps/africa.ump:246
 msgid "Africa"
@@ -96,6 +96,14 @@ msgstr "Partida a Muerte Multijugador"
 msgid "Gasstation"
 msgstr "Gasolinera"
 
+#: ../base/maps/harbour2.ump:445
+msgid "Harbour"
+msgstr "Puerto"
+
+#: ../base/maps/harbour2.ump:490
+msgid "Pier"
+msgstr "Muelle"
+
 #: ../base/maps/hills.ump:488 ../base/maps/hills.ump:519
 #: ../base/maps/hills.ump:571
 msgid "UFO landed in hills area"
@@ -133,22 +141,6 @@ msgstr "Mercado"
 #: ../base/maps/military_convoy.ump:69
 msgid "Military convoy"
 msgstr "Convoy militar"
-
-#: ../base/maps/mm_harbour.ump:506
-msgid "Harbour"
-msgstr "Puerto"
-
-#: ../base/maps/mm_harbour.ump:532
-msgid "Area"
-msgstr "Área"
-
-#: ../base/maps/mm_harbour.ump:560
-msgid "Test"
-msgstr "Prueba"
-
-#: ../base/maps/mm_harbour.ump:607
-msgid "mini"
-msgstr "Mini"
 
 #: ../base/maps/oriental.ump:464
 msgid "Oriental small"
@@ -2838,7 +2830,7 @@ msgstr "mail_new_radar_contact"
 #: ../base/ufos/research.ufo:5201 ../base/ufos/research.ufo:5270
 #: ../base/ufos/research.ufo:5299
 msgid "mail_from_col_falkland"
-msgstr "Col. Ingrid Falkland, División de Inteligencia, PHALANX, Comando de Operaciones del Atlántico"
+msgstr "Cnel. Ingrid Falkland, División de Inteligencia, PHALANX, Comando de Operaciones del Atlántico"
 
 #: ../base/ufos/events.ufo:233
 msgid "Response Too Late -- %s"
@@ -3016,7 +3008,7 @@ msgstr "Almacén para OVNI"
 
 #: ../base/ufos/installation.ufo:33
 msgid "The UFO Yard is a camouflaged storage field for captured UFOs. It can be placed anywhere in the world to store captured UFOs for dismantling and research, and can transfer UFOs to other Yards. UFOs stored in a Yard can be researched and/or dismantled from any PHALANX base with appropriate facilities, but these activities proceed more slowly the further away the UFO Yard is from the base."
-msgstr "El Almacén para OVNI es un campo camuflado para el almacenamiento de los OVNI capturados. Puede ser construido en cualquier parte del globo para almacenar los OVNI capturados para su investigación y desmantelamiento, y puede transferir OVNI a otros Corrales. Los OVNI elmacenados en un Corral pueden ser investigados y/o desmantelados desde cualquier base de PHALANX con las instalaciones adecuadas, pero estas acciones se llevan a cabo de manera más lenta mientras más lejos este el Corral para OVNI de la base"
+msgstr "El Almacén para OVNI es un campo camuflado para el almacenamiento de los OVNI capturados. Puede ser construido en cualquier parte del globo para almacenar los OVNI capturados para su investigación y desmantelamiento, y puede transferir OVNI a otros Almacenes. Los OVNI almacenados pueden ser investigados y/o desmantelados desde cualquier base de PHALANX con las instalaciones adecuadas, pero estas acciones se llevan a cabo de manera más lenta mientras más lejos este el Almacén para OVNI de la base"
 
 #: ../base/ufos/installation.ufo:38 ../base/ufos/ui/geoscape.ufo:956
 msgid "SAM Site"
@@ -3158,7 +3150,7 @@ msgstr "Lugar del choque OVNI"
 msgid "A Bomber has landed in the middle of a city."
 msgstr "Un Bombardero ha aterrizado en medio de una ciudad."
 
-#: ../base/ufos/maps.ufo:268 ../base/ufos/maps.ufo:3399
+#: ../base/ufos/maps.ufo:268 ../base/ufos/maps.ufo:3408
 msgid "A small UFO has crashed in this mining region."
 msgstr "Un pequeño OVNI se ha estrellado en esta región minera."
 
@@ -3197,228 +3189,232 @@ msgstr "Una zona industrial en una región helada."
 msgid "An underpopulated area in a cold region."
 msgstr "Zona de baja población en una región helada."
 
-#: ../base/ufos/maps.ufo:974
+#: ../base/ufos/maps.ufo:973
 msgid "An important container harbour is attacked by alien invaders."
 msgstr "Un importante puerto de carga es atacado por invasores alienígenas."
 
-#: ../base/ufos/maps.ufo:1019 ../base/ufos/maps.ufo:1064
-#: ../base/ufos/maps.ufo:1106
+#: ../base/ufos/maps.ufo:1028 ../base/ufos/maps.ufo:1073
+#: ../base/ufos/maps.ufo:1115
 msgid "UFO landed in hills area."
 msgstr "Aterrizaje OVNI en una zona montañosa."
 
-#: ../base/ufos/maps.ufo:1153 ../base/ufos/maps.ufo:1197
+#: ../base/ufos/maps.ufo:1162 ../base/ufos/maps.ufo:1206
 msgid "Industrial theme."
 msgstr "Sitio industrial"
 
-#: ../base/ufos/maps.ufo:1244 ../base/ufos/maps.ufo:1294
-#: ../base/ufos/maps.ufo:2443
+#: ../base/ufos/maps.ufo:1253 ../base/ufos/maps.ufo:1303
+#: ../base/ufos/maps.ufo:2452
 msgid "A classic eastern suburban area."
 msgstr "Una típica área suburbana occidental."
 
-#: ../base/ufos/maps.ufo:1347
+#: ../base/ufos/maps.ufo:1356
 msgid "A laboratory where they examined found UFO wreck tiles."
 msgstr "Un laboratorio donde se examinaban algunos restos OVNI."
 
-#: ../base/ufos/maps.ufo:1404
+#: ../base/ufos/maps.ufo:1413
 msgid "A mansion near the coast."
 msgstr "Una mansión cerca de la costa."
 
-#: ../base/ufos/maps.ufo:1455 ../base/ufos/maps.ufo:1495
-#: ../base/ufos/maps.ufo:1578
+#: ../base/ufos/maps.ufo:1464 ../base/ufos/maps.ufo:1504
+#: ../base/ufos/maps.ufo:1587
 msgid "A suburban district of an oriental area."
 msgstr "Un distrito suburbano de una región oriental."
 
-#: ../base/ufos/maps.ufo:1537
+#: ../base/ufos/maps.ufo:1546
 msgid "Crashed UFO in oriental suburban district."
 msgstr "OVNI caído en un distrito suburbano de una región oriental."
 
-#: ../base/ufos/maps.ufo:1621 ../base/ufos/maps.ufo:1661
-#: ../base/ufos/maps.ufo:1702
+#: ../base/ufos/maps.ufo:1630 ../base/ufos/maps.ufo:1670
+#: ../base/ufos/maps.ufo:1711
 msgid "A cleared stretch of land in the middle of the jungle."
 msgstr "Un claro a la mitad de la selva."
 
-#: ../base/ufos/maps.ufo:1743 ../base/ufos/maps.ufo:1783
+#: ../base/ufos/maps.ufo:1752 ../base/ufos/maps.ufo:1792
 msgid "A river runs through this piece of jungle."
 msgstr "Hay un río que corre a travez de esta parte de la selva."
 
-#: ../base/ufos/maps.ufo:1829
+#: ../base/ufos/maps.ufo:1838
 msgid "UFO Crashsite."
 msgstr "Lugar del choque OVNI"
 
-#: ../base/ufos/maps.ufo:1861 ../base/ufos/maps.ufo:1903
-#: ../base/ufos/maps.ufo:1944 ../base/ufos/maps.ufo:1987
+#: ../base/ufos/maps.ufo:1870 ../base/ufos/maps.ufo:1912
+#: ../base/ufos/maps.ufo:1953 ../base/ufos/maps.ufo:1996
 msgid "A peaceful neighbourhood on the outskirts of a centre of population."
 msgstr "Un barrio pacifico a las afueras de un centro de población."
 
-#: ../base/ufos/maps.ufo:2034
+#: ../base/ufos/maps.ufo:2043
 msgid "Cemetery terror mission."
 msgstr "Misión de terror en un cementerio"
 
-#: ../base/ufos/maps.ufo:2075 ../base/ufos/maps.ufo:3058
+#: ../base/ufos/maps.ufo:2084 ../base/ufos/maps.ufo:3067
 msgid "A small neighbourhood in a warm urban region."
 msgstr "Un pequeño vecindario urbano en una región templada."
 
-#: ../base/ufos/maps.ufo:2127
+#: ../base/ufos/maps.ufo:2136
 msgid "A place where people come to relax and mingle."
 msgstr "Un lugar a donde la gente viene a relajarse y convivir."
 
-#: ../base/ufos/maps.ufo:2179
+#: ../base/ufos/maps.ufo:2188
 msgid "An office complex under construction."
 msgstr "Un complejo de oficinas en construcción."
 
-#: ../base/ufos/maps.ufo:2231
+#: ../base/ufos/maps.ufo:2240
 msgid "A tropical area where several suspected criminals have made their homes."
 msgstr "Una región tropical donde varios presuntos criminales han hecho sus hogares."
 
-#: ../base/ufos/maps.ufo:2296
+#: ../base/ufos/maps.ufo:2305
 msgid "A small estate in the mountains."
 msgstr "Una pequeña finca en las montañas."
 
-#: ../base/ufos/maps.ufo:2337
+#: ../base/ufos/maps.ufo:2346
 msgid "A place where citizens come to replenish their vehicles' fuel supply."
 msgstr "Una estación de gasolina."
 
-#: ../base/ufos/maps.ufo:2390
+#: ../base/ufos/maps.ufo:2399
 msgid "A small office in a mountainous region."
 msgstr "Una pequeña oficina en una región montañosa."
 
-#: ../base/ufos/maps.ufo:2498
+#: ../base/ufos/maps.ufo:2507
 msgid "A kind of communal gathering centre annex foraging facility, known as a supermarket."
 msgstr "Un supermercado."
 
-#: ../base/ufos/maps.ufo:2553
+#: ../base/ufos/maps.ufo:2562
 msgid "A military convoy has caught the eye of the aliens."
 msgstr "Un convoy militar ha llamado la atención de los alienígenas."
 
-#: ../base/ufos/maps.ufo:2605
+#: ../base/ufos/maps.ufo:2614
 msgid "A shelter that was built to house people in times of major disasters. Some internal blast doors may have been closed."
 msgstr "Un refugio construido para situaciones de emergencia. Algunas puertas pueden estar bloqueadas."
 
-#: ../base/ufos/maps.ufo:2658
+#: ../base/ufos/maps.ufo:2667
 msgid "A small industrial area."
 msgstr "Una pequeña zona industrial."
 
-#: ../base/ufos/maps.ufo:2711
+#: ../base/ufos/maps.ufo:2720
 msgid "A stadium used for various recreational events."
 msgstr "Un estadio utilizado para eventos recreativos."
 
-#: ../base/ufos/maps.ufo:2765
+#: ../base/ufos/maps.ufo:2774
 msgid "An office complex in the centre of town."
 msgstr "Un complejo de oficinas en el centro de la ciudad."
 
-#: ../base/ufos/maps.ufo:2820
+#: ../base/ufos/maps.ufo:2829
 msgid "An industrial area, used for loading and unloading goods."
 msgstr "Una zona industrial, usada para carga y descarga de bienes."
 
-#: ../base/ufos/maps.ufo:2870 ../base/ufos/maps.ufo:2915
+#: ../base/ufos/maps.ufo:2879 ../base/ufos/maps.ufo:2924
 msgid "A small bungalow."
 msgstr "Una pequeña cabaña."
 
-#: ../base/ufos/maps.ufo:2962
+#: ../base/ufos/maps.ufo:2971
 msgid "A bunker used in a previous conflict."
 msgstr "Un refugio subterráneo usado en un conflicto anterior."
 
-#: ../base/ufos/maps.ufo:3013
+#: ../base/ufos/maps.ufo:3022
 msgid "A small industry city area."
 msgstr "Una pequeña zona industrial."
 
-#: ../base/ufos/maps.ufo:3108
+#: ../base/ufos/maps.ufo:3117
 msgid "A crashed UFO-Corrupter."
 msgstr "Un OVNI - Corruptor caído."
 
-#: ../base/ufos/maps.ufo:3156
+#: ../base/ufos/maps.ufo:3165
 msgid "A hydroelectricity dam that is threatened by the alien invaders."
 msgstr "Una central hidroeléctrica amenazada por los invasores alienígenas."
 
-#: ../base/ufos/maps.ufo:3205
+#: ../base/ufos/maps.ufo:3214
 msgid "A small village."
 msgstr "Una pequeña villa."
 
-#: ../base/ufos/maps.ufo:3253
+#: ../base/ufos/maps.ufo:3262
 msgid "An estate owned by rich and influential people."
 msgstr "Una finca de gente rica e influyente."
 
-#: ../base/ufos/maps.ufo:3299
+#: ../base/ufos/maps.ufo:3308
 msgid "An excavation site that has fallen under alien attack."
 msgstr "Un sitio de excavación que ha sido atacado por los alienígenas."
 
-#: ../base/ufos/maps.ufo:3350
+#: ../base/ufos/maps.ufo:3359
 msgid "A ferry."
 msgstr "Un transbordador."
 
-#: ../base/ufos/maps.ufo:3449
+#: ../base/ufos/maps.ufo:3458
 msgid "A fuel depot the aliens try to destroy."
 msgstr "Un almacén de combustible que los alienígenas intentan destruir."
 
-#: ../base/ufos/maps.ufo:3490
+#: ../base/ufos/maps.ufo:3499
 msgid "A depot with the name 'The Gate' where secret technology is stored."
 msgstr "Un almacén llamado \"The Gate\" donde se resguarda tecnología secreta"
 
-#: ../base/ufos/maps.ufo:3538
+#: ../base/ufos/maps.ufo:3547
 msgid "A local harbour."
 msgstr "Un puerto local."
 
-#: ../base/ufos/maps.ufo:3596 ../base/ufos/maps.ufo:3632
+#: ../base/ufos/maps.ufo:3605 ../base/ufos/maps.ufo:3641
 msgid "A small settlement in winter."
 msgstr "Un pequeño asentamiento invernal."
 
-#: ../base/ufos/maps.ufo:3680
+#: ../base/ufos/maps.ufo:3689
 msgid "An old mine."
 msgstr "Una vieja mina."
 
-#: ../base/ufos/maps.ufo:3733
+#: ../base/ufos/maps.ufo:3742
+msgid "Neighbourhood."
+msgstr "Vecindario."
+
+#: ../base/ufos/maps.ufo:3785
 msgid "An office complex on the outskirts of town."
 msgstr "Un complejo de oficinas a las afueras de la ciudad."
 
-#: ../base/ufos/maps.ufo:3780 ../base/ufos/maps.ufo:3827
+#: ../base/ufos/maps.ufo:3832 ../base/ufos/maps.ufo:3879
 msgid "An urban district in an oriental region."
 msgstr "Zona urbana de una región oriental."
 
-#: ../base/ufos/maps.ufo:3876
+#: ../base/ufos/maps.ufo:3928
 msgid "Underground pipe construction site."
 msgstr "Zona de construcción de una tubería subterránea."
 
-#: ../base/ufos/maps.ufo:3923
+#: ../base/ufos/maps.ufo:3975
 msgid "A luxurious vacation resort."
 msgstr "Un lujoso sitio vacacional."
 
-#: ../base/ufos/maps.ufo:3973
+#: ../base/ufos/maps.ufo:4025
 msgid "A rather old-fashioned suburban district."
 msgstr "Un antiguo distrito suburbano."
 
-#: ../base/ufos/maps.ufo:4037
+#: ../base/ufos/maps.ufo:4089
 msgid "A crashed Scout UFO."
 msgstr "Un OVNI explorador caído"
 
-#: ../base/ufos/maps.ufo:4122
+#: ../base/ufos/maps.ufo:4174
 msgid "A subway station in a suburban part of town."
 msgstr "Una estación del metro en una zona suburbana de la ciudad."
 
-#: ../base/ufos/maps.ufo:4165
+#: ../base/ufos/maps.ufo:4217
 msgid "A suburban district."
 msgstr "Un distrito suburbano."
 
-#: ../base/ufos/maps.ufo:4213
+#: ../base/ufos/maps.ufo:4265
 msgid "Wilderness terror mission."
 msgstr "Misión de terror en el desierto"
 
-#: ../base/ufos/maps.ufo:4264
+#: ../base/ufos/maps.ufo:4316
 msgid "An alien base."
 msgstr "Una base alienígena"
 
-#: ../base/ufos/maps.ufo:4285
+#: ../base/ufos/maps.ufo:4337
 msgid "Base is under attack."
 msgstr "Base bajo ataque"
 
-#: ../base/ufos/maps.ufo:4297
+#: ../base/ufos/maps.ufo:4349
 msgid "Rescue mission."
 msgstr "Misión de rescate"
 
-#: ../base/ufos/maps.ufo:4327
+#: ../base/ufos/maps.ufo:4379
 msgid "Training Zone: Alpha"
 msgstr "Zona de Entrenamiento: Alfa"
 
-#: ../base/ufos/maps.ufo:4344
+#: ../base/ufos/maps.ufo:4396
 msgid "Training Zone: Bravo"
 msgstr "Zona de Entrenamiento: Bravo"
 
@@ -4096,7 +4092,7 @@ msgid "alien_origins_txt"
 msgstr ""
 "Buenos días, Señor. Tenemos los resultados del proyecto Origen Alienígena y creo que le serán alentadores. Este es mi resumen sobre la información obtenida:\n"
 "\n"
-"En general el proyecto ha sido un rotundo éxito de integración y cooperación. Días atrás, y durante cortos períodos de tiempo, hemos logrado tener el control directo de todas las instalaciones de detecciones civiles y militares existentes en el sistema solar, incluyendo varias instalaciones en el cinturón de asteroides, tan secretas que hemos tenido que jurar silencio ante las Naciones Unidas. Nuestras sondas espaciales han revisado meticulosamente todos los espacios edificables del sistema solar para detectar cualquier signo de una base extraterrestre. Con todos los medios de los que disponíamos hemos tenido, durante las pasadas dos semanas, una cobertura del Sistema Solar de aproximadamente el 90%. El 10% restante no ha permanecido desatendido más de cuarenta minutos seguidos.\n"
+"En general el proyecto ha sido un rotundo éxito de integración y cooperación. Días atrás, y durante cortos períodos de tiempo, hemos logrado tener el control directo de todas las instalaciones de detección civiles y militares existentes en el sistema solar, incluyendo varias instalaciones en el cinturón de asteroides, tan secretas que hemos tenido que jurar silencio ante las Naciones Unidas. Nuestras sondas espaciales han revisado meticulosamente todos los espacios edificables del sistema solar para detectar cualquier signo de una base extraterrestre. Con todos los medios de los que disponíamos hemos tenido, durante las pasadas dos semanas, una cobertura del Sistema Solar de aproximadamente el 90%. El 10% restante no ha permanecido desatendido más de cuarenta minutos seguidos.\n"
 "\n"
 "Desgraciadamente (aunque depende de qué se considere una desgracia) no hemos encontrado rastro alguno de que exista una flota alienígena escondida en el Sistema Solar. Aunque nunca se alcanza la absoluta seguridad cuando se trata de un asunto como este, el trabajo de las semanas pasadas nos permite afirmar concluyentemente:\n"
 "\n"
@@ -4144,11 +4140,11 @@ msgid "alien_theory_txt"
 msgstr ""
 "Comandante, mi equipo y yo hemos terminado nuestros análisis del OVNI que capturamos. Es un autentico milagro de ingeniería, y estamos viendo la forma de echar mano a toda esta preciosa tecnología.\n"
 "\n"
-"La extraña construcción de la nave nos ha llevado a un montón de preguntas por responder. Gran parte del diseño tiene poco sentido visto desde fuera. Sin embargo, ahora que hemos conseguido observarlo desde cerca, en persona y testear los materiales alienígenas del casco bajo condiciones de laboratorio, hemos conseguido una imagen mucho mas clara de las capacidades del OVNI. He hecho una lista de nuestros más importantes descubrimientos:\n"
+"La extraña construcción de la nave nos ha llevado a un gran número de preguntas por responder. Gran parte del diseño tiene poco sentido visto desde fuera. Sin embargo, ahora que hemos conseguido observarlo desde cerca, en persona y examinar los materiales alienígenas del casco bajo condiciones de laboratorio, hemos conseguido una imagen mucho mas clara de las capacidades del OVNI. He hecho una lista de nuestros más importantes descubrimientos:\n"
 "\n"
 "-- El sistema de propulsión alienígena es de un tipo de motor-cohete diferente a cualquier cosa fabricada en la Tierra. Usa un desintegrador directo de materia-antimateria para generar empuje inyectando protones y antiprotones en la cámara de reacción, que luego conduce esta fuerza explosiva por detrás del motor. Esto confiere al OVNI una potencia extrema y no necesita aire ni otros gases para alimentar la reacción, permitiéndole arder en el vacío extremo. Hay un sistema de refrigeración altamente avanzado bombeando nitrógeno liquido a través de la estructura del motor para enfriarlo y para reducir la señal infrarroja. El calor generado además es usado para proveer de la electricidad necesaria para cubrir las necesidades de la nave.\n"
 "\n"
-"-- El deposito de combustible es muy muy pequeño, medido en fracciones de gramo, y hasta casi sufro un ataque al corazón cuando vi lo que contenía. Si hay una fuga en uno de esos depósitos, incluso de tres décimas de gramo de esta antimateria, podría sobrepasar la fuerza explosiva de la bomba atómica de Hirosima. Naturalmente el deposito está blindado y escondido tan profundo como es posible en el interior del fuselaje, y hasta posee un mecanismo para expulsar el depósito ante una emergencia, aunque no es perfecto. Un impacto directo en deposito o en el sistema de contención podría causar una explosión. La mayor parte de la onda expansiva sería contenida por la dura estructura del OVNI, pero cualquier explosión representa una amenaza extrema para nuestros interceptores. El lado bueno es que las explosiones protón - antiproton son de poca precipitación radiactiva.\n"
+"-- El deposito de combustible es muy muy pequeño, medido en fracciones de gramo, y hasta casi sufro un ataque al corazón cuando vi lo que contenía. Si hay una fuga en uno de esos depósitos, incluso de tres décimas de gramo de esta antimateria, podría sobrepasar la fuerza explosiva de la bomba atómica de Hiroshima. Naturalmente el deposito está blindado y escondido tan profundo como es posible en el interior del fuselaje, y hasta posee un mecanismo para expulsar el depósito ante una emergencia, aunque no es perfecto. Un impacto directo en deposito o en el sistema de contención podría causar una explosión. La mayor parte de la onda expansiva sería contenida por la dura estructura del OVNI, pero cualquier explosión representa una amenaza extrema para nuestros interceptores. El lado bueno es que las explosiones protón - antiproton son de poca precipitación radiactiva.\n"
 "\n"
 "-- La nave es extremadamente difícil de ver con equipamiento de detección humano, independientemente de la capacidad de los equipos electrónicos de guerra que poseen los alienígenas. Esto en gran medida es debido a los materiales del casco que absorben efectivamente todo tipo de radiación. Hemos tenido mas suerte en la detección pasiva de infrarrojos y de radiación gamma, debido que los motores basados en antimateria producen mucha de ambas.\n"
 "\n"
@@ -4809,7 +4805,7 @@ msgstr ""
 "\n"
 "Al menos, eso es lo que pensábamos, hasta que los alienígenas aparecieron.\n"
 "\n"
-"Ver las aeronaves alienígenas en nuestros cielos, a avanzados robots escudriñar nuestras calles, y a sus armas de alta potencia desgarrar a nuestra gente nos ha dado un montón de nuevas ideas. También nos ha obligado a revisar muy de cerca la información recolectada sobre las investigaciones de las Naciones Unidas. Es nada menos que una mina de oro encubierta. Al combinar lo mejor de cada una de estas piezas de rompecabezas, creemos que podemos ser capaces de concebir una nueva arma para nuestros equipos tácticos que será a la vez portátil y efectiva en combate. Esta arma tendrá el alcance extremo y la potencia necesarios para servirnos bien en los próximos días.\n"
+"Ver las aeronaves alienígenas en nuestros cielos, a avanzados robots escudriñar nuestras calles, y a sus armas de alta potencia desgarrar a nuestra gente nos ha dado un gran número de nuevas ideas. También nos ha obligado a revisar muy de cerca la información recolectada sobre las investigaciones de las Naciones Unidas. Es nada menos que una mina de oro encubierta. Al combinar lo mejor de cada una de estas piezas de rompecabezas, creemos que podemos ser capaces de concebir una nueva arma para nuestros equipos tácticos que será a la vez portátil y efectiva en combate. Esta arma tendrá el alcance extremo y la potencia necesarios para servirnos bien en los próximos días.\n"
 "\n"
 "Esta idea es muy prometedora, Comandante. Nos gustaría su autorización sobre tiempo de laboratorio y fondos, a fin de hacer de las armas electromagnéticas una realidad.\n"
 "\n"
@@ -6538,7 +6534,7 @@ msgstr ""
 "\n"
 "La armadura incluye otras características como movimiento servo-asistido en las botas, lo que permite a su usuario moverse mas rápidamente, y un curioso sistema construido en los codos que ayuda a mejorar la puntería del soldado aplicando selectivamente presión sobre partes de los brazos. Estamos investigando nuevos usos para esta tecnología.\n"
 "\n"
-"Adaptar esta armadura a un cuerpo humano será imposible debido a las diferencias físicas y a la dificultad de trabajar con estos materiales. Sin embargo, he preparado una propuesta de investigación separada para estudiar la posibilidad de diseñar y producir en masa nuestras propias armaduras usando el traje alienígena como modelo. Estará ya debería encontrarse en su bandeja de entrada, Comandante.\n"
+"Adaptar esta armadura a un cuerpo humano será imposible debido a las diferencias físicas y a la dificultad de trabajar con estos materiales. Sin embargo, he preparado una propuesta de investigación separada para estudiar la posibilidad de diseñar y producir en masa nuestras propias armaduras usando el traje alienígena como modelo. Esta ya debería encontrarse en su bandeja de entrada, Comandante.\n"
 "\n"
 "--Cte. Navarre"
 
@@ -6760,7 +6756,7 @@ msgstr ""
 "\n"
 "Doctrina Recomendada\n"
 "\n"
-"Por su propia naturaleza, la Entrada es la una de las instalaciones más vulnerables en cualquier base. Los extraterrestres hostiles intentarán, casi con total seguridad, acceder a la base por aquí. Es uno de los puntos clave para la defensa de una base, y debería ser situada a una distancia considerable del Centro de Comando, de modo que los soldados en servicio puedan responder a un ataque con el máximo empeño sin sin poner en peligro el CC.\n"
+"Por su propia naturaleza, la Entrada es la una de las instalaciones más vulnerables en cualquier base. Los extraterrestres hostiles intentarán, casi con total seguridad, acceder a la base por aquí. Es uno de los puntos clave para la defensa de una base, y debería ser situada a una distancia considerable del Centro de Comando, de modo que los soldados en servicio puedan responder a un ataque con el máximo empeño sin poner en peligro el CC.\n"
 "\n"
 "Por sí misma, la Entrada tiene poco valor táctico. Puede asumirse que los EXTs intentarán mantener la Entrada y elegirán otros objetivos que asaltar más tentadores, ya que habitualmente la Entrada no contiene materiales inflamables y carece de áreas especialmente vulnerables a la destrucción. Al no contener equipos y componentes avanzados, su reparación es rápida y económica. En caso resultar dañada, otras instalaciones de la base pueden desempeñar temporalmente la función de la Entrada sin afectar significativamente el normal funcionamiento de la base.\n"
 "\n"
@@ -6798,14 +6794,14 @@ msgstr ""
 "\n"
 "Esto prueba que los alienígenas no son invulnerables a nuestros misiles. simplemente necesitamos los mejores para el trabajo. Este descubrimiento nos ha llevado a adaptar los planos de algunas antiguas baterías de misiles y equiparlas con lanzadores nuevos. nuestros resultados son prometedores.\n"
 "\n"
-"La batería consiste de cuatro lanzadores que se \"asoman\" a la superficie cuando van a disparar sobre un objetivo. Cada lanzador carga 20 MTAs AA51 \"Cicada\". Este es uno de los misiles mas avanzados de la tierra, con una carga de aparatos electrónicos mayor que la de un avión de pasajeros comercial, diseñado para derribar naves enemigas sin importar cuan rápido estas se desplacen. No hay mejor arma defensiva de emergencia en el planeta al momento de preparar este documento.\n"
+"La batería consiste de cuatro lanzadores que se \"asoman\" a la superficie cuando van a disparar sobre un objetivo. Cada lanzador carga 20 MTA AA51 \"Cicada\". Este es uno de los misiles mas avanzados de la tierra, con una carga de aparatos electrónicos mayor que la de un avión de pasajeros comercial, diseñado para derribar naves enemigas sin importar cuan rápido estas se desplacen. No hay mejor arma defensiva de emergencia en el planeta al momento de preparar este documento.\n"
 "\n"
 "Enfrentado a naves alienígenas, las probabilidades de éxito de un \"Cicada\" serán bajas, pero en cantidades suficientes les harán daño. Evidentemente, los misiles y su equipamiento electrónico son extremadamente costosos, muy por encima de nuestro presupuesto en los números que necesitaríamos para poder enfrentar con éxito a los OVNI entrantes. Afortunadamente, las Naciones Unidas han acordado proveernos todos los MTA estándar de sus reservas estratégicas sin costo para nosotros.\n"
 "\n"
 "\n"
 "Doctrina Recomendada\n"
 "\n"
-"Si se construye en una de nuestras bases, se puede ordenar a la batería de misiles que ataque a cualquier OVNI dentro del alcance o que espere hasta que se se haya identificado que el OVNI se está preparando para atacar la base en cuestión. Esta decisión descansa sobre el Comandante de la Base. Asistir a nuestros interceptores 'suavizando' un OVNI con MTAs ayudará a quitarle un poco de presión a nuestros pilotos y aeronaves, pero no existe manera de ocultar completamente nuestros lanzamientos a pesar de nuestros mejores esfuerzos por camuflarlos. Lanzamientos repetidos en gran escala delatarán nuestra posición tarde o temprano.\n"
+"Si se construye en una de nuestras bases, se puede ordenar a la batería de misiles que ataque a cualquier OVNI dentro del alcance o que espere hasta que se se haya identificado que el OVNI se está preparando para atacar la base en cuestión. Esta decisión descansa sobre el Comandante de la Base. Asistir a nuestros interceptores 'suavizando' un OVNI con MTA ayudará a quitarle un poco de presión a nuestros pilotos y aeronaves, pero no existe manera de ocultar completamente nuestros lanzamientos a pesar de nuestros mejores esfuerzos por camuflarlos. Lanzamientos repetidos en gran escala delatarán nuestra posición tarde o temprano.\n"
 "\n"
 "La batería de misiles se encontrará en riesgo moderado durante un asalto a la base. Está diseñada para prevenir los ataques a la base; si uno ya ha atravesado esta defensa, esta ya no será de gran importancia para los atacantes a menos que estén limpiando el camino para un ataque posterior. Sin embargo, puede ser un objetivo de oportunidad tentador ya que aunque los misiles están protegidos, detonarán si se los somete a suficiente abuso. Una explosión en la batería de misiles puede tener efectos desastrosos en la instalación y en toda la base.\n"
 "\n"
@@ -6990,7 +6986,7 @@ msgstr ""
 "\n"
 "Anexo, Dr. Dolan Connor, 16 de Marzo de 2084:\n"
 "\n"
-"Al revisar los archivos correspondientes a los laboratorios de PHALANX, he llegado a la conclusión de que estaban muy adelantados a su época. Sus diseños son todavía viables y se pueden adaptar a nuestras necesidades, requiriéndose únicamente algunas pequeñas actualizaciones de equipos."
+"Al revisar los archivos correspondientes a los laboratorios de PHALANX, he llegado a la conclusión de que estaban muy adelantados a su época. Sus diseños son todavía viables y se pueden adaptar a nuestras necesidades, requiriéndose únicamente algunas pequeñas actualizaciones de equipo."
 
 #: ../base/ufos/research.ufo:3308
 msgid "b_powerplant_txt"
@@ -8266,7 +8262,7 @@ msgstr ""
 "\n"
 "(Teoría OVNI): \"El sistema de propulsión alienígena es de un tipo de motor-cohete diferente a cualquier cosa fabricada en la Tierra. Usa un desintegrador directo de materia-antimateria para generar empuje inyectando protones y antiprotones en la cámara de reacción, que luego conduce esta fuerza explosiva por detrás del motor. Esto confiere al OVNI una potencia extrema y no necesita aire ni otros gases para alimentar la reacción, permitiéndole arder en el vacío extremo. Hay un sistema de refrigeración altamente avanzado bombeando nitrógeno liquido a través de la estructura del motor para enfriarlo y para reducir la señal infrarroja. El calor generado además es usado para proveer de la electricidad necesaria para cubrir las necesidades de la nave.\"\n"
 "\n"
-"Con este proyecto hemos aprendido un montón sobre como son construidos esos motores, como controlarlos, y como podríamos integrarlos en nuestra flota aérea. Deberíamos ser capaces de replicar esos motores y usarlos para cualquier aplicación que podamos necesitar en el futuro. Tengo que advertirle que serán extremadamente costosos de producir. Entre lo complejo de usar materiales alienígenas, la sensibilidad de los sistemas electromagnéticos y el sistema de refrigeración por nitrógeno liquido, es algo que reduce los limites de nuestra capacidad de producción.\n"
+"Con este proyecto hemos aprendido mucho sobre como son construidos esos motores, como controlarlos, y como podríamos integrarlos en nuestra flota aérea. Deberíamos ser capaces de replicar esos motores y usarlos para cualquier aplicación que podamos necesitar en el futuro. Tengo que advertirle que serán extremadamente costosos de producir. Entre lo complejo de usar materiales alienígenas, la sensibilidad de los sistemas electromagnéticos y el sistema de refrigeración por nitrógeno liquido, es algo que reduce los limites de nuestra capacidad de producción.\n"
 "\n"
 "Hay que realizar algunas investigaciones serán requeridas para entender el almacenamiento y control de la antimateria, pero los motores son unidades separadas, básicamente son motores alienígenas con adaptadores para usarlo con tecnología humana. Deberíamos poder empezar a integrarlos tan pronto como consigamos suficiente cantidad de combustible para mantener nuestra flota aérea en el cielo.\n"
 "\n"
@@ -9423,7 +9419,7 @@ msgstr "Construye una base"
 
 #: ../base/ufos/seq_tutorials.ufo:96
 msgid "Hire employees: scientists, soldiers"
-msgstr "Contrata  empleados, científicos y soldados"
+msgstr "Contrata empleados, científicos y soldados"
 
 #: ../base/ufos/seq_tutorials.ufo:133
 msgid "Start some research"
@@ -9741,7 +9737,7 @@ msgstr "¡Cuida tu espalda! Tus soldados solo pueden ver a los enemigos en un ar
 
 #: ../base/ufos/tips.ufo:24
 msgid "Building a workshop and off-base installations UFO yards allows you to disassemble UFOs."
-msgstr "Construir un taller y la instalación exterior de un corral para OVNI te permite desensamblar OVNI."
+msgstr "Construir un taller y la instalación exterior de un almacén para OVNI te permite desensamblar OVNI."
 
 #: ../base/ufos/tips.ufo:25
 msgid "You can make soldiers crouch to better protect them from enemy fire. But remember that crouching and standing up cost Time Units (TUs), and moving while crouched costs more TUs than walking normally."
@@ -10017,7 +10013,7 @@ msgstr "Visita nuestros foros y únete a la comunidad en http://ufoai.ninex.info
 
 #: ../base/ufos/ui/_menu.ufo:607
 msgid "Note: Campaign-specific keybindings visible in Campaign mode only."
-msgstr "Nota: Los atajos específicos de la Campaña solo son visibles  en el modo de Campaña."
+msgstr "Nota: Los atajos específicos de la Campaña solo son visibles en el modo de Campaña."
 
 #: ../base/ufos/ui/aircraft.ufo:12 ../base/ufos/ui/aircraft_soldiers.ufo:70
 msgid "Add/remove this soldier"
@@ -12242,7 +12238,7 @@ msgstr "Consejos emergentes del cursor:"
 
 #: ../base/ufos/ui/options.ufo:338
 msgid "Show 'Tip of the Day':"
-msgstr "Mostrar  'Consejo del Día':"
+msgstr "Mostrar 'Consejo del Día':"
 
 #: ../base/ufos/ui/options.ufo:355
 msgid "Menu Options"
@@ -12466,7 +12462,7 @@ msgstr "Nivel de Anisotropía:"
 
 #: ../base/ufos/ui/options.ufo:858
 msgid "Very high values are only recommended when playing in very high screen resolutions."
-msgstr " Niveles muy elevados se recomiendan solamente al jugar con resoluciones muy altas."
+msgstr "Niveles muy elevados se recomiendan solamente al jugar con resoluciones muy altas."
 
 #: ../base/ufos/ui/options.ufo:872
 msgid "OpenGL Settings"
@@ -12498,7 +12494,7 @@ msgstr "Vertex Buffers:"
 
 #: ../base/ufos/ui/options.ufo:958
 msgid "OpenGL multisample buffers provide a mechanism to antialias all GL primitives. / The Swap Interval selects when a buffer swap will occur. The value '0' means that the swap will occur immediately (also known as 'v-sync off')."
-msgstr "Los Multisample Buffers OpenGL son una forma de alisar las formas GL primitivas. /  El Intervalo de Sincronización Vertical ajusta cuando se refresca el buffer. Un valor de 0 significa que el buffer se refresca inmediatamente (también se conoce como \"desactivar la sincronía vertical\")."
+msgstr "Los Multisample Buffers OpenGL son una forma de alisar las formas GL primitivas. / El Intervalo de Sincronización Vertical ajusta cuando se refresca el buffer. Un valor de 0 significa que el buffer se refresca inmediatamente (también se conoce como \"desactivar la sincronía vertical\")."
 
 #: ../base/ufos/ui/options.ufo:959
 msgid "Multisample Buffers / Swap Interval:"
@@ -12566,7 +12562,7 @@ msgstr "Habilitar las Sombras."
 
 #: ../base/ufos/ui/options.ufo:1099
 msgid "The lightmap block size defines the resolution of the lightmap. Higher block size means using more detailed lightmaps."
-msgstr "El tamaño de  bloque del mapa de luz define la resolución del mapa de luz. Valores más altos significan mapas de luz más detallados."
+msgstr "El tamaño de bloque del mapa de luz define la resolución del mapa de luz. Valores más altos significan mapas de luz más detallados."
 
 #: ../base/ufos/ui/options.ufo:1100
 msgid "Lightmap Block Size:"
@@ -13689,51 +13685,51 @@ msgstr "¡No es tu turno!"
 msgid "You cannot reload this unknown item.\n"
 msgstr "No puedes recargar este objeto desconocido.\n"
 
-#: client/battlescape/cl_actor.c:1788
+#: client/battlescape/cl_actor.c:1786
 msgid "Unknown alien race"
 msgstr "Raza alienígena desconocida"
 
-#: client/battlescape/cl_actor.c:2482
+#: client/battlescape/cl_actor.c:2480
 msgid "Toggle to next living actor"
 msgstr "Cambiar al siguiente personaje"
 
-#: client/battlescape/cl_actor.c:2483
+#: client/battlescape/cl_actor.c:2481
 msgid "Toggle to previous living actor"
 msgstr "Cambiar al personaje anterior"
 
-#: client/battlescape/cl_actor.c:2484
+#: client/battlescape/cl_actor.c:2482
 msgid "Select an actor from list"
 msgstr "Seleccionar a un personaje de la lista"
 
-#: client/battlescape/cl_actor.c:2485
+#: client/battlescape/cl_actor.c:2483
 msgid "Update an actor"
 msgstr "Actualizar un personaje"
 
-#: client/battlescape/cl_actor.c:2486
+#: client/battlescape/cl_actor.c:2484
 msgid "Toggle stand/crouch."
 msgstr "Cambiar entre parado/agachado"
 
-#: client/battlescape/cl_actor.c:2487
+#: client/battlescape/cl_actor.c:2485
 msgid "Toggle the headgear"
 msgstr "Encender/Apagar el equipo"
 
-#: client/battlescape/cl_actor.c:2488
+#: client/battlescape/cl_actor.c:2486
 msgid "Use"
 msgstr "Usar"
 
-#: client/battlescape/cl_actor.c:2489
+#: client/battlescape/cl_actor.c:2487
 msgid "Confirm the current action"
 msgstr "Confirmar la acción actual:"
 
-#: client/battlescape/cl_actor.c:2490
+#: client/battlescape/cl_actor.c:2488
 msgid "Toggle to the next alien in sight of the selected actor."
 msgstr "Enfocar el siguiente alienígena que el soldado seleccionado puede ver."
 
-#: client/battlescape/cl_actor.c:2492
+#: client/battlescape/cl_actor.c:2490
 msgid "Toggle camera to the next visible alien."
 msgstr "Enfocar el siguiente alienígena visible."
 
-#: client/battlescape/cl_actor.c:2493
+#: client/battlescape/cl_actor.c:2491
 msgid "Toggle camera to the previous visible alien."
 msgstr "Enfocar el alienígena visible anterior."
 
@@ -14007,7 +14003,7 @@ msgstr "cargando %s"
 msgid "loading models..."
 msgstr "cargando modelos..."
 
-#: client/battlescape/cl_view.c:117 client/cl_main.c:1021
+#: client/battlescape/cl_view.c:117 client/cl_main.c:1018
 msgid "Awaiting game start"
 msgstr "Esperando el inicio del juego"
 
@@ -14109,7 +14105,7 @@ msgstr "ALERTA ROJA"
 
 #: client/cgame/campaign/cp_aircraft.c:421
 msgid "Nothing - should not be displayed"
-msgstr "Nada -  No debería ser mostrado"
+msgstr "Nada - No debería ser mostrado"
 
 #: client/cgame/campaign/cp_aircraft.c:423
 msgid "at home base"
@@ -14234,7 +14230,7 @@ msgstr "Un nuevo %s esta listo en %s"
 #: client/cgame/campaign/cp_ufo.c:406 client/cgame/campaign/cp_ufo.c:816
 #: client/cgame/campaign/cp_ufo.c:821 client/cgame/campaign/cp_ufo.c:827
 #: client/cgame/campaign/missions/cp_mission_baseattack.c:122
-#: client/cgame/multiplayer/mp_serverlist.c:458 client/cl_main.c:413
+#: client/cgame/multiplayer/mp_serverlist.c:458 client/cl_main.c:411
 msgid "Notice"
 msgstr "Aviso"
 
@@ -14462,7 +14458,7 @@ msgstr[1] "%i días para construirlo\n"
 #: client/cgame/campaign/cp_ufopedia.c:232
 #, c-format
 msgid "Running costs:\t%i c\n"
-msgstr "Costos de la Operación:\t%i c\n"
+msgstr "Costo de operación:\t%i c\n"
 
 #: client/cgame/campaign/cp_base.c:1462
 #: client/cgame/campaign/cp_ufopedia.c:229
@@ -14480,7 +14476,7 @@ msgstr "No hay aeronaves en esta base - Primero tienes que comprar o transferir 
 #: client/cgame/campaign/cp_market_callbacks.c:620
 #: client/cgame/campaign/cp_market_callbacks.c:704
 #: client/cgame/campaign/cp_market_callbacks.c:706
-#: client/cgame/campaign/cp_save.c:390 client/cgame/cl_game_team.c:264
+#: client/cgame/campaign/cp_save.c:384 client/cgame/cl_game_team.c:264
 #: client/cgame/cl_game_team.c:285
 msgid "Note"
 msgstr "Nota"
@@ -14936,7 +14932,7 @@ msgid "Rank: %s"
 msgstr "Rango: %s"
 
 #: client/cgame/campaign/cp_cgame_callbacks.c:411
-#, fuzzy, c-format
+#, c-format
 msgid "%s "
 msgstr "%s"
 
@@ -14968,8 +14964,8 @@ msgid "Could not hire employee"
 msgstr "No se puede contratar al empleado"
 
 #: client/cgame/campaign/cp_event.c:312
-#: client/cgame/campaign/cp_messages.c:282 client/cgame/campaign/cp_save.c:289
-#: client/cgame/campaign/cp_save.c:308 client/cgame/campaign/cp_time.c:119
+#: client/cgame/campaign/cp_messages.c:282 client/cgame/campaign/cp_save.c:283
+#: client/cgame/campaign/cp_save.c:302 client/cgame/campaign/cp_time.c:119
 #: client/cgame/campaign/cp_ufopedia.c:499
 #: client/cgame/campaign/cp_ufopedia.c:504
 #, c-format
@@ -15450,7 +15446,7 @@ msgstr "Sobrevivientes alienígenas"
 
 #: client/cgame/campaign/cp_mission_callbacks.c:123
 msgid "PHALANX soldiers killed by Aliens"
-msgstr "Soldados de PHALANX asesinados por los alienígenas"
+msgstr "Soldados de PHALANX asesinados por alienígenas"
 
 #: client/cgame/campaign/cp_mission_callbacks.c:124
 msgid "PHALANX soldiers missing in action"
@@ -15466,7 +15462,7 @@ msgstr "Sobrevivientes de PHALANX"
 
 #: client/cgame/campaign/cp_mission_callbacks.c:129
 msgid "Civilians killed by Aliens"
-msgstr "Civiles asesinados por los alienígenas"
+msgstr "Civiles asesinados por alienígenas"
 
 #: client/cgame/campaign/cp_mission_callbacks.c:130
 msgid "Civilians killed by friendly fire"
@@ -15540,12 +15536,12 @@ msgstr "Actividad alienígena ha sido reportada en '%s'"
 #: client/cgame/campaign/cp_missions.c:1035
 #, c-format
 msgid "Defence of base: %s successful!"
-msgstr "¡Defensa  de la base: %s exitosa!"
+msgstr "¡Defensa de la base: %s exitosa!"
 
 #: client/cgame/campaign/cp_missions.c:1210
 #: client/cgame/campaign/missions/cp_mission_harvest.c:170
 #: client/cgame/campaign/missions/cp_mission_recon.c:161
-#: client/cgame/staticcampaign/scp_missions.c:208
+#: client/cgame/staticcampaign/scp_missions.c:210
 msgid "No nation"
 msgstr "Sin nación"
 
@@ -16053,60 +16049,60 @@ msgstr "No hay nada que investigar."
 msgid "Build a laboratory first."
 msgstr "Primero construye un Laboratorio."
 
-#: client/cgame/campaign/cp_save.c:186
+#: client/cgame/campaign/cp_save.c:180
 msgid "Error decompressing data"
 msgstr "Error al descomprimir los datos"
 
-#: client/cgame/campaign/cp_save.c:268
+#: client/cgame/campaign/cp_save.c:262
 msgid "No campaign active."
 msgstr "No hay una campaña activa."
 
-#: client/cgame/campaign/cp_save.c:274
+#: client/cgame/campaign/cp_save.c:268
 msgid "Nothing to save yet."
 msgstr "Aún no hay nada que guardar"
 
-#: client/cgame/campaign/cp_save.c:318
+#: client/cgame/campaign/cp_save.c:312
 msgid "Could not allocate enough memory to save this game"
 msgstr "No hay memoria suficiente para guardar el juego"
 
-#: client/cgame/campaign/cp_save.c:340
+#: client/cgame/campaign/cp_save.c:334
 msgid "Memory error compressing save-game data - set save_compressed cvar to 0"
 msgstr "Error de memoria al comprimir los datos para guardar el juego - establece save_compressed a 0 (set save_compressed 0) en la consola"
 
-#: client/cgame/campaign/cp_save.c:387 client/cgame/campaign/cp_save.c:389
+#: client/cgame/campaign/cp_save.c:381 client/cgame/campaign/cp_save.c:383
 msgid "Error saving game."
 msgstr "Error al guardar el juego."
 
-#: client/cgame/campaign/cp_save.c:470 client/cgame/campaign/cp_save.c:494
-#: client/cgame/campaign/cp_save.c:626
+#: client/cgame/campaign/cp_save.c:464 client/cgame/campaign/cp_save.c:488
+#: client/cgame/campaign/cp_save.c:620
 msgid "Error loading game."
 msgstr "Error al cargar el juego."
 
-#: client/cgame/campaign/cp_save.c:471 client/cgame/campaign/cp_save.c:495
-#: client/cgame/campaign/cp_save.c:627
+#: client/cgame/campaign/cp_save.c:465 client/cgame/campaign/cp_save.c:489
+#: client/cgame/campaign/cp_save.c:621
 #: client/cgame/multiplayer/mp_callbacks.c:62 client/cl_irc.c:1218
-#: client/cl_irc.c:1450 client/cl_main.c:539 client/cl_main.c:543
-#: client/cl_main.c:567
+#: client/cl_irc.c:1450 client/cl_main.c:537 client/cl_main.c:541
+#: client/cl_main.c:565
 msgid "Error"
 msgstr "Error"
 
-#: client/cgame/campaign/cp_save.c:570
+#: client/cgame/campaign/cp_save.c:564
 msgid "QuickSave"
 msgstr "Guardado Rápido"
 
-#: client/cgame/campaign/cp_save.c:608
+#: client/cgame/campaign/cp_save.c:602
 msgid "Campaign was successfully saved."
 msgstr "Se ha guardado exitosamente la campaña."
 
-#: client/cgame/campaign/cp_save.c:608
+#: client/cgame/campaign/cp_save.c:602
 msgid "Quicksave"
 msgstr "Guardado Rápido"
 
-#: client/cgame/campaign/cp_save.c:629
+#: client/cgame/campaign/cp_save.c:623
 msgid "Campaign loaded"
 msgstr "Campaña cargada"
 
-#: client/cgame/campaign/cp_save.c:629
+#: client/cgame/campaign/cp_save.c:623
 msgid "Quicksave campaign was successfully loaded."
 msgstr "El juego guardado automáticamente se ha cargado con éxito."
 
@@ -16590,7 +16586,7 @@ msgstr "cuerpo(s):"
 #: client/cgame/campaign/cp_ufo.c:406 client/cgame/campaign/cp_ufo.c:816
 #, c-format
 msgid "A UFO is flying toward %s"
-msgstr "Un OVNI se aproxima a%s"
+msgstr "Un OVNI se aproxima a %s"
 
 #: client/cgame/campaign/cp_ufo.c:821
 #, c-format
@@ -17185,28 +17181,28 @@ msgstr "El servidor cerró la conexión"
 msgid "..."
 msgstr "..."
 
-#: client/cl_main.c:538
+#: client/cl_main.c:536
 #, c-format
 msgid "Local game version (%s) differs from the server version (%s)"
 msgstr "La versión local del juego (%s) es diferente de la del servidor (%s)"
 
-#: client/cl_main.c:543
+#: client/cl_main.c:541
 msgid "Script files are not the same"
 msgstr "Los Scripts no son los mismos"
 
-#: client/cl_main.c:567
+#: client/cl_main.c:565
 msgid "Local map version differs from server"
 msgstr "La versión local del mapa es diferente de la del servidor"
 
-#: client/cl_main.c:906
+#: client/cl_main.c:903
 msgid "Target your shot to the ground"
 msgstr "Apunta tu disparo hacia el suelo"
 
-#: client/cl_main.c:1153
+#: client/cl_main.c:1150
 msgid "This change requires a restart"
 msgstr "Este cambio requiere reiniciar el juego"
 
-#: client/cl_main.c:1158
+#: client/cl_main.c:1155
 msgid "This change might require a restart"
 msgstr "Este cambio puede requerir reiniciar el juego"
 
@@ -17282,7 +17278,7 @@ msgstr "Click con el botón izquierdo del ratón (menú)"
 
 #: client/input/cl_input.c:986
 msgid "Middle mouse button click (menu)"
-msgstr "Click con el botón central  del ratón (menú)"
+msgstr "Click con el botón central del ratón (menú)"
 
 #: client/input/cl_input.c:988
 msgid "Right mouse button click (menu)"
@@ -17301,8 +17297,8 @@ msgid "Select objects/Walk to a square/In fire mode, fire etc"
 msgstr "Seleccionar objetos/Caminar hacia una casilla/En modo de disparo: disparar, etc."
 
 #: client/input/cl_input.c:994
-msgid "Walk to a square/In fire mode, cancel action"
-msgstr "Caminar hacia una casilla/En modo de disparo: cancelar la acción"
+msgid "Rotate Battlescape/In fire mode, cancel action"
+msgstr "Rotar el mapa/En modo de disparo: cancelar la acción"
 
 #: client/input/cl_input.c:996
 msgid "Turn soldier toward mouse pointer"
@@ -17558,6 +17554,15 @@ msgstr "alienígena"
 #: po/OTHER_STRINGS:6
 msgid "Take a screenshot"
 msgstr "Tomar una captura de pantalla"
+
+#~ msgid "Area"
+#~ msgstr "Área"
+
+#~ msgid "Test"
+#~ msgstr "Prueba"
+
+#~ msgid "mini"
+#~ msgstr "Mini"
 
 #~ msgid "Precision Shot"
 #~ msgstr "Disparo de Precisión"
