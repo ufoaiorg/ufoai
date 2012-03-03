@@ -991,7 +991,7 @@ void IN_Init (void)
 	Cmd_AddCommand("wheeldownmouse", CL_WheelDown_f, N_("Mouse wheel down"));
 	Cmd_AddCommand("+select", CL_SelectDown_f, N_("Select objects/Walk to a square/In fire mode, fire etc"));
 	Cmd_AddCommand("-select", CL_SelectUp_f, NULL);
-	Cmd_AddCommand("+action", CL_ActionDown_f, N_("Walk to a square/In fire mode, cancel action"));
+	Cmd_AddCommand("+action", CL_ActionDown_f, N_("Rotate Battlescape/In fire mode, cancel action"));
 	Cmd_AddCommand("-action", CL_ActionUp_f, NULL);
 	Cmd_AddCommand("+turn", CL_TurnDown_f, N_("Turn soldier toward mouse pointer"));
 	Cmd_AddCommand("-turn", CL_TurnUp_f, NULL);

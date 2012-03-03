@@ -1236,8 +1236,6 @@ void CL_ActorActionMouse (void)
 
 	if (CL_ActorFireModeActivated(selActor->actorMode)) {
 		CL_ActorSetMode(selActor, M_MOVE);
-	} else {
-		CL_ActorMoveMouse();
 	}
 }
 

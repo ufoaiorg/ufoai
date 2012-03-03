@@ -13043,7 +13043,7 @@ msgid "Select objects/Walk to a square/In fire mode, fire etc"
 msgstr ""
 
 #: client/input/cl_input.c:994
-msgid "Walk to a square/In fire mode, cancel action"
+msgid "Rotate Battlescape/In fire mode, cancel action"
 msgstr ""
 
 #: client/input/cl_input.c:996
