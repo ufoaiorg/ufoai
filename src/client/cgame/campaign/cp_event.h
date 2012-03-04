@@ -66,7 +66,7 @@ typedef struct campaignEvent_s {
 } campaignEvent_t;
 
 typedef struct campaignEvents_s {
-	campaignEvent_t campaignEvents[MAX_CAMPAIGNEVENTS];	/**< holds all campaign events (cl_event.c) */
+	campaignEvent_t campaignEvents[MAX_CAMPAIGNEVENTS];	/**< holds all campaign events */
 	int numCampaignEvents;	/**< how many events (script-id: events) parsed */
 	char *id;				/**< script id */
 } campaignEvents_t;
