@@ -2946,33 +2946,27 @@ static void Com_ParseDamageTypes (const char *name, const char **text)
 		if (i == csi.numDTs) {
 			Q_strncpyz(csi.dts[csi.numDTs].id, token, sizeof(csi.dts[csi.numDTs].id));
 
-			/* Check dmgtype IDs and store their IDs in csi. */
-			if (csi.dts[csi.numDTs].showInMenu) {
-				Com_DPrintf(DEBUG_CLIENT, "Com_ParseDamageTypes: dmgtype/dmgweight %s\n", token);
-				/* Special IDs */
-				if (Q_streq(token, "normal"))
-					csi.damNormal = csi.numDTs;
-				else if (Q_streq(token, "blast"))
-					csi.damBlast = csi.numDTs;
-				else if (Q_streq(token, "fire"))
-					csi.damFire = csi.numDTs;
-				else if (Q_streq(token, "shock"))
-					csi.damShock = csi.numDTs;
-				else if (Q_streq(token, "laser"))
-					csi.damLaser = csi.numDTs;
-				else if (Q_streq(token, "plasma"))
-					csi.damPlasma = csi.numDTs;
-				else if (Q_streq(token, "particlebeam"))
-					csi.damParticle = csi.numDTs;
-				else if (Q_streq(token, "stun_electro"))
-					csi.damStunElectro = csi.numDTs;
-				else if (Q_streq(token, "stun_gas"))
-					csi.damStunGas = csi.numDTs;
-				else
-					Com_Printf("Unknown dmgtype: '%s'\n", token);
-			} else {
-				Com_DPrintf(DEBUG_CLIENT, "Com_ParseDamageTypes: dmgweight %s\n", token);
-			}
+			/* Special IDs */
+			if (Q_streq(token, "normal"))
+				csi.damNormal = csi.numDTs;
+			else if (Q_streq(token, "blast"))
+				csi.damBlast = csi.numDTs;
+			else if (Q_streq(token, "fire"))
+				csi.damFire = csi.numDTs;
+			else if (Q_streq(token, "shock"))
+				csi.damShock = csi.numDTs;
+			else if (Q_streq(token, "laser"))
+				csi.damLaser = csi.numDTs;
+			else if (Q_streq(token, "plasma"))
+				csi.damPlasma = csi.numDTs;
+			else if (Q_streq(token, "particlebeam"))
+				csi.damParticle = csi.numDTs;
+			else if (Q_streq(token, "stun_electro"))
+				csi.damStunElectro = csi.numDTs;
+			else if (Q_streq(token, "stun_gas"))
+				csi.damStunGas = csi.numDTs;
+			else if (Q_streq(token, "smoke"))
+				csi.damSmoke = csi.numDTs;
 
 			csi.numDTs++;
 			if (csi.numDTs >= MAX_DAMAGETYPES)
