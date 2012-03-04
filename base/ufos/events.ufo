@@ -51,9 +51,8 @@ mail alienbreathing
 
 mail alien_base_discovered
 {
-	to "_mail_to_base_commander"
 	from "_mail_from_xo"
-	// location name
+	to "_mail_to_base_commander"
 	subject "_Alien Base Discovered"
 	body "_mail_alien_base_discovered"
 	model "characters/howard"
