@@ -586,9 +586,10 @@ static void G_SpawnItemOnFloor (const pos3_t pos, const item_t *item)
  * @param[in] weapon The weapon to shoot with
  * @param[in] mock pseudo shooting - only for calculating mock values - NULL for real shots
  * @param[in] z_align This value may change the target z height
+ * @param[out] impact The location of the target (-center?)
  */
 static void G_ShootGrenade (const player_t *player, edict_t *ent, const fireDef_t *fd,
-	const vec3_t from, const pos3_t at, int mask, const item_t *weapon, shot_mock_t *mock, int z_align)
+	const vec3_t from, const pos3_t at, int mask, const item_t *weapon, shot_mock_t *mock, int z_align, vec3_t impact)
 {
 	vec3_t last, target, temp;
 	vec3_t startV, curV, oldPos, newPos;
@@ -683,15 +684,16 @@ static void G_ShootGrenade (const player_t *player, edict_t *ent, const fireDef_
 				}
 
 				tr.endpos[2] += 10;
+				VectorCopy(tr.endpos, impact);
 
 				/* check if this is a stone, ammo clip or grenade */
 				if (fd->splrad > 0.0) {
-					G_SplashDamage(ent, fd, tr.endpos, mock, &tr);
+					G_SplashDamage(ent, fd, impact, mock, &tr);
 				} else if (!mock) {
 					/* spawn the stone on the floor */
 					if (fd->ammo && !fd->splrad && weapon->t->thrown) {
 						pos3_t drop;
-						VecToPos(tr.endpos, drop);
+						VecToPos(impact, drop);
 						G_SpawnItemOnFloor(drop, weapon);
 					}
 				}
@@ -718,6 +720,7 @@ static void G_ShootGrenade (const player_t *player, edict_t *ent, const fireDef_
 		} else {
 			dt += GRENADE_DT;
 			VectorCopy(newPos, oldPos);
+			VectorCopy(newPos, impact);
 		}
 	}
 }
@@ -777,15 +780,15 @@ static void DumpAllEntities (void)
  * @param[in] z_align This value may change the target z height
  * @param[in] i The ith shot
  * @param[in] shootType The firemode (ST_NUM_SHOOT_TYPES)
+ * @param[out] impact The location of the target (-center?)
  * @sa CL_TargetingStraight
  */
 static void G_ShootSingle (edict_t *ent, const fireDef_t *fd, const vec3_t from, const pos3_t at,
-	int mask, const item_t *weapon, shot_mock_t *mock, int z_align, int i, shoot_types_t shootType)
+	int mask, const item_t *weapon, shot_mock_t *mock, int z_align, int i, shoot_types_t shootType, vec3_t impact)
 {
 	vec3_t dir;			/* Direction from the location of the gun muzzle ("from") to the target ("at") */
 	vec3_t angles;		/** @todo The random dir-modifier? */
 	vec3_t cur_loc;		/* The current location of the projectile. */
-	vec3_t impact;		/* The location of the target (-center?) */
 	vec3_t temp;
 	vec3_t tracefrom;	/* sum */
 	trace_t tr;			/* the traceing */
@@ -1071,6 +1074,7 @@ qboolean G_ClientShoot (const player_t * player, edict_t* ent, const pos3_t at, 
 	containerIndex_t container;
 	int mask;
 	qboolean quiet;
+	vec3_t impact;
 
 	/* just in 'test-whether-it's-possible'-mode or the player is an
 	 * ai - no readable feedback needed */
@@ -1246,9 +1250,9 @@ qboolean G_ClientShoot (const player_t * player, edict_t* ent, const pos3_t at, 
 	/* Fire all shots. */
 	for (i = 0; i < shots; i++)
 		if (fd->gravity)
-			G_ShootGrenade(player, ent, fd, shotOrigin, at, mask, weapon, mock, z_align);
+			G_ShootGrenade(player, ent, fd, shotOrigin, at, mask, weapon, mock, z_align, impact);
 		else
-			G_ShootSingle(ent, fd, shotOrigin, at, mask, weapon, mock, z_align, i, shootType);
+			G_ShootSingle(ent, fd, shotOrigin, at, mask, weapon, mock, z_align, i, shootType, impact);
 
 	if (!mock) {
 		/* send TUs if ent still alive */
