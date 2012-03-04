@@ -482,16 +482,18 @@ static void UP_SetMailHeader (technology_t* tech, techMailType_t type, eventMail
 		/* reread the unread mails in UP_GetUnreadMails */
 		ccs.numUnreadMails = -1;
 	} else {
+		techMail_t *mail;
 		assert(tech);
 		assert(type < TECHMAIL_MAX);
 
-		from = tech->mail[type].from;
-		to = tech->mail[type].to;
-		subject = tech->mail[type].subject;
-		model = tech->mail[type].model;
+		mail = &tech->mail[type];
+		from = mail->from;
+		to = mail->to;
+		subject = mail->subject;
+		model = mail->model;
 
-		if (tech->mail[type].date) {
-			Q_strncpyz(dateBuf, _(tech->mail[type].date), sizeof(dateBuf));
+		if (mail->date) {
+			Q_strncpyz(dateBuf, _(mail->date), sizeof(dateBuf));
 		} else {
 			switch (type) {
 			case TECHMAIL_PRE:
@@ -509,8 +511,8 @@ static void UP_SetMailHeader (technology_t* tech, techMailType_t type, eventMail
 			}
 		}
 		if (from != NULL) {
-			if (!tech->mail[type].read) {
-				tech->mail[type].read = qtrue;
+			if (!mail->read) {
+				mail->read = qtrue;
 				/* reread the unread mails in UP_GetUnreadMails */
 				ccs.numUnreadMails = -1;
 			}
