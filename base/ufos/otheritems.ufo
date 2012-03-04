@@ -10,16 +10,6 @@ item antimatter
 	notonmarket	true
 }
 
-item brapparatus
-{
-	name		"_Alien Breathing Apparatus"
-	is_dummy	true
-	model		objects/alien/breathing/alienb
-	price		300
-	size		4
-	weapon		false
-}
-
 item alienmaterials
 {
 	name		"_Alien Materials"

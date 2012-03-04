@@ -144,7 +144,6 @@ void AL_AddAliens (aircraft_t *aircraft)
 	qboolean messageAlreadySet = qfalse;
 	technology_t *breathingTech;
 	qboolean alienBreathing = qfalse;
-	const objDef_t *alienBreathingObjDef;
 
 	assert(aircraft);
 	toBase = aircraft->homebase;
@@ -165,9 +164,6 @@ void AL_AddAliens (aircraft_t *aircraft)
 	if (!breathingTech)
 		Com_Error(ERR_DROP, "AL_AddAliens: Could not get breathing apparatus tech definition");
 	alienBreathing = RS_IsResearched_ptr(breathingTech);
-	alienBreathingObjDef = INVSH_GetItemByID(breathingTech->provides);
-	if (!alienBreathingObjDef)
-		Com_Error(ERR_DROP, "AL_AddAliens: Could not get breathing apparatus item definition");
 
 	for (i = 0; i < alienCargoTypes; i++) {
 		for (j = 0; j < ccs.numAliensTD; j++) {
@@ -178,18 +174,12 @@ void AL_AddAliens (aircraft_t *aircraft)
 			if (ac->teamDef == cargo[i].teamDef) {
 				const qboolean isRobot = CHRSH_IsTeamDefRobot(cargo[i].teamDef);
 				ac->amountDead += cargo[i].amountDead;
-				/* Add breathing apparatuses to aircraft cargo so that they are processed with other collected items
-				 * if the alien race is not mechanical */
-				if (!isRobot)
-					AII_CollectItem(aircraft, alienBreathingObjDef, cargo[i].amountDead);
 
 				if (cargo[i].amountAlive <= 0)
 					continue;
 				if (!alienBreathing && !isRobot) {
 					/* We can not store living (i.e. no robots or dead bodies) aliens without rs_alien_breathing tech */
 					ac->amountDead += cargo[i].amountAlive;
-					/* Add breathing apparatuses as well */
-					AII_CollectItem(aircraft, alienBreathingObjDef, cargo[i].amountAlive);
 					/* only once */
 					if (!messageAlreadySet) {
 						MS_AddNewMessage(_("Notice"), _("You can't hold live aliens yet. Aliens died."), qfalse, MSG_DEATH, NULL);
@@ -216,7 +206,6 @@ void AL_AddAliens (aircraft_t *aircraft)
 							}
 							/* Just kill aliens which don't fit the limit. */
 							ac->amountDead++;
-							AII_CollectItem(aircraft, alienBreathingObjDef, 1);
 						}
 					}
 					/* only once */

@@ -6,7 +6,7 @@
  */
 
 /*
-Copyright (C) 2002-2011 UFO: Alien Invasion.
+Copyright (C) 2002-2012 UFO: Alien Invasion.
 
 This program is free software; you can redistribute it and/or
 modify it under the terms of the GNU General Public License
@@ -168,7 +168,6 @@ void TR_TransferAlienAfterMissionStart (const base_t *base, aircraft_t *transfer
 	aliensTmp_t *cargo;
 	const technology_t *breathingTech;
 	qboolean alienBreathing = qfalse;
-	const objDef_t *alienBreathingObjDef;
 
 	if (!base) {
 		Com_Printf("TR_TransferAlienAfterMissionStart_f: No base selected!\n");
@@ -179,9 +178,6 @@ void TR_TransferAlienAfterMissionStart (const base_t *base, aircraft_t *transfer
 	if (!breathingTech)
 		Com_Error(ERR_DROP, "AL_AddAliens: Could not get breathing apparatus tech definition");
 	alienBreathing = RS_IsResearched_ptr(breathingTech);
-	alienBreathingObjDef = INVSH_GetItemByID(breathingTech->provides);
-	if (!alienBreathingObjDef)
-		Com_Error(ERR_DROP, "AL_AddAliens: Could not get breathing apparatus item definition");
 
 	OBJZERO(transfer);
 
@@ -225,10 +221,6 @@ void TR_TransferAlienAfterMissionStart (const base_t *base, aircraft_t *transfer
 				if (base->alienscont[j].teamDef == cargo->teamDef) {
 					transfer.hasAliens = qtrue;
 					transfer.alienAmount[j][TRANS_ALIEN_DEAD] = cargo->amountDead;
-
-					/* If we transfer aliens from battlefield add also breathing apparatur(s) */
-					transfer.hasItems = qtrue;
-					transfer.itemAmount[alienBreathingObjDef->idx] += cargo->amountDead;
 					cargo->amountDead = 0;
 					break;
 				}

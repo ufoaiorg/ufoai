@@ -344,29 +344,7 @@ tech rs_alien_breathing
 
 	time		2500
 	image		techs/alien_breathing
-	provides	"brapparatus"
 }
-
-// TODO check if we _really_ need the rs_item_brapparatus tech ... rs_alien_breathing seems to fulfill all the same function (except for the "provide" entry).
-tech rs_item_brapparatus
-{
-	type		weapon
-	name		"_Alien Breathing Apparatus"
-	description {
-		default "_alien_breathing_txt"
-	}
-
-	require_AND
-	{
-		tech rs_alien_breathing
-	}
-
-	provides	brapparatus
-	time		0
-	producetime	-1
-	image		"techs/alien_breathing"
-}
-
 
 tech rs_alien_mind
 {
