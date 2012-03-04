@@ -156,7 +156,7 @@ static void GAME_SK_ChangeEquip_f (void)
 	Com_sprintf(cvarBuf, sizeof(cvarBuf), "%sname", cvarName);
 
 	cgi->Cvar_Set(cvarName, ed->id);
-	cgi->Cvar_Set(cvarBuf, ed->name);
+	cgi->Cvar_Set(cvarBuf, va("_%s", ed->name));
 }
 
 /**
