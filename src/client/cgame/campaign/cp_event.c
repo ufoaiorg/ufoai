@@ -314,7 +314,6 @@ void CL_EventAddMail_f (void)
 		eventMail->date = Mem_PoolStrDup(dateBuf, cp_campaignPool, 0);
 	}
 
-	/* the subject double %s: see UP_SetMailHeader */
 	m = MS_AddNewMessage("", va(_("You've got a new mail: %s"), _(eventMail->subject)), qfalse, MSG_EVENT, NULL);
 	if (m)
 		m->eventMail = eventMail;
