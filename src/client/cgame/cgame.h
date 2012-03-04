@@ -203,6 +203,9 @@ typedef struct cgame_import_s {
 	int (IMPORT *FS_LoadFile) (const char *path, byte **buffer);
 	void (IMPORT *FS_FreeFile) (void *buffer);
 	int (IMPORT *FS_CheckFile) (const char *fmt, ...) __attribute__((format(printf, 1, 2)));
+	int (IMPORT *FS_BuildFileList) (const char *files);
+	const char* (IMPORT *FS_NextFileFromFileList) (const char *files);
+	char *(IMPORT *FS_NextScriptHeader) (const char *files, const char **name, const char **text);
 
 	/* console variable interaction */
 	cvar_t *(IMPORT *Cvar_Get) (const char *varName, const char *value, int flags, const char* desc);
@@ -224,6 +227,7 @@ typedef struct cgame_import_s {
 	void (IMPORT *Cmd_ExecuteString) (const char *text);
 	void (IMPORT *Cmd_AddParamCompleteFunction) (const char *cmd_name, int (*function)(const char *partial, const char **match));
 	int (IMPORT *Cmd_GenericCompleteFunction) (size_t len, const char **match, int matches, const char **list);
+	mapDef_t* (IMPORT *Com_GetMapDefinitionByID) (const char *mapDefID);
 
 	void (IMPORT *Cbuf_AddText) (const char *text);
 

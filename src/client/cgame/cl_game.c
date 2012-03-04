@@ -414,6 +414,7 @@ static const cgame_import_t* GAME_GetImportData (const cgameType_t *t)
 		cgi->Cmd_RemoveCommand = Cmd_RemoveCommand;
 		cgi->Cmd_AddParamCompleteFunction = Cmd_AddParamCompleteFunction;
 		cgi->Cmd_GenericCompleteFunction = Cmd_GenericCompleteFunction;
+		cgi->Com_GetMapDefinitionByID = Com_GetMapDefinitionByID;
 
 		cgi->Cbuf_AddText = Cbuf_AddText;
 
@@ -434,6 +435,9 @@ static const cgame_import_t* GAME_GetImportData (const cgameType_t *t)
 		cgi->FS_FreeFile = FS_FreeFile;
 		cgi->FS_LoadFile = FS_LoadFile;
 		cgi->FS_CheckFile = FS_CheckFile;
+		cgi->FS_BuildFileList = FS_BuildFileList;
+		cgi->FS_NextFileFromFileList = FS_NextFileFromFileList;
+		cgi->FS_NextScriptHeader = FS_NextScriptHeader;
 
 		cgi->UI_AddOption = UI_AddOption;
 		cgi->UI_ExecuteConfunc = UI_ExecuteConfunc;
