@@ -780,10 +780,8 @@ window hud_phone extends hud
 	confunc reserve_shot_disable { }
 
 	// REACTION MODE BUTTON
-	confunc startreactionmany { }
-	confunc startreactionmany_impos	{ }
-	confunc startreactiononce { }
-	confunc startreactiononce_impos { }
+	confunc startreaction { }
+	confunc startreaction_impos { }
 	confunc deselect_reaction { }
 	confunc disable_reaction { }
 

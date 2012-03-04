@@ -253,9 +253,7 @@ typedef int32_t shoot_types_t;
 #define STATE_DAZED			0x0080	/**< dazed and unable to move */
 
 /* private states */
-#define STATE_REACTION_ONCE	0x0100
-#define STATE_REACTION_MANY	0x0200
-#define STATE_REACTION		0x0300	/**< reaction - once or many */
+#define STATE_REACTION		0x0300	/**< reaction fire */
 #define STATE_SHAKEN		0x0400	/**< forced reaction fire */
 #define STATE_XVI			0x0800	/**< controlled by the other team */
 

@@ -802,14 +802,12 @@ static qboolean HUD_DisplayImpossibleReaction (const le_t * actor)
 		return qfalse;
 
 	/* Display 'impossible" (red) reaction buttons */
-	if (actor->state & STATE_REACTION_ONCE)
-		UI_ExecuteConfunc("startreactiononce_impos");
-	else if (actor->state & STATE_REACTION_MANY)
-		UI_ExecuteConfunc("startreactionmany_impos");
-	else
-		return qtrue;
+	if (actor->state & STATE_REACTION) {
+		UI_ExecuteConfunc("startreaction_impos");
+		return qfalse;
+	}
 
-	return qfalse;
+	return qtrue;
 }
 
 /**
@@ -826,10 +824,8 @@ static void HUD_DisplayPossibleReaction (const le_t * actor)
 		return;
 
 	/* Display 'usable" (blue) reaction buttons */
-	if (actor->state & STATE_REACTION_ONCE)
-		UI_ExecuteConfunc("startreactiononce");
-	else if (actor->state & STATE_REACTION_MANY)
-		UI_ExecuteConfunc("startreactionmany");
+	if (actor->state & STATE_REACTION)
+		UI_ExecuteConfunc("startreaction");
 }
 
 /**
@@ -1038,10 +1034,8 @@ void HUD_UpdateCursor (void)
 		iconOffsetY += iconSpacing;
 
 		/* Display 'Reaction shot' icon if actor has it activated. */
-		if (le->state & STATE_REACTION_ONCE)
+		if (le->state & STATE_REACTION)
 			image = R_FindImage("pics/cursors/reactionfire", it_pic);
-		else if (le->state & STATE_REACTION_MANY)
-			image = R_FindImage("pics/cursors/reactionfiremany", it_pic);
 		else
 			image = NULL;
 

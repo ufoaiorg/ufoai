@@ -1070,26 +1070,15 @@ window hud_alt extends hud
 	confunc disable_primaryright { *node:root.right.bt_primaryright@image	= "althud/buttons_althud1g" }
 	confunc disable_reloadleft { *node:root.right.bt_reloadleft@image		= "althud/buttons_althud1g" }
 	confunc disable_reloadright { *node:root.right.bt_reloadright@image	= "althud/buttons_althud1g" }
-
-	confunc startreactionmany
-	{
-		*node:root.right.bt_reaction_a@image = "althud/buttons_althud1b"
-		*node:root.right.bt_reaction_a@tooltip = "_Multiple-shot reaction fire"
-	}
-	confunc startreactionmany_impos
-	{
-		*node:root.right.bt_reaction_a@image = "althud/buttons_althud1br"
-		*node:root.right.bt_reaction_a@tooltip = "_Multiple-shot reaction fire (not possible)"
-	}
-	confunc startreactiononce
+	confunc startreaction
 	{
 		*node:root.right.bt_reaction_a@image		= "althud/buttons_althud1a"
-		*node:root.right.bt_reaction_a@tooltip	= "_One-shot reaction fire"
+		*node:root.right.bt_reaction_a@tooltip	= "_Reaction fire"
 	}
-	confunc startreactiononce_impos
+	confunc startreaction_impos
 	{
 		*node:root.right.bt_reaction_a@image		= "althud/buttons_althud1ar"
-		*node:root.right.bt_reaction_a@tooltip	= "_One-shot reaction fire (not possible)"
+		*node:root.right.bt_reaction_a@tooltip	= "_Reaction fire (not possible)"
 	}
 
 	confunc deselect_reaction

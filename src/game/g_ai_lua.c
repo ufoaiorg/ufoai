@@ -718,9 +718,7 @@ static int AIL_reactionfire (lua_State *L)
 		if (lua_isstring(L, 1)) {
 			/* get reaction fire mode */
 			const char* cmd = lua_tostring(L, 1);
-			reactionState = Q_streq(cmd, "disable") ? ~STATE_REACTION
-				: Q_streq(cmd, "once") ? STATE_REACTION_ONCE
-				: Q_streq(cmd, "many") ? STATE_REACTION_MANY : 0;
+			reactionState = Q_streq(cmd, "disable") ? ~STATE_REACTION : STATE_REACTION;
 		}
 
 		if (reactionState && lua_gettop(L) > 1 && lua_isboolean(L, 2)) {

@@ -1059,29 +1059,17 @@ window hud_default extends hud
 	}
 
 	// REACTION MODE BUTTON
-	confunc startreactionmany
-	{
-		*node:root.info.bt_reaction_s@texl	= "0 96"
-		*node:root.info.bt_reaction_s@texh	= "31 127"
-		*node:root.info.bt_reaction_s@tooltip = "_Multiple-shot reaction fire"
-	}
-	confunc startreactionmany_impos
-	{
-		*node:root.info.bt_reaction_s@texl	= "32 96"
-		*node:root.info.bt_reaction_s@texh	= "63 127"
-		*node:root.info.bt_reaction_s@tooltip = "_Multiple-shot reaction fire (Not possible)"
-	}
-	confunc startreactiononce
+	confunc startreaction
 	{
 		*node:root.info.bt_reaction_s@texl	= "0 64"
 		*node:root.info.bt_reaction_s@texh	= "31 95"
-		*node:root.info.bt_reaction_s@tooltip = "_One-shot reaction fire"
+		*node:root.info.bt_reaction_s@tooltip = "_Reaction fire"
 	}
-	confunc startreactiononce_impos
+	confunc startreaction_impos
 	{
 		*node:root.info.bt_reaction_s@texl	= "32 64"
 		*node:root.info.bt_reaction_s@texh	= "63 95"
-		*node:root.info.bt_reaction_s@tooltip = "_One-shot reaction fire (Not possible)"
+		*node:root.info.bt_reaction_s@tooltip = "_Reaction fire (Not possible)"
 	}
 	confunc deselect_reaction
 	{

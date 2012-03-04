@@ -171,7 +171,7 @@ void G_MoraleBehaviour (int team)
 						&& !G_IsRaged(ent)) {
 					/* shaken is later reset along with reaction fire */
 					G_SetShaken(ent);
-					G_SetState(ent, STATE_REACTION_MANY);
+					G_SetState(ent, STATE_REACTION);
 					G_EventSendState(G_VisToPM(ent->visflags), ent);
 					G_ClientPrintf(G_PLAYER_FROM_ENT(ent), PRINT_HUD, _("%s is currently shaken.\n"),
 							ent->chr.name);

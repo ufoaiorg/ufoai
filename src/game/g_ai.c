@@ -1157,7 +1157,7 @@ static void AI_InitPlayer (const player_t * player, edict_t * ent, const equipDe
 
 	/* no need to call G_SendStats for the AI - reaction fire is serverside only for the AI */
 	if (frand() < 0.75f)
-		G_ClientStateChange(player, ent, STATE_REACTION_ONCE, qfalse);
+		G_ClientStateChange(player, ent, STATE_REACTION, qfalse);
 
 	/* initialize the LUA AI now */
 	if (team == TEAM_CIVILIAN)

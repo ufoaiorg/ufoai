@@ -194,10 +194,8 @@ static void HUD_ToggleReaction_f (void)
 		return;
 
 	if (!(actor->state & STATE_REACTION))
-		state = STATE_REACTION_ONCE;
-	else if (actor->state & STATE_REACTION_ONCE)
-		state = STATE_REACTION_MANY;
-	else if (actor->state & STATE_REACTION_MANY)
+		state = STATE_REACTION;
+	else
 		state = ~STATE_REACTION;
 
 	/* Send request to update actor's reaction state to the server. */

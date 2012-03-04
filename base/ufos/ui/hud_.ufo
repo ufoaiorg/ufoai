@@ -239,10 +239,8 @@ window hud extends levelbuttons {
 
 	confunc reserve_shot_disable { }
 
-	confunc startreactionmany { }
-	confunc startreactionmany_impos { }
-	confunc startreactiononce { }
-	confunc startreactiononce_impos { }
+	confunc startreaction { }
+	confunc startreaction_impos { }
 
 	confunc startround { }
 	confunc endround { }

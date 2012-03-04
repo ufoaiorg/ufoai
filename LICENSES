@@ -2659,8 +2659,6 @@ base/pics/althud/bar_top.png | GNU General Public License 2.0 |  | Based on the 
 base/pics/althud/buttons_althud1.png | GNU General Public License 2.0 |  | Based on the original menu artwork by SparX and Rasta
 base/pics/althud/buttons_althud1a.png | GNU General Public License 2.0 |  | Based on the original menu artwork by SparX and Rasta
 base/pics/althud/buttons_althud1ar.png | GNU General Public License 2.0 |  | Based on the original menu artwork by SparX and Rasta
-base/pics/althud/buttons_althud1b.png | GNU General Public License 2.0 |  | Based on the original menu artwork by SparX and Rasta
-base/pics/althud/buttons_althud1br.png | GNU General Public License 2.0 |  | Based on the original menu artwork by SparX and Rasta
 base/pics/althud/buttons_althud1g.png | GNU General Public License 2.0 |  | Based on the original menu artwork by SparX and Rasta
 base/pics/armour/light.png | GNU General Public License 2.0
 base/pics/armour/lightadv.png | GNU General Public License 2.0 | John W. Bjerk (eleazar)
@@ -2741,7 +2739,6 @@ base/pics/cursors/cursor1.png | GNU General Public License 2.0 or later
 base/pics/cursors/cursor2.png | GNU General Public License 2.0 or later
 base/pics/cursors/ducked.png | GNU General Public License 2.0 or later
 base/pics/cursors/reactionfire.png | Creative Commons Attribution-Share Alike 3.0 | Werner Höhrer (hoehrer)
-base/pics/cursors/reactionfiremany.png | Creative Commons Attribution-Share Alike 3.0 | Werner Höhrer (hoehrer)
 base/pics/cursors/wait.png | GNU General Public License 2.0 or later | Christian "Crystan" Hoffmann
 base/pics/envmaps/envmap_0.png | GNU General Public License 2.0 | Jay Dolan (Quake2World)
 base/pics/envmaps/envmap_1.png | GNU General Public License 2.0 | Jay Dolan (Quake2World)

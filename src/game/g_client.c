@@ -491,8 +491,7 @@ void G_ClientStateChange (const player_t* player, edict_t* ent, int reqState, qb
 		}
 		break;
 	/* Request to turn on multi- or single-reaction fire mode. */
-	case STATE_REACTION_MANY:
-	case STATE_REACTION_ONCE:
+	case STATE_REACTION:
 		/* Disable reaction fire. */
 		G_RemoveReaction(ent);
 
