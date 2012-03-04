@@ -30,6 +30,7 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #include "cp_installation_callbacks.h"
 #include "cp_installation.h"
 #include "cp_map.h"
+#include "cp_ufo.h"
 
  /**
  * @brief Sets the title of the installation to a cvar to prepare the rename menu.
@@ -83,7 +84,18 @@ void INS_SelectInstallation (installation_t *installation)
 			Cvar_Set("mn_installation_timetobuild", va(ngettext("%d day", "%d days", timetobuild), timetobuild));
 		}
 		INS_SetCurrentSelectedInstallation(installation);
-		UI_PushWindow("popup_installationstatus", NULL, NULL);
+
+		switch (INS_GetType(installation)) {
+		case INSTALLATION_UFOYARD:
+			UI_PushWindow("popup_ufoyards", NULL, NULL);
+			break;
+		case INSTALLATION_DEFENCE:
+			UI_PushWindow("basedefence", NULL, NULL);
+			break;
+		case INSTALLATION_RADAR:
+		default:
+			UI_PushWindow("popup_installationstatus", NULL, NULL);
+		}
 	}
 }
 
@@ -192,7 +204,7 @@ static void INS_DestroyInstallation_f (void)
 	}
 
 	/* Ask 'Are you sure?' by default */
-	if (Cmd_Argc() < 3) {
+	if (Cmd_Argc() < 3 || !atoi(Cmd_Argv(2))) {
 		char command[MAX_VAR];
 
 		Com_sprintf(command, sizeof(command), "mn_installation_destroy %d 1; ui_pop;", installation->idx);
@@ -213,6 +225,40 @@ static void INS_UpdateInstallationLimit_f (void)
 	Cvar_SetValue("mn_installation_max", B_GetInstallationLimit());
 }
 
+/**
+ * @brief Fills the UI with ufo yard data
+ */
+static void INS_FillUFOYardData_f (void)
+{
+	installation_t *ins;
+
+	UI_ExecuteConfunc("ufolist_clear");
+	if (Cmd_Argc() < 2 || atoi(Cmd_Argv(1)) < 0) {
+		ins = INS_GetCurrentSelectedInstallation();
+		if (!ins || INS_GetType(ins) != INSTALLATION_UFOYARD)
+			ins = INS_GetFirstUFOYard(qfalse);
+	} else {
+		ins = INS_GetByIDX(atoi(Cmd_Argv(1)));
+		if (!ins)
+			Com_DPrintf(DEBUG_CLIENT, "Installation not founded (idx %i)\n", atoi(Cmd_Argv(1)));
+	}
+
+	if (ins) {
+		const nation_t *nat = MAP_GetNation(ins->pos);
+		const int timeToBuild = max(0, ins->installationTemplate->buildTime - (ccs.date.day - ins->buildStart));
+		const char *buildTime = timeToBuild > 0 ? va(ngettext("%d day", "%d days", timeToBuild), timeToBuild) : "-";
+		const int freeCap = max(0, ins->ufoCapacity.max - ins->ufoCapacity.cur);
+		const char *nationName = nat ? _(nat->name) : "";
+
+		UI_ExecuteConfunc("ufolist_addufoyard %d \"%s\" \"%s\" %d %d \"%s\"", ins->idx, ins->name, nationName, ins->ufoCapacity.max, freeCap, buildTime);
+
+		US_Foreach(ufo) {
+			if (ufo->installation != ins)
+				continue;
+			UI_ExecuteConfunc("ufolist_addufo %d \"%s\" \"Health %3.0f%%\" \"%s\"", ufo->idx, UFO_AircraftToIDOnGeoscape(ufo->ufoTemplate), ufo->condition * 100, ufo->ufoTemplate->model);
+		}
+	}
+}
 void INS_InitCallbacks (void)
 {
 	Cmd_AddCommand("mn_installation_select", INS_SelectInstallation_f, "Parameter is the installation index. -1 will build a new one.");
@@ -220,6 +266,8 @@ void INS_InitCallbacks (void)
 	Cmd_AddCommand("mn_installation_changename", INS_ChangeInstallationName_f, "Called after editing the cvar installation name");
 	Cmd_AddCommand("mn_installation_destroy", INS_DestroyInstallation_f, "Destroys an installation");
 	Cmd_AddCommand("mn_installation_update_max_count", INS_UpdateInstallationLimit_f, "Updates the installation count limit");
+
+	Cmd_AddCommand("ui_fillufoyards", INS_FillUFOYardData_f, "Fills UFOYard UI with data");
 
 	Cvar_SetValue("mn_installation_count", INS_GetCount());
 	Cvar_Set("mn_installation_title", "");
@@ -229,6 +277,8 @@ void INS_InitCallbacks (void)
 
 void INS_ShutdownCallbacks (void)
 {
+	Cmd_RemoveCommand("ui_fillufoyards");
+
 	Cmd_RemoveCommand("mn_installation_select");
 	Cmd_RemoveCommand("mn_installation_build");
 	Cmd_RemoveCommand("mn_installation_changename");

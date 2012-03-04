@@ -1,0 +1,287 @@
+// Installation popup windows
+
+component panel cmp_ufoyard_entry {
+	{
+		size		"250 40"
+		border		0
+		bordercolor	"0 0.5 0 1"
+
+		onClick {
+			// disabled as selector does notreally work
+			// cmd "ufolist_select root.list.<node:this.id@string><node:this.id@integer>;"
+		}
+	}
+
+	data id {
+	}
+	model ufomodel {
+		pos			"2 4"
+		size		"32 32"
+		autoscale	true
+		angles		"0 0 150"
+		ghost		true
+	}
+	string title {
+		pos			"37 2"
+		size		"200 20"
+		font		"f_small_bold"
+		ghost		true
+	}
+	string detail {
+		pos			"37 22"
+		size		"200 15"
+		font		"f_verysmall"
+		ghost		true
+	}
+}
+
+window popup_ufoyards {
+	{
+		string		"_UFO Yards"
+		image		"ui/popup_alpha_tile"
+		pos			"64 250"
+		size		"768 370"
+		dragbutton	true
+		closebutton	true
+	}
+
+	data selected {
+		string		""
+	}
+
+	panel list {
+		{
+			pos		"20 50"
+			size	"250 295"
+			layout 	LAYOUT_TOP_DOWN_FLOW
+			wheelscrollable	true
+			border	1
+			padding	6
+
+			onViewChange {
+				*node:parent.list_scroll@fullsize = <fullsize>
+				*node:parent.list_scroll@current = <viewpos>
+				*node:parent.list_scroll@viewsize = <viewsize>
+			}
+		}
+	}
+	vscrollbar list_scroll {
+		image		"ui/scrollbar_v_green"
+		pos			"270 50"
+		height		"295"
+		current		0
+		viewsize	4
+		fullsize	4
+		hidewhenunused	true
+
+		onChange {
+			*node:parent.list@viewpos = <current>
+		}
+	}
+
+	// this should only be a vertical line...
+	bar separator {
+		pos			"293 92"
+		size		"4 255"
+		readonly	true
+		nohover		true
+		color		"0 0.4 0 1"
+		max			1
+		current		1
+	}
+
+	tab ufoyardtabs {
+		{
+			pos		"300 50"
+			size	"450 35"
+			cvar	*cvar:ufoyard_tab
+			onChange {
+			}
+		}
+		option information {
+			label	"_Information"
+			value	"info"
+		}
+		option transfer {
+			label	"_Transfer"
+			value	"transfer"
+			invis	true
+		}
+		option sell {
+			label	"_Sell"
+			value	"sell"
+			invis	true
+		}
+	}
+
+	panel yardinfo {
+		{
+			pos		"300 85"
+			size	"450 270"
+		}
+
+		model ufomodel {
+			src			"geoscape/ufoyard"
+			pos			"10 10"
+			size		"128 128"
+			autoscale	true
+			angles		"0 0 150"
+		}
+
+		string name_label {
+			string		"_Name:"
+			pos			"150 5"
+			size		"290 20"
+			font		"f_small_bold"
+		}
+		textentry name {
+			string		*cvar:mn_installation_title
+			pos			"150 35"
+			size		"265 25"
+			border		3
+			bordercolor	"0 0.5 0 1"
+
+			onChange {
+				cmd "mn_installation_changename;"
+				cmd "ui_fillufoyards;"
+			}
+		}
+		button name_edit
+		{
+			tooltip		"_Rename Installation"
+			icon		"icons/pen"
+			pos			"420 33"
+			size		"35 35"
+			padding		0
+			onClick {
+				call *node:parent.name@edit
+			}
+		}
+
+		string location_label {
+			string		"_Location:"
+			pos			"150 75"
+			size		"290 20"
+			font		"f_small_bold"
+		}
+		string location {
+			pos			"150 100"
+			size		"280 20"
+			contentalign	ALIGN_UR
+		}
+
+		string buildtime_label {
+			string		"_Time to build:"
+			pos			"150 130"
+			size		"200 20"
+			invis		true
+			font		"f_small_bold"
+		}
+		string buildtime {
+			pos			"350 130"
+			size		"80 20"
+			contentalign	ALIGN_UR
+			invis		true
+		}
+
+		string maxcap_label {
+			string		"_Capacity:"
+			pos			"150 150"
+			size		"200 20"
+			font		"f_small_bold"
+		}
+		string maxcap {
+			pos			"350 150"
+			size		"80 20"
+			contentalign	ALIGN_UR
+		}
+
+		string freecap_label 	{
+			string		"_Free Space:"
+			pos			"150 175"
+			size		"200 20"
+			font		"f_small_bold"
+		}
+		string freecap {
+			pos			"350 175"
+			size		"80 20"
+			contentalign	ALIGN_UR
+		}
+
+		checkbox confirm {
+			tooltip		"_Confirm destroying"
+			image		"ui/checkbox_green"
+			pos			"120 221"
+			size		"20 20"
+			current		0
+		}
+		cmpPopupButton destroy {
+			string		"_Destroy"
+			tooltip		"_Destroy installation"
+			pos			"170 215"
+			size		"200 32"
+			font		"f_menu"
+
+			onClick {
+				cmd "ui_pop; mn_installation_destroy -1 <node:parent.confirm@current>;"
+			}
+		}
+	}
+
+	confunc ufolist_clear {
+		*node:root.selected@string = ""
+		call *node:parent.list@removeAllChild
+	}
+	confunc ufolist_addufoyard {
+		call *node:parent.list@createChild("ufoyard<1>", "cmp_ufoyard_entry")
+		*node:parent.list.ufoyard<1>.id@string = "ufoyard"
+		*node:parent.list.ufoyard<1>.id@integer = <1>
+		*node:parent.list.ufoyard<1>.ufomodel@src = "geoscape/ufoyard"
+		*node:parent.list.ufoyard<1>.title@string = "<2>"
+		*cvar:mn_installation_title = "<2>"
+		*node:parent.list.ufoyard<1>.detail@string = "<3>"
+
+		*node:parent.yardinfo.location@string = "<3>"
+		if ( "<node:parent.yardinfo.location@string>" eq "" ) {
+			*node:parent.yardinfo.location_label@invis = true
+		} else {
+			*node:parent.yardinfo.location_label@invis = false
+		}
+
+		*node:parent.yardinfo.maxcap@string = "<4>"
+		*node:parent.yardinfo.freecap@string = "<5>"
+		*node:parent.yardinfo.confirm@current = 0
+
+		*node:parent.yardinfo.buildtime@string = "<6>"
+		if ( *node:parent.yardinfo.buildtime@string eq "-" ) {
+			*node:parent.yardinfo.buildtime_label@invis = true
+			*node:parent.yardinfo.buildtime@invis = true
+		} else {
+			*node:parent.yardinfo.buildtime_label@invis = false
+			*node:parent.yardinfo.buildtime@invis = false
+		}
+
+		cmd "ufolist_select root.list.ufoyard<1>;"
+	}
+	confunc ufolist_addufo {
+		call *node:parent.list@createChild("ufo<1>", "cmp_ufoyard_entry")
+		*node:parent.list.ufo<1>.id@integer = <1>
+		*node:parent.list.ufo<1>.id@string = "ufo"
+		*node:parent.list.ufo<1>.ufomodel@src = "<4>"
+		*node:parent.list.ufo<1>.title@string = "<2>"
+		*node:parent.list.ufo<1>.detail@string = "<3>"
+	}
+	confunc ufolist_select {
+		if ( *node:root.selected@string ne "" ) {
+			*node:<node:root.selected@string>@border = 0
+		}
+		*node:root.selected@string = "<1>"
+		*node:<node:root.selected@string>@border = 1
+	}
+
+	func onWindowOpened {
+		cmd "ui_fillufoyards;"
+	}
+	func onWindowClosed {
+	}
+}
