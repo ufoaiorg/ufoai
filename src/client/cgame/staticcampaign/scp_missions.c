@@ -334,6 +334,7 @@ qboolean SCP_Save (xmlNode_t *parent)
 		XML_AddString(actMisNode, SAVE_STATICCAMPAIGN_STAGESETNAME, mis->cause->def->name);
 		XML_AddString(actMisNode, SAVE_STATICCAMPAIGN_MISSIONID, mis->mission->id);
 		XML_AddString(actMisNode, SAVE_STATICCAMPAIGN_MISSIONNAME, mis->def->id);
+		XML_AddInt(actMisNode, SAVE_STATICCAMPAIGN_MISSIONCOUNT, mis->def->count);
 		XML_AddDate(actMisNode, SAVE_STATICCAMPAIGN_MISSIONEXPIREDATE, mis->expire.day, mis->expire.sec);
 	}
 
@@ -422,6 +423,8 @@ qboolean SCP_Load (xmlNode_t *parent)
 			Com_Printf("......error: Incomplete mission info for mission %s\n", name);
 			return qfalse;
 		}
+
+		mis->def->count = XML_GetInt(snode, SAVE_STATICCAMPAIGN_MISSIONCOUNT, 0);
 
 		name = XML_GetString(snode, SAVE_STATICCAMPAIGN_MISSIONID);
 		mis->mission = CP_GetMissionByIDSilent(name);
