@@ -54,7 +54,7 @@ mail alien_base_discovered
 	to "_mail_to_base_commander"
 	from "_mail_from_xo"
 	// location name
-	subject "_Alien Base Discovered -- %s"
+	subject "_Alien Base Discovered"
 	body "_mail_alien_base_discovered"
 	model "characters/howard"
 	icon icons/mail_world
