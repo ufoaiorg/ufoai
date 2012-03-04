@@ -37,7 +37,8 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 typedef struct saveFileHeader_s {
 	uint32_t version;			/**< which savegame version */
 	uint32_t compressed;		/**< is this file compressed via zlib */
-	uint32_t dummy[14];			/**< maybe we have to extend this later */
+	uint32_t subsystems;		/**< amount of subsystems that were saved in this savegame */
+	uint32_t dummy[13];			/**< maybe we have to extend this later */
 	char gameVersion[16];		/**< game version that was used to save this file */
 	char name[32];				/**< savefile name */
 	char gameDate[32];			/**< internal game date */
@@ -97,6 +98,10 @@ static qboolean SAV_VerifyHeader (saveFileHeader_t const * const header)
 	len = strlen(header->realDate);
 	if (len > sizeof(header->realDate)) {
 		Com_Printf("realDate is "UFO_SIZE_T" Bytes long, max is "UFO_SIZE_T"\n", len, sizeof(header->realDate));
+		return qfalse;
+	}
+	if (header->subsystems != 0 && header->subsystems != saveSubsystemsAmount) {
+		Com_DPrintf(DEBUG_CLIENT, "Savefile has incompatible amount of subsystems\n");
 		return qfalse;
 	}
 
@@ -296,6 +301,7 @@ static qboolean SAV_GameSave (const char *filename, const char *comment, char **
 	OBJZERO(header);
 	header.compressed = LittleLong(save_compressed->integer);
 	header.version = LittleLong(SAVE_FILE_VERSION);
+	header.subsystems = LittleLong(saveSubsystemsAmount);
 	Q_strncpyz(header.name, comment, sizeof(header.name));
 	Q_strncpyz(header.gameVersion, UFO_VERSION, sizeof(header.gameVersion));
 	CP_DateConvertLong(&ccs.date, &date);
@@ -403,6 +409,7 @@ static void SAV_GameReadGameComment (const int idx)
 		header.compressed = LittleLong(header.compressed);
 		header.version = LittleLong(header.version);
 		header.xmlSize = LittleLong(header.xmlSize);
+		header.subsystems = LittleLong(header.subsystems);
 
 		if (!SAV_VerifyHeader(&header))
 			Com_Printf("Savegame header for slot%d is corrupted!\n", idx);
@@ -545,7 +552,10 @@ static void SAV_GameSaveNameCleanup_f (void)
 		Com_Printf("Warning: Savefile header may be corrupted\n");
 
 	Com_sprintf(cvar, sizeof(cvar), "mn_slot%i", slotID);
-	Cvar_Set(cvar, header.name);
+	if (SAV_VerifyHeader(&header))
+		Cvar_Set(cvar, header.name);
+	else
+		Cvar_Set(cvar, "");
 	FS_CloseFile(&f);
 }
 
