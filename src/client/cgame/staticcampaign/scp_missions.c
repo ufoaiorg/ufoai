@@ -24,6 +24,7 @@
  */
 
 #include "scp_missions.h"
+#include "../campaign/cp_campaign.h"
 #include "../campaign/cp_time.h"
 #include "../campaign/cp_missions.h"
 #include "../campaign/cp_map.h"
@@ -195,7 +196,7 @@ static void SCP_CampaignAddMission (setState_t *set)
 	}
 
 	mission = CP_CreateNewMission(INTERESTCATEGORY_TERROR_ATTACK, qtrue);
-	mission->mapDef = Com_GetMapDefinitionByID(mis->def->id);
+	mission->mapDef = cgi->Com_GetMapDefinitionByID(mis->def->id);
 	if (!mission->mapDef) {
 		Com_Printf("SCP_CampaignAddMission: Could not get the mapdef '%s'\n", mis->def->id);
 		CP_MissionRemove(mission);
@@ -304,7 +305,7 @@ qboolean SCP_Save (xmlNode_t *parent)
 	actMis_t *mis;
 	int i;
 
-	xmlNode_t *scdNode = XML_AddNode(parent, SAVE_STATICCAMPAIGN);
+	xmlNode_t *scdNode = cgi->XML_AddNode(parent, SAVE_STATICCAMPAIGN);
 
 	/* check campaign events */
 	for (i = 0, stage = scd->stage; i < scd->numStages; i++, stage++) {
@@ -312,30 +313,30 @@ qboolean SCP_Save (xmlNode_t *parent)
 			setState_t *set;
 			int j;
 
-			xmlNode_t *stageNode = XML_AddNode(scdNode, SAVE_STATICCAMPAIGN_STAGE);
-			XML_AddString(stageNode, SAVE_STATICCAMPAIGN_STAGENAME, stage->def->name);
-			XML_AddDate(stageNode, SAVE_STATICCAMPAIGN_STAGEDATE, stage->start.day, stage->start.sec);
+			xmlNode_t *stageNode = cgi->XML_AddNode(scdNode, SAVE_STATICCAMPAIGN_STAGE);
+			cgi->XML_AddString(stageNode, SAVE_STATICCAMPAIGN_STAGENAME, stage->def->name);
+			cgi->XML_AddDate(stageNode, SAVE_STATICCAMPAIGN_STAGEDATE, stage->start.day, stage->start.sec);
 
 			/* write all sets */
 			for (j = 0, set = &scd->set[stage->def->first]; j < stage->def->num; j++, set++) {
-				xmlNode_t *setStateNode = XML_AddNode(stageNode, SAVE_STATICCAMPAIGN_SETSTATE);
+				xmlNode_t *setStateNode = cgi->XML_AddNode(stageNode, SAVE_STATICCAMPAIGN_SETSTATE);
 
-				XML_AddString(setStateNode, SAVE_STATICCAMPAIGN_SETSTATENAME, set->def->name);
-				XML_AddBool(setStateNode, SAVE_STATICCAMPAIGN_SETSTATEACTIVE, set->active);
-				XML_AddInt(setStateNode, SAVE_STATICCAMPAIGN_SETSTATEDONE, set->done);
-				XML_AddDate(setStateNode, SAVE_STATICCAMPAIGN_SETSTATESTARTDATE, set->start.day, set->start.sec);
-				XML_AddDate(setStateNode, SAVE_STATICCAMPAIGN_SETSTATEEVENTDATE, set->event.day, set->event.sec);
+				cgi->XML_AddString(setStateNode, SAVE_STATICCAMPAIGN_SETSTATENAME, set->def->name);
+				cgi->XML_AddBool(setStateNode, SAVE_STATICCAMPAIGN_SETSTATEACTIVE, set->active);
+				cgi->XML_AddInt(setStateNode, SAVE_STATICCAMPAIGN_SETSTATEDONE, set->done);
+				cgi->XML_AddDate(setStateNode, SAVE_STATICCAMPAIGN_SETSTATESTARTDATE, set->start.day, set->start.sec);
+				cgi->XML_AddDate(setStateNode, SAVE_STATICCAMPAIGN_SETSTATEEVENTDATE, set->event.day, set->event.sec);
 			}
 		}
 	}
 
 	for (i = 0, mis = scd->activeMissions; i < scd->numActiveMissions; i++, mis++) {
-		xmlNode_t *actMisNode = XML_AddNode(scdNode, SAVE_STATICCAMPAIGN_ACTIVEMISSION);
-		XML_AddString(actMisNode, SAVE_STATICCAMPAIGN_STAGESETNAME, mis->cause->def->name);
-		XML_AddString(actMisNode, SAVE_STATICCAMPAIGN_MISSIONID, mis->mission->id);
-		XML_AddString(actMisNode, SAVE_STATICCAMPAIGN_MISSIONNAME, mis->def->id);
-		XML_AddInt(actMisNode, SAVE_STATICCAMPAIGN_MISSIONCOUNT, mis->def->count);
-		XML_AddDate(actMisNode, SAVE_STATICCAMPAIGN_MISSIONEXPIREDATE, mis->expire.day, mis->expire.sec);
+		xmlNode_t *actMisNode = cgi->XML_AddNode(scdNode, SAVE_STATICCAMPAIGN_ACTIVEMISSION);
+		cgi->XML_AddString(actMisNode, SAVE_STATICCAMPAIGN_STAGESETNAME, mis->cause->def->name);
+		cgi->XML_AddString(actMisNode, SAVE_STATICCAMPAIGN_MISSIONID, mis->mission->id);
+		cgi->XML_AddString(actMisNode, SAVE_STATICCAMPAIGN_MISSIONNAME, mis->def->id);
+		cgi->XML_AddInt(actMisNode, SAVE_STATICCAMPAIGN_MISSIONCOUNT, mis->def->count);
+		cgi->XML_AddDate(actMisNode, SAVE_STATICCAMPAIGN_MISSIONEXPIREDATE, mis->expire.day, mis->expire.sec);
 	}
 
 	return qtrue;
@@ -346,7 +347,7 @@ qboolean SCP_Load (xmlNode_t *parent)
 	xmlNode_t *node;
 	xmlNode_t *snode;
 
-	node = XML_GetNode(parent, SAVE_STATICCAMPAIGN);
+	node = cgi->XML_GetNode(parent, SAVE_STATICCAMPAIGN);
 	if (!node) {
 		return qfalse;
 	}
@@ -354,24 +355,24 @@ qboolean SCP_Load (xmlNode_t *parent)
 	SCP_Parse();
 
 	/* read static campaign data */
-	for (snode = XML_GetNode(node, SAVE_STATICCAMPAIGN_STAGE); snode;
-			snode = XML_GetNextNode(snode, node, SAVE_STATICCAMPAIGN_STAGE)) {
+	for (snode = cgi->XML_GetNode(node, SAVE_STATICCAMPAIGN_STAGE); snode;
+			snode = cgi->XML_GetNextNode(snode, node, SAVE_STATICCAMPAIGN_STAGE)) {
 		xmlNode_t *stateNode;
-		const char *id = XML_GetString(snode, SAVE_STATICCAMPAIGN_STAGENAME);
+		const char *id = cgi->XML_GetString(snode, SAVE_STATICCAMPAIGN_STAGENAME);
 		stageState_t *state = SCP_CampaignActivateStage(id);
 		if (!state) {
 			Com_Printf("......error: unable to load campaign, unknown stage '%s'\n", id);
 			return qfalse;
 		}
 
-		XML_GetDate(snode, SAVE_STATICCAMPAIGN_STAGEDATE, &state->start.day, &state->start.sec);
+		cgi->XML_GetDate(snode, SAVE_STATICCAMPAIGN_STAGEDATE, &state->start.day, &state->start.sec);
 		int num = 0;
-		for (stateNode = XML_GetNode(snode, SAVE_STATICCAMPAIGN_SETSTATE); stateNode;
-				stateNode = XML_GetNextNode(stateNode, snode, SAVE_STATICCAMPAIGN_SETSTATE)) {
+		for (stateNode = cgi->XML_GetNode(snode, SAVE_STATICCAMPAIGN_SETSTATE); stateNode;
+				stateNode = cgi->XML_GetNextNode(stateNode, snode, SAVE_STATICCAMPAIGN_SETSTATE)) {
 			num++;
 			setState_t *set;
 			int j;
-			const char *name = XML_GetString(stateNode, SAVE_STATICCAMPAIGN_SETSTATENAME);
+			const char *name = cgi->XML_GetString(stateNode, SAVE_STATICCAMPAIGN_SETSTATENAME);
 			for (j = 0, set = &scd->set[state->def->first]; j < state->def->num; j++, set++)
 				if (Q_streq(name, set->def->name))
 					break;
@@ -380,22 +381,22 @@ qboolean SCP_Load (xmlNode_t *parent)
 				return qfalse;
 			}
 
-			set->active = XML_GetBool(stateNode, SAVE_STATICCAMPAIGN_SETSTATEACTIVE, qfalse);
-			set->num = XML_GetInt(stateNode, SAVE_STATICCAMPAIGN_SETSTATENUM, 0);
-			set->done = XML_GetInt(stateNode, SAVE_STATICCAMPAIGN_SETSTATEDONE, 0);
+			set->active = cgi->XML_GetBool(stateNode, SAVE_STATICCAMPAIGN_SETSTATEACTIVE, qfalse);
+			set->num = cgi->XML_GetInt(stateNode, SAVE_STATICCAMPAIGN_SETSTATENUM, 0);
+			set->done = cgi->XML_GetInt(stateNode, SAVE_STATICCAMPAIGN_SETSTATEDONE, 0);
 
-			XML_GetDate(stateNode, SAVE_STATICCAMPAIGN_SETSTATESTARTDATE, &set->start.day, &set->start.sec);
-			XML_GetDate(stateNode, SAVE_STATICCAMPAIGN_SETSTATEEVENTDATE, &set->event.day, &set->event.sec);
+			cgi->XML_GetDate(stateNode, SAVE_STATICCAMPAIGN_SETSTATESTARTDATE, &set->start.day, &set->start.sec);
+			cgi->XML_GetDate(stateNode, SAVE_STATICCAMPAIGN_SETSTATEEVENTDATE, &set->event.day, &set->event.sec);
 		}
 
 		if (num != state->def->num)
 			Com_Printf("......warning: Different number of sets: savegame: %i, scripts: %i\n", num, state->def->num);
 	}
 
-	for (snode = XML_GetNode(node, SAVE_STATICCAMPAIGN_ACTIVEMISSION); snode;
-			snode = XML_GetNextNode(snode, node, SAVE_STATICCAMPAIGN_ACTIVEMISSION)) {
+	for (snode = cgi->XML_GetNode(node, SAVE_STATICCAMPAIGN_ACTIVEMISSION); snode;
+			snode = cgi->XML_GetNextNode(snode, node, SAVE_STATICCAMPAIGN_ACTIVEMISSION)) {
 		int j;
-		const char *name = XML_GetString(snode, SAVE_STATICCAMPAIGN_STAGESETNAME);
+		const char *name = cgi->XML_GetString(snode, SAVE_STATICCAMPAIGN_STAGESETNAME);
 		actMis_t *mis = &scd->activeMissions[scd->numActiveMissions++];
 		mis->def = NULL;
 		mis->cause = NULL;
@@ -411,7 +412,7 @@ qboolean SCP_Load (xmlNode_t *parent)
 		}
 
 		/* get mission definition */
-		name = XML_GetString(snode, SAVE_STATICCAMPAIGN_MISSIONNAME);
+		name = cgi->XML_GetString(snode, SAVE_STATICCAMPAIGN_MISSIONNAME);
 		for (j = 0; j < scd->numMissions; j++)
 			if (Q_streq(name, scd->missions[j].id)) {
 				mis->def = &scd->missions[j];
@@ -424,9 +425,9 @@ qboolean SCP_Load (xmlNode_t *parent)
 			return qfalse;
 		}
 
-		mis->def->count = XML_GetInt(snode, SAVE_STATICCAMPAIGN_MISSIONCOUNT, 0);
+		mis->def->count = cgi->XML_GetInt(snode, SAVE_STATICCAMPAIGN_MISSIONCOUNT, 0);
 
-		name = XML_GetString(snode, SAVE_STATICCAMPAIGN_MISSIONID);
+		name = cgi->XML_GetString(snode, SAVE_STATICCAMPAIGN_MISSIONID);
 		mis->mission = CP_GetMissionByIDSilent(name);
 		if (!mis->mission) {
 			Com_Printf("......error: Could not find mission for %s\n", name);
@@ -434,7 +435,7 @@ qboolean SCP_Load (xmlNode_t *parent)
 		}
 
 		/* read time */
-		XML_GetDate(snode, SAVE_STATICCAMPAIGN_MISSIONEXPIREDATE, &mis->expire.day, &mis->expire.sec);
+		cgi->XML_GetDate(snode, SAVE_STATICCAMPAIGN_MISSIONEXPIREDATE, &mis->expire.day, &mis->expire.sec);
 	}
 
 	return qtrue;

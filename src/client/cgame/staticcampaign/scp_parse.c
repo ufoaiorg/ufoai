@@ -119,7 +119,7 @@ static void SCP_ParseMission (const char *name, const char **text)
 
 	} while (*text);
 
-	mapDef_t *mapDef = Com_GetMapDefinitionByID(ms->id);
+	mapDef_t *mapDef = cgi->Com_GetMapDefinitionByID(ms->id);
 	if (mapDef == NULL) {
 		Com_Printf("SCP_ParseMission: invalid mapdef for '%s'\n", ms->id);
 		return;
@@ -217,7 +217,7 @@ static void SCP_ParseStageSet (const char *name, const char **text)
 				}
 
 				if (j == scd->numMissions) {
-					const mapDef_t *mapDef = Com_GetMapDefinitionByID(token);
+					const mapDef_t *mapDef = cgi->Com_GetMapDefinitionByID(token);
 					if (mapDef != NULL) {
 						if (j < MAX_STATIC_MISSIONS - 1) {
 							/* we don't need and mission definition in the scripts if we just would like to link a mapdef */
@@ -332,11 +332,11 @@ void SCP_Parse (void)
 {
 	const char *type, *name, *text;
 
-	FS_BuildFileList("ufos/*.ufo");
-	FS_NextScriptHeader(NULL, NULL, NULL);
+	cgi->FS_BuildFileList("ufos/*.ufo");
+	cgi->FS_NextScriptHeader(NULL, NULL, NULL);
 	text = NULL;
 
-	while ((type = FS_NextScriptHeader("ufos/*.ufo", &name, &text)) != NULL) {
+	while ((type = cgi->FS_NextScriptHeader("ufos/*.ufo", &name, &text)) != NULL) {
 		if (Q_streq(type, "staticcampaign")) {
 			const char **textPtr = &text;
 			SCP_ParseStaticCampaignData(name, textPtr);
