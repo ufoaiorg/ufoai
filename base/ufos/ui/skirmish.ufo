@@ -241,7 +241,7 @@ window skirmish
 			size	"475 355"
 		}
 		// ==============================================
-		// EQUIPMENT PLAYER STRINGS, TEXTENTRY & BUTTONS
+		// EQUIPMENT PLAYER STRINGS & BUTTONS
 		// ==============================================
 		string equipment
 		{
@@ -249,18 +249,15 @@ window skirmish
 			pos			"10 50"
 			size		"450 20"
 		}
-		textentry slot_equipment
+		string slot_equipment
 		{
 			string		*cvar:cl_equipname
-			image		"ui/button_green_verysmall"
 			color		"0 .78 0 1"
-			selectcolor	"1 1 1 1"
 			contentalign	ALIGN_CC
 			padding		8
 			font		"f_verysmall"
 			pos			"30 80"
 			size		"260 34"
-			disabled	true
 			onWheelUp	{ cmd "sk_prevequip cl_equip;" }
 			onWheelDown	{ cmd "sk_nextequip cl_equip;" }
 		}
@@ -283,7 +280,7 @@ window skirmish
 			onClick		{ cmd "sk_nextequip cl_equip;" }
 		}
 		// ==========================================
-		// EQUIPMENT AI STRINGS, TEXTENTRY & BUTTONS
+		// EQUIPMENT AI STRINGS & BUTTONS
 		// ==========================================
 		string equipment_alien
 		{
@@ -291,10 +288,9 @@ window skirmish
 			pos			"10 150"
 			size		"450 20"
 		}
-		textentry slot_alien_equipment
+		string slot_alien_equipment
 		{
 			string		*cvar:ai_equipmentname
-			image		"ui/button_green_verysmall"
 			color		"0 .78 0 1"
 			selectcolor	"1 1 1 1"
 			contentalign	ALIGN_CC
@@ -302,7 +298,6 @@ window skirmish
 			font		"f_verysmall"
 			pos			"30 180"
 			size		"260 34"
-			disabled	true
 			onWheelUp	{ cmd "sk_prevequip ai_equipment;" }
 			onWheelDown	{ cmd "sk_nextequip ai_equipment;" }
 		}
