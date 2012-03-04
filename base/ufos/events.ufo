@@ -1,5 +1,6 @@
 // ==============================================
 // EVENT DEFINITIONS - for the 'news' and storyline events.
+// these mails can get send with 'addeventmail' console command
 // ==============================================
 
 // rs_alien_base_discovered_event is trigger from code as it relies on an alienbase being discovered
