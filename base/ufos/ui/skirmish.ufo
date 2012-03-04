@@ -249,9 +249,10 @@ window skirmish
 			pos			"10 50"
 			size		"450 20"
 		}
-		string slot_equipment
+		button slot_equipment
 		{
 			string		*cvar:cl_equipname
+			image		"ui/button_green_verysmall"
 			color		"0 .78 0 1"
 			contentalign	ALIGN_CC
 			padding		8
@@ -288,9 +289,10 @@ window skirmish
 			pos			"10 150"
 			size		"450 20"
 		}
-		string slot_alien_equipment
+		button slot_alien_equipment
 		{
 			string		*cvar:ai_equipmentname
+			image		"ui/button_green_verysmall"
 			color		"0 .78 0 1"
 			selectcolor	"1 1 1 1"
 			contentalign	ALIGN_CC
