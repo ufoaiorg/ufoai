@@ -239,7 +239,7 @@ void G_TakeDamage (edict_t *ent, int damage)
  * @param start The start vector of the trace
  * @param end The end vector of the trace
  */
-static void G_TraceDraw (const vec3_t start, const vec3_t end)
+static inline void G_TraceDraw (const vec3_t start, const vec3_t end)
 {
 	if (g_drawtraces->integer)
 		G_EventParticleSpawn(PM_ALL, "fadeTracerDebug", TRACING_ALL_VISIBLE_LEVELS, start, end, vec3_origin);
@@ -292,8 +292,7 @@ const char* G_GetPlayerName (int pnum)
 {
 	if (pnum >= game.sv_maxplayersperteam)
 		return "";
-	else
-		return game.players[pnum].pers.netname;
+	return game.players[pnum].pers.netname;
 }
 
 /**
