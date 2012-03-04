@@ -1362,8 +1362,13 @@ const char *UI_GetReferenceString (const uiNode_t* const node, const char *ref)
 
 		/* get the reference and the name */
 		token = Com_MacroExpandString(ref);
-		if (token)
+		if (token) {
+			if (token[0] == '_') {
+				token++;
+				return _(token);
+			}
 			return token;
+		}
 
 		/* skip the star */
 		token = ref + 1;
