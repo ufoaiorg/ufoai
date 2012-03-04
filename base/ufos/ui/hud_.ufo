@@ -61,19 +61,35 @@ component panel cmpFiremodeEntry {
 		contentalign ALIGN_CL
 		ghost true
 	}
+	string tu_label {
+		pos "17 32"
+		size "50 28"
+		contentalign ALIGN_CR
+		ghost true
+		string		"_TU:"
+		font		"f_verysmall"
+	}
 	string tu
 	{
-		pos "27 32"
-		size "69 28"
-		contentalign ALIGN_CC
+		pos "67 32"
+		size "29 28"
+		contentalign ALIGN_CL
 		ghost true
+		font		"f_verysmall"
+	}
+	string shot_label {
+		pos "99 32"
+		size "80 28"
+		contentalign ALIGN_CR
+		ghost true
+		string		"_Shots:"
 		font		"f_verysmall"
 	}
 	string shot
 	{
-		pos "99 32"
-		size "111 28"
-		contentalign ALIGN_CC
+		pos "179 32"
+		size "30 28"
+		contentalign ALIGN_CL
 		ghost true
 		font		"f_verysmall"
 	}
@@ -95,8 +111,8 @@ component panel cmpFiremodeEntry {
 		*node:parent.index@string = "<3>"
 
 		*node:parent.name@string = "<6>"
-		*node:parent.tu@string = "_TU: <7>"
-		*node:parent.shot@string = "_Shots: <8>"
+		*node:parent.tu@string = "<7>"
+		*node:parent.shot@string = "<8>"
 		*node:parent.tu@tooltip = "<9>"
 
 		if ( <5> eq "1" ) {

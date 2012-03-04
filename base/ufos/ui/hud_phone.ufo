@@ -93,11 +93,21 @@ component panel hud_phone_firemodeentry {
 		font "f_verybig"
 		color	"0 0 0 1"
 	}
-	string shot
+	string shot_label
 	{
 		pos "250 70"
-		size "250 70"
-		contentalign ALIGN_CC
+		size "150 70"
+		string "_Shots:"
+		contentalign ALIGN_CR
+		ghost true
+		font "f_verybig"
+		color	"0 0 0 1"
+	}
+	string shot
+	{
+		pos "400 70"
+		size "100 70"
+		contentalign ALIGN_CL
 		ghost true
 		font "f_verybig"
 		color	"0 0 0 1"
@@ -121,7 +131,7 @@ component panel hud_phone_firemodeentry {
 
 		*node:parent.name@string = "<6>"
 		*node:parent.tu@string = "<7>"
-		*node:parent.shot@string = "_Shots: <8>"
+		*node:parent.shot@string = "<8>"
 		*node:parent.tu@tooltip = "<9>"
 
 		if (<2> eq "r") {
