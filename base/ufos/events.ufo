@@ -33,7 +33,6 @@ mail prolog
 {
 	from "_mail_from_un"
 	to "_mail_to_base_commander"
-	date "_2084 Mar 21"
 	subject "_Good Luck"
 	body "_mail_prolog"
 	icon icons/mail_un
@@ -56,5 +55,5 @@ mail alien_base_discovered
 	subject "_Alien Base Discovered"
 	body "_mail_alien_base_discovered"
 	model "characters/howard"
-	icon icons/mail_world
+	icon icons/mail_event
 }
