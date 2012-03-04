@@ -48,6 +48,7 @@ damagetypes standard
 	"particlebeam_heavy"
 	"_stun_electro"
 	"_stun_gas"
+	"smoke"
 }
 
 // =======================

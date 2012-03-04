@@ -386,6 +386,7 @@ typedef struct csi_s {
 	int damStunGas;		/**< Stun gas attack (only effective against organic targets).
 						 * @todo Maybe even make a differentiation between aliens/humans here? */
 	int damStunElectro;	/**< Electro-Shock attack (effective against organic and robotic targets). */
+	int damSmoke;		/**< smoke damage type */
 
 	/** Equipment definitions */
 	equipDef_t eds[MAX_EQUIPDEFS];

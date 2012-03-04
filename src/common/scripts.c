@@ -3294,7 +3294,7 @@ void Com_ParseScripts (qboolean onlyServer)
 	/* reset csi basic info */
 	INVSH_InitCSI(&csi);
 	csi.idRight = csi.idLeft = csi.idExtension = csi.idBackpack = csi.idBelt = csi.idHolster = csi.idArmour = csi.idFloor = csi.idEquip = csi.idHeadgear = NONE;
-	csi.damNormal = csi.damBlast = csi.damFire = csi.damShock = csi.damLaser = csi.damPlasma = csi.damParticle = csi.damStunElectro = csi.damStunGas = NONE;
+	csi.damNormal = csi.damBlast = csi.damFire = csi.damShock = csi.damLaser = csi.damPlasma = csi.damParticle = csi.damStunElectro = csi.damStunGas = csi.damSmoke = NONE;
 
 	/* pre-stage parsing */
 	Com_Printf("%i script files\n", FS_BuildFileList("ufos/*.ufo"));

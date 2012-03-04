@@ -295,6 +295,7 @@ static void G_Damage (edict_t *target, const fireDef_t *fd, int damage, edict_t 
 	const qboolean stunEl = (fd->obj->dmgtype == gi.csi->damStunElectro);
 	const qboolean stunGas = (fd->obj->dmgtype == gi.csi->damStunGas);
 	const qboolean shock = (fd->obj->dmgtype == gi.csi->damShock);
+	const qboolean smoke = (fd->obj->dmgtype == gi.csi->damSmoke);
 	qboolean isRobot;
 
 	assert(target);
@@ -302,7 +303,7 @@ static void G_Damage (edict_t *target, const fireDef_t *fd, int damage, edict_t 
 	/* Breakables */
 	if (G_IsBrushModel(target) && G_IsBreakable(target)) {
 		/* Breakables are immune to stun & shock damage. */
-		if (stunEl || stunGas || shock || mock)
+		if (stunEl || stunGas || shock || mock || smoke)
 			return;
 
 		if (damage >= target->HP) {
