@@ -1,0 +1,62 @@
+
+// entity 0
+{
+"classname" "worldspawn"
+// brush 0
+{
+( 26 10 6 ) ( 26 6 6 ) ( 22 10 6 ) tex_common/lightclip 0 0 0 0.5 0.5 65280 0 0
+( 26 10 7 ) ( 22 10 7 ) ( 26 10 5 ) tex_common/lightclip 0 0 0 0.5 0.5 65280 0 0
+( 26 10 6 ) ( 26 10 4 ) ( 26 6 6 ) tex_common/lightclip 0 0 0 0.5 0.5 65280 0 0
+( 22 6 5 ) ( 26 6 5 ) ( 22 10 5 ) tex_common/lightclip 0 0 0 0.5 0.5 65280 0 0
+( 22 6 5 ) ( 22 6 7 ) ( 26 6 5 ) tex_common/lightclip 0 0 0 0.5 0.5 65280 0 0
+( 22 6 5 ) ( 22 10 5 ) ( 22 6 7 ) tex_common/lightclip 0 0 0 0.5 0.5 65280 0 0
+}
+// brush 1
+{
+( 30 41 6 ) ( 20 41 6 ) ( 20 31 6 ) tex_common/lightclip 0 0 0 0.5 0.5
+( 20 31 7 ) ( 20 41 7 ) ( 30 41 7 ) tex_common/lightclip 0 0 0 0.5 0.5
+( 25 41 7 ) ( 25 41 6 ) ( 30 41 6 ) tex_common/lightclip 0 0 0 0.5 0.5
+( 29 39 7 ) ( 29 39 6 ) ( 32 35 6 ) tex_common/lightclip 0 0 0 0.5 0.5
+( 29 34 7 ) ( 29 34 6 ) ( 27 30 6 ) tex_common/lightclip 0 0 0 0.5 0.5
+( 25 31 7 ) ( 25 31 6 ) ( 20 31 6 ) tex_common/lightclip 0 0 0 0.5 0.5
+( 21 34 7 ) ( 21 34 6 ) ( 18 38 6 ) tex_common/lightclip 0 0 0 0.5 0.5
+( 21 39 7 ) ( 21 39 6 ) ( 23 43 6 ) tex_common/lightclip 0 0 0 0.5 0.5
+}
+// brush 2
+{
+( 62 22 6 ) ( 62 21 6 ) ( 78 21 6 ) tex_common/lightclip 0 0 0 0.5 0.5
+( 78 21 7 ) ( 62 21 7 ) ( 62 22 7 ) tex_common/lightclip 0 0 0 0.5 0.5
+( 62 22 16 ) ( 62 22 0 ) ( 62 30 0 ) tex_common/lightclip 0 0 0 0.5 0.5
+( 66 28 16 ) ( 66 28 0 ) ( 73 32 0 ) tex_common/lightclip 0 0 0 0.5 0.5
+( 74 28 16 ) ( 74 28 0 ) ( 81 24 0 ) tex_common/lightclip 0 0 0 0.5 0.5
+( 78 22 16 ) ( 78 22 0 ) ( 78 14 0 ) tex_common/lightclip 0 0 0 0.5 0.5
+( 74 15 16 ) ( 74 15 0 ) ( 67 11 0 ) tex_common/lightclip 0 0 0 0.5 0.5
+( 66 15 16 ) ( 66 15 0 ) ( 59 19 0 ) tex_common/lightclip 0 0 0 0.5 0.5
+}
+}
+// entity 1
+{
+"classname" "misc_model"
+"model" "models/objects/vegi/plants2/plant_03.md2"
+"origin" "24 8 4"
+"spawnflags" "255"
+"skin" "9"
+}
+// entity 2
+{
+"classname" "misc_model"
+"model" "models/objects/vegi/plants2/plant_03.md2"
+"origin" "25 36 4"
+"spawnflags" "255"
+"skin" "12"
+"modelscale_vec" "2 2 2"
+}
+// entity 3
+{
+"classname" "misc_model"
+"model" "models/objects/vegi/plants2/plant_03.md2"
+"origin" "70 22 4"
+"spawnflags" "255"
+"skin" "10"
+"modelscale_vec" "3 3 3"
+}
