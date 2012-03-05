@@ -1,0 +1,65 @@
+
+// entity 0
+{
+"classname" "worldspawn"
+// brush 0
+{
+( 30 14 6 ) ( 30 18 6 ) ( 34 14 6 ) tex_common/lightclip 0 0 0 0.5 0.5 65280 0 0
+( 30 14 7 ) ( 34 14 7 ) ( 30 14 5 ) tex_common/lightclip 0 0 0 0.5 0.5 65280 0 0
+( 30 14 6 ) ( 30 14 4 ) ( 30 18 6 ) tex_common/lightclip 0 0 0 0.5 0.5 65280 0 0
+( 34 18 5 ) ( 30 18 5 ) ( 34 14 5 ) tex_common/lightclip 0 0 0 0.5 0.5 65280 0 0
+( 34 18 5 ) ( 34 18 7 ) ( 30 18 5 ) tex_common/lightclip 0 0 0 0.5 0.5 65280 0 0
+( 34 18 5 ) ( 34 14 5 ) ( 34 18 7 ) tex_common/lightclip 0 0 0 0.5 0.5 65280 0 0
+}
+// brush 1
+{
+( 33 42 6 ) ( 33 52 6 ) ( 23 52 6 ) tex_common/lightclip 0 0 0 0.5 0.5
+( 23 52 7 ) ( 33 52 7 ) ( 33 42 7 ) tex_common/lightclip 0 0 0 0.5 0.5
+( 33 47 7 ) ( 33 47 6 ) ( 33 42 6 ) tex_common/lightclip 0 0 0 0.5 0.5
+( 31 43 7 ) ( 31 43 6 ) ( 27 40 6 ) tex_common/lightclip 0 0 0 0.5 0.5
+( 26 43 7 ) ( 26 43 6 ) ( 22 45 6 ) tex_common/lightclip 0 0 0 0.5 0.5
+( 23 47 7 ) ( 23 47 6 ) ( 23 52 6 ) tex_common/lightclip 0 0 0 0.5 0.5
+( 26 51 7 ) ( 26 51 6 ) ( 30 54 6 ) tex_common/lightclip 0 0 0 0.5 0.5
+( 31 51 7 ) ( 31 51 6 ) ( 35 49 6 ) tex_common/lightclip 0 0 0 0.5 0.5
+}
+// brush 2
+{
+( 90 42 6 ) ( 90 43 6 ) ( 74 43 6 ) tex_common/lightclip 0 0 0 0.5 0.5
+( 74 43 7 ) ( 90 43 7 ) ( 90 42 7 ) tex_common/lightclip 0 0 0 0.5 0.5
+( 90 42 16 ) ( 90 42 0 ) ( 90 34 0 ) tex_common/lightclip 0 0 0 0.5 0.5
+( 86 36 16 ) ( 86 36 0 ) ( 79 32 0 ) tex_common/lightclip 0 0 0 0.5 0.5
+( 78 36 16 ) ( 78 36 0 ) ( 71 40 0 ) tex_common/lightclip 0 0 0 0.5 0.5
+( 74 42 16 ) ( 74 42 0 ) ( 74 50 0 ) tex_common/lightclip 0 0 0 0.5 0.5
+( 78 49 16 ) ( 78 49 0 ) ( 85 53 0 ) tex_common/lightclip 0 0 0 0.5 0.5
+( 86 49 16 ) ( 86 49 0 ) ( 93 45 0 ) tex_common/lightclip 0 0 0 0.5 0.5
+}
+}
+// entity 1
+{
+"classname" "misc_model"
+"model" "models/objects/vegi/plants2/plants_01.md2"
+"origin" "32 16 4"
+"spawnflags" "255"
+"skin" "13"
+"angles" "0 90 0"
+}
+// entity 2
+{
+"classname" "misc_model"
+"model" "models/objects/vegi/plants2/plants_01.md2"
+"origin" "28 47 4"
+"spawnflags" "255"
+"skin" "15"
+"modelscale_vec" "2 2 2"
+"angles" "0 -90 0"
+}
+// entity 3
+{
+"classname" "misc_model"
+"model" "models/objects/vegi/plants2/plants_01.md2"
+"origin" "82 42 4"
+"spawnflags" "255"
+"skin" "14"
+"modelscale_vec" "3 3 3"
+"angles" "0 -180 0"
+}
