@@ -99,10 +99,10 @@ m      +w       x
 tile +a_00
 	// this should be a required / fixed tile for faster assembling
 {
-3 3
-0      a      0
-a     +a      m
-0      x      0
+4 3
+0      a      a      0
+a     +a      +a     m
+0      x      x      0
 }
 
 tile +a_01
@@ -428,6 +428,16 @@ x    +a   +a   +a   am
 
 // muliplayer tiles -------------------------------------------------
 
+tile +team1
+	// 2 x info_2x2_start for team 1
+	// 10 x info_player_start_start for team 1
+{
+3 3
+0      a      0
+a     +a      a
+0      x      0
+}
+
 tile +team2
 	// 2 x info_2x2_start for team 2
 	// 10 x info_player_start_start for team 2
@@ -435,6 +445,26 @@ tile +team2
 3 3
 0      a      0
 a     +a      m
+0      a      0
+}
+
+tile +team3
+	// 2 x info_2x2_start for team 3
+	// 10 x info_player_start_start for team 3
+{
+3 3
+0      a      0
+x     +a      a
+0      a      0
+}
+
+tile +team4
+	// 2 x info_2x2_start for team 4
+	// 10 x info_player_start_start for team 4
+{
+3 3
+0      x      0
+a     +a      a
 0      a      0
 }
 
@@ -461,7 +491,7 @@ size "8 7"
 +m_06	"0 1"	//2 - 2		2x1		a+m, a ramp down to the water
 +a_01	"0 1"	//1 - 2		1x1		a single container
 +a_02	"0 1"	//1 - 2		1x1		a single container
-+a_03	"0 1"	//1 - 1		1x1		three containers, boxes and crates
++a_03	"0 1"	//2 - 2		1x2		three containers, boxes and crates
 +a_04	"0 1"	//1 - 1		1x1		a single container
 +a_05	"0 1"	//2 - 2		2x1		four containers
 +a_06	"0 1"	//2 - 2		2x1		2x4 containers
@@ -505,7 +535,7 @@ size "8 7"
 +m_06	"0 1"	//2 - 2		2x1		a+m, a ramp down to the water
 +a_01	"0 1"	//1 - 2		1x1		a single container
 +a_02	"0 1"	//1 - 2		1x1		a single container
-+a_03	"0 1"	//1 - 1		1x1		three containers, boxes and crates
++a_03	"0 1"	//2 - 2		1x2		three containers, boxes and crates
 +a_04	"0 1"	//1 - 1		1x1		a single container
 +a_05	"0 1"	//2 - 2		2x1		four containers
 +a_06	"0 1"	//2 - 2		2x1		2x4 containers
