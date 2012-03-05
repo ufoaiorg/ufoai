@@ -1,0 +1,25 @@
+
+// entity 0
+{
+"classname" "worldspawn"
+// brush 0
+{
+( 13 26 9 ) ( 13 25 9 ) ( 29 25 9 ) tex_common/lightclip 0 0 0 0.5 0.5
+( 30 25 11 ) ( 14 25 11 ) ( 14 26 11 ) tex_common/lightclip 0 0 0 0.5 0.5
+( 14 26 20 ) ( 14 26 4 ) ( 14 34 4 ) tex_common/lightclip 0 0 0 0.5 0.5
+( 18 32 20 ) ( 18 32 4 ) ( 25 36 4 ) tex_common/lightclip 0 0 0 0.5 0.5
+( 26 32 20 ) ( 26 32 4 ) ( 33 28 4 ) tex_common/lightclip 0 0 0 0.5 0.5
+( 30 26 20 ) ( 30 26 4 ) ( 30 18 4 ) tex_common/lightclip 0 0 0 0.5 0.5
+( 26 19 20 ) ( 26 19 4 ) ( 19 15 4 ) tex_common/lightclip 0 0 0 0.5 0.5
+( 18 19 20 ) ( 18 19 4 ) ( 11 23 4 ) tex_common/lightclip 0 0 0 0.5 0.5
+}
+}
+// entity 1
+{
+"classname" "misc_model"
+"model" "models/objects/vegi/plants2/plants_02.md2"
+"origin" "28 31 7"
+"spawnflags" "255"
+"skin" "16"
+"modelscale_vec" "3 3 3"
+}
