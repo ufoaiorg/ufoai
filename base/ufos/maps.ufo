@@ -58,9 +58,7 @@ mapdef africa_large
 	teams			2
 	gametypes {
 		1on1
-		1on1on1
 		2on2
-		2on2on2
 		coop2
 		coop3
 		coop4
@@ -112,9 +110,7 @@ mapdef africa_small
 	teams			2
 	gametypes {
 		1on1
-		1on1on1
 		2on2
-		2on2on2
 		coop2
 		coop3
 		coop4
@@ -413,9 +409,7 @@ mapdef desert_harvester_crash
 	hurtaliens		true
 	gametypes {
 		1on1
-		1on1on1
 		2on2
-		2on2on2
 		coop2
 		coop3
 		coop4
@@ -591,9 +585,7 @@ mapdef farm2
 	multiplayer		true
 	gametypes {
 		1on1
-		1on1on1
 		2on2
-		2on2on2
 		coop2
 		coop3
 		coop4
@@ -1255,9 +1247,7 @@ mapdef japan_large
 	multiplayer	false
 	gametypes {
 		1on1
-		1on1on1
 		2on2
-		2on2on2
 		coop2
 		coop3
 		coop4
@@ -1305,9 +1295,7 @@ mapdef japan_small
 	multiplayer	false
 	gametypes {
 		1on1
-		1on1on1
 		2on2
-		2on2on2
 		coop2
 		coop3
 		coop4
@@ -2086,9 +2074,7 @@ mapdef city_disco
 	teams			2
 	gametypes {
 		1on1
-		1on1on1
 		2on2
-		2on2on2
 		coop2
 		coop3
 		coop4
@@ -2190,9 +2176,7 @@ mapdef construction
 	teams			2
 	gametypes {
 		1on1
-		1on1on1
 		2on2
-		2on2on2
 		coop2
 		coop3
 		coop4
@@ -2242,9 +2226,7 @@ mapdef druglord
 	teams			2
 	gametypes {
 		1on1
-		1on1on1
 		2on2
-		2on2on2
 		coop2
 		coop3
 		coop4
@@ -2292,9 +2274,7 @@ mapdef eaglenest
 	teams			2
 	gametypes {
 		1on1
-		1on1on1
 		2on2
-		2on2on2
 		coop2
 		coop3
 		coop4
@@ -2348,9 +2328,7 @@ mapdef gasstation
 	teams			2
 	gametypes {
 		1on1
-		1on1on1
 		2on2
-		2on2on2
 		coop2
 		coop3
 		coop4
@@ -2401,9 +2379,7 @@ mapdef italy
 	multiplayer	true
 	gametypes {
 		1on1
-		1on1on1
 		2on2
-		2on2on2
 		coop2
 		coop3
 		coop4
@@ -2455,9 +2431,7 @@ mapdef japan_default
 	multiplayer	true
 	gametypes {
 		1on1
-		1on1on1
 		2on2
-		2on2on2
 		coop2
 		coop3
 		coop4
@@ -2509,9 +2483,7 @@ mapdef mart
 	teams		2
 	gametypes {
 		1on1
-		1on1on1
 		2on2
-		2on2on2
 		coop2
 		coop3
 		coop4
@@ -2564,9 +2536,7 @@ mapdef military_convoy
 	teams			2
 	gametypes {
 		1on1
-		1on1on1
 		2on2
-		2on2on2
 		coop2
 		coop3
 		coop4
@@ -2669,9 +2639,7 @@ mapdef spedition
 	teams		2
 	gametypes {
 		1on1
-		1on1on1
 		2on2
-		2on2on2
 		coop2
 		coop3
 		coop4
@@ -2722,9 +2690,7 @@ mapdef stadium
 	teams			2
 	gametypes {
 		1on1
-		1on1on1
 		2on2
-		2on2on2
 		coop2
 		coop3
 		coop4
@@ -2831,9 +2797,7 @@ mapdef transport
 	teams		2
 	gametypes {
 		1on1
-		1on1on1
 		2on2
-		2on2on2
 		coop2
 		coop3
 		coop4
@@ -2973,9 +2937,7 @@ mapdef bunker
 	teams		2
 	gametypes {
 		1on1
-		1on1on1
 		2on2
-		2on2on2
 		coop2
 		coop3
 		coop4
@@ -3024,9 +2986,7 @@ mapdef city_industry
 	teams			2
 	gametypes {
 		1on1
-		1on1on1
 		2on2
-		2on2on2
 		coop2
 		coop3
 		coop4
@@ -3069,9 +3029,7 @@ mapdef city_train
 	teams			2
 	gametypes {
 		1on1
-		1on1on1
 		2on2
-		2on2on2
 		coop2
 		coop3
 		coop4
@@ -3120,9 +3078,7 @@ mapdef corrupter_crash
 	campaign		false // TODO: activate once the corrupter is available in the campaign
 	gametypes {
 		1on1
-		1on1on1
 		2on2
-		2on2on2
 		coop2
 		coop3
 		coop4
@@ -3167,9 +3123,7 @@ mapdef dam
 	teams		2
 	gametypes {
 		1on1
-		1on1on1
 		2on2
-		2on2on2
 		coop2
 		coop3
 		coop4
@@ -3264,9 +3218,7 @@ mapdef estate
 	teams			2
 	gametypes {
 		1on1
-		1on1on1
 		2on2
-		2on2on2
 		coop2
 		coop3
 		coop4
@@ -3314,9 +3266,7 @@ mapdef excavation
 	civilianteam	middle
 	gametypes {
 		1on1
-		1on1on1
 		2on2
-		2on2on2
 		coop2
 		coop3
 		coop4
@@ -3413,9 +3363,7 @@ mapdef fighter_crash
 
 	gametypes {
 		1on1
-		1on1on1
 		2on2
-		2on2on2
 		coop2
 		coop3
 		coop4
@@ -3460,9 +3408,7 @@ mapdef fueldump
 	teams			2
 	gametypes {
 		1on1
-		1on1on1
 		2on2
-		2on2on2
 	}
 	maxaliens		10
 
@@ -3501,9 +3447,7 @@ mapdef gate
 	teams			2
 	gametypes {
 		1on1
-		1on1on1
 		2on2
-		2on2on2
 		coop2
 		coop3
 		coop4
@@ -3549,9 +3493,7 @@ mapdef harbour
 	teams			2
 	gametypes {
 		1on1
-		1on1on1
 		2on2
-		2on2on2
 		coop2
 		coop3
 		coop4
@@ -3595,9 +3537,7 @@ mapdef lake_ice
 	teams			2
 	gametypes {
 		1on1
-		1on1on1
 		2on2
-		2on2on2
 		coop2
 		coop3
 		coop4
@@ -3787,9 +3727,7 @@ mapdef office
 	teams			2
 	gametypes {
 		1on1
-		1on1on1
 		2on2
-		2on2on2
 		coop2
 		coop3
 		coop4
@@ -3834,9 +3772,7 @@ mapdef oriental
 	teams			2
 	gametypes {
 		1on1
-		1on1on1
 		2on2
-		2on2on2
 		coop2
 		coop3
 		coop4
@@ -3881,9 +3817,7 @@ mapdef oriental_mosque
 	teams			2
 	gametypes {
 		1on1
-		1on1on1
 		2on2
-		2on2on2
 		coop2
 		coop3
 		coop4
@@ -3977,9 +3911,7 @@ mapdef resort
 	teams			2
 	gametypes {
 		1on1
-		1on1on1
 		2on2
-		2on2on2
 		coop2
 		coop3
 		coop4
@@ -4078,9 +4010,7 @@ mapdef scout_crash
 	teams			2
 	gametypes {
 		1on1
-		1on1on1
 		2on2
-		2on2on2
 		coop2
 		coop3
 		coop4
@@ -4176,9 +4106,7 @@ mapdef subway
 	teams			2
 	gametypes {
 		1on1
-		1on1on1
 		2on2
-		2on2on2
 		coop2
 		coop3
 		coop4
@@ -4219,9 +4147,7 @@ mapdef village
 	teams			2
 	gametypes {
 		1on1
-		1on1on1
 		2on2
-		2on2on2
 		coop2
 		coop3
 		coop4
@@ -4267,9 +4193,7 @@ mapdef wilderness
 	teams			2
 	gametypes {
 		1on1
-		1on1on1
 		2on2
-		2on2on2
 		coop2
 	}
 	maxaliens		16
