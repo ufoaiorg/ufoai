@@ -2,7 +2,7 @@
 // entity 0
 {
 "classname" "misc_model"
-"model" "models/objects/plastic_barrel/plastic_barrel.md2"
+"model" "models/objects/barrel_plastic/barrel_plastic.md2"
 "origin" "-48 16 4"
 "spawnflags" "255"
 "skin" "0"
@@ -10,7 +10,7 @@
 // entity 1
 {
 "classname" "misc_model"
-"model" "models/objects/plastic_barrel/plastic_barrel.md2"
+"model" "models/objects/barrel_plastic/barrel_plastic.md2"
 "origin" "80 16 4"
 "spawnflags" "255"
 "modelscale_vec" "1.5 1.5 1.5"
@@ -523,7 +523,7 @@
 // entity 3
 {
 "classname" "misc_model"
-"model" "models/objects/plastic_barrel/plastic_barrel.md2"
+"model" "models/objects/barrel_plastic/barrel_plastic.md2"
 "origin" "16 16 4"
 "spawnflags" "255"
 "skin" "0"
@@ -532,7 +532,7 @@
 // entity 4
 {
 "classname" "misc_model"
-"model" "models/objects/plastic_barrel/plastic_barrel.md2"
+"model" "models/objects/barrel_plastic/barrel_plastic.md2"
 "origin" "139 12 12"
 "spawnflags" "255"
 "skin" "0"
@@ -540,7 +540,7 @@
 // entity 5
 {
 "classname" "misc_model"
-"model" "models/objects/plastic_barrel/plastic_barrel.md2"
+"model" "models/objects/barrel_plastic/barrel_plastic.md2"
 "origin" "160 12 12"
 "spawnflags" "255"
 "skin" "0"
@@ -548,7 +548,7 @@
 // entity 6
 {
 "classname" "misc_model"
-"model" "models/objects/plastic_barrel/plastic_barrel.md2"
+"model" "models/objects/barrel_plastic/barrel_plastic.md2"
 "origin" "180.5 12 12"
 "spawnflags" "255"
 "skin" "0"
@@ -556,7 +556,7 @@
 // entity 7
 {
 "classname" "misc_model"
-"model" "models/objects/plastic_barrel/plastic_barrel.md2"
+"model" "models/objects/barrel_plastic/barrel_plastic.md2"
 "origin" "139 52 12"
 "spawnflags" "255"
 "skin" "0"
@@ -564,7 +564,7 @@
 // entity 8
 {
 "classname" "misc_model"
-"model" "models/objects/plastic_barrel/plastic_barrel.md2"
+"model" "models/objects/barrel_plastic/barrel_plastic.md2"
 "origin" "160 52 12"
 "spawnflags" "255"
 "skin" "0"
@@ -572,7 +572,7 @@
 // entity 9
 {
 "classname" "misc_model"
-"model" "models/objects/plastic_barrel/plastic_barrel.md2"
+"model" "models/objects/barrel_plastic/barrel_plastic.md2"
 "origin" "180.5 52 12"
 "spawnflags" "255"
 "skin" "0"
@@ -580,7 +580,7 @@
 // entity 10
 {
 "classname" "misc_model"
-"model" "models/objects/plastic_barrel/plastic_barrel.md2"
+"model" "models/objects/barrel_plastic/barrel_plastic.md2"
 "origin" "139 32 12"
 "spawnflags" "255"
 "skin" "0"
@@ -588,7 +588,7 @@
 // entity 11
 {
 "classname" "misc_model"
-"model" "models/objects/plastic_barrel/plastic_barrel.md2"
+"model" "models/objects/barrel_plastic/barrel_plastic.md2"
 "origin" "160 32 12"
 "spawnflags" "255"
 "skin" "0"
@@ -596,7 +596,7 @@
 // entity 12
 {
 "classname" "misc_model"
-"model" "models/objects/plastic_barrel/plastic_barrel.md2"
+"model" "models/objects/barrel_plastic/barrel_plastic.md2"
 "origin" "180.5 32 12"
 "spawnflags" "255"
 "skin" "0"
