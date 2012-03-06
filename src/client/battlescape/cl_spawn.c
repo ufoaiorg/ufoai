@@ -222,6 +222,8 @@ static void SP_worldspawn (const localEntityParse_t *entData)
 		Vector4Set(refdef.sunSpecularColor, 0.5, 0.5, 0.7, 1);
 	}
 
+	Vector4Set(refdef.sunVector, 0.0, 0.0, 1.0, 0.0); /** @todo read actual value from the worldspawn entity or use ufo2map default one(s) to match the compiled lighting */
+
 	/** @todo Parse fog from worldspawn config */
 	refdef.weather = WEATHER_NONE;
 	refdef.fogColor[3] = 1.0;

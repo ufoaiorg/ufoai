@@ -687,6 +687,9 @@ void R_EnableSpecularMap (const image_t *image, qboolean enable)
 	if (!r_state.dynamic_lighting_enabled)
 		return;
 
+	if (r_quality->integer < 1)
+		return;
+
 	if (enable && image != NULL) {
 		R_BindTextureForTexUnit(image->texnum, &texunit_specularmap);
 		R_ProgramParameter1i("SPECULARMAP", 1);

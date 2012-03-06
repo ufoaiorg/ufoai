@@ -207,6 +207,7 @@ typedef struct {
 	vec4_t ambientColor;
 	vec4_t sunDiffuseColor;
 	vec4_t sunSpecularColor;
+	vec4_t sunVector;		/**< pointing towards the sun, should be x y z 0 to match the OpengGL logic */
 
 	/* entity, dynamic lights and corona lists are repopulated each frame, don't use them as persistent */
 	int numEntities;

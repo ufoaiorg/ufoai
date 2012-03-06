@@ -36,7 +36,7 @@
 typedef enum {SHQ_LOW, SHQ_MID, SHQ_HIGH, SHQ_NUM} shaderQualityLevel_t;
 
 const char *shaderQualityLevelNames[SHQ_NUM][2] = {
-	{"world_low","model"},
+	{"world_low","model_low"},
 	{"world_med","model"},
 	{"world_med","model"} /* @todo high quality world shader */
 };
@@ -789,24 +789,30 @@ static void R_UseWorldProgram (r_program_t *prog)
 static void R_InitModelProgram (r_program_t *prog)
 {
 	R_ProgramParameter1i("SAMPLER_DIFFUSE", 0);
-	R_ProgramParameter1i("SAMPLER_SPECULAR", 1);
-	R_ProgramParameter1i("SAMPLER_ROUGHMAP", 2);
 	R_ProgramParameter1i("SAMPLER_NORMALMAP", 3);
 	R_ProgramParameter1i("SAMPLER_GLOWMAP", 4);
 
 	R_ProgramParameter1i("BUMPMAP", 0);
-	R_ProgramParameter1i("ROUGHMAP", 0);
-	R_ProgramParameter1i("SPECULARMAP", 0);
 	R_ProgramParameter1i("ANIMATE", 0);
 
-	R_ProgramParameter1f("HARDNESS", defaultMaterial.hardness);
-	R_ProgramParameter1f("SPECULAR", defaultMaterial.specular);
-	R_ProgramParameter1f("BUMP", defaultMaterial.bump);
-	R_ProgramParameter1f("PARALLAX", defaultMaterial.parallax);
 	R_ProgramParameter1f("GLOWSCALE", defaultMaterial.glowscale);
 	R_ProgramParameter1f("OFFSET", 0.0);
 
 	R_ProgramParameter3fv("AMBIENT", refdef.ambientColor);
+
+	if (r_quality->integer > 0) {
+		R_ProgramParameter1i("SAMPLER_SPECULAR", 1);
+		R_ProgramParameter1i("SAMPLER_ROUGHMAP", 2);
+		R_ProgramParameter1i("ROUGHMAP", 0);
+		R_ProgramParameter1i("SPECULARMAP", 0);
+		R_ProgramParameter1f("HARDNESS", defaultMaterial.hardness);
+		R_ProgramParameter1f("SPECULAR", defaultMaterial.specular);
+		R_ProgramParameter1f("BUMP", defaultMaterial.bump);
+		R_ProgramParameter1f("PARALLAX", defaultMaterial.parallax);
+	} else {
+		R_ProgramParameter3fv("SUNCOLOR", refdef.sunDiffuseColor);
+		R_ProgramParameter3fv("SUNDIRECTION", refdef.sunVector);
+	}
 
 	if (r_fog->integer) {
 		if (r_state.fog_enabled) {
@@ -825,6 +831,15 @@ static void R_UseModelProgram (r_program_t *prog)
 
 	R_ProgramParameter1f("OFFSET", 0.0);
 	R_ProgramParameter3fv("AMBIENT", refdef.ambientColor);
+
+	if (r_quality->integer == 0) {
+		vec4_t sunDirection;
+
+		R_ProgramParameter3fv("SUNCOLOR", refdef.sunDiffuseColor);
+
+		GLVectorTransform(r_locals.world_matrix, refdef.sunVector, sunDirection);
+		R_ProgramParameter3fv("SUNDIRECTION", sunDirection); /* last component is not needed */
+	}
 
 	if (r_fog->integer) {
 		if (r_state.fog_enabled) {
