@@ -1,0 +1,29 @@
+
+// entity 0
+{
+"classname" "worldspawn"
+}
+// entity 1
+{
+"classname" "misc_model"
+"model" "models/objects/vegi/grass2/grass.md2"
+"origin" "16 10 4"
+"spawnflags" "255"
+"skin" "6"
+}
+// entity 2
+{
+"classname" "misc_model"
+"model" "models/objects/vegi/grass2/grass.md2"
+"origin" "8 17 4"
+"spawnflags" "255"
+"skin" "2"
+}
+// entity 3
+{
+"classname" "misc_model"
+"model" "models/objects/vegi/grass2/grass.md2"
+"origin" "23 19 4"
+"spawnflags" "255"
+"skin" "3"
+}
