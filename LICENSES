@@ -3873,12 +3873,10 @@ base/shaders/transform_lights_vs.glsl | GNU General Public License 2.0 or later
 base/shaders/warp_fs.glsl | GNU General Public License 2.0 or later
 base/shaders/warp_vs.glsl | GNU General Public License 2.0 or later
 base/shaders/world_devtools_fs.glsl | GNU General Public License 2.0 or later
-base/shaders/world_fs.glsl | GNU General Public License 2.0 or later
 base/shaders/world_low_fs.glsl | GNU General Public License 2.0 or later
 base/shaders/world_low_vs.glsl | GNU General Public License 2.0 or later
 base/shaders/world_med_fs.glsl | GNU General Public License 2.0 or later
 base/shaders/world_med_vs.glsl | GNU General Public License 2.0 or later
-base/shaders/world_vs.glsl | GNU General Public License 2.0 or later
 base/shaders/write_fragment_fs.glsl | GNU General Public License 2.0 or later
 base/sound/aliens/bloodspider/attack.ogg | Creative Commons Attribution-Share Alike 3.0 | Christian "Crystan" Hoffmann
 base/sound/aliens/bloodspider/die1.ogg | Creative Commons Attribution-Share Alike 3.0 | Christian "Crystan" Hoffmann
