@@ -9,7 +9,6 @@ uniform int BUMPMAP;
 in_qualifier vec4 TANGENTS;
 
 /* from includes:
-out_qualifier vec3 point;
 out_qualifier vec3 normal;
 
 out_qualifier vec3 eyedir;

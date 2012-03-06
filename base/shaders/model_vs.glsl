@@ -8,7 +8,6 @@ uniform int BUMPMAP;
 uniform int ANIMATE;
 
 /* from includes:
-varying vec3 point;
 varying vec3 normal;
 
 attribute vec4 NEXT_FRAME_VERTS;

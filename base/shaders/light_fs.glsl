@@ -3,7 +3,6 @@
  * @brief Dynamic lighting fragment shader.
  */
 
-in_qualifier vec3 point;
 in_qualifier vec3 normal;
 
 vec3 LightContribution(vec4 lightParams, vec4 lightDir) {
