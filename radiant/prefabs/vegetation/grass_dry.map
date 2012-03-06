@@ -1,0 +1,14 @@
+
+// entity 0
+{
+"classname" "worldspawn"
+}
+// entity 1
+{
+"classname" "misc_model"
+"model" "models/objects/vegi/grass_dry/grass_dry.md2"
+"origin" "24 8 4"
+"spawnflags" "255"
+"skin" "0"
+"angles" "0 -90 0"
+}
