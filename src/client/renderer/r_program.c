@@ -788,6 +788,8 @@ static void R_UseWorldProgram (r_program_t *prog)
 
 static void R_InitModelProgram (r_program_t *prog)
 {
+	vec4_t sunDirection;
+
 	R_ProgramParameter1i("SAMPLER_DIFFUSE", 0);
 	R_ProgramParameter1i("SAMPLER_NORMALMAP", 3);
 	R_ProgramParameter1i("SAMPLER_GLOWMAP", 4);
@@ -800,6 +802,9 @@ static void R_InitModelProgram (r_program_t *prog)
 
 	R_ProgramParameter3fv("AMBIENT", refdef.ambientColor);
 
+	GLVectorTransform(r_locals.world_matrix, refdef.sunVector, sunDirection);
+	R_ProgramParameter3fv("SUNDIRECTION", sunDirection); /* last component is not needed */
+
 	if (r_quality->integer > 0) {
 		R_ProgramParameter1i("SAMPLER_SPECULAR", 1);
 		R_ProgramParameter1i("SAMPLER_ROUGHMAP", 2);
@@ -809,9 +814,6 @@ static void R_InitModelProgram (r_program_t *prog)
 		R_ProgramParameter1f("SPECULAR", defaultMaterial.specular);
 		R_ProgramParameter1f("BUMP", defaultMaterial.bump);
 		R_ProgramParameter1f("PARALLAX", defaultMaterial.parallax);
-	} else {
-		R_ProgramParameter3fv("SUNCOLOR", refdef.sunDiffuseColor);
-		R_ProgramParameter3fv("SUNDIRECTION", refdef.sunVector);
 	}
 
 	if (r_fog->integer) {
@@ -827,19 +829,15 @@ static void R_InitModelProgram (r_program_t *prog)
 
 static void R_UseModelProgram (r_program_t *prog)
 {
+	vec4_t sunDirection;
 	/*R_ProgramParameter1i("LIGHTS", refdef.numLights);*/
 
 	R_ProgramParameter1f("OFFSET", 0.0);
 	R_ProgramParameter3fv("AMBIENT", refdef.ambientColor);
+	R_ProgramParameter3fv("SUNCOLOR", refdef.sunDiffuseColor);
 
-	if (r_quality->integer == 0) {
-		vec4_t sunDirection;
-
-		R_ProgramParameter3fv("SUNCOLOR", refdef.sunDiffuseColor);
-
-		GLVectorTransform(r_locals.world_matrix, refdef.sunVector, sunDirection);
-		R_ProgramParameter3fv("SUNDIRECTION", sunDirection); /* last component is not needed */
-	}
+	GLVectorTransform(r_locals.world_matrix, refdef.sunVector, sunDirection);
+	R_ProgramParameter3fv("SUNDIRECTION", sunDirection); /* last component is not needed */
 
 	if (r_fog->integer) {
 		if (r_state.fog_enabled) {

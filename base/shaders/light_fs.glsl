@@ -5,13 +5,13 @@
 
 in_qualifier vec3 normal;
 
-vec3 LightContribution(vec4 lightParams, vec4 lightDir) {
-	vec3 delta = lightDir.xyz;
+vec3 LightContribution(vec4 lightParams, vec3 lightDir) {
+	vec3 delta = lightDir;
 	vec3 dir = normalize(delta);
 	float NdotL = max(0.0, dot(normal, dir));
 	float attenuation = 1.0;
 
-	if (bool(lightDir.w) && NdotL > 0.0) {
+	if (NdotL > 0.0) {
 		float dist = length(delta);
 		float attenDiv = lightParams.a * dist * dist;
 		/* If none of the attenuation parameters are set, we keep 1.0.*/

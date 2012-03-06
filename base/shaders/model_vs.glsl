@@ -15,6 +15,10 @@ attribute vec4 NEXT_FRAME_NORMALS;
 attribute vec4 NEXT_FRAME_TANGENTS;
 uniform float TIME;
 
+uniform vec3 SUNDIRECTION;
+
+out_qualifier vec3 sunDir;
+
 vec4 Vertex;
 vec3 Normal;
 vec4 Tangent;

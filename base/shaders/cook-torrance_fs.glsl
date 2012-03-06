@@ -13,17 +13,15 @@
 /**
  * @todo does not compile on my ati x600 yet
  */
-vec3 LightContribution(in vec4 lightParams, in vec4 lightDir, in vec3 N, in vec3 V, float NdotV, float R_2, in vec4 roughness, in vec4 specular, in vec4 diffuse) {
+vec3 LightContribution(in vec4 lightParams, in vec3 lightDir, in vec3 N, in vec3 V, float NdotV, float R_2, in vec4 roughness, in vec4 specular, in vec4 diffuse) {
 	/* calculate light attenuation due to distance (do this first so we can return early if possible) */
 	float attenuate = 1.0;
 
-	if (bool(lightDir.w)) { /* directional sources don't get attenuated */
-		float dist = length(lightDir);
-		float attenDiv = lightParams.a * dist * dist;
-		/* If none of the attenuation parameters are set, we keep 1.0.*/
-		if (bool(attenDiv)) {
-			attenuate = 1.0 / attenDiv;
-		}
+	float dist = length(lightDir);
+	float attenDiv = lightParams.a * dist * dist;
+	/* If none of the attenuation parameters are set, we keep 1.0.*/
+	if (bool(attenDiv)) {
+		attenuate = 1.0 / attenDiv;
 	}
 
 	/* if we're out of range, ignore the light; else calculate its contribution */
@@ -32,7 +30,7 @@ vec3 LightContribution(in vec4 lightParams, in vec4 lightDir, in vec3 N, in vec3
 	}
 
 	/* Normalize vectors and cache dot products */
-	vec3 L = normalize(lightDir.xyz);
+	vec3 L = normalize(lightDir);
 	float NdotL = clamp(dot(N, L), 0.0, 1.0);
 
 	/* Compute the final color contribution of the light */
@@ -117,6 +115,12 @@ vec4 IlluminateFragment(void) {
 
 	/* add ambient light */
 	totalColor += diffuse.rgb * diffuse.a * AMBIENT; /* FIXME: why it should depend on diffuse alpha? */
+
+	/* fake light for the sunlight */
+	vec4 sunColor;
+	sunColor.rgb = SUNCOLOR;
+	sunColor.a = 1.0;
+	totalColor += LightContribution(sunColor, sunDir, N, V, NdotV, R_2, roughness, specular, diffuse);
 
 	/* do per-light calculations */
 #unroll r_dynamic_lights

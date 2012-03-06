@@ -118,18 +118,11 @@ void R_EnableWorldLights (void)
 		return;
 	}
 
-	/* Light #0 is reserved for the Sun, which is already factored into lightmaps */
-	glLightf(GL_LIGHT0, GL_CONSTANT_ATTENUATION, MIN_GL_CONSTANT_ATTENUATION);
-	glLightfv(GL_LIGHT0, GL_DIFFUSE, blackColor);
-	glLightfv(GL_LIGHT0, GL_AMBIENT, blackColor);
-	glLightfv(GL_LIGHT0, GL_SPECULAR, blackColor);
-	glDisable(GL_LIGHT0);
-
 	for (i = 0; i < refdef.numDynamicLights && i < maxLights; i++)
-		R_SetupSpotLight (i, &refdef.dynamicLights[i]);
+		R_SetupSpotLight(i, &refdef.dynamicLights[i]);
 
 	/* if there aren't enough active lights, turn off the rest */
-	while (i < MAX_GL_LIGHTS - 1)
+	while (i < MAX_GL_LIGHTS)
 		R_DisableSpotLight(i++);
 
 	glEnable(GL_LIGHTING);
@@ -145,9 +138,8 @@ void R_EnableModelLights (const light_t **lights, int numLights, qboolean enable
 {
 	int i;
 	int maxLights = r_dynamic_lights->integer;
-	const vec4_t sunDirection = {0.0, 0.0, 1.0, 0.0}; /* works only with shader, not the FFP */
 
-	assert(numLights < MAX_GL_LIGHTS); /* light 0 is reserved */
+	assert(numLights <= MAX_GL_LIGHTS);
 
 	if (!enable || !r_state.lighting_enabled) {
 		if (!r_state.active_normalmap && r_state.dynamic_lighting_enabled)
@@ -174,21 +166,11 @@ void R_EnableModelLights (const light_t **lights, int numLights, qboolean enable
 
 	glEnable(GL_LIGHTING);
 
-	/* Light #0 is reserved for the Sun */
-	glEnable(GL_LIGHT0);
-	glLightf(GL_LIGHT0, GL_CONSTANT_ATTENUATION, 1.0);
-	glLightf(GL_LIGHT0, GL_LINEAR_ATTENUATION, 0.0);
-	glLightf(GL_LIGHT0, GL_QUADRATIC_ATTENUATION, 0.0);
-
-	glLightfv(GL_LIGHT0, GL_POSITION, sunDirection);
-	glLightfv(GL_LIGHT0, GL_DIFFUSE, refdef.sunDiffuseColor);
-	glLightfv(GL_LIGHT0, GL_SPECULAR, refdef.sunSpecularColor);
-
 	for (i = 0; i < numLights; i++)
 		R_SetupSpotLight (i, lights[i]);
 
 	/* if there aren't enough active lights, turn off the rest */
-	while (i < MAX_GL_LIGHTS - 1)
+	while (i < MAX_GL_LIGHTS)
 		R_DisableSpotLight(i++);
 }
 

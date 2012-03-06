@@ -16,6 +16,10 @@ uniform int ROUGHMAP;
 uniform int SPECULARMAP;
 uniform vec3 AMBIENT;
 
+uniform vec3 SUNCOLOR;
+
+in_qualifier vec3 sunDir; /** < Direction towards the sun */
+
 /** Diffuse texture.*/
 uniform sampler2D SAMPLER_DIFFUSE;
 /** Specularmap.*/
@@ -30,7 +34,7 @@ const vec3 negHalf = vec3(-0.5);
 
 #define R_DYNAMIC_LIGHTS #replace r_dynamic_lights
 #if r_dynamic_lights
-in_qualifier vec4 lightDirs[R_DYNAMIC_LIGHTS];
+in_qualifier vec3 lightDirs[R_DYNAMIC_LIGHTS];
 in_qualifier vec4 lightParams[R_DYNAMIC_LIGHTS];
 #endif
 
@@ -59,7 +63,7 @@ void main(void) {
 #endif
 
 	/* Developer tools, if enabled */
-	finalColor = ApplyDeveloperTools(finalColor, lightDirs[0].xyz, texture2D(SAMPLER_NORMALMAP, gl_TexCoord[0].st).rgb);
+	finalColor = ApplyDeveloperTools(finalColor, sunDir, texture2D(SAMPLER_NORMALMAP, gl_TexCoord[0].st).rgb);
 
 	writeFragment(finalColor);
 }

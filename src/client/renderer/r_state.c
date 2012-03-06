@@ -360,7 +360,7 @@ void R_SetupSpotLight (int index, const light_t *light)
 	if (index < 0 || index >= r_dynamic_lights->integer)
 		return;
 
-	index += GL_LIGHT1; /* light 0 is used for global illumination */
+	index += GL_LIGHT0;
 
 	glEnable(index);
 	glLightf(index, GL_CONSTANT_ATTENUATION, MIN_GL_CONSTANT_ATTENUATION);
@@ -386,7 +386,7 @@ void R_DisableSpotLight (int index)
 	if (index < 0 || index >= MAX_GL_LIGHTS - 1)
 		return;
 
-	index += GL_LIGHT1; /* light 0 is used for global illumination */
+	index += GL_LIGHT0;
 
 	glDisable(index);
 	glLightf(index, GL_CONSTANT_ATTENUATION, MIN_GL_CONSTANT_ATTENUATION);
