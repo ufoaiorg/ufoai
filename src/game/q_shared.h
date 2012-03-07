@@ -158,6 +158,7 @@ typedef enum {
 	ET_SOUND,
 	ET_SOLID,
 	ET_MESSAGE,
+	ET_SMOKE,
 
 	ET_MAX,
 

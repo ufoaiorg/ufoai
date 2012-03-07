@@ -47,6 +47,7 @@ static qboolean G_LineVis (const vec3_t from, const vec3_t to)
 /**
  * @brief calculate how much check is "visible" from @c from
  * @param[in] from The world coordinate to check from
+ * @param[in] ent The source edict of the check
  * @param[in] check The edict to check how good (or if at all) it is visible
  * @param[in] full Perform a full check in different directions. If this is
  * @c false the actor is fully visible if one vis check returned @c true. With
@@ -60,11 +61,29 @@ static qboolean G_LineVis (const vec3_t from, const vec3_t to)
  * particular actor.
  * @sa CL_ActorVis
  */
-float G_ActorVis (const vec3_t from, const edict_t *check, qboolean full)
+float G_ActorVis (const vec3_t from, const edict_t *ent, const edict_t *check, qboolean full)
 {
 	vec3_t test, dir;
 	float delta;
 	int i, n;
+	const float distance = VectorDist(check->origin, ent->origin);
+
+	/* units that are very close are visible in the smoke */
+	if (distance > UNIT_SIZE * 1.5f) {
+		vec3_t eyeEnt;
+		edict_t *e = NULL;
+
+		G_ActorGetEyeVector(ent, eyeEnt);
+
+		while ((e = G_EdictsGetNext(e))) {
+			if (G_IsSmoke(e)) {
+				if (RayIntersectAABB(eyeEnt, check->absmin, e->absmin, e->absmax)
+				 || RayIntersectAABB(eyeEnt, check->absmax, e->absmin, e->absmax)) {
+					return ACTOR_VIS_0;
+				}
+			}
+		}
+	}
 
 	/* start on eye height */
 	VectorCopy(check->origin, test);
@@ -175,7 +194,7 @@ qboolean G_Vis (const int team, const edict_t *from, const edict_t *check, int f
 	switch (check->type) {
 	case ET_ACTOR:
 	case ET_ACTOR2x2:
-		return G_ActorVis(eye, check, qfalse) > ACTOR_VIS_0;
+		return G_ActorVis(eye, from, check, qfalse) > ACTOR_VIS_0;
 	case ET_ITEM:
 	case ET_PARTICLE:
 		return !G_LineVis(eye, check->origin);

@@ -287,8 +287,6 @@ item smokegrenade
 			name	"_Lob"
 			skill	explosive
 			projtl	smokegren
-			impact	smoke_explosion
-			hitbody smoke_explosion
 			impsnd	weapons/explosion-smoke
 			bodysnd	weapons/explosion-smoke
 			bncsnd	weapons/grenade-bounce
@@ -313,8 +311,6 @@ item smokegrenade
 			name	"_Roll"
 			skill	explosive
 			projtl	smokegren
-			impact	smoke_explosion
-			hitbody smoke_explosion
 			impsnd	weapons/explosion-smoke
 			bodysnd	weapons/explosion-smoke
 			firesnd	weapons/grenade-pin

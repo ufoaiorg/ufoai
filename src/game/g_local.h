@@ -186,6 +186,7 @@ extern game_export_t globals;
 /** @note This check also includes the IsStunned check - see the STATE_* bitmasks */
 #define G_IsDead(ent)			G_IsState(ent, STATE_DEAD)
 #define G_IsActor(ent)			((ent)->type == ET_ACTOR || (ent)->type == ET_ACTOR2x2)
+#define G_IsSmoke(ent)			((ent)->type == ET_SMOKE)
 #define G_IsTriggerNextMap(ent)	((ent)->type == ET_TRIGGER_NEXTMAP)
 #define G_IsItem(ent)			((ent)->type == ET_ITEM)
 #define G_IsDoor(ent)			((ent)->type == ET_DOOR || (ent)->type == ET_DOOR_SLIDING)
@@ -360,6 +361,7 @@ int G_TouchTriggers(edict_t *ent);
 void G_TouchSolids(edict_t *ent);
 void G_TouchEdicts(edict_t *ent, float extend);
 edict_t *G_Spawn(void);
+void G_SpawnSmokeField(const pos3_t gridPos, int rounds);
 edict_t *G_SpawnParticle(const vec3_t origin, int spawnflags, const char *particle);
 void G_FreeEdict(edict_t *e);
 qboolean G_UseEdict(edict_t *ent, edict_t* activator);
@@ -491,7 +493,7 @@ void G_InvList_f(const player_t *player);
 
 /* g_vis.c */
 qboolean G_FrustumVis(const edict_t *from, const vec3_t point);
-float G_ActorVis(const vec3_t from, const edict_t *check, qboolean full);
+float G_ActorVis(const vec3_t from, const edict_t *ent, const edict_t *check, qboolean full);
 void G_VisFlagsClear(int team);
 void G_VisFlagsAdd(edict_t *ent, vismask_t visMask);
 void G_VisFlagsSwap(edict_t *ent, vismask_t visMask);
@@ -686,6 +688,7 @@ struct edict_s {
 
 	/** only used locally in game, not by server */
 
+	edict_t *particleLink;
 	const edict_t *link;		/**< can be used to store another edict that e.g. interacts with the current one */
 	entity_type_t type;
 	vismask_t visflags;			/**< bitmask of teams that can see this edict */

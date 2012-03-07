@@ -45,6 +45,7 @@ static void SP_misc_item(edict_t *ent);
 static void SP_misc_mission(edict_t *ent);
 static void SP_misc_mission_aliens(edict_t *ent);
 static void SP_misc_message(edict_t *ent);
+static void SP_misc_smoke(edict_t *ent);
 
 typedef struct {
 	const char *name;
@@ -76,6 +77,7 @@ static const spawn_t spawns[] = {
 	{"trigger_touch", SP_trigger_touch},
 	{"trigger_rescue", SP_trigger_rescue},
 	{"misc_message", SP_misc_message},
+	{"misc_smoke", SP_misc_smoke},
 
 	{NULL, NULL}
 };
@@ -411,6 +413,73 @@ edict_t *G_Spawn (void)
 
 	G_InitEdict(ent);
 	return ent;
+}
+
+static void Think_Smoke (edict_t *self)
+{
+	if (self->time + self->count <= level.actualRound) {
+		G_EventEdictPerish(G_VisToPM(self->particleLink->visflags), self->particleLink);
+		G_FreeEdict(self->particleLink);
+		G_FreeEdict(self);
+	}
+}
+
+static void G_SpawnSmoke (const pos3_t pos, int rounds)
+{
+	edict_t *smokeField = G_GetEdictFromPos(pos, ET_SMOKE);
+	if (smokeField == NULL) {
+		vec3_t particleOrigin;
+		smokeField = G_Spawn();
+		smokeField->classname = "smoke";
+		smokeField->type = ET_SMOKE;
+		smokeField->fieldSize = ACTOR_SIZE_NORMAL;
+		smokeField->contentFlags = CONTENTS_SMOKE;
+		smokeField->solid = SOLID_NOT;
+		VectorSet(smokeField->maxs, UNIT_SIZE / 2, UNIT_SIZE / 2, UNIT_HEIGHT / 2);
+		VectorSet(smokeField->mins, -UNIT_SIZE / 2, -UNIT_SIZE / 2, -UNIT_HEIGHT / 2);
+		VectorCopy(pos, smokeField->pos);
+		G_EdictCalcOrigin(smokeField);
+		VectorCopy(smokeField->origin, particleOrigin);
+		smokeField->particleLink = G_SpawnParticle(particleOrigin, 0, "smoke_explosion");
+		smokeField->think = Think_Smoke;
+		smokeField->nextthink = 1;
+		smokeField->time = level.actualRound;
+		gi.LinkEdict(smokeField);
+	}
+
+	smokeField->count = rounds;
+}
+
+/**
+ * @brief Spawns a smoke field that is available for some rounds
+ * @param[in] gridPos The position in the world that is the center of the smoke field
+ */
+void G_SpawnSmokeField (const pos3_t gridPos, int rounds)
+{
+	vec3_t vec;
+	int i;
+
+	G_SpawnSmoke(gridPos, rounds);
+
+	PosToVec(gridPos, vec);
+	vec[2] -= GROUND_DELTA;
+
+	for (i = 0; i < DIRECTIONS; i++) {
+		vec3_t end;
+		pos3_t pos;
+		trace_t tr;
+
+		VectorSet(pos, gridPos[0] + dvecs[i][0], gridPos[1] + dvecs[i][1], gridPos[2]);
+		PosToVec(pos, end);
+		end[2] -= GROUND_DELTA;
+
+		tr = G_Trace(vec, end, NULL, MASK_SMOKE);
+		/* trace didn't reach the target - something was hit before */
+		if (tr.fraction < 1.0) {
+			continue;
+		}
+		G_SpawnSmoke(pos, rounds);
+	}
 }
 
 /**
@@ -850,6 +919,12 @@ static qboolean Message_Use (edict_t *self, edict_t *activator)
 
 		return qfalse;
 	}
+}
+
+static void SP_misc_smoke (edict_t *ent)
+{
+	G_SpawnSmoke(ent->pos, ent->count);
+	G_FreeEdict(ent);
 }
 
 static void SP_misc_message (edict_t *ent)

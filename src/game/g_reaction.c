@@ -482,7 +482,7 @@ static qboolean G_ReactionFireIsPossible (const edict_t *ent, const edict_t *tar
 	if (!frustum)
 		return qfalse;
 
-	actorVis = G_ActorVis(ent->origin, target, qtrue);
+	actorVis = G_ActorVis(ent->origin, ent, target, qtrue);
 	if (actorVis <= 0.2)
 		return qfalse;
 

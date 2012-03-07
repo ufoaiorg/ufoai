@@ -847,7 +847,7 @@ static int AIL_positionshoot (lua_State *L)
 					continue;
 				/* Better spot (easier to get to). */
 				if (tu < min_tu) {
-					if (G_ActorVis(check, target->ent, qtrue) > 0.3) {
+					if (G_ActorVis(check, ent, target->ent, qtrue) > 0.3) {
 						VectorCopy(to, bestPos);
 						min_tu = tu;
 					}

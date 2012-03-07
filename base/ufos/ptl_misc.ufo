@@ -11,17 +11,11 @@ particle smoke_explosion
 	init
 	{
 		v		"0 0 0"
-		tps		25.0
-		spawn	smokebig
-		rounds	2
+		tps		20.0
 	}
 	think
 	{
 		spawn	smokebig
-	}
-	round
-	{
-		tps		50.0
 	}
 }
 
@@ -1551,17 +1545,17 @@ particle smokebig
 		rand		float 0.2
 		add			float 0.4
 		pop			*tps
-		crand		vector "60 60 20"
+		crand		vector "14 14 20"
 		add			*s
 		pop			*s
-		crand		vector "150 150 1000"
+		crand		vector "22 22 1000"
 		add			*v
 	}
 	run
 	{
-		push		pos "60 60"
+		push		pos "14 14"
 		mul			*t
-		add			pos "30 30"
+		add			pos "0.3 0.3"
 		pop			*size
 	}
 	think { kill }

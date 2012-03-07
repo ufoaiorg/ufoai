@@ -680,3 +680,27 @@ entity misc_item {
 		spawnflags	"255"
 	}
 }
+
+entity misc_smoke {
+	description	"A smoke field that blocks visiblity until it is gone."
+	color		".8 .8 .8"
+	size		"-16 -16 -32 16 16 32"
+
+	optional {
+		targetname	"The id of this entity"
+	}
+
+	mandatory {
+		origin	"Position"
+		count	"The amount of rouds the smoke field will stay on battlefield"
+	}
+
+	type {
+		count	"UNSIGNED V_INT"
+		origin	"V_FLOAT 3"
+	}
+
+	default {
+		count	"2"
+	}
+}

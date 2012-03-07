@@ -138,7 +138,7 @@ qboolean AI_CheckUsingDoor (const edict_t *ent, const edict_t *door)
 			/* check whether the enemy is close enough to change the state */
 			if (VectorDist(check->origin, ent->origin) > MAX_SPOT_DIST)
 				continue;
-			actorVis = G_ActorVis(check->origin, ent, qtrue);
+			actorVis = G_ActorVis(check->origin, check, ent, qtrue);
 			/* there is a visible enemy, don't use that door */
 			if (actorVis > ACTOR_VIS_0)
 				return qfalse;
@@ -179,7 +179,7 @@ static qboolean AI_CheckCrouch (const edict_t *ent)
 		/* check whether the enemy is close enough to change the state */
 		if (VectorDist(check->origin, ent->origin) > MAX_SPOT_DIST)
 			continue;
-		actorVis = G_ActorVis(check->origin, ent, qtrue);
+		actorVis = G_ActorVis(check->origin, check, ent, qtrue);
 		if (actorVis >= ACTOR_VIS_50)
 			return qtrue;
 	}
@@ -469,7 +469,7 @@ static void AI_SearchBestTarget (aiAction_t *aia, const edict_t *ent, edict_t *c
 
 			/* check how good the target is visible */
 			if (!visChecked) {	/* only do this once per actor ! */
-				vis = G_ActorVis(ent->origin, check, qtrue);
+				vis = G_ActorVis(ent->origin, ent, check, qtrue);
 				visChecked = qtrue;
 			}
 			if (vis == ACTOR_VIS_0)
@@ -747,7 +747,7 @@ static float AI_CivilianCalcBestAction (edict_t * ent, pos3_t to, aiAction_t * a
 		if (!G_IsVisibleForTeam(check, ent->team))
 			continue;
 
-		if (G_ActorVis(check->origin, ent, qtrue) > 0.25)
+		if (G_ActorVis(check->origin, check, ent, qtrue) > 0.25)
 			reactionTrap += 25.0;
 	}
 	delta -= reactionTrap;

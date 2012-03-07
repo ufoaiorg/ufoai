@@ -90,7 +90,7 @@ static void G_Morale (int type, const edict_t * victim, const edict_t * attacker
 				if (type == ML_DEATH)
 					mod += mob_death->value;
 				/* seeing how someone gets shot increases the morale change */
-				if (ent == victim || (G_FrustumVis(ent, victim->origin) && G_ActorVis(ent->origin, victim, qfalse)))
+				if (ent == victim || (G_FrustumVis(ent, victim->origin) && G_ActorVis(ent->origin, ent, victim, qfalse)))
 					mod *= mof_watching->value;
 				if (ent->team == attacker->team) {
 					/* teamkills are considered to be bad form, but won't cause an increased morale boost for the enemy */
@@ -513,7 +513,7 @@ static void G_SplashDamage (edict_t *ent, const fireDef_t *fd, vec3_t impact, sh
 		}
 
 		/* check for walls */
-		if (G_IsLivingActor(check) && !G_ActorVis(impact, check, qfalse))
+		if (G_IsLivingActor(check) && !G_ActorVis(impact, ent, check, qfalse))
 			continue;
 
 		/* do damage */
@@ -1255,6 +1255,12 @@ qboolean G_ClientShoot (const player_t * player, edict_t* ent, const pos3_t at, 
 			G_ShootSingle(ent, fd, shotOrigin, at, mask, weapon, mock, z_align, i, shootType, impact);
 
 	if (!mock) {
+		if (fd->obj->dmgtype == gi.csi->damSmoke) {
+			pos3_t smokePos;
+			VecToPos(impact, smokePos);
+			G_SpawnSmokeField(smokePos, 2);
+		}
+
 		/* send TUs if ent still alive */
 		if (ent->inuse && !G_IsDead(ent)) {
 			G_ActorSetTU(ent, ent->TU - fd->time);
