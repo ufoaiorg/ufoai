@@ -22,7 +22,7 @@ vec3 LightFragment(vec3 normal) {
 	vec3 light = vec3(0.0);
 
 #unroll r_dynamic_lights
-	light += LightContribution(lightParams[$], lightDirs[$], normal);
+	light += LightContribution(LIGHTPARAMS[$], lightDirs[$], normal);
 #endunroll
 
 	return light;

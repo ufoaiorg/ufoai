@@ -124,7 +124,7 @@ vec4 IlluminateFragment(void) {
 
 	/* do per-light calculations */
 #unroll r_dynamic_lights
-	totalColor += LightContribution(lightParams[$], lightDirs[$], N, V, NdotV, R_2, roughness, specular, diffuse);
+	totalColor += LightContribution(LIGHTPARAMS[$], lightDirs[$], N, V, NdotV, R_2, roughness, specular, diffuse);
 #endunroll
 
 	return vec4(totalColor, diffuse.a);
