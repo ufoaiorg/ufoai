@@ -169,6 +169,16 @@ void R_ProgramParameter3fv (const char *name, GLfloat *value)
 	qglUniform3fv(v->location, 1, value);
 }
 
+void R_ProgramParameter3fvs (const char *name, GLint size, GLfloat *value)
+{
+	r_progvar_t *v;
+
+	if (!(v = R_ProgramVariable(GL_UNIFORM, name)))
+		return;
+
+	qglUniform3fv(v->location, size, value);
+}
+
 void R_ProgramParameter4fv (const char *name, GLfloat *value)
 {
 	r_progvar_t *v;
@@ -177,6 +187,16 @@ void R_ProgramParameter4fv (const char *name, GLfloat *value)
 		return;
 
 	qglUniform4fv(v->location, 1, value);
+}
+
+void R_ProgramParameter4fvs (const char *name, GLint size, GLfloat *value)
+{
+	r_progvar_t *v;
+
+	if (!(v = R_ProgramVariable(GL_UNIFORM, name)))
+		return;
+
+	qglUniform4fv(v->location, size, value);
 }
 
 void R_ProgramParameterMatrix4fv (const char *name, GLfloat *value)
