@@ -357,6 +357,22 @@ void GLVectorTransform (const float m[16], const vec4_t in, vec4_t out)
 }
 
 /**
+ * @brief Transform position (xyz) vector by OpenGL rules
+ * @note Equivalent to calling GLVectorTransfrom with (x y z 1) vector and taking first 3 components of result
+ * @param[out] out the result of the multiplication = @c m * @c in.
+ * @param[in] m 4*4 matrix
+ * @param[in] in 3d vector.
+ * @sa GLVectorTransform
+ */
+void GLPositionTransform (const float m[16], const vec3_t in, vec3_t out)
+{
+	int i;
+
+	for (i = 0; i < 3; i++)
+		out[i] = m[i] * in[0] + m[i + 4] * in[1] + m[i + 8] * in[2] + m[i + 12];
+}
+
+/**
  * @brief Rotate a vector with a rotation matrix.
  * @param[out] vb The result of multiplication (ie vector @c va after rotation).
  * @param[in] m The 3*3 matrix (rotation matrix in case of a rotation).
