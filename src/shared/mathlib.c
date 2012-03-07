@@ -1134,3 +1134,48 @@ void MatrixTranspose (const vec3_t m[3], vec3_t t[3])
 		}
 	}
 }
+
+qboolean RayIntersectAABB (const vec3_t start, const vec3_t end, const vec3_t mins, const vec3_t maxs)
+{
+	float t0 = 0.0f;
+	float t1 = 1.0f;
+	vec3_t delta;
+	int i;
+
+	VectorSubtract(end, start, delta);
+
+	for (i = 0; i < 3; i++) {
+		const float threshold = 1.0e-6f;
+		float u0, u1;
+
+		if (fabs(delta[i]) < threshold) {
+			if (delta[i] > 0.0f) {
+				return !(end[i] < mins[i] || start[i] > maxs[i]);
+			} else {
+				return !(start[i] < mins[i] || end[i] > maxs[i]);
+			}
+		}
+
+		u0 = (mins[i] - start[i]) / delta[i];
+		u1 = (maxs[i] - start[i]) / delta[i];
+
+		if (u0 > u1) {
+			const float temp = u0;
+			u0 = u1;
+			u1 = temp;
+		}
+
+		if (u1 < t0 || u0 > t1) {
+			return qfalse;
+		}
+
+		t0 = max(u0, t0);
+		t1 = min(u1, t1);
+
+		if (t1 < t0) {
+			return qfalse;
+		}
+	}
+
+	return qtrue;
+}

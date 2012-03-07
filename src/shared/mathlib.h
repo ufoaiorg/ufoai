@@ -263,4 +263,6 @@ void TangentVectors(const vec3_t normal, const vec3_t sdir, const vec3_t tdir, v
 void Orthogonalize(vec3_t v1, const vec3_t v2);
 void MatrixTranspose(const vec3_t m[3], vec3_t t[3]);
 
+qboolean RayIntersectAABB(const vec3_t start, const vec3_t end, const vec3_t mins, const vec3_t maxs);
+
 #endif
