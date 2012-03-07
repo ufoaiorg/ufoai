@@ -429,6 +429,20 @@ void G_ActorModifyCounters (const edict_t *attacker, const edict_t *victim, int 
 #endif
 }
 
+/**
+ * @brief Fills a vector with the eye position of a given actor
+ * @param[in] actor The actor edict to get the eye position in the world from
+ * @param[out] eye The eye vector world position
+ */
+void G_ActorGetEyeVector (const edict_t *actor, vec3_t eye)
+{
+	VectorCopy(actor->origin, eye);
+	if (G_IsCrouched(actor) || G_IsPaniced(actor))
+		eye[2] += EYE_CROUCH;
+	else
+		eye[2] += EYE_STAND;
+}
+
 static void G_ActorRevitalise (edict_t *ent)
 {
 	if (G_IsStunned(ent)) {

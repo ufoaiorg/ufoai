@@ -169,11 +169,7 @@ qboolean G_Vis (const int team, const edict_t *from, const edict_t *check, int f
 		return qfalse;
 
 	/* get viewers eye height */
-	VectorCopy(from->origin, eye);
-	if (G_IsCrouched(from) || G_IsPaniced(from))
-		eye[2] += EYE_CROUCH;
-	else
-		eye[2] += EYE_STAND;
+	G_ActorGetEyeVector(from, eye);
 
 	/* line trace check */
 	switch (check->type) {

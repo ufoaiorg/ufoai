@@ -950,13 +950,13 @@ static void TR_RecursiveHullCheck (boxtrace_t *traceData, int32_t nodenum, float
  * @param[in] maxs box maxs
  * @param[in] tile Tile to check (normally 0 - except in assembled maps)
  * @param[in] headnode if < 0 we are in a leaf node
- * @param[in] brushmask brushes the trace should stop at (see MASK_*)
+ * @param[in] contentmask brushes the trace should stop at (see MASK_*)
  * @param[in] brushreject brushes the trace should ignore (see MASK_*)
  * @param[in] fraction The furthest distance needed to trace before we stop.
  * @sa TR_RecursiveHullCheck
  * @sa TR_BoxLeafnums_headnode
  */
-trace_t TR_BoxTrace (TR_TILE_TYPE *tile, const vec3_t start, const vec3_t end, const vec3_t mins, const vec3_t maxs, const int headnode, const int brushmask, const int brushreject, const float fraction)
+trace_t TR_BoxTrace (TR_TILE_TYPE *tile, const vec3_t start, const vec3_t end, const vec3_t mins, const vec3_t maxs, const int headnode, const int contentmask, const int brushreject, const float fraction)
 {
 	vec3_t offset, amins, amaxs, astart, aend;
 	boxtrace_t traceData;
@@ -989,7 +989,7 @@ trace_t TR_BoxTrace (TR_TILE_TYPE *tile, const vec3_t start, const vec3_t end, c
 	VectorAdd(start, offset, astart);
 	VectorAdd(end, offset, aend);
 
-	traceData.contents = brushmask;
+	traceData.contents = contentmask;
 	traceData.rejects = brushreject;
 	traceData.tile = tile;
 	VectorCopy(astart, traceData.start);

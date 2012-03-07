@@ -86,7 +86,7 @@ static qboolean CM_LineMissesModel (const vec3_t start, const vec3_t stop, const
  * @param[in] mins box mins
  * @param[in] maxs box maxs
  * @param[in] headnode if < 0 we are in a leaf node
- * @param[in] brushmask brushes the trace should stop at (see MASK_*)
+ * @param[in] contentmask content flags the trace should stop at (see MASK_*)
  * @param[in] brushrejects brushes the trace should ignore (see MASK_*)
  * @param[in] origin center for rotating objects
  * @param[in] angles current rotation status (in degrees) for rotating objects
@@ -95,7 +95,7 @@ static qboolean CM_LineMissesModel (const vec3_t start, const vec3_t stop, const
  * @brief Handles offseting and rotation of the end points for moving and rotating entities
  * @sa CM_BoxTrace
  */
-trace_t CM_HintedTransformedBoxTrace (mapTile_t *tile, const vec3_t start, const vec3_t end, const vec3_t mins, const vec3_t maxs, const int headnode, const int brushmask, const int brushrejects, const vec3_t origin, const vec3_t angles, const vec3_t rmaShift, const float fraction)
+trace_t CM_HintedTransformedBoxTrace (mapTile_t *tile, const vec3_t start, const vec3_t end, const vec3_t mins, const vec3_t maxs, const int headnode, const int contentmask, const int brushrejects, const vec3_t origin, const vec3_t angles, const vec3_t rmaShift, const float fraction)
 {
 	trace_t trace;
 	vec3_t start_l, end_l;
@@ -137,7 +137,7 @@ trace_t CM_HintedTransformedBoxTrace (mapTile_t *tile, const vec3_t start, const
 	}
 
 	/* sweep the box through the model */
-	trace = TR_BoxTrace(tile, start_l, end_l, mins, maxs, headnode, brushmask, brushrejects, fraction);
+	trace = TR_BoxTrace(tile, start_l, end_l, mins, maxs, headnode, contentmask, brushrejects, fraction);
 	trace.mapTile = tile->idx;
 
 	if (rotated && trace.fraction != 1.0) {

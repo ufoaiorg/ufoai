@@ -439,6 +439,7 @@ void G_ActorGiveTimeUnits(edict_t *ent);
 void G_ActorSetTU(edict_t *ent, int tus);
 void G_ActorUseTU(edict_t *ent, int tus);
 void G_ActorModifyCounters(const edict_t *attacker, const edict_t *victim, int deltaAlive, int deltaKills, int deltaStuns);
+void G_ActorGetEyeVector(const edict_t *actor, vec3_t eye);
 int G_ClientAction(player_t * player);
 void G_ClientEndRound(player_t * player);
 void G_ClientTeamInfo(const player_t * player);
