@@ -23,9 +23,16 @@ uniform sampler2D SAMPLER_DELUXEMAP;
 /** Normalmap.*/
 uniform sampler2D SAMPLER_NORMALMAP;
 
+#define R_DYNAMIC_LIGHTS #replace r_dynamic_lights
+#if r_dynamic_lights
+in_qualifier vec3 lightDirs[R_DYNAMIC_LIGHTS];
+uniform vec4 LIGHTPARAMS[R_DYNAMIC_LIGHTS];
+#endif
+
 const vec3 two = vec3(2.0);
 const vec3 negHalf = vec3(-0.5);
 
+#include "light_fs.glsl"
 #include "fog_fs.glsl"
 #include "world_devtools_fs.glsl"
 #include "write_fragment_fs.glsl"
@@ -60,6 +67,9 @@ void main(void) {
 
 	/* Sample the diffuse texture, honoring the parallax offset.*/
 	vec4 diffuse = texture2D(SAMPLER_DIFFUSE, gl_TexCoord[0].st);
+
+	/* Add dynamic lights, if any */
+	light = clamp(light + LightFragment(normalmap.rgb), 0.0, 2.0);
 
 	finalColor.rgb = diffuse.rgb * light;
 	finalColor.a = diffuse.a;

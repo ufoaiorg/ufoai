@@ -5,7 +5,6 @@
 
 uniform float OFFSET;
 uniform int ANIMATE;
-uniform vec3 SUNDIRECTION;
 
 /* from includes:
 attribute vec4 NEXT_FRAME_VERTS;
@@ -20,9 +19,9 @@ vec4 Tangent;
 varying float fog;
 */
 
-out_qualifier vec3 sunDir; /** < Direction towards the sun, in tangent space */
-
 #include "lerp_vs.glsl"
+#include "light_vs.glsl"
+#include "transform_lights_vs.glsl"
 #include "fog_vs.glsl"
 
 /**
@@ -34,7 +33,7 @@ void main(void) {
 	} else {
 		Vertex = gl_Vertex;
 		Normal = gl_Normal;
-		Tangent = TANGENTS; /** @todo what if tangents are disabled? */
+		Tangent = TANGENTS;
 	}
 
 	/* MVP transform into clip space.*/
@@ -45,15 +44,10 @@ void main(void) {
 	/* Pass texture coordinate through.*/
 	gl_TexCoord[0] = gl_MultiTexCoord0 + OFFSET;
 
-	/* construct tangent space */
-	vec3 normal = normalize(gl_NormalMatrix * Normal);
-	vec3 tangent = normalize(gl_NormalMatrix * Tangent.xyz);
-	vec3 bitangent = normalize(cross(normal, tangent)) * Tangent.w;
+	LightVertex();
 
-	/* transform sun direction to tangent space */
-	sunDir.x = dot(SUNDIRECTION, tangent);
-	sunDir.y = dot(SUNDIRECTION, bitangent);
-	sunDir.z = dot(SUNDIRECTION, normal);
+	TransformLights();
+
 
 #if r_fog
 	FogVertex();

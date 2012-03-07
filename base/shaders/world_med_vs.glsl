@@ -4,7 +4,6 @@
  */
 
 uniform float OFFSET;
-uniform int BUMPMAP;
 
 in_qualifier vec4 TANGENTS;
 
@@ -31,7 +30,7 @@ vec4 Tangent;
 void main(void) {
 	Vertex = gl_Vertex;
 	Normal = gl_Normal;
-	Tangent = TANGENTS; /** @todo what if tangents are disabled? */
+	Tangent = TANGENTS;
 
 	/* MVP transform into clip space.*/
 	gl_Position = ftransform();

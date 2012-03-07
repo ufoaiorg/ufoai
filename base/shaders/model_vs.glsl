@@ -44,7 +44,7 @@ void main(void) {
 	} else {
 		Vertex = gl_Vertex;
 		Normal = gl_Normal;
-		Tangent = TANGENTS; /** @todo what if tangents are disabled? */
+		Tangent = TANGENTS;
 	}
 
 	/* MVP transform into clip space.*/
