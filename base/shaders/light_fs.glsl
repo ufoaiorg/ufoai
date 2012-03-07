@@ -3,22 +3,14 @@
  * @brief Dynamic lighting fragment shader.
  */
 
-in_qualifier vec3 normal;
-
-vec3 LightContribution(vec4 lightParams, vec3 lightDir) {
+vec3 LightContribution(vec4 lightParams, vec3 lightDir, vec3 normal) {
 	vec3 delta = lightDir;
 	vec3 dir = normalize(delta);
-	float NdotL = max(0.0, dot(normal, dir));
-	float attenuation = 1.0;
+	float NdotL = clamp(dot(normal, dir), 0.0, 1.0);
 
-	if (NdotL > 0.0) {
-		float dist = length(delta);
-		float attenDiv = lightParams.a * dist * dist;
-		/* If none of the attenuation parameters are set, we keep 1.0.*/
-		if (bool(attenDiv)) {
-			attenuation = 1.0 / attenDiv;
-		}
-	}
+	float dist = length(delta);
+	float attenDiv = max(lightParams.a * dist * dist, 0.5);
+	float attenuation = 1.0 / attenDiv;
 
 	return lightParams.rgb * NdotL * attenuation;
 }
@@ -26,11 +18,11 @@ vec3 LightContribution(vec4 lightParams, vec3 lightDir) {
 /**
  * @brief LightFragment.
  */
-vec3 LightFragment() {
+vec3 LightFragment(vec3 normal) {
 	vec3 light = vec3(0.0);
 
 #unroll r_dynamic_lights
-	light += LightContribution(lightParams[$], lightDirs[$]);
+	light += LightContribution(lightParams[$], lightDirs[$], normal);
 #endunroll
 
 	return light;

@@ -74,7 +74,7 @@ void main(void) {
 	vec4 diffuse = texture2D(SAMPLER_DIFFUSE, gl_TexCoord[0].st + offset);
 
 	/* Otherwise, add to lightmap.*/
-	light = clamp(light + LightFragment(), 0.0, 1.8);
+	light = clamp(light + LightFragment(normalmap.rgb), 0.0, 2.0);
 
 	finalColor.rgb = diffuse.rgb * light;
 	finalColor.a = diffuse.a;
