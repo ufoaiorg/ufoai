@@ -159,6 +159,7 @@ typedef enum {
 	ET_SOLID,
 	ET_MESSAGE,
 	ET_SMOKE,
+	ET_FIRE,
 
 	ET_MAX,
 
@@ -387,7 +388,8 @@ typedef struct csi_s {
 	int damStunGas;		/**< Stun gas attack (only effective against organic targets).
 						 * @todo Maybe even make a differentiation between aliens/humans here? */
 	int damStunElectro;	/**< Electro-Shock attack (effective against organic and robotic targets). */
-	int damSmoke;		/**< smoke damage type */
+	int damSmoke;		/**< smoke damage type that spawn smoke fields that blocks the visibility */
+	int damIncendiary;	/**< incendiary damage type that spawns fire fields that will hurt actors */
 
 	/** Equipment definitions */
 	equipDef_t eds[MAX_EQUIPDEFS];

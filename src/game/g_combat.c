@@ -1258,7 +1258,7 @@ qboolean G_ClientShoot (const player_t * player, edict_t* ent, const pos3_t at, 
 		if (fd->obj->dmgtype == gi.csi->damSmoke) {
 			pos3_t smokePos;
 			VecToPos(impact, smokePos);
-			G_SpawnSmokeField(smokePos, 2);
+			G_SpawnSmokeField(smokePos, "smoke_explosion", 2);
 		}
 
 		/* send TUs if ent still alive */

@@ -1548,7 +1548,7 @@ particle smokebig
 		crand		vector "14 14 20"
 		add			*s
 		pop			*s
-		crand		vector "22 22 1000"
+		crand		vector "22 22 2000"
 		add			*v
 	}
 	run

@@ -693,6 +693,7 @@ entity misc_smoke {
 	mandatory {
 		origin	"Position"
 		count	"The amount of rouds the smoke field will stay on battlefield"
+		particle	"The particle for the smoke field"
 	}
 
 	type {
@@ -702,5 +703,6 @@ entity misc_smoke {
 
 	default {
 		count	"2"
+		particle	"smoke_explosion"
 	}
 }

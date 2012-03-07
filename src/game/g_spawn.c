@@ -424,27 +424,14 @@ static void Think_Smoke (edict_t *self)
 	}
 }
 
-static void G_SpawnSmoke (const pos3_t pos, int rounds)
+static void G_SpawnSmoke (const pos3_t pos, const char *particle, int rounds)
 {
 	edict_t *smokeField = G_GetEdictFromPos(pos, ET_SMOKE);
 	if (smokeField == NULL) {
-		vec3_t particleOrigin;
 		smokeField = G_Spawn();
-		smokeField->classname = "smoke";
-		smokeField->type = ET_SMOKE;
-		smokeField->fieldSize = ACTOR_SIZE_NORMAL;
-		smokeField->contentFlags = CONTENTS_SMOKE;
-		smokeField->solid = SOLID_NOT;
-		VectorSet(smokeField->maxs, UNIT_SIZE / 2, UNIT_SIZE / 2, UNIT_HEIGHT / 2);
-		VectorSet(smokeField->mins, -UNIT_SIZE / 2, -UNIT_SIZE / 2, -UNIT_HEIGHT / 2);
 		VectorCopy(pos, smokeField->pos);
 		G_EdictCalcOrigin(smokeField);
-		VectorCopy(smokeField->origin, particleOrigin);
-		smokeField->particleLink = G_SpawnParticle(particleOrigin, 0, "smoke_explosion");
-		smokeField->think = Think_Smoke;
-		smokeField->nextthink = 1;
-		smokeField->time = level.actualRound;
-		gi.LinkEdict(smokeField);
+		SP_misc_smoke(smokeField);
 	}
 
 	smokeField->count = rounds;
@@ -454,12 +441,12 @@ static void G_SpawnSmoke (const pos3_t pos, int rounds)
  * @brief Spawns a smoke field that is available for some rounds
  * @param[in] gridPos The position in the world that is the center of the smoke field
  */
-void G_SpawnSmokeField (const pos3_t gridPos, int rounds)
+void G_SpawnSmokeField (const pos3_t gridPos, const char *particle, int rounds)
 {
 	vec3_t vec;
 	int i;
 
-	G_SpawnSmoke(gridPos, rounds);
+	G_SpawnSmoke(gridPos, particle, rounds);
 
 	PosToVec(gridPos, vec);
 	vec[2] -= GROUND_DELTA;
@@ -478,7 +465,7 @@ void G_SpawnSmokeField (const pos3_t gridPos, int rounds)
 		if (tr.fraction < 1.0) {
 			continue;
 		}
-		G_SpawnSmoke(pos, rounds);
+		G_SpawnSmoke(pos, particle, rounds);
 	}
 }
 
@@ -923,8 +910,24 @@ static qboolean Message_Use (edict_t *self, edict_t *activator)
 
 static void SP_misc_smoke (edict_t *ent)
 {
-	G_SpawnSmoke(ent->pos, ent->count);
-	G_FreeEdict(ent);
+	vec3_t particleOrigin;
+
+	ent->classname = "smoke";
+	ent->type = ET_SMOKE;
+	ent->fieldSize = ACTOR_SIZE_NORMAL;
+	ent->solid = SOLID_NOT;
+	VectorSet(ent->maxs, UNIT_SIZE / 2, UNIT_SIZE / 2, UNIT_HEIGHT / 2);
+	VectorSet(ent->mins, -UNIT_SIZE / 2, -UNIT_SIZE / 2, -UNIT_HEIGHT / 2);
+	G_EdictCalcOrigin(ent);
+	ent->think = Think_Smoke;
+	ent->nextthink = 1;
+	ent->time = level.actualRound;
+
+	gi.LinkEdict(ent);
+
+	VectorCopy(ent->origin, particleOrigin);
+	particleOrigin[2] -= GROUND_DELTA;
+	ent->particleLink = G_SpawnParticle(particleOrigin, 0, ent->particle);
 }
 
 static void SP_misc_message (edict_t *ent)

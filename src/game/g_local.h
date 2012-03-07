@@ -361,7 +361,7 @@ int G_TouchTriggers(edict_t *ent);
 void G_TouchSolids(edict_t *ent);
 void G_TouchEdicts(edict_t *ent, float extend);
 edict_t *G_Spawn(void);
-void G_SpawnSmokeField(const pos3_t gridPos, int rounds);
+void G_SpawnSmokeField(const pos3_t gridPos, const char *particle, int rounds);
 edict_t *G_SpawnParticle(const vec3_t origin, int spawnflags, const char *particle);
 void G_FreeEdict(edict_t *e);
 qboolean G_UseEdict(edict_t *ent, edict_t* activator);
