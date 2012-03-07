@@ -69,6 +69,7 @@ extern cvar_t *r_debug_tangents;
 extern cvar_t *r_debug_lights;
 extern cvar_t *r_ext_texture_compression;
 extern cvar_t *r_checkerror;
+extern cvar_t *r_particles;
 extern cvar_t *r_showbox;
 extern cvar_t *r_shadows;
 extern cvar_t *r_stencilshadows;

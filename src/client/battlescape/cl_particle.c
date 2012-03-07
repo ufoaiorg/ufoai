@@ -743,7 +743,7 @@ ptl_t *CL_ParticleSpawn (const char *name, int levelFlags, const vec3_t s, const
 
 	/* add the particle */
 	for (i = 0; i < r_numParticles; i++)
-		if (!r_particles[i].inuse)
+		if (!r_particleArray[i].inuse)
 			break;
 
 	if (i == r_numParticles) {
@@ -756,7 +756,7 @@ ptl_t *CL_ParticleSpawn (const char *name, int levelFlags, const vec3_t s, const
 	}
 
 	/* allocate particle */
-	p = &r_particles[i];
+	p = &r_particleArray[i];
 	OBJZERO(*p);
 
 	/* set basic values */
@@ -875,7 +875,7 @@ void CL_ParticleCheckRounds (void)
 	ptl_t *p;
 	int i;
 
-	for (i = 0, p = r_particles; i < r_numParticles; i++, p++)
+	for (i = 0, p = r_particleArray; i < r_numParticles; i++, p++)
 		if (p->inuse) {
 			/* run round function */
 			CL_ParticleFunction(p, p->ctrl->round);
@@ -1088,7 +1088,7 @@ void CL_ParticleRun (void)
 
 	CL_ParticleRunTimed();
 
-	for (i = 0, p = r_particles; i < r_numParticles; i++, p++)
+	for (i = 0, p = r_particleArray; i < r_numParticles; i++, p++)
 		if (p->inuse)
 			CL_ParticleRun2(p);
 }
@@ -1480,7 +1480,7 @@ static void PTL_DebugList_f (void)
 
 	Com_Printf("%i particles\n", r_numParticles);
 	for (i = 0; i < r_numParticles; i++) {
-		const ptl_t *p = &r_particles[i];
+		const ptl_t *p = &r_particleArray[i];
 		const ptlDef_t *def = p->ctrl;
 		const value_t *pp = pps;
 		if (!p->inuse)

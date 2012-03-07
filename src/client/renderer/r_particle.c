@@ -26,8 +26,10 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #include "r_particle.h"
 #include "r_draw.h"
 
-ptl_t r_particles[MAX_PTLS];
+ptl_t r_particleArray[MAX_PTLS];
 int r_numParticles;
+
+cvar_t *r_particles;
 
 /*
 =============================================================
@@ -266,7 +268,10 @@ void R_DrawParticles (void)
 	ptl_t *p;
 	int i;
 
-	for (i = 0, p = r_particles; i < r_numParticles; i++, p++)
+	if (!r_particles->integer)
+		return;
+
+	for (i = 0, p = r_particleArray; i < r_numParticles; i++, p++)
 		if (p->inuse && !p->invis) {
 			/* test for visibility */
 			if (p->levelFlags && !((1 << refdef.worldlevel) & p->levelFlags))
