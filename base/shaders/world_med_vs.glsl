@@ -13,7 +13,6 @@ out_qualifier vec3 normal;
 
 out_qualifier vec3 eyedir;
 out_qualifier vec3 lightDirs[];
-out_qualifier vec4 lightParams[R_DYNAMIC_LIGHTS];
 
 varying float fog;
 */

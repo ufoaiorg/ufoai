@@ -110,22 +110,29 @@ void R_EnableWorldLights (void)
 {
 	int i;
 	int maxLights = r_dynamic_lights->integer;
-	vec4_t blackColor = {0.0, 0.0, 0.0, 1.0};
+	vec3_t lightPositions[MAX_GL_LIGHTS];
+	vec4_t lightParams[MAX_GL_LIGHTS];
 
 	/* with the current blending model, lighting breaks FFP world render */
 	if (!r_programs->integer) {
-		glDisable(GL_LIGHTING);
 		return;
 	}
 
-	for (i = 0; i < refdef.numDynamicLights && i < maxLights; i++)
-		R_SetupSpotLight(i, &refdef.dynamicLights[i]);
+	for (i = 0; i < refdef.numDynamicLights && i < maxLights; i++) {
+		const light_t *light = &refdef.dynamicLights[i];
+
+		GLPositionTransform(r_locals.world_matrix, light->origin, lightPositions[i]);
+		VectorCopy(light->color, lightParams[i]);
+		lightParams[i][3] = 16.0 / (light->radius * light->radius);
+	}
 
 	/* if there aren't enough active lights, turn off the rest */
-	while (i < MAX_GL_LIGHTS)
-		R_DisableSpotLight(i++);
+	for (;i < maxLights ;i++)
+		Vector4Set(lightParams[i], 0, 0, 0, 1);
 
-	glEnable(GL_LIGHTING);
+	/* Send light data to shaders */
+	R_ProgramParameter3fvs("LIGHTPOSITIONS", maxLights, (GLfloat *)lightPositions);
+	R_ProgramParameter4fvs("LIGHTPARAMS", maxLights, (GLfloat *)lightParams);
 
 	R_EnableAttribute("TANGENTS");
 }
@@ -140,15 +147,22 @@ void R_EnableModelLights (const light_t **lights, int numLights, qboolean enable
 {
 	int i;
 	int maxLights = r_dynamic_lights->integer;
+	vec3_t lightPositions[MAX_GL_LIGHTS];
+	vec4_t lightParams[MAX_GL_LIGHTS];
 
 	assert(numLights <= MAX_GL_LIGHTS);
 
 	if (!enable || !r_state.lighting_enabled) {
-		if (r_state.dynamic_lighting_enabled)
-			R_DisableAttribute("TANGENTS");
+		if (r_state.dynamic_lighting_enabled) {
+			R_DisableAttribute("TANGENTS"); /** @todo is it a good idea? */
 
-		R_DisableLights();
-		glDisable(GL_LIGHTING);
+			for (i = 0; i < maxLights; i++)
+				Vector4Set(lightParams[i], 0, 0, 0, 1);
+
+			/* Send light data to shaders */
+			R_ProgramParameter3fvs("LIGHTPOSITIONS", maxLights, (GLfloat *)lightPositions);
+			R_ProgramParameter4fvs("LIGHTPARAMS", maxLights, (GLfloat *)lightParams);
+		}
 
 		r_state.dynamic_lighting_enabled = qfalse;
 		return;
@@ -166,14 +180,21 @@ void R_EnableModelLights (const light_t **lights, int numLights, qboolean enable
 
 	R_ProgramParameter3fv("AMBIENT", refdef.ambientColor);
 
-	glEnable(GL_LIGHTING);
+	for (i = 0; i < numLights; i++) {
+		const light_t *light = lights[i];
 
-	for (i = 0; i < numLights; i++)
-		R_SetupSpotLight (i, lights[i]);
+		GLPositionTransform(r_locals.world_matrix, light->origin, lightPositions[i]);
+		VectorCopy(light->color, lightParams[i]);
+		lightParams[i][3] = 16.0 / (light->radius * light->radius);
+	}
 
 	/* if there aren't enough active lights, turn off the rest */
-	while (i < MAX_GL_LIGHTS)
-		R_DisableSpotLight(i++);
+	for (; i < maxLights; i++)
+		Vector4Set(lightParams[i], 0, 0, 0, 1);
+
+	/* Send light data to shaders */
+	R_ProgramParameter3fvs("LIGHTPOSITIONS", maxLights, (GLfloat *)lightPositions);
+	R_ProgramParameter4fvs("LIGHTPARAMS", maxLights, (GLfloat *)lightParams);
 }
 
 void R_AddStaticLight (const vec3_t origin, float radius, const vec3_t color)
@@ -216,8 +237,6 @@ void R_DisableLights (void)
 void R_ClearStaticLights (void)
 {
 	refdef.numStaticLights = 0;
-
-	R_DisableLights();
 }
 
 /** @todo - the updating of the per-entity list of nearest

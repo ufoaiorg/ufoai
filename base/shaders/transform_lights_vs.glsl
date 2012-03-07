@@ -10,8 +10,8 @@ out_qualifier vec3 eyedir;
 
 #define R_DYNAMIC_LIGHTS #replace r_dynamic_lights
 #if r_dynamic_lights
+uniform vec3 LIGHTPOSITIONS[R_DYNAMIC_LIGHTS];
 out_qualifier vec3 lightDirs[R_DYNAMIC_LIGHTS];
-out_qualifier vec4 lightParams[R_DYNAMIC_LIGHTS];
 #endif
 
 /**
@@ -39,12 +39,10 @@ void TransformLights(void) {
 	/* Transform relative light positions into tangent space.*/
 	vec3 lpos;
 #unroll r_dynamic_lights
-	lpos = gl_LightSource[$].position.xyz - point;
+	lpos = LIGHTPOSITIONS[$] - point;
 
 	lightDirs[$].x = dot(lpos, tangent);
 	lightDirs[$].y = dot(lpos, bitangent);
 	lightDirs[$].z = dot(lpos, normal);
-	lightParams[$].rgb = gl_LightSource[$].diffuse.rgb;
-	lightParams[$].a = gl_LightSource[$].quadraticAttenuation;
 #endunroll
 }

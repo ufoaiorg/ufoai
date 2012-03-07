@@ -474,7 +474,6 @@ void R_RenderOpaqueBspRRefs (void)
 
 	R_EnableLighting(NULL, qfalse);
 	R_EnableGlowMap(NULL);
-	R_DisableLights();
 	R_EnableTexture(&texunit_lightmap, qfalse);
 }
 
@@ -501,7 +500,6 @@ void R_RenderAlphaTestBspRRefs (void)
 
 	R_EnableLighting(NULL, qfalse);
 	R_EnableGlowMap(NULL);
-	R_DisableLights();
 	R_EnableAlphaTest(qfalse);
 }
 
