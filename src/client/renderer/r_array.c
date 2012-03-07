@@ -88,10 +88,8 @@ static inline void R_SetVertexArrayState (const mBspModel_t* bsp, int mask)
 		if (mask & R_ARRAY_NORMAL)
 			R_BindArray(GL_NORMAL_ARRAY, GL_FLOAT, bsp->normals);
 
-		/* tangent vectors for bump mapping */
-		if (r_bumpmap->value > 0.0 && r_state.active_program == r_state.world_program)
-			if (mask & R_ARRAY_TANGENT)
-				R_BindArray(GL_TANGENT_ARRAY, GL_FLOAT, bsp->tangents);
+		if (mask & R_ARRAY_TANGENT)
+			R_BindArray(GL_TANGENT_ARRAY, GL_FLOAT, bsp->tangents);
 	}
 
 	/* diffuse texcoords */
@@ -124,8 +122,7 @@ static inline void R_SetVertexBufferState (const mBspModel_t* bsp, int mask)
 		if (mask & R_ARRAY_NORMAL)
 			R_BindBuffer(GL_NORMAL_ARRAY, GL_FLOAT, bsp->normal_buffer);
 
-		/* tangent vectors for bump mapping */
-		if (r_bumpmap->value > 0.0 && (mask & R_ARRAY_TANGENT))
+		if (mask & R_ARRAY_TANGENT)
 			R_BindBuffer(GL_TANGENT_ARRAY, GL_FLOAT, bsp->tangent_buffer);
 	}
 
@@ -196,9 +193,7 @@ void R_ResetArrayState (void)
 	if (r_state.lighting_enabled) {
 		R_BindDefaultArray(GL_NORMAL_ARRAY);
 
-		/* tangent vectors for bump mapping */
-		if (r_bumpmap->value > 0.0 && r_state.active_program == r_state.world_program)
-			R_BindDefaultArray(GL_TANGENT_ARRAY);
+		R_BindDefaultArray(GL_TANGENT_ARRAY);
 	}
 
 	/* diffuse texcoords */

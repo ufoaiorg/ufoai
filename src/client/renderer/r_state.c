@@ -161,8 +161,7 @@ void R_BindArray (GLenum target, GLenum type, const void *array)
 		glNormalPointer(type, 0, array);
 		break;
 	case GL_TANGENT_ARRAY:
-		if (r_state.active_program != r_state.world_program || r_quality->integer > 0)
-			R_AttributePointer("TANGENTS", 4, array);
+		R_AttributePointer("TANGENTS", 4, array);
 		break;
 	case GL_NEXT_VERTEX_ARRAY:
 		R_AttributePointer("NEXT_FRAME_VERTS", 3, array);
@@ -451,8 +450,6 @@ void R_EnableBumpmap (const image_t *normalmap)
 
 	if (!normalmap) {
 		/* disable bump mapping */
-		if (r_state.active_program != r_state.world_program || r_quality->integer > 0)
-			R_DisableAttribute("TANGENTS");
 		R_ProgramParameter1i("BUMPMAP", 0);
 
 		r_state.active_normalmap = normalmap;
@@ -461,8 +458,6 @@ void R_EnableBumpmap (const image_t *normalmap)
 
 	if (!r_state.active_normalmap) {
 		/* enable bump mapping */
-		if (r_state.active_program != r_state.world_program || r_quality->integer > 0)
-			R_EnableAttribute("TANGENTS");
 		R_ProgramParameter1i("BUMPMAP", 1);
 		/* default material to use if no material gets loaded */
 		R_UseMaterial(&defaultMaterial);

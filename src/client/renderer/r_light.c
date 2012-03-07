@@ -126,6 +126,8 @@ void R_EnableWorldLights (void)
 		R_DisableSpotLight(i++);
 
 	glEnable(GL_LIGHTING);
+
+	R_EnableAttribute("TANGENTS");
 }
 
 /**
@@ -142,7 +144,7 @@ void R_EnableModelLights (const light_t **lights, int numLights, qboolean enable
 	assert(numLights <= MAX_GL_LIGHTS);
 
 	if (!enable || !r_state.lighting_enabled) {
-		if (!r_state.active_normalmap && r_state.dynamic_lighting_enabled)
+		if (r_state.dynamic_lighting_enabled)
 			R_DisableAttribute("TANGENTS");
 
 		R_DisableLights();
