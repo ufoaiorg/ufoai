@@ -37,8 +37,8 @@ typedef enum {SHQ_LOW, SHQ_MID, SHQ_HIGH, SHQ_NUM} shaderQualityLevel_t;
 
 const char *shaderQualityLevelNames[SHQ_NUM][2] = {
 	{"world_low","model_low"},
-	{"world_med","model"},
-	{"world_med","model"} /* @todo high quality world shader */
+	{"world_med","model_high"}, /** @todo medium quality model shader */
+	{"world_med","model_high"} /** @todo high quality world shader */
 };
 
 void R_UseProgram  (r_program_t *prog)
