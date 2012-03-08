@@ -1292,7 +1292,7 @@ item rpg_incendiary_ammo
 	size			6
 	is_primary		true
 	is_heavy		true
-	dmgtype			fire
+	dmgtype			incendiary
 
 	weapon_mod rpg
 	{
@@ -1540,7 +1540,7 @@ item grenl_incendiary_ammo
 	size			6
 	is_primary		true
 	is_heavy		true
-	dmgtype			fire
+	dmgtype			incendiary
 
 	weapon_mod grenl
 	{

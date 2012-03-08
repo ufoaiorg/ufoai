@@ -491,7 +491,6 @@ item stungrenade_alien
 
 // ====================
 // INCENDIARY GRENADE
-// TODO fix the various values
 // ====================
 item incgrenade
 {
@@ -507,7 +506,7 @@ item incgrenade
 	size		5
 	is_misc	true
 	thrown		true
-	dmgtype fire
+	dmgtype 	incendiary
 
 	weapon_mod incgrenade
 	{

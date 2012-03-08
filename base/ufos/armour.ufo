@@ -49,6 +49,7 @@ damagetypes standard
 	"_stun_electro"
 	"_stun_gas"
 	"smoke"
+	"incendiary"
 }
 
 // =======================
@@ -84,6 +85,8 @@ item armour_light
 		fire_medium			15
 		fire_heavy			15
 		fire_flamer         1
+
+		incendiary			15
 
 		shock				0
 
@@ -146,6 +149,8 @@ item armour_lightadv
 		fire_heavy			19
 		fire_flamer         2
 
+		incendiary			19
+
 		shock				10
 
 		plasma_light		18
@@ -206,6 +211,8 @@ item armour_medium
 		fire_medium			22
 		fire_heavy			22
 		fire_flamer         3
+
+		incendiary			22
 
 		shock				10
 
@@ -268,6 +275,8 @@ item armour_power
 		fire_heavy			35
 		fire_flamer         4
 
+		incendiary			35
+
 		shock				20
 
 		plasma_light		32
@@ -326,6 +335,8 @@ item armour_power
 //
 //		fire_medium			27
 //		fire_heavy			21
+//
+//		incendiary			27
 //
 //		shock				18
 //
@@ -386,6 +397,8 @@ item armour_power
 //		fire_medium		27
 //		fire_heavy		21
 //
+//		incendiary		27
+//
 //		shock			18
 //
 //		plasma_light	20
@@ -444,6 +457,8 @@ item armour_power
 //
 //		fire_medium		27
 //		fire_heavy		21
+//
+//		incendiary		27
 //
 //		shock			18
 //
@@ -510,6 +525,8 @@ item armour_light_alien
 		fire_heavy		15
 		fire_flamer		2
 
+		incendiary		15
+
 		shock			0
 
 		plasma_light	24
@@ -570,6 +587,8 @@ item armour_medium_alien
 		fire_medium		22
 		fire_heavy		22
 		fire_flamer		3
+
+		incendiary		22
 
 		shock			10
 
