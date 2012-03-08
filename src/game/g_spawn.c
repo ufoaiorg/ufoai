@@ -433,6 +433,7 @@ static void G_SpawnSmoke (const pos3_t pos, const char *particle, int rounds)
 		ent = G_Spawn();
 		VectorCopy(pos, ent->pos);
 		G_EdictCalcOrigin(ent);
+		ent->particle = particle;
 		SP_misc_smoke(ent);
 	}
 
@@ -478,8 +479,9 @@ static void G_SpawnFire (const pos3_t pos, const char *particle, int rounds, int
 		ent = G_Spawn();
 		VectorCopy(pos, ent->pos);
 		G_EdictCalcOrigin(ent);
-		SP_misc_fire(ent);
 		ent->dmg = damage;
+		ent->particle = particle;
+		SP_misc_fire(ent);
 	}
 
 	ent->count = rounds;

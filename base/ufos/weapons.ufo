@@ -532,9 +532,10 @@ item incgrenade
 			ammo	1
 			delaybetweenshots		1
 			time	8
+			damage	"15 10"
 			spldmg	"80 30"
 			splrad	3
-			dmgweight fire_medium
+			dmgweight incendiary
 		}
 		firedef
 		{
@@ -559,9 +560,10 @@ item incgrenade
 			ammo	1
 			delaybetweenshots		1
 			time	8
+			damage	"15 10"
 			spldmg	"80 30"
 			splrad	3
-			dmgweight fire_medium
+			dmgweight incendiary
 		}
 	}
 }
