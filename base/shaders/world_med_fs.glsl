@@ -13,9 +13,13 @@
 
 uniform int BUMPMAP;
 uniform int SPECULARMAP;
+/*uniform float SPECULAR; specular component brightness (0 - no specular) */
+/*uniform float HARDNESS; specular exponent divided by 512 */
 
 /** Diffuse texture.*/
 uniform sampler2D SAMPLER_DIFFUSE;
+/** Specularmap.*/
+/*uniform sampler2D SAMPLER_SPECULAR;*/
 /** Lightmap.*/
 uniform sampler2D SAMPLER_LIGHTMAP;
 /** Deluxemap.*/
@@ -44,11 +48,12 @@ uniform vec4 LIGHTPARAMS[R_DYNAMIC_LIGHTS];
 void main(void) {
 	vec4 finalColor = vec4(0.0);
 	vec3 light = vec3(0.0);
+	vec3 specular;
 	/* These two should be declared in this scope for developer tools to work */
 	vec3 deluxemap = vec3(0.0, 0.0, 1.0);
 	vec4 normalmap = vec4(0.0, 0.0, 1.0, 0.5);
+	vec4 specularmap = vec4(SPECULAR, SPECULAR, SPECULAR, HARDNESS);
 
-	/* use Phong lighting (ie. legacy rendering code) */
 	vec2 offset = vec2(0.0);
 
 	/* lightmap contains pre-computed incoming light color */
@@ -71,13 +76,18 @@ void main(void) {
 #endif
 
 	/* Sample the diffuse texture, honoring the parallax offset.*/
-	vec4 diffuse = texture2D(SAMPLER_DIFFUSE, gl_TexCoord[0].st + offset);
+	vec4 diffusemap = texture2D(SAMPLER_DIFFUSE, gl_TexCoord[0].st + offset);
 
-	/* Otherwise, add to lightmap.*/
+	/* Calculate specular component via Phong model */
+	vec3 V = reflect(-normalize(eyedir), normalmap.rgb);
+	float LdotV = dot(V, deluxemap);
+	specular = specularmap.rgb * pow(max(LdotV, 0.0), specularmap.a * 512.0);
+
+	/* Calculate dynamic lights (if any) */
 	light = clamp(light + LightFragment(normalmap.rgb), 0.0, 2.0);
 
-	finalColor.rgb = diffuse.rgb * light;
-	finalColor.a = diffuse.a;
+	finalColor.rgb = diffusemap.rgb * light + specular;
+	finalColor.a = diffusemap.a;
 
 #if r_fog
 	/* Add fog.*/
