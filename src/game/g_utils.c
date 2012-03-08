@@ -609,6 +609,8 @@ int G_TouchSolids (edict_t *ent, float extend)
 		edict_t* hit = touch[i];
 		if (hit->solid == SOLID_TRIGGER)
 			continue;
+		if (!hit->inuse)
+			continue;
 		if (!hit->touch)
 			continue;
 		hit->touch(hit, ent);

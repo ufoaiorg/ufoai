@@ -233,8 +233,6 @@ qboolean Touch_HurtTrigger (edict_t *self, edict_t *activator)
 		G_TakeDamage(activator, damage);
 	}
 
-	G_CheckDeathOrKnockout(activator, self, NULL, damage);
-
 	return qtrue;
 }
 
