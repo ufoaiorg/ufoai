@@ -576,8 +576,11 @@ entity trigger_hurt {
 	spawnflags	"KILL STUN DAZE"
 
 	optional {
-		dmg	"Damage per step (whole numbers only)"
 		targetname	"The id of this entity"
+	}
+
+	mandatory {
+		dmg	"Damage per step (whole numbers only)"
 	}
 
 	default {
@@ -704,5 +707,33 @@ entity misc_smoke {
 	default {
 		count	"2"
 		particle	"smoke_explosion"
+	}
+}
+
+entity misc_fire {
+	description	"A fire field that hurts touching actors."
+	color		"1.0 .5 .0"
+	size		"-16 -16 -32 16 16 32"
+
+	optional {
+		targetname	"The id of this entity"
+	}
+
+	mandatory {
+		origin		"Position"
+		count		"The amount of rouds the fire field will stay on battlefield"
+		particle	"The particle for the fire field"
+		dmg			"Damage per step (whole numbers only)"
+	}
+
+	type {
+		count	"UNSIGNED V_INT"
+		origin	"V_FLOAT 3"
+	}
+
+	default {
+		count	"2"
+		particle	"fire"
+		dmg	"5"
 	}
 }

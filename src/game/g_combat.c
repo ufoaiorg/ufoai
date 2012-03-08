@@ -456,7 +456,7 @@ static inline qboolean G_FireAffectedSurface (const cBspSurface_t *surface, cons
 	if (!(surface->surfaceFlags & SURF_BURN))
 		return qfalse;
 
-	if (fd->obj->dmgtype == gi.csi->damFire || fd->obj->dmgtype == gi.csi->damBlast)
+	if (fd->obj->dmgtype == gi.csi->damIncendiary || fd->obj->dmgtype == gi.csi->damFire || fd->obj->dmgtype == gi.csi->damBlast)
 		return qtrue;
 
 	return qfalse;
@@ -1259,6 +1259,11 @@ qboolean G_ClientShoot (const player_t * player, edict_t* ent, const pos3_t at, 
 			pos3_t smokePos;
 			VecToPos(impact, smokePos);
 			G_SpawnSmokeField(smokePos, "smoke_explosion", 2);
+		} else if (fd->obj->dmgtype == gi.csi->damIncendiary) {
+			pos3_t firePos;
+			const int damage = max(0, fd->damage[0] + (fd->damage[1] * crand()));
+			VecToPos(impact, firePos);
+			G_SpawnFireField(firePos, "fire", 2, damage);
 		}
 
 		/* send TUs if ent still alive */

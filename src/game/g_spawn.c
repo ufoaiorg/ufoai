@@ -46,6 +46,7 @@ static void SP_misc_mission(edict_t *ent);
 static void SP_misc_mission_aliens(edict_t *ent);
 static void SP_misc_message(edict_t *ent);
 static void SP_misc_smoke(edict_t *ent);
+static void SP_misc_fire(edict_t *ent);
 
 typedef struct {
 	const char *name;
@@ -78,6 +79,7 @@ static const spawn_t spawns[] = {
 	{"trigger_rescue", SP_trigger_rescue},
 	{"misc_message", SP_misc_message},
 	{"misc_smoke", SP_misc_smoke},
+	{"misc_fire", SP_misc_fire},
 
 	{NULL, NULL}
 };
@@ -415,7 +417,7 @@ edict_t *G_Spawn (void)
 	return ent;
 }
 
-static void Think_Smoke (edict_t *self)
+static void Think_SmokeAndFire (edict_t *self)
 {
 	if (self->time + self->count <= level.actualRound) {
 		G_EventEdictPerish(G_VisToPM(self->particleLink->visflags), self->particleLink);
@@ -426,15 +428,15 @@ static void Think_Smoke (edict_t *self)
 
 static void G_SpawnSmoke (const pos3_t pos, const char *particle, int rounds)
 {
-	edict_t *smokeField = G_GetEdictFromPos(pos, ET_SMOKE);
-	if (smokeField == NULL) {
-		smokeField = G_Spawn();
-		VectorCopy(pos, smokeField->pos);
-		G_EdictCalcOrigin(smokeField);
-		SP_misc_smoke(smokeField);
+	edict_t *ent = G_GetEdictFromPos(pos, ET_SMOKE);
+	if (ent == NULL) {
+		ent = G_Spawn();
+		VectorCopy(pos, ent->pos);
+		G_EdictCalcOrigin(ent);
+		SP_misc_smoke(ent);
 	}
 
-	smokeField->count = rounds;
+	ent->count = rounds;
 }
 
 /**
@@ -460,12 +462,54 @@ void G_SpawnSmokeField (const pos3_t gridPos, const char *particle, int rounds)
 		PosToVec(pos, end);
 		end[2] -= GROUND_DELTA;
 
-		tr = G_Trace(vec, end, NULL, MASK_SMOKE);
+		tr = G_Trace(vec, end, NULL, MASK_SMOKE_AND_FIRE);
 		/* trace didn't reach the target - something was hit before */
 		if (tr.fraction < 1.0) {
 			continue;
 		}
 		G_SpawnSmoke(pos, particle, rounds);
+	}
+}
+
+static void G_SpawnFire (const pos3_t pos, const char *particle, int rounds, int damage)
+{
+	edict_t *ent = G_GetEdictFromPos(pos, ET_FIRE);
+	if (ent == NULL) {
+		ent = G_Spawn();
+		VectorCopy(pos, ent->pos);
+		G_EdictCalcOrigin(ent);
+		SP_misc_fire(ent);
+		ent->dmg = damage;
+	}
+
+	ent->count = rounds;
+}
+
+void G_SpawnFireField (const pos3_t gridPos, const char *particle, int rounds, int damage)
+{
+	vec3_t vec;
+	int i;
+
+	G_SpawnFire(gridPos, particle, rounds, damage);
+
+	PosToVec(gridPos, vec);
+	vec[2] -= GROUND_DELTA;
+
+	for (i = 0; i < DIRECTIONS; i++) {
+		vec3_t end;
+		pos3_t pos;
+		trace_t tr;
+
+		VectorSet(pos, gridPos[0] + dvecs[i][0], gridPos[1] + dvecs[i][1], gridPos[2]);
+		PosToVec(pos, end);
+		end[2] -= GROUND_DELTA;
+
+		tr = G_Trace(vec, end, NULL, MASK_SMOKE_AND_FIRE);
+		/* trace didn't reach the target - something was hit before */
+		if (tr.fraction < 1.0) {
+			continue;
+		}
+		G_SpawnFire(pos, particle, rounds, damage);
 	}
 }
 
@@ -908,18 +952,18 @@ static qboolean Message_Use (edict_t *self, edict_t *activator)
 	}
 }
 
-static void SP_misc_smoke (edict_t *ent)
+static void G_SpawnField (edict_t *ent, const char *classname, entity_type_t type, solid_t solid)
 {
 	vec3_t particleOrigin;
 
-	ent->classname = "smoke";
-	ent->type = ET_SMOKE;
+	ent->classname = classname;
+	ent->type = type;
 	ent->fieldSize = ACTOR_SIZE_NORMAL;
-	ent->solid = SOLID_NOT;
+	ent->solid = solid;
 	VectorSet(ent->maxs, UNIT_SIZE / 2, UNIT_SIZE / 2, UNIT_HEIGHT / 2);
 	VectorSet(ent->mins, -UNIT_SIZE / 2, -UNIT_SIZE / 2, -UNIT_HEIGHT / 2);
 	G_EdictCalcOrigin(ent);
-	ent->think = Think_Smoke;
+	ent->think = Think_SmokeAndFire;
 	ent->nextthink = 1;
 	ent->time = level.actualRound;
 
@@ -928,6 +972,17 @@ static void SP_misc_smoke (edict_t *ent)
 	VectorCopy(ent->origin, particleOrigin);
 	particleOrigin[2] -= GROUND_DELTA;
 	ent->particleLink = G_SpawnParticle(particleOrigin, 0, ent->particle);
+}
+
+static void SP_misc_smoke (edict_t *ent)
+{
+	G_SpawnField(ent, "smoke", ET_SMOKE, SOLID_NOT);
+}
+
+static void SP_misc_fire (edict_t *ent)
+{
+	G_SpawnField(ent, "fire", ET_FIRE, SOLID_BBOX);
+	ent->touch = Touch_HurtTrigger;
 }
 
 static void SP_misc_message (edict_t *ent)

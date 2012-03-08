@@ -215,7 +215,7 @@ void SP_trigger_nextmap (edict_t *ent)
  * @brief Hurt trigger
  * @sa SP_trigger_hurt
  */
-static qboolean Touch_HurtTrigger (edict_t *self, edict_t *activator)
+qboolean Touch_HurtTrigger (edict_t *self, edict_t *activator)
 {
 	/* these actors should really not be able to trigger this - they don't move anymore */
 	assert(!G_IsDead(activator));

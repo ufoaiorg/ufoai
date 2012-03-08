@@ -187,6 +187,7 @@ extern game_export_t globals;
 #define G_IsDead(ent)			G_IsState(ent, STATE_DEAD)
 #define G_IsActor(ent)			((ent)->type == ET_ACTOR || (ent)->type == ET_ACTOR2x2)
 #define G_IsSmoke(ent)			((ent)->type == ET_SMOKE)
+#define G_IsFire(ent)			((ent)->type == ET_FIRE)
 #define G_IsTriggerNextMap(ent)	((ent)->type == ET_TRIGGER_NEXTMAP)
 #define G_IsItem(ent)			((ent)->type == ET_ITEM)
 #define G_IsDoor(ent)			((ent)->type == ET_DOOR || (ent)->type == ET_DOOR_SLIDING)
@@ -358,10 +359,11 @@ const char* G_GetWeaponNameForFiredef(const fireDef_t *fd);
 void G_PrintActorStats(const edict_t *victim, const edict_t *attacker, const fireDef_t *fd);
 void G_PrintStats(const char *buffer);
 int G_TouchTriggers(edict_t *ent);
-void G_TouchSolids(edict_t *ent);
+int G_TouchSolids(edict_t *ent, float extend);
 void G_TouchEdicts(edict_t *ent, float extend);
 edict_t *G_Spawn(void);
 void G_SpawnSmokeField(const pos3_t gridPos, const char *particle, int rounds);
+void G_SpawnFireField(const pos3_t gridPos, const char *particle, int rounds, int damage);
 edict_t *G_SpawnParticle(const vec3_t origin, int spawnflags, const char *particle);
 void G_FreeEdict(edict_t *e);
 qboolean G_UseEdict(edict_t *ent, edict_t* activator);
@@ -537,6 +539,7 @@ void SP_trigger_hurt(edict_t *ent);
 void SP_trigger_touch(edict_t *ent);
 void SP_trigger_rescue(edict_t *ent);
 
+qboolean Touch_HurtTrigger(edict_t *self, edict_t *activator);
 void Think_NextMapTrigger(edict_t *self);
 
 /* g_func.c */

@@ -429,6 +429,9 @@ void G_ClientMove (const player_t * player, int visTeam, edict_t* ent, const pos
 					if (!clientAction)
 						status |= VIS_STOP;
 				}
+
+				G_TouchSolids(ent, 10.0f);
+
 				/* state has changed - maybe we walked on a trigger_hurt */
 				if (oldState != ent->state)
 					status |= VIS_STOP;

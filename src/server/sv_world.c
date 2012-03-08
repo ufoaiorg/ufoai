@@ -283,7 +283,6 @@ int SV_AreaEdicts (const vec3_t mins, const vec3_t maxs, edict_t **list, int max
 	return ap.areaEdictListCount;
 }
 
-
 /**
  * @brief Fills a list with edicts that are in use and are touching the given bounding box
  * @param[in] mins The mins of the bounding box

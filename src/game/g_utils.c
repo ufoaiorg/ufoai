@@ -583,29 +583,38 @@ int G_TouchTriggers (edict_t *ent)
 }
 
 /**
- * @brief Call after linking a new trigger in or destroying a bmodel
- * during gameplay to force all entities it covers to immediately touch it
+ * @brief Call after making a step to a new grid tile to immediately touch edicts whose
+ * bbox intersects with the edicts' bbox
+ * @return the amount of touched edicts
  */
-void G_TouchSolids (edict_t *ent)
+int G_TouchSolids (edict_t *ent, float extend)
 {
-	int i, num;
+	int i, num, usedNum = 0;
+	vec3_t absmin, absmax;
 	edict_t *touch[MAX_EDICTS];
 
-	num = gi.BoxEdicts(ent->absmin, ent->absmax, touch, lengthof(touch));
+	if (!G_IsLivingActor(ent))
+		return 0;
+
+	for (i = 0; i < 3; i++) {
+		absmin[i] = ent->absmin[i] - extend;
+		absmax[i] = ent->absmax[i] + extend;
+	}
+
+	num = gi.TouchEdicts(absmin, absmax, touch, lengthof(touch), ent);
 
 	/* be careful, it is possible to have an entity in this
 	 * list removed before we get to it (killtriggered) */
 	for (i = 0; i < num; i++) {
 		edict_t* hit = touch[i];
-		if (!hit->inuse)
-			continue;
 		if (hit->solid == SOLID_TRIGGER)
 			continue;
-		if (ent->touch)
-			ent->touch(ent, hit);
-		if (!ent->inuse)
-			break;
+		if (!hit->touch)
+			continue;
+		hit->touch(hit, ent);
+		usedNum++;
 	}
+	return usedNum;
 }
 
 /**
