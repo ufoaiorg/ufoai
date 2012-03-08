@@ -184,7 +184,7 @@ static void G_UpdateCharacterBodycount (edict_t *attacker, const fireDef_t *fd, 
 	chrScoreGlobal_t *scoreGlobal;
 	killtypes_t type;
 
-	if (!attacker || !fd || !target)
+	if (!attacker || !target)
 		return;
 
 	scoreGlobal = &attacker->chr.score;
@@ -196,9 +196,11 @@ static void G_UpdateCharacterBodycount (edict_t *attacker, const fireDef_t *fd, 
 	switch (target->team) {
 	case TEAM_ALIEN:
 		type = KILLED_ENEMIES;
-		assert(fd->weaponSkill >= 0);
-		assert(fd->weaponSkill < lengthof(scoreMission->skillKills));
-		scoreMission->skillKills[fd->weaponSkill]++;
+		if (fd) {
+			assert(fd->weaponSkill >= 0);
+			assert(fd->weaponSkill < lengthof(scoreMission->skillKills));
+			scoreMission->skillKills[fd->weaponSkill]++;
+		}
 		break;
 	case TEAM_CIVILIAN:
 		type = KILLED_CIVILIANS;
@@ -410,6 +412,11 @@ static void G_Damage (edict_t *target, const fireDef_t *fd, int damage, edict_t 
 	if (mock)
 		return;
 
+	G_CheckDeathOrKnockout(target, attacker, fd, damage);
+}
+
+void G_CheckDeathOrKnockout (edict_t *target, edict_t *attacker, const fireDef_t *fd, int damage)
+{
 	/* Check death/knockout. */
 	if (target->HP == 0 || target->HP <= target->STUN) {
 		G_SendStats(target);

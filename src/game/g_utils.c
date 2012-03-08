@@ -329,7 +329,7 @@ void G_PrintActorStats (const edict_t *victim, const edict_t *attacker, const fi
 {
 	char buffer[512];
 
-	if (attacker != NULL) {
+	if (attacker != NULL && fd != NULL) {
 		if (victim->pnum != attacker->pnum) {
 			const char *victimName = G_GetPlayerName(victim->pnum);
 			const char *attackerName = G_GetPlayerName(attacker->pnum);

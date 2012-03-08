@@ -508,6 +508,7 @@ qboolean G_Vis(const int team, const edict_t * from, const edict_t * check, int 
 
 /* g_combat.c */
 qboolean G_ClientShoot(const player_t *player, edict_t* ent, const pos3_t at, shoot_types_t shootType, fireDefIndex_t firemode, shot_mock_t *mock, qboolean allowReaction, int z_align);
+void G_CheckDeathOrKnockout(edict_t *target, edict_t *attacker, const fireDef_t *fd, int damage);
 
 /* g_ai.c */
 void AI_Init(void);

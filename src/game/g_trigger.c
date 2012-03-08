@@ -217,21 +217,23 @@ void SP_trigger_nextmap (edict_t *ent)
  */
 qboolean Touch_HurtTrigger (edict_t *self, edict_t *activator)
 {
+	const int damage = self->dmg;
+
 	/* these actors should really not be able to trigger this - they don't move anymore */
-	assert(!G_IsDead(activator));
-	assert(!G_IsStunned(activator));
+	if (G_IsDead(activator))
+		return qfalse;
+	if (G_IsStunned(activator))
+		return qfalse;
 
 	if (self->spawnflags & 2) {
-		activator->STUN += self->dmg;
-		if (activator->HP <= activator->STUN)
-			G_SetStunned(activator);
+		activator->STUN += damage;
 	} else if (self->spawnflags & 4) {
 		/** @todo Handle dazed via trigger_hurt */
 	} else {
-		G_TakeDamage(activator, self->dmg);
-		if (activator->HP == 0)
-			G_SetDead(activator);
+		G_TakeDamage(activator, damage);
 	}
+
+	G_CheckDeathOrKnockout(activator, self, NULL, damage);
 
 	return qtrue;
 }
