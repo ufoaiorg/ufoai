@@ -18,7 +18,7 @@ namespace ui
 	}
 
 QuerySidesDialog::QuerySidesDialog(int numSidesMin, int numSidesMax) :
-	BlockingTransientWindow(_(WINDOW_TITLE), GlobalRadiant().getMainWindow()),
+	PersistentTransientWindow(_(WINDOW_TITLE), GlobalRadiant().getMainWindow()),
 	_entry(NULL),
 	_result(NUM_RESULTS),
 	_numSides(-1),

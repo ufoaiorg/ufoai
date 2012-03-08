@@ -23,11 +23,11 @@
 #define FINDBRUSH_H
 
 #include <gtk/gtkwidget.h>
-#include "gtkutil/window/BlockingTransientWindow.h"
+#include "gtkutil/window/PersistentTransientWindow.h"
 
 namespace ui {
 
-class FindBrushDialog: public gtkutil::BlockingTransientWindow
+class FindBrushDialog: public gtkutil::PersistentTransientWindow
 {
 		// The entry fields
 		GtkWidget* _entityEntry;

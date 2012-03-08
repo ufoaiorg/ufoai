@@ -29,7 +29,7 @@ class CheckDialogCompilerIgnoreObserver: public ICompilerObserver
 };
 
 ErrorCheckDialog::ErrorCheckDialog () :
-	gtkutil::BlockingTransientWindow(_("Error checking"), GlobalRadiant().getMainWindow())
+	gtkutil::PersistentTransientWindow(_("Error checking"), GlobalRadiant().getMainWindow())
 {
 	gtk_window_set_default_size(GTK_WINDOW(getWindow()), CHECKDLG_DEFAULT_SIZE_X, CHECKDLG_DEFAULT_SIZE_Y);
 	gtk_container_set_border_width(GTK_CONTAINER(getWindow()), 12);

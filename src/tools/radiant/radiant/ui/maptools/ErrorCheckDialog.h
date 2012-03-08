@@ -5,7 +5,7 @@
 #include <gtk/gtkwidget.h>
 #include <gtk/gtkliststore.h>
 #include <gtk/gtktreeselection.h>
-#include "gtkutil/window/BlockingTransientWindow.h"
+#include "gtkutil/window/PersistentTransientWindow.h"
 
 namespace ui {
 
@@ -14,7 +14,7 @@ namespace ui {
  * Note: Show the dialog by instantiating it. It automatically enters a
  *       GTK main loop after show().
  */
-class ErrorCheckDialog: public gtkutil::BlockingTransientWindow
+class ErrorCheckDialog: public gtkutil::PersistentTransientWindow
 {
 	private:
 

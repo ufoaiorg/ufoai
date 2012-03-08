@@ -35,7 +35,7 @@ namespace ui {
 	}
 
 FindAndReplaceShader::FindAndReplaceShader(const std::string& find, const std::string& replace) :
-	gtkutil::BlockingTransientWindow(_(FINDDLG_WINDOW_TITLE), GlobalRadiant().getMainWindow())
+	gtkutil::PersistentTransientWindow(_(FINDDLG_WINDOW_TITLE), GlobalRadiant().getMainWindow())
 {
 	gtk_window_set_default_size(GTK_WINDOW(getWindow()), FINDDLG_DEFAULT_SIZE_X, FINDDLG_DEFAULT_SIZE_Y);
 	gtk_container_set_border_width(GTK_CONTAINER(getWindow()), 12);

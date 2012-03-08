@@ -1,7 +1,7 @@
 #ifndef _QUERY_SIDES_DIALOG_H_
 #define _QUERY_SIDES_DIALOG_H_
 
-#include "gtkutil/window/BlockingTransientWindow.h"
+#include "gtkutil/window/PersistentTransientWindow.h"
 
 typedef struct _GtkWidget GtkWidget;
 
@@ -9,7 +9,7 @@ namespace ui
 {
 
 class QuerySidesDialog :
-	public gtkutil::BlockingTransientWindow
+	public gtkutil::PersistentTransientWindow
 {
 public:
 	enum Result

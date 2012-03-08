@@ -5,7 +5,7 @@
 #include <gtk/gtkwidget.h>
 #include <gtk/gtkeditable.h>
 #include <gtk/gtkliststore.h>
-#include "gtkutil/window/BlockingTransientWindow.h"
+#include "gtkutil/window/PersistentTransientWindow.h"
 
 /* greebo: The dialog providing the Find & Replace shader functionality.
  *
@@ -15,7 +15,7 @@
 namespace ui {
 
 class FindAndReplaceShader :
-	public gtkutil::BlockingTransientWindow
+	public gtkutil::PersistentTransientWindow
 {
 	// The entry fields
 	GtkWidget* _findEntry;
