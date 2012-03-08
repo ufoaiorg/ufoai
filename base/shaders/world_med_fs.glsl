@@ -19,7 +19,7 @@ uniform int SPECULARMAP;
 /** Diffuse texture.*/
 uniform sampler2D SAMPLER_DIFFUSE;
 /** Specularmap.*/
-/*uniform sampler2D SAMPLER_SPECULAR;*/
+uniform sampler2D SAMPLER_SPECULAR;
 /** Lightmap.*/
 uniform sampler2D SAMPLER_LIGHTMAP;
 /** Deluxemap.*/
@@ -77,6 +77,11 @@ void main(void) {
 
 	/* Sample the diffuse texture, honoring the parallax offset.*/
 	vec4 diffusemap = texture2D(SAMPLER_DIFFUSE, gl_TexCoord[0].st + offset);
+
+	/* Sample specularity map, if any */
+	if (SPECULARMAP > 0) {
+		specularmap = texture2D(SAMPLER_SPECULAR, gl_TexCoord[0].st + offset);
+	}
 
 	/* Calculate specular component via Phong model */
 	vec3 V = reflect(-normalize(eyedir), normalmap.rgb);

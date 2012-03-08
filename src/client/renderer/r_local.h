@@ -48,7 +48,7 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 void R_DrawSurfaces (const mBspSurfaces_t *surfs);
 void R_DrawMaterialSurfaces(const mBspSurfaces_t *surfs);
 
-void R_SetSurfaceBumpMappingParameters(const mBspSurface_t *surf, const image_t *normalMap);
+void R_SetSurfaceBumpMappingParameters(const mBspSurface_t *surf, const image_t *normalMap, const image_t *specularMap);
 
 /*==================================================== */
 

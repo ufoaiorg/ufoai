@@ -29,7 +29,7 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #include "r_error.h"
 #include "r_draw.h"
 
-void R_SetSurfaceBumpMappingParameters (const mBspSurface_t *surf, const image_t *normalMap)
+void R_SetSurfaceBumpMappingParameters (const mBspSurface_t *surf, const image_t *normalMap, const image_t *specularMap)
 {
 	if (!r_state.lighting_enabled)
 		return;
@@ -43,9 +43,11 @@ void R_SetSurfaceBumpMappingParameters (const mBspSurface_t *surf, const image_t
 		const image_t *image = surf->texinfo->image;
 		R_BindDeluxemapTexture(surf->deluxemap_texnum);
 		R_EnableBumpmap(normalMap);
+		R_EnableSpecularMap(specularMap, qtrue);
 		R_UseMaterial(&image->material);
 	} else {
 		R_EnableBumpmap(NULL);
+		R_EnableSpecularMap(NULL, qfalse);
 		R_UseMaterial(NULL);
 	}
 }
@@ -80,7 +82,7 @@ static void R_SetSurfaceState (const mBspSurface_t *surf)
 			R_BindLightmapTexture(surf->lightmap_texnum);
 	}
 
-	R_SetSurfaceBumpMappingParameters(surf, image->normalmap);
+	R_SetSurfaceBumpMappingParameters(surf, image->normalmap, image->specularmap);
 
 	R_EnableGlowMap(image->glowmap);
 

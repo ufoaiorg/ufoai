@@ -47,7 +47,7 @@ typedef struct gltexunit_s {
 	int array_size;
 } gltexunit_t;
 
-#define MAX_GL_TEXUNITS		5
+#define MAX_GL_TEXUNITS		6
 
 /* these are defined for convenience */
 #define texunit_0	        r_state.texunits[0]
@@ -55,13 +55,14 @@ typedef struct gltexunit_s {
 #define texunit_2	        r_state.texunits[2]
 #define texunit_3	        r_state.texunits[3]
 #define texunit_4	        r_state.texunits[4]
+#define texunit_5	        r_state.texunits[5]
 
 #define texunit_diffuse			texunit_0
 #define texunit_lightmap		texunit_1
 #define texunit_deluxemap		texunit_2
 #define texunit_normalmap		texunit_3
 #define texunit_glowmap			texunit_4
-#define texunit_specularmap		texunit_1
+#define texunit_specularmap		texunit_5
 #define texunit_roughnessmap	texunit_2
 
 

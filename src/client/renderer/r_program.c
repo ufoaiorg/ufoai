@@ -772,6 +772,7 @@ static void R_InitWorldProgram (r_program_t *prog)
 
 	if (r_quality->integer > 0) {
 		R_ProgramParameter1i("SPECULARMAP", 0);
+		R_ProgramParameter1i("SAMPLER_SPECULAR", 5);
 
 		R_ProgramParameter1f("HARDNESS", defaultMaterial.hardness);
 		R_ProgramParameter1f("SPECULAR", defaultMaterial.specular);
@@ -826,7 +827,7 @@ static void R_InitModelProgram (r_program_t *prog)
 	R_ProgramParameter3fv("SUNDIRECTION", sunDirection); /* last component is not needed */
 
 	if (r_quality->integer > 0) {
-		R_ProgramParameter1i("SAMPLER_SPECULAR", 1);
+		R_ProgramParameter1i("SAMPLER_SPECULAR", 5);
 		R_ProgramParameter1i("SAMPLER_ROUGHMAP", 2);
 		R_ProgramParameter1i("ROUGHMAP", 0);
 		R_ProgramParameter1i("SPECULARMAP", 0);
