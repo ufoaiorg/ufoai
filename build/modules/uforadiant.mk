@@ -350,6 +350,8 @@ $(TARGET)_SRCS      = \
 	$(RADIANT_BASE)/libs/xmlutil/Document.cpp \
 	$(RADIANT_BASE)/libs/xmlutil/Node.cpp \
 	\
+	$(RADIANT_BASE)/libs/Instance.cpp \
+	\
 	shared/parse.c \
 	shared/entitiesdef.c \
 	$(RADIANT_BASE)/libs/picomodel/picointernal.c \

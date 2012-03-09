@@ -290,6 +290,7 @@
 		<Unit filename="..\..\src\tools\radiant\libs\gtkutil\window\PersistentTransientWindow.h" />
 		<Unit filename="..\..\src\tools\radiant\libs\gtkutil\window\TransientWindow.h" />
 		<Unit filename="..\..\src\tools\radiant\libs\gtkutil\xorrectangle.h" />
+		<Unit filename="..\..\src\tools\radiant\libs\Instance.cpp" />
 		<Unit filename="..\..\src\tools\radiant\libs\imagelib.h" />
 		<Unit filename="..\..\src\tools\radiant\libs\instancelib.h" />
 		<Unit filename="..\..\src\tools\radiant\libs\maplib.h" />
