@@ -4,3 +4,66 @@
 		envmap 0
 	}
 }
+
+{
+	material tex_mattn/wall037
+	specular 0.0
+	hardness 0.01
+}
+
+{
+	material tex_nature/grass
+	hardness 0.01
+	parallax 1.0
+	specular 0.0
+}
+
+{
+	material tex_streets/street001
+	specular 0.0
+	hardness 0.01
+}
+
+{
+	material tex_mattn/floor027
+	specular 0.0
+	hardness 0.01
+}
+
+{
+	material tex_buildings/roof008
+	specular 0.0
+	hardness 0.01
+}
+
+{
+	material tex_nature/rock009
+	hardness 0.01
+	parallax 1.0
+	specular 0.0
+	bump 1.5
+}
+
+{
+	material tex_buildings/concrete002
+	specular 0.0
+	hardness 0.01
+}
+
+{
+	material tex_buildings/woodceiling1bdark
+	specular 0.0
+	hardness 0.01
+}
+
+{
+	material tex_mattn/wall045
+	specular 0.0
+	bump 2.0
+}
+
+{
+	material tex_material/conc01
+	specular 0.0
+	hardness 0.01
+}
