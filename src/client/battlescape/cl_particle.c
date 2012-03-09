@@ -888,6 +888,39 @@ void CL_ParticleCheckRounds (void)
 		}
 }
 
+typedef struct ptlTraceCache_s {
+	int count;
+	vec3_t start;
+	vec3_t end;
+	vec3_t mins;
+	vec3_t maxs;
+	trace_t trace;
+} ptlTraceCache_t;
+
+/**
+ * @brief Particle tracing with caching
+ */
+static inline trace_t PTL_Trace (ptl_t *ptl, const vec3_t mins, const vec3_t maxs)
+{
+	static ptlTraceCache_t ptlCache;
+	const float epsilonPos = 3.0f;
+	const float epsilonBBox = 1.0f;
+
+	if (VectorCompareEps(ptlCache.start, ptl->origin, epsilonPos) && VectorCompareEps(ptlCache.end, ptl->s, epsilonPos)
+			&& VectorCompareEps(ptlCache.mins, mins, epsilonBBox) && VectorCompareEps(ptlCache.maxs, maxs, epsilonBBox)) {
+		ptlCache.count++;
+		return ptlCache.trace;
+	}
+
+	VectorCopy(ptl->origin, ptlCache.start);
+	VectorCopy(ptl->s, ptlCache.end);
+	VectorCopy(mins, ptlCache.mins);
+	VectorCopy(maxs, ptlCache.maxs);
+
+	ptlCache.trace = CL_Trace(ptl->origin, ptl->s, mins, maxs, NULL, NULL, MASK_SOLID, cl.mapMaxLevel - 1);
+	return ptlCache.trace;
+}
+
 /**
  * @brief Prepares the particle rendering, calculate new position, velocity and all the
  * other particle values that are needed to display it
@@ -943,7 +976,7 @@ static void CL_ParticleRun2 (ptl_t *p)
 
 		VectorSet(mins, -size, -size, -size);
 		VectorSet(maxs, size, size, size);
-		tr = CL_Trace(p->origin, p->s, mins, maxs, NULL, NULL, MASK_SOLID, cl.mapMaxLevel - 1);
+		tr = PTL_Trace(p, mins, maxs);
 
 		/* hit something solid */
 		if (tr.fraction < 1.0 || tr.startsolid) {
