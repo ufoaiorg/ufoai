@@ -687,6 +687,7 @@ entity misc_item {
 entity misc_smoke {
 	description	"A smoke field that blocks visiblity until it is gone."
 	color		".8 .8 .8"
+	spawnflags	"level1 level2 level3 level4 level5 level6 level7 level8"
 	size		"-16 -16 -32 16 16 32"
 
 	optional {
@@ -696,6 +697,7 @@ entity misc_smoke {
 	mandatory {
 		origin	"Position"
 		count	"The amount of rouds the smoke field will stay on battlefield"
+		spawnflags	"level flags"
 		particle	"The particle for the smoke field"
 	}
 
@@ -707,12 +709,14 @@ entity misc_smoke {
 	default {
 		count	"2"
 		particle	"smoke_explosion"
+		spawnflags	"255"
 	}
 }
 
 entity misc_fire {
 	description	"A fire field that hurts touching actors."
 	color		"1.0 .5 .0"
+	spawnflags	"level1 level2 level3 level4 level5 level6 level7 level8"
 	size		"-16 -16 -32 16 16 32"
 
 	optional {
@@ -722,6 +726,7 @@ entity misc_fire {
 	mandatory {
 		origin		"Position"
 		count		"The amount of rouds the fire field will stay on battlefield"
+		spawnflags	"level flags"
 		particle	"The particle for the fire field"
 		dmg			"Damage per step (whole numbers only)"
 	}
@@ -735,5 +740,6 @@ entity misc_fire {
 		count	"2"
 		particle	"fire"
 		dmg	"5"
+		spawnflags	"255"
 	}
 }

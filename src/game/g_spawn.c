@@ -973,7 +973,7 @@ static void G_SpawnField (edict_t *ent, const char *classname, entity_type_t typ
 
 	VectorCopy(ent->origin, particleOrigin);
 	particleOrigin[2] -= GROUND_DELTA;
-	ent->particleLink = G_SpawnParticle(particleOrigin, 0, ent->particle);
+	ent->particleLink = G_SpawnParticle(particleOrigin, ent->spawnflags, ent->particle);
 }
 
 static void SP_misc_smoke (edict_t *ent)
