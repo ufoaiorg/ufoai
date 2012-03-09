@@ -1029,6 +1029,10 @@ void R_InitPrograms (void)
 	OBJZERO(r_state.shaders);
 	OBJZERO(r_state.programs);
 
+	/* Capable of running shaders, but have got them disabled, so do nothing */
+	if (!r_programs->integer)
+		return;
+
 	r_state.world_program = R_LoadProgram(shaderQualityLevelNames[r_programs->integer - 1][0], R_InitWorldProgram, R_UseWorldProgram);
 	r_state.model_program = R_LoadProgram(shaderQualityLevelNames[r_programs->integer - 1][1], R_InitModelProgram, R_UseModelProgram);
 	r_state.warp_program = R_LoadProgram("warp", R_InitWarpProgram, R_UseWarpProgram);
