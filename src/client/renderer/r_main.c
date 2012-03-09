@@ -86,7 +86,6 @@ cvar_t *r_vertexbuffers;
 cvar_t *r_warp;
 cvar_t *r_dynamic_lights;
 cvar_t *r_programs;
-cvar_t *r_quality;
 /** @brief The GLSL version being used (not necessarily a supported version by the OpenGL implementation). Stored as a c-string and integer.*/
 cvar_t *r_glsl_version;
 cvar_t *r_postprocess;
@@ -478,16 +477,11 @@ static qboolean R_CvarPrograms (cvar_t *cvar)
 	if (qglUseProgram) {
 		if (!cvar->integer || !r_config.drawBuffers)
 			Cvar_SetValue("r_postprocess", 0);
-		return Cvar_AssertValue(cvar, 0, 1, qtrue);
+		return Cvar_AssertValue(cvar, 0, 3, qtrue);
 	}
 
 	Cvar_SetValue(cvar->name, 0);
 	return qtrue;
-}
-
-static qboolean R_CvarQuality (cvar_t *cvar)
-{
-	return Cvar_AssertValue(cvar, 0, 2, qtrue);
 }
 
 /**
@@ -996,13 +990,9 @@ static void R_InitExtensions (void)
 		Com_Printf("Framebuffer objects unsupported by OpenGL implementation.\n");
 	}
 
-	r_programs = Cvar_Get("r_programs", "1", CVAR_ARCHIVE | CVAR_R_PROGRAMS, "Use GLSL shaders");
+	r_programs = Cvar_Get("r_programs", "1", CVAR_ARCHIVE | CVAR_R_PROGRAMS, "GLSL shaders level: 0 - disabled, 1 - low, 2 - medium, 3 - high");
 	r_programs->modified = qfalse;
 	Cvar_SetCheckFunction("r_programs", R_CvarPrograms);
-
-	r_quality = Cvar_Get("r_quality", "1", CVAR_ARCHIVE | CVAR_R_PROGRAMS, "Shader quality (0-2)");
-	r_quality->modified = qfalse;
-	Cvar_SetCheckFunction("r_quality", R_CvarQuality);
 
 	r_glsl_version = Cvar_Get("r_glsl_version", "1.10", CVAR_ARCHIVE | CVAR_R_PROGRAMS, "GLSL Version");
 	Cvar_SetCheckFunction("r_glsl_version", R_CvarGLSLVersionCheck);

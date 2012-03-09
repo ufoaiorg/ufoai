@@ -770,7 +770,7 @@ static void R_InitWorldProgram (r_program_t *prog)
 
 	R_ProgramParameter1i("BUMPMAP", 0);
 
-	if (r_quality->integer > 0) {
+	if (r_programs->integer > 1) {
 		R_ProgramParameter1i("SPECULARMAP", 0);
 		R_ProgramParameter1i("SAMPLER_SPECULAR", 5);
 
@@ -826,7 +826,7 @@ static void R_InitModelProgram (r_program_t *prog)
 	GLVectorTransform(r_locals.world_matrix, refdef.sunVector, sunDirection);
 	R_ProgramParameter3fv("SUNDIRECTION", sunDirection); /* last component is not needed */
 
-	if (r_quality->integer > 0) {
+	if (r_programs->integer > 1) {
 		R_ProgramParameter1i("SAMPLER_SPECULAR", 5);
 		R_ProgramParameter1i("SAMPLER_ROUGHMAP", 2);
 		R_ProgramParameter1i("ROUGHMAP", 0);
@@ -1029,8 +1029,8 @@ void R_InitPrograms (void)
 	OBJZERO(r_state.shaders);
 	OBJZERO(r_state.programs);
 
-	r_state.world_program = R_LoadProgram(shaderQualityLevelNames[r_quality->integer][0], R_InitWorldProgram, R_UseWorldProgram);
-	r_state.model_program = R_LoadProgram(shaderQualityLevelNames[r_quality->integer][1], R_InitModelProgram, R_UseModelProgram);
+	r_state.world_program = R_LoadProgram(shaderQualityLevelNames[r_programs->integer - 1][0], R_InitWorldProgram, R_UseWorldProgram);
+	r_state.model_program = R_LoadProgram(shaderQualityLevelNames[r_programs->integer - 1][1], R_InitModelProgram, R_UseModelProgram);
 	r_state.warp_program = R_LoadProgram("warp", R_InitWarpProgram, R_UseWarpProgram);
 	r_state.geoscape_program = R_LoadProgram("geoscape", R_InitGeoscapeProgram, NULL);
 	r_state.combine2_program = R_LoadProgram("combine2", R_InitCombine2Program, NULL);

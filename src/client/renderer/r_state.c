@@ -123,7 +123,7 @@ void R_UseMaterial (const material_t *material)
 		R_ProgramParameter1f("BUMP", b);
 	last_b = b;
 
-	if (r_state.active_program != r_state.world_program || r_quality->integer > 0) {
+	if (r_state.active_program != r_state.world_program || r_programs->integer > 1) {
 		p = r_state.active_material->parallax * r_parallax->value;
 		if (p != last_p)
 			R_ProgramParameter1f("PARALLAX", p);
@@ -682,7 +682,7 @@ void R_EnableSpecularMap (const image_t *image, qboolean enable)
 	if (!r_state.dynamic_lighting_enabled)
 		return;
 
-	if (r_quality->integer < 1)
+	if (r_programs->integer < 2)
 		return;
 
 	if (enable && image != NULL) {
