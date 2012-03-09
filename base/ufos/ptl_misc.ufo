@@ -57,7 +57,7 @@ particle smokefield
 	init
 	{
 		v		"0 0 0"
-		tps		20.0
+		tps		24.0
 	}
 	think
 	{
@@ -69,14 +69,16 @@ particle smokefield_smoke
 {
 	init
 	{
-		image		sfx/smoke
-		blend		add
+		frame		0
+		endframe	3
+		image		+sfx/smoke_
+		blend		replace
 		style		facing
 		thinkfade	out
 		rand		float 0.2
-		add			float 0.3
+		add			float 0.2
 		pop			*tps
-		crand		vector "12 12 0"
+		crand		vector "12 12 4"
 		add			*s
 		pop			*s
 		rand		vector "0 0 54"
