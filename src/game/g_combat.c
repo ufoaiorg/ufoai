@@ -1268,14 +1268,10 @@ qboolean G_ClientShoot (const player_t * player, edict_t* ent, const pos3_t at, 
 
 	if (!mock) {
 		if (fd->obj->dmgtype == gi.csi->damSmoke) {
-			pos3_t smokePos;
-			VecToPos(impact, smokePos);
-			G_SpawnSmokeField(smokePos, "smoke_explosion", 2);
+			G_SpawnSmokeField(impact, "smoke_explosion", 2);
 		} else if (fd->obj->dmgtype == gi.csi->damIncendiary) {
-			pos3_t firePos;
 			const int damage = max(0, fd->damage[0] + (fd->damage[1] * crand()));
-			VecToPos(impact, firePos);
-			G_SpawnFireField(firePos, "fire", 2, damage);
+			G_SpawnFireField(impact, "fire", 2, damage);
 		}
 
 		/* send TUs if ent still alive */

@@ -349,6 +349,7 @@ qboolean G_MissionDestroy(edict_t *self);
 void G_MissionThink(edict_t *self);
 
 /* g_utils.c */
+uint32_t G_GetLevelFlagsFromPos(const pos3_t pos);
 edict_t *G_Find(edict_t *from, int fieldofs, char *match);
 edict_t *G_FindRadius(edict_t *from, const vec3_t org, float rad, entity_type_t type);
 edict_t *G_FindTargetEntity(const char *target);
@@ -362,8 +363,8 @@ int G_TouchTriggers(edict_t *ent);
 int G_TouchSolids(edict_t *ent, float extend);
 void G_TouchEdicts(edict_t *ent, float extend);
 edict_t *G_Spawn(void);
-void G_SpawnSmokeField(const pos3_t gridPos, const char *particle, int rounds);
-void G_SpawnFireField(const pos3_t gridPos, const char *particle, int rounds, int damage);
+void G_SpawnSmokeField(const vec3_t vec, const char *particle, int rounds);
+void G_SpawnFireField(const vec3_t vec, const char *particle, int rounds, int damage);
 edict_t *G_SpawnParticle(const vec3_t origin, int spawnflags, const char *particle);
 void G_FreeEdict(edict_t *e);
 qboolean G_UseEdict(edict_t *ent, edict_t* activator);

@@ -426,13 +426,23 @@ static void Think_SmokeAndFire (edict_t *self)
 	}
 }
 
-static void G_SpawnSmoke (const pos3_t pos, const char *particle, int rounds)
+static void G_SpawnSmoke (const vec3_t vec, const char *particle, int rounds)
 {
-	edict_t *ent = G_GetEdictFromPos(pos, ET_SMOKE);
+	pos3_t pos;
+	edict_t *ent;
+
+	VecToPos(vec, pos);
+
+	ent = G_GetEdictFromPos(pos, ET_SMOKE);
 	if (ent == NULL) {
+		pos_t z = gi.GridFall(gi.routingMap, ACTOR_SIZE_NORMAL, pos);
+		if (z != pos[2])
+			return;
+
 		ent = G_Spawn();
 		VectorCopy(pos, ent->pos);
 		G_EdictCalcOrigin(ent);
+		ent->spawnflags = G_GetLevelFlagsFromPos(pos);
 		ent->particle = particle;
 		SP_misc_smoke(ent);
 	}
@@ -442,76 +452,73 @@ static void G_SpawnSmoke (const pos3_t pos, const char *particle, int rounds)
 
 /**
  * @brief Spawns a smoke field that is available for some rounds
- * @param[in] gridPos The position in the world that is the center of the smoke field
+ * @param[in] vec The position in the world that is the center of the smoke field
  */
-void G_SpawnSmokeField (const pos3_t gridPos, const char *particle, int rounds)
+void G_SpawnSmokeField (const vec3_t vec, const char *particle, int rounds)
 {
-	vec3_t vec;
 	int i;
 
-	G_SpawnSmoke(gridPos, particle, rounds);
-
-	PosToVec(gridPos, vec);
-	vec[2] -= GROUND_DELTA;
+	G_SpawnSmoke(vec, particle, rounds);
 
 	for (i = 0; i < DIRECTIONS; i++) {
 		vec3_t end;
-		pos3_t pos;
 		trace_t tr;
 
-		VectorSet(pos, gridPos[0] + dvecs[i][0], gridPos[1] + dvecs[i][1], gridPos[2]);
-		PosToVec(pos, end);
-		end[2] -= GROUND_DELTA;
+		VectorSet(end, vec[0] + dvecs[i][0] * UNIT_SIZE, vec[1] + dvecs[i][1] * UNIT_SIZE, vec[2]);
 
 		tr = G_Trace(vec, end, NULL, MASK_SMOKE_AND_FIRE);
 		/* trace didn't reach the target - something was hit before */
-		if (tr.fraction < 1.0) {
+		if (tr.fraction < 1.0 || (tr.contentFlags & CONTENTS_WATER)) {
 			continue;
 		}
-		G_SpawnSmoke(pos, particle, rounds);
+		G_SpawnSmoke(end, particle, rounds);
 	}
 }
 
-static void G_SpawnFire (const pos3_t pos, const char *particle, int rounds, int damage)
+static void G_SpawnFire (const vec3_t vec, const char *particle, int rounds, int damage)
 {
-	edict_t *ent = G_GetEdictFromPos(pos, ET_FIRE);
+	pos3_t pos;
+	edict_t *ent;
+
+	VecToPos(vec, pos);
+
+	ent = G_GetEdictFromPos(pos, ET_FIRE);
 	if (ent == NULL) {
+		pos_t z = gi.GridFall(gi.routingMap, ACTOR_SIZE_NORMAL, pos);
+		if (z != pos[2])
+			return;
+
 		ent = G_Spawn();
 		VectorCopy(pos, ent->pos);
-		G_EdictCalcOrigin(ent);
+		VectorCopy(vec, ent->origin);
 		ent->dmg = damage;
 		ent->particle = particle;
+		ent->spawnflags = G_GetLevelFlagsFromPos(pos);
 		SP_misc_fire(ent);
 	}
 
 	ent->count = rounds;
 }
 
-void G_SpawnFireField (const pos3_t gridPos, const char *particle, int rounds, int damage)
+void G_SpawnFireField (const vec3_t vec, const char *particle, int rounds, int damage)
 {
-	vec3_t vec;
 	int i;
 
-	G_SpawnFire(gridPos, particle, rounds, damage);
-
-	PosToVec(gridPos, vec);
-	vec[2] -= GROUND_DELTA;
+	G_SpawnFire(vec, particle, rounds, damage);
 
 	for (i = 0; i < DIRECTIONS; i++) {
 		vec3_t end;
-		pos3_t pos;
 		trace_t tr;
 
-		VectorSet(pos, gridPos[0] + dvecs[i][0], gridPos[1] + dvecs[i][1], gridPos[2]);
-		PosToVec(pos, end);
-		end[2] -= GROUND_DELTA;
+		VectorSet(end, vec[0] + dvecs[i][0] * UNIT_SIZE, vec[1] + dvecs[i][1] * UNIT_SIZE, vec[2]);
 
 		tr = G_Trace(vec, end, NULL, MASK_SMOKE_AND_FIRE);
 		/* trace didn't reach the target - something was hit before */
-		if (tr.fraction < 1.0) {
+		if (tr.fraction < 1.0 || (tr.contentFlags & CONTENTS_WATER)) {
 			continue;
 		}
-		G_SpawnFire(pos, particle, rounds, damage);
+
+		G_SpawnFire(end, particle, rounds, damage);
 	}
 }
 

@@ -650,3 +650,19 @@ void G_TouchEdicts (edict_t *ent, float extend)
 			ent->touch(ent, hit);
 	}
 }
+
+/**
+ * @brief Calculates the level flags for a given grid position.
+ */
+uint32_t G_GetLevelFlagsFromPos (const pos3_t pos)
+{
+	uint32_t levelflags = 0;
+	int i;
+	for (i = 0; i < PATHFINDING_HEIGHT; i++) {
+		if (i >= pos[2]) {
+			levelflags |= (1 << i);
+		}
+	}
+
+	return levelflags;
+}
