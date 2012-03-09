@@ -457,6 +457,7 @@ void G_EventSendParticle (unsigned int playerMask, const edict_t *ent)
 	gi.AddEvent(playerMask, EV_PARTICLE_APPEAR);
 	gi.WriteShort(ent->number);
 	gi.WriteShort(ent->spawnflags);
+	gi.WritePos(ent->origin);
 	gi.WriteString(ent->particle);
 	gi.EndEvents();
 }

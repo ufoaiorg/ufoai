@@ -49,10 +49,11 @@ void CL_ParticleAppear (const eventRegister_t *self, struct dbuffer *msg)
 {
 	char particle[MAX_VAR];
 	int entnum, levelflags;
+	vec3_t origin;
 	le_t* le;
 
 	/* read data */
-	NET_ReadFormat(msg, self->formatString, &entnum, &levelflags, particle, sizeof(particle));
+	NET_ReadFormat(msg, self->formatString, &entnum, &levelflags, origin, particle, sizeof(particle));
 
 	le = LE_Get(entnum);
 	if (!le)
@@ -63,7 +64,7 @@ void CL_ParticleAppear (const eventRegister_t *self, struct dbuffer *msg)
 	le->invis = !cl_leshowinvis->integer;
 	le->levelflags = levelflags;
 	le->particleID = Mem_PoolStrDup(particle, cl_genericPool, 0);
-	le->ptl = CL_ParticleSpawn(le->particleID, le->levelflags, le->origin, NULL, NULL);
+	le->ptl = CL_ParticleSpawn(le->particleID, le->levelflags, origin, NULL, NULL);
 	if (!le->ptl)
 		Com_Printf("Could not spawn particle: '%s'\n", le->particleID);
 }

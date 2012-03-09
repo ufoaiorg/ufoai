@@ -125,7 +125,7 @@ const eventRegister_t events[] = {
 	{E(EV_MODEL_EXPLODE), "s", CL_Explode, CL_ExplodeTime, NULL},
 	{E(EV_MODEL_EXPLODE_TRIGGERED), "s", CL_Explode, NULL, NULL},
 
-	{E(EV_PARTICLE_APPEAR), "ss&", CL_ParticleAppear, CL_ParticleAppearTime, NULL},
+	{E(EV_PARTICLE_APPEAR), "ssp&", CL_ParticleAppear, CL_ParticleAppearTime, NULL},
 	{E(EV_PARTICLE_SPAWN), "bppp&", CL_ParticleSpawnEvent, CL_ParticleSpawnEventTime, NULL},
 
 	{E(EV_SOUND), "sp&", CL_SoundEvent, NULL, NULL},
