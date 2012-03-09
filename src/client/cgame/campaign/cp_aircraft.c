@@ -905,13 +905,13 @@ static void AIR_TransferItemsCarriedByCharacterToBase (character_t *chr, base_t 
 #endif
 		for (ic = CONTAINER(chr, container); ic; ic = ic->next) {
 			const objDef_t *obj = ic->item.t;
-			B_UpdateStorageAndCapacity(sourceBase, obj, -1, qfalse, qfalse);
-			B_UpdateStorageAndCapacity(destBase, obj, 1, qfalse, qfalse);
+			B_UpdateStorageAndCapacity(sourceBase, obj, -1, qfalse);
+			B_UpdateStorageAndCapacity(destBase, obj, 1, qfalse);
 
 			obj = ic->item.m;
 			if (obj) {
-				B_UpdateStorageAndCapacity(sourceBase, obj, -1, qfalse, qfalse);
-				B_UpdateStorageAndCapacity(destBase, obj, 1, qfalse, qfalse);
+				B_UpdateStorageAndCapacity(sourceBase, obj, -1, qfalse);
+				B_UpdateStorageAndCapacity(destBase, obj, 1, qfalse);
 			}
 		}
 	}

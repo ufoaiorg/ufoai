@@ -765,7 +765,7 @@ static void BS_BuyItem_f (void)
 
 			if (ugvWeaponBuyable && E_HireRobot(base, ugv)) {
 				/* Move the item into the storage. */
-				B_UpdateStorageAndCapacity(base, ugvWeapon, 1, qfalse, qfalse);
+				B_UpdateStorageAndCapacity(base, ugvWeapon, 1, qfalse);
 				BS_RemoveItemFromMarket(ugvWeapon, 1);
 
 				/* Update Display/List and credits. */
@@ -839,7 +839,7 @@ static void BS_SellItem_f (void)
 		} else {
 			if (B_ItemInBase(ugvWeapon, base) > 0) {
 				/* If we have a weapon we sell it as well. */
-				B_UpdateStorageAndCapacity(base, ugvWeapon, -1, qfalse, qfalse);
+				B_UpdateStorageAndCapacity(base, ugvWeapon, -1, qfalse);
 				BS_AddItemToMarket(ugvWeapon, 1);
 			}
 			BS_BuyType(base);
@@ -857,7 +857,7 @@ static void BS_SellItem_f (void)
 		/* don't sell more items than we have */
 		if (numItems) {
 			/* reinit the menu */
-			B_UpdateStorageAndCapacity(base, item, -numItems, qfalse, qfalse);
+			B_UpdateStorageAndCapacity(base, item, -numItems, qfalse);
 			BS_AddItemToMarket(item, numItems);
 			BS_BuyType(base);
 			CP_UpdateCredits(ccs.credits + BS_GetItemSellingPrice(item) * numItems);

@@ -474,7 +474,7 @@ static int PR_DisassembleItem (base_t *base, const components_t *comp, float con
 				B_ManageAntimatter(base, amount, qtrue);
 			} else {
 				technology_t *tech = RS_GetTechForItem(compOd);
-				B_UpdateStorageAndCapacity(base, compOd, amount, qfalse, qfalse);
+				B_UpdateStorageAndCapacity(base, compOd, amount, qfalse);
 				RS_MarkCollected(tech);
 			}
 			Com_DPrintf(DEBUG_CLIENT, "PR_DisassembleItem: added %i amounts of %s\n", amount, compOd->id);
@@ -574,7 +574,7 @@ static void PR_ProductionFrame (base_t* base, production_t *prod)
 		if (PR_IsItem(prod)) {
 			CP_UpdateCredits(ccs.credits - PR_GetPrice(prod->data.data.item));
 			/* Now add it to equipment and update capacity. */
-			B_UpdateStorageAndCapacity(base, prod->data.data.item, 1, qfalse, qfalse);
+			B_UpdateStorageAndCapacity(base, prod->data.data.item, 1, qfalse);
 		} else if (PR_IsAircraft(prod)) {
 			CP_UpdateCredits(ccs.credits - PR_GetPrice(prod->data.data.aircraft));
 			/* Now add new aircraft. */

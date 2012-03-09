@@ -969,7 +969,7 @@ static void CP_DebugAllItems_f (void)
 		const objDef_t *obj = INVSH_GetItemByIDX(i);
 		if (!obj->weapon && !obj->numWeapons)
 			continue;
-		B_UpdateStorageAndCapacity(base, obj, 1, qfalse, qtrue);
+		B_UpdateStorageAndCapacity(base, obj, 1, qtrue);
 		if (B_ItemInBase(obj, base) > 0) {
 			technology_t *tech = RS_GetTechForItem(obj);
 			RS_MarkCollected(tech);

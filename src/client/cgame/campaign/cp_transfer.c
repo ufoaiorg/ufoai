@@ -71,7 +71,7 @@ static void TR_EmptyTransferCargo (base_t *destination, transfer_t *transfer, qb
 				MSO_CheckAddNewMessage(NT_TRANSFER_LOST, _("Transport mission"), cp_messageBuffer, qfalse, MSG_TRANSFERFINISHED, NULL);
 				break;
 			}
-			B_UpdateStorageAndCapacity(destination, od, transfer->itemAmount[od->idx], qfalse, qtrue);
+			B_UpdateStorageAndCapacity(destination, od, transfer->itemAmount[od->idx], qtrue);
 		}
 	}
 

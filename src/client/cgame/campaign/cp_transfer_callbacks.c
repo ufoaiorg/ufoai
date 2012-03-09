@@ -785,7 +785,7 @@ static void TR_TransferListClear_f (void)
 			if (Q_streq(od->id, ANTIMATTER_TECH_ID))
 				B_ManageAntimatter(base, itemCargoAmount, qtrue);
 			else
-				B_UpdateStorageAndCapacity(base, od, itemCargoAmount, qfalse, qfalse);
+				B_UpdateStorageAndCapacity(base, od, itemCargoAmount, qfalse);
 		}
 	}
 	for (i = 0; i < ccs.numAliensTD; i++) {	/* Return aliens. */
@@ -892,7 +892,7 @@ static void TR_AddItemToTransferList (base_t *base, transferData_t *td, int num,
 
 				if (amount) {
 					td->trItemsTmp[od->idx] += amount;
-					B_UpdateStorageAndCapacity(base, od, -amount, qfalse, qfalse);
+					B_UpdateStorageAndCapacity(base, od, -amount, qfalse);
 					break;
 				} else
 					return;
@@ -1180,7 +1180,7 @@ static void TR_RemoveItemFromCargoList (base_t *base, transferData_t *transferDa
 				if (Q_streq(od->id, ANTIMATTER_TECH_ID))
 					B_ManageAntimatter(base, amount, qfalse);
 				else
-					B_UpdateStorageAndCapacity(base, od, amount, qfalse, qfalse);
+					B_UpdateStorageAndCapacity(base, od, amount, qfalse);
 				break;
 			}
 			cnt++;

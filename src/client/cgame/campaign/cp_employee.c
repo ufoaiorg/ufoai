@@ -1160,10 +1160,10 @@ void E_RemoveInventoryFromStorage (employee_t *employee)
 		while (invList) {
 			/* Remove ammo */
 			if (invList->item.m && invList->item.m != invList->item.t)
-				B_UpdateStorageAndCapacity(employee->baseHired, invList->item.m, -1, qfalse, qfalse);
+				B_UpdateStorageAndCapacity(employee->baseHired, invList->item.m, -1, qfalse);
 			/* Remove Item */
 			if (invList->item.t)
-				B_UpdateStorageAndCapacity(employee->baseHired, invList->item.t, -1, qfalse, qfalse);
+				B_UpdateStorageAndCapacity(employee->baseHired, invList->item.t, -1, qfalse);
 
 			invList = invList->next;
 		}

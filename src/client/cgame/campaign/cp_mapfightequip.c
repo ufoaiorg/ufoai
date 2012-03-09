@@ -497,7 +497,7 @@ void AII_RemoveItemFromSlot (base_t* base, aircraftSlot_t *slot, qboolean ammo)
 			/* Can only remove non-virtual ammo */
 			if (!slot->ammo->isVirtual) {
 				if (base)
-					B_UpdateStorageAndCapacity(base, slot->ammo, 1, qfalse, qfalse);
+					B_UpdateStorageAndCapacity(base, slot->ammo, 1, qfalse);
 				slot->ammo = NULL;
 				slot->ammoLeft = 0;
 			}
@@ -507,7 +507,7 @@ void AII_RemoveItemFromSlot (base_t* base, aircraftSlot_t *slot, qboolean ammo)
 		AII_RemoveItemFromSlot(base, slot, qtrue);
 		if (!slot->item->isVirtual) {
 			if (base)
-				B_UpdateStorageAndCapacity(base, slot->item, 1, qfalse, qfalse);
+				B_UpdateStorageAndCapacity(base, slot->item, 1, qfalse);
 			/* the removal is over */
 			if (slot->nextItem) {
 				/* there is anoter item to install after this one */
@@ -549,14 +549,14 @@ void AII_RemoveNextItemFromSlot (base_t* base, aircraftSlot_t *slot, qboolean am
 		if (slot->nextAmmo) {
 			if (!slot->nextAmmo->isVirtual) {
 				if (base)
-					B_UpdateStorageAndCapacity(base, slot->nextAmmo, 1, qfalse, qfalse);
+					B_UpdateStorageAndCapacity(base, slot->nextAmmo, 1, qfalse);
 				slot->nextAmmo = NULL;
 			}
 		}
 	} else if (slot->nextItem) {
 		/* Remove nextItem */
 		if (base)
-			B_UpdateStorageAndCapacity(base, slot->nextItem, 1, qfalse, qfalse);
+			B_UpdateStorageAndCapacity(base, slot->nextItem, 1, qfalse);
 		slot->nextItem = NULL;
 		/* also remove ammo if any */
 		if (slot->nextAmmo)
@@ -606,7 +606,7 @@ qboolean AII_ReloadWeapon (aircraftSlot_t *slot)
 				return qfalse;
 			}
 
-			B_UpdateStorageAndCapacity(slot->aircraft->homebase, slot->ammo, -1, qfalse, qfalse);
+			B_UpdateStorageAndCapacity(slot->aircraft->homebase, slot->ammo, -1, qfalse);
 			slot->ammoLeft = slot->ammo->ammo;
 			slot->delayNextShot = slot->ammo->craftitem.weaponDelay * AIRCRAFT_RELOAD_DELAY_MULTIPLIER;
 		}
@@ -616,7 +616,7 @@ qboolean AII_ReloadWeapon (aircraftSlot_t *slot)
 		if (!B_BaseHasItem(slot->base, slot->ammo))
 			return qfalse;
 
-		B_UpdateStorageAndCapacity(slot->base, slot->ammo, -1, qfalse, qfalse);
+		B_UpdateStorageAndCapacity(slot->base, slot->ammo, -1, qfalse);
 		slot->ammoLeft = slot->ammo->ammo;
 		slot->delayNextShot = slot->ammo->craftitem.weaponDelay * BASE_RELOAD_DELAY_MULTIPLIER;
 	} else if (slot->installation) {
@@ -740,7 +740,7 @@ qboolean AII_AddAmmoToSlot (base_t* base, const technology_t *tech, aircraftSlot
 	if (slot->nextItem) {
 		/* the base pointer can be null here - e.g. in case you are equipping a UFO */
 		if (base)
-			B_UpdateStorageAndCapacity(base, ammo, -1, qfalse, qfalse);
+			B_UpdateStorageAndCapacity(base, ammo, -1, qfalse);
 		return qtrue;
 	}
 	AII_ReloadWeapon(slot);
@@ -805,7 +805,7 @@ qboolean AII_AddItemToSlot (base_t *base, const technology_t *tech, aircraftSlot
 		 * Remove item even for nextItem, this way we are sure we won't use the same item
 		 * for another aircraft. */
 		if (base)
-			B_UpdateStorageAndCapacity(base, item, -1, qfalse, qfalse);
+			B_UpdateStorageAndCapacity(base, item, -1, qfalse);
 	} else {
 		Com_Printf("AII_AddItemToSlot: Could not add item '%s' to slot %i (slot-size: %i - item-weight: %i)\n",
 			item->id, slot->idx, slot->size, item->size);

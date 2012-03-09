@@ -164,7 +164,7 @@ qboolean BS_CheckAndDoBuyItem (base_t* base, const objDef_t *item, int number)
 		return qfalse;
 	}
 
-	B_UpdateStorageAndCapacity(base, item, numItems, qfalse, qfalse);
+	B_UpdateStorageAndCapacity(base, item, numItems, qfalse);
 	BS_RemoveItemFromMarket(item, numItems);
 	CP_UpdateCredits(ccs.credits - price * numItems);
 	return qtrue;

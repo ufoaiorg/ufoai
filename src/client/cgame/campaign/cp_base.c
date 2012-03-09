@@ -2261,7 +2261,7 @@ static void B_SellOrAddItems (aircraft_t *aircraft)
 		/* If the related technology is NOT researched, don't sell items. */
 		if (!RS_IsResearched_ptr(tech)) {
 			/* Items not researched cannot be thrown out even if not enough space in storage. */
-			B_UpdateStorageAndCapacity(base, item, amount, qfalse, qtrue);
+			B_UpdateStorageAndCapacity(base, item, amount, qtrue);
 			if (amount > 0)
 				RS_MarkCollected(tech);
 			continue;
@@ -2276,7 +2276,7 @@ static void B_SellOrAddItems (aircraft_t *aircraft)
 				/* Check whether there is enough space for adding this item.
 				 * If yes - add. If not - sell. */
 				for (j = 0; j < amount; j++) {
-					if (!B_UpdateStorageAndCapacity(base, item, 1, qfalse, qfalse)) {
+					if (!B_UpdateStorageAndCapacity(base, item, 1, qfalse)) {
 						/* Not enough space, sell item. */
 						BS_AddItemToMarket(item, 1);
 						forcedgained += item->price;
@@ -2836,12 +2836,10 @@ int B_AddToStorage (base_t* base, const objDef_t *obj, int amount)
  * @param[in] base The base which storage and capacity should be updated
  * @param[in] obj The item.
  * @param[in] amount Amount to be added to removed
- * @param[in] reset Set this to true (amount is not needed) if you want to reset the
- * storage amount and capacities (e.g. in case of a base ransack)
  * @param[in] ignorecap qtrue if we won't check freespace but will just add items.
  * @sa CL_BaseRansacked
  */
-qboolean B_UpdateStorageAndCapacity (base_t* base, const objDef_t *obj, int amount, qboolean reset, qboolean ignorecap)
+qboolean B_UpdateStorageAndCapacity (base_t* base, const objDef_t *obj, int amount, qboolean ignorecap)
 {
 	capacities_t *cap;
 
@@ -2852,42 +2850,36 @@ qboolean B_UpdateStorageAndCapacity (base_t* base, const objDef_t *obj, int amou
 		return qtrue;
 
 	cap = CAP_Get(base, CAP_ITEMS);
-	if (reset) {
-		base->storage.numItems[obj->idx] = 0;
-		base->storage.numItemsLoose[obj->idx] = 0;
-		cap->cur = 0;
-	} else {
-		if (!B_ItemIsStoredInBaseStorage(obj)) {
-			Com_DPrintf(DEBUG_CLIENT, "B_UpdateStorageAndCapacity: Item '%s' is not stored in storage: skip\n", obj->id);
+	if (!B_ItemIsStoredInBaseStorage(obj)) {
+		Com_DPrintf(DEBUG_CLIENT, "B_UpdateStorageAndCapacity: Item '%s' is not stored in storage: skip\n", obj->id);
+		return qfalse;
+	}
+
+	if (!ignorecap && amount > 0) {
+		/* Only add items if there is enough room in storage */
+		if (cap->max - cap->cur < (obj->size * amount)) {
+			Com_DPrintf(DEBUG_CLIENT, "B_UpdateStorageAndCapacity: Not enough storage space (item: %s, amount: %i)\n", obj->id, amount);
 			return qfalse;
 		}
+	}
 
-		if (!ignorecap && amount > 0) {
-			/* Only add items if there is enough room in storage */
-			if (cap->max - cap->cur < (obj->size * amount)) {
-				Com_DPrintf(DEBUG_CLIENT, "B_UpdateStorageAndCapacity: Not enough storage space (item: %s, amount: %i)\n", obj->id, amount);
-				return qfalse;
-			}
-		}
+	base->storage.numItems[obj->idx] += amount;
+	if (obj->size > 0)
+		cap->cur += (amount * obj->size);
 
-		base->storage.numItems[obj->idx] += amount;
-		if (obj->size > 0)
-			cap->cur += (amount * obj->size);
+	if (cap->cur < 0) {
+		Com_Printf("B_UpdateStorageAndCapacity: current storage capacity is negative (%i): reset to 0\n", cap->cur);
+		cap->cur = 0;
+	}
 
-		if (cap->cur < 0) {
-			Com_Printf("B_UpdateStorageAndCapacity: current storage capacity is negative (%i): reset to 0\n", cap->cur);
-			cap->cur = 0;
-		}
+	if (base->storage.numItems[obj->idx] < 0) {
+		Com_Printf("B_UpdateStorageAndCapacity: current number of item '%s' is negative: reset to 0\n", obj->id);
+		base->storage.numItems[obj->idx] = 0;
+	}
 
-		if (base->storage.numItems[obj->idx] < 0) {
-			Com_Printf("B_UpdateStorageAndCapacity: current number of item '%s' is negative: reset to 0\n", obj->id);
-			base->storage.numItems[obj->idx] = 0;
-		}
-
-		if (base->storage.numItems[obj->idx] == 0) {
-			technology_t *tech = RS_GetTechForItem(obj);
-			RS_StopResearch(tech);
-		}
+	if (base->storage.numItems[obj->idx] == 0) {
+		technology_t *tech = RS_GetTechForItem(obj);
+		RS_StopResearch(tech);
 	}
 
 	return qtrue;
