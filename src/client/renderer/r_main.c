@@ -772,7 +772,7 @@ static inline qboolean R_CheckExtension (const char *extension)
  * @brief Check and load all needed and supported opengl extensions
  * @sa R_Init
  */
-static qboolean R_InitExtensions (void)
+static void R_InitExtensions (void)
 {
 	GLenum err;
 	int tmpInteger;
@@ -1090,12 +1090,6 @@ static qboolean R_InitExtensions (void)
 		}
 		Q_strncpyz(r_config.lodDir, "low", sizeof(r_config.lodDir));
 	}
-
-	/* multitexture is the only one we absolutely need */
-	if (!qglActiveTexture || !qglClientActiveTexture)
-		return qfalse;
-
-	return qtrue;
 }
 
 /**
