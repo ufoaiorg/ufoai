@@ -3,10 +3,10 @@
 // for the description of the particle language
 
 // =======================
-// MISCELLANEOUS EFFECTS
+// FIRE FIELD
 // ======================
 
-particle smoke_explosion
+particle firefield
 {
 	init
 	{
@@ -15,9 +15,90 @@ particle smoke_explosion
 	}
 	think
 	{
-		spawn	smokebig
+		spawn	firefield_fire
 	}
 }
+
+particle firefield_fire
+{
+	init
+	{
+		image  sfx/fireball
+		blend  add
+		style  facing
+		thinkfade  out
+		rand   float 0.3		// 1/lifetime
+		add    float 0.5
+		pop    *tps
+		crand  vector "14 14 0"	// variance position
+		add    *s
+		pop    *s
+		rand  vector "8 8 35"	// variance velocity
+		add    *v
+		pop    *v
+		physics true
+	}
+	run
+	{
+		push   pos "4 4"		// change in size
+		mul    *t
+		add    pos "14 14"		// size to start with
+		pop    *size
+	}
+	think { kill }
+}
+
+// =======================
+// SMOKE FIELD
+// ======================
+
+particle smokefield
+{
+	init
+	{
+		v		"0 0 0"
+		tps		20.0
+	}
+	think
+	{
+		spawn	smokefield_smoke
+	}
+}
+
+particle smokefield_smoke
+{
+	init
+	{
+		image		sfx/smoke
+		blend		add
+		style		facing
+		thinkfade	out
+		rand		float 0.2
+		add			float 0.3
+		pop			*tps
+		crand		vector "12 12 0"
+		add			*s
+		pop			*s
+		rand		vector "0 0 54"
+		add			*s
+		pop			*s
+		crand		vector "2 2 0"
+		add			*v
+		physics		true
+	}
+	run
+	{
+		push		pos "12 12"
+		mul			*t
+		add			pos "0.2 0.2"
+		pop			*size
+	}
+	think { kill }
+}
+
+// =======================
+// MISCELLANEOUS EFFECTS
+// ======================
 
 particle frag_explosion
 {

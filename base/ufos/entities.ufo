@@ -708,7 +708,7 @@ entity misc_smoke {
 
 	default {
 		count	"2"
-		particle	"smoke_explosion"
+		particle	"smokefield"
 		spawnflags	"255"
 	}
 }
