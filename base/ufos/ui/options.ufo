@@ -1030,13 +1030,6 @@ window options
 				pos			"32 320"
 				size		"320 20"
 			}
-			checkbox light
-			{
-				current		*cvar:r_lights
-				pos			"385 320"
-				size		"20 18"
-				image		"ui/checkbox_blue"
-			}
 			string dynamiclights_value
 			{
 				string		*cvar:r_dynamic_lights
