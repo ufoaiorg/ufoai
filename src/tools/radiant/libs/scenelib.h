@@ -369,12 +369,6 @@ inline bool node_is_group (scene::Node& node)
 	return false;
 }
 
-inline Selectable* Instance_getSelectable (scene::Instance& instance);
-inline const Selectable* Instance_getSelectable (const scene::Instance& instance);
-
-inline Bounded* Instance_getBounded (scene::Instance& instance);
-inline const Bounded* Instance_getBounded (const scene::Instance& instance);
-
 namespace scene
 {
 	class Instance
@@ -574,15 +568,6 @@ class SelectableSetSelected
 			selectable.setSelected(m_selected);
 		}
 };
-
-inline Bounded* Instance_getBounded (scene::Instance& instance)
-{
-	return dynamic_cast<Bounded*>(&instance);
-}
-inline const Bounded* Instance_getBounded (const scene::Instance& instance)
-{
-	return dynamic_cast<const Bounded*>(&instance);
-}
 
 inline Transformable* Instance_getTransformable (scene::Instance& instance)
 {

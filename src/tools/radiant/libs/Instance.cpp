@@ -107,7 +107,7 @@ namespace scene
 
 			m_bounds = childBounds();
 
-			const Bounded* bounded = Instance_getBounded(*this);
+			const Bounded* bounded = dynamic_cast<const Bounded*>(this);
 			if (bounded != 0) {
 				m_bounds.includeAABB(aabb_for_oriented_aabb_safe(bounded->localAABB(), localToWorld()));
 			}
