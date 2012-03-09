@@ -2883,6 +2883,11 @@ qboolean B_UpdateStorageAndCapacity (base_t* base, const objDef_t *obj, int amou
 			Com_Printf("B_UpdateStorageAndCapacity: current number of item '%s' is negative: reset to 0\n", obj->id);
 			base->storage.numItems[obj->idx] = 0;
 		}
+
+		if (base->storage.numItems[obj->idx] == 0) {
+			technology_t *tech = RS_GetTechForItem(obj);
+			RS_StopResearch(tech);
+		}
 	}
 
 	return qtrue;
