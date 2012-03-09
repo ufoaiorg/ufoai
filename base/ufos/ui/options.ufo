@@ -1119,30 +1119,6 @@ window options
 					value	"2048"
 				}
 			}
-			// ===============
-			// LIGHTMAP SCALE
-			// ===============
-			string lightmap_str
-			{
-				tooltip		"_Changing this would scale the lightmap brightness."
-				string		"_Lightmap Scale:"
-				pos			"32 420"
-				size		"320 20"
-			}
-			image lightmap_rahmen
-			{
-				src		"ui/bar_rahmen"
-				pos			"208 447"
-			}
-			bar lightmap_bar
-			{
-				current		*cvar:r_modulate
-				pos			"217 452"
-				size		"238 6"
-				color		"0 .8 0 1"
-				max			4.0
-				onClick		{ }
-			}
 			// ========================
 			// GEOSCAPE 3DMAP LIGHTING
 			// ========================
@@ -1150,18 +1126,18 @@ window options
 			{
 				tooltip		"_Amount of light emitting from the sun and shining on the earth."
 				string		"_Geo Ambient Lighting:"
-				pos			"32 470"
+				pos			"32 420"
 				size		"320 20"
 			}
 			image m3dmapambient_rahmen
 			{
 				src		"ui/bar_rahmen"
-				pos			"204 497"
+				pos			"204 447"
 			}
 			bar m3dmapambient_bar
 			{
 				current		*cvar:cl_3dmapAmbient
-				pos			"213 502"
+				pos			"213 452"
 				size		"238 6"
 				color		"0 .8 0 1"
 				min			-1

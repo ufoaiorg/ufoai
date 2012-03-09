@@ -77,7 +77,6 @@ cvar_t *r_driver;
 cvar_t *r_shadows;
 cvar_t *r_stencilshadows;
 cvar_t *r_soften;
-cvar_t *r_modulate;
 cvar_t *r_swapinterval;
 cvar_t *r_multisample;
 cvar_t *r_wire;
@@ -590,10 +589,6 @@ static void R_RegisterSystemVars (void)
  */
 static void R_RegisterImageVars (void)
 {
-	if (r_config.hardwareType == GLHW_NVIDIA)
-		r_modulate = Cvar_Get("r_modulate", "1.0", CVAR_ARCHIVE | CVAR_R_IMAGES, "Scale lightmap values");
-	else
-		r_modulate = Cvar_Get("r_modulate", "2.0", CVAR_ARCHIVE | CVAR_R_IMAGES, "Scale lightmap values");
 	r_soften = Cvar_Get("r_soften", "0", CVAR_ARCHIVE | CVAR_R_IMAGES, "Apply blur to lightmap");
 }
 
