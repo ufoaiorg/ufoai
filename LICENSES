@@ -3646,14 +3646,14 @@ base/pics/sfx/explosions/greenplas_05.png | GNU General Public License 2.0 | Lor
 base/pics/sfx/explosions/greenplas_06.png | GNU General Public License 2.0 | Lord Havoc;MCR
 base/pics/sfx/explosions/greenplas_07.png | GNU General Public License 2.0 | Lord Havoc;MCR
 base/pics/sfx/fireball.jpg | Public Domain |  | Public Domain Golgotha
-base/pics/sfx/flame1.png | GNU General Public License 2.0 | OpenArena
-base/pics/sfx/flame2.png | GNU General Public License 2.0 | OpenArena
-base/pics/sfx/flame3.png | GNU General Public License 2.0 | OpenArena
-base/pics/sfx/flame4.png | GNU General Public License 2.0 | OpenArena
-base/pics/sfx/flame5.png | GNU General Public License 2.0 | OpenArena
-base/pics/sfx/flame6.png | GNU General Public License 2.0 | OpenArena
-base/pics/sfx/flame7.png | GNU General Public License 2.0 | OpenArena
-base/pics/sfx/flame8.png | GNU General Public License 2.0 | OpenArena
+base/pics/sfx/flame01.png | GNU General Public License 2.0 | OpenArena
+base/pics/sfx/flame02.png | GNU General Public License 2.0 | OpenArena
+base/pics/sfx/flame03.png | GNU General Public License 2.0 | OpenArena
+base/pics/sfx/flame04.png | GNU General Public License 2.0 | OpenArena
+base/pics/sfx/flame05.png | GNU General Public License 2.0 | OpenArena
+base/pics/sfx/flame06.png | GNU General Public License 2.0 | OpenArena
+base/pics/sfx/flame07.png | GNU General Public License 2.0 | OpenArena
+base/pics/sfx/flame08.png | GNU General Public License 2.0 | OpenArena
 base/pics/sfx/flare_blue.jpg | Public Domain |  | Public Domain Golgotha
 base/pics/sfx/flare_red.jpg | Public Domain |  | Public Domain Golgotha
 base/pics/sfx/greenball.png | GNU General Public License 2.0 | Lord Havoc;MCR
@@ -3689,11 +3689,11 @@ base/pics/sfx/smoke_02.png | Creative Commons Attribution-Share Alike 3.0 | Patr
 base/pics/sfx/smoke_03.png | Creative Commons Attribution-Share Alike 3.0 | Patrick Raynor
 base/pics/sfx/smoke_gren.png | Creative Commons Attribution-Share Alike 3.0 | Patrick Raynor;MCR | based on base/pics/sfx/smoke_00
 base/pics/sfx/smoke_particle.jpg | Public Domain |  | Public Domain Golgotha
-base/pics/sfx/smoke_puff1.jpg | Public Domain |  | Public Domain Golgotha
-base/pics/sfx/smoke_puff2.jpg | Public Domain |  | Public Domain Golgotha
-base/pics/sfx/smoke_puff3.jpg | Public Domain |  | Public Domain Golgotha
-base/pics/sfx/smoke_puff4.jpg | Public Domain |  | Public Domain Golgotha
-base/pics/sfx/smoke_puff5.jpg | Public Domain |  | Public Domain Golgotha
+base/pics/sfx/smoke_puff01.jpg | Public Domain |  | Public Domain Golgotha
+base/pics/sfx/smoke_puff02.jpg | Public Domain |  | Public Domain Golgotha
+base/pics/sfx/smoke_puff03.jpg | Public Domain |  | Public Domain Golgotha
+base/pics/sfx/smoke_puff04.jpg | Public Domain |  | Public Domain Golgotha
+base/pics/sfx/smoke_puff05.jpg | Public Domain |  | Public Domain Golgotha
 base/pics/sfx/snow.png | Creative Commons Attribution-Share Alike 3.0 | Christian "Crystan" Hoffmann
 base/pics/sfx/spark.png | Creative Commons Attribution-Share Alike 3.0 | Christian "Crystan" Hoffmann
 base/pics/sfx/tesla1.jpg | GNU General Public License 2.0 | OpenArena
