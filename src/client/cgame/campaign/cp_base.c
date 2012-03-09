@@ -2879,7 +2879,8 @@ qboolean B_UpdateStorageAndCapacity (base_t* base, const objDef_t *obj, int amou
 
 	if (base->storage.numItems[obj->idx] == 0) {
 		technology_t *tech = RS_GetTechForItem(obj);
-		RS_StopResearch(tech);
+		if (tech->statusResearch == RS_RUNNING)
+			RS_StopResearch(tech);
 	}
 
 	return qtrue;
