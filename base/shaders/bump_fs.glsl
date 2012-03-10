@@ -20,17 +20,3 @@ vec2 BumpTexcoord(in float height) {
 
 	return vec2(height * PARALLAX * 0.04 - 0.02) * eye.xy;
 }
-
-
-/**
- * @brief BumpFragment.
- */
-vec3 BumpFragment(in vec3 deluxemap, in vec3 normalmap) {
-	float diffuse = clamp(dot(deluxemap,
-			vec3(normalmap.x * BUMP, normalmap.y * BUMP, normalmap.z)), 0.0, 1.0);
-
-	float specular = HARDNESS * pow(max(-dot(eye,
-			reflect(deluxemap, normalmap)), 0.0), 8.0 * SPECULAR);
-
-	return vec3(diffuse + specular);
-}

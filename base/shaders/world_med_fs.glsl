@@ -13,8 +13,8 @@
 
 uniform int BUMPMAP;
 uniform int SPECULARMAP;
-/*uniform float SPECULAR; specular component brightness (0 - no specular) */
-/*uniform float HARDNESS; specular exponent divided by 512 */
+/*uniform float SPECULAR; specular exponent divided by 512  */
+/*uniform float HARDNESS; specular component brightness (0 - no specular) */
 
 /** Diffuse texture.*/
 uniform sampler2D SAMPLER_DIFFUSE;
@@ -52,7 +52,7 @@ void main(void) {
 	/* These two should be declared in this scope for developer tools to work */
 	vec3 deluxemap = vec3(0.0, 0.0, 1.0);
 	vec4 normalmap = vec4(0.0, 0.0, 1.0, 0.5);
-	vec4 specularmap = vec4(SPECULAR, SPECULAR, SPECULAR, HARDNESS);
+	vec4 specularmap = vec4(HARDNESS, HARDNESS, HARDNESS, SPECULAR);
 
 	vec2 offset = vec2(0.0);
 
@@ -69,9 +69,11 @@ void main(void) {
 		deluxemap = texture2D(SAMPLER_DELUXEMAP, gl_TexCoord[1].st).rgb;
 		deluxemap = normalize(two * (deluxemap + negHalf));
 
-		/* Resolve parallax offset and bump mapping.*/
+		/* Resolve parallax offset */
 		offset = BumpTexcoord(normalmap.a);
-		light *= BumpFragment(deluxemap, normalmap.rgb);
+
+		/* Bump mapping.*/
+		light *= clamp(dot(deluxemap, vec3(normalmap.x * BUMP, normalmap.y * BUMP, normalmap.z)), 0.0, 1.0);
 	}
 #endif
 
