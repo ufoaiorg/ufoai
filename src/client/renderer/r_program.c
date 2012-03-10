@@ -37,7 +37,7 @@ typedef enum {SHQ_LOW, SHQ_MID, SHQ_HIGH, SHQ_NUM} shaderQualityLevel_t;
 
 const char *shaderQualityLevelNames[SHQ_NUM][2] = {
 	{"world_low","model_low"},
-	{"world_med","model_high"}, /** @todo medium quality model shader */
+	{"world_med","model_med"},
 	{"world_med","model_high"} /** @todo high quality world shader */
 };
 
@@ -828,13 +828,15 @@ static void R_InitModelProgram (r_program_t *prog)
 
 	if (r_programs->integer > 1) {
 		R_ProgramParameter1i("SAMPLER_SPECULAR", 5);
-		R_ProgramParameter1i("SAMPLER_ROUGHMAP", 2);
-		R_ProgramParameter1i("ROUGHMAP", 0);
 		R_ProgramParameter1i("SPECULARMAP", 0);
 		R_ProgramParameter1f("HARDNESS", defaultMaterial.hardness);
 		R_ProgramParameter1f("SPECULAR", defaultMaterial.specular);
 		R_ProgramParameter1f("BUMP", defaultMaterial.bump);
 		R_ProgramParameter1f("PARALLAX", defaultMaterial.parallax);
+		if (r_programs->integer > 2) {
+			R_ProgramParameter1i("SAMPLER_ROUGHMAP", 2);
+			R_ProgramParameter1i("ROUGHMAP", 0);
+		}
 	}
 
 	if (r_fog->integer) {

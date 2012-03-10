@@ -3870,6 +3870,8 @@ base/shaders/model_high_fs.glsl | GNU General Public License 2.0 or later
 base/shaders/model_high_vs.glsl | GNU General Public License 2.0 or later
 base/shaders/model_low_fs.glsl | GNU General Public License 2.0 or later
 base/shaders/model_low_vs.glsl | GNU General Public License 2.0 or later
+base/shaders/model_med_fs.glsl | GNU General Public License 2.0 or later
+base/shaders/model_med_vs.glsl | GNU General Public License 2.0 or later
 base/shaders/transform_lights_vs.glsl | GNU General Public License 2.0 or later
 base/shaders/warp_fs.glsl | GNU General Public License 2.0 or later
 base/shaders/warp_vs.glsl | GNU General Public License 2.0 or later
