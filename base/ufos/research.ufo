@@ -12,7 +12,7 @@
 //		tech
 //			Items have all the information in here. Especially the name and the model/image.
 //		logic
-//			"logic" defines that this entry is onbly used for complex requirements as defined in "require_*". This is not displayed anywhere. logic technologies are moved to research_logic.ufo
+//			"logic" defines that this entry is only used for complex requirements as defined in "require_*". This is not displayed anywhere. logic technologies are moved to research_logic.ufo
 //		weapon
 //			This is an entry for an item that is defined in "weapon*.ufo".
 //		everything else (craft, building, alien, etc...)
@@ -45,7 +45,7 @@
 //			See the po files in the source directory (src/po/*.po)
 //	pre_description {}
 //		Usage is the same as "description".
-//		The diffrence is that these entries are displayed e.g.:
+//		The difference is that these entries are displayed e.g.:
 //			* A new technology is proposed by out scientists (even with no obvious "prequesites")
 //			* When an item has been collected, but it's not yet researched.
 // ===============
@@ -78,20 +78,20 @@
 //=================
 //	delay [WIP - not yet implemented]
 //		The number of days until a 'successor' technology-item will be available for research.
-//		i.e. Every requirement from above is met, but this nubmer of days hasn't passed yet => tech not yet available for research.
+//		i.e. Every requirement from above is met, but this number of days hasn't passed yet => tech not yet available for research.
 //	provides yyy
 //		The item (only one allowed) name (yyy) in the correct ufo file or data-structure (e.g. inventory).
 //		The given name is _not_ a "tech", it is an identifier for the item/craft/etc...
 //		This item can be produced once the "tech" item has been finished.
 //	time
-//		Time the research needs to be finished. The values are given in "hours", buuut....
+//		Time the research needs to be finished. The values are given in "hours", but....
 //		Consider that this value doesn't reflect _real_ time, but it will depend on the number of scientists working on the item.
 //		The time given is the time needed for 10 workers, so the actual time needed for x workers is time * 10 / workers.
 //		If time is set to 0 the tech will be marked as researched as soon as all requirements are fulfilled (or there are none to begin with).
 //		If time is set to -1 the tech is not researchable at all. Only use this for multiplayer stuff (research status is forced there).
 //		[Default] 0
 //	producetime
-//		Time the production of one item takes. This value is similar to time, incuding the "it is not 'real time'" argument (see there for more!)
+//		Time the production of one item takes. This value is similar to time, including the "it is not 'real time'" argument (see there for more!)
 //		0 [Default] The items are produced in (nearly) no time.
 //		-1 Will prevent the item to be produced. (Only needed if the thing 'provides' something and this thing is not meant for production.)
 //	image
