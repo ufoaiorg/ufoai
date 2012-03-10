@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?eclipse version="3.4"?>
+<plugin>
+
+   <extension
+         point="org.eclipse.ui.editors">
+      <editor
+            name="MD2 Editor"
+            extensions="md2"
+            icon="icons/md2.png"
+            class="net.sourceforge.ufoai.md2viewer.editors.MD2Editor"
+            id="net.sourceforge.ufoai.md2viewer.editors.MD2Editor">
+      </editor>
+   </extension>
+
+</plugin>

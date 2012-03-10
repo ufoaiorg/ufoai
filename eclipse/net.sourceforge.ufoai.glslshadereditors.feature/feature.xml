@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<feature
+      id="net.sourceforge.ufoai.glslshadereditors.feature"
+      label="GLSL-Editors"
+      version="1.0.0.qualifier"
+      provider-name="UFO: AI Team">
+
+   <description url="http://ufoai.sourceforge.net">
+      UFO:AI GLSL editors based on http://sourceforge.net/projects/glshaders/
+   </description>
+
+   <copyright url="http://www.example.com/copyright">
+      [Enter Copyright Description here.]
+   </copyright>
+
+   <license url="http://www.example.com/license">
+      [Enter License Description here.]
+   </license>
+
+   <url>
+      <discovery label="GLShaders site" url="http://sourceforge.net/projects/glshaders/"/>
+   </url>
+
+   <plugin
+         id="net.sourceforge.ufoai.glsleditors"
+         download-size="0"
+         install-size="0"
+         version="0.0.0"
+         unpack="false"/>
+
+   <plugin
+         id="net.sourceforget.ufoai.glsltools"
+         download-size="0"
+         install-size="0"
+         version="0.0.0"
+         unpack="false"/>
+
+</feature>

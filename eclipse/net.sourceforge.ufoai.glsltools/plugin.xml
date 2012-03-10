@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?eclipse version="3.0"?>
+<plugin>
+	<extension point="org.eclipse.ui.preferencePages">
+		<page name="Shaders Preferences" class="cgTools.preferences.CgCompilerPreferencePage"
+			id="cgTools.preferences.CgCompilerPreferencePage">
+		</page>
+	</extension>
+	<extension point="org.eclipse.core.runtime.preferences">
+		<initializer class="cgTools.preferences.PreferenceInitializer">
+		</initializer>
+	</extension>
+
+	<extension id="cgTools.cgBuilder" name="Cg Project Builder"
+		point="org.eclipse.core.resources.builders">
+		<builder hasNature="true" isConfigurable="true">
+			<run class="cgTools.builder.cgBuilder">
+			</run>
+		</builder>
+	</extension>
+	<extension id="cgTools.cgCompiler" name="cg Project Compiler"
+		point="org.eclipse.core.resources.natures">
+		<runtime>
+			<run class="cgTools.builder.cgCompiler">
+			</run>
+		</runtime>
+		<builder id="fr.trevidos.GLShaderTools.cgTools.cgBuilder">
+		</builder>
+	</extension>
+	<extension point="org.eclipse.ui.popupMenus">
+		<objectContribution adaptable="true"
+			objectClass="org.eclipse.core.resources.IProject" nameFilter="*"
+			id="cgTools.contribution1">
+			<visibility>
+				<not>
+					<objectState name="nature" value="cgTools.cgCompiler" />
+				</not>
+			</visibility>
+			<action class="cgTools.builder.ToggleNatureAction" enablesFor="+"
+				id="cgTools.addRemoveNatureAction" label="Use a shader Compiler (CG/GLSL) in the project"
+				menubarPath="additions" state="false" style="toggle"
+				tooltip="Add a shader Compiler for Cg/GLSL files (.vp/.fp and .glsl)">
+			</action>
+		</objectContribution>
+	</extension>
+	<extension id="cgTools.cgProblem" name="CG Problem"
+		point="org.eclipse.core.resources.markers">
+		<super type="org.eclipse.core.resources.problemmarker" />
+		<super type="org.eclipse.core.resources.textmarker" />
+		<persistent value="true">
+		</persistent>
+	</extension>
+</plugin>

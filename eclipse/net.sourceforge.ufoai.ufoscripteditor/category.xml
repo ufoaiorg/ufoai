@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<site>
+   <feature url="features/net.sourceforge.ufoai.glslshadereditors.feature_1.0.0.qualifier.jar" id="net.sourceforge.ufoai.glslshadereditors.feature" version="1.0.0.qualifier">
+      <category name="net.sourceforge.ufoai"/>
+   </feature>
+   <feature url="features/net.sourceforge.ufoai.md2viewer.feature_1.0.0.qualifier.jar" id="net.sourceforge.ufoai.md2viewer.feature" version="1.0.0.qualifier">
+      <category name="net.sourceforge.ufoai"/>
+   </feature>
+   <feature url="features/net.sourceforge.ufoai.ufoscripteditor.feature_1.0.0.qualifier.jar" id="net.sourceforge.ufoai.ufoscripteditor.feature" version="1.0.0.qualifier">
+      <category name="net.sourceforge.ufoai"/>
+   </feature>
+   <category-def name="net.sourceforge.ufoai" label="UFO:AI"/>
+</site>

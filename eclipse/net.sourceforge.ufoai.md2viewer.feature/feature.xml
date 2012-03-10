@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<feature
+      id="net.sourceforge.ufoai.md2viewer.feature"
+      label="MD2-Viewer"
+      version="1.0.0.qualifier"
+      provider-name="UFO: AI Team">
+
+   <description url="http://ufoai.sourceforge.net">
+      UFO:AI md2 model viewer
+   </description>
+
+   <copyright url="http://www.example.com/copyright">
+      [Enter Copyright Description here.]
+   </copyright>
+
+   <license url="http://www.example.com/license">
+      [Enter License Description here.]
+   </license>
+
+   <plugin
+         id="net.sourceforge.ufoai.md2viewer"
+         download-size="0"
+         install-size="0"
+         version="0.0.0"
+         unpack="false"/>
+
+</feature>

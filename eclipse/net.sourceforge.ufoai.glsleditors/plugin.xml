@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?eclipse version="3.0"?>
+<plugin>
+	<extension point="org.eclipse.ui.preferencePages">
+		<page id="cgEditor.preferences.CgEditorPreferencePage" name="Shaders Editor Preferences"
+			class="cgEditor.preferences.CgEditorPreferencePage" category="cgTools.preferences.CgCompilerPreferencePage">
+		</page>
+	</extension>
+	<extension point="org.eclipse.core.runtime.preferences">
+		<initializer class="cgEditor.preferences.PreferenceInitializer">
+		</initializer>
+	</extension>
+
+	<extension point="org.eclipse.ui.editors">
+		<editor name="Cg Editor" extensions="vp" icon="icons/cg.png"
+			contributorClass="org.eclipse.ui.texteditor.BasicTextEditorActionContributor"
+			class="cgEditor.editors.CgEditor" id="cgEditor.editors.CgEditor">
+		</editor>
+
+		<editor name="GLSL Editor" extensions="glsl" icon="icons/opengl.png"
+			contributorClass="org.eclipse.ui.texteditor.BasicTextEditorActionContributor"
+			class="cgEditor.editors.GLSLEditor" id="cgEditor.editors.GLSLEditor">
+		</editor>
+
+		<editor name="Cg Editor" extensions="fp" icon="icons/cg.png"
+			contributorClass="org.eclipse.ui.texteditor.BasicTextEditorActionContributor"
+			class="cgEditor.editors.CgEditor" id="cgEditor.editors.CgEditor">
+		</editor>
+
+		<editor name="Cg Editor" extensions="fx" icon="icons/cg.png"
+			contributorClass="org.eclipse.ui.texteditor.BasicTextEditorActionContributor"
+			class="cgEditor.editors.CgEditor" id="cgEditor.editors.CgEditor">
+		</editor>
+	</extension>
+</plugin>

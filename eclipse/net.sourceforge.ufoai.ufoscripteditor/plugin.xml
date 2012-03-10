@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?eclipse version="3.4"?>
+<plugin>
+
+   <extension
+         point="org.eclipse.ui.editors">
+      <editor
+            name="UFO:AI Script Editor"
+            extensions="ufo"
+            icon="icons/ufo.png"
+            contributorClass="org.eclipse.ui.texteditor.BasicTextEditorActionContributor"
+            class="net.sourceforge.ufoai.ufoscripteditor.editors.UFOScriptEditor"
+            id="net.sourceforge.ufoai.ufoscripteditor.editors.ufoscripteditor">
+      </editor>
+      <editor
+            name="UFO:AI UMP Script Editor"
+            extensions="ump"
+            icon="icons/ump.png"
+            contributorClass="org.eclipse.ui.texteditor.BasicTextEditorActionContributor"
+            class="net.sourceforge.ufoai.ufoscripteditor.editors.UFOScriptEditor"
+            id="net.sourceforge.ufoai.ufoscripteditor.editors.ufoscripteditor">
+      </editor>
+      <editor
+            class="net.sourceforge.ufoai.ufoscripteditor.editors.UFOScriptEditor"
+            contributorClass="org.eclipse.ui.texteditor.BasicTextEditorActionContributor"
+            extensions="mat"
+            icon="icons/ufo.png"
+            id="net.sourceforge.ufoai.ufoscripteditor.editors.ufoscripteditor"
+            name="UFO:AI Material Editor">
+      </editor>
+      <editor
+            class="net.sourceforge.ufoai.ufoscripteditor.editors.UFOScriptEditor"
+            contributorClass="org.eclipse.ui.texteditor.BasicTextEditorActionContributor"
+            extensions="cfg"
+            icon="icons/ufo.png"
+            id="net.sourceforge.ufoai.ufoscripteditor.editors.ufoscripteditor"
+            name="UFO:AI Config Editor">
+      </editor>
+   </extension>
+   <extension
+         point="org.eclipse.ui.views">
+         <view
+	            class="net.sourceforge.ufoai.ufoscripteditor.views.previewers.MenuPreviewer"
+	            icon="icons/ufo.png"
+	            id="net.sourceforge.ufoai.ufoscripteditor.views.previewers.menupreviewer"
+	            name="Menu Preview">
+	      </view>
+   </extension>
+</plugin>

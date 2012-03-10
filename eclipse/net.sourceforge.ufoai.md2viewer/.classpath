@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<classpath>
+	<classpathentry kind="con" path="org.eclipse.jdt.launching.JRE_CONTAINER/org.eclipse.jdt.internal.debug.ui.launcher.StandardVMType/JavaSE-1.6"/>
+	<classpathentry kind="con" path="org.eclipse.pde.core.requiredPlugins"/>
+	<classpathentry kind="src" path="src"/>
+	<classpathentry kind="lib" path="lib/jogl/gluegen-rt.jar"/>
+	<classpathentry kind="lib" path="lib/jogl/jogl.all.jar">
+		<attributes>
+			<attribute name="javadoc_location" value="jar:platform:/resource/net.sourceforge.ufoai.md2viewer/lib/jogl/javadoc/javadoc.zip!/"/>
+		</attributes>
+	</classpathentry>
+	<classpathentry kind="lib" path="lib/jogl/nativewindow.all.jar"/>
+	<classpathentry kind="lib" path="lib/jogl/newt.all.jar"/>
+	<classpathentry kind="output" path="bin"/>
+</classpath>

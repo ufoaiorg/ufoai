@@ -1,0 +1,30 @@
+Manifest-Version: 1.0
+Bundle-ManifestVersion: 2
+Bundle-Name: net.sourceforge.ufoai.md2viewer
+Bundle-SymbolicName: net.sourceforge.ufoai.md2viewer; singleton:=true
+Bundle-Version: 1.0.1
+Bundle-Activator: net.sourceforge.ufoai.md2viewer.Activator
+Require-Bundle: org.eclipse.ui,
+ org.eclipse.core.runtime,
+ org.eclipse.jface.text,
+ org.eclipse.ui.editors,
+ org.eclipse.ui.ide;bundle-version="3.5.1",
+ org.eclipse.core.resources;bundle-version="3.5.1",
+ org.eclipse.ui.views;bundle-version="3.4.1"
+Bundle-ActivationPolicy: lazy
+Bundle-RequiredExecutionEnvironment: JavaSE-1.6
+Bundle-ClassPath: .,
+ lib/jogl/jogl.all.jar,
+ lib/jogl/newt.all.jar,
+ lib/jogl/gluegen-rt.jar,
+ lib/jogl/nativewindow.all.jar
+Bundle-NativeCode: lib/jogl/windows/gluegen-rt.dll ; lib/jogl/windows/jogl_desktop.dll ; lib/jogl/windows/jogl_es1.dll ; lib/jogl/windows/jogl_es2.dll ; lib/jogl/windows/jogl_gl2es12.dll ; lib/jogl/windows/nativewindow_awt.dll ; lib/jogl/windows/newt.dll ;
+  osname=Win32 ;
+  processor=x86,
+ lib/jogl/linux/i386/libgluegen-rt.so ;lib/jogl/linux/i386/libjogl_desktop.so ;lib/jogl/linux/i386/libjogl_es1.so ;lib/jogl/linux/i386/libjogl_es2.so ;lib/jogl/linux/i386/libjogl_gl2es12.so ;lib/jogl/linux/i386/libnativewindow_awt.so ;lib/jogl/linux/i386/libnativewindow_x11.so ;lib/jogl/linux/i386/libnewt.so
+  osname=linux ;
+  processor=x86,
+ lib/jogl/linux/x86_64/libgluegen-rt.so ;lib/jogl/linux/x86_64/libjogl_desktop.so ;lib/jogl/linux/x86_64/libjogl_es1.so ;lib/jogl/linux/x86_64/libjogl_es2.so ;lib/jogl/linux/x86_64/libjogl_gl2es12.so ;lib/jogl/linux/x86_64/libnativewindow_awt.so ;lib/jogl/linux/x86_64/libnativewindow_x11.so ;lib/jogl/linux/x86_64/libnewt.so
+  osname=linux ;
+  processor=x86-64
+Export-Package: net.sourceforge.ufoai.md2viewer.editors
