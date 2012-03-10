@@ -823,6 +823,7 @@ static void R_InitModelProgram (r_program_t *prog)
 	R_ProgramParameter1f("OFFSET", 0.0);
 
 	R_ProgramParameter3fv("AMBIENT", refdef.ambientColor);
+	R_ProgramParameter3fv("SUNCOLOR", refdef.sunDiffuseColor);
 
 	GLVectorTransform(r_locals.world_matrix, refdef.sunVector, sunDirection);
 	R_ProgramParameter3fv("SUNDIRECTION", sunDirection); /* last component is not needed */
