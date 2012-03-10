@@ -84,6 +84,7 @@ typedef struct entity_s {
 
 	const light_t *lights[MAX_ENTITY_LIGHTS];		/**< static and dynamic lights sorted by distance */
 	int numLights;
+	qboolean inShadow; /**< true if entity is shadowed from the sun */
 
 	const image_t *texture;
 

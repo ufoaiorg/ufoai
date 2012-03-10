@@ -707,7 +707,7 @@ void R_DrawAliasModel (entity_t *e)
 	R_EnableGlowMap(skin->glowmap);
 
 	R_UpdateLightList(e);
-	R_EnableModelLights(e->lights, e->numLights, qtrue);
+	R_EnableModelLights(e->lights, e->numLights, e->inShadow, qtrue);
 
 	/** @todo this breaks the encapsulation - don't call CL_* functions from within the renderer code */
 	if (r_debug_lights->integer) {
@@ -738,7 +738,7 @@ void R_DrawAliasModel (entity_t *e)
 	if (r_state.roughnessmap_enabled)
 		R_EnableRoughnessMap(NULL, qfalse);
 
-	R_EnableModelLights(NULL, 0, qfalse);
+	R_EnableModelLights(NULL, 0, qfalse, qfalse);
 
 	R_EnableGlowMap(NULL);
 

@@ -138,9 +138,10 @@ void R_EnableWorldLights (void)
  * @brief Enable or disable realtime dynamic lighting for models
  * @param lights The lights to enable
  * @param numLights The amount of lights in the given lights list
+ * @param inShadow Whether model is shadowed from the sun
  * @param enable Whether to turn realtime lighting on or off
  */
-void R_EnableModelLights (const light_t **lights, int numLights, qboolean enable)
+void R_EnableModelLights (const light_t **lights, int numLights, qboolean inShadow, qboolean enable)
 {
 	int i;
 	int maxLights = r_dynamic_lights->integer;
@@ -178,6 +179,13 @@ void R_EnableModelLights (const light_t **lights, int numLights, qboolean enable
 	R_UseMaterial(&defaultMaterial);
 
 	R_ProgramParameter3fv("AMBIENT", refdef.ambientColor);
+
+	if (inShadow) {
+		vec3_t blackColor = {0.0, 0.0, 0.0};
+		R_ProgramParameter3fv("SUNCOLOR", blackColor);
+	} else {
+		R_ProgramParameter3fv("SUNCOLOR", refdef.sunDiffuseColor);
+	}
 
 	if (!maxLights)
 		return;
@@ -336,11 +344,18 @@ void R_UpdateLightList (entity_t *ent)
 	const vec_t *pos = ent->transform.matrix + 12; /* type system hack, sorry */
 	vec3_t diametralVec; /** < conservative estimate of entity's bounding sphere diameter, in vector form */
 	float diameter; /** < value of this entity's diameter (approx) */
+	vec3_t fakeSunPos; /**< as if sun wasn't at infinite distance */
 
 	VectorSubtract(ent->maxs, ent->mins, diametralVec); /** @todo what if origin is NOT inside aabb? then this estimate will not be conservative enough */
 	diameter = VectorLength(diametralVec);
 
 	ent->numLights = 0; /* clear the list of lights */
+
+	/* Check if origin of this entity is hit by sunlight (not the best test, but at least fast) */
+	/** @todo cache whenever possible */
+	VectorMA(pos, 8192.0, refdef.sunVector, fakeSunPos);
+	R_Trace(pos, fakeSunPos, 0, MASK_SOLID);
+	ent->inShadow = refdef.trace.fraction != 1.0;
 
 	if (!r_dynamic_lights->integer)
 		return;

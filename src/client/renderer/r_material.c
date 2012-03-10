@@ -418,7 +418,7 @@ void R_DrawMaterialSurfaces (const mBspSurfaces_t *surfs)
 	assert(r_state.blend_enabled);
 
 	/** @todo - integrate BSP lighting with model lighting */
-	R_EnableModelLights(NULL, 0, qfalse);
+	R_EnableModelLights(NULL, 0, qfalse, qfalse);
 
 	R_EnableColorArray(qtrue);
 
