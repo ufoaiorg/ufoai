@@ -42,17 +42,6 @@ static technology_t *techHash[TECH_HASH_SIZE];
 static technology_t *techHashProvided[TECH_HASH_SIZE];
 
 /**
- * @brief Push a news about this tech when researched.
- * @param[in] tech Technology pointer.
- * @sa RS_ResearchFinish
- */
-static inline void RS_PushNewsWhenResearchedFinished (const technology_t* tech)
-{
-	/*if (tech->time == 0 && tech->type == RS_NEWS)
-		UP_OpenWith(tech->id);*/
-}
-
-/**
  * @brief Sets a technology status to researched and updates the date.
  * @param[in] tech The technology that was researched.
  */
@@ -81,10 +70,9 @@ void RS_ResearchFinish (technology_t* tech)
 		tech->statusResearchable = qtrue;
 		tech->preResearchedDate = ccs.date;
 	}
-	RS_PushNewsWhenResearchedFinished(tech);
 
 	/* send a new message and add it to the mailclient */
-	if ((tech->mailSent < MAILSENT_FINISHED) && (tech->type != RS_LOGIC)) {
+	if (tech->mailSent < MAILSENT_FINISHED && tech->type != RS_LOGIC) {
 		Com_sprintf(cp_messageBuffer, sizeof(cp_messageBuffer), _("A research project has been completed: %s\n"), _(tech->name));
 		MSO_CheckAddNewMessage( NT_RESEARCH_COMPLETED, _("Research finished"), cp_messageBuffer, qfalse, MSG_RESEARCH_FINISHED, tech);
 		tech->mailSent = MAILSENT_FINISHED;
