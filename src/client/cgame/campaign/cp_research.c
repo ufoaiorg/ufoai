@@ -59,8 +59,7 @@ static inline void RS_PushNewsWhenResearchedFinished (const technology_t* tech)
 void RS_ResearchFinish (technology_t* tech)
 {
 	/* Remove all scientists from the technology. */
-	while (tech->scientists > 0)
-		RS_RemoveScientist(tech, NULL);
+	RS_StopResearch(tech);
 
 	/** At this point we define what research-report description is used when displayed. (i.e. "usedDescription" is set here).
 	 * That's because this is the first the player will see the research result
@@ -101,7 +100,6 @@ void RS_StopResearch (technology_t* tech)
 	assert(tech);
 	while (tech->scientists > 0)
 		RS_RemoveScientist(tech, NULL);
-	assert(tech->statusResearch == RS_PAUSED);
 }
 
 /**
@@ -249,6 +247,7 @@ qboolean RS_RequirementsMet (const requirements_t *requiredAND, const requiremen
 			case RS_LINK_ANTIMATTER:
 				if (base && B_AntimatterInBase(base) >= req->amount)
 					metOR = qtrue;
+				break;
 			default:
 				break;
 			}
@@ -798,10 +797,7 @@ int RS_ResearchRun (void)
 			Com_sprintf(cp_messageBuffer, sizeof(cp_messageBuffer), _("Research prerequisites of %s do not met at %s. Research halted!"), _(tech->name), tech->base->name);
 			MSO_CheckAddNewMessage(NT_RESEARCH_HALTED, _("Research halted"), cp_messageBuffer, qfalse, MSG_RESEARCH_HALTED, NULL);
 
-			while (tech->scientists > 0)
-				RS_RemoveScientist(tech, NULL);
-			assert(tech->statusResearch == RS_PAUSED);
-
+			RS_StopResearch(tech);
 			continue;
 		}
 
@@ -1841,6 +1837,6 @@ qboolean RS_ScriptSanityCheck (void)
 
 	if (!error)
 		return qtrue;
-	else
-		return qfalse;
+
+	return qfalse;
 }
