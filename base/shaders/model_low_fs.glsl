@@ -12,6 +12,8 @@
 #endif
 
 uniform int BUMPMAP;
+uniform float BUMP;
+
 uniform vec3 AMBIENT;
 uniform vec3 SUNCOLOR;
 
@@ -43,7 +45,10 @@ void main(void) {
 	vec3 normal = vec3(0.0, 0.0, 1.0);
 
 	if (BUMPMAP > 0) {
-		normal = normalize((texture2D(SAMPLER_NORMALMAP, gl_TexCoord[0].st).rgb - 0.5) * 2.0); /** < Expanded normal */
+		vec4 normalmap = texture2D(SAMPLER_NORMALMAP, gl_TexCoord[0].st);
+		normal = (normalmap.rgb - 0.5) * 2.0; /** < Expanded normal */
+		normal.xy *= BUMP;
+		normal = normalize(normal);
 	}
 
 	/* Lambert illumination model */

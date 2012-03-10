@@ -818,6 +818,7 @@ static void R_InitModelProgram (r_program_t *prog)
 	R_ProgramParameter1i("BUMPMAP", 0);
 	R_ProgramParameter1i("ANIMATE", 0);
 
+	R_ProgramParameter1f("BUMP", defaultMaterial.bump);
 	R_ProgramParameter1f("GLOWSCALE", defaultMaterial.glowscale);
 	R_ProgramParameter1f("OFFSET", 0.0);
 
@@ -831,7 +832,6 @@ static void R_InitModelProgram (r_program_t *prog)
 		R_ProgramParameter1i("SPECULARMAP", 0);
 		R_ProgramParameter1f("HARDNESS", defaultMaterial.hardness);
 		R_ProgramParameter1f("SPECULAR", defaultMaterial.specular);
-		R_ProgramParameter1f("BUMP", defaultMaterial.bump);
 		R_ProgramParameter1f("PARALLAX", defaultMaterial.parallax);
 		if (r_programs->integer > 2) {
 			R_ProgramParameter1i("SAMPLER_ROUGHMAP", 2);
