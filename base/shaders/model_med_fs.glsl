@@ -73,7 +73,7 @@ void main(void) {
 	/* Calculate specular component via Phong model */
 	vec3 V = reflect(-normalize(eyedir), normal);
 	float LdotV = dot(V, sun);
-	specular = specularmap.rgb * pow(max(LdotV, 0.0), specularmap.a * 512.0);
+	specular = SUNCOLOR * specularmap.rgb * pow(max(LdotV, 0.0), specularmap.a * 512.0);
 
 	/* Calculate dynamic lights (if any) */
 	light = clamp(light + LightFragment(normal), 0.0, 2.0);

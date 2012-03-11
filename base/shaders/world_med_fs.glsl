@@ -88,7 +88,7 @@ void main(void) {
 	/* Calculate specular component via Phong model */
 	vec3 V = reflect(-normalize(eyedir), normalmap.rgb);
 	float LdotV = dot(V, deluxemap);
-	specular = specularmap.rgb * pow(max(LdotV, 0.0), specularmap.a * 512.0);
+	specular = light * specularmap.rgb * pow(max(LdotV, 0.0), specularmap.a * 512.0);
 
 	/* Calculate dynamic lights (if any) */
 	light = clamp(light + LightFragment(normalmap.rgb), 0.0, 2.0);
