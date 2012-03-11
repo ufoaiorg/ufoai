@@ -145,8 +145,48 @@ void R_EnableModelLights (const light_t **lights, int numLights, qboolean inShad
 {
 	int i;
 	int maxLights = r_dynamic_lights->integer;
+	const vec4_t blackColor = {0.0, 0.0, 0.0, 1.0};
+	const vec4_t whiteColor = {1.0, 1.0, 1.0, 1.0};
+	const vec4_t defaultLight0Position = {0.0, 0.0, 1.0, 0.0};
 	vec3_t lightPositions[MAX_GL_LIGHTS];
 	vec4_t lightParams[MAX_GL_LIGHTS];
+
+	if (r_programs->integer == 0) { /* Fixed function path renderer got only the sunlight */
+		/* Setup OpenGL light #0 to act as a sun and environment light */
+		glEnable(GL_LIGHTING);
+		glEnable(GL_LIGHT0);
+		glEnable(GL_COLOR_MATERIAL);
+		glColorMaterial(GL_FRONT_AND_BACK, GL_AMBIENT_AND_DIFFUSE);
+
+		glLightf(GL_LIGHT0, GL_CONSTANT_ATTENUATION, 1.0);
+		glLightf(GL_LIGHT0, GL_LINEAR_ATTENUATION, 0);
+		glLightf(GL_LIGHT0, GL_QUADRATIC_ATTENUATION, 0);
+
+		glLightfv(GL_LIGHT0, GL_SPECULAR, blackColor);
+		glLightfv(GL_LIGHT0, GL_AMBIENT, refdef.modelAmbientColor);
+
+		glLightfv(GL_LIGHT0, GL_POSITION, refdef.sunVector);
+
+		if (enable) {
+			if (inShadow) {
+				/* ambient only */
+				glLightfv(GL_LIGHT0, GL_DIFFUSE, blackColor);
+			} else {
+				/* Full sunlight */
+				glLightfv(GL_LIGHT0, GL_DIFFUSE, refdef.sunDiffuseColor);
+			}
+		} else {
+			/* restore the default OpenGL state */
+			glDisable(GL_LIGHTING);
+			glDisable(GL_COLOR_MATERIAL);
+
+			glLightfv(GL_LIGHT0, GL_POSITION, defaultLight0Position);
+			glLightfv(GL_LIGHT0, GL_AMBIENT, blackColor);
+			glLightfv(GL_LIGHT0, GL_DIFFUSE, whiteColor);
+			glLightfv(GL_LIGHT0, GL_SPECULAR, whiteColor);
+		}
+		return;
+	}
 
 	assert(numLights <= MAX_GL_LIGHTS);
 
@@ -181,7 +221,6 @@ void R_EnableModelLights (const light_t **lights, int numLights, qboolean inShad
 	R_ProgramParameter3fv("AMBIENT", refdef.modelAmbientColor);
 
 	if (inShadow) {
-		vec3_t blackColor = {0.0, 0.0, 0.0};
 		R_ProgramParameter3fv("SUNCOLOR", blackColor);
 	} else {
 		R_ProgramParameter3fv("SUNCOLOR", refdef.sunDiffuseColor);
