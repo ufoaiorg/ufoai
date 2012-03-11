@@ -63,12 +63,13 @@ item needlergun_ammo
 		{
 			name		"_Short Burst"
 			skill		assault
-			projtl		bullet-hmg
+			projtl		needler-small
 			impact		bulletImpact
 			hitbody		null
-			firesnd		weapons/bullet-needler
+			firesnd		weapons/bullet-needler-30x
 			impsnd		impact/nail-impact
 			bodysnd 	impact/nail-bodyimpact
+			sndonce		true
 			speed		2000
 			spread		"1.5 1.6"
 			crouch		0.8
@@ -86,10 +87,10 @@ item needlergun_ammo
 		{
 			name		"_Cannonade"
 			skill		assault
-			projtl		bullet-hmg
+			projtl		needler-small
 			impact		bulletImpact
 			hitbody		null
-			firesnd		weapons/bullet-needlerheavy
+			firesnd		weapons/bullet-needler-90x
 			impsnd		impact/nail-impact
 			bodysnd 	impact/nail-bodyimpact
 			sndonce		true
@@ -109,10 +110,10 @@ item needlergun_ammo
 		{
 			name		"_Needle Stream"
 			skill		assault
-			projtl		bullet-hmg
+			projtl		needler-small
 			impact		bulletImpact
 			hitbody		null
-			firesnd		weapons/bullet-needlerheavy
+			firesnd		weapons/bullet-needler-120x
 			impsnd		impact/nail-impact
 			bodysnd 	impact/nail-bodyimpact
 			sndonce		true
@@ -136,12 +137,13 @@ item needlergun_ammo
 		{
 			name		"_Short Burst"
 			skill		assault
-			projtl		bullet-hmg
+			projtl		needler-heavy
 			impact		bulletImpact
 			hitbody		null
-			firesnd		weapons/bullet-needler
+			firesnd		weapons/bullet-heavyneedler-30x
 			impsnd		impact/nail-impact
 			bodysnd 	impact/nail-bodyimpact
+			sndonce		true
 			speed		2000
 			spread		"1.3 1.5"
 			crouch		0.8
@@ -159,10 +161,10 @@ item needlergun_ammo
 		{
 			name		"_Cannonade"
 			skill		assault
-			projtl		bullet-hmg
+			projtl		needler-heavy
 			impact		bulletImpact
 			hitbody		null
-			firesnd		weapons/bullet-needlerheavy
+			firesnd		weapons/bullet-heavyneedler-105x
 			impsnd		impact/nail-impact
 			bodysnd 	impact/nail-bodyimpact
 			sndonce		true
@@ -182,10 +184,10 @@ item needlergun_ammo
 		{
 			name		"_Needle Stream"
 			skill		assault
-			projtl		bullet-hmg
+			projtl		needler-heavy
 			impact		bulletImpact
 			hitbody		null
-			firesnd		weapons/bullet-needlerheavy
+			firesnd		weapons/bullet-heavyneedler-150x
 			impsnd		impact/nail-impact
 			bodysnd 	impact/nail-bodyimpact
 			sndonce		true

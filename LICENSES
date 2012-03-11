@@ -3715,6 +3715,7 @@ base/pics/sfx/weapons/muzzleplasmaside.png | Creative Commons Attribution-Share 
 base/pics/sfx/weapons/muzzleplasmaspiral.png | GNU General Public License 2.0 | Lord Havoc;MCR | plasmaimpact_01
 base/pics/sfx/weapons/muzzleptl.png | GNU General Public License 2.0 | Lord Havoc;MCR | plasmaimpact_01
 base/pics/sfx/weapons/muzzleptlside.png | Creative Commons Attribution-Share Alike 3.0 | Christian "Crystan" Hoffmann
+base/pics/sfx/weapons/needle-heavy.png | Creative Commons Attribution-Share Alike 3.0 | Christian "Crystan" Hoffmann
 base/pics/sfx/weapons/particlebeam.png | GNU General Public License 2.0 | Lord Havoc;MCR | plasmaimpact_01
 base/pics/sfx/weapons/plasmaball-core.png | GNU General Public License 2.0 | Lord Havoc;MCR | plasmaimpact_01
 base/pics/sfx/weapons/plasmabeam.png | GNU General Public License 2.0 | Lord Havoc;MCR | plasmaimpact_01
@@ -4173,10 +4174,14 @@ base/sound/weapons/bullet-chaingun-5x.ogg | Creative Commons Attribution-Share A
 base/sound/weapons/bullet-flechette.ogg | Creative Commons Attribution-Share Alike 3.0 | Christian Crystan Hoffmann
 base/sound/weapons/bullet-gauss.ogg | Creative Commons Attribution-Share Alike 3.0 | Christian "Crystan" Hoffmann
 base/sound/weapons/bullet-heavybolter.ogg | Creative Commons Attribution-Share Alike 3.0 | Christian "Crystan" Hoffmann
+base/sound/weapons/bullet-heavyneedler-105x.ogg | Creative Commons Attribution-Share Alike 3.0 | Christian "Crystan" Hoffmann
+base/sound/weapons/bullet-heavyneedler-150x.ogg | Creative Commons Attribution-Share Alike 3.0 | Christian "Crystan" Hoffmann
+base/sound/weapons/bullet-heavyneedler-30x.ogg | Creative Commons Attribution-Share Alike 3.0 | Christian "Crystan" Hoffmann
 base/sound/weapons/bullet-hmg-20x.ogg | Creative Commons Attribution-Share Alike 3.0 | Christian "Crystan" Hoffmann
 base/sound/weapons/bullet-hmg-5x.ogg | Creative Commons Attribution-Share Alike 3.0 | Christian "Crystan" Hoffmann
-base/sound/weapons/bullet-needler.ogg | Creative Commons Attribution-Share Alike 3.0 | Christian "Crystan" Hoffmann
-base/sound/weapons/bullet-needlerheavy.ogg | Creative Commons Attribution-Share Alike 3.0 | Christian "Crystan" Hoffmann
+base/sound/weapons/bullet-needler-120x.ogg | Creative Commons Attribution-Share Alike 3.0 | Christian "Crystan" Hoffmann
+base/sound/weapons/bullet-needler-30x.ogg | Creative Commons Attribution-Share Alike 3.0 | Christian "Crystan" Hoffmann
+base/sound/weapons/bullet-needler-90x.ogg | Creative Commons Attribution-Share Alike 3.0 | Christian "Crystan" Hoffmann
 base/sound/weapons/bullet-pistol.ogg | Creative Commons Attribution-Share Alike 3.0 | Christian "Crystan" Hoffmann
 base/sound/weapons/bullet-pistol2.ogg | Creative Commons Attribution-Share Alike 3.0 | Christian "Crystan" Hoffmann
 base/sound/weapons/bullet-rifle-1x.ogg | Creative Commons Attribution-Share Alike 3.0 | Christian "Crystan" Hoffmann

@@ -194,6 +194,36 @@ particle bullet-hmg
 	}
 }
 
+particle needler-heavy
+{
+	init
+	{
+		image  sfx/weapons/needle-heavy
+		tps    190
+		style  axis
+		blend  add
+		offset "0 -16 0"
+		size   "40 40"
+		lightcolor "0.5 0.3 0.2"
+		lightintensity 0.2
+	}
+}
+
+particle needler-small
+{
+	init
+	{
+		image  sfx/weapons/needle-heavy
+		tps    190
+		style  axis
+		blend  add
+		offset "0 -16 0"
+		size   "20 20"
+		lightcolor "0.5 0.3 0.2"
+		lightintensity 0.2
+	}
+}
+
 particle bullet-shotgun
 {
 	init
