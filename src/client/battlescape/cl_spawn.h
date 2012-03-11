@@ -39,7 +39,13 @@ typedef struct {
 	vec3_t scale;
 	vec3_t color;
 	vec3_t ambientNightColor;
+	vec_t nightLight;
+	vec2_t nightSunAngles;
+	vec3_t nightSunColor;
 	vec3_t ambientDayColor;
+	vec_t dayLight;
+	vec2_t daySunAngles;
+	vec3_t daySunColor;
 	vec2_t wait;
 	int maxLevel;
 	int maxMultiplayerTeams;

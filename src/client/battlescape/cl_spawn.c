@@ -58,7 +58,13 @@ static const value_t localEntityValues[] = {
 	{"targetname", V_STRING, offsetof(localEntityParse_t, targetname), 0},
 	{"light", V_INT, offsetof(localEntityParse_t, light), MEMBER_SIZEOF(localEntityParse_t, light)},
 	{"ambient_day", V_VECTOR, offsetof(localEntityParse_t, ambientDayColor), MEMBER_SIZEOF(localEntityParse_t, ambientDayColor)},
+	{"light_day", V_FLOAT, offsetof(localEntityParse_t, dayLight), MEMBER_SIZEOF(localEntityParse_t, dayLight)},
+	{"angles_day", V_POS, offsetof(localEntityParse_t, daySunAngles), MEMBER_SIZEOF(localEntityParse_t, daySunAngles)},
+	{"color_day", V_VECTOR, offsetof(localEntityParse_t, daySunColor), MEMBER_SIZEOF(localEntityParse_t, daySunColor)},
 	{"ambient_night", V_VECTOR, offsetof(localEntityParse_t, ambientNightColor), MEMBER_SIZEOF(localEntityParse_t, ambientNightColor)},
+	{"light_night", V_FLOAT, offsetof(localEntityParse_t, nightLight), MEMBER_SIZEOF(localEntityParse_t, nightLight)},
+	{"angles_night", V_POS, offsetof(localEntityParse_t, nightSunAngles), MEMBER_SIZEOF(localEntityParse_t, nightSunAngles)},
+	{"color_night", V_VECTOR, offsetof(localEntityParse_t, nightSunColor), MEMBER_SIZEOF(localEntityParse_t, nightSunColor)},
 
 	{NULL, 0, 0, 0}
 };
@@ -178,10 +184,14 @@ void CL_SpawnParseEntitystring (void)
 #define MIN_AMBIENT_COMPONENT 0.1
 #define MIN_AMBIENT_SUM 0.50
 
+/** @note Defaults should match those of ufo2map, or lighting will be inconsistent between world and models */
 static void SP_worldspawn (const localEntityParse_t *entData)
 {
 	const int dayLightmap = CL_GetConfigStringInteger(CS_LIGHTMAP);
 	int i;
+	vec3_t sunAngles;
+	vec4_t sunColor;
+	vec_t sunIntensity;
 
 	/* maximum level */
 	cl.mapMaxLevel = entData->maxLevel;
@@ -198,12 +208,56 @@ static void SP_worldspawn (const localEntityParse_t *entData)
 
 	/** @todo - make sun position/color vary based on local time at location? */
 
-	if (dayLightmap)
-		VectorCopy(entData->ambientDayColor, refdef.ambientColor);
-	else
-		VectorCopy(entData->ambientNightColor, refdef.ambientColor);
+	/** @note Some vectors have exra elements to comply with mathlib and/or OpenGL conventions, but handled as shorter ones */
+	if (dayLightmap) {
+		/* set defaults for daylight */
+		Vector4Set(refdef.ambientColor, 0.26, 0.26, 0.26, 1.0);
+		sunIntensity = 280;
+		VectorSet(sunAngles, -75, 100, 0);
+		Vector4Set(sunColor, 0.90, 0.75, 0.65, 1.0);
 
-	/* clamp it */
+		/* override defaults with data from worldspawn entity, if any */
+		if (VectorNotEmpty(entData->ambientDayColor))
+			VectorCopy(entData->ambientDayColor, refdef.ambientColor);
+
+		if (entData->dayLight)
+			sunIntensity = entData->dayLight;
+
+		if (Vector2NotEmpty(entData->daySunAngles))
+			Vector2Copy(entData->daySunAngles, sunAngles);
+
+		if (VectorNotEmpty(entData->daySunColor))
+			VectorCopy(entData->daySunColor, sunColor);
+
+		Vector4Set(refdef.sunSpecularColor, 1.0, 1.0, 0.9, 1);
+	} else {
+		/* set defaults for night light */
+        Vector4Set(refdef.ambientColor, 0.16, 0.16, 0.17, 1.0);
+		sunIntensity = 15;
+		VectorSet(sunAngles, -80, 220, 0);
+		Vector4Set(sunColor, 0.25, 0.25, 0.35, 1.0);
+
+		/* override defaults with data from worldspawn entity, if any */
+		if (VectorNotEmpty(entData->ambientNightColor))
+			VectorCopy(entData->ambientNightColor, refdef.ambientColor);
+
+		if (entData->nightLight)
+			sunIntensity = entData->nightLight;
+
+		if (Vector2NotEmpty(entData->nightSunAngles))
+			Vector2Copy(entData->nightSunAngles, sunAngles);
+
+		if (VectorNotEmpty(entData->nightSunColor))
+			VectorCopy(entData->nightSunColor, sunColor);
+
+		Vector4Set(refdef.sunSpecularColor, 0.5, 0.5, 0.7, 1);
+	}
+
+	ColorNormalize(sunColor, sunColor);
+	VectorScale(sunColor, sunIntensity/255.0, sunColor);
+	Vector4Copy(sunColor, refdef.sunDiffuseColor);
+
+	/* clamp ambient */
 	for (i = 0; i < 3; i++)
 		if (refdef.ambientColor[i] < MIN_AMBIENT_COMPONENT)
 			refdef.ambientColor[i] = MIN_AMBIENT_COMPONENT;
@@ -212,17 +266,8 @@ static void SP_worldspawn (const localEntityParse_t *entData)
 	while (VectorSum(refdef.ambientColor) < MIN_AMBIENT_SUM)
 		VectorScale(refdef.ambientColor, 1.25, refdef.ambientColor);
 
-	refdef.ambientColor[3] = 1.0f; /* unused, but we shouldn't feed garbage to OpenGL driver */
-
-	if (dayLightmap) { /* sunlight color */
-		Vector4Set(refdef.sunDiffuseColor, 0.8, 0.8, 0.8, 1);
-		Vector4Set(refdef.sunSpecularColor, 1.0, 1.0, 0.9, 1);
-	} else { /* moonlight color */
-		Vector4Set(refdef.sunDiffuseColor, 0.2, 0.2, 0.3, 1);
-		Vector4Set(refdef.sunSpecularColor, 0.5, 0.5, 0.7, 1);
-	}
-
-	Vector4Set(refdef.sunVector, 0.0, 0.0, 1.0, 0.0); /** @todo read actual value from the worldspawn entity or use ufo2map default one(s) to match the compiled lighting */
+	AngleVectors(sunAngles, refdef.sunVector, NULL, NULL);
+	refdef.sunVector[3] = 0.0; /* to use as directional light source in OpenGL */
 
 	/** @todo Parse fog from worldspawn config */
 	refdef.weather = WEATHER_NONE;
