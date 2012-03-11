@@ -771,6 +771,8 @@ static void R_InitWorldProgram (r_program_t *prog)
 	R_ProgramParameter1i("BUMPMAP", 0);
 
 	if (r_programs->integer > 1) {
+		R_ProgramParameter3fv("AMBIENT", refdef.ambientColor);
+
 		R_ProgramParameter1i("SPECULARMAP", 0);
 		R_ProgramParameter1i("SAMPLER_SPECULAR", 5);
 
@@ -795,7 +797,10 @@ static void R_InitWorldProgram (r_program_t *prog)
 
 static void R_UseWorldProgram (r_program_t *prog)
 {
-	/*R_ProgramParameter1i("LIGHTS", refdef.numLights);*/
+	if (r_programs->integer > 1) {
+		R_ProgramParameter3fv("AMBIENT", refdef.ambientColor);
+	}
+
 	if (r_fog->integer) {
 		if (r_state.fog_enabled) {
 			R_ProgramParameter3fv("FOGCOLOR", refdef.fogColor);
@@ -822,7 +827,7 @@ static void R_InitModelProgram (r_program_t *prog)
 	R_ProgramParameter1f("GLOWSCALE", defaultMaterial.glowscale);
 	R_ProgramParameter1f("OFFSET", 0.0);
 
-	R_ProgramParameter3fv("AMBIENT", refdef.ambientColor);
+	R_ProgramParameter3fv("AMBIENT", refdef.modelAmbientColor);
 	R_ProgramParameter3fv("SUNCOLOR", refdef.sunDiffuseColor);
 
 	GLVectorTransform(r_locals.world_matrix, refdef.sunVector, sunDirection);
@@ -857,7 +862,7 @@ static void R_UseModelProgram (r_program_t *prog)
 	/*R_ProgramParameter1i("LIGHTS", refdef.numLights);*/
 
 	R_ProgramParameter1f("OFFSET", 0.0);
-	R_ProgramParameter3fv("AMBIENT", refdef.ambientColor);
+	R_ProgramParameter3fv("AMBIENT", refdef.modelAmbientColor);
 	R_ProgramParameter3fv("SUNCOLOR", refdef.sunDiffuseColor);
 
 	GLVectorTransform(r_locals.world_matrix, refdef.sunVector, sunDirection);

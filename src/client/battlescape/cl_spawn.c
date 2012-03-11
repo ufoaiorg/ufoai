@@ -257,14 +257,15 @@ static void SP_worldspawn (const localEntityParse_t *entData)
 	VectorScale(sunColor, sunIntensity/255.0, sunColor);
 	Vector4Copy(sunColor, refdef.sunDiffuseColor);
 
-	/* clamp ambient */
+	/* clamp ambient for models */
+	Vector4Copy(refdef.ambientColor, refdef.modelAmbientColor);
 	for (i = 0; i < 3; i++)
-		if (refdef.ambientColor[i] < MIN_AMBIENT_COMPONENT)
-			refdef.ambientColor[i] = MIN_AMBIENT_COMPONENT;
+		if (refdef.modelAmbientColor[i] < MIN_AMBIENT_COMPONENT)
+			refdef.modelAmbientColor[i] = MIN_AMBIENT_COMPONENT;
 
 	/* scale it into a reasonable range, the clamp above ensures this will work */
-	while (VectorSum(refdef.ambientColor) < MIN_AMBIENT_SUM)
-		VectorScale(refdef.ambientColor, 1.25, refdef.ambientColor);
+	while (VectorSum(refdef.modelAmbientColor) < MIN_AMBIENT_SUM)
+		VectorScale(refdef.modelAmbientColor, 1.25, refdef.modelAmbientColor);
 
 	AngleVectors(sunAngles, refdef.sunVector, NULL, NULL);
 	refdef.sunVector[3] = 0.0; /* to use as directional light source in OpenGL */

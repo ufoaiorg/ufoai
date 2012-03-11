@@ -178,7 +178,7 @@ void R_EnableModelLights (const light_t **lights, int numLights, qboolean inShad
 
 	R_UseMaterial(&defaultMaterial);
 
-	R_ProgramParameter3fv("AMBIENT", refdef.ambientColor);
+	R_ProgramParameter3fv("AMBIENT", refdef.modelAmbientColor);
 
 	if (inShadow) {
 		vec3_t blackColor = {0.0, 0.0, 0.0};

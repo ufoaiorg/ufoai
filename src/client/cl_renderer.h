@@ -205,6 +205,7 @@ typedef struct {
 	int weather;				/**< weather effects */
 	vec4_t fogColor;
 	vec4_t ambientColor;
+	vec4_t modelAmbientColor; /**< clamped to avoid black models */
 	vec4_t sunDiffuseColor;
 	vec4_t sunSpecularColor;
 	vec4_t sunVector;		/**< pointing towards the sun, should be x y z 0 to match the OpengGL logic */

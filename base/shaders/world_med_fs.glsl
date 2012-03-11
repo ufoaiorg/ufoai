@@ -15,6 +15,7 @@ uniform int BUMPMAP;
 uniform int SPECULARMAP;
 /*uniform float SPECULAR; specular exponent divided by 512  */
 /*uniform float HARDNESS; specular component brightness (0 - no specular) */
+uniform vec3 AMBIENT;
 
 /** Diffuse texture.*/
 uniform sampler2D SAMPLER_DIFFUSE;
@@ -88,7 +89,7 @@ void main(void) {
 	/* Calculate specular component via Phong model */
 	vec3 V = reflect(-normalize(eyedir), normalmap.rgb);
 	float LdotV = dot(V, deluxemap);
-	specular = light * specularmap.rgb * pow(max(LdotV, 0.0), specularmap.a * 512.0);
+	specular = clamp(light - AMBIENT, 0.0, 1.0) * specularmap.rgb * pow(max(LdotV, 0.0), specularmap.a * 512.0);
 
 	/* Calculate dynamic lights (if any) */
 	light = clamp(light + LightFragment(normalmap.rgb), 0.0, 2.0);
