@@ -34,6 +34,11 @@ utility MD2Import "Quake2 MD2 Importer" silentErrors:false
 		button importButton "Import MD2..."
 	)
 
+	group "Tools:"
+	(
+		button createTag "Create New Tag" tooltip:"Create a new tag triangle"
+	)
+
 	local appName = "MD2 Importer"
 
 
@@ -435,5 +440,15 @@ utility MD2Import "Quake2 MD2 Importer" silentErrors:false
 				max views redraw
 			)
 		)
+	)
+
+	-- Does exactly what it says :)
+	on createTag pressed do
+	(
+		local verts = #([0, 0, 0], [0, -1, 0], [2, 0, 0])
+		local tri = #([1, 2, 3])
+		local tagObject = mesh prefix:"tag_unnamed" vertices:verts faces:tri pos:[0,0,0]
+		update tagObject
+		max views redraw
 	)
 )
