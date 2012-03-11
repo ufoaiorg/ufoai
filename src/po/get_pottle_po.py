@@ -68,15 +68,10 @@ def download(uri):
     return re
 
 def find_available_languages():
-    data = download(POTTLE_URL)
-    languages = re.findall("%s/([a-zA-Z_]*)/" % POTTLE_BASE, data)
+    data = download(POTTLE_URL + "/projects/ufoai/")
+    languages = re.findall("%s/([a-zA-Z_]*)/ufoai/" % POTTLE_BASE, data)
     languages = set(languages)
-    languages.remove('html')
-    languages.remove('notices')
-    languages.remove('docs')
-    languages.remove('accounts')
     languages.remove('projects')
-    languages.remove('contact')
     return languages
 
 def get_language(lang):
