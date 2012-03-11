@@ -312,20 +312,20 @@ fn fanlength md2 it iv=
 fn makemd2 object=
 (
 	if MD2TAGexport.useanim.state==1 then
-		(
+	(
 		astart=animationrange.start
 		aend=animationrange.end
-		)
+	)
 	else
-		(
+	(
 		astart=MD2TAGexport.animstart.value
 		aend=MD2TAGexport.animend.value
-		)
+	)
 	if not(MD2TAGexport.oneframe.state) do
-		(
+	(
 		astart=1
 		aend=1
-		)
+	)
 
 	obj=(object)
 	floor=getNodeByName "tag_floor" exact:true
@@ -520,11 +520,11 @@ fn writemd2 object md2file=
 	writelong f offsetgl			--offset to gl commands
 	writelong f offsetend			--offset to end
 
------------------------------------------------------
--- end of header
------------------------------------------------------
--- write out the skin names
------------------------------------------------------
+	-----------------------------------------------------
+	-- end of header
+	-----------------------------------------------------
+	-- write out the skin names
+	-----------------------------------------------------
 	for i in model.skinlist do
 	(
 		if i.count>63 do return "Skin name too long"
@@ -532,18 +532,18 @@ fn writemd2 object md2file=
 		for j=i.count to 62 do writebyte f 0
 	)
 
------------------------------------------------------
--- write texture coordinate list
------------------------------------------------------
+	-----------------------------------------------------
+	-- write texture coordinate list
+	-----------------------------------------------------
 	for i in model.texlist do
 	(
 		writeshort f i.s #unsigned
 		writeshort f i.t #unsigned
 	)
 
------------------------------------------------------
---write triangles (C style: -1)
------------------------------------------------------
+	-----------------------------------------------------
+	--write triangles (C style: -1)
+	-----------------------------------------------------
 	for i in model.trilist do
 	(
 		writeshort f (i.vx[1]-1) #unsigned
@@ -554,9 +554,9 @@ fn writemd2 object md2file=
 		writeshort f (i.st[3]-1) #unsigned
 	)
 
------------------------------------------------------
--- write frames
------------------------------------------------------
+	-----------------------------------------------------
+	-- write frames
+	-----------------------------------------------------
 	for i in model.framelist do
 	(
 		writefloat f i.scale.x
@@ -575,9 +575,9 @@ fn writemd2 object md2file=
 			writebyte f i.vNorm[j]
 		)
 	)
------------------------------------------------------
--- write gl commands
------------------------------------------------------
+	-----------------------------------------------------
+	-- write gl commands
+	-----------------------------------------------------
 	for i in model.glcmdlist do
 	(
 		if (classof i)==integer then writelong f i
@@ -585,9 +585,9 @@ fn writemd2 object md2file=
 		else return "Unknown glcmd data type"
 	)
 
-------------------------------------------------------
--- end of file writing
-------------------------------------------------------
+	------------------------------------------------------
+	-- end of file writing
+	------------------------------------------------------
 	msgstr = "MD2: " + md2file + " ->\n" + obj.name + " exported"
 	messagebox msgstr title:"MD2 Export Success"
 
@@ -620,20 +620,20 @@ fn maketags objlist=
 	-- get frame range
 	-------------------------------------
 	if MD2TAGexport.useanim.state==1 then
-		(
+	(
 		astart=animationrange.start
 		aend=animationrange.end
-		)
+	)
 	else
-		(
+	(
 		astart=MD2TAGexport.animstart.value
 		aend=MD2TAGexport.animend.value
-		)
+	)
 	if not(MD2TAGexport.oneframe.state) do
-		(
+	(
 		astart=1
 		aend=1
-		)
+	)
 
 	num=aend-astart+1
 	tags=TAG_file framenum:num namel:#() tagl:#()
@@ -789,17 +789,18 @@ utility MD2TAGExport "MD2/TAG Exporter"
 		checkbox unibbox "Unified Bounding Box" align:#center checked:false
 		button bexportMD2 "     Export MD2    "
 	)
-	group "TAG Export"
+	group "TAG Tools"
 	(
 		button bexportTAG "     Export TAG    "
+		button createTag "Create New Tag" tooltip:"Create a new tag triangle"
 	)
-	group "About"
-	(
-		label titleLabel	"MD2/TAG Exporter v1.5"
-		HyperLink credits1 "by Herby" align:#center address:"mailto:herby@planetquake.com" color:(color 0 100 0) hoverColor:(color 0 0 100)
-		label credits2 "based on code"
-		HyperLink credits3 "by Adam Barton" align:#center address:"mailto:adam.add3d.co.uk" color:(color 0 100 0) hoverColor:(color 0 0 100)
-	)
+---	group "About"
+---	(
+---		label titleLabel	"MD2/TAG Exporter v1.5"
+---		HyperLink credits1 "by Herby" align:#center address:"mailto:herby@planetquake.com" color:(color 0 100 0) hoverColor:(color 0 0 100)
+---		label credits2 "based on code"
+---		HyperLink credits3 "by Adam Barton" align:#center address:"mailto:adam.add3d.co.uk" color:(color 0 100 0) hoverColor:(color 0 0 100)
+---	)
 
 	on baddSkin pressed do
 	(
@@ -850,5 +851,15 @@ utility MD2TAGExport "MD2/TAG Exporter"
 			addcheck (writetags selection tagfilename)
 			lastfile=substring tagfilename 1 (tagfilename.count-4)
 		)
+	)
+
+	-- Does exactly what it says :)
+	on createTag pressed do
+	(
+		local verts = #([0, 0, 0], [0, -1, 0], [2, 0, 0])
+		local tri = #([1, 2, 3])
+		local tagObject = mesh prefix:"tag_unnamed" vertices:verts faces:tri pos:[0,0,0]
+		update tagObject
+		max views redraw
 	)
 )
