@@ -392,9 +392,13 @@ void R_UpdateLightList (entity_t *ent)
 
 	/* Check if origin of this entity is hit by sunlight (not the best test, but at least fast) */
 	/** @todo cache whenever possible */
-	VectorMA(pos, 8192.0, refdef.sunVector, fakeSunPos);
-	R_Trace(pos, fakeSunPos, 0, MASK_SOLID);
-	ent->inShadow = refdef.trace.fraction != 1.0;
+	if (ent->flags & RF_ACTOR) { /** @todo Hack to avoid dropships being shadowed by lightclips placed at them. Should be removed once correct global illumination model is done */
+		VectorMA(pos, 8192.0, refdef.sunVector, fakeSunPos);
+		R_Trace(pos, fakeSunPos, 0, MASK_SOLID);
+		ent->inShadow = refdef.trace.fraction != 1.0;
+	} else {
+		ent->inShadow = qfalse;
+	}
 
 	if (!r_dynamic_lights->integer)
 		return;
