@@ -30,7 +30,7 @@ utility MD2Import "MD2/TAG Importer" silentErrors:false
 
 	group "Import:"
 	(
-		checkbox animCheck "Load all frames" checked:false align:#center
+		checkbox animCheck "Load all frames" checked:true align:#center
 		button importMD2Button "Import MD2..." tooltip:"Import the md2 model"
 		button importTagButton "Import TAG..." tooltip:"Import the tag file"
 	)
