@@ -372,7 +372,7 @@ void R_EndBuildingLightmaps (void)
  * @param[in] size Bounding box size used for tracing
  * @param[in] contentmask Searched content the trace should watch for
  */
-void R_Trace (vec3_t start, vec3_t end, float size, int contentmask)
+void R_Trace (const vec3_t start, const vec3_t end, float size, int contentmask)
 {
 	vec3_t mins, maxs;
 	float frac;
