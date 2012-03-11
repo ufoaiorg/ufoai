@@ -1,6 +1,6 @@
 -------------------------------------
 --MD2/TAG Exporter
---Version 1.4 for max 4
+--Version 1.5 for max 4
 --Herby - Email herby@planetquake.com
 --Adam Barton - Email adam@add3d.co.uk
 -------------------------------------
@@ -459,84 +459,6 @@ fn makemd2 object=
 		qsort md2.trilist zsort ff:md2.framelist[1]
 	)
 
-	------------------------------------
-	-- build GL command list
-	------------------------------------
-	if MD2TAGexport.doglcmds.state do
-	(
-		if cmds==undefined or not MD2TAGexport.sameglcmds.state do
-		(
-			cmds=#()
-			used=#()
-			for i=1 to md2.trilist.count do append used 0
-
-			best_vx=#()
-			best_st=#()
-			best_tris=#()
-
-			for i=1 to md2.trilist.count do
-			(
-				if used[i]>0 do continue
-
-				bestlen=0
-				besttype=0
-
-				for type=1 to 2 do
-				(
-					for sv=1 to 3 do
-					(
-						if type==1 then len=striplength md2 i sv
-						else len=fanlength md2 i sv
-
-						if len>bestlen do
-						(
-							besttype=type
-							bestlen=len
-							best_vx=#()
-							best_st=#()
-							best_tris=#()
-
-							for j=1 to bestlen+2 do
-							(
-								append best_vx strip_vx[j]
-								append best_st strip_st[j]
-							)
-							for j=1 to bestlen do
-								append best_tris strip_tris[j]
-						)
-					)
-				)
-
-				for j=1 to bestlen do
-					used[best_tris[j]]=1
-
-				if besttype==1 then append cmds (bestlen+2)
-				else append cmds -(bestlen+2)
-
-				for j=1 to bestlen+2 do
-				(
-					k=best_st[j]
-
-					s=md2.texlist[k].s as float
-					t=md2.texlist[k].t as float
-
-					s=(s+0.5)/256;
-					t=(t+0.5)/256;
-
-					append cmds s
-					append cmds t
-					append cmds (best_vx[j]-1)   -- (C Style: -1)
-				)
-			)
-			append cmds 0
-
-			if not MD2TAGexport.sameglcmds.enabled do
-				MD2TAGexport.sameglcmds.enabled=true
-		)
-
-		md2.glcmdlist=cmds
-	)
-
 	md2
 )
 
@@ -864,9 +786,7 @@ utility MD2TAGExport "MD2/TAG Exporter"
 	(
 		checkbox dozsort "Z-Sort Triangles" align:#center checked:true
 		checkbox donormals "Generate Normals" align:#center checked:true
-		checkbox doglcmds "Add GL Commands" align:#center checked:true
 		checkbox unibbox "Unified Bounding Box" align:#center checked:false
-		checkbox sameglcmds "Use same GLCmds" align:#center checked:false enabled:false
 		button bexportMD2 "     Export MD2    "
 	)
 	group "TAG Export"
@@ -875,7 +795,7 @@ utility MD2TAGExport "MD2/TAG Exporter"
 	)
 	group "About"
 	(
-		label titleLabel	"MD2/TAG Exporter v1.4"
+		label titleLabel	"MD2/TAG Exporter v1.5"
 		HyperLink credits1 "by Herby" align:#center address:"mailto:herby@planetquake.com" color:(color 0 100 0) hoverColor:(color 0 0 100)
 		label credits2 "based on code"
 		HyperLink credits3 "by Adam Barton" align:#center address:"mailto:adam.add3d.co.uk" color:(color 0 100 0) hoverColor:(color 0 0 100)
@@ -910,7 +830,7 @@ utility MD2TAGExport "MD2/TAG Exporter"
 
 		md2filename=getsavefilename caption:"Save MD2" \
 			filename:(lastfile+".md2") \
-			types:"Blitz MD2 (*.md2)|*.md2|All Files (*.*)|*.*|"
+			types:"UFO:AI MD2 (*.md2)|*.md2|All Files (*.*)|*.*|"
 		if md2filename!=undefined do
 		(
 			addcheck (writemd2 selection md2filename)
@@ -924,7 +844,7 @@ utility MD2TAGExport "MD2/TAG Exporter"
 
 		tagfilename=getsavefilename caption:"Save TAG" \
 			filename:(lastfile+".tag") \
-			types:"Herby TAG (*.tag)|*.tag|All Files (*.*)|*.*|"
+			types:"UFO:AI MD2 TAG (*.tag)|*.tag|All Files (*.*)|*.*|"
 		if tagfilename!=undefined do
 		(
 			addcheck (writetags selection tagfilename)
