@@ -1,0 +1,41 @@
+
+// entity 0
+{
+"classname" "worldspawn"
+}
+// entity 1
+{
+"classname" "misc_model"
+"model" "models/objects/bathroom/soap.md2"
+"origin" "3.125 1.5 34"
+"spawnflags" "255"
+"skin" "0"
+"angles" "0 -90 0"
+"modelscale_vec" "0.5 0.5 0.5"
+}
+// entity 2
+{
+"classname" "func_group"
+// brush 0
+{
+( 5.75 1.625 44 ) ( 5.75 1.5 44 ) ( 0 1.625 44 ) tex_common/weaponclip 0 0 0 0.5 0.5 65280 0 0
+( 5.875 3.125 44 ) ( 0.125 3.125 44 ) ( 5.875 3.125 34 ) tex_common/weaponclip 0 0 0 0.5 0.5 65280 0 0
+( 5.75 1.625 44 ) ( 5.75 1.625 34 ) ( 5.75 1.5 44 ) tex_common/weaponclip 0 0 0 0.5 0.5 65280 0 0
+( 0 1.5 34 ) ( 5.75 1.5 34 ) ( 0 1.625 34 ) tex_common/weaponclip 0 0 0 0.5 0.5 65280 0 0
+( 0 0 34 ) ( 0 0 44 ) ( 5.75 0 34 ) tex_common/weaponclip 0 0 0 0.5 0.5 65280 0 0
+( 0 1.5 34 ) ( 0 1.625 34 ) ( 0 1.5 44 ) tex_common/weaponclip 0 0 0 0.5 0.5 65280 0 0
+( 64 3.125 37.5 ) ( -64 2.25 44 ) ( -64 3.125 37.5 ) tex_common/weaponclip 0 0 0 0.5 0.5 65280 0 0
+( -64 3.125 36.125 ) ( -64 2.375 34 ) ( 64 3.125 36.125 ) tex_common/weaponclip 0 0 0 0.5 0.5 65280 0 0
+}
+// brush 1
+{
+( 5.75 1.625 44 ) ( 5.75 1.5 44 ) ( 0 1.625 44 ) tex_common/lightclip 0 0 0 0.5 0.5 65280 0 0
+( 5.875 3.125 44 ) ( 0.125 3.125 44 ) ( 5.875 3.125 34 ) tex_common/lightclip 0 0 0 0.5 0.5 65280 0 0
+( 5.75 1.625 44 ) ( 5.75 1.625 34 ) ( 5.75 1.5 44 ) tex_common/lightclip 0 0 0 0.5 0.5 65280 0 0
+( 0 1.5 34 ) ( 5.75 1.5 34 ) ( 0 1.625 34 ) tex_common/lightclip 0 0 0 0.5 0.5 65280 0 0
+( 0 0 34 ) ( 0 0 44 ) ( 5.75 0 34 ) tex_common/lightclip 0 0 0 0.5 0.5 65280 0 0
+( 0 1.5 34 ) ( 0 1.625 34 ) ( 0 1.5 44 ) tex_common/lightclip 0 0 0 0.5 0.5 65280 0 0
+( 64 3.125 37.5 ) ( -64 2.25 44 ) ( -64 3.125 37.5 ) tex_common/lightclip 0 0 0 0.5 0.5 65280 0 0
+( -64 3.125 36.125 ) ( -64 2.375 34 ) ( 64 3.125 36.125 ) tex_common/lightclip 0 0 0 0.5 0.5 65280 0 0
+}
+}
