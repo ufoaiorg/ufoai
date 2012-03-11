@@ -232,7 +232,7 @@ static void SP_worldspawn (const localEntityParse_t *entData)
 		Vector4Set(refdef.sunSpecularColor, 1.0, 1.0, 0.9, 1);
 	} else {
 		/* set defaults for night light */
-        Vector4Set(refdef.ambientColor, 0.16, 0.16, 0.17, 1.0);
+		Vector4Set(refdef.ambientColor, 0.16, 0.16, 0.17, 1.0);
 		sunIntensity = 15;
 		VectorSet(sunAngles, -80, 220, 0);
 		Vector4Set(sunColor, 0.25, 0.25, 0.35, 1.0);
