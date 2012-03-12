@@ -31,6 +31,7 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #include "cp_installation.h"
 #include "cp_map.h"
 #include "cp_ufo.h"
+#include "cp_uforecovery_callbacks.h"
 
  /**
  * @brief Sets the title of the installation to a cvar to prepare the rename menu.
@@ -253,9 +254,13 @@ static void INS_FillUFOYardData_f (void)
 		UI_ExecuteConfunc("ufolist_addufoyard %d \"%s\" \"%s\" %d %d \"%s\"", ins->idx, ins->name, nationName, ins->ufoCapacity.max, freeCap, buildTime);
 
 		US_Foreach(ufo) {
+			const char *ufoName = UFO_AircraftToIDOnGeoscape(ufo->ufoTemplate);
+			const char *condition = va(_("Condition: %3.0f%%"), ufo->condition * 100);
+			const char *status = US_StoredUFOStatus(ufo);
+
 			if (ufo->installation != ins)
 				continue;
-			UI_ExecuteConfunc("ufolist_addufo %d \"%s\" \"Health %3.0f%%\" \"%s\"", ufo->idx, UFO_AircraftToIDOnGeoscape(ufo->ufoTemplate), ufo->condition * 100, ufo->ufoTemplate->model);
+			UI_ExecuteConfunc("ufolist_addufo %d \"%s\" \"%s\" \"%s\" \"%s\"", ufo->idx, ufoName, condition, ufo->ufoTemplate->model, status);
 		}
 	}
 }

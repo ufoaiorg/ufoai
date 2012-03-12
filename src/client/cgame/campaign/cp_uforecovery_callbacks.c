@@ -6,7 +6,7 @@
  */
 
 /*
-Copyright (C) 2002-2011 UFO: Alien Invasion.
+Copyright (C) 2002-2012 UFO: Alien Invasion.
 
 This program is free software; you can redistribute it and/or
 modify it under the terms of the GNU General Public License
@@ -29,6 +29,8 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #include "cp_ufo.h"
 #include "cp_uforecovery.h"
 #include "cp_uforecovery_callbacks.h"
+#include "../../ui/ui_popup.h" /* popupText */
+
 
 #include "../../ui/ui_main.h"
 
@@ -510,6 +512,89 @@ static void UR_DialogStartSell_f (void)
 	UR_DialogRecoveryDone();
 }
 
+/**
+ * @brief Returns string representation of the stored UFO's status
+ * @note uses stored ufo status and disassembly
+ */
+const char *US_StoredUFOStatus (const storedUFO_t *ufo)
+{
+	assert(ufo);
+
+	if (ufo->disassembly != NULL)
+		return "disassembling";
+
+	switch (ufo->status) {
+		case SUFO_STORED:
+			return "stored";
+		case SUFO_RECOVERED:
+		case SUFO_TRANSFERED:
+			return "transfering";
+		default:
+			return "unknown";
+	}
+}
+
+/**
+ * @brief Send Stored UFO data to the UI
+ * @note it's called by 'ui_selectstoredufo' command with a parameter of the stored UFO IDX
+ */
+static void US_SelectStoredUfo_f (void)
+{
+	const storedUFO_t *ufo;
+
+	if (Cmd_Argc() < 2 || (ufo = US_GetStoredUFOByIDX(atoi(Cmd_Argv(1)))) == NULL) {
+		UI_ExecuteConfunc("show_storedufo -");
+		return;
+	} else {
+		const char *ufoName = UFO_AircraftToIDOnGeoscape(ufo->ufoTemplate);
+		const char *status = US_StoredUFOStatus(ufo);
+		const date_t time = Date_Substract(ufo->arrive, ccs.date);
+		const char *eta;
+
+		if (Q_streq(status, "transfering"))
+			eta = CP_SecondConvert(Date_DateToSeconds(&time));
+		else
+			eta = "-";
+
+		UI_ExecuteConfunc("show_storedufo %d \"%s\" %3.0f \"%s\" \"%s\" \"%s\" \"%s\"", ufo->idx, ufoName, ufo->condition * 100, ufo->ufoTemplate->model, status, eta, ufo->installation->name);
+	}
+}
+
+
+/**
+ * @brief Destroys a stored UFO
+ * @note it's called by 'ui_destroystoredufo' command with a parameter of the stored UFO IDX and a confirmation value
+ */
+static void US_DestroySoredUFO_f (void)
+{
+	storedUFO_t *ufo = NULL;
+
+	if (Cmd_Argc() < 2) {
+			Com_DPrintf(DEBUG_CLIENT, "Usage: %s <idx> [0|1]\nWhere the second, optional parameter is the confirmation.\n", Cmd_Argv(0));
+			return;
+	} else {
+		ufo = US_GetStoredUFOByIDX(atoi(Cmd_Argv(1)));
+		if (!ufo) {
+			Com_DPrintf(DEBUG_CLIENT, "Stored UFO with idx: %i does not exist\n", atoi(Cmd_Argv(1)));
+			return;
+		}
+	}
+
+	/* Ask 'Are you sure?' by default */
+	if (Cmd_Argc() < 3 || !atoi(Cmd_Argv(2))) {
+		char command[128];
+
+		Com_sprintf(command, sizeof(command), "ui_destroystoredufo %d 1;ui_pop; mn_installation_select %d;", ufo->idx, ufo->installation->idx);
+		UI_PopupButton(_("Destroy stored UFO"), _("Do you really want to destroy this stored UFO?"),
+			command, _("Destroy"), _("Destroy stored UFO"),
+			"ui_pop;", _("Cancel"), _("Forget it"),
+			NULL, NULL, NULL);
+		return;
+	}
+	US_RemoveStoredUFO(ufo);
+	Cmd_ExecuteString(va("mn_installation_select %d", ufo->installation->idx));
+}
+
 void UR_InitCallbacks (void)
 {
 	Cmd_AddCommand("cp_uforecovery_init", UR_DialogInit_f, "Function to trigger UFO Recovered event");
@@ -519,10 +604,16 @@ void UR_InitCallbacks (void)
 	Cmd_AddCommand("cp_uforecovery_store_start", UR_DialogStartStore_f, "Function to start UFO recovery processing.");
 	Cmd_AddCommand("cp_uforecovery_sell_start", UR_DialogStartSell_f, "Function to start UFO selling processing.");
 	Cmd_AddCommand("cp_uforecovery_sort", UR_DialogSortByColumn_f, "Sorts nations and update ui state.");
+
+	Cmd_AddCommand("ui_selectstoredufo", US_SelectStoredUfo_f, "Send Stored UFO data to the UI");
+	Cmd_AddCommand("ui_destroystoredufo", US_DestroySoredUFO_f, "Desstroy stored UFO");
 }
 
 void UR_ShutdownCallbacks (void)
 {
+	Cmd_RemoveCommand("ui_destroystoredufo");
+	Cmd_RemoveCommand("ui_selectstoredufo");
+
 	Cmd_RemoveCommand("cp_uforecovery_init");
 	Cmd_RemoveCommand("cp_uforecovery_sell_init");
 	Cmd_RemoveCommand("cp_uforecovery_store_init");
