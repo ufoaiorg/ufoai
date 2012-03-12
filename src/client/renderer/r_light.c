@@ -145,7 +145,7 @@ void R_EnableModelLights (const light_t **lights, int numLights, qboolean inShad
 {
 	int i;
 	int maxLights = r_dynamic_lights->integer;
-	const vec4_t blackColor = {0.0, 0.0, 0.0, 1.0};
+	vec4_t blackColor = {0.0, 0.0, 0.0, 1.0};
 	const vec4_t whiteColor = {1.0, 1.0, 1.0, 1.0};
 	const vec4_t defaultLight0Position = {0.0, 0.0, 1.0, 0.0};
 	vec3_t lightPositions[MAX_GL_LIGHTS];
