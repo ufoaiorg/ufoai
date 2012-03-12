@@ -98,6 +98,7 @@ cvar_t *r_parallax;
 cvar_t *r_fog;
 cvar_t *r_flares;
 cvar_t *r_coronas;
+cvar_t *r_drawtags;
 
 static void R_PrintInfo (const char *pre, const char *msg)
 {
@@ -572,6 +573,7 @@ static void R_RegisterSystemVars (void)
 	r_flares = Cvar_Get("r_flares", "1", CVAR_ARCHIVE, "Activate or deactivate flares");
 	r_coronas = Cvar_Get("r_coronas", "1", CVAR_ARCHIVE, "Activate or deactivate coronas");
 	r_particles = Cvar_Get("r_particles", "1", 0, "Activate or deactivate particle rendering");
+	r_drawtags = Cvar_Get("r_drawtags", "1", 0, "Activate or deactivate tag rendering");
 
 	for (commands = r_commands; commands->name; commands++)
 		Cmd_AddCommand(commands->name, commands->function, commands->description);

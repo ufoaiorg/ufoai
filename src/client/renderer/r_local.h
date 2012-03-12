@@ -95,6 +95,7 @@ extern cvar_t *r_fog;
 extern cvar_t *r_flares;
 extern cvar_t *r_coronas;
 extern cvar_t *r_dynamic_lights;
+extern cvar_t *r_drawtags;
 
 /* private renderer variables */
 typedef struct rlocals_s {

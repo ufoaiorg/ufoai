@@ -541,6 +541,44 @@ static mAliasMesh_t* R_GetLevelOfDetailForModel (const vec3_t origin, const mAli
 	}
 }
 
+static void R_DrawAliasTags (const mAliasModel_t *mod)
+{
+	int i;
+	const uint32_t color[] = {0xFF0000FF, 0xFF00FF00, 0xFFFF0000};
+	glEnable(GL_LINE_SMOOTH);
+	R_EnableTexture(&texunit_diffuse, qfalse);
+	R_EnableColorArray(qtrue);
+
+	for (i = 0; i < mod->num_tags; i++) {
+		int j;
+		const mAliasTag_t *tag = &mod->tags[i];
+		for (j = 0; j < 3; j++) {
+			vec3_t out;
+			const mAliasTagOrientation_t *o = &tag->orient[mod->curFrame];
+			VectorMA(o->origin, 5, o->axis[j], out);
+			const vec3_t points[] = { { o->origin[0], o->origin[1], o->origin[2] }, { out[0], out[1], out[2] } };
+			GLbyte colorArray[8];
+
+			memcpy(&colorArray[0], &color[j], 4);
+			memcpy(&colorArray[4], &color[j], 4);
+
+			R_BindArray(GL_COLOR_ARRAY, GL_UNSIGNED_BYTE, colorArray);
+			R_BindArray(GL_VERTEX_ARRAY, GL_FLOAT, points);
+			glDrawArrays(GL_LINE_STRIP, 0, 2);
+
+			refdef.batchCount++;
+		}
+	}
+
+	/* restore default array bindings */
+	R_BindDefaultArray(GL_COLOR_ARRAY);
+	R_BindDefaultArray(GL_VERTEX_ARRAY);
+
+	R_EnableColorArray(qfalse);
+	R_EnableTexture(&texunit_diffuse, qtrue);
+	glDisable(GL_LINE_SMOOTH);
+}
+
 static mAliasMesh_t* R_DrawAliasModelBuffer (entity_t *e)
 {
 	mAliasModel_t *mod = &e->model->alias;
@@ -555,6 +593,10 @@ static mAliasMesh_t* R_DrawAliasModelBuffer (entity_t *e)
 		R_DrawAliasStatic(lodMesh, e->shell);
 	else
 		R_DrawAliasFrameLerp(mod, lodMesh, e->as.backlerp, e->as.frame, e->as.oldframe, e->shell);
+
+	if (r_drawtags->integer) {
+		R_DrawAliasTags(mod);
+	}
 
 	return lodMesh;
 }
