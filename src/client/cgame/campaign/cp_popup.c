@@ -550,13 +550,13 @@ static void CL_PopupInterceptBaseClick_f (void)
 
 	installation = NULL;
 	if (num >= 0) { /* don't try to find an installation if we already found the right base */
-		INS_Foreach(i) {
+		INS_Foreach(inst) {
 			/* Check if the installation should be displayed in base list */
-			if (AII_InstallationCanShoot(i)) {
+			if (AII_InstallationCanShoot(inst)) {
 				num--;
 				atLeastOneBase = qtrue;
 				if (num < 0) {
-					installation = i;
+					installation = inst;
 					break;
 				}
 			}
