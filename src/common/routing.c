@@ -398,7 +398,9 @@ int RT_CheckCell (mapTiles_t *mapTiles, routing_t * map, const int actorSize, co
 	box_t box; /* Holds the exact bounds to be traced for legs and torso. */
 	pos3_t pos;
 	float bottom, top; /* Floor and ceiling model distances from the cell base. (in mapunits) */
+#ifdef DEBUG
 	float initial; /* Cell floor and ceiling z coordinate. */
+#endif
 	int bottomQ, topQ; /* The floor and ceiling in QUANTs */
 	int i;
 	int fz, cz; /* Floor and ceiling Z cell coordinates */
@@ -420,16 +422,11 @@ int RT_CheckCell (mapTiles_t *mapTiles, routing_t * map, const int actorSize, co
 	/*
 	 * Adjust these points so that start to end is from the top of the cell to the bottom of the model.
 	 */
+#ifdef DEBUG
 	initial = start[2] + UNIT_HEIGHT / 2; /* This is the top-most starting point in this cell. */
+#endif
 	start[2] += UNIT_HEIGHT / 2 - QUANT; /* This one QUANT unit below initial. */
 	end[2] = -UNIT_HEIGHT * 2; /* To the bottom of the model! (Plus some for good measure) */
-
-#ifdef DEBUG
-	/** @todo remove me */
-	/* just a place to place a breakpoint */
-	if (x == 126 && y == 121 && actorSize == 1)
-		i = 17;
-#endif
 
 	/*
 	 * Trace for a floor.  Steps:
@@ -465,7 +462,9 @@ int RT_CheckCell (mapTiles_t *mapTiles, routing_t * map, const int actorSize, co
 		/* We have hit a brush that faces up and can be stood on. Look for a ceiling. */
 		bottom = tr.endpos[2];  /* record the floor position. */
 
+#ifdef DEBUG
 		assert(initial > bottom);
+#endif
 
 		if (debugTrace)
 			Com_Printf("Potential floor found at %f.\n", bottom);
