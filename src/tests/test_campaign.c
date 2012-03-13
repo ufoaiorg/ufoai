@@ -372,6 +372,7 @@ static void testAutoMissions (void)
 	base = CreateBase("unittestautomission", pos);
 	CU_ASSERT_PTR_NOT_NULL_FATAL(base);
 
+	aircraft = NULL;
 	AIR_ForeachFromBase(a, base) {
 		if (AIR_GetTeamSize(a) > 0) {
 			aircraft = a;
