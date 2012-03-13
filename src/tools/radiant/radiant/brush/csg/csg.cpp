@@ -251,7 +251,7 @@ static bool Brush_subtract (const Brush& brush, const Brush& other, brush_vector
 			}
 		}
 
-		if (fragments.size()) {
+		if (!fragments.empty()) {
 			ret_fragments.insert(ret_fragments.end(), fragments.begin(), fragments.end());
 			return true;
 		}

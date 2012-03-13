@@ -353,7 +353,7 @@ void FaceInstance::update_move_planepts_vertex2 (std::size_t index, std::size_t 
 }
 void FaceInstance::update_selection_vertex ()
 {
-	if (m_vertexSelection.size() == 0) {
+	if (m_vertexSelection.empty()) {
 		m_selectableVertices.setSelected(false);
 	} else {
 		m_selectableVertices.setSelected(true);
@@ -409,7 +409,7 @@ void FaceInstance::update_move_planepts_edge (std::size_t index)
 }
 void FaceInstance::update_selection_edge ()
 {
-	if (m_edgeSelection.size() == 0) {
+	if (m_edgeSelection.empty()) {
 		m_selectableEdges.setSelected(false);
 	} else {
 		m_selectableEdges.setSelected(true);
