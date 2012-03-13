@@ -387,6 +387,7 @@ typedef struct {
 
 
 #define BSP_SwapHeader(header, name) { \
+	unsigned int i; \
 	(header)->ident = LittleLong((header)->ident); \
 	(header)->version = LittleLong((header)->version); \
 	for (i = 0; i < HEADER_LUMPS; i++) { \

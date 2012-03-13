@@ -786,7 +786,6 @@ static void CM_AddMapTile (const char *name, const qboolean day, const int sX, c
 	char filename[MAX_QPATH];
 	unsigned checksum;
 	byte *buf;
-	unsigned int i;
 	int length;
 	dBspHeader_t header;
 	/* use for random map assembly for shifting origins and so on */
