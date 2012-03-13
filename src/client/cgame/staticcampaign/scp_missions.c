@@ -270,7 +270,7 @@ void SCP_CampaignActivateFirstStage (void)
 
 void SCP_CampaignProgress (const missionResults_t *results)
 {
-	actMis_t *mission;
+	actMis_t *mission = NULL;
 	int i;
 
 	for (i = 0; i < scd->numActiveMissions; i++) {
@@ -280,7 +280,7 @@ void SCP_CampaignProgress (const missionResults_t *results)
 		}
 	}
 
-	if (i == scd->numActiveMissions) {
+	if (i == scd->numActiveMissions || mission == NULL) {
 		Com_Printf("SCP_CampaignProgress: Could not find an active mission\n");
 		return;
 	}
