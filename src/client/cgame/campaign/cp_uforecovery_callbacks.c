@@ -544,17 +544,17 @@ static void US_SelectStoredUfo_f (void)
 
 	if (Cmd_Argc() < 2 || (ufo = US_GetStoredUFOByIDX(atoi(Cmd_Argv(1)))) == NULL) {
 		UI_ExecuteConfunc("show_storedufo -");
-		return;
 	} else {
 		const char *ufoName = UFO_AircraftToIDOnGeoscape(ufo->ufoTemplate);
 		const char *status = US_StoredUFOStatus(ufo);
-		const date_t time = Date_Substract(ufo->arrive, ccs.date);
 		const char *eta;
 
-		if (Q_streq(status, "transfering"))
+		if (Q_streq(status, "transfering")) {
+			date_t time = Date_Substract(ufo->arrive, ccs.date);
 			eta = CP_SecondConvert(Date_DateToSeconds(&time));
-		else
+		} else {
 			eta = "-";
+		}
 
 		UI_ExecuteConfunc("show_storedufo %d \"%s\" %3.0f \"%s\" \"%s\" \"%s\" \"%s\"", ufo->idx, ufoName, ufo->condition * 100, ufo->ufoTemplate->model, status, eta, ufo->installation->name);
 	}
