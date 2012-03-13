@@ -336,13 +336,11 @@ static void BS_BuyType (const base_t *base)
 	switch (buyCat) {
 	case FILTER_AIRCRAFT:	/* Aircraft */
 		{
-		const technology_t* tech;
 		const aircraft_t *aircraftTemplate;
 		for (i = 0, j = 0, aircraftTemplate = ccs.aircraftTemplates; i < ccs.numAircraftTemplates; i++, aircraftTemplate++) {
 			if (!BS_AircraftIsOnMarket(aircraftTemplate))
 				continue;
-			tech = aircraftTemplate->tech;
-			assert(tech);
+			assert(aircraftTemplate->tech);
 			if (BS_GetStorageAmountInBase(base, aircraftTemplate->id) + BS_GetAircraftOnMarket(aircraftTemplate) > 0) {
 				if (j >= buyList.scroll && j < MAX_MARKET_MENU_ENTRIES) {
 					UI_ExecuteConfunc("buy_show %i", j - buyList.scroll);
