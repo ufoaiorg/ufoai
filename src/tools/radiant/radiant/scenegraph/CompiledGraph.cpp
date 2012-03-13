@@ -58,7 +58,7 @@ void CompiledGraph::addSceneObserver(scene::Graph::Observer* observer) {
 
 void CompiledGraph::removeSceneObserver(scene::Graph::Observer* observer) {
 	// Cycle through the list of observers and call the moved method
-	for (ObserverList::iterator i = _sceneObservers.begin(); i != _sceneObservers.end(); i++) {
+	for (ObserverList::iterator i = _sceneObservers.begin(); i != _sceneObservers.end(); ++i) {
 		scene::Graph::Observer* registered = *i;
 
 		if (registered == observer) {
@@ -70,7 +70,7 @@ void CompiledGraph::removeSceneObserver(scene::Graph::Observer* observer) {
 
 void CompiledGraph::sceneChanged ()
 {
-	for (ObserverList::iterator i = _sceneObservers.begin(); i != _sceneObservers.end(); i++) {
+	for (ObserverList::iterator i = _sceneObservers.begin(); i != _sceneObservers.end(); ++i) {
 		scene::Graph::Observer* observer = *i;
 		observer->onSceneGraphChange();
 	}
@@ -166,7 +166,7 @@ void CompiledGraph::insert (scene::Instance* instance)
 	// Notify the graph tree model about the change
 	sceneChanged();
 
-	for (ObserverList::iterator i = _sceneObservers.begin(); i != _sceneObservers.end(); i++) {
+	for (ObserverList::iterator i = _sceneObservers.begin(); i != _sceneObservers.end(); ++i) {
 		(*i)->onSceneNodeInsert(*instance);
 	}
 
@@ -180,7 +180,7 @@ void CompiledGraph::erase (scene::Instance* instance)
 	// Notify the graph tree model about the change
 	sceneChanged();
 
-	for (ObserverList::iterator i = _sceneObservers.begin(); i != _sceneObservers.end(); i++) {
+	for (ObserverList::iterator i = _sceneObservers.begin(); i != _sceneObservers.end(); ++i) {
 		(*i)->onSceneNodeErase(*instance);
 	}
 
