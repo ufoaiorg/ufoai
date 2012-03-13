@@ -458,7 +458,6 @@ static void HUD_DisplayActions (const char* callback, const le_t* actor, qboolea
 	const objDef_t *ammo;
 	const fireDef_t *fd;
 	int i;
-	character_t* chr;
 
 	if (!actor)
 		return;
@@ -480,9 +479,6 @@ static void HUD_DisplayActions (const char* callback, const le_t* actor, qboolea
 			Com_DPrintf(DEBUG_CLIENT, "HUD_DisplayFiremodes: no weapon or ammo found.\n");
 			return;
 		}
-
-		chr = CL_ActorGetChr(actor);
-		assert(chr);
 
 		for (i = 0; i < MAX_FIREDEFS_PER_WEAPON; i++) {
 			/* Display the firemode information (image + text). */
@@ -519,9 +515,6 @@ static void HUD_DisplayActions (const char* callback, const le_t* actor, qboolea
 			Com_DPrintf(DEBUG_CLIENT, "HUD_DisplayFiremodes: no weapon or ammo found.\n");
 			return;
 		}
-
-		chr = CL_ActorGetChr(actor);
-		assert(chr);
 
 		for (i = 0; i < MAX_FIREDEFS_PER_WEAPON; i++) {
 			/* Display the firemode information (image + text). */
