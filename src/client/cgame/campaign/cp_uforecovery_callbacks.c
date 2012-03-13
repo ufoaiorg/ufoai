@@ -30,7 +30,7 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #include "cp_uforecovery.h"
 #include "cp_uforecovery_callbacks.h"
 #include "cp_time.h"
-#include "../../ui/ui_popup.h" /* popupText */
+#include "../../ui/ui_popup.h" /* UI_PopupButton */
 #include "../../ui/ui_main.h"
 
 /**

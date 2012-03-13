@@ -161,6 +161,8 @@ static void SL_SliceTheWorld (const TR_TILE_TYPE *tile, const vec3_t mins, const
 	qboolean rotated = qfalse;
 	unsigned char *pictureBuffer;
 
+	lineX1 = lineY1 = lineX2 = lineY2 = 0.0f;
+
 	width = (int) (maxX - minX);
 	height = (int) (maxY - minY);
 
