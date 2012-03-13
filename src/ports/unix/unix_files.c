@@ -218,7 +218,6 @@ void Sys_Mkfifo (const char *ospath, qFILE *f)
 {
 	FILE *fifo;
 	int result;
-	int fn;
 	struct stat buf;
 
 	/* if file already exists AND is a pipefile, remove it */
@@ -231,7 +230,7 @@ void Sys_Mkfifo (const char *ospath, qFILE *f)
 
 	fifo = fopen(ospath, "w+");
 	if (fifo) {
-		fn = fileno(fifo);
+		const int fn = fileno(fifo);
 		fcntl(fn, F_SETFL, O_NONBLOCK);
 	}
 
