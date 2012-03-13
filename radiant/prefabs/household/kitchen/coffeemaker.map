@@ -1,0 +1,51 @@
+
+// entity 0
+{
+"classname" "worldspawn"
+}
+// entity 1
+{
+"classname" "misc_model"
+"model" "models/objects/furniture/coffeemaker/coffeemaker.md2"
+"origin" "2.625 2.625 4"
+"spawnflags" "255"
+"skin" "0"
+"angles" "0 2.50448e-006 0"
+}
+// entity 2
+{
+"classname" "func_group"
+// brush 0
+{
+( 6 5 14.875 ) ( 6 0 14.875 ) ( 0 5 14.875 ) tex_common/weaponclip 0 0 0 0.5 0.5 65280 0 0
+( 6.125 5.125 14.875 ) ( 0.125 5.125 14.875 ) ( 6.125 5.125 13.875 ) tex_common/weaponclip 63.75 19.75 0 0.5 0.5 65280 0 0
+( 5.875 5 5 ) ( 5.875 5 4 ) ( 5.875 0 5 ) tex_common/weaponclip 0 0 0 0.5 0.5 65280 0 0
+( 0 0 4 ) ( 6 0 4 ) ( 0 5 4 ) tex_common/weaponclip 0 0 0 0.5 0.5 65280 0 0
+( 0 0 4 ) ( 0 0 5 ) ( 6 0 4 ) tex_common/weaponclip 0 0 0 0.5 0.5 65280 0 0
+( 0 0 4 ) ( 0 5 4 ) ( 0 0 5 ) tex_common/weaponclip 0 0 0 0.5 0.5 65280 0 0
+( 5.875 1.375 -64 ) ( 3.5 0 -64 ) ( 5.875 1.375 64 ) tex_common/weaponclip 0 0 0 0.5 0.5 65280 0 0
+( 5.875 4 64 ) ( 3.75 5.125 -64 ) ( 5.875 4 -64 ) tex_common/weaponclip 0 0 0 0.5 0.5 65280 0 0
+}
+// brush 1
+{
+( 6 5 14.875 ) ( 6 0 14.875 ) ( 0 5 14.875 ) tex_common/lightclip 0 0 0 0.5 0.5 65280 0 0
+( 6.125 5.125 14.875 ) ( 0.125 5.125 14.875 ) ( 6.125 5.125 13.875 ) tex_common/lightclip 63.75 19.75 0 0.5 0.5 65280 0 0
+( 5.875 5 5 ) ( 5.875 5 4 ) ( 5.875 0 5 ) tex_common/lightclip 0 0 0 0.5 0.5 65280 0 0
+( 0 0 4 ) ( 6 0 4 ) ( 0 5 4 ) tex_common/lightclip 0 0 0 0.5 0.5 65280 0 0
+( 0 0 4 ) ( 0 0 5 ) ( 6 0 4 ) tex_common/lightclip 0 0 0 0.5 0.5 65280 0 0
+( 0 0 4 ) ( 0 5 4 ) ( 0 0 5 ) tex_common/lightclip 0 0 0 0.5 0.5 65280 0 0
+( 5.875 1.375 -64 ) ( 3.5 0 -64 ) ( 5.875 1.375 64 ) tex_common/lightclip 0 0 0 0.5 0.5 65280 0 0
+( 5.875 4 64 ) ( 3.75 5.125 -64 ) ( 5.875 4 -64 ) tex_common/lightclip 0 0 0 0.5 0.5 65280 0 0
+}
+// brush 2
+{
+( 6 5 14.875 ) ( 6 0 14.875 ) ( 0 5 14.875 ) tex_common/actorclip 0 0 0 0.5 0.5 65280 0 0
+( 6.125 5.125 14.875 ) ( 0.125 5.125 14.875 ) ( 6.125 5.125 13.875 ) tex_common/actorclip 63.75 19.75 0 0.5 0.5 65280 0 0
+( 5.875 5 5 ) ( 5.875 5 4 ) ( 5.875 0 5 ) tex_common/actorclip 0 0 0 0.5 0.5 65280 0 0
+( 0 0 4 ) ( 6 0 4 ) ( 0 5 4 ) tex_common/actorclip 0 0 0 0.5 0.5 65280 0 0
+( 0 0 4 ) ( 0 0 5 ) ( 6 0 4 ) tex_common/actorclip 0 0 0 0.5 0.5 65280 0 0
+( 0 0 4 ) ( 0 5 4 ) ( 0 0 5 ) tex_common/actorclip 0 0 0 0.5 0.5 65280 0 0
+( 5.875 1.375 -64 ) ( 3.5 0 -64 ) ( 5.875 1.375 64 ) tex_common/actorclip 0 0 0 0.5 0.5 65280 0 0
+( 5.875 4 64 ) ( 3.75 5.125 -64 ) ( 5.875 4 -64 ) tex_common/actorclip 0 0 0 0.5 0.5 65280 0 0
+}
+}
