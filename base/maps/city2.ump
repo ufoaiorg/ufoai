@@ -12,18 +12,6 @@ base city2/c2_
 
 // tile definitions -------------------------------------------------
 
-tile +doors
-{
-7 7
-0     a     a     a     a     a     0
-a     +a    +a    +a    +a    +a    a
-a     +a    +a    +a    +a    +a    a
-a     +a    +a    +a    +a    +a    a
-a     +a    +a    +a    +a    +a    a
-a     +a    +a    +a    +a    +a    a
-0     a     a     a     a     a     0
-}
-
 tile +main
 {
 7 7
@@ -96,7 +84,6 @@ assembly city2
 {
 title "city2"
 size "5 5"
-// fix +doors "0 0"
 fix +main "0 0"
 fix *rm_drop +craft_drop_herakles "0 0"
 }
