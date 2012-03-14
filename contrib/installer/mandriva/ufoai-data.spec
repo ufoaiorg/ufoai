@@ -1,7 +1,7 @@
 %define oname   ufoai
 
 Name:		ufoai-data
-Version:	2.4
+Version:	2.5
 Release:	%mkrel 1
 URL:		http://ufoai.sourceforge.net/
 Source0:	%{oname}-%{version}-data.tar
