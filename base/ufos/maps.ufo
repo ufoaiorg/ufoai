@@ -2062,6 +2062,46 @@ mapdef cemetery_main
 	}
 }
 
+////////////////////////
+// CITY2 RANDOM MAPS //
+///////////////////////
+
+mapdef city2
+{
+        map             "+city2"
+        description     "_A city high rise."
+		param			"city2"
+        multiplayer     false
+		campaign		false
+        maxaliens       23
+        aircraft
+        {
+			craft_drop_firebird
+			craft_drop_herakles
+			craft_drop_raptor
+        }
+
+        ufos
+        {
+			//any
+        }
+
+        terrains
+        {
+			//any
+        }
+
+        cultures
+        {
+			//any
+        }
+
+        populations
+        {
+			urban
+        }
+}
+
 ////////////////////////////
 // CITY_DISCO RANDOM MAPS //
 ////////////////////////////
