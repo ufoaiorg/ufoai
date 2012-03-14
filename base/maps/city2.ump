@@ -1,0 +1,102 @@
+// *********************************
+// CITY HIGH RISE MAP
+// *********************************
+
+// Tiletypes:
+// ----------
+// + : tile contains something
+// a : we do not care, as it is all 'fixed'
+
+base city2/c2_
+
+
+// tile definitions -------------------------------------------------
+
+tile +doors
+{
+7 7
+0     a     a     a     a     a     0
+a     +a    +a    +a    +a    +a    a
+a     +a    +a    +a    +a    +a    a
+a     +a    +a    +a    +a    +a    a
+a     +a    +a    +a    +a    +a    a
+a     +a    +a    +a    +a    +a    a
+0     a     a     a     a     a     0
+}
+
+tile +main
+{
+7 7
+0     a     a     a     a     a     0
+a     +a    +a    +a    +a    +a    a
+a     +a    +a    +a    +a    +a    a
+a     +a    +a    +a    +a    +a    a
+a     +a    +a    +a    +a    +a    a
+a     +a    +a    +a    +a    +a    a
+0     a     a     a     a     a     0
+}
+
+
+// dropships --------------------------------------------------------
+
+tile +craft_drop_firebird
+{
+7 7
+0     a     a     a     a     a     0
+a     +a    +a    +a    +a    +a    a
+a     +a    +a    +a    +a    +a    a
+a     +a    +a    +a    +a    +a    a
+a     +a    +a    +a    +a    +a    a
+a     +a    +a    +a    +a    +a    a
+0     a     a     a     a     a     0
+}
+
+tile +craft_drop_herakles
+{
+7 7
+0     a     a     a     a     a     0
+a     +a    +a    +a    +a    +a    a
+a     +a    +a    +a    +a    +a    a
+a     +a    +a    +a    +a    +a    a
+a     +a    +a    +a    +a    +a    a
+a     +a    +a    +a    +a    +a    a
+0     a     a     a     a     a     0
+}
+
+tile +craft_drop_raptor
+{
+7 7
+0     a     a     a     a     a     0
+a     +a    +a    +a    +a    +a    a
+a     +a    +a    +a    +a    +a    a
+a     +a    +a    +a    +a    +a    a
+a     +a    +a    +a    +a    +a    a
+a     +a    +a    +a    +a    +a    a
+0     a     a     a     a     a     0
+}
+
+// multiplayer tiles ------------------------------------------------
+
+tile +craft_drop_empty
+	// for testing and multiplayer
+{
+7 7
+0     a     a     a     a     a     0
+a     +a    +a    +a    +a    +a    a
+a     +a    +a    +a    +a    +a    a
+a     +a    +a    +a    +a    +a    a
+a     +a    +a    +a    +a    +a    a
+a     +a    +a    +a    +a    +a    a
+0     a     a     a     a     a     0
+}
+
+// assemblies -------------------------------------------------------
+
+assembly city2
+{
+title "city2"
+size "5 5"
+// fix +doors "0 0"
+fix +main "0 0"
+fix *rm_drop +craft_drop_herakles "0 0"
+}
