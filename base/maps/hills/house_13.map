@@ -6047,7 +6047,7 @@
 // entity 72
 {
 "classname" "misc_model"
-"origin" "400 419 37"
+"origin" "400 419 28"
 "model" "models/objects/furniture/flowerpot2/flowerpot2.md2"
 "spawnflags" "1"
 }
