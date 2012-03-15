@@ -74,7 +74,6 @@ namespace gtkutil
 		if (fileName.empty())
 			return NULL;
 
-		std::string fullFileName(g_bitmapsPath + fileName);
-		return pixbuf_new_from_file_with_mask(fullFileName.c_str());
+		return pixbuf_new_from_file_with_mask(g_bitmapsPath + fileName);
 	}
 } // namespace gtkutil

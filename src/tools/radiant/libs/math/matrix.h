@@ -64,7 +64,7 @@ class Matrix4
 
 		// Get a scale matrix
 		static Matrix4 getScale(const Vector3& scale) {
-			return Matrix4::byColumns(scale[0], 0, 0, 0, 0, scale[1], 0, 0, 0, 0, scale[2], 0, 0,
+			return byColumns(scale[0], 0, 0, 0, 0, scale[1], 0, 0, 0, 0, scale[2], 0, 0,
 					0, 0, 1);
 		}
 
@@ -379,7 +379,7 @@ class Matrix4
 		// Return matrix product
 		Matrix4 getMultipliedBy(const Matrix4& rhs)
 		{
-			return Matrix4::byColumns(
+			return byColumns(
 				rhs[0] * m_elements[0] + rhs[1] * m_elements[4] + rhs[2] * m_elements[8] + rhs[3] * m_elements[12],
 				rhs[0] * m_elements[1] + rhs[1] * m_elements[5] + rhs[2] * m_elements[9] + rhs[3] * m_elements[13],
 				rhs[0] * m_elements[2] + rhs[1] * m_elements[6] + rhs[2] * m_elements[10]+ rhs[3] * m_elements[14],

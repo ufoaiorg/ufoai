@@ -12,7 +12,7 @@ namespace gtkutil
 {
 
 PanedPosition::PanedPosition() :
-	_position(DEFAULT_POSITION)
+	_position(DEFAULT_POSITION), _paned(NULL)
 {}
 
 // Connect the passed GtkPaned to this object
