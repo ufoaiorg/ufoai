@@ -72,6 +72,7 @@ void US_RemoveStoredUFO(storedUFO_t *ufo);
 int US_UFOsInStorage(const aircraft_t *ufoTemplate, const installation_t *installation);
 int US_StoredUFOCount(void);
 void US_RemoveUFOsExceedingCapacity(installation_t *installation);
+qboolean US_TransferUFO(storedUFO_t *ufo, installation_t *ufoyard);
 
 /**
  * @brief returns if any UFOs are stored in UFO Yards

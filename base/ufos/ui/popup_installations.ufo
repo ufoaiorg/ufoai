@@ -36,6 +36,107 @@ component panel cmp_ufoyard_entry {
 	}
 }
 
+component panel cmp_ufotransfer_entry {
+	{
+		size		"420 40"
+		border		0
+		bordercolor	"0 0.5 0 1"
+
+		onClick {
+			cmd "ufotransferlist_selectyard <node:this.id@integer>;"
+		}
+		onRClick {
+			cmd "mn_installation_select <node:this.id@integer>;"
+		}
+	}
+
+	data id {
+		integer		0
+		string		""
+	}
+	model yardmodel {
+		src			"geoscape/ufoyard"
+		pos			"2 4"
+		size		"32 32"
+		autoscale	true
+		angles		"0 0 150"
+		ghost		true
+		// temporary hidden due to the model+panelscrolling bug
+		invis		true
+	}
+	string title {
+		pos			"37 4"
+		size		"290 20"
+		font		"f_small_bold"
+		ghost		true
+	}
+	string space {
+		pos			"330 4"
+		size		"20 15"
+		font		"f_verysmall"
+		ghost		true
+	}
+	string space_label {
+		string		"_free"
+		pos			"350 4"
+		size		"60 15"
+		font		"f_verysmall"
+		ghost		true
+	}
+	string location {
+		pos			"37 22"
+		size		"370 15"
+		font		"f_verysmall"
+		ghost		true
+	}
+	panel ufos {
+		layout		LAYOUT_LEFT_RIGHT_FLOW
+		top			40
+		size		"240 40"
+		ghost		true
+	}
+	button transfer {
+		string		"_Transfer"
+		pos			"280 47"
+		size		"110 26"
+		contentalign	ALIGN_CC
+		bordercolor	"0 .5 0 1"
+		border		1
+
+		onMouseEnter {
+			if ( *node:this@disabled != true ) {
+				*node:this@bordercolor = "1 1 1 1"
+			}
+		}
+		onMouseLeave {
+			if ( *node:this@disabled != true ) {
+				*node:this@bordercolor = "0 .5 0 1"
+			}
+		}
+		onClick {
+			cmd "ui_transferufo <node:root.selected@integer> <node:parent.id@integer>; ui_fillufoyards;"
+		}
+	}
+}
+
+component panel cmp_ufotransfer_ufoentry {
+	{
+		size		"40 40"
+		border		0
+		bordercolor	"0 0.5 0 1"
+	}
+
+	model ufomodel {
+		pos			"2 4"
+		size		"40 40"
+		autoscale	true
+		angles		"0 0 150"
+		ghost		true
+		// temporary hidden due to the model+panelscrolling bug
+		invis		true
+	}
+}
+
 window popup_ufoyards {
 	{
 		string		"_UFO Yards"
@@ -107,22 +208,26 @@ window popup_ufoyards {
 					if ( *cvar:ufoyard_tab eq "info" ) {
 						*node:parent.ufoinfo@invis = false
 						*node:parent.ufotransfer@invis = true
+						*node:parent.ufotransfer_scroll@invis = true
 						*node:parent.ufosell@invis = true
 					} elif ( *cvar:ufoyard_tab eq "transfer" ) {
 						*node:parent.ufoinfo@invis = true
 						*node:parent.ufotransfer@invis = false
+						*node:parent.ufotransfer_scroll@invis = false
 						*node:parent.ufosell@invis = true
 
 						cmd "ui_fill_ufotransfer <node:root.selected@integer>;"
 					} elif ( *cvar:ufoyard_tab eq "sell" ) {
 						*node:parent.ufoinfo@invis = true
 						*node:parent.ufotransfer@invis = false
+						*node:parent.ufotransfer_scroll@invis = false
 						*node:parent.ufosell@invis = true
 
 						cmd "ui_fill_ufosell <node:root.selected@integer>;"
 					} else {
 						*node:parent.ufoinfo@invis = true
 						*node:parent.ufotransfer@invis = true
+						*node:parent.ufotransfer_scroll@invis = true
 						*node:parent.ufosell@invis = true
 					}
 				} else {
@@ -130,6 +235,7 @@ window popup_ufoyards {
 					*node:this.sell@disabled = true
 					*node:parent.ufoinfo@invis = true
 					*node:parent.ufotransfer@invis = true
+					*node:parent.ufotransfer_scroll@invis = true
 					*node:parent.ufosell@invis = true
 
 					*cvar:ufoyard_tab = "info"
@@ -145,7 +251,6 @@ window popup_ufoyards {
 			label	"_Transfer"
 			value	"transfer"
 			disabled true
-			invis	true
 		}
 		option sell {
 			label	"_Sell"
@@ -343,7 +448,6 @@ window popup_ufoyards {
 			pos			"170 180"
 			size		"200 32"
 			font		"f_menu"
-			invis		true
 
 			onClick {
 				*cvar:ufoyard_tab = "transfer"
@@ -369,8 +473,74 @@ window popup_ufoyards {
 			}
 		}
 	}
-	panel ufotransfer {}
-	panel ufosell {}
+	panel ufotransfer {
+		{
+			pos		"300 85"
+			size	"430 270"
+			layout	LAYOUT_TOP_DOWN_FLOW
+			padding	6
+			invis	true
+			wheelscrollable	true
+			onViewChange {
+				*node:parent.ufotransfer_scroll@fullsize = <fullsize>
+				*node:parent.ufotransfer_scroll@current = <viewpos>
+				*node:parent.ufotransfer_scroll@viewsize = <viewsize>
+			}
+		}
+
+		data selected {
+			integer		0
+			string		""
+		}
+	}
+	vscrollbar ufotransfer_scroll {
+		image		"ui/scrollbar_v_green"
+		pos			"730 85"
+		height		270
+		current		0
+		viewsize	4
+		fullsize	4
+		hidewhenunused	true
+
+		onChange {
+			*node:parent.ufotransfer@viewpos = <current>
+		}
+	}
+
+	panel ufosell {
+		{
+			pos		"300 85"
+			size	"430 270"
+			layout	LAYOUT_TOP_DOWN_FLOW
+			padding	6
+			invis	true
+			wheelscrollable	true
+			onViewChange {
+				*node:parent.ufosell_scroll@fullsize = <fullsize>
+				*node:parent.ufosell_scroll@current = <viewpos>
+				*node:parent.ufosell_scroll@viewsize = <viewsize>
+			}
+		}
+
+		data selected {
+			integer		0
+			string		""
+		}
+	}
+	vscrollbar ufosell_scroll {
+		image		"ui/scrollbar_v_green"
+		pos			"730 85"
+		height		270
+		current		0
+		viewsize	4
+		fullsize	4
+		hidewhenunused	true
+		invis		true
+
+		onChange {
+			*node:parent.ufosell@viewpos = <current>
+		}
+	}
 
 	confunc ufolist_clear {
 		*node:root.selected@integer = 0
@@ -490,6 +660,50 @@ window popup_ufoyards {
 				*node:parent.ufoinfo.eta@invis = false
 			}
 		}
+	}
+
+	confunc ufotransferlist_clear {
+		*node:root.ufotransfer.selected@integer = -1
+		*node:root.ufotransfer.selected@string = ""
+		call *node:parent.ufotransfer@removeAllChild
+	}
+	confunc ufotransferlist_addyard {
+		call *node:parent.ufotransfer@createChild("destyard<1>", "cmp_ufotransfer_entry")
+
+		*node:parent.ufotransfer.destyard<1>.id@integer = <5>
+		if ( *node:parent.ufotransfer.destyard<1>.id@integer < 1 ) {
+			*node:parent.ufotransfer.destyard<1>@bgcolor = ".3 .3 .3 .3"
+		}
+		*node:parent.ufotransfer.destyard<1>.id@integer = <4>
+		if ( *node:parent.ufotransfer.destyard<1>.id@integer < 1 ) {
+			*node:parent.ufotransfer.destyard<1>.transfer@disabled = true
+			*node:parent.ufotransfer.destyard<1>.transfer@bordercolor = ".5 .5 .5 1"
+		}
+		*node:parent.ufotransfer.destyard<1>.id@integer = <1>
+		*node:parent.ufotransfer.destyard<1>.title@string = "<2>"
+		*node:parent.ufotransfer.destyard<1>.location@string = "<3>"
+		*node:parent.ufotransfer.destyard<1>.space@string = "_free"
+		*node:parent.ufotransfer.destyard<1>.space@string = "<4>"
+	}
+	confunc ufotransferlist_selectyard {
+		if ( *node:root.ufotransfer.selected@integer != -1 ) {
+			*node:root.ufotransfer.destyard<node:root.ufotransfer.selected@integer>@border = 0
+			*node:root.ufotransfer.destyard<node:root.ufotransfer.selected@integer>@height = 40
+		}
+		*node:root.ufotransfer.selected@integer = <1>
+		*node:root.ufotransfer.destyard<1>@border = 1
+		if ( *node:parent.ufotransfer.destyard<1>@bgcolor ne ".3 .3 .3 .3" ) {
+			*node:root.ufotransfer.destyard<1>@height = 80
+			cmd "ui_selecttransferyard <1>;"
+		}
+	}
+
+	confunc ufotransferlist_clearufos {
+		call *node:parent.ufotransfer.destyard<1>.ufos@removeAllChild
+	}
+	confunc ufotransferlist_addufos {
+		call *node:parent.ufotransfer.destyard<1>.ufos@createChild("ufo<2>", "cmp_ufotransfer_ufoentry")
+		*node:parent.ufotransfer.destyard<1>.ufos.ufo<2>.ufomodel@src = "<3>"
 	}
 
 	func onWindowOpened {

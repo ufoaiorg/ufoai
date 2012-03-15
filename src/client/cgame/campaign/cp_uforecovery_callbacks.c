@@ -29,6 +29,7 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #include "cp_ufo.h"
 #include "cp_uforecovery.h"
 #include "cp_uforecovery_callbacks.h"
+#include "cp_map.h"
 #include "cp_time.h"
 #include "../../ui/ui_popup.h" /* UI_PopupButton */
 #include "../../ui/ui_main.h"
@@ -590,6 +591,91 @@ static void US_DestroySoredUFO_f (void)
 	Cmd_ExecuteString(va("mn_installation_select %d", ufo->installation->idx));
 }
 
+/**
+ * @brief Fills UFO Yard UI with transfer destinations
+ */
+static void US_FillUFOTransfer_f (void)
+{
+	storedUFO_t *ufo = NULL;
+
+	if (Cmd_Argc() < 2) {
+			Com_DPrintf(DEBUG_CLIENT, "Usage: %s <idx>\n", Cmd_Argv(0));
+			return;
+	} else {
+		ufo = US_GetStoredUFOByIDX(atoi(Cmd_Argv(1)));
+		if (!ufo) {
+			Com_DPrintf(DEBUG_CLIENT, "Stored UFO with idx: %i does not exist\n", atoi(Cmd_Argv(1)));
+			return;
+		}
+	}
+
+	UI_ExecuteConfunc("ufotransferlist_clear");
+	INS_Foreach(ins) {
+		nation_t *nat = MAP_GetNation(ins->pos);
+		const char *nationName = nat ? _(nat->name) : "";
+		const int freeSpace = max(0, ins->ufoCapacity.max - ins->ufoCapacity.cur);
+
+		if (ins == ufo->installation)
+			continue;
+		if (INS_GetType(ins) != INSTALLATION_UFOYARD)
+			continue;
+		UI_ExecuteConfunc("ufotransferlist_addyard %d \"%s\" \"%s\" %d %d", ins->idx, ins->name, nationName, freeSpace, ins->ufoCapacity.max);
+	}
+}
+
+/**
+ * @brief Send Stored UFOs of the destination UFO Yard
+ */
+static void US_FillUFOTransferUFOs_f (void)
+{
+	installation_t *ins = NULL;
+
+	if (Cmd_Argc() < 2) {
+		Com_DPrintf(DEBUG_CLIENT, "Usage: %s <idx>\n", Cmd_Argv(0));
+		return;
+	} else {
+		ins = INS_GetByIDX(atoi(Cmd_Argv(1)));
+		if (!ins) {
+			Com_DPrintf(DEBUG_CLIENT, "Installation with idx: %i does not exist\n", atoi(Cmd_Argv(1)));
+			return;
+		}
+	}
+
+	UI_ExecuteConfunc("ufotransferlist_clearufos %d", ins->idx);
+	if (ins) {
+		US_Foreach(ufo) {
+			if (ufo->installation != ins)
+				continue;
+			UI_ExecuteConfunc("ufotransferlist_addufos %d %d \"%s\"", ins->idx, ufo->idx, ufo->ufoTemplate->model);
+		}
+	}
+}
+
+/**
+ * @brief Callback to start the transfer of a stored UFO
+ */
+static void US_TransferUFO_f (void)
+{
+	storedUFO_t *ufo;
+	installation_t *ins = NULL;
+
+	if (Cmd_Argc() < 3) {
+		Com_Printf("Usage: %s <stored-ufo-idx>  <ufoyard-idx>\n", Cmd_Argv(0));
+		return;
+	}
+	ufo = US_GetStoredUFOByIDX(atoi(Cmd_Argv(1)));
+	if (ufo == NULL) {
+		Com_Printf("Stored ufo with idx %i not found.\n", atoi(Cmd_Argv(1)));
+		return;
+	}
+	ins = INS_GetByIDX(atoi(Cmd_Argv(2)));
+	if (!ins) {
+		Com_Printf("Installation with idx: %i does not exist\n", atoi(Cmd_Argv(2)));
+		return;
+	}
+	US_TransferUFO(ufo, ins);
+}
+
 void UR_InitCallbacks (void)
 {
 	Cmd_AddCommand("cp_uforecovery_init", UR_DialogInit_f, "Function to trigger UFO Recovered event");
@@ -601,11 +687,17 @@ void UR_InitCallbacks (void)
 	Cmd_AddCommand("cp_uforecovery_sort", UR_DialogSortByColumn_f, "Sorts nations and update ui state.");
 
 	Cmd_AddCommand("ui_selectstoredufo", US_SelectStoredUfo_f, "Send Stored UFO data to the UI");
-	Cmd_AddCommand("ui_destroystoredufo", US_DestroySoredUFO_f, "Desstroy stored UFO");
+	Cmd_AddCommand("ui_destroystoredufo", US_DestroySoredUFO_f, "Destroy stored UFO");
+	Cmd_AddCommand("ui_fill_ufotransfer", US_FillUFOTransfer_f, "Fills UFO Yard UI with transfer destinations");
+	Cmd_AddCommand("ui_selecttransferyard", US_FillUFOTransferUFOs_f, "Send Stored UFOs of the destination UFO Yard");
+	Cmd_AddCommand("ui_transferufo", US_TransferUFO_f, "Transfer stored UFO to another UFO Yard");
 }
 
 void UR_ShutdownCallbacks (void)
 {
+	Cmd_RemoveCommand("ui_transferufo");
+	Cmd_RemoveCommand("ui_selecttransferyard");
+	Cmd_RemoveCommand("ui_fill_ufotransfer");
 	Cmd_RemoveCommand("ui_destroystoredufo");
 	Cmd_RemoveCommand("ui_selectstoredufo");
 
