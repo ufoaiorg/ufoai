@@ -687,15 +687,23 @@ const char *Com_MacroExpandString (const char *text)
 
 void Com_UploadCrashDump (const char *crashDumpFile)
 {
-	upparam_t param;
+	upparam_t paramUser;
+	upparam_t paramVersion;
+	upparam_t paramOS;
 	const char *crashDumpURL = "http://ufoai.ninex.info/CrashDump.php";
 
-	param.name = "user";
-	param.value = Sys_GetCurrentUser();
-	param.next = NULL;
+	paramUser.name = "user";
+	paramUser.value = Sys_GetCurrentUser();
+	paramUser.next = &paramVersion;
+	paramVersion.name = "version";
+	paramVersion.value = UFO_VERSION;
+	paramVersion.next = &paramOS;
+	paramOS.name = "os";
+	paramOS.value = BUILDSTRING_OS;
+	paramOS.next = NULL;
 
-	HTTP_PutFile("crashdump", crashDumpFile, crashDumpURL, &param);
-	HTTP_PutFile("crashdump", va("%s/%s", FS_Gamedir(), consoleLogName), crashDumpURL, &param);
+	HTTP_PutFile("crashdump", crashDumpFile, crashDumpURL, &paramUser);
+	HTTP_PutFile("crashdump", va("%s/%s", FS_Gamedir(), consoleLogName), crashDumpURL, &paramUser);
 }
 
 /**
