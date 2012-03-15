@@ -106,7 +106,7 @@ void Sys_Backtrace (void)
 
 	fprintf(crash, "======start======\n");
 
-	fprintf(crash, BUILDSTRING"\n\n");
+	fprintf(crash, BUILDSTRING ", cpu: " CPUSTRING ", version: " UFO_VERSION "\n\n");
 	fflush(crash);
 
 	androidDumpBacktrace(crash);

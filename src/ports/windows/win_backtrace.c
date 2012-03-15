@@ -123,7 +123,7 @@ static LONG WINAPI exception_filter (LPEXCEPTION_POINTERS info)
 				timeInfo.wYear, timeInfo.wMonth, timeInfo.wDay);
 		fprintf(crash, "Windows version %d.%d (Build %d) %s\n",
 				osInfo.dwMajorVersion, osInfo.dwMinorVersion, osInfo.dwBuildNumber, osInfo.szCSDVersion);
-		fprintf(crash, BUILDSTRING"\n\n");
+		fprintf(crash, BUILDSTRING ", cpu: " CPUSTRING ", version: " UFO_VERSION "\n\n");
 		fprintf(crash, "%s", g_output);
 		fprintf(crash, "======end========\n");
 		fclose(crash);
