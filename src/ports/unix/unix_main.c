@@ -247,7 +247,7 @@ void Sys_Backtrace (void)
 	fprintf(crash, "OS Info: %s %s %s %s %s\n", info.sysname, info.nodename, info.release, info.version, info.machine);
 #endif
 
-	fprintf(crash, BUILDSTRING"\n\n");
+	fprintf(crash, BUILDSTRING ", cpu: " CPUSTRING ", version: " UFO_VERSION "\n\n");
 	fflush(crash);
 
 #ifdef HAVE_EXECINFO_H
