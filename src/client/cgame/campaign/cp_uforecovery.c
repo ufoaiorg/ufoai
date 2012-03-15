@@ -6,7 +6,7 @@
  */
 
 /*
-Copyright (C) 2002-2011 UFO: Alien Invasion.
+Copyright (C) 2002-2012 UFO: Alien Invasion.
 
 This program is free software; you can redistribute it and/or
 modify it under the terms of the GNU General Public License
@@ -53,10 +53,18 @@ void UR_ProcessActive (void)
 		if (Date_LaterThan(&ufo->arrive, &ccs.date))
 			continue;
 
-		ufo->status = SUFO_STORED;
-
 		Com_sprintf(cp_messageBuffer, sizeof(cp_messageBuffer), _("%s was transfered to %s."), UFO_TypeToName(ufo->ufoTemplate->ufotype), ufo->installation->name);
-		MSO_CheckAddNewMessage(NT_TRANSFER_UFORECOVERY_FINISHED, _("UFO Recovered"), cp_messageBuffer, qfalse, MSG_TRANSFERFINISHED, NULL);
+		switch (ufo->status) {
+		case SUFO_RECOVERED:
+			MSO_CheckAddNewMessage(NT_TRANSFER_UFORECOVERY_FINISHED, _("UFO Recovered"), cp_messageBuffer, qfalse, MSG_TRANSFERFINISHED, NULL);
+			break;
+		case SUFO_TRANSFERED:
+			MSO_CheckAddNewMessage(NT_TRANSFER_UFORECOVERY_FINISHED, _("UFO Transfered"), cp_messageBuffer, qfalse, MSG_TRANSFERFINISHED, NULL);
+			break;
+		default:
+			break;
+		}
+		ufo->status = SUFO_STORED;
 
 		if (!ufo->ufoTemplate->tech->statusCollected)
 			RS_MarkCollected(ufo->ufoTemplate->tech);
@@ -213,6 +221,47 @@ void US_RemoveUFOsExceedingCapacity (installation_t *installation)
 		}
 		US_RemoveStoredUFO(ufo);
 	}
+}
+
+/**
+ * @brief Start transfering of a stored UFO
+ * @param[in,out] ufo Stored UFO to transfer
+ * @param[in,out] ufoyard Destination of the UFO transfer
+ * @return success or failure indicator
+ */
+qboolean US_TransferUFO (storedUFO_t *ufo, installation_t *ufoyard)
+{
+	date_t date;
+
+	if (!ufo)
+		Com_Error(ERR_DROP, "No UFO cannot be transfered!");
+	if (!ufoyard)
+		Com_Error(ERR_DROP, "UFO cannot be transfered to void!");
+	/* only stored ufo can be transfered */
+	if (ufo->status != SUFO_STORED)
+		return qfalse;
+	/* UFO being disassembled cannot be transfered*/
+	if (ufo->disassembly != NULL)
+		return qfalse;
+	/* UFO is in the same yard - no need of transfer */
+	if (ufo->installation == ufoyard)
+		return qfalse;
+	if (ufoyard->ufoCapacity.cur >= ufoyard->ufoCapacity.max)
+		return qfalse;
+
+	date = ccs.date;
+	date.day += (int) RECOVERY_DELAY;
+
+	ufo->installation->ufoCapacity.cur--;
+	ufo->status = SUFO_TRANSFERED;
+	ufo->arrive = date;
+	ufo->installation = ufoyard;
+	ufoyard->ufoCapacity.cur++;
+
+	Com_sprintf(cp_messageBuffer, sizeof(cp_messageBuffer), _("UFO transport started, cargo is being transported to %s"), ufoyard->name);
+	MSO_CheckAddNewMessage(NT_TRANSFER_STARTED, _("UFO transport"), cp_messageBuffer, qfalse, MSG_TRANSFERFINISHED, NULL);
+
+	return qtrue;
 }
 
 /**
