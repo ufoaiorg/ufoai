@@ -66,7 +66,7 @@ void R_InitMiscTexture (void)
 	r_warpTexture = R_LoadImageData("***r_warptexture***", (byte *)data, MISC_TEXTURE_SIZE, MISC_TEXTURE_SIZE, it_effect);
 
 	/* empty pic in the texture chain for cinematic frames */
-	R_LoadImageData("***cinematic***", NULL, VID_NORM_WIDTH, VID_NORM_HEIGHT, it_effect);
+	R_LoadImageData("***cinematic***", NULL, VID_NORM_WIDTH, VID_NORM_HEIGHT, it_pic);
 }
 
 /*
