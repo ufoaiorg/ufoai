@@ -3,7 +3,7 @@
  */
 
 /*
-Copyright (C) 2002-2011 UFO: Alien Invasion.
+Copyright (C) 2002-2012 UFO: Alien Invasion.
 
 This program is free software; you can redistribute it and/or
 modify it under the terms of the GNU General Public License
@@ -887,6 +887,7 @@ static void BS_BuySellItem_f (void)
 
 /**
  * @brief Enable or disable autosell option for given itemtype.
+ * @note old callback, the current UI uses this
  */
 static void BS_Autosell_f (void)
 {
@@ -928,7 +929,54 @@ static void BS_Autosell_f (void)
 }
 
 
+/* New UI callbacks */
 
+/**
+ * @brief Sets/unsets or flips the autosell property of an item on the market
+ */
+static void BS_SetAutosell_f (void)
+{
+	const objDef_t *od;
+	const technology_t *tech;
+
+	if (Cmd_Argc() < 2) {
+		Com_Printf("Usage: %s <item-id> [0|1]\nWhere second parameter is the state (off/on), if ommitted the autosell property will be flipped.\n", Cmd_Argv(0));
+		return;
+	}
+	/* aircraft check */
+	if (AIR_GetAircraftSilent(Cmd_Argv(1)) != NULL) {
+		Com_Printf("Aircraft can't be autosold!\n");
+		return;
+	}
+	/* items */
+	od = INVSH_GetItemByID(Cmd_Argv(1));
+	if (!od) {
+		/* no printf, INVSH_GetItemByID gave warning already */
+		return;
+	}
+	if (od->isVirtual) {
+		Com_Printf("Item %s is virtual, can't be autosold!\n", od->id);
+		return;
+	}
+	if (od->notOnMarket) {
+		Com_Printf("Item %s is not on market, can't be autosold!\n", od->id);
+		return;
+	}
+	tech = RS_GetTechForItem(od);
+	/* Don't allow to enable autosell for items not researched. */
+	if (!RS_IsResearched_ptr(tech)) {
+		Com_Printf("Item %s is not researched, can't be autosold!\n", od->id);
+		return;
+	}
+	if (Cmd_Argc() >= 3)
+		ccs.eMarket.autosell[od->idx] = atoi(Cmd_Argv(2));
+	else
+		ccs.eMarket.autosell[od->idx] = ! ccs.eMarket.autosell[od->idx];
+}
+
+/**
+ * @brief Function registers the callbacks of the maket UI and do initializations
+ */
 void BS_InitCallbacks(void)
 {
 	Cmd_AddCommand("buy_type", BS_BuyType_f, NULL);
@@ -942,10 +990,17 @@ void BS_InitCallbacks(void)
 
 	OBJZERO(buyList);
 	buyList.length = -1;
+
+	Cmd_AddCommand("ui_market_setautosell", BS_SetAutosell_f, "Sets/unsets or flips the autosell property of an item on the market");
 }
 
+/**
+ * @brief Function unregisters the callbacks of the maket UI
+ */
 void BS_ShutdownCallbacks(void)
 {
+	Cmd_RemoveCommand("ui_market_setautosell");
+
 	Cmd_RemoveCommand("buy_type");
 	Cmd_RemoveCommand("market_click");
 	Cmd_RemoveCommand("market_scroll");
