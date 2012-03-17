@@ -97,6 +97,11 @@ def command_edit(entry_name, options):
     if not options.dryrun:
         licenses.save_to_file(options.datafile)
 
+def command_sort(options):
+    licenses = LicenseSet(options.datafile)
+    if not options.dryrun:
+        licenses.save_to_file(options.datafile)
+
 def command_copy(entry_name, new_entry_name, options):
     licenses = LicenseSet(options.datafile)
     if options.force and licenses.exists_entry(new_entry_name):
@@ -160,6 +165,7 @@ Commands:
     list ENTRYNAME_REGEX
                         List entry name (use metadata options to
                         filter the list)
+    sort                Read, sort, and save licenses
 """
         exit(0)
 
@@ -187,6 +193,9 @@ Commands:
         entry_name = args[1]
         new_entry_name = args[2]
         command_move(entry_name, new_entry_name, options)
+
+    elif args[0] == "sort":
+        command_sort(options)
 
     elif args[0] == "copy":
         if len(args) != 3:
