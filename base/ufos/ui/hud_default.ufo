@@ -1069,7 +1069,7 @@ window hud_default extends hud
 	{
 		*node:root.info.bt_reaction_s@texl	= "32 64"
 		*node:root.info.bt_reaction_s@texh	= "63 95"
-		*node:root.info.bt_reaction_s@tooltip = "_Reaction fire (Not possible)"
+		*node:root.info.bt_reaction_s@tooltip = "_Reaction fire (not possible)"
 	}
 	confunc deselect_reaction
 	{
