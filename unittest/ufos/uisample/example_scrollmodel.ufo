@@ -1,0 +1,72 @@
+window unittest_scrollmodel
+{
+	{
+		pos "100 100"
+		size "340 500"
+		dragbutton	true
+		closebutton	true
+		string		"_Unittest scrollmodel"
+		bgcolor		"0 0 0 1"
+		timeout		1000
+	}
+
+	panel scrollable {
+		{
+			pos "20 50"
+			size "240 430"
+			onViewchange	{
+				*node:root.scroll@current = <viewpos>
+				*node:root.scroll@fullsize = <fullsize>
+				*node:root.scroll@viewsize = <viewsize>
+			}
+			layout		LAYOUT_TOP_DOWN_FLOW
+			layoutMargin	6
+		}
+
+		model mdl0
+		{
+			src			"pilots/female/body"
+			autoscale	true
+			pos			"40 20"
+			size		"50 78"
+		}
+
+		model mdl1
+		{
+			src			"pilots/female/head01"
+			autoscale	true
+			pos			"40 200"
+			size		"100 100"
+		}
+
+		model mdl2
+		{
+			src			"pilots/female/head01"
+			autoscale	true
+			pos			"40 400"
+			size		"200 200"
+		}
+
+		model mdl3
+		{
+			src			"pilots/female/head01"
+			autoscale	true
+			pos			"40 800"
+			size		"300 300"
+		}
+
+	}
+
+	vscrollbar scroll {
+		image		"ui/scrollbar_v_green"
+		pos			"270 50"
+		height		"430"
+		current		0
+		viewsize	21
+		fullsize	22
+		onChange		{
+			*node:root.scrollable@viewpos = <current>
+		}
+	}
+
+}

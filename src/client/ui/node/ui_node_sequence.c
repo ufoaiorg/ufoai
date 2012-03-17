@@ -48,11 +48,13 @@ static void UI_SequenceNodeDraw (uiNode_t *node)
 	if (EXTRADATA(node).context != NULL && EXTRADATA(node).playing) {
 		qboolean finished = qfalse;
 		vec2_t pos;
+		vec2_t screenPos;
 		UI_GetNodeAbsPos(node, pos);
+		UI_GetNodeScreenPos(node, screenPos);
 
 		R_PushMatrix();
-		R_CleanupDepthBuffer(pos[0], pos[1], node->size[0], node->size[1]);
-		R_PushClipRect(pos[0], pos[1], node->size[0], node->size[1]);
+		R_CleanupDepthBuffer(screenPos[0], screenPos[1], node->size[0], node->size[1]);
+		R_PushClipRect(screenPos[0], screenPos[1], node->size[0], node->size[1]);
 
 		SEQ_SetView(EXTRADATA(node).context, pos, node->size);
 		finished = !SEQ_Render(EXTRADATA(node).context);

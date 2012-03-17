@@ -429,10 +429,10 @@ static void UI_BaseInventoryNodeDraw2 (uiNode_t *node, const objDef_t *highlight
 	qboolean updateScroll = qfalse;
 	int visibleHeight = 0;
 	int needHeight = 0;
-	vec2_t pos;
+	vec2_t screenPos;
 
-	UI_GetNodeAbsPos(node, pos);
-	R_PushClipRect(pos[0], pos[1], node->size[0], node->size[1]);
+	UI_GetNodeScreenPos(node, screenPos);
+	R_PushClipRect(screenPos[0], screenPos[1], node->size[0], node->size[1]);
 
 	needHeight = UI_BaseInventoryNodeDrawItems(node, highlightType);
 

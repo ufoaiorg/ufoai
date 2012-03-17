@@ -513,7 +513,8 @@ static void UI_RadarNodeDraw (uiNode_t *node)
 {
 	le_t *le;
 	int i;
-	vec3_t pos;
+	vec2_t pos;
+	vec2_t screenPos;
 #ifdef RADARSIZE_DEBUG
 	int textposy = 40;
 	static const vec4_t red = {1, 0, 0, 0.5};
@@ -531,10 +532,11 @@ static void UI_RadarNodeDraw (uiNode_t *node)
 		return;
 
 	UI_GetNodeAbsPos(node, pos);
-	R_CleanupDepthBuffer(pos[0], pos[1], node->size[0], node->size[1]);
+	UI_GetNodeScreenPos(node, screenPos);
+	R_CleanupDepthBuffer(screenPos[0], screenPos[1], node->size[0], node->size[1]);
 	UI_DrawFill(pos[0], pos[1], mapWidth * mapCoefX, mapHeight * mapCoefY, backgroundColor);
 #ifndef RADARSIZE_DEBUG
-	R_PushClipRect(pos[0], pos[1], node->size[0], node->size[1]);
+	R_PushClipRect(screenPos[0], screenPos[1], node->size[0], node->size[1]);
 #endif
 
 	/* the cl struct is wiped with every new map */
