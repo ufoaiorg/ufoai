@@ -107,7 +107,7 @@ void UI_NodeGetPoint (const uiNode_t* node, vec2_t pos, int direction)
 }
 
 /**
- * @brief Returns the absolute position of a node
+ * @brief Returns the absolute position of a node.
  * @param[in] node Context node
  * @param[out] pos Absolute position
  */
@@ -129,6 +129,41 @@ void UI_GetNodeAbsPos (const uiNode_t* node, vec2_t pos)
 		pos[0] += node->pos[0];
 		pos[1] += node->pos[1];
 		node = node->parent;
+	}
+}
+
+/**
+ * @brief Returns the absolute position of a node in the screen.
+ * Screen position is not used for the node rendering cause we use OpenGL
+ * translations. But this function is need for some R_functions methodes.
+ * @param[in] node Context node
+ * @param[out] pos Absolute position into the screen
+ */
+void UI_GetNodeScreenPos (const uiNode_t* node, vec2_t pos)
+{
+	assert(node);
+	assert(pos);
+
+	/* if we request the position of a non drawable node, there is a problem */
+	if (node->behaviour->isVirtual)
+		Com_Error(ERR_FATAL, "UI_GetNodeAbsPos: Node '%s' doesn't have a position", node->name);
+
+	Vector2Set(pos, 0, 0);
+	while (node) {
+#ifdef DEBUG
+		if (node->pos[0] != (int)node->pos[0] || node->pos[1] != (int)node->pos[1])
+			Com_Error(ERR_FATAL, "UI_GetNodeAbsPos: Node '%s' position %f,%f is not integer", UI_GetPath(node), node->pos[0], node->pos[1]);
+#endif
+		pos[0] += node->pos[0];
+		pos[1] += node->pos[1];
+		node = node->parent;
+
+		if (node && node->behaviour->getClientPosition) {
+			vec2_t clientPosition = {0, 0};
+			node->behaviour->getClientPosition(node, clientPosition);
+			pos[0] += clientPosition[0];
+			pos[1] += clientPosition[1];
+		}
 	}
 }
 

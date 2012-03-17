@@ -253,6 +253,7 @@ void UI_DrawModelNode (uiNode_t *node, const char *source)
 	modelInfo_t mi;
 	uiModel_t *model;
 	vec3_t nodeorigin;
+	vec2_t screenPos;
 	vec3_t autoScale;
 	vec3_t autoCenter;
 
@@ -274,10 +275,12 @@ void UI_DrawModelNode (uiNode_t *node, const char *source)
 	}
 
 	/* compute the absolute origin ('origin' property is relative to the node center) */
+	UI_GetNodeScreenPos(node, screenPos);
+	R_CleanupDepthBuffer(screenPos[0], screenPos[1], node->size[0], node->size[1]);
+	if (EXTRADATA(node).clipOverflow) {
+		R_PushClipRect(screenPos[0], screenPos[1], node->size[0], node->size[1]);
+	}
 	UI_GetNodeAbsPos(node, nodeorigin);
-	R_CleanupDepthBuffer(nodeorigin[0], nodeorigin[1], node->size[0], node->size[1]);
-	if (EXTRADATA(node).clipOverflow)
-		R_PushClipRect(nodeorigin[0], nodeorigin[1], node->size[0], node->size[1]);
 	nodeorigin[0] += node->size[0] / 2 + EXTRADATA(node).origin[0];
 	nodeorigin[1] += node->size[1] / 2 + EXTRADATA(node).origin[1];
 	nodeorigin[2] = EXTRADATA(node).origin[2];

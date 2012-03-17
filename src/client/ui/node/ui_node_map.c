@@ -42,12 +42,11 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 static void UI_MapNodeDraw (uiNode_t *node)
 {
 	if (CP_IsRunning()) {
-		vec2_t pos;
-
-		UI_GetNodeAbsPos(node, pos);
+		vec2_t screenPos;
 
 		/* Draw geoscape */
-		R_PushClipRect(pos[0], pos[1], node->size[0], node->size[1]);
+		UI_GetNodeScreenPos(node, screenPos);
+		R_PushClipRect(screenPos[0], screenPos[1], node->size[0], node->size[1]);
 		MAP_DrawMap(node, ccs.curCampaign);
 		R_PopClipRect();
 	}
