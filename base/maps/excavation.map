@@ -10729,7 +10729,7 @@
 {
 "classname" "misc_model"
 "spawnflags" "1"
-"model" "models/weapons/rpg/rpg.md2"
+"model" "models/weapons/rpg2/rpg.md2"
 "angles" "0 70 -55"
 "origin" "951.25 807.5 29.5"
 }
@@ -10737,7 +10737,7 @@
 {
 "classname" "misc_model"
 "origin" "946.5 870.5 46.25"
-"model" "models/weapons/rpg/rpg.md2"
+"model" "models/weapons/rpg2/rpg.md2"
 "spawnflags" "1"
 "angles" "0 98 90"
 }
