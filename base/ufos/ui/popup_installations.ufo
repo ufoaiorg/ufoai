@@ -61,8 +61,6 @@ component panel cmp_ufotransfer_entry {
 		autoscale	true
 		angles		"0 0 150"
 		ghost		true
-		// temporary hidden due to the model+panelscrolling bug
-		invis		true
 	}
 	string title {
 		pos			"37 4"
@@ -132,8 +130,6 @@ component panel cmp_ufotransfer_ufoentry {
 		autoscale	true
 		angles		"0 0 150"
 		ghost		true
-		// temporary hidden due to the model+panelscrolling bug
-		invis		true
 	}
 }
 

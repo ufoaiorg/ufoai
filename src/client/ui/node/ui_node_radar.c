@@ -533,7 +533,7 @@ static void UI_RadarNodeDraw (uiNode_t *node)
 
 	UI_GetNodeAbsPos(node, pos);
 	UI_GetNodeScreenPos(node, screenPos);
-	R_CleanupDepthBuffer(screenPos[0], screenPos[1], node->size[0], node->size[1]);
+	R_CleanupDepthBuffer(pos[0], pos[1], node->size[0], node->size[1]);
 	UI_DrawFill(pos[0], pos[1], mapWidth * mapCoefX, mapHeight * mapCoefY, backgroundColor);
 #ifndef RADARSIZE_DEBUG
 	R_PushClipRect(screenPos[0], screenPos[1], node->size[0], node->size[1]);
