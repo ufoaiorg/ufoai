@@ -45,7 +45,6 @@ team africa
 			deathsound	civilians/femaledeath01
 			deathsound	civilians/civfemdeath01a
 			deathsound	civilians/civfemdeath02a
-			deathsound	civilians/civboydeath01a
 		}
 		male {
 			hurtsound	civilians/malehurt01
@@ -97,7 +96,6 @@ team asia
 			deathsound	civilians/femaledeath01
 			deathsound	civilians/civfemdeath01a
 			deathsound	civilians/civfemdeath02a
-			deathsound	civilians/civboydeath01a
 		}
 		male {
 			hurtsound	civilians/malehurt01
@@ -191,7 +189,6 @@ team europe
 			deathsound	civilians/femaledeath01
 			deathsound	civilians/civfemdeath01a
 			deathsound	civilians/civfemdeath02a
-			deathsound	civilians/civboydeath01a
 		}
 		male {
 			hurtsound	civilians/malehurt01
@@ -247,7 +244,6 @@ team latin
 			deathsound	civilians/femaledeath01
 			deathsound	civilians/civfemdeath01a
 			deathsound	civilians/civfemdeath02a
-			deathsound	civilians/civboydeath01a
 		}
 		male {
 			hurtsound	civilians/malehurt01
@@ -303,7 +299,6 @@ team middle
 			deathsound	civilians/femaledeath01
 			deathsound	civilians/civfemdeath01a
 			deathsound	civilians/civfemdeath02a
-			deathsound	civilians/civboydeath01a
 		}
 		male {
 			hurtsound	civilians/malehurt01
@@ -397,7 +392,6 @@ team states
 			deathsound	civilians/femaledeath01
 			deathsound	civilians/civfemdeath01a
 			deathsound	civilians/civfemdeath02a
-			deathsound	civilians/civboydeath01a
 		}
 		male {
 			hurtsound	civilians/malehurt01
@@ -452,7 +446,6 @@ team oceania
 			deathsound	civilians/femaledeath01
 			deathsound	civilians/civfemdeath01a
 			deathsound	civilians/civfemdeath02a
-			deathsound	civilians/civboydeath01a
 		}
 		male {
 			hurtsound	civilians/malehurt01
@@ -532,7 +525,6 @@ team russia
 			deathsound	civilians/femaledeath01
 			deathsound	civilians/civfemdeath01a
 			deathsound	civilians/civfemdeath02a
-			deathsound	civilians/civboydeath01a
 		}
 		male {
 			hurtsound	civilians/malehurt01
@@ -666,7 +658,6 @@ team scientist
 			deathsound	civilians/femaledeath01
 			deathsound	civilians/civfemdeath01a
 			deathsound	civilians/civfemdeath02a
-			deathsound	civilians/civboydeath01a
 		}
 		male {
 			hurtsound	civilians/malehurt01
