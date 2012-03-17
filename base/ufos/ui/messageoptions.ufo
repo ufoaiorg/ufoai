@@ -266,6 +266,7 @@ window messageoptions
 		*node:root.messagetypes@viewpos = 0
 		*node:root.messagetypes_scroll@current = 0
 		cmd "game_timestop;msgoptions_init 13;msgoptions_backup;"
+		cmd "msgoptions_scroll <node:root.messagetypes_scroll@current>;"
 	}
 
 	func onWindowClosed
