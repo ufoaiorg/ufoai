@@ -87,3 +87,11 @@ size "5 5"
 fix +main "0 0"
 fix *rm_drop +craft_drop_herakles "0 0"
 }
+
+assembly city2mp
+{
+title "city2"
+size "5 5"
+fix +main "0 0"
+fix +craft_drop_empty "0 0"
+}

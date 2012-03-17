@@ -4266,6 +4266,39 @@ mapdef wilderness
 	}
 }
 
+// ===================== //
+// MULTIPLAYER ONLY MAPS //
+// ===================== //
+
+//////////////////////////
+// CITY2 MULTIPLAYER MAP//
+//////////////////////////
+
+mapdef city2
+{
+        map             "+city2"
+        description     "_A city high rise."
+		param			"city2mp"
+        singleplayer    false
+		campaign		false
+        multiplayer     true
+		teams			4
+		maxaliens       23
+		gametypes
+		{
+			1on1
+			1on1on1
+			2on2
+			2on2on2
+			3on3
+			3on3on3
+			4on4
+			4on4on4
+		}
+
+}
+
+
 // ============ //
 // SPECIAL MAPS //
 // ============ //
