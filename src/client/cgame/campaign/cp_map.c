@@ -134,7 +134,7 @@ static const vec4_t yellow = {1.0f, 0.874f, 0.294f, 1.0f};
 static const vec4_t red = {1.0f, 0.0f, 0.0f, 0.8f};
 
 static const float smoothAcceleration = 0.06f;		/**< the acceleration to use during a smooth motion (This affects the speed of the smooth motion) */
-static const float defaultBaseAngle = 90.0f;	/**< Default angle value for 3D models like bases */
+static const float defaultBaseAngle = -90.0f;	/**< Default angle value for 3D models like bases */
 
 static byte *terrainPic;				/**< this is the terrain mask for separating the climate
 										 * zone and water by different color values */
