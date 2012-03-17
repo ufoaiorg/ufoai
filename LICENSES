@@ -2501,15 +2501,6 @@ base/models/weapons/plasrifle/plasrifle_clip.jpg | GNU General Public License 2.
 base/models/weapons/plasrifle/plasrifle_clip.md2 | GNU General Public License 2.0 | Lukas "Rastaman" Beyeler
 base/models/weapons/plasrifle/plasrifle_clip_gm.png | GNU General Public License 2.0 or later | MCR | based on original UFO:AI content
 base/models/weapons/plasrifle/plasrifle_gm.png | GNU General Public License 2.0 or later | MCR | based on original UFO:AI content
-base/models/weapons/rpg/rocket.jpg | GNU General Public License 2.0 | Lukas "Rastaman" Beyeler
-base/models/weapons/rpg/rocket.md2 | GNU General Public License 2.0 | Lukas "Rastaman" Beyeler
-base/models/weapons/rpg/rocket_particle.png | GNU General Public License 2.0 | A M D G
-base/models/weapons/rpg/rpg.jpg | GNU General Public License 2.0 | Lukas "Rastaman" Beyeler
-base/models/weapons/rpg/rpg.md2 | GNU General Public License 2.0 | Lukas "Rastaman" Beyeler
-base/models/weapons/rpg/rpg.tag | GNU General Public License 2.0 or later | Martin Gerhardy
-base/models/weapons/rpg/rpg_ammo.md2 | GNU General Public License 2.0 | Lukas "Rastaman" Beyeler
-base/models/weapons/rpg/rpg_inc_ammo.md2 | GNU General Public License 2.0 | Lukas "Rastaman" Beyeler
-base/models/weapons/rpg/rpg_particle_ammo.md2 | GNU General Public License 2.0 | A M D G
 base/models/weapons/rpg2/ammo_ex.png | GNU General Public License 3.0 or later | Flying Steel
 base/models/weapons/rpg2/ammo_ex_nm.png | GNU General Public License 3.0 or later | Flying Steel
 base/models/weapons/rpg2/ammo_ex_sm.png | GNU General Public License 3.0 or later | Flying Steel
