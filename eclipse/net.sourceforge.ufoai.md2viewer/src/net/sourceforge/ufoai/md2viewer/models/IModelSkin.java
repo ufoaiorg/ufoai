@@ -1,7 +1,7 @@
 package net.sourceforge.ufoai.md2viewer.models;
 
 public interface IModelSkin {
-	int getIndex();
+    int getIndex();
 
-	String getPath();
+    String getPath();
 }

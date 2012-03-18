@@ -1,7 +1,7 @@
 package net.sourceforge.ufoai.md2viewer.models;
 
 public interface IModelFactory {
-	IModel create();
+    IModel create();
 
-	String getExtension();
+    String getExtension();
 }
