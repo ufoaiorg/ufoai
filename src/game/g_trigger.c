@@ -370,7 +370,8 @@ void SP_trigger_rescue (edict_t *ent)
 	ent->solid = SOLID_TRIGGER;
 	gi.SetModel(ent, ent->model);
 
-	ent->spawnflags |= 0xFF;
+	if (ent->spawnflags == 0)
+		ent->spawnflags |= 0xFF;
 	ent->touch = Touch_RescueTrigger;
 	ent->reset = Reset_RescueTrigger;
 	ent->child = NULL;
