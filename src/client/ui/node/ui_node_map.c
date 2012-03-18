@@ -196,12 +196,13 @@ static void UI_MapNodeZoom (uiNode_t *node, qboolean out)
 	MAP_StopSmoothMovement();
 }
 
-static void UI_MapNodeMouseWheel (uiNode_t *node, int deltaX, int deltaY)
+static qboolean UI_MapNodeMouseWheel (uiNode_t *node, int deltaX, int deltaY)
 {
 	qboolean down = deltaY > 0;
 	if (deltaY == 0)
-		return;
+		return qfalse;
 	UI_MapNodeZoom(node, down);
+	return qtrue;
 }
 
 static void UI_MapNodeZoomIn (uiNode_t *node, const uiCallContext_t *context)

@@ -83,7 +83,7 @@ static void UI_BattlescapeNodeClose (uiNode_t *node)
 /**
  * @brief Called when user request scrolling on the battlescape.
  */
-static void UI_BattlescapeNodeScroll (uiNode_t *node, int deltaX, int deltaY)
+static qboolean UI_BattlescapeNodeScroll (uiNode_t *node, int deltaX, int deltaY)
 {
 	while (deltaY < 0) {
 		CL_CameraZoomIn();
@@ -93,6 +93,7 @@ static void UI_BattlescapeNodeScroll (uiNode_t *node, int deltaX, int deltaY)
 		CL_CameraZoomOut();
 		deltaY--;
 	}
+	return qtrue;
 }
 
 void UI_RegisterBattlescapeNode (uiBehaviour_t *behaviour)

@@ -259,13 +259,14 @@ static void UI_VScrollbarNodeCapturedMouseLost (uiNode_t *node)
 /**
  * @brief Called when the user wheel the mouse over the node
  */
-static void UI_VScrollbarNodeWheel (uiNode_t *node, int deltaX, int deltaY)
+static qboolean UI_VScrollbarNodeWheel (uiNode_t *node, int deltaX, int deltaY)
 {
 	if (deltaY == 0)
-		return;
+		return qfalse;
 	if (EXTRADATA(node).fullsize == 0 || EXTRADATA(node).fullsize < EXTRADATA(node).viewsize)
-		return;
+		return qfalse;
 	UI_VScrollbarNodeSet(node, EXTRADATA(node).pos + deltaY);
+	return qtrue;
 }
 
 /**

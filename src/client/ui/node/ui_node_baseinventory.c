@@ -742,12 +742,12 @@ static void UI_BaseInventoryNodeMouseUp (uiNode_t *node, int x, int y, int butto
 	}
 }
 
-static void UI_BaseInventoryNodeWheel (uiNode_t *node, int deltaX, int deltaY)
+static qboolean UI_BaseInventoryNodeWheel (uiNode_t *node, int deltaX, int deltaY)
 {
 	qboolean down = deltaY > 0;
 	const int delta = 20;
 	if (deltaY == 0)
-		return;
+		return qfalse;
 	if (down) {
 		const int lenght = EXTRADATA(node).scrollY.fullSize - EXTRADATA(node).scrollY.viewSize;
 		if (EXTRADATA(node).scrollY.viewPos < lenght) {
@@ -764,6 +764,7 @@ static void UI_BaseInventoryNodeWheel (uiNode_t *node, int deltaX, int deltaY)
 			UI_BaseInventoryNodeUpdateScroll(node);
 		}
 	}
+	return qtrue;
 }
 
 static void UI_BaseInventoryNodeLoading (uiNode_t *node)

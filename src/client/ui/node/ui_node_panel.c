@@ -494,25 +494,33 @@ static void UI_PanelPropertyChanged (uiNode_t *node, const value_t *property)
  * @param[in] deltaX horizontal scrolling value (not used)
  * @param[in] deltaX vertical scrolling value
  */
-static void UI_PanelNodeMouseWheel (uiNode_t *node, int deltaX, int deltaY)
+static qboolean UI_PanelNodeMouseWheel (uiNode_t *node, int deltaX, int deltaY)
 {
 	qboolean down = deltaY > 0;
 	qboolean updated;
 
 	if (!EXTRADATA(node).wheelScrollable || deltaY == 0)
-		return;
+		return qfalse;
 
-	updated = UI_SetScroll(&EXTRADATA(node).super.scrollY, EXTRADATA(node).super.scrollY.viewPos + (down ? 1 : -1), -1, -1);
+	updated = UI_SetScroll(&EXTRADATA(node).super.scrollY, EXTRADATA(node).super.scrollY.viewPos + (down ? 10 : -10), -1, -1);
 
 	if (EXTRADATA(node).super.onViewChange && updated)
 		UI_ExecuteEventActions(node, EXTRADATA(node).super.onViewChange);
 
-	if (node->onWheelUp && !down)
+	/* @todo use super behaviour */
+	if (node->onWheelUp && !down) {
 		UI_ExecuteEventActions(node, node->onWheelUp);
-	if (node->onWheelDown && down)
+		updated = qtrue;
+	}
+	if (node->onWheelDown && down) {
 		UI_ExecuteEventActions(node, node->onWheelDown);
-	if (node->onWheel)
+		updated = qtrue;
+	}
+	if (node->onWheel) {
 		UI_ExecuteEventActions(node, node->onWheel);
+		updated = qtrue;
+	}
+	return updated;
 }
 
 void UI_RegisterPanelNode (uiBehaviour_t *behaviour)

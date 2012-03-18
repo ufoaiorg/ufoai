@@ -706,30 +706,15 @@ void UI_MouseScroll (int deltaX, int deltaY)
 
 	/* send it to the captured mouse node */
 	if (capturedNode) {
-		if (capturedNode->behaviour->scroll)
-			capturedNode->behaviour->scroll(capturedNode, deltaX, deltaY);
+		capturedNode->behaviour->scroll(capturedNode, deltaX, deltaY);
 		return;
 	}
 
 	node = hoveredNode;
 
 	while (node) {
-		if (node->behaviour->scroll) {
-			node->behaviour->scroll(node, deltaX, deltaY);
+		if (node->behaviour->scroll(node, deltaX, deltaY)) {
 			break;
-		} else {
-			if (node->onWheelUp && deltaY < 0) {
-				UI_ExecuteEventActions(node, node->onWheelUp);
-				break;
-			}
-			if (node->onWheelDown && deltaY > 0) {
-				UI_ExecuteEventActions(node, node->onWheelDown);
-				break;
-			}
-			if (node->onWheel && deltaY != 0) {
-				UI_ExecuteEventActions(node, node->onWheel);
-				break;
-			}
 		}
 		node = node->parent;
 	}

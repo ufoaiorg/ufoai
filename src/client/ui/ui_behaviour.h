@@ -64,7 +64,7 @@ typedef struct uiBehaviour_s {
 	void (*leftClick)(struct uiNode_s *node, int x, int y);		/**< left mouse click event in the node */
 	void (*rightClick)(struct uiNode_s *node, int x, int y);		/**< right mouse button click event in the node */
 	void (*middleClick)(struct uiNode_s *node, int x, int y);	/**< middle mouse button click event in the node */
-	void (*scroll)(struct uiNode_s *node, int deltaX, int deltaY);	/**< mouse wheel event in the node */
+	qboolean (*scroll)(struct uiNode_s *node, int deltaX, int deltaY);	/**< mouse wheel event in the node */
 	void (*mouseMove)(struct uiNode_s *node, int x, int y);
 	void (*mouseDown)(struct uiNode_s *node, int x, int y, int button);	/**< mouse button down event in the node */
 	void (*mouseUp)(struct uiNode_s *node, int x, int y, int button);	/**< mouse button up event in the node */
