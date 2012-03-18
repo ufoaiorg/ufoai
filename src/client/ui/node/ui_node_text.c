@@ -438,18 +438,28 @@ static void UI_TextNodeRightClick (uiNode_t * node, int x, int y)
 
 /**
  */
-static void UI_TextNodeMouseWheel (uiNode_t *node, int deltaX, int deltaY)
+static qboolean UI_TextNodeMouseWheel (uiNode_t *node, int deltaX, int deltaY)
 {
+	qboolean updated;
 	qboolean down = deltaY > 0;
 	if (deltaY == 0)
-		return;
-	UI_AbstractScrollableNodeScrollY(node, (down ? 1 : -1));
-	if (node->onWheelUp && !down)
+		return qfalse;
+	updated = UI_AbstractScrollableNodeScrollY(node, (down ? 1 : -1));
+
+	/* @todo use super behaviour */
+	if (node->onWheelUp && !down) {
 		UI_ExecuteEventActions(node, node->onWheelUp);
-	if (node->onWheelDown && down)
+		updated = qtrue;
+	}
+	if (node->onWheelDown && down) {
 		UI_ExecuteEventActions(node, node->onWheelDown);
-	if (node->onWheel)
+		updated = qtrue;
+	}
+	if (node->onWheel) {
 		UI_ExecuteEventActions(node, node->onWheel);
+		updated = qtrue;
+	}
+	return updated;
 }
 
 static void UI_TextNodeLoading (uiNode_t *node)

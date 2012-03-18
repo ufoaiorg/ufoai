@@ -360,13 +360,13 @@ static void UI_MaterialEditorNodeInit (uiNode_t *node, linkedList_t *params)
 /**
  * @brief Called when the user wheel the mouse over the node
  */
-static void UI_MaterialEditorNodeWheel (uiNode_t *node, int deltaX, int deltaY)
+static qboolean UI_MaterialEditorNodeWheel (uiNode_t *node, int deltaX, int deltaY)
 {
 	qboolean down = deltaY > 0;
 	const int diff = (down) ? 1 : -1;
 	if (deltaY == 0)
-		return;
-	UI_AbstractScrollableNodeScrollY(node, diff);
+		return qfalse;
+	return UI_AbstractScrollableNodeScrollY(node, diff);
 }
 
 static void UI_MaterialEditorStart_f (void)

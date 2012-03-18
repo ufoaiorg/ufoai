@@ -812,6 +812,23 @@ static void UI_AbstractNodeCallDelete (uiNode_t *node, const uiCallContext_t *co
 	UI_DeleteNode(node);
 }
 
+static qboolean UI_AbstractNodeScroll (uiNode_t *node, int deltaX, int deltaY)
+{
+	if (node->onWheelUp && deltaY < 0) {
+		UI_ExecuteEventActions(node, node->onWheelUp);
+		return qtrue;
+	}
+	if (node->onWheelDown && deltaY > 0) {
+		UI_ExecuteEventActions(node, node->onWheelDown);
+		return qtrue;
+	}
+	if (node->onWheel && deltaY != 0) {
+		UI_ExecuteEventActions(node, node->onWheel);
+		return qtrue;
+	}
+	return qfalse;
+}
+
 void UI_RegisterAbstractNode (uiBehaviour_t *behaviour)
 {
 	behaviour->name = "abstractnode";
@@ -830,6 +847,7 @@ void UI_RegisterAbstractNode (uiBehaviour_t *behaviour)
 	behaviour->sizeChanged = UI_AbstractNodeSizeChanged;
 	behaviour->windowOpened = UI_AbstractNodeInit;
 	behaviour->windowClosed = UI_AbstractNodeClose;
+	behaviour->scroll = UI_AbstractNodeScroll;
 
 	/* Top-left position of the node */
 	UI_RegisterNodeProperty(behaviour, "pos", V_POS, uiNode_t, pos);

@@ -230,22 +230,30 @@ static void UI_OptionListNodeClick (uiNode_t * node, int x, int y)
 /**
  * @brief Auto scroll the list
  */
-static void UI_OptionListNodeMouseWheel (uiNode_t *node, int deltaX, int deltaY)
+static qboolean UI_OptionListNodeMouseWheel (uiNode_t *node, int deltaX, int deltaY)
 {
 	qboolean down = deltaY > 0;
 	qboolean updated;
 	if (deltaY == 0)
-		return;
+		return qfalse;
 	updated = UI_SetScroll(&EXTRADATA(node).scrollY, EXTRADATA(node).scrollY.viewPos + (down ? 1 : -1), -1, -1);
 	if (EXTRADATA(node).onViewChange && updated)
 		UI_ExecuteEventActions(node, EXTRADATA(node).onViewChange);
 
-	if (node->onWheelUp && !down)
+	/* @todo use super behaviour */
+	if (node->onWheelUp && !down) {
 		UI_ExecuteEventActions(node, node->onWheelUp);
-	if (node->onWheelDown && down)
+		updated = qtrue;
+	}
+	if (node->onWheelDown && down) {
 		UI_ExecuteEventActions(node, node->onWheelDown);
-	if (node->onWheel)
+		updated = qtrue;
+	}
+	if (node->onWheel) {
 		UI_ExecuteEventActions(node, node->onWheel);
+		updated = qtrue;
+	}
+	return updated;
 }
 
 /**

@@ -313,20 +313,6 @@ static void UI_TextNodeRightClick (uiNode_t * node, int x, int y)
 		UI_ExecuteEventActions(node, node->onRightClick);
 }
 
-static void UI_TextNodeMouseWheel (uiNode_t *node, int deltaX, int deltaY)
-{
-	qboolean down = deltaY > 0;
-	if (deltaY == 0)
-		return;
-	UI_AbstractScrollableNodeScrollY(node, (down ? 1 : -1));
-	if (node->onWheelUp && !down)
-		UI_ExecuteEventActions(node, node->onWheelUp);
-	if (node->onWheelDown && down)
-		UI_ExecuteEventActions(node, node->onWheelDown);
-	if (node->onWheel)
-		UI_ExecuteEventActions(node, node->onWheel);
-}
-
 static void UI_TextNodeLoading (uiNode_t *node)
 {
 	EXTRADATA(node).super.textLineSelected = -1; /**< Invalid/no line selected per default. */
@@ -382,7 +368,6 @@ void UI_RegisterText2Node (uiBehaviour_t *behaviour)
 	behaviour->draw = UI_TextNodeDraw;
 	behaviour->leftClick = UI_TextNodeClick;
 	behaviour->rightClick = UI_TextNodeRightClick;
-	behaviour->scroll = UI_TextNodeMouseWheel;
 	behaviour->mouseMove = UI_TextNodeMouseMove;
 	behaviour->loading = UI_TextNodeLoading;
 	behaviour->loaded = UI_TextNodeLoaded;

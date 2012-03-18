@@ -157,15 +157,16 @@ static void UI_SpinnerNodeCapturedMouseLost (uiNode_t *node)
 /**
  * @note Mouse wheel is not inhibited when node is disabled
  */
-static void UI_SpinnerNodeWheel (uiNode_t *node, int deltaX, int deltaY)
+static qboolean UI_SpinnerNodeWheel (uiNode_t *node, int deltaX, int deltaY)
 {
 	qboolean down = deltaY > 0;
 	const qboolean disabled = node->disabled || node->parent->disabled;
 	if (deltaY == 0)
-		return;
+		return qfalse;
 	if (disabled)
-		return;
+		return qfalse;
 	UI_SpinnerNodeStep(node, down);
+	return qtrue;
 }
 
 static void UI_SpinnerNodeDraw (uiNode_t *node)
