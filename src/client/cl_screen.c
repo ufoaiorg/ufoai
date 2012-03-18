@@ -172,7 +172,10 @@ static void SCR_DrawDownloading (void)
 void SCR_DrawLoading (int percent, const char *loadingMessages)
 {
 	const image_t* loadingPic;
+	const image_t* overlayPic;
 	const vec4_t color = {0.0, 0.7, 0.0, 0.8};
+	const int paddingX = 40;
+	const int paddingY = 43;
 	char *mapmsg;
 
 	if (cls.downloadName[0]) {
@@ -180,14 +183,26 @@ void SCR_DrawLoading (int percent, const char *loadingMessages)
 		return;
 	}
 
-	loadingPic = SCR_SetLoadingBackground(CL_GetConfigString(CS_MAPTITLE));
-
 	R_BeginFrame();
 
 	/* center loading screen */
-	R_DrawImage(viddef.virtualWidth / 2 - loadingPic->width / 2, viddef.virtualHeight / 2 - loadingPic->height / 2, loadingPic);
-	R_Color(color);
+	overlayPic = R_FindImage("pics/maps/loading/loading_background", it_pic);
+	R_DrawImage(viddef.virtualWidth / 2 - overlayPic->width / 2, viddef.virtualHeight / 2 - overlayPic->height / 2, overlayPic);
 
+	loadingPic = SCR_SetLoadingBackground(CL_GetConfigString(CS_MAPTITLE));
+	R_DrawStretchImage(viddef.virtualWidth / 2 - overlayPic->width / 2 + paddingX, viddef.virtualHeight / 2 - overlayPic->height / 2 + paddingY,
+			overlayPic->width - paddingX * 2, overlayPic->height - paddingY * 2, loadingPic);
+
+	overlayPic = R_FindImage("pics/maps/loading/loading_border", it_pic);
+	R_DrawImage(viddef.virtualWidth / 2 - overlayPic->width / 2, viddef.virtualHeight / 2 - overlayPic->height / 2, overlayPic);
+	overlayPic = R_FindImage("pics/maps/loading/loading_logo", it_pic);
+	R_DrawImage(viddef.virtualWidth / 2 - overlayPic->width / 2, viddef.virtualHeight / 2 - overlayPic->height / 2, overlayPic);
+
+	if (overlayPic != r_noTexture) {
+		R_DrawImage(viddef.virtualWidth / 2 - overlayPic->width / 2, viddef.virtualHeight / 2 - overlayPic->height / 2, overlayPic);
+	}
+
+	R_Color(color);
 	if (CL_GetConfigString(CS_TILES)[0] != '\0') {
 		mapmsg = va(_("Loading Map [%s]"), _(CL_GetConfigString(CS_MAPTITLE)));
 		UI_DrawString("f_menubig", ALIGN_UC,
