@@ -2072,7 +2072,7 @@ mapdef city2
         description     "_A city high rise."
 		param			"city2"
         multiplayer     false
-		campaign		false
+		campaign		true
         maxaliens       23
         aircraft
         {
@@ -4274,7 +4274,7 @@ mapdef wilderness
 // CITY2 MULTIPLAYER MAP//
 //////////////////////////
 
-mapdef city2
+mapdef city2_mp
 {
         map             "+city2"
         description     "_A city high rise."
