@@ -68,6 +68,7 @@ window skirmish
 		layoutColumns	2
 		layoutMargin	5
 		padding		5
+		wheelscrollable true
 
 		onViewChange {
 			*node:root.maplist_scroll@fullsize = <fullsize>
