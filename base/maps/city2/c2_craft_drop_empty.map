@@ -18,123 +18,118 @@
 }
 // entity 1
 {
-"classname" "trigger_rescue"
-"team" "1"
-}
-// entity 2
-{
 "classname" "info_civilian_start"
 "origin" "272 624 220"
 }
-// entity 3
+// entity 2
 {
 "classname" "info_civilian_start"
 "origin" "624 1008 220"
 "angle" "-90"
 }
-// entity 4
+// entity 3
 {
 "classname" "info_civilian_start"
 "origin" "1008 624 220"
 "angle" "180"
 }
-// entity 5
+// entity 4
 {
 "classname" "info_civilian_start"
 "origin" "624 272 220"
 "angle" "90"
 }
-// entity 6
+// entity 5
 {
 "classname" "info_player_start"
 "team" "4"
 "origin" "656 624 220"
 "angle" "-90"
 }
-// entity 7
+// entity 6
 {
 "classname" "info_2x2_start"
 "origin" "640 832 220"
 "team" "4"
 "angle" "90"
 }
-// entity 8
+// entity 7
 {
 "classname" "info_2x2_start"
 "origin" "672 448 220"
 "team" "4"
 "angle" "-90"
 }
-// entity 9
+// entity 8
 {
 "classname" "info_player_start"
 "team" "4"
 "origin" "656 656 220"
 }
-// entity 10
+// entity 9
 {
 "classname" "info_player_start"
 "team" "4"
 "origin" "624 624 220"
 "angle" "180"
 }
-// entity 11
+// entity 10
 {
 "classname" "info_player_start"
 "team" "4"
 "origin" "624 656 220"
 "angle" "90"
 }
-// entity 12
+// entity 11
 {
 "classname" "info_player_start"
 "team" "4"
 "origin" "624 912 220"
 "angle" "90"
 }
-// entity 13
+// entity 12
 {
 "classname" "info_player_start"
 "team" "4"
 "origin" "656 912 220"
 "angle" "90"
 }
-// entity 14
+// entity 13
 {
 "classname" "info_player_start"
 "team" "4"
 "origin" "912 656 220"
 "angle" "0"
 }
-// entity 15
+// entity 14
 {
 "classname" "info_player_start"
 "team" "4"
 "origin" "912 624 220"
 "angle" "0"
 }
-// entity 16
+// entity 15
 {
 "classname" "info_player_start"
 "team" "4"
 "origin" "656 368 220"
 "angle" "-90"
 }
-// entity 17
+// entity 16
 {
 "classname" "info_player_start"
 "team" "4"
 "origin" "624 368 220"
 "angle" "-90"
 }
-// entity 18
+// entity 17
 {
 "classname" "info_player_start"
 "team" "4"
 "origin" "368 624 220"
 "angle" "180"
 }
-// entity 19
+// entity 18
 {
 "classname" "info_player_start"
 "team" "4"
