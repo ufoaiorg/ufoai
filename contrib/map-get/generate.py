@@ -13,7 +13,7 @@ import optparse
 import mapsync
 import time
 
-UFO2MAPFLAGS = ' -v 4 -nice 19 -quant 4 -extra'
+UFO2MAPFLAGS = ' -v 4 -nice 19 -quant 4 -soft'
 JOBS = 1
 
 def run(cmd, mandatory=True):

@@ -7,7 +7,7 @@
 
 import os, fnmatch, sys, stat, platform
 
-extra = "-extra"
+extra = "-soft"
 
 def getFile(root):
     pattern = "*.map"

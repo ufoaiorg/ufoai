@@ -8,7 +8,7 @@ use strict;
 # built, and does not handle the case when qrad3 gets interrupted
 # mid-way.
 
-my $extra = "-bounce 0 -extra";
+my $extra = "-bounce 0 -soft";
 
 my $ufo2map = "../../ufo2map";
 

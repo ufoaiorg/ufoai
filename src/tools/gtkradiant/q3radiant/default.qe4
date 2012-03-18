@@ -2,7 +2,7 @@
 "mapspath" "c:\programme\ufoai\base\maps"
 "brush_primit" "0"
 "Fast" "! c:\programme\ufoai\ufo2map $"
-"Extra" "! c:\programme\ufoai\ufo2map -extra $"
+"Extra" "! c:\programme\ufoai\ufo2map -soft $"
 "Only Ents" "! c:\programme\ufoai\ufo2map -onlyents $"
 "autosave" "c:\programme\ufoai\base\maps\autosave.map"
 "texturepath" "c:\programme\ufoai\base\textures"

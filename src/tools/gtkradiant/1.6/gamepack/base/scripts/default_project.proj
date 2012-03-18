@@ -91,7 +91,7 @@ Note : Default project settings are for single player... this can be changed thr
   <key name="bsp_ufo2map: (no day lightmap)" value="! &quot;$TEMPLATEapppathufo2map&quot; -nice 19 -noradiosity day $"/>
   <key name="bsp_ufo2map: (no night lightmap)" value="! &quot;$TEMPLATEapppathufo2map&quot; -nice 19 -noradiosity night $"/>
   <key name="bsp_ufo2map: (fast)" value="! &quot;$TEMPLATEapppathufo2map&quot; -nice 19 $"/>
-  <key name="bsp_ufo2map: (full)" value="! &quot;$TEMPLATEapppathufo2map&quot; -nice 19 -extra $"/>
+  <key name="bsp_ufo2map: (full)" value="! &quot;$TEMPLATEapppathufo2map&quot; -nice 19 -soft $"/>
   <key name="bsp_ufo2map: (only ents)" value="! &quot;$TEMPLATEapppathufo2map&quot; -nice 19 -onlyents $"/>
   <key name="bsp_ufo2map: (only ents)" value="! &quot;$TEMPLATEapppathufo2map&quot; -nice 19 -onlyents $"/>
 </project>
