@@ -105,7 +105,7 @@ staticcampaign small {
 			delay		"0 0 1"
 			frame		"0 10 0"
 			expire		"0 8 0"
-			missions	"construction office harbour resort bungalow tropic_river city_disco tropic_drug_crash oriental_medium_crash desert_harvester_crash"
+			missions	"construction office harbour city2 resort bungalow tropic_river city_disco tropic_drug_crash oriental_medium_crash desert_harvester_crash"
 			quota		6
 			nextstage	invasion
 			ufos		2
