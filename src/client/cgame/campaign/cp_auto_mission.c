@@ -90,7 +90,7 @@ typedef struct autoMissionBattle_s {
 #define AM_IsAlien(type)  ((type) == AUTOMISSION_TEAM_TYPE_ALIEN)
 #define AM_IsCivilian(type) ((type) == AUTOMISSION_TEAM_TYPE_CIVILIAN)
 #define AM_SetHostile(battle, team, otherTeam, value) (battle)->isHostile[(team)][(otherTeam)] = (value)
-#define AM_IsHostile(battle, team, otherTeam) (battle)->isHostile[(team)][(otherTeam)]
+#define AM_IsHostile(battle, team, otherTeam) ((battle)->isHostile[(team)][(otherTeam)])
 
 #define AM_GetUnit(battle, teamIdx, unitIdx) (&battle->units[teamIdx][unitIdx])
 #define AM_IsUnitActive(unit) (((unit)->chr->HP > 0) && ((unit)->chr->HP > (unit)->chr->STUN))
@@ -473,12 +473,7 @@ static int AM_GetRandomTeam (autoMissionBattle_t *battle, int currTeam, qboolean
 		int nextTeam;
 
 		/* if not, check next */
-		for (nextTeam = eTeam + 1; nextTeam < AUTOMISSION_TEAM_TYPE_MAX; nextTeam++) {
-			if (battle->teamActive[nextTeam] && AM_IsHostile(battle, currTeam, nextTeam) == enemy)
-				return nextTeam;
-		}
-		/* not found any, start over from 0 */
-		for (nextTeam = 0; nextTeam < eTeam; nextTeam++) {
+		for (nextTeam = (eTeam + 1) % AUTOMISSION_TEAM_TYPE_MAX; nextTeam != eTeam; nextTeam = (nextTeam + 1) % AUTOMISSION_TEAM_TYPE_MAX) {
 			if (battle->teamActive[nextTeam] && AM_IsHostile(battle, currTeam, nextTeam) == enemy)
 				return nextTeam;
 		}
@@ -516,13 +511,7 @@ static autoUnit_t *AM_GetRandomActiveUnitOfTeam (autoMissionBattle_t *battle, in
 		int nextIdx;
 
 		/* if not active, check next */
-		for (nextIdx = idx + 1; nextIdx < battle->nUnits[team]; nextIdx++) {
-			unit = AM_GetUnit(battle, team, nextIdx);
-			if (AM_IsUnitActive(unit))
-				return unit;
-		}
-		/* not found any active, start over from 0 */
-		for (nextIdx = 0; nextIdx < idx; nextIdx++) {
+		for (nextIdx = (idx + 1) % battle->nUnits[team]; nextIdx != idx; nextIdx = (nextIdx + 1) % battle->nUnits[team]) {
 			unit = AM_GetUnit(battle, team, nextIdx);
 			if (AM_IsUnitActive(unit))
 				return unit;
@@ -530,6 +519,41 @@ static autoUnit_t *AM_GetRandomActiveUnitOfTeam (autoMissionBattle_t *battle, in
 		/* none found */
 		return NULL;
 	}
+}
+
+/**
+ * @brief returns a randomly selected active unit
+ * @param[in] battle The battle we fight
+ * @param[in] currTeam Current team we search for
+ * @param[in] enemy If the team should be enemy or friendly
+ */
+static autoUnit_t *AM_GetRandomActiveUnit (autoMissionBattle_t *battle, int currTeam, qboolean enemy)
+{
+	int eTeam;
+	int nextTeam;
+	autoUnit_t *unit;
+
+	assert(battle);
+	assert(currTeam >= 0 && currTeam < AUTOMISSION_TEAM_TYPE_MAX);
+
+	eTeam = AM_GetRandomTeam(battle, currTeam, enemy);
+	if (eTeam >= AUTOMISSION_TEAM_TYPE_MAX)
+		return NULL;
+
+	unit = AM_GetRandomActiveUnitOfTeam(battle, eTeam);
+	if (unit)
+		return unit;
+
+	/* if not, check next */
+	for (nextTeam = (eTeam + 1) % AUTOMISSION_TEAM_TYPE_MAX; nextTeam != eTeam; nextTeam = (nextTeam + 1) % AUTOMISSION_TEAM_TYPE_MAX) {
+		if (battle->teamActive[nextTeam] && AM_IsHostile(battle, currTeam, nextTeam) == enemy) {
+			unit = AM_GetRandomActiveUnitOfTeam(battle, nextTeam);
+			if (unit)
+				return unit;
+		}
+	}
+	/* none found */
+	return NULL;
 }
 
 /**
@@ -641,11 +665,9 @@ static qboolean AM_CheckFire (autoMissionBattle_t *battle, autoUnit_t *currUnit,
  */
 static qboolean AM_UnitAttackEnemy (autoMissionBattle_t *battle, autoUnit_t *currUnit, const double effective)
 {
-	int eTeam;
 	autoUnit_t *eUnit;
 
-	eTeam = AM_GetRandomTeam(battle, currUnit->team, qtrue);
-	eUnit = AM_GetRandomActiveUnitOfTeam(battle, eTeam);
+	eUnit = AM_GetRandomActiveUnit(battle, currUnit->team, qtrue);
 	/* no more enemies */
 	if (eUnit == NULL)
 		return qfalse;
@@ -653,8 +675,7 @@ static qboolean AM_UnitAttackEnemy (autoMissionBattle_t *battle, autoUnit_t *cur
 	/* shot an enemy */
 	if (!AM_CheckFire(battle, currUnit, eUnit, effective)) {
 		/* if failed, attack a friendly */
-		eTeam = AM_GetRandomTeam(battle, currUnit->team, qfalse);
-		eUnit = AM_GetRandomActiveUnitOfTeam(battle, eTeam);
+		eUnit = AM_GetRandomActiveUnit(battle, currUnit->team, qfalse);
 		if (eUnit != NULL)
 			AM_CheckFire(battle, currUnit, eUnit, effective);
 	}
