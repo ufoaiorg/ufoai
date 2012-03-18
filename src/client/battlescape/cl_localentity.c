@@ -943,6 +943,9 @@ qboolean LE_BrushModelAction (le_t * le, entity_t * ent)
 		float x, y, z, xmax;
 		const int drawFlags = cl_map_draw_rescue_zone->integer;
 
+		if (!((1 << cl_worldlevel->integer) & le->levelflags))
+			break;
+
 		ent->flags = 0; /* Do not draw anything at all, if drawFlags set to 0 */
 		enum { DRAW_TEXTURE = 0x1, DRAW_CIRCLES = 0x2 };
 		ent->model = NULL;
