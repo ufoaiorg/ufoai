@@ -499,11 +499,10 @@ static qboolean UI_PanelNodeMouseWheel (uiNode_t *node, int deltaX, int deltaY)
 	qboolean down = deltaY > 0;
 	qboolean updated;
 
-	if (!EXTRADATA(node).wheelScrollable || deltaY == 0)
+	if (deltaY == 0)
 		return qfalse;
 
-	updated = UI_SetScroll(&EXTRADATA(node).super.scrollY, EXTRADATA(node).super.scrollY.viewPos + (down ? 10 : -10), -1, -1);
-
+	updated = UI_SetScroll(&EXTRADATA(node).super.scrollY, EXTRADATA(node).super.scrollY.viewPos + deltaY * 50, -1, -1);
 	if (EXTRADATA(node).super.onViewChange && updated)
 		UI_ExecuteEventActions(node, EXTRADATA(node).super.onViewChange);
 
