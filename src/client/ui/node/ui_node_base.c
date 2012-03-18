@@ -282,6 +282,7 @@ static void UI_BaseMapNodeClick (uiNode_t *node, int x, int y)
 				if (B_GetBuildingAt(base, x, y) != NULL || B_IsTileBlocked(base, x, y))
 					return;
 		B_SetBuildingByClick(base, building, row, col);
+		S_StartLocalSample("geoscape/build-place", 1.0f);
 		return;
 	}
 
