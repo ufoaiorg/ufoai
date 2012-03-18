@@ -90,7 +90,6 @@ SectionGroup /e "Game" SECGROUP01
 		SetOutPath "$INSTDIR"
 			File "..\..\..\COPYING"
 			File "..\..\..\README"
-			File "..\..\dlls\*.dll"
 			File "..\..\..\ufo.exe"
 			File "..\..\..\ufoded.exe"
 		SetOutPath "$INSTDIR\base"
