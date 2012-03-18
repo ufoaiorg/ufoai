@@ -31,6 +31,7 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #include "cp_ufo.h"
 #include "cp_missions.h"
 #include "save/save_airfight.h"
+#include "../../sound/s_main.h"
 
 /**
  * @brief Remove a projectile from ccs.projectiles
@@ -107,6 +108,18 @@ static qboolean AIRFIGHT_AddProjectile (const base_t* attackingBase, const insta
 		AII_ReloadWeapon(weaponSlot);
 
 	ccs.numProjectiles++;
+
+	const char *sound;
+	if (projectile->bullets) {
+		sound = "geoscape/combat-gun";
+	} else if (projectile->beam) {
+		sound = "geoscape/combat-airlaser";
+	} else {
+		sound = "geoscape/combat-rocket";
+	}
+
+	if (sound != NULL)
+		S_StartLocalSample(sound, 1.0f);
 
 	return qtrue;
 }
@@ -547,9 +560,13 @@ static void AIRFIGHT_ProjectileHits (const campaign_t* campaign, aircraftProject
 	if (damage > 0) {
 		assert(target->damage > 0);
 		target->damage -= damage;
-		if (target->damage <= 0)
+		if (target->damage <= 0) {
 			/* Target is destroyed */
 			AIRFIGHT_ActionsAfterAirfight(campaign, projectile->attackingAircraft, target, target->type == AIRCRAFT_UFO);
+			S_StartLocalSample("geoscape/combat-explosion", 1.0f);
+		} else {
+			S_StartLocalSample("geoscape/combat-rocket-exp", 1.0f);
+		}
 	}
 }
 

@@ -96,6 +96,7 @@ void INS_SelectInstallation (installation_t *installation)
 		case INSTALLATION_RADAR:
 		default:
 			UI_PushWindow("popup_installationstatus", NULL, NULL);
+			break;
 		}
 	}
 }
