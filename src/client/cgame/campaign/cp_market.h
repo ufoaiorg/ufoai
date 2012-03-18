@@ -4,7 +4,7 @@
  */
 
 /*
-Copyright (C) 2002-2011 UFO: Alien Invasion.
+Copyright (C) 2002-2012 UFO: Alien Invasion.
 
 This program is free software; you can redistribute it and/or
 modify it under the terms of the GNU General Public License
@@ -20,11 +20,10 @@ See the GNU General Public License for more details.
 You should have received a copy of the GNU General Public License
 along with this program; if not, write to the Free Software
 Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
-
 */
 
-#ifndef CLIENT_CL_MARKET_H
-#define CLIENT_CL_MARKET_H
+#ifndef CP_MARKET_H
+#define CP_MARKET_H
 
 /** market structure */
 typedef struct market_s {
@@ -39,21 +38,31 @@ typedef struct market_s {
 	double currentEvolutionAircraft[AIRCRAFTTYPE_MAX];	/**< evolution of the market */
 } market_t;
 
-void BS_AddItemToMarket(const objDef_t *od, int amount);
-void BS_RemoveItemFromMarket(const objDef_t *od, int amount);
-void BS_AddAircraftToMarket(const aircraft_t *aircraft, int amount);
-void BS_RemoveAircraftFromMarket(const aircraft_t *aircraft, int amount);
 int BS_GetAircraftOnMarket(const aircraft_t *aircraft);
 int BS_GetAircraftSellingPrice(const aircraft_t *aircraft);
 int BS_GetAircraftBuyingPrice(const aircraft_t *aircraft);
+void BS_AddAircraftToMarket(const aircraft_t *aircraft, int amount);
+void BS_RemoveAircraftFromMarket(const aircraft_t *aircraft, int amount);
+
+int BS_GetItemOnMarket(const objDef_t *od);
 int BS_GetItemSellingPrice(const objDef_t *od);
 int BS_GetItemBuyingPrice(const objDef_t *od);
+void BS_AddItemToMarket(const objDef_t *od, int amount);
+void BS_RemoveItemFromMarket(const objDef_t *od, int amount);
 
 qboolean BS_CheckAndDoBuyItem(base_t* base, const objDef_t *item, int number);
+
+qboolean BS_BuyAircraft(const aircraft_t *aircraftTemplate, base_t *base);
 qboolean BS_SellAircraft(aircraft_t *aircraft);
+
+qboolean BS_BuyUGV(const ugv_t *ugv, base_t *base);
+qboolean BS_SellUGV(employee_t *robot);
+
+qboolean BS_BuyItem(const objDef_t *od, base_t *base, int count);
+qboolean BS_SellItem(const objDef_t *od, base_t *base, int count);
 
 qboolean BS_IsOnMarket(const objDef_t const* item);
 void BS_InitMarket(const struct campaign_s *campaign);
 void CP_CampaignRunMarket(struct campaign_s *campaign);
 
-#endif /* CLIENT_CL_MARKET_H */
+#endif

@@ -1,11 +1,11 @@
 /**
  * @file cp_market.c
  * @brief Single player market stuff.
- * @note Buy/Sell menu functions prefix: BS_
+ * @note Buy/Sell functions prefix: BS_
  */
 
 /*
-Copyright (C) 2002-2011 UFO: Alien Invasion.
+Copyright (C) 2002-2012 UFO: Alien Invasion.
 
 This program is free software; you can redistribute it and/or
 modify it under the terms of the GNU General Public License
@@ -21,7 +21,6 @@ See the GNU General Public License for more details.
 You should have received a copy of the GNU General Public License
 along with this program; if not, write to the Free Software
 Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
-
 */
 
 #include "../../cl_shared.h"
@@ -90,8 +89,33 @@ int BS_GetAircraftSellingPrice (const aircraft_t *aircraft)
 {
 	const humanAircraftType_t type = Com_DropShipShortNameToID(aircraft->id);
 	const market_t *market = BS_GetMarket();
+	int sellPrice = market->bidAircraft[type];
+
 	assert(aircraft->type != AIRCRAFT_UFO);
-	return market->bidAircraft[type];
+
+	if (aircraft->tpl != aircraft) {
+		int i;
+
+		if (aircraft->shield.item)
+			sellPrice += BS_GetItemSellingPrice(aircraft->shield.item);
+		if (aircraft->shield.ammo)
+			sellPrice += BS_GetItemSellingPrice(aircraft->shield.ammo);
+
+		for (i = 0; i < aircraft->maxWeapons; i++) {
+			if (aircraft->weapons[i].item)
+				sellPrice += BS_GetItemSellingPrice(aircraft->weapons[i].item);
+			if (aircraft->weapons[i].ammo)
+				sellPrice += BS_GetItemSellingPrice(aircraft->weapons[i].ammo);
+		}
+
+		for (i = 0; i < aircraft->maxElectronics; i++) {
+			if (aircraft->electronics[i].item)
+				sellPrice += BS_GetItemSellingPrice(aircraft->electronics[i].item);
+			if (aircraft->electronics[i].ammo)
+				sellPrice += BS_GetItemSellingPrice(aircraft->electronics[i].ammo);
+		}
+	}
+	return sellPrice;
 }
 
 /**
@@ -105,6 +129,17 @@ int BS_GetAircraftBuyingPrice (const aircraft_t *aircraft)
 	const market_t *market = BS_GetMarket();
 	assert(aircraft->type != AIRCRAFT_UFO);
 	return market->askAircraft[type];
+}
+
+/**
+ * @brief Get the number of items of the given type on the market
+ * @param[in] od the item (objDef) to search the market for
+ * @return The amount of items for the given type
+ */
+int BS_GetItemOnMarket (const objDef_t *od)
+{
+	const market_t *market = BS_GetMarket();
+	return market->numItems[od->idx];
 }
 
 /**
@@ -184,6 +219,48 @@ static void BS_ProcessCraftItemSale (const objDef_t *craftitem, const int numIte
 }
 
 /**
+ * @brief Buys an aircraft
+ * @param[in] aircraft The aircraft template to buy
+ * @param[out] base Base to buy at
+ * @return @c true if the aircraft could get bought, @c false otherwise
+ */
+qboolean BS_BuyAircraft (const aircraft_t *aircraftTemplate, base_t *base)
+{
+	int freeSpace;
+	int price;
+
+	if (!base)
+		Com_Error(ERR_DROP, "BS_BuyAircraft: No base given.");
+	if (!aircraftTemplate)
+		Com_Error(ERR_DROP, "BS_BuyAircraft: No aircraft template given.");
+
+	if (!B_GetBuildingStatus(base, B_COMMAND))
+		return qfalse;
+	/* We cannot buy aircraft if there is no power in our base. */
+	if (!B_GetBuildingStatus(base, B_POWER))
+		return qfalse;
+	/* We cannot buy aircraft without any hangar. */
+	if (!AIR_AircraftAllowed(base))
+		return qfalse;
+
+	/* Check free space in hangars. */
+	freeSpace = AIR_CalculateHangarStorage(aircraftTemplate, base, 0);
+	if (freeSpace <= 0)
+		return qfalse;
+
+	price = BS_GetAircraftBuyingPrice(aircraftTemplate);
+	if (ccs.credits < price)
+		return qfalse;
+
+	/* Hangar capacities are being updated in AIR_NewAircraft().*/
+	BS_RemoveAircraftFromMarket(aircraftTemplate, 1);
+	CP_UpdateCredits(ccs.credits - price);
+	AIR_NewAircraft(base, aircraftTemplate);
+
+	return qtrue;
+}
+
+/**
  * @brief Sells the given aircraft with all the equipment.
  * @param aircraft The aircraft to sell
  * @return @c true if the aircraft could get sold, @c false otherwise
@@ -219,8 +296,141 @@ qboolean BS_SellAircraft (aircraft_t *aircraft)
 	/* the capacities are also updated here */
 	BS_AddAircraftToMarket(aircraft, 1);
 	CP_UpdateCredits(ccs.credits + BS_GetAircraftSellingPrice(aircraft));
-
 	AIR_DeleteAircraft(aircraft);
+
+	return qtrue;
+}
+
+/**
+ * @brief Buys the given UGV
+ * @param[in] ugv The ugv template of the UGV to buy
+ * @param[out] base Base to buy at
+ * @return @c true if the ugv could get bought, @c false otherwise
+ * @TODO Implement this correctly once we have UGV
+ */
+qboolean BS_BuyUGV (const ugv_t *ugv, base_t *base)
+{
+	const objDef_t *ugvWeapon;
+
+	if (!ugv)
+		Com_Error(ERR_DROP, "BS_BuyUGV: Called on NULL UGV!");
+	if (!base)
+		Com_Error(ERR_DROP, "BS_BuyUGV: Called on NULL base!");
+	ugvWeapon = INVSH_GetItemByID(ugv->weapon);
+	if (!ugvWeapon)
+		Com_Error(ERR_DROP, "BS_BuyItem_f: Could not get weapon '%s' for ugv/tank '%s'.", ugv->weapon, ugv->id);
+
+	if (ccs.credits < ugv->price)
+		return qfalse;
+	if (E_CountUnhiredRobotsByType(ugv) <= 0)
+		return qfalse;
+	if (BS_GetItemOnMarket(ugvWeapon) <= 0)
+		return qfalse;
+	if (CAP_GetFreeCapacity(base, CAP_ITEMS) < UGV_SIZE + ugvWeapon->size)
+		return qfalse;
+	if (!E_HireRobot(base, ugv))
+		return qfalse;
+
+	BS_RemoveItemFromMarket(ugvWeapon, 1);
+	CP_UpdateCredits(ccs.credits - ugv->price);
+	B_UpdateStorageAndCapacity(base, ugvWeapon, 1, qfalse);
+
+	return qtrue;
+}
+
+/**
+ * @brief Sells the given UGV with all the equipment.
+ * @param robot The employee record of the UGV to sell
+ * @return @c true if the ugv could get sold, @c false otherwise
+ * @TODO Implement this correctly once we have UGV
+ */
+qboolean BS_SellUGV (employee_t *robot)
+{
+	const objDef_t *ugvWeapon;
+	const ugv_t *ugv;
+	base_t *base;
+
+	if (!robot)
+		Com_Error(ERR_DROP, "Selling NULL UGV!");
+	if (!robot->ugv)
+		Com_Error(ERR_DROP, "Selling invalid UGV with UCN: %i", robot->chr.ucn);
+	ugv = robot->ugv;
+	base = robot->baseHired;
+
+	/* Check if we have a weapon for this ugv in the market to sell it. */
+	ugvWeapon = INVSH_GetItemByID(ugv->weapon);
+	if (!ugvWeapon)
+		Com_Error(ERR_DROP, "BS_BuyItem_f: Could not get wepaon '%s' for ugv/tank '%s'.", ugv->weapon, ugv->id);
+
+	if (!E_UnhireEmployee(robot)) {
+		/** @todo message - Couldn't fire employee. */
+		Com_DPrintf(DEBUG_CLIENT, "Couldn't sell/fire robot/ugv.\n");
+		return qfalse;
+	}
+
+	BS_AddItemToMarket(ugvWeapon, 1);
+	CP_UpdateCredits(ccs.credits + ugv->price);
+	B_UpdateStorageAndCapacity(base, ugvWeapon, -1, qfalse);
+
+	return qtrue;
+}
+
+/**
+ * @brief Buys items from the market
+ * @param[in] od pointer to the item (Object Definition record)
+ * @param[out] base Base to buy at
+ * @param[in ] count Number of items to buy
+ * @return @c true if the ugv could get bought, @c false otherwise
+ */
+qboolean BS_BuyItem (const objDef_t *od, base_t *base, int count)
+{
+	if (!od)
+		Com_Error(ERR_DROP, "BS_BuyItem: Called on NULL objDef!");
+	if (!base)
+		Com_Error(ERR_DROP, "BS_BuyItem: Called on NULL base!");
+
+	if (!BS_IsOnMarket(od))
+		return qfalse;
+	if (count <= 0)
+		return qfalse;
+	if (ccs.credits < BS_GetItemBuyingPrice(od) * count)
+		return qfalse;
+	if (BS_GetItemOnMarket(od) < count)
+		return qfalse;
+	if (CAP_GetFreeCapacity(base, CAP_ITEMS) < od->size * count)
+		return qfalse;
+
+	B_UpdateStorageAndCapacity(base, od, count, qfalse);
+	BS_RemoveItemFromMarket(od, count);
+	CP_UpdateCredits(ccs.credits - BS_GetItemBuyingPrice(od) * count);
+
+	return qtrue;
+}
+
+/**
+ * @brief Sells items from the market
+ * @param[in] od pointer to the item (Object Definition record)
+ * @param[out] base Base to sell at
+ * @param[in ] count Number of items to sell
+ * @return @c true if the ugv could get sold, @c false otherwise
+ */
+qboolean BS_SellItem (const objDef_t *od, base_t *base, int count)
+{
+	if (!od)
+		Com_Error(ERR_DROP, "BS_SellItem: Called on NULL objDef!");
+	if (!base)
+		Com_Error(ERR_DROP, "BS_SellItem: Called on NULL base!");
+
+	if (!BS_IsOnMarket(od))
+		return qfalse;
+	if (count <= 0)
+		return qfalse;
+	if (B_ItemInBase(od, base) < count)
+		return qfalse;
+
+	B_UpdateStorageAndCapacity(base, od, -1 * count, qfalse);
+	BS_AddItemToMarket(od, count);
+	CP_UpdateCredits(ccs.credits + BS_GetItemSellingPrice(od) * count);
 
 	return qtrue;
 }

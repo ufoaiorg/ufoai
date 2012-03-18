@@ -19,7 +19,6 @@ See the GNU General Public License for more details.
 You should have received a copy of the GNU General Public License
 along with this program; if not, write to the Free Software
 Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
-
 */
 
 #include "../../cl_shared.h"
@@ -31,7 +30,6 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #include "cp_popup.h"
 
 #define MAX_BUYLIST		64
-
 #define MAX_MARKET_MENU_ENTRIES 22
 
 /**
@@ -975,6 +973,184 @@ static void BS_SetAutosell_f (void)
 }
 
 /**
+ * @brief Buy/Sell item/aircraft/ugv on the market
+ */
+static void BS_Buy_f (void)
+{
+	const char *itemid;
+	int count;
+	base_t *base = B_GetCurrentSelectedBase();
+	const aircraft_t *aircraft;
+	const ugv_t *ugv;
+	const objDef_t *od;
+
+	if (Cmd_Argc() < 2) {
+		Com_Printf("Usage: %s <item-id> <count> [base-idx] \nNegative count means selling. If base index is ommitted buys on the currently selected base.\n", Cmd_Argv(0));
+		return;
+	}
+
+	itemid = Cmd_Argv(1);
+	count = atoi(Cmd_Argv(2));
+
+	if (Cmd_Argc() >= 4)
+		base = B_GetFoundedBaseByIDX(atoi(Cmd_Argv(3)));
+
+	if (Q_strstart(itemid, "aircraft-")) {
+		/* aircraft sell - with aircraft golbal idx */
+		int idx = atoi(itemid + 9);
+		aircraft_t *aircraft = AIR_AircraftGetFromIDX(idx);
+
+		if (!aircraft) {
+			Com_Printf("Invalid aircraft index!\n");
+			return;
+		}
+		AIR_RemoveEmployees(aircraft);
+		BS_SellAircraft(aircraft);
+		return;
+	}
+
+	if (Q_strstart(itemid, "ugv-")) {
+		/* ugv sell - with unique character number index */
+		int ucn = atoi(itemid + 4);
+		employee_t *robot = E_GetEmployeeByTypeFromChrUCN(EMPL_ROBOT, ucn);
+
+		if (!robot) {
+			Com_Printf("Invalid UCN for UGV!\n");
+			return;
+		}
+
+		BS_SellUGV(robot);
+		return;
+	}
+
+	if (!base) {
+		Com_Printf("No/invalid base selected.\n");
+		return;
+	}
+
+	aircraft = AIR_GetAircraftSilent(itemid);
+	if (aircraft) {
+		int freeSpace;
+		int price;
+
+		if (!B_GetBuildingStatus(base, B_COMMAND)) {
+			CP_Popup(_("Note"), _("No command centre in this base.\nHangars are not functional.\n"));
+			return;
+		}
+		/* We cannot buy aircraft if there is no power in our base. */
+		if (!B_GetBuildingStatus(base, B_POWER)) {
+			CP_Popup(_("Note"), _("No power supplies in this base.\nHangars are not functional."));
+			return;
+		}
+		/* We cannot buy aircraft without any hangar. */
+		if (!AIR_AircraftAllowed(base)) {
+			CP_Popup(_("Note"), _("Build a hangar first."));
+			return;
+		}
+		/* Check free space in hangars. */
+		freeSpace = AIR_CalculateHangarStorage(aircraft, base, 0);
+		if (freeSpace < 0) {
+			Com_Printf("BS_Buy_f: something bad happened, AIR_CalculateHangarStorage returned < 0!\n");
+			return;
+		}
+		if (freeSpace == 0) {
+			CP_Popup(_("Notice"), _("You cannot buy this aircraft.\nNot enough space in hangars.\n"));
+			return;
+		}
+
+		price = BS_GetAircraftBuyingPrice(aircraft);
+		if (ccs.credits < price) {
+			CP_Popup(_("Notice"), _("You cannot buy this aircraft.\nNot enough credits.\n"));
+			return;
+		}
+
+		BS_BuyAircraft(aircraft, base);
+		return;
+	}
+
+	ugv = Com_GetUGVByIDSilent(itemid);
+	if (ugv) {
+		const objDef_t *ugvWeapon = INVSH_GetItemByID(ugv->weapon);
+		if (!ugvWeapon)
+			Com_Error(ERR_DROP, "BS_BuyItem_f: Could not get weapon '%s' for ugv/tank '%s'.", ugv->weapon, ugv->id);
+
+		if (E_CountUnhiredRobotsByType(ugv) < 1)
+			return;
+		if (ccs.eMarket.numItems[ugvWeapon->idx] < 1)
+			return;
+
+		if (ccs.credits < ugv->price) {
+			CP_Popup(_("Not enough money"), _("You cannot buy this item as you don't have enough credits."));
+			return;
+		}
+
+		if (CAP_GetFreeCapacity(base, CAP_ITEMS) < UGV_SIZE + ugvWeapon->size) {
+			CP_Popup(_("Not enough storage space"), _("You cannot buy this item.\nNot enough space in storage.\nBuild more storage facilities."));
+			return;
+		}
+
+		BS_BuyUGV(ugv, base);
+		return;
+	}
+
+	if (count == 0) {
+		Com_Printf("Invalid number of items to buy/sell: %s\n", Cmd_Argv(2));
+		return;
+	}
+
+	/* item */
+	od = INVSH_GetItemByID(Cmd_Argv(1));
+	if (od) {
+		if (!BS_IsOnMarket(od))
+			return;
+
+		if (count > 0) {
+			/* buy */
+			const int price = BS_GetItemBuyingPrice(od);
+			count = min(count, BS_GetItemOnMarket(od));
+
+			/* no items available on market */
+			if (count <= 0)
+				return;
+
+			if (price <= 0) {
+				Com_Printf("Item on market with invalid buying price: %s (%d)\n", od->id, BS_GetItemBuyingPrice(od));
+				return;
+			}
+			/** @todo warn if player can buy less item due to available credits? */
+			count = min(count, ccs.credits / price);
+			/* not enough money for a single item */
+			if (count <= 0) {
+				CP_Popup(_("Not enough money"), _("You cannot buy this item as you don't have enough credits."));
+				return;
+			}
+
+			if (od->size <= 0) {
+				Com_Printf("Item on market with invalid size: %s (%d)\n", od->id, od->size);
+				return;
+			}
+			count = min(count, CAP_GetFreeCapacity(base, CAP_ITEMS) / od->size);
+			if (count <= 0) {
+				CP_Popup(_("Not enough storage space"), _("You cannot buy this item.\nNot enough space in storage.\nBuild more storage facilities."));
+				return;
+			}
+
+			BS_BuyItem(od, base, count);
+			return;
+		} else {
+			/* sell */
+			count = min(-1 * count, B_ItemInBase(od, base));
+			/* no items in storage */
+			if (count <= 0)
+				return;
+			BS_SellItem(od, base, count);
+		}
+		return;
+	}
+	Com_Printf("Invalid item ID\n");
+}
+
+/**
  * @brief Function registers the callbacks of the maket UI and do initializations
  */
 void BS_InitCallbacks(void)
@@ -992,6 +1168,7 @@ void BS_InitCallbacks(void)
 	buyList.length = -1;
 
 	Cmd_AddCommand("ui_market_setautosell", BS_SetAutosell_f, "Sets/unsets or flips the autosell property of an item on the market");
+	Cmd_AddCommand("ui_market_buy", BS_Buy_f, "Buy/Sell item/aircraft/ugv on the market");
 }
 
 /**
@@ -999,6 +1176,7 @@ void BS_InitCallbacks(void)
  */
 void BS_ShutdownCallbacks(void)
 {
+	Cmd_RemoveCommand("ui_market_buy");
 	Cmd_RemoveCommand("ui_market_setautosell");
 
 	Cmd_RemoveCommand("buy_type");
