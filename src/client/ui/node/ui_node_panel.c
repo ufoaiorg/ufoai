@@ -499,7 +499,8 @@ static qboolean UI_PanelNodeMouseWheel (uiNode_t *node, int deltaX, int deltaY)
 	qboolean down = deltaY > 0;
 	qboolean updated;
 
-	if (deltaY == 0)
+	/* @todo remove wheelScrollable after 2.4 release */
+	if (!EXTRADATA(node).wheelScrollable || deltaY == 0)
 		return qfalse;
 
 	updated = UI_SetScroll(&EXTRADATA(node).super.scrollY, EXTRADATA(node).super.scrollY.viewPos + deltaY * 50, -1, -1);
