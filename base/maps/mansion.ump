@@ -374,9 +374,9 @@ a      +u      +u       +u     +u     e
 0      s       s        s      s      0
 }
 
-assembly testall
+assembly huge
 {
-title "_mansion_huge"
+title "_Mansion"
 size "17 14"
 fix +coast1 "3 4"
 fix +coast2 "1 9"

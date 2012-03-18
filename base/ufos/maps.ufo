@@ -1395,10 +1395,11 @@ mapdef laboratory
 // MANSION RANDOM MAPS //
 /////////////////////////
 
-mapdef mansion
+mapdef mansion_huge
 {
     map				"+mansion"
     description		"_A mansion near the coast."
+	param			"huge"
     teams			4
     multiplayer		true
     gametypes
@@ -4274,7 +4275,7 @@ mapdef wilderness
 // CITY2 MULTIPLAYER MAP//
 //////////////////////////
 
-mapdef city2_mp
+mapdef city2mp
 {
         map             "+city2"
         description     "_A city high rise."
