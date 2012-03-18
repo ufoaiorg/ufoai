@@ -614,7 +614,6 @@ entity trigger_nextmap {
 		nextmap		"The map to start once this trigger is touched"
 		particle	"The particle that indicates the activity of this trigger"
 		team		"The team number that this trigger serves as a next map trigger"
-		spawnflags	"level flags"
 	}
 
 	type {
@@ -638,7 +637,6 @@ entity trigger_rescue {
 
 	mandatory {
 		team	"The team number that this trigger serves as a rescue zone"
-		spawnflags	"level flags"
 	}
 
 	type {
