@@ -1441,6 +1441,46 @@ mapdef mansion_huge
     }
 }
 
+mapdef mansion_medium
+{
+    map				"+mansion1"
+    description		"_A mansion. An important and influential person lives here."
+	param			"medium"
+    singleplayer	true
+	campaign		true
+	multiplayer		false
+	maxaliens		18
+    aircraft
+    {
+		craft_drop_firebird
+		craft_drop_herakles
+		craft_drop_raptor
+    }
+
+    ufos
+    {
+	    // any
+    }
+
+    terrains
+    {
+		coast
+		grass
+    }
+
+    cultures
+    {
+		western
+    }
+
+    populations
+    {
+		urban
+		suburban
+		village
+    }
+}
+
 //////////////////////////
 // ORIENTAL RANDOM MAPS //
 //////////////////////////

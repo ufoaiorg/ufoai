@@ -1,0 +1,73 @@
+// *******************************************
+// Mediterranean mansion - the medium assembly
+// *******************************************
+
+// by Holger 'ShipIt' Gellrich
+
+// this is an extension of the +mansion map
+// the dropships land on mansion_craft_ufo_empty here
+
+extends mansion
+base mansion1/m1_
+
+// tile definitions -------------------------------------------------
+
+tile +craft_drop_firebird
+	// 8 x info_human_start
+
+{
+6 7
+0      0       0        0      0      0
+0      a       +u       +u     +u     e
+0      a       +u       +u     +u     e
+a      +u      +u       +u     +u     e
+a      +u      +u       +u     +u     e
+a      +u      +u       +u     +u     e
+0      s       s        s      s      0
+}
+
+
+tile +craft_drop_herakles
+	// 8 x info_human_start
+
+{
+6 7
+0      0       0        0      0      0
+0      a       +u       +u     +u     e
+0      a       +u       +u     +u     e
+a      +u      +u       +u     +u     e
+a      +u      +u       +u     +u     e
+a      +u      +u       +u     +u     e
+0      s       s        s      s      0
+}
+
+tile +craft_drop_raptor
+	// 8 x info_human_start
+	// 8 x info_player start for team 2
+	// 2 x info_2x2_start for team 2
+	// 11x info_alien_start
+
+{
+6 7
+0      0       0        0      0      0
+0      a       +u       +u     +u     e
+0      a       +u       +u     +u     e
+a      +u      +u       +u     +u     e
+a      +u      +u       +u     +u     e
+a      +u      +u       +u     +u     e
+0      s       s        s      s      0
+}
+
+
+// tilesets ---------------------------------------------------------
+
+// assemblies -------------------------------------------------------
+
+assembly medium
+{
+title "_Mansion"
+size "10 5"
+fix mansion/mansion_main "1 1"
+fix mansion/mansion_craft_ufo_empty "7 1"
+fix *rm_drop +craft_drop_firebird "7 1"
+}
