@@ -148,7 +148,7 @@
 			<errorcheckparameters value="-v 1 -check" />
 			<errorfixparameters value="-v 1 -fix" />
 			<binary value="" />
-			<parameters value="-extra" />
+			<parameters value="-soft" />
 			<materialparameters value="-material" />
 		</compiler>
 
