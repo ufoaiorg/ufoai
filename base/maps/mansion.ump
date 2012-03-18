@@ -376,6 +376,7 @@ a      +u      +u       +u     +u     e
 
 assembly testall
 {
+title "_mansion_huge"
 size "17 14"
 fix +coast1 "3 4"
 fix +coast2 "1 9"
