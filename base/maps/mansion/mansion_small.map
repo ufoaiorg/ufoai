@@ -2770,3 +2770,17 @@
 "angle" "90"
 "team" "2"
 }
+// entity 66
+{
+"classname" "light"
+"_color" "1 1 1"
+"light" "180"
+"origin" "152 176 184"
+}
+// entity 67
+{
+"classname" "light"
+"_color" "1 1 1"
+"light" "100"
+"origin" "92 652 56"
+}
