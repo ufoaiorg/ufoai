@@ -1151,6 +1151,76 @@ static void BS_Buy_f (void)
 }
 
 /**
+ * @brief Show informations about item/aircaft/ugv in the market
+ */
+static void BS_ShowInfo_f (void)
+{
+	const char *itemid;
+	const aircraft_t *aircraft;
+	const ugv_t *ugv;
+	const objDef_t *od;
+
+	if (Cmd_Argc() < 2) {
+		Com_Printf("Usage: %s <item-id>\n", Cmd_Argv(0));
+		return;
+	}
+
+	itemid = Cmd_Argv(1);
+
+	if (Q_strstart(itemid, "aircraft-")) {
+		/* PHALANX aircraft - with aircraft golbal idx */
+		int idx = atoi(itemid + 9);
+		aircraft = AIR_AircraftGetFromIDX(idx);
+
+		if (!aircraft) {
+			Com_Printf("Invalid aircraft index!\n");
+			return;
+		}
+		/** @todo show specialized info about PHALANX aircraft */
+		BS_MarketAircraftDescription(aircraft->tpl);
+		return;
+	}
+
+	if (Q_strstart(itemid, "ugv-")) {
+		/* PHALANX ugv - with unique character number index */
+		int ucn = atoi(itemid + 4);
+		employee_t *robot = E_GetEmployeeByTypeFromChrUCN(EMPL_ROBOT, ucn);
+
+		if (!robot) {
+			Com_Printf("Invalid UCN for UGV!\n");
+			return;
+		}
+
+		/** @todo show specialized info about PHLANX UGVs */
+		UP_UGVDescription(robot->ugv);
+		return;
+	}
+
+	aircraft = AIR_GetAircraftSilent(itemid);
+	if (aircraft) {
+		BS_MarketAircraftDescription(aircraft->tpl);
+		return;
+	}
+
+	ugv = Com_GetUGVByIDSilent(itemid);
+	if (ugv) {
+		UP_UGVDescription(ugv);
+		return;
+	}
+
+	/* item */
+	od = INVSH_GetItemByID(Cmd_Argv(1));
+	if (od) {
+		if (!BS_IsOnMarket(od))
+			return;
+
+		INV_ItemDescription(od);
+		return;
+	}
+	Com_Printf("Invalid item ID\n");
+}
+
+/**
  * @brief Function registers the callbacks of the maket UI and do initializations
  */
 void BS_InitCallbacks(void)
@@ -1169,6 +1239,7 @@ void BS_InitCallbacks(void)
 
 	Cmd_AddCommand("ui_market_setautosell", BS_SetAutosell_f, "Sets/unsets or flips the autosell property of an item on the market");
 	Cmd_AddCommand("ui_market_buy", BS_Buy_f, "Buy/Sell item/aircraft/ugv on the market");
+	Cmd_AddCommand("ui_market_showinfo", BS_ShowInfo_f, "Show informations about item/aircaft/ugv in the market");
 }
 
 /**
@@ -1176,6 +1247,7 @@ void BS_InitCallbacks(void)
  */
 void BS_ShutdownCallbacks(void)
 {
+	Cmd_RemoveCommand("ui_market_showinfo");
 	Cmd_RemoveCommand("ui_market_buy");
 	Cmd_RemoveCommand("ui_market_setautosell");
 
