@@ -41,7 +41,8 @@ b      +d     +d      +d      g
 
 tile +craft_drop_firebird
 	// 8 x info_human_start
-	// 8 x info_player_start for Team 1,  2x info_2x2_start for Team 1
+	// 8 x info_player_start for Team 1
+	// 2 x info_2x2_start for Team 1
 {
 5 5
 0      0       0     0       0
@@ -53,7 +54,8 @@ b      +d     +d     +d      g
 
 tile +craft_drop_herakles
 	// 8 x info_human_start
-	// 8 x info_player_start for Team 1,  2x info_2x2_start for Team 1
+	// 8 x info_player_start for Team 1
+	// 2 x info_2x2_start for Team 1
 {
 5 5
 0      0       0     0       0
@@ -65,7 +67,8 @@ b      +d     +d     +d      g
 
 tile +craft_drop_raptor
 	// 8 x info_human_start
-	// 8 x info_player_start for Team 1,  2x info_2x2_start for Team 1
+	// 8 x info_player_start for Team 1
+	// 2 x info_2x2_start for Team 1
 {
 5 5
 0      0       0     0       0
@@ -80,14 +83,29 @@ tile +main
 	// 7 x info_alien_start
 	// 12 x info_civilian_start
 {
-10 7
-0      b      b      b      g      g      g      g      g      0
-c      +a     +a     +a     +a     +a     +a     +a     +a     u
-c      +a     +a     +a     +a     +a     +a     +a     +a     u
-c      +a     +a     +a     +a     +a     +a     +a     u      u
-c      +a     +a     +a     +a     +a     +a     +a     u      u
-c      +a     +a     +a     +a     +a     +a     +a     u      u
-0      s      s      s      s      s      s      s      s      u
+9 7
+0      b      b      b      g      g      g      g      0
+c      +a     +a     +a     +a     +a     +a     +a     u
+c      +a     +a     +a     +a     +a     +a     +a     u
+c      +a     +a     +a     +a     +a     +a     u      u
+c      +a     +a     +a     +a     +a     +a     u      u
+c      +a     +a     +a     +a     +a     +a     u      u
+0      s      s      s      s      s      s      s      u
+}
+
+tile +small
+	// the landing zone for the small assembly
+	// 8 x info_human_start
+	// 8 x info_player_start for Team 1,  2x info_2x2_start for Team 1
+	// 8 x info_player_start for Team 2,  2x info_2x2_start for Team 2
+	// 8 x info_alien_start, placed in mansion_main
+{
+3 5
+0       b     0
+a      +a     a
+a      +a     a
+a      +a     a
+0      o      0
 }
 
 tile +poolhouse
@@ -302,6 +320,7 @@ gu    +e     +e    +o    0
 
 tile +craft_ufo_empty
 	// this is the basement for every _craft_ufo.*
+	// this is the basement for all m1_craft_drop_*
 	// 2 x info_civilian_start
 {
 6 7
@@ -416,4 +435,12 @@ fix +craft_drop_empty "6 12"
 fix *rm_drop +craft_drop_firebird "6 12"
 fix +craft_ufo_empty "11 4"
 fix *rm_ufo +craft_ufo_scout "11 4"
+}
+
+assembly small
+{
+title "_Mansion"
+size "7 5"
+fix +main "1 1"
+fix +small "7 1"
 }
