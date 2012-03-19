@@ -1457,7 +1457,15 @@ mapdef mansion_medium
     maxaliens		18
 	singleplayer	true
 	campaign		true
-	multiplayer		false
+	multiplayer		true
+	teams			2
+	gametypes
+	{
+		1on1
+		2on2
+		3on3
+		4on4
+	}
 	aircraft
     {
 		craft_drop_firebird
