@@ -1400,15 +1400,23 @@ mapdef mansion_huge
     map				"+mansion"
     description		"_A mansion near the coast."
 	param			"huge"
-    teams			4
+	maxaliens		19
     multiplayer		true
+	teams			4
     gametypes
     {
 		1on1
 		1on1on1
 		2on2
+		2on2on2
+		3on3
+		3on3on3
+		4on4
+		4on4on4
+		coop2
+		coop3
+		coop4
     }
-    maxaliens		8
     aircraft
     {
 		craft_drop_firebird
@@ -1446,15 +1454,62 @@ mapdef mansion_medium
     map				"+mansion1"
     description		"_A mansion. An important and influential person lives here."
 	param			"medium"
-    singleplayer	true
+    maxaliens		18
+	singleplayer	true
 	campaign		true
 	multiplayer		false
-	maxaliens		18
-    aircraft
+	aircraft
     {
 		craft_drop_firebird
 		craft_drop_herakles
 		craft_drop_raptor
+    }
+
+    ufos
+    {
+	    // any
+    }
+
+    terrains
+    {
+		coast
+		grass
+    }
+
+    cultures
+    {
+		western
+    }
+
+    populations
+    {
+		urban
+		suburban
+		village
+    }
+}
+
+mapdef mansion_small
+{
+    map				"+mansion"
+    description		"_A mansion. An important and influential person lives here."
+	param			"small"
+	maxaliens		15
+    singleplayer	true
+	campaign		true
+	multiplayer		true
+	teams			2
+	gametypes
+	{
+		1on1
+		2on2
+		3on3
+		4on4
+	}
+
+	aircraft
+    {
+		// any
     }
 
     ufos
