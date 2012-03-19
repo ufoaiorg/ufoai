@@ -3534,7 +3534,7 @@
 {
 "classname" "trigger_rescue"
 "team" "1"
-"spawnflags" "248"
+"spawnflags" "252"
 // brush 0
 {
 ( 704 208 194 ) ( 576 208 194 ) ( 704 368 194 ) tex_common/trigger 0 0 0 0.25 0.25 64512 0 0

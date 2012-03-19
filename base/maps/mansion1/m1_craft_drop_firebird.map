@@ -2382,6 +2382,7 @@
 {
 "classname" "trigger_rescue"
 "team" "1"
+"spawnflags" "252"
 // brush 0
 {
 ( 448 288 192 ) ( 320 288 192 ) ( 448 448 192 ) tex_common/trigger 0 9.404977e-014 -90 0.25 0.25 64512 0 0
@@ -3199,6 +3200,7 @@
 {
 "classname" "trigger_rescue"
 "team" "1"
+"spawnflags" "252"
 // brush 0
 {
 ( 320 288 192 ) ( 192 288 192 ) ( 320 448 192 ) tex_common/trigger 0 9.404977e-014 -90 0.25 0.25 64512 0 0
@@ -3213,6 +3215,7 @@
 {
 "classname" "trigger_rescue"
 "team" "1"
+"spawnflags" "252"
 // brush 0
 {
 ( 544 288 192 ) ( 416 288 192 ) ( 544 448 192 ) tex_common/trigger 0 9.404977e-014 -90 0.25 0.25 64512 0 0
