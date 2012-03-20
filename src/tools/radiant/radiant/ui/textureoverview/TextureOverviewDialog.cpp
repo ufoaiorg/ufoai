@@ -85,7 +85,6 @@ namespace ui
 		};
 	}
 
-	// TODO: don't let this be a BlockingTransientWindow
 	TextureOverviewDialog::TextureOverviewDialog () :
 			gtkutil::PersistentTransientWindow(_("Texture overview"), GlobalRadiant().getMainWindow()), _store(
 					gtk_list_store_new(TEXTUREOVERVIEW_SIZE, GDK_TYPE_PIXBUF, G_TYPE_STRING, G_TYPE_INT))

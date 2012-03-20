@@ -181,7 +181,7 @@ void FindAndReplaceShader::onReplaceChanged(GtkEditable* editable, FindAndReplac
 
 void FindAndReplaceShader::showDialog() {
 	// Just instantiate a new dialog, this enters a main loop
-	FindAndReplaceShader dialog;
+	new FindAndReplaceShader;
 }
 
 } // namespace ui
