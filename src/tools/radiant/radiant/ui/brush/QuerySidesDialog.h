@@ -1,7 +1,7 @@
 #ifndef _QUERY_SIDES_DIALOG_H_
 #define _QUERY_SIDES_DIALOG_H_
 
-#include "gtkutil/window/PersistentTransientWindow.h"
+#include "gtkutil/window/BlockingTransientWindow.h"
 
 typedef struct _GtkWidget GtkWidget;
 
@@ -9,7 +9,7 @@ namespace ui
 {
 
 class QuerySidesDialog :
-	public gtkutil::PersistentTransientWindow
+	public gtkutil::BlockingTransientWindow
 {
 public:
 	enum Result
@@ -35,6 +35,7 @@ private:
 public:
 	// Constructor
 	QuerySidesDialog(int numSidesMin, int numSidesMax);
+	~QuerySidesDialog();
 
 	/**
 	 * greebo: Shows the dialog, returns the number of sides as selected by the user.
