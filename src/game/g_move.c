@@ -454,9 +454,6 @@ void G_ClientMove (const player_t * player, int visTeam, edict_t* ent, const pos
 				autoCrouchRequired = qfalse;
 			}
 
-			/* Restore ent->TU because the movement code relies on it not being modified! */
-			G_ActorSetTU(ent, initTU);
-
 			/* check for death */
 			if (((oldHP != 0 && oldHP != ent->HP) || (oldState != ent->state)) && !G_IsDazed(ent)) {
 				/** @todo Handle dazed via trigger_hurt */
@@ -472,6 +469,9 @@ void G_ClientMove (const player_t * player, int visTeam, edict_t* ent, const pos
 				autoCrouchRequired = qfalse;
 				break;
 			}
+
+			/* Restore ent->TU because the movement code relies on it not being modified! */
+			G_ActorSetTU(ent, initTU);
 		}
 
 		/* submit the TUs / round down */
