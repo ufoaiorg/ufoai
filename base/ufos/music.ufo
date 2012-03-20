@@ -5,7 +5,6 @@ music main
 
 music geoscape
 {
-//	azrael1
 	Crystan-Geosphere02
 	Crystan-Geosphere03
 	Crystan-Geosphere04
@@ -52,21 +51,5 @@ music battlescape
 
 music aircombat
 {
-//	alBasrahM
-	David01
-	David02
-	David03
-	David04
-	David05
-//	dawn
-//	Marine01
-//	Marine02
-//	MarineAlienRaid
-//	MarineBacktheAttack
-//	MarineFireFight
-//	MarineIndustrial
-//	MarineStrikingIntoTheUnknown
-//	MarineUrbanWarfare
-//	turinItalyM
-//	ufo2
+// aircombat is not implemented yet, so we do not need any tracks for v2.4
 }
