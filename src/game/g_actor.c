@@ -45,6 +45,10 @@ void G_ActorUseDoor (edict_t *actor, edict_t *door)
 {
 	edict_t *closeActor = NULL;
 
+	/* check whether it's part of an edict group but not the master */
+	if (door->flags & FL_GROUPSLAVE)
+		door = door->groupMaster;
+
 	if (!G_ClientUseEdict(G_PLAYER_FROM_ENT(actor), actor, door))
 		return;
 

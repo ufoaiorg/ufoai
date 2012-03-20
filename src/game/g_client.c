@@ -700,10 +700,6 @@ int G_ClientAction (player_t * player)
 			/* maybe the door is no longer 'alive' because it was destroyed */
 			if (actionEnt && ent->clientAction == actionEnt) {
 				if (G_IsDoor(actionEnt)) {
-					/* check whether it's part of an edict group but not the master */
-					if (actionEnt->flags & FL_GROUPSLAVE)
-						actionEnt = actionEnt->groupMaster;
-
 					G_ActorUseDoor(ent, actionEnt);
 				}
 			}
