@@ -21,6 +21,7 @@ import subprocess
 import hashlib, os
 import cPickle
 import sys
+import datetime
 import re
 import shutil
 from xml.dom.minidom import parseString
@@ -244,11 +245,16 @@ def generateGraph(output, d):
     plot(output, d, nonfree, times, "nonfree.png")
     return True
 
-def plot(output, d, data, times, imagename):
-    cmds = 'set terminal png;\n'
-    cmds+= 'set object 1 rect from graph 0, graph 0 to graph 1, graph 1 back;\n'
-    cmds+= 'set object 1 rect fc rgb "grey" fillstyle solid 1.0;\n'
+def timestamp_to_date(timestamp):
+    d = datetime.datetime.fromtimestamp(timestamp)
+    return d.strftime("%Y-%m-%d")
 
+def plot(output, d, data, times, imagename):
+    cmds = """
+set terminal png;
+set object 1 rect from graph 0, graph 0 to graph 1, graph 1 back;
+set object 1 rect fc rgb "grey" fillstyle solid 1.0;
+"""
     ymax = 0
     lastrevision = 0
     for i in data:
@@ -264,21 +270,29 @@ def plot(output, d, data, times, imagename):
         if lastelement[0] < lastrevision:
             data[i].append((lastelement[0] + 1, 0))
 
+    cmds+= 'set style data linespoints;\n'
+    cmds+= 'set timefmt "%Y-%m-%d";\n'
+    cmds+= 'set xdata time;\n'
+    cmds+= 'set format x "%b\\n%Y";\n'
+
+
     filename = "%s/licenses/public_html%s/%s" % (output, d, imagename)
     print "* %s" % filename
     cmds+= 'set style data linespoints;\n'
     cmds+= 'set output "%s";\n' % filename
-    cmds+= 'set xrange [%i to %i];\n' % (min(times), max(times) + 1 + (max(times)-min(times))*0.15)
+    xmin = timestamp_to_date(min(times))
+    xmax = timestamp_to_date(max(times) + 1 + (max(times)-min(times)) * 0.15)
     cmds+= 'set yrange [0 to %i];\n' % (int(ymax * 1.15))
+    cmds+= 'set xrange [\"%s\" to \"%s\"];\n' % (xmin, xmax)
 
     cmds+= 'plot '
     p = []
     tmpfiles = []
     for i in data:
-        plot_data = '\n'.join('%i %i' % (x[0], x[1]) for x in data[i])
+        plot_data = '\n'.join('%s %i' % (timestamp_to_date(x[0]), x[1]) for x in data[i])
         f = open(tempfile.mktemp(), "wt")
         f.write(plot_data)
-        p.append("'%s' title \"%s\" " % (f.name, i))
+        p.append("'%s' using 1:2 title \"%s\" " % (f.name, i))
         f.close()
         tmpfiles.append(f)
 
