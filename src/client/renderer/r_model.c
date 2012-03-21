@@ -119,6 +119,7 @@ static qboolean R_LoadModel (model_t *mod, const char *filename)
 {
 	byte *buf;
 	int modfilelen;
+	char animname[MAX_QPATH];
 
 	if (filename[0] == '\0')
 		Com_Error(ERR_FATAL, "R_ModForName: NULL name");
@@ -162,16 +163,12 @@ static qboolean R_LoadModel (model_t *mod, const char *filename)
 	}
 
 	/* load the animations */
-	Com_StripExtension(mod->name, mod->alias.animname, sizeof(mod->alias.animname));
-	Com_DefaultExtension(mod->alias.animname, sizeof(mod->alias.animname), ".anm");
+	Com_StripExtension(mod->name, animname, sizeof(animname));
+	Com_DefaultExtension(animname, sizeof(animname), ".anm");
 
 	/* try to load the animation file */
-	if (FS_CheckFile("%s", mod->alias.animname) != -1) {
-		/* load the tags */
-		byte *animbuf = NULL;
-		FS_LoadFile(mod->alias.animname, &animbuf);
-		R_ModLoadAnims(&mod->alias, (const char *)animbuf);
-		FS_FreeFile(animbuf);
+	if (FS_CheckFile("%s", animname) != -1) {
+		R_ModLoadAnims(&mod->alias, animname);
 	}
 
 	FS_FreeFile(buf);

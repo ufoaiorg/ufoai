@@ -33,17 +33,26 @@ ALIAS MODELS
 ==============================================================================
 */
 
-void R_ModLoadAnims (mAliasModel_t *mod, const char *buffer)
+void R_ModLoadAnims (mAliasModel_t *mod, const char *animname)
 {
 	const char *text, *token;
 	mAliasAnim_t *anim;
 	int n;
+	/* load the tags */
+	byte *animbuf = NULL;
+	const char *buffer;
+
+	FS_LoadFile(animname, &animbuf);
+
+	buffer = (const char *)animbuf;
 
 	/* count the animations */
 	n = Com_CountTokensInBuffer(buffer);
 
-	if ((n % 4) != 0)
-		Com_Error(ERR_DROP, "invalid syntax: %s", mod->animname);
+	if ((n % 4) != 0) {
+		FS_FreeFile(animbuf);
+		Com_Error(ERR_DROP, "invalid syntax: %s", animname);
+	}
 
 	/* each animation definition is made out of 4 tokens */
 	n /= 4;
@@ -68,10 +77,10 @@ void R_ModLoadAnims (mAliasModel_t *mod, const char *buffer)
 			break;
 		anim->from = atoi(token);
 		if (anim->from < 0)
-			Com_Error(ERR_FATAL, "R_ModLoadAnims: negative start frame for %s", mod->animname);
+			Com_Error(ERR_FATAL, "R_ModLoadAnims: negative start frame for %s", animname);
 		else if (anim->from > mod->num_frames)
 			Com_Error(ERR_FATAL, "R_ModLoadAnims: start frame is higher than models frame count (%i) (model: %s)",
-					mod->num_frames, mod->animname);
+					mod->num_frames, animname);
 
 		/* get the end */
 		token = Com_Parse(&text);
@@ -79,10 +88,10 @@ void R_ModLoadAnims (mAliasModel_t *mod, const char *buffer)
 			break;
 		anim->to = atoi(token);
 		if (anim->to < 0)
-			Com_Error(ERR_FATAL, "R_ModLoadAnims: negative start frame for %s", mod->animname);
+			Com_Error(ERR_FATAL, "R_ModLoadAnims: negative start frame for %s", animname);
 		else if (anim->to > mod->num_frames)
 			Com_Error(ERR_FATAL, "R_ModLoadAnims: end frame is higher than models frame count (%i) (model: %s)",
-					mod->num_frames, mod->animname);
+					mod->num_frames, animname);
 
 		/* get the fps */
 		token = Com_Parse(&text);
@@ -94,6 +103,8 @@ void R_ModLoadAnims (mAliasModel_t *mod, const char *buffer)
 		mod->num_anims++;
 		anim++;
 	} while (mod->num_anims < n);
+
+	FS_FreeFile(animbuf);
 }
 
 
