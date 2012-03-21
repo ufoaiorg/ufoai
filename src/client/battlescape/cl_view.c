@@ -215,7 +215,6 @@ void CL_ViewPrecacheModels (void)
 /**
  * @brief Calculates refdef's FOV_X.
  * Should generally be called after any changes are made to the zoom level (via cl.cam.zoom)
- * @sa V_CalcFovY
  */
 void CL_ViewCalcFieldOfViewX (void)
 {

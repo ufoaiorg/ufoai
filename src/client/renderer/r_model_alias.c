@@ -248,20 +248,26 @@ qboolean R_ModLoadMDX (model_t *mod)
 			return qfalse;
 
 		buf = buffer;
-		if (strncmp((const char *) buf, IDMDXHEADER, strlen(IDMDXHEADER)))
+		if (strncmp((const char *) buf, IDMDXHEADER, strlen(IDMDXHEADER))) {
+			FS_FreeFile(buf);
 			Com_Error(ERR_DROP, "No mdx file buffer given");
+		}
 		buffer += strlen(IDMDXHEADER) * sizeof(char);
 		version = LittleLong(*(uint32_t*) buffer);
-		if (version != MDX_VERSION)
+		if (version != MDX_VERSION) {
+			FS_FreeFile(buf);
 			Com_Error(ERR_DROP, "Invalid version of the mdx file, expected %i, found %i",
 					MDX_VERSION, version);
+		}
 		buffer += sizeof(uint32_t);
 
 		intbuf = (const int32_t *) buffer;
 
 		mesh->num_verts = LittleLong(*intbuf);
-		if (mesh->num_verts <= 0 || mesh->num_verts > MAX_ALIAS_VERTS)
+		if (mesh->num_verts <= 0 || mesh->num_verts > MAX_ALIAS_VERTS) {
+			FS_FreeFile(buf);
 			Com_Error(ERR_DROP, "mdx file for %s has to many (or no) vertices: %i", mod->name, mesh->num_verts);
+		}
 		intbuf++;
 		mesh->num_indexes = LittleLong(*intbuf);
 		intbuf++;
