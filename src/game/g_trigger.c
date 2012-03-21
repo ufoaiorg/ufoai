@@ -168,7 +168,7 @@ void Think_NextMapTrigger (edict_t *self)
 	VecToPos(center, centerPos);
 	G_EventCenterViewAt(PM_ALL, centerPos);
 
-	gi.BroadcastPrintf(PRINT_HUD, _("You are now ready to switch the map"));
+	gi.BroadcastPrintf(PRINT_HUD, _("You are now ready to switch the map\n"));
 
 	self->touch = Touch_NextMapTrigger;
 	self->think = NULL;
