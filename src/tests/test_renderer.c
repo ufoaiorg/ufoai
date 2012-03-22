@@ -62,13 +62,9 @@ static void testLoadAllAnimationFiles (void)
 	mod.num_frames = 100000;
 
 	while ((filename = FS_NextFileFromFileList(pattern)) != NULL) {
-		byte *animbuf;
-
 		vid_modelPool = Mem_CreatePool("Vid Model Pool");
-		FS_LoadFile(filename, &animbuf);
 		Com_Printf("load anim file: %s\n", filename);
-		R_ModLoadAnims(&mod, (const char *)animbuf);
-		FS_FreeFile(animbuf);
+		R_ModLoadAnims(&mod, filename);
 		Mem_DeletePool(vid_modelPool);
 	}
 
@@ -127,16 +123,12 @@ static void testCharacterAnimationFiles (void)
 			continue;
 
 		if (animList != NULL) {
-			byte *animbuf;
-
 			OBJZERO(mod);
 			/* set a very high value to work around the error check in the loading function */
 			mod.num_frames = 100000;
 
-			FS_LoadFile(filename, &animbuf);
 			Com_Printf("load character anim file: %s\n", filename);
-			R_ModLoadAnims(&mod, (const char *)animbuf);
-			FS_FreeFile(animbuf);
+			R_ModLoadAnims(&mod, filename);
 
 			while (*animList != NULL) {
 				int i;
