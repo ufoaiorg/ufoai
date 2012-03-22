@@ -2213,7 +2213,7 @@ window hud_mini extends hud
 
 	func onScriptLoaded {
 		// Register the window to the HUD list
-		cmd "add_hud_name <path:root> \"Minimal HUD\""
+		cmd "add_hud_name <path:root> \"_Minimal HUD\""
 	}
 
 }
