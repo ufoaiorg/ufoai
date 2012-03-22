@@ -432,6 +432,8 @@ while [ $# -gt 0 ]; do
 		;;
 	--enable-only-*)
 		OPTION="${1#--enable-only-}"
+		HARD_LINKED_GAME=1
+		HARD_LINKED_CGAME=1
 		check_module $OPTION
 		enable_only $OPTION
 		;;

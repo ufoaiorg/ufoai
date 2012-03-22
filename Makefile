@@ -19,6 +19,8 @@ BUILDDIR    ?= $(MODE)-$(TARGET_OS)-$(TARGET_ARCH)
 SRCDIR      := src
 TARGETS_TMP := $(sort $(patsubst build/modules/%.mk,%,$(wildcard build/modules/*.mk)))
 TARGETS     := $(filter-out $(foreach TARGET,$(TARGETS_TMP),$(if $($(TARGET)_DISABLE),$(TARGET),)),$(TARGETS_TMP))
+DISABLED    := $(filter-out $(TARGETS),$(TARGETS_TMP))
+
 ifeq ($(DISABLE_DEPENDENCY_TRACKING),)
   DEP_FLAGS := -MP -MD -MT $$@
 endif
@@ -48,7 +50,7 @@ ASSEMBLE_OBJECTS = \
 define INCLUDE_RULE
 include build/modules/$(1).mk
 endef
-$(foreach TARGET,$(TARGETS),$(eval $(call INCLUDE_RULE,$(TARGET))))
+$(foreach TARGET,$(TARGETS_TMP),$(eval $(call INCLUDE_RULE,$(TARGET))))
 
 .PHONY: clean
 clean: $(addprefix clean-,$(TARGETS)) clean-docs
