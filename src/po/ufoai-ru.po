@@ -3,7 +3,7 @@ msgstr ""
 "Project-Id-Version: UFO Alien Invasion\n"
 "Report-Msgid-Bugs-To: tlh2000@users.sourceforge.net\n"
 "POT-Creation-Date: 2012-02-26 11:29+0700\n"
-"PO-Revision-Date: 2012-02-26 19:43+0700\n"
+"PO-Revision-Date: 2012-03-23 16:40+0700\n"
 "Last-Translator: Kostia (Kildor) Romanov <kostia@ngs.ru>\n"
 "Language-Team: \n"
 "MIME-Version: 1.0\n"
@@ -2512,9 +2512,8 @@ msgid "Assault Rifles Only"
 msgstr "Только штурмовые винтовки"
 
 #: ../base/ufos/equipment.ufo:249
-#, fuzzy
 msgid "No IR Goggles"
-msgstr "Прибор ИФ-видения"
+msgstr "Без ИФ-очков"
 
 #: ../base/ufos/equipment.ufo:308
 msgid "Flamers/Rifles/Grenades"
@@ -13268,14 +13267,12 @@ msgid "Requirements"
 msgstr "Требования"
 
 #: ../base/ufos/ui/research.ufo:17
-#, fuzzy
 msgid "Open UFOPaedia"
 msgstr "Открыть НЛОпедию"
 
 #: ../base/ufos/ui/research.ufo:43
-#, fuzzy
 msgid "Add/Remove scientist"
-msgstr "Добавить или убрать учёного"
+msgstr "Добавить/убрать учёного"
 
 #: ../base/ufos/ui/research.ufo:210
 msgid "Switch to another base"
@@ -13537,7 +13534,7 @@ msgstr "Текущие трансферты"
 
 #: ../base/ufos/ui/ufopedia.ufo:90
 msgid "Pre-Research Report"
-msgstr "Предварительный отчёт по иследованиям"
+msgstr "Предварительная заявка"
 
 #: ../base/ufos/ui/ufopedia.ufo:108
 msgid "The Big Picture"
@@ -17063,14 +17060,12 @@ msgid "Employee"
 msgstr "Персонал"
 
 #: client/cgame/campaign/cp_transfer_callbacks.c:1548
-#, fuzzy
 msgid "alive"
-msgstr "пришелец"
+msgstr "живых"
 
 #: client/cgame/campaign/cp_transfer_callbacks.c:1552
-#, fuzzy
 msgid "dead"
-msgstr "Мёртвых:"
+msgstr "мёртвых"
 
 #: client/cgame/campaign/cp_ufo.c:406
 #: client/cgame/campaign/cp_ufo.c:816
