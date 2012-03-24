@@ -178,6 +178,11 @@ typedef enum {
 	KEYSPACE_MAX
 } keyBindSpace_t;
 
+typedef enum {
+	key_game,		/**< input focus is on the menu (or the keyBindings) */
+	key_console		/**< console is opened */
+} keydest_t;
+
 #define MAXKEYLINES 32
 
 extern int msgMode;
@@ -192,7 +197,7 @@ extern char *menuKeyBindings[K_KEY_SIZE];
 extern char *battleKeyBindings[K_KEY_SIZE];
 
 qboolean Key_IsDown(unsigned int key);
-void Key_SetDest(int key_dest);
+void Key_SetDest(keydest_t key_dest);
 void Key_Event(unsigned int key, unsigned short unicode, qboolean down, unsigned time);
 void Key_Init(void);
 void Key_WriteBindings(const char* filename);

@@ -108,7 +108,7 @@ void SCR_DrawLoadingScreen (qboolean string, int percent)
 		/* Not used with gettext because it would make removing it too easy. */
 		UI_DrawString("f_menubig", ALIGN_UC,
 			(int)(viddef.virtualWidth / 2), 30,
-			0, viddef.virtualWidth, 50, "Download this game for free at http://ufoai.sf.net", 0, 0, NULL, qfalse, 0);
+			0, viddef.virtualWidth, 50, "Download this game for free at http://ufoai.sf.net", 0, 0, NULL, qfalse, LONGLINES_WRAP);
 	}
 	SCR_DrawLoadingBar((int)(viddef.virtualWidth / 2) - 300, viddef.virtualHeight - 30, 600, 20, percent);
 
@@ -160,7 +160,7 @@ static void SCR_DrawDownloading (void)
 		(int)(viddef.virtualWidth / 2),
 		(int)(viddef.virtualHeight / 2 - 60),
 		(int)(viddef.virtualWidth / 2),
-		viddef.virtualWidth, 50, dlmsg, 1, 0, NULL, qfalse, 0);
+		viddef.virtualWidth, 50, dlmsg, 1, 0, NULL, qfalse, LONGLINES_WRAP);
 
 	SCR_DrawLoadingBar((int)(viddef.virtualWidth / 2) - 300, viddef.virtualHeight - 30, 600, 20, (int)cls.downloadPercent);
 }
@@ -209,14 +209,14 @@ void SCR_DrawLoading (int percent, const char *loadingMessages)
 			(int)(viddef.virtualWidth / 2),
 			(int)(viddef.virtualHeight / 2 - 60),
 			(int)(viddef.virtualWidth / 2),
-			viddef.virtualWidth, 50, mapmsg, 1, 0, NULL, qfalse, 0);
+			viddef.virtualWidth, 50, mapmsg, 1, 0, NULL, qfalse, LONGLINES_WRAP);
 	}
 
 	UI_DrawString("f_menu", ALIGN_UC,
 		(int)(viddef.virtualWidth / 2),
 		(int)(viddef.virtualHeight / 2),
 		(int)(viddef.virtualWidth / 2),
-		viddef.virtualWidth, 50, loadingMessages, 1, 0, NULL, qfalse, 0);
+		viddef.virtualWidth, 50, loadingMessages, 1, 0, NULL, qfalse, LONGLINES_WRAP);
 
 	SCR_DrawLoadingBar((int)(viddef.virtualWidth / 2) - 300, viddef.virtualHeight - 30, 600, 20, percent);
 

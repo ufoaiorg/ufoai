@@ -120,7 +120,7 @@ extern cvar_t *s_language;
 
 /* cl_main.c */
 int CL_GetClientState(void);
-void CL_SetClientState(int state);
+void CL_SetClientState(connstate_t state);
 void CL_Disconnect(void);
 void CL_Init(void);
 

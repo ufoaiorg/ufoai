@@ -834,7 +834,7 @@ void Key_Init (void)
  * @brief Sets the keyDest in cls
  * @param[in] keyDest see keydest_t
  */
-void Key_SetDest (int keyDest)
+void Key_SetDest (keydest_t keyDest)
 {
 	cls.keyDest = keyDest;
 	if (cls.keyDest == key_console) {

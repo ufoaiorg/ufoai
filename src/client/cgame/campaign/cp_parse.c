@@ -65,7 +65,7 @@ static int CP_GetAlienMissionTypeByID (const char *type)
 static const value_t alien_group_vals[] = {
 	{"mininterest", V_INT, offsetof(alienTeamGroup_t, minInterest), 0},
 	{"maxinterest", V_INT, offsetof(alienTeamGroup_t, maxInterest), 0},
-	{NULL, 0, 0, 0}
+	{NULL, V_NULL, 0, 0}
 };
 
 /**
@@ -306,7 +306,7 @@ static const value_t salary_vals[] = {
 	{"admin_pilot", V_INT, offsetof(salary_t, admin[EMPL_PILOT]), MEMBER_SIZEOF(salary_t, admin[EMPL_PILOT])},
 	{"admin_robot", V_INT, offsetof(salary_t, admin[EMPL_ROBOT]), MEMBER_SIZEOF(salary_t, admin[EMPL_ROBOT])},
 	{"debt_interest", V_FLOAT, offsetof(salary_t, debtInterest), MEMBER_SIZEOF(salary_t, debtInterest)},
-	{NULL, 0, 0, 0}
+	{NULL, V_NULL, 0, 0}
 };
 
 /**
@@ -350,7 +350,7 @@ static const value_t campaign_vals[] = {
 	{"date", V_DATE, offsetof(campaign_t, date), 0},
 	{"basecost", V_INT, offsetof(campaign_t, basecost), MEMBER_SIZEOF(campaign_t, basecost)},
 	{"firstbase", V_STRING, offsetof(campaign_t, firstBaseTemplate), 0},
-	{NULL, 0, 0, 0}
+	{NULL, V_NULL, 0, 0}
 };
 
 /**

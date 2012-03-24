@@ -91,7 +91,7 @@ qboolean INV_MoveItem (inventory_t* inv, const invDef_t * toContainer, int px, i
  */
 qboolean INV_LoadWeapon (const invList_t *weaponList, inventory_t *inv, const invDef_t *srcContainer, const invDef_t *destContainer)
 {
-	int equipType;
+	itemFilterTypes_t equipType;
 	invList_t *ic = NULL;
 	int i = 0;
 	const objDef_t *weapon;
@@ -176,7 +176,7 @@ static qboolean INV_EquipmentDefSanityCheck (void)
 	qboolean result = qtrue;
 
 	for (i = 0; i < csi.numEDs; i++) {
-		const equipDef_t const *ed = &csi.eds[i];
+		const equipDef_t *const ed = &csi.eds[i];
 		/* only check definitions used for generating teams */
 		if (!Q_strstart(ed->id, "alien") && !Q_strstart(ed->id, "phalanx"))
 			continue;
@@ -184,7 +184,7 @@ static qboolean INV_EquipmentDefSanityCheck (void)
 		/* Check primary */
 		sum = 0;
 		for (j = 0; j < csi.numODs; j++) {
-			const objDef_t const *obj = INVSH_GetItemByIDX(j);
+			const objDef_t *const obj = INVSH_GetItemByIDX(j);
 			if (obj->weapon && obj->fireTwoHanded
 			 && (INV_ItemMatchesFilter(obj, FILTER_S_PRIMARY) || INV_ItemMatchesFilter(obj, FILTER_S_HEAVY)))
 				sum += ed->numItems[j];
@@ -197,7 +197,7 @@ static qboolean INV_EquipmentDefSanityCheck (void)
 		/* Check secondary */
 		sum = 0;
 		for (j = 0; j < csi.numODs; j++) {
-			const objDef_t const *obj = INVSH_GetItemByIDX(j);
+			const objDef_t *const obj = INVSH_GetItemByIDX(j);
 			if (obj->weapon && obj->reload && !obj->deplete && INV_ItemMatchesFilter(obj, FILTER_S_SECONDARY))
 				sum += ed->numItems[j];
 		}
@@ -209,7 +209,7 @@ static qboolean INV_EquipmentDefSanityCheck (void)
 		/* Check armour */
 		sum = 0;
 		for (j = 0; j < csi.numODs; j++) {
-			const objDef_t const *obj = INVSH_GetItemByIDX(j);
+			const objDef_t *const obj = INVSH_GetItemByIDX(j);
 			if (INV_ItemMatchesFilter(obj, FILTER_S_ARMOUR))
 				sum += ed->numItems[j];
 		}
@@ -385,7 +385,7 @@ CASSERT(lengthof(filterTypeNames) == MAX_FILTERTYPES);
  */
 itemFilterTypes_t INV_GetFilterTypeID (const char * filterTypeID)
 {
-	itemFilterTypes_t i;
+	int i;
 
 	if (!filterTypeID)
 		return MAX_FILTERTYPES;
@@ -397,7 +397,7 @@ itemFilterTypes_t INV_GetFilterTypeID (const char * filterTypeID)
 	for (i = 0; i < MAX_FILTERTYPES; i++) {
 		const char *fileTypeName = filterTypeNames[i];
 		if (fileTypeName && Q_streq(fileTypeName, filterTypeID))
-			return i;
+			return (itemFilterTypes_t)i;
 	}
 
 	/* No matching filter type found, returning max value. */

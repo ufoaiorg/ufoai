@@ -1569,7 +1569,7 @@ static const value_t fdps[] = {
 	{"spldmg", V_POS, offsetof(fireDef_t, spldmg), MEMBER_SIZEOF(fireDef_t, spldmg)},
 	{"dmgweight", V_DMGWEIGHT, offsetof(fireDef_t, dmgweight), MEMBER_SIZEOF(fireDef_t, dmgweight)},
 	{"irgoggles", V_BOOL, offsetof(fireDef_t, irgoggles), MEMBER_SIZEOF(fireDef_t, irgoggles)},
-	{NULL, 0, 0, 0}
+	{NULL, V_NULL, 0, 0}
 };
 
 
@@ -1905,7 +1905,7 @@ static const value_t idps[] = {
 	/* time units for moving something out */
 	{"out", V_INT, offsetof(invDef_t, out), MEMBER_SIZEOF(invDef_t, out)},
 
-	{NULL, 0, 0, 0}
+	{NULL, V_NULL, 0, 0}
 };
 
 static void Com_ParseInventory (const char *name, const char **text)
@@ -2009,7 +2009,7 @@ static const value_t equipment_definition_vals[] = {
 	{"maxinterest", V_INT, offsetof(equipDef_t, maxInterest), MEMBER_SIZEOF(equipDef_t, maxInterest)},
 	{"name", V_TRANSLATION_STRING, offsetof(equipDef_t, name), 0},
 
-	{NULL, 0, 0, 0}
+	{NULL, V_NULL, 0, 0}
 };
 
 static void Com_ParseEquipment (const char *name, const char **text)
@@ -2527,7 +2527,7 @@ static const value_t teamDefValues[] = {
 	{"death_texture", V_STRING, offsetof(teamDef_t, deathTextureName), 0},
 	{"race", V_RACE, offsetof(teamDef_t, race), MEMBER_SIZEOF(teamDef_t, race)},
 
-	{NULL, 0, 0, 0}
+	{NULL, V_NULL, 0, 0}
 };
 
 static void Com_ParseTeam (const char *name, const char **text)
@@ -2663,7 +2663,7 @@ static const value_t ugvValues[] = {
 	{"actors", V_STRING, offsetof(ugv_t, actors), 0},
 	{"price", V_INT, offsetof(ugv_t, price), 0},
 
-	{NULL, 0, 0, 0}
+	{NULL, V_NULL, 0, 0}
 };
 
 /**
@@ -2773,7 +2773,7 @@ static const value_t terrainTypeValues[] = {
 	{"footstepvolume", V_FLOAT, offsetof(terrainType_t, footStepVolume), 0},
 	{"bouncefraction", V_FLOAT, offsetof(terrainType_t, bounceFraction), 0},
 
-	{NULL, 0, 0, 0}
+	{NULL, V_NULL, 0, 0}
 };
 
 /**
@@ -2835,7 +2835,7 @@ GAMETYPE INTERPRETER
 /** @brief possible gametype values for the gameserver (ufo-scriptfiles) */
 static const value_t gameTypeValues[] = {
 	{"name", V_TRANSLATION_STRING, offsetof(gametype_t, name), 0}, /**< translated game-type name for menu displaying */
-	{NULL, 0, 0, 0}
+	{NULL, V_NULL, 0, 0}
 };
 
 static void Com_ParseGameTypes (const char *name, const char **text)
@@ -3198,7 +3198,7 @@ static const value_t mapdef_vals[] = {
 	{"cultures", V_LIST, offsetof(mapDef_t, cultures), 0},
 	{"gametypes", V_LIST, offsetof(mapDef_t, gameTypes), 0},
 
-	{NULL, 0, 0, 0}
+	{NULL, V_NULL, 0, 0}
 };
 
 static void Com_ParseMapDefinition (const char *name, const char **text)

@@ -118,7 +118,7 @@ typedef struct cgame_import_s {
 	int (IMPORT *CL_Milliseconds) (void);
 	void (IMPORT *CL_Drop) (void);
 	void (IMPORT *CL_QueryMasterServer) (const char *action, http_callback_t callback);
-	void (IMPORT *CL_SetClientState) (int state);
+	void (IMPORT *CL_SetClientState) (connstate_t state);
 	int (IMPORT *CL_GetClientState) (void);
 	void (IMPORT *CL_Disconnect) (void);
 

@@ -853,7 +853,7 @@ static const value_t cgame_vals[] = {
 	{"name", V_STRING, offsetof(cgameType_t, name), 0},
 	{"equipmentlist", V_LIST, offsetof(cgameType_t, equipmentList), 0},
 
-	{NULL, 0, 0, 0}
+	{NULL, V_NULL, 0, 0}
 };
 
 void GAME_ParseModes (const char *name, const char **text)

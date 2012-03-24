@@ -64,7 +64,7 @@ typedef enum {
 	CIN_STATUS_NONE,	/**< not playing */
 	CIN_STATUS_INVALID,
 	CIN_STATUS_PLAYING,
-	CIN_STATUS_PAUSE,
+	CIN_STATUS_PAUSE
 } cinStatus_t;
 
 #endif /* CLIENT_CL_CINEMATIC_H */

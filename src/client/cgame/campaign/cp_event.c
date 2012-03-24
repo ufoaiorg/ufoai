@@ -142,7 +142,7 @@ static const value_t eventMail_vals[] = {
 	{"icon", V_HUNK_STRING, offsetof(eventMail_t, icon), 0},
 	{"model", V_HUNK_STRING, offsetof(eventMail_t, model), 0},
 
-	{NULL, 0, 0, 0}
+	{NULL, V_NULL, 0, 0}
 };
 
 /**

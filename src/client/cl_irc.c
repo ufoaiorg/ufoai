@@ -914,8 +914,8 @@ static void Irc_Client_CmdNick (const char *prefix, const char *params, const ch
 static void Irc_Client_CmdPrivmsg (const char *prefix, const char *params, const char *trailing)
 {
 	char nick[MAX_VAR];
-	char * const emph = strchr(prefix, '!');
-	char * ctcp = strchr(trailing, IRC_CTCP_MARKER_CHR);
+	const char * const emph = strchr(prefix, '!');
+	const char * ctcp = strchr(trailing, IRC_CTCP_MARKER_CHR);
 	OBJZERO(nick);
 	if (emph)
 		memcpy(nick, prefix, emph - prefix);
@@ -1258,7 +1258,7 @@ static qboolean Irc_Proto_ParseServerMsg (const char *txt, size_t txt_len, irc_s
 			}
 			command[3] = '\0';
 			msg->type = IRC_COMMAND_NUMERIC;
-			msg->id.numeric = atoi(command);
+			msg->id.numeric = (irc_numeric_t)atoi(command);
 		} else if (c < end && *c != '\r') {
 			/* string command */
 			int i = 1;

@@ -132,7 +132,7 @@ static const value_t valid_building_vars[] = {
 	{"onenable", V_HUNK_STRING, offsetof(building_t, onEnable), 0}, /**< Event handler. */
 	{"ondisable", V_HUNK_STRING, offsetof(building_t, onDisable), 0}, /**< Event handler. */
 	{"mandatory", V_BOOL, offsetof(building_t, mandatory), MEMBER_SIZEOF(building_t, mandatory)}, /**< Automatically construct this building when a base is set up. Must also set the pos-flag. */
-	{NULL, 0, 0, 0}
+	{NULL, V_NULL, 0, 0}
 };
 
 /**

@@ -37,11 +37,6 @@ typedef enum {
 	MS_MAX
 } mouseSpace_t;
 
-typedef enum {
-	key_game,		/**< input focus is on the menu (or the keyBindings) */
-	key_console		/**< console is opened */
-} keydest_t;
-
 #define STATE_FORWARD	1
 #define STATE_RIGHT		2
 #define STATE_ZOOM		3

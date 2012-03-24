@@ -331,7 +331,7 @@ static const value_t installation_vals[] = {
 	{"model", V_HUNK_STRING, offsetof(installationTemplate_t, model), 0},
 	{"image", V_HUNK_STRING, offsetof(installationTemplate_t, image), 0},
 
-	{NULL, 0, 0, 0}
+	{NULL, V_NULL, 0, 0}
 };
 
 /**

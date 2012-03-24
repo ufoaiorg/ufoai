@@ -701,7 +701,7 @@ static const value_t actorskin_vals[] = {
 	{"singleplayer", V_BOOL, offsetof(actorSkin_t, singleplayer), MEMBER_SIZEOF(actorSkin_t, singleplayer)},
 	{"multiplayer", V_BOOL, offsetof(actorSkin_t, multiplayer), MEMBER_SIZEOF(actorSkin_t, multiplayer)},
 
-	{NULL, 0, 0, 0}
+	{NULL, V_NULL, 0, 0}
 };
 
 
@@ -1033,7 +1033,7 @@ int CL_GetClientState (void)
 /**
  * @brief Sets the client state
  */
-void CL_SetClientState (int state)
+void CL_SetClientState (connstate_t state)
 {
 	Com_DPrintf(DEBUG_CLIENT, "CL_SetClientState: Set new state to %i (old was: %i)\n", state, cls.state);
 	cls.state = state;
