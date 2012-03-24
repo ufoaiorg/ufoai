@@ -223,8 +223,8 @@ static void U2M_Parameter (int argc, const char **argv)
 			/* arg to -v should be a single digit. if it is not a number
 			 * atoi will return 0, and no warning will be given. so check that
 			 * it looks like the arg for -v first */
-			if (strlen(argv[i+1]) == 1)
-				config.verbosity = atoi(argv[++i]);
+			if (strlen(argv[i + 1]) == 1)
+				config.verbosity = (verbosityLevel_t)atoi(argv[++i]);
 			Verb_Printf(VERB_LESS, "verbosity = %i\n", config.verbosity);
 		} else if (Q_streq(argv[i], "-noweld")) {
 			/* make every point unique */

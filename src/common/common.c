@@ -531,7 +531,7 @@ void Com_SetServerState (int state)
 		SV_Shutdown("Server shutdown", qfalse);
 	else if (state == ss_restart)
 		SV_Shutdown("Server map change", qtrue);
-	sv->state = state;
+	sv->state = (server_state_t)state;
 }
 
 /**

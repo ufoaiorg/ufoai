@@ -135,7 +135,7 @@ static const field_t fields[] = {
 	{"randomspawn", offsetof(spawn_temp_t, randomSpawn), F_INT, FFL_SPAWNTEMP},
 	{"noequipment", offsetof(spawn_temp_t, noEquipment), F_INT, FFL_SPAWNTEMP},
 
-	{0, 0, 0, 0}
+	{0, 0, F_IGNORE, 0}
 };
 
 /**

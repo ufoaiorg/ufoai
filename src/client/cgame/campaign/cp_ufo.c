@@ -862,7 +862,7 @@ void UFO_NotifyPhalanxAircraftRemoved (const aircraft_t * const aircraft)
  * @return true or false wether UFO should be seen or not on geoscape.
  * @sa AIR_IsAircraftOnGeoscape
  */
-qboolean UFO_IsUFOSeenOnGeoscape (const aircraft_t const *ufo)
+qboolean UFO_IsUFOSeenOnGeoscape (const aircraft_t *ufo)
 {
 #ifdef DEBUG
 	if (ufo->notOnGeoscape)

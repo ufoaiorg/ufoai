@@ -651,7 +651,7 @@ void CP_CampaignRunMarket (campaign_t *campaign)
  * @param[in] item Pointer to the item to check
  * @note this function doesn't check if the item is available on market (buyable > 0)
  */
-qboolean BS_IsOnMarket (const objDef_t const* item)
+qboolean BS_IsOnMarket (const objDef_t * item)
 {
 	assert(item);
 	return !(item->isVirtual || item->notOnMarket);

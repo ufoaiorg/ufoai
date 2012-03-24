@@ -137,8 +137,8 @@ building_t *B_GetBuildingTemplate(const char *buildingName);
 buildingType_t B_GetBuildingTypeByBuildingID(const char *buildingID);
 qboolean B_CheckBuildingDependencesStatus(const building_t* building);
 qboolean B_IsBuildingBuiltUp(const building_t *building);
-float B_GetConstructionTimeRemain(const building_t const* building);
+float B_GetConstructionTimeRemain(const building_t * building);
 
-qboolean B_FireEvent(const building_t const* buildingTemplate, const struct base_s const* base, buildingEvent_t eventType);
+qboolean B_FireEvent(const building_t * buildingTemplate, const struct base_s * base, buildingEvent_t eventType);
 
 #endif

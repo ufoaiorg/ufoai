@@ -52,7 +52,7 @@ qboolean CP_CheckNewMissionDetectedOnGeoscape(void);
 qboolean CP_CheckMissionLimitedInTime(const mission_t *mission);
 void CP_MissionDisableTimeLimit(mission_t *mission);
 void CP_MissionNotifyBaseDestroyed(const base_t *base);
-void CP_MissionNotifyInstallationDestroyed(const installation_t const *installation);
+void CP_MissionNotifyInstallationDestroyed(const installation_t *installation);
 const char* MAP_GetMissionModel(const mission_t *mission);
 void CP_MissionRemoveFromGeoscape(mission_t *mission);
 void CP_MissionAddToGeoscape(mission_t *mission, qboolean force);

@@ -869,7 +869,7 @@ void CP_MissionNotifyBaseDestroyed (const base_t *base)
  * @brief Notify missions that an installation has been destroyed.
  * @param[in] installation Pointer to the installation that has been destroyed.
  */
-void CP_MissionNotifyInstallationDestroyed (const installation_t const *installation)
+void CP_MissionNotifyInstallationDestroyed (const installation_t *installation)
 {
 	MIS_Foreach(mission) {
 		if (mission->category == INTERESTCATEGORY_INTERCEPT && mission->data.installation) {

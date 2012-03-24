@@ -639,7 +639,7 @@ int G_ClientAction (player_t * player)
 	const char *format;
 
 	/* read the header */
-	action = gi.ReadByte();
+	action = (player_action_t)gi.ReadByte();
 	num = gi.ReadShort();
 
 	ent = G_EdictsGetByNum(num);
@@ -1215,7 +1215,8 @@ void G_ClientInitActorStates (const player_t * player)
 	for (i = 0; i < length; i++) {
 		const int ucn = gi.ReadShort();
 		int saveTU;
-		int hand, fmIdx, objIdx;
+		actorHands_t hand;
+		int fmIdx, objIdx;
 		edict_t *ent = G_ActorGetByUCN(ucn, player->pers.team);
 		if (!ent)
 			gi.Error("Could not find character on team %i with unique character number %i", player->pers.team, ucn);
@@ -1223,7 +1224,7 @@ void G_ClientInitActorStates (const player_t * player)
 		/* these state changes are not consuming any TUs */
 		saveTU = ent->TU;
 		G_ClientStateChange(player, ent, gi.ReadShort(), qfalse);
-		hand = gi.ReadShort();
+		hand = (actorHands_t)gi.ReadShort();
 		fmIdx = gi.ReadShort();
 		objIdx = gi.ReadShort();
 		G_ActorSetTU(ent, saveTU);

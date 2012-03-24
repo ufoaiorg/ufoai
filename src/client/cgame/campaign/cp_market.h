@@ -61,7 +61,7 @@ qboolean BS_SellUGV(employee_t *robot);
 qboolean BS_BuyItem(const objDef_t *od, base_t *base, int count);
 qboolean BS_SellItem(const objDef_t *od, base_t *base, int count);
 
-qboolean BS_IsOnMarket(const objDef_t const* item);
+qboolean BS_IsOnMarket(const objDef_t * item);
 void BS_InitMarket(const struct campaign_s *campaign);
 void CP_CampaignRunMarket(struct campaign_s *campaign);
 

@@ -105,7 +105,7 @@ edict_t *G_GetEdictFromPosExcluding (const pos3_t pos, const int n, ...)
 	va_start(ap, n);
 
 	for (i = 0; i < n; i++) {
-		types[i] = va_arg(ap, entity_type_t);
+		types[i] = (entity_type_t)va_arg(ap, int);
 	}
 
 	while ((ent = G_EdictsGetNextInUse(ent))) {

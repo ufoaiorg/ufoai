@@ -38,10 +38,10 @@ static int G_GetEarnedExperience (abilityskills_t skill, edict_t *ent)
 	character_t *chr = &ent->chr;
 
 	int experience = 0;
-	abilityskills_t i;
+	int i;
 
 	switch (skill) {
-	case ABILITY_POWER:
+	case ABILITY_POWER: {
 		experience = 46; /** @todo Make a formula for this once strength is used in combat. */
 		/* if soldier gets a TU impact from the armour, it trains power by moving around in heavy armour */
 		/* the training goes faster if the TU impact is higher, up to a limit */
@@ -54,6 +54,7 @@ static int G_GetEarnedExperience (abilityskills_t skill, edict_t *ent)
 		training = min(training, 200);
 		experience += max(168 * training / 200, 0);
 		break;
+	}
 	case ABILITY_SPEED:
 		experience += chr->scoreMission->movedNormal / 2 + chr->scoreMission->movedCrouched;
 		/* skip skills < ABILITY_NUM_TYPES, they are abilities not real skills */
@@ -147,7 +148,7 @@ static void G_UpdateCharacterSkills (edict_t *ent)
 {
 	character_t *chr = &ent->chr;
 
-	abilityskills_t i = 0;
+	int i;
 	unsigned int maxXP, gainedXP, totalGainedXP;
 
 	/* Robots/UGVs do not get skill-upgrades. */
@@ -156,8 +157,9 @@ static void G_UpdateCharacterSkills (edict_t *ent)
 
 	totalGainedXP = 0;
 	for (i = 0; i < SKILL_NUM_TYPES; i++) {
-		maxXP = G_CharacterGetMaxExperiencePerMission(i);
-		gainedXP = G_GetEarnedExperience(i, ent);
+		const abilityskills_t skill = (abilityskills_t)i;
+		maxXP = G_CharacterGetMaxExperiencePerMission(skill);
+		gainedXP = G_GetEarnedExperience(skill, ent);
 
 		gainedXP = min(gainedXP, maxXP);
 		chr->score.experience[i] += gainedXP;
@@ -169,7 +171,7 @@ static void G_UpdateCharacterSkills (edict_t *ent)
 
 	/* Health isn't part of abilityskills_t, so it needs to be handled separately. */
 	assert(i == SKILL_NUM_TYPES);	/**< We need to get sure that index for health-experience is correct. */
-	maxXP = G_CharacterGetMaxExperiencePerMission(i);
+	maxXP = G_CharacterGetMaxExperiencePerMission((abilityskills_t)i);
 	gainedXP = min(maxXP, totalGainedXP / 2);
 
 	chr->score.experience[i] += gainedXP;

@@ -465,7 +465,7 @@ qboolean AIR_IsAircraftInBase (const aircraft_t * aircraft)
  * @return @c false if given aircraft is not on geoscape, @c true if given aircraft is on geoscape.
  * @sa UFO_IsUFOSeenOnGeoscape
  */
-qboolean AIR_IsAircraftOnGeoscape (const aircraft_t const * aircraft)
+qboolean AIR_IsAircraftOnGeoscape (const aircraft_t *aircraft)
 {
 	switch (aircraft->status) {
 	case AIR_IDLE:
@@ -1938,7 +1938,7 @@ static float AIR_GetDestinationFindRoot (const float c, const float B, const flo
  * @sa AIR_SendAircraftPursuingUFO
  * @sa UFO_SendPursuingAircraft
  */
-void AIR_GetDestinationWhilePursuing (const aircraft_t const *shooter, const aircraft_t const *target, vec2_t *dest)
+void AIR_GetDestinationWhilePursuing (const aircraft_t *shooter, const aircraft_t *target, vec2_t *dest)
 {
 	vec3_t shooterPos, targetPos, targetDestPos, shooterDestPos, rotationAxis;
 	vec3_t tangentVectTS, tangentVectTD;

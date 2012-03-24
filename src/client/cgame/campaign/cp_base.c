@@ -1337,7 +1337,7 @@ qboolean B_MapIsCellFree (const base_t *base, int col, int row)
  * @param[in] col Set building to col
  * @return building created in base (this is not a building template)
  */
-building_t* B_SetBuildingByClick (base_t *base, const building_t const *buildingTemplate, int row, int col)
+building_t* B_SetBuildingByClick (base_t *base, const building_t *buildingTemplate, int row, int col)
 {
 #ifdef DEBUG
 	if (!base)

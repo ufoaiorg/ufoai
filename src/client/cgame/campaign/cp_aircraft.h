@@ -259,7 +259,7 @@ int AIR_GetAircraftIDXInBase(const aircraft_t* aircraft);
 aircraft_t *AIR_GetAircraftFromBaseByIDXSafe(const struct base_s *base, int index);
 const char *AIR_AircraftStatusToName(const aircraft_t *aircraft);
 qboolean AIR_IsAircraftInBase(const aircraft_t *aircraft);
-qboolean AIR_IsAircraftOnGeoscape(const aircraft_t const *aircraft);
+qboolean AIR_IsAircraftOnGeoscape(const aircraft_t *aircraft);
 
 void AIR_DeleteAircraft(aircraft_t *aircraft);
 void AIR_DestroyAircraft(aircraft_t *aircraft);
@@ -280,7 +280,7 @@ qboolean AIR_AircraftHasEnoughFuel(const aircraft_t *aircraft, const vec2_t dest
 qboolean AIR_AircraftHasEnoughFuelOneWay(const aircraft_t *aircraft, const vec2_t destination);
 void AIR_AircraftReturnToBase(aircraft_t *aircraft);
 qboolean AIR_SendAircraftToMission(aircraft_t* aircraft, struct mission_s* mission);
-void AIR_GetDestinationWhilePursuing(const aircraft_t const *shooter, const aircraft_t const *target, vec2_t *dest);
+void AIR_GetDestinationWhilePursuing(const aircraft_t *shooter, const aircraft_t *target, vec2_t *dest);
 qboolean AIR_SendAircraftPursuingUFO(aircraft_t* aircraft, aircraft_t* ufo);
 void AIR_AircraftsNotifyUFORemoved(const aircraft_t *const ufo, qboolean destroyed);
 void AIR_AircraftsUFODisappear(const aircraft_t *const ufo);

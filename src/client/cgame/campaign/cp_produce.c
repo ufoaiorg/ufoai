@@ -90,7 +90,7 @@ static double PR_CalculateProductionPercentPerMinute (const base_t *base, const 
  * @param[in] base Pointer to the base the production happen
  * @param[in] prodData Pointer to the productionData structure
  */
-static int PR_CalculateTotalFrames (const base_t const *base, const productionData_t const *prodData)
+static int PR_CalculateTotalFrames (const base_t *base, const productionData_t *prodData)
 {
 	return (1.0 / PR_CalculateProductionPercentPerMinute(base, prodData)) + 1;
 }
@@ -99,7 +99,7 @@ static int PR_CalculateTotalFrames (const base_t const *base, const productionDa
  * @brief Calculates the remaining time for a technology in minutes
  * @param[in] prod Pointer to the production structure
  */
-int PR_GetRemainingMinutes (const production_t const *prod)
+int PR_GetRemainingMinutes (const production_t *prod)
 {
 	assert(prod);
 	return prod->totalFrames - prod->frame;
@@ -109,7 +109,7 @@ int PR_GetRemainingMinutes (const production_t const *prod)
  * @brief Calculates the remaining hours for a technology
  * @param[in] prod Pointer to the production structure
  */
-int PR_GetRemainingHours (const production_t const *prod)
+int PR_GetRemainingHours (const production_t *prod)
 {
 	return round(PR_GetRemainingMinutes(prod) / (double)MINUTES_PER_HOUR);
 }
@@ -119,7 +119,7 @@ int PR_GetRemainingHours (const production_t const *prod)
  * @param[in] base Pointer to the base to calculate production time at
  * @param[in] prodData Pointer to the production data structure
  */
-int PR_GetProductionHours (const base_t const *base, const productionData_t const *prodData)
+int PR_GetProductionHours (const base_t *base, const productionData_t *prodData)
 {
 	return round(PR_CalculateTotalFrames(base, prodData) / (double)MINUTES_PER_HOUR);
 }
@@ -130,7 +130,7 @@ int PR_GetProductionHours (const base_t const *base, const productionData_t cons
  * @param[in] amount How many items are planned to be added (positive number) or removed (negative number).
  * @param[in] reqs The production requirements of the item that is to be produced. These included numbers are multiplied with 'amount')
  */
-void PR_UpdateRequiredItemsInBasestorage (base_t *base, int amount, const requirements_t const *reqs)
+void PR_UpdateRequiredItemsInBasestorage (base_t *base, int amount, const requirements_t *reqs)
 {
 	int i;
 
@@ -171,7 +171,7 @@ void PR_UpdateRequiredItemsInBasestorage (base_t *base, int amount, const requir
  * @param[in] base Pointer to base.
  * @return how much item/aircraft/etc can be produced
  */
-int PR_RequirementsMet (int amount, const requirements_t const *reqs, base_t *base)
+int PR_RequirementsMet (int amount, const requirements_t *reqs, base_t *base)
 {
 	int i;
 	int producibleAmount = amount;
@@ -768,7 +768,7 @@ void PR_UpdateProductionCap (base_t *base)
  * @brief check if an item is producable.
  * @param[in] item Pointer to the item that should be checked.
  */
-qboolean PR_ItemIsProduceable (const objDef_t const *item)
+qboolean PR_ItemIsProduceable (const objDef_t *item)
 {
 	const technology_t *tech = RS_GetTechForItem(item);
 	return tech->produceTime != -1;

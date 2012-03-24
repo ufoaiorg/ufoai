@@ -194,7 +194,7 @@ int32_t CM_HeadnodeForBox (mapTile_t *tile, const vec3_t mins, const vec3_t maxs
  * @return qtrue - hit something
  * @return qfalse - hit nothing
  */
-qboolean CM_EntTestLine (mapTiles_t *mapTiles, const const vec3_t start, const vec3_t stop, const int levelmask, const char **entlist)
+qboolean CM_EntTestLine (mapTiles_t *mapTiles, const vec3_t start, const vec3_t stop, const int levelmask, const char **entlist)
 {
 	trace_t trace;
 	const char **name;

@@ -223,7 +223,7 @@ static qboolean I_RemoveFromInventory (inventoryInterface_t* self, inventory_t* 
  * @return IA_ARMOUR when placing an armour on the actor.
  * @return IA_MOVE when just moving an item.
  */
-static int I_MoveInInventory (inventoryInterface_t* self, inventory_t* const inv, const invDef_t * from, invList_t *fItem, const invDef_t * to, int tx, int ty, int *TU, invList_t ** icp)
+static inventory_action_t I_MoveInInventory (inventoryInterface_t* self, inventory_t* const inv, const invDef_t * from, invList_t *fItem, const invDef_t * to, int tx, int ty, int *TU, invList_t ** icp)
 {
 	invList_t *ic;
 
@@ -748,11 +748,14 @@ static void I_EquipActor (inventoryInterface_t* self, inventory_t* const inv, co
 					if (ed->numItems[ammo] && INVSH_LoadableInWeapon(&self->csi->ods[ammo], primaryWeapon))
 						break;
 				if (ammo < self->csi->numODs) {
-					primary =
-						/* To avoid two particle weapons. */
+					if (/* To avoid two particle weapons. */
 						!(self->csi->ods[ammo].dmgtype == self->csi->damParticle)
 						/* To avoid SMG + Assault Rifle */
-						&& !(self->csi->ods[ammo].dmgtype == self->csi->damNormal);
+						&& !(self->csi->ods[ammo].dmgtype == self->csi->damNormal)) {
+						primary = WEAPON_OTHER;
+					} else {
+						primary = WEAPON_PARTICLE_OR_NORMAL;
+					}
 				}
 				/* reset missedPrimary: we got a primary weapon */
 				missedPrimary = 0;

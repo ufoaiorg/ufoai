@@ -30,7 +30,7 @@ typedef struct inventoryInterface_s
 	invList_t* (*AddToInventory) (struct inventoryInterface_s* self, inventory_t * const i, const item_t* const item, const invDef_t * container, int x, int y,
 			int amount) __attribute__((nonnull(1), nonnull(2), warn_unused_result));
 
-	int (*MoveInInventory) (struct inventoryInterface_s* self, inventory_t* const i, const invDef_t * from, invList_t *item, const invDef_t * to,
+	inventory_action_t (*MoveInInventory) (struct inventoryInterface_s* self, inventory_t* const i, const invDef_t * from, invList_t *item, const invDef_t * to,
 			int tx, int ty, int *TU, invList_t ** icp) __attribute__((nonnull(1), nonnull(2)));
 
 	qboolean (*TryAddToInventory) (struct inventoryInterface_s* self, inventory_t* const inv, const item_t * const item, const invDef_t * container);
