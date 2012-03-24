@@ -1089,7 +1089,7 @@ static void CL_ActorStandCrouch_f (void)
 static void CL_ActorUseHeadgear_f (void)
 {
 	invList_t* headgear;
-	const int tmpMouseSpace = IN_GetMouseSpace();
+	const mouseSpace_t tmpMouseSpace = IN_GetMouseSpace();
 
 	/* this can be executed by a click on a hud button
 	 * but we need MS_WORLD mouse space to let the shooting

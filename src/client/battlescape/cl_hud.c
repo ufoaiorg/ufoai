@@ -154,7 +154,7 @@ static void HUD_UpdateAllActors (void)
  */
 static void HUD_SetWeaponButton (buttonTypes_t button, weaponButtonState_t state)
 {
-	const char const* prefix;
+	const char *prefix;
 
 	switch (state) {
 	case BT_STATE_DESELECT:

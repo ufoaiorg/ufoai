@@ -140,7 +140,7 @@ CASSERT(lengthof(events) == EV_NUM_EVENTS);
 
 const eventRegister_t *CL_GetEvent (const event_t eType)
 {
-	event_t i;
+	int i;
 
 	for (i = EV_NULL; i < EV_NUM_EVENTS; i++) {
 		if (events[i].type == eType)

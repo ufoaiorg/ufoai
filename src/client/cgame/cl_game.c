@@ -1414,19 +1414,19 @@ const equipDef_t *GAME_ChangeEquip (const linkedList_t *equipmentList, changeEqu
 		} else if (changeType == FORWARD) {
 			equipID = (const char *)(entry->next != NULL ? entry->next->data : equipmentList->data);
 		} else if (changeType == BACKWARD) {
-			const char *new = NULL;
-			const char *prev = NULL;
+			const char *newEntry = NULL;
+			const char *prevEntry = NULL;
 			LIST_Foreach(equipmentList, char const, tmp) {
 				if (Q_streq(tmp, equipID)) {
-					if (prev != NULL) {
-						new = prev;
+					if (prevEntry != NULL) {
+						newEntry = prevEntry;
 						break;
 					}
 				}
-				prev = tmp;
-				new = tmp;
+				prevEntry = tmp;
+				newEntry = tmp;
 			}
-			equipID = new;
+			equipID = newEntry;
 		}
 		ed = INV_GetEquipmentDefinitionByID(equipID);
 		if (ed == NULL)

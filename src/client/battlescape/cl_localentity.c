@@ -406,15 +406,15 @@ const char *LE_GetAnim (const char *anim, int right, int left, int state)
 		else {
 			type = INVSH_GetItemByIDX(left)->type;
 			/* left hand grenades look OK with default anim; others don't */
-			if (!Q_streq(type, "grenade"))
-				goto akimbo;
+			if (!Q_streq(type, "grenade")) {
+				type = "pistol_d";
+			}
 		}
 	} else {
 		const objDef_t *od = INVSH_GetItemByIDX(right);
 		animationIndex = od->animationIndex;
 		type = od->type;
 		if (left != NONE && Q_streq(od->type, "pistol") && Q_streq(INVSH_GetItemByIDX(left)->type, "pistol")) {
-akimbo:
 			type = "pistol_d";
 		}
 	}

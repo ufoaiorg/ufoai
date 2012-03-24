@@ -216,7 +216,7 @@ void CL_ParseEvent (struct dbuffer *msg)
 	static eventTiming_t eventTiming;
 	qboolean now;
 	const eventRegister_t *eventData;
-	event_t eType = NET_ReadByte(msg);
+	int eType = NET_ReadByte(msg);
 	if (eType == EV_NULL)
 		return;
 
@@ -231,7 +231,7 @@ void CL_ParseEvent (struct dbuffer *msg)
 	if (eType >= EV_NUM_EVENTS)
 		Com_Error(ERR_DROP, "CL_ParseEvent: invalid event %i", eType);
 
-	eventData = CL_GetEvent(eType);
+	eventData = CL_GetEvent((event_t)eType);
 	if (!eventData->eventCallback)
 		Com_Error(ERR_DROP, "CL_ParseEvent: no handling function for event %i", eType);
 
@@ -242,7 +242,7 @@ void CL_ParseEvent (struct dbuffer *msg)
 		/* log and call function */
 		CL_LogEvent(eventData);
 		Com_DPrintf(DEBUG_EVENTSYS, "event(now [%i]): %s\n", cl.time, eventData->name);
-		GAME_NofityEvent(eType);
+		GAME_NofityEvent((event_t)eType);
 		eventData->eventCallback(eventData, msg);
 	} else {
 		evTimes_t *cur = (evTimes_t *)Mem_PoolAlloc(sizeof(*cur), cl_genericPool, 0);
@@ -250,7 +250,7 @@ void CL_ParseEvent (struct dbuffer *msg)
 
 		/* copy the buffer as first action, the event time functions can modify the buffer already */
 		cur->msg = dbuffer_dup(msg);
-		cur->eType = eType;
+		cur->eType = (event_t)eType;
 
 		/* timestamp (msec) that is used to determine when the event should be executed */
 		when = CL_GetEventTime(cur->eType, msg, &eventTiming);

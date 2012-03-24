@@ -452,7 +452,7 @@ static void CL_ParticleFunction (ptl_t * p, ptlCmd_t * cmd)
 			/* store the value in the stack */
 			stackPtr[stackIdx] = &cmdStack[e];
 			stackType[stackIdx] = cmd->type;
-			e += Com_SetValue(stackPtr[stackIdx++], cmdData, cmd->type, 0, 0);
+			e += Com_SetValue(stackPtr[stackIdx++], cmdData, (valueTypes_t)cmd->type, 0, 0);
 			break;
 
 		case PC_POP:
@@ -488,9 +488,9 @@ static void CL_ParticleFunction (ptl_t * p, ptlCmd_t * cmd)
 
 			/* get different data */
 			if (cmd->cmd == PC_POP)
-				e -= Com_SetValue(cmdData, stackPtr[--stackIdx], cmd->type, 0, 0);
+				e -= Com_SetValue(cmdData, stackPtr[--stackIdx], (valueTypes_t)cmd->type, 0, 0);
 			else
-				Com_SetValue(cmdData, stackPtr[stackIdx - 1], cmd->type, 0, 0);
+				Com_SetValue(cmdData, stackPtr[stackIdx - 1], (valueTypes_t)cmd->type, 0, 0);
 			break;
 
 		case PC_ADD:
@@ -1362,9 +1362,9 @@ static void CL_ParsePtlCmds (const char *name, const char **text)
 				/* set the values */
 				pc->type = j;
 
-				pcmdPos = Com_AlignPtr(pcmdPos, pc->type);
+				pcmdPos = (byte*) Com_AlignPtr(pcmdPos, (valueTypes_t)pc->type);
 				pc->ref = (int) (pcmdPos - pcmdData);
-				pcmdPos += Com_EParseValue(pcmdPos, token, pc->type, 0, 0);
+				pcmdPos += Com_EParseValue(pcmdPos, token, (valueTypes_t)pc->type, 0, 0);
 
 /*				Com_Printf("%s %s %i\n", vt_names[pc->type], token, pcmdPos - pc->ref, (char *)pc->ref); */
 				break;
@@ -1387,9 +1387,9 @@ static void CL_ParsePtlCmds (const char *name, const char **text)
 				pc->cmd = PC_PUSH;
 				pc->type = pp->type;
 
-				pcmdPos = Com_AlignPtr(pcmdPos, pc->type);
+				pcmdPos = (byte*) Com_AlignPtr(pcmdPos, (valueTypes_t)pc->type);
 				pc->ref = (int) (pcmdPos - pcmdData);
-				pcmdPos += Com_EParseValue(pcmdPos, token, pc->type, 0, 0);
+				pcmdPos += Com_EParseValue(pcmdPos, token, (valueTypes_t)pc->type, 0, 0);
 
 				pc = &ptlCmd[numPtlCmds++];
 				pc->cmd = PC_POP;
