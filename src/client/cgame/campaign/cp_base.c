@@ -737,8 +737,9 @@ void B_ResetAllStatusAndCapacities (base_t *base, qboolean firstEnable)
 
 	/* reset all values of hasBuilding[] */
 	for (i = 0; i < MAX_BUILDING_TYPE; i++) {
-		if (i != B_MISC)
-			B_SetBuildingStatus(base, i, qfalse);
+		const buildingType_t type = (buildingType_t)i;
+		if (type != B_MISC)
+			B_SetBuildingStatus(base, type, qfalse);
 	}
 	/* activate all buildings that needs to be activated */
 	while (test) {
@@ -781,9 +782,11 @@ void B_ResetAllStatusAndCapacities (base_t *base, qboolean firstEnable)
 		B_UpdateAntimatterCap(base);
 
 	/* Check that current capacity is possible -- if we changed values in *.ufo */
-	for (i = 0; i < MAX_CAP; i++)
-		if (CAP_GetFreeCapacity(base, i) < 0)
+	for (i = 0; i < MAX_CAP; i++) {
+		const baseCapacities_t cap = (baseCapacities_t)i;
+		if (CAP_GetFreeCapacity(base, cap) < 0)
 			Com_Printf("B_ResetAllStatusAndCapacities: Warning, capacity of %i is bigger than maximum capacity\n", i);
+	}
 }
 
 /**
@@ -1052,7 +1055,7 @@ static void B_UpdateAllBaseBuildingStatus (building_t* building, buildingStatus_
 	} else {
 		/* no other status than status of building 1 has been modified
 		 * update only status of building 1 */
-		const int cap = B_GetCapacityFromBuildingType(building->buildingType);
+		const baseCapacities_t cap = B_GetCapacityFromBuildingType(building->buildingType);
 		if (cap != MAX_CAP)
 			B_UpdateBaseCapacities(cap, base);
 	}
@@ -1244,7 +1247,7 @@ void B_SetName (base_t *base, const char *name)
  */
 base_t *B_Build (const campaign_t *campaign, const vec2_t pos, const char *name)
 {
-	baseCapacities_t cap;
+	int i;
 	base_t *base = B_GetFirstUnfoundedBase();
 	float level;
 
@@ -1265,8 +1268,10 @@ base_t *B_Build (const campaign_t *campaign, const vec2_t pos, const char *name)
 	ccs.numBases++;
 
 	/* reset capacities */
-	for (cap = 0; cap < MAX_CAP; cap++)
+	for (i = 0; i < MAX_CAP; i++) {
+		const baseCapacities_t cap = (baseCapacities_t)i;
 		CAP_SetCurrent(base, cap, 0);
+	}
 
 	/* setup for first base */
 	if (ccs.campaignStats.basesBuilt == 0) {
