@@ -174,7 +174,7 @@ void CP_SpawnAlienBaseMission (alienBase_t *alienBase)
  * inside @c radarratio times radar range.
  * @sa UFO_UpdateAlienInterestForOneBase
  */
-static void AB_UpdateStealthForOneBase (const aircraft_t const *aircraft, alienBase_t *base)
+static void AB_UpdateStealthForOneBase (const aircraft_t *aircraft, alienBase_t *base)
 {
 	float distance;
 	float probability = 0.0001f;			/**< base probability, will be modified below */

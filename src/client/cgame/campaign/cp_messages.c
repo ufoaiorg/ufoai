@@ -268,7 +268,7 @@ qboolean MS_LoadXML (xmlNode_t *p)
 			/** No tech found drop message. */
 			continue;
 		}
-		mess = MS_AddNewMessageSound(title, text, qfalse, mtype, tech, qfalse);
+		mess = MS_AddNewMessageSound(title, text, qfalse, (messageType_t)mtype, tech, qfalse);
 		mess->eventMail = mail;
 		XML_GetDate(sn, SAVE_MESSAGES_DATE, &mess->date.day, &mess->date.sec);
 		/* redo timestamp text after setting date */

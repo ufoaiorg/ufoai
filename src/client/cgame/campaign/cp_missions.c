@@ -135,7 +135,7 @@ void CP_StartMissionMap (mission_t* mission, const battleParam_t *battleParamete
  * @param[in] missionCat Mission category to check.
  * @return True if alien Category may be used for this mission category.
  */
-static qboolean CP_IsAlienTeamForCategory (const alienTeamCategory_t const *cat, const interestCategory_t missionCat)
+static qboolean CP_IsAlienTeamForCategory (const alienTeamCategory_t *cat, const interestCategory_t missionCat)
 {
 	int i;
 
@@ -572,7 +572,7 @@ const char* MAP_GetMissionModel (const mission_t *mission)
  * @param[in] mission Pointer to mission we want to check visibility.
  * @return see missionDetectionStatus_t.
  */
-static missionDetectionStatus_t CP_CheckMissionVisibleOnGeoscape (const mission_t const *mission)
+static missionDetectionStatus_t CP_CheckMissionVisibleOnGeoscape (const mission_t *mission)
 {
 	/* This function could be called before position of the mission is defined */
 	if (!mission->posAssigned)
@@ -1322,7 +1322,7 @@ void CP_SpawnRescueMission (aircraft_t *aircraft, aircraft_t *ufo)
  */
 qboolean CP_MissionBegin (mission_t *mission)
 {
-	int ufoType;
+	ufoType_t ufoType;
 
 	mission->stage = STAGE_COME_FROM_ORBIT;
 
@@ -1558,7 +1558,7 @@ void CP_SpawnNewMissions (void)
 		Com_DPrintf(DEBUG_CLIENT, "interest = %d, new missions = %d\n", ccs.overallInterest, newMissionNum);
 		for (i = 0; i < newMissionNum; i++) {
 			if (frand() > nonOccurrence) {
-				const int type = CP_SelectNewMissionType();
+				const interestCategory_t type = (interestCategory_t)CP_SelectNewMissionType();
 				CP_CreateNewMission(type, qfalse);
 			}
 		}
@@ -1592,12 +1592,15 @@ void CP_InitializeSpawningDelay (void)
  */
 static void MIS_SpawnNewMissions_f (void)
 {
-	int category, type = 0;
+	interestCategory_t category;
+	int type = 0;
 	mission_t *mission;
 
 	if (Cmd_Argc() < 2) {
+		int i;
 		Com_Printf("Usage: %s <category> [<type>]\n", Cmd_Argv(0));
-		for (category = INTERESTCATEGORY_RECON; category < INTERESTCATEGORY_MAX; category++) {
+		for (i = INTERESTCATEGORY_RECON; i < INTERESTCATEGORY_MAX; i++) {
+			category = (interestCategory_t)i;
 			Com_Printf("...%i: %s", category, INT_InterestCategoryToName(category));
 			if (category == INTERESTCATEGORY_RECON)
 				Com_Printf(" <0:Random, 1:Aerial, 2:Ground>");
@@ -1613,7 +1616,7 @@ static void MIS_SpawnNewMissions_f (void)
 	if (Cmd_Argc() >= 3)
 		type = atoi(Cmd_Argv(2));
 
-	category = atoi(Cmd_Argv(1));
+	category = (interestCategory_t)atoi(Cmd_Argv(1));
 
 	if (category < INTERESTCATEGORY_NONE || category >= INTERESTCATEGORY_MAX)
 		return;

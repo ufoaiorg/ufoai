@@ -294,9 +294,9 @@ building_t *B_GetBuildingTemplate (const char *buildingName)
 
 	assert(buildingName);
 	for (i = 0; i < ccs.numBuildingTemplates; i++) {
-		building_t *template = &ccs.buildingTemplates[i];
-		if (Q_streq(template->id, buildingName))
-			return template;
+		building_t *buildingTemplate = &ccs.buildingTemplates[i];
+		if (Q_streq(buildingTemplate->id, buildingName))
+			return buildingTemplate;
 	}
 
 	Com_Printf("Building %s not found\n", buildingName);

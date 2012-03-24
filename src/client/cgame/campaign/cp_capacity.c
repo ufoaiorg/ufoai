@@ -262,9 +262,10 @@ void CAP_CheckOverflow (void)
 	base_t *base = NULL;
 
 	while ((base = B_GetNext(base)) != NULL) {
-		baseCapacities_t capacityType;
+		int i;
 
-		for (capacityType = CAP_ALIENS; capacityType < MAX_CAP; capacityType++) {
+		for (i = CAP_ALIENS; i < MAX_CAP; i++) {
+			baseCapacities_t capacityType = (baseCapacities_t)i;
 			capacities_t *cap = CAP_Get(base, capacityType);
 
 			if (cap->cur <= cap->max)

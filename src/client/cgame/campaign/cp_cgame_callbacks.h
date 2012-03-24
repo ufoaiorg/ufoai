@@ -26,7 +26,7 @@
 
 #include "../cl_game.h"
 
-const cgame_import_t *cgImport;
+extern const cgame_import_t *cgImport;
 
 const char* GAME_CP_GetItemModel(const char *string);
 void GAME_CP_InitStartup(void);

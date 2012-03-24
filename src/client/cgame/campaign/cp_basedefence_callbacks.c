@@ -95,7 +95,7 @@ static void BDEF_SelectItem_f (void)
 	aircraftSlot_t *slot;
 	installation_t* installation = INS_GetCurrentSelectedInstallation();
 	base_t *base = B_GetCurrentSelectedBase();
-	int bdefType;
+	aircraftItemType_t bdefType;
 	int slotIDX;
 	int itemIDX;
 
@@ -313,7 +313,7 @@ static void BDEF_AddItem_f (void)
 	base_t *base = B_GetCurrentSelectedBase();
 	technology_t **list;
 	technology_t *itemTech = NULL;
-	int bdefType;
+	aircraftItemType_t bdefType;
 	int slotIDX;
 
 	if ((!base && !installation) || (base && installation)) {
@@ -405,7 +405,7 @@ static void BDEF_RemoveItem_f (void)
 	aircraftSlot_t *slot;
 	installation_t* installation = INS_GetCurrentSelectedInstallation();
 	base_t *base = B_GetCurrentSelectedBase();
-	int bdefType;
+	aircraftItemType_t bdefType;
 	int slotIDX;
 
 	if ((!base && !installation) || (base && installation)) {
@@ -478,7 +478,8 @@ static void BDEF_RemoveItem_f (void)
  */
 static void BDEF_RemoveBattery_f (void)
 {
-	int basedefType, baseIdx;
+	basedefenceType_t basedefType;
+	int baseIdx;
 	base_t *base;
 
 	if (Cmd_Argc() < 3) {
@@ -525,12 +526,12 @@ static void BDEF_RemoveBattery_f (void)
 			basedefType = BASEDEF_MISSILE;
 		} else {
 			/* both type are possible, choose one randomly */
-			basedefType = rand() % 2 + BASEDEF_MISSILE;
+			basedefType = (basedefenceType_t)(rand() % 2 + BASEDEF_MISSILE);
 		}
 	} else {
 		/* Check if the removed building was under construction */
-		int type, max;
-		int workingNum;
+		buildingType_t type;
+		int workingNum, max;
 		building_t *building;
 
 		switch (basedefType) {

@@ -1767,7 +1767,7 @@ static void CL_SwapSkill (character_t *cp1, character_t *cp2, abilityskills_t sk
 	cp2->score.experience[skill] = tmp1;
 }
 
-static void CL_DoSwapSkills (character_t *cp1, character_t *cp2, const int skill)
+static void CL_DoSwapSkills (character_t *cp1, character_t *cp2, const abilityskills_t skill)
 {
 	if (cp1->score.skills[skill] < cp2->score.skills[skill])
 		CL_SwapSkill(cp1, cp2, skill);
@@ -1804,16 +1804,18 @@ static void CL_DoSwapSkills (character_t *cp1, character_t *cp2, const int skill
  */
 static void CL_SwapSkills (chrList_t *team)
 {
-	int i, j, k, skill;
+	int i, j, k;
 	const byte fmode1 = 0;
 	const byte fmode2 = 1;
 
 	i = team->num;
 	while (i--) {
+		int x;
 		/* running the loops below is not enough, we need transitive closure */
 		/* I guess num times is enough --- could anybody prove this? */
 		/* or perhaps 2 times is enough as long as weapons have 1 skill? */
-		for (skill = ABILITY_NUM_TYPES; skill < SKILL_NUM_TYPES; skill++) {
+		for (x = ABILITY_NUM_TYPES; x < SKILL_NUM_TYPES; x++) {
+			abilityskills_t skill = (abilityskills_t)x;
 			for (j = 0; j < team->num - 1; j++) {
 				character_t *cp1 = team->chr[j];
 				const fireDef_t *fdRightArray = NULL;
@@ -1975,8 +1977,10 @@ static void B_BaseList_f (void)
 		Com_Printf("Base Alien interest %f\n", base->alienInterest);
 		Com_Printf("Base hasBuilding[]:\n");
 		Com_Printf("Misc  Lab Quar Stor Work Hosp Hang Cont SHgr UHgr SUHg Powr  Cmd AMtr Entr Miss Lasr  Rdr Team\n");
-		for (j = 0; j < MAX_BUILDING_TYPE; j++)
-			Com_Printf("  %i  ", B_GetBuildingStatus(base, j));
+		for (j = 0; j < MAX_BUILDING_TYPE; j++) {
+			const buildingType_t type = (buildingType_t)j;
+			Com_Printf("  %i  ", B_GetBuildingStatus(base, type));
+		}
 		Com_Printf("\n");
 		Com_Printf("Base pos %.02f:%.02f\n", base->pos[0], base->pos[1]);
 		Com_Printf("Base map:\n");
@@ -2092,7 +2096,8 @@ static void B_PrintCapacities_f (void)
 	}
 	base = B_GetBaseByIDX(i);
 	for (i = 0; i < MAX_CAP; i++) {
-		const buildingType_t buildingType = B_GetBuildingTypeByCapacity(i);
+		const baseCapacities_t cap = (baseCapacities_t)i;
+		const buildingType_t buildingType = B_GetBuildingTypeByCapacity(cap);
 		if (buildingType >= MAX_BUILDING_TYPE)
 			Com_Printf("B_PrintCapacities_f: Could not find building associated with capacity %i\n", i);
 		else {
@@ -2101,7 +2106,7 @@ static void B_PrintCapacities_f (void)
 					break;
 			}
 			Com_Printf("Building: %s, capacity max: %i, capacity cur: %i\n",
-			ccs.buildingTemplates[j].id, CAP_GetMax(base, i), CAP_GetCurrent(base, i));
+			ccs.buildingTemplates[j].id, CAP_GetMax(base, i), CAP_GetCurrent(base, cap));
 		}
 	}
 }
@@ -2446,7 +2451,8 @@ void B_UpdateBaseCapacities (baseCapacities_t cap, base_t *base)
 		Com_DPrintf(DEBUG_CLIENT, "B_UpdateBaseCapacities: going to update ALL capacities.\n");
 		/* Loop through all capacities and update them. */
 		for (i = 0; i < cap; i++) {
-			B_UpdateBaseCapacities(i, base);
+			const baseCapacities_t cap = (baseCapacities_t) i;
+			B_UpdateBaseCapacities(cap, base);
 		}
 		break;
 	default:

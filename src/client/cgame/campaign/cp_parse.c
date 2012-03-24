@@ -34,7 +34,7 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
  * @return Alien mission category
  * @sa interestCategory_t
  */
-static int CP_GetAlienMissionTypeByID (const char *type)
+static interestCategory_t CP_GetAlienMissionTypeByID (const char *type)
 {
 	if (Q_streq(type, "recon"))
 		return INTERESTCATEGORY_RECON;

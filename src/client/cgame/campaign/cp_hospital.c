@@ -68,9 +68,10 @@ qboolean HOS_HealCharacter (character_t* chr, qboolean hospital)
  */
 void HOS_HospitalRun (void)
 {
-	employeeType_t type;
+	int i;
 
-	for (type = 0; type < MAX_EMPL; type++) {
+	for (i = 0; i < MAX_EMPL; i++) {
+		employeeType_t type = (employeeType_t)i;
 		E_Foreach(type, employee) {
 			if (!E_IsHired(employee))
 				continue;
