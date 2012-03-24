@@ -176,9 +176,13 @@ void UI_DrawSpriteInBox (qboolean flip, const uiSprite_t* sprite, uiSpriteStatus
 		texY = sprite->pos[status][1];
 		image = sprite->image[status];
 		if (!image) {
-			texX = sprite->pos[SPRITE_STATUS_NORMAL][0];
-			texY = sprite->pos[SPRITE_STATUS_NORMAL][1];
-			image = sprite->image[SPRITE_STATUS_NORMAL];
+			if (texX == 0 && texY == 0) {
+				texX = sprite->pos[SPRITE_STATUS_NORMAL][0];
+				texY = sprite->pos[SPRITE_STATUS_NORMAL][1];
+				image = sprite->image[SPRITE_STATUS_NORMAL];
+			} else {
+				image = sprite->image[SPRITE_STATUS_NORMAL];
+			}
 		}
 	}
 	if (!image)
