@@ -71,7 +71,7 @@ static campaign_t *GetCampaign (void)
 
 static void ResetCampaignData (void)
 {
-	const campaign_t *campaign;
+	campaign_t *campaign;
 
 	CP_ResetCampaignData();
 	CP_ParseCampaignData();
@@ -244,11 +244,12 @@ static void testAircraftHandling (void)
 
 static void testEmployeeHandling (void)
 {
-	employeeType_t type;
+	int i;
 
 	ResetCampaignData();
 
-	for (type = 0; type < MAX_EMPL; type++) {
+	for (i = 0; i < MAX_EMPL; i++) {
+		employeeType_t type = (employeeType_t)i;
 		if (type != EMPL_ROBOT) {
 			int cnt;
 			employee_t *e = E_CreateEmployee(type, NULL, NULL);
@@ -265,7 +266,6 @@ static void testEmployeeHandling (void)
 	}
 
 	{
-		int i;
 		const int amount = 3;
 		for (i = 0; i < amount; i++) {
 			employee_t *e = E_CreateEmployee(EMPL_SOLDIER, NULL, NULL);
@@ -327,7 +327,7 @@ static void testBaseBuilding (void)
 {
 	vec2_t pos = {0, 0};
 	base_t *base;
-	employeeType_t type;
+	int i;
 
 	ResetCampaignData();
 
@@ -339,8 +339,10 @@ static void testBaseBuilding (void)
 
 	B_Destroy(base);
 
-	for (type = 0; type < MAX_EMPL; type++)
+	for (i = 0; i < MAX_EMPL; i++) {
+		employeeType_t type = (employeeType_t)i;
 		CU_ASSERT_EQUAL(E_CountHired(base, type), 0);
+	}
 
 	/* cleanup for the following tests */
 	E_DeleteAllEmployees(NULL);
@@ -1097,28 +1099,29 @@ static void testHospital (void)
 {
 	base_t *base;
 	const vec2_t destination = { 10, 10 };
-	employeeType_t type;
-	int i;
+	int i, n;
 
 	ResetCampaignData();
 
 	base = CreateBase("unittesthospital", destination);
 
-	i = 0;
+	n = 0;
 	/* hurt all employees */
-	for (type = 0; type < MAX_EMPL; type++) {
+	for (i = 0; i < MAX_EMPL; i++) {
+		employeeType_t type = (employeeType_t)i;
 		E_Foreach(type, employee) {
 			if (!E_IsHired(employee))
 				continue;
 			employee->chr.HP = employee->chr.maxHP - 10;
-			i++;
+			n++;
 		}
 	}
-	CU_ASSERT_NOT_EQUAL(i, 0);
+	CU_ASSERT_NOT_EQUAL(n, 0);
 
 	HOS_HospitalRun();
 
-	for (type = 0; type < MAX_EMPL; type++) {
+	for (i = 0; i < MAX_EMPL; i++) {
+		employeeType_t type = (employeeType_t)i;
 		E_Foreach(type, employee) {
 			if (!E_IsHired(employee))
 				continue;
@@ -1246,15 +1249,16 @@ static qboolean skipTest (const mapDef_t *md)
 
 static void testTerrorMissions (void)
 {
-	ufoType_t ufoType;
 	int numUfoTypes;
 	ufoType_t ufoTypes[UFO_MAX];
 	mapDef_t *md;
+	int i;
 
 	ResetCampaignData();
 
 	/* Set overall interest level so every UFO can be used for missions */
-	for (ufoType = UFO_SCOUT; ufoType < UFO_MAX; ufoType++) {
+	for (i = UFO_SCOUT; i < UFO_MAX; i++) {
+		ufoType_t ufoType = (ufoType_t)i;
 		const aircraft_t *ufo = UFO_GetByType(ufoType);
 
 		if (!ufo)
@@ -1272,7 +1276,8 @@ static void testTerrorMissions (void)
 
 	/* Search with UFOs available for Terror missions */
 	numUfoTypes = CP_TerrorMissionAvailableUFOs(NULL, ufoTypes);
-	for (ufoType = 0; ufoType < numUfoTypes; ufoType++) {
+	for (i = 0; i < numUfoTypes; i++) {
+		ufoType_t ufoType = (ufoType_t)i;
 		mission_t mission;
 		aircraft_t *ufo = UFO_AddToGeoscape(ufoTypes[ufoType], NULL, &mission);
 
@@ -1303,7 +1308,8 @@ static void testTerrorMissions (void)
 		/* skip mapDefs which don't support UFO types that do terror missions */
 		if (!LIST_IsEmpty(md->ufos)) {
 			qboolean found = qfalse;
-			for (ufoType = 0; ufoType < numUfoTypes; ufoType++) {
+			for (i = 0; i < numUfoTypes; i++) {
+				ufoType_t ufoType = (ufoType_t)i;
 				const aircraft_t *ufo = UFO_GetByType(ufoTypes[ufoType]);
 
 				if (!ufo)

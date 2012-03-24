@@ -639,8 +639,8 @@ static void R_UpdateVidDef (const viddefContext_t *context)
 qboolean R_SetMode (void)
 {
 	qboolean result;
-	viddefContext_t prev;
-	viddefContext_t new;
+	viddefContext_t prevCtx;
+	viddefContext_t newCtx;
 	vidmode_t vidmode;
 
 	Com_Printf("I: setting mode %d\n", vid_mode->integer);
@@ -650,34 +650,34 @@ qboolean R_SetMode (void)
 	viddef.stretch = vid_stretch->integer;
 
 	/* store old values if new ones will fail */
-	prev = viddef.context;
+	prevCtx = viddef.context;
 
 	/* new values */
-	new = viddef.context;
-	new.mode = vid_mode->integer;
-	new.fullscreen = vid_fullscreen->integer;
-	new.multisample = r_multisample->integer;
-	new.swapinterval = r_swapinterval->integer;
-	if (!VID_GetModeInfo(new.mode, &vidmode)) {
+	newCtx = viddef.context;
+	newCtx.mode = vid_mode->integer;
+	newCtx.fullscreen = vid_fullscreen->integer;
+	newCtx.multisample = r_multisample->integer;
+	newCtx.swapinterval = r_swapinterval->integer;
+	if (!VID_GetModeInfo(newCtx.mode, &vidmode)) {
 		Com_Printf("I: invalid mode\n");
 		Cvar_Set("vid_mode", "-1");
 		return qfalse;
 	}
-	new.width = vidmode.width;
-	new.height = vidmode.height;
-	result = R_InitGraphics(&new);
+	newCtx.width = vidmode.width;
+	newCtx.height = vidmode.height;
+	result = R_InitGraphics(&newCtx);
 	if (!result) {
 		/* failed, revert */
 		Com_Printf("Failed to set video mode %dx%d %s.\n",
-				new.width, new.height,
-				(new.fullscreen ? "fullscreen" : "windowed"));
-		result = R_InitGraphics(&prev);
+				newCtx.width, newCtx.height,
+				(newCtx.fullscreen ? "fullscreen" : "windowed"));
+		result = R_InitGraphics(&prevCtx);
 		if (!result)
 			return qfalse;
-		new = prev;
+		newCtx = prevCtx;
 	}
 
-	R_UpdateVidDef(&new);
+	R_UpdateVidDef(&newCtx);
 	R_ShutdownFBObjects();
 	R_InitFBObjects();
 	UI_InvalidateStack();

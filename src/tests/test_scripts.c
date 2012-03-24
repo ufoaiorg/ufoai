@@ -171,7 +171,7 @@ static void testTeamDefsModelScriptData (void)
 				teamDef->id));
 
 		LIST_Foreach(armourPaths, char const, armourPath) {
-			nametypes_t l;
+			int l;
 
 			for (l = NAME_NEUTRAL; l < NAME_LAST; l++) {
 				linkedList_t *list = teamDef->models[l];

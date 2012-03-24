@@ -86,25 +86,25 @@ static void testScheduler (void)
 {
 	scheduleEvent_t *one, *two, *three, *four, *five, *e;
 
-	three = Schedule_Event(4, NULL, NULL, NULL, "three");
+	three = Schedule_Event(4, NULL, NULL, NULL, NULL);
 	CU_ASSERT_EQUAL_FATAL(three->next, NULL);
 
-	four = Schedule_Event(4, NULL, NULL, NULL, "four");
+	four = Schedule_Event(4, NULL, NULL, NULL, NULL);
 	CU_ASSERT_EQUAL_FATAL(three->next, four);
 	CU_ASSERT_EQUAL_FATAL(four->next, NULL);
 
-	five = Schedule_Event(4, NULL, NULL, NULL, "five");
+	five = Schedule_Event(4, NULL, NULL, NULL, NULL);
 	CU_ASSERT_EQUAL_FATAL(three->next, four);
 	CU_ASSERT_EQUAL_FATAL(four->next, five);
 	CU_ASSERT_EQUAL_FATAL(five->next, NULL);
 
-	one = Schedule_Event(3, NULL, delayCheck, NULL, "one");
+	one = Schedule_Event(3, NULL, delayCheck, NULL, NULL);
 	CU_ASSERT_EQUAL_FATAL(one->next, three);
 	CU_ASSERT_EQUAL_FATAL(three->next, four);
 	CU_ASSERT_EQUAL_FATAL(four->next, five);
 	CU_ASSERT_EQUAL_FATAL(five->next, NULL);
 
-	two = Schedule_Event(3, NULL, NULL, NULL, "two");
+	two = Schedule_Event(3, NULL, NULL, NULL, NULL);
 	CU_ASSERT_EQUAL_FATAL(one->next, two);
 	CU_ASSERT_EQUAL_FATAL(two->next, three);
 	CU_ASSERT_EQUAL_FATAL(three->next, four);
