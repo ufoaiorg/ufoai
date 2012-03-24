@@ -174,13 +174,10 @@ int CountBrushList (bspbrush_t *brushes)
  */
 bspbrush_t *AllocBrush (int numsides)
 {
-	size_t size = sizeof(bspbrush_t);
+	const size_t size = offsetof(bspbrush_t, sides) + sizeof(((bspbrush_t*)0)->sides) * numsides;
 
 	if (threadstate.numthreads == 1)
 		c_active_brushes++;
-
-	if (numsides > 6)
-		size += sizeof(side_t) * (numsides - 6);
 
 	return (bspbrush_t *)Mem_Alloc(size);
 }
@@ -222,9 +219,7 @@ bspbrush_t *CopyBrush (const bspbrush_t *brush)
 {
 	bspbrush_t *newbrush;
 	int i;
-	size_t size = sizeof(bspbrush_t);
-	if (brush->numsides > 6)
-		size += sizeof(side_t) * (brush->numsides - 6);
+	const size_t size = offsetof(bspbrush_t, sides) + sizeof(((bspbrush_t*)0)->sides) * brush->numsides;
 
 	newbrush = AllocBrush(brush->numsides);
 	memcpy(newbrush, brush, size);
