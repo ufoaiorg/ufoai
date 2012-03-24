@@ -89,7 +89,7 @@ int AIR_BaseCountAircraft (const base_t *base)
  * @sa AIR_NewAircraft
  * @sa AIR_UpdateHangarCapForAll
  */
-static int AIR_UpdateHangarCapForOne (const aircraft_t const *aircraftTemplate, base_t *base)
+static int AIR_UpdateHangarCapForOne (const aircraft_t *aircraftTemplate, base_t *base)
 {
 	const baseCapacities_t capType = AIR_GetCapacityByAircraftWeight(aircraftTemplate);
 	const buildingType_t buildingType = B_GetBuildingTypeByCapacity(capType);
@@ -610,7 +610,7 @@ qboolean AIR_AircraftHasEnoughFuel (const aircraft_t *aircraft, const vec2_t des
  * @sa MAP_MapCalcLine
  * @return qtrue if the aircraft can go to the position, qfalse else
  */
-qboolean AIR_AircraftHasEnoughFuelOneWay (const aircraft_t const *aircraft, const vec2_t destination)
+qboolean AIR_AircraftHasEnoughFuelOneWay (const aircraft_t *aircraft, const vec2_t destination)
 {
 	float distance;
 
@@ -821,7 +821,7 @@ aircraft_t* AIR_NewAircraft (base_t *base, const aircraft_t *aircraftTemplate)
  * @brief Returns capacity type needed for an aircraft
  * @param[in] aircraft Aircraft to check
  */
-int AIR_GetCapacityByAircraftWeight (const aircraft_t *aircraft)
+baseCapacities_t AIR_GetCapacityByAircraftWeight (const aircraft_t *aircraft)
 {
 	assert(aircraft);
 	switch (aircraft->size) {
@@ -864,7 +864,7 @@ static int AIR_GetStorageRoom (const aircraft_t *aircraft)
 	return size;
 }
 
-const char *AIR_CheckMoveIntoNewHomebase (const aircraft_t *aircraft, const base_t* base, const int capacity)
+const char *AIR_CheckMoveIntoNewHomebase (const aircraft_t *aircraft, const base_t* base, const baseCapacities_t capacity)
 {
 	if (!B_GetBuildingStatus(base, B_GetBuildingTypeByCapacity(capacity)))
 		return _("No operational hangars at that base.");
@@ -1525,7 +1525,7 @@ void AIR_ParseAircraft (const char *name, const char **text, qboolean assignAirc
 							return;
 						for (i = 0; i < MAX_ACITEMS; i++) {
 							if (Q_streq(token, air_slot_type_strings[i])) {
-								itemType = i;
+								itemType = (aircraftItemType_t)i;
 								switch (itemType) {
 								case AC_ITEM_WEAPON:
 									aircraftTemplate->maxWeapons++;
@@ -1549,13 +1549,14 @@ void AIR_ParseAircraft (const char *name, const char **text, qboolean assignAirc
 							if (Q_streq(token, air_position_strings[i])) {
 								switch (itemType) {
 								case AC_ITEM_WEAPON:
-									aircraftTemplate->weapons[aircraftTemplate->maxWeapons - 1].pos = i;
+									aircraftTemplate->weapons[aircraftTemplate->maxWeapons - 1].pos = (itemPos_t)i;
 									break;
 								case AC_ITEM_ELECTRONICS:
-									aircraftTemplate->electronics[aircraftTemplate->maxElectronics - 1].pos = i;
+									aircraftTemplate->electronics[aircraftTemplate->maxElectronics - 1].pos = (itemPos_t)i;
 									break;
 								default:
 									i = AIR_POSITIONS_MAX;
+									break;
 								}
 								break;
 							}
@@ -2508,7 +2509,7 @@ static qboolean AIR_LoadAircraftXML (xmlNode_t *p, aircraft_t *craft)
 		return qfalse;
 	}
 
-	craft->status = status;
+	craft->status = (aircraftStatus_t)status;
 	craft->fuel = XML_GetInt(p, SAVE_AIRCRAFT_FUEL, 0);
 	craft->damage = XML_GetInt(p, SAVE_AIRCRAFT_DAMAGE, 0);
 	XML_GetPos3(p, SAVE_AIRCRAFT_POS, craft->pos);
@@ -2867,7 +2868,7 @@ int AIR_CalculateHangarStorage (const aircraft_t *aircraftTemplate, const base_t
 	if (!base->founded) {
 		return -1;
 	} else {
-		const int aircraftCapacity = AIR_GetCapacityByAircraftWeight(aircraftTemplate);
+		const baseCapacities_t aircraftCapacity = AIR_GetCapacityByAircraftWeight(aircraftTemplate);
 		/* If this is a small aircraft, we will check space in small hangar.
 		 * If this is a large aircraft, we will check space in big hangar. */
 		const int freespace = CAP_GetFreeCapacity(base, aircraftCapacity) - used;

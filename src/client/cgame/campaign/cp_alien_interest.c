@@ -199,12 +199,12 @@ const char* INT_InterestCategoryToName (interestCategory_t category)
  */
 static void INT_AlienInterestList_f (void)
 {
-	interestCategory_t i;
+	int i;
 
 	Com_Printf("Overall interest: %i\n", ccs.overallInterest);
 	Com_Printf("Individual interest:\n");
 	for (i = INTERESTCATEGORY_NONE; i < INTERESTCATEGORY_MAX; i++)
-		Com_Printf("...%i. %s -- %i\n", i, INT_InterestCategoryToName(i), ccs.interest[i]);
+		Com_Printf("...%i. %s -- %i\n", i, INT_InterestCategoryToName((interestCategory_t)i), ccs.interest[i]);
 }
 
 /**

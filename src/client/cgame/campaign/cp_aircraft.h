@@ -25,6 +25,8 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #ifndef CP_AIRCRAFT_H
 #define CP_AIRCRAFT_H
 
+#include "cp_capacity.h"
+
 #define MAX_CARGO		32
 #define MAX_AIRCRAFT	64
 #define LINE_MAXSEG 64
@@ -293,9 +295,9 @@ int AIR_CountInBaseByTemplate(const struct base_s *base, const aircraft_t *aircr
 const char *AIR_GetAircraftString(aircraftType_t aircraftType);
 
 int AIR_GetAircraftWeaponRanges(const aircraftSlot_t *slot, int maxSlot, float *weaponRanges);
-int AIR_GetCapacityByAircraftWeight(const aircraft_t *aircraft);
+baseCapacities_t AIR_GetCapacityByAircraftWeight(const aircraft_t *aircraft);
 
-const char *AIR_CheckMoveIntoNewHomebase(const aircraft_t *aircraft, const struct base_s* base, const int capacity);
+const char *AIR_CheckMoveIntoNewHomebase(const aircraft_t *aircraft, const struct base_s* base, const baseCapacities_t capacity);
 
 void AII_CollectItem(aircraft_t *aircraft, const objDef_t *item, int amount);
 void AII_CollectingItems(aircraft_t *aircraft, int won);

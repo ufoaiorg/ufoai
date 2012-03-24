@@ -53,7 +53,7 @@ static void B_InitialEquipment(aircraft_t *aircraft, const equipDef_t *ed);
  * @returns a linkedList with neighbouring buildings
  * @note for unfinished building it returns an empty list
  */
-static linkedList_t *B_GetNeighbours (const building_t const *building)
+static linkedList_t *B_GetNeighbours (const building_t *building)
 {
 	linkedList_t *neighbours = NULL;
 	base_t *base;
@@ -795,7 +795,7 @@ void B_ResetAllStatusAndCapacities (base_t *base, qboolean firstEnable)
 qboolean B_BuildingDestroy (building_t* building)
 {
 	const buildingType_t buildingType = building->buildingType;
-	const building_t const *buildingTemplate = building->tpl;
+	const building_t *buildingTemplate = building->tpl;
 	const qboolean runDisableCommand = building->buildingStatus == B_STATUS_WORKING;
 	base_t *base = building->base;
 
@@ -1073,7 +1073,7 @@ static void B_UpdateAllBaseBuildingStatus (building_t* building, buildingStatus_
  * @param[in] hire Hire employees for the building we create from the template
  * @param[in] pos The position on the base grid
  */
-static void B_AddBuildingToBasePos (base_t *base, const building_t const *buildingTemplate, qboolean hire, const vec2_t pos)
+static void B_AddBuildingToBasePos (base_t *base, const building_t *buildingTemplate, qboolean hire, const vec2_t pos)
 {
 	/* new building in base (not a template) */
 	building_t *buildingNew;
