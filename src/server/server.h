@@ -205,7 +205,7 @@ void SV_BroadcastPrintf(int level, const char *fmt, ...) __attribute__((format(p
 
 /* sv_user.c */
 void SV_ExecuteClientMessage(client_t * cl, int cmd, struct dbuffer *msg);
-void SV_SetClientState(client_t* client, int state);
+void SV_SetClientState(client_t* client, client_state_t state);
 
 /* sv_ccmds.c */
 void SV_SetMaster_f(void);

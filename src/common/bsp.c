@@ -697,7 +697,7 @@ static void CMod_LoadLighting (mapTile_t *tile, const byte *base, const lump_t *
 	if (l->filelen == 0)
 		return;
 
-	tile->lightdata = Mem_PoolAlloc(l->filelen, com_cmodelSysPool, 0);
+	tile->lightdata = (byte*)Mem_PoolAlloc(l->filelen, com_cmodelSysPool, 0);
 	memcpy(tile->lightdata, base + l->fileofs, l->filelen);
 }
 

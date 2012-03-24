@@ -199,7 +199,7 @@ qboolean Com_ParseBlockToken(const char *name, const char **text, void *base, co
 void* Com_AlignPtr(const void *memory, valueTypes_t type);
 const char *Com_ValueToStr(const void *base, const valueTypes_t type, const int ofs);
 const char *Com_GetLastParseError(void);
-int Com_ParseValue(void *base, const char *token, valueTypes_t type, int ofs, size_t size, size_t *writtenBytes);
+resultStatus_t Com_ParseValue(void *base, const char *token, valueTypes_t type, int ofs, size_t size, size_t *writtenBytes);
 qboolean Com_ParseBoolean(const char *token);
 
 /*==============================================================

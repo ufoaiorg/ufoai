@@ -469,7 +469,7 @@ void* Com_AlignPtr (const void *memory, valueTypes_t type)
  * @note instead of , this function separate error message and write byte result
  * @todo This function has much in common with Com_SetValue. Refactor them !
  */
-int Com_ParseValue (void *base, const char *token, valueTypes_t type, int ofs, size_t size, size_t *writtenBytes)
+resultStatus_t Com_ParseValue (void *base, const char *token, valueTypes_t type, int ofs, size_t size, size_t *writtenBytes)
 {
 	byte *b;
 	int x, y, w, h;
@@ -730,7 +730,7 @@ int Com_ParseValue (void *base, const char *token, valueTypes_t type, int ofs, s
 			snprintf(parseErrorMessage, sizeof(parseErrorMessage), "Illegal align token '%s'", token);
 			return RESULT_ERROR;
 		}
-		*(align_t *)b = num;
+		*(align_t *)b = (align_t)num;
 		*writtenBytes = sizeof(align_t);
 		break;
 
@@ -742,7 +742,7 @@ int Com_ParseValue (void *base, const char *token, valueTypes_t type, int ofs, s
 			snprintf(parseErrorMessage, sizeof(parseErrorMessage), "Illegal blend token '%s'", token);
 			return RESULT_ERROR;
 		}
-		*(blend_t *)b = num;
+		*(blend_t *)b = (blend_t)num;
 		*writtenBytes = sizeof(blend_t);
 		break;
 
@@ -754,7 +754,7 @@ int Com_ParseValue (void *base, const char *token, valueTypes_t type, int ofs, s
 			snprintf(parseErrorMessage, sizeof(parseErrorMessage), "Illegal style token '%s'", token);
 			return RESULT_ERROR;
 		}
-		*(style_t *)b = num;
+		*(style_t *)b = (style_t)num;
 		*writtenBytes = sizeof(style_t);
 		break;
 
@@ -766,7 +766,7 @@ int Com_ParseValue (void *base, const char *token, valueTypes_t type, int ofs, s
 			snprintf(parseErrorMessage, sizeof(parseErrorMessage), "Illegal fade token '%s'", token);
 			return RESULT_ERROR;
 		}
-		*(fade_t *)b = num;
+		*(fade_t *)b = (fade_t)num;
 		*writtenBytes = sizeof(fade_t);
 		break;
 
@@ -1839,7 +1839,7 @@ static void Com_ParseItem (const char *name, const char **text)
 				/* Check which type it is and store the correct one.*/
 				for (i = 0; i < MAX_ACITEMS; i++) {
 					if (Q_streq(token, air_slot_type_strings[i])) {
-						od->craftitem.type = i;
+						od->craftitem.type = (aircraftItemType_t)i;
 						break;
 					}
 				}
