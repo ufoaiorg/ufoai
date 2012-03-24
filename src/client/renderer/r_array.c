@@ -157,12 +157,12 @@ void R_SetArrayState (const mBspModel_t *bsp)
 
 	/* try to save some binds */
 	if (r_array_state.bspmodel == bsp) {
-		const int xor = r_array_state.arrays ^ arrays;
-		if (!xor)  /* no changes, we're done */
+		const int xorR = r_array_state.arrays ^ arrays;
+		if (!xorR)  /* no changes, we're done */
 			return;
 
 		/* resolve what's left to turn on */
-		mask = arrays & xor;
+		mask = arrays & xorR;
 	}
 
 	if (r_vertexbuffers->integer && qglGenBuffers)  /* use vbo */

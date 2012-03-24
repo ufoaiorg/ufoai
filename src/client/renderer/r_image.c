@@ -506,7 +506,7 @@ image_t* R_RenderToTexture (const char *name, int x, int y, int w, int h)
 		if (dimensionDiffer) {
 			R_DeleteImage(img);
 		}
-		byte* buf = Mem_PoolAlloc(w * h * 4, vid_imagePool, 0);
+		byte* buf = (byte*) Mem_PoolAlloc(w * h * 4, vid_imagePool, 0);
 		img = R_LoadImageData(name, buf, w, h, it_effect);
 		Mem_Free(buf);
 	}

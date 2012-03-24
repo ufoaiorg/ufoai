@@ -427,8 +427,8 @@ static void R_RenderBspRRefs (drawSurfaceFunc drawFunc, surfaceArrayType_t surfT
 {
 	int i;
 	for (i = 0; i < numBspRRefs; i++) {
-		const bspRenderRef_t const *bspRR = &bspRRefs[i];
-		const mBspModel_t const *bsp = bspRR->bsp;
+		const bspRenderRef_t *const bspRR = &bspRRefs[i];
+		const mBspModel_t *const bsp = bspRR->bsp;
 
 		if (!bsp->sorted_surfaces[surfType]->count)
 			continue;

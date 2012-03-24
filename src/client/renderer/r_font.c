@@ -696,7 +696,7 @@ int R_FontDrawString (const char *fontId, align_t align, int x, int y, int absX,
 	const font_t *font = R_GetFont(fontId);
 	const wrapCache_t *wrap;
 	int i;
-	const align_t horizontalAlign = align % 3; /* left, center, right */
+	const align_t horizontalAlign = (align_t)(align % 3); /* left, center, right */
 	int xalign = 0;
 
 	wrap = R_FontWrapText(font, c, maxWidth - (x - absX), method);
