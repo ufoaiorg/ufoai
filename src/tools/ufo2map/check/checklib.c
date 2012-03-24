@@ -48,7 +48,7 @@ void Check_Printf (verbosityLevel_t msgVerbLevel, qboolean change,
 							int entnum, int brushnum, const char *format, ...)
 {
 	static int skippingCheckLine = 0;
-	static int lastMsgVerbLevel = VERB_NORMAL;
+	static verbosityLevel_t lastMsgVerbLevel = VERB_NORMAL;
 	static qboolean firstSuccessfulPrint = qtrue;
 	static qboolean startOfLine = qtrue;
 	const qboolean containsNewline = strchr(format, '\n') != NULL;
