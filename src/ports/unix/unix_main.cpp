@@ -163,7 +163,7 @@ static int find_matching_file (struct dl_phdr_info *info, size_t size, void *dat
 	typedef ElfW(Addr) Elf_Addr;
 #endif
 
-	struct file_match *match = data;
+	struct file_match *match = (file_match*)data;
 	/* This code is modeled from Gfind_proc_info-lsb.c:callback() from libunwind */
 	long n;
 	Elf_Addr const  load_base = info->dlpi_addr;
@@ -184,7 +184,7 @@ static int find_matching_file (struct dl_phdr_info *info, size_t size, void *dat
 static void _backtrace (FILE *crash, void * const *buffer, int size)
 {
 	int x;
-	struct bfd_set *set = calloc(1, sizeof(*set));
+	struct bfd_set *set = (bfd_set*)calloc(1, sizeof(*set));
 	struct output_buffer ob;
 	struct bfd_ctx *bc = NULL;
 
@@ -193,7 +193,7 @@ static void _backtrace (FILE *crash, void * const *buffer, int size)
 	bfd_init();
 
 	for (x = 0; x < size; x++) {
-		struct file_match match = {.address = buffer[x]};
+		struct file_match match = {buffer[x]};
 		unsigned long addr;
 		const char * file = NULL;
 		const char * func = NULL;
