@@ -1128,10 +1128,10 @@ extern int ZEXPORT unzOpenCurrentFile3 (file, method, level, raw, password)
     if ((s->cur_file_info.compression_method==Z_DEFLATED) &&
         (!raw))
     {
-      pfile_in_zip_read_info->stream.zalloc = (alloc_func)0;
-      pfile_in_zip_read_info->stream.zfree = (free_func)0;
-      pfile_in_zip_read_info->stream.opaque = (voidpf)0;
-      pfile_in_zip_read_info->stream.next_in = (voidpf)0;
+      pfile_in_zip_read_info->stream.zalloc   = 0;
+      pfile_in_zip_read_info->stream.zfree    = 0;
+      pfile_in_zip_read_info->stream.opaque   = 0;
+      pfile_in_zip_read_info->stream.next_in  = 0;
       pfile_in_zip_read_info->stream.avail_in = 0;
 
       err=inflateInit2(&pfile_in_zip_read_info->stream, -MAX_WBITS);
