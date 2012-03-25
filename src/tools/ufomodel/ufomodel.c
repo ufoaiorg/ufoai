@@ -30,6 +30,8 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #include "../../common/qfiles.h"
 #include "../../shared/typedefs.h"
 #include "../../common/mem.h"
+#define QGL_EXTERN
+#include "../../client/renderer/r_gl.h"
 #include "../../client/renderer/r_material.h"
 #include "../../client/renderer/r_image.h"
 #include "../../client/renderer/r_model.h"

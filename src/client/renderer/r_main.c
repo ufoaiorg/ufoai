@@ -22,6 +22,8 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 
 */
 
+#define QGL_EXTERN
+#include "r_gl.h"
 #include "r_local.h"
 #include "r_program.h"
 #include "r_sphere.h"
