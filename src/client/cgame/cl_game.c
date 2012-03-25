@@ -299,7 +299,7 @@ static void GAME_UI_Popup (const char *title, const char *format, ...)
 	UI_Popup(title, popupText);
 }
 
-static void* GAME_StrDup (const char *string)
+static char* GAME_StrDup (const char *string)
 {
 	return Mem_PoolStrDup(string, cl_genericPool, 0);
 }

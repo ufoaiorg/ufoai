@@ -125,7 +125,7 @@ typedef struct cgame_import_s {
 	void (IMPORT *GAME_SwitchCurrentSelectedMap) (int step);
 	const mapDef_t* (IMPORT *GAME_GetCurrentSelectedMap) (void);
 	int (IMPORT *GAME_GetCurrentTeam) (void);
-	void* (IMPORT *GAME_StrDup) (const char *string);
+	char* (IMPORT *GAME_StrDup) (const char *string);
 	void (IMPORT *GAME_AutoTeam) (const char *equipmentDefinitionID, int teamMembers);
 	const equipDef_t *(IMPORT *GAME_ChangeEquip) (const linkedList_t *equipmentList, changeEquipType_t changeType, const char *equipID);
 	size_t (IMPORT *GAME_GetCharacterArraySize) (void);

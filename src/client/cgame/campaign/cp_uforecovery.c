@@ -359,7 +359,7 @@ qboolean US_LoadXML (xmlNode_t *p)
 			Com_Printf("Invalid storedUFOStatus '%s'\n", id);
 			continue;
 		}
-		ufo.status = statusIDX;
+		ufo.status = (storedUFOStatus_t)statusIDX;
 		/* ufo->installation */
 		ufo.installation = INS_GetByIDX(XML_GetInt(snode, SAVE_UFORECOVERY_INSTALLATIONIDX, -1));
 		if (!ufo.installation) {

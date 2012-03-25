@@ -205,7 +205,7 @@ static transferType_t TR_GetTransferType (const char *id)
 	int i;
 	for (i = 0; i < TRANS_TYPE_MAX; i++) {
 		if (Q_streq(transferTypeIDs[i], id))
-			return i;
+			return (transferType_t)i;
 	}
 	return TRANS_TYPE_INVALID;
 }
@@ -274,13 +274,13 @@ static int TR_CheckItem (const objDef_t *od, const base_t *destbase, int amount)
 static qboolean TR_CheckEmployee (const employee_t *employee, const base_t *destbase)
 {
 	int intransfer = 0;
-	employeeType_t emplType;
+	int i;
 
 	assert(employee && destbase);
 
 	/* Count amount of all employees already on the transfer list. */
-	for (emplType = EMPL_SOLDIER; emplType < MAX_EMPL; emplType++) {
-		intransfer += LIST_Count(td.trEmployeesTmp[emplType]);
+	for (i = EMPL_SOLDIER; i < MAX_EMPL; i++) {
+		intransfer += LIST_Count(td.trEmployeesTmp[i]);
 	}
 
 	/* Does the destination base has enough space in living quarters? */
@@ -393,7 +393,7 @@ static qboolean TR_CheckAircraft (const aircraft_t *aircraft, const base_t *dest
 static void TR_CargoList (void)
 {
 	int i = 0;
-	employeeType_t emplType;
+	int emplType;
 	linkedList_t *cargoList = NULL;
 	linkedList_t *cargoListAmount = NULL;
 	char str[128];
@@ -448,7 +448,7 @@ static void TR_CargoList (void)
 			if (!emplCount)
 				break;
 
-			LIST_AddString(&cargoList, E_GetEmployeeString(emplType, emplCount));
+			LIST_AddString(&cargoList, E_GetEmployeeString((employeeType_t)emplType, emplCount));
 			LIST_AddString(&cargoListAmount, va("%i", emplCount));
 			td.cargo[td.trCargoCountTmp].type = CARGO_TYPE_EMPLOYEE;
 			td.trCargoCountTmp++;
@@ -568,9 +568,10 @@ static int TR_FillEmployees (const base_t *srcbase, const base_t *destbase, link
 	int cnt = 0;
 
 	if (B_GetBuildingStatus(destbase, B_QUARTERS)) {
-		employeeType_t emplType;
+		int i;
 
-		for (emplType = EMPL_SOLDIER; emplType < MAX_EMPL; emplType++) {
+		for (i = EMPL_SOLDIER; i < MAX_EMPL; i++) {
+			const employeeType_t emplType = (employeeType_t)i;
 			switch (emplType) {
 			case EMPL_SOLDIER:
 			case EMPL_PILOT: {
@@ -749,7 +750,7 @@ static void TR_TransferSelect (const base_t *srcbase, const base_t *destbase, tr
  */
 static void TR_TransferSelect_f (void)
 {
-	int type;
+	transferType_t type;
 	const base_t *base = B_GetCurrentSelectedBase();
 
 	if (!td.transferBase || !base)
@@ -905,9 +906,10 @@ static void TR_AddItemToTransferList (base_t *base, transferData_t *td, int num,
 static void TR_AddEmployeeToTransferList (base_t *base, transferData_t *transferData, int num)
 {
 	int cnt = 0;
-	employeeType_t emplType;
+	int i;
 
-	for (emplType = EMPL_SOLDIER; emplType < MAX_EMPL; emplType++) {
+	for (i = EMPL_SOLDIER; i < MAX_EMPL; i++) {
+		const employeeType_t emplType = (employeeType_t)i;
 		switch (emplType) {
 		case EMPL_SOLDIER:
 		case EMPL_PILOT:
@@ -1192,13 +1194,13 @@ static void TR_RemoveEmployeeFromCargoList (base_t *base, transferData_t *transf
 {
 	int cnt = 0, entries = 0, i;
 	qboolean removed = qfalse;
-	employeeType_t emplType;
 
 	for (i = 0; i < MAX_CARGO; i++) {
 		/* Count previous types on the list. */
 		switch (transferData->cargo[i].type) {
 		case CARGO_TYPE_ITEM:
 			entries++;
+			break;
 		default:
 			break;
 		}
@@ -1207,11 +1209,12 @@ static void TR_RemoveEmployeeFromCargoList (base_t *base, transferData_t *transf
 	cnt = entries;
 	Com_DPrintf(DEBUG_CLIENT, "TR_CargoListSelect_f: cnt: %i, num: %i\n", cnt, num);
 
-	for (emplType = EMPL_SOLDIER; emplType < MAX_EMPL; emplType++) {
+	for (i = EMPL_SOLDIER; i < MAX_EMPL; i++) {
+		const employeeType_t emplType = (employeeType_t)i;
 		switch (emplType) {
 		case EMPL_SOLDIER:
 		case EMPL_PILOT: {
-			employee_t *employee = LIST_GetByIdx(td.trEmployeesTmp[emplType], num - cnt);
+			employee_t *employee = (employee_t*)LIST_GetByIdx(td.trEmployeesTmp[emplType], num - cnt);
 
 			if (employee) {
 				removed = LIST_Remove(&td.trEmployeesTmp[emplType], (void*) employee);
@@ -1385,11 +1388,13 @@ static void TR_CargoListSelect_f (void)
 static void TR_Init_f (void)
 {
 	base_t *base = B_GetCurrentSelectedBase();
-	employeeType_t emplType;
+	int i;
 
 	/* Clear employees temp lists. */
-	for (emplType = EMPL_SOLDIER; emplType < MAX_EMPL; emplType++)
+	for (i = EMPL_SOLDIER; i < MAX_EMPL; i++) {
+		const employeeType_t emplType = (employeeType_t)i;
 		LIST_Delete(&td.trEmployeesTmp[emplType]);
+	}
 	/* Clear aircraft temp list. */
 	LIST_Delete(&td.aircraft);
 
@@ -1427,7 +1432,7 @@ static void TR_Init_f (void)
 static void TR_TransferClose_f (void)
 {
 	base_t *base = B_GetCurrentSelectedBase();
-	employeeType_t emplType;
+	int i;
 
 	if (!base)
 		return;
@@ -1438,8 +1443,10 @@ static void TR_TransferClose_f (void)
 	/* Clear temporary cargo arrays. */
 	OBJZERO(td.trItemsTmp);
 	OBJZERO(td.trAliensTmp);
-	for (emplType = EMPL_SOLDIER; emplType < MAX_EMPL; emplType++)
+	for (i = EMPL_SOLDIER; i < MAX_EMPL; i++) {
+		const employeeType_t emplType = (employeeType_t)i;
 		LIST_Delete(&td.trEmployeesTmp[emplType]);
+	}
 	LIST_Delete(&td.aircraft);
 }
 
@@ -1523,10 +1530,10 @@ static void TR_List_f (void)
 		}
 		/* Employee */
 		if (transfer->hasEmployees) {
-			employeeType_t emplType;
-
+			int j;
 			UI_ExecuteConfunc("tr_listaddcargo %d \"%s\" \"%s\" \"%s\"", i, "tr_cargo", "employee", _("Employee"));
-			for (emplType = EMPL_SOLDIER; emplType < MAX_EMPL; emplType++) {
+			for (j = EMPL_SOLDIER; j < MAX_EMPL; j++) {
+				const employeeType_t emplType = (employeeType_t)j;
 				TR_ForeachEmployee(employee, transfer, emplType) {
 					if (employee->ugv) {
 						/** @todo: add ugv listing when they're implemented */
@@ -1584,12 +1591,13 @@ void TR_InitCallbacks (void)
 
 void TR_ShutdownCallbacks (void)
 {
-	employeeType_t emplType;
+	int i;
 
 	LIST_Delete(&td.aircraft);
 
-	for (emplType = EMPL_SOLDIER; emplType < MAX_EMPL; emplType++)
-		LIST_Delete(&td.trEmployeesTmp[emplType]);
+	for (i = EMPL_SOLDIER; i < MAX_EMPL; i++) {
+		LIST_Delete(&td.trEmployeesTmp[i]);
+	}
 
 	Cmd_RemoveCommand("trans_list");
 	Cmd_RemoveCommand("trans_init");

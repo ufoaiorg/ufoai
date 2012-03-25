@@ -158,7 +158,7 @@ static void MSO_Toggle_f (void)
 		const msgCategoryEntry_t *selectedEntry;
 		int optionType;
 		qboolean activate;
-		notify_t type;
+		int type;
 		uiNode_t *messageSetting = UI_GetOption(TEXT_MESSAGEOPTIONS);
 
 		UI_InitOptionIteratorAtIndex(messageList_scroll + listIndex, messageSetting, &iterator);
@@ -192,7 +192,7 @@ static void MSO_Toggle_f (void)
 			optionType = MSO_SOUND;
 			activate = !selectedEntry->settings->doSound;
 		}
-		MSO_Set(listIndex, type, optionType, activate, qtrue);
+		MSO_Set(listIndex, (notify_t)type, optionType, activate, qtrue);
 	}
 }
 

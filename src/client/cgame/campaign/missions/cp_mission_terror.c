@@ -129,7 +129,7 @@ static void CP_TerrorMissionGo (mission_t *mission)
 
 	/* Choose a map */
 	for (counter = 0; counter < MAX_POS_LOOP; counter++) {
-		const city_t const *city = CP_ChooseCity();
+		const city_t *city = CP_ChooseCity();
 
 		if (!city)
 			continue;
@@ -171,7 +171,7 @@ static void CP_TerrorMissionGo (mission_t *mission)
  * @note Terror attack mission -- Stage 0
  * @return number of elements written in @c ufoTypes
  */
-int CP_TerrorMissionAvailableUFOs (const mission_t const *mission, ufoType_t *ufoTypes)
+int CP_TerrorMissionAvailableUFOs (const mission_t *mission, ufoType_t *ufoTypes)
 {
 	int num = 0;
 

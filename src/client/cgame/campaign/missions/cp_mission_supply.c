@@ -145,7 +145,7 @@ static void CP_SupplyGoToBase (mission_t *mission)
  */
 static void CP_SupplyMissionCreate (mission_t *mission)
 {
-	int ufoType;
+	ufoType_t ufoType;
 
 	mission->stage = STAGE_COME_FROM_ORBIT;
 

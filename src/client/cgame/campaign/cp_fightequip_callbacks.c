@@ -29,7 +29,7 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #include "cp_mapfightequip.h"
 #include "cp_ufo.h"
 
-static int airequipID = -1;				/**< value of aircraftItemType_t that defines what item we are installing. */
+static aircraftItemType_t airequipID = MAX_ACITEMS;				/**< value of aircraftItemType_t that defines what item we are installing. */
 
 static int airequipSelectedZone = ZONE_NONE;		/**< Selected zone in equip menu */
 static int airequipSelectedSlot = ZONE_NONE;			/**< Selected slot in equip menu */
@@ -48,6 +48,7 @@ static void AIM_CheckAirequipID (void)
 		return;
 	default:
 		airequipID = AC_ITEM_WEAPON;
+		break;
 	}
 }
 
@@ -71,6 +72,8 @@ static void AIM_CheckAirequipSelectedSlot (const aircraft_t *aircraft)
 			airequipSelectedSlot = 0;
 			return;
 		}
+		break;
+	default:
 		break;
 	}
 }
@@ -232,7 +235,7 @@ static void AIM_UpdateAircraftItemList (const aircraftSlot_t *slot)
  */
 static void AIM_DrawAircraftSlots (const aircraft_t *aircraft)
 {
-	itemPos_t i;
+	int i;
 
 	/* initialise model cvars */
 	for (i = 0; i < AIR_POSITIONS_MAX; i++)
@@ -567,13 +570,13 @@ static void AIM_UpdateItemDescription (qboolean fromList, qboolean fromSlot)
 static void AIM_AircraftEquipMenuUpdate_f (void)
 {
 	if (Cmd_Argc() != 2) {
-		if (airequipID == -1) {
+		if (airequipID == MAX_ACITEMS) {
 			Com_Printf("Usage: %s <num>\n", Cmd_Argv(0));
 			return;
 		}
 		AIM_CheckAirequipID();
 	} else {
-		const int type = atoi(Cmd_Argv(1));
+		const aircraftItemType_t type = (aircraftItemType_t)atoi(Cmd_Argv(1));
 		switch (type) {
 		case AC_ITEM_ELECTRONICS:
 		case AC_ITEM_SHIELD:
@@ -617,7 +620,8 @@ static void AIM_AircraftEquipSlotSelect_f (void)
 	aircraft = base->aircraftCurrent;
 	assert(aircraft);
 
-	pos = atoi(Cmd_Argv(1));
+	i = atoi(Cmd_Argv(1));
+	pos = (itemPos_t)i;
 
 	if (Cmd_Argc() == 3) {
 		if (Q_streq(Cmd_Argv(2), "zone1")) {
@@ -656,6 +660,7 @@ static void AIM_AircraftEquipSlotSelect_f (void)
 		break;
 	default:
 		Com_Printf("AIM_AircraftEquipSlotSelect_f : only weapons and electronics have several slots\n");
+		break;
 	}
 
 	/* Update menu after changing slot */
@@ -734,7 +739,7 @@ static void AIM_AircraftEquipAddItem_f (void)
 	aircraft_t *aircraft = NULL;
 	base_t *base = B_GetCurrentSelectedBase();
 
-	zone = (airequipID == AC_ITEM_AMMO)?2:1;
+	zone = (airequipID == AC_ITEM_AMMO) ? 2 : 1;
 
 	/* proceed only if an item has been selected */
 	if (!aimSelectedTechnology)
@@ -818,7 +823,7 @@ static void AIM_AircraftEquipRemoveItem_f (void)
 	aircraft_t *aircraft = NULL;
 	base_t *base = B_GetCurrentSelectedBase();
 
-	zone = (airequipID == AC_ITEM_AMMO)?2:1;
+	zone = (airequipID == AC_ITEM_AMMO) ? 2 : 1;
 
 	assert(base);
 	aircraft = base->aircraftCurrent;
@@ -897,7 +902,7 @@ static void AIM_AircraftEquipMenuClick_f (void)
  */
 static void AIM_AircraftItemtypeByName_f (void)
 {
-	int i;
+	aircraftItemType_t i;
 	const char *name;
 
 	if (Cmd_Argc() != 2) {

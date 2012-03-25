@@ -213,7 +213,7 @@ static void UFO_SetRandomPos (aircraft_t* ufocraft)
  * @param[in] base Pointer to the base
  * @return 0 if ufo is not a target, 1 if target of a missile, 2 if target of a laser
  */
-static int UFO_IsTargetOfBase (const aircraft_t const *ufo, const base_t const *base)
+static int UFO_IsTargetOfBase (const aircraft_t *ufo, const base_t *base)
 {
 	int i;
 
@@ -236,7 +236,7 @@ static int UFO_IsTargetOfBase (const aircraft_t const *ufo, const base_t const *
  * @param[in] installation Pointer to the installation
  * @return UFO_IS_NO_TARGET if ufo is not a target, UFO_IS_TARGET_OF_MISSILE if target of a missile
  */
-static int UFO_IsTargetOfInstallation (const aircraft_t const *ufo, const installation_t const *installation)
+static int UFO_IsTargetOfInstallation (const aircraft_t *ufo, const installation_t *installation)
 {
 	int i;
 
@@ -259,7 +259,7 @@ static int UFO_IsTargetOfInstallation (const aircraft_t const *ufo, const instal
  * @sa UFO_UpdateAlienInterestForAllBases
  * @sa AB_UpdateStealthForOneBase
  */
-static void UFO_UpdateAlienInterestForOneBase (const aircraft_t const *ufo, base_t *base)
+static void UFO_UpdateAlienInterestForOneBase (const aircraft_t *ufo, base_t *base)
 {
 	float probability;
 	float distance;
@@ -301,7 +301,7 @@ static void UFO_UpdateAlienInterestForOneBase (const aircraft_t const *ufo, base
  * @param[in] installation Pointer to the installation
  * @sa UFO_UpdateAlienInterestForOneBase
  */
-static void UFO_UpdateAlienInterestForOneInstallation (const aircraft_t const *ufo, installation_t *installation)
+static void UFO_UpdateAlienInterestForOneInstallation (const aircraft_t *ufo, installation_t *installation)
 {
 	float probability;
 	float distance;

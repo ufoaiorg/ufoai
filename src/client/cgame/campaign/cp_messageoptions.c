@@ -116,7 +116,7 @@ static void MSO_Set_f (void)
 	if (Cmd_Argc() != 4)
 		Com_Printf("Usage: %s <messagetypename> <pause|notify|sound> <0|1>\n", Cmd_Argv(0));
 	else {
-		notify_t type;
+		int type;
 		int optionsType;
 		const char *messagetype = Cmd_Argv(1);
 
@@ -139,7 +139,7 @@ static void MSO_Set_f (void)
 			Com_Printf("Unrecognized optionstype during set '%s' ignored\n", Cmd_Argv(2));
 			return;
 		}
-		MSO_Set(0, type, optionsType, atoi(Cmd_Argv(3)), qfalse);
+		MSO_Set(0, (notify_t)type, optionsType, atoi(Cmd_Argv(3)), qfalse);
 	}
 }
 
@@ -154,7 +154,7 @@ static void MSO_SetAll_f(void)
 		Com_Printf("Usage: %s <pause|notify|sound> <0|1>\n", Cmd_Argv(0));
 	else {
 		int optionsType;
-		notify_t type;
+		int type;
 		qboolean activate = atoi(Cmd_Argv(2));
 		if (Q_streq(Cmd_Argv(1), "pause"))
 			optionsType = MSO_PAUSE;
@@ -168,7 +168,7 @@ static void MSO_SetAll_f(void)
 		}
 		/* update settings for chosen type */
 		for (type = 0; type < NT_NUM_NOTIFYTYPE; type ++) {
-			MSO_Set(0, type, optionsType, activate, qfalse);
+			MSO_Set(0, (notify_t)type, optionsType, activate, qfalse);
 		}
 		/* reinit menu */
 		MSO_SetMenuState(MSO_MSTATE_PREPARED,qtrue,qtrue);
@@ -205,7 +205,7 @@ message_t *MSO_CheckAddNewMessage (const notify_t messagecategory, const char *t
  */
 qboolean MSO_SaveXML (xmlNode_t *p)
 {
-	notify_t type;
+	int type;
 	xmlNode_t *n = XML_AddNode(p, SAVE_MESSAGEOPTIONS_MESSAGEOPTIONS);
 
 	/* save positive values */
@@ -238,7 +238,7 @@ qboolean MSO_LoadXML (xmlNode_t *p)
 
 	for (s = XML_GetNode(n, SAVE_MESSAGEOPTIONS_TYPE); s; s = XML_GetNextNode(s,n, SAVE_MESSAGEOPTIONS_TYPE)) {
 		const char *messagetype = XML_GetString(s, SAVE_MESSAGEOPTIONS_NAME);
-		notify_t type;
+		int type;
 
 		for (type = 0; type < NT_NUM_NOTIFYTYPE; type++) {
 			if (Q_streq(nt_strings[type], messagetype))
@@ -250,9 +250,9 @@ qboolean MSO_LoadXML (xmlNode_t *p)
 			Com_Printf("Unrecognized messagetype '%s' ignored while loading\n", messagetype);
 			continue;
 		}
-		MSO_Set(0, type, MSO_NOTIFY, XML_GetBool(s, SAVE_MESSAGEOPTIONS_NOTIFY, qfalse), qfalse);
-		MSO_Set(0, type, MSO_PAUSE, XML_GetBool(s, SAVE_MESSAGEOPTIONS_PAUSE, qfalse), qfalse);
-		MSO_Set(0, type, MSO_SOUND, XML_GetBool(s, SAVE_MESSAGEOPTIONS_SOUND, qfalse), qfalse);
+		MSO_Set(0, (notify_t)type, MSO_NOTIFY, XML_GetBool(s, SAVE_MESSAGEOPTIONS_NOTIFY, qfalse), qfalse);
+		MSO_Set(0, (notify_t)type, MSO_PAUSE, XML_GetBool(s, SAVE_MESSAGEOPTIONS_PAUSE, qfalse), qfalse);
+		MSO_Set(0, (notify_t)type, MSO_SOUND, XML_GetBool(s, SAVE_MESSAGEOPTIONS_SOUND, qfalse), qfalse);
 	}
 
 	MSO_SetMenuState(MSO_MSTATE_REINIT,qfalse, qfalse);
