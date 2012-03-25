@@ -6,7 +6,7 @@ ifeq ($($(TARGET)_STATIC),1)
 $(TARGET)_LDFLAGS  += -static
 endif
 
-$(TARGET)_LINKER   := $(CC)
+$(TARGET)_LINKER   := $(CXX)
 $(TARGET)_FILE     := $(TARGET)$(EXE_EXT)
 $(TARGET)_LDFLAGS  += -lm
 $(TARGET)_CFLAGS   += -DCOMPILE_UFO $(SDL_CFLAGS) $(SDL_IMAGE_CFLAGS) $(MXML_CFLAGS)
