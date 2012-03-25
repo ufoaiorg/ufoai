@@ -31,17 +31,7 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 mBspSurfaces_t r_material_surfaces;
 
 /** @todo load this from file, will make tweaking the game much easier */
-material_t defaultMaterial = {
-	.flags = 0,
-	.time = 0.0f,
-	.bump = DEFAULT_BUMP,
-	.parallax = DEFAULT_PARALLAX,
-	.hardness = DEFAULT_HARDNESS,
-	.specular = DEFAULT_SPECULAR,
-	.glowscale = DEFAULT_GLOWSCALE,
-	.stages = NULL,
-	.num_stages = 0
-};
+material_t defaultMaterial = {0, 0.0f, DEFAULT_BUMP, DEFAULT_PARALLAX, DEFAULT_HARDNESS, DEFAULT_SPECULAR, DEFAULT_GLOWSCALE, NULL, 0};
 
 #define UPDATE_THRESHOLD 0.02
 /**
