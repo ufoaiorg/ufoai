@@ -73,7 +73,6 @@
 			<Add option="-D__GNUWIN32__" />
 			<Add option="-DWINVER=0x501" />
 			<Add option="-DCOMPILE_MAP" />
-			<Add option="-D__GNUC_STDC_INLINE__" />
 		</Compiler>
 		<Linker>
 			<Add library="SDL" />
