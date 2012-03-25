@@ -212,10 +212,10 @@ static void UI_TextNodeDrawText (uiNode_t* node, const linkedList_t* list, qbool
 		} else {
 			if (noDraw) {
 				int lines = 0;
-				R_FontTextSize (font, cur, width, EXTRADATA(node).super.longlines, NULL, NULL, &lines, NULL);
+				R_FontTextSize (font, cur, width, (longlines_t)EXTRADATA(node).super.longlines, NULL, NULL, &lines, NULL);
 				fullSizeY += lines;
 			} else
-				UI_DrawString(font, node->contentAlign, x1, y, x, width, EXTRADATA(node).super.lineHeight, cur, viewSizeY, EXTRADATA(node).super.super.scrollY.viewPos, &fullSizeY, qtrue, EXTRADATA(node).super.longlines);
+				UI_DrawString(font, (align_t)node->contentAlign, x1, y, x, width, EXTRADATA(node).super.lineHeight, cur, viewSizeY, EXTRADATA(node).super.super.scrollY.viewPos, &fullSizeY, qtrue, (longlines_t)EXTRADATA(node).super.longlines);
 		}
 
 		list = list->next;

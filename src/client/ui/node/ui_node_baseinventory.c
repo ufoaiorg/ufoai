@@ -166,7 +166,7 @@ static void UI_ContainerItemIteratorInit (containerItemIterator_t *iterator, con
 	iterator->itemID = -1;
 	iterator->groupID = 0;
 	iterator->node = node;
-	iterator->filterEquipType = EXTRADATACONST(node).filterEquipType;
+	iterator->filterEquipType = (itemFilterTypes_t) EXTRADATACONST(node).filterEquipType;
 
 	if (EXTRADATACONST(node).displayAvailableOnTop) {
 		/* available items */
@@ -354,7 +354,7 @@ static int UI_BaseInventoryNodeDrawItems (uiNode_t *node, const objDef_t *highli
 		UI_DrawString("f_verysmall", ALIGN_LC,
 			pos[0] + obj->sx * C_UNIT / 2.0, pos[1] + obj->sy * C_UNIT / 2.0,
 			pos[0] + obj->sx * C_UNIT / 2.0, cellWidth - 5, /* maxWidth */
-			0, va("x%i", amount), 0, 0, NULL, qfalse, 0);
+			0, va("x%i", amount), 0, 0, NULL, qfalse, LONGLINES_WRAP);
 		pos[0] -= obj->sx * C_UNIT / 2.0;
 		pos[1] += obj->sy * C_UNIT / 2.0;
 		cellHeight += obj->sy * C_UNIT;
@@ -381,7 +381,7 @@ static int UI_BaseInventoryNodeDrawItems (uiNode_t *node, const objDef_t *highli
 					continue;
 
 				/* find and skip none existing ammo */
-				icItem = UI_ContainerNodeGetExistingItem(node, tempItem.t, EXTRADATA(node).filterEquipType);
+				icItem = UI_ContainerNodeGetExistingItem(node, tempItem.t, (itemFilterTypes_t) EXTRADATA(node).filterEquipType);
 				if (!icItem)
 					continue;
 
@@ -392,7 +392,7 @@ static int UI_BaseInventoryNodeDrawItems (uiNode_t *node, const objDef_t *highli
 				UI_DrawString("f_verysmall", ALIGN_LC,
 					ammopos[0] + icItem->item.t->sx * C_UNIT / 2.0, ammopos[1] + icItem->item.t->sy * C_UNIT / 2.0,
 					ammopos[0] + icItem->item.t->sx * C_UNIT / 2.0, cellWidth - 5 - ammopos[0],	/* maxWidth */
-					0, va("x%i", icItem->item.amount), 0, 0, NULL, qfalse, 0);
+					0, va("x%i", icItem->item.amount), 0, 0, NULL, qfalse, LONGLINES_WRAP);
 				ammopos[0] += icItem->item.t->sx * C_UNIT / 2.0;
 				ammopos[1] += icItem->item.t->sy * C_UNIT / 2.0;
 			}
@@ -579,7 +579,7 @@ static invList_t *UI_BaseInventoryNodeGetItem (const uiNode_t* const node, int m
 					continue;
 
 				/* find and skip none existing ammo */
-				icItem = UI_ContainerNodeGetExistingItem(node, objammo, EXTRADATACONST(node).filterEquipType);
+				icItem = UI_ContainerNodeGetExistingItem(node, objammo, (itemFilterTypes_t) EXTRADATACONST(node).filterEquipType);
 				if (!icItem)
 					continue;
 

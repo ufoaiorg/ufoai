@@ -40,7 +40,7 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 
 static const value_t *propertySource;
 
-static const uiBehaviour_t const *localBehaviour;
+static const uiBehaviour_t *localBehaviour;
 
 
 static void UI_SequenceNodeDraw (uiNode_t *node)

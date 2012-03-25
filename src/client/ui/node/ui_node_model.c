@@ -48,7 +48,7 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #define ROTATE_SPEED	0.5
 #define MAX_OLDREFVALUE MAX_VAR
 
-static const uiBehaviour_t const *localBehaviour;
+static const uiBehaviour_t *localBehaviour;
 
 /**
  * @brief Returns pointer to UI model

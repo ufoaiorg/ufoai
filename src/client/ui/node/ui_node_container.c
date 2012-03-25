@@ -116,7 +116,7 @@ static inline qboolean UI_IsScrollContainerNode (const uiNode_t* const node)
 void UI_ContainerNodeUpdateEquipment (inventory_t *inv, const equipDef_t *ed)
 {
 	int i;
-	int *numItems = Mem_Dup(ed->numItems, sizeof(ed->numItems));
+	int *numItems = (int*) Mem_Dup(ed->numItems, sizeof(ed->numItems));
 
 	/* a 'tiny hack' to add the remaining equipment (not carried)
 	 * correctly into buy categories, reloading at the same time;
@@ -340,7 +340,7 @@ static void UI_DrawFree (containerIndex_t container, const uiNode_t *node, int p
 	if (showTUs && CL_BattlescapeRunning()) {
 		UI_DrawString("f_verysmall", ALIGN_UL, nodepos[0] + 3, nodepos[1] + 3,
 			nodepos[0] + 3, node->size[0] - 6, 0,
-			va(_("In: %i Out: %i"), inv->in, inv->out), 0, 0, NULL, qfalse, 0);
+			va(_("In: %i Out: %i"), inv->in, inv->out), 0, 0, NULL, qfalse, LONGLINES_WRAP);
 	}
 }
 

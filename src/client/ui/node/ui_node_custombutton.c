@@ -107,7 +107,7 @@ static void UI_CustomButtonNodeDraw (uiNode_t *node)
 	text = UI_GetReferenceString(node, node->text);
 	if (text != NULL && *text != '\0') {
 		R_Color(textColor);
-		UI_DrawStringInBox(font, node->contentAlign,
+		UI_DrawStringInBox(font, (align_t) node->contentAlign,
 			pos[0] + node->padding, pos[1] + node->padding,
 			node->size[0] - node->padding - node->padding, node->size[1] - node->padding - node->padding,
 			text, LONGLINES_PRETTYCHOP);

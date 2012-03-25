@@ -46,7 +46,7 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
  */
 const struct value_s *UI_RegisterNodePropertyPosSize_ (struct uiBehaviour_s *behaviour, const char* name, int type, size_t pos, size_t size)
 {
-	value_t *property = UI_AllocHunkMemory(sizeof(value_t), STRUCT_MEMORY_ALIGN, qfalse);
+	value_t *property = (value_t*) UI_AllocHunkMemory(sizeof(value_t), STRUCT_MEMORY_ALIGN, qfalse);
 	if (property == NULL)
 		Com_Error(ERR_FATAL, "UI_RegisterNodePropertyPosSize_: UI memory hunk exceeded - increase the size");
 
@@ -55,7 +55,7 @@ const struct value_s *UI_RegisterNodePropertyPosSize_ (struct uiBehaviour_s *beh
 	}
 
 	property->string = name;
-	property->type = type;
+	property->type = (valueTypes_t) type;
 	property->ofs = pos;
 	property->size = size;
 
@@ -196,7 +196,7 @@ void UI_InitializeNodeBehaviour (uiBehaviour_t* behaviour)
 		int i = 0;
 		const value_t* previous;
 		const value_t** oldmemory = behaviour->localProperties;
-		behaviour->localProperties = UI_AllocHunkMemory(sizeof(value_t*) * (behaviour->propertyCount+1), STRUCT_MEMORY_ALIGN, qfalse);
+		behaviour->localProperties = (const value_t**) UI_AllocHunkMemory(sizeof(value_t*) * (behaviour->propertyCount+1), STRUCT_MEMORY_ALIGN, qfalse);
 		if (behaviour->localProperties == NULL) {
 			Com_Error(ERR_FATAL, "UI_InitializeNodeBehaviour: UI memory hunk exceeded - increase the size");
 		}

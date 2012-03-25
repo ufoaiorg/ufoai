@@ -292,7 +292,7 @@ static void UI_TextNodeDrawText (uiNode_t* node, const char *text, const linkedL
 					tabwidth = 0;
 
 				if (tabwidth != 0)
-					UI_DrawString(font, node->contentAlign, x1, y, x1, tabwidth - 1, EXTRADATA(node).lineHeight, cur, viewSizeY, EXTRADATA(node).super.scrollY.viewPos, &fullSizeY, qfalse, LONGLINES_PRETTYCHOP);
+					UI_DrawString(font, (align_t)node->contentAlign, x1, y, x1, tabwidth - 1, EXTRADATA(node).lineHeight, cur, viewSizeY, EXTRADATA(node).super.scrollY.viewPos, &fullSizeY, qfalse, LONGLINES_PRETTYCHOP);
 
 				/* next */
 				x1 += tabwidth;
@@ -311,10 +311,10 @@ static void UI_TextNodeDrawText (uiNode_t* node, const char *text, const linkedL
 			} else {
 				if (noDraw) {
 					int lines = 0;
-					R_FontTextSize (font, cur, width, EXTRADATA(node).longlines, NULL, NULL, &lines, NULL);
+					R_FontTextSize (font, cur, width, (longlines_t)EXTRADATA(node).longlines, NULL, NULL, &lines, NULL);
 					fullSizeY += lines;
 				} else
-					UI_DrawString(font, node->contentAlign, x1, y, x, width, EXTRADATA(node).lineHeight, cur, viewSizeY, EXTRADATA(node).super.scrollY.viewPos, &fullSizeY, qtrue, EXTRADATA(node).longlines);
+					UI_DrawString(font, (align_t)node->contentAlign, x1, y, x, width, EXTRADATA(node).lineHeight, cur, viewSizeY, EXTRADATA(node).super.scrollY.viewPos, &fullSizeY, qtrue, (longlines_t)EXTRADATA(node).longlines);
 			}
 		}
 

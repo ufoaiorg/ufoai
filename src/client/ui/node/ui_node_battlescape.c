@@ -31,7 +31,7 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #include "ui_node_battlescape.h"
 #include "../../client.h"
 
-const struct uiBehaviour_s const *ui_battleScapeBehaviour;
+const struct uiBehaviour_s *ui_battleScapeBehaviour;
 
 /**
  * @brief Determine the position and size of the render

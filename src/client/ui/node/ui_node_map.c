@@ -56,7 +56,7 @@ typedef enum {
 	MODE_NULL,
 	MODE_SHIFT2DMAP,
 	MODE_SHIFT3DMAP,
-	MODE_ZOOMMAP,
+	MODE_ZOOMMAP
 } mapDragMode_t;
 
 static int oldMousePosX = 0;

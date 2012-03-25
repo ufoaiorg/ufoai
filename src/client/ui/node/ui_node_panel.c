@@ -43,7 +43,7 @@ static const value_t *propertyLayoutMargin;
 static const value_t *propertyLayoutColumns;
 static const value_t *propertyPadding;
 
-static const uiBehaviour_t const *localBehaviour;
+static const uiBehaviour_t *localBehaviour;
 
 /**
  * @brief Handles Button draw
@@ -355,8 +355,13 @@ static void UI_ClientLayout (uiNode_t *node)
  */
 static void UI_ColumnLayout (uiNode_t *node)
 {
+#ifdef __cplusplus
+	int *columnPos = new int[EXTRADATA(node).layoutColumns];
+	int *columnSize = new int[EXTRADATA(node).layoutColumns];
+#else
 	int columnPos[EXTRADATA(node).layoutColumns];
 	int columnSize[EXTRADATA(node).layoutColumns];
+#endif
 	int rowHeight = 0;
 	int i;
 	int y;
@@ -364,6 +369,10 @@ static void UI_ColumnLayout (uiNode_t *node)
 
 	if (EXTRADATA(node).layoutColumns <= 0) {
 		Com_Printf("UI_ColumnLayout: Column number must be positive (%s). Layout ignored.", UI_GetPath(node));
+#ifdef __cplusplus
+		delete columnPos;
+		delete columnSize;
+#endif
 		return;
 	}
 
@@ -416,6 +425,11 @@ static void UI_ColumnLayout (uiNode_t *node)
 		if (updated && EXTRADATA(node).super.onViewChange)
 			UI_ExecuteEventActions(node, EXTRADATA(node).super.onViewChange);
 	}
+
+#ifdef __cplusplus
+		delete columnPos;
+		delete columnSize;
+#endif
 }
 
 static void UI_PanelNodeDoLayout (uiNode_t *node)

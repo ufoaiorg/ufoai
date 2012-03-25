@@ -70,9 +70,9 @@ static void UI_StringNodeDraw (uiNode_t *node)
 
 	R_Color(color);
 	if (node->size[0] == 0)
-		UI_DrawString(font, node->contentAlign, nodepos[0], nodepos[1], nodepos[0], node->size[0], 0, ref, 0, 0, NULL, qfalse, 0);
+		UI_DrawString(font, (align_t)node->contentAlign, nodepos[0], nodepos[1], nodepos[0], node->size[0], 0, ref, 0, 0, NULL, qfalse, LONGLINES_WRAP);
 	else
-		UI_DrawStringInBox(font, node->contentAlign, nodepos[0] + node->padding, nodepos[1] + node->padding, node->size[0] - node->padding - node->padding, node->size[1] - node->padding - node->padding, ref, EXTRADATA(node).longlines);
+		UI_DrawStringInBox(font, (align_t)node->contentAlign, nodepos[0] + node->padding, nodepos[1] + node->padding, node->size[0] - node->padding - node->padding, node->size[1] - node->padding - node->padding, ref, (longlines_t) EXTRADATA(node).longlines);
 	R_Color(NULL);
 }
 
@@ -93,7 +93,7 @@ static void UI_StringNodeDrawTooltip (uiNode_t *node, int x, int y)
 		if (!text)
 			return;
 
-		R_FontTextSize(font, text, node->size[0] - node->padding - node->padding, EXTRADATA(node).longlines, NULL, NULL, NULL, &isTruncated);
+		R_FontTextSize(font, text, node->size[0] - node->padding - node->padding, (longlines_t)EXTRADATA(node).longlines, NULL, NULL, NULL, &isTruncated);
 		if (isTruncated) {
 			const int tooltipWidth = 250;
 			static char tooltiptext[MAX_VAR * 4];

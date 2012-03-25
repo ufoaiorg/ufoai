@@ -39,10 +39,10 @@ const value_t ui_spriteProperties[] = {
 	{"disabledtexl", V_POS, offsetof(uiSprite_t, pos[SPRITE_STATUS_DISABLED]), MEMBER_SIZEOF(uiSprite_t, pos[SPRITE_STATUS_DISABLED])},
 	{"clickedtexl", V_POS, offsetof(uiSprite_t, pos[SPRITE_STATUS_CLICKED]), MEMBER_SIZEOF(uiSprite_t, pos[SPRITE_STATUS_CLICKED])},
 
-	{"image", V_REF_OF_STRING, offsetof(uiSprite_t, image[SPRITE_STATUS_NORMAL]), 0},
-	{"hoveredimage", V_REF_OF_STRING, offsetof(uiSprite_t, image[SPRITE_STATUS_HOVER]), 0},
-	{"disabledimage", V_REF_OF_STRING, offsetof(uiSprite_t, image[SPRITE_STATUS_DISABLED]), 0},
-	{"clickedimage", V_REF_OF_STRING, offsetof(uiSprite_t, image[SPRITE_STATUS_CLICKED]), 0},
+	{"image", (valueTypes_t)V_REF_OF_STRING, offsetof(uiSprite_t, image[SPRITE_STATUS_NORMAL]), 0},
+	{"hoveredimage", (valueTypes_t)V_REF_OF_STRING, offsetof(uiSprite_t, image[SPRITE_STATUS_HOVER]), 0},
+	{"disabledimage", (valueTypes_t)V_REF_OF_STRING, offsetof(uiSprite_t, image[SPRITE_STATUS_DISABLED]), 0},
+	{"clickedimage", (valueTypes_t)V_REF_OF_STRING, offsetof(uiSprite_t, image[SPRITE_STATUS_CLICKED]), 0},
 
 	{"color", V_COLOR, offsetof(uiSprite_t, color[SPRITE_STATUS_NORMAL]), MEMBER_SIZEOF(uiSprite_t, color[SPRITE_STATUS_NORMAL])},
 	{"hoveredcolor", V_COLOR, offsetof(uiSprite_t, color[SPRITE_STATUS_HOVER]), MEMBER_SIZEOF(uiSprite_t, color[SPRITE_STATUS_HOVER])},

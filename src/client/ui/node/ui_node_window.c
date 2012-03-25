@@ -52,7 +52,7 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 
 #define MARGE 3
 
-const uiBehaviour_t const *ui_windowBehaviour;
+const uiBehaviour_t *ui_windowBehaviour;
 
 static const int CONTROLS_IMAGE_DIMENSIONS = 25;
 static const int CONTROLS_PADDING = 18;

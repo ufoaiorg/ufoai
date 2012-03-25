@@ -33,7 +33,7 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #define EXTRADATA(node) UI_EXTRADATA(node, EXTRADATA_TYPE)
 #define EXTRADATACONST(node) UI_EXTRADATACONST(node, EXTRADATA_TYPE)
 
-static const uiBehaviour_t const *localBehaviour;
+static const uiBehaviour_t *localBehaviour;
 
 static inline void UI_InitCvarOrFloat (float** adress, float defaultValue)
 {

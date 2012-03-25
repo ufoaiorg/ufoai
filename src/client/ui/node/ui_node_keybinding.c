@@ -162,12 +162,12 @@ static void UI_KeyBindingNodeDraw (uiNode_t *node)
 
 	R_Color(textColor);
 
-	UI_DrawStringInBox(font, node->contentAlign,
+	UI_DrawStringInBox(font, (align_t)node->contentAlign,
 		descriptionPos[0] + node->padding, descriptionPos[1] + node->padding,
 		descriptionSize[0] - node->padding - node->padding, descriptionSize[1] - node->padding - node->padding,
 		description, LONGLINES_PRETTYCHOP);
 
-	UI_DrawStringInBox(font, node->contentAlign,
+	UI_DrawStringInBox(font, (align_t)node->contentAlign,
 		bindingPos[0] + node->padding, bindingPos[1] + node->padding,
 		bindingSize[0] - node->padding - node->padding, bindingSize[1] - node->padding - node->padding,
 		binding, LONGLINES_PRETTYCHOP);

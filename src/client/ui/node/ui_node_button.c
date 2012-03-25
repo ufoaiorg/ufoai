@@ -118,7 +118,7 @@ static void UI_ButtonNodeDraw (uiNode_t *node)
 	if (text != NULL && *text != '\0') {
 		R_Color(textColor);
 		text = _(text);
-		UI_DrawStringInBox(font, node->contentAlign,
+		UI_DrawStringInBox(font, (align_t) node->contentAlign,
 			pos[0] + node->padding + iconPadding, pos[1] + node->padding,
 			node->size[0] - node->padding - node->padding - iconPadding, node->size[1] - node->padding - node->padding,
 			text, LONGLINES_PRETTYCHOP);

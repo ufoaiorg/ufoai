@@ -43,7 +43,7 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 
 /** prototypes */
 static qboolean UI_ParseProperty(void* object, const value_t *property, const char* objectName, const char **text, const char **token);
-static uiAction_t *UI_ParseActionList(uiNode_t *node, const char **text, const const char **token);
+static uiAction_t *UI_ParseActionList(uiNode_t *node, const char **text, const char **token);
 static uiNode_t *UI_ParseNode(uiNode_t * parent, const char **text, const char **token, const char *errhead);
 
 /** @brief valid properties for a UI model definition */
@@ -170,7 +170,7 @@ float* UI_AllocStaticFloat (int count)
 {
 	float *result;
 	assert(count > 0);
-	result = UI_AllocHunkMemory(sizeof(float) * count, sizeof(float), qfalse);
+	result = (float*) UI_AllocHunkMemory(sizeof(float) * count, sizeof(float), qfalse);
 	if (result == NULL)
 		Com_Error(ERR_FATAL, "UI_AllocFloat: UI memory hunk exceeded - increase the size");
 	return result;
@@ -186,7 +186,7 @@ vec4_t* UI_AllocStaticColor (int count)
 {
 	vec4_t *result;
 	assert(count > 0);
-	result = UI_AllocHunkMemory(sizeof(vec_t) * 4 * count, sizeof(vec_t), qfalse);
+	result = (vec4_t*) UI_AllocHunkMemory(sizeof(vec_t) * 4 * count, sizeof(vec_t), qfalse);
 	if (result == NULL)
 		Com_Error(ERR_FATAL, "UI_AllocColor: UI memory hunk exceeded - increase the size");
 	return result;
@@ -205,7 +205,7 @@ char* UI_AllocStaticString (const char* string, int size)
 	if (size == 0) {
 		size = strlen(string) + 1;
 	}
-	result = UI_AllocHunkMemory(size, sizeof(char), qfalse);
+	result = (char*) UI_AllocHunkMemory(size, sizeof(char), qfalse);
 	if (result == NULL)
 		Com_Error(ERR_FATAL, "UI_AllocString: UI memory hunk exceeded - increase the size");
 	Q_strncpyz(result, string, size);
@@ -258,12 +258,12 @@ qboolean UI_InitRawActionValue (uiAction_t* action, uiNode_t *node, const value_
 			Com_Printf("UI_ParseRawValue: setter for property '%s' (type %d, 0x%X) is not supported (%s)\n", property->string, property->type, property->type, UI_GetPath(node));
 			return qfalse;
 		}
-		ui_global.curadata = Com_AlignPtr(ui_global.curadata, property->type & V_BASETYPEMASK);
+		ui_global.curadata = (byte*) Com_AlignPtr(ui_global.curadata, (valueTypes_t) (property->type & V_BASETYPEMASK));
 		action->type = EA_VALUE_RAW;
 		action->d.terminal.d1.data = ui_global.curadata;
 		action->d.terminal.d2.integer = property->type;
 		/** @todo we should hide use of ui_global.curadata */
-		ui_global.curadata += Com_EParseValue(ui_global.curadata, string, property->type & V_BASETYPEMASK, 0, property->size);
+		ui_global.curadata += Com_EParseValue(ui_global.curadata, string, (valueTypes_t) (property->type & V_BASETYPEMASK), 0, property->size);
 		return qtrue;
 	}
 }
@@ -422,7 +422,7 @@ static qboolean UI_ParseCallAction (uiNode_t *node, uiAction_t *action, const ch
  * @sa ea_t
  * @todo need cleanup, compute action out of the final memory; reduce number of var
  */
-static uiAction_t *UI_ParseActionList (uiNode_t *node, const char **text, const const char **token)
+static uiAction_t *UI_ParseActionList (uiNode_t *node, const char **text, const char **token)
 {
 	const char *errhead = "UI_ParseActionList: unexpected end of file (in event)";
 	uiAction_t *firstAction;
@@ -714,7 +714,7 @@ static qboolean UI_ParseProperty (void* object, const value_t *property, const c
 		}
 
 		/* a reference to data is handled like this */
-		ui_global.curadata = Com_AlignPtr(ui_global.curadata, property->type & V_BASETYPEMASK);
+		ui_global.curadata = (byte*) Com_AlignPtr(ui_global.curadata, (valueTypes_t) (property->type & V_BASETYPEMASK));
 		*(byte **) ((byte *) object + property->ofs) = ui_global.curadata;
 
 		/** @todo check for the moment its not a cvar */
@@ -726,7 +726,7 @@ static qboolean UI_ParseProperty (void* object, const value_t *property, const c
 			return qfalse;
 		}
 
-		result = Com_ParseValue(ui_global.curadata, *token, property->type & V_BASETYPEMASK, 0, property->size, &bytes);
+		result = Com_ParseValue(ui_global.curadata, *token, (valueTypes_t) (property->type & V_BASETYPEMASK), 0, property->size, &bytes);
 		if (result != RESULT_OK) {
 			Com_Printf("UI_ParseProperty: Invalid value for property '%s': %s\n", property->string, Com_GetLastParseError());
 			return qfalse;
@@ -747,7 +747,7 @@ static qboolean UI_ParseProperty (void* object, const value_t *property, const c
 		/* references are parsed as string */
 		if ((*token)[0] == '*') {
 			/* a reference to data */
-			ui_global.curadata = Com_AlignPtr(ui_global.curadata, V_STRING);
+			ui_global.curadata = (byte*) Com_AlignPtr(ui_global.curadata, V_STRING);
 			*(byte **) valuePtr = ui_global.curadata;
 
 			/* sanity check */
@@ -764,7 +764,7 @@ static qboolean UI_ParseProperty (void* object, const value_t *property, const c
 			ui_global.curadata += bytes;
 		} else {
 			/* a reference to data */
-			ui_global.curadata = Com_AlignPtr(ui_global.curadata, property->type & V_BASETYPEMASK);
+			ui_global.curadata = (byte*) Com_AlignPtr(ui_global.curadata, (valueTypes_t)(property->type & V_BASETYPEMASK));
 			*(byte **) valuePtr = ui_global.curadata;
 
 			/* sanity check */
@@ -773,7 +773,7 @@ static qboolean UI_ParseProperty (void* object, const value_t *property, const c
 				return qfalse;
 			}
 
-			result = Com_ParseValue(ui_global.curadata, *token, property->type & V_BASETYPEMASK, 0, property->size, &bytes);
+			result = Com_ParseValue(ui_global.curadata, *token, (valueTypes_t)(property->type & V_BASETYPEMASK), 0, property->size, &bytes);
 			if (result != RESULT_OK) {
 				Com_Printf("UI_ParseProperty: Invalid value for property '%s': %s\n", property->string, Com_GetLastParseError());
 				return qfalse;

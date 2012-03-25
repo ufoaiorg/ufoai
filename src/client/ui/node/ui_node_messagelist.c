@@ -284,7 +284,7 @@ static void UI_MessageDebugUseAllIcons_f (void)
 	int i = 0;
 	message = cp_messageStack;
 	while (message) {
-		message->type = i % MSG_MAX;
+		message->type = (messageType_t)(i % MSG_MAX);
 		message = message->next;
 		i++;
 	}
