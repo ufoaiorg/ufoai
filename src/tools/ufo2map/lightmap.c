@@ -897,7 +897,7 @@ static void WriteTGA24 (const char *filename, const byte * data, int width, int 
 
 	size = width * height * 3;
 	/* allocate a buffer and set it up */
-	buffer = (byte *)Mem_Alloc(size + TGA_HEADER_SIZE);
+	buffer = Mem_AllocTypeN(byte, size + TGA_HEADER_SIZE);
 	memset(buffer, 0, TGA_HEADER_SIZE);
 	buffer[2] = 2;
 	buffer[12] = width & 255;

@@ -176,7 +176,7 @@ static void SL_SliceTheWorld (const TR_TILE_TYPE *tile, const vec3_t mins, const
 	height /= scale;
 	width /= scale;
 
-	pictureBuffer = (unsigned char *) Mem_Alloc(width * height * DEPTH);
+	pictureBuffer = Mem_AllocTypeN(unsigned char, width * height * DEPTH);
 
 	for (sliceIndex = 0; sliceIndex < numberOfSlices; sliceIndex++) {
 		int j;

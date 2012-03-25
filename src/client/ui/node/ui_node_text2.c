@@ -44,7 +44,7 @@ static void UI_TextNodeGenerateLineSplit (uiNode_t *node)
 {
 	const char *data;
 	int bufferSize = 1024;
-	char *buffer = (char *)Mem_Alloc(bufferSize);
+	char *buffer = Mem_AllocTypeN(char, bufferSize);
 
 	LIST_Delete(&EXTRADATA(node).lineSplit);
 
@@ -79,7 +79,7 @@ static void UI_TextNodeGenerateLineSplit (uiNode_t *node)
 		if (lineSize + 1 > bufferSize) {
 			bufferSize = lineSize + 1;
 			Mem_Free(buffer);
-			buffer = (char *)Mem_Alloc(bufferSize);
+			buffer = Mem_AllocTypeN(char, bufferSize);
 		}
 
 		Q_strncpyz(buffer, data, lineSize + 1);
