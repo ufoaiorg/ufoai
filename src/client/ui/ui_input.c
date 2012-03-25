@@ -579,7 +579,8 @@ void UI_MouseMove (int x, int y)
 	oldHoveredNode = hoveredNode;
 
 	/* send the move event */
-	UI_Node_MouseMove(hoveredNode, x, y);
+	if (hoveredNode)
+		UI_Node_MouseMove(hoveredNode, x, y);
 }
 
 #define UI_IsMouseInvalidate() (oldMousePosX == -1)
