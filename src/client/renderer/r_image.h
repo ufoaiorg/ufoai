@@ -26,7 +26,7 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #ifndef R_IMAGE_H
 #define R_IMAGE_H
 
-#include "r_gl.h"
+#include <SDL_opengl.h>
 #include "r_material.h"
 /*
 skins will be outline flood filled and mip mapped

@@ -3,6 +3,7 @@
  * @brief Small utility that shows the size of some of the structs that are used in UFO:AI
  */
 
+#include <SDL_opengl.h>
 #include "../common/common.h"
 #include "../shared/shared.h"
 #include "../shared/mutex.h"
