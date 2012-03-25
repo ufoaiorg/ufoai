@@ -1337,7 +1337,7 @@ static qboolean Irc_Proto_Enqueue (const char *msg, size_t msg_len)
 	n = irc_bucket.first_msg;
 	if (irc_bucket.message_size + 1 <= messageBucketSize && irc_bucket.character_size + msg_len <= characterBucketSize) {
 		/** @todo strip high bits - or unprintable chars */
-		m->msg = (char*) Mem_Alloc(msg_len);
+		m->msg = Mem_AllocTypeN(char, msg_len);
 		memcpy(m->msg, msg, msg_len);
 		m->msg_len = msg_len;
 		m->next = NULL;

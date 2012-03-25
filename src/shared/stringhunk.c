@@ -87,9 +87,9 @@ size_t STRHUNK_GetFreeSpace (const stringHunk_t *hunk)
 
 stringHunk_t *STRHUNK_Create (size_t size)
 {
-	stringHunk_t *strHunk = (stringHunk_t*)Mem_AllocType(stringHunk_t);
+	stringHunk_t *strHunk = Mem_AllocType(stringHunk_t);
 	strHunk->size = size;
-	strHunk->hunk = (char*)Mem_Alloc(size);
+	strHunk->hunk = Mem_AllocTypeN(char, size);
 	strHunk->pos = strHunk->hunk;
 	return strHunk;
 }

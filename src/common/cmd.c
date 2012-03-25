@@ -158,7 +158,7 @@ void Cbuf_InsertText (const char *text)
 	/* copy off any commands still remaining in the exec buffer */
 	templen = cmd_text.cursize;
 	if (templen) {
-		temp = (char *)Mem_Alloc(templen);
+		temp = Mem_AllocTypeN(char, templen);
 		memcpy(temp, cmd_text.data, templen);
 		SZ_Clear(&cmd_text);
 	} else
@@ -306,7 +306,7 @@ qboolean Cbuf_AddLateCommands (void)
 	if (!s)
 		return qfalse;
 
-	text = (char *)Mem_Alloc(s + 1);
+	text = Mem_AllocTypeN(char, s + 1);
 	text[0] = 0;
 	for (i = 1; i < argc; i++) {
 		Q_strcat(text, Com_Argv(i), s);
@@ -315,7 +315,7 @@ qboolean Cbuf_AddLateCommands (void)
 	}
 
 	/* pull out the commands */
-	build = (char *)Mem_Alloc(s + 1);
+	build = Mem_AllocTypeN(char, s + 1);
 	build[0] = 0;
 
 	for (i = 0; i < s - 1; i++) {
@@ -370,7 +370,7 @@ static void Cmd_Exec_f (void)
 	Com_Printf("executing %s\n", Cmd_Argv(1));
 
 	/* the file doesn't have a trailing 0, so we need to copy it off */
-	f2 = (char *)Mem_Alloc(len + 2);
+	f2 = Mem_AllocTypeN(char, len + 2);
 	memcpy(f2, f, len);
 	/* make really sure that there is a newline */
 	f2[len] = '\n';

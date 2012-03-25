@@ -38,7 +38,7 @@ void PQueueInitialise (priorityQueue_t *pq, uint32_t maxElements)
 	pq->maxSize = maxElements;
 	pq->currentSize = 0;
 
-	pq->elements = (priorityQueueElement_t*) Mem_Alloc(sizeof(priorityQueueElement_t) * (maxElements + 1));
+	pq->elements = Mem_AllocTypeN(priorityQueueElement_t, maxElements + 1);
 
 	if (pq->elements == NULL)
 		Sys_Error("PQueueInitialise: Memory alloc failed!");

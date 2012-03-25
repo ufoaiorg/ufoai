@@ -535,7 +535,7 @@ void SetKeyValue (entity_t *ent, const char *key, const char *value)
 			ep->value = Mem_StrDup(value);
 			return;
 		}
-	ep = (epair_t *)Mem_Alloc(sizeof(*ep));
+	ep = Mem_AllocType(epair_t);
 	ep->next = ent->epairs;
 	ent->epairs = ep;
 	ep->key = Mem_StrDup(key);

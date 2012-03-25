@@ -215,7 +215,7 @@ static void CalcLightinfoVectors (lightinfo_t *l)
 
 	/* total sample count */
 	l->numsurfpt = l->texsize[0] * l->texsize[1];
-	l->surfpt = (vec3_t *)Mem_Alloc(l->numsurfpt * sizeof(vec3_t));
+	l->surfpt = Mem_AllocTypeN(vec3_t, l->numsurfpt);
 	if (!l->surfpt)
 		Sys_Error("Surface too large to light ("UFO_SIZE_T")", l->numsurfpt * sizeof(*l->surfpt));
 
@@ -833,7 +833,7 @@ void BuildFacelights (unsigned int facenum)
 	center = face_extents[facenum].center;  /* center of the face */
 
 	/* Also setup the hints.  Each hint is specific to each light source, including sunlight. */
-	headhints = (int *)Mem_Alloc((numlights[config.compile_for_day] + 1) * sizeof(int));
+	headhints = Mem_AllocTypeN(int, (numlights[config.compile_for_day] + 1));
 
 	/* calculate light for each sample */
 	for (i = 0; i < fl->numsamples; i++) {

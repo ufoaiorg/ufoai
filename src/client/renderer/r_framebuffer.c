@@ -93,7 +93,7 @@ void R_InitFBObjects (void)
 	qglBindFramebufferEXT(GL_FRAMEBUFFER_EXT, 0);
 	r_state.activeFramebuffer = &screenBuffer;
 
-	colorAttachments = (GLenum *)Mem_Alloc(sizeof(GLenum) * r_config.maxDrawBuffers);
+	colorAttachments = Mem_AllocTypeN(GLenum, r_config.maxDrawBuffers);
 	for (i = 0; i < r_config.maxDrawBuffers; i++)
 		colorAttachments[i] = GL_COLOR_ATTACHMENT0_EXT + i;
 
@@ -206,7 +206,7 @@ r_framebuffer_t * R_CreateFramebuffer (int width, int height, int ntextures, qbo
 	R_SetupViewport(buf, 0, 0, width, height);
 
 	buf->nTextures = ntextures;
-	buf->textures = (unsigned int *)Mem_Alloc(sizeof(unsigned int) * ntextures);
+	buf->textures = Mem_AllocTypeN(unsigned int, ntextures);
 
 	buf->pixelFormat = halfFloat ? GL_RGBA16F_ARB : GL_RGBA8;
 	buf->byteFormat = halfFloat ? GL_HALF_FLOAT_ARB : GL_UNSIGNED_BYTE;

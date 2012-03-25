@@ -44,7 +44,7 @@ static void GAME_SCP_InitStartup (void)
 
 	ccs.missionSpawnCallback = SCP_SpawnNewMissions;
 	ccs.missionResultCallback = SCP_CampaignProgress;
-	scd = (staticCampaignData_t*)Mem_Alloc(sizeof(*scd));
+	scd = Mem_AllocType(staticCampaignData_t);
 }
 
 static void GAME_SCP_Shutdown (void)

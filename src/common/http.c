@@ -119,13 +119,13 @@ size_t HTTP_Recv (void *ptr, size_t size, size_t nmemb, void *stream)
 
 	if (!dl->fileSize) {
 		dl->fileSize = bytes > 131072 ? bytes : 131072;
-		dl->tempBuffer = (char *)Mem_Alloc((int)dl->fileSize);
+		dl->tempBuffer = Mem_AllocTypeN(char, dl->fileSize);
 	} else if (dl->position + bytes >= dl->fileSize - 1) {
 		char *tmp;
 
 		tmp = dl->tempBuffer;
 
-		dl->tempBuffer = (char *)Mem_Alloc((int)(dl->fileSize * 2));
+		dl->tempBuffer = Mem_AllocTypeN(char, dl->fileSize * 2);
 		memcpy(dl->tempBuffer, tmp, dl->fileSize);
 		Mem_Free(tmp);
 		dl->fileSize *= 2;

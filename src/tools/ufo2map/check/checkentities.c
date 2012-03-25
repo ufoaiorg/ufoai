@@ -188,7 +188,7 @@ void Check_Stats(void) {
 
 	Check_InitEntityDefs();
 
-	entNums = (int *)Mem_Alloc(numEntityDefs * sizeof(int));
+	entNums = Mem_AllocTypeN(int, numEntityDefs);
 
 	Check_MapSize(worldSize);
 	Verb_Printf(VERB_NORMAL, "        Number of brushes: %i\n",nummapbrushes);
@@ -265,7 +265,7 @@ mapbrush_t **Check_ExtraBrushesForWorldspawn (int *numBrushes)
 	if (!numToMoveToWorldspawn)
 		return NULL;
 
-	brushesToMove = (mapbrush_t **)Mem_Alloc(numToMoveToWorldspawn * sizeof(*brushesToMove));
+	brushesToMove = Mem_AllocTypeN(mapbrush_t *, numToMoveToWorldspawn);
 	if (!brushesToMove)
 		Sys_Error("Check_ExtraBrushesForWorldspawn: out of memory");
 

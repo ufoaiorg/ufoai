@@ -691,7 +691,7 @@ static void R_SortSurfacesArrays (const model_t *mod)
 {
 	const mBspSurface_t *surf, *s;
 	int i, ns;
-	mBspSurfaces_t **r_sorted_surfaces = (mBspSurfaces_t **) Mem_Alloc(r_numImages * sizeof(mBspSurfaces_t *));
+	mBspSurfaces_t **r_sorted_surfaces = Mem_AllocTypeN(mBspSurfaces_t *, r_numImages);
 
 	/* resolve the start surface and total surface count */
 	s = &mod->bsp.surfaces[mod->bsp.firstmodelsurface];

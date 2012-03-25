@@ -116,7 +116,7 @@ void ASE_Load (const char *filename, qboolean verbose)
 	ase.verbose = verbose;
 	ase.len = FS_FileLength(&file);
 
-	ase.curpos = ase.buffer = (char *)Mem_Alloc(ase.len);
+	ase.curpos = ase.buffer = Mem_AllocTypeN(char, ase.len);
 	if (!ase.curpos)
 		Sys_Error("Could not allocate memory for ase loading");
 
@@ -170,7 +170,7 @@ polyset_t *ASE_GetSurfaceAnimation (int whichSurface)
 
 	numFramesInAnimation = pObject->anim.numFrames;
 
-	psets = (polyset_t *)Mem_Alloc(sizeof(*psets) * numFramesInAnimation);
+	psets = Mem_AllocTypeN(polyset_t, numFramesInAnimation);
 
 	for (f = 0, i = 0; i < numFramesInAnimation; i++) {
 		int t;
@@ -180,7 +180,7 @@ polyset_t *ASE_GetSurfaceAnimation (int whichSurface)
 		strcpy(ps->name, pObject->name);
 		strcpy(ps->materialname, ase.materials[pObject->materialRef].name);
 
-		ps->triangles = (triangle_t *)Mem_Alloc(sizeof(*ps->triangles) * pObject->anim.frames[i].numFaces);
+		ps->triangles = Mem_AllocTypeN(triangle_t, pObject->anim.frames[i].numFaces);
 		ps->numtriangles = pObject->anim.frames[i].numFaces;
 
 		for (t = 0; t < pObject->anim.frames[i].numFaces; t++) {
@@ -510,22 +510,22 @@ static void ASE_KeyMESH (const char *token)
 		pMesh->numTVertexes = atoi(s_token);
 		VERBOSE((".....num tvertexes: %d\n", pMesh->numTVertexes));
 	} else if (Q_streq(token, "*MESH_VERTEX_LIST")) {
-		pMesh->vertexes = (aseVertex_t *)Mem_Alloc(sizeof(aseVertex_t) * pMesh->numVertexes);
+		pMesh->vertexes = Mem_AllocTypeN(aseVertex_t, pMesh->numVertexes);
 		pMesh->currentVertex = 0;
 		VERBOSE((".....parsing MESH_VERTEX_LIST\n"));
 		ASE_ParseBracedBlock(ASE_KeyMESH_VERTEX_LIST);
 	} else if (Q_streq(token, "*MESH_TVERTLIST")) {
 		pMesh->currentVertex = 0;
-		pMesh->tvertexes = (aseTVertex_t *)Mem_Alloc(sizeof(aseTVertex_t) * pMesh->numTVertexes);
+		pMesh->tvertexes = Mem_AllocTypeN(aseTVertex_t, pMesh->numTVertexes);
 		VERBOSE((".....parsing MESH_TVERTLIST\n"));
 		ASE_ParseBracedBlock(ASE_KeyMESH_TVERTLIST);
 	} else if (Q_streq(token, "*MESH_FACE_LIST")) {
-		pMesh->faces = (aseFace_t *)Mem_Alloc(sizeof(aseFace_t) * pMesh->numFaces);
+		pMesh->faces = Mem_AllocTypeN(aseFace_t, pMesh->numFaces);
 		pMesh->currentFace = 0;
 		VERBOSE((".....parsing MESH_FACE_LIST\n"));
 		ASE_ParseBracedBlock(ASE_KeyMESH_FACE_LIST);
 	} else if (Q_streq(token, "*MESH_TFACELIST")) {
-		pMesh->tfaces = (aseFace_t *)Mem_Alloc(sizeof(aseFace_t) * pMesh->numFaces);
+		pMesh->tfaces = Mem_AllocTypeN(aseFace_t, pMesh->numFaces);
 		pMesh->currentFace = 0;
 		VERBOSE((".....parsing MESH_TFACE_LIST\n"));
 		ASE_ParseBracedBlock(ASE_KeyTFACE_LIST);

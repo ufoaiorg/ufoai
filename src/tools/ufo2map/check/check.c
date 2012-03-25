@@ -325,7 +325,7 @@ static void Check_NearList (void)
 			continue;
 
 		/* now we know how many, we can malloc. then copy the pointers */
-		iBrush->nearBrushes = (mapbrush_t **)Mem_Alloc(numNear * sizeof(mapbrush_t *));
+		iBrush->nearBrushes = Mem_AllocTypeN(mapbrush_t *, numNear);
 
 		if (!iBrush->nearBrushes)
 			Sys_Error("Check_Nearlist: out of memory");
@@ -505,7 +505,7 @@ static void Check_FindCompositeSides (void)
 			}
 
 			if (numMembers > 1) { /* composite found */
-				side_t **sidesInNewComposite = (side_t **)Mem_Alloc(numMembers * sizeof(*sidesInNewComposite));
+				side_t **sidesInNewComposite = Mem_AllocTypeN(side_t *, numMembers);
 
 				if (!sidesInNewComposite)
 					Sys_Error("Check_FindCompositeSides: out of memory");
