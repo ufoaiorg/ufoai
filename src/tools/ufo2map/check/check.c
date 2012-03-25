@@ -34,6 +34,9 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #include "../bsp.h"
 #include "../ufo2map.h"
 
+compositeSide_t compositeSides[MAX_MAP_SIDES / 2];
+int numCompositeSides;
+
 /** how close faces have to be in order for one to be hidden and set to SURF_NODRAW. Also
  *  the margin for abutting brushes to be considered not intersecting */
 #define CH_DIST_EPSILON 0.001f

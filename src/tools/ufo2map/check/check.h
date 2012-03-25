@@ -40,8 +40,8 @@ typedef struct compositeSide_s {
  *  @note a composite must have at least 2 members. composites should not be duplicated,
  *  hence the largest possible number is the number of sides divided by two.
  */
-compositeSide_t compositeSides[MAX_MAP_SIDES / 2];
-int numCompositeSides;
+extern compositeSide_t compositeSides[MAX_MAP_SIDES / 2];
+extern int numCompositeSides;
 
 void CheckTexturesBasedOnFlags(void);
 void CheckFlagsBasedOnTextures(void);

@@ -23,13 +23,7 @@ typedef struct slicerConfig_s {
 	char filename[MAX_QPATH];
 } slicerConfig_t;
 
-static slicerConfig_t config = {
-	.thickness = 8.0,
-	.scale = 1,
-	.singleContour = qtrue,
-	.multipleContour = qtrue,
-	.filename = ""
-};
+static slicerConfig_t config = {8.0, 1, qtrue, qtrue, ""};
 
 static void Usage (void)
 {
