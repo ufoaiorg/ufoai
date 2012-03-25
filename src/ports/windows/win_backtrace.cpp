@@ -108,7 +108,7 @@ static LONG WINAPI exception_filter (LPEXCEPTION_POINTERS info)
 	if (!SymInitialize(GetCurrentProcess(), 0, TRUE)) {
 		output_print(&ob, "Failed to init symbol context\n");
 	} else {
-		struct bfd_set *set = calloc(1, sizeof(*set));
+		struct bfd_set *set = (struct bfd_set *)calloc(1, sizeof(*set));
 		bfd_init();
 		_backtrace(&ob, set, 128, info->ContextRecord);
 		release_set(set);
@@ -140,7 +140,7 @@ static LONG WINAPI exception_filter (LPEXCEPTION_POINTERS info)
 static void backtrace_register (void)
 {
 	if (g_output == NULL) {
-		g_output = malloc(BUFFER_MAX);
+		g_output = (char*)malloc(BUFFER_MAX);
 		g_prev = SetUnhandledExceptionFilter(exception_filter);
 	}
 }
