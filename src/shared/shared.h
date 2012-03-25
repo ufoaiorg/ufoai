@@ -71,9 +71,7 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 # define IMPORT
 #endif
 
-#if !defined __STDC_VERSION__
-#  define inline
-#elif __STDC_VERSION__ < 199901L
+#if !defined __cplusplus && (!defined __STDC_VERSION__ || __STDC_VERSION__ < 199901L)
 /* if we are using ansi - the compiler doesn't know about inline */
 #  if defined __GNUC__
 #    define inline __inline__
