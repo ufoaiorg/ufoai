@@ -34,6 +34,11 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 
 static entity_t r_entities[MAX_ENTITIES];
 
+entity_t *r_opaque_mesh_entities;
+entity_t *r_blend_mesh_entities;
+entity_t *r_null_entities;
+entity_t *r_special_entities;
+
 /**
  * @brief setter for entity origin
  * @param[out] ent The entity to set the origin for

@@ -94,9 +94,10 @@ typedef struct entity_s {
 } entity_t;
 
 /* entity chains for rendering */
-entity_t *r_opaque_mesh_entities;
-entity_t *r_blend_mesh_entities, *r_null_entities;
-entity_t *r_special_entities;
+extern entity_t *r_opaque_mesh_entities;
+extern entity_t *r_blend_mesh_entities;
+extern entity_t *r_null_entities;
+extern entity_t *r_special_entities;
 
 
 int R_AddEntity(const entity_t *ent);
