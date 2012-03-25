@@ -295,7 +295,7 @@ static void Com_ParseVersion (const char *version)
 {
 	if (!versionParsed) {
 		if (!Q_streq(version, UFO_VERSION))
-			Sys_Error("You are mixing versions of the binary ("UFO_VERSION") and the script (%s) files.", version);
+			Sys_Error("You are mixing versions of the binary (" UFO_VERSION ") and the script (%s) files.", version);
 	} else {
 		Sys_Error("More than one version string found in the script files.");
 	}
@@ -480,18 +480,18 @@ resultStatus_t Com_ParseValue (void *base, const char *token, valueTypes_t type,
 
 #ifdef DEBUG
 	if (b != Com_AlignPtr(b, type))
-		Com_Printf("Wrong alignment: %p %p type:%d size:"UFO_SIZE_T"\n", b, Com_AlignPtr(b, type), type, vt_aligns[type]);
+		Com_Printf("Wrong alignment: %p %p type:%d size:" UFO_SIZE_T "\n", b, Com_AlignPtr(b, type), type, vt_aligns[type]);
 #endif
 
 	if (size) {
 #ifdef DEBUG
 		if (size > vt_sizes[type]) {
-			snprintf(parseErrorMessage, sizeof(parseErrorMessage), "Size mismatch: given size: "UFO_SIZE_T", should be: "UFO_SIZE_T" (type: %i). ", size, vt_sizes[type], type);
+			snprintf(parseErrorMessage, sizeof(parseErrorMessage), "Size mismatch: given size: " UFO_SIZE_T ", should be: " UFO_SIZE_T " (type: %i). ", size, vt_sizes[type], type);
 			status = RESULT_WARNING;
 		}
 #endif
 		if (size < vt_sizes[type]) {
-			snprintf(parseErrorMessage, sizeof(parseErrorMessage), "Size mismatch: given size: "UFO_SIZE_T", should be: "UFO_SIZE_T". (type: %i)", size, vt_sizes[type], type);
+			snprintf(parseErrorMessage, sizeof(parseErrorMessage), "Size mismatch: given size: " UFO_SIZE_T ", should be: " UFO_SIZE_T ". (type: %i)", size, vt_sizes[type], type);
 			return RESULT_ERROR;
 		}
 	}
@@ -934,13 +934,13 @@ int Com_SetValue (void *base, const void *set, valueTypes_t type, int ofs, size_
 	if (size) {
 #ifdef DEBUG
 		if (size > vt_sizes[type])
-			Com_Printf("Warning: Size mismatch: given size: "UFO_SIZE_T", should be: "UFO_SIZE_T". File: '%s', line: %i (type: %i)\n", size, vt_sizes[type], file, line, type);
+			Com_Printf("Warning: Size mismatch: given size: " UFO_SIZE_T ", should be: " UFO_SIZE_T ". File: '%s', line: %i (type: %i)\n", size, vt_sizes[type], file, line, type);
 
 		if (size < vt_sizes[type])
-			Sys_Error("Size mismatch: given size: "UFO_SIZE_T", should be: "UFO_SIZE_T". File: '%s', line: %i (type: %i)\n", size, vt_sizes[type], file, line, type);
+			Sys_Error("Size mismatch: given size: " UFO_SIZE_T ", should be: " UFO_SIZE_T ". File: '%s', line: %i (type: %i)\n", size, vt_sizes[type], file, line, type);
 #else
 		if (size < vt_sizes[type])
-			Sys_Error("Size mismatch: given size: "UFO_SIZE_T", should be: "UFO_SIZE_T". (type: %i)\n", size, vt_sizes[type], type);
+			Sys_Error("Size mismatch: given size: " UFO_SIZE_T ", should be: " UFO_SIZE_T ". (type: %i)\n", size, vt_sizes[type], type);
 #endif
 	}
 

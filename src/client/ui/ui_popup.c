@@ -73,10 +73,10 @@ uiNode_t *UI_PopupList (const char *title, const char *headline, linkedList_t* e
 
 	window = UI_GetWindow(POPUPLIST_WINDOW_NAME);
 	if (!window)
-		Com_Error(ERR_FATAL, "Could not get "POPUPLIST_WINDOW_NAME" window");
+		Com_Error(ERR_FATAL, "Could not get " POPUPLIST_WINDOW_NAME " window");
 	listNode = UI_GetNode(window, POPUPLIST_NODE_NAME);
 	if (!listNode)
-		Com_Error(ERR_FATAL, "Could not get "POPUPLIST_NODE_NAME" node in "POPUPLIST_WINDOW_NAME" window");
+		Com_Error(ERR_FATAL, "Could not get " POPUPLIST_NODE_NAME " node in " POPUPLIST_WINDOW_NAME " window");
 
 	/* free previous actions */
 	if (listNode->onClick) {
@@ -159,7 +159,7 @@ void UI_PopupButton (const char *title, const char *text,
 
 	window = UI_GetWindow(POPUPBUTTON_WINDOW_NAME);
 	if (!window)
-		Com_Error(ERR_FATAL, "Could not get \""POPUPBUTTON_WINDOW_NAME"\" window");
+		Com_Error(ERR_FATAL, "Could not get \"" POPUPBUTTON_WINDOW_NAME "\" window");
 
 	Cvar_Set("ui_sys_popup_button_text1", clickText1);
 	Cvar_Set("ui_sys_popup_button_tooltip1", tooltip1);

@@ -337,7 +337,7 @@ static qboolean GAME_LoadTeam (const char *filename)
 	node = XML_GetNode(topNode, SAVE_TEAM_ROOTNODE);
 	if (!node) {
 		mxmlDelete(topNode);
-		Com_Printf("Error: Failure in loading the xml data! (node '"SAVE_TEAM_ROOTNODE"' not found)\n");
+		Com_Printf("Error: Failure in loading the xml data! (node '" SAVE_TEAM_ROOTNODE "' not found)\n");
 		return qfalse;
 	}
 	Cvar_Set("mn_teamname", header.name);
@@ -346,7 +346,7 @@ static qboolean GAME_LoadTeam (const char *filename)
 	if (!snode) {
 		mxmlDelete(topNode);
 		Mem_Free(cbuf);
-		Com_Printf("Error: Failure in loading the xml data! (node '"SAVE_TEAM_NODE"' not found)\n");
+		Com_Printf("Error: Failure in loading the xml data! (node '" SAVE_TEAM_NODE "' not found)\n");
 		return qfalse;
 	}
 	GAME_LoadTeamInfo(snode);
@@ -355,7 +355,7 @@ static qboolean GAME_LoadTeam (const char *filename)
 	if (!snode) {
 		mxmlDelete(topNode);
 		Mem_Free(cbuf);
-		Com_Printf("Error: Failure in loading the xml data! (node '"SAVE_TEAM_EQUIPMENT"' not found)\n");
+		Com_Printf("Error: Failure in loading the xml data! (node '" SAVE_TEAM_EQUIPMENT "' not found)\n");
 		return qfalse;
 	}
 

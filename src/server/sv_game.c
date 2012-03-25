@@ -511,7 +511,7 @@ static qboolean SV_LoadGame (const char *path)
 {
 	char name[MAX_OSPATH];
 
-	Com_sprintf(name, sizeof(name), "%s/game_"CPUSTRING".%s", path, SO_EXT);
+	Com_sprintf(name, sizeof(name), "%s/game_" CPUSTRING ".%s", path, SO_EXT);
 	svs.gameLibrary = SDL_LoadObject(name);
 	if (!svs.gameLibrary) {
 		Com_sprintf(name, sizeof(name), "%s/game.%s", path, SO_EXT);

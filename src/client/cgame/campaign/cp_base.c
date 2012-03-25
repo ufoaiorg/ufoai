@@ -2942,7 +2942,7 @@ void B_ManageAntimatter (base_t *base, int amount, qboolean add)
 
 	od = INVSH_GetItemByIDSilent(ANTIMATTER_TECH_ID);
 	if (od == NULL)
-		Com_Error(ERR_DROP, "Could not find "ANTIMATTER_TECH_ID" object definition");
+		Com_Error(ERR_DROP, "Could not find " ANTIMATTER_TECH_ID " object definition");
 
 	cap = CAP_Get(base, CAP_ANTIMATTER);
 	if (add) {	/* Adding. */

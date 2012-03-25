@@ -156,7 +156,7 @@ static void M_Start (const char *file)
 	Com_StripExtension(file, name, sizeof(name));
 	len = strlen(name);
 	if (len + 4 >= MAX_QPATH) {
-		Com_Printf("M_Start: MAX_QPATH exceeded: "UFO_SIZE_T"\n", len + 4);
+		Com_Printf("M_Start: MAX_QPATH exceeded: " UFO_SIZE_T "\n", len + 4);
 		return;
 	}
 

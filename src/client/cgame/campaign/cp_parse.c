@@ -764,7 +764,7 @@ void CP_ParseCampaignData (void)
 		campaign->asymptoticMarketDef = INV_GetEquipmentDefinitionByID(campaign->asymptoticMarket);
 	}
 
-	Com_Printf("Campaign data loaded - size "UFO_SIZE_T" bytes\n", sizeof(ccs));
+	Com_Printf("Campaign data loaded - size " UFO_SIZE_T " bytes\n", sizeof(ccs));
 	Com_Printf("...techs: %i\n", ccs.numTechnologies);
 	Com_Printf("...buildings: %i\n", ccs.numBuildingTemplates);
 	Com_Printf("...ranks: %i\n", ccs.numRanks);

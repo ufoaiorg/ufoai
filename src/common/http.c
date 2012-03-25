@@ -191,7 +191,7 @@ static char* HTTP_GetURLInternal (const char *url)
 	curl_easy_setopt(dl.curl, CURLOPT_MAXREDIRS, 5);
 	curl_easy_setopt(dl.curl, CURLOPT_WRITEHEADER, &dl);
 	curl_easy_setopt(dl.curl, CURLOPT_HEADERFUNCTION, HTTP_Header);
-	curl_easy_setopt(dl.curl, CURLOPT_USERAGENT, GAME_TITLE" "UFO_VERSION);
+	curl_easy_setopt(dl.curl, CURLOPT_USERAGENT, GAME_TITLE " " UFO_VERSION);
 	curl_easy_setopt(dl.curl, CURLOPT_URL, dl.URL);
 	curl_easy_setopt(dl.curl, CURLOPT_NOSIGNAL, 1);
 
@@ -230,7 +230,7 @@ void HTTP_PutFile (const char *formName, const char *fileName, const char *url, 
 	curl_easy_setopt(curl, CURLOPT_NOPROGRESS, 1);
 	curl_easy_setopt(curl, CURLOPT_FAILONERROR, 1);
 	curl_easy_setopt(curl, CURLOPT_FOLLOWLOCATION, 1);
-	curl_easy_setopt(curl, CURLOPT_USERAGENT, GAME_TITLE" "UFO_VERSION);
+	curl_easy_setopt(curl, CURLOPT_USERAGENT, GAME_TITLE " " UFO_VERSION);
 	curl_easy_setopt(curl, CURLOPT_URL, url);
 	curl_easy_setopt(curl, CURLOPT_NOSIGNAL, 1);
 	curl_easy_perform(curl);

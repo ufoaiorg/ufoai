@@ -668,11 +668,11 @@ static void FS_AddHomeAsGameDirectory (const char *dir, qboolean write)
 
 	if (homedir) {
 #ifdef _WIN32
-		Com_sprintf(gdir, sizeof(gdir), "%s/"UFO_VERSION"/%s", homedir, dir);
+		Com_sprintf(gdir, sizeof(gdir), "%s/" UFO_VERSION "/%s", homedir, dir);
 #elif defined (__APPLE__) || defined (MACOSX)
-		Com_sprintf(gdir, sizeof(gdir), "%s/Documents/UFOAI-"UFO_VERSION"/%s", homedir, dir);
+		Com_sprintf(gdir, sizeof(gdir), "%s/Documents/UFOAI-" UFO_VERSION "/%s", homedir, dir);
 #else
-		Com_sprintf(gdir, sizeof(gdir), "%s/.ufoai/"UFO_VERSION"/%s", homedir, dir);
+		Com_sprintf(gdir, sizeof(gdir), "%s/.ufoai/" UFO_VERSION "/%s", homedir, dir);
 #endif
 		FS_CreatePath(va("%s/", gdir));
 

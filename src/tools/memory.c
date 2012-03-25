@@ -25,7 +25,7 @@
 
 #define STRUCTFORMAT "%24s"
 #define SIZEFORMAT "%12s"
-#define TYPESIZE(type) printf(STRUCTFORMAT": "SIZEFORMAT" KB\n", #type, MEMORY_HumanReadable(sizeof(type)));
+#define TYPESIZE(type) printf(STRUCTFORMAT ": " SIZEFORMAT " KB\n", #type, MEMORY_HumanReadable(sizeof(type)));
 
 #if defined _WIN64
 # define UFO_SIZE_LENGTH_T "%I64u"
@@ -43,7 +43,7 @@ static const char* MEMORY_HumanReadable (size_t size)
 	const size_t b = size % 1024;
 	const size_t mb = size / 1024 / 1024;
 
-	snprintf(buf, sizeof(buf) - 1, UFO_SIZE_T"."UFO_SIZE_LENGTH_T"."UFO_SIZE_LENGTH_T, mb, kb, b);
+	snprintf(buf, sizeof(buf) - 1, UFO_SIZE_T "." UFO_SIZE_LENGTH_T "." UFO_SIZE_LENGTH_T, mb, kb, b);
 	buf[sizeof(buf) - 1] = '\0';
 	return buf;
 }
@@ -54,7 +54,7 @@ static const char* MEMORY_HumanReadable (size_t size)
 
 int main (void)
 {
-	printf(STRUCTFORMAT"     "SIZEFORMAT"\n\n", "struct", "size");
+	printf(STRUCTFORMAT "     " SIZEFORMAT "\n\n", "struct", "size");
 
 	TYPESIZE(aircraft_t);
 	TYPESIZE(aircraftProjectile_t);

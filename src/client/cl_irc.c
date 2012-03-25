@@ -965,7 +965,7 @@ static void Irc_Client_CmdPrivmsg (const char *prefix, const char *params, const
 				/* split port and version */
 				*version++ = '\0';
 				if (!Q_streq(version, UFO_VERSION)) {
-					Com_DPrintf(DEBUG_CLIENT, "irc invite message from different game version received: %s (versus our version: "UFO_VERSION")\n",
+					Com_DPrintf(DEBUG_CLIENT, "irc invite message from different game version received: %s (versus our version: " UFO_VERSION ")\n",
 							version);
 					return;
 				}

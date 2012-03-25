@@ -175,7 +175,7 @@ static qboolean CL_LanguageTest (const char *localeID)
 #ifdef LOCALEDIR
 		Com_sprintf(languagePath, sizeof(languagePath), LOCALEDIR);
 #else
-		Com_sprintf(languagePath, sizeof(languagePath), "%s/"BASEDIRNAME"/i18n/", FS_GetCwd());
+		Com_sprintf(languagePath, sizeof(languagePath), "%s/" BASEDIRNAME "/i18n/", FS_GetCwd());
 #endif
 	Com_DPrintf(DEBUG_CLIENT, "CL_LanguageTest: using mo files from '%s'\n", languagePath);
 	Q_strcat(languagePath, localeID, sizeof(languagePath));

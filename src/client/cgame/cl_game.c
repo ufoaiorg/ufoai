@@ -888,7 +888,7 @@ static qboolean GAME_LoadGame (const char *path, const char *name)
 {
 	char fullPath[MAX_OSPATH];
 
-	Com_sprintf(fullPath, sizeof(fullPath), "%s/cgame-%s_"CPUSTRING".%s", path, name, SO_EXT);
+	Com_sprintf(fullPath, sizeof(fullPath), "%s/cgame-%s_" CPUSTRING ".%s", path, name, SO_EXT);
 	cls.cgameLibrary = SDL_LoadObject(fullPath);
 	if (!cls.cgameLibrary) {
 		Com_sprintf(fullPath, sizeof(fullPath), "%s/cgame-%s.%s", path, name, SO_EXT);

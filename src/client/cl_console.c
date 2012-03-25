@@ -269,7 +269,7 @@ void Con_SaveConsoleHistory (void)
 
 	FS_OpenFile(CONSOLE_HISTORY_FILENAME, &f, FILE_WRITE);
 	if (!f.f) {
-		Com_Printf("Can not open "CONSOLE_HISTORY_FILENAME" for writing\n");
+		Com_Printf("Can not open " CONSOLE_HISTORY_FILENAME " for writing\n");
 		return;
 	}
 

@@ -82,22 +82,22 @@ static qboolean SAV_VerifyHeader (saveFileHeader_t const * const header)
 	/*check the length of the string*/
 	len = strlen(header->name);
 	if (len > sizeof(header->name)) {
-		Com_Printf("Name is "UFO_SIZE_T" Bytes long, max is "UFO_SIZE_T"\n", len, sizeof(header->name));
+		Com_Printf("Name is " UFO_SIZE_T " Bytes long, max is " UFO_SIZE_T "\n", len, sizeof(header->name));
 		return qfalse;
 	}
 	len = strlen(header->gameVersion);
 	if (len > sizeof(header->gameVersion)) {
-		Com_Printf("gameVersion is "UFO_SIZE_T" Bytes long, max is "UFO_SIZE_T"\n", len, sizeof(header->gameVersion));
+		Com_Printf("gameVersion is " UFO_SIZE_T " Bytes long, max is " UFO_SIZE_T "\n", len, sizeof(header->gameVersion));
 		return qfalse;
 	}
 	len = strlen(header->gameDate);
 	if (len > sizeof(header->gameDate)) {
-		Com_Printf("gameDate is "UFO_SIZE_T" Bytes long, max is "UFO_SIZE_T"\n", len, sizeof(header->gameDate));
+		Com_Printf("gameDate is " UFO_SIZE_T " Bytes long, max is " UFO_SIZE_T "\n", len, sizeof(header->gameDate));
 		return qfalse;
 	}
 	len = strlen(header->realDate);
 	if (len > sizeof(header->realDate)) {
-		Com_Printf("realDate is "UFO_SIZE_T" Bytes long, max is "UFO_SIZE_T"\n", len, sizeof(header->realDate));
+		Com_Printf("realDate is " UFO_SIZE_T " Bytes long, max is " UFO_SIZE_T "\n", len, sizeof(header->realDate));
 		return qfalse;
 	}
 	if (header->subsystems != 0 && header->subsystems != saveSubsystemsAmount) {

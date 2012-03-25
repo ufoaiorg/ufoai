@@ -255,16 +255,16 @@ void *_Mem_Alloc (size_t size, qboolean zeroFill, memPool_t *pool, const int tag
 
 	/* Check size */
 	if (size <= 0)
-		Sys_Error("Mem_Alloc: Attempted allocation of '"UFO_SIZE_T"' memory ignored\n" "alloc: %s:#%i\n", size, fileName, fileLine);
+		Sys_Error("Mem_Alloc: Attempted allocation of '" UFO_SIZE_T "' memory ignored\n" "alloc: %s:#%i\n", size, fileName, fileLine);
 
 	if (size > 0x40000000)
-		Sys_Error("Mem_Alloc: Attempted allocation of '"UFO_SIZE_T"' bytes!\n" "alloc: %s:#%i\n", size, fileName, fileLine);
+		Sys_Error("Mem_Alloc: Attempted allocation of '" UFO_SIZE_T "' bytes!\n" "alloc: %s:#%i\n", size, fileName, fileLine);
 
 	/* Add header and round to cacheline */
 	size = (size + sizeof(memBlock_t) + sizeof(memBlockFoot_t) + 31) & ~31;
 	mem = (memBlock_t *)malloc(size);
 	if (!mem)
-		Sys_Error("Mem_Alloc: failed on allocation of '"UFO_SIZE_T"' bytes\n" "alloc: %s:#%i", size, fileName, fileLine);
+		Sys_Error("Mem_Alloc: failed on allocation of '" UFO_SIZE_T "' bytes\n" "alloc: %s:#%i", size, fileName, fileLine);
 
 	/* Zero fill */
 	if (zeroFill)
@@ -595,7 +595,7 @@ static void Mem_Stats_f (void)
 				if (i & 1)
 					Com_Printf(S_COLOR_GREEN);
 
-				Com_Printf("%5i %5i %20s "UFO_SIZE_T"B\n", i + 1, mem->allocLine, mem->allocFile, mem->size);
+				Com_Printf("%5i %5i %20s " UFO_SIZE_T "B\n", i + 1, mem->allocLine, mem->allocFile, mem->size);
 
 				totalBytes += mem->size;
 			}

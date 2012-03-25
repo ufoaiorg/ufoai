@@ -148,7 +148,7 @@ void CP_SpawnAlienBaseMission (alienBase_t *alienBase)
 
 	mission->mapDef = Com_GetMapDefinitionByID(MAPDEF_ALIENBASE);
 	if (!mission->mapDef)
-		Com_Error(ERR_FATAL, "Could not find mapdef "MAPDEF_ALIENBASE);
+		Com_Error(ERR_FATAL, "Could not find mapdef " MAPDEF_ALIENBASE);
 
 	Vector2Copy(alienBase->pos, mission->pos);
 	mission->posAssigned = qtrue;

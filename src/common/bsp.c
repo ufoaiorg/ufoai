@@ -59,7 +59,7 @@ static void CMod_LoadSubmodels (mapTile_t *tile, const byte *base, const lump_t 
 
 	in = (const dBspModel_t *) (base + l->fileofs);
 	if (l->filelen % sizeof(*in))
-		Com_Error(ERR_DROP, "CMod_LoadSubmodels: funny lump size (%i => "UFO_SIZE_T")", l->filelen, sizeof(*in));
+		Com_Error(ERR_DROP, "CMod_LoadSubmodels: funny lump size (%i => " UFO_SIZE_T ")", l->filelen, sizeof(*in));
 	count = l->filelen / sizeof(*in);
 	Com_DPrintf(DEBUG_ENGINE, S_COLOR_GREEN "...submodels: %i\n", count);
 
