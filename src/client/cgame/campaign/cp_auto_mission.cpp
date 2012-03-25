@@ -429,9 +429,9 @@ static void AM_CalculateTeamScores (autoMissionBattle_t *battle)
 
 			/* In DEBUG mode, these should help with telling where things are at what time, for bug-hunting purposes. */
 			/* Note (Destructavator):  Is there a better way to implement this?  Is there a set protocol for this type of thing? */
-			Com_DPrintf(DEBUG_CLIENT, "Team %i has calculated ratio of healthy units of %lf.\n",
+			Com_DPrintf(DEBUG_CLIENT, "Team %i has calculated ratio of healthy units of %f.\n",
 					team, teamRatioHealthyUnits[team]);
-			Com_DPrintf(DEBUG_CLIENT, "Team %i has calculated ratio of health values of %lf.\n",
+			Com_DPrintf(DEBUG_CLIENT, "Team %i has calculated ratio of health values of %f.\n",
 					team, teamRatioHealthTotal[team]);
 
 			/** @todo speaking names please */
@@ -446,7 +446,7 @@ static void AM_CalculateTeamScores (autoMissionBattle_t *battle)
 				battle->scoreTeamSkill[team] = ChkDNorm (FpCurveDn (battle->scoreTeamSkill[team], skillAdjCalcAbs) );
 			/* if (skillAdjCalc == exact 0.0), no change to team's skill. */
 
-			Com_DPrintf(DEBUG_CLIENT, "Team %i has adjusted skill rating of %lf.\n",
+			Com_DPrintf(DEBUG_CLIENT, "Team %i has adjusted skill rating of %f.\n",
 					team, battle->scoreTeamSkill[team]);
 		}
 	}
@@ -722,7 +722,7 @@ static void AM_DoFight (autoMissionBattle_t *battle)
 				if (!AM_IsUnitActive(unit))
 					continue;
 
-				Com_DPrintf(DEBUG_CLIENT, "Unit %i on team %i has adjusted attack rating of %lf.\n",
+				Com_DPrintf(DEBUG_CLIENT, "Unit %i on team %i has adjusted attack rating of %f.\n",
 						currentUnit, team, battle->scoreTeamSkill[team]);
 
 				aliveUnits++;
