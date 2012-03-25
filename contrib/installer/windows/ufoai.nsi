@@ -164,6 +164,7 @@ Section "Source Code" SEC03
 	SetOutPath "$INSTDIR\src"
 		File /r /x .gitignore "..\..\..\src\*.h"
 		File /r /x .gitignore "..\..\..\src\*.c"
+		File /r /x .gitignore "..\..\..\src\*.cpp"
 		File /r /x .gitignore "..\..\..\src\*.def"
 		File /r /x .gitignore "..\..\..\src\*.rc"
 	SetOutPath "$INSTDIR\src\docs"
