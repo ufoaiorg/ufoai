@@ -116,7 +116,7 @@ static inline qboolean UI_IsScrollContainerNode (const uiNode_t* const node)
 void UI_ContainerNodeUpdateEquipment (inventory_t *inv, const equipDef_t *ed)
 {
 	int i;
-	int *numItems = (int*) Mem_Dup(ed->numItems, sizeof(ed->numItems));
+	int *const numItems = Mem_Dup(int, ed->numItems, lengthof(ed->numItems));
 
 	/* a 'tiny hack' to add the remaining equipment (not carried)
 	 * correctly into buy categories, reloading at the same time;

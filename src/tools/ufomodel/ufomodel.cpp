@@ -469,7 +469,8 @@ static void MD2GLCmdsRemove (const byte *buf, const char *fileName, int bufSize,
 	numGLCmds = LittleLong(md2->num_glcmds);
 
 	if (numGLCmds > 0) {
-		dMD2Model_t *fixedMD2 = (dMD2Model_t *)Mem_Dup(buf, bufSize);
+		byte        *const copy     = Mem_Dup(byte, buf, bufSize);
+		dMD2Model_t *const fixedMD2 = (dMD2Model_t*)copy;
 		const size_t delta = numGLCmds * sizeof(uint32_t);
 		const uint32_t offset = LittleLong(fixedMD2->ofs_glcmds);
 
@@ -486,7 +487,7 @@ static void MD2GLCmdsRemove (const byte *buf, const char *fileName, int bufSize,
 
 		FS_WriteFile(fixedMD2, bufSize, fileName);
 
-		Mem_Free(fixedMD2);
+		Mem_Free(copy);
 
 		*(size_t *)userData += delta;
 		Com_Printf("  \\ - removed %i glcmds from '%s' (save "UFO_SIZE_T" bytes)\n",
@@ -529,7 +530,7 @@ static void MD2SkinFix (const byte *buf, const char *fileName, int bufSize, void
 			char pathBuf[MD2_MAX_SKINNAME];
 			const char *fixedPath;
 			if (model == NULL) {
-				model = (byte *)Mem_Dup(buf, bufSize);
+				model = Mem_Dup(byte, buf, bufSize);
 				Com_Printf("model: %s\n", fileName);
 			}
 			fixedMD2 = (dMD2Model_t *)model;
