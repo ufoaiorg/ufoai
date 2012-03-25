@@ -53,7 +53,7 @@ void output_print (struct output_buffer *ob, const char * format, ...)
 
 static void lookup_section (bfd *abfd, asection *sec, void *opaque_data)
 {
-	struct find_info *data = opaque_data;
+	struct find_info *data = (struct find_info *)opaque_data;
 	bfd_vma vma;
 
 	if (data->func)
@@ -154,7 +154,7 @@ static int init_bfd_ctx (struct bfd_ctx *bc, const char * procname, struct outpu
 	}
 
 	bc->handle = b;
-	bc->symbol = symbol_table;
+	bc->symbol = (asymbol**)symbol_table;
 
 	return 0;
 }
@@ -182,8 +182,8 @@ struct bfd_ctx *get_bc (struct output_buffer *ob, struct bfd_set *set, const cha
 	if (init_bfd_ctx(&bc, procname, ob)) {
 		return NULL;
 	}
-	set->next = calloc(1, sizeof(*set));
-	set->bc = malloc(sizeof(struct bfd_ctx));
+	set->next = (bfd_set*)calloc(1, sizeof(*set));
+	set->bc = (bfd_ctx*)malloc(sizeof(struct bfd_ctx));
 	memcpy(set->bc, &bc, sizeof(bc));
 	set->name = strdup(procname);
 
