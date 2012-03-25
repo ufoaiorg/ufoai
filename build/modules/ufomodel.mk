@@ -16,37 +16,37 @@ ifeq ($(SSE),1)
 endif
 
 $(TARGET)_SRCS      = \
-	tools/ufomodel/ufomodel.c \
+	tools/ufomodel/ufomodel.cpp \
 	\
-	shared/mathlib.c \
-	shared/mutex.c \
-	shared/byte.c \
-	shared/images.c \
-	shared/parse.c \
-	shared/shared.c \
-	shared/utf8.c \
+	shared/mathlib.cpp \
+	shared/mutex.cpp \
+	shared/byte.cpp \
+	shared/images.cpp \
+	shared/parse.cpp \
+	shared/shared.cpp \
+	shared/utf8.cpp \
 	\
-	common/files.c \
-	common/list.c \
-	common/mem.c \
-	common/unzip.c \
-	common/ioapi.c \
+	common/files.cpp \
+	common/list.cpp \
+	common/mem.cpp \
+	common/unzip.cpp \
+	common/ioapi.cpp \
 	\
-	client/renderer/r_model.c \
-	client/renderer/r_model_alias.c \
-	client/renderer/r_model_dpm.c \
-	client/renderer/r_model_md2.c \
-	client/renderer/r_model_md3.c \
-	client/renderer/r_model_obj.c
+	client/renderer/r_model.cpp \
+	client/renderer/r_model_alias.cpp \
+	client/renderer/r_model_dpm.cpp \
+	client/renderer/r_model_md2.cpp \
+	client/renderer/r_model_md3.cpp \
+	client/renderer/r_model_obj.cpp
 
 ifeq ($(TARGET_OS),mingw32)
 	$(TARGET)_SRCS+=\
-		ports/windows/win_shared.c
+		ports/windows/win_shared.cpp
 else
 	$(TARGET)_SRCS+= \
-		ports/unix/unix_files.c \
-		ports/unix/unix_shared.c \
-		ports/unix/unix_main.c
+		ports/unix/unix_files.cpp \
+		ports/unix/unix_shared.cpp \
+		ports/unix/unix_main.cpp
 endif
 
 $(TARGET)_OBJS     := $(call ASSEMBLE_OBJECTS,$(TARGET))

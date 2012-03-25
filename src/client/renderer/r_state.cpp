@@ -792,8 +792,6 @@ void R_Setup3D (void)
 	R_CheckError();
 }
 
-extern const float SKYBOX_DEPTH;
-
 /**
  * @sa R_Setup3D
  */

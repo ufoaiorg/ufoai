@@ -32,6 +32,13 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #include "r_light.h"
 #include "r_image.h"
 
+/**
+ * @brief Center position of skybox along z-axis. This is used to make sure we see only the inside of Skybox.
+ * @sa R_DrawStarfield
+ * @sa R_Setup2D
+ */
+#define SKYBOX_DEPTH -9999.0f
+
 /* vertex arrays are used for many things */
 #define GL_ARRAY_LENGTH_CHUNK 4096
 extern const vec2_t default_texcoords[4];

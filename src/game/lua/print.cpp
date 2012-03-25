@@ -40,7 +40,7 @@ static void PrintString(const TString* ts)
    case '\t': printf("\\t"); break;
    case '\v': printf("\\v"); break;
    default:	if (isprint((unsigned char)c))
-   			putchar(c);
+			putchar(c);
 		else
 			printf("\\%03u",(unsigned char)c);
   }
@@ -168,7 +168,7 @@ static void PrintHeader(const Proto* f)
  else
   s="(string)";
  printf("\n%s <%s:%d,%d> (%d instruction%s, %d bytes at %p)\n",
- 	(f->linedefined==0)?"main":"function",s,
+	(f->linedefined==0)?"main":"function",s,
 	f->linedefined,f->lastlinedefined,
 	S(f->sizecode),f->sizecode*Sizeof(Instruction),VOID(f));
  printf("%d%s param%s, %d slot%s, %d upvalue%s, ",

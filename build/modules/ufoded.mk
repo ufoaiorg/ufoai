@@ -12,94 +12,94 @@ $(TARGET)_LDFLAGS  += $(BFD_LIBS) $(INTL_LIBS) $(SDL_LIBS) $(CURL_LIBS) $(SO_LIB
 $(TARGET)_CFLAGS   += -DCOMPILE_UFO -DDEDICATED_ONLY $(BFD_CFLAGS) $(INTL_CFLAGS) $(SDL_CFLAGS) $(CURL_CFLAGS)
 
 $(TARGET)_SRCS      = \
-	common/cmd.c \
-	common/http.c \
-	common/ioapi.c \
-	common/unzip.c \
-	common/bsp.c \
-	common/grid.c \
-	common/cmodel.c \
-	common/common.c \
-	common/cvar.c \
-	common/files.c \
-	common/list.c \
-	common/md4.c \
-	common/md5.c \
-	common/mem.c \
-	common/msg.c \
-	common/dbuffer.c \
-	common/net.c \
-	common/netpack.c \
-	common/pqueue.c \
-	common/scripts.c \
-	common/tracing.c \
-	common/routing.c \
+	common/cmd.cpp \
+	common/http.cpp \
+	common/ioapi.cpp \
+	common/unzip.cpp \
+	common/bsp.cpp \
+	common/grid.cpp \
+	common/cmodel.cpp \
+	common/common.cpp \
+	common/cvar.cpp \
+	common/files.cpp \
+	common/list.cpp \
+	common/md4.cpp \
+	common/md5.cpp \
+	common/mem.cpp \
+	common/msg.cpp \
+	common/dbuffer.cpp \
+	common/net.cpp \
+	common/netpack.cpp \
+	common/pqueue.cpp \
+	common/scripts.cpp \
+	common/tracing.cpp \
+	common/routing.cpp \
 	\
-	server/sv_ccmds.c \
-	server/sv_game.c \
-	server/sv_init.c \
-	server/sv_log.c \
-	server/sv_main.c \
-	server/sv_mapcycle.c \
-	server/sv_rma.c \
-	server/sv_send.c \
-	server/sv_user.c \
-	server/sv_world.c \
-	server/sv_clientstub.c \
+	server/sv_ccmds.cpp \
+	server/sv_game.cpp \
+	server/sv_init.cpp \
+	server/sv_log.cpp \
+	server/sv_main.cpp \
+	server/sv_mapcycle.cpp \
+	server/sv_rma.cpp \
+	server/sv_send.cpp \
+	server/sv_user.cpp \
+	server/sv_world.cpp \
+	server/sv_clientstub.cpp \
 	\
-	shared/bfd.c \
-	shared/byte.c \
-	shared/stringhunk.c \
-	shared/infostring.c \
-	shared/mathlib.c \
-	shared/mutex.c \
-	shared/parse.c \
-	shared/shared.c \
-	shared/utf8.c \
+	shared/bfd.cpp \
+	shared/byte.cpp \
+	shared/stringhunk.cpp \
+	shared/infostring.cpp \
+	shared/mathlib.cpp \
+	shared/mutex.cpp \
+	shared/parse.cpp \
+	shared/shared.cpp \
+	shared/utf8.cpp \
 	\
-	game/q_shared.c \
-	game/inv_shared.c \
-	game/chr_shared.c
+	game/q_shared.cpp \
+	game/inv_shared.cpp \
+	game/chr_shared.cpp
 
 ifneq ($(findstring $(TARGET_OS), netbsd freebsd linux),)
 	$(TARGET)_SRCS += \
-		ports/linux/linux_main.c \
-		ports/unix/unix_console.c \
-		ports/unix/unix_files.c \
-		ports/unix/unix_shared.c \
-		ports/unix/unix_main.c
+		ports/linux/linux_main.cpp \
+		ports/unix/unix_console.cpp \
+		ports/unix/unix_files.cpp \
+		ports/unix/unix_shared.cpp \
+		ports/unix/unix_main.cpp
 endif
 
 ifeq ($(TARGET_OS),mingw32)
 	$(TARGET)_SRCS += \
-		ports/windows/win_backtrace.c \
-		ports/windows/win_console.c \
-		ports/windows/win_shared.c \
-		ports/windows/win_main.c \
+		ports/windows/win_backtrace.cpp \
+		ports/windows/win_console.cpp \
+		ports/windows/win_shared.cpp \
+		ports/windows/win_main.cpp \
 		ports/windows/ufo.rc
 endif
 
 ifeq ($(TARGET_OS),darwin)
 	$(TARGET)_SRCS += \
 		ports/macosx/osx_main.m \
-		ports/unix/unix_console.c \
-		ports/unix/unix_files.c \
-		ports/unix/unix_shared.c \
-		ports/unix/unix_main.c
+		ports/unix/unix_console.cpp \
+		ports/unix/unix_files.cpp \
+		ports/unix/unix_shared.cpp \
+		ports/unix/unix_main.cpp
 endif
 
 ifeq ($(TARGET_OS),solaris)
 	$(TARGET)_SRCS += \
-		ports/solaris/solaris_main.c \
-		ports/unix/unix_console.c \
-		ports/unix/unix_files.c \
-		ports/unix/unix_shared.c \
-		ports/unix/unix_main.c
+		ports/solaris/solaris_main.cpp \
+		ports/unix/unix_console.cpp \
+		ports/unix/unix_files.cpp \
+		ports/unix/unix_shared.cpp \
+		ports/unix/unix_main.cpp
 endif
 
 ifeq ($(HARD_LINKED_GAME),1)
 	$(TARGET)_SRCS     += $(game_SRCS) \
-		game/inventory.c
+		game/inventory.cpp
 else
 	$(TARGET)_DEPS     := game
 endif

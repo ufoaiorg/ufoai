@@ -6874,7 +6874,7 @@ radiant/bitmaps/grid_window.png | GNU General Public License 2.0 or later | Nate
 radiant/bitmaps/particle_map.png | GNU General Public License 2.0 or later | Nate Wright
 radiant/bitmaps/particle_weapon.png | GNU General Public License 2.0 or later | Nate Wright
 radiant/bitmaps/texwindow_uniformsize.png |  | orbweaver (commiter in darkradiant repository) | http://darkradiant.svn.sourceforge.net/viewvc/darkradiant/trunk/darkradiant/install/bitmaps/texwindow_uniformsize.png?view=markup&pathrev=309
-src/common/pqueue.c | Public Domain
+src/common/pqueue.cpp | Public Domain
 src/common/pqueue.h | Public Domain
 src/docs/pathfinding.odg | GNU Free Documentation License | Werner "hoehrer" Höhrer
 src/docs/tex/chapters/geoscape.tex | GNU General Public License 2.0 | Eric Goller

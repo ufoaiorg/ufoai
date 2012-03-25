@@ -16,56 +16,56 @@ ifeq ($(SSE),1)
 endif
 
 $(TARGET)_SRCS      = \
-	tools/ufo2map/ufo2map.c \
-	tools/ufo2map/lighting.c \
-	tools/ufo2map/bsp.c \
-	tools/ufo2map/bspbrush.c \
-	tools/ufo2map/csg.c \
-	tools/ufo2map/faces.c \
-	tools/ufo2map/levels.c \
-	tools/ufo2map/lightmap.c \
-	tools/ufo2map/map.c \
-	tools/ufo2map/patches.c \
-	tools/ufo2map/portals.c \
-	tools/ufo2map/routing.c \
-	tools/ufo2map/textures.c \
-	tools/ufo2map/tree.c \
-	tools/ufo2map/threads.c \
-	tools/ufo2map/writebsp.c \
-	tools/ufo2map/check/checkentities.c \
-	tools/ufo2map/check/checklib.c \
-	tools/ufo2map/check/check.c \
-	tools/ufo2map/common/aselib.c \
-	tools/ufo2map/common/bspfile.c \
-	tools/ufo2map/common/polylib.c \
-	tools/ufo2map/common/scriplib.c \
-	tools/ufo2map/common/trace.c \
+	tools/ufo2map/ufo2map.cpp \
+	tools/ufo2map/lighting.cpp \
+	tools/ufo2map/bsp.cpp \
+	tools/ufo2map/bspbrush.cpp \
+	tools/ufo2map/csg.cpp \
+	tools/ufo2map/faces.cpp \
+	tools/ufo2map/levels.cpp \
+	tools/ufo2map/lightmap.cpp \
+	tools/ufo2map/map.cpp \
+	tools/ufo2map/patches.cpp \
+	tools/ufo2map/portals.cpp \
+	tools/ufo2map/routing.cpp \
+	tools/ufo2map/textures.cpp \
+	tools/ufo2map/tree.cpp \
+	tools/ufo2map/threads.cpp \
+	tools/ufo2map/writebsp.cpp \
+	tools/ufo2map/check/checkentities.cpp \
+	tools/ufo2map/check/checklib.cpp \
+	tools/ufo2map/check/check.cpp \
+	tools/ufo2map/common/aselib.cpp \
+	tools/ufo2map/common/bspfile.cpp \
+	tools/ufo2map/common/polylib.cpp \
+	tools/ufo2map/common/scriplib.cpp \
+	tools/ufo2map/common/trace.cpp \
 	\
-	shared/mathlib.c \
-	shared/mutex.c \
-	shared/byte.c \
-	shared/images.c \
-	shared/parse.c \
-	shared/shared.c \
-	shared/entitiesdef.c \
-	shared/utf8.c \
+	shared/mathlib.cpp \
+	shared/mutex.cpp \
+	shared/byte.cpp \
+	shared/images.cpp \
+	shared/parse.cpp \
+	shared/shared.cpp \
+	shared/entitiesdef.cpp \
+	shared/utf8.cpp \
 	\
-	common/files.c \
-	common/list.c \
-	common/mem.c \
-	common/unzip.c \
-	common/tracing.c \
-	common/routing.c \
-	common/ioapi.c
+	common/files.cpp \
+	common/list.cpp \
+	common/mem.cpp \
+	common/unzip.cpp \
+	common/tracing.cpp \
+	common/routing.cpp \
+	common/ioapi.cpp
 
 ifeq ($(TARGET_OS),mingw32)
 	$(TARGET)_SRCS+=\
-		ports/windows/win_shared.c
+		ports/windows/win_shared.cpp
 else
 	$(TARGET)_SRCS+= \
-		ports/unix/unix_files.c \
-		ports/unix/unix_shared.c \
-		ports/unix/unix_main.c
+		ports/unix/unix_files.cpp \
+		ports/unix/unix_shared.cpp \
+		ports/unix/unix_main.cpp
 endif
 
 $(TARGET)_OBJS     := $(call ASSEMBLE_OBJECTS,$(TARGET))

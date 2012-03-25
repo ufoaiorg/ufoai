@@ -64,8 +64,8 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 # ifndef snprintf
 #  define snprintf _snprintf
 # endif
-# define EXPORT __cdecl
-# define IMPORT __cdecl
+# define EXPORT
+# define IMPORT
 #else
 # define EXPORT
 # define IMPORT

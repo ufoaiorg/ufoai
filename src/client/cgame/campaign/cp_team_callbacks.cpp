@@ -33,8 +33,10 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #include "cp_team_callbacks.h"
 #include "cp_map.h" /* MAP_GetSelectedAircraft */
 
-linkedList_t *employeeList;	/** @sa E_GetEmployeeByMenuIndex */
-int employeesInCurrentList;
+/* List of (hired) emplyoees in the current category (employeeType). */
+static linkedList_t *employeeList;	/** @sa E_GetEmployeeByMenuIndex */
+/* How many employees in current list (changes on every category change, too) */
+static int employeesInCurrentList;
 
 /***********************************************************
  * Bindings

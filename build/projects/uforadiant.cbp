@@ -120,10 +120,10 @@
 		<Linker>
 			<Add library="libjpeg" />
 		</Linker>
-		<Unit filename="..\..\src\shared\entitiesdef.c">
+		<Unit filename="..\..\src\shared\entitiesdef.cpp">
 			<Option compilerVar="CC" />
 		</Unit>
-		<Unit filename="..\..\src\shared\parse.c">
+		<Unit filename="..\..\src\shared\parse.cpp">
 			<Option compilerVar="CC" />
 		</Unit>
 		<Unit filename="..\..\src\tools\radiant\include\Bounded.h" />

@@ -82,76 +82,76 @@
 			<Add library="jpeg" />
 			<Add library="png" />
 		</Linker>
-		<Unit filename="..\..\src\client\renderer\r_model.c">
+		<Unit filename="..\..\src\client\renderer\r_model.cpp">
 			<Option compilerVar="CC" />
 		</Unit>
-		<Unit filename="..\..\src\client\renderer\r_model_alias.c">
+		<Unit filename="..\..\src\client\renderer\r_model_alias.cpp">
 			<Option compilerVar="CC" />
 		</Unit>
-		<Unit filename="..\..\src\client\renderer\r_model_dpm.c">
+		<Unit filename="..\..\src\client\renderer\r_model_dpm.cpp">
 			<Option compilerVar="CC" />
 		</Unit>
-		<Unit filename="..\..\src\client\renderer\r_model_md2.c">
+		<Unit filename="..\..\src\client\renderer\r_model_md2.cpp">
 			<Option compilerVar="CC" />
 		</Unit>
-		<Unit filename="..\..\src\client\renderer\r_model_md3.c">
+		<Unit filename="..\..\src\client\renderer\r_model_md3.cpp">
 			<Option compilerVar="CC" />
 		</Unit>
-		<Unit filename="..\..\src\client\renderer\r_model_obj.c">
+		<Unit filename="..\..\src\client\renderer\r_model_obj.cpp">
 			<Option compilerVar="CC" />
 		</Unit>
-		<Unit filename="..\..\src\common\files.c">
+		<Unit filename="..\..\src\common\files.cpp">
 			<Option compilerVar="CC" />
 		</Unit>
-		<Unit filename="..\..\src\common\ioapi.c">
+		<Unit filename="..\..\src\common\ioapi.cpp">
 			<Option compilerVar="CC" />
 		</Unit>
 		<Unit filename="..\..\src\common\ioapi.h" />
-		<Unit filename="..\..\src\common\list.c">
+		<Unit filename="..\..\src\common\list.cpp">
 			<Option compilerVar="CC" />
 		</Unit>
-		<Unit filename="..\..\src\common\mem.c">
+		<Unit filename="..\..\src\common\mem.cpp">
 			<Option compilerVar="CC" />
 		</Unit>
 		<Unit filename="..\..\src\common\mem.h" />
-		<Unit filename="..\..\src\common\unzip.c">
+		<Unit filename="..\..\src\common\unzip.cpp">
 			<Option compilerVar="CC" />
 		</Unit>
 		<Unit filename="..\..\src\common\unzip.h" />
-		<Unit filename="..\..\src\ports\windows\win_shared.c">
+		<Unit filename="..\..\src\ports\windows\win_shared.cpp">
 			<Option compilerVar="CC" />
 		</Unit>
-		<Unit filename="..\..\src\shared\byte.c">
+		<Unit filename="..\..\src\shared\byte.cpp">
 			<Option compilerVar="CC" />
 		</Unit>
 		<Unit filename="..\..\src\shared\byte.h" />
 		<Unit filename="..\..\src\shared\defines.h" />
-		<Unit filename="..\..\src\shared\images.c">
+		<Unit filename="..\..\src\shared\images.cpp">
 			<Option compilerVar="CC" />
 		</Unit>
 		<Unit filename="..\..\src\shared\images.h" />
-		<Unit filename="..\..\src\shared\mathlib.c">
+		<Unit filename="..\..\src\shared\mathlib.cpp">
 			<Option compilerVar="CC" />
 		</Unit>
 		<Unit filename="..\..\src\shared\mathlib.h" />
-		<Unit filename="..\..\src\shared\mutex.c">
+		<Unit filename="..\..\src\shared\mutex.cpp">
 			<Option compilerVar="CC" />
 		</Unit>
 		<Unit filename="..\..\src\shared\mutex.h" />
-		<Unit filename="..\..\src\shared\parse.c">
+		<Unit filename="..\..\src\shared\parse.cpp">
 			<Option compilerVar="CC" />
 		</Unit>
 		<Unit filename="..\..\src\shared\parse.h" />
-		<Unit filename="..\..\src\shared\shared.c">
+		<Unit filename="..\..\src\shared\shared.cpp">
 			<Option compilerVar="CC" />
 		</Unit>
 		<Unit filename="..\..\src\shared\shared.h" />
 		<Unit filename="..\..\src\shared\typedefs.h" />
-		<Unit filename="..\..\src\shared\utf8.c">
+		<Unit filename="..\..\src\shared\utf8.cpp">
 			<Option compilerVar="CC" />
 		</Unit>
 		<Unit filename="..\..\src\shared\utf8.h" />
-		<Unit filename="..\..\src\tools\ufomodel\ufomodel.c">
+		<Unit filename="..\..\src\tools\ufomodel\ufomodel.cpp">
 			<Option compilerVar="CC" />
 		</Unit>
 		<Extensions>

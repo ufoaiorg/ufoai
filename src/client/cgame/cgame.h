@@ -265,7 +265,7 @@ typedef struct cgame_import_s {
 	void (IMPORT *INV_ItemDescription) (const objDef_t *od);
 } cgame_import_t;
 
-const cgame_export_t *GetCGameAPI(const cgame_import_t *import);
+extern "C" const cgame_export_t *GetCGameAPI(const cgame_import_t *import);
 
 typedef const cgame_export_t *(*cgame_api_t) (const cgame_import_t *);
 

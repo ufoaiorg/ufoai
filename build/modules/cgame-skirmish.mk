@@ -12,19 +12,19 @@ $(TARGET)_LDFLAGS  += $(SO_LDFLAGS) $(MXML_LIBS) -lm
 $(TARGET)_FILE     := base/$(TARGET).$(SO_EXT)
 
 $(TARGET)_SRCS      = \
-	client/cgame/skirmish/cl_game_skirmish.c
+	client/cgame/skirmish/cl_game_skirmish.cpp
 
 ifneq ($(HARD_LINKED_CGAME),1)
-	$(TARGET)_SRCS += shared/mathlib.c \
-		shared/shared.c \
-		shared/utf8.c \
-		shared/parse.c \
-		shared/infostring.c \
+	$(TARGET)_SRCS += shared/mathlib.cpp \
+		shared/shared.cpp \
+		shared/utf8.cpp \
+		shared/parse.cpp \
+		shared/infostring.cpp \
 		\
-		game/q_shared.c \
-		game/chr_shared.c \
-		game/inv_shared.c \
-		game/inventory.c
+		game/q_shared.cpp \
+		game/chr_shared.cpp \
+		game/inv_shared.cpp \
+		game/inventory.cpp
 else
 	$(TARGET)_IGNORE := yes
 endif

@@ -12,23 +12,23 @@ $(TARGET)_LDFLAGS  += $(SO_LDFLAGS) $(MXML_LIBS) -lm
 $(TARGET)_FILE     := base/$(TARGET).$(SO_EXT)
 
 $(TARGET)_SRCS      = \
-	client/cgame/staticcampaign/cl_game_staticcampaign.c \
-	client/cgame/staticcampaign/scp_missions.c \
-	client/cgame/staticcampaign/scp_parse.c
+	client/cgame/staticcampaign/cl_game_staticcampaign.cpp \
+	client/cgame/staticcampaign/scp_missions.cpp \
+	client/cgame/staticcampaign/scp_parse.cpp
 
 ifneq ($(HARD_LINKED_CGAME),1)
-	$(TARGET)_SRCS += shared/mathlib.c \
-		shared/shared.c \
-		shared/utf8.c \
-		shared/parse.c \
-		shared/infostring.c \
+	$(TARGET)_SRCS += shared/mathlib.cpp \
+		shared/shared.cpp \
+		shared/utf8.cpp \
+		shared/parse.cpp \
+		shared/infostring.cpp \
 		\
-		common/binaryexpressionparser.c \
+		common/binaryexpressionparser.cpp \
 		\
-		game/q_shared.c \
-		game/chr_shared.c \
-		game/inv_shared.c \
-		game/inventory.c \
+		game/q_shared.cpp \
+		game/chr_shared.cpp \
+		game/inv_shared.cpp \
+		game/inventory.cpp \
 		\
 		$(cgame-campaign_SRCS)
 else

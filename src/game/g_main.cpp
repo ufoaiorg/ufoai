@@ -34,7 +34,14 @@ level_locals_t level;
 game_import_t gi;
 game_export_t globals;
 
-cvar_t *password;
+#ifndef HARD_LINKED_GAME
+cvar_t *sv_maxclients;
+cvar_t *sv_dedicated;
+cvar_t *developer;
+#endif
+
+cvar_t *logstats;
+FILE *logstatsfile;
 
 cvar_t *sv_needpass;
 cvar_t *sv_maxplayersperteam;
@@ -43,24 +50,16 @@ cvar_t *sv_maxsoldiersperplayer;
 cvar_t *sv_enablemorale;
 cvar_t *sv_roundtimelimit;
 cvar_t *sv_maxentities;
-cvar_t *sv_dedicated;
-cvar_t *developer;
-
-cvar_t *logstats;
-FILE *logstatsfile;
-
 cvar_t *sv_filterban;
-
-static cvar_t *sv_cheats;
-
 cvar_t *sv_maxteams;
-
 cvar_t *sv_ai;
 cvar_t *sv_teamplay;
-cvar_t *sv_maxclients;
 cvar_t *sv_hurtaliens;
 cvar_t *sv_shot_origin;
+static cvar_t *sv_cheats;
 static cvar_t *sv_send_edicts;
+
+cvar_t *password;
 
 cvar_t *ai_alien;
 cvar_t *ai_civilian;

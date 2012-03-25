@@ -24,15 +24,11 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 
 #include "test_rma.h"
 #include "test_shared.h"
+#include "../server/server.h"
 #include "../server/sv_rma.h"
 #include "../ports/system.h"
 
 #define MAX_ALLOWED_TIME_TO_ASSEMBLE 30000
-
-cvar_t *sv_dumpmapassembly;
-cvar_t *sv_threads;
-cvar_t *sv_rma;
-cvar_t *sv_rmadisplaythemap;
 
 /**
  * The suite initialization function.

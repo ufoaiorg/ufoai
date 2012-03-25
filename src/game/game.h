@@ -282,6 +282,6 @@ typedef struct {
 	int maxplayersperteam;
 } game_export_t;
 
-game_export_t *GetGameAPI(game_import_t * import);
+extern "C" game_export_t *GetGameAPI(game_import_t * import);
 
 #endif /* GAME_GAME_H */

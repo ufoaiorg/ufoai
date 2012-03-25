@@ -40,11 +40,10 @@ static const int maxEmployeesPerPage = 15;
 
 static int employeeScrollPos = 0;
 
-/* List of (hired) employees in the current category (employeeType). */
-linkedList_t *employeeList;	/** @sa E_GetEmployeeByMenuIndex */
-
-/* How many employees in current list (changes on every catergory change, too) */
-int employeesInCurrentList;
+/* List of (hired) emplyoees in the current category (employeeType). */
+static linkedList_t *employeeList;	/** @sa E_GetEmployeeByMenuIndex */
+/* How many employees in current list (changes on every category change, too) */
+static int employeesInCurrentList;
 
 /**
  * @brief Update GUI with the current number of employee per category

@@ -23,8 +23,6 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 
 */
 
-extern "C" {
-
 #include "ui_main.h"
 #include "ui_behaviour.h"
 #include "ui_nodes.h"
@@ -33,7 +31,6 @@ extern "C" {
 #include "ui_parse.h"
 #include "ui_components.h"
 #include "ui_internal.h"
-
 
 /**
  * @todo Use typeid when it is possible
@@ -839,6 +836,4 @@ void UI_Validate (uiNode_t *node)
 {
 	if (node->invalidated)
 		node->behaviour->doLayout(node);
-}
-
 }

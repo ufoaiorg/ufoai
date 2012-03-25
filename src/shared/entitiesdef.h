@@ -28,10 +28,6 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #ifndef ENITIESDEF_H
 # define ENITIESDEF_H
 
-#ifdef __cplusplus
-extern "C" {
-#endif
-
 # define	ED_MAX_DEFS		64
 
 # define	ED_ERROR		-1
@@ -96,9 +92,5 @@ void ED_Free(void);
 
 extern int numEntityDefs;
 extern entityDef_t entityDefs[ED_MAX_DEFS + 1];
-
-#ifdef __cplusplus
-}
-#endif
 
 #endif

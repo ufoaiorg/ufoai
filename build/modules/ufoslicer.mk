@@ -12,34 +12,34 @@ $(TARGET)_LDFLAGS  += -lpng -ljpeg -lm -lz $(SDL_LIBS) $(SDL_IMAGE_LIBS)
 $(TARGET)_CFLAGS   += -DCOMPILE_MAP $(SDL_CFLAGS) $(SDL_IMAGE_CFLAGS)
 
 $(TARGET)_SRCS      = \
-	tools/ufoslicer.c \
+	tools/ufoslicer.cpp \
 	\
-	common/bspslicer.c \
-	common/files.c \
-	common/list.c \
-	common/mem.c \
-	common/unzip.c \
-	common/ioapi.c \
+	common/bspslicer.cpp \
+	common/files.cpp \
+	common/list.cpp \
+	common/mem.cpp \
+	common/unzip.cpp \
+	common/ioapi.cpp \
 	\
-	tools/ufo2map/common/bspfile.c \
-	tools/ufo2map/common/scriplib.c \
+	tools/ufo2map/common/bspfile.cpp \
+	tools/ufo2map/common/scriplib.cpp \
 	\
-	shared/mathlib.c \
-	shared/mutex.c \
-	shared/byte.c \
-	shared/images.c \
-	shared/parse.c \
-	shared/shared.c \
-	shared/utf8.c
+	shared/mathlib.cpp \
+	shared/mutex.cpp \
+	shared/byte.cpp \
+	shared/images.cpp \
+	shared/parse.cpp \
+	shared/shared.cpp \
+	shared/utf8.cpp
 
 ifeq ($(TARGET_OS),mingw32)
 	$(TARGET)_SRCS+=\
-		ports/windows/win_shared.c
+		ports/windows/win_shared.cpp
 else
 	$(TARGET)_SRCS+= \
-		ports/unix/unix_files.c \
-		ports/unix/unix_shared.c \
-		ports/unix/unix_main.c
+		ports/unix/unix_files.cpp \
+		ports/unix/unix_shared.cpp \
+		ports/unix/unix_main.cpp
 endif
 
 $(TARGET)_OBJS     := $(call ASSEMBLE_OBJECTS,$(TARGET))

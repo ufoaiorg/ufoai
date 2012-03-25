@@ -32,8 +32,6 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 
 #define MARKER_SIZE 60.0
 
-extern const float STANDARD_3D_ZOOM;
-
 /**
  * @brief Draw the day and night images of a flat geoscape
  * multitexture feature is used to blend the images
@@ -294,13 +292,6 @@ void R_Draw3DMapMarkers (int x, int y, int w, int h, const vec3_t rotate, const 
 	/* restore previous matrix */
 	glPopMatrix();
 }
-
-/**
- * @brief Center position of skybox along z-axis. This is used to make sure we see only the inside of Skybox.
- * @sa R_DrawStarfield
- * @sa R_Setup2D
- */
-const float SKYBOX_DEPTH = -9999.0f;
 
 /**
  * @brief Half size of Skybox.
