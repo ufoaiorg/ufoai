@@ -355,13 +355,8 @@ static void UI_ClientLayout (uiNode_t *node)
  */
 static void UI_ColumnLayout (uiNode_t *node)
 {
-#ifdef __cplusplus
-	int *columnPos = new int[EXTRADATA(node).layoutColumns];
-	int *columnSize = new int[EXTRADATA(node).layoutColumns];
-#else
-	int columnPos[EXTRADATA(node).layoutColumns];
-	int columnSize[EXTRADATA(node).layoutColumns];
-#endif
+	int *columnPos = Mem_AllocTypeN(int, EXTRADATA(node).layoutColumns);
+	int *columnSize = Mem_AllocTypeN(int, EXTRADATA(node).layoutColumns);
 	int rowHeight = 0;
 	int i;
 	int y;
@@ -369,10 +364,8 @@ static void UI_ColumnLayout (uiNode_t *node)
 
 	if (EXTRADATA(node).layoutColumns <= 0) {
 		Com_Printf("UI_ColumnLayout: Column number must be positive (%s). Layout ignored.", UI_GetPath(node));
-#ifdef __cplusplus
-		delete columnPos;
-		delete columnSize;
-#endif
+		Mem_Free(columnPos);
+		Mem_Free(columnSize);
 		return;
 	}
 
@@ -426,10 +419,8 @@ static void UI_ColumnLayout (uiNode_t *node)
 			UI_ExecuteEventActions(node, EXTRADATA(node).super.onViewChange);
 	}
 
-#ifdef __cplusplus
-		delete columnPos;
-		delete columnSize;
-#endif
+	Mem_Free(columnPos);
+	Mem_Free(columnSize);
 }
 
 static void UI_PanelNodeDoLayout (uiNode_t *node)
