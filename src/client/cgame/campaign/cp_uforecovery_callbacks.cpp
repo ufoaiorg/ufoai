@@ -642,12 +642,10 @@ static void US_FillUFOTransferUFOs_f (void)
 	}
 
 	UI_ExecuteConfunc("ufotransferlist_clearufos %d", ins->idx);
-	if (ins) {
-		US_Foreach(ufo) {
-			if (ufo->installation != ins)
-				continue;
-			UI_ExecuteConfunc("ufotransferlist_addufos %d %d \"%s\"", ins->idx, ufo->idx, ufo->ufoTemplate->model);
-		}
+	US_Foreach(ufo) {
+		if (ufo->installation != ins)
+			continue;
+		UI_ExecuteConfunc("ufotransferlist_addufos %d %d \"%s\"", ins->idx, ufo->idx, ufo->ufoTemplate->model);
 	}
 }
 
