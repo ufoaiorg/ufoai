@@ -1131,7 +1131,7 @@ static void TR_TransferBaseSelect (base_t *srcbase, base_t *destbase)
  */
 static void TR_InitBaseList (void)
 {
-	const base_t const *currentBase = B_GetCurrentSelectedBase();
+	const base_t *currentBase = B_GetCurrentSelectedBase();
 	uiNode_t *baseList = NULL;
 	base_t *base = NULL;
 

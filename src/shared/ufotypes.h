@@ -36,13 +36,9 @@
 typedef float float32_t;
 typedef double double64_t;
 
-#ifdef __cplusplus
 typedef int qboolean;
 #define qtrue 1
 #define qfalse 0
-#else
-typedef enum {qfalse, qtrue} qboolean;
-#endif
 
 #ifndef byte
 typedef uint8_t byte;

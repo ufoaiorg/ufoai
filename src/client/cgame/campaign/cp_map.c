@@ -1406,7 +1406,7 @@ static void MAP_DrawMapOneMission (const uiNode_t* node, const mission_t *ms)
 		R_DrawImage(x - image->width / 2, y - image->height / 2, image);
 	}
 
-	UI_DrawString("f_verysmall", ALIGN_UL, x + 10, y, 0, 0, 0,  _(ms->location), 0, 0, NULL, qfalse, 0);
+	UI_DrawString("f_verysmall", ALIGN_UL, x + 10, y, 0, 0, 0,  _(ms->location), 0, 0, NULL, qfalse, LONGLINES_WRAP);
 }
 
 /**
@@ -1427,7 +1427,7 @@ static void MAP_DrawMapOneInstallation (const uiNode_t* node, const installation
 	if (oneUFOVisible && AII_InstallationCanShoot(installation)) {
 		int i;
 		for (i = 0; i < tpl->maxBatteries; i++) {
-			const aircraftSlot_t const *slot = &installation->batteries[i].slot;
+			const aircraftSlot_t *slot = &installation->batteries[i].slot;
 			if (slot->item && slot->ammoLeft != 0 && slot->installationTime == 0) {
 				MAP_MapDrawEquidistantPoints(node, installation->pos,
 					slot->ammo->craftitem.stats[AIR_STATS_WRANGE], red);
@@ -1450,7 +1450,7 @@ static void MAP_DrawMapOneInstallation (const uiNode_t* node, const installation
 
 	/* Draw installation names */
 	if (MAP_AllMapToScreen(node, installation->pos, &x, &y, NULL))
-		UI_DrawString(font, ALIGN_UL, x, y + 10, 0, 0, 0, installation->name, 0, 0, NULL, qfalse, 0);
+		UI_DrawString(font, ALIGN_UL, x, y + 10, 0, 0, 0, installation->name, 0, 0, NULL, qfalse, LONGLINES_WRAP);
 }
 
 /**
@@ -1469,14 +1469,14 @@ static void MAP_DrawMapOneBase (const uiNode_t* node, const base_t *base,
 	if (oneUFOVisible && AII_BaseCanShoot(base)) {
 		int i;
 		for (i = 0; i < base->numBatteries; i++) {
-			const aircraftSlot_t const *slot = &base->batteries[i].slot;
+			const aircraftSlot_t *slot = &base->batteries[i].slot;
 			if (slot->item && slot->ammoLeft != 0 && slot->installationTime == 0) {
 				MAP_MapDrawEquidistantPoints(node, base->pos,
 					slot->ammo->craftitem.stats[AIR_STATS_WRANGE], red);
 			}
 		}
 		for (i = 0; i < base->numLasers; i++) {
-			const aircraftSlot_t const *slot = &base->lasers[i].slot;
+			const aircraftSlot_t *slot = &base->lasers[i].slot;
 			if (slot->item && slot->ammoLeft != 0 && slot->installationTime == 0) {
 				MAP_MapDrawEquidistantPoints(node, base->pos,
 					slot->ammo->craftitem.stats[AIR_STATS_WRANGE], red);
@@ -1507,7 +1507,7 @@ static void MAP_DrawMapOneBase (const uiNode_t* node, const base_t *base,
 
 	/* Draw base names */
 	if (MAP_AllMapToScreen(node, base->pos, &x, &y, NULL))
-		UI_DrawString(font, ALIGN_UL, x, y + 10, 0, 0, 0, base->name, 0, 0, NULL, qfalse, 0);
+		UI_DrawString(font, ALIGN_UL, x, y + 10, 0, 0, 0, base->name, 0, 0, NULL, qfalse, LONGLINES_WRAP);
 }
 
 /**
@@ -1885,7 +1885,7 @@ static void MAP_DrawMapMarkers (const uiNode_t* node)
 	for (i = 0; i < ccs.numNations; i++) {
 		const nation_t *nation = NAT_GetNationByIDX(i);
 		if (MAP_AllMapToScreen(node, nation->pos, &x, &y, NULL))
-			UI_DrawString("f_verysmall", ALIGN_UC, x , y, 0, 0, 0, _(nation->name), 0, 0, NULL, qfalse, 0);
+			UI_DrawString("f_verysmall", ALIGN_UC, x , y, 0, 0, 0, _(nation->name), 0, 0, NULL, qfalse, LONGLINES_WRAP);
 		if (showXVI) {
 			const nationInfo_t *stats = NAT_GetCurrentMonthInfo(nation);
 			Q_strcat(buffer, va(_("%s\t%i%%\n"), _(nation->name), stats->xviInfection), sizeof(buffer));

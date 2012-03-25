@@ -388,7 +388,7 @@ qboolean NAT_ScriptSanityCheck (void)
 		qboolean parametersFit = qfalse;
 		ufoType_t ufoTypes[UFO_MAX];
 		int numTypes;
-		const mapDef_t const *md;
+		const mapDef_t *md;
 
 		if (!city->name) {
 			error++;
@@ -817,7 +817,7 @@ void NAT_HandleBudget (const campaign_t *campaign)
 					+ employee->chr.score.rank * CP_GetSalaryRankBonusEmployee(salary, employee->type);
 		}
 		totalExpenditure += cost;
-		Com_sprintf(message, sizeof(message), _("Paid %i credits to: %s"), cost, E_GetEmployeeString(i, 1));
+		Com_sprintf(message, sizeof(message), _("Paid %i credits to: %s"), cost, E_GetEmployeeString((employeeType_t)i, 1));
 		MS_AddNewMessageSound(_("Notice"), message, qfalse, MSG_STANDARD, NULL, qfalse);
 	}
 

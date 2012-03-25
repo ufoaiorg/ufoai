@@ -77,22 +77,24 @@ static void TR_EmptyTransferCargo (base_t *destination, transfer_t *transfer, qb
 
 	if (transfer->hasEmployees && transfer->srcBase) {	/* Employees. (cannot come from a mission) */
 		if (!success || !B_GetBuildingStatus(destination, B_QUARTERS)) {	/* Employees will be unhired. */
-			employeeType_t i;
+			int i;
 			if (success) {
 				Com_sprintf(cp_messageBuffer, sizeof(cp_messageBuffer), _("%s does not have Living Quarters, employees got unhired!"), destination->name);
 				MSO_CheckAddNewMessage(NT_TRANSFER_LOST, _("Transport mission"), cp_messageBuffer, qfalse, MSG_TRANSFERFINISHED, NULL);
 			}
 			for (i = EMPL_SOLDIER; i < MAX_EMPL; i++) {
-				TR_ForeachEmployee(employee, transfer, i) {
+				const employeeType_t type = (employeeType_t)i;
+				TR_ForeachEmployee(employee, transfer, type) {
 					employee->baseHired = transfer->srcBase;	/* Restore back the original baseid. */
 					employee->transfer = qfalse;
 					E_UnhireEmployee(employee);
 				}
 			}
 		} else {
-			employeeType_t i;
+			int i;
 			for (i = EMPL_SOLDIER; i < MAX_EMPL; i++) {
-				TR_ForeachEmployee(employee, transfer, i) {
+				const employeeType_t type = (employeeType_t)i;
+				TR_ForeachEmployee(employee, transfer, type) {
 					employee->baseHired = transfer->srcBase;	/* Restore back the original baseid. */
 					employee->transfer = qfalse;
 					E_UnhireEmployee(employee);
@@ -430,10 +432,11 @@ static void TR_ListTransfers_f (void)
 		}
 		/* Carried Employees */
 		if (transfer->hasEmployees) {
-			employeeType_t emplType;
+			int i;
 
 			Com_Printf("...Carried Employee:\n");
-			for (emplType = EMPL_SOLDIER; emplType < MAX_EMPL; emplType++) {
+			for (i = EMPL_SOLDIER; i < MAX_EMPL; i++) {
+				const employeeType_t emplType = (employeeType_t)i;
 				TR_ForeachEmployee(employee, transfer, emplType) {
 					if (employee->ugv) {
 						/** @todo: improve ugv listing when they're implemented */
@@ -674,12 +677,13 @@ void TR_InitStartup (void)
 void TR_Shutdown (void)
 {
 	TR_Foreach(transfer) {
-		employeeType_t emplType;
+		int i;
 
 		LIST_Delete(&transfer->aircraft);
 
-		for (emplType = EMPL_SOLDIER; emplType < MAX_EMPL; emplType++)
-			LIST_Delete(&transfer->employees[emplType]);
+		for (i = EMPL_SOLDIER; i < MAX_EMPL; i++) {
+			LIST_Delete(&transfer->employees[i]);
+		}
 	}
 
 	TR_ShutdownCallbacks();

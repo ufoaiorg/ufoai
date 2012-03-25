@@ -141,7 +141,7 @@ void PR_UpdateRequiredItemsInBasestorage (base_t *base, int amount, const requir
 		return;
 
 	for (i = 0; i < reqs->numLinks; i++) {
-		const requirement_t const *req = &reqs->links[i];
+		const requirement_t *req = &reqs->links[i];
 		switch (req->type) {
 		case RS_LINK_ITEM: {
 			const objDef_t *item = req->link.od;
@@ -177,7 +177,7 @@ int PR_RequirementsMet (int amount, const requirements_t *reqs, base_t *base)
 	int producibleAmount = amount;
 
 	for (i = 0; i < reqs->numLinks; i++) {
-		const requirement_t const *req = &reqs->links[i];
+		const requirement_t *req = &reqs->links[i];
 
 		switch (req->type) {
 		case RS_LINK_ITEM: {
@@ -210,7 +210,7 @@ int PR_RequirementsMet (int amount, const requirements_t *reqs, base_t *base)
  */
 int PR_QueueFreeSpace (const base_t* base)
 {
-	const production_queue_t const *queue = PR_GetProductionForBase(base);
+	const production_queue_t *queue = PR_GetProductionForBase(base);
 
 	int numWorkshops;
 
@@ -262,7 +262,7 @@ technology_t* PR_GetTech (const productionData_t *data)
  * @param[in] data The production data
  * @param[in] amount Desired amount to produce.
  */
-production_t *PR_QueueNew (base_t *base, const productionData_t const *data, signed int amount)
+production_t *PR_QueueNew (base_t *base, const productionData_t *data, signed int amount)
 {
 	production_t *prod;
 	const technology_t *tech;

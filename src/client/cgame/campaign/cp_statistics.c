@@ -80,9 +80,10 @@ void CP_StatsUpdate_f (void)
 	/* costs */
 	for (i = 0; i < MAX_EMPL; i++) {
 		E_Foreach(i, employee) {
+			const employeeType_t type = (employeeType_t)i;
 			if (!E_IsHired(employee))
 				continue;
-			costs += CP_GetSalaryBaseEmployee(salary, i) + employee->chr.score.rank * CP_GetSalaryRankBonusEmployee(salary, i);
+			costs += CP_GetSalaryBaseEmployee(salary, type) + employee->chr.score.rank * CP_GetSalaryRankBonusEmployee(salary, type);
 			hired[employee->type]++;
 		}
 	}
@@ -91,7 +92,8 @@ void CP_StatsUpdate_f (void)
 	pos += (strlen(pos) + 1);
 	UI_RegisterText(TEXT_STATS_EMPLOYEES, pos);
 	for (i = 0; i < MAX_EMPL; i++) {
-		Q_strcat(pos, va(_("%s\t%i\n"), E_GetEmployeeString(i, hired[i]), hired[i]), (ptrdiff_t)(&statsBuffer[MAX_STATS_BUFFER] - pos));
+		const employeeType_t type = (employeeType_t)i;
+		Q_strcat(pos, va(_("%s\t%i\n"), E_GetEmployeeString(type, hired[i]), hired[i]), (ptrdiff_t)(&statsBuffer[MAX_STATS_BUFFER] - pos));
 	}
 
 	/* costs - second part */

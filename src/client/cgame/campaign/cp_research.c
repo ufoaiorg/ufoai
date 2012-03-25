@@ -1735,16 +1735,15 @@ qboolean RS_LoadXML (xmlNode_t *parent)
 		t->statusResearchable = XML_GetBool(snode, SAVE_RESEARCH_STATUSRESEARCHABLE, qfalse);
 		XML_GetDate(snode, SAVE_RESEARCH_PREDATE, &t->preResearchedDate.day, &t->preResearchedDate.sec);
 		XML_GetDate(snode, SAVE_RESEARCH_DATE, &t->researchedDate.day, &t->researchedDate.sec);
-		t->mailSent = XML_GetInt(snode, SAVE_RESEARCH_MAILSENT, 0);
+		t->mailSent = (mailSentType_t)XML_GetInt(snode, SAVE_RESEARCH_MAILSENT, 0);
 
 		/* load which techMails were read */
 		/** @todo this should be handled by the mail system */
 		for (ssnode = XML_GetNode(snode, SAVE_RESEARCH_MAIL); ssnode; ssnode = XML_GetNextNode(ssnode, snode, SAVE_RESEARCH_MAIL)) {
 			const int j= XML_GetInt(ssnode, SAVE_RESEARCH_MAIL_ID, TECHMAIL_MAX);
-			if (j < TECHMAIL_MAX) {
-				const techMailType_t mailType = j;
-				t->mail[mailType].read = qtrue;
-			} else
+			if (j < TECHMAIL_MAX)
+				t->mail[j].read = qtrue;
+			else
 				Com_Printf("......your save game contains unknown techmail ids... \n");
 		}
 
