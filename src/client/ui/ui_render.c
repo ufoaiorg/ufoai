@@ -284,8 +284,8 @@ void UI_DrawPanel (const vec2_t pos, const vec2_t size, const char *texture, int
  */
 int UI_DrawStringInBox (const char *fontID, align_t align, int x, int y, int width, int height, const char *text, longlines_t method)
 {
-	const align_t horizontalAlign = align % 3; /* left, center, right */
-	const align_t verticalAlign = align / 3;  /* top, center, bottom */
+	const align_t horizontalAlign = (align_t)(align % 3); /* left, center, right */
+	const align_t verticalAlign = (align_t)(align / 3);  /* top, center, bottom */
 
 	/* position of the text for UI_DrawString */
 	const int xx = x + ((width * horizontalAlign) >> 1);
@@ -298,7 +298,7 @@ int UI_DrawString (const char *fontID, align_t align, int x, int y, int absX, in
 		int lineHeight, const char *c, int boxHeight, int scrollPos, int *curLine, qboolean increaseLine, longlines_t method)
 {
 	const uiFont_t *font = UI_GetFontByID(fontID);
-	const align_t verticalAlign = align / 3;  /* top, center, bottom */
+	const align_t verticalAlign = (align_t)(align / 3);  /* top, center, bottom */
 	int lines;
 
 	if (!font)
