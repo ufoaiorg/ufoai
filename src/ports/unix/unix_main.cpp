@@ -193,7 +193,7 @@ static void _backtrace (FILE *crash, void * const *buffer, int size)
 	bfd_init();
 
 	for (x = 0; x < size; x++) {
-		struct file_match match = {buffer[x]};
+		struct file_match match = {(const char*)buffer[x], NULL, NULL, NULL};
 		unsigned long addr;
 		const char * file = NULL;
 		const char * func = NULL;
