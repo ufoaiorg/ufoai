@@ -51,7 +51,7 @@ typedef struct buyList_s {
 
 static buyList_t buyList;	/**< Current buylist that is shown in the menu. */
 static const objDef_t *currentSelectedMenuEntry;	/**< Current selected entry on the list. */
-static int buyCat = FILTER_S_PRIMARY;	/**< Category of items in the menu.
+static itemFilterTypes_t buyCat = FILTER_S_PRIMARY;	/**< Category of items in the menu.
 										 * @sa itemFilterTypes_t */
 
 /**
@@ -181,7 +181,7 @@ static void BS_MarketScroll_f (void)
 	int i;
 	base_t *base = B_GetCurrentSelectedBase();
 
-	if (!base || buyCat >= MAX_FILTERTYPES || buyCat < 0)
+	if (!base || buyCat == MAX_FILTERTYPES)
 		return;
 
 	if (Cmd_Argc() < 2) {
@@ -315,7 +315,7 @@ static void BS_BuyType (const base_t *base)
 	int i, j = 0;
 	char tmpbuf[MAX_VAR];
 
-	if (!base || buyCat >= MAX_FILTERTYPES || buyCat < 0)
+	if (!base || buyCat == MAX_FILTERTYPES)
 		return;
 
 	CP_UpdateCredits(ccs.credits);
@@ -558,14 +558,9 @@ static void BS_BuyType_f (void)
 		buyCat = INV_GetFilterTypeID(Cmd_Argv(1));
 
 		if (buyCat == FILTER_DISASSEMBLY)
-			buyCat--;
-		if (buyCat < 0) {
-			buyCat = MAX_FILTERTYPES - 1;
-			if (buyCat == FILTER_DISASSEMBLY)
-				buyCat--;
-		} else if (buyCat >= MAX_FILTERTYPES) {
-			buyCat = 0;
-		}
+			buyCat = FILTER_DUMMY;
+		else if (buyCat == MAX_FILTERTYPES)
+			buyCat = FILTER_S_PRIMARY;
 
 		Cvar_Set("mn_itemtype", INV_GetFilterType(buyCat));
 		currentSelectedMenuEntry = NULL;

@@ -595,7 +595,7 @@ static void UP_Article (technology_t* tech, eventMail_t *mail)
 		/* event mail */
 		Cvar_SetValue("mn_uppreavailable", 0);
 		Cvar_SetValue("mn_updisplay", UFOPEDIA_CHAPTERS);
-		UP_SetMailHeader(NULL, 0, mail);
+		UP_SetMailHeader(NULL, TECHMAIL_PRE, mail);
 		UI_RegisterText(TEXT_UFOPEDIA, _(mail->body));
 		/* This allows us to use the index button in the UFOpaedia,
 		 * eventMails don't have any chapter to go back to. */

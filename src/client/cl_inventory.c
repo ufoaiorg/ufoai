@@ -407,9 +407,8 @@ itemFilterTypes_t INV_GetFilterTypeID (const char * filterTypeID)
 /**
  * @param[in] id The filter type index
  */
-const char *INV_GetFilterType (const int id)
+const char *INV_GetFilterType (itemFilterTypes_t id)
 {
-	assert(id >= 0);
 	assert(id < MAX_FILTERTYPES);
 	return filterTypeNames[id];
 }

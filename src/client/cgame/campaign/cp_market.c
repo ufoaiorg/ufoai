@@ -464,7 +464,8 @@ qboolean BS_SaveXML (xmlNode_t *parent)
 	for (i = 0; i < AIRCRAFTTYPE_MAX; i++) {
 		if (market->bidAircraft[i] > 0 || market->askAircraft[i] > 0) {
 			xmlNode_t * snode = XML_AddNode(node, SAVE_MARKET_AIRCRAFT);
-			XML_AddString(snode, SAVE_MARKET_ID, Com_DropShipTypeToShortName(i));
+			const char *shortName = Com_DropShipTypeToShortName((humanAircraftType_t)i);
+			XML_AddString(snode, SAVE_MARKET_ID, shortName);
 			XML_AddIntValue(snode, SAVE_MARKET_NUM, market->numAircraft[i]);
 			XML_AddIntValue(snode, SAVE_MARKET_BID, market->bidAircraft[i]);
 			XML_AddIntValue(snode, SAVE_MARKET_ASK, market->askAircraft[i]);
@@ -506,7 +507,7 @@ qboolean BS_LoadXML (xmlNode_t *parent)
 	}
 	for (snode = XML_GetNode(node, SAVE_MARKET_AIRCRAFT); snode; snode = XML_GetNextNode(snode, node, SAVE_MARKET_AIRCRAFT)) {
 		const char *s = XML_GetString(snode, SAVE_MARKET_ID);
-		humanAircraftType_t type = Com_DropShipShortNameToID(s);
+		const humanAircraftType_t type = Com_DropShipShortNameToID(s);
 
 		market->numAircraft[type] = XML_GetInt(snode, SAVE_MARKET_NUM, 0);
 		market->bidAircraft[type] = XML_GetInt(snode, SAVE_MARKET_BID, 0);
@@ -548,7 +549,7 @@ void BS_InitMarket (const campaign_t *campaign)
 	}
 
 	for (i = 0; i < AIRCRAFTTYPE_MAX; i++) {
-		const char* name = Com_DropShipTypeToShortName(i);
+		const char* name = Com_DropShipTypeToShortName((humanAircraftType_t)i);
 		const aircraft_t *aircraft = AIR_GetAircraft(name);
 		if (market->askAircraft[i] == 0) {
 			market->askAircraft[i] = aircraft->price;
@@ -616,7 +617,7 @@ void CP_CampaignRunMarket (campaign_t *campaign)
 	}
 
 	for (i = 0; i < AIRCRAFTTYPE_MAX; i++) {
-		const humanAircraftType_t type = i;
+		const humanAircraftType_t type = (humanAircraftType_t)i;
 		const char *aircraftID = Com_DropShipTypeToShortName(type);
 		const aircraft_t* aircraft = AIR_GetAircraft(aircraftID);
 		const technology_t *tech = aircraft->tech;

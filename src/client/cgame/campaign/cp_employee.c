@@ -592,7 +592,7 @@ employee_t* E_CreateEmployee (employeeType_t type, const nation_t *nation, const
 
 	Com_DPrintf(DEBUG_CLIENT, "Generate character for type: %i\n", type);
 
-	return (employee_t*) LIST_Add(&ccs.employees[type], (void*) &employee, sizeof(employee))->data;
+	return (employee_t*) LIST_Add(&ccs.employees[type], (const byte*) &employee, sizeof(employee))->data;
 }
 
 /**
@@ -638,9 +638,10 @@ qboolean E_DeleteEmployee (employee_t *employee)
  */
 void E_DeleteAllEmployees (base_t* base)
 {
-	employeeType_t type;
+	int i;
 
-	for (type = EMPL_SOLDIER; type < MAX_EMPL; type++) {
+	for (i = EMPL_SOLDIER; i < MAX_EMPL; i++) {
+		const employeeType_t type = (employeeType_t)i;
 		E_Foreach(type, employee) {
 			if (base == NULL || E_IsInBase(employee, base))
 				E_DeleteEmployee(employee);
@@ -659,14 +660,15 @@ void E_DeleteAllEmployees (base_t* base)
  */
 void E_DeleteEmployeesExceedingCapacity (base_t *base)
 {
-	int type;
+	int i;
 
 	/* Check if there are too many employees */
 	if (CAP_GetFreeCapacity(base, CAP_EMPLOYEES) >= 0)
 		return;
 
 	/* do a reverse loop in order to finish by soldiers (the most important employees) */
-	for (type = MAX_EMPL - 1; type >= 0; type--) {
+	for (i = MAX_EMPL - 1; i >= 0; i--) {
+		const employeeType_t type = (employeeType_t)i;
 		/* UGV are not stored in Quarters */
 		if (type == EMPL_ROBOT)
 			continue;
@@ -838,15 +840,16 @@ int E_CountHiredRobotByType (const base_t* const base, const ugv_t *ugvType)
  */
 int E_CountAllHired (const base_t* const base)
 {
-	employeeType_t type;
-	int count;
+	int count, i;
 
 	if (!base)
 		return 0;
 
 	count = 0;
-	for (type = 0; type < MAX_EMPL; type++)
+	for (i = 0; i < MAX_EMPL; i++) {
+		const employeeType_t type = (employeeType_t)i;
 		count += E_CountHired(base, type);
+	}
 
 	return count;
 }
@@ -946,9 +949,10 @@ void E_InitialEmployees (const campaign_t *campaign)
  */
 static void E_ListHired_f (void)
 {
-	employeeType_t emplType;
+	int i;
 
-	for (emplType = 0; emplType < MAX_EMPL; emplType++) {
+	for (i = 0; i < MAX_EMPL; i++) {
+		const employeeType_t emplType = (employeeType_t)i;
 		E_Foreach(emplType, employee) {
 			Com_Printf("Employee: %s (ucn: %i) %s at %s\n", E_GetEmployeeString(employee->type, 1), employee->chr.ucn,
 					employee->chr.name, employee->baseHired->name);
@@ -1006,9 +1010,10 @@ employee_t* E_GetEmployeeByTypeFromChrUCN (employeeType_t type, int uniqueCharac
  */
 employee_t* E_GetEmployeeFromChrUCN (int uniqueCharacterNumber)
 {
-	employeeType_t emplType;
+	int i;
 
-	for (emplType = EMPL_SOLDIER; emplType < MAX_EMPL; emplType++) {
+	for (i = EMPL_SOLDIER; i < MAX_EMPL; i++) {
+		const employeeType_t emplType = (employeeType_t)i;
 		employee_t *employee = E_GetEmployeeByTypeFromChrUCN(emplType, uniqueCharacterNumber);
 		if (employee)
 			return employee;
@@ -1029,10 +1034,11 @@ employee_t* E_GetEmployeeFromChrUCN (int uniqueCharacterNumber)
  */
 qboolean E_SaveXML (xmlNode_t *p)
 {
-	employeeType_t emplType;
+	int i;
 
 	Com_RegisterConstList(saveEmployeeConstants);
-	for (emplType = 0; emplType < MAX_EMPL; emplType++) {
+	for (i = 0; i < MAX_EMPL; i++) {
+		const employeeType_t emplType = (employeeType_t)i;
 		xmlNode_t *snode = XML_AddNode(p, SAVE_EMPLOYEE_EMPLOYEES);
 
 		XML_AddString(snode, SAVE_EMPLOYEE_TYPE, Com_GetConstVariable(SAVE_EMPLOYEETYPE_NAMESPACE, emplType));
@@ -1119,7 +1125,7 @@ qboolean E_LoadXML (xmlNode_t *p)
 				success = qfalse;
 				break;
 			}
-			LIST_Add(&ccs.employees[emplType], (void*) &e, sizeof(e));
+			LIST_Add(&ccs.employees[emplType], (const byte*) &e, sizeof(e));
 		}
 		if (!success)
 			break;
@@ -1188,10 +1194,12 @@ void E_InitStartup (void)
  */
 void E_Shutdown (void)
 {
-	employeeType_t employeeType;
+	int i;
 
-	for (employeeType = EMPL_SOLDIER; employeeType < MAX_EMPL; employeeType++)
-		LIST_Delete(&ccs.employees[employeeType]);
+	for (i = EMPL_SOLDIER; i < MAX_EMPL; i++) {
+		const employeeType_t emplType = (employeeType_t)i;
+		LIST_Delete(&ccs.employees[emplType]);
+	}
 
 	E_ShutdownCallbacks();
 #ifdef DEBUG

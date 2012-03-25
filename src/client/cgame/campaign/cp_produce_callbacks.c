@@ -37,7 +37,7 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
  * Holds the current active production category/filter type.
  * @sa itemFilterTypes_t
  */
-static int produceCategory = FILTER_S_PRIMARY;
+static itemFilterTypes_t produceCategory = FILTER_S_PRIMARY;
 
 /** Holds the current active selected queue entry. */
 static production_t *selectedProduction = NULL;
@@ -186,7 +186,7 @@ static void PR_UpdateProductionList (const base_t* base)
 	UI_RegisterLinkedListText(TEXT_PRODUCTION_QUEUED, productionQueued);
 }
 
-static void PR_RequirementsInfo (const base_t const *base, const requirements_t const *reqs) {
+static void PR_RequirementsInfo (const base_t *base, const requirements_t *reqs) {
 	const vec4_t green = {0.0f, 1.0f, 0.0f, 0.8f};
 	const vec4_t yellow = {1.0f, 0.874f, 0.294f, 1.0f};
 	int i;
@@ -203,7 +203,7 @@ static void PR_RequirementsInfo (const base_t const *base, const requirements_t 
 		return;
 
 	for (i = 0; i < reqs->numLinks; i++) {
-		const requirement_t const *req = &reqs->links[i];
+		const requirement_t *req = &reqs->links[i];
 
 		switch (req->type) {
 		case RS_LINK_ITEM: {
@@ -522,7 +522,7 @@ static void PR_ProductionListClick_f (void)
  */
 static void PR_ProductionType_f (void)
 {
-	int cat;
+	itemFilterTypes_t cat;
 	base_t *base = B_GetCurrentSelectedBase();
 
 	if (Cmd_Argc() < 2) {
@@ -533,7 +533,7 @@ static void PR_ProductionType_f (void)
 	cat = INV_GetFilterTypeID(Cmd_Argv(1));
 
 	/* Check if the given category index is valid. */
-	if (cat < 0 || cat >= MAX_FILTERTYPES)
+	if (cat == MAX_FILTERTYPES)
 		cat = FILTER_S_PRIMARY;
 
 	/* Can be called from everywhere without a base set */

@@ -1618,7 +1618,7 @@ static void MIS_SpawnNewMissions_f (void)
 
 	category = (interestCategory_t)atoi(Cmd_Argv(1));
 
-	if (category < INTERESTCATEGORY_NONE || category >= INTERESTCATEGORY_MAX)
+	if (category == INTERESTCATEGORY_MAX)
 		return;
 
 	if (category == INTERESTCATEGORY_ALIENBASE) {

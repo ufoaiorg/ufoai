@@ -121,7 +121,7 @@ installation_t* INS_Build (const installationTemplate_t *installationTemplate, c
 	RADAR_Initialise(&(installation.radar), 0.0f, 0.0f, 0.0f, qfalse);
 
 	ccs.campaignStats.installationsBuilt++;
-	return (installation_t*)(LIST_Add(&ccs.installations, (void*)&installation, sizeof(installation)))->data;
+	return (installation_t*)(LIST_Add(&ccs.installations, (const byte*)&installation, sizeof(installation)))->data;
 }
 
 /**
@@ -527,7 +527,7 @@ qboolean INS_LoadXML (xmlNode_t *p)
 			inst.numBatteries = inst.installationTemplate->maxBatteries;
 		}
 
-		instp = (installation_t*)(LIST_Add(&ccs.installations, (void*)&inst, sizeof(inst)))->data;
+		instp = (installation_t*)(LIST_Add(&ccs.installations, (const byte*)&inst, sizeof(inst)))->data;
 		BDEF_InitialiseInstallationSlots(instp);
 		B_LoadBaseSlotsXML(instp->batteries, instp->numBatteries, ss);
 	}

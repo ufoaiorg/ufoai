@@ -134,12 +134,12 @@ static void AM_ClearBattle (autoMissionBattle_t *battle)
  * @note This function actually gets the data from the campaign object, using the aircraft data to
  * find out which of all the employees are on the aircraft (in the mission)
  */
-static void AM_FillTeamFromAircraft (autoMissionBattle_t *battle, const int teamNum, const aircraft_t *aircraft, const campaign_t *campaign)
+static void AM_FillTeamFromAircraft (autoMissionBattle_t *battle, const autoMissionTeamType_t teamNum, const aircraft_t *aircraft, const campaign_t *campaign)
 {
 	int teamSize;
 	int unitsAlive;
 
-	assert(teamNum >= 0 && teamNum < AUTOMISSION_TEAM_TYPE_MAX);
+	assert(teamNum < AUTOMISSION_TEAM_TYPE_MAX);
 	assert(battle != NULL);
 	assert(aircraft != NULL);
 
@@ -219,7 +219,7 @@ static void AM_FillTeamFromAircraft (autoMissionBattle_t *battle, const int team
  */
 static void AM_CreateUnitChr (autoUnit_t *unit, const teamDef_t *teamDef, const equipDef_t *ed)
 {
-	unit->chr = Mem_PoolAlloc(sizeof(character_t), cp_campaignPool, 0);
+	unit->chr = (character_t*)Mem_PoolAlloc(sizeof(character_t), cp_campaignPool, 0);
 	cgi->CL_GenerateCharacter(unit->chr, teamDef->id);
 
 	if (ed) {
@@ -299,16 +299,17 @@ static void AM_FillTeamFromBattleParams (autoMissionBattle_t *battle, const batt
  */
 static void AM_SetDefaultHostilities (autoMissionBattle_t *battle, const qboolean civsInfected)
 {
-	autoMissionTeamType_t team;
-	autoMissionTeamType_t otherTeam;
+	int i;
 	qboolean civsInverted = !civsInfected;
 
-	for (team = AUTOMISSION_TEAM_TYPE_PLAYER; team < AUTOMISSION_TEAM_TYPE_MAX; team++) {
+	for (i = AUTOMISSION_TEAM_TYPE_PLAYER; i < AUTOMISSION_TEAM_TYPE_MAX; i++) {
+		int j;
+		const autoMissionTeamType_t team = (autoMissionTeamType_t)i;
 		if (!battle->teamActive[team])
 			continue;
 
-		for (otherTeam = AUTOMISSION_TEAM_TYPE_PLAYER; otherTeam < AUTOMISSION_TEAM_TYPE_MAX; otherTeam++) {
-
+		for (j = AUTOMISSION_TEAM_TYPE_PLAYER; j < AUTOMISSION_TEAM_TYPE_MAX; j++) {
+			const autoMissionTeamType_t otherTeam = (autoMissionTeamType_t)j;
 			if (!battle->teamActive[otherTeam])
 				continue;
 
@@ -917,7 +918,7 @@ void AM_Go (mission_t *mission, aircraft_t *aircraft, const campaign_t *campaign
 
 	AM_ClearBattle(&autoBattle);
 	autoBattle.results = results;
-	AM_FillTeamFromAircraft(&autoBattle, 0, aircraft, campaign);
+	AM_FillTeamFromAircraft(&autoBattle, AUTOMISSION_TEAM_TYPE_PLAYER, aircraft, campaign);
 	AM_FillTeamFromBattleParams(&autoBattle, battleParameters);
 	AM_SetDefaultHostilities(&autoBattle, qfalse);
 	AM_CalculateTeamScores(&autoBattle);

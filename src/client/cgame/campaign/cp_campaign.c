@@ -758,7 +758,7 @@ qboolean CP_LoadXML (xmlNode_t *parent)
  */
 static qboolean CP_SaveMapDefStatXML (xmlNode_t *parent)
 {
-	const mapDef_t const* md;
+	const mapDef_t *md;
 
 	MapDef_ForeachSingleplayerCampaign(md) {
 		if (md->timesAlreadyUsed > 0) {
@@ -1425,8 +1425,10 @@ int CP_GetSalaryAdministrative (const salary_t *salary)
 	int i, costs;
 
 	costs = salary->adminInitial;
-	for (i = 0; i < MAX_EMPL; i++)
-		costs += E_CountByType(i) * CP_GetSalaryAdminEmployee(salary, i);
+	for (i = 0; i < MAX_EMPL; i++) {
+		const employeeType_t type = (employeeType_t)i;
+		costs += E_CountByType(type) * CP_GetSalaryAdminEmployee(salary, type);
+	}
 	return costs;
 }
 

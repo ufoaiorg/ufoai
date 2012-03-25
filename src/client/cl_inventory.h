@@ -63,7 +63,7 @@ qboolean INV_UnloadWeapon(invList_t *weapon, inventory_t *inv, const invDef_t *c
 const equipDef_t *INV_GetEquipmentDefinitionByID(const char *name);
 void INV_InitStartup(void);
 itemFilterTypes_t INV_GetFilterFromItem(const objDef_t *obj);
-const char *INV_GetFilterType(const int id);
+const char *INV_GetFilterType(itemFilterTypes_t id);
 itemFilterTypes_t INV_GetFilterTypeID(const char * filterTypeID);
 qboolean INV_ItemMatchesFilter(const objDef_t *obj, const itemFilterTypes_t filterType);
 invList_t *INV_SearchInInventoryWithFilter(const inventory_t* const i, const invDef_t * container, const objDef_t *item,  const itemFilterTypes_t filterType) __attribute__((nonnull(1)));
