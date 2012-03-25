@@ -771,6 +771,10 @@ static void R_InitExtensions (void)
 	/* Get OpenGL version.*/
 	sscanf(r_config.versionString, "%d.%d", &r_config.glVersionMajor, &r_config.glVersionMinor);
 
+	/* multitexture */
+	qglActiveTexture = NULL;
+	qglClientActiveTexture = NULL;
+
 	/* vertex buffer */
 	qglGenBuffers = NULL;
 	qglDeleteBuffers = NULL;
@@ -828,6 +832,12 @@ static void R_InitExtensions (void)
 	qglGetFramebufferAttachmentParameterivEXT = NULL;
 	qglGenerateMipmapEXT = NULL;
 	qglDrawBuffers = NULL;
+
+	/* multitexture */
+	if (R_CheckExtension("GL_ARB_multitexture")) {
+		qglActiveTexture = (ActiveTexture_t)R_GetProcAddress("glActiveTexture");
+		qglClientActiveTexture = (ClientActiveTexture_t)R_GetProcAddress("glClientActiveTexture");
+	}
 
 	if (R_CheckExtension("GL_ARB_texture_compression")) {
 		if (r_ext_texture_compression->integer) {
