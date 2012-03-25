@@ -25,6 +25,7 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #include "ui_internal.h"
 #include "ui_dragndrop.h"
 #include "ui_input.h"
+#include "ui_node.h"
 #include "ui_sound.h"
 
 #include "node/ui_node_abstractnode.h"
@@ -150,9 +151,9 @@ void UI_DNDAbort (void)
 	assert(sourceNode != NULL);
 
 	if (nodeAcceptDND && targetNode) {
-		targetNode->behaviour->dndLeave(targetNode);
+		UI_Node_DndLeave(targetNode);
 	}
-	sourceNode->behaviour->dndFinished(sourceNode, qfalse);
+	UI_Node_DndFinished(sourceNode, qfalse);
 
 	UI_DNDCleanup();
 	UI_InvalidateMouse();
@@ -176,9 +177,9 @@ void UI_DNDDrop (void)
 	}
 
 	if (targetNode) {
-		result = targetNode->behaviour->dndDrop(targetNode, mousePosX, mousePosY);
+		result = UI_Node_DndDrop(targetNode, mousePosX, mousePosY);
 	}
-	sourceNode->behaviour->dndFinished(sourceNode, result);
+	UI_Node_DndFinished(sourceNode, result);
 
 	UI_PlaySound("item-drop");
 
@@ -201,11 +202,11 @@ static void UI_DNDMouseMove (int mousePosX, int mousePosY)
 
 	if (node != targetNode) {
 		if (nodeAcceptDND && targetNode) {
-			targetNode->behaviour->dndLeave(targetNode);
+			UI_Node_DndLeave(targetNode);
 		}
 		targetNode = node;
 		if (targetNode) {
-			nodeAcceptDND = targetNode->behaviour->dndEnter(targetNode);
+			nodeAcceptDND = UI_Node_DndEnter(targetNode);
 		}
 	}
 
@@ -220,9 +221,8 @@ static void UI_DNDMouseMove (int mousePosX, int mousePosY)
 		return;
 	}
 
-	positionAcceptDND = node->behaviour->dndMove(targetNode, mousePosX, mousePosY);
+	positionAcceptDND = UI_Node_DndMove(targetNode, mousePosX, mousePosY);
 }
-
 
 /**
  * @brief Draw to dragging object and catch mouse move event

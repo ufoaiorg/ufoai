@@ -24,6 +24,7 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 
 #include "ui_expression.h"
 #include "ui_main.h"
+#include "ui_node.h"
 #include "ui_internal.h"
 #include "ui_parse.h"
 #include "ui_actions.h"
@@ -370,7 +371,7 @@ const char* UI_GetStringFromExpression (uiAction_t *expression, const uiCallCont
 				}
 				string = UI_GetStringFromNodeProperty(node, property);
 				if (string == NULL) {
-					Com_Printf("UI_GetStringFromExpression: String getter for '%s@%s' property do not exists; '' returned\n", node->behaviour->name, property->string);
+					Com_Printf("UI_GetStringFromExpression: String getter for '%s@%s' property do not exists; '' returned\n", UI_Node_GetWidgetName(node), property->string);
 					return "";
 				}
 				return string;

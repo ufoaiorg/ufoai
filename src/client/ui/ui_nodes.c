@@ -24,6 +24,7 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 
 #include "ui_main.h"
 #include "ui_internal.h"
+#include "ui_node.h"
 #include "ui_nodes.h"
 #include "ui_parse.h"
 #include "ui_input.h"
@@ -332,9 +333,9 @@ static uiNode_t* UI_AllocNodeWithoutNew (const char* name, const char* type, qbo
 
 	node->behaviour = behaviour;
 #ifdef DEBUG
-	node->behaviour->count++;
+	UI_Node_DebugCountWidget(node, 1);
 #endif
-	if (node->behaviour->isAbstract)
+	if (UI_Node_IsAbstract(node))
 		Com_Error(ERR_FATAL, "UI_AllocNodeWithoutNew: Node behavior '%s' is abstract. We can't instantiate it.", type);
 
 	if (name != NULL) {
@@ -344,8 +345,7 @@ static uiNode_t* UI_AllocNodeWithoutNew (const char* name, const char* type, qbo
 	}
 
 	/* initialize default properties */
-	if (node->behaviour->loading)
-		node->behaviour->loading(node);
+	UI_Node_Loading(node);
 
 	return node;
 }
@@ -363,8 +363,8 @@ uiNode_t* UI_AllocNode (const char* name, const char* type, qboolean isDynamic)
 	uiNode_t* node = UI_AllocNodeWithoutNew(name, type, isDynamic);
 
 	/* allocate memory */
-	if (node->dynamic && node->behaviour->newNode)
-		node->behaviour->newNode(node);
+	if (node->dynamic)
+		UI_Node_NewNode(node);
 
 	return node;
 }
@@ -380,7 +380,7 @@ static uiNode_t *UI_GetNodeInTreeAtPosition (uiNode_t *node, int rx, int ry)
 {
 	uiNode_t *find;
 
-	if (node->invis || node->behaviour->isVirtual || !UI_CheckVisibility(node))
+	if (node->invis || UI_Node_IsVirtual(node) || !UI_CheckVisibility(node))
 		return NULL;
 
 	/* relative to the node */
@@ -397,8 +397,8 @@ static uiNode_t *UI_GetNodeInTreeAtPosition (uiNode_t *node, int rx, int ry)
 		uiNode_t *child;
 		vec2_t clientPosition = {0, 0};
 
-		if (node->behaviour->getClientPosition)
-			node->behaviour->getClientPosition(node, clientPosition);
+		if (UI_Node_IsScrollableContainer(node))
+			UI_Node_GetClientPosition(node, clientPosition);
 
 		rx -= clientPosition[0];
 		ry -= clientPosition[1];
@@ -571,8 +571,7 @@ void UI_DeleteNode (uiNode_t* node)
 		}
 	}
 
-	if (node->behaviour->deleteNode)
-		node->behaviour->deleteNode(node);
+	UI_Node_DeleteNode(node);
 }
 
 /**
@@ -587,10 +586,10 @@ void UI_DeleteNode (uiNode_t* node)
  */
 uiNode_t* UI_CloneNode (const uiNode_t* node, uiNode_t *newWindow, qboolean recursive, const char *newName, qboolean isDynamic)
 {
-	uiNode_t* newNode = UI_AllocNodeWithoutNew(NULL, node->behaviour->name, isDynamic);
+	uiNode_t* newNode = UI_AllocNodeWithoutNew(NULL, UI_Node_GetWidgetName(node), isDynamic);
 
 	/* clone all data */
-	memcpy(newNode, node, sizeof(*node) + node->behaviour->extraDataSize);
+	memcpy(newNode, node, UI_Node_GetMemorySize(node));
 	newNode->dynamic = isDynamic;
 
 	/* custom name */
@@ -620,10 +619,10 @@ uiNode_t* UI_CloneNode (const uiNode_t* node, uiNode_t *newWindow, qboolean recu
 	}
 
 	/* allocate memories */
-	if (newNode->dynamic && newNode->behaviour->newNode)
-		newNode->behaviour->newNode(newNode);
+	if (newNode->dynamic)
+		UI_Node_NewNode(newNode);
 
-	newNode->behaviour->clone(node, newNode);
+	UI_Node_Clone(node, newNode);
 
 	return newNode;
 }

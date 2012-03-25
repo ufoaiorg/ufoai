@@ -28,6 +28,7 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #include "../client.h"
 #include "ui_parse.h"
 #include "ui_main.h"
+#include "ui_node.h"
 #include "ui_data.h"
 #include "ui_internal.h"
 #include "ui_actions.h"
@@ -859,7 +860,7 @@ static qboolean UI_ParseProperty (void* object, const value_t *property, const c
 static qboolean UI_ParseFunction (uiNode_t * node, const char **text, const char **token)
 {
 	uiAction_t **action;
-	assert(node->behaviour->isFunction);
+	assert(UI_Node_IsFunction(node));
 
 	Com_EnableFunctionScriptToken(qtrue);
 
@@ -966,7 +967,7 @@ static qboolean UI_ParseNodeBody (uiNode_t * node, const char **text, const char
 	}
 
 	/* functions are a special case */
-	if (node->behaviour->isFunction) {
+	if (UI_Node_IsFunction(node)) {
 		result = UI_ParseFunction(node, text, token);
 	} else {
 
@@ -1106,8 +1107,7 @@ static uiNode_t *UI_ParseNode (uiNode_t * parent, const char **text, const char 
 		return NULL;
 
 	/* validate properties */
-	if (node->behaviour->loaded)
-		node->behaviour->loaded(node);
+	UI_Node_Loaded(node);
 
 	return node;
 }
@@ -1343,7 +1343,7 @@ qboolean UI_ParseWindow (const char *type, const char *name, const char **text)
 #endif
 	}
 
-	window->behaviour->loaded(window);
+	UI_Node_Loaded(window);
 	return qtrue;
 }
 

@@ -28,6 +28,7 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #include "ui_draw.h"
 #include "ui_actions.h"
 #include "ui_input.h"
+#include "ui_node.h"
 #include "ui_timer.h" /* define UI_HandleTimers */
 #include "ui_dragndrop.h"
 #include "ui_tooltip.h"
@@ -84,7 +85,7 @@ static void UI_HighlightNode (const uiNode_t *node, const vec4_t color)
 
 	UI_GetNodeAbsPos(node, pos);
 
-	text = va("%s (%s)", node->name, node->behaviour->name);
+	text = va("%s (%s)", node->name, UI_Node_GetWidgetName(node));
 	R_FontTextSize("f_small_bold", text, DEBUG_PANEL_WIDTH, LONGLINES_PRETTYCHOP, &width, NULL, NULL, NULL);
 
 	R_Color(color);
@@ -216,7 +217,7 @@ static void UI_DrawNode (uiNode_t *node)
 	UI_Validate(node);
 
 	/* skip invisible, virtual, and undrawable nodes */
-	if (node->invis || node->behaviour->isVirtual)
+	if (node->invis || UI_Node_IsVirtual(node))
 		return;
 	/* if construct */
 	if (!UI_CheckVisibility(node))
@@ -239,16 +240,16 @@ static void UI_DrawNode (uiNode_t *node)
 	}
 
 	/* draw the node */
-	if (node->behaviour->draw) {
-		node->behaviour->draw(node);
+	if (UI_Node_IsDrawable(node)) {
+		UI_Node_Draw(node);
 	}
 
 	/* draw all child */
-	if (!node->behaviour->drawItselfChild && node->firstChild) {
+	if (!UI_Node_IsDrawItselfChild(node) && node->firstChild) {
 		qboolean hasClient = qfalse;
 		vec2_t clientPosition;
-		if (node->behaviour->getClientPosition) {
-			node->behaviour->getClientPosition(node, clientPosition);
+		if (UI_Node_IsScrollableContainer(node)) {
+			UI_Node_GetClientPosition(node, clientPosition);
 			hasClient = qtrue;
 		}
 
@@ -369,8 +370,8 @@ void UI_Draw (void)
 		UI_DrawNode(window);
 
 		/* draw a node over the window */
-		if (drawOverNode && drawOverNode->behaviour->drawOverWindow) {
-			drawOverNode->behaviour->drawOverWindow(drawOverNode);
+		if (drawOverNode) {
+			UI_Node_DrawOverWindow(drawOverNode);
 		}
 	}
 
@@ -384,11 +385,7 @@ void UI_Draw (void)
 
 	/* draw tooltip */
 	if (hoveredNode && tooltipVisible && !UI_DNDIsDragging()) {
-		if (hoveredNode->behaviour->drawTooltip) {
-			hoveredNode->behaviour->drawTooltip(hoveredNode, mousePosX, mousePosY);
-		} else {
-			UI_Tooltip(hoveredNode, mousePosX, mousePosY);
-		}
+		UI_Node_DrawTooltip(hoveredNode, mousePosX, mousePosY);
 	}
 
 #ifdef DEBUG

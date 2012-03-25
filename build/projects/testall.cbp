@@ -846,6 +846,9 @@
 		<Unit filename="..\..\src\client\ui\ui_nodes.c">
 			<Option compilerVar="CC" />
 		</Unit>
+		<Unit filename="..\..\src\client\ui\ui_node.cpp">
+			<Option compilerVar="CC" />
+		</Unit>
 		<Unit filename="..\..\src\client\ui\ui_parse.c">
 			<Option compilerVar="CC" />
 		</Unit>

@@ -25,6 +25,7 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #include "ui_main.h"
 #include "ui_internal.h"
 #include "ui_input.h"
+#include "ui_node.h"
 #include "node/ui_node_abstractnode.h"
 #include "node/ui_node_window.h"
 #include "node/ui_node_battlescape.h"
@@ -194,9 +195,7 @@ uiNode_t* UI_PushWindow (const char *name, const char *parentName, linkedList_t 
 	else
 		Com_Printf("Window stack overflow\n");
 
-	if (window->behaviour->windowOpened) {
-		window->behaviour->windowOpened(window, params);
-	}
+	UI_Node_WindowOpened(window, params);
 
 	/* change from e.g. console mode to game input mode (fetch input) */
 	Key_SetDest(key_game);
@@ -360,8 +359,7 @@ static void UI_CloseAllWindow (void)
 	for (i = ui_global.windowStackPos - 1; i >= 0; i--) {
 		uiNode_t *window = ui_global.windowStack[i];
 
-		if (window->behaviour->windowClosed)
-			window->behaviour->windowClosed(window);
+		UI_Node_WindowClosed(window);
 
 		/* safe: unlink window */
 		WINDOWEXTRADATA(window).parent = NULL;
@@ -433,15 +431,14 @@ static void UI_CloseWindowByRef (uiNode_t *window)
 		if (WINDOWEXTRADATA(m).parent != window) {
 			break;
 		}
-		if (window->behaviour->windowClosed)
-			window->behaviour->windowClosed(window);
+
+		UI_Node_WindowClosed(window);
 		WINDOWEXTRADATA(m).parent = NULL;
 		UI_RemoveWindowAtPositionFromStack(i + 1);
 	}
 
 	/* close the window */
-	if (window->behaviour->windowClosed)
-		window->behaviour->windowClosed(window);
+	UI_Node_WindowClosed(window);
 	WINDOWEXTRADATA(window).parent = NULL;
 	UI_RemoveWindowAtPositionFromStack(i);
 
@@ -718,7 +715,7 @@ static void UI_DebugTree (const uiNode_t *node, int depth)
 	for (i = 0; i < depth; i++) {
 		Com_Printf("    ");
 	}
-	Com_Printf("+ %s %s\n", node->behaviour->name, node->name);
+	Com_Printf("+ %s %s\n", UI_Node_GetWidgetName(node), node->name);
 
 	while (child) {
 		UI_DebugTree(child, depth + 1);

@@ -28,6 +28,7 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #include "ui_input.h"
 #include "ui_internal.h"
 #include "ui_nodes.h"
+#include "ui_node.h"
 #include "ui_parse.h"
 #include "ui_draw.h"
 #include "ui_dragndrop.h"
@@ -172,15 +173,13 @@ void UI_RequestFocus (uiNode_t* node)
 	focusNode = NULL;
 
 	/* lost the focus */
-	if (tmp && tmp->behaviour->focusLost) {
-		tmp->behaviour->focusLost(tmp);
+	if (tmp) {
+		UI_Node_FocusLost(tmp);
 	}
 
 	/* get the focus */
 	focusNode = node;
-	if (focusNode->behaviour->focusGained) {
-		focusNode->behaviour->focusGained(focusNode);
-	}
+	UI_Node_FocusGained(focusNode);
 }
 
 /**
@@ -212,9 +211,7 @@ void UI_RemoveFocus (void)
 	focusNode = NULL;
 
 	/* callback the lost of the focus */
-	if (tmp->behaviour->focusLost) {
-		tmp->behaviour->focusLost(tmp);
-	}
+	UI_Node_FocusLost(tmp);
 }
 
 static uiKeyBinding_t* UI_AllocStaticKeyBinding (void)
@@ -350,7 +347,7 @@ static qboolean UI_KeyPressedInWindow (unsigned int key, const uiNode_t *window)
 	/* execute event */
 	node = binding->node;
 	if (binding->property == NULL)
-		node->behaviour->activate(node);
+		UI_Node_Activate(node);
 	else if (binding->property->type == V_UI_NODEMETHOD) {
 		uiCallContext_t newContext;
 		uiNodeMethod_t func = (uiNodeMethod_t) binding->property->ofs;
@@ -372,9 +369,8 @@ static qboolean UI_KeyPressedInWindow (unsigned int key, const uiNode_t *window)
 qboolean UI_KeyRelease (unsigned int key, unsigned short unicode)
 {
 	/* translate event into the node with focus */
-	if (focusNode && focusNode->behaviour->keyReleased) {
-		if (focusNode->behaviour->keyReleased(focusNode, key, unicode))
-			return qtrue;
+	if (focusNode) {
+		return UI_Node_KeyReleased(focusNode, key, unicode);
 	}
 
 	return qfalse;
@@ -399,9 +395,8 @@ qboolean UI_KeyPressed (unsigned int key, unsigned short unicode)
 	}
 
 	/* translate event into the node with focus */
-	if (focusNode && focusNode->behaviour->keyPressed) {
-		if (focusNode->behaviour->keyPressed(focusNode, key, unicode))
-			return qtrue;
+	if (focusNode && UI_Node_KeyPressed(focusNode, key, unicode)) {
+		return qtrue;
 	}
 
 	/* else use common behaviour */
@@ -483,9 +478,7 @@ void UI_MouseRelease (void)
 		return;
 
 	capturedNode = NULL;
-	if (tmp->behaviour->capturedMouseLost)
-		tmp->behaviour->capturedMouseLost(tmp);
-
+	UI_Node_CapturedMouseLost(tmp);
 	UI_InvalidateMouse();
 }
 
@@ -536,8 +529,7 @@ void UI_MouseMove (int x, int y)
 
 	/* send the captured move mouse event */
 	if (capturedNode) {
-		if (capturedNode->behaviour->capturedMouseMove)
-			capturedNode->behaviour->capturedMouseMove(capturedNode, x, y);
+		UI_Node_CapturedMouseMove(capturedNode, x, y);
 		return;
 	}
 
@@ -587,9 +579,7 @@ void UI_MouseMove (int x, int y)
 	oldHoveredNode = hoveredNode;
 
 	/* send the move event */
-	if (hoveredNode && hoveredNode->behaviour->mouseMove) {
-		hoveredNode->behaviour->mouseMove(hoveredNode, x, y);
-	}
+	UI_Node_MouseMove(hoveredNode, x, y);
 }
 
 #define UI_IsMouseInvalidate() (oldMousePosX == -1)
@@ -609,8 +599,7 @@ static void UI_LeftClick (int x, int y)
 
 	/* send it to the captured mouse node */
 	if (capturedNode) {
-		if (capturedNode->behaviour->leftClick)
-			capturedNode->behaviour->leftClick(capturedNode, x, y);
+		UI_Node_LeftClick(capturedNode, x, y);
 		return;
 	}
 
@@ -626,11 +615,7 @@ static void UI_LeftClick (int x, int y)
 
 	disabled = (hoveredNode == NULL) || (hoveredNode->disabled) || (hoveredNode->parent && hoveredNode->parent->disabled);
 	if (!disabled) {
-		if (hoveredNode->behaviour->leftClick) {
-			hoveredNode->behaviour->leftClick(hoveredNode, x, y);
-		} else {
-			UI_ExecuteEventActions(hoveredNode, hoveredNode->onClick);
-		}
+		UI_Node_LeftClick(hoveredNode, x, y);
 	}
 }
 
@@ -649,18 +634,13 @@ static void UI_RightClick (int x, int y)
 
 	/* send it to the captured mouse node */
 	if (capturedNode) {
-		if (capturedNode->behaviour->rightClick)
-			capturedNode->behaviour->rightClick(capturedNode, x, y);
+		UI_Node_RightClick(capturedNode, x, y);
 		return;
 	}
 
 	disabled = (hoveredNode == NULL) || (hoveredNode->disabled) || (hoveredNode->parent && hoveredNode->parent->disabled);
 	if (!disabled) {
-		if (hoveredNode->behaviour->rightClick) {
-			hoveredNode->behaviour->rightClick(hoveredNode, x, y);
-		} else {
-			UI_ExecuteEventActions(hoveredNode, hoveredNode->onRightClick);
-		}
+		UI_Node_RightClick(hoveredNode, x, y);
 	}
 }
 
@@ -677,19 +657,13 @@ static void UI_MiddleClick (int x, int y)
 
 	/* send it to the captured mouse node */
 	if (capturedNode) {
-		if (capturedNode->behaviour->middleClick)
-			capturedNode->behaviour->middleClick(capturedNode, x, y);
+		UI_Node_MiddleClick(capturedNode, x, y);
 		return;
 	}
 
 	disabled = (hoveredNode == NULL) || (hoveredNode->disabled) || (hoveredNode->parent && hoveredNode->parent->disabled);
 	if (!disabled) {
-		if (hoveredNode->behaviour->middleClick) {
-			hoveredNode->behaviour->middleClick(hoveredNode, x, y);
-		} else {
-			UI_ExecuteEventActions(hoveredNode, hoveredNode->onMiddleClick);
-		}
-		return;
+		UI_Node_MiddleClick(hoveredNode, x, y);
 	}
 }
 
@@ -706,14 +680,14 @@ void UI_MouseScroll (int deltaX, int deltaY)
 
 	/* send it to the captured mouse node */
 	if (capturedNode) {
-		capturedNode->behaviour->scroll(capturedNode, deltaX, deltaY);
+		UI_Node_Scroll(capturedNode, deltaX, deltaY);
 		return;
 	}
 
 	node = hoveredNode;
 
 	while (node) {
-		if (node->behaviour->scroll(node, deltaX, deltaY)) {
+		if (UI_Node_Scroll(node, deltaX, deltaY)) {
 			break;
 		}
 		node = node->parent;
@@ -735,8 +709,7 @@ void UI_MouseDown (int x, int y, int button)
 
 	if (node != NULL) {
 		UI_MoveWindowOnTop(node->root);
-		if (node->behaviour->mouseDown)
-			node->behaviour->mouseDown(node, x, y, button);
+		UI_Node_MouseDown(node, x, y, button);
 	}
 
 	/* click event */
@@ -752,6 +725,8 @@ void UI_MouseDown (int x, int y, int button)
 		UI_MiddleClick(x, y);
 		break;
 	}
+
+	/** @todo each node should use it, if it is need */
 	UI_PlaySound("click1");
 }
 
@@ -771,6 +746,5 @@ void UI_MouseUp (int x, int y, int button)
 	if (node == NULL)
 		return;
 
-	if (node->behaviour->mouseUp)
-		node->behaviour->mouseUp(node, x, y, button);
+	UI_Node_MouseUp(node, x, y, button);
 }

@@ -108,6 +108,7 @@ $(TARGET)_SRCS      = \
 	client/ui/ui_sprite.c \
 	client/ui/ui_input.c \
 	client/ui/ui_main.c \
+	client/ui/ui_node.cpp \
 	client/ui/ui_nodes.c \
 	client/ui/ui_parse.c \
 	client/ui/ui_popup.c \

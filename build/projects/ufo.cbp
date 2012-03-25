@@ -1167,6 +1167,10 @@
 			<Option compilerVar="CC" />
 		</Unit>
 		<Unit filename="..\..\src\client\ui\ui_nodes.h" />
+		<Unit filename="..\..\src\client\ui\ui_node.cpp">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="..\..\src\client\ui\ui_node.h" />
 		<Unit filename="..\..\src\client\ui\ui_parse.c">
 			<Option compilerVar="CC" />
 		</Unit>
