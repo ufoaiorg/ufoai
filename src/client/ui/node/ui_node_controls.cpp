@@ -40,7 +40,7 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 static int deltaMouseX;
 static int deltaMouseY;
 
-static void UI_ControlsNodeMouseDown (uiNode_t *node, int x, int y, int button)
+void uiControlNode::mouseDown (uiNode_t *node, int x, int y, int button)
 {
 	if (button == K_MOUSE1) {
 		UI_SetMouseCapture(node);
@@ -52,7 +52,7 @@ static void UI_ControlsNodeMouseDown (uiNode_t *node, int x, int y, int button)
 	}
 }
 
-static void UI_ControlsNodeMouseUp (uiNode_t *node, int x, int y, int button)
+void uiControlNode::mouseUp (uiNode_t *node, int x, int y, int button)
 {
 	if (button == K_MOUSE1)
 		UI_MouseRelease();
@@ -61,7 +61,7 @@ static void UI_ControlsNodeMouseUp (uiNode_t *node, int x, int y, int button)
 /**
  * @brief Called when the node is captured by the mouse
  */
-static void UI_ControlsNodeCapturedMouseMove (uiNode_t *node, int x, int y)
+void uiControlNode::capturedMouseMove (uiNode_t *node, int x, int y)
 {
 	/* compute new x position of the window */
 	x -= deltaMouseX;
@@ -84,7 +84,5 @@ void UI_RegisterControlsNode (uiBehaviour_t *behaviour)
 {
 	behaviour->name = "controls";
 	behaviour->extends = "image";
-	behaviour->mouseDown = UI_ControlsNodeMouseDown;
-	behaviour->mouseUp = UI_ControlsNodeMouseUp;
-	behaviour->capturedMouseMove = UI_ControlsNodeCapturedMouseMove;
+	behaviour->manager = new uiControlNode();
 }

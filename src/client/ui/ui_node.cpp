@@ -23,10 +23,12 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 
 */
 
+#include <typeinfo>
 #include "ui_main.h"
 #include "ui_behaviour.h"
 #include "ui_nodes.h"
 #include "ui_node.h"
+#include "node/ui_node_abstractnode.h"
 #include "node/ui_node_panel.h"
 #include "ui_parse.h"
 #include "ui_components.h"
@@ -40,11 +42,11 @@ qboolean UI_Node_IsVirtual(const struct uiNode_s *node)
 	return node->behaviour->isVirtual;
 }
 
-/**
- * @todo Use typeid when it is possible
- */
 qboolean UI_Node_IsDrawable(const struct uiNode_s *node)
 {
+	if (node->behaviour->manager) {
+		return (typeid(uiLocatedNode).before(typeid(node->behaviour->manager))) ? qtrue : qfalse;
+	}
 	return (node->behaviour->draw != NULL) ? qtrue : qfalse;
 }
 
@@ -86,6 +88,11 @@ intptr_t UI_Node_GetMemorySize(const struct uiNode_s *node)
 
 void UI_Node_Draw(struct uiNode_s *node)
 {
+	if (node->behaviour->manager) {
+		uiLocatedNode *b = dynamic_cast<uiLocatedNode*>(node->behaviour->manager);
+		b->draw(node);
+		return;
+	}
 	node->behaviour->draw(node);
 }
 
@@ -122,26 +129,51 @@ qboolean UI_Node_Scroll(struct uiNode_s *node, int deltaX, int deltaY)
 
 void UI_Node_MouseMove(struct uiNode_s *node, int x, int y)
 {
+	if (node->behaviour->manager) {
+		uiLocatedNode *b = dynamic_cast<uiLocatedNode*>(node->behaviour->manager);
+		b->mouseMove(node, x, y);
+		return;
+	}
 	node->behaviour->mouseMove(node, x, y);
 }
 
 void UI_Node_MouseDown(struct uiNode_s *node, int x, int y, int button)
 {
+	if (node->behaviour->manager) {
+		uiLocatedNode *b = dynamic_cast<uiLocatedNode*>(node->behaviour->manager);
+		b->mouseDown(node, x, y, button);
+		return;
+	}
 	node->behaviour->mouseDown(node, x, y, button);
 }
 
 void UI_Node_MouseUp(struct uiNode_s *node, int x, int y, int button)
 {
+	if (node->behaviour->manager) {
+		uiLocatedNode *b = dynamic_cast<uiLocatedNode*>(node->behaviour->manager);
+		b->mouseUp(node, x, y, button);
+		return;
+	}
 	node->behaviour->mouseUp(node, x, y, button);
 }
 
 void UI_Node_CapturedMouseMove(struct uiNode_s *node, int x, int y)
 {
+	if (node->behaviour->manager) {
+		uiLocatedNode *b = dynamic_cast<uiLocatedNode*>(node->behaviour->manager);
+		b->capturedMouseMove(node, x, y);
+		return;
+	}
 	node->behaviour->capturedMouseMove(node, x, y);
 }
 
 void UI_Node_CapturedMouseLost(struct uiNode_s *node)
 {
+	if (node->behaviour->manager) {
+		uiLocatedNode *b = dynamic_cast<uiLocatedNode*>(node->behaviour->manager);
+		b->capturedMouseLost(node);
+		return;
+	}
 	node->behaviour->capturedMouseLost(node);
 }
 
@@ -149,11 +181,21 @@ void UI_Node_CapturedMouseLost(struct uiNode_s *node)
 
 void UI_Node_Loading(struct uiNode_s *node)
 {
+	if (node->behaviour->manager) {
+		uiNode *b = node->behaviour->manager;
+		b->loading(node);
+		return;
+	}
 	node->behaviour->loading(node);
 }
 
 void UI_Node_Loaded(struct uiNode_s *node)
 {
+	if (node->behaviour->manager) {
+		uiNode *b = node->behaviour->manager;
+		b->loaded(node);
+		return;
+	}
 	node->behaviour->loaded(node);
 }
 

@@ -35,7 +35,7 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #define EXTRADATA_TYPE ekgExtraData_t
 #define EXTRADATA(node) UI_EXTRADATA(node, EXTRADATA_TYPE)
 
-static void UI_EKGNodeDraw (uiNode_t *node)
+void uiEkgNode::draw (uiNode_t *node)
 {
 	vec2_t size;
 	vec2_t nodepos;
@@ -103,7 +103,7 @@ static void UI_EKGNodeDraw (uiNode_t *node)
 /**
  * @brief Called at the begin of the load from script
  */
-static void UI_EKGNodeLoading (uiNode_t *node)
+void uiEkgNode::loading (uiNode_t *node)
 {
 	EXTRADATA(node).scaleCvarValue = 1.0f;
 	EXTRADATA(node).scrollSpeed = 0.07f;
@@ -112,9 +112,8 @@ static void UI_EKGNodeLoading (uiNode_t *node)
 void UI_RegisterEKGNode (uiBehaviour_t* behaviour)
 {
 	behaviour->name = "ekg";
-	behaviour->loading = UI_EKGNodeLoading;
 	behaviour->extends = "image";
-	behaviour->draw = UI_EKGNodeDraw;
+	behaviour->manager = new uiEkgNode();
 	behaviour->extraDataSize = sizeof(EXTRADATA_TYPE);
 
 	/* @todo Need documentation */

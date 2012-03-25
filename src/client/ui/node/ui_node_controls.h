@@ -25,7 +25,25 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #ifndef CLIENT_UI_UI_NODE_CONTROLS_H
 #define CLIENT_UI_UI_NODE_CONTROLS_H
 
-struct uiBehaviour_s;
+#include "ui_node_image.h"
+
+class uiControlNode : public uiImageNode {
+public:
+	/**
+	 * @override
+	 */
+	void mouseDown(struct uiNode_s *node, int x, int y, int button);
+	/**
+	 * @override
+	 */
+	void mouseUp(struct uiNode_s *node, int x, int y, int button);
+	/**
+	 * @override
+	 */
+	void capturedMouseMove(struct uiNode_s *node, int x, int y);
+
+};
+
 void UI_RegisterControlsNode(struct uiBehaviour_s *behaviour);
 
 #endif

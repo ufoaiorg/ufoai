@@ -28,6 +28,38 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #include "../ui_nodes.h"
 #include "../ui_node.h"
 
+struct uiNode_s;
+struct uiBehaviour_s;
+
+class uiNode {
+public:
+	/** Called before script initialization, initialized default values */
+	virtual void loading(struct uiNode_s *node) {}
+	/** only called one time, when node parsing was finished */
+	virtual void loaded(struct uiNode_s *node) {}
+
+	virtual ~uiNode() {}
+};
+
+class uiLocatedNode : public uiNode {
+public:
+	/** How to draw a node */
+	virtual void draw(struct uiNode_s *node) {}
+
+	/** Mouse move event in the node */
+	virtual void mouseMove(struct uiNode_s *node, int x, int y) {}
+	/** Mouse button down event in the node */
+	virtual void mouseDown(struct uiNode_s *node, int x, int y, int button) {}
+	/** Mouse button up event in the node */
+	virtual void mouseUp(struct uiNode_s *node, int x, int y, int button) {}
+	/** Mouse move event in the node when captured */
+	virtual void capturedMouseMove(struct uiNode_s *node, int x, int y) {}
+	/** Capture is finished */
+	virtual void capturedMouseLost(struct uiNode_s *node) {}
+
+	virtual ~uiLocatedNode() {}
+};
+
 void UI_RegisterAbstractNode(struct uiBehaviour_s *);
 
 #endif

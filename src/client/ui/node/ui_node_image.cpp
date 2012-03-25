@@ -52,7 +52,7 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 /**
  * @brief Handled after the end of the load of the node from the script (all data and/or child are set)
  */
-static void UI_ImageNodeLoaded (uiNode_t *node)
+void uiImageNode::loaded (uiNode_t *node)
 {
 	/* update the size when its possible */
 	if (Vector2Empty(node->size)) {
@@ -118,7 +118,7 @@ static void UI_ImageAlignBoxInBox (vec2_t outerBoxPos, vec2_t outerBoxSize, vec2
  * @brief Draws the image node
  * @param[in] node The UI node to draw
  */
-void UI_ImageNodeDraw (uiNode_t *node)
+void uiImageNode::draw (uiNode_t *node)
 {
 	vec2_t size;
 	vec2_t nodepos;
@@ -196,8 +196,7 @@ void UI_RegisterImageNode (uiBehaviour_t* behaviour)
 {
 	/** @todo rename it according to the function name when its possible */
 	behaviour->name = "image";
-	behaviour->draw = UI_ImageNodeDraw;
-	behaviour->loaded = UI_ImageNodeLoaded;
+	behaviour->manager = new uiImageNode();
 	behaviour->extraDataSize = sizeof(EXTRADATA_TYPE);
 
 	/* Do not change the image ratio. The image will be proportionally stretched. */

@@ -26,6 +26,7 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #define CLIENT_UI_UI_BEHAVIOUR_H
 
 #include "ui_nodes.h"
+#include "node/ui_node_abstractnode.h"
 
 struct value_s;
 struct uiBehaviour_s;
@@ -39,6 +40,7 @@ typedef struct uiBehaviour_s {
 	/* behaviour attributes */
 	const char* name;				/**< name of the behaviour: string type of a node */
 	const char* extends;			/**< name of the extends behaviour */
+	uiNode* manager;				/**< manager of the behaviour */
 	qboolean registration;			/**< True if we can define the behavior with registration function */
 	qboolean isVirtual;				/**< true, if the node doesn't have any position on the screen */
 	qboolean isFunction;			/**< true, if the node is a function */

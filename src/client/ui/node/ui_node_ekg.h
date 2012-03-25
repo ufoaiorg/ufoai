@@ -27,6 +27,19 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 
 #include "ui_node_image.h"
 
+class uiEkgNode : public uiImageNode {
+public:
+	/**
+	 * @override
+	 */
+	void loading(struct uiNode_s *node);
+	/**
+	 * @override
+	 */
+	void draw(struct uiNode_s *node);
+};
+
+
 typedef struct ekgExtraData_s {
 	imageExtraData_t super;
 	float scrollSpeed;
