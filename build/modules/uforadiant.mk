@@ -352,8 +352,8 @@ $(TARGET)_SRCS      = \
 	\
 	$(RADIANT_BASE)/libs/Instance.cpp \
 	\
-	shared/parse.c \
-	shared/entitiesdef.c \
+	shared/parse.cpp \
+	shared/entitiesdef.cpp \
 	$(RADIANT_BASE)/libs/picomodel/picointernal.c \
 	$(RADIANT_BASE)/libs/picomodel/picomodel.c \
 	$(RADIANT_BASE)/libs/picomodel/picomodules.c \
