@@ -401,7 +401,6 @@ char *Sys_GetHomeDirectory (void)
 {
 	TCHAR szPath[MAX_PATH];
 	static char path[MAX_OSPATH];
-	FARPROC qSHGetFolderPath;
 	HMODULE shfolder;
 
 	shfolder = LoadLibrary("shfolder.dll");
@@ -411,7 +410,8 @@ char *Sys_GetHomeDirectory (void)
 		return NULL;
 	}
 
-	qSHGetFolderPath = GetProcAddress(shfolder, "SHGetFolderPathA");
+	typedef HRESULT SHGetFolderPath_t(HWND, int, HANDLE, DWORD, LPSTR);
+	SHGetFolderPath_t* const qSHGetFolderPath = (SHGetFolderPath_t*)GetProcAddress(shfolder, "SHGetFolderPathA");
 	if (qSHGetFolderPath == NULL) {
 		Com_Printf("Unable to find SHGetFolderPath in SHFolder.dll\n");
 		FreeLibrary(shfolder);
