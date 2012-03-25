@@ -355,8 +355,6 @@ static void UI_ClientLayout (uiNode_t *node)
  */
 static void UI_ColumnLayout (uiNode_t *node)
 {
-	int *columnPos = Mem_AllocTypeN(int, EXTRADATA(node).layoutColumns);
-	int *columnSize = Mem_AllocTypeN(int, EXTRADATA(node).layoutColumns);
 	int rowHeight = 0;
 	int i;
 	int y;
@@ -364,10 +362,11 @@ static void UI_ColumnLayout (uiNode_t *node)
 
 	if (EXTRADATA(node).layoutColumns <= 0) {
 		Com_Printf("UI_ColumnLayout: Column number must be positive (%s). Layout ignored.", UI_GetPath(node));
-		Mem_Free(columnPos);
-		Mem_Free(columnSize);
 		return;
 	}
+
+	int *columnPos = Mem_AllocTypeN(int, EXTRADATA(node).layoutColumns);
+	int *columnSize = Mem_AllocTypeN(int, EXTRADATA(node).layoutColumns);
 
 	/* check the first row */
 	child = node->firstChild;
