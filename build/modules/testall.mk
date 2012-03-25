@@ -135,7 +135,7 @@ $(TARGET)_SRCS      = \
 	client/ui/ui_timer.c \
 	client/ui/ui_tooltip.c \
 	client/ui/ui_windows.c \
-	client/ui/node/ui_node_abstractnode.c \
+	client/ui/node/ui_node_abstractnode.cpp \
 	client/ui/node/ui_node_abstractvalue.c \
 	client/ui/node/ui_node_abstractoption.c \
 	client/ui/node/ui_node_abstractscrollbar.c \
