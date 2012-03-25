@@ -115,1037 +115,1037 @@
 			<Add library="xvidcore" />
 		</Linker>
 		<Unit filename="..\..\src\client\battlescape\cl_actor.cpp">
-			<Option compilerVar="CC" />
+			<Option compilerVar="CPP" />
 		</Unit>
 		<Unit filename="..\..\src\client\battlescape\cl_battlescape.cpp">
-			<Option compilerVar="CC" />
+			<Option compilerVar="CPP" />
 		</Unit>
 		<Unit filename="..\..\src\client\battlescape\cl_camera.cpp">
-			<Option compilerVar="CC" />
+			<Option compilerVar="CPP" />
 		</Unit>
 		<Unit filename="..\..\src\client\battlescape\cl_hud.cpp">
-			<Option compilerVar="CC" />
+			<Option compilerVar="CPP" />
 		</Unit>
 		<Unit filename="..\..\src\client\battlescape\cl_hud_callbacks.cpp">
-			<Option compilerVar="CC" />
+			<Option compilerVar="CPP" />
 		</Unit>
 		<Unit filename="..\..\src\client\battlescape\cl_localentity.cpp">
-			<Option compilerVar="CC" />
+			<Option compilerVar="CPP" />
 		</Unit>
 		<Unit filename="..\..\src\client\battlescape\cl_parse.cpp">
-			<Option compilerVar="CC" />
+			<Option compilerVar="CPP" />
 		</Unit>
 		<Unit filename="..\..\src\client\battlescape\cl_particle.cpp">
-			<Option compilerVar="CC" />
+			<Option compilerVar="CPP" />
 		</Unit>
 		<Unit filename="..\..\src\client\battlescape\cl_radar.cpp">
-			<Option compilerVar="CC" />
+			<Option compilerVar="CPP" />
 		</Unit>
 		<Unit filename="..\..\src\client\battlescape\cl_radar.h" />
 		<Unit filename="..\..\src\client\battlescape\cl_spawn.cpp">
-			<Option compilerVar="CC" />
+			<Option compilerVar="CPP" />
 		</Unit>
 		<Unit filename="..\..\src\client\battlescape\cl_ugv.cpp">
-			<Option compilerVar="CC" />
+			<Option compilerVar="CPP" />
 		</Unit>
 		<Unit filename="..\..\src\client\battlescape\cl_view.cpp">
-			<Option compilerVar="CC" />
+			<Option compilerVar="CPP" />
 		</Unit>
 		<Unit filename="..\..\src\client\battlescape\events\e_main.cpp">
-			<Option compilerVar="CC" />
+			<Option compilerVar="CPP" />
 		</Unit>
 		<Unit filename="..\..\src\client\battlescape\events\e_parse.cpp">
-			<Option compilerVar="CC" />
+			<Option compilerVar="CPP" />
 		</Unit>
 		<Unit filename="..\..\src\client\battlescape\events\e_server.cpp">
-			<Option compilerVar="CC" />
+			<Option compilerVar="CPP" />
 		</Unit>
 		<Unit filename="..\..\src\client\battlescape\events\event\actor\e_event_actoradd.cpp">
-			<Option compilerVar="CC" />
+			<Option compilerVar="CPP" />
 		</Unit>
 		<Unit filename="..\..\src\client\battlescape\events\event\actor\e_event_actorappear.cpp">
-			<Option compilerVar="CC" />
+			<Option compilerVar="CPP" />
 		</Unit>
 		<Unit filename="..\..\src\client\battlescape\events\event\actor\e_event_actorclientaction.cpp">
-			<Option compilerVar="CC" />
+			<Option compilerVar="CPP" />
 		</Unit>
 		<Unit filename="..\..\src\client\battlescape\events\event\actor\e_event_actordie.cpp">
-			<Option compilerVar="CC" />
+			<Option compilerVar="CPP" />
 		</Unit>
 		<Unit filename="..\..\src\client\battlescape\events\event\actor\e_event_actormove.cpp">
-			<Option compilerVar="CC" />
+			<Option compilerVar="CPP" />
 		</Unit>
 		<Unit filename="..\..\src\client\battlescape\events\event\actor\e_event_actorreactionfirechange.cpp">
-			<Option compilerVar="CC" />
+			<Option compilerVar="CPP" />
 		</Unit>
 		<Unit filename="..\..\src\client\battlescape\events\event\actor\e_event_actorreservationchange.cpp">
-			<Option compilerVar="CC" />
+			<Option compilerVar="CPP" />
 		</Unit>
 		<Unit filename="..\..\src\client\battlescape\events\event\actor\e_event_actorresetclientaction.cpp">
-			<Option compilerVar="CC" />
+			<Option compilerVar="CPP" />
 		</Unit>
 		<Unit filename="..\..\src\client\battlescape\events\event\actor\e_event_actorrevitalised.cpp">
-			<Option compilerVar="CC" />
+			<Option compilerVar="CPP" />
 		</Unit>
 		<Unit filename="..\..\src\client\battlescape\events\event\actor\e_event_actorshoot.cpp">
-			<Option compilerVar="CC" />
+			<Option compilerVar="CPP" />
 		</Unit>
 		<Unit filename="..\..\src\client\battlescape\events\event\actor\e_event_actorshoothidden.cpp">
-			<Option compilerVar="CC" />
+			<Option compilerVar="CPP" />
 		</Unit>
 		<Unit filename="..\..\src\client\battlescape\events\event\actor\e_event_actorstartshoot.cpp">
-			<Option compilerVar="CC" />
+			<Option compilerVar="CPP" />
 		</Unit>
 		<Unit filename="..\..\src\client\battlescape\events\event\actor\e_event_actorstatechange.cpp">
-			<Option compilerVar="CC" />
+			<Option compilerVar="CPP" />
 		</Unit>
 		<Unit filename="..\..\src\client\battlescape\events\event\actor\e_event_actorstats.cpp">
-			<Option compilerVar="CC" />
+			<Option compilerVar="CPP" />
 		</Unit>
 		<Unit filename="..\..\src\client\battlescape\events\event\actor\e_event_actorthrow.cpp">
-			<Option compilerVar="CC" />
+			<Option compilerVar="CPP" />
 		</Unit>
 		<Unit filename="..\..\src\client\battlescape\events\event\actor\e_event_actorturn.cpp">
-			<Option compilerVar="CC" />
+			<Option compilerVar="CPP" />
 		</Unit>
 		<Unit filename="..\..\src\client\battlescape\events\event\inventory\e_event_invadd.cpp">
-			<Option compilerVar="CC" />
+			<Option compilerVar="CPP" />
 		</Unit>
 		<Unit filename="..\..\src\client\battlescape\events\event\inventory\e_event_invammo.cpp">
-			<Option compilerVar="CC" />
+			<Option compilerVar="CPP" />
 		</Unit>
 		<Unit filename="..\..\src\client\battlescape\events\event\inventory\e_event_invdel.cpp">
-			<Option compilerVar="CC" />
+			<Option compilerVar="CPP" />
 		</Unit>
 		<Unit filename="..\..\src\client\battlescape\events\event\inventory\e_event_invreload.cpp">
-			<Option compilerVar="CC" />
+			<Option compilerVar="CPP" />
 		</Unit>
 		<Unit filename="..\..\src\client\battlescape\events\event\player\e_event_centerview.cpp">
-			<Option compilerVar="CC" />
+			<Option compilerVar="CPP" />
 		</Unit>
 		<Unit filename="..\..\src\client\battlescape\events\event\player\e_event_doendround.cpp">
-			<Option compilerVar="CC" />
+			<Option compilerVar="CPP" />
 		</Unit>
 		<Unit filename="..\..\src\client\battlescape\events\event\player\e_event_endroundannounce.cpp">
-			<Option compilerVar="CC" />
+			<Option compilerVar="CPP" />
 		</Unit>
 		<Unit filename="..\..\src\client\battlescape\events\event\player\e_event_reset.cpp">
-			<Option compilerVar="CC" />
+			<Option compilerVar="CPP" />
 		</Unit>
 		<Unit filename="..\..\src\client\battlescape\events\event\player\e_event_results.cpp">
-			<Option compilerVar="CC" />
+			<Option compilerVar="CPP" />
 		</Unit>
 		<Unit filename="..\..\src\client\battlescape\events\event\player\e_event_startgame.cpp">
-			<Option compilerVar="CC" />
+			<Option compilerVar="CPP" />
 		</Unit>
 		<Unit filename="..\..\src\client\battlescape\events\event\world\e_event_addbrushmodel.cpp">
-			<Option compilerVar="CC" />
+			<Option compilerVar="CPP" />
 		</Unit>
 		<Unit filename="..\..\src\client\battlescape\events\event\world\e_event_addedict.cpp">
-			<Option compilerVar="CC" />
+			<Option compilerVar="CPP" />
 		</Unit>
 		<Unit filename="..\..\src\client\battlescape\events\event\world\e_event_doorclose.cpp">
-			<Option compilerVar="CC" />
+			<Option compilerVar="CPP" />
 		</Unit>
 		<Unit filename="..\..\src\client\battlescape\events\event\world\e_event_dooropen.cpp">
-			<Option compilerVar="CC" />
+			<Option compilerVar="CPP" />
 		</Unit>
 		<Unit filename="..\..\src\client\battlescape\events\event\world\e_event_entappear.cpp">
-			<Option compilerVar="CC" />
+			<Option compilerVar="CPP" />
 		</Unit>
 		<Unit filename="..\..\src\client\battlescape\events\event\world\e_event_entdestroy.cpp">
-			<Option compilerVar="CC" />
+			<Option compilerVar="CPP" />
 		</Unit>
 		<Unit filename="..\..\src\client\battlescape\events\event\world\e_event_entperish.cpp">
-			<Option compilerVar="CC" />
+			<Option compilerVar="CPP" />
 		</Unit>
 		<Unit filename="..\..\src\client\battlescape\events\event\world\e_event_explode.cpp">
-			<Option compilerVar="CC" />
+			<Option compilerVar="CPP" />
 		</Unit>
 		<Unit filename="..\..\src\client\battlescape\events\event\world\e_event_particleappear.cpp">
-			<Option compilerVar="CC" />
+			<Option compilerVar="CPP" />
 		</Unit>
 		<Unit filename="..\..\src\client\battlescape\events\event\world\e_event_particlespawn.cpp">
-			<Option compilerVar="CC" />
+			<Option compilerVar="CPP" />
 		</Unit>
 		<Unit filename="..\..\src\client\battlescape\events\event\world\e_event_sound.cpp">
-			<Option compilerVar="CC" />
+			<Option compilerVar="CPP" />
 		</Unit>
 		<Unit filename="..\..\src\client\cgame\staticcampaign\cl_game_staticcampaign.cpp">
-			<Option compilerVar="CC" />
+			<Option compilerVar="CPP" />
 		</Unit>
 		<Unit filename="..\..\src\client\cgame\staticcampaign\scp_missions.cpp">
-			<Option compilerVar="CC" />
+			<Option compilerVar="CPP" />
 		</Unit>
 		<Unit filename="..\..\src\client\cgame\staticcampaign\scp_parse.cpp">
-			<Option compilerVar="CC" />
+			<Option compilerVar="CPP" />
 		</Unit>
 		<Unit filename="..\..\src\client\cgame\campaign\cl_game_campaign.cpp">
-			<Option compilerVar="CC" />
+			<Option compilerVar="CPP" />
 		</Unit>
 		<Unit filename="..\..\src\client\cgame\campaign\cp_aircraft.cpp">
-			<Option compilerVar="CC" />
+			<Option compilerVar="CPP" />
 		</Unit>
 		<Unit filename="..\..\src\client\cgame\campaign\cp_aircraft_callbacks.cpp">
-			<Option compilerVar="CC" />
+			<Option compilerVar="CPP" />
 		</Unit>
 		<Unit filename="..\..\src\client\cgame\campaign\cp_airfight.cpp">
-			<Option compilerVar="CC" />
+			<Option compilerVar="CPP" />
 		</Unit>
 		<Unit filename="..\..\src\client\cgame\campaign\cp_alien_interest.cpp">
-			<Option compilerVar="CC" />
+			<Option compilerVar="CPP" />
 		</Unit>
 		<Unit filename="..\..\src\client\cgame\campaign\cp_alienbase.cpp">
-			<Option compilerVar="CC" />
+			<Option compilerVar="CPP" />
 		</Unit>
 		<Unit filename="..\..\src\client\cgame\campaign\cp_aliencont.cpp">
-			<Option compilerVar="CC" />
+			<Option compilerVar="CPP" />
 		</Unit>
 		<Unit filename="..\..\src\client\cgame\campaign\cp_aliencont_callbacks.cpp">
-			<Option compilerVar="CC" />
+			<Option compilerVar="CPP" />
 		</Unit>
 		<Unit filename="..\..\src\client\cgame\campaign\cp_auto_mission.cpp">
-			<Option compilerVar="CC" />
+			<Option compilerVar="CPP" />
 		</Unit>
 		<Unit filename="..\..\src\client\cgame\campaign\cp_base.cpp">
-			<Option compilerVar="CC" />
+			<Option compilerVar="CPP" />
 		</Unit>
 		<Unit filename="..\..\src\client\cgame\campaign\cp_base_callbacks.cpp">
-			<Option compilerVar="CC" />
+			<Option compilerVar="CPP" />
 		</Unit>
 		<Unit filename="..\..\src\client\cgame\campaign\cp_basedefence_callbacks.cpp">
-			<Option compilerVar="CC" />
+			<Option compilerVar="CPP" />
 		</Unit>
 		<Unit filename="..\..\src\client\cgame\campaign\cp_building.cpp">
-			<Option compilerVar="CC" />
+			<Option compilerVar="CPP" />
 		</Unit>
 		<Unit filename="..\..\src\client\cgame\campaign\cp_campaign.cpp">
-			<Option compilerVar="CC" />
+			<Option compilerVar="CPP" />
 		</Unit>
 		<Unit filename="..\..\src\client\cgame\campaign\cp_capacity.cpp">
-			<Option compilerVar="CC" />
+			<Option compilerVar="CPP" />
 		</Unit>
 		<Unit filename="..\..\src\client\cgame\campaign\cp_cgame_callbacks.cpp">
-			<Option compilerVar="CC" />
+			<Option compilerVar="CPP" />
 		</Unit>
 		<Unit filename="..\..\src\client\cgame\campaign\cp_employee.cpp">
-			<Option compilerVar="CC" />
+			<Option compilerVar="CPP" />
 		</Unit>
 		<Unit filename="..\..\src\client\cgame\campaign\cp_employee_callbacks.cpp">
-			<Option compilerVar="CC" />
+			<Option compilerVar="CPP" />
 		</Unit>
 		<Unit filename="..\..\src\client\cgame\campaign\cp_event.cpp">
-			<Option compilerVar="CC" />
+			<Option compilerVar="CPP" />
 		</Unit>
 		<Unit filename="..\..\src\client\cgame\campaign\cp_fightequip_callbacks.cpp">
-			<Option compilerVar="CC" />
+			<Option compilerVar="CPP" />
 		</Unit>
 		<Unit filename="..\..\src\client\cgame\campaign\cp_hospital.cpp">
-			<Option compilerVar="CC" />
+			<Option compilerVar="CPP" />
 		</Unit>
 		<Unit filename="..\..\src\client\cgame\campaign\cp_hospital_callbacks.cpp">
-			<Option compilerVar="CC" />
+			<Option compilerVar="CPP" />
 		</Unit>
 		<Unit filename="..\..\src\client\cgame\campaign\cp_installation.cpp">
-			<Option compilerVar="CC" />
+			<Option compilerVar="CPP" />
 		</Unit>
 		<Unit filename="..\..\src\client\cgame\campaign\cp_installation_callbacks.cpp">
-			<Option compilerVar="CC" />
+			<Option compilerVar="CPP" />
 		</Unit>
 		<Unit filename="..\..\src\client\cgame\campaign\cp_map.cpp">
-			<Option compilerVar="CC" />
+			<Option compilerVar="CPP" />
 		</Unit>
 		<Unit filename="..\..\src\client\cgame\campaign\cp_mapfightequip.cpp">
-			<Option compilerVar="CC" />
+			<Option compilerVar="CPP" />
 		</Unit>
 		<Unit filename="..\..\src\client\cgame\campaign\cp_market.cpp">
-			<Option compilerVar="CC" />
+			<Option compilerVar="CPP" />
 		</Unit>
 		<Unit filename="..\..\src\client\cgame\campaign\cp_market_callbacks.cpp">
-			<Option compilerVar="CC" />
+			<Option compilerVar="CPP" />
 		</Unit>
 		<Unit filename="..\..\src\client\cgame\campaign\cp_messageoptions.cpp">
-			<Option compilerVar="CC" />
+			<Option compilerVar="CPP" />
 		</Unit>
 		<Unit filename="..\..\src\client\cgame\campaign\cp_messageoptions_callbacks.cpp">
-			<Option compilerVar="CC" />
+			<Option compilerVar="CPP" />
 		</Unit>
 		<Unit filename="..\..\src\client\cgame\campaign\cp_messages.cpp">
-			<Option compilerVar="CC" />
+			<Option compilerVar="CPP" />
 		</Unit>
 		<Unit filename="..\..\src\client\cgame\campaign\cp_mission_callbacks.cpp">
-			<Option compilerVar="CC" />
+			<Option compilerVar="CPP" />
 		</Unit>
 		<Unit filename="..\..\src\client\cgame\campaign\cp_mission_triggers.cpp">
-			<Option compilerVar="CC" />
+			<Option compilerVar="CPP" />
 		</Unit>
 		<Unit filename="..\..\src\client\cgame\campaign\cp_missions.cpp">
-			<Option compilerVar="CC" />
+			<Option compilerVar="CPP" />
 		</Unit>
 		<Unit filename="..\..\src\client\cgame\campaign\cp_nation.cpp">
-			<Option compilerVar="CC" />
+			<Option compilerVar="CPP" />
 		</Unit>
 		<Unit filename="..\..\src\client\cgame\campaign\cp_overlay.cpp">
-			<Option compilerVar="CC" />
+			<Option compilerVar="CPP" />
 		</Unit>
 		<Unit filename="..\..\src\client\cgame\campaign\cp_parse.cpp">
-			<Option compilerVar="CC" />
+			<Option compilerVar="CPP" />
 		</Unit>
 		<Unit filename="..\..\src\client\cgame\campaign\cp_popup.cpp">
-			<Option compilerVar="CC" />
+			<Option compilerVar="CPP" />
 		</Unit>
 		<Unit filename="..\..\src\client\cgame\campaign\cp_produce.cpp">
-			<Option compilerVar="CC" />
+			<Option compilerVar="CPP" />
 		</Unit>
 		<Unit filename="..\..\src\client\cgame\campaign\cp_produce_callbacks.cpp">
-			<Option compilerVar="CC" />
+			<Option compilerVar="CPP" />
 		</Unit>
 		<Unit filename="..\..\src\client\cgame\campaign\cp_radar.cpp">
-			<Option compilerVar="CC" />
+			<Option compilerVar="CPP" />
 		</Unit>
 		<Unit filename="..\..\src\client\cgame\campaign\cp_rank.cpp">
-			<Option compilerVar="CC" />
+			<Option compilerVar="CPP" />
 		</Unit>
 		<Unit filename="..\..\src\client\cgame\campaign\cp_research.cpp">
-			<Option compilerVar="CC" />
+			<Option compilerVar="CPP" />
 		</Unit>
 		<Unit filename="..\..\src\client\cgame\campaign\cp_research_callbacks.cpp">
-			<Option compilerVar="CC" />
+			<Option compilerVar="CPP" />
 		</Unit>
 		<Unit filename="..\..\src\client\cgame\campaign\cp_save.cpp">
-			<Option compilerVar="CC" />
+			<Option compilerVar="CPP" />
 		</Unit>
 		<Unit filename="..\..\src\client\cgame\campaign\cp_statistics.cpp">
-			<Option compilerVar="CC" />
+			<Option compilerVar="CPP" />
 		</Unit>
 		<Unit filename="..\..\src\client\cgame\campaign\cp_team.cpp">
-			<Option compilerVar="CC" />
+			<Option compilerVar="CPP" />
 		</Unit>
 		<Unit filename="..\..\src\client\cgame\campaign\cp_team_callbacks.cpp">
-			<Option compilerVar="CC" />
+			<Option compilerVar="CPP" />
 		</Unit>
 		<Unit filename="..\..\src\client\cgame\campaign\cp_time.cpp">
-			<Option compilerVar="CC" />
+			<Option compilerVar="CPP" />
 		</Unit>
 		<Unit filename="..\..\src\client\cgame\campaign\cp_transfer.cpp">
-			<Option compilerVar="CC" />
+			<Option compilerVar="CPP" />
 		</Unit>
 		<Unit filename="..\..\src\client\cgame\campaign\cp_transfer_callbacks.cpp">
-			<Option compilerVar="CC" />
+			<Option compilerVar="CPP" />
 		</Unit>
 		<Unit filename="..\..\src\client\cgame\campaign\cp_ufo.cpp">
-			<Option compilerVar="CC" />
+			<Option compilerVar="CPP" />
 		</Unit>
 		<Unit filename="..\..\src\client\cgame\campaign\cp_ufopedia.cpp">
-			<Option compilerVar="CC" />
+			<Option compilerVar="CPP" />
 		</Unit>
 		<Unit filename="..\..\src\client\cgame\campaign\cp_uforecovery.cpp">
-			<Option compilerVar="CC" />
+			<Option compilerVar="CPP" />
 		</Unit>
 		<Unit filename="..\..\src\client\cgame\campaign\cp_uforecovery_callbacks.cpp">
-			<Option compilerVar="CC" />
+			<Option compilerVar="CPP" />
 		</Unit>
 		<Unit filename="..\..\src\client\cgame\campaign\cp_xvi.cpp">
-			<Option compilerVar="CC" />
+			<Option compilerVar="CPP" />
 		</Unit>
 		<Unit filename="..\..\src\client\cgame\campaign\missions\cp_mission_baseattack.cpp">
-			<Option compilerVar="CC" />
+			<Option compilerVar="CPP" />
 		</Unit>
 		<Unit filename="..\..\src\client\cgame\campaign\missions\cp_mission_buildbase.cpp">
-			<Option compilerVar="CC" />
+			<Option compilerVar="CPP" />
 		</Unit>
 		<Unit filename="..\..\src\client\cgame\campaign\missions\cp_mission_harvest.cpp">
-			<Option compilerVar="CC" />
+			<Option compilerVar="CPP" />
 		</Unit>
 		<Unit filename="..\..\src\client\cgame\campaign\missions\cp_mission_intercept.cpp">
-			<Option compilerVar="CC" />
+			<Option compilerVar="CPP" />
 		</Unit>
 		<Unit filename="..\..\src\client\cgame\campaign\missions\cp_mission_recon.cpp">
-			<Option compilerVar="CC" />
+			<Option compilerVar="CPP" />
 		</Unit>
 		<Unit filename="..\..\src\client\cgame\campaign\missions\cp_mission_rescue.cpp">
-			<Option compilerVar="CC" />
+			<Option compilerVar="CPP" />
 		</Unit>
 		<Unit filename="..\..\src\client\cgame\campaign\missions\cp_mission_rescue.h" />
 		<Unit filename="..\..\src\client\cgame\campaign\missions\cp_mission_supply.cpp">
-			<Option compilerVar="CC" />
+			<Option compilerVar="CPP" />
 		</Unit>
 		<Unit filename="..\..\src\client\cgame\campaign\missions\cp_mission_terror.cpp">
-			<Option compilerVar="CC" />
+			<Option compilerVar="CPP" />
 		</Unit>
 		<Unit filename="..\..\src\client\cgame\campaign\missions\cp_mission_xvi.cpp">
-			<Option compilerVar="CC" />
+			<Option compilerVar="CPP" />
 		</Unit>
 		<Unit filename="..\..\src\client\cgame\cl_game.cpp">
-			<Option compilerVar="CC" />
+			<Option compilerVar="CPP" />
 		</Unit>
 		<Unit filename="..\..\src\client\cgame\cl_game_team.cpp">
-			<Option compilerVar="CC" />
+			<Option compilerVar="CPP" />
 		</Unit>
 		<Unit filename="..\..\src\client\cgame\multiplayer\cl_game_multiplayer.cpp">
-			<Option compilerVar="CC" />
+			<Option compilerVar="CPP" />
 		</Unit>
 		<Unit filename="..\..\src\client\cgame\multiplayer\mp_callbacks.cpp">
-			<Option compilerVar="CC" />
+			<Option compilerVar="CPP" />
 		</Unit>
 		<Unit filename="..\..\src\client\cgame\multiplayer\mp_serverlist.cpp">
-			<Option compilerVar="CC" />
+			<Option compilerVar="CPP" />
 		</Unit>
 		<Unit filename="..\..\src\client\cgame\skirmish\cl_game_skirmish.cpp">
-			<Option compilerVar="CC" />
+			<Option compilerVar="CPP" />
 		</Unit>
 		<Unit filename="..\..\src\client\cinematic\cl_cinematic.cpp">
-			<Option compilerVar="CC" />
+			<Option compilerVar="CPP" />
 		</Unit>
 		<Unit filename="..\..\src\client\cinematic\cl_cinematic_ogm.cpp">
-			<Option compilerVar="CC" />
+			<Option compilerVar="CPP" />
 		</Unit>
 		<Unit filename="..\..\src\client\cinematic\cl_cinematic_roq.cpp">
-			<Option compilerVar="CC" />
+			<Option compilerVar="CPP" />
 		</Unit>
 		<Unit filename="..\..\src\client\cinematic\cl_sequence.cpp">
-			<Option compilerVar="CC" />
+			<Option compilerVar="CPP" />
 		</Unit>
 		<Unit filename="..\..\src\client\cl_console.cpp">
-			<Option compilerVar="CC" />
+			<Option compilerVar="CPP" />
 		</Unit>
 		<Unit filename="..\..\src\client\cl_http.cpp">
-			<Option compilerVar="CC" />
+			<Option compilerVar="CPP" />
 		</Unit>
 		<Unit filename="..\..\src\client\cl_inventory.cpp">
-			<Option compilerVar="CC" />
+			<Option compilerVar="CPP" />
 		</Unit>
 		<Unit filename="..\..\src\client\cl_inventory_callbacks.cpp">
-			<Option compilerVar="CC" />
+			<Option compilerVar="CPP" />
 		</Unit>
 		<Unit filename="..\..\src\client\cl_irc.cpp">
-			<Option compilerVar="CC" />
+			<Option compilerVar="CPP" />
 		</Unit>
 		<Unit filename="..\..\src\client\cl_language.cpp">
-			<Option compilerVar="CC" />
+			<Option compilerVar="CPP" />
 		</Unit>
 		<Unit filename="..\..\src\client\cl_main.cpp">
-			<Option compilerVar="CC" />
+			<Option compilerVar="CPP" />
 		</Unit>
 		<Unit filename="..\..\src\client\cl_menu.cpp">
-			<Option compilerVar="CC" />
+			<Option compilerVar="CPP" />
 		</Unit>
 		<Unit filename="..\..\src\client\cl_screen.cpp">
-			<Option compilerVar="CC" />
+			<Option compilerVar="CPP" />
 		</Unit>
 		<Unit filename="..\..\src\client\cl_team.cpp">
-			<Option compilerVar="CC" />
+			<Option compilerVar="CPP" />
 		</Unit>
 		<Unit filename="..\..\src\client\cl_tip.cpp">
-			<Option compilerVar="CC" />
+			<Option compilerVar="CPP" />
 		</Unit>
 		<Unit filename="..\..\src\client\cl_tutorials.cpp">
-			<Option compilerVar="CC" />
+			<Option compilerVar="CPP" />
 		</Unit>
 		<Unit filename="..\..\src\client\cl_video.cpp">
-			<Option compilerVar="CC" />
+			<Option compilerVar="CPP" />
 		</Unit>
 		<Unit filename="..\..\src\client\input\cl_input.cpp">
-			<Option compilerVar="CC" />
+			<Option compilerVar="CPP" />
 		</Unit>
 		<Unit filename="..\..\src\client\input\cl_joystick.cpp">
-			<Option compilerVar="CC" />
+			<Option compilerVar="CPP" />
 		</Unit>
 		<Unit filename="..\..\src\client\input\cl_keys.cpp">
-			<Option compilerVar="CC" />
+			<Option compilerVar="CPP" />
 		</Unit>
 		<Unit filename="..\..\src\client\renderer\r_array.cpp">
-			<Option compilerVar="CC" />
+			<Option compilerVar="CPP" />
 		</Unit>
 		<Unit filename="..\..\src\client\renderer\r_bsp.cpp">
-			<Option compilerVar="CC" />
+			<Option compilerVar="CPP" />
 		</Unit>
 		<Unit filename="..\..\src\client\renderer\r_corona.cpp">
-			<Option compilerVar="CC" />
+			<Option compilerVar="CPP" />
 		</Unit>
 		<Unit filename="..\..\src\client\renderer\r_draw.cpp">
-			<Option compilerVar="CC" />
+			<Option compilerVar="CPP" />
 		</Unit>
 		<Unit filename="..\..\src\client\renderer\r_entity.cpp">
-			<Option compilerVar="CC" />
+			<Option compilerVar="CPP" />
 		</Unit>
 		<Unit filename="..\..\src\client\renderer\r_flare.cpp">
-			<Option compilerVar="CC" />
+			<Option compilerVar="CPP" />
 		</Unit>
 		<Unit filename="..\..\src\client\renderer\r_font.cpp">
-			<Option compilerVar="CC" />
+			<Option compilerVar="CPP" />
 		</Unit>
 		<Unit filename="..\..\src\client\renderer\r_framebuffer.cpp">
-			<Option compilerVar="CC" />
+			<Option compilerVar="CPP" />
 		</Unit>
 		<Unit filename="..\..\src\client\renderer\r_geoscape.cpp">
-			<Option compilerVar="CC" />
+			<Option compilerVar="CPP" />
 		</Unit>
 		<Unit filename="..\..\src\client\renderer\r_image.cpp">
-			<Option compilerVar="CC" />
+			<Option compilerVar="CPP" />
 		</Unit>
 		<Unit filename="..\..\src\client\renderer\r_light.cpp">
-			<Option compilerVar="CC" />
+			<Option compilerVar="CPP" />
 		</Unit>
 		<Unit filename="..\..\src\client\renderer\r_lightmap.cpp">
-			<Option compilerVar="CC" />
+			<Option compilerVar="CPP" />
 		</Unit>
 		<Unit filename="..\..\src\client\renderer\r_main.cpp">
-			<Option compilerVar="CC" />
+			<Option compilerVar="CPP" />
 		</Unit>
 		<Unit filename="..\..\src\client\renderer\r_material.cpp">
-			<Option compilerVar="CC" />
+			<Option compilerVar="CPP" />
 		</Unit>
 		<Unit filename="..\..\src\client\renderer\r_matrix.cpp">
-			<Option compilerVar="CC" />
+			<Option compilerVar="CPP" />
 		</Unit>
 		<Unit filename="..\..\src\client\renderer\r_mesh.cpp">
-			<Option compilerVar="CC" />
+			<Option compilerVar="CPP" />
 		</Unit>
 		<Unit filename="..\..\src\client\renderer\r_mesh_anim.cpp">
-			<Option compilerVar="CC" />
+			<Option compilerVar="CPP" />
 		</Unit>
 		<Unit filename="..\..\src\client\renderer\r_misc.cpp">
-			<Option compilerVar="CC" />
+			<Option compilerVar="CPP" />
 		</Unit>
 		<Unit filename="..\..\src\client\renderer\r_model.cpp">
-			<Option compilerVar="CC" />
+			<Option compilerVar="CPP" />
 		</Unit>
 		<Unit filename="..\..\src\client\renderer\r_model_alias.cpp">
-			<Option compilerVar="CC" />
+			<Option compilerVar="CPP" />
 		</Unit>
 		<Unit filename="..\..\src\client\renderer\r_model_brush.cpp">
-			<Option compilerVar="CC" />
+			<Option compilerVar="CPP" />
 		</Unit>
 		<Unit filename="..\..\src\client\renderer\r_model_dpm.cpp">
-			<Option compilerVar="CC" />
+			<Option compilerVar="CPP" />
 		</Unit>
 		<Unit filename="..\..\src\client\renderer\r_model_md2.cpp">
-			<Option compilerVar="CC" />
+			<Option compilerVar="CPP" />
 		</Unit>
 		<Unit filename="..\..\src\client\renderer\r_model_md3.cpp">
-			<Option compilerVar="CC" />
+			<Option compilerVar="CPP" />
 		</Unit>
 		<Unit filename="..\..\src\client\renderer\r_model_obj.cpp">
-			<Option compilerVar="CC" />
+			<Option compilerVar="CPP" />
 		</Unit>
 		<Unit filename="..\..\src\client\renderer\r_particle.cpp">
-			<Option compilerVar="CC" />
+			<Option compilerVar="CPP" />
 		</Unit>
 		<Unit filename="..\..\src\client\renderer\r_program.cpp">
-			<Option compilerVar="CC" />
+			<Option compilerVar="CPP" />
 		</Unit>
 		<Unit filename="..\..\src\client\renderer\r_sdl.cpp">
-			<Option compilerVar="CC" />
+			<Option compilerVar="CPP" />
 		</Unit>
 		<Unit filename="..\..\src\client\renderer\r_sphere.cpp">
-			<Option compilerVar="CC" />
+			<Option compilerVar="CPP" />
 		</Unit>
 		<Unit filename="..\..\src\client\renderer\r_state.cpp">
-			<Option compilerVar="CC" />
+			<Option compilerVar="CPP" />
 		</Unit>
 		<Unit filename="..\..\src\client\renderer\r_surface.cpp">
-			<Option compilerVar="CC" />
+			<Option compilerVar="CPP" />
 		</Unit>
 		<Unit filename="..\..\src\client\renderer\r_thread.cpp">
-			<Option compilerVar="CC" />
+			<Option compilerVar="CPP" />
 		</Unit>
 		<Unit filename="..\..\src\client\sound\s_main.cpp">
-			<Option compilerVar="CC" />
+			<Option compilerVar="CPP" />
 		</Unit>
 		<Unit filename="..\..\src\client\sound\s_mix.cpp">
-			<Option compilerVar="CC" />
+			<Option compilerVar="CPP" />
 		</Unit>
 		<Unit filename="..\..\src\client\sound\s_music.cpp">
-			<Option compilerVar="CC" />
+			<Option compilerVar="CPP" />
 		</Unit>
 		<Unit filename="..\..\src\client\sound\s_sample.cpp">
-			<Option compilerVar="CC" />
+			<Option compilerVar="CPP" />
 		</Unit>
 		<Unit filename="..\..\src\client\ui\node\ui_node_abstractnode.cpp">
-			<Option compilerVar="CC" />
+			<Option compilerVar="CPP" />
 		</Unit>
 		<Unit filename="..\..\src\client\ui\node\ui_node_abstractoption.cpp">
-			<Option compilerVar="CC" />
+			<Option compilerVar="CPP" />
 		</Unit>
 		<Unit filename="..\..\src\client\ui\node\ui_node_abstractscrollable.cpp">
-			<Option compilerVar="CC" />
+			<Option compilerVar="CPP" />
 		</Unit>
 		<Unit filename="..\..\src\client\ui\node\ui_node_abstractscrollbar.cpp">
-			<Option compilerVar="CC" />
+			<Option compilerVar="CPP" />
 		</Unit>
 		<Unit filename="..\..\src\client\ui\node\ui_node_abstractvalue.cpp">
-			<Option compilerVar="CC" />
+			<Option compilerVar="CPP" />
 		</Unit>
 		<Unit filename="..\..\src\client\ui\node\ui_node_bar.cpp">
-			<Option compilerVar="CC" />
+			<Option compilerVar="CPP" />
 		</Unit>
 		<Unit filename="..\..\src\client\ui\node\ui_node_base.cpp">
-			<Option compilerVar="CC" />
+			<Option compilerVar="CPP" />
 		</Unit>
 		<Unit filename="..\..\src\client\ui\node\ui_node_baseinventory.cpp">
-			<Option compilerVar="CC" />
+			<Option compilerVar="CPP" />
 		</Unit>
 		<Unit filename="..\..\src\client\ui\node\ui_node_battlescape.cpp">
-			<Option compilerVar="CC" />
+			<Option compilerVar="CPP" />
 		</Unit>
 		<Unit filename="..\..\src\client\ui\node\ui_node_button.cpp">
-			<Option compilerVar="CC" />
+			<Option compilerVar="CPP" />
 		</Unit>
 		<Unit filename="..\..\src\client\ui\node\ui_node_checkbox.cpp">
-			<Option compilerVar="CC" />
+			<Option compilerVar="CPP" />
 		</Unit>
 		<Unit filename="..\..\src\client\ui\node\ui_node_container.cpp">
-			<Option compilerVar="CC" />
+			<Option compilerVar="CPP" />
 		</Unit>
 		<Unit filename="..\..\src\client\ui\node\ui_node_controls.cpp">
-			<Option compilerVar="CC" />
+			<Option compilerVar="CPP" />
 		</Unit>
 		<Unit filename="..\..\src\client\ui\node\ui_node_custombutton.cpp">
-			<Option compilerVar="CC" />
+			<Option compilerVar="CPP" />
 		</Unit>
 		<Unit filename="..\..\src\client\ui\node\ui_node_data.cpp">
-			<Option compilerVar="CC" />
+			<Option compilerVar="CPP" />
 		</Unit>
 		<Unit filename="..\..\src\client\ui\node\ui_node_editor.cpp">
-			<Option compilerVar="CC" />
+			<Option compilerVar="CPP" />
 		</Unit>
 		<Unit filename="..\..\src\client\ui\node\ui_node_ekg.cpp">
-			<Option compilerVar="CC" />
+			<Option compilerVar="CPP" />
 		</Unit>
 		<Unit filename="..\..\src\client\ui\node\ui_node_image.cpp">
-			<Option compilerVar="CC" />
+			<Option compilerVar="CPP" />
 		</Unit>
 		<Unit filename="..\..\src\client\ui\node\ui_node_item.cpp">
-			<Option compilerVar="CC" />
+			<Option compilerVar="CPP" />
 		</Unit>
 		<Unit filename="..\..\src\client\ui\node\ui_node_keybinding.cpp">
-			<Option compilerVar="CC" />
+			<Option compilerVar="CPP" />
 		</Unit>
 		<Unit filename="..\..\src\client\ui\node\ui_node_linechart.cpp">
-			<Option compilerVar="CC" />
+			<Option compilerVar="CPP" />
 		</Unit>
 		<Unit filename="..\..\src\client\ui\node\ui_node_map.cpp">
-			<Option compilerVar="CC" />
+			<Option compilerVar="CPP" />
 		</Unit>
 		<Unit filename="..\..\src\client\ui\node\ui_node_material_editor.cpp">
-			<Option compilerVar="CC" />
+			<Option compilerVar="CPP" />
 		</Unit>
 		<Unit filename="..\..\src\client\ui\node\ui_node_messagelist.cpp">
-			<Option compilerVar="CC" />
+			<Option compilerVar="CPP" />
 		</Unit>
 		<Unit filename="..\..\src\client\ui\node\ui_node_model.cpp">
-			<Option compilerVar="CC" />
+			<Option compilerVar="CPP" />
 		</Unit>
 		<Unit filename="..\..\src\client\ui\node\ui_node_option.cpp">
-			<Option compilerVar="CC" />
+			<Option compilerVar="CPP" />
 		</Unit>
 		<Unit filename="..\..\src\client\ui\node\ui_node_optionlist.cpp">
-			<Option compilerVar="CC" />
+			<Option compilerVar="CPP" />
 		</Unit>
 		<Unit filename="..\..\src\client\ui\node\ui_node_optiontree.cpp">
-			<Option compilerVar="CC" />
+			<Option compilerVar="CPP" />
 		</Unit>
 		<Unit filename="..\..\src\client\ui\node\ui_node_panel.cpp">
-			<Option compilerVar="CC" />
+			<Option compilerVar="CPP" />
 		</Unit>
 		<Unit filename="..\..\src\client\ui\node\ui_node_radar.cpp">
-			<Option compilerVar="CC" />
+			<Option compilerVar="CPP" />
 		</Unit>
 		<Unit filename="..\..\src\client\ui\node\ui_node_radiobutton.cpp">
-			<Option compilerVar="CC" />
+			<Option compilerVar="CPP" />
 		</Unit>
 		<Unit filename="..\..\src\client\ui\node\ui_node_rows.cpp">
-			<Option compilerVar="CC" />
+			<Option compilerVar="CPP" />
 		</Unit>
 		<Unit filename="..\..\src\client\ui\node\ui_node_selectbox.cpp">
-			<Option compilerVar="CC" />
+			<Option compilerVar="CPP" />
 		</Unit>
 		<Unit filename="..\..\src\client\ui\node\ui_node_sequence.cpp">
-			<Option compilerVar="CC" />
+			<Option compilerVar="CPP" />
 		</Unit>
 		<Unit filename="..\..\src\client\ui\node\ui_node_special.cpp">
-			<Option compilerVar="CC" />
+			<Option compilerVar="CPP" />
 		</Unit>
 		<Unit filename="..\..\src\client\ui\node\ui_node_spinner.cpp">
-			<Option compilerVar="CC" />
+			<Option compilerVar="CPP" />
 		</Unit>
 		<Unit filename="..\..\src\client\ui\node\ui_node_spinner2.cpp">
-			<Option compilerVar="CC" />
+			<Option compilerVar="CPP" />
 		</Unit>
 		<Unit filename="..\..\src\client\ui\node\ui_node_string.cpp">
-			<Option compilerVar="CC" />
+			<Option compilerVar="CPP" />
 		</Unit>
 		<Unit filename="..\..\src\client\ui\node\ui_node_tab.cpp">
-			<Option compilerVar="CC" />
+			<Option compilerVar="CPP" />
 		</Unit>
 		<Unit filename="..\..\src\client\ui\node\ui_node_tbar.cpp">
-			<Option compilerVar="CC" />
+			<Option compilerVar="CPP" />
 		</Unit>
 		<Unit filename="..\..\src\client\ui\node\ui_node_text.cpp">
-			<Option compilerVar="CC" />
+			<Option compilerVar="CPP" />
 		</Unit>
 		<Unit filename="..\..\src\client\ui\node\ui_node_text2.cpp">
-			<Option compilerVar="CC" />
+			<Option compilerVar="CPP" />
 		</Unit>
 		<Unit filename="..\..\src\client\ui\node\ui_node_textentry.cpp">
-			<Option compilerVar="CC" />
+			<Option compilerVar="CPP" />
 		</Unit>
 		<Unit filename="..\..\src\client\ui\node\ui_node_textlist.cpp">
-			<Option compilerVar="CC" />
+			<Option compilerVar="CPP" />
 		</Unit>
 		<Unit filename="..\..\src\client\ui\node\ui_node_texture.cpp">
-			<Option compilerVar="CC" />
+			<Option compilerVar="CPP" />
 		</Unit>
 		<Unit filename="..\..\src\client\ui\node\ui_node_todo.cpp">
-			<Option compilerVar="CC" />
+			<Option compilerVar="CPP" />
 		</Unit>
 		<Unit filename="..\..\src\client\ui\node\ui_node_video.cpp">
-			<Option compilerVar="CC" />
+			<Option compilerVar="CPP" />
 		</Unit>
 		<Unit filename="..\..\src\client\ui\node\ui_node_vscrollbar.cpp">
-			<Option compilerVar="CC" />
+			<Option compilerVar="CPP" />
 		</Unit>
 		<Unit filename="..\..\src\client\ui\node\ui_node_window.cpp">
-			<Option compilerVar="CC" />
+			<Option compilerVar="CPP" />
 		</Unit>
 		<Unit filename="..\..\src\client\ui\node\ui_node_zone.cpp">
-			<Option compilerVar="CC" />
+			<Option compilerVar="CPP" />
 		</Unit>
 		<Unit filename="..\..\src\client\ui\ui_actions.cpp">
-			<Option compilerVar="CC" />
+			<Option compilerVar="CPP" />
 		</Unit>
 		<Unit filename="..\..\src\client\ui\ui_behaviour.cpp">
-			<Option compilerVar="CC" />
+			<Option compilerVar="CPP" />
 		</Unit>
 		<Unit filename="..\..\src\client\ui\ui_components.cpp">
-			<Option compilerVar="CC" />
+			<Option compilerVar="CPP" />
 		</Unit>
 		<Unit filename="..\..\src\client\ui\ui_data.cpp">
-			<Option compilerVar="CC" />
+			<Option compilerVar="CPP" />
 		</Unit>
 		<Unit filename="..\..\src\client\ui\ui_dragndrop.cpp">
-			<Option compilerVar="CC" />
+			<Option compilerVar="CPP" />
 		</Unit>
 		<Unit filename="..\..\src\client\ui\ui_draw.cpp">
-			<Option compilerVar="CC" />
+			<Option compilerVar="CPP" />
 		</Unit>
 		<Unit filename="..\..\src\client\ui\ui_expression.cpp">
-			<Option compilerVar="CC" />
+			<Option compilerVar="CPP" />
 		</Unit>
 		<Unit filename="..\..\src\client\ui\ui_font.cpp">
-			<Option compilerVar="CC" />
+			<Option compilerVar="CPP" />
 		</Unit>
 		<Unit filename="..\..\src\client\ui\ui_input.cpp">
-			<Option compilerVar="CC" />
+			<Option compilerVar="CPP" />
 		</Unit>
 		<Unit filename="..\..\src\client\ui\ui_main.cpp">
-			<Option compilerVar="CC" />
+			<Option compilerVar="CPP" />
 		</Unit>
 		<Unit filename="..\..\src\client\ui\ui_nodes.cpp">
-			<Option compilerVar="CC" />
+			<Option compilerVar="CPP" />
 		</Unit>
 		<Unit filename="..\..\src\client\ui\ui_node.cpp">
-			<Option compilerVar="CC" />
+			<Option compilerVar="CPP" />
 		</Unit>
 		<Unit filename="..\..\src\client\ui\ui_parse.cpp">
-			<Option compilerVar="CC" />
+			<Option compilerVar="CPP" />
 		</Unit>
 		<Unit filename="..\..\src\client\ui\ui_popup.cpp">
-			<Option compilerVar="CC" />
+			<Option compilerVar="CPP" />
 		</Unit>
 		<Unit filename="..\..\src\client\ui\ui_render.cpp">
-			<Option compilerVar="CC" />
+			<Option compilerVar="CPP" />
 		</Unit>
 		<Unit filename="..\..\src\client\ui\ui_sound.cpp">
-			<Option compilerVar="CC" />
+			<Option compilerVar="CPP" />
 		</Unit>
 		<Unit filename="..\..\src\client\ui\ui_sprite.cpp">
-			<Option compilerVar="CC" />
+			<Option compilerVar="CPP" />
 		</Unit>
 		<Unit filename="..\..\src\client\ui\ui_timer.cpp">
-			<Option compilerVar="CC" />
+			<Option compilerVar="CPP" />
 		</Unit>
 		<Unit filename="..\..\src\client\ui\ui_tooltip.cpp">
-			<Option compilerVar="CC" />
+			<Option compilerVar="CPP" />
 		</Unit>
 		<Unit filename="..\..\src\client\ui\ui_windows.cpp">
-			<Option compilerVar="CC" />
+			<Option compilerVar="CPP" />
 		</Unit>
 		<Unit filename="..\..\src\common\bsp.cpp">
-			<Option compilerVar="CC" />
+			<Option compilerVar="CPP" />
 		</Unit>
 		<Unit filename="..\..\src\common\binaryexpressionparser.cpp">
-			<Option compilerVar="CC" />
+			<Option compilerVar="CPP" />
 		</Unit>
 		<Unit filename="..\..\src\common\cmd.cpp">
-			<Option compilerVar="CC" />
+			<Option compilerVar="CPP" />
 		</Unit>
 		<Unit filename="..\..\src\common\cmodel.cpp">
-			<Option compilerVar="CC" />
+			<Option compilerVar="CPP" />
 		</Unit>
 		<Unit filename="..\..\src\common\common.cpp">
-			<Option compilerVar="CC" />
+			<Option compilerVar="CPP" />
 		</Unit>
 		<Unit filename="..\..\src\common\cvar.cpp">
-			<Option compilerVar="CC" />
+			<Option compilerVar="CPP" />
 		</Unit>
 		<Unit filename="..\..\src\common\dbuffer.cpp">
-			<Option compilerVar="CC" />
+			<Option compilerVar="CPP" />
 		</Unit>
 		<Unit filename="..\..\src\common\files.cpp">
-			<Option compilerVar="CC" />
+			<Option compilerVar="CPP" />
 		</Unit>
 		<Unit filename="..\..\src\common\grid.cpp">
-			<Option compilerVar="CC" />
+			<Option compilerVar="CPP" />
 		</Unit>
 		<Unit filename="..\..\src\common\http.cpp">
-			<Option compilerVar="CC" />
+			<Option compilerVar="CPP" />
 		</Unit>
 		<Unit filename="..\..\src\common\ioapi.cpp">
-			<Option compilerVar="CC" />
+			<Option compilerVar="CPP" />
 		</Unit>
 		<Unit filename="..\..\src\common\list.cpp">
-			<Option compilerVar="CC" />
+			<Option compilerVar="CPP" />
 		</Unit>
 		<Unit filename="..\..\src\common\md4.cpp">
-			<Option compilerVar="CC" />
+			<Option compilerVar="CPP" />
 		</Unit>
 		<Unit filename="..\..\src\common\md5.cpp">
-			<Option compilerVar="CC" />
+			<Option compilerVar="CPP" />
 		</Unit>
 		<Unit filename="..\..\src\common\mem.cpp">
-			<Option compilerVar="CC" />
+			<Option compilerVar="CPP" />
 		</Unit>
 		<Unit filename="..\..\src\common\msg.cpp">
-			<Option compilerVar="CC" />
+			<Option compilerVar="CPP" />
 		</Unit>
 		<Unit filename="..\..\src\common\net.cpp">
-			<Option compilerVar="CC" />
+			<Option compilerVar="CPP" />
 		</Unit>
 		<Unit filename="..\..\src\common\netpack.cpp">
-			<Option compilerVar="CC" />
+			<Option compilerVar="CPP" />
 		</Unit>
 		<Unit filename="..\..\src\common\pqueue.cpp">
-			<Option compilerVar="CC" />
+			<Option compilerVar="CPP" />
 		</Unit>
 		<Unit filename="..\..\src\common\routing.cpp">
-			<Option compilerVar="CC" />
+			<Option compilerVar="CPP" />
 		</Unit>
 		<Unit filename="..\..\src\common\scripts.cpp">
-			<Option compilerVar="CC" />
+			<Option compilerVar="CPP" />
 		</Unit>
 		<Unit filename="..\..\src\common\tracing.cpp">
-			<Option compilerVar="CC" />
+			<Option compilerVar="CPP" />
 		</Unit>
 		<Unit filename="..\..\src\common\unzip.cpp">
-			<Option compilerVar="CC" />
+			<Option compilerVar="CPP" />
 		</Unit>
 		<Unit filename="..\..\src\common\xml.cpp">
-			<Option compilerVar="CC" />
+			<Option compilerVar="CPP" />
 		</Unit>
 		<Unit filename="..\..\src\game\chr_shared.cpp">
-			<Option compilerVar="CC" />
+			<Option compilerVar="CPP" />
 		</Unit>
 		<Unit filename="..\..\src\game\chr_shared.h" />
 		<Unit filename="..\..\src\game\g_actor.cpp">
-			<Option compilerVar="CC" />
+			<Option compilerVar="CPP" />
 		</Unit>
 		<Unit filename="..\..\src\game\g_ai.cpp">
-			<Option compilerVar="CC" />
+			<Option compilerVar="CPP" />
 		</Unit>
 		<Unit filename="..\..\src\game\g_ai.h" />
 		<Unit filename="..\..\src\game\g_ai_lua.cpp">
-			<Option compilerVar="CC" />
+			<Option compilerVar="CPP" />
 		</Unit>
 		<Unit filename="..\..\src\game\g_client.cpp">
-			<Option compilerVar="CC" />
+			<Option compilerVar="CPP" />
 		</Unit>
 		<Unit filename="..\..\src\game\g_cmds.cpp">
-			<Option compilerVar="CC" />
+			<Option compilerVar="CPP" />
 		</Unit>
 		<Unit filename="..\..\src\game\g_combat.cpp">
-			<Option compilerVar="CC" />
+			<Option compilerVar="CPP" />
 		</Unit>
 		<Unit filename="..\..\src\game\g_edicts.cpp">
-			<Option compilerVar="CC" />
+			<Option compilerVar="CPP" />
 		</Unit>
 		<Unit filename="..\..\src\game\g_events.cpp">
-			<Option compilerVar="CC" />
+			<Option compilerVar="CPP" />
 		</Unit>
 		<Unit filename="..\..\src\game\g_func.cpp">
-			<Option compilerVar="CC" />
+			<Option compilerVar="CPP" />
 		</Unit>
 		<Unit filename="..\..\src\game\g_inventory.cpp">
-			<Option compilerVar="CC" />
+			<Option compilerVar="CPP" />
 		</Unit>
 		<Unit filename="..\..\src\game\g_local.h" />
 		<Unit filename="..\..\src\game\g_main.cpp">
-			<Option compilerVar="CC" />
+			<Option compilerVar="CPP" />
 		</Unit>
 		<Unit filename="..\..\src\game\g_match.cpp">
-			<Option compilerVar="CC" />
+			<Option compilerVar="CPP" />
 		</Unit>
 		<Unit filename="..\..\src\game\g_mission.cpp">
-			<Option compilerVar="CC" />
+			<Option compilerVar="CPP" />
 		</Unit>
 		<Unit filename="..\..\src\game\g_morale.cpp">
-			<Option compilerVar="CC" />
+			<Option compilerVar="CPP" />
 		</Unit>
 		<Unit filename="..\..\src\game\g_move.cpp">
-			<Option compilerVar="CC" />
+			<Option compilerVar="CPP" />
 		</Unit>
 		<Unit filename="..\..\src\game\g_phys.cpp">
-			<Option compilerVar="CC" />
+			<Option compilerVar="CPP" />
 		</Unit>
 		<Unit filename="..\..\src\game\g_reaction.cpp">
-			<Option compilerVar="CC" />
+			<Option compilerVar="CPP" />
 		</Unit>
 		<Unit filename="..\..\src\game\g_round.cpp">
-			<Option compilerVar="CC" />
+			<Option compilerVar="CPP" />
 		</Unit>
 		<Unit filename="..\..\src\game\g_spawn.cpp">
-			<Option compilerVar="CC" />
+			<Option compilerVar="CPP" />
 		</Unit>
 		<Unit filename="..\..\src\game\g_stats.cpp">
-			<Option compilerVar="CC" />
+			<Option compilerVar="CPP" />
 		</Unit>
 		<Unit filename="..\..\src\game\g_svcmds.cpp">
-			<Option compilerVar="CC" />
+			<Option compilerVar="CPP" />
 		</Unit>
 		<Unit filename="..\..\src\game\g_trigger.cpp">
-			<Option compilerVar="CC" />
+			<Option compilerVar="CPP" />
 		</Unit>
 		<Unit filename="..\..\src\game\g_utils.cpp">
-			<Option compilerVar="CC" />
+			<Option compilerVar="CPP" />
 		</Unit>
 		<Unit filename="..\..\src\game\g_vis.cpp">
-			<Option compilerVar="CC" />
+			<Option compilerVar="CPP" />
 		</Unit>
 		<Unit filename="..\..\src\game\game.h" />
 		<Unit filename="..\..\src\game\inv_shared.cpp">
-			<Option compilerVar="CC" />
+			<Option compilerVar="CPP" />
 		</Unit>
 		<Unit filename="..\..\src\game\inv_shared.h" />
 		<Unit filename="..\..\src\game\inventory.cpp">
-			<Option compilerVar="CC" />
+			<Option compilerVar="CPP" />
 		</Unit>
 		<Unit filename="..\..\src\game\inventory.h" />
 		<Unit filename="..\..\src\game\lua\lapi.cpp">
-			<Option compilerVar="CC" />
+			<Option compilerVar="CPP" />
 		</Unit>
 		<Unit filename="..\..\src\game\lua\lapi.h" />
 		<Unit filename="..\..\src\game\lua\lauxlib.cpp">
-			<Option compilerVar="CC" />
+			<Option compilerVar="CPP" />
 		</Unit>
 		<Unit filename="..\..\src\game\lua\lauxlib.h" />
 		<Unit filename="..\..\src\game\lua\lbaselib.cpp">
-			<Option compilerVar="CC" />
+			<Option compilerVar="CPP" />
 		</Unit>
 		<Unit filename="..\..\src\game\lua\lcode.cpp">
-			<Option compilerVar="CC" />
+			<Option compilerVar="CPP" />
 		</Unit>
 		<Unit filename="..\..\src\game\lua\lcode.h" />
 		<Unit filename="..\..\src\game\lua\ldblib.cpp">
-			<Option compilerVar="CC" />
+			<Option compilerVar="CPP" />
 		</Unit>
 		<Unit filename="..\..\src\game\lua\ldebug.cpp">
-			<Option compilerVar="CC" />
+			<Option compilerVar="CPP" />
 		</Unit>
 		<Unit filename="..\..\src\game\lua\ldebug.h" />
 		<Unit filename="..\..\src\game\lua\ldo.cpp">
-			<Option compilerVar="CC" />
+			<Option compilerVar="CPP" />
 		</Unit>
 		<Unit filename="..\..\src\game\lua\ldo.h" />
 		<Unit filename="..\..\src\game\lua\ldump.cpp">
-			<Option compilerVar="CC" />
+			<Option compilerVar="CPP" />
 		</Unit>
 		<Unit filename="..\..\src\game\lua\lfunc.cpp">
-			<Option compilerVar="CC" />
+			<Option compilerVar="CPP" />
 		</Unit>
 		<Unit filename="..\..\src\game\lua\lfunc.h" />
 		<Unit filename="..\..\src\game\lua\lgc.cpp">
-			<Option compilerVar="CC" />
+			<Option compilerVar="CPP" />
 		</Unit>
 		<Unit filename="..\..\src\game\lua\lgc.h" />
 		<Unit filename="..\..\src\game\lua\linit.cpp">
-			<Option compilerVar="CC" />
+			<Option compilerVar="CPP" />
 		</Unit>
 		<Unit filename="..\..\src\game\lua\liolib.cpp">
-			<Option compilerVar="CC" />
+			<Option compilerVar="CPP" />
 		</Unit>
 		<Unit filename="..\..\src\game\lua\llex.cpp">
-			<Option compilerVar="CC" />
+			<Option compilerVar="CPP" />
 		</Unit>
 		<Unit filename="..\..\src\game\lua\llex.h" />
 		<Unit filename="..\..\src\game\lua\llimits.h" />
 		<Unit filename="..\..\src\game\lua\lmathlib.cpp">
-			<Option compilerVar="CC" />
+			<Option compilerVar="CPP" />
 		</Unit>
 		<Unit filename="..\..\src\game\lua\lmem.cpp">
-			<Option compilerVar="CC" />
+			<Option compilerVar="CPP" />
 		</Unit>
 		<Unit filename="..\..\src\game\lua\lmem.h" />
 		<Unit filename="..\..\src\game\lua\loadlib.cpp">
-			<Option compilerVar="CC" />
+			<Option compilerVar="CPP" />
 		</Unit>
 		<Unit filename="..\..\src\game\lua\lobject.cpp">
-			<Option compilerVar="CC" />
+			<Option compilerVar="CPP" />
 		</Unit>
 		<Unit filename="..\..\src\game\lua\lobject.h" />
 		<Unit filename="..\..\src\game\lua\lopcodes.cpp">
-			<Option compilerVar="CC" />
+			<Option compilerVar="CPP" />
 		</Unit>
 		<Unit filename="..\..\src\game\lua\lopcodes.h" />
 		<Unit filename="..\..\src\game\lua\loslib.cpp">
-			<Option compilerVar="CC" />
+			<Option compilerVar="CPP" />
 		</Unit>
 		<Unit filename="..\..\src\game\lua\lparser.cpp">
-			<Option compilerVar="CC" />
+			<Option compilerVar="CPP" />
 		</Unit>
 		<Unit filename="..\..\src\game\lua\lparser.h" />
 		<Unit filename="..\..\src\game\lua\lstate.cpp">
-			<Option compilerVar="CC" />
+			<Option compilerVar="CPP" />
 		</Unit>
 		<Unit filename="..\..\src\game\lua\lstate.h" />
 		<Unit filename="..\..\src\game\lua\lstring.cpp">
-			<Option compilerVar="CC" />
+			<Option compilerVar="CPP" />
 		</Unit>
 		<Unit filename="..\..\src\game\lua\lstring.h" />
 		<Unit filename="..\..\src\game\lua\lstrlib.cpp">
-			<Option compilerVar="CC" />
+			<Option compilerVar="CPP" />
 		</Unit>
 		<Unit filename="..\..\src\game\lua\ltable.cpp">
-			<Option compilerVar="CC" />
+			<Option compilerVar="CPP" />
 		</Unit>
 		<Unit filename="..\..\src\game\lua\ltable.h" />
 		<Unit filename="..\..\src\game\lua\ltablib.cpp">
-			<Option compilerVar="CC" />
+			<Option compilerVar="CPP" />
 		</Unit>
 		<Unit filename="..\..\src\game\lua\ltm.cpp">
-			<Option compilerVar="CC" />
+			<Option compilerVar="CPP" />
 		</Unit>
 		<Unit filename="..\..\src\game\lua\ltm.h" />
 		<Unit filename="..\..\src\game\lua\lua.h" />
 		<Unit filename="..\..\src\game\lua\luaconf.h" />
 		<Unit filename="..\..\src\game\lua\lualib.h" />
 		<Unit filename="..\..\src\game\lua\lundump.cpp">
-			<Option compilerVar="CC" />
+			<Option compilerVar="CPP" />
 		</Unit>
 		<Unit filename="..\..\src\game\lua\lundump.h" />
 		<Unit filename="..\..\src\game\lua\lvm.cpp">
-			<Option compilerVar="CC" />
+			<Option compilerVar="CPP" />
 		</Unit>
 		<Unit filename="..\..\src\game\lua\lvm.h" />
 		<Unit filename="..\..\src\game\lua\lzio.cpp">
-			<Option compilerVar="CC" />
+			<Option compilerVar="CPP" />
 		</Unit>
 		<Unit filename="..\..\src\game\lua\lzio.h" />
 		<Unit filename="..\..\src\game\lua\print.cpp">
-			<Option compilerVar="CC" />
+			<Option compilerVar="CPP" />
 		</Unit>
 		<Unit filename="..\..\src\game\q_shared.cpp">
-			<Option compilerVar="CC" />
+			<Option compilerVar="CPP" />
 		</Unit>
 		<Unit filename="..\..\src\game\q_shared.h" />
 		<Unit filename="..\..\src\libs\mxml\config.h" />
@@ -1182,141 +1182,141 @@
 			<Option compilerVar="WINDRES" />
 		</Unit>
 		<Unit filename="..\..\src\ports\windows\win_backtrace.cpp">
-			<Option compilerVar="CC" />
+			<Option compilerVar="CPP" />
 		</Unit>
 		<Unit filename="..\..\src\ports\windows\win_console.cpp">
-			<Option compilerVar="CC" />
+			<Option compilerVar="CPP" />
 		</Unit>
 		<Unit filename="..\..\src\ports\windows\win_shared.cpp">
-			<Option compilerVar="CC" />
+			<Option compilerVar="CPP" />
 		</Unit>
 		<Unit filename="..\..\src\server\sv_ccmds.cpp">
-			<Option compilerVar="CC" />
+			<Option compilerVar="CPP" />
 		</Unit>
 		<Unit filename="..\..\src\server\sv_game.cpp">
-			<Option compilerVar="CC" />
+			<Option compilerVar="CPP" />
 		</Unit>
 		<Unit filename="..\..\src\server\sv_init.cpp">
-			<Option compilerVar="CC" />
+			<Option compilerVar="CPP" />
 		</Unit>
 		<Unit filename="..\..\src\server\sv_log.cpp">
-			<Option compilerVar="CC" />
+			<Option compilerVar="CPP" />
 		</Unit>
 		<Unit filename="..\..\src\server\sv_main.cpp">
-			<Option compilerVar="CC" />
+			<Option compilerVar="CPP" />
 		</Unit>
 		<Unit filename="..\..\src\server\sv_mapcycle.cpp">
-			<Option compilerVar="CC" />
+			<Option compilerVar="CPP" />
 		</Unit>
 		<Unit filename="..\..\src\server\sv_rma.cpp">
-			<Option compilerVar="CC" />
+			<Option compilerVar="CPP" />
 		</Unit>
 		<Unit filename="..\..\src\server\sv_rma.h" />
 		<Unit filename="..\..\src\server\sv_send.cpp">
-			<Option compilerVar="CC" />
+			<Option compilerVar="CPP" />
 		</Unit>
 		<Unit filename="..\..\src\server\sv_user.cpp">
-			<Option compilerVar="CC" />
+			<Option compilerVar="CPP" />
 		</Unit>
 		<Unit filename="..\..\src\server\sv_world.cpp">
-			<Option compilerVar="CC" />
+			<Option compilerVar="CPP" />
 		</Unit>
 		<Unit filename="..\..\src\shared\bfd.cpp">
-			<Option compilerVar="CC" />
+			<Option compilerVar="CPP" />
 		</Unit>
 		<Unit filename="..\..\src\shared\byte.cpp">
-			<Option compilerVar="CC" />
+			<Option compilerVar="CPP" />
 		</Unit>
 		<Unit filename="..\..\src\shared\entitiesdef.cpp">
-			<Option compilerVar="CC" />
+			<Option compilerVar="CPP" />
 		</Unit>
 		<Unit filename="..\..\src\shared\images.cpp">
-			<Option compilerVar="CC" />
+			<Option compilerVar="CPP" />
 		</Unit>
 		<Unit filename="..\..\src\shared\infostring.cpp">
-			<Option compilerVar="CC" />
+			<Option compilerVar="CPP" />
 		</Unit>
 		<Unit filename="..\..\src\shared\mathlib.cpp">
-			<Option compilerVar="CC" />
+			<Option compilerVar="CPP" />
 		</Unit>
 		<Unit filename="..\..\src\shared\mathlib_extra.cpp">
-			<Option compilerVar="CC" />
+			<Option compilerVar="CPP" />
 		</Unit>
 		<Unit filename="..\..\src\shared\mutex.cpp">
-			<Option compilerVar="CC" />
+			<Option compilerVar="CPP" />
 		</Unit>
 		<Unit filename="..\..\src\shared\mutex.h" />
 		<Unit filename="..\..\src\shared\parse.cpp">
-			<Option compilerVar="CC" />
+			<Option compilerVar="CPP" />
 		</Unit>
 		<Unit filename="..\..\src\shared\shared.cpp">
-			<Option compilerVar="CC" />
+			<Option compilerVar="CPP" />
 		</Unit>
 		<Unit filename="..\..\src\shared\stringhunk.cpp">
-			<Option compilerVar="CC" />
+			<Option compilerVar="CPP" />
 		</Unit>
 		<Unit filename="..\..\src\shared\utf8.cpp">
-			<Option compilerVar="CC" />
+			<Option compilerVar="CPP" />
 		</Unit>
 		<Unit filename="..\..\src\tests\test_all.cpp">
-			<Option compilerVar="CC" />
+			<Option compilerVar="CPP" />
 		</Unit>
 		<Unit filename="..\..\src\tests\test_campaign.cpp">
-			<Option compilerVar="CC" />
+			<Option compilerVar="CPP" />
 		</Unit>
 		<Unit filename="..\..\src\tests\test_campaign.h" />
 		<Unit filename="..\..\src\tests\test_dbuffer.cpp">
-			<Option compilerVar="CC" />
+			<Option compilerVar="CPP" />
 		</Unit>
 		<Unit filename="..\..\src\tests\test_dbuffer.h" />
 		<Unit filename="..\..\src\tests\test_events.cpp">
-			<Option compilerVar="CC" />
+			<Option compilerVar="CPP" />
 		</Unit>
 		<Unit filename="..\..\src\tests\test_game.cpp">
-			<Option compilerVar="CC" />
+			<Option compilerVar="CPP" />
 		</Unit>
 		<Unit filename="..\..\src\tests\test_game.h" />
 		<Unit filename="..\..\src\tests\test_generic.cpp">
-			<Option compilerVar="CC" />
+			<Option compilerVar="CPP" />
 		</Unit>
 		<Unit filename="..\..\src\tests\test_inventory.cpp">
-			<Option compilerVar="CC" />
+			<Option compilerVar="CPP" />
 		</Unit>
 		<Unit filename="..\..\src\tests\test_inventory.h" />
 		<Unit filename="..\..\src\tests\test_mapdef.cpp">
-			<Option compilerVar="CC" />
+			<Option compilerVar="CPP" />
 		</Unit>
 		<Unit filename="..\..\src\tests\test_mathlibextra.cpp">
-			<Option compilerVar="CC" />
+			<Option compilerVar="CPP" />
 		</Unit>
 		<Unit filename="..\..\src\tests\test_parser.cpp">
-			<Option compilerVar="CC" />
+			<Option compilerVar="CPP" />
 		</Unit>
 		<Unit filename="..\..\src\tests\test_parser.h" />
 		<Unit filename="..\..\src\tests\test_renderer.cpp">
-			<Option compilerVar="CC" />
+			<Option compilerVar="CPP" />
 		</Unit>
 		<Unit filename="..\..\src\tests\test_rma.cpp">
-			<Option compilerVar="CC" />
+			<Option compilerVar="CPP" />
 		</Unit>
 		<Unit filename="..\..\src\tests\test_rma.h" />
 		<Unit filename="..\..\src\tests\test_routing.cpp">
-			<Option compilerVar="CC" />
+			<Option compilerVar="CPP" />
 		</Unit>
 		<Unit filename="..\..\src\tests\test_routing.h" />
 		<Unit filename="..\..\src\tests\test_scripts.cpp">
-			<Option compilerVar="CC" />
+			<Option compilerVar="CPP" />
 		</Unit>
 		<Unit filename="..\..\src\tests\test_shared.cpp">
-			<Option compilerVar="CC" />
+			<Option compilerVar="CPP" />
 		</Unit>
 		<Unit filename="..\..\src\tests\test_shared.h" />
 		<Unit filename="..\..\src\tests\test_ui.cpp">
-			<Option compilerVar="CC" />
+			<Option compilerVar="CPP" />
 		</Unit>
 		<Unit filename="..\..\src\tests\test_ui.h" />
 		<Unit filename="..\..\src\tests\test_ui_level2.cpp">
-			<Option compilerVar="CC" />
+			<Option compilerVar="CPP" />
 		</Unit>
 		<Unit filename="..\..\src\tests\test_ui_level2.h" />
 		<Extensions>

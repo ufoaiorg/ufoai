@@ -121,10 +121,10 @@
 			<Add library="libjpeg" />
 		</Linker>
 		<Unit filename="..\..\src\shared\entitiesdef.cpp">
-			<Option compilerVar="CC" />
+			<Option compilerVar="CPP" />
 		</Unit>
 		<Unit filename="..\..\src\shared\parse.cpp">
-			<Option compilerVar="CC" />
+			<Option compilerVar="CPP" />
 		</Unit>
 		<Unit filename="..\..\src\tools\radiant\include\Bounded.h" />
 		<Unit filename="..\..\src\tools\radiant\include\VolumeIntersectionValue.h" />
