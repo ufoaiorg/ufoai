@@ -5,10 +5,10 @@
  * 1. G_ReactionFireOnMovement()
  *		calls	G_ReactionFireCheckExecution()
  *				calls	G_ReactionFireTryToShoot()
- *		calls	G_ReactionFireSearchTarget() (equiv. to RFT_Update)
+ *		calls	G_ReactionFireTargetsUpdateAll()
  * 2. G_ClientShoot()
  *		calls	G_ReactionFirePreShot()
- *				calls	G_ReactionFireSearchTarget()
+ *				calls	G_ReactionFireTargetsUpdateAll()
  *				calls	G_ReactionFireTryToShoot()
  *		calls	G_ReactionFirePostShot()
  *				calls	G_ReactionFireCheckExecution()
@@ -513,43 +513,6 @@ static void G_ReactionFireTargetsUpdateAll (const edict_t *target)
 }
 
 /**
- * @brief Check whether 'target' has just triggered any new reaction fire
- * @param[in] target The entity triggering fire
- * @sa G_CanReactionFire
- * @sa G_GetFiringTUs
- */
-static void G_ReactionFireSearchTarget (const edict_t *target)
-{
-	edict_t *ent = NULL;
-
-	/* check all possible shooters */
-	while ((ent = G_EdictsGetNextLivingActor(ent))) {
-		int tus;
-
-		/* not if ent has reaction target already */
-		if (ent->reactionTarget)
-			continue;
-
-		/* check whether reaction fire is possible */
-		if (!G_ReactionFireIsPossible(ent, target))
-			continue;
-
-		/* see how quickly ent can fire (if it can fire at all) */
-		tus = G_ReactionFireGetTUsForItem(ent, target, RIGHT(ent));
-		if (tus < 0)
-			continue;
-
-		/* queue a reaction fire to take place */
-		ent->reactionTarget = target;
-		/* An enemy entering the line of fire of a soldier on reaction
-		 * fire should have the opportunity to spend time equal to the
-		 * sum of these values. */
-		ent->reactionTUs = max(0, target->TU - (tus / 4.0));
-		ent->reactionNoDraw = qfalse;
-	}
-}
-
-/**
  * @brief Perform the reaction fire shot
  * @param[in] player The player this action belongs to (the human player or the ai)
  * @param[in] shooter The actor that is trying to shoot
@@ -684,8 +647,6 @@ qboolean G_ReactionFireOnMovement (edict_t *target)
 	const qboolean fired = G_ReactionFireCheckExecution(target);
 
 	/* Check to see whether this triggers any reaction fire */
-	G_ReactionFireSearchTarget(target);
-
 	G_ReactionFireTargetsUpdateAll(target);
 
 	return fired;
@@ -703,8 +664,6 @@ void G_ReactionFirePreShot (const edict_t *target, const int fdTime)
 	qboolean repeat = qtrue;
 
 	/* Check to see whether this triggers any reaction fire */
-	G_ReactionFireSearchTarget(target);
-
 	G_ReactionFireTargetsUpdateAll(target);
 
 	/* if any reaction fire occurs, we have to loop through all entities again to allow
