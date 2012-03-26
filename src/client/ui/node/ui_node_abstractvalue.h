@@ -27,6 +27,10 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #ifndef CLIENT_UI_UI_NODE_ABSTRACTVALUE_H
 #define CLIENT_UI_UI_NODE_ABSTRACTVALUE_H
 
+class uiAbstractValueNode : public uiLocatedNode {
+
+};
+
 /**
  * @brief extradata for common GUI widget which allow to
  * edit a value (scrollbar, spinner, and more)

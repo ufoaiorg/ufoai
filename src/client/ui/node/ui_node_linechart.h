@@ -29,6 +29,10 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 
 #define MAX_LINESTRIPS 16
 
+class uiLineChartNode : public uiLocatedNode {
+
+};
+
 /**
  * @brief an element of the line chart
  */

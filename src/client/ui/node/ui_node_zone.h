@@ -25,6 +25,10 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #ifndef CLIENT_UI_UI_NODE_ZONE_H
 #define CLIENT_UI_UI_NODE_ZONE_H
 
+class uiZoneNode : public uiLocatedNode {
+
+};
+
 typedef struct {
 	qboolean repeat;			/**< repeat action when "click" is held */
 	int clickDelay;				/**< delay for the next "click" */

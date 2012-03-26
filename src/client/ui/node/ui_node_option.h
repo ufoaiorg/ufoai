@@ -26,6 +26,11 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #define CLIENT_UI_UI_NODE_OPTION_H
 
 #include "../ui_nodes.h"
+#include "ui_node_abstractnode.h"
+
+class uiOptionNode : public uiLocatedNode {
+
+};
 
 void UI_RegisterOptionNode(struct uiBehaviour_s *behaviour);
 

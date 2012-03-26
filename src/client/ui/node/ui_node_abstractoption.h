@@ -30,6 +30,10 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 
 struct uiAction_s;
 
+class uiAbstractOptionNode : public uiAbstractScrollableNode {
+
+};
+
 typedef struct {
 	/* link to shared data (can be used if internal data is null) */
 	int dataId;							/**< Shared data id where we can find option */

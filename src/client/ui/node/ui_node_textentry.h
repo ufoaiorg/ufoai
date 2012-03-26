@@ -28,6 +28,10 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 
 #include "../ui_nodes.h"
 
+class uiTextEntryNode : public uiLocatedNode {
+
+};
+
 /**
  * @brief extradata for the textentry, to custom draw and behaviour
  */

@@ -25,6 +25,10 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #ifndef CLIENT_UI_UI_NODE_DATA_H
 #define CLIENT_UI_UI_NODE_DATA_H
 
+class uiDataNode : public uiNode {
+
+};
+
 struct uiBehaviour_s;
 
 void UI_RegisterDataNode(struct uiBehaviour_s* behaviour);

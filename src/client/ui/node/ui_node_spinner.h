@@ -28,6 +28,10 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 
 #include "ui_node_abstractvalue.h"
 
+class uiSpinnerNode : public uiAbstractValueNode {
+
+};
+
 typedef struct spinnerExtraData_s {
 	abstractValueExtraData_t super;
 	float shiftIncreaseFactor;

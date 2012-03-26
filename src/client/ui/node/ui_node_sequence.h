@@ -28,6 +28,10 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #include "../ui_nodes.h"
 #include "../../cinematic/cl_sequence.h"
 
+class uiSequenceNode : public uiLocatedNode {
+
+};
+
 void UI_RegisterSequenceNode(struct uiBehaviour_s *behaviour);
 
 typedef struct {

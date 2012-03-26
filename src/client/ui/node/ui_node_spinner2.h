@@ -28,6 +28,10 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 
 #include "ui_node_spinner.h"
 
+class uiSpinner2Node : public uiSpinnerNode {
+
+};
+
 typedef struct spinner2ExtraData_s {
 	spinnerExtraData_t super;
 

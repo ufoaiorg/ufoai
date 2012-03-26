@@ -27,10 +27,17 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #define CLIENT_UI_UI_NODE_ABSTRACTSCROLLABLE_H
 
 #include "../../../shared/mathlib.h"
+#include "ui_node_abstractnode.h"
 
 struct uiBehaviour_s;
 struct uiAction_s;
 struct uiNode_s;
+
+class uiAbstractScrollableNode : public uiLocatedNode {
+public:
+	virtual int getCellWidth (uiNode_t *node) {return 1;}
+	virtual int getCellHeight (uiNode_t *node) {return 1;}
+};
 
 /**
  * @brief Scroll representation

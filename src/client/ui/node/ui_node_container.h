@@ -33,6 +33,10 @@ struct base_s;
 struct uiBehaviour_s;
 struct uiNode_s;
 
+class uiContainerNode : public uiLocatedNode {
+
+};
+
 extern inventory_t *ui_inventory;
 
 void UI_RegisterContainerNode(struct uiBehaviour_s *behaviour);

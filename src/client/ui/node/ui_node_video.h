@@ -28,6 +28,10 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #include "../ui_nodes.h"
 #include "../../cinematic/cl_cinematic.h"
 
+class uiVideoNode : public uiLocatedNode {
+
+};
+
 void UI_RegisterVideoNode(struct uiBehaviour_s *behaviour);
 
 #define UI_VIDEOEXTRADATA_TYPE videoExtraData_t

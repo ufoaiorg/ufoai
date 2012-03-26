@@ -27,6 +27,10 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 
 #include "../ui_nodes.h"
 
+class uiSelectBoxNode : public uiLocatedNode {
+
+};
+
 void UI_RegisterSelectBoxNode(struct uiBehaviour_s *behaviour);
 
 #endif

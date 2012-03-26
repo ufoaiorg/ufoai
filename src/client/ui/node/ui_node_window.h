@@ -26,12 +26,17 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #define CLIENT_UI_UI_NODE_WINDOW_H
 
 #include "../../../shared/mathlib.h"
+#include "ui_node_abstractnode.h"
 
 /* prototype */
 struct uiNode_s;
 struct uiAction_s;
 struct uiBehaviour_s;
 struct uiKeyBinding_s;
+
+class uiWindowNode : public uiLocatedNode {
+
+};
 
 extern const struct uiBehaviour_s *ui_windowBehaviour;
 

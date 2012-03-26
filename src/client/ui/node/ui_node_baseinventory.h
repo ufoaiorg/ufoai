@@ -28,6 +28,10 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #include "ui_node_container.h"
 #include "ui_node_abstractscrollable.h"
 
+class uiBaseInventoryNode : public uiContainerNode {
+
+};
+
 /* prototypes */
 struct uiBehaviour_s;
 

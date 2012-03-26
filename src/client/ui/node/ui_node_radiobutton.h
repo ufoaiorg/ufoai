@@ -27,6 +27,10 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 
 #include "../ui_nodes.h"
 
+class uiRadioButtonNode : public uiLocatedNode {
+
+};
+
 typedef struct radioButtonExtraData_s {
 	char* cvar;
 	float value;

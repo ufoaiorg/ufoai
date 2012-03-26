@@ -27,6 +27,19 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 
 #include "../ui_nodes.h"
 
+class uiConFuncNode : public uiNode {
+
+};
+
+class uiFuncNode : public uiNode {
+
+};
+
+class uiCvarNode : public uiNode {
+
+};
+
+
 void UI_RegisterConFuncNode(struct uiBehaviour_s *behaviour);
 void UI_RegisterCvarFuncNode(struct uiBehaviour_s *behaviour);
 void UI_RegisterFuncNode(struct uiBehaviour_s *behaviour);

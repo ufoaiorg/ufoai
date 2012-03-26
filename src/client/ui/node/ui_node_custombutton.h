@@ -28,6 +28,10 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #include "../ui_nodes.h"
 #include "ui_node_button.h"
 
+class uiCustomButtonNode : public uiButtonNode {
+
+};
+
 /* prototype */
 struct uiSprite_s;
 

@@ -26,6 +26,12 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #ifndef CLIENT_UI_UI_NODE_ABSTRACTSCROLLBAR_H
 #define CLIENT_UI_UI_NODE_ABSTRACTSCROLLBAR_H
 
+#include "ui_node_abstractnode.h"
+
+class uiAbstractScrollbarNode : public uiLocatedNode {
+
+};
+
 /**
  * @brief extradata for scrollbar widget
  * @todo think about switching to percent when its possible (lowPosition, hightPosition)

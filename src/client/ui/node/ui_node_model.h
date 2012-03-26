@@ -26,7 +26,12 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #define CLIENT_UI_UI_NODE_MODEL_H
 
 #include "../ui_nodes.h"
+#include "ui_node_abstractnode.h"
 #include "../../cl_renderer.h"	/**< include animState_t */
+
+class uiModelNode : public uiLocatedNode {
+
+};
 
 #define UI_MAX_MODELS		128
 
