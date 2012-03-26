@@ -2278,8 +2278,8 @@ static void B_SellOrAddItems (aircraft_t *aircraft)
 		} else {
 			/* If the related technology is researched, check the autosell option. */
 			if (ccs.eMarket.autosell[item->idx]) { /* Sell items if autosell is enabled. */
-				BS_AddItemToMarket(item, amount);
-				gained += (item->price * amount);
+				BS_SellItem(item, NULL, amount);
+				gained += BS_GetItemSellingPrice(item) * amount;
 				numitems += amount;
 			} else {
 				int j;
@@ -2288,8 +2288,8 @@ static void B_SellOrAddItems (aircraft_t *aircraft)
 				for (j = 0; j < amount; j++) {
 					if (!B_UpdateStorageAndCapacity(base, item, 1, qfalse)) {
 						/* Not enough space, sell item. */
-						BS_AddItemToMarket(item, 1);
-						forcedgained += item->price;
+						BS_SellItem(item, NULL, 1);
+						forcedgained += BS_GetItemSellingPrice(item);
 						forcedsold++;
 					}
 				}
@@ -2308,7 +2308,6 @@ static void B_SellOrAddItems (aircraft_t *aircraft)
 			base->name, va(ngettext("%i item was sold for %i credits.", "%i items were sold for %i credits.", forcedsold), forcedsold, forcedgained));
 		MS_AddNewMessage(_("Notice"), cp_messageBuffer, qfalse, MSG_STANDARD, NULL);
 	}
-	CP_UpdateCredits(ccs.credits + gained + forcedgained);
 
 	/* ship no longer has cargo aboard */
 	aircraft->itemTypes = 0;

@@ -31,40 +31,89 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 
 #define BS_GetMarket() (&ccs.eMarket)
 
-void BS_AddItemToMarket (const objDef_t *od, int amount)
+/**
+ * @brief Check if an item is on market
+ * @param[in] item Pointer to the item to check
+ * @note this function doesn't check if the item is available on market (buyable > 0)
+ */
+qboolean BS_IsOnMarket (const objDef_t *item)
+{
+	assert(item);
+	return !(item->isVirtual || item->notOnMarket);
+}
+
+/**
+ * @brief Get the number of items of the given type on the market
+ * @param[in] od the item (objDef) to search the market for
+ * @return The amount of items for the given type
+ */
+int BS_GetItemOnMarket (const objDef_t *od)
+{
+	const market_t *market = BS_GetMarket();
+	return BS_IsOnMarket(od) ? market->numItems[od->idx] : 0;
+}
+
+/**
+ * @brief Internal function to add items to the market
+ * @param[in] od Object definition (the item itself)
+ * @param[in] amount Non-negative number of items to add
+ */
+static void BS_AddItemToMarket (const objDef_t *od, int amount)
 {
 	market_t *market = BS_GetMarket();
 	assert(amount >= 0);
 	market->numItems[od->idx] += amount;
 }
 
-void BS_RemoveItemFromMarket (const objDef_t *od, int amount)
+/**
+ * @brief Internal function to remove items from the market
+ * @param[in] od Object definition (the item itself)
+ * @param[in] amount Non-negative number of items to remove
+ */
+static void BS_RemoveItemFromMarket (const objDef_t *od, int amount)
 {
 	market_t *market = BS_GetMarket();
+
 	assert(amount >= 0);
-	market->numItems[od->idx] -= amount;
-	if (market->numItems[od->idx] < 0)
-		market->numItems[od->idx] = 0;
+
+	market->numItems[od->idx] = max(market->numItems[od->idx] - amount, 0);
 }
 
-void BS_AddAircraftToMarket (const aircraft_t *aircraft, int amount)
+/**
+ * @brief Get the price for an item that you want to sell on the market
+ * @param[in] od The item to sell
+ * @return The price of the item
+ */
+int BS_GetItemSellingPrice (const objDef_t *od)
 {
-	const humanAircraftType_t type = Com_DropShipShortNameToID(aircraft->id);
-	market_t *market = BS_GetMarket();
-	assert(amount >= 0);
-	assert(aircraft->type != AIRCRAFT_UFO);
-	market->numAircraft[type] += amount;
+	const market_t *market = BS_GetMarket();
+	return market->bidItems[od->idx];
 }
 
-void BS_RemoveAircraftFromMarket (const aircraft_t *aircraft, int amount)
+/**
+ * @brief Get the price for an item that you want to buy on the market
+ * @param[in] od The item to buy
+ * @return The price of the item
+ */
+int BS_GetItemBuyingPrice (const objDef_t *od)
 {
-	const humanAircraftType_t type = Com_DropShipShortNameToID(aircraft->id);
-	market_t *market = BS_GetMarket();
-	assert(amount >= 0);
-	assert(aircraft->type != AIRCRAFT_UFO);
-	market->numAircraft[type] -= amount;
-	if (market->numAircraft[type] < 0)
-		market->numAircraft[type] = 0;
+	const market_t *market = BS_GetMarket();
+	return market->askItems[od->idx];
+}
+
+/**
+ * @brief Checks whether a given aircraft should appear on the market
+ * @param aircraft The aircraft to check
+ * @return @c true if the aircraft should appear on the market
+ */
+qboolean BS_AircraftIsOnMarket (const aircraft_t *aircraft)
+{
+	if (aircraft->type == AIRCRAFT_UFO)
+		return qfalse;
+	if (aircraft->price == -1)
+		return qfalse;
+
+	return  qtrue;
 }
 
 /**
@@ -76,8 +125,38 @@ int BS_GetAircraftOnMarket (const aircraft_t *aircraft)
 {
 	const humanAircraftType_t type = Com_DropShipShortNameToID(aircraft->id);
 	const market_t *market = BS_GetMarket();
+
+	return BS_AircraftIsOnMarket(aircraft) ? market->numAircraft[type] : 0;
+}
+
+/**
+ * @brief Internal function to add aircraft to the market
+ * @param[in] aircraft Aircraft template definition
+ * @param[in] amount Non-negative number of aircraft to add
+ */
+static void BS_AddAircraftToMarket (const aircraft_t *aircraft, int amount)
+{
+	const humanAircraftType_t type = Com_DropShipShortNameToID(aircraft->id);
+	market_t *market = BS_GetMarket();
+	assert(amount >= 0);
 	assert(aircraft->type != AIRCRAFT_UFO);
-	return market->numAircraft[type];
+	market->numAircraft[type] += amount;
+}
+
+/**
+ * @brief Internal function to remove aircraft from the market
+ * @param[in] aircraft Aircraft template definition
+ * @param[in] amount Non-negative number of aircraft to remove
+ */
+static void BS_RemoveAircraftFromMarket (const aircraft_t *aircraft, int amount)
+{
+	const humanAircraftType_t type = Com_DropShipShortNameToID(aircraft->id);
+	market_t *market = BS_GetMarket();
+
+	assert(amount >= 0);
+	assert(aircraft->type != AIRCRAFT_UFO);
+
+	market->numAircraft[type] = max(market->numAircraft[type] - amount, 0);
 }
 
 /**
@@ -130,81 +209,6 @@ int BS_GetAircraftBuyingPrice (const aircraft_t *aircraft)
 	assert(aircraft->type != AIRCRAFT_UFO);
 	return market->askAircraft[type];
 }
-
-/**
- * @brief Get the number of items of the given type on the market
- * @param[in] od the item (objDef) to search the market for
- * @return The amount of items for the given type
- */
-int BS_GetItemOnMarket (const objDef_t *od)
-{
-	const market_t *market = BS_GetMarket();
-	return BS_IsOnMarket(od) ? market->numItems[od->idx] : 0;
-}
-
-/**
- * @brief Get the price for an item that you want to sell on the market
- * @param[in] od The item to sell
- * @return The price of the item
- */
-int BS_GetItemSellingPrice (const objDef_t *od)
-{
-	const market_t *market = BS_GetMarket();
-	return market->bidItems[od->idx];
-}
-
-/**
- * @brief Get the price for an item that you want to buy on the market
- * @param[in] od The item to buy
- * @return The price of the item
- */
-int BS_GetItemBuyingPrice (const objDef_t *od)
-{
-	const market_t *market = BS_GetMarket();
-	return market->askItems[od->idx];
-}
-
-/**
- * @brief Buy items.
- * @param[in] base Pointer to the base where items are bought.
- * @param[in] item Pointer to the item to buy.
- * @param[in] number Number of items to buy.
- */
-qboolean BS_CheckAndDoBuyItem (base_t* base, const objDef_t *item, int number)
-{
-	int numItems;
-	const int price = BS_GetItemBuyingPrice(item);
-	const market_t *market = BS_GetMarket();
-
-	assert(base);
-
-	/* you can't buy more items than there are on market */
-	numItems = min(number, market->numItems[item->idx]);
-
-	/* you can't buy more items than you have credits for */
-	/** @todo Handle items with price 0 better */
-	if (price)
-		numItems = min(numItems, ccs.credits / price);
-	if (numItems <= 0)
-		return qfalse;
-
-	/* you can't buy more items than you have room for */
-	/** @todo Handle items with size 0 better */
-	if (item->size)
-		numItems = min(numItems, CAP_GetFreeCapacity(base, CAP_ITEMS) / item->size);
-	/* make sure that numItems is > 0 (can be negative because capacities.cur may be greater than
-	 * capacities.max if storage is disabled or if alien items have been collected on mission */
-	if (numItems <= 0) {
-		CP_Popup(_("Not enough storage space"), _("You cannot buy this item.\nNot enough space in storage.\nBuild more storage facilities."));
-		return qfalse;
-	}
-
-	B_UpdateStorageAndCapacity(base, item, numItems, qfalse);
-	BS_RemoveItemFromMarket(item, numItems);
-	CP_UpdateCredits(ccs.credits - price * numItems);
-	return qtrue;
-}
-
 
 /**
  * @brief Update storage, the market, and the player's credits
@@ -418,17 +422,18 @@ qboolean BS_SellItem (const objDef_t *od, base_t *base, int count)
 {
 	if (!od)
 		Com_Error(ERR_DROP, "BS_SellItem: Called on NULL objDef!");
-	if (!base)
-		Com_Error(ERR_DROP, "BS_SellItem: Called on NULL base!");
 
 	if (!BS_IsOnMarket(od))
 		return qfalse;
 	if (count <= 0)
 		return qfalse;
-	if (B_ItemInBase(od, base) < count)
-		return qfalse;
 
-	B_UpdateStorageAndCapacity(base, od, -1 * count, qfalse);
+	if (base) {
+		if (B_ItemInBase(od, base) < count)
+			return qfalse;
+		B_UpdateStorageAndCapacity(base, od, -1 * count, qfalse);
+	}
+
 	BS_AddItemToMarket(od, count);
 	CP_UpdateCredits(ccs.credits + BS_GetItemSellingPrice(od) * count);
 
@@ -645,17 +650,6 @@ void CP_CampaignRunMarket (campaign_t *campaign)
 			market->currentEvolutionAircraft[i] -= num;
 		}
 	}
-}
-
-/**
- * @brief Check if an item is on market
- * @param[in] item Pointer to the item to check
- * @note this function doesn't check if the item is available on market (buyable > 0)
- */
-qboolean BS_IsOnMarket (const objDef_t * item)
-{
-	assert(item);
-	return !(item->isVirtual || item->notOnMarket);
 }
 
 /**
