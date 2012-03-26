@@ -410,7 +410,11 @@ void R_UpdateLightList (entity_t *ent)
 		if (distSqr > (diameter + light->radius) * (diameter + light->radius))
 			continue;
 
-		R_AddLightToEntity(ent, light, distSqr);
+		/** @todo Cache at least for static light -> static model interaction */
+		R_Trace(pos, light->origin, 0, MASK_SOLID);
+
+		if (refdef.trace.fraction == 1.0)
+			R_AddLightToEntity(ent, light, distSqr);
 	}
 
 	/* add dynamic lights, too */
@@ -421,6 +425,9 @@ void R_UpdateLightList (entity_t *ent)
 		if (distSqr > (diameter + light->radius) * (diameter + light->radius))
 			continue;
 
-		R_AddLightToEntity(ent, light, distSqr);
+		R_Trace(pos, light->origin, 0, MASK_SOLID);
+
+		if (refdef.trace.fraction == 1.0)
+			R_AddLightToEntity(ent, light, distSqr);
 	}
 }
