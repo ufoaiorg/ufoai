@@ -478,8 +478,6 @@ static qboolean R_CvarCheckDynamicLights (cvar_t *cvar)
 static qboolean R_CvarPrograms (cvar_t *cvar)
 {
 	if (qglUseProgram) {
-		if (!cvar->integer || !r_config.drawBuffers)
-			Cvar_SetValue("r_postprocess", 0);
 		return Cvar_AssertValue(cvar, 0, 3, qtrue);
 	}
 
@@ -509,7 +507,7 @@ static qboolean R_CvarGLSLVersionCheck (cvar_t *cvar)
 
 static qboolean R_CvarPostProcess (cvar_t *cvar)
 {
-	if (r_config.frameBufferObject && r_programs->integer && r_config.drawBuffers)
+	if (r_config.frameBufferObject && r_config.drawBuffers)
 		return Cvar_AssertValue(cvar, 0, 1, qtrue);
 
 	Cvar_SetValue(cvar->name, 0);
