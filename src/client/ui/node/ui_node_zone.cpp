@@ -48,7 +48,7 @@ static void UI_ZoneNodeRepeat (uiNode_t *node, uiTimer_t *timer)
 	}
 }
 
-static void UI_ZoneNodeDown (uiNode_t *node, int x, int y, int button)
+void uiZoneNode::mouseDown (uiNode_t *node, int x, int y, int button)
 {
 	if (!EXTRADATA(node).repeat)
 		return;
@@ -59,7 +59,7 @@ static void UI_ZoneNodeDown (uiNode_t *node, int x, int y, int button)
 	}
 }
 
-static void UI_ZoneNodeUp (uiNode_t *node, int x, int y, int button)
+void uiZoneNode::mouseUp (uiNode_t *node, int x, int y, int button)
 {
 	if (!EXTRADATA(node).repeat)
 		return;
@@ -72,7 +72,7 @@ static void UI_ZoneNodeUp (uiNode_t *node, int x, int y, int button)
  * @brief Called when the node have lost the captured node
  * We clean cached data
  */
-static void UI_ZoneNodeCapturedMouseLost (uiNode_t *node)
+void uiZoneNode::capturedMouseLost (uiNode_t *node)
 {
 	if (capturedTimer) {
 		UI_TimerRelease(capturedTimer);
@@ -83,7 +83,7 @@ static void UI_ZoneNodeCapturedMouseLost (uiNode_t *node)
 /**
  * @brief Call before the script initialized the node
  */
-static void UI_ZoneNodeLoading (uiNode_t *node)
+void uiZoneNode::loading (uiNode_t *node)
 {
 	EXTRADATA(node).clickDelay = 1000;
 }
@@ -91,10 +91,7 @@ static void UI_ZoneNodeLoading (uiNode_t *node)
 void UI_RegisterZoneNode (uiBehaviour_t *behaviour)
 {
 	behaviour->name = "zone";
-	behaviour->loading = UI_ZoneNodeLoading;
-	behaviour->mouseDown = UI_ZoneNodeDown;
-	behaviour->mouseUp = UI_ZoneNodeUp;
-	behaviour->capturedMouseLost = UI_ZoneNodeCapturedMouseLost;
+	behaviour->manager = new uiZoneNode();
 	behaviour->extraDataSize = sizeof(EXTRADATA_TYPE);
 
 	/* If true, the <code>onclick</code> call back is called more than one time if the user do not release the button. */
