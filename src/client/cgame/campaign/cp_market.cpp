@@ -139,7 +139,7 @@ int BS_GetAircraftBuyingPrice (const aircraft_t *aircraft)
 int BS_GetItemOnMarket (const objDef_t *od)
 {
 	const market_t *market = BS_GetMarket();
-	return market->numItems[od->idx];
+	return BS_IsOnMarket(od) ? market->numItems[od->idx] : 0;
 }
 
 /**

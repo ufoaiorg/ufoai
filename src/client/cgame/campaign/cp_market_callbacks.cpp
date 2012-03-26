@@ -1216,6 +1216,96 @@ static void BS_ShowInfo_f (void)
 }
 
 /**
+ * @brief Fill market item list
+ */
+static void BS_FillMarket_f (void)
+{
+	const base_t *base = B_GetCurrentSelectedBase();
+	itemFilterTypes_t type;
+
+	if (Cmd_Argc() < 2) {
+		Com_Printf("Usage: %s <category>\n", Cmd_Argv(0));
+		return;
+	}
+	if (Cmd_Argc() >= 3)
+		base = B_GetFoundedBaseByIDX(atoi(Cmd_Argv(2)));
+	if (!base) {
+		Com_Printf("No/invalid base selected.\n");
+		return;
+	}
+
+	type = INV_GetFilterTypeID(Cmd_Argv(1));
+	UI_ExecuteConfunc("ui_market_clear");
+	switch (type) {
+	case FILTER_UGVITEM:
+		/* show own UGV */
+		E_Foreach(EMPL_ROBOT, robot) {
+			const ugv_t *ugv = robot->ugv;
+			const technology_t* tech = RS_GetTechByProvided(ugv->id);
+
+			if (!E_IsInBase(robot, base))
+				continue;
+
+			UI_ExecuteConfunc("ui_market_add \"ugv-%d\" \"%s\" 1 0 0 %d - \"%s\"", robot->chr.ucn, _(tech->name), ugv->price, E_IsAwayFromBase(robot) ? _("UGV is away from home") : "-");
+		}
+		/* show buyable UGV */
+		for (int i = 0; i < csi.numUGV; i++) {
+			const ugv_t *ugv = &csi.ugvs[i];
+			const technology_t* tech = RS_GetTechByProvided(ugv->id);
+			const objDef_t *ugvWeapon = INVSH_GetItemByID(ugv->weapon);
+			const int buyable = min(E_CountUnhiredRobotsByType(ugv), BS_GetItemOnMarket(ugvWeapon));
+
+			assert(tech);
+			if (!RS_IsResearched_ptr(tech))
+				continue;
+			if (buyable <= 0)
+				continue;
+
+			UI_ExecuteConfunc("ui_market_add %s \"%s\" 0 %d %d %d - -", ugv->id, _(tech->name), buyable, ugv->price, ugv->price);
+		}
+		/* show (UGV) items */
+	case FILTER_S_PRIMARY:
+	case FILTER_S_SECONDARY:
+	case FILTER_S_HEAVY:
+	case FILTER_S_MISC:
+	case FILTER_S_ARMOUR:
+	case FILTER_DUMMY:
+	case FILTER_CRAFTITEM:
+	case MAX_FILTERTYPES: {
+		for (int i = 0; i < csi.numODs; i++) {
+			const objDef_t *od = &csi.ods[i];
+			const technology_t *tech = RS_GetTechForItem(od);
+
+			if (!BS_IsOnMarket(od))
+				continue;
+			if (B_ItemInBase(od, base) + BS_GetItemOnMarket(od) <= 0)
+				continue;
+			if (type != MAX_FILTERTYPES && !INV_ItemMatchesFilter(od, type))
+				continue;
+			UI_ExecuteConfunc("ui_market_add %s \"%s\" %d %d %d %d %s -", od->id, _(od->name), B_ItemInBase(od, base), BS_GetItemOnMarket(od), BS_GetItemBuyingPrice(od), BS_GetItemSellingPrice(od), RS_IsResearched_ptr(tech) ? va("%d", ccs.eMarket.autosell[i]) : "-");
+		}
+		break;
+	}
+	case FILTER_AIRCRAFT: {
+		AIR_Foreach(aircraft) {
+			UI_ExecuteConfunc("ui_market_add \"aircraft-%d\" \"%s\" 1 0 0 %d - \"%s\"", aircraft->idx, aircraft->name, BS_GetAircraftSellingPrice(aircraft), AIR_IsAircraftInBase(aircraft) ? "-" : _("Aircraft is away from home"));
+		}
+		for (int i = 0; i < ccs.numAircraftTemplates; i++) {
+		const aircraft_t *aircraft = &ccs.aircraftTemplates[i];
+			if (!BS_AircraftIsOnMarket(aircraft))
+				continue;
+			if (!RS_IsResearched_ptr(aircraft->tech))
+				continue;
+			UI_ExecuteConfunc("ui_market_add \"%s\" \"%s\" 0 %d %d %d - -", aircraft->id, _(aircraft->tech->name), BS_GetAircraftOnMarket(aircraft), BS_GetAircraftBuyingPrice(aircraft), BS_GetAircraftSellingPrice(aircraft));
+		}
+		break;
+	}
+	default:
+		break;
+	}
+}
+
+/**
  * @brief Function registers the callbacks of the maket UI and do initializations
  */
 void BS_InitCallbacks(void)
@@ -1235,6 +1325,7 @@ void BS_InitCallbacks(void)
 	Cmd_AddCommand("ui_market_setautosell", BS_SetAutosell_f, "Sets/unsets or flips the autosell property of an item on the market");
 	Cmd_AddCommand("ui_market_buy", BS_Buy_f, "Buy/Sell item/aircraft/ugv on the market");
 	Cmd_AddCommand("ui_market_showinfo", BS_ShowInfo_f, "Show informations about item/aircaft/ugv in the market");
+	Cmd_AddCommand("ui_market_fill", BS_FillMarket_f, "Fill market item list");
 }
 
 /**
@@ -1242,6 +1333,7 @@ void BS_InitCallbacks(void)
  */
 void BS_ShutdownCallbacks(void)
 {
+	Cmd_RemoveCommand("ui_market_fill");
 	Cmd_RemoveCommand("ui_market_showinfo");
 	Cmd_RemoveCommand("ui_market_buy");
 	Cmd_RemoveCommand("ui_market_setautosell");
