@@ -2,41 +2,76 @@
 // MARKET MENU
 // ==================
 
-component panel cmpMarketItem
-{
+component panel cmpMarketItem {
 	{
-		size "425 24"
-		onClick	{ cmd "mn_buysell <num> <lastdiff>; market_click <num>;" }
-//		onWheel		{ cmd "sync_market_scroll <lineselected> <viewpos>;market_scroll <viewpos>;" }
+		size "425 25"
+		onClick {
+			cmd "ui_market_select <node:this.id@string>;"
+		}
 	}
-	zone wz_buysell
-	{
-		pos			"302 0"
-		size		"120 24"
-		onWheelUp	{ cmd "mn_buy <node:parent@num>;" }
-		onWheelDown	{ cmd "mn_sell <node:parent@num>;" }
+
+	data id {
 	}
-	spinner bt_buysell
-	{
+
+	checkbox autosell {
+		current		0
+		image		"ui/checkbox_blue"
+		pos			"0 0"
+		size		"22 18"
+
+		onChange {
+			cmd "ui_market_setautosell \"<node:parent.id@string>\" <node:this@current>;"
+			cmd "ui_market_fill <cvar:ui_market_category>;"
+			cmd "ui_market_select <node:parent.id@string>;"
+		}
+	}
+
+	string name {
+		color		"0 .78 0 1"
+		pos			"25 0"
+		size		"250 25"
+		ghost		true
+	}
+	string storage {
+		color		"0 .78 0 1"
+		contentalign	ALIGN_CR
+		pos			"300 0"
+		size		"40 25"
+		ghost		true
+	}
+	string market {
+		color		"0 .78 0 1"
+		contentalign	ALIGN_CR
+		pos			"376 0"
+		size		"40 25"
+		ghost true
+	}
+	string price {
+		color		"0 .78 0 1"
+		contentalign	ALIGN_CR
+		pos			"432 0"
+		size		"60 25"
+		ghost		true
+	}
+
+	spinner buysell {
 		tooltip		"_Buy and sell item"
 		image		"ui/spinner_blue"
 		pos			"346 0"
-		onChange	{ cmd "mn_buysell <node:parent@num> <lastdiff>; market_click <node:parent@num>;" }
+		onChange {
+			if ( ( ( <node:parent.storage@string> + <node:parent.market@string> ) + <lastdiff> ) < 1 ) {
+				*node:root.selected@string = ""
+			}
+			cmd "ui_market_buy \"<node:parent.id@string>\" <lastdiff>;"
+			cmd "ui_market_fill <cvar:ui_market_category>;"
+			if ( *node:root.selected@string ne "" ) {
+				cmd "ui_market_select \"<node:parent.id@string>\";"
+			}
+		}
 	}
-	checkbox bt_autosell
-	{
-		current		0
-		image		"ui/checkbox_blue"
-//		pos			"30 180"
-		pos			"0 0"
-		size		"22 18"
-		onChange	{ cmd "buy_autosell <node:parent@num>;" }
-	}
-
 }
 
-window market extends objectinfo
-{
+window market extends objectinfo {
 	/** @todo Remove me */
 	{ } // empty properties to fix parsing problem with "image" token (behaviour or property?)
 
@@ -44,8 +79,7 @@ window market extends objectinfo
 	// background
 	// ==================
 
-	image background
-	{
+	image background {
 		src		"background/base_bg"
 	}
 
@@ -55,6 +89,10 @@ window market extends objectinfo
 	// ==================
 	// tab
 	// ==================
+
+	data selected {
+		string	""
+	}
 
 	panel tab_background {
 		pos		"24 96"
@@ -66,9 +104,11 @@ window market extends objectinfo
 		{
 			pos		"47 106"
 			size	"938 39"
-			cvar	*cvar:mn_itemtype
+			cvar	*cvar:ui_market_category
+
 			onChange {
-				cmd "buy_type <cvar:mn_itemtype>;"
+				*node:root.selected@string = ""
+				cmd "ui_market_fill <cvar:ui_market_category>;"
 			}
 		}
 
@@ -128,174 +168,135 @@ window market extends objectinfo
 		bgcolor	"0.03 0.42 0.03 1"
 	}
 
-	panel itemlist {
+	panel itemlist_back {
 		pos		"12 160"
 		size	"553 597"
 		image	"ui/panel_grey_green_large2"
 	}
-
-	textlist market
-	{
-		dataid		TEXT_MARKET_NAMES
+	string name_label {
+		string		"_Name"
+		pos			"55 180"
+		size		"250 25"
 		color		"0 .78 0 1"
-		rows		"22"
-		lineheight	"25"
-		pos			"55 177"
-		size		"265 550"
-		onChange	{ cmd "sync_market_scroll <lineselected> <viewpos>;market_click <lineselected>;" }
-		onWheel		{ cmd "sync_market_scroll <lineselected> <viewpos>;market_scroll <viewpos>;" }
 	}
-
-	textlist market_storage
-	{
-		dataid		TEXT_MARKET_STORAGE
+	string storage_label {
+		string		"_Store"
+		tooltip		"_Number of such items in base"
+		pos			"325 180"
+		size		"60 25"
 		color		"0 .78 0 1"
 		contentalign	ALIGN_CR
-		pos			"330 177"
-		rows		"22"
-		size		"40 550"
-		lineheight	"25"
-		onChange	{ cmd "sync_market_scroll <lineselected> <viewpos>;market_click <lineselected>;" }
-		onWheel		{ cmd "sync_market_scroll <lineselected> <viewpos>;market_scroll <viewpos>;" }
 	}
-
-	textlist market_market
-	{
-		dataid		TEXT_MARKET_MARKET
+	string market_label {
+		string		"_Market"
+		tooltip		"_Number of such items on the market"
+		pos			"390 180"
+		size		"60 25"
 		color		"0 .78 0 1"
 		contentalign	ALIGN_CR
-		pos			"406 177"
-		rows		"22"
-		size		"40 550"
-		lineheight	"25"
-		onChange	{ cmd "sync_market_scroll <lineselected> <viewpos>;market_click <lineselected>;" }
-		onWheel		{ cmd "sync_market_scroll <lineselected> <viewpos>;market_scroll <viewpos>;" }
 	}
-
-	textlist market_prices
-	{
-		dataid		TEXT_MARKET_PRICES
+	string price {
+		string		"_Price"
+		pos			"462 180"
+		size		"60 25"
 		color		"0 .78 0 1"
 		contentalign	ALIGN_CR
-		rows		"22"
-		size		"80 550"
-		lineheight	"25"
-		pos			"462 177"
-		onChange	{ cmd "sync_market_scroll <lineselected> <viewpos>;market_click <lineselected>;" }
-		onWheel		{ cmd "sync_market_scroll <lineselected> <viewpos>;market_scroll <viewpos>;" }
 	}
 
-	/**
-	 * @param <1> item selected
-	 * @param <2> scroll position
+	panel itemlist {
+		pos		"30 205"
+		size	"500 535"
+		layout	LAYOUT_TOP_DOWN_FLOW
+		wheelscrollable	true
+		onViewChange {
+			*node:parent.itemlist_scroll@fullsize = <fullsize>
+			*node:parent.itemlist_scroll@current = <viewpos>
+			*node:parent.itemlist_scroll@viewsize = <viewsize>
+		}
+	}
+	vscrollbar itemlist_scroll {
+		image		"ui/scrollbar_v_green"
+		pos			"530 205"
+		height		"535"
+		current		0
+		viewsize	21
+		fullsize	21
+		hidewhenunused true
+		onChange {
+			*node:parent.itemlist@viewpos = <current>
+		}
+	}
+
+	/*
+	 * @brief Select an entry from thelist
+	 * <1> item id
 	 */
-	confunc sync_market_scroll {
-		*node:root.market@lineselected = <1>
-		*node:root.market_storage@lineselected = <1>
-		*node:root.market_market@lineselected = <1>
-		*node:root.market_prices@lineselected = <1>
-		*node:root.market@viewpos = <2>
-		*node:root.market_storage@viewpos = <2>
-		*node:root.market_market@viewpos = <2>
-		*node:root.market_prices@viewpos = <2>
+	confunc ui_market_select {
+		if ( *node:root.selected@string ne "" ) {
+			*node:root.itemlist.item_<node:root.selected@string>.name@color = "0 .78 0 1"
+			*node:root.itemlist.item_<node:root.selected@string>.storage@color = "0 .78 0 1"
+			*node:root.itemlist.item_<node:root.selected@string>.market@color = "0 .78 0 1"
+			*node:root.itemlist.item_<node:root.selected@string>.price@color = "0 .78 0 1"
+		}
+		*node:root.selected@string = <1>
+		if ( *node:root.selected@string ne "" ) {
+			*node:root.itemlist.item_<node:root.selected@string>.name@color = "1 1 1 1"
+			*node:root.itemlist.item_<node:root.selected@string>.storage@color = "1 1 1 1"
+			*node:root.itemlist.item_<node:root.selected@string>.market@color = "1 1 1 1"
+			*node:root.itemlist.item_<node:root.selected@string>.price@color = "1 1 1 1"
+			cmd "ui_market_showinfo <1>;"
+		}
 	}
-
-	// ==================
-	// buy/sell/autosell buttons
-	// ==================
-
-	/**
-	 * @note correct current and max values of spinners will be set via confunc
-	 * @sa (confunc) buy_updateitem
-	 * @sa BS_UpdateItem
+	/*
+	 * @brief Confunc to clear the itemlist
 	 */
-	cmpMarketItem item0
-	{
-		pos			"30 180"
+	confunc ui_market_clear {
+		call *node:root.itemlist@removeAllchild
 	}
-	cmpMarketItem item1
-	{
-		pos			"30 205"
-	}
-	cmpMarketItem item2
-	{
-		pos			"30 230"
-	}
-	cmpMarketItem item3
-	{
-		pos			"30 255"
-	}
-	cmpMarketItem item4
-	{
-		pos			"30 280"
-	}
-	cmpMarketItem item5
-	{
-		pos			"30 305"
-	}
-	cmpMarketItem item6
-	{
-		pos			"30 330"
-	}
-	cmpMarketItem item7
-	{
-		pos			"30 355"
-	}
-	cmpMarketItem item8
-	{
-		pos			"30 380"
-	}
-	cmpMarketItem item9
-	{
-		pos			"30 405"
-	}
-	cmpMarketItem item10
-	{
-		pos			"30 430"
-	}
-	cmpMarketItem item11
-	{
-		pos			"30 455"
-	}
-	cmpMarketItem item12
-	{
-		pos			"30 480"
-	}
-	cmpMarketItem item13
-	{
-		pos			"30 505"
-	}
-	cmpMarketItem item14
-	{
-		pos			"30 530"
-	}
-	cmpMarketItem item15
-	{
-		pos			"30 555"
-	}
-	cmpMarketItem item16
-	{
-		pos			"30 580"
-	}
-	cmpMarketItem item17
-	{
-		pos			"30 605"
-	}
-	cmpMarketItem item18
-	{
-		pos			"30 630"
-	}
-	cmpMarketItem item19
-	{
-		pos			"30 655"
-	}
-	cmpMarketItem item20
-	{
-		pos			"30 680"
-	}
-	cmpMarketItem item21
-	{
-		pos			"30 705"
+	/*
+	 * @brief Confunc to add the item to market's itemlist
+	 * <1> reference id
+	 * <2> name
+	 * <3> count at base
+	 * <4> count on market
+	 * <5> buy price
+	 * <6> sell price
+	 * <7> autosell (0: off, 1: on, -: not available"
+	 * <8> tooltip for disabled entries, "-" otherwise
+     */
+	confunc ui_market_add {
+		call *node:root.itemlist@createChild("item_<1>", "cmpMarketItem")
+
+		// autosell
+		*node:root.itemlist.item_<1>.id@string = <7>
+		if ( *node:root.itemlist.item_<1>.id@string eq "-" ) {
+			*node:root.itemlist.item_<1>.autosell@invis = true
+		} else {
+			*node:root.itemlist.item_<1>.autosell@current = <7>
+		}
+		*node:root.itemlist.item_<1>.id@string = <8>
+		if ( *node:root.itemlist.item_<1>.id@string ne "-" ) {
+			*node:root.itemlist.item_<1>.autosell@tooltip = <8>
+			*node:root.itemlist.item_<1>.autosell@disabled = true
+			*node:root.itemlist.item_<1>.buysell@disabled = true
+			*node:root.itemlist.item_<1>.buysell@tooltip = <8>
+		}
+
+		*node:root.itemlist.item_<1>.id@string = <1>
+		*node:root.itemlist.item_<1>.name@string = <2>
+		*node:root.itemlist.item_<1>.storage@string = <3>
+		*node:root.itemlist.item_<1>.market@string = <4>
+		*node:root.itemlist.item_<1>.price@string = <5>
+		if ( *node:root.itemlist.item_<1>.price@string eq "0" ) {
+			*node:root.itemlist.item_<1>.price@string = <6>
+		}
+		*node:root.itemlist.item_<1>.buysell@min = 0
+		*node:root.itemlist.item_<1>.buysell@current = <3>
+		*node:root.itemlist.item_<1>.buysell@max = ( <3> + <4> )
+
+		if ( *node:root.selected@string eq "" ) {
+			call *node:root.ui_market_select ( "<1>" )
+		}
 	}
 
 	panel basedescription {
@@ -311,7 +312,7 @@ window market extends objectinfo
 
 		string txt_storage_caption
 		{
-			visiblewhen "*cvar:mn_itemtype ne \"aircraft\""	// for everything except aircraft
+			visiblewhen "*cvar:ui_market_category ne \"aircraft\""	// for everything except aircraft
 			string 		"_Storage (used/all):"
 			pos			"62 50"
 			size		"200 20"
@@ -320,7 +321,7 @@ window market extends objectinfo
 
 		string txt_storage_value
 		{
-			visiblewhen "*cvar:mn_itemtype ne \"aircraft\""	// for everything except aircraft
+			visiblewhen "*cvar:ui_market_category ne \"aircraft\""	// for everything except aircraft
 			string 		*cvar:mn_bs_storage
 			pos			"267 50"
 			size		"100 20"
@@ -329,7 +330,7 @@ window market extends objectinfo
 	}
 
 	confunc listen_openpedia {
-		cmd "market_click <node:root.market@lineselected>;"
+		cmd "ui_market_select \"<node:root.selected@string>\";"
 		cmd "ui_removelistener ufopedia@onWindowClosed <path:this>;"
 	}
 
@@ -346,7 +347,7 @@ window market extends objectinfo
 
 		string itemname
 		{
-			visiblewhen "*cvar:mn_itemtype ne \"aircraft\""	// for everything except aircraft
+			visiblewhen "*cvar:ui_market_category ne \"aircraft\""	// for everything except aircraft
 			string		*cvar:mn_itemname
 			pos			"22 25"
 			size		"365 20"
@@ -354,7 +355,7 @@ window market extends objectinfo
 		}
 		string aircraftname
 		{
-			visiblewhen "*cvar:mn_itemtype eq \"aircraft\""	// Only for aircraft.
+			visiblewhen "*cvar:ui_market_category eq \"aircraft\""	// Only for aircraft.
 			string		*cvar:mn_aircraftname
 			pos			"22 25"
 			size		"365 20"
@@ -491,90 +492,18 @@ window market extends objectinfo
 
 	}
 
-	// =========================
-	// buy/sell/autosell actions
-	// =========================
-
-	/**
-	 * @brief checks an autosell checkbox and makes it visible
-	 * @param[in] <1> row of item
-	 */
-	confunc buy_autoselle {
-		*node:root.item<1>.bt_autosell@invis = false
-		*node:root.item<1>.bt_autosell@current = 1
-		*node:root.item<1>.bt_autosell@tooltip = "_Item autosell enabled"
-	}
-	/**
-	 * @brief unchecks an autosell checkbox and makes it visible
-	 * @param[in] <1> row of item
-	 */
-	confunc buy_autoselld {
-		*node:root.item<1>.bt_autosell@invis = false
-		*node:root.item<1>.bt_autosell@current = 0
-		*node:root.item<1>.bt_autosell@tooltip = "_Item autosell disabled"
-	}
-	/**
-	 * @brief makes an autosell checkbox invisible
-	 * @param[in] <1> row of item
-	 */
-	confunc buy_autoselli {
-		*node:root.item<1>.bt_autosell@invis = true
-	}
-
-	/**
-	 * @brief sets the selected line of the buylist
-	 * @param[in] <1> row of the item
-	 */
-	confunc buy_selectitem {
-		*node:root.market@lineselected = <1>
-	}
-
-	/**
-	 * @brief sets the correct values for spinner controls
-	 * @param[in] <1> row of the item
-	 * @param[in] <2> quantity of the item in the base
-	 * @param[in] <3> min value allowed
-	 * @param[in] <4> max value allowed
-	 */
-	confunc buy_updateitem {
-		*node:root.item<1>.bt_buysell@current = <2>
-		*node:root.item<1>.bt_buysell@min = <3>
-		*node:root.item<1>.bt_buysell@max = <4>
-	}
-
-	/**
-	 * @brief hides the buy/sell spinner control
-	 * @param[in] <1> row of the item
-	 */
-	confunc buy_hide {
-		*node:root.item<1>.bt_buysell@invis = true
-	}
-	/**
-	 * @brief shows the buy/sell spinner control
-	 * @param[in] <1> row of the item
-	 */
-	confunc buy_show {
-		*node:root.item<1>.bt_buysell@invis = false
-	}
-
 	// ==================
 	// init
 	// ==================
 
-	func onWindowOpened
-	{
-		cmd "buy_type *cvar:mn_itemtype;"
-		*cvar:i = 0
-		while ( *cvar:i < 22 ) {
-			*node:root.item<cvar:i>@num = <cvar:i>
-			*cvar:i = ( *cvar:i + 1 )
-		}
-		delete *cvar:i
+	func onWindowOpened {
+		*node:root.selected@string = ""
+		cmd "ui_market_fill \"<cvar:ui_market_category>\";"
 		*cvar:mn_lastsubmenu = "market"
 	}
 
-	func onWindowClosed
-	{
+	func onWindowClosed {
+		call *node:root.ui_market_clear
 		// Call base_init so that storage data can be updated
 		cmd "base_init;"
 	}
