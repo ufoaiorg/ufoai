@@ -24,6 +24,8 @@ vec4 Tangent;
 #include "transform_lights_vs.glsl"
 #include "fog_vs.glsl"
 
+out_qualifier vec4 blendColor;
+
 /**
  * @brief Main.
  */
@@ -47,4 +49,6 @@ void main(void) {
 #if r_fog
 	FogVertex();
 #endif
+
+	blendColor = gl_Color;
 }
