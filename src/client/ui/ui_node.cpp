@@ -34,11 +34,11 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #include "ui_components.h"
 #include "ui_internal.h"
 
-/**
- * @todo Use typeid when it is possible
- */
 qboolean UI_Node_IsVirtual(const struct uiNode_s *node)
 {
+	if (node->behaviour->manager) {
+		return (typeid(uiLocatedNode).before(typeid(node->behaviour->manager))) ? qfalse : qtrue;
+	}
 	return node->behaviour->isVirtual;
 }
 
@@ -73,6 +73,9 @@ qboolean UI_Node_IsFunction(const struct uiNode_s *node)
  */
 qboolean UI_Node_IsScrollableContainer(const struct uiNode_s *node)
 {
+	if (node->behaviour->manager) {
+		return (typeid(uiAbstractScrollableNode).before(typeid(node->behaviour->manager))) ? qtrue : qfalse;
+	}
 	return (node->behaviour->getClientPosition != NULL) ? qtrue : qfalse;
 }
 
@@ -98,32 +101,61 @@ void UI_Node_Draw(struct uiNode_s *node)
 
 void UI_Node_DrawTooltip(struct uiNode_s *node, int x, int y)
 {
+	if (node->behaviour->manager) {
+		uiLocatedNode *b = dynamic_cast<uiLocatedNode*>(node->behaviour->manager);
+		b->drawTooltip(node, x, y);
+		return;
+	}
 	node->behaviour->drawTooltip(node, x, y);
 }
 
 void UI_Node_DrawOverWindow(struct uiNode_s *node)
 {
+	if (node->behaviour->manager) {
+		uiLocatedNode *b = dynamic_cast<uiLocatedNode*>(node->behaviour->manager);
+		b->drawOverWindow(node);
+		return;
+	}
 	node->behaviour->drawOverWindow(node);
 }
 
 /* mouse events */
 void UI_Node_LeftClick(struct uiNode_s *node, int x, int y)
 {
+	if (node->behaviour->manager) {
+		uiLocatedNode *b = dynamic_cast<uiLocatedNode*>(node->behaviour->manager);
+		b->leftClick(node, x, y);
+		return;
+	}
 	node->behaviour->leftClick(node, x, y);
 }
 
 void UI_Node_RightClick(struct uiNode_s *node, int x, int y)
 {
+	if (node->behaviour->manager) {
+		uiLocatedNode *b = dynamic_cast<uiLocatedNode*>(node->behaviour->manager);
+		b->rightClick(node, x, y);
+		return;
+	}
 	node->behaviour->rightClick(node, x, y);
 }
 
 void UI_Node_MiddleClick(struct uiNode_s *node, int x, int y)
 {
+	if (node->behaviour->manager) {
+		uiLocatedNode *b = dynamic_cast<uiLocatedNode*>(node->behaviour->manager);
+		b->middleClick(node, x, y);
+		return;
+	}
 	node->behaviour->middleClick(node, x, y);
 }
 
 qboolean UI_Node_Scroll(struct uiNode_s *node, int deltaX, int deltaY)
 {
+	if (node->behaviour->manager) {
+		uiLocatedNode *b = dynamic_cast<uiLocatedNode*>(node->behaviour->manager);
+		return b->scroll(node, deltaX, deltaY);
+	}
 	return node->behaviour->scroll(node, deltaX, deltaY);
 }
 
@@ -201,16 +233,31 @@ void UI_Node_Loaded(struct uiNode_s *node)
 
 void UI_Node_Clone(const struct uiNode_s *source, struct uiNode_s *clone)
 {
+	if (source->behaviour->manager) {
+		uiNode *b = source->behaviour->manager;
+		b->clone(source, clone);
+		return;
+	}
 	source->behaviour->clone(source, clone);
 }
 
 void UI_Node_NewNode(struct uiNode_s *node)
 {
+	if (node->behaviour->manager) {
+		uiNode *b = node->behaviour->manager;
+		b->newNode(node);
+		return;
+	}
 	node->behaviour->newNode(node);
 }
 
 void UI_Node_DeleteNode(struct uiNode_s *node)
 {
+	if (node->behaviour->manager) {
+		uiNode *b = node->behaviour->manager;
+		b->deleteNode(node);
+		return;
+	}
 	node->behaviour->deleteNode(node);
 }
 
@@ -218,36 +265,71 @@ void UI_Node_DeleteNode(struct uiNode_s *node)
 
 void UI_Node_WindowOpened(struct uiNode_s *node, linkedList_t *params)
 {
+	if (node->behaviour->manager) {
+		uiNode *b = node->behaviour->manager;
+		b->windowOpened(node, params);
+		return;
+	}
 	node->behaviour->windowOpened(node, params);
 }
 
 void UI_Node_WindowClosed(struct uiNode_s *node)
 {
+	if (node->behaviour->manager) {
+		uiNode *b = node->behaviour->manager;
+		b->windowClosed(node);
+		return;
+	}
 	node->behaviour->windowClosed(node);
 }
 
 void UI_Node_DoLayout(struct uiNode_s *node)
 {
+	if (node->behaviour->manager) {
+		uiLocatedNode *b = dynamic_cast<uiLocatedNode*>(node->behaviour->manager);
+		b->doLayout(node);
+		return;
+	}
 	node->behaviour->doLayout(node);
 }
 
 void UI_Node_Activate(struct uiNode_s *node)
 {
+	if (node->behaviour->manager) {
+		uiNode *b = node->behaviour->manager;
+		b->activate(node);
+		return;
+	}
 	node->behaviour->activate(node);
 }
 
 void UI_Node_PropertyChanged(struct uiNode_s *node, const value_t *property)
 {
+	if (node->behaviour->manager) {
+		uiNode *b = node->behaviour->manager;
+		b->propertyChanged(node, property);
+		return;
+	}
 	node->behaviour->propertyChanged(node, property);
 }
 
 void UI_Node_SizeChanged(struct uiNode_s *node)
 {
+	if (node->behaviour->manager) {
+		uiLocatedNode *b = dynamic_cast<uiLocatedNode*>(node->behaviour->manager);
+		b->sizeChanged(node);
+		return;
+	}
 	node->behaviour->sizeChanged(node);
 }
 
 void UI_Node_GetClientPosition(const struct uiNode_s *node, vec2_t position)
 {
+	if (node->behaviour->manager) {
+		uiAbstractScrollableNode *b = dynamic_cast<uiAbstractScrollableNode*>(node->behaviour->manager);
+		b->getClientPosition(node, position);
+		return;
+	}
 	node->behaviour->getClientPosition(node, position);
 }
 
@@ -255,26 +337,47 @@ void UI_Node_GetClientPosition(const struct uiNode_s *node, vec2_t position)
 
 qboolean UI_Node_DndEnter(struct uiNode_s *node)
 {
+	if (node->behaviour->manager) {
+		uiLocatedNode *b = dynamic_cast<uiLocatedNode*>(node->behaviour->manager);
+		return b->dndEnter(node);
+	}
 	return node->behaviour->dndEnter(node);
 }
 
 qboolean UI_Node_DndMove(struct uiNode_s *node, int x, int y)
 {
+	if (node->behaviour->manager) {
+		uiLocatedNode *b = dynamic_cast<uiLocatedNode*>(node->behaviour->manager);
+		return b->dndMove(node, x, y);
+	}
 	return node->behaviour->dndMove(node, x, y);
 }
 
 void UI_Node_DndLeave(struct uiNode_s *node)
 {
+	if (node->behaviour->manager) {
+		uiLocatedNode *b = dynamic_cast<uiLocatedNode*>(node->behaviour->manager);
+		b->dndLeave(node);
+		return;
+	}
 	node->behaviour->dndLeave(node);
 }
 
 qboolean UI_Node_DndDrop(struct uiNode_s *node, int x, int y)
 {
+	if (node->behaviour->manager) {
+		uiLocatedNode *b = dynamic_cast<uiLocatedNode*>(node->behaviour->manager);
+		return b->dndDrop(node, x, y);
+	}
 	return node->behaviour->dndDrop(node, x, y);
 }
 
 qboolean UI_Node_DndFinished(struct uiNode_s *node, qboolean isDroped)
 {
+	if (node->behaviour->manager) {
+		uiLocatedNode *b = dynamic_cast<uiLocatedNode*>(node->behaviour->manager);
+		return b->dndFinished(node, isDroped);
+	}
 	return node->behaviour->dndFinished(node, isDroped);
 }
 
@@ -282,21 +385,39 @@ qboolean UI_Node_DndFinished(struct uiNode_s *node, qboolean isDroped)
 
 void UI_Node_FocusGained(struct uiNode_s *node)
 {
+	if (node->behaviour->manager) {
+		uiLocatedNode *b = dynamic_cast<uiLocatedNode*>(node->behaviour->manager);
+		b->focusGained(node);
+		return;
+	}
 	node->behaviour->focusGained(node);
 }
 
 void UI_Node_FocusLost(struct uiNode_s *node)
 {
+	if (node->behaviour->manager) {
+		uiLocatedNode *b = dynamic_cast<uiLocatedNode*>(node->behaviour->manager);
+		b->focusLost(node);
+		return;
+	}
 	node->behaviour->focusLost(node);
 }
 
 qboolean UI_Node_KeyPressed(struct uiNode_s *node, unsigned int key, unsigned short unicode)
 {
+	if (node->behaviour->manager) {
+		uiLocatedNode *b = dynamic_cast<uiLocatedNode*>(node->behaviour->manager);
+		return b->keyPressed(node, key, unicode);
+	}
 	return node->behaviour->keyPressed(node, key, unicode);
 }
 
 qboolean UI_Node_KeyReleased(struct uiNode_s *node, unsigned int key, unsigned short unicode)
 {
+	if (node->behaviour->manager) {
+		uiLocatedNode *b = dynamic_cast<uiLocatedNode*>(node->behaviour->manager);
+		return b->keyPressed(node, key, unicode);
+	}
 	return node->behaviour->keyReleased(node, key, unicode);
 }
 
@@ -304,11 +425,19 @@ qboolean UI_Node_KeyReleased(struct uiNode_s *node, unsigned int key, unsigned s
 
 int UI_Node_GetCellWidth(struct uiNode_s *node)
 {
+	if (node->behaviour->manager) {
+		uiAbstractScrollableNode *b = dynamic_cast<uiAbstractScrollableNode*>(node->behaviour->manager);
+		return b->getCellWidth(node);
+	}
 	return node->behaviour->getCellWidth(node);
 }
 
 int UI_Node_GetCellHeight(struct uiNode_s *node)
 {
+	if (node->behaviour->manager) {
+		uiAbstractScrollableNode *b = dynamic_cast<uiAbstractScrollableNode*>(node->behaviour->manager);
+		return b->getCellHeight(node);
+	}
 	return node->behaviour->getCellHeight(node);
 }
 
