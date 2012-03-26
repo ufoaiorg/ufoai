@@ -43,6 +43,8 @@ uniform vec4 LIGHTPARAMS[R_DYNAMIC_LIGHTS];
 #include "world_devtools_fs.glsl"
 #include "write_fragment_fs.glsl"
 
+in_qualifier vec4 blendColor;
+
 /**
  * @brief main
  */
@@ -96,6 +98,8 @@ void main(void) {
 
 	finalColor.rgb = diffusemap.rgb * light + specular;
 	finalColor.a = diffusemap.a;
+
+	finalColor *= blendColor;
 
 #if r_fog
 	/* Add fog.*/

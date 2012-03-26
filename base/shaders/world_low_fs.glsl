@@ -37,6 +37,8 @@ const vec3 negHalf = vec3(-0.5);
 #include "world_devtools_fs.glsl"
 #include "write_fragment_fs.glsl"
 
+in_qualifier vec4 blendColor;
+
 /**
  * @brief main
  */
@@ -73,6 +75,8 @@ void main(void) {
 
 	finalColor.rgb = diffuse.rgb * light;
 	finalColor.a = diffuse.a;
+
+	finalColor *= blendColor;
 
 #if r_fog
 	/* Add fog.*/
