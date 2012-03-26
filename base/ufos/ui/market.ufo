@@ -133,7 +133,7 @@ window market extends objectinfo {
 			value	"armour"
 		}
 		option craftitem {
-			label	"_Craft items"
+			label	"_Aircraft items"
 			value	"craftitem"
 		}
 		option aircraft {
