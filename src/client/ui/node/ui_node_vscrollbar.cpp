@@ -217,7 +217,7 @@ static void UI_ActiveVScrollbarNode_f ()
 	UI_VScrollbarNodeAction(node, actionId, qfalse);
 }
 
-static void UI_VScrollbarNodeMouseDown (uiNode_t *node, int x, int y, int button)
+void uiVScrollbarNode::mouseDown (uiNode_t *node, int x, int y, int button)
 {
 	int hoveredElement = -1;
 	int description[5];
@@ -232,7 +232,7 @@ static void UI_VScrollbarNodeMouseDown (uiNode_t *node, int x, int y, int button
 	UI_VScrollbarNodeAction(node, hoveredElement, qtrue);
 }
 
-static void UI_VScrollbarNodeMouseUp (uiNode_t *node, int x, int y, int button)
+void uiVScrollbarNode::mouseUp (uiNode_t *node, int x, int y, int button)
 {
 	if (EXTRADATA(node).fullsize == 0 || EXTRADATA(node).fullsize < EXTRADATA(node).viewsize)
 		return;
@@ -248,7 +248,7 @@ static void UI_VScrollbarNodeMouseUp (uiNode_t *node, int x, int y, int button)
  * @brief Called when the node have lost the captured node
  * We clean cached data
  */
-static void UI_VScrollbarNodeCapturedMouseLost (uiNode_t *node)
+void uiVScrollbarNode::capturedMouseLost (uiNode_t *node)
 {
 	if (capturedTimer) {
 		UI_TimerRelease(capturedTimer);
@@ -259,7 +259,7 @@ static void UI_VScrollbarNodeCapturedMouseLost (uiNode_t *node)
 /**
  * @brief Called when the user wheel the mouse over the node
  */
-static qboolean UI_VScrollbarNodeWheel (uiNode_t *node, int deltaX, int deltaY)
+qboolean uiVScrollbarNode::scroll (uiNode_t *node, int deltaX, int deltaY)
 {
 	if (deltaY == 0)
 		return qfalse;
@@ -272,7 +272,7 @@ static qboolean UI_VScrollbarNodeWheel (uiNode_t *node, int deltaX, int deltaY)
 /**
  * @brief Called when the node is captured by the mouse
  */
-static void UI_VScrollbarNodeCapturedMouseMove (uiNode_t *node, int x, int y)
+void uiVScrollbarNode::capturedMouseMove (uiNode_t *node, int x, int y)
 {
 	const int posSize = EXTRADATA(node).fullsize;
 	const int graphicSize = node->size[1] - (4 * ELEMENT_HEIGHT);
@@ -293,7 +293,7 @@ static void UI_VScrollbarNodeCapturedMouseMove (uiNode_t *node, int x, int y)
 /**
  * @brief Call to draw the node
  */
-static void UI_VScrollbarNodeDraw (uiNode_t *node)
+void uiVScrollbarNode::draw (uiNode_t *node)
 {
 	vec2_t pos;
 	int y = 0;
@@ -411,12 +411,12 @@ static void UI_VScrollbarNodeDraw (uiNode_t *node)
 
 }
 
-static void UI_VScrollbarNodeLoading (uiNode_t *node)
+void uiVScrollbarNode::loading (uiNode_t *node)
 {
 	node->size[0] = 19;
 }
 
-static void UI_VScrollbarNodeLoaded (uiNode_t *node)
+void uiVScrollbarNode::loaded (uiNode_t *node)
 {
 #ifdef DEBUG
 	if (node->size[1] - (ELEMENT_HEIGHT * 4) < 0)
@@ -428,14 +428,7 @@ void UI_RegisterVScrollbarNode (uiBehaviour_t *behaviour)
 {
 	behaviour->name = "vscrollbar";
 	behaviour->extends = "abstractscrollbar";
-	behaviour->scroll = UI_VScrollbarNodeWheel;
-	behaviour->mouseDown = UI_VScrollbarNodeMouseDown;
-	behaviour->mouseUp = UI_VScrollbarNodeMouseUp;
-	behaviour->capturedMouseMove = UI_VScrollbarNodeCapturedMouseMove;
-	behaviour->capturedMouseLost = UI_VScrollbarNodeCapturedMouseLost;
-	behaviour->draw = UI_VScrollbarNodeDraw;
-	behaviour->loaded = UI_VScrollbarNodeLoaded;
-	behaviour->loading = UI_VScrollbarNodeLoading;
+	behaviour->manager = new uiVScrollbarNode();
 
 	/** @todo convert it to a node function */
 	Cmd_AddCommand("ui_active_vscrollbar", UI_ActiveVScrollbarNode_f, "Active an element of a scrollbar node, (dummy mouse/user)");
