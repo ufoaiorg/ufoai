@@ -50,6 +50,14 @@ qboolean UI_Node_IsDrawable(const struct uiNode_s *node)
 	return (node->behaviour->draw != NULL) ? qtrue : qfalse;
 }
 
+qboolean UI_Node_IsWindow(const struct uiNode_s *node)
+{
+	if (!node->behaviour->manager) {
+		return qfalse;
+	}
+	return (typeid(uiWindowNode).before(typeid(node->behaviour->manager))) ? qtrue : qfalse;
+}
+
 qboolean UI_Node_IsAbstract(const struct uiNode_s *node)
 {
 	return node->behaviour->isAbstract;

@@ -263,7 +263,7 @@ void UI_ReadNodePath (const char* path, const uiNode_t *relativeNode, uiNode_t *
 			break;
 		case '#':	/* window index */
 			/** @todo FIXME use a warning instead of an assert */
-			assert(node->behaviour == ui_windowBehaviour);
+			assert(UI_Node_IsWindow(node));
 			node = UI_WindowNodeGetIndexedChild(node, name);
 			break;
 		case '@':	/* property */

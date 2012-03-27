@@ -52,8 +52,6 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 
 #define MARGE 3
 
-const uiBehaviour_t *ui_windowBehaviour;
-
 static const int CONTROLS_IMAGE_DIMENSIONS = 25;
 static const int CONTROLS_PADDING = 18;
 
@@ -129,7 +127,7 @@ qboolean UI_WindowIsFullScreen (const uiNode_t* const node)
 	return EXTRADATACONST(node).isFullScreen;
 }
 
-static void UI_WindowNodeDraw (uiNode_t *node)
+void uiWindowNode::draw (uiNode_t *node)
 {
 	const char* image;
 	const char* text;
@@ -186,7 +184,7 @@ static void UI_WindowNodeDraw (uiNode_t *node)
 	}
 }
 
-static void UI_WindowNodeDoLayout (uiNode_t *node)
+void uiWindowNode::doLayout (uiNode_t *node)
 {
 	if (!node->invalidated)
 		return;
@@ -214,14 +212,14 @@ static void UI_WindowNodeDoLayout (uiNode_t *node)
 	}
 
 	/* super */
-	ui_windowBehaviour->super->doLayout(node);
+	uiLocatedNode::doLayout(node);
 }
 
 /**
  * @brief Called when we init the node on the screen
  * @todo we can move generic code into abstract node
  */
-static void UI_WindowNodeInit (uiNode_t *node, linkedList_t *params)
+void uiWindowNode::windowOpened (uiNode_t *node, linkedList_t *params)
 {
 	uiNode_t *child;
 
@@ -230,9 +228,7 @@ static void UI_WindowNodeInit (uiNode_t *node, linkedList_t *params)
 
 	/* init child */
 	for (child = node->firstChild; child; child = child->next) {
-		if (child->behaviour->windowOpened) {
-			child->behaviour->windowOpened(child, NULL);
-		}
+		UI_Node_WindowOpened(child, NULL);
 	}
 
 	/* script callback */
@@ -246,15 +242,13 @@ static void UI_WindowNodeInit (uiNode_t *node, linkedList_t *params)
  * @brief Called when we close the node on the screen
  * @todo we can move generic code into abstract node
  */
-static void UI_WindowNodeClose (uiNode_t *node)
+void uiWindowNode::windowClosed (uiNode_t *node)
 {
 	uiNode_t *child;
 
 	/* close child */
 	for (child = node->firstChild; child; child = child->next) {
-		if (child->behaviour->windowClosed) {
-			child->behaviour->windowClosed(child);
-		}
+		UI_Node_WindowClosed(child);
 	}
 
 	/* script callback */
@@ -265,7 +259,7 @@ static void UI_WindowNodeClose (uiNode_t *node)
 /**
  * @brief Called at the begin of the load from script
  */
-static void UI_WindowNodeLoading (uiNode_t *node)
+void uiWindowNode::loading (uiNode_t *node)
 {
 	node->size[0] = VID_NORM_WIDTH;
 	node->size[1] = VID_NORM_HEIGHT;
@@ -276,7 +270,7 @@ static void UI_WindowNodeLoading (uiNode_t *node)
 /**
  * @brief Called at the end of the load from script
  */
-static void UI_WindowNodeLoaded (uiNode_t *node)
+void uiWindowNode::loaded (uiNode_t *node)
 {
 	static const char* closeCommand = "ui_close <path:root>;";
 
@@ -323,7 +317,7 @@ static void UI_WindowNodeLoaded (uiNode_t *node)
 #endif
 }
 
-static void UI_WindowNodeClone (const uiNode_t *source, uiNode_t *clone)
+void uiWindowNode::clone (const uiNode_t *source, uiNode_t *clone)
 {
 	/* clean up index */
 	EXTRADATA(clone).index = NULL;
@@ -398,15 +392,8 @@ uiKeyBinding_t *UI_WindowNodeGetKeyBinding (const struct uiNode_s* const node, u
 
 void UI_RegisterWindowNode (uiBehaviour_t *behaviour)
 {
-	ui_windowBehaviour = behaviour;
 	behaviour->name = "window";
-	behaviour->loading = UI_WindowNodeLoading;
-	behaviour->loaded = UI_WindowNodeLoaded;
-	behaviour->windowOpened = UI_WindowNodeInit;
-	behaviour->windowClosed = UI_WindowNodeClose;
-	behaviour->draw = UI_WindowNodeDraw;
-	behaviour->doLayout = UI_WindowNodeDoLayout;
-	behaviour->clone = UI_WindowNodeClone;
+	behaviour->manager = new uiWindowNode();
 	behaviour->extraDataSize = sizeof(EXTRADATA_TYPE);
 
 	/* Texture to use. The texture is a cut of 9 portions
