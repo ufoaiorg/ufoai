@@ -28,6 +28,7 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #include <CUnit/Automated.h>
 #include <CUnit/Console.h>
 #include <CUnit/TestDB.h>
+#include <SDL_main.h>
 
 #include "test_shared.h"
 
@@ -236,7 +237,7 @@ static void Test_EnableAllSuites (void)
 	}
 }
 
-static void Test_Parameters (const int argc, const char **argv)
+static void Test_Parameters (const int argc, char **argv)
 {
 	int i;
 
@@ -349,7 +350,7 @@ static void TEST_vPrintfLog (const char *fmt, va_list ap)
  * Returns a CUE_SUCCESS on successful running, another
  * CUnit error code on failure.
  */
-int main (int argc, const char **argv)
+int main (int argc, char **argv)
 {
 	int i;
 	int failures;
