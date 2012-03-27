@@ -4,6 +4,7 @@
  */
 
 #include <SDL_opengl.h>
+#include <SDL_main.h>
 #include "../common/common.h"
 #include "../shared/shared.h"
 #include "../shared/mutex.h"
@@ -52,7 +53,7 @@ static const char* MEMORY_HumanReadable (size_t size)
 #undef main
 #endif
 
-int main (void)
+int main (int argc, char **argv)
 {
 	printf(STRUCTFORMAT "     " SIZEFORMAT "\n\n", "struct", "size");
 

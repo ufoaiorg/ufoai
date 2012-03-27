@@ -44,6 +44,7 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #include "check/checklib.h"
 #include "../../shared/shared.h"
 #include "ufo2map.h"
+#include <SDL_main.h>
 
 mapConfig_t config;
 static char mapFilename[MAX_OSPATH];

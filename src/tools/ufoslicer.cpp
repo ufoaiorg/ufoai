@@ -4,6 +4,7 @@
  * @note Based on the BSP_tools by botman
  */
 
+#include <SDL_main.h>
 #include "../common/bspslicer.h"
 #include "../common/mem.h"
 #include "../shared/byte.h"
