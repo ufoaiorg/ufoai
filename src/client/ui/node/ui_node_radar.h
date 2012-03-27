@@ -29,7 +29,12 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #include "ui_node_abstractnode.h"
 
 class uiRadarNode : public uiLocatedNode {
-
+	void draw(struct uiNode_s *node);
+	void windowOpened(struct uiNode_s *node, linkedList_t *params);
+	void windowClosed(struct uiNode_s *node);
+	void mouseDown(struct uiNode_s *node, int x, int y, int button);
+	void mouseUp(struct uiNode_s *node, int x, int y, int button);
+	void capturedMouseMove(struct uiNode_s *node, int x, int y);
 };
 
 void UI_RegisterRadarNode(struct uiBehaviour_s *behaviour);

@@ -51,8 +51,9 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 
 /**
  * @brief Handles Button clicks
+ * @todo it is useless !
  */
-static void UI_ButtonNodeClick (uiNode_t * node, int x, int y)
+void uiButtonNode::leftClick (uiNode_t * node, int x, int y)
 {
 	if (node->onClick) {
 		UI_ExecuteEventActions(node, node->onClick);
@@ -62,7 +63,7 @@ static void UI_ButtonNodeClick (uiNode_t * node, int x, int y)
 /**
  * @brief Handles Button draw
  */
-static void UI_ButtonNodeDraw (uiNode_t *node)
+void uiButtonNode::draw (uiNode_t *node)
 {
 	static const int panelTemplate[] = {
 		CORNER_SIZE, MID_SIZE, CORNER_SIZE,
@@ -129,7 +130,7 @@ static void UI_ButtonNodeDraw (uiNode_t *node)
 /**
  * @brief Handles Button before loading. Used to set default attribute values
  */
-static void UI_ButtonNodeLoading (uiNode_t *node)
+void uiButtonNode::loading (uiNode_t *node)
 {
 	node->padding = 8;
 	node->contentAlign = ALIGN_CC;
@@ -140,7 +141,7 @@ static void UI_ButtonNodeLoading (uiNode_t *node)
 /**
  * @brief Handled after the end of the load of the node from script (all data and/or child are set)
  */
-static void UI_ButtonNodeLoaded (uiNode_t *node)
+void uiButtonNode::loaded (uiNode_t *node)
 {
 	/* auto calc the size if none was given via script files */
 	if (node->size[1] == 0) {
@@ -156,10 +157,7 @@ static void UI_ButtonNodeLoaded (uiNode_t *node)
 void UI_RegisterButtonNode (uiBehaviour_t *behaviour)
 {
 	behaviour->name = "button";
-	behaviour->draw = UI_ButtonNodeDraw;
-	behaviour->loaded = UI_ButtonNodeLoaded;
-	behaviour->leftClick = UI_ButtonNodeClick;
-	behaviour->loading = UI_ButtonNodeLoading;
+	behaviour->manager = new uiButtonNode();
 	behaviour->extraDataSize = sizeof(EXTRADATA_TYPE);
 
 	/* Texture used by the button. It's a normalized texture of 128x128.

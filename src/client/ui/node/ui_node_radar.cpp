@@ -509,7 +509,7 @@ static void UI_RadarNodeDrawActor (const le_t *le, const vec3_t pos)
  * @note we only need to handle the 2d plane and can ignore the z level
  * @param[in] node Node description of the radar
  */
-static void UI_RadarNodeDraw (uiNode_t *node)
+void uiRadarNode::draw (uiNode_t *node)
 {
 	le_t *le;
 	int i;
@@ -627,7 +627,7 @@ static void UI_RadarNodeDraw (uiNode_t *node)
 /**
  * @brief Called when the node is captured by the mouse
  */
-static void UI_RadarNodeCapturedMouseMove (uiNode_t *node, int x, int y)
+void uiRadarNode::capturedMouseMove (uiNode_t *node, int x, int y)
 {
 	const float mapWidth = cl.mapData->mapMax[0] - cl.mapData->mapMin[0];
 	const float mapHeight = cl.mapData->mapMax[1] - cl.mapData->mapMin[1];
@@ -646,38 +646,33 @@ static void UI_RadarNodeCapturedMouseMove (uiNode_t *node, int x, int y)
 	VectorCopy(pos, cl.cam.origin);
 }
 
-static void UI_RadarNodeMouseDown (uiNode_t *node, int x, int y, int button)
+void uiRadarNode::mouseDown (uiNode_t *node, int x, int y, int button)
 {
 	if (node->disabled)
 		return;
 
 	if (button == K_MOUSE1) {
 		UI_SetMouseCapture(node);
-		UI_RadarNodeCapturedMouseMove(node, x, y);
+		capturedMouseMove(node, x, y);
 	}
 }
 
-static void UI_RadarNodeMouseUp (uiNode_t *node, int x, int y, int button)
+void uiRadarNode::mouseUp (uiNode_t *node, int x, int y, int button)
 {
 	if (button == K_MOUSE1)
 		UI_MouseRelease();
 }
 
-static void UI_RadarWindowedClosed (uiNode_t *node)
+void uiRadarNode::windowClosed (uiNode_t *node)
 {
 }
 
-static void UI_RadarWindowedOpened (uiNode_t *node, linkedList_t *params)
+void uiRadarNode::windowOpened (uiNode_t *node, linkedList_t *params)
 {
 }
 
 void UI_RegisterRadarNode (uiBehaviour_t *behaviour)
 {
 	behaviour->name = "radar";
-	behaviour->draw = UI_RadarNodeDraw;
-	behaviour->windowOpened = UI_RadarWindowedOpened;
-	behaviour->windowClosed = UI_RadarWindowedClosed;
-	behaviour->mouseDown = UI_RadarNodeMouseDown;
-	behaviour->mouseUp = UI_RadarNodeMouseUp;
-	behaviour->capturedMouseMove = UI_RadarNodeCapturedMouseMove;
+	behaviour->manager = new uiRadarNode();
 }

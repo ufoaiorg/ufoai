@@ -28,7 +28,10 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #include "../ui_nodes.h"
 
 class uiButtonNode : public uiLocatedNode {
-
+	void draw(struct uiNode_s *node);
+	void loading(struct uiNode_s *node);
+	void loaded(struct uiNode_s *node);
+	void leftClick(struct uiNode_s *node, int x, int y);
 };
 
 typedef struct buttonExtraData_s {

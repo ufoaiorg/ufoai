@@ -45,7 +45,7 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
  * @brief Draws the texture node
  * @param[in] node The UI node to draw
  */
-static void UI_TextureNodeDraw (uiNode_t *node)
+void uiTextureNode::draw (uiNode_t *node)
 {
 	vec2_t nodepos;
 	const image_t *image;
@@ -70,7 +70,7 @@ static void UI_TextureNodeDraw (uiNode_t *node)
 void UI_RegisterTextureNode (uiBehaviour_t* behaviour)
 {
 	behaviour->name = "texture";
-	behaviour->draw = UI_TextureNodeDraw;
+	behaviour->manager = new uiTextureNode();
 	behaviour->extraDataSize = sizeof(EXTRADATA_TYPE);
 
 	/* Source of the texture */

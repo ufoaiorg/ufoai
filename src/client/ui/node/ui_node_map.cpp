@@ -39,7 +39,7 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #define EXTRADATA(node) UI_EXTRADATA(node, EXTRADATA_TYPE)
 #define EXTRADATACONST(node) UI_EXTRADATACONST(node, EXTRADATA_TYPE)
 
-static void UI_MapNodeDraw (uiNode_t *node)
+void uiMapNode::draw (uiNode_t *node)
 {
 	if (CP_IsRunning()) {
 		vec2_t screenPos;
@@ -63,7 +63,7 @@ static int oldMousePosX = 0;
 static int oldMousePosY = 0;
 static mapDragMode_t mode = MODE_NULL;
 
-static void UI_MapNodeCapturedMouseMove (uiNode_t *node, int x, int y)
+void uiMapNode::capturedMouseMove (uiNode_t *node, int x, int y)
 {
 	switch (mode) {
 	case MODE_SHIFT2DMAP:
@@ -139,7 +139,7 @@ static void UI_MapNodeStartMouseShifting (uiNode_t *node, int x, int y)
 	oldMousePosY = y;
 }
 
-static void UI_MapNodeMouseDown (uiNode_t *node, int x, int y, int button)
+void uiMapNode::mouseDown (uiNode_t *node, int x, int y, int button)
 {
 	/* finish the last drag before */
 	if (mode != MODE_NULL)
@@ -162,7 +162,7 @@ static void UI_MapNodeMouseDown (uiNode_t *node, int x, int y, int button)
 	}
 }
 
-static void UI_MapNodeMouseUp (uiNode_t *node, int x, int y, int button)
+void uiMapNode::mouseUp (uiNode_t *node, int x, int y, int button)
 {
 	if (mode != MODE_NULL) {
 		UI_MouseRelease();
@@ -174,7 +174,7 @@ static void UI_MapNodeMouseUp (uiNode_t *node, int x, int y, int button)
  * @brief Called when the node have lost the captured node
  * We clean cached data
  */
-static void UI_MapNodeCapturedMouseLost (uiNode_t *node)
+void uiMapNode::capturedMouseLost (uiNode_t *node)
 {
 	mode = MODE_NULL;
 }
@@ -196,7 +196,7 @@ static void UI_MapNodeZoom (uiNode_t *node, qboolean out)
 	MAP_StopSmoothMovement();
 }
 
-static qboolean UI_MapNodeMouseWheel (uiNode_t *node, int deltaX, int deltaY)
+qboolean uiMapNode::scroll (uiNode_t *node, int deltaX, int deltaY)
 {
 	qboolean down = deltaY > 0;
 	if (deltaY == 0)
@@ -218,7 +218,7 @@ static void UI_MapNodeZoomOut (uiNode_t *node, const uiCallContext_t *context)
 /**
  * @brief Called before loading. Used to set default attribute values
  */
-static void UI_MapNodeLoading (uiNode_t *node)
+void uiMapNode::loading (uiNode_t *node)
 {
 	Vector4Set(node->color, 1, 1, 1, 1);
 }
@@ -226,13 +226,7 @@ static void UI_MapNodeLoading (uiNode_t *node)
 void UI_RegisterMapNode (uiBehaviour_t *behaviour)
 {
 	behaviour->name = "map";
-	behaviour->draw = UI_MapNodeDraw;
-	behaviour->mouseDown = UI_MapNodeMouseDown;
-	behaviour->mouseUp = UI_MapNodeMouseUp;
-	behaviour->capturedMouseMove = UI_MapNodeCapturedMouseMove;
-	behaviour->capturedMouseLost = UI_MapNodeCapturedMouseLost;
-	behaviour->scroll = UI_MapNodeMouseWheel;
-	behaviour->loading = UI_MapNodeLoading;
+	behaviour->manager = new uiMapNode();
 	behaviour->extraDataSize = sizeof(EXTRADATA_TYPE);
 
 	/* Use a right padding. */

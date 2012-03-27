@@ -583,7 +583,7 @@ qboolean UI_IsMouseOnWindow (void)
 	hovered = UI_GetHoveredNode();
 	if (hovered) {
 		/* else if it is a render node */
-		if (hovered->behaviour == ui_battleScapeBehaviour) {
+		if (UI_Node_IsBattleScape(hovered)) {
 			return qfalse;
 		}
 		return qtrue;

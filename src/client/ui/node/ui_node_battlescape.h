@@ -26,12 +26,15 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #define CLIENT_UI_UI_NODE_BATTLESCAPE_H
 
 class uiBattleScapeNode : public uiLocatedNode {
-
+	void draw(struct uiNode_s *node);
+	void sizeChanged(struct uiNode_s *node);
+	void windowOpened(struct uiNode_s *node, linkedList_t *params);
+	void windowClosed(struct uiNode_s *node);
+	void loading(struct uiNode_s *node);
+	qboolean scroll(struct uiNode_s *node, int deltaX, int deltaY);
 };
 
 struct uiBehaviour_s;
-
-extern const struct uiBehaviour_s *ui_battleScapeBehaviour;
 
 void UI_RegisterBattlescapeNode(struct uiBehaviour_s *behaviour);
 

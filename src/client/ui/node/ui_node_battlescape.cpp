@@ -31,8 +31,6 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #include "ui_node_battlescape.h"
 #include "../../client.h"
 
-const struct uiBehaviour_s *ui_battleScapeBehaviour;
-
 /**
  * @brief Determine the position and size of the render
  */
@@ -47,12 +45,12 @@ static void UI_SetRenderRect (int x, int y, int width, int height)
 /**
  * @brief Call before the script initialized the node
  */
-static void UI_BattlescapeNodeLoading (uiNode_t *node)
+void uiBattleScapeNode::loading (uiNode_t *node)
 {
 	/* node->ghost = qtrue; */
 }
 
-static void UI_BattlescapeNodeDraw (uiNode_t *node)
+void uiBattleScapeNode::draw (uiNode_t *node)
 {
 	/** Note: hack to fix everytime renderrect (for example when we close hud_nohud) */
 	vec2_t pos;
@@ -60,7 +58,7 @@ static void UI_BattlescapeNodeDraw (uiNode_t *node)
 	UI_SetRenderRect(pos[0], pos[1], node->size[0], node->size[1]);
 }
 
-static void UI_BattlescapeNodeInit (uiNode_t *node, linkedList_t *params)
+void uiBattleScapeNode::windowOpened (uiNode_t *node, linkedList_t *params)
 {
 	vec2_t pos;
 	UI_GetNodeAbsPos(node, pos);
@@ -68,14 +66,14 @@ static void UI_BattlescapeNodeInit (uiNode_t *node, linkedList_t *params)
 }
 
 
-static void UI_BattlescapeNodeSizeChanged (uiNode_t *node)
+void uiBattleScapeNode::sizeChanged (uiNode_t *node)
 {
 	vec2_t pos;
 	UI_GetNodeAbsPos(node, pos);
 	UI_SetRenderRect(pos[0], pos[1], node->size[0], node->size[1]);
 }
 
-static void UI_BattlescapeNodeClose (uiNode_t *node)
+void uiBattleScapeNode::windowClosed (uiNode_t *node)
 {
 	UI_SetRenderRect(0, 0, 0, 0);
 }
@@ -83,7 +81,7 @@ static void UI_BattlescapeNodeClose (uiNode_t *node)
 /**
  * @brief Called when user request scrolling on the battlescape.
  */
-static qboolean UI_BattlescapeNodeScroll (uiNode_t *node, int deltaX, int deltaY)
+qboolean uiBattleScapeNode::scroll (uiNode_t *node, int deltaX, int deltaY)
 {
 	while (deltaY < 0) {
 		CL_CameraZoomIn();
@@ -99,11 +97,5 @@ static qboolean UI_BattlescapeNodeScroll (uiNode_t *node, int deltaX, int deltaY
 void UI_RegisterBattlescapeNode (uiBehaviour_t *behaviour)
 {
 	behaviour->name = "battlescape";
-	behaviour->loading = UI_BattlescapeNodeLoading;
-	behaviour->windowOpened = UI_BattlescapeNodeInit;
-	behaviour->windowClosed = UI_BattlescapeNodeClose;
-	behaviour->scroll = UI_BattlescapeNodeScroll;
-	behaviour->sizeChanged = UI_BattlescapeNodeSizeChanged;
-	behaviour->draw = UI_BattlescapeNodeDraw;
-	ui_battleScapeBehaviour = behaviour;
+	behaviour->manager = new uiBattleScapeNode();
 }

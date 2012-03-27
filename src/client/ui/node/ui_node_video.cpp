@@ -43,7 +43,7 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #define EXTRADATA(node) UI_EXTRADATA(node, EXTRADATA_TYPE)
 #define EXTRADATACONST(node) UI_EXTRADATACONST(node, EXTRADATA_TYPE)
 
-static void UI_VideoNodeDrawOverWindow (uiNode_t *node)
+void uiVideoNode::drawOverWindow (uiNode_t *node)
 {
 	if (EXTRADATA(node).cin.status == CIN_STATUS_INVALID) {
 		/** @todo Maybe draw a black screen? */
@@ -73,7 +73,7 @@ static void UI_VideoNodeDrawOverWindow (uiNode_t *node)
 	}
 }
 
-static void UI_VideoNodeDraw (uiNode_t *node)
+void uiVideoNode::draw (uiNode_t *node)
 {
 	if (!node->image)
 		return;
@@ -83,15 +83,15 @@ static void UI_VideoNodeDraw (uiNode_t *node)
 		return;
 	}
 
-	UI_VideoNodeDrawOverWindow(node);
+	drawOverWindow(node);
 }
 
-static void UI_VideoNodeInit (uiNode_t *node, linkedList_t *params)
+void uiVideoNode::windowOpened (uiNode_t *node, linkedList_t *params)
 {
 	CIN_InitCinematic(&(EXTRADATA(node).cin));
 }
 
-static void UI_VideoNodeClose (uiNode_t *node)
+void uiVideoNode::windowClosed (uiNode_t *node)
 {
 	/* If playing a cinematic, stop it */
 	CIN_CloseCinematic(&(EXTRADATA(node).cin));
@@ -100,11 +100,8 @@ static void UI_VideoNodeClose (uiNode_t *node)
 void UI_RegisterVideoNode (uiBehaviour_t* behaviour)
 {
 	behaviour->name = "video";
-	behaviour->draw = UI_VideoNodeDraw;
-	behaviour->windowOpened = UI_VideoNodeInit;
-	behaviour->windowClosed = UI_VideoNodeClose;
-	behaviour->drawOverWindow = UI_VideoNodeDrawOverWindow;
 	behaviour->extraDataSize = sizeof(EXTRADATA_TYPE);
+	behaviour->manager = new uiVideoNode();
 
 	/** Source of the video. File name without prefix ./base/videos and without extension */
 	UI_RegisterNodeProperty(behaviour, "src", V_CVAR_OR_STRING, uiNode_t, image);

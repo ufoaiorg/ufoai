@@ -113,7 +113,7 @@ static void UI_TextEntryNodeFocus (uiNode_t *node, const uiCallContext_t *contex
 /**
  * @brief Called when the user click with the right mouse button
  */
-static void UI_TextEntryNodeClick (uiNode_t *node, int x, int y)
+void uiTextEntryNode::leftClick (uiNode_t *node, int x, int y)
 {
 	if (node->disabled)
 		return;
@@ -135,7 +135,7 @@ static void UI_TextEntryNodeClick (uiNode_t *node, int x, int y)
 /**
  * @brief Called when the node got the focus
  */
-static void UI_TextEntryFocusGained (uiNode_t *node)
+void uiTextEntryNode::focusGained (uiNode_t *node)
 {
 	assert(editedCvar == NULL);
 	/* skip '*cvar ' */
@@ -148,7 +148,7 @@ static void UI_TextEntryFocusGained (uiNode_t *node)
 /**
  * @brief Called when the node lost the focus
  */
-static void UI_TextEntryFocusLost (uiNode_t *node)
+void uiTextEntryNode::focusLost (uiNode_t *node)
 {
 	/* already aborted/changed with the keyboard */
 	if (editedCvar == NULL)
@@ -194,7 +194,7 @@ static void UI_TextEntryNodeEdit (uiNode_t *node, unsigned int key)
  * @brief Called when we press a key when the node got the focus
  * @return True, if we use the event
  */
-static qboolean UI_TextEntryNodeKeyPressed (uiNode_t *node, unsigned int key, unsigned short unicode)
+qboolean uiTextEntryNode::keyPressed (uiNode_t *node, unsigned int key, unsigned short unicode)
 {
 	switch (key) {
 	/* remove the last char */
@@ -223,7 +223,7 @@ static qboolean UI_TextEntryNodeKeyPressed (uiNode_t *node, unsigned int key, un
 	return qtrue;
 }
 
-static void UI_TextEntryNodeDraw (uiNode_t *node)
+void uiTextEntryNode::draw (uiNode_t *node)
 {
 	static const int panelTemplate[] = {
 		CORNER_SIZE, MID_SIZE, CORNER_SIZE,
@@ -307,7 +307,7 @@ static void UI_TextEntryNodeDraw (uiNode_t *node)
 /**
  * @brief Call before the script initialization of the node
  */
-static void UI_TextEntryNodeLoading (uiNode_t *node)
+void uiTextEntryNode::loading (uiNode_t *node)
 {
 	node->padding = 8;
 	node->contentAlign = ALIGN_CL;
@@ -318,12 +318,7 @@ static void UI_TextEntryNodeLoading (uiNode_t *node)
 void UI_RegisterTextEntryNode (struct uiBehaviour_s *behaviour)
 {
 	behaviour->name = "textentry";
-	behaviour->leftClick = UI_TextEntryNodeClick;
-	behaviour->focusGained = UI_TextEntryFocusGained;
-	behaviour->focusLost = UI_TextEntryFocusLost;
-	behaviour->keyPressed = UI_TextEntryNodeKeyPressed;
-	behaviour->draw = UI_TextEntryNodeDraw;
-	behaviour->loading = UI_TextEntryNodeLoading;
+	behaviour->manager = new uiTextEntryNode();
 	behaviour->extraDataSize = sizeof(EXTRADATA_TYPE);
 
 	/* Texture used by the button. It's a normalized texture of 128x128.

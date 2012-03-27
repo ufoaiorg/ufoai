@@ -34,7 +34,7 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #define EXTRADATA_TYPE lineChartExtraData_t
 #define EXTRADATA(node) UI_EXTRADATA(node, EXTRADATA_TYPE)
 
-static void UI_LineChartNodeDraw (uiNode_t *node)
+void uiLineChartNode::draw (uiNode_t *node)
 {
 	lineStrip_t *lineStrip;
 	const int dataId = EXTRADATA(node).dataId;
@@ -84,7 +84,7 @@ static void UI_LineChartNodeDraw (uiNode_t *node)
 void UI_RegisterLineChartNode (uiBehaviour_t *behaviour)
 {
 	behaviour->name = "linechart";
-	behaviour->draw = UI_LineChartNodeDraw;
+	behaviour->manager = new uiLineChartNode();
 	behaviour->extraDataSize = sizeof(EXTRADATA_TYPE);
 
 	/* Identity the shared data the node use. It must be a LINESTRIP data. */

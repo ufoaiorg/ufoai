@@ -28,7 +28,13 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #include "../ui_nodes.h"
 
 class uiMapNode : public uiLocatedNode {
-
+	void draw(struct uiNode_s *node);
+	void mouseDown(struct uiNode_s *node, int x, int y, int button);
+	void mouseUp(struct uiNode_s *node, int x, int y, int button);
+	void capturedMouseMove(struct uiNode_s *node, int x, int y);
+	void capturedMouseLost(struct uiNode_s *node);
+	void loading(struct uiNode_s *node);
+	qboolean scroll(struct uiNode_s *node, int deltaX, int deltaY);
 };
 
 #define UI_MAPEXTRADATA_TYPE mapExtraData_t

@@ -68,7 +68,7 @@ static qboolean UI_RadioButtonNodeIsSelected (uiNode_t *node)
  * @brief Handles RadioButton draw
  * @todo need to implement image. We can't do everything with only one icon (or use another icon)
  */
-static void UI_RadioButtonNodeDraw (uiNode_t *node)
+void uiRadioButtonNode::draw (uiNode_t *node)
 {
 	vec2_t pos;
 	uiSpriteStatus_t iconStatus;
@@ -112,7 +112,7 @@ static void UI_RadioButtonNodeDraw (uiNode_t *node)
 /**
  * @brief Activate the node. Can be used without the mouse (ie. a button will execute onClick)
  */
-static void UI_RadioButtonNodeActivate (uiNode_t * node)
+void uiRadioButtonNode::activate (uiNode_t * node)
 {
 	/* no cvar given? */
 	if (!EXTRADATA(node).cvar || !*(char*)(EXTRADATA(node).cvar)) {
@@ -146,20 +146,18 @@ static void UI_RadioButtonNodeActivate (uiNode_t * node)
 /**
  * @brief Handles radio button clicks
  */
-static void UI_RadioButtonNodeClick (uiNode_t * node, int x, int y)
+void uiRadioButtonNode::leftClick (uiNode_t * node, int x, int y)
 {
 	if (node->onClick)
 		UI_ExecuteEventActions(node, node->onClick);
 
-	UI_RadioButtonNodeActivate(node);
+	activate(node);
 }
 
 void UI_RegisterRadioButtonNode (uiBehaviour_t *behaviour)
 {
 	behaviour->name = "radiobutton";
-	behaviour->draw = UI_RadioButtonNodeDraw;
-	behaviour->leftClick = UI_RadioButtonNodeClick;
-	behaviour->activate = UI_RadioButtonNodeActivate;
+	behaviour->manager = new uiRadioButtonNode();
 	behaviour->extraDataSize = sizeof(EXTRADATA_TYPE);
 
 	/* Numerical value defining the radiobutton. Cvar is updated with this value when the radio button is selected. */

@@ -31,7 +31,10 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #include "../../input/cl_keys.h"
 
 class uiKeyBindingNode : public uiLocatedNode {
-
+	void leftClick(struct uiNode_s *node, int x, int y);
+	qboolean keyPressed(struct uiNode_s *node, unsigned int key, unsigned short unicode);
+	void draw(struct uiNode_s *node);
+	void loading(struct uiNode_s *node);
 };
 
 /**

@@ -49,7 +49,7 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 /**
  * @brief Called when the user click with the right mouse button
  */
-static void UI_KeyBindingNodeClick (uiNode_t *node, int x, int y)
+void uiKeyBindingNode::leftClick (uiNode_t *node, int x, int y)
 {
 	if (node->disabled)
 		return;
@@ -72,7 +72,7 @@ static void UI_KeyBindingNodeClick (uiNode_t *node, int x, int y)
  * @brief Called when we press a key when the node got the focus
  * @return True, if we use the event
  */
-static qboolean UI_KeyBindingNodeKeyPressed (uiNode_t *node, unsigned int key, unsigned short unicode)
+qboolean uiKeyBindingNode::keyPressed (uiNode_t *node, unsigned int key, unsigned short unicode)
 {
 	const char *command;
 	const char *binding;
@@ -107,7 +107,7 @@ static qboolean UI_KeyBindingNodeKeyPressed (uiNode_t *node, unsigned int key, u
 	return qtrue;
 }
 
-static void UI_KeyBindingNodeDraw (uiNode_t *node)
+void uiKeyBindingNode::draw (uiNode_t *node)
 {
 	static const int panelTemplate[] = {
 		CORNER_SIZE, MID_SIZE, CORNER_SIZE,
@@ -178,7 +178,7 @@ static void UI_KeyBindingNodeDraw (uiNode_t *node)
 /**
  * @brief Call before the script initialization of the node
  */
-static void UI_KeyBindingNodeLoading (uiNode_t *node)
+void uiKeyBindingNode::loading (uiNode_t *node)
 {
 	node->padding = 8;
 	node->contentAlign = ALIGN_CL;
@@ -190,10 +190,7 @@ static void UI_KeyBindingNodeLoading (uiNode_t *node)
 void UI_RegisterKeyBindingNode (uiBehaviour_t *behaviour)
 {
 	behaviour->name = "keybinding";
-	behaviour->leftClick = UI_KeyBindingNodeClick;
-	behaviour->keyPressed = UI_KeyBindingNodeKeyPressed;
-	behaviour->draw = UI_KeyBindingNodeDraw;
-	behaviour->loading = UI_KeyBindingNodeLoading;
+	behaviour->manager = new uiKeyBindingNode();
 	behaviour->extraDataSize = sizeof(EXTRADATA_TYPE);
 
 	UI_RegisterExtradataNodeProperty(behaviour, "keyspace", V_INT, keyBindingExtraData_t, keySpace);

@@ -43,7 +43,7 @@ static const value_t *propertySource;
 static const uiBehaviour_t *localBehaviour;
 
 
-static void UI_SequenceNodeDraw (uiNode_t *node)
+void uiSequenceNode::draw (uiNode_t *node)
 {
 	if (EXTRADATA(node).context != NULL && EXTRADATA(node).playing) {
 		qboolean finished = qfalse;
@@ -69,7 +69,7 @@ static void UI_SequenceNodeDraw (uiNode_t *node)
 	}
 }
 
-static void UI_SequenceNodeInit (uiNode_t *node, linkedList_t *params)
+void uiSequenceNode::windowOpened (uiNode_t *node, linkedList_t *params)
 {
 	if (EXTRADATA(node).context == NULL)
 		EXTRADATA(node).context = SEQ_AllocContext();
@@ -79,7 +79,7 @@ static void UI_SequenceNodeInit (uiNode_t *node, linkedList_t *params)
 	}
 }
 
-static void UI_SequenceNodeClose (uiNode_t *node)
+void uiSequenceNode::windowClosed (uiNode_t *node)
 {
 	if (EXTRADATA(node).context != NULL) {
 		SEQ_FreeContext(EXTRADATA(node).context);
@@ -88,20 +88,20 @@ static void UI_SequenceNodeClose (uiNode_t *node)
 	EXTRADATA(node).playing = qfalse;
 }
 
-static void UI_SequenceNodeLeftClick (uiNode_t *node, int x, int y)
+void uiSequenceNode::leftClick (uiNode_t *node, int x, int y)
 {
 	if (EXTRADATA(node).context != NULL) {
 		SEQ_SendClickEvent(EXTRADATA(node).context);
 	}
 }
 
-static void UI_SequencePropertyChanged (uiNode_t *node, const value_t *property)
+void uiSequenceNode::propertyChanged (uiNode_t *node, const value_t *property)
 {
 	if (property == propertySource) {
 		if (node->image != NULL) {
-			UI_SequenceNodeInit(node, NULL);
+			windowOpened(node, NULL);
 		} else if (EXTRADATA(node).context != NULL) {
-			UI_SequenceNodeClose(node);
+			windowClosed(node);
 		}
 		return;
 	}
@@ -112,12 +112,8 @@ void UI_RegisterSequenceNode (uiBehaviour_t* behaviour)
 {
 	localBehaviour = behaviour;
 	behaviour->name = "sequence";
-	behaviour->draw = UI_SequenceNodeDraw;
-	behaviour->windowOpened = UI_SequenceNodeInit;
-	behaviour->windowClosed = UI_SequenceNodeClose;
+	behaviour->manager = new uiSequenceNode();
 	behaviour->extraDataSize = sizeof(EXTRADATA_TYPE);
-	behaviour->propertyChanged = UI_SequencePropertyChanged;
-	behaviour->leftClick = UI_SequenceNodeLeftClick;
 
 	/** Source of the video. File name without prefix ./base/videos and without extension */
 	propertySource = UI_RegisterNodeProperty(behaviour, "src", V_CVAR_OR_STRING, uiNode_t, image);

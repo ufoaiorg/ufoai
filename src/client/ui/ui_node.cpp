@@ -29,6 +29,7 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #include "ui_nodes.h"
 #include "ui_node.h"
 #include "node/ui_node_abstractnode.h"
+#include "node/ui_node_battlescape.h"
 #include "node/ui_node_panel.h"
 #include "ui_parse.h"
 #include "ui_components.h"
@@ -56,6 +57,14 @@ qboolean UI_Node_IsWindow(const struct uiNode_s *node)
 		return qfalse;
 	}
 	return (typeid(uiWindowNode).before(typeid(node->behaviour->manager))) ? qtrue : qfalse;
+}
+
+qboolean UI_Node_IsBattleScape(const struct uiNode_s *node)
+{
+	if (!node->behaviour->manager) {
+		return qfalse;
+	}
+	return (typeid(uiBattleScapeNode).before(typeid(node->behaviour->manager))) ? qtrue : qfalse;
 }
 
 qboolean UI_Node_IsAbstract(const struct uiNode_s *node)

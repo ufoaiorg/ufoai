@@ -98,12 +98,12 @@ static zoneNode_t UI_EditorNodeGetElementAtPosition (uiNode_t *node, int x, int 
 	return ZONE_NONE;
 }
 
-static void UI_EditorNodeDraw (uiNode_t *node)
+void uiEditorNode::draw (uiNode_t *node)
 {
 	UI_CaptureDrawOver(node);
 }
 
-static void UI_EditorNodeDrawOverWindow (uiNode_t *node)
+void uiEditorNode::drawOverWindow (uiNode_t *node)
 {
 	uiNode_t* hovered = NULL;
 
@@ -131,7 +131,7 @@ static void UI_EditorNodeDrawOverWindow (uiNode_t *node)
 		UI_EditorNodeHighlightNode(anchoredNode, red, qtrue);
 }
 
-static void UI_EditorNodeCapturedMouseMove (uiNode_t *node, int x, int y)
+void uiEditorNode::capturedMouseMove (uiNode_t *node, int x, int y)
 {
 	vec2_t size;
 	const int diffX = x - startX;
@@ -186,12 +186,12 @@ static void UI_EditorNodeCapturedMouseMove (uiNode_t *node, int x, int y)
 /**
  * @brief Called when the node have lost the captured node
  */
-static void UI_EditorNodeCapturedMouseLost (uiNode_t *node)
+void uiEditorNode::capturedMouseLost (uiNode_t *node)
 {
 	dragStatus = ZONE_NONE;
 }
 
-static void UI_EditorNodeMouseUp (uiNode_t *node, int x, int y, int button)
+void uiEditorNode::mouseUp (uiNode_t *node, int x, int y, int button)
 {
 	if (UI_GetMouseCapture() != node)
 		return;
@@ -212,7 +212,7 @@ static void UI_EditorNodeSelectNode (uiNode_t *node, uiNode_t *selected)
 	Cvar_Set("ui_sys_editor_window", anchoredNode->root->name);
 }
 
-static void UI_EditorNodeMouseDown (uiNode_t *node, int x, int y, int button)
+void uiEditorNode::mouseDown (uiNode_t *node, int x, int y, int button)
 {
 	uiNode_t* hovered;
 
@@ -352,13 +352,7 @@ static void UI_EditorNodeExtract_f (void)
 void UI_RegisterEditorNode (uiBehaviour_t *behaviour)
 {
 	behaviour->name = "editor";
-	behaviour->extends = "special";
-	behaviour->draw = UI_EditorNodeDraw;
-	behaviour->drawOverWindow = UI_EditorNodeDrawOverWindow;
-	behaviour->mouseDown = UI_EditorNodeMouseDown;
-	behaviour->mouseUp = UI_EditorNodeMouseUp;
-	behaviour->capturedMouseMove = UI_EditorNodeCapturedMouseMove;
-	behaviour->capturedMouseLost = UI_EditorNodeCapturedMouseLost;
+	behaviour->manager = new uiEditorNode();
 
 	/* start edition mode */
 	UI_RegisterNodeMethod(behaviour, "start", UI_EditorNodeStart);
