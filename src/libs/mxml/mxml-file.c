@@ -1289,7 +1289,8 @@ mxml_file_getc(void *p,			/* I  - Pointer to file */
 	  * Multi-word UTF-16 char...
 	  */
 
-          int lch = (getc(fp) << 8) | getc(fp);
+          int lch = getc(fp) << 8;
+          lch |= getc(fp);
 
           if (lch < 0xdc00 || lch >= 0xdfff)
 	    return (EOF);
@@ -1317,7 +1318,8 @@ mxml_file_getc(void *p,			/* I  - Pointer to file */
 	  * Multi-word UTF-16 char...
 	  */
 
-          int lch = getc(fp) | (getc(fp) << 8);
+          int lch = getc(fp);
+          lch |= getc(fp) << 8;
 
           if (lch < 0xdc00 || lch >= 0xdfff)
 	    return (EOF);
