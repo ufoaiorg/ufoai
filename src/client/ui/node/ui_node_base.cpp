@@ -231,7 +231,7 @@ static void UI_BaseMapNodeDrawTooltip (uiNode_t *node, int x, int y)
 	int col, row;
 	building_t *building;
 	const int itemToolTipWidth = 250;
-	char *tooltipText;
+	const char *tooltipText;
 	base_t *base = B_GetCurrentSelectedBase();
 
 	UI_BaseMapGetCellAtPos(node, x, y, &col, &row);

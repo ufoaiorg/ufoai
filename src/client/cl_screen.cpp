@@ -176,7 +176,7 @@ void SCR_DrawLoading (int percent, const char *loadingMessages)
 	const vec4_t color = {0.0, 0.7, 0.0, 0.8};
 	const int paddingX = 40;
 	const int paddingY = 43;
-	char *mapmsg;
+	const char *mapmsg;
 
 	if (cls.downloadName[0]) {
 		SCR_DrawDownloading();

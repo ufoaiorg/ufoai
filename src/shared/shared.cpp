@@ -373,7 +373,7 @@ int Q_StringSort (const void *string1, const void *string2)
  * @brief does a varargs printf into a temp buffer, so I don't need to have
  * varargs versions of all text functions.
  */
-char *va (const char *format, ...)
+const char *va (const char *format, ...)
 {
 	va_list argptr;
 	/* in case va is called by nested functions */

@@ -263,6 +263,7 @@ static void UI_TextEntryNodeDraw (uiNode_t *node)
 
 	text = UI_GetReferenceString(node, node->text);
 	if (text != NULL) {
+		char tmp[MAX_VAR];
 		/** @todo we don't need to edit the text to draw the cursor */
 		if (UI_HasFocus(node)) {
 			if (CL_Milliseconds() % 1000 < 500) {
@@ -271,7 +272,8 @@ static void UI_TextEntryNodeDraw (uiNode_t *node)
 		}
 
 		if (EXTRADATA(node).isPassword) {
-			char *c = va("%s", text);
+			Q_strncpyz(tmp, text, sizeof(tmp));
+			char *c = tmp;
 			int size = UTF8_strlen(c);
 			text = c;
 			/* hide the text with a special char */
