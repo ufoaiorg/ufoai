@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: UFO Alien Invasion\n"
 "Report-Msgid-Bugs-To: tlh2000@users.sourceforge.net\n"
-"POT-Creation-Date: 2012-03-27 08:50-0600\n"
+"POT-Creation-Date: 2012-03-28 13:18+0700\n"
 "PO-Revision-Date: 2012-03-25 19:23+0200\n"
 "Last-Translator: DarkRainX <darkrainx@users.sourceforge.net>\n"
 "Language-Team: \n"
@@ -3388,7 +3388,7 @@ msgstr "Historia"
 #: ../base/ufos/ui/geoscape.ufo:1666 ../base/ufos/ui/market.ufo:100
 #: ../base/ufos/ui/production.ufo:80 ../base/ufos/ui/transfer.ufo:58
 #: ../base/ufos/ui/transfer.ufo:78 client/cgame/campaign/cp_map.c:339
-#: client/cgame/campaign/cp_transfer_callbacks.c:1565
+#: client/cgame/campaign/cp_transfer_callbacks.c:1558
 msgid "Aircraft"
 msgstr "Naves"
 
@@ -10345,26 +10345,26 @@ msgid "Available equipment:"
 msgstr "Equipo disponible:"
 
 #: ../base/ufos/ui/aircraft_equip.ufo:213
-#: client/cgame/campaign/cp_fightequip_callbacks.c:138
+#: client/cgame/campaign/cp_fightequip_callbacks.c:135
 msgid "Weapons"
 msgstr "Armas"
 
 #: ../base/ufos/ui/aircraft_equip.ufo:217
-#: client/cgame/campaign/cp_fightequip_callbacks.c:145
+#: client/cgame/campaign/cp_fightequip_callbacks.c:142
 msgid "Ammo"
 msgstr "Munición"
 
 #: ../base/ufos/ui/aircraft_equip.ufo:221 ../base/ufos/ui/equipment.ufo:295
 #: ../base/ufos/ui/market.ufo:92 ../base/ufos/ui/production.ufo:72
 #: ../base/ufos/ui/team.ufo:325
-#: client/cgame/campaign/cp_fightequip_callbacks.c:140
+#: client/cgame/campaign/cp_fightequip_callbacks.c:137
 #: client/cgame/campaign/cp_ufopedia.c:146
 msgid "Armour"
 msgstr "Armadura"
 
 #: ../base/ufos/ui/aircraft_equip.ufo:225
-#: client/cgame/campaign/cp_fightequip_callbacks.c:142
-#: client/cgame/campaign/cp_transfer_callbacks.c:1521
+#: client/cgame/campaign/cp_fightequip_callbacks.c:139
+#: client/cgame/campaign/cp_transfer_callbacks.c:1514
 msgid "Items"
 msgstr "Objetos"
 
@@ -10480,7 +10480,7 @@ msgstr "Fuerza:"
 
 #: ../base/ufos/ui/aircraft_soldiers.ufo:392 ../base/ufos/ui/equipment.ufo:466
 #: ../base/ufos/ui/hire.ufo:343 ../base/ufos/ui/hospital.ufo:451
-#: ../base/ufos/ui/options.ufo:1765 ../base/ufos/ui/physdat.ufo:123
+#: ../base/ufos/ui/options.ufo:1747 ../base/ufos/ui/physdat.ufo:123
 #: ../base/ufos/ui/popup_baseattack.ufo:182 ../base/ufos/ui/team.ufo:486
 msgid "Speed:"
 msgstr "Velocidad:"
@@ -10603,7 +10603,7 @@ msgstr "Equipa Armas Defensivas"
 
 #: ../base/ufos/ui/basedefence.ufo:30
 #: ../base/ufos/ui/popup_installations.ufo:243
-#: client/cgame/campaign/cp_base.c:2068
+#: client/cgame/campaign/cp_base.c:2059
 msgid "Information"
 msgstr "Información"
 
@@ -10801,7 +10801,7 @@ msgid "Select building"
 msgstr "Seleccionar instalación"
 
 #: ../base/ufos/ui/buildings.ufo:179 ../base/ufos/ui/geoscape.ufo:549
-#: ../base/ufos/ui/market.ufo:367 client/cgame/campaign/cp_ufopedia.c:119
+#: ../base/ufos/ui/market.ufo:363 client/cgame/campaign/cp_ufopedia.c:119
 #: client/cgame/campaign/cp_ufopedia.c:611
 #: client/cgame/campaign/cp_ufopedia.c:664
 #: client/cgame/campaign/cp_ufopedia.c:673
@@ -10959,22 +10959,22 @@ msgstr "Pesado"
 msgid "Misc"
 msgstr "Miscelánea"
 
-#: ../base/ufos/ui/equipment.ufo:362 ../base/ufos/ui/market.ufo:422
+#: ../base/ufos/ui/equipment.ufo:362 ../base/ufos/ui/market.ufo:418
 #: ../base/ufos/ui/team.ufo:392 ../base/ufos/ui/ufopedia.ufo:342
 msgid "With:"
 msgstr "Con:"
 
-#: ../base/ufos/ui/equipment.ufo:399 ../base/ufos/ui/market.ufo:459
+#: ../base/ufos/ui/equipment.ufo:399 ../base/ufos/ui/market.ufo:455
 #: ../base/ufos/ui/team.ufo:429 ../base/ufos/ui/ufopedia.ufo:379
 msgid "Firemode:"
 msgstr "Modo:"
 
-#: ../base/ufos/ui/equipment.ufo:407 ../base/ufos/ui/market.ufo:467
+#: ../base/ufos/ui/equipment.ufo:407 ../base/ufos/ui/market.ufo:463
 #: ../base/ufos/ui/team.ufo:437 ../base/ufos/ui/ufopedia.ufo:387
 msgid "Previous firemode"
 msgstr "Modo anterior"
 
-#: ../base/ufos/ui/equipment.ufo:425 ../base/ufos/ui/market.ufo:485
+#: ../base/ufos/ui/equipment.ufo:425 ../base/ufos/ui/market.ufo:481
 #: ../base/ufos/ui/team.ufo:455 ../base/ufos/ui/ufopedia.ufo:405
 msgid "Next firemode"
 msgstr "Siguiente modo"
@@ -11151,7 +11151,8 @@ msgid "Base"
 msgstr "Base"
 
 #: ../base/ufos/ui/geoscape.ufo:1053
-msgid "0 days"
+#, fuzzy
+msgid "0 day"
 msgstr "0 días"
 
 #: ../base/ufos/ui/geoscape.ufo:1082
@@ -11927,7 +11928,7 @@ msgstr "Opciones iniciales"
 msgid "User Information"
 msgstr "Información del usuario"
 
-#: ../base/ufos/ui/main.ufo:138 ../base/ufos/ui/options.ufo:1298
+#: ../base/ufos/ui/main.ufo:138 ../base/ufos/ui/options.ufo:1280
 msgid "Volume Control"
 msgstr "Control de volumen"
 
@@ -11935,7 +11936,7 @@ msgstr "Control de volumen"
 msgid "Effects:"
 msgstr "Efectos:"
 
-#: ../base/ufos/ui/main.ufo:164 ../base/ufos/ui/options.ufo:1325
+#: ../base/ufos/ui/main.ufo:164 ../base/ufos/ui/options.ufo:1307
 msgid "Music:"
 msgstr "Música:"
 
@@ -11989,23 +11990,19 @@ msgid "Craft items"
 msgstr "Eq Aeroave"
 
 #: ../base/ufos/ui/market.ufo:104 ../base/ufos/ui/options.ufo:423
-#: ../base/ufos/ui/options.ufo:1141 ../base/ufos/ui/production.ufo:88
+#: ../base/ufos/ui/options.ufo:1123 ../base/ufos/ui/production.ufo:84
 msgid "Other"
 msgstr "Otro"
 
-#: ../base/ufos/ui/market.ufo:108 ../base/ufos/ui/production.ufo:84
-msgid "UGV items"
-msgstr "Eq VTD"
-
-#: ../base/ufos/ui/market.ufo:315
+#: ../base/ufos/ui/market.ufo:311
 msgid "Storage (used/all):"
 msgstr "Almacén (usado/todo):"
 
-#: ../base/ufos/ui/market.ufo:505
+#: ../base/ufos/ui/market.ufo:501
 msgid "Item autosell enabled"
 msgstr "Activar el autovendido del objeto"
 
-#: ../base/ufos/ui/market.ufo:514
+#: ../base/ufos/ui/market.ufo:510
 msgid "Item autosell disabled"
 msgstr "Desactivar el autovendido del objeto"
 
@@ -12634,463 +12631,451 @@ msgstr "Mostrar FPS:"
 msgid "Display the number of rendered frames per second."
 msgstr "Mostrar el número de cuadros renderizados por segundo."
 
-#: ../base/ufos/ui/options.ufo:682
-msgid "Do not play the intro movie when starting the game."
-msgstr "No reproducir la película de introducción al iniciar el juego."
-
-#: ../base/ufos/ui/options.ufo:683
-msgid "Hold Back Intro Video:"
-msgstr "Omitir el vídeo de introducción:"
-
-#: ../base/ufos/ui/options.ufo:689
-msgid "Default is to play the intro video just once at the first game start."
-msgstr "Lo normal es reproducir el vídeo una sola vez cuando el juego inicia por primera ocasión."
-
-#: ../base/ufos/ui/options.ufo:714
+#: ../base/ufos/ui/options.ufo:696
 msgid "Texture Settings"
 msgstr "Opciones de las Texturas"
 
-#: ../base/ufos/ui/options.ufo:722
+#: ../base/ufos/ui/options.ufo:704
 msgid "Sets the maximum size for textures and caps resolutions higher than that value."
 msgstr "Ajusta el tamaño máximo para las texturas y recorta las resoluciones mayores que este valor."
 
-#: ../base/ufos/ui/options.ufo:723
+#: ../base/ufos/ui/options.ufo:705
 msgid "Resolution Cap:"
 msgstr "Limite de Resolución:"
 
-#: ../base/ufos/ui/options.ufo:730
+#: ../base/ufos/ui/options.ufo:712
 msgid "Low means a maximum of 256x256 pixel texture resolution. Extreme means up to 8192x8192 pixel."
 msgstr "Bajo significa un máximo de 256x256 píxeles de resolución para las texturas. Extremo significa hasta 8192x8192 píxeles."
 
-#: ../base/ufos/ui/options.ufo:736 ../base/ufos/ui/options.ufo:1086
-#: ../base/ufos/ui/options.ufo:1237
+#: ../base/ufos/ui/options.ufo:718 ../base/ufos/ui/options.ufo:1068
+#: ../base/ufos/ui/options.ufo:1219
 msgid "Low"
 msgstr "Bajo"
 
-#: ../base/ufos/ui/options.ufo:740 ../base/ufos/ui/options.ufo:1090
-#: ../base/ufos/ui/options.ufo:1251
+#: ../base/ufos/ui/options.ufo:722 ../base/ufos/ui/options.ufo:1072
+#: ../base/ufos/ui/options.ufo:1233
 msgid "Medium"
 msgstr "Medio"
 
-#: ../base/ufos/ui/options.ufo:744 ../base/ufos/ui/options.ufo:1094
+#: ../base/ufos/ui/options.ufo:726 ../base/ufos/ui/options.ufo:1076
 #: client/cgame/campaign/cp_cgame_callbacks.c:80
 msgid "Normal"
 msgstr "Normal"
 
-#: ../base/ufos/ui/options.ufo:748 ../base/ufos/ui/options.ufo:1098
-#: ../base/ufos/ui/options.ufo:1265
+#: ../base/ufos/ui/options.ufo:730 ../base/ufos/ui/options.ufo:1080
+#: ../base/ufos/ui/options.ufo:1247
 msgid "High"
 msgstr "Alto"
 
-#: ../base/ufos/ui/options.ufo:752 client/battlescape/cl_actor.c:118
+#: ../base/ufos/ui/options.ufo:734 client/battlescape/cl_actor.c:118
 msgid "Excellent"
 msgstr "Excelente"
 
-#: ../base/ufos/ui/options.ufo:756
+#: ../base/ufos/ui/options.ufo:738
 msgid "Extreme"
 msgstr "Extremo"
 
-#: ../base/ufos/ui/options.ufo:766
+#: ../base/ufos/ui/options.ufo:748
 msgid "Sets the texture filtering and mipmapping method."
 msgstr "Ajusta el método de filtrado de de texturas y de mapeo MIP."
 
-#: ../base/ufos/ui/options.ufo:767
+#: ../base/ufos/ui/options.ufo:749
 msgid "Filtering:"
 msgstr "Filtrado:"
 
-#: ../base/ufos/ui/options.ufo:780
+#: ../base/ufos/ui/options.ufo:762
 msgid "No filtering, no mipmaps"
 msgstr "Sin filtrado, sin mapas MIP"
 
-#: ../base/ufos/ui/options.ufo:784
+#: ../base/ufos/ui/options.ufo:766
 msgid "Bilinear filtering, no mipmaps"
 msgstr "Filtrado bilinear, sin mapas MIP"
 
-#: ../base/ufos/ui/options.ufo:788
+#: ../base/ufos/ui/options.ufo:770
 msgid "No filtering, mipmaps"
 msgstr "Sin filtrado, con mapas MIP"
 
-#: ../base/ufos/ui/options.ufo:792
+#: ../base/ufos/ui/options.ufo:774
 msgid "Bilinear filtering, mipmaps"
 msgstr "Filtrado bilinear, con mapas MIP"
 
-#: ../base/ufos/ui/options.ufo:796
+#: ../base/ufos/ui/options.ufo:778
 msgid "Trilinear filtering, mipmaps"
 msgstr "Filtrado trilinear, con mapas MIP"
 
-#: ../base/ufos/ui/options.ufo:800
+#: ../base/ufos/ui/options.ufo:782
 msgid "Bilinear filtering, trilinear filtering, mipmaps"
 msgstr "Filtrado bilinear, filtrado trilinear, con mapas MIP"
 
-#: ../base/ufos/ui/options.ufo:810
+#: ../base/ufos/ui/options.ufo:792
 msgid "Enable texture compression for better memory performance, disable for better rendering quality."
 msgstr "Activa la compresión de texturas para un mejor aprovechamiento de la memoria, desactivalo para una mayor calidad de imagen."
 
-#: ../base/ufos/ui/options.ufo:811
+#: ../base/ufos/ui/options.ufo:793
 msgid "Compression:"
 msgstr "Compresión:"
 
-#: ../base/ufos/ui/options.ufo:827
+#: ../base/ufos/ui/options.ufo:809
 msgid "Texture Level-of-Detail. Enabling this might result in some blurry textures if you zoom out a little bit."
 msgstr "Nivel de detalle de la textura. Activar esto puede resultar en algunas texturas borrosas si te alejas un poco."
 
-#: ../base/ufos/ui/options.ufo:828
+#: ../base/ufos/ui/options.ufo:810
 msgid "LoD:"
 msgstr "Nivel de Detalle:"
 
-#: ../base/ufos/ui/options.ufo:844
+#: ../base/ufos/ui/options.ufo:826
 msgid "The degree or ratio of anisotropic filtering. High ratios will make distant textures appear more sharp. Very high ratios are only recommended when playing in high resolutions."
 msgstr "El grado de filtrado anisotrópico. Niveles altos harán que las texturas distantes parezcan más definidas. Niveles muy elevados se recomiendan solamente al jugar con resoluciones muy altas."
 
-#: ../base/ufos/ui/options.ufo:845
+#: ../base/ufos/ui/options.ufo:827
 msgid "Anisotropy Level:"
 msgstr "Nivel de Anisotropía:"
 
-#: ../base/ufos/ui/options.ufo:858
+#: ../base/ufos/ui/options.ufo:840
 msgid "Very high values are only recommended when playing in very high screen resolutions."
 msgstr "Niveles muy elevados se recomiendan solamente al jugar con resoluciones muy altas."
 
-#: ../base/ufos/ui/options.ufo:872
+#: ../base/ufos/ui/options.ufo:854
 msgid "OpenGL Settings"
 msgstr "Opciones OpenGL"
 
-#: ../base/ufos/ui/options.ufo:882
+#: ../base/ufos/ui/options.ufo:864
 msgid "OpenGL GLSL Shaders are available only if your graphics-card driver fully supports OpenGL 2.0+ and will enhance UFO:AI using advanced shading techniques."
 msgstr "El sombreado OpenGl GLSL solo está disponible si tu tarjeta de vídeo tiene soporte completo para OpenGL 2.0+ y mejorará UFO:AI utilizando técnicas avanzadas de sombreado."
 
-#: ../base/ufos/ui/options.ufo:883
+#: ../base/ufos/ui/options.ufo:865
 msgid "GLSL Shaders:"
 msgstr "Sombreados GLSL:"
 
-#: ../base/ufos/ui/options.ufo:890
+#: ../base/ufos/ui/options.ufo:872
 msgid "Sets the OpenGL Shader Quality - or disables them"
 msgstr "Configura la calidad del sombreado OpenGL o lo desactiva"
 
-#: ../base/ufos/ui/options.ufo:897
+#: ../base/ufos/ui/options.ufo:879
 msgid "Disabled"
 msgstr "Desactivado"
 
-#: ../base/ufos/ui/options.ufo:902
+#: ../base/ufos/ui/options.ufo:884
 msgid "Low quality"
 msgstr "Baja calidad"
 
-#: ../base/ufos/ui/options.ufo:907
+#: ../base/ufos/ui/options.ufo:889
 msgid "Medium quality"
 msgstr "Calidad media"
 
-#: ../base/ufos/ui/options.ufo:912
+#: ../base/ufos/ui/options.ufo:894
 msgid "High quality"
 msgstr "Alta calidad"
 
-#: ../base/ufos/ui/options.ufo:921
+#: ../base/ufos/ui/options.ufo:903
 msgid "Vertex Buffers are submitting extensible arrays of vertex attributes to be mapped into the GPU for fast drawing."
 msgstr "LosVertex Buffers son juegos expansibles de atributos de los vértices que se envían para ser mapeados en la GPU para un dibujado rápido."
 
-#: ../base/ufos/ui/options.ufo:922
+#: ../base/ufos/ui/options.ufo:904
 msgid "Vertex Buffers:"
 msgstr "Bufferes Vertex:"
 
-#: ../base/ufos/ui/options.ufo:938
+#: ../base/ufos/ui/options.ufo:920
 msgid "OpenGL multisample buffers provide a mechanism to antialias all GL primitives. / The Swap Interval selects when a buffer swap will occur. The value '0' means that the swap will occur immediately (also known as 'v-sync off')."
 msgstr "Los Multisample Buffers OpenGL son una forma de alisar las formas GL primitivas. / El Intervalo de Sincronización Vertical ajusta cuando se refresca el buffer. Un valor de 0 significa que el buffer se refresca inmediatamente (también se conoce como \"desactivar la sincronía vertical\")."
 
-#: ../base/ufos/ui/options.ufo:939
+#: ../base/ufos/ui/options.ufo:921
 msgid "Multisample Buffers / Swap Interval:"
 msgstr "Multisample Buffers / Sincronización Vertical:"
 
-#: ../base/ufos/ui/options.ufo:945
+#: ../base/ufos/ui/options.ufo:927
 msgid "Choose between 0-4 Multisample Buffers. Higher values will provide better antialiasing and will enhance picture quality."
 msgstr "Escoge entre 0 y 4 Multisample Buffers. Valores más altos resultan en un mejor alisado y aumentan la calidad de la imagen."
 
-#: ../base/ufos/ui/options.ufo:961
+#: ../base/ufos/ui/options.ufo:943
 msgid "Set to '0' to turn v-sync off (faster). Set to '1' or higher to turn v-sync on (better quality)."
 msgstr "Selecciona 0 para desactivar la sincronía vertical (más rapidez). Selecciona 1 o más para activar la sincronía vertical (mejor calidad)."
 
-#: ../base/ufos/ui/options.ufo:980
+#: ../base/ufos/ui/options.ufo:962
 msgid "Post-processing shader effects like glowing textures (only available if GLSL Shaders are turned on)."
 msgstr "Efectos de sombreado del post-procesador gráfico tales como texturas brillantes (solo disponible si el sombreado GLSL está activado)."
 
-#: ../base/ufos/ui/options.ufo:981
+#: ../base/ufos/ui/options.ufo:963
 msgid "Post-Processing Shader Effects:"
 msgstr "Activar el post-proceso de efecto de sombreado:"
 
-#: ../base/ufos/ui/options.ufo:987
+#: ../base/ufos/ui/options.ufo:969
 msgid "Enable post processing shader effects. ATTENTION: May require restart to take effect."
 msgstr "Activar los efectos de sombreado del post-procesador gráfico. ATENCIÓN: Puede requerir reiniciar."
 
-#: ../base/ufos/ui/options.ufo:998
+#: ../base/ufos/ui/options.ufo:980
 msgid "Light and Shadow"
 msgstr "Luz y Sombra"
 
-#: ../base/ufos/ui/options.ufo:1008
+#: ../base/ufos/ui/options.ufo:990
 msgid "Realtime lighting of the 3D world in UFO:AI. / Maximum number of dynamic hardware accelerated lights allowed."
 msgstr "Iluminación en tiempo real de la escenas 3D en UFO:AI. / Máximo número de luces dinámicas aceleradas por hardware permitidas."
 
-#: ../base/ufos/ui/options.ufo:1009
+#: ../base/ufos/ui/options.ufo:991
 msgid "Realtime Lighting / Max Dynamic Lights:"
 msgstr "Luz en Tiempo Real/Luces Dinámicas:"
 
-#: ../base/ufos/ui/options.ufo:1021
+#: ../base/ufos/ui/options.ufo:1003
 msgid "Change the number of allowed hardware accelerated dynamic lights. ATTENTION: Realtime lighting has to be turned on for this setting to work."
 msgstr "Cambiar el número de dinámicas luces aceleradas por hardware. ATENCIÓN: La iluminación en tiempo real debe estar activa para que esto funcione."
 
-#: ../base/ufos/ui/options.ufo:1034
+#: ../base/ufos/ui/options.ufo:1016
 msgid "Also known as bumpmapping."
 msgstr "Mapa de relieve de las texturas."
 
-#: ../base/ufos/ui/options.ufo:1035
+#: ../base/ufos/ui/options.ufo:1017
 msgid "Texture Normalmapping:"
 msgstr "Relieve de la Textura:"
 
-#: ../base/ufos/ui/options.ufo:1041
+#: ../base/ufos/ui/options.ufo:1023
 msgid "Enable normal-/bumpmapping. ATTENTION: Realtime lighting must be turned on for normalmapping to work."
 msgstr "Activar los mapas de relieve. ATENCIÓN: La iluminación en tiempo real debe estar activa para que los mapas de relieve funcionen."
 
-#: ../base/ufos/ui/options.ufo:1053
+#: ../base/ufos/ui/options.ufo:1035
 msgid "At the moment these are just drop-shadows."
 msgstr "Por el momento estas son solo sombras proyectadas."
 
-#: ../base/ufos/ui/options.ufo:1054
+#: ../base/ufos/ui/options.ufo:1036
 msgid "Shadows:"
 msgstr "Sombras:"
 
-#: ../base/ufos/ui/options.ufo:1060
+#: ../base/ufos/ui/options.ufo:1042
 msgid "Enable shadows."
 msgstr "Habilitar las Sombras."
 
-#: ../base/ufos/ui/options.ufo:1072
+#: ../base/ufos/ui/options.ufo:1054
 msgid "The lightmap block size defines the resolution of the lightmap. Higher block size means using more detailed lightmaps."
 msgstr "El tamaño de bloque del mapa de luz define la resolución del mapa de luz. Valores más altos significan mapas de luz más detallados."
 
-#: ../base/ufos/ui/options.ufo:1073
+#: ../base/ufos/ui/options.ufo:1055
 msgid "Lightmap Block Size:"
 msgstr "Bloque del mapa de Luz:"
 
-#: ../base/ufos/ui/options.ufo:1080
+#: ../base/ufos/ui/options.ufo:1062
 msgid "Low means a maximum lightmap resolution of 512x512 pixel. High means up to 2048x2048 pixel."
 msgstr "Bajo significa una resolución máxima del mapa de luz de 51x512 píxeles. Alto significa hasta 2048x2048 píxeles."
 
-#: ../base/ufos/ui/options.ufo:1107
+#: ../base/ufos/ui/options.ufo:1089
 msgid "Amount of light emitting from the sun and shining on the earth."
 msgstr "Cantidad de luz emitida por el Sol y que llega a la Tierra."
 
-#: ../base/ufos/ui/options.ufo:1108
+#: ../base/ufos/ui/options.ufo:1090
 msgid "Geo Ambient Lighting:"
 msgstr "Luz Ambiental del Mapa:"
 
-#: ../base/ufos/ui/options.ufo:1151
+#: ../base/ufos/ui/options.ufo:1133
 msgid "Flares are used to display light reflection effects. Flare visibility is calculated according to the angle of the surface emitting the light."
 msgstr "Los destellos se usan para mostrar los efectos de reflexión de la luz. La visibilidad de los destellos se calcula a partir del ángulo de la superficie que emite la luz."
 
-#: ../base/ufos/ui/options.ufo:1152
+#: ../base/ufos/ui/options.ufo:1134
 msgid "Flares:"
 msgstr "Destellos:"
 
-#: ../base/ufos/ui/options.ufo:1168
+#: ../base/ufos/ui/options.ufo:1150
 msgid "Coronas are soft, alpha-blended, rounded polygons."
 msgstr "Las coronas son polígonos suaves y redondeados mediante fusión alfa."
 
-#: ../base/ufos/ui/options.ufo:1169
+#: ../base/ufos/ui/options.ufo:1151
 msgid "Coronas:"
 msgstr "Coronas:"
 
-#: ../base/ufos/ui/options.ufo:1185
+#: ../base/ufos/ui/options.ufo:1167
 msgid "Fog does not relate to any weather effect here, but when enabled distant textures on the battlescape are faded out."
 msgstr "La niebla no se relaciona con los efectos del clima, pero al activarla las texturas lejanas durante el combate se difuminan."
 
-#: ../base/ufos/ui/options.ufo:1186
+#: ../base/ufos/ui/options.ufo:1168
 msgid "Fog:"
 msgstr "Niebla:"
 
-#: ../base/ufos/ui/options.ufo:1202
+#: ../base/ufos/ui/options.ufo:1184
 msgid "Weather effects like rain or snow."
 msgstr "Efectos del clima tales como lluvia o nieve."
 
-#: ../base/ufos/ui/options.ufo:1203
+#: ../base/ufos/ui/options.ufo:1185
 msgid "Weather Effects:"
 msgstr "Efectos del tiempo:"
 
-#: ../base/ufos/ui/options.ufo:1219
+#: ../base/ufos/ui/options.ufo:1201
 msgid "The material system is used to display texture animations, effects like rotating or stretching or scrolling textures and manipulate rendering through applying special material properties like specularity or hardness to defined textures."
 msgstr "El sistema de materiales se usa para mostrar las animaciones de las texturas, efectos como rotar, estirar o desplazar las texturas y manipular la imagen aplicando propiedades especiales como especularidad o dureza a las texturas definidas."
 
-#: ../base/ufos/ui/options.ufo:1220
+#: ../base/ufos/ui/options.ufo:1202
 msgid "Material System:"
 msgstr "Sistema de Materiales:"
 
-#: ../base/ufos/ui/options.ufo:1234
+#: ../base/ufos/ui/options.ufo:1216
 msgid "Switch to low video settings"
 msgstr "Cambiar a opciones de vídeo reducidas"
 
-#: ../base/ufos/ui/options.ufo:1248
+#: ../base/ufos/ui/options.ufo:1230
 msgid "Switch to medium video settings"
 msgstr "Cambiar a opciones de vídeo moderadas"
 
-#: ../base/ufos/ui/options.ufo:1262
+#: ../base/ufos/ui/options.ufo:1244
 msgid "Switch to very high video settings"
 msgstr "Cambiar a opciones de vídeo elevadas"
 
-#: ../base/ufos/ui/options.ufo:1291
+#: ../base/ufos/ui/options.ufo:1273
 msgid "Audio Settings"
 msgstr "Opciones de Sonido"
 
-#: ../base/ufos/ui/options.ufo:1308
+#: ../base/ufos/ui/options.ufo:1290
 msgid "Enable or disable sound."
 msgstr "Activa o desactiva la reproduccion de sonido"
 
-#: ../base/ufos/ui/options.ufo:1309
+#: ../base/ufos/ui/options.ufo:1291
 msgid "Enable Audio:"
 msgstr "Habilitar el Sonido:"
 
-#: ../base/ufos/ui/options.ufo:1349
+#: ../base/ufos/ui/options.ufo:1331
 msgid "Sound Effects:"
 msgstr "Efectos de Sonido:"
 
-#: ../base/ufos/ui/options.ufo:1374
+#: ../base/ufos/ui/options.ufo:1356
 msgid "Menu Sounds:"
 msgstr "Sonidos del Menú:"
 
-#: ../base/ufos/ui/options.ufo:1380
+#: ../base/ufos/ui/options.ufo:1362
 msgid "Turn the menu sounds on or off."
 msgstr "Activar/Desactivar los sonidos del menú."
 
-#: ../base/ufos/ui/options.ufo:1406
+#: ../base/ufos/ui/options.ufo:1388
 msgid "Advanced Audio Options"
 msgstr "Opciones Avanzadas de Sonido"
 
-#: ../base/ufos/ui/options.ufo:1416
+#: ../base/ufos/ui/options.ufo:1398
 msgid "The sample rate frequency in kHz. Use higher values for better sound quality."
 msgstr "La frecuencia de muestreo en kHz. Usa valores más altos para mejor calidad de sonido."
 
-#: ../base/ufos/ui/options.ufo:1417
+#: ../base/ufos/ui/options.ufo:1399
 msgid "Audio Sample Rate:"
 msgstr "Frecuencia de Muestreo:"
 
-#: ../base/ufos/ui/options.ufo:1451
+#: ../base/ufos/ui/options.ufo:1433
 msgid "Restart the sound-engine and apply your settings."
 msgstr "Reiniciar el motor de sonido y aplicar los cambios."
 
-#: ../base/ufos/ui/options.ufo:1473
+#: ../base/ufos/ui/options.ufo:1455
 msgid "Gameplay Settings"
 msgstr "Ajustes del juego"
 
-#: ../base/ufos/ui/options.ufo:1480
+#: ../base/ufos/ui/options.ufo:1462
 msgid "Battlescape Camera Settings"
 msgstr "Opciones de la Cámara"
 
-#: ../base/ufos/ui/options.ufo:1490
+#: ../base/ufos/ui/options.ufo:1472
 msgid "Scroll Speed:"
 msgstr "Vel. Desplazamiento:"
 
-#: ../base/ufos/ui/options.ufo:1514
+#: ../base/ufos/ui/options.ufo:1496
 msgid "Rotation Speed:"
 msgstr "Velocidad de Rotación:"
 
-#: ../base/ufos/ui/options.ufo:1538
+#: ../base/ufos/ui/options.ufo:1520
 msgid "The move deceleration of the battlescape camera. Lower this value if you want smoother camera movement, increase it if you want cameramovement to decelerate faster or stop immediately."
 msgstr "Velocidad de desaceleración de la cámara. Selecciona un valor bajo si quieres un movimiento más suave de la cámara usa un valor alto si quieres que la cámara se detenga más rápido o súbitamente."
 
-#: ../base/ufos/ui/options.ufo:1539
+#: ../base/ufos/ui/options.ufo:1521
 msgid "Move Deceleration:"
 msgstr "Desaceleración:"
 
-#: ../base/ufos/ui/options.ufo:1563
+#: ../base/ufos/ui/options.ufo:1545
 msgid "Isometric Mode means the 3D world will be rendered without perspective correction."
 msgstr "El Modo Isométrico significa que la escena en 3D será renderizada sin corrección de perspectiva."
 
-#: ../base/ufos/ui/options.ufo:1564
+#: ../base/ufos/ui/options.ufo:1546
 msgid "Isometric Mode:"
 msgstr "Modo isométrico:"
 
-#: ../base/ufos/ui/options.ufo:1580
+#: ../base/ufos/ui/options.ufo:1562
 msgid "Center the camera view automatically at the soldier when selecting it, or at the enemy when he is shooting or appearing."
 msgstr "Centrar la cámara automáticamente en el soldado al seleccionarlo, o en el enemigo cuando aparece o te dispara."
 
-#: ../base/ufos/ui/options.ufo:1581
+#: ../base/ufos/ui/options.ufo:1563
 msgid "Center View:"
 msgstr "Centrar vista:"
 
-#: ../base/ufos/ui/options.ufo:1597
+#: ../base/ufos/ui/options.ufo:1579
 msgid "Battlescape Gameplay Settings"
 msgstr "Opciones del Combate"
 
-#: ../base/ufos/ui/options.ufo:1607
+#: ../base/ufos/ui/options.ufo:1589
 msgid "Actor Speed:"
 msgstr "Velocidad:"
 
-#: ../base/ufos/ui/options.ufo:1618
+#: ../base/ufos/ui/options.ufo:1600
 msgid "Choose between 0-9, higher values mean higher actor speed."
 msgstr "Escoge del 0 al 9, valores más altos significan actores más rápidos."
 
-#: ../base/ufos/ui/options.ufo:1631
+#: ../base/ufos/ui/options.ufo:1613
 msgid "Enabling this will give you a preview of your actions on the battlescape which you then have to confirm."
 msgstr "Activar esta opción te dará una vista preliminar de tus acciones durante el combate, las cuales tendrás que confirmar."
 
-#: ../base/ufos/ui/options.ufo:1632
+#: ../base/ufos/ui/options.ufo:1614
 msgid "Confirm Actions:"
 msgstr "Confirmar acciones:"
 
-#: ../base/ufos/ui/options.ufo:1639
+#: ../base/ufos/ui/options.ufo:1621
 msgid "'No' means all your orders on the battlescape will be executed immediately. 'Yes' means you will be prompted to confirm all of your orders before the soldier begins to execute them. 'Only for moving' means the path will be displayed before you confirm a soldier's move."
 msgstr "\"No\" significa que tus ordenes durante el combate serán ejecutadas de inmediato. \"Si\" quiere decir que se te pedirá confirmar todas tus ordenes antes de que el soldado comience a ejecutarlas. \"Solo al desplazarse\" significa que se mostrará la ruta antes de que confirmes el movimiento de un soldado."
 
-#: ../base/ufos/ui/options.ufo:1645 po/OTHER_STRINGS:4
+#: ../base/ufos/ui/options.ufo:1627 po/OTHER_STRINGS:4
 msgid "Yes"
 msgstr "Sí"
 
-#: ../base/ufos/ui/options.ufo:1649 po/OTHER_STRINGS:5
+#: ../base/ufos/ui/options.ufo:1631 po/OTHER_STRINGS:5
 msgid "No"
 msgstr "No"
 
-#: ../base/ufos/ui/options.ufo:1653
+#: ../base/ufos/ui/options.ufo:1635
 msgid "Moving only"
 msgstr "Solo al moverse"
 
-#: ../base/ufos/ui/options.ufo:1662
+#: ../base/ufos/ui/options.ufo:1644
 msgid "Autostand regulates if your soldier should automatically stand up when he is getting the order to move while being crouched."
 msgstr "Regula si el soldado debe levantarse automáticamente cuando recibe la orden de desplazarse estando arrodillado."
 
-#: ../base/ufos/ui/options.ufo:1663
+#: ../base/ufos/ui/options.ufo:1645
 msgid "Autostand:"
 msgstr "Levantarse para Caminar:"
 
-#: ../base/ufos/ui/options.ufo:1679
+#: ../base/ufos/ui/options.ufo:1661
 msgid "Select the Head-Up-Display for the battlescape."
 msgstr "Selecciona la Pantalla de Visualización Frontal (HUD, por sus siglas en ingles) para el combate."
 
-#: ../base/ufos/ui/options.ufo:1680
+#: ../base/ufos/ui/options.ufo:1662
 msgid "HUD Design:"
 msgstr "Diseño del HUD:"
 
-#: ../base/ufos/ui/options.ufo:1697
+#: ../base/ufos/ui/options.ufo:1679
 msgid "Joystick Settings"
 msgstr "Opciones del Joystick"
 
-#: ../base/ufos/ui/options.ufo:1707
+#: ../base/ufos/ui/options.ufo:1689
 msgid "Enable:"
 msgstr "Habilitar:"
 
-#: ../base/ufos/ui/options.ufo:1723
+#: ../base/ufos/ui/options.ufo:1705
 msgid "Joystick or Joypad:"
 msgstr "Joystick:"
 
-#: ../base/ufos/ui/options.ufo:1729
+#: ../base/ufos/ui/options.ufo:1711
 msgid "Available game controllers."
 msgstr "Controladores de juegos disponibles."
 
-#: ../base/ufos/ui/options.ufo:1740
+#: ../base/ufos/ui/options.ufo:1722
 msgid "Adjust the joystick threshold to a high enough value, so movement of the analogue stick will be recognized."
 msgstr "Ajusta el umbral del joystick a un valor lo suficientemente alto, para que se reconozca el movimiento de la palanca analógica."
 
-#: ../base/ufos/ui/options.ufo:1741
+#: ../base/ufos/ui/options.ufo:1723
 msgid "Threshold:"
 msgstr "Umbral:"
 
-#: ../base/ufos/ui/options.ufo:1789
+#: ../base/ufos/ui/options.ufo:1771
 msgid "Show Keys"
 msgstr "Mostrar asociaciones de teclas"
 
-#: ../base/ufos/ui/options.ufo:1823
+#: ../base/ufos/ui/options.ufo:1805
 msgid "Key Bindings"
 msgstr "Mostrar asociaciones de teclas"
 
@@ -13194,48 +13179,48 @@ msgstr "Almacenado"
 msgid "unknown"
 msgstr "Desconocido"
 
-#: ../base/ufos/ui/production.ufo:92
+#: ../base/ufos/ui/production.ufo:88
 #: client/cgame/campaign/cp_produce_callbacks.c:295
 msgid "Disassembly"
 msgstr "Desmantelar"
 
-#: ../base/ufos/ui/production.ufo:144
+#: ../base/ufos/ui/production.ufo:140
 msgid "Workers (ready/all):"
 msgstr "Trabajadores (listos/todos):"
 
-#: ../base/ufos/ui/production.ufo:165
+#: ../base/ufos/ui/production.ufo:161
 msgid "Workshop capacity:"
 msgstr "Capacidad del taller:"
 
-#: ../base/ufos/ui/production.ufo:186
+#: ../base/ufos/ui/production.ufo:182
 msgid "Storage capacity:"
 msgstr "Capacidad de almacenamiento:"
 
-#: ../base/ufos/ui/production.ufo:207
+#: ../base/ufos/ui/production.ufo:203
 msgid "Production limit:"
 msgstr "Límite de producción:"
 
-#: ../base/ufos/ui/production.ufo:385 ../base/ufos/ui/production.ufo:396
+#: ../base/ufos/ui/production.ufo:381 ../base/ufos/ui/production.ufo:392
 msgid "Change the production amount"
 msgstr "Cambiar la cantidad a producir"
 
-#: ../base/ufos/ui/production.ufo:408
+#: ../base/ufos/ui/production.ufo:404
 msgid "Start this production"
 msgstr "Comenzar la producción"
 
-#: ../base/ufos/ui/production.ufo:419
+#: ../base/ufos/ui/production.ufo:415
 msgid "Stop production"
 msgstr "Parar producción"
 
-#: ../base/ufos/ui/production.ufo:429
+#: ../base/ufos/ui/production.ufo:425
 msgid "Increase priority"
 msgstr "Incrementar prioridad"
 
-#: ../base/ufos/ui/production.ufo:441
+#: ../base/ufos/ui/production.ufo:437
 msgid "Decrease priority"
 msgstr "Disminuir prioridad"
 
-#: ../base/ufos/ui/production.ufo:514
+#: ../base/ufos/ui/production.ufo:510
 msgid "Requirements"
 msgstr "Requisitos"
 
@@ -13457,7 +13442,7 @@ msgstr "Añadir/Remover el objeto a la transferencia. Mantén presionada la tecl
 
 #: ../base/ufos/ui/transfer.ufo:56 ../base/ufos/ui/transfer.ufo:73
 #: client/cgame/campaign/cp_cgame_callbacks.c:137
-#: client/cgame/campaign/cp_transfer_callbacks.c:1550
+#: client/cgame/campaign/cp_transfer_callbacks.c:1543
 msgid "Aliens"
 msgstr "Alienígenas"
 
@@ -14524,7 +14509,7 @@ msgstr "Un nuevo %s esta listo en %s"
 #: client/cgame/campaign/cp_aircraft.c:1249
 #: client/cgame/campaign/cp_aircraft.c:1304
 #: client/cgame/campaign/cp_aircraft.c:1327
-#: client/cgame/campaign/cp_aircraft.c:2048
+#: client/cgame/campaign/cp_aircraft.c:2047
 #: client/cgame/campaign/cp_aircraft_callbacks.c:94
 #: client/cgame/campaign/cp_aircraft_callbacks.c:102
 #: client/cgame/campaign/cp_aircraft_callbacks.c:110
@@ -14534,13 +14519,13 @@ msgstr "Un nuevo %s esta listo en %s"
 #: client/cgame/campaign/cp_aliencont.c:185
 #: client/cgame/campaign/cp_aliencont.c:204
 #: client/cgame/campaign/cp_aliencont.c:213
-#: client/cgame/campaign/cp_auto_mission.c:763
-#: client/cgame/campaign/cp_auto_mission.c:765
-#: client/cgame/campaign/cp_auto_mission.c:768
-#: client/cgame/campaign/cp_auto_mission.c:829
-#: client/cgame/campaign/cp_base.c:1354 client/cgame/campaign/cp_base.c:1404
-#: client/cgame/campaign/cp_base.c:2304 client/cgame/campaign/cp_base.c:2309
-#: client/cgame/campaign/cp_base.c:2939
+#: client/cgame/campaign/cp_auto_mission.c:762
+#: client/cgame/campaign/cp_auto_mission.c:764
+#: client/cgame/campaign/cp_auto_mission.c:767
+#: client/cgame/campaign/cp_auto_mission.c:828
+#: client/cgame/campaign/cp_base.c:1349 client/cgame/campaign/cp_base.c:1399
+#: client/cgame/campaign/cp_base.c:2294 client/cgame/campaign/cp_base.c:2299
+#: client/cgame/campaign/cp_base.c:2928
 #: client/cgame/campaign/cp_base_callbacks.c:70
 #: client/cgame/campaign/cp_base_callbacks.c:199
 #: client/cgame/campaign/cp_base_callbacks.c:244
@@ -14560,10 +14545,8 @@ msgstr "Un nuevo %s esta listo en %s"
 #: client/cgame/campaign/cp_mapfightequip.c:370
 #: client/cgame/campaign/cp_mapfightequip.c:376
 #: client/cgame/campaign/cp_mapfightequip.c:388
-#: client/cgame/campaign/cp_market_callbacks.c:624
-#: client/cgame/campaign/cp_market_callbacks.c:629
-#: client/cgame/campaign/cp_market_callbacks.c:1052
-#: client/cgame/campaign/cp_market_callbacks.c:1058
+#: client/cgame/campaign/cp_market_callbacks.c:631
+#: client/cgame/campaign/cp_market_callbacks.c:636
 #: client/cgame/campaign/cp_mission_callbacks.c:64
 #: client/cgame/campaign/cp_missions.c:689
 #: client/cgame/campaign/cp_missions.c:1037
@@ -14632,7 +14615,7 @@ msgstr "Asigna uno o mas soldados a esta aeronave primero."
 msgid "Insufficient fuel."
 msgstr "Combustible insuficiente."
 
-#: client/cgame/campaign/cp_aircraft.c:2048
+#: client/cgame/campaign/cp_aircraft.c:2047
 #, c-format
 msgid "Craft %s has not enough fuel to intercept UFO: fly back to %s."
 msgstr "La aeronave %s no tiene suficiente combustible para interceptar al OVNI: regresando a %s."
@@ -14713,7 +14696,7 @@ msgid "UFO interception successful -- UFO lost to sea."
 msgstr "Interceptación del OVNI exitosa -- El OVNI se ha perdido en el mar."
 
 #: client/cgame/campaign/cp_airfight.c:472
-#: client/cgame/campaign/cp_auto_mission.c:768
+#: client/cgame/campaign/cp_auto_mission.c:767
 msgid "You've lost the battle"
 msgstr "Has perdido la batalla"
 
@@ -14747,140 +14730,137 @@ msgstr "Bloque libre"
 
 #: client/cgame/campaign/cp_aliencont_callbacks.c:228
 #: client/cgame/campaign/cp_basedefence_callbacks.c:217
-#: client/cgame/campaign/cp_basedefence_callbacks.c:620
+#: client/cgame/campaign/cp_basedefence_callbacks.c:619
 #: client/cgame/campaign/cp_ufopedia.c:229 client/input/cl_joystick.c:278
 msgid "None"
 msgstr "Nada"
 
-#: client/cgame/campaign/cp_auto_mission.c:763
+#: client/cgame/campaign/cp_auto_mission.c:762
 msgid "You've won the battle"
 msgstr "Has ganado la batalla"
 
-#: client/cgame/campaign/cp_auto_mission.c:765
+#: client/cgame/campaign/cp_auto_mission.c:764
 msgid "You've defeated the enemy, but did poorly, and many civialians were killed"
 msgstr "Has derrotado al enemigo, pero tu desempeño fue pobre, y muchos civiles fueron asesinados."
 
-#: client/cgame/campaign/cp_auto_mission.c:829
+#: client/cgame/campaign/cp_auto_mission.c:828
 msgid "Collected alien bodies"
 msgstr "Cadáveres alienígenas recogidos"
 
-#: client/cgame/campaign/cp_base.c:995
+#: client/cgame/campaign/cp_base.c:992
 msgid "Not set"
 msgstr "No establecido"
 
-#: client/cgame/campaign/cp_base.c:1001
+#: client/cgame/campaign/cp_base.c:998
 #, c-format
 msgid "Already %i in base"
 msgstr "Ya hay %i en la base"
 
-#: client/cgame/campaign/cp_base.c:1007
+#: client/cgame/campaign/cp_base.c:1004
 msgid "Construction finished"
 msgstr "Construcción finalizada"
 
-#: client/cgame/campaign/cp_base.c:1011
+#: client/cgame/campaign/cp_base.c:1008
 msgid "Working 100%"
 msgstr "Trabajando 100%"
 
-#: client/cgame/campaign/cp_base.c:1015
+#: client/cgame/campaign/cp_base.c:1012
 msgid "Not operational, depends on"
 msgstr "No esta operativa, depende de"
 
-#: client/cgame/campaign/cp_base.c:1019
+#: client/cgame/campaign/cp_base.c:1016
 msgid "Down"
 msgstr "Abajo"
 
-#: client/cgame/campaign/cp_base.c:1354
+#: client/cgame/campaign/cp_base.c:1349
 msgid "Not enough credits to build this\n"
 msgstr "No tienes suficientes créditos para construir esto\n"
 
-#: client/cgame/campaign/cp_base.c:1404
+#: client/cgame/campaign/cp_base.c:1399
 msgid "You must build next to existing buildings."
 msgstr "Debes construir junto a instalaciones existentes."
 
-#: client/cgame/campaign/cp_base.c:1458
+#: client/cgame/campaign/cp_base.c:1453
 #, c-format
 msgid "Costs:\t%i c\n"
 msgstr "Costes:\t%i c\n"
 
-#: client/cgame/campaign/cp_base.c:1461
+#: client/cgame/campaign/cp_base.c:1456
 #, c-format
 msgid "%i Day to build\n"
 msgid_plural "%i Days to build\n"
 msgstr[0] "%i Día para construcción\n"
 msgstr[1] "%i Días para construcción\n"
 
-#: client/cgame/campaign/cp_base.c:1464
+#: client/cgame/campaign/cp_base.c:1459
 #: client/cgame/campaign/cp_ufopedia.c:232
 #, c-format
 msgid "Running costs:\t%i c\n"
 msgstr "Mantenimiento:\t%i c\n"
 
-#: client/cgame/campaign/cp_base.c:1467
+#: client/cgame/campaign/cp_base.c:1462
 #: client/cgame/campaign/cp_ufopedia.c:229
 #, c-format
 msgid "Needs:\t%s\n"
 msgstr "Necesita:\t%s\n"
 
-#: client/cgame/campaign/cp_base.c:2055
+#: client/cgame/campaign/cp_base.c:2046
 msgid "No aircraft in this base - You first have to purchase or transfer an aircraft\n"
 msgstr "No hay aeronaves en esta base - Primero deberás comprar o transferir una aeronave\n"
 
-#: client/cgame/campaign/cp_base.c:2055 client/cgame/campaign/cp_base.c:2057
-#: client/cgame/campaign/cp_market_callbacks.c:601
-#: client/cgame/campaign/cp_market_callbacks.c:606
-#: client/cgame/campaign/cp_market_callbacks.c:611
-#: client/cgame/campaign/cp_market_callbacks.c:695
-#: client/cgame/campaign/cp_market_callbacks.c:697
-#: client/cgame/campaign/cp_market_callbacks.c:1032
-#: client/cgame/campaign/cp_market_callbacks.c:1037
-#: client/cgame/campaign/cp_market_callbacks.c:1042
+#: client/cgame/campaign/cp_base.c:2046 client/cgame/campaign/cp_base.c:2048
+#: client/cgame/campaign/cp_market_callbacks.c:608
+#: client/cgame/campaign/cp_market_callbacks.c:613
+#: client/cgame/campaign/cp_market_callbacks.c:618
+#: client/cgame/campaign/cp_market_callbacks.c:702
+#: client/cgame/campaign/cp_market_callbacks.c:704
 #: client/cgame/campaign/cp_save.c:390 client/cgame/cl_game_team.c:264
 #: client/cgame/cl_game_team.c:285
 msgid "Note"
 msgstr "Nota"
 
-#: client/cgame/campaign/cp_base.c:2057
+#: client/cgame/campaign/cp_base.c:2048
 msgid "No aircraft in this base - You first have to purchase an aircraft\n"
 msgstr "No hay una aeronave en esta base - Primero debes de comprar una aeronave\n"
 
-#: client/cgame/campaign/cp_base.c:2067
+#: client/cgame/campaign/cp_base.c:2058
 msgid "Antimatter (current/max):"
 msgstr "Antimateria (actualmente/máximo):"
 
-#: client/cgame/campaign/cp_base.c:2239
+#: client/cgame/campaign/cp_base.c:2229
 #, c-format
 msgid "Construction of %s building finished in %s."
 msgstr "Construcción de %s finalizada en base %s."
 
-#: client/cgame/campaign/cp_base.c:2240
+#: client/cgame/campaign/cp_base.c:2230
 msgid "Building finished"
 msgstr "Edificio finalizado"
 
-#: client/cgame/campaign/cp_base.c:2302
+#: client/cgame/campaign/cp_base.c:2292
 #, c-format
 msgid "By selling %s you gathered %i credits."
 msgstr "Por vender %s has recogido %i de créditos."
 
-#: client/cgame/campaign/cp_base.c:2303
+#: client/cgame/campaign/cp_base.c:2293
 #, c-format
 msgid "%i collected item"
 msgid_plural "%i collected items"
 msgstr[0] "%i objeto recuperado"
 msgstr[1] "%i objetos recuperados"
 
-#: client/cgame/campaign/cp_base.c:2307
+#: client/cgame/campaign/cp_base.c:2297
 #, c-format
 msgid "Not enough storage space in %s. %s"
 msgstr "No hay suficiente espacio de almacenamiento en %s. %s"
 
-#: client/cgame/campaign/cp_base.c:2308
+#: client/cgame/campaign/cp_base.c:2298
 #, c-format
 msgid "%i item was sold for %i credits."
 msgid_plural "%i items were sold for %i credits."
 msgstr[0] "Se se ha asignado escudo"
 msgstr[1] "El objeto %i se ha vendido por %i créditos."
 
-#: client/cgame/campaign/cp_base.c:2937
+#: client/cgame/campaign/cp_base.c:2926
 #, c-format
 msgid "%s does not have Antimatter Storage Facility. %i units of antimatter got removed."
 msgstr "La base %s, no tiene un Almacén de Antimateria. Se eliminaran %i unidades de antimateria."
@@ -15089,7 +15069,7 @@ msgstr "Necesitas reclutar %s para usar la construcción de %s."
 msgid "Build a %s first."
 msgstr "Construye un %s primero."
 
-#: client/cgame/campaign/cp_base_callbacks.c:796
+#: client/cgame/campaign/cp_base_callbacks.c:798
 msgid "^BAircraft\n"
 msgstr "^BNaves\n"
 
@@ -15097,46 +15077,46 @@ msgstr "^BNaves\n"
 msgid "^BEmployees\n"
 msgstr "^BEmpleados\n"
 
-#: client/cgame/campaign/cp_base_callbacks.c:814
+#: client/cgame/campaign/cp_base_callbacks.c:813
 msgid "^BAliens\n"
 msgstr "^BAlienígenas\n"
 
-#: client/cgame/campaign/cp_base_callbacks.c:826
+#: client/cgame/campaign/cp_base_callbacks.c:825
 msgid "^BBuildings\t\t\t\t\t\tCapacity\t\t\t\tAmount\n"
 msgstr "^BConstrucciones\t\t\t\t\t\tCapacidad\t\t\t\tCantidad\n"
 
-#: client/cgame/campaign/cp_base_callbacks.c:848
+#: client/cgame/campaign/cp_base_callbacks.c:847
 msgid "day"
 msgid_plural "days"
 msgstr[0] "día"
 msgstr[1] "días"
 
-#: client/cgame/campaign/cp_base_callbacks.c:858
+#: client/cgame/campaign/cp_base_callbacks.c:857
 msgid "^BProduction\t\t\t\t\t\tQuantity\t\t\t\tPercent\n"
 msgstr "^BProducción\t\t\t\t\t\tcantidad\t\t\t\tPorcentaje\n"
 
-#: client/cgame/campaign/cp_base_callbacks.c:865
+#: client/cgame/campaign/cp_base_callbacks.c:864
 #, c-format
 msgid "%s\t\t\t\t\t\t%d\t\t\t\t%.2f%%\n"
 msgstr "%s\t\t\t\t\t\t%d\t\t\t\t%.2f%%\n"
 
-#: client/cgame/campaign/cp_base_callbacks.c:869
-#: client/cgame/campaign/cp_base_callbacks.c:885
+#: client/cgame/campaign/cp_base_callbacks.c:868
+#: client/cgame/campaign/cp_base_callbacks.c:884
 msgid "Nothing\n"
 msgstr "Nada\n"
 
-#: client/cgame/campaign/cp_base_callbacks.c:874
+#: client/cgame/campaign/cp_base_callbacks.c:873
 msgid "^BResearch\t\t\t\t\t\tScientists\t\t\t\tPercent\n"
 msgstr "^BInvestigación\t\t\t\t\t\tCientíficos\t\t\t\tPorcentaje\n"
 
-#: client/cgame/campaign/cp_base_callbacks.c:879
+#: client/cgame/campaign/cp_base_callbacks.c:878
 #, c-format
 msgid "%s\t\t\t\t\t\t%d\t\t\t\t%1.2f%%\n"
 msgstr "%s\t\t\t\t\t\t%d\t\t\t\t%1.2f%%\n"
 
-#: client/cgame/campaign/cp_base_callbacks.c:943
+#: client/cgame/campaign/cp_base_callbacks.c:942
 #: client/cgame/campaign/cp_campaign.c:655
-#: client/cgame/campaign/cp_market_callbacks.c:304
+#: client/cgame/campaign/cp_market_callbacks.c:306
 #, c-format
 msgid "%i c"
 msgstr "%i c"
@@ -15330,85 +15310,85 @@ msgstr "%i %s %02i"
 msgid "You've got a new mail: %s"
 msgstr "Tienes un nuevo correo: %s"
 
-#: client/cgame/campaign/cp_fightequip_callbacks.c:147
+#: client/cgame/campaign/cp_fightequip_callbacks.c:144
 #: client/cgame/campaign/cp_map.c:1635 client/cgame/campaign/cp_map.c:1654
 msgid "Unknown"
 msgstr "Desconocido"
 
-#: client/cgame/campaign/cp_fightequip_callbacks.c:360
+#: client/cgame/campaign/cp_fightequip_callbacks.c:357
 msgid "No item assigned.\n"
 msgstr "No se ha asignado el objeto.\n"
 
-#: client/cgame/campaign/cp_fightequip_callbacks.c:361
+#: client/cgame/campaign/cp_fightequip_callbacks.c:358
 #, c-format
 msgid "This slot is for %s or smaller items."
 msgstr "Este bloque es para %s u objetos mas pequeños."
 
-#: client/cgame/campaign/cp_fightequip_callbacks.c:369
+#: client/cgame/campaign/cp_fightequip_callbacks.c:366
 msgid "This item is functional.\n"
 msgstr "Este objeto esta operativo.\n"
 
-#: client/cgame/campaign/cp_fightequip_callbacks.c:371
+#: client/cgame/campaign/cp_fightequip_callbacks.c:368
 #, c-format
 msgid "This item will be installed in %i hours.\n"
 msgstr "Este objeto se instalara en %i horas.\n"
 
-#: client/cgame/campaign/cp_fightequip_callbacks.c:374
+#: client/cgame/campaign/cp_fightequip_callbacks.c:371
 #, c-format
 msgid "%s will be removed in %i hours.\n"
 msgstr "%s se removerá en %i horas.\n"
 
-#: client/cgame/campaign/cp_fightequip_callbacks.c:376
+#: client/cgame/campaign/cp_fightequip_callbacks.c:373
 #, c-format
 msgid "%s will be installed in %i hours.\n"
 msgstr "%s se instalará en %i horas.\n"
 
-#: client/cgame/campaign/cp_fightequip_callbacks.c:379
+#: client/cgame/campaign/cp_fightequip_callbacks.c:376
 #, c-format
 msgid "This item will be removed in %i hours.\n"
 msgstr "Este objeto se quitara en %i horas.\n"
 
-#: client/cgame/campaign/cp_fightequip_callbacks.c:389
+#: client/cgame/campaign/cp_fightequip_callbacks.c:386
 msgid "No ammo assigned to this weapon."
 msgstr "No hay munición asignada a esta arma."
 
-#: client/cgame/campaign/cp_fightequip_callbacks.c:397
+#: client/cgame/campaign/cp_fightequip_callbacks.c:394
 msgid "No ammo needed"
 msgstr "No necesita municiones"
 
-#: client/cgame/campaign/cp_fightequip_callbacks.c:524
+#: client/cgame/campaign/cp_fightequip_callbacks.c:521
 msgid "No slot selected."
 msgstr "No se ha seleccionado un soporte."
 
-#: client/cgame/campaign/cp_fightequip_callbacks.c:527
+#: client/cgame/campaign/cp_fightequip_callbacks.c:524
 msgid "No item selected."
 msgstr "No se ha seleccionado un objeto."
 
-#: client/cgame/campaign/cp_fightequip_callbacks.c:530
+#: client/cgame/campaign/cp_fightequip_callbacks.c:527
 msgid "You can't equip an alien technology."
 msgstr "No puedes equipar tecnología alienígena desconocida."
 
-#: client/cgame/campaign/cp_fightequip_callbacks.c:533
+#: client/cgame/campaign/cp_fightequip_callbacks.c:530
 msgid "Technology requested is not yet completed."
 msgstr "Los requisitos de investigación no se han cumplido todavía."
 
-#: client/cgame/campaign/cp_fightequip_callbacks.c:536
+#: client/cgame/campaign/cp_fightequip_callbacks.c:533
 msgid "This item is too heavy for the selected slot."
 msgstr "Este objeto es muy pesado para el soporte seleccionado."
 
-#: client/cgame/campaign/cp_fightequip_callbacks.c:539
+#: client/cgame/campaign/cp_fightequip_callbacks.c:536
 msgid "Equip a weapon first."
 msgstr "Primero equipa un arma"
 
-#: client/cgame/campaign/cp_fightequip_callbacks.c:542
+#: client/cgame/campaign/cp_fightequip_callbacks.c:539
 msgid "Ammo not usable with current weapon."
 msgstr "No se puede usar esta munición con el arma actual."
 
-#: client/cgame/campaign/cp_fightequip_callbacks.c:545
+#: client/cgame/campaign/cp_fightequip_callbacks.c:542
 msgid "Unknown problem."
 msgstr "Problema desconocido"
 
-#: client/cgame/campaign/cp_fightequip_callbacks.c:548
+#: client/cgame/campaign/cp_fightequip_callbacks.c:545
 msgid "Ok"
 msgstr "Vale"
 
@@ -15615,17 +15595,13 @@ msgstr "Peso elevado"
 msgid "Unknown weight"
 msgstr "Peso desconocido"
 
-#: client/cgame/campaign/cp_market.c:198
-#: client/cgame/campaign/cp_market_callbacks.c:753
-#: client/cgame/campaign/cp_market_callbacks.c:1083
-#: client/cgame/campaign/cp_market_callbacks.c:1129
+#: client/cgame/campaign/cp_market.c:163
+#: client/cgame/campaign/cp_market_callbacks.c:760
 msgid "Not enough storage space"
 msgstr "No hay suficiente espacio de almacenamiento"
 
-#: client/cgame/campaign/cp_market.c:198
-#: client/cgame/campaign/cp_market_callbacks.c:753
-#: client/cgame/campaign/cp_market_callbacks.c:1083
-#: client/cgame/campaign/cp_market_callbacks.c:1129
+#: client/cgame/campaign/cp_market.c:163
+#: client/cgame/campaign/cp_market_callbacks.c:760
 msgid ""
 "You cannot buy this item.\n"
 "Not enough space in storage.\n"
@@ -15635,8 +15611,7 @@ msgstr ""
 "No hay suficiente espacio en los almacenes.\n"
 "Construye mas instalaciones de almacén."
 
-#: client/cgame/campaign/cp_market_callbacks.c:601
-#: client/cgame/campaign/cp_market_callbacks.c:1032
+#: client/cgame/campaign/cp_market_callbacks.c:608
 msgid ""
 "No command centre in this base.\n"
 "Hangars are not functional.\n"
@@ -15644,8 +15619,7 @@ msgstr ""
 "Esta base no tiene un centro de comando.\n"
 "Los hangares no funcionan.\n"
 
-#: client/cgame/campaign/cp_market_callbacks.c:606
-#: client/cgame/campaign/cp_market_callbacks.c:1037
+#: client/cgame/campaign/cp_market_callbacks.c:613
 msgid ""
 "No power supplies in this base.\n"
 "Hangars are not functional."
@@ -15653,13 +15627,11 @@ msgstr ""
 "No hay fuentes de energía en esta base.\n"
 "Los hangares no están operativos."
 
-#: client/cgame/campaign/cp_market_callbacks.c:611
-#: client/cgame/campaign/cp_market_callbacks.c:1042
+#: client/cgame/campaign/cp_market_callbacks.c:618
 msgid "Build a hangar first."
 msgstr "Primero construye un hangar"
 
-#: client/cgame/campaign/cp_market_callbacks.c:624
-#: client/cgame/campaign/cp_market_callbacks.c:1052
+#: client/cgame/campaign/cp_market_callbacks.c:631
 msgid ""
 "You cannot buy this aircraft.\n"
 "Not enough space in hangars.\n"
@@ -15667,8 +15639,7 @@ msgstr ""
 "No puedes compra esta aeronave.\n"
 "No tienes suficiente espacio en los hangares.\n"
 
-#: client/cgame/campaign/cp_market_callbacks.c:629
-#: client/cgame/campaign/cp_market_callbacks.c:1058
+#: client/cgame/campaign/cp_market_callbacks.c:636
 msgid ""
 "You cannot buy this aircraft.\n"
 "Not enough credits.\n"
@@ -15676,23 +15647,13 @@ msgstr ""
 "No puedes comprar esta aeronave.\n"
 "No tienes suficientes créditos.\n"
 
-#: client/cgame/campaign/cp_market_callbacks.c:695
+#: client/cgame/campaign/cp_market_callbacks.c:702
 msgid "You can't sell an aircraft if it still has a team assigned"
 msgstr "No puedes vender una aeronave que tenga todavía un equipo asignado"
 
-#: client/cgame/campaign/cp_market_callbacks.c:697
+#: client/cgame/campaign/cp_market_callbacks.c:704
 msgid "You can't sell an aircraft that is not in base"
 msgstr "No puedes vender una aeronave que no se encuentra en su base"
-
-#: client/cgame/campaign/cp_market_callbacks.c:1078
-#: client/cgame/campaign/cp_market_callbacks.c:1119
-msgid "Not enough money"
-msgstr "No hay suficiente dinero"
-
-#: client/cgame/campaign/cp_market_callbacks.c:1078
-#: client/cgame/campaign/cp_market_callbacks.c:1119
-msgid "You cannot buy this item as you don't have enough credits."
-msgstr "No puedes comprar esto. No tienes suficientes créditos."
 
 #: client/cgame/campaign/cp_messageoptions.c:36
 msgid "installation_installed"
@@ -16522,38 +16483,38 @@ msgstr ""
 "\n"
 "Ingresos de este mes:\f%d"
 
-#: client/cgame/campaign/cp_statistics.c:96
+#: client/cgame/campaign/cp_statistics.c:94
 #: client/cl_inventory_callbacks.c:138
 #, c-format
 msgid "%s\t%i\n"
 msgstr "%s\t%i\n"
 
-#: client/cgame/campaign/cp_statistics.c:102
+#: client/cgame/campaign/cp_statistics.c:100
 #, c-format
 msgid "Employees:\t%i c\n"
 msgstr "Empleados:\t%i c\n"
 
-#: client/cgame/campaign/cp_statistics.c:111
+#: client/cgame/campaign/cp_statistics.c:109
 #, c-format
 msgid "Aircraft:\t%i c\n"
 msgstr "Naves:\t%i c\n"
 
-#: client/cgame/campaign/cp_statistics.c:117
+#: client/cgame/campaign/cp_statistics.c:115
 #, c-format
 msgid "Base (%s):\t%i c\n"
 msgstr "Base (%s):\t%i c\n"
 
-#: client/cgame/campaign/cp_statistics.c:122
+#: client/cgame/campaign/cp_statistics.c:120
 #, c-format
 msgid "Administrative costs:\t%i c\n"
 msgstr "Costes administrativos:\t%i c\n"
 
-#: client/cgame/campaign/cp_statistics.c:129
+#: client/cgame/campaign/cp_statistics.c:127
 #, c-format
 msgid "Debt:\t%i c\n"
 msgstr "Deuda:\t%i c\n"
 
-#: client/cgame/campaign/cp_statistics.c:132
+#: client/cgame/campaign/cp_statistics.c:130
 #, c-format
 msgid ""
 "\n"
@@ -16564,12 +16525,12 @@ msgstr ""
 "\t-------\n"
 "Total:\t%i c\n"
 
-#: client/cgame/campaign/cp_statistics.c:137
+#: client/cgame/campaign/cp_statistics.c:135
 #, c-format
 msgid "Max. allowed debts: %ic\n"
 msgstr "Máximo adeudo permitido: %ic\n"
 
-#: client/cgame/campaign/cp_statistics.c:142
+#: client/cgame/campaign/cp_statistics.c:140
 #, c-format
 msgid ""
 "Max. allowed eXtraterrestial Viral Infection: %i%%\n"
@@ -16676,12 +16637,12 @@ msgstr "¡%s no tiene Almacén de Antimateria, la Antimateria se perdió!"
 #: client/cgame/campaign/cp_transfer.c:58
 #: client/cgame/campaign/cp_transfer.c:71
 #: client/cgame/campaign/cp_transfer.c:83
-#: client/cgame/campaign/cp_transfer.c:110
-#: client/cgame/campaign/cp_transfer.c:135
-#: client/cgame/campaign/cp_transfer.c:148
-#: client/cgame/campaign/cp_transfer.c:235
-#: client/cgame/campaign/cp_transfer.c:252
-#: client/cgame/campaign/cp_transfer.c:258
+#: client/cgame/campaign/cp_transfer.c:108
+#: client/cgame/campaign/cp_transfer.c:133
+#: client/cgame/campaign/cp_transfer.c:146
+#: client/cgame/campaign/cp_transfer.c:233
+#: client/cgame/campaign/cp_transfer.c:250
+#: client/cgame/campaign/cp_transfer.c:256
 #: client/cgame/campaign/cp_transfer_callbacks.c:193
 msgid "Transport mission"
 msgstr "Misión de transporte"
@@ -16696,32 +16657,32 @@ msgstr "La base %s no tiene suficiente espacio en el almacén, ¡Los objetos ser
 msgid "%s does not have Living Quarters, employees got unhired!"
 msgstr "La base %s no tiene espacio en los barracones, ¡Los empleados serán despedidos!"
 
-#: client/cgame/campaign/cp_transfer.c:109
+#: client/cgame/campaign/cp_transfer.c:107
 #, c-format
 msgid "%s does not have Alien Containment, Aliens are removed!"
 msgstr "La base %s no tiene espacio en la Contención Alienígena, ¡Los alienígenas serán eliminados!"
 
-#: client/cgame/campaign/cp_transfer.c:134
+#: client/cgame/campaign/cp_transfer.c:132
 #, c-format
 msgid "%s does not have enough Alien Containment space, some Aliens are removed!"
 msgstr "La base %s no tiene espacio en la Contención Alienígena, ¡Los alienígenas serán eliminados!"
 
-#: client/cgame/campaign/cp_transfer.c:147
+#: client/cgame/campaign/cp_transfer.c:145
 #, c-format
 msgid "%s does not have enough free space. Aircraft is lost!"
 msgstr "%s no tiene suficiente espacio en sus hangares. ¡Hemos perdido la aeronave!"
 
-#: client/cgame/campaign/cp_transfer.c:234
+#: client/cgame/campaign/cp_transfer.c:232
 #: client/cgame/campaign/cp_transfer_callbacks.c:192
 #, c-format
 msgid "Transport mission started, cargo is being transported to %s"
 msgstr "La misión de traslado a empezado, la carga se esta transportando a la base %s"
 
-#: client/cgame/campaign/cp_transfer.c:252
+#: client/cgame/campaign/cp_transfer.c:250
 msgid "The destination base no longer exists! Transfer carge was lost, personnel has been discharged."
 msgstr "¡La base de destino ya no existe! La carga trasferida se a perdido, el personal a sido desembarcado."
 
-#: client/cgame/campaign/cp_transfer.c:257
+#: client/cgame/campaign/cp_transfer.c:255
 #, c-format
 msgid "Transport mission ended, unloading cargo in %s"
 msgstr "La misión de transporte a terminado, descargando la carga en la base %s"
@@ -16842,13 +16803,13 @@ msgid "Pilot %s"
 msgstr "Piloto %s"
 
 #: client/cgame/campaign/cp_transfer_callbacks.c:470
-#: client/cgame/campaign/cp_transfer_callbacks.c:645
+#: client/cgame/campaign/cp_transfer_callbacks.c:644
 #, c-format
 msgid "Corpse of %s"
 msgstr "Cadáver de %s"
 
 #: client/cgame/campaign/cp_transfer_callbacks.c:487
-#: client/cgame/campaign/cp_transfer_callbacks.c:679
+#: client/cgame/campaign/cp_transfer_callbacks.c:678
 #, c-format
 msgid "Aircraft %s"
 msgstr "Aeronave %s"
@@ -16861,104 +16822,104 @@ msgstr "El Almacén está vacío."
 msgid "Transfer is not possible - the base doesn't have a working Storage."
 msgstr "No se puede realizar la transferencia - esta base no tiene un Almacén funcional"
 
-#: client/cgame/campaign/cp_transfer_callbacks.c:620
+#: client/cgame/campaign/cp_transfer_callbacks.c:619
 msgid "Living Quarters empty."
 msgstr "El Alojamiento está vacío."
 
-#: client/cgame/campaign/cp_transfer_callbacks.c:624
+#: client/cgame/campaign/cp_transfer_callbacks.c:623
 msgid "Transfer is not possible - the base doesn't have Living Quarters."
 msgstr "La transferencia no es posible - la base no tiene suficiente espacio en los barracones."
 
-#: client/cgame/campaign/cp_transfer_callbacks.c:652
+#: client/cgame/campaign/cp_transfer_callbacks.c:651
 #, c-format
 msgid "Alive %s"
 msgstr "%s con Vida"
 
-#: client/cgame/campaign/cp_transfer_callbacks.c:658
+#: client/cgame/campaign/cp_transfer_callbacks.c:657
 msgid "Alien Containment is empty."
 msgstr "La Celda para Alienígenas está vacía."
 
-#: client/cgame/campaign/cp_transfer_callbacks.c:662
+#: client/cgame/campaign/cp_transfer_callbacks.c:661
 msgid "Transfer is not possible - the base doesn't have an Alien Containment."
 msgstr "La transferencia no es posible - la base no tiene un centro de Contención de Alienígena."
 
-#: client/cgame/campaign/cp_transfer_callbacks.c:665
+#: client/cgame/campaign/cp_transfer_callbacks.c:664
 msgid "Transfer is not possible - the base does not have power supplies."
 msgstr "La transferencia no es posible - La base no tiene fuentes de energía."
 
-#: client/cgame/campaign/cp_transfer_callbacks.c:685
+#: client/cgame/campaign/cp_transfer_callbacks.c:684
 msgid "No aircraft available for transfer."
 msgstr "No hay aeronaves que transferir."
 
-#: client/cgame/campaign/cp_transfer_callbacks.c:689
+#: client/cgame/campaign/cp_transfer_callbacks.c:688
 msgid "Transfer is not possible - the base doesn't have a functional hangar."
 msgstr "No se puede realizar la transferencia - esta base no tiene un Hangar funcional."
 
-#: client/cgame/campaign/cp_transfer_callbacks.c:1047
+#: client/cgame/campaign/cp_transfer_callbacks.c:1045
 msgid "No target base selected"
 msgstr "No hay un destino seleccionado."
 
-#: client/cgame/campaign/cp_transfer_callbacks.c:1047
+#: client/cgame/campaign/cp_transfer_callbacks.c:1045
 msgid "Please select the target base from the list"
 msgstr "Por favor selecciona la base destino de la lista"
 
-#: client/cgame/campaign/cp_transfer_callbacks.c:1085
+#: client/cgame/campaign/cp_transfer_callbacks.c:1083
 msgid "You can transfer equipment - this base has a Storage.\n"
 msgstr "Se puede transferir equipo - Esta base tiene un Almacén.\n"
 
-#: client/cgame/campaign/cp_transfer_callbacks.c:1088
+#: client/cgame/campaign/cp_transfer_callbacks.c:1086
 msgid "No Storage in this base.\n"
 msgstr "No hay Almacenes en esta base.\n"
 
-#: client/cgame/campaign/cp_transfer_callbacks.c:1092
+#: client/cgame/campaign/cp_transfer_callbacks.c:1090
 msgid "You can transfer employees - this base has Living Quarters.\n"
 msgstr "Puedes transferir empleados - Esta base tiene barracones.\n"
 
-#: client/cgame/campaign/cp_transfer_callbacks.c:1094
+#: client/cgame/campaign/cp_transfer_callbacks.c:1092
 msgid "No Living Quarters in this base.\n"
 msgstr "No hay Alojamientos en esta Base.\n"
 
-#: client/cgame/campaign/cp_transfer_callbacks.c:1098
+#: client/cgame/campaign/cp_transfer_callbacks.c:1096
 msgid "You can transfer Aliens - this base has an Alien Containment.\n"
 msgstr "Se pueden transferir alienígenas - esta base tiene una Celda para Alienígenas\n"
 
-#: client/cgame/campaign/cp_transfer_callbacks.c:1100
+#: client/cgame/campaign/cp_transfer_callbacks.c:1098
 msgid "No Alien Containment in this base.\n"
 msgstr "No hay una Celda para Alienígenas en esta base.\n"
 
-#: client/cgame/campaign/cp_transfer_callbacks.c:1104
+#: client/cgame/campaign/cp_transfer_callbacks.c:1102
 msgid "You can transfer antimatter - this base has an Antimatter Storage.\n"
 msgstr "Puedes transferir antimateria - esta base tiene un Almacén de Antimateria.\n"
 
-#: client/cgame/campaign/cp_transfer_callbacks.c:1106
+#: client/cgame/campaign/cp_transfer_callbacks.c:1104
 msgid "No Antimatter Storage in this base.\n"
 msgstr "No hay un Almacén de Antimateria en esta base.\n"
 
-#: client/cgame/campaign/cp_transfer_callbacks.c:1110
+#: client/cgame/campaign/cp_transfer_callbacks.c:1108
 msgid "You can transfer aircraft - this base has a Hangar.\n"
 msgstr "Se pueden transferir aeronaves - esta base tiene un Hangar.\n"
 
-#: client/cgame/campaign/cp_transfer_callbacks.c:1112
+#: client/cgame/campaign/cp_transfer_callbacks.c:1110
 msgid "Aircraft transfer not possible - this base does not have a Command Centre.\n"
 msgstr "No se pueden transferir aeronaves - esta base no tiene un Centro de Comando.\n"
 
-#: client/cgame/campaign/cp_transfer_callbacks.c:1114
+#: client/cgame/campaign/cp_transfer_callbacks.c:1112
 msgid "No Hangar in this base.\n"
 msgstr "No hay un Hangar en esta base.\n"
 
-#: client/cgame/campaign/cp_transfer_callbacks.c:1118
+#: client/cgame/campaign/cp_transfer_callbacks.c:1116
 msgid "No power supplies in this base.\n"
 msgstr "No hay una Central Eléctrica en esta base.\n"
 
-#: client/cgame/campaign/cp_transfer_callbacks.c:1534
+#: client/cgame/campaign/cp_transfer_callbacks.c:1528
 msgid "Employee"
 msgstr "Empleado"
 
-#: client/cgame/campaign/cp_transfer_callbacks.c:1555
+#: client/cgame/campaign/cp_transfer_callbacks.c:1548
 msgid "alive"
 msgstr "espécimen(es):"
 
-#: client/cgame/campaign/cp_transfer_callbacks.c:1559
+#: client/cgame/campaign/cp_transfer_callbacks.c:1552
 msgid "dead"
 msgstr "cuerpo(s):"
 
@@ -17624,7 +17585,7 @@ msgstr "^BAtajos del combate"
 msgid "Downloading [%s]"
 msgstr "Descargando [%s]"
 
-#: client/cl_screen.c:207
+#: client/cl_screen.c:192
 #, c-format
 msgid "Loading Map [%s]"
 msgstr "Cargando Mapa [%s]"
@@ -17724,7 +17685,7 @@ msgid_plural "%3.1f days left"
 msgstr[0] "Falta %3.1f día."
 msgstr[1] "Faltan %3.1f días."
 
-#: client/ui/node/ui_node_base.c:247
+#: client/ui/node/ui_node_base.c:246
 msgid "not operational, depends on"
 msgstr "No esta operativo, depende de "
 
@@ -17774,19 +17735,19 @@ msgstr "Cerrar esta ventana"
 msgid "Key: %s"
 msgstr "Tecla: %s"
 
-#: game/g_actor.c:88
+#: game/g_actor.c:84
 msgid "Soldier entered the rescue zone\n"
 msgstr "El soldado entró en la zona de rescate\n"
 
-#: game/g_actor.c:90
+#: game/g_actor.c:86
 msgid "Soldier left the rescue zone\n"
 msgstr "El soldado ha dejado la zona de rescate\n"
 
-#: game/g_actor.c:647
+#: game/g_actor.c:643
 msgid "Can't perform action - not enough TUs!\n"
 msgstr "No puedes hacerlo - no tienes suficientes UT!\n"
 
-#: game/g_actor.c:651
+#: game/g_actor.c:647
 msgid "Can't perform action - weapon already fully loaded with the same ammunition!\n"
 msgstr "No puedes hacerlo - el arma ya está completamente cargada con esa munición\n"
 
@@ -17941,7 +17902,8 @@ msgid "Switching map!\n"
 msgstr "¡Cambiando de mapa!\n"
 
 #: game/g_trigger.c:171
-msgid "You are now ready to switch the map\n"
+#, fuzzy
+msgid "You are now ready to switch the map"
 msgstr "Ahora estas listo para cambiar el mapa\n"
 
 #: po/OTHER_STRINGS:2
@@ -17955,6 +17917,24 @@ msgstr "alienígena"
 #: po/OTHER_STRINGS:6
 msgid "Take a screenshot"
 msgstr "Tomar captura de pantalla"
+
+#~ msgid "UGV items"
+#~ msgstr "Eq VTD"
+
+#~ msgid "Do not play the intro movie when starting the game."
+#~ msgstr "No reproducir la película de introducción al iniciar el juego."
+
+#~ msgid "Hold Back Intro Video:"
+#~ msgstr "Omitir el vídeo de introducción:"
+
+#~ msgid "Default is to play the intro video just once at the first game start."
+#~ msgstr "Lo normal es reproducir el vídeo una sola vez cuando el juego inicia por primera ocasión."
+
+#~ msgid "Not enough money"
+#~ msgstr "No hay suficiente dinero"
+
+#~ msgid "You cannot buy this item as you don't have enough credits."
+#~ msgstr "No puedes comprar esto. No tienes suficientes créditos."
 
 #~ msgid "Watch out for Reaction Fire! A soldier can fall under Reaction Fire even if another soldier is moving."
 #~ msgstr "¡Cuidado con el fuego de reacción! Un soldado puede caer bajo sus efectos aunque sea otro soldado que se mueva."
