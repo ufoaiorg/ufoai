@@ -36,7 +36,7 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 
 #define TEXTURE_WIDTH 250.0
 
-static void UI_TBarNodeDraw (uiNode_t *node)
+void uiTBarNode::draw (uiNode_t *node)
 {
 	/* dataImageOrModel is the texture name */
 	float shx;
@@ -76,7 +76,7 @@ void UI_RegisterTBarNode (uiBehaviour_t *behaviour)
 {
 	behaviour->name = "tbar";
 	behaviour->extends = "abstractvalue";
-	behaviour->draw = UI_TBarNodeDraw;
+	behaviour->manager = new uiTBarNode();
 	behaviour->extraDataSize = sizeof(EXTRADATA_TYPE);
 
 	/* @todo Need documentation */

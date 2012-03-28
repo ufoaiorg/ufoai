@@ -43,7 +43,7 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 
 #define EXTRADATA(node) UI_EXTRADATA(node, abstractValueExtraData_t)
 
-static void UI_CheckBoxNodeDraw (uiNode_t* node)
+void uiCheckBoxNode::draw (uiNode_t* node)
 {
 	const float value = UI_GetReferenceFloat(node, EXTRADATA(node).value);
 	vec2_t pos;
@@ -80,7 +80,7 @@ static void UI_CheckBoxNodeDraw (uiNode_t* node)
 /**
  * @brief Activate the node. Can be used without the mouse (ie. a button will execute onClick)
  */
-static void UI_CheckBoxNodeActivate (uiNode_t *node)
+void uiCheckBoxNode::activate (uiNode_t *node)
 {
 	const float last = UI_GetReferenceFloat(node, EXTRADATA(node).value);
 	float value;
@@ -109,24 +109,24 @@ static void UI_CheckBoxNodeActivate (uiNode_t *node)
 
 static void UI_CheckBoxNodeCallActivate (uiNode_t *node, const uiCallContext_t *context)
 {
-	UI_CheckBoxNodeActivate(node);
+	UI_Node_Activate(node);
 }
 
 /**
  * @brief Handles checkboxes clicks
  */
-static void UI_CheckBoxNodeClick (uiNode_t * node, int x, int y)
+void uiCheckBoxNode::leftClick (uiNode_t * node, int x, int y)
 {
 	if (node->onClick)
 		UI_ExecuteEventActions(node, node->onClick);
 
-	UI_CheckBoxNodeActivate(node);
+	activate(node);
 }
 
 /**
  * @brief Handled before the begin of the load of the node from the script
  */
-static void UI_CheckBoxNodeLoading (uiNode_t *node)
+void uiCheckBoxNode::loading (uiNode_t *node)
 {
 }
 
@@ -134,10 +134,7 @@ void UI_RegisterCheckBoxNode (uiBehaviour_t *behaviour)
 {
 	behaviour->name = "checkbox";
 	behaviour->extends = "abstractvalue";
-	behaviour->draw = UI_CheckBoxNodeDraw;
-	behaviour->leftClick = UI_CheckBoxNodeClick;
-	behaviour->loading = UI_CheckBoxNodeLoading;
-	behaviour->activate = UI_CheckBoxNodeActivate;
+	behaviour->manager = new uiCheckBoxNode();
 
 	/* Texture used for the widget. Its a 128x128 template image with all
 	 * three status according to the value, and four status according to the

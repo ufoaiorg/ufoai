@@ -41,7 +41,7 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #define EXTRADATA_TYPE barExtraData_t
 #define EXTRADATA(node) UI_EXTRADATA(node, EXTRADATA_TYPE)
 
-static void UI_BarNodeDraw (uiNode_t *node)
+void uiBarNode::draw (uiNode_t *node)
 {
 	vec4_t color;
 	float fac;
@@ -90,7 +90,7 @@ static void UI_BarNodeDraw (uiNode_t *node)
 /**
  * @brief Called when the node is captured by the mouse
  */
-static void UI_BarNodeCapturedMouseMove (uiNode_t *node, int x, int y)
+void uiBarNode::capturedMouseMove (uiNode_t *node, int x, int y)
 {
 	char var[MAX_VAR];
 	vec2_t pos;
@@ -141,18 +141,18 @@ static void UI_BarNodeCapturedMouseMove (uiNode_t *node, int x, int y)
 		UI_ExecuteEventActions(node, node->onChange);
 }
 
-static void UI_BarNodeMouseDown (uiNode_t *node, int x, int y, int button)
+void uiBarNode::mouseDown (uiNode_t *node, int x, int y, int button)
 {
 	if (node->disabled || EXTRADATA(node).readOnly)
 		return;
 
 	if (button == K_MOUSE1) {
 		UI_SetMouseCapture(node);
-		UI_BarNodeCapturedMouseMove(node, x, y);
+		capturedMouseMove(node, x, y);
 	}
 }
 
-static void UI_BarNodeMouseUp (uiNode_t *node, int x, int y, int button)
+void uiBarNode::mouseUp (uiNode_t *node, int x, int y, int button)
 {
 	if (button == K_MOUSE1)
 		UI_MouseRelease();
@@ -161,7 +161,7 @@ static void UI_BarNodeMouseUp (uiNode_t *node, int x, int y, int button)
 /**
  * @brief Called before loading. Used to set default attribute values
  */
-static void UI_BarNodeLoading (uiNode_t *node)
+void uiBarNode::loading (uiNode_t *node)
 {
 	Vector4Set(node->color, 1, 1, 1, 1);
 	EXTRADATA(node).orientation = ALIGN_CR;
@@ -171,11 +171,7 @@ void UI_RegisterBarNode (uiBehaviour_t *behaviour)
 {
 	behaviour->name = "bar";
 	behaviour->extends = "abstractvalue";
-	behaviour->draw = UI_BarNodeDraw;
-	behaviour->loading = UI_BarNodeLoading;
-	behaviour->mouseDown = UI_BarNodeMouseDown;
-	behaviour->mouseUp = UI_BarNodeMouseUp;
-	behaviour->capturedMouseMove = UI_BarNodeCapturedMouseMove;
+	behaviour->manager = new uiBarNode();
 	behaviour->extraDataSize = sizeof(EXTRADATA_TYPE);
 
 	/**

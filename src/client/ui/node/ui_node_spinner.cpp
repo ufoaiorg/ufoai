@@ -119,7 +119,7 @@ static void UI_SpinnerNodeRepeat (uiNode_t *node, uiTimer_t *timer)
 	}
 }
 
-static void UI_SpinnerNodeDown (uiNode_t *node, int x, int y, int button)
+void uiSpinnerNode::mouseDown (uiNode_t *node, int x, int y, int button)
 {
 	const qboolean disabled = node->disabled || node->parent->disabled;
 	if (disabled)
@@ -135,7 +135,7 @@ static void UI_SpinnerNodeDown (uiNode_t *node, int x, int y, int button)
 	}
 }
 
-static void UI_SpinnerNodeUp (uiNode_t *node, int x, int y, int button)
+void uiSpinnerNode::mouseUp (uiNode_t *node, int x, int y, int button)
 {
 	if (button == K_MOUSE1 && UI_GetMouseCapture() == node) {
 		UI_MouseRelease();
@@ -146,7 +146,7 @@ static void UI_SpinnerNodeUp (uiNode_t *node, int x, int y, int button)
  * @brief Called when the node have lost the captured node
  * We clean cached data
  */
-static void UI_SpinnerNodeCapturedMouseLost (uiNode_t *node)
+void uiSpinnerNode::capturedMouseLost (uiNode_t *node)
 {
 	if (capturedTimer) {
 		UI_TimerRelease(capturedTimer);
@@ -157,7 +157,7 @@ static void UI_SpinnerNodeCapturedMouseLost (uiNode_t *node)
 /**
  * @note Mouse wheel is not inhibited when node is disabled
  */
-static qboolean UI_SpinnerNodeWheel (uiNode_t *node, int deltaX, int deltaY)
+qboolean uiSpinnerNode::scroll (uiNode_t *node, int deltaX, int deltaY)
 {
 	qboolean down = deltaY > 0;
 	const qboolean disabled = node->disabled || node->parent->disabled;
@@ -169,7 +169,7 @@ static qboolean UI_SpinnerNodeWheel (uiNode_t *node, int deltaX, int deltaY)
 	return qtrue;
 }
 
-static void UI_SpinnerNodeDraw (uiNode_t *node)
+void uiSpinnerNode::draw (uiNode_t *node)
 {
 	vec2_t pos;
 	int topTexX, topTexY;
@@ -229,7 +229,7 @@ static void UI_SpinnerNodeDraw (uiNode_t *node)
 		bottomTexX + SPINNER_WIDTH, bottomTexY + SPINNER_HEIGHT, bottomTexX, bottomTexY + SPINNER_HEIGHT - BUTTON_BOTTOM_SIZE, image);
 }
 
-static void UI_SpinnerNodeLoading (uiNode_t *node)
+void uiSpinnerNode::loading (uiNode_t *node)
 {
 	localBehaviour->super->loaded(node);
 
@@ -244,12 +244,7 @@ void UI_RegisterSpinnerNode (uiBehaviour_t *behaviour)
 	localBehaviour = behaviour;
 	behaviour->name = "spinner";
 	behaviour->extends = "abstractvalue";
-	behaviour->scroll = UI_SpinnerNodeWheel;
-	behaviour->mouseDown = UI_SpinnerNodeDown;
-	behaviour->mouseUp = UI_SpinnerNodeUp;
-	behaviour->capturedMouseLost = UI_SpinnerNodeCapturedMouseLost;
-	behaviour->draw = UI_SpinnerNodeDraw;
-	behaviour->loading = UI_SpinnerNodeLoading;
+	behaviour->manager = new uiSpinnerNode();
 	behaviour->extraDataSize = sizeof(EXTRADATA_TYPE);
 
 	/* The size of the widget is uneditable. Fixed to 15x19.

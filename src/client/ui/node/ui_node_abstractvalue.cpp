@@ -33,8 +33,6 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #define EXTRADATA(node) UI_EXTRADATA(node, EXTRADATA_TYPE)
 #define EXTRADATACONST(node) UI_EXTRADATACONST(node, EXTRADATA_TYPE)
 
-static const uiBehaviour_t *localBehaviour;
-
 static inline void UI_InitCvarOrFloat (float** adress, float defaultValue)
 {
 	if (*adress == NULL) {
@@ -43,7 +41,7 @@ static inline void UI_InitCvarOrFloat (float** adress, float defaultValue)
 	}
 }
 
-static void UI_AbstractValueLoaded (uiNode_t * node)
+void uiAbstractValueNode::loaded (uiNode_t * node)
 {
 	UI_InitCvarOrFloat((float**)&EXTRADATA(node).value, 0);
 	UI_InitCvarOrFloat((float**)&EXTRADATA(node).delta, 1);
@@ -51,7 +49,7 @@ static void UI_AbstractValueLoaded (uiNode_t * node)
 	UI_InitCvarOrFloat((float**)&EXTRADATA(node).min, 0);
 }
 
-static void UI_AbstractValueNew (uiNode_t * node)
+void uiAbstractValueNode::newNode (uiNode_t * node)
 {
 	EXTRADATA(node).value = Mem_PoolAlloc(sizeof(float), ui_dynPool, 0);
 	EXTRADATA(node).delta = Mem_PoolAlloc(sizeof(float), ui_dynPool, 0);
@@ -59,7 +57,7 @@ static void UI_AbstractValueNew (uiNode_t * node)
 	EXTRADATA(node).min = Mem_PoolAlloc(sizeof(float), ui_dynPool, 0);
 }
 
-static void UI_AbstractValueDelete (uiNode_t * node)
+void uiAbstractValueNode::deleteNode (uiNode_t * node)
 {
 	Mem_Free(EXTRADATA(node).value);
 	Mem_Free(EXTRADATA(node).delta);
@@ -91,9 +89,9 @@ static void UI_CloneCvarOrFloat (const uiNode_t *source, uiNode_t *clone, const 
 /**
  * @brief Call to update a cloned node
  */
-static void UI_AbstractValueClone (const uiNode_t *source, uiNode_t *clone)
+void uiAbstractValueNode::clone (const uiNode_t *source, uiNode_t *clone)
 {
-	localBehaviour->super->clone(source, clone);
+	uiLocatedNode::clone(source, clone);
 	UI_CloneCvarOrFloat(source, clone, (const float*const*)&EXTRADATACONST(source).value, (float**)&EXTRADATA(clone).value);
 	UI_CloneCvarOrFloat(source, clone, (const float*const*)&EXTRADATACONST(source).delta, (float**)&EXTRADATA(clone).delta);
 	UI_CloneCvarOrFloat(source, clone, (const float*const*)&EXTRADATACONST(source).max, (float**)&EXTRADATA(clone).max);
@@ -102,12 +100,8 @@ static void UI_AbstractValueClone (const uiNode_t *source, uiNode_t *clone)
 
 void UI_RegisterAbstractValueNode (uiBehaviour_t *behaviour)
 {
-	localBehaviour = behaviour;
 	behaviour->name = "abstractvalue";
-	behaviour->loaded = UI_AbstractValueLoaded;
-	behaviour->clone = UI_AbstractValueClone;
-	behaviour->newNode = UI_AbstractValueNew;
-	behaviour->deleteNode = UI_AbstractValueDelete;
+	behaviour->manager = new uiAbstractValueNode();
 	behaviour->isAbstract = qtrue;
 	behaviour->extraDataSize = sizeof(EXTRADATA_TYPE);
 

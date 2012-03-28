@@ -31,11 +31,16 @@ class uiAbstractBaseNode : public uiLocatedNode {
 };
 
 class uiBaseMapNode : public uiAbstractBaseNode {
-
+	void draw(struct uiNode_s *node);
+	void leftClick(struct uiNode_s *node, int x, int y);
+	void rightClick(struct uiNode_s *node, int x, int y);
+	void middleClick(struct uiNode_s *node, int x, int y);
+	void drawTooltip(struct uiNode_s *node, int x, int y);
 };
 
 class uiBaseLayoutNode : public uiAbstractBaseNode {
-
+	void draw(struct uiNode_s *node);
+	void loading(struct uiNode_s *node);
 };
 
 

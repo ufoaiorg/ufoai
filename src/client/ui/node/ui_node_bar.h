@@ -27,8 +27,12 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 
 #include "ui_node_abstractvalue.h"
 
-class uiBarNode : public uiLocatedNode {
-
+class uiBarNode : public uiAbstractValueNode {
+	void draw(struct uiNode_s *node);
+	void loading(struct uiNode_s *node);
+	void mouseDown(struct uiNode_s *node, int x, int y, int button);
+	void mouseUp(struct uiNode_s *node, int x, int y, int button);
+	void capturedMouseMove(struct uiNode_s *node, int x, int y);
 };
 
 /* prototype */

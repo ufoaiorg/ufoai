@@ -52,7 +52,7 @@ static void UI_AbstractBaseNodeLoaded (uiNode_t * node)
 /**
  * @brief Draw a small square with the layout of the given base
  */
-static void UI_BaseLayoutNodeDraw (uiNode_t * node)
+void uiBaseLayoutNode::draw (uiNode_t * node)
 {
 	base_t *base;
 	int height, width, y;
@@ -119,7 +119,7 @@ static void UI_BaseMapGetCellAtPos (const uiNode_t *node, int x, int y, int *col
 /**
  * @brief Draws a base.
  */
-static void UI_BaseMapNodeDraw (uiNode_t * node)
+void uiBaseMapNode::draw (uiNode_t * node)
 {
 	int width, height, row, col;
 	const building_t *building;
@@ -226,7 +226,7 @@ static void UI_BaseMapNodeDraw (uiNode_t * node)
  * @param[in] x Position x of the mouse
  * @param[in] y Position y of the mouse
  */
-static void UI_BaseMapNodeDrawTooltip (uiNode_t *node, int x, int y)
+void uiBaseMapNode::drawTooltip (uiNode_t *node, int x, int y)
 {
 	int col, row;
 	building_t *building;
@@ -255,7 +255,7 @@ static void UI_BaseMapNodeDrawTooltip (uiNode_t *node, int x, int y)
  * @param[in] x Absolute X mouse position into the screen
  * @param[in] y Absolute Y mouse position into the screen
  */
-static void UI_BaseMapNodeClick (uiNode_t *node, int x, int y)
+void uiBaseMapNode::leftClick (uiNode_t *node, int x, int y)
 {
 	int row, col;
 	base_t *base = B_GetCurrentSelectedBase();
@@ -306,7 +306,7 @@ static void UI_BaseMapNodeClick (uiNode_t *node, int x, int y)
  * @param[in] x Absolute x mouse coordinate (screen coordinates)
  * @param[in] y Absolute y mouse coordinate (screen coordinates)
  */
-static void UI_BaseMapNodeRightClick (uiNode_t *node, int x, int y)
+void uiBaseMapNode::rightClick (uiNode_t *node, int x, int y)
 {
 	int row, col;
 	base_t *base = B_GetCurrentSelectedBase();
@@ -332,7 +332,7 @@ static void UI_BaseMapNodeRightClick (uiNode_t *node, int x, int y)
  * @param[in] y The y screen coordinate
  * @note relies on @c baseCurrent
  */
-static void UI_BaseMapNodeMiddleClick (uiNode_t *node, int x, int y)
+void uiBaseMapNode::middleClick (uiNode_t *node, int x, int y)
 {
 	int row, col;
 	const base_t *base = B_GetCurrentSelectedBase();
@@ -357,7 +357,7 @@ static void UI_BaseMapNodeMiddleClick (uiNode_t *node, int x, int y)
 /**
  * @brief Called before loading. Used to set default attribute values
  */
-static void UI_BaseLayoutNodeLoading (uiNode_t *node)
+void uiBaseLayoutNode::loading (uiNode_t *node)
 {
 	node->padding = 3;
 	Vector4Set(node->color, 1, 1, 1, 1);
@@ -378,17 +378,12 @@ void UI_RegisterBaseMapNode (uiBehaviour_t *behaviour)
 {
 	behaviour->name = "basemap";
 	behaviour->extends = "abstractbase";
-	behaviour->draw = UI_BaseMapNodeDraw;
-	behaviour->leftClick = UI_BaseMapNodeClick;
-	behaviour->rightClick = UI_BaseMapNodeRightClick;
-	behaviour->drawTooltip = UI_BaseMapNodeDrawTooltip;
-	behaviour->middleClick = UI_BaseMapNodeMiddleClick;
+	behaviour->manager = new uiBaseMapNode();
 }
 
 void UI_RegisterBaseLayoutNode (uiBehaviour_t *behaviour)
 {
 	behaviour->name = "baselayout";
 	behaviour->extends = "abstractbase";
-	behaviour->draw = UI_BaseLayoutNodeDraw;
-	behaviour->loading = UI_BaseLayoutNodeLoading;
+	behaviour->manager = new uiBaseLayoutNode();
 }

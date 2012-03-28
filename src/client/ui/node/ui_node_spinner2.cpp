@@ -49,7 +49,7 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #define EXTRADATA(node) UI_EXTRADATA(node, EXTRADATA_TYPE)
 #define EXTRADATACONST(node) UI_EXTRADATACONST(node, EXTRADATA_TYPE)
 
-static void UI_Spinner2NodeDraw (uiNode_t *node)
+void uiSpinner2Node::draw (uiNode_t *node)
 {
 	vec2_t pos;
 	const float delta = UI_GetReferenceFloat(node, EXTRADATA(node).super.super.delta);
@@ -103,7 +103,7 @@ void UI_RegisterSpinner2Node (uiBehaviour_t *behaviour)
 {
 	behaviour->name = "spinner2";
 	behaviour->extends = "spinner";
-	behaviour->draw = UI_Spinner2NodeDraw;
+	behaviour->manager = new uiSpinner2Node();
 	behaviour->extraDataSize = sizeof(EXTRADATA_TYPE);
 
 	/**
