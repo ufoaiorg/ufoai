@@ -93,8 +93,8 @@ void TEST_Init (void)
 
 	Com_SetExceptionCallback(Test_RunError);
 
-	http_timeout = Cvar_Get("noname", "", 0, NULL);
-	http_proxy = Cvar_Get("noname", "", 0, NULL);
+	http_timeout = Cvar_Get("noname");
+	http_proxy = Cvar_Get("noname");
 }
 
 

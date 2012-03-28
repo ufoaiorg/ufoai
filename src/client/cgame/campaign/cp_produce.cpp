@@ -739,9 +739,9 @@ qboolean PR_ProductionAllowed (const base_t* base)
 
 void PR_ProductionInit (void)
 {
-	mn_production_limit = Cvar_Get("mn_production_limit", "0", 0, NULL);
-	mn_production_workers = Cvar_Get("mn_production_workers", "0", 0, NULL);
-	mn_production_amount = Cvar_Get("mn_production_amount", "0", 0, NULL);
+	mn_production_limit = Cvar_Get("mn_production_limit", "0");
+	mn_production_workers = Cvar_Get("mn_production_workers", "0");
+	mn_production_amount = Cvar_Get("mn_production_amount", "0");
 }
 
 /**

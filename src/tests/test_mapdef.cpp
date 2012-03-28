@@ -43,10 +43,10 @@ static int UFO_InitSuiteMapDef (void)
 	sv_genericPool = Mem_CreatePool("mapdef-test");
 	com_networkPool = Mem_CreatePool("Network");
 	vid_imagePool = Mem_CreatePool("Vid: Image system");
-	sv_dumpmapassembly = Cvar_Get("sv_dumpassembly", "0", 0, NULL);
-	sv_public = Cvar_Get("sv_public", "0", 0, NULL);
-	port = Cvar_Get("testport", "27909", 0, NULL);
-	masterserver_url = Cvar_Get("masterserver_test", "http://localhost", 0, NULL);
+	sv_dumpmapassembly = Cvar_Get("sv_dumpassembly", "0");
+	sv_public = Cvar_Get("sv_public", "0");
+	port = Cvar_Get("testport", "27909");
+	masterserver_url = Cvar_Get("masterserver_test", "http://localhost");
 
 	cl_genericPool = Mem_CreatePool("Client: Generic");
 

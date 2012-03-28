@@ -69,15 +69,15 @@ void Sys_Init (void)
 	}
 
 	if (s_win95)
-		sys_os = Cvar_Get("sys_os", "win95", CVAR_SERVERINFO, NULL);
+		sys_os = Cvar_Get("sys_os", "win95", CVAR_SERVERINFO);
 	else if (s_win2k)
-		sys_os = Cvar_Get("sys_os", "win2K", CVAR_SERVERINFO, NULL);
+		sys_os = Cvar_Get("sys_os", "win2K", CVAR_SERVERINFO);
 	else if (s_winxp)
-		sys_os = Cvar_Get("sys_os", "winXP", CVAR_SERVERINFO, NULL);
+		sys_os = Cvar_Get("sys_os", "winXP", CVAR_SERVERINFO);
 	else if (s_vista)
-		sys_os = Cvar_Get("sys_os", "winVista", CVAR_SERVERINFO, NULL);
+		sys_os = Cvar_Get("sys_os", "winVista", CVAR_SERVERINFO);
 	else
-		sys_os = Cvar_Get("sys_os", "win", CVAR_SERVERINFO, NULL);
+		sys_os = Cvar_Get("sys_os", "win", CVAR_SERVERINFO);
 
 #if 0
 	GlobalMemoryStatus(&mem);

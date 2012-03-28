@@ -98,8 +98,8 @@ static int UFO_InitSuiteCampaign (void)
 
 	cl_genericPool = Mem_CreatePool("Client: Generic");
 	cp_campaignPool = Mem_CreatePool("Client: Local (per game)");
-	cp_campaign = Cvar_Get("cp_campaign", "main", 0, NULL);
-	cp_missiontest = Cvar_Get("cp_missiontest", "0", 0, NULL);
+	cp_campaign = Cvar_Get("cp_campaign", "main");
+	cp_missiontest = Cvar_Get("cp_missiontest", "0");
 	vid_imagePool = Mem_CreatePool("Vid: Image system");
 
 	r_state.active_texunit = &r_state.texunits[0];
@@ -114,8 +114,8 @@ static int UFO_InitSuiteCampaign (void)
 
 	Cmd_AddCommand("msgoptions_set", Cmd_Dummy_f);
 
-	cl_geoscape_overlay = Cvar_Get("cl_geoscape_overlay", "0", 0, NULL);
-	cl_3dmap = Cvar_Get("cl_3dmap", "1", 0, NULL);
+	cl_geoscape_overlay = Cvar_Get("cl_geoscape_overlay", "0");
+	cl_3dmap = Cvar_Get("cl_3dmap", "1");
 
 	CL_SetClientState(ca_disconnected);
 	cls.realtime = Sys_Milliseconds();

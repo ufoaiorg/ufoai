@@ -1162,7 +1162,7 @@ void Qcommon_Init (int argc, const char **argv)
 	sv_gametype = Cvar_Get("sv_gametype", "1on1", CVAR_ARCHIVE | CVAR_SERVERINFO, "Sets the multiplayer gametype - see gametypelist command for a list of all gametypes");
 	http_proxy = Cvar_Get("http_proxy", "", CVAR_ARCHIVE, "Use this proxy for http transfers");
 	http_timeout = Cvar_Get("http_timeout", "3", CVAR_ARCHIVE, "Http connection and read timeout");
-	port = Cvar_Get("port", DOUBLEQUOTE(PORT_SERVER), CVAR_NOSET, NULL);
+	port = Cvar_Get("port", DOUBLEQUOTE(PORT_SERVER), CVAR_NOSET);
 	masterserver_url = Cvar_Get("masterserver_url", MASTER_SERVER, CVAR_ARCHIVE, "URL of UFO:AI masterserver");
 #ifdef DEDICATED_ONLY
 	sv_dedicated = Cvar_Get("sv_dedicated", "1", CVAR_SERVERINFO | CVAR_NOSET, "Is this a dedicated server?");
@@ -1176,7 +1176,7 @@ void Qcommon_Init (int argc, const char **argv)
 
 	s_language = Cvar_Get("s_language", "", CVAR_ARCHIVE, "Game language - full language string e.g. en_EN.UTF-8");
 	s_language->modified = qfalse;
-	cl_maxfps = Cvar_Get("cl_maxfps", "50", CVAR_ARCHIVE, NULL);
+	cl_maxfps = Cvar_Get("cl_maxfps", "50", CVAR_ARCHIVE);
 	Cvar_SetCheckFunction("cl_maxfps", Com_CvarCheckMaxFPS);
 #endif
 

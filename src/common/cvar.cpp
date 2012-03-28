@@ -525,7 +525,7 @@ static cvar_t *Cvar_Set2 (const char *varName, const char *value, qboolean force
 	var = Cvar_FindVar(varName);
 	/* create it */
 	if (!var)
-		return Cvar_Get(varName, value, 0, NULL);
+		return Cvar_Get(varName, value);
 
 	if (var->flags & (CVAR_USERINFO | CVAR_SERVERINFO)) {
 		if (!Cvar_InfoValidate(value)) {
@@ -653,7 +653,7 @@ cvar_t *Cvar_FullSet (const char *varName, const char *value, int flags)
 	var = Cvar_FindVar(varName);
 	/* create it */
 	if (!var)
-		return Cvar_Get(varName, value, flags, NULL);
+		return Cvar_Get(varName, value, flags);
 
 	var->modified = qtrue;
 

@@ -938,7 +938,7 @@ static void B_MakeBaseMapShot_f (void)
 /** @todo unify the names into mn_base_* */
 void B_InitCallbacks (void)
 {
-	mn_base_title = Cvar_Get("mn_base_title", "", 0, NULL);
+	mn_base_title = Cvar_Get("mn_base_title");
 	cl_start_buildings = Cvar_Get("cl_start_buildings", "1", CVAR_ARCHIVE, "Start with initial buildings in your first base");
 	Cvar_Set("mn_base_cost", va(_("%i c"), ccs.curCampaign->basecost));
 	Cvar_SetValue("mn_base_count", B_GetCount());

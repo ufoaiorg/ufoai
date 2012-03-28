@@ -219,7 +219,7 @@ const char* UI_GenInjectedString (const char* input, qboolean addNewLine, const 
 			if (next) {
 				/* cvar injection */
 				if (Q_strstart(propertyName, "cvar:")) {
-					const cvar_t *cvar = Cvar_Get(propertyName + 5, "", 0, NULL);
+					const cvar_t *cvar = Cvar_Get(propertyName + 5);
 					const int l = snprintf(cout, length, "%s", cvar->string);
 					cout += l;
 					cin = next;

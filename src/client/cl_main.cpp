@@ -835,7 +835,7 @@ static void CL_CheckCvars_f (void)
 
 	for (c = checkcvar; c->name != NULL; c++) {
 		if (!c->var)
-			c->var = Cvar_Get(c->name, "", 0, NULL);
+			c->var = Cvar_Get(c->name);
 		if (c->var->string[0] == '\0') {
 			Com_Printf("%s has no value\n", c->var->name);
 			UI_PushWindow("checkcvars", NULL, NULL);

@@ -2013,14 +2013,14 @@ void Irc_Init (void)
 	irc_channel = Cvar_Get("irc_channel", "#ufoai-gamer", CVAR_ARCHIVE, "IRC channel to join into");
 	irc_channel->modified = qfalse;
 	irc_port = Cvar_Get("irc_port", "6667", CVAR_ARCHIVE, "IRC port to connect to");
-	irc_user = Cvar_Get("irc_user", "UFOAIPlayer", CVAR_ARCHIVE, NULL);
-	irc_password = Cvar_Get("irc_password", "", CVAR_ARCHIVE, NULL);
-	irc_topic = Cvar_Get("irc_topic", "Connecting (please wait)...", CVAR_NOSET, NULL);
-	irc_defaultChannel = Cvar_Get("irc_defaultChannel", "", CVAR_NOSET, NULL);
+	irc_user = Cvar_Get("irc_user", "UFOAIPlayer", CVAR_ARCHIVE);
+	irc_password = Cvar_Get("irc_password", "", CVAR_ARCHIVE);
+	irc_topic = Cvar_Get("irc_topic", "Connecting (please wait)...", CVAR_NOSET);
+	irc_defaultChannel = Cvar_Get("irc_defaultChannel", "", CVAR_NOSET);
 	irc_logConsole = Cvar_Get("irc_logConsole", "0", CVAR_ARCHIVE, "Log all irc conversations to game console, too");
 	irc_showIfNotInMenu = Cvar_Get("irc_showIfNotInMenu", "0", CVAR_ARCHIVE, "Show chat messages on top of the menu stack if we are not in the irc menu");
-	irc_send_buffer = Cvar_Get("irc_send_buffer", "", 0, NULL);
-	irc_nick = Cvar_Get("cl_name", "", 0, NULL);
+	irc_send_buffer = Cvar_Get("irc_send_buffer");
+	irc_nick = Cvar_Get("cl_name");
 
 	irc_messageBucketSize = Cvar_Get("irc_messageBucketSize", "100", CVAR_ARCHIVE, "max 100 messages in bucket");
 	irc_messageBucketBurst = Cvar_Get("irc_messageBucketBurst", "5", CVAR_ARCHIVE, "max burst size is 5 messages");

@@ -842,7 +842,7 @@ void CL_RunHTTPDownloads (void)
 
 void HTTP_InitStartup (void)
 {
-	cl_http_filelists = Cvar_Get("cl_http_filelists", "1", 0, NULL);
+	cl_http_filelists = Cvar_Get("cl_http_filelists", "1");
 	cl_http_downloads = Cvar_Get("cl_http_downloads", "1", 0, "Try to download files via http");
-	cl_http_max_connections = Cvar_Get("cl_http_max_connections", "1", 0, NULL);
+	cl_http_max_connections = Cvar_Get("cl_http_max_connections", "1");
 }

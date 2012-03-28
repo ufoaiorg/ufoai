@@ -139,7 +139,7 @@ static void UI_TextEntryFocusGained (uiNode_t *node)
 {
 	assert(editedCvar == NULL);
 	/* skip '*cvar ' */
-	editedCvar = Cvar_Get(&((char*)node->text)[6], "", 0, NULL);
+	editedCvar = Cvar_Get(&((char*)node->text)[6]);
 	assert(editedCvar);
 	Q_strncpyz(cvarValueBackup, editedCvar->string, sizeof(cvarValueBackup));
 	isAborted = qfalse;

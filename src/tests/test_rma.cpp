@@ -39,9 +39,9 @@ static int UFO_InitSuiteRandomMapAssembly (void)
 	TEST_Init();
 	Com_ParseScripts(qtrue);
 
-	sv_dumpmapassembly = Cvar_Get("sv_dumpassembly", "0", 0, NULL);
-	sv_rma = Cvar_Get("sv_rma_tmp", "2", 0, NULL);
-	sv_rmadisplaythemap = Cvar_Get("sv_rmadisplaythemap", "1", 0, NULL);
+	sv_dumpmapassembly = Cvar_Get("sv_dumpassembly", "0");
+	sv_rma = Cvar_Get("sv_rma_tmp", "2");
+	sv_rmadisplaythemap = Cvar_Get("sv_rmadisplaythemap", "1");
 
 	return 0;
 }
