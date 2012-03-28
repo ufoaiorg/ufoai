@@ -35,8 +35,8 @@ class filetype_t
 			name(_name), pattern(_pattern)
 		{
 		}
-		const std::string& name;
-		const std::string& pattern;
+		const std::string name;
+		const std::string pattern;
 };
 
 class IFileTypeList

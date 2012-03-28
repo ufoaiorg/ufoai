@@ -112,7 +112,7 @@ class GTKMasks
 			std::vector<std::string>::const_iterator j = m_masks.begin();
 			for (FileTypeList::const_iterator i = m_types.begin(); i != m_types.end(); ++i, ++j) {
 				if (mask == (*j)) {
-					return filetype_pair_t((*i).m_moduleName, filetype_t((*i).m_name.c_str(), (*i).m_pattern.c_str()));
+					return filetype_pair_t((*i).m_moduleName, filetype_t((*i).m_name, (*i).m_pattern));
 				}
 			}
 			return filetype_pair_t();
