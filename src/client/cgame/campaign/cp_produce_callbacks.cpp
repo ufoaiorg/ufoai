@@ -848,16 +848,16 @@ static void PR_ProductionDown_f (void)
 
 void PR_InitCallbacks (void)
 {
-	Cmd_AddCommand("prod_init", PR_ProductionList_f, NULL);
-	Cmd_AddCommand("prod_type", PR_ProductionType_f, NULL);
+	Cmd_AddCommand("prod_init", PR_ProductionList_f);
+	Cmd_AddCommand("prod_type", PR_ProductionType_f);
 	Cmd_AddCommand("prod_up", PR_ProductionUp_f, "Move production item up in the queue");
 	Cmd_AddCommand("prod_down", PR_ProductionDown_f, "Move production item down in the queue");
 	Cmd_AddCommand("prod_change", PR_ProductionChange_f, "Change production amount");
 	Cmd_AddCommand("prod_inc", PR_ProductionIncrease_f, "Increase production amount");
 	Cmd_AddCommand("prod_dec", PR_ProductionDecrease_f, "Decrease production amount");
 	Cmd_AddCommand("prod_stop", PR_ProductionStop_f, "Stop production");
-	Cmd_AddCommand("prodlist_rclick", PR_ProductionListRightClick_f, NULL);
-	Cmd_AddCommand("prodlist_click", PR_ProductionListClick_f, NULL);
+	Cmd_AddCommand("prodlist_rclick", PR_ProductionListRightClick_f);
+	Cmd_AddCommand("prodlist_click", PR_ProductionListClick_f);
 }
 
 void PR_ShutdownCallbacks (void)

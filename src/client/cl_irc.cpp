@@ -1990,16 +1990,16 @@ void Irc_Init (void)
 	Cmd_AddCommand("irc_join", Irc_Client_Join_f, "Join an irc channel");
 	Cmd_AddCommand("irc_connect", Irc_Connect_f, "Connect to the irc network");
 	Cmd_AddCommand("irc_disconnect", Irc_Disconnect_f, "Disconnect from the irc network");
-	Cmd_AddCommand("irc_part", Irc_Client_Part_f, NULL);
-	Cmd_AddCommand("irc_privmsg", Irc_Client_PrivMsg_f, NULL);
-	Cmd_AddCommand("irc_mode", Irc_Client_Mode_f, NULL);
-	Cmd_AddCommand("irc_who", Irc_Client_Who_f, NULL);
-	Cmd_AddCommand("irc_whois", Irc_Client_Whois_f, NULL);
-	Cmd_AddCommand("irc_whowas", Irc_Client_Whowas_f, NULL);
-	Cmd_AddCommand("irc_chanmsg", Irc_Client_Msg_f, NULL);
-	Cmd_AddCommand("irc_topic", Irc_Client_Topic_f, NULL);
-	Cmd_AddCommand("irc_names", Irc_Client_Names_f, NULL);
-	Cmd_AddCommand("irc_kick", Irc_Client_Kick_f, NULL);
+	Cmd_AddCommand("irc_part", Irc_Client_Part_f);
+	Cmd_AddCommand("irc_privmsg", Irc_Client_PrivMsg_f);
+	Cmd_AddCommand("irc_mode", Irc_Client_Mode_f);
+	Cmd_AddCommand("irc_who", Irc_Client_Who_f);
+	Cmd_AddCommand("irc_whois", Irc_Client_Whois_f);
+	Cmd_AddCommand("irc_whowas", Irc_Client_Whowas_f);
+	Cmd_AddCommand("irc_chanmsg", Irc_Client_Msg_f);
+	Cmd_AddCommand("irc_topic", Irc_Client_Topic_f);
+	Cmd_AddCommand("irc_names", Irc_Client_Names_f);
+	Cmd_AddCommand("irc_kick", Irc_Client_Kick_f);
 	Cmd_AddCommand("irc_invite", Irc_Client_Invite_f, "Invite other players for a game");
 
 	Cmd_AddCommand("irc_userlist_click", Irc_UserClick_f, "Menu function for clicking a user from the list");

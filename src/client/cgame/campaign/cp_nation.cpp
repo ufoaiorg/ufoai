@@ -889,7 +889,7 @@ void NAT_BackupMonthlyData (void)
  */
 void NAT_InitStartup (void)
 {
-	Cmd_AddCommand("nation_stats_click", CP_NationStatsClick_f, NULL);
+	Cmd_AddCommand("nation_stats_click", CP_NationStatsClick_f);
 	Cmd_AddCommand("nation_update", CL_NationStatsUpdate_f, "Shows the current nation list + statistics.");
 	Cmd_AddCommand("nation_select", CL_NationSelect_f, "Select nation and display all relevant information for it.");
 #ifdef DEBUG

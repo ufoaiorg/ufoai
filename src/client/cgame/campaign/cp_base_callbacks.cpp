@@ -948,19 +948,19 @@ void B_InitCallbacks (void)
 	Cmd_AddCommand("mn_base_prev", B_PrevBase_f, "Go to the previous base");
 	Cmd_AddCommand("mn_base_next", B_NextBase_f, "Go to the next base");
 	Cmd_AddCommand("mn_base_select", B_SelectBase_f, "Select a founded base by index");
-	Cmd_AddCommand("mn_base_build", B_BuildBase_f, NULL);
-	Cmd_AddCommand("mn_set_base_title", B_SetBaseTitle_f, NULL);
+	Cmd_AddCommand("mn_base_build", B_BuildBase_f);
+	Cmd_AddCommand("mn_set_base_title", B_SetBaseTitle_f);
 	Cmd_AddCommand("base_changename", B_ChangeBaseName_f, "Called after editing the cvar base name");
-	Cmd_AddCommand("base_init", B_BaseInit_f, NULL);
+	Cmd_AddCommand("base_init", B_BaseInit_f);
 	Cmd_AddCommand("base_assemble", B_AssembleMap_f, "Called to assemble the current selected base");
-	Cmd_AddCommand("building_init", B_BuildingInit_f, NULL);
-	Cmd_AddCommand("building_status", B_BuildingStatus_f, NULL);
+	Cmd_AddCommand("building_init", B_BuildingInit_f);
+	Cmd_AddCommand("building_status", B_BuildingStatus_f);
 	Cmd_AddCommand("building_destroy", B_BuildingDestroy_f, "Function to destroy a building (select via right click in baseview first)");
 	Cmd_AddCommand("building_amdestroy", B_Destroy_AntimaterStorage_f, "Function called if antimatter storage destroyed");
 	Cmd_AddCommand("building_ufopedia", B_BuildingInfoClick_f, "Opens the UFOpedia for the current selected building");
 	Cmd_AddCommand("check_building_status", B_CheckBuildingStatusForMenu_f, "Create a popup to inform player why he can't use a button");
 	Cmd_AddCommand("buildings_click", B_BuildingClick_f, "Opens the building information window in construction mode");
-	Cmd_AddCommand("reset_building_current", B_ResetBuildingCurrent_f, NULL);
+	Cmd_AddCommand("reset_building_current", B_ResetBuildingCurrent_f);
 	Cmd_AddCommand("basesummary_selectbase", BaseSummary_SelectBase_f, "Opens Base Statistics menu in base");
 }
 

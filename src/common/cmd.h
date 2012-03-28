@@ -98,7 +98,7 @@ void Cmd_Shutdown(void);
  * if function is NULL, the command will be forwarded to the server
  * as a clc_stringcmd instead of executed locally
  */
-void Cmd_AddCommand(const char *cmd_name, xcommand_t function, const char *desc);
+void Cmd_AddCommand(const char *cmd_name, xcommand_t function, const char *desc = NULL);
 
 void Cmd_RemoveCommand(const char *cmd_name);
 

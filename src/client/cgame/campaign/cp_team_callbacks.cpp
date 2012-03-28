@@ -513,9 +513,9 @@ static void CP_TeamListDebug_f (void)
 
 void CP_TEAM_InitCallbacks (void)
 {
-	Cmd_AddCommand("team_updateequip", CP_UpdateEquipmentMenuParameters_f, NULL);
-	Cmd_AddCommand("update_soldier_list", CP_UpdateSoldierList_f, NULL);
-	Cmd_AddCommand("update_pilot_list", CP_UpdatePilotList_f, NULL);
+	Cmd_AddCommand("team_updateequip", CP_UpdateEquipmentMenuParameters_f);
+	Cmd_AddCommand("update_soldier_list", CP_UpdateSoldierList_f);
+	Cmd_AddCommand("update_pilot_list", CP_UpdatePilotList_f);
 
 	Cmd_AddCommand("team_hire", CP_AssignSoldier_f, "Add/remove already hired actor to the aircraft");
 	Cmd_AddCommand("pilot_hire", CP_AssignPilot_f, "Add/remove already hired pilot to an aircraft");

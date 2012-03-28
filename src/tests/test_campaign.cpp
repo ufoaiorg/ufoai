@@ -112,7 +112,7 @@ static int UFO_InitSuiteCampaign (void)
 
 	Cmd_ExecuteString("game_setmode campaigns");
 
-	Cmd_AddCommand("msgoptions_set", Cmd_Dummy_f, NULL);
+	Cmd_AddCommand("msgoptions_set", Cmd_Dummy_f);
 
 	cl_geoscape_overlay = Cvar_Get("cl_geoscape_overlay", "0", 0, NULL);
 	cl_3dmap = Cvar_Get("cl_3dmap", "1", 0, NULL);

@@ -2777,11 +2777,11 @@ void MAP_InitStartup (void)
 {
 	int i;
 
-	Cmd_AddCommand("multi_select_click", MAP_MultiSelectExecuteAction_f, NULL);
+	Cmd_AddCommand("multi_select_click", MAP_MultiSelectExecuteAction_f);
 	Cmd_AddCommand("map_overlay", MAP_SetOverlay_f, "Set the geoscape overlay");
 	Cmd_AddCommand("map_deactivateoverlay", MAP_DeactivateOverlay_f, "Deactivate overlay");
 	Cmd_AddCommand("map_selectobject", MAP_SelectObject_f, "Select an object and center on it");
-	Cmd_AddCommand("mn_mapaction_reset", MAP_ResetAction, NULL);
+	Cmd_AddCommand("mn_mapaction_reset", MAP_ResetAction);
 
 	cl_geoscape_overlay = Cvar_Get("cl_geoscape_overlay", "0", 0, "Geoscape overlays - Bitmask");
 	cl_3dmap = Cvar_Get("cl_3dmap", "1", CVAR_ARCHIVE, "3D geoscape or flat geoscape");

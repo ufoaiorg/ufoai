@@ -275,13 +275,13 @@ static void AIR_ChangeAircraftName_f (void)
 void AIR_InitCallbacks (void)
 {
 	/* menu aircraft */
-	Cmd_AddCommand("aircraft_start", AIM_AircraftStart_f, NULL);
+	Cmd_AddCommand("aircraft_start", AIM_AircraftStart_f);
 	/* menu aircraft_equip, aircraft */
-	Cmd_AddCommand("mn_select_aircraft", AIM_SelectAircraft_f, NULL);
+	Cmd_AddCommand("mn_select_aircraft", AIM_SelectAircraft_f);
 	/* menu aircraft, popup_transferbaselist */
 	Cmd_AddCommand("aircraft_return", AIM_AircraftReturnToBase_f, "Sends the current aircraft back to homebase");
 	/* menu aircraft, aircraft_equip, aircraft_soldier */
-	Cmd_AddCommand("aircraft_update_list", AIR_AircraftUpdateList_f, NULL);
+	Cmd_AddCommand("aircraft_update_list", AIR_AircraftUpdateList_f);
 	Cmd_AddCommand("aircraft_namechange", AIR_ChangeAircraftName_f, "Callback to change the name of the aircraft.");
 }
 

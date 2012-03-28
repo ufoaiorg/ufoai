@@ -1128,7 +1128,7 @@ void Cmd_Init (void)
 	Cmd_AddCommand("exec", Cmd_Exec_f, "Execute a script file");
 	Cmd_AddParamCompleteFunction("exec", Cmd_CompleteExecCommand);
 	Cmd_AddCommand("echo", Cmd_Echo_f, "Print to game console");
-	Cmd_AddCommand("wait", Cmd_Wait_f, NULL);
+	Cmd_AddCommand("wait", Cmd_Wait_f);
 	Cmd_AddCommand("alias", Cmd_Alias_f, "Creates a new command that executes a command string");
 	Cmd_AddCommand("aliasa", Cmd_Alias_f, "Creates a new, persistent command that executes a command string");
 	Cmd_AddCommand("cmdclose", Cmd_Close_f, "Close the command buffer");

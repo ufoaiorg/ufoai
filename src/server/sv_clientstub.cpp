@@ -84,5 +84,5 @@ int CL_Milliseconds (void)
 
 void Key_Init (void)
 {
-	Cmd_AddCommand("bind", Cmd_Dummy_f, NULL);
+	Cmd_AddCommand("bind", Cmd_Dummy_f);
 }

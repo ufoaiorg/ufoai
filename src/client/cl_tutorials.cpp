@@ -82,8 +82,8 @@ void TUT_InitStartup (void)
 {
 	/* tutorial stuff */
 	Cmd_AddCommand("listtutorials", TUT_List_f, "Show all tutorials");
-	Cmd_AddCommand("gettutorials", TUT_GetTutorials_f, NULL);
-	Cmd_AddCommand("tutoriallist_click", TUT_ListClick_f, NULL);
+	Cmd_AddCommand("gettutorials", TUT_GetTutorials_f);
+	Cmd_AddCommand("tutoriallist_click", TUT_ListClick_f);
 }
 
 

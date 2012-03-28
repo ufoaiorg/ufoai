@@ -687,7 +687,7 @@ void BDEF_InitCallbacks (void)
 	Cmd_AddCommand("add_battery", BDEF_AddBattery_f, "Add a new battery to base");
 	Cmd_AddCommand("remove_battery", BDEF_RemoveBattery_f, "Remove a battery from base");
 	Cmd_AddCommand("basedef_updatemenu", BDEF_BaseDefenceMenuUpdate_f, "Inits base defence menu");
-	Cmd_AddCommand("basedef_selectitem", BDEF_SelectItem_f, NULL);
+	Cmd_AddCommand("basedef_selectitem", BDEF_SelectItem_f);
 	Cmd_AddCommand("basedef_additem", BDEF_AddItem_f, "Add item to slot");
 	Cmd_AddCommand("basedef_removeitem", BDEF_RemoveItem_f, "Remove item from slot");
 	Cmd_AddCommand("basedef_autofire", BDEF_ChangeAutoFire, "Change autofire option for selected defence system");

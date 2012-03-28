@@ -1227,13 +1227,13 @@ void UP_InitStartup (void)
 	Cmd_AddCommand("mn_upcontent", UP_Content_f, "Shows the UFOpaedia chapters");
 	Cmd_AddCommand("mn_upupdate", UP_Update_f, "Redraw the current UFOpaedia article");
 	Cmd_AddCommand("ufopedia", UP_FindEntry_f, "Open the UFOpaedia with the given article");
-	Cmd_AddCommand("ufopedia_click", UP_Click_f, NULL);
-	Cmd_AddCommand("mailclient_click", UP_MailClientClick_f, NULL);
+	Cmd_AddCommand("ufopedia_click", UP_Click_f);
+	Cmd_AddCommand("mailclient_click", UP_MailClientClick_f);
 	Cmd_AddCommand("mn_mail_readall", UP_SetAllMailsRead_f, "Mark all mails read");
 	Cmd_AddCommand("ufopedia_openmail", UP_OpenMail_f, "Start the mailclient");
-	Cmd_AddCommand("ufopedia_scrollmail", UP_SetMailButtons_f, NULL);
-	Cmd_AddCommand("techtree_click", UP_TechTreeClick_f, NULL);
-	Cmd_AddCommand("mn_upgotoresearchedlink", UP_ResearchedLinkClick_f, NULL);
+	Cmd_AddCommand("ufopedia_scrollmail", UP_SetMailButtons_f);
+	Cmd_AddCommand("techtree_click", UP_TechTreeClick_f);
+	Cmd_AddCommand("mn_upgotoresearchedlink", UP_ResearchedLinkClick_f);
 
 	mn_uppretext = Cvar_Get("mn_uppretext", "0", 0, "Show the pre-research text in the UFOpaedia");
 	mn_uppreavailable = Cvar_Get("mn_uppreavailable", "0", 0, "True if there is a pre-research text available");

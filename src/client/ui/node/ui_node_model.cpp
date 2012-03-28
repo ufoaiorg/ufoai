@@ -552,5 +552,5 @@ void UI_RegisterModelNode (uiBehaviour_t *behaviour)
 	/* Both. Name of the skin for the model. */
 	UI_RegisterExtradataNodeProperty(behaviour, "skin", V_CVAR_OR_STRING, modelExtraData_t, skin);
 
-	Cmd_AddCommand("uimodelslist", UI_ListUIModels_f, NULL);
+	Cmd_AddCommand("uimodelslist", UI_ListUIModels_f);
 }

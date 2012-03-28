@@ -439,7 +439,7 @@ const char* GAME_CP_GetItemModel (const char *string)
 void GAME_CP_InitStartup (void)
 {
 	Cmd_AddCommand("cp_results", GAME_CP_Results_f, "Parses and shows the game results");
-	Cmd_AddCommand("cp_getdescription", GAME_CP_CampaignDescription_f, NULL);
+	Cmd_AddCommand("cp_getdescription", GAME_CP_CampaignDescription_f);
 	Cmd_AddCommand("cp_getcampaigns", GAME_CP_GetCampaigns_f, "Fill the campaign list with available campaigns");
 	Cmd_AddCommand("cp_start", GAME_CP_Start_f, "Start the new campaign");
 

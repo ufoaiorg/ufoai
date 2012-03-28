@@ -593,15 +593,15 @@ static void CL_PopupInterceptBaseClick_f (void)
 void CL_PopupInit (void)
 {
 	/* popup_aircraft commands */
-	Cmd_AddCommand("popup_aircraft_action_click", CL_PopupAircraftClick_f, NULL);
+	Cmd_AddCommand("popup_aircraft_action_click", CL_PopupAircraftClick_f);
 
 	/* popup_intercept commands */
-	Cmd_AddCommand("ships_click", CL_PopupInterceptClick_f, NULL);
-	Cmd_AddCommand("ships_rclick", CL_PopupInterceptRClick_f, NULL);
-	Cmd_AddCommand("bases_click", CL_PopupInterceptBaseClick_f, NULL);
+	Cmd_AddCommand("ships_click", CL_PopupInterceptClick_f);
+	Cmd_AddCommand("ships_rclick", CL_PopupInterceptRClick_f);
+	Cmd_AddCommand("bases_click", CL_PopupInterceptBaseClick_f);
 
 	/* popup_homebase commands */
-	Cmd_AddCommand("change_homebase", CL_PopupChangeHomebase_f, NULL);
+	Cmd_AddCommand("change_homebase", CL_PopupChangeHomebase_f);
 
 	OBJZERO(popupIntercept);
 	OBJZERO(popupAircraft);

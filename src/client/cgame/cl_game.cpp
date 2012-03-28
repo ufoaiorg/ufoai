@@ -1467,8 +1467,8 @@ void GAME_InitStartup (void)
 	Cmd_AddCommand("game_exit", GAME_Exit_f, "Abort the game and let the aliens/opponents win");
 	Cmd_AddCommand("game_abort", GAME_Abort_f, "Abort the game and let the aliens/opponents win");
 	Cmd_AddCommand("game_autoteam", GAME_AutoTeam_f, "Assign initial equipment to soldiers");
-	Cmd_AddCommand("game_toggleactor", GAME_ToggleActorForTeam_f, NULL);
-	Cmd_AddCommand("game_saveteamstate", GAME_SaveTeamState_f, NULL);
+	Cmd_AddCommand("game_toggleactor", GAME_ToggleActorForTeam_f);
+	Cmd_AddCommand("game_saveteamstate", GAME_SaveTeamState_f);
 	Cmd_AddCommand("game_saveteam", GAME_SaveTeam_f, "Save a team slot");
 	Cmd_AddCommand("game_loadteam", GAME_LoadTeam_f, "Load a team slot");
 	Cmd_AddCommand("game_teamcomments", GAME_TeamSlotComments_f, "Fills the team selection menu with the team names");

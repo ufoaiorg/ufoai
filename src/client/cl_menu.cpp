@@ -100,7 +100,7 @@ static void CLMN_InitKeyList_f (void)
 void CLMN_InitStartup (void)
 {
 	/* print the keyBindings to mn.menuText */
-	Cmd_AddCommand("mn_init_keylist", CLMN_InitKeyList_f, NULL);
+	Cmd_AddCommand("mn_init_keylist", CLMN_InitKeyList_f);
 
 	UI_Init();
 }

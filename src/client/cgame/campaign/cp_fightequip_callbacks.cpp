@@ -933,11 +933,11 @@ void AIM_InitCallbacks (void)
 {
 	Cmd_AddCommand("airequip_updatemenu", AIM_AircraftEquipMenuUpdate_f, "Init function for the aircraft equip menu");
 	Cmd_AddCommand("airequip_selectcategory", AIM_AircraftItemtypeByName_f, "Select an item category and update the GUI");
-	Cmd_AddCommand("airequip_list_click", AIM_AircraftEquipMenuClick_f, NULL);
-	Cmd_AddCommand("airequip_slot_select", AIM_AircraftEquipSlotSelect_f, NULL);
+	Cmd_AddCommand("airequip_list_click", AIM_AircraftEquipMenuClick_f);
+	Cmd_AddCommand("airequip_slot_select", AIM_AircraftEquipSlotSelect_f);
 	Cmd_AddCommand("airequip_add_item", AIM_AircraftEquipAddItem_f, "Add item to slot");
 	Cmd_AddCommand("airequip_remove_item", AIM_AircraftEquipRemoveItem_f, "Remove item from slot");
-	Cmd_AddCommand("airequip_zone_select", AIM_AircraftEquipZoneSelect_f, NULL);
+	Cmd_AddCommand("airequip_zone_select", AIM_AircraftEquipZoneSelect_f);
 }
 
 void AIM_ShutdownCallbacks (void)

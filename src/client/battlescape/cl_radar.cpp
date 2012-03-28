@@ -146,11 +146,11 @@ static void CL_BattlescapeRadarGenerateAllRelease_f (void)
 
 void CL_BattlescapeRadarInit (void)
 {
-	Cmd_AddCommand("closeradar", CL_BattlescapeRadarClose_f, NULL);
-	Cmd_AddCommand("openradar", CL_BattlescapeRadarOpen_f, NULL);
+	Cmd_AddCommand("closeradar", CL_BattlescapeRadarClose_f);
+	Cmd_AddCommand("openradar", CL_BattlescapeRadarOpen_f);
 
-	Cmd_AddCommand("ui_genpreviewradarmap", CL_BattlescapeRadarGenPreview_f, NULL);
-	Cmd_AddCommand("ui_genradarmap", CL_BattlescapeRadarGenerate_f, NULL);
-	Cmd_AddCommand("ui_genallradarmap", CL_BattlescapeRadarGenerateAll_f, NULL);
-	Cmd_AddCommand("ui_genallradarmaprelease", CL_BattlescapeRadarGenerateAllRelease_f, NULL);
+	Cmd_AddCommand("ui_genpreviewradarmap", CL_BattlescapeRadarGenPreview_f);
+	Cmd_AddCommand("ui_genradarmap", CL_BattlescapeRadarGenerate_f);
+	Cmd_AddCommand("ui_genallradarmap", CL_BattlescapeRadarGenerateAll_f);
+	Cmd_AddCommand("ui_genallradarmaprelease", CL_BattlescapeRadarGenerateAllRelease_f);
 }

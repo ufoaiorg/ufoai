@@ -370,8 +370,8 @@ void E_InitCallbacks (void)
 	Cmd_AddCommand("employee_update_count", E_UpdateGUICount_f, "Callback to update the employee count of the current GUI");
 	Cmd_AddCommand("employee_init", E_EmployeeList_f, "Init function for employee hire menu");
 	Cmd_AddCommand("employee_delete", E_EmployeeDelete_f, "Removed an employee from the global employee list");
-	Cmd_AddCommand("employee_hire", E_EmployeeHire_f, NULL);
-	Cmd_AddCommand("employee_select", E_EmployeeSelect_f, NULL);
+	Cmd_AddCommand("employee_hire", E_EmployeeHire_f);
+	Cmd_AddCommand("employee_select", E_EmployeeSelect_f);
 	Cmd_AddCommand("employee_changename", E_ChangeName_f, "Change the name of an employee");
 	Cmd_AddCommand("employee_scroll", E_EmployeeListScroll_f, "Scroll callback for employee list");
 }

@@ -845,7 +845,7 @@ void RS_InitCallbacks (void)
 {
 	Cmd_AddCommand("research_init", UI_ResearchInit_f, "Research menu init function binding");
 	Cmd_AddCommand("research_select", CL_ResearchSelect_f, "Update current selection with the one that has been clicked");
-	Cmd_AddCommand("research_update", RS_UpdateData_f, NULL);
+	Cmd_AddCommand("research_update", RS_UpdateData_f);
 	Cmd_AddCommand("research_type", CL_ResearchType_f, "Switch between different research types");
 	Cmd_AddCommand("mn_rs_add", RS_AssignScientist_f, "Assign one scientist to this entry");
 	Cmd_AddCommand("mn_rs_change", RS_ChangeScientist_f, "Assign or remove scientist from this entry");

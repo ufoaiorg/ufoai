@@ -268,7 +268,7 @@ static void INS_FillUFOYardData_f (void)
 void INS_InitCallbacks (void)
 {
 	Cmd_AddCommand("mn_installation_select", INS_SelectInstallation_f, "Parameter is the installation index. -1 will build a new one.");
-	Cmd_AddCommand("mn_installation_build", INS_BuildInstallation_f, NULL);
+	Cmd_AddCommand("mn_installation_build", INS_BuildInstallation_f);
 	Cmd_AddCommand("mn_installation_changename", INS_ChangeInstallationName_f, "Called after editing the cvar installation name");
 	Cmd_AddCommand("mn_installation_destroy", INS_DestroyInstallation_f, "Destroys an installation");
 	Cmd_AddCommand("mn_installation_update_max_count", INS_UpdateInstallationLimit_f, "Updates the installation count limit");

@@ -296,7 +296,7 @@ void Con_Init (void)
 	con_background = Cvar_Get("con_background", "1", CVAR_ARCHIVE, "Console is rendered with background image");
 
 	Cmd_AddCommand("toggleconsole", Con_ToggleConsole_f, N_("Show/hide ufoconsole."));
-	Cmd_AddCommand("togglechat", Con_ToggleChat_f, NULL);
+	Cmd_AddCommand("togglechat", Con_ToggleChat_f);
 	Cmd_AddCommand("clear", Con_Clear_f, "Clear console text");
 
 	/* load console history if con_history is true */
