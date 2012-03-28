@@ -56,62 +56,6 @@ typedef struct uiBehaviour_s {
 #ifdef DEBUG
 	int count;						/**< number of node allocated */
 #endif
-
-	/* draw callback */
-	void (*draw)(struct uiNode_s *node);							/**< how to draw a node */
-	void (*drawTooltip)(struct uiNode_s *node, int x, int y);	/**< allow to draw a custom tooltip */
-	void (*drawOverWindow)(struct uiNode_s *node);					/**< callback to draw content over the window @sa UI_CaptureDrawOver */
-
-	/* mouse events */
-	void (*leftClick)(struct uiNode_s *node, int x, int y);		/**< left mouse click event in the node */
-	void (*rightClick)(struct uiNode_s *node, int x, int y);		/**< right mouse button click event in the node */
-	void (*middleClick)(struct uiNode_s *node, int x, int y);	/**< middle mouse button click event in the node */
-	qboolean (*scroll)(struct uiNode_s *node, int deltaX, int deltaY);	/**< mouse wheel event in the node */
-	void (*mouseMove)(struct uiNode_s *node, int x, int y);
-	void (*mouseDown)(struct uiNode_s *node, int x, int y, int button);	/**< mouse button down event in the node */
-	void (*mouseUp)(struct uiNode_s *node, int x, int y, int button);	/**< mouse button up event in the node */
-	void (*capturedMouseMove)(struct uiNode_s *node, int x, int y);
-	void (*capturedMouseLost)(struct uiNode_s *node);
-
-	/* system allocation */
-	void (*loading)(struct uiNode_s *node);		/**< called before script initialization, initialized default values */
-	void (*loaded)(struct uiNode_s *node);		/**< only called one time, when node parsing was finished */
-	void (*clone)(const struct uiNode_s *source, struct uiNode_s *clone);			/**< call to initialize a cloned node */
-	void (*newNode)(struct uiNode_s *node);			/**< call to initialize a dynamic node */
-	void (*deleteNode)(struct uiNode_s *node);		/**< call to delete a dynamic node */
-
-	/* system callback */
-	void (*windowOpened)(struct uiNode_s *node, linkedList_t *params);			/**< Invoked when the window is added to the rendering stack */
-	void (*windowClosed)(struct uiNode_s *node);		/**< Invoked when the window is removed from the rendering stack */
-	void (*doLayout)(struct uiNode_s *node);		/**< call to update node layout */
-	void (*activate)(struct uiNode_s *node);		/**< Activate the node. Can be used without the mouse (ie. a button will execute onClick) */
-	void (*propertyChanged)(struct uiNode_s *node, const value_t *property);		/**< Called when a property change */
-	void (*sizeChanged)(struct uiNode_s *node);		/**< Called when the node size change */
-	void (*getClientPosition)(const struct uiNode_s *node, vec2_t position);	/**< Return the position of the client zone into the node */
-
-	/* drag and drop callback */
-	qboolean (*dndEnter)(struct uiNode_s *node);							/**< Send to the target when we enter first, return true if we can drop the DND somewhere on the node */
-	qboolean (*dndMove)(struct uiNode_s *node, int x, int y);			/**< Send to the target when we enter first, return true if we can drop the DND here */
-	void (*dndLeave)(struct uiNode_s *node);								/**< Send to the target when the DND is canceled */
-	qboolean (*dndDrop)(struct uiNode_s *node, int x, int y);			/**< Send to the target to finalize the drop */
-	qboolean (*dndFinished)(struct uiNode_s *node, qboolean isDroped);	/**< Sent to the source to finalize the drop */
-
-	/* focus and keyboard events */
-	void (*focusGained)(struct uiNode_s *node);
-	void (*focusLost)(struct uiNode_s *node);
-	qboolean (*keyPressed)(struct uiNode_s *node, unsigned int key, unsigned short unicode);
-	qboolean (*keyReleased)(struct uiNode_s *node, unsigned int key, unsigned short unicode);
-
-	/* cell size */
-	int (*getCellWidth)(struct uiNode_s *node);
-	int (*getCellHeight)(struct uiNode_s *node);
-
-	/* Planned */
-#if 0
-	/* mouse move event */
-	void (*mouseEnter)(struct uiNode_s *node);
-	void (*mouseLeave)(struct uiNode_s *node);
-#endif
 } uiBehaviour_t;
 
 /**

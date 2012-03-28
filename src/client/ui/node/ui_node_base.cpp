@@ -42,7 +42,7 @@ static const vec4_t white = {1.0f, 1.0f, 1.0f, 0.8f};
 /**
  * @brief Called after the end of the node load from script (all data and/or child are set)
  */
-static void UI_AbstractBaseNodeLoaded (uiNode_t * node)
+void uiAbstractBaseNode::loaded (uiNode_t * node)
 {
 	const int id = EXTRADATA(node).baseid;
 	if (B_GetBaseByIDX(id) == NULL)
@@ -367,7 +367,7 @@ void UI_RegisterAbstractBaseNode (uiBehaviour_t *behaviour)
 {
 	behaviour->name = "abstractbase";
 	behaviour->isAbstract = qtrue;
-	behaviour->loaded = UI_AbstractBaseNodeLoaded;
+	behaviour->manager = new uiAbstractBaseNode();
 	behaviour->extraDataSize = sizeof(EXTRADATA_TYPE);
 
 	/* Identify the base, from a base ID, the node use. */

@@ -35,6 +35,7 @@ void UI_RegisterAbstractScrollbarNode (uiBehaviour_t *behaviour)
 	behaviour->name = "abstractscrollbar";
 	behaviour->isAbstract = qtrue;
 	behaviour->extraDataSize = sizeof(EXTRADATA_TYPE);
+	behaviour->manager = new uiAbstractScrollbarNode();
 
 	/* Current position of the scroll. Image of the <code>viewpos</code> from <code>abstractscrollable</code> node. */
 	UI_RegisterExtradataNodeProperty(behaviour, "current", V_INT, EXTRADATA_TYPE, pos);

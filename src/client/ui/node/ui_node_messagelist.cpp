@@ -319,7 +319,7 @@ void uiMessageListNode::mouseUp (struct uiNode_s *node, int x, int y, int button
 
 void uiMessageListNode::capturedMouseMove (uiNode_t *node, int x, int y)
 {
-	const int lineHeight = node->behaviour->getCellHeight(node);
+	const int lineHeight = getCellHeight(node);
 	const int deltaY = (mouseScrollY - y) / lineHeight;
 	/* We're doing only vertical scroll, that's enough for the most instances */
 	if (abs(mouseScrollY - y) >= lineHeight) {
@@ -328,8 +328,7 @@ void uiMessageListNode::capturedMouseMove (uiNode_t *node, int x, int y)
 		mouseScrollX = x;
 		mouseScrollY = y;
 	}
-	if (node->behaviour->mouseMove)
-		node->behaviour->mouseMove(node, x, y);
+	mouseMove(node, x, y);
 }
 
 /**

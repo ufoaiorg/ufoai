@@ -100,48 +100,34 @@ static void UI_NodeSetProperty_f (void)
 }
 #endif
 
-static qboolean UI_AbstractNodeDNDEnter (uiNode_t *node)
+qboolean uiLocatedNode::dndEnter (uiNode_t *node)
 {
 	return qfalse;
 }
 
-static qboolean UI_AbstractNodeDNDMove (uiNode_t *node, int x, int y)
+qboolean uiLocatedNode::dndMove (uiNode_t *node, int x, int y)
 {
 	return qtrue;
 }
 
-static void UI_AbstractNodeDNDLeave (uiNode_t *node)
+void uiLocatedNode::dndLeave (uiNode_t *node)
 {
 }
 
-static qboolean UI_AbstractNodeDNDDrop (uiNode_t *node, int x, int y)
+qboolean uiLocatedNode::dndDrop (uiNode_t *node, int x, int y)
 {
 	return qtrue;
 }
 
-static qboolean UI_AbstractNodeDNDFinished (uiNode_t *node, qboolean isDroped)
+qboolean uiLocatedNode::dndFinished (uiNode_t *node, qboolean isDroped)
 {
 	return isDroped;
 }
 
 /**
- * @brief Call to update a cloned node
- */
-static void UI_AbstractNodeClone (const uiNode_t *source, uiNode_t *clone)
-{
-}
-
-/**
- * @brief Call to update a new node, after a dynamic allocation
- */
-static void UI_AbstractNodeNewNode (uiNode_t *node)
-{
-}
-
-/**
  * @brief Activate the node. Can be used without the mouse (ie. a button will execute onClick)
  */
-static void UI_AbstractNodeActivate (uiNode_t *node)
+void uiNode::activate (uiNode_t *node)
 {
 	if (node->onClick)
 		UI_ExecuteEventActions(node, node->onClick);
@@ -150,43 +136,39 @@ static void UI_AbstractNodeActivate (uiNode_t *node)
 /**
  * @brief Call to update the node layout. This common code revalidates the node tree.
  */
-static void UI_AbstractNodeDoLayout (uiNode_t *node)
+void uiLocatedNode::doLayout (uiNode_t *node)
 {
 	uiNode_t *child;
 	if (!node->invalidated)
 		return;
 
 	for (child = node->firstChild; child; child = child->next) {
-		child->behaviour->doLayout(child);
+		UI_Node_DoLayout(child);
 	}
 
 	node->invalidated = qfalse;
 }
 
-static void UI_AbstractNodeInit (uiNode_t *node, linkedList_t *params)
+void uiNode::windowOpened (uiNode_t *node, linkedList_t *params)
 {
 	uiNode_t* child;
 	for (child = node->firstChild; child; child = child->next) {
-		if (child->behaviour->windowOpened) {
-			child->behaviour->windowOpened(child, NULL);
-		}
+		UI_Node_WindowOpened(child, NULL);
 	}
 }
 
-static void UI_AbstractNodeClose (uiNode_t *node)
+void uiNode::windowClosed (uiNode_t *node)
 {
 	uiNode_t* child;
 	for (child = node->firstChild; child; child = child->next) {
-		if (child->behaviour->windowClosed) {
-			child->behaviour->windowClosed(child);
-		}
+		UI_Node_WindowClosed(child);
 	}
 }
 
 /**
  * @brief Callback stub
  */
-static void UI_AbstractNodeSizeChanged (uiNode_t *node)
+void uiLocatedNode::sizeChanged (uiNode_t *node)
 {
 	if (node->firstChild != NULL)
 		UI_Invalidate(node);
@@ -203,10 +185,10 @@ static const value_t *propertyHeight;
 static const value_t *propertySize;
 static const value_t *propertyInvis;
 
-static void UI_AbstractNodePropertyChanged (uiNode_t *node, const value_t *property)
+void uiNode::propertyChanged (uiNode_t *node, const value_t *property)
 {
 	if (property == propertyWidth || property == propertyHeight || property == propertySize) {
-		node->behaviour->sizeChanged(node);
+		UI_Node_SizeChanged(node);
 	} else if (property == propertyInvis) {
 		UI_AbstractNodeVisibilityChange(node);
 	}
@@ -260,7 +242,7 @@ static void UI_AbstractNodeCallDelete (uiNode_t *node, const uiCallContext_t *co
 	UI_DeleteNode(node);
 }
 
-static qboolean UI_AbstractNodeScroll (uiNode_t *node, int deltaX, int deltaY)
+qboolean uiLocatedNode::scroll (uiNode_t *node, int deltaX, int deltaY)
 {
 	if (node->onWheelUp && deltaY < 0) {
 		UI_ExecuteEventActions(node, node->onWheelUp);
@@ -277,100 +259,31 @@ static qboolean UI_AbstractNodeScroll (uiNode_t *node, int deltaX, int deltaY)
 	return qfalse;
 }
 
-static void UI_AbstractNodeNothing(uiNode_t *node)
-{
-	// do nothing
-}
-
-static void UI_AbstractNodeDrawTooltip(struct uiNode_s *node, int x, int y)
+void uiLocatedNode::drawTooltip(struct uiNode_s *node, int x, int y)
 {
 	UI_Tooltip(node, x, y);
 }
 
-static void UI_AbstractNodeMouseDown(struct uiNode_s *node, int x, int y, int button)
-{
-}
-
-static void UI_AbstractNodeMouseUp(struct uiNode_s *node, int x, int y, int button)
-{
-}
-
-static void UI_AbstractNodeMouseMove(struct uiNode_s *node, int x, int y)
-{
-}
-
-static void UI_AbstractNodeCapturedMouseMove(struct uiNode_s *node, int x, int y)
-{
-}
-
-static void UI_AbstractNodeCapturedMouseLost(struct uiNode_s *node)
-{
-}
-
-static void UI_AbstractNodeMouseLeftClick(struct uiNode_s *node, int x, int y)
+void uiLocatedNode::leftClick(struct uiNode_s *node, int x, int y)
 {
 	UI_ExecuteEventActions(node, node->onClick);
 }
 
-static void UI_AbstractNodeMouseRightClick(struct uiNode_s *node, int x, int y)
+void uiLocatedNode::rightClick(struct uiNode_s *node, int x, int y)
 {
 	UI_ExecuteEventActions(node, node->onRightClick);
 }
 
-static void UI_AbstractNodeMouseMiddleClick(struct uiNode_s *node, int x, int y)
+void uiLocatedNode::middleClick(struct uiNode_s *node, int x, int y)
 {
 	UI_ExecuteEventActions(node, node->onMiddleClick);
-}
-
-static qboolean UI_AbstractNodeKeyPressed(struct uiNode_s *node, unsigned int key, unsigned short unicode)
-{
-	return qfalse;
-}
-
-static qboolean UI_AbstractNodeKeyReleased(struct uiNode_s *node, unsigned int key, unsigned short unicode)
-{
-	return qfalse;
 }
 
 void UI_RegisterAbstractNode (uiBehaviour_t *behaviour)
 {
 	behaviour->name = "abstractnode";
 	behaviour->isAbstract = qtrue;
-
-	/* callbacks */
-	behaviour->dndEnter = UI_AbstractNodeDNDEnter;
-	behaviour->dndMove = UI_AbstractNodeDNDMove;
-	behaviour->dndLeave = UI_AbstractNodeDNDLeave;
-	behaviour->dndDrop = UI_AbstractNodeDNDDrop;
-	behaviour->dndFinished = UI_AbstractNodeDNDFinished;
-	behaviour->doLayout = UI_AbstractNodeDoLayout;
-	behaviour->clone = UI_AbstractNodeClone;
-	behaviour->newNode = UI_AbstractNodeNewNode;
-	behaviour->loaded = UI_AbstractNodeNothing;
-	behaviour->loading = UI_AbstractNodeNothing;
-	behaviour->deleteNode = UI_AbstractNodeNothing;
-	behaviour->drawOverWindow = UI_AbstractNodeNothing;
-	behaviour->drawTooltip = UI_AbstractNodeDrawTooltip;
-
-	behaviour->mouseDown = UI_AbstractNodeMouseDown;
-	behaviour->mouseUp = UI_AbstractNodeMouseUp;
-	behaviour->mouseMove = UI_AbstractNodeMouseMove;
-	behaviour->capturedMouseMove = UI_AbstractNodeCapturedMouseMove;
-	behaviour->capturedMouseLost = UI_AbstractNodeCapturedMouseLost;
-	behaviour->scroll = UI_AbstractNodeScroll;
-	behaviour->leftClick = UI_AbstractNodeMouseLeftClick;
-	behaviour->rightClick = UI_AbstractNodeMouseRightClick;
-	behaviour->middleClick = UI_AbstractNodeMouseMiddleClick;
-	behaviour->keyPressed = UI_AbstractNodeKeyPressed;
-	behaviour->keyReleased = UI_AbstractNodeKeyReleased;
-
-	behaviour->activate = UI_AbstractNodeActivate;
-	behaviour->focusGained = UI_AbstractNodeNothing;
-	behaviour->focusLost = UI_AbstractNodeNothing;
-	behaviour->propertyChanged = UI_AbstractNodePropertyChanged;
-	behaviour->sizeChanged = UI_AbstractNodeSizeChanged;
-	behaviour->windowOpened = UI_AbstractNodeInit;
-	behaviour->windowClosed = UI_AbstractNodeClose;
+	behaviour->manager = new uiLocatedNode();
 
 	/* Top-left position of the node */
 	UI_RegisterNodeProperty(behaviour, "pos", V_POS, uiNode_t, pos);

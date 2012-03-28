@@ -125,7 +125,6 @@ static const registerFunction_t registerFunctions[] = {
 	UI_RegisterRowsNode,
 	UI_RegisterSelectBoxNode,
 	UI_RegisterSequenceNode,
-	UI_RegisterSpecialNode,
 	UI_RegisterSpinnerNode,
 	UI_RegisterSpinner2Node,
 	UI_RegisterStringNode,

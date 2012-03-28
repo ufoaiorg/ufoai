@@ -81,6 +81,10 @@ static void UI_TopDownFlowLayout (uiNode_t *node, int margin)
 	vec2_t newSize = {width, 0};
 
 	while (child) {
+		if (!UI_Node_IsDrawable(child)) {
+			child = child->next;
+			continue;
+		}
 		newSize[1] = child->size[1];
 		UI_NodeSetSize(child, newSize);
 		child->pos[0] = node->padding;
@@ -116,6 +120,10 @@ static void UI_LeftRightFlowLayout (uiNode_t *node, int margin)
 	vec2_t newSize = {0, height};
 
 	while (child) {
+		if (!UI_Node_IsDrawable(child)) {
+			child = child->next;
+			continue;
+		}
 		newSize[0] = child->size[0];
 		UI_NodeSetSize(child, newSize);
 		child->pos[0] = positionX;
@@ -306,7 +314,7 @@ void UI_StarLayout (uiNode_t *node)
 			child->pos[0] = 0;
 			child->pos[1] = 0;
 			UI_NodeSetSize(child, node->size);
-			child->behaviour->doLayout(child);
+			UI_Node_DoLayout(child);
 		} else if (child->align < LAYOUTALIGN_SPECIAL) {
 			UI_NodeGetPoint(node, destination, child->align);
 			UI_NodeRelativeToAbsolutePoint(node, destination);
@@ -401,7 +409,7 @@ static void UI_ColumnLayout (uiNode_t *node)
 		child->pos[0] = columnPos[column];
 		child->pos[1] = y;
 		/*UI_NodeSetSize(child, node->size);*/
-		child->behaviour->doLayout(child);
+		UI_Node_DoLayout(child);
 		i++;
 	}
 
@@ -456,7 +464,7 @@ void uiPanelNode::doLayout (uiNode_t *node)
 		break;
 	}
 
-	localBehaviour->super->doLayout(node);
+	uiAbstractScrollableNode::doLayout(node);
 }
 
 /**
@@ -489,7 +497,7 @@ void uiPanelNode::propertyChanged (uiNode_t *node, const value_t *property)
 		UI_Invalidate(node);
 		return;
 	}
-	localBehaviour->super->propertyChanged(node, property);
+	uiAbstractScrollableNode::propertyChanged(node, property);
 }
 
 /**

@@ -105,7 +105,7 @@ void uiSequenceNode::propertyChanged (uiNode_t *node, const value_t *property)
 		}
 		return;
 	}
-	localBehaviour->super->propertyChanged(node, property);
+	uiLocatedNode::propertyChanged(node, property);
 }
 
 void UI_RegisterSequenceNode (uiBehaviour_t* behaviour)

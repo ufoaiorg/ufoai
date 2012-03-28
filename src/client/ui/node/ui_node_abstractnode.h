@@ -49,13 +49,13 @@ public:
 	/* system callback */
 
 	/** Invoked when the window is added to the rendering stack */
-	virtual void windowOpened(struct uiNode_s *node, linkedList_t *params) {}
+	virtual void windowOpened(struct uiNode_s *node, linkedList_t *params);
 	/** Invoked when the window is removed from the rendering stack */
-	virtual void windowClosed(struct uiNode_s *node) {}
+	virtual void windowClosed(struct uiNode_s *node);
 	/** Activate the node. Can be used without the mouse (ie. a button will execute onClick) */
-	virtual void activate(struct uiNode_s *node) {}
+	virtual void activate(struct uiNode_s *node);
 	/** Called when a property change */
-	virtual void propertyChanged(struct uiNode_s *node, const value_t *property) {}
+	virtual void propertyChanged(struct uiNode_s *node, const value_t *property);
 
 	virtual ~uiNode() {}
 };
@@ -65,25 +65,31 @@ public:
 	/** How to draw a node */
 	virtual void draw(struct uiNode_s *node) {}
 	/** Allow to draw a custom tooltip */
-	virtual void drawTooltip(struct uiNode_s *node, int x, int y) {}
+	virtual void drawTooltip(struct uiNode_s *node, int x, int y);
 	/** Callback to draw content over the window @sa UI_CaptureDrawOver */
 	virtual void drawOverWindow(struct uiNode_s *node) {}
 
 	/** Called to update node layout */
-	virtual void doLayout(struct uiNode_s *node) {}
+	virtual void doLayout(struct uiNode_s *node);
 	/** Called when the node size change */
-	virtual void sizeChanged(struct uiNode_s *node) {}
+	virtual void sizeChanged(struct uiNode_s *node);
 
 	/* mouse events */
 
 	/** Left mouse click event in the node */
-	virtual void leftClick(struct uiNode_s *node, int x, int y) {}
+	virtual void leftClick(struct uiNode_s *node, int x, int y);
 	/** Right mouse button click event in the node */
-	virtual void rightClick(struct uiNode_s *node, int x, int y) {}
+	virtual void rightClick(struct uiNode_s *node, int x, int y);
 	/** Middle mouse button click event in the node */
-	virtual void middleClick(struct uiNode_s *node, int x, int y) {}
+	virtual void middleClick(struct uiNode_s *node, int x, int y);
 	/** Mouse wheel event in the node */
-	virtual qboolean scroll(struct uiNode_s *node, int deltaX, int deltaY) {return qfalse;}
+	virtual qboolean scroll(struct uiNode_s *node, int deltaX, int deltaY);
+	/* Planned */
+#if 0
+	/* mouse move event */
+	virtual void mouseEnter(struct uiNode_s *node);
+	virtual void mouseLeave(struct uiNode_s *node);
+#endif
 
 	/** Mouse move event in the node */
 	virtual void mouseMove(struct uiNode_s *node, int x, int y) {}
@@ -99,15 +105,15 @@ public:
 	/* drag and drop callback */
 
 	/** Send to the target when we enter first, return true if we can drop the DND somewhere on the node */
-	virtual qboolean dndEnter(struct uiNode_s *node) {return qfalse;}
+	virtual qboolean dndEnter(struct uiNode_s *node);
 	/** Send to the target when we enter first, return true if we can drop the DND here */
-	virtual qboolean dndMove(struct uiNode_s *node, int x, int y) {return qfalse;}
+	virtual qboolean dndMove(struct uiNode_s *node, int x, int y);
 	/** Send to the target when the DND is canceled */
-	virtual void dndLeave(struct uiNode_s *node) {}
+	virtual void dndLeave(struct uiNode_s *node);
 	/** Send to the target to finalize the drop */
-	virtual qboolean dndDrop(struct uiNode_s *node, int x, int y) {return qfalse;}
+	virtual qboolean dndDrop(struct uiNode_s *node, int x, int y);
 	/** Sent to the source to finalize the drop */
-	virtual qboolean dndFinished(struct uiNode_s *node, qboolean isDroped) {return qfalse;}
+	virtual qboolean dndFinished(struct uiNode_s *node, qboolean isDroped);
 
 	/* focus and keyboard events */
 	virtual void focusGained(struct uiNode_s *node) {}

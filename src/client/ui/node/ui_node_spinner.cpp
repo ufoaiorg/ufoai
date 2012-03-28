@@ -231,7 +231,7 @@ void uiSpinnerNode::draw (uiNode_t *node)
 
 void uiSpinnerNode::loading (uiNode_t *node)
 {
-	localBehaviour->super->loaded(node);
+	uiLocatedNode::loaded(node);
 
 	/* default values */
 	EXTRADATA(node).shiftIncreaseFactor = 2.0F;

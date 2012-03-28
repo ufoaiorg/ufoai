@@ -59,7 +59,7 @@ static int UI_TextListNodeGetLine (const uiNode_t *node, int x, int y)
 	return (int) (y / lineHeight) + EXTRADATACONST(node).super.scrollY.viewPos;
 }
 
-static void UI_TextListNodeMouseMove (uiNode_t *node, int x, int y)
+void uiTextListNode::mouseMove (uiNode_t *node, int x, int y)
 {
 	EXTRADATA(node).lineUnderMouse = UI_TextListNodeGetLine(node, x, y);
 }
@@ -155,7 +155,7 @@ static void UI_TextLineNodeDrawText (uiNode_t* node, const linkedList_t* list)
 /**
  * @brief Draw a text node
  */
-static void UI_TextListNodeDraw (uiNode_t *node)
+void uiTextListNode::draw (uiNode_t *node)
 {
 	const uiSharedData_t *shared;
 	shared = &ui_global.sharedData[EXTRADATA(node).dataID];
@@ -176,7 +176,7 @@ static void UI_TextListNodeDraw (uiNode_t *node)
  * @brief Calls the script command for a text node that is clickable
  * @sa UI_TextNodeRightClick
  */
-static void UI_TextListNodeClick (uiNode_t * node, int x, int y)
+void uiTextListNode::leftClick (uiNode_t * node, int x, int y)
 {
 	const int line = UI_TextListNodeGetLine(node, x, y);
 
@@ -197,7 +197,7 @@ static void UI_TextListNodeClick (uiNode_t * node, int x, int y)
  * @brief Calls the script command for a text node that is clickable via right mouse button
  * @todo we should delete that function
  */
-static void UI_TextListNodeRightClick (uiNode_t * node, int x, int y)
+void uiTextListNode::rightClick (uiNode_t * node, int x, int y)
 {
 	const int line = UI_TextListNodeGetLine(node, x, y);
 
@@ -214,7 +214,7 @@ static void UI_TextListNodeRightClick (uiNode_t * node, int x, int y)
 		UI_ExecuteEventActions(node, node->onRightClick);
 }
 
-static void UI_TextListNodeLoading (uiNode_t *node)
+void uiTextListNode::loading (uiNode_t *node)
 {
 	EXTRADATA(node).textLineSelected = -1; /**< Invalid/no line selected per default. */
 	Vector4Set(node->selectedColor, 1.0, 1.0, 1.0, 1.0);
@@ -226,9 +226,5 @@ void UI_RegisterTextListNode (uiBehaviour_t *behaviour)
 {
 	behaviour->name = "textlist";
 	behaviour->extends = "text";
-	behaviour->draw = UI_TextListNodeDraw;
-	behaviour->leftClick = UI_TextListNodeClick;
-	behaviour->rightClick = UI_TextListNodeRightClick;
-	behaviour->mouseMove = UI_TextListNodeMouseMove;
-	behaviour->loading = UI_TextListNodeLoading;
+	behaviour->manager = new uiTextListNode();
 }

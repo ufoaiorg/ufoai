@@ -29,7 +29,8 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #include "ui_node_abstractnode.h"
 
 class uiOptionNode : public uiLocatedNode {
-
+	void propertyChanged(struct uiNode_s *node, const value_t *property);
+	void doLayout(struct uiNode_s *node);
 };
 
 void UI_RegisterOptionNode(struct uiBehaviour_s *behaviour);

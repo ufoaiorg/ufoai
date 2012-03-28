@@ -35,7 +35,7 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
  * @brief Call after the script initialized the node
  * @todo special cases should be managed as a common property event of the parent node
  */
-static void UI_FuncNodeLoaded (uiNode_t *node)
+void uiFuncNode::loaded (uiNode_t *node)
 {
 	/** @todo move this code into the parser (it should not create a node) */
 	const value_t *prop = UI_GetPropertyFromBehaviour(node->parent->behaviour, node->name);
@@ -48,25 +48,17 @@ static void UI_FuncNodeLoaded (uiNode_t *node)
 	}
 }
 
-void UI_RegisterSpecialNode (uiBehaviour_t *behaviour)
-{
-	behaviour->name = "special";
-	behaviour->isVirtual = qtrue;
-}
-
 void UI_RegisterFuncNode (uiBehaviour_t *behaviour)
 {
 	behaviour->name = "func";
-	behaviour->extends = "special";
 	behaviour->isVirtual = qtrue;
 	behaviour->isFunction = qtrue;
-	behaviour->loaded = UI_FuncNodeLoaded;
+	behaviour->manager = new uiFuncNode();
 }
 
 void UI_RegisterNullNode (uiBehaviour_t *behaviour)
 {
 	behaviour->name = "";
-	behaviour->extends = "special";
 	behaviour->isVirtual = qtrue;
 }
 
@@ -98,7 +90,7 @@ static qboolean UI_ConFuncIsVirtual (const uiNode_t *const node)
 /**
  * @brief Call after the script initialized the node
  */
-static void UI_ConFuncNodeLoaded (uiNode_t *node)
+void uiConFuncNode::loaded (uiNode_t *node)
 {
 	/* register confunc non inherited */
 	if (node->super == NULL) {
@@ -124,15 +116,15 @@ static void UI_ConFuncNodeLoaded (uiNode_t *node)
 	}
 }
 
-static void UI_ConFuncNodeClone (const uiNode_t *source, uiNode_t *clone)
+void uiConFuncNode::clone (const uiNode_t *source, uiNode_t *clone)
 {
-	UI_ConFuncNodeLoaded(clone);
+	loaded(clone);
 }
 
 /**
  * @brief Callback every time the parent window is opened (pushed into the active window stack)
  */
-static void UI_ConFuncNodeInit (uiNode_t *node, linkedList_t *params)
+void uiConFuncNode::windowOpened (uiNode_t *node, linkedList_t *params)
 {
 	if (UI_ConFuncIsVirtual(node)) {
 		const value_t *property = UI_GetPropertyFromBehaviour(node->behaviour, "onClick");
@@ -144,7 +136,7 @@ static void UI_ConFuncNodeInit (uiNode_t *node, linkedList_t *params)
 /**
  * @brief Callback every time the parent window is closed (pop from the active window stack)
  */
-static void UI_ConFuncNodeClose (uiNode_t *node)
+void uiConFuncNode::windowClosed (uiNode_t *node)
 {
 	if (UI_ConFuncIsVirtual(node)) {
 		const value_t *property = UI_GetPropertyFromBehaviour(node->behaviour, "onClick");
@@ -156,13 +148,9 @@ static void UI_ConFuncNodeClose (uiNode_t *node)
 void UI_RegisterConFuncNode (uiBehaviour_t *behaviour)
 {
 	behaviour->name = "confunc";
-	behaviour->extends = "special";
 	behaviour->isVirtual = qtrue;
 	behaviour->isFunction = qtrue;
-	behaviour->loaded = UI_ConFuncNodeLoaded;
-	behaviour->windowOpened = UI_ConFuncNodeInit;
-	behaviour->windowClosed = UI_ConFuncNodeClose;
-	behaviour->clone = UI_ConFuncNodeClone;
+	behaviour->manager = new uiConFuncNode();
 }
 
 static void UI_CvarListenerNodeCallback (const char *cvarName, const char *oldValue, const char *newValue, void *data)
@@ -197,7 +185,7 @@ static void UI_CvarListenerNodeBind (uiNode_t *node)
 /**
  * @brief Callback every time the parent window is closed (pop from the active window stack)
  */
-static void UI_CvarListenerNodeUnbind (uiNode_t *node)
+void uiCvarNode::windowClosed (uiNode_t *node)
 {
 	cvar_t *var;
 
@@ -218,12 +206,17 @@ static void UI_CvarListenerNodeUnbind (uiNode_t *node)
 	}
 }
 
-static void UI_CvarListenerNodeOpen (uiNode_t *node, linkedList_t *params)
+void uiCvarNode::windowOpened (uiNode_t *node, linkedList_t *params)
 {
 	UI_CvarListenerNodeBind(node);
 }
 
-static void UI_CvarListenerNodeClone (const uiNode_t *source, uiNode_t *clone)
+void uiCvarNode::deleteNode (uiNode_t *node)
+{
+	windowClosed(node);
+}
+
+void uiCvarNode::clone (const uiNode_t *source, uiNode_t *clone)
 {
 	UI_CvarListenerNodeBind(clone);
 }
@@ -236,13 +229,9 @@ static void UI_CvarListenerNodeForceBind (uiNode_t *node, const uiCallContext_t 
 void UI_RegisterCvarFuncNode (uiBehaviour_t *behaviour)
 {
 	behaviour->name = "cvarlistener";
-	behaviour->extends = "special";
 	behaviour->isVirtual = qtrue;
 	behaviour->isFunction = qtrue;
-	behaviour->windowOpened = UI_CvarListenerNodeOpen;
-	behaviour->windowClosed = UI_CvarListenerNodeUnbind;
-	behaviour->deleteNode = UI_CvarListenerNodeUnbind;
-	behaviour->clone = UI_CvarListenerNodeClone;
+	behaviour->manager = new uiCvarNode();
 	/* Force to bind the node to the cvar */
 	UI_RegisterNodeMethod(behaviour, "forceBind", UI_CvarListenerNodeForceBind);
 }

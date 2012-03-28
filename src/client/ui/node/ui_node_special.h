@@ -28,15 +28,21 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #include "../ui_nodes.h"
 
 class uiConFuncNode : public uiNode {
-
+	void loaded(struct uiNode_s *node);
+	void windowOpened(struct uiNode_s *node, linkedList_t *params);
+	void windowClosed(struct uiNode_s *node);
+	void clone(const struct uiNode_s *source, struct uiNode_s *clone);
 };
 
 class uiFuncNode : public uiNode {
-
+	void loaded(struct uiNode_s *node);
 };
 
 class uiCvarNode : public uiNode {
-
+	void windowOpened(struct uiNode_s *node, linkedList_t *params);
+	void windowClosed(struct uiNode_s *node);
+	void clone(const struct uiNode_s *source, struct uiNode_s *clone);
+	void deleteNode(struct uiNode_s *node);
 };
 
 
@@ -44,6 +50,5 @@ void UI_RegisterConFuncNode(struct uiBehaviour_s *behaviour);
 void UI_RegisterCvarFuncNode(struct uiBehaviour_s *behaviour);
 void UI_RegisterFuncNode(struct uiBehaviour_s *behaviour);
 void UI_RegisterNullNode(struct uiBehaviour_s *behaviour);
-void UI_RegisterSpecialNode(struct uiBehaviour_s *behaviour);
 
 #endif

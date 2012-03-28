@@ -54,7 +54,7 @@ static void UI_TodoNodeDrawTooltip (uiNode_t *node, int x, int y)
 	UI_DrawTooltip(tooltiptext, x, y, tooltipWidth);
 }
 
-static void UI_TodoNodeDraw (uiNode_t *node)
+void uiTodoNode::draw (uiNode_t *node)
 {
 	static vec4_t red = {1.0, 0.0, 0.0, 1.0};
 	vec2_t pos;
@@ -66,17 +66,17 @@ static void UI_TodoNodeDraw (uiNode_t *node)
 		UI_CaptureDrawOver(node);
 }
 
-static void UI_TodoNodeDrawOverWindow (uiNode_t *node)
+void uiTodoNode::drawOverWindow (uiNode_t *node)
 {
 	UI_TodoNodeDrawTooltip(node, mousePosX, mousePosY);
 }
 
-static void UI_TodoNodeLoading (uiNode_t *node)
+void uiTodoNode::loading (uiNode_t *node)
 {
 	Vector4Set(node->color, 1.0, 1.0, 1.0, 1.0);
 }
 
-static void UI_TodoNodeLoaded (uiNode_t *node)
+void uiTodoNode::loaded (uiNode_t *node)
 {
 #ifndef DEBUG
 	node->invis = qtrue;
@@ -89,8 +89,5 @@ void UI_RegisterTodoNode (uiBehaviour_t *behaviour)
 {
 	behaviour->name = "todo";
 	behaviour->extends = "string";
-	behaviour->draw = UI_TodoNodeDraw;
-	behaviour->drawOverWindow = UI_TodoNodeDrawOverWindow;
-	behaviour->loading = UI_TodoNodeLoading;
-	behaviour->loaded = UI_TodoNodeLoaded;
+	behaviour->manager = new uiTodoNode();
 }

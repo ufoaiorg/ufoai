@@ -72,7 +72,7 @@ int UI_OptionUpdateCache (uiNode_t* option)
 	return count;
 }
 
-static void UI_OptionDoLayout (uiNode_t *node)
+void uiOptionNode::doLayout (uiNode_t *node)
 {
 	uiNode_t *child = node->firstChild;
 	int count = 0;
@@ -91,13 +91,13 @@ static void UI_OptionDoLayout (uiNode_t *node)
 	node->invalidated = qfalse;
 }
 
-static void UI_OptionPropertyChanged (uiNode_t *node, const value_t *property)
+void uiOptionNode::propertyChanged (uiNode_t *node, const value_t *property)
 {
 	if (property == propertyCollapsed) {
 		UI_Invalidate(node);
 		return;
 	}
-	ui_optionBehaviour->super->propertyChanged(node, property);
+	uiLocatedNode::propertyChanged(node, property);
 }
 
 /**
@@ -132,8 +132,7 @@ void UI_RegisterOptionNode (uiBehaviour_t *behaviour)
 {
 	behaviour->name = "option";
 	behaviour->extraDataSize = sizeof(EXTRADATA_TYPE);
-	behaviour->doLayout = UI_OptionDoLayout;
-	behaviour->propertyChanged = UI_OptionPropertyChanged;
+	behaviour->manager = new uiOptionNode();
 
 	/**
 	 * Displayed text

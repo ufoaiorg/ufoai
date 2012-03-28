@@ -51,7 +51,7 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #define EXTRADATA(node) UI_EXTRADATA(node, EXTRADATA_TYPE)
 #define EXTRADATACONST(node) UI_EXTRADATACONST(node, EXTRADATA_TYPE)
 
-static void UI_StringNodeDraw (uiNode_t *node)
+void uiStringNode::draw (uiNode_t *node)
 {
 	vec2_t nodepos;
 	const char *font = UI_GetFontFromNode(node);
@@ -82,7 +82,7 @@ static void UI_StringNodeDraw (uiNode_t *node)
  * @param[in] x Position x of the mouse
  * @param[in] y Position y of the mouse
  */
-static void UI_StringNodeDrawTooltip (uiNode_t *node, int x, int y)
+void uiStringNode::drawTooltip (uiNode_t *node, int x, int y)
 {
 	if (node->tooltip) {
 		UI_Tooltip(node, x, y);
@@ -104,7 +104,7 @@ static void UI_StringNodeDrawTooltip (uiNode_t *node, int x, int y)
 	}
 }
 
-static void UI_StringNodeLoading (uiNode_t *node)
+void uiStringNode::loading (uiNode_t *node)
 {
 	node->padding = 3;
 	Vector4Set(node->color, 1.0, 1.0, 1.0, 1.0);
@@ -114,9 +114,7 @@ static void UI_StringNodeLoading (uiNode_t *node)
 void UI_RegisterStringNode (uiBehaviour_t *behaviour)
 {
 	behaviour->name = "string";
-	behaviour->draw = UI_StringNodeDraw;
-	behaviour->drawTooltip = UI_StringNodeDrawTooltip;
-	behaviour->loading = UI_StringNodeLoading;
+	behaviour->manager = new uiStringNode();
 	behaviour->extraDataSize = sizeof(EXTRADATA_TYPE);
 
 	/* What to do with text lines longer than node width. Default is to wordwrap them to make multiple lines.

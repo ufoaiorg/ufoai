@@ -117,39 +117,7 @@ const value_t *UI_GetPropertyFromBehaviour (const uiBehaviour_t *behaviour, cons
 
 /** @brief position of virtual function into node behaviour */
 static const int virtualFunctions[] = {
-	offsetof(uiBehaviour_t, draw),
-	offsetof(uiBehaviour_t, drawTooltip),
-	offsetof(uiBehaviour_t, leftClick),
-	offsetof(uiBehaviour_t, rightClick),
-	offsetof(uiBehaviour_t, middleClick),
-	offsetof(uiBehaviour_t, scroll),
-	offsetof(uiBehaviour_t, mouseMove),
-	offsetof(uiBehaviour_t, mouseDown),
-	offsetof(uiBehaviour_t, mouseUp),
-	offsetof(uiBehaviour_t, capturedMouseMove),
-	offsetof(uiBehaviour_t, capturedMouseLost),
-	offsetof(uiBehaviour_t, loading),
-	offsetof(uiBehaviour_t, loaded),
-	offsetof(uiBehaviour_t, windowOpened),
-	offsetof(uiBehaviour_t, windowClosed),
-	offsetof(uiBehaviour_t, clone),
-	offsetof(uiBehaviour_t, newNode),
-	offsetof(uiBehaviour_t, deleteNode),
-	offsetof(uiBehaviour_t, activate),
-	offsetof(uiBehaviour_t, doLayout),
-	offsetof(uiBehaviour_t, dndEnter),
-	offsetof(uiBehaviour_t, dndMove),
-	offsetof(uiBehaviour_t, dndLeave),
-	offsetof(uiBehaviour_t, dndDrop),
-	offsetof(uiBehaviour_t, dndFinished),
-	offsetof(uiBehaviour_t, focusGained),
-	offsetof(uiBehaviour_t, focusLost),
 	offsetof(uiBehaviour_t, extraDataSize),
-	offsetof(uiBehaviour_t, sizeChanged),
-	offsetof(uiBehaviour_t, propertyChanged),
-	offsetof(uiBehaviour_t, getClientPosition),
-	offsetof(uiBehaviour_t, getCellWidth),
-	offsetof(uiBehaviour_t, getCellHeight),
 	-1
 };
 
@@ -165,6 +133,10 @@ void UI_InitializeNodeBehaviour (uiBehaviour_t* behaviour)
 	/* everything inherits 'abstractnode' */
 	if (behaviour->extends == NULL && !Q_streq(behaviour->name, "abstractnode")) {
 		behaviour->extends = "abstractnode";
+	}
+
+	if (behaviour->manager == NULL && behaviour->name[0] != '\0') {
+		Com_Error(ERR_FATAL, "UI_InitializeNodeBehaviour: Behaviour '%s' expect a manager class", behaviour->name);
 	}
 
 	if (behaviour->extends) {

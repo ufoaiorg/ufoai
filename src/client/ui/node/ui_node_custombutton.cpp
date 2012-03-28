@@ -61,7 +61,7 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 /**
  * @brief Handles CustomButton draw
  */
-static void UI_CustomButtonNodeDraw (uiNode_t *node)
+void uiCustomButtonNode::draw (uiNode_t *node)
 {
 	const char *text;
 	int texY;
@@ -119,7 +119,7 @@ void UI_RegisterCustomButtonNode (uiBehaviour_t *behaviour)
 {
 	behaviour->name = "custombutton";
 	behaviour->extends = "button";
-	behaviour->draw = UI_CustomButtonNodeDraw;
+	behaviour->manager = new uiCustomButtonNode();
 	behaviour->extraDataSize = sizeof(EXTRADATA_TYPE);
 
 	/* Skin position. Define the top-left position of the skin we will used from the image.

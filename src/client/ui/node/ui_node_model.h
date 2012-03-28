@@ -30,7 +30,15 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #include "../../cl_renderer.h"	/**< include animState_t */
 
 class uiModelNode : public uiLocatedNode {
-
+	void draw(struct uiNode_s *node);
+	void mouseDown(struct uiNode_s *node, int x, int y, int button);
+	void mouseUp(struct uiNode_s *node, int x, int y, int button);
+	void loading(struct uiNode_s *node);
+	void loaded(struct uiNode_s *node);
+	void clone(const struct uiNode_s *source, struct uiNode_s *clone);
+	void newNode(struct uiNode_s *node);
+	void deleteNode(struct uiNode_s *node);
+	void capturedMouseMove(struct uiNode_s *node, int x, int y);
 };
 
 #define UI_MAX_MODELS		128

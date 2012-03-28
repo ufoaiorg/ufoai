@@ -41,7 +41,7 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 /**
  * @brief Draw an item node
  */
-static void UI_ItemNodeDraw (uiNode_t *node)
+void uiItemNode::draw (uiNode_t *node)
 {
 	const objDef_t *od;
 	const char* ref = UI_GetReferenceString(node, EXTRADATA(node).model);
@@ -81,7 +81,7 @@ void UI_RegisterItemNode (uiBehaviour_t *behaviour)
 {
 	behaviour->name = "item";
 	behaviour->extends = "model";
-	behaviour->draw = UI_ItemNodeDraw;
+	behaviour->manager = new uiItemNode();
 
 	/* Display an item like a container node do it */
 	UI_RegisterExtradataNodeProperty(behaviour, "containerlike", V_BOOL, modelExtraData_t, containerLike);

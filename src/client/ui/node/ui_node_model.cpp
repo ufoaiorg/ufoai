@@ -80,7 +80,7 @@ static void UI_ListUIModels_f (void)
 	}
 }
 
-static void UI_ModelNodeDraw (uiNode_t *node)
+void uiModelNode::draw (uiNode_t *node)
 {
 	const char* ref = UI_GetReferenceString(node, EXTRADATA(node).model);
 	char source[MAX_VAR];
@@ -419,7 +419,7 @@ void UI_DrawModelNode (uiNode_t *node, const char *source)
 static int oldMousePosX = 0;
 static int oldMousePosY = 0;
 
-static void UI_ModelNodeCapturedMouseMove (uiNode_t *node, int x, int y)
+void uiModelNode::capturedMouseMove (uiNode_t *node, int x, int y)
 {
 	float *rotateAngles = EXTRADATA(node).angles;
 
@@ -442,7 +442,7 @@ static void UI_ModelNodeCapturedMouseMove (uiNode_t *node, int x, int y)
 	oldMousePosY = y;
 }
 
-static void UI_ModelNodeMouseDown (uiNode_t *node, int x, int y, int button)
+void uiModelNode::mouseDown (uiNode_t *node, int x, int y, int button)
 {
 	if (button != K_MOUSE1)
 		return;
@@ -453,7 +453,7 @@ static void UI_ModelNodeMouseDown (uiNode_t *node, int x, int y, int button)
 	oldMousePosY = y;
 }
 
-static void UI_ModelNodeMouseUp (uiNode_t *node, int x, int y, int button)
+void uiModelNode::mouseUp (uiNode_t *node, int x, int y, int button)
 {
 	if (button != K_MOUSE1)
 		return;
@@ -465,7 +465,7 @@ static void UI_ModelNodeMouseUp (uiNode_t *node, int x, int y, int button)
 /**
  * @brief Called before loading. Used to set default attribute values
  */
-static void UI_ModelNodeLoading (uiNode_t *node)
+void uiModelNode::loading (uiNode_t *node)
 {
 	Vector4Set(node->color, 1, 1, 1, 1);
 	VectorSet(EXTRADATA(node).scale, 1, 1, 1);
@@ -475,26 +475,26 @@ static void UI_ModelNodeLoading (uiNode_t *node)
 /**
  * @brief Call to update a cloned node
  */
-static void UI_ModelNodeClone (const uiNode_t *source, uiNode_t *clone)
+void uiModelNode::clone (const uiNode_t *source, uiNode_t *clone)
 {
-	localBehaviour->super->clone(source, clone);
+	uiLocatedNode::clone(source, clone);
 	if (!clone->dynamic)
 		EXTRADATA(clone).oldRefValue = UI_AllocStaticString("", MAX_OLDREFVALUE);
 }
 
-static void UI_ModelNodeNew (uiNode_t *node)
+void uiModelNode::newNode (uiNode_t *node)
 {
 	EXTRADATA(node).oldRefValue = (char*) Mem_PoolAlloc(MAX_OLDREFVALUE, ui_dynPool, 0);
 	EXTRADATA(node).oldRefValue[0] = '\0';
 }
 
-static void UI_ModelNodeDelete (uiNode_t *node)
+void uiModelNode::deleteNode (uiNode_t *node)
 {
 	Mem_Free(EXTRADATA(node).oldRefValue);
 	EXTRADATA(node).oldRefValue = NULL;
 }
 
-static void UI_ModelNodeLoaded (uiNode_t *node)
+void uiModelNode::loaded (uiNode_t *node)
 {
 	/* a tag without but not a submodel */
 	if (EXTRADATA(node).tag != NULL && node->behaviour != node->parent->behaviour) {
@@ -516,15 +516,7 @@ void UI_RegisterModelNode (uiBehaviour_t *behaviour)
 	localBehaviour = behaviour;
 	behaviour->name = "model";
 	behaviour->drawItselfChild = qtrue;
-	behaviour->draw = UI_ModelNodeDraw;
-	behaviour->mouseDown = UI_ModelNodeMouseDown;
-	behaviour->mouseUp = UI_ModelNodeMouseUp;
-	behaviour->loading = UI_ModelNodeLoading;
-	behaviour->loaded = UI_ModelNodeLoaded;
-	behaviour->clone = UI_ModelNodeClone;
-	behaviour->newNode = UI_ModelNodeNew;
-	behaviour->deleteNode = UI_ModelNodeDelete;
-	behaviour->capturedMouseMove = UI_ModelNodeCapturedMouseMove;
+	behaviour->manager = new uiModelNode();
 	behaviour->extraDataSize = sizeof(EXTRADATA_TYPE);
 
 	/* Both. Name of the animation for the model */
