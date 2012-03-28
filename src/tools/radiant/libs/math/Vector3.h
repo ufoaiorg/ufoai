@@ -14,12 +14,11 @@
  * execute an inner product of two vectors.
  */
 
-#include "lrint.h"
+#include "FloatTools.h"
 #include "pi.h"
 #include <sstream>
 #include <string>
 #include <cmath>
-#include <float.h>
 
 // BasicVector3: A 3-element vector of type Element
 template<typename Element>
