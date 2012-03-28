@@ -1071,7 +1071,7 @@ window options
 			{
 				tooltip		"_The lightmap block size defines the resolution of the lightmap. Higher block size means using more detailed lightmaps."
 				string		"_Lightmap Block Size:"
-				pos			"32 395"
+				pos			"32 370"
 				size		"240 20"
 			}
 			selectbox lightmapres_box
@@ -1079,7 +1079,7 @@ window options
 				{
 					tooltip		"_Low means a maximum lightmap resolution of 512x512 pixel. High means up to 2048x2048 pixel."
 					cvar		*cvar:r_maxlightmap
-					pos			"339 397"
+					pos			"339 372"
 					size		"125 20"
 				}
 				option low_value {
@@ -1106,23 +1106,41 @@ window options
 			{
 				tooltip		"_Amount of light emitting from the sun and shining on the earth."
 				string		"_Geo Ambient Lighting:"
-				pos			"32 420"
+				pos			"32 395"
 				size		"320 20"
 			}
 			image m3dmapambient_rahmen
 			{
 				src		"ui/bar_rahmen"
-				pos			"204 447"
+				pos			"204 422"
 			}
 			bar m3dmapambient_bar
 			{
 				current		*cvar:cl_3dmapAmbient
-				pos			"213 452"
+				pos			"213 427"
 				size		"238 6"
 				color		"0 .8 0 1"
 				min			-1
 				max			3
 				onClick		{ }
+			}
+			// ====================
+			// RENDERER INTEL HACK
+			// ====================
+			string intelhack_str
+			{
+				tooltip		"_Enabled by default for compatibility reasons."
+				string		"_Intel Graphics Hardware Hack:"
+				pos			"32 485"
+				size		"320 20"
+			}
+			checkbox intelhack
+			{
+				tooltip		"_Disable the Intel graphics hardware hack.\nThis hack enables texture compression and disables GLSL shaders on Intel chips for compatibility reasons with older Intel graphics hardware. Disable this if you are playing on modern hardware to be able to turn on advanced rendering features."
+				current		*cvar:r_intel_hack
+				pos			"445 485"
+				size		"20 18"
+				image		"ui/checkbox_blue"
 			}
 		}
 
