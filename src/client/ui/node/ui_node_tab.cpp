@@ -125,7 +125,7 @@ static uiNode_t* UI_TabNodeTabAtPosition (const uiNode_t *node, int x, int y)
 /**
  * @brief Handles tab clicks
  */
-static void UI_TabNodeClick (uiNode_t * node, int x, int y)
+void uiTabNode::leftClick (uiNode_t * node, int x, int y)
 {
 	uiNode_t* option;
 
@@ -173,7 +173,7 @@ static inline void UI_TabNodeDrawJunction (const char *image, int x, int y, ui_t
 		0 + TILE_SIZE * (1 + rightType), 0 + TILE_SIZE * leftType, image);
 }
 
-static void UI_TabNodeDraw (uiNode_t *node)
+void uiTabNode::draw (uiNode_t *node)
 {
 	ui_tabStatus_t lastStatus = UI_TAB_NOTHING;
 	uiNode_t* option;
@@ -290,7 +290,7 @@ static void UI_TabNodeDraw (uiNode_t *node)
  * @param[in] x Position x of the mouse
  * @param[in] y Position y of the mouse
  */
-static void UI_TabNodeDrawTooltip (uiNode_t *node, int x, int y)
+void uiTabNode::drawTooltip (uiNode_t *node, int x, int y)
 {
 	uiNode_t *option;
 	const int tooltipWidth = 250;
@@ -314,7 +314,7 @@ static void UI_TabNodeDrawTooltip (uiNode_t *node, int x, int y)
  * check cvar then, reduce runtime check
  * @todo move cvar check to AbstractOption
  */
-static void UI_TabNodeInit (uiNode_t *node, linkedList_t *params)
+void uiTabNode::windowOpened (uiNode_t *node, linkedList_t *params)
 {
 	const char *cvarName;
 
@@ -344,9 +344,6 @@ void UI_RegisterTabNode (uiBehaviour_t *behaviour)
 {
 	behaviour->name = "tab";
 	behaviour->extends = "abstractoption";
-	behaviour->draw = UI_TabNodeDraw;
-	behaviour->drawTooltip = UI_TabNodeDrawTooltip;
-	behaviour->leftClick = UI_TabNodeClick;
-	behaviour->windowOpened = UI_TabNodeInit;
+	behaviour->manager = new uiTabNode();
 	behaviour->drawItselfChild = qtrue;
 }

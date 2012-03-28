@@ -127,7 +127,7 @@ static void UI_MaterialEditorNodeUpdateView (uiNode_t *node, qboolean reset)
 /**
  * @param node The node to draw
  */
-static void UI_MaterialEditorNodeDraw (uiNode_t *node)
+void uiMaterialEditorNode::draw (uiNode_t *node)
 {
 	int i;
 	vec2_t pos;
@@ -325,7 +325,7 @@ static int UI_MaterialEditorNameToStage (const char *stageName)
 	return -1;
 }
 
-static void UI_MaterialEditorMouseDown (uiNode_t *node, int x, int y, int button)
+void uiMaterialEditorNode::mouseDown (uiNode_t *node, int x, int y, int button)
 {
 	int id;
 	if (button != K_MOUSE1)
@@ -351,7 +351,7 @@ static void UI_MaterialEditorMouseDown (uiNode_t *node, int x, int y, int button
 /**
  * @brief Called when we push a window with this node
  */
-static void UI_MaterialEditorNodeInit (uiNode_t *node, linkedList_t *params)
+void uiMaterialEditorNode::windowOpened (uiNode_t *node, linkedList_t *params)
 {
 	node->num = -1;
 	UI_MaterialEditorNodeUpdateView(node, qtrue);
@@ -360,7 +360,7 @@ static void UI_MaterialEditorNodeInit (uiNode_t *node, linkedList_t *params)
 /**
  * @brief Called when the user wheel the mouse over the node
  */
-static qboolean UI_MaterialEditorNodeWheel (uiNode_t *node, int deltaX, int deltaY)
+qboolean uiMaterialEditorNode::scroll (uiNode_t *node, int deltaX, int deltaY)
 {
 	qboolean down = deltaY > 0;
 	const int diff = (down) ? 1 : -1;
@@ -594,10 +594,7 @@ void UI_RegisterMaterialEditorNode (uiBehaviour_t *behaviour)
 {
 	behaviour->name = "material_editor";
 	behaviour->extends = "abstractscrollable";
-	behaviour->draw = UI_MaterialEditorNodeDraw;
-	behaviour->windowOpened = UI_MaterialEditorNodeInit;
-	behaviour->mouseDown = UI_MaterialEditorMouseDown;
-	behaviour->scroll = UI_MaterialEditorNodeWheel;
+	behaviour->manager = new uiMaterialEditorNode();
 
 	/** @todo convert it to ui functions */
 	Cmd_AddCommand("ui_materialeditor_removestage", UI_MaterialEditorRemoveStage_f, "Removes the selected material stage");

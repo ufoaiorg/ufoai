@@ -129,7 +129,7 @@ static int UI_TextNodeGetLine (const uiNode_t *node, int x, int y)
 	return line;
 }
 
-static void UI_TextNodeMouseMove (uiNode_t *node, int x, int y)
+void uiTextNode::mouseMove (uiNode_t *node, int x, int y)
 {
 	EXTRADATA(node).lineUnderMouse = UI_TextNodeGetLine(node, x, y);
 }
@@ -369,7 +369,7 @@ static void UI_TextUpdateCache (uiNode_t *node)
 /**
  * @brief Draw a text node
  */
-static void UI_TextNodeDraw (uiNode_t *node)
+void uiTextNode::draw (uiNode_t *node)
 {
 	const uiSharedData_t *shared;
 
@@ -406,7 +406,7 @@ static void UI_TextNodeDraw (uiNode_t *node)
  * @brief Calls the script command for a text node that is clickable
  * @sa UI_TextNodeRightClick
  */
-static void UI_TextNodeClick (uiNode_t * node, int x, int y)
+void uiTextNode::leftClick (uiNode_t * node, int x, int y)
 {
 	int line = UI_TextNodeGetLine(node, x, y);
 
@@ -423,7 +423,7 @@ static void UI_TextNodeClick (uiNode_t * node, int x, int y)
  * @brief Calls the script command for a text node that is clickable via right mouse button
  * @sa UI_TextNodeClick
  */
-static void UI_TextNodeRightClick (uiNode_t * node, int x, int y)
+void uiTextNode::rightClick (uiNode_t * node, int x, int y)
 {
 	int line = UI_TextNodeGetLine(node, x, y);
 
@@ -438,7 +438,7 @@ static void UI_TextNodeRightClick (uiNode_t * node, int x, int y)
 
 /**
  */
-static qboolean UI_TextNodeMouseWheel (uiNode_t *node, int deltaX, int deltaY)
+qboolean uiTextNode::scroll (uiNode_t *node, int deltaX, int deltaY)
 {
 	qboolean updated;
 	qboolean down = deltaY > 0;
@@ -462,14 +462,14 @@ static qboolean UI_TextNodeMouseWheel (uiNode_t *node, int deltaX, int deltaY)
 	return updated;
 }
 
-static void UI_TextNodeLoading (uiNode_t *node)
+void uiTextNode::loading (uiNode_t *node)
 {
 	EXTRADATA(node).textLineSelected = -1; /**< Invalid/no line selected per default. */
 	Vector4Set(node->selectedColor, 1.0, 1.0, 1.0, 1.0);
 	Vector4Set(node->color, 1.0, 1.0, 1.0, 1.0);
 }
 
-static void UI_TextNodeLoaded (uiNode_t *node)
+void uiTextNode::loaded (uiNode_t *node)
 {
 	int lineheight = EXTRADATA(node).lineHeight;
 	/* auto compute lineheight */
@@ -514,7 +514,7 @@ static void UI_TextNodeLoaded (uiNode_t *node)
  * @brief Track mouse down/up events to implement drag&drop-like scrolling, for touchscreen devices
  * @sa UI_TextNodeMouseUp, UI_TextNodeCapturedMouseMove
 */
-static void UI_TextNodeMouseDown (struct uiNode_s *node, int x, int y, int button)
+void uiTextNode::mouseDown (struct uiNode_s *node, int x, int y, int button)
 {
 	if (!UI_GetMouseCapture() && button == K_MOUSE1 &&
 		EXTRADATA(node).super.scrollY.fullSize > EXTRADATA(node).super.scrollY.viewSize) {
@@ -524,13 +524,13 @@ static void UI_TextNodeMouseDown (struct uiNode_s *node, int x, int y, int butto
 	}
 }
 
-static void UI_TextNodeMouseUp (struct uiNode_s *node, int x, int y, int button)
+void uiTextNode::mouseUp (struct uiNode_s *node, int x, int y, int button)
 {
 	if (UI_GetMouseCapture() == node)  /* More checks can never hurt */
 		UI_MouseRelease();
 }
 
-static void UI_TextNodeCapturedMouseMove (uiNode_t *node, int x, int y)
+void uiTextNode::capturedMouseMove (uiNode_t *node, int x, int y)
 {
 	const int lineHeight = node->behaviour->getCellHeight(node);
 	const int deltaY = (mouseScrollY - y) / lineHeight;
@@ -550,7 +550,7 @@ static void UI_TextNodeCapturedMouseMove (uiNode_t *node, int x, int y)
  * Here we guess the widget can scroll pixel per pixel.
  * @return Size in pixel.
  */
-static int UI_TextNodeGetCellHeight (uiNode_t *node)
+int uiTextNode::getCellHeight (uiNode_t *node)
 {
 	int lineHeight = EXTRADATA(node).lineHeight;
 	if (lineHeight == 0)
@@ -562,18 +562,8 @@ void UI_RegisterTextNode (uiBehaviour_t *behaviour)
 {
 	behaviour->name = "text";
 	behaviour->extends = "abstractscrollable";
-	behaviour->draw = UI_TextNodeDraw;
-	behaviour->leftClick = UI_TextNodeClick;
-	behaviour->rightClick = UI_TextNodeRightClick;
-	behaviour->scroll = UI_TextNodeMouseWheel;
-	behaviour->mouseMove = UI_TextNodeMouseMove;
-	behaviour->mouseDown = UI_TextNodeMouseDown;
-	behaviour->mouseUp = UI_TextNodeMouseUp;
-	behaviour->capturedMouseMove = UI_TextNodeCapturedMouseMove;
-	behaviour->loading = UI_TextNodeLoading;
-	behaviour->loaded = UI_TextNodeLoaded;
+	behaviour->manager = new uiTextNode();
 	behaviour->extraDataSize = sizeof(EXTRADATA_TYPE);
-	behaviour->getCellHeight = UI_TextNodeGetCellHeight;
 
 	/* Current selected line  */
 	UI_RegisterExtradataNodeProperty(behaviour, "lineselected", V_INT, textExtraData_t, textLineSelected);

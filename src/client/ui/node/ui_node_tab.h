@@ -29,7 +29,10 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #include "ui_node_abstractoption.h"
 
 class uiTabNode : public uiAbstractOptionNode {
-
+	void draw(struct uiNode_s *node);
+	void drawTooltip(struct uiNode_s *node, int x, int y);
+	void leftClick(struct uiNode_s *node, int x, int y);
+	void windowOpened(struct uiNode_s *node, linkedList_t *params);
 };
 
 void UI_RegisterTabNode(struct uiBehaviour_s *behaviour);

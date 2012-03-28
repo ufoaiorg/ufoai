@@ -115,6 +115,13 @@ public:
 	virtual qboolean keyPressed(struct uiNode_s *node, unsigned int key, unsigned short unicode) {return qfalse;}
 	virtual qboolean keyReleased(struct uiNode_s *node, unsigned int key, unsigned short unicode) {return qfalse;}
 
+	/** Return the position of the client zone into the node */
+	virtual void getClientPosition(const struct uiNode_s *node, vec2_t position) {}
+	/** cell size */
+	virtual int getCellWidth (uiNode_t *node) {return 1;}
+	/** cell size */
+	virtual int getCellHeight (uiNode_t *node) {return 1;}
+
 };
 
 void UI_RegisterAbstractNode(struct uiBehaviour_s *);

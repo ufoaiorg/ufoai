@@ -42,7 +42,7 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
  */
 qboolean UI_AbstractScrollableNodeIsSizeChange (uiNode_t *node)
 {
-	assert(UI_NodeInstanceOf(node, "abstractscrollable"));
+	assert(UI_Node_IsScrollableContainer(node));
 
 	if (!Vector2Equal(node->size, EXTRADATA(node).cacheSize)) {
 		Vector2Copy(node->size, EXTRADATA(node).cacheSize);
@@ -113,7 +113,7 @@ qboolean UI_SetScroll (uiScroll_t *scroll, int viewPos, int viewSize, int fullSi
 qboolean UI_AbstractScrollableNodeSetY (uiNode_t *node, int viewPos, int viewSize, int fullSize)
 {
 	qboolean updated;
-	assert(UI_NodeInstanceOf(node, "abstractscrollable"));
+	assert(UI_Node_IsScrollableContainer(node));
 
 	updated = UI_SetScroll(&EXTRADATA(node).scrollY, viewPos, viewSize, fullSize);
 
@@ -160,27 +160,16 @@ static void UI_AbstractScrollableNodeMoveEnd (uiNode_t *node, const uiCallContex
  */
 qboolean UI_AbstractScrollableNodeScrollY (uiNode_t *node, int offset)
 {
-	assert(UI_NodeInstanceOf(node, "abstractscrollable"));
+	assert(UI_Node_IsScrollableContainer(node));
 	return UI_AbstractScrollableNodeSetY(node, EXTRADATA(node).scrollY.viewPos + offset, -1, -1);
-}
-
-/**
- * @brief Return size of the cell, which is the size (in virtual "pixel") which represente 1 in the scroll values.
- * Here expect the widget can scroll pixel per pixel.
- * @return Size in pixel.
- */
-static int UI_AbstractScrollableGetCellSize (uiNode_t *node)
-{
-	return 1;
 }
 
 void UI_RegisterAbstractScrollableNode (uiBehaviour_t *behaviour)
 {
 	behaviour->name = "abstractscrollable";
+	behaviour->manager = new uiAbstractScrollableNode();
 	behaviour->isAbstract = qtrue;
 	behaviour->extraDataSize = sizeof(EXTRADATA_TYPE);
-	behaviour->getCellWidth = UI_AbstractScrollableGetCellSize;
-	behaviour->getCellHeight = UI_AbstractScrollableGetCellSize;
 
 
 	/* position of the vertical view (into the full number of elements the node contain) */

@@ -28,7 +28,13 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #include "ui_node_abstractscrollable.h"
 
 class uiMessageListNode : public uiAbstractScrollableNode {
-
+	void draw(struct uiNode_s *node);
+	void loading(struct uiNode_s *node);
+	qboolean scroll(struct uiNode_s *node, int deltaX, int deltaY);
+	void mouseDown(struct uiNode_s *node, int x, int y, int button);
+	void mouseUp(struct uiNode_s *node, int x, int y, int button);
+	void capturedMouseMove(struct uiNode_s *node, int x, int y);
+	int getCellHeight (uiNode_t *node);
 };
 
 struct uiBehaviour_s;

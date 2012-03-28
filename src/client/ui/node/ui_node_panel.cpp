@@ -48,7 +48,7 @@ static const uiBehaviour_t *localBehaviour;
 /**
  * @brief Handles Button draw
  */
-static void UI_PanelNodeDraw (uiNode_t *node)
+void uiPanelNode::draw (uiNode_t *node)
 {
 	static const int panelTemplate[] = {
 		CORNER_SIZE, MID_SIZE, CORNER_SIZE,
@@ -422,7 +422,7 @@ static void UI_ColumnLayout (uiNode_t *node)
 	Mem_Free(columnSize);
 }
 
-static void UI_PanelNodeDoLayout (uiNode_t *node)
+void uiPanelNode::doLayout (uiNode_t *node)
 {
 	if (!node->invalidated)
 		return;
@@ -462,7 +462,7 @@ static void UI_PanelNodeDoLayout (uiNode_t *node)
 /**
  * @brief Handled after the end of the load of the node from script (all data and/or child are set)
  */
-static void UI_PanelNodeLoaded (uiNode_t *node)
+void uiPanelNode::loaded (uiNode_t *node)
 {
 #ifdef DEBUG
 	if (node->size[0] < CORNER_SIZE + MID_SIZE + CORNER_SIZE || node->size[1] < CORNER_SIZE + MID_SIZE + CORNER_SIZE)
@@ -472,13 +472,13 @@ static void UI_PanelNodeLoaded (uiNode_t *node)
 		UI_Invalidate(node);
 }
 
-static void UI_PanelNodeGetClientPosition (const uiNode_t *node, vec2_t position)
+void uiPanelNode::getClientPosition (const uiNode_t *node, vec2_t position)
 {
 	position[0] = -EXTRADATACONST(node).super.scrollX.viewPos;
 	position[1] = -EXTRADATACONST(node).super.scrollY.viewPos;
 }
 
-static void UI_PanelPropertyChanged (uiNode_t *node, const value_t *property)
+void uiPanelNode::propertyChanged (uiNode_t *node, const value_t *property)
 {
 	/** @todo move it to registration code when it is possible */
 	if (propertyPadding == NULL) {
@@ -498,7 +498,7 @@ static void UI_PanelPropertyChanged (uiNode_t *node, const value_t *property)
  * @param[in] deltaX horizontal scrolling value (not used)
  * @param[in] deltaX vertical scrolling value
  */
-static qboolean UI_PanelNodeMouseWheel (uiNode_t *node, int deltaX, int deltaY)
+qboolean uiPanelNode::scroll (uiNode_t *node, int deltaX, int deltaY)
 {
 	qboolean down = deltaY > 0;
 	qboolean updated;
@@ -533,12 +533,7 @@ void UI_RegisterPanelNode (uiBehaviour_t *behaviour)
 	behaviour->extends = "abstractscrollable";
 	behaviour->name = "panel";
 	behaviour->extraDataSize = sizeof(EXTRADATA_TYPE);
-	behaviour->draw = UI_PanelNodeDraw;
-	behaviour->loaded = UI_PanelNodeLoaded;
-	behaviour->doLayout = UI_PanelNodeDoLayout;
-	behaviour->getClientPosition = UI_PanelNodeGetClientPosition;
-	behaviour->propertyChanged = UI_PanelPropertyChanged;
-	behaviour->scroll = UI_PanelNodeMouseWheel;
+	behaviour->manager = new uiPanelNode();
 
 	/**
 	 * Select a layout manager to set position and size of child. Most of layout manager

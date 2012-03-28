@@ -127,7 +127,7 @@ static int UI_TextNodeGetLine (const uiNode_t *node, int x, int y)
 	return line;
 }
 
-static void UI_TextNodeMouseMove (uiNode_t *node, int x, int y)
+void uiText2Node::mouseMove (uiNode_t *node, int x, int y)
 {
 	EXTRADATA(node).super.lineUnderMouse = UI_TextNodeGetLine(node, x, y);
 }
@@ -252,7 +252,7 @@ static void UI_TextUpdateCache (uiNode_t *node)
 /**
  * @brief Draw a text node
  */
-static void UI_TextNodeDraw (uiNode_t *node)
+void uiText2Node::draw (uiNode_t *node)
 {
 	const uiSharedData_t *shared;
 
@@ -283,7 +283,7 @@ static void UI_TextNodeDraw (uiNode_t *node)
  * @brief Calls the script command for a text node that is clickable
  * @sa UI_TextNodeRightClick
  */
-static void UI_TextNodeClick (uiNode_t * node, int x, int y)
+void uiText2Node::leftClick (uiNode_t * node, int x, int y)
 {
 	int line = UI_TextNodeGetLine(node, x, y);
 
@@ -300,7 +300,7 @@ static void UI_TextNodeClick (uiNode_t * node, int x, int y)
  * @brief Calls the script command for a text node that is clickable via right mouse button
  * @sa UI_TextNodeClick
  */
-static void UI_TextNodeRightClick (uiNode_t * node, int x, int y)
+void uiText2Node::rightClick (uiNode_t * node, int x, int y)
 {
 	int line = UI_TextNodeGetLine(node, x, y);
 
@@ -313,14 +313,14 @@ static void UI_TextNodeRightClick (uiNode_t * node, int x, int y)
 		UI_ExecuteEventActions(node, node->onRightClick);
 }
 
-static void UI_TextNodeLoading (uiNode_t *node)
+void uiText2Node::loading (uiNode_t *node)
 {
 	EXTRADATA(node).super.textLineSelected = -1; /**< Invalid/no line selected per default. */
 	Vector4Set(node->selectedColor, 1.0, 1.0, 1.0, 1.0);
 	Vector4Set(node->color, 1.0, 1.0, 1.0, 1.0);
 }
 
-static void UI_TextNodeLoaded (uiNode_t *node)
+void uiText2Node::loaded (uiNode_t *node)
 {
 	int lineheight = EXTRADATA(node).super.lineHeight;
 	/* auto compute lineheight */
@@ -365,11 +365,6 @@ void UI_RegisterText2Node (uiBehaviour_t *behaviour)
 {
 	behaviour->name = "text2";
 	behaviour->extends = "text";
-	behaviour->draw = UI_TextNodeDraw;
-	behaviour->leftClick = UI_TextNodeClick;
-	behaviour->rightClick = UI_TextNodeRightClick;
-	behaviour->mouseMove = UI_TextNodeMouseMove;
-	behaviour->loading = UI_TextNodeLoading;
-	behaviour->loaded = UI_TextNodeLoaded;
+	behaviour->manager = new uiText2Node();
 	behaviour->extraDataSize = sizeof(EXTRADATA_TYPE);
 }

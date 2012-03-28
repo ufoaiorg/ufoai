@@ -34,15 +34,13 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #define EXTRADATA_TYPE abstractOptionExtraData_t
 #define EXTRADATA(node) UI_EXTRADATA(node, EXTRADATA_TYPE)
 
-const uiBehaviour_t *abstractOptionBehaviour;
-
 /**
  * @brief Sort options by alphabet
  */
 void UI_OptionNodeSortOptions (uiNode_t *node)
 {
 	uiNode_t *option;
-	assert(UI_NodeInstanceOf(node, "abstractoption"));
+	assert(UI_Node_IsOptionContainer(node));
 	UI_SortOptions(&node->firstChild);
 
 	/** update lastChild */
@@ -76,7 +74,7 @@ void UI_AbstractOptionSetCurrentValue(uiNode_t * node, const char *value)
 		UI_ExecuteEventActions(node, node->onChange);
 }
 
-static void UI_AbstractOptionDoLayout (uiNode_t *node)
+void uiAbstractOptionNode::doLayout (uiNode_t *node)
 {
 	uiNode_t *option = node->firstChild;
 
@@ -125,7 +123,7 @@ uiNode_t* UI_AbstractOptionGetFirstOption (uiNode_t * node)
  * Here expect the widget can scroll pixel per pixel.
  * @return Size in pixel.
  */
-static int UI_AbstractOptionGetCellWidth (uiNode_t *node)
+int uiAbstractOptionNode::getCellWidth (uiNode_t *node)
 {
 	return 1;
 }
@@ -135,7 +133,7 @@ static int UI_AbstractOptionGetCellWidth (uiNode_t *node)
  * Here we guess the widget can scroll pixel per pixel.
  * @return Size in pixel.
  */
-static int UI_AbstractOptionGetCellHeight (uiNode_t *node)
+int uiAbstractOptionNode::getCellHeight (uiNode_t *node)
 {
 	return 1;
 }
@@ -146,10 +144,7 @@ void UI_RegisterAbstractOptionNode (uiBehaviour_t *behaviour)
 	behaviour->isAbstract = qtrue;
 	behaviour->extraDataSize = sizeof(EXTRADATA_TYPE);
 	behaviour->drawItselfChild = qtrue;
-	behaviour->doLayout = UI_AbstractOptionDoLayout;
-	abstractOptionBehaviour = behaviour;
-	behaviour->getCellWidth = UI_AbstractOptionGetCellWidth;
-	behaviour->getCellHeight = UI_AbstractOptionGetCellHeight;
+	behaviour->manager = new uiAbstractOptionNode();
 
 	/** Optional. Data ID we want to use. It must be an option list. It substitute to the inline options */
 	UI_RegisterExtradataNodeProperty(behaviour, "dataid", V_UI_DATAID, EXTRADATA_TYPE, dataId);

@@ -34,6 +34,7 @@ qboolean UI_Node_IsDrawable (const struct uiNode_s *node);
 qboolean UI_Node_IsAbstract (const struct uiNode_s *node);
 qboolean UI_Node_IsFunction (const struct uiNode_s *node);
 qboolean UI_Node_IsWindow (const struct uiNode_s *node);
+qboolean UI_Node_IsOptionContainer (const struct uiNode_s *node);
 qboolean UI_Node_IsBattleScape (const struct uiNode_s *node);
 qboolean UI_Node_IsScrollableContainer (const struct uiNode_s *node);
 qboolean UI_Node_IsDrawItselfChild (const struct uiNode_s *node);

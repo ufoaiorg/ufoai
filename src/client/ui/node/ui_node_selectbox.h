@@ -28,7 +28,12 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #include "ui_node_abstractoption.h"
 
 class uiSelectBoxNode : public uiAbstractOptionNode {
-
+	void draw(struct uiNode_s *node);
+	void drawOverWindow(struct uiNode_s *node);
+	void leftClick(struct uiNode_s *node, int x, int y);
+	void capturedMouseMove(struct uiNode_s *node, int x, int y);
+	void loading(struct uiNode_s *node);
+	void loaded(struct uiNode_s *node);
 };
 
 void UI_RegisterSelectBoxNode(struct uiBehaviour_s *behaviour);

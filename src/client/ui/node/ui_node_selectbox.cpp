@@ -71,7 +71,7 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
  * @brief call when the mouse move is the node is captured
  * @todo we can remove the loop if we save the current element in the node
  */
-static void UI_SelectBoxNodeCapturedMouseMove (uiNode_t *node, int x, int y)
+void uiSelectBoxNode::capturedMouseMove (uiNode_t *node, int x, int y)
 {
 	uiNode_t* option;
 	int posy;
@@ -92,7 +92,7 @@ static void UI_SelectBoxNodeCapturedMouseMove (uiNode_t *node, int x, int y)
 	}
 }
 
-static void UI_SelectBoxNodeDraw (uiNode_t *node)
+void uiSelectBoxNode::draw (uiNode_t *node)
 {
 	uiNode_t* option;
 	int selBoxX, selBoxY;
@@ -156,7 +156,7 @@ static void UI_SelectBoxNodeDraw (uiNode_t *node)
 	}
 }
 
-static void UI_SelectBoxNodeDrawOverWindow (uiNode_t *node)
+void uiSelectBoxNode::drawOverWindow (uiNode_t *node)
 {
 	uiNode_t* option;
 	int selBoxX, selBoxY;
@@ -233,7 +233,7 @@ static void UI_SelectBoxNodeDrawOverWindow (uiNode_t *node)
 /**
  * @brief Handles selectboxes clicks
  */
-static void UI_SelectBoxNodeClick (uiNode_t *node, int x, int y)
+void uiSelectBoxNode::leftClick (uiNode_t *node, int x, int y)
 {
 	uiNode_t* option;
 	int clickedAtOption;
@@ -288,12 +288,12 @@ static void UI_SelectBoxNodeClick (uiNode_t *node, int x, int y)
 /**
  * @brief Called before loading. Used to set default attribute values
  */
-static void UI_SelectBoxNodeLoading (uiNode_t *node)
+void uiSelectBoxNode::loading (uiNode_t *node)
 {
 	Vector4Set(node->color, 0.6, 0.6, 0.6, 0.3);
 }
 
-static void UI_SelectBoxNodeLoaded (uiNode_t *node)
+void uiSelectBoxNode::loaded (uiNode_t *node)
 {
 	/* force a size (according to the texture) */
 	node->size[1] = SELECTBOX_DEFAULT_HEIGHT;
@@ -303,11 +303,6 @@ void UI_RegisterSelectBoxNode (uiBehaviour_t *behaviour)
 {
 	behaviour->name = "selectbox";
 	behaviour->extends = "abstractoption";
-	behaviour->draw = UI_SelectBoxNodeDraw;
-	behaviour->drawOverWindow = UI_SelectBoxNodeDrawOverWindow;
-	behaviour->leftClick = UI_SelectBoxNodeClick;
-	behaviour->loading = UI_SelectBoxNodeLoading;
-	behaviour->loaded = UI_SelectBoxNodeLoaded;
-	behaviour->capturedMouseMove = UI_SelectBoxNodeCapturedMouseMove;
+	behaviour->manager = new uiSelectBoxNode();
 	behaviour->drawItselfChild = qtrue;
 }

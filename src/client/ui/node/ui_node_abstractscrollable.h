@@ -34,13 +34,6 @@ struct uiAction_s;
 struct uiNode_s;
 
 class uiAbstractScrollableNode : public uiLocatedNode {
-public:
-	/** Return the position of the client zone into the node */
-	virtual void getClientPosition(const struct uiNode_s *node, vec2_t position) {}
-	/** cell size */
-	virtual int getCellWidth (uiNode_t *node) {return 1;}
-	/** cell size */
-	virtual int getCellHeight (uiNode_t *node) {return 1;}
 };
 
 /**

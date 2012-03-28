@@ -28,7 +28,15 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #include "../ui_nodes.h"
 
 class uiOptionListNode : public uiAbstractOptionNode {
-
+	void draw(struct uiNode_s *node);
+	void leftClick(struct uiNode_s *node, int x, int y);
+	qboolean scroll(struct uiNode_s *node, int deltaX, int deltaY);
+	void mouseDown(struct uiNode_s *node, int x, int y, int button);
+	void mouseUp(struct uiNode_s *node, int x, int y, int button);
+	void capturedMouseMove(struct uiNode_s *node, int x, int y);
+	void loading(struct uiNode_s *node);
+	void loaded(struct uiNode_s *node);
+	int getCellHeight(struct uiNode_s *node);
 };
 
 void UI_RegisterOptionListNode(struct uiBehaviour_s *behaviour);

@@ -109,7 +109,7 @@ static uiNode_t* UI_OptionTreeNodeGetFirstOption (uiNode_t * node)
 	}
 }
 
-static void UI_OptionTreeNodeDraw (uiNode_t *node)
+void uiOptionTreeNode::draw (uiNode_t *node)
 {
 	static const int panelTemplate[] = {
 		CORNER_SIZE, MID_SIZE, CORNER_SIZE,
@@ -246,7 +246,7 @@ static uiNode_t* UI_OptionTreeNodeGetOptionAtPosition (uiNode_t * node, int x, i
 /**
  * @brief Handles selectboxes clicks
  */
-static void UI_OptionTreeNodeClick (uiNode_t * node, int x, int y)
+void uiOptionTreeNode::leftClick (uiNode_t * node, int x, int y)
 {
 	uiNode_t* option;
 	int depth;
@@ -277,7 +277,7 @@ static void UI_OptionTreeNodeClick (uiNode_t * node, int x, int y)
 /**
  * @brief Auto scroll the list
  */
-static qboolean UI_OptionTreeNodeMouseWheel (uiNode_t *node, int deltaX, int deltaY)
+qboolean uiOptionTreeNode::scroll (uiNode_t *node, int deltaX, int deltaY)
 {
 	qboolean down = deltaY > 0;
 	qboolean updated;
@@ -306,14 +306,14 @@ static qboolean UI_OptionTreeNodeMouseWheel (uiNode_t *node, int deltaX, int del
 /**
  * @brief Called before loading. Used to set default attribute values
  */
-static void UI_OptionTreeNodeLoading (uiNode_t *node)
+void uiOptionTreeNode::loading (uiNode_t *node)
 {
 	Vector4Set(node->color, 1, 1, 1, 1);
 	EXTRADATA(node).versionId = -1;
 	node->padding = 3;
 }
 
-static void UI_OptionTreeNodeLoaded (uiNode_t *node)
+void uiOptionTreeNode::loaded (uiNode_t *node)
 {
 }
 
@@ -367,7 +367,7 @@ static void UI_OptionTreeSetSelectedValue (uiNode_t *node, const uiCallContext_t
 	}
 }
 
-static void UI_OptionTreeNodeDoLayout (uiNode_t *node)
+void uiOptionTreeNode::doLayout (uiNode_t *node)
 {
 	UI_OptionTreeNodeUpdateCache(node);
 	node->invalidated = qfalse;
@@ -377,7 +377,7 @@ static void UI_OptionTreeNodeDoLayout (uiNode_t *node)
  * @brief Track mouse down/up events to implement drag&drop-like scrolling, for touchscreen devices
  * @sa UI_OptionTreeNodeMouseUp, UI_OptionTreeNodeCapturedMouseMove
 */
-static void UI_OptionTreeNodeMouseDown (struct uiNode_s *node, int x, int y, int button)
+void uiOptionTreeNode::mouseDown (struct uiNode_s *node, int x, int y, int button)
 {
 	if (!UI_GetMouseCapture() && button == K_MOUSE1 &&
 		EXTRADATA(node).scrollY.fullSize > EXTRADATA(node).scrollY.viewSize) {
@@ -387,13 +387,13 @@ static void UI_OptionTreeNodeMouseDown (struct uiNode_s *node, int x, int y, int
 	}
 }
 
-static void UI_OptionTreeNodeMouseUp (struct uiNode_s *node, int x, int y, int button)
+void uiOptionTreeNode::mouseUp (struct uiNode_s *node, int x, int y, int button)
 {
 	if (UI_GetMouseCapture() == node)  /* More checks can never hurt */
 		UI_MouseRelease();
 }
 
-static void UI_OptionTreeNodeCapturedMouseMove (uiNode_t *node, int x, int y)
+void uiOptionTreeNode::capturedMouseMove (uiNode_t *node, int x, int y)
 {
 	const int lineHeight = node->behaviour->getCellHeight(node);
 	const int deltaY = (mouseScrollY - y) / lineHeight;
@@ -416,7 +416,7 @@ static void UI_OptionTreeNodeCapturedMouseMove (uiNode_t *node, int x, int y)
  * Here we guess the widget can scroll pixel per pixel.
  * @return Size in pixel.
  */
-static int UI_OptionTreeNodeGetCellHeight (uiNode_t *node)
+int uiOptionTreeNode::getCellHeight (uiNode_t *node)
 {
 	int lineHeight = EXTRADATA(node).lineHeight;
 	if (lineHeight == 0)
@@ -428,16 +428,7 @@ void UI_RegisterOptionTreeNode (uiBehaviour_t *behaviour)
 {
 	behaviour->name = "optiontree";
 	behaviour->extends = "abstractoption";
-	behaviour->draw = UI_OptionTreeNodeDraw;
-	behaviour->leftClick = UI_OptionTreeNodeClick;
-	behaviour->scroll = UI_OptionTreeNodeMouseWheel;
-	behaviour->mouseDown = UI_OptionTreeNodeMouseDown;
-	behaviour->mouseUp = UI_OptionTreeNodeMouseUp;
-	behaviour->capturedMouseMove = UI_OptionTreeNodeCapturedMouseMove;
-	behaviour->loading = UI_OptionTreeNodeLoading;
-	behaviour->loaded = UI_OptionTreeNodeLoaded;
-	behaviour->doLayout = UI_OptionTreeNodeDoLayout;
-	behaviour->getCellHeight = UI_OptionTreeNodeGetCellHeight;
+	behaviour->manager = new uiOptionTreeNode();
 	behaviour->drawItselfChild = qtrue;
 
 	/* Call it to toggle the node status. */

@@ -173,7 +173,7 @@ static void UI_MessageDraw (const uiNode_t *node, message_t *message, const char
  * @brief Draws the messagesystem node
  * @param[in] node The context node
  */
-static void UI_MessageListNodeDraw (uiNode_t *node)
+void uiMessageListNode::draw (uiNode_t *node)
 {
 	message_t *message;
 	int screenLines;
@@ -254,7 +254,7 @@ static void UI_MessageListNodeDraw (uiNode_t *node)
 	}
 }
 
-static qboolean UI_MessageListNodeMouseWheel (uiNode_t *node, int deltaX, int deltaY)
+qboolean uiMessageListNode::scroll (uiNode_t *node, int deltaX, int deltaY)
 {
 	qboolean down = deltaY > 0;
 	qboolean updated;
@@ -292,7 +292,7 @@ static void UI_MessageDebugUseAllIcons_f (void)
 }
 #endif
 
-static void UI_MessageListNodeLoading (uiNode_t *node)
+void uiMessageListNode::loading (uiNode_t *node)
 {
 	Vector4Set(node->color, 1.0, 1.0, 1.0, 1.0);
 }
@@ -301,7 +301,7 @@ static void UI_MessageListNodeLoading (uiNode_t *node)
  * @brief Track mouse down/up events to implement drag&drop-like scrolling, for touchscreen devices
  * @sa UI_TextNodeMouseUp, UI_TextNodeCapturedMouseMove
 */
-static void UI_MessageListNodeMouseDown (struct uiNode_s *node, int x, int y, int button)
+void uiMessageListNode::mouseDown (struct uiNode_s *node, int x, int y, int button)
 {
 	if (!UI_GetMouseCapture() && button == K_MOUSE1 &&
 		EXTRADATA(node).scrollY.fullSize > EXTRADATA(node).scrollY.viewSize) {
@@ -311,13 +311,13 @@ static void UI_MessageListNodeMouseDown (struct uiNode_s *node, int x, int y, in
 	}
 }
 
-static void UI_MessageListNodeMouseUp (struct uiNode_s *node, int x, int y, int button)
+void uiMessageListNode::mouseUp (struct uiNode_s *node, int x, int y, int button)
 {
 	if (UI_GetMouseCapture() == node)  /* More checks can never hurt */
 		UI_MouseRelease();
 }
 
-static void UI_MessageListNodeCapturedMouseMove (uiNode_t *node, int x, int y)
+void uiMessageListNode::capturedMouseMove (uiNode_t *node, int x, int y)
 {
 	const int lineHeight = node->behaviour->getCellHeight(node);
 	const int deltaY = (mouseScrollY - y) / lineHeight;
@@ -337,7 +337,7 @@ static void UI_MessageListNodeCapturedMouseMove (uiNode_t *node, int x, int y)
  * Here we guess the widget can scroll pixel per pixel.
  * @return Size in pixel.
  */
-static int UI_MessageListNodeGetCellHeight (uiNode_t *node)
+int uiMessageListNode::getCellHeight (uiNode_t *node)
 {
 	return LINEHEIGHT;
 }
@@ -346,13 +346,7 @@ void UI_RegisterMessageListNode (uiBehaviour_t *behaviour)
 {
 	behaviour->name = "messagelist";
 	behaviour->extends = "abstractscrollable";
-	behaviour->draw = UI_MessageListNodeDraw;
-	behaviour->loading = UI_MessageListNodeLoading;
-	behaviour->scroll = UI_MessageListNodeMouseWheel;
-	behaviour->mouseDown = UI_MessageListNodeMouseDown;
-	behaviour->mouseUp = UI_MessageListNodeMouseUp;
-	behaviour->capturedMouseMove = UI_MessageListNodeCapturedMouseMove;
-	behaviour->getCellHeight = UI_MessageListNodeGetCellHeight;
+	behaviour->manager = new uiMessageListNode();
 
 #ifdef DEBUG
 	Cmd_AddCommand("debug_ui_message_useallicons", UI_MessageDebugUseAllIcons_f, "Update message to use all icons");
