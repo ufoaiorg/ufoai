@@ -258,7 +258,7 @@ static void UI_GetItemTooltip (item_t item, char *tooltipText, size_t stringMaxL
  * into the node (uses the @c invDef_t shape bitmask to determine the size)
  * @param[in,out] node The node to get the size for
  */
-static void UI_BaseInventoryNodeLoaded (uiNode_t* const node)
+void uiBaseInventoryNode::loaded (uiNode_t* const node)
 {
 	EXTRADATA(node).super.container = INVSH_GetInventoryDefinitionByID("equip");
 }
@@ -468,7 +468,7 @@ static void UI_BaseInventoryNodeDraw2 (uiNode_t *node, const objDef_t *highlight
 /**
  * @brief Main function to draw a container node
  */
-static void UI_BaseInventoryNodeDraw (uiNode_t *node)
+void uiBaseInventoryNode::draw (uiNode_t *node)
 {
 	const objDef_t *highlightType = NULL;
 
@@ -624,7 +624,7 @@ static invList_t *UI_BaseInventoryNodeGetItem (const uiNode_t* const node, int m
  * @param[in] x Position x of the mouse
  * @param[in] y Position y of the mouse
  */
-static void UI_BaseInventoryNodeDrawTooltip (uiNode_t *node, int x, int y)
+void uiBaseInventoryNode::drawTooltip (uiNode_t *node, int x, int y)
 {
 	static char tooltiptext[MAX_VAR * 2];
 	const invList_t *itemHover;
@@ -687,7 +687,7 @@ static void UI_ContainerNodeAutoPlace (uiNode_t* node, int mouseX, int mouseY)
 static int oldMouseX = 0;
 static int oldMouseY = 0;
 
-static void UI_BaseInventoryNodeCapturedMouseMove (uiNode_t *node, int x, int y)
+void uiBaseInventoryNode::capturedMouseMove (uiNode_t *node, int x, int y)
 {
 	const int delta = abs(oldMouseX - x) + abs(oldMouseY - y);
 	if (delta > 15) {
@@ -696,7 +696,7 @@ static void UI_BaseInventoryNodeCapturedMouseMove (uiNode_t *node, int x, int y)
 	}
 }
 
-static void UI_BaseInventoryNodeMouseDown (uiNode_t *node, int x, int y, int button)
+void uiBaseInventoryNode::mouseDown (uiNode_t *node, int x, int y, int button)
 {
 	switch (button) {
 	case K_MOUSE1:
@@ -730,7 +730,7 @@ static void UI_BaseInventoryNodeMouseDown (uiNode_t *node, int x, int y, int but
 	}
 }
 
-static void UI_BaseInventoryNodeMouseUp (uiNode_t *node, int x, int y, int button)
+void uiBaseInventoryNode::mouseUp (uiNode_t *node, int x, int y, int button)
 {
 	if (button != K_MOUSE1)
 		return;
@@ -742,7 +742,7 @@ static void UI_BaseInventoryNodeMouseUp (uiNode_t *node, int x, int y, int butto
 	}
 }
 
-static qboolean UI_BaseInventoryNodeWheel (uiNode_t *node, int deltaX, int deltaY)
+qboolean uiBaseInventoryNode::scroll (uiNode_t *node, int deltaX, int deltaY)
 {
 	qboolean down = deltaY > 0;
 	const int delta = 20;
@@ -767,7 +767,7 @@ static qboolean UI_BaseInventoryNodeWheel (uiNode_t *node, int deltaX, int delta
 	return qtrue;
 }
 
-static void UI_BaseInventoryNodeLoading (uiNode_t *node)
+void uiBaseInventoryNode::loading (uiNode_t *node)
 {
 	EXTRADATA(node).super.container = NULL;
 	EXTRADATA(node).columns = 1;
@@ -777,7 +777,7 @@ static void UI_BaseInventoryNodeLoading (uiNode_t *node)
 /**
  * @brief Call when a DND enter into the node
  */
-static qboolean UI_BaseInventoryNodeDNDEnter (uiNode_t *target)
+qboolean uiBaseInventoryNode::dndEnter (uiNode_t *target)
 {
 	/* The node is invalide */
 	if (EXTRADATA(target).super.container == NULL)
@@ -790,7 +790,7 @@ static qboolean UI_BaseInventoryNodeDNDEnter (uiNode_t *target)
  * @brief Call into the target when the DND hover it
  * @return True if the DND is accepted
  */
-static qboolean UI_BaseInventoryNodeDNDMove (uiNode_t *target, int x, int y)
+qboolean uiBaseInventoryNode::dndMove (uiNode_t *target, int x, int y)
 {
 	return qtrue;
 }
@@ -798,14 +798,14 @@ static qboolean UI_BaseInventoryNodeDNDMove (uiNode_t *target, int x, int y)
 /**
  * @brief Call when a DND enter into the node
  */
-static void UI_BaseInventoryNodeDNDLeave (uiNode_t *node)
+void uiBaseInventoryNode::dndLeave (uiNode_t *node)
 {
 }
 
 /**
  * @brief Call when we open the window containing the node
  */
-static void UI_BaseInventoryNodeInit (uiNode_t *node, linkedList_t *params)
+void uiBaseInventoryNode::windowOpened (uiNode_t *node, linkedList_t *params)
 {
 }
 
@@ -813,18 +813,7 @@ void UI_RegisterBaseInventoryNode (uiBehaviour_t* behaviour)
 {
 	behaviour->name = "baseinventory";
 	behaviour->extends = "container";
-	behaviour->draw = UI_BaseInventoryNodeDraw;
-	behaviour->drawTooltip = UI_BaseInventoryNodeDrawTooltip;
-	behaviour->mouseDown = UI_BaseInventoryNodeMouseDown;
-	behaviour->mouseUp = UI_BaseInventoryNodeMouseUp;
-	behaviour->scroll = UI_BaseInventoryNodeWheel;
-	behaviour->capturedMouseMove = UI_BaseInventoryNodeCapturedMouseMove;
-	behaviour->windowOpened = UI_BaseInventoryNodeInit;
-	behaviour->loading = UI_BaseInventoryNodeLoading;
-	behaviour->loaded = UI_BaseInventoryNodeLoaded;
-	behaviour->dndEnter = UI_BaseInventoryNodeDNDEnter;
-	behaviour->dndMove = UI_BaseInventoryNodeDNDMove;
-	behaviour->dndLeave = UI_BaseInventoryNodeDNDLeave;
+	behaviour->manager = new uiBaseInventoryNode();
 	behaviour->extraDataSize = sizeof(EXTRADATA_TYPE);
 
 	/* Display/hide weapons. */

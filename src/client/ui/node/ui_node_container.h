@@ -34,7 +34,17 @@ struct uiBehaviour_s;
 struct uiNode_s;
 
 class uiContainerNode : public uiLocatedNode {
-
+	void draw(struct uiNode_s *node);
+	void drawTooltip(struct uiNode_s *node, int x, int y);
+	void mouseDown(struct uiNode_s *node, int x, int y, int button);
+	void mouseUp(struct uiNode_s *node, int x, int y, int button);
+	void capturedMouseMove(struct uiNode_s *node, int x, int y);
+	void loading(struct uiNode_s *node);
+	void loaded(struct uiNode_s *node);
+	qboolean dndEnter(struct uiNode_s *node);
+	qboolean dndMove(struct uiNode_s *node, int x, int y);
+	void dndLeave(struct uiNode_s *node);
+	qboolean dndFinished(struct uiNode_s *node, qboolean isDroped);
 };
 
 extern inventory_t *ui_inventory;

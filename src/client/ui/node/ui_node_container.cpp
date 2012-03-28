@@ -399,7 +399,7 @@ static void UI_ContainerNodeDrawFreeSpace (uiNode_t *node, inventory_t *inv)
  * into the node (uses the @c invDef_t shape bitmask to determine the size)
  * @param[in,out] node The node to get the size for
  */
-static void UI_ContainerNodeLoaded (uiNode_t* const node)
+void uiContainerNode::loaded (uiNode_t* const node)
 {
 	const char *name;
 	const invDef_t *container;
@@ -587,7 +587,7 @@ static void UI_ContainerNodeDrawDropPreview (uiNode_t *target)
 /**
  * @brief Main function to draw a container node
  */
-static void UI_ContainerNodeDraw (uiNode_t *node)
+void uiContainerNode::draw (uiNode_t *node)
 {
 	const objDef_t *highlightType = NULL;
 
@@ -665,7 +665,7 @@ static invList_t *UI_ContainerNodeGetItemAtPosition (const uiNode_t* const node,
  * @param[in] x Position x of the mouse
  * @param[in] y Position y of the mouse
  */
-static void UI_ContainerNodeDrawTooltip (uiNode_t *node, int x, int y)
+void uiContainerNode::drawTooltip (uiNode_t *node, int x, int y)
 {
 	static char tooltiptext[MAX_VAR * 2];
 	const invList_t *itemHover;
@@ -822,7 +822,7 @@ static void UI_ContainerNodeAutoPlace (uiNode_t* node, int mouseX, int mouseY)
 static int oldMouseX = 0;
 static int oldMouseY = 0;
 
-static void UI_ContainerNodeCapturedMouseMove (uiNode_t *node, int x, int y)
+void uiContainerNode::capturedMouseMove (uiNode_t *node, int x, int y)
 {
 	const int delta = abs(oldMouseX - x) + abs(oldMouseY - y);
 	if (delta > 15) {
@@ -831,7 +831,7 @@ static void UI_ContainerNodeCapturedMouseMove (uiNode_t *node, int x, int y)
 	}
 }
 
-static void UI_ContainerNodeMouseDown (uiNode_t *node, int x, int y, int button)
+void uiContainerNode::mouseDown (uiNode_t *node, int x, int y, int button)
 {
 	switch (button) {
 	case K_MOUSE1:
@@ -865,7 +865,7 @@ static void UI_ContainerNodeMouseDown (uiNode_t *node, int x, int y, int button)
 	}
 }
 
-static void UI_ContainerNodeMouseUp (uiNode_t *node, int x, int y, int button)
+void uiContainerNode::mouseUp (uiNode_t *node, int x, int y, int button)
 {
 	if (button != K_MOUSE1)
 		return;
@@ -877,7 +877,7 @@ static void UI_ContainerNodeMouseUp (uiNode_t *node, int x, int y, int button)
 	}
 }
 
-static void UI_ContainerNodeLoading (uiNode_t *node)
+void uiContainerNode::loading (uiNode_t *node)
 {
 	EXTRADATA(node).container = NULL;
 	node->color[3] = 1.0;
@@ -886,7 +886,7 @@ static void UI_ContainerNodeLoading (uiNode_t *node)
 /**
  * @brief Call when a DND enter into the node
  */
-static qboolean UI_ContainerNodeDNDEnter (uiNode_t *target)
+qboolean uiContainerNode::dndEnter (uiNode_t *target)
 {
 	/* accept items only, if we have a container */
 	return UI_DNDGetType() == DND_ITEM && EXTRADATA(target).container && (!UI_IsScrollContainerNode(target) || UI_DNDGetSourceNode() !=  target);
@@ -896,7 +896,7 @@ static qboolean UI_ContainerNodeDNDEnter (uiNode_t *target)
  * @brief Call into the target when the DND hover it
  * @return True if the DND is accepted
  */
-static qboolean UI_ContainerNodeDNDMove (uiNode_t *target, int x, int y)
+qboolean uiContainerNode::dndMove (uiNode_t *target, int x, int y)
 {
 	vec2_t nodepos;
 	qboolean exists;
@@ -973,7 +973,7 @@ static qboolean UI_ContainerNodeDNDMove (uiNode_t *target, int x, int y)
 /**
  * @brief Call when a DND enter into the node
  */
-static void UI_ContainerNodeDNDLeave (uiNode_t *node)
+void uiContainerNode::dndLeave (uiNode_t *node)
 {
 	dragInfoToX = -1;
 	dragInfoToY = -1;
@@ -982,7 +982,7 @@ static void UI_ContainerNodeDNDLeave (uiNode_t *node)
 /**
  * @brief Call into the source when the DND end
  */
-static qboolean UI_ContainerNodeDNDFinished (uiNode_t *source, qboolean isDropped)
+qboolean uiContainerNode::dndFinished (uiNode_t *source, qboolean isDropped)
 {
 	item_t *dragItem = UI_DNDGetItem();
 	const invDef_t *sourceContainer = EXTRADATACONST(source).container;
@@ -1041,17 +1041,7 @@ static qboolean UI_ContainerNodeDNDFinished (uiNode_t *source, qboolean isDroppe
 void UI_RegisterContainerNode (uiBehaviour_t* behaviour)
 {
 	behaviour->name = "container";
-	behaviour->draw = UI_ContainerNodeDraw;
-	behaviour->drawTooltip = UI_ContainerNodeDrawTooltip;
-	behaviour->mouseDown = UI_ContainerNodeMouseDown;
-	behaviour->mouseUp = UI_ContainerNodeMouseUp;
-	behaviour->capturedMouseMove = UI_ContainerNodeCapturedMouseMove;
-	behaviour->loading = UI_ContainerNodeLoading;
-	behaviour->loaded = UI_ContainerNodeLoaded;
-	behaviour->dndEnter = UI_ContainerNodeDNDEnter;
-	behaviour->dndFinished = UI_ContainerNodeDNDFinished;
-	behaviour->dndMove = UI_ContainerNodeDNDMove;
-	behaviour->dndLeave = UI_ContainerNodeDNDLeave;
+	behaviour->manager = new uiContainerNode();
 	behaviour->extraDataSize = sizeof(EXTRADATA_TYPE);
 
 	/* Callback value set before calling onSelect. It is used to know the item selected */
