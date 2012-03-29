@@ -254,25 +254,25 @@ void uiMessageListNode::draw (uiNode_t *node)
 	}
 }
 
-qboolean uiMessageListNode::scroll (uiNode_t *node, int deltaX, int deltaY)
+bool uiMessageListNode::scroll (uiNode_t *node, int deltaX, int deltaY)
 {
-	qboolean down = deltaY > 0;
-	qboolean updated;
+	bool down = deltaY > 0;
+	bool updated;
 	if (deltaY == 0)
-		return qfalse;
+		return false;
 	updated = UI_AbstractScrollableNodeScrollY(node, (down ? 1 : -1));
 	/* @todo use super behaviour */
 	if (node->onWheelUp && !down) {
 		UI_ExecuteEventActions(node, node->onWheelUp);
-		updated = qtrue;
+		updated = true;
 	}
 	if (node->onWheelDown && down) {
 		UI_ExecuteEventActions(node, node->onWheelDown);
-		updated = qtrue;
+		updated = true;
 	}
 	if (node->onWheel) {
 		UI_ExecuteEventActions(node, node->onWheel);
-		updated = qtrue;
+		updated = true;
 	}
 	return updated;
 }

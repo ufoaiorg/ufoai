@@ -30,7 +30,7 @@ class uiMaterialEditorNode : public uiAbstractScrollableNode {
 	void draw(struct uiNode_s *node);
 	void windowOpened(struct uiNode_s *node, linkedList_t *params);
 	void mouseDown(struct uiNode_s *node, int x, int y, int button);
-	qboolean scroll(struct uiNode_s *node, int deltaX, int deltaY);
+	bool scroll(struct uiNode_s *node, int deltaX, int deltaY);
 };
 
 struct uiBehaviour_s;

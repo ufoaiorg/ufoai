@@ -40,15 +40,15 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 /**
  * @brief return true if the node size change and update the cache
  */
-qboolean UI_AbstractScrollableNodeIsSizeChange (uiNode_t *node)
+bool UI_AbstractScrollableNodeIsSizeChange (uiNode_t *node)
 {
 	assert(UI_Node_IsScrollableContainer(node));
 
 	if (!Vector2Equal(node->size, EXTRADATA(node).cacheSize)) {
 		Vector2Copy(node->size, EXTRADATA(node).cacheSize);
-		return qtrue;
+		return true;
 	}
-	return qfalse;
+	return false;
 }
 
 /**
@@ -59,9 +59,9 @@ qboolean UI_AbstractScrollableNodeIsSizeChange (uiNode_t *node)
  * @param[in] fullSize New full size to set, else -1 if no change
  * @return True, if something have change
  */
-qboolean UI_SetScroll (uiScroll_t *scroll, int viewPos, int viewSize, int fullSize)
+bool UI_SetScroll (uiScroll_t *scroll, int viewPos, int viewSize, int fullSize)
 {
-	qboolean updated = qfalse;
+	bool updated = false;
 
 	/* default values */
 	if (viewPos == -1)
@@ -88,15 +88,15 @@ qboolean UI_SetScroll (uiScroll_t *scroll, int viewPos, int viewSize, int fullSi
 	/* update */
 	if (scroll->viewPos != viewPos) {
 		scroll->viewPos = viewPos;
-		updated = qtrue;
+		updated = true;
 	}
 	if (scroll->viewSize != viewSize) {
 		scroll->viewSize = viewSize;
-		updated = qtrue;
+		updated = true;
 	}
 	if (scroll->fullSize != fullSize) {
 		scroll->fullSize = fullSize;
-		updated = qtrue;
+		updated = true;
 	}
 
 	return updated;
@@ -110,9 +110,9 @@ qboolean UI_SetScroll (uiScroll_t *scroll, int viewPos, int viewSize, int fullSi
  * @param[in] fullSize New full size to set, else -1 if no change
  * @return True, if something have change
  */
-qboolean UI_AbstractScrollableNodeSetY (uiNode_t *node, int viewPos, int viewSize, int fullSize)
+bool UI_AbstractScrollableNodeSetY (uiNode_t *node, int viewPos, int viewSize, int fullSize)
 {
-	qboolean updated;
+	bool updated;
 	assert(UI_Node_IsScrollableContainer(node));
 
 	updated = UI_SetScroll(&EXTRADATA(node).scrollY, viewPos, viewSize, fullSize);
@@ -158,7 +158,7 @@ static void UI_AbstractScrollableNodeMoveEnd (uiNode_t *node, const uiCallContex
  * @brief Scroll the Y scroll with a relative position, and call event if need
  * @return True, if something have change
  */
-qboolean UI_AbstractScrollableNodeScrollY (uiNode_t *node, int offset)
+bool UI_AbstractScrollableNodeScrollY (uiNode_t *node, int offset)
 {
 	assert(UI_Node_IsScrollableContainer(node));
 	return UI_AbstractScrollableNodeSetY(node, EXTRADATA(node).scrollY.viewPos + offset, -1, -1);

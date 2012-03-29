@@ -95,7 +95,7 @@ static void UI_TopDownFlowLayout (uiNode_t *node, int margin)
 
 	/* fix scroll */
 	{
-		qboolean updated;
+		bool updated;
 
 		updated = UI_SetScroll(&EXTRADATA(node).super.scrollX, -1, node->size[0], node->size[0]);
 		updated = UI_SetScroll(&EXTRADATA(node).super.scrollY, -1, node->size[1], positionY + node->padding) || updated;
@@ -506,14 +506,14 @@ void uiPanelNode::propertyChanged (uiNode_t *node, const value_t *property)
  * @param[in] deltaX horizontal scrolling value (not used)
  * @param[in] deltaX vertical scrolling value
  */
-qboolean uiPanelNode::scroll (uiNode_t *node, int deltaX, int deltaY)
+bool uiPanelNode::scroll (uiNode_t *node, int deltaX, int deltaY)
 {
-	qboolean down = deltaY > 0;
-	qboolean updated;
+	bool down = deltaY > 0;
+	bool updated;
 
 	/* @todo remove wheelScrollable after 2.4 release */
 	if (!EXTRADATA(node).wheelScrollable || deltaY == 0)
-		return qfalse;
+		return false;
 
 	updated = UI_SetScroll(&EXTRADATA(node).super.scrollY, EXTRADATA(node).super.scrollY.viewPos + deltaY * 50, -1, -1);
 	if (EXTRADATA(node).super.onViewChange && updated)
@@ -522,15 +522,15 @@ qboolean uiPanelNode::scroll (uiNode_t *node, int deltaX, int deltaY)
 	/* @todo use super behaviour */
 	if (node->onWheelUp && !down) {
 		UI_ExecuteEventActions(node, node->onWheelUp);
-		updated = qtrue;
+		updated = true;
 	}
 	if (node->onWheelDown && down) {
 		UI_ExecuteEventActions(node, node->onWheelDown);
-		updated = qtrue;
+		updated = true;
 	}
 	if (node->onWheel) {
 		UI_ExecuteEventActions(node, node->onWheel);
-		updated = qtrue;
+		updated = true;
 	}
 	return updated;
 }

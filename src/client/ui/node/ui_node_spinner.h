@@ -34,7 +34,7 @@ class uiSpinnerNode : public uiAbstractValueNode {
 	void mouseDown(struct uiNode_s *node, int x, int y, int button);
 	void mouseUp(struct uiNode_s *node, int x, int y, int button);
 	void capturedMouseLost(struct uiNode_s *node);
-	qboolean scroll(struct uiNode_s *node, int deltaX, int deltaY);
+	bool scroll(struct uiNode_s *node, int deltaX, int deltaY);
 };
 
 typedef struct spinnerExtraData_s {

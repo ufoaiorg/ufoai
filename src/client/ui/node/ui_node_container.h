@@ -41,10 +41,10 @@ class uiContainerNode : public uiLocatedNode {
 	void capturedMouseMove(struct uiNode_s *node, int x, int y);
 	void loading(struct uiNode_s *node);
 	void loaded(struct uiNode_s *node);
-	qboolean dndEnter(struct uiNode_s *node);
-	qboolean dndMove(struct uiNode_s *node, int x, int y);
+	bool dndEnter(struct uiNode_s *node);
+	bool dndMove(struct uiNode_s *node, int x, int y);
 	void dndLeave(struct uiNode_s *node);
-	qboolean dndFinished(struct uiNode_s *node, qboolean isDroped);
+	bool dndFinished(struct uiNode_s *node, bool isDroped);
 };
 
 extern inventory_t *ui_inventory;

@@ -742,12 +742,12 @@ void uiBaseInventoryNode::mouseUp (uiNode_t *node, int x, int y, int button)
 	}
 }
 
-qboolean uiBaseInventoryNode::scroll (uiNode_t *node, int deltaX, int deltaY)
+bool uiBaseInventoryNode::scroll (uiNode_t *node, int deltaX, int deltaY)
 {
-	qboolean down = deltaY > 0;
+	bool down = deltaY > 0;
 	const int delta = 20;
 	if (deltaY == 0)
-		return qfalse;
+		return false;
 	if (down) {
 		const int lenght = EXTRADATA(node).scrollY.fullSize - EXTRADATA(node).scrollY.viewSize;
 		if (EXTRADATA(node).scrollY.viewPos < lenght) {
@@ -764,7 +764,7 @@ qboolean uiBaseInventoryNode::scroll (uiNode_t *node, int deltaX, int deltaY)
 			UI_BaseInventoryNodeUpdateScroll(node);
 		}
 	}
-	return qtrue;
+	return true;
 }
 
 void uiBaseInventoryNode::loading (uiNode_t *node)
@@ -777,7 +777,7 @@ void uiBaseInventoryNode::loading (uiNode_t *node)
 /**
  * @brief Call when a DND enter into the node
  */
-qboolean uiBaseInventoryNode::dndEnter (uiNode_t *target)
+bool uiBaseInventoryNode::dndEnter (uiNode_t *target)
 {
 	/* The node is invalide */
 	if (EXTRADATA(target).super.container == NULL)
@@ -790,9 +790,9 @@ qboolean uiBaseInventoryNode::dndEnter (uiNode_t *target)
  * @brief Call into the target when the DND hover it
  * @return True if the DND is accepted
  */
-qboolean uiBaseInventoryNode::dndMove (uiNode_t *target, int x, int y)
+bool uiBaseInventoryNode::dndMove (uiNode_t *target, int x, int y)
 {
-	return qtrue;
+	return true;
 }
 
 /**

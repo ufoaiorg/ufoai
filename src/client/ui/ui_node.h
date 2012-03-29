@@ -29,15 +29,15 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 /* prototype */
 struct uiNode_s;
 
-qboolean UI_Node_IsVirtual (const struct uiNode_s *node);
-qboolean UI_Node_IsDrawable (const struct uiNode_s *node);
-qboolean UI_Node_IsAbstract (const struct uiNode_s *node);
-qboolean UI_Node_IsFunction (const struct uiNode_s *node);
-qboolean UI_Node_IsWindow (const struct uiNode_s *node);
-qboolean UI_Node_IsOptionContainer (const struct uiNode_s *node);
-qboolean UI_Node_IsBattleScape (const struct uiNode_s *node);
-qboolean UI_Node_IsScrollableContainer (const struct uiNode_s *node);
-qboolean UI_Node_IsDrawItselfChild (const struct uiNode_s *node);
+bool UI_Node_IsVirtual (const struct uiNode_s *node);
+bool UI_Node_IsDrawable (const struct uiNode_s *node);
+bool UI_Node_IsAbstract (const struct uiNode_s *node);
+bool UI_Node_IsFunction (const struct uiNode_s *node);
+bool UI_Node_IsWindow (const struct uiNode_s *node);
+bool UI_Node_IsOptionContainer (const struct uiNode_s *node);
+bool UI_Node_IsBattleScape (const struct uiNode_s *node);
+bool UI_Node_IsScrollableContainer (const struct uiNode_s *node);
+bool UI_Node_IsDrawItselfChild (const struct uiNode_s *node);
 
 const char* UI_Node_GetWidgetName (const struct uiNode_s *node);
 intptr_t UI_Node_GetMemorySize (const struct uiNode_s *node);
@@ -48,7 +48,7 @@ void UI_Node_DrawOverWindow (struct uiNode_s *node);
 void UI_Node_LeftClick (struct uiNode_s *node, int x, int y);
 void UI_Node_RightClick (struct uiNode_s *node, int x, int y);
 void UI_Node_MiddleClick (struct uiNode_s *node, int x, int y);
-qboolean UI_Node_Scroll (struct uiNode_s *node, int deltaX, int deltaY);
+bool UI_Node_Scroll (struct uiNode_s *node, int deltaX, int deltaY);
 void UI_Node_MouseMove (struct uiNode_s *node, int x, int y);
 void UI_Node_MouseDown (struct uiNode_s *node, int x, int y, int button);
 void UI_Node_MouseUp (struct uiNode_s *node, int x, int y, int button);
@@ -66,15 +66,15 @@ void UI_Node_Activate (struct uiNode_s *node);
 void UI_Node_PropertyChanged (struct uiNode_s *node, const value_t *property);
 void UI_Node_SizeChanged (struct uiNode_s *node);
 void UI_Node_GetClientPosition (const struct uiNode_s *node, vec2_t position);
-qboolean UI_Node_DndEnter (struct uiNode_s *node);
-qboolean UI_Node_DndMove (struct uiNode_s *node, int x, int y);
+bool UI_Node_DndEnter (struct uiNode_s *node);
+bool UI_Node_DndMove (struct uiNode_s *node, int x, int y);
 void UI_Node_DndLeave (struct uiNode_s *node);
-qboolean UI_Node_DndDrop (struct uiNode_s *node, int x, int y);
-qboolean UI_Node_DndFinished (struct uiNode_s *node, qboolean isDroped);
+bool UI_Node_DndDrop (struct uiNode_s *node, int x, int y);
+bool UI_Node_DndFinished (struct uiNode_s *node, bool isDroped);
 void UI_Node_FocusGained (struct uiNode_s *node);
 void UI_Node_FocusLost (struct uiNode_s *node);
-qboolean UI_Node_KeyPressed (struct uiNode_s *node, unsigned int key, unsigned short unicode);
-qboolean UI_Node_KeyReleased (struct uiNode_s *node, unsigned int key, unsigned short unicode);
+bool UI_Node_KeyPressed (struct uiNode_s *node, unsigned int key, unsigned short unicode);
+bool UI_Node_KeyReleased (struct uiNode_s *node, unsigned int key, unsigned short unicode);
 int UI_Node_GetCellWidth (struct uiNode_s *node);
 int UI_Node_GetCellHeight (struct uiNode_s *node);
 
@@ -82,9 +82,9 @@ int UI_Node_GetCellHeight (struct uiNode_s *node);
 void UI_Node_DebugCountWidget (struct uiNode_s *node, int count);
 #endif
 
-qboolean UI_NodeInstanceOf(const uiNode_t *node, const char* behaviourName);
-qboolean UI_NodeInstanceOfPointer(const uiNode_t *node, const struct uiBehaviour_s* behaviour);
-qboolean UI_NodeSetProperty(uiNode_t* node, const value_t *property, const char* value);
+bool UI_NodeInstanceOf(const uiNode_t *node, const char* behaviourName);
+bool UI_NodeInstanceOfPointer(const uiNode_t *node, const struct uiBehaviour_s* behaviour);
+bool UI_NodeSetProperty(uiNode_t* node, const value_t *property, const char* value);
 void UI_NodeSetPropertyFromRAW(uiNode_t* node, const value_t *property, const void* rawValue, int rawType);
 float UI_GetFloatFromNodeProperty(const struct uiNode_s* node, const value_t* property);
 const char* UI_GetStringFromNodeProperty(const uiNode_t* node, const value_t* property);

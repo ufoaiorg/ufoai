@@ -34,7 +34,7 @@ class uiMapNode : public uiLocatedNode {
 	void capturedMouseMove(struct uiNode_s *node, int x, int y);
 	void capturedMouseLost(struct uiNode_s *node);
 	void loading(struct uiNode_s *node);
-	qboolean scroll(struct uiNode_s *node, int deltaX, int deltaY);
+	bool scroll(struct uiNode_s *node, int deltaX, int deltaY);
 };
 
 #define UI_MAPEXTRADATA_TYPE mapExtraData_t

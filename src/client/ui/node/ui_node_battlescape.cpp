@@ -81,7 +81,7 @@ void uiBattleScapeNode::windowClosed (uiNode_t *node)
 /**
  * @brief Called when user request scrolling on the battlescape.
  */
-qboolean uiBattleScapeNode::scroll (uiNode_t *node, int deltaX, int deltaY)
+bool uiBattleScapeNode::scroll (uiNode_t *node, int deltaX, int deltaY)
 {
 	while (deltaY < 0) {
 		CL_CameraZoomIn();
@@ -91,7 +91,7 @@ qboolean uiBattleScapeNode::scroll (uiNode_t *node, int deltaX, int deltaY)
 		CL_CameraZoomOut();
 		deltaY--;
 	}
-	return qtrue;
+	return true;
 }
 
 void UI_RegisterBattlescapeNode (uiBehaviour_t *behaviour)

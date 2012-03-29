@@ -31,7 +31,7 @@ class uiTextNode : public uiAbstractScrollableNode {
 	void draw(struct uiNode_s *node);
 	void leftClick(struct uiNode_s *node, int x, int y);
 	void rightClick(struct uiNode_s *node, int x, int y);
-	qboolean scroll(struct uiNode_s *node, int deltaX, int deltaY);
+	bool scroll(struct uiNode_s *node, int deltaX, int deltaY);
 	void mouseMove(struct uiNode_s *node, int x, int y);
 	void mouseDown(struct uiNode_s *node, int x, int y, int button);
 	void mouseUp(struct uiNode_s *node, int x, int y, int button);

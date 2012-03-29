@@ -32,7 +32,7 @@ class uiVScrollbarNode : public uiAbstractScrollbarNode {
 	void loaded(struct uiNode_s *node);
 	void mouseDown(struct uiNode_s *node, int x, int y, int button);
 	void mouseUp(struct uiNode_s *node, int x, int y, int button);
-	qboolean scroll(struct uiNode_s *node, int deltaX, int deltaY);
+	bool scroll(struct uiNode_s *node, int deltaX, int deltaY);
 	void capturedMouseMove(struct uiNode_s *node, int x, int y);
 	void capturedMouseLost(struct uiNode_s *node);
 };

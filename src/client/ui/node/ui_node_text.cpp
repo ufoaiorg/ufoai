@@ -438,26 +438,26 @@ void uiTextNode::rightClick (uiNode_t * node, int x, int y)
 
 /**
  */
-qboolean uiTextNode::scroll (uiNode_t *node, int deltaX, int deltaY)
+bool uiTextNode::scroll (uiNode_t *node, int deltaX, int deltaY)
 {
-	qboolean updated;
-	qboolean down = deltaY > 0;
+	bool updated;
+	bool down = deltaY > 0;
 	if (deltaY == 0)
-		return qfalse;
+		return false;
 	updated = UI_AbstractScrollableNodeScrollY(node, (down ? 1 : -1));
 
 	/* @todo use super behaviour */
 	if (node->onWheelUp && !down) {
 		UI_ExecuteEventActions(node, node->onWheelUp);
-		updated = qtrue;
+		updated = true;
 	}
 	if (node->onWheelDown && down) {
 		UI_ExecuteEventActions(node, node->onWheelDown);
-		updated = qtrue;
+		updated = true;
 	}
 	if (node->onWheel) {
 		UI_ExecuteEventActions(node, node->onWheel);
-		updated = qtrue;
+		updated = true;
 	}
 	return updated;
 }

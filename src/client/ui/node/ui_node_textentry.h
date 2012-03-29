@@ -34,7 +34,7 @@ class uiTextEntryNode : public uiLocatedNode {
 	void draw(struct uiNode_s *node);
 	void focusGained(struct uiNode_s *node);
 	void focusLost(struct uiNode_s *node);
-	qboolean keyPressed(struct uiNode_s *node, unsigned int key, unsigned short unicode);
+	bool keyPressed(struct uiNode_s *node, unsigned int key, unsigned short unicode);
 };
 
 /**

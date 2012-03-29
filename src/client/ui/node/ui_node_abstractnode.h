@@ -83,7 +83,7 @@ public:
 	/** Middle mouse button click event in the node */
 	virtual void middleClick(struct uiNode_s *node, int x, int y);
 	/** Mouse wheel event in the node */
-	virtual qboolean scroll(struct uiNode_s *node, int deltaX, int deltaY);
+	virtual bool scroll(struct uiNode_s *node, int deltaX, int deltaY);
 	/* Planned */
 #if 0
 	/* mouse move event */
@@ -105,21 +105,21 @@ public:
 	/* drag and drop callback */
 
 	/** Send to the target when we enter first, return true if we can drop the DND somewhere on the node */
-	virtual qboolean dndEnter(struct uiNode_s *node);
+	virtual bool dndEnter(struct uiNode_s *node);
 	/** Send to the target when we enter first, return true if we can drop the DND here */
-	virtual qboolean dndMove(struct uiNode_s *node, int x, int y);
+	virtual bool dndMove(struct uiNode_s *node, int x, int y);
 	/** Send to the target when the DND is canceled */
 	virtual void dndLeave(struct uiNode_s *node);
 	/** Send to the target to finalize the drop */
-	virtual qboolean dndDrop(struct uiNode_s *node, int x, int y);
+	virtual bool dndDrop(struct uiNode_s *node, int x, int y);
 	/** Sent to the source to finalize the drop */
-	virtual qboolean dndFinished(struct uiNode_s *node, qboolean isDroped);
+	virtual bool dndFinished(struct uiNode_s *node, bool isDroped);
 
 	/* focus and keyboard events */
 	virtual void focusGained(struct uiNode_s *node) {}
 	virtual void focusLost(struct uiNode_s *node) {}
-	virtual qboolean keyPressed(struct uiNode_s *node, unsigned int key, unsigned short unicode) {return qfalse;}
-	virtual qboolean keyReleased(struct uiNode_s *node, unsigned int key, unsigned short unicode) {return qfalse;}
+	virtual bool keyPressed(struct uiNode_s *node, unsigned int key, unsigned short unicode) {return false;}
+	virtual bool keyReleased(struct uiNode_s *node, unsigned int key, unsigned short unicode) {return false;}
 
 	/** Return the position of the client zone into the node */
 	virtual void getClientPosition(const struct uiNode_s *node, vec2_t position) {}

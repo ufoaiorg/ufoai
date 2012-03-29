@@ -886,7 +886,7 @@ void uiContainerNode::loading (uiNode_t *node)
 /**
  * @brief Call when a DND enter into the node
  */
-qboolean uiContainerNode::dndEnter (uiNode_t *target)
+bool uiContainerNode::dndEnter (uiNode_t *target)
 {
 	/* accept items only, if we have a container */
 	return UI_DNDGetType() == DND_ITEM && EXTRADATA(target).container && (!UI_IsScrollContainerNode(target) || UI_DNDGetSourceNode() !=  target);
@@ -896,7 +896,7 @@ qboolean uiContainerNode::dndEnter (uiNode_t *target)
  * @brief Call into the target when the DND hover it
  * @return True if the DND is accepted
  */
-qboolean uiContainerNode::dndMove (uiNode_t *target, int x, int y)
+bool uiContainerNode::dndMove (uiNode_t *target, int x, int y)
 {
 	vec2_t nodepos;
 	qboolean exists;
@@ -949,7 +949,7 @@ qboolean uiContainerNode::dndMove (uiNode_t *target, int x, int y)
 
 	/* we can drag every thing */
 	if (UI_IsScrollContainerNode(target)) {
-		return qtrue;
+		return true;
 	}
 
 	{
@@ -958,14 +958,14 @@ qboolean uiContainerNode::dndMove (uiNode_t *target, int x, int y)
 		/* is there empty slot? */
 		const int checkedTo = INVSH_CheckToInventory(ui_inventory, dragItem->t, EXTRADATA(target).container, dragInfoToX, dragInfoToY, dragInfoIC);
 		if (checkedTo != INV_DOES_NOT_FIT)
-			return qtrue;
+			return true;
 
 		/* can we equip dragging item into the target item? */
 		fItem = INVSH_SearchInInventory(ui_inventory, EXTRADATA(target).container, dragInfoToX, dragInfoToY);
 		if (!fItem)
 			return qfalse;
 		if (EXTRADATA(target).container->single)
-			return qtrue;
+			return true;
 		return INVSH_LoadableInWeapon(dragItem->t, fItem->item.t);
 	}
 }
@@ -982,14 +982,14 @@ void uiContainerNode::dndLeave (uiNode_t *node)
 /**
  * @brief Call into the source when the DND end
  */
-qboolean uiContainerNode::dndFinished (uiNode_t *source, qboolean isDropped)
+bool uiContainerNode::dndFinished (uiNode_t *source, bool isDropped)
 {
 	item_t *dragItem = UI_DNDGetItem();
 	const invDef_t *sourceContainer = EXTRADATACONST(source).container;
 
 	/* if the target can't finalize the DND we stop */
 	if (!isDropped) {
-		return qfalse;
+		return false;
 	}
 
 	assert(sourceContainer);
@@ -1035,7 +1035,7 @@ qboolean uiContainerNode::dndFinished (uiNode_t *source, qboolean isDropped)
 
 	dragInfoFromX = -1;
 	dragInfoFromY = -1;
-	return qtrue;
+	return true;
 }
 
 void UI_RegisterContainerNode (uiBehaviour_t* behaviour)

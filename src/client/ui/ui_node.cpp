@@ -36,42 +36,42 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #include "ui_components.h"
 #include "ui_internal.h"
 
-qboolean UI_Node_IsVirtual(const struct uiNode_s *node)
+bool UI_Node_IsVirtual(const struct uiNode_s *node)
 {
 	uiLocatedNode* b = dynamic_cast<uiLocatedNode*>(node->behaviour->manager);
 	return b == NULL;
 }
 
-qboolean UI_Node_IsDrawable(const struct uiNode_s *node)
+bool UI_Node_IsDrawable(const struct uiNode_s *node)
 {
 	uiLocatedNode* b = dynamic_cast<uiLocatedNode*>(node->behaviour->manager);
 	return b != NULL;
 }
 
-qboolean UI_Node_IsOptionContainer(const struct uiNode_s *node)
+bool UI_Node_IsOptionContainer(const struct uiNode_s *node)
 {
 	uiAbstractOptionNode* b = dynamic_cast<uiAbstractOptionNode*>(node->behaviour->manager);
 	return b != NULL;
 }
 
-qboolean UI_Node_IsWindow(const struct uiNode_s *node)
+bool UI_Node_IsWindow(const struct uiNode_s *node)
 {
 	uiWindowNode* b = dynamic_cast<uiWindowNode*>(node->behaviour->manager);
 	return b != NULL;
 }
 
-qboolean UI_Node_IsBattleScape(const struct uiNode_s *node)
+bool UI_Node_IsBattleScape(const struct uiNode_s *node)
 {
 	uiBattleScapeNode *b = dynamic_cast<uiBattleScapeNode*>(node->behaviour->manager);
 	return b != NULL;
 }
 
-qboolean UI_Node_IsAbstract(const struct uiNode_s *node)
+bool UI_Node_IsAbstract(const struct uiNode_s *node)
 {
 	return node->behaviour->isAbstract;
 }
 
-qboolean UI_Node_IsDrawItselfChild(const struct uiNode_s *node)
+bool UI_Node_IsDrawItselfChild(const struct uiNode_s *node)
 {
 	return node->behaviour->drawItselfChild;
 }
@@ -79,7 +79,7 @@ qboolean UI_Node_IsDrawItselfChild(const struct uiNode_s *node)
 /**
  * @todo Use typeid when it is possible
  */
-qboolean UI_Node_IsFunction(const struct uiNode_s *node)
+bool UI_Node_IsFunction(const struct uiNode_s *node)
 {
 	return node->behaviour->isFunction;
 }
@@ -87,7 +87,7 @@ qboolean UI_Node_IsFunction(const struct uiNode_s *node)
 /**
  * @todo Use typeid when it is possible
  */
-qboolean UI_Node_IsScrollableContainer(const struct uiNode_s *node)
+bool UI_Node_IsScrollableContainer(const struct uiNode_s *node)
 {
 	uiAbstractScrollableNode *b = dynamic_cast<uiAbstractScrollableNode*>(node->behaviour->manager);
 	return b != NULL;
@@ -140,7 +140,7 @@ void UI_Node_MiddleClick(struct uiNode_s *node, int x, int y)
 	b->middleClick(node, x, y);
 }
 
-qboolean UI_Node_Scroll(struct uiNode_s *node, int deltaX, int deltaY)
+bool UI_Node_Scroll(struct uiNode_s *node, int deltaX, int deltaY)
 {
 	uiLocatedNode *b = dynamic_cast<uiLocatedNode*>(node->behaviour->manager);
 	return b->scroll(node, deltaX, deltaY);
@@ -256,13 +256,13 @@ void UI_Node_GetClientPosition(const struct uiNode_s *node, vec2_t position)
 
 /* drag and drop callback */
 
-qboolean UI_Node_DndEnter(struct uiNode_s *node)
+bool UI_Node_DndEnter(struct uiNode_s *node)
 {
 	uiLocatedNode *b = dynamic_cast<uiLocatedNode*>(node->behaviour->manager);
 	return b->dndEnter(node);
 }
 
-qboolean UI_Node_DndMove(struct uiNode_s *node, int x, int y)
+bool UI_Node_DndMove(struct uiNode_s *node, int x, int y)
 {
 	uiLocatedNode *b = dynamic_cast<uiLocatedNode*>(node->behaviour->manager);
 	return b->dndMove(node, x, y);
@@ -274,13 +274,13 @@ void UI_Node_DndLeave(struct uiNode_s *node)
 	b->dndLeave(node);
 }
 
-qboolean UI_Node_DndDrop(struct uiNode_s *node, int x, int y)
+bool UI_Node_DndDrop(struct uiNode_s *node, int x, int y)
 {
 	uiLocatedNode *b = dynamic_cast<uiLocatedNode*>(node->behaviour->manager);
 	return b->dndDrop(node, x, y);
 }
 
-qboolean UI_Node_DndFinished(struct uiNode_s *node, qboolean isDroped)
+bool UI_Node_DndFinished(struct uiNode_s *node, bool isDroped)
 {
 	uiLocatedNode *b = dynamic_cast<uiLocatedNode*>(node->behaviour->manager);
 	return b->dndFinished(node, isDroped);
@@ -300,13 +300,13 @@ void UI_Node_FocusLost(struct uiNode_s *node)
 	b->focusLost(node);
 }
 
-qboolean UI_Node_KeyPressed(struct uiNode_s *node, unsigned int key, unsigned short unicode)
+bool UI_Node_KeyPressed(struct uiNode_s *node, unsigned int key, unsigned short unicode)
 {
 	uiLocatedNode *b = dynamic_cast<uiLocatedNode*>(node->behaviour->manager);
 	return b->keyPressed(node, key, unicode);
 }
 
-qboolean UI_Node_KeyReleased(struct uiNode_s *node, unsigned int key, unsigned short unicode)
+bool UI_Node_KeyReleased(struct uiNode_s *node, unsigned int key, unsigned short unicode)
 {
 	uiLocatedNode *b = dynamic_cast<uiLocatedNode*>(node->behaviour->manager);
 	return b->keyPressed(node, key, unicode);
@@ -341,7 +341,7 @@ void UI_Node_DebugCountWidget(struct uiNode_s *node, int count)
  * @param[in] behaviourName Behaviour name we check
  * @return True if the node inherits from the behaviour
  */
-qboolean UI_NodeInstanceOf (const uiNode_t *node, const char* behaviourName)
+bool UI_NodeInstanceOf (const uiNode_t *node, const char* behaviourName)
 {
 	const uiBehaviour_t *behaviour;
 	for (behaviour = node->behaviour; behaviour; behaviour = behaviour->super) {
@@ -357,7 +357,7 @@ qboolean UI_NodeInstanceOf (const uiNode_t *node, const char* behaviourName)
  * @param[in] behaviour Behaviour we check
  * @return True if the node inherits from the behaviour
  */
-qboolean UI_NodeInstanceOfPointer (const uiNode_t *node, const uiBehaviour_t* behaviour)
+bool UI_NodeInstanceOfPointer (const uiNode_t *node, const uiBehaviour_t* behaviour)
 {
 	const uiBehaviour_t *b;
 	for (b = node->behaviour; b; b = b->super) {
@@ -712,7 +712,7 @@ void UI_NodeSetPropertyFromRAW (uiNode_t* node, const value_t *property, const v
 /**
  * @brief Set node property
  */
-qboolean UI_NodeSetProperty (uiNode_t* node, const value_t *property, const char* value)
+bool UI_NodeSetProperty (uiNode_t* node, const value_t *property, const char* value)
 {
 	byte* b = (byte*)node + property->ofs;
 	const int specialType = property->type & V_UI_MASK;
@@ -724,10 +724,10 @@ qboolean UI_NodeSetProperty (uiNode_t* node, const value_t *property, const char
 		result = Com_ParseValue(node, value, property->type, property->ofs, property->size, &bytes);
 		if (result != RESULT_OK) {
 			Com_Printf("UI_NodeSetProperty: Invalid value for property '%s': %s\n", property->string, Com_GetLastParseError());
-			return qfalse;
+			return false;
 		}
 		UI_Node_PropertyChanged(node, property);
-		return qtrue;
+		return true;
 
 	case V_UI_CVAR:	/* cvar */
 		switch ((int)property->type) {
@@ -736,7 +736,7 @@ qboolean UI_NodeSetProperty (uiNode_t* node, const value_t *property, const char
 				UI_FreeStringProperty(*(void**)b);
 				*(char**) b = Mem_PoolStrDup(value, ui_dynStringPool, 0);
 				UI_Node_PropertyChanged(node, property);
-				return qtrue;
+				return true;
 			}
 			break;
 		case V_CVAR_OR_FLOAT:
@@ -747,13 +747,13 @@ qboolean UI_NodeSetProperty (uiNode_t* node, const value_t *property, const char
 					UI_FreeStringProperty(*(void**)b);
 					*(char**) b = Mem_PoolStrDup(value, ui_dynStringPool, 0);
 					UI_Node_PropertyChanged(node, property);
-					return qtrue;
+					return true;
 				}
 
 				result = Com_ParseValue(&f, value, V_FLOAT, 0, sizeof(f), &bytes);
 				if (result != RESULT_OK) {
 					Com_Printf("UI_NodeSetProperty: Invalid value for property '%s': %s\n", property->string, Com_GetLastParseError());
-					return qfalse;
+					return false;
 				}
 
 				b = (byte*) (*(void**)b);
@@ -762,7 +762,7 @@ qboolean UI_NodeSetProperty (uiNode_t* node, const value_t *property, const char
 				else
 					*(float*) b = f;
 				UI_Node_PropertyChanged(node, property);
-				return qtrue;
+				return true;
 			}
 		case V_CVAR_OR_LONGSTRING:
 		case V_CVAR_OR_STRING:
@@ -770,7 +770,7 @@ qboolean UI_NodeSetProperty (uiNode_t* node, const value_t *property, const char
 				UI_FreeStringProperty(*(void**)b);
 				*(char**) b = Mem_PoolStrDup(value, ui_dynStringPool, 0);
 				UI_Node_PropertyChanged(node, property);
-				return qtrue;
+				return true;
 			}
 		}
 		break;
@@ -781,14 +781,14 @@ qboolean UI_NodeSetProperty (uiNode_t* node, const value_t *property, const char
 			{
 				uiSprite_t* sprite = UI_GetSpriteByName(value);
 				*(const uiSprite_t**) b = sprite;
-				return qtrue;
+				return true;
 			}
 		}
 		break;
 	}
 
 	Com_Printf("UI_NodeSetProperty: Unimplemented type for property '%s@%s'\n", UI_GetPath(node), property->string);
-	return qfalse;
+	return false;
 }
 
 /**

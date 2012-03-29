@@ -360,12 +360,12 @@ void uiMaterialEditorNode::windowOpened (uiNode_t *node, linkedList_t *params)
 /**
  * @brief Called when the user wheel the mouse over the node
  */
-qboolean uiMaterialEditorNode::scroll (uiNode_t *node, int deltaX, int deltaY)
+bool uiMaterialEditorNode::scroll (uiNode_t *node, int deltaX, int deltaY)
 {
-	qboolean down = deltaY > 0;
+	bool down = deltaY > 0;
 	const int diff = (down) ? 1 : -1;
 	if (deltaY == 0)
-		return qfalse;
+		return false;
 	return UI_AbstractScrollableNodeScrollY(node, diff);
 }
 

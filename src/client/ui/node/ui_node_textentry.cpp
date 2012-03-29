@@ -194,16 +194,16 @@ static void UI_TextEntryNodeEdit (uiNode_t *node, unsigned int key)
  * @brief Called when we press a key when the node got the focus
  * @return True, if we use the event
  */
-qboolean uiTextEntryNode::keyPressed (uiNode_t *node, unsigned int key, unsigned short unicode)
+bool uiTextEntryNode::keyPressed (uiNode_t *node, unsigned int key, unsigned short unicode)
 {
 	switch (key) {
 	/* remove the last char */
 	case K_BACKSPACE:
 		UI_TextEntryNodeEdit(node, K_BACKSPACE);
-		return qtrue;
+		return true;
 	/* cancel the edition */
 	case K_ESCAPE:
-		isAborted = qtrue;
+		isAborted = true;
 		UI_RemoveFocus();
 		return qtrue;
 	/* validate the edition */
@@ -211,16 +211,16 @@ qboolean uiTextEntryNode::keyPressed (uiNode_t *node, unsigned int key, unsigned
 	case K_KP_ENTER:
 		UI_TextEntryNodeValidateEdition(node);
 		UI_RemoveFocus();
-		return qtrue;
+		return true;
 	}
 
 	/* non printable */
 	if (unicode < 32 || (unicode >= 127 && unicode < 192))
-		return qfalse;
+		return false;
 
 	/* add a char */
 	UI_TextEntryNodeEdit(node, unicode);
-	return qtrue;
+	return true;
 }
 
 void uiTextEntryNode::draw (uiNode_t *node)

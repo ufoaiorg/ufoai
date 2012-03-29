@@ -33,13 +33,13 @@ class uiBaseInventoryNode : public uiContainerNode {
 	void drawTooltip(struct uiNode_s *node, int x, int y);
 	void mouseDown(struct uiNode_s *node, int x, int y, int button);
 	void mouseUp(struct uiNode_s *node, int x, int y, int button);
-	qboolean scroll(struct uiNode_s *node, int deltaX, int deltaY);
+	bool scroll(struct uiNode_s *node, int deltaX, int deltaY);
 	void capturedMouseMove(struct uiNode_s *node, int x, int y);
 	void windowOpened(struct uiNode_s *node, linkedList_t *params);
 	void loading(struct uiNode_s *node);
 	void loaded(struct uiNode_s *node);
-	qboolean dndEnter(struct uiNode_s *node);
-	qboolean dndMove(struct uiNode_s *node, int x, int y);
+	bool dndEnter(struct uiNode_s *node);
+	bool dndMove(struct uiNode_s *node, int x, int y);
 	void dndLeave(struct uiNode_s *node);
 };
 

@@ -72,7 +72,7 @@ void uiKeyBindingNode::leftClick (uiNode_t *node, int x, int y)
  * @brief Called when we press a key when the node got the focus
  * @return True, if we use the event
  */
-qboolean uiKeyBindingNode::keyPressed (uiNode_t *node, unsigned int key, unsigned short unicode)
+bool uiKeyBindingNode::keyPressed (uiNode_t *node, unsigned int key, unsigned short unicode)
 {
 	const char *command;
 	const char *binding;
@@ -81,7 +81,7 @@ qboolean uiKeyBindingNode::keyPressed (uiNode_t *node, unsigned int key, unsigne
 
 	/** @todo what about macro expansion? */
 	if (!Q_strstart(node->text, "*binding:"))
-		return qfalse;
+		return false;
 
 	command = node->text + 9;
 
@@ -95,7 +95,7 @@ qboolean uiKeyBindingNode::keyPressed (uiNode_t *node, unsigned int key, unsigne
 			const char *keyStr = Key_KeynumToString(key);
 			UI_DisplayNotice(va(_("Key %s already bound"), keyStr), 2000, NULL);
 		}
-		return qfalse;
+		return false;
 	}
 
 	/* fire change event */
@@ -104,7 +104,7 @@ qboolean uiKeyBindingNode::keyPressed (uiNode_t *node, unsigned int key, unsigne
 
 	Key_SetBinding(key, command, EXTRADATA(node).keySpace);
 
-	return qtrue;
+	return true;
 }
 
 void uiKeyBindingNode::draw (uiNode_t *node)

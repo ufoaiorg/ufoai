@@ -64,7 +64,7 @@ static void UI_OptionTreeNodeUpdateScroll (uiNode_t *node)
 {
 	const char *font;
 	int fontHeight;
-	qboolean updated;
+	bool updated;
 	int elements;
 
 	font = UI_GetFontFromNode(node);
@@ -277,12 +277,12 @@ void uiOptionTreeNode::leftClick (uiNode_t * node, int x, int y)
 /**
  * @brief Auto scroll the list
  */
-qboolean uiOptionTreeNode::scroll (uiNode_t *node, int deltaX, int deltaY)
+bool uiOptionTreeNode::scroll (uiNode_t *node, int deltaX, int deltaY)
 {
-	qboolean down = deltaY > 0;
-	qboolean updated;
+	bool down = deltaY > 0;
+	bool updated;
 	if (deltaY == 0)
-		return qfalse;
+		return false;
 	updated = UI_SetScroll(&EXTRADATA(node).scrollY, EXTRADATA(node).scrollY.viewPos + (down ? 1 : -1), -1, -1);
 	if (EXTRADATA(node).onViewChange && updated)
 		UI_ExecuteEventActions(node, EXTRADATA(node).onViewChange);
@@ -290,15 +290,15 @@ qboolean uiOptionTreeNode::scroll (uiNode_t *node, int deltaX, int deltaY)
 	/* @todo use super behaviour */
 	if (node->onWheelUp && !down) {
 		UI_ExecuteEventActions(node, node->onWheelUp);
-		updated = qtrue;
+		updated = true;
 	}
 	if (node->onWheelDown && down) {
 		UI_ExecuteEventActions(node, node->onWheelDown);
-		updated = qtrue;
+		updated = true;
 	}
 	if (node->onWheel) {
 		UI_ExecuteEventActions(node, node->onWheel);
-		updated = qtrue;
+		updated = true;
 	}
 	return updated;
 }
@@ -399,7 +399,7 @@ void uiOptionTreeNode::capturedMouseMove (uiNode_t *node, int x, int y)
 	const int deltaY = (mouseScrollY - y) / lineHeight;
 	/* We're doing only vertical scroll, that's enough for the most instances */
 	if (deltaY != 0) {
-		qboolean updated;
+		bool updated;
 		updated = UI_SetScroll(&EXTRADATA(node).scrollY, EXTRADATA(node).scrollY.viewPos + deltaY, -1, -1);
 		if (EXTRADATA(node).onViewChange && updated)
 			UI_ExecuteEventActions(node, EXTRADATA(node).onViewChange);

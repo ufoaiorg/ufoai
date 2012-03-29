@@ -100,12 +100,12 @@ static void UI_NodeSetProperty_f (void)
 }
 #endif
 
-qboolean uiLocatedNode::dndEnter (uiNode_t *node)
+bool uiLocatedNode::dndEnter (uiNode_t *node)
 {
 	return qfalse;
 }
 
-qboolean uiLocatedNode::dndMove (uiNode_t *node, int x, int y)
+bool uiLocatedNode::dndMove (uiNode_t *node, int x, int y)
 {
 	return qtrue;
 }
@@ -114,12 +114,12 @@ void uiLocatedNode::dndLeave (uiNode_t *node)
 {
 }
 
-qboolean uiLocatedNode::dndDrop (uiNode_t *node, int x, int y)
+bool uiLocatedNode::dndDrop (uiNode_t *node, int x, int y)
 {
 	return qtrue;
 }
 
-qboolean uiLocatedNode::dndFinished (uiNode_t *node, qboolean isDroped)
+bool uiLocatedNode::dndFinished (uiNode_t *node, bool isDroped)
 {
 	return isDroped;
 }
@@ -242,21 +242,21 @@ static void UI_AbstractNodeCallDelete (uiNode_t *node, const uiCallContext_t *co
 	UI_DeleteNode(node);
 }
 
-qboolean uiLocatedNode::scroll (uiNode_t *node, int deltaX, int deltaY)
+bool uiLocatedNode::scroll (uiNode_t *node, int deltaX, int deltaY)
 {
 	if (node->onWheelUp && deltaY < 0) {
 		UI_ExecuteEventActions(node, node->onWheelUp);
-		return qtrue;
+		return true;
 	}
 	if (node->onWheelDown && deltaY > 0) {
 		UI_ExecuteEventActions(node, node->onWheelDown);
-		return qtrue;
+		return true;
 	}
 	if (node->onWheel && deltaY != 0) {
 		UI_ExecuteEventActions(node, node->onWheel);
-		return qtrue;
+		return true;
 	}
-	return qfalse;
+	return false;
 }
 
 void uiLocatedNode::drawTooltip(struct uiNode_s *node, int x, int y)

@@ -31,7 +31,7 @@ class uiBattleScapeNode : public uiLocatedNode {
 	void windowOpened(struct uiNode_s *node, linkedList_t *params);
 	void windowClosed(struct uiNode_s *node);
 	void loading(struct uiNode_s *node);
-	qboolean scroll(struct uiNode_s *node, int deltaX, int deltaY);
+	bool scroll(struct uiNode_s *node, int deltaX, int deltaY);
 };
 
 struct uiBehaviour_s;

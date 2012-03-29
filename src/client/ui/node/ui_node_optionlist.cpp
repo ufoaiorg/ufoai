@@ -56,7 +56,7 @@ static int mouseScrollY;
 static void UI_OptionListNodeUpdateScroll (uiNode_t *node)
 {
 	int lineHeight;
-	qboolean updated;
+	bool updated;
 	int elements;
 
 	lineHeight =  EXTRADATA(node).lineHeight;
@@ -230,12 +230,12 @@ void uiOptionListNode::leftClick (uiNode_t * node, int x, int y)
 /**
  * @brief Auto scroll the list
  */
-qboolean uiOptionListNode::scroll (uiNode_t *node, int deltaX, int deltaY)
+bool uiOptionListNode::scroll (uiNode_t *node, int deltaX, int deltaY)
 {
-	qboolean down = deltaY > 0;
-	qboolean updated;
+	bool down = deltaY > 0;
+	bool updated;
 	if (deltaY == 0)
-		return qfalse;
+		return false;
 	updated = UI_SetScroll(&EXTRADATA(node).scrollY, EXTRADATA(node).scrollY.viewPos + (down ? 1 : -1), -1, -1);
 	if (EXTRADATA(node).onViewChange && updated)
 		UI_ExecuteEventActions(node, EXTRADATA(node).onViewChange);
@@ -243,15 +243,15 @@ qboolean uiOptionListNode::scroll (uiNode_t *node, int deltaX, int deltaY)
 	/* @todo use super behaviour */
 	if (node->onWheelUp && !down) {
 		UI_ExecuteEventActions(node, node->onWheelUp);
-		updated = qtrue;
+		updated = true;
 	}
 	if (node->onWheelDown && down) {
 		UI_ExecuteEventActions(node, node->onWheelDown);
-		updated = qtrue;
+		updated = true;
 	}
 	if (node->onWheel) {
 		UI_ExecuteEventActions(node, node->onWheel);
-		updated = qtrue;
+		updated = true;
 	}
 	return updated;
 }

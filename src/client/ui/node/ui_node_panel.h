@@ -33,7 +33,7 @@ class uiPanelNode : public uiAbstractScrollableNode {
 	void doLayout(struct uiNode_s *node);
 	void getClientPosition(const struct uiNode_s *node, vec2_t position);
 	void propertyChanged(struct uiNode_s *node, const value_t *property);
-	qboolean scroll(struct uiNode_s *node, int deltaX, int deltaY);
+	bool scroll(struct uiNode_s *node, int deltaX, int deltaY);
 };
 
 struct uiNode_s;
