@@ -140,13 +140,12 @@ inline int file_write (const void *buffer, int len, FILE * f)
 {
 	int block, remaining;
 	int written;
-	byte *buf;
 	int tries;
 
 	if (!f)
 		return 0;
 
-	buf = (byte *) buffer;
+	byte const *buf = static_cast<byte const*>(buffer);
 
 	remaining = len;
 	tries = 0;
