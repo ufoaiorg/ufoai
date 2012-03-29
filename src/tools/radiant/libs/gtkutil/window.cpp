@@ -123,12 +123,6 @@ void destroy_floating_window (GtkWindow* window)
 	gtk_widget_destroy(GTK_WIDGET(window));
 }
 
-gint window_realize_remove_sysmenu (GtkWidget* widget, gpointer data)
-{
-	gdk_window_set_decorations(widget->window, (GdkWMDecoration) (GDK_DECOR_ALL | GDK_DECOR_MENU));
-	return FALSE;
-}
-
 gboolean persistent_floating_window_delete (GtkWindow* floating, GdkEvent *event, GtkWindow* main_window)
 {
 	gtk_widget_hide(GTK_WIDGET(floating));
