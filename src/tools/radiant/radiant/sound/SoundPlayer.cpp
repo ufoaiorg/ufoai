@@ -9,7 +9,6 @@
 #include "archivelib.h"
 #include "os/path.h"
 #include "imagelib.h" // for ScopedArchiveBuffer
-#include "AutoPtr.h"
 
 // We need the usleep() command. Be sure to include the windows.h
 // header after the local textfilestream.h because there are definition conflicts otherwise.
@@ -25,12 +24,6 @@
 
 namespace sound
 {
-	namespace
-	{
-		typedef std::vector<char> DecodeBuffer;
-		typedef AutoPtr<DecodeBuffer> DecodeBufferPtr;
-	}
-
 	// Constructor
 	SoundPlayer::SoundPlayer () :
 		_initialised(false), _context(NULL), _buffer(0), _source(0), _timer(200, checkBuffer, this)
@@ -189,7 +182,7 @@ namespace sound
 
 				long bytes;
 				char smallBuffer[4096];
-				DecodeBufferPtr largeBuffer(new DecodeBuffer());
+				std::vector<char> largeBuffer;
 				do {
 					int bitStream;
 					// Read a chunk of decoded data from the vorbis file
@@ -201,17 +194,15 @@ namespace sound
 						globalErrorStream() << "SoundPlayer: Error decoding OGG: OV_EBADLINK.\n";
 					} else {
 						// Stuff this into the variable-sized buffer
-						largeBuffer->insert(largeBuffer->end(), smallBuffer, smallBuffer + bytes);
+						largeBuffer.insert(largeBuffer.end(), smallBuffer, smallBuffer + bytes);
 					}
 				} while (bytes > 0);
 
 				// Allocate a new buffer
 				alGenBuffers(1, &_buffer);
 
-				DecodeBuffer& bufferRef = *largeBuffer;
-
 				// Upload sound data to buffer
-				alBufferData(_buffer, format, &bufferRef[0], static_cast<ALsizei> (bufferRef.size()), freq);
+				alBufferData(_buffer, format, &largeBuffer[0], static_cast<ALsizei>(largeBuffer.size()), freq);
 
 				// Clean up the OGG routines
 				ov_clear(&oggFile);
