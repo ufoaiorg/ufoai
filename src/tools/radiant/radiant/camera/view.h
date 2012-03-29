@@ -25,6 +25,10 @@
 #include "cullable.h"
 #include "math/frustum.h"
 
+char const* Cull_GetStats();
+
+void Cull_ResetStats();
+
 extern int g_count_dots;
 extern int g_count_planes;
 extern int g_count_oriented_planes;

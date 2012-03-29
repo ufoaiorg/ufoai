@@ -375,7 +375,6 @@ void CamWnd::Cam_Draw() {
 
 	render::RenderStatistics::Instance().resetStats();
 
-	extern void Cull_ResetStats ();
 	Cull_ResetStats();
 
 	glMatrixMode(GL_PROJECTION);
@@ -493,7 +492,6 @@ void CamWnd::Cam_Draw() {
 	GlobalOpenGL().drawString(render::RenderStatistics::Instance().getStatString());
 
 	glRasterPos3f(1.0f, static_cast<float> (m_Camera.height) - 11.0f, 0.0f);
-	extern const char* Cull_GetStats ();
 	GlobalOpenGL().drawString(Cull_GetStats());
 
 	// bind back to the default texture so that we don't have problems

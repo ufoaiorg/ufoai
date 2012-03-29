@@ -69,6 +69,7 @@
 #include "../common/ToolbarCreator.h"
 #include "../menu/FiltersMenu.h"
 
+#include "../../commands.h"
 #include "../../map/AutoSaver.h"
 #include "../../sidebar/sidebar.h"
 #include "../../sidebar/texturebrowser.h"
@@ -712,8 +713,6 @@ static void GlobalGL_sharedContextDestroyed (void)
 
 #include "preferencesystem.h"
 #include "stringio.h"
-
-void Commands_Register ();
 
 void MainFrame_Construct (void)
 {

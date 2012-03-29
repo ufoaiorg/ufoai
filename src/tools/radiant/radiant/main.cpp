@@ -60,6 +60,7 @@
 
  */
 
+#include "commands.h"
 #include "version.h"
 #include "radiant_i18n.h"
 
@@ -349,8 +350,6 @@ static void remove_local_pid (void)
 	std::string g_pidGameFile = GlobalRegistry().get(RKEY_SETTINGS_PATH) + "/radiant.pid";
 	file_remove(g_pidGameFile);
 }
-
-void Commands_Init();
 
 int main (int argc, char* argv[])
 {
