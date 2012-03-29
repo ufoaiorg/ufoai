@@ -2,6 +2,8 @@
 // entity 0
 {
 "classname" "worldspawn"
+"maxlevel" "6"
+"randomspawn" "1"
 // brush 0
 {
 ( 128 102 68 ) ( 128 102 92 ) ( 136 110 92 ) tex_misc/barrel2 64 213.3334 0 -0.03125 0.09375 1536 1024 0
