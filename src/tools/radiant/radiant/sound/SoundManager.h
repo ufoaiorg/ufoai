@@ -41,8 +41,6 @@ class SoundManager: public ISoundManager
 		 */
 		SoundManager ();
 
-		~SoundManager ();
-
 		/** greebo: Plays the sound file. Tries to resolve the filename's
 		 * 			extension by appending .ogg or .wav and such.
 		 */

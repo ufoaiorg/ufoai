@@ -16,11 +16,6 @@ SoundManager::SoundManager ()
 	resumingFileNameToBePlayed = ""; //  "maledeath01.ogg";  for testing :)
 }
 
-// Destructor
-SoundManager::~SoundManager ()
-{
-}
-
 bool SoundManager::playSound (const std::string& fileName)
 {
 	if (!playbackEnabled)
