@@ -4,7 +4,6 @@
 #include "iarchive.h"
 #include "GenericFileSystem.h"
 #include "stream/filestream.h"
-#include "AutoPtr.h"
 
 class ZipRecord
 {
@@ -49,6 +48,5 @@ class ZipArchive: public Archive
 		bool read_record ();
 		bool read_pkzip ();
 };
-typedef AutoPtr<ZipArchive> ZipArchivePtr;
 
 #endif /*ZIPARCHIVE_H_*/

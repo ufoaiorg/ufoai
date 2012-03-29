@@ -1,6 +1,5 @@
 #include "Routing.h"
 #include "math/matrix.h"
-#include "AutoPtr.h"
 #include <string>
 #include "eclasslib.h"
 

@@ -5,7 +5,6 @@
 #include "gtkutil/ScrolledFrame.h"
 
 #include "texturelib.h"
-#include "AutoPtr.h"
 #include "radiant_i18n.h"
 #include "igl.h"
 #include "ishadersystem.h"

@@ -4,7 +4,6 @@
 #include "SoundPlayer.h"
 
 #include "isound.h"
-#include "AutoPtr.h"
 #include "generic/callback.h"
 #include "gtkutil/widget.h"
 
@@ -62,7 +61,6 @@ class SoundManager: public ISoundManager
 		bool isPlaybackEnabled ();
 };
 
-typedef AutoPtr<SoundManager> SoundManagerPtr;
 }
 
 void GlobalSoundManager_switchPlaybackEnabledFlag ();

@@ -5,7 +5,6 @@
 #include "modulesystem/moduleregistry.h"
 #include "generic/constant.h"
 #include "generic/callbackfwd.h"
-#include "AutoPtr.h"
 #include <vector>
 #include <string>
 #include "debugging/debugging.h"

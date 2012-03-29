@@ -1,5 +1,6 @@
 #include "SoundManager.h"
 
+#include "../../libs/AutoPtr.h"
 #include "ifilesystem.h"
 #include "archivelib.h"
 #include "generic/callback.h"
