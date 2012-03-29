@@ -79,14 +79,14 @@ inline GtkWindow* create_dialog_window (GtkWindow* parent, const std::string& ti
 	return window;
 }
 
-gboolean modal_dialog_button_clicked (GtkWidget *widget, ModalDialogButton* button)
+static gboolean modal_dialog_button_clicked (GtkWidget *widget, ModalDialogButton* button)
 {
 	button->m_dialog.loop = false;
 	button->m_dialog.ret = button->m_value;
 	return TRUE;
 }
 
-gboolean modal_dialog_delete (GtkWidget *widget, GdkEvent* event, ModalDialog* dialog)
+static gboolean modal_dialog_delete (GtkWidget *widget, GdkEvent* event, ModalDialog* dialog)
 {
 	dialog->loop = 0;
 	dialog->ret = eIDCANCEL;

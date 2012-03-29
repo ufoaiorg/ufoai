@@ -35,9 +35,7 @@
 #include "iselection.h"
 #include "iundo.h"
 #include "imap.h"
-MapModules& ReferenceAPI_getMapModules ();
 #include "imodel.h"
-ModelModules& ReferenceAPI_getModelModules ();
 #include "ifilesystem.h"
 #include "iarchive.h"
 #include "ifiletypes.h"
@@ -63,9 +61,11 @@ ModelModules& ReferenceAPI_getModelModules ();
 #include "../map/algorithm/Traverse.h"
 #include "../filetypes.h"
 
-static bool References_Saved ();
+static bool          References_Saved ();
+static MapModules&   ReferenceAPI_getMapModules();
+static ModelModules& ReferenceAPI_getModelModules();
 
-void MapChanged ()
+static void MapChanged ()
 {
 	GlobalMap().setModified(!References_Saved());
 }
@@ -133,7 +133,7 @@ static bool file_saveBackup (const std::string& path)
  * file before calling MapResource_saveFile() to do the actual saving of
  * data.
  */
-bool MapResource_save (const MapFormat& format, scene::Node& root, const std::string& path, const std::string& name)
+static bool MapResource_save (const MapFormat& format, scene::Node& root, const std::string& path, const std::string& name)
 {
 	std::string fullpath = path + name;
 
@@ -280,7 +280,7 @@ static ModelCache::iterator ModelCache_insert (const std::string& path, const st
 	return g_modelCache.insert(ModelKey("", ""), g_nullModel);
 }
 
-void ModelCache_flush (const std::string& path, const std::string& name)
+static void ModelCache_flush (const std::string& path, const std::string& name)
 {
 	ModelCache::iterator i = g_modelCache.find(ModelKey(path, name));
 	if (i != g_modelCache.end()) {
@@ -289,14 +289,14 @@ void ModelCache_flush (const std::string& path, const std::string& name)
 	}
 }
 
-void ModelCache_clear ()
+static void ModelCache_clear ()
 {
 	g_modelCache_enabled = false;
 	g_modelCache.clear();
 	g_modelCache_enabled = true;
 }
 
-NodeSmartReference Model_load (ModelLoader* loader, const std::string& path, const std::string& name, const std::string& type)
+static NodeSmartReference Model_load (ModelLoader* loader, const std::string& path, const std::string& name, const std::string& type)
 {
 	if (loader != 0) {
 		return ModelResource_load(loader, name);
@@ -692,7 +692,7 @@ void FlushReferences ()
 	g_referenceCache.clear();
 }
 
-ReferenceCache& GetReferenceCache ()
+static ReferenceCache& GetReferenceCache ()
 {
 	return g_referenceCache;
 }
@@ -753,11 +753,12 @@ typedef SingletonModule<ReferenceAPI, ReferenceDependencies> ReferenceModule;
 typedef Static<ReferenceModule> StaticReferenceModule;
 StaticRegisterModule staticRegisterReference(StaticReferenceModule::instance());
 
-ModelModules& ReferenceAPI_getModelModules ()
+static ModelModules& ReferenceAPI_getModelModules ()
 {
 	return StaticReferenceModule::instance().getDependencies().getModelModules();
 }
-MapModules& ReferenceAPI_getMapModules ()
+
+static MapModules& ReferenceAPI_getMapModules ()
 {
 	return StaticReferenceModule::instance().getDependencies().getMapModules();
 }

@@ -49,7 +49,7 @@ typedef void* (*glXGetProcAddressARBProc) (const GLubyte *procName);
 
 #endif
 
-void QGL_Shutdown (OpenGLBinding& table)
+static void QGL_Shutdown (OpenGLBinding& table)
 {
 	g_message("Shutting down OpenGL module...");
 
@@ -79,7 +79,7 @@ GLU_ERROR_STRUCT glu_errlist[] = { { GL_NO_ERROR, "GL_NO_ERROR - no error" }, { 
 		"GL_STACK_UNDERFLOW - Function would cause a stack underflow." }, { GL_OUT_OF_MEMORY,
 		"GL_OUT_OF_MEMORY - There is not enough memory left to execute the function." }, { 0, 0 } };
 
-const GLubyte* qgluErrorString (GLenum errCode)
+static const GLubyte* qgluErrorString (GLenum errCode)
 {
 	int search = 0;
 	for (search = 0; glu_errlist[search].errstr; search++) {
@@ -89,7 +89,7 @@ const GLubyte* qgluErrorString (GLenum errCode)
 	return (const GLubyte *) "Unknown error";
 }
 
-void glInvalidFunction ()
+static void QGL_DLLEXPORT glInvalidFunction ()
 {
 	ERROR_MESSAGE("calling an invalid OpenGL function");
 }
@@ -131,7 +131,7 @@ bool QGL_ExtensionSupported (const char* extension)
 
 typedef int (QGL_DLLEXPORT *QGLFunctionPointer) ();
 
-QGLFunctionPointer QGL_getExtensionFunc (const char* symbol)
+static QGLFunctionPointer QGL_getExtensionFunc (const char* symbol)
 {
 #if defined(__linux__) || defined (__FreeBSD__) || defined(__APPLE__)
 	if (qglXGetProcAddressARB == 0) {
@@ -160,11 +160,11 @@ void QGL_invalidateExtensionFunc (Func& func)
 	func = reinterpret_cast<Func> (glInvalidFunction);
 }
 
-void QGL_clear (OpenGLBinding& table)
+static void QGL_clear (OpenGLBinding& table)
 {
 }
 
-int QGL_Init (OpenGLBinding& table)
+static int QGL_Init (OpenGLBinding& table)
 {
 	QGL_clear(table);
 
@@ -186,7 +186,7 @@ int g_qglMajorVersion = 0;
 int g_qglMinorVersion = 0;
 
 // requires a valid gl context
-void QGL_InitVersion ()
+static void QGL_InitVersion ()
 {
 	const std::size_t versionSize = 256;
 	char version[versionSize];
@@ -313,7 +313,7 @@ void QGL_sharedContextDestroyed (OpenGLBinding& table)
 	QGL_clear(table);
 }
 
-void QGL_assertNoErrors ()
+static void QGL_assertNoErrors ()
 {
 	GLenum error = glGetError();
 	while (error != GL_NO_ERROR) {

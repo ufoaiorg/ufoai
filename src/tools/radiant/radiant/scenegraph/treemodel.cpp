@@ -365,7 +365,7 @@ static void graph_tree_model_tree_model_init (GtkTreeModelIface *iface)
 	iface->iter_parent = graph_tree_model_iter_parent;
 }
 
-GType graph_tree_model_get_type (void)
+static GType graph_tree_model_get_type (void)
 {
 	static GType graph_tree_model_type = 0;
 
@@ -400,7 +400,7 @@ void graph_tree_model_delete (GraphTreeModel* model)
 	g_object_unref(G_OBJECT(model));
 }
 
-void graph_tree_model_row_changed (GraphTreeModel* model, GraphTreeNode::iterator i)
+static void graph_tree_model_row_changed (GraphTreeModel* model, GraphTreeNode::iterator i)
 {
 	GtkTreeIter iter;
 	graph_iterator_write_tree_iter(i, &iter);
@@ -412,7 +412,7 @@ void graph_tree_model_row_changed (GraphTreeModel* model, GraphTreeNode::iterato
 	gtk_tree_path_free(tree_path);
 }
 
-void graph_tree_model_row_inserted (GraphTreeModel* model, GraphTreeNode::iterator i)
+static void graph_tree_model_row_inserted (GraphTreeModel* model, GraphTreeNode::iterator i)
 {
 	GtkTreeIter iter;
 	graph_iterator_write_tree_iter(i, &iter);
@@ -424,7 +424,7 @@ void graph_tree_model_row_inserted (GraphTreeModel* model, GraphTreeNode::iterat
 	gtk_tree_path_free(tree_path);
 }
 
-void graph_tree_model_row_deleted (GraphTreeModel* model, GraphTreeNode::iterator i)
+static void graph_tree_model_row_deleted (GraphTreeModel* model, GraphTreeNode::iterator i)
 {
 	GtkTreeIter iter;
 	graph_iterator_write_tree_iter(i, &iter);
@@ -436,24 +436,24 @@ void graph_tree_model_row_deleted (GraphTreeModel* model, GraphTreeNode::iterato
 	gtk_tree_path_free(tree_path);
 }
 
-void graph_tree_model_row_inserted (GraphTreeModel& model, GraphTreeNode::iterator i)
+static void graph_tree_model_row_inserted (GraphTreeModel& model, GraphTreeNode::iterator i)
 {
 	graph_tree_model_row_inserted(&model, i);
 }
 
-void graph_tree_model_row_deleted (GraphTreeModel& model, GraphTreeNode::iterator i)
+static void graph_tree_model_row_deleted (GraphTreeModel& model, GraphTreeNode::iterator i)
 {
 	graph_tree_model_row_deleted(&model, i);
 }
 
-std::string node_get_name (scene::Node& node)
+static std::string node_get_name (scene::Node& node)
 {
 	Nameable* nameable = Node_getNameable(node);
 	return (nameable != NULL) ? nameable->name() : "node";
 }
 
 // Checks for NULL references and returns "" if node is NULL
-std::string node_get_name_safe (scene::Node& node)
+static std::string node_get_name_safe (scene::Node& node)
 {
 	if (&node == NULL) {
 		return "";
@@ -461,7 +461,7 @@ std::string node_get_name_safe (scene::Node& node)
 	return node_get_name(node);
 }
 
-GraphTreeNode* graph_tree_model_find_parent (GraphTreeModel* model, const scene::Path& path)
+static GraphTreeNode* graph_tree_model_find_parent (GraphTreeModel* model, const scene::Path& path)
 {
 	GraphTreeNode* parent = model->m_graph;
 	for (scene::Path::const_iterator i = path.begin(); i != path.end() - 1; ++i) {
@@ -473,7 +473,7 @@ GraphTreeNode* graph_tree_model_find_parent (GraphTreeModel* model, const scene:
 	return parent;
 }
 
-void node_attach_name_changed_callback (scene::Node& node, const NameCallback& callback)
+static void node_attach_name_changed_callback (scene::Node& node, const NameCallback& callback)
 {
 	if (&node != 0) {
 		Nameable* nameable = Node_getNameable(node);
@@ -482,7 +482,8 @@ void node_attach_name_changed_callback (scene::Node& node, const NameCallback& c
 		}
 	}
 }
-void node_detach_name_changed_callback (scene::Node& node, const NameCallback& callback)
+
+static void node_detach_name_changed_callback (scene::Node& node, const NameCallback& callback)
 {
 	if (&node != 0) {
 		Nameable* nameable = Node_getNameable(node);
@@ -492,7 +493,7 @@ void node_detach_name_changed_callback (scene::Node& node, const NameCallback& c
 	}
 }
 
-void graph_tree_node_foreach_pre (GraphTreeNode::iterator root, const Callback1<GraphTreeNode::iterator>& callback)
+static void graph_tree_node_foreach_pre (GraphTreeNode::iterator root, const Callback1<GraphTreeNode::iterator>& callback)
 {
 	callback(root);
 	for (GraphTreeNode::iterator i = (*root).second->begin(); i != (*root).second->end(); ++i) {
@@ -500,7 +501,7 @@ void graph_tree_node_foreach_pre (GraphTreeNode::iterator root, const Callback1<
 	}
 }
 
-void graph_tree_node_foreach_post (GraphTreeNode::iterator root, const Callback1<GraphTreeNode::iterator>& callback)
+static void graph_tree_node_foreach_post (GraphTreeNode::iterator root, const Callback1<GraphTreeNode::iterator>& callback)
 {
 	for (GraphTreeNode::iterator i = (*root).second->begin(); i != (*root).second->end(); ++i) {
 		graph_tree_node_foreach_post(i, callback);
@@ -519,7 +520,7 @@ void graph_tree_model_row_changed (GraphTreeNode& node)
 	graph_tree_model_row_changed(model, i);
 }
 
-void graph_tree_model_set_name (const scene::Instance& instance, const std::string& name)
+static void graph_tree_model_set_name (const scene::Instance& instance, const std::string& name)
 {
 	GraphTreeModel* model = scene_graph_get_tree_model();
 	GraphTreeNode* parent = graph_tree_model_find_parent(model, instance.path());

@@ -45,7 +45,7 @@ typedef std::list<std::pair<std::string, std::string> > KeyValues;
 
 NodeSmartReference g_nullNode(NewNullNode());
 
-NodeSmartReference Entity_create (EntityCreator& entityTable, EntityClass* entityClass, const KeyValues& keyValues)
+static NodeSmartReference Entity_create (EntityCreator& entityTable, EntityClass* entityClass, const KeyValues& keyValues)
 {
 	scene::Node& entity(entityTable.createEntity(entityClass));
 	for (KeyValues::const_iterator i = keyValues.begin(); i != keyValues.end(); ++i) {
@@ -54,7 +54,7 @@ NodeSmartReference Entity_create (EntityCreator& entityTable, EntityClass* entit
 	return NodeSmartReference(entity);
 }
 
-NodeSmartReference Entity_parseTokens (Tokeniser& tokeniser, EntityCreator& entityTable, const PrimitiveParser& parser,
+static NodeSmartReference Entity_parseTokens (Tokeniser& tokeniser, EntityCreator& entityTable, const PrimitiveParser& parser,
 		int index)
 {
 	NodeSmartReference entity(g_nullNode);

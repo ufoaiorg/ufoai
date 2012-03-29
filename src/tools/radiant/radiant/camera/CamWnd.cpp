@@ -98,12 +98,12 @@ public:
 
 // --------------- Callbacks ---------------------------------------------------------
 
-void selection_motion(gdouble x, gdouble y, guint state, void* data) {
+static void selection_motion(gdouble x, gdouble y, guint state, void* data) {
 	//globalOutputStream() << "motion... ";
 	reinterpret_cast<WindowObserver*>(data)->onMouseMotion(WindowVector(x, y), state);
 }
 
-void camwnd_update_xor_rectangle(CamWnd& self, Rectangle area) {
+static void camwnd_update_xor_rectangle(CamWnd& self, Rectangle area) {
 	if (GTK_WIDGET_VISIBLE(self.m_gl_widget)) {
 		self.m_XORRectangle.set(rectangle_from_area(area.min, area.max, self.getCamera().width, self.getCamera().height));
 	}
@@ -123,7 +123,7 @@ gboolean CamWnd::camera_expose(GtkWidget* widget, GdkEventExpose* event, gpointe
 	return FALSE;
 }
 
-void Camera_motionDelta(int x, int y, unsigned int state, void* data) {
+static void Camera_motionDelta(int x, int y, unsigned int state, void* data) {
 	Camera* cam = reinterpret_cast<Camera*>(data);
 
 	cam->m_mouseMove.motion_delta(x, y, state);

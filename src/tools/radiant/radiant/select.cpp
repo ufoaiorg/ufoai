@@ -160,7 +160,7 @@ inline void Nudge (int nDim, float fNudge)
 	GlobalSelectionSystem().translateSelected(translate);
 }
 
-void Selection_NudgeZ (float amount)
+static void Selection_NudgeZ (float amount)
 {
 	std::stringstream command;
 	command << "nudgeSelected -axis z -amount " << amount;

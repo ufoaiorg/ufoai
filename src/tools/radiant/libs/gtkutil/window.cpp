@@ -69,14 +69,14 @@ unsigned int connect_floating (GtkWindow* main_window, GtkWindow* floating)
 	return g_signal_connect(G_OBJECT(main_window), "window_state_event", G_CALLBACK(main_window_iconified), floating);
 }
 
-gboolean destroy_disconnect_floating (GtkWindow* widget, gpointer data)
+static gboolean destroy_disconnect_floating (GtkWindow* widget, gpointer data)
 {
 	g_signal_handler_disconnect(G_OBJECT(data),
 			gpointer_to_int(g_object_get_data(G_OBJECT(widget), "floating_handler")));
 	return FALSE;
 }
 
-gboolean floating_window_delete_present (GtkWindow* floating, GdkEventFocus *event, GtkWindow* main_window)
+static gboolean floating_window_delete_present (GtkWindow* floating, GdkEventFocus *event, GtkWindow* main_window)
 {
 	if (gtk_window_is_active(floating) || gtk_window_is_active(main_window)) {
 		gtk_window_present(main_window);
@@ -84,12 +84,12 @@ gboolean floating_window_delete_present (GtkWindow* floating, GdkEventFocus *eve
 	return FALSE;
 }
 
-guint connect_floating_window_delete_present (GtkWindow* floating, GtkWindow* main_window)
+static guint connect_floating_window_delete_present (GtkWindow* floating, GtkWindow* main_window)
 {
 	return g_signal_connect(G_OBJECT(floating), "delete_event", G_CALLBACK(floating_window_delete_present), main_window);
 }
 
-gboolean floating_window_destroy_present (GtkWindow* floating, GtkWindow* main_window)
+static gboolean floating_window_destroy_present (GtkWindow* floating, GtkWindow* main_window)
 {
 	if (gtk_window_is_active(floating) || gtk_window_is_active(main_window)) {
 		gtk_window_present(main_window);
@@ -97,7 +97,7 @@ gboolean floating_window_destroy_present (GtkWindow* floating, GtkWindow* main_w
 	return FALSE;
 }
 
-guint connect_floating_window_destroy_present (GtkWindow* floating, GtkWindow* main_window)
+static guint connect_floating_window_destroy_present (GtkWindow* floating, GtkWindow* main_window)
 {
 	return g_signal_connect(G_OBJECT(floating), "destroy", G_CALLBACK(floating_window_destroy_present), main_window);
 }
@@ -147,7 +147,7 @@ GtkWindow* create_persistent_floating_window (const std::string& title, GtkWindo
 	return window;
 }
 
-gint window_realize_remove_minmax (GtkWidget* widget, gpointer data)
+static gint window_realize_remove_minmax (GtkWidget* widget, gpointer data)
 {
 	gdk_window_set_decorations(widget->window, (GdkWMDecoration) (GDK_DECOR_ALL | GDK_DECOR_MINIMIZE
 			| GDK_DECOR_MAXIMIZE));

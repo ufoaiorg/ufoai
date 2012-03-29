@@ -106,7 +106,7 @@ inline GtkWidget* getVBox (GtkWidget* page)
 	return gtk_bin_get_child(GTK_BIN(page));
 }
 
-GtkTreeIter PreferenceTree_appendPage (GtkTreeStore* store, GtkTreeIter* parent, const std::string& name,
+static GtkTreeIter PreferenceTree_appendPage (GtkTreeStore* store, GtkTreeIter* parent, const std::string& name,
 		GtkWidget* page)
 {
 	GtkTreeIter group;
@@ -115,7 +115,7 @@ GtkTreeIter PreferenceTree_appendPage (GtkTreeStore* store, GtkTreeIter* parent,
 	return group;
 }
 
-GtkWidget* PreferencePages_addPage (GtkWidget* notebook, const std::string& name)
+static GtkWidget* PreferencePages_addPage (GtkWidget* notebook, const std::string& name)
 {
 	GtkWidget* preflabel = gtk_label_new(name.c_str());
 	gtk_widget_show(preflabel);

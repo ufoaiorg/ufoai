@@ -237,7 +237,7 @@ bool redrawRequired (void)
 }
 }
 
-bool MainFrame_isActiveApp (void)
+static bool MainFrame_isActiveApp (void)
 {
 	GList* list = gtk_window_list_toplevels();
 	for (GList* i = list; i != 0; i = g_list_next(i)) {
@@ -672,7 +672,7 @@ namespace {
 GLFont g_font(0, 0);
 }
 
-void GlobalGL_sharedContextCreated (void)
+static void GlobalGL_sharedContextCreated (void)
 {
 	// report OpenGL information
 	globalOutputStream() << "GL_VENDOR: " << reinterpret_cast<const char*> (glGetString(GL_VENDOR)) << "\n";
@@ -702,7 +702,7 @@ void GlobalGL_sharedContextCreated (void)
 	GlobalOpenGL().m_fontHeight = g_font.getPixelHeight();
 }
 
-void GlobalGL_sharedContextDestroyed (void)
+static void GlobalGL_sharedContextDestroyed (void)
 {
 	GlobalTexturesCache().unrealise();
 	GlobalShaderCache().unrealise();

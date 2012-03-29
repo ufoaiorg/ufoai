@@ -47,7 +47,7 @@
 
 #include "os/path.h"
 
-GtkEntry* DialogEntry_new ()
+static GtkEntry* DialogEntry_new ()
 {
 	GtkEntry* entry = GTK_ENTRY(gtk_entry_new());
 	gtk_widget_show(GTK_WIDGET(entry));
@@ -66,7 +66,7 @@ class DialogEntryRow
 		GtkEntry* m_entry;
 };
 
-DialogEntryRow DialogEntryRow_new (const std::string& name)
+static DialogEntryRow DialogEntryRow_new (const std::string& name)
 {
 	GtkWidget* alignment = gtk_alignment_new(0.0, 0.5, 0.0, 0.0);
 	gtk_widget_show(alignment);
@@ -77,7 +77,7 @@ DialogEntryRow DialogEntryRow_new (const std::string& name)
 	return DialogEntryRow(GTK_WIDGET(DialogRow_new(name, alignment)), entry);
 }
 
-GtkSpinButton* DialogSpinner_new (double value, double lower, double upper, int fraction)
+static GtkSpinButton* DialogSpinner_new (double value, double lower, double upper, int fraction)
 {
 	double step = 1.0 / double(fraction);
 	unsigned int digits = 0;
@@ -103,7 +103,7 @@ class DialogSpinnerRow
 		GtkSpinButton* m_spin;
 };
 
-DialogSpinnerRow DialogSpinnerRow_new (const char* name, double value, double lower, double upper, int fraction)
+static DialogSpinnerRow DialogSpinnerRow_new (const char* name, double value, double lower, double upper, int fraction)
 {
 	GtkWidget* alignment = gtk_alignment_new(0.0, 0.5, 0.0, 0.0);
 	gtk_widget_show(alignment);
