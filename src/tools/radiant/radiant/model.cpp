@@ -36,6 +36,7 @@ typedef unsigned char byte;
 #include "ifilesystem.h"
 #include "iundo.h"
 #include "ifiletypes.h"
+#include "model.h"
 #include "preferencesystem.h"
 #include "stringio.h"
 #include "iarchive.h"

@@ -22,6 +22,12 @@
 #if !defined(INCLUDED_GENERIC_H)
 #define INCLUDED_GENERIC_H
 
+namespace scene {
+	class Node;
+}
+
+class EntityClass;
+
 scene::Node& New_GenericEntity (EntityClass* eclass);
 
 #endif

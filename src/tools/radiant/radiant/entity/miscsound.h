@@ -19,6 +19,12 @@
 #if !defined(INCLUDED_MISCSOUND_H)
 #define INCLUDED_MISCSOUND_H
 
+namespace scene {
+	class Node;
+}
+
+class EntityClass;
+
 scene::Node& New_MiscSound (EntityClass* eclass);
 
 #endif

@@ -21,6 +21,7 @@
  */
 
 #include "cullable.h"
+#include "miscsound.h"
 #include "renderable.h"
 #include "editable.h"
 

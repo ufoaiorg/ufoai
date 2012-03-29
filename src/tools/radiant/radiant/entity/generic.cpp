@@ -29,6 +29,7 @@
  */
 
 #include "cullable.h"
+#include "generic.h"
 #include "renderable.h"
 #include "editable.h"
 

@@ -26,6 +26,7 @@
  */
 
 #include "cullable.h"
+#include "group.h"
 #include "renderable.h"
 #include "editable.h"
 

@@ -1,3 +1,4 @@
+#include "commands.h"
 #include "ui/mainframe/mainframe.h"
 #include "radiant_i18n.h"
 
