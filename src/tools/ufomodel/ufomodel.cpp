@@ -490,7 +490,7 @@ static void MD2GLCmdsRemove (const byte *buf, const char *fileName, int bufSize,
 		Mem_Free(copy);
 
 		*(size_t *)userData += delta;
-		Com_Printf("  \\ - removed %i glcmds from '%s' (save "UFO_SIZE_T" bytes)\n",
+		Com_Printf("  \\ - removed %i glcmds from '%s' (save " UFO_SIZE_T " bytes)\n",
 				numGLCmds, fileName, delta);
 	}
 }
@@ -631,7 +631,7 @@ static void GLCmdsRemove (void)
 {
 	size_t bytes = 0;
 	MD2Visitor(MD2GLCmdsRemove, &bytes);
-	Com_Printf("Saved "UFO_SIZE_T"bytes after removing all glcmds from the md2 files\n", bytes);
+	Com_Printf("Saved " UFO_SIZE_T "bytes after removing all glcmds from the md2 files\n", bytes);
 }
 
 void R_ReallocateStateArrays(int size)
@@ -667,7 +667,7 @@ void R_ReallocateTexunitArray(gltexunit_t * texunit, int size)
 
 int main (int argc, char **argv)
 {
-	Com_Printf("---- ufomodel "VERSION" ----\n");
+	Com_Printf("---- ufomodel " VERSION " ----\n");
 
 	UM_DefaultParameter();
 	UM_Parameter(argc, argv);

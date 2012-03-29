@@ -217,7 +217,7 @@ static void CalcLightinfoVectors (lightinfo_t *l)
 	l->numsurfpt = l->texsize[0] * l->texsize[1];
 	l->surfpt = Mem_AllocTypeN(vec3_t, l->numsurfpt);
 	if (!l->surfpt)
-		Sys_Error("Surface too large to light ("UFO_SIZE_T")", l->numsurfpt * sizeof(*l->surfpt));
+		Sys_Error("Surface too large to light (" UFO_SIZE_T ")", l->numsurfpt * sizeof(*l->surfpt));
 
 	/* distance between samples */
 	l->step = 1 << config.lightquant;

@@ -136,7 +136,7 @@ static int Sys_BacktraceLibsCallback (struct dl_phdr_info *info, size_t size, vo
 		end += info->dlpi_phdr[j].p_memsz;
 	}
 
-	fprintf(crash, "[0x"UFO_SIZE_T"x-0x"UFO_SIZE_T"x] %s\n", info->dlpi_addr, info->dlpi_addr + end, info->dlpi_name);
+	fprintf(crash, "[0x" UFO_SIZE_T "x-0x" UFO_SIZE_T "x] %s\n", info->dlpi_addr, info->dlpi_addr + end, info->dlpi_name);
 	return 0;
 }
 

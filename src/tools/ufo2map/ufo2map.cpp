@@ -462,7 +462,7 @@ static void U2M_Parameter (int argc, char **argv)
 				Sys_Error("invalid parameter count\n");
 			}
 		} else if (Q_streq(argv[i], "-V") || Q_streq(argv[i], "--version")) {
-			Verb_Printf(VERB_LESS, "version:"VERSION" revision:"REVISION"\n");
+			Verb_Printf(VERB_LESS, "version:" VERSION " revision:" REVISION "\n");
 			exit(0);
 		} else if (i < (argc - 1)) {
 			/* Last param is the map path, every other param should have been caught by now. */
@@ -558,7 +558,7 @@ int main (int argc, char **argv)
 
 	U2M_Parameter(argc, argv);
 
-	Verb_Printf(VERB_NORMAL, "---- ufo2map "VERSION" ----\n");
+	Verb_Printf(VERB_NORMAL, "---- ufo2map " VERSION " ----\n");
 
 	if (argc < 2) {
 		Usage();

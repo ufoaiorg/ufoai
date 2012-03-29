@@ -2907,7 +2907,7 @@ int B_AntimatterInBase (const base_t *base)
 
 	od = INVSH_GetItemByID(ANTIMATTER_TECH_ID);
 	if (od == NULL)
-		Com_Error(ERR_DROP, "Could not find "ANTIMATTER_TECH_ID" object definition");
+		Com_Error(ERR_DROP, "Could not find " ANTIMATTER_TECH_ID " object definition");
 
 	assert(base);
 	assert(B_ItemInBase(od, base) == CAP_GetCurrent(base, CAP_ANTIMATTER));

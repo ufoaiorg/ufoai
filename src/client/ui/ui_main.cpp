@@ -71,12 +71,12 @@ static void UI_Memory_f (void)
 	Com_Printf("\t-Node allocation: %i\n", ui_global.numNodes);
 
 	Com_Printf("Memory:\n");
-	Com_Printf("\t-Action structure size: "UFO_SIZE_T" B\n", sizeof(uiAction_t));
-	Com_Printf("\t-Model structure size: "UFO_SIZE_T" B\n", sizeof(uiModel_t));
-	Com_Printf("\t-Node structure size: "UFO_SIZE_T" B x%d\n", sizeof(uiNode_t), ui_global.numNodes);
+	Com_Printf("\t-Action structure size: " UFO_SIZE_T " B\n", sizeof(uiAction_t));
+	Com_Printf("\t-Model structure size: " UFO_SIZE_T " B\n", sizeof(uiModel_t));
+	Com_Printf("\t-Node structure size: " UFO_SIZE_T " B x%d\n", sizeof(uiNode_t), ui_global.numNodes);
 	for (i = 0; i < UI_GetNodeBehaviourCount(); i++) {
 		uiBehaviour_t *b = UI_GetNodeBehaviourByIndex(i);
-		Com_Printf("\t -Behaviour %20s structure size: "UFO_SIZE_T" (+"UFO_SIZE_T" B) x%4u\n", b->name, sizeof(uiNode_t) + b->extraDataSize, b->extraDataSize, b->count);
+		Com_Printf("\t -Behaviour %20s structure size: " UFO_SIZE_T " (+" UFO_SIZE_T " B) x%4u\n", b->name, sizeof(uiNode_t) + b->extraDataSize, b->extraDataSize, b->count);
 	}
 
 	size = 0;
@@ -86,13 +86,13 @@ static void UI_Memory_f (void)
 	}
 	Com_Printf("Global memory:\n");
 	Com_Printf("\t-System pool: %ui B\n", _Mem_PoolSize(ui_sysPool));
-	Com_Printf("\t -AData allocation: "UFO_SIZE_T"/%i B\n", (ptrdiff_t)(ui_global.curadata - ui_global.adata), ui_global.adataize);
-	Com_Printf("\t -AData used by nodes: "UFO_SIZE_T" B\n", size);
+	Com_Printf("\t -AData allocation: " UFO_SIZE_T "/%i B\n", (ptrdiff_t)(ui_global.curadata - ui_global.adata), ui_global.adataize);
+	Com_Printf("\t -AData used by nodes: " UFO_SIZE_T " B\n", size);
 	Com_Printf("\t-Dynamic node/data pool: %ui B\n", _Mem_PoolSize(ui_dynPool));
 	Com_Printf("\t-Dynamic strings pool: %ui B\n", _Mem_PoolSize(ui_dynStringPool));
 
 	size = _Mem_PoolSize(ui_sysPool) + _Mem_PoolSize(ui_dynPool) + _Mem_PoolSize(ui_dynStringPool);
-	Com_Printf("\t-Full size: "UFO_SIZE_T" B\n", size);
+	Com_Printf("\t-Full size: " UFO_SIZE_T " B\n", size);
 }
 #endif
 

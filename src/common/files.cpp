@@ -857,7 +857,7 @@ void FS_InitFilesystem (qboolean writeToHomeDir)
 
 #ifdef PKGDATADIR
 	/* add the system search path */
-	FS_AddGameDirectory(PKGDATADIR"/"BASEDIRNAME, qfalse);
+	FS_AddGameDirectory(PKGDATADIR "/" BASEDIRNAME, qfalse);
 #endif
 
 	FS_AddGameDirectory("./" BASEDIRNAME, !writeToHomeDir);
