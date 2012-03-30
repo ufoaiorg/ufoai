@@ -44,17 +44,18 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #define MAX_RF_TARGETS 10
 #define MAX_RF_DATA 50
 
-typedef struct reactionFireTarget
+class ReactionFireTarget
 {
+public:
 	edict_t const *target;
 	int triggerTUs;		/* the amount of TUS of the target(!) at which the reaction takes place */
-} reactionFireTarget_t;
+};
 
 typedef struct reactionFireTargets
 {
 	int entnum;
 	int count;
-	reactionFireTarget_t targets[MAX_RF_TARGETS];
+	ReactionFireTarget targets[MAX_RF_TARGETS];
 } reactionFireTargets_t;
 
 static reactionFireTargets_t rfData[MAX_RF_DATA];
