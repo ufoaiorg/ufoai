@@ -36,26 +36,12 @@
 #include "messagebox.h"
 #include "IConv.h"
 
-struct filetype_pair_t
-{
-		filetype_pair_t () :
-			m_moduleName("")
-		{
-		}
-		filetype_pair_t (const std::string& moduleName, filetype_t type) :
-			m_moduleName(moduleName), m_type(type)
-		{
-		}
-		const std::string& m_moduleName;
-		filetype_t m_type;
-};
-
 class FileTypeList: public IFileTypeList
 {
 		struct filetype_copy_t
 		{
-				filetype_copy_t (const filetype_pair_t& other) :
-					m_moduleName(other.m_moduleName), m_name(other.m_type.name), m_pattern(other.m_type.pattern)
+				filetype_copy_t (std::string const& moduleName, filetype_t const& type) :
+					m_moduleName(moduleName), m_name(type.name), m_pattern(type.pattern)
 				{
 				}
 				std::string m_moduleName;
@@ -84,7 +70,7 @@ class FileTypeList: public IFileTypeList
 
 		void addType (const std::string& moduleName, filetype_t type)
 		{
-			m_types.push_back(filetype_pair_t(moduleName, type));
+			m_types.push_back(filetype_copy_t(moduleName, type));
 		}
 };
 
