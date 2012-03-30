@@ -119,23 +119,18 @@ bool QGL_ExtensionSupported (const char* extension)
 	return false;
 }
 
-typedef int (QGL_DLLEXPORT *QGLFunctionPointer) ();
-
-static QGLFunctionPointer QGL_getExtensionFunc (const char* symbol)
-{
-#if defined(__linux__) || defined (__FreeBSD__) || defined(__APPLE__)
-	return qglXGetProcAddressARB ? (QGLFunctionPointer)qglXGetProcAddressARB(reinterpret_cast<GLubyte const*>(symbol)) : 0;
-#elif defined(_WIN32)
-	return wglGetProcAddress(symbol);
-#else
-#error "unsupported platform"
-#endif
-}
-
 template<typename Func>
 bool QGL_constructExtensionFunc (Func& func, const char* symbol)
 {
-	func = reinterpret_cast<Func> (QGL_getExtensionFunc(symbol));
+	func = reinterpret_cast<Func>(
+#if defined(__linux__) || defined (__FreeBSD__) || defined(__APPLE__)
+		qglXGetProcAddressARB ? qglXGetProcAddressARB(reinterpret_cast<GLubyte const*>(symbol)) : 0
+#elif defined(_WIN32)
+		wglGetProcAddress(symbol)
+#else
+#error "unsupported platform"
+#endif
+	);
 	return func != 0;
 }
 
