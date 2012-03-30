@@ -707,8 +707,6 @@ static void GlobalGL_sharedContextDestroyed (void)
 {
 	GlobalTexturesCache().unrealise();
 	GlobalShaderCache().unrealise();
-
-	QGL_sharedContextDestroyed(GlobalOpenGL());
 }
 
 #include "preferencesystem.h"

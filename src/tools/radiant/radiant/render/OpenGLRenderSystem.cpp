@@ -287,10 +287,6 @@ void QGL_sharedContextCreated (OpenGLBinding& table)
 	}
 }
 
-void QGL_sharedContextDestroyed (OpenGLBinding& table)
-{
-}
-
 static void QGL_assertNoErrors ()
 {
 	GLenum error = glGetError();
