@@ -39,7 +39,6 @@ PROC ( WINAPI * qwglGetProcAddress)(LPCSTR);
 # include <GL/glx.h>
 # include <dlfcn.h>
 # include <gdk/gdkx.h>
-Bool (*qglXQueryExtension) (Display *dpy, int *errorb, int *event);
 void* (*qglXGetProcAddressARB) (const GLubyte *procName);
 typedef void* (*glXGetProcAddressARBProc) (const GLubyte *procName);
 
@@ -56,7 +55,6 @@ static void QGL_Shutdown (OpenGLBinding& table)
 #ifdef _WIN32
 	qwglGetProcAddress = 0;
 #elif defined(__linux__) || defined (__FreeBSD__) || defined(__APPLE__)
-	qglXQueryExtension = 0;
 	qglXGetProcAddressARB = 0;
 #else
 #error "unsupported platform"
@@ -171,9 +169,8 @@ static int QGL_Init (OpenGLBinding& table)
 #ifdef _WIN32
 	qwglGetProcAddress = wglGetProcAddress;
 #elif defined(__linux__) || defined (__FreeBSD__) || defined(__APPLE__)
-	qglXQueryExtension = glXQueryExtension;
 	qglXGetProcAddressARB = (glXGetProcAddressARBProc) dlsym(RTLD_DEFAULT, "glXGetProcAddressARB");
-	if ((qglXQueryExtension == 0) || (qglXQueryExtension(GDK_DISPLAY(), 0, 0) != True))
+	if (!glXQueryExtension(GDK_DISPLAY(), 0, 0))
 		return 0;
 #else
 #error "unsupported platform"
