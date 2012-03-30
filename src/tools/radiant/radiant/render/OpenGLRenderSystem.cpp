@@ -148,12 +148,6 @@ bool QGL_constructExtensionFunc (Func& func, const char* symbol)
 	return func != 0;
 }
 
-template<typename Func>
-void QGL_invalidateExtensionFunc (Func& func)
-{
-	func = reinterpret_cast<Func> (glInvalidFunction);
-}
-
 static void QGL_clear (OpenGLBinding& table)
 {
 }
