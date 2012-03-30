@@ -582,17 +582,6 @@ static qboolean G_ReactionFireTryToShoot (edict_t *shooter, const edict_t *targe
 	if (tookShot) {
 		/* clear any shakenness */
 		G_RemoveShaken(shooter);
-
-		/* check whether further reaction fire is possible */
-		if (G_ReactionFireIsPossible(shooter, target)){
-			/* see how quickly shooter can fire (if it can fire at all) */
-			const int tus = G_ReactionFireGetTUsForItem(shooter, target, RIGHT(shooter));
-			if (tus >= 0) {
-				/* An enemy getting reaction shot gets more time before
-				 * reaction fire is repeated. */
-				shooter->reactionTUs = max(0, target->TU - tus);
-			}
-		}
 	}
 
 	return tookShot;
@@ -620,16 +609,6 @@ static qboolean G_ReactionFireCheckExecution (const edict_t *target)
 					G_ReactionFireTargetsAdvance(shooter, target, tus);
 					fired |= qtrue;
 				}
-			}
-		} else {
-			if (shooter->reactionTarget) {
-				const int reactionTargetTU = shooter->reactionTarget->TU;
-				const int reactionTU = shooter->reactionTUs;
-				const qboolean timeout = reactionTargetTU < reactionTU;
-				/* check whether target has changed (i.e. the player is making a move with a
-				 * different entity) or whether target is out of time. */
-				if (shooter->reactionTarget != target || timeout)
-					fired |= G_ReactionFireTryToShoot(shooter, target);
 			}
 		}
 	}
@@ -732,7 +711,6 @@ void G_ReactionFireReset (int team)
 		 * state? - see G_MoraleBehaviour */
 		G_RemoveShaken(ent);
 		ent->reactionTarget = NULL;
-		ent->reactionTUs = 0;
 
 		G_EventActorStateChange(G_TeamToPM(ent->team), ent);
 	}
