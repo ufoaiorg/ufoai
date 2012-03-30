@@ -10,15 +10,15 @@
  * @brief This function does the actual processing of raw RGBA data into a GL texture.
  * @note It will also resample to power-of-two dimensions, generate the mipmaps and adjust gamma.
  */
-void GLTexture::LoadTextureRGBA (Image* image)
+void GLTexture::LoadTextureRGBA (Image& image)
 {
-	surfaceFlags = image->getSurfaceFlags();
-	contentFlags = image->getContentFlags();
-	value = image->getValue();
-	width = image->getWidth();
-	height = image->getHeight();
+	surfaceFlags = image.getSurfaceFlags();
+	contentFlags = image.getContentFlags();
+	value        = image.getValue();
+	width        = image.getWidth();
+	height       = image.getHeight();
 
-	Image* processed = shaders::TextureManipulator::Instance().getProcessedImage(image);
+	Image* processed = shaders::TextureManipulator::Instance().getProcessedImage(&image);
 
 	hasAlpha = processed->hasAlpha();
 	color = shaders::TextureManipulator::Instance().getFlatshadeColour(processed);
@@ -40,7 +40,7 @@ void GLTexture::LoadTextureRGBA (Image* image)
 	glBindTexture(GL_TEXTURE_2D, 0);
 
 	// if we had to resize it
-	if (image != processed)
+	if (&image != processed)
 		delete processed;
 }
 
@@ -57,7 +57,7 @@ void GLTexture::realise ()
 	if (!name.empty() && !strstr(name.c_str(), "_nm")) {
 		AutoPtr<Image> image(load.loadImage(name));
 		if (image) {
-			LoadTextureRGBA(image);
+			LoadTextureRGBA(*image);
 		} else {
 			globalWarningStream() << "Texture load failed: '" << name << "'\n";
 		}
