@@ -148,14 +148,8 @@ bool QGL_constructExtensionFunc (Func& func, const char* symbol)
 	return func != 0;
 }
 
-static void QGL_clear (OpenGLBinding& table)
-{
-}
-
 static int QGL_Init (OpenGLBinding& table)
 {
-	QGL_clear(table);
-
 #if defined __linux__ || defined __FreeBSD__ || defined __APPLE__
 	qglXGetProcAddressARB = (glXGetProcAddressARBProc) dlsym(RTLD_DEFAULT, "glXGetProcAddressARB");
 	if (!glXQueryExtension(GDK_DISPLAY(), 0, 0))
@@ -295,7 +289,6 @@ void QGL_sharedContextCreated (OpenGLBinding& table)
 
 void QGL_sharedContextDestroyed (OpenGLBinding& table)
 {
-	QGL_clear(table);
 }
 
 static void QGL_assertNoErrors ()
