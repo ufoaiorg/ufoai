@@ -114,7 +114,9 @@ window buildings
 	{
 		cmd "building_init;"
 		call *node:root.mn_buildings_reset
-		cmd "ui_push_child popup_buildingpreview buildings;"
+		if ( *node:root.building_preview@current > 0 ) {
+			cmd "ui_push_child popup_buildingpreview buildings;"
+		}
 		*cvar:mn_lastsubmenu = "buildings"
 	}
 
