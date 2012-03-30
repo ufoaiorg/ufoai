@@ -18,7 +18,6 @@ base/0shaders.pk3     /usr/share/games/ufoai/base
 base/0snd.pk3         /usr/share/games/ufoai/base
 base/0textures.pk3    /usr/share/games/ufoai/base
 base/0ufos.pk3        /usr/share/games/ufoai/base
-base/0videos.pk3      /usr/share/games/ufoai/base
 # don't add 0media.pk3, the fonts are added via symlinks
 base/i18n/* /usr/share/games/ufoai/base/i18n
 src/docs/tex/ufo-manual_EN.pdf /usr/share/doc/ufoai-data/
