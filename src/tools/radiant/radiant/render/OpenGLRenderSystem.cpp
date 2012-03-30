@@ -84,11 +84,6 @@ static const GLubyte* qgluErrorString (GLenum errCode)
 	return (const GLubyte *) "Unknown error";
 }
 
-static void QGL_DLLEXPORT glInvalidFunction ()
-{
-	ERROR_MESSAGE("calling an invalid OpenGL function");
-}
-
 bool QGL_ExtensionSupported (const char* extension)
 {
 	const GLubyte *extensions = 0;
@@ -129,11 +124,7 @@ typedef int (QGL_DLLEXPORT *QGLFunctionPointer) ();
 static QGLFunctionPointer QGL_getExtensionFunc (const char* symbol)
 {
 #if defined(__linux__) || defined (__FreeBSD__) || defined(__APPLE__)
-	if (qglXGetProcAddressARB == 0) {
-		return reinterpret_cast<QGLFunctionPointer> (glInvalidFunction);
-	} else {
-		return (QGLFunctionPointer) qglXGetProcAddressARB(reinterpret_cast<const GLubyte*> (symbol));
-	}
+	return qglXGetProcAddressARB ? (QGLFunctionPointer)qglXGetProcAddressARB(reinterpret_cast<GLubyte const*>(symbol)) : 0;
 #elif defined(_WIN32)
 	return wglGetProcAddress(symbol);
 #else
