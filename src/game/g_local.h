@@ -726,7 +726,6 @@ struct edict_s {
 	/** delayed reaction fire */
 	const edict_t *reactionTarget;	/**< the moving actor who triggered the RF of this ent - only set when this actor has reaction fire enabled */
 	float reactionTUs;				/**< TU value of the target at which reaction will occur */
-	qboolean reactionNoDraw;
 	qboolean inRescueZone;			/**< the actor is standing in a rescue zone if this is true - this means that
 									 * when the mission is aborted the actor will not die */
 

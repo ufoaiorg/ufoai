@@ -682,29 +682,6 @@ void G_ReactionFirePreShot (const edict_t *target, const int fdTime)
 						G_ReactionFireTargetsAdvance(shooter, target, fdTime);
 					}
 				}
-			} else {
-				if (!shooter->reactionTarget)
-					continue;
-
-				/* check this shooter hasn't already lost the draw */
-				if (shooter->reactionNoDraw)
-					continue;
-
-				/* can't reaction fire if no TUs to fire */
-				if (entTUs < 0) {
-					shooter->reactionTarget = NULL;
-					continue;
-				}
-
-				/* see who won */
-				if (entTUs >= fdTime) {
-					/* target wins, so delay shooter */
-					/* shooter can't lose the TU battle again */
-					shooter->reactionNoDraw = qtrue;
-				} else {
-					/* shooter wins so take the shot */
-					G_ReactionFireTryToShoot(shooter, shooter->reactionTarget);
-				}
 			}
 		}
 	}
@@ -756,7 +733,6 @@ void G_ReactionFireReset (int team)
 		G_RemoveShaken(ent);
 		ent->reactionTarget = NULL;
 		ent->reactionTUs = 0;
-		ent->reactionNoDraw = qfalse;
 
 		G_EventActorStateChange(G_TeamToPM(ent->team), ent);
 	}
