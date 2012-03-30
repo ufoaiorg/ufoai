@@ -55,5 +55,5 @@ CCFLAGS += -std=c99
 #CCFLAGS += -Wdeclaration-after-statement
 #CCFLAGS += -Wc++-compat
 
-CXXFLAGS += $(CFLAGS)
+CXXFLAGS := $(CFLAGS) $(CXXFLAGS)
 CXXFLAGS += -Wnon-virtual-dtor
