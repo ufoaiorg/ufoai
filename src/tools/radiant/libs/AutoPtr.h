@@ -39,9 +39,9 @@ template<typename T> class AutoPtr
 			return p_;
 		}
 
-		operator T* () const
+		T& operator * () const
 		{
-			return p_;
+			return *p_;
 		}
 
 		operator bool () const
