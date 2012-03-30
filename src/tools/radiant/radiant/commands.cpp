@@ -100,27 +100,28 @@
 
 namespace {
 bool g_currentToolModeSupportsComponentEditing = false;
-}
 
-static void Exit (void)
+void Exit ()
 {
 	if (GlobalMap().askForSave(_("Exit Radiant"))) {
 		gtk_main_quit();
 	}
 }
 
-static void Undo (void)
+void Undo ()
 {
 	GlobalUndoSystem().undo();
 	SceneChangeNotify();
 	GlobalShaderClipboard().clear();
 }
 
-static void Redo (void)
+void Redo ()
 {
 	GlobalUndoSystem().redo();
 	SceneChangeNotify();
 	GlobalShaderClipboard().clear();
+}
+
 }
 
 static void Map_ExportSelected (TextOutputStream& ostream)
@@ -143,7 +144,9 @@ static void Selection_Paste (void)
 	clipboard_paste(Map_ImportSelected);
 }
 
-static void Copy (void)
+namespace {
+
+void Copy ()
 {
 	if (GlobalSelectionSystem().areFacesSelected()) {
 		selection::algorithm::pickShaderFromSelection();
@@ -152,13 +155,13 @@ static void Copy (void)
 	}
 }
 
-static void Cut (void)
+void Cut ()
 {
 	Copy();
 	selection::algorithm::deleteSelection();
 }
 
-static void Paste (void)
+void Paste ()
 {
 	if (GlobalSelectionSystem().areFacesSelected()) {
 		selection::algorithm::pasteShaderToSelection();
@@ -170,7 +173,7 @@ static void Paste (void)
 	}
 }
 
-static void PasteToCamera (void)
+void PasteToCamera ()
 {
 	CamWnd& camwnd = *g_pParentWnd->GetCamWnd();
 	GlobalSelectionSystem().setSelectedAll(false);
@@ -187,14 +190,16 @@ static void PasteToCamera (void)
 	GlobalSelectionSystem().translateSelected(delta);
 }
 
-static void OpenHelpURL (void)
+void OpenHelpURL ()
 {
 	OpenURL("http://ufoai.ninex.info/wiki/index.php/Category:Mapping");
 }
 
-static void OpenBugReportURL (void)
+void OpenBugReportURL ()
 {
 	OpenURL("http://sourceforge.net/tracker/?func=add&group_id=157793&atid=805242");
+}
+
 }
 
 static void ModeChangeNotify (void)
@@ -234,7 +239,9 @@ static void ComponentModeChanged (void)
 	GlobalEventManager().setToggled("DragFaces", FaceMode());
 }
 
-static void ComponentMode_SelectionChanged (const Selectable& selectable)
+namespace {
+
+void ComponentMode_SelectionChanged (const Selectable& selectable)
 {
 	if (GlobalSelectionSystem().Mode() == SelectionSystem::eComponent && GlobalSelectionSystem().countSelected() == 0) {
 		SelectionSystem_DefaultMode();
@@ -242,7 +249,7 @@ static void ComponentMode_SelectionChanged (const Selectable& selectable)
 	}
 }
 
-static void ToggleEntityMode ()
+void ToggleEntityMode ()
 {
 	if (GlobalSelectionSystem().Mode() == SelectionSystem::eEntity) {
 		SelectionSystem_DefaultMode();
@@ -255,7 +262,7 @@ static void ToggleEntityMode ()
 	ModeChangeNotify();
 }
 
-static void ToggleEdgeMode ()
+void ToggleEdgeMode ()
 {
 	if (EdgeMode()) {
 		SelectionSystem_DefaultMode();
@@ -273,7 +280,7 @@ static void ToggleEdgeMode ()
 	ModeChangeNotify();
 }
 
-static void ToggleVertexMode ()
+void ToggleVertexMode ()
 {
 	if (VertexMode()) {
 		SelectionSystem_DefaultMode();
@@ -291,7 +298,7 @@ static void ToggleVertexMode ()
 	ModeChangeNotify();
 }
 
-static void ToggleFaceMode ()
+void ToggleFaceMode ()
 {
 	if (FaceMode()) {
 		SelectionSystem_DefaultMode();
@@ -309,13 +316,15 @@ static void ToggleFaceMode ()
 	ModeChangeNotify();
 }
 
-static void CallBrushExportOBJ ()
+void CallBrushExportOBJ ()
 {
 	if (GlobalSelectionSystem().countSelected() != 0) {
 		export_selected(GlobalRadiant().getMainWindow());
 	} else {
 		gtkutil::errorDialog(_("No Brushes Selected!"));
 	}
+}
+
 }
 
 enum ENudgeDirection
@@ -393,31 +402,33 @@ void Selection_Deselect (void)
 	}
 }
 
-static void Selection_NudgeUp (void)
+namespace {
+
+void Selection_NudgeUp ()
 {
 	UndoableCommand undo("nudgeSelectedUp");
 	NudgeSelection(eNudgeUp, GlobalGrid().getGridSize(), GlobalXYWnd().getActiveViewType());
 }
 
-static void Selection_NudgeDown (void)
+void Selection_NudgeDown ()
 {
 	UndoableCommand undo("nudgeSelectedDown");
 	NudgeSelection(eNudgeDown, GlobalGrid().getGridSize(), GlobalXYWnd().getActiveViewType());
 }
 
-static void Selection_NudgeLeft (void)
+void Selection_NudgeLeft ()
 {
 	UndoableCommand undo("nudgeSelectedLeft");
 	NudgeSelection(eNudgeLeft, GlobalGrid().getGridSize(), GlobalXYWnd().getActiveViewType());
 }
 
-static void Selection_NudgeRight (void)
+void Selection_NudgeRight ()
 {
 	UndoableCommand undo("nudgeSelectedRight");
 	NudgeSelection(eNudgeRight, GlobalGrid().getGridSize(), GlobalXYWnd().getActiveViewType());
 }
 
-static void ToolChanged ()
+void ToolChanged ()
 {
 	GlobalEventManager().setToggled("ToggleClipper", GlobalClipper().clipMode());
 	GlobalEventManager().setToggled("MouseTranslate", GlobalSelectionSystem().ManipulatorMode()
@@ -430,7 +441,7 @@ static void ToolChanged ()
 
 static const char* const c_ResizeMode_status = "QE4 Drag Tool";
 
-static void DragMode (void)
+void DragMode ()
 {
 	if (g_pParentWnd->getCurrentToolMode() == DragMode && g_pParentWnd->getDefaultToolMode() != DragMode) {
 		g_pParentWnd->getDefaultToolMode()();
@@ -449,7 +460,7 @@ static void DragMode (void)
 
 static const char* const c_TranslateMode_status = "Translate Tool";
 
-static void TranslateMode (void)
+void TranslateMode ()
 {
 	if (g_pParentWnd->getCurrentToolMode() == TranslateMode && g_pParentWnd->getDefaultToolMode() != TranslateMode) {
 		g_pParentWnd->getDefaultToolMode()();
@@ -468,7 +479,7 @@ static void TranslateMode (void)
 
 static const char* const c_RotateMode_status = "Rotate Tool";
 
-static void RotateMode (void)
+void RotateMode ()
 {
 	if (g_pParentWnd->getCurrentToolMode() == RotateMode && g_pParentWnd->getDefaultToolMode() != RotateMode) {
 		g_pParentWnd->getDefaultToolMode()();
@@ -487,7 +498,7 @@ static void RotateMode (void)
 
 static const char* const c_ScaleMode_status = "Scale Tool";
 
-static void ScaleMode (void)
+void ScaleMode ()
 {
 	if (g_pParentWnd->getCurrentToolMode() == ScaleMode && g_pParentWnd->getDefaultToolMode() != ScaleMode) {
 		g_pParentWnd->getDefaultToolMode()();
@@ -506,7 +517,7 @@ static void ScaleMode (void)
 
 static const char* const c_ClipperMode_status = "Clipper Tool";
 
-static void ClipperMode (void)
+void ClipperMode ()
 {
 	if (g_pParentWnd->getCurrentToolMode() == ClipperMode && g_pParentWnd->getDefaultToolMode() != ClipperMode) {
 		g_pParentWnd->getDefaultToolMode()();
@@ -526,7 +537,7 @@ static void ClipperMode (void)
 }
 
 // greebo: This toggles the brush size info display in the ortho views
-static void ToggleShowSizeInfo ()
+void ToggleShowSizeInfo ()
 {
 	if (GlobalRegistry().get("user/ui/showSizeInfo") == "1") {
 		GlobalRegistry().set("user/ui/showSizeInfo", "0");
@@ -534,6 +545,8 @@ static void ToggleShowSizeInfo ()
 		GlobalRegistry().set("user/ui/showSizeInfo", "1");
 	}
 	SceneChangeNotify();
+}
+
 }
 
 class SnappableSnapToGridSelected: public scene::Graph::Walker
@@ -582,7 +595,9 @@ class ComponentSnappableSnapToGridSelected: public scene::Graph::Walker
 		}
 };
 
-static void Selection_SnapToGrid (void)
+namespace {
+
+void Selection_SnapToGrid ()
 {
 	StringOutputStream command;
 	command << "snapSelected -grid " << GlobalGrid().getGridSize();
@@ -595,19 +610,21 @@ static void Selection_SnapToGrid (void)
 	}
 }
 
-static void TextureOverview ()
+void TextureOverview ()
 {
 	new ui::TextureOverviewDialog;
 }
 
-static void FindBrushOrEntity ()
+void FindBrushOrEntity ()
 {
 	new ui::FindBrushDialog;
 }
 
-static void EditColourScheme ()
+void EditColourScheme ()
 {
 	new ui::ColourSchemeEditor(); // self-destructs in GTK callback
+}
+
 }
 
 class NullMapCompilerObserver: public ICompilerObserver
@@ -617,7 +634,9 @@ class NullMapCompilerObserver: public ICompilerObserver
 		}
 };
 
-static void ToolsCompile ()
+namespace {
+
+void ToolsCompile ()
 {
 	if (!GlobalMap().askForSave(_("Compile Map")))
 		return;
@@ -636,7 +655,7 @@ static void ToolsCompile ()
 	}
 }
 
-static void ToolsCheckErrors ()
+void ToolsCheckErrors ()
 {
 	if (!GlobalMap().askForSave(_("Check Map")))
 		return;
@@ -650,7 +669,7 @@ static void ToolsCheckErrors ()
 	ui::ErrorCheckDialog::showDialog();
 }
 
-static void ToolsGenerateMaterials ()
+void ToolsGenerateMaterials ()
 {
 	if (!GlobalMap().askForSave(_("Generate Materials")))
 		return;
@@ -669,6 +688,8 @@ static void ToolsGenerateMaterials ()
 	} catch (MapCompileException& e) {
 		gtkutil::errorDialog(e.what());
 	}
+}
+
 }
 
 void Commands_Register ()

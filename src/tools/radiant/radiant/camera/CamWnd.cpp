@@ -103,10 +103,14 @@ static void selection_motion(gdouble x, gdouble y, guint state, void* data) {
 	reinterpret_cast<WindowObserver*>(data)->onMouseMotion(WindowVector(x, y), state);
 }
 
-static void camwnd_update_xor_rectangle(CamWnd& self, Rectangle area) {
+namespace {
+
+void camwnd_update_xor_rectangle(CamWnd& self, Rectangle area) {
 	if (GTK_WIDGET_VISIBLE(self.m_gl_widget)) {
 		self.m_XORRectangle.set(rectangle_from_area(area.min, area.max, self.getCamera().width, self.getCamera().height));
 	}
+}
+
 }
 
 gboolean CamWnd::camera_size_allocate(GtkWidget* widget, GtkAllocation* allocation, CamWnd* camwnd) {

@@ -65,9 +65,13 @@ static bool          References_Saved ();
 static MapModules&   ReferenceAPI_getMapModules();
 static ModelModules& ReferenceAPI_getModelModules();
 
-static void MapChanged ()
+namespace {
+
+void MapChanged ()
 {
 	GlobalMap().setModified(!References_Saved());
+}
+
 }
 
 static EntityCreator* g_entityCreator = 0;

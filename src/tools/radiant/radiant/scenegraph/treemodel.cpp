@@ -412,7 +412,9 @@ static void graph_tree_model_row_changed (GraphTreeModel* model, GraphTreeNode::
 	gtk_tree_path_free(tree_path);
 }
 
-static void graph_tree_model_row_inserted (GraphTreeModel* model, GraphTreeNode::iterator i)
+namespace {
+
+void graph_tree_model_row_inserted (GraphTreeModel* model, GraphTreeNode::iterator i)
 {
 	GtkTreeIter iter;
 	graph_iterator_write_tree_iter(i, &iter);
@@ -424,7 +426,7 @@ static void graph_tree_model_row_inserted (GraphTreeModel* model, GraphTreeNode:
 	gtk_tree_path_free(tree_path);
 }
 
-static void graph_tree_model_row_deleted (GraphTreeModel* model, GraphTreeNode::iterator i)
+void graph_tree_model_row_deleted (GraphTreeModel* model, GraphTreeNode::iterator i)
 {
 	GtkTreeIter iter;
 	graph_iterator_write_tree_iter(i, &iter);
@@ -436,14 +438,16 @@ static void graph_tree_model_row_deleted (GraphTreeModel* model, GraphTreeNode::
 	gtk_tree_path_free(tree_path);
 }
 
-static void graph_tree_model_row_inserted (GraphTreeModel& model, GraphTreeNode::iterator i)
+void graph_tree_model_row_inserted (GraphTreeModel& model, GraphTreeNode::iterator i)
 {
 	graph_tree_model_row_inserted(&model, i);
 }
 
-static void graph_tree_model_row_deleted (GraphTreeModel& model, GraphTreeNode::iterator i)
+void graph_tree_model_row_deleted (GraphTreeModel& model, GraphTreeNode::iterator i)
 {
 	graph_tree_model_row_deleted(&model, i);
+}
+
 }
 
 static std::string node_get_name (scene::Node& node)
@@ -520,7 +524,9 @@ void graph_tree_model_row_changed (GraphTreeNode& node)
 	graph_tree_model_row_changed(model, i);
 }
 
-static void graph_tree_model_set_name (const scene::Instance& instance, const std::string& name)
+namespace {
+
+void graph_tree_model_set_name (const scene::Instance& instance, const std::string& name)
 {
 	GraphTreeModel* model = scene_graph_get_tree_model();
 	GraphTreeNode* parent = graph_tree_model_find_parent(model, instance.path());
@@ -536,6 +542,8 @@ static void graph_tree_model_set_name (const scene::Instance& instance, const st
 			&instance.path().top().get()), node));
 	graph_tree_node_foreach_pre(newNode, ReferenceCaller1<GraphTreeModel, GraphTreeNode::iterator,
 			graph_tree_model_row_inserted> (*model));
+}
+
 }
 
 void graph_tree_model_insert (GraphTreeModel* model, const scene::Instance& instance)
