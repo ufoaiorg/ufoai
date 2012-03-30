@@ -26,7 +26,13 @@ component panel cmpHospitalPanel {
 		pos "0 0"
 	}
 
-	image icon	{ visiblewhen "exists *cvar:mn_hos_item<node:parent@num>"		src "icons/health_unused" 	pos "248  11" }
+	button icon	{
+		visiblewhen "exists *cvar:mn_hos_item<node:parent@num>"
+		icon "icons/health_unused"
+		padding 0
+		pos "248  11"
+		size "40 40"
+	}
 
 	string item	{ pos "15 10"	color "1 1 1 1"	size "220 16" }
 
@@ -89,22 +95,22 @@ window hospital
 	}
 
 	confunc hospitalserious	{
-		*node:root.hos<1>.icon@src				= "icons/health_critical"
+		*node:root.hos<1>.icon@icon				= "icons/health_critical"
 		*node:root.hos<1>.button@src			= "ui/hosp_button_light"
 		*node:root.hos<1>.click_button@tooltip	= "_Heavily wounded"
 	}
 	confunc hospitalmedium	{
-		*node:root.hos<1>.icon@src				= "icons/health_medium"
+		*node:root.hos<1>.icon@icon				= "icons/health_medium"
 		*node:root.hos<1>.button@src			= "ui/hosp_button_light"
 		*node:root.hos<1>.click_button@tooltip	= "_Medium wounds"
 	}
 	confunc hospitallight	{
-		*node:root.hos<1>.icon@src				= "icons/health_normal"
+		*node:root.hos<1>.icon@icon				= "icons/health_normal"
 		*node:root.hos<1>.button@src			= "ui/hosp_button_light"
 		*node:root.hos<1>.click_button@tooltip	= "_Slightly wounded"
 	}
 	confunc hospitalunused	{
-		*node:root.hos<1>.icon@src				= "icons/health_unused"
+		*node:root.hos<1>.icon@icon				= "icons/health_unused"
 		*node:root.hos<1>.button@src			= "ui/hosp_button_green"
 		*node:root.hos<1>.click_button@tooltip	= "_Unused"
 	}
