@@ -906,7 +906,7 @@ void TextureBrowser::constructTreeView ()
 
 void TextureBrowser::onActivateDirectoryChange (GtkMenuItem* item, TextureBrowser* textureBrowser)
 {
-	const std::string& dirname = std::string((const gchar*) g_object_get_data(G_OBJECT(item), "directory")) + "/";
+	std::string const& dirname = *static_cast<std::string const*>(g_object_get_data(G_OBJECT(item), "directory")) + "/";
 	textureBrowser->showDirectory(dirname);
 	textureBrowser->queueDraw();
 }
@@ -919,9 +919,8 @@ GtkMenuItem* TextureBrowser::constructDirectoriesMenu (GtkMenu* menu)
 
 	TextureGroups::const_iterator i = groups.begin();
 	while (i != groups.end()) {
-		const gchar* directory = (*i).c_str();
-		GtkWidget* item = gtk_menu_item_new_with_label(directory);
-		g_object_set_data(G_OBJECT(item), "directory", (gpointer) directory);
+		GtkWidget* const item = gtk_menu_item_new_with_label(i->c_str());
+		g_object_set_data(G_OBJECT(item), "directory", const_cast<std::string*>(&*i));
 		g_signal_connect(G_OBJECT(item), "activate", G_CALLBACK(onActivateDirectoryChange), this);
 		gtk_container_add(GTK_CONTAINER(menu), item);
 		++i;
