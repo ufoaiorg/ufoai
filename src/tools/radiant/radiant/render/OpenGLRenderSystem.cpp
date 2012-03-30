@@ -142,7 +142,7 @@ bool QGL_constructExtensionFunc (Func& func, const char* symbol)
 static int QGL_Init (OpenGLBinding& table)
 {
 #if defined __linux__ || defined __FreeBSD__ || defined __APPLE__
-	qglXGetProcAddressARB = (glXGetProcAddressARBProc) dlsym(RTLD_DEFAULT, "glXGetProcAddressARB");
+	qglXGetProcAddressARB = reinterpret_cast<glXGetProcAddressARBProc>(dlfunc(RTLD_DEFAULT, "glXGetProcAddressARB"));
 	if (!glXQueryExtension(GDK_DISPLAY(), 0, 0))
 		return 0;
 #elif !defined _WIN32
