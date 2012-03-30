@@ -223,7 +223,7 @@ template<typename TextOutputStreamType>
 inline TextOutputStreamType& ostream_write(TextOutputStreamType& ostream, const FloatFormat& formatted) {
 	const std::size_t bufferSize = 32;
 	char buf[bufferSize];
-	ostream.write(buf, g_snprintf(buf, bufferSize, "%*.*lf", formatted.m_width, formatted.m_precision, formatted.m_f));
+	ostream.write(buf, g_snprintf(buf, bufferSize, "%*.*f", formatted.m_width, formatted.m_precision, formatted.m_f));
 	return ostream;
 }
 
