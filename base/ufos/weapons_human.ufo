@@ -921,17 +921,17 @@ item shotgun2_slug_ammo
 			projtl				bullet
 			impact				bulletImpact
 			hitbody				null
-			firesnd				weapons/bullet-shotgun-3x
+			firesnd				weapons/bullet-shotgunmini
 			impsnd				impact/bullet-impact
 			bodysnd 			impact/bullet-bodyimpact
-			sndonce				true
+			sndonce				false
 			speed				3000
 			spread				"2.4 2.4"
 			crouch				0.7
 			range				26
 			shots				3
 			ammo				3
-			delaybetweenshots	7
+			delaybetweenshots	5
 			time				12
 			damage				"55 5"
 			dmgweight			normal_heavy
@@ -986,7 +986,7 @@ item shotgun_micro_ammo
 			projtl				bullet
 			impact				bulletImpact
 			hitbody				null
-			firesnd				weapons/bullet-shotgunmini
+			firesnd				weapons/bullet-shotgun
 			impsnd				impact/bullet-impact
 			bodysnd 			impact/bullet-bodyimpact
 			sndonce				true
@@ -1069,9 +1069,9 @@ item shotgun_micro_ammo
 			spread				"2.5 2.5"
 			crouch				1.0
 			range				16
-			shots				3
+			shots				24
 			ammo				3
-			delaybetweenshots	5
+			delaybetweenshots	        36
 			time				12
 			damage				"15 2"
 			dmgweight			normal_spray
@@ -1093,9 +1093,9 @@ item shotgun_micro_ammo
 			spread				"3 3"
 			crouch				1.0
 			range				16
-			shots				7
+			shots				56
 			ammo				7
-			delaybetweenshots	5
+			delaybetweenshots	        36
 			time				20
 			damage				"15 2"
 			dmgweight			normal_spray
