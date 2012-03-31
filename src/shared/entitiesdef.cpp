@@ -890,11 +890,9 @@ const entityDef_t *ED_GetEntityDef (const char *classname)
 void ED_Free (void)
 {
 	if (numEntityDefs) {
-		entityDef_t *ed;
-		for (ed = entityDefs; ed->numKeyDefs; ed++) {
-			entityKeyDef_t *kd;
+		for (entityDef_t* ed = entityDefs; ed->numKeyDefs; ++ed) {
 			free(ed->classname);
-			for (kd = ed->keyDefs; kd->name; kd++) {
+			for (entityKeyDef_t* kd = ed->keyDefs; kd->name; ++kd) {
 				free(kd->name);
 				free(kd->desc);
 				free(kd->defaultVal);

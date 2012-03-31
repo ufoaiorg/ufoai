@@ -176,7 +176,6 @@ void SCR_DrawLoading (int percent, const char *loadingMessages)
 	const vec4_t color = {0.0, 0.7, 0.0, 0.8};
 	const int paddingX = 40;
 	const int paddingY = 43;
-	const char *mapmsg;
 
 	if (cls.downloadName[0]) {
 		SCR_DrawDownloading();
@@ -204,7 +203,7 @@ void SCR_DrawLoading (int percent, const char *loadingMessages)
 
 	R_Color(color);
 	if (CL_GetConfigString(CS_TILES)[0] != '\0') {
-		mapmsg = va(_("Loading Map [%s]"), _(CL_GetConfigString(CS_MAPTITLE)));
+		char const* const mapmsg = va(_("Loading Map [%s]"), _(CL_GetConfigString(CS_MAPTITLE)));
 		UI_DrawString("f_menubig", ALIGN_UC,
 			(int)(viddef.virtualWidth / 2),
 			(int)(viddef.virtualHeight / 2 - 60),

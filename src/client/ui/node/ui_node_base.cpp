@@ -231,7 +231,6 @@ void uiBaseMapNode::drawTooltip (uiNode_t *node, int x, int y)
 	int col, row;
 	building_t *building;
 	const int itemToolTipWidth = 250;
-	const char *tooltipText;
 	base_t *base = B_GetCurrentSelectedBase();
 
 	UI_BaseMapGetCellAtPos(node, x, y, &col, &row);
@@ -242,7 +241,7 @@ void uiBaseMapNode::drawTooltip (uiNode_t *node, int x, int y)
 	if (!building)
 		return;
 
-	tooltipText = _(building->name);
+	char const* tooltipText = _(building->name);
 	if (!B_CheckBuildingDependencesStatus(building))
 		tooltipText = va("%s\n%s %s", tooltipText, _("not operational, depends on"), _(building->dependsBuilding->name));
 	UI_DrawTooltip(tooltipText, x, y, itemToolTipWidth);
