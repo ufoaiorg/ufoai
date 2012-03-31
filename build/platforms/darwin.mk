@@ -3,17 +3,17 @@ SO_CFLAGS                 = -fPIC -fno-common
 SO_LDFLAGS                = -dynamiclib
 SO_LIBS                  := -ldl
 
-CFLAGS                   += -D_BSD_SOURCE -D_XOPEN_SOURCE
+CCFLAGS                  += -D_BSD_SOURCE -D_XOPEN_SOURCE
 LDFLAGS                  += -framework IOKit -framework Foundation -framework Cocoa
 LDFLAGS                  += -rdynamic
 
 ### most mac users will have their additional libs and headers under /opt/local,
 ### check for that, and if present, add to CFLAGS/LDFLAGS (really convenient!)
-CFLAGS                   += -I/opt/local/include -F/opt/local/Library/Frameworks
+CCFLAGS                  += -I/opt/local/include -F/opt/local/Library/Frameworks
 LDFLAGS                  += -L/opt/local/lib -F/opt/local/Library/Frameworks
 
 ifdef UNIVERSAL
-	CFLAGS += -arch i386 -arch ppc
+	CCFLAGS += -arch i386 -arch ppc
 	LDFLAGS += -arch i386 -arch ppc
 endif
 
