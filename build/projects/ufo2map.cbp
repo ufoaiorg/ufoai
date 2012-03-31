@@ -67,160 +67,82 @@
 			<Add option="-DCOMPILE_MAP" />
 		</Compiler>
 		<Linker>
+			<Add library="mingw32" />
+			<Add library="SDLmain" />
 			<Add library="SDL" />
 			<Add library="SDL_image" />
 			<Add library="z" />
 			<Add library="jpeg" />
 			<Add library="png" />
 		</Linker>
-		<Unit filename="..\..\src\common\files.cpp">
-			<Option compilerVar="CPP" />
-		</Unit>
-		<Unit filename="..\..\src\common\ioapi.cpp">
-			<Option compilerVar="CPP" />
-		</Unit>
+		<Unit filename="..\..\src\common\files.cpp" />
+		<Unit filename="..\..\src\common\ioapi.cpp" />
 		<Unit filename="..\..\src\common\ioapi.h" />
-		<Unit filename="..\..\src\common\list.cpp">
-			<Option compilerVar="CPP" />
-		</Unit>
-		<Unit filename="..\..\src\common\mem.cpp">
-			<Option compilerVar="CPP" />
-		</Unit>
+		<Unit filename="..\..\src\common\list.cpp" />
+		<Unit filename="..\..\src\common\mem.cpp" />
 		<Unit filename="..\..\src\common\mem.h" />
-		<Unit filename="..\..\src\common\routing.cpp">
-			<Option compilerVar="CPP" />
-		</Unit>
+		<Unit filename="..\..\src\common\routing.cpp" />
 		<Unit filename="..\..\src\common\routing.h" />
-		<Unit filename="..\..\src\common\tracing.cpp">
-			<Option compilerVar="CPP" />
-		</Unit>
+		<Unit filename="..\..\src\common\tracing.cpp" />
 		<Unit filename="..\..\src\common\tracing.h" />
-		<Unit filename="..\..\src\common\unzip.cpp">
-			<Option compilerVar="CPP" />
-		</Unit>
+		<Unit filename="..\..\src\common\unzip.cpp" />
 		<Unit filename="..\..\src\common\unzip.h" />
-		<Unit filename="..\..\src\ports\windows\win_shared.cpp">
-			<Option compilerVar="CPP" />
-		</Unit>
-		<Unit filename="..\..\src\shared\byte.cpp">
-			<Option compilerVar="CPP" />
-		</Unit>
+		<Unit filename="..\..\src\ports\windows\win_shared.cpp" />
+		<Unit filename="..\..\src\shared\byte.cpp" />
 		<Unit filename="..\..\src\shared\byte.h" />
 		<Unit filename="..\..\src\shared\defines.h" />
-		<Unit filename="..\..\src\shared\entitiesdef.cpp">
-			<Option compilerVar="CPP" />
-		</Unit>
+		<Unit filename="..\..\src\shared\entitiesdef.cpp" />
 		<Unit filename="..\..\src\shared\entitiesdef.h" />
-		<Unit filename="..\..\src\shared\images.cpp">
-			<Option compilerVar="CPP" />
-		</Unit>
+		<Unit filename="..\..\src\shared\images.cpp" />
 		<Unit filename="..\..\src\shared\images.h" />
-		<Unit filename="..\..\src\shared\mathlib.cpp">
-			<Option compilerVar="CPP" />
-		</Unit>
+		<Unit filename="..\..\src\shared\mathlib.cpp" />
 		<Unit filename="..\..\src\shared\mathlib.h" />
-		<Unit filename="..\..\src\shared\mutex.cpp">
-			<Option compilerVar="CPP" />
-		</Unit>
+		<Unit filename="..\..\src\shared\mutex.cpp" />
 		<Unit filename="..\..\src\shared\mutex.h" />
-		<Unit filename="..\..\src\shared\parse.cpp">
-			<Option compilerVar="CPP" />
-		</Unit>
+		<Unit filename="..\..\src\shared\parse.cpp" />
 		<Unit filename="..\..\src\shared\parse.h" />
-		<Unit filename="..\..\src\shared\shared.cpp">
-			<Option compilerVar="CPP" />
-		</Unit>
+		<Unit filename="..\..\src\shared\shared.cpp" />
 		<Unit filename="..\..\src\shared\shared.h" />
 		<Unit filename="..\..\src\shared\typedefs.h" />
-		<Unit filename="..\..\src\shared\utf8.cpp">
-			<Option compilerVar="CPP" />
-		</Unit>
+		<Unit filename="..\..\src\shared\utf8.cpp" />
 		<Unit filename="..\..\src\shared\utf8.h" />
-		<Unit filename="..\..\src\tools\ufo2map\bsp.cpp">
-			<Option compilerVar="CPP" />
-		</Unit>
+		<Unit filename="..\..\src\tools\ufo2map\bsp.cpp" />
 		<Unit filename="..\..\src\tools\ufo2map\bsp.h" />
-		<Unit filename="..\..\src\tools\ufo2map\bspbrush.cpp">
-			<Option compilerVar="CPP" />
-		</Unit>
+		<Unit filename="..\..\src\tools\ufo2map\bspbrush.cpp" />
 		<Unit filename="..\..\src\tools\ufo2map\bspbrush.h" />
-		<Unit filename="..\..\src\tools\ufo2map\check\check.cpp">
-			<Option compilerVar="CPP" />
-		</Unit>
+		<Unit filename="..\..\src\tools\ufo2map\check\check.cpp" />
 		<Unit filename="..\..\src\tools\ufo2map\check\check.h" />
-		<Unit filename="..\..\src\tools\ufo2map\check\checkentities.cpp">
-			<Option compilerVar="CPP" />
-		</Unit>
+		<Unit filename="..\..\src\tools\ufo2map\check\checkentities.cpp" />
 		<Unit filename="..\..\src\tools\ufo2map\check\checkentities.h" />
-		<Unit filename="..\..\src\tools\ufo2map\check\checklib.cpp">
-			<Option compilerVar="CPP" />
-		</Unit>
+		<Unit filename="..\..\src\tools\ufo2map\check\checklib.cpp" />
 		<Unit filename="..\..\src\tools\ufo2map\check\checklib.h" />
-		<Unit filename="..\..\src\tools\ufo2map\common\aselib.cpp">
-			<Option compilerVar="CPP" />
-		</Unit>
+		<Unit filename="..\..\src\tools\ufo2map\common\aselib.cpp" />
 		<Unit filename="..\..\src\tools\ufo2map\common\aselib.h" />
-		<Unit filename="..\..\src\tools\ufo2map\common\bspfile.cpp">
-			<Option compilerVar="CPP" />
-		</Unit>
+		<Unit filename="..\..\src\tools\ufo2map\common\bspfile.cpp" />
 		<Unit filename="..\..\src\tools\ufo2map\common\bspfile.h" />
-		<Unit filename="..\..\src\tools\ufo2map\common\polylib.cpp">
-			<Option compilerVar="CPP" />
-		</Unit>
+		<Unit filename="..\..\src\tools\ufo2map\common\polylib.cpp" />
 		<Unit filename="..\..\src\tools\ufo2map\common\polylib.h" />
-		<Unit filename="..\..\src\tools\ufo2map\common\scriplib.cpp">
-			<Option compilerVar="CPP" />
-		</Unit>
+		<Unit filename="..\..\src\tools\ufo2map\common\scriplib.cpp" />
 		<Unit filename="..\..\src\tools\ufo2map\common\scriplib.h" />
-		<Unit filename="..\..\src\tools\ufo2map\common\trace.cpp">
-			<Option compilerVar="CPP" />
-		</Unit>
-		<Unit filename="..\..\src\tools\ufo2map\csg.cpp">
-			<Option compilerVar="CPP" />
-		</Unit>
-		<Unit filename="..\..\src\tools\ufo2map\faces.cpp">
-			<Option compilerVar="CPP" />
-		</Unit>
-		<Unit filename="..\..\src\tools\ufo2map\levels.cpp">
-			<Option compilerVar="CPP" />
-		</Unit>
+		<Unit filename="..\..\src\tools\ufo2map\common\trace.cpp" />
+		<Unit filename="..\..\src\tools\ufo2map\csg.cpp" />
+		<Unit filename="..\..\src\tools\ufo2map\faces.cpp" />
+		<Unit filename="..\..\src\tools\ufo2map\levels.cpp" />
 		<Unit filename="..\..\src\tools\ufo2map\levels.h" />
-		<Unit filename="..\..\src\tools\ufo2map\lighting.cpp">
-			<Option compilerVar="CPP" />
-		</Unit>
+		<Unit filename="..\..\src\tools\ufo2map\lighting.cpp" />
 		<Unit filename="..\..\src\tools\ufo2map\lighting.h" />
-		<Unit filename="..\..\src\tools\ufo2map\lightmap.cpp">
-			<Option compilerVar="CPP" />
-		</Unit>
-		<Unit filename="..\..\src\tools\ufo2map\map.cpp">
-			<Option compilerVar="CPP" />
-		</Unit>
+		<Unit filename="..\..\src\tools\ufo2map\lightmap.cpp" />
+		<Unit filename="..\..\src\tools\ufo2map\map.cpp" />
 		<Unit filename="..\..\src\tools\ufo2map\map.h" />
-		<Unit filename="..\..\src\tools\ufo2map\patches.cpp">
-			<Option compilerVar="CPP" />
-		</Unit>
-		<Unit filename="..\..\src\tools\ufo2map\portals.cpp">
-			<Option compilerVar="CPP" />
-		</Unit>
-		<Unit filename="..\..\src\tools\ufo2map\routing.cpp">
-			<Option compilerVar="CPP" />
-		</Unit>
-		<Unit filename="..\..\src\tools\ufo2map\textures.cpp">
-			<Option compilerVar="CPP" />
-		</Unit>
+		<Unit filename="..\..\src\tools\ufo2map\patches.cpp" />
+		<Unit filename="..\..\src\tools\ufo2map\portals.cpp" />
+		<Unit filename="..\..\src\tools\ufo2map\routing.cpp" />
+		<Unit filename="..\..\src\tools\ufo2map\textures.cpp" />
 		<Unit filename="..\..\src\tools\ufo2map\textures.h" />
-		<Unit filename="..\..\src\tools\ufo2map\threads.cpp">
-			<Option compilerVar="CPP" />
-		</Unit>
-		<Unit filename="..\..\src\tools\ufo2map\tree.cpp">
-			<Option compilerVar="CPP" />
-		</Unit>
-		<Unit filename="..\..\src\tools\ufo2map\ufo2map.cpp">
-			<Option compilerVar="CPP" />
-		</Unit>
-		<Unit filename="..\..\src\tools\ufo2map\writebsp.cpp">
-			<Option compilerVar="CPP" />
-		</Unit>
+		<Unit filename="..\..\src\tools\ufo2map\threads.cpp" />
+		<Unit filename="..\..\src\tools\ufo2map\tree.cpp" />
+		<Unit filename="..\..\src\tools\ufo2map\ufo2map.cpp" />
+		<Unit filename="..\..\src\tools\ufo2map\writebsp.cpp" />
 		<Extensions>
 			<code_completion />
 			<envvars />
