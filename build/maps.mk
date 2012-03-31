@@ -6,6 +6,13 @@ NICE              ?= 19
 UFO2MAPFLAGS      ?= -v 4 -nice $(NICE) -quant 4 -soft
 FAST_UFO2MAPFLAGS ?= -v 2 -quant 6 -nice $(NICE)
 ENTS_UFO2MAPFLAGS ?= -v 2 -nice $(NICE) -onlyents
+PYTHONBIN         := $(shell python -m urllib2 2>/dev/null && echo python)
+ifeq ($(PYTHONBIN),)
+        PYTHONBIN         := $(shell python2.6 -m urllib2 2>/dev/null && echo python2.6)
+endif
+ifeq ($(PYTHONBIN),)
+        PYTHONBIN         := $(shell python2.7 -m urllib2 2>/dev/null && echo python2.7)
+endif
 
 maps: ufo2map $(BSPS)
 
@@ -17,10 +24,10 @@ maps-ents:
 
 # TODO only sync if there were updates on the map files
 maps-sync:
-	contrib/map-get/update.py
+	$(PYTHONBIN) contrib/map-get/update.py
 
 force-maps-sync:
-	contrib/map-get/update.py --reply=yes
+	$(PYTHONBIN) contrib/map-get/update.py --reply=yes
 
 clean-maps:
 	@echo "Deleting maps..."
