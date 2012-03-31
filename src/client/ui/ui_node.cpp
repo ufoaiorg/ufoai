@@ -757,7 +757,7 @@ bool UI_NodeSetProperty (uiNode_t* node, const value_t *property, const char* va
 				}
 
 				b = (byte*) (*(void**)b);
-				if (Q_strstart((const char*)b, "*cvar"))
+				if (Q_strstart((const char*)b, "*cvar:"))
 					Cvar_SetValue(&((char*)b)[6], f);
 				else
 					*(float*) b = f;
@@ -848,7 +848,7 @@ float UI_GetFloatFromNodeProperty (const uiNode_t* node, const value_t* property
 		return *(const float*) b;
 	} else if ((property->type & V_UI_MASK) == V_UI_CVAR) {
 		b = *(const byte* const*) b;
-		if (Q_strstart((const char*)b, "*cvar")) {
+		if (Q_strstart((const char*)b, "*cvar:")) {
 			const char* cvarName = (const char*)b + 6;
 			const cvar_t *cvar = Cvar_Get(cvarName, "", 0, "UI script cvar property");
 			return cvar->value;

@@ -60,7 +60,7 @@ const char *UI_AbstractOptionGetCurrentValue (uiNode_t * node)
 	}
 
 	/* not a cvar? */
-	if (!Q_strstart(EXTRADATA(node).cvar, "*cvar"))
+	if (!Q_strstart(EXTRADATA(node).cvar, "*cvar:"))
 		return NULL;
 
 	return UI_GetReferenceString(node, EXTRADATA(node).cvar);
