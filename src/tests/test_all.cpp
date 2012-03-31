@@ -382,17 +382,21 @@ int main (int argc, char **argv)
 	} else
 		Qcommon_SetPrintFunction(TEST_vPrintf);
 
-	if (config.console)
-		/* Run all tests using the console interface */
-		CU_console_run_tests();
-	else if (config.automated) {
-		CU_basic_set_mode(CU_BRM_VERBOSE);
-		CU_set_output_filename(resultPrefix);
-		CU_automated_run_tests();
-	} else {
-		/* Run all tests using the CUnit Basic interface */
-		CU_basic_set_mode(CU_BRM_VERBOSE);
-		CU_basic_run_tests();
+	try {
+		if (config.console)
+			/* Run all tests using the console interface */
+			CU_console_run_tests();
+		else if (config.automated) {
+			CU_basic_set_mode(CU_BRM_VERBOSE);
+			CU_set_output_filename(resultPrefix);
+			CU_automated_run_tests();
+		} else {
+			/* Run all tests using the CUnit Basic interface */
+			CU_basic_set_mode(CU_BRM_VERBOSE);
+			CU_basic_run_tests();
+		}
+	} catch (comDrop_t const&) {
+		Sys_Error("There was a Com_Error or Com_Drop call during the execution of this test");
 	}
 
 	failures = CU_get_number_of_failures();

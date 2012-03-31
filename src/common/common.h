@@ -224,7 +224,11 @@ void Com_vPrintf(const char *fmt, va_list);
 
 typedef void (*exceptionCallback_t)(void);
 
-void Com_SetExceptionCallback(exceptionCallback_t callback);
+/**
+ * Thrown by Com_Drop().
+ */
+struct comDrop_t {};
+
 void Com_Drop(void) __attribute__((noreturn));
 void Com_Quit(void);
 void Com_WriteConfigToFile(const char *filename);

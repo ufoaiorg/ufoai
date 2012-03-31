@@ -23,12 +23,12 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 
 */
 
+#include "../shared/autoptr.h"
 #include "common.h"
 #include "http.h"
 #include "../server/server.h"
 #include "../shared/parse.h"
 #include "../ports/system.h"
-#include <setjmp.h>
 
 #define	MAXPRINTMSG	4096
 #define MAX_NUM_ARGVS	50
@@ -37,8 +37,6 @@ csi_t csi;
 
 static int com_argc;
 static const char *com_argv[MAX_NUM_ARGVS + 1];
-
-static jmp_buf abortframe; /* an ERR_DROP occurred, exit the entire frame */
 
 static vPrintfPtr_t vPrintfPtr = Com_vPrintf;
 
@@ -471,17 +469,9 @@ void Com_Error (int code, const char *fmt, ...)
 	}
 }
 
-void Com_SetExceptionCallback (exceptionCallback_t callback)
-{
-	static exceptionCallback_t callbackFunc;
-	callbackFunc = callback;
-	if (setjmp(abortframe))
-		callbackFunc();
-}
-
 void Com_Drop (void)
 {
-	longjmp(abortframe, -1);
+	throw comDrop_t();
 }
 
 /**
@@ -1079,11 +1069,6 @@ vPrintfPtr_t Qcommon_GetPrintFunction (void)
 	return vPrintfPtr;
 }
 
-static void Qcommon_InitError (void)
-{
-	Sys_Error("Error during initialization");
-}
-
 /**
  * @brief Init function
  * @sa Com_ParseScripts
@@ -1106,151 +1091,153 @@ void Qcommon_Init (int argc, const char **argv)
 	com_genericPool = Mem_CreatePool("Generic");
 	com_networkPool = Mem_CreatePool("Network");
 
-	Com_SetExceptionCallback(Qcommon_InitError);
+	try {
+		OBJZERO(csi);
 
-	OBJZERO(csi);
+		/* prepare enough of the subsystems to handle
+		 * cvar and command buffer management */
+		Com_InitArgv(argc, argv);
 
-	/* prepare enough of the subsystems to handle
-	 * cvar and command buffer management */
-	Com_InitArgv(argc, argv);
+		Swap_Init();
+		Cbuf_Init();
 
-	Swap_Init();
-	Cbuf_Init();
+		Cmd_Init();
+		Cvar_Init();
 
-	Cmd_Init();
-	Cvar_Init();
+		Key_Init();
 
-	Key_Init();
+		/* we need to add the early commands twice, because
+		 * a basedir needs to be set before executing
+		 * config files, but we want other parms to override
+		 * the settings of the config files */
+		Cbuf_AddEarlyCommands(qfalse);
+		Cbuf_Execute();
 
-	/* we need to add the early commands twice, because
-	 * a basedir needs to be set before executing
-	 * config files, but we want other parms to override
-	 * the settings of the config files */
-	Cbuf_AddEarlyCommands(qfalse);
-	Cbuf_Execute();
+		FS_InitFilesystem(qtrue);
 
-	FS_InitFilesystem(qtrue);
-
-	Cbuf_AddText("exec default.cfg\n");
+		Cbuf_AddText("exec default.cfg\n");
 #ifdef DEDICATED_ONLY
-	Cbuf_AddText("exec dedconfig.cfg\n");
+		Cbuf_AddText("exec dedconfig.cfg\n");
 #else
-	Cbuf_AddText("exec config.cfg\n");
+		Cbuf_AddText("exec config.cfg\n");
 #endif
 
-	Cbuf_AddEarlyCommands(qtrue);
-	Cbuf_Execute();
+		Cbuf_AddEarlyCommands(qtrue);
+		Cbuf_Execute();
 
-	Com_SetRenderModified(qfalse);
-	Com_SetUserinfoModified(qfalse);
+		Com_SetRenderModified(qfalse);
+		Com_SetUserinfoModified(qfalse);
 
-	/* init commands and vars */
-	Cmd_AddCommand("saveconfig", Com_WriteConfig_f, "Write the configuration to file");
-	Cmd_AddCommand("gametypelist", Com_GameTypeList_f, "List all available multiplayer game types");
+		/* init commands and vars */
+		Cmd_AddCommand("saveconfig", Com_WriteConfig_f, "Write the configuration to file");
+		Cmd_AddCommand("gametypelist", Com_GameTypeList_f, "List all available multiplayer game types");
 #ifdef DEBUG
-	Cmd_AddCommand("debug_help", Com_DebugHelp_f, "Show some debugging help");
-	Cmd_AddCommand("debug_error", Com_DebugError_f, "Just throw a fatal error to test error shutdown procedures");
+		Cmd_AddCommand("debug_help", Com_DebugHelp_f, "Show some debugging help");
+		Cmd_AddCommand("debug_error", Com_DebugError_f, "Just throw a fatal error to test error shutdown procedures");
 #endif
-	Cmd_AddCommand("setdeveloper", Com_DeveloperSet_f, "Set the developer cvar to only get the debug output you want");
+		Cmd_AddCommand("setdeveloper", Com_DeveloperSet_f, "Set the developer cvar to only get the debug output you want");
 
-	developer = Cvar_Get("developer", "0", 0, "Activate developer output to logfile and gameconsole");
+		developer = Cvar_Get("developer", "0", 0, "Activate developer output to logfile and gameconsole");
 #ifdef DEBUG
-	logfile_active = Cvar_Get("logfile", "2", 0, "0 = deactivate logfile, 1 = write normal logfile, 2 = flush on every new line, 3 = always append to existing file");
+		logfile_active = Cvar_Get("logfile", "2", 0, "0 = deactivate logfile, 1 = write normal logfile, 2 = flush on every new line, 3 = always append to existing file");
 #else
-	logfile_active = Cvar_Get("logfile", "1", 0, "0 = deactivate logfile, 1 = write normal logfile, 2 = flush on every new line, 3 = always append to existing file");
+		logfile_active = Cvar_Get("logfile", "1", 0, "0 = deactivate logfile, 1 = write normal logfile, 2 = flush on every new line, 3 = always append to existing file");
 #endif
-	sv_gametype = Cvar_Get("sv_gametype", "1on1", CVAR_ARCHIVE | CVAR_SERVERINFO, "Sets the multiplayer gametype - see gametypelist command for a list of all gametypes");
-	http_proxy = Cvar_Get("http_proxy", "", CVAR_ARCHIVE, "Use this proxy for http transfers");
-	http_timeout = Cvar_Get("http_timeout", "3", CVAR_ARCHIVE, "Http connection and read timeout");
-	port = Cvar_Get("port", DOUBLEQUOTE(PORT_SERVER), CVAR_NOSET);
-	masterserver_url = Cvar_Get("masterserver_url", MASTER_SERVER, CVAR_ARCHIVE, "URL of UFO:AI masterserver");
+		sv_gametype = Cvar_Get("sv_gametype", "1on1", CVAR_ARCHIVE | CVAR_SERVERINFO, "Sets the multiplayer gametype - see gametypelist command for a list of all gametypes");
+		http_proxy = Cvar_Get("http_proxy", "", CVAR_ARCHIVE, "Use this proxy for http transfers");
+		http_timeout = Cvar_Get("http_timeout", "3", CVAR_ARCHIVE, "Http connection and read timeout");
+		port = Cvar_Get("port", DOUBLEQUOTE(PORT_SERVER), CVAR_NOSET);
+		masterserver_url = Cvar_Get("masterserver_url", MASTER_SERVER, CVAR_ARCHIVE, "URL of UFO:AI masterserver");
 #ifdef DEDICATED_ONLY
-	sv_dedicated = Cvar_Get("sv_dedicated", "1", CVAR_SERVERINFO | CVAR_NOSET, "Is this a dedicated server?");
-	/* don't allow to override this from commandline of config */
-	Cvar_ForceSet("sv_dedicated", "1");
+		sv_dedicated = Cvar_Get("sv_dedicated", "1", CVAR_SERVERINFO | CVAR_NOSET, "Is this a dedicated server?");
+		/* don't allow to override this from commandline of config */
+		Cvar_ForceSet("sv_dedicated", "1");
 #else
-	sv_dedicated = Cvar_Get("sv_dedicated", "0", CVAR_SERVERINFO | CVAR_NOSET, "Is this a dedicated server?");
+		sv_dedicated = Cvar_Get("sv_dedicated", "0", CVAR_SERVERINFO | CVAR_NOSET, "Is this a dedicated server?");
 
-	/* set this to false for client - otherwise Qcommon_Frame would set the initial values to multiplayer */
-	sv_gametype->modified = qfalse;
+		/* set this to false for client - otherwise Qcommon_Frame would set the initial values to multiplayer */
+		sv_gametype->modified = qfalse;
 
-	s_language = Cvar_Get("s_language", "", CVAR_ARCHIVE, "Game language - full language string e.g. en_EN.UTF-8");
-	s_language->modified = qfalse;
-	cl_maxfps = Cvar_Get("cl_maxfps", "50", CVAR_ARCHIVE);
-	Cvar_SetCheckFunction("cl_maxfps", Com_CvarCheckMaxFPS);
+		s_language = Cvar_Get("s_language", "", CVAR_ARCHIVE, "Game language - full language string e.g. en_EN.UTF-8");
+		s_language->modified = qfalse;
+		cl_maxfps = Cvar_Get("cl_maxfps", "50", CVAR_ARCHIVE);
+		Cvar_SetCheckFunction("cl_maxfps", Com_CvarCheckMaxFPS);
 #endif
 
-	const char *s = va("UFO: Alien Invasion %s %s %s %s", UFO_VERSION, CPUSTRING, __DATE__, BUILDSTRING);
-	Cvar_Get("version", s, CVAR_NOSET, "Full version string");
-	Cvar_Get("ver", UFO_VERSION, CVAR_SERVERINFO | CVAR_NOSET, "Version number");
+		const char *s = va("UFO: Alien Invasion %s %s %s %s", UFO_VERSION, CPUSTRING, __DATE__, BUILDSTRING);
+		Cvar_Get("version", s, CVAR_NOSET, "Full version string");
+		Cvar_Get("ver", UFO_VERSION, CVAR_SERVERINFO | CVAR_NOSET, "Version number");
 
-	if (sv_dedicated->integer)
-		Cmd_AddCommand("quit", Com_Quit, "Quits the game");
+		if (sv_dedicated->integer)
+			Cmd_AddCommand("quit", Com_Quit, "Quits the game");
 
-	Mem_Init();
-	Sys_Init();
+		Mem_Init();
+		Sys_Init();
 
-	NET_Init();
+		NET_Init();
 
-	curl_global_init(CURL_GLOBAL_NOTHING);
-	Com_Printf("%s initialized.\n", curl_version());
+		curl_global_init(CURL_GLOBAL_NOTHING);
+		Com_Printf("%s initialized.\n", curl_version());
 
-	SV_Init();
+		SV_Init();
 
-	/* e.g. init the client hunk that is used in script parsing */
-	CL_Init();
+		/* e.g. init the client hunk that is used in script parsing */
+		CL_Init();
 
-	Com_ParseScripts(sv_dedicated->integer);
+		Com_ParseScripts(sv_dedicated->integer);
 #ifndef DEDICATED_ONLY
-	Cbuf_AddText("exec keys.cfg\n");
+		Cbuf_AddText("exec keys.cfg\n");
 #endif
 
-	if (!sv_dedicated->integer)
-		Cbuf_AddText("init\n");
-	else
-		Cbuf_AddText("dedicated_start\n");
-	Cbuf_Execute();
+		if (!sv_dedicated->integer)
+			Cbuf_AddText("init\n");
+		else
+			Cbuf_AddText("dedicated_start\n");
+		Cbuf_Execute();
 
-	FS_ExecAutoexec();
+		FS_ExecAutoexec();
 
-	/* add + commands from command line
-	 * if the user didn't give any commands, run default action */
-	if (Cbuf_AddLateCommands()) {
-		/* the user asked for something explicit
-		 * so drop the loading plaque */
-		SCR_EndLoadingPlaque();
-	}
+		/* add + commands from command line
+		 * if the user didn't give any commands, run default action */
+		if (Cbuf_AddLateCommands()) {
+			/* the user asked for something explicit
+			 * so drop the loading plaque */
+			SCR_EndLoadingPlaque();
+		}
 
-	com_pipefile = Cvar_Get("com_pipefile", "", CVAR_ARCHIVE, "Filename of the pipe that is used to send commands to the game");
-	if (com_pipefile->string[0] != '\0') {
-		FS_CreateOpenPipeFile(com_pipefile->string, &pipefile);
-	}
+		com_pipefile = Cvar_Get("com_pipefile", "", CVAR_ARCHIVE, "Filename of the pipe that is used to send commands to the game");
+		if (com_pipefile->string[0] != '\0') {
+			FS_CreateOpenPipeFile(com_pipefile->string, &pipefile);
+		}
 
-	CL_InitAfter();
+		CL_InitAfter();
 
-	/* Check memory integrity */
-	Mem_CheckGlobalIntegrity();
+		/* Check memory integrity */
+		Mem_CheckGlobalIntegrity();
 
-	/* Touch memory */
-	Mem_TouchGlobal();
+		/* Touch memory */
+		Mem_TouchGlobal();
 
 #ifndef DEDICATED_ONLY
-	if (!sv_dedicated->integer) {
-		Schedule_Timer(cl_maxfps, &CL_Frame, NULL, NULL);
-		Schedule_Timer(Cvar_Get("cl_slowfreq", "10", 0, NULL), &CL_SlowFrame, NULL, NULL);
+		if (!sv_dedicated->integer) {
+			Schedule_Timer(cl_maxfps, &CL_Frame, NULL, NULL);
+			Schedule_Timer(Cvar_Get("cl_slowfreq", "10", 0, NULL), &CL_SlowFrame, NULL, NULL);
 
-		/* now hide the console */
-		Sys_ShowConsole(qfalse);
-	}
+			/* now hide the console */
+			Sys_ShowConsole(qfalse);
+		}
 #endif
 
-	Schedule_Timer(Cvar_Get("sv_freq", "10", CVAR_NOSET, NULL), &SV_Frame, NULL, NULL);
+		Schedule_Timer(Cvar_Get("sv_freq", "10", CVAR_NOSET, NULL), &SV_Frame, NULL, NULL);
 
-	/** @todo This line wants to be removed */
-	Schedule_Timer(Cvar_Get("cbuf_freq", "10", 0, NULL), &Cbuf_Execute_timer, NULL, NULL);
+		/** @todo This line wants to be removed */
+		Schedule_Timer(Cvar_Get("cbuf_freq", "10", 0, NULL), &Cbuf_Execute_timer, NULL, NULL);
 
-	Com_Printf("====== UFO Initialized ======\n");
-	Com_Printf("=============================\n");
+		Com_Printf("====== UFO Initialized ======\n");
+		Com_Printf("=============================\n");
+	} catch (comDrop_t const&) {
+		Sys_Error("Error during initialization");
+	}
 }
 
 /**
@@ -1319,8 +1306,10 @@ static void tick_timer (int now, void *data)
 	if (timer->interval != old_interval)
 		Com_DPrintf(DEBUG_ENGINE, "Adjusted timer on %s to interval %d\n", timer->min_freq->name, timer->interval);
 
-	if (setjmp(abortframe) == 0)
+	try {
 		timer->func(now, timer->data);
+	} catch (comDrop_t const&) {
+	}
 
 	/* We correct for the lateness of this frame. We do not correct for
 	 * the time consumed by this frame - that's billed to the lateness
@@ -1460,27 +1449,16 @@ int CL_FilterEventQueue (event_filter *filter)
 void Qcommon_Frame (void)
 {
 	int time_to_next;
-	static scheduleEvent_t *event;
 
-	/* an ERR_DROP was thrown */
-	if (setjmp(abortframe))
-		return;
-
-	/* If the next event is due... */
-	event = Dequeue_Event(Sys_Milliseconds());
-	if (event) {
-		if (setjmp(abortframe)) {
-			Mem_Free(event);
-			return;
+	try {
+		/* If the next event is due... */
+		AutoPtr<scheduleEvent_t> const event(Dequeue_Event(Sys_Milliseconds()));
+		if (event) {
+			/* Dispatch the event */
+			event->func(event->when, event->data);
 		}
-
-		/* Dispatch the event */
-		event->func(event->when, event->data);
-
-		if (setjmp(abortframe))
-			return;
-
-		Mem_Free(event);
+	} catch (comDrop_t const&) {
+		return;
 	}
 
 	/* Now we spend time_to_next milliseconds working on whatever

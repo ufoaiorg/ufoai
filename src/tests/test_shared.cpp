@@ -56,42 +56,32 @@ void TEST_vPrintf (const char *fmt, va_list argptr)
 	fflush(stderr);
 }
 
-static void Test_InitError (void)
-{
-	Sys_Error("Error during initialization");
-}
-
-static void Test_RunError (void)
-{
-	Sys_Error("There was a Com_Error or Com_Drop call during the execution of this test");
-}
-
 void TEST_Init (void)
 {
-	Com_SetExceptionCallback(Test_InitError);
+	try {
+		com_aliasSysPool  = Mem_CreatePool("Common: Alias system");
+		com_cmdSysPool    = Mem_CreatePool("Common: Command system");
+		com_cmodelSysPool = Mem_CreatePool("Common: Collision model");
+		com_cvarSysPool   = Mem_CreatePool("Common: Cvar system");
+		com_fileSysPool   = Mem_CreatePool("Common: File system");
+		com_genericPool   = Mem_CreatePool("Generic");
 
-	com_aliasSysPool = Mem_CreatePool("Common: Alias system");
-	com_cmdSysPool = Mem_CreatePool("Common: Command system");
-	com_cmodelSysPool = Mem_CreatePool("Common: Collision model");
-	com_cvarSysPool = Mem_CreatePool("Common: Cvar system");
-	com_fileSysPool = Mem_CreatePool("Common: File system");
-	com_genericPool = Mem_CreatePool("Generic");
+		Mem_Init();
+		Cbuf_Init();
+		Cmd_Init();
+		Cvar_Init();
+		FS_InitFilesystem(qtrue);
+		FS_AddGameDirectory("./unittest", qfalse);
+		Swap_Init();
+		SV_Init();
+		NET_Init();
 
-	Mem_Init();
-	Cbuf_Init();
-	Cmd_Init();
-	Cvar_Init();
-	FS_InitFilesystem(qtrue);
-	FS_AddGameDirectory("./unittest", qfalse);
-	Swap_Init();
-	SV_Init();
-	NET_Init();
+		FS_ExecAutoexec();
 
-	FS_ExecAutoexec();
-
-	OBJZERO(csi);
-
-	Com_SetExceptionCallback(Test_RunError);
+		OBJZERO(csi);
+	} catch (comDrop_t const&) {
+		Sys_Error("Error during initialization");
+	}
 
 	http_timeout = Cvar_Get("noname");
 	http_proxy = Cvar_Get("noname");
