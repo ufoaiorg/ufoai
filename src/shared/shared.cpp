@@ -533,7 +533,8 @@ const char *Q_stristr (const char *str, const char *substr)
 char const* Q_strstart (char const* str, char const* start)
 {
 	for (; *start != '\0'; ++str, ++start) {
-		if (*str != *start) return 0;
+		if (*str != *start)
+			return 0;
 	}
 	return str;
 }

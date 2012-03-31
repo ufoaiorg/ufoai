@@ -80,7 +80,8 @@ bool uiKeyBindingNode::keyPressed (uiNode_t *node, unsigned int key, unsigned sh
 
 	/** @todo what about macro expansion? */
 	char const* const command = Q_strstart(node->text, "*binding:");
-	if (!command) return false;
+	if (!command)
+		return false;
 
 	/** @todo ensure that the binding for the key command is not executed */
 
