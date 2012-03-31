@@ -530,13 +530,12 @@ const char *Q_stristr (const char *str, const char *substr)
 	return str;
 }
 
-qboolean Q_strstart (char const *str, char const *start)
+char const* Q_strstart (char const* str, char const* start)
 {
 	for (; *start != '\0'; ++str, ++start) {
-		if (*str != *start)
-			return qfalse;
+		if (*str != *start) return 0;
 	}
-	return qtrue;
+	return str;
 }
 
 /**

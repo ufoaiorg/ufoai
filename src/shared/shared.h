@@ -141,8 +141,10 @@ void Q_strcat(char *dest, const char *src, size_t size) __attribute__((nonnull))
 char *Q_strlwr(char *str) __attribute__((nonnull));
 const char *Q_stristr(const char *str, const char *substr) __attribute__((nonnull));
 qboolean Q_strreplace(const char *source, const char *pattern, const char *replace, char *dest, size_t destsize);
-/** Returns whether start is a prefix of str. */
-qboolean Q_strstart(char const *str, char const *start) __attribute__((nonnull));
+
+/** Returns a pointer just past the prefix in str, if start is a prefix of str,
+ * otherwise a null pointer is returned */
+char const* Q_strstart(char const* str, char const* start) __attribute__((nonnull));
 
 void Com_Printf(const char *fmt, ...) __attribute__((format(printf, 1, 2)));
 void Com_DPrintf(int level, const char *msg, ...) __attribute__((format(printf, 2, 3)));
