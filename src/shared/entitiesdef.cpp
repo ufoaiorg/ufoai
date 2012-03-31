@@ -910,7 +910,7 @@ void ED_Free (void)
 					free(kd->ranges);
 				}
 			}
-			free(kd = ed->keyDefs);
+			free(ed->keyDefs);
 		}
 	}
 }
