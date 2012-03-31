@@ -309,7 +309,7 @@ bool UI_Node_KeyPressed(struct uiNode_s *node, unsigned int key, unsigned short 
 bool UI_Node_KeyReleased(struct uiNode_s *node, unsigned int key, unsigned short unicode)
 {
 	uiLocatedNode *b = dynamic_cast<uiLocatedNode*>(node->behaviour->manager);
-	return b->keyPressed(node, key, unicode);
+	return b->keyReleased(node, key, unicode);
 }
 
 /* cell size */
