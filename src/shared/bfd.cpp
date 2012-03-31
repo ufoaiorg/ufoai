@@ -161,9 +161,7 @@ static int init_bfd_ctx (struct bfd_ctx *bc, const char * procname, struct outpu
 
 static void close_bfd_ctx (struct bfd_ctx *bc)
 {
-	if (bc->symbol) {
-		free(bc->symbol);
-	}
+	free(bc->symbol);
 	if (bc->handle) {
 		bfd_close(bc->handle);
 	}

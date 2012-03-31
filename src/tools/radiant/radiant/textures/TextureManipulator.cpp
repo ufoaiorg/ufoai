@@ -325,10 +325,8 @@ void TextureManipulator::resampleTexture (const void *indata_, int inwidth, int 
 		int outheight, int bytesperpixel)
 {
 	if (rowsize < outwidth * bytesperpixel) {
-		if (row1)
-			free(row1);
-		if (row2)
-			free(row2);
+		free(row1);
+		free(row2);
 
 		rowsize = outwidth * bytesperpixel;
 		row1 = (byte *) malloc(rowsize);

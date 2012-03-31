@@ -240,8 +240,7 @@ static int translate_addresses (bfd *abfd, asection *section, void *xaddr, char 
 				if (buf_func != NULL)
 					snprintf(buf_func, buf_func_len, "%s", name);
 
-				if (alloc != NULL)
-					free(alloc);
+				free(alloc);
 			}
 
 			if (m_libtrace_data.base_names && si.filename != NULL) {
@@ -308,10 +307,8 @@ int libtrace_init (const char *file_name, const char *section_name, const char *
 
 int libtrace_close (void)
 {
-	if (m_libtrace_data.syms != NULL) {
-		free(m_libtrace_data.syms);
-		m_libtrace_data.syms = NULL;
-	}
+	free(m_libtrace_data.syms);
+	m_libtrace_data.syms = NULL;
 
 	bfd_close(m_libtrace_data.abfd);
 

@@ -187,9 +187,7 @@ static TObjVertexData *SizeObjVertexData (TObjVertexData *vertexData, int reqEnt
 
 static void FreeObjVertexData (TObjVertexData *vertexData)
 {
-	if (vertexData != NULL) {
-		free((TObjVertexData *) vertexData);
-	}
+	free(vertexData);
 }
 
 static picoShader_t *_obj_default_shader (picoModel_t *model)

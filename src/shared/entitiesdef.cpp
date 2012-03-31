@@ -895,20 +895,15 @@ void ED_Free (void)
 			entityKeyDef_t *kd;
 			free(ed->classname);
 			for (kd = ed->keyDefs; kd->name; kd++) {
-				if (kd->name)
-					free(kd->name);
-				if (kd->desc)
-					free(kd->desc);
-				if (kd->defaultVal)
-					free(kd->defaultVal);
+				free(kd->name);
+				free(kd->desc);
+				free(kd->defaultVal);
 				if (kd->numRanges) {
 					int i;
 					for (i = 0; i < kd->numRanges ;i++) {
 						entityKeyRange_t *kr = kd->ranges[i];
-						if (kr->iArr)
-							free(kr->iArr);
-						if (kr->fArr)
-							free(kr->fArr);
+						free(kr->iArr);
+						free(kr->fArr);
 						free(kr->str);
 						free(kr);
 					}
