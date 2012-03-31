@@ -992,8 +992,8 @@ int FS_BuildFileList (const char *fileList)
 					else {
 						char pathName[MAX_QPATH];
 						char pathNameEntry[MAX_QPATH];
-						Com_FilePath(findname, pathName);
-						Com_FilePath(fileNameEntry, pathNameEntry);
+						Com_FilePath(findname, pathName, sizeof(pathName));
+						Com_FilePath(fileNameEntry, pathNameEntry, sizeof(pathNameEntry));
 						if (Q_streq(pathNameEntry, pathName))
 							add = qtrue;
 					}

@@ -88,7 +88,7 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 const char *Com_SkipPath(const char *pathname);
 void Com_ReplaceFilename(const char *fileName, const char *name, char *path, size_t size);
 void Com_StripExtension(const char *in, char *out, size_t size);
-void Com_FilePath(const char *in, char *out);
+void Com_FilePath(const char *in, char *out, size_t size);
 const char *Com_GetExtension(const char *path);
 void Com_DefaultExtension(char *path, size_t len, const char *extension);
 int Com_Filter(const char *pattern, const char *text);

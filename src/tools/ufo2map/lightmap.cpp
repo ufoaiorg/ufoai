@@ -991,7 +991,7 @@ void ExportLightmaps (const char *bspFileName)
 	char path[MAX_QPATH], lightmapName[MAX_QPATH];
 	const char *fileName = Com_SkipPath(bspFileName);
 
-	Com_FilePath(bspFileName, path);
+	Com_FilePath(bspFileName, path, sizeof(path));
 	Com_StripExtension(fileName, lightmapName, sizeof(lightmapName));
 
 	/* note it */

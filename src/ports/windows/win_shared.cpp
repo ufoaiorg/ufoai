@@ -177,7 +177,7 @@ char *Sys_FindFirst (const char *path, unsigned musthave, unsigned canthave)
 		Sys_Error("Sys_BeginFind without close");
 	findhandle = 0;
 
-	Com_FilePath(path, findbase);
+	Com_FilePath(path, findbase, sizeof(findbase));
 	findhandle = _findfirst(path, &findinfo);
 	while (findhandle != -1) {
 		/* found one that matched */

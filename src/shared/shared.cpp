@@ -315,16 +315,19 @@ void Com_DefaultExtension (char *path, size_t len, const char *extension)
 
 /**
  * @brief Returns the path up to, but not including the last /
- * @todo add a size parameter to prevent buffer overflows
  */
-void Com_FilePath (const char *in, char *out)
+void Com_FilePath (const char *in, char *out, size_t size)
 {
 	const char *s = in + strlen(in) - 1;
 
 	while (s != in && *s != '/')
 		s--;
 
-	Q_strncpyz(out, in, s - in + 1);
+	const size_t pathLength = s - in + 1;
+	if (pathLength <= size)
+		Q_strncpyz(out, in, pathLength);
+	else if (size >= 1)
+		out[0] = '\0';
 }
 
 /**

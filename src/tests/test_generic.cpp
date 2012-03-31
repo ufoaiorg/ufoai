@@ -599,6 +599,16 @@ static void testEntitiesDef (void)
 	ED_Free();
 }
 
+static void testComFilePath (void)
+{
+	char buf[32];
+	Com_FilePath("/foo/bar/file.txt", buf, sizeof(buf));
+	CU_ASSERT_STRING_EQUAL(buf, "/foo/bar");
+
+	Com_FilePath("/foo/bar/a/little/bit/too/long/for/the/buffer/file.txt", buf, sizeof(buf));
+	CU_ASSERT_STRING_EQUAL(buf, "");
+}
+
 int UFO_AddGenericTests (void)
 {
 	/* add a suite to the registry */
@@ -657,6 +667,9 @@ int UFO_AddGenericTests (void)
 		return CU_get_error();
 
 	if (CU_ADD_TEST(GenericSuite, testEntitiesDef) == NULL)
+		return CU_get_error();
+
+	if (CU_ADD_TEST(GenericSuite, testComFilePath) == NULL)
 		return CU_get_error();
 
 	return CUE_SUCCESS;
