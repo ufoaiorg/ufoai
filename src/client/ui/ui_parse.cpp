@@ -1375,10 +1375,8 @@ const char *UI_GetReferenceString (const uiNode_t* const node, const char *ref)
 		if (token[0] == '\0')
 			return NULL;
 
-		if (Q_strstart(token, "binding:")) {
-			/* skip prefix */
-			token = token + 8;
-			return Key_GetBinding(token, (cls.state != ca_active ? KEYSPACE_UI : KEYSPACE_GAME));
+		if (char const* const binding = Q_strstart(token, "binding:")) {
+			return Key_GetBinding(binding, cls.state != ca_active ? KEYSPACE_UI : KEYSPACE_GAME);
 		} else {
 			Sys_Error("UI_GetReferenceString: unknown reference");	/**< maybe this code is never used */
 #if 0	/** @todo need a full rework */
@@ -1419,16 +1417,13 @@ float UI_GetReferenceFloat (const uiNode_t* const node, const void *ref)
 {
 	if (!ref)
 		return 0.0;
-	if (((const char *) ref)[0] == '*') {
-		const char *token;
-		token = (const char *) ref + 1;
-
+	if (char const* const token = Q_strstart((char const*)ref, "*")) {
 		if (token[0] == '\0')
 			return 0.0;
 
-		if (Q_strstart(token, "cvar:")) {
+		if (char const* const cvar = Q_strstart(token, "cvar:")) {
 			/* get the cvar value */
-			return Cvar_GetValue(token + 5);
+			return Cvar_GetValue(cvar);
 		} else {
 			/** @todo maybe this code is never used */
 			Sys_Error("UI_GetReferenceFloat: unknown reference '%s' from node '%s'",

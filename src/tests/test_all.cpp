@@ -246,24 +246,22 @@ static void Test_Parameters (const int argc, char **argv)
 			config.console = qtrue;
 		} else if (Q_streq(argv[i], "-a") || Q_streq(argv[i], "--automated")) {
 			config.automated = qtrue;
-		} else if (Q_strstart(argv[i], "-D")) {
-			const char* value = strchr(argv[i], '=');
-			if (value != NULL) {
+		} else if (char const* const arg = Q_strstart(argv[i], "-D")) {
+			if (char const* const value = strchr(arg, '=')) {
 				char name[32];
-				int size = (value - argv[i]) + 1 - 2;
+				size_t const size = value - arg + 1;
 				if (size >= sizeof(name)) {
 					fprintf(stderr, "Error: Argument \"%s\" use a property name too much big.\n", argv[i]);
 					exit(2);
 				}
-				Q_strncpyz(name, argv[i] + 2, size);
+				Q_strncpyz(name, arg, size);
 				TEST_RegisterProperty(name, value + 1);
 			} else {
 				fprintf(stderr, "Warning: \"%s\" do not value. Command line argument ignored.\n", argv[i]);
 			}
 		} else if (Q_streq(argv[i], "--disable-all")) {
 			Test_DisableAllSuites();
-		} else if (Q_strstart(argv[i], "--disable-")) {
-			const char *name = argv[i] + 10;
+		} else if (char const* const name = Q_strstart(argv[i], "--disable-")) {
 			switch (Test_DisableSuite(name)) {
 			case 0:
 				break;
@@ -276,8 +274,7 @@ static void Test_Parameters (const int argc, char **argv)
 			}
 		} else if (Q_streq(argv[i], "--enable-all")) {
 			Test_EnableAllSuites();
-		} else if (Q_strstart(argv[i], "--enable-")) {
-			const char *name = argv[i] + 9;
+		} else if (char const* const name = Q_strstart(argv[i], "--enable-")) {
 			switch (Test_EnableSuite(name)) {
 			case 0:
 				break;
@@ -288,16 +285,15 @@ static void Test_Parameters (const int argc, char **argv)
 			case 2:
 				printf("Warning: Suite \"%s\" already enabled\n", name);
 			}
-		} else if (Q_strstart(argv[i], "--only-")) {
-			const char *name = argv[i] + 7;
+		} else if (char const* const name = Q_strstart(argv[i], "--only-")) {
 			Test_DisableAllSuites();
 			if (Test_EnableSuite(name) != 0) {
 				fprintf(stderr, "Error: Suite \"%s\" unknown\n", name);
 				fprintf(stderr, "Use \"%s -l\" to show the list of suites\n", argv[0]);
 				exit(2);
 			}
-		} else if (Q_strstart(argv[i], "--output-prefix=")) {
-			resultPrefix = argv[i] + 16;
+		} else if (char const* const prefix = Q_strstart(argv[i], "--output-prefix=")) {
+			resultPrefix = prefix;
 		} else if (Q_streq(argv[i], "-l") || Q_streq(argv[i], "--list")) {
 			Test_List(qfalse);
 			exit(0);

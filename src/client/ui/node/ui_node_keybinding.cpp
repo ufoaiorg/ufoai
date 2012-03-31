@@ -74,16 +74,13 @@ void uiKeyBindingNode::leftClick (uiNode_t *node, int x, int y)
  */
 bool uiKeyBindingNode::keyPressed (uiNode_t *node, unsigned int key, unsigned short unicode)
 {
-	const char *command;
 	const char *binding;
 
 	UI_RemoveFocus();
 
 	/** @todo what about macro expansion? */
-	if (!Q_strstart(node->text, "*binding:"))
-		return false;
-
-	command = node->text + 9;
+	char const* const command = Q_strstart(node->text, "*binding:");
+	if (!command) return false;
 
 	/** @todo ensure that the binding for the key command is not executed */
 

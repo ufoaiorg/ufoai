@@ -316,14 +316,13 @@ void uiTabNode::drawTooltip (uiNode_t *node, int x, int y)
  */
 void uiTabNode::windowOpened (uiNode_t *node, linkedList_t *params)
 {
-	const char *cvarName;
-
 	/* no cvar given? */
 	if (!(EXTRADATA(node).cvar))
 		return;
 
 	/* not a cvar? */
-	if (!Q_strstart(EXTRADATA(node).cvar, "*cvar:")) {
+	char const* const cvarName = Q_strstart(EXTRADATA(node).cvar, "*cvar:");
+	if (!cvarName) {
 		/* normalize */
 		Com_Printf("UI_TabNodeInit: node '%s' doesn't have a valid cvar assigned (\"%s\" read)\n", UI_GetPath(node), EXTRADATA(node).cvar);
 		EXTRADATA(node).cvar = NULL;
@@ -331,7 +330,6 @@ void uiTabNode::windowOpened (uiNode_t *node, linkedList_t *params)
 	}
 
 	/* cvar do not exists? */
-	cvarName = &EXTRADATA(node).cvar[6];
 	if (Cvar_FindVar(cvarName) == NULL) {
 		/* search default value, if possible */
 		uiNode_t* option = node->firstChild;

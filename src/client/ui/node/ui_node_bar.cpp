@@ -109,7 +109,7 @@ void uiBarNode::capturedMouseMove (uiNode_t *node, int x, int y)
 	UI_GetNodeAbsPos(node, pos);
 	Q_strncpyz(var, (const char *)EXTRADATA(node).super.value, sizeof(var));
 	/* no cvar? */
-	if (Q_strstart(var, "*cvar:")) {
+	if (char const* const cvar = Q_strstart(var, "*cvar:")) {
 		/* normalize it */
 		float frac;
 		const float min = UI_GetReferenceFloat(node, EXTRADATA(node).super.min);
@@ -133,7 +133,7 @@ void uiBarNode::capturedMouseMove (uiNode_t *node, int x, int y)
 			Com_Printf("UI_BarNodeCapturedMouseMove: Orientation %d not supported\n", EXTRADATA(node).orientation);
 			break;
 		}
-		Cvar_SetValue(&var[6], min + frac * (max - min));
+		Cvar_SetValue(cvar, min + frac * (max - min));
 	}
 
 	/* callback */

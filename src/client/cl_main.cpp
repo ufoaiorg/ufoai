@@ -354,10 +354,7 @@ static void CL_ConnectionlessPacket (struct dbuffer *msg)
 	if (Q_streq(c, "client_connect")) {
 		int i;
 		for (i = 1; i < Cmd_Argc(); i++) {
-			const char *p = Cmd_Argv(i);
-			const char *downloadServerParam = "dlserver=";
-			if (Q_strstart(p, downloadServerParam)) {
-				p += strlen(downloadServerParam);
+			if (char const* const p = Q_strstart(Cmd_Argv(i), "dlserver=")) {
 				Com_sprintf(cls.downloadReferer, sizeof(cls.downloadReferer), "ufo://%s", cls.servername);
 				CL_SetHTTPServer(p);
 				if (cls.downloadServer[0])

@@ -128,9 +128,9 @@ static void BS_Buy_f (void)
 	if (Cmd_Argc() >= 4)
 		base = B_GetFoundedBaseByIDX(atoi(Cmd_Argv(3)));
 
-	if (Q_strstart(itemid, "aircraft-")) {
+	if (char const* const rest = Q_strstart(itemid, "aircraft-")) {
 		/* aircraft sell - with aircraft golbal idx */
-		int idx = atoi(itemid + 9);
+		int idx = atoi(rest);
 		aircraft_t *aircraft = AIR_AircraftGetFromIDX(idx);
 
 		if (!aircraft) {
@@ -142,9 +142,9 @@ static void BS_Buy_f (void)
 		return;
 	}
 
-	if (Q_strstart(itemid, "ugv-")) {
+	if (char const* const rest = Q_strstart(itemid, "ugv-")) {
 		/* ugv sell - with unique character number index */
-		int ucn = atoi(itemid + 4);
+		int ucn = atoi(rest);
 		employee_t *robot = E_GetEmployeeByTypeFromChrUCN(EMPL_ROBOT, ucn);
 
 		if (!robot) {
@@ -300,9 +300,9 @@ static void BS_ShowInfo_f (void)
 
 	itemid = Cmd_Argv(1);
 
-	if (Q_strstart(itemid, "aircraft-")) {
+	if (char const* const rest = Q_strstart(itemid, "aircraft-")) {
 		/* PHALANX aircraft - with aircraft golbal idx */
-		int idx = atoi(itemid + 9);
+		int idx = atoi(rest);
 		aircraft = AIR_AircraftGetFromIDX(idx);
 
 		if (!aircraft) {
@@ -314,9 +314,9 @@ static void BS_ShowInfo_f (void)
 		return;
 	}
 
-	if (Q_strstart(itemid, "ugv-")) {
+	if (char const* const rest = Q_strstart(itemid, "ugv-")) {
 		/* PHALANX ugv - with unique character number index */
-		int ucn = atoi(itemid + 4);
+		int ucn = atoi(rest);
 		employee_t *robot = E_GetEmployeeByTypeFromChrUCN(EMPL_ROBOT, ucn);
 
 		if (!robot) {

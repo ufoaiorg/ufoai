@@ -99,8 +99,8 @@ static void UI_SpinnerNodeStep (uiNode_t *node, qboolean down)
 
 	/* save result */
 	EXTRADATA(node).super.lastdiff = value - last;
-	if (Q_strstart((const char *)EXTRADATA(node).super.value, "*cvar:"))
-		Cvar_SetValue(&((const char*)EXTRADATA(node).super.value)[6], value);
+	if (char const* const cvar = Q_strstart((char const*)EXTRADATA(node).super.value, "*cvar:"))
+		Cvar_SetValue(cvar, value);
 	else
 		*(float*) EXTRADATA(node).super.value = value;
 

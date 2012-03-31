@@ -329,11 +329,13 @@ static void HUD_ExecuteAction_f (void)
 		return;
 	}
 
-	if (Q_strstart(Cmd_Argv(1), "fire_hand") && strlen(Cmd_Argv(1)) >= 13) {
-		const char hand = Cmd_Argv(1)[9];
-		const int index = atoi(Cmd_Argv(1) + 12);
-		Cmd_ExecuteString(va("hud_fireweapon %c %i", hand, index));
-		return;
+	if (char const* const rest = Q_strstart(Cmd_Argv(1), "fire_hand")) {
+		if (strlen(rest) >= 4) {
+			char const hand  = rest[0];
+			int  const index = atoi(rest + 3);
+			Cmd_ExecuteString(va("hud_fireweapon %c %i", hand, index));
+			return;
+		}
 	}
 
 	Com_Printf("HUD_ExecuteAction_f: Action \"%s\" unknown.\n", Cmd_Argv(1));

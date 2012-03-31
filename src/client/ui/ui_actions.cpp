@@ -218,16 +218,14 @@ const char* UI_GenInjectedString (const char* input, qboolean addNewLine, const 
 			const char *next = UI_GenCommandReadProperty(cin, propertyName, sizeof(propertyName));
 			if (next) {
 				/* cvar injection */
-				if (Q_strstart(propertyName, "cvar:")) {
-					const cvar_t *cvar = Cvar_Get(propertyName + 5);
+				if (char const* const rest = Q_strstart(propertyName, "cvar:")) {
+					cvar_t const* const cvar = Cvar_Get(rest);
 					const int l = snprintf(cout, length, "%s", cvar->string);
 					cout += l;
 					cin = next;
 					length -= l;
 					continue;
-
-				} else if (Q_strstart(propertyName, "node:")) {
-					const char *path = propertyName + 5;
+				} else if (char const* const path = Q_strstart(propertyName, "node:")) {
 					uiNode_t *node;
 					const value_t *property;
 					const char* string;
@@ -255,11 +253,9 @@ const char* UI_GenInjectedString (const char* input, qboolean addNewLine, const 
 					cin = next;
 					length -= l;
 					continue;
-
 				/* source path injection */
-				} else if (Q_strstart(propertyName, "path:")) {
+				} else if (char const* const command = Q_strstart(propertyName, "path:")) {
 					if (context->source) {
-						const char *command = propertyName + 5;
 						const uiNode_t *node = NULL;
 						if (Q_streq(command, "root"))
 							node = context->source->root;

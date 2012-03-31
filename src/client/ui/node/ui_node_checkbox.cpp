@@ -95,8 +95,8 @@ void uiCheckBoxNode::activate (uiNode_t *node)
 
 	/* save result */
 	EXTRADATA(node).lastdiff = value - last;
-	if (Q_strstart((const char *)EXTRADATA(node).value, "*cvar:")) {
-		Cvar_SetValue(&((const char*)EXTRADATA(node).value)[6], value);
+	if (char const* const cvar = Q_strstart((char const*)EXTRADATA(node).value, "*cvar:")) {
+		Cvar_SetValue(cvar, value);
 	} else {
 		*(float*) EXTRADATA(node).value = value;
 	}

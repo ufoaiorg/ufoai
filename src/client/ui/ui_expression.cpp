@@ -580,8 +580,7 @@ static uiAction_t *UI_ParseValueExpression (const char **text)
 	}
 
 	/* it is a cvarname */
-	if (Q_strstart(token, "*cvar:")) {
-		const char* cvarName = token + 6;
+	if (char const* const cvarName = Q_strstart(token, "*cvar:")) {
 		expression->d.terminal.d1.constString = UI_AllocStaticString(cvarName, 0);
 		if (UI_IsInjectedString(cvarName))
 			expression->type = EA_VALUE_CVARNAME_WITHINJECTION;
@@ -592,17 +591,15 @@ static uiAction_t *UI_ParseValueExpression (const char **text)
 
 	/* it is a node property or it is a OLD syntax node property */
 	/** @todo We MUST remove the OLD code as fast as possible */
-	if (Q_strstart(token, "*node:") || Q_strstart(token, "*")) {
-		const char* path = token + 1;
+	if (char const* path = Q_strstart(token, "*")) {
 		const char *propertyName;
-		qboolean relativeToNode;
 #if 0	/* it looks useless, an unused cache */
 		const value_t *property;
 #endif
 
-		relativeToNode = Q_strstart(path, "node:");
+		char const* const relativeToNode = Q_strstart(path, "node:");
 		if (relativeToNode)
-			path = path + 5;
+			path = relativeToNode;
 
 		if (UI_IsInjectedString(path))
 			expression->type = EA_VALUE_PATHPROPERTY_WITHINJECTION;
