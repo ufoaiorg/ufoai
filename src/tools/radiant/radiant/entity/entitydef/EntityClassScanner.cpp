@@ -165,14 +165,12 @@ void EntityClassScannerUFO::scanFile (EntityClassCollector& collector)
 		std::string buffer = "Parsing of entities definition file failed, returned error was " + std::string(
 				ED_GetLastError());
 		gtkutil::errorDialog(buffer);
-		free(entities);
-		ED_Free();
-		return;
-	}
-	for (int i = 0; i < numEntityDefs; i++) {
-		EntityClass *e = initFromDefinition(&entityDefs[i]);
-		if (e)
-			collector.insert(e);
+	} else {
+		for (int i = 0; i < numEntityDefs; i++) {
+			EntityClass *e = initFromDefinition(&entityDefs[i]);
+			if (e)
+				collector.insert(e);
+		}
 	}
 	free(entities);
 	ED_Free();
