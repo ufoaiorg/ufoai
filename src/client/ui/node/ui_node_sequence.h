@@ -29,11 +29,11 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #include "../../cinematic/cl_sequence.h"
 
 class uiSequenceNode : public uiLocatedNode {
-	void draw(struct uiNode_s *node);
-	void leftClick(struct uiNode_s *node, int x, int y);
-	void windowOpened(struct uiNode_s *node, linkedList_t *params);
-	void windowClosed(struct uiNode_s *node);
-	void propertyChanged(struct uiNode_s *node, const value_t *property);
+	void draw(struct uiNode_s *node) OVERRIDE;
+	void leftClick(struct uiNode_s *node, int x, int y) OVERRIDE;
+	void windowOpened(struct uiNode_s *node, linkedList_t *params) OVERRIDE;
+	void windowClosed(struct uiNode_s *node) OVERRIDE;
+	void propertyChanged(struct uiNode_s *node, const value_t *property) OVERRIDE;
 };
 
 void UI_RegisterSequenceNode(struct uiBehaviour_s *behaviour);

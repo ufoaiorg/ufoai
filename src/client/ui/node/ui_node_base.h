@@ -31,11 +31,11 @@ class uiAbstractBaseNode : public uiLocatedNode {
 };
 
 class uiBaseMapNode : public uiAbstractBaseNode {
-	void draw(struct uiNode_s *node);
-	void leftClick(struct uiNode_s *node, int x, int y);
-	void rightClick(struct uiNode_s *node, int x, int y);
-	void middleClick(struct uiNode_s *node, int x, int y);
-	void drawTooltip(struct uiNode_s *node, int x, int y);
+	void draw(struct uiNode_s *node) OVERRIDE;
+	void leftClick(struct uiNode_s *node, int x, int y) OVERRIDE;
+	void rightClick(struct uiNode_s *node, int x, int y) OVERRIDE;
+	void middleClick(struct uiNode_s *node, int x, int y) OVERRIDE;
+	void drawTooltip(struct uiNode_s *node, int x, int y) OVERRIDE;
 };
 
 class uiBaseLayoutNode : public uiAbstractBaseNode {

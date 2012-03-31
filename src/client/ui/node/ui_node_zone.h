@@ -26,22 +26,10 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #define CLIENT_UI_UI_NODE_ZONE_H
 
 class uiZoneNode : public uiLocatedNode {
-	/**
-	 * @override
-	 */
-	void loading(struct uiNode_s *node);
-	/**
-	 * @override
-	 */
-	void mouseDown(struct uiNode_s *node, int x, int y, int button);
-	/**
-	 * @override
-	 */
-	void mouseUp(struct uiNode_s *node, int x, int y, int button);
-	/**
-	 * @override
-	 */
-	void capturedMouseLost(struct uiNode_s *node);
+	void loading(struct uiNode_s *node) OVERRIDE;
+	void mouseDown(struct uiNode_s *node, int x, int y, int button) OVERRIDE;
+	void mouseUp(struct uiNode_s *node, int x, int y, int button) OVERRIDE;
+	void capturedMouseLost(struct uiNode_s *node) OVERRIDE;
 };
 
 typedef struct {

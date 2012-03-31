@@ -28,8 +28,8 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #include "../ui_nodes.h"
 
 class uiRowsNode : public uiLocatedNode {
-	void draw(struct uiNode_s *node);
-	void loaded(struct uiNode_s *node);
+	void draw(struct uiNode_s *node) OVERRIDE;
+	void loaded(struct uiNode_s *node) OVERRIDE;
 };
 
 typedef struct rowsExtraData_s {

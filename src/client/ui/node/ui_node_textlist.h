@@ -26,11 +26,11 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #define CLIENT_UI_UI_NODE_TEXTLIST_H
 
 class uiTextListNode : public uiTextNode {
-	void draw(struct uiNode_s *node);
-	void leftClick(struct uiNode_s *node, int x, int y);
-	void rightClick(struct uiNode_s *node, int x, int y);
-	void mouseMove(struct uiNode_s *node, int x, int y);
-	void loading(struct uiNode_s *node);
+	void draw(struct uiNode_s *node) OVERRIDE;
+	void leftClick(struct uiNode_s *node, int x, int y) OVERRIDE;
+	void rightClick(struct uiNode_s *node, int x, int y) OVERRIDE;
+	void mouseMove(struct uiNode_s *node, int x, int y) OVERRIDE;
+	void loading(struct uiNode_s *node) OVERRIDE;
 };
 
 struct uiBehaviour_s;

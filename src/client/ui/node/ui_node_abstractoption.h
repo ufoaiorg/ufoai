@@ -31,9 +31,9 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 struct uiAction_s;
 
 class uiAbstractOptionNode : public uiLocatedNode {
-	void doLayout(struct uiNode_s *node);
-	int getCellWidth(struct uiNode_s *node);
-	int getCellHeight(struct uiNode_s *node);
+	void doLayout(struct uiNode_s *node) OVERRIDE;
+	int getCellWidth(struct uiNode_s *node) OVERRIDE;
+	int getCellHeight(struct uiNode_s *node) OVERRIDE;
 };
 
 typedef struct {

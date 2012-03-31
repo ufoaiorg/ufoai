@@ -32,14 +32,8 @@ void UI_ImageNodeDraw(struct uiNode_s *node);
 
 class uiImageNode : public uiLocatedNode {
 public:
-	/**
-	 * @override
-	 */
-	void loaded(struct uiNode_s *node);
-	/**
-	 * @override
-	 */
-	void draw(struct uiNode_s *node);
+	void loaded(struct uiNode_s *node) OVERRIDE;
+	void draw(struct uiNode_s *node) OVERRIDE;
 };
 
 typedef struct imageExtraData_s {

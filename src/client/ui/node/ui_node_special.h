@@ -28,10 +28,10 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #include "../ui_nodes.h"
 
 class uiConFuncNode : public uiNode {
-	void loaded(struct uiNode_s *node);
-	void windowOpened(struct uiNode_s *node, linkedList_t *params);
-	void windowClosed(struct uiNode_s *node);
-	void clone(const struct uiNode_s *source, struct uiNode_s *clone);
+	void loaded(struct uiNode_s *node) OVERRIDE;
+	void windowOpened(struct uiNode_s *node, linkedList_t *params) OVERRIDE;
+	void windowClosed(struct uiNode_s *node) OVERRIDE;
+	void clone(const struct uiNode_s *source, struct uiNode_s *clone) OVERRIDE;
 };
 
 class uiFuncNode : public uiNode {

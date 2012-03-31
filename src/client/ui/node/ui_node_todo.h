@@ -28,10 +28,10 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #include "ui_node_string.h"
 
 class uiTodoNode : public uiStringNode {
-	void draw(struct uiNode_s *node);
-	void drawOverWindow(struct uiNode_s *node);
-	void loading(struct uiNode_s *node);
-	void loaded(struct uiNode_s *node);
+	void draw(struct uiNode_s *node) OVERRIDE;
+	void drawOverWindow(struct uiNode_s *node) OVERRIDE;
+	void loading(struct uiNode_s *node) OVERRIDE;
+	void loaded(struct uiNode_s *node) OVERRIDE;
 };
 
 void UI_RegisterTodoNode(struct uiBehaviour_s *behaviour);

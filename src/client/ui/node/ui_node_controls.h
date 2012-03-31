@@ -29,19 +29,9 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 
 class uiControlNode : public uiImageNode {
 public:
-	/**
-	 * @override
-	 */
-	void mouseDown(struct uiNode_s *node, int x, int y, int button);
-	/**
-	 * @override
-	 */
-	void mouseUp(struct uiNode_s *node, int x, int y, int button);
-	/**
-	 * @override
-	 */
-	void capturedMouseMove(struct uiNode_s *node, int x, int y);
-
+	void mouseDown(struct uiNode_s *node, int x, int y, int button) OVERRIDE;
+	void mouseUp(struct uiNode_s *node, int x, int y, int button) OVERRIDE;
+	void capturedMouseMove(struct uiNode_s *node, int x, int y) OVERRIDE;
 };
 
 void UI_RegisterControlsNode(struct uiBehaviour_s *behaviour);

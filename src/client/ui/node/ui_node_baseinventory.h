@@ -29,18 +29,18 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #include "ui_node_abstractscrollable.h"
 
 class uiBaseInventoryNode : public uiContainerNode {
-	void draw(struct uiNode_s *node);
-	void drawTooltip(struct uiNode_s *node, int x, int y);
-	void mouseDown(struct uiNode_s *node, int x, int y, int button);
-	void mouseUp(struct uiNode_s *node, int x, int y, int button);
-	bool scroll(struct uiNode_s *node, int deltaX, int deltaY);
-	void capturedMouseMove(struct uiNode_s *node, int x, int y);
-	void windowOpened(struct uiNode_s *node, linkedList_t *params);
-	void loading(struct uiNode_s *node);
-	void loaded(struct uiNode_s *node);
-	bool dndEnter(struct uiNode_s *node);
-	bool dndMove(struct uiNode_s *node, int x, int y);
-	void dndLeave(struct uiNode_s *node);
+	void draw(struct uiNode_s *node) OVERRIDE;
+	void drawTooltip(struct uiNode_s *node, int x, int y) OVERRIDE;
+	void mouseDown(struct uiNode_s *node, int x, int y, int button) OVERRIDE;
+	void mouseUp(struct uiNode_s *node, int x, int y, int button) OVERRIDE;
+	bool scroll(struct uiNode_s *node, int deltaX, int deltaY) OVERRIDE;
+	void capturedMouseMove(struct uiNode_s *node, int x, int y) OVERRIDE;
+	void windowOpened(struct uiNode_s *node, linkedList_t *params) OVERRIDE;
+	void loading(struct uiNode_s *node) OVERRIDE;
+	void loaded(struct uiNode_s *node) OVERRIDE;
+	bool dndEnter(struct uiNode_s *node) OVERRIDE;
+	bool dndMove(struct uiNode_s *node, int x, int y) OVERRIDE;
+	void dndLeave(struct uiNode_s *node) OVERRIDE;
 };
 
 /* prototypes */

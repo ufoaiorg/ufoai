@@ -28,7 +28,7 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #include "ui_node_model.h"
 
 class uiItemNode : public uiModelNode {
-	void draw(struct uiNode_s *node);
+	void draw(struct uiNode_s *node) OVERRIDE;
 };
 
 void UI_RegisterItemNode(struct uiBehaviour_s *behaviour);

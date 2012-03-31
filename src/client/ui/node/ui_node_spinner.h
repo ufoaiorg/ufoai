@@ -29,12 +29,12 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #include "ui_node_abstractvalue.h"
 
 class uiSpinnerNode : public uiAbstractValueNode {
-	void draw(struct uiNode_s *node);
-	void loading(struct uiNode_s *node);
-	void mouseDown(struct uiNode_s *node, int x, int y, int button);
-	void mouseUp(struct uiNode_s *node, int x, int y, int button);
-	void capturedMouseLost(struct uiNode_s *node);
-	bool scroll(struct uiNode_s *node, int deltaX, int deltaY);
+	void draw(struct uiNode_s *node) OVERRIDE;
+	void loading(struct uiNode_s *node) OVERRIDE;
+	void mouseDown(struct uiNode_s *node, int x, int y, int button) OVERRIDE;
+	void mouseUp(struct uiNode_s *node, int x, int y, int button) OVERRIDE;
+	void capturedMouseLost(struct uiNode_s *node) OVERRIDE;
+	bool scroll(struct uiNode_s *node, int deltaX, int deltaY) OVERRIDE;
 };
 
 typedef struct spinnerExtraData_s {

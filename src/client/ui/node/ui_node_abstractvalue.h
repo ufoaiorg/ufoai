@@ -28,10 +28,10 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #define CLIENT_UI_UI_NODE_ABSTRACTVALUE_H
 
 class uiAbstractValueNode : public uiLocatedNode {
-	void loaded(struct uiNode_s *node);
-	void clone(const struct uiNode_s *source, struct uiNode_s *clone);
-	void newNode(struct uiNode_s *node);
-	void deleteNode(struct uiNode_s *node);
+	void loaded(struct uiNode_s *node) OVERRIDE;
+	void clone(const struct uiNode_s *source, struct uiNode_s *clone) OVERRIDE;
+	void newNode(struct uiNode_s *node) OVERRIDE;
+	void deleteNode(struct uiNode_s *node) OVERRIDE;
 };
 
 /**

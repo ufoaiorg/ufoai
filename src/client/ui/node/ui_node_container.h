@@ -34,17 +34,17 @@ struct uiBehaviour_s;
 struct uiNode_s;
 
 class uiContainerNode : public uiLocatedNode {
-	void draw(struct uiNode_s *node);
-	void drawTooltip(struct uiNode_s *node, int x, int y);
-	void mouseDown(struct uiNode_s *node, int x, int y, int button);
-	void mouseUp(struct uiNode_s *node, int x, int y, int button);
-	void capturedMouseMove(struct uiNode_s *node, int x, int y);
-	void loading(struct uiNode_s *node);
-	void loaded(struct uiNode_s *node);
-	bool dndEnter(struct uiNode_s *node);
-	bool dndMove(struct uiNode_s *node, int x, int y);
-	void dndLeave(struct uiNode_s *node);
-	bool dndFinished(struct uiNode_s *node, bool isDroped);
+	void draw(struct uiNode_s *node) OVERRIDE;
+	void drawTooltip(struct uiNode_s *node, int x, int y) OVERRIDE;
+	void mouseDown(struct uiNode_s *node, int x, int y, int button) OVERRIDE;
+	void mouseUp(struct uiNode_s *node, int x, int y, int button) OVERRIDE;
+	void capturedMouseMove(struct uiNode_s *node, int x, int y) OVERRIDE;
+	void loading(struct uiNode_s *node) OVERRIDE;
+	void loaded(struct uiNode_s *node) OVERRIDE;
+	bool dndEnter(struct uiNode_s *node) OVERRIDE;
+	bool dndMove(struct uiNode_s *node, int x, int y) OVERRIDE;
+	void dndLeave(struct uiNode_s *node) OVERRIDE;
+	bool dndFinished(struct uiNode_s *node, bool isDroped) OVERRIDE;
 };
 
 extern inventory_t *ui_inventory;

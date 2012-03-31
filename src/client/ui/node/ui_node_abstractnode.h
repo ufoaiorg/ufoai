@@ -28,6 +28,8 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #include "../ui_nodes.h"
 #include "../ui_node.h"
 
+#define OVERRIDE
+
 struct uiNode_s;
 struct uiBehaviour_s;
 

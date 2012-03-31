@@ -29,10 +29,10 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #include "../../cinematic/cl_cinematic.h"
 
 class uiVideoNode : public uiLocatedNode {
-	void draw(struct uiNode_s *node);
-	void drawOverWindow(struct uiNode_s *node);
-	void windowOpened(struct uiNode_s *node, linkedList_t *params);
-	void windowClosed(struct uiNode_s *node);
+	void draw(struct uiNode_s *node) OVERRIDE;
+	void drawOverWindow(struct uiNode_s *node) OVERRIDE;
+	void windowOpened(struct uiNode_s *node, linkedList_t *params) OVERRIDE;
+	void windowClosed(struct uiNode_s *node) OVERRIDE;
 };
 
 void UI_RegisterVideoNode(struct uiBehaviour_s *behaviour);

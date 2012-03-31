@@ -27,14 +27,14 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #define CLIENT_UI_UI_NODE_VSCROLLBAR_H
 
 class uiVScrollbarNode : public uiAbstractScrollbarNode {
-	void draw(struct uiNode_s *node);
-	void loading(struct uiNode_s *node);
-	void loaded(struct uiNode_s *node);
-	void mouseDown(struct uiNode_s *node, int x, int y, int button);
-	void mouseUp(struct uiNode_s *node, int x, int y, int button);
-	bool scroll(struct uiNode_s *node, int deltaX, int deltaY);
-	void capturedMouseMove(struct uiNode_s *node, int x, int y);
-	void capturedMouseLost(struct uiNode_s *node);
+	void draw(struct uiNode_s *node) OVERRIDE;
+	void loading(struct uiNode_s *node) OVERRIDE;
+	void loaded(struct uiNode_s *node) OVERRIDE;
+	void mouseDown(struct uiNode_s *node, int x, int y, int button) OVERRIDE;
+	void mouseUp(struct uiNode_s *node, int x, int y, int button) OVERRIDE;
+	bool scroll(struct uiNode_s *node, int deltaX, int deltaY) OVERRIDE;
+	void capturedMouseMove(struct uiNode_s *node, int x, int y) OVERRIDE;
+	void capturedMouseLost(struct uiNode_s *node) OVERRIDE;
 };
 
 void UI_RegisterVScrollbarNode(struct uiBehaviour_s *behaviour);

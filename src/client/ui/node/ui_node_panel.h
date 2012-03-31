@@ -28,12 +28,12 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #include "ui_node_abstractscrollable.h"
 
 class uiPanelNode : public uiAbstractScrollableNode {
-	void draw(struct uiNode_s *node);
-	void loaded(struct uiNode_s *node);
-	void doLayout(struct uiNode_s *node);
-	void getClientPosition(const struct uiNode_s *node, vec2_t position);
-	void propertyChanged(struct uiNode_s *node, const value_t *property);
-	bool scroll(struct uiNode_s *node, int deltaX, int deltaY);
+	void draw(struct uiNode_s *node) OVERRIDE;
+	void loaded(struct uiNode_s *node) OVERRIDE;
+	void doLayout(struct uiNode_s *node) OVERRIDE;
+	void getClientPosition(const struct uiNode_s *node, vec2_t position) OVERRIDE;
+	void propertyChanged(struct uiNode_s *node, const value_t *property) OVERRIDE;
+	bool scroll(struct uiNode_s *node, int deltaX, int deltaY) OVERRIDE;
 };
 
 struct uiNode_s;

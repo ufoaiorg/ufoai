@@ -35,34 +35,13 @@ struct uiBehaviour_s;
 struct uiKeyBinding_s;
 
 class uiWindowNode : public uiLocatedNode {
-	/**
-	 * @override
-	 */
-	void draw(struct uiNode_s *node);
-	/**
-	 * @override
-	 */
-	void doLayout(struct uiNode_s *node);
-	/**
-	 * @override
-	 */
-	void loading(struct uiNode_s *node);
-	/**
-	 * @override
-	 */
-	void loaded(struct uiNode_s *node);
-	/**
-	 * @override
-	 */
-	void windowOpened(struct uiNode_s *node, linkedList_t *params);
-	/**
-	 * @override
-	 */
-	void windowClosed(struct uiNode_s *node);
-	/**
-	 * @override
-	 */
-	void clone(const struct uiNode_s *source, struct uiNode_s *clone);
+	void draw(struct uiNode_s *node) OVERRIDE;
+	void doLayout(struct uiNode_s *node) OVERRIDE;
+	void loading(struct uiNode_s *node) OVERRIDE;
+	void loaded(struct uiNode_s *node) OVERRIDE;
+	void windowOpened(struct uiNode_s *node, linkedList_t *params) OVERRIDE;
+	void windowClosed(struct uiNode_s *node) OVERRIDE;
+	void clone(const struct uiNode_s *source, struct uiNode_s *clone) OVERRIDE;
 };
 
 #define INDEXEDCHILD_HASH_SIZE 32
