@@ -2,11 +2,11 @@
 
 #include <gtk/gtkvbox.h>
 #include <gtk/gtktable.h>
+#include "../../../../../shared/autoptr.h"
 #include "gtkutil/LeftAlignedLabel.h"
 #include "gtkutil/dialog.h"
 #include "ifilesystem.h"
 #include "radiant_i18n.h"
-#include "AutoPtr.h"
 #include "stream/textfilestream.h"
 #include "iarchive.h"
 

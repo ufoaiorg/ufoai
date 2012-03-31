@@ -1,8 +1,8 @@
+#include "../../../../shared/autoptr.h"
 #include "texturelib.h"
 #include "iimage.h"
 #include "itextures.h"
 #include "igl.h"
-#include "AutoPtr.h"
 
 #include "TextureManipulator.h"
 

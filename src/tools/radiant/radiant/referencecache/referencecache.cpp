@@ -29,8 +29,8 @@
 
 #include "debugging/debugging.h"
 
+#include "../../../../shared/autoptr.h"
 #include "../map/RootNode.h"
-#include "AutoPtr.h"
 #include "iscenegraph.h"
 #include "iselection.h"
 #include "iundo.h"

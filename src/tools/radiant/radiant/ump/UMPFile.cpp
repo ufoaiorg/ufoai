@@ -1,11 +1,11 @@
 #include "UMPFile.h"
 
+#include "../../../../shared/autoptr.h"
 #include "stream/textfilestream.h"
 #include "iradiant.h"
 #include "ifilesystem.h"
 #include "iarchive.h"
 #include <sstream>
-#include "AutoPtr.h"
 #include "UMPException.h"
 #include "string/string.h"
 #include "os/path.h"

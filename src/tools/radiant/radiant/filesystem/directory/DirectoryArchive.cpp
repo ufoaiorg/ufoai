@@ -21,7 +21,7 @@
 
 #include "DirectoryArchive.h"
 
-#include "AutoPtr.h"
+#include "../../../../../shared/autoptr.h"
 #include "idatastream.h"
 
 #include <stdio.h>

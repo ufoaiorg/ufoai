@@ -1,11 +1,11 @@
 #include "MaterialShader.h"
+#include "../../../../shared/autoptr.h"
 #include "imaterial.h"
 #include "iscriplib.h"
 #include "itextures.h"
 #include "iscriplib.h"
 
 #include "stream/stringstream.h"
-#include "AutoPtr.h"
 
 // constructor for empty material shader
 MaterialShader::MaterialShader (const std::string& textureName) :

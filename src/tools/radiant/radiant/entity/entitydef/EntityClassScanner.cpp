@@ -1,12 +1,12 @@
 #include "EntityClassScanner.h"
 
+#include "../../../../../shared/autoptr.h"
 #include "ifilesystem.h"
 #include "iarchive.h"
 
 #include "string/string.h"
 #include "eclasslib.h"
 #include "gtkutil/dialog.h"
-#include "AutoPtr.h"
 #include "os/path.h"
 
 const std::string EntityClassScannerUFO::getFilename () const

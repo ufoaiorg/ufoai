@@ -1,9 +1,9 @@
 #include "Parser.h"
 
+#include "../../../../../shared/autoptr.h"
 #include "iufoscript.h"
 #include "ifilesystem.h"
 #include "iarchive.h"
-#include "AutoPtr.h"
 #include <sstream>
 
 namespace scripts

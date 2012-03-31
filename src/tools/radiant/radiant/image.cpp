@@ -21,11 +21,11 @@
 
 #include "image.h"
 
+#include "../../../shared/autoptr.h"
 #include "modulesystem.h"
 #include "iimage.h"
 #include "ifilesystem.h"
 #include "iarchive.h"
-#include "AutoPtr.h"
 #include "plugin.h"
 
 #include "generic/reference.h"

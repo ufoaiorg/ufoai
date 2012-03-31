@@ -23,6 +23,7 @@
  */
 
 #include "PrefabSelector.h"
+#include "../../../../shared/autoptr.h"
 #include "radiant_i18n.h"
 #include "stream/stringstream.h"
 #include "gtkutil/messagebox.h"
@@ -35,7 +36,6 @@
 #include "os/path.h"
 #include "os/dir.h"
 #include "os/file.h"
-#include "AutoPtr.h"
 #include "ifilesystem.h"
 #include "iregistry.h"
 #include "iundo.h"

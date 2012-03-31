@@ -24,6 +24,7 @@
  Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
  */
 
+#include "../../../../shared/autoptr.h"
 #include "imaterial.h"
 #include "iradiant.h"
 #include "ieventmanager.h"
@@ -39,7 +40,6 @@
 #include "os/file.h"
 #include "stream/textfilestream.h"
 #include "stream/stringstream.h"
-#include "AutoPtr.h"
 #include "shared.h"
 #include "gtkutil/dialog.h"
 

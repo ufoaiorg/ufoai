@@ -1,7 +1,7 @@
 #include "FileSystem.h"
 #include "FileSystemModule.h"
 
-#include "AutoPtr.h"
+#include "../../../../shared/autoptr.h"
 #include "string/string.h"
 #include "os/path.h"
 #include "generic/callback.h"

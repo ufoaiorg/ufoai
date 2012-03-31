@@ -1,6 +1,6 @@
 #include "RoutingLumpLoader.h"
 #include "RoutingLump.h"
-#include "AutoPtr.h"
+#include "../../../shared/autoptr.h"
 #include "ifilesystem.h"
 #include "gtkutil/dialog.h"
 #include "radiant_i18n.h"

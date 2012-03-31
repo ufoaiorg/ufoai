@@ -19,7 +19,7 @@
  Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
  */
 
-#include "AutoPtr.h"
+#include "../../../../shared/autoptr.h"
 #include "radiant_i18n.h"
 #include "iscriplib.h"
 #include "ibrush.h"

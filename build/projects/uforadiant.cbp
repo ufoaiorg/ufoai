@@ -120,6 +120,7 @@
 		<Linker>
 			<Add library="libjpeg" />
 		</Linker>
+		<Unit filename="..\..\src\shared\autoptr.h" />
 		<Unit filename="..\..\src\shared\entitiesdef.cpp">
 			<Option compilerVar="CPP" />
 		</Unit>
@@ -180,7 +181,6 @@
 		<Unit filename="..\..\src\tools\radiant\include\shared.h" />
 		<Unit filename="..\..\src\tools\radiant\include\version.h" />
 		<Unit filename="..\..\src\tools\radiant\include\windowobserver.h" />
-		<Unit filename="..\..\src\tools\radiant\libs\AutoPtr.h" />
 		<Unit filename="..\..\src\tools\radiant\libs\archivelib.h" />
 		<Unit filename="..\..\src\tools\radiant\libs\bytestreamutils.h" />
 		<Unit filename="..\..\src\tools\radiant\libs\character.h" />

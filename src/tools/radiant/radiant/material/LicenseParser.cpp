@@ -1,4 +1,5 @@
 #include "LicenseParser.h"
+#include "../../../../shared/autoptr.h"
 #include "iscriplib.h"
 #include "iregistry.h"
 #include "iarchive.h"
@@ -6,7 +7,6 @@
 
 #include "string/string.h"
 #include "os/path.h"
-#include "AutoPtr.h"
 
 #include "../environment.h"
 

@@ -26,7 +26,7 @@ typedef unsigned char byte;
 #include <algorithm>
 #include <list>
 
-#include "AutoPtr.h"
+#include "../../../shared/autoptr.h"
 #include "iscenegraph.h"
 #include "irender.h"
 #include "iselection.h"
