@@ -15,6 +15,7 @@ particle firefield
 	}
 	think
 	{
+		spawn   burnFireFlame
 		spawn	firefield_fire
 	}
 }
@@ -57,7 +58,7 @@ particle smokefield
 	init
 	{
 		v		"0 0 0"
-		tps		14.0
+		tps		24.0
 	}
 	think
 	{
@@ -71,24 +72,21 @@ particle smokefield_smoke
 	{
 		frame 0
 		endframe 3
-		image +sfx/smoke/smoke_
+		image +sfx/smoke_
 		blend  replace
 		style  facing
 		thinkfade  out
-
-
-		a      "0 0 0"
-		crand  vector "0 0 15"
-		add    vector "0 0 10"
-		pop    *v
-
-		crand  vector "15 15 15"
-		add    *s
-		pop    *s
-
-		rand   float 0.5
+		rand   float 0.2
 		add    float 0.2
 		pop    *tps
+		crand  vector "12 12 4"
+		add    *s
+		pop    *s
+		rand   vector "0 0 54"
+		add    *s
+		pop    *s
+		crand  vector "2 2 0"
+		add    *v
 		physics true
 	}
 	run
@@ -762,6 +760,7 @@ particle camping_fire
 	}
 	think
 	{
+		spawn  firefield_fire
 		spawn  burnFireFlame
 	}
 }
