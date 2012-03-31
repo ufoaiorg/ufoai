@@ -1398,20 +1398,14 @@ scheduleEvent_t* Dequeue_Event(int now);
  */
 scheduleEvent_t* Dequeue_Event (int now)
 {
-	scheduleEvent_t *event = event_queue;
-	scheduleEvent_t *prev = NULL;
+	for (scheduleEvent_t **anchor = &event_queue; *anchor; anchor = &(*anchor)->next) {
+		scheduleEvent_t *const event = *anchor;
+		if (event->when > now) break;
 
-	while (event && event->when <= now) {
 		if (event->check == NULL || event->check(now, event->data)) {
-			if (prev) {
-				prev->next = event->next;
-			} else {
-				event_queue = event->next;
-			}
+			*anchor = event->next;
 			return event;
 		}
-		prev = event;
-		event = event->next;
 	}
 	return NULL;
 }
