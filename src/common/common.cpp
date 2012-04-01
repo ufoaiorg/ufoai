@@ -572,7 +572,7 @@ void Com_ClearArgv (int arg)
 }
 
 
-void Com_InitArgv (int argc, const char **argv)
+static void Com_InitArgv (int argc, char **argv)
 {
 	int i;
 
@@ -1076,7 +1076,7 @@ vPrintfPtr_t Qcommon_GetPrintFunction (void)
  * @sa Sys_Init
  * @sa CL_Init
  */
-void Qcommon_Init (int argc, const char **argv)
+void Qcommon_Init (int argc, char **argv)
 {
 	Sys_InitSignals();
 

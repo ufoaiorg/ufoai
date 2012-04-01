@@ -286,7 +286,7 @@ typedef void (*vPrintfPtr_t)(const char *fmt, va_list ap);
 vPrintfPtr_t Qcommon_GetPrintFunction(void);
 void Qcommon_SetPrintFunction(vPrintfPtr_t func);
 
-void Qcommon_Init(int argc, const char **argv);
+void Qcommon_Init(int argc, char **argv);
 void Qcommon_Frame(void);
 void Qcommon_Shutdown(void);
 void Com_SetGameType(void);
@@ -363,8 +363,6 @@ void Com_ClearArgv(int arg);
 unsigned int Com_HashKey(const char *name, int hashsize);
 const char* Com_MacroExpandString(const char *text);
 void Com_UploadCrashDump(const char *crashDumpFile);
-
-void Com_InitArgv(int argc, const char **argv);
 
 qboolean Com_ConsoleCompleteCommand(const char *s, char *target, size_t bufSize, uint32_t *pos, uint32_t offset);
 

@@ -106,7 +106,7 @@ int WINAPI WinMain (HINSTANCE hInstance, HINSTANCE, LPSTR, int)
 	/* always change to the current working dir */
 	FixWorkingDirectory();
 
-	Qcommon_Init(__argc, const_cast<char const**>(__argv));
+	Qcommon_Init(__argc, __argv);
 
 	/* main window message loop */
 	while (1)

@@ -53,7 +53,7 @@ void Sys_Init (void)
 	sys_priority = Cvar_Get("sys_priority", "0", CVAR_ARCHIVE, "Process nice level");
 }
 
-int main (int argc, const char **argv)
+int main (int argc, char **argv)
 {
 	Sys_ConsoleInit();
 	Qcommon_Init(argc, argv);

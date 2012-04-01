@@ -71,7 +71,7 @@ static void InitCocoa (void)
  * @brief Sets the current working directory to the top of the
  * application bundle hierarchy.
  */
-static void SetWorkingDirectory (const char **argv)
+static void SetWorkingDirectory (char **argv)
 {
 	char newPath[MAX_OSPATH];
 	NSBundle *mainBundle;
