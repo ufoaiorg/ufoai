@@ -538,18 +538,6 @@ char const* Q_strstart (char const* str, char const* start)
 	return str;
 }
 
-/**
- * @brief Replaces the first occurence of the given pattern in the source string with the given replace string.
- * @param source The source string
- * @param pattern The pattern that should be replaced
- * @param replace The replacement string
- * @param dest The target buffer
- * @param destsize The size of the target buffer
- * @note If this function returns @c false, the target string might be in an undefined stage. E.g. don't
- * rely on it being 0-terminated.
- * @return @c false if the pattern wasn't found or the target buffer is to small to store the resulting
- * string, @c if the replacement was successful.
- */
 qboolean Q_strreplace (const char *source, const char *pattern, const char *replace, char *dest, size_t destsize)
 {
 	if (char const* const hit = strstr(source, pattern)) {

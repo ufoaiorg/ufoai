@@ -140,6 +140,19 @@ int Q_vsnprintf(char *str, size_t size, const char *format, va_list ap);
 void Q_strcat(char *dest, const char *src, size_t size) __attribute__((nonnull));
 char *Q_strlwr(char *str) __attribute__((nonnull));
 const char *Q_stristr(const char *str, const char *substr) __attribute__((nonnull));
+
+/**
+ * @brief Replaces the first occurence of the given pattern in the source string with the given replace string.
+ * @param source The source string
+ * @param pattern The pattern that should be replaced
+ * @param replace The replacement string
+ * @param dest The target buffer
+ * @param destsize The size of the target buffer
+ * @note If this function returns @c false, the target string might be in an undefined stage. E.g. don't
+ * rely on it being 0-terminated.
+ * @return @c false if the pattern wasn't found or the target buffer is to small to store the resulting
+ * string, @c if the replacement was successful.
+ */
 qboolean Q_strreplace(const char *source, const char *pattern, const char *replace, char *dest, size_t destsize);
 
 /** Returns a pointer just past the prefix in str, if start is a prefix of str,
