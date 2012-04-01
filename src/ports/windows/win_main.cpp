@@ -30,8 +30,6 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #include <io.h>
 #include <mmsystem.h>
 
-qboolean s_win95, s_win2k, s_winxp, s_vista;
-
 void Sys_Init (void)
 {
 	OSVERSIONINFO vinfo;
@@ -49,31 +47,23 @@ void Sys_Init (void)
 	if (!GetVersionEx(&vinfo))
 		Sys_Error("Couldn't get OS info");
 
+	char const* detected = "win";
 	if (vinfo.dwMajorVersion < 4) /* at least win nt 4 */
 		Sys_Error("UFO: AI requires windows version 4 or greater");
 	if (vinfo.dwPlatformId == VER_PLATFORM_WIN32s) /* win3.x with win32 extensions */
 		Sys_Error("UFO: AI doesn't run on Win32s");
 	else if (vinfo.dwPlatformId == VER_PLATFORM_WIN32_WINDOWS) /* win95, 98, me */
-		s_win95 = qtrue;
+		detected = "win95";
 	else if (vinfo.dwPlatformId == VER_PLATFORM_WIN32_NT) { /* win nt, xp */
 		if (vinfo.dwMajorVersion == 5 && vinfo.dwMinorVersion == 0)
-			s_win2k = qtrue;
+			detected = "win2K";
 		else if (vinfo.dwMajorVersion == 5)
-			s_winxp = qtrue;
+			detected = "winXP";
 		else if (vinfo.dwMajorVersion == 6)
-			s_vista = qtrue;
+			detected = "winVista";
 	}
 
-	if (s_win95)
-		sys_os = Cvar_Get("sys_os", "win95", CVAR_SERVERINFO);
-	else if (s_win2k)
-		sys_os = Cvar_Get("sys_os", "win2K", CVAR_SERVERINFO);
-	else if (s_winxp)
-		sys_os = Cvar_Get("sys_os", "winXP", CVAR_SERVERINFO);
-	else if (s_vista)
-		sys_os = Cvar_Get("sys_os", "winVista", CVAR_SERVERINFO);
-	else
-		sys_os = Cvar_Get("sys_os", "win", CVAR_SERVERINFO);
+	sys_os = Cvar_Get("sys_os", detected, CVAR_SERVERINFO);
 
 #if 0
 	GlobalMemoryStatus(&mem);
