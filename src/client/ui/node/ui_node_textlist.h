@@ -31,6 +31,8 @@ class uiTextListNode : public uiTextNode {
 	void rightClick(struct uiNode_s *node, int x, int y) OVERRIDE;
 	void mouseMove(struct uiNode_s *node, int x, int y) OVERRIDE;
 	void loading(struct uiNode_s *node) OVERRIDE;
+protected:
+	void drawText (struct uiNode_s* node, const linkedList_t* list);
 };
 
 struct uiBehaviour_s;

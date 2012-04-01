@@ -40,13 +40,11 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #define EXTRADATA(node) UI_EXTRADATA(node, EXTRADATA_TYPE)
 #define EXTRADATACONST(node) UI_EXTRADATACONST(node, EXTRADATA_TYPE)
 
-static void UI_TextUpdateCache(uiNode_t *node);
-
 /* Used for drag&drop-like scrolling */
 static int mouseScrollX;
 static int mouseScrollY;
 
-void UI_TextValidateCache (uiNode_t *node, textUpdateCache_t update)
+void uiTextNode::validateCache (uiNode_t *node)
 {
 	int v;
 	if (EXTRADATA(node).dataID == TEXT_NULL || node->text != NULL)
@@ -54,7 +52,7 @@ void UI_TextValidateCache (uiNode_t *node, textUpdateCache_t update)
 
 	v = UI_GetDataVersion(EXTRADATA(node).dataID);
 	if (v != EXTRADATA(node).versionId) {
-		update(node);
+		updateCache(node);
 	}
 }
 
@@ -87,7 +85,8 @@ void UI_TextScrollEnd (const char* nodePath)
 		return;
 	}
 
-	UI_TextValidateCache(node, UI_TextUpdateCache);
+	uiTextNode *b = dynamic_cast<uiTextNode*>(node->behaviour->manager);
+	b->validateCache(node);
 
 	if (EXTRADATA(node).super.scrollY.fullSize > EXTRADATA(node).super.scrollY.viewSize) {
 		EXTRADATA(node).super.scrollY.viewPos = EXTRADATA(node).super.scrollY.fullSize - EXTRADATA(node).super.scrollY.viewSize;
@@ -144,7 +143,7 @@ void uiTextNode::mouseMove (uiNode_t *node, int x, int y)
  * @param[in] noDraw If true, calling of this function only update the cache (real number of lines)
  * @note text or list but be used, not both
  */
-static void UI_TextNodeDrawText (uiNode_t* node, const char *text, const linkedList_t* list, qboolean noDraw)
+void uiTextNode::drawText (uiNode_t* node, const char *text, const linkedList_t* list, bool noDraw)
 {
 	/** @todo verry big, what about static, rendering is not multi threaded */
 	char textCopy[UI_TEXTNODE_BUFFERSIZE];
@@ -162,7 +161,7 @@ static void UI_TextNodeDrawText (uiNode_t* node, const char *text, const linkedL
 
 	UI_GetNodeAbsPos(node, pos);
 
-	if (UI_AbstractScrollableNodeIsSizeChange(node)) {
+	if (isSizeChange(node)) {
 		int lineHeight = EXTRADATA(node).lineHeight;
 		if (lineHeight == 0) {
 			const char *font = UI_GetFontFromNode(node);
@@ -333,12 +332,12 @@ static void UI_TextNodeDrawText (uiNode_t* node, const char *text, const linkedL
 	} while (cur);
 
 	/* update scroll status */
-	UI_AbstractScrollableNodeSetY(node, -1, viewSizeY, fullSizeY);
+	setScrollY(node, -1, viewSizeY, fullSizeY);
 
 	R_Color(NULL);
 }
 
-static void UI_TextUpdateCache (uiNode_t *node)
+void uiTextNode::updateCache (uiNode_t *node)
 {
 	const uiSharedData_t *shared;
 
@@ -353,11 +352,11 @@ static void UI_TextUpdateCache (uiNode_t *node)
 			const char* t = shared->data.text;
 			if (t[0] == '_')
 				t = _(++t);
-			UI_TextNodeDrawText(node, t, NULL, qtrue);
+			drawText(node, t, NULL, qtrue);
 		}
 		break;
 	case UI_SHARED_LINKEDLISTTEXT:
-		UI_TextNodeDrawText(node, NULL, shared->data.linkedListText, qtrue);
+		drawText(node, NULL, shared->data.linkedListText, qtrue);
 		break;
 	default:
 		break;
@@ -377,7 +376,7 @@ void uiTextNode::draw (uiNode_t *node)
 		const char* t = UI_GetReferenceString(node, node->text);
 		if (t[0] == '_')
 			t = _(++t);
-		UI_TextNodeDrawText(node, t, NULL, qfalse);
+		drawText(node, t, NULL, qfalse);
 		return;
 	}
 
@@ -389,11 +388,11 @@ void uiTextNode::draw (uiNode_t *node)
 		const char* t = shared->data.text;
 		if (t[0] == '_')
 			t = _(++t);
-		UI_TextNodeDrawText(node, t, NULL, qfalse);
+		drawText(node, t, NULL, qfalse);
 		break;
 	}
 	case UI_SHARED_LINKEDLISTTEXT:
-		UI_TextNodeDrawText(node, NULL, shared->data.linkedListText, qfalse);
+		drawText(node, NULL, shared->data.linkedListText, qfalse);
 		break;
 	default:
 		break;
@@ -444,7 +443,7 @@ bool uiTextNode::scroll (uiNode_t *node, int deltaX, int deltaY)
 	bool down = deltaY > 0;
 	if (deltaY == 0)
 		return false;
-	updated = UI_AbstractScrollableNodeScrollY(node, (down ? 1 : -1));
+	updated = scrollY(node, (down ? 1 : -1));
 
 	/* @todo use super behaviour */
 	if (node->onWheelUp && !down) {
@@ -536,7 +535,7 @@ void uiTextNode::capturedMouseMove (uiNode_t *node, int x, int y)
 	const int deltaY = (mouseScrollY - y) / lineHeight;
 	/* We're doing only vertical scroll, that's enough for the most instances */
 	if (abs(mouseScrollY - y) >= lineHeight) {
-		UI_AbstractScrollableNodeScrollY(node, deltaY);
+		scrollY(node, deltaY);
 		/* @todo not accurate */
 		mouseScrollX = x;
 		mouseScrollY = y;

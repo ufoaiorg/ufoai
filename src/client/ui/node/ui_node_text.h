@@ -28,6 +28,7 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #include "ui_node_abstractscrollable.h"
 
 class uiTextNode : public uiAbstractScrollableNode {
+public:
 	void draw(struct uiNode_s *node);
 	void leftClick(struct uiNode_s *node, int x, int y) OVERRIDE;
 	void rightClick(struct uiNode_s *node, int x, int y) OVERRIDE;
@@ -38,7 +39,12 @@ class uiTextNode : public uiAbstractScrollableNode {
 	void capturedMouseMove(struct uiNode_s *node, int x, int y) OVERRIDE;
 	void loading(struct uiNode_s *node) OVERRIDE;
 	void loaded(struct uiNode_s *node) OVERRIDE;
-	int getCellHeight (uiNode_t *node) OVERRIDE;
+	int getCellHeight (struct uiNode_s *node) OVERRIDE;
+public:
+	void validateCache(struct uiNode_s *node);
+protected:
+	void drawText (struct uiNode_s *node, const char *text, const linkedList_t* list, bool noDraw);
+	virtual void updateCache (struct uiNode_s *node);
 };
 
 struct uiBehaviour_s;
@@ -63,9 +69,6 @@ typedef struct {
 	qboolean mousefx;
 
 } textExtraData_t;
-
-typedef void (*textUpdateCache_t) (struct uiNode_s *node);
-void UI_TextValidateCache(struct uiNode_s *node, textUpdateCache_t update);
 
 /**
  * @note text node inherite scrollable node. Scrollable (super) extradata

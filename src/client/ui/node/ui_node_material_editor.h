@@ -31,6 +31,8 @@ class uiMaterialEditorNode : public uiAbstractScrollableNode {
 	void windowOpened(struct uiNode_s *node, linkedList_t *params) OVERRIDE;
 	void mouseDown(struct uiNode_s *node, int x, int y, int button) OVERRIDE;
 	bool scroll(struct uiNode_s *node, int deltaX, int deltaY) OVERRIDE;
+protected:
+	void updateView (struct uiNode_s *node, bool reset);
 };
 
 struct uiBehaviour_s;

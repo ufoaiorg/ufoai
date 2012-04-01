@@ -35,6 +35,9 @@ class uiText2Node : public uiTextNode {
 	void mouseMove(struct uiNode_s *node, int x, int y) OVERRIDE;
 	void loading(struct uiNode_s *node) OVERRIDE;
 	void loaded(struct uiNode_s *node) OVERRIDE;
+	void updateCache (struct uiNode_s *node) OVERRIDE;
+protected:
+	void drawText (struct uiNode_s* node, const linkedList_t* list, bool noDraw);
 };
 
 struct uiBehaviour_s;

@@ -140,7 +140,7 @@ void uiText2Node::mouseMove (uiNode_t *node, int x, int y)
  * @param[in] list The test to draw else NULL
  * @param[in] noDraw If true, calling of this function only update the cache (real number of lines)
  */
-static void UI_TextNodeDrawText (uiNode_t* node, const linkedList_t* list, qboolean noDraw)
+void uiText2Node::drawText (uiNode_t* node, const linkedList_t* list, bool noDraw)
 {
 	char newFont[MAX_VAR];
 	const char* oldFont = NULL;
@@ -153,7 +153,7 @@ static void UI_TextNodeDrawText (uiNode_t* node, const linkedList_t* list, qbool
 
 	UI_GetNodeAbsPos(node, pos);
 
-	if (UI_AbstractScrollableNodeIsSizeChange(node)) {
+	if (isSizeChange(node)) {
 		int lineHeight = EXTRADATA(node).super.lineHeight;
 		if (lineHeight == 0) {
 			const char *font = UI_GetFontFromNode(node);
@@ -222,28 +222,28 @@ static void UI_TextNodeDrawText (uiNode_t* node, const linkedList_t* list, qbool
 	}
 
 	/* update scroll status */
-	UI_AbstractScrollableNodeSetY(node, -1, viewSizeY, fullSizeY);
+	setScrollY(node, -1, viewSizeY, fullSizeY);
 
 	R_Color(NULL);
 }
 
-static void UI_TextUpdateCache (uiNode_t *node)
+void uiText2Node::updateCache (uiNode_t *node)
 {
 	const uiSharedData_t *shared;
 
 	UI_TextNodeGenerateLineSplit(node);
 
 	if (EXTRADATA(node).super.dataID == TEXT_NULL && node->text != NULL) {
-		UI_TextNodeDrawText(node, EXTRADATA(node).lineSplit, qtrue);
+		drawText(node, EXTRADATA(node).lineSplit, qtrue);
 		return;
 	}
 
 	shared = &ui_global.sharedData[EXTRADATA(node).super.dataID];
 
 	if (shared->type == UI_SHARED_LINKEDLISTTEXT) {
-		UI_TextNodeDrawText(node, shared->data.linkedListText, qtrue);
+		drawText(node, shared->data.linkedListText, qtrue);
 	} else {
-		UI_TextNodeDrawText(node, EXTRADATA(node).lineSplit, qtrue);
+		drawText(node, EXTRADATA(node).lineSplit, qtrue);
 	}
 
 	EXTRADATA(node).super.versionId = shared->versionId;
@@ -256,10 +256,10 @@ void uiText2Node::draw (uiNode_t *node)
 {
 	const uiSharedData_t *shared;
 
-	UI_TextValidateCache(node, UI_TextUpdateCache);
+	validateCache(node);
 
 	if (EXTRADATA(node).super.dataID == TEXT_NULL && node->text != NULL) {
-		UI_TextNodeDrawText(node, EXTRADATA(node).lineSplit, qfalse);
+		drawText(node, EXTRADATA(node).lineSplit, qfalse);
 		return;
 	}
 
@@ -267,10 +267,10 @@ void uiText2Node::draw (uiNode_t *node)
 
 	switch (shared->type) {
 	case UI_SHARED_TEXT:
-		UI_TextNodeDrawText(node, EXTRADATA(node).lineSplit, qfalse);
+		drawText(node, EXTRADATA(node).lineSplit, qfalse);
 		break;
 	case UI_SHARED_LINKEDLISTTEXT:
-		UI_TextNodeDrawText(node, shared->data.linkedListText, qfalse);
+		drawText(node, shared->data.linkedListText, qfalse);
 		break;
 	default:
 		break;

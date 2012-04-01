@@ -69,7 +69,7 @@ void uiTextListNode::mouseMove (uiNode_t *node, int x, int y)
  * @param[in] node The context node
  * @param[in] list The text list to draw
  */
-static void UI_TextLineNodeDrawText (uiNode_t* node, const linkedList_t* list)
+void uiTextListNode::drawText (uiNode_t* node, const linkedList_t* list)
 {
 	vec4_t colorHover;
 	vec4_t colorSelectedHover;
@@ -85,7 +85,7 @@ static void UI_TextLineNodeDrawText (uiNode_t* node, const linkedList_t* list)
 	if (lineHeight == 0)
 		lineHeight = UI_FontGetHeight(font);
 
-	if (UI_AbstractScrollableNodeIsSizeChange(node))
+	if (isSizeChange(node))
 		viewSizeY = node->size[1] / lineHeight;
 	else
 		viewSizeY = EXTRADATA(node).super.scrollY.viewSize;
@@ -147,7 +147,7 @@ static void UI_TextLineNodeDrawText (uiNode_t* node, const linkedList_t* list)
 	}
 
 	/* update scroll status */
-	UI_AbstractScrollableNodeSetY(node, -1, viewSizeY, count);
+	setScrollY(node, -1, viewSizeY, count);
 
 	R_Color(NULL);
 }
@@ -169,7 +169,7 @@ void uiTextListNode::draw (uiNode_t *node)
 		return;
 	}
 
-	UI_TextLineNodeDrawText(node, shared->data.linkedListText);
+	drawText(node, shared->data.linkedListText);
 }
 
 /**

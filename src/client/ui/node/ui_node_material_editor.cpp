@@ -110,7 +110,7 @@ static int UI_MaterialEditorNodeGetImageCount (uiNode_t *node)
 /**
  * @brief Update the scrollable view
  */
-static void UI_MaterialEditorNodeUpdateView (uiNode_t *node, qboolean reset)
+void uiMaterialEditorNode::updateView (uiNode_t *node, bool reset)
 {
 	const int imageCount = UI_MaterialEditorNodeGetImageCount(node);
 	const int imagesPerLine = (node->size[0] - node->padding) / (IMAGE_WIDTH + node->padding);
@@ -119,9 +119,9 @@ static void UI_MaterialEditorNodeUpdateView (uiNode_t *node, qboolean reset)
 	/* update view */
 	if (imagesPerLine > 0 && imagesPerColumn > 0) {
 		const int pos = reset ? 0 : -1;
-		UI_AbstractScrollableNodeSetY(node, pos, imagesPerColumn, imageCount / imagesPerLine);
+		setScrollY(node, pos, imagesPerColumn, imageCount / imagesPerLine);
 	} else
-		UI_AbstractScrollableNodeSetY(node, 0, 0, 0);
+		setScrollY(node, 0, 0, 0);
 }
 
 /**
@@ -135,8 +135,8 @@ void uiMaterialEditorNode::draw (uiNode_t *node)
 	int cntView = 0;
 	const int imagesPerLine = (node->size[0] - node->padding) / (IMAGE_WIDTH + node->padding);
 
-	if (UI_AbstractScrollableNodeIsSizeChange(node))
-		UI_MaterialEditorNodeUpdateView(node, qfalse);
+	if (isSizeChange(node))
+		updateView(node, false);
 
 	/* width too small to display anything */
 	if (imagesPerLine <= 0)
@@ -354,7 +354,7 @@ void uiMaterialEditorNode::mouseDown (uiNode_t *node, int x, int y, int button)
 void uiMaterialEditorNode::windowOpened (uiNode_t *node, linkedList_t *params)
 {
 	node->num = -1;
-	UI_MaterialEditorNodeUpdateView(node, qtrue);
+	updateView(node, true);
 }
 
 /**
@@ -366,7 +366,7 @@ bool uiMaterialEditorNode::scroll (uiNode_t *node, int deltaX, int deltaY)
 	const int diff = (down) ? 1 : -1;
 	if (deltaY == 0)
 		return false;
-	return UI_AbstractScrollableNodeScrollY(node, diff);
+	return scrollY(node, diff);
 }
 
 static void UI_MaterialEditorStart_f (void)

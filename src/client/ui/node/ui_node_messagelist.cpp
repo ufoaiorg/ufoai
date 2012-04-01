@@ -203,7 +203,7 @@ void uiMessageListNode::draw (uiNode_t *node)
 	width = node->size[0] - node->padding - node->padding;
 
 	/* update message cache */
-	if (UI_AbstractScrollableNodeIsSizeChange(node)) {
+	if (isSizeChange(node)) {
 		/* recompute all line size */
 		message = cp_messageStack;
 		while (message) {
@@ -225,11 +225,11 @@ void uiMessageListNode::draw (uiNode_t *node)
 	/* update scroll status */
 #ifdef AUTOSCROLL
 	if (autoscroll)
-		UI_AbstractScrollableNodeSetY(node, lineNumber, node->size[1] / defaultHeight, lineNumber);
+		setScrollY(node, lineNumber, node->size[1] / defaultHeight, lineNumber);
 	else
-		UI_AbstractScrollableNodeSetY(node, -1, node->size[1] / defaultHeight, lineNumber);
+		setScrollY(node, -1, node->size[1] / defaultHeight, lineNumber);
 #else
-	UI_AbstractScrollableNodeSetY(node, -1, node->size[1] / defaultHeight, lineNumber);
+	setScrollY(node, -1, node->size[1] / defaultHeight, lineNumber);
 #endif
 
 	/* found the first message we must display */
@@ -260,7 +260,7 @@ bool uiMessageListNode::scroll (uiNode_t *node, int deltaX, int deltaY)
 	bool updated;
 	if (deltaY == 0)
 		return false;
-	updated = UI_AbstractScrollableNodeScrollY(node, (down ? 1 : -1));
+	updated = scrollY(node, (down ? 1 : -1));
 	/* @todo use super behaviour */
 	if (node->onWheelUp && !down) {
 		UI_ExecuteEventActions(node, node->onWheelUp);
@@ -323,7 +323,7 @@ void uiMessageListNode::capturedMouseMove (uiNode_t *node, int x, int y)
 	const int deltaY = (mouseScrollY - y) / lineHeight;
 	/* We're doing only vertical scroll, that's enough for the most instances */
 	if (abs(mouseScrollY - y) >= lineHeight) {
-		UI_AbstractScrollableNodeScrollY(node, deltaY);
+		scrollY(node, deltaY);
 		/* @todo not accurate */
 		mouseScrollX = x;
 		mouseScrollY = y;
