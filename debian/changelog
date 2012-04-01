@@ -1,3 +1,10 @@
+ufoai (2.4-dev-3) oneiric; urgency=low
+
+  [ Sander van Grieken ]
+  * Removed dependency on binutils
+
+ -- Sander van Grieken <sander@outrightsolutions.nl>  Sun, 01 Apr 2012 14:42:54 +0300
+
 ufoai (2.4-dev-2) oneiric; urgency=low
 
   [ Martin Gerhardy ]
