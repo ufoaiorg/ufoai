@@ -538,12 +538,12 @@ char const* Q_strstart (char const* str, char const* start)
 	return str;
 }
 
-qboolean Q_strreplace (const char *source, const char *pattern, const char *replace, char *dest, size_t destsize)
+bool Q_strreplace (const char *source, const char *pattern, const char *replace, char *dest, size_t destsize)
 {
 	if (char const* const hit = strstr(source, pattern)) {
 		int const len = snprintf(dest, destsize, "%.*s%s%s", (int)(hit - source), source, replace, hit + strlen(pattern));
 		return 0 < len && (size_t)len < destsize;
 	} else {
-		return qfalse;
+		return false;
 	}
 }

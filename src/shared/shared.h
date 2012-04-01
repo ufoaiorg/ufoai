@@ -153,7 +153,7 @@ const char *Q_stristr(const char *str, const char *substr) __attribute__((nonnul
  * @return @c false if the pattern wasn't found or the target buffer is to small to store the resulting
  * string, @c if the replacement was successful.
  */
-qboolean Q_strreplace(const char *source, const char *pattern, const char *replace, char *dest, size_t destsize);
+bool Q_strreplace(const char *source, const char *pattern, const char *replace, char *dest, size_t destsize);
 
 /** Returns a pointer just past the prefix in str, if start is a prefix of str,
  * otherwise a null pointer is returned */
