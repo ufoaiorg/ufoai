@@ -4,7 +4,7 @@
  */
 
 /*
-Copyright (C) 2002-2011 UFO: Alien Invasion.
+Copyright (C) 2002-2012 UFO: Alien Invasion.
 
 This program is free software; you can redistribute it and/or
 modify it under the terms of the GNU General Public License
@@ -63,9 +63,9 @@ typedef struct autoUnit_s {
  * @brief Data structure for a simulated or auto mission.
  */
 typedef struct autoMissionBattle_s {
-	qboolean teamActive[AUTOMISSION_TEAM_TYPE_MAX];					/**< Which teams exist in a battle, supports hardcoded MAX of 8 teams */
 	qboolean isHostile[AUTOMISSION_TEAM_TYPE_MAX][AUTOMISSION_TEAM_TYPE_MAX];		/**< Friendly or hostile?  Params are [Each team] [Each other team] */
 	short nUnits[AUTOMISSION_TEAM_TYPE_MAX];							/**< Number of units (soldiers, aliens, UGVs, whatever) on each team, hardcoded MAX of 64 per team */
+	short actUnits[AUTOMISSION_TEAM_TYPE_MAX];							/**< Number of active units (soldiers, aliens, UGVs, whatever) on each team, hardcoded MAX of 64 per team */
 
 	double scoreTeamEquipment[AUTOMISSION_TEAM_TYPE_MAX];			/**< Number from 0.f to 1.f, represents how good a team's equipment is (higher is better) */
 	double scoreTeamSkill[AUTOMISSION_TEAM_TYPE_MAX];				/**< Number from 0.f to 1.f, represents how good a team's abilities are (higher is better) */
@@ -110,7 +110,6 @@ static void AM_ClearBattle (autoMissionBattle_t *battle)
 	for (team = 0; team < AUTOMISSION_TEAM_TYPE_MAX; team++) {
 		int otherTeam;
 
-		battle->teamActive[team] = qfalse;
 		battle->scoreTeamDifficulty[team] = 0.5;
 		battle->scoreTeamEquipment[team] = 0.5;
 		battle->scoreTeamSkill[team] = 0.5;
@@ -134,12 +133,12 @@ static void AM_ClearBattle (autoMissionBattle_t *battle)
  * @note This function actually gets the data from the campaign object, using the aircraft data to
  * find out which of all the employees are on the aircraft (in the mission)
  */
-static void AM_FillTeamFromAircraft (autoMissionBattle_t *battle, const int teamNum, const aircraft_t *aircraft, const campaign_t *campaign)
+static void AM_FillTeamFromAircraft (autoMissionBattle_t *battle, const autoMissionTeamType_t teamNum, const aircraft_t *aircraft, const campaign_t *campaign)
 {
 	int teamSize;
 	int unitsAlive;
 
-	assert(teamNum >= 0 && teamNum < AUTOMISSION_TEAM_TYPE_MAX);
+	assert(teamNum < AUTOMISSION_TEAM_TYPE_MAX);
 	assert(battle != NULL);
 	assert(aircraft != NULL);
 
@@ -160,6 +159,7 @@ static void AM_FillTeamFromAircraft (autoMissionBattle_t *battle, const int team
 			break;
 	}
 	battle->nUnits[teamNum] = teamSize;
+	battle->actUnits[teamNum] = unitsAlive;
 
 	if (teamSize == 0) {
 		Com_DPrintf(DEBUG_CLIENT, "Warning: Attempt to add soldiers to an auto-mission from an aircraft with no soldiers onboard.\n");
@@ -169,9 +169,6 @@ static void AM_FillTeamFromAircraft (autoMissionBattle_t *battle, const int team
 		Com_DPrintf(DEBUG_CLIENT, "Warning: Attempt to add team to auto battle where all the units on the team are DEAD!\n");
 		Com_DPrintf(DEBUG_CLIENT, "--- Note: This team will LOSE the battle by default.\n");
 	}
-
-	if (teamSize > 0)
-		battle->teamActive[teamNum] = qtrue;
 
 	/* NOTE:  For now these are hard-coded to values based upon general campaign difficulty.
 	 * --- In the future, it might be easier to set this according to a scripted value in a .ufo
@@ -219,7 +216,7 @@ static void AM_FillTeamFromAircraft (autoMissionBattle_t *battle, const int team
  */
 static void AM_CreateUnitChr (autoUnit_t *unit, const teamDef_t *teamDef, const equipDef_t *ed)
 {
-	unit->chr = Mem_PoolAlloc(sizeof(character_t), cp_campaignPool, 0);
+	unit->chr = (character_t*)Mem_PoolAlloc(sizeof(character_t), cp_campaignPool, 0);
 	cgi->CL_GenerateCharacter(unit->chr, teamDef->id);
 
 	if (ed) {
@@ -257,6 +254,7 @@ static void AM_FillTeamFromBattleParams (autoMissionBattle_t *battle, const batt
 
 	/* Aliens */
 	battle->nUnits[AUTOMISSION_TEAM_TYPE_ALIEN] = missionParams->aliens;
+	battle->actUnits[AUTOMISSION_TEAM_TYPE_ALIEN] = missionParams->aliens;
 	if (missionParams->aliens > 0) {
 		const equipDef_t *ed = INV_GetEquipmentDefinitionByID(missionParams->alienEquipment);
 		const alienTeamGroup_t *alienTeamGroup = missionParams->alienTeamGroup;
@@ -269,12 +267,12 @@ static void AM_FillTeamFromBattleParams (autoMissionBattle_t *battle, const batt
 			unit->team = AUTOMISSION_TEAM_TYPE_ALIEN;
 			unit->idx = unitIDX;
 		}
-		battle->teamActive[AUTOMISSION_TEAM_TYPE_ALIEN] = qtrue;
 		battle->scoreTeamSkill[AUTOMISSION_TEAM_TYPE_ALIEN] = (frand() * 0.6f) + 0.2f;
 	}
 
 	/* Civilians (if any) */
 	battle->nUnits[AUTOMISSION_TEAM_TYPE_CIVILIAN] = missionParams->civilians;
+	battle->actUnits[AUTOMISSION_TEAM_TYPE_CIVILIAN] = missionParams->civilians;
 	if (missionParams->civilians > 0) {
 		const teamDef_t *teamDef = Com_GetTeamDefinitionByID(missionParams->civTeam);
 		int unitIDX;
@@ -285,7 +283,6 @@ static void AM_FillTeamFromBattleParams (autoMissionBattle_t *battle, const batt
 			unit->team = AUTOMISSION_TEAM_TYPE_CIVILIAN;
 			unit->idx = unitIDX;
 		}
-		battle->teamActive[AUTOMISSION_TEAM_TYPE_CIVILIAN] = qtrue;
 		battle->scoreTeamSkill[AUTOMISSION_TEAM_TYPE_CIVILIAN] = (frand() * 0.5f) + 0.05f;
 	}
 }
@@ -299,17 +296,18 @@ static void AM_FillTeamFromBattleParams (autoMissionBattle_t *battle, const batt
  */
 static void AM_SetDefaultHostilities (autoMissionBattle_t *battle, const qboolean civsInfected)
 {
-	autoMissionTeamType_t team;
-	autoMissionTeamType_t otherTeam;
+	int i;
 	qboolean civsInverted = !civsInfected;
 
-	for (team = AUTOMISSION_TEAM_TYPE_PLAYER; team < AUTOMISSION_TEAM_TYPE_MAX; team++) {
-		if (!battle->teamActive[team])
+	for (i = AUTOMISSION_TEAM_TYPE_PLAYER; i < AUTOMISSION_TEAM_TYPE_MAX; i++) {
+		int j;
+		const autoMissionTeamType_t team = (autoMissionTeamType_t)i;
+		if (battle->actUnits[team] <= 0)
 			continue;
 
-		for (otherTeam = AUTOMISSION_TEAM_TYPE_PLAYER; otherTeam < AUTOMISSION_TEAM_TYPE_MAX; otherTeam++) {
-
-			if (!battle->teamActive[otherTeam])
+		for (j = AUTOMISSION_TEAM_TYPE_PLAYER; j < AUTOMISSION_TEAM_TYPE_MAX; j++) {
+			const autoMissionTeamType_t otherTeam = (autoMissionTeamType_t)j;
+			if (battle->actUnits[otherTeam] <= 0)
 				continue;
 
 			if (AM_IsPlayer(team)) {
@@ -363,7 +361,7 @@ static void AM_CalculateTeamScores (autoMissionBattle_t *battle)
 	for (team = 0; team < AUTOMISSION_TEAM_TYPE_MAX; team++) {
 		unitTotal += battle->nUnits[team];
 
-		if (battle->teamActive[team]) {
+		if (battle->actUnits[team] > 0) {
 			lastActiveTeam = team;
 			totalActiveTeams++;
 		}
@@ -371,7 +369,7 @@ static void AM_CalculateTeamScores (autoMissionBattle_t *battle)
 			if (battle->nUnits[isHostileCount] <= 0)
 				continue;
 
-			if (battle->isHostile[team][isHostileCount] && battle->teamActive[team])
+			if (battle->isHostile[team][isHostileCount] && battle->actUnits[team] > 0)
 				isHostileTotal++;
 		}
 	}
@@ -402,7 +400,7 @@ static void AM_CalculateTeamScores (autoMissionBattle_t *battle)
 		teamPooledUnitsHealthy[team] = 0.0;
 		teamPooledUnitsTotal[team] = 0.0;
 
-		if (battle->teamActive[team]) {
+		if (battle->actUnits[team] > 0) {
 			double skillAdjCalc;
 			double skillAdjCalcAbs;
 
@@ -428,9 +426,9 @@ static void AM_CalculateTeamScores (autoMissionBattle_t *battle)
 
 			/* In DEBUG mode, these should help with telling where things are at what time, for bug-hunting purposes. */
 			/* Note (Destructavator):  Is there a better way to implement this?  Is there a set protocol for this type of thing? */
-			Com_DPrintf(DEBUG_CLIENT, "Team %i has calculated ratio of healthy units of %lf.\n",
+			Com_DPrintf(DEBUG_CLIENT, "Team %i has calculated ratio of healthy units of %f.\n",
 					team, teamRatioHealthyUnits[team]);
-			Com_DPrintf(DEBUG_CLIENT, "Team %i has calculated ratio of health values of %lf.\n",
+			Com_DPrintf(DEBUG_CLIENT, "Team %i has calculated ratio of health values of %f.\n",
 					team, teamRatioHealthTotal[team]);
 
 			/** @todo speaking names please */
@@ -445,7 +443,7 @@ static void AM_CalculateTeamScores (autoMissionBattle_t *battle)
 				battle->scoreTeamSkill[team] = ChkDNorm (FpCurveDn (battle->scoreTeamSkill[team], skillAdjCalcAbs) );
 			/* if (skillAdjCalc == exact 0.0), no change to team's skill. */
 
-			Com_DPrintf(DEBUG_CLIENT, "Team %i has adjusted skill rating of %lf.\n",
+			Com_DPrintf(DEBUG_CLIENT, "Team %i has adjusted skill rating of %f.\n",
 					team, battle->scoreTeamSkill[team]);
 		}
 	}
@@ -467,14 +465,14 @@ static int AM_GetRandomTeam (autoMissionBattle_t *battle, int currTeam, qboolean
 	/* select a team randomly */
 	eTeam = rand () % AUTOMISSION_TEAM_TYPE_MAX;
 	/* if selected team is active and it's hostility match, we're ready */
-	if (battle->teamActive[eTeam] && AM_IsHostile(battle, currTeam, eTeam) == enemy) {
+	if (battle->actUnits[eTeam] > 0 && AM_IsHostile(battle, currTeam, eTeam) == enemy) {
 		return eTeam;
 	} else {
 		int nextTeam;
 
 		/* if not, check next */
 		for (nextTeam = (eTeam + 1) % AUTOMISSION_TEAM_TYPE_MAX; nextTeam != eTeam; nextTeam = (nextTeam + 1) % AUTOMISSION_TEAM_TYPE_MAX) {
-			if (battle->teamActive[nextTeam] && AM_IsHostile(battle, currTeam, nextTeam) == enemy)
+			if (battle->actUnits[nextTeam] > 0 && AM_IsHostile(battle, currTeam, nextTeam) == enemy)
 				return nextTeam;
 		}
 		/* none found */
@@ -495,7 +493,7 @@ static autoUnit_t *AM_GetRandomActiveUnitOfTeam (autoMissionBattle_t *battle, in
 	assert(battle);
 	if (team < 0 || team >= AUTOMISSION_TEAM_TYPE_MAX)
 		return NULL;
-	if (!battle->teamActive[team])
+	if (battle->actUnits[team] <= 0)
 		return NULL;
 	if (battle->nUnits[team] <= 0)
 		return NULL;
@@ -546,7 +544,7 @@ static autoUnit_t *AM_GetRandomActiveUnit (autoMissionBattle_t *battle, int curr
 
 	/* if not, check next */
 	for (nextTeam = (eTeam + 1) % AUTOMISSION_TEAM_TYPE_MAX; nextTeam != eTeam; nextTeam = (nextTeam + 1) % AUTOMISSION_TEAM_TYPE_MAX) {
-		if (battle->teamActive[nextTeam] && AM_IsHostile(battle, currTeam, nextTeam) == enemy) {
+		if (battle->actUnits[nextTeam] > 0 && AM_IsHostile(battle, currTeam, nextTeam) == enemy) {
 			unit = AM_GetRandomActiveUnitOfTeam(battle, nextTeam);
 			if (unit)
 				return unit;
@@ -593,6 +591,8 @@ static qboolean AM_CheckFire (autoMissionBattle_t *battle, autoUnit_t *currUnit,
 #if DEBUG
 	Com_Printf("AutoBattle: Team: %d Unit: %d killed Team: %d Unit: %d\n", currUnit->team, currUnit->idx, eUnit->team, eUnit->idx);
 #endif
+	battle->actUnits[eUnit->team]--;
+
 	switch (currUnit->team) {
 	case AUTOMISSION_TEAM_TYPE_PLAYER:
 		switch (eUnit->team) {
@@ -706,7 +706,7 @@ static void AM_DoFight (autoMissionBattle_t *battle)
 			int aliveUnits;
 			int currentUnit;
 
-			if (!battle->teamActive[team])
+			if (battle->actUnits[team] <= 0)
 				continue;
 
 			aliveUnits = 0;
@@ -721,22 +721,17 @@ static void AM_DoFight (autoMissionBattle_t *battle)
 				if (!AM_IsUnitActive(unit))
 					continue;
 
-				Com_DPrintf(DEBUG_CLIENT, "Unit %i on team %i has adjusted attack rating of %lf.\n",
+				Com_DPrintf(DEBUG_CLIENT, "Unit %i on team %i has adjusted attack rating of %f.\n",
 						currentUnit, team, battle->scoreTeamSkill[team]);
 
 				aliveUnits++;
 				combatActive = AM_UnitAttackEnemy(battle, unit, effective);
 			}
-
-			if (aliveUnits == 0) {
-				battle->teamActive[team] = qfalse;
-				Com_DPrintf(DEBUG_CLIENT, "Team %i has been DEFEATED and is OUT OF ACTION.\n", team);
-			}
 		}
 	}
 
 	/* Set results */
-	if (!battle->teamActive[AUTOMISSION_TEAM_TYPE_PLAYER]) {
+	if (battle->actUnits[AUTOMISSION_TEAM_TYPE_PLAYER] <= 0) {
 		battle->results->won = qfalse;
 		battle->winningTeam = AUTOMISSION_TEAM_TYPE_ALIEN;
 	} else {
@@ -917,7 +912,7 @@ void AM_Go (mission_t *mission, aircraft_t *aircraft, const campaign_t *campaign
 
 	AM_ClearBattle(&autoBattle);
 	autoBattle.results = results;
-	AM_FillTeamFromAircraft(&autoBattle, 0, aircraft, campaign);
+	AM_FillTeamFromAircraft(&autoBattle, AUTOMISSION_TEAM_TYPE_PLAYER, aircraft, campaign);
 	AM_FillTeamFromBattleParams(&autoBattle, battleParameters);
 	AM_SetDefaultHostilities(&autoBattle, qfalse);
 	AM_CalculateTeamScores(&autoBattle);
