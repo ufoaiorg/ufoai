@@ -30,6 +30,7 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 class uiPanelNode : public uiAbstractScrollableNode {
 	void draw(struct uiNode_s *node) OVERRIDE;
 	void loaded(struct uiNode_s *node) OVERRIDE;
+	void loading(struct uiNode_s *node) OVERRIDE;
 	void doLayout(struct uiNode_s *node) OVERRIDE;
 	void getClientPosition(const struct uiNode_s *node, vec2_t position) OVERRIDE;
 	void propertyChanged(struct uiNode_s *node, const value_t *property) OVERRIDE;

@@ -470,6 +470,15 @@ void uiPanelNode::doLayout (uiNode_t *node)
 /**
  * @brief Handled after the end of the load of the node from script (all data and/or child are set)
  */
+void uiPanelNode::loading (uiNode_t *node)
+{
+	uiLocatedNode::loading(node);
+	EXTRADATA(node).wheelScrollable = qtrue;
+}
+
+/**
+ * @brief Handled after the end of the load of the node from script (all data and/or child are set)
+ */
 void uiPanelNode::loaded (uiNode_t *node)
 {
 #ifdef DEBUG
