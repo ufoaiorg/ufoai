@@ -97,8 +97,8 @@ static void UI_TopDownFlowLayout (uiNode_t *node, int margin)
 	{
 		bool updated;
 
-		updated = UI_SetScroll(&EXTRADATA(node).super.scrollX, -1, node->size[0], node->size[0]);
-		updated = UI_SetScroll(&EXTRADATA(node).super.scrollY, -1, node->size[1], positionY + node->padding) || updated;
+		updated = EXTRADATA(node).super.scrollX.set(-1, node->size[0], node->size[0]);
+		updated = EXTRADATA(node).super.scrollY.set(-1, node->size[1], positionY + node->padding) || updated;
 		if (updated && EXTRADATA(node).super.onViewChange)
 			UI_ExecuteEventActions(node, EXTRADATA(node).super.onViewChange);
 	}
@@ -348,8 +348,8 @@ static void UI_ClientLayout (uiNode_t *node)
 	width += node->padding;
 	height += node->padding;
 
-	updated = UI_SetScroll(&EXTRADATA(node).super.scrollX, -1, node->size[0], width);
-	updated = UI_SetScroll(&EXTRADATA(node).super.scrollY, -1, node->size[1], height) || updated;
+	updated = EXTRADATA(node).super.scrollX.set(-1, node->size[0], width);
+	updated = EXTRADATA(node).super.scrollY.set(-1, node->size[1], height) || updated;
 	if (updated && EXTRADATA(node).super.onViewChange)
 		UI_ExecuteEventActions(node, EXTRADATA(node).super.onViewChange);
 }
@@ -420,8 +420,8 @@ static void UI_ColumnLayout (uiNode_t *node)
 		int height = y + rowHeight + node->padding;
 		qboolean updated;
 
-		updated = UI_SetScroll(&EXTRADATA(node).super.scrollX, -1, node->size[0], width);
-		updated = UI_SetScroll(&EXTRADATA(node).super.scrollY, -1, node->size[1], height) || updated;
+		updated = EXTRADATA(node).super.scrollX.set(-1, node->size[0], width);
+		updated = EXTRADATA(node).super.scrollY.set(-1, node->size[1], height) || updated;
 		if (updated && EXTRADATA(node).super.onViewChange)
 			UI_ExecuteEventActions(node, EXTRADATA(node).super.onViewChange);
 	}
@@ -515,7 +515,8 @@ bool uiPanelNode::scroll (uiNode_t *node, int deltaX, int deltaY)
 	if (!EXTRADATA(node).wheelScrollable || deltaY == 0)
 		return false;
 
-	updated = UI_SetScroll(&EXTRADATA(node).super.scrollY, EXTRADATA(node).super.scrollY.viewPos + deltaY * 50, -1, -1);
+	updated = EXTRADATA(node).super.scrollX.moveDelta(deltaX * 50);
+	updated |= EXTRADATA(node).super.scrollY.moveDelta(deltaY * 50);
 	if (EXTRADATA(node).super.onViewChange && updated)
 		UI_ExecuteEventActions(node, EXTRADATA(node).super.onViewChange);
 

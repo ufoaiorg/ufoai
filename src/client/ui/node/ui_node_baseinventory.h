@@ -49,7 +49,8 @@ struct uiBehaviour_s;
 typedef struct baseInventoryExtraData_s {
 	containerExtraData_t super;
 
-	int filterEquipType;	/**< A filter */
+	/** A filter */
+	int filterEquipType;
 
 	int columns;
 	qboolean displayWeapon;

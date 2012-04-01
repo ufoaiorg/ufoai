@@ -46,13 +46,22 @@ public:
 /**
  * @brief Scroll representation
  */
-typedef struct {
+struct uiScroll_t {
 	int viewPos;			/**< Position of the view */
 	int viewSize;			/**< Visible size */
 	int fullSize;			/**< Full size allowed */
-} uiScroll_t;
 
-bool UI_SetScroll(uiScroll_t *scroll, int viewPos, int viewSize, int fullSize);
+	bool set(int viewPos, int viewSize, int fullSize);
+	bool move(int viewPos);
+	/**
+	 * @brief Move the position with a delta position
+	 * @param[in] deltaPos Variation of the position
+	 * @return True, if something have changed
+	 */
+	bool moveDelta(int deltaPos) {
+		return move(this->viewPos + deltaPos);
+	}
+};
 
 typedef struct {
 	vec2_t cacheSize;		/**< check the size change while we dont have a realy event from property setter */

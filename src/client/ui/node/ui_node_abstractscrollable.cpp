@@ -52,24 +52,45 @@ bool uiAbstractScrollableNode::isSizeChange (uiNode_t *node)
 }
 
 /**
+ * @brief Fix a new position
+ * @param[in] viewPos New view position
+ * @return True, if something have changed
+ */
+bool uiScroll_t::move (int viewPos)
+{
+	/* clap position */
+	if (viewPos < 0)
+		viewPos = 0;
+	else if (viewPos > this->fullSize - this->viewSize)
+		viewPos = this->fullSize - this->viewSize;
+
+	/* no changes */
+	if (this->viewPos == viewPos) {
+		return false;
+	}
+
+	this->viewPos = viewPos;
+	return true;
+}
+
+/**
  * @brief Set the scroll to a position
- * @param[in] scroll scroll to edit
  * @param[in] viewPos New position to set, else -1 if no change
  * @param[in] viewSize New view size to set, else -1 if no change
  * @param[in] fullSize New full size to set, else -1 if no change
- * @return True, if something have change
+ * @return True, if something have changed
  */
-bool UI_SetScroll (uiScroll_t *scroll, int viewPos, int viewSize, int fullSize)
+bool uiScroll_t::set (int viewPos, int viewSize, int fullSize)
 {
 	bool updated = false;
 
 	/* default values */
 	if (viewPos == -1)
-		viewPos = scroll->viewPos;
+		viewPos = this->viewPos;
 	if (viewSize == -1)
-		viewSize = scroll->viewSize;
+		viewSize = this->viewSize;
 	if (fullSize == -1)
-		fullSize = scroll->fullSize;
+		fullSize = this->fullSize;
 
 	/* fix limits */
 	if (viewSize < 0)
@@ -86,16 +107,16 @@ bool UI_SetScroll (uiScroll_t *scroll, int viewPos, int viewSize, int fullSize)
 		viewPos = fullSize - viewSize;
 
 	/* update */
-	if (scroll->viewPos != viewPos) {
-		scroll->viewPos = viewPos;
+	if (this->viewPos != viewPos) {
+		this->viewPos = viewPos;
 		updated = true;
 	}
-	if (scroll->viewSize != viewSize) {
-		scroll->viewSize = viewSize;
+	if (this->viewSize != viewSize) {
+		this->viewSize = viewSize;
 		updated = true;
 	}
-	if (scroll->fullSize != fullSize) {
-		scroll->fullSize = fullSize;
+	if (this->fullSize != fullSize) {
+		this->fullSize = fullSize;
 		updated = true;
 	}
 
@@ -115,7 +136,7 @@ bool uiAbstractScrollableNode::setScrollY (uiNode_t *node, int viewPos, int view
 	bool updated;
 	assert(UI_Node_IsScrollableContainer(node));
 
-	updated = UI_SetScroll(&EXTRADATA(node).scrollY, viewPos, viewSize, fullSize);
+	updated = EXTRADATA(node).scrollY.set(viewPos, viewSize, fullSize);
 
 	if (updated && EXTRADATA(node).onViewChange)
 		UI_ExecuteEventActions(node, EXTRADATA(node).onViewChange);

@@ -73,7 +73,7 @@ static void UI_OptionTreeNodeUpdateScroll (uiNode_t *node)
 		fontHeight = UI_FontGetHeight(font);
 
 	elements = (node->size[1] - node->padding - node->padding) / fontHeight;
-	updated = UI_SetScroll(&EXTRADATA(node).scrollY, -1, elements, EXTRADATA(node).count);
+	updated = EXTRADATA(node).scrollY.set(-1, elements, EXTRADATA(node).count);
 	if (updated && EXTRADATA(node).onViewChange)
 		UI_ExecuteEventActions(node, EXTRADATA(node).onViewChange);
 }
@@ -283,7 +283,7 @@ bool uiOptionTreeNode::scroll (uiNode_t *node, int deltaX, int deltaY)
 	bool updated;
 	if (deltaY == 0)
 		return false;
-	updated = UI_SetScroll(&EXTRADATA(node).scrollY, EXTRADATA(node).scrollY.viewPos + (down ? 1 : -1), -1, -1);
+	updated = EXTRADATA(node).scrollY.move(down ? 1 : -1);
 	if (EXTRADATA(node).onViewChange && updated)
 		UI_ExecuteEventActions(node, EXTRADATA(node).onViewChange);
 
@@ -359,12 +359,11 @@ static void UI_OptionTreeSetSelectedValue (uiNode_t *node, const uiCallContext_t
 	pos = UI_FindOptionPosition(&iterator, option);
 	if (pos == -1)
 		return;
-	if (pos < EXTRADATA(node).scrollY.viewPos || pos >= EXTRADATA(node).scrollY.viewPos + EXTRADATA(node).scrollY.viewSize) {
-		qboolean updated;
-		updated = UI_SetScroll(&EXTRADATA(node).scrollY, pos, -1, -1);
-		if (updated && EXTRADATA(node).onViewChange)
-			UI_ExecuteEventActions(node, EXTRADATA(node).onViewChange);
-	}
+
+	qboolean updated;
+	updated = EXTRADATA(node).scrollY.move(pos);
+	if (updated && EXTRADATA(node).onViewChange)
+		UI_ExecuteEventActions(node, EXTRADATA(node).onViewChange);
 }
 
 void uiOptionTreeNode::doLayout (uiNode_t *node)
@@ -400,7 +399,7 @@ void uiOptionTreeNode::capturedMouseMove (uiNode_t *node, int x, int y)
 	/* We're doing only vertical scroll, that's enough for the most instances */
 	if (deltaY != 0) {
 		bool updated;
-		updated = UI_SetScroll(&EXTRADATA(node).scrollY, EXTRADATA(node).scrollY.viewPos + deltaY, -1, -1);
+		updated = EXTRADATA(node).scrollY.moveDelta(deltaY);
 		if (EXTRADATA(node).onViewChange && updated)
 			UI_ExecuteEventActions(node, EXTRADATA(node).onViewChange);
 		/* @todo not accurate */

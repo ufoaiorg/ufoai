@@ -38,6 +38,7 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #include "ui_node_model.h"
 #include "ui_node_container.h"
 #include "ui_node_abstractnode.h"
+#include "ui_node_abstractscrollable.h"
 
 #include "../../client.h"
 #include "../../renderer/r_draw.h"
@@ -744,27 +745,14 @@ void uiBaseInventoryNode::mouseUp (uiNode_t *node, int x, int y, int button)
 
 bool uiBaseInventoryNode::scroll (uiNode_t *node, int deltaX, int deltaY)
 {
-	bool down = deltaY > 0;
-	const int delta = 20;
 	if (deltaY == 0)
 		return false;
-	if (down) {
-		const int lenght = EXTRADATA(node).scrollY.fullSize - EXTRADATA(node).scrollY.viewSize;
-		if (EXTRADATA(node).scrollY.viewPos < lenght) {
-			EXTRADATA(node).scrollY.viewPos += delta;
-			if (EXTRADATA(node).scrollY.viewPos > lenght)
-				EXTRADATA(node).scrollY.viewPos = lenght;
-			UI_BaseInventoryNodeUpdateScroll(node);
-		}
-	} else {
-		if (EXTRADATA(node).scrollY.viewPos > 0) {
-			EXTRADATA(node).scrollY.viewPos -= delta;
-			if (EXTRADATA(node).scrollY.viewPos < 0)
-				EXTRADATA(node).scrollY.viewPos = 0;
-			UI_BaseInventoryNodeUpdateScroll(node);
-		}
+
+	if (EXTRADATA(node).scrollY.moveDelta(deltaY * 20)) {
+		UI_BaseInventoryNodeUpdateScroll(node);
+		return true;
 	}
-	return true;
+	return false;
 }
 
 void uiBaseInventoryNode::loading (uiNode_t *node)
