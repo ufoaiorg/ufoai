@@ -230,7 +230,6 @@ void uiTextEntryNode::draw (uiNode_t *node)
 		CORNER_SIZE, MID_SIZE, CORNER_SIZE,
 		MARGE
 	};
-	const char *text;
 	int texX, texY;
 	const float *textColor;
 	const char *image;
@@ -261,43 +260,31 @@ void uiTextEntryNode::draw (uiNode_t *node)
 	if (image)
 		UI_DrawPanel(pos, node->size, image, texX, texY, panelTemplate);
 
-	text = UI_GetReferenceString(node, node->text);
-	if (text != NULL) {
-		char tmp[MAX_VAR];
-		/** @todo we don't need to edit the text to draw the cursor */
-		if (UI_HasFocus(node)) {
-			if (CL_Milliseconds() % 1000 < 500) {
-				text = va("%s%c", text, CURSOR);
-			}
-		}
-
+	if (char const* const text = UI_GetReferenceString(node, node->text)) {
+		char  buf[MAX_VAR];
+		char* c = buf;
 		if (EXTRADATA(node).isPassword) {
-			Q_strncpyz(tmp, text, sizeof(tmp));
-			char *c = tmp;
-			int size = UTF8_strlen(c);
-			text = c;
-			/* hide the text with a special char */
-			assert(strlen(c) >= size);	/* trustable, but it can't be false */
-			while (size) {
-				*c++ = HIDECHAR;
-				size--;
-			}
-			/* readd the cursor */
-			if (UI_HasFocus(node)) {
-				if (CL_Milliseconds() % 1000 < 500) {
-					c--;
-					*c++ = CURSOR;
-				}
-			}
-			*c = '\0';
+			size_t const size = UTF8_strlen(text);
+			memset(buf, HIDECHAR, size);
+			c += size;
+		} else {
+			size_t const size = strlen(text);
+			memcpy(buf, text, size);
+			c += size;
 		}
 
-		if (*text != '\0') {
+		if (UI_HasFocus(node) && CL_Milliseconds() % 1000 < 500) {
+			*c++ = CURSOR;
+		}
+
+		*c = '\0';
+
+		if (*buf != '\0') {
 			R_Color(textColor);
 			UI_DrawStringInBox(font, (align_t)node->contentAlign,
 				pos[0] + node->padding, pos[1] + node->padding,
 				node->size[0] - node->padding - node->padding, node->size[1] - node->padding - node->padding,
-				text, LONGLINES_PRETTYCHOP);
+				buf, LONGLINES_PRETTYCHOP);
 			R_Color(NULL);
 		}
 	}
