@@ -6,16 +6,12 @@ SO_LIBS                  :=
 EXE_EXT                   = .exe
 
 # TODO: config.h
-CCFLAGS                  += -DSHARED_EXT=\"$(SO_EXT)\"
-CCFLAGS                  += -DGETTEXT_STATIC
-CXXFLAGS                 += -DSHARED_EXT=\"$(SO_EXT)\"
-CXXFLAGS                 += -DGETTEXT_STATIC
+CFLAGS                   += -DSHARED_EXT=\"$(SO_EXT)\"
+CFLAGS                   += -DGETTEXT_STATIC
 ifeq ($(W2K),1)
-  CCFLAGS                += -DWINVER=0x500
-  CXXFLAGS               += -DWINVER=0x500
+  CFLAGS                 += -DWINVER=0x500
 else
-  CCFLAGS                += -DWINVER=0x501
-  CXXFLAGS               += -DWINVER=0x501
+  CFLAGS                 += -DWINVER=0x501
 endif
 
 PKG_CONFIG               ?= $(CROSS)pkg-config
@@ -34,3 +30,4 @@ endif
 ufo2map_LDFLAGS          += -lwinmm
 ufomodel_LDFLAGS         += -lwinmm
 uforadiant_LDFLAGS       += -lglib-2.0 -lgtk-win32-2.0 -lgobject-2.0 -mwindows -static-libgcc -static-libstdc++
+memory_LDFLAGS           += $(INTL_LIBS)

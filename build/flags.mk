@@ -34,26 +34,22 @@ CFLAGS += -Wwrite-strings
 
 ifeq ($(PROFILING),1)
   CFLAGS  += -pg
-  CCFLAGS += -pg
   LDFLAGS += -pg
 endif
 
 ifeq ($(DEBUG),1)
   CFLAGS  += -DDEBUG
-  CCFLAGS  += -DDEBUG
 else
   CFLAGS  += -DNDEBUG
-  CCFLAGS  += -DNDEBUG
 endif
 
 CCFLAGS += $(CFLAGS)
-CFLAGS += -std=c99
+CCFLAGS += -std=c99
 
-#CFLAGS += -Werror-implicit-function-declaration
-#CFLAGS += -Wimplicit-int
-#CFLAGS += -Wmissing-prototypes
-#CFLAGS += -Wdeclaration-after-statement
-#CFLAGS += -Wc++-compat
+#CCFLAGS += -Werror-implicit-function-declaration
+#CCFLAGS += -Wimplicit-int
+#CCFLAGS += -Wmissing-prototypes
+#CCFLAGS += -Wdeclaration-after-statement
+#CCFLAGS += -Wc++-compat
 
-CXXFLAGS := $(CCFLAGS) $(CXXFLAGS)
 CXXFLAGS += -Wnon-virtual-dtor

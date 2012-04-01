@@ -40,6 +40,8 @@ include build/platforms/$(TARGET_OS).mk
 include build/modes/$(MODE).mk
 include build/default.mk
 
+CXXFLAGS := $(CFLAGS) $(CXXFLAGS)
+
 ASSEMBLE_OBJECTS = \
 	$(addprefix $(BUILDDIR)/$(1)/,$(addsuffix .o,$(filter %.c,$($(1)_SRCS)))) \
 	$(addprefix $(BUILDDIR)/$(1)/,$(addsuffix .o,$(filter %.rc,$($(1)_SRCS)))) \
@@ -92,6 +94,10 @@ $(BUILDDIR)/$(1)/%.c.o: $(SRCDIR)/%.c $(BUILDDIR)/$(1)/.dirs
 $(BUILDDIR)/$(1)/%.m.o: $(SRCDIR)/%.m $(BUILDDIR)/$(1)/.dirs
 	@echo '===> CC [$(1)] $$<'
 	$(Q)$(CROSS)$(CC) $(CCFLAGS) $($(1)_CCFLAGS) -c -o $$@ $$< $(DEP_FLAGS)
+
+$(BUILDDIR)/$(1)/%.mm.o: $(SRCDIR)/%.mm $(BUILDDIR)/$(1)/.dirs
+	@echo '===> CXX [$(1)] $$<'
+	$(Q)$(CROSS)$(CXX) $(CXXFLAGS) $($(1)_CXXFLAGS) -c -o $$@ $$< $(DEP_FLAGS)
 
 $(BUILDDIR)/$(1)/%.rc.o: $(SRCDIR)/%.rc $(BUILDDIR)/$(1)/.dirs
 	@echo '===> WINDRES [$(1)] $$<'

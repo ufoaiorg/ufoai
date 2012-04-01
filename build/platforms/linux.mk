@@ -3,10 +3,8 @@ SO_LDFLAGS                = -shared
 SO_CFLAGS                 = -fpic
 SO_LIBS                  := -ldl
 
-CCFLAGS                  += -DSHARED_EXT=\"$(SO_EXT)\"
-CCFLAGS                  += -D_GNU_SOURCE -D_BSD_SOURCE -D_XOPEN_SOURCE
-CXXFLAGS                 += -DSHARED_EXT=\"$(SO_EXT)\"
-CXXFLAGS                 += -D_GNU_SOURCE -D_BSD_SOURCE -D_XOPEN_SOURCE
+CFLAGS                   += -DSHARED_EXT=\"$(SO_EXT)\"
+CFLAGS                   += -D_GNU_SOURCE -D_BSD_SOURCE -D_XOPEN_SOURCE
 
 LDFLAGS                  +=
 
