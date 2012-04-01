@@ -32,10 +32,6 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 
 qboolean s_win95, s_win2k, s_winxp, s_vista;
 
-#define MAX_NUM_ARGVS 128
-static int argc;
-static const char *argv[MAX_NUM_ARGVS];
-
 void Sys_Init (void)
 {
 	OSVERSIONINFO vinfo;
@@ -85,30 +81,6 @@ void Sys_Init (void)
 #endif
 }
 
-static void ParseCommandLine (LPSTR lpCmdLine)
-{
-	argc = 1;
-	argv[0] = "exe";
-
-	while (*lpCmdLine && (argc < MAX_NUM_ARGVS)) {
-		while (*lpCmdLine && ((*lpCmdLine <= 32) || (*lpCmdLine > 126)))
-			lpCmdLine++;
-
-		if (*lpCmdLine) {
-			argv[argc] = lpCmdLine;
-			argc++;
-
-			while (*lpCmdLine && ((*lpCmdLine > 32) && (*lpCmdLine <= 126)))
-				lpCmdLine++;
-
-			if (*lpCmdLine) {
-				*lpCmdLine = 0;
-				lpCmdLine++;
-			}
-		}
-	}
-}
-
 static void FixWorkingDirectory (void)
 {
 	char *p;
@@ -125,18 +97,16 @@ static void FixWorkingDirectory (void)
 	SetCurrentDirectory(curDir);
 }
 
-int WINAPI WinMain (HINSTANCE hInstance, HINSTANCE, LPSTR lpCmdLine, int)
+int WINAPI WinMain (HINSTANCE hInstance, HINSTANCE, LPSTR, int)
 {
 	global_hInstance = hInstance;
-
-	ParseCommandLine(lpCmdLine);
 
 	Sys_ConsoleInit();
 
 	/* always change to the current working dir */
 	FixWorkingDirectory();
 
-	Qcommon_Init(argc, argv);
+	Qcommon_Init(__argc, const_cast<char const**>(__argv));
 
 	/* main window message loop */
 	while (1)
