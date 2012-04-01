@@ -77,7 +77,6 @@ components craft_ufo_supply {
 	item	craft_alien_propulsion		2	%
 	item	craft_alien_astrogation		2	%
 	item	craft_alien_detection		1	%
-	item	craft_weapon_particle_beam	2	%
 }
 
 // UFO -- Corrupter
