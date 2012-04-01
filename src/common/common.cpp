@@ -1336,6 +1336,16 @@ static void Schedule_Timer (cvar_t *freq, event_func *func, event_check_func *ch
 	Schedule_Event(Sys_Milliseconds() + timer->interval, &tick_timer, check, NULL, timer);
 }
 
+void* scheduleEvent_t::operator new(size_t const size)
+{
+	return Mem_PoolAlloc(size, com_genericPool, 0);
+}
+
+void scheduleEvent_t::operator delete(void* const p)
+{
+	Mem_Free(p);
+}
+
 /**
  * @brief Schedules an event to run on or after the given time, and when its check function returns true.
  * @param when The earliest time the event can run
@@ -1352,7 +1362,7 @@ scheduleEvent_t *Schedule_Event (int when, event_func *func, event_check_func *c
 #ifdef DEBUG
 	scheduleEvent_t *i;
 #endif
-	scheduleEvent_t *event = (scheduleEvent_t *)Mem_PoolAlloc(sizeof(*event), com_genericPool, 0);
+	scheduleEvent_t* const event = new scheduleEvent_t();
 	event->when = when;
 	event->func = func;
 	event->check = check;
