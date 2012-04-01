@@ -55,13 +55,6 @@ extern OSErr CPSSetFrontProcess(CPSProcessSerNum *psn);
 /* General routines */
 /* ======================================================================= */
 
-void Sys_Init (void)
-{
-	sys_os = Cvar_Get("sys_os", "macosx", CVAR_SERVERINFO, NULL);
-	sys_affinity = Cvar_Get("sys_affinity", "0", CVAR_ARCHIVE, NULL);
-	sys_priority = Cvar_Get("sys_priority", "0", CVAR_ARCHIVE, "Process nice level");
-}
-
 static void InitCocoa (void)
 {
 	void (*nsappload)(void);
@@ -113,7 +106,7 @@ static void SetWorkingDirectory (const char **argv)
 #ifdef main
 #undef main
 #endif
-int main (int argc, const char **argv)
+int main (int argc, char **argv)
 {
 	/* create Autorelease Pool, to avoid Error Messages under MacOSX */
 	NSAutoreleasePool *pool = [[NSAutoreleasePool alloc] init];
