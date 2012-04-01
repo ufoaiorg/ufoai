@@ -210,7 +210,7 @@ item laser_ammo
 		firedef
 		{
 			name		"_Wave Fire"
-			skill		heavy
+			skill		assault
 			projtl		laserOverload
 			impact		laserImpact
 			hitbody		laserImpact
@@ -229,7 +229,7 @@ item laser_ammo
 		firedef
 		{
 			name				"_Pulsed Fire"
-			skill				heavy
+			skill				assault
 			projtl				laserBeam
 			impact				laserImpact
 			hitbody				laserImpact

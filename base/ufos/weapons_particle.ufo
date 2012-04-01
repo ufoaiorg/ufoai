@@ -234,7 +234,7 @@ item pbeamcannon_ammo
 		firedef
 		{
 			name				"_Snap Shot"
-			skill				heavy
+			skill				assault
 			projtl				pbeamMiniBeam
 			impact				pbeamImpact
 			hitbody				pbeamImpact
@@ -256,7 +256,7 @@ item pbeamcannon_ammo
 		firedef
 		{
 			name				"_Burst"
-			skill				heavy
+			skill				assault
 			projtl				pbeamMiniBeam
 			impact				pbeamImpact
 			hitbody				pbeamImpact
@@ -278,7 +278,7 @@ item pbeamcannon_ammo
 		firedef
 		{
 			name		"_Unrestricted Blast"
-			skill		heavy
+			skill		assault
 			projtl		pbeamBigBeam
 			impact		pbeamBigImpact
 			hitbody		pbeamBigImpact

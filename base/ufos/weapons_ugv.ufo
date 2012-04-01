@@ -79,7 +79,7 @@ item ugv_chaingun_belt
 		firedef
 		{
 			name				"_10-Round Burst"
-			skill				heavy
+			skill				assault
 			projtl				bullet
 			impact				bulletImpact
 			hitbody				null
@@ -103,7 +103,7 @@ item ugv_chaingun_belt
 		firedef
 		{
 			name				"_Full-Auto"
-			skill				heavy
+			skill				assault
 			projtl				bullet
 			impact				bulletImpact
 			hitbody				null
@@ -128,7 +128,7 @@ item ugv_chaingun_belt
 //		firedef
 //		{
 //			name				"_Full-Auto Sweep"
-//			skill				heavy
+//			skill				assault
 //			projtl				bullet
 //			impact				bulletImpact
 //			hitbody				null

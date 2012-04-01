@@ -107,7 +107,7 @@ item assault_ammo
 		firedef
 		{
 			name		"_Aimed Shot"
-			skill		assault
+			skill		sniper
 			projtl		bullet
 			impact		bulletImpact
 			hitbody		null
@@ -195,7 +195,7 @@ item assault_ammo
 		firedef
 		{
 			name		"_Aimed Shot"
-			skill		assault
+			skill		sniper
 			projtl		bullet
 			impact		bulletImpact
 			hitbody		null
@@ -260,7 +260,7 @@ item machinegun_ammo
 		firedef
 		{
 			name				"_5-Shot Burst"
-			skill				heavy
+			skill				assault
 			projtl				bullet-hmg
 			impact				bulletImpact
 			hitbody				null
@@ -283,7 +283,7 @@ item machinegun_ammo
 		firedef
 		{
 			name				"_Full-Auto"
-			skill				heavy
+			skill				assault
 			projtl				bullet-hmg
 			impact				bulletImpact
 			hitbody				null
@@ -306,7 +306,7 @@ item machinegun_ammo
 		firedef
 		{
 			name				"_Full-Auto Sweep"
-			skill				heavy
+			skill				assault
 			projtl				bullet-hmg
 			impact				bulletImpact
 			hitbody				null
@@ -372,7 +372,7 @@ item sniper_ammo
 		firedef
 		{
 			name		"_Snap Shot"
-			skill		sniper
+			skill		assault
 			projtl		bullet_sniper
 			impact		bulletImpact
 			hitbody		null
@@ -460,7 +460,7 @@ item coilgun_ammo
 		firedef
 		{
 			name		"_Snap Shot"
-			skill		sniper
+			skill		assault
 			projtl		bolter
 			impact		bolterImpact
 			hitbody		null
@@ -1148,7 +1148,7 @@ item flamer_ammo
 		firedef
 		{
 			name				"_Candlelight"
-			skill				heavy
+			skill				close
 			projtl				fireBall
 			impact				fireImpact
 			hitbody				burning
@@ -1169,7 +1169,7 @@ item flamer_ammo
 		firedef
 		{
 			name				"_Inferno"
-			skill				heavy
+			skill				close
 			projtl				fireBall
 			impact				fireImpact
 			hitbody				burning
@@ -1190,7 +1190,7 @@ item flamer_ammo
 		firedef
 		{
 			name				"_Inferno Sweep"
-			skill				heavy
+			skill				close
 			projtl				fireBall
 			impact				fireImpact
 			hitbody				burning
@@ -1734,7 +1734,7 @@ item grenl_fle_ammo
 		firedef
 		{
 			name				"_Single Shot"
-			skill				heavy
+			skill				close
 			projtl				bullet
 			impact				bulletImpact
 			hitbody				null
@@ -1754,7 +1754,7 @@ item grenl_fle_ammo
 		firedef
 		{
 			name				"_3-Round Burst"
-			skill				heavy
+			skill				close
 			projtl				bullet
 			impact				bulletImpact
 			hitbody				null

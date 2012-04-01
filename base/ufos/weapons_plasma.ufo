@@ -170,7 +170,7 @@ item plasrifle_ammo
 		firedef
 		{
 			name				"_Aimed Shot"
-			skill				assault
+			skill				sniper
 			projtl				plasmaPulse
 			impact				plasmaImpactCharged
 			hitbody				plasmaImpactCharged
@@ -282,7 +282,7 @@ item plasblaster_ammo
 		firedef
 		{
 			name				"_Snap Shot"
-			skill				heavy
+			skill				close
 			projtl				plasmaContinuous
 			impact				plasmaImpact
 			hitbody				plasmaImpact
@@ -305,7 +305,7 @@ item plasblaster_ammo
 		firedef
 		{
 			name				"_Ball"
-			skill				heavy
+			skill				close
 			projtl				plasmaBigBall
 			impact				plasmaBigImpact
 			hitbody				plasmaBigImpact
@@ -329,7 +329,7 @@ item plasblaster_ammo
 		firedef
 		{
 			name				"_Burst"
-			skill 				heavy
+			skill 				close
 			projtl				plasmaContinuous
 			impact				plasmaImpact
 			hitbody				plasmaImpact
