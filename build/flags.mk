@@ -47,13 +47,13 @@ else
 endif
 
 CCFLAGS += $(CFLAGS)
-CCFLAGS += -std=c99
+CFLAGS += -std=c99
 
-#CCFLAGS += -Werror-implicit-function-declaration
-#CCFLAGS += -Wimplicit-int
-#CCFLAGS += -Wmissing-prototypes
-#CCFLAGS += -Wdeclaration-after-statement
-#CCFLAGS += -Wc++-compat
+#CFLAGS += -Werror-implicit-function-declaration
+#CFLAGS += -Wimplicit-int
+#CFLAGS += -Wmissing-prototypes
+#CFLAGS += -Wdeclaration-after-statement
+#CFLAGS += -Wc++-compat
 
-CXXFLAGS := $(CFLAGS) $(CXXFLAGS)
+CXXFLAGS := $(CCFLAGS) $(CXXFLAGS)
 CXXFLAGS += -Wnon-virtual-dtor

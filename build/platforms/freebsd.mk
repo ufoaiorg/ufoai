@@ -4,6 +4,7 @@ SO_CFLAGS                 = -fpic
 SO_LIBS                  :=
 
 CCFLAGS                  += -DSHARED_EXT=\"$(SO_EXT)\"
+CXXFLAGS                 += -DSHARED_EXT=\"$(SO_EXT)\"
 
 LDFLAGS                  +=
 

@@ -8,12 +8,14 @@ EXE_EXT                   = .exe
 # TODO: config.h
 CCFLAGS                  += -DSHARED_EXT=\"$(SO_EXT)\"
 CCFLAGS                  += -DGETTEXT_STATIC
+CXXFLAGS                 += -DSHARED_EXT=\"$(SO_EXT)\"
+CXXFLAGS                 += -DGETTEXT_STATIC
 ifeq ($(W2K),1)
   CCFLAGS                += -DWINVER=0x500
-  # Wspiapi.h make use of inline function, but std=c99 will prevent this. -fgnu89-inline tells GCC to use the traditional GNU semantics for inline functions when in C99 mode
-  CCFLAGS                += -fgnu89-inline
+  CXXFLAGS               += -DWINVER=0x500
 else
   CCFLAGS                += -DWINVER=0x501
+  CXXFLAGS               += -DWINVER=0x501
 endif
 
 PKG_CONFIG               ?= $(CROSS)pkg-config
