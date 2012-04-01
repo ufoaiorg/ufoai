@@ -125,12 +125,8 @@ static void FixWorkingDirectory (void)
 	SetCurrentDirectory(curDir);
 }
 
-int WINAPI WinMain (HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpCmdLine, int nCmdShow)
+int WINAPI WinMain (HINSTANCE hInstance, HINSTANCE, LPSTR lpCmdLine, int)
 {
-	/* previous instances do not exist in Win32 */
-	if (hPrevInstance)
-		return 0;
-
 	global_hInstance = hInstance;
 
 	ParseCommandLine(lpCmdLine);
