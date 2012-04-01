@@ -52,7 +52,7 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 void uiSpinner2Node::draw (uiNode_t *node)
 {
 	vec2_t pos;
-	const float delta = UI_GetReferenceFloat(node, EXTRADATA(node).super.super.delta);
+	const float delta = getDelta(node);
 	/* TODO quite stupid? */
 	const qboolean disabled = node->disabled || node->parent->disabled;
 
@@ -67,9 +67,9 @@ void uiSpinner2Node::draw (uiNode_t *node)
 		topStatus = SPRITE_STATUS_DISABLED;
 		bottomStatus = SPRITE_STATUS_DISABLED;
 	} else {
-		const float value = UI_GetReferenceFloat(node, EXTRADATA(node).super.super.value);
-		const float min = UI_GetReferenceFloat(node, EXTRADATA(node).super.super.min);
-		const float max = UI_GetReferenceFloat(node, EXTRADATA(node).super.super.max);
+		const float value = getValue(node);
+		const float min = getMin(node);
+		const float max = getMax(node);
 
 		status = SPRITE_STATUS_NORMAL;
 

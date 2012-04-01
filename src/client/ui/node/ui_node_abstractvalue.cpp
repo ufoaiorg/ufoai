@@ -29,6 +29,9 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #include "../ui_internal.h"
 #include "ui_node_abstractvalue.h"
 
+#include "../../input/cl_input.h"
+#include "../../input/cl_keys.h"
+
 #define EXTRADATA_TYPE abstractValueExtraData_t
 #define EXTRADATA(node) UI_EXTRADATA(node, EXTRADATA_TYPE)
 #define EXTRADATACONST(node) UI_EXTRADATACONST(node, EXTRADATA_TYPE)
@@ -39,6 +42,11 @@ static inline void UI_InitCvarOrFloat (float** adress, float defaultValue)
 		*adress = UI_AllocStaticFloat(1);
 		**adress = defaultValue;
 	}
+}
+
+void uiAbstractValueNode::loading (uiNode_t * node)
+{
+	EXTRADATA(node).shiftIncreaseFactor = 2.0F;
 }
 
 void uiAbstractValueNode::loaded (uiNode_t * node)
@@ -86,6 +94,90 @@ static void UI_CloneCvarOrFloat (const uiNode_t *source, uiNode_t *clone, const 
 	}
 }
 
+float uiAbstractValueNode::getFactorFloat (const uiNode_t *node)
+{
+	if (!Key_IsDown(K_SHIFT))
+		return 1.0F;
+
+	return EXTRADATACONST(node).shiftIncreaseFactor;
+}
+
+void uiAbstractValueNode::setRange(struct uiNode_s *node, float min, float max)
+{
+	if (EXTRADATA(node).min == NULL) {
+		UI_InitCvarOrFloat((float**)&EXTRADATA(node).min, min);
+	}
+	if (EXTRADATA(node).max == NULL) {
+		UI_InitCvarOrFloat((float**)&EXTRADATA(node).max, max);
+	}
+}
+
+bool uiAbstractValueNode::setValue(struct uiNode_s *node, float value)
+{
+	const float last = UI_GetReferenceFloat(node, EXTRADATA(node).value);
+	const float max = UI_GetReferenceFloat(node, EXTRADATA(node).max);
+	const float min = UI_GetReferenceFloat(node, EXTRADATA(node).min);
+
+	/* ensure sane values */
+	if (value < min)
+		value = min;
+	else if (value > max)
+		value = max;
+
+	/* nothing change? */
+	if (last == value) {
+		return false;
+	}
+
+	/* save result */
+	EXTRADATA(node).lastdiff = value - last;
+	const char* cvar = Q_strstart((char *)EXTRADATA(node).value, "*cvar:");
+	if (cvar)
+		Cvar_SetValue(cvar, value);
+	else
+		*(float*) EXTRADATA(node).value = value;
+
+	/* fire change event */
+	if (node->onChange)
+		UI_ExecuteEventActions(node, node->onChange);
+
+	return true;
+}
+
+bool uiAbstractValueNode::incValue(struct uiNode_s *node)
+{
+	float value = UI_GetReferenceFloat(node, EXTRADATA(node).value);
+	const float delta = getFactorFloat(node) * UI_GetReferenceFloat(node, EXTRADATA(node).delta);
+	return setValue(node, value + delta);
+}
+
+bool uiAbstractValueNode::decValue(struct uiNode_s *node)
+{
+	float value = UI_GetReferenceFloat(node, EXTRADATA(node).value);
+	const float delta = getFactorFloat(node) * UI_GetReferenceFloat(node, EXTRADATA(node).delta);
+	return setValue(node, value - delta);
+}
+
+float uiAbstractValueNode::getMin (const struct uiNode_s *node)
+{
+	return UI_GetReferenceFloat(node, EXTRADATA(node).min);
+}
+
+float uiAbstractValueNode::getMax (const struct uiNode_s *node)
+{
+	return UI_GetReferenceFloat(node, EXTRADATA(node).max);
+}
+
+float uiAbstractValueNode::getDelta (const struct uiNode_s *node)
+{
+	return UI_GetReferenceFloat(node, EXTRADATA(node).delta);
+}
+
+float uiAbstractValueNode::getValue (const struct uiNode_s *node)
+{
+	return UI_GetReferenceFloat(node, EXTRADATA(node).value);
+}
+
 /**
  * @brief Call to update a cloned node
  */
@@ -113,6 +205,8 @@ void UI_RegisterAbstractValueNode (uiBehaviour_t *behaviour)
 	UI_RegisterExtradataNodeProperty(behaviour, "max", V_CVAR_OR_FLOAT, abstractValueExtraData_t, max);
 	/* Minimum value we can set to the node. It can be a cvar. Default value is 1. */
 	UI_RegisterExtradataNodeProperty(behaviour, "min", V_CVAR_OR_FLOAT, abstractValueExtraData_t, min);
+	/* Defines a factor that is applied to the delta value when the shift key is held down. */
+	UI_RegisterExtradataNodeProperty(behaviour, "shiftincreasefactor", V_FLOAT, abstractValueExtraData_t, shiftIncreaseFactor);
 
 	/* Callback value set when before calling onChange. It is used to know the change apply by the user
 	 * @Deprecated

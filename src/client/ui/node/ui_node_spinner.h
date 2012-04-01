@@ -35,12 +35,11 @@ class uiSpinnerNode : public uiAbstractValueNode {
 	void mouseUp(struct uiNode_s *node, int x, int y, int button) OVERRIDE;
 	void capturedMouseLost(struct uiNode_s *node) OVERRIDE;
 	bool scroll(struct uiNode_s *node, int deltaX, int deltaY) OVERRIDE;
+public:
+	void repeat (uiNode_t *node, struct uiTimer_s *timer);
+protected:
+	bool step (uiNode_t *node, bool down);
 };
-
-typedef struct spinnerExtraData_s {
-	abstractValueExtraData_t super;
-	float shiftIncreaseFactor;
-} spinnerExtraData_t;
 
 void UI_RegisterSpinnerNode(struct uiBehaviour_s *behaviour);
 

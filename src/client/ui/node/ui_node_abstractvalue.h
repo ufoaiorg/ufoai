@@ -28,10 +28,22 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #define CLIENT_UI_UI_NODE_ABSTRACTVALUE_H
 
 class uiAbstractValueNode : public uiLocatedNode {
+public:
 	void loaded(struct uiNode_s *node) OVERRIDE;
+	void loading(struct uiNode_s *node) OVERRIDE;
 	void clone(const struct uiNode_s *source, struct uiNode_s *clone) OVERRIDE;
 	void newNode(struct uiNode_s *node) OVERRIDE;
 	void deleteNode(struct uiNode_s *node) OVERRIDE;
+protected:
+	void setRange(struct uiNode_s *node, float min, float max);
+	bool setValue(struct uiNode_s *node, float value);
+	bool incValue(struct uiNode_s *node);
+	bool decValue(struct uiNode_s *node);
+	float getFactorFloat(const struct uiNode_s *node);
+	float getMin(const struct uiNode_s *node);
+	float getMax(const struct uiNode_s *node);
+	float getDelta(const struct uiNode_s *node);
+	float getValue(const struct uiNode_s *node);
 };
 
 /**
@@ -44,6 +56,7 @@ typedef struct abstractValueExtraData_s {
 	void* value;	/**< Current value */
 	void* delta;	/**< Quantity the control add or remove in one step */
 	float lastdiff;	/**< Different of the value from the last update. Its more an event property than a node property */
+	float shiftIncreaseFactor;
 } abstractValueExtraData_t;
 
 struct uiBehaviour_s; /* prototype */

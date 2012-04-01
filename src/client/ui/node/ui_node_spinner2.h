@@ -33,7 +33,7 @@ class uiSpinner2Node : public uiSpinnerNode {
 };
 
 typedef struct spinner2ExtraData_s {
-	spinnerExtraData_t super;
+	abstractValueExtraData_s super;
 
 	struct uiSprite_s *background;	/**< Link to the background */
 	struct uiSprite_s *bottomIcon;		/**< Link to the icon used for the bottom button */

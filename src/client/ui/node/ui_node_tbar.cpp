@@ -53,9 +53,9 @@ void uiTBarNode::draw (uiNode_t *node)
 
 	{
 		float ps;
-		const float min = UI_GetReferenceFloat(node, EXTRADATA(node).super.min);
-		const float max = UI_GetReferenceFloat(node, EXTRADATA(node).super.max);
-		float value = UI_GetReferenceFloat(node, EXTRADATA(node).super.value);
+		const float min = getMin(node);
+		const float max = getMax(node);
+		float value = getValue(node);
 		/* clamp the value */
 		if (value > max)
 			value = max;

@@ -45,7 +45,7 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 
 void uiCheckBoxNode::draw (uiNode_t* node)
 {
-	const float value = UI_GetReferenceFloat(node, EXTRADATA(node).value);
+	const float value = getValue(node);
 	vec2_t pos;
 	const char *image = UI_GetReferenceString(node, node->image);
 	int texx, texy;
@@ -82,7 +82,7 @@ void uiCheckBoxNode::draw (uiNode_t* node)
  */
 void uiCheckBoxNode::activate (uiNode_t *node)
 {
-	const float last = UI_GetReferenceFloat(node, EXTRADATA(node).value);
+	const float last = getValue(node);
 	float value;
 
 	if (node->disabled)
@@ -94,17 +94,7 @@ void uiCheckBoxNode::activate (uiNode_t *node)
 		return;
 
 	/* save result */
-	EXTRADATA(node).lastdiff = value - last;
-	if (char const* const cvar = Q_strstart((char const*)EXTRADATA(node).value, "*cvar:")) {
-		Cvar_SetValue(cvar, value);
-	} else {
-		*(float*) EXTRADATA(node).value = value;
-	}
-
-	/* fire change event */
-	if (node->onChange) {
-		UI_ExecuteEventActions(node, node->onChange);
-	}
+	setValue(node, value);
 }
 
 static void UI_CheckBoxNodeCallActivate (uiNode_t *node, const uiCallContext_t *context)
@@ -128,6 +118,8 @@ void uiCheckBoxNode::leftClick (uiNode_t * node, int x, int y)
  */
 void uiCheckBoxNode::loading (uiNode_t *node)
 {
+	uiAbstractValueNode::loading(node);
+	setRange(node, -1, 1);
 }
 
 void UI_RegisterCheckBoxNode (uiBehaviour_t *behaviour)

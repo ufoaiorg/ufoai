@@ -46,9 +46,9 @@ void uiBarNode::draw (uiNode_t *node)
 	vec4_t color;
 	float fac;
 	vec2_t nodepos;
-	const float min = UI_GetReferenceFloat(node, EXTRADATA(node).super.min);
-	const float max = UI_GetReferenceFloat(node, EXTRADATA(node).super.max);
-	const float value = UI_GetReferenceFloat(node, EXTRADATA(node).super.value);
+	const float min = getMin(node);
+	const float max = getMax(node);
+	const float value = getValue(node);
 
 	UI_GetNodeAbsPos(node, nodepos);
 
@@ -92,9 +92,6 @@ void uiBarNode::draw (uiNode_t *node)
  */
 void uiBarNode::capturedMouseMove (uiNode_t *node, int x, int y)
 {
-	char var[MAX_VAR];
-	vec2_t pos;
-
 	UI_NodeAbsoluteToRelativePos(node, &x, &y);
 
 	if (x < 0)
@@ -106,39 +103,30 @@ void uiBarNode::capturedMouseMove (uiNode_t *node, int x, int y)
 	else if (y > node->size[1])
 		y = node->size[1];
 
-	UI_GetNodeAbsPos(node, pos);
-	Q_strncpyz(var, (const char *)EXTRADATA(node).super.value, sizeof(var));
-	/* no cvar? */
-	if (char const* const cvar = Q_strstart(var, "*cvar:")) {
-		/* normalize it */
-		float frac;
-		const float min = UI_GetReferenceFloat(node, EXTRADATA(node).super.min);
-		const float max = UI_GetReferenceFloat(node, EXTRADATA(node).super.max);
+	float frac;
+	const float min = getMin(node);
+	const float max = getMax(node);
 
-		switch (EXTRADATA(node).orientation) {
-		case ALIGN_UC:
-			frac = (node->size[1] - (float) y) / node->size[1];
-			break;
-		case ALIGN_LC:
-			frac = (float) y / node->size[1];
-			break;
-		case ALIGN_CR:
-			frac = (float) x / node->size[0];
-			break;
-		case ALIGN_CL:
-			frac = (node->size[0] - (float) x) / node->size[0];
-			break;
-		default:
-			frac = 0;
-			Com_Printf("UI_BarNodeCapturedMouseMove: Orientation %d not supported\n", EXTRADATA(node).orientation);
-			break;
-		}
-		Cvar_SetValue(cvar, min + frac * (max - min));
+	switch (EXTRADATA(node).orientation) {
+	case ALIGN_UC:
+		frac = (node->size[1] - (float) y) / node->size[1];
+		break;
+	case ALIGN_LC:
+		frac = (float) y / node->size[1];
+		break;
+	case ALIGN_CR:
+		frac = (float) x / node->size[0];
+		break;
+	case ALIGN_CL:
+		frac = (node->size[0] - (float) x) / node->size[0];
+		break;
+	default:
+		frac = 0;
+		Com_Printf("UI_BarNodeCapturedMouseMove: Orientation %d not supported\n", EXTRADATA(node).orientation);
+		break;
 	}
 
-	/* callback */
-	if (node->onChange)
-		UI_ExecuteEventActions(node, node->onChange);
+	setValue(node, min + frac * (max - min));
 }
 
 void uiBarNode::mouseDown (uiNode_t *node, int x, int y, int button)
