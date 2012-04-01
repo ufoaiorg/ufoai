@@ -166,7 +166,9 @@ check_headers() {
 	check_header "xvid.h"
 	check_header "theora/theora.h"
 	check_header "execinfo.h"
-	check_header "bfd.h"
+	if [ "$DEBUG" = "1" ]; then
+	    check_header "bfd.h"
+	fi
 	check_header "sys/utsname.h"
 	check_header "link.h"
 	check_header "CUnit/Basic.h"
