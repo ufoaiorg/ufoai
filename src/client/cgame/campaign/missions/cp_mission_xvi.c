@@ -4,7 +4,7 @@
  */
 
 /*
-Copyright (C) 2002-2011 UFO: Alien Invasion.
+Copyright (C) 2002-2012 UFO: Alien Invasion.
 
 This program is free software; you can redistribute it and/or
 modify it under the terms of the GNU General Public License
@@ -67,9 +67,6 @@ static void CP_XVIMissionStart (mission_t *mission)
 
 	mission->stage = STAGE_SPREAD_XVI;
 
-	/* mission appear on geoscape, player can go there */
-	CP_MissionAddToGeoscape(mission, qfalse);
-
 	if (mission->ufo) {
 		mission->finalDate = Date_Add(ccs.date, Date_Random(minMissionDelay, missionDelay));
 		/* ufo becomes invisible on geoscape, but don't remove it from ufo global array (may reappear)*/
@@ -78,6 +75,9 @@ static void CP_XVIMissionStart (mission_t *mission)
 		/* Go to next stage on next frame */
 		mission->finalDate = ccs.date;
 	}
+
+	/* mission appear on geoscape, player can go there */
+	CP_MissionAddToGeoscape(mission, qfalse);
 }
 
 /**
