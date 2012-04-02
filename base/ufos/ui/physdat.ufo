@@ -69,7 +69,6 @@ window physdata
 			pos			"27 20"
 			size		"191 322"
 			scale		"5 5 5"
-			omega		"0 1 0"
 		}
 
 		model head
