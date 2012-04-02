@@ -1417,32 +1417,6 @@ item grenl_ammo
 
 		firedef
 		{
-			name				"_3-Round Burst - Airburst"
-			skill				explosive
-			projtl				grenl_ammo
-			impact				explosionGrenade
-			hitbody				explosionGrenade
-			firesnd				weapons/grenade-launcher
-			impsnd				weapons/explosion-grenade
-			bodysnd				weapons/explosion-grenade
-			bncsnd				weapons/grenade-bounce
-			gravity				true
-			launched			true
-			spread				"0 4"
-			range				15
-			shots				3
-			ammo				3
-			delaybetweenshots	3
-			time				15
-			damage				"20 2"
-			spldmg				"100 10"
-			splrad				4
-			dmgweight			blast
-			reaction			false
-		}
-
-		firedef
-		{
 			name				"_Snap Shot - Timed"
 			skill				explosive
 			projtl				grenl_ammo
@@ -1491,34 +1465,6 @@ item grenl_ammo
 			ammo				1
 			delaybetweenshots	1
 			time				12
-			spldmg				"100 10"
-			splrad				4
-			dmgweight			blast
-			reaction			false
-		}
-
-		firedef
-		{
-			name				"_3-Round Burst - Timed"
-			skill				explosive
-			projtl				grenl_ammo
-			impact				explosionGrenade
-			hitbody				explosionGrenade
-			firesnd				weapons/grenade-launcher
-			impsnd				weapons/explosion-grenade
-			bodysnd				weapons/explosion-grenade
-			bncsnd				weapons/grenade-bounce
-			gravity				true
-			launched			true
-			delay				1
-			bounce				5
-			bncfac				0.6
-			spread				"0 4"
-			range				15
-			shots				3
-			ammo				3
-			delaybetweenshots	3
-			time				15
 			spldmg				"100 10"
 			splrad				4
 			dmgweight			blast
@@ -1598,32 +1544,6 @@ item grenl_incendiary_ammo
 
 		firedef
 		{
-			name				"_3-Round Burst - Airburst"
-			skill				explosive
-			projtl				grenl_ic_ammo
-			impact				explosionGrenade
-			hitbody				explosionGrenade
-			firesnd				weapons/grenade-launcher
-			impsnd				weapons/explosion-fire
-			bodysnd				weapons/explosion-fire
-			bncsnd				weapons/grenade-bounce
-			gravity				true
-			launched			true
-			spread				"0 4"
-			range				15
-			shots				3
-			ammo				3
-			delaybetweenshots	3
-			time				15
-			damage				"15 10"
-			spldmg				"95 10"
-			splrad				4
-			dmgweight			incendiary
-			reaction			false
-		}
-
-		firedef
-		{
 			name				"_Snap Shot - Timed"
 			skill				explosive
 			projtl				grenl_ic_ammo
@@ -1679,35 +1599,6 @@ item grenl_incendiary_ammo
 			dmgweight			incendiary
 			reaction			false
 		}
-
-		firedef
-		{
-			name				"_3-Round Burst - Timed"
-			skill				explosive
-			projtl				grenl_ic_ammo
-			impact				explosionGrenade
-			hitbody				explosionGrenade
-			firesnd				weapons/grenade-launcher
-			impsnd				weapons/explosion-fire
-			bodysnd				weapons/explosion-fire
-			bncsnd				weapons/grenade-bounce
-			gravity				true
-			launched			true
-			delay				1
-			bounce				5
-			bncfac				0.6
-			spread				"0 4"
-			range				15
-			shots				3
-			ammo				3
-			delaybetweenshots	3
-			time				15
-			damage				"15 10"
-			spldmg				"95 10"
-			splrad				4
-			dmgweight			incendiary
-			reaction			false
-		}
 	}
 }
 
@@ -1746,26 +1637,6 @@ item grenl_fle_ammo
 			ammo				1
 			delaybetweenshots	0
 			time				8
-			damage				"6 2"
-			dmgweight			normal_light
-			reaction			true
-		}
-
-		firedef
-		{
-			name				"_3-Round Burst"
-			skill				close
-			projtl				bullet
-			impact				bulletImpact
-			hitbody				null
-			firesnd				weapons/bullet-flechette
-			speed				3000
-			spread				"5 5.5"
-			range				10
-			shots				72
-			ammo				3
-			delaybetweenshots	0
-			time				14
 			damage				"6 2"
 			dmgweight			normal_light
 			reaction			true
@@ -1843,31 +1714,6 @@ item grenl_plasma_ammo
 
 		firedef
 		{
-			name				"_3-Round Burst - Airburst"
-			skill				explosive
-			projtl				grenl_plasma_ammo
-			impact				plasmaBigExplosion
-			hitbody				plasmaBigExplosion
-			firesnd				weapons/grenade-launcher
-			impsnd				weapons/explosion-plasma
-			bodysnd				weapons/explosion-plasma
-			bncsnd				weapons/grenade-bounce
-			gravity				true
-			launched			true
-			spread				"0 4"
-			range				15
-			shots				3
-			ammo				3
-			delaybetweenshots	3
-			time				15
-			damage				"20 10"
-			spldmg				"130 20"
-			splrad				5
-			dmgweight			plasma_heavy
-		}
-
-		firedef
-		{
 			name				"_Snap Shot - Timed"
 			skill				explosive
 			projtl				grenl_plasma_ammo
@@ -1915,33 +1761,6 @@ item grenl_plasma_ammo
 			ammo				1
 			delaybetweenshots	1
 			time				12
-			spldmg				"130 20"
-			splrad				5
-			dmgweight			plasma_heavy
-		}
-
-		firedef
-		{
-			name				"_3-Round Burst - Timed"
-			skill				explosive
-			projtl				grenl_plasma_ammo
-			impact				plasmaBigExplosion
-			hitbody				plasmaBigExplosion
-			firesnd				weapons/grenade-launcher
-			impsnd				weapons/explosion-plasma
-			bodysnd				weapons/explosion-plasma
-			bncsnd				weapons/grenade-bounce
-			gravity				true
-			launched			true
-			delay				1
-			bounce				5
-			bncfac				0.6
-			spread				"0 4"
-			range				15
-			shots				3
-			ammo				3
-			delaybetweenshots	3
-			time				15
 			spldmg				"130 20"
 			splrad				5
 			dmgweight			plasma_heavy
