@@ -170,7 +170,7 @@ Section "Source Code" SEC03
 	SetOutPath "$INSTDIR\src\docs"
 		File /r /x .gitignore "..\..\..\src\docs\*.*"
 	SetOutPath "$INSTDIR\src\ports"
-		File /r /x .gitignore "..\..\..\src\ports\*.m"
+		File /r /x .gitignore "..\..\..\src\ports\*.mm"
 		File /r /x .gitignore "..\..\..\src\ports\*.xbm"
 		File /r /x .gitignore "..\..\..\src\ports\*.png"
 	SetOutPath "$INSTDIR\src\po"
