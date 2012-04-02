@@ -37,6 +37,7 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #include "../ui_main.h"
 #include "../ui_actions.h"
 #include "../ui_render.h"
+#include "../ui_sound.h"
 #include "ui_node_checkbox.h"
 #include "ui_node_abstractnode.h"
 #include "ui_node_abstractvalue.h"
@@ -109,7 +110,7 @@ void uiCheckBoxNode::leftClick (uiNode_t * node, int x, int y)
 {
 	if (node->onClick)
 		UI_ExecuteEventActions(node, node->onClick);
-
+	UI_PlaySound("click1");
 	activate(node);
 }
 

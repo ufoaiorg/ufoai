@@ -29,6 +29,7 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #include "../ui_behaviour.h"
 #include "../ui_components.h"
 #include "../ui_parse.h"
+#include "../ui_sound.h"
 
 #ifdef DEBUG
 /**
@@ -266,17 +267,26 @@ void uiLocatedNode::drawTooltip(struct uiNode_s *node, int x, int y)
 
 void uiLocatedNode::leftClick(struct uiNode_s *node, int x, int y)
 {
-	UI_ExecuteEventActions(node, node->onClick);
+	if (node->onClick != NULL) {
+		UI_ExecuteEventActions(node, node->onClick);
+		UI_PlaySound("click1");
+	}
 }
 
 void uiLocatedNode::rightClick(struct uiNode_s *node, int x, int y)
 {
-	UI_ExecuteEventActions(node, node->onRightClick);
+	if (node->onRightClick != NULL) {
+		UI_ExecuteEventActions(node, node->onRightClick);
+		UI_PlaySound("click1");
+	}
 }
 
 void uiLocatedNode::middleClick(struct uiNode_s *node, int x, int y)
 {
-	UI_ExecuteEventActions(node, node->onMiddleClick);
+	if (node->onMiddleClick != NULL) {
+		UI_ExecuteEventActions(node, node->onMiddleClick);
+		UI_PlaySound("click1");
+	}
 }
 
 void UI_RegisterAbstractNode (uiBehaviour_t *behaviour)

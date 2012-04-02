@@ -29,6 +29,7 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #include "../ui_actions.h"
 #include "../ui_font.h"
 #include "../ui_input.h"
+#include "../ui_sound.h"
 #include "../ui_sprite.h"
 #include "../ui_render.h"
 #include "../ui_tooltip.h"
@@ -142,6 +143,8 @@ void uiTabNode::leftClick (uiNode_t * node, int x, int y)
 	/* only execute the click stuff if the selectbox is active */
 	if (node->state)
 		UI_AbstractOptionSetCurrentValue(node, OPTIONEXTRADATA(option).value);
+
+	UI_PlaySound("click1");
 }
 
 /**

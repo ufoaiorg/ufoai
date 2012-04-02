@@ -32,6 +32,7 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #include "../ui_behaviour.h"
 #include "../ui_font.h"
 #include "../ui_render.h"
+#include "../ui_sound.h"
 #include "../ui_sprite.h"
 #include "ui_node_button.h"
 #include "ui_node_custombutton.h"
@@ -57,6 +58,7 @@ void uiButtonNode::leftClick (uiNode_t * node, int x, int y)
 {
 	if (node->onClick) {
 		UI_ExecuteEventActions(node, node->onClick);
+		UI_PlaySound("click1");
 	}
 }
 

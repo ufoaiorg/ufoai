@@ -32,7 +32,6 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #include "ui_parse.h"
 #include "ui_draw.h"
 #include "ui_dragndrop.h"
-#include "ui_sound.h"
 
 #include "../input/cl_keys.h"
 #include "../input/cl_input.h"
@@ -726,9 +725,6 @@ void UI_MouseDown (int x, int y, int button)
 		UI_MiddleClick(x, y);
 		break;
 	}
-
-	/** @todo each node should use it, if it is need */
-	UI_PlaySound("click1");
 }
 
 /**
