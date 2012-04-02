@@ -1723,6 +1723,7 @@ mapdef tropic_bigufo
 	param		"bigufo"
 	multiplayer	false
 	maxaliens	25
+	// randomspawn enabled
 
 	aircraft
 	{
@@ -1763,6 +1764,7 @@ mapdef tropic_drug
 	param		"drug"
 	multiplayer	false
 	maxaliens	14
+	// randomspawn enabled
 
 	aircraft
 	{
@@ -1804,6 +1806,7 @@ mapdef tropic_drug_crash
 	param		"drug_crash"
 	multiplayer	false
 	maxaliens	14
+	// randomspawn enabled
 	hurtaliens	true
 
 	aircraft
@@ -1845,6 +1848,7 @@ mapdef tropic_river
 	param		"river"
 	multiplayer	false
 	maxaliens	6
+	// randomspawn enabled
 
 	aircraft
 	{
@@ -1886,6 +1890,7 @@ mapdef tropic_river_crash
 	hurtaliens	true
 	multiplayer	false
 	maxaliens	6
+	// randomspawn enabled
 
 	aircraft
 	{
