@@ -118,7 +118,6 @@ window aircraft_pilots extends iaircraft
 			pos		"377 463"
 			size	"168 283"
 			origin	"0 -35 0"
-			omega	"0 -1 0"
 		}
 
 		model head
