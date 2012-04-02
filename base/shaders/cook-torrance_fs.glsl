@@ -1,5 +1,5 @@
 /**
- * @file cook-torrance_fs.glsl
+ * @file
  * @brief A fragment shader model for light reflection.
  *
  * The Cook-Torrance model for light reflection is a physics

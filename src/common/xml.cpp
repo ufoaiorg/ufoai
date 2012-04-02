@@ -1,5 +1,5 @@
 /**
- * @file xml.c
+ * @file
  * @brief UFO:AI interface functions to mxml
  */
 

@@ -1,5 +1,5 @@
 /**
- * @file lighting.h
+ * @file
  */
 
 /*

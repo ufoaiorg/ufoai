@@ -1,5 +1,5 @@
 /**
- * @file cl_tip.c
+ * @file
  * @brief Tip of the day code
  */
 

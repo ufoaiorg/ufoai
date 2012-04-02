@@ -1,5 +1,5 @@
 /**
- * @file android_system.c
+ * @file
  * @brief Some android specific functions
  */
 

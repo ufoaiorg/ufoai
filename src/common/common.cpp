@@ -1,5 +1,5 @@
 /**
- * @file common.c
+ * @file
  * @brief Misc functions used in client and server
  */
 

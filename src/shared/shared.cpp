@@ -1,5 +1,5 @@
 /**
- * @file shared.c
+ * @file
  * @brief Shared functions
  */
 

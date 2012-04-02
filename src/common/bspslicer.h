@@ -1,5 +1,5 @@
 /*
- * @file bspslicer.h
+ * @file
  */
 
 #ifndef BSPSLICER_H

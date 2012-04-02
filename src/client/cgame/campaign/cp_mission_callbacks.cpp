@@ -1,5 +1,5 @@
 /**
- * @file cp_mission_callbacks.c
+ * @file
  * @brief UI callbacks for missions.
  * @note Automission related function prefix: AM_
  * @note Other mission function prefix: MIS_

@@ -1,5 +1,5 @@
 /**
- * @file particles.h
+ * @file
  */
 
 #ifndef PARTICLES_H

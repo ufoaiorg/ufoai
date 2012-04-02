@@ -1,5 +1,5 @@
 /**
- * @file r_model_brush.c
+ * @file
  * @brief brush model loading
  */
 

@@ -1,5 +1,5 @@
 /**
- * @file cp_aircraft_callbacks.c
+ * @file
  * @brief Menu related console command callbacks
  */
 

@@ -1,5 +1,5 @@
 /**
- * @file cl_sequence.c
+ * @file
  * @brief Non-interactive sequence rendering and AVI recording.
  * @note Sequences are rendered inside the UI code with the sequence node.
  * The default window sequence is used as facility with seq_start and seq_stop

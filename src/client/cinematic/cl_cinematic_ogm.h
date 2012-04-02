@@ -1,5 +1,5 @@
 /**
- * @file cl_cinematic_ogm.h
+ * @file
  * @brief Header file for OGM cinematics
  */
 

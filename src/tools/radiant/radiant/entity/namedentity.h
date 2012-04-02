@@ -1,5 +1,5 @@
 /**
- * @file namedentity.h
+ * @file
  * @brief Renders the entity classname
  */
 

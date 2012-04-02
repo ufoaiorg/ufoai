@@ -1,5 +1,5 @@
 /**
- * @file cl_localentity.c
+ * @file
  * @brief Local entity management.
  */
 

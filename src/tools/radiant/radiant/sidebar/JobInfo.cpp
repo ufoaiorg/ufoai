@@ -1,5 +1,5 @@
 /**
- * @file jobinfo.cpp
+ * @file
  * @brief Job Information sidebar widget (e.g. progress bar for compilation runs)
  */
 

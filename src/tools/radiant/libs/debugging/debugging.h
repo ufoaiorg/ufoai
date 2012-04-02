@@ -23,7 +23,7 @@ Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
 #define INCLUDED_DEBUGGING_DEBUGGING_H
 
 /**
- * @file debugging.h
+ * @file
  * @brief Debugging macros for fatal error/assert messages.
  */
 

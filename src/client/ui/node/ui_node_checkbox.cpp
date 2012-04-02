@@ -1,5 +1,5 @@
 /**
- * @file ui_node_checkbox.c
+ * @file
  * @brief The checkbox node is a three state widget. If the value is 0,
  * checkbox is unchecked, if value is bigger than 0, the value is checked;
  * but if the value is under 0, the checkbox display an "invalidate" status.

@@ -1,5 +1,5 @@
 /**
- * @file plugin.cpp
+ * @file
  */
 
 /*

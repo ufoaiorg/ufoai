@@ -1,5 +1,5 @@
 /**
- * @file ui_internal.h
+ * @file
  * @brief Internal data use by the UI package
  * @note It should not be include by a file outside the UI package
  */

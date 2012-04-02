@@ -1,5 +1,5 @@
 /**
- * @file ufoslicer.c
+ * @file
  * @brief Utility to slice a bsp file into a flat 2d plan of the map
  * @note Based on the BSP_tools by botman
  */

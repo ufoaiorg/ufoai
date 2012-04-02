@@ -1,5 +1,5 @@
 /**
- * @file preferences.cpp
+ * @file
  * @brief User preferences
  * @author Leonardo Zide (leo@lokigames.com)
  */

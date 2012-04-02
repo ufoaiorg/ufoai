@@ -1,5 +1,5 @@
 /**
- * @file string.h
+ * @file
  * @brief C-style null-terminated-character-array string library.
  */
 

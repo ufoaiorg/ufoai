@@ -1,5 +1,5 @@
 /**
- * @file dir.h
+ * @file
  * brief OS directory-listing object.
  */
 

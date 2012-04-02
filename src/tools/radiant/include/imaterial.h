@@ -1,5 +1,5 @@
 /**
- * @file imaterial.h
+ * @file
  * @brief Material generation headers
  */
 

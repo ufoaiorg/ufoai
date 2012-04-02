@@ -1,5 +1,5 @@
 /**
- * @file cl_video.h
+ * @file
  * @brief Video driver defs.
  */
 

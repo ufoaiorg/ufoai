@@ -1,5 +1,5 @@
 /**
- * @file light_vs.glsl
+ * @file
  * @brief Lighting vertex shader.
  */
 

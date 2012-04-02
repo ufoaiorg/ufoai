@@ -1,5 +1,5 @@
 /**
- * @file ipathfinding.h
+ * @file
  * @brief Global pathfinding interface
  */
 

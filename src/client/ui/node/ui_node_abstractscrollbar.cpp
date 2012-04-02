@@ -1,5 +1,5 @@
 /**
- * @file ui_node_abstractscrollbar.c
+ * @file
  * @brief The <code>abstractscrollbar</code> is an abstract node (we can't instantiate it).
  * It exists to share same properties for vertical and horizontal scrollbar.
  * At the moment only the concrete <code>vscrollbar</code>.

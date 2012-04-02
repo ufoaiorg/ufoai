@@ -1,5 +1,5 @@
 /**
- * @file images.h
+ * @file
  * @brief Image loading and saving functions
  */
 

@@ -1,5 +1,5 @@
 /**
- * @file convolve5_vs.glsl
+ * @file
  * @brief Very simple vertex shader to pass along coordinates to a fragment shader.
  */
 

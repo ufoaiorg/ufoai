@@ -1,5 +1,5 @@
 /**
- * @file callback.h
+ * @file
  * @brief Type-safe techniques for binding the first argument of an opaque callback.
  */
 

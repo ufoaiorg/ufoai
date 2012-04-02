@@ -1,5 +1,5 @@
 /**
- * @file ui_node_option.c
+ * @file
  */
 
 /*

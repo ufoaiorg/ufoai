@@ -1,5 +1,5 @@
 /**
- * @file test_renderer.c
+ * @file
  * @brief Test cases for code below client/renderer
  */
 

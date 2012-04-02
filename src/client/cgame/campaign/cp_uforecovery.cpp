@@ -1,5 +1,5 @@
 /**
- * @file cp_uforecovery.c
+ * @file
  * @brief UFO recovery and storing
  * @note UFO recovery functions with UR_*
  * @note UFO storing functions with US_*

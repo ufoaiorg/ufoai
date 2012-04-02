@@ -1,5 +1,5 @@
 /**
- * @file cl_inventory.h
+ * @file
  * @brief Header file for inventory handling and Equipment menu.
  */
 

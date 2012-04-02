@@ -1,5 +1,5 @@
 /**
- * @file transform_lights_vs.glsl
+ * @file
  * @brief Transform lights to the tangent space. Requires light_vs.glsl and lerp_vs.glsl.
  */
 

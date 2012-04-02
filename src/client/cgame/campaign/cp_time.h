@@ -1,5 +1,5 @@
 /**
- * @file cp_time.h
+ * @file
  * @brief Campaign geoscape time header
  */
 

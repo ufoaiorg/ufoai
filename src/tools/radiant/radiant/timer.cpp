@@ -1,5 +1,5 @@
 /**
- * @file timer.cpp
+ * @file
  */
 
 /*

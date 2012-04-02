@@ -1,5 +1,5 @@
 /**
- * @file windowobservers.cpp
+ * @file
  * @brief Window input handling
  */
 

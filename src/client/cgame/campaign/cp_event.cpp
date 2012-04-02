@@ -1,5 +1,5 @@
 /**
- * @file cp_event.c
+ * @file
  * @brief Geoscape event implementation
  */
 

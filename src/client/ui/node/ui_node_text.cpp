@@ -1,5 +1,5 @@
 /**
- * @file ui_node_text.c
+ * @file
  * @todo add getter/setter to cleanup access to extradata from cl_*.c files (check "u.text.")
  */
 

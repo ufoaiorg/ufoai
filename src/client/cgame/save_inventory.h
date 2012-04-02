@@ -1,5 +1,5 @@
 /**
- * @file save_inventory.h
+ * @file
  * @brief XML tag constants for savegame.
  */
 

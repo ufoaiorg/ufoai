@@ -1,5 +1,5 @@
 /**
- * @file chr_shared.h
+ * @file
  */
 
 /*

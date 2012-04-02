@@ -1,5 +1,5 @@
 /**
- * @file r_model_dpm.h
+ * @file
  * @brief dpm model loading
  * @note type 2 model (hierarchical skeletal pose)
  * within this specification, int is assumed to be 32bit, float is assumed to be 32bit, char is assumed to be 8bit, text is assumed to be an array of chars with NULL termination

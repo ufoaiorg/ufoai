@@ -1,5 +1,5 @@
 /**
- * @file cvar.c
+ * @file
  * @brief Manage cvars
  *
  * cvar_t variables are used to hold scalar or string variables that can be changed or displayed at the console or prog code as well as accessed directly

@@ -1,5 +1,5 @@
 /**
- * @file cp_ufopedia.c
+ * @file
  * @brief UFOpaedia script interpreter.
  * @todo Split the mail code into cl_mailclient.c/h
  * @todo Remove direct access to nodes

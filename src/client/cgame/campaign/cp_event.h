@@ -1,5 +1,5 @@
 /**
- * @file cp_event.h
+ * @file
  * @brief Header for geoscape event related stuff.
  */
 

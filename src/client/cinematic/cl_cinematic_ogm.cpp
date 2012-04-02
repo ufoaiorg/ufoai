@@ -1,5 +1,5 @@
 /**
- * @file cl_cinematic_ogm.c
+ * @file
  *
  * @note Taken from World Of Padman Engine
  * @note This is a "ogm"-decoder to use a "better" (smaller files, higher resolutions) Cinematic-Format than roq

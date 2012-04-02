@@ -1,5 +1,5 @@
 /**
- * @file PrefabSelector.h
+ * @file
  */
 
 /*

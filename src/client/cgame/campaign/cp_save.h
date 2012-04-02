@@ -1,5 +1,5 @@
 /**
- * @file cp_save.h
+ * @file
  * @brief Defines some savefile structures
  */
 

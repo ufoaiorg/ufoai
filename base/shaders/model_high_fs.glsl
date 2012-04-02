@@ -1,5 +1,5 @@
 /**
- * @file world_fs.glsl
+ * @file
  * @brief Default battlescape model fragment shader.
  */
 

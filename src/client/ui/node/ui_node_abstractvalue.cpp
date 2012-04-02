@@ -1,5 +1,5 @@
 /**
- * @file ui_node_abstractvalue.c
+ * @file
  * @brief The abstractvalue node is an abstract node (we can't instanciate it).
  * It provide common properties to concrete nodes, to manage a value in a range.
  */

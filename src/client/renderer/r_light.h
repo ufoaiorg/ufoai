@@ -1,5 +1,5 @@
 /**
- * @file r_light.h
+ * @file
  */
 
 /*

@@ -1,5 +1,5 @@
 /**
- * @file client.h
+ * @file
  * @brief Primary header for client.
  */
 

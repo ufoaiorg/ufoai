@@ -1,5 +1,5 @@
 /**
- * @file ui_node_model.c
+ * @file
  * @brief This node allow to include a 3D-model into the GUI.
  * It provide a way to create composite models, check
  * [[How to script UI#How to create a composite model]]. We call it "main model"

@@ -1,5 +1,5 @@
 /**
- * @file cl_http.c
+ * @file
  * @author R1CH
  * @brief HTTP downloading is used if the server provides a content server URL in the
  * connect message. Any missing content the client needs will then use the

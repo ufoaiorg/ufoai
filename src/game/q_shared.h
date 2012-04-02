@@ -1,5 +1,5 @@
 /**
- * @file q_shared.h
+ * @file
  * @brief Common header file.
  *
  * @todo Apparently included by every file - unnecessary?

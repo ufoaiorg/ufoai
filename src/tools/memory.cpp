@@ -1,5 +1,5 @@
 /**
- * @file memory.c
+ * @file
  * @brief Small utility that shows the size of some of the structs that are used in UFO:AI
  */
 

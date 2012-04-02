@@ -1,5 +1,5 @@
 /**
- * @file ui_parse.c
+ * @file
  * @todo remove all "token" param from function and use Com_UnParseLastToken
  * @todo reduce use of uiGlobal (create global functions to add/get/... entities)
  * @todo remove Com_EParseValue and use Com_ParseValue

@@ -1,5 +1,5 @@
 /**
- * @file matrix.h
+ * @file
  * @brief Matrix data types and related operations.
  */
 

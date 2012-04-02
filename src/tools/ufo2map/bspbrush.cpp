@@ -1,5 +1,5 @@
 /**
- * @file bspbrush.c
+ * @file
  */
 
 /*

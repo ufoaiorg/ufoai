@@ -1,5 +1,5 @@
 /**
- * @file src/tools/radiant/libs/imagelib.h
+ * @file
  */
 
 /*

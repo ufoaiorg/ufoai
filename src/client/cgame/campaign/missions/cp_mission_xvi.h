@@ -1,5 +1,5 @@
 /**
- * @file cp_mission_xvi.h
+ * @file
  * @brief Campaign mission header
  */
 

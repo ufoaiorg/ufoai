@@ -1,5 +1,5 @@
 /**
- * @file cp_xvi.h
+ * @file
  * @brief Campaign XVI header
  */
 

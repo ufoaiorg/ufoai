@@ -1,5 +1,5 @@
 /**
- * @file r_sphere.c
+ * @file
  * @brief Functions to generate and render spheres
  */
 /*

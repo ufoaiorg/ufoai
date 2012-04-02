@@ -1,5 +1,5 @@
 /**
- * @file game.h
+ * @file
  * @brief Interface to game library.
  */
 

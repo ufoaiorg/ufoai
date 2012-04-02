@@ -1,5 +1,5 @@
 /**
- * @file grid.c
+ * @file
  * @brief Grid oriented movement and scanning
  */
 

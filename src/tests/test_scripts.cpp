@@ -1,5 +1,5 @@
 /**
- * @file test_scripts.c
+ * @file
  * @brief Test cases for checking the scripts for logic errors
  */
 

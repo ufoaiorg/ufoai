@@ -1,5 +1,5 @@
 /**
- * @file files.c
+ * @file
  * @brief All of UFO's data access is through a hierarchical file system, but the
  * contents of the file system can be transparently merged from several sources.
  * The "base directory" is the path to the directory holding the ufo binary and the game directory (base).

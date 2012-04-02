@@ -1,5 +1,5 @@
 /**
- * @file scp_shared.h
+ * @file
  * @brief Singleplayer static campaign shared header
  */
 

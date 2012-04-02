@@ -1,5 +1,5 @@
 /**
- * @file cp_mission_intercept.c
+ * @file
  * @brief Campaign mission
  */
 

@@ -1,5 +1,5 @@
 /**
- * @file mathlib_extra.h
+ * @file
  * @brief Special, additional math algorithms for floating-point values
  *
  * These are special, custom functions for influencing floating-point variables,

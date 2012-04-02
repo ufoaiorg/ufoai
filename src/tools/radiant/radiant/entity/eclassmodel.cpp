@@ -1,5 +1,5 @@
 /**
- * @file eclassmodel.cpp
+ * @file
  * @brief Represents any entity which has a fixed size specified in its entity-definition and displays a model (e.g. ammo_bfg).
  * This entity displays the model specified in its entity-definition.
  * The "origin" and "angle" keys directly control the entity's local-to-parent transform.

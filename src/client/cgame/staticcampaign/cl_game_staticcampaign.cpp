@@ -1,5 +1,5 @@
 /**
- * @file cl_game_staticcampaign.c
+ * @file
  * @brief Singleplayer static campaign game type code
  */
 

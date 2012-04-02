@@ -1,5 +1,5 @@
 /**
- * @file r_material.h
+ * @file
  * @brief Header file for the render material subsystem
  */
 

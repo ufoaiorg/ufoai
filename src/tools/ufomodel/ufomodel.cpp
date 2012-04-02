@@ -1,5 +1,5 @@
 /**
- * @file ufomodel.c
+ * @file
  * @brief Starting point for model tool
  */
 

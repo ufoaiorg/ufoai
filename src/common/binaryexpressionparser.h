@@ -1,5 +1,5 @@
 /**
- * @file binaryexpressionparser.h
+ * @file
  */
 
 /*

@@ -1,5 +1,5 @@
 /**
- * @file mp_callbacks.c
+ * @file
  * @brief Serverlist menu callbacks for multiplayer
  */
 

@@ -1,5 +1,5 @@
 /**
- * @file cl_inventory_callbacks.c
+ * @file
  */
 
 /*

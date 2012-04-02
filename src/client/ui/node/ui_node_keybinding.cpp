@@ -1,5 +1,5 @@
 /**
- * @file ui_node_keybinding.c
+ * @file
  * @brief This node implements the key binding change and display
  */
 

@@ -1,5 +1,5 @@
 /**
- * @file src/common/routing.c
+ * @file
  * @brief grid pathfinding and routing
  */
 

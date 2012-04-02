@@ -1,5 +1,5 @@
 /*
- * @file bspslicer.c
+ * @file
  * @brief Based on the BSP_tool from botman's Half-Life BSP utilities
  */
 

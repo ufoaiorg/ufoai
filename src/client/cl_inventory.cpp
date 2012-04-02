@@ -1,5 +1,5 @@
 /**
- * @file cl_inventory.c
+ * @file
  * @brief General actor related inventory function for are used in every game mode
  * @note Inventory functions prefix: INV_
  */

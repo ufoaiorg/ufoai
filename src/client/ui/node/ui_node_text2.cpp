@@ -1,5 +1,5 @@
 /**
- * @file ui_node_text2.c
+ * @file
  * Node to display article of text. The node pre-parsed the "brute" text into a
  * data structure. The rendering code only paint the data structure, without any parsing.
  */

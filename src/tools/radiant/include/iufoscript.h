@@ -1,5 +1,5 @@
 /**
- * @file iufoscript.h
+ * @file
  * @brief Global UFOScript interface
  */
 

@@ -1,5 +1,5 @@
 /**
- * @file cp_cgame_callbacks.c
+ * @file
  */
 
 /*

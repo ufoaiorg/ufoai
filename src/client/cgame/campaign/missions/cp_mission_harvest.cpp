@@ -1,5 +1,5 @@
 /**
- * @file cp_mission_harvest.c
+ * @file
  * @brief Campaign mission
  */
 

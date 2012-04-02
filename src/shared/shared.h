@@ -1,5 +1,5 @@
 /**
- * @file src/shared/shared.h
+ * @file
  */
 
 /*

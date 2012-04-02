@@ -1,5 +1,5 @@
 /**
- * @file win_shared.c
+ * @file
  * @brief Windows shared functions
  */
 

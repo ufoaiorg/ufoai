@@ -1,5 +1,5 @@
 /**
- * @file r_particle.h
+ * @file
  * @brief Particle system header file
  */
 

@@ -1,5 +1,5 @@
 /**
- * @file world_devtools_fs.glsl
+ * @file
  * @brief Developer tools for battlescape world fragment shader.
  */
 

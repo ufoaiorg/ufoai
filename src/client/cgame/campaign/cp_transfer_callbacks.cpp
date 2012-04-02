@@ -1,5 +1,5 @@
 /**
- * @file cp_transfer_callbacks.c
+ * @file
  */
 
 /*

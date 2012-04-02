@@ -1,5 +1,5 @@
 /**
- * @file cp_rank.c
+ * @file
  */
 
 /*

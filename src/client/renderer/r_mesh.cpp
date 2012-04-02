@@ -1,5 +1,5 @@
 /**
- * @file r_mesh.c
+ * @file
  * @brief Mesh Model drawing code
  */
 

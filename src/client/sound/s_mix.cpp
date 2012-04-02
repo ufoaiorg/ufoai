@@ -1,5 +1,5 @@
 /**
- * @file s_mix.c
+ * @file
  * @brief Main control for any streaming sound output device.
  */
 

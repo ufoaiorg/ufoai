@@ -1,5 +1,5 @@
 /**
- * @file src/tools/radiant/radiant/server.h
+ * @file
  */
 
 /*

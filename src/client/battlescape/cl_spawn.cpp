@@ -1,5 +1,5 @@
 /**
- * @file cl_spawn.c
+ * @file
  * @brief Client side entity spawning from map entity string
  */
 

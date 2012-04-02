@@ -1,5 +1,5 @@
 /**
- * @file cp_mapfightequip.h
+ * @file
  * @brief Header for slot management related stuff.
  */
 

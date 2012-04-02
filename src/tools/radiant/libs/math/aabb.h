@@ -1,5 +1,5 @@
 /**
- * @file aabb.h
+ * @file
  * @brief Axis-aligned bounding-box data types and related operations.
  */
 

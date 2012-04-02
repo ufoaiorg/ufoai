@@ -1,5 +1,5 @@
 /**
- * @file qfiles.h
+ * @file
  * @note This file must be identical in the quake and utils directories
  * @brief Header for various formats like pak, and model formats as well as bsp format
  * @note The .pk3 files are just zip files

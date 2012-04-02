@@ -1,5 +1,5 @@
 /**
- * @file cp_aliencont_callbacks.c
+ * @file
  * @brief Menu related callback functions used alien containment
  */
 

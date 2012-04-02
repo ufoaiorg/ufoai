@@ -1,5 +1,5 @@
 /**
- * @file cmd.c
+ * @file
  * @brief Script command processing module
  * Command text buffering. Any number of commands can be added in a frame, from several different sources.
  * Most commands come from either keyBindings or console line input, but remote

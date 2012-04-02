@@ -1,5 +1,5 @@
 /**
- * @file cp_statistics.h
+ * @file
  * @brief Campaign statistic headers
  */
 

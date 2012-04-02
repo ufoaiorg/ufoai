@@ -1,5 +1,5 @@
 /**
- * @file dialog.cpp
+ * @file
  * @brief Base dialog class, provides a way to run modal dialogs and
  * set/get the widget values in member variables.
  */

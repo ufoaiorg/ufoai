@@ -1,5 +1,5 @@
 /**
- * @file cp_installation.c
+ * @file
  * @brief Handles everything that is located in or accessed through an installation.
  * @note Installation functions prefix: INS_*
  */

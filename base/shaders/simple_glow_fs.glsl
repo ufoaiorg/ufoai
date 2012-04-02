@@ -1,5 +1,5 @@
 /**
- * @file simple_glow_fs.glsl
+ * @file
  * @brief This is the glow shader that is applied if no other shader is
  * active but the glow map should get rendered.
  */

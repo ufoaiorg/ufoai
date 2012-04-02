@@ -1,5 +1,5 @@
 /**
- * @file cp_map.c
+ * @file
  * @brief Geoscape/Map management
  */
 

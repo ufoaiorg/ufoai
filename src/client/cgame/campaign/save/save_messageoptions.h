@@ -1,5 +1,5 @@
 /**
- * @file save_messageoptions.h
+ * @file
  * @brief XML tag constants for savegame.
  */
 

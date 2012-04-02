@@ -1,5 +1,5 @@
 /**
- * @file cp_installation_callbacks.h
+ * @file
  * @brief Header file for menu related console command callbacks
  */
 

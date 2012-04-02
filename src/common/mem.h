@@ -1,5 +1,5 @@
 /**
- * @file mem.h
+ * @file
  * @brief Memory handling with sentinel checking and pools with tags for grouped free'ing
  */
 

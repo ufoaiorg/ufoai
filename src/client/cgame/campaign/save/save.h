@@ -1,5 +1,5 @@
 /**
- * @file save.h
+ * @file
  * @brief XML tag constants for savegame.
  */
 

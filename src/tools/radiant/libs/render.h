@@ -1,5 +1,5 @@
 /**
- * @file render.h
+ * @file
  * @brief High-level constructs for efficient OpenGL rendering.
  */
 

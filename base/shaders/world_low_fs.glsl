@@ -1,5 +1,5 @@
 /**
- * @file world_low_fs.glsl
+ * @file
  * @brief Low quality battlescape fragment shader.
  */
 

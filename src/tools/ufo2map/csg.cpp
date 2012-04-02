@@ -1,5 +1,5 @@
 /**
- * @file csg.c
+ * @file
  * @brief Constructive Solids Geometry
  * @note tag all brushes with original contents
  * brushes may contain multiple contents

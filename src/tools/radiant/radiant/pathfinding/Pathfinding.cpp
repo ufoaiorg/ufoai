@@ -1,5 +1,5 @@
 /**
- * @file pathfinding.cpp
+ * @file
  * @brief Show pathfinding related info in the radiant windows
  */
 

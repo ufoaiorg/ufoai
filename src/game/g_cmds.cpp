@@ -1,5 +1,5 @@
 /**
- * @file g_cmds.c
+ * @file
  * @brief Player commands.
  */
 

@@ -1,5 +1,5 @@
 /**
- * @file test_ui.h
+ * @file
  */
 
 /*

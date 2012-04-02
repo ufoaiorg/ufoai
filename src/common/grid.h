@@ -1,5 +1,5 @@
 /**
- * @file grid.h
+ * @file
  * @brief Battlescape grid functions
  */
 

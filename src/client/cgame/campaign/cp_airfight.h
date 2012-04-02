@@ -1,5 +1,5 @@
 /**
- * @file cp_airfight.h
+ * @file
  * @brief Header file for airfights
  */
 

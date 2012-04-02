@@ -1,5 +1,5 @@
 /**
- * @file cp_aliencont.h
+ * @file
  * @brief Header file for Alien Containment stuff.
  */
 

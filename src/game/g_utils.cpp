@@ -1,5 +1,5 @@
 /**
- * @file g_utils.c
+ * @file
  * @brief Misc utility functions for game module.
  */
 

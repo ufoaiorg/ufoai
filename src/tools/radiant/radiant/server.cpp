@@ -1,5 +1,5 @@
 /**
- * @file server.cpp
+ * @file
  */
 
 /*

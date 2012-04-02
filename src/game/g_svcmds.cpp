@@ -1,5 +1,5 @@
 /**
- * @file g_svcmds.c
+ * @file
  * @brief Server commands.
  */
 

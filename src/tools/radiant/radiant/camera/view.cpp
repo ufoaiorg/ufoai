@@ -1,5 +1,5 @@
 /**
- * @file view.cpp
+ * @file
  * @brief Culling stats for the 3d window
  */
 

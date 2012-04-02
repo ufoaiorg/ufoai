@@ -1,5 +1,5 @@
 /**
- * @file model_devtools_fs.glsl
+ * @file
  * @brief Developer tools for battlescape model fragment shader.
  */
 

@@ -1,5 +1,5 @@
 /**
- * @file pqueue.h
+ * @file
  * @brief Header file for the priority queue implementation.
  */
 

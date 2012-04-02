@@ -1,5 +1,5 @@
 /**
- * @file cl_console.h
+ * @file
  * @brief Console header file.
  */
 

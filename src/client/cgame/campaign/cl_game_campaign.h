@@ -1,5 +1,5 @@
 /**
- * @file cl_game_campaign.h
+ * @file
  * @brief Singleplayer campaign game type headers
  */
 

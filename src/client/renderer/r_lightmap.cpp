@@ -1,5 +1,5 @@
 /**
- * @file r_lightmap.c
+ * @file
  * In video memory, lightmaps are chunked into NxN RGBA blocks.
  * In the bsp, they are just RGB, and we retrieve them using floating point for precision.
  */

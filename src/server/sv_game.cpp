@@ -1,5 +1,5 @@
 /**
- * @file sv_game.c
+ * @file
  * @brief Interface to the game library.
  */
 

@@ -1,5 +1,5 @@
 /**
- * @file portals.c
+ * @file
  * @brief imagine you have a series of rooms connected by doorways. Each doorway
  * has a portal in it. If two portals can see eachother, the rooms become linked
  * in the pvs

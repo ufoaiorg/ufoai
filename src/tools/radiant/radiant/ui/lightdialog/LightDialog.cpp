@@ -1,5 +1,5 @@
 /**
- * @file LightDialog.cpp
+ * @file
  * @brief Creates the light dialog to set the intensity
  */
 

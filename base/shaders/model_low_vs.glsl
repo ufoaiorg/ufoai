@@ -1,5 +1,5 @@
 /**
- * @file model_low_vs.glsl
+ * @file
  * @brief Low quality battlescape model vertex shader.
  */
 

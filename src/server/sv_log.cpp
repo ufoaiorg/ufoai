@@ -1,5 +1,5 @@
 /**
- * @file sv_log.c
+ * @file
  * @brief game lib logging handling
  * @note we need this because the game lib logic can run in a separate thread
  * and could cause some systems to hang if we would use Com_Printf indirectly

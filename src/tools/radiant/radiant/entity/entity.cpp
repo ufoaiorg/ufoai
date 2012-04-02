@@ -1,5 +1,5 @@
 /**
- * @file entity.cpp
+ * @file
  */
 
 /*

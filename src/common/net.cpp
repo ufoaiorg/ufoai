@@ -1,5 +1,5 @@
 /**
- * @file net.c
+ * @file
  * @note This file should fully support ipv6 and any other protocol that is
  * compatible with the getaddrinfo interface, with the exception of
  * NET_DatagramBroadcast() which must be amended for each protocol (and

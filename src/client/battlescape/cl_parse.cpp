@@ -1,5 +1,5 @@
 /**
- * @file cl_parse.c
+ * @file
  * @brief Parse a message (event) received from the server.
  */
 

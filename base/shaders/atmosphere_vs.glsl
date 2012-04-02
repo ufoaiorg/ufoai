@@ -1,5 +1,5 @@
 /**
- * @file atmosphere_vs.glsl
+ * @file
  * @brief Atmosphere vertex shader
  */
 

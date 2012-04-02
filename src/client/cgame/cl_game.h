@@ -1,5 +1,5 @@
 /**
- * @file cl_game.h
+ * @file
  * @brief Shared game type headers
  */
 

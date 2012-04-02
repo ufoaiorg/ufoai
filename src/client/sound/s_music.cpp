@@ -1,5 +1,5 @@
 /**
- * @file s_music.c
+ * @file
  */
 
 /*

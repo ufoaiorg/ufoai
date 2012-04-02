@@ -1,5 +1,5 @@
 /**
- * @file iump.h
+ * @file
  * @brief Global UMP interface
  */
 

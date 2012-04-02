@@ -1,5 +1,5 @@
 /**
- * @file test_rma.c
+ * @file
  */
 
 /*

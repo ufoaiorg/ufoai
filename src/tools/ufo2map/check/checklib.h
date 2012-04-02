@@ -1,5 +1,5 @@
 /**
- * @file checklib.h
+ * @file
  * @brief Performs check on a loaded mapfile, and makes changes
  * that can be saved back to the source map.
  */

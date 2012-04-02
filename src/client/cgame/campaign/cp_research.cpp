@@ -1,5 +1,5 @@
 /**
- * @file cp_research.c
+ * @file
  * @brief Technology research.
  *
  * Handles everything related to the research-tree.

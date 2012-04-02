@@ -1,5 +1,5 @@
 /**
- * @file cp_auto_mission.c
+ * @file
  * @brief single player automatic (quick, simulated) missions, without going to the battlescape.
  */
 

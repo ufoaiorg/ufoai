@@ -1,5 +1,5 @@
 /**
- * @file mp_serverlist.c
+ * @file
  * @brief Serverlist management for multiplayer
  */
 

@@ -1,5 +1,5 @@
 /**
- * @file world_vs.glsl
+ * @file
  * @brief Default battlescape model vertex shader.
  */
 

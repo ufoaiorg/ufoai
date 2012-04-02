@@ -1,5 +1,5 @@
 /**
- * @file checkentities.h
+ * @file
  */
 
 /*

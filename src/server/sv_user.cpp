@@ -1,5 +1,5 @@
 /**
- * @file sv_user.c
+ * @file
  * @brief Server code for moving users.
  */
 

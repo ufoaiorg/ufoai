@@ -1,5 +1,5 @@
 /**
- * @file cp_capacity.c
+ * @file
  */
 
 /*

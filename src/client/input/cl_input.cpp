@@ -1,5 +1,5 @@
 /**
- * @file cl_input.c
+ * @file
  * @brief Client input handling - bindable commands.
  * @note Continuous button event tracking is complicated by the fact that two different
  * input sources (say, mouse button 1 and the control key) can both press the

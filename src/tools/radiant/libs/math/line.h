@@ -1,5 +1,5 @@
 /**
- * @file line.h
+ * @file
  * @brief Line data types and related operations.
  */
 

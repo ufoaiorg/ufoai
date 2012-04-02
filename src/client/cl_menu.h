@@ -1,5 +1,5 @@
 /**
- * @file cl_menu.h
+ * @file
  * @brief Header for client menu implementation
  */
 

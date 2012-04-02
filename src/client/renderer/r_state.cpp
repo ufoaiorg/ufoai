@@ -1,5 +1,5 @@
 /**
- * @file r_image.c
+ * @file
  */
 
 /*

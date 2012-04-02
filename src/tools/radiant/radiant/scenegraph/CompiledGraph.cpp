@@ -1,5 +1,5 @@
 /**
- * @file scenegraph.cpp
+ * @file
  */
 
 /*

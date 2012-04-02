@@ -1,5 +1,5 @@
 /**
- * @file map.cpp
+ * @file
  */
 
 /*

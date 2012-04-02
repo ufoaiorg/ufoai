@@ -1,5 +1,5 @@
 /**
- * @file cp_statistics.c
+ * @file
  * @brief Campaign statistics.
  */
 

@@ -1,5 +1,5 @@
 /**
- * @file cp_ufo.c
+ * @file
  * @brief UFOs on geoscape
  */
 

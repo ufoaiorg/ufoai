@@ -1,5 +1,5 @@
 /**
- * @file md4.c
+ * @file
  * @brief An implementation of MD4 designed for use in the samba SMB authentication protocol
  * @note This code makes no attempt to be fast!
  * @note It assumes that a int is at least 32 bits long

@@ -1,5 +1,5 @@
 /**
- * @file material.cpp
+ * @file
  * @brief Material generation code
  */
 

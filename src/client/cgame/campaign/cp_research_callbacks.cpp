@@ -1,5 +1,5 @@
 /**
- * @file cp_research_callbacks.c
+ * @file
  * @brief Menu related functions for research.
  *
  */

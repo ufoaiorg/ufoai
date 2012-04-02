@@ -1,5 +1,5 @@
 /**
- * @file byte.h
+ * @file
  * @brief Byte order functions header
  */
 

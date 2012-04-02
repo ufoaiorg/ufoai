@@ -1,5 +1,5 @@
 /**
- * @file frustum.h
+ * @file
  * @brief View-frustum data types and related operations.
  */
 

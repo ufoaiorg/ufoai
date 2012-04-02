@@ -1,5 +1,5 @@
 /**
- * @file cp_mission_triggers.c
+ * @file
  * @brief Campaign mission triggers
  */
 

@@ -1,5 +1,5 @@
 /**
- * @file sv_main.c
+ * @file
  * @brief Main server code?
  */
 

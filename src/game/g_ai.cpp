@@ -1,5 +1,5 @@
 /**
- * @file g_ai.c
+ * @file
  * @brief Artificial Intelligence.
  */
 

@@ -1,5 +1,5 @@
 /**
- * @file sv_init.c
+ * @file
  * @brief Server initialisation stuff.
  */
 

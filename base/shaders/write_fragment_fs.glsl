@@ -1,5 +1,5 @@
 /**
- * @file write_fragment_fs.glsl
+ * @file
  * @brief Writes given fragment color to the rendering buffer. Adds glow if needed.
  */
 

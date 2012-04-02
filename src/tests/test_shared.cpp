@@ -1,5 +1,5 @@
 /**
- * @file test_shared.c
+ * @file
  * @brief Shared code for unittests
  */
 

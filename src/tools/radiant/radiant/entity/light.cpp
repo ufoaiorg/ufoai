@@ -1,5 +1,5 @@
 /**
- * @file light.cpp
+ * @file
  * @brief Represents any light entity (e.g. light).
  * This entity displays a special 'light' model.
  * The "origin" key directly controls the position of the light model in local space.

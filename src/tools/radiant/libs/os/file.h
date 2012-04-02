@@ -1,5 +1,5 @@
 /**
- * @file src/tools/radiant/libs/os/file.h
+ * @file
  * @brief OS file-system querying and manipulation.
  */
 

@@ -1,5 +1,5 @@
 /**
- * @file geoscape_fs.glsl
+ * @file
  * @brief Geoscape fragment shader.
  */
 

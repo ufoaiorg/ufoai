@@ -1,5 +1,5 @@
 /**
- * @file ui_node_texture.c
+ * @file
  * @brief The <code>texture</code> behaviour allow to draw a motif (an image) in all the surface of the a node.
  * The image is not stretched but looped.
  * @code

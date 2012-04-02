@@ -1,5 +1,5 @@
 /**
- * @file eclass.cpp
+ * @file
  */
 
 /*

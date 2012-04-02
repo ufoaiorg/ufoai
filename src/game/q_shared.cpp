@@ -1,5 +1,5 @@
 /**
- * @file q_shared.c
+ * @file
  * @brief Common functions.
  */
 

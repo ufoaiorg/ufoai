@@ -1,5 +1,5 @@
 /**
- * @file cl_game.c
+ * @file
  * @brief Shared game type code
  */
 

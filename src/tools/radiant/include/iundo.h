@@ -1,5 +1,5 @@
 /**
- * @file iundo.h
+ * @file
  * @brief The undo-system interface. Uses the 'memento' pattern.
  */
 

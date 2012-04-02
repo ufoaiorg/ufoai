@@ -1,5 +1,5 @@
 /**
- * @file aselib.c
+ * @file
  * @brief ASE model loading
  */
 

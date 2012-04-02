@@ -1,5 +1,5 @@
 /**
- * @file pi.h
+ * @file
  * @brief Pi constants and degrees/radians conversion.
  */
 

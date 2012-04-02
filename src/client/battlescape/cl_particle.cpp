@@ -1,5 +1,5 @@
 /**
- * @file cl_particle.c
+ * @file
  * @brief Client particle parsing and rendering functions.
  */
 

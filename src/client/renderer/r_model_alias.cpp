@@ -1,5 +1,5 @@
 /**
- * @file r_model_alias.c
+ * @file
  * @brief shared alias model loading code (md2, md3)
  */
 

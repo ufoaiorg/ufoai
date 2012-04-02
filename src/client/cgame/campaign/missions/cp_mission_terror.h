@@ -1,5 +1,5 @@
 /**
- * @file cp_mission_terror.h
+ * @file
  * @brief Campaign mission headers
  */
 

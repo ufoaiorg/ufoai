@@ -1,5 +1,5 @@
 /**
- * @file vertex_normals.h
+ * @file
  * @brief Contains vertex normals lookup table.
  */
 

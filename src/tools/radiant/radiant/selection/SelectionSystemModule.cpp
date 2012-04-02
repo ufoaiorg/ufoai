@@ -1,5 +1,5 @@
 /**
- * @file selection.cpp
+ * @file
  */
 
 /*

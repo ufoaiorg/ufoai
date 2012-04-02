@@ -1,5 +1,5 @@
 /**
- * @file cl_cinematic_roq.c
+ * @file
  * @note This code based on the OverDose and KMQuakeII source code
  */
 

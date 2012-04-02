@@ -1,5 +1,5 @@
 /**
- * @file e_server.h
+ * @file
  * @brief Events that are send from the client to the server
  */
 

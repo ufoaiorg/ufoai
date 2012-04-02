@@ -1,5 +1,5 @@
 /**
- * @file common.h
+ * @file
  * @brief definitions common between client and server, but not game lib
  */
 

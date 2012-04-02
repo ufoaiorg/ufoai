@@ -1,5 +1,5 @@
 /**
- * @file cl_hud.c
+ * @file
  * @brief HUD related routines.
  */
 

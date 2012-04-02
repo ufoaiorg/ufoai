@@ -1,5 +1,5 @@
 /**
- * @file cp_mission_buildbase.c
+ * @file
  * @brief Campaign mission code for alien bases
  */
 

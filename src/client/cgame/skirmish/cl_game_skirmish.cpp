@@ -1,5 +1,5 @@
 /**
- * @file cl_game_skirmish.c
+ * @file
  * @brief Skirmish game type implementation
  */
 

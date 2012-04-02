@@ -1,5 +1,5 @@
 /**
- * @file check.c
+ * @file
  * @brief Some checks during compile, warning on -check and changes .map on -fix
  */
 

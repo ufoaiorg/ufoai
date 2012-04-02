@@ -1,5 +1,5 @@
 /**
- * @file sv_ccmds.c
+ * @file
  * @brief Console-only server commands.
  *
  * These commands can only be entered from stdin or by a remote operator datagram.

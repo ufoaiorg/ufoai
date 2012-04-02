@@ -1,5 +1,5 @@
 /**
- * @file cp_missions.c
+ * @file
  * @brief Campaign missions code
  */
 

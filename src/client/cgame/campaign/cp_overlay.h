@@ -1,5 +1,5 @@
 /**
- * @file cp_overlay.h
+ * @file
  * @brief Functions to generate and render overlay for geoscape
  */
 

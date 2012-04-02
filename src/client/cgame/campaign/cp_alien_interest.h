@@ -1,5 +1,5 @@
 /**
- * @file cp_alien_interest.h
+ * @file
  * @brief Alien interest header
  */
 

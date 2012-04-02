@@ -1,5 +1,5 @@
 /**
- * @file g_client.c
+ * @file
  * @brief Main part of the game logic.
  */
 

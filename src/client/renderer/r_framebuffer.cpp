@@ -1,5 +1,5 @@
 /**
- * @file r_framebuffer.c
+ * @file
  * @brief Framebuffer Objects support
  */
 

@@ -1,5 +1,5 @@
 /**
- * @file cl_cinematic_roq.h
+ * @file
  * @brief Header file for ROQ cinematics
  */
 

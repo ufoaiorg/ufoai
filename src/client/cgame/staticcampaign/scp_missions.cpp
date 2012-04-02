@@ -1,5 +1,5 @@
 /**
- * @file scp_missions.c
+ * @file
  * @brief Singleplayer static campaign mission code
  */
 

@@ -1,5 +1,5 @@
 /**
- * @file scp_parse.c
+ * @file
  * @brief Singleplayer static campaign script parser code
  */
 

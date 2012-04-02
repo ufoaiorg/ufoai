@@ -1,5 +1,5 @@
 /**
- * @file r_image.h
+ * @file
  * @brief
  */
 

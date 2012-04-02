@@ -1,5 +1,5 @@
 /**
- * @file checklib.c
+ * @file
  * @brief functions for check.c
  */
 

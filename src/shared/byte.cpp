@@ -1,5 +1,5 @@
 /**
- * @file byte.c
+ * @file
  * @brief Byte order functions
  */
 

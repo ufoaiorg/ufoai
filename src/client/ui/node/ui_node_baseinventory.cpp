@@ -1,5 +1,5 @@
 /**
- * @file ui_node_baseinventory.c
+ * @file
  * @brief "Base inventory" is one of the container nodes. It allow to see and
  * drag and drop soldier items from a base to soldier equipments.
  * @todo extend it with aircraft equipment

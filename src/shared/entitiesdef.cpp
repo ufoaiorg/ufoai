@@ -1,5 +1,5 @@
 /**
- * @file entitiesdef.c
+ * @file
  * @brief Handles definition of entities, parsing them from entities.ufo
  */
 

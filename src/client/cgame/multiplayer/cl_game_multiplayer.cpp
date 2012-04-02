@@ -1,5 +1,5 @@
 /**
- * @file cl_game_multiplayer.c
+ * @file
  * @brief Multiplayer game type code
  */
 

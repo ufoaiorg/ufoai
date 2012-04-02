@@ -1,5 +1,5 @@
 /**
- * @file cl_team.c
+ * @file
  * @brief Team management, name generation and parsing.
  */
 

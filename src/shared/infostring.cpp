@@ -1,5 +1,5 @@
 /**
- * @file infostring.c
+ * @file
  * @brief Info string handling
  */
 

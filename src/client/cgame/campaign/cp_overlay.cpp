@@ -1,5 +1,5 @@
 /**
- * @file cp_overlay.c
+ * @file
  * @brief Functions to generate and render overlay for geoscape
  * @todo update the alpha values for radar like the ones for the xvi map - it's much faster like this
  */

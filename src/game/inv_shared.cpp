@@ -1,5 +1,5 @@
 /**
- * @file inv_shared.c
+ * @file
  * @brief Common object-, inventory-, container- and firemode-related functions.
  * @note Shared inventory management functions prefix: INVSH_
  * @note Shared firemode management functions prefix: FIRESH_

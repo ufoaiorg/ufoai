@@ -1,5 +1,5 @@
 /**
- * @file md5.c
+ * @file
  * @brief An implementation of MD5
  */
 

@@ -1,5 +1,5 @@
 /**
- * @file r_font.c
+ * @file
  * @brief font handling with SDL_ttf font engine
  */
 

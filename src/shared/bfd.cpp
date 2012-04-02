@@ -1,5 +1,5 @@
 /**
- * @file bfd.c
+ * @file
  * @brief Stacktrace functions (libbfd/binutils)
  */
 

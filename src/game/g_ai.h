@@ -1,5 +1,5 @@
 /**
- * @file g_ai.h
+ * @file
  * @brief Artificial Intelligence structures.
  */
 

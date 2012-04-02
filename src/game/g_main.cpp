@@ -1,5 +1,5 @@
 /**
- * @file g_main.c
+ * @file
  * @brief Main game functions.
  */
 

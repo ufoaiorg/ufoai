@@ -1,5 +1,5 @@
 /**
- * @file cl_hud_callbacks.h
+ * @file
  */
 
 /*

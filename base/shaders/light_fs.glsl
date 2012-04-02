@@ -1,5 +1,5 @@
 /**
- * @file light_fs.glsl
+ * @file
  * @brief Dynamic lighting fragment shader.
  */
 

@@ -1,5 +1,5 @@
 /**
- * @file ui_node_video.c
+ * @file
  * @todo add function to play/stop/pause
  * @todo fix fullscreen, looped video
  * @todo event when video end

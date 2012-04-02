@@ -1,5 +1,5 @@
 /**
- * @file r_gl.h
+ * @file
  * @brief OpenGL bindings
  */
 

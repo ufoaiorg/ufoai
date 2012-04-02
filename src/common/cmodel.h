@@ -1,5 +1,5 @@
 /**
- * @file cmodel.h
+ * @file
  * @brief Common model code header (for bsp and others)
  */
 

@@ -1,5 +1,5 @@
 /**
- * @file inv_shared.h
+ * @file
  * @brief common object-, inventory-, container- and firemode-related functions headers.
  */
 

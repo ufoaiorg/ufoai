@@ -1,5 +1,5 @@
 /**
- * @file lightmap.c
+ * @file
  */
 
 /*

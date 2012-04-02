@@ -1,5 +1,5 @@
 /**
- * @file cp_hospital_callbacks.h
+ * @file
  * @brief Header file for menu related console command callbacks
  */
 

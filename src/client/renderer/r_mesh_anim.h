@@ -1,5 +1,5 @@
 /**
- * @file r_mesh_anim.h
+ * @file
  */
 
 /*

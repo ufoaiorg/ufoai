@@ -1,5 +1,5 @@
 /**
- * @file r_model_alias.h
+ * @file
  * @brief Shared alias model functions
  */
 

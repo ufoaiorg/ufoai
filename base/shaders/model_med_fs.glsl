@@ -1,5 +1,5 @@
 /**
- * @file model_med_fs.glsl
+ * @file
  * @brief Medium quality battlescape model fragment shader.
  */
 

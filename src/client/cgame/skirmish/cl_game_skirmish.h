@@ -1,5 +1,5 @@
 /**
- * @file cl_game_skirmish.h
+ * @file
  * @brief Skirmish game type headers
  */
 

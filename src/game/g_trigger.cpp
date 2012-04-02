@@ -1,5 +1,5 @@
 /**
- * @file g_trigger.c
+ * @file
  * @brief Trigger functions
  */
 

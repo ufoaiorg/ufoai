@@ -1,5 +1,5 @@
 /**
- * @file clipboard.cpp
+ * @file
  * @brief Platform-independent GTK clipboard support.
  * @todo Using GDK_SELECTION_CLIPBOARD fails on win32, so we use the win32 API directly for now.
  */

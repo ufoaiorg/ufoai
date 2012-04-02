@@ -1,5 +1,5 @@
 /**
- * @file cl_game_multiplayer.h
+ * @file
  * @brief Multiplayer game type headers
  */
 

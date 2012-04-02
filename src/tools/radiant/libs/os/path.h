@@ -1,5 +1,5 @@
 /**
- * @file path.h
+ * @file
  * @brief OS file-system path comparison, decomposition and manipulation.
  * Paths are c-style null-terminated-character-arrays.
  * Path separators must be forward slashes (unix style).

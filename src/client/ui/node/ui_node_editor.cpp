@@ -1,5 +1,5 @@
 /**
- * @file ui_node_editor.c
+ * @file
  * @note type "ui_push editor" to use it, Escape button to close it, and "ui_extract" to extract a window to a script
  * @brief Editor is an invisible node used to create an edition mode. The edition mode
  * allow user to move and resize all visible nodes.

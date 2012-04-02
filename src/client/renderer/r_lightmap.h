@@ -1,5 +1,5 @@
 /**
- * @file r_lightmap.h
+ * @file
  * @brief lightmap definitions
  */
 

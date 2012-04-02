@@ -1,5 +1,5 @@
 /**
- * @file trace.c
+ * @file
  * @brief The major lighting operation is a point to point visibility test, performed
  * by recursive subdivision of the line by the BSP tree.
  */

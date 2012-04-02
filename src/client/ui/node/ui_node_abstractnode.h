@@ -1,5 +1,5 @@
 /**
- * @file ui_node_abstractnode.h
+ * @file
  */
 
 /*

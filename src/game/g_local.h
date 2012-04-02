@@ -1,5 +1,5 @@
 /**
- * @file g_local.h
+ * @file
  * @brief Local definitions for game module
  */
 

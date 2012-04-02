@@ -1,5 +1,5 @@
 /**
- * @file cp_alien_interest.c
+ * @file
  * @brief Alien interest values influence the campaign actions
  */
 

@@ -1,5 +1,5 @@
 /**
- * @file cp_alienbase.c
+ * @file
  * @brief Alien base related functions
  */
 

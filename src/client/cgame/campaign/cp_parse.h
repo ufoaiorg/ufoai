@@ -1,5 +1,5 @@
 /**
- * @file cp_parse.h
+ * @file
  * @brief Campaign parsing header
  */
 

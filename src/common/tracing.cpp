@@ -1,5 +1,5 @@
 /**
- * @file tracing.c
+ * @file
  * @brief model tracing and bounding
  * @note collision detection code
  */

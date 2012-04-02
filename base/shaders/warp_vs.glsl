@@ -1,5 +1,5 @@
 /**
- * @file warp_vs.glsl
+ * @file
  * @brief Warp vertex shader.
  */
 

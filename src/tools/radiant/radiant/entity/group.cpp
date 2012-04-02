@@ -1,5 +1,5 @@
 /**
- * @file group.cpp
+ * @file
  * @brief Represents any entity which does not have a fixed size specified in its entity-definition (except misc_model).
  * This entity behaves as a group, i.e. it contains brushes.
  */

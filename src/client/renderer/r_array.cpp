@@ -1,5 +1,5 @@
 /**
- * @file r_array.c
+ * @file
  * @brief Arrays are "lazily" managed to reduce glArrayPointer calls. Drawing routines
  * should call R_SetArrayState or R_ResetArrayState somewhat early-on.
  */

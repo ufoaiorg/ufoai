@@ -1,5 +1,5 @@
 /**
- * @file texwindow.cpp
+ * @file
  * @brief Texture Window
  * @author Leonardo Zide (leo@lokigames.com)
  */

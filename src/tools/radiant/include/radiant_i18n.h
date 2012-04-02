@@ -1,5 +1,5 @@
 /**
- * @file radiant_i18n.h
+ * @file
  */
 
 /*

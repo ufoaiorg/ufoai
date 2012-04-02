@@ -1,5 +1,5 @@
 /**
- * @file cp_nation.c
+ * @file
  * @brief Nation code
  * @note Functions with NAT_*
  */

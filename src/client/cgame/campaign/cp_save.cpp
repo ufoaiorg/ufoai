@@ -1,5 +1,5 @@
 /**
- * @file cp_save.c
+ * @file
  * @brief Implements savegames
  */
 

@@ -1,5 +1,5 @@
 /**
- * @file test_ui.c
+ * @file
  * @brief Test cases for code below client/ui/ when the global UI "engine" is started
  */
 

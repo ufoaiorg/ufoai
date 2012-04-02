@@ -1,5 +1,5 @@
 /**
- * @file ui_components.c
+ * @file
  */
 
 /*

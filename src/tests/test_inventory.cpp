@@ -1,5 +1,5 @@
 /**
- * @file test_inventory.c
+ * @file
  */
 
 /*

@@ -1,5 +1,5 @@
 /**
- * @file ui_node_abstractnode.c
+ * @file
  * @brief Every node extends this node
  */
 

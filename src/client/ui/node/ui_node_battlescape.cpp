@@ -1,5 +1,5 @@
 /**
- * @file ui_node_battlescape.c
+ * @file
  * @brief The <code>battlescape</code> node identify the part of the screen the engine
  * use to render battlescape map
  * @todo Maybe we should capture the input with it, instead of using client namespace MS_*

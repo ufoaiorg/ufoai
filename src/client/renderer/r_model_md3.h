@@ -1,5 +1,5 @@
 /**
- * @file r_model_md3.h
+ * @file
  * @brief md3 alias model loading
  */
 

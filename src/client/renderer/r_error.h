@@ -1,5 +1,5 @@
 /**
- * @file r_error.h
+ * @file
  * @brief Error checking function
  */
 

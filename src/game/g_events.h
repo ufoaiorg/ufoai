@@ -1,5 +1,5 @@
 /**
- * @file g_events.h
+ * @file
  * @brief Event related headers
  */
 

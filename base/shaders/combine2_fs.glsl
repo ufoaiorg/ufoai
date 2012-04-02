@@ -1,5 +1,5 @@
 /**
- * @file combine2_fs.glsl
+ * @file
  * @brief combine2 fragment shader.
  */
 

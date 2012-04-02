@@ -1,5 +1,5 @@
 /**
- * @file cp_hospital.h
+ * @file
  * @brief Header file for hospital related stuff
  */
 

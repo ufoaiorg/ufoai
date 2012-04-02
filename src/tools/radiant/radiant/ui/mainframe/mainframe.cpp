@@ -1,5 +1,5 @@
 /**
- * @file mainframe.cpp
+ * @file
  * @brief Main Window for UFORadiant
  * @note Creates the editing windows and dialogs, creates commands and
  * registers preferences as well as handling internal paths

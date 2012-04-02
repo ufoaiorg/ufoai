@@ -1,5 +1,5 @@
 /**
- * @file test_parser.c
+ * @file
  * @brief Test cases for code about shared parser
  */
 

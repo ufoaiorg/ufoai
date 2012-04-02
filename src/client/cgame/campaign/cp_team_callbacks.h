@@ -1,5 +1,5 @@
 /**
- * @file cp_team_callbacks.h
+ * @file
  * @brief Menu related callback functions for the team menu
  */
 

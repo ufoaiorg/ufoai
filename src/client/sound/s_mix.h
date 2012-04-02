@@ -1,5 +1,5 @@
 /**
- * @file s_mix.h
+ * @file
  * @brief Specifies sound API?
  */
 

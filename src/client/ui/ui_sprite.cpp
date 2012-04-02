@@ -1,5 +1,5 @@
 /**
- * @file ui_sprite.c
+ * @file
  */
 
 /*

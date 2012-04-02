@@ -1,5 +1,5 @@
 /**
- * @file itextstream.h
+ * @file
  */
 
 /*

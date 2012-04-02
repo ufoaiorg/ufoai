@@ -1,5 +1,5 @@
 /**
- * @file cp_hospital_callbacks.c
+ * @file
  */
 
 /*

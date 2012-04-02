@@ -1,5 +1,5 @@
 /**
- * @file cp_uforecovery_callbacks.h
+ * @file
  * @brief UFO recovery and storing callback header file
  */
 

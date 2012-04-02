@@ -1,5 +1,5 @@
 /**
- * @file g_combat.c
+ * @file
  * @brief All parts of the main game logic that are combat related
  */
 

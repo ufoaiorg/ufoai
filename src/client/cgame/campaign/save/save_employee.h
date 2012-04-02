@@ -1,5 +1,5 @@
 /**
- * @file save_employee.h
+ * @file
  * @brief XML tag constants for savegame.
  */
 

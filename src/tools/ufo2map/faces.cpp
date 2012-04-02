@@ -1,5 +1,5 @@
 /**
- * @file faces.c
+ * @file
  * @note some faces will be removed before saving, but still form nodes:
  * meeting planes of different water current volumes
  */

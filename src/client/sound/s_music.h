@@ -1,5 +1,5 @@
 /**
- * @file s_music.h
+ * @file
  * @brief Specifies music API
  */
 

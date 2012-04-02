@@ -1,5 +1,5 @@
 /**
- * @file cp_produce_callbacks.c
+ * @file
  * @brief Menu related callback functions used for production.
  */
 

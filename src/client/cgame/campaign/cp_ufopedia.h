@@ -1,5 +1,5 @@
 /**
- * @file cp_ufopedia.h
+ * @file
  * @brief Header file for UFOpaedia script interpreter.
  */
 

@@ -1,5 +1,5 @@
 /**
- * @file mathlib.c
+ * @file
  * @brief math primitives
  */
 

@@ -1,5 +1,5 @@
 /**
- * @file generic.cpp
+ * @file
  * @brief Represents any entity which has a fixed size specified in its entity-definition and does not display a model (e.g. info_player_start).
  *
  * This entity displays an axis-aligned bounding box of the size and colour specified in its entity-definition.

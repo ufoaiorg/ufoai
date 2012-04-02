@@ -1,5 +1,5 @@
 /**
- * @file LevelFilter.cpp
+ * @file
  */
 
 /*

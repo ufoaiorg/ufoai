@@ -1,5 +1,5 @@
 /**
- * @file cp_employee_callbacks.c
+ * @file
  * @brief Header file for menu callback functions used for hire/employee menu
  */
 

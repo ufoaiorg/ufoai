@@ -1,5 +1,5 @@
 /**
- * @file netpack.c
+ * @file
  */
 
 /*

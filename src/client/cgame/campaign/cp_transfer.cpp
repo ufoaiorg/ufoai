@@ -1,5 +1,5 @@
 /**
- * @file cp_transfer.c
+ * @file
  * @brief Deals with the Transfer stuff.
  * @note Transfer menu functions prefix: TR_
  * @todo Remove direct access to nodes

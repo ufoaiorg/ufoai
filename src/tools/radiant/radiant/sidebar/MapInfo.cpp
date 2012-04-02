@@ -1,5 +1,5 @@
 /**
- * @file mapinfo.cpp
+ * @file
  * @brief Map Information sidebar widget
  */
 

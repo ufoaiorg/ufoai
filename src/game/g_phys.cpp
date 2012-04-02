@@ -1,5 +1,5 @@
 /**
- * @file g_phys.c
+ * @file
  * @brief Misc physic functions
  * @note G_PhysicsRun is called every frame to handle physics stuff
  */

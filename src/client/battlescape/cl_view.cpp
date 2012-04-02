@@ -1,5 +1,5 @@
 /**
- * @file cl_view.c
+ * @file
  * @brief Player rendering positioning.
  */
 

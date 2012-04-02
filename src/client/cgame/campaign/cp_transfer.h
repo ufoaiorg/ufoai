@@ -1,5 +1,5 @@
 /**
- * @file cp_transfer.h
+ * @file
  * @brief Header file for Transfer stuff.
  */
 

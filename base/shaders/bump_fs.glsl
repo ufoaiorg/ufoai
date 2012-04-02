@@ -1,5 +1,5 @@
 /**
- * @file bump_fs.glsl
+ * @file
  * @brief Bumpmap fragment shader.
  */
 

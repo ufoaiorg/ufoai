@@ -1,5 +1,5 @@
 /**
- * @file convolve5_fs.glsl
+ * @file
  * @brief convolve5 fragment shader.
  */
 

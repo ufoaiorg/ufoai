@@ -1,5 +1,5 @@
 /**
- * @file patches.c
+ * @file
  */
 
 /*

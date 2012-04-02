@@ -1,5 +1,5 @@
 /**
- * @file save_nation.h
+ * @file
  * @brief XML tag constants for savegame.
  */
 

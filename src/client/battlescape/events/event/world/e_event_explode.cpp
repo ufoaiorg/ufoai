@@ -1,5 +1,5 @@
 /**
- * @file e_event_explode.c
+ * @file
  */
 
 /*

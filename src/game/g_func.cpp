@@ -1,5 +1,5 @@
 /**
- * @file g_func.c
+ * @file
  * @brief func_* edicts
  */
 

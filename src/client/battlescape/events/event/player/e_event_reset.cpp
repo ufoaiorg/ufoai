@@ -1,5 +1,5 @@
 /**
- * @file e_event_reset.c
+ * @file
  */
 
 /*

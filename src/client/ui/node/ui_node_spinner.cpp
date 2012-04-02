@@ -1,5 +1,5 @@
 /**
- * @file ui_node_spinner.c
+ * @file
  * @brief The spinner node is a vertical widget used to change a value.
  */
 

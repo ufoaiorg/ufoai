@@ -1,5 +1,5 @@
 /**
- * @file cp_team.h
+ * @file
  * @brief Team management for the campaign gametype headers
  */
 

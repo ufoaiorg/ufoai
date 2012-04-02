@@ -1,5 +1,5 @@
 /**
- * @file ui_node_zone.h
+ * @file
  */
 
 /*

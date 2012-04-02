@@ -1,5 +1,5 @@
 /**
- * @file ui_windows.h
+ * @file
  */
 
 /*

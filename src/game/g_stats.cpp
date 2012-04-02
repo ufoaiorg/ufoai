@@ -1,5 +1,5 @@
 /**
- * @file g_stats.c
+ * @file
  */
 
 /*

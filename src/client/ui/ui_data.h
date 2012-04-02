@@ -1,5 +1,5 @@
 /**
- * @file ui_data.h
+ * @file
  * @brief Data and interface to share data
  * @todo clean up the interface
  */

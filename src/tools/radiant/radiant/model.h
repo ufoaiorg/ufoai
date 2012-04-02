@@ -1,5 +1,5 @@
 /**
- * @file /radiant/radiant/model.h
+ * @file
  */
 
 /*

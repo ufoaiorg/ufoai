@@ -1,5 +1,5 @@
 /**
- * @file lerp_vs.glsl
+ * @file
  * @brief Lerp vertex shader.
  */
 

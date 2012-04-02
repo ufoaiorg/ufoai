@@ -1,5 +1,5 @@
 /**
- * @file r_model_obj.h
+ * @file
  * @brief obj model loading
  */
 

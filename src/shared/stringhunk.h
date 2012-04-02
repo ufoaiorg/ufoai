@@ -1,5 +1,5 @@
 /**
- * @file stringhunk.h
+ * @file
  * @brief Header for string hunk management
  */
 

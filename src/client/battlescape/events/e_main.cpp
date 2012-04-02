@@ -1,5 +1,5 @@
 /**
- * @file e_main.c
+ * @file
  */
 
 /*

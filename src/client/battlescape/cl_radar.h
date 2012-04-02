@@ -1,5 +1,5 @@
 /**
- * @file cl_radar.h
+ * @file
  * @brief Battlescape radar header
  */
 

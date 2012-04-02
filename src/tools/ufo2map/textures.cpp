@@ -1,5 +1,5 @@
 /**
- * @file textures.c
+ * @file
  */
 
 /*

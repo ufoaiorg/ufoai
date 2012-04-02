@@ -1,5 +1,5 @@
 /**
- * @file cl_game_team.c
+ * @file
  * @brief cgame team management.
  */
 

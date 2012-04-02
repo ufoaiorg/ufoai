@@ -1,5 +1,5 @@
 /**
- * @file ui_node_data.c
+ * @file
  * @brief The <code>data</code> behaviour allow to store string/float number/integer into a node.
  * Is is a vistual node which is not displayed nor activable by input device like mouse.
  * The node can store 3 types, which have no relations together.

@@ -1,5 +1,5 @@
 /**
- * @file win_local.h
+ * @file
  * @brief Win32-specific UFO header file
  */
 

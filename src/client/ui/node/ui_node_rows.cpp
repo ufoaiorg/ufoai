@@ -1,5 +1,5 @@
 /**
- * @file ui_node_panel.c
+ * @file
  * @todo clean up all properties
  */
 

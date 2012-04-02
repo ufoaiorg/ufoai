@@ -1,5 +1,5 @@
 /**
- * @file cp_building.c
+ * @file
  * @brief Base building related stuff.
  */
 

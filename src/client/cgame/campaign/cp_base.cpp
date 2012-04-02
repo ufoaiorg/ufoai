@@ -1,5 +1,5 @@
 /**
- * @file cp_base.c
+ * @file
  * @brief Handles everything that is located in or accessed trough a base.
  * @note Basemanagement functions prefix: B_
  * @note See "base/ufos/basemanagement.ufo" for the underlying content.

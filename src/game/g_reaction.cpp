@@ -1,5 +1,5 @@
 /**
- * @file g_reaction.c
+ * @file
  * @brief Reaction fire code
  * Reaction fire is involved in the following situations:
  * 1. G_ReactionFireOnMovement()

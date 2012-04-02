@@ -1,5 +1,5 @@
 /**
- * @file cl_menu.c
+ * @file
  * @brief Client menu functions.
  */
 

@@ -1,5 +1,5 @@
 /**
- * @file ui_node.cpp
+ * @file
  * @brief C interface to allow to access to cpp node code.
  */
 

@@ -1,5 +1,5 @@
 /**
- * @file ufo2map.c
+ * @file
  * @brief Starting point for map compiler
  */
 

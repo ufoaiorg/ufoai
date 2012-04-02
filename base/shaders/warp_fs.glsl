@@ -1,5 +1,5 @@
 /**
- * @file warp_fs.glsl
+ * @file
  * @brief Warp fragment shader.
  */
 

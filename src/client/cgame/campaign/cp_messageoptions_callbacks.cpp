@@ -1,5 +1,5 @@
 /**
- * @file cp_messageoptions_callbacks.c
+ * @file
  * @todo Remove direct access to nodes
  */
 

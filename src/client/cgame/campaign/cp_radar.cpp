@@ -1,5 +1,5 @@
 /**
- * @file cp_radar.c
+ * @file
  * @brief Radars / sensor stuff, to detect and track ufos
  */
 

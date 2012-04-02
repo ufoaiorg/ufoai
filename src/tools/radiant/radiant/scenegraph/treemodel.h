@@ -1,5 +1,5 @@
 /**
- * @file treemodel.h
+ * @file
  */
 
 /*

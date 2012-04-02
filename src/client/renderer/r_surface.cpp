@@ -1,5 +1,5 @@
 /**
- * @file r_surface.c
+ * @file
  * @brief surface-related refresh code
  */
 

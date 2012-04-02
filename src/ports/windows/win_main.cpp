@@ -1,5 +1,5 @@
 /**
- * @file win_main.c
+ * @file
  * @brief Windows system functions
  */
 

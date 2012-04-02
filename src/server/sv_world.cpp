@@ -1,5 +1,5 @@
 /**
- * @file sv_world.c
+ * @file
  * @brief World query functions.
  */
 

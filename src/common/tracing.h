@@ -1,5 +1,5 @@
 /**
- * @file tracing.h
+ * @file
  * @brief Tracing functions
  */
 

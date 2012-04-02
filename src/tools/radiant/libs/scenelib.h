@@ -1,5 +1,5 @@
 /**
- * @file scenelib.h
+ * @file
  */
 
 /*

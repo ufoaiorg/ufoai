@@ -1,5 +1,5 @@
 /**
- * @file cp_aircraft.c
+ * @file
  * @brief Most of the aircraft related stuff.
  * @sa cl_airfight.c
  * @note Aircraft management functions prefix: AIR_

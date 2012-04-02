@@ -1,5 +1,5 @@
 /**
- * @file r_model.c
+ * @file
  * @brief model loading and caching
  */
 

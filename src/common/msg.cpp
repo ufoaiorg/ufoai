@@ -1,5 +1,5 @@
 /**
- * @file msg.c
+ * @file
  * @brief Message IO functions - handles size buffers
  */
 

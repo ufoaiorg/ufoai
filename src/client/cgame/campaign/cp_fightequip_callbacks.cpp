@@ -1,5 +1,5 @@
 /**
- * @file cp_fightequip_callbacks.c
+ * @file
  * @brief Header file for menu callback functions used for base and aircraft equip menu
  */
 

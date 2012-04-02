@@ -1,5 +1,5 @@
 /**
- * @file ui_node_todo.c
+ * @file
  * @brief A node allowing to tag a GUI with comment (only visible on debug mode).
  */
 

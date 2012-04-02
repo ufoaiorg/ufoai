@@ -1,5 +1,5 @@
 /**
- * @file cl_ugv.c
+ * @file
  * @brief Unmanned ground vehicle related routines.
  */
 

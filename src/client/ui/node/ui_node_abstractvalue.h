@@ -1,5 +1,5 @@
 /**
- * @file ui_node_abstractvalue.h
+ * @file
  * @brief Define common thing for GUI controls which allow to
  * edit a value (scroolbar, spinner, and more)
  */

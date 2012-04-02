@@ -1,5 +1,5 @@
 /**
- * @file test_game.c
+ * @file
  * @brief Test cases for code about server game logic
  */
 

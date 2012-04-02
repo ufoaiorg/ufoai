@@ -1,5 +1,5 @@
 /**
- * @file r_model.h
+ * @file
  * @brief Brush model header file
  * @note d*_t structures are on-disk representations
  * @note m*_t structures are in-memory

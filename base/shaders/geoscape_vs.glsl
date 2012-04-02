@@ -1,5 +1,5 @@
 /**
- * @file geoscape_vs.glsl
+ * @file
  * @brief Geoscape vertex shader.
  */
 

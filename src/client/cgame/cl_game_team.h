@@ -1,5 +1,5 @@
 /**
- * @file cl_game_team.h
+ * @file
  * @brief cgame team management headers.
  */
 

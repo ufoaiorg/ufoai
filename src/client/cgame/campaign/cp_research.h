@@ -1,5 +1,5 @@
 /**
- * @file cp_research.h
+ * @file
  * @brief Header for research related stuff.
  */
 

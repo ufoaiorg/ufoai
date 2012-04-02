@@ -1,5 +1,5 @@
 /**
- * @file findbrush.cpp
+ * @file
  * @brief Creates the findbrush widget and select the brush (if found)
  */
 

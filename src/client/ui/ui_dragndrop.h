@@ -1,5 +1,5 @@
 /**
- * @file ui_dragndrop.h
+ * @file
  */
 
 /*

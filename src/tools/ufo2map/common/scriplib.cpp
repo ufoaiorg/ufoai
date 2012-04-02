@@ -1,5 +1,5 @@
 /**
- * @file scriplib.c
+ * @file
  * @todo Remove this and use parse.c
  */
 

@@ -1,5 +1,5 @@
 /**
- * @file cp_base_callbacks.c
+ * @file
  * @brief Menu related console command callbacks
  */
 

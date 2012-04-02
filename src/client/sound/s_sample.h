@@ -1,5 +1,5 @@
 /**
- * @file s_sample.h
+ * @file
  */
 
 /*

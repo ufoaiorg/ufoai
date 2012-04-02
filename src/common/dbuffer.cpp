@@ -1,5 +1,5 @@
 /**
- * @file dbuffer.c
+ * @file
  * @brief A dbuffer is a dynamically sized buffer that stores arbitrary bytes
  * in a queue. It does not provide random access; characters may be
  * inserted only at the end and removed only from the beginning.

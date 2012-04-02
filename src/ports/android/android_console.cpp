@@ -1,5 +1,5 @@
 /**
- * @file android_console.c
+ * @file
  * @brief console functions for andriod ports
  */
 

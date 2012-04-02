@@ -1,5 +1,5 @@
 /**
- * @file bsp.h
+ * @file
  */
 
 /*

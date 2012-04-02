@@ -1,5 +1,5 @@
 /**
- * @file scripts.h
+ * @file
  * @brief Header for script parsing functions
  */
 

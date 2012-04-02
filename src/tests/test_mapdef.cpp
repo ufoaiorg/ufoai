@@ -1,5 +1,5 @@
 /**
- * @file test_mapdef.c
+ * @file
  * @brief Test cases for the mapdef code and loading the related maps
  */
 

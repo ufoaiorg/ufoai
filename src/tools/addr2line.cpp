@@ -1,5 +1,5 @@
 /**
- * @file addr2line.c
+ * @file
  * @note Derived from addr2line.c and associated binutils files, version 2.18.
  */
 

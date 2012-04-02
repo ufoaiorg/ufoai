@@ -1,5 +1,5 @@
 /**
- * @file g_edicts.c
+ * @file
  * @brief functions to handle the storage of all edicts in the game module.
  */
 

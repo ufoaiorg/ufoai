@@ -1,5 +1,5 @@
 /**
- * @file cp_auto_mission.h
+ * @file
  * @brief Header file for single player automatic (quick, simulated) missions,
  * without going to the battlescape.
  */

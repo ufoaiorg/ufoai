@@ -1,5 +1,5 @@
 /**
- * @file ui_behaviour.h
+ * @file
  */
 
 /*

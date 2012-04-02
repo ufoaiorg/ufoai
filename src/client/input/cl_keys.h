@@ -1,5 +1,5 @@
 /**
- * @file cl_keys.h
+ * @file
  * @brief Header file for keyboard handler.
  */
 

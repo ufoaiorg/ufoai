@@ -1,5 +1,5 @@
 /**
- * @file stringhunk.c
+ * @file
  * @brief String hunk management
  */
 

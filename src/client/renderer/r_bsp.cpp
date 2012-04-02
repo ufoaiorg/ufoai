@@ -1,5 +1,5 @@
 /**
- * @file r_bsp.c
+ * @file
  * @brief BSP model code
  */
 

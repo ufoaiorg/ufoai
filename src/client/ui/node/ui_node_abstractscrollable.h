@@ -1,5 +1,5 @@
 /**
- * @file ui_node_abstractscrollable.h
+ * @file
  * @brief base code for scrollable node
  */
 

@@ -1,5 +1,5 @@
 /**
- * @file r_model_dpm.c
+ * @file
  * @brief dpm alias model loading
  */
 

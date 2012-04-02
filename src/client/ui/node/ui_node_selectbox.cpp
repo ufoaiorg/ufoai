@@ -1,5 +1,5 @@
 /**
- * @file ui_node_selectbox.c
+ * @file
  * @todo manage disabled option
  * @code
  * selectbox texres_box

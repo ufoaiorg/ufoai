@@ -1,5 +1,5 @@
 /**
- * @file g_mission.c
+ * @file
  * @brief Mission related code - king of the hill and so on.
  */
 

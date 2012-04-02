@@ -1,5 +1,5 @@
 /**
- * @file mutex.c
+ * @file
  * @brief SDL mutex function wrappers
  */
 

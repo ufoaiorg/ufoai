@@ -1,5 +1,5 @@
 /**
- * @file sv_log.h
+ * @file
  * @brief game lib logging handling
  */
 

@@ -1,5 +1,5 @@
 /**
- * @file cl_joystick.h
+ * @file
  */
 
 /*

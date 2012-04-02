@@ -1,5 +1,5 @@
 /**
- * @file ui_node_zone.c
+ * @file
  * @brief The <code>zone</code> node allow to create an hidden active node.
  * Currently we only use it to support repeat mouse actions without merging
  * the code which managing this feature.

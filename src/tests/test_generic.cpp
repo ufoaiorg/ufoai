@@ -1,5 +1,5 @@
 /**
- * @file test_generic.c
+ * @file
  * @brief Test cases for code below common/ and shared/
  */
 

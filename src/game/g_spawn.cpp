@@ -1,5 +1,5 @@
 /**
- * @file g_spawn.c
+ * @file
  * @brief Brings new objects into the world.
  */
 

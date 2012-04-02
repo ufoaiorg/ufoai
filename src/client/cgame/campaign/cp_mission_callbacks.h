@@ -1,5 +1,5 @@
 /**
- * @file cp_mission_callbacks.h
+ * @file
  * @brief header file UI callbacks for missions.
  */
 

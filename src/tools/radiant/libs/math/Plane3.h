@@ -1,5 +1,5 @@
 /**
- * @file Plane3.h
+ * @file
  * @brief A plane in 3D space can be represented by a point and a normal vector.
  *
  * It is sufficient to specify four numbers to fully describe the plane: the three

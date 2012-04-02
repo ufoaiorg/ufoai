@@ -1,5 +1,5 @@
 /**
- * @file cp_hospital.c
+ * @file
  * @brief Most of the hospital related stuff
  * @note Hospital functions prefix: HOS_
  */

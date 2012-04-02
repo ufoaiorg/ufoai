@@ -1,5 +1,5 @@
 /**
- * @file fog_vs.glsl
+ * @file
  * @brief Fog vertex shader.
  */
 

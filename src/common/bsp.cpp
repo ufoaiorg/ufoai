@@ -1,5 +1,5 @@
 /**
- * @file common/bsp.c
+ * @file
  * @brief bsp model loading
  */
 

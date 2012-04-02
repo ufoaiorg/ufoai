@@ -1,5 +1,5 @@
 /**
- * @file ui_node_spinner.c
+ * @file
  * @brief The spinner2 node is a vertical widget used to change a numerical value.
  *
  * It use 3 sprites to display the node: A sprite for the background, a sprite

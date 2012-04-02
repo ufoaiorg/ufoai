@@ -1,5 +1,5 @@
 /**
- * @file ui_node_window.c
+ * @file
  * @todo move it as an inheritance of panel behaviour?
  */
 

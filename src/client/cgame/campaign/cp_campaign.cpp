@@ -1,5 +1,5 @@
 /**
- * @file cp_campaign.c
+ * @file
  * @brief Single player campaign control.
  */
 

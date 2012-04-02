@@ -1,5 +1,5 @@
 /**
- * @file tree.c
+ * @file
  */
 
 /*

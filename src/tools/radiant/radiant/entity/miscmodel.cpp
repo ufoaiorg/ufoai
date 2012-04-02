@@ -1,5 +1,5 @@
 /**
- * @file miscmodel.cpp
+ * @file
  * @brief Represents the misc_model entity.
  * This entity displays the model specified in its "model" key.
  * The "origin", "angles" and "modelscale_vec" keys directly control the entity's local-to-parent transform.

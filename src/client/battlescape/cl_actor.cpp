@@ -1,5 +1,5 @@
 /**
- * @file cl_actor.c
+ * @file
  * @brief Actor related routines.
  */
 

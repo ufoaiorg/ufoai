@@ -1,5 +1,5 @@
 /**
- * @file r_array.h
+ * @file
  */
 
 /*

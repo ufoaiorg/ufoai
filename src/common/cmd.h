@@ -1,5 +1,5 @@
 /**
- * @file cmd.h
+ * @file
  * @brief Command text buffering and command execution header
  * @note Any number of commands can be added in a frame, from several different sources.
  * Most commands come from either keyBindings or console line input, but remote

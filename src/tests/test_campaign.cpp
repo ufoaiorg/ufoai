@@ -1,5 +1,5 @@
 /**
- * @file test_campaign.c
+ * @file
  * @brief Test cases for the campaign code
  */
 

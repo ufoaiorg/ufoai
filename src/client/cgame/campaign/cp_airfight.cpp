@@ -1,5 +1,5 @@
 /**
- * @file cp_airfight.c
+ * @file
  * @brief Airfight related stuff.
  * @todo Somehow i need to know which alien race was in the ufo we shoot down
  * I need this info for spawning the crash site @sa CP_CreateBattleParameters

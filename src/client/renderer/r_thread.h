@@ -1,5 +1,5 @@
 /**
- * @file r_thread.h
+ * @file
  */
 
 /*

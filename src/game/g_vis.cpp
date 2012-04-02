@@ -1,5 +1,5 @@
 /**
- * @file g_vis.c
+ * @file
  */
 
 /*

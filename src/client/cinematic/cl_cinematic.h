@@ -1,5 +1,5 @@
 /**
- * @file cl_cinematic.h
+ * @file
  * @brief Header file for cinematics
  */
 

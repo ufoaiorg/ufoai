@@ -1,5 +1,5 @@
 /**
- * @file cl_screen.h
+ * @file
  * @brief Header for certain screen operations.
  */
 

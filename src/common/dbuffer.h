@@ -23,7 +23,8 @@ struct dbuffer;
 
 #include <sys/types.h>
 
-/** @file dbuffer.h
+/**
+ * @file
  * @brief Data buffers (struct dbuffer)
  */
 

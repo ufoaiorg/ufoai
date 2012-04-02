@@ -1,5 +1,5 @@
 /**
- * @file fog_fs.glsl
+ * @file
  * @brief Fog fragment shader.
  */
 

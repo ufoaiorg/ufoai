@@ -1,5 +1,5 @@
 /**
- * @file cp_messageoptions.h
+ * @file
  * @brief Header file for messageoptions related stuff
  */
 

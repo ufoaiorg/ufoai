@@ -1,5 +1,5 @@
 /**
- * @file cp_popup.h
+ * @file
  */
 
 /*

@@ -1,5 +1,5 @@
 /**
- * @file ui_node_tab.c
+ * @file
  * @todo auto tooltip for chopped options
  */
 

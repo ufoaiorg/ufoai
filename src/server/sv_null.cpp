@@ -1,5 +1,5 @@
 /**
- * @file sv_null.c
+ * @file
  * @brief Stub out the entire server system for pure net-only clients.
  *
  * NOTE: This code is currently not in use and is not compiled.

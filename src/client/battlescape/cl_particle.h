@@ -1,5 +1,5 @@
 /**
- * @file cl_particle.h
+ * @file
  */
 
 /*

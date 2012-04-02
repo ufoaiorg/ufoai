@@ -1,5 +1,5 @@
 /**
- * @file lighting.c
+ * @file
  * @note every surface must be divided into at least two patches each axis
  */
 

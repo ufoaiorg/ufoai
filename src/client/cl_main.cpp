@@ -1,5 +1,5 @@
 /**
- * @file cl_main.c
+ * @file
  * @brief Primary functions for the client. NB: The main() is system-specific and can currently be found in ports/.
  */
 

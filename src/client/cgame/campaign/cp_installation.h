@@ -1,5 +1,5 @@
 /**
- * @file cp_installation.h
+ * @file
  * @brief Header for installation management related stuff.
  */
 

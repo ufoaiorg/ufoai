@@ -1,5 +1,5 @@
 /**
- * @file cgame.h
+ * @file
  * @brief Client game mode interface
  */
 

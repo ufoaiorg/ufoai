@@ -1,5 +1,5 @@
 /**
- * @file cl_screen.c
+ * @file
  * @brief Master for refresh, status bar, console, chat, notify, etc
  *
  * Full screen console.

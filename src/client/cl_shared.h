@@ -1,5 +1,5 @@
 /**
- * @file cl_shared.h
+ * @file
  * @brief Share stuff between the different cgame implementations
  */
 

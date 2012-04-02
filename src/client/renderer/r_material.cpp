@@ -1,5 +1,5 @@
 /**
- * @file r_material.c
+ * @file
  * @brief Material related code
  */
 

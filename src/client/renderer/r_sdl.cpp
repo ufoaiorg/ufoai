@@ -1,5 +1,5 @@
 /**
- * @file r_sdl.c
+ * @file
  * @brief This file contains SDL specific stuff having to do with the OpenGL refresh
  */
 

@@ -1,5 +1,5 @@
 /**
- * @file atmosphere_fs.glsl
+ * @file
  * @brief Atmosphere fragment shader.
  */
 

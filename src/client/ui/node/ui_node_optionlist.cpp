@@ -1,5 +1,5 @@
 /**
- * @file ui_node_optionlist.c
+ * @file
  * @todo manage disabled option
  */
 

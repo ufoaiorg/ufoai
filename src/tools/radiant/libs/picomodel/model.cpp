@@ -1,5 +1,5 @@
 /**
- * @file model.cpp
+ * @file
  */
 
 /*

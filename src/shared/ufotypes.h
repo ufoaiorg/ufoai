@@ -1,5 +1,5 @@
 /**
- * @file ufotypes.h
+ * @file
  * @brief Cross-platform type definitions.
  *
  * For compilers that provide it, includes C99 inttypes.h for defining integer types.

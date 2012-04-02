@@ -1,5 +1,5 @@
 /**
- * @file scp_missions.h
+ * @file
  * @brief Singleplayer static campaign mission header
  */
 

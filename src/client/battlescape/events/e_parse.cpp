@@ -1,5 +1,5 @@
 /**
- * @file e_parse.c
+ * @file
  * @section eventformat Event format identifiers
  * id	| type		| length (bytes)
  *======================================
