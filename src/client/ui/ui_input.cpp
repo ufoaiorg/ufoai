@@ -606,6 +606,7 @@ static void UI_LeftClick (int x, int y)
 	/* if we click outside a dropdown window, we close it */
 	/** @todo need to refactoring it with the focus code (cleaner) */
 	/** @todo at least should be moved on the mouse down event (when the focus should change) */
+	/** @todo this code must be on mouse down */
 	if (!hoveredNode && ui_global.windowStackPos != 0) {
 		uiNode_t *window = ui_global.windowStack[ui_global.windowStackPos - 1];
 		if (UI_WindowIsDropDown(window)) {
@@ -694,6 +695,8 @@ void UI_MouseScroll (int deltaX, int deltaY)
 	}
 }
 
+static uiNode_t *pressedNode;
+
 /**
  * @brief Called when we are in UI mode and down a mouse button
  * @sa UI_LeftClick
@@ -712,18 +715,11 @@ void UI_MouseDown (int x, int y, int button)
 		UI_Node_MouseDown(node, x, y, button);
 	}
 
-	/* click event */
-	/** @todo should be send this event when the mouse up (after a down on the same node) */
-	switch (button) {
-	case K_MOUSE1:
-		UI_LeftClick(x, y);
-		break;
-	case K_MOUSE2:
-		UI_RightClick(x, y);
-		break;
-	case K_MOUSE3:
-		UI_MiddleClick(x, y);
-		break;
+	/* select clickableNode on button up, and detect multipress button */
+	if (pressedNode == NULL) {
+		pressedNode = node;
+	} else {
+		pressedNode = NULL;
 	}
 }
 
@@ -736,6 +732,22 @@ void UI_MouseDown (int x, int y, int button)
 void UI_MouseUp (int x, int y, int button)
 {
 	uiNode_t *node;
+
+	/* send click event */
+	if (pressedNode) {
+		switch (button) {
+		case K_MOUSE1:
+			UI_LeftClick(x, y);
+			break;
+		case K_MOUSE2:
+			UI_RightClick(x, y);
+			break;
+		case K_MOUSE3:
+			UI_MiddleClick(x, y);
+			break;
+		}
+	}
+	pressedNode = NULL;
 
 	/* captured or hover node */
 	node = capturedNode ? capturedNode : hoveredNode;
