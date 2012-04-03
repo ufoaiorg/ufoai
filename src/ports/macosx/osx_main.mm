@@ -26,35 +26,22 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #include <Cocoa/Cocoa.h>
 #include <SDL_main.h>
 #include <fcntl.h>
-#include <string.h>
 
 #include "../../common/common.h"
-#include "../system.h"
 
 
 /**
  * @brief Sets the current working directory to the top of the
  * application bundle hierarchy.
  */
-static void SetWorkingDirectory (char **argv)
+static void SetWorkingDirectory ()
 {
-	char newPath[MAX_OSPATH];
-	NSBundle *mainBundle;
-	int strLength = strlen(*argv);
-
-	Com_DPrintf(DEBUG_SYSTEM, "Path Length : %d \n", strLength);
-	mainBundle = [NSBundle mainBundle];
-
-	if (strLength >= sizeof(newPath)) {
-		Com_Printf("Path is too long. Please copy Bundle to a shorter path location \n");
+	if (NSBundle* const mainBundle = [NSBundle mainBundle]) {
+		char const* const newPath = [[mainBundle bundlePath] UTF8String];
+		Com_DPrintf(DEBUG_SYSTEM, "%s = new path\n", newPath);
+		chdir(newPath);
 	} else {
-		if (mainBundle != NULL) {
-			strncpy(newPath, [[mainBundle bundlePath] UTF8String], sizeof(newPath));
-			Com_DPrintf(DEBUG_SYSTEM, "%s = new path\n", newPath);
-			chdir(newPath);
-		} else {
-			Com_Printf("Main bundle appears to be NULL!\n");
-		}
+		Com_Printf("Main bundle appears to be NULL!\n");
 	}
 }
 
@@ -66,7 +53,7 @@ static void SetWorkingDirectory (char **argv)
  */
 int main (int argc, char **argv)
 {
-	SetWorkingDirectory(argv);
+	SetWorkingDirectory();
 
 	Sys_ConsoleInit();
 	Qcommon_Init(argc, argv);
