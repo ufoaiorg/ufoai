@@ -475,7 +475,7 @@ terrain tex_nature/rock007 {
 
 // wooden stairs
 terrain tex_material/wood002 {
-	footstepsound "footsteps/squeak_2"
+	footstepsound "footsteps/wood2"
 }
 
 // ==========================

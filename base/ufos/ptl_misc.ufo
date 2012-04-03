@@ -70,30 +70,26 @@ particle smokefield_smoke
 {
 	init
 	{
-		frame 0
-		endframe 3
 		image +sfx/smoke_
-		blend  replace
+		blend  blend
 		style  facing
 		thinkfade  out
-		rand   float 0.2
+		rand   float 0.2		// 1/lifetime
 		add    float 0.2
 		pop    *tps
-		crand  vector "12 12 4"
+		crand  vector "14 14 0"	// variance position
 		add    *s
 		pop    *s
-		rand   vector "0 0 54"
-		add    *s
-		pop    *s
-		crand  vector "2 2 0"
+		rand  vector "0 0 16"	// variance velocity
 		add    *v
+		pop    *v
 		physics true
 	}
 	run
 	{
 		push		pos "12 12"
 		mul			*t
-		add			pos "0.2 0.2"
+		add			pos "1 1"
 		pop			*size
 	}
 	think { kill }
