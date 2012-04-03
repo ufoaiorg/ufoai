@@ -410,7 +410,7 @@ char *Sys_GetHomeDirectory (void)
 		return NULL;
 	}
 
-	typedef HRESULT SHGetFolderPath_t(HWND, int, HANDLE, DWORD, LPSTR);
+	typedef HRESULT WINAPI SHGetFolderPath_t(HWND, int, HANDLE, DWORD, LPSTR);
 	SHGetFolderPath_t* const qSHGetFolderPath = (SHGetFolderPath_t*)GetProcAddress(shfolder, "SHGetFolderPathA");
 	if (qSHGetFolderPath == NULL) {
 		Com_Printf("Unable to find SHGetFolderPath in SHFolder.dll\n");
