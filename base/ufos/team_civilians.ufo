@@ -47,7 +47,7 @@ team africa
 			deathsound	civilians/civfemdeath02a
 		}
 		male {
-			hurtsound	civilians/malehurt01
+			hurtsound	civilians/malehurt02
 			hurtsound	civilians/malehurt02
 			hurtsound	civilians/malehurt03
 			hurtsound	civilians/malehurt04
@@ -98,7 +98,7 @@ team asia
 			deathsound	civilians/civfemdeath02a
 		}
 		male {
-			hurtsound	civilians/malehurt01
+			hurtsound	civilians/malehurt02
 			hurtsound	civilians/malehurt02
 			hurtsound	civilians/malehurt03
 			hurtsound	civilians/malehurt04
@@ -191,7 +191,7 @@ team europe
 			deathsound	civilians/civfemdeath02a
 		}
 		male {
-			hurtsound	civilians/malehurt01
+			hurtsound	civilians/malehurt02
 			hurtsound	civilians/malehurt02
 			hurtsound	civilians/malehurt03
 			hurtsound	civilians/malehurt04
@@ -246,7 +246,7 @@ team latin
 			deathsound	civilians/civfemdeath02a
 		}
 		male {
-			hurtsound	civilians/malehurt01
+			hurtsound	civilians/malehurt02
 			hurtsound	civilians/malehurt02
 			hurtsound	civilians/malehurt03
 			hurtsound	civilians/malehurt04
@@ -301,7 +301,7 @@ team middle
 			deathsound	civilians/civfemdeath02a
 		}
 		male {
-			hurtsound	civilians/malehurt01
+			hurtsound	civilians/malehurt02
 			hurtsound	civilians/malehurt02
 			hurtsound	civilians/malehurt03
 			hurtsound	civilians/malehurt04
@@ -394,7 +394,7 @@ team states
 			deathsound	civilians/civfemdeath02a
 		}
 		male {
-			hurtsound	civilians/malehurt01
+			hurtsound	civilians/malehurt02
 			hurtsound	civilians/malehurt02
 			hurtsound	civilians/malehurt03
 			hurtsound	civilians/malehurt04
@@ -448,7 +448,7 @@ team oceania
 			deathsound	civilians/civfemdeath02a
 		}
 		male {
-			hurtsound	civilians/malehurt01
+			hurtsound	civilians/malehurt02
 			hurtsound	civilians/malehurt02
 			hurtsound	civilians/malehurt03
 			hurtsound	civilians/malehurt04
@@ -527,7 +527,7 @@ team russia
 			deathsound	civilians/civfemdeath02a
 		}
 		male {
-			hurtsound	civilians/malehurt01
+			hurtsound	civilians/malehurt02
 			hurtsound	civilians/malehurt02
 			hurtsound	civilians/malehurt03
 			hurtsound	civilians/malehurt04
@@ -570,7 +570,7 @@ team armysoldier
 
 	actorsounds {
 		male {
-			hurtsound	civilians/malehurt01
+			hurtsound	civilians/malehurt02
 			hurtsound	civilians/malehurt02
 			hurtsound	civilians/malehurt03
 			hurtsound	civilians/malehurt04
@@ -608,7 +608,7 @@ team miner
 
 	actorsounds {
 		male {
-			hurtsound	civilians/malehurt01
+			hurtsound	civilians/malehurt02
 			hurtsound	civilians/malehurt02
 			hurtsound	civilians/malehurt03
 			hurtsound	civilians/malehurt04
@@ -660,7 +660,7 @@ team scientist
 			deathsound	civilians/civfemdeath02a
 		}
 		male {
-			hurtsound	civilians/malehurt01
+			hurtsound	civilians/malehurt02
 			hurtsound	civilians/malehurt02
 			hurtsound	civilians/malehurt03
 			hurtsound	civilians/malehurt04
@@ -701,7 +701,7 @@ team worker
 
 	actorsounds {
 		male {
-			hurtsound	civilians/malehurt01
+			hurtsound	civilians/malehurt02
 			hurtsound	civilians/malehurt02
 			hurtsound	civilians/malehurt03
 			hurtsound	civilians/malehurt04
