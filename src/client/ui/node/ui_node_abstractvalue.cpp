@@ -160,22 +160,22 @@ bool uiAbstractValueNode::decValue(struct uiNode_s *node)
 
 float uiAbstractValueNode::getMin (const struct uiNode_s *node)
 {
-	return UI_GetReferenceFloat(node, EXTRADATA(node).min);
+	return UI_GetReferenceFloat(node, EXTRADATACONST(node).min);
 }
 
 float uiAbstractValueNode::getMax (const struct uiNode_s *node)
 {
-	return UI_GetReferenceFloat(node, EXTRADATA(node).max);
+	return UI_GetReferenceFloat(node, EXTRADATACONST(node).max);
 }
 
 float uiAbstractValueNode::getDelta (const struct uiNode_s *node)
 {
-	return UI_GetReferenceFloat(node, EXTRADATA(node).delta);
+	return UI_GetReferenceFloat(node, EXTRADATACONST(node).delta);
 }
 
 float uiAbstractValueNode::getValue (const struct uiNode_s *node)
 {
-	return UI_GetReferenceFloat(node, EXTRADATA(node).value);
+	return UI_GetReferenceFloat(node, EXTRADATACONST(node).value);
 }
 
 /**
