@@ -294,8 +294,6 @@ int E_GetHiredEmployees (const base_t* const base, employeeType_t type, linkedLi
 		}
 	}
 
-	if (hiredEmployees == NULL)
-		return 0;
 	return LIST_Count(*hiredEmployees);
 }
 
