@@ -27,7 +27,7 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 
 
 class uiAbstractBaseNode : public uiLocatedNode {
-	void loaded(struct uiNode_s *node);
+	void loaded(struct uiNode_s *node) OVERRIDE;
 };
 
 class uiBaseMapNode : public uiAbstractBaseNode {
@@ -39,8 +39,8 @@ class uiBaseMapNode : public uiAbstractBaseNode {
 };
 
 class uiBaseLayoutNode : public uiAbstractBaseNode {
-	void draw(struct uiNode_s *node);
-	void loading(struct uiNode_s *node);
+	void draw(struct uiNode_s *node) OVERRIDE;
+	void loading(struct uiNode_s *node) OVERRIDE;
 };
 
 
