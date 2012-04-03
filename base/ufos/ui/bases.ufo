@@ -41,6 +41,16 @@ component panel cmpBuildingSpace
 		border	1
 		current	0
 		max		100
+		readonly	true
+
+		/* readd onHover effect of non-readonly bars */
+		/** @todo do we want this? */
+		onMouseEnter {
+			*node:this@color = "0 1 0 1"
+		}
+		onMouseLeave {
+			*node:this@color = "0 0.8 0 1"
+		}
 	}
 }
 
