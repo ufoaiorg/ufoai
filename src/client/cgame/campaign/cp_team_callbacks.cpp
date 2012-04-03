@@ -271,7 +271,7 @@ static void CP_AssignPilot_f (void)
 	if (!employeeList)
 		return;
 
-	employee = E_GetEmployeeByMenuIndex(num);
+	employee = (employee_t*)LIST_GetByIdx(employeeList, num);
 	if (!employee)
 		Com_Error(ERR_DROP, "CP_AssignPilot_f: No employee at list-pos %i (base: %i)", num, base->idx);
 
@@ -299,6 +299,7 @@ static void CP_AssignSoldier_f (void)
 	int relativeId = 0;
 	int num;
 	const employeeType_t employeeType = EMPL_SOLDIER;
+	employee_t *employee;
 
 	/* check syntax */
 	if (Cmd_Argc() < 2 || Cmd_Argc() > 3) {
@@ -321,9 +322,18 @@ static void CP_AssignSoldier_f (void)
 	if (!aircraft)
 		return;
 
-	AIM_AddEmployeeFromMenu(aircraft, num);
-	CP_UpdateActorAircraftVar(aircraft, employeeType);
+	employee = (employee_t*)LIST_GetByIdx(employeeList, num);
+	if (!employee)
+		Com_Error(ERR_DROP, "CP_AssignSoldier_f: Could not get employee %i", num);
 
+	if (AIR_IsEmployeeInAircraft(employee, aircraft)) {
+		AIR_RemoveEmployee(employee, aircraft);
+	} else {
+		/* Assign soldier to aircraft/team if aircraft is not full */
+		AIR_AddEmployee(employee, aircraft);
+	}
+
+	CP_UpdateActorAircraftVar(aircraft, employeeType);
 	UI_ExecuteConfunc("aircraft_status_change");
 	Cbuf_AddText(va("team_select %i %i\n", num - relativeId, relativeId));
 }
@@ -395,7 +405,7 @@ static void CP_ActorPilotSelect_f (void)
 		return;
 	}
 
-	employee = E_GetEmployeeByMenuIndex(num);
+	employee = (employee_t*)LIST_GetByIdx(employeeList, num);
 	if (!employee)
 		Com_Error(ERR_DROP, "CP_ActorPilotSelect_f: No employee at list-pos %i (base: %i)", num, base->idx);
 
@@ -435,7 +445,7 @@ static void CP_ActorTeamSelect_f (void)
 		return;
 	}
 
-	employee = E_GetEmployeeByMenuIndex(num);
+	employee = (employee_t*)LIST_GetByIdx(employeeList, num);
 	if (!employee)
 		Com_Error(ERR_DROP, "CP_ActorTeamSelect_f: No employee at list-pos %i (base: %i)", num, base->idx);
 
