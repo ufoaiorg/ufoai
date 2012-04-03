@@ -36,6 +36,8 @@ class uiBaseMapNode : public uiAbstractBaseNode {
 	void rightClick(struct uiNode_s *node, int x, int y) OVERRIDE;
 	void middleClick(struct uiNode_s *node, int x, int y) OVERRIDE;
 	void drawTooltip(struct uiNode_s *node, int x, int y) OVERRIDE;
+protected:
+	void getCellAtPos(const uiNode_t *node, int x, int y, int *col, int *row);
 };
 
 class uiBaseLayoutNode : public uiAbstractBaseNode {

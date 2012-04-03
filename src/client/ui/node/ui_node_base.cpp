@@ -100,7 +100,7 @@ void uiBaseLayoutNode::draw (uiNode_t * node)
  * @param[out] col Col of the cell at the position (-1 if no cell)
  * @param[out] row Row of the cell at the position (-1 if no cell)
  */
-static void UI_BaseMapGetCellAtPos (const uiNode_t *node, int x, int y, int *col, int *row)
+void uiBaseMapNode::getCellAtPos (const uiNode_t *node, int x, int y, int *col, int *row)
 {
 	assert(col);
 	assert(row);
@@ -192,7 +192,7 @@ void uiBaseMapNode::draw (uiNode_t * node)
 	if (!node->state)
 		return;
 
-	UI_BaseMapGetCellAtPos(node, mousePosX, mousePosY, &col, &row);
+	getCellAtPos(node, mousePosX, mousePosY, &col, &row);
 	if (col == -1)
 		return;
 
@@ -233,7 +233,7 @@ void uiBaseMapNode::drawTooltip (uiNode_t *node, int x, int y)
 	const int itemToolTipWidth = 250;
 	base_t *base = B_GetCurrentSelectedBase();
 
-	UI_BaseMapGetCellAtPos(node, x, y, &col, &row);
+	getCellAtPos(node, x, y, &col, &row);
 	if (col == -1)
 		return;
 
@@ -263,7 +263,7 @@ void uiBaseMapNode::leftClick (uiNode_t *node, int x, int y)
 	assert(node);
 	assert(node->root);
 
-	UI_BaseMapGetCellAtPos(node, x, y, &col, &row);
+	getCellAtPos(node, x, y, &col, &row);
 	if (col == -1)
 		return;
 
@@ -314,7 +314,7 @@ void uiBaseMapNode::rightClick (uiNode_t *node, int x, int y)
 	assert(node);
 	assert(node->root);
 
-	UI_BaseMapGetCellAtPos(node, x, y, &col, &row);
+	getCellAtPos(node, x, y, &col, &row);
 	if (col == -1)
 		return;
 	if (!base->map[row][col].building)
@@ -342,7 +342,7 @@ void uiBaseMapNode::middleClick (uiNode_t *node, int x, int y)
 	assert(node);
 	assert(node->root);
 
-	UI_BaseMapGetCellAtPos(node, x, y, &col, &row);
+	getCellAtPos(node, x, y, &col, &row);
 	if (col == -1)
 		return;
 
