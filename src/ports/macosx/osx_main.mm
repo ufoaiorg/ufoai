@@ -28,27 +28,9 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #include <fcntl.h>
 #include <string.h>
 
-#include <dlfcn.h>
-
 #include "../../common/common.h"
 #include "../system.h"
 
-
-/* ======================================================================= */
-/* General routines */
-/* ======================================================================= */
-
-static void InitCocoa (void)
-{
-	void (*nsappload)(void);
-	void* cocoa_lib;
-	/* @todo: Don't hardcode the path - let configure decide */
-	cocoa_lib = dlopen("/System/Library/Frameworks/Cocoa.framework/Cocoa", RTLD_LAZY);
-	if (!cocoa_lib)
-		Sys_Error("InitCocoa: Could not load cocoa framework\n");
-	nsappload = (void(*)()) dlsym(cocoa_lib, "NSApplicationLoad");
-	nsappload();
-}
 
 /**
  * @brief Sets the current working directory to the top of the
@@ -84,8 +66,6 @@ static void SetWorkingDirectory (char **argv)
  */
 int main (int argc, char **argv)
 {
-	InitCocoa();
-
 	SetWorkingDirectory(argv);
 
 	Sys_ConsoleInit();
