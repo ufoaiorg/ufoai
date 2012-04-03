@@ -23,33 +23,16 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 
 */
 
-#include <stdlib.h>
+#include <Cocoa/Cocoa.h>
+#include <SDL_main.h>
 #include <fcntl.h>
-#include <stdarg.h>
-#include <stdio.h>
 #include <string.h>
-#include <errno.h>
 
 #include <dlfcn.h>
 
 #include "../../common/common.h"
 #include "../system.h"
-#include "osx_main.h"
 
-@interface NSApplication(SDL_Missing_Methods)
-- (void)setAppleMenu:(NSMenu *)menu;
-@end
-
-
-typedef struct CPSProcessSerNum
-{
-	UInt32		lo;
-	UInt32		hi;
-} CPSProcessSerNum;
-
-extern OSErr CPSGetCurrentProcess(CPSProcessSerNum *psn);
-extern OSErr CPSEnableForegroundOperation(CPSProcessSerNum *psn, UInt32 _arg2, UInt32 _arg3, UInt32 _arg4, UInt32 _arg5);
-extern OSErr CPSSetFrontProcess(CPSProcessSerNum *psn);
 
 /* ======================================================================= */
 /* General routines */
@@ -92,10 +75,6 @@ static void SetWorkingDirectory (char **argv)
 		}
 	}
 }
-@implementation osx_main
-@end
-@implementation SDLApplication : NSApplication
-@end
 
 /**
  * @brief The entry point for OSX server and client.
@@ -103,24 +82,9 @@ static void SetWorkingDirectory (char **argv)
  * Inits the the program and calls Qcommon in an infinite loop.
  * FIXME: While this works, infinite loops are bad; one should not rely on exit() call; the program should be designed to fall through the bottom.
  */
-#ifdef main
-#undef main
-#endif
 int main (int argc, char **argv)
 {
-	/* create Autorelease Pool, to avoid Error Messages under MacOSX */
-	NSAutoreleasePool *pool = [[NSAutoreleasePool alloc] init];
-
 	InitCocoa();
-
-	[SDLApplication sharedApplication];
-	{
-		CPSProcessSerNum PSN;
-		if (!CPSGetCurrentProcess(&PSN))
-			if (!CPSEnableForegroundOperation(&PSN, 0x03, 0x3C, 0x2C, 0x1103))
-				if (!CPSSetFrontProcess(&PSN))
-					[SDLApplication sharedApplication];
-	}
 
 	SetWorkingDirectory(argv);
 
@@ -131,7 +95,5 @@ int main (int argc, char **argv)
 	while (1)
 		Qcommon_Frame();
 
-	/* Free the Release Pool resources */
-	[pool release];
 	return 0;
 }

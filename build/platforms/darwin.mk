@@ -5,7 +5,6 @@ SO_LIBS                  := -ldl
 
 CFLAGS                   += -D_BSD_SOURCE -D_XOPEN_SOURCE
 LDFLAGS                  += -framework IOKit -framework Foundation -framework Cocoa
-LDFLAGS                  += -rdynamic
 
 ### most mac users will have their additional libs and headers under /opt/local,
 ### check for that, and if present, add to CFLAGS/LDFLAGS (really convenient!)
@@ -22,7 +21,7 @@ CURL_CONFIG              ?= curl-config
 CURL_LIBS                ?= $(shell $(CURL_CONFIG) --libs)
 CURL_CFLAGS              ?= $(shell $(CURL_CONFIG) --cflags)
 SDL_CFLAGS               ?= -I$(FRAMEWORK_DIR)/SDL.framework/Headers
-SDL_LIBS                 ?= -framework SDL
+SDL_LIBS                 ?= -framework SDL -lSDLmain
 SDL_IMAGE_CFLAGS         ?= -I$(FRAMEWORK_DIR)/SDL_image.framework/Headers
 SDL_IMAGE_LIBS           ?= -framework SDL_image
 SDL_MIXER_CFLAGS         ?= -I$(FRAMEWORK_DIR)/SDL_mixer.framework/Headers
