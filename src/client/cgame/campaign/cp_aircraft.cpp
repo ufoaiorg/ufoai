@@ -8,7 +8,7 @@
  */
 
 /*
-Copyright (C) 2002-2011 UFO: Alien Invasion.
+Copyright (C) 2002-2012 UFO: Alien Invasion.
 
 This program is free software; you can redistribute it and/or
 modify it under the terms of the GNU General Public License
@@ -3045,42 +3045,12 @@ qboolean AIR_AddEmployee (employee_t *employee, aircraft_t *aircraft)
 }
 
 /**
- * @brief Adds or removes a soldier to/from an aircraft.
- * @param[in,out] aircraft Aircraft to add to/remove from
- * @param[in] num Index of Soldier (in menu) to add/remove
- * @sa E_EmployeeHire_f
- */
-void AIM_AddEmployeeFromMenu (aircraft_t *aircraft, const int num)
-{
-	employee_t *employee;
-
-	Com_DPrintf(DEBUG_CLIENT, "AIM_AddEmployeeFromMenu: Trying to get employee with hired-idx %i.\n", num);
-
-	/* If this fails it's very likely that employeeList is not filled. */
-	employee = E_GetEmployeeByMenuIndex(num);
-	if (!employee)
-		Com_Error(ERR_DROP, "AIM_AddEmployeeFromMenu: Could not get employee %i", num);
-
-	Com_DPrintf(DEBUG_CLIENT, "AIM_AddEmployeeFromMenu: employee with ucn %i selected\n", employee->chr.ucn);
-
-	assert(aircraft);
-
-	if (AIR_IsEmployeeInAircraft(employee, aircraft)) {
-		/* use the global aircraft index here */
-		AIR_RemoveEmployee(employee, aircraft);
-	} else {
-		/* Assign soldier to aircraft/team if aircraft is not full */
-		AIR_AddEmployee(employee, aircraft);
-	}
-}
-
-/**
  * @brief Assigns initial team of soldiers to aircraft
  * @param[in,out] aircraft soldiers to add to
  */
 void AIR_AssignInitial (aircraft_t *aircraft)
 {
-	int i, num;
+	int count;
 	base_t *base;
 
 	if (!aircraft) {
@@ -3091,9 +3061,15 @@ void AIR_AssignInitial (aircraft_t *aircraft)
 	base = aircraft->homebase;
 	assert(base);
 
-	num = min(E_GenerateHiredEmployeesList(base), aircraft->maxTeamSize);
-	for (i = 0; i < num; i++)
-		AIM_AddEmployeeFromMenu(aircraft, i);
+	count = 0;
+	E_Foreach(EMPL_SOLDIER, employee) {
+		if (count >= aircraft->maxTeamSize)
+			break;
+		if (employee->baseHired != base)
+			continue;
+		if (AIR_AddEmployee(employee, aircraft))
+			count++;
+	}
 }
 
 /**

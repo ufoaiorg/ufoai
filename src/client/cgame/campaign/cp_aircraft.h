@@ -4,7 +4,7 @@
  */
 
 /*
-Copyright (C) 2002-2011 UFO: Alien Invasion.
+Copyright (C) 2002-2012 UFO: Alien Invasion.
 
 This program is free software; you can redistribute it and/or
 modify it under the terms of the GNU General Public License
@@ -312,7 +312,6 @@ qboolean AIR_RemoveEmployee(struct employee_s *employee, aircraft_t* aircraft);
 const aircraft_t *AIR_IsEmployeeInAircraft(const struct employee_s *employee, const aircraft_t* aircraft);
 void AIR_MoveEmployeeInventoryIntoStorage(const aircraft_t *aircraft, equipDef_t *equip);
 
-void AIM_AddEmployeeFromMenu(aircraft_t *aircraft, const int num);
 void AIR_AssignInitial(aircraft_t *aircraft);
 
 qboolean AIR_CanIntercept(const aircraft_t *aircraft);
