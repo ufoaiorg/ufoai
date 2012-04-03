@@ -399,8 +399,7 @@ void Sys_NormPath (char* path)
  */
 char *Sys_GetHomeDirectory (void)
 {
-	TCHAR szPath[MAX_PATH];
-	static char path[MAX_OSPATH];
+	static char path[MAX_PATH];
 	HMODULE shfolder;
 
 	shfolder = LoadLibrary("shfolder.dll");
@@ -418,13 +417,12 @@ char *Sys_GetHomeDirectory (void)
 		return NULL;
 	}
 
-	if (!SUCCEEDED(qSHGetFolderPath(NULL, CSIDL_APPDATA, NULL, 0, szPath))) {
+	if (!SUCCEEDED(qSHGetFolderPath(NULL, CSIDL_APPDATA, NULL, 0, path))) {
 		Com_Printf("Unable to detect CSIDL_APPDATA\n");
 		FreeLibrary(shfolder);
 		return NULL;
 	}
 
-	Q_strncpyz(path, szPath, sizeof(path));
 	Q_strcat(path, "\\UFOAI", sizeof(path));
 	FreeLibrary(shfolder);
 
