@@ -39,14 +39,31 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 
 static const vec4_t white = {1.0f, 1.0f, 1.0f, 0.8f};
 
+void uiAbstractBaseNode::loading (uiNode_t * node)
+{
+	EXTRADATA(node).baseid = -1;
+}
+
 /**
  * @brief Called after the end of the node load from script (all data and/or child are set)
  */
 void uiAbstractBaseNode::loaded (uiNode_t * node)
 {
+	/* it do not make any sens to check it here */
+#if 0
 	const int id = EXTRADATA(node).baseid;
 	if (B_GetBaseByIDX(id) == NULL)
 		Com_Printf("UI_AbstractBaseNodeLoaded: Invalid baseid given %i", id);
+#endif
+}
+
+base_t* uiAbstractBaseNode::getBase (const uiNode_t * node)
+{
+	if (EXTRADATA(node).baseid == -1) {
+		return B_GetCurrentSelectedBase();
+	} else {
+		return B_GetBaseByIDX(EXTRADATA(node).baseid);
+	}
 }
 
 /**
@@ -54,7 +71,7 @@ void uiAbstractBaseNode::loaded (uiNode_t * node)
  */
 void uiBaseLayoutNode::draw (uiNode_t * node)
 {
-	base_t *base;
+	const base_t *base;
 	int height, width, y;
 	int row, col;
 	const vec4_t c_gray = {0.5, 0.5, 0.5, 1.0};
@@ -70,7 +87,7 @@ void uiBaseLayoutNode::draw (uiNode_t * node)
 
 	UI_GetNodeAbsPos(node, nodepos);
 
-	base = B_GetBaseByIDX(EXTRADATA(node).baseid);
+	base = getBase(node);
 
 	y = nodepos[1] + node->padding;
 	for (row = 0; row < BASE_SIZE; row++) {
@@ -123,7 +140,7 @@ void uiBaseMapNode::draw (uiNode_t * node)
 {
 	int width, height, row, col;
 	const building_t *building;
-	const base_t *base = B_GetCurrentSelectedBase();
+	const base_t *base = getBase(node);
 	qboolean used[MAX_BUILDINGS];
 
 	if (!base) {
@@ -231,7 +248,7 @@ void uiBaseMapNode::drawTooltip (uiNode_t *node, int x, int y)
 	int col, row;
 	building_t *building;
 	const int itemToolTipWidth = 250;
-	base_t *base = B_GetCurrentSelectedBase();
+	const base_t *base = getBase(node);
 
 	getCellAtPos(node, x, y, &col, &row);
 	if (col == -1)
@@ -257,7 +274,7 @@ void uiBaseMapNode::drawTooltip (uiNode_t *node, int x, int y)
 void uiBaseMapNode::leftClick (uiNode_t *node, int x, int y)
 {
 	int row, col;
-	base_t *base = B_GetCurrentSelectedBase();
+	base_t *base = getBase(node);
 
 	assert(base);
 	assert(node);
@@ -308,7 +325,7 @@ void uiBaseMapNode::leftClick (uiNode_t *node, int x, int y)
 void uiBaseMapNode::rightClick (uiNode_t *node, int x, int y)
 {
 	int row, col;
-	base_t *base = B_GetCurrentSelectedBase();
+	const base_t *base = getBase(node);
 
 	assert(base);
 	assert(node);
@@ -334,7 +351,7 @@ void uiBaseMapNode::rightClick (uiNode_t *node, int x, int y)
 void uiBaseMapNode::middleClick (uiNode_t *node, int x, int y)
 {
 	int row, col;
-	const base_t *base = B_GetCurrentSelectedBase();
+	const base_t *base = getBase(node);
 	const building_t *entry;
 	if (base == NULL)
 		return;
@@ -358,6 +375,7 @@ void uiBaseMapNode::middleClick (uiNode_t *node, int x, int y)
  */
 void uiBaseLayoutNode::loading (uiNode_t *node)
 {
+	uiAbstractBaseNode::loading(node);
 	node->padding = 3;
 	Vector4Set(node->color, 1, 1, 1, 1);
 }
