@@ -683,7 +683,7 @@ item pistol2_ammo
 			impsnd				impact/bullet-impact
 			bodysnd 			impact/bullet-bodyimpact
 			speed				3000
-			spread				"3 3"
+			spread				"3.5 3.5"
 			crouch				1
 			range				40
 			shots				10
