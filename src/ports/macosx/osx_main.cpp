@@ -23,9 +23,11 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 
 */
 
-#include <Cocoa/Cocoa.h>
+#include <CoreFoundation/CoreFoundation.h>
 #include <SDL_main.h>
 #include <fcntl.h>
+#include <sys/param.h>
+#include <unistd.h>
 
 #include "../../common/common.h"
 
@@ -36,13 +38,20 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
  */
 static void SetWorkingDirectory ()
 {
-	if (NSBundle* const mainBundle = [NSBundle mainBundle]) {
-		char const* const newPath = [[mainBundle bundlePath] UTF8String];
-		Com_DPrintf(DEBUG_SYSTEM, "%s = new path\n", newPath);
-		chdir(newPath);
-	} else {
-		Com_Printf("Main bundle appears to be NULL!\n");
+	bool success = false;
+	if (CFBundleRef const mainBundle = CFBundleGetMainBundle()) {
+		if (CFURLRef const url = CFBundleCopyBundleURL(mainBundle)) {
+			char path[MAXPATHLEN];
+			if (CFURLGetFileSystemRepresentation(url, true, reinterpret_cast<UInt8*>(path), sizeof(path))) {
+				Com_DPrintf(DEBUG_SYSTEM, "%s = new path\n", path);
+				chdir(path);
+				success = true;
+			}
+			CFRelease(url);
+		}
 	}
+	if (!success)
+		Com_Printf("Failed to get path of main bundle\n");
 }
 
 /**

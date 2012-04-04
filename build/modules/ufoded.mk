@@ -81,7 +81,7 @@ endif
 
 ifeq ($(TARGET_OS),darwin)
 	$(TARGET)_SRCS += \
-		ports/macosx/osx_main.mm \
+		ports/macosx/osx_main.cpp \
 		ports/macosx/osx_shared.cpp \
 		ports/unix/unix_console.cpp \
 		ports/unix/unix_files.cpp \
