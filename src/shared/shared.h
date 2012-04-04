@@ -56,10 +56,6 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #define UFO_DEPRECATED
 #endif
 
-#ifndef NULL
-#define NULL ((void *)0)
-#endif
-
 #ifdef _WIN32
 # ifndef snprintf
 #  define snprintf _snprintf
