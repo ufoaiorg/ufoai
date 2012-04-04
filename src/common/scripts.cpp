@@ -1720,7 +1720,7 @@ static void Com_ParseFireDefition (objDef_t *od, const char *name, const char *t
 	if (od->numWeapons < MAX_WEAPONS_PER_OBJDEF) {
 		/* Store the current item-pointer and the weapon id for later linking of the "weapon" pointers */
 		LIST_AddPointer(&parseItemWeapons, od);
-		LIST_Add(&parseItemWeapons, &od->numWeapons, sizeof(int));
+		LIST_Add(&parseItemWeapons, od->numWeapons);
 		LIST_AddString(&parseItemWeapons, token);
 
 		/* get it's body */
@@ -1824,7 +1824,7 @@ static void Com_ParseItem (const char *name, const char **text)
 				if (od->numWeapons < MAX_WEAPONS_PER_OBJDEF) {
 					/* Store the current item-pointer and the weapon id for later linking of the "weapon" pointers */
 					LIST_AddPointer(&parseItemWeapons, od);
-					LIST_Add(&parseItemWeapons, &od->numWeapons, sizeof(int));
+					LIST_Add(&parseItemWeapons, od->numWeapons);
 					LIST_AddString(&parseItemWeapons, token);
 					od->numWeapons++;
 				} else {

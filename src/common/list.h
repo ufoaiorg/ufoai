@@ -44,4 +44,12 @@ void *LIST_GetByIdx(linkedList_t *list, int index);
 qboolean LIST_Remove(linkedList_t **list, const void *data);
 void LIST_Sort(linkedList_t **list, linkedListSort_t sorter, const void* userData);
 
+/**
+ * Add a copy of data to list and return a reference to the copied data.
+ */
+template<typename T> inline T& LIST_Add(linkedList_t** const list, T const& data)
+{
+	return *static_cast<T*>(LIST_Add(list, &data, sizeof(data))->data);
+}
+
 #endif /* LIST_H_ */

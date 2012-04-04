@@ -750,9 +750,9 @@ static void AII_SetAircraftInSlots (aircraft_t *aircraft)
  */
 aircraft_t *AIR_Add (base_t *base, const aircraft_t *aircraftTemplate)
 {
-	aircraft_t *aircraft = (aircraft_t *)LIST_Add(&ccs.aircraft, aircraftTemplate, sizeof(*aircraftTemplate))->data;
-	aircraft->homebase = base;
-	return aircraft;
+	aircraft_t& aircraft = LIST_Add(&ccs.aircraft, *aircraftTemplate);
+	aircraft.homebase = base;
+	return &aircraft;
 }
 
 /**

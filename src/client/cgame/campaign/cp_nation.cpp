@@ -370,7 +370,7 @@ void CL_ParseCities (const char *name, const char **text)
 		Com_DPrintf(DEBUG_CLIENT, "...found city %s\n", name);
 		newCity.id = Mem_PoolStrDup(name, cp_campaignPool, 0);
 		/* Add city to the list */
-		LIST_Add(&ccs.cities, &newCity, sizeof(newCity));
+		LIST_Add(&ccs.cities, newCity);
 	}
 }
 

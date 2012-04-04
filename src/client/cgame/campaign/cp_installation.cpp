@@ -121,7 +121,7 @@ installation_t* INS_Build (const installationTemplate_t *installationTemplate, c
 	RADAR_Initialise(&(installation.radar), 0.0f, 0.0f, 0.0f, qfalse);
 
 	ccs.campaignStats.installationsBuilt++;
-	return (installation_t*)(LIST_Add(&ccs.installations, &installation, sizeof(installation)))->data;
+	return &LIST_Add(&ccs.installations, installation);
 }
 
 /**
@@ -472,7 +472,6 @@ qboolean INS_LoadXML (xmlNode_t *p)
 	for (s = XML_GetNode(n, SAVE_INSTALLATION_INSTALLATION); s; s = XML_GetNextNode(s,n, SAVE_INSTALLATION_INSTALLATION)) {
 		xmlNode_t *ss;
 		installation_t inst;
-		installation_t *instp;
 		const char *instID = XML_GetString(s, SAVE_INSTALLATION_TEMPLATEID);
 		const char *instStat = XML_GetString(s, SAVE_INSTALLATION_STATUS);
 
@@ -527,9 +526,9 @@ qboolean INS_LoadXML (xmlNode_t *p)
 			inst.numBatteries = inst.installationTemplate->maxBatteries;
 		}
 
-		instp = (installation_t*)(LIST_Add(&ccs.installations, &inst, sizeof(inst)))->data;
-		BDEF_InitialiseInstallationSlots(instp);
-		B_LoadBaseSlotsXML(instp->batteries, instp->numBatteries, ss);
+		installation_t& instp = LIST_Add(&ccs.installations, inst);
+		BDEF_InitialiseInstallationSlots(&instp);
+		B_LoadBaseSlotsXML(instp.batteries, instp.numBatteries, ss);
 	}
 	Com_UnregisterConstList(saveInstallationConstants);
 	Cvar_Set("mn_installation_count", va("%i", INS_GetCount()));
