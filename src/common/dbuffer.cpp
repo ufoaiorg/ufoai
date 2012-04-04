@@ -61,7 +61,7 @@ static struct dbuffer_element * allocate_element (void)
 	TH_MutexLock(dbuf_lock);
 
 	if (free_elements == 0) {
-		dbuffer_element* const newBuf = Mem_PoolAllocType(dbuffer_element, com_genericPool, 0);
+		dbuffer_element* const newBuf = Mem_PoolAllocType(dbuffer_element, com_genericPool);
 		newBuf->next = free_element_list;
 		free_element_list = newBuf;
 		free_elements++;
@@ -127,7 +127,7 @@ struct dbuffer * new_dbuffer (void)
 	TH_MutexLock(dbuf_lock);
 
 	if (free_dbuffers == 0) {
-		dbuffer* const newBuf = Mem_PoolAllocType(dbuffer, com_genericPool, 0);
+		dbuffer* const newBuf = Mem_PoolAllocType(dbuffer, com_genericPool);
 		newBuf->next_free = free_dbuffer_list;
 		free_dbuffer_list = newBuf;
 		free_dbuffers++;

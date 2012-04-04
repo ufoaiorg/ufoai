@@ -59,7 +59,7 @@ void R_ModLoadAnims (mAliasModel_t *mod, const char *animname)
 	if (n > MAX_ANIMS)
 		n = MAX_ANIMS;
 
-	mod->animdata = Mem_PoolAllocTypeN(mAliasAnim_t, n, vid_modelPool, 0);
+	mod->animdata = Mem_PoolAllocTypeN(mAliasAnim_t, n, vid_modelPool);
 	anim = mod->animdata;
 	text = buffer;
 	mod->num_anims = 0;
@@ -272,9 +272,9 @@ qboolean R_ModLoadMDX (model_t *mod)
 		mesh->num_indexes = LittleLong(*intbuf);
 		intbuf++;
 
-		mesh->indexes    = Mem_PoolAllocTypeN(int32_t,        mesh->num_indexes,                       vid_modelPool, 0);
-		mesh->revIndexes = Mem_PoolAllocTypeN(mIndexList_t,   mesh->num_verts,                         vid_modelPool, 0);
-		mesh->vertexes   = Mem_PoolAllocTypeN(mAliasVertex_t, mesh->num_verts * mod->alias.num_frames, vid_modelPool, 0);
+		mesh->indexes    = Mem_PoolAllocTypeN(int32_t,        mesh->num_indexes,                       vid_modelPool);
+		mesh->revIndexes = Mem_PoolAllocTypeN(mIndexList_t,   mesh->num_verts,                         vid_modelPool);
+		mesh->vertexes   = Mem_PoolAllocTypeN(mAliasVertex_t, mesh->num_verts * mod->alias.num_frames, vid_modelPool);
 
 		/* load index that maps triangle verts to Vertex objects */
 		for (i = 0; i < mesh->num_indexes; i++) {
@@ -291,7 +291,7 @@ qboolean R_ModLoadMDX (model_t *mod)
 
 		for (i = 0; i < mesh->num_verts; i++) {
 			mesh->revIndexes[i].length = 0;
-			mesh->revIndexes[i].list   = Mem_PoolAllocTypeN(int32_t, sharedTris[i], vid_modelPool, 0);
+			mesh->revIndexes[i].list   = Mem_PoolAllocTypeN(int32_t, sharedTris[i], vid_modelPool);
 		}
 
 		for (i = 0; i < mesh->num_indexes; i++)
@@ -329,7 +329,7 @@ void R_ModCalcUniqueNormalsAndTangents (mAliasMesh_t *mesh, int nFrames, float s
 	if (numIndexes >= MAX_ALIAS_VERTS)
 		Com_Error(ERR_DROP, "model %s has too many tris", mesh->name);
 
-	int32_t* const newIndexArray = Mem_PoolAllocTypeN(int32_t, numIndexes, vid_modelPool, 0);
+	int32_t* const newIndexArray = Mem_PoolAllocTypeN(int32_t, numIndexes, vid_modelPool);
 
 	/* calculate per-triangle surface normals */
 	for (i = 0, j = 0; i < numIndexes; i += 3, j++) {
@@ -475,15 +475,15 @@ void R_ModCalcUniqueNormalsAndTangents (mAliasMesh_t *mesh, int nFrames, float s
 		sharedTris[newIndexArray[i]]++;
 
 	/* set up reverse-index that maps Vertex objects to a list of triangle verts */
-	mesh->revIndexes = Mem_PoolAllocTypeN(mIndexList_t, numVerts, vid_modelPool, 0);
+	mesh->revIndexes = Mem_PoolAllocTypeN(mIndexList_t, numVerts, vid_modelPool);
 	for (i = 0; i < numVerts; i++) {
 		mesh->revIndexes[i].length = 0;
-		mesh->revIndexes[i].list   = Mem_PoolAllocTypeN(int32_t, sharedTris[i], vid_modelPool, 0);
+		mesh->revIndexes[i].list   = Mem_PoolAllocTypeN(int32_t, sharedTris[i], vid_modelPool);
 	}
 
 	/* merge identical vertexes, storing only unique ones */
-	mAliasVertex_t* const newVertexes = Mem_PoolAllocTypeN(mAliasVertex_t, numVerts * nFrames, vid_modelPool, 0);
-	mAliasCoord_t*  const newStcoords = Mem_PoolAllocTypeN(mAliasCoord_t,  numVerts,           vid_modelPool, 0);
+	mAliasVertex_t* const newVertexes = Mem_PoolAllocTypeN(mAliasVertex_t, numVerts * nFrames, vid_modelPool);
+	mAliasCoord_t*  const newStcoords = Mem_PoolAllocTypeN(mAliasCoord_t,  numVerts,           vid_modelPool);
 	for (i = 0; i < numIndexes; i++) {
 		const int idx = indexArray[indRemap[i]];
 		const int idx2 = newIndexArray[i];
@@ -677,16 +677,16 @@ void R_ModLoadArrayData (mAliasModel_t *mod, mAliasMesh_t *mesh, qboolean loadNo
 	assert(mesh->next_normals == NULL);
 	assert(mesh->next_tangents == NULL);
 
-	mesh->verts     = Mem_PoolAllocTypeN(float, v,  vid_modelPool, 0);
-	mesh->normals   = Mem_PoolAllocTypeN(float, v,  vid_modelPool, 0);
-	mesh->tangents  = Mem_PoolAllocTypeN(float, t,  vid_modelPool, 0);
-	mesh->texcoords = Mem_PoolAllocTypeN(float, st, vid_modelPool, 0);
+	mesh->verts     = Mem_PoolAllocTypeN(float, v,  vid_modelPool);
+	mesh->normals   = Mem_PoolAllocTypeN(float, v,  vid_modelPool);
+	mesh->tangents  = Mem_PoolAllocTypeN(float, t,  vid_modelPool);
+	mesh->texcoords = Mem_PoolAllocTypeN(float, st, vid_modelPool);
 	if (mod->num_frames == 1) {
 		R_FillArrayData(mod, mesh, 0.0, 0, 0, loadNormals);
 	} else {
-		mesh->next_verts    = Mem_PoolAllocTypeN(float, v, vid_modelPool, 0);
-		mesh->next_normals  = Mem_PoolAllocTypeN(float, v, vid_modelPool, 0);
-		mesh->next_tangents = Mem_PoolAllocTypeN(float, t, vid_modelPool, 0);
+		mesh->next_verts    = Mem_PoolAllocTypeN(float, v, vid_modelPool);
+		mesh->next_normals  = Mem_PoolAllocTypeN(float, v, vid_modelPool);
+		mesh->next_tangents = Mem_PoolAllocTypeN(float, t, vid_modelPool);
 
 		mod->curFrame = -1;
 		mod->oldFrame = -1;

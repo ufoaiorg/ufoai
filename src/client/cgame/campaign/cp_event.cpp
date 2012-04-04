@@ -75,7 +75,7 @@ eventMail_t* CL_GetEventMail (const char *id, qboolean createCopy)
 		if (!eventMail)
 			return NULL;
 
-		eventMail_t* const newEventMail = Mem_PoolAllocType(eventMail_t, cp_campaignPool, 0);
+		eventMail_t* const newEventMail = Mem_PoolAllocType(eventMail_t, cp_campaignPool);
 		if (!newEventMail)
 			return NULL;
 

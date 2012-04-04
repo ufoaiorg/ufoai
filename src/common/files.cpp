@@ -463,7 +463,7 @@ static pack_t *FS_LoadPackFile (const char *packfile)
 			unzGoToNextFile(uf);
 		}
 
-		pack_t* const pack = Mem_PoolAllocType(pack_t, com_fileSysPool, 0);
+		pack_t* const pack = Mem_PoolAllocType(pack_t, com_fileSysPool);
 		Q_strncpyz(pack->filename, packfile, sizeof(pack->filename));
 		pack->handle.z = uf;
 		pack->handle.f = NULL;
@@ -471,7 +471,7 @@ static pack_t *FS_LoadPackFile (const char *packfile)
 		unzGoToFirstFile(uf);
 
 		/* Allocate space for array of packfile structures (filename, offset, length) */
-		packfile_t* const newfiles = Mem_PoolAllocTypeN(packfile_t, i, com_fileSysPool, 0);
+		packfile_t* const newfiles = Mem_PoolAllocTypeN(packfile_t, i, com_fileSysPool);
 
 		for (i = 0; i < gi.number_entry; i++) {
 			err = unzGetCurrentFileInfo(uf, &file_info, filenameInZip, sizeof(filenameInZip), NULL, 0, NULL, 0);
@@ -556,7 +556,7 @@ void FS_AddGameDirectory (const char *dir, qboolean write)
 		if (!pak)
 			continue;
 
-		searchpath_t* const search = Mem_PoolAllocType(searchpath_t, com_fileSysPool, 0);
+		searchpath_t* const search = Mem_PoolAllocType(searchpath_t, com_fileSysPool);
 		search->pack = pak;
 		search->next = fs_searchpaths;
 		search->write = qfalse;
@@ -564,7 +564,7 @@ void FS_AddGameDirectory (const char *dir, qboolean write)
 	}
 
 	/* add the directory to the search path */
-	searchpath_t* const search = Mem_PoolAllocType(searchpath_t, com_fileSysPool, 0);
+	searchpath_t* const search = Mem_PoolAllocType(searchpath_t, com_fileSysPool);
 	Q_strncpyz(search->filename, dir, sizeof(search->filename));
 	search->next = fs_searchpaths;
 	search->write = write;
@@ -600,7 +600,7 @@ char **FS_ListFiles (const char *findname, int *numfiles, unsigned musthave, uns
 	nfiles++; /* add space for a guard */
 	*numfiles = nfiles;
 
-	char** const list = Mem_PoolAllocTypeN(char*, nfiles, com_fileSysPool, 0);
+	char** const list = Mem_PoolAllocTypeN(char*, nfiles, com_fileSysPool);
 	OBJZERO(tempList);
 
 	s = Sys_FindFirst(findname, musthave, canthave);
@@ -731,7 +731,7 @@ static void FS_Link_f (void)
 	}
 
 	/* create a new link */
-	filelink_t* const l = Mem_PoolAllocType(filelink_t, com_fileSysPool, 0);
+	filelink_t* const l = Mem_PoolAllocType(filelink_t, com_fileSysPool);
 	l->next = fs_links;
 	fs_links = l;
 	l->from = Mem_PoolStrDup(Cmd_Argv(1), com_fileSysPool, 0);
@@ -948,7 +948,7 @@ int FS_BuildFileList (const char *fileList)
 	}
 
 	/* allocate a new block and link it into the list */
-	listBlock_t* const block = Mem_PoolAllocType(listBlock_t, com_fileSysPool, 0);
+	listBlock_t* const block = Mem_PoolAllocType(listBlock_t, com_fileSysPool);
 	block->next = fs_blocklist;
 	fs_blocklist = block;
 
@@ -1384,7 +1384,7 @@ void FS_GetMaps (qboolean reset)
 						Com_Printf("FS_GetMaps: Max maps limit hit\n");
 						break;
 					}
-					fs_maps[fs_numInstalledMaps + 1] = Mem_PoolAllocTypeN(char, MAX_QPATH, com_fileSysPool, 0);
+					fs_maps[fs_numInstalledMaps + 1] = Mem_PoolAllocTypeN(char, MAX_QPATH, com_fileSysPool);
 					if (fs_maps[fs_numInstalledMaps + 1] == NULL) {
 						Com_Printf("Could not allocate memory in FS_GetMaps\n");
 						continue;
@@ -1415,7 +1415,7 @@ void FS_GetMaps (qboolean reset)
 							Com_Printf("FS_GetMaps: Max maps limit hit\n");
 							break;
 						}
-						fs_maps[fs_numInstalledMaps + 1] = Mem_PoolAllocTypeN(char, MAX_QPATH, com_fileSysPool, 0);
+						fs_maps[fs_numInstalledMaps + 1] = Mem_PoolAllocTypeN(char, MAX_QPATH, com_fileSysPool);
 						if (fs_maps[fs_numInstalledMaps + 1] == NULL) {
 							Com_Printf("Could not allocate memory in FS_GetMaps\n");
 							Mem_Free(dirnames[i]);
@@ -1442,7 +1442,7 @@ void FS_GetMaps (qboolean reset)
 						Com_Printf("FS_GetMaps: Max maps limit hit\n");
 						break;
 					}
-					fs_maps[fs_numInstalledMaps + 1] = Mem_PoolAllocTypeN(char, MAX_QPATH, com_fileSysPool, 0);
+					fs_maps[fs_numInstalledMaps + 1] = Mem_PoolAllocTypeN(char, MAX_QPATH, com_fileSysPool);
 					if (fs_maps[fs_numInstalledMaps + 1] == NULL) {
 						Com_Printf("Could not allocate memory in FS_GetMaps\n");
 						Mem_Free(dirnames[i]);
@@ -1656,7 +1656,7 @@ void FS_CopyFile (const char *fromOSPath, const char *toOSPath)
 	len = ftell(f);
 	fseek(f, 0, SEEK_SET);
 
-	byte* const buf = Mem_PoolAllocTypeN(byte, len, com_fileSysPool, 0);
+	byte* const buf = Mem_PoolAllocTypeN(byte, len, com_fileSysPool);
 	if (fread(buf, 1, len, f) != len)
 		Sys_Error("Short read in FS_CopyFile");
 	fclose(f);

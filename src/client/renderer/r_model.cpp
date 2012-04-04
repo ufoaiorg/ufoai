@@ -346,7 +346,7 @@ void R_LoadActorSkinsFromModel (mAliasMesh_t *outMesh, image_t * defaultSkin)
 	assert(outMesh);
 
 	outMesh->num_skins = r_numActorSkinName;
-	outMesh->skins = Mem_PoolAllocTypeN(mAliasSkin_t, outMesh->num_skins, vid_modelPool, 0);
+	outMesh->skins = Mem_PoolAllocTypeN(mAliasSkin_t, outMesh->num_skins, vid_modelPool);
 
 	if (defaultSkin == r_noTexture)
 		Com_Printf("R_LoadActorSkinsFromModel: No default skin found for model \"%s\"\n", outMesh->name);

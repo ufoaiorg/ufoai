@@ -930,7 +930,7 @@ void CL_ParseSequence (const char *name, const char **text)
 
 				/* init seqCmd */
 				if (seqCmds == NULL)
-					seqCmds = Mem_PoolAllocTypeN(seqCmd_t, MAX_SEQCMDS, cl_genericPool, 0);
+					seqCmds = Mem_PoolAllocTypeN(seqCmd_t, MAX_SEQCMDS, cl_genericPool);
 				sc = &seqCmds[numSeqCmds++];
 				OBJZERO(*sc);
 				sc->handler = seqCmdFunc[i];

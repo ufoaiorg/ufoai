@@ -84,7 +84,7 @@ message_t *MS_AddNewMessageSound (const char *title, const char *text, qboolean 
 	assert(type < MSG_MAX);
 
 	/* allocate memory for new message - delete this with every new game */
-	message_t* const mess = Mem_PoolAllocType(message_t, cp_campaignPool, 0);
+	message_t* const mess = Mem_PoolAllocType(message_t, cp_campaignPool);
 
 	/* push the new message at the beginning of the stack */
 	mess->next = cp_messageStack;

@@ -58,7 +58,7 @@ static void R_ModLoadLighting (const lump_t *l)
 	if (l->filelen == 0)
 		return;
 
-	r_worldmodel->bsp.lightdata  = Mem_PoolAllocTypeN(byte, l->filelen, vid_lightPool, 0);
+	r_worldmodel->bsp.lightdata  = Mem_PoolAllocTypeN(byte, l->filelen, vid_lightPool);
 	r_worldmodel->bsp.lightquant = *(const byte *) (mod_base + l->fileofs);
 	memcpy(r_worldmodel->bsp.lightdata, mod_base + l->fileofs, l->filelen);
 }
@@ -72,7 +72,7 @@ static void R_ModLoadVertexes (const lump_t *l)
 	if (l->filelen % sizeof(*in))
 		Com_Error(ERR_DROP, "R_ModLoadVertexes: funny lump size in %s", r_worldmodel->name);
 	count = l->filelen / sizeof(*in);
-	mBspVertex_t* out = Mem_PoolAllocTypeN(mBspVertex_t, count, vid_modelPool, 0);
+	mBspVertex_t* out = Mem_PoolAllocTypeN(mBspVertex_t, count, vid_modelPool);
 	Com_DPrintf(DEBUG_RENDERER, "...verts: %i\n", count);
 
 	r_worldmodel->bsp.vertexes = out;
@@ -136,7 +136,7 @@ static void R_ModLoadSubmodels (const lump_t *l)
 	if (l->filelen % sizeof(*in))
 		Com_Error(ERR_DROP, "R_ModLoadSubmodels: funny lump size in %s", r_worldmodel->name);
 	count = l->filelen / sizeof(*in);
-	mBspHeader_t* out = Mem_PoolAllocTypeN(mBspHeader_t, count, vid_modelPool, 0);
+	mBspHeader_t* out = Mem_PoolAllocTypeN(mBspHeader_t, count, vid_modelPool);
 	Com_DPrintf(DEBUG_RENDERER, "...submodels: %i\n", count);
 
 	r_worldmodel->bsp.submodels = out;
@@ -165,7 +165,7 @@ static void R_ModLoadEdges (const lump_t *l)
 	if (l->filelen % sizeof(*in))
 		Com_Error(ERR_DROP, "R_ModLoadEdges: funny lump size in %s", r_worldmodel->name);
 	count = l->filelen / sizeof(*in);
-	mBspEdge_t* out = Mem_PoolAllocTypeN(mBspEdge_t, count + 1, vid_modelPool, 0);
+	mBspEdge_t* out = Mem_PoolAllocTypeN(mBspEdge_t, count + 1, vid_modelPool);
 	Com_DPrintf(DEBUG_RENDERER, "...edges: %i\n", count);
 
 	r_worldmodel->bsp.edges = out;
@@ -190,7 +190,7 @@ static void R_ModLoadTexinfo (const lump_t *l)
 	if (l->filelen % sizeof(*in))
 		Com_Error(ERR_DROP, "R_ModLoadTexinfo: funny lump size in %s", r_worldmodel->name);
 	count = l->filelen / sizeof(*in);
-	mBspTexInfo_t* out = Mem_PoolAllocTypeN(mBspTexInfo_t, count, vid_modelPool, 0);
+	mBspTexInfo_t* out = Mem_PoolAllocTypeN(mBspTexInfo_t, count, vid_modelPool);
 	Com_DPrintf(DEBUG_RENDERER, "...texinfo: %i\n", count);
 
 	r_worldmodel->bsp.texinfo = out;
@@ -288,7 +288,7 @@ static void R_ModLoadSurfaces (qboolean day, const lump_t *l)
 	if (l->filelen % sizeof(*in))
 		Com_Error(ERR_DROP, "R_ModLoadSurfaces: funny lump size in %s", r_worldmodel->name);
 	count = l->filelen / sizeof(*in);
-	mBspSurface_t* out = Mem_PoolAllocTypeN(mBspSurface_t, count, vid_modelPool, 0);
+	mBspSurface_t* out = Mem_PoolAllocTypeN(mBspSurface_t, count, vid_modelPool);
 	Com_DPrintf(DEBUG_RENDERER, "...faces: %i\n", count);
 
 	r_worldmodel->bsp.surfaces = out;
@@ -361,7 +361,7 @@ static void R_ModLoadNodes (const lump_t *l)
 	if (l->filelen % sizeof(*in))
 		Com_Error(ERR_DROP, "R_ModLoadNodes: funny lump size in %s", r_worldmodel->name);
 	count = l->filelen / sizeof(*in);
-	mBspNode_t* out = Mem_PoolAllocTypeN(mBspNode_t, count, vid_modelPool, 0);
+	mBspNode_t* out = Mem_PoolAllocTypeN(mBspNode_t, count, vid_modelPool);
 	Com_DPrintf(DEBUG_RENDERER, "...nodes: %i\n", count);
 
 	r_worldmodel->bsp.nodes = out;
@@ -415,7 +415,7 @@ static void R_ModLoadLeafs (const lump_t *l)
 	if (l->filelen % sizeof(*in))
 		Com_Error(ERR_DROP, "R_ModLoadLeafs: funny lump size in %s", r_worldmodel->name);
 	count = l->filelen / sizeof(*in);
-	mBspLeaf_t* out = Mem_PoolAllocTypeN(mBspLeaf_t, count, vid_modelPool, 0);
+	mBspLeaf_t* out = Mem_PoolAllocTypeN(mBspLeaf_t, count, vid_modelPool);
 	Com_DPrintf(DEBUG_RENDERER, "...leafs: %i\n", count);
 
 	r_worldmodel->bsp.leafs = out;
@@ -443,7 +443,7 @@ static void R_ModLoadSurfedges (const lump_t *l)
 	if (count < 1 || count >= MAX_MAP_SURFEDGES)
 		Com_Error(ERR_DROP, "R_ModLoadSurfedges: bad surfedges count in %s: %i", r_worldmodel->name, count);
 
-	int* const out = Mem_PoolAllocTypeN(int, count, vid_modelPool, 0);
+	int* const out = Mem_PoolAllocTypeN(int, count, vid_modelPool);
 	Com_DPrintf(DEBUG_RENDERER, "...surface edges: %i\n", count);
 
 	r_worldmodel->bsp.surfedges = out;
@@ -466,7 +466,7 @@ static void R_ModLoadPlanes (const lump_t *l)
 	if (l->filelen % sizeof(*in))
 		Com_Error(ERR_DROP, "R_ModLoadPlanes: funny lump size in %s", r_worldmodel->name);
 	count = l->filelen / sizeof(*in);
-	cBspPlane_t* out = Mem_PoolAllocTypeN(cBspPlane_t, count * 2, vid_modelPool, 0);
+	cBspPlane_t* out = Mem_PoolAllocTypeN(cBspPlane_t, count * 2, vid_modelPool);
 	Com_DPrintf(DEBUG_RENDERER, "...planes: %i\n", count);
 
 	r_worldmodel->bsp.planes = out;
@@ -537,11 +537,11 @@ static void R_LoadBspVertexArrays (model_t *mod)
 	surf = mod->bsp.surfaces;
 
 	/* allocate the vertex arrays */
-	mod->bsp.texcoords   = Mem_PoolAllocTypeN(GLfloat, vertexcount * 2, vid_modelPool, 0);
-	mod->bsp.lmtexcoords = Mem_PoolAllocTypeN(GLfloat, vertexcount * 2, vid_modelPool, 0);
-	mod->bsp.verts       = Mem_PoolAllocTypeN(GLfloat, vertexcount * 3, vid_modelPool, 0);
-	mod->bsp.normals     = Mem_PoolAllocTypeN(GLfloat, vertexcount * 3, vid_modelPool, 0);
-	mod->bsp.tangents    = Mem_PoolAllocTypeN(GLfloat, vertexcount * 4, vid_modelPool, 0);
+	mod->bsp.texcoords   = Mem_PoolAllocTypeN(GLfloat, vertexcount * 2, vid_modelPool);
+	mod->bsp.lmtexcoords = Mem_PoolAllocTypeN(GLfloat, vertexcount * 2, vid_modelPool);
+	mod->bsp.verts       = Mem_PoolAllocTypeN(GLfloat, vertexcount * 3, vid_modelPool);
+	mod->bsp.normals     = Mem_PoolAllocTypeN(GLfloat, vertexcount * 3, vid_modelPool);
+	mod->bsp.tangents    = Mem_PoolAllocTypeN(GLfloat, vertexcount * 4, vid_modelPool);
 
 	for (i = 0; i < mod->bsp.numsurfaces; i++, surf++) {
 		surf->index = vertind / 3;
@@ -693,7 +693,7 @@ static void R_SortSurfacesArrays (const model_t *mod)
 		int index = R_GetImageIndex(surf->texinfo->image);
 		mBspSurfaces_t *surfs = r_sorted_surfaces[index];
 		if (!surfs) {  /* allocate it */
-			surfs = Mem_PoolAllocType(mBspSurfaces_t, vid_modelPool, 0);
+			surfs = Mem_PoolAllocType(mBspSurfaces_t, vid_modelPool);
 			r_sorted_surfaces[index] = surfs;
 		}
 
@@ -704,7 +704,7 @@ static void R_SortSurfacesArrays (const model_t *mod)
 	for (i = 0; i < r_numImages; i++) {
 		mBspSurfaces_t *surfs = r_sorted_surfaces[i];
 		if (surfs) {
-			surfs->surfaces = Mem_PoolAllocTypeN(mBspSurface_t*, surfs->count, vid_modelPool, 0);
+			surfs->surfaces = Mem_PoolAllocTypeN(mBspSurface_t*, surfs->count, vid_modelPool);
 			surfs->count = 0;
 		}
 	}
@@ -738,7 +738,7 @@ static void R_LoadSurfacesArrays_ (model_t *mod)
 	/* allocate the surfaces array structures */
 	/** @todo only one allocation should be used here - allocate the whole array with one Mem_PoolAlloc call */
 	for (i = 0; i < NUM_SURFACES_ARRAYS; i++)
-		mod->bsp.sorted_surfaces[i] = Mem_PoolAllocType(mBspSurfaces_t, vid_modelPool, 0);
+		mod->bsp.sorted_surfaces[i] = Mem_PoolAllocType(mBspSurfaces_t, vid_modelPool);
 
 	/* resolve the start surface and total surface count */
 	s = &mod->bsp.surfaces[mod->bsp.firstmodelsurface];
@@ -774,7 +774,7 @@ static void R_LoadSurfacesArrays_ (model_t *mod)
 	for (i = 0; i < NUM_SURFACES_ARRAYS; i++) {
 		mBspSurfaces_t *surfaces = mod->bsp.sorted_surfaces[i];
 		if (surfaces->count) {
-			surfaces->surfaces = Mem_PoolAllocTypeN(mBspSurface_t*, surfaces->count, vid_modelPool, 0);
+			surfaces->surfaces = Mem_PoolAllocTypeN(mBspSurface_t*, surfaces->count, vid_modelPool);
 			surfaces->count = 0;
 		}
 	}

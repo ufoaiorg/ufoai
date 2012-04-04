@@ -202,10 +202,10 @@ static void R_BuildLightmap (mBspSurface_t *surf, byte *sout, byte *dout, int st
 	const int size = smax * tmax;
 	stride -= (smax * LIGHTMAP_BLOCK_BYTES);
 
-	byte* const lightmap = Mem_PoolAllocTypeN(byte, size * LIGHTMAP_BLOCK_BYTES, vid_lightPool, 0);
+	byte* const lightmap = Mem_PoolAllocTypeN(byte, size * LIGHTMAP_BLOCK_BYTES, vid_lightPool);
 	lm = lightmap;
 
-	byte* const deluxemap = Mem_PoolAllocTypeN(byte, size * DELUXEMAP_BLOCK_BYTES, vid_lightPool, 0);
+	byte* const deluxemap = Mem_PoolAllocTypeN(byte, size * DELUXEMAP_BLOCK_BYTES, vid_lightPool);
 	dm = deluxemap;
 
 	/* convert the raw lightmap samples to floating point and scale them */
@@ -240,7 +240,7 @@ static void R_BuildLightmap (mBspSurface_t *surf, byte *sout, byte *dout, int st
 	/* the final lightmap is uploaded to the card via the strided lightmap
 	 * block, and also cached on the surface for fast point lighting lookups */
 
-	surf->lightmap = Mem_PoolAllocTypeN(byte, size * LIGHTMAP_BYTES, vid_lightPool, 0);
+	surf->lightmap = Mem_PoolAllocTypeN(byte, size * LIGHTMAP_BYTES, vid_lightPool);
 	l = surf->lightmap;
 	lm = lightmap;
 	dm = deluxemap;
@@ -340,9 +340,9 @@ void R_BeginBuildingLightmaps (void)
 	/* users can tune lightmap size for their card */
 	r_lightmaps.size = r_maxlightmap->integer;
 
-	r_lightmaps.allocated        = Mem_PoolAllocTypeN(unsigned, r_lightmaps.size, vid_lightPool, 0);
-	r_lightmaps.sample_buffer    = Mem_PoolAllocTypeN(byte, r_lightmaps.size * r_lightmaps.size * sizeof(unsigned), vid_lightPool, 0);
-	r_lightmaps.direction_buffer = Mem_PoolAllocTypeN(byte, r_lightmaps.size * r_lightmaps.size * sizeof(unsigned), vid_lightPool, 0);
+	r_lightmaps.allocated        = Mem_PoolAllocTypeN(unsigned, r_lightmaps.size, vid_lightPool);
+	r_lightmaps.sample_buffer    = Mem_PoolAllocTypeN(byte, r_lightmaps.size * r_lightmaps.size * sizeof(unsigned), vid_lightPool);
+	r_lightmaps.direction_buffer = Mem_PoolAllocTypeN(byte, r_lightmaps.size * r_lightmaps.size * sizeof(unsigned), vid_lightPool);
 
 	r_lightmaps.lightmap_count = 0;
 	r_lightmaps.deluxemap_count = 0;

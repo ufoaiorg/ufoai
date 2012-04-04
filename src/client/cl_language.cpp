@@ -100,7 +100,7 @@ void CL_ParseLanguages (const char *name, const char **text)
 		return;
 	}
 
-	language_t* const language = Mem_PoolAllocType(language_t, cl_genericPool, 0);
+	language_t* const language = Mem_PoolAllocType(language_t, cl_genericPool);
 	language->localeID = Mem_PoolStrDup(name, cl_genericPool, 0);
 	language->localeString = "";
 	language->nativeString = "";
@@ -123,7 +123,7 @@ void CL_ParseLanguages (const char *name, const char **text)
 				/* end of locale mappings reached */
 				if (!*text || *token == '}')
 					break;
-				localeMapping_t* const mapping = Mem_PoolAllocType(localeMapping_t, cl_genericPool, 0);
+				localeMapping_t* const mapping = Mem_PoolAllocType(localeMapping_t, cl_genericPool);
 				mapping->localeMapping = Mem_PoolStrDup(token, cl_genericPool, 0);
 				/* link it in */
 				mapping->next = language->localeMapping;

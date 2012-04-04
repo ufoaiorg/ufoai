@@ -61,7 +61,7 @@ const struct value_s *UI_RegisterNodePropertyPosSize_ (struct uiBehaviour_s *beh
 
 	if (behaviour->localProperties == NULL) {
 		/* temporary memory allocation */
-		behaviour->localProperties = Mem_PoolAllocTypeN(value_t const*, LOCAL_PROPERTY_SIZE, ui_sysPool, 0);
+		behaviour->localProperties = Mem_PoolAllocTypeN(value_t const*, LOCAL_PROPERTY_SIZE, ui_sysPool);
 	}
 	if (behaviour->propertyCount >= LOCAL_PROPERTY_SIZE-1) {
 		Com_Error(ERR_FATAL, "UI_RegisterNodePropertyPosSize_: Property memory of behaviour %s is full.", behaviour->name);

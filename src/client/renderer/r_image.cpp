@@ -162,7 +162,7 @@ void R_LoadImage (const char *name, byte **pic, int *width, int *height)
 		const size_t size = (surf->w * surf->h) * 4;
 		*width = surf->w;
 		*height = surf->h;
-		*pic = Mem_PoolAllocTypeN(byte, size, vid_imagePool, 0);
+		*pic = Mem_PoolAllocTypeN(byte, size, vid_imagePool);
 		memcpy(*pic, surf->pixels, size);
 		SDL_FreeSurface(surf);
 	}
@@ -506,7 +506,7 @@ image_t* R_RenderToTexture (const char *name, int x, int y, int w, int h)
 		if (dimensionDiffer) {
 			R_DeleteImage(img);
 		}
-		byte* const buf = Mem_PoolAllocTypeN(byte, w * h * 4, vid_imagePool, 0);
+		byte* const buf = Mem_PoolAllocTypeN(byte, w * h * 4, vid_imagePool);
 		img = R_LoadImageData(name, buf, w, h, it_effect);
 		Mem_Free(buf);
 	}

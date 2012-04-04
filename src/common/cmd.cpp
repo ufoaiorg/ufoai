@@ -434,7 +434,7 @@ static void Cmd_Alias_f (void)
 	}
 
 	if (!a) {
-		a = Mem_PoolAllocType(cmd_alias_t, com_aliasSysPool, 0);
+		a = Mem_PoolAllocType(cmd_alias_t, com_aliasSysPool);
 		a->next = cmd_alias;
 		/* cmd_alias_hash should be null on the first run */
 		a->hash_next = cmd_alias_hash[hash];
@@ -809,7 +809,7 @@ void Cmd_AddCommand (const char *cmd_name, xcommand_t function, const char *desc
 		}
 	}
 
-	cmd_function_t* const cmd = Mem_PoolAllocType(cmd_function_t, com_cmdSysPool, 0);
+	cmd_function_t* const cmd = Mem_PoolAllocType(cmd_function_t, com_cmdSysPool);
 	cmd->name = cmd_name;
 	cmd->description = desc;
 	cmd->function = function;

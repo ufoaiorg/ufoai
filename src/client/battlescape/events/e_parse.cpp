@@ -245,7 +245,7 @@ void CL_ParseEvent (struct dbuffer *msg)
 		GAME_NofityEvent((event_t)eType);
 		eventData->eventCallback(eventData, msg);
 	} else {
-		evTimes_t* const cur = Mem_PoolAllocType(evTimes_t, cl_genericPool, 0);
+		evTimes_t* const cur = Mem_PoolAllocType(evTimes_t, cl_genericPool);
 		int when;
 
 		/* copy the buffer as first action, the event time functions can modify the buffer already */

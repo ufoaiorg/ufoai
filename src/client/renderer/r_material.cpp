@@ -1042,7 +1042,7 @@ void R_LoadMaterials (const char *map)
 		}
 
 		if (*c == '{' && inmaterial) {
-			materialStage_t* const s = Mem_PoolAllocType(materialStage_t, vid_imagePool, 0);
+			materialStage_t* const s = Mem_PoolAllocType(materialStage_t, vid_imagePool);
 			s->glowscale = defaultMaterial.glowscale;
 
 			if (R_ParseStage(s, &buffer) == -1) {

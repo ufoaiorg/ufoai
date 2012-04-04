@@ -27,8 +27,8 @@ linkedList_t* LIST_Add (linkedList_t** listDest, const byte* data, size_t length
 
 	/* create the list */
 	if (!*listDest) {
-		*listDest = Mem_PoolAllocType(linkedList_t, com_genericPool, 0);
-		(*listDest)->data = Mem_PoolAllocTypeN(byte, length, com_genericPool, 0);
+		*listDest = Mem_PoolAllocType(linkedList_t, com_genericPool);
+		(*listDest)->data = Mem_PoolAllocTypeN(byte, length, com_genericPool);
 		memcpy(((*listDest)->data), data, length);
 		(*listDest)->next = NULL; /* not really needed - but for better readability */
 		return *listDest;
@@ -38,9 +38,9 @@ linkedList_t* LIST_Add (linkedList_t** listDest, const byte* data, size_t length
 	while (list->next)
 		list = list->next;
 
-	linkedList_t* const newEntry = Mem_PoolAllocType(linkedList_t, com_genericPool, 0);
+	linkedList_t* const newEntry = Mem_PoolAllocType(linkedList_t, com_genericPool);
 	list->next = newEntry;
-	newEntry->data = Mem_PoolAllocTypeN(byte, length, com_genericPool, 0);
+	newEntry->data = Mem_PoolAllocTypeN(byte, length, com_genericPool);
 	memcpy(newEntry->data, data, length);
 	newEntry->next = NULL; /* not really needed - but for better readability */
 
@@ -97,7 +97,7 @@ void LIST_AddStringSorted (linkedList_t** listDest, const char* data)
 		tmp = NULL;
 		while (list) {
 			if (Q_StringSort(data, (const char *)list->data) < 0) {
-				linkedList_t* const newEntry = Mem_PoolAllocType(linkedList_t, com_genericPool, 0);
+				linkedList_t* const newEntry = Mem_PoolAllocType(linkedList_t, com_genericPool);
 				newEntry->data = (byte*)Mem_StrDup(data);
 				newEntry->next = list;
 				if (tmp != NULL)
@@ -110,7 +110,7 @@ void LIST_AddStringSorted (linkedList_t** listDest, const char* data)
 			list = list->next;
 		}
 		assert(tmp);
-		tmp->next = Mem_PoolAllocType(linkedList_t, com_genericPool, 0);
+		tmp->next = Mem_PoolAllocType(linkedList_t, com_genericPool);
 		tmp->next->data = (byte*)Mem_StrDup(data);
 		tmp->next->next = NULL; /* not really needed - but for better readability */
 	}
@@ -132,7 +132,7 @@ void LIST_PrependString (linkedList_t** listDest, const char* data)
 		return;
 	}
 
-	linkedList_t* const newEntry = Mem_PoolAllocType(linkedList_t, com_genericPool, 0);
+	linkedList_t* const newEntry = Mem_PoolAllocType(linkedList_t, com_genericPool);
 	newEntry->next = *listDest;
 	*listDest = newEntry;
 	newEntry->data = (byte*)Mem_StrDup(data);
@@ -154,7 +154,7 @@ void LIST_AddString (linkedList_t** listDest, const char* data)
 
 	/* create the list */
 	if (!*listDest) {
-		*listDest = Mem_PoolAllocType(linkedList_t, com_genericPool, 0);
+		*listDest = Mem_PoolAllocType(linkedList_t, com_genericPool);
 		(*listDest)->data = (byte*)Mem_StrDup(data);
 		(*listDest)->next = NULL; /* not really needed - but for better readability */
 		return;
@@ -164,7 +164,7 @@ void LIST_AddString (linkedList_t** listDest, const char* data)
 	while (list->next)
 		list = list->next;
 
-	linkedList_t* const newEntry = Mem_PoolAllocType(linkedList_t, com_genericPool, 0);
+	linkedList_t* const newEntry = Mem_PoolAllocType(linkedList_t, com_genericPool);
 	list->next = newEntry;
 	newEntry->data = (byte*)Mem_StrDup(data);
 	newEntry->next = NULL; /* not really needed - but for better readability */
@@ -185,7 +185,7 @@ void LIST_AddPointer (linkedList_t** listDest, void* data)
 
 	/* create the list */
 	if (!*listDest) {
-		*listDest = Mem_PoolAllocType(linkedList_t, com_genericPool, 0);
+		*listDest = Mem_PoolAllocType(linkedList_t, com_genericPool);
 		(*listDest)->data = (byte *)data;
 		(*listDest)->ptr = qtrue;
 		(*listDest)->next = NULL; /* not really needed - but for better readability */
@@ -196,7 +196,7 @@ void LIST_AddPointer (linkedList_t** listDest, void* data)
 	while (list->next)
 		list = list->next;
 
-	linkedList_t* const newEntry = Mem_PoolAllocType(linkedList_t, com_genericPool, 0);
+	linkedList_t* const newEntry = Mem_PoolAllocType(linkedList_t, com_genericPool);
 	list->next = newEntry;
 	newEntry->data = (byte *)data;
 	newEntry->ptr = qtrue;

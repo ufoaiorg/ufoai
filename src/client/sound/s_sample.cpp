@@ -124,7 +124,7 @@ int S_LoadSampleIdx (const char *soundFile)
 		return 0;		/* couldn't load the sound's data */
 
 	hash = Com_HashKey(name, SAMPLE_HASH_SIZE);
-	s_sample_t* const sample = Mem_PoolAllocType(s_sample_t, cl_soundSysPool, 0);
+	s_sample_t* const sample = Mem_PoolAllocType(s_sample_t, cl_soundSysPool);
 	sample->name = Mem_PoolStrDup(name, cl_soundSysPool, 0);
 	sample->chunk = chunk;
 	sample->hashNext = sampleHash[hash];

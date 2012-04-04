@@ -238,7 +238,7 @@ void UI_Init (void)
 
 	Com_Printf("Allocate %i megabytes for the ui hunk\n", ui_hunkSize->integer);
 	ui_global.adataize = ui_hunkSize->integer * 1024 * 1024;
-	ui_global.adata    = Mem_PoolAllocTypeN(byte, ui_global.adataize, ui_sysPool, 0);
+	ui_global.adata    = Mem_PoolAllocTypeN(byte, ui_global.adataize, ui_sysPool);
 	ui_global.curadata = ui_global.adata;
 
 	UI_InitData();

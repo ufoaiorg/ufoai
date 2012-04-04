@@ -79,7 +79,7 @@ void R_ModLoadAliasMD3Model (model_t *mod, byte *buffer, int bufSize)
 
 	/* load the frames */
 	pinframe = (const dmd3frame_t *)((const byte *)md3 + LittleLong(md3->ofs_frames));
-	mAliasFrame_t* poutframe = mod->alias.frames = Mem_PoolAllocTypeN(mAliasFrame_t, mod->alias.num_frames, vid_modelPool, 0);
+	mAliasFrame_t* poutframe = mod->alias.frames = Mem_PoolAllocTypeN(mAliasFrame_t, mod->alias.num_frames, vid_modelPool);
 
 	mod->radius = 0;
 	ClearBounds(mod->mins, mod->maxs);
@@ -100,11 +100,11 @@ void R_ModLoadAliasMD3Model (model_t *mod, byte *buffer, int bufSize)
 	/* load the tags */
 	if (mod->alias.num_tags) {
 		pintag = (const dmd3tag_t *)((const byte *)md3 + LittleLong(md3->ofs_tags));
-		mAliasTag_t* pouttag = mod->alias.tags = Mem_PoolAllocTypeN(mAliasTag_t, mod->alias.num_tags, vid_modelPool, 0);
+		mAliasTag_t* pouttag = mod->alias.tags = Mem_PoolAllocTypeN(mAliasTag_t, mod->alias.num_tags, vid_modelPool);
 
 		/** @todo the tag loading is broken - the order is different in the md3 file */
 		for (l = 0; l < mod->alias.num_tags; l++, pouttag++, pintag++) {
-			mAliasTagOrientation_t* orient = pouttag->orient = Mem_PoolAllocTypeN(mAliasTagOrientation_t, mod->alias.num_frames, vid_modelPool, 0);
+			mAliasTagOrientation_t* orient = pouttag->orient = Mem_PoolAllocTypeN(mAliasTagOrientation_t, mod->alias.num_frames, vid_modelPool);
 			memcpy(pouttag->name, pintag->name, MD3_MAX_PATH);
 			for (i = 0; i < mod->alias.num_frames; i++, orient++) {
 				for (j = 0; j < 3; j++) {
@@ -119,7 +119,7 @@ void R_ModLoadAliasMD3Model (model_t *mod, byte *buffer, int bufSize)
 
 	/* load the meshes */
 	pinmesh = (const dmd3mesh_t *)((const byte *)md3 + LittleLong(md3->ofs_meshes));
-	mAliasMesh_t* poutmesh = mod->alias.meshes = Mem_PoolAllocTypeN(mAliasMesh_t, mod->alias.num_meshes, vid_modelPool, 0);
+	mAliasMesh_t* poutmesh = mod->alias.meshes = Mem_PoolAllocTypeN(mAliasMesh_t, mod->alias.num_meshes, vid_modelPool);
 
 	for (i = 0; i < mod->alias.num_meshes; i++, poutmesh++) {
 		memcpy(poutmesh->name, pinmesh->name, MD3_MAX_PATH);
@@ -150,7 +150,7 @@ void R_ModLoadAliasMD3Model (model_t *mod, byte *buffer, int bufSize)
 
 		/* register all skins */
 		pinskin = (const dmd3skin_t *)((const byte *)pinmesh + LittleLong(pinmesh->ofs_skins));
-		poutmesh->skins = Mem_PoolAllocTypeN(mAliasSkin_t, poutmesh->num_skins, vid_modelPool, 0);
+		poutmesh->skins = Mem_PoolAllocTypeN(mAliasSkin_t, poutmesh->num_skins, vid_modelPool);
 
 		for (j = 0; j < poutmesh->num_skins; j++) {
 			mAliasSkin_t *modelSkin = &poutmesh->skins[j];
@@ -160,7 +160,7 @@ void R_ModLoadAliasMD3Model (model_t *mod, byte *buffer, int bufSize)
 
 		/* load the indexes */
 		pinindex = (const int32_t *)((const byte *)pinmesh + LittleLong(pinmesh->ofs_tris));
-		int32_t* poutindex = poutmesh->indexes = Mem_PoolAllocTypeN(int32_t, poutmesh->num_tris * 3, vid_modelPool, 0);
+		int32_t* poutindex = poutmesh->indexes = Mem_PoolAllocTypeN(int32_t, poutmesh->num_tris * 3, vid_modelPool);
 
 		for (j = 0; j < poutmesh->num_tris; j++, pinindex += 3, poutindex += 3) {
 			poutindex[0] = (int32_t)LittleLong(pinindex[0]);
@@ -170,7 +170,7 @@ void R_ModLoadAliasMD3Model (model_t *mod, byte *buffer, int bufSize)
 
 		/* load the texture coordinates */
 		pincoord = (const dmd3coord_t *)((const byte *)pinmesh + LittleLong(pinmesh->ofs_tcs));
-		poutmesh->stcoords = Mem_PoolAllocTypeN(mAliasCoord_t, poutmesh->num_verts, vid_modelPool, 0);
+		poutmesh->stcoords = Mem_PoolAllocTypeN(mAliasCoord_t, poutmesh->num_verts, vid_modelPool);
 
 		for (j = 0; j < poutmesh->num_verts; j++, pincoord++) {
 			poutmesh->stcoords[j][0] = LittleFloat(pincoord->st[0]);
@@ -179,7 +179,7 @@ void R_ModLoadAliasMD3Model (model_t *mod, byte *buffer, int bufSize)
 
 		/* load the vertexes and normals */
 		pinvert = (const dmd3vertex_t *)((const byte *)pinmesh + LittleLong(pinmesh->ofs_verts));
-		mAliasVertex_t* poutvert = poutmesh->vertexes = Mem_PoolAllocTypeN(mAliasVertex_t, mod->alias.num_frames * poutmesh->num_verts, vid_modelPool, 0);
+		mAliasVertex_t* poutvert = poutmesh->vertexes = Mem_PoolAllocTypeN(mAliasVertex_t, mod->alias.num_frames * poutmesh->num_verts, vid_modelPool);
 
 		for (l = 0; l < mod->alias.num_frames; l++) {
 			for (j = 0; j < poutmesh->num_verts; j++, pinvert++, poutvert++) {

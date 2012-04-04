@@ -573,7 +573,7 @@ static void UI_MaterialEditorNewStage_f (void)
 	}
 
 	m = &R_GetImageAtIndex(id)->material;
-	materialStage_t* const s = Mem_PoolAllocType(materialStage_t, vid_imagePool, 0);
+	materialStage_t* const s = Mem_PoolAllocType(materialStage_t, vid_imagePool);
 	m->num_stages++;
 
 	/* append the stage to the chain */

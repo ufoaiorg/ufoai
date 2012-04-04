@@ -102,7 +102,7 @@ void CL_ParseTipsOfTheDay (const char *name, const char **text)
 			Com_Printf("Ignore tip: '%s' - not marked translatable\n", token);
 			continue;
 		}
-		tipOfTheDay_t* const tip = Mem_PoolAllocType(tipOfTheDay_t, cl_genericPool, 0);
+		tipOfTheDay_t* const tip = Mem_PoolAllocType(tipOfTheDay_t, cl_genericPool);
 		tip->tipString = Mem_PoolStrDup(token, cl_genericPool, 0);
 		tip->next = tipList;
 		tipList = tip;

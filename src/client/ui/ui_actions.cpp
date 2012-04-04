@@ -752,7 +752,7 @@ void UI_PoolAllocAction (uiAction_t** action, int type, const void *data)
 {
 	if (*action)
 		Com_Error(ERR_FATAL, "There is already an action assigned");
-	*action = Mem_PoolAllocType(uiAction_t, ui_sysPool, 0);
+	*action = Mem_PoolAllocType(uiAction_t, ui_sysPool);
 	(*action)->type = type;
 	switch (type) {
 	case EA_CMD:
@@ -783,8 +783,8 @@ void UI_AddListener (uiNode_t *node, const value_t *property, const uiNode_t *fu
 	}
 
 	/* create the call action */
-	uiAction_t* const action = Mem_PoolAllocType(uiAction_t, ui_sysPool, 0);
-	uiAction_t* const value  = Mem_PoolAllocType(uiAction_t, ui_sysPool, 0);
+	uiAction_t* const action = Mem_PoolAllocType(uiAction_t, ui_sysPool);
+	uiAction_t* const value  = Mem_PoolAllocType(uiAction_t, ui_sysPool);
 	value->d.terminal.d1.constString = Mem_PoolStrDup(UI_GetPath(functionNode), ui_sysPool, 0);
 	value->next = NULL;
 	action->type = EA_LISTENER;

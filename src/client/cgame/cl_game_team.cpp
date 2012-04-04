@@ -233,7 +233,7 @@ static qboolean GAME_SaveTeam (const char *filename, const char *name)
 	/* required for storing compressed */
 	header.xmlSize = LittleLong(requiredBufferLength);
 
-	byte* const buf = Mem_PoolAllocTypeN(byte, requiredBufferLength + 1, cl_genericPool, 0);
+	byte* const buf = Mem_PoolAllocTypeN(byte, requiredBufferLength + 1, cl_genericPool);
 	if (!buf) {
 		mxmlDelete(topNode);
 		Com_Printf("Error: Could not allocate enough memory to save this game\n");
@@ -242,7 +242,7 @@ static qboolean GAME_SaveTeam (const char *filename, const char *name)
 	mxmlSaveString(topNode, (char*)buf, requiredBufferLength + 1, MXML_NO_CALLBACK);
 	mxmlDelete(topNode);
 
-	byte* const fbuf = Mem_PoolAllocTypeN(byte, requiredBufferLength + 1 + sizeof(header), cl_genericPool, 0);
+	byte* const fbuf = Mem_PoolAllocTypeN(byte, requiredBufferLength + 1 + sizeof(header), cl_genericPool);
 	memcpy(fbuf, &header, sizeof(header));
 	memcpy(fbuf + sizeof(header), buf, requiredBufferLength + 1);
 	Mem_Free(buf);
@@ -304,7 +304,7 @@ static qboolean GAME_LoadTeam (const char *filename)
 	}
 
 	clen = FS_FileLength(&f);
-	byte* const cbuf = Mem_PoolAllocTypeN(byte, clen, cl_genericPool, 0);
+	byte* const cbuf = Mem_PoolAllocTypeN(byte, clen, cl_genericPool);
 	if (FS_Read(cbuf, clen, &f) != clen) {
 		Com_Printf("Warning: Could not read %i bytes from savefile\n", clen);
 		FS_CloseFile(&f);
