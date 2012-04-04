@@ -165,25 +165,19 @@ void SV_MapcycleClear (void)
  */
 static void SV_MapcycleAdd (const char* mapName, qboolean day, const char* gameType)
 {
-	mapcycle_t *mapcycle;
-
-	if (!mapcycleList) {
-		mapcycleList = Mem_PoolAllocType(mapcycle_t, sv_genericPool);
-		mapcycle = mapcycleList; /* first one */
-	} else {
-		/* go to the last entry */
-		mapcycle = mapcycleList;
-		while (mapcycle->next)
-			mapcycle = mapcycle->next;
-		mapcycle->next = Mem_PoolAllocType(mapcycle_t, sv_genericPool);
-		mapcycle = mapcycle->next;
-	}
-	mapcycle->map = Mem_PoolStrDup(mapName, sv_genericPool, 0);
-	mapcycle->day = day;
+	mapcycle_t* const mapcycle = Mem_PoolAllocType(mapcycle_t, sv_genericPool);
+	mapcycle->map  = Mem_PoolStrDup(mapName, sv_genericPool, 0);
+	mapcycle->day  = day;
 	mapcycle->type = Mem_PoolStrDup(gameType, sv_genericPool, 0);
+	mapcycle->next = 0;
 	Com_DPrintf(DEBUG_SERVER, "mapcycle add: '%s' type '%s'\n", mapcycle->map, mapcycle->type);
-	mapcycle->next = NULL;
-	mapcycleCount++;
+
+	/* Append to end of list. */
+	mapcycle_t** anchor = &mapcycleList;
+	while (*anchor) anchor = &(*anchor)->next;
+	*anchor = mapcycle;
+
+	++mapcycleCount;
 }
 
 /**
