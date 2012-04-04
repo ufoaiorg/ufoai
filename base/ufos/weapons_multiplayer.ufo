@@ -129,7 +129,7 @@ item shotgun
 	weapon			true
 	type			biggun
 	animationindex	1
-	holdtwohanded	true
+	holdtwohanded	false
 	firetwohanded	true
 	shape			"0 0 4 2"
 	center			"10.4 0 1"
