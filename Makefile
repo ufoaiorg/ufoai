@@ -45,10 +45,7 @@ CXXFLAGS := $(CFLAGS) $(CXXFLAGS)
 ASSEMBLE_OBJECTS = \
 	$(addprefix $(BUILDDIR)/$(1)/,$(addsuffix .o,$(filter %.c,$($(1)_SRCS)))) \
 	$(addprefix $(BUILDDIR)/$(1)/,$(addsuffix .o,$(filter %.rc,$($(1)_SRCS)))) \
-	$(addprefix $(BUILDDIR)/$(1)/,$(addsuffix .o,$(filter %.m,$($(1)_SRCS)))) \
-	$(addprefix $(BUILDDIR)/$(1)/,$(addsuffix .o,$(filter %.mm,$($(1)_SRCS)))) \
 	$(addprefix $(BUILDDIR)/$(1)/,$(addsuffix .o,$(filter %.cpp,$($(1)_SRCS)))) \
-	$(addprefix $(BUILDDIR)/$(1)/,$(addsuffix .o,$(filter %.cc,$($(1)_SRCS))))
 
 define INCLUDE_RULE
 include build/modules/$(1).mk
@@ -92,21 +89,9 @@ $(BUILDDIR)/$(1)/%.c.o: $(SRCDIR)/%.c $(BUILDDIR)/$(1)/.dirs
 	@echo '===> CC [$(1)] $$<'
 	$(Q)$(CROSS)$(CC) $(CCFLAGS) $($(1)_CCFLAGS) -c -o $$@ $$< $(DEP_FLAGS)
 
-$(BUILDDIR)/$(1)/%.m.o: $(SRCDIR)/%.m $(BUILDDIR)/$(1)/.dirs
-	@echo '===> CC [$(1)] $$<'
-	$(Q)$(CROSS)$(CC) $(CCFLAGS) $($(1)_CCFLAGS) -c -o $$@ $$< $(DEP_FLAGS)
-
-$(BUILDDIR)/$(1)/%.mm.o: $(SRCDIR)/%.mm $(BUILDDIR)/$(1)/.dirs
-	@echo '===> CXX [$(1)] $$<'
-	$(Q)$(CROSS)$(CXX) $(CXXFLAGS) $($(1)_CXXFLAGS) -c -o $$@ $$< $(DEP_FLAGS)
-
 $(BUILDDIR)/$(1)/%.rc.o: $(SRCDIR)/%.rc $(BUILDDIR)/$(1)/.dirs
 	@echo '===> WINDRES [$(1)] $$<'
 	$(Q)$(CROSS)$(WINDRES) -v $(subst \,\\\,$(subst -DUFO_REVISION,-D UFO_REVISION,$(filter -DUFO_REVISION=%,$(CXXFLAGS)))) $(subst -DDEBUG, -D DEBUG,$(filter -DDEBUG,$(CXXFLAGS))) -D FULL_PATH_RC_FILE -i $$< -o $$@
-
-$(BUILDDIR)/$(1)/%.cc.o: $(SRCDIR)/%.cc $(BUILDDIR)/$(1)/.dirs
-	@echo '===> CXX [$(1)] $$<'
-	$(Q)$(CROSS)$(CXX) $(CXXFLAGS) $($(1)_CXXFLAGS) -c -o $$@ $$< $(DEP_FLAGS)
 
 $(BUILDDIR)/$(1)/%.cpp.o: $(SRCDIR)/%.cpp $(BUILDDIR)/$(1)/.dirs
 	@echo '===> CXX [$(1)] $$<'
