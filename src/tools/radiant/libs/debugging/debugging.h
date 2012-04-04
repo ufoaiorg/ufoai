@@ -27,10 +27,11 @@ Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
  * @brief Debugging macros for fatal error/assert messages.
  */
 
+#include "../../../../shared/cxx.h"
 #include "stream/textstream.h"
 #include "generic/static.h"
 
-#if defined (__i386__) && defined (__GNUC__) && __GNUC__ >= 2
+#if defined __i386__ && GCC_ATLEAST(2, 0)
 #define DEBUGGER_BREAKPOINT() __asm__ __volatile__ ("int $03")
 #else
 #include <signal.h>
