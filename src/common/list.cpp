@@ -199,36 +199,20 @@ void LIST_AddPointer (linkedList_t** listDest, void* data)
  */
 qboolean LIST_RemoveEntry (linkedList_t **list, linkedList_t *entry)
 {
-	linkedList_t* prev;
-	linkedList_t* listPos;
-
 	assert(list);
 	assert(entry);
 
-	prev = *list;
-	listPos = *list;
-
-	/* first entry */
-	if (*list == entry) {
-		if (!(*list)->ptr)
-			Mem_Free((*list)->data);
-		listPos = (*list)->next;
-		Mem_Free(*list);
-		*list = listPos;
-		return qtrue;
-	} else {
-		while (listPos) {
-			if (listPos == entry) {
-				prev->next = listPos->next;
-				if (!listPos->ptr)
-					Mem_Free(listPos->data);
-				Mem_Free(listPos);
-				return qtrue;
-			}
-			prev = listPos;
-			listPos = listPos->next;
+	for (; *list; list = &(*list)->next) {
+		if (*list == entry) {
+			/* Unlink the entry. */
+			*list = entry->next;
+			/* Delete the entry. */
+			if (!entry->ptr) Mem_Free(entry->data);
+			Mem_Free(entry);
+			return qtrue;
 		}
 	}
+
 	return qfalse;
 }
 
