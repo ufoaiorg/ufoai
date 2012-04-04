@@ -130,13 +130,6 @@ void LIST_AddStringSorted (linkedList_t** listDest, const char* data)
  */
 void LIST_PrependString (linkedList_t** listDest, const char* data)
 {
-
-	/* create the list */
-	if (!*listDest) {
-		LIST_AddString(listDest, data);
-		return;
-	}
-
 	*listDest = LIST_AllocateString(data, *listDest);
 }
 
