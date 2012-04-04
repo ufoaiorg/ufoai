@@ -14,7 +14,7 @@ item plaspistol
 	center			"1 0 0"
 	scale			1.5
 	ammo			8
-	reload			10
+	reload			15
 	reloadsound		weapons/reload-pistol
 	price			2000
 	size			20
@@ -48,38 +48,16 @@ item plaspistol_ammo
 			impsnd				impact/plasma-impact
 			bodysnd 			impact/plasma-bodyimpact
 			speed				1500
-			spread				"1.5 1.5"
-			crouch				0.8
+			spread				"2.2 2.2"
+			crouch				1
 			range				40
 			shots				1
 			ammo				1
 			delaybetweenshots	5
 			time				6
-			damage				"50 5"
+			damage				"50 10"
 			dmgweight			plasma_light
 			reaction			true
-		}
-		firedef
-		{
-			name				"_Aimed Shot"
-			skill				close
-			projtl				plasmaMiniPulse
-			impact				plasmaImpactCharged
-			hitbody				plasmaImpactCharged
-			firesnd				weapons/plasma-small
-			impsnd				impact/plasma-impact
-			bodysnd 			impact/plasma-bodyimpact
-			speed				1500
-			spread				"1.2 1.2"
-			crouch				0.8
-			range				40
-			shots				1
-			ammo				1
-			delaybetweenshots	5
-			time				10
-			damage				"50 5"
-			dmgweight			plasma_light
-			reaction			false
 		}
 		firedef
 		{
@@ -92,15 +70,37 @@ item plaspistol_ammo
 			impsnd				impact/plasma-impact
 			bodysnd 			impact/plasma-bodyimpact
 			speed				1500
-			spread				"1.9 1.9"
-			crouch				0.8
+			spread				"2.8 2.8"
+			crouch				1
 			range				40
 			shots				3
 			ammo				3
 			delaybetweenshots	5
 			time				10
-			damage				"50 5"
+			damage				"50 10"
 			dmgweight			plasma_light
+		}
+		firedef
+		{
+			name				"_Aimed Shot"
+			skill				close
+			projtl				plasmaMiniPulse
+			impact				plasmaImpactCharged
+			hitbody				plasmaImpactCharged
+			firesnd				weapons/plasma-small
+			impsnd				impact/plasma-impact
+			bodysnd 			impact/plasma-bodyimpact
+			speed				1500
+			spread				"2 2"
+			crouch				1
+			range				40
+			shots				1
+			ammo				1
+			delaybetweenshots	5
+			time				10
+			damage				"50 10"
+			dmgweight			plasma_light
+			reaction			false
 		}
 	}
 }

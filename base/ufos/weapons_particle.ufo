@@ -48,19 +48,19 @@ item pbeampistol_ammo
 			impsnd		impact/laser-impact
 			bodysnd 	impact/laser-bodyimpact
 			speed		0
-			spread		"1 1"
-			crouch		0.9
+			spread		"1.8 1.8"
+			crouch		1
 			range		30
 			shots		1
 			ammo		1
-			time		7
-			damage		"60 10"
+			time		6
+			damage		"70 10"
 			dmgweight	particlebeam_light
 			reaction	true
 		}
 		firedef
 		{
-			name				"_Burst"
+			name				"_Aimed Shot"
 			skill				close
 			projtl				pbeamMiniBeam
 			impact				pbeamImpact
@@ -69,14 +69,14 @@ item pbeampistol_ammo
 			impsnd				impact/laser-impact
 			bodysnd 			impact/laser-bodyimpact
 			speed				0
-			spread				"1.8 1.8"
-			crouch				0.9
+			spread				"1.6 1.6"
+			crouch				1
 			range				30
-			shots				3
-			ammo				3
+			shots				1
+			ammo				1
 			delaybetweenshots	5
-			time				11
-			damage				"60 10"
+			time				10
+			damage				"70 10"
 			dmgweight			particlebeam_light
 		}
 	}

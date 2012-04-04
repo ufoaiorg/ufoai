@@ -521,7 +521,7 @@ item pistol
 	center			"2 0 1"
 	scale			1.35
 	ammo			12
-	reload			12
+	reload			6
 	reloadsound		weapons/reload-pistol
 	price			900
 	size			7
@@ -555,37 +555,15 @@ item pistol_ammo
 			impsnd		impact/bullet-impact
 			bodysnd 	impact/bullet-bodyimpact
 			speed		3000
-			spread		"1.1 1.1"
-			crouch		0.9
+			spread		"2 2"
+			crouch		1
 			range		40
 			shots		1
 			ammo		1
-			time		6
-			damage		"35 5"
+			time		4
+			damage		"30 5"
 			dmgweight	normal_light
 			reaction	true
-		}
-		firedef
-		{
-			name				"_3-Round Burst"
-			skill				close
-			projtl				bullet-smg
-			impact				bulletImpact
-			hitbody				null
-			firesnd				weapons/bullet-pistol
-			impsnd				impact/bullet-impact
-			bodysnd 			impact/bullet-bodyimpact
-			speed				3000
-			spread				"1.3 1.3"
-			crouch				0.9
-			range				40
-			shots				3
-			ammo				3
-			delaybetweenshots	10
-			time				8
-			damage				"35 5"
-			dmgweight			normal_light
-			reaction			true
 		}
 		firedef
 		{
@@ -598,14 +576,14 @@ item pistol_ammo
 			impsnd				impact/bullet-impact
 			bodysnd 			impact/bullet-bodyimpact
 			speed				3000
-			spread				"1 1"
-			crouch				0.9
+			spread				"1.5 1.5"
+			crouch				1
 			range				40
 			shots				1
 			ammo				1
 			delaybetweenshots	10
 			time				8
-			damage				"35 5"
+			damage				"30 5"
 			dmgweight			normal_light
 		}
 	}
@@ -628,7 +606,7 @@ item pistol2
 	center			"-0.1 0 0"
 	scale			2.0
 	ammo			30
-	reload			12
+	reload			10
 	reloadsound		weapons/reload-pistol
 	price			1000
 	size			7
@@ -662,12 +640,12 @@ item pistol2_ammo
 			impsnd		impact/bullet-impact
 			bodysnd 	impact/bullet-bodyimpact
 			speed		3000
-			spread		"1.5 1.5"
-			crouch		0.9
+			spread		"2 2"
+			crouch		1
 			range		40
 			shots		1
 			ammo		1
-			time		5
+			time		6
 			damage		"20 5"
 			reaction	true
 			dmgweight	normal_light
@@ -683,13 +661,13 @@ item pistol2_ammo
 			impsnd				impact/bullet-impact
 			bodysnd 			impact/bullet-bodyimpact
 			speed				3000
-			spread				"1.6 1.6"
-			crouch				0.9
+			spread				"2.5 2.5"
+			crouch				1
 			range				40
 			shots				3
 			ammo				3
 			delaybetweenshots	10
-			time				7
+			time				9
 			damage				"20 5"
 			dmgweight			normal_light
 			reaction			true
@@ -705,13 +683,13 @@ item pistol2_ammo
 			impsnd				impact/bullet-impact
 			bodysnd 			impact/bullet-bodyimpact
 			speed				3000
-			spread				"1.7 1.7"
-			crouch				0.9
+			spread				"3 3"
+			crouch				1
 			range				40
-			shots				8
-			ammo				8
+			shots				10
+			ammo				10
 			delaybetweenshots	10
-			time				14
+			time				12
 			damage				"20 5"
 			dmgweight			normal_light
 			reaction			true

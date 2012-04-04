@@ -14,7 +14,7 @@ item laserpistol
 	center			"2.5 0 1.2"
 	scale			1.7
 	ammo			26
-	reload			12
+	reload			10
 	reloadsound		weapons/reload-pistol
 	price			2000
 	size			10
@@ -124,13 +124,13 @@ item laser_ammo
 			hitbody		laserImpact
 			firesnd		weapons/laser-small
 			speed		0
-			spread		"0.75 0.75"
-			crouch		0.9
+			spread		"1.5 1.5"
+			crouch		1
 			range		60
 			shots		1
 			ammo		1
-			time		5
-			damage		"36 6"
+			time		4
+			damage		"20 5"
 			dmgweight	laser_light
 			reaction	true
 		}
@@ -146,13 +146,13 @@ item laser_ammo
 			bodysnd 			impact/laser-bodyimpact
 			delaybetweenshots	6
 			speed				0
-			spread				"0.75 0.75"
-			crouch				0.9
+			spread				"1.5 1.5"
+			crouch				1
 			range				60
 			shots				3
 			ammo				3
 			time				8
-			damage				"36 6"
+			damage				"20 5"
 			dmgweight			laser_light
 			reaction			true
 		}
