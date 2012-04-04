@@ -11,6 +11,14 @@ LINKED LIST
 #include <assert.h>
 #include <string.h>
 
+static linkedList_t* LIST_AllocateEntry(void* const data, linkedList_t* const next = 0)
+{
+	linkedList_t* const e = Mem_PoolAllocType(linkedList_t, com_genericPool);
+	e->data = data;
+	e->next = next;
+	return e;
+}
+
 /**
  * @brief Adds an entry to a new or to an already existing linked list
  * @sa LIST_AddString
@@ -25,12 +33,11 @@ linkedList_t* LIST_Add (linkedList_t** listDest, void const* data, size_t length
 	assert(listDest);
 	assert(data);
 
+	void* const dataCopy = memcpy(Mem_PoolAllocTypeN(byte, length, com_genericPool), data, length);
+
 	/* create the list */
 	if (!*listDest) {
-		*listDest = Mem_PoolAllocType(linkedList_t, com_genericPool);
-		(*listDest)->data = Mem_PoolAllocTypeN(byte, length, com_genericPool);
-		memcpy(((*listDest)->data), data, length);
-		(*listDest)->next = NULL; /* not really needed - but for better readability */
+		*listDest = LIST_AllocateEntry(dataCopy);
 		return *listDest;
 	} else
 		list = *listDest;
@@ -38,11 +45,8 @@ linkedList_t* LIST_Add (linkedList_t** listDest, void const* data, size_t length
 	while (list->next)
 		list = list->next;
 
-	linkedList_t* const newEntry = Mem_PoolAllocType(linkedList_t, com_genericPool);
+	linkedList_t* const newEntry = LIST_AllocateEntry(dataCopy);
 	list->next = newEntry;
-	newEntry->data = Mem_PoolAllocTypeN(byte, length, com_genericPool);
-	memcpy(newEntry->data, data, length);
-	newEntry->next = NULL; /* not really needed - but for better readability */
 
 	return newEntry;
 }
@@ -84,10 +88,7 @@ linkedList_t* LIST_GetPointer (linkedList_t* list, const void* data)
 
 static linkedList_t* LIST_AllocateString(char const* data, linkedList_t* const next = 0)
 {
-	linkedList_t* const e = Mem_PoolAllocType(linkedList_t, com_genericPool);
-	e->data = Mem_StrDup(data);
-	e->next = next;
-	return e;
+	return LIST_AllocateEntry(Mem_StrDup(data), next);
 }
 
 void LIST_AddStringSorted (linkedList_t** listDest, const char* data)
@@ -181,10 +182,8 @@ void LIST_AddPointer (linkedList_t** listDest, void* data)
 
 	/* create the list */
 	if (!*listDest) {
-		*listDest = Mem_PoolAllocType(linkedList_t, com_genericPool);
-		(*listDest)->data = data;
+		*listDest = LIST_AllocateEntry(data);
 		(*listDest)->ptr = qtrue;
-		(*listDest)->next = NULL; /* not really needed - but for better readability */
 		return;
 	} else
 		list = *listDest;
@@ -192,11 +191,9 @@ void LIST_AddPointer (linkedList_t** listDest, void* data)
 	while (list->next)
 		list = list->next;
 
-	linkedList_t* const newEntry = Mem_PoolAllocType(linkedList_t, com_genericPool);
+	linkedList_t* const newEntry = LIST_AllocateEntry(data);
 	list->next = newEntry;
-	newEntry->data = data;
 	newEntry->ptr = qtrue;
-	newEntry->next = NULL; /* not really needed - but for better readability */
 }
 
 /**
