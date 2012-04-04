@@ -44,10 +44,8 @@ typedef int qboolean;
 typedef uint8_t byte;
 #endif
 
-#if defined _WIN64
-# define UFO_SIZE_T "%I64u"
-#elif defined _WIN32
-# define UFO_SIZE_T "%u"
+#if defined _WIN32
+#	define UFO_SIZE_T "%Iu"
 #else
 # define UFO_SIZE_T "%zu"
 #endif

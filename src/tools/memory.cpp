@@ -28,10 +28,8 @@
 #define SIZEFORMAT "%12s"
 #define TYPESIZE(type) printf(STRUCTFORMAT ": " SIZEFORMAT " KB\n", #type, MEMORY_HumanReadable(sizeof(type)));
 
-#if defined _WIN64
-# define UFO_SIZE_LENGTH_T "%I64u"
-#elif defined _WIN32
-# define UFO_SIZE_LENGTH_T "%03u"
+#if defined _WIN32
+#	define UFO_SIZE_LENGTH_T "%03Iu"
 #else
 # define UFO_SIZE_LENGTH_T "%03zu"
 #endif
