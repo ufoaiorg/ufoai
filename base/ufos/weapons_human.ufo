@@ -345,8 +345,8 @@ item sniper
 	shape			"0 1 5 1"
 	center			"9 0 3"
 	scale			1.05
-	ammo			5
-	reload			10
+	ammo			8
+	reload			15
 	reloadsound		weapons/reload-sniper
 	price			1300
 	size			60
@@ -363,7 +363,7 @@ item sniper_ammo
 	center			"0 0 0"
 	scale			1.15
 	price			85
-	size			5
+	size			8
 	is_primary		true
 	dmgtype			normal
 
@@ -380,14 +380,14 @@ item sniper_ammo
 			impsnd		impact/bullet-impact
 			bodysnd 	impact/bullet-bodyimpact
 			speed		3600
-			spread		"1.5 1.5"
-			crouch		0.5
-			range		90
+			spread		"2.5 2.5"
+			crouch		1
+			range		100
 			shots		1
 			ammo		1
-			time		12
-			damage		"105 0"
-			dmgweight	normal_heavy
+			time		15
+			damage		"130 20"
+			dmgweight	normal_medium
 			reaction	true
 			throughwall 1
 		}
@@ -402,14 +402,14 @@ item sniper_ammo
 			impsnd		impact/bullet-impact
 			bodysnd 	impact/bullet-bodyimpact
 			speed		3600
-			spread		"0.9 0.9"
-			crouch		0.5
-			range		90
+			spread		"0.85 0.85"
+			crouch		0.6
+			range		100
 			shots		1
 			ammo		1
-			time		18
-			damage		"105 0"
-			dmgweight	normal_heavy
+			time		20
+			damage		"130 20"
+			dmgweight	normal_medium
 			reaction	true
 			throughwall 1
 		}
@@ -433,8 +433,8 @@ item coilgun
 	shape			"0 1 4 1"
 	center			"9 2.7 3.2"
 	scale			0.9
-	ammo			2
-	reload			10
+	ammo			4
+	reload			15
 	reloadsound		weapons/reload-sniper
 	price			3000
 	size			30
@@ -451,7 +451,7 @@ item coilgun_ammo
 	center			"0 0 1.2"
 	scale			1.15
 	price			85
-	size			10
+	size			4
 	is_primary		true
 	dmgtype			normal
 
@@ -468,13 +468,13 @@ item coilgun_ammo
 			impsnd		impact/nail-impact
 			bodysnd 	impact/nail-bodyimpact
 			speed		2000
-			spread		"1.5 1.5"
-			crouch		0.5
+			spread		"2.5 2.5"
+			crouch		1
 			range		100
 			shots		1
 			ammo		1
-			time		12
-			damage		"180 36"
+			time		16
+			damage		"160 40"
 			dmgweight	normal_heavy
 			reaction	true
 			throughwall 3
@@ -490,13 +490,13 @@ item coilgun_ammo
 			impsnd		impact/nail-impact
 			bodysnd 	impact/nail-bodyimpact
 			speed		2000
-			spread		"0.9 0.9"
-			crouch		0.5
+			spread		"0.8 0.8"
+			crouch		0.6
 			range		100
 			shots		1
 			ammo		1
-			time		18
-			damage		"180 36"
+			time		24
+			damage		"160 40"
 			dmgweight	normal_heavy
 			reaction	true
 			throughwall 3
@@ -1784,8 +1784,8 @@ item bolterrifle
 	shape			"0 0 5 2"
 	center			"4 1 1.1"
 	scale			1.2
-	ammo			8
-	reload			15
+	ammo			2
+	reload			20
 	reloadsound		weapons/reload-rifle
 	price			2000
 	size			45
@@ -1822,37 +1822,13 @@ item bolterrifle_ammo
 			bodysnd 	impact/nail-bodyimpact
 			sndonce		true
 			speed		2000
-			spread		"1.7 1.7"
-			crouch		0.8
-			range		80
+			spread		"2.5 2.5"
+			crouch		1
+			range		100
 			shots		1
 			ammo		1
-			time		9
-			damage		"75 10"
-			dmgweight	normal_heavy
-			reaction	true
-			throughwall 2
-		}
-
-		firedef
-		{
-			name		"_3-Round Burst"
-			skill		assault
-			projtl		bolter
-			impact		bolterImpact
-			hitbody		null
-			firesnd		weapons/bullet-bolter
-			impsnd		impact/nail-impact
-			bodysnd 	impact/nail-bodyimpact
-			sndonce		true
-			speed		2000
-			spread		"2.4 2.4"
-			crouch		0.8
-			range		80
-			shots		3
-			ammo		3
-			time		14
-			damage		"75 10"
+			time		18
+			damage		"140 20"
 			dmgweight	normal_heavy
 			reaction	true
 			throughwall 2
@@ -1869,14 +1845,14 @@ item bolterrifle_ammo
 			impsnd				impact/nail-impact
 			bodysnd 			impact/nail-bodyimpact
 			speed				2000
-			spread				"1.1 1.1"
-			crouch				0.70
-			range				80
+			spread				"0.65 0.65"
+			crouch				0.6
+			range				100
 			shots				1
 			ammo				1
 			delaybetweenshots	2
-			time				16
-			damage				"75 10"
+			time				28
+			damage				"140 20"
 			dmgweight			normal_heavy
 			throughwall 2
 		}
