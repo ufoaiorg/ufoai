@@ -714,7 +714,7 @@ item smg
 	center			"6.4 0 1"
 	scale			1.15
 	ammo			50
-	reload			12
+	reload			10
 	reloadsound		weapons/reload-smg
 	price			1350
 	size			8
@@ -739,27 +739,6 @@ item smg_ammo
 	{
 		firedef
 		{
-			name		"_Snap Shot"
-			skill		close
-			projtl		bullet-smg
-			impact		bulletImpact
-			hitbody		null
-			firesnd		weapons/bullet-smg-1x
-			impsnd		impact/bullet-impact
-			bodysnd 	impact/bullet-bodyimpact
-			speed		3000
-			spread		"1.7 1.7"
-			crouch		0.8
-			range		50
-			shots		1
-			ammo		1
-			time		5
-			damage		"20 4"
-			dmgweight	normal_light
-			reaction	true
-		}
-		firedef
-		{
 			name				"_5-Round Burst"
 			skill				close
 			projtl				bullet-smg
@@ -770,15 +749,15 @@ item smg_ammo
 			bodysnd 			impact/bullet-bodyimpact
 			sndonce				true
 			speed				3000
-			spread				"2.0 2.0"
-			crouch				0.7
+			spread				"1.8 1.8"
+			crouch				0.8
 			range				50
 			shots				5
 			ammo				5
 			delaybetweenshots	14
-			time				10
-			damage				"20 4"
-			dmgweight			normal_light
+			time				8
+			damage				"20 5"
+			dmgweight			normal_spray
 			reaction			true
 		}
 		firedef
@@ -793,37 +772,16 @@ item smg_ammo
 			bodysnd 			impact/bullet-bodyimpact
 			sndonce				true
 			speed				3000
-			spread				"3.0 3.0"
-			crouch				0.6
+			spread				"3 3"
+			crouch				0.8
 			range				50
-			shots				15
-			ammo				15
+			shots				25
+			ammo				25
 			delaybetweenshots	14
-			time				18
-			damage				"20 4"
-			dmgweight			normal_light
+			time				12
+			damage				"20 5"
+			dmgweight			normal_spray
 			reaction			true
-		}
-		firedef
-		{
-			name		"_Aimed Shot"
-			skill		close
-			projtl		bullet-smg
-			impact		bulletImpact
-			hitbody		null
-			firesnd		weapons/bullet-smg-1x
-			impsnd		impact/bullet-impact
-			bodysnd 	impact/bullet-bodyimpact
-			speed		3000
-			spread		"1.25 1.25"
-			crouch		0.8
-			range		50
-			shots		1
-			ammo		1
-			time		10
-			damage		"20 4"
-			dmgweight	normal_light
-			reaction	false
 		}
 	}
 }
@@ -844,7 +802,7 @@ item shotgun2
 	shape			"0 1 4 1"
 	center			"1.5 0 3.8"
 	scale			0.98
-	ammo			10
+	ammo			7
 	reload			14
 	reloadsound		weapons/reload-shotgun
 	price			1500
@@ -870,7 +828,7 @@ item shotgun2_slug_ammo
 	{
 		firedef
 		{
-			name				"_Single Shot"
+			name				"_Snap Shot"
 			skill				close
 			projtl				bullet
 			impact				bulletImpact
@@ -880,39 +838,15 @@ item shotgun2_slug_ammo
 			bodysnd 			impact/bullet-bodyimpact
 			sndonce				true
 			speed				3000
-			spread				"1.5 1.5"
-			crouch				0.8
-			range				26
+			spread				"2 2"
+			crouch				1
+			range				20
 			shots				1
 			ammo				1
 			delaybetweenshots	0
-			time				7
-			damage				"55 5"
-			dmgweight			normal_heavy
-			reaction			true
-		}
-
-		firedef
-		{
-			name				"_3-Round Burst"
-			skill				close
-			projtl				bullet
-			impact				bulletImpact
-			hitbody				null
-			firesnd				weapons/bullet-shotgunmini
-			impsnd				impact/bullet-impact
-			bodysnd 			impact/bullet-bodyimpact
-			sndonce				false
-			speed				3000
-			spread				"2.4 2.4"
-			crouch				0.7
-			range				26
-			shots				3
-			ammo				3
-			delaybetweenshots	5
-			time				12
-			damage				"55 5"
-			dmgweight			normal_heavy
+			time				10
+			damage				"120 20"
+			dmgweight			normal_medium
 			reaction			true
 		}
 	}
@@ -934,7 +868,7 @@ item shotgun_micro
 	center			"3 0 3"
 	scale			1.2
 	ammo			7
-	reload			20
+	reload			8
 	reloadsound		weapons/reload-shotgun
 	price			1350
 	size			10
@@ -959,7 +893,7 @@ item shotgun_micro_ammo
 	{
 		firedef
 		{
-			name				"_Single Shot"
+			name				"_Snap Shot"
 			skill				close
 			projtl				bullet
 			impact				bulletImpact
@@ -969,38 +903,14 @@ item shotgun_micro_ammo
 			bodysnd 			impact/bullet-bodyimpact
 			sndonce				true
 			speed				3000
-			spread				"1.6 1.6"
-			crouch				0.9
-			range				20
+			spread				"4 4"
+			crouch				1
+			range				15
 			shots				8
 			ammo				1
 			delaybetweenshots	0
-			time				7
-			damage				"14 2"
-			dmgweight			normal_spray
-			reaction			true
-		}
-
-		firedef
-		{
-			name				"_3-Round Burst"
-			skill				close
-			projtl				bullet
-			impact				bulletImpact
-			hitbody				null
-			firesnd				weapons/bullet-shotgunmini
-			impsnd				impact/bullet-impact
-			bodysnd 			impact/bullet-bodyimpact
-			sndonce				false
-			speed				3000
-			spread				"2.6 2.6"
-			crouch				0.9
-			range				20
-			shots				24
-			ammo				3
-			delaybetweenshots	        5
-			time				12
-			damage				"14 2"
+			time				10
+			damage				"20 5"
 			dmgweight			normal_spray
 			reaction			true
 		}
@@ -1010,8 +920,8 @@ item shotgun_micro_ammo
 	{
 		firedef
 		{
-			name				"_Single Shot"
-			skill				assault
+			name				"_Snap Shot"
+			skill				close
 			projtl				bullet
 			impact				bulletImpact
 			hitbody				null
@@ -1020,62 +930,14 @@ item shotgun_micro_ammo
 			bodysnd 			impact/bullet-bodyimpact
 			sndonce				true
 			speed				3000
-			spread				"1.7 1.7"
-			crouch				1.0
-			range				16
+			spread				"3 3"
+			crouch				1
+			range				15
 			shots				8
 			ammo				1
 			delaybetweenshots	0
-			time				7
-			damage				"15 2"
-			dmgweight			normal_spray
-			reaction			true
-		}
-
-		firedef
-		{
-			name				"_3-Round Burst"
-			skill				assault
-			projtl				bullet
-			impact				bulletImpact
-			hitbody				null
-			firesnd				weapons/bullet-shotgunmini
-			impsnd				impact/bullet-impact
-			bodysnd 			impact/bullet-bodyimpact
-			sndonce				false
-			speed				3000
-			spread				"2.5 2.5"
-			crouch				1.0
-			range				16
-			shots				24
-			ammo				3
-			delaybetweenshots	        36
-			time				12
-			damage				"15 2"
-			dmgweight			normal_spray
-			reaction			true
-		}
-
-		firedef
-		{
-			name				"_Full-Auto"
-			skill				assault
-			projtl				bullet
-			impact				bulletImpact
-			hitbody				null
-			firesnd				weapons/bullet-shotgunmini
-			impsnd				impact/bullet-impact
-			bodysnd 			impact/bullet-bodyimpact
-			sndonce				false
-			speed				3000
-			spread				"3 3"
-			crouch				1.0
-			range				16
-			shots				56
-			ammo				7
-			delaybetweenshots	        36
-			time				20
-			damage				"15 2"
+			time				10
+			damage				"20 5"
 			dmgweight			normal_spray
 			reaction			true
 		}

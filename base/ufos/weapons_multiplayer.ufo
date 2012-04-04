@@ -129,12 +129,12 @@ item shotgun
 	weapon			true
 	type			biggun
 	animationindex	1
-	holdtwohanded	false
+	holdtwohanded	true
 	firetwohanded	true
 	shape			"0 0 4 2"
 	center			"10.4 0 1"
 	scale			1
-	ammo			7
+	ammo			2
 	reload			20
 	reloadsound		weapons/reload-shotgun
 	price			1500
@@ -154,13 +154,13 @@ item shotgun_ammo
 	price			35
 	size			4
 	is_primary		true
-	dmgtype			blast
+	dmgtype			normal
 
 	weapon_mod shotgun
 	{
 		firedef
 		{
-			name				"_Single Shot"
+			name				"_Single Barrel"
 			skill				close
 			projtl				bullet-shotgun
 			impact				bulletImpact
@@ -170,21 +170,20 @@ item shotgun_ammo
 			bodysnd 			impact/bullet-bodyimpact
 			sndonce				true
 			speed				3000
-			spread				"1.8 1.8"
+			spread				"3.5 3.5"
 			crouch				1.0
-			range				60
-			shots				10
+			range				15
+			shots				8
 			ammo				1
 			delaybetweenshots	0
-			time				8
-			damage				"11 0"
-			dmgweight			blast
+			time				10
+			damage				"20 5"
+			dmgweight			normal_spray
 			reaction			true
 		}
-
 		firedef
 		{
-			name				"_Double Shot"
+			name				"_Double Barrel"
 			skill				close
 			projtl				bullet-shotgun
 			impact				bulletImpact
@@ -194,15 +193,15 @@ item shotgun_ammo
 			bodysnd 			impact/bullet-bodyimpact
 			sndonce				true
 			speed				3000
-			spread				"2.8 2.8"
+			spread				"4 4"
 			crouch				1.0
-			range				60
-			shots				20
+			range				15
+			shots				16
 			ammo				2
 			delaybetweenshots	0
-			time				12
-			damage				"11 0"
-			dmgweight			blast
+			time				10
+			damage				"20 5"
+			dmgweight			normal_spray
 			reaction			true
 		}
 	}
