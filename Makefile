@@ -42,10 +42,7 @@ include build/default.mk
 
 CXXFLAGS := $(CFLAGS) $(CXXFLAGS)
 
-ASSEMBLE_OBJECTS = \
-	$(addprefix $(BUILDDIR)/$(1)/,$(addsuffix .o,$(filter %.c,$($(1)_SRCS)))) \
-	$(addprefix $(BUILDDIR)/$(1)/,$(addsuffix .o,$(filter %.rc,$($(1)_SRCS)))) \
-	$(addprefix $(BUILDDIR)/$(1)/,$(addsuffix .o,$(filter %.cpp,$($(1)_SRCS)))) \
+ASSEMBLE_OBJECTS = $(patsubst %, $(BUILDDIR)/$(1)/%.o, $(filter %.c %.cpp %.rc, $($(1)_SRCS)))
 
 define INCLUDE_RULE
 include build/modules/$(1).mk
