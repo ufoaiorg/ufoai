@@ -35,7 +35,8 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #include "../../renderer/r_draw.h"
 
 #define EXTRADATA_TYPE baseExtraData_t
-#define EXTRADATA(node) UI_EXTRADATA(node, baseExtraData_t)
+#define EXTRADATA(node) UI_EXTRADATA(node, EXTRADATA_TYPE)
+#define EXTRADATACONST(node) UI_EXTRADATACONST(node, EXTRADATA_TYPE)
 
 static const vec4_t white = {1.0f, 1.0f, 1.0f, 0.8f};
 
@@ -59,10 +60,10 @@ void uiAbstractBaseNode::loaded (uiNode_t * node)
 
 base_t* uiAbstractBaseNode::getBase (const uiNode_t * node)
 {
-	if (EXTRADATA(node).baseid == -1) {
+	if (EXTRADATACONST(node).baseid == -1) {
 		return B_GetCurrentSelectedBase();
 	} else {
-		return B_GetBaseByIDX(EXTRADATA(node).baseid);
+		return B_GetBaseByIDX(EXTRADATACONST(node).baseid);
 	}
 }
 
