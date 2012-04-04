@@ -925,26 +925,16 @@ int FS_BuildFileList (const char *fileList)
 
 	/* check the blocklist for older searches
 	 * and do a new one after deleting them */
-	for (listBlock_t* block = fs_blocklist, * tblock = NULL; block;) {
+	for (listBlock_t** anchor = &fs_blocklist; *anchor;) {
+		listBlock_t* const block = *anchor;
 		if (Q_streq(block->path, files)) {
-			/* delete old one */
-			if (tblock)
-				tblock->next = block->next;
-			else
-				fs_blocklist = block->next;
+			*anchor = block->next;
 
 			LIST_Delete(&block->files);
 			Mem_Free(block);
-
-			if (tblock)
-				block = tblock->next;
-			else
-				block = fs_blocklist;
-			continue;
+		} else {
+			anchor = &block->next;
 		}
-
-		tblock = block;
-		block = block->next;
 	}
 
 	/* allocate a new block and link it into the list */
