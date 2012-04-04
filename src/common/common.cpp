@@ -1319,7 +1319,7 @@ static void tick_timer (int now, void *data)
 
 static void Schedule_Timer (cvar_t *freq, event_func *func, event_check_func *check, void *data)
 {
-	struct timer *timer = (struct timer *)Mem_PoolAlloc(sizeof(*timer), com_genericPool, 0);
+	struct timer* const timer = Mem_PoolAllocType(struct timer, com_genericPool, 0);
 	int i;
 	timer->min_freq = freq;
 	timer->interval = 1000 / freq->integer;

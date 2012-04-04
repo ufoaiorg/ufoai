@@ -241,8 +241,8 @@ static void CIN_ROQ_DecodeInfo (cinematic_t *cin, const byte *data)
 	if (!Q_IsPowerOfTwo(ROQCIN.frameWidth) || !Q_IsPowerOfTwo(ROQCIN.frameHeight))
 		Com_Error(ERR_DROP, "CIN_DecodeInfo: size is not a power of two (%i x %i)", ROQCIN.frameWidth, ROQCIN.frameHeight);
 
-	ROQCIN.frameBuffer[0] = (byte *)Mem_PoolAlloc(ROQCIN.frameWidth * ROQCIN.frameHeight * 4, cl_genericPool, 0);
-	ROQCIN.frameBuffer[1] = (byte *)Mem_PoolAlloc(ROQCIN.frameWidth * ROQCIN.frameHeight * 4, cl_genericPool, 0);
+	ROQCIN.frameBuffer[0] = Mem_PoolAllocTypeN(byte, ROQCIN.frameWidth * ROQCIN.frameHeight * 4, cl_genericPool, 0);
+	ROQCIN.frameBuffer[1] = Mem_PoolAllocTypeN(byte, ROQCIN.frameWidth * ROQCIN.frameHeight * 4, cl_genericPool, 0);
 }
 
 /**
@@ -572,7 +572,7 @@ int CIN_ROQ_OpenCinematic (cinematic_t *cin, const char *fileName)
 	}
 
 	assert(cin->codecData == NULL);
-	cin->codecData = Mem_PoolAlloc(sizeof(ROQCIN), vid_genericPool, 0);
+	cin->codecData = Mem_PoolAllocType(roqCinematic_t, vid_genericPool, 0);
 	OBJZERO(ROQCIN);
 
 	/* Open the file */

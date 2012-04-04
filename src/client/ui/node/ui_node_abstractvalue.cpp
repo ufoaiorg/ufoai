@@ -59,10 +59,10 @@ void uiAbstractValueNode::loaded (uiNode_t * node)
 
 void uiAbstractValueNode::newNode (uiNode_t * node)
 {
-	EXTRADATA(node).value = Mem_PoolAlloc(sizeof(float), ui_dynPool, 0);
-	EXTRADATA(node).delta = Mem_PoolAlloc(sizeof(float), ui_dynPool, 0);
-	EXTRADATA(node).max = Mem_PoolAlloc(sizeof(float), ui_dynPool, 0);
-	EXTRADATA(node).min = Mem_PoolAlloc(sizeof(float), ui_dynPool, 0);
+	EXTRADATA(node).value = Mem_PoolAllocType(float, ui_dynPool, 0);
+	EXTRADATA(node).delta = Mem_PoolAllocType(float, ui_dynPool, 0);
+	EXTRADATA(node).max   = Mem_PoolAllocType(float, ui_dynPool, 0);
+	EXTRADATA(node).min   = Mem_PoolAllocType(float, ui_dynPool, 0);
 }
 
 void uiAbstractValueNode::deleteNode (uiNode_t * node)

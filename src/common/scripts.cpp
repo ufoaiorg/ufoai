@@ -225,7 +225,7 @@ void Com_RegisterConstInt (const char *name, int value)
 		return;
 	}
 
-	a = (com_constNameInt_t *)Mem_PoolAlloc(sizeof(*a), com_aliasSysPool, 0);
+	a = Mem_PoolAllocType(com_constNameInt_t, com_aliasSysPool, 0);
 	Q_strncpyz(a->name, variable, sizeof(a->name));
 	if (!Q_streq(variable, name))
 		a->fullname = Mem_StrDup(name);
@@ -2803,7 +2803,6 @@ const terrainType_t* Com_GetTerrainType (const char *textureName)
  */
 static void Com_ParseTerrain (const char *name, const char **text)
 {
-	terrainType_t *t;
 
 	/* check for additions to existing name categories */
 	if (Com_GetTerrainType(name) != NULL) {
@@ -2811,7 +2810,7 @@ static void Com_ParseTerrain (const char *name, const char **text)
 		return;
 	}
 
-	t = (terrainType_t *)Mem_PoolAlloc(sizeof(*t), com_genericPool, 0);
+	terrainType_t* const t = Mem_PoolAllocType(terrainType_t, com_genericPool, 0);
 	t->footStepVolume = SND_VOLUME_FOOTSTEPS;
 	t->bounceFraction = 1.0f;
 

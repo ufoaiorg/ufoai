@@ -168,14 +168,14 @@ static void SV_MapcycleAdd (const char* mapName, qboolean day, const char* gameT
 	mapcycle_t *mapcycle;
 
 	if (!mapcycleList) {
-		mapcycleList = (mapcycle_t *)Mem_PoolAlloc(sizeof(*mapcycle), sv_genericPool, 0);
+		mapcycleList = Mem_PoolAllocType(mapcycle_t, sv_genericPool, 0);
 		mapcycle = mapcycleList; /* first one */
 	} else {
 		/* go to the last entry */
 		mapcycle = mapcycleList;
 		while (mapcycle->next)
 			mapcycle = mapcycle->next;
-		mapcycle->next = (mapcycle_t *)Mem_PoolAlloc(sizeof(*mapcycle), sv_genericPool, 0);
+		mapcycle->next = Mem_PoolAllocType(mapcycle_t, sv_genericPool, 0);
 		mapcycle = mapcycle->next;
 	}
 	mapcycle->map = Mem_PoolStrDup(mapName, sv_genericPool, 0);

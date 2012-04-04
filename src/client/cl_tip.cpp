@@ -82,7 +82,6 @@ void CL_ParseTipsOfTheDay (const char *name, const char **text)
 {
 	const char *errhead = "CL_ParseTipsOfTheDay: unexpected end of file (tips ";
 	const char	*token;
-	tipOfTheDay_t *tip;
 
 	/* get it's body */
 	token = Com_Parse(text);
@@ -103,7 +102,7 @@ void CL_ParseTipsOfTheDay (const char *name, const char **text)
 			Com_Printf("Ignore tip: '%s' - not marked translatable\n", token);
 			continue;
 		}
-		tip = (tipOfTheDay_t *)Mem_PoolAlloc(sizeof(*tip), cl_genericPool, 0);
+		tipOfTheDay_t* const tip = Mem_PoolAllocType(tipOfTheDay_t, cl_genericPool, 0);
 		tip->tipString = Mem_PoolStrDup(token, cl_genericPool, 0);
 		tip->next = tipList;
 		tipList = tip;

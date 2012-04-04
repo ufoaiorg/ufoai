@@ -32,7 +32,7 @@ void R_CreateSurfaceFlare (mBspSurface_t *surf)
 	if (!(m->flags & STAGE_FLARE)) /* surface is not flared */
 		return;
 
-	surf->flare = (mBspFlare_t *) Mem_PoolAlloc(sizeof(*surf->flare), vid_modelPool, 0);
+	surf->flare = Mem_PoolAllocType(mBspFlare_t, vid_modelPool, 0);
 
 	/* move the flare away from the surface, into the level */
 	VectorMA(surf->center, 2, surf->normal, surf->flare->origin);

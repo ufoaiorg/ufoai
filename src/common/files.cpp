@@ -443,8 +443,6 @@ static pack_t *FS_LoadPackFile (const char *packfile)
 
 	if (Q_streq(extension, "pk3") || Q_streq(extension, "zip")) {
 		int i;
-		pack_t *pack;
-		packfile_t *newfiles;
 		unz_file_info file_info;
 		unz_global_info gi;
 		unzFile uf = unzOpen(packfile);
@@ -465,7 +463,7 @@ static pack_t *FS_LoadPackFile (const char *packfile)
 			unzGoToNextFile(uf);
 		}
 
-		pack = (pack_t *)Mem_PoolAlloc(sizeof(*pack), com_fileSysPool, 0);
+		pack_t* const pack = Mem_PoolAllocType(pack_t, com_fileSysPool, 0);
 		Q_strncpyz(pack->filename, packfile, sizeof(pack->filename));
 		pack->handle.z = uf;
 		pack->handle.f = NULL;
@@ -473,7 +471,7 @@ static pack_t *FS_LoadPackFile (const char *packfile)
 		unzGoToFirstFile(uf);
 
 		/* Allocate space for array of packfile structures (filename, offset, length) */
-		newfiles = (packfile_t *)Mem_PoolAlloc(i * sizeof(*newfiles), com_fileSysPool, 0);
+		packfile_t* const newfiles = Mem_PoolAllocTypeN(packfile_t, i, com_fileSysPool, 0);
 
 		for (i = 0; i < gi.number_entry; i++) {
 			err = unzGetCurrentFileInfo(uf, &file_info, filenameInZip, sizeof(filenameInZip), NULL, 0, NULL, 0);
@@ -514,22 +512,19 @@ static char const* const pakFileExt[] = {
  */
 void FS_AddGameDirectory (const char *dir, qboolean write)
 {
-	searchpath_t *search;
 	char **dirnames = NULL;
 	int ndirs = 0, i;
 	char pakfile_list[MAX_PACKFILES][MAX_OSPATH];
 	int pakfile_count = 0;
 	char pattern[MAX_OSPATH];
 
-	search = fs_searchpaths;
-	while (search) {
+	for (searchpath_t* search = fs_searchpaths; search; search = search->next) {
 		if (Q_streq(search->filename, dir))
 			return;
 		if (write && search->write) {
 			Com_Printf("change writing directory to %s\n", dir);
 			search->write = qfalse;
 		}
-		search = search->next;
 	}
 
 	Com_Printf("Adding game dir: %s\n", dir);
@@ -561,7 +556,7 @@ void FS_AddGameDirectory (const char *dir, qboolean write)
 		if (!pak)
 			continue;
 
-		search = (searchpath_t *)Mem_PoolAlloc(sizeof(*search), com_fileSysPool, 0);
+		searchpath_t* const search = Mem_PoolAllocType(searchpath_t, com_fileSysPool, 0);
 		search->pack = pak;
 		search->next = fs_searchpaths;
 		search->write = qfalse;
@@ -569,7 +564,7 @@ void FS_AddGameDirectory (const char *dir, qboolean write)
 	}
 
 	/* add the directory to the search path */
-	search = (searchpath_t *)Mem_PoolAlloc(sizeof(*search), com_fileSysPool, 0);
+	searchpath_t* const search = Mem_PoolAllocType(searchpath_t, com_fileSysPool, 0);
 	Q_strncpyz(search->filename, dir, sizeof(search->filename));
 	search->next = fs_searchpaths;
 	search->write = write;
@@ -587,7 +582,6 @@ char **FS_ListFiles (const char *findname, int *numfiles, unsigned musthave, uns
 {
 	char *s;
 	int nfiles = 0, i;
-	char **list = NULL;
 	char tempList[MAX_FILES][MAX_OSPATH];
 
 	*numfiles = 0;
@@ -606,7 +600,7 @@ char **FS_ListFiles (const char *findname, int *numfiles, unsigned musthave, uns
 	nfiles++; /* add space for a guard */
 	*numfiles = nfiles;
 
-	list = (char **)Mem_PoolAlloc(sizeof(char*) * nfiles, com_fileSysPool, 0);
+	char** const list = Mem_PoolAllocTypeN(char*, nfiles, com_fileSysPool, 0);
 	OBJZERO(tempList);
 
 	s = Sys_FindFirst(findname, musthave, canthave);
@@ -712,7 +706,7 @@ void FS_ExecAutoexec (void)
  */
 static void FS_Link_f (void)
 {
-	filelink_t *l, **prev;
+	filelink_t **prev;
 
 	if (Cmd_Argc() != 3) {
 		Com_Printf("Usage: %s <from> <to>\n", Cmd_Argv(0));
@@ -721,7 +715,7 @@ static void FS_Link_f (void)
 
 	/* see if the link already exists */
 	prev = &fs_links;
-	for (l = fs_links; l; l = l->next) {
+	for (filelink_t* l = fs_links; l; l = l->next) {
 		if (Q_streq(l->from, Cmd_Argv(1))) {
 			Mem_Free(l->to);
 			if (!strlen(Cmd_Argv(2))) {	/* delete it */
@@ -737,7 +731,7 @@ static void FS_Link_f (void)
 	}
 
 	/* create a new link */
-	l = (filelink_t *)Mem_PoolAlloc(sizeof(*l), com_fileSysPool, 0);
+	filelink_t* const l = Mem_PoolAllocType(filelink_t, com_fileSysPool, 0);
 	l->next = fs_links;
 	fs_links = l;
 	l->from = Mem_PoolStrDup(Cmd_Argv(1), com_fileSysPool, 0);
@@ -920,7 +914,6 @@ static void _AddToListBlock (linkedList_t** fl, const char* name, qboolean strip
  */
 int FS_BuildFileList (const char *fileList)
 {
-	listBlock_t *block, *tblock;
 	searchpath_t *search;
 	char files[MAX_QPATH];
 	char findname[1024];
@@ -932,7 +925,7 @@ int FS_BuildFileList (const char *fileList)
 
 	/* check the blocklist for older searches
 	 * and do a new one after deleting them */
-	for (block = fs_blocklist, tblock = NULL; block;) {
+	for (listBlock_t* block = fs_blocklist, * tblock = NULL; block;) {
 		if (Q_streq(block->path, files)) {
 			/* delete old one */
 			if (tblock)
@@ -955,7 +948,7 @@ int FS_BuildFileList (const char *fileList)
 	}
 
 	/* allocate a new block and link it into the list */
-	block = (listBlock_t *)Mem_PoolAlloc(sizeof(*block), com_fileSysPool, 0);
+	listBlock_t* const block = Mem_PoolAllocType(listBlock_t, com_fileSysPool, 0);
 	block->next = fs_blocklist;
 	fs_blocklist = block;
 
@@ -1391,7 +1384,7 @@ void FS_GetMaps (qboolean reset)
 						Com_Printf("FS_GetMaps: Max maps limit hit\n");
 						break;
 					}
-					fs_maps[fs_numInstalledMaps + 1] = (char *)Mem_PoolAlloc(MAX_QPATH * sizeof(char), com_fileSysPool, 0);
+					fs_maps[fs_numInstalledMaps + 1] = Mem_PoolAllocTypeN(char, MAX_QPATH, com_fileSysPool, 0);
 					if (fs_maps[fs_numInstalledMaps + 1] == NULL) {
 						Com_Printf("Could not allocate memory in FS_GetMaps\n");
 						continue;
@@ -1422,7 +1415,7 @@ void FS_GetMaps (qboolean reset)
 							Com_Printf("FS_GetMaps: Max maps limit hit\n");
 							break;
 						}
-						fs_maps[fs_numInstalledMaps + 1] = (char *) Mem_PoolAlloc(MAX_QPATH * sizeof(char), com_fileSysPool, 0);
+						fs_maps[fs_numInstalledMaps + 1] = Mem_PoolAllocTypeN(char, MAX_QPATH, com_fileSysPool, 0);
 						if (fs_maps[fs_numInstalledMaps + 1] == NULL) {
 							Com_Printf("Could not allocate memory in FS_GetMaps\n");
 							Mem_Free(dirnames[i]);
@@ -1449,7 +1442,7 @@ void FS_GetMaps (qboolean reset)
 						Com_Printf("FS_GetMaps: Max maps limit hit\n");
 						break;
 					}
-					fs_maps[fs_numInstalledMaps + 1] = (char *) Mem_PoolAlloc(MAX_QPATH * sizeof(char), com_fileSysPool, 0);
+					fs_maps[fs_numInstalledMaps + 1] = Mem_PoolAllocTypeN(char, MAX_QPATH, com_fileSysPool, 0);
 					if (fs_maps[fs_numInstalledMaps + 1] == NULL) {
 						Com_Printf("Could not allocate memory in FS_GetMaps\n");
 						Mem_Free(dirnames[i]);
@@ -1649,7 +1642,6 @@ void FS_CopyFile (const char *fromOSPath, const char *toOSPath)
 {
 	FILE *f;
 	int len;
-	byte *buf;
 
 	if (!fs_searchpaths)
 		Sys_Error("Filesystem call made without initialization");
@@ -1664,7 +1656,7 @@ void FS_CopyFile (const char *fromOSPath, const char *toOSPath)
 	len = ftell(f);
 	fseek(f, 0, SEEK_SET);
 
-	buf = (byte *)Mem_PoolAlloc(len, com_fileSysPool, 0);
+	byte* const buf = Mem_PoolAllocTypeN(byte, len, com_fileSysPool, 0);
 	if (fread(buf, 1, len, f) != len)
 		Sys_Error("Short read in FS_CopyFile");
 	fclose(f);

@@ -241,7 +241,7 @@ static int NET_DatagramFindFreeSocket (void)
  */
 static struct net_stream *NET_StreamNew (int index)
 {
-	struct net_stream *s = (struct net_stream *)Mem_PoolAlloc(sizeof(*s), com_networkPool, 0);
+	net_stream* const s = Mem_PoolAllocType(net_stream, com_networkPool, 0);
 	s->data = NULL;
 	s->loopback_peer = NULL;
 	s->loopback = qfalse;
@@ -995,7 +995,6 @@ void SV_Stop (void)
  */
 static struct datagram_socket *NET_DatagramSocketDoNew (const struct addrinfo *addr)
 {
-	struct datagram_socket *s;
 	SOCKET sock = socket(addr->ai_family, addr->ai_socktype, addr->ai_protocol);
 	int t = 1;
 	const int index = NET_DatagramFindFreeSocket();
@@ -1036,7 +1035,7 @@ static struct datagram_socket *NET_DatagramSocketDoNew (const struct addrinfo *a
 	maxfd = max(sock + 1, maxfd);
 	FD_SET(sock, &read_fds);
 
-	s = (struct datagram_socket *)Mem_PoolAlloc(sizeof(*s), com_networkPool, 0);
+	datagram_socket* const s = Mem_PoolAllocType(datagram_socket, com_networkPool, 0);
 	s->family = addr->ai_family;
 	s->addrlen = addr->ai_addrlen;
 	s->socket = sock;
@@ -1093,13 +1092,12 @@ struct datagram_socket *NET_DatagramSocketNew (const char *node, const char *ser
  */
 void NET_DatagramSend (struct datagram_socket *s, const char *buf, int len, struct sockaddr *to)
 {
-	struct datagram *dgram;
 	if (!s || len <= 0 || !buf || !to)
 		return;
 
-	dgram = (struct datagram *)Mem_PoolAlloc(sizeof(*dgram), com_networkPool, 0);
-	dgram->msg = (char *)Mem_PoolAlloc(len, com_networkPool, 0);
-	dgram->addr = (char *)Mem_PoolAlloc(s->addrlen, com_networkPool, 0);
+	datagram* const dgram = Mem_PoolAllocType(datagram, com_networkPool, 0);
+	dgram->msg  = Mem_PoolAllocTypeN(char, len,        com_networkPool, 0);
+	dgram->addr = Mem_PoolAllocTypeN(char, s->addrlen, com_networkPool, 0);
 	memcpy(dgram->msg, buf, len);
 	memcpy(dgram->addr, to, len);
 	dgram->len = len;

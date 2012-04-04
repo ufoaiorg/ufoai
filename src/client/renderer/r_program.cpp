@@ -501,7 +501,7 @@ static size_t R_PreprocessShaderR (const char *name, const char **inPtr, char *o
 				int j = 0,
 					z = 0;
 				size_t subLength = 0;
-				byte* buffer = (byte*)Mem_PoolAlloc(SHADER_BUF_SIZE, vid_imagePool, 0);
+				byte* const buffer = Mem_PoolAllocTypeN(byte, SHADER_BUF_SIZE, vid_imagePool, 0);
 				(*inPtr) += 6;
 				z = Cvar_GetValue(Com_Parse(inPtr));
 				while (*(*inPtr)) {
@@ -603,7 +603,7 @@ static r_shader_t *R_LoadShader (const GLenum type, const char *name)
 	r_shader_t *sh;
 	char path[MAX_QPATH], *src[1];
 	unsigned e, length[1];
-	char *source, *srcBuf;
+	char *srcBuf;
 	byte *buf;
 	int i;
 	size_t bufLength = SHADER_BUF_SIZE;
@@ -623,7 +623,7 @@ static r_shader_t *R_LoadShader (const GLenum type, const char *name)
 
 	Com_DPrintf(DEBUG_RENDERER, "R_LoadShader: Loading ./base/shaders/%s.\n", name);
 
-	srcBuf = source = (char *)Mem_PoolAlloc(bufLength, vid_imagePool, 0);
+	char* const source = srcBuf = Mem_PoolAllocTypeN(char, bufLength, vid_imagePool, 0);
 
 	initializeLength = R_InitializeShader(type, name, srcBuf, bufLength);
 	srcBuf += initializeLength;

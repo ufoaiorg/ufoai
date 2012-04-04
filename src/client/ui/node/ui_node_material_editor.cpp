@@ -559,7 +559,6 @@ static void UI_MaterialEditorRemoveStage_f (void)
 static void UI_MaterialEditorNewStage_f (void)
 {
 	material_t *m;
-	materialStage_t *s;
 	int id;
 
 	if (Cmd_Argc() < 2) {
@@ -574,7 +573,7 @@ static void UI_MaterialEditorNewStage_f (void)
 	}
 
 	m = &R_GetImageAtIndex(id)->material;
-	s = (materialStage_t *)Mem_PoolAlloc(sizeof(*s), vid_imagePool, 0);
+	materialStage_t* const s = Mem_PoolAllocType(materialStage_t, vid_imagePool, 0);
 	m->num_stages++;
 
 	/* append the stage to the chain */

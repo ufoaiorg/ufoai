@@ -61,7 +61,7 @@ eventMail_t* CL_GetEventMail (const char *id, qboolean createCopy)
 		return NULL;
 	} else {
 		/* create a copy of the static eventmails */
-		eventMail_t *eventMail = NULL, *newEventMail;
+		eventMail_t *eventMail = NULL;
 
 		/* search the static mails - and only the static ones! */
 		for (i = 0; i < ccs.numEventMails; i++) {
@@ -75,7 +75,7 @@ eventMail_t* CL_GetEventMail (const char *id, qboolean createCopy)
 		if (!eventMail)
 			return NULL;
 
-		newEventMail = (eventMail_t *)Mem_PoolAlloc(sizeof(*newEventMail), cp_campaignPool, 0);
+		eventMail_t* const newEventMail = Mem_PoolAllocType(eventMail_t, cp_campaignPool, 0);
 		if (!newEventMail)
 			return NULL;
 

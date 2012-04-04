@@ -195,17 +195,17 @@ static void R_GetAverageSurfaceColor (const byte *in, int width, int height, vec
 static void R_BuildLightmap (mBspSurface_t *surf, byte *sout, byte *dout, int stride)
 {
 	unsigned int i, j;
-	byte *lightmap, *lm, *l, *deluxemap, *dm;
+	byte *lm, *l, *dm;
 
 	const int smax = (surf->stextents[0] / surf->lightmap_scale) + 1;
 	const int tmax = (surf->stextents[1] / surf->lightmap_scale) + 1;
 	const int size = smax * tmax;
 	stride -= (smax * LIGHTMAP_BLOCK_BYTES);
 
-	lightmap = (byte *)Mem_PoolAlloc(size * LIGHTMAP_BLOCK_BYTES, vid_lightPool, 0);
+	byte* const lightmap = Mem_PoolAllocTypeN(byte, size * LIGHTMAP_BLOCK_BYTES, vid_lightPool, 0);
 	lm = lightmap;
 
-	deluxemap = (byte *)Mem_PoolAlloc(size * DELUXEMAP_BLOCK_BYTES, vid_lightPool, 0);
+	byte* const deluxemap = Mem_PoolAllocTypeN(byte, size * DELUXEMAP_BLOCK_BYTES, vid_lightPool, 0);
 	dm = deluxemap;
 
 	/* convert the raw lightmap samples to floating point and scale them */
@@ -240,7 +240,7 @@ static void R_BuildLightmap (mBspSurface_t *surf, byte *sout, byte *dout, int st
 	/* the final lightmap is uploaded to the card via the strided lightmap
 	 * block, and also cached on the surface for fast point lighting lookups */
 
-	surf->lightmap = (byte *)Mem_PoolAlloc(size * LIGHTMAP_BYTES, vid_lightPool, 0);
+	surf->lightmap = Mem_PoolAllocTypeN(byte, size * LIGHTMAP_BYTES, vid_lightPool, 0);
 	l = surf->lightmap;
 	lm = lightmap;
 	dm = deluxemap;
@@ -340,14 +340,9 @@ void R_BeginBuildingLightmaps (void)
 	/* users can tune lightmap size for their card */
 	r_lightmaps.size = r_maxlightmap->integer;
 
-	r_lightmaps.allocated = (unsigned *)Mem_PoolAlloc(r_lightmaps.size *
-		sizeof(unsigned), vid_lightPool, 0);
-
-	r_lightmaps.sample_buffer = (byte *)Mem_PoolAlloc(
-		r_lightmaps.size * r_lightmaps.size * sizeof(unsigned), vid_lightPool, 0);
-
-	r_lightmaps.direction_buffer = (byte *)Mem_PoolAlloc(
-		r_lightmaps.size * r_lightmaps.size * sizeof(unsigned), vid_lightPool, 0);
+	r_lightmaps.allocated        = Mem_PoolAllocTypeN(unsigned, r_lightmaps.size, vid_lightPool, 0);
+	r_lightmaps.sample_buffer    = Mem_PoolAllocTypeN(byte, r_lightmaps.size * r_lightmaps.size * sizeof(unsigned), vid_lightPool, 0);
+	r_lightmaps.direction_buffer = Mem_PoolAllocTypeN(byte, r_lightmaps.size * r_lightmaps.size * sizeof(unsigned), vid_lightPool, 0);
 
 	r_lightmaps.lightmap_count = 0;
 	r_lightmaps.deluxemap_count = 0;

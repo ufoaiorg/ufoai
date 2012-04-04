@@ -994,7 +994,7 @@ static void Irc_Client_CmdPrivmsg (const char *prefix, const char *params, const
 
 static void Irc_Client_CmdRplNamreply (const char *params, const char *trailing)
 {
-	char *parseBuf, *pos;
+	char *pos;
 	char *space;
 	char nick[MAX_VAR];
 	size_t len = strlen(trailing) + 1;
@@ -1003,7 +1003,7 @@ static void Irc_Client_CmdRplNamreply (const char *params, const char *trailing)
 	if (!chan)
 		return;
 
-	parseBuf = (char *)Mem_PoolAlloc(len * sizeof(char), cl_ircSysPool, 0);
+	char* const parseBuf = Mem_PoolAllocTypeN(char, len, cl_ircSysPool, 0);
 	if (!parseBuf)
 		return;
 
@@ -1527,7 +1527,7 @@ static void Irc_Logic_AddChannelName (irc_channel_t *channel, irc_nick_prefix_t 
 		if (!strncmp(&(user->key[1]), nick, MAX_VAR - 1))
 			return;
 	}
-	user = (irc_user_t *)Mem_PoolAlloc(sizeof(*user), cl_ircSysPool, 0);
+	user = Mem_PoolAllocType(irc_user_t, cl_ircSysPool, 0);
 	user->next = channel->user;
 	channel->user = user;
 

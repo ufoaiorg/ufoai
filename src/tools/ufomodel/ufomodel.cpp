@@ -116,7 +116,7 @@ image_t *R_LoadImageData (const char *name, byte * pic, int width, int height, i
 	if (len == 0)
 		Com_Error(ERR_DROP, "R_LoadImageData: name is empty");
 
-	image = (image_t *)Mem_PoolAlloc(sizeof(*image), vid_imagePool, 0);
+	image = Mem_PoolAllocType(image_t, vid_imagePool, 0);
 	image->has_alpha = qfalse;
 	image->type = type;
 	image->width = width;
@@ -184,7 +184,6 @@ void Com_Error (int code, const char *fmt, ...)
  */
 static model_t *LoadModel (const char *name)
 {
-	model_t *mod;
 	byte *buf;
 	int modfilelen;
 
@@ -195,7 +194,7 @@ static model_t *LoadModel (const char *name)
 		return NULL;
 	}
 
-	mod = (model_t *)Mem_PoolAlloc(sizeof(*mod), vid_modelPool, 0);
+	model_t* const mod = Mem_PoolAllocType(model_t, vid_modelPool, 0);
 	Q_strncpyz(mod->name, name, sizeof(mod->name));
 
 	/* call the appropriate loader */
@@ -687,7 +686,7 @@ int main (int argc, char **argv)
 
 	FS_InitFilesystem(qfalse);
 
-	r_noTexture = (image_t *)Mem_PoolAlloc(sizeof(*r_noTexture), vid_imagePool, 0);
+	r_noTexture = Mem_PoolAllocType(image_t, vid_imagePool, 0);
 	Q_strncpyz(r_noTexture->name, "noTexture", sizeof(r_noTexture->name));
 
 	switch (config.action) {

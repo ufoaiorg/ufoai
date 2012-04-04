@@ -88,8 +88,6 @@ void CL_ParseLanguages (const char *name, const char **text)
 {
 	const char *errhead = "CL_ParseLanguages: unexpected end of file (language ";
 	const char	*token;
-	language_t *language = NULL;
-	localeMapping_t *mapping = NULL;
 
 	if (!*text) {
 		Com_Printf("CL_ParseLanguages: language without body ignored (%s)\n", name);
@@ -102,7 +100,7 @@ void CL_ParseLanguages (const char *name, const char **text)
 		return;
 	}
 
-	language = (language_t *)Mem_PoolAlloc(sizeof(*language), cl_genericPool, 0);
+	language_t* const language = Mem_PoolAllocType(language_t, cl_genericPool, 0);
 	language->localeID = Mem_PoolStrDup(name, cl_genericPool, 0);
 	language->localeString = "";
 	language->nativeString = "";
@@ -125,7 +123,7 @@ void CL_ParseLanguages (const char *name, const char **text)
 				/* end of locale mappings reached */
 				if (!*text || *token == '}')
 					break;
-				mapping = (localeMapping_t *)Mem_PoolAlloc(sizeof(*mapping), cl_genericPool, 0);
+				localeMapping_t* const mapping = Mem_PoolAllocType(localeMapping_t, cl_genericPool, 0);
 				mapping->localeMapping = Mem_PoolStrDup(token, cl_genericPool, 0);
 				/* link it in */
 				mapping->next = language->localeMapping;

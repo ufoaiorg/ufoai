@@ -95,7 +95,6 @@ void R_ScreenShot (int x, int y, int width, int height, const char *filename, co
 {
 	char	checkName[MAX_OSPATH];
 	int		type, shotNum, quality = 100;
-	byte	*buffer;
 	qFILE	f;
 	int rowPack;
 
@@ -161,7 +160,7 @@ void R_ScreenShot (int x, int y, int width, int height, const char *filename, co
 	}
 
 	/* Allocate room for a copy of the framebuffer */
-	buffer = (byte *)Mem_PoolAlloc(width * height * 3, vid_imagePool, 0);
+	byte* const buffer = Mem_PoolAllocTypeN(byte, width * height * 3, vid_imagePool, 0);
 	if (!buffer) {
 		Com_Printf("R_ScreenShot_f: Could not allocate %i bytes for screenshot!\n", width * height * 3);
 		FS_CloseFile(&f);

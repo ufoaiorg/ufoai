@@ -357,7 +357,6 @@ qboolean Cvar_Delete (const char *varName)
  */
 cvar_t *Cvar_Get (const char *var_name, const char *var_value, int flags, const char* desc)
 {
-	cvar_t *var;
 	const unsigned hash = Com_HashKey(var_name, CVAR_HASH_SIZE);
 
 	if (flags & (CVAR_USERINFO | CVAR_SERVERINFO)) {
@@ -367,8 +366,7 @@ cvar_t *Cvar_Get (const char *var_name, const char *var_value, int flags, const 
 		}
 	}
 
-	var = Cvar_FindVar(var_name);
-	if (var) {
+	if (cvar_t* const var = Cvar_FindVar(var_name)) {
 		if (!var->defaultString && (flags & CVAR_CHEAT))
 			var->defaultString = Mem_PoolStrDup(var_value, com_cvarSysPool, 0);
 		var->flags |= flags;
@@ -390,7 +388,7 @@ cvar_t *Cvar_Get (const char *var_name, const char *var_value, int flags, const 
 		}
 	}
 
-	var = (cvar_t *)Mem_PoolAlloc(sizeof(*var), com_cvarSysPool, 0);
+	cvar_t* const var = Mem_PoolAllocType(cvar_t, com_cvarSysPool, 0);
 	var->name = Mem_PoolStrDup(var_name, com_cvarSysPool, 0);
 	var->string = Mem_PoolStrDup(var_value, com_cvarSysPool, 0);
 	var->oldString = NULL;
@@ -429,7 +427,7 @@ static void Cvar_ExecuteChangeListener (const cvar_t* cvar)
 
 static cvarChangeListener_t *Cvar_GetChangeListener (cvarChangeListenerFunc_t listenerFunc)
 {
-	cvarChangeListener_t *listener = (cvarChangeListener_t *)Mem_PoolAlloc(sizeof(*listener), com_cvarSysPool, 0);
+	cvarChangeListener_t* const listener = Mem_PoolAllocType(cvarChangeListener_t, com_cvarSysPool, 0);
 	listener->exec = listenerFunc;
 	return listener;
 }

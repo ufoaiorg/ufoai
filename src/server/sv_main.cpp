@@ -790,7 +790,7 @@ void SV_Init (void)
 
 	OBJZERO(svs);
 
-	sv = (serverInstanceGame_t *) Mem_PoolAlloc(sizeof(*sv), sv_genericPool, 0);
+	sv = Mem_PoolAllocType(serverInstanceGame_t, sv_genericPool, 0);
 
 	SV_InitOperatorCommands();
 

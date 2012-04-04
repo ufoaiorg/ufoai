@@ -301,7 +301,7 @@ static int CIN_XVID_LoadVideoFrame (cinematic_t *cin)
 					Mem_Free(OGMCIN.outputBuffer);
 
 				/* Allocate the new buffer */
-				OGMCIN.outputBuffer = (byte*) Mem_PoolAlloc(OGMCIN.outputBufferSize * OGM_CINEMATIC_BPP, cl_genericPool, 0);
+				OGMCIN.outputBuffer = Mem_PoolAllocTypeN(byte, OGMCIN.outputBufferSize * OGM_CINEMATIC_BPP, cl_genericPool, 0);
 				if (OGMCIN.outputBuffer == NULL) {
 					OGMCIN.outputBufferSize = 0;
 					r = -2;
@@ -420,7 +420,7 @@ static int CIN_THEORA_LoadVideoFrame (cinematic_t *cin)
 					Mem_Free(OGMCIN.outputBuffer);
 
 				/* Allocate the new buffer */
-				OGMCIN.outputBuffer = (byte*) Mem_PoolAlloc(OGMCIN.outputBufferSize * OGM_CINEMATIC_BPP, cl_genericPool, 0);
+				OGMCIN.outputBuffer = Mem_PoolAllocTypeN(byte, OGMCIN.outputBufferSize * OGM_CINEMATIC_BPP, cl_genericPool, 0);
 				if (OGMCIN.outputBuffer == NULL) {
 					OGMCIN.outputBufferSize = 0;
 					r = -2;
@@ -571,8 +571,7 @@ int CIN_OGM_OpenCinematic (cinematic_t *cin, const char* filename)
 
 	/* alloc memory for decoding of this video */
 	assert(cin->codecData == NULL);
-	cin->codecData = Mem_PoolAlloc(sizeof(OGMCIN), vid_genericPool, 0);
-	memset(cin->codecData, 0, sizeof(ogmCinematic_t));
+	cin->codecData = Mem_PoolAllocType(ogmCinematic_t, vid_genericPool, 0);
 
 	if (FS_OpenFile(filename, &OGMCIN.ogmFile, FILE_READ) == -1) {
 		Com_Printf("Can't open ogm-file for reading (%s)\n", filename);

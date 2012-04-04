@@ -107,7 +107,6 @@ static Mix_Chunk* S_LoadSampleChunk (const char *sound)
 int S_LoadSampleIdx (const char *soundFile)
 {
 	Mix_Chunk *chunk;
-	s_sample_t *sample;
 	char name[MAX_QPATH];
 	unsigned hash;
 
@@ -116,8 +115,7 @@ int S_LoadSampleIdx (const char *soundFile)
 
 	Com_StripExtension(soundFile, name, sizeof(name));
 
-	sample = S_FindByName(name);
-	if (sample)
+	if (s_sample_t* const sample = S_FindByName(name))
 		return sample->index;
 
 	/* make sure the sound is loaded */
@@ -126,7 +124,7 @@ int S_LoadSampleIdx (const char *soundFile)
 		return 0;		/* couldn't load the sound's data */
 
 	hash = Com_HashKey(name, SAMPLE_HASH_SIZE);
-	sample = (s_sample_t *)Mem_PoolAlloc(sizeof(*sample), cl_soundSysPool, 0);
+	s_sample_t* const sample = Mem_PoolAllocType(s_sample_t, cl_soundSysPool, 0);
 	sample->name = Mem_PoolStrDup(name, cl_soundSysPool, 0);
 	sample->chunk = chunk;
 	sample->hashNext = sampleHash[hash];

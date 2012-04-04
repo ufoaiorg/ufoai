@@ -752,7 +752,7 @@ void UI_PoolAllocAction (uiAction_t** action, int type, const void *data)
 {
 	if (*action)
 		Com_Error(ERR_FATAL, "There is already an action assigned");
-	*action = (uiAction_t *)Mem_PoolAlloc(sizeof(**action), ui_sysPool, 0);
+	*action = Mem_PoolAllocType(uiAction_t, ui_sysPool, 0);
 	(*action)->type = type;
 	switch (type) {
 	case EA_CMD:
@@ -772,8 +772,6 @@ void UI_PoolAllocAction (uiAction_t** action, int type, const void *data)
 void UI_AddListener (uiNode_t *node, const value_t *property, const uiNode_t *functionNode)
 {
 	uiAction_t *lastAction;
-	uiAction_t *action;
-	uiAction_t *value;
 
 	if (node->dynamic) {
 		Com_Printf("UI_AddListener: '%s' is a dynamic node. We can't listen it.\n", UI_GetPath(node));
@@ -785,8 +783,8 @@ void UI_AddListener (uiNode_t *node, const value_t *property, const uiNode_t *fu
 	}
 
 	/* create the call action */
-	action = (uiAction_t*) Mem_PoolAlloc(sizeof(*action), ui_sysPool, 0);
-	value = (uiAction_t*) Mem_PoolAlloc(sizeof(*action), ui_sysPool, 0);
+	uiAction_t* const action = Mem_PoolAllocType(uiAction_t, ui_sysPool, 0);
+	uiAction_t* const value  = Mem_PoolAllocType(uiAction_t, ui_sysPool, 0);
 	value->d.terminal.d1.constString = Mem_PoolStrDup(UI_GetPath(functionNode), ui_sysPool, 0);
 	value->next = NULL;
 	action->type = EA_LISTENER;

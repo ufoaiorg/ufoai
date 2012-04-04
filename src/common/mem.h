@@ -78,6 +78,8 @@ typedef struct memPool_s {
 #define Mem_Alloc(size)									_Mem_Alloc((size),qtrue,com_genericPool,0,__FILE__,__LINE__)
 #define Mem_AllocExt(size,zeroFill)						_Mem_Alloc((size),(zeroFill),com_genericPool,0,__FILE__,__LINE__)
 #define Mem_PoolAlloc(size,pool,tagNum)					_Mem_Alloc((size),qtrue,(pool),(tagNum),__FILE__,__LINE__)
+#define Mem_PoolAllocTypeN(type, n, pool, tagNum)       static_cast<type*>(Mem_PoolAlloc(sizeof(type) * (n), (pool), (tagNum)))
+#define Mem_PoolAllocType(type, pool, tagNum)           static_cast<type*>(Mem_PoolAllocTypeN(type, 1, (pool), (tagNum)))
 #define Mem_PoolAllocExt(size,zeroFill,pool,tagNum)		_Mem_Alloc((size),(zeroFill),(pool),(tagNum),__FILE__,__LINE__)
 #define Mem_ReAlloc(ptr,size)							_Mem_ReAlloc((ptr),(size),__FILE__,__LINE__)
 #define Mem_SafeReAlloc(ptr, size)						((ptr) ? Mem_ReAlloc(ptr, size) : Mem_Alloc(size))

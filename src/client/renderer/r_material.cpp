@@ -928,7 +928,7 @@ void R_LoadMaterials (const char *map)
 	qboolean inmaterial;
 	image_t *image;
 	material_t *m;
-	materialStage_t *s, *ss;
+	materialStage_t *ss;
 
 	/* clear previously loaded materials */
 	R_ImageClearMaterials();
@@ -1042,7 +1042,7 @@ void R_LoadMaterials (const char *map)
 		}
 
 		if (*c == '{' && inmaterial) {
-			s = (materialStage_t *)Mem_PoolAlloc(sizeof(*s), vid_imagePool, 0);
+			materialStage_t* const s = Mem_PoolAllocType(materialStage_t, vid_imagePool, 0);
 			s->glowscale = defaultMaterial.glowscale;
 
 			if (R_ParseStage(s, &buffer) == -1) {

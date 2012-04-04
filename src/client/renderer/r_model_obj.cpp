@@ -70,9 +70,9 @@ static void R_LoadObjModelVertexArrays (mobj_t *obj, model_t *mod)
 	mesh->num_tris = obj->num_tris;
 	mesh->num_verts = obj->num_verts;
 
-	mesh->verts = (float *)Mem_PoolAlloc(sizeof(float) * v, vid_modelPool, 0);
-	mesh->normals = (float *)Mem_PoolAlloc(sizeof(float) * v, vid_modelPool, 0);
-	mesh->texcoords = (float *)Mem_PoolAlloc(sizeof(float) * st, vid_modelPool, 0);
+	mesh->verts     = Mem_PoolAllocTypeN(float, v,  vid_modelPool, 0);
+	mesh->normals   = Mem_PoolAllocTypeN(float, v,  vid_modelPool, 0);
+	mesh->texcoords = Mem_PoolAllocTypeN(float, st, vid_modelPool, 0);
 
 	/* fill the arrays */
 	for (i = 0; i < obj->num_tris; i++, t++) {
@@ -293,7 +293,7 @@ static void R_LoadObjSkin (model_t *mod)
 				mesh->num_skins++;
 			}
 		}
-		mesh->skins = (mAliasSkin_t *)Mem_PoolAlloc(sizeof(mAliasSkin_t) * mesh->num_skins, vid_modelPool, 0);
+		mesh->skins = Mem_PoolAllocTypeN(mAliasSkin_t, mesh->num_skins, vid_modelPool, 0);
 
 		buffer = (const char *)buf;
 		i = 0;
@@ -316,7 +316,7 @@ static void R_LoadObjSkin (model_t *mod)
 		FS_FreeFile(buf);
 	} else {
 		mesh->num_skins = 1;
-		mesh->skins = (mAliasSkin_t *)Mem_PoolAlloc(sizeof(mAliasSkin_t), vid_modelPool, 0);
+		mesh->skins     = Mem_PoolAllocType(mAliasSkin_t, vid_modelPool, 0);
 		mesh->skins[0].skin = R_AliasModelGetSkin(mod->name, skinPath);
 		Q_strncpyz(mesh->skins[0].name, mesh->skins[0].skin->name, sizeof(mesh->skins[0].name));
 	}
@@ -381,11 +381,11 @@ void R_LoadObjModel (model_t *mod, byte *buffer, int bufSize)
 			mod->name, obj.num_verts, obj.num_texcoords, obj.num_tris, obj.num_normals);
 
 	/* allocate the primitives */
-	obj.verts = (float *)Mem_PoolAlloc(obj.num_verts * sizeof(float) * 3, vid_modelPool, 0);
+	obj.verts = Mem_PoolAllocTypeN(float, obj.num_verts * 3, vid_modelPool, 0);
 	if (obj.num_normals)
-		obj.normals = (float *)Mem_PoolAlloc(obj.num_normals * sizeof(float) * 3, vid_modelPool, 0);
-	obj.texcoords = (float *)Mem_PoolAlloc(obj.num_texcoords * sizeof(float) * 2, vid_modelPool, 0);
-	obj.tris = (mobjtri_t *)Mem_PoolAlloc(obj.num_tris * sizeof(mobjtri_t), vid_modelPool, 0);
+		obj.normals = Mem_PoolAllocTypeN(float,     obj.num_normals   * 3, vid_modelPool, 0);
+	obj.texcoords = Mem_PoolAllocTypeN(float,     obj.num_texcoords * 2, vid_modelPool, 0);
+	obj.tris      = Mem_PoolAllocTypeN(mobjtri_t, obj.num_tris,          vid_modelPool, 0);
 
 	/* load the primitives */
 	R_LoadObjModel_(mod, &obj, buffer, bufSize);
@@ -396,7 +396,7 @@ void R_LoadObjModel (model_t *mod, byte *buffer, int bufSize)
 		AddPointToBounds(v, mod->mins, mod->maxs);
 
 	/* we only have one mesh in obj files */
-	mod->alias.meshes = (mAliasMesh_t *)Mem_PoolAlloc(sizeof(mAliasMesh_t), vid_modelPool, 0);
+	mod->alias.meshes = Mem_PoolAllocType(mAliasMesh_t, vid_modelPool, 0);
 
 	/* load the skin */
 	R_LoadObjSkin(mod);

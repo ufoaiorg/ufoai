@@ -216,7 +216,7 @@ static void AM_FillTeamFromAircraft (autoMissionBattle_t *battle, const autoMiss
  */
 static void AM_CreateUnitChr (autoUnit_t *unit, const teamDef_t *teamDef, const equipDef_t *ed)
 {
-	unit->chr = (character_t*)Mem_PoolAlloc(sizeof(character_t), cp_campaignPool, 0);
+	unit->chr = Mem_PoolAllocType(character_t, cp_campaignPool, 0);
 	cgi->CL_GenerateCharacter(unit->chr, teamDef->id);
 
 	if (ed) {

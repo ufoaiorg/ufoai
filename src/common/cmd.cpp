@@ -434,7 +434,7 @@ static void Cmd_Alias_f (void)
 	}
 
 	if (!a) {
-		a = (cmd_alias_t *)Mem_PoolAlloc(sizeof(*a), com_aliasSysPool, 0);
+		a = Mem_PoolAllocType(cmd_alias_t, com_aliasSysPool, 0);
 		a->next = cmd_alias;
 		/* cmd_alias_hash should be null on the first run */
 		a->hash_next = cmd_alias_hash[hash];
@@ -789,7 +789,6 @@ void Cmd_AddUserdata (const char *cmd_name, void* userdata)
  */
 void Cmd_AddCommand (const char *cmd_name, xcommand_t function, const char *desc)
 {
-	cmd_function_t *cmd;
 	unsigned int hash;
 
 	if (!cmd_name || !cmd_name[0])
@@ -803,14 +802,14 @@ void Cmd_AddCommand (const char *cmd_name, xcommand_t function, const char *desc
 
 	/* fail if the command already exists */
 	hash = Com_HashKey(cmd_name, CMD_HASH_SIZE);
-	for (cmd = cmd_functions_hash[hash]; cmd; cmd = cmd->hash_next) {
+	for (cmd_function_t* cmd = cmd_functions_hash[hash]; cmd; cmd = cmd->hash_next) {
 		if (Q_streq(cmd_name, cmd->name)) {
 			Com_DPrintf(DEBUG_COMMANDS, "Cmd_AddCommand: %s already defined\n", cmd_name);
 			return;
 		}
 	}
 
-	cmd = (cmd_function_t *)Mem_PoolAlloc(sizeof(*cmd), com_cmdSysPool, 0);
+	cmd_function_t* const cmd = Mem_PoolAllocType(cmd_function_t, com_cmdSysPool, 0);
 	cmd->name = cmd_name;
 	cmd->description = desc;
 	cmd->function = function;

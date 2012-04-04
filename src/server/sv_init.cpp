@@ -84,7 +84,7 @@ static void SV_InitGame (void)
 	if (svs.serverMutex)
 		Sys_Error("There is still a server running");
 
-	svs.clients = (client_t *)Mem_PoolAlloc(sizeof(client_t) * sv_maxclients->integer, sv_genericPool, 0);
+	svs.clients     = Mem_PoolAllocTypeN(client_t, sv_maxclients->integer, sv_genericPool, 0);
 	svs.serverMutex = TH_MutexCreate("server");
 
 	/* init network stuff */

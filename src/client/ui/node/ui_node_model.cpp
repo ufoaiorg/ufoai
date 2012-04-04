@@ -341,7 +341,7 @@ void UI_DrawModelNode (uiNode_t *node, const char *source)
 			}
 		}
 		if (!EXTRADATA(node).animationState) {
-			as = (animState_t *) Mem_PoolAlloc(sizeof(*as), cl_genericPool, 0);
+			as = Mem_PoolAllocType(animState_t, cl_genericPool, 0);
 			if (!as)
 				Com_Error(ERR_DROP, "Model %s should have animState_t for animation %s - but doesn't\n", mi.name, ref);
 			R_AnimChange(as, mi.model, ref);
@@ -484,7 +484,7 @@ void uiModelNode::clone (const uiNode_t *source, uiNode_t *clone)
 
 void uiModelNode::newNode (uiNode_t *node)
 {
-	EXTRADATA(node).oldRefValue = (char*) Mem_PoolAlloc(MAX_OLDREFVALUE, ui_dynPool, 0);
+	EXTRADATA(node).oldRefValue = Mem_PoolAllocTypeN(char, MAX_OLDREFVALUE, ui_dynPool, 0);
 	EXTRADATA(node).oldRefValue[0] = '\0';
 }
 
