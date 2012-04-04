@@ -3,11 +3,11 @@
 
 #include "../shared/ufotypes.h"
 
-typedef struct linkedList_s {
-	byte *data;
-	struct linkedList_s *next;
-	qboolean ptr;	/**< don't call Mem_Free for data if this is @c true */
-} linkedList_t;
+struct linkedList_t {
+	byte*         data;
+	linkedList_t* next;
+	qboolean      ptr; /**< don't call Mem_Free for data if this is @c true */
+};
 
 typedef int (*linkedListSort_t) (linkedList_t *entry1, linkedList_t *entry2, const void *userData);
 

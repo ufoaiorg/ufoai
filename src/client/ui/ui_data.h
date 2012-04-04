@@ -32,8 +32,7 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #include "ui_nodes.h"
 #include "node/ui_node_option.h"
 
-/* prototype */
-struct linkedList_s;
+struct linkedList_t;
 
 /** @brief linked into ui_global.sharedData - defined in UI scripts via dataID property */
 typedef enum {
@@ -133,7 +132,7 @@ typedef struct uiSharedData_s {
 		/** @brief Holds static array of characters to display */
 		const char *text;
 		/** @brief Holds a linked list for displaying in the UI */
-		struct linkedList_s *linkedListText;
+		linkedList_t *linkedListText;
 		/** @brief Holds a linked list for option (label, action, icon...) */
 		struct uiNode_s *option;
 		/** @brief Holds a line strip, a list of point */
@@ -163,7 +162,7 @@ void UI_RegisterText(int textId, const char *text);
 const char *UI_GetText(int textId) __attribute__ ((warn_unused_result));
 
 /* linked list */
-void UI_RegisterLinkedListText(int textId, struct linkedList_s *text);
+void UI_RegisterLinkedListText(int textId, linkedList_t *text);
 
 /* option */
 void UI_RegisterOption(int dataId, struct uiNode_s *option);
@@ -171,7 +170,7 @@ struct uiNode_s *UI_GetOption(int dataId) __attribute__ ((warn_unused_result));
 void UI_SortOptions(struct uiNode_s **option);
 struct uiNode_s* UI_InitOptionIteratorAtIndex(int index, struct uiNode_s* option, uiOptionIterator_t* iterator);
 struct uiNode_s* UI_OptionIteratorNextOption(uiOptionIterator_t* iterator);
-void UI_UpdateInvisOptions(struct uiNode_s *option, const struct linkedList_s *stringList);
+void UI_UpdateInvisOptions(struct uiNode_s *option, const linkedList_t *stringList);
 struct uiNode_s* UI_FindOptionByValue(uiOptionIterator_t* iterator, const char* value);
 int UI_FindOptionPosition(uiOptionIterator_t* iterator, const struct uiNode_s* option);
 struct uiNode_s* UI_AddOption(struct uiNode_s**tree, const char* name, const char* label, const char* value);
