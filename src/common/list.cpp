@@ -82,6 +82,14 @@ linkedList_t* LIST_GetPointer (linkedList_t* list, const void* data)
 	return NULL;
 }
 
+static linkedList_t* LIST_AllocateString(char const* data, linkedList_t* const next = 0)
+{
+	linkedList_t* const e = Mem_PoolAllocType(linkedList_t, com_genericPool);
+	e->data = Mem_StrDup(data);
+	e->next = next;
+	return e;
+}
+
 void LIST_AddStringSorted (linkedList_t** listDest, const char* data)
 {
 	assert(listDest);
@@ -97,9 +105,7 @@ void LIST_AddStringSorted (linkedList_t** listDest, const char* data)
 		tmp = NULL;
 		while (list) {
 			if (Q_StringSort(data, static_cast<char const*>(list->data)) < 0) {
-				linkedList_t* const newEntry = Mem_PoolAllocType(linkedList_t, com_genericPool);
-				newEntry->data = Mem_StrDup(data);
-				newEntry->next = list;
+				linkedList_t* const newEntry = LIST_AllocateString(data, list);
 				if (tmp != NULL)
 					tmp->next = newEntry;
 				else
@@ -110,9 +116,7 @@ void LIST_AddStringSorted (linkedList_t** listDest, const char* data)
 			list = list->next;
 		}
 		assert(tmp);
-		tmp->next = Mem_PoolAllocType(linkedList_t, com_genericPool);
-		tmp->next->data = Mem_StrDup(data);
-		tmp->next->next = NULL; /* not really needed - but for better readability */
+		tmp->next = LIST_AllocateString(data);
 	}
 }
 
@@ -132,10 +136,7 @@ void LIST_PrependString (linkedList_t** listDest, const char* data)
 		return;
 	}
 
-	linkedList_t* const newEntry = Mem_PoolAllocType(linkedList_t, com_genericPool);
-	newEntry->next = *listDest;
-	*listDest = newEntry;
-	newEntry->data = Mem_StrDup(data);
+	*listDest = LIST_AllocateString(data, *listDest);
 }
 
 /**
@@ -154,9 +155,7 @@ void LIST_AddString (linkedList_t** listDest, const char* data)
 
 	/* create the list */
 	if (!*listDest) {
-		*listDest = Mem_PoolAllocType(linkedList_t, com_genericPool);
-		(*listDest)->data = Mem_StrDup(data);
-		(*listDest)->next = NULL; /* not really needed - but for better readability */
+		*listDest = LIST_AllocateString(data);
 		return;
 	} else
 		list = *listDest;
@@ -164,10 +163,7 @@ void LIST_AddString (linkedList_t** listDest, const char* data)
 	while (list->next)
 		list = list->next;
 
-	linkedList_t* const newEntry = Mem_PoolAllocType(linkedList_t, com_genericPool);
-	list->next = newEntry;
-	newEntry->data = Mem_StrDup(data);
-	newEntry->next = NULL; /* not really needed - but for better readability */
+	list->next = LIST_AllocateString(data);
 }
 
 /**
