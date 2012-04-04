@@ -89,35 +89,35 @@ team taman
 
 	//TODO: Balance values
 	resistance {
-		normal_light 6
-		normal_spray 3
-		normal_medium 5
-		normal_heavy 4
+		normal_spray 0
+		normal_light 0
+		normal_medium -10
+		normal_heavy -30
 
-		normal_steelblade 1
-		normal_monomolecularblade 0
+		normal_steelblade 0
+		normal_monomolecularblade -20
 		normal_needle -2
 
-		blast -12
+		blast -50
 
-		fire_light 10
-		fire_medium 8
-		fire_heavy 6
-		fire_flamer 2
+		fire_light 15
+		fire_medium 5
+		fire_heavy 0
+		fire_flamer 0
 
-		shock -8
+		shock -10
 
 		laser_light 10
-		laser_medium 8
-		laser_heavy 6
+		laser_medium 15
+		laser_heavy 25
 
-		plasma_light 8
-		plasma_medium 6
+		plasma_light 5
+		plasma_medium 5
 		plasma_heavy 5
 
-		particlebeam_light 0
-		particlebeam_medium 0
-		particlebeam_heavy 0
+		particlebeam_light 50
+		particlebeam_medium 50
+		particlebeam_heavy 50
 
 		stun_electro 0
 		stun_gas 0
@@ -204,35 +204,35 @@ team ortnok
 
 	//TODO: Balance values
 	resistance {
-		normal_light 10
-		normal_spray 5
-		normal_medium 5
-		normal_heavy 4
+		normal_spray 10
+		normal_light 20
+		normal_medium 20
+		normal_heavy 0
 
-		normal_steelblade 8
-		normal_monomolecularblade 4
-		normal_needle 3
+		normal_steelblade 40
+		normal_monomolecularblade 20
+		normal_needle 4
 
-		blast 10
+		blast 50
 
-		fire_light -5
-		fire_medium -4
-		fire_heavy -3
-		fire_flamer 0
+		fire_light -10
+		fire_medium -20
+		fire_heavy -40
+		fire_flamer -50
 
-		shock 0
+		shock 10
 
-		laser_light 14
-		laser_medium 12
-		laser_heavy 10
+		laser_light 30
+		laser_medium 40
+		laser_heavy 50
 
 		plasma_light 0
 		plasma_medium 0
 		plasma_heavy 0
 
-		particlebeam_light 0
-		particlebeam_medium 0
-		particlebeam_heavy 0
+		particlebeam_light -30
+		particlebeam_medium -40
+		particlebeam_heavy -50
 
 		stun_electro 0
 		stun_gas 0
@@ -308,38 +308,38 @@ team shevaar
 
 	//TODO: Balance values
 	resistance {
-		normal_light 8
-		normal_spray 4
-		normal_medium 6
-		normal_heavy 5
+		normal_spray 10
+		normal_light 30
+		normal_medium 20
+		normal_heavy 20
 
-		normal_steelblade 6
-		normal_monomolecularblade 3
-		normal_needle 2
+		normal_steelblade 50
+		normal_monomolecularblade 20
+		normal_needle 6
 
-		blast 10
+		blast 30
 
-		fire_light -7
-		fire_medium -6
-		fire_heavy -5
-		fire_flamer -1
+		fire_light -10
+		fire_medium -20
+		fire_heavy -30
+		fire_flamer -40
 
 		shock 0
 
-		laser_light -6
-		laser_medium -5
-		laser_heavy -4
+		laser_light 0
+		laser_medium 0
+		laser_heavy 0
 
-		plasma_light -8
-		plasma_medium -6
-		plasma_heavy -5
+		plasma_light -10
+		plasma_medium -20
+		plasma_heavy -30
 
-		particlebeam_light 0
-		particlebeam_medium 0
-		particlebeam_heavy 0
+		particlebeam_light -10
+		particlebeam_medium -20
+		particlebeam_heavy -30
 
-		stun_electro 3
-		stun_gas -6
+		stun_electro -10
+		stun_gas -10
 	}
 	templates {
 		soldier_shevaar
@@ -410,37 +410,37 @@ team bloodspider
 
 	//TODO: Balance values
 	resistance {
-		normal_light 12
-		normal_spray 6
-		normal_medium 7
-		normal_heavy 6
+		normal_spray 5
+		normal_light 20
+		normal_medium 0
+		normal_heavy -20
 
-		normal_steelblade 10
-		normal_monomolecularblade 5
-		normal_needle 7
+		normal_steelblade 50
+		normal_monomolecularblade 20
+		normal_needle 4
 
-		blast -16
+		blast -30
 
 		fire_light 10
-		fire_medium 8
-		fire_heavy 6
-		fire_flamer 2
+		fire_medium 20
+		fire_heavy 30
+		fire_flamer 40
 
 		shock 999
 
-		laser_light 14
-		laser_medium 12
-		laser_heavy 10
+		laser_light 10
+		laser_medium 20
+		laser_heavy 30
 
-		plasma_light 12
-		plasma_medium 9
-		plasma_heavy 7
+		plasma_light 0
+		plasma_medium -20
+		plasma_heavy -40
 
-		particlebeam_light 0
-		particlebeam_medium 0
-		particlebeam_heavy 0
+		particlebeam_light 10
+		particlebeam_medium 20
+		particlebeam_heavy 30
 
-		stun_electro 6
+		stun_electro 0
 		stun_gas 999
 	}
 	templates {

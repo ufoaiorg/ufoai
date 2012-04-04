@@ -510,36 +510,36 @@ item armour_light_alien
 	armourpath	"light"
 
 	protection {
-		normal_light	20
-		normal_medium	16
-		normal_heavy	12
 		normal_spray	10
+		normal_light	20
+		normal_medium	20
+		normal_heavy	5
 
-		normal_steelblade			10
-		normal_monomolecularblade	5
-		normal_needle		0
+		normal_steelblade			30
+		normal_monomolecularblade	0
+		normal_needle		2
 
-		blast			25
+		blast			20
 
-		fire_medium		15
-		fire_heavy		15
+		fire_medium		25
+		fire_heavy		10
 		fire_flamer		2
 
-		incendiary		15
+		incendiary		25
 
 		shock			0
 
-		plasma_light	24
-		plasma_medium	19
-		plasma_heavy	15
+		laser_light		5
+		laser_medium	5
+		laser_heavy		5
 
-		laser_light		18
-		laser_medium	16
-		laser_heavy		12
+		plasma_light	30
+		plasma_medium	20
+		plasma_heavy	5
 
-		particlebeam_light	21
-		particlebeam_medium	19
-		particlebeam_heavy	17
+		particlebeam_light	-5
+		particlebeam_medium	-10
+		particlebeam_heavy	-15
 
 		stun_electro	0
 		stun_gas		0
@@ -573,36 +573,36 @@ item armour_medium_alien
 	armourpath	"medium"
 
 	protection {
-		normal_light	31
-		normal_medium	27
-		normal_heavy	22
-		normal_spray	11
+		normal_spray	25
+		normal_light	60
+		normal_medium	50
+		normal_heavy	25
 
-		normal_steelblade			20
-		normal_monomolecularblade	12
-		normal_needle		7
+		normal_steelblade			60
+		normal_monomolecularblade	15
+		normal_needle		4
 
-		blast			38
+		blast			50
 
-		fire_medium		22
-		fire_heavy		22
-		fire_flamer		3
+		fire_medium		35
+		fire_heavy		10
+		fire_flamer		2
 
-		incendiary		22
+		incendiary		45
 
-		shock			10
+		shock			0
 
-		plasma_light	35
-		plasma_medium	29
-		plasma_heavy	22
+		laser_light		10
+		laser_medium	10
+		laser_heavy		10
 
-		laser_light		28
-		laser_medium	26
-		laser_heavy		24
+		plasma_light	50
+		plasma_medium	40
+		plasma_heavy	30
 
-		particlebeam_light	31
-		particlebeam_medium	27
-		particlebeam_heavy	24
+		particlebeam_light	-30
+		particlebeam_medium	-40
+		particlebeam_heavy	-50
 
 		stun_electro	10
 		stun_gas		10
