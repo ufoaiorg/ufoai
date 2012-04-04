@@ -660,10 +660,6 @@ void R_ReallocateTexunitArray(gltexunit_t * texunit, int size)
 		r_state.active_texunit = texunit;
 }
 
-#ifdef main
-#undef main
-#endif
-
 int main (int argc, char **argv)
 {
 	Com_Printf("---- ufomodel " VERSION " ----\n");
