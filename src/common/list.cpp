@@ -19,6 +19,13 @@ static linkedList_t* LIST_AllocateEntry(void* const data, linkedList_t* const ne
 	return e;
 }
 
+/** Append entry to end of list. */
+static void LIST_AppendEntry(linkedList_t** list, linkedList_t* const entry)
+{
+	while (*list) list = &(*list)->next;
+	*list = entry;
+}
+
 /**
  * @brief Adds an entry to a new or to an already existing linked list
  * @sa LIST_AddString
@@ -28,25 +35,13 @@ static linkedList_t* LIST_AllocateEntry(void* const data, linkedList_t* const ne
  */
 linkedList_t* LIST_Add (linkedList_t** listDest, void const* data, size_t length)
 {
-	linkedList_t *list;
-
 	assert(listDest);
 	assert(data);
 
-	void* const dataCopy = memcpy(Mem_PoolAllocTypeN(byte, length, com_genericPool), data, length);
-
-	/* create the list */
-	if (!*listDest) {
-		*listDest = LIST_AllocateEntry(dataCopy);
-		return *listDest;
-	} else
-		list = *listDest;
-
-	while (list->next)
-		list = list->next;
-
+	void*         const dataCopy = memcpy(Mem_PoolAllocTypeN(byte, length, com_genericPool), data, length);
 	linkedList_t* const newEntry = LIST_AllocateEntry(dataCopy);
-	list->next = newEntry;
+
+	LIST_AppendEntry(listDest, newEntry);
 
 	return newEntry;
 }
@@ -124,22 +119,10 @@ void LIST_PrependString (linkedList_t** listDest, const char* data)
  */
 void LIST_AddString (linkedList_t** listDest, const char* data)
 {
-	linkedList_t *list;
-
 	assert(listDest);
 	assert(data);
 
-	/* create the list */
-	if (!*listDest) {
-		*listDest = LIST_AllocateString(data);
-		return;
-	} else
-		list = *listDest;
-
-	while (list->next)
-		list = list->next;
-
-	list->next = LIST_AllocateString(data);
+	LIST_AppendEntry(listDest, LIST_AllocateString(data));
 }
 
 /**
@@ -150,25 +133,13 @@ void LIST_AddString (linkedList_t** listDest, const char* data)
  */
 void LIST_AddPointer (linkedList_t** listDest, void* data)
 {
-	linkedList_t *list;
-
 	assert(listDest);
 	assert(data);
 
-	/* create the list */
-	if (!*listDest) {
-		*listDest = LIST_AllocateEntry(data);
-		(*listDest)->ptr = qtrue;
-		return;
-	} else
-		list = *listDest;
-
-	while (list->next)
-		list = list->next;
-
 	linkedList_t* const newEntry = LIST_AllocateEntry(data);
-	list->next = newEntry;
 	newEntry->ptr = qtrue;
+
+	LIST_AppendEntry(listDest, newEntry);
 }
 
 /**
