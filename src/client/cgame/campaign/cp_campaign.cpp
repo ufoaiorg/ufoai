@@ -132,7 +132,7 @@ void CP_ParseCharacterData (struct dbuffer *msg)
 			for (j = 0; j < KILLED_NUM_TYPES; j++)
 				c.chrscore.stuns[j] = NET_ReadShort(msg);
 			c.chrscore.assignedMissions = NET_ReadShort(msg);
-			LIST_Add(&updateCharacters, (const byte*)&c, sizeof(c));
+			LIST_Add(&updateCharacters, &c, sizeof(c));
 		}
 	}
 }

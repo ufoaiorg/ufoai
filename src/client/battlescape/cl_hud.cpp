@@ -279,7 +279,7 @@ static void HUD_PopupFiremodeReservation (const le_t *le, qboolean popupReload)
 	reserveShotData.fireModeIndex = -1;
 	reserveShotData.weaponIndex = NONE;
 	reserveShotData.TUs = -1;
-	LIST_Add(&popupListData, (byte *)&reserveShotData, sizeof(reserveShotData));
+	LIST_Add(&popupListData, &reserveShotData, sizeof(reserveShotData));
 	selectedEntry = 0;
 
 	do {	/* Loop for the 2 hands (l/r) to avoid unnecessary code-duplication and abstraction. */
@@ -304,7 +304,7 @@ static void HUD_PopupFiremodeReservation (const le_t *le, qboolean popupReload)
 					reserveShotData.fireModeIndex = i;
 					reserveShotData.weaponIndex = ammo->weapons[fd->weapFdsIdx]->idx;
 					reserveShotData.TUs = ammoFD->time;
-					LIST_Add(&popupListData, (byte *)&reserveShotData, sizeof(reserveShotData));
+					LIST_Add(&popupListData, &reserveShotData, sizeof(reserveShotData));
 
 					/* Remember the line that is currently selected (if any). */
 					if (chr->reservedTus.shotSettings.hand == hand

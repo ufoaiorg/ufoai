@@ -235,7 +235,7 @@ void TR_TransferAlienAfterMissionStart (const base_t *base, aircraft_t *transfer
 	MSO_CheckAddNewMessage(NT_TRANSFER_ALIENBODIES_DEFERED, _("Transport mission"), message, qfalse, MSG_TRANSFERFINISHED, NULL);
 	UI_PopWindow(qfalse);
 
-	LIST_Add(&ccs.transfers, (const byte*) &transfer, sizeof(transfer));
+	LIST_Add(&ccs.transfers, &transfer, sizeof(transfer));
 }
 
 /**
@@ -349,7 +349,7 @@ transfer_t* TR_TransferStart (base_t *srcBase, transferData_t *transData)
 	PR_ProductionAllowed(srcBase);
 	RS_ResearchAllowed(srcBase);
 
-	return (transfer_t*) LIST_Add(&ccs.transfers, (const byte*) &transfer, sizeof(transfer))->data;
+	return (transfer_t*) LIST_Add(&ccs.transfers, &transfer, sizeof(transfer))->data;
 }
 
 /**
@@ -653,7 +653,7 @@ qboolean TR_LoadXML (xmlNode_t *p)
 					LIST_AddPointer(&transfer.aircraft, (void*)aircraft);
 			}
 		}
-		LIST_Add(&ccs.transfers, (const byte*) &transfer, sizeof(transfer));
+		LIST_Add(&ccs.transfers, &transfer, sizeof(transfer));
 	}
 
 	return qtrue;

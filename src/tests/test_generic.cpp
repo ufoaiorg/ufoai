@@ -199,7 +199,7 @@ static void testLinkedList (void)
 	const linkedList_t *entry2;
 	const char *returnedData;
 
-	entry = LIST_Add(&list, (const byte*)data, length);
+	entry = LIST_Add(&list, data, length);
 	CU_ASSERT_EQUAL(LIST_Count(list), 1);
 	CU_ASSERT_TRUE(entry != NULL);
 	returnedData = (const char *)LIST_GetByIdx(list, 0);
@@ -211,7 +211,7 @@ static void testLinkedList (void)
 	LIST_RemoveEntry(&list, entry);
 	CU_ASSERT_EQUAL(LIST_Count(list), 0);
 	CU_ASSERT_EQUAL(LIST_Count(LIST_CopyStructure(list)), 0);
-	LIST_Add(&list, (const byte*)data, length);
+	LIST_Add(&list, data, length);
 	list2 = LIST_CopyStructure(list);
 	CU_ASSERT_EQUAL(LIST_Count(list2), 1);
 	LIST_Delete(&list2);

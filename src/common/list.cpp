@@ -18,7 +18,7 @@ LINKED LIST
  * @return Returns a pointer to the data that has been added, wrapped in a linkedList_t
  * @todo Optimize this to not allocate memory for every entry - but use a hunk
  */
-linkedList_t* LIST_Add (linkedList_t** listDest, const byte* data, size_t length)
+linkedList_t* LIST_Add (linkedList_t** listDest, void const* data, size_t length)
 {
 	linkedList_t *list;
 
@@ -56,7 +56,7 @@ linkedList_t* LIST_Add (linkedList_t** listDest, const byte* data, size_t length
 const linkedList_t* LIST_ContainsString (const linkedList_t* list, const char* string)
 {
 	while ((string != NULL) && (list != NULL)) {
-		if (Q_streq((const char*)list->data, string))
+		if (Q_streq(static_cast<char const*>(list->data), string))
 			return list;
 		list = list->next;
 	}
@@ -96,9 +96,9 @@ void LIST_AddStringSorted (linkedList_t** listDest, const char* data)
 		list = *listDest;
 		tmp = NULL;
 		while (list) {
-			if (Q_StringSort(data, (const char *)list->data) < 0) {
+			if (Q_StringSort(data, static_cast<char const*>(list->data)) < 0) {
 				linkedList_t* const newEntry = Mem_PoolAllocType(linkedList_t, com_genericPool);
-				newEntry->data = (byte*)Mem_StrDup(data);
+				newEntry->data = Mem_StrDup(data);
 				newEntry->next = list;
 				if (tmp != NULL)
 					tmp->next = newEntry;
@@ -111,7 +111,7 @@ void LIST_AddStringSorted (linkedList_t** listDest, const char* data)
 		}
 		assert(tmp);
 		tmp->next = Mem_PoolAllocType(linkedList_t, com_genericPool);
-		tmp->next->data = (byte*)Mem_StrDup(data);
+		tmp->next->data = Mem_StrDup(data);
 		tmp->next->next = NULL; /* not really needed - but for better readability */
 	}
 }
@@ -135,7 +135,7 @@ void LIST_PrependString (linkedList_t** listDest, const char* data)
 	linkedList_t* const newEntry = Mem_PoolAllocType(linkedList_t, com_genericPool);
 	newEntry->next = *listDest;
 	*listDest = newEntry;
-	newEntry->data = (byte*)Mem_StrDup(data);
+	newEntry->data = Mem_StrDup(data);
 }
 
 /**
@@ -155,7 +155,7 @@ void LIST_AddString (linkedList_t** listDest, const char* data)
 	/* create the list */
 	if (!*listDest) {
 		*listDest = Mem_PoolAllocType(linkedList_t, com_genericPool);
-		(*listDest)->data = (byte*)Mem_StrDup(data);
+		(*listDest)->data = Mem_StrDup(data);
 		(*listDest)->next = NULL; /* not really needed - but for better readability */
 		return;
 	} else
@@ -166,7 +166,7 @@ void LIST_AddString (linkedList_t** listDest, const char* data)
 
 	linkedList_t* const newEntry = Mem_PoolAllocType(linkedList_t, com_genericPool);
 	list->next = newEntry;
-	newEntry->data = (byte*)Mem_StrDup(data);
+	newEntry->data = Mem_StrDup(data);
 	newEntry->next = NULL; /* not really needed - but for better readability */
 }
 
@@ -186,7 +186,7 @@ void LIST_AddPointer (linkedList_t** listDest, void* data)
 	/* create the list */
 	if (!*listDest) {
 		*listDest = Mem_PoolAllocType(linkedList_t, com_genericPool);
-		(*listDest)->data = (byte *)data;
+		(*listDest)->data = data;
 		(*listDest)->ptr = qtrue;
 		(*listDest)->next = NULL; /* not really needed - but for better readability */
 		return;
@@ -198,7 +198,7 @@ void LIST_AddPointer (linkedList_t** listDest, void* data)
 
 	linkedList_t* const newEntry = Mem_PoolAllocType(linkedList_t, com_genericPool);
 	list->next = newEntry;
-	newEntry->data = (byte *)data;
+	newEntry->data = data;
 	newEntry->ptr = qtrue;
 	newEntry->next = NULL; /* not really needed - but for better readability */
 }
@@ -433,7 +433,7 @@ void *LIST_GetByIdx (linkedList_t *list, int index)
 	i = 0;
 	while (list) {
 		if (i == index)
-			return (void *)list->data;
+			return list->data;
 		i++;
 		list = list->next;
 	}

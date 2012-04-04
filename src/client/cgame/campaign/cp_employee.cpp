@@ -605,7 +605,7 @@ employee_t* E_CreateEmployee (employeeType_t type, const nation_t *nation, const
 
 	Com_DPrintf(DEBUG_CLIENT, "Generate character for type: %i\n", type);
 
-	return (employee_t*) LIST_Add(&ccs.employees[type], (const byte*) &employee, sizeof(employee))->data;
+	return (employee_t*)LIST_Add(&ccs.employees[type], &employee, sizeof(employee))->data;
 }
 
 /**
@@ -1138,7 +1138,7 @@ qboolean E_LoadXML (xmlNode_t *p)
 				success = qfalse;
 				break;
 			}
-			LIST_Add(&ccs.employees[emplType], (const byte*) &e, sizeof(e));
+			LIST_Add(&ccs.employees[emplType], &e, sizeof(e));
 		}
 		if (!success)
 			break;

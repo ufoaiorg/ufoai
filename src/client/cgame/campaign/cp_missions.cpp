@@ -1500,7 +1500,7 @@ mission_t *CP_CreateNewMission (interestCategory_t category, qboolean beginNow)
 		CP_TerrorMissionOnSpawn();
 
 	/* Add mission to global array */
-	list = LIST_Add(&ccs.missions, (byte*) &mission, sizeof(mission));
+	list = LIST_Add(&ccs.missions, &mission, sizeof(mission));
 	return (mission_t *)list->data;
 }
 
@@ -1963,7 +1963,7 @@ qboolean MIS_LoadXML (xmlNode_t *parent)
 			defaultAssigned = qtrue;
 		mission.posAssigned = XML_GetBool(node, SAVE_MISSIONS_POSASSIGNED, defaultAssigned);
 		/* Add mission to global array */
-		LIST_Add(&ccs.missions, (byte*) &mission, sizeof(mission));
+		LIST_Add(&ccs.missions, &mission, sizeof(mission));
 	}
 	Com_UnregisterConstList(saveInterestConstants);
 	Com_UnregisterConstList(saveMissionConstants);

@@ -98,7 +98,7 @@ alienBase_t* AB_BuildBase (const vec2_t pos)
 	base.stealth = initialStealthValue;
 	base.idx = ccs.campaignStats.alienBasesBuilt++;
 
-	return (alienBase_t*)(LIST_Add(&ccs.alienBases, (const byte *)&base, sizeof(base)))->data;
+	return (alienBase_t*)(LIST_Add(&ccs.alienBases, &base, sizeof(base)))->data;
 }
 
 /**
@@ -365,7 +365,7 @@ qboolean AB_LoadXML (xmlNode_t *p)
 		}
 		base.supply = XML_GetInt(s, SAVE_ALIENBASE_SUPPLY, 0);
 		base.stealth = XML_GetFloat(s, SAVE_ALIENBASE_STEALTH, 0.0);
-		LIST_Add(&ccs.alienBases, (const byte *)&base, sizeof(base));
+		LIST_Add(&ccs.alienBases, &base, sizeof(base));
 	}
 
 	return qtrue;

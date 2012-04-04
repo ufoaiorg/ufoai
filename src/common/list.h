@@ -4,7 +4,7 @@
 #include "../shared/ufotypes.h"
 
 struct linkedList_t {
-	byte*         data;
+	void*         data;
 	linkedList_t* next;
 	qboolean      ptr; /**< don't call Mem_Free for data if this is @c true */
 };
@@ -32,7 +32,7 @@ void LIST_PrependString(linkedList_t** listDest, const char* data);
 void LIST_AddString(linkedList_t** list, const char* data);
 void LIST_AddStringSorted(linkedList_t** listDest, const char* data);
 void LIST_AddPointer(linkedList_t** listDest, void* data);
-linkedList_t* LIST_Add(linkedList_t** list, const byte* data, size_t length);
+linkedList_t* LIST_Add(linkedList_t** list, void const* data, size_t length);
 const linkedList_t* LIST_ContainsString(const linkedList_t* list, const char* string);
 linkedList_t* LIST_GetPointer(linkedList_t* list, const void* data);
 void LIST_Delete(linkedList_t **list);
