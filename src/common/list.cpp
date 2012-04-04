@@ -96,29 +96,11 @@ void LIST_AddStringSorted (linkedList_t** listDest, const char* data)
 	assert(listDest);
 	assert(data);
 
-	/* create the list */
-	if (!*listDest)
-		LIST_AddString(listDest, data);
-	else {
-		linkedList_t *list, *tmp;
-
-		list = *listDest;
-		tmp = NULL;
-		while (list) {
-			if (Q_StringSort(data, static_cast<char const*>(list->data)) < 0) {
-				linkedList_t* const newEntry = LIST_AllocateString(data, list);
-				if (tmp != NULL)
-					tmp->next = newEntry;
-				else
-					*listDest = newEntry;
-				return;
-			}
-			tmp = list;
-			list = list->next;
-		}
-		assert(tmp);
-		tmp->next = LIST_AllocateString(data);
+	for (; *listDest; listDest = &(*listDest)->next) {
+		if (Q_StringSort(data, static_cast<char const*>((*listDest)->data)) < 0) break;
 	}
+
+	*listDest = LIST_AllocateString(data, *listDest);
 }
 
 /**
