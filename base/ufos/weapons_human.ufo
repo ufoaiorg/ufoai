@@ -713,7 +713,7 @@ item smg
 	shape			"0 0 3 2"
 	center			"6.4 0 1"
 	scale			1.15
-	ammo			50
+	ammo			30
 	reload			10
 	reloadsound		weapons/reload-smg
 	price			1350
@@ -756,7 +756,7 @@ item smg_ammo
 			ammo				5
 			delaybetweenshots	14
 			time				8
-			damage				"20 5"
+			damage				"12 3"
 			dmgweight			normal_spray
 			reaction			true
 		}
@@ -775,11 +775,11 @@ item smg_ammo
 			spread				"3 3"
 			crouch				0.8
 			range				50
-			shots				25
-			ammo				25
+			shots				15
+			ammo				15
 			delaybetweenshots	14
-			time				12
-			damage				"20 5"
+			time				20
+			damage				"12 3"
 			dmgweight			normal_spray
 			reaction			true
 		}
@@ -838,7 +838,7 @@ item shotgun2_slug_ammo
 			bodysnd 			impact/bullet-bodyimpact
 			sndonce				true
 			speed				3000
-			spread				"2 2"
+			spread				"3 3"
 			crouch				1
 			range				20
 			shots				1
@@ -903,7 +903,7 @@ item shotgun_micro_ammo
 			bodysnd 			impact/bullet-bodyimpact
 			sndonce				true
 			speed				3000
-			spread				"4 4"
+			spread				"5 5"
 			crouch				1
 			range				15
 			shots				8
@@ -930,7 +930,7 @@ item shotgun_micro_ammo
 			bodysnd 			impact/bullet-bodyimpact
 			sndonce				true
 			speed				3000
-			spread				"3 3"
+			spread				"4 4"
 			crouch				1
 			range				15
 			shots				8
@@ -959,8 +959,8 @@ item flamer
 	shape			"0 0 5 2"
 	center			"9 0 2"
 	scale			1.2
-	ammo			6
-	reload			14
+	ammo			4
+	reload			20
 	reloadsound		weapons/reload-pistol	// @todo better sound?
 	price			1500
 	size			60
@@ -996,12 +996,12 @@ item flamer_ammo
 			sndonce				true
 			speed				300
 			spread				"1.5 0.5"
-			crouch				1.0
+			crouch				1.5
 			range				8
 			shots				30
 			ammo				1
 			delaybetweenshots	25
-			time				8
+			time				12
 			damage				"6 2"
 			dmgweight			fire_flamer
 			reaction			true
@@ -1016,13 +1016,13 @@ item flamer_ammo
 			firesnd				weapons/flamer-big
 			sndonce				true
 			speed				300
-			spread				"2 0.5"
-			crouch				1.0
+			spread				"1.5 0.5"
+			crouch				1.5
 			range				8
 			shots				60
 			ammo				2
 			delaybetweenshots	25
-			time				12
+			time				20
 			damage				"6 2"
 			dmgweight			fire_flamer
 			reaction			true
@@ -1038,12 +1038,12 @@ item flamer_ammo
 			sndonce				true
 			speed				300
 			spread				"1 10"
-			crouch				1.0
+			crouch				1.5
 			range				8
 			shots				60
 			ammo				2
 			delaybetweenshots	25
-			time				12
+			time				20
 			damage				"6 2"
 			dmgweight			fire_flamer
 			reaction			true
