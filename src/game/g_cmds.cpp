@@ -152,6 +152,11 @@ static void G_KillTeam_f (void)
 			/* die */
 			ent->HP = 0;
 			G_ActorDieOrStun(ent, NULL);
+
+			if (teamToKill == TEAM_ALIEN)
+				level.num_kills[TEAM_PHALANX][TEAM_ALIEN]++;
+			else
+				level.num_kills[TEAM_ALIEN][teamToKill]++;
 			amount--;
 		}
 	}
