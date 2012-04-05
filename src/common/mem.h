@@ -33,12 +33,14 @@ struct memBlockFoot_t {
 	uint32_t sentinel;				/**< For memory integrity checking */
 };
 
+struct memPool_t;
+
 struct memBlock_t {
 	memBlock_t *next;
 
 	uint32_t topSentinel;			/**< For memory integrity checking */
 
-	struct memPool_s *pool;			/**< Owner pool */
+	memPool_t *pool;			/**< Owner pool */
 	int tagNum;						/**< For group free */
 	size_t size;					/**< Size of allocation including this header */
 
@@ -53,7 +55,7 @@ struct memBlock_t {
 	uint32_t botSentinel;			/**< For memory integrity checking */
 };
 
-typedef struct memPool_s {
+struct memPool_t {
 	char name[MEM_MAX_POOLNAME];	/**< Name of pool */
 	qboolean inUse;					/**< Slot in use? */
 
@@ -64,7 +66,7 @@ typedef struct memPool_s {
 
 	const char *createFile;			/**< File this pool was created on */
 	int createLine;					/**< Line this pool was created on */
-} memPool_t;
+};
 
 /* constants */
 #define Mem_CreatePool(name)							_Mem_CreatePool((name),__FILE__,__LINE__)

@@ -11,8 +11,8 @@
 #include "../common/tracing.h"
 #include "../tools/ufo2map/common/bspfile.h"
 
-struct memPool_s *com_fileSysPool;
-struct memPool_s *com_genericPool;
+memPool_t *com_fileSysPool;
+memPool_t *com_genericPool;
 dMapTile_t *curTile;
 mapTiles_t mapTiles;
 

@@ -64,11 +64,11 @@ typedef struct modelConfig_s {
 
 static modelConfig_t config;
 
-struct memPool_s *com_genericPool;
-struct memPool_s *com_fileSysPool;
-struct memPool_s *vid_modelPool;
-struct memPool_s *vid_lightPool;	/* compilation dependency */
-struct memPool_s *vid_imagePool;
+memPool_t *com_genericPool;
+memPool_t *com_fileSysPool;
+memPool_t *vid_modelPool;
+memPool_t *vid_lightPool;	/* compilation dependency */
+memPool_t *vid_imagePool;
 
 static void Exit(int exitCode) __attribute__ ((__noreturn__));
 

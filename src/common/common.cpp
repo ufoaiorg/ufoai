@@ -61,13 +61,13 @@ cvar_t* sys_os;
 static qFILE logfile;
 static qFILE pipefile;
 
-struct memPool_s *com_aliasSysPool;
-struct memPool_s *com_cmdSysPool;
-struct memPool_s *com_cmodelSysPool;
-struct memPool_s *com_cvarSysPool;
-struct memPool_s *com_fileSysPool;
-struct memPool_s *com_genericPool;
-struct memPool_s *com_networkPool;
+memPool_t* com_aliasSysPool;
+memPool_t* com_cmdSysPool;
+memPool_t* com_cmodelSysPool;
+memPool_t* com_cvarSysPool;
+memPool_t* com_fileSysPool;
+memPool_t* com_genericPool;
+memPool_t* com_networkPool;
 
 static scheduleEvent_t *event_queue = NULL;
 

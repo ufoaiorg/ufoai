@@ -80,11 +80,11 @@ cvar_t *cl_teamnum;
 
 client_static_t cls;
 
-struct memPool_s *cl_genericPool;	/**< permanent client data - menu, fonts */
-struct memPool_s *vid_genericPool;	/**< also holds all the static models */
-struct memPool_s *vid_imagePool;
-struct memPool_s *vid_lightPool;	/**< lightmap - wiped with every new map */
-struct memPool_s *vid_modelPool;	/**< modeldata - wiped with every new map */
+memPool_t* cl_genericPool;	/**< permanent client data - menu, fonts */
+memPool_t* vid_genericPool;	/**< also holds all the static models */
+memPool_t* vid_imagePool;
+memPool_t* vid_lightPool;	/**< lightmap - wiped with every new map */
+memPool_t* vid_modelPool;	/**< modeldata - wiped with every new map */
 /*====================================================================== */
 
 /**

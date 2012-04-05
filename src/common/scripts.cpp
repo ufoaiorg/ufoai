@@ -1374,7 +1374,7 @@ const char *Com_ValueToStr (const void *base, const valueTypes_t type, const int
 	}
 }
 
-qboolean Com_ParseBlockToken (const char *name, const char **text, void *base, const value_t *values, struct memPool_s *mempool, const char *token)
+qboolean Com_ParseBlockToken (const char *name, const char **text, void *base, const value_t *values, memPool_t *mempool, const char *token)
 {
 	const value_t *v;
 	const char *errhead = "Com_ParseBlockToken: unexpected end of file (";
@@ -1425,7 +1425,7 @@ qboolean Com_ParseBlockToken (const char *name, const char **text, void *base, c
 	return v->string != NULL;
 }
 
-qboolean Com_ParseBlock (const char *name, const char **text, void *base, const value_t *values, struct memPool_s *mempool)
+qboolean Com_ParseBlock (const char *name, const char **text, void *base, const value_t *values, memPool_t *mempool)
 {
 	const char *errhead = "Com_ParseBlock: unexpected end of file (";
 	const char *token;
