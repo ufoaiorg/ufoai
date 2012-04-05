@@ -33,7 +33,7 @@ item knife
 			range		1.5
 			shots		1
 			time		4
-			damage		"40 20"
+			damage		"50 5"
 			dmgweight	normal_steelblade
 			reaction	true
 		}
@@ -49,11 +49,11 @@ item knife
 			bodysnd 	impact/knife-bodyimpact
 			speed		320
 			range		7
-			spread		"1 4"
+			spread		"1.5 1.5"
 			shots		1
 			ammo		1
 			time		8
-			damage		"35 15"
+			damage		"20 5"
 			dmgweight	normal_steelblade
 			reaction	true
 		}
@@ -94,8 +94,8 @@ item knifemono
 			speed		0
 			range		1.5
 			shots		1
-			time		6
-			damage		"70 18"
+			time		4
+			damage		"80 5"
 			dmgweight	normal_monomolecularblade
 			reaction	true
 		}
@@ -111,11 +111,11 @@ item knifemono
 			bodysnd 	impact/knife-bodyimpact
 			speed		320
 			range		7
-			spread		"1 4"
+			spread		"1.5 1.5"
 			shots		1
 			ammo		1
 			time		8
-			damage		"60 15"
+			damage		"40 5"
 			dmgweight	normal_monomolecularblade
 			reaction	true
 		}
@@ -238,7 +238,7 @@ item kerrblade
 			range		1.5
 			shots		1
 			time		8
-			damage		"95 25"
+			damage		"100 10"
 			dmgweight	normal_monomolecularblade
 			reaction	true
 		}
@@ -256,7 +256,7 @@ item kerrblade
 			range		1.5
 			shots		1
 			time		14
-			damage		"180 45"
+			damage		"200 20"
 			dmgweight	normal_monomolecularblade
 			reaction	true
 		}
@@ -298,29 +298,10 @@ item plasblade
 			bodysnd 	impact/plasma-bodyimpact
 			speed		0
 			range		1.5
-			spread		"1 4"
+			spread		"1 1"
 			shots		1
-			time		7
-			damage		"300 5"
-			dmgweight	plasma_heavy
-			reaction	true
-		}
-		firedef
-		{
-			name		"_Throw"
-			skill		close
-			projtl		plasblade
-			impact		plasmaImpactCharged
-			hitbody		plasmaImpactCharged
-			impsnd		impact/plasma-impact
-			bodysnd 	impact/plasma-bodyimpact
-			firesnd		weapons/plasma-blade
-			speed		320
-			range		7
-			spread		"2 5"
-			shots		1
-			time		12
-			damage		"300 5"
+			time		6
+			damage		"350 20"
 			dmgweight	plasma_heavy
 			reaction	true
 		}
