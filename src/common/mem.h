@@ -29,9 +29,9 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #define MEM_MAX_POOLNAME	64
 #define MEM_HASH			11
 
-typedef struct memBlockFoot_s {
+struct memBlockFoot_t {
 	uint32_t sentinel;				/**< For memory integrity checking */
-} memBlockFoot_t;
+};
 
 typedef struct memBlock_s {
 	struct memBlock_s *next;
