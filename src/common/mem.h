@@ -75,7 +75,7 @@ typedef struct memPool_s {
 #define Mem_FreePool(pool)								_Mem_FreePool((pool),__FILE__,__LINE__)
 #define Mem_AllocTypeN(type, n)							((type*)Mem_Alloc(sizeof(type) * (n)))
 #define Mem_AllocType(type)								((type*)Mem_Alloc(sizeof(type)))
-#define Mem_Alloc(size)									_Mem_Alloc((size),qtrue,com_genericPool,0,__FILE__,__LINE__)
+#define Mem_Alloc(size)									Mem_PoolAlloc((size), com_genericPool, 0)
 #define Mem_PoolAlloc(size,pool,tagNum)					_Mem_Alloc((size),qtrue,(pool),(tagNum),__FILE__,__LINE__)
 #define Mem_PoolAllocTypeN(type, n, pool)               static_cast<type*>(Mem_PoolAlloc(sizeof(type) * (n), (pool), 0))
 #define Mem_PoolAllocType(type, pool)                   static_cast<type*>(Mem_PoolAllocTypeN(type, 1, (pool)))
