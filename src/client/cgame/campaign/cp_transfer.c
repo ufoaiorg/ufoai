@@ -435,19 +435,14 @@ static void TR_ListTransfers_f (void)
 			Com_Printf("...Carried Employee:\n");
 			for (emplType = EMPL_SOLDIER; emplType < MAX_EMPL; emplType++) {
 				TR_ForeachEmployee(employee, transfer, emplType) {
-					if (employee->ugv) {
-						/** @todo: improve ugv listing when they're implemented */
-						Com_Printf("......ugv: %s [ucn: %i]\n", employee->ugv->id, employee->chr.ucn);
-					} else {
-						Com_Printf("......%s (%s) / %s [ucn: %i]\n", employee->chr.name,
-							E_GetEmployeeString(employee->type, 1),
-							(employee->nation) ? employee->nation->id : "(nonation)",
-							employee->chr.ucn);
-						if (!E_IsHired(employee))
-							Com_Printf("Warning: employee^ not hired!\n");
-						if (!employee->transfer)
-							Com_Printf("Warning: employee^ not marked as being transfered!\n");
-					}
+					Com_Printf("......%s (%s) / %s [ucn: %i]\n", employee->chr.name,
+						E_GetEmployeeString(employee->type, 1),
+						(employee->nation) ? employee->nation->id : "(nonation)",
+						employee->chr.ucn);
+					if (!E_IsHired(employee))
+						Com_Printf("Warning: employee^ not hired!\n");
+					if (!employee->transfer)
+						Com_Printf("Warning: employee^ not marked as being transfered!\n");
 				}
 			}
 		}

@@ -3,7 +3,7 @@
  */
 
 /*
-Copyright (C) 2002-2011 UFO: Alien Invasion.
+Copyright (C) 2002-2012 UFO: Alien Invasion.
 
 This program is free software; you can redistribute it and/or
 modify it under the terms of the GNU General Public License
@@ -40,8 +40,6 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
  */
 typedef struct buyListEntry_s {
 	const objDef_t *item;			/**< Item pointer */
-	const ugv_t *ugv;				/**< Used for mixed UGV (characters) and FILTER_UGVITEM (items) list.
-									 * If not NULL a FILTER_UGVITEM-item is set in "item". */
 	const aircraft_t *aircraft;	/**< Used for aircraft production - aircraft template */
 } buyListEntry_t;
 
@@ -79,8 +77,6 @@ static const objDef_t *BS_GetObjectDefition (const buyListEntry_t *entry)
 	assert(entry);
 	if (entry->item)
 		return entry->item;
-	else if (entry->ugv)
-		return NULL;
 	else if (entry->aircraft)
 		return NULL;
 
@@ -137,12 +133,7 @@ static inline qboolean BS_GetMinMaxValueByItemID (const base_t *base, int itemNu
 	if (itemNum < 0 || itemNum + buyList.scroll >= buyList.length)
 		return qfalse;
 
-	if (buyCat == FILTER_UGVITEM && buyList.l[itemNum + buyList.scroll].ugv) {
-		/** @todo compute something better */
-		*min = 0;
-		*value = 10000;
-		*max = 20000;
-	} else if (buyCat == FILTER_AIRCRAFT && buyList.l[itemNum + buyList.scroll].aircraft) {
+	if (buyCat == FILTER_AIRCRAFT && buyList.l[itemNum + buyList.scroll].aircraft) {
 		const aircraft_t *aircraft = buyList.l[itemNum + buyList.scroll].aircraft;
 		if (!aircraft)
 			return qfalse;
@@ -254,15 +245,6 @@ static void BS_MarketClick_f (void)
 		UP_AircraftItemDescription(buyList.l[num].item);
 		Cvar_Set("mn_aircraftname", "");
 		break;
-	case FILTER_UGVITEM:
-		if (buyList.l[num].ugv) {
-			UP_UGVDescription(buyList.l[num].ugv);
-			currentSelectedMenuEntry = NULL;
-		} else {
-			INV_ItemDescription(buyList.l[num].item);
-			currentSelectedMenuEntry = buyList.l[num].item;
-		}
-		break;
 	case MAX_FILTERTYPES:
 		break;
 	default:
@@ -276,7 +258,7 @@ static void BS_MarketClick_f (void)
 }
 
 /**
- * @brief Opens the UFOpedia for the current selected item/aircraft/ugv.
+ * @brief Opens the UFOpedia for the current selected item/aircraft.
  * @note called by market_openpedia
  */
 static void BS_MarketInfoClick_f (void)
@@ -350,7 +332,6 @@ static void BS_BuyType (const base_t *base)
 				if (j >= MAX_BUYLIST)
 					Com_Error(ERR_DROP, "Increase the MAX_BUYLIST value to handle that much items\n");
 				buyList.l[j].item = NULL;
-				buyList.l[j].ugv = NULL;
 				buyList.l[j].aircraft = aircraftTemplate;
 				buyList.length = j + 1;
 				BS_UpdateItem(base, j - buyList.scroll);
@@ -382,81 +363,11 @@ static void BS_BuyType (const base_t *base)
 				if (j >= MAX_BUYLIST)
 					Com_Error(ERR_DROP, "Increase the MAX_FILTERLIST value to handle that much items\n");
 				buyList.l[j].item = od;
-				buyList.l[j].ugv = NULL;
 				buyList.l[j].aircraft = NULL;
 				buyList.length = j + 1;
 				BS_UpdateItem(base, j - buyList.scroll);
 				j++;
 			}
-		}
-		break;
-	case FILTER_UGVITEM:	/* Heavy equipment like UGVs and it's weapons/ammo. */
-		{
-		/* Get item list. */
-		j = 0;
-		for (i = 0; i < csi.numUGV; i++) {
-			/** @todo Add this entry to the list */
-			ugv_t *ugv = &csi.ugvs[i];
-			const technology_t* tech = RS_GetTechByProvided(ugv->id);
-			assert(tech);
-			if (RS_IsResearched_ptr(tech)) {
-				const int hiredRobot = E_CountHiredRobotByType(base, ugv);
-				const int unhiredRobot = E_CountUnhiredRobotsByType(ugv);
-
-				if (hiredRobot + unhiredRobot <= 0)
-					continue;
-
-				if (j >= buyList.scroll && j < MAX_MARKET_MENU_ENTRIES) {
-					UI_ExecuteConfunc("buy_show %i", j - buyList.scroll);
-				}
-
-				/** @todo use the market to get the price */
-				BS_AddToList(tech->name,
-					hiredRobot,			/* numInStorage */
-					unhiredRobot,			/* numOnMarket */
-					ugv->price);
-
-				if (j >= MAX_BUYLIST)
-					Com_Error(ERR_DROP, "Increase the MAX_BUYLIST value to handle that much entries.\n");
-				buyList.l[j].item = NULL;
-				buyList.l[j].ugv = ugv;
-				buyList.l[j].aircraft = NULL;
-				buyList.length = j + 1;
-				BS_UpdateItem(base, j - buyList.scroll);
-				j++;
-			}
-		}
-
-		for (i = 0, od = csi.ods; i < csi.numODs; i++, od++) {
-			if (!BS_IsOnMarket(od))
-				continue;
-
-			/* Check whether the item matches the proper filter, storage in current base and market. */
-			if (INV_ItemMatchesFilter(od, FILTER_UGVITEM) && (B_ItemInBase(od, base) || ccs.eMarket.numItems[i])) {
-				BS_AddToList(od->name, B_ItemInBase(od, base), ccs.eMarket.numItems[i], BS_GetItemBuyingPrice(od));
-				/* Set state of Autosell button. */
-				if (j >= buyList.scroll && j < MAX_MARKET_MENU_ENTRIES) {
-					const technology_t *tech = RS_GetTechForItem(od);
-
-					UI_ExecuteConfunc("buy_show %i", j - buyList.scroll);
-					if (RS_IsResearched_ptr(tech)) {
-						if (ccs.eMarket.autosell[i])
-							UI_ExecuteConfunc("buy_autoselle %i", j - buyList.scroll);
-						else
-							UI_ExecuteConfunc("buy_autoselld %i", j - buyList.scroll);
-					}
-				}
-
-				if (j >= MAX_BUYLIST)
-					Com_Error(ERR_DROP, "Increase the MAX_BUYLIST value to handle that much items\n");
-				buyList.l[j].item = od;
-				buyList.l[j].ugv = NULL;
-				buyList.l[j].aircraft = NULL;
-				buyList.length = j + 1;
-				BS_UpdateItem(base, j - buyList.scroll);
-				j++;
-			}
-		}
 		}
 		break;
 	default:	/* Normal items */
@@ -484,7 +395,6 @@ static void BS_BuyType (const base_t *base)
 					if (j >= MAX_BUYLIST)
 						Com_Error(ERR_DROP, "Increase the MAX_BUYLIST value to handle that much items\n");
 					buyList.l[j].item = od;
-					buyList.l[j].ugv = NULL;
 					buyList.l[j].aircraft = NULL;
 					buyList.length = j + 1;
 					BS_UpdateItem(base, j - buyList.scroll);
@@ -519,15 +429,6 @@ static void BS_BuyType (const base_t *base)
 				UP_AircraftItemDescription(currentSelectedMenuEntry);
 			else
 				UP_AircraftItemDescription(buyList.l[0].item);
-			break;
-		case FILTER_UGVITEM:
-			/** @todo select first heavy item */
-			if (currentSelectedMenuEntry)
-				INV_ItemDescription(currentSelectedMenuEntry);
-			else if (buyList.l[0].ugv)
-				UP_UGVDescription(buyList.l[0].ugv);
-			else if (buyList.l[0].item)
-				INV_ItemDescription(buyList.l[0].item);
 			break;
 		default:
 			assert(buyCat != MAX_FILTERTYPES);
@@ -739,41 +640,7 @@ static void BS_BuyItem_f (void)
 
 	UI_ExecuteConfunc("buy_selectitem %i", num + buyList.scroll);
 
-	if (buyCat == FILTER_UGVITEM && buyList.l[num + buyList.scroll].ugv) {
-		/* The list entry is an actual ugv/robot */
-		const ugv_t *ugv = buyList.l[num + buyList.scroll].ugv;
-
-		UP_UGVDescription(ugv);
-
-		if (ccs.credits >= ugv->price && E_CountUnhiredRobotsByType(ugv) > 0) {
-			qboolean ugvWeaponBuyable;
-			/* Check if we have a weapon for this ugv in the market and there is enough storage-room for it. */
-			const objDef_t *ugvWeapon = INVSH_GetItemByID(ugv->weapon);
-			if (!ugvWeapon)
-				Com_Error(ERR_DROP, "BS_BuyItem_f: Could not get weapon '%s' for ugv/tank '%s'.", ugv->weapon, ugv->id);
-
-			ugvWeaponBuyable = qtrue;
-			if (!ccs.eMarket.numItems[ugvWeapon->idx])
-				ugvWeaponBuyable = qfalse;
-
-			if (CAP_GetFreeCapacity(base, CAP_ITEMS) < UGV_SIZE + ugvWeapon->size) {
-				CP_Popup(_("Not enough storage space"), _("You cannot buy this item.\nNot enough space in storage.\nBuild more storage facilities."));
-				ugvWeaponBuyable = qfalse;
-			}
-
-			if (ugvWeaponBuyable && E_HireRobot(base, ugv)) {
-				/* Move the item into the storage. */
-				B_UpdateStorageAndCapacity(base, ugvWeapon, 1, qfalse);
-				BS_RemoveItemFromMarket(ugvWeapon, 1);
-
-				/* Update Display/List and credits. */
-				BS_BuyType(base);
-				CP_UpdateCredits(ccs.credits - ugv->price);	/** @todo make this depend on market as well? */
-			} else {
-				Com_Printf("Could not buy this item.\n");
-			}
-		}
-	} else {
+	{
 		/* Normal item (or equipment for UGVs/Robots if buyCategory==BUY_HEAVY) */
 		const objDef_t *item = BS_GetObjectDefition(&buyList.l[num + buyList.scroll]);
 		assert(item);
@@ -817,33 +684,7 @@ static void BS_SellItem_f (void)
 		return;
 
 	UI_ExecuteConfunc("buy_selectitem %i", num + buyList.scroll);
-	if (buyCat == FILTER_UGVITEM && buyList.l[num + buyList.scroll].ugv) {
-		employee_t *employee;
-		/* The list entry is an actual ugv/robot */
-		const ugv_t *ugv = buyList.l[num + buyList.scroll].ugv;
-		const objDef_t *ugvWeapon;
-
-		UP_UGVDescription(ugv);
-
-		/* Check if we have a weapon for this ugv in the market to sell it. */
-		ugvWeapon = INVSH_GetItemByID(ugv->weapon);
-		if (!ugvWeapon)
-			Com_Error(ERR_DROP, "BS_BuyItem_f: Could not get wepaon '%s' for ugv/tank '%s'.", ugv->weapon, ugv->id);
-
-		employee = E_GetHiredRobot(base, ugv);
-		if (!E_UnhireEmployee(employee)) {
-			/** @todo message - Couldn't fire employee. */
-			Com_DPrintf(DEBUG_CLIENT, "Couldn't sell/fire robot/ugv.\n");
-		} else {
-			if (B_ItemInBase(ugvWeapon, base) > 0) {
-				/* If we have a weapon we sell it as well. */
-				B_UpdateStorageAndCapacity(base, ugvWeapon, -1, qfalse);
-				BS_AddItemToMarket(ugvWeapon, 1);
-			}
-			BS_BuyType(base);
-			CP_UpdateCredits(ccs.credits + ugv->price);	/** @todo make this depend on market as well? */
-		}
-	} else {
+	{
 		const objDef_t *item = BS_GetObjectDefition(&buyList.l[num + buyList.scroll]);
 		/* don't sell more items than we have */
 		const int numItems = min(B_ItemInBase(item, base), BS_GetBuySellFactor());

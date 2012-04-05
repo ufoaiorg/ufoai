@@ -4,7 +4,7 @@
  */
 
 /*
-Copyright (C) 2002-2011 UFO: Alien Invasion.
+Copyright (C) 2002-2012 UFO: Alien Invasion.
 
 This program is free software; you can redistribute it and/or
 modify it under the terms of the GNU General Public License
@@ -32,7 +32,6 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #define SAVE_EMPLOYEE_BASEHIRED "baseHired"
 #define SAVE_EMPLOYEE_ASSIGNED "assigned"
 #define SAVE_EMPLOYEE_NATION "nation"
-#define SAVE_EMPLOYEE_UGV "UGV"
 #define SAVE_EMPLOYEE_CHR "character"
 
 #define SAVE_EMPLOYEETYPE_NAMESPACE "saveEmployeeType"
@@ -41,7 +40,6 @@ static const constListEntry_t saveEmployeeConstants[] = {
 	{SAVE_EMPLOYEETYPE_NAMESPACE"::scientist", EMPL_SCIENTIST},
 	{SAVE_EMPLOYEETYPE_NAMESPACE"::worker", EMPL_WORKER},
 	{SAVE_EMPLOYEETYPE_NAMESPACE"::pilot", EMPL_PILOT},
-	{SAVE_EMPLOYEETYPE_NAMESPACE"::robot", EMPL_ROBOT},
 	{NULL, -1}
 };
 
@@ -55,7 +53,7 @@ DTD:
 	type		soldier|
 				scientist|
 				worker|
-				pilot|robot	#REQUIRED
+				pilot		#REQUIRED
 >
 
 <!ELEMENT employee character>
@@ -64,7 +62,6 @@ DTD:
 	baseHired	CDATA		#IMPLIED
 	assigned	CDATA		#IMPLIED
 	nation		CDATA		#REQUIRED
-	UGV			CDATA		#IMPLIED
 >
 
 ** for <character> check save_character.h

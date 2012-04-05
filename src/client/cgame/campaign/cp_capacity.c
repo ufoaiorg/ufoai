@@ -3,7 +3,7 @@
  */
 
 /*
-Copyright (C) 2002-2011 UFO: Alien Invasion.
+Copyright (C) 2002-2012 UFO: Alien Invasion.
 
 This program is free software; you can redistribute it and/or
 modify it under the terms of the GNU General Public License
@@ -123,7 +123,7 @@ void CAP_RemoveItemsExceedingCapacity (base_t *base)
 {
 	int i;
 	int objIdx[MAX_OBJDEFS];	/**< Will contain idx of items that can be removed */
-	int num, cnt;
+	int num;
 
 	if (CAP_GetFreeCapacity(base, CAP_ITEMS) >= 0)
 		return;
@@ -141,28 +141,16 @@ void CAP_RemoveItemsExceedingCapacity (base_t *base)
 		objIdx[num++] = i;
 	}
 
-	cnt = E_CountHired(base, EMPL_ROBOT);
-	/* UGV takes room in storage capacity: we store them with a value MAX_OBJDEFS that can't be used by objIdx */
-	for (i = 0; i < cnt; i++) {
-		objIdx[num++] = MAX_OBJDEFS;
-	}
-
 	while (num && CAP_GetFreeCapacity(base, CAP_ITEMS) < 0) {
 		/* Select the item to remove */
 		const int randNumber = rand() % num;
-		if (objIdx[randNumber] >= MAX_OBJDEFS) {
-			/* A UGV is destroyed: get first one */
-			employee_t* employee = E_GetHiredRobot(base, 0);
-			/* There should be at least a UGV */
-			assert(employee);
-			E_DeleteEmployee(employee);
-		} else {
-			/* items are destroyed. We guess that all items of a given type are stored in the same location
-			 *	=> destroy all items of this type */
-			const int idx = objIdx[randNumber];
-			const objDef_t *od = INVSH_GetItemByIDX(idx);
-			B_UpdateStorageAndCapacity(base, od, -B_ItemInBase(od, base), qfalse);
-		}
+
+		/* items are destroyed. We guess that all items of a given type are stored in the same location
+		 *	=> destroy all items of this type */
+		const int idx = objIdx[randNumber];
+		const objDef_t *od = INVSH_GetItemByIDX(idx);
+		B_UpdateStorageAndCapacity(base, od, -B_ItemInBase(od, base), qfalse);
+
 		REMOVE_ELEM(objIdx, randNumber, num);
 
 		/* Make sure that we don't have an infinite loop */
@@ -192,9 +180,6 @@ void CAP_UpdateStorageCap (base_t *base)
 
 		CAP_AddCurrent(base, CAP_ITEMS, B_ItemInBase(obj, base) * obj->size);
 	}
-
-	/* UGV takes room in storage capacity */
-	CAP_AddCurrent(base, CAP_ITEMS, UGV_SIZE * E_CountHired(base, EMPL_ROBOT));
 }
 
 /**

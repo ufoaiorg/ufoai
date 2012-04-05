@@ -4,7 +4,7 @@
  */
 
 /*
-Copyright (C) 2002-2011 UFO: Alien Invasion.
+Copyright (C) 2002-2012 UFO: Alien Invasion.
 
 This program is free software; you can redistribute it and/or
 modify it under the terms of the GNU General Public License
@@ -157,18 +157,6 @@ void CP_CleanupAircraftCrew (aircraft_t *aircraft, equipDef_t * ed)
 
 	assert(aircraft);
 
-	/* Auto-assign weapons to UGVs/Robots if they have no weapon yet. */
-	LIST_Foreach(aircraft->acTeam, employee_t, employee) {
-		character_t *chr = &employee->chr;
-
-		/* This is an UGV */
-		if (employee->ugv) {
-			/* Check if there is a weapon and add it if there isn't. */
-			if (!RIGHT(chr) || !RIGHT(chr)->item.t)
-				cgi->INV_EquipActorRobot(&chr->i, INVSH_GetItemByID(employee->ugv->weapon));
-		}
-	}
-
 	for (container = 0; container < csi.numIDs; container++) {
 		LIST_Foreach(aircraft->acTeam, employee_t, employee) {
 			invList_t *ic, *next;
@@ -200,15 +188,6 @@ void CP_CleanupAircraftCrew (aircraft_t *aircraft, equipDef_t * ed)
 void CP_CleanTempInventory (base_t* base)
 {
 	E_Foreach(EMPL_SOLDIER, employee) {
-		int k;
-		for (k = 0; k < csi.numIDs; k++) {
-			/* idFloor and idEquip are temp */
-			if (INVDEF(k)->temp)
-				employee->chr.i.c[k] = NULL;
-		}
-	}
-
-	E_Foreach(EMPL_ROBOT, employee) {
 		int k;
 		for (k = 0; k < csi.numIDs; k++) {
 			/* idFloor and idEquip are temp */

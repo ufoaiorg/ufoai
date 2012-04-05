@@ -438,9 +438,6 @@ static void TR_CargoList (void)
 			}
 			break;
 		}
-		case EMPL_ROBOT:
-			/** @todo implement UGV transfers */
-			break;
 		case EMPL_SCIENTIST:
 		case EMPL_WORKER: {
 			int emplCount = LIST_Count(td.trEmployeesTmp[emplType]);
@@ -596,9 +593,6 @@ static int TR_FillEmployees (const base_t *srcbase, const base_t *destbase, link
 				}
 				break;
 			}
-			case EMPL_ROBOT:
-				/** @todo implement UGV transfers */
-				break;
 			case EMPL_SCIENTIST:
 			case EMPL_WORKER: {
 				const int hired = E_CountHired(srcbase, emplType);
@@ -914,9 +908,6 @@ static void TR_AddEmployeeToTransferList (base_t *base, transferData_t *transfer
 			TR_GetTransferEmployee(emplType, &cnt, base, num);
 			cnt++;
 			break;
-		case EMPL_ROBOT:
-			/** @todo implement UGV transfers */
-			break;
 		case EMPL_SCIENTIST:
 		case EMPL_WORKER:
 			/* no employee in base or all employees already in the transfer list */
@@ -1221,9 +1212,6 @@ static void TR_RemoveEmployeeFromCargoList (base_t *base, transferData_t *transf
 
 			break;
 		}
-		case EMPL_ROBOT:
-			/** @todo implement UGV transfers */
-			break;
 		case EMPL_SCIENTIST:
 		case EMPL_WORKER:
 			if (!LIST_IsEmpty(td.trEmployeesTmp[emplType])) {
@@ -1528,11 +1516,7 @@ static void TR_List_f (void)
 			UI_ExecuteConfunc("tr_listaddcargo %d \"%s\" \"%s\" \"%s\"", i, "tr_cargo", "employee", _("Employee"));
 			for (emplType = EMPL_SOLDIER; emplType < MAX_EMPL; emplType++) {
 				TR_ForeachEmployee(employee, transfer, emplType) {
-					if (employee->ugv) {
-						/** @todo: add ugv listing when they're implemented */
-					} else {
-						UI_ExecuteConfunc("tr_listaddcargo %d \"%s\" \"%s\" \"%s\"", i, "tr_cargo.employee", va("ucn%i", employee->chr.ucn), va("%s %s", E_GetEmployeeString(employee->type, 1), employee->chr.name));
-					}
+					UI_ExecuteConfunc("tr_listaddcargo %d \"%s\" \"%s\" \"%s\"", i, "tr_cargo.employee", va("ucn%i", employee->chr.ucn), va("%s %s", E_GetEmployeeString(employee->type, 1), employee->chr.name));
 				}
 			}
 		}

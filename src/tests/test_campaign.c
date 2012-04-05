@@ -4,7 +4,7 @@
  */
 
 /*
-Copyright (C) 2002-2011 UFO: Alien Invasion.
+Copyright (C) 2002-2012 UFO: Alien Invasion.
 
 This program is free software; you can redistribute it and/or
 modify it under the terms of the GNU General Public License
@@ -249,26 +249,24 @@ static void testEmployeeHandling (void)
 	ResetCampaignData();
 
 	for (type = 0; type < MAX_EMPL; type++) {
-		if (type != EMPL_ROBOT) {
-			int cnt;
-			employee_t *e = E_CreateEmployee(type, NULL, NULL);
-			CU_ASSERT_PTR_NOT_NULL(e);
+		int cnt;
+		employee_t *e = E_CreateEmployee(type, NULL);
+		CU_ASSERT_PTR_NOT_NULL(e);
 
-			cnt = E_CountUnhired(type);
-			CU_ASSERT_EQUAL(cnt, 1);
+		cnt = E_CountUnhired(type);
+		CU_ASSERT_EQUAL(cnt, 1);
 
-			E_DeleteEmployee(e);
+		E_DeleteEmployee(e);
 
-			cnt = E_CountUnhired(type);
-			CU_ASSERT_EQUAL(cnt, 0);
-		}
+		cnt = E_CountUnhired(type);
+		CU_ASSERT_EQUAL(cnt, 0);
 	}
 
 	{
 		int i;
 		const int amount = 3;
 		for (i = 0; i < amount; i++) {
-			employee_t *e = E_CreateEmployee(EMPL_SOLDIER, NULL, NULL);
+			employee_t *e = E_CreateEmployee(EMPL_SOLDIER, NULL);
 			CU_ASSERT_PTR_NOT_NULL(e);
 		}
 		{
@@ -290,7 +288,7 @@ static void testEmployeeHandling (void)
 	}
 
 	{
-		employee_t *e = E_CreateEmployee(EMPL_PILOT, NULL, NULL);
+		employee_t *e = E_CreateEmployee(EMPL_PILOT, NULL);
 		int cnt;
 		CU_ASSERT_PTR_NOT_NULL(e);
 		cnt = E_RefreshUnhiredEmployeeGlobalList(EMPL_PILOT, qfalse);
@@ -299,18 +297,11 @@ static void testEmployeeHandling (void)
 	}
 
 	{
-		const ugv_t *ugvType = Com_GetUGVByID("ugv_ares_w");
-		employee_t *e = E_CreateEmployee(EMPL_ROBOT, NULL, ugvType);
-		CU_ASSERT_PTR_NOT_NULL(e);
-		CU_ASSERT_TRUE(E_DeleteEmployee(e));
-	}
-
-	{
 		int i, cnt;
 		employee_t *e;
 
 		for (i = 0; i < MAX_EMPLOYEES; i++) {
-			e = E_CreateEmployee(EMPL_SOLDIER, NULL, NULL);
+			e = E_CreateEmployee(EMPL_SOLDIER, NULL);
 			CU_ASSERT_PTR_NOT_NULL(e);
 
 			cnt = E_CountUnhired(EMPL_SOLDIER);

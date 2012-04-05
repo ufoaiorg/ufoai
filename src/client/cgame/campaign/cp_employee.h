@@ -4,7 +4,7 @@
  */
 
 /*
-Copyright (C) 2002-2011 UFO: Alien Invasion.
+Copyright (C) 2002-2012 UFO: Alien Invasion.
 
 This program is free software; you can redistribute it and/or
 modify it under the terms of the GNU General Public License
@@ -48,7 +48,6 @@ typedef enum {
 	EMPL_SCIENTIST,
 	EMPL_WORKER,
 	EMPL_PILOT,
-	EMPL_ROBOT,
 	MAX_EMPL		/**< For counting over all available enums. */
 } employeeType_t;
 
@@ -60,7 +59,6 @@ typedef struct employee_s {
 	character_t chr;				/**< employee stats */
 	employeeType_t type;			/**< employee type */
 	const struct nation_s *nation;	/**< What nation this employee came from. This is NULL if the nation is unknown for some (code-related) reason. */
-	const struct ugv_s *ugv;		/**< if this is an employee of type EMPL_ROBOT then this is a pointer to the matching ugv_t struct. For normal employees this is NULL. */
 } employee_t;
 
 void E_ResetEmployees(void);
@@ -69,12 +67,11 @@ employee_t* E_GetUnhired(employeeType_t type);
 
 int E_CountByType(employeeType_t type);
 
-employee_t* E_CreateEmployee(employeeType_t type, const struct nation_s *nation, const struct ugv_s *ugvType);
+employee_t* E_CreateEmployee(employeeType_t type, const struct nation_s *nation);
 qboolean E_DeleteEmployee(employee_t *employee);
 
 qboolean E_HireEmployee(base_t* base, employee_t* employee);
 qboolean E_HireEmployeeByType(base_t* base, employeeType_t type);
-qboolean E_HireRobot(base_t* base, const struct ugv_s *ugvType);
 qboolean E_UnhireEmployee(employee_t* employee);
 int E_RefreshUnhiredEmployeeGlobalList(const employeeType_t type, const qboolean excludeUnhappyNations);
 
@@ -86,9 +83,7 @@ qboolean E_IsAwayFromBase(const employee_t *employee);
 employeeType_t E_GetEmployeeType(const char* type);
 extern const char* E_GetEmployeeString(employeeType_t type, int n);
 
-employee_t* E_GetUnhiredRobot(const struct ugv_s *ugvType);
 int E_GetHiredEmployees(const base_t* const base, employeeType_t type, linkedList_t **hiredEmployees);
-employee_t* E_GetHiredRobot(const base_t* const base, const struct ugv_s *ugvType);
 employee_t* E_GetUnassignedEmployee(const base_t* const base, employeeType_t type);
 employee_t* E_GetAssignedEmployee(const base_t* const base, employeeType_t type);
 employee_t* E_GetEmployeeFromChrUCN(int uniqueCharacterNumber);
@@ -96,10 +91,8 @@ employee_t* E_GetEmployeeByTypeFromChrUCN(employeeType_t type, int uniqueCharact
 qboolean E_MoveIntoNewBase(employee_t *employee, base_t *newBase);
 
 int E_CountHired(const base_t* const base, employeeType_t type);
-int E_CountHiredRobotByType(const base_t* const base, const struct ugv_s *ugvType);
 int E_CountAllHired(const base_t* const base);
 int E_CountUnhired(employeeType_t type);
-int E_CountUnhiredRobotsByType(const struct ugv_s *ugvType);
 int E_CountUnassigned(const base_t* const base, employeeType_t type);
 employee_t* E_GetEmployeeByMenuIndex(int num);
 void E_UnhireAllEmployees(base_t* base, employeeType_t type);

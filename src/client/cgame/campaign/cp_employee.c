@@ -5,7 +5,7 @@
  */
 
 /*
-Copyright (C) 2002-2011 UFO: Alien Invasion.
+Copyright (C) 2002-2012 UFO: Alien Invasion.
 
 This program is free software; you can redistribute it and/or
 modify it under the terms of the GNU General Public License
@@ -75,9 +75,8 @@ qboolean E_IsAwayFromBase (const employee_t *employee)
 	if (employee->transfer)
 		return qtrue;
 
-	/* for now only soldiers, ugvs and pilots can be assigned to an aircraft */
-	if (employee->type != EMPL_SOLDIER && employee->type != EMPL_ROBOT
-	 && employee->type != EMPL_PILOT)
+	/* for now only soldiers and pilots can be assigned to an aircraft */
+	if (employee->type != EMPL_SOLDIER && employee->type != EMPL_PILOT)
 		return qfalse;
 
 	base = employee->baseHired;
@@ -175,10 +174,6 @@ qboolean E_MoveIntoNewBase (employee_t *employee, base_t *newBase)
 			CAP_AddCurrent(oldBase, CAP_EMPLOYEES, -1);
 			CAP_AddCurrent(newBase, CAP_EMPLOYEES, 1);
 			break;
-		case EMPL_ROBOT:
-			CAP_AddCurrent(oldBase, CAP_ITEMS, -UGV_SIZE);
-			CAP_AddCurrent(newBase, CAP_ITEMS, UGV_SIZE);
-			break;
 		case MAX_EMPL:
 			break;
 		}
@@ -204,8 +199,6 @@ const char* E_GetEmployeeString (employeeType_t type, int n)
 		return ngettext("Worker", "Workers", n);
 	case EMPL_PILOT:
 		return ngettext("Pilot", "Pilots", n);
-	case EMPL_ROBOT:
-		return ngettext("UGV", "UGVS", n);
 	default:
 		Com_Error(ERR_DROP, "Unknown employee type '%i'\n", type);
 	}
@@ -230,8 +223,6 @@ employeeType_t E_GetEmployeeType (const char* type)
 		return EMPL_WORKER;
 	else if (Q_streq(type, "EMPL_PILOT"))
 		return EMPL_PILOT;
-	else if (Q_streq(type, "EMPL_ROBOT"))
-		return EMPL_ROBOT;
 
 	return MAX_EMPL;
 }
@@ -248,25 +239,6 @@ void E_ResetEmployees (void)
 	Com_DPrintf(DEBUG_CLIENT, "E_ResetEmployees: Delete all employees\n");
 	for (i = EMPL_SOLDIER; i < MAX_EMPL; i++)
 		LIST_Delete(&ccs.employees[i]);
-}
-
-/**
- * @brief Return a "not hired" ugv-employee pointer of a given ugv-type.
- * @param[in] ugvType What type of robot we want.
- * @return employee_t pointer on success or NULL on error.
- * @sa E_GetHiredRobot
- */
-employee_t* E_GetUnhiredRobot (const ugv_t *ugvType)
-{
-	E_Foreach(EMPL_ROBOT, employee) {
-		if (!E_IsHired(employee)) {
-			/* If no type was given we return the first ugv we find. */
-			if (!ugvType || employee->ugv == ugvType)
-				return employee;
-		}
-	}
-
-	return NULL;
 }
 
 /**
@@ -297,38 +269,6 @@ int E_GetHiredEmployees (const base_t* const base, employeeType_t type, linkedLi
 	if (hiredEmployees == NULL)
 		return 0;
 	return LIST_Count(*hiredEmployees);
-}
-
-/**
- * @brief Return a "hired" ugv-employee pointer of a given ugv-type in a given base.
- * @param[in] base Which base the ugv should be searched in.c
- * @param[in] ugvType What type of robot we want.
- * @return employee_t pointer on success or NULL on error.
- * @sa E_GetUnhiredRobot
- */
-employee_t* E_GetHiredRobot (const base_t* const base, const ugv_t *ugvType)
-{
-	linkedList_t *hiredEmployees = NULL;
-	employee_t *employee;
-
-	E_GetHiredEmployees(base, EMPL_ROBOT, &hiredEmployees);
-
-	employee = NULL;
-	LIST_Foreach(hiredEmployees, employee_t, e) {
-		if ((e->ugv == ugvType || !ugvType)	/* If no type was given we return the first ugv we find. */
-		 && E_IsInBase(e, base)) {		/* It has to be in the defined base. */
-			assert(E_IsHired(e));
-			employee = e;
-			break;
-		}
-	}
-
-	LIST_Delete(&hiredEmployees);
-
-	if (!employee)
-		Com_DPrintf(DEBUG_CLIENT, "Could not get unhired ugv/robot.\n");
-
-	return employee;
 }
 
 /**
@@ -389,7 +329,6 @@ employee_t* E_GetUnassignedEmployee (const base_t* const base, const employeeTyp
  * @param[in] employee Which employee to hire
  * @sa E_HireEmployeeByType
  * @sa E_UnhireEmployee
- * @todo handle EMPL_ROBOT capacities here?
  */
 qboolean E_HireEmployee (base_t* base, employee_t* employee)
 {
@@ -413,9 +352,6 @@ qboolean E_HireEmployee (base_t* base, employee_t* employee)
 		case EMPL_SOLDIER:
 			CAP_AddCurrent(base, CAP_EMPLOYEES, 1);
 			break;
-		case EMPL_ROBOT:
-			CAP_AddCurrent(base, CAP_ITEMS, UGV_SIZE);
-			break;
 		case MAX_EMPL:
 			break;
 		}
@@ -434,18 +370,6 @@ qboolean E_HireEmployee (base_t* base, employee_t* employee)
 qboolean E_HireEmployeeByType (base_t* base, employeeType_t type)
 {
 	employee_t* employee = E_GetUnhired(type);
-	return employee ? E_HireEmployee(base, employee) : qfalse;
-}
-
-/**
- * @brief Hires the first free employee of that type.
- * @param[in] base  Which base the ugv/robot should be hired in.
- * @param[in] ugvType What type of ugv/robot should be hired.
- * @return qtrue if everything went ok (the ugv was added), otherwise qfalse.
- */
-qboolean E_HireRobot (base_t* base, const ugv_t *ugvType)
-{
-	employee_t* employee = E_GetUnhiredRobot(ugvType);
 	return employee ? E_HireEmployee(base, employee) : qfalse;
 }
 
@@ -476,7 +400,6 @@ void E_ResetEmployee (employee_t *employee)
  * @sa CL_RemoveSoldierFromAircraft
  * @sa E_ResetEmployee
  * @sa E_RemoveEmployeeFromBuildingOrAircraft
- * @todo handle EMPL_ROBOT capacities here?
  */
 qboolean E_UnhireEmployee (employee_t* employee)
 {
@@ -496,9 +419,6 @@ qboolean E_UnhireEmployee (employee_t* employee)
 		case EMPL_SCIENTIST:
 		case EMPL_SOLDIER:
 			CAP_AddCurrent(base, CAP_EMPLOYEES, -1);
-			break;
-		case EMPL_ROBOT:
-			CAP_AddCurrent(base, CAP_ITEMS, -UGV_SIZE);
 			break;
 		case MAX_EMPL:
 			break;
@@ -533,11 +453,10 @@ void E_UnhireAllEmployees (base_t* base, employeeType_t type)
  * @brief Creates an entry of a new employee in the global list and assignes it to no building/base.
  * @param[in] type What type of employee to create.
  * @param[in] nation What nation the employee (mainly used for soldiers in singleplayer) comes from.
- * @param[in] ugvType What type of ugv this employee is.
  * @return Pointer to the newly created employee in the global list. NULL if something goes wrong.
  * @sa E_DeleteEmployee
  */
-employee_t* E_CreateEmployee (employeeType_t type, const nation_t *nation, const ugv_t *ugvType)
+employee_t* E_CreateEmployee (employeeType_t type, const nation_t *nation)
 {
 	employee_t employee;
 	const char *teamID;
@@ -553,7 +472,6 @@ employee_t* E_CreateEmployee (employeeType_t type, const nation_t *nation, const
 	employee.assigned = qfalse;
 	employee.type = type;
 	employee.nation = nation;
-	employee.ugv = ugvType;
 
 	teamID = GAME_GetTeamDef();
 
@@ -574,14 +492,6 @@ employee_t* E_CreateEmployee (employeeType_t type, const nation_t *nation, const
 	case EMPL_WORKER:
 		rank = "worker";
 		Com_sprintf(teamDefName, sizeof(teamDefName), "%s_worker", teamID);
-		break;
-	case EMPL_ROBOT:
-		if (!ugvType)
-			Com_Error(ERR_DROP, "E_CreateEmployee: no type given for generation of EMPL_ROBOT employee.");
-
-		rank = "ugv";
-
-		Com_sprintf(teamDefName, sizeof(teamDefName), "%s%s", teamID, ugvType->actors);
 		break;
 	default:
 		Com_Error(ERR_DROP, "E_CreateEmployee: Unknown employee type\n");
@@ -667,9 +577,6 @@ void E_DeleteEmployeesExceedingCapacity (base_t *base)
 
 	/* do a reverse loop in order to finish by soldiers (the most important employees) */
 	for (type = MAX_EMPL - 1; type >= 0; type--) {
-		/* UGV are not stored in Quarters */
-		if (type == EMPL_ROBOT)
-			continue;
 
 		E_Foreach(type, employee) {
 			if (E_IsInBase(employee, base))
@@ -726,7 +633,7 @@ int E_RefreshUnhiredEmployeeGlobalList (const employeeType_t type, const qboolea
 	nationIdx = 0;
 	cnt = 0;
 	while (idx-- > 0) {
-		if (E_CreateEmployee(type, happyNations[nationIdx], NULL) != NULL)
+		if (E_CreateEmployee(type, happyNations[nationIdx]) != NULL)
 			cnt++;
 		nationIdx = (nationIdx + 1) % numHappyNations;
 	}
@@ -751,8 +658,7 @@ qboolean E_RemoveEmployeeFromBuildingOrAircraft (employee_t *employee)
 	/* not assigned to any building... */
 	if (E_EmployeeIsUnassigned(employee)) {
 		/* ... and no aircraft handling needed? */
-		if (employee->type != EMPL_SOLDIER && employee->type != EMPL_ROBOT
-		 && employee->type != EMPL_PILOT)
+		if (employee->type != EMPL_SOLDIER && employee->type != EMPL_PILOT)
 			return qfalse;
 	}
 
@@ -766,7 +672,6 @@ qboolean E_RemoveEmployeeFromBuildingOrAircraft (employee_t *employee)
 		RS_RemoveFiredScientist(base, employee);
 		break;
 
-	case EMPL_ROBOT:
 	case EMPL_SOLDIER:
 		/* Remove soldier from aircraft/team if he was assigned to one. */
 		if (AIR_IsEmployeeInAircraft(employee, NULL))
@@ -810,31 +715,10 @@ int E_CountHired (const base_t* const base, employeeType_t type)
 }
 
 /**
- * @brief Counts 'hired' (i.e. bought or produced UGVs and other robots of a given ugv-type in a given base.
- * @param[in] base The base where we count (@c NULL to count all).
- * @param[in] ugvType What type of robot/ugv we are looking for.
- * @return Count of Robots/UGVs.
- */
-int E_CountHiredRobotByType (const base_t* const base, const ugv_t *ugvType)
-{
-	int count = 0;
-
-	E_Foreach(EMPL_ROBOT, employee) {
-		if (!E_IsHired(employee))
-			continue;
-		if (employee->ugv == ugvType && (!base || E_IsInBase(employee, base)))
-			count++;
-	}
-	return count;
-}
-
-
-/**
  * @brief Counts all hired employees of a given base
  * @param[in] base The base where we count
  * @return count of hired employees of a given type in a given base
  * @note must not return 0 if hasBuilding[B_QUARTER] is qfalse: used to update capacity
- * @todo What about EMPL_ROBOT?
  */
 int E_CountAllHired (const base_t* const base)
 {
@@ -862,22 +746,6 @@ int E_CountUnhired (employeeType_t type)
 
 	E_Foreach(type, employee) {
 		if (!E_IsHired(employee))
-			count++;
-	}
-	return count;
-}
-
-/**
- * @brief Counts all available Robots/UGVs that are for sale.
- * @param[in] ugvType What type of robot/ugv we are looking for.
- * @return count of available robots/ugvs.
- */
-int E_CountUnhiredRobotsByType (const ugv_t *ugvType)
-{
-	int count = 0;
-
-	E_Foreach(EMPL_ROBOT, employee) {
-		if (!E_IsHired(employee) && employee->ugv == ugvType)
 			count++;
 	}
 	return count;
@@ -924,20 +792,13 @@ void E_InitialEmployees (const campaign_t *campaign)
 
 	/* setup initial employee count */
 	for (i = 0; i < campaign->soldiers; i++)
-		E_CreateEmployee(EMPL_SOLDIER, E_RandomNation(), NULL);
+		E_CreateEmployee(EMPL_SOLDIER, E_RandomNation());
 	for (i = 0; i < campaign->scientists; i++)
-		E_CreateEmployee(EMPL_SCIENTIST, E_RandomNation(), NULL);
+		E_CreateEmployee(EMPL_SCIENTIST, E_RandomNation());
 	for (i = 0; i < campaign->workers; i++)
-		E_CreateEmployee(EMPL_WORKER, E_RandomNation(), NULL);
+		E_CreateEmployee(EMPL_WORKER, E_RandomNation());
 	for (i = 0; i < campaign->pilots; i++)
-		E_CreateEmployee(EMPL_PILOT, E_RandomNation(), NULL);
-	for (i = 0; i < campaign->ugvs; i++) {
-		/** @todo don't use hardcoded UGV ids */
-		if (frand() > 0.5)
-			E_CreateEmployee(EMPL_ROBOT, E_RandomNation(), Com_GetUGVByID("ugv_ares_w"));
-		else
-			E_CreateEmployee(EMPL_ROBOT, E_RandomNation(), Com_GetUGVByID("ugv_phoenix"));
-	}
+		E_CreateEmployee(EMPL_PILOT, E_RandomNation());
 }
 
 #ifdef DEBUG
@@ -1048,9 +909,6 @@ qboolean E_SaveXML (xmlNode_t *p)
 			/* Store the nations identifier string. */
 			assert(employee->nation);
 			XML_AddString(ssnode, SAVE_EMPLOYEE_NATION, employee->nation->id);
-			/* Store the ugv-type identifier string. (Only exists for EMPL_ROBOT). */
-			if (employee->ugv)
-				XML_AddString(ssnode, SAVE_EMPLOYEE_UGV, employee->ugv->id);
 			/* Character Data */
 			chrNode = XML_AddNode(ssnode, SAVE_EMPLOYEE_CHR);
 			GAME_SaveCharacter(chrNode, &employee->chr);
@@ -1079,8 +937,7 @@ qboolean E_LoadXML (xmlNode_t *p)
 
 		if (!Com_GetConstIntFromNamespace(SAVE_EMPLOYEETYPE_NAMESPACE, type, (int*) &emplType)) {
 			Com_Printf("Invalid employee type '%s'\n", type);
-			success = qfalse;
-			break;
+			continue;
 		}
 
 		for (ssnode = XML_GetNode(snode, SAVE_EMPLOYEE_EMPLOYEE); ssnode;
@@ -1105,8 +962,6 @@ qboolean E_LoadXML (xmlNode_t *p)
 				success = qfalse;
 				break;
 			}
-			/* UGV-Type */
-			e.ugv = Com_GetUGVByIDSilent(XML_GetString(ssnode, SAVE_EMPLOYEE_UGV));
 			/* Character Data */
 			chrNode = XML_GetNode(ssnode, SAVE_EMPLOYEE_CHR);
 			if (!chrNode) {

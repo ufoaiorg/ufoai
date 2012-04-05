@@ -4,7 +4,7 @@
  */
 
 /*
-Copyright (C) 2002-2011 UFO: Alien Invasion.
+Copyright (C) 2002-2012 UFO: Alien Invasion.
 
 This program is free software; you can redistribute it and/or
 modify it under the terms of the GNU General Public License
@@ -294,8 +294,6 @@ static const value_t salary_vals[] = {
 	{"scientist_rankbonus", V_INT, offsetof(salary_t, rankBonus[EMPL_SCIENTIST]), MEMBER_SIZEOF(salary_t, rankBonus[EMPL_SCIENTIST])},
 	{"pilot_base", V_INT, offsetof(salary_t, base[EMPL_PILOT]), MEMBER_SIZEOF(salary_t, base[EMPL_PILOT])},
 	{"pilot_rankbonus", V_INT, offsetof(salary_t, rankBonus[EMPL_PILOT]), MEMBER_SIZEOF(salary_t, rankBonus[EMPL_PILOT])},
-	{"robot_base", V_INT, offsetof(salary_t, base[EMPL_ROBOT]), MEMBER_SIZEOF(salary_t, base[EMPL_ROBOT])},
-	{"robot_rankbonus", V_INT, offsetof(salary_t, rankBonus[EMPL_ROBOT]), MEMBER_SIZEOF(salary_t, rankBonus[EMPL_ROBOT])},
 	{"aircraft_factor", V_INT, offsetof(salary_t, aircraftFactor), MEMBER_SIZEOF(salary_t, aircraftFactor)},
 	{"aircraft_divisor", V_INT, offsetof(salary_t, aircraftDivisor), MEMBER_SIZEOF(salary_t, aircraftDivisor)},
 	{"base_upkeep", V_INT, offsetof(salary_t, baseUpkeep), MEMBER_SIZEOF(salary_t, baseUpkeep)},
@@ -304,7 +302,6 @@ static const value_t salary_vals[] = {
 	{"admin_worker", V_INT, offsetof(salary_t, admin[EMPL_WORKER]), MEMBER_SIZEOF(salary_t, admin[EMPL_WORKER])},
 	{"admin_scientist", V_INT, offsetof(salary_t, admin[EMPL_SCIENTIST]), MEMBER_SIZEOF(salary_t, admin[EMPL_SCIENTIST])},
 	{"admin_pilot", V_INT, offsetof(salary_t, admin[EMPL_PILOT]), MEMBER_SIZEOF(salary_t, admin[EMPL_PILOT])},
-	{"admin_robot", V_INT, offsetof(salary_t, admin[EMPL_ROBOT]), MEMBER_SIZEOF(salary_t, admin[EMPL_ROBOT])},
 	{"debt_interest", V_FLOAT, offsetof(salary_t, debtInterest), MEMBER_SIZEOF(salary_t, debtInterest)},
 	{NULL, 0, 0, 0}
 };
@@ -409,8 +406,6 @@ static void CP_ParseCampaign (const char *name, const char **text)
 	s->rankBonus[EMPL_SCIENTIST] = 500;
 	s->base[EMPL_PILOT] = 3000;
 	s->rankBonus[EMPL_PILOT] = 500;
-	s->base[EMPL_ROBOT] = 7500;
-	s->rankBonus[EMPL_ROBOT] = 1500;
 	s->aircraftFactor = 1;
 	s->aircraftDivisor = 25;
 	s->baseUpkeep = 20000;
@@ -419,7 +414,6 @@ static void CP_ParseCampaign (const char *name, const char **text)
 	s->admin[EMPL_WORKER] = 75;
 	s->admin[EMPL_SCIENTIST] = 75;
 	s->admin[EMPL_PILOT] = 75;
-	s->admin[EMPL_ROBOT] = 150;
 	s->debtInterest = 0.005;
 
 	do {

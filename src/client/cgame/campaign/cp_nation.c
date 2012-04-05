@@ -772,14 +772,14 @@ void NAT_HandleBudget (const campaign_t *campaign)
 
 		for (j = 0; 0.25 + j < (float) nation->maxScientists * stats->happiness * stats->happiness; j++) {
 			/* Create a scientist, but don't auto-hire her. */
-			E_CreateEmployee(EMPL_SCIENTIST, nation, NULL);
+			E_CreateEmployee(EMPL_SCIENTIST, nation);
 			newScientists++;
 		}
 
 		if (stats->happiness > 0) {
 			for (j = 0; 0.25 + j < (float) nation->maxSoldiers * stats->happiness * stats->happiness * stats->happiness; j++) {
 				/* Create a soldier. */
-				E_CreateEmployee(EMPL_SOLDIER, nation, NULL);
+				E_CreateEmployee(EMPL_SOLDIER, nation);
 				newSoldiers++;
 			}
 		}
@@ -787,14 +787,14 @@ void NAT_HandleBudget (const campaign_t *campaign)
 		if (stats->happiness > 0) {
 			for (j = 0; 0.25 + j < (float) nation->maxPilots * stats->happiness * stats->happiness * stats->happiness; j++) {
 				/* Create a pilot. */
-				E_CreateEmployee(EMPL_PILOT, nation, NULL);
+				E_CreateEmployee(EMPL_PILOT, nation);
 				newPilots++;
 			}
 		}
 
 		for (j = 0; 0.25 + j * 2 < (float) nation->maxWorkers * stats->happiness; j++) {
 			/* Create a worker. */
-			E_CreateEmployee(EMPL_WORKER, nation, NULL);
+			E_CreateEmployee(EMPL_WORKER, nation);
 			newWorkers++;
 		}
 
