@@ -92,9 +92,6 @@ typedef struct memPool_s {
 #define Mem_CheckPoolIntegrity(pool)					_Mem_CheckPoolIntegrity((pool),__FILE__,__LINE__)
 #define Mem_CheckGlobalIntegrity()						_Mem_CheckGlobalIntegrity(__FILE__,__LINE__)
 
-#define Mem_TouchPool(pool)								_Mem_TouchPool((pool),__FILE__,__LINE__)
-#define Mem_TouchGlobal()								_Mem_TouchGlobal(__FILE__,__LINE__)
-
 /* functions */
 memPool_t *_Mem_CreatePool(const char *name, const char *fileName, const int fileLine) __attribute__ ((malloc));
 void _Mem_DeletePool(memPool_t *pool, const char *fileName, const int fileLine);
@@ -113,9 +110,6 @@ uint32_t _Mem_ChangeTag(memPool_t *pool, const int tagFrom, const int tagTo);
 
 void _Mem_CheckPoolIntegrity(memPool_t *pool, const char *fileName, const int fileLine);
 void _Mem_CheckGlobalIntegrity(const char *fileName, const int fileLine);
-
-void _Mem_TouchPool(memPool_t *pool, const char *fileName, const int fileLine);
-void _Mem_TouchGlobal(const char *fileName, const int fileLine);
 
 void* _Mem_AllocatedInPool(memPool_t *pool, const void *pointer);
 

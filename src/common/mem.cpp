@@ -484,29 +484,6 @@ void _Mem_CheckGlobalIntegrity (const char *fileName, const int fileLine)
 }
 
 
-void _Mem_TouchPool (struct memPool_s *pool, const char *fileName, const int fileLine)
-{
-	memBlock_t *mem;
-	uint32_t i;
-	int sum;
-	int j = 0;
-
-	if (!pool)
-		return;
-
-	sum = 0;
-
-	/* Cycle through the blocks */
-	for (j = 0; j < MEM_HASH; j++) {
-		for (mem = pool->blocks[j]; mem; mem = mem->next) {
-			/* Touch each page */
-			for (i = 0; i < mem->memSize; i += 128) {
-				sum += ((byte *)mem->memPointer)[i];
-			}
-		}
-	}
-}
-
 /**
  * Searches a given pointer in all memory pool blocks
  * @param pool The pool to search the pointer in
@@ -530,21 +507,6 @@ void* _Mem_AllocatedInPool (struct memPool_s *pool, const void *pointer)
 	}
 
 	return NULL;
-}
-
-void _Mem_TouchGlobal (const char *fileName, const int fileLine)
-{
-	memPool_t *pool;
-	uint32_t i, num;
-
-	/* Touch every pool */
-	num = 0;
-	for (i = 0, pool = &m_poolList[0]; i < m_numPools; pool++, i++) {
-		if (pool->inUse) {
-			_Mem_TouchPool(pool, fileName, fileLine);
-			num++;
-		}
-	}
 }
 
 #ifdef COMPILE_UFO

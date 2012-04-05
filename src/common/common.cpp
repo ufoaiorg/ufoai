@@ -1215,9 +1215,6 @@ void Qcommon_Init (int argc, char **argv)
 		/* Check memory integrity */
 		Mem_CheckGlobalIntegrity();
 
-		/* Touch memory */
-		Mem_TouchGlobal();
-
 #ifndef DEDICATED_ONLY
 		if (!sv_dedicated->integer) {
 			Schedule_Timer(cl_maxfps, &CL_Frame, NULL, NULL);

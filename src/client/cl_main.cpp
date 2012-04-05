@@ -1205,9 +1205,6 @@ void CL_Init (void)
 
 	CL_ClearState();
 
-	/* Touch memory */
-	Mem_TouchGlobal();
-
 	/* cvar feedback */
 	for (var = Cvar_GetFirst(); var; var = var->next) {
 		if (var->flags & CVAR_R_CONTEXT)
