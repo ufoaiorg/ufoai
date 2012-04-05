@@ -3,21 +3,34 @@
 
 #define GCC_ATLEAST(major, minor) (defined __GNUC__ && (__GNUC__ > (major) || (__GNUC__ == (major) && __GNUC_MINOR__ >= (minor))))
 
-#define CXX11(gcc_major, gcc_minor, msc_ver) ( \
+#ifndef __has_extension // clang feature detection
+#	ifdef __has_feature
+#		define __has_extension __has_feature
+#	else
+#		define __has_extension(x) 0
+#	endif
+#endif
+
+#define CXX11(gcc_major, gcc_minor, msc_ver, clang_feature) ( \
 	__cplusplus >= 201103L || \
 	(defined __GXX_EXPERIMENTAL_CXX0X__ && GCC_ATLEAST((gcc_major), (gcc_minor))) || \
-	(defined _MSC_VER && (msc_ver) != 0 && _MSC_VER >= (msc_ver)) \
+	(defined _MSC_VER && (msc_ver) != 0 && _MSC_VER >= (msc_ver)) || \
+	__has_extension(clang_feature) \
 )
 
-#if CXX11(4, 4, 0)
+#if CXX11(4, 4, 0, cxx_defaulted_functions)
 #	define DEFAULT = default
-#	define DELETED = delete
 #else
 #	define DEFAULT {}
+#endif
+
+#if CXX11(4, 4, 0, cxx_deleted_functions)
+#	define DELETED = delete
+#else
 #	define DELETED
 #endif
 
-#if CXX11(4, 7, 1400)
+#if CXX11(4, 7, 1400, cxx_override_control)
 #	define OVERRIDE override
 #else
 #	define OVERRIDE
