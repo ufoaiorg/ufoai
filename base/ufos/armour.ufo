@@ -523,7 +523,7 @@ item armour_light_alien
 
 		fire_medium		25
 		fire_heavy		10
-		fire_flamer		2
+		fire_flamer		1
 
 		incendiary		25
 
@@ -598,7 +598,7 @@ item armour_medium_alien
 
 		plasma_light	50
 		plasma_medium	40
-		plasma_heavy	30
+		plasma_heavy	25
 
 		particlebeam_light	-30
 		particlebeam_medium	-40
