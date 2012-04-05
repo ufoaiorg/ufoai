@@ -122,17 +122,19 @@ void _Mem_DeletePool (struct memPool_s *pool, const char *fileName, const int fi
 	pool->name[0] = '\0';
 }
 
-
 /*==============================================================================
 POOL AND TAG MEMORY ALLOCATION
 ==============================================================================*/
 
+static memBlock_t* Mem_PtrToBlock(void* const ptr)
+{
+	return static_cast<memBlock_t*>(ptr) - 1;
+}
+
 static void _Mem_CheckSentinels (void *ptr, const char *fileName, const int fileLine)
 {
-	memBlock_t *mem;
-
 	/* Check sentinels */
-	mem = (memBlock_t *)((byte *)ptr - sizeof(memBlock_t));
+	memBlock_t* const mem = Mem_PtrToBlock(ptr);
 	if (mem->topSentinel != MEM_HEAD_SENTINEL_TOP) {
 		Sys_Error("Mem_Free: bad memory header top sentinel [buffer underflow]\n"
 			"free: %s:#%i", fileName, fileLine);
@@ -159,7 +161,6 @@ static void _Mem_CheckSentinels (void *ptr, const char *fileName, const int file
  */
 void _Mem_Free (void *ptr, const char *fileName, const int fileLine)
 {
-	memBlock_t *mem;
 	memBlock_t *search;
 	memBlock_t **prev;
 
@@ -168,7 +169,7 @@ void _Mem_Free (void *ptr, const char *fileName, const int fileLine)
 
 	_Mem_CheckSentinels(ptr, fileName, fileLine);
 
-	mem = (memBlock_t *)((byte *)ptr - sizeof(memBlock_t));
+	memBlock_t* const mem = Mem_PtrToBlock(ptr);
 
 	TH_MutexLock(z_lock);
 
@@ -302,7 +303,6 @@ void *_Mem_Alloc (size_t size, qboolean zeroFill, memPool_t *pool, const int tag
 
 void* _Mem_ReAlloc (void *ptr, size_t size, const char *fileName, const int fileLine)
 {
-	memBlock_t *mem;
 	memPool_t *pool;
 	void *newPtr;
 
@@ -314,7 +314,7 @@ void* _Mem_ReAlloc (void *ptr, size_t size, const char *fileName, const int file
 
 	_Mem_CheckSentinels(ptr, fileName, fileLine);
 
-	mem = (memBlock_t *)((byte *)ptr - sizeof(memBlock_t));
+	memBlock_t* const mem = Mem_PtrToBlock(ptr);
 
 	/* if size matches, do nothing */
 	if (mem->memSize == size)
