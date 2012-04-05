@@ -800,6 +800,7 @@ mapdef frozen_alienlandingindustrial
 	multiplayer	false
 	description	"_An industrial area in a cold region."
 	maxaliens	14
+	// randomspawn enabled
 
 	aircraft
 	{
@@ -823,7 +824,7 @@ mapdef frozen_alienlandingindustrial
 
 	cultures
 	{
-		//any
+		// any
 	}
 
 	populations
@@ -842,6 +843,7 @@ mapdef frozen_alienlandingnature
 	multiplayer	false
 	description	"_An industrial area in a cold region."
 	maxaliens	8
+	// randomspawn enabled
 
 	aircraft
 	{
@@ -865,7 +867,7 @@ mapdef frozen_alienlandingnature
 
 	cultures
 	{
-		//any
+		// any
 	}
 
 	populations
@@ -884,6 +886,7 @@ mapdef frozen_industrial
 	multiplayer	false
 	description	"_An industrial area in a cold region."
 	maxaliens	8 //TODO: This is an arbitrary value right now.
+	// randomspawn enabled
 
 	aircraft
 	{
@@ -892,9 +895,10 @@ mapdef frozen_industrial
 		craft_drop_herakles
 	}
 
-//	ufos
-//	{
-//	}
+	ufos
+	{
+		// any
+	}
 
 	terrains
 	{
@@ -904,7 +908,7 @@ mapdef frozen_industrial
 
 	cultures
 	{
-		//any
+		// any
 	}
 
 	populations
@@ -923,6 +927,7 @@ mapdef frozen_small
 	multiplayer	false
 	description	"_An underpopulated area in a cold region."
 	maxaliens	8 //TODO: This is an arbitrary value right now.
+	// randomspawn enabled
 
 	aircraft
 	{
@@ -931,9 +936,10 @@ mapdef frozen_small
 		craft_drop_herakles
 	}
 
-//	ufos
-//	{
-//	}
+	ufos
+	{
+		// any
+	}
 
 	terrains
 	{
@@ -943,7 +949,7 @@ mapdef frozen_small
 
 	cultures
 	{
-		//any
+		// any
 	}
 
 	populations

@@ -3,14 +3,15 @@
 {
 "classname" "worldspawn"
 "maxlevel" "6"
+"randomspawn" "1"
 // brush 0
 {
 ( 136 352 0 ) ( 0 352 0 ) ( 0 256 0 ) tex_common/nodraw 0 0 0 0.5 0.5 65280 128 0
 ( 0 256 4 ) ( 0 352 4 ) ( 136 352 4 ) tex_nature/snow002 0 0 0 0.5 0.5 65280 0 0
-( -24 0 8 ) ( 112 0 8 ) ( 112 0 0 ) tex_common/nodraw 0 0 0 0.5 0.5 65280 128 0
-( 512 -152 8 ) ( 512 -56 8 ) ( 512 -56 0 ) tex_common/nodraw 0 0 0 0.5 0.5 65280 128 0
-( 144 512 8 ) ( 8 512 8 ) ( 8 512 0 ) tex_common/nodraw 0 0 0 0.5 0.5 65280 128 0
-( 0 352 8 ) ( 0 256 8 ) ( 0 256 0 ) tex_common/nodraw 0 0 0 0.5 0.5 65280 128 0
+( -24 0 8 ) ( 112 0 8 ) ( 112 0 0 ) tex_nature/snow002 0 0 0 0.5 0.5 65280 0 0
+( 512 -152 8 ) ( 512 -56 8 ) ( 512 -56 0 ) tex_nature/snow002 0 0 0 0.5 0.5 65280 0 0
+( 144 512 8 ) ( 8 512 8 ) ( 8 512 0 ) tex_nature/snow002 0 0 0 0.5 0.5 65280 0 0
+( 0 352 8 ) ( 0 256 8 ) ( 0 256 0 ) tex_nature/snow002 0 0 0 0.5 0.5 65280 0 0
 }
 // brush 1
 {
@@ -185,8 +186,8 @@
 }
 // brush 20
 {
-( 312 100 60 ) ( 312 100 76 ) ( 360 100 76 ) tex_common/weaponclip -0 0 0 -0.5 0.5 33554432 0 0
-( 360 164 60 ) ( 360 164 76 ) ( 312 164 76 ) tex_common/weaponclip -0 0 0 -0.5 0.5 33554432 0 0
+( 312 100 60 ) ( 312 100 76 ) ( 360 100 76 ) tex_common/weaponclip 0 0 0 -0.5 0.5 33554432 0 0
+( 360 164 60 ) ( 360 164 76 ) ( 312 164 76 ) tex_common/weaponclip 0 0 0 -0.5 0.5 33554432 0 0
 ( 334 128 75 ) ( 321 256 73 ) ( 334 256 75 ) tex_common/weaponclip 0 0 0 -1 1 33554432 0 0
 ( 321 128 73 ) ( 311 256 65 ) ( 321 256 73 ) tex_common/weaponclip 0 0 0 -1 1 33554432 0 0
 ( 311 128 65 ) ( 308 256 54 ) ( 311 256 65 ) tex_common/weaponclip 0 0 0 1 1 33554432 0 0
@@ -311,9 +312,9 @@
 // brush 33
 {
 ( 308 152 -12 ) ( 308 152 44 ) ( 308 96 44 ) tex_common/actorclip 0 40 0 0.5 0.5 65536 0 0
-( 160 96 -10 ) ( 160 96 46 ) ( 288 96 46 ) tex_common/actorclip -0 44 0 -0.5 0.5 65536 0 0
-( 392 152 -10 ) ( 392 152 46 ) ( 288 152 46 ) tex_common/actorclip -0 44 0 -0.5 0.5 65536 0 0
-( 160 448 46 ) ( 288 448 46 ) ( 288 288 46 ) tex_common/actorclip -0 0 0 -0.5 0.5 65536 0 0
+( 160 96 -10 ) ( 160 96 46 ) ( 288 96 46 ) tex_common/actorclip 0 44 0 -0.5 0.5 65536 0 0
+( 392 152 -10 ) ( 392 152 46 ) ( 288 152 46 ) tex_common/actorclip 0 44 0 -0.5 0.5 65536 0 0
+( 160 448 46 ) ( 288 448 46 ) ( 288 288 46 ) tex_common/actorclip 0 0 0 -0.5 0.5 65536 0 0
 ( 308 128 40 ) ( 316 256 30 ) ( 308 256 40 ) tex_common/actorclip 0 0 0 1 1 65536 0 0
 ( 316 128 30 ) ( 328 256 26 ) ( 316 256 30 ) tex_common/actorclip 0 0 0 -1 1 65536 0 0
 ( 328 128 26 ) ( 342 256 28 ) ( 328 256 26 ) tex_common/actorclip 0 0 0 -1 1 65536 0 0
@@ -407,10 +408,10 @@
 {
 ( 384 96 0 ) ( 384 96 56 ) ( 384 152 56 ) tex_common/actorclip 0 0 0 0.5 0.5 65536 0 0
 ( 248 152 0 ) ( 248 152 56 ) ( 248 96 56 ) tex_common/actorclip 0 0 0 0.5 0.5 65536 0 0
-( 160 96 0 ) ( 160 96 56 ) ( 288 96 56 ) tex_common/actorclip -0 0 0 -0.5 0.5 65536 0 0
-( 392 152 0 ) ( 392 152 56 ) ( 288 152 56 ) tex_common/actorclip -0 0 0 -0.5 0.5 65536 0 0
+( 160 96 0 ) ( 160 96 56 ) ( 288 96 56 ) tex_common/actorclip 0 0 0 -0.5 0.5 65536 0 0
+( 392 152 0 ) ( 392 152 56 ) ( 288 152 56 ) tex_common/actorclip 0 0 0 -0.5 0.5 65536 0 0
 ( 296 288 46 ) ( 296 448 46 ) ( 168 448 46 ) tex_common/actorclip 16 0 0 -0.5 0.5 65536 0 0
-( 160 448 56 ) ( 288 448 56 ) ( 288 288 56 ) tex_common/actorclip -0 0 0 -0.5 0.5 65536 0 0
+( 160 448 56 ) ( 288 448 56 ) ( 288 288 56 ) tex_common/actorclip 0 0 0 -0.5 0.5 65536 0 0
 }
 // brush 44
 {
@@ -605,8 +606,8 @@
 }
 // brush 64
 {
-( 312 100 60 ) ( 312 100 76 ) ( 360 100 76 ) tex_common/nodraw -0 0 0 -0.5 0.5 0 128 0
-( 360 164 60 ) ( 360 164 76 ) ( 312 164 76 ) tex_common/nodraw -0 0 0 -0.5 0.5 0 128 0
+( 312 100 60 ) ( 312 100 76 ) ( 360 100 76 ) tex_common/nodraw 0 0 0 -0.5 0.5 0 128 0
+( 360 164 60 ) ( 360 164 76 ) ( 312 164 76 ) tex_common/nodraw 0 0 0 -0.5 0.5 0 128 0
 ( 334 128 75 ) ( 321 256 73 ) ( 334 256 75 ) tex_common/nodraw 0 0 0 -1 1 0 128 0
 ( 321 128 73 ) ( 311 256 65 ) ( 321 256 73 ) tex_common/nodraw 0 0 0 -1 1 0 128 0
 ( 311 128 65 ) ( 308 256 54 ) ( 311 256 65 ) tex_common/nodraw 0 0 0 1 1 0 128 0
@@ -826,60 +827,53 @@
 }
 // entity 4
 {
-"classname" "info_player_start"
-"team" "2"
-"origin" "80 240 28"
+"classname" "info_alien_start"
+"origin" "304 304 28"
 "angle" "315"
 }
 // entity 5
 {
 "classname" "info_alien_start"
-"origin" "304 304 28"
-"angle" "315"
-}
-// entity 6
-{
-"classname" "info_alien_start"
 "origin" "112 400 28"
 "angle" "135"
 }
-// entity 7
+// entity 6
 {
 "classname" "info_alien_start"
 "origin" "80 80 28"
 "angle" "315"
 }
-// entity 8
+// entity 7
 {
 "classname" "info_alien_start"
 "origin" "272 80 28"
 "angle" "270"
 }
-// entity 9
+// entity 8
 {
 "classname" "info_alien_start"
 "origin" "368 400 28"
 "angle" "-45"
 }
-// entity 10
+// entity 9
 {
 "classname" "info_alien_start"
 "origin" "144 304 28"
 "angle" "180"
 }
-// entity 11
+// entity 10
 {
 "classname" "info_alien_start"
 "origin" "432 48 28"
 "angle" "315"
 }
-// entity 12
+// entity 11
 {
 "classname" "info_alien_start"
 "origin" "432 464 28"
 "angle" "315"
 }
-// entity 13
+// entity 12
 {
 "classname" "misc_model"
 "origin" "224 288 40"
@@ -887,7 +881,7 @@
 "model" "models/aircraft/ufo_fighter/ufo_fighter_wings.md2"
 "angles" "0 90 0"
 }
-// entity 14
+// entity 13
 {
 "classname" "misc_model"
 "origin" "224 288 40"
@@ -895,7 +889,7 @@
 "model" "models/aircraft/ufo_fighter/ufo_fighter_engines_2.md2"
 "angles" "0 90 0"
 }
-// entity 15
+// entity 14
 {
 "classname" "misc_model"
 "origin" "224 288 40"
@@ -903,7 +897,7 @@
 "model" "models/aircraft/ufo_fighter/ufo_fighter_engines_1.md2"
 "angles" "0 90 0"
 }
-// entity 16
+// entity 15
 {
 "classname" "misc_model"
 "origin" "224 288 40"
@@ -911,7 +905,7 @@
 "model" "models/aircraft/ufo_fighter/ufo_fighter_hull.md2"
 "angles" "0 90 0"
 }
-// entity 17
+// entity 16
 {
 "classname" "misc_model"
 "origin" "224 288 40"
@@ -919,14 +913,14 @@
 "spawnflags" "254"
 "angles" "0 90 0"
 }
-// entity 18
+// entity 17
 {
 "classname" "light"
 "origin" "224 246 65"
 "_color" "1 0.2 0"
 "light" "80"
 }
-// entity 19
+// entity 18
 {
 "classname" "light"
 "origin" "288 280 104"
@@ -934,7 +928,7 @@
 "light" "200"
 "spawnflags" "1"
 }
-// entity 20
+// entity 19
 {
 "classname" "light"
 "origin" "160 280 104"
@@ -942,28 +936,28 @@
 "light" "200"
 "spawnflags" "1"
 }
-// entity 21
+// entity 20
 {
 "classname" "misc_particle"
 "origin" "432 64 368"
 "spawnflags" "255"
 "particle" "weather_snow"
 }
-// entity 22
+// entity 21
 {
 "classname" "misc_particle"
 "origin" "432 448 368"
 "spawnflags" "255"
 "particle" "weather_snow"
 }
-// entity 23
+// entity 22
 {
 "classname" "misc_particle"
 "origin" "112 64 368"
 "spawnflags" "255"
 "particle" "weather_snow"
 }
-// entity 24
+// entity 23
 {
 "classname" "misc_particle"
 "origin" "112 448 368"
