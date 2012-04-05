@@ -295,7 +295,7 @@ int R_UploadData (const char *name, byte *frame, int width, int height)
 	}
 
 	if (scaledWidth != width || scaledHeight != height) {  /* whereas others need to be scaled */
-		scaled = (unsigned *)Mem_PoolAllocExt(scaledWidth * scaledHeight * sizeof(unsigned), qfalse, vid_imagePool, 0);
+		scaled = Mem_PoolAllocTypeN(unsigned, scaledWidth * scaledHeight, vid_imagePool);
 		R_ScaleTexture((unsigned *)frame, width, height, scaled, scaledWidth, scaledHeight);
 	} else {
 		scaled = (unsigned *)frame;

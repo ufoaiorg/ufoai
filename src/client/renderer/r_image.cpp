@@ -289,7 +289,7 @@ void R_UploadTexture (unsigned *data, int width, int height, image_t* image)
 	}
 
 	if (scaledWidth != width || scaledHeight != height) {  /* whereas others need to be scaled */
-		scaled = (unsigned *)Mem_PoolAllocExt(scaledWidth * scaledHeight * sizeof(unsigned), qfalse, vid_imagePool, 0);
+		scaled = Mem_PoolAllocTypeN(unsigned, scaledWidth * scaledHeight, vid_imagePool);
 		R_ScaleTexture(data, width, height, scaled, scaledWidth, scaledHeight);
 	} else {
 		scaled = data;
@@ -338,14 +338,13 @@ void R_UploadTexture (unsigned *data, int width, int height, image_t* image)
  */
 void R_SoftenTexture (byte *in, int width, int height, int bpp)
 {
-	byte *out;
 	int i, j, k;
 	const int size = width * height * bpp;
 
 	/* soften into a copy of the original image, as in-place would be incorrect */
-	out = (byte *)Mem_PoolAllocExt(size, qfalse, vid_imagePool, 0);
+	byte* const out = Mem_PoolAllocTypeN(byte, size, vid_imagePool);
 	if (!out)
-		Com_Error(ERR_FATAL, "Mem_PoolAllocExt: failed on allocation of %i bytes for R_SoftenTexture", width * height * bpp);
+		Com_Error(ERR_FATAL, "R_SoftenTexture: failed on allocation of %i bytes", width * height * bpp);
 
 	memcpy(out, in, size);
 
