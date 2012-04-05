@@ -2904,6 +2904,14 @@ qboolean AIR_RemoveEmployee (employee_t *employee, aircraft_t *aircraft)
 	Com_DPrintf(DEBUG_CLIENT, "AIR_RemoveEmployee: base: %i - aircraft->idx: %i\n",
 		aircraft->homebase ? aircraft->homebase->idx : -1, aircraft->idx);
 
+	if (AIR_GetPilot(aircraft) == employee) {
+#ifdef DEBUG
+		if (employee->type != EMPL_PILOT)
+			Com_Printf("Warning: pilot of aircraf %i is not a qualified pilot (ucn: %i)\n", aircraft->idx, employee->chr.ucn);
+#endif
+		return AIR_SetPilot(aircraft, NULL);
+	}
+
 	cgi->INV_DestroyInventory(&employee->chr.i);
 	return LIST_Remove(&aircraft->acTeam, employee);
 }

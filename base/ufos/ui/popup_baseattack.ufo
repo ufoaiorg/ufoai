@@ -9,9 +9,10 @@ component panel cmp_soldierentry {
 
 	string name {
 		pos			"0 0"
+		color		"0 .78 0 1"
 		size		"270 25"
 		onClick {
-			cmd "team_select_ucn <node:parent.id@integer>;"
+			cmd "soldierlist_select <node:parent.id@integer>;"
 		}
 	}
 
@@ -22,7 +23,7 @@ component panel cmp_soldierentry {
 		size		"25 25"
 
 		onChange {
-			cmd "team_select_ucn <node:parent.id@integer>; team_assign_ucn <node:parent.id@integer>;"
+			cmd "ui_team_assign_ucn <node:parent.id@integer>; ui_team_fillbdef; soldierlist_select <node:parent.id@integer>;"
 		}
 	}
 }
@@ -37,6 +38,9 @@ window popup_assembleteam
 		modal			true				// we can't click out
 		image			"ui/popup_alpha_tile"
 		string			"_Assemble Team"
+	}
+
+	data selected {
 	}
 
 	rows soldierlist_lines {
@@ -314,7 +318,6 @@ window popup_assembleteam
 		}
 	}
 
-
 	confunc soldierlist_clear {
 		call *node:parent.soldierlist@removeAllChild
 	}
@@ -322,19 +325,32 @@ window popup_assembleteam
 		call *node:parent.soldierlist@createChild("soldier<1>", "cmp_soldierentry")
 		*node:parent.soldierlist.soldier<1>.id@integer = <1>
 		*node:parent.soldierlist.soldier<1>.name@string = <2>
-	}
-	confunc soldierlist_update {
-		*node:parent.soldierlist.soldier<1>.selected@current = <2>
+		*node:parent.soldierlist.soldier<1>.selected@current = <3>
 
-		if ( *cvar:cpteam_size > 0 ) {
-			*node:parent.equip@disabled = false
-		} else {
-			*node:parent.equip@disabled = true
+		if ( "<4>" ne "" ) {
+			*node:parent.soldierlist.soldier<1>.selected@tooltip = <4>
+			*node:parent.soldierlist.soldier<1>.selected@disabled = true
+		}
+
+		if ( *node:root.selected@integer < 1 ) {
+			cmd "soldierlist_select <1>;"
+			*node:root.selected@integer = <1>
 		}
 	}
-	func onWindowOpened
-	{
-		cmd	"cp_missionauto_check;"
+	confunc soldierlist_select {
+		if ( *node:root.selected@integer >= 0 ) {
+			*node:parent.soldierlist.soldier<node:root.selected@integer>.name@color = "0 .78 0 1"
+		}
+		*node:root.selected@integer = <1>
+		if ( *node:root.selected@integer >= 0 ) {
+			*node:parent.soldierlist.soldier<1>.name@color = "1 1 1 1"
+			cmd "ui_team_select_ucn <node:root.selected@integer>;"
+		}
+	}
+
+	func onWindowOpened {
+		*node:root.selected@integer = -1
+		cmd	"cp_missionauto_check; ui_team_fillbdef"
 	}
 	func onWindowClosed {
 		cmd "popbaseattack_upd;"

@@ -140,15 +140,11 @@ void CP_BaseAttackMissionDestroyBase (mission_t *mission)
 void CP_BaseAttackStartMission (mission_t *mission)
 {
 	base_t *base = mission->data.base;
-	linkedList_t *hiredSoldiersInBase = NULL;
 	int soldiers;
 
 	assert(base);
-
 	mission->stage = STAGE_BASE_ATTACK;
-
 	CP_MissionDisableTimeLimit(mission);
-
 	if (mission->ufo) {
 		/* ufo becomes invisible on geoscape, but don't remove it from ufo global array (may reappear)*/
 		CP_UFORemoveFromGeoscape(mission, qfalse);
@@ -175,9 +171,6 @@ void CP_BaseAttackStartMission (mission_t *mission)
 	ccs.mapAction = MA_BASEATTACK;
 	Com_DPrintf(DEBUG_CLIENT, "Base attack: %s at %.0f:%.0f\n", mission->id, mission->pos[0], mission->pos[1]);
 
-	/** @todo EMPL_ROBOT */
-	E_GetHiredEmployees(base, EMPL_SOLDIER, &hiredSoldiersInBase);
-
 	/* Fill the fake aircraft */
 	LIST_Delete(&baseAttackFakeAircraft.acTeam);
 	OBJZERO(baseAttackFakeAircraft);
@@ -187,27 +180,17 @@ void CP_BaseAttackStartMission (mission_t *mission)
 #if 0
 	/** @todo active this once more than 8 soldiers are working */
 	/* needed to spawn soldiers on map */
-	baseAttackFakeAircraft.maxTeamSize = LIST_Count(hiredSoldiersInBase);
+	baseAttackFakeAircraft.maxTeamSize = E_CountByType(EMPL_SOLDIER) + E_CountByType(EMPL_ROBOT);
 #else
 	baseAttackFakeAircraft.maxTeamSize = MAX_ACTIVETEAM;
 #endif
 
-	if (!hiredSoldiersInBase) {
-		Com_DPrintf(DEBUG_CLIENT, "CP_BaseAttackStartMission: Base '%s' has no soldiers: it can't defend itself. Destroy base.\n", base->name);
-		CP_BaseAttackMissionDestroyBase(mission);
-		return;
-	}
-
-	UI_ExecuteConfunc("soldierlist_clear");
 	soldiers = 0;
-	LIST_Foreach(hiredSoldiersInBase, employee_t, employee) {
-		const rank_t *rank = CL_GetRankByIdx(employee->chr.score.rank);
-
+	E_Foreach(EMPL_SOLDIER, employee) {
+		if (!E_IsInBase(employee, base))
+			continue;
 		if (E_IsAwayFromBase(employee))
 			continue;
-		UI_ExecuteConfunc("soldierlist_add %d \"%s %s\"", employee->chr.ucn, (rank) ? _(rank->shortname) : "", employee->chr.name);
-		if (soldiers < 1)
-			UI_ExecuteConfunc("team_select_ucn %d", employee->chr.ucn);
 		soldiers++;
 	}
 	if (soldiers == 0) {
@@ -221,7 +204,6 @@ void CP_BaseAttackStartMission (mission_t *mission)
 	baseAttackFakeAircraft.maxTeamSize = AIR_GetTeamSize(&baseAttackFakeAircraft);
 #endif
 
-	LIST_Delete(&hiredSoldiersInBase);
 	base->aircraftCurrent = &baseAttackFakeAircraft;
 	MAP_SetMissionAircraft(&baseAttackFakeAircraft);
 	/** @todo remove me - this is not needed because we are using the base->aircraftCurrent

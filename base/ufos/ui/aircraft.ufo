@@ -2,32 +2,33 @@
 // INTERFACE FOR ALL AIRCRAFT MENUS
 // =================================
 
-component panel cmpActorSelect {
+component panel aircraft_teammember {
 	{
-		size "300 35"
-		num "0"
-	}
-	checkbox check_actor
-	{
-		tooltip	"_Add/remove this soldier"
-		pos	"242 10"
-		current 0
-		image "ui/checkbox_green"
-		size "20 20"
-		invis	true
-		onWheelUp 	{ cmd "ui_active_vscrollbar <path:root>.scroll_employees 0;" } // 0: click on top
-		onWheelDown { cmd "ui_active_vscrollbar <path:root>.scroll_employees 4;" } // 4: click on bottom
+		size		"260 25"
 	}
 
-	string txt_actor
-	{
-		string	*cvar:mn_ename<node:parent@num>
-		pos		"22 0"
-		size	"190 35"
-		contentalign ALIGN_CL
-		invis	true
-		onWheelUp 	{ cmd "ui_active_vscrollbar <path:root>.scroll_employees 0;" } // 0: click on top
-		onWheelDown { cmd "ui_active_vscrollbar <path:root>.scroll_employees 4;" } // 4: click on bottom
+	data id {
+		string		""
+	}
+
+	string name {
+		pos			"0 0"
+		color		"0 .78 0 1"
+		size		"230 25"
+		onClick {
+			cmd "aircraft_soldierlist_select <node:parent.id@integer>;"
+		}
+	}
+
+	checkbox selected {
+		tooltip		"_Add/remove soldier to the team"
+		image		"ui/checkbox_green"
+		pos			"230 0"
+		size		"25 25"
+
+		onChange {
+			cmd "ui_team_assign_ucn <node:parent.id@integer>; ui_team_fill \"<node:parent.id@string>\"; aircraft_soldierlist_select <node:parent.id@integer>;"
+		}
 	}
 }
 
@@ -190,6 +191,37 @@ window iaircraft
 	 * @brief Callback to update the GUI when the aircraft status change
 	 */
 	confunc aircraft_status_change { }
+
+	confunc aircraft_soldierlist_clear {
+		call *node:parent.soldierlist@removeAllChild
+	}
+	confunc aircraft_soldierlist_add {
+		call *node:parent.soldierlist@createChild("member<1>", "aircraft_teammember")
+		*node:parent.soldierlist.member<1>.id@integer = <1>
+		*node:parent.soldierlist.member<1>.id@string = <2>
+		*node:parent.soldierlist.member<1>.name@string = <3>
+		*node:parent.soldierlist.member<1>.selected@current = <4>
+
+		if ( "<5>" ne "" ) {
+			*node:parent.soldierlist.member<1>.selected@disabled = true
+			*node:parent.soldierlist.member<1>.name@tooltip = "<5>"
+			*node:parent.soldierlist.member<1>.selected@tooltip = "<5>"
+		}
+		if ( *node:root.selected@integer < 0 ) {
+			cmd "aircraft_soldierlist_select <1>;"
+			*node:root.selected@integer = <1>
+		}
+	}
+	confunc aircraft_soldierlist_select {
+		if ( *node:root.selected@integer >= 0 ) {
+			*node:parent.soldierlist.member<node:root.selected@integer>.name@color = "0 .78 0 1"
+		}
+		*node:root.selected@integer = <1>
+		if ( *node:root.selected@integer >= 0 ) {
+			*node:parent.soldierlist.member<1>.name@color = "1 1 1 1"
+			cmd "ui_team_select_ucn <node:root.selected@integer>;"
+		}
+	}
 
 /**
  * @brief Reset the cvars for a character.

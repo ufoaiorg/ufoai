@@ -2,28 +2,8 @@
 // AIRCRAFT PILOTS MENU
 // ==================
 
-component cmpActorSelect cmpPilotSelect {
-	{
-		num "0"
-	}
-	checkbox check_actor
-	{
-		tooltip	"_Add/remove this pilot"
-		onChange { cmd "pilot_hire <node:parent@num> <cvar:mn_relative_id>;" }
-	}
-
-	string txt_actor
-	{
-		onClick { cmd "pilot_select <node:parent@num> <cvar:mn_relative_id>;" }
-	}
-
-}
-
-
 window aircraft_pilots extends iaircraft
 {
-
-
 	// ==================
 	// background
 	// ==================
@@ -133,125 +113,39 @@ window aircraft_pilots extends iaircraft
 	// pilot list
 	// ==================
 
-	/**
-	 * @param[in] <1> id of employee in the list
-	 */
-	confunc aircraft_pilot_usedelsewhere
-	{
-		*node:root.actor_select<1>.txt_actor@color = ".50 .50 .50 1"
-		*node:root.actor_select<1>.check_actor@current = 0
-		*node:root.actor_select<1>.check_actor@tooltip = "_Pilot is assigned to another craft"
-		*node:root.actor_select<1>.check_actor@disabled = true
-		*node:root.actor_select<1>.check_actor@invis = false
-		*node:root.actor_select<1>.txt_actor@invis = false
+	data selected {
 	}
 
-	/**
-	 * @param[in] <1> id of employee in the list
-	 */
-	confunc aircraft_pilot_unassigned {
-		*node:root.actor_select<1>.txt_actor@color = "0 .78 0 1"
-		*node:root.actor_select<1>.check_actor@disabled = false
-		*node:root.actor_select<1>.check_actor@current = 0
+	rows soldierlist_lines {
+		pos			"35 460"
+		size		"270 283"
+		color1		"0 0.08 0 1"
+		color2		"0 0.16 0 1"
+		lineheight	25
+	}
+	panel soldierlist {
+		pos			"35 460"
+		size		"270 283"
+		padding		6
+		layout		LAYOUT_TOP_DOWN_FLOW
+		wheelscrollable	true
 
-		*node:root.actor_select<1>.check_actor@invis = false
-		*node:root.actor_select<1>.txt_actor@invis = false
-		if ( *cvar:mn_pilotassigned == 1 ) {
-			*node:root.actor_select<1>.check_actor@disabled = true
-			*node:root.actor_select<1>.check_actor@tooltip = "_A pilot is already assigned to this craft"
-		} else {
-			*node:root.actor_select<1>.check_actor@tooltip = "_Assign pilot to this craft"
+		onViewChange {
+			*node:parent.soldierlist_scroll@fullsize = <fullsize>
+			*node:parent.soldierlist_scroll@current = <viewpos>
+			*node:parent.soldierlist_scroll@viewsize = <viewsize>
 		}
 	}
+	vscrollbar soldierlist_scroll {
+		image		"ui/scrollbar_v_green"
+		pos			"310 462"
+		height		"283"
+		current		0
+		viewsize	8
+		fullsize	50
 
-	/**
-	 * @param[in] <1> id of employee in the list
-	 */
-	confunc aircraft_pilot_assigned {
-		*node:root.actor_select<1>.txt_actor@color = "0 .78 0 1"
-		*node:root.actor_select<1>.check_actor@disabled = false
-		*node:root.actor_select<1>.check_actor@current = 1
-		*node:root.actor_select<1>.check_actor@tooltip = "_Remove pilot from this craft"
-		*node:root.actor_select<1>.check_actor@invis = false
-		*node:root.actor_select<1>.txt_actor@invis = false
-	}
-
-	/**
-	 * @param[in] <1> id of employee in the list
-	 */
-	confunc aircraft_pilot_holdsequip {
-	}
-
-	/**
-	 * @param[in] <1> id of employee in the list
-	 */
-	confunc aircraft_pilot_holdsnoequip {
-	}
-
-	/**
-	 * @param[in] <1> id of employee in the list
-	 */
-	confunc aircraft_pilot_unusedslot {
-		*node:root.actor_select<1>.check_actor@invis = true
-		*node:root.actor_select<1>.txt_actor@invis = true
-	}
-
-	/**
-	 * @param[in] <1> number of employee in the list
-	 */
-	confunc aircraft_pilot_list_size {
-		*node:root.scroll_employees@fullsize = <1>
-	}
-
-	/**
-	 * @param[in] <1> number of employee in the list
-	 */
-	confunc aircraft_pilot_selected {
-		*node:root.actor_select<1>.txt_actor@color = "1 1 1 1"
-	}
-
-	cmpPilotSelect actor_select0 {
-		pos "38 462"
-	}
-
-	cmpPilotSelect actor_select1 {
-		pos	"38 497"
-	}
-
-	cmpPilotSelect actor_select2 {
-		pos	"38 532"
-	}
-
-	cmpPilotSelect actor_select3 {
-		pos	"38 567"
-	}
-
-	cmpPilotSelect actor_select4 {
-		pos	"38 602"
-	}
-
-	cmpPilotSelect actor_select5 {
-		pos	"38 637"
-	}
-
-	cmpPilotSelect actor_select6 {
-		pos	"38 672"
-	}
-
-	cmpPilotSelect actor_select7 {
-		pos	"38 707"
-	}
-
-	vscrollbar scroll_employees
-	{
-		image	"ui/scrollbar_v_green"
-		pos "310 462"	height	"283"
-		current 0
-		viewsize 8
-		fullsize 50
 		onChange {
-			cmd "update_pilot_list 8 <current>"
-			*cvar:mn_relative_id = <current>
+			*node:parent.soldierlist@viewpos = <current>
 		}
 	}
 
@@ -262,9 +156,11 @@ window aircraft_pilots extends iaircraft
 	/**
 	 * @note iaircraft interface
 	 */
-	confunc aircraft_change
-	{
-		cmd "update_pilot_list 8 0;pilot_select 0;set mn_show_employee 1;"
+	confunc aircraft_change	{
+		cmd "ui_team_fill pilot;"
+		if ( *node:root.selected@integer >= 0 ) {
+			cmd "aircraft_soldierlist_select <node:root.selected@integer>;"
+		}
 		*node:root.aircraft_list@lineselected = <1>
 		// absent from base, go back to the main GUI
 		if ( *cvar:mn_equipsoldierstate == 1 ) {
@@ -274,16 +170,7 @@ window aircraft_pilots extends iaircraft
 
 	func onWindowOpened
 	{
-		*cvar:i = 0
-		while ( *cvar:i < 8 ) {
-			*node:root.actor_select<cvar:i>@num = <cvar:i>
-			*node:root.actor_select<cvar:i>.txt_actor@string = *cvar:mn_ename<cvar:i>
-			*cvar:i = ( *cvar:i + 1 )
-		}
-		delete *cvar:i
-
-		cmd "mn_select_aircraft <cvar:mn_aircraft_id>"
-		*cvar:mn_relative_id = 0
-		cmd "update_pilot_list 8 0;pilot_select 0;set mn_show_employee 1;"
+		*node:root.selected@integer = -1
+		cmd "mn_select_aircraft <cvar:mn_aircraft_id>;"
 	}
 }

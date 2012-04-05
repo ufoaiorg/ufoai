@@ -5,7 +5,7 @@
  */
 
 /*
-Copyright (C) 2002-2011 UFO: Alien Invasion.
+Copyright (C) 2002-2012 UFO: Alien Invasion.
 
 This program is free software; you can redistribute it and/or
 modify it under the terms of the GNU General Public License
@@ -222,6 +222,7 @@ employeeType_t E_GetEmployeeType (const char* type)
 	if (!type)
 		return MAX_EMPL;
 
+	/* employee types as string */
 	if (Q_streq(type, "EMPL_SCIENTIST"))
 		return EMPL_SCIENTIST;
 	else if (Q_streq(type, "EMPL_SOLDIER"))
@@ -231,6 +232,20 @@ employeeType_t E_GetEmployeeType (const char* type)
 	else if (Q_streq(type, "EMPL_PILOT"))
 		return EMPL_PILOT;
 	else if (Q_streq(type, "EMPL_ROBOT"))
+		return EMPL_ROBOT;
+
+	/* human readable employee type strings */
+	if (Q_streq(type, "scientist"))
+		return EMPL_SCIENTIST;
+	else if (Q_streq(type, "soldier"))
+		return EMPL_SOLDIER;
+	else if (Q_streq(type, "worker"))
+		return EMPL_WORKER;
+	else if (Q_streq(type, "pilot"))
+		return EMPL_PILOT;
+	else if (Q_streq(type, "robot"))
+		return EMPL_ROBOT;
+	else if (Q_streq(type, "ugv"))
 		return EMPL_ROBOT;
 
 	return MAX_EMPL;
