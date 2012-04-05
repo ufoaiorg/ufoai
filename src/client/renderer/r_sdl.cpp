@@ -112,7 +112,7 @@ qboolean Rimp_Init (void)
 				int i;
 				for (r_sdl_config.numModes = 0; modes[r_sdl_config.numModes]; r_sdl_config.numModes++) {}
 
-				r_sdl_config.modes = (rect_t*)Mem_AllocExt(sizeof(rect_t) * r_sdl_config.numModes, qfalse);
+				r_sdl_config.modes = Mem_AllocTypeN(rect_t, r_sdl_config.numModes);
 				for (i = 0; i < r_sdl_config.numModes; i++) {
 					r_sdl_config.modes[i][0] = modes[i]->w;
 					r_sdl_config.modes[i][1] = modes[i]->h;
