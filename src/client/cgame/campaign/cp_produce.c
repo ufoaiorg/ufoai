@@ -765,6 +765,20 @@ void PR_UpdateProductionCap (base_t *base)
 		workspaceCapacity->cur = workers;
 	else
 		workspaceCapacity->cur = workspaceCapacity->max;
+
+	/* recalculate time to finish */
+	production_queue_t *q = PR_GetProductionForBase(base);
+	/* not actually any active productions */
+	if (q->numItems <= 0)
+		return;
+	/* Workshop is disabled because their dependences are disabled */
+	if (!PR_ProductionAllowed(base))
+		return;
+
+	for (int i = 0; i < q->numItems; i++) {
+		production_t *prod = &q->items[i];
+		prod->totalFrames = PR_CalculateTotalFrames(base, &prod->data);
+	}
 }
 
 /**
