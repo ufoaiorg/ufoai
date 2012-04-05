@@ -218,7 +218,7 @@ team ortnok
 		fire_light -10
 		fire_medium -20
 		fire_heavy -40
-		fire_flamer -50
+		fire_flamer -1
 
 		shock 10
 
@@ -322,7 +322,7 @@ team shevaar
 		fire_light -10
 		fire_medium -20
 		fire_heavy -30
-		fire_flamer -40
+		fire_flamer -1
 
 		shock 0
 
