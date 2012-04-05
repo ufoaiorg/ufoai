@@ -33,8 +33,8 @@ struct memBlockFoot_t {
 	uint32_t sentinel;				/**< For memory integrity checking */
 };
 
-typedef struct memBlock_s {
-	struct memBlock_s *next;
+struct memBlock_t {
+	memBlock_t *next;
 
 	uint32_t topSentinel;			/**< For memory integrity checking */
 
@@ -51,7 +51,7 @@ typedef struct memBlock_s {
 	memBlockFoot_t *footer;			/**< Allocated in the space AFTER the block to check for overflow */
 
 	uint32_t botSentinel;			/**< For memory integrity checking */
-} memBlock_t;
+};
 
 typedef struct memPool_s {
 	char name[MEM_MAX_POOLNAME];	/**< Name of pool */
