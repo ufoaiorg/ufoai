@@ -778,8 +778,10 @@ window popup_intercept_ready
 	{
 		if ( *cvar:cp_mission_autogo_available == 1 ) {
 			*node:root.bt_auto_go@disabled = false
+			*node:parent.bt_auto_go@tooltip = "_Automatically finish mission"
 		} else {
 			*node:root.bt_auto_go@disabled = true
+			*node:parent.bt_auto_go@tooltip = "_This kind of mission cannot be done automatically"
 		}
 	}
 
