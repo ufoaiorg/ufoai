@@ -37,17 +37,13 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
  */
 void MakeTracingNodes (int levels)
 {
-	size_t size;
-	tnode_t *tnode;
 	int i;
 
 	/* Release any memory we have for existing tnodes, just in case. */
 	CloseTracingNodes();
 
-	size = (curTile->numnodes + 1) * sizeof(*tnode);
 	/* allocate memory for the tnodes structure */
-	curTile->tnodes = (tnode_t *)Mem_Alloc(size);
-	tnode = curTile->tnodes;
+	tnode_t* tnode = curTile->tnodes = Mem_AllocTypeN(tnode_t, curTile->numnodes + 1);
 	curTile->numtheads = 0;
 
 	for (i = 0; i < levels; i++) {

@@ -265,8 +265,8 @@ static void CalcPoints (lightinfo_t *l, float sofs, float tofs)
 /** @brief buckets for sample accumulation - clipped by the surface */
 typedef struct facelight_s {
 	int numsamples;
-	float *samples;		/**< lightmap samples */
-	float *directions;	/**< for specular lighting/bumpmapping */
+	vec3_t* samples;    /**< lightmap samples */
+	vec3_t* directions; /**< for specular lighting/bumpmapping */
 } facelight_t;
 
 static facelight_t facelight[LIGHTMAP_MAX][MAX_MAP_FACES];
@@ -827,8 +827,8 @@ void BuildFacelights (unsigned int facenum)
 
 	fl = &facelight[config.compile_for_day][facenum];
 	fl->numsamples = li.numsurfpt;
-	fl->samples = (float *)Mem_Alloc(fl->numsamples * sizeof(vec3_t));
-	fl->directions = (float *)Mem_Alloc(fl->numsamples * sizeof(vec3_t));
+	fl->samples    = Mem_AllocTypeN(vec3_t, fl->numsamples);
+	fl->directions = Mem_AllocTypeN(vec3_t, fl->numsamples);
 
 	center = face_extents[facenum].center;  /* center of the face */
 
@@ -837,8 +837,8 @@ void BuildFacelights (unsigned int facenum)
 
 	/* calculate light for each sample */
 	for (i = 0; i < fl->numsamples; i++) {
-		float *sample = fl->samples + i * 3;			/* accumulate lighting here */
-		float *direction = fl->directions + i * 3;		/* accumulate direction here */
+		float* const sample    = fl->samples[i];    /* accumulate lighting here */
+		float* const direction = fl->directions[i]; /* accumulate direction here */
 
 		if (tex->surfaceFlags & SURF_PHONG)
 			/* interpolated normal */
@@ -879,7 +879,7 @@ void BuildFacelights (unsigned int facenum)
 	Mem_Free(headhints);
 
 	for (i = 0; i < fl->numsamples; i++) {  /* pad them */
-		float *direction = fl->directions + i * 3;
+		float* const direction = fl->directions[i];
 		if (VectorEmpty(direction))
 			VectorSet(direction, 0.0, 0.0, 1.0);
 	}
@@ -1047,7 +1047,7 @@ void FinalLightFace (unsigned int facenum)
 		vec3_t temp;
 
 		/* start with raw sample data */
-		VectorCopy((fl->samples + j * 3), temp);
+		VectorCopy(fl->samples[j], temp);
 
 		/* convert to float */
 		VectorScale(temp, 1.0 / 255.0, temp);
@@ -1104,7 +1104,7 @@ void FinalLightFace (unsigned int facenum)
 		}
 
 		/* also write the directional data */
-		VectorCopy((fl->directions + j * 3), dir);
+		VectorCopy(fl->directions[j], dir);
 		for (k = 0; k < 3; k++)
 			*dest++ = (byte)((dir[k] + 1.0f) * 127.0f);
 	}
