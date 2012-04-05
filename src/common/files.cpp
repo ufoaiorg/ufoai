@@ -396,7 +396,6 @@ int FS_Read (void *buffer, int len, qFILE * f)
 int FS_LoadFile (const char *path, byte **buffer)
 {
 	qFILE h;
-	byte *buf;
 	int len;
 
 	/* look for it in the filesystem or pack files */
@@ -412,8 +411,7 @@ int FS_LoadFile (const char *path, byte **buffer)
 		return len;
 	}
 
-	assert(com_fileSysPool);
-	buf = (byte*)_Mem_Alloc(len + 1, qtrue, com_fileSysPool, 0, path, 0);
+	byte* const buf = Mem_PoolAllocTypeN(byte, len + 1, com_fileSysPool);
 	if (!buf)
 		return -1;
 	*buffer = buf;
