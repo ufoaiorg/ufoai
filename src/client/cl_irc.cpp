@@ -1322,7 +1322,6 @@ static qboolean Irc_Proto_ParseServerMsg (const char *txt, size_t txt_len, irc_s
  */
 static qboolean Irc_Proto_Enqueue (const char *msg, size_t msg_len)
 {
-	irc_bucket_message_t *m;
 	const int messageBucketSize = irc_messageBucketSize->integer;
 	const int characterBucketSize = irc_characterBucketSize->integer;
 
@@ -1332,9 +1331,9 @@ static qboolean Irc_Proto_Enqueue (const char *msg, size_t msg_len)
 	}
 
 	/* create message node */
-	m = Mem_AllocType(irc_bucket_message_t);
 	if (irc_bucket.message_size + 1 <= messageBucketSize && irc_bucket.character_size + msg_len <= characterBucketSize) {
 		/** @todo strip high bits - or unprintable chars */
+		irc_bucket_message_t* const m = Mem_AllocType(irc_bucket_message_t);
 		m->msg = Mem_AllocTypeN(char, msg_len);
 		memcpy(m->msg, msg, msg_len);
 		m->msg_len = msg_len;
