@@ -48,7 +48,6 @@ struct memBlock_t {
     char const*     allocFile;   /**< File the memory was allocated in */
     int             allocLine;   /**< Line the memory was allocated at */
 
-    void*           memPointer;  /**< pointer to allocated memory */
     size_t          memSize;     /**< Size minus the header */
 
     memBlockFoot_t* footer;      /**< Allocated in the space AFTER the block to check for overflow */
@@ -171,6 +170,11 @@ static memBlock_t* Mem_PtrToBlock(void* const ptr)
 	return static_cast<memBlock_t*>(ptr) - 1;
 }
 
+static void* Mem_BlockToPtr(memBlock_t* const mem)
+{
+	return mem + 1;
+}
+
 static void _Mem_CheckSentinels (void *ptr, const char *fileName, const int fileLine)
 {
 	/* Check sentinels */
@@ -252,7 +256,7 @@ void _Mem_FreeTag (memPool_t *pool, const int tagNum, const char *fileName, cons
 		for (mem = pool->blocks[j]; mem; mem = next) {
 			next = mem->next;
 			if (mem->tagNum == tagNum)
-				_Mem_Free(mem->memPointer, fileName, fileLine);
+				_Mem_Free(Mem_BlockToPtr(mem), fileName, fileLine);
 		}
 	}
 }
@@ -274,7 +278,7 @@ void _Mem_FreePool (memPool_t *pool, const char *fileName, const int fileLine)
 	for (j = 0; j < MEM_HASH; j++) {
 		for (mem = pool->blocks[j]; mem; mem = next) {
 			next = mem->next;
-			_Mem_Free(mem->memPointer, fileName, fileLine);
+			_Mem_Free(Mem_BlockToPtr(mem), fileName, fileLine);
 		}
 	}
 
@@ -315,12 +319,11 @@ void *_Mem_Alloc (size_t size, qboolean zeroFill, memPool_t *pool, const int tag
 	mem->topSentinel = MEM_HEAD_SENTINEL_TOP;
 	mem->tagNum = tagNum;
 	mem->size = size;
-	mem->memPointer = (void *)(mem + 1);
 	mem->memSize = size - sizeof(memBlock_t) - sizeof(memBlockFoot_t);
 	mem->pool = pool;
 	mem->allocFile = fileName;
 	mem->allocLine = fileLine;
-	mem->footer = (memBlockFoot_t *)((byte *)mem->memPointer + mem->memSize);
+	mem->footer = reinterpret_cast<memBlockFoot_t*>(reinterpret_cast<byte*>(Mem_BlockToPtr(mem)) + mem->memSize);
 	mem->botSentinel = MEM_HEAD_SENTINEL_BOT;
 
 	/* Fill in the footer */
@@ -338,7 +341,7 @@ void *_Mem_Alloc (size_t size, qboolean zeroFill, memPool_t *pool, const int tag
 
 	TH_MutexUnlock(z_lock);
 
-	return mem->memPointer;
+	return Mem_BlockToPtr(mem);
 }
 
 void* _Mem_ReAlloc (void *ptr, size_t size, const char *fileName, const int fileLine)
@@ -540,7 +543,7 @@ bool _Mem_AllocatedInPool (memPool_t *pool, const void *pointer)
 	mem = pool->blocks[(uintptr_t)pointer % MEM_HASH];
 	/* Cycle through the blocks */
 	for ( ; mem; mem = mem->next) {
-		if (mem->memPointer == pointer)
+		if (Mem_BlockToPtr(mem) == pointer)
 			return true;
 	}
 
