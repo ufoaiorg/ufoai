@@ -269,14 +269,12 @@ void R_DrawFills (void)
  * @param[in] height The height of the texture
  * @return the texture number of the uploaded images
  */
-int R_UploadData (const char *name, byte *frame, int width, int height)
+int R_UploadData (const char *name, unsigned *frame, int width, int height)
 {
 	image_t *img;
 	unsigned *scaled;
 	int scaledWidth, scaledHeight;
 	int samples = r_config.gl_compressed_solid_format ? r_config.gl_compressed_solid_format : r_config.gl_solid_format;
-	int i, c;
-	byte *scan;
 
 	R_GetScaledTextureSize(width, height, &scaledWidth, &scaledHeight);
 
@@ -285,10 +283,8 @@ int R_UploadData (const char *name, byte *frame, int width, int height)
 		Com_Error(ERR_FATAL, "Could not find the searched image: %s", name);
 
 	/* scan the texture for any non-255 alpha */
-	c = scaledWidth * scaledHeight;
-	/* set scan to the first alpha byte */
-	for (i = 0, scan = ((byte *) frame) + 3; i < c; i++, scan += 4) {
-		if (*scan != 255) {
+	for (unsigned const* i = frame, * const end = i + scaledHeight * scaledWidth; i != end; ++i) {
+		if ((*i & 0xFF000000U) != 0xFF000000U) {
 			samples = r_config.gl_compressed_alpha_format ? r_config.gl_compressed_alpha_format : r_config.gl_alpha_format;
 			break;
 		}
@@ -296,9 +292,9 @@ int R_UploadData (const char *name, byte *frame, int width, int height)
 
 	if (scaledWidth != width || scaledHeight != height) {  /* whereas others need to be scaled */
 		scaled = Mem_PoolAllocTypeN(unsigned, scaledWidth * scaledHeight, vid_imagePool);
-		R_ScaleTexture((unsigned *)frame, width, height, scaled, scaledWidth, scaledHeight);
+		R_ScaleTexture(frame, width, height, scaled, scaledWidth, scaledHeight);
 	} else {
-		scaled = (unsigned *)frame;
+		scaled = frame;
 	}
 
 	R_BindTexture(img->texnum);
@@ -316,7 +312,7 @@ int R_UploadData (const char *name, byte *frame, int width, int height)
 	glTexParameterf(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
 	R_CheckError();
 
-	if (scaled != (unsigned *)frame)
+	if (scaled != frame)
 		Mem_Free(scaled);
 
 	return img->texnum;

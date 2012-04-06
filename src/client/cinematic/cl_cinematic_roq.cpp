@@ -527,7 +527,7 @@ static void CIN_ROQ_DrawCinematic (cinematic_t *cin)
 
 	if (!ROQCIN.frameBuffer[1])
 		return;
-	texnum = R_UploadData("***cinematic***", ROQCIN.frameBuffer[1], ROQCIN.frameWidth, ROQCIN.frameHeight);
+	texnum = R_UploadData("***cinematic***", (unsigned*)ROQCIN.frameBuffer[1], ROQCIN.frameWidth, ROQCIN.frameHeight);
 	R_DrawTexture(texnum, cin->x, cin->y, cin->w, cin->h);
 }
 

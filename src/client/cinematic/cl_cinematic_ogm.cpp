@@ -731,7 +731,7 @@ static void CIN_OGM_DrawCinematic (cinematic_t *cin)
 
 	if (!OGMCIN.outputBuffer)
 		return;
-	texnum = R_UploadData("***cinematic***", OGMCIN.outputBuffer, OGMCIN.outputWidth, OGMCIN.outputHeight);
+	texnum = R_UploadData("***cinematic***", (unsigned*)OGMCIN.outputBuffer, OGMCIN.outputWidth, OGMCIN.outputHeight);
 	R_DrawTexture(texnum, cin->x, cin->y, cin->w, cin->h);
 }
 
