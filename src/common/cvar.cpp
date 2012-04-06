@@ -482,27 +482,18 @@ cvarChangeListener_t *Cvar_RegisterChangeListener (const char *varName, cvarChan
 void Cvar_UnRegisterChangeListener (const char *varName, cvarChangeListenerFunc_t listenerFunc)
 {
 	cvar_t *var = Cvar_FindVar(varName);
-	cvarChangeListener_t *l, *prev;
-
 	if (!var) {
 		Com_Printf("Could not unregister change listener, cvar '%s' wasn't found\n", varName);
 		return;
 	}
 
-	l = var->changeListener;
-	prev = NULL;
-	while (l) {
+	for (cvarChangeListener_t** anchor = &var->changeListener; *anchor; anchor = &(*anchor)->next) {
+		cvarChangeListener_t* const l = *anchor;
 		if (l->exec == listenerFunc) {
-			if (prev) {
-				prev->next = l->next;
-			} else {
-				var->changeListener = l->next;
-			}
+			*anchor = l->next;
 			Mem_Free(l);
 			return;
 		}
-		prev = l;
-		l = l->next;
 	}
 }
 
