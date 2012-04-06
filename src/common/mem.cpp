@@ -529,7 +529,7 @@ void _Mem_CheckGlobalIntegrity (const char *fileName, const int fileLine)
  * @param pool The pool to search the pointer in
  * @param pointer The pointer to search in the pool
  */
-void* _Mem_AllocatedInPool (memPool_t *pool, const void *pointer)
+bool _Mem_AllocatedInPool (memPool_t *pool, const void *pointer)
 {
 	memBlock_t *mem;
 
@@ -541,10 +541,10 @@ void* _Mem_AllocatedInPool (memPool_t *pool, const void *pointer)
 	/* Cycle through the blocks */
 	for ( ; mem; mem = mem->next) {
 		if (mem->memPointer == pointer)
-			return mem->memPointer;
+			return true;
 	}
 
-	return NULL;
+	return false;
 }
 
 #ifdef COMPILE_UFO

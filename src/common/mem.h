@@ -73,7 +73,7 @@ uint32_t _Mem_ChangeTag(memPool_t *pool, const int tagFrom, const int tagTo);
 void _Mem_CheckPoolIntegrity(memPool_t *pool, const char *fileName, const int fileLine);
 void _Mem_CheckGlobalIntegrity(const char *fileName, const int fileLine);
 
-void* _Mem_AllocatedInPool(memPool_t *pool, const void *pointer);
+bool _Mem_AllocatedInPool(memPool_t *pool, const void *pointer);
 
 void Mem_Init(void);
 void Mem_Shutdown(void);
