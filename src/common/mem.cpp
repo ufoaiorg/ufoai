@@ -538,8 +538,6 @@ void* _Mem_AllocatedInPool (memPool_t *pool, const void *pointer)
 
 	/* if it's in the pool, it must be in THIS block */
 	mem = pool->blocks[(uintptr_t)pointer % MEM_HASH];
-	if (!mem)		/* the block might be in initialized state */
-		return NULL;
 	/* Cycle through the blocks */
 	for ( ; mem; mem = mem->next) {
 		if (mem->memPointer == pointer)
