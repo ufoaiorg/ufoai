@@ -228,32 +228,19 @@ static void CL_StartHTTPDownload (dlqueue_t *entry, dlhandle_t *dl)
  */
 void CL_SetHTTPServer (const char *URL)
 {
-	dlqueue_t *q, *last;
-
 	CL_HTTP_Cleanup();
 
-	q = &cls.downloadQueue;
-
-	last = NULL;
-
-	while (q->next) {
+	for (dlqueue_t* q = cls.downloadQueue; q;) {
+		dlqueue_t* const del = q;
 		q = q->next;
-
-		if (last)
-			Mem_Free(last);
-
-		last = q;
+		Mem_Free(del);
 	}
-
-	if (last)
-		Mem_Free(last);
+	cls.downloadQueue = 0;
 
 	if (multi)
 		Com_Error(ERR_DROP, "CL_SetHTTPServer: Still have old handle");
 
 	multi = curl_multi_init();
-
-	OBJZERO(cls.downloadQueue);
 
 	abortDownloads = HTTPDL_ABORT_NONE;
 	handleCount = pendingCount = 0;
@@ -266,17 +253,12 @@ void CL_SetHTTPServer (const char *URL)
  */
 void CL_CancelHTTPDownloads (qboolean permKill)
 {
-	dlqueue_t	*q;
-
 	if (permKill)
 		abortDownloads = HTTPDL_ABORT_HARD;
 	else
 		abortDownloads = HTTPDL_ABORT_SOFT;
 
-	q = &cls.downloadQueue;
-
-	while (q->next) {
-		q = q->next;
+	for (dlqueue_t* q = cls.downloadQueue; q; q = q->next) {
 		if (q->state == DLQ_STATE_NOT_STARTED)
 			q->state = DLQ_STATE_DONE;
 	}
@@ -309,28 +291,22 @@ static dlhandle_t *CL_GetFreeDLHandle (void)
  */
 qboolean CL_QueueHTTPDownload (const char *ufoPath)
 {
-	dlqueue_t *q;
-
 	/* no http server (or we got booted) */
 	if (!cls.downloadServer[0] || abortDownloads || !cl_http_downloads->integer)
 		return qfalse;
 
-	q = &cls.downloadQueue;
-
-	while (q->next) {
-		q = q->next;
-
+	dlqueue_t** anchor = &cls.downloadQueue;
+	for (; *anchor; anchor = &(*anchor)->next) {
 		/* avoid sending duplicate requests */
-		if (Q_streq(ufoPath, q->ufoPath))
+		if (Q_streq(ufoPath, (*anchor)->ufoPath))
 			return qtrue;
 	}
 
-	q->next = Mem_AllocType(dlqueue_t);
-	q = q->next;
-
+	dlqueue_t* const q = Mem_AllocType(dlqueue_t);
 	q->next = NULL;
 	q->state = DLQ_STATE_NOT_STARTED;
 	Q_strncpyz(q->ufoPath, ufoPath, sizeof(q->ufoPath));
+	*anchor = q;
 
 	/* special case for map file lists */
 	if (cl_http_filelists->integer) {
@@ -501,18 +477,14 @@ static void CL_CheckAndQueueDownload (char *path)
 				 * this prevents someone on 28k dialup trying to do both the main .pk3
 				 * and referenced configstrings data at once. */
 				if (pak) {
-					dlqueue_t *q, *last;
-
-					last = q = &cls.downloadQueue;
-
-					while (q->next) {
-						last = q;
-						q = q->next;
-					}
-
-					last->next = NULL;
-					q->next = cls.downloadQueue.next;
-					cls.downloadQueue.next = q;
+					dlqueue_t** anchor = &cls.downloadQueue;
+					while ((*anchor)->next) anchor = &(*anchor)->next;
+					/* Remove the last element from the end of the list ... */
+					dlqueue_t* const d = *anchor;
+					*anchor            = 0;
+					/* ... and prepend it to the list. */
+					d->next            = cls.downloadQueue;
+					cls.downloadQueue  = d;
 				}
 			}
 		}
@@ -556,12 +528,9 @@ static void CL_ParseFileList (dlhandle_t *dl)
  */
 static void CL_ReVerifyHTTPQueue (void)
 {
-	dlqueue_t *q = &cls.downloadQueue;
-
 	pendingCount = 0;
 
-	while (q->next) {
-		q = q->next;
+	for (dlqueue_t* q = cls.downloadQueue; q; q = q->next) {
 		if (q->state == DLQ_STATE_NOT_STARTED) {
 			if (FS_LoadFile(q->ufoPath, NULL) != -1)
 				q->state = DLQ_STATE_DONE;
@@ -776,10 +745,7 @@ static void CL_FinishHTTPDownload (void)
  */
 static void CL_StartNextHTTPDownload (void)
 {
-	dlqueue_t *q = &cls.downloadQueue;
-
-	while (q->next) {
-		q = q->next;
+	for (dlqueue_t* q = cls.downloadQueue; q; q = q->next) {
 		if (q->state == DLQ_STATE_NOT_STARTED) {
 			size_t len;
 			dlhandle_t *dl = CL_GetFreeDLHandle();

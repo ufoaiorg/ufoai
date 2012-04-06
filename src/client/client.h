@@ -85,7 +85,7 @@ typedef struct client_static_s {
 	int downloadPercent;
 
 	qboolean downloadMaps;
-	dlqueue_t downloadQueue;	/**< queue of paths we need */
+	dlqueue_t* downloadQueue;	/**< queue of paths we need */
 	dlhandle_t HTTPHandles[4];	/**< actual download handles */
 	char downloadServer[512];	/**< base url prefix to download from */
 	char downloadReferer[32];	/**< libcurl requires a static string :( */
