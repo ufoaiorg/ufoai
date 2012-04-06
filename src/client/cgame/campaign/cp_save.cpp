@@ -128,7 +128,6 @@ static qboolean SAV_VerifyHeader (saveFileHeader_t const * const header)
  */
 qboolean SAV_GameLoad (const char *file, const char **error)
 {
-	uLongf len;
 	char filename[MAX_OSPATH];
 	qFILE f;
 	int i, clen;
@@ -171,10 +170,10 @@ qboolean SAV_GameLoad (const char *file, const char **error)
 			"...game version: %s\n"
 			"...xml Size: %i, compressed? %c\n",
 			header.version, header.gameVersion, header.xmlSize, header.compressed ? 'y' : 'n');
-	len = header.xmlSize + 50;
-	byte* const buf = Mem_PoolAllocTypeN(byte, len, cp_campaignPool);
 
 	if (header.compressed) {
+		uLongf      len = header.xmlSize + 50;
+		byte* const buf = Mem_PoolAllocTypeN(byte, len, cp_campaignPool);
 		/* uncompress data, skipping comment header */
 		const int res = uncompress(buf, &len, cbuf + sizeof(header), clen - sizeof(header));
 		Mem_Free(cbuf);
@@ -192,8 +191,8 @@ qboolean SAV_GameLoad (const char *file, const char **error)
 			*error = "Corrupted xml data";
 			return qfalse;
 		}
+		Mem_Free(buf);
 	} else {
-		/*memcpy(buf, cbuf + sizeof(header), clen - sizeof(header));*/
 		topNode = XML_Parse((const char*)(cbuf + sizeof(header)));
 		Mem_Free(cbuf);
 		if (!topNode) {
@@ -202,7 +201,6 @@ qboolean SAV_GameLoad (const char *file, const char **error)
 			return qfalse;
 		}
 	}
-	Mem_Free(buf);
 
 	/* doing a subsystem run */
 	GAME_ReloadMode();
