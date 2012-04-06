@@ -653,8 +653,10 @@ static r_shader_t *R_LoadShader (const GLenum type, const char *name)
 	sh->type = type;
 
 	sh->id = qglCreateShader(sh->type);
-	if (!sh->id)
+	if (!sh->id) {
+		Mem_Free(source);
 		return NULL;
+	}
 
 	/* upload the shader source */
 	qglShaderSource(sh->id, 1, src, length);
