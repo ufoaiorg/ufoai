@@ -179,19 +179,19 @@ static void _Mem_CheckSentinels (memBlock_t* const mem, const char *fileName, co
 {
 	/* Check sentinels */
 	if (mem->topSentinel != MEM_HEAD_SENTINEL_TOP) {
-		Sys_Error("Mem_Free: bad memory header top sentinel [buffer underflow]\n"
+		Sys_Error("Mem_CheckSentinels: bad memory header top sentinel [buffer underflow]\n"
 			"free: %s:#%i", fileName, fileLine);
 	} else if (mem->botSentinel != MEM_HEAD_SENTINEL_BOT) {
-		Sys_Error("Mem_Free: bad memory header bottom sentinel [buffer underflow]\n"
+		Sys_Error("Mem_CheckSentinels: bad memory header bottom sentinel [buffer underflow]\n"
 			"free: %s:#%i", fileName, fileLine);
 	} else if (!mem->footer) {
-		Sys_Error("Mem_Free: bad memory footer [buffer overflow]\n"
+		Sys_Error("Mem_CheckSentinels: bad memory footer [buffer overflow]\n"
 			"pool: %s\n"
 			"alloc: %s:#%i\n"
 			"free: %s:#%i",
 			mem->pool ? mem->pool->name : "UNKNOWN", mem->allocFile, mem->allocLine, fileName, fileLine);
 	} else if (mem->footer->sentinel != MEM_FOOT_SENTINEL) {
-		Sys_Error("Mem_Free: bad memory footer sentinel [buffer overflow]\n"
+		Sys_Error("Mem_CheckSentinels: bad memory footer sentinel [buffer overflow]\n"
 			"pool: %s\n"
 			"alloc: %s:#%i\n"
 			"free: %s:#%i",
@@ -482,25 +482,7 @@ void _Mem_CheckPoolIntegrity (memPool_t *pool, const char *fileName, const int f
 	for (j = 0, blocks = 0, size = 0; j < MEM_HASH; j++) {
 		for (mem = pool->blocks[j]; mem; blocks++, mem = mem->next) {
 			size += mem->size;
-			if (mem->topSentinel != MEM_HEAD_SENTINEL_TOP) {
-				Sys_Error("Mem_CheckPoolIntegrity: bad memory head top sentinel [buffer underflow]\n"
-					"check: %s:#%i", fileName, fileLine);
-			} else if (mem->botSentinel != MEM_HEAD_SENTINEL_BOT) {
-				Sys_Error("Mem_CheckPoolIntegrity: bad memory head bottom sentinel [buffer underflow]\n"
-					"check: %s:#%i", fileName, fileLine);
-			} else if (!mem->footer) {
-				Sys_Error("Mem_CheckPoolIntegrity: bad memory footer [buffer overflow]\n"
-					"pool: %s\n"
-					"alloc: %s:#%i\n"
-					"check: %s:#%i",
-					mem->pool ? mem->pool->name : "UNKNOWN", mem->allocFile, mem->allocLine, fileName, fileLine);
-			} else if (mem->footer->sentinel != MEM_FOOT_SENTINEL) {
-				Sys_Error("Mem_CheckPoolIntegrity: bad memory foot sentinel [buffer overflow]\n"
-					"pool: %s\n"
-					"alloc: %s:#%i\n"
-					"check: %s:#%i",
-					mem->pool ? mem->pool->name : "UNKNOWN", mem->allocFile, mem->allocLine, fileName, fileLine);
-			}
+			_Mem_CheckSentinels(mem, fileName, fileLine);
 		}
 	}
 
