@@ -466,7 +466,7 @@ uint32_t _Mem_ChangeTag (memPool_t *pool, const int tagFrom, const int tagTo)
 }
 
 
-void _Mem_CheckPoolIntegrity (memPool_t *pool, const char *fileName, const int fileLine)
+static void _Mem_CheckPoolIntegrity (memPool_t *pool, const char *fileName, const int fileLine)
 {
 	memBlock_t *mem;
 	uint32_t blocks;
