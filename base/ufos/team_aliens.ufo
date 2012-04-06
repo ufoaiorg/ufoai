@@ -98,7 +98,7 @@ team taman
 		normal_monomolecularblade -20
 		normal_needle -2
 
-		blast -50
+		blast -20
 
 		fire_light 15
 		fire_medium 5
@@ -213,7 +213,7 @@ team ortnok
 		normal_monomolecularblade 20
 		normal_needle 4
 
-		blast 50
+		blast 35
 
 		fire_light -10
 		fire_medium -20
@@ -317,7 +317,7 @@ team shevaar
 		normal_monomolecularblade 20
 		normal_needle 6
 
-		blast 30
+		blast 20
 
 		fire_light -10
 		fire_medium -20
