@@ -1069,7 +1069,7 @@ item rpg
 	center			"-7.8 2.5 3.5"
 	scale			0.80
 	ammo			1
-	reload			12
+	reload			16
 	reloadsound		weapons/reload-rocket
 	price			4000
 	size			75
@@ -1105,15 +1105,15 @@ item rpg_ammo
 			impsnd		weapons/explosion-rocket
 			bodysnd		weapons/explosion-rocket
 			speed		450
-			spread		"0.2 0.6"
+			spread		"1.4 1.4"
 			crouch		0.6
 			range		250
 			shots		1
 			ammo		1
-			time		14
+			time		24
 			damage		"0 0"
-			spldmg		"120 30"
-			splrad		6
+			spldmg		"150 20"
+			splrad		4
 			dmgweight	blast
 		}
 	}
@@ -1147,15 +1147,15 @@ item rpg_incendiary_ammo
 			impsnd		weapons/explosion-fire
 			bodysnd		weapons/explosion-fire
 			speed		450
-			spread		"0.2 0.6"
+			spread		"1.4 1.4"
 			crouch		0.6
 			range		250
 			shots		1
 			ammo		1
-			time		14
-			damage		"15 15"
-			spldmg		"90 30"
-			splrad		7
+			time		24
+			damage		"0 0"
+			spldmg		"75 20"
+			splrad		4
 			dmgweight	incendiary
 		}
 	}
@@ -1178,7 +1178,7 @@ item grenl
 	center			"7 0 2.4"
 	scale			1.1
 	ammo			6
-	reload			14
+	reload			16
 	reloadsound		weapons/reload-grenade
 	price			2500
 	size			60
@@ -1205,7 +1205,7 @@ item grenl_ammo
 	{
 		firedef
 		{
-			name				"_Snap Shot - Airburst"
+			name				"_Snap Shot (Impact)"
 			skill				explosive
 			projtl				grenl_ammo
 			impact				explosionGrenade
@@ -1217,21 +1217,21 @@ item grenl_ammo
 			gravity				true
 			launched			true
 			spread				"0 2"
-			range				15
+			range				20
 			shots				1
 			ammo				1
 			delaybetweenshots	1
-			time				8
-			damage				"20 2"
-			spldmg				"100 10"
-			splrad				4
+			time				12
+			damage				"0 0"
+			spldmg				"130 20"
+			splrad				3
 			dmgweight			blast
 			reaction			false
 		}
 
 		firedef
 		{
-			name				"_Aimed Shot - Airburst"
+			name				"_Aimed Shot (Impact)"
 			skill				explosive
 			projtl				grenl_ammo
 			impact				explosionGrenade
@@ -1243,21 +1243,21 @@ item grenl_ammo
 			gravity				true
 			launched			true
 			spread				"0 1.5"
-			range				15
+			range				20
 			shots				1
 			ammo				1
 			delaybetweenshots	1
-			time				12
-			damage				"20 2"
-			spldmg				"100 10"
-			splrad				4
+			time				18
+			damage				"0 0"
+			spldmg				"130 20"
+			splrad				3
 			dmgweight			blast
 			reaction			false
 		}
 
 		firedef
 		{
-			name				"_Snap Shot - Timed"
+			name				"_Snap Shot (Timer)"
 			skill				explosive
 			projtl				grenl_ammo
 			impact				explosionGrenade
@@ -1272,20 +1272,21 @@ item grenl_ammo
 			bounce				5
 			bncfac				0.6
 			spread				"0 2"
-			range				15
+			range				20
 			shots				1
 			ammo				1
 			delaybetweenshots	1
-			time				8
-			spldmg				"100 10"
-			splrad				4
+			time				12
+			damage				"0 0"
+			spldmg				"130 20"
+			splrad				3
 			dmgweight			blast
 			reaction			false
 		}
 
 		firedef
 		{
-			name				"_Aimed Shot - Timed"
+			name				"_Aimed Shot (Timer)"
 			skill				explosive
 			projtl				grenl_ammo
 			impact				explosionGrenade
@@ -1300,13 +1301,14 @@ item grenl_ammo
 			bounce				5
 			bncfac				0.6
 			spread				"0 1.5"
-			range				15
+			range				20
 			shots				1
 			ammo				1
 			delaybetweenshots	1
-			time				12
-			spldmg				"100 10"
-			splrad				4
+			time				18
+			damage				"0 0"
+			spldmg				"130 20"
+			splrad				3
 			dmgweight			blast
 			reaction			false
 		}
@@ -1332,7 +1334,7 @@ item grenl_incendiary_ammo
 	{
 		firedef
 		{
-			name				"_Snap Shot - Airburst"
+			name				"_Snap Shot (Impact)"
 			skill				explosive
 			projtl				grenl_ic_ammo
 			impact				explosionGrenade
@@ -1344,21 +1346,21 @@ item grenl_incendiary_ammo
 			gravity				true
 			launched			true
 			spread				"0 2"
-			range				15
+			range				20
 			shots				1
 			ammo				1
 			delaybetweenshots	1
-			time				8
-			damage				"15 10"
-			spldmg				"95 10"
-			splrad				4
+			time				12
+			damage				"0 0"
+			spldmg				"75 20"
+			splrad				3
 			dmgweight			incendiary
 			reaction			false
 		}
 
 		firedef
 		{
-			name				"_Aimed Shot - Airburst"
+			name				"_Aimed Shot (Impact)"
 			skill				explosive
 			projtl				grenl_ic_ammo
 			impact				explosionGrenade
@@ -1370,21 +1372,21 @@ item grenl_incendiary_ammo
 			gravity				true
 			launched			true
 			spread				"0 1.5"
-			range				15
+			range				20
 			shots				1
 			ammo				1
 			delaybetweenshots	1
-			time				12
-			damage				"15 10"
-			spldmg				"95 10"
-			splrad				4
+			time				18
+			damage				"0 0"
+			spldmg				"75 20"
+			splrad				3
 			dmgweight			incendiary
 			reaction			false
 		}
 
 		firedef
 		{
-			name				"_Snap Shot - Timed"
+			name				"_Snap Shot (Timer)"
 			skill				explosive
 			projtl				grenl_ic_ammo
 			impact				explosionGrenade
@@ -1399,21 +1401,21 @@ item grenl_incendiary_ammo
 			bounce				5
 			bncfac				0.6
 			spread				"0 2"
-			range				15
+			range				20
 			shots				1
 			ammo				1
 			delaybetweenshots	1
-			time				8
-			damage				"15 10"
-			spldmg				"95 10"
-			splrad				4
+			time				12
+			damage				"0 0"
+			spldmg				"75 20"
+			splrad				3
 			dmgweight			incendiary
 			reaction			false
 		}
 
 		firedef
 		{
-			name				"_Aimed Shot - Timed"
+			name				"_Aimed Shot (Timer)"
 			skill				explosive
 			projtl				grenl_ic_ammo
 			impact				explosionGrenade
@@ -1428,14 +1430,14 @@ item grenl_incendiary_ammo
 			bounce				5
 			bncfac				0.6
 			spread				"0 1.5"
-			range				15
+			range				20
 			shots				1
 			ammo				1
 			delaybetweenshots	1
-			time				12
-			damage				"15 10"
-			spldmg				"95 10"
-			splrad				4
+			time				18
+			damage				"0 0"
+			spldmg				"75 20"
+			splrad				3
 			dmgweight			incendiary
 			reaction			false
 		}
@@ -1464,21 +1466,21 @@ item grenl_fle_ammo
 	{
 		firedef
 		{
-			name				"_Single Shot"
+			name				"_Snap Shot"
 			skill				close
 			projtl				bullet
 			impact				bulletImpact
 			hitbody				null
 			firesnd				weapons/bullet-flechette
 			speed				3000
-			spread				"4 4.5"
+			spread				"4 4"
 			range				10
-			shots				24
+			shots				8
 			ammo				1
 			delaybetweenshots	0
-			time				8
-			damage				"6 2"
-			dmgweight			normal_light
+			time				12
+			damage				"20 5"
+			dmgweight			normal_spray
 			reaction			true
 		}
 	}
@@ -1503,7 +1505,7 @@ item grenl_plasma_ammo
 	{
 		firedef
 		{
-			name				"_Snap Shot - Airburst"
+			name				"_Snap Shot (Impact)"
 			skill				explosive
 			projtl				grenl_plasma_ammo
 			impact				plasmaBigExplosion
@@ -1515,21 +1517,21 @@ item grenl_plasma_ammo
 			gravity				true
 			launched			true
 			spread				"0 2"
-			range				15
+			range				20
 			shots				1
 			ammo				1
 			delaybetweenshots	1
-			time				8
-			damage				"20 10"
-			spldmg				"130 20"
-			splrad				5
+			time				12
+			damage				"0 0"
+			spldmg				"180 20"
+			splrad				3
 			dmgweight			plasma_heavy
 			reaction			false
 		}
 
 		firedef
 		{
-			name				"_Aimed Shot - Airburst"
+			name				"_Aimed Shot (Impact)"
 			skill				explosive
 			projtl				grenl_plasma_ammo
 			impact				plasmaBigExplosion
@@ -1541,20 +1543,20 @@ item grenl_plasma_ammo
 			gravity				true
 			launched			true
 			spread				"0 1.5"
-			range				15
+			range				20
 			shots				1
 			ammo				1
 			delaybetweenshots	1
-			time				12
-			damage				"20 10"
-			spldmg				"130 20"
-			splrad				5
+			time				18
+			damage				"0 0"
+			spldmg				"180 20"
+			splrad				3
 			dmgweight			plasma_heavy
 		}
 
 		firedef
 		{
-			name				"_Snap Shot - Timed"
+			name				"_Snap Shot (Timer)"
 			skill				explosive
 			projtl				grenl_plasma_ammo
 			impact				plasmaBigExplosion
@@ -1569,19 +1571,20 @@ item grenl_plasma_ammo
 			bounce				5
 			bncfac				0.6
 			spread				"0 2"
-			range				15
+			range				20
 			shots				1
 			ammo				1
 			delaybetweenshots	1
-			time				8
-			spldmg				"130 20"
-			splrad				5
+			time				12
+			damage				"0 0"
+			spldmg				"180 20"
+			splrad				3
 			dmgweight			plasma_heavy
 		}
 
 		firedef
 		{
-			name				"_Aimed Shot - Timed"
+			name				"_Aimed Shot (Timer)"
 			skill				explosive
 			projtl				grenl_plasma_ammo
 			impact				plasmaBigExplosion
@@ -1596,13 +1599,14 @@ item grenl_plasma_ammo
 			bounce				5
 			bncfac				0.6
 			spread				"0 1.5"
-			range				15
+			range				20
 			shots				1
 			ammo				1
 			delaybetweenshots	1
-			time				12
-			spldmg				"130 20"
-			splrad				5
+			time				18
+			damage				"0 0"
+			spldmg				"180 20"
+			splrad				3
 			dmgweight			plasma_heavy
 		}
 	}
