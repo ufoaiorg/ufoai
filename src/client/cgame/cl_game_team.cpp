@@ -344,7 +344,6 @@ static qboolean GAME_LoadTeam (const char *filename)
 	snode = XML_GetNode(node, SAVE_TEAM_NODE);
 	if (!snode) {
 		mxmlDelete(topNode);
-		Mem_Free(cbuf);
 		Com_Printf("Error: Failure in loading the xml data! (node '" SAVE_TEAM_NODE "' not found)\n");
 		return qfalse;
 	}
@@ -353,7 +352,6 @@ static qboolean GAME_LoadTeam (const char *filename)
 	snode = XML_GetNode(node, SAVE_TEAM_EQUIPMENT);
 	if (!snode) {
 		mxmlDelete(topNode);
-		Mem_Free(cbuf);
 		Com_Printf("Error: Failure in loading the xml data! (node '" SAVE_TEAM_EQUIPMENT "' not found)\n");
 		return qfalse;
 	}
