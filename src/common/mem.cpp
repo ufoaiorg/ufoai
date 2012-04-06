@@ -43,7 +43,6 @@ struct memBlock_t {
 
     memPool_t*  pool;        /**< Owner pool */
     int         tagNum;      /**< For group free */
-    size_t      size;        /**< Size of allocation including this header */
 
     char const* allocFile;   /**< File the memory was allocated in */
     int         allocLine;   /**< Line the memory was allocated at */
@@ -178,6 +177,11 @@ static memBlockFoot_t* Mem_BlockToFooter(memBlock_t* const mem)
 	return reinterpret_cast<memBlockFoot_t*>(reinterpret_cast<byte*>(Mem_BlockToPtr(mem)) + mem->memSize);
 }
 
+static size_t Mem_BlockRawSize(memBlock_t const* const mem)
+{
+	return mem->memSize + sizeof(memBlock_t) + sizeof(memBlockFoot_t);
+}
+
 static void _Mem_CheckSentinels (memBlock_t* const mem, const char *fileName, const int fileLine)
 {
 	/* Check sentinels */
@@ -214,7 +218,7 @@ void _Mem_Free (void *ptr, const char *fileName, const int fileLine)
 
 	/* Decrement counters */
 	mem->pool->blockCount--;
-	mem->pool->byteCount -= mem->size;
+	mem->pool->byteCount -= Mem_BlockRawSize(mem);
 
 	/* De-link it */
 	prev = &mem->pool->blocks[(uintptr_t)mem % MEM_HASH];
@@ -313,7 +317,6 @@ void *_Mem_Alloc (size_t size, qboolean zeroFill, memPool_t *pool, const int tag
 	/* Fill in the header */
 	mem->topSentinel = MEM_HEAD_SENTINEL_TOP;
 	mem->tagNum = tagNum;
-	mem->size = size;
 	mem->memSize = size - sizeof(memBlock_t) - sizeof(memBlockFoot_t);
 	mem->pool = pool;
 	mem->allocFile = fileName;
@@ -477,7 +480,7 @@ void _Mem_CheckPoolIntegrity (memPool_t *pool, const char *fileName, const int f
 	/* Check sentinels */
 	for (j = 0, blocks = 0, size = 0; j < MEM_HASH; j++) {
 		for (mem = pool->blocks[j]; mem; blocks++, mem = mem->next) {
-			size += mem->size;
+			size += Mem_BlockRawSize(mem);
 			_Mem_CheckSentinels(mem, fileName, fileLine);
 		}
 	}
@@ -573,9 +576,11 @@ static void Mem_Stats_f (void)
 				if (i & 1)
 					Com_Printf(S_COLOR_GREEN);
 
-				Com_Printf("%5i %5i %20s " UFO_SIZE_T "B\n", i + 1, mem->allocLine, mem->allocFile, mem->size);
+				size_t const size = Mem_BlockRawSize(mem);
 
-				totalBytes += mem->size;
+				Com_Printf("%5i %5i %20s " UFO_SIZE_T "B\n", i + 1, mem->allocLine, mem->allocFile, size);
+
+				totalBytes += size;
 			}
 		}
 
