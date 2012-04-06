@@ -540,16 +540,10 @@ static void UI_MaterialEditorRemoveStage_f (void)
 		return;
 	}
 
-	if (stageID == 0) {
-		materialStage_t *s = image->material.stages;
-		image->material.stages = s->next;
-		Mem_Free(s);
-	} else {
-		materialStage_t *sParent = UI_MaterialEditorGetStage(&image->material, stageID - 1);
-		materialStage_t *s = sParent->next;
-		sParent->next = s->next;
-		Mem_Free(s);
-	}
+	materialStage_t** const anchor = stageID == 0 ? &image->material.stages : &UI_MaterialEditorGetStage(&image->material, stageID - 1)->next;
+	materialStage_t*  const s      = *anchor;
+	*anchor = s->next;
+	Mem_Free(s);
 
 	image->material.num_stages--;
 
