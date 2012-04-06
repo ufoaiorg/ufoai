@@ -208,7 +208,7 @@ item flashbang
 		firedef
 		{
 			name	"_Lob"
-			skill	explosive
+			skill	close
 			projtl	flashgren
 			impact	flash_explosion
 			hitbody flash_explosion
@@ -234,7 +234,7 @@ item flashbang
 		firedef
 		{
 			name	"_Roll"
-			skill	explosive
+			skill	close
 			projtl	flashgren
 			impact	flash_explosion
 			hitbody flash_explosion
