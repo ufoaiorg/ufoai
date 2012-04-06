@@ -472,11 +472,24 @@ static void AI_SearchBestTarget (aiAction_t *aia, const edict_t *ent, edict_t *c
 			if (!AI_FighterCheckShoot(ent, check, fd, &dist))
 				continue;
 
-			/* check how good the target is visible */
+			/* check how good the target is visible and if we have a shot */
 			if (!visChecked) {	/* only do this once per actor ! */
 				vis = G_ActorVis(ent->origin, ent, check, qtrue);
 				visChecked = qtrue;
+
+				if (vis != ACTOR_VIS_0) {
+					/* check weapon can hit */
+					vec3_t dir, origin;
+
+					VectorSubtract(check->origin, ent->origin, dir);
+					G_GetShotOrigin(ent, fd, dir, origin);
+
+					/* gun-to-target line free? */
+					if (G_TestLine(origin, check->origin))
+						continue;
+				}
 			}
+
 			if (vis == ACTOR_VIS_0)
 				continue;
 
