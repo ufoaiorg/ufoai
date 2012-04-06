@@ -26,23 +26,7 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #ifndef _COMMON_MEM_H
 #define _COMMON_MEM_H
 
-#define MEM_MAX_POOLNAME	64
-#define MEM_HASH			11
-
-struct memBlock_t;
-
-struct memPool_t {
-	char name[MEM_MAX_POOLNAME];	/**< Name of pool */
-	qboolean inUse;					/**< Slot in use? */
-
-	memBlock_t *blocks[MEM_HASH];	/**< Allocated blocks */
-
-	uint32_t blockCount;			/**< Total allocated blocks */
-	uint32_t byteCount;				/**< Total allocated bytes */
-
-	const char *createFile;			/**< File this pool was created on */
-	int createLine;					/**< Line this pool was created on */
-};
+struct memPool_t;
 
 /* constants */
 #define Mem_CreatePool(name)							_Mem_CreatePool((name),__FILE__,__LINE__)

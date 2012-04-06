@@ -569,6 +569,8 @@ static game_export_t *SV_GetGameAPI (game_import_t *parms)
 	return GetGameAPI(parms);
 }
 
+static char const* const gameSysPoolName = "Server: Game system";
+
 /**
  * @brief Called when either the entire server is being killed, or it is changing to a different game directory.
  * @sa G_Shutdown
@@ -596,7 +598,7 @@ void SV_ShutdownGameProgs (void)
 	size = Mem_PoolSize(sv->gameSysPool);
 	if (size > 0) {
 		Com_Printf("WARNING: Game memory leak (%u bytes)\n", size);
-		Cmd_ExecuteString(va("mem_stats %s", sv->gameSysPool->name));
+		Cmd_ExecuteString(va("mem_stats %s", gameSysPoolName));
 	}
 
 	Mem_DeletePool(sv->gameSysPool);
@@ -758,7 +760,7 @@ void SV_InitGameProgs (void)
 	if (svs.ge->apiversion != GAME_API_VERSION)
 		Com_Error(ERR_DROP, "game is version %i, not %i", svs.ge->apiversion, GAME_API_VERSION);
 
-	sv->gameSysPool = Mem_CreatePool("Server: Game system");
+	sv->gameSysPool = Mem_CreatePool(gameSysPoolName);
 
 	svs.ge->Init();
 

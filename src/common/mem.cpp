@@ -29,6 +29,9 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #include "common.h"
 #include "../shared/mutex.h"
 
+#define MEM_MAX_POOLNAME 64
+#define MEM_HASH         11
+
 struct memBlockFoot_t {
     uint32_t sentinel; /**< For memory integrity checking */
 };
@@ -51,6 +54,19 @@ struct memBlock_t {
     memBlockFoot_t* footer;      /**< Allocated in the space AFTER the block to check for overflow */
 
     uint32_t        botSentinel; /**< For memory integrity checking */
+};
+
+struct memPool_t {
+    char        name[MEM_MAX_POOLNAME]; /**< Name of pool */
+    qboolean    inUse;                  /**< Slot in use? */
+
+    memBlock_t* blocks[MEM_HASH];       /**< Allocated blocks */
+
+    uint32_t    blockCount;             /**< Total allocated blocks */
+    uint32_t    byteCount;              /**< Total allocated bytes */
+
+    char const* createFile;             /**< File this pool was created on */
+    int         createLine;             /**< Line this pool was created on */
 };
 
 #define MEM_HEAD_SENTINEL_TOP	0xFEBDFAED
