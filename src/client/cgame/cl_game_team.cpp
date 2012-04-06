@@ -320,6 +320,7 @@ static qboolean GAME_LoadTeam (const char *filename)
 
 	if (header.version != TEAM_SAVE_FILE_VERSION) {
 		Com_Printf("Invalid version number\n");
+		Mem_Free(cbuf);
 		return qfalse;
 	}
 
