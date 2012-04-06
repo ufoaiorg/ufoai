@@ -78,7 +78,7 @@ typedef struct {
 	int				frameWidth;
 	int				frameHeight;
 	int				frameRate;
-	byte *			frameBuffer[2];
+	unsigned* frameBuffer[2];
 
 	int				startTime;	/**< cinematic start timestamp */
 	int				currentFrame;
@@ -128,7 +128,7 @@ static void CIN_ROQ_ApplyVector2x2 (cinematic_t *cin, int x, int y, const byte *
 		const int xp = x + roqCin_quadOffsets2[0][i];
 		const int yp = y + roqCin_quadOffsets2[1][i];
 		const unsigned int *src = (const unsigned int *)ROQCIN.quadVectors + (indices[i] * 4);
-		unsigned int *dst = (unsigned int *)ROQCIN.frameBuffer[0] + (yp * ROQCIN.frameWidth + xp);
+		unsigned* dst = ROQCIN.frameBuffer[0] + (yp * ROQCIN.frameWidth + xp);
 
 		dst[0] = src[0];
 		dst[1] = src[1];
@@ -151,7 +151,7 @@ static void CIN_ROQ_ApplyVector4x4 (cinematic_t *cin, int x, int y, const byte *
 		const int xp = x + roqCin_quadOffsets4[0][i];
 		const int yp = y + roqCin_quadOffsets4[1][i];
 		const unsigned int *src = (const unsigned int *)ROQCIN.quadVectors + (indices[i] * 4);
-		unsigned int *dst = (unsigned int *)ROQCIN.frameBuffer[0] + (yp * ROQCIN.frameWidth + xp);
+		unsigned* dst = ROQCIN.frameBuffer[0] + (yp * ROQCIN.frameWidth + xp);
 
 		dst[0] = src[0];
 		dst[1] = src[0];
@@ -189,8 +189,8 @@ static void CIN_ROQ_ApplyMotion4x4 (cinematic_t *cin, int x, int y, int mx, int 
 	int i;
 	const int xp = x + 8 - (mv >> 4) - mx;
 	const int yp = y + 8 - (mv & 15) - my;
-	const unsigned int *src = (const unsigned int *)ROQCIN.frameBuffer[1] + (yp * ROQCIN.frameWidth + xp);
-	unsigned int *dst = (unsigned int *)ROQCIN.frameBuffer[0] + (y * ROQCIN.frameWidth + x);
+	unsigned const* src = ROQCIN.frameBuffer[1] + (yp * ROQCIN.frameWidth + xp);
+	unsigned*       dst = ROQCIN.frameBuffer[0] + (y  * ROQCIN.frameWidth + x);
 
 	for (i = 0; i < 4; i++, src += ROQCIN.frameWidth, dst += ROQCIN.frameWidth) {
 		dst[0] = src[0];
@@ -208,8 +208,8 @@ static void CIN_ROQ_ApplyMotion8x8 (cinematic_t *cin, int x, int y, int mx, int 
 	int i;
 	const int xp = x + 8 - (mv >> 4) - mx;
 	const int yp = y + 8 - (mv & 15) - my;
-	const unsigned int *src = (const unsigned int *)ROQCIN.frameBuffer[1] + (yp * ROQCIN.frameWidth + xp);
-	unsigned int *dst = (unsigned int *)ROQCIN.frameBuffer[0] + (y * ROQCIN.frameWidth + x);
+	unsigned const* src = ROQCIN.frameBuffer[1] + (yp * ROQCIN.frameWidth + xp);
+	unsigned*       dst = ROQCIN.frameBuffer[0] + (y  * ROQCIN.frameWidth + x);
 
 	for (i = 0; i < 8; i++, src += ROQCIN.frameWidth, dst += ROQCIN.frameWidth) {
 		dst[0] = src[0];
@@ -241,8 +241,8 @@ static void CIN_ROQ_DecodeInfo (cinematic_t *cin, const byte *data)
 	if (!Q_IsPowerOfTwo(ROQCIN.frameWidth) || !Q_IsPowerOfTwo(ROQCIN.frameHeight))
 		Com_Error(ERR_DROP, "CIN_DecodeInfo: size is not a power of two (%i x %i)", ROQCIN.frameWidth, ROQCIN.frameHeight);
 
-	ROQCIN.frameBuffer[0] = Mem_PoolAllocTypeN(byte, ROQCIN.frameWidth * ROQCIN.frameHeight * 4, cl_genericPool);
-	ROQCIN.frameBuffer[1] = Mem_PoolAllocTypeN(byte, ROQCIN.frameWidth * ROQCIN.frameHeight * 4, cl_genericPool);
+	ROQCIN.frameBuffer[0] = Mem_PoolAllocTypeN(unsigned, ROQCIN.frameWidth * ROQCIN.frameHeight, cl_genericPool);
+	ROQCIN.frameBuffer[1] = Mem_PoolAllocTypeN(unsigned, ROQCIN.frameWidth * ROQCIN.frameHeight, cl_genericPool);
 }
 
 /**
@@ -309,7 +309,6 @@ static void CIN_ROQ_DecodeCodeBook (cinematic_t *cin, const byte *data)
  */
 static void CIN_ROQ_DecodeVideo (cinematic_t *cin, const byte *data)
 {
-	byte	*buffer;
 	int		vqFlag, vqFlagPos, vqCode;
 	int		xPos, yPos, xMot, yMot;
 	int		x, y;
@@ -402,9 +401,9 @@ static void CIN_ROQ_DecodeVideo (cinematic_t *cin, const byte *data)
 
 	/* Copy or swap the buffers */
 	if (!ROQCIN.currentFrame)
-		memcpy(ROQCIN.frameBuffer[1], ROQCIN.frameBuffer[0], ROQCIN.frameWidth * ROQCIN.frameHeight * 4);
+		memcpy(ROQCIN.frameBuffer[1], ROQCIN.frameBuffer[0], sizeof(*ROQCIN.frameBuffer[1]) * ROQCIN.frameWidth * ROQCIN.frameHeight);
 	else {
-		buffer = ROQCIN.frameBuffer[0];
+		unsigned* const buffer = ROQCIN.frameBuffer[0];
 		ROQCIN.frameBuffer[0] = ROQCIN.frameBuffer[1];
 		ROQCIN.frameBuffer[1] = buffer;
 	}
@@ -527,7 +526,7 @@ static void CIN_ROQ_DrawCinematic (cinematic_t *cin)
 
 	if (!ROQCIN.frameBuffer[1])
 		return;
-	texnum = R_UploadData("***cinematic***", (unsigned*)ROQCIN.frameBuffer[1], ROQCIN.frameWidth, ROQCIN.frameHeight);
+	texnum = R_UploadData("***cinematic***", ROQCIN.frameBuffer[1], ROQCIN.frameWidth, ROQCIN.frameHeight);
 	R_DrawTexture(texnum, cin->x, cin->y, cin->w, cin->h);
 }
 
