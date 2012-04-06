@@ -802,10 +802,8 @@ static int SEQ_ExecuteDelete (sequenceContext_t *context, const char *name, cons
 	if (s2d) {
 		s2d->inuse = qfalse;
 
-		if (s2d->text) {
-			Mem_Free(s2d->text);
-			s2d->text = NULL;
-		}
+		Mem_Free(s2d->text);
+		s2d->text = NULL;
 	}
 
 	if (!se && !s2d)

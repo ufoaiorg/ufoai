@@ -43,8 +43,7 @@ void R_ModelLoadDPMVertsForFrame (model_t *mod, int frame)
 
 	for (i = 0, mesh = mod->alias.meshes; i < mod->alias.num_meshes; i++, mesh++) {
 		/* the vertices might change - so free the memory */
-		if (mesh->vertexes)
-			Mem_Free(mesh->vertexes);
+		Mem_Free(mesh->vertexes);
 		boneVertex = mesh->bonesVertexes;
 		mAliasVertex_t* outVertex = mesh->vertexes = Mem_PoolAllocTypeN(mAliasVertex_t, mesh->num_verts, vid_modelPool);
 		for (j = 0; j < mesh->num_verts; j++, outVertex++, boneVertex++) {

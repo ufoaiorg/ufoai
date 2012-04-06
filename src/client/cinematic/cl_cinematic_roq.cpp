@@ -548,10 +548,8 @@ void CIN_ROQ_CloseCinematic (cinematic_t *cin)
 	else
 		Com_Printf("CIN_ROQ_StopCinematic: Warning no opened file\n");
 
-	if (ROQCIN.frameBuffer[0]) {
-		Mem_Free(ROQCIN.frameBuffer[0]);
-		Mem_Free(ROQCIN.frameBuffer[1]);
-	}
+	Mem_Free(ROQCIN.frameBuffer[0]);
+	Mem_Free(ROQCIN.frameBuffer[1]);
 
 	M_StopMusicStream(&ROQCIN.musicStream);
 
@@ -609,14 +607,10 @@ int CIN_ROQ_OpenCinematic (cinematic_t *cin, const char *fileName)
 	ROQCIN.frameHeight = 0;
 	ROQCIN.startTime = CL_Milliseconds();
 	ROQCIN.frameRate = (chunk.flags != 0) ? chunk.flags : 30;
-	if (ROQCIN.frameBuffer[0]) {
-		Mem_Free(ROQCIN.frameBuffer[0]);
-		ROQCIN.frameBuffer[0] = NULL;
-	}
-	if (ROQCIN.frameBuffer[1]) {
-		Mem_Free(ROQCIN.frameBuffer[1]);
-		ROQCIN.frameBuffer[1] = NULL;
-	}
+	Mem_Free(ROQCIN.frameBuffer[0]);
+	ROQCIN.frameBuffer[0] = NULL;
+	Mem_Free(ROQCIN.frameBuffer[1]);
+	ROQCIN.frameBuffer[1] = NULL;
 
 	ROQCIN.currentFrame = 0;
 

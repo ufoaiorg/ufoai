@@ -66,7 +66,6 @@ void MakeTracingNodes (int levels)
  */
 void CloseTracingNodes (void)
 {
-	if (curTile->tnodes)
-		Mem_Free(curTile->tnodes);
+	Mem_Free(curTile->tnodes);
 	curTile->tnodes = NULL;
 }

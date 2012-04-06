@@ -213,14 +213,10 @@ static void ASE_FreeGeomObject (int ndx)
 	pObject = &ase.objects[ndx];
 
 	for (i = 0; i < pObject->anim.numFrames; i++) {
-		if (pObject->anim.frames[i].vertexes)
-			Mem_Free(pObject->anim.frames[i].vertexes);
-		if (pObject->anim.frames[i].tvertexes)
-			Mem_Free(pObject->anim.frames[i].tvertexes);
-		if (pObject->anim.frames[i].faces)
-			Mem_Free(pObject->anim.frames[i].faces);
-		if (pObject->anim.frames[i].tfaces)
-			Mem_Free(pObject->anim.frames[i].tfaces);
+		Mem_Free(pObject->anim.frames[i].vertexes);
+		Mem_Free(pObject->anim.frames[i].tvertexes);
+		Mem_Free(pObject->anim.frames[i].faces);
+		Mem_Free(pObject->anim.frames[i].tfaces);
 	}
 
 	OBJZERO(*pObject);

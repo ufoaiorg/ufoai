@@ -318,10 +318,8 @@ void CP_CreateBattleParameters (mission_t *mission, battleParam_t *param, const 
 	CP_CreateCivilianTeam(mission, param);
 
 	/* Reset parameters */
-	if (param->param) {
-		Mem_Free(param->param);
-		param->param = NULL;
-	}
+	Mem_Free(param->param);
+	param->param = NULL;
 
 	param->mission = mission;
 	color = MAP_GetColor(mission->pos, MAPTYPE_TERRAIN, NULL);

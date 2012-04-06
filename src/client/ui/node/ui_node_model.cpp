@@ -335,10 +335,8 @@ void UI_DrawModelNode (uiNode_t *node, const char *source)
 		if (strncmp(EXTRADATA(node).oldRefValue, source, MAX_OLDREFVALUE)) {
 			Q_strncpyz(EXTRADATA(node).oldRefValue, source, MAX_OLDREFVALUE);
 			/* model has changed but mem is already reserved in pool */
-			if (EXTRADATA(node).animationState) {
-				Mem_Free(EXTRADATA(node).animationState);
-				EXTRADATA(node).animationState = NULL;
-			}
+			Mem_Free(EXTRADATA(node).animationState);
+			EXTRADATA(node).animationState = NULL;
 		}
 		if (!EXTRADATA(node).animationState) {
 			as = Mem_PoolAllocType(animState_t, cl_genericPool);

@@ -569,10 +569,8 @@ void Key_SetBinding (int keynum, const char *binding, keyBindSpace_t space)
 	}
 
 	/* free old bindings */
-	if (*keySpace) {
-		Mem_Free(*keySpace);
-		*keySpace = NULL;
-	}
+	Mem_Free(*keySpace);
+	*keySpace = NULL;
 
 	/* allocate memory for new binding, but don't set empty commands*/
 	if (binding)

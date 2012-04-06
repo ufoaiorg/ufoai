@@ -2479,25 +2479,17 @@ qboolean MAP_PositionFitsTCPNTypes (const vec2_t pos, const linkedList_t* terrai
 
 void MAP_Shutdown (void)
 {
-	if (terrainPic) {
-		Mem_Free(terrainPic);
-		terrainPic = NULL;
-	}
+	Mem_Free(terrainPic);
+	terrainPic = NULL;
 
-	if (culturePic) {
-		Mem_Free(culturePic);
-		culturePic = NULL;
-	}
+	Mem_Free(culturePic);
+	culturePic = NULL;
 
-	if (populationPic) {
-		Mem_Free(populationPic);
-		populationPic = NULL;
-	}
+	Mem_Free(populationPic);
+	populationPic = NULL;
 
-	if (nationsPic) {
-		Mem_Free(nationsPic);
-		nationsPic = NULL;
-	}
+	Mem_Free(nationsPic);
+	nationsPic = NULL;
 }
 
 void MAP_Init (const char *map)

@@ -315,12 +315,9 @@ qboolean Cvar_Delete (const char *varName)
 			HASH_Delete(cvarVarsHash, var, previousVar, hash);
 			Mem_Free(var->name);
 			Mem_Free(var->string);
-			if (var->description)
-				Mem_Free(var->description);
-			if (var->oldString)
-				Mem_Free(var->oldString);
-			if (var->defaultString)
-				Mem_Free(var->defaultString);
+			Mem_Free(var->description);
+			Mem_Free(var->oldString);
+			Mem_Free(var->defaultString);
 			/* latched cvars should not be removable */
 			assert(var->latchedString == NULL);
 			changeListener = var->changeListener;
@@ -371,8 +368,7 @@ cvar_t *Cvar_Get (const char *var_name, const char *var_value, int flags, const 
 			var->defaultString = Mem_PoolStrDup(var_value, com_cvarSysPool, 0);
 		var->flags |= flags;
 		if (desc) {
-			if (var->description)
-				Mem_Free(var->description);
+			Mem_Free(var->description);
 			var->description = Mem_PoolStrDup(desc, com_cvarSysPool, 0);
 		}
 		return var;
@@ -551,8 +547,7 @@ static cvar_t *Cvar_Set2 (const char *varName, const char *value, qboolean force
 				Com_Printf("%s will be changed for next game.\n", varName);
 				var->latchedString = Mem_PoolStrDup(value, com_cvarSysPool, 0);
 			} else {
-				if (var->oldString)
-					Mem_Free(var->oldString);
+				Mem_Free(var->oldString);
 				var->oldString = var->string;
 				var->string = Mem_PoolStrDup(value, com_cvarSysPool, 0);
 				var->value = atof(var->string);
@@ -565,10 +560,8 @@ static cvar_t *Cvar_Set2 (const char *varName, const char *value, qboolean force
 			return var;
 		}
 	} else {
-		if (var->latchedString) {
-			Mem_Free(var->latchedString);
-			var->latchedString = NULL;
-		}
+		Mem_Free(var->latchedString);
+		var->latchedString = NULL;
 	}
 
 	if (Q_streq(value, var->string))
@@ -577,8 +570,7 @@ static cvar_t *Cvar_Set2 (const char *varName, const char *value, qboolean force
 	if (var->flags & CVAR_R_MASK)
 		Com_SetRenderModified(qtrue);
 
-	if (var->oldString)
-		Mem_Free(var->oldString);		/* free the old value string */
+	Mem_Free(var->oldString);		/* free the old value string */
 	var->oldString = var->string;
 	var->modified = qtrue;
 
@@ -650,8 +642,7 @@ cvar_t *Cvar_FullSet (const char *varName, const char *value, int flags)
 	if (var->flags & CVAR_USERINFO)
 		Com_SetUserinfoModified(qtrue);
 
-	if (var->oldString)
-		Mem_Free(var->oldString);		/* free the old value string */
+	Mem_Free(var->oldString);		/* free the old value string */
 	var->oldString = var->string;
 
 	var->string = Mem_PoolStrDup(value, com_cvarSysPool, 0);
@@ -1073,10 +1064,8 @@ void Cvar_FixCheatVars (void)
 			continue;
 
 		/* also remove the oldString value here */
-		if (var->oldString) {
-			Mem_Free(var->oldString);
-			var->oldString = NULL;
-		}
+		Mem_Free(var->oldString);
+		var->oldString = NULL;
 		Mem_Free(var->string);
 		var->string = Mem_PoolStrDup(var->defaultString, com_cvarSysPool, 0);
 		var->value = atof(var->string);

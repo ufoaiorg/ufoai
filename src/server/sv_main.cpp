@@ -886,16 +886,14 @@ void SV_Shutdown (const char *finalmsg, qboolean reconnect)
 
 	for (i = 0; i < sv->numSVModels; i++) {
 		sv_model_t *model = &sv->svModels[i];
-		if (model->name)
-			Mem_Free(model->name);
+		Mem_Free(model->name);
 	}
 
 	/* free current level */
 	OBJZERO(*sv);
 
 	/* free server static data */
-	if (svs.clients)
-		Mem_Free(svs.clients);
+	Mem_Free(svs.clients);
 
 	if (svs.serverMutex != NULL)
 		TH_MutexDestroy(svs.serverMutex);

@@ -295,8 +295,7 @@ static int CIN_XVID_LoadVideoFrame (cinematic_t *cin)
 				OGMCIN.outputBufferSize = OGMCIN.xvidDecodeStats.data.vol.width * OGMCIN.xvidDecodeStats.data.vol.height;
 
 				/* Free old output buffer*/
-				if (OGMCIN.outputBuffer)
-					Mem_Free(OGMCIN.outputBuffer);
+				Mem_Free(OGMCIN.outputBuffer);
 
 				/* Allocate the new buffer */
 				OGMCIN.outputBuffer = Mem_PoolAllocTypeN(unsigned, OGMCIN.outputBufferSize, cl_genericPool);
@@ -414,8 +413,7 @@ static int CIN_THEORA_LoadVideoFrame (cinematic_t *cin)
 				OGMCIN.outputBufferSize = OGMCIN.th_info.width * OGMCIN.th_info.height;
 
 				/* Free old output buffer*/
-				if (OGMCIN.outputBuffer)
-					Mem_Free(OGMCIN.outputBuffer);
+				Mem_Free(OGMCIN.outputBuffer);
 
 				/* Allocate the new buffer */
 				OGMCIN.outputBuffer = Mem_PoolAllocTypeN(unsigned, OGMCIN.outputBufferSize, cl_genericPool);
@@ -769,8 +767,7 @@ void CIN_OGM_CloseCinematic (cinematic_t *cin)
 
 	M_StopMusicStream(&OGMCIN.musicStream);
 
-	if (OGMCIN.outputBuffer)
-		Mem_Free(OGMCIN.outputBuffer);
+	Mem_Free(OGMCIN.outputBuffer);
 	OGMCIN.outputBuffer = NULL;
 
 	vorbis_dsp_clear(&OGMCIN.vd);

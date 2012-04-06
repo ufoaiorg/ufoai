@@ -178,8 +178,7 @@ qboolean Com_UnregisterConstVariable (const char *name)
 						}
 					}
 				}
-				if (a->fullname)
-					Mem_Free(a->fullname);
+				Mem_Free(a->fullname);
 				Mem_Free(a);
 				return qtrue;
 			}

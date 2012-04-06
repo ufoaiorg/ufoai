@@ -187,8 +187,7 @@ void UI_Shutdown (void)
 		}
 	}
 
-	if (ui_global.adataize)
-		Mem_Free(ui_global.adata);
+	Mem_Free(ui_global.adata);
 	ui_global.adata = NULL;
 	ui_global.adataize = 0;
 

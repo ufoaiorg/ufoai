@@ -556,10 +556,8 @@ void CL_HTTP_Cleanup (void)
 			dl->file = NULL;
 		}
 
-		if (dl->tempBuffer) {
-			Mem_Free(dl->tempBuffer);
-			dl->tempBuffer = NULL;
-		}
+		Mem_Free(dl->tempBuffer);
+		dl->tempBuffer = NULL;
 
 		if (dl->curl) {
 			if (multi)

@@ -721,8 +721,7 @@ static void R_SortSurfacesArrays (const model_t *mod)
 	for (i = 0; i < r_numImages; i++) {
 		mBspSurfaces_t *surfs = r_sorted_surfaces[i];
 		if (surfs) {
-			if (surfs->surfaces)
-				Mem_Free(surfs->surfaces);
+			Mem_Free(surfs->surfaces);
 			Mem_Free(surfs);
 		}
 	}
