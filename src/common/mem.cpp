@@ -37,22 +37,20 @@ struct memBlockFoot_t {
 };
 
 struct memBlock_t {
-    memBlock_t*     next;
+    memBlock_t* next;
 
-    uint32_t        topSentinel; /**< For memory integrity checking */
+    uint32_t    topSentinel; /**< For memory integrity checking */
 
-    memPool_t*      pool;        /**< Owner pool */
-    int             tagNum;      /**< For group free */
-    size_t          size;        /**< Size of allocation including this header */
+    memPool_t*  pool;        /**< Owner pool */
+    int         tagNum;      /**< For group free */
+    size_t      size;        /**< Size of allocation including this header */
 
-    char const*     allocFile;   /**< File the memory was allocated in */
-    int             allocLine;   /**< Line the memory was allocated at */
+    char const* allocFile;   /**< File the memory was allocated in */
+    int         allocLine;   /**< Line the memory was allocated at */
 
-    size_t          memSize;     /**< Size minus the header */
+    size_t      memSize;     /**< Size minus the header */
 
-    memBlockFoot_t* footer;      /**< Allocated in the space AFTER the block to check for overflow */
-
-    uint32_t        botSentinel; /**< For memory integrity checking */
+    uint32_t    botSentinel; /**< For memory integrity checking */
 };
 
 struct memPool_t {
@@ -175,6 +173,11 @@ static void* Mem_BlockToPtr(memBlock_t* const mem)
 	return mem + 1;
 }
 
+static memBlockFoot_t* Mem_BlockToFooter(memBlock_t* const mem)
+{
+	return reinterpret_cast<memBlockFoot_t*>(reinterpret_cast<byte*>(Mem_BlockToPtr(mem)) + mem->memSize);
+}
+
 static void _Mem_CheckSentinels (memBlock_t* const mem, const char *fileName, const int fileLine)
 {
 	/* Check sentinels */
@@ -184,13 +187,7 @@ static void _Mem_CheckSentinels (memBlock_t* const mem, const char *fileName, co
 	} else if (mem->botSentinel != MEM_HEAD_SENTINEL_BOT) {
 		Sys_Error("Mem_CheckSentinels: bad memory header bottom sentinel [buffer underflow]\n"
 			"free: %s:#%i", fileName, fileLine);
-	} else if (!mem->footer) {
-		Sys_Error("Mem_CheckSentinels: bad memory footer [buffer overflow]\n"
-			"pool: %s\n"
-			"alloc: %s:#%i\n"
-			"free: %s:#%i",
-			mem->pool ? mem->pool->name : "UNKNOWN", mem->allocFile, mem->allocLine, fileName, fileLine);
-	} else if (mem->footer->sentinel != MEM_FOOT_SENTINEL) {
+	} else if (Mem_BlockToFooter(mem)->sentinel != MEM_FOOT_SENTINEL) {
 		Sys_Error("Mem_CheckSentinels: bad memory footer sentinel [buffer overflow]\n"
 			"pool: %s\n"
 			"alloc: %s:#%i\n"
@@ -321,11 +318,10 @@ void *_Mem_Alloc (size_t size, qboolean zeroFill, memPool_t *pool, const int tag
 	mem->pool = pool;
 	mem->allocFile = fileName;
 	mem->allocLine = fileLine;
-	mem->footer = reinterpret_cast<memBlockFoot_t*>(reinterpret_cast<byte*>(Mem_BlockToPtr(mem)) + mem->memSize);
 	mem->botSentinel = MEM_HEAD_SENTINEL_BOT;
 
 	/* Fill in the footer */
-	mem->footer->sentinel = MEM_FOOT_SENTINEL;
+	Mem_BlockToFooter(mem)->sentinel = MEM_FOOT_SENTINEL;
 
 	TH_MutexLock(z_lock);
 
