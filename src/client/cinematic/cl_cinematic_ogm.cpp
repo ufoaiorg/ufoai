@@ -63,7 +63,7 @@ typedef struct
 	yuv_buffer th_yuvbuffer;
 #endif
 
-	byte* outputBuffer;
+	unsigned* outputBuffer;
 	int outputWidth;
 	int outputHeight;
 	int outputBufferSize; /**< in pixel (so "real bytesize" = outputBufferSize * 4) */
@@ -78,8 +78,6 @@ typedef struct
 static yuvTable_t ogmCin_yuvTable;
 
 #define OGMCIN (*((ogmCinematic_t*)cin->codecData))
-
-#define OGM_CINEMATIC_BPP 4
 
 #ifdef HAVE_XVID_H
 
@@ -138,8 +136,8 @@ static int CIN_XVID_Decode (cinematic_t *cin, unsigned char *input, int inputSiz
 	xvid_dec_frame.length = inputSize;
 
 	/* Output frame structure */
-	xvid_dec_frame.output.plane[0] = OGMCIN.outputBuffer;
-	xvid_dec_frame.output.stride[0] = OGMCIN.outputWidth * OGM_CINEMATIC_BPP;
+	xvid_dec_frame.output.plane[0]  = OGMCIN.outputBuffer;
+	xvid_dec_frame.output.stride[0] = OGMCIN.outputWidth * sizeof(*OGMCIN.outputBuffer);
 	if (OGMCIN.outputBuffer == NULL)
 		xvid_dec_frame.output.csp = XVID_CSP_NULL;
 	else
@@ -301,7 +299,7 @@ static int CIN_XVID_LoadVideoFrame (cinematic_t *cin)
 					Mem_Free(OGMCIN.outputBuffer);
 
 				/* Allocate the new buffer */
-				OGMCIN.outputBuffer = Mem_PoolAllocTypeN(byte, OGMCIN.outputBufferSize * OGM_CINEMATIC_BPP, cl_genericPool);
+				OGMCIN.outputBuffer = Mem_PoolAllocTypeN(unsigned, OGMCIN.outputBufferSize, cl_genericPool);
 				if (OGMCIN.outputBuffer == NULL) {
 					OGMCIN.outputBufferSize = 0;
 					r = -2;
@@ -420,7 +418,7 @@ static int CIN_THEORA_LoadVideoFrame (cinematic_t *cin)
 					Mem_Free(OGMCIN.outputBuffer);
 
 				/* Allocate the new buffer */
-				OGMCIN.outputBuffer = Mem_PoolAllocTypeN(byte, OGMCIN.outputBufferSize * OGM_CINEMATIC_BPP, cl_genericPool);
+				OGMCIN.outputBuffer = Mem_PoolAllocTypeN(unsigned, OGMCIN.outputBufferSize, cl_genericPool);
 				if (OGMCIN.outputBuffer == NULL) {
 					OGMCIN.outputBufferSize = 0;
 					r = -2;
@@ -440,7 +438,7 @@ static int CIN_THEORA_LoadVideoFrame (cinematic_t *cin)
 				CIN_THEORA_FrameYUVtoRGB24(OGMCIN.th_yuvbuffer.y, OGMCIN.th_yuvbuffer.u, OGMCIN.th_yuvbuffer.v,
 						OGMCIN.th_info.width, OGMCIN.th_info.height, OGMCIN.th_yuvbuffer.y_stride,
 						OGMCIN.th_yuvbuffer.uv_stride, yWShift, uvWShift, yHShift, uvHShift,
-						(uint32_t*) OGMCIN.outputBuffer);
+						OGMCIN.outputBuffer);
 
 				r = 1;
 				OGMCIN.videoFrameCount = th_frame;
@@ -731,7 +729,7 @@ static void CIN_OGM_DrawCinematic (cinematic_t *cin)
 
 	if (!OGMCIN.outputBuffer)
 		return;
-	texnum = R_UploadData("***cinematic***", (unsigned*)OGMCIN.outputBuffer, OGMCIN.outputWidth, OGMCIN.outputHeight);
+	texnum = R_UploadData("***cinematic***", OGMCIN.outputBuffer, OGMCIN.outputWidth, OGMCIN.outputHeight);
 	R_DrawTexture(texnum, cin->x, cin->y, cin->w, cin->h);
 }
 
