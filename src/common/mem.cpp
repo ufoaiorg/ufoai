@@ -175,10 +175,9 @@ static void* Mem_BlockToPtr(memBlock_t* const mem)
 	return mem + 1;
 }
 
-static void _Mem_CheckSentinels (void *ptr, const char *fileName, const int fileLine)
+static void _Mem_CheckSentinels (memBlock_t* const mem, const char *fileName, const int fileLine)
 {
 	/* Check sentinels */
-	memBlock_t* const mem = Mem_PtrToBlock(ptr);
 	if (mem->topSentinel != MEM_HEAD_SENTINEL_TOP) {
 		Sys_Error("Mem_Free: bad memory header top sentinel [buffer underflow]\n"
 			"free: %s:#%i", fileName, fileLine);
@@ -211,9 +210,8 @@ void _Mem_Free (void *ptr, const char *fileName, const int fileLine)
 	if (!ptr)
 		return;
 
-	_Mem_CheckSentinels(ptr, fileName, fileLine);
-
 	memBlock_t* const mem = Mem_PtrToBlock(ptr);
+	_Mem_CheckSentinels(mem, fileName, fileLine);
 
 	TH_MutexLock(z_lock);
 
@@ -355,9 +353,8 @@ void* _Mem_ReAlloc (void *ptr, size_t size, const char *fileName, const int file
 	if (!ptr)
 		Sys_Error("Use Mem_Alloc instead");
 
-	_Mem_CheckSentinels(ptr, fileName, fileLine);
-
 	memBlock_t* const mem = Mem_PtrToBlock(ptr);
+	_Mem_CheckSentinels(mem, fileName, fileLine);
 
 	/* if size matches, do nothing */
 	if (mem->memSize == size)
@@ -378,7 +375,7 @@ void* _Mem_ReAlloc (void *ptr, size_t size, const char *fileName, const int file
 	/* if there was old data, free it */
 	_Mem_Free(ptr, fileName, fileLine);
 
-	_Mem_CheckSentinels(newPtr, fileName, fileLine);
+	_Mem_CheckSentinels(Mem_PtrToBlock(newPtr), fileName, fileLine);
 
 	return newPtr;
 }
