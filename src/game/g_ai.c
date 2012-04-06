@@ -84,12 +84,17 @@ static qboolean AI_FighterCheckShoot (const edict_t* ent, const edict_t* check, 
 	*dist = VectorDist(ent->origin, check->origin);
 	if (*dist > fd->range)
 		return qfalse;
+
+	/* if insane, we don't check more */
+	if (G_IsInsane(ent))
+		return qtrue;
+
 	/* don't shoot - we are to close */
-	else if (*dist < fd->splrad)
+	if (*dist < fd->splrad)
 		return qfalse;
 
 	/* check FF */
-	if (!G_IsInsane(ent) && AI_CheckFF(ent, check->origin, fd->spread[0]))
+	if (AI_CheckFF(ent, check->origin, fd->spread[0]))
 		return qfalse;
 
 	return qtrue;
