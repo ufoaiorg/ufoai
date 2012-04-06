@@ -29,31 +29,7 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #define MEM_MAX_POOLNAME	64
 #define MEM_HASH			11
 
-struct memBlockFoot_t {
-	uint32_t sentinel;				/**< For memory integrity checking */
-};
-
-struct memPool_t;
-
-struct memBlock_t {
-	memBlock_t *next;
-
-	uint32_t topSentinel;			/**< For memory integrity checking */
-
-	memPool_t *pool;			/**< Owner pool */
-	int tagNum;						/**< For group free */
-	size_t size;					/**< Size of allocation including this header */
-
-	const char *allocFile;			/**< File the memory was allocated in */
-	int allocLine;					/**< Line the memory was allocated at */
-
-	void *memPointer;				/**< pointer to allocated memory */
-	size_t memSize;					/**< Size minus the header */
-
-	memBlockFoot_t *footer;			/**< Allocated in the space AFTER the block to check for overflow */
-
-	uint32_t botSentinel;			/**< For memory integrity checking */
-};
+struct memBlock_t;
 
 struct memPool_t {
 	char name[MEM_MAX_POOLNAME];	/**< Name of pool */

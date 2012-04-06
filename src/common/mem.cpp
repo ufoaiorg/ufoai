@@ -29,6 +29,30 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #include "common.h"
 #include "../shared/mutex.h"
 
+struct memBlockFoot_t {
+    uint32_t sentinel; /**< For memory integrity checking */
+};
+
+struct memBlock_t {
+    memBlock_t*     next;
+
+    uint32_t        topSentinel; /**< For memory integrity checking */
+
+    memPool_t*      pool;        /**< Owner pool */
+    int             tagNum;      /**< For group free */
+    size_t          size;        /**< Size of allocation including this header */
+
+    char const*     allocFile;   /**< File the memory was allocated in */
+    int             allocLine;   /**< Line the memory was allocated at */
+
+    void*           memPointer;  /**< pointer to allocated memory */
+    size_t          memSize;     /**< Size minus the header */
+
+    memBlockFoot_t* footer;      /**< Allocated in the space AFTER the block to check for overflow */
+
+    uint32_t        botSentinel; /**< For memory integrity checking */
+};
+
 #define MEM_HEAD_SENTINEL_TOP	0xFEBDFAED
 #define MEM_HEAD_SENTINEL_BOT	0xD0BAF0FF
 #define MEM_FOOT_SENTINEL		0xF00DF00D
