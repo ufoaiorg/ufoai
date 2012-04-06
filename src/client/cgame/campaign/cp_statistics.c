@@ -250,8 +250,6 @@ static void CP_CampaignStats_f (void)
 	Com_Printf("...scientist_rankbonus: %i\n", CP_GetSalaryRankBonusEmployee(salary, EMPL_SCIENTIST));
 	Com_Printf("...pilot_base: %i\n", CP_GetSalaryBaseEmployee(salary, EMPL_PILOT));
 	Com_Printf("...pilot_rankbonus: %i\n", CP_GetSalaryRankBonusEmployee(salary, EMPL_PILOT));
-	Com_Printf("...robot_base: %i\n", CP_GetSalaryBaseEmployee(salary, EMPL_ROBOT));
-	Com_Printf("...robot_rankbonus: %i\n", CP_GetSalaryRankBonusEmployee(salary, EMPL_ROBOT));
 	Com_Printf("...aircraft_factor: %i\n", salary->aircraftFactor);
 	Com_Printf("...aircraft_divisor: %i\n", salary->aircraftDivisor);
 	Com_Printf("...base_upkeep: %i\n", salary->baseUpkeep);
@@ -260,7 +258,6 @@ static void CP_CampaignStats_f (void)
 	Com_Printf("...admin_worker: %i\n", CP_GetSalaryAdminEmployee(salary, EMPL_WORKER));
 	Com_Printf("...admin_scientist: %i\n", CP_GetSalaryAdminEmployee(salary, EMPL_SCIENTIST));
 	Com_Printf("...admin_pilot: %i\n", CP_GetSalaryAdminEmployee(salary, EMPL_PILOT));
-	Com_Printf("...admin_robot: %i\n", CP_GetSalaryAdminEmployee(salary, EMPL_ROBOT));
 	Com_Printf("...debt_interest: %.5f\n", salary->debtInterest);
 }
 #endif /* DEBUG */

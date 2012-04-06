@@ -830,19 +830,19 @@ static void CL_DebugNewEmployees_f (void)
 
 	for (j = 0; j < 5; j++)
 		/* Create a scientist */
-		E_CreateEmployee(EMPL_SCIENTIST, nation, NULL);
+		E_CreateEmployee(EMPL_SCIENTIST, nation);
 
 	for (j = 0; j < 5; j++)
 		/* Create a pilot. */
-		E_CreateEmployee(EMPL_PILOT, nation, NULL);
+		E_CreateEmployee(EMPL_PILOT, nation);
 
 	for (j = 0; j < 5; j++)
 		/* Create a soldier. */
-		E_CreateEmployee(EMPL_SOLDIER, nation, NULL);
+		E_CreateEmployee(EMPL_SOLDIER, nation);
 
 	for (j = 0; j < 5; j++)
 		/* Create a worker. */
-		E_CreateEmployee(EMPL_WORKER, nation, NULL);
+		E_CreateEmployee(EMPL_WORKER, nation);
 }
 #endif
 
