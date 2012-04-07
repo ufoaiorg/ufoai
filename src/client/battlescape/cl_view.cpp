@@ -128,10 +128,8 @@ void CL_ViewLoadMedia (void)
 static float CL_PrecacheCharacterModels (float alreadyLoadedPercent)
 {
 	teamDef_t *td;
-	int i, j, num;
+	int i, j;
 	char model[MAX_QPATH];
-	const char *path;
-	linkedList_t *list;
 	const float percent = 40.0f;
 
 	if (!cl_precache->integer)
@@ -140,31 +138,17 @@ static float CL_PrecacheCharacterModels (float alreadyLoadedPercent)
 	/* search the name */
 	for (i = 0, td = csi.teamDef; i < csi.numTeamDefs; i++, td++)
 		for (j = NAME_NEUTRAL; j < NAME_LAST; j++) {
-			/* no models for this gender */
-			if (!td->numModels[j])
-				continue;
 			/* search one of the model definitions */
-			list = td->models[j];
-			assert(list);
-			for (num = 0; num < td->numModels[j]; num++) {
-				assert(list);
-				path = (const char*)list->data;
-				list = list->next;
+			for (linkedList_t const* list = td->models[j]; list; list = list->next) {
+				teamDef_t::model_t const& m = *static_cast<teamDef_t::model_t const*>(list->data);
 				/* register body */
-				Com_sprintf(model, sizeof(model), "%s/%s", path, list->data);
+				Com_sprintf(model, sizeof(model), "%s/%s", m.path, m.body);
 				if (!R_FindModel(model))
 					Com_Printf("Com_PrecacheCharacterModels: Could not register model %s\n", model);
-				list = list->next;
 				/* register head */
-				Com_sprintf(model, sizeof(model), "%s/%s", path, list->data);
+				Com_sprintf(model, sizeof(model), "%s/%s", m.path, m.head);
 				if (!R_FindModel(model))
 					Com_Printf("Com_PrecacheCharacterModels: Could not register model %s\n", model);
-
-				/* skip skin */
-				list = list->next;
-
-				/* new path */
-				list = list->next;
 
 				alreadyLoadedPercent += percent / (td->numModels[j] * csi.numTeamDefs * NAME_LAST);
 				SCR_DrawLoadingScreen(qtrue, alreadyLoadedPercent);

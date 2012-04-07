@@ -220,6 +220,13 @@ typedef struct teamDef_s {
 	linkedList_t *names[NAME_NUM_TYPES];	/**< Names list per gender. */
 	int numNames[NAME_NUM_TYPES];	/**< Amount of names in this list for all different genders. */
 
+	struct model_t {
+		char* path;
+		char* body;
+		char* head;
+		int   skin;
+	};
+
 	linkedList_t *models[NAME_LAST];	/**< Models list per gender. */
 	int numModels[NAME_LAST];	/**< Amount of models in this list for all different genders. */
 

@@ -1984,15 +1984,6 @@ EQUIPMENT DEFINITION INTERPRETER
 ==============================================================================
 */
 
-typedef enum model_script_s {
-	MODEL_PATH,
-	MODEL_BODY,
-	MODEL_HEAD,
-	MODEL_SKIN,
-
-	MODEL_NUM_TYPES
-} model_script_t;
-
 const char *const name_strings[NAME_NUM_TYPES] = {
 	"neutral",
 	"female",
@@ -2144,18 +2135,13 @@ static const char *Com_GiveName (int gender, const teamDef_t *td)
 }
 
 /**
- * @param[in] type MODEL_PATH, MODEL_BODY, MODEL_HEAD, MODEL_SKIN (path, body, head, skin - see team_*.ufo)
  * @param[in] gender 1 (female) or 2 (male)
  * @param[in] td The team definition
  * @sa Com_GetCharacterValues
  */
-static const char *Com_GiveModel (int type, int gender, const teamDef_t *td)
+static teamDef_t::model_t const* Com_GiveModel (int gender, const teamDef_t *td)
 {
-	int j;
-
 	const linkedList_t* list;
-	/* search one of the model definitions and (the +) go to the type entry from team_*.ufo  */
-	const int num = (rand() % td->numModels[gender]) * MODEL_NUM_TYPES + type;
 
 	/* found category */
 	if (!td->numModels[gender]) {
@@ -2163,15 +2149,18 @@ static const char *Com_GiveModel (int type, int gender, const teamDef_t *td)
 		return NULL;
 	}
 
+	/* search one of the model definitions */
+	size_t n = rand() % td->numModels[gender];
+
 	/* skip models and unwanted info */
 	list = td->models[gender];
-	for (j = 0; j < num; j++) {
+	while (n-- != 0) {
 		assert(list);
 		list = list->next;
 	}
 
 	/* return the value */
-	return (const char*)list->data;
+	return static_cast<teamDef_t::model_t const*>(list->data);
 }
 
 /**
@@ -2270,25 +2259,13 @@ void Com_GetCharacterValues (const char *teamDefition, character_t * chr)
 		Q_strcat(chr->name, str, sizeof(chr->name));
 
 		/* get model */
-		str = Com_GiveModel(MODEL_PATH, gender, chr->teamDef);
-		if (!str)
-			continue;
-		Q_strncpyz(chr->path, str, sizeof(chr->path));
+		teamDef_t::model_t const* const model = Com_GiveModel(gender, chr->teamDef);
+		if (!model) continue;
 
-		str = Com_GiveModel(MODEL_BODY, gender, chr->teamDef);
-		if (!str)
-			continue;
-		Q_strncpyz(chr->body, str, sizeof(chr->body));
-
-		str = Com_GiveModel(MODEL_HEAD, gender, chr->teamDef);
-		if (!str)
-			continue;
-		Q_strncpyz(chr->head, str, sizeof(chr->head));
-
-		str = Com_GiveModel(MODEL_SKIN, gender, chr->teamDef);
-		if (!str)
-			continue;
-		chr->skin = atoi(str);
+		Q_strncpyz(chr->path, model->path, sizeof(chr->path));
+		Q_strncpyz(chr->body, model->body, sizeof(chr->body));
+		Q_strncpyz(chr->head, model->head, sizeof(chr->head));
+		chr->skin = model->skin;
 		return;
 	}
 	Com_Error(ERR_DROP, "Could not set character values for team '%s'\n", teamDefition);
@@ -2411,6 +2388,7 @@ static void Com_ParseActorModels (const char *name, const char **text, teamDef_t
 
 				do {
 					/* get the path, body, head and skin */
+					teamDef_t::model_t model;
 					for (j = 0; j < 4; j++) {
 						token = Com_EParse(text, errhead, name);
 						if (!*text) {
@@ -2420,19 +2398,22 @@ static void Com_ParseActorModels (const char *name, const char **text, teamDef_t
 						if (*token == '}')
 							break;
 
-						if (j == 3 && *token == '*')
-							LIST_AddString(&td->models[i], "");
-						else
-							LIST_AddString(&td->models[i], token);
+						switch (j) {
+						case 0: model.path = Mem_StrDup(token); break;
+						case 1: model.body = Mem_StrDup(token); break;
+						case 2: model.head = Mem_StrDup(token); break;
+						case 3: model.skin = atoi(token);       break;
+						}
 					}
 					/* first token was '}' */
 					if (j == 0)
 						break;
 
 					/* only add complete actor info */
-					if (j == 4)
+					if (j == 4) {
+						LIST_Add(&td->models[i], model);
 						td->numModels[i]++;
-					else {
+					} else {
 						Com_Printf("Com_ParseActors: Incomplete actor data: '%s' - j: %i\n", td->id, j);
 						break;
 					}
