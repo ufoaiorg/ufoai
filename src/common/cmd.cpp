@@ -1016,26 +1016,23 @@ static void Cmd_List_f (void)
 
 /**
  * @brief Autocomplete function for exec command
- * @note This function only lists all cfg files - but doesn't perform any
- * autocomplete step when hitting tab after "exec "
  * @sa Cmd_AddParamCompleteFunction
  */
 static int Cmd_CompleteExecCommand (const char *partial, const char **match)
 {
-	const char *filename;
-	size_t len;
+	int n = 0;
 
-	FS_BuildFileList("*.cfg");
-
-	len = strlen(partial);
-	if (!len) {
-		while ((filename = FS_NextFileFromFileList("*.cfg")) != NULL) {
+	char const* const pattern = "*.cfg";
+	FS_BuildFileList(pattern);
+	while (char const* filename = FS_NextFileFromFileList(pattern)) {
+		if (Cmd_GenericCompleteFunction(filename, partial, match)) {
 			Com_Printf("%s\n", filename);
+			++n;
 		}
 	}
-
 	FS_NextFileFromFileList(NULL);
-	return 0;
+
+	return n;
 }
 
 /**
