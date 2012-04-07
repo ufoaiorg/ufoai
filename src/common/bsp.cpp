@@ -72,8 +72,6 @@ static void CMod_LoadSubmodels (mapTile_t *tile, const byte *base, const lump_t 
 	tile->nummodels = count;
 
 	for (i = 0; i < count; i++, in++, out++) {
-		out = &tile->models[i];
-
 		/* Record the shift in case we need to undo it. */
 		VectorCopy(shift, out->shift);
 		/* spread the mins / maxs by a pixel */
