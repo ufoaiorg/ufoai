@@ -327,7 +327,6 @@ void UI_DrawModelNode (uiNode_t *node, const char *source)
 
 	/* do animations */
 	if (EXTRADATA(node).animation && *EXTRADATA(node).animation) {
-		animState_t *as;
 		const char *ref;
 		ref = UI_GetReferenceString(node, EXTRADATA(node).animation);
 
@@ -338,7 +337,8 @@ void UI_DrawModelNode (uiNode_t *node, const char *source)
 			Mem_Free(EXTRADATA(node).animationState);
 			EXTRADATA(node).animationState = NULL;
 		}
-		if (!EXTRADATA(node).animationState) {
+		animState_t* as = EXTRADATA(node).animationState;
+		if (!as) {
 			as = Mem_PoolAllocType(animState_t, cl_genericPool);
 			if (!as)
 				Com_Error(ERR_DROP, "Model %s should have animState_t for animation %s - but doesn't\n", mi.name, ref);
@@ -347,9 +347,6 @@ void UI_DrawModelNode (uiNode_t *node, const char *source)
 		} else {
 			const char *anim;
 			/* change anim if needed */
-			as = EXTRADATA(node).animationState;
-			if (!as)
-				Com_Error(ERR_DROP, "Model %s should have animState_t for animation %s - but doesn't\n", mi.name, ref);
 			anim = R_AnimGetName(as, mi.model);
 			if (anim && !Q_streq(anim, ref))
 				R_AnimChange(as, mi.model, ref);
