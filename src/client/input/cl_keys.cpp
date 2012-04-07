@@ -771,30 +771,14 @@ static void Key_Bindlist_f (void)
 
 static int Key_CompleteKeyName (const char *partial, const char **match)
 {
-	int matches = 0;
-	const char *localMatch[MAX_COMPLETE];
-	size_t len;
-	const keyName_t *kn;
-
-	len = strlen(partial);
-	if (!len) {
-		for (kn = keyNames; kn->name; kn++) {
+	int n = 0;
+	for (keyName_t const* kn = keyNames; kn->name; ++kn) {
+		if (Cmd_GenericCompleteFunction(kn->name, partial, match)) {
 			Com_Printf("%s\n", kn->name);
-		}
-		return 0;
-	}
-
-	/* check for partial matches */
-	for (kn = keyNames; kn->name; kn++) {
-		if (!strncmp(partial, kn->name, len)) {
-			Com_Printf("%s\n", kn->name);
-			localMatch[matches++] = kn->name;
-			if (matches >= MAX_COMPLETE)
-				break;
+			++n;
 		}
 	}
-
-	return Cmd_GenericCompleteFunction(len, match, matches, localMatch);
+	return n;
 }
 
 void Key_Init (void)

@@ -102,13 +102,20 @@ void Cmd_AddCommand(const char *cmd_name, xcommand_t function, const char *desc 
 
 void Cmd_RemoveCommand(const char *cmd_name);
 
-#define MAX_COMPLETE 128
 void Cmd_AddParamCompleteFunction(const char *cmd_name, int (*function)(const char *partial, const char **match));
 
 void Cmd_AddUserdata(const char *cmd_name, void* userdata);
 void* Cmd_GetUserdata (const char *cmd_name);
 
-int Cmd_GenericCompleteFunction(size_t len, const char **match, int matches, const char **list);
+/**
+ * Tests whether candidate has partial as prefix and determines the common prefix of all candidates passed to it.
+ * @sa Cmd_AddParamCompleteFunction
+ * @param[out] match      The found entry of the list we are searching, in case of more than one entry their common suffix is returned.
+ * @param[in]  candidate  A completion candidate.
+ * @param[in]  partial    The prefix a candidate must have to be considered a match.
+ * @returns    true iff the candidate matches partial.
+ */
+bool Cmd_GenericCompleteFunction(char const* candidate, char const* partial, char const** match);
 
 /**
  * @brief used by the cvar code to check for cvar / command name overlap

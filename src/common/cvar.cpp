@@ -257,34 +257,19 @@ void Cvar_Reset (cvar_t *cvar)
  */
 int Cvar_CompleteVariable (const char *partial, const char **match)
 {
-	int matches = 0;
-	const char *localMatch[MAX_COMPLETE];
-	cvar_t* cvar;
-	size_t len;
-
-	len = strlen(partial);
-	if (!len)
-		return 0;
-
-	localMatch[matches] = NULL;
-
-	/* check for partial matches */
-	for (cvar = cvarVars; cvar; cvar = cvar->next) {
-		if (!strncmp(partial, cvar->name, len)) {
+	int n = 0;
+	for (cvar_t const* cvar = cvarVars; cvar; cvar = cvar->next) {
 #ifndef DEBUG
-			if (cvar->flags & CVAR_DEVELOPER)
-				continue;
+		if (cvar->flags & CVAR_DEVELOPER) continue;
 #endif
+		if (Cmd_GenericCompleteFunction(cvar->name, partial, match)) {
 			Com_Printf("[var] %-20s = \"%s\"\n", cvar->name, cvar->string);
 			if (cvar->description)
 				Com_Printf(S_COLOR_GREEN "      %s\n", cvar->description);
-			localMatch[matches++] = cvar->name;
-			if (matches >= MAX_COMPLETE)
-				break;
+			++n;
 		}
 	}
-
-	return Cmd_GenericCompleteFunction(len, match, matches, localMatch);
+	return n;
 }
 
 /**

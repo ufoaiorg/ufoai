@@ -656,50 +656,29 @@ const char* Cmd_GetCommandDesc (const char* cmd_name)
 	return "";
 }
 
-/**
- * @sa Cmd_AddParamCompleteFunction
- * @param[out] match The found entry of the list we are searching, in case of more than one entry their common suffix is returned.
- * @param[in] len The length of the already typed string (where you are searching entries for in the @c list)
- * @param[in] matches The amount of entries in the @c list parameter
- * @param[in] list The list of entries to search for possible matches
- * @returns the amount of matches
- */
-int Cmd_GenericCompleteFunction (size_t len, const char **match, int matches, const char **list)
+bool Cmd_GenericCompleteFunction(char const* candidate, char const* partial, char const** match)
 {
 	static char matchString[MAX_QPATH];
-	int lenResult = 0;
-	int i;
 
-	switch (matches) {
-	/* exactly one match */
-	case 1:
-		*match = list[0];
-		lenResult = strlen(list[0]);
-		break;
-	/* no matches */
-	case 0:
-		break;
-	/* more than one match */
-	default:
-		/* get the shortest matching string of the results */
-		for (lenResult = len;; lenResult++) {
-			const char matchChar = list[0][lenResult];
-			for (i = 1; i < matches; i++) {
-				if (matchChar != list[i][lenResult])
-					goto out;
-			}
-		}
-out:
-		break;
-	}
-	/* len is >= 1 here */
-	if (matches && len != lenResult) {
-		if (lenResult >= MAX_QPATH)
-			lenResult = MAX_QPATH - 1;
-		Q_strncpyz(matchString, list[0], lenResult + 1);
+	if (!Q_strstart(candidate, partial))
+		return false;
+
+	if (!*match) {
+		/* First match. */
+		Q_strncpyz(matchString, candidate, sizeof(matchString));
 		*match = matchString;
+	} else {
+		/* Subsequent match, determine common prefix with previous match(es). */
+		char*       dst = matchString;
+		char const* src = candidate;
+		while (*dst == *src) {
+			++dst;
+			++src;
+		}
+		*dst = '\0';
 	}
-	return matches;
+
+	return true;
 }
 
 /**
@@ -912,41 +891,30 @@ int Cmd_CompleteCommandParameters (const char *command, const char *partial, con
  */
 int Cmd_CompleteCommand (const char *partial, const char **match)
 {
-	const cmd_function_t *cmd;
-	const cmd_alias_t *a;
-	const char *localMatch[MAX_COMPLETE];
-	int len, matches = 0;
-
-	len = strlen(partial);
-
-	if (!len)
+	if (partial[0] == '\0')
 		return 0;
 
+	int n = 0;
+
 	/* check for partial matches in commands */
-	for (cmd = cmd_functions; cmd; cmd = cmd->next) {
-		if (!strncmp(partial, cmd->name, len)) {
+	for (cmd_function_t const* cmd = cmd_functions; cmd; cmd = cmd->next) {
+		if (Cmd_GenericCompleteFunction(cmd->name, partial, match)) {
 			Com_Printf("[cmd] %s\n", cmd->name);
 			if (cmd->description)
 				Com_Printf(S_COLOR_GREEN "      %s\n", cmd->description);
-			localMatch[matches++] = cmd->name;
-			if (matches >= MAX_COMPLETE)
-				break;
+			++n;
 		}
 	}
 
 	/* and then aliases */
-	if (matches < MAX_COMPLETE) {
-		for (a = cmd_alias; a; a = a->next) {
-			if (!strncmp(partial, a->name, len)) {
-				Com_Printf("[ali] %s\n", a->name);
-				localMatch[matches++] = a->name;
-				if (matches >= MAX_COMPLETE)
-					break;
-			}
+	for (cmd_alias_t const* a = cmd_alias; a; a = a->next) {
+		if (Cmd_GenericCompleteFunction(a->name, partial, match)) {
+			Com_Printf("[ali] %s\n", a->name);
+			++n;
 		}
 	}
 
-	return Cmd_GenericCompleteFunction(len, match, matches, localMatch);
+	return n;
 }
 
 

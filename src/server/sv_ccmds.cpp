@@ -388,9 +388,6 @@ static void SV_ServerCommand_f (void)
  */
 static int SV_CompleteMapCommand (const char *partial, const char **match)
 {
-	int i, matches = 0;
-	const char *localMatch[MAX_COMPLETE];
-	size_t len;
 	const char *dayNightStr = NULL;
 	static char dayNightMatch[7];
 
@@ -426,26 +423,14 @@ static int SV_CompleteMapCommand (const char *partial, const char **match)
 
 	FS_GetMaps(qfalse);
 
-	len = strlen(partial);
-	if (!len) {
-		/* list them all if there was no parameter given */
-		for (i = 0; i <= fs_numInstalledMaps; i++)
-			Com_Printf("%s\n", fs_maps[i]);
-		return fs_numInstalledMaps;
-	}
-
-	localMatch[matches] = NULL;
-
-	/* search all matches and fill the localMatch array */
-	for (i = 0; i <= fs_numInstalledMaps; i++)
-		if (!strncmp(partial, fs_maps[i], len)) {
-			Com_Printf("%s\n", fs_maps[i]);
-			localMatch[matches++] = fs_maps[i];
-			if (matches >= MAX_COMPLETE)
-				break;
+	int n = 0;
+	for (char* const* i = fs_maps, * const* const end = i + fs_numInstalledMaps; i != end; ++i) {
+		if (Cmd_GenericCompleteFunction(*i, partial, match)) {
+			Com_Printf("%s\n", *i);
+			++n;
 		}
-
-	return Cmd_GenericCompleteFunction(len, match, matches, localMatch);
+	}
+	return n;
 }
 
 /**
@@ -488,42 +473,16 @@ static char const* const serverCommandList[] = {
  */
 static int SV_CompleteServerCommand (const char *partial, const char **match)
 {
-	int i, matches = 0;
-	const char *localMatch[MAX_COMPLETE];
-	size_t len;
-	int numServerCommands;
-
-	len = strlen(partial);
-	if (!len) {
-		for (i = 0; ; i += 2) {
-			if (!serverCommandList[i])
-				break;
-			Com_Printf("[cmd] %s\n", serverCommandList[i]);
-			if (*serverCommandList[i + 1])
-				Com_Printf(S_COLOR_GREEN "      %s\n", serverCommandList[i + 1]);
+	int n = 0;
+	for (char const* const* i = serverCommandList; i[0]; i += 2) {
+		if (Cmd_GenericCompleteFunction(i[0], partial, match)) {
+			Com_Printf("[cmd] %s\n", i[0]);
+			if (*i[1])
+				Com_Printf(S_COLOR_GREEN "      %s\n", i[1]);
+			++n;
 		}
-		return i - 1;
 	}
-
-	for (i = 0, numServerCommands = 0; ; numServerCommands++, i += 2) {
-		if (!serverCommandList[i])
-			break;
-	}
-
-	localMatch[matches] = NULL;
-
-	/* search all matches and fill the localMatch array */
-	for (i = 0; i < numServerCommands; i++)
-		if (!strncmp(partial, serverCommandList[i * 2], len)) {
-			Com_Printf("[cmd] %s\n", serverCommandList[i * 2]);
-			if (*serverCommandList[i * 2 + 1])
-				Com_Printf(S_COLOR_GREEN "      %s\n", serverCommandList[i * 2 + 1]);
-			localMatch[matches++] = serverCommandList[i * 2];
-			if (matches >= MAX_COMPLETE)
-				break;
-		}
-
-	return Cmd_GenericCompleteFunction(len, match, matches, localMatch);
+	return n;
 }
 
 /**

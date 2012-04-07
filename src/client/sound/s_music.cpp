@@ -291,37 +291,18 @@ static void M_Change_f (void)
 
 static int M_CompleteMusic (const char *partial, const char **match)
 {
-	const char *filename;
-	int matches = 0;
-	const char *localMatch[MAX_COMPLETE];
-	size_t len;
+	char const* const pattern = "music/*.ogg";
+	FS_BuildFileList(pattern);
 
-	FS_BuildFileList("music/*.ogg");
-
-	len = strlen(partial);
-	if (!len) {
-		while ((filename = FS_NextFileFromFileList("music/*.ogg")) != NULL) {
+	int n = 0;
+	while (char const* const filename = FS_NextFileFromFileList(pattern)) {
+		if (Cmd_GenericCompleteFunction(filename, partial, match)) {
 			Com_Printf("%s\n", filename);
-		}
-		FS_NextFileFromFileList(NULL);
-		return 0;
-	}
-
-	/* start from first file entry */
-	FS_NextFileFromFileList(NULL);
-
-	/* check for partial matches */
-	while ((filename = FS_NextFileFromFileList("music/*.ogg")) != NULL) {
-		if (!strncmp(partial, filename, len)) {
-			Com_Printf("%s\n", filename);
-			localMatch[matches++] = filename;
-			if (matches >= MAX_COMPLETE)
-				break;
+			++n;
 		}
 	}
-	FS_NextFileFromFileList(NULL);
-
-	return Cmd_GenericCompleteFunction(len, match, matches, localMatch);
+	FS_NextFileFromFileList(0);
+	return n;
 }
 
 void M_Frame (void)

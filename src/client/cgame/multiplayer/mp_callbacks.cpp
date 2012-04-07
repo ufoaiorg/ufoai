@@ -238,33 +238,15 @@ static void CL_TeamNum_f (void)
  */
 static int CL_CompleteNetworkAddress (const char *partial, const char **match)
 {
-	int i, matches = 0;
-	const char *localMatch[MAX_COMPLETE];
-	const size_t len = strlen(partial);
-	if (!len) {
-		/* list them all if there was no parameter given */
-		for (i = 0; i < MAX_BOOKMARKS; i++) {
-			const char *adrStr = cgi->Cvar_GetString(va("adr%i", i));
-			if (adrStr[0] != '\0')
-				cgi->Com_Printf("%s\n", adrStr);
-		}
-		return 0;
-	}
-
-	localMatch[matches] = NULL;
-
-	/* search all matches and fill the localMatch array */
-	for (i = 0; i < MAX_BOOKMARKS; i++) {
-		const char *adrStr = cgi->Cvar_GetString(va("adr%i", i));
-		if (adrStr[0] != '\0' && !strncmp(partial, adrStr, len)) {
+	int n = 0;
+	for (int i = 0; i != MAX_BOOKMARKS; ++i) {
+		char const* const adrStr = cgi->Cvar_GetString(va("adr%i", i));
+		if (adrStr[0] != '\0' && cgi->Cmd_GenericCompleteFunction(adrStr, partial, match)) {
 			cgi->Com_Printf("%s\n", adrStr);
-			localMatch[matches++] = adrStr;
-			if (matches >= MAX_COMPLETE)
-				break;
+			++n;
 		}
 	}
-
-	return cgi->Cmd_GenericCompleteFunction(len, match, matches, localMatch);
+	return n;
 }
 
 void MP_CallbacksInit (const cgame_import_t *import)

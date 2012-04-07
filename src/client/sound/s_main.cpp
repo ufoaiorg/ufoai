@@ -151,36 +151,23 @@ static void S_Restart_f (void)
 
 static int S_CompleteSounds (const char *partial, const char **match)
 {
-	const char *filename;
-	int matches = 0;
-	const char *localMatch[MAX_COMPLETE];
-	size_t len = strlen(partial);
-	const char *soundExtensions[] = SAMPLE_TYPES;
-	const char **extension = soundExtensions;
-	int returnValue;
+	char const* const soundExtensions[] = SAMPLE_TYPES;
 
-	/* check for partial matches */
-	while (*extension) {
+	int n = 0;
+	for (char const* const* extension = soundExtensions; *extension; ++extension) {
 		char pattern[MAX_OSPATH];
 		Com_sprintf(pattern, sizeof(pattern), "sound/**.%s", *extension);
 		FS_BuildFileList(pattern);
-		while ((filename = FS_NextFileFromFileList(pattern)) != NULL) {
-			const char *fileWithPath = filename + 6;
-			if (!len) {
+		while (char const* filename = FS_NextFileFromFileList(pattern)) {
+			char const* const fileWithPath = filename + 6;
+			if (Cmd_GenericCompleteFunction(fileWithPath, partial, match)) {
 				Com_Printf("%s\n", fileWithPath);
-			} else if (!strncmp(partial, fileWithPath, len)) {
-				Com_Printf("%s\n", fileWithPath);
-				localMatch[matches++] = fileWithPath;
-				if (matches >= MAX_COMPLETE)
-					break;
+				++n;
 			}
 		}
-		FS_NextFileFromFileList(NULL);
-		extension++;
+		FS_NextFileFromFileList(0);
 	}
-
-	returnValue = Cmd_GenericCompleteFunction(len, match, matches, localMatch);
-	return returnValue;
+	return n;
 }
 
 /**

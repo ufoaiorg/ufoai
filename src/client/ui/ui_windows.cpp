@@ -212,31 +212,15 @@ uiNode_t* UI_PushWindow (const char *name, const char *parentName, linkedList_t 
  */
 int UI_CompleteWithWindow (const char *partial, const char **match)
 {
-	int i;
-	int matches = 0;
-	const char *localMatch[MAX_COMPLETE];
-	const size_t len = strlen(partial);
-
-	if (len == 0) {
-		for (i = 0; i < ui_global.numWindows; i++)
-			Com_Printf("%s\n", ui_global.windows[i]->name);
-		return 0;
-	}
-
-	/* check for partial matches */
-	for (i = 0; i < ui_global.numWindows; i++) {
-		char const* const name = ui_global.windows[i]->name;
-		if (!strncmp(partial, name, len)) {
+	int n = 0;
+	for (uiNode_t** i = ui_global.windows, ** const end = i + ui_global.numWindows; i != end; ++i) {
+		char const* const name = (*i)->name;
+		if (Cmd_GenericCompleteFunction(name, partial, match)) {
 			Com_Printf("%s\n", name);
-			localMatch[matches++] = name;
-			if (matches >= MAX_COMPLETE) {
-				Com_Printf("UI_CompleteWithWindow: hit MAX_COMPLETE\n");
-				break;
-			}
+			++n;
 		}
 	}
-
-	return Cmd_GenericCompleteFunction(len, match, matches, localMatch);
+	return n;
 }
 
 /**
