@@ -517,7 +517,7 @@ item armour_light_alien
 
 		normal_steelblade			30
 		normal_monomolecularblade	0
-		normal_needle		2
+		normal_needle		1
 
 		blast			20
 
@@ -580,7 +580,7 @@ item armour_medium_alien
 
 		normal_steelblade			60
 		normal_monomolecularblade	15
-		normal_needle		4
+		normal_needle		3
 
 		blast			50
 

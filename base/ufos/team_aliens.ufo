@@ -211,7 +211,7 @@ team ortnok
 
 		normal_steelblade 40
 		normal_monomolecularblade 20
-		normal_needle 4
+		normal_needle 2
 
 		blast 35
 
@@ -315,7 +315,7 @@ team shevaar
 
 		normal_steelblade 50
 		normal_monomolecularblade 20
-		normal_needle 6
+		normal_needle 2
 
 		blast 20
 
