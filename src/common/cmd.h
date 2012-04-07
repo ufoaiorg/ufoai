@@ -103,8 +103,6 @@ void Cmd_AddCommand(const char *cmd_name, xcommand_t function, const char *desc 
 void Cmd_RemoveCommand(const char *cmd_name);
 
 #define MAX_COMPLETE 128
-extern void Cmd_AddParamCompleteFunction(const char *cmd_name, int (*function)(const char *partial, const char **match));
-
 void Cmd_AddParamCompleteFunction(const char *cmd_name, int (*function)(const char *partial, const char **match));
 
 void Cmd_AddUserdata(const char *cmd_name, void* userdata);
