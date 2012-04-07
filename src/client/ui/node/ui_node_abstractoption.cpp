@@ -103,7 +103,7 @@ uiNode_t* UI_AbstractOptionGetFirstOption (uiNode_t * node)
 		return node->firstChild;
 	} else {
 		const int v = UI_GetDataVersion(EXTRADATA(node).dataId);
-		if (v != EXTRADATA(node).dataId) {
+		if (v != EXTRADATA(node).versionId) {
 			int count = 0;
 			uiNode_t *option = UI_GetOption(EXTRADATA(node).dataId);
 			while (option) {
