@@ -149,11 +149,8 @@ static int QGL_Init (OpenGLBinding& table)
 	return 1;
 }
 
-int g_qglMajorVersion = 0;
-int g_qglMinorVersion = 0;
-
 // requires a valid gl context
-static void QGL_InitVersion ()
+static void QGL_InitVersion (OpenGLBinding& table)
 {
 	const std::size_t versionSize = 256;
 	char version[versionSize];
@@ -162,12 +159,12 @@ static void QGL_InitVersion ()
 	char* firstDot = strchr(version, '.');
 	ASSERT_NOTNULL(firstDot);
 	*firstDot = '\0';
-	g_qglMajorVersion = atoi(version);
+	table.major_version = atoi(version);
 	char* secondDot = strchr(firstDot + 1, '.');
 	if (secondDot != 0) {
 		*secondDot = '\0';
 	}
-	g_qglMinorVersion = atoi(firstDot + 1);
+	table.minor_version = atoi(firstDot + 1);
 }
 
 inline void extension_not_implemented (const char* extension)
@@ -184,10 +181,7 @@ int QGL_maxTextureAnisotropy ()
 
 void QGL_sharedContextCreated (OpenGLBinding& table)
 {
-	QGL_InitVersion();
-
-	table.major_version = g_qglMajorVersion;
-	table.minor_version = g_qglMinorVersion;
+	QGL_InitVersion(table);
 
 	if (QGL_ExtensionSupported("GL_ARB_multitexture")) {
 		table.support_ARB_multitexture = QGL_constructExtensionFunc(table.m_glActiveTexture, "glActiveTextureARB")
