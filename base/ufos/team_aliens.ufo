@@ -440,7 +440,7 @@ team bloodspider
 		particlebeam_medium 20
 		particlebeam_heavy 30
 
-		stun_electro 0
+		stun_electro 999
 		stun_gas 999
 	}
 	templates {
