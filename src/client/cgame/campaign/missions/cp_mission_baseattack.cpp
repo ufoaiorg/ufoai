@@ -177,13 +177,10 @@ void CP_BaseAttackStartMission (mission_t *mission)
 	baseAttackFakeAircraft.homebase = base;
 	/* needed for transfer of alien corpses */
 	VectorCopy(base->pos, baseAttackFakeAircraft.pos);
-#if 0
-	/** @todo active this once more than 8 soldiers are working */
+
+	/** this will be neccessary once more than 8 soldiers are working */
 	/* needed to spawn soldiers on map */
-	baseAttackFakeAircraft.maxTeamSize = E_CountByType(EMPL_SOLDIER) + E_CountByType(EMPL_ROBOT);
-#else
-	baseAttackFakeAircraft.maxTeamSize = MAX_ACTIVETEAM;
-#endif
+	baseAttackFakeAircraft.maxTeamSize = min(MAX_ACTIVETEAM, E_CountByType(EMPL_SOLDIER) + E_CountByType(EMPL_ROBOT);
 
 	soldiers = 0;
 	E_Foreach(EMPL_SOLDIER, employee) {
