@@ -186,8 +186,6 @@ static void UI_DrawModelNodeWithUIModel (uiNode_t *node, const char *source, mod
 			}
 
 			as = &parentModel->animState;
-			if (!as)
-				Com_Error(ERR_DROP, "Model %s should have animState_t for animation %s - but doesn't\n", pmi.name, parentModel->anim);
 			pmi.frame = as->frame;
 			pmi.oldframe = as->oldframe;
 			pmi.backlerp = as->backlerp;
