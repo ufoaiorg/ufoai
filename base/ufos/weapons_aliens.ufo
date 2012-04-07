@@ -14,8 +14,8 @@ item needlergun
 	shape			"0 1 4 1"
 	center			"4 -0.5 0.2"
 	scale			1.2
-	ammo			120
-	reload			15
+	ammo			240
+	reload			14
 	reloadsound		weapons/reload-nail
 	price			5000
 	size			45
@@ -35,8 +35,8 @@ item needlerheavy
 	shape			"0 1 4 1"
 	center			"10 -0.5 0.2"
 	scale			0.8
-	ammo			160
-	reload			19
+	ammo			240
+	reload			18
 	reloadsound		weapons/reload-nail
 	price			5000
 	size			45
@@ -71,14 +71,14 @@ item needlergun_ammo
 			bodysnd 	impact/nail-bodyimpact
 			sndonce		true
 			speed		2000
-			spread		"1.5 1.6"
-			crouch		0.8
+			spread		"1.6 1.6"
+			crouch		0.85
 			range		250
 			shots		30
 			delaybetweenshots	25
-			ammo		10
+			ammo		30
 			time		12
-			damage		"9 2"
+			damage		"8 2"
 			dmgweight	normal_needle
 			reaction	true
 		}
@@ -95,14 +95,14 @@ item needlergun_ammo
 			bodysnd 	impact/nail-bodyimpact
 			sndonce		true
 			speed		2000
-			spread		"2.0 2.2"
-			crouch		0.8
+			spread		"2 2"
+			crouch		0.85
 			range		250
 			shots		90
 			delaybetweenshots	25
-			ammo		30
-			time		17
-			damage		"9 2"
+			ammo		90
+			time		16
+			damage		"8 2"
 			dmgweight	normal_needle
 			reaction	true
 		}
@@ -118,14 +118,14 @@ item needlergun_ammo
 			bodysnd 	impact/nail-bodyimpact
 			sndonce		true
 			speed		2000
-			spread		"2.0 5.8"
-			crouch		0.8
+			spread		"2.5 2.5"
+			crouch		0.85
 			range		250
 			shots		120
 			delaybetweenshots	25
-			ammo		40
-			time		22
-			damage		"9 2"
+			ammo		120
+			time		20
+			damage		"8 2"
 			dmgweight	normal_needle
 			reaction	true
 		}
@@ -145,14 +145,14 @@ item needlergun_ammo
 			bodysnd 	impact/nail-bodyimpact
 			sndonce		true
 			speed		2000
-			spread		"1.3 1.5"
-			crouch		0.8
+			spread		"1.9 1.9"
+			crouch		0.85
 			range		250
 			shots		30
 			delaybetweenshots	40
-			ammo		10
-			time		15
-			damage		"12 2"
+			ammo		50
+			time		14
+			damage		"8 2"
 			dmgweight	normal_needle
 			reaction	true
 		}
@@ -169,14 +169,14 @@ item needlergun_ammo
 			bodysnd 	impact/nail-bodyimpact
 			sndonce		true
 			speed		2000
-			spread		"1.8 2.1"
-			crouch		0.8
+			spread		"2.5 2.5"
+			crouch		0.85
 			range		250
-			shots		105
+			shots		90
 			delaybetweenshots	40
-			ammo		35
+			ammo		120
 			time		20
-			damage		"12 2"
+			damage		"8 2"
 			dmgweight	normal_needle
 			reaction	true
 		}
@@ -192,14 +192,14 @@ item needlergun_ammo
 			bodysnd 	impact/nail-bodyimpact
 			sndonce		true
 			speed		2000
-			spread		"1.8 8.6"
-			crouch		0.8
+			spread		"3 3"
+			crouch		0.85
 			range		250
-			shots		150
+			shots		120
 			delaybetweenshots	40
-			ammo		50
+			ammo		200
 			time		26
-			damage		"12 2"
+			damage		"8 2"
 			dmgweight	normal_needle
 			reaction	true
 		}

@@ -52,7 +52,7 @@ item ugv_chaingun
 	center			"5 0 2"
 	scale			1.25
 	ammo			500
-	reload			20
+	reload			40
 	reloadsound		weapons/reload-pistol	// @todo better sound?
 	price			0 // @todo maybe we still need this somewhere?
 	size			120
@@ -78,7 +78,7 @@ item ugv_chaingun_belt
 	{
 		firedef
 		{
-			name				"_10-Round Burst"
+			name				"_25-Round Burst"
 			skill				assault
 			projtl				bullet
 			impact				bulletImpact
@@ -88,17 +88,18 @@ item ugv_chaingun_belt
 			bodysnd 			impact/bullet-bodyimpact
 			sndonce				true
 			speed				3000
-			spread				"1 4"
-			crouch				1.0
-			range				60
-			shots				10
-			ammo				10
+			spread				"3 3"
+			crouch				1
+			range				100
+			shots				25
+			ammo				25
 			delaybetweenshots	10
-			time				10
-			damage				"25 5"
-			dmgweight			normal_heavy
+			time				25
+			damage				"35 5"
+			dmgweight			normal_spray
 			//reaction			true
 			reaction			false // do we allow RF for remote-controlled (or are they autonomous?) tanks?
+			throughwall			5
 		}
 		firedef
 		{
@@ -112,17 +113,18 @@ item ugv_chaingun_belt
 			bodysnd 			impact/bullet-bodyimpact
 			sndonce				true
 			speed				3000
-			spread				"3 6"
-			crouch				1.0
-			range				60
-			shots				50
-			ammo				50
+			spread				"4 4"
+			crouch				1
+			range				100
+			shots				100
+			ammo				100
 			delaybetweenshots	20
-			time				20
-			damage				"25 5"
-			dmgweight			normal_heavy
+			time				40
+			damage				"35 5"
+			dmgweight			normal_spray
 			//reaction			true
 			reaction			false // do we allow RF for remote-controlled (or are they autonomous?) tanks?
+			throughwall			5
 		}
 // Deactivated for now
 //		firedef

@@ -49,9 +49,9 @@ item assault_ammo
 			impsnd		impact/bullet-impact
 			bodysnd 	impact/bullet-bodyimpact
 			speed		3000
-			spread		"1.8 1.8"
-			crouch		0.7
-			range		70
+			spread		"1.2 1.2"
+			crouch		0.85
+			range		100
 			shots		1
 			ammo		1
 			time		8
@@ -71,9 +71,9 @@ item assault_ammo
 			bodysnd 			impact/bullet-bodyimpact
 			sndonce				true
 			speed				3000
-			spread				"2.0 2.0"
-			crouch				0.7
-			range				70
+			spread				"1.4 1.4"
+			crouch				0.85
+			range				100
 			shots				3
 			ammo				3
 			delaybetweenshots	10
@@ -94,13 +94,13 @@ item assault_ammo
 			bodysnd 			impact/bullet-bodyimpact
 			sndonce				true
 			speed				3000
-			spread				"2.5 2.5"
-			crouch				0.6
-			range				70
+			spread				"1.6 1.6"
+			crouch				0.85
+			range				100
 			shots				8
 			ammo				8
 			delaybetweenshots	10
-			time				18
+			time				16
 			damage				"42 5"
 			dmgweight			normal_medium
 		}
@@ -116,11 +116,11 @@ item assault_ammo
 			bodysnd 	impact/bullet-bodyimpact
 			speed		3000
 			spread		"1 1"
-			crouch		0.7
-			range		70
+			crouch		0.85
+			range		100
 			shots		1
 			ammo		1
-			time		14
+			time		16
 			damage		"42 5"
 			dmgweight	normal_medium
 		}
@@ -139,13 +139,13 @@ item assault_ammo
 			impsnd		impact/bullet-impact
 			bodysnd 	impact/bullet-bodyimpact
 			speed		3000
-			spread		"1.0 1.0"
-			crouch		0.7
-			range		250
+			spread		"1 1"
+			crouch		0.85
+			range		100
 			shots		1
 			ammo		1
-			time		8
-			damage		"40 5"
+			time		10
+			damage		"42 5"
 			dmgweight	normal_medium
 			reaction	true
 		}
@@ -161,13 +161,13 @@ item assault_ammo
 			bodysnd 			impact/bullet-bodyimpact
 			speed				3000
 			spread				"1.2 1.2"
-			crouch				0.7
-			range				70
+			crouch				0.85
+			range				100
 			shots				3
 			ammo				3
 			delaybetweenshots	5
-			time				10
-			damage				"40 5"
+			time				14
+			damage				"42 5"
 			dmgweight			normal_medium
 			reaction			true
 		}
@@ -182,14 +182,14 @@ item assault_ammo
 			impsnd				impact/bullet-impact
 			bodysnd 			impact/bullet-bodyimpact
 			speed				3000
-			spread				"1.8 1.8"
-			crouch				0.6
-			range				70
+			spread				"1.5 1.5"
+			crouch				0.85
+			range				100
 			shots				6
 			ammo				8
-			delaybetweenshots	10
+			delaybetweenshots	18
 			time				16
-			damage				"40 5"
+			damage				"42 5"
 			dmgweight			normal_medium
 		}
 		firedef
@@ -203,13 +203,13 @@ item assault_ammo
 			impsnd		impact/bullet-impact
 			bodysnd 	impact/bullet-bodyimpact
 			speed		3000
-			spread		"0.75 0.75"
-			crouch		0.6
-			range		70
+			spread		"0.9 0.9"
+			crouch		0.85
+			range		100
 			shots		1
 			ammo		1
-			time		12
-			damage		"40 5"
+			time		18
+			damage		"42 5"
 			dmgweight	normal_medium
 		}
 	}
@@ -269,14 +269,14 @@ item machinegun_ammo
 			bodysnd 			impact/bullet-bodyimpact
 			sndonce				true
 			speed				3000
-			spread				"2 2"
-			crouch				0.75
-			range				70
+			spread				"1.8 1.8"
+			crouch				1.2
+			range				100
 			shots				5
 			ammo				5
 			delaybetweenshots	10
 			time				14
-			damage				"45 9"
+			damage				"42 5"
 			dmgweight			normal_medium
 			reaction			true
 		}
@@ -292,14 +292,14 @@ item machinegun_ammo
 			bodysnd 			impact/bullet-bodyimpact
 			sndonce				true
 			speed				3000
-			spread				"3 3"
-			crouch				0.5
-			range				70
+			spread				"2.4 2.4"
+			crouch				1.2
+			range				100
 			shots				20
 			ammo				20
 			delaybetweenshots	10
-			time				25
-			damage				"45 9"
+			time				24
+			damage				"42 5"
 			dmgweight			normal_medium
 			reaction			true
 		}
@@ -316,13 +316,13 @@ item machinegun_ammo
 			sndonce				true
 			speed				3000
 			spread				"3 20"
-			crouch				0.5
-			range				70
+			crouch				1.2
+			range				100
 			shots				20
 			ammo				20
 			delaybetweenshots	10
-			time				25
-			damage				"45 9"
+			time				24
+			damage				"42 5"
 			dmgweight			normal_medium
 			reaction			true
 		}

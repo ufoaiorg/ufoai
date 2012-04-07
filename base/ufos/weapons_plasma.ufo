@@ -122,7 +122,7 @@ item plasrifle
 	center			"9.3 0 1.5"
 	scale			1.25
 	ammo			20
-	reload			16
+	reload			12
 	reloadsound		weapons/reload-rifle
 	price			2500
 	size			40
@@ -156,14 +156,58 @@ item plasrifle_ammo
 			impsnd				impact/plasma-impact
 			bodysnd 			impact/plasma-bodyimpact
 			speed				1300
-			spread				"1.7 1.7"
-			crouch				0.8
+			spread				"1.2 1.2"
+			crouch				0.85
 			range				70
 			shots				1
 			ammo				1
 			delaybetweenshots	5
-			time				9
-			damage				"70 4"
+			time				8
+			damage				"80 10"
+			dmgweight			plasma_medium
+			reaction			true
+		}
+		firedef
+		{
+			name				"_3-Round Burst"
+			skill				assault
+			projtl				plasmaPulse
+			impact				plasmaImpactCharged
+			hitbody				plasmaImpactCharged
+			firesnd				weapons/plasma-medium
+			impsnd				impact/plasma-impact
+			bodysnd 			impact/plasma-bodyimpact
+			speed				1300
+			spread				"1.5 1.5"
+			crouch				0.85
+			range				70
+			shots				3
+			ammo				3
+			delaybetweenshots	8
+			time				12
+			damage				"80 10"
+			dmgweight			plasma_medium
+			reaction			true
+		}
+		firedef
+		{
+			name				"_Full-Auto"
+			skill				assault
+			projtl				plasmaPulse
+			impact				plasmaImpactCharged
+			hitbody				plasmaImpactCharged
+			firesnd				weapons/plasma-medium
+			impsnd				impact/plasma-impact
+			bodysnd 			impact/plasma-bodyimpact
+			speed				1700
+			spread				"1.8 1.8"
+			crouch				0.85
+			range				70
+			shots				6
+			ammo				6
+			delaybetweenshots	8
+			time				16
+			damage				"80 10"
 			dmgweight			plasma_medium
 			reaction			true
 		}
@@ -179,59 +223,15 @@ item plasrifle_ammo
 			bodysnd 			impact/plasma-bodyimpact
 			speed				1300
 			spread				"1 1"
-			crouch				0.8
+			crouch				0.85
 			range				70
 			shots				1
 			ammo				1
 			delaybetweenshots	5
-			time				14
-			damage				"70 4"
+			time				16
+			damage				"80 10"
 			dmgweight			plasma_medium
 			reaction			false
-		}
-		firedef
-		{
-			name				"_Burst"
-			skill				assault
-			projtl				plasmaPulse
-			impact				plasmaImpactCharged
-			hitbody				plasmaImpactCharged
-			firesnd				weapons/plasma-medium
-			impsnd				impact/plasma-impact
-			bodysnd 			impact/plasma-bodyimpact
-			speed				1300
-			spread				"1.9 1.9"
-			crouch				0.7
-			range				70
-			shots				3
-			ammo				3
-			delaybetweenshots	8
-			time				16
-			damage				"70 4"
-			dmgweight			plasma_medium
-			reaction			true
-		}
-		firedef
-		{
-			name				"_Full-Auto"
-			skill				assault
-			projtl				plasmaPulse
-			impact				plasmaImpactCharged
-			hitbody				plasmaImpactCharged
-			firesnd				weapons/plasma-medium
-			impsnd				impact/plasma-impact
-			bodysnd 			impact/plasma-bodyimpact
-			speed				1700
-			spread				"2.7 2.7"
-			crouch				0.6
-			range				70
-			shots				6
-			ammo				6
-			delaybetweenshots	8
-			time				22
-			damage				"70 4"
-			dmgweight			plasma_medium
-			reaction			true
 		}
 	}
 }
