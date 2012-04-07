@@ -718,7 +718,7 @@ qboolean Com_ConsoleCompleteCommand (const char *s, char *target, size_t bufSize
 	if (!s[0] || s[0] == ' ')
 		return qfalse;
 
-	else if (s[0] == '\\' || s[0] == '/') {
+	if (s[0] == '\\' || s[0] == '/') {
 		/* maybe we are using the same buffers - and we want to keep the slashes */
 		if (s == target)
 			offset++;
