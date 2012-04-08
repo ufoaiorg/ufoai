@@ -76,14 +76,14 @@ GLU_ERROR_STRUCT glu_errlist[] = { { GL_NO_ERROR, "GL_NO_ERROR - no error" }, { 
 		"GL_STACK_UNDERFLOW - Function would cause a stack underflow." }, { GL_OUT_OF_MEMORY,
 		"GL_OUT_OF_MEMORY - There is not enough memory left to execute the function." }, { 0, 0 } };
 
-static const GLubyte* qgluErrorString (GLenum errCode)
+static char const* qgluErrorString (GLenum const errCode)
 {
 	int search = 0;
 	for (search = 0; glu_errlist[search].errstr; search++) {
 		if (errCode == glu_errlist[search].errnum)
-			return (const GLubyte *) glu_errlist[search].errstr;
+			return glu_errlist[search].errstr;
 	} //end for
-	return (const GLubyte *) "Unknown error";
+	return "Unknown error";
 }
 
 bool QGL_ExtensionSupported (const char* extension)
@@ -273,7 +273,7 @@ static void QGL_assertNoErrors ()
 {
 	GLenum error = glGetError();
 	while (error != GL_NO_ERROR) {
-		const char* errorString = reinterpret_cast<const char*> (qgluErrorString(error));
+		const char* errorString = qgluErrorString(error);
 		if (error == GL_OUT_OF_MEMORY) {
 			ERROR_MESSAGE("OpenGL out of memory error: " << errorString);
 		} else {
