@@ -137,19 +137,8 @@ static int QGL_Init (OpenGLBinding& table)
 // requires a valid gl context
 static void QGL_InitVersion (OpenGLBinding& table)
 {
-	const std::size_t versionSize = 256;
-	char version[versionSize];
-	strncpy(version, reinterpret_cast<const char*> (glGetString(GL_VERSION)), versionSize - 1);
-	version[versionSize - 1] = '\0';
-	char* firstDot = strchr(version, '.');
-	ASSERT_NOTNULL(firstDot);
-	*firstDot = '\0';
-	table.major_version = atoi(version);
-	char* secondDot = strchr(firstDot + 1, '.');
-	if (secondDot != 0) {
-		*secondDot = '\0';
-	}
-	table.minor_version = atoi(firstDot + 1);
+	char const* const version = reinterpret_cast<char const*>(glGetString(GL_VERSION));
+	sscanf(version, "%d.%d", &table.major_version, &table.minor_version);
 }
 
 inline void extension_not_implemented (const char* extension)
