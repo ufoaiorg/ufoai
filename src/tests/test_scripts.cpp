@@ -174,42 +174,24 @@ static void testTeamDefsModelScriptData (void)
 			int l;
 
 			for (l = NAME_NEUTRAL; l < NAME_LAST; l++) {
-				linkedList_t *list = teamDef->models[l];
-				int k;
-
 				/* no models for this gender */
 				if (!teamDef->numModels[l])
 					continue;
 
-				CU_ASSERT_PTR_NOT_NULL(list);
-				for (k = 0; k < teamDef->numModels[l]; k++) {
-					const char *path;
+				CU_ASSERT_PTR_NOT_NULL_FATAL(teamDef->models[l]);
 
-					CU_ASSERT_PTR_NOT_NULL_FATAL(list);
-					path = (const char*)list->data;
-					/* body */
-					list = list->next;
-					CU_ASSERT_PTR_NOT_NULL_FATAL(list);
-					UFO_CU_ASSERT_TRUE_MSG(TEST_CheckModel(va("%s/%s", path, list->data)), va("%s does not exist in models/%s (teamDef: %s)",
-							list->data, path, teamDef->id));
-					UFO_CU_ASSERT_TRUE_MSG(TEST_CheckModel(va("%s%s/%s", path, armourPath, list->data)), va("%s does not exist in models/%s%s (teamDef: %s)",
-							list->data, path, armourPath, teamDef->id));
+				for (linkedList_t const* list = teamDef->models[l]; list; list = list->next) {
+					teamDef_t::model_t const& m = *static_cast<teamDef_t::model_t const*>(list->data);
 
-					list = list->next;
-					CU_ASSERT_PTR_NOT_NULL_FATAL(list);
-					/* head */
-					UFO_CU_ASSERT_TRUE_MSG(TEST_CheckModel(va("%s/%s", path, list->data)), va("%s does not exist in models/%s (teamDef: %s)",
-							list->data, path, teamDef->id));
-					UFO_CU_ASSERT_TRUE_MSG(TEST_CheckModel(va("%s%s/%s", path, armourPath, list->data)), va("%s does not exist in models/%s%s (teamDef: %s)",
-							list->data, path, armourPath, teamDef->id));
+					UFO_CU_ASSERT_TRUE_MSG(TEST_CheckModel(va("%s/%s", m.path, m.body)), va("%s does not exist in models/%s (teamDef: %s)",
+							m.body, m.path, teamDef->id));
+					UFO_CU_ASSERT_TRUE_MSG(TEST_CheckModel(va("%s%s/%s", m.path, armourPath, m.body)), va("%s does not exist in models/%s%s (teamDef: %s)",
+							m.body, m.path, armourPath, teamDef->id));
 
-					/* skip skin */
-					/** @todo check that the skin is valid for the given model */
-					list = list->next;
-					CU_ASSERT_PTR_NOT_NULL_FATAL(list);
-
-					/* new path */
-					list = list->next;
+					UFO_CU_ASSERT_TRUE_MSG(TEST_CheckModel(va("%s/%s", m.path, m.head)), va("%s does not exist in models/%s (teamDef: %s)",
+							m.head, m.path, teamDef->id));
+					UFO_CU_ASSERT_TRUE_MSG(TEST_CheckModel(va("%s%s/%s", m.path, armourPath, m.head)), va("%s does not exist in models/%s%s (teamDef: %s)",
+							m.head, m.path, armourPath, teamDef->id));
 				}
 			}
 		}
