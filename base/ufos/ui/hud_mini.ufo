@@ -17,7 +17,7 @@ component image cmp_bar_teamsep_deco
 	size	"16 128"
 }
 
-// Components for the soldier panel
+// Components for the soldier selection panel
 
 component image cmp_bar_teambox_disabled
 {
@@ -36,12 +36,23 @@ component image cmp_bar_teambox
 	texh		"87 98"
 	onWheelUp	{ cmd "actor_next;"}
 	onWheelDown	{ cmd "actor_prev;"}
-	onMouseEnter {
-		*node:this@src = "minihud/bar_teambox_hovered"
-	}
-	onMouseLeave {
-		*node:this@src = "minihud/bar_teambox_full"
-	}
+}
+
+// Components for the soldier number strings
+
+component string cmp_str_soldier_shadow
+{
+	size		"15 15"
+	color		"0 0 0 1"
+	ghost		true
+	font		"f_verysmall"
+}
+component string cmp_str_soldier
+{
+	size		"15 15"
+	color		"0 .6 0 1"
+	ghost		true
+	font		"f_verysmall"
 }
 
 
@@ -256,10 +267,12 @@ window hud_mini extends hud
 			tooltip		"_LMB/RMB:Select\nWheel:Select Next/Prev\nKey:1"
 			visiblewhen	"*cvar:mn_hp0 > 0"
 			onMouseEnter {
+				*node:this@src = "minihud/bar_teambox_hovered"
 				*node:root.floor.str_soldier0_shadow@font = "f_verysmall_bold"
 				*node:root.floor.str_soldier0@font = "f_verysmall_bold"
 			}
 			onMouseLeave {
+				*node:this@src = "minihud/bar_teambox_full"
 				*node:root.floor.str_soldier0_shadow@font = "f_verysmall"
 				*node:root.floor.str_soldier0@font = "f_verysmall"
 			}
@@ -273,10 +286,12 @@ window hud_mini extends hud
 			tooltip		"_LMB/RMB:Select\nWheel:Select Next/Prev\nKey:2"
 			visiblewhen	"*cvar:mn_hp1 > 0"
 			onMouseEnter {
+				*node:this@src = "minihud/bar_teambox_hovered"
 				*node:root.floor.str_soldier1_shadow@font = "f_verysmall_bold"
 				*node:root.floor.str_soldier1@font = "f_verysmall_bold"
 			}
 			onMouseLeave {
+				*node:this@src = "minihud/bar_teambox_full"
 				*node:root.floor.str_soldier1_shadow@font = "f_verysmall"
 				*node:root.floor.str_soldier1@font = "f_verysmall"
 			}
@@ -290,10 +305,12 @@ window hud_mini extends hud
 			tooltip		"_LMB/RMB:Select\nWheel:Select Next/Prev\nKey:3"
 			visiblewhen	"*cvar:mn_hp2 > 0"
 			onMouseEnter {
+				*node:this@src = "minihud/bar_teambox_hovered"
 				*node:root.floor.str_soldier2_shadow@font = "f_verysmall_bold"
 				*node:root.floor.str_soldier2@font = "f_verysmall_bold"
 			}
 			onMouseLeave {
+				*node:this@src = "minihud/bar_teambox_full"
 				*node:root.floor.str_soldier2_shadow@font = "f_verysmall"
 				*node:root.floor.str_soldier2@font = "f_verysmall"
 			}
@@ -307,10 +324,12 @@ window hud_mini extends hud
 			tooltip		"_LMB/RMB:Select\nWheel:Select Next/Prev\nKey:4"
 			visiblewhen	"*cvar:mn_hp3 > 0"
 			onMouseEnter {
+				*node:this@src = "minihud/bar_teambox_hovered"
 				*node:root.floor.str_soldier3_shadow@font = "f_verysmall_bold"
 				*node:root.floor.str_soldier3@font = "f_verysmall_bold"
 			}
 			onMouseLeave {
+				*node:this@src = "minihud/bar_teambox_full"
 				*node:root.floor.str_soldier3_shadow@font = "f_verysmall"
 				*node:root.floor.str_soldier3@font = "f_verysmall"
 			}
@@ -324,10 +343,12 @@ window hud_mini extends hud
 			tooltip		"_LMB/RMB:Select\nWheel:Select Next/Prev\nKey:5"
 			visiblewhen	"*cvar:mn_hp4 > 0"
 			onMouseEnter {
+				*node:this@src = "minihud/bar_teambox_hovered"
 				*node:root.floor.str_soldier4_shadow@font = "f_verysmall_bold"
 				*node:root.floor.str_soldier4@font = "f_verysmall_bold"
 			}
 			onMouseLeave {
+				*node:this@src = "minihud/bar_teambox_full"
 				*node:root.floor.str_soldier4_shadow@font = "f_verysmall"
 				*node:root.floor.str_soldier4@font = "f_verysmall"
 			}
@@ -341,10 +362,12 @@ window hud_mini extends hud
 			tooltip		"_LMB/RMB:Select\nWheel:Select Next/Prev\nKey:6"
 			visiblewhen	"*cvar:mn_hp5 > 0"
 			onMouseEnter {
+				*node:this@src = "minihud/bar_teambox_hovered"
 				*node:root.floor.str_soldier5_shadow@font = "f_verysmall_bold"
 				*node:root.floor.str_soldier5@font = "f_verysmall_bold"
 			}
 			onMouseLeave {
+				*node:this@src = "minihud/bar_teambox_full"
 				*node:root.floor.str_soldier5_shadow@font = "f_verysmall"
 				*node:root.floor.str_soldier5@font = "f_verysmall"
 			}
@@ -358,10 +381,12 @@ window hud_mini extends hud
 			tooltip		"_LMB/RMB:Select\nWheel:Select Next/Prev\nKey:7"
 			visiblewhen	"*cvar:mn_hp6 > 0"
 			onMouseEnter {
+				*node:this@src = "minihud/bar_teambox_hovered"
 				*node:root.floor.str_soldier6_shadow@font = "f_verysmall_bold"
 				*node:root.floor.str_soldier6@font = "f_verysmall_bold"
 			}
 			onMouseLeave {
+				*node:this@src = "minihud/bar_teambox_full"
 				*node:root.floor.str_soldier6_shadow@font = "f_verysmall"
 				*node:root.floor.str_soldier6@font = "f_verysmall"
 			}
@@ -375,175 +400,114 @@ window hud_mini extends hud
 			tooltip		"_LMB/RMB:Select\nWheel:Select Next/Prev\nKey:8"
 			visiblewhen	"*cvar:mn_hp7 > 0"
 			onMouseEnter {
+				*node:this@src = "minihud/bar_teambox_hovered"
 				*node:root.floor.str_soldier7_shadow@font = "f_verysmall_bold"
 				*node:root.floor.str_soldier7@font = "f_verysmall_bold"
 			}
 			onMouseLeave {
+				*node:this@src = "minihud/bar_teambox_full"
 				*node:root.floor.str_soldier7_shadow@font = "f_verysmall"
 				*node:root.floor.str_soldier7@font = "f_verysmall"
 			}
 		}
 
-
 		// soldier numbers strings
-		string str_soldier0_shadow
+		cmp_str_soldier_shadow str_soldier0_shadow
 		{
 			pos			"91 26"
-			size		"15 15"
-			font		"f_verysmall"
-			color		"0 0 0 1"
 			string		"1"
-			ghost		true
 			visiblewhen	"*cvar:mn_hp0 > 0"
 		}
-		string str_soldier0
+		cmp_str_soldier str_soldier0
 		{
 			pos			"90 25"
-			size		"15 15"
-			font		"f_verysmall"
-			color		"1 1 1 1"
 			string		"1"
-			ghost		true
 			visiblewhen	"*cvar:mn_hp0 > 0"
+			// first soldier is selected
+			color		"1 1 1 1"
 		}
-		string str_soldier1_shadow
+		cmp_str_soldier_shadow str_soldier1_shadow
 		{
 			pos			"171 26"
-			size		"15 15"
-			font		"f_verysmall"
-			color		"0 0 0 1"
 			string		"2"
-			ghost		true
 			visiblewhen	"*cvar:mn_hp1 > 0"
 		}
-		string str_soldier1
+		cmp_str_soldier str_soldier1
 		{
 			pos			"170 25"
-			size		"15 15"
-			font		"f_verysmall"
-			color		"0 0.6 0 1"
 			string		"2"
-			ghost		true
 			visiblewhen	"*cvar:mn_hp1 > 0"
 		}
-		string str_soldier2_shadow
+		cmp_str_soldier_shadow str_soldier2_shadow
 		{
 			pos			"251 26"
-			size		"15 15"
-			font		"f_verysmall"
-			color		"0 0 0 1"
 			string		"3"
-			ghost		true
 			visiblewhen	"*cvar:mn_hp2 > 0"
 		}
-		string str_soldier2
+		cmp_str_soldier str_soldier2
 		{
 			pos			"250 25"
-			size		"15 15"
-			font		"f_verysmall"
-			color		"0 0.6 0 1"
 			string		"3"
-			ghost		true
 			visiblewhen	"*cvar:mn_hp2 > 0"
 		}
-		string str_soldier3_shadow
+		cmp_str_soldier_shadow str_soldier3_shadow
 		{
 			pos			"331 26"
-			size		"15 15"
-			font		"f_verysmall"
-			color		"0 0 0 1"
 			string		"4"
-			ghost		true
 			visiblewhen	"*cvar:mn_hp3 > 0"
 		}
-		string str_soldier3
+		cmp_str_soldier str_soldier3
 		{
 			pos			"330 25"
-			size		"15 15"
-			font		"f_verysmall"
-			color		"0 0.6 0 1"
 			string		"4"
-			ghost		true
 			visiblewhen	"*cvar:mn_hp3 > 0"
 		}
-		string str_soldier4_shadow
+		cmp_str_soldier_shadow str_soldier4_shadow
 		{
 			pos			"411 26"
-			size		"15 15"
-			font		"f_verysmall"
-			color		"0 0 0 1"
 			string		"5"
-			ghost		true
 			visiblewhen	"*cvar:mn_hp4 > 0"
 		}
-		string str_soldier4
+		cmp_str_soldier str_soldier4
 		{
 			pos			"410 25"
-			size		"15 15"
-			font		"f_verysmall"
-			color		"0 0.6 0 1"
 			string		"5"
-			ghost		true
 			visiblewhen	"*cvar:mn_hp4 > 0"
 		}
-		string str_soldier5_shadow
+		cmp_str_soldier_shadow str_soldier5_shadow
 		{
 			pos			"491 26"
-			size		"15 15"
-			font		"f_verysmall"
-			color		"0 0 0 1"
 			string		"6"
-			ghost		true
 			visiblewhen	"*cvar:mn_hp5 > 0"
 		}
-		string str_soldier5
+		cmp_str_soldier str_soldier5
 		{
 			pos			"490 25"
-			size		"15 15"
-			font		"f_verysmall"
-			color		"0 0.6 0 1"
 			string		"6"
-			ghost		true
 			visiblewhen	"*cvar:mn_hp5 > 0"
 		}
-		string str_soldier6_shadow
+		cmp_str_soldier_shadow str_soldier6_shadow
 		{
 			pos			"571 26"
-			size		"15 15"
-			font		"f_verysmall"
-			color		"0 0 0 1"
 			string		"7"
-			ghost		true
 			visiblewhen	"*cvar:mn_hp6 > 0"
 		}
-		string str_soldier6
+		cmp_str_soldier str_soldier6
 		{
 			pos			"570 25"
-			size		"15 15"
-			font		"f_verysmall"
-			color		"0 0.6 0 1"
 			string		"7"
-			ghost		true
 			visiblewhen	"*cvar:mn_hp6 > 0"
 		}
-		string str_soldier7_shadow
+		cmp_str_soldier_shadow str_soldier7_shadow
 		{
 			pos			"651 26"
-			size		"15 15"
-			font		"f_verysmall"
-			color		"0 0 0 1"
 			string		"8"
-			ghost		true
 			visiblewhen	"*cvar:mn_hp7 > 0"
 		}
-		string str_soldier7
+		cmp_str_soldier str_soldier7
 		{
 			pos			"650 25"
-			size		"15 15"
-			font		"f_verysmall"
-			color		"0 0.6 0 1"
 			string		"8"
-			ghost		true
 			visiblewhen	"*cvar:mn_hp7 > 0"
 		}
 
