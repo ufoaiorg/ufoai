@@ -261,10 +261,8 @@ void QGL_sharedContextCreated (OpenGLBinding& table)
 
 static void QGL_assertNoErrors ()
 {
-	GLenum error = glGetError();
-	while (error != GL_NO_ERROR) {
+	while (GLenum const error = glGetError()) {
 		ERROR_MESSAGE("OpenGL error: " << qgluErrorString(error));
-		error = glGetError();
 	}
 }
 
