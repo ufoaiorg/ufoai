@@ -29,6 +29,22 @@ component image cmp_bar_teambox_disabled
 	tooltip		"_Wheel:Select Next/Prev"
 }
 
+component image cmp_bar_teambox
+{
+	src		"minihud/bar_teambox_full"
+	size		"87 98"
+	texh		"87 98"
+	onWheelUp	{ cmd "actor_next;"}
+	onWheelDown	{ cmd "actor_prev;"}
+	onMouseEnter {
+		*node:this@src = "minihud/bar_teambox_hovered"
+	}
+	onMouseLeave {
+		*node:this@src = "minihud/bar_teambox_full"
+	}
+}
+
+
 window hud_mini extends hud
 {
 
@@ -232,195 +248,139 @@ window hud_mini extends hud
 			visiblewhen	"*cvar:mn_hp7 < 1"
 		}
 
-		image bar_teambox0
+		cmp_bar_teambox bar_teambox0
 		{
-			src		"minihud/bar_teambox_full"
 			pos			"21 22"
-			size		"87 98"
-			texh		"87 98"
 			onClick		{ cmd "actor_select 0;" }
 			onRClick	{ cmd "actor_select 0;" }
-			onWheelUp	{ cmd "actor_next;"}
-			onWheelDown	{ cmd "actor_prev;"}
 			tooltip		"_LMB/RMB:Select\nWheel:Select Next/Prev\nKey:1"
 			visiblewhen	"*cvar:mn_hp0 > 0"
 			onMouseEnter {
 				*node:root.floor.str_soldier0_shadow@font = "f_verysmall_bold"
 				*node:root.floor.str_soldier0@font = "f_verysmall_bold"
-				*node:this@src = "minihud/bar_teambox_hovered"
 			}
 			onMouseLeave {
 				*node:root.floor.str_soldier0_shadow@font = "f_verysmall"
 				*node:root.floor.str_soldier0@font = "f_verysmall"
-				*node:this@src = "minihud/bar_teambox_full"
 			}
 		}
 
-		image bar_teambox1
+		cmp_bar_teambox bar_teambox1
 		{
-			src		"minihud/bar_teambox_full"
 			pos			"101 22"
-			size		"87 98"
-			texh		"87 98"
 			onClick		{ cmd "actor_select 1;" }
 			onRClick	{ cmd "actor_select 1;" }
-			onWheelUp	{ cmd "actor_next;"}
-			onWheelDown	{ cmd "actor_prev;"}
 			tooltip		"_LMB/RMB:Select\nWheel:Select Next/Prev\nKey:2"
 			visiblewhen	"*cvar:mn_hp1 > 0"
 			onMouseEnter {
 				*node:root.floor.str_soldier1_shadow@font = "f_verysmall_bold"
 				*node:root.floor.str_soldier1@font = "f_verysmall_bold"
-				*node:this@src = "minihud/bar_teambox_hovered"
 			}
 			onMouseLeave {
 				*node:root.floor.str_soldier1_shadow@font = "f_verysmall"
 				*node:root.floor.str_soldier1@font = "f_verysmall"
-				*node:this@src = "minihud/bar_teambox_full"
 			}
 		}
 
-		image bar_teambox2
+		cmp_bar_teambox bar_teambox2
 		{
-			src		"minihud/bar_teambox_full"
 			pos			"181 22"
-			size		"87 98"
-			texh		"87 98"
 			onClick		{ cmd "actor_select 2;" }
 			onRClick	{ cmd "actor_select 2;" }
-			onWheelUp	{ cmd "actor_next;"}
-			onWheelDown	{ cmd "actor_prev;"}
 			tooltip		"_LMB/RMB:Select\nWheel:Select Next/Prev\nKey:3"
 			visiblewhen	"*cvar:mn_hp2 > 0"
 			onMouseEnter {
 				*node:root.floor.str_soldier2_shadow@font = "f_verysmall_bold"
 				*node:root.floor.str_soldier2@font = "f_verysmall_bold"
-				*node:this@src = "minihud/bar_teambox_hovered"
 			}
 			onMouseLeave {
 				*node:root.floor.str_soldier2_shadow@font = "f_verysmall"
 				*node:root.floor.str_soldier2@font = "f_verysmall"
-				*node:this@src = "minihud/bar_teambox_full"
 			}
 		}
 
-		image bar_teambox3
+		cmp_bar_teambox bar_teambox3
 		{
-			src		"minihud/bar_teambox_full"
 			pos			"261 22"
-			size		"87 98"
-			texh		"87 98"
 			onClick		{ cmd "actor_select 3;" }
 			onRClick	{ cmd "actor_select 3;" }
-			onWheelUp	{ cmd "actor_next;"}
-			onWheelDown	{ cmd "actor_prev;"}
 			tooltip		"_LMB/RMB:Select\nWheel:Select Next/Prev\nKey:4"
 			visiblewhen	"*cvar:mn_hp3 > 0"
 			onMouseEnter {
 				*node:root.floor.str_soldier3_shadow@font = "f_verysmall_bold"
 				*node:root.floor.str_soldier3@font = "f_verysmall_bold"
-				*node:this@src = "minihud/bar_teambox_hovered"
 			}
 			onMouseLeave {
 				*node:root.floor.str_soldier3_shadow@font = "f_verysmall"
 				*node:root.floor.str_soldier3@font = "f_verysmall"
-				*node:this@src = "minihud/bar_teambox_full"
 			}
 		}
 
-		image bar_teambox4
+		cmp_bar_teambox bar_teambox4
 		{
-			src		"minihud/bar_teambox_full"
 			pos			"341 22"
-			size		"87 98"
-			texh		"87 98"
 			onClick		{ cmd "actor_select 4;" }
 			onRClick	{ cmd "actor_select 4;" }
-			onWheelUp	{ cmd "actor_next;"}
-			onWheelDown	{ cmd "actor_prev;"}
 			tooltip		"_LMB/RMB:Select\nWheel:Select Next/Prev\nKey:5"
 			visiblewhen	"*cvar:mn_hp4 > 0"
 			onMouseEnter {
 				*node:root.floor.str_soldier4_shadow@font = "f_verysmall_bold"
 				*node:root.floor.str_soldier4@font = "f_verysmall_bold"
-				*node:this@src = "minihud/bar_teambox_hovered"
 			}
 			onMouseLeave {
 				*node:root.floor.str_soldier4_shadow@font = "f_verysmall"
 				*node:root.floor.str_soldier4@font = "f_verysmall"
-				*node:this@src = "minihud/bar_teambox_full"
 			}
 		}
 
-		image bar_teambox5
+		cmp_bar_teambox bar_teambox5
 		{
-			src		"minihud/bar_teambox_full"
 			pos			"421 22"
-			size		"87 98"
-			texh		"87 98"
 			onClick		{ cmd "actor_select 5;" }
 			onRClick	{ cmd "actor_select 5;" }
-			onWheelUp	{ cmd "actor_next;"}
-			onWheelDown	{ cmd "actor_prev;"}
 			tooltip		"_LMB/RMB:Select\nWheel:Select Next/Prev\nKey:6"
 			visiblewhen	"*cvar:mn_hp5 > 0"
 			onMouseEnter {
 				*node:root.floor.str_soldier5_shadow@font = "f_verysmall_bold"
 				*node:root.floor.str_soldier5@font = "f_verysmall_bold"
-				*node:this@src = "minihud/bar_teambox_hovered"
 			}
 			onMouseLeave {
 				*node:root.floor.str_soldier5_shadow@font = "f_verysmall"
 				*node:root.floor.str_soldier5@font = "f_verysmall"
-				*node:this@src = "minihud/bar_teambox_full"
 			}
 		}
 
-		image bar_teambox6
+		cmp_bar_teambox bar_teambox6
 		{
-			src		"minihud/bar_teambox_full"
 			pos			"501 22"
-			size		"87 98"
-			texh		"87 98"
 			onClick		{ cmd "actor_select 6;" }
 			onRClick	{ cmd "actor_select 6;" }
-			onWheelUp	{ cmd "actor_next;"}
-			onWheelDown	{ cmd "actor_prev;"}
 			tooltip		"_LMB/RMB:Select\nWheel:Select Next/Prev\nKey:7"
 			visiblewhen	"*cvar:mn_hp6 > 0"
 			onMouseEnter {
 				*node:root.floor.str_soldier6_shadow@font = "f_verysmall_bold"
 				*node:root.floor.str_soldier6@font = "f_verysmall_bold"
-				*node:this@src = "minihud/bar_teambox_hovered"
 			}
 			onMouseLeave {
 				*node:root.floor.str_soldier6_shadow@font = "f_verysmall"
 				*node:root.floor.str_soldier6@font = "f_verysmall"
-				*node:this@src = "minihud/bar_teambox_full"
 			}
 		}
 
-		image bar_teambox7
+		cmp_bar_teambox bar_teambox7
 		{
-			src		"minihud/bar_teambox_full"
 			pos			"581 22"
-			size		"87 98"
-			texh		"87 98"
 			onClick		{ cmd "actor_select 7;" }
 			onRClick	{ cmd "actor_select 7;" }
-			onWheelUp	{ cmd "actor_next;"}
-			onWheelDown	{ cmd "actor_prev;"}
 			tooltip		"_LMB/RMB:Select\nWheel:Select Next/Prev\nKey:8"
 			visiblewhen	"*cvar:mn_hp7 > 0"
 			onMouseEnter {
 				*node:root.floor.str_soldier7_shadow@font = "f_verysmall_bold"
 				*node:root.floor.str_soldier7@font = "f_verysmall_bold"
-				*node:this@src = "minihud/bar_teambox_hovered"
 			}
 			onMouseLeave {
 				*node:root.floor.str_soldier7_shadow@font = "f_verysmall"
 				*node:root.floor.str_soldier7@font = "f_verysmall"
-				*node:this@src = "minihud/bar_teambox_full"
 			}
 		}
 
