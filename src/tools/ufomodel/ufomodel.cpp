@@ -37,6 +37,7 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #include "../../client/renderer/r_model.h"
 #include "../../client/renderer/r_state.h"
 #include "../../shared/images.h"
+#include <SDL_main.h>
 
 #define VERSION "0.2"
 
