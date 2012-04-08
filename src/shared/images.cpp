@@ -36,29 +36,7 @@
 #include <zlib.h>
 
 /** image formats, tried in this order */
-static char const* const IMAGE_TYPES[] = { "png", "jpg", "tga", NULL };
-
-/** default pixel format to which all images are converted */
-static SDL_PixelFormat format = {NULL, 32, 4, 0, 0, 0, 0, 24, 16, 8, 0,
-#if SDL_BYTEORDER == SDL_BIG_ENDIAN
-	0xff000000,
-	0x00ff0000,
-	0x0000ff00,
-	0x000000ff,
-#else
-	0x000000ff,
-	0x0000ff00,
-	0x00ff0000,
-	0xff000000,
-#endif
-#if SDL_VERSION_ATLEAST(1,3,0)
-	NULL,
-	0,
-	0,
-#else
-	0, 1
-#endif
-};
+static char const* const IMAGE_TYPES[] = { "png", "jpg", NULL };
 
 #define TGA_UNMAP_COMP			10
 
@@ -281,31 +259,135 @@ void R_WriteJPG (qFILE *f, byte *buffer, int width, int height, int quality)
 	jpeg_destroy_compress(&cinfo);
 }
 
-/**
- * @brief Loads the specified image from the game filesystem and populates
- * the provided SDL_Surface.
- */
-static SDL_Surface* Img_LoadTypedImage (char const* name, char const* type)
+static byte* readFile(char const* const name, char const* const suffix, size_t& len)
 {
 	char path[MAX_QPATH];
-	byte *buf;
-	int len;
-	SDL_RWops *rw;
-	SDL_Surface *surf;
-	SDL_Surface *s = 0;
+	snprintf(path, sizeof(path), "%s.%s", name, suffix);
+	byte* buf = 0;
+	len = FS_LoadFile(path, &buf);
+	return buf;
+}
 
-	snprintf(path, sizeof(path), "%s.%s", name, type);
-	if ((len = FS_LoadFile(path, &buf)) != -1) {
-		if ((rw = SDL_RWFromMem(buf, len))) {
-			if ((surf = IMG_LoadTyped_RW(rw, 0, (char*)(uintptr_t)type))) {
-				s = SDL_ConvertSurface(surf, &format, 0);
-				SDL_FreeSurface(surf);
+static SDL_Surface* createSurface(int const height, int const width)
+{
+	return SDL_CreateRGBSurface(0, width, height, 32,
+#if SDL_BYTEORDER == SDL_BIG_ENDIAN
+		0xFF000000U, 0x00FF0000U, 0x0000FF00U, 0x000000FFU
+#else
+		0x000000FFU, 0x0000FF00U, 0x00FF0000U, 0xFF000000U
+#endif
+	);
+}
+
+struct bufState_t
+{
+	byte*       ptr;
+	byte const* end;
+};
+
+static void readMem(png_struct* const png, png_byte* const dst, png_size_t const size)
+{
+	bufState_t& state = *static_cast<bufState_t*>(png_get_io_ptr(png));
+	if (state.end - state.ptr < size) {
+		png_error(png, "premature end of input");
+	} else {
+		memcpy(dst, state.ptr, size);
+		state.ptr += size;
+	}
+}
+
+static SDL_Surface* Img_LoadPNG(char const* const name)
+{
+	SDL_Surface* res = 0;
+	size_t       len;
+	if (byte* const buf = readFile(name, "png", len)) {
+		if (png_struct* png = png_create_read_struct(PNG_LIBPNG_VER_STRING, 0, 0, 0)) {
+			png_info* info = png_create_info_struct(png);
+			if (info) {
+				bufState_t state = { buf, buf + len };
+				png_set_read_fn(png, &state, &readMem);
+
+				png_read_info(png, info);
+
+				png_uint_32 height;
+				png_uint_32 width;
+				int         bit_depth;
+				int         color_type;
+				png_get_IHDR(png, info, &width, &height, &bit_depth, &color_type, 0, 0, 0);
+
+				/* Ensure that we always get a RGBA image with 8 bits per channel. */
+				png_set_strip_16(png);
+				png_set_packing(png);
+				png_set_expand(png);
+				png_set_add_alpha(png, 255, PNG_FILLER_AFTER);
+
+				if (SDL_Surface* const s = createSurface(height, width)) {
+					png_start_read_image(png);
+
+					png_byte*    dst   = static_cast<png_byte*>(s->pixels);
+					size_t const pitch = s->pitch;
+					for (size_t n = height; n != 0; dst += pitch, --n) {
+						png_read_row(png, dst, 0);
+					}
+
+					png_read_end(png, info);
+					res = s;
+				}
 			}
-			SDL_FreeRW(rw);
+
+			png_destroy_read_struct(&png, &info, 0);
 		}
+
 		FS_FreeFile(buf);
 	}
-	return s;
+
+	return res;
+}
+
+static SDL_Surface* Img_LoadJPG(char const* const name)
+{
+	SDL_Surface* res = 0;
+	size_t       len;
+	if (byte* const buf = readFile(name, "jpg", len)) {
+		jpeg_decompress_struct cinfo;
+		jpeg_error_mgr         jerr;
+
+		cinfo.err = jpeg_std_error(&jerr);
+		jpeg_create_decompress(&cinfo);
+
+		jpeg_mem_src(&cinfo, buf, len);
+
+		jpeg_read_header(&cinfo, true);
+
+		cinfo.out_color_space = JCS_RGB;
+
+		if (SDL_Surface* const s = createSurface(cinfo.image_height, cinfo.image_width)) {
+			jpeg_start_decompress(&cinfo);
+
+			byte*        dst   = static_cast<byte*>(s->pixels);
+			size_t const pitch = s->pitch;
+			for (size_t n = cinfo.image_height; n != 0; dst += pitch, --n) {
+				JSAMPLE* lines[1] = { dst };
+				jpeg_read_scanlines(&cinfo, lines, 1);
+
+				/* Convert RGB to RGBA. */
+				for (size_t x = cinfo.image_width; x-- != 0;) {
+					dst[4 * x + 0] = dst[3 * x + 0];
+					dst[4 * x + 1] = dst[3 * x + 1];
+					dst[4 * x + 2] = dst[3 * x + 2];
+					dst[4 * x + 3] = 255;
+				}
+			}
+
+			jpeg_finish_decompress(&cinfo);
+			res = s;
+		}
+
+		jpeg_destroy_decompress(&cinfo);
+		FS_FreeFile(buf);
+	}
+
+	return res;
 }
 
 /**
@@ -317,14 +399,9 @@ static SDL_Surface* Img_LoadTypedImage (char const* name, char const* type)
  */
 SDL_Surface* Img_LoadImage (char const* name)
 {
-	int i;
-
-	i = 0;
-	while (IMAGE_TYPES[i]) {
-		SDL_Surface* const surf = Img_LoadTypedImage(name, IMAGE_TYPES[i++]);
-		if (surf)
-			return surf;
-	}
-
+	if (SDL_Surface* const s = Img_LoadPNG(name))
+		return s;
+	if (SDL_Surface* const s = Img_LoadJPG(name))
+		return s;
 	return 0;
 }

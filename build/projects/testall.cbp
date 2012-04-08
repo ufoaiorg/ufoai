@@ -105,7 +105,6 @@
 			<Add library="SDLmain" />
 			<Add library="SDL" />
 			<Add library="SDL_ttf" />
-			<Add library="SDL_image" />
 			<Add library="SDL_mixer" />
 			<Add library="z" />
 			<Add library="jpeg" />
