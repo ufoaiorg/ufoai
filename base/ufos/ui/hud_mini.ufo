@@ -2,7 +2,7 @@
 // MINIMAL HUD MAIN
 // =================
 
-// Components
+// Components for the soldier decoration panel
 
 component image cmp_bar_teambox_deco
 {
@@ -17,6 +17,17 @@ component image cmp_bar_teamsep_deco
 	size	"16 128"
 }
 
+// Components for the soldier panel
+
+component image cmp_bar_teambox_disabled
+{
+	src		"minihud/bar_teambox_disabled"
+	size		"87 98"
+	texh		"87 98"
+	onWheelUp	{ cmd "actor_next;"}
+	onWheelDown	{ cmd "actor_prev;"}
+	tooltip		"_Wheel:Select Next/Prev"
+}
 
 window hud_mini extends hud
 {
@@ -173,99 +184,51 @@ window hud_mini extends hud
 			ghost	true
 		}
 
-		image bar_teambox0_disabled
+		cmp_bar_teambox_disabled bar_teambox0_disabled
 		{
-			src		"minihud/bar_teambox_disabled"
 			pos			"21 22"
-			size		"87 98"
-			texh		"87 98"
-			onWheelUp	{ cmd "actor_next;"}
-			onWheelDown	{ cmd "actor_prev;"}
-			tooltip		"_Wheel:Select Next/Prev"
 			visiblewhen	"*cvar:mn_hp0 < 1"
 		}
 
-		image bar_teambox1_disabled
+		cmp_bar_teambox_disabled bar_teambox1_disabled
 		{
-			src		"minihud/bar_teambox_disabled"
 			pos			"101 22"
-			size		"87 98"
-			texh		"87 98"
-			onWheelUp	{ cmd "actor_next;"}
-			onWheelDown	{ cmd "actor_prev;"}
-			tooltip		"_Wheel:Select Next/Prev"
 			visiblewhen	"*cvar:mn_hp1 < 1"
 		}
 
-		image bar_teambox2_disabled
+		cmp_bar_teambox_disabled bar_teambox2_disabled
 		{
-			src		"minihud/bar_teambox_disabled"
 			pos			"181 22"
-			size		"87 98"
-			texh		"87 98"
-			onWheelUp	{ cmd "actor_next;"}
-			onWheelDown	{ cmd "actor_prev;"}
-			tooltip		"_Wheel:Select Next/Prev"
 			visiblewhen	"*cvar:mn_hp2 < 1"
 		}
 
-		image bar_teambox3_disabled
+		cmp_bar_teambox_disabled bar_teambox3_disabled
 		{
-			src		"minihud/bar_teambox_disabled"
 			pos			"261 22"
-			size		"87 98"
-			texh		"87 98"
-			onWheelUp	{ cmd "actor_next;"}
-			onWheelDown	{ cmd "actor_prev;"}
-			tooltip		"_Wheel:Select Next/Prev"
 			visiblewhen	"*cvar:mn_hp3 < 1"
 		}
 
-		image bar_teambox4_disabled
+		cmp_bar_teambox_disabled bar_teambox4_disabled
 		{
-			src		"minihud/bar_teambox_disabled"
 			pos			"341 22"
-			size		"87 98"
-			texh		"87 98"
-			onWheelUp	{ cmd "actor_next;"}
-			onWheelDown	{ cmd "actor_prev;"}
-			tooltip		"_Wheel:Select Next/Prev"
 			visiblewhen	"*cvar:mn_hp4 < 1"
 		}
 
-		image bar_teambox5_disabled
+		cmp_bar_teambox_disabled bar_teambox5_disabled
 		{
-			src		"minihud/bar_teambox_disabled"
 			pos			"421 22"
-			size		"87 98"
-			texh		"87 98"
-			onWheelUp	{ cmd "actor_next;"}
-			onWheelDown	{ cmd "actor_prev;"}
-			tooltip		"_Wheel:Select Next/Prev"
 			visiblewhen	"*cvar:mn_hp5 < 1"
 		}
 
-		image bar_teambox6_disabled
+		cmp_bar_teambox_disabled bar_teambox6_disabled
 		{
-			src		"minihud/bar_teambox_disabled"
 			pos			"501 22"
-			size		"87 98"
-			texh		"87 98"
-			onWheelUp	{ cmd "actor_next;"}
-			onWheelDown	{ cmd "actor_prev;"}
-			tooltip		"_Wheel:Select Next/Prev"
 			visiblewhen	"*cvar:mn_hp6 < 1"
 		}
 
-		image bar_teambox7_disabled
+		cmp_bar_teambox_disabled bar_teambox7_disabled
 		{
-			src		"minihud/bar_teambox_disabled"
 			pos			"581 22"
-			size		"87 98"
-			texh		"87 98"
-			onWheelUp	{ cmd "actor_next;"}
-			onWheelDown	{ cmd "actor_prev;"}
-			tooltip		"_Wheel:Select Next/Prev"
 			visiblewhen	"*cvar:mn_hp7 < 1"
 		}
 
