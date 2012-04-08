@@ -62,28 +62,18 @@ static void QGL_Shutdown (OpenGLBinding& table)
 	g_message("Done.\n");
 }
 
-typedef struct glu_error_struct
-{
-		GLenum errnum;
-		const char *errstr;
-} GLU_ERROR_STRUCT;
-
-GLU_ERROR_STRUCT glu_errlist[] = { { GL_NO_ERROR, "GL_NO_ERROR - no error" }, { GL_INVALID_ENUM,
-		"GL_INVALID_ENUM - An unacceptable value is specified for an enumerated argument." }, { GL_INVALID_VALUE,
-		"GL_INVALID_VALUE - A numeric argument is out of range." }, { GL_INVALID_OPERATION,
-		"GL_INVALID_OPERATION - The specified operation is not allowed in the current state." }, { GL_STACK_OVERFLOW,
-		"GL_STACK_OVERFLOW - Function would cause a stack overflow." }, { GL_STACK_UNDERFLOW,
-		"GL_STACK_UNDERFLOW - Function would cause a stack underflow." }, { GL_OUT_OF_MEMORY,
-		"GL_OUT_OF_MEMORY - There is not enough memory left to execute the function." }, { 0, 0 } };
-
 static char const* qgluErrorString (GLenum const errCode)
 {
-	int search = 0;
-	for (search = 0; glu_errlist[search].errstr; search++) {
-		if (errCode == glu_errlist[search].errnum)
-			return glu_errlist[search].errstr;
-	} //end for
-	return "Unknown error";
+	switch (errCode) {
+	case GL_NO_ERROR:          return "GL_NO_ERROR - no error";
+	case GL_INVALID_ENUM:      return "GL_INVALID_ENUM - An unacceptable value is specified for an enumerated argument.";
+	case GL_INVALID_VALUE:     return "GL_INVALID_VALUE - A numeric argument is out of range.";
+	case GL_INVALID_OPERATION: return "GL_INVALID_OPERATION - The specified operation is not allowed in the current state.";
+	case GL_STACK_OVERFLOW:    return "GL_STACK_OVERFLOW - Function would cause a stack overflow.";
+	case GL_STACK_UNDERFLOW:   return "GL_STACK_UNDERFLOW - Function would cause a stack underflow.";
+	case GL_OUT_OF_MEMORY:     return "GL_OUT_OF_MEMORY - There is not enough memory left to execute the function.";
+	default:                   return "Unknown error";
+	}
 }
 
 bool QGL_ExtensionSupported (const char* extension)
