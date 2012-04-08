@@ -2,8 +2,25 @@
 // MINIMAL HUD MAIN
 // =================
 
+// Components
+
+component image cmp_bar_teambox_deco
+{
+	src		"minihud/bar_teambox_deco"
+	ghost	true
+	size	"64 128"
+}
+component image cmp_bar_teamsep_deco
+{
+	src		"minihud/bar_teamsep_deco"
+	ghost	true
+	size	"16 128"
+}
+
+
 window hud_mini extends hud
 {
+
 	{
 		noticepos	"512 20"
 		timeout	10000
@@ -46,117 +63,73 @@ window hud_mini extends hud
 			ghost	true
 		}
 
-		image bar_teambox0_deco
+		cmp_bar_teambox_deco teambox_deco0
 		{
-			src		"minihud/bar_teambox_deco"
 			pos			"32 0"
-			size		"64 128"
-			ghost	true
 		}
 
-		image bar_teamsep1_deco
+		cmp_bar_teamsep_deco teamsep_deco1
 		{
-			src		"minihud/bar_teamsep_deco"
 			pos			"96 0"
-			size		"16 128"
-			ghost	true
 		}
-		image bar_teambox1_deco
+		cmp_bar_teambox_deco teambox_deco1
 		{
-			src		"minihud/bar_teambox_deco"
 			pos			"112 0"
-			size		"64 128"
-			ghost	true
+
 		}
 
-		image bar_teamsep2_deco
+		cmp_bar_teamsep_deco teamsep_deco2
 		{
-			src		"minihud/bar_teamsep_deco"
 			pos			"176 0"
-			size		"16 128"
-			ghost	true
 		}
-		image bar_teambox2_deco
+		cmp_bar_teambox_deco teambox_deco2
 		{
-			src		"minihud/bar_teambox_deco"
 			pos			"192 0"
-			size		"64 128"
-			ghost	true
 		}
 
-		image bar_teamsep3_deco
+		cmp_bar_teamsep_deco teamsep_deco3
 		{
-			src		"minihud/bar_teamsep_deco"
 			pos			"256 0"
-			size		"16 128"
-			ghost	true
 		}
-		image bar_teambox3_deco
+		cmp_bar_teambox_deco teambox_deco3
 		{
-			src		"minihud/bar_teambox_deco"
 			pos			"272 0"
-			size		"64 128"
-			ghost	true
 		}
 
-		image bar_teamsep4_deco
+		cmp_bar_teamsep_deco teamsep_deco4
 		{
-			src		"minihud/bar_teamsep_deco"
 			pos			"336 0"
-			size		"16 128"
-			ghost	true
 		}
-		image bar_teambox4_deco
+		cmp_bar_teambox_deco teambox_deco4
 		{
-			src		"minihud/bar_teambox_deco"
 			pos			"352 0"
-			size		"64 128"
-			ghost	true
 		}
 
-		image bar_teamsep5_deco
+		cmp_bar_teamsep_deco teamsep_deco5
 		{
-			src		"minihud/bar_teamsep_deco"
 			pos			"416 0"
-			size		"16 128"
-			ghost	true
 		}
-		image bar_teambox5_deco
+		cmp_bar_teambox_deco teambox_deco5
 		{
-			src		"minihud/bar_teambox_deco"
 			pos			"432 0"
-			size		"64 128"
-			ghost	true
 		}
 
-		image bar_teamsep6_deco
+		cmp_bar_teamsep_deco teamsep_deco6
 		{
-			src		"minihud/bar_teamsep_deco"
 			pos			"496 0"
-			size		"16 128"
-			ghost	true
 		}
-		image bar_teambox6_deco
+		cmp_bar_teambox_deco teambox_deco6
 		{
-			src		"minihud/bar_teambox_deco"
 			pos			"512 0"
-			size		"64 128"
-			ghost	true
 		}
 
-		image bar_teamsep7_deco
+		cmp_bar_teamsep_deco teamsep_deco7
 		{
-			src		"minihud/bar_teamsep_deco"
 			pos			"576 0"
-			size		"16 128"
-			ghost	true
 		}
-		image bar_teambox7_deco
+		cmp_bar_teambox_deco teambox_deco7
 		{
-			src		"minihud/bar_teambox_deco"
 			pos			"592 0"
-			size		"64 128"
-			ghost	true
 		}
 
 		image bar_teamright_deco
@@ -172,19 +145,19 @@ window hud_mini extends hud
 			*cvar:tmp = ( <1> + 1 )
 			*cvar:i = 1
 			while ( *cvar:i < *cvar:tmp ) {
-				*node:root.floor_deco.bar_teambox<cvar:i>_deco@invis = false  *node:root.floor_deco.bar_teamsep<cvar:i>_deco@invis = false
+				*node:root.floor_deco.teambox_deco<cvar:i>@invis = false  *node:root.floor_deco.teamsep_deco<cvar:i>@invis = false
 				*cvar:i = ( *cvar:i + 1 )
 			}
 
 			while ( *cvar:tmp < 8 ) {
-				*node:root.floor_deco.bar_teambox<cvar:tmp>_deco@invis = true  *node:root.floor_deco.bar_teamsep<cvar:tmp>_deco@invis = true
+				*node:root.floor_deco.teambox_deco<cvar:tmp>@invis = true  *node:root.floor_deco.teamsep_deco<cvar:tmp>@invis = true
 				*cvar:tmp = ( *cvar:tmp + 1 )
 			}
 
 			delete *cvar:tmp
 			delete *cvar:i
 
-			*node:root.floor_deco.bar_teamright_deco@left = ( *node:root.floor_deco.bar_teambox<1>_deco@left + *node:root.floor_deco.bar_teambox<1>_deco@width )
+			*node:root.floor_deco.bar_teamright_deco@left = ( *node:root.floor_deco.teambox_deco<1>@left + *node:root.floor_deco.teambox_deco<1>@width )
 		}
 	}
 
