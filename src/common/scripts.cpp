@@ -2260,7 +2260,8 @@ void Com_GetCharacterValues (const char *teamDefition, character_t * chr)
 
 		/* get model */
 		teamDef_t::model_t const* const model = Com_GiveModel(gender, chr->teamDef);
-		if (!model) continue;
+		if (!model)
+			continue;
 
 		Q_strncpyz(chr->path, model->path, sizeof(chr->path));
 		Q_strncpyz(chr->body, model->body, sizeof(chr->body));
@@ -2399,10 +2400,18 @@ static void Com_ParseActorModels (const char *name, const char **text, teamDef_t
 							break;
 
 						switch (j) {
-						case 0: model.path = Mem_StrDup(token); break;
-						case 1: model.body = Mem_StrDup(token); break;
-						case 2: model.head = Mem_StrDup(token); break;
-						case 3: model.skin = atoi(token);       break;
+						case 0:
+							model.path = Mem_StrDup(token);
+							break;
+						case 1:
+							model.body = Mem_StrDup(token);
+							break;
+						case 2:
+							model.head = Mem_StrDup(token);
+							break;
+						case 3:
+							model.skin = atoi(token);
+							break;
 						}
 					}
 					/* first token was '}' */

@@ -260,7 +260,8 @@ int Cvar_CompleteVariable (const char *partial, const char **match)
 	int n = 0;
 	for (cvar_t const* cvar = cvarVars; cvar; cvar = cvar->next) {
 #ifndef DEBUG
-		if (cvar->flags & CVAR_DEVELOPER) continue;
+		if (cvar->flags & CVAR_DEVELOPER)
+			continue;
 #endif
 		if (Cmd_GenericCompleteFunction(cvar->name, partial, match)) {
 			Com_Printf("[var] %-20s = \"%s\"\n", cvar->name, cvar->string);

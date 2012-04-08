@@ -123,7 +123,8 @@ void uiRadioButtonNode::activate (uiNode_t * node)
 	/* its not a cvar! */
 	/** @todo the parser should already check that the property value is a right cvar */
 	char const* const cvarName = Q_strstart((char const*)(EXTRADATA(node).cvar), "*cvar:");
-	if (!cvarName) return;
+	if (!cvarName)
+		return;
 
 	UI_GetReferenceFloat(node, EXTRADATA(node).cvar);
 	/* Is we click on the already selected button, we can continue */

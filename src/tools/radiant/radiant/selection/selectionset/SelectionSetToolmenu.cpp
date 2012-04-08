@@ -142,7 +142,8 @@ void SelectionSetToolmenu::onEntryActivated(GtkEntry* entry,
 	// Create new selection set if possible
 	std::string name = gtk_entry_get_text(entry);
 
-	if (name.empty()) return;
+	if (name.empty())
+		return;
 
 	// don't create empty sets
 	if (GlobalSelectionSystem().countSelected() == 0)
