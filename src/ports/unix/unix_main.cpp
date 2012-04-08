@@ -140,8 +140,6 @@ static int Sys_BacktraceLibsCallback (struct dl_phdr_info *info, size_t size, vo
 	return 0;
 }
 
-#endif
-
 #ifdef HAVE_BFD_H
 
 /* following code parts are taken from libcairo */
@@ -230,6 +228,8 @@ static void _backtrace (FILE *crash, void * const *buffer, int size)
 
 #endif
 
+#endif
+
 /**
  * @brief On platforms supporting it, print a backtrace.
  */
@@ -253,7 +253,7 @@ void Sys_Backtrace (void)
 #ifdef HAVE_EXECINFO_H
 	void *symbols[MAX_BACKTRACE_SYMBOLS];
 	const int i = backtrace(symbols, MAX_BACKTRACE_SYMBOLS);
-#ifdef HAVE_BFD_H
+#if defined HAVE_LINK_H && defined HAVE_BFD_H
 	_backtrace(crash, symbols, i);
 #else
 	backtrace_symbols_fd(symbols, i, fileno(crash));
