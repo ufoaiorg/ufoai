@@ -78,16 +78,11 @@ static char const* qgluErrorString (GLenum const errCode)
 
 bool QGL_ExtensionSupported (const char* extension)
 {
-	const GLubyte *extensions = 0;
-	const GLubyte *start;
-	GLubyte *where, *terminator;
-
 	// Extension names should not have spaces.
-	where = (GLubyte *) strchr(extension, ' ');
-	if (where || *extension == '\0')
+	if (strchr(extension, ' ') || *extension == '\0')
 		return false;
 
-	extensions = glGetString(GL_EXTENSIONS);
+	char const* const extensions = reinterpret_cast<char const*>(glGetString(GL_EXTENSIONS));
 #ifndef __APPLE__
 	if (!extensions)
 		return false;
@@ -95,12 +90,12 @@ bool QGL_ExtensionSupported (const char* extension)
 
 	// It takes a bit of care to be fool-proof about parsing the
 	// OpenGL extensions string. Don't be fooled by sub-strings, etc.
-	for (start = extensions;;) {
-		where = (GLubyte *) strstr((const char *) start, extension);
+	for (char const* start = extensions;;) {
+		char const* const where = strstr(start, extension);
 		if (!where)
 			break;
 
-		terminator = where + strlen(extension);
+		char const* const terminator = where + strlen(extension);
 		if (where == start || *(where - 1) == ' ')
 			if (*terminator == ' ' || *terminator == '\0')
 				return true;
