@@ -263,12 +263,7 @@ static void QGL_assertNoErrors ()
 {
 	GLenum error = glGetError();
 	while (error != GL_NO_ERROR) {
-		const char* errorString = qgluErrorString(error);
-		if (error == GL_OUT_OF_MEMORY) {
-			ERROR_MESSAGE("OpenGL out of memory error: " << errorString);
-		} else {
-			ERROR_MESSAGE("OpenGL error: " << errorString);
-		}
+		ERROR_MESSAGE("OpenGL error: " << qgluErrorString(error));
 		error = glGetError();
 	}
 }
