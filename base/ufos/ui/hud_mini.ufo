@@ -64,6 +64,30 @@ component model cmp_model_head
 	ghost		true
 }
 
+// Components for the soldier status bars
+
+component bar cmp_bar_health
+{
+	size		"66 6"
+	color		".8 0 0 0.7"
+	disabled	true
+	tooltip		"_Health"
+}
+component bar cmp_bar_morale
+{
+	size		"66 6"
+	color		".8 .8 0 0.7"
+	disabled	true
+	tooltip		"_Morale"
+}
+component bar cmp_bar_time
+{
+	size		"66 6"
+	color		".2 .2 1 0.9"
+	disabled	true
+	tooltip		"_TUs"
+}
+
 window hud_mini extends hud
 {
 
@@ -625,252 +649,156 @@ window hud_mini extends hud
 		// status bars
 		// ==================
 
-		bar health0
+		cmp_bar_health health0
 		{
 			pos			"32 90"
-			size		"66 6"
-			color		".8 0 0 0.7"
 			current		*cvar:mn_hp0
 			max			*cvar:mn_hpmax0
-			disabled	true
-			tooltip		"_Health"
 		}
-		bar morale0
+		cmp_bar_morale morale0
 		{
 			pos			"32 97"
-			size		"66 6"
-			color		".8 .8 0 0.7"
 			current		*cvar:mn_morale0
 			max			*cvar:mn_moralemax0
-			disabled	true
-			tooltip		"_Morale"
 		}
-		bar time0
+		cmp_bar_time time0
 		{
 			pos			"32 104"
-			size		"66 6"
-			color		".2 .2 1 0.9"
 			current		*cvar:mn_tu0
 			max			*cvar:mn_tumax0
-			disabled	true
-			tooltip		"_TUs"
 		}
 
-		bar health1
+		cmp_bar_health health1
 		{
 			pos			"112 90"
-			size		"66 6"
-			color		".8 0 0 0.7"
 			current		*cvar:mn_hp1
 			max			*cvar:mn_hpmax1
-			disabled	true
-			tooltip		"_Health"
 		}
-		bar morale1
+		cmp_bar_morale morale1
 		{
 			pos			"112 97"
-			size		"66 6"
-			color		".8 .8 0 0.7"
 			current		*cvar:mn_morale1
 			max			*cvar:mn_moralemax1
-			disabled	true
-			tooltip		"_Morale"
 		}
-		bar time1
+		cmp_bar_time time1
 		{
 			pos			"112 104"
-			size		"66 6"
-			color		".2 .2 1 0.9"
 			current		*cvar:mn_tu1
 			max			*cvar:mn_tumax1
-			disabled	true
-			tooltip		"_TUs"
 		}
 
-		bar health2
+		cmp_bar_health health2
 		{
 			pos			"192 90"
-			size		"66 6"
-			color		".8 0 0 0.7"
 			current		*cvar:mn_hp2
 			max			*cvar:mn_hpmax2
-			disabled	true
-			tooltip		"_Health"
 		}
-		bar morale2
+		cmp_bar_morale morale2
 		{
 			pos			"192 97"
-			size		"66 6"
-			color		".8 .8 0 0.7"
 			current		*cvar:mn_morale2
 			max			*cvar:mn_moralemax2
-			disabled	true
-			tooltip		"_Morale"
 		}
-		bar time2
+		cmp_bar_time time2
 		{
 			pos			"192 104"
-			size		"66 6"
-			color		".2 .2 1 0.9"
 			current		*cvar:mn_tu2
 			max			*cvar:mn_tumax2
-			disabled	true
-			tooltip		"_TUs"
 		}
 
-		bar health3
+		cmp_bar_health health3
 		{
 			pos			"272 90"
-			size		"66 6"
-			color		".8 0 0 0.7"
 			current		*cvar:mn_hp3
 			max			*cvar:mn_hpmax3
-			disabled	true
-			tooltip		"_Health"
 		}
-		bar morale3
+		cmp_bar_morale morale3
 		{
 			pos			"272 97"
-			size		"66 6"
-			color		".8 .8 0 0.7"
 			current		*cvar:mn_morale3
 			max			*cvar:mn_moralemax3
-			disabled	true
-			tooltip		"_Morale"
 		}
-		bar time3
+		cmp_bar_time time3
 		{
 			pos			"272 104"
-			size		"66 6"
-			color		".2 .2 1 0.9"
 			current		*cvar:mn_tu3
 			max			*cvar:mn_tumax3
-			disabled	true
-			tooltip		"_TUs"
 		}
 
-		bar health4
+		cmp_bar_health health4
 		{
 			pos			"352 90"
-			size		"66 6"
-			color		".8 0 0 0.7"
 			current		*cvar:mn_hp4
 			max			*cvar:mn_hpmax4
-			disabled	true
-			tooltip		"_Health"
 		}
-		bar morale4
+		cmp_bar_morale morale4
 		{
 			pos			"352 97"
-			size		"66 6"
-			color		".8 .8 0 0.7"
 			current		*cvar:mn_morale4
 			max			*cvar:mn_moralemax4
-			disabled	true
-			tooltip		"_Morale"
 		}
-		bar time4
+		cmp_bar_time time4
 		{
 			pos			"352 104"
-			size		"66 6"
-			color		".2 .2 1 0.9"
 			current		*cvar:mn_tu4
 			max			*cvar:mn_tumax4
-			disabled	true
-			tooltip		"_TUs"
 		}
 
-		bar health5
+		cmp_bar_health health5
 		{
 			pos			"432 90"
-			size		"66 6"
-			color		".8 0 0 0.7"
 			current		*cvar:mn_hp5
 			max			*cvar:mn_hpmax5
-			disabled	true
-			tooltip		"_Health"
 		}
-		bar morale5
+		cmp_bar_morale morale5
 		{
 			pos			"432 97"
-			size		"66 6"
-			color		".8 .8 0 0.7"
 			current		*cvar:mn_morale5
 			max			*cvar:mn_moralemax5
-			disabled	true
-			tooltip		"_Morale"
 		}
-		bar time5
+		cmp_bar_time time5
 		{
 			pos			"432 104"
-			size		"66 6"
-			color		".2 .2 1 0.9"
 			current		*cvar:mn_tu5
 			max			*cvar:mn_tumax5
-			disabled	true
-			tooltip		"_TUs"
 		}
 
-		bar health6
+		cmp_bar_health health6
 		{
 			pos			"512 90"
-			size		"66 6"
-			color		".8 0 0 0.7"
 			current		*cvar:mn_hp6
 			max			*cvar:mn_hpmax6
-			disabled	true
-			tooltip		"_Health"
 		}
-		bar morale6
+		cmp_bar_morale morale6
 		{
 			pos			"512 97"
-			size		"66 6"
-			color		".8 .8 0 0.7"
 			current		*cvar:mn_morale6
 			max			*cvar:mn_moralemax6
-			disabled	true
-			tooltip		"_Morale"
 		}
-		bar time6
+		cmp_bar_time time6
 		{
 			pos			"512 104"
-			size		"66 6"
-			color		".2 .2 1 0.9"
 			current		*cvar:mn_tu6
 			max			*cvar:mn_tumax6
-			disabled	true
-			tooltip		"_TUs"
 		}
 
-		bar health7
+		cmp_bar_health health7
 		{
 			pos			"592 90"
-			size		"66 6"
-			color		".8 0 0 0.7"
 			current		*cvar:mn_hp7
 			max			*cvar:mn_hpmax7
-			disabled	true
-			tooltip		"_Health"
 		}
-		bar morale7
+		cmp_bar_morale morale7
 		{
 			pos			"592 97"
-			size		"66 6"
-			color		".8 .8 0 0.7"
 			current		*cvar:mn_morale7
 			max			*cvar:mn_moralemax7
-			disabled	true
-			tooltip		"_Morale"
 		}
-		bar time7
+		cmp_bar_time time7
 		{
 			pos			"592 104"
-			size		"66 6"
-			color		".2 .2 1 0.9"
 			current		*cvar:mn_tu7
 			max			*cvar:mn_tumax7
-			disabled	true
-			tooltip		"_TUs"
 		}
 	}
 
