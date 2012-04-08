@@ -701,15 +701,6 @@ void R_InitImages (void)
 {
 	int i;
 
-#ifdef SDL_IMAGE_VERSION
-	SDL_version version;
-
-	SDL_IMAGE_VERSION(&version)
-	Com_Printf("SDL_image version %i.%i.%i\n", version.major, version.minor, version.patch);
-#else
-	Com_Printf("could not get SDL_image version\n");
-#endif
-
 	r_numImages = 0;
 
 	for (i = 0; i < MAX_ENVMAPTEXTURES; i++) {

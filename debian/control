@@ -9,7 +9,7 @@ Build-Depends: debhelper (>= 5.0.0), libpng-dev, libjpeg-dev,
  libtheora-dev | libxvidcore4-dev, dpatch,
  libglib2.0-dev, zlib1g-dev, gettext, libmxml-dev,
  pkg-config, libopenal-dev, libgtksourceview2.0-dev,
- libsdl-image1.2-dev, python2.6 | python2.7, binutils-dev,
+ python2.6 | python2.7, binutils-dev,
  libx11-xcb-dev, texlive-latex-base, texlive-latex-recommended,
  texlive-latex-extra
 Build-Conflicts: nvidia-glx, nvidia-current
