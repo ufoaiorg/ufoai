@@ -143,6 +143,9 @@ static const inventoryImport_t inventoryImport = { G_FreeInventory, G_FreeAllInv
  */
 static void G_Init (void)
 {
+	char mspp[10];
+	sprintf(mspp, "%i", MAX_ACTIVETEAM);
+
 	gi.DPrintf("==== InitGame ====\n");
 
 	/* noset vars */
@@ -160,7 +163,7 @@ static void G_Init (void)
 	/* max. soldiers per team */
 	sv_maxsoldiersperteam = gi.Cvar_Get("sv_maxsoldiersperteam", "4", CVAR_ARCHIVE | CVAR_SERVERINFO | CVAR_LATCH, "How many soldiers may one team have");
 	/* max soldiers per player */
-	sv_maxsoldiersperplayer = gi.Cvar_Get("sv_maxsoldiersperplayer", "8", CVAR_ARCHIVE | CVAR_SERVERINFO | CVAR_LATCH, "How many soldiers one player is able to control in a given team");
+	sv_maxsoldiersperplayer = gi.Cvar_Get("sv_maxsoldiersperplayer", mspp, CVAR_ARCHIVE | CVAR_SERVERINFO | CVAR_LATCH, "How many soldiers one player is able to control in a given team");
 	/* enable moralestates in multiplayer */
 	sv_enablemorale = gi.Cvar_Get("sv_enablemorale", "1", CVAR_ARCHIVE | CVAR_SERVERINFO | CVAR_LATCH, "Enable morale behaviour for actors");
 	sv_roundtimelimit = gi.Cvar_Get("sv_roundtimelimit", "90", CVAR_ARCHIVE | CVAR_SERVERINFO, "Timelimit in seconds for multiplayer rounds");
