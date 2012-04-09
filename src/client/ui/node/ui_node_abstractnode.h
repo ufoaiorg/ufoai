@@ -29,7 +29,6 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #include "../ui_nodes.h"
 #include "../ui_node.h"
 
-struct uiNode_s;
 struct uiBehaviour_s;
 
 class uiNode {
@@ -37,26 +36,26 @@ public:
 	/* system allocation */
 
 	/** Called before script initialization, initialized default values */
-	virtual void loading(struct uiNode_s *node) {}
+	virtual void loading(uiNode_t* node) {}
 	/** only called one time, when node parsing was finished */
-	virtual void loaded(struct uiNode_s *node) {}
+	virtual void loaded(uiNode_t* node) {}
 	/** call to initialize a cloned node */
-	virtual void clone(const struct uiNode_s *source, struct uiNode_s *clone) {}
+	virtual void clone(uiNode_t const* source, uiNode_t* clone) {}
 	/** call to initialize a dynamic node */
-	virtual void newNode(struct uiNode_s *node) {}
+	virtual void newNode(uiNode_t* node) {}
 	/** call to delete a dynamic node */
-	virtual void deleteNode(struct uiNode_s *node) {}
+	virtual void deleteNode(uiNode_t* node) {}
 
 	/* system callback */
 
 	/** Invoked when the window is added to the rendering stack */
-	virtual void windowOpened(struct uiNode_s *node, linkedList_t *params);
+	virtual void windowOpened(uiNode_t* node, linkedList_t *params);
 	/** Invoked when the window is removed from the rendering stack */
-	virtual void windowClosed(struct uiNode_s *node);
+	virtual void windowClosed(uiNode_t* node);
 	/** Activate the node. Can be used without the mouse (ie. a button will execute onClick) */
-	virtual void activate(struct uiNode_s *node);
+	virtual void activate(uiNode_t* node);
 	/** Called when a property change */
-	virtual void propertyChanged(struct uiNode_s *node, const value_t *property);
+	virtual void propertyChanged(uiNode_t* node, const value_t *property);
 
 	virtual ~uiNode() {}
 };
@@ -64,66 +63,66 @@ public:
 class uiLocatedNode : public uiNode {
 public:
 	/** How to draw a node */
-	virtual void draw(struct uiNode_s *node) {}
+	virtual void draw(uiNode_t* node) {}
 	/** Allow to draw a custom tooltip */
-	virtual void drawTooltip(struct uiNode_s *node, int x, int y);
+	virtual void drawTooltip(uiNode_t* node, int x, int y);
 	/** Callback to draw content over the window @sa UI_CaptureDrawOver */
-	virtual void drawOverWindow(struct uiNode_s *node) {}
+	virtual void drawOverWindow(uiNode_t* node) {}
 
 	/** Called to update node layout */
-	virtual void doLayout(struct uiNode_s *node);
+	virtual void doLayout(uiNode_t* node);
 	/** Called when the node size change */
-	virtual void sizeChanged(struct uiNode_s *node);
+	virtual void sizeChanged(uiNode_t* node);
 
 	/* mouse events */
 
 	/** Left mouse click event in the node */
-	virtual void leftClick(struct uiNode_s *node, int x, int y);
+	virtual void leftClick(uiNode_t* node, int x, int y);
 	/** Right mouse button click event in the node */
-	virtual void rightClick(struct uiNode_s *node, int x, int y);
+	virtual void rightClick(uiNode_t* node, int x, int y);
 	/** Middle mouse button click event in the node */
-	virtual void middleClick(struct uiNode_s *node, int x, int y);
+	virtual void middleClick(uiNode_t* node, int x, int y);
 	/** Mouse wheel event in the node */
-	virtual bool scroll(struct uiNode_s *node, int deltaX, int deltaY);
+	virtual bool scroll(uiNode_t* node, int deltaX, int deltaY);
 	/* Planned */
 #if 0
 	/* mouse move event */
-	virtual void mouseEnter(struct uiNode_s *node);
-	virtual void mouseLeave(struct uiNode_s *node);
+	virtual void mouseEnter(uiNode_t* node);
+	virtual void mouseLeave(uiNode_t* node);
 #endif
 
 	/** Mouse move event in the node */
-	virtual void mouseMove(struct uiNode_s *node, int x, int y) {}
+	virtual void mouseMove(uiNode_t* node, int x, int y) {}
 	/** Mouse button down event in the node */
-	virtual void mouseDown(struct uiNode_s *node, int x, int y, int button) {}
+	virtual void mouseDown(uiNode_t* node, int x, int y, int button) {}
 	/** Mouse button up event in the node */
-	virtual void mouseUp(struct uiNode_s *node, int x, int y, int button) {}
+	virtual void mouseUp(uiNode_t* node, int x, int y, int button) {}
 	/** Mouse move event in the node when captured */
-	virtual void capturedMouseMove(struct uiNode_s *node, int x, int y) {}
+	virtual void capturedMouseMove(uiNode_t* node, int x, int y) {}
 	/** Capture is finished */
-	virtual void capturedMouseLost(struct uiNode_s *node) {}
+	virtual void capturedMouseLost(uiNode_t* node) {}
 
 	/* drag and drop callback */
 
 	/** Send to the target when we enter first, return true if we can drop the DND somewhere on the node */
-	virtual bool dndEnter(struct uiNode_s *node);
+	virtual bool dndEnter(uiNode_t* node);
 	/** Send to the target when we enter first, return true if we can drop the DND here */
-	virtual bool dndMove(struct uiNode_s *node, int x, int y);
+	virtual bool dndMove(uiNode_t* node, int x, int y);
 	/** Send to the target when the DND is canceled */
-	virtual void dndLeave(struct uiNode_s *node);
+	virtual void dndLeave(uiNode_t* node);
 	/** Send to the target to finalize the drop */
-	virtual bool dndDrop(struct uiNode_s *node, int x, int y);
+	virtual bool dndDrop(uiNode_t* node, int x, int y);
 	/** Sent to the source to finalize the drop */
-	virtual bool dndFinished(struct uiNode_s *node, bool isDroped);
+	virtual bool dndFinished(uiNode_t* node, bool isDroped);
 
 	/* focus and keyboard events */
-	virtual void focusGained(struct uiNode_s *node) {}
-	virtual void focusLost(struct uiNode_s *node) {}
-	virtual bool keyPressed(struct uiNode_s *node, unsigned int key, unsigned short unicode) {return false;}
-	virtual bool keyReleased(struct uiNode_s *node, unsigned int key, unsigned short unicode) {return false;}
+	virtual void focusGained(uiNode_t* node) {}
+	virtual void focusLost(uiNode_t* node) {}
+	virtual bool keyPressed(uiNode_t* node, unsigned int key, unsigned short unicode) {return false;}
+	virtual bool keyReleased(uiNode_t* node, unsigned int key, unsigned short unicode) {return false;}
 
 	/** Return the position of the client zone into the node */
-	virtual void getClientPosition(const struct uiNode_s *node, vec2_t position) {}
+	virtual void getClientPosition(uiNode_t const* node, vec2_t position) {}
 	/** cell size */
 	virtual int getCellWidth (uiNode_t *node) {return 1;}
 	/** cell size */

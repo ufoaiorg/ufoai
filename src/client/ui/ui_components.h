@@ -28,9 +28,9 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #include "../../common/common.h"
 
 /* prototype */
-struct uiNode_s;
+struct uiNode_t;
 
-void UI_InsertComponent(struct uiNode_s* component);
-struct uiNode_s *UI_GetComponent(const char *name);
+void UI_InsertComponent(uiNode_t* component);
+uiNode_t* UI_GetComponent(const char *name);
 
 #endif

@@ -329,7 +329,7 @@ void uiWindowNode::clone (const uiNode_t *source, uiNode_t *clone)
  * @param node A window node
  * @return A position, else NULL if no notice position
  */
-vec_t *UI_WindowNodeGetNoticePosition(struct uiNode_s *node)
+vec_t *UI_WindowNodeGetNoticePosition(uiNode_t* node)
 {
 	if (Vector2Empty(EXTRADATA(node).noticePos))
 		return NULL;
@@ -341,7 +341,7 @@ vec_t *UI_WindowNodeGetNoticePosition(struct uiNode_s *node)
  * @param node A window node
  * @return True if the window is a drop down.
  */
-qboolean UI_WindowIsDropDown(const struct uiNode_s* const node)
+qboolean UI_WindowIsDropDown(uiNode_t const* const node)
 {
 	return EXTRADATACONST(node).dropdown;
 }
@@ -351,7 +351,7 @@ qboolean UI_WindowIsDropDown(const struct uiNode_s* const node)
  * @param node A window node
  * @return True if the window is a modal.
  */
-qboolean UI_WindowIsModal(const struct uiNode_s* const node)
+qboolean UI_WindowIsModal(uiNode_t const* const node)
 {
 	return EXTRADATACONST(node).modal;
 }
@@ -378,7 +378,7 @@ const uiKeyBinding_t *binding;
  * @param node A window node
  * @param key A key code, either K_ value or lowercase ascii
  */
-uiKeyBinding_t *UI_WindowNodeGetKeyBinding (const struct uiNode_s* const node, unsigned int key)
+uiKeyBinding_t *UI_WindowNodeGetKeyBinding (uiNode_t const* const node, unsigned int key)
 {
 	uiKeyBinding_t *binding = EXTRADATACONST(node).keyList;
 	assert(UI_NodeInstanceOf(node, "window"));

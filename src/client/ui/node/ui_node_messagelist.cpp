@@ -301,7 +301,7 @@ void uiMessageListNode::loading (uiNode_t *node)
  * @brief Track mouse down/up events to implement drag&drop-like scrolling, for touchscreen devices
  * @sa UI_TextNodeMouseUp, UI_TextNodeCapturedMouseMove
 */
-void uiMessageListNode::mouseDown (struct uiNode_s *node, int x, int y, int button)
+void uiMessageListNode::mouseDown (uiNode_t* node, int x, int y, int button)
 {
 	if (!UI_GetMouseCapture() && button == K_MOUSE1 &&
 		EXTRADATA(node).scrollY.fullSize > EXTRADATA(node).scrollY.viewSize) {
@@ -311,7 +311,7 @@ void uiMessageListNode::mouseDown (struct uiNode_s *node, int x, int y, int butt
 	}
 }
 
-void uiMessageListNode::mouseUp (struct uiNode_s *node, int x, int y, int button)
+void uiMessageListNode::mouseUp (uiNode_t* node, int x, int y, int button)
 {
 	if (UI_GetMouseCapture() == node)  /* More checks can never hurt */
 		UI_MouseRelease();

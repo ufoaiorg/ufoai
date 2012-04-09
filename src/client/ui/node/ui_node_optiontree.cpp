@@ -376,7 +376,7 @@ void uiOptionTreeNode::doLayout (uiNode_t *node)
  * @brief Track mouse down/up events to implement drag&drop-like scrolling, for touchscreen devices
  * @sa UI_OptionTreeNodeMouseUp, UI_OptionTreeNodeCapturedMouseMove
 */
-void uiOptionTreeNode::mouseDown (struct uiNode_s *node, int x, int y, int button)
+void uiOptionTreeNode::mouseDown (uiNode_t* node, int x, int y, int button)
 {
 	if (!UI_GetMouseCapture() && button == K_MOUSE1 &&
 		EXTRADATA(node).scrollY.fullSize > EXTRADATA(node).scrollY.viewSize) {
@@ -386,7 +386,7 @@ void uiOptionTreeNode::mouseDown (struct uiNode_s *node, int x, int y, int butto
 	}
 }
 
-void uiOptionTreeNode::mouseUp (struct uiNode_s *node, int x, int y, int button)
+void uiOptionTreeNode::mouseUp (uiNode_t* node, int x, int y, int button)
 {
 	if (UI_GetMouseCapture() == node)  /* More checks can never hurt */
 		UI_MouseRelease();

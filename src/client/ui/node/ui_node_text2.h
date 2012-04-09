@@ -29,15 +29,15 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #include "ui_node_text.h"
 
 class uiText2Node : public uiTextNode {
-	void draw(struct uiNode_s *node) OVERRIDE;
-	void leftClick(struct uiNode_s *node, int x, int y) OVERRIDE;
-	void rightClick(struct uiNode_s *node, int x, int y) OVERRIDE;
-	void mouseMove(struct uiNode_s *node, int x, int y) OVERRIDE;
-	void loading(struct uiNode_s *node) OVERRIDE;
-	void loaded(struct uiNode_s *node) OVERRIDE;
-	void updateCache (struct uiNode_s *node) OVERRIDE;
+	void draw(uiNode_t* node) OVERRIDE;
+	void leftClick(uiNode_t* node, int x, int y) OVERRIDE;
+	void rightClick(uiNode_t* node, int x, int y) OVERRIDE;
+	void mouseMove(uiNode_t* node, int x, int y) OVERRIDE;
+	void loading(uiNode_t* node) OVERRIDE;
+	void loaded(uiNode_t* node) OVERRIDE;
+	void updateCache (uiNode_t* node) OVERRIDE;
 protected:
-	void drawText (struct uiNode_s* node, const linkedList_t* list, bool noDraw);
+	void drawText (uiNode_t* node, const linkedList_t* list, bool noDraw);
 };
 
 struct uiBehaviour_s;

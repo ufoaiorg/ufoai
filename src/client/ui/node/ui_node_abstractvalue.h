@@ -29,21 +29,21 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 
 class uiAbstractValueNode : public uiLocatedNode {
 public:
-	void loaded(struct uiNode_s *node) OVERRIDE;
-	void loading(struct uiNode_s *node) OVERRIDE;
-	void clone(const struct uiNode_s *source, struct uiNode_s *clone) OVERRIDE;
-	void newNode(struct uiNode_s *node) OVERRIDE;
-	void deleteNode(struct uiNode_s *node) OVERRIDE;
+	void loaded(uiNode_t* node) OVERRIDE;
+	void loading(uiNode_t* node) OVERRIDE;
+	void clone(uiNode_t const* source, uiNode_t* clone) OVERRIDE;
+	void newNode(uiNode_t* node) OVERRIDE;
+	void deleteNode(uiNode_t* node) OVERRIDE;
 protected:
-	void setRange(struct uiNode_s *node, float min, float max);
-	bool setValue(struct uiNode_s *node, float value);
-	bool incValue(struct uiNode_s *node);
-	bool decValue(struct uiNode_s *node);
-	float getFactorFloat(const struct uiNode_s *node);
-	float getMin(const struct uiNode_s *node);
-	float getMax(const struct uiNode_s *node);
-	float getDelta(const struct uiNode_s *node);
-	float getValue(const struct uiNode_s *node);
+	void setRange(uiNode_t* node, float min, float max);
+	bool setValue(uiNode_t* node, float value);
+	bool incValue(uiNode_t* node);
+	bool decValue(uiNode_t* node);
+	float getFactorFloat(uiNode_t const* node);
+	float getMin(uiNode_t const* node);
+	float getMax(uiNode_t const* node);
+	float getDelta(uiNode_t const* node);
+	float getValue(uiNode_t const* node);
 };
 
 /**

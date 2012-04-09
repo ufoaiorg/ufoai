@@ -28,12 +28,12 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #include "ui_node_abstractnode.h"
 
 void UI_RegisterImageNode(struct uiBehaviour_s* behaviour);
-void UI_ImageNodeDraw(struct uiNode_s *node);
+void UI_ImageNodeDraw(uiNode_t* node);
 
 class uiImageNode : public uiLocatedNode {
 public:
-	void loaded(struct uiNode_s *node) OVERRIDE;
-	void draw(struct uiNode_s *node) OVERRIDE;
+	void loaded(uiNode_t* node) OVERRIDE;
+	void draw(uiNode_t* node) OVERRIDE;
 };
 
 typedef struct imageExtraData_s {

@@ -57,7 +57,7 @@ qboolean UI_DNDIsDragging (void)
 /**
  * @brief Return true if the requested node is the current target of the DND
  */
-qboolean UI_DNDIsTargetNode (struct uiNode_s *node)
+qboolean UI_DNDIsTargetNode (uiNode_t* node)
 {
 	if (!UI_DNDIsDragging())
 		return qfalse;
@@ -67,7 +67,7 @@ qboolean UI_DNDIsTargetNode (struct uiNode_s *node)
 /**
  * @brief Return true if the requested node is the source of the DND
  */
-qboolean UI_DNDIsSourceNode (struct uiNode_s *node)
+qboolean UI_DNDIsSourceNode (uiNode_t* node)
 {
 	if (!UI_DNDIsDragging())
 		return qfalse;

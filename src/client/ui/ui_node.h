@@ -27,87 +27,87 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #define CLIENT_UI_UI_NODE_H
 
 /* prototype */
-struct uiNode_s;
+struct uiNode_t;
 
-bool UI_Node_IsVirtual (const struct uiNode_s *node);
-bool UI_Node_IsDrawable (const struct uiNode_s *node);
-bool UI_Node_IsAbstract (const struct uiNode_s *node);
-bool UI_Node_IsFunction (const struct uiNode_s *node);
-bool UI_Node_IsWindow (const struct uiNode_s *node);
-bool UI_Node_IsOptionContainer (const struct uiNode_s *node);
-bool UI_Node_IsBattleScape (const struct uiNode_s *node);
-bool UI_Node_IsScrollableContainer (const struct uiNode_s *node);
-bool UI_Node_IsDrawItselfChild (const struct uiNode_s *node);
+bool UI_Node_IsVirtual (uiNode_t const* node);
+bool UI_Node_IsDrawable (uiNode_t const* node);
+bool UI_Node_IsAbstract (uiNode_t const* node);
+bool UI_Node_IsFunction (uiNode_t const* node);
+bool UI_Node_IsWindow (uiNode_t const* node);
+bool UI_Node_IsOptionContainer (uiNode_t const* node);
+bool UI_Node_IsBattleScape (uiNode_t const* node);
+bool UI_Node_IsScrollableContainer (uiNode_t const* node);
+bool UI_Node_IsDrawItselfChild (uiNode_t const* node);
 
-const char* UI_Node_GetWidgetName (const struct uiNode_s *node);
-intptr_t UI_Node_GetMemorySize (const struct uiNode_s *node);
+const char* UI_Node_GetWidgetName (uiNode_t const* node);
+intptr_t UI_Node_GetMemorySize (uiNode_t const* node);
 
-void UI_Node_Draw (struct uiNode_s *node);
-void UI_Node_DrawTooltip (struct uiNode_s *node, int x, int y);
-void UI_Node_DrawOverWindow (struct uiNode_s *node);
-void UI_Node_LeftClick (struct uiNode_s *node, int x, int y);
-void UI_Node_RightClick (struct uiNode_s *node, int x, int y);
-void UI_Node_MiddleClick (struct uiNode_s *node, int x, int y);
-bool UI_Node_Scroll (struct uiNode_s *node, int deltaX, int deltaY);
-void UI_Node_MouseMove (struct uiNode_s *node, int x, int y);
-void UI_Node_MouseDown (struct uiNode_s *node, int x, int y, int button);
-void UI_Node_MouseUp (struct uiNode_s *node, int x, int y, int button);
-void UI_Node_CapturedMouseMove (struct uiNode_s *node, int x, int y);
-void UI_Node_CapturedMouseLost (struct uiNode_s *node);
-void UI_Node_Loading (struct uiNode_s *node);
-void UI_Node_Loaded (struct uiNode_s *node);
-void UI_Node_Clone (const struct uiNode_s *source, struct uiNode_s *clone);
-void UI_Node_NewNode (struct uiNode_s *node);
-void UI_Node_DeleteNode (struct uiNode_s *node);
-void UI_Node_WindowOpened (struct uiNode_s *node, linkedList_t *params);
-void UI_Node_WindowClosed (struct uiNode_s *node);
-void UI_Node_DoLayout (struct uiNode_s *node);
-void UI_Node_Activate (struct uiNode_s *node);
-void UI_Node_PropertyChanged (struct uiNode_s *node, const value_t *property);
-void UI_Node_SizeChanged (struct uiNode_s *node);
-void UI_Node_GetClientPosition (const struct uiNode_s *node, vec2_t position);
-bool UI_Node_DndEnter (struct uiNode_s *node);
-bool UI_Node_DndMove (struct uiNode_s *node, int x, int y);
-void UI_Node_DndLeave (struct uiNode_s *node);
-bool UI_Node_DndDrop (struct uiNode_s *node, int x, int y);
-bool UI_Node_DndFinished (struct uiNode_s *node, bool isDroped);
-void UI_Node_FocusGained (struct uiNode_s *node);
-void UI_Node_FocusLost (struct uiNode_s *node);
-bool UI_Node_KeyPressed (struct uiNode_s *node, unsigned int key, unsigned short unicode);
-bool UI_Node_KeyReleased (struct uiNode_s *node, unsigned int key, unsigned short unicode);
-int UI_Node_GetCellWidth (struct uiNode_s *node);
-int UI_Node_GetCellHeight (struct uiNode_s *node);
+void UI_Node_Draw (uiNode_t* node);
+void UI_Node_DrawTooltip (uiNode_t* node, int x, int y);
+void UI_Node_DrawOverWindow (uiNode_t* node);
+void UI_Node_LeftClick (uiNode_t* node, int x, int y);
+void UI_Node_RightClick (uiNode_t* node, int x, int y);
+void UI_Node_MiddleClick (uiNode_t* node, int x, int y);
+bool UI_Node_Scroll (uiNode_t* node, int deltaX, int deltaY);
+void UI_Node_MouseMove (uiNode_t* node, int x, int y);
+void UI_Node_MouseDown (uiNode_t* node, int x, int y, int button);
+void UI_Node_MouseUp (uiNode_t* node, int x, int y, int button);
+void UI_Node_CapturedMouseMove (uiNode_t* node, int x, int y);
+void UI_Node_CapturedMouseLost (uiNode_t* node);
+void UI_Node_Loading (uiNode_t* node);
+void UI_Node_Loaded (uiNode_t* node);
+void UI_Node_Clone (uiNode_t const* source, uiNode_t* clone);
+void UI_Node_NewNode (uiNode_t* node);
+void UI_Node_DeleteNode (uiNode_t* node);
+void UI_Node_WindowOpened (uiNode_t* node, linkedList_t *params);
+void UI_Node_WindowClosed (uiNode_t* node);
+void UI_Node_DoLayout (uiNode_t* node);
+void UI_Node_Activate (uiNode_t* node);
+void UI_Node_PropertyChanged (uiNode_t* node, const value_t *property);
+void UI_Node_SizeChanged (uiNode_t* node);
+void UI_Node_GetClientPosition (uiNode_t const* node, vec2_t position);
+bool UI_Node_DndEnter (uiNode_t* node);
+bool UI_Node_DndMove (uiNode_t* node, int x, int y);
+void UI_Node_DndLeave (uiNode_t* node);
+bool UI_Node_DndDrop (uiNode_t* node, int x, int y);
+bool UI_Node_DndFinished (uiNode_t* node, bool isDroped);
+void UI_Node_FocusGained (uiNode_t* node);
+void UI_Node_FocusLost (uiNode_t* node);
+bool UI_Node_KeyPressed (uiNode_t* node, unsigned int key, unsigned short unicode);
+bool UI_Node_KeyReleased (uiNode_t* node, unsigned int key, unsigned short unicode);
+int UI_Node_GetCellWidth (uiNode_t* node);
+int UI_Node_GetCellHeight (uiNode_t* node);
 
 #ifdef DEBUG
-void UI_Node_DebugCountWidget (struct uiNode_s *node, int count);
+void UI_Node_DebugCountWidget (uiNode_t* node, int count);
 #endif
 
 bool UI_NodeInstanceOf(const uiNode_t *node, const char* behaviourName);
 bool UI_NodeInstanceOfPointer(const uiNode_t *node, const struct uiBehaviour_s* behaviour);
 bool UI_NodeSetProperty(uiNode_t* node, const value_t *property, const char* value);
 void UI_NodeSetPropertyFromRAW(uiNode_t* node, const value_t *property, const void* rawValue, int rawType);
-float UI_GetFloatFromNodeProperty(const struct uiNode_s* node, const value_t* property);
+float UI_GetFloatFromNodeProperty(uiNode_t const* node, const value_t* property);
 const char* UI_GetStringFromNodeProperty(const uiNode_t* node, const value_t* property);
 
 /* visibility */
-void UI_UnHideNode(struct uiNode_s *node);
-void UI_HideNode(struct uiNode_s *node);
-void UI_Invalidate(struct uiNode_s *node);
-void UI_Validate(struct uiNode_s *node);
+void UI_UnHideNode(uiNode_t* node);
+void UI_HideNode(uiNode_t* node);
+void UI_Invalidate(uiNode_t* node);
+void UI_Validate(uiNode_t* node);
 void UI_NodeSetSize(uiNode_t* node, vec2_t size);
 
 /* position */
-void UI_GetNodeAbsPos(const struct uiNode_s* node, vec2_t pos);
+void UI_GetNodeAbsPos(uiNode_t const* node, vec2_t pos);
 void UI_GetNodeScreenPos(const uiNode_t* node, vec2_t pos);
-void UI_NodeAbsoluteToRelativePos(const struct uiNode_s* node, int *x, int *y);
+void UI_NodeAbsoluteToRelativePos(uiNode_t const* node, int *x, int *y);
 void UI_NodeRelativeToAbsolutePoint(const uiNode_t* node, vec2_t pos);
 void UI_NodeGetPoint(const uiNode_t* node, vec2_t pos, int pointDirection);
 
 /* navigation */
-struct uiNode_s *UI_GetNode(const struct uiNode_s* const node, const char *name);
-void UI_InsertNode(struct uiNode_s* const node, struct uiNode_s *prevNode, struct uiNode_s *newNode);
-void UI_AppendNode(struct uiNode_s* const node, struct uiNode_s *newNode);
-uiNode_t* UI_RemoveNode(uiNode_t* const node, uiNode_t *child);
+uiNode_t* UI_GetNode(uiNode_t const* node, const char *name);
+void UI_InsertNode(uiNode_t* node, uiNode_t* prevNode, uiNode_t* newNode);
+void UI_AppendNode(uiNode_t* node, uiNode_t* newNode);
+uiNode_t* UI_RemoveNode(uiNode_t* node, uiNode_t* child);
 void UI_UpdateRoot(uiNode_t *node, uiNode_t *newRoot);
 
 

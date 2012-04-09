@@ -29,27 +29,27 @@ struct base_s;
 
 class uiAbstractBaseNode : public uiLocatedNode {
 public:
-	void loaded(struct uiNode_s *node) OVERRIDE;
-	void loading(struct uiNode_s *node) OVERRIDE;
+	void loaded(uiNode_t* node) OVERRIDE;
+	void loading(uiNode_t* node) OVERRIDE;
 protected:
 	base_s* getBase(const uiNode_t *node);
 };
 
 class uiBaseMapNode : public uiAbstractBaseNode {
 public:
-	void draw(struct uiNode_s *node) OVERRIDE;
-	void leftClick(struct uiNode_s *node, int x, int y) OVERRIDE;
-	void rightClick(struct uiNode_s *node, int x, int y) OVERRIDE;
-	void middleClick(struct uiNode_s *node, int x, int y) OVERRIDE;
-	void drawTooltip(struct uiNode_s *node, int x, int y) OVERRIDE;
+	void draw(uiNode_t* node) OVERRIDE;
+	void leftClick(uiNode_t* node, int x, int y) OVERRIDE;
+	void rightClick(uiNode_t* node, int x, int y) OVERRIDE;
+	void middleClick(uiNode_t* node, int x, int y) OVERRIDE;
+	void drawTooltip(uiNode_t* node, int x, int y) OVERRIDE;
 protected:
 	void getCellAtPos(const uiNode_t *node, int x, int y, int *col, int *row);
 };
 
 class uiBaseLayoutNode : public uiAbstractBaseNode {
 public:
-	void draw(struct uiNode_s *node) OVERRIDE;
-	void loading(struct uiNode_s *node) OVERRIDE;
+	void draw(uiNode_t* node) OVERRIDE;
+	void loading(uiNode_t* node) OVERRIDE;
 };
 
 

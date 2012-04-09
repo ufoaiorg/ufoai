@@ -36,7 +36,7 @@ extern cvar_t *cl_mapzoommin;
 extern cvar_t *cl_3dmap;
 
 /* prototype */
-struct uiNode_s;
+struct uiNode_t;
 
 #define MAP_IsAircraftSelected(aircraft) ((aircraft) == ccs.geoscape.selectedAircraft)
 #define MAP_IsInterceptorSelected(aircraft) ((aircraft) == ccs.geoscape.interceptAircraft)
@@ -56,18 +56,18 @@ struct uiNode_s;
 #define MAP_SetMissionAircraft(aircraft) (ccs.geoscape.missionAircraft = (aircraft))
 
 nation_t* MAP_GetNation(const vec2_t pos);
-qboolean MAP_AllMapToScreen(const struct uiNode_s* node, const vec2_t pos, int *x, int *y, int *z);
-void MAP_MapDrawEquidistantPoints(const struct uiNode_s* node, const vec2_t center, const float angle, const vec4_t color);
+qboolean MAP_AllMapToScreen(uiNode_t const* node, const vec2_t pos, int *x, int *y, int *z);
+void MAP_MapDrawEquidistantPoints(uiNode_t const* node, const vec2_t center, const float angle, const vec4_t color);
 float MAP_AngleOfPath(const vec3_t start, const vec2_t end, vec3_t direction, vec3_t ortVector);
 void MAP_MapCalcLine(const vec2_t start, const vec2_t end, mapline_t* line);
-void MAP_DrawMap(const struct uiNode_s* node, const campaign_t *campaign);
+void MAP_DrawMap(uiNode_t const* node, const campaign_t *campaign);
 void MAP_CenterOnPoint_f(void);
 void MAP_StopSmoothMovement(void);
 base_t* MAP_PositionCloseToBase(const vec2_t pos);
 
 void MAP_Scroll_f(void);
 void MAP_Zoom_f(void);
-qboolean MAP_MapClick(struct uiNode_s * node, int x, int y);
+qboolean MAP_MapClick(uiNode_t* node, int x, int y);
 void MAP_ResetAction(void);
 void MAP_SelectAircraft(aircraft_t* aircraft);
 void MAP_SelectUFO(aircraft_t* ufo);

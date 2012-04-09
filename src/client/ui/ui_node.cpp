@@ -36,42 +36,42 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #include "ui_components.h"
 #include "ui_internal.h"
 
-bool UI_Node_IsVirtual(const struct uiNode_s *node)
+bool UI_Node_IsVirtual(uiNode_t const* node)
 {
 	uiLocatedNode* b = dynamic_cast<uiLocatedNode*>(node->behaviour->manager);
 	return b == NULL;
 }
 
-bool UI_Node_IsDrawable(const struct uiNode_s *node)
+bool UI_Node_IsDrawable(uiNode_t const* node)
 {
 	uiLocatedNode* b = dynamic_cast<uiLocatedNode*>(node->behaviour->manager);
 	return b != NULL;
 }
 
-bool UI_Node_IsOptionContainer(const struct uiNode_s *node)
+bool UI_Node_IsOptionContainer(uiNode_t const* node)
 {
 	uiAbstractOptionNode* b = dynamic_cast<uiAbstractOptionNode*>(node->behaviour->manager);
 	return b != NULL;
 }
 
-bool UI_Node_IsWindow(const struct uiNode_s *node)
+bool UI_Node_IsWindow(uiNode_t const* node)
 {
 	uiWindowNode* b = dynamic_cast<uiWindowNode*>(node->behaviour->manager);
 	return b != NULL;
 }
 
-bool UI_Node_IsBattleScape(const struct uiNode_s *node)
+bool UI_Node_IsBattleScape(uiNode_t const* node)
 {
 	uiBattleScapeNode *b = dynamic_cast<uiBattleScapeNode*>(node->behaviour->manager);
 	return b != NULL;
 }
 
-bool UI_Node_IsAbstract(const struct uiNode_s *node)
+bool UI_Node_IsAbstract(uiNode_t const* node)
 {
 	return node->behaviour->isAbstract;
 }
 
-bool UI_Node_IsDrawItselfChild(const struct uiNode_s *node)
+bool UI_Node_IsDrawItselfChild(uiNode_t const* node)
 {
 	return node->behaviour->drawItselfChild;
 }
@@ -79,7 +79,7 @@ bool UI_Node_IsDrawItselfChild(const struct uiNode_s *node)
 /**
  * @todo Use typeid when it is possible
  */
-bool UI_Node_IsFunction(const struct uiNode_s *node)
+bool UI_Node_IsFunction(uiNode_t const* node)
 {
 	return node->behaviour->isFunction;
 }
@@ -87,90 +87,90 @@ bool UI_Node_IsFunction(const struct uiNode_s *node)
 /**
  * @todo Use typeid when it is possible
  */
-bool UI_Node_IsScrollableContainer(const struct uiNode_s *node)
+bool UI_Node_IsScrollableContainer(uiNode_t const* node)
 {
 	uiAbstractScrollableNode *b = dynamic_cast<uiAbstractScrollableNode*>(node->behaviour->manager);
 	return b != NULL;
 }
 
-const char* UI_Node_GetWidgetName(const struct uiNode_s *node)
+const char* UI_Node_GetWidgetName(uiNode_t const* node)
 {
 	return node->behaviour->name;
 }
 
-intptr_t UI_Node_GetMemorySize(const struct uiNode_s *node)
+intptr_t UI_Node_GetMemorySize(uiNode_t const* node)
 {
 	return sizeof(*node) + node->behaviour->extraDataSize;
 }
 
-void UI_Node_Draw(struct uiNode_s *node)
+void UI_Node_Draw(uiNode_t* node)
 {
 	uiLocatedNode *b = dynamic_cast<uiLocatedNode*>(node->behaviour->manager);
 	b->draw(node);
 }
 
-void UI_Node_DrawTooltip(struct uiNode_s *node, int x, int y)
+void UI_Node_DrawTooltip(uiNode_t* node, int x, int y)
 {
 	uiLocatedNode *b = dynamic_cast<uiLocatedNode*>(node->behaviour->manager);
 	b->drawTooltip(node, x, y);
 }
 
-void UI_Node_DrawOverWindow(struct uiNode_s *node)
+void UI_Node_DrawOverWindow(uiNode_t* node)
 {
 	uiLocatedNode *b = dynamic_cast<uiLocatedNode*>(node->behaviour->manager);
 	b->drawOverWindow(node);
 }
 
 /* mouse events */
-void UI_Node_LeftClick(struct uiNode_s *node, int x, int y)
+void UI_Node_LeftClick(uiNode_t* node, int x, int y)
 {
 	uiLocatedNode *b = dynamic_cast<uiLocatedNode*>(node->behaviour->manager);
 	b->leftClick(node, x, y);
 }
 
-void UI_Node_RightClick(struct uiNode_s *node, int x, int y)
+void UI_Node_RightClick(uiNode_t* node, int x, int y)
 {
 	uiLocatedNode *b = dynamic_cast<uiLocatedNode*>(node->behaviour->manager);
 	b->rightClick(node, x, y);
 }
 
-void UI_Node_MiddleClick(struct uiNode_s *node, int x, int y)
+void UI_Node_MiddleClick(uiNode_t* node, int x, int y)
 {
 	uiLocatedNode *b = dynamic_cast<uiLocatedNode*>(node->behaviour->manager);
 	b->middleClick(node, x, y);
 }
 
-bool UI_Node_Scroll(struct uiNode_s *node, int deltaX, int deltaY)
+bool UI_Node_Scroll(uiNode_t* node, int deltaX, int deltaY)
 {
 	uiLocatedNode *b = dynamic_cast<uiLocatedNode*>(node->behaviour->manager);
 	return b->scroll(node, deltaX, deltaY);
 }
 
-void UI_Node_MouseMove(struct uiNode_s *node, int x, int y)
+void UI_Node_MouseMove(uiNode_t* node, int x, int y)
 {
 	uiLocatedNode *b = dynamic_cast<uiLocatedNode*>(node->behaviour->manager);
 	b->mouseMove(node, x, y);
 }
 
-void UI_Node_MouseDown(struct uiNode_s *node, int x, int y, int button)
+void UI_Node_MouseDown(uiNode_t* node, int x, int y, int button)
 {
 	uiLocatedNode *b = dynamic_cast<uiLocatedNode*>(node->behaviour->manager);
 	b->mouseDown(node, x, y, button);
 }
 
-void UI_Node_MouseUp(struct uiNode_s *node, int x, int y, int button)
+void UI_Node_MouseUp(uiNode_t* node, int x, int y, int button)
 {
 	uiLocatedNode *b = dynamic_cast<uiLocatedNode*>(node->behaviour->manager);
 	b->mouseUp(node, x, y, button);
 }
 
-void UI_Node_CapturedMouseMove(struct uiNode_s *node, int x, int y)
+void UI_Node_CapturedMouseMove(uiNode_t* node, int x, int y)
 {
 	uiLocatedNode *b = dynamic_cast<uiLocatedNode*>(node->behaviour->manager);
 	b->capturedMouseMove(node, x, y);
 }
 
-void UI_Node_CapturedMouseLost(struct uiNode_s *node)
+void UI_Node_CapturedMouseLost(uiNode_t* node)
 {
 	uiLocatedNode *b = dynamic_cast<uiLocatedNode*>(node->behaviour->manager);
 	b->capturedMouseLost(node);
@@ -178,31 +178,31 @@ void UI_Node_CapturedMouseLost(struct uiNode_s *node)
 
 /* system allocation */
 
-void UI_Node_Loading(struct uiNode_s *node)
+void UI_Node_Loading(uiNode_t* node)
 {
 	uiNode *b = node->behaviour->manager;
 	b->loading(node);
 }
 
-void UI_Node_Loaded(struct uiNode_s *node)
+void UI_Node_Loaded(uiNode_t* node)
 {
 	uiNode *b = node->behaviour->manager;
 	b->loaded(node);
 }
 
-void UI_Node_Clone(const struct uiNode_s *source, struct uiNode_s *clone)
+void UI_Node_Clone(uiNode_t const* source, uiNode_t* clone)
 {
 	uiNode *b = source->behaviour->manager;
 	b->clone(source, clone);
 }
 
-void UI_Node_NewNode(struct uiNode_s *node)
+void UI_Node_NewNode(uiNode_t* node)
 {
 	uiNode *b = node->behaviour->manager;
 	b->newNode(node);
 }
 
-void UI_Node_DeleteNode(struct uiNode_s *node)
+void UI_Node_DeleteNode(uiNode_t* node)
 {
 	uiNode *b = node->behaviour->manager;
 	b->deleteNode(node);
@@ -210,19 +210,19 @@ void UI_Node_DeleteNode(struct uiNode_s *node)
 
 /* system callback */
 
-void UI_Node_WindowOpened(struct uiNode_s *node, linkedList_t *params)
+void UI_Node_WindowOpened(uiNode_t* node, linkedList_t *params)
 {
 	uiNode *b = node->behaviour->manager;
 	b->windowOpened(node, params);
 }
 
-void UI_Node_WindowClosed(struct uiNode_s *node)
+void UI_Node_WindowClosed(uiNode_t* node)
 {
 	uiNode *b = node->behaviour->manager;
 	b->windowClosed(node);
 }
 
-void UI_Node_DoLayout(struct uiNode_s *node)
+void UI_Node_DoLayout(uiNode_t* node)
 {
 	if (UI_Node_IsDrawable(node)) {
 		uiLocatedNode *b = dynamic_cast<uiLocatedNode*>(node->behaviour->manager);
@@ -230,25 +230,25 @@ void UI_Node_DoLayout(struct uiNode_s *node)
 	}
 }
 
-void UI_Node_Activate(struct uiNode_s *node)
+void UI_Node_Activate(uiNode_t* node)
 {
 	uiNode *b = node->behaviour->manager;
 	b->activate(node);
 }
 
-void UI_Node_PropertyChanged(struct uiNode_s *node, const value_t *property)
+void UI_Node_PropertyChanged(uiNode_t* node, const value_t *property)
 {
 	uiNode *b = node->behaviour->manager;
 	b->propertyChanged(node, property);
 }
 
-void UI_Node_SizeChanged(struct uiNode_s *node)
+void UI_Node_SizeChanged(uiNode_t* node)
 {
 	uiLocatedNode *b = dynamic_cast<uiLocatedNode*>(node->behaviour->manager);
 	b->sizeChanged(node);
 }
 
-void UI_Node_GetClientPosition(const struct uiNode_s *node, vec2_t position)
+void UI_Node_GetClientPosition(uiNode_t const* node, vec2_t position)
 {
 	uiAbstractScrollableNode *b = dynamic_cast<uiAbstractScrollableNode*>(node->behaviour->manager);
 	b->getClientPosition(node, position);
@@ -256,31 +256,31 @@ void UI_Node_GetClientPosition(const struct uiNode_s *node, vec2_t position)
 
 /* drag and drop callback */
 
-bool UI_Node_DndEnter(struct uiNode_s *node)
+bool UI_Node_DndEnter(uiNode_t* node)
 {
 	uiLocatedNode *b = dynamic_cast<uiLocatedNode*>(node->behaviour->manager);
 	return b->dndEnter(node);
 }
 
-bool UI_Node_DndMove(struct uiNode_s *node, int x, int y)
+bool UI_Node_DndMove(uiNode_t* node, int x, int y)
 {
 	uiLocatedNode *b = dynamic_cast<uiLocatedNode*>(node->behaviour->manager);
 	return b->dndMove(node, x, y);
 }
 
-void UI_Node_DndLeave(struct uiNode_s *node)
+void UI_Node_DndLeave(uiNode_t* node)
 {
 	uiLocatedNode *b = dynamic_cast<uiLocatedNode*>(node->behaviour->manager);
 	b->dndLeave(node);
 }
 
-bool UI_Node_DndDrop(struct uiNode_s *node, int x, int y)
+bool UI_Node_DndDrop(uiNode_t* node, int x, int y)
 {
 	uiLocatedNode *b = dynamic_cast<uiLocatedNode*>(node->behaviour->manager);
 	return b->dndDrop(node, x, y);
 }
 
-bool UI_Node_DndFinished(struct uiNode_s *node, bool isDroped)
+bool UI_Node_DndFinished(uiNode_t* node, bool isDroped)
 {
 	uiLocatedNode *b = dynamic_cast<uiLocatedNode*>(node->behaviour->manager);
 	return b->dndFinished(node, isDroped);
@@ -288,25 +288,25 @@ bool UI_Node_DndFinished(struct uiNode_s *node, bool isDroped)
 
 /* focus and keyboard events */
 
-void UI_Node_FocusGained(struct uiNode_s *node)
+void UI_Node_FocusGained(uiNode_t* node)
 {
 	uiLocatedNode *b = dynamic_cast<uiLocatedNode*>(node->behaviour->manager);
 	b->focusGained(node);
 }
 
-void UI_Node_FocusLost(struct uiNode_s *node)
+void UI_Node_FocusLost(uiNode_t* node)
 {
 	uiLocatedNode *b = dynamic_cast<uiLocatedNode*>(node->behaviour->manager);
 	b->focusLost(node);
 }
 
-bool UI_Node_KeyPressed(struct uiNode_s *node, unsigned int key, unsigned short unicode)
+bool UI_Node_KeyPressed(uiNode_t* node, unsigned int key, unsigned short unicode)
 {
 	uiLocatedNode *b = dynamic_cast<uiLocatedNode*>(node->behaviour->manager);
 	return b->keyPressed(node, key, unicode);
 }
 
-bool UI_Node_KeyReleased(struct uiNode_s *node, unsigned int key, unsigned short unicode)
+bool UI_Node_KeyReleased(uiNode_t* node, unsigned int key, unsigned short unicode)
 {
 	uiLocatedNode *b = dynamic_cast<uiLocatedNode*>(node->behaviour->manager);
 	return b->keyReleased(node, key, unicode);
@@ -314,13 +314,13 @@ bool UI_Node_KeyReleased(struct uiNode_s *node, unsigned int key, unsigned short
 
 /* cell size */
 
-int UI_Node_GetCellWidth(struct uiNode_s *node)
+int UI_Node_GetCellWidth(uiNode_t* node)
 {
 	uiAbstractScrollableNode *b = dynamic_cast<uiAbstractScrollableNode*>(node->behaviour->manager);
 	return b->getCellWidth(node);
 }
 
-int UI_Node_GetCellHeight(struct uiNode_s *node)
+int UI_Node_GetCellHeight(uiNode_t* node)
 {
 	uiAbstractScrollableNode *b = dynamic_cast<uiAbstractScrollableNode*>(node->behaviour->manager);
 	return b->getCellHeight(node);
@@ -328,7 +328,7 @@ int UI_Node_GetCellHeight(struct uiNode_s *node)
 
 #ifdef DEBUG
 
-void UI_Node_DebugCountWidget(struct uiNode_s *node, int count)
+void UI_Node_DebugCountWidget(uiNode_t* node, int count)
 {
 	node->behaviour->count += count;
 }

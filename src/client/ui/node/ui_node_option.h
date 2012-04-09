@@ -29,8 +29,8 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #include "ui_node_abstractnode.h"
 
 class uiOptionNode : public uiLocatedNode {
-	void propertyChanged(struct uiNode_s *node, const value_t *property) OVERRIDE;
-	void doLayout(struct uiNode_s *node) OVERRIDE;
+	void propertyChanged(uiNode_t* node, const value_t *property) OVERRIDE;
+	void doLayout(uiNode_t* node) OVERRIDE;
 };
 
 void UI_RegisterOptionNode(struct uiBehaviour_s *behaviour);
@@ -59,7 +59,7 @@ typedef struct optionExtraData_s {
 
 } optionExtraData_t;
 
-int UI_OptionUpdateCache(struct uiNode_s* option);
+int UI_OptionUpdateCache(uiNode_t* option);
 uiNode_t *UI_AllocOptionNode(const char* name, const char* label, const char* value);
 
 #endif

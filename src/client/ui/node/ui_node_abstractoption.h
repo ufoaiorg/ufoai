@@ -31,9 +31,9 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 struct uiAction_s;
 
 class uiAbstractOptionNode : public uiLocatedNode {
-	void doLayout(struct uiNode_s *node) OVERRIDE;
-	int getCellWidth(struct uiNode_s *node) OVERRIDE;
-	int getCellHeight(struct uiNode_s *node) OVERRIDE;
+	void doLayout(uiNode_t* node) OVERRIDE;
+	int getCellWidth(uiNode_t* node) OVERRIDE;
+	int getCellHeight(uiNode_t* node) OVERRIDE;
 };
 
 typedef struct {
@@ -51,12 +51,11 @@ typedef struct {
 	struct uiAction_s *onViewChange;	/**< called when view change (number of elements...) */
 } abstractOptionExtraData_t;
 
-struct uiNode_s;
 struct uiBehaviour_s;
 
 void UI_RegisterAbstractOptionNode(struct uiBehaviour_s *behaviour);
-void UI_OptionNodeSortOptions(struct uiNode_s *node);
-struct uiNode_s* UI_AbstractOptionGetFirstOption(uiNode_t * node);
+void UI_OptionNodeSortOptions(uiNode_t* node);
+uiNode_t* UI_AbstractOptionGetFirstOption(uiNode_t* node);
 const char *UI_AbstractOptionGetCurrentValue(uiNode_t * node);
 void UI_AbstractOptionSetCurrentValue(uiNode_t * node, const char *value);
 

@@ -26,12 +26,12 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #define CLIENT_UI_UI_INPUT_H
 
 /* prototype */
-struct uiNode_s;
+struct uiNode_t;
 
 #define UI_MAX_KEYBINDING	128
 
 typedef struct uiKeyBinding_s {
-	struct uiNode_s *node;				/**< Node target. */
+	uiNode_t* node;				/**< Node target. */
 	const struct value_s *property;		/**< Property target, else NULL. */
 	int key;							/**< Keynum to catch. */
 	const char* description;			/**< Description of this binding */
@@ -48,11 +48,11 @@ void UI_MouseDown(int x, int y, int button);
 void UI_MouseUp(int x, int y, int button);
 void UI_InvalidateMouse(void);
 qboolean UI_CheckMouseMove(void);
-struct uiNode_s *UI_GetHoveredNode(void);
+uiNode_t* UI_GetHoveredNode(void);
 
 /* focus */
-void UI_RequestFocus(struct uiNode_s* node);
-qboolean UI_HasFocus(const struct uiNode_s* node);
+void UI_RequestFocus(uiNode_t* node);
+qboolean UI_HasFocus(uiNode_t const* node);
 void UI_RemoveFocus(void);
 qboolean UI_KeyRelease(unsigned int key, unsigned short unicode);
 qboolean UI_KeyPressed(unsigned int key, unsigned short unicode);
@@ -60,8 +60,8 @@ int UI_GetKeyBindingCount(void);
 uiKeyBinding_t* UI_GetKeyBindingByIndex(int index);
 
 /* mouse capture */
-struct uiNode_s* UI_GetMouseCapture(void);
-void UI_SetMouseCapture(struct uiNode_s* node);
+uiNode_t* UI_GetMouseCapture(void);
+void UI_SetMouseCapture(uiNode_t* node);
 void UI_MouseRelease(void);
 
 /* all inputs */

@@ -26,12 +26,12 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #define CLIENT_UI_UI_NODE_EDITOR_H
 
 class uiEditorNode : public uiLocatedNode {
-	void draw(struct uiNode_s *node) OVERRIDE;
-	void drawOverWindow(struct uiNode_s *node) OVERRIDE;
-	void mouseDown(struct uiNode_s *node, int x, int y, int button) OVERRIDE;
-	void mouseUp(struct uiNode_s *node, int x, int y, int button) OVERRIDE;
-	void capturedMouseMove(struct uiNode_s *node, int x, int y) OVERRIDE;
-	void capturedMouseLost(struct uiNode_s *node) OVERRIDE;
+	void draw(uiNode_t* node) OVERRIDE;
+	void drawOverWindow(uiNode_t* node) OVERRIDE;
+	void mouseDown(uiNode_t* node, int x, int y, int button) OVERRIDE;
+	void mouseUp(uiNode_t* node, int x, int y, int button) OVERRIDE;
+	void capturedMouseMove(uiNode_t* node, int x, int y) OVERRIDE;
+	void capturedMouseLost(uiNode_t* node) OVERRIDE;
 };
 
 void UI_RegisterEditorNode(struct uiBehaviour_s* behaviour);

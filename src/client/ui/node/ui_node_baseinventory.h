@@ -29,18 +29,18 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #include "ui_node_abstractscrollable.h"
 
 class uiBaseInventoryNode : public uiContainerNode {
-	void draw(struct uiNode_s *node) OVERRIDE;
-	void drawTooltip(struct uiNode_s *node, int x, int y) OVERRIDE;
-	void mouseDown(struct uiNode_s *node, int x, int y, int button) OVERRIDE;
-	void mouseUp(struct uiNode_s *node, int x, int y, int button) OVERRIDE;
-	bool scroll(struct uiNode_s *node, int deltaX, int deltaY) OVERRIDE;
-	void capturedMouseMove(struct uiNode_s *node, int x, int y) OVERRIDE;
-	void windowOpened(struct uiNode_s *node, linkedList_t *params) OVERRIDE;
-	void loading(struct uiNode_s *node) OVERRIDE;
-	void loaded(struct uiNode_s *node) OVERRIDE;
-	bool dndEnter(struct uiNode_s *node) OVERRIDE;
-	bool dndMove(struct uiNode_s *node, int x, int y) OVERRIDE;
-	void dndLeave(struct uiNode_s *node) OVERRIDE;
+	void draw(uiNode_t* node) OVERRIDE;
+	void drawTooltip(uiNode_t* node, int x, int y) OVERRIDE;
+	void mouseDown(uiNode_t* node, int x, int y, int button) OVERRIDE;
+	void mouseUp(uiNode_t* node, int x, int y, int button) OVERRIDE;
+	bool scroll(uiNode_t* node, int deltaX, int deltaY) OVERRIDE;
+	void capturedMouseMove(uiNode_t* node, int x, int y) OVERRIDE;
+	void windowOpened(uiNode_t* node, linkedList_t *params) OVERRIDE;
+	void loading(uiNode_t* node) OVERRIDE;
+	void loaded(uiNode_t* node) OVERRIDE;
+	bool dndEnter(uiNode_t* node) OVERRIDE;
+	bool dndMove(uiNode_t* node, int x, int y) OVERRIDE;
+	void dndLeave(uiNode_t* node) OVERRIDE;
 };
 
 /* prototypes */

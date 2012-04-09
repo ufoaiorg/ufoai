@@ -26,7 +26,7 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #define CLIENT_UI_UI_DRAW_H
 
 /* prototype */
-struct uiNode_s;
+struct uiNode_t;
 
 /* module initialization */
 void UI_InitDraw(void);
@@ -35,6 +35,6 @@ void UI_InitDraw(void);
 void UI_Draw(void);
 void UI_DisplayNotice(const char *text, int time, const char *windowName);
 void UI_DrawCursor(void);
-void UI_CaptureDrawOver(struct uiNode_s *node);
+void UI_CaptureDrawOver(uiNode_t* node);
 
 #endif

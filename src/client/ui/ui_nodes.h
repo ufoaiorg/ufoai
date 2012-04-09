@@ -33,7 +33,6 @@ struct uiSprite_s;
 struct value_s;
 struct nodeKeyBinding_s;
 struct uiCallContext_s;
-struct uiNode_s;
 struct uiModel_s;
 
 typedef struct uiExcludeRect_s {
@@ -48,20 +47,20 @@ typedef struct uiExcludeRect_s {
 /**
  * @brief Atomic structure used to define most of the UI
  */
-typedef struct uiNode_s {
+struct uiNode_t {
 	/* common identification */
 	char name[MAX_VAR];			/**< name from the script files */
 	struct uiBehaviour_s *behaviour;
-	struct uiNode_s *super;	/**< Node inherited, else NULL */
+	uiNode_t* super;            /**< Node inherited, else NULL */
 	qboolean dynamic;			/** If true, it use dynamic memory */
 	qboolean indexed;			/** If true, the node name indexed into his window */
 
 	/* common navigation */
-	struct uiNode_s *firstChild;	/**< first element of linked list of child */
-	struct uiNode_s *lastChild;		/**< last element of linked list of child */
-	struct uiNode_s *next;			/**< Next element into linked list */
-	struct uiNode_s *parent;		/**< Parent window, else NULL */
-	struct uiNode_s *root;			/**< Shortcut to the root node */
+	uiNode_t* firstChild; /**< first element of linked list of child */
+	uiNode_t* lastChild;  /**< last element of linked list of child */
+	uiNode_t* next;       /**< Next element into linked list */
+	uiNode_t* parent;     /**< Parent window, else NULL */
+	uiNode_t* root;       /**< Shortcut to the root node */
 
 	/* common pos */
 	vec2_t pos;
@@ -105,7 +104,7 @@ typedef struct uiNode_s {
 	struct uiAction_s *onWheelUp;
 	struct uiAction_s *onWheelDown;
 	struct uiAction_s *onChange;	/**< called when the widget change from an user action */
-} uiNode_t;
+};
 
 
 /**
@@ -125,9 +124,9 @@ void UI_InitNodes(void);
 uiNode_t* UI_AllocNode(const char* name, const char* type, qboolean isDynamic);
 uiNode_t* UI_GetNodeByPath(const char* path) __attribute__ ((warn_unused_result));
 void UI_ReadNodePath(const char* path, const uiNode_t *relativeNode, uiNode_t** resultNode, const value_t **resultProperty);
-struct uiNode_s *UI_GetNodeAtPosition(int x, int y) __attribute__ ((warn_unused_result));
+uiNode_t* UI_GetNodeAtPosition(int x, int y) __attribute__ ((warn_unused_result));
 const char* UI_GetPath(const uiNode_t* node) __attribute__ ((warn_unused_result));
-struct uiNode_s *UI_CloneNode(const struct uiNode_s * node, struct uiNode_s *newWindow, qboolean recursive, const char *newName, qboolean isDynamic) __attribute__ ((warn_unused_result));
+uiNode_t* UI_CloneNode(uiNode_t const* node, uiNode_t* newWindow, qboolean recursive, const char *newName, qboolean isDynamic) __attribute__ ((warn_unused_result));
 qboolean UI_CheckVisibility(uiNode_t *node);
 void UI_DeleteAllChild(uiNode_t* node);
 void UI_DeleteNode(uiNode_t* node);

@@ -25,7 +25,7 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #ifndef CLIENT_UI_UI_FONT_H
 #define CLIENT_UI_UI_FONT_H
 
-struct uiNode_s;
+struct uiNode_t;
 
 typedef struct uiFont_s {
 	char *name;
@@ -35,7 +35,7 @@ typedef struct uiFont_s {
 } uiFont_t;
 
 /* will return the size and the path for each font */
-const char *UI_GetFontFromNode(const struct uiNode_s *const node);
+const char *UI_GetFontFromNode(uiNode_t const* node);
 const uiFont_t *UI_GetFontByID(const char *fontID);
 /* this is the function where all the sdl_ttf fonts are parsed */
 qboolean UI_ParseFont(const char *name, const char **text);

@@ -27,12 +27,12 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #define CLIENT_UI_UI_NODE_MATERIAL_EDITOR_H
 
 class uiMaterialEditorNode : public uiAbstractScrollableNode {
-	void draw(struct uiNode_s *node) OVERRIDE;
-	void windowOpened(struct uiNode_s *node, linkedList_t *params) OVERRIDE;
-	void mouseDown(struct uiNode_s *node, int x, int y, int button) OVERRIDE;
-	bool scroll(struct uiNode_s *node, int deltaX, int deltaY) OVERRIDE;
+	void draw(uiNode_t* node) OVERRIDE;
+	void windowOpened(uiNode_t* node, linkedList_t *params) OVERRIDE;
+	void mouseDown(uiNode_t* node, int x, int y, int button) OVERRIDE;
+	bool scroll(uiNode_t* node, int deltaX, int deltaY) OVERRIDE;
 protected:
-	void updateView (struct uiNode_s *node, bool reset);
+	void updateView (uiNode_t* node, bool reset);
 };
 
 struct uiBehaviour_s;

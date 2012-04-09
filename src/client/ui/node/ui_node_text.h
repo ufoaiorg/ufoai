@@ -29,29 +29,29 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 
 class uiTextNode : public uiAbstractScrollableNode {
 public:
-	void draw(struct uiNode_s *node);
-	void leftClick(struct uiNode_s *node, int x, int y) OVERRIDE;
-	void rightClick(struct uiNode_s *node, int x, int y) OVERRIDE;
-	bool scroll(struct uiNode_s *node, int deltaX, int deltaY) OVERRIDE;
-	void mouseMove(struct uiNode_s *node, int x, int y) OVERRIDE;
-	void mouseDown(struct uiNode_s *node, int x, int y, int button) OVERRIDE;
-	void mouseUp(struct uiNode_s *node, int x, int y, int button) OVERRIDE;
-	void capturedMouseMove(struct uiNode_s *node, int x, int y) OVERRIDE;
-	void loading(struct uiNode_s *node) OVERRIDE;
-	void loaded(struct uiNode_s *node) OVERRIDE;
-	int getCellHeight (struct uiNode_s *node) OVERRIDE;
+	void draw(uiNode_t* node);
+	void leftClick(uiNode_t* node, int x, int y) OVERRIDE;
+	void rightClick(uiNode_t* node, int x, int y) OVERRIDE;
+	bool scroll(uiNode_t* node, int deltaX, int deltaY) OVERRIDE;
+	void mouseMove(uiNode_t* node, int x, int y) OVERRIDE;
+	void mouseDown(uiNode_t* node, int x, int y, int button) OVERRIDE;
+	void mouseUp(uiNode_t* node, int x, int y, int button) OVERRIDE;
+	void capturedMouseMove(uiNode_t* node, int x, int y) OVERRIDE;
+	void loading(uiNode_t* node) OVERRIDE;
+	void loaded(uiNode_t* node) OVERRIDE;
+	int getCellHeight (uiNode_t* node) OVERRIDE;
 public:
-	void validateCache(struct uiNode_s *node);
+	void validateCache(uiNode_t* node);
 protected:
-	void drawText (struct uiNode_s *node, const char *text, const linkedList_t* list, bool noDraw);
-	virtual void updateCache (struct uiNode_s *node);
+	void drawText (uiNode_t* node, const char *text, const linkedList_t* list, bool noDraw);
+	virtual void updateCache (uiNode_t* node);
 };
 
 struct uiBehaviour_s;
 struct uiAction_s;
 
 void UI_TextScrollEnd(const char* nodePath);
-void UI_TextNodeSelectLine(struct uiNode_s *node, int num);
+void UI_TextNodeSelectLine(uiNode_t* node, int num);
 
 void UI_RegisterTextNode(struct uiBehaviour_s *behaviour);
 

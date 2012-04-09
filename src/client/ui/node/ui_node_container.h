@@ -31,26 +31,26 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 /* prototypes */
 struct base_s;
 struct uiBehaviour_s;
-struct uiNode_s;
+struct uiNode_t;
 
 class uiContainerNode : public uiLocatedNode {
-	void draw(struct uiNode_s *node) OVERRIDE;
-	void drawTooltip(struct uiNode_s *node, int x, int y) OVERRIDE;
-	void mouseDown(struct uiNode_s *node, int x, int y, int button) OVERRIDE;
-	void mouseUp(struct uiNode_s *node, int x, int y, int button) OVERRIDE;
-	void capturedMouseMove(struct uiNode_s *node, int x, int y) OVERRIDE;
-	void loading(struct uiNode_s *node) OVERRIDE;
-	void loaded(struct uiNode_s *node) OVERRIDE;
-	bool dndEnter(struct uiNode_s *node) OVERRIDE;
-	bool dndMove(struct uiNode_s *node, int x, int y) OVERRIDE;
-	void dndLeave(struct uiNode_s *node) OVERRIDE;
-	bool dndFinished(struct uiNode_s *node, bool isDroped) OVERRIDE;
+	void draw(uiNode_t* node) OVERRIDE;
+	void drawTooltip(uiNode_t* node, int x, int y) OVERRIDE;
+	void mouseDown(uiNode_t* node, int x, int y, int button) OVERRIDE;
+	void mouseUp(uiNode_t* node, int x, int y, int button) OVERRIDE;
+	void capturedMouseMove(uiNode_t* node, int x, int y) OVERRIDE;
+	void loading(uiNode_t* node) OVERRIDE;
+	void loaded(uiNode_t* node) OVERRIDE;
+	bool dndEnter(uiNode_t* node) OVERRIDE;
+	bool dndMove(uiNode_t* node, int x, int y) OVERRIDE;
+	void dndLeave(uiNode_t* node) OVERRIDE;
+	bool dndFinished(uiNode_t* node, bool isDroped) OVERRIDE;
 };
 
 extern inventory_t *ui_inventory;
 
 void UI_RegisterContainerNode(struct uiBehaviour_s *behaviour);
-void UI_DrawItem(struct uiNode_s *node, const vec3_t org, const struct item_s *item, int x, int y, const vec3_t scale, const vec4_t color);
+void UI_DrawItem(uiNode_t* node, const vec3_t org, const struct item_s *item, int x, int y, const vec3_t scale, const vec4_t color);
 void UI_ContainerNodeUpdateEquipment(inventory_t *inv, const equipDef_t *ed);
 uiNode_t *UI_GetContainerNodeByContainerIDX(const uiNode_t* const parent, const int index);
 void UI_ContainerNodeAutoPlaceItem (uiNode_t* node, invList_t *ic);

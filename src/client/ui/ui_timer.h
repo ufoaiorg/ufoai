@@ -25,10 +25,10 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #ifndef CLIENT_UI_UI_TIMER_H
 #define CLIENT_UI_UI_TIMER_H
 
-struct uiNode_s;
+struct uiNode_t;
 struct uiTimer_s;
 
-typedef void (*timerCallback_t)(struct uiNode_s *node, struct uiTimer_s *timer);
+typedef void (*timerCallback_t)(uiNode_t* node, struct uiTimer_s *timer);
 
 /**
  * @todo We can use void* for the owner type, and allow to use it outside nodes
@@ -38,7 +38,7 @@ typedef struct uiTimer_s {
 	struct uiTimer_s *prev;	/**< previous timer in the ordered list of active timers */
 	int nextTime;				/**< next time we must call the callback function. Must node be edited, it used to sort linkedlist of timers */
 
-	struct uiNode_s *owner;	/**< owner node of the timer */
+	uiNode_t* owner;            /**< owner node of the timer */
 	timerCallback_t callback;	/**< function called every delay */
 	int calledTime;				/**< time we call the function. For the first call the value is 1 */
 
@@ -47,7 +47,7 @@ typedef struct uiTimer_s {
 	qboolean isRunning;			/**< true if the timer is running */
 } uiTimer_t;
 
-uiTimer_t* UI_AllocTimer(struct uiNode_s *node, int firstDelay, timerCallback_t callback) __attribute__ ((warn_unused_result));
+uiTimer_t* UI_AllocTimer(uiNode_t* node, int firstDelay, timerCallback_t callback) __attribute__ ((warn_unused_result));
 void UI_TimerStart(uiTimer_t *timer);
 void UI_TimerStop(uiTimer_t *timer);
 void UI_TimerRelease(uiTimer_t *timer);

@@ -29,25 +29,25 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #include "ui_node_abstractnode.h"
 
 /* prototype */
-struct uiNode_s;
+struct uiNode_t;
 struct uiAction_s;
 struct uiBehaviour_s;
 struct uiKeyBinding_s;
 
 class uiWindowNode : public uiLocatedNode {
-	void draw(struct uiNode_s *node) OVERRIDE;
-	void doLayout(struct uiNode_s *node) OVERRIDE;
-	void loading(struct uiNode_s *node) OVERRIDE;
-	void loaded(struct uiNode_s *node) OVERRIDE;
-	void windowOpened(struct uiNode_s *node, linkedList_t *params) OVERRIDE;
-	void windowClosed(struct uiNode_s *node) OVERRIDE;
-	void clone(const struct uiNode_s *source, struct uiNode_s *clone) OVERRIDE;
+	void draw(uiNode_t* node) OVERRIDE;
+	void doLayout(uiNode_t* node) OVERRIDE;
+	void loading(uiNode_t* node) OVERRIDE;
+	void loaded(uiNode_t* node) OVERRIDE;
+	void windowOpened(uiNode_t* node, linkedList_t *params) OVERRIDE;
+	void windowClosed(uiNode_t* node) OVERRIDE;
+	void clone(uiNode_t const* source, uiNode_t* clone) OVERRIDE;
 };
 
 #define INDEXEDCHILD_HASH_SIZE 32
 
 typedef struct node_index_s {
-	struct uiNode_s *node;
+	uiNode_t* node;
 	struct node_index_s *hash_next;
 	struct node_index_s *next;
 } node_index_t;
@@ -70,7 +70,7 @@ typedef struct {
 	int timeOut;					/**< ms value until calling onTimeOut (see cl.time) */
 	int lastTime;					/**< when a window was pushed this value is set to cl.time */
 
-	struct uiNode_s *parent;	/**< to create child window */
+	uiNode_t* parent;	/**< to create child window */
 
 	struct uiKeyBinding_s *keyList;	/** list of key binding */
 
@@ -87,15 +87,15 @@ typedef struct {
 
 void UI_RegisterWindowNode(struct uiBehaviour_s *behaviour);
 
-qboolean UI_WindowIsFullScreen(const struct uiNode_s* const window);
-qboolean UI_WindowIsDropDown(const struct uiNode_s* const window);
-qboolean UI_WindowIsModal(const struct uiNode_s* const window);
-void UI_WindowNodeRegisterKeyBinding(struct uiNode_s* window, struct uiKeyBinding_s *binding);
-struct uiKeyBinding_s *UI_WindowNodeGetKeyBinding(const struct uiNode_s* const node, unsigned int key);
-vec_t *UI_WindowNodeGetNoticePosition(struct uiNode_s *node);
+qboolean UI_WindowIsFullScreen(uiNode_t const* window);
+qboolean UI_WindowIsDropDown(uiNode_t const* window);
+qboolean UI_WindowIsModal(uiNode_t const* window);
+void UI_WindowNodeRegisterKeyBinding(uiNode_t* window, struct uiKeyBinding_s *binding);
+struct uiKeyBinding_s *UI_WindowNodeGetKeyBinding(uiNode_t const* node, unsigned int key);
+vec_t *UI_WindowNodeGetNoticePosition(uiNode_t* node);
 /* child index */
-struct uiNode_s* UI_WindowNodeGetIndexedChild(struct uiNode_s* const node, const char* childName);
-qboolean UI_WindowNodeAddIndexedNode(struct uiNode_s* const node, struct uiNode_s* const child);
-qboolean UI_WindowNodeRemoveIndexedNode(struct uiNode_s* const node, struct uiNode_s* const child);
+uiNode_t* UI_WindowNodeGetIndexedChild(uiNode_t* node, const char* childName);
+qboolean UI_WindowNodeAddIndexedNode(uiNode_t* node, uiNode_t* child);
+qboolean UI_WindowNodeRemoveIndexedNode(uiNode_t* node, uiNode_t* child);
 
 #endif

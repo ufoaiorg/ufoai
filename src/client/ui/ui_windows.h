@@ -28,7 +28,7 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #include "../../common/common.h"
 
 /* prototype */
-struct uiNode_s;
+struct uiNode_t;
 struct uiCallContext_s;
 
 /* module initialization */
@@ -36,24 +36,24 @@ void UI_InitWindows(void);
 
 /* window stack */
 int UI_GetLastFullScreenWindow(void);
-struct uiNode_s* UI_PushWindow(const char *name, const char *parentName, linkedList_t *params);
+uiNode_t* UI_PushWindow(const char *name, const char *parentName, linkedList_t *params);
 void UI_InitStack(const char* activeWindow, const char* mainWindow, qboolean popAll, qboolean pushActive);
 void UI_PopWindow(qboolean all);
 void UI_PopWindowWithEscKey(void);
 void UI_CloseWindow(const char* name);
-struct uiNode_s* UI_GetActiveWindow(void);
+uiNode_t* UI_GetActiveWindow(void);
 int UI_CompleteWithWindow(const char *partial, const char **match);
 qboolean UI_IsWindowOnStack(const char* name);
 qboolean UI_IsMouseOnWindow(void);
 void UI_InvalidateStack(void);
-void UI_InsertWindow(struct uiNode_s* window);
-void UI_MoveWindowOnTop (struct uiNode_s * window);
+void UI_InsertWindow(uiNode_t* window);
+void UI_MoveWindowOnTop (uiNode_t* window);
 
 /* deprecated */
 const char* UI_GetActiveWindowName(void);
 
 /** @todo move it on m_nodes, its a common getter/setter */
-void UI_SetNewWindowPos(struct uiNode_s* window, int x, int y);
-struct uiNode_s *UI_GetWindow(const char *name);
+void UI_SetNewWindowPos(uiNode_t* window, int x, int y);
+uiNode_t* UI_GetWindow(const char *name);
 
 #endif

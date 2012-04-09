@@ -30,7 +30,7 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 
 struct value_s;
 struct uiBehaviour_s;
-struct uiNode_s;
+struct uiNode_t;
 
 /**
  * @brief node behaviour, how a node work
@@ -61,7 +61,7 @@ typedef struct uiBehaviour_s {
 /**
  * @brief Signature of a function to bind a node method.
  */
-typedef void (*uiNodeMethod_t)(struct uiNode_s* node, const struct uiCallContext_s *context);
+typedef void (*uiNodeMethod_t)(uiNode_t* node, const struct uiCallContext_s *context);
 
 /**
  * @brief Register a property to a behaviour.

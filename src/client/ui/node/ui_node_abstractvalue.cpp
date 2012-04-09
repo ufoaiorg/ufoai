@@ -102,7 +102,7 @@ float uiAbstractValueNode::getFactorFloat (const uiNode_t *node)
 	return EXTRADATACONST(node).shiftIncreaseFactor;
 }
 
-void uiAbstractValueNode::setRange(struct uiNode_s *node, float min, float max)
+void uiAbstractValueNode::setRange(uiNode_t* node, float min, float max)
 {
 	if (EXTRADATA(node).min == NULL) {
 		UI_InitCvarOrFloat((float**)&EXTRADATA(node).min, min);
@@ -112,7 +112,7 @@ void uiAbstractValueNode::setRange(struct uiNode_s *node, float min, float max)
 	}
 }
 
-bool uiAbstractValueNode::setValue(struct uiNode_s *node, float value)
+bool uiAbstractValueNode::setValue(uiNode_t* node, float value)
 {
 	const float last = UI_GetReferenceFloat(node, EXTRADATA(node).value);
 	const float max = UI_GetReferenceFloat(node, EXTRADATA(node).max);
@@ -144,36 +144,36 @@ bool uiAbstractValueNode::setValue(struct uiNode_s *node, float value)
 	return true;
 }
 
-bool uiAbstractValueNode::incValue(struct uiNode_s *node)
+bool uiAbstractValueNode::incValue(uiNode_t* node)
 {
 	float value = UI_GetReferenceFloat(node, EXTRADATA(node).value);
 	const float delta = getFactorFloat(node) * UI_GetReferenceFloat(node, EXTRADATA(node).delta);
 	return setValue(node, value + delta);
 }
 
-bool uiAbstractValueNode::decValue(struct uiNode_s *node)
+bool uiAbstractValueNode::decValue(uiNode_t* node)
 {
 	float value = UI_GetReferenceFloat(node, EXTRADATA(node).value);
 	const float delta = getFactorFloat(node) * UI_GetReferenceFloat(node, EXTRADATA(node).delta);
 	return setValue(node, value - delta);
 }
 
-float uiAbstractValueNode::getMin (const struct uiNode_s *node)
+float uiAbstractValueNode::getMin (uiNode_t const* node)
 {
 	return UI_GetReferenceFloat(node, EXTRADATACONST(node).min);
 }
 
-float uiAbstractValueNode::getMax (const struct uiNode_s *node)
+float uiAbstractValueNode::getMax (uiNode_t const* node)
 {
 	return UI_GetReferenceFloat(node, EXTRADATACONST(node).max);
 }
 
-float uiAbstractValueNode::getDelta (const struct uiNode_s *node)
+float uiAbstractValueNode::getDelta (uiNode_t const* node)
 {
 	return UI_GetReferenceFloat(node, EXTRADATACONST(node).delta);
 }
 
-float uiAbstractValueNode::getValue (const struct uiNode_s *node)
+float uiAbstractValueNode::getValue (uiNode_t const* node)
 {
 	return UI_GetReferenceFloat(node, EXTRADATACONST(node).value);
 }

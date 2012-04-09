@@ -30,15 +30,15 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #include "../../cl_renderer.h"	/**< include animState_t */
 
 class uiModelNode : public uiLocatedNode {
-	void draw(struct uiNode_s *node) OVERRIDE;
-	void mouseDown(struct uiNode_s *node, int x, int y, int button) OVERRIDE;
-	void mouseUp(struct uiNode_s *node, int x, int y, int button) OVERRIDE;
-	void loading(struct uiNode_s *node) OVERRIDE;
-	void loaded(struct uiNode_s *node) OVERRIDE;
-	void clone(const struct uiNode_s *source, struct uiNode_s *clone) OVERRIDE;
-	void newNode(struct uiNode_s *node) OVERRIDE;
-	void deleteNode(struct uiNode_s *node) OVERRIDE;
-	void capturedMouseMove(struct uiNode_s *node, int x, int y) OVERRIDE;
+	void draw(uiNode_t* node) OVERRIDE;
+	void mouseDown(uiNode_t* node, int x, int y, int button) OVERRIDE;
+	void mouseUp(uiNode_t* node, int x, int y, int button) OVERRIDE;
+	void loading(uiNode_t* node) OVERRIDE;
+	void loaded(uiNode_t* node) OVERRIDE;
+	void clone(uiNode_t const* source, uiNode_t* clone) OVERRIDE;
+	void newNode(uiNode_t* node) OVERRIDE;
+	void deleteNode(uiNode_t* node) OVERRIDE;
+	void capturedMouseMove(uiNode_t* node, int x, int y) OVERRIDE;
 };
 
 #define UI_MAX_MODELS		128
@@ -78,7 +78,7 @@ typedef struct modelExtraData_s {
 } modelExtraData_t;
 
 uiModel_t *UI_GetUIModel(const char *modelName);
-void UI_DrawModelNode(struct uiNode_s *node, const char *source);
+void UI_DrawModelNode(uiNode_t* node, const char *source);
 void UI_RegisterModelNode(struct uiBehaviour_s *behaviour);
 
 #endif

@@ -28,7 +28,7 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #include "../../common/common.h"
 
 /* prototype */
-struct uiNode_s;
+struct uiNode_t;
 struct uiAction_s;
 struct uiCallContext_s;
 
@@ -38,6 +38,6 @@ struct uiAction_s *UI_ParseExpression(const char **text) __attribute__ ((warn_un
 qboolean UI_GetBooleanFromExpression(struct uiAction_s *expression, const struct uiCallContext_s *context) __attribute__ ((warn_unused_result));
 float UI_GetFloatFromExpression(struct uiAction_s *expression, const struct uiCallContext_s *context) __attribute__ ((warn_unused_result));
 const char *UI_GetStringFromExpression(struct uiAction_s *expression, const struct uiCallContext_s *context) __attribute__ ((warn_unused_result));
-struct uiNode_s* UI_GetNodeFromExpression(struct uiAction_s *expression, const struct uiCallContext_s *context, const struct value_s **property);
+uiNode_t* UI_GetNodeFromExpression(struct uiAction_s *expression, const struct uiCallContext_s *context, const struct value_s **property);
 
 #endif

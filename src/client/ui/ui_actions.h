@@ -182,7 +182,7 @@ typedef struct uiAction_s {
 } uiAction_t;
 
 /* prototype */
-struct uiNode_s;
+struct uiNode_t;
 struct cvar_s;
 
 /** @brief Type for uiAction_t
@@ -196,7 +196,7 @@ typedef struct uiValue_s {
 		float number;
 		char* string;
 		struct cvar_s *cvar;
-		struct uiNode_s *node;
+		uiNode_t* node;
 	} value;
 } uiValue_t;
 
@@ -205,7 +205,7 @@ typedef struct uiValue_s {
  */
 typedef struct uiCallContext_s {
 	/** node owning the action */
-	struct uiNode_s* source;
+	uiNode_t* source;
 	/** is the function can use param from command line */
 	qboolean useCmdParam;
 	linkedList_t *params;
@@ -214,9 +214,9 @@ typedef struct uiCallContext_s {
 	int varNumber;
 } uiCallContext_t;
 
-void UI_ExecuteEventActions(struct uiNode_s* source, const uiAction_t* firstAction);
-void UI_ExecuteConFuncActions(struct uiNode_s* source, const uiAction_t* firstAction);
-void UI_ExecuteEventActionsEx (struct uiNode_s* source, const uiAction_t* firstAction, linkedList_t *params);
+void UI_ExecuteEventActions(uiNode_t* source, const uiAction_t* firstAction);
+void UI_ExecuteConFuncActions(uiNode_t* source, const uiAction_t* firstAction);
+void UI_ExecuteEventActionsEx (uiNode_t* source, const uiAction_t* firstAction, linkedList_t *params);
 qboolean UI_IsInjectedString(const char *string);
 void UI_FreeStringProperty(void* pointer);
 const char* UI_GenInjectedString(const char* input, qboolean addNewLine, const uiCallContext_t *context);
@@ -226,8 +226,8 @@ uiValue_t* UI_GetVariable (const uiCallContext_t *context, int relativeVarId);
 void UI_PoolAllocAction(uiAction_t** action, int type, const void *data);
 uiAction_t* UI_AllocStaticCommandAction(const char *command);
 void UI_InitActions(void);
-void UI_AddListener(struct uiNode_s *node, const value_t *property, const struct uiNode_s *functionNode);
-void UI_RemoveListener(struct uiNode_s *node, const value_t *property, struct uiNode_s *functionNode);
+void UI_AddListener(uiNode_t* node, const value_t *property, uiNode_t const* functionNode);
+void UI_RemoveListener(uiNode_t* node, const value_t *property, uiNode_t* functionNode);
 
 const char* UI_GetParam(const uiCallContext_t *context, int paramID);
 int UI_GetParamNumber(const uiCallContext_t *context);

@@ -90,22 +90,22 @@ typedef struct cgame_import_s {
 	/* UI functions */
 	void (IMPORT *UI_ExecuteConfunc) (const char *fmt, ...) __attribute__((format(printf, 1, 2)));
 	void (IMPORT *UI_PopWindow) (qboolean all);
-	struct uiNode_s* (IMPORT *UI_PushWindow) (const char *name, const char *parentName, linkedList_t *params);
+	uiNode_t* (IMPORT *UI_PushWindow) (const char *name, const char *parentName, linkedList_t *params);
 	void (IMPORT *UI_InitStack) (const char* activeMenu, const char* mainMenu, qboolean popAll, qboolean pushActive);
 	void (IMPORT *UI_Popup) (const char *title, const char *format, ...);
-	struct uiNode_s* (IMPORT *UI_AddOption) (struct uiNode_s** tree, const char* name, const char* label, const char* value);
-	void (IMPORT *UI_RegisterOption) (int dataId, struct uiNode_s *option);
+	uiNode_t* (IMPORT *UI_AddOption) (uiNode_t** tree, const char* name, const char* label, const char* value);
+	void (IMPORT *UI_RegisterOption) (int dataId, uiNode_t* option);
 	void (IMPORT *UI_RegisterText) (int textId, const char *text);
 	void (IMPORT *UI_ResetData) (int dataId);
 	void (IMPORT *UI_RegisterLinkedListText) (int textId, linkedList_t *text);
 	void (IMPORT *UI_TextScrollEnd) (const char* nodePath);
-	void (IMPORT *UI_TextNodeSelectLine) (struct uiNode_s *node, int num);
-	struct uiNode_s *(IMPORT *UI_PopupList) (const char *title, const char *headline, linkedList_t* entries, const char *clickAction);
-	void (IMPORT *UI_UpdateInvisOptions) (struct uiNode_s *option, const linkedList_t *stringList);
+	void (IMPORT *UI_TextNodeSelectLine) (uiNode_t* node, int num);
+	uiNode_t* (IMPORT *UI_PopupList) (const char *title, const char *headline, linkedList_t* entries, const char *clickAction);
+	void (IMPORT *UI_UpdateInvisOptions) (uiNode_t* option, const linkedList_t *stringList);
 	void (IMPORT *HUD_InitUI) (const char *optionWindowName, qboolean popAll);
 	void (IMPORT *HUD_DisplayMessage) (const char *text);
-	struct uiNode_s *(IMPORT *UI_GetOption) (int dataId);
-	void (IMPORT *UI_SortOptions) (struct uiNode_s **first);
+	uiNode_t* (IMPORT *UI_GetOption) (int dataId);
+	void (IMPORT *UI_SortOptions) (uiNode_t** first);
 
 	void (IMPORT *LIST_AddString) (linkedList_t** listDest, const char* data);
 	const linkedList_t* (IMPORT *LIST_ContainsString) (const linkedList_t* list, const char* string);

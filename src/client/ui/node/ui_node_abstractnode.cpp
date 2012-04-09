@@ -260,12 +260,12 @@ bool uiLocatedNode::scroll (uiNode_t *node, int deltaX, int deltaY)
 	return false;
 }
 
-void uiLocatedNode::drawTooltip(struct uiNode_s *node, int x, int y)
+void uiLocatedNode::drawTooltip(uiNode_t* node, int x, int y)
 {
 	UI_Tooltip(node, x, y);
 }
 
-void uiLocatedNode::leftClick(struct uiNode_s *node, int x, int y)
+void uiLocatedNode::leftClick(uiNode_t* node, int x, int y)
 {
 	if (node->onClick != NULL) {
 		UI_ExecuteEventActions(node, node->onClick);
@@ -273,7 +273,7 @@ void uiLocatedNode::leftClick(struct uiNode_s *node, int x, int y)
 	}
 }
 
-void uiLocatedNode::rightClick(struct uiNode_s *node, int x, int y)
+void uiLocatedNode::rightClick(uiNode_t* node, int x, int y)
 {
 	if (node->onRightClick != NULL) {
 		UI_ExecuteEventActions(node, node->onRightClick);
@@ -281,7 +281,7 @@ void uiLocatedNode::rightClick(struct uiNode_s *node, int x, int y)
 	}
 }
 
-void uiLocatedNode::middleClick(struct uiNode_s *node, int x, int y)
+void uiLocatedNode::middleClick(uiNode_t* node, int x, int y)
 {
 	if (node->onMiddleClick != NULL) {
 		UI_ExecuteEventActions(node, node->onMiddleClick);

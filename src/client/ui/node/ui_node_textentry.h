@@ -29,12 +29,12 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #include "../ui_nodes.h"
 
 class uiTextEntryNode : public uiLocatedNode {
-	void loading(struct uiNode_s *node) OVERRIDE;
-	void leftClick(struct uiNode_s *node, int x, int y) OVERRIDE;
-	void draw(struct uiNode_s *node) OVERRIDE;
-	void focusGained(struct uiNode_s *node) OVERRIDE;
-	void focusLost(struct uiNode_s *node) OVERRIDE;
-	bool keyPressed(struct uiNode_s *node, unsigned int key, unsigned short unicode) OVERRIDE;
+	void loading(uiNode_t* node) OVERRIDE;
+	void leftClick(uiNode_t* node, int x, int y) OVERRIDE;
+	void draw(uiNode_t* node) OVERRIDE;
+	void focusGained(uiNode_t* node) OVERRIDE;
+	void focusLost(uiNode_t* node) OVERRIDE;
+	bool keyPressed(uiNode_t* node, unsigned int key, unsigned short unicode) OVERRIDE;
 };
 
 /**

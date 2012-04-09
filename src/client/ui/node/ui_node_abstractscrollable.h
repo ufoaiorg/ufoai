@@ -31,16 +31,16 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 
 struct uiBehaviour_s;
 struct uiAction_s;
-struct uiNode_s;
+struct uiNode_t;
 
 class uiAbstractScrollableNode : public uiLocatedNode {
 public:
 	/**
 	 * @todo remove it, use property listener
 	 */
-	bool isSizeChange(struct uiNode_s *node);
-	bool scrollY(struct uiNode_s *node, int offset);
-	bool setScrollY(struct uiNode_s *node, int viewPos, int viewSize, int fullSize);
+	bool isSizeChange(uiNode_t* node);
+	bool scrollY(uiNode_t* node, int offset);
+	bool setScrollY(uiNode_t* node, int viewPos, int viewSize, int fullSize);
 };
 
 /**

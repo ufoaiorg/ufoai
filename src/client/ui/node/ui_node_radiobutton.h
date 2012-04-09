@@ -28,9 +28,9 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #include "../ui_nodes.h"
 
 class uiRadioButtonNode : public uiLocatedNode {
-	void leftClick(struct uiNode_s *node, int x, int y) OVERRIDE;
-	void draw(struct uiNode_s *node) OVERRIDE;
-	void activate(struct uiNode_s *node) OVERRIDE;
+	void leftClick(uiNode_t* node, int x, int y) OVERRIDE;
+	void draw(uiNode_t* node) OVERRIDE;
+	void activate(uiNode_t* node) OVERRIDE;
 };
 
 typedef struct radioButtonExtraData_s {

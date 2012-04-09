@@ -29,7 +29,7 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #include "ui_node_button.h"
 
 class uiCustomButtonNode : public uiButtonNode {
-	void draw(struct uiNode_s *node) OVERRIDE;
+	void draw(uiNode_t* node) OVERRIDE;
 };
 
 /* prototype */

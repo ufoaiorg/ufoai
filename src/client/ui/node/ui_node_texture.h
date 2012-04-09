@@ -28,7 +28,7 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 struct uiBehaviour_s;
 
 class uiTextureNode : public uiLocatedNode {
-	void draw(struct uiNode_s *node) OVERRIDE;
+	void draw(uiNode_t* node) OVERRIDE;
 };
 
 void UI_RegisterTextureNode(struct uiBehaviour_s* behaviour);
