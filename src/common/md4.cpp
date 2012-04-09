@@ -29,7 +29,7 @@
  $Id$
 */
 
-#include <string.h>		/* XoXus: needed for memset call */
+#include "../shared/shared.h"
 #include "md4.h"
 
 static struct mdfour *m;
@@ -137,7 +137,7 @@ static void mdfour_tail (const unsigned char *in, int n)
 
 	b = m->totalN * 8;
 
-	memset(buf, 0, 128);
+	OBJZERO(buf);
 	if (n)
 		memcpy(buf, in, n);
 	buf[n] = 0x80;

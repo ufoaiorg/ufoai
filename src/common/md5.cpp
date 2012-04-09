@@ -256,7 +256,7 @@ static void MD5Final(struct MD5Context *ctx, unsigned char *digest)
 
 	if (digest != NULL)
 		memcpy(digest, ctx->buf, 16);
-	memset(ctx, 0, sizeof(*ctx));	/* In case it's sensitive */
+	OBJZERO(*ctx); /* In case it's sensitive */
 }
 
 /**

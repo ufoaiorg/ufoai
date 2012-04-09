@@ -1095,5 +1095,5 @@ void Cvar_Init (void)
 void Cvar_Shutdown (void)
 {
 	cvarVars = NULL;
-	memset(cvarVarsHash, 0, sizeof(cvarVarsHash));
+	OBJZERO(cvarVarsHash);
 }

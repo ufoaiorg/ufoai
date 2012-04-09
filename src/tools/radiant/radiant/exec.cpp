@@ -19,9 +19,9 @@
  * Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA 02111-1307, USA.
  */
 
+#include "../../../shared/shared.h"
 #include "exec.h"
 #include <glib/gprintf.h>
-#include <string.h>
 #include <unistd.h>
 
 #include "sidebar/JobInfo.h"
@@ -87,7 +87,7 @@ static gboolean exec_channel_callback (GIOChannel *channel, GIOCondition conditi
 	if ((condition & G_IO_IN) || (condition & G_IO_PRI)) {
 		static const gint BUFF_SIZE = 1024;
 		gchar buffer[BUFF_SIZE];
-		memset(buffer, 0, sizeof(buffer));
+		OBJZERO(buffer);
 		gsize bytes = 0;
 		const GIOStatus status =
 				g_io_channel_read_chars(channel, buffer, (BUFF_SIZE - 1) * sizeof(gchar), &bytes, NULL);

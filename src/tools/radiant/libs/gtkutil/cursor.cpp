@@ -21,9 +21,9 @@
 
 #include "cursor.h"
 
+#include "../../../../shared/shared.h"
 #include "stream/textstream.h"
 
-#include <string.h>
 #include <gdk/gdkcursor.h>
 #include <gdk/gdkpixmap.h>
 
@@ -32,7 +32,7 @@ GdkCursor* create_blank_cursor ()
 	GdkPixmap *pixmap;
 	GdkBitmap *mask;
 	char buffer[(32 * 32) / 8];
-	memset(buffer, 0, sizeof(buffer));
+	OBJZERO(buffer);
 	GdkColor white = { 0, 0xffff, 0xffff, 0xffff };
 	GdkColor black = { 0, 0x0000, 0x0000, 0x0000 };
 	pixmap = gdk_bitmap_create_from_data(0, buffer, 32, 32);

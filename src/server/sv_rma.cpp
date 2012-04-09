@@ -174,7 +174,7 @@ static void SV_RmaPrintMap (const mapInfo_t *map)
 
 	/* initialize */
 	int rb = (1 + map->mAssembly[map->mAsm].width) * ACW;	/* index of right border */
-	memset(screen, ' ', sizeof(screen));
+	OBJSET(screen, ' ');
 	for (i = 0; i < MMH * ACH + 1; i++) {
 		screen[i][rb + 1] = '|';
 		screen[i][rb + 2] = 0;
