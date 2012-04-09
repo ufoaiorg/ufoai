@@ -370,9 +370,9 @@ window skirmish
 		{
 			current		*cvar:sv_maxsoldiersperplayer
 			image		"ui/spinner_blue"
-			pos			"368 274"
-			min			1
-			max			9
+			pos		"368 274"
+			min		1
+			max		9
 			delta		1
 		}
 		// =======================
