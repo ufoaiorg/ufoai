@@ -314,7 +314,7 @@ window bases
 		confunc current_employees
 		{
 			*node:parent.cur_employees.soldier_val@string = "<1>"
-			*node:parent.cur_employees.pilot_val@string = "<1>"
+			*node:parent.cur_employees.pilot_val@string = "<2>"
 			*node:parent.cur_employees.scientist_val@string = "<3>"
 			*node:parent.cur_employees.worker_val@string = "<4>"
 		}
