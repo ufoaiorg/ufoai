@@ -606,7 +606,7 @@ uiNode_t* UI_CloneNode (const uiNode_t* node, uiNode_t *newWindow, qboolean recu
 	newNode->firstChild = NULL;
 	newNode->lastChild = NULL;
 	newNode->next = NULL;
-	newNode->super = *(uiNode_t**) ((void*)&node);
+	newNode->super = node;
 
 	/* clone child */
 	if (recursive) {
