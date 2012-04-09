@@ -506,15 +506,14 @@ void TextureManipulator::resampleTexture (const void *indata_, int inwidth, int 
 // in can be the same as out
 void TextureManipulator::mipReduce (byte *in, byte *out, int width, int height, int destwidth, int destheight)
 {
-	int x, y, width2, height2, nextrow;
 	if (width > destwidth) {
 		if (height > destheight) {
 			// reduce both
-			width2 = width >> 1;
-			height2 = height >> 1;
-			nextrow = width << 2;
-			for (y = 0; y < height2; y++) {
-				for (x = 0; x < width2; x++) {
+			int const width2  = width  >> 1;
+			int const height2 = height >> 1;
+			int const nextrow = width  << 2;
+			for (int y = 0; y < height2; y++) {
+				for (int x = 0; x < width2; x++) {
 					out[0] = (byte) ((in[0] + in[4] + in[nextrow] + in[nextrow + 4]) >> 2);
 					out[1] = (byte) ((in[1] + in[5] + in[nextrow + 1] + in[nextrow + 5]) >> 2);
 					out[2] = (byte) ((in[2] + in[6] + in[nextrow + 2] + in[nextrow + 6]) >> 2);
@@ -526,9 +525,9 @@ void TextureManipulator::mipReduce (byte *in, byte *out, int width, int height, 
 			}
 		} else {
 			// reduce width
-			width2 = width >> 1;
-			for (y = 0; y < height; y++) {
-				for (x = 0; x < width2; x++) {
+			int const width2 = width >> 1;
+			for (int y = 0; y < height; y++) {
+				for (int x = 0; x < width2; x++) {
 					out[0] = (byte) ((in[0] + in[4]) >> 1);
 					out[1] = (byte) ((in[1] + in[5]) >> 1);
 					out[2] = (byte) ((in[2] + in[6]) >> 1);
@@ -541,10 +540,10 @@ void TextureManipulator::mipReduce (byte *in, byte *out, int width, int height, 
 	} else {
 		if (height > destheight) {
 			// reduce height
-			height2 = height >> 1;
-			nextrow = width << 2;
-			for (y = 0; y < height2; y++) {
-				for (x = 0; x < width; x++) {
+			int const height2 = height >> 1;
+			int const nextrow = width  << 2;
+			for (int y = 0; y < height2; y++) {
+				for (int x = 0; x < width; x++) {
 					out[0] = (byte) ((in[0] + in[nextrow]) >> 1);
 					out[1] = (byte) ((in[1] + in[nextrow + 1]) >> 1);
 					out[2] = (byte) ((in[2] + in[nextrow + 2]) >> 1);

@@ -144,23 +144,21 @@ static void exec_spawn_process (ExecCmd *e, GSpawnChildSetupFunc child_setup)
 #else
 		g_debug("exec_spawn_process - spawed process with pid [%d]\n", e->pid);
 #endif
-		GIOChannel *char_out = NULL, *chan_err = NULL;
-		guint chan_out_id = 0, chan_err_id = 0;
 
 		if (!e->piped) {
-			char_out = g_io_channel_unix_new(std_out);
+			GIOChannel* const char_out = g_io_channel_unix_new(std_out);
 			g_io_channel_set_encoding(char_out, NULL, NULL);
 			g_io_channel_set_buffered(char_out, FALSE);
 			g_io_channel_set_flags(char_out, G_IO_FLAG_NONBLOCK, NULL);
-			chan_out_id = g_io_add_watch(char_out,
+			guint const chan_out_id = g_io_add_watch(char_out,
 					(GIOCondition)(G_IO_IN | G_IO_HUP | G_IO_ERR | G_IO_PRI | G_IO_NVAL), exec_channel_callback,
 					(gpointer) e);
 
-			chan_err = g_io_channel_unix_new(std_err);
+			GIOChannel* const chan_err = g_io_channel_unix_new(std_err);
 			g_io_channel_set_encoding(chan_err, NULL, NULL);
 			g_io_channel_set_buffered(chan_err, FALSE);
 			g_io_channel_set_flags(chan_err, G_IO_FLAG_NONBLOCK, NULL);
-			chan_err_id = g_io_add_watch(chan_err,
+			guint const chan_err_id = g_io_add_watch(chan_err,
 					(GIOCondition)(G_IO_IN | G_IO_HUP | G_IO_ERR | G_IO_PRI | G_IO_NVAL), exec_channel_callback,
 					(gpointer) e);
 

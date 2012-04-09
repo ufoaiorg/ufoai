@@ -2605,7 +2605,6 @@ mxml_write_name(const char *s,		/* I - Name to write */
 		int        (*putc_cb)(int, void *))
 					/* I - Write callback */
 {
-  char		quote;			/* Quote character */
   const char	*name;			/* Entity name */
 
 
@@ -2618,7 +2617,7 @@ mxml_write_name(const char *s,		/* I - Name to write */
     if ((*putc_cb)(*s, p) < 0)
       return (-1);
 
-    quote = *s++;
+    char const quote = *s++; /* Quote character */
 
     while (*s && *s != quote)
     {
