@@ -123,6 +123,7 @@ typedef struct fireDef_s {
 	float splrad;			/**< splash damage radius */
 	int weaponSkill;		/**< What weapon skill is needed to fire this weapon. */
 	int irgoggles;			/**< Is this an irgoggle? */
+	int rounds;				/**< e.g. for incendiary grenades */
 } fireDef_t;
 
 /**

@@ -1268,10 +1268,12 @@ qboolean G_ClientShoot (const player_t * player, edict_t* ent, const pos3_t at, 
 
 	if (!mock) {
 		if (fd->obj->dmgtype == gi.csi->damSmoke) {
-			G_SpawnSmokeField(impact, "smokefield", 2);
+			const int rounds = max(2, fd->rounds);
+			G_SpawnSmokeField(impact, "smokefield", rounds);
 		} else if (fd->obj->dmgtype == gi.csi->damIncendiary) {
 			const int damage = max(0, fd->damage[0] + (fd->damage[1] * crand()));
-			G_SpawnFireField(impact, "firefield", 2, damage);
+			const int rounds = max(2, fd->rounds);
+			G_SpawnFireField(impact, "firefield", rounds, damage);
 		}
 
 		/* send TUs if ent still alive */

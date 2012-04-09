@@ -1568,6 +1568,7 @@ static const value_t fdps[] = {
 	{"spldmg", V_POS, offsetof(fireDef_t, spldmg), MEMBER_SIZEOF(fireDef_t, spldmg)},
 	{"dmgweight", V_DMGWEIGHT, offsetof(fireDef_t, dmgweight), MEMBER_SIZEOF(fireDef_t, dmgweight)},
 	{"irgoggles", V_BOOL, offsetof(fireDef_t, irgoggles), MEMBER_SIZEOF(fireDef_t, irgoggles)},
+	{"rounds", V_INT, offsetof(fireDef_t, rounds), MEMBER_SIZEOF(fireDef_t, rounds)},
 	{NULL, V_NULL, 0, 0}
 };
 
