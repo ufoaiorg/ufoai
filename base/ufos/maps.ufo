@@ -155,6 +155,52 @@ mapdef africa_small
 	}
 }
 
+mapdef africa_small_crash
+{
+	map			"+africa"
+	param		"small_crash"
+	civilianteam	africa
+	campaign	true
+	multiplayer	false
+	hurtaliens	true
+	description	"_Crashed UFO in an african suburban district."
+	size		"small"
+	maxaliens	8
+	// randomspawn enabled
+
+	aircraft
+	{
+		craft_drop_firebird
+		craft_drop_raptor
+		craft_drop_herakles
+	}
+
+	ufos
+	{
+		craft_crash_fighter
+	}
+
+	terrains
+	{
+		grass
+		tropical
+		desert
+		mountain
+	}
+
+	cultures
+	{
+		african
+	}
+
+	populations
+	{
+		village
+		suburban
+		urban
+	}
+}
+
 /////////////////////////////
 // BEACH RANDOM MAPS ////////
 /////////////////////////////

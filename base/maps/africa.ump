@@ -34,6 +34,16 @@ a +a  +a +a  a
 0  0   a  a  0
 }
 
+tile +craft_crash_fighter
+{
+4 4
+
+0  a  a  0
+a +a +a  a
+a +a +a  a
+0  a  a  0
+}
+
 
 tile +craft_ufo_harvester
 {
@@ -238,6 +248,25 @@ multiplayer +mp_team2
 +misc1  "0 4"
 *rm_drop +craft_drop_firebird "1 1"
 *rm_ufo +craft_ufo_scout "1 1"
+}
+
+assembly small_crash
+{
+size "6 4"
+title "_Africa"
++empty1 "1 1"
++empty2 "1 1"
++empty5 "0 3"
++house1 "1 4"
++house2 "1 4"
++house3 "1 4"
++house5 "1 1"
++fence1 "0 1"
++fence2 "0 1"
++fence3 "0 1"
++misc1  "0 4"
+*rm_drop +craft_drop_firebird "1 1"
+*rm_ufo +craft_crash_fighter "1 1"
 }
 
 assembly large
