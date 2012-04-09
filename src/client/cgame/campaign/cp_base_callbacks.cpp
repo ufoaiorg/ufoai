@@ -370,7 +370,7 @@ static void B_BaseInit_f (void)
 	 * Get the number of different employees in the base
 	 * @todo: Get the number of injured soldiers if hospital exists
 	 */
-	UI_ExecuteConfunc("current_employees %i %i %i", E_CountHired(base, EMPL_SOLDIER), E_CountHired(base, EMPL_SCIENTIST), E_CountHired(base, EMPL_WORKER));
+	UI_ExecuteConfunc("current_employees %i %i %i %i", E_CountHired(base, EMPL_SOLDIER), E_CountHired(base, EMPL_PILOT), E_CountHired(base, EMPL_SCIENTIST), E_CountHired(base, EMPL_WORKER));
 
 	/*
 	 * List the first five aircraft in the base if they exist
