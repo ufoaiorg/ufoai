@@ -601,7 +601,7 @@ void Brush::removeDegenerateEdges ()
 				if (adjacent != c_brush_maxFaces) {
 					other.erase(other.begin() + adjacent);
 				}
-				winding.erase(j);
+				j = winding.erase(j);
 			} else {
 				++j;
 			}
@@ -665,7 +665,7 @@ void Brush::verifyConnectivityGraph ()
 			// remove unidirectional graph edges
 			if ((*j).adjacent == c_brush_maxFaces || Winding_FindAdjacent(m_faces[(*j).adjacent]->getWinding(), i)
 					== c_brush_maxFaces) {
-				winding.erase(j);
+				j = winding.erase(j);
 			} else {
 				++j;
 			}
