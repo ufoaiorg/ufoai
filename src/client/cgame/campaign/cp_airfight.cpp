@@ -38,11 +38,10 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
  * @param[in] projectile The projectile to remove
  * @sa AIRFIGHT_AddProjectile
  */
-static qboolean AIRFIGHT_RemoveProjectile (aircraftProjectile_t *projectile)
+static void AIRFIGHT_RemoveProjectile (aircraftProjectile_t *projectile)
 {
 	const ptrdiff_t num = (ptrdiff_t)(projectile - ccs.projectiles);
 	REMOVE_ELEM_ADJUST_IDX(ccs.projectiles, num, ccs.numProjectiles);
-	return qtrue;
 }
 
 /**
