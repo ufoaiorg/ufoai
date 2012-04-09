@@ -1,70 +1,83 @@
 // *********************************
 // Bridge
+// ------
+// Constructed of three horizontal
+// tiles that can be vertically
+// shuffled.
+// - Bridge
+// - UFO (main body of map)
+// - Dropship
 // *********************************
 
 base bridge/br_
 
-// Tiletypes:
-// ----------
-// +: tile contains something
-// a: main
-// b: dropship
-
-tile +main
+// Large bridge tile
+tile +bridge
 {
-16 12
+13 4
 
-0      0      0      0      0      0      0      0      0      0      0      0      0      0      0      0
-0      +a     +a     b      b      b      +a     +a     +a     +a     +a     +a     +a     +a     +a     0
-0      +a     +a     b      b      b      +a     +a     +a     +a     +a     +a     +a     +a     +a     0
-0      +a     +a     +a     +a     +a     +a     +a     +a     +a     +a     +a     +a     +a     +a     0
-0      +a     +a     +a     +a     +a     +a     +a     +a     +a     +a     +a     +a     +a     +a     0
-0      +a     +a     +a     +a     +a     +a     +a     +a     +a     +a     +a     +a     +a     +a     0
-0      +a     +a     +a     +a     +a     +a     +a     +a     +a     +a     +a     +a     +a     +a     0
-0      +a     +a     +a     +a     +a     +a     +a     +a     +a     +a     +a     +a     +a     +a     0
-0      +a     +a     +a     +a     +a     +a     +a     +a     +a     +a     +a     +a     +a     +a     0
-0      +a     +a     +a     +a     +a     +a     +a     +a     +a     +a     +a     +a     +a     +a     0
-0      +a     +a     +a     +a     +a     +a     +a     +a     +a     +a     +a     +a     +a     +a     0
-0      0      0      0      0      0      0      0      0      0      0      0      0      0      0      0
+0      0      0      0      0      0      0      0      0      0      0      0      0
+0      +a     +a     +a     +a     +a     +a     +a     +a     +a     +a     +a     0
+0      +a     +a     +a     +a     +a     +a     +a     +a     +a     +a     +a     0
+0      0      0      0      0      0      0      0      0      0      0      0      0
 }
 
+// Crashed UFO (Fighter)
+tile +craft_crash_fighter
+{
+13 7
+
+0      0      0      0      0      0      0      0      0      0      0      0      0
+0      +a     +a     +a     +a     +a     +a     +a     +a     +a     +a     +a     0
+0      +a     +a     +a     +a     +a     +a     +a     +a     +a     +a     +a     0
+0      +a     +a     +a     +a     +a     +a     +a     +a     +a     +a     +a     0
+0      +a     +a     +a     +a     +a     +a     +a     +a     +a     +a     +a     0
+0      +a     +a     +a     +a     +a     +a     +a     +a     +a     +a     +a     0
+0      0      0      0      0      0      0      0      0      0      0      0      0
+}
+
+// Dropship (Firebird)
 tile +craft_drop_firebird
 {
-5 4
+13 5
 
-0      0      0      0      0
-a      +b     +b     +b     a
-a      +b     +b     +b     a
-0      a      a      a      0
+0      0      0      0      0      0      0      0      0      0      0      0      0
+0      +a     +a     +a     +a     +a     +a     +a     +a     +a     +a     +a     0
+0      +a     +a     +a     +a     +a     +a     +a     +a     +a     +a     +a     0
+0      +a     +a     +a     +a     +a     +a     +a     +a     +a     +a     +a     0
+0      0      0      0      0      0      0      0      0      0      0      0      0
 }
 
+// Dropship (Herakles)
 tile +craft_drop_herakles
 {
-5 4
+13 5
 
-0      0      0      0      0
-a      +b     +b     +b     a
-a      +b     +b     +b     a
-0      a      a      a      0
+0      0      0      0      0      0      0      0      0      0      0      0      0
+0      +a     +a     +a     +a     +a     +a     +a     +a     +a     +a     +a     0
+0      +a     +a     +a     +a     +a     +a     +a     +a     +a     +a     +a     0
+0      +a     +a     +a     +a     +a     +a     +a     +a     +a     +a     +a     0
+0      0      0      0      0      0      0      0      0      0      0      0      0
 }
 
+// Dropship (Raptor)
 tile +craft_drop_raptor
 {
-5 4
+13 5
 
-0      0      0      0      0
-a      +b     +b     +b     a
-a      +b     +b     +b     a
-0      a      a      a      0
+0      0      0      0      0      0      0      0      0      0      0      0      0
+0      +a     +a     +a     +a     +a     +a     +a     +a     +a     +a     +a     0
+0      +a     +a     +a     +a     +a     +a     +a     +a     +a     +a     +a     0
+0      +a     +a     +a     +a     +a     +a     +a     +a     +a     +a     +a     0
+0      0      0      0      0      0      0      0      0      0      0      0      0
 }
 
-// ########################################
-// ########### Maps for the game ###########
 
 assembly default
 {
-size "14 10"
-title "_Bridge"
-+main "1 1"
-*rm_drop +craft_drop_firebird "1 1"
+size		"11 10"
+title		"_Bridge"
++bridge		"1 1"
+*rm_ufo		+craft_crash_fighter "1 1"
+*rm_drop	+craft_drop_firebird "1 1"
 }

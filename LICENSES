@@ -60,10 +60,11 @@ base/maps/bomber_city/bc_craft_drop_herakles.map | GNU General Public License 2.
 base/maps/bomber_city/bc_craft_drop_raptor.map | GNU General Public License 2.0 or later
 base/maps/bomber_city/bc_main.map | GNU General Public License 2.0 or later
 base/maps/bridge.ump | GNU General Public License 2.0 or later
+base/maps/bridge/br_bridge.map | GNU General Public License 2.0 or later | Martin Gerhardy
+base/maps/bridge/br_craft_crash_fighter.map | GNU General Public License 2.0 or later | Martin Gerhardy
 base/maps/bridge/br_craft_drop_firebird.map | GNU General Public License 2.0 or later | Martin Gerhardy
 base/maps/bridge/br_craft_drop_herakles.map | GNU General Public License 2.0 or later | Martin Gerhardy
 base/maps/bridge/br_craft_drop_raptor.map | GNU General Public License 2.0 or later
-base/maps/bridge/br_main.map | GNU General Public License 2.0 or later | Martin Gerhardy
 base/maps/bunker.map | GNU General Public License 2.0 or later
 base/maps/cemetery.ump | GNU General Public License 2.0 or later
 base/maps/cemetery/cem_craft_drop_firebird.map | GNU General Public License 2.0 or later | wotwot
