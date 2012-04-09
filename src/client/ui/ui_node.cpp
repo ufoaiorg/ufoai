@@ -592,21 +592,14 @@ void UI_InsertNode (uiNode_t* const node, uiNode_t *prevNode, uiNode_t *newNode)
 	assert(!newNode->next);
 	/* everything come from the same window (force the dev to update himself this links) */
 	assert(!prevNode || (prevNode->root == newNode->root));
-	if (prevNode == NULL) {
-		newNode->next = node->firstChild;
-		node->firstChild = newNode;
-		if (node->lastChild == NULL) {
-			node->lastChild = newNode;
-		}
-		newNode->parent = node;
-	} else {
-		newNode->next = prevNode->next;
-		prevNode->next = newNode;
-		if (prevNode == node->lastChild) {
-			node->lastChild = newNode;
-		}
-		newNode->parent = node;
-	}
+
+	uiNode_t** const anchor = prevNode ? &prevNode->next : &node->firstChild;
+	newNode->next   = *anchor;
+	*anchor         = newNode;
+	newNode->parent = node;
+
+	if (!newNode->next)
+		node->lastChild = newNode;
 
 	if (newNode->root && newNode->indexed)
 		UI_WindowNodeAddIndexedNode(newNode->root, newNode);
