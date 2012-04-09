@@ -352,10 +352,9 @@ static void SV_EndEvents (void)
 
 typedef struct {
 	const char *name;
-	event_t eventNum;
 } eventNames_t;
 
-#define M(x) {#x, x}
+#define M(x) { #x }
 const eventNames_t eventNames[] = {
 	M(EV_NULL),
 	M(EV_RESET),
