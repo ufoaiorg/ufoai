@@ -43,6 +43,9 @@
 # endif
 #define SIGKILL 0
 #define WNOHANG 0
+#	define FMT_PID "%p"
+#else
+#	define FMT_PID "%d"
 #endif
 
 static gint child_child_pipe[2];
@@ -136,11 +139,7 @@ static void exec_spawn_process (ExecCmd *e, GSpawnChildSetupFunc child_setup)
 			| G_SPAWN_DO_NOT_REAP_CHILD);
 	if (g_spawn_async_with_pipes(NULL, (gchar**) e->args->pdata, NULL, flags, child_setup, e, &e->pid, NULL, &std_out,
 			&std_err, &err)) {
-#ifdef _WIN32
-		g_debug("exec_spawn_process - spawed process with pid [%p]\n", e->pid);
-#else
-		g_debug("exec_spawn_process - spawed process with pid [%d]\n", e->pid);
-#endif
+		g_debug("exec_spawn_process - spawed process with pid [" FMT_PID "]\n", e->pid);
 
 		if (!e->piped) {
 			GIOChannel* const char_out = g_io_channel_unix_new(std_out);
@@ -175,11 +174,7 @@ static void exec_spawn_process (ExecCmd *e, GSpawnChildSetupFunc child_setup)
 
 		/* If the process was cancelled then we kill off the child */
 		if (exec_cmd_get_state(e) == CANCELLED) {
-#ifdef _WIN32
-			g_debug("exec_spawn_process - killing process with pid [%p]\n", e->pid);
-#else
-			g_debug("exec_spawn_process - killing process with pid [%d]\n", e->pid);
-#endif
+			g_debug("exec_spawn_process - killing process with pid [" FMT_PID "]\n", e->pid);
 			gint ret = kill(e->pid, SIGQUIT);
 			g_debug("exec_spawn_process - SIGQUIT returned [%d]\n", ret);
 			if (ret != 0) {
@@ -199,11 +194,7 @@ static void exec_spawn_process (ExecCmd *e, GSpawnChildSetupFunc child_setup)
 		close(std_err);
 
 		exec_cmd_set_state(e, (e->exit_code == 0) ? COMPLETED : FAILED);
-#ifdef _WIN32
-		g_debug("exec_spawn_process - child [%p] exitcode [%d]\n", e->pid, e->exit_code);
-#else
-		g_debug("exec_spawn_process - child [%d] exitcode [%d]\n", e->pid, e->exit_code);
-#endif
+		g_debug("exec_spawn_process - child [" FMT_PID "] exitcode [%d]\n", e->pid, e->exit_code);
 	} else {
 		if (err != NULL)
 			g_warning("exec_spawn_process - failed to spawn process [%d] [%s]\n", err->code, err->message);
