@@ -66,10 +66,10 @@ void GraphTreeModel::erase (const scene::Instance& instance)
 		// Remove this from the GtkTreeStore...
 		gtk_tree_store_remove(_model, found->second->getIter());
 
+		delete found->second;
+
 		// ...and from our lookup table
 		_nodemap.erase(found);
-
-		delete found->second;
 	}
 }
 
