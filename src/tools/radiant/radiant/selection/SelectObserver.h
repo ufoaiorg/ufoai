@@ -39,17 +39,19 @@ private:
 
 		// Retrieve the according ObserverEvent for the GdkEventButton
 		ui::ObserverEvent observerEvent = mouseEvents.getObserverEvent(_event);
-
-		if (observerEvent == ui::obsToggle || observerEvent == ui::obsToggle || observerEvent == ui::obsToggleFace) {
+		switch (observerEvent) {
+		case ui::obsToggle:
+		case ui::obsToggleFace:
 			return SelectionSystem::eToggle;
-		}
 
-		if (observerEvent == ui::obsReplace || observerEvent == ui::obsReplaceFace) {
+		case ui::obsReplace:
+		case ui::obsReplaceFace:
 			return SelectionSystem::eReplace;
-		}
 
-		// greebo: Return the standard case: eManipulator mode, if none of the above apply
-		return SelectionSystem::eManipulator;
+		default:
+			// greebo: Return the standard case: eManipulator mode, if none of the above apply
+			return SelectionSystem::eManipulator;
+		}
 	}
 
 	/* Return the rectangle coordinates spanned by the mouse pointer and the starting point
