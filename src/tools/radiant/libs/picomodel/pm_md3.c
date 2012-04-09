@@ -54,14 +54,6 @@ typedef struct md3Frame_s
 	char creator[16];
 } md3Frame_t;
 
-/* md3 model tag information */
-typedef struct md3Tag_s
-{
-	char name[64];
-	float origin[3];
-	float axis[3][3];
-} md3Tag_t;
-
 /* md3 surface md3 (one object mesh) */
 typedef struct md3Surface_s
 {
