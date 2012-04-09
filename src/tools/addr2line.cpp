@@ -348,7 +348,6 @@ int main (int argc, char **argv)
 	const char *file_name = NULL;
 	const char *section_name = NULL;
 	char *target = NULL;
-	int c;
 
 #if defined (HAVE_SETLOCALE) && defined (HAVE_LC_MESSAGES)
 	setlocale (LC_MESSAGES, "");

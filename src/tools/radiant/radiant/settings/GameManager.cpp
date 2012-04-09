@@ -77,7 +77,6 @@ GameManager::GameManager () :
 	GlobalPreferenceSystem().addConstructor(this);
 
 	// TODO Remove this and read the game.xml data from the xmlregistry, too
-	std::string path = DirectoryCleaned(_enginePath);
 	std::string strGameFilename = Environment::Instance().getAppPath() + "game.xml";
 
 	xmlDocPtr pDoc = xmlParseFile(strGameFilename.c_str());

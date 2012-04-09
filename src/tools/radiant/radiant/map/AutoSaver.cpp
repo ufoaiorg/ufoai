@@ -90,8 +90,6 @@ void AutoMapSaver::saveSnapshot() {
 	}
 
 	const std::string& mapName = GlobalMap().getName();
-	std::string name = os::getFilenameFromPath(mapName);
-	std::string extension = os::getExtension(mapName);
 
 	// Append the the snapshot folder to the path
 	std::string snapshotPath = os::stripFilename(mapName) + "/" + GlobalRegistry().get(RKEY_AUTOSAVE_SNAPSHOTS_FOLDER);

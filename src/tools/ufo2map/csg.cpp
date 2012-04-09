@@ -302,7 +302,7 @@ bspbrush_t *MakeBspBrushList (int startbrush, int endbrush, int level, vec3_t cl
 {
 	bspbrush_t *brushlist, *newbrush;
 	int i, j, vis;
-	int c_faces, c_brushes, numsides;
+	int numsides;
 
 	Verb_Printf(VERB_DUMP, "MakeBspBrushList: bounds (%f %f %f) (%f %f %f)\n",
 		clipmins[0], clipmins[1], clipmins[2], clipmaxs[0], clipmaxs[1], clipmaxs[2]);
@@ -318,8 +318,6 @@ bspbrush_t *MakeBspBrushList (int startbrush, int endbrush, int level, vec3_t cl
 	}
 
 	brushlist = NULL;
-	c_faces = 0;
-	c_brushes = 0;
 
 	for (i = startbrush; i < endbrush; i++) {
 		mapbrush_t *mb = &mapbrushes[i];
@@ -376,9 +374,6 @@ bspbrush_t *MakeBspBrushList (int startbrush, int endbrush, int level, vec3_t cl
 			Verb_Printf(VERB_DUMP, "Rejected brush %i: cannot clip to box.\n", i);
 			continue;
 		}
-
-		c_faces += vis;
-		c_brushes++;
 
 		newbrush->next = brushlist;
 		brushlist = newbrush;
