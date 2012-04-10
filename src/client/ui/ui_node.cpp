@@ -621,19 +621,14 @@ uiNode_t* UI_RemoveNode (uiNode_t* const node, uiNode_t *child)
 	assert(node->firstChild);
 
 	/** remove the 'child' node */
-	if (child == node->firstChild) {
-		node->firstChild = child->next;
-	} else {
-		/** find node before 'child' node */
-		uiNode_t *previous = node->firstChild;
-		while (previous != NULL) {
-			if (previous->next == child)
-				break;
-			previous = previous->next;
+	for (uiNode_t** anchor = &node->firstChild;; anchor = &(*anchor)->next) {
+		if (!*anchor)
+			return 0;
+
+		if (*anchor == child) {
+			*anchor = child->next;
+			break;
 		}
-		previous->next = child->next;
-		if (previous == NULL)
-			return NULL;
 	}
 	UI_Invalidate(node);
 
