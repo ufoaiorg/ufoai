@@ -344,8 +344,7 @@ static void UI_NodeSetPropertyFromActionValue (uiNode_t *node, const value_t *pr
 	if (value->type == EA_VALUE_STRING) {
 		const char* string = value->d.terminal.d1.constString;
 		if ((property->type & V_UI_MASK) == V_UI_CVAR && Q_strstart(string, "*cvar:")) {
-			void *mem = ((byte *) node + property->ofs);
-			*(void**) mem = value->d.terminal.d1.data;
+			getValue<void*>(node, property) = value->d.terminal.d1.data;
 		} else {
 			/** @todo here we must catch error in a better way, and using cvar for error code to create unittest automations */
 			UI_InitRawActionValue(value, node, property, string);
@@ -482,11 +481,7 @@ static inline void UI_ExecuteCallAction (const uiAction_t* action, const uiCallC
 	}
 
 	if (callProperty == NULL || callProperty->type == V_UI_ACTION) {
-		uiAction_t *actionsRef = NULL;
-		if (callProperty == NULL)
-			actionsRef = callNode->onClick;
-		else
-			actionsRef = *(uiAction_t **) ((byte *) callNode + callProperty->ofs);
+		uiAction_t const* const actionsRef = callProperty ? getValue<uiAction_t*>(callNode, callProperty) : callNode->onClick;
 		UI_ExecuteActions(actionsRef, &newContext);
 	} else if (callProperty->type == V_UI_NODEMETHOD) {
 		uiNodeMethod_t func = (uiNodeMethod_t) callProperty->ofs;
@@ -771,8 +766,6 @@ void UI_PoolAllocAction (uiAction_t** action, int type, const void *data)
  */
 void UI_AddListener (uiNode_t *node, const value_t *property, const uiNode_t *functionNode)
 {
-	uiAction_t *lastAction;
-
 	if (node->dynamic) {
 		Com_Printf("UI_AddListener: '%s' is a dynamic node. We can't listen it.\n", UI_GetPath(node));
 		return;
@@ -794,13 +787,10 @@ void UI_AddListener (uiNode_t *node, const value_t *property, const uiNode_t *fu
 	action->next = NULL;
 
 	/* insert the action */
-	lastAction = *(uiAction_t**)((char*)node + property->ofs);
-	if (lastAction) {
-		while (lastAction->next)
-			lastAction = lastAction->next;
-		lastAction->next = action;
-	} else
-		*(uiAction_t**)((char*)node + property->ofs) = action;
+	uiAction_t** anchor = &getValue<uiAction_t*>(node, property);
+	while (*anchor)
+		anchor = &(*anchor)->next;
+	*anchor = action;
 }
 
 /**
@@ -845,18 +835,17 @@ static void UI_AddListener_f (void)
 void UI_RemoveListener (uiNode_t *node, const value_t *property, uiNode_t *functionNode)
 {
 	void *data;
-	uiAction_t *lastAction;
 
 	/* data we must remove */
 	data = (void*) &functionNode->onClick;
 
 	/* remove the action */
-	lastAction = *(uiAction_t**)((char*)node + property->ofs);
-	if (lastAction) {
+	uiAction_t*& action = getValue<uiAction_t*>(node, property);
+	if (uiAction_t* lastAction = action) {
 		uiAction_t *tmp = NULL;
 		if (lastAction->type == EA_LISTENER && lastAction->d.terminal.d2.constData == data) {
 			tmp = lastAction;
-			*(uiAction_t**)((char*)node + property->ofs) = lastAction->next;
+			action = lastAction->next;
 		} else {
 			while (lastAction->next) {
 				if (lastAction->next->type == EA_LISTENER && lastAction->next->d.terminal.d2.constData == data)

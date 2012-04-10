@@ -665,8 +665,6 @@ void UI_AppendNode (uiNode_t* const node, uiNode_t *newNode)
 
 void UI_NodeSetPropertyFromRAW (uiNode_t* node, const value_t *property, const void* rawValue, int rawType)
 {
-	void *mem = ((byte *) node + property->ofs);
-
 	if (property->type != rawType) {
 		Com_Printf("UI_NodeSetPropertyFromRAW: type %i expected, but @%s type %i found. Property setter to '%s@%s' skipped\n", rawType, property->string, property->type, UI_GetPath(node), property->string);
 		return;
@@ -675,22 +673,16 @@ void UI_NodeSetPropertyFromRAW (uiNode_t* node, const value_t *property, const v
 	if ((property->type & V_UI_MASK) == V_NOT_UI)
 		Com_SetValue(node, rawValue, property->type, property->ofs, property->size);
 	else if ((property->type & V_UI_MASK) == V_UI_CVAR) {
-		UI_FreeStringProperty(*(void**)mem);
+		UI_FreeStringProperty(getValue<void*>(node, property));
 		switch (property->type & V_BASETYPEMASK) {
-		case V_FLOAT:
-			**(float **) mem = *(const float*) rawValue;
-			break;
-		case V_INT:
-			**(int **) mem = *(const int*) rawValue;
-			break;
-		default:
-			*(const byte **) mem = (const byte*) rawValue;
-			break;
+		case V_FLOAT: *getValue<float*     >(node, property) = *static_cast<float const*>(rawValue); break;
+		case V_INT:   *getValue<int*       >(node, property) = *static_cast<int   const*>(rawValue); break;
+		default:       getValue<byte const*>(node, property) =  static_cast<byte  const*>(rawValue); break;
 		}
 	} else if (property->type == V_UI_ACTION) {
-		*(const uiAction_t**) mem = (const uiAction_t*) rawValue;
+		getValue<uiAction_t const*>(node, property) = static_cast<uiAction_t const*>(rawValue);
 	} else if (property->type == V_UI_SPRITEREF) {
-		*(const uiSprite_t**) mem = (const uiSprite_t*) rawValue;
+		getValue<uiSprite_t const*>(node, property) = static_cast<uiSprite_t const*>(rawValue);
 	} else {
 		Com_Error(ERR_FATAL, "UI_NodeSetPropertyFromRAW: Property type '%d' unsupported", property->type);
 	}
@@ -702,7 +694,6 @@ void UI_NodeSetPropertyFromRAW (uiNode_t* node, const value_t *property, const v
  */
 bool UI_NodeSetProperty (uiNode_t* node, const value_t *property, const char* value)
 {
-	byte* b = (byte*)node + property->ofs;
 	const int specialType = property->type & V_UI_MASK;
 	int result;
 	size_t bytes;
@@ -721,8 +712,9 @@ bool UI_NodeSetProperty (uiNode_t* node, const value_t *property, const char* va
 		switch ((int)property->type) {
 		case V_UI_CVAR:
 			if (Q_strstart(value, "*cvar:")) {
-				UI_FreeStringProperty(*(void**)b);
-				*(char**) b = Mem_PoolStrDup(value, ui_dynStringPool, 0);
+				char*& b = getValue<char*>(node, property);
+				UI_FreeStringProperty(b);
+				b = Mem_PoolStrDup(value, ui_dynStringPool, 0);
 				UI_Node_PropertyChanged(node, property);
 				return true;
 			}
@@ -732,8 +724,9 @@ bool UI_NodeSetProperty (uiNode_t* node, const value_t *property, const char* va
 				float f;
 
 				if (Q_strstart(value, "*cvar:")) {
-					UI_FreeStringProperty(*(void**)b);
-					*(char**) b = Mem_PoolStrDup(value, ui_dynStringPool, 0);
+					char*& b = getValue<char*>(node, property);
+					UI_FreeStringProperty(b);
+					b = Mem_PoolStrDup(value, ui_dynStringPool, 0);
 					UI_Node_PropertyChanged(node, property);
 					return true;
 				}
@@ -744,7 +737,7 @@ bool UI_NodeSetProperty (uiNode_t* node, const value_t *property, const char* va
 					return false;
 				}
 
-				b = (byte*) (*(void**)b);
+				void* const b = getValue<void*>(node, property);
 				if (char const* const cvar = Q_strstart((char const*)b, "*cvar:"))
 					Cvar_SetValue(cvar, f);
 				else
@@ -755,8 +748,9 @@ bool UI_NodeSetProperty (uiNode_t* node, const value_t *property, const char* va
 		case V_CVAR_OR_LONGSTRING:
 		case V_CVAR_OR_STRING:
 			{
-				UI_FreeStringProperty(*(void**)b);
-				*(char**) b = Mem_PoolStrDup(value, ui_dynStringPool, 0);
+				char*& b = getValue<char*>(node, property);
+				UI_FreeStringProperty(b);
+				b = Mem_PoolStrDup(value, ui_dynStringPool, 0);
 				UI_Node_PropertyChanged(node, property);
 				return true;
 			}
@@ -768,7 +762,7 @@ bool UI_NodeSetProperty (uiNode_t* node, const value_t *property, const char* va
 		case V_UI_SPRITEREF:
 			{
 				uiSprite_t* sprite = UI_GetSpriteByName(value);
-				*(const uiSprite_t**) b = sprite;
+				getValue<uiSprite_t const*>(node, property) = sprite;
 				return true;
 			}
 		}
@@ -788,7 +782,6 @@ bool UI_NodeSetProperty (uiNode_t* node, const value_t *property, const char* va
 const char* UI_GetStringFromNodeProperty (const uiNode_t* node, const value_t* property)
 {
 	const int baseType = property->type & V_UI_MASK;
-	const byte* b = (const byte*)node + property->ofs;
 	assert(node);
 	assert(property);
 
@@ -799,7 +792,7 @@ const char* UI_GetStringFromNodeProperty (const uiNode_t* node, const value_t* p
 		switch ((int)property->type) {
 		case V_CVAR_OR_FLOAT:
 			{
-				const float f = UI_GetReferenceFloat(node, *(const void*const*)b);
+				const float f = UI_GetReferenceFloat(node, getValue<void*>(node, property));
 				const int i = f;
 				if (f == i)
 					return va("%i", i);
@@ -809,7 +802,7 @@ const char* UI_GetStringFromNodeProperty (const uiNode_t* node, const value_t* p
 		case V_CVAR_OR_LONGSTRING:
 		case V_CVAR_OR_STRING:
 		case V_UI_CVAR:
-			return UI_GetReferenceString(node, *(const char*const*)b);
+			return UI_GetReferenceString(node, getValue<char*>(node, property));
 		}
 		break;
 	default:
@@ -829,13 +822,12 @@ const char* UI_GetStringFromNodeProperty (const uiNode_t* node, const value_t* p
  */
 float UI_GetFloatFromNodeProperty (const uiNode_t* node, const value_t* property)
 {
-	const byte* b = (const byte*)node + property->ofs;
 	assert(node);
 
 	if (property->type == V_FLOAT) {
-		return *(const float*) b;
+		return getValue<float>(node, property);
 	} else if ((property->type & V_UI_MASK) == V_UI_CVAR) {
-		b = *(const byte* const*) b;
+		void* const b = getValue<void*>(node, property);
 		if (char const* const cvarName = Q_strstart((char const*)b, "*cvar:")) {
 			const cvar_t *cvar = Cvar_Get(cvarName, "", 0, "UI script cvar property");
 			return cvar->value;
@@ -845,9 +837,9 @@ float UI_GetFloatFromNodeProperty (const uiNode_t* node, const value_t* property
 			return atof((const char*)b);
 		}
 	} else if (property->type == V_INT) {
-		return *(const int*) b;
+		return getValue<int>(node, property);
 	} else if (property->type == V_BOOL) {
-		return *(const qboolean *) b;
+		return getValue<qboolean>(node, property);
 	} else {
 #ifdef DEBUG
 		Com_Printf("UI_GetFloatFromNodeProperty: Unimplemented float getter for property '%s@%s'. If it should return a float, request it.\n", UI_GetPath(node), property->string);

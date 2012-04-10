@@ -40,11 +40,11 @@ void uiFuncNode::loaded (uiNode_t *node)
 	/** @todo move this code into the parser (it should not create a node) */
 	const value_t *prop = UI_GetPropertyFromBehaviour(node->parent->behaviour, node->name);
 	if (prop && prop->type == V_UI_ACTION) {
-		void **value = (void**) ((uintptr_t)node->parent + prop->ofs);
-		if (*value == NULL)
-			*value = (void*) node->onClick;
-		else
+		if (uiAction_t*& value = getValue<uiAction_t*>(node->parent, prop)) {
 			Com_Printf("UI_FuncNodeLoaded: '%s' already defined. Second function ignored (\"%s\")\n", prop->string, UI_GetPath(node));
+		} else {
+			value = node->onClick;
+		}
 	}
 }
 
