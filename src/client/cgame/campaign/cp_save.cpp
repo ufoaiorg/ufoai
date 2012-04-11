@@ -145,7 +145,7 @@ qboolean SAV_GameLoad (const char *file, const char **error)
 	}
 
 	clen = FS_FileLength(&f);
-	byte* const cbuf = Mem_PoolAllocTypeN(byte, clen, cp_campaignPool);
+	byte* const cbuf = Mem_PoolAllocTypeN(byte, clen + 1 /* for '\0' if not compressed */, cp_campaignPool);
 	if (FS_Read(cbuf, clen, &f) != clen)
 		Com_Printf("Warning: Could not read %i bytes from savefile\n", clen);
 	FS_CloseFile(&f);
@@ -172,10 +172,11 @@ qboolean SAV_GameLoad (const char *file, const char **error)
 			header.version, header.gameVersion, header.xmlSize, header.compressed ? 'y' : 'n');
 
 	if (header.compressed) {
-		uLongf      len = header.xmlSize + 50;
-		byte* const buf = Mem_PoolAllocTypeN(byte, len, cp_campaignPool);
+		uLongf      len = header.xmlSize + 1 /* for '\0' */;
+		byte* const buf = Mem_PoolAllocTypeN(byte, len /* sic, old savegames contain one (garbage) byte more than the header says. */, cp_campaignPool);
 		/* uncompress data, skipping comment header */
 		const int res = uncompress(buf, &len, cbuf + sizeof(header), clen - sizeof(header));
+		buf[header.xmlSize] = '\0'; /* Ensure '\0' termination. */
 		Mem_Free(cbuf);
 
 		if (res != Z_OK) {
@@ -328,7 +329,7 @@ static qboolean SAV_GameSave (const char *filename, const char *comment, char **
 	memcpy(fbuf, &header, sizeof(header));
 
 	if (header.compressed) {
-		res = compress(fbuf + sizeof(header), &bufLen, buf, requiredBufferLength + 1);
+		res = compress(fbuf + sizeof(header), &bufLen, buf, requiredBufferLength);
 		Mem_Free(buf);
 
 		if (res != Z_OK) {
@@ -338,7 +339,7 @@ static qboolean SAV_GameSave (const char *filename, const char *comment, char **
 			return qfalse;
 		}
 	} else {
-		memcpy(fbuf + sizeof(header), buf, requiredBufferLength + 1);
+		memcpy(fbuf + sizeof(header), buf, requiredBufferLength);
 		Mem_Free(buf);
 	}
 
