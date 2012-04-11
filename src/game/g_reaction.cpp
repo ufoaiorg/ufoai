@@ -600,7 +600,7 @@ static qboolean G_ReactionFireCheckExecution (const edict_t *target)
 	/* check all possible shooters */
 	while ((shooter = G_EdictsGetNextLivingActor(shooter))) {
 		const int tus = G_ReactionFireGetTUsForItem(shooter, target, RIGHT(shooter));
-		if (tus > 1 && g_reactionnew->integer) {
+		if (tus > 1) {	/* indicates an RF weapon is there */
 			if (G_ReactionFireTargetsExpired(shooter, target, 0)) {
 				if (G_ReactionFireTryToShoot(shooter, target)) {
 					G_ReactionFireTargetsAdvance(shooter, target, tus);
@@ -644,13 +644,13 @@ void G_ReactionFirePreShot (const edict_t *target, const int fdTime)
 	G_ReactionFireTargetsUpdateAll(target);
 
 	/* if any reaction fire occurs, we have to loop through all entities again to allow
-	 * multiple (fast) RF snap shots before a (slow) aimed shot from the target occurs (only if g_reactionnew is set to 1). */
+	 * multiple (fast) RF snap shots before a (slow) aimed shot from the target occurs. */
 	while (repeat) {
 		repeat = qfalse;
 		/* check all ents to see who wins and who loses a draw */
 		while ((shooter = G_EdictsGetNextLivingActor(shooter))) {
 			int entTUs = G_ReactionFireGetTUsForItem(shooter, target, RIGHT(shooter));
-			if (entTUs > 1 && g_reactionnew->integer) {
+			if (entTUs > 1) {	/* indicates an RF weapon is there */
 				if (G_ReactionFireTargetsExpired(shooter, target, fdTime)) {
 					if (G_ReactionFireTryToShoot(shooter, target)) {
 						repeat = qtrue;
