@@ -4101,27 +4101,11 @@
 // entity 4
 {
 "classname" "misc_model"
-"origin" "436 92 34"
-"angles" "0 -112 0"
-"skin" "2"
-"spawnflags" "255"
-"model" "models/objects/vegi/bush/bush01.md2"
-}
-// entity 5
-{
-"classname" "misc_model"
-"origin" "1186 484 2"
-"model" "models/objects/vegi/plants/plant_a.md2"
-"spawnflags" "255"
-}
-// entity 6
-{
-"classname" "misc_model"
 "origin" "1758 192 2"
 "model" "models/objects/vegi/plants/plant_a.md2"
 "spawnflags" "255"
 }
-// entity 7
+// entity 5
 {
 "classname" "func_group"
 // brush 0
@@ -4467,18 +4451,4 @@
 ( 1248 321 163 ) ( 1248 321 156 ) ( 1249 323 156 ) tex_material/metall001 40 124 0 0.125 0.125 64512 0 0
 ( 1248 321 156 ) ( 1248 321 163 ) ( 1248 318 163 ) tex_material/metall001 40 124 0 0.125 0.125 64512 0 0
 }
-}
-// entity 8
-{
-"classname" "light"
-"light" "100"
-"origin" "6.875 4 38.125"
-"_color" "1 0.822492 0.00894179"
-}
-// entity 9
-{
-"classname" "light"
-"light" "100"
-"origin" "6.875 4 38.125"
-"_color" "1 0.822492 0.00894179"
 }
