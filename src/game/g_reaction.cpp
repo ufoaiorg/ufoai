@@ -153,8 +153,6 @@ static void G_ReactionFireTargetsRemove (edict_t *shooter, const edict_t *target
 			rfts->count--;
 		}
 	}
-	/* support the legacy RF code */
-	shooter->reactionTarget = NULL;
 }
 
 /**
@@ -604,7 +602,6 @@ static qboolean G_ReactionFireCheckExecution (const edict_t *target)
 		const int tus = G_ReactionFireGetTUsForItem(shooter, target, RIGHT(shooter));
 		if (tus > 1 && g_reactionnew->integer) {
 			if (G_ReactionFireTargetsExpired(shooter, target, 0)) {
-				shooter->reactionTarget = target;
 				if (G_ReactionFireTryToShoot(shooter, target)) {
 					G_ReactionFireTargetsAdvance(shooter, target, tus);
 					fired |= qtrue;
@@ -655,7 +652,6 @@ void G_ReactionFirePreShot (const edict_t *target, const int fdTime)
 			int entTUs = G_ReactionFireGetTUsForItem(shooter, target, RIGHT(shooter));
 			if (entTUs > 1 && g_reactionnew->integer) {
 				if (G_ReactionFireTargetsExpired(shooter, target, fdTime)) {
-					shooter->reactionTarget = target;
 					if (G_ReactionFireTryToShoot(shooter, target)) {
 						repeat = qtrue;
 						G_ReactionFireTargetsAdvance(shooter, target, fdTime);
@@ -683,17 +679,8 @@ void G_ReactionFirePostShot (edict_t *target)
  */
 void G_ReactionFireOnEndTurn (void)
 {
-	edict_t *ent = NULL;
-
-	/* resolve all outstanding reaction firing if possible */
-	while ((ent = G_EdictsGetNextLivingActor(ent))) {
-		if (!ent->reactionTarget)
-			continue;
-		G_ReactionFireTargetsRemove(ent, ent->reactionTarget);
-		ent->reactionTarget = NULL;
-		/* we explicitly do nothing at end of turn */
-		/* G_ReactionFireTryToShoot(ent, ent->reactionTarget); */
-	}
+	/* we explicitly do nothing at end of turn, just reset the table */
+	G_ReactionFireTargetsInit();
 }
 
 /**
@@ -710,7 +697,6 @@ void G_ReactionFireReset (int team)
 		/** @todo why do we send the state here and why do we change the "shaken"
 		 * state? - see G_MoraleBehaviour */
 		G_RemoveShaken(ent);
-		ent->reactionTarget = NULL;
 
 		G_EventActorStateChange(G_TeamToPM(ent->team), ent);
 	}

@@ -726,10 +726,8 @@ struct edict_s {
 								 * string for each door part and they will open both
 								 * if you open one */
 
-	/** delayed reaction fire */
-	const edict_t *reactionTarget;	/**< the moving actor who triggered the RF of this ent - only set when this actor has reaction fire enabled */
-	qboolean inRescueZone;			/**< the actor is standing in a rescue zone if this is true - this means that
-									 * when the mission is aborted the actor will not die */
+	qboolean inRescueZone;		/**< the actor is standing in a rescue zone if this is true - this means that
+								 * when the mission is aborted the actor will not die */
 
 	/** client actions - interact with the world */
 	edict_t *clientAction;
