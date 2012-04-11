@@ -5,36 +5,34 @@
 // Tiletypes:
 // ----------
 // +: tile contains something
-// a: any
+// a: common
 // d: dropship tile
 // u: UFO tile
 
 base ice/ice_
 
-// ---------------------------------
-// Dropship on ice map
-tile +craft_drop_firebird
-{
-4 4
-0      a      a     0
-a     +d     +d     a
-a     +d     +d     a
-0      a      a     0
-}
+// Dropships --------------------------------------------------------
 
-tile +craft_drop_herakles
+tile +craft_drop_firebird
+	// 8 x info_human_start
+	// 2 info_2x2_start
 {
 4 5
-0       a      a     0
-a      +b     +b     a
-a      +b     +b     a
-a      +b     +b     a
-0       a      a     0
+0      a      a     0
+x     +d     +d     a
+x     +d     +d     a
+x     +d     +d     a
+0      a      a     0
 }
 
-// ---------------------------------
-// Big rocks of ice - horizontal
+// crashed UFO´s-----------------------------------------------------
+
+
+// Common tiles -----------------------------------------------------
+
 tile +r01
+	// big rocks of ice - horizontal
+	// 4 x info_alien_start
 {
 4 4
 0      adu     adu      0
@@ -43,9 +41,9 @@ adu     +a     +a       adu
 0      adu     adu      0
 }
 
-// ---------------------------------
-// Big rocks of ice - vertical
 tile +r02
+	// big rocks of ice - vertical
+	// 4 x info_alien_start
 {
 4 4
 0      adu     adu      0
@@ -54,9 +52,9 @@ adu     +a     +a       adu
 0      adu     adu      0
 }
 
-// ---------------------------------
-// Iceblock with niche
 tile +r03
+	// iceb lock with niche
+	// 4 x info_alien_start
 {
 4 4
 0      adu     adu      0
@@ -64,11 +62,10 @@ adu     +a     +a       adu
 adu     +a     +a       adu
 0      adu     adu      0
 }
-
-// ---------------------------------
-// Plain snow terrain
 
 tile +r04
+	// Plain snow terrain
+	// 4 x info_alien_start
 {
 4 4
 0      adu     adu      0
@@ -77,9 +74,9 @@ adu     +a     +a       adu
 0      adu     adu      0
 }
 
-// ---------------------------------
-// Iceblock with niche
+
 tile +r05
+	// ice block with niche
 {
 4 4
 0      adu     adu      0
@@ -88,48 +85,36 @@ adu     +a     +a       adu
 0      adu     adu      0
 }
 
-// *********************************
+tile +r06
+	// an ice block
+{
+3 3
+0      adu     0
+adu     +a     adu
+0      adu     0
+}
+
+tile +r07
+	// plain
+{
+3 3
+0      adu     0
+adu     +a     adu
+0      adu     0
+}
+
+// map assemblies ---------------------------------------------------
 
 assembly test
 {
-size "6 6"
-+r01 "1 4"
-+r02 "1 8"
-+r03 "0 8"
-//+r04 "1 6"
-//+r05 "1 6"
-+craft_drop_firebird "1 1"
+size "6 4"
+title "_Ice"
++r01 "0 1"
++r02 "0 1"
++r03 "0 1"
++r04 "0 1"
++r05 "0 1"
++r06 "0 1"
++r07 "0 1"
+*rm_drop +craft_drop_firebird "1 1"
 }
-
-// *********************************
-// ***** Maps for screenshots *****
-
-// assembly drop_firebird
-// {
-// size "2 2"
-// +craft_drop_firebird "1 1"
-// }
-//
-// assembly r1
-// {
-// size "2 2"
-// +r01 "1 1"
-// }
-//
-// assembly r2
-// {
-// size "2 2"
-// +r02 "1 1"
-// }
-//
-// assembly r3
-// {
-// size "2 2"
-// +r03 "1 1"
-// }
-//
-// assembly r4
-// {
-// size "2 2"
-// +r04 "1 1"
-// }

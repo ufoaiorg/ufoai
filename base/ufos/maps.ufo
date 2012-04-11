@@ -1195,6 +1195,45 @@ mapdef hills_small
 	}
 }
 
+/////////////////////
+// ICE RANDOM MAPS //
+/////////////////////
+
+mapdef ice
+{
+        map             "+ice"
+        description     "_An icy environment."
+		param           "test"
+        maxaliens       8
+		campaign 		false
+		singleplayer	true
+		multiplayer     false
+		aircraft
+        {
+			craft_drop_firebird
+        }
+
+        ufos
+        {
+                // any
+        }
+
+        terrains
+        {
+            arctic
+        }
+
+        cultures
+        {
+                // any
+        }
+
+        populations
+        {
+            nopopulation
+        }
+}
+
 ////////////////////////////
 // INDUSTRIAL RANDOM MAPS //
 ////////////////////////////
