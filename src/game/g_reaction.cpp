@@ -74,6 +74,18 @@ void G_ReactionFireTargetsInit (void)
 }
 
 /**
+ * @brief Reset the target count in the reaction fire table for all entities.
+ */
+static void G_ReactionFireTargetsReset (void)
+{
+	int i;
+
+	for (i = 0; i < MAX_RF_DATA; i++) {
+		rfData[i].count = 0;
+	}
+}
+
+/**
  * @brief Create a table of reaction fire targets for the given edict.
  * @param[in] shooter The reaction firing actor
  */
@@ -680,7 +692,7 @@ void G_ReactionFirePostShot (edict_t *target)
 void G_ReactionFireOnEndTurn (void)
 {
 	/* we explicitly do nothing at end of turn, just reset the table */
-	G_ReactionFireTargetsInit();
+	G_ReactionFireTargetsReset();
 }
 
 /**
