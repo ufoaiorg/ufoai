@@ -1702,6 +1702,7 @@ item bolterrifle_ammo
 			time				28
 			damage				"140 20"
 			dmgweight			normal_heavy
+			reaction	true
 			throughwall 2
 		}
 	}
