@@ -11,10 +11,3 @@
 		lightmap
 	}
 }
-
-{
-	material tex_nature/water_dark
-	{
-		envmap 0
-	}
-}
