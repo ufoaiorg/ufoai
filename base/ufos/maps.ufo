@@ -308,7 +308,7 @@ mapdef bridge
 {
 	map				"+bridge"
 	description		"_A small UFO has crashed in this mining region."
-	multiplayer		true
+	multiplayer		false
 	teams			3
 	gametypes {
 		1on1
