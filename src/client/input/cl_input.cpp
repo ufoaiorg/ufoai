@@ -342,8 +342,6 @@ static void CL_SelectUp_f (void)
  */
 static void CL_ActionDown_f (void)
 {
-	if (IN_GetMouseSpace() != MS_WORLD)
-		return;
 	IN_KeyDown(&in_pantilt);
 }
 
