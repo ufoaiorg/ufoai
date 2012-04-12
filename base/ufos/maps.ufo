@@ -4344,7 +4344,7 @@ mapdef small_house
 	terrains
 	{
 		grass
-		mountains
+		mountain
 	}
 
 	populations
@@ -4367,7 +4367,7 @@ mapdef small_street
 	terrains
 	{
 		grass
-		mountains
+		mountain
 	}
 
 	populations
