@@ -279,16 +279,17 @@ int Cvar_CompleteVariable (const char *partial, const char **match)
 qboolean Cvar_Delete (const char *varName)
 {
 	unsigned hash;
-	cvar_t *var, *previousVar = NULL;
 
 	hash = Com_HashKey(varName, CVAR_HASH_SIZE);
-	for (var = cvarVarsHash[hash]; var; var = var->hash_next) {
+	for (cvar_t** anchor = &cvarVarsHash[hash]; *anchor; anchor = &(*anchor)->hash_next) {
+		cvar_t* const var = *anchor;
 		if (!Q_strcasecmp(varName, var->name)) {
 			cvarChangeListener_t *changeListener;
 			if (var->flags != 0) {
 				Com_Printf("Can't delete the cvar '%s' - it's a special cvar\n", varName);
 				return qfalse;
 			}
+			HASH_Delete(anchor);
 			if (var->prev) {
 				assert(var->prev->next == var);
 				var->prev->next = var->next;
@@ -298,7 +299,6 @@ qboolean Cvar_Delete (const char *varName)
 				assert(var->next->prev == var);
 				var->next->prev = var->prev;
 			}
-			HASH_Delete(cvarVarsHash, var, previousVar, hash);
 			Mem_Free(var->name);
 			Mem_Free(var->string);
 			Mem_Free(var->description);
@@ -316,7 +316,6 @@ qboolean Cvar_Delete (const char *varName)
 
 			return qtrue;
 		}
-		previousVar = var;
 	}
 	Com_Printf("Cvar '%s' wasn't found\n", varName);
 	return qfalse;

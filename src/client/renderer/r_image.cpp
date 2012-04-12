@@ -385,19 +385,16 @@ void R_UploadAlpha (const image_t *image, const byte *alphaData)
 static inline void R_DeleteImage (image_t *image)
 {
 	const unsigned int hash = Com_HashKey(image->name, MAX_IMAGEHASH);
-	image_t *var, *previousVar = NULL;
+	for (image_t** anchor = &imageHash[hash]; *anchor; anchor = &(*anchor)->hash_next) {
+		if (Q_streq((*anchor)->name, image->name)) {
+			HASH_Delete(anchor);
+			break;
+		}
+	}
 
 	/* free it */
 	glDeleteTextures(1, &image->texnum);
 	R_CheckError();
-
-	for (var = imageHash[hash]; var; var = var->hash_next) {
-		if (Q_streq(var->name, image->name) ) {
-			HASH_Delete(imageHash, var, previousVar, hash);
-			break;
-		}
-		previousVar = var;
-	}
 
 	OBJZERO(*image);
 }
