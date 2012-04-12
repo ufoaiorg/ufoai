@@ -9,6 +9,7 @@ void glBindTexture (GLenum target, GLuint id)
 
 GLenum glGetError (void)
 {
+	return GL_NO_ERROR;
 }
 
 void glTexParameterf (GLenum target, GLenum pname, GLfloat param)
