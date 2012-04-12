@@ -1,8 +1,6 @@
 /* gcc gldummy.c -shared -fpic -ldl -o libGL.so */
 #include <GL/gl.h>
 
-static int texnum;
-
 void glBindTexture (GLenum target, GLuint id)
 {
 }
@@ -23,8 +21,8 @@ void glTexImage2D (GLenum target, GLint level, GLint internalformat, GLsizei wid
 
 void glGenTextures (GLsizei n, GLuint *textures)
 {
-	int i;
-	for (i = 0; i < n; i++) {
+	static GLuint texnum;
+	for (GLsizei i = 0; i != n; ++i) {
 		textures[i] = ++texnum;
 	}
 }
