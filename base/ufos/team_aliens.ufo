@@ -424,7 +424,7 @@ team bloodspider
 		fire_light 10
 		fire_medium 20
 		fire_heavy 30
-		fire_flamer 40
+		fire_flamer 2
 
 		shock 999
 
