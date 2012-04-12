@@ -342,6 +342,8 @@ static void CL_SelectUp_f (void)
  */
 static void CL_ActionDown_f (void)
 {
+	if (!CL_OnBattlescape())
+		return;
 	IN_KeyDown(&in_pantilt);
 }
 
