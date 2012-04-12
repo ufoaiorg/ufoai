@@ -295,6 +295,8 @@ static void testEmployeeHandling (void)
 		CU_ASSERT_PTR_NOT_NULL(e);
 		cnt = E_RefreshUnhiredEmployeeGlobalList(EMPL_PILOT, qfalse);
 		CU_ASSERT_EQUAL(cnt, 1);
+		e = E_GetUnhired(EMPL_PILOT);
+		CU_ASSERT_PTR_NOT_NULL(e);
 		CU_ASSERT_TRUE(E_DeleteEmployee(e));
 	}
 
