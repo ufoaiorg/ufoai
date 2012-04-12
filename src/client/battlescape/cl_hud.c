@@ -446,7 +446,7 @@ static void HUD_DisplayFiremodeEntry (const char* callback, const le_t* actor, c
 /**
  * List actions from a soldier to a callback confunc
  * @param callback confunc callback
- * @param actor actor witch can do the actions
+ * @param actor actor who can do the actions
  * @param right if true, list right firemode
  * @param left if true, list left firemode
  * @param reloadRight if true, list right weapon reload actions
