@@ -89,7 +89,7 @@ static qboolean HUD_CheckShooting (const le_t* le, invList_t *weapon)
 
 	/* Cannot shoot because of lack of ammo. */
 	if (weapon->item.a <= 0 && weapon->item.t->reload) {
-		HUD_DisplayMessage(_("Can't perform action:\nout of ammo.\n"));
+		HUD_DisplayMessage(_("Can't perform action:\nOut of ammo.\n"));
 		return qfalse;
 	}
 	/* Cannot shoot because weapon is fireTwoHanded, yet both hands handle items. */
@@ -164,7 +164,7 @@ static void HUD_SetMoveMode_f (void)
 
 
 /**
- * @brief Toggles if the current actor reserves Tus for crouching.
+ * @brief Toggles if the current actor reserves TUs for crouching.
  */
 static void HUD_ToggleCrouchReservation_f (void)
 {
@@ -270,7 +270,7 @@ static qboolean HUD_CheckReload (const le_t* le, const invList_t *weapon, contai
 	}
 	/* Cannot reload because of not enough TUs. */
 	if (le->TU < tus) {
-		HUD_DisplayMessage(_("Can't perform action:\nnot enough TUs.\n"));
+		HUD_DisplayMessage(_("Can't perform action:\nNot enough TUs.\n"));
 		return qfalse;
 	}
 
@@ -307,7 +307,7 @@ static void HUD_ReloadRight_f (void)
 
 /**
  * Ask the current selected solider to execute an action
- * @todo extend it to open doors, or thing like that
+ * @todo extend it to open doors or things like that
  */
 static void HUD_ExecuteAction_f (void)
 {
