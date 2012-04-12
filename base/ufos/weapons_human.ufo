@@ -1699,7 +1699,6 @@ item bolterrifle_ammo
 			range				100
 			shots				1
 			ammo				1
-			delaybetweenshots	2
 			time				28
 			damage				"140 20"
 			dmgweight			normal_heavy
