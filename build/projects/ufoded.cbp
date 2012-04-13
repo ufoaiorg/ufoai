@@ -70,6 +70,7 @@
 			<Add option="-Wno-unused-parameter" />
 			<Add option="-Wreturn-type" />
 			<Add option="-Wwrite-strings" />
+			<Add option="-Wno-format" />
 			<Add option="-D__GNUWIN32__" />
 			<Add option="-DWINVER=0x501" />
 			<Add option="-DDEDICATED_ONLY" />
@@ -80,171 +81,75 @@
 			<Add library="z" />
 			<Add library="SDL" />
 		</Linker>
-		<Unit filename="..\..\src\common\bsp.cpp">
-			<Option compilerVar="CPP" />
-		</Unit>
-		<Unit filename="..\..\src\common\cmd.cpp">
-			<Option compilerVar="CPP" />
-		</Unit>
+		<Unit filename="..\..\src\common\bsp.cpp" />
+		<Unit filename="..\..\src\common\cmd.cpp" />
 		<Unit filename="..\..\src\common\cmd.h" />
-		<Unit filename="..\..\src\common\cmodel.cpp">
-			<Option compilerVar="CPP" />
-		</Unit>
+		<Unit filename="..\..\src\common\cmodel.cpp" />
 		<Unit filename="..\..\src\common\cmodel.h" />
-		<Unit filename="..\..\src\common\common.cpp">
-			<Option compilerVar="CPP" />
-		</Unit>
+		<Unit filename="..\..\src\common\common.cpp" />
 		<Unit filename="..\..\src\common\common.h" />
-		<Unit filename="..\..\src\common\cvar.cpp">
-			<Option compilerVar="CPP" />
-		</Unit>
+		<Unit filename="..\..\src\common\cvar.cpp" />
 		<Unit filename="..\..\src\common\cvar.h" />
-		<Unit filename="..\..\src\common\dbuffer.cpp">
-			<Option compilerVar="CPP" />
-		</Unit>
+		<Unit filename="..\..\src\common\dbuffer.cpp" />
 		<Unit filename="..\..\src\common\dbuffer.h" />
-		<Unit filename="..\..\src\common\files.cpp">
-			<Option compilerVar="CPP" />
-		</Unit>
-		<Unit filename="..\..\src\common\grid.cpp">
-			<Option compilerVar="CPP" />
-		</Unit>
-		<Unit filename="..\..\src\common\http.cpp">
-			<Option compilerVar="CPP" />
-		</Unit>
+		<Unit filename="..\..\src\common\files.cpp" />
+		<Unit filename="..\..\src\common\grid.cpp" />
+		<Unit filename="..\..\src\common\http.cpp" />
 		<Unit filename="..\..\src\common\http.h" />
-		<Unit filename="..\..\src\common\ioapi.cpp">
-			<Option compilerVar="CPP" />
-		</Unit>
+		<Unit filename="..\..\src\common\ioapi.cpp" />
 		<Unit filename="..\..\src\common\ioapi.h" />
-		<Unit filename="..\..\src\common\list.cpp">
-			<Option compilerVar="CPP" />
-		</Unit>
-		<Unit filename="..\..\src\common\md4.cpp">
-			<Option compilerVar="CPP" />
-		</Unit>
-		<Unit filename="..\..\src\common\mem.cpp">
-			<Option compilerVar="CPP" />
-		</Unit>
-		<Unit filename="..\..\src\common\msg.cpp">
-			<Option compilerVar="CPP" />
-		</Unit>
-		<Unit filename="..\..\src\common\net.cpp">
-			<Option compilerVar="CPP" />
-		</Unit>
+		<Unit filename="..\..\src\common\list.cpp" />
+		<Unit filename="..\..\src\common\md4.cpp" />
+		<Unit filename="..\..\src\common\mem.cpp" />
+		<Unit filename="..\..\src\common\msg.cpp" />
+		<Unit filename="..\..\src\common\net.cpp" />
 		<Unit filename="..\..\src\common\net.h" />
-		<Unit filename="..\..\src\common\netpack.cpp">
-			<Option compilerVar="CPP" />
-		</Unit>
+		<Unit filename="..\..\src\common\netpack.cpp" />
 		<Unit filename="..\..\src\common\netpack.h" />
-		<Unit filename="..\..\src\common\pqueue.cpp">
-			<Option compilerVar="CPP" />
-		</Unit>
-		<Unit filename="..\..\src\common\routing.cpp">
-			<Option compilerVar="CPP" />
-		</Unit>
+		<Unit filename="..\..\src\common\pqueue.cpp" />
+		<Unit filename="..\..\src\common\routing.cpp" />
 		<Unit filename="..\..\src\common\routing.h" />
-		<Unit filename="..\..\src\common\scripts.cpp">
-			<Option compilerVar="CPP" />
-		</Unit>
-		<Unit filename="..\..\src\common\tracing.cpp">
-			<Option compilerVar="CPP" />
-		</Unit>
+		<Unit filename="..\..\src\common\scripts.cpp" />
+		<Unit filename="..\..\src\common\tracing.cpp" />
 		<Unit filename="..\..\src\common\tracing.h" />
-		<Unit filename="..\..\src\common\unzip.cpp">
-			<Option compilerVar="CPP" />
-		</Unit>
+		<Unit filename="..\..\src\common\unzip.cpp" />
 		<Unit filename="..\..\src\common\unzip.h" />
-		<Unit filename="..\..\src\game\chr_shared.cpp">
-			<Option compilerVar="CPP" />
-		</Unit>
-		<Unit filename="..\..\src\game\inv_shared.cpp">
-			<Option compilerVar="CPP" />
-		</Unit>
-		<Unit filename="..\..\src\game\q_shared.cpp">
-			<Option compilerVar="CPP" />
-		</Unit>
+		<Unit filename="..\..\src\game\chr_shared.cpp" />
+		<Unit filename="..\..\src\game\inv_shared.cpp" />
+		<Unit filename="..\..\src\game\q_shared.cpp" />
 		<Unit filename="..\..\src\ports\windows\ufo.rc">
 			<Option compilerVar="WINDRES" />
 		</Unit>
-		<Unit filename="..\..\src\ports\windows\win_backtrace.cpp">
-			<Option compilerVar="CPP" />
-		</Unit>
-		<Unit filename="..\..\src\ports\windows\win_console.cpp">
-			<Option compilerVar="CPP" />
-		</Unit>
-		<Unit filename="..\..\src\ports\windows\win_main.cpp">
-			<Option compilerVar="CPP" />
-		</Unit>
-		<Unit filename="..\..\src\ports\windows\win_shared.cpp">
-			<Option compilerVar="CPP" />
-		</Unit>
-		<Unit filename="..\..\src\server\sv_ccmds.cpp">
-			<Option compilerVar="CPP" />
-		</Unit>
-		<Unit filename="..\..\src\server\sv_clientstub.cpp">
-			<Option compilerVar="CPP" />
-		</Unit>
-		<Unit filename="..\..\src\server\sv_game.cpp">
-			<Option compilerVar="CPP" />
-		</Unit>
-		<Unit filename="..\..\src\server\sv_init.cpp">
-			<Option compilerVar="CPP" />
-		</Unit>
-		<Unit filename="..\..\src\server\sv_log.cpp">
-			<Option compilerVar="CPP" />
-		</Unit>
-		<Unit filename="..\..\src\server\sv_main.cpp">
-			<Option compilerVar="CPP" />
-		</Unit>
-		<Unit filename="..\..\src\server\sv_mapcycle.cpp">
-			<Option compilerVar="CPP" />
-		</Unit>
-		<Unit filename="..\..\src\server\sv_rma.cpp">
-			<Option compilerVar="CPP" />
-		</Unit>
-		<Unit filename="..\..\src\server\sv_send.cpp">
-			<Option compilerVar="CPP" />
-		</Unit>
-		<Unit filename="..\..\src\server\sv_user.cpp">
-			<Option compilerVar="CPP" />
-		</Unit>
-		<Unit filename="..\..\src\server\sv_world.cpp">
-			<Option compilerVar="CPP" />
-		</Unit>
-		<Unit filename="..\..\src\shared\bfd.cpp">
-			<Option compilerVar="CPP" />
-		</Unit>
-		<Unit filename="..\..\src\shared\stringhunk.cpp">
-			<Option compilerVar="CPP" />
-		</Unit>
-		<Unit filename="..\..\src\shared\byte.cpp">
-			<Option compilerVar="CPP" />
-		</Unit>
+		<Unit filename="..\..\src\ports\windows\win_backtrace.cpp" />
+		<Unit filename="..\..\src\ports\windows\win_console.cpp" />
+		<Unit filename="..\..\src\ports\windows\win_main.cpp" />
+		<Unit filename="..\..\src\ports\windows\win_shared.cpp" />
+		<Unit filename="..\..\src\server\sv_ccmds.cpp" />
+		<Unit filename="..\..\src\server\sv_clientstub.cpp" />
+		<Unit filename="..\..\src\server\sv_game.cpp" />
+		<Unit filename="..\..\src\server\sv_init.cpp" />
+		<Unit filename="..\..\src\server\sv_log.cpp" />
+		<Unit filename="..\..\src\server\sv_main.cpp" />
+		<Unit filename="..\..\src\server\sv_mapcycle.cpp" />
+		<Unit filename="..\..\src\server\sv_rma.cpp" />
+		<Unit filename="..\..\src\server\sv_send.cpp" />
+		<Unit filename="..\..\src\server\sv_user.cpp" />
+		<Unit filename="..\..\src\server\sv_world.cpp" />
+		<Unit filename="..\..\src\shared\bfd.cpp" />
+		<Unit filename="..\..\src\shared\byte.cpp" />
 		<Unit filename="..\..\src\shared\byte.h" />
-		<Unit filename="..\..\src\shared\infostring.cpp">
-			<Option compilerVar="CPP" />
-		</Unit>
+		<Unit filename="..\..\src\shared\infostring.cpp" />
 		<Unit filename="..\..\src\shared\infostring.h" />
-		<Unit filename="..\..\src\shared\mathlib.cpp">
-			<Option compilerVar="CPP" />
-		</Unit>
+		<Unit filename="..\..\src\shared\mathlib.cpp" />
 		<Unit filename="..\..\src\shared\mathlib.h" />
-		<Unit filename="..\..\src\shared\mutex.cpp">
-			<Option compilerVar="CPP" />
-		</Unit>
+		<Unit filename="..\..\src\shared\mutex.cpp" />
 		<Unit filename="..\..\src\shared\mutex.h" />
-		<Unit filename="..\..\src\shared\parse.cpp">
-			<Option compilerVar="CPP" />
-		</Unit>
-		<Unit filename="..\..\src\shared\shared.cpp">
-			<Option compilerVar="CPP" />
-		</Unit>
+		<Unit filename="..\..\src\shared\parse.cpp" />
+		<Unit filename="..\..\src\shared\shared.cpp" />
 		<Unit filename="..\..\src\shared\shared.h" />
+		<Unit filename="..\..\src\shared\stringhunk.cpp" />
 		<Unit filename="..\..\src\shared\ufotypes.h" />
-		<Unit filename="..\..\src\shared\utf8.cpp">
-			<Option compilerVar="CPP" />
-		</Unit>
+		<Unit filename="..\..\src\shared\utf8.cpp" />
 		<Unit filename="..\..\src\shared\utf8.h" />
 		<Extensions>
 			<code_completion />

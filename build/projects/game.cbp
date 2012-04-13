@@ -56,213 +56,86 @@
 			<Add option="-Wno-unused-parameter" />
 			<Add option="-Wreturn-type" />
 			<Add option="-Wwrite-strings" />
+			<Add option="-Wno-format" />
 			<Add option="-D__GNUWIN32__" />
 			<Add option="-DWINVER=0x501" />
 			<Add option="-DCOMPILE_UFO" />
 		</Compiler>
 		<Unit filename="..\..\base\ai\alien.lua" />
 		<Unit filename="..\..\base\ai\civilian.lua" />
-		<Unit filename="..\..\src\game\chr_shared.cpp">
-			<Option compilerVar="CPP" />
-		</Unit>
+		<Unit filename="..\..\src\game\chr_shared.cpp" />
 		<Unit filename="..\..\src\game\chr_shared.h" />
-		<Unit filename="..\..\src\game\g_actor.cpp">
-			<Option compilerVar="CPP" />
-		</Unit>
-		<Unit filename="..\..\src\game\g_ai.cpp">
-			<Option compilerVar="CPP" />
-		</Unit>
+		<Unit filename="..\..\src\game\g_actor.cpp" />
+		<Unit filename="..\..\src\game\g_ai.cpp" />
 		<Unit filename="..\..\src\game\g_ai.h" />
-		<Unit filename="..\..\src\game\g_ai_lua.cpp">
-			<Option compilerVar="CPP" />
-		</Unit>
-		<Unit filename="..\..\src\game\g_client.cpp">
-			<Option compilerVar="CPP" />
-		</Unit>
-		<Unit filename="..\..\src\game\g_cmds.cpp">
-			<Option compilerVar="CPP" />
-		</Unit>
-		<Unit filename="..\..\src\game\g_combat.cpp">
-			<Option compilerVar="CPP" />
-		</Unit>
-		<Unit filename="..\..\src\game\g_edicts.cpp">
-			<Option compilerVar="CPP" />
-		</Unit>
-		<Unit filename="..\..\src\game\g_events.cpp">
-			<Option compilerVar="CPP" />
-		</Unit>
-		<Unit filename="..\..\src\game\g_func.cpp">
-			<Option compilerVar="CPP" />
-		</Unit>
-		<Unit filename="..\..\src\game\g_inventory.cpp">
-			<Option compilerVar="CPP" />
-		</Unit>
+		<Unit filename="..\..\src\game\g_ai_lua.cpp" />
+		<Unit filename="..\..\src\game\g_client.cpp" />
+		<Unit filename="..\..\src\game\g_cmds.cpp" />
+		<Unit filename="..\..\src\game\g_combat.cpp" />
+		<Unit filename="..\..\src\game\g_edicts.cpp" />
+		<Unit filename="..\..\src\game\g_events.cpp" />
+		<Unit filename="..\..\src\game\g_func.cpp" />
+		<Unit filename="..\..\src\game\g_inventory.cpp" />
 		<Unit filename="..\..\src\game\g_local.h" />
-		<Unit filename="..\..\src\game\g_main.cpp">
-			<Option compilerVar="CPP" />
-		</Unit>
-		<Unit filename="..\..\src\game\g_match.cpp">
-			<Option compilerVar="CPP" />
-		</Unit>
-		<Unit filename="..\..\src\game\g_mission.cpp">
-			<Option compilerVar="CPP" />
-		</Unit>
-		<Unit filename="..\..\src\game\g_morale.cpp">
-			<Option compilerVar="CPP" />
-		</Unit>
-		<Unit filename="..\..\src\game\g_move.cpp">
-			<Option compilerVar="CPP" />
-		</Unit>
-		<Unit filename="..\..\src\game\g_phys.cpp">
-			<Option compilerVar="CPP" />
-		</Unit>
-		<Unit filename="..\..\src\game\g_reaction.cpp">
-			<Option compilerVar="CPP" />
-		</Unit>
-		<Unit filename="..\..\src\game\g_round.cpp">
-			<Option compilerVar="CPP" />
-		</Unit>
-		<Unit filename="..\..\src\game\g_spawn.cpp">
-			<Option compilerVar="CPP" />
-		</Unit>
-		<Unit filename="..\..\src\game\g_stats.cpp">
-			<Option compilerVar="CPP" />
-		</Unit>
-		<Unit filename="..\..\src\game\g_svcmds.cpp">
-			<Option compilerVar="CPP" />
-		</Unit>
-		<Unit filename="..\..\src\game\g_trigger.cpp">
-			<Option compilerVar="CPP" />
-		</Unit>
-		<Unit filename="..\..\src\game\g_utils.cpp">
-			<Option compilerVar="CPP" />
-		</Unit>
-		<Unit filename="..\..\src\game\g_vis.cpp">
-			<Option compilerVar="CPP" />
-		</Unit>
-		<Unit filename="..\..\src\game\game.def">
-			<Option compilerVar="CPP" />
-		</Unit>
+		<Unit filename="..\..\src\game\g_main.cpp" />
+		<Unit filename="..\..\src\game\g_match.cpp" />
+		<Unit filename="..\..\src\game\g_mission.cpp" />
+		<Unit filename="..\..\src\game\g_morale.cpp" />
+		<Unit filename="..\..\src\game\g_move.cpp" />
+		<Unit filename="..\..\src\game\g_phys.cpp" />
+		<Unit filename="..\..\src\game\g_reaction.cpp" />
+		<Unit filename="..\..\src\game\g_round.cpp" />
+		<Unit filename="..\..\src\game\g_spawn.cpp" />
+		<Unit filename="..\..\src\game\g_stats.cpp" />
+		<Unit filename="..\..\src\game\g_svcmds.cpp" />
+		<Unit filename="..\..\src\game\g_trigger.cpp" />
+		<Unit filename="..\..\src\game\g_utils.cpp" />
+		<Unit filename="..\..\src\game\g_vis.cpp" />
+		<Unit filename="..\..\src\game\game.def" />
 		<Unit filename="..\..\src\game\game.h" />
-		<Unit filename="..\..\src\game\inv_shared.cpp">
-			<Option compilerVar="CPP" />
-		</Unit>
+		<Unit filename="..\..\src\game\inv_shared.cpp" />
 		<Unit filename="..\..\src\game\inv_shared.h" />
-		<Unit filename="..\..\src\game\inventory.cpp">
-			<Option compilerVar="CPP" />
-		</Unit>
-		<Unit filename="..\..\src\game\lua\lapi.cpp">
-			<Option compilerVar="CPP" />
-		</Unit>
-		<Unit filename="..\..\src\game\lua\lauxlib.cpp">
-			<Option compilerVar="CPP" />
-		</Unit>
-		<Unit filename="..\..\src\game\lua\lbaselib.cpp">
-			<Option compilerVar="CPP" />
-		</Unit>
-		<Unit filename="..\..\src\game\lua\lcode.cpp">
-			<Option compilerVar="CPP" />
-		</Unit>
-		<Unit filename="..\..\src\game\lua\ldblib.cpp">
-			<Option compilerVar="CPP" />
-		</Unit>
-		<Unit filename="..\..\src\game\lua\ldebug.cpp">
-			<Option compilerVar="CPP" />
-		</Unit>
-		<Unit filename="..\..\src\game\lua\ldo.cpp">
-			<Option compilerVar="CPP" />
-		</Unit>
-		<Unit filename="..\..\src\game\lua\ldump.cpp">
-			<Option compilerVar="CPP" />
-		</Unit>
-		<Unit filename="..\..\src\game\lua\lfunc.cpp">
-			<Option compilerVar="CPP" />
-		</Unit>
-		<Unit filename="..\..\src\game\lua\lgc.cpp">
-			<Option compilerVar="CPP" />
-		</Unit>
-		<Unit filename="..\..\src\game\lua\linit.cpp">
-			<Option compilerVar="CPP" />
-		</Unit>
-		<Unit filename="..\..\src\game\lua\liolib.cpp">
-			<Option compilerVar="CPP" />
-		</Unit>
-		<Unit filename="..\..\src\game\lua\llex.cpp">
-			<Option compilerVar="CPP" />
-		</Unit>
-		<Unit filename="..\..\src\game\lua\lmathlib.cpp">
-			<Option compilerVar="CPP" />
-		</Unit>
-		<Unit filename="..\..\src\game\lua\lmem.cpp">
-			<Option compilerVar="CPP" />
-		</Unit>
-		<Unit filename="..\..\src\game\lua\loadlib.cpp">
-			<Option compilerVar="CPP" />
-		</Unit>
-		<Unit filename="..\..\src\game\lua\lobject.cpp">
-			<Option compilerVar="CPP" />
-		</Unit>
-		<Unit filename="..\..\src\game\lua\lopcodes.cpp">
-			<Option compilerVar="CPP" />
-		</Unit>
-		<Unit filename="..\..\src\game\lua\loslib.cpp">
-			<Option compilerVar="CPP" />
-		</Unit>
-		<Unit filename="..\..\src\game\lua\lparser.cpp">
-			<Option compilerVar="CPP" />
-		</Unit>
-		<Unit filename="..\..\src\game\lua\lstate.cpp">
-			<Option compilerVar="CPP" />
-		</Unit>
-		<Unit filename="..\..\src\game\lua\lstring.cpp">
-			<Option compilerVar="CPP" />
-		</Unit>
-		<Unit filename="..\..\src\game\lua\lstrlib.cpp">
-			<Option compilerVar="CPP" />
-		</Unit>
-		<Unit filename="..\..\src\game\lua\ltable.cpp">
-			<Option compilerVar="CPP" />
-		</Unit>
-		<Unit filename="..\..\src\game\lua\ltablib.cpp">
-			<Option compilerVar="CPP" />
-		</Unit>
-		<Unit filename="..\..\src\game\lua\ltm.cpp">
-			<Option compilerVar="CPP" />
-		</Unit>
-		<Unit filename="..\..\src\game\lua\lundump.cpp">
-			<Option compilerVar="CPP" />
-		</Unit>
-		<Unit filename="..\..\src\game\lua\lvm.cpp">
-			<Option compilerVar="CPP" />
-		</Unit>
-		<Unit filename="..\..\src\game\lua\lzio.cpp">
-			<Option compilerVar="CPP" />
-		</Unit>
-		<Unit filename="..\..\src\game\lua\print.cpp">
-			<Option compilerVar="CPP" />
-		</Unit>
-		<Unit filename="..\..\src\game\q_shared.cpp">
-			<Option compilerVar="CPP" />
-		</Unit>
+		<Unit filename="..\..\src\game\inventory.cpp" />
+		<Unit filename="..\..\src\game\lua\lapi.cpp" />
+		<Unit filename="..\..\src\game\lua\lauxlib.cpp" />
+		<Unit filename="..\..\src\game\lua\lbaselib.cpp" />
+		<Unit filename="..\..\src\game\lua\lcode.cpp" />
+		<Unit filename="..\..\src\game\lua\ldblib.cpp" />
+		<Unit filename="..\..\src\game\lua\ldebug.cpp" />
+		<Unit filename="..\..\src\game\lua\ldo.cpp" />
+		<Unit filename="..\..\src\game\lua\ldump.cpp" />
+		<Unit filename="..\..\src\game\lua\lfunc.cpp" />
+		<Unit filename="..\..\src\game\lua\lgc.cpp" />
+		<Unit filename="..\..\src\game\lua\linit.cpp" />
+		<Unit filename="..\..\src\game\lua\liolib.cpp" />
+		<Unit filename="..\..\src\game\lua\llex.cpp" />
+		<Unit filename="..\..\src\game\lua\lmathlib.cpp" />
+		<Unit filename="..\..\src\game\lua\lmem.cpp" />
+		<Unit filename="..\..\src\game\lua\loadlib.cpp" />
+		<Unit filename="..\..\src\game\lua\lobject.cpp" />
+		<Unit filename="..\..\src\game\lua\lopcodes.cpp" />
+		<Unit filename="..\..\src\game\lua\loslib.cpp" />
+		<Unit filename="..\..\src\game\lua\lparser.cpp" />
+		<Unit filename="..\..\src\game\lua\lstate.cpp" />
+		<Unit filename="..\..\src\game\lua\lstring.cpp" />
+		<Unit filename="..\..\src\game\lua\lstrlib.cpp" />
+		<Unit filename="..\..\src\game\lua\ltable.cpp" />
+		<Unit filename="..\..\src\game\lua\ltablib.cpp" />
+		<Unit filename="..\..\src\game\lua\ltm.cpp" />
+		<Unit filename="..\..\src\game\lua\lundump.cpp" />
+		<Unit filename="..\..\src\game\lua\lvm.cpp" />
+		<Unit filename="..\..\src\game\lua\lzio.cpp" />
+		<Unit filename="..\..\src\game\lua\print.cpp" />
+		<Unit filename="..\..\src\game\q_shared.cpp" />
 		<Unit filename="..\..\src\game\q_shared.h" />
-		<Unit filename="..\..\src\shared\infostring.cpp">
-			<Option compilerVar="CPP" />
-		</Unit>
-		<Unit filename="..\..\src\shared\mathlib.cpp">
-			<Option compilerVar="CPP" />
-		</Unit>
+		<Unit filename="..\..\src\shared\infostring.cpp" />
+		<Unit filename="..\..\src\shared\mathlib.cpp" />
 		<Unit filename="..\..\src\shared\mathlib.h" />
-		<Unit filename="..\..\src\shared\parse.cpp">
-			<Option compilerVar="CPP" />
-		</Unit>
+		<Unit filename="..\..\src\shared\parse.cpp" />
 		<Unit filename="..\..\src\shared\parse.h" />
-		<Unit filename="..\..\src\shared\shared.cpp">
-			<Option compilerVar="CPP" />
-		</Unit>
+		<Unit filename="..\..\src\shared\shared.cpp" />
 		<Unit filename="..\..\src\shared\shared.h" />
-		<Unit filename="..\..\src\shared\utf8.cpp">
-			<Option compilerVar="CPP" />
-		</Unit>
+		<Unit filename="..\..\src\shared\utf8.cpp" />
 		<Unit filename="..\..\src\shared\utf8.h" />
 		<Extensions>
 			<code_completion />

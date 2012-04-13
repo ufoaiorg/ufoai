@@ -68,6 +68,7 @@
 			<Add option="-Wno-unused-parameter" />
 			<Add option="-Wreturn-type" />
 			<Add option="-Wwrite-strings" />
+			<Add option="-Wno-format" />
 			<Add option="-D__GNUWIN32__" />
 			<Add option="-DWINVER=0x501" />
 			<Add option="-DCOMPILE_MAP" />
@@ -78,57 +79,23 @@
 			<Add library="jpeg" />
 			<Add library="png" />
 		</Linker>
-		<Unit filename="..\..\src\common\bspslicer.cpp">
-			<Option compilerVar="CPP" />
-		</Unit>
-		<Unit filename="..\..\src\common\files.cpp">
-			<Option compilerVar="CPP" />
-		</Unit>
-		<Unit filename="..\..\src\common\list.cpp">
-			<Option compilerVar="CPP" />
-		</Unit>
-		<Unit filename="..\..\src\common\mem.cpp">
-			<Option compilerVar="CPP" />
-		</Unit>
-		<Unit filename="..\..\src\common\unzip.cpp">
-			<Option compilerVar="CPP" />
-		</Unit>
-		<Unit filename="..\..\src\common\ioapi.cpp">
-			<Option compilerVar="CPP" />
-		</Unit>
-		<Unit filename="..\..\src\tools\ufo2map\common\bspfile.cpp">
-			<Option compilerVar="CPP" />
-		</Unit>
-		<Unit filename="..\..\src\tools\ufo2map\common\scriplib.cpp">
-			<Option compilerVar="CPP" />
-		</Unit>
-		<Unit filename="..\..\src\shared\mathlib.cpp">
-			<Option compilerVar="CPP" />
-		</Unit>
-		<Unit filename="..\..\src\shared\mutex.cpp">
-			<Option compilerVar="CPP" />
-		</Unit>
-		<Unit filename="..\..\src\shared\byte.cpp">
-			<Option compilerVar="CPP" />
-		</Unit>
-		<Unit filename="..\..\src\shared\images.cpp">
-			<Option compilerVar="CPP" />
-		</Unit>
-		<Unit filename="..\..\src\shared\parse.cpp">
-			<Option compilerVar="CPP" />
-		</Unit>
-		<Unit filename="..\..\src\shared\shared.cpp">
-			<Option compilerVar="CPP" />
-		</Unit>
-		<Unit filename="..\..\src\shared\utf8.cpp">
-			<Option compilerVar="CPP" />
-		</Unit>
-		<Unit filename="..\..\src\tools\ufoslicer.cpp">
-			<Option compilerVar="CPP" />
-		</Unit>
-		<Unit filename="..\..\src\ports\windows\win_shared.cpp">
-			<Option compilerVar="CPP" />
-		</Unit>
+		<Unit filename="..\..\src\common\bspslicer.cpp" />
+		<Unit filename="..\..\src\common\files.cpp" />
+		<Unit filename="..\..\src\common\ioapi.cpp" />
+		<Unit filename="..\..\src\common\list.cpp" />
+		<Unit filename="..\..\src\common\mem.cpp" />
+		<Unit filename="..\..\src\common\unzip.cpp" />
+		<Unit filename="..\..\src\ports\windows\win_shared.cpp" />
+		<Unit filename="..\..\src\shared\byte.cpp" />
+		<Unit filename="..\..\src\shared\images.cpp" />
+		<Unit filename="..\..\src\shared\mathlib.cpp" />
+		<Unit filename="..\..\src\shared\mutex.cpp" />
+		<Unit filename="..\..\src\shared\parse.cpp" />
+		<Unit filename="..\..\src\shared\shared.cpp" />
+		<Unit filename="..\..\src\shared\utf8.cpp" />
+		<Unit filename="..\..\src\tools\ufo2map\common\bspfile.cpp" />
+		<Unit filename="..\..\src\tools\ufo2map\common\scriplib.cpp" />
+		<Unit filename="..\..\src\tools\ufoslicer.cpp" />
 		<Extensions>
 			<code_completion />
 			<envvars />
