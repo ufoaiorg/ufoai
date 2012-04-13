@@ -7186,8 +7186,8 @@
 // entity 71
 {
 "classname" "misc_model"
-"model" "models/objects/vegi/grass_dry/grass_dry.md2"
-"origin" "990 614 2"
+"model" "models/objects/vegi/grass_dry/grass_dry2.md2"
+"origin" "990 613 2"
 "spawnflags" "255"
 "skin" "0"
 "angles" "0 -90 0"
@@ -7195,7 +7195,7 @@
 // entity 72
 {
 "classname" "misc_model"
-"model" "models/objects/vegi/grass_dry/grass_dry.md2"
+"model" "models/objects/vegi/grass_dry/grass_dry2.md2"
 "origin" "936 552 2"
 "spawnflags" "255"
 "skin" "0"
@@ -7204,7 +7204,7 @@
 // entity 73
 {
 "classname" "misc_model"
-"model" "models/objects/vegi/grass_dry/grass_dry.md2"
+"model" "models/objects/vegi/grass_dry/grass_dry2.md2"
 "origin" "924 596 2"
 "spawnflags" "255"
 "skin" "0"
