@@ -35,6 +35,10 @@
 #include <png.h>
 #include <zlib.h>
 
+#if JPEG_LIB_VERSION < 80
+#	include <jerror.h>
+#endif
+
 /** image formats, tried in this order */
 static char const* const IMAGE_TYPES[] = { "png", "jpg", NULL };
 
@@ -344,6 +348,29 @@ static SDL_Surface* Img_LoadPNG(char const* const name)
 	return res;
 }
 
+#if JPEG_LIB_VERSION < 80
+static void djepg_nop(jpeg_decompress_struct*) {}
+
+static boolean djepg_fill_input_buffer(jpeg_decompress_struct* const cinfo)
+{
+	ERREXIT(cinfo, JERR_INPUT_EOF);
+	return false;
+}
+
+static void djepg_skip_input_data(jpeg_decompress_struct* const cinfo, long const num_bytes)
+{
+	if (num_bytes < 0)
+		return;
+
+	jpeg_source_mgr& src = *cinfo->src;
+	if (src.bytes_in_buffer < (size_t)num_bytes)
+		ERREXIT(cinfo, JERR_INPUT_EOF);
+
+	src.next_input_byte += num_bytes;
+	src.bytes_in_buffer -= num_bytes;
+}
+#endif
+
 static SDL_Surface* Img_LoadJPG(char const* const name)
 {
 	SDL_Surface* res = 0;
@@ -355,7 +382,19 @@ static SDL_Surface* Img_LoadJPG(char const* const name)
 		cinfo.err = jpeg_std_error(&jerr);
 		jpeg_create_decompress(&cinfo);
 
+#if JPEG_LIB_VERSION < 80
+		jpeg_source_mgr src;
+		src.next_input_byte   = buf;
+		src.bytes_in_buffer   = len;
+		src.init_source       = &djepg_nop;
+		src.fill_input_buffer = &djepg_fill_input_buffer;
+		src.skip_input_data   = &djepg_skip_input_data;
+		src.resync_to_restart = &jpeg_resync_to_restart;
+		src.term_source       = &djepg_nop;
+		cinfo.src             = &src;
+#else
 		jpeg_mem_src(&cinfo, buf, len);
+#endif
 
 		jpeg_read_header(&cinfo, true);
 
