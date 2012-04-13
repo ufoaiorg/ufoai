@@ -42,17 +42,19 @@ component image cmp_bar_teambox
 
 component string cmp_str_soldier_shadow
 {
-	size		"15 15"
+	size		"20 20"
 	color		"0 0 0 1"
 	ghost		true
 	font		"f_verysmall"
+	contentalign	ALIGN_CL
 }
 component string cmp_str_soldier
 {
-	size		"15 15"
+	size		"20 20"
 	color		"0 .6 0 1"
 	ghost		true
 	font		"f_verysmall"
+	contentalign	ALIGN_CL
 }
 
 // Component for the soldier head models
@@ -119,8 +121,8 @@ window hud_mini extends hud
 
 	panel floor_deco {
 		{
-			pos		"256 640"
-			size	"688 128"
+			pos		"94 640"
+			size	"1012 128"
 			align	LAYOUTALIGN_BOTTOM
 			ghost	true
 		}
@@ -202,10 +204,46 @@ window hud_mini extends hud
 			pos			"592 0"
 		}
 
+		cmp_bar_teamsep_deco teamsep_deco8
+		{
+			pos			"656 0"
+		}
+		cmp_bar_teambox_deco teambox_deco8
+		{
+			pos			"672 0"
+		}
+
+		cmp_bar_teamsep_deco teamsep_deco9
+		{
+			pos			"736 0"
+		}
+		cmp_bar_teambox_deco teambox_deco9
+		{
+			pos			"752 0"
+		}
+
+		cmp_bar_teamsep_deco teamsep_deco10
+		{
+			pos			"816 0"
+		}
+		cmp_bar_teambox_deco teambox_deco10
+		{
+			pos			"832 0"
+		}
+
+		cmp_bar_teamsep_deco teamsep_deco11
+		{
+			pos			"896 0"
+		}
+		cmp_bar_teambox_deco teambox_deco11
+		{
+			pos			"912 0"
+		}
+
 		image bar_teamright_deco
 		{
 			src		"minihud/bar_teamright_deco"
-			pos			"656 0"
+			pos			"976 0"
 			size		"32 128"
 			ghost	true
 		}
@@ -219,7 +257,7 @@ window hud_mini extends hud
 				*cvar:i = ( *cvar:i + 1 )
 			}
 
-			while ( *cvar:tmp < 8 ) {
+			while ( *cvar:tmp < 12 ) {
 				*node:root.floor_deco.teambox_deco<cvar:tmp>@invis = true  *node:root.floor_deco.teamsep_deco<cvar:tmp>@invis = true
 				*cvar:tmp = ( *cvar:tmp + 1 )
 			}
@@ -237,8 +275,8 @@ window hud_mini extends hud
 
 	panel floor {
 		{
-			pos		"256 640"
-			size	"688 128"
+			pos		"94 640"
+			size	"1012 128"
 			align	LAYOUTALIGN_BOTTOM
 			ghost	true
 		}
@@ -289,6 +327,30 @@ window hud_mini extends hud
 		{
 			pos			"581 22"
 			visiblewhen	"*cvar:mn_hp7 < 1"
+		}
+
+		cmp_bar_teambox_disabled bar_teambox8_disabled
+		{
+			pos			"661 22"
+			visiblewhen	"*cvar:mn_hp8 < 1"
+		}
+
+		cmp_bar_teambox_disabled bar_teambox9_disabled
+		{
+			pos			"741 22"
+			visiblewhen	"*cvar:mn_hp8 < 1"
+		}
+
+		cmp_bar_teambox_disabled bar_teambox10_disabled
+		{
+			pos			"821 22"
+			visiblewhen	"*cvar:mn_hp8 < 1"
+		}
+
+		cmp_bar_teambox_disabled bar_teambox11_disabled
+		{
+			pos			"901 22"
+			visiblewhen	"*cvar:mn_hp8 < 1"
 		}
 
 		cmp_bar_teambox bar_teambox0
@@ -443,6 +505,82 @@ window hud_mini extends hud
 			}
 		}
 
+		cmp_bar_teambox bar_teambox8
+		{
+			pos			"661 22"
+			onClick		{ cmd "actor_select 8;" }
+			onRClick	{ cmd "actor_select 8;" }
+			tooltip		"_LMB/RMB:Select\nWheel:Select Next/Prev\nKey:9"
+			visiblewhen	"*cvar:mn_hp8 > 0"
+			onMouseEnter {
+				*node:this@src = "minihud/bar_teambox_hovered"
+				*node:root.floor.str_soldier8_shadow@font = "f_verysmall_bold"
+				*node:root.floor.str_soldier8@font = "f_verysmall_bold"
+			}
+			onMouseLeave {
+				*node:this@src = "minihud/bar_teambox_full"
+				*node:root.floor.str_soldier8_shadow@font = "f_verysmall"
+				*node:root.floor.str_soldier8@font = "f_verysmall"
+			}
+		}
+
+		cmp_bar_teambox bar_teambox9
+		{
+			pos			"741 22"
+			onClick		{ cmd "actor_select 9;" }
+			onRClick	{ cmd "actor_select 9;" }
+			tooltip		"_LMB/RMB:Select\nWheel:Select Next/Prev"
+			visiblewhen	"*cvar:mn_hp9 > 0"
+			onMouseEnter {
+				*node:this@src = "minihud/bar_teambox_hovered"
+				*node:root.floor.str_soldier9_shadow@font = "f_verysmall_bold"
+				*node:root.floor.str_soldier9@font = "f_verysmall_bold"
+			}
+			onMouseLeave {
+				*node:this@src = "minihud/bar_teambox_full"
+				*node:root.floor.str_soldier9_shadow@font = "f_verysmall"
+				*node:root.floor.str_soldier9@font = "f_verysmall"
+			}
+		}
+
+		cmp_bar_teambox bar_teambox10
+		{
+			pos			"821 22"
+			onClick		{ cmd "actor_select 10;" }
+			onRClick	{ cmd "actor_select 10;" }
+			tooltip		"_LMB/RMB:Select\nWheel:Select Next/Prev"
+			visiblewhen	"*cvar:mn_hp10 > 0"
+			onMouseEnter {
+				*node:this@src = "minihud/bar_teambox_hovered"
+				*node:root.floor.str_soldier10_shadow@font = "f_verysmall_bold"
+				*node:root.floor.str_soldier10@font = "f_verysmall_bold"
+			}
+			onMouseLeave {
+				*node:this@src = "minihud/bar_teambox_full"
+				*node:root.floor.str_soldier10_shadow@font = "f_verysmall"
+				*node:root.floor.str_soldier10@font = "f_verysmall"
+			}
+		}
+
+		cmp_bar_teambox bar_teambox11
+		{
+			pos			"901 22"
+			onClick		{ cmd "actor_select 11;" }
+			onRClick	{ cmd "actor_select 11;" }
+			tooltip		"_LMB/RMB:Select\nWheel:Select Next/Prev"
+			visiblewhen	"*cvar:mn_hp11 > 0"
+			onMouseEnter {
+				*node:this@src = "minihud/bar_teambox_hovered"
+				*node:root.floor.str_soldier11_shadow@font = "f_verysmall_bold"
+				*node:root.floor.str_soldier11@font = "f_verysmall_bold"
+			}
+			onMouseLeave {
+				*node:this@src = "minihud/bar_teambox_full"
+				*node:root.floor.str_soldier11_shadow@font = "f_verysmall"
+				*node:root.floor.str_soldier11@font = "f_verysmall"
+			}
+		}
+
 		// soldier numbers strings
 		cmp_str_soldier_shadow str_soldier0_shadow
 		{
@@ -542,6 +680,55 @@ window hud_mini extends hud
 			string		"8"
 			visiblewhen	"*cvar:mn_hp7 > 0"
 		}
+		cmp_str_soldier_shadow str_soldier8_shadow
+		{
+			pos			"731 26"
+			string		"9"
+			visiblewhen	"*cvar:mn_hp8 > 0"
+		}
+		cmp_str_soldier str_soldier8
+		{
+			pos			"730 25"
+			string		"9"
+			visiblewhen	"*cvar:mn_hp8 > 0"
+		}
+		// we have to move 7 points to the left compared to the other single digit strings
+		cmp_str_soldier_shadow str_soldier9_shadow
+		{
+			pos			"804 26"
+			string		"10"
+			visiblewhen	"*cvar:mn_hp9 > 0"
+		}
+		cmp_str_soldier str_soldier9
+		{
+			pos			"803 25"
+			string		"10"
+			visiblewhen	"*cvar:mn_hp9 > 0"
+		}
+		cmp_str_soldier_shadow str_soldier10_shadow
+		{
+			pos			"884 26"
+			string		"11"
+			visiblewhen	"*cvar:mn_hp10 > 0"
+		}
+		cmp_str_soldier str_soldier10
+		{
+			pos			"883 25"
+			string		"11"
+			visiblewhen	"*cvar:mn_hp10 > 0"
+		}
+		cmp_str_soldier_shadow str_soldier11_shadow
+		{
+			pos			"964 26"
+			string		"12"
+			visiblewhen	"*cvar:mn_hp11 > 0"
+		}
+		cmp_str_soldier str_soldier11
+		{
+			pos			"963 25"
+			string		"12"
+			visiblewhen	"*cvar:mn_hp11 > 0"
+		}
 
 		func hudenable_floor
 		{
@@ -559,7 +746,7 @@ window hud_mini extends hud
 				*cvar:i = ( *cvar:i + 1 )
 			}
 
-			while ( *cvar:tmp < 8 ) {
+			while ( *cvar:tmp < 12 ) {
 				*node:root.floor.bar_teambox<cvar:tmp>@invis = true
 				*node:root.floor.bar_teambox<cvar:tmp>_disabled@invis = true
 				*node:root.floor.str_soldier<cvar:tmp>_shadow@invis = true
@@ -599,50 +786,74 @@ window hud_mini extends hud
 		cmp_model_head head0
 		{
 			src			*cvar:mn_head0
-			angles		"15 70 100"
+			angles		"15 60 100"
 			pos			"40 20"
 		}
 		cmp_model_head head1
 		{
 			src			*cvar:mn_head1
-			angles		"15 75 100"
+			angles		"15 65 100"
 			pos			"120 20"
 		}
 		cmp_model_head head2
 		{
 			src			*cvar:mn_head2
-			angles		"15 80 100"
+			angles		"15 70 100"
 			pos			"200 20"
 		}
 		cmp_model_head head3
 		{
 			src			*cvar:mn_head3
-			angles		"15 85 100"
+			angles		"15 75 100"
 			pos			"280 20"
 		}
 		cmp_model_head head4
 		{
 			src			*cvar:mn_head4
-			angles		"15 95 100"
+			angles		"15 80 100"
 			pos			"360 20"
 		}
 		cmp_model_head head5
 		{
 			src			*cvar:mn_head5
-			angles		"15 100 100"
+			angles		"15 85 100"
 			pos			"440 20"
 		}
 		cmp_model_head head6
 		{
 			src			*cvar:mn_head6
-			angles		"15 105 100"
+			angles		"15 95 100"
 			pos			"520 20"
 		}
 		cmp_model_head head7
 		{
 			src			*cvar:mn_head7
-			angles		"15 110 100"
+			angles		"15 100 100"
 			pos			"600 20"
+		}
+		cmp_model_head head8
+		{
+			src			*cvar:mn_head8
+			angles		"15 105 100"
+			pos			"680 20"
+		}
+		cmp_model_head head9
+		{
+			src			*cvar:mn_head9
+			angles		"15 110 100"
+			pos			"760 20"
+		}
+		cmp_model_head head10
+		{
+			src			*cvar:mn_head10
+			angles		"15 115 100"
+			pos			"840 20"
+		}
+		cmp_model_head head11
+		{
+			src			*cvar:mn_head11
+			angles		"15 120 100"
+			pos			"920 20"
 		}
 
 		// ==================
@@ -800,6 +1011,83 @@ window hud_mini extends hud
 			current		*cvar:mn_tu7
 			max			*cvar:mn_tumax7
 		}
+
+		cmp_bar_health health8
+		{
+			pos			"672 90"
+			current		*cvar:mn_hp8
+			max			*cvar:mn_hpmax8
+		}
+		cmp_bar_morale morale8
+		{
+			pos			"672 97"
+			current		*cvar:mn_morale8
+			max			*cvar:mn_moralemax8
+		}
+		cmp_bar_time time8
+		{
+			pos			"672 104"
+			current		*cvar:mn_tu8
+			max			*cvar:mn_tumax8
+		}
+
+		cmp_bar_health health9
+		{
+			pos			"752 90"
+			current		*cvar:mn_hp9
+			max			*cvar:mn_hpmax9
+		}
+		cmp_bar_morale morale9
+		{
+			pos			"752 97"
+			current		*cvar:mn_morale9
+			max			*cvar:mn_moralemax9
+		}
+		cmp_bar_time time9
+		{
+			pos			"752 104"
+			current		*cvar:mn_tu9
+			max			*cvar:mn_tumax9
+		}
+
+		cmp_bar_health health10
+		{
+			pos			"832 90"
+			current		*cvar:mn_hp10
+			max			*cvar:mn_hpmax10
+		}
+		cmp_bar_morale morale10
+		{
+			pos			"832 97"
+			current		*cvar:mn_morale10
+			max			*cvar:mn_moralemax10
+		}
+		cmp_bar_time time10
+		{
+			pos			"832 104"
+			current		*cvar:mn_tu10
+			max			*cvar:mn_tumax10
+		}
+
+		cmp_bar_health health11
+		{
+			pos			"912 90"
+			current		*cvar:mn_hp11
+			max			*cvar:mn_hpmax11
+		}
+		cmp_bar_morale morale11
+		{
+			pos			"912 97"
+			current		*cvar:mn_morale11
+			max			*cvar:mn_moralemax11
+		}
+		cmp_bar_time time11
+		{
+			pos			"912 104"
+			current		*cvar:mn_tu11
+			max			*cvar:mn_tumax11
+		}
+
 	}
 
 	// ============================
@@ -1363,7 +1651,7 @@ window hud_mini extends hud
 		// next turn button
 		image nextturn
 		{
-			tooltip		"_End round"
+			tooltip		"_End turn"
 			src			"althud/buttons_althud1g"
 			pos			"103 208"
 			texl		"0 0"
@@ -1823,7 +2111,7 @@ window hud_mini extends hud
 	confunc hudselect {
 		*node:root.floor.bar_selbox@left = ( *node:root.floor.bar_teambox<1>@left )
 			*cvar:i = 0
-			while ( *cvar:i < 8 ) {
+			while ( *cvar:i < 12 ) {
 				*node:root.floor.str_soldier<cvar:i>@color = "0 .6 0 1"
 				*cvar:i = ( *cvar:i + 1 )
 			}
@@ -1938,8 +2226,7 @@ window hud_mini extends hud
 		if ( exists *cvar:mn_chrrank_img ) { delete *cvar:mn_chrrank_img }
 		delete *cvar:mn_selected_soldier
 		delete *cvar:mn_minihud_enabled
-//		delete *cvar:mn_enemycolorfactor
-		// TODO: delete currently only supports cvarname, that is why a loop is not possible
+		// TODO: delete currently only supports cvarname, that is why a loop is not possible here
 		if ( exists *cvar:mn_left_hand0 ) { delete *cvar:mn_Left_hand0 }
 		if ( exists *cvar:mn_left_hand1 ) { delete *cvar:mn_Left_hand1 }
 		if ( exists *cvar:mn_left_hand2 ) { delete *cvar:mn_Left_hand2 }
@@ -1948,6 +2235,10 @@ window hud_mini extends hud
 		if ( exists *cvar:mn_left_hand5 ) { delete *cvar:mn_Left_hand5 }
 		if ( exists *cvar:mn_left_hand6 ) { delete *cvar:mn_Left_hand6 }
 		if ( exists *cvar:mn_left_hand7 ) { delete *cvar:mn_Left_hand7 }
+		if ( exists *cvar:mn_left_hand8 ) { delete *cvar:mn_Left_hand8 }
+		if ( exists *cvar:mn_left_hand8 ) { delete *cvar:mn_Left_hand9 }
+		if ( exists *cvar:mn_left_hand8 ) { delete *cvar:mn_Left_hand10 }
+		if ( exists *cvar:mn_left_hand8 ) { delete *cvar:mn_Left_hand11 }
 	}
 
 	func onScriptLoaded {

@@ -372,7 +372,7 @@ window skirmish
 			image		"ui/spinner_blue"
 			pos		"368 274"
 			min		1
-			max		9
+			max		12
 			delta		1
 		}
 		// =======================
