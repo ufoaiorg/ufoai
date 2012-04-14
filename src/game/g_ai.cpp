@@ -1118,8 +1118,9 @@ static void AI_SetCharacterValues (edict_t * ent, int team)
 	if (team != TEAM_CIVILIAN) {
 		if (gi.csi->numAlienTeams) {
 			const int alienTeam = rand() % gi.csi->numAlienTeams;
-			assert(gi.csi->alienTeams[alienTeam]);
-			teamDefintion = gi.csi->alienTeams[alienTeam]->id;
+			const teamDef_t *td = gi.csi->alienTeams[alienTeam];
+			assert(td);
+			teamDefintion = td->id;
 		} else
 			teamDefintion = gi.Cvar_String("ai_alien");
 	} else if (team == TEAM_CIVILIAN) {
