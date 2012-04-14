@@ -1243,7 +1243,7 @@ mapdef ice
         map             "+ice"
         description     "_An icy environment."
 		param           "test"
-        maxaliens       8
+        maxaliens       12
 		campaign 		false
 		singleplayer	true
 		multiplayer     false
