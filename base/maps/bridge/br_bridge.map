@@ -2,11 +2,11 @@
 // entity 0
 {
 "classname" "worldspawn"
-"saturation" "0.6"
-"brightness" "0.8"
 "maxteams" "2"
 "randomspawn" "1"
 "maxlevel" "5"
+"saturation" "0.6"
+"brightness" "0.8"
 // brush 0
 {
 ( 1944 240 320 ) ( 1856 192 324 ) ( 1856 256 324 ) tex_buildings/mtl_gray 170 170.3333 0 0.375 0.375 61440 1024 0
@@ -4451,4 +4451,116 @@
 ( 1248 321 163 ) ( 1248 321 156 ) ( 1249 323 156 ) tex_material/metall001 40 124 0 0.125 0.125 64512 0 0
 ( 1248 321 156 ) ( 1248 321 163 ) ( 1248 318 163 ) tex_material/metall001 40 124 0 0.125 0.125 64512 0 0
 }
+}
+// entity 6
+{
+"classname" "info_player_start"
+"team" "2"
+"origin" "2160 48 28"
+"angle" "180"
+}
+// entity 7
+{
+"classname" "info_player_start"
+"team" "2"
+"origin" "2256 48 28"
+"angle" "90"
+}
+// entity 8
+{
+"classname" "info_player_start"
+"team" "2"
+"origin" "2224 48 28"
+"angle" "90"
+}
+// entity 9
+{
+"classname" "info_player_start"
+"team" "2"
+"origin" "2192 48 28"
+"angle" "90"
+}
+// entity 10
+{
+"classname" "info_player_start"
+"team" "2"
+"origin" "2160 144 28"
+"angle" "180"
+}
+// entity 11
+{
+"classname" "info_player_start"
+"team" "2"
+"origin" "2256 144 28"
+"angle" "90"
+}
+// entity 12
+{
+"classname" "info_player_start"
+"team" "2"
+"origin" "2224 144 28"
+"angle" "90"
+}
+// entity 13
+{
+"classname" "info_player_start"
+"team" "2"
+"origin" "2192 144 28"
+"angle" "90"
+}
+// entity 14
+{
+"classname" "info_player_start"
+"team" "2"
+"origin" "2160 112 28"
+"angle" "180"
+}
+// entity 15
+{
+"classname" "info_player_start"
+"team" "2"
+"origin" "2256 112 28"
+"angle" "90"
+}
+// entity 16
+{
+"classname" "info_player_start"
+"team" "2"
+"origin" "2224 112 28"
+"angle" "90"
+}
+// entity 17
+{
+"classname" "info_player_start"
+"team" "2"
+"origin" "2192 112 28"
+"angle" "90"
+}
+// entity 18
+{
+"classname" "info_player_start"
+"team" "2"
+"origin" "2160 80 28"
+"angle" "180"
+}
+// entity 19
+{
+"classname" "info_player_start"
+"team" "2"
+"origin" "2256 80 28"
+"angle" "90"
+}
+// entity 20
+{
+"classname" "info_player_start"
+"team" "2"
+"origin" "2224 80 28"
+"angle" "90"
+}
+// entity 21
+{
+"classname" "info_player_start"
+"team" "2"
+"origin" "2192 80 28"
+"angle" "90"
 }
