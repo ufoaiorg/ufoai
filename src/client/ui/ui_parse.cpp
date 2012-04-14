@@ -1335,12 +1335,7 @@ qboolean UI_ParseWindow (const char *type, const char *name, const char **text)
 	/* parse it's body */
 	result = UI_ParseNodeBody(window, text, &token, errhead);
 	if (!result) {
-#ifdef COMPILE_UNITTESTS
-		Com_Printf("UI_ParseWindow: window \"%s\" has a bad body\n", window->name);
-		return qfalse;
-#else
 		Com_Error(ERR_FATAL, "UI_ParseWindow: window \"%s\" has a bad body\n", window->name);
-#endif
 	}
 
 	UI_Node_Loaded(window);
@@ -1377,40 +1372,17 @@ const char *UI_GetReferenceString (const uiNode_t* const node, const char *ref)
 
 		if (char const* const binding = Q_strstart(token, "binding:")) {
 			return Key_GetBinding(binding, cls.state != ca_active ? KEYSPACE_UI : KEYSPACE_GAME);
-		} else {
-			Sys_Error("UI_GetReferenceString: unknown reference");	/**< maybe this code is never used */
-#if 0	/** @todo need a full rework */
-			uiNode_t *refNode;
-			const value_t *val;
-
-			token = Com_Parse(&text);
-			if (!text)
-				return NULL;
-
-			/* draw a reference to a node property */
-			refNode = UI_GetNode(node->root, ident);
-			if (!refNode)
-				return NULL;
-
-			/* get the property */
-			val = UI_GetPropertyFromBehaviour(refNode->behaviour, token);
-			if (!val)
-				return NULL;
-
-			/* get the string */
-			return Com_ValueToStr(refNode, val->type & V_BASETYPEMASK, val->ofs);
-#endif
 		}
 
+		Sys_Error("UI_GetReferenceString: unknown reference %s", token);
 	/* translatable string */
 	} else if (ref[0] == '_') {
 		ref++;
 		return _(ref);
+	}
 
 	/* just a string */
-	} else {
-		return ref;
-	}
+	return ref;
 }
 
 float UI_GetReferenceFloat (const uiNode_t* const node, const void *ref)
@@ -1422,32 +1394,12 @@ float UI_GetReferenceFloat (const uiNode_t* const node, const void *ref)
 			return 0.0;
 
 		if (char const* const cvar = Q_strstart(token, "cvar:")) {
-			/* get the cvar value */
 			return Cvar_GetValue(cvar);
-		} else {
-			/** @todo maybe this code is never used */
-			Sys_Error("UI_GetReferenceFloat: unknown reference '%s' from node '%s'",
-					token, node->name);
-#if 0	/** @todo need a full rework */
-			uiNode_t *refNode;
-			const value_t *val;
-
-			/* draw a reference to a node property */
-			refNode = UI_GetNode(node->root, ident);
-			if (!refNode)
-				return 0.0;
-
-			/* get the property */
-			val = UI_GetPropertyFromBehaviour(refNode->behaviour, token);
-			if (!val || val->type != V_FLOAT)
-				return 0.0;
-
-			/* get the string */
-			return *(float *) ((byte *) refNode + val->ofs);
-#endif
 		}
-	} else {
-		/* just get the data */
-		return *(const float *) ref;
+
+		Sys_Error("UI_GetReferenceFloat: unknown reference '%s' from node '%s'", token, node->name);
 	}
+
+	/* just get the data */
+	return *(const float *) ref;
 }

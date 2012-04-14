@@ -56,8 +56,9 @@ static void TEST_ParseScript (const char* scriptName)
 	FS_NextScriptHeader(NULL, NULL, NULL);
 	text = NULL;
 	while ((type = FS_NextScriptHeader(scriptName, &name, &text)) != NULL) {
-		const qboolean result = CL_ParseClientData(type, name, &text);
-		if (!result) {
+		try {
+			CL_ParseClientData(type, name, &text);
+		} catch (const comDrop_t &e) {
 			CU_assertImplementation(CU_FALSE, __LINE__, va("Failed to parse needed scripts for type: %s and id %s", type, name), __FILE__, "", CU_FALSE);
 			nbWrongScripts++;
 		}
