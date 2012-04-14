@@ -134,7 +134,7 @@ aircraft craft_drop_herakles
 	model		"geoscape/drop_herakles"
 	price		30000
 	building	building_hangar
-	numteam		8
+	numteam		12
 	size		2
 	image		"geoscape/air_dropship"
 	slot {
@@ -170,7 +170,7 @@ aircraft craft_drop_raptor
 	model		"geoscape/drop_raptor"
 	price		30000
 	building	building_hangar
-	numteam		8
+	numteam		10
 	size		2
 	image		"geoscape/air_dropship"
 	slot {

@@ -2,19 +2,23 @@
 // EQUIPMENT MENU
 // ==================
 
-component radiobutton buttonActorEquip
-{
-	size	"27 35"
-	background	"buttons/blue2-1"
-	cvar	*cvar:selected_actor
-	onChange { cmd "game_actorselect <value>;" }
-	tooltip	"_Equip this soldier"
-}
+component panel equipSoldier {
+	{
+		size		"260 25"
+	}
 
-component string txtActorEquip
-{
-	size	"270 40"
-	contentalign ALIGN_CL
+	data id {
+		string		""
+	}
+
+	string name {
+		pos			"0 0"
+		color		"0 .78 0 1"
+		size		"260 25"
+		onClick {
+			cmd "equipment_soldierlist_select <node:parent.id@integer>;"
+		}
+	}
 }
 
 window equipment extends objectinfo
@@ -98,141 +102,64 @@ window equipment extends objectinfo
 	// names list
 	// ==================
 
-	func names_clear
-	{
-		*node:root.txt_actor0@color = "0 .78 0 1"
-		*node:root.txt_actor1@color = "0 .78 0 1"
-		*node:root.txt_actor2@color = "0 .78 0 1"
-		*node:root.txt_actor3@color = "0 .78 0 1"
-		*node:root.txt_actor4@color = "0 .78 0 1"
-		*node:root.txt_actor5@color = "0 .78 0 1"
-		*node:root.txt_actor6@color = "0 .78 0 1"
-		*node:root.txt_actor7@color = "0 .78 0 1"
+	data selected {
 	}
 
-	confunc equipenable {
-		*node:root.bt_actor<1>@disabled = false
+	rows soldierlist_lines {
+		pos			"55 18"
+		size		"260 320"
+		color1		"0 0.08 0 1"
+		color2		"0 0.16 0 1"
+		lineheight	25
+	}
+	panel soldierlist {
+		pos			"55 18"
+		size		"260 320"
+		padding		6
+		layout		LAYOUT_TOP_DOWN_FLOW
+		wheelscrollable	true
+
+		onViewChange {
+			*node:parent.soldierlist_scroll@fullsize = <fullsize>
+			*node:parent.soldierlist_scroll@current = <viewpos>
+			*node:parent.soldierlist_scroll@viewsize = <viewsize>
+		}
+	}
+	vscrollbar soldierlist_scroll {
+		image		"ui/scrollbar_v_green"
+		pos			"317 18"
+		height		"320"
+		current		0
+		viewsize	8
+		fullsize	50
+
+		onChange {
+			*node:parent.soldierlist@viewpos = <current>
+		}
 	}
 
-	confunc equipdisable {
-		*node:root.bt_actor<1>@disabled = true
-		*cvar:mn_name<1> = ""
+	confunc equipment_soldierlist_clear {
+		call *node:parent.soldierlist@removeAllChild
 	}
+	confunc equipment_soldierlist_add {
+		call *node:parent.soldierlist@createChild("member<1>", "equipSoldier")
+		*node:parent.soldierlist.member<1>.id@integer = <1>
+		*node:parent.soldierlist.member<1>.name@string = <2>
 
-	confunc equipdeselect {
-		*node:root.bt_actor<1>@disabled = false
-		*node:root.txt_actor<1>@color = "0 .78 0 1"
+		if ( *node:root.selected@integer < 0 ) {
+			cmd "equipment_soldierlist_select <1>;"
+			*node:root.selected@integer = <1>
+		}
 	}
-
-	confunc equipselect {
-		*node:root.bt_actor<1>@disabled = false
-		*cvar:selected_actor = <1>
-		*node:root.txt_actor<1>@color = "1 1 1 1"
-	}
-
-	buttonActorEquip bt_actor0
-	{
-		pos		"10 14"
-		value	0
-		icon	"icons/number_1"
-	}
-
-	buttonActorEquip bt_actor1
-	{
-		pos		"10 55"
-		value	1
-		icon	"icons/number_2"
-	}
-
-	buttonActorEquip bt_actor2
-	{
-		pos		"10 96"
-		value	2
-		icon	"icons/number_3"
-	}
-
-	buttonActorEquip bt_actor3
-	{
-		pos		"10 137"
-		value	3
-		icon	"icons/number_4"
-	}
-
-	buttonActorEquip bt_actor4
-	{
-		pos		"10 178"
-		value	4
-		icon	"icons/number_5"
-	}
-
-	buttonActorEquip bt_actor5
-	{
-		pos		"10 219"
-		value	5
-		icon	"icons/number_6"
-	}
-
-	buttonActorEquip bt_actor6
-	{
-		pos		"10 260"
-		value	6
-		icon	"icons/number_7"
-	}
-
-	buttonActorEquip bt_actor7
-	{
-		pos		"10 301"
-		value	7
-		icon	"icons/number_8"
-	}
-
-	txtActorEquip txt_actor0
-	{
-		string	*cvar:mn_name0
-		pos		"60 13"
-		onClick { cmd "game_actorselect 0;" }
-	}
-	txtActorEquip txt_actor1
-	{
-		string	*cvar:mn_name1
-		pos		"60 54"
-		onClick { cmd "game_actorselect 1;" }
-	}
-	txtActorEquip txt_actor2
-	{
-		string	*cvar:mn_name2
-		pos		"60 95"
-		onClick { cmd "game_actorselect 2;" }
-	}
-	txtActorEquip txt_actor3
-	{
-		string	*cvar:mn_name3
-		pos		"60 136"
-		onClick { cmd "game_actorselect 3;" }
-	}
-	txtActorEquip txt_actor4
-	{
-		string	*cvar:mn_name4
-		pos		"60 177"
-		onClick { cmd "game_actorselect 4;" }
-	}
-	txtActorEquip txt_actor5
-	{
-		string	*cvar:mn_name5
-		pos		"60 218"
-		onClick { cmd "game_actorselect 5;" }
-	}
-	txtActorEquip txt_actor6
-	{
-		string	*cvar:mn_name6
-		pos		"60 259"
-		onClick { cmd "game_actorselect 6;" }
-	}
-	txtActorEquip txt_actor7
-	{
-		string	*cvar:mn_name7
-		pos		"60 300"
-		onClick { cmd "game_actorselect 7;" }
+	confunc equipment_soldierlist_select {
+		if ( *node:root.selected@integer >= 0 ) {
+			*node:parent.soldierlist.member<node:root.selected@integer>.name@color = "0 .78 0 1"
+		}
+		*node:root.selected@integer = <1>
+		if ( *node:root.selected@integer >= 0 ) {
+			*node:parent.soldierlist.member<1>.name@color = "1 1 1 1"
+			cmd "ui_team_select_ucn <node:root.selected@integer>;"
+		}
 	}
 
 	// ==================
@@ -622,9 +549,7 @@ window equipment extends objectinfo
 		tooltip		"_Rename your unit"
 		pos			"544 24"
 		size		"230 20"
-		onChange	{
-			cmd "employee_changename; team_updateequip; game_actorselect <cvar:cl_selected>;"
-		}
+		onChange	{ cmd "employee_changename; ui_team_fillequip; update_item_list;" }
 	}
 
 	button bt_edit
@@ -667,7 +592,7 @@ window equipment extends objectinfo
 		pos		"660 290"
 		size	"120 40"
 		cvar	*cvar:mn_skin
-		onChange { cmd "team_changeskin;" }
+		onChange { cmd "ui_team_changeskin <node:root.selected@integer> <cvar:mn_skin>;" }
 		dataid	OPTION_SINGLEPLAYER_SKINS
 	}
 
@@ -686,7 +611,7 @@ window equipment extends objectinfo
 	container armour	{
 		pos "735 100"
 		color "1 1 1 0"		// active, but display it transparent
-		onChange { cmd "actor_updatecurrent;" }
+		onChange { cmd "equipment_soldierlist_select <node:root.selected@integer>;" }
 		onSelect { cmd "object_update <lastselectedid>;" }
 	}
 
@@ -739,33 +664,31 @@ window equipment extends objectinfo
 	// ==================
 	// additional stuff
 	// ==================
-
-	custombutton bt_go
-	{
-		tooltip	"_Done"
-		background	"buttons/large_blue"
-		pos		"940 720"
-		size	"64 37"
-		icon "icons/return"
-		onClick	{ cmd "ui_pop;" }
+	custombutton bt_go {
+		tooltip			"_Done"
+		background		"buttons/large_blue"
+		pos				"940 720"
+		size			"64 37"
+		icon			"icons/return"
+		onClick {
+			cmd "ui_pop;"
+		}
 	}
 
-	func onWindowClosed
-	{
+	func onWindowClosed {
 		/** @note Do not define action here
 		 * this close is edited by the code
 		 * pushing this menu
 		 */
 	}
 
-	func onWindowOpened
-	{
-		call *node:root.names_clear
+	func onWindowOpened {
 		call *node:root.actor_stats
 		*cvar:mn_infotype = 0
 		*cvar:mn_equiptype = 0
 		*cvar:mn_linkname = ""
 		*cvar:mn_itemname = ""
-		cmd "team_initskin;team_updateequip;update_item_list;game_actorselect 0;"
+		*node:root.selected@integer = -1
+		cmd "team_initskin; ui_team_fillequip; update_item_list;"
 	}
 }

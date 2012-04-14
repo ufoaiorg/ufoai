@@ -20,7 +20,6 @@ See the GNU General Public License for more details.
 You should have received a copy of the GNU General Public License
 along with this program; if not, write to the Free Software
 Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
-
 */
 
 #include "../../cl_shared.h"
@@ -32,59 +31,7 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #include "cp_team.h"
 #include "cp_team_callbacks.h"
 #include "cp_map.h" /* MAP_GetSelectedAircraft */
-
-/**
- * @brief Displays actor equipment and unused items in proper (filter) category.
- * @note This function is called everytime the equipment screen for the team pops up.
- * @todo Do we allow EMPL_ROBOTs to be equipable? Or is simple buying of ammo enough (similar to original UFO/XCOM)?
- * In the first case the EMPL_SOLDIER stuff below needs to be changed.
- * @todo merge with GAME_GetEquipment
- */
-static void CP_UpdateEquipmentMenuParameters_f (void)
-{
-	aircraft_t *aircraft;
-	equipDef_t unused;
-	base_t *base = B_GetCurrentSelectedBase();
-	int i;
-	size_t size;
-
-	if (!base)
-		return;
-
-	aircraft = base->aircraftCurrent;
-	if (!aircraft)
-		return;
-
-	/* no soldiers are assigned to the current aircraft. */
-	if (AIR_GetTeamSize(aircraft) == 0) {
-		UI_PopWindow(qfalse);
-		return;
-	}
-
-	Cvar_ForceSet("cl_selected", "0");
-
-	/** @todo Skip EMPL_ROBOT (i.e. ugvs) for now . */
-	CP_UpdateActorAircraftVar(aircraft, EMPL_SOLDIER);
-
-	size = lengthof(chrDisplayList.chr);
-	for (i = 0; i < size; i++) {
-		if (i < chrDisplayList.num)
-			UI_ExecuteConfunc("equipenable %i", i);
-		else
-			UI_ExecuteConfunc("equipdisable %i", i);
-	}
-
-	/* clean up aircraft crew for upcoming mission */
-	CP_CleanTempInventory(aircraft->homebase);
-	unused = aircraft->homebase->storage;
-
-	AIR_Foreach(aircraftInBase) {
-		if (aircraftInBase->homebase == base)
-			CP_CleanupAircraftCrew(aircraftInBase, &unused);
-	}
-
-	GAME_UpdateInventory(&aircraft->homebase->bEquipment, &unused);
-}
+#include "../../ui/node/ui_node_container.h"
 
 /**
  * @brief Adds or removes a soldier to/from an aircraft using his/her UCN as reference.
@@ -159,6 +106,14 @@ static void CP_TEAM_SelectActorByUCN_f (void)
 		Com_Error(ERR_DROP, "CP_TEAM_SelectActorByUCN_f: No employee with UCN %i", ucn);
 
 	chr = &employee->chr;
+
+	/* update menu inventory */
+	if (ui_inventory && ui_inventory != &chr->i) {
+		CONTAINER(chr, csi.idEquip) = ui_inventory->c[csi.idEquip];
+		/* set 'old' idEquip to NULL */
+		ui_inventory->c[csi.idEquip] = NULL;
+	}
+	ui_inventory = &chr->i;
 
 	/* set info cvars */
 	CL_UpdateCharacterValues(chr, "mn_");
@@ -262,6 +217,42 @@ static void CP_TEAM_FillEmployeeList_f (void)
 	}
 }
 
+/**
+ * @brief Fill the employee list for the in-base soldier equip screen and initialize the inventory
+ */
+static void CP_TEAM_FillEquipSoldierList_f (void)
+{
+	base_t *base = B_GetCurrentSelectedBase();
+	aircraft_t *aircraft = base->aircraftCurrent;
+	equipDef_t unused;
+
+	if (Cmd_Argc() > 1 ) {
+		aircraft = AIR_AircraftGetFromIDX(atoi(Cmd_Argv(1)));
+		if (!aircraft) {
+			Com_Printf("No aircraft exist with global idx %i\n", atoi(Cmd_Argv(2)));
+			return;
+		}
+		base = aircraft->homebase;
+	}
+	if (!aircraft)
+		return;
+
+	/* add soldiers to list */
+	UI_ExecuteConfunc("equipment_soldierlist_clear");
+	LIST_Foreach(aircraft->acTeam, employee_t, employee) {
+		UI_ExecuteConfunc("equipment_soldierlist_add %d \"%s\"", employee->chr.ucn, employee->chr.name);
+	}
+
+	/* clean up aircraft crew for upcoming mission */
+	CP_CleanTempInventory(aircraft->homebase);
+	unused = aircraft->homebase->storage;
+
+	AIR_Foreach(aircraftInBase) {
+		if (aircraftInBase->homebase == base)
+			CP_CleanupAircraftCrew(aircraftInBase, &unused);
+	}
+	UI_ContainerNodeUpdateEquipment(&aircraft->homebase->bEquipment, &unused);
+}
 
 /**
  * @brief Fill the employee list for Base defence mission
@@ -300,16 +291,45 @@ static void CP_TEAM_FillBDEFEmployeeList_f (void)
 }
 
 /**
+ * @brief Change the skin of a soldier
+ */
+static void CP_TEAM_ChangeSkin_f (void)
+{
+	if (Cmd_Argc() < 3 ) {
+		Com_Printf("Usage: %s <ucn> <skinidx>\n", Cmd_Argv(0));
+		return;
+	}
+	int ucn = atoi(Cmd_Argv(1));
+	int skinIdx = atoi(Cmd_Argv(2));
+
+	employee_t *soldier = E_GetEmployeeFromChrUCN(ucn);
+	if (soldier == NULL|| soldier->type != EMPL_SOLDIER) {
+		Com_Printf("Invalid soldier UCN: %i\n", ucn);
+		return;
+	}
+
+	/** @todo Get the skin id from the model by using the actorskin id */
+	/** @todo Or remove skins from models and convert character_t->skin to string */
+	/** @todo these functions are not accessible from here and maybe I shouldn't use them directly but set up a cgame import stuff? */
+#if 0
+	skinIdx = CL_FixActorSkinIDX(skinIdx);
+	Cvar_Set("mn_skinname", CL_GetTeamSkinName(skinIdx));
+#endif
+	Cvar_SetValue("mn_skin", skinIdx);
+	soldier->chr.skin = skinIdx;
+}
+
+/**
  * @brief Function that registers team (UI) callbacks
  */
 void CP_TEAM_InitCallbacks (void)
 {
-	Cmd_AddCommand("team_updateequip", CP_UpdateEquipmentMenuParameters_f);
-
 	Cmd_AddCommand("ui_team_select_ucn", CP_TEAM_SelectActorByUCN_f, "Select a soldier in the team menu by his/her UCN");
 	Cmd_AddCommand("ui_team_assign_ucn", CP_TEAM_AssignSoldierByUCN_f, "Add/remove soldier to the aircraft");
 	Cmd_AddCommand("ui_team_fill", CP_TEAM_FillEmployeeList_f, "Fill the Team assignment UI with employee");
 	Cmd_AddCommand("ui_team_fillbdef", CP_TEAM_FillBDEFEmployeeList_f, "Fill the Team assignment UI with employee for base defence");
+	Cmd_AddCommand("ui_team_fillequip", CP_TEAM_FillEquipSoldierList_f, "Fill the employee list for the in-base soldier equip screen and initialize the inventory");
+	Cmd_AddCommand("ui_team_changeskin", CP_TEAM_ChangeSkin_f, "Change the skin of a soldier");
 #ifdef DEBUG
 	Cmd_AddCommand("debug_teamlist", CP_TeamListDebug_f, "Debug function to show all hired and assigned teammembers");
 #endif
@@ -320,12 +340,12 @@ void CP_TEAM_InitCallbacks (void)
  */
 void CP_TEAM_ShutdownCallbacks (void)
 {
+	Cmd_RemoveCommand("ui_team_changeskin");
+	Cmd_RemoveCommand("ui_team_fillequip");
 	Cmd_RemoveCommand("ui_team_fillbdef");
 	Cmd_RemoveCommand("ui_team_fill");
 	Cmd_RemoveCommand("ui_team_assign_ucn");
 	Cmd_RemoveCommand("ui_team_select_ucn");
-
-	Cmd_RemoveCommand("team_updateequip");
 #ifdef DEBUG
 	Cmd_RemoveCommand("debug_teamlist");
 #endif

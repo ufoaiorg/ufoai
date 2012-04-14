@@ -230,10 +230,8 @@ void CP_CleanTempInventory (base_t* base)
  * @returns the number of employees that are in the aircraft and were added to
  * the character list
  */
-int CP_UpdateActorAircraftVar (aircraft_t *aircraft, employeeType_t employeeType)
+void CP_UpdateActorAircraftVar (aircraft_t *aircraft, employeeType_t employeeType)
 {
-	int i;
-	size_t size;
 	int numOnAircraft;
 	const employee_t *pilot = AIR_GetPilot(aircraft);
 
@@ -257,30 +255,4 @@ int CP_UpdateActorAircraftVar (aircraft_t *aircraft, employeeType_t employeeType
 		Cvar_Set("mn_pilot_head", "");
 		Cvar_Set("mn_pilot_skin", "");
 	}
-
-	size = lengthof(chrDisplayList.chr);
-
-	/* update chrDisplayList list (this is the one that is currently displayed) */
-	chrDisplayList.num = 0;
-	LIST_Foreach(aircraft->acTeam, employee_t, empl) {
-		if (empl->type != employeeType)
-			continue;
-
-		assert(chrDisplayList.num < size);
-		chrDisplayList.chr[chrDisplayList.num] = &empl->chr;
-
-		/* Sanity check(s) */
-		if (!chrDisplayList.chr[chrDisplayList.num])
-			Com_Error(ERR_DROP, "CP_UpdateActorAircraftVar: Could not get employee character with idx: %i", chrDisplayList.num);
-		Com_DPrintf(DEBUG_CLIENT, "add %s to chrDisplayList (pos: %i)\n", chrDisplayList.chr[chrDisplayList.num]->name, chrDisplayList.num);
-		Cvar_Set(va("mn_name%i", chrDisplayList.num), chrDisplayList.chr[chrDisplayList.num]->name);
-
-		/* Update number of displayed team-members. */
-		chrDisplayList.num++;
-	}
-
-	for (i = chrDisplayList.num; i < size; i++)
-		chrDisplayList.chr[i] = NULL;	/* Just in case */
-
-	return chrDisplayList.num;
 }

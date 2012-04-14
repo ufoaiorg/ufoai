@@ -305,7 +305,7 @@ static void INV_UpdateObject_f (void)
 
 	/* check syntax */
 	if (Cmd_Argc() < 2) {
-		Com_Printf("Usage: %s <objectid> <mustwechangetab>\n", Cmd_Argv(0));
+		Com_Printf("Usage: %s <objectid> [mustwechangetab]\n", Cmd_Argv(0));
 		return;
 	}
 
