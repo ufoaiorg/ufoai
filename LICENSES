@@ -6817,8 +6817,14 @@ base/textures/tex_ufo/ufo2_09.png | GNU General Public License 2.0 or later | MC
 base/textures/tex_ufo/ufo2_09_nm.png | GNU General Public License 2.0 or later | Martin Gerhardy
 base/textures/tex_ufo/ufo2_10.png | GNU General Public License 2.0 or later | MCR | Based on the gpled work by "SparX" Beyeler
 base/textures/tex_ufo/ufo2_10_nm.png | GNU General Public License 2.0 or later | Martin Gerhardy
-base/textures/tex_ufo/ufo2_11.png | GNU General Public License 2.0 | "SparX" Beyeler
-base/textures/tex_ufo/ufo2_11_nm.png | GNU General Public License 2.0 or later | Martin Gerhardy
+base/textures/tex_ufo/ufo2_11.png | GNU General Public License 2.0 | "SparX" Beyeler, Georges "TRaK" Grondin, Nate Wright
+base/textures/tex_ufo/ufo2_11_nm.png | GNU General Public License 2.0 or later | Nate Wright
+base/textures/tex_ufo/ufo2_11b.png | GNU General Public License 2.0 | "SparX" Beyeler, Georges "TRaK" Grondin, Nate Wright
+base/textures/tex_ufo/ufo2_11b_nm.png | GNU General Public License 2.0 or later | Nate Wright
+base/textures/tex_ufo/ufo2_11c.png | GNU General Public License 2.0 | "SparX" Beyeler, Georges "TRaK" Grondin, Nate Wright
+base/textures/tex_ufo/ufo2_11c_nm.png | GNU General Public License 2.0 or later | Nate Wright
+base/textures/tex_ufo/ufo2_11d.png | GNU General Public License 2.0 | "SparX" Beyeler, Georges "TRaK" Grondin, Nate Wright
+base/textures/tex_ufo/ufo2_11d_nm.png | GNU General Public License 2.0 or later | Nate Wright
 base/textures/tex_ufo/ufo2_12.png | GNU General Public License 2.0 or later | "SparX" Beyeler
 base/textures/tex_ufo/ufo2_12_nm.png | GNU General Public License 2.0 or later | Martin Gerhardy
 base/textures/tex_ufo/ufo2_13.png | GNU General Public License 2.0 or later | "SparX" Beyeler
