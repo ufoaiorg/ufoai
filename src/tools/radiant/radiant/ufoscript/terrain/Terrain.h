@@ -20,7 +20,7 @@ namespace scripts
 
 			virtual ~Terrain ();
 
-			// creates a terrain defintion for every selected texture
+			// creates a terrain definition for every selected texture
 			void generateTerrainDefinitionsForTextures ();
 
 			// shows existing terrain definitions

@@ -74,7 +74,7 @@ typedef int32_t fireDefIndex_t;
 
 /** @brief this is a fire definition for our weapons/ammo */
 typedef struct fireDef_s {
-	const char *name;			/**< fire defintion name (translatable) */
+	const char *name;			/**< fire definition name (translatable) */
 	const char *projectile;	/**< projectile particle */
 	const char *impact;		/**< impact particle */
 	const char *impactSound;	/**< the sound that is played on impact */

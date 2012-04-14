@@ -41,7 +41,7 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
  * @param[in] teamDef The team definition that should be searched for
  * @return The index of the team definition in the alien cargo of the given aircraft
  */
-static inline int AL_GetCargoIndexForTeamDefintion (const aircraft_t *aircraft, const teamDef_t *teamDef)
+static inline int AL_GetCargoIndexForTeamDefinition (const aircraft_t *aircraft, const teamDef_t *teamDef)
 {
 	const aliensTmp_t *cargo = AL_GetAircraftAlienCargo(aircraft);
 	const int alienCargoTypes = AL_GetAircraftAlienCargoTypes(aircraft);
@@ -73,7 +73,7 @@ qboolean AL_AddAlienTypeToAircraftCargo (aircraft_t *aircraft, const teamDef_t *
 {
 	aliensTmp_t *cargo = AL_GetAircraftAlienCargo(aircraft);
 	const int alienCargoTypes = AL_GetAircraftAlienCargoTypes(aircraft);
-	const int index = AL_GetCargoIndexForTeamDefintion(aircraft, teamDef);
+	const int index = AL_GetCargoIndexForTeamDefinition(aircraft, teamDef);
 	aliensTmp_t *c = &cargo[index];
 
 	if (!c->teamDef)

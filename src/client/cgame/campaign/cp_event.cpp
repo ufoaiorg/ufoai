@@ -33,7 +33,7 @@ static linkedList_t *eventMails = NULL;
 /**
  * @brief Searches all event mails for a given id
  * @note Might also return NULL - always check the return value
- * @note If you want to create mails that base on a script defintion but have differnet
+ * @note If you want to create mails that base on a script definition but have different
  * body messages, set createCopy to true
  * @param[in] id The id from the script files
  * @param[in] createCopy Don't return the link to ccs.eventMails but allocate memory

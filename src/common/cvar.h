@@ -63,7 +63,7 @@ typedef struct cvarListener_s {
 } cvarChangeListener_t;
 
 /**
- * @brief This is a cvar defintion. Cvars can be user modified and used in our menus e.g.
+ * @brief This is a cvar definition. Cvars can be user modified and used in our menus e.g.
  * @note nothing outside the Cvar_*() functions should modify these fields!
  */
 typedef struct cvar_s {

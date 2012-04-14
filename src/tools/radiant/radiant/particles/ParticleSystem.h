@@ -12,7 +12,7 @@ class ParticleSystem: public IParticleSystem
 		typedef std::vector<scripts::DataBlock*> DataBlocks;
 		DataBlocks _blocks;
 
-		ParticleDefinitionMap _particleDefintions;
+		ParticleDefinitionMap _particleDefinitions;
 		bool _init;
 
 	public:

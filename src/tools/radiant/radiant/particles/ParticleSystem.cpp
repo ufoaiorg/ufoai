@@ -15,7 +15,7 @@ ParticleSystem::ParticleSystem ()
 
 ParticleSystem::~ParticleSystem ()
 {
-	for (ParticleDefinitionMap::iterator i = _particleDefintions.begin(); i != _particleDefintions.end(); ++i) {
+	for (ParticleDefinitionMap::iterator i = _particleDefinitions.begin(); i != _particleDefinitions.end(); ++i) {
 		delete i->second;
 	}
 }
@@ -35,7 +35,7 @@ IParticleDefinition* ParticleSystem::getParticle (const std::string& particleID)
 
 void ParticleSystem::foreachParticle (const Visitor& visitor) const
 {
-	for (ParticleDefinitionMap::const_iterator i = _particleDefintions.begin(); i != _particleDefintions.end(); ++i) {
+	for (ParticleDefinitionMap::const_iterator i = _particleDefinitions.begin(); i != _particleDefinitions.end(); ++i) {
 		visitor.visit(i->second);
 	}
 }
@@ -48,10 +48,10 @@ const ParticleDefinitionMap& ParticleSystem::getParticleDefinitions ()
 		_blocks = parser.getEntries();
 		for (DataBlocks::iterator i = _blocks.begin(); i != _blocks.end(); ++i) {
 			const std::string& particleID = (*i)->getID();
-			_particleDefintions[particleID] = ParticleParser(particleID, (*i)->getData()).getParticle();
+			_particleDefinitions[particleID] = ParticleParser(particleID, (*i)->getData()).getParticle();
 		}
 	}
-	return _particleDefintions;
+	return _particleDefinitions;
 }
 
 // Module stuff

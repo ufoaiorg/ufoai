@@ -1114,21 +1114,21 @@ static void AI_SetStats (edict_t * ent)
 static void AI_SetCharacterValues (edict_t * ent, int team)
 {
 	/* Set model. */
-	const char *teamDefintion;
+	const char *teamDefinition;
 	if (team != TEAM_CIVILIAN) {
 		if (gi.csi->numAlienTeams) {
 			const int alienTeam = rand() % gi.csi->numAlienTeams;
 			const teamDef_t *td = gi.csi->alienTeams[alienTeam];
 			assert(td);
-			teamDefintion = td->id;
+			teamDefinition = td->id;
 		} else
-			teamDefintion = gi.Cvar_String("ai_alien");
+			teamDefinition = gi.Cvar_String("ai_alien");
 	} else if (team == TEAM_CIVILIAN) {
-		teamDefintion = gi.Cvar_String("ai_civilian");
+		teamDefinition = gi.Cvar_String("ai_civilian");
 	}
-	gi.GetCharacterValues(teamDefintion, &ent->chr);
+	gi.GetCharacterValues(teamDefinition, &ent->chr);
 	if (!ent->chr.teamDef)
-		gi.Error("Could not set teamDef for character: '%s'", teamDefintion);
+		gi.Error("Could not set teamDef for character: '%s'", teamDefinition);
 }
 
 
