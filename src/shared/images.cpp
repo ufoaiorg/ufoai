@@ -349,15 +349,15 @@ static SDL_Surface* Img_LoadPNG(char const* const name)
 }
 
 #if JPEG_LIB_VERSION < 80
-static void djepg_nop(jpeg_decompress_struct*) {}
+static void djpeg_nop(jpeg_decompress_struct*) {}
 
-static boolean djepg_fill_input_buffer(jpeg_decompress_struct* const cinfo)
+static boolean djpeg_fill_input_buffer(jpeg_decompress_struct* const cinfo)
 {
 	ERREXIT(cinfo, JERR_INPUT_EOF);
 	return false;
 }
 
-static void djepg_skip_input_data(jpeg_decompress_struct* const cinfo, long const num_bytes)
+static void djpeg_skip_input_data(jpeg_decompress_struct* const cinfo, long const num_bytes)
 {
 	if (num_bytes < 0)
 		return;
@@ -386,11 +386,11 @@ static SDL_Surface* Img_LoadJPG(char const* const name)
 		jpeg_source_mgr src;
 		src.next_input_byte   = buf;
 		src.bytes_in_buffer   = len;
-		src.init_source       = &djepg_nop;
-		src.fill_input_buffer = &djepg_fill_input_buffer;
-		src.skip_input_data   = &djepg_skip_input_data;
+		src.init_source       = &djpeg_nop;
+		src.fill_input_buffer = &djpeg_fill_input_buffer;
+		src.skip_input_data   = &djpeg_skip_input_data;
 		src.resync_to_restart = &jpeg_resync_to_restart;
-		src.term_source       = &djepg_nop;
+		src.term_source       = &djpeg_nop;
 		cinfo.src             = &src;
 #else
 		jpeg_mem_src(&cinfo, buf, len);
