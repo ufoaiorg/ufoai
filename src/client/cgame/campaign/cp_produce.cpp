@@ -49,7 +49,7 @@ static cvar_t* mn_production_amount;	/**< Amount of the current production; if n
  * @sa PR_DisassemblyInfo
  * @return 0 if the production does not make any progress, 1 if the whole item is built in 1 minute
  */
-static double PR_CalculateProductionPercentPerMinute (const base_t *base, const productionData_t *prodData)
+static double PR_CalculateProductionTimeInMinutes (const base_t *base, const productionData_t *prodData)
 {
 	/* Check how many workers hired in this base. */
 	const signed int allWorkers = E_CountHired(base, EMPL_WORKER);
@@ -71,11 +71,10 @@ static double PR_CalculateProductionPercentPerMinute (const base_t *base, const 
 		 * Penalty starts when distance is greater than 45 degrees */
 		distanceFactor = max(1.0, GetDistanceOnGlobe(storedUFO->installation->pos, base->pos) / 45.0);
 	}
-	const double divisor = PRODUCE_WORKERS * distanceFactor * timeDefault;
-	/* Calculate the fraction of item produced for our amount of workers. */
-	const double fraction = maxWorkers / divisor;
-	/* Don't allow to return fraction greater than 1 (you still need at least 1 hour to produce an item). */
-	return min(fraction, 1.0);
+	/* Calculate the time needed for production of the item for our amount of workers. */
+	double const timeScaled = distanceFactor * timeDefault * PRODUCE_WORKERS / maxWorkers;
+	/* Don't allow to return a time of less than 1 (you still need at least 1 minute to produce an item). */
+	return max(1.0, timeScaled);
 }
 
 /**
@@ -85,7 +84,7 @@ static double PR_CalculateProductionPercentPerMinute (const base_t *base, const 
  */
 static int PR_CalculateTotalFrames (const base_t *base, const productionData_t *prodData)
 {
-	return (1.0 / PR_CalculateProductionPercentPerMinute(base, prodData)) + 1;
+	return PR_CalculateProductionTimeInMinutes(base, prodData) + 1;
 }
 
 /**
