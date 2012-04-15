@@ -71,18 +71,11 @@ static double PR_CalculateProductionPercentPerMinute (const base_t *base, const 
 		 * Penalty starts when distance is greater than 45 degrees */
 		distanceFactor = max(1.0, GetDistanceOnGlobe(storedUFO->installation->pos, base->pos) / 45.0);
 	}
-	if (maxWorkers == PRODUCE_WORKERS) {
-		/* No need to calculate: timeDefault is for PRODUCE_WORKERS workers. */
-		const double divisor = distanceFactor * timeDefault;
-		const double fraction = 1.0 / divisor;
-		return min(fraction, 1.0);
-	} else {
-		const double divisor = PRODUCE_WORKERS * distanceFactor * timeDefault;
-		/* Calculate the fraction of item produced for our amount of workers. */
-		const double fraction = maxWorkers / divisor;
-		/* Don't allow to return fraction greater than 1 (you still need at least 1 hour to produce an item). */
-		return min(fraction, 1.0);
-	}
+	const double divisor = PRODUCE_WORKERS * distanceFactor * timeDefault;
+	/* Calculate the fraction of item produced for our amount of workers. */
+	const double fraction = maxWorkers / divisor;
+	/* Don't allow to return fraction greater than 1 (you still need at least 1 hour to produce an item). */
+	return min(fraction, 1.0);
 }
 
 /**
