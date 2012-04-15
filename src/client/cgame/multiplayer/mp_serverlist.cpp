@@ -296,7 +296,7 @@ void CL_ParseServerInfoMessage (struct dbuffer *msg, const char *hostname)
 		}
 		cgi->Com_DPrintf(DEBUG_CLIENT, "%s\n", str); /* status string */
 
-		cgi->Cvar_Set("mn_mappic", "maps/shots/default.jpg");
+		cgi->Cvar_Set("mn_mappic", "maps/shots/default");
 		if (*Info_ValueForKey(str, "sv_needpass") == '1')
 			cgi->Cvar_Set("mn_server_need_password", "1");
 		else
