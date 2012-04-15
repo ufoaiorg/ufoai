@@ -55,24 +55,22 @@ static double PR_CalculateProductionTimeInMinutes (const base_t *base, const pro
 	const signed int allWorkers = E_CountHired(base, EMPL_WORKER);
 	/* We will not use more workers than workspace capacity in this base. */
 	const signed int maxWorkers = min(allWorkers, CAP_GetMax(base, CAP_WORKSPACE));
-	signed int timeDefault;
-	double distanceFactor;
 
+	double timeDefault;
 	if (PR_IsProductionData(prodData)) {
 		const technology_t *tech = PR_GetTech(prodData);
 		/* This is the default production time for PRODUCE_WORKERS workers. */
 		timeDefault = tech->produceTime;
-		distanceFactor = 1.0;
 	} else {
 		const storedUFO_t *storedUFO = prodData->data.ufo;
 		/* This is the default disassemble time for PRODUCE_WORKERS workers. */
 		timeDefault = storedUFO->comp->time;
 		/* Production is 4 times longer when installation is on Antipodes
 		 * Penalty starts when distance is greater than 45 degrees */
-		distanceFactor = max(1.0, GetDistanceOnGlobe(storedUFO->installation->pos, base->pos) / 45.0);
+		timeDefault *= max(1.0, GetDistanceOnGlobe(storedUFO->installation->pos, base->pos) / 45.0);
 	}
 	/* Calculate the time needed for production of the item for our amount of workers. */
-	double const timeScaled = distanceFactor * timeDefault * (MINUTES_PER_HOUR * PRODUCE_WORKERS) / maxWorkers;
+	double const timeScaled = timeDefault * (MINUTES_PER_HOUR * PRODUCE_WORKERS) / maxWorkers;
 	/* Don't allow to return a time of less than 1 (you still need at least 1 minute to produce an item). */
 	return max(1.0, timeScaled);
 }
