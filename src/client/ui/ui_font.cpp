@@ -120,7 +120,7 @@ qboolean UI_ParseFont (const char *name, const char **text)
 				case V_TRANSLATION_STRING:
 					token++;
 				case V_HUNK_STRING:
-					Mem_PoolStrDupTo(token, &getValue<char*>(font, v), ui_sysPool, 0);
+					Mem_PoolStrDupTo(token, &Com_GetValue<char*>(font, v), ui_sysPool, 0);
 					break;
 				default:
 					Com_EParseValue(font, token, v->type, v->ofs, v->size);

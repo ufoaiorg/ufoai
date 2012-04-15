@@ -179,14 +179,14 @@ typedef struct value_s {
 	size_t size;
 } value_t;
 
-template<typename T> inline T& getValue(void* const object, value_t const* const value)
+template<typename T> inline T& Com_GetValue(void* const object, value_t const* const value)
 {
 	return *reinterpret_cast<T*>(reinterpret_cast<byte*>(object) + value->ofs);
 }
 
-template<typename T> inline T const& getValue(void const* const object, value_t const* const value)
+template<typename T> inline T const& Com_GetValue(void const* const object, value_t const* const value)
 {
-	return getValue<T>(const_cast<void*>(object), value);
+	return Com_GetValue<T>(const_cast<void*>(object), value);
 }
 
 typedef enum {

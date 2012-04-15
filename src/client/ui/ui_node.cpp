@@ -673,16 +673,16 @@ void UI_NodeSetPropertyFromRAW (uiNode_t* node, const value_t *property, const v
 	if ((property->type & V_UI_MASK) == V_NOT_UI)
 		Com_SetValue(node, rawValue, property->type, property->ofs, property->size);
 	else if ((property->type & V_UI_MASK) == V_UI_CVAR) {
-		UI_FreeStringProperty(getValue<void*>(node, property));
+		UI_FreeStringProperty(Com_GetValue<void*>(node, property));
 		switch (property->type & V_BASETYPEMASK) {
-		case V_FLOAT: *getValue<float*     >(node, property) = *static_cast<float const*>(rawValue); break;
-		case V_INT:   *getValue<int*       >(node, property) = *static_cast<int   const*>(rawValue); break;
-		default:       getValue<byte const*>(node, property) =  static_cast<byte  const*>(rawValue); break;
+		case V_FLOAT: *Com_GetValue<float*     >(node, property) = *static_cast<float const*>(rawValue); break;
+		case V_INT:   *Com_GetValue<int*       >(node, property) = *static_cast<int   const*>(rawValue); break;
+		default:       Com_GetValue<byte const*>(node, property) =  static_cast<byte  const*>(rawValue); break;
 		}
 	} else if (property->type == V_UI_ACTION) {
-		getValue<uiAction_t const*>(node, property) = static_cast<uiAction_t const*>(rawValue);
+		Com_GetValue<uiAction_t const*>(node, property) = static_cast<uiAction_t const*>(rawValue);
 	} else if (property->type == V_UI_SPRITEREF) {
-		getValue<uiSprite_t const*>(node, property) = static_cast<uiSprite_t const*>(rawValue);
+		Com_GetValue<uiSprite_t const*>(node, property) = static_cast<uiSprite_t const*>(rawValue);
 	} else {
 		Com_Error(ERR_FATAL, "UI_NodeSetPropertyFromRAW: Property type '%d' unsupported", property->type);
 	}
@@ -712,7 +712,7 @@ bool UI_NodeSetProperty (uiNode_t* node, const value_t *property, const char* va
 		switch ((int)property->type) {
 		case V_UI_CVAR:
 			if (Q_strstart(value, "*cvar:")) {
-				char*& b = getValue<char*>(node, property);
+				char*& b = Com_GetValue<char*>(node, property);
 				UI_FreeStringProperty(b);
 				b = Mem_PoolStrDup(value, ui_dynStringPool, 0);
 				UI_Node_PropertyChanged(node, property);
@@ -724,7 +724,7 @@ bool UI_NodeSetProperty (uiNode_t* node, const value_t *property, const char* va
 				float f;
 
 				if (Q_strstart(value, "*cvar:")) {
-					char*& b = getValue<char*>(node, property);
+					char*& b = Com_GetValue<char*>(node, property);
 					UI_FreeStringProperty(b);
 					b = Mem_PoolStrDup(value, ui_dynStringPool, 0);
 					UI_Node_PropertyChanged(node, property);
@@ -737,7 +737,7 @@ bool UI_NodeSetProperty (uiNode_t* node, const value_t *property, const char* va
 					return false;
 				}
 
-				void* const b = getValue<void*>(node, property);
+				void* const b = Com_GetValue<void*>(node, property);
 				if (char const* const cvar = Q_strstart((char const*)b, "*cvar:"))
 					Cvar_SetValue(cvar, f);
 				else
@@ -748,7 +748,7 @@ bool UI_NodeSetProperty (uiNode_t* node, const value_t *property, const char* va
 		case V_CVAR_OR_LONGSTRING:
 		case V_CVAR_OR_STRING:
 			{
-				char*& b = getValue<char*>(node, property);
+				char*& b = Com_GetValue<char*>(node, property);
 				UI_FreeStringProperty(b);
 				b = Mem_PoolStrDup(value, ui_dynStringPool, 0);
 				UI_Node_PropertyChanged(node, property);
@@ -762,7 +762,7 @@ bool UI_NodeSetProperty (uiNode_t* node, const value_t *property, const char* va
 		case V_UI_SPRITEREF:
 			{
 				uiSprite_t* sprite = UI_GetSpriteByName(value);
-				getValue<uiSprite_t const*>(node, property) = sprite;
+				Com_GetValue<uiSprite_t const*>(node, property) = sprite;
 				return true;
 			}
 		}
@@ -792,7 +792,7 @@ const char* UI_GetStringFromNodeProperty (const uiNode_t* node, const value_t* p
 		switch ((int)property->type) {
 		case V_CVAR_OR_FLOAT:
 			{
-				const float f = UI_GetReferenceFloat(node, getValue<void*>(node, property));
+				const float f = UI_GetReferenceFloat(node, Com_GetValue<void*>(node, property));
 				const int i = f;
 				if (f == i)
 					return va("%i", i);
@@ -802,7 +802,7 @@ const char* UI_GetStringFromNodeProperty (const uiNode_t* node, const value_t* p
 		case V_CVAR_OR_LONGSTRING:
 		case V_CVAR_OR_STRING:
 		case V_UI_CVAR:
-			return UI_GetReferenceString(node, getValue<char*>(node, property));
+			return UI_GetReferenceString(node, Com_GetValue<char*>(node, property));
 		}
 		break;
 	default:
@@ -825,9 +825,9 @@ float UI_GetFloatFromNodeProperty (const uiNode_t* node, const value_t* property
 	assert(node);
 
 	if (property->type == V_FLOAT) {
-		return getValue<float>(node, property);
+		return Com_GetValue<float>(node, property);
 	} else if ((property->type & V_UI_MASK) == V_UI_CVAR) {
-		void* const b = getValue<void*>(node, property);
+		void* const b = Com_GetValue<void*>(node, property);
 		if (char const* const cvarName = Q_strstart((char const*)b, "*cvar:")) {
 			const cvar_t *cvar = Cvar_Get(cvarName, "", 0, "UI script cvar property");
 			return cvar->value;
@@ -837,9 +837,9 @@ float UI_GetFloatFromNodeProperty (const uiNode_t* node, const value_t* property
 			return atof((const char*)b);
 		}
 	} else if (property->type == V_INT) {
-		return getValue<int>(node, property);
+		return Com_GetValue<int>(node, property);
 	} else if (property->type == V_BOOL) {
-		return getValue<qboolean>(node, property);
+		return Com_GetValue<qboolean>(node, property);
 	} else {
 #ifdef DEBUG
 		Com_Printf("UI_GetFloatFromNodeProperty: Unimplemented float getter for property '%s@%s'. If it should return a float, request it.\n", UI_GetPath(node), property->string);

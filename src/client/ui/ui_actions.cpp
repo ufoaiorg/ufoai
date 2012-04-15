@@ -344,7 +344,7 @@ static void UI_NodeSetPropertyFromActionValue (uiNode_t *node, const value_t *pr
 	if (value->type == EA_VALUE_STRING) {
 		const char* string = value->d.terminal.d1.constString;
 		if ((property->type & V_UI_MASK) == V_UI_CVAR && Q_strstart(string, "*cvar:")) {
-			getValue<void*>(node, property) = value->d.terminal.d1.data;
+			Com_GetValue<void*>(node, property) = value->d.terminal.d1.data;
 		} else {
 			/** @todo here we must catch error in a better way, and using cvar for error code to create unittest automations */
 			UI_InitRawActionValue(value, node, property, string);
@@ -481,7 +481,7 @@ static inline void UI_ExecuteCallAction (const uiAction_t* action, const uiCallC
 	}
 
 	if (callProperty == NULL || callProperty->type == V_UI_ACTION) {
-		uiAction_t const* const actionsRef = callProperty ? getValue<uiAction_t*>(callNode, callProperty) : callNode->onClick;
+		uiAction_t const* const actionsRef = callProperty ? Com_GetValue<uiAction_t*>(callNode, callProperty) : callNode->onClick;
 		UI_ExecuteActions(actionsRef, &newContext);
 	} else if (callProperty->type == V_UI_NODEMETHOD) {
 		uiNodeMethod_t func = (uiNodeMethod_t) callProperty->ofs;
@@ -787,7 +787,7 @@ void UI_AddListener (uiNode_t *node, const value_t *property, const uiNode_t *fu
 	action->next = NULL;
 
 	/* insert the action */
-	uiAction_t** anchor = &getValue<uiAction_t*>(node, property);
+	uiAction_t** anchor = &Com_GetValue<uiAction_t*>(node, property);
 	while (*anchor)
 		anchor = &(*anchor)->next;
 	*anchor = action;
@@ -840,7 +840,7 @@ void UI_RemoveListener (uiNode_t *node, const value_t *property, uiNode_t *funct
 	data = (void*) &functionNode->onClick;
 
 	/* remove the action */
-	uiAction_t*& action = getValue<uiAction_t*>(node, property);
+	uiAction_t*& action = Com_GetValue<uiAction_t*>(node, property);
 	if (uiAction_t* lastAction = action) {
 		uiAction_t *tmp = NULL;
 		if (lastAction->type == EA_LISTENER && lastAction->d.terminal.d2.constData == data) {

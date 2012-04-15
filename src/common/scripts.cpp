@@ -1397,10 +1397,10 @@ qboolean Com_ParseBlockToken (const char *name, const char **text, void *base, c
 					/* fall through */
 				}
 			case V_HUNK_STRING:
-				Mem_PoolStrDupTo(token, &getValue<char*>(base, v), mempool, 0);
+				Mem_PoolStrDupTo(token, &Com_GetValue<char*>(base, v), mempool, 0);
 				break;
 			case V_LIST: {
-				linkedList_t*& list = getValue<linkedList_t*>(base, v);
+				linkedList_t*& list = Com_GetValue<linkedList_t*>(base, v);
 				assert(!list);
 				do {
 					token = Com_EParse(text, errhead, name);

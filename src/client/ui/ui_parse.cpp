@@ -630,7 +630,7 @@ static qboolean UI_ParseExcludeRect (uiNode_t * node, const char **text, const c
 static qboolean UI_ParseEventProperty (uiNode_t * node, const value_t *event, const char **text, const char **token, const char *errhead)
 {
 	/* add new actions to end of list */
-	uiAction_t** action = &getValue<uiAction_t*>(node, event);
+	uiAction_t** action = &Com_GetValue<uiAction_t*>(node, event);
 	for (; *action; action = &(*action)->next) {}
 
 	/* get the action body */
@@ -686,7 +686,7 @@ static qboolean UI_ParseProperty (void* object, const value_t *property, const c
 
 		if (property->type == V_TRANSLATION_STRING) {
 			/* selectbox values are static arrays */
-			char* const target = getValue<char[]>(object, property);
+			char* const target = Com_GetValue<char[]>(object, property);
 			const char *translatableToken = *token;
 			assert(property->size);
 			if (translatableToken[0] == '_')
@@ -712,7 +712,7 @@ static qboolean UI_ParseProperty (void* object, const value_t *property, const c
 
 		/* a reference to data is handled like this */
 		ui_global.curadata = (byte*) Com_AlignPtr(ui_global.curadata, (valueTypes_t) (property->type & V_BASETYPEMASK));
-		getValue<byte*>(object, property) = ui_global.curadata;
+		Com_GetValue<byte*>(object, property) = ui_global.curadata;
 
 		/** @todo check for the moment its not a cvar */
 		assert((*token)[0] != '*');
@@ -745,7 +745,7 @@ static qboolean UI_ParseProperty (void* object, const value_t *property, const c
 		if ((*token)[0] == '*') {
 			/* a reference to data */
 			ui_global.curadata = (byte*) Com_AlignPtr(ui_global.curadata, V_STRING);
-			getValue<byte*>(object, property) = ui_global.curadata;
+			Com_GetValue<byte*>(object, property) = ui_global.curadata;
 
 			/* sanity check */
 			if (strlen(*token) > MAX_VAR - 1) {
@@ -762,7 +762,7 @@ static qboolean UI_ParseProperty (void* object, const value_t *property, const c
 		} else {
 			/* a reference to data */
 			ui_global.curadata = (byte*) Com_AlignPtr(ui_global.curadata, (valueTypes_t)(property->type & V_BASETYPEMASK));
-			getValue<byte*>(object, property) = ui_global.curadata;
+			Com_GetValue<byte*>(object, property) = ui_global.curadata;
 
 			/* sanity check */
 			if ((property->type & V_BASETYPEMASK) == V_STRING && strlen(*token) > MAX_VAR - 1) {
@@ -800,7 +800,7 @@ static qboolean UI_ParseProperty (void* object, const value_t *property, const c
 				if (!*text)
 					return qfalse;
 
-				uiSprite_t const*& sprite = getValue<uiSprite_t const*>(object, property);
+				uiSprite_t const*& sprite = Com_GetValue<uiSprite_t const*>(object, property);
 				sprite = UI_GetSpriteByName(*token);
 				if (!sprite) {
 					Com_Printf("UI_ParseProperty: sprite '%s' not found (object %s)\n", *token, objectName);
@@ -814,7 +814,7 @@ static qboolean UI_ParseProperty (void* object, const value_t *property, const c
 				if (!*text)
 					return qfalse;
 
-				uiAction_t*& expression = getValue<uiAction_t*>(object, property);
+				uiAction_t*& expression = Com_GetValue<uiAction_t*>(object, property);
 				expression = UI_AllocStaticStringCondition(*token);
 				if (!expression)
 					return qfalse;
@@ -827,7 +827,7 @@ static qboolean UI_ParseProperty (void* object, const value_t *property, const c
 				if (!*text)
 					return qfalse;
 
-				int& dataId = getValue<int>(object, property);
+				int& dataId = Com_GetValue<int>(object, property);
 				dataId = UI_GetDataIDByName(*token);
 				if (dataId < 0) {
 					Com_Printf("UI_ParseProperty: Could not find shared data ID '%s' (%s@%s)\n",
@@ -1180,7 +1180,7 @@ qboolean UI_ParseUIModel (const char *name, const char **text)
 				return qfalse;
 			switch (v->type) {
 			case V_HUNK_STRING:
-				Mem_PoolStrDupTo(token, &getValue<char*>(model, v), ui_sysPool, 0);
+				Mem_PoolStrDupTo(token, &Com_GetValue<char*>(model, v), ui_sysPool, 0);
 				break;
 			default:
 				Com_EParseValue(model, token, v->type, v->ofs, v->size);

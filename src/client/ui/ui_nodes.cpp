@@ -557,7 +557,7 @@ void UI_DeleteNode (uiNode_t* node)
 			continue;
 		while (*property) {
 			if (((*property)->type & V_UI_MASK) == V_UI_CVAR) {
-				if (void*& mem = getValue<void*>(node, *property)) {
+				if (void*& mem = Com_GetValue<void*>(node, *property)) {
 					UI_FreeStringProperty(mem);
 					mem = 0;
 				}
