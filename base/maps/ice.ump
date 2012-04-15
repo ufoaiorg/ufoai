@@ -113,6 +113,16 @@ adu     +a     adu
 0      adu     0
 }
 
+tile +r09
+	// the ship´s bridge
+{
+3 4
+0      adu     0
+adu     +a     adu
+adu     +a     adu
+0      adu     0
+}
+
 // map assemblies ---------------------------------------------------
 
 assembly test
@@ -126,6 +136,7 @@ title "_Ice"
 +r05 "0 1"
 +r06 "0 2"
 +r07 "0 2"
-+r08 "0 2"
++r08 "0 1"
++r09 "0 1"
 *rm_drop +craft_drop_firebird "1 1"
 }
