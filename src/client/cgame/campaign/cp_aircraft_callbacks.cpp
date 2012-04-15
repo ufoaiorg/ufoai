@@ -74,7 +74,7 @@ static void AIM_SelectAircraft_f (void)
 }
 
 /**
- * @brief Starts an aircraft or stops the current mission and let the aircraft idle around.
+ * @brief Starts an aircraft or stops the current mission and lets the aircraft idle around.
  */
 static void AIM_AircraftStart_f (void)
 {
@@ -89,7 +89,7 @@ static void AIM_AircraftStart_f (void)
 		return;
 	}
 
-	/* Aircraft cannot start without Command Centre operational. */
+	/* Aircraft cannot start without operational Command Centre. */
 	if (!B_GetBuildingStatus(base, B_COMMAND)) {
 		CP_Popup(_("Notice"), _("No operational Command Centre in this base.\n\nAircraft can not start.\n"));
 		return;
@@ -117,12 +117,12 @@ static void AIM_AircraftStart_f (void)
 }
 
 #define SOLDIER_EQUIP_MENU_BUTTON_NO_AIRCRAFT_IN_BASE 1
-#define SOLDIER_EQUIP_MENU_BUTTON_NO_SOLDIES_AVAILABLE 2
+#define SOLDIER_EQUIP_MENU_BUTTON_NO_SOLDIERS_AVAILABLE 2
 #define SOLDIER_EQUIP_MENU_BUTTON_OK 3
 /**
  * @brief Determines the state of the equip soldier menu button:
  * @returns SOLIDER_EQUIP_MENU_BUTTON_NO_AIRCRAFT_IN_BASE if no aircraft in base
- * @returns SOLIDER_EQUIP_MENU_BUTTON_NO_SOLDIES_AVAILABLE if no soldiers available
+ * @returns SOLIDER_EQUIP_MENU_BUTTON_NO_SOLDIERS_AVAILABLE if no soldiers available
  * @returns SOLIDER_EQUIP_MENU_BUTTON_OK if none of the above is true
  */
 static int CL_EquipSoldierState (const aircraft_t * aircraft)
@@ -131,7 +131,7 @@ static int CL_EquipSoldierState (const aircraft_t * aircraft)
 		return SOLDIER_EQUIP_MENU_BUTTON_NO_AIRCRAFT_IN_BASE;
 
 	if (E_CountHired(aircraft->homebase, EMPL_SOLDIER) <= 0)
-		return SOLDIER_EQUIP_MENU_BUTTON_NO_SOLDIES_AVAILABLE;
+		return SOLDIER_EQUIP_MENU_BUTTON_NO_SOLDIERS_AVAILABLE;
 
 	return SOLDIER_EQUIP_MENU_BUTTON_OK;
 }
@@ -215,13 +215,13 @@ void AIR_AircraftSelect (aircraft_t* aircraft)
 	Q_strcat(aircraftInfo, va(_("Fuel:\t%i/%i\n"), AIR_AircraftMenuStatsValues(aircraft->fuel, AIR_STATS_FUELSIZE),
 		AIR_AircraftMenuStatsValues(aircraft->stats[AIR_STATS_FUELSIZE], AIR_STATS_FUELSIZE)), sizeof(aircraftInfo));
 	Q_strcat(aircraftInfo, va(_("Operational range:\t%i km\n"), AIR_GetOperationRange(aircraft)), sizeof(aircraftInfo));
-	Q_strcat(aircraftInfo, va(_("Weapons:\t%i on %i\n"), AIR_GetSlotItems(AC_ITEM_WEAPON, aircraft), aircraft->maxWeapons), sizeof(aircraftInfo));
-	Q_strcat(aircraftInfo, va(_("Armour:\t%i on 1\n"), AIR_GetSlotItems(AC_ITEM_SHIELD, aircraft)), sizeof(aircraftInfo));
-	Q_strcat(aircraftInfo, va(_("Electronics:\t%i on %i"), AIR_GetSlotItems(AC_ITEM_ELECTRONICS, aircraft), aircraft->maxElectronics), sizeof(aircraftInfo));
+	Q_strcat(aircraftInfo, va(_("Weapons:\t%i of %i\n"), AIR_GetSlotItems(AC_ITEM_WEAPON, aircraft), aircraft->maxWeapons), sizeof(aircraftInfo));
+	Q_strcat(aircraftInfo, va(_("Armour:\t%i of 1\n"), AIR_GetSlotItems(AC_ITEM_SHIELD, aircraft)), sizeof(aircraftInfo));
+	Q_strcat(aircraftInfo, va(_("Electronics:\t%i of %i"), AIR_GetSlotItems(AC_ITEM_ELECTRONICS, aircraft), aircraft->maxElectronics), sizeof(aircraftInfo));
 
 	UI_RegisterText(TEXT_AIRCRAFT_INFO, aircraftInfo);
 
-	/** @todo This shouldn't exists. UI should use the global idx as reference */
+	/** @todo This shouldn't exist. UI should use the global idx as reference */
 	/* compute the ID and... */
 	id = 0;
 	AIR_ForeachFromBase(aircraftInBase, base) {
@@ -279,7 +279,7 @@ void AIR_InitCallbacks (void)
 	/* menu aircraft_equip, aircraft */
 	Cmd_AddCommand("mn_select_aircraft", AIM_SelectAircraft_f);
 	/* menu aircraft, popup_transferbaselist */
-	Cmd_AddCommand("aircraft_return", AIM_AircraftReturnToBase_f, "Sends the current aircraft back to homebase");
+	Cmd_AddCommand("aircraft_return", AIM_AircraftReturnToBase_f, "Sends the current aircraft back to homebase.");
 	/* menu aircraft, aircraft_equip, aircraft_soldier */
 	Cmd_AddCommand("aircraft_update_list", AIR_AircraftUpdateList_f);
 	Cmd_AddCommand("aircraft_namechange", AIR_ChangeAircraftName_f, "Callback to change the name of the aircraft.");
