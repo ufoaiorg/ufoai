@@ -1,7 +1,7 @@
 /**
  * @file
  * @brief The container node refer to 3 different nodes merged into a singler one. Both
- * can drag and drop solider items from a container to another one. The first container
+ * can drag and drop soldier items from a container to another one. The first container
  * is a soldier slot. For example, the left arm, the bag pack... The second is the base
  * inventiory (which is now an extended node from container). And the last it a floor
  * container used into the battlescape. The node name itself is used to know the container

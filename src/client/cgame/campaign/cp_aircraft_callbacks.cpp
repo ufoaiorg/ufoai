@@ -121,9 +121,9 @@ static void AIM_AircraftStart_f (void)
 #define SOLDIER_EQUIP_MENU_BUTTON_OK 3
 /**
  * @brief Determines the state of the equip soldier menu button:
- * @returns SOLIDER_EQUIP_MENU_BUTTON_NO_AIRCRAFT_IN_BASE if no aircraft in base
- * @returns SOLIDER_EQUIP_MENU_BUTTON_NO_SOLDIERS_AVAILABLE if no soldiers available
- * @returns SOLIDER_EQUIP_MENU_BUTTON_OK if none of the above is true
+ * @returns SOLDIER_EQUIP_MENU_BUTTON_NO_AIRCRAFT_IN_BASE if no aircraft in base
+ * @returns SOLDIER_EQUIP_MENU_BUTTON_NO_SOLDIERS_AVAILABLE if no soldiers available
+ * @returns SOLDIER_EQUIP_MENU_BUTTON_OK if none of the above is true
  */
 static int CL_EquipSoldierState (const aircraft_t * aircraft)
 {

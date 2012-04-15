@@ -306,7 +306,7 @@ static void HUD_ReloadRight_f (void)
 }
 
 /**
- * Ask the current selected solider to execute an action
+ * Ask the current selected soldier to execute an action
  * @todo extend it to open doors or things like that
  */
 static void HUD_ExecuteAction_f (void)
