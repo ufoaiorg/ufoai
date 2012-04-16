@@ -3,7 +3,7 @@
  */
 
 /*
-All original material Copyright (C) 2002-2011 UFO: Alien Invasion.
+All original material Copyright (C) 2002-2012 UFO: Alien Invasion.
 
 This program is free software; you can redistribute it and/or
 modify it under the terms of the GNU General Public License
@@ -64,7 +64,7 @@ static cvar_t *snd_music_volume;
 
 /**
  * @brief Parses music definitions for different situations
- * @note We can have lists for geoscape and battlescape e.g.
+ * @note We have lists for geoscape, battlescape, main and aircombat
  */
 void M_ParseMusic (const char *name, const char **text)
 {
@@ -81,7 +81,7 @@ void M_ParseMusic (const char *name, const char **text)
 	else if (Q_streq(name, "main"))
 		i = MUSIC_MAIN;
 	else {
-		Com_Printf("M_ParseMusic: Invalid music id '%s'\n", name);
+		Com_Printf("M_ParseMusic: Invalid music id '%s'!\n", name);
 		FS_SkipBlock(text);
 		return;
 	}
@@ -90,7 +90,7 @@ void M_ParseMusic (const char *name, const char **text)
 	token = Com_Parse(text);
 
 	if (!*text || *token != '{') {
-		Com_Printf("M_ParseMusic: music def \"%s\" without body ignored\n", name);
+		Com_Printf("M_ParseMusic: Music def \"%s\" without body ignored!\n", name);
 		return;
 	}
 
@@ -101,7 +101,7 @@ void M_ParseMusic (const char *name, const char **text)
 		if (*token == '}')
 			break;
 		if (musicArrayLength[i] >= MUSIC_MAX_ENTRIES) {
-			Com_Printf("M_ParseMusic: Too many music entries for category: '%s'\n", name);
+			Com_Printf("M_ParseMusic: Too many music entries for category: '%s'!\n", name);
 			FS_SkipBlock(text);
 			break;
 		}
@@ -146,7 +146,7 @@ static void M_Start (const char *file)
 		return;
 
 	if (!s_env.initialized) {
-		Com_Printf("M_Start: no sound started\n");
+		Com_Printf("M_Start: No sound started!\n");
 		return;
 	}
 
@@ -177,19 +177,19 @@ static void M_Start (const char *file)
 
 	/* load it in */
 	if ((size = FS_LoadFile(va("music/%s.ogg", name), &musicBuf)) == -1) {
-		Com_Printf("M_Start: Could not load '%s' background track\n", name);
+		Com_Printf("M_Start: Could not load '%s' background track!\n", name);
 		return;
 	}
 
 	rw = SDL_RWFromMem(musicBuf, size);
 	if (!rw) {
-		Com_Printf("M_Start: Could not load music: 'music/%s'\n", name);
+		Com_Printf("M_Start: Could not load music: 'music/%s'!\n", name);
 		FS_FreeFile(musicBuf);
 		return;
 	}
 	music.data = Mix_LoadMUS_RW(rw);
 	if (!music.data) {
-		Com_Printf("M_Start: Could not load music: 'music/%s' (%s)\n", name, Mix_GetError());
+		Com_Printf("M_Start: Could not load music: 'music/%s' (%s)!\n", name, Mix_GetError());
 		SDL_FreeRW(rw);
 		FS_FreeFile(musicBuf);
 		return;
@@ -198,7 +198,7 @@ static void M_Start (const char *file)
 	Q_strncpyz(music.currentTrack, name, sizeof(music.currentTrack));
 	music.buffer = musicBuf;
 	if (Mix_FadeInMusic(music.data, -1, 1500) == -1)
-		Com_Printf("M_Start: Could not play music: 'music/%s' (%s)\n", name, Mix_GetError());
+		Com_Printf("M_Start: Could not play music: 'music/%s' (%s)!\n", name, Mix_GetError());
 }
 
 /**
@@ -233,14 +233,14 @@ static void M_RandomTrack_f (void)
 			if (!randomID) {
 				Com_sprintf(findname, sizeof(findname), "%s", filename);
 				musicTrack = Com_SkipPath(findname);
-				Com_Printf("..playing next: '%s'\n", musicTrack);
+				Com_Printf("..playing next music track: '%s'\n", musicTrack);
 				Cvar_Set("snd_music", musicTrack);
 			}
 			randomID--;
 		}
 		FS_NextFileFromFileList(NULL);
 	} else {
-		Com_DPrintf(DEBUG_SOUND, "M_RandomTrack_f: No musics found!\n");
+		Com_DPrintf(DEBUG_SOUND, "M_RandomTrack_f: No music found!\n");
 	}
 }
 
@@ -271,21 +271,21 @@ static void M_Change_f (void)
 	} else if (Q_streq(type, "aircombat")) {
 		category = MUSIC_AIRCOMBAT;
 	} else {
-		Com_Printf("Invalid parameter given\n");
+		Com_Printf("Invalid parameter given!\n");
 		return;
 	}
 
 	if (category != MUSIC_BATTLESCAPE && CL_OnBattlescape()) {
-		Com_DPrintf(DEBUG_SOUND, "Not changing music to %s - we are in Battlescape\n", type);
+		Com_DPrintf(DEBUG_SOUND, "Not changing music to %s - we are on the battlescape!\n", type);
 		return;
 	}
 
 	if (!musicArrayLength[category]) {
-		Com_Printf("Could not find any %s music tracks\n", type);
+		Com_Printf("M_Change_f: Could not find any %s themed music tracks!\n", type);
 		return;
 	}
 	rnd = rand() % musicArrayLength[category];
-	Com_Printf("music change to %s (from %s)\n", musicArrays[category][rnd], snd_music->string);
+	Com_Printf("Music: %s track changed from %s to %s.\n", type, snd_music->string, musicArrays[category][rnd]);
 	Cvar_Set("snd_music", musicArrays[category][rnd]);
 }
 
@@ -328,13 +328,13 @@ void M_Init (void)
 {
 	if (Cmd_Exists("music_change"))
 		Cmd_RemoveCommand("music_change");
-	Cmd_AddCommand("music_play", M_Play_f, "Plays a background sound track");
-	Cmd_AddCommand("music_change", M_Change_f, "Changes the music theme");
-	Cmd_AddCommand("music_stop", M_Stop, "Stops currently playing music tracks");
-	Cmd_AddCommand("music_randomtrack", M_RandomTrack_f, "Plays a random background track");
+	Cmd_AddCommand("music_play", M_Play_f, "Plays a music track.");
+	Cmd_AddCommand("music_change", M_Change_f, "Changes the music theme (valid values:battlescape/geoscape/main/aircombat).");
+	Cmd_AddCommand("music_stop", M_Stop, "Stops currently playing music track.");
+	Cmd_AddCommand("music_randomtrack", M_RandomTrack_f, "Plays a random music track.");
 	Cmd_AddParamCompleteFunction("music_play", M_CompleteMusic);
 	snd_music = Cvar_Get("snd_music", "PsymongN3", 0, "Background music track");
-	snd_music_volume = Cvar_Get("snd_music_volume", "128", CVAR_ARCHIVE, "Music volume - default is 128");
+	snd_music_volume = Cvar_Get("snd_music_volume", "128", CVAR_ARCHIVE, "Music volume - default is 128.");
 	snd_music_volume->modified = qtrue;
 
 	OBJZERO(music);
