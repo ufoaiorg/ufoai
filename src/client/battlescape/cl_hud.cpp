@@ -4,7 +4,7 @@
  */
 
 /*
-Copyright (C) 2002-2011 UFO: Alien Invasion.
+Copyright (C) 2002-2012 UFO: Alien Invasion.
 
 This program is free software; you can redistribute it and/or
 modify it under the terms of the GNU General Public License
@@ -1549,31 +1549,31 @@ void HUD_InitStartup (void)
 	Cmd_AddCommand("hud_selectreactionfiremode", HUD_SelectReactionFiremode_f, "Change/Select firemode used for reaction fire.");
 	Cmd_AddCommand("hud_listfiremodes", HUD_DisplayFiremodes_f, "Display a list of firemodes for a weapon+ammo.");
 	Cmd_AddCommand("hud_listactions", HUD_DisplayActions_f, "Display a list of action from the selected soldier.");
-	Cmd_AddCommand("hud_getactorcvar", HUD_ActorGetCvarData_f, "Update cvars from actor from list");
+	Cmd_AddCommand("hud_getactorcvar", HUD_ActorGetCvarData_f, "Update cvars from actor from list.");
 
 	/** @note We can't check the value at startup cause scripts are not yet loaded */
-	cl_hud = Cvar_Get("cl_hud", "hud_default", CVAR_ARCHIVE | CVAR_LATCH, "Current selected HUD");
+	cl_hud = Cvar_Get("cl_hud", "hud_default", CVAR_ARCHIVE | CVAR_LATCH, "Current selected HUD.");
 	Cvar_SetCheckFunction("cl_hud", HUD_CvarCheckMNHud);
 
-	cl_worldlevel = Cvar_Get("cl_worldlevel", "0", 0, "Current worldlevel in tactical mode");
+	cl_worldlevel = Cvar_Get("cl_worldlevel", "0", 0, "Current worldlevel in tactical mode.");
 	Cvar_SetCheckFunction("cl_worldlevel", CL_CvarWorldLevel);
 	cl_worldlevel->modified = qfalse;
 
-	Cvar_Get("mn_ammoleft", "", 0, "The remaining amount of ammunition in for the left hand weapon");
-	Cvar_Get("mn_lweapon", "", 0, "The left hand weapon model of the current selected actor - empty if no weapon");
+	Cvar_Get("mn_ammoleft", "", 0, "The remaining amount of ammunition in the left hand weapon.");
+	Cvar_Get("mn_lweapon", "", 0, "The left hand weapon model of the current selected actor - empty if no weapon.");
 	Cvar_RegisterChangeListener("mn_ammoleft", HUD_LeftHandChangeListener);
 	Cvar_RegisterChangeListener("mn_lweapon", HUD_LeftHandChangeListener);
 
-	Cvar_Get("mn_ammoright", "", 0, "The remaining amount of ammunition in for the right hand weapon");
-	Cvar_Get("mn_rweapon", "", 0, "The right hand weapon model of the current selected actor - empty if no weapon");
+	Cvar_Get("mn_ammoright", "", 0, "The remaining amount of ammunition in the right hand weapon.");
+	Cvar_Get("mn_rweapon", "", 0, "The right hand weapon model of the current selected actor - empty if no weapon.");
 	Cvar_RegisterChangeListener("mn_ammoright", HUD_RightHandChangeListener);
 	Cvar_RegisterChangeListener("mn_rweapon", HUD_RightHandChangeListener);
 
-	Cvar_Get("mn_turemain", "", 0, "Remaining TUs for the current selected actor");
+	Cvar_Get("mn_turemain", "", 0, "Remaining TUs for the current selected actor.");
 	Cvar_RegisterChangeListener("mn_turemain", HUD_TUChangeListener);
 
 	Cvar_RegisterChangeListener("cl_selected", HUD_ActorSelectionChangeListener);
 
-	cl_hud_message_timeout = Cvar_Get("cl_hud_message_timeout", "2000", CVAR_ARCHIVE, "Timeout for HUD messages (milliseconds)");
-	cl_show_cursor_tooltips = Cvar_Get("cl_show_cursor_tooltips", "1", CVAR_ARCHIVE, "Show cursor tooltips in tactical game mode");
+	cl_hud_message_timeout = Cvar_Get("cl_hud_message_timeout", "2000", CVAR_ARCHIVE, "Timeout for HUD messages (milliseconds).");
+	cl_show_cursor_tooltips = Cvar_Get("cl_show_cursor_tooltips", "1", CVAR_ARCHIVE, "Show cursor tooltips in tactical game mode.");
 }
