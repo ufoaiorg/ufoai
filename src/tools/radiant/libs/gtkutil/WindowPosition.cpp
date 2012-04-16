@@ -68,6 +68,7 @@ void WindowPosition::applyPosition() {
 	if (_window != NULL) {
 		gtk_window_set_gravity(_window, GDK_GRAVITY_STATIC);
 
+		// TODO: What about multi-monitor setups with overlapping windows?
 		GdkScreen* screen = gdk_screen_get_default();
 
 		// Sanity check of the window position
