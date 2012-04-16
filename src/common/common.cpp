@@ -1366,16 +1366,11 @@ scheduleEvent_t *Schedule_Event (int when, event_func *func, event_check_func *c
 	event->clean = clean;
 	event->data = data;
 
-	if (!event_queue || event_queue->when > when) {
-		event->next = event_queue;
-		event_queue = event;
-	} else {
-		scheduleEvent_t *e = event_queue;
-		while (e->next && e->next->when <= when)
-			e = e->next;
-		event->next = e->next;
-		e->next = event;
-	}
+	scheduleEvent_t** anchor = &event_queue;
+	while (*anchor && (*anchor)->when <= when)
+		anchor = &(*anchor)->next;
+	event->next = *anchor;
+	*anchor     = event;
 
 #ifdef DEBUG
 	for (i = event_queue; i && i->next; i = i->next)
