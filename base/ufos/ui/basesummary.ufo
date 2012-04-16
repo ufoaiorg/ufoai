@@ -9,10 +9,9 @@ component baselayout cmpBase
 	padding		2
 	onClick 		{
 		cmd "basesummary_selectbase <baseid>;"
+		cmd "mn_base_select <baseid>;"
 	}
 }
-
-
 
 window basesummary
 {
