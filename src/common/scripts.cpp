@@ -1631,6 +1631,11 @@ static qboolean Com_ParseFire (const char *name, const char **text, fireDef_t * 
 	if (fd->weaponSkill < ABILITY_NUM_TYPES)
 		Com_Printf("Com_ParseFire: firedef for weapon \"%s\" doesn't have a skill set\n", name);
 
+	if (fd->shots == 1 && fd->delayBetweenShots > 0.0f) {
+		Com_Printf("Com_ParseFire: firedef for weapon \"%s\" has delayBetweenShots set but is only a one-shot-firedef\n", name);
+		fd->delayBetweenShots = 0.0f;
+	}
+
 	if (fd->name == NULL) {
 		Com_Printf("firedef without name\n");
 		return qfalse;
