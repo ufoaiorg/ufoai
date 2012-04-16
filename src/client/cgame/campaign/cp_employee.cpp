@@ -205,7 +205,7 @@ const char* E_GetEmployeeString (employeeType_t type, int n)
 	case EMPL_PILOT:
 		return ngettext("Pilot", "Pilots", n);
 	case EMPL_ROBOT:
-		return ngettext("UGV", "UGVS", n);
+		return ngettext("UGV", "UGVs", n);
 	default:
 		Com_Error(ERR_DROP, "Unknown employee type '%i'\n", type);
 	}
