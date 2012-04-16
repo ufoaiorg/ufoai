@@ -69,9 +69,6 @@ TexTool::TexTool() :
 	populateWindow();
 
 	// Connect the window position tracker
-	xml::NodeList windowStateList = GlobalRegistry().findXPath(RKEY_WINDOW_STATE);
-
-	// Connect the window position tracker
 	_windowPosition.loadFromPath(RKEY_WINDOW_STATE);
 
 	_windowPosition.connect(GTK_WINDOW(getWindow()));
@@ -84,7 +81,7 @@ TexTool::TexTool() :
 }
 
 void TexTool::keyChanged(const std::string& changedKey, const std::string& newValue) {
-	_gridActive = GlobalRegistry().get(RKEY_GRID_STATE) == "1";
+	_gridActive = GlobalRegistry().getBool(RKEY_GRID_STATE);
 	draw();
 }
 
