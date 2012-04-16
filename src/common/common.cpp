@@ -1356,9 +1356,6 @@ void scheduleEvent_t::operator delete(void* const p)
  */
 scheduleEvent_t *Schedule_Event (int when, event_func *func, event_check_func *check, event_clean_func *clean, void *data)
 {
-#ifdef DEBUG
-	scheduleEvent_t *i;
-#endif
 	scheduleEvent_t* const event = new scheduleEvent_t();
 	event->when = when;
 	event->func = func;
@@ -1373,9 +1370,10 @@ scheduleEvent_t *Schedule_Event (int when, event_func *func, event_check_func *c
 	*anchor     = event;
 
 #ifdef DEBUG
-	for (i = event_queue; i && i->next; i = i->next)
+	for (scheduleEvent_t* i = event_queue; i && i->next; i = i->next) {
 		if (i->when > i->next->when)
 			abort();
+	}
 #endif
 
 	return event;
