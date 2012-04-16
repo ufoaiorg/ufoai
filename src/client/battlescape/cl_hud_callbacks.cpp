@@ -3,7 +3,7 @@
  */
 
 /*
-Copyright (C) 2002-2011 UFO: Alien Invasion.
+Copyright (C) 2002-2012 UFO: Alien Invasion.
 
 This program is free software; you can redistribute it and/or
 modify it under the terms of the GNU General Public License
@@ -148,7 +148,7 @@ static void HUD_FireWeapon_f (void)
 	} else {
 		/* Cannot shoot because of not enough TUs - every other
 		 * case should be checked previously in this function. */
-		HUD_DisplayMessage(_("Can't perform action:\nnot enough TUs.\n"));
+		HUD_DisplayMessage(_("Can't perform action:\nNot enough TUs.\n"));
 	}
 }
 
@@ -258,14 +258,14 @@ static qboolean HUD_CheckReload (const le_t* le, const invList_t *weapon, contai
 
 	/* Cannot reload because this item is not reloadable. */
 	if (!weapon->item.t->reload) {
-		HUD_DisplayMessage(_("Can't perform action:\nthis item is not reloadable.\n"));
+		HUD_DisplayMessage(_("Can't perform action:\nThis item is not reloadable.\n"));
 		return qfalse;
 	}
 
 	tus = HUD_CalcReloadTime(le, weapon->item.t, container);
 	/* Cannot reload because of no ammo in inventory. */
 	if (tus == -1) {
-		HUD_DisplayMessage(_("Can't perform action:\nammo not available.\n"));
+		HUD_DisplayMessage(_("Can't perform action:\nAmmo not available.\n"));
 		return qfalse;
 	}
 	/* Cannot reload because of not enough TUs. */
@@ -343,11 +343,11 @@ static void HUD_ExecuteAction_f (void)
 
 void HUD_InitCallbacks (void)
 {
-	Cmd_AddCommand("hud_movemode", HUD_SetMoveMode_f, N_("Set selected actor to move mode (it cancels the fire mode)"));
-	Cmd_AddCommand("hud_reloadleft", HUD_ReloadLeft_f, N_("Reload the weapon in the soldiers left hand"));
-	Cmd_AddCommand("hud_reloadright", HUD_ReloadRight_f, N_("Reload the weapon in the soldiers right hand"));
+	Cmd_AddCommand("hud_movemode", HUD_SetMoveMode_f, N_("Set selected actor to move mode (it cancels the fire mode)."));
+	Cmd_AddCommand("hud_reloadleft", HUD_ReloadLeft_f, N_("Reload the weapon in the soldiers left hand."));
+	Cmd_AddCommand("hud_reloadright", HUD_ReloadRight_f, N_("Reload the weapon in the soldiers right hand."));
 	Cmd_AddCommand("hud_togglecrouchreserve", HUD_ToggleCrouchReservation_f, N_("Toggle reservation for crouching."));
-	Cmd_AddCommand("hud_togglereaction", HUD_ToggleReaction_f, N_("Toggle reaction fire"));
+	Cmd_AddCommand("hud_togglereaction", HUD_ToggleReaction_f, N_("Toggle reaction fire."));
 	Cmd_AddCommand("hud_fireweapon", HUD_FireWeapon_f, N_("Start aiming the weapon."));
 	Cmd_AddCommand("hud_executeaction", HUD_ExecuteAction_f, N_("Execute an action."));
 }
