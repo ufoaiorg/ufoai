@@ -529,7 +529,7 @@ window hud_mini extends hud
 			pos			"741 22"
 			onClick		{ cmd "actor_select 9;" }
 			onRClick	{ cmd "actor_select 9;" }
-			tooltip		"_LMB/RMB:Select\nWheel:Select Next/Prev"
+			tooltip		"_LMB/RMB:Select\nWheel:Select Next/Prev\nKey:0"
 			visiblewhen	"*cvar:mn_hp9 > 0"
 			onMouseEnter {
 				*node:this@src = "minihud/bar_teambox_hovered"
