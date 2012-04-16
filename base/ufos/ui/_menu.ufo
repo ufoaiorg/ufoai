@@ -603,7 +603,7 @@ window popup_keyinfo
 	}
 
 	func onWindowOpened {
-		if ( *cvar:mn_base_count > 0 ) { *cvar:mn_keyinfo_label_string = "_Visit our forums and join the community at http://ufoai.ninex.info." }
+		if ( *cvar:mn_base_count > 0 ) { *cvar:mn_keyinfo_label_string = "_Visit our forums and join the community at http://www.ufoai.org." }
 		else { *cvar:mn_keyinfo_label_string = "_Note: Campaign-specific keybindings visible in Campaign mode only." }
 		cmd "mn_init_keylist;"
 		*cvar:help_window_open = 1
