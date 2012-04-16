@@ -1370,7 +1370,7 @@ scheduleEvent_t *Schedule_Event (int when, event_func *func, event_check_func *c
 	*anchor     = event;
 
 #ifdef DEBUG
-	for (scheduleEvent_t* i = event_queue; i && i->next; i = i->next) {
+	for (scheduleEvent_t* i = event_queue; i->next; i = i->next) {
 		if (i->when > i->next->when)
 			abort();
 	}
