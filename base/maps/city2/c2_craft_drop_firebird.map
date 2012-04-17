@@ -984,3 +984,24 @@
 "origin" "624 272 220"
 "angle" "90"
 }
+// entity 21
+{
+"classname" "info_2x2_start"
+"origin" "736 480 220"
+"team" "1"
+"angle" "180"
+}
+// entity 22
+{
+"classname" "info_2x2_start"
+"origin" "736 800 220"
+"team" "1"
+"angle" "180"
+}
+// entity 23
+{
+"classname" "info_2x2_start"
+"origin" "384 736 220"
+"team" "1"
+"angle" "180"
+}
