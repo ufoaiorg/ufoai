@@ -723,3 +723,24 @@
 ( 336 288 0 ) ( 464 288 0 ) ( 336 288 96 ) tex_common/trigger 1 0 0 0.3 0.25 0 0 0
 }
 }
+// entity 54
+{
+"classname" "info_2x2_start"
+"origin" "640 416 28"
+"team" "1"
+"angle" "90"
+}
+// entity 55
+{
+"classname" "info_2x2_start"
+"origin" "320 64 28"
+"team" "1"
+"angle" "180"
+}
+// entity 56
+{
+"classname" "info_2x2_start"
+"origin" "192 448 28"
+"team" "1"
+"angle" "0"
+}
