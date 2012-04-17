@@ -639,3 +639,21 @@
 ( 256 498 0 ) ( 384 498 0 ) ( 256 498 96 ) tex_common/trigger 0 0 0 0.25 0.25 0 0 0
 }
 }
+// entity 43
+{
+"classname" "info_2x2_start"
+"origin" "416 704 28"
+"team" "1"
+}
+// entity 44
+{
+"classname" "info_2x2_start"
+"origin" "352 64 28"
+"team" "1"
+}
+// entity 45
+{
+"classname" "info_2x2_start"
+"origin" "96 320 28"
+"team" "1"
+}
