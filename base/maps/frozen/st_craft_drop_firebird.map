@@ -752,3 +752,10 @@
 ( 288 384 0 ) ( 416 384 0 ) ( 288 384 96 ) tex_common/trigger 0 0 0 0.25 0.25 65280 0 0
 }
 }
+// entity 42
+{
+"classname" "info_2x2_start"
+"origin" "704 128 32"
+"team" "1"
+"angle" "-90"
+}
