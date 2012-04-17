@@ -4,6 +4,7 @@
 "classname" "worldspawn"
 "maxlevel" "3"
 "maxteams" "2"
+"randomspawn" "1"
 // brush 0
 {
 ( 359 288 80 ) ( 338 312 80 ) ( 359 312 80 ) tex_common/weaponclip 0 36 90 1 -1 33554432 0 0
@@ -867,7 +868,7 @@
 // entity 17
 {
 "classname" "info_human_start"
-"origin" "400 80 28"
+"origin" "368 80 28"
 "angle" "-90"
 }
 // entity 18
@@ -923,4 +924,37 @@
 ( 128 672 0 ) ( 128 672 96 ) ( 128 512 0 ) tex_common/trigger 0 0 0 0.25 0.25 0 0 0
 ( 96 704 0 ) ( 224 704 0 ) ( 96 704 96 ) tex_common/trigger 0 0 0 0.25 0.25 0 0 0
 }
+}
+// entity 26
+{
+"classname" "info_2x2_start"
+"origin" "64 96 28"
+"team" "1"
+"angle" "-180"
+}
+// entity 27
+{
+"classname" "info_2x2_start"
+"origin" "448 32 28"
+"team" "1"
+"angle" "180"
+}
+// entity 28
+{
+"classname" "info_2x2_start"
+"origin" "32 672 28"
+"team" "1"
+"angle" "180"
+}
+// entity 29
+{
+"classname" "info_human_start"
+"origin" "48 240 28"
+"angle" "180"
+}
+// entity 30
+{
+"classname" "info_human_start"
+"origin" "48 432 28"
+"angle" "180"
 }

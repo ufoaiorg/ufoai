@@ -4,6 +4,7 @@
 "classname" "worldspawn"
 "maxlevel" "6"
 "maxteams" "2"
+"randomspawn" "1"
 // brush 0
 {
 ( 192 496 0 ) ( 192 336 0 ) ( 320 496 0 ) tex_common/nodraw 64 0 0 0.5 0.5 65280 0 0
@@ -470,4 +471,54 @@
 ( 192 496 0 ) ( 192 496 96 ) ( 192 336 0 ) tex_common/trigger 0 -1 0 0.25 0.2 65280 0 0
 ( 192 528 0 ) ( 320 528 0 ) ( 192 528 96 ) tex_common/trigger 0 -1 0 0.25 0.2 65280 0 0
 }
+}
+// entity 16
+{
+"classname" "info_human_start"
+"origin" "16 240 24"
+}
+// entity 17
+{
+"classname" "info_human_start"
+"origin" "80 368 24"
+"angle" "135"
+}
+// entity 18
+{
+"classname" "info_human_start"
+"origin" "112 272 24"
+"angle" "135"
+}
+// entity 19
+{
+"classname" "info_human_start"
+"origin" "208 144 24"
+"angle" "-45"
+}
+// entity 20
+{
+"classname" "info_human_start"
+"origin" "176 240 24"
+"angle" "-45"
+}
+// entity 21
+{
+"classname" "info_2x2_start"
+"origin" "352 64 28"
+"team" "1"
+"angle" "180"
+}
+// entity 22
+{
+"classname" "info_2x2_start"
+"origin" "64 480 28"
+"team" "1"
+"angle" "180"
+}
+// entity 23
+{
+"classname" "info_2x2_start"
+"origin" "416 640 28"
+"team" "1"
+"angle" "180"
 }
