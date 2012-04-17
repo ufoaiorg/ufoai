@@ -813,87 +813,82 @@
 // entity 2
 {
 "classname" "info_human_start"
-"origin" "176 112 32"
+"origin" "272 80 32"
 }
 // entity 3
 {
 "classname" "info_human_start"
-"origin" "272 80 32"
+"origin" "208 80 32"
 }
 // entity 4
 {
 "classname" "info_human_start"
-"origin" "208 80 32"
+"origin" "176 16 32"
 }
 // entity 5
 {
 "classname" "info_human_start"
-"origin" "176 16 32"
+"origin" "240 48 32"
 }
 // entity 6
 {
 "classname" "info_human_start"
-"origin" "240 48 32"
+"origin" "304 48 32"
 }
 // entity 7
 {
 "classname" "info_human_start"
-"origin" "304 48 32"
-}
-// entity 8
-{
-"classname" "info_human_start"
 "origin" "176 48 32"
 }
-// entity 9
+// entity 8
 {
 "classname" "info_player_start"
 "origin" "176 80 32"
 "team" "1"
 }
-// entity 10
+// entity 9
 {
 "classname" "info_player_start"
 "origin" "208 16 32"
 "team" "1"
 }
-// entity 11
+// entity 10
 {
 "classname" "info_player_start"
 "origin" "208 48 32"
 "team" "1"
 }
-// entity 12
+// entity 11
 {
 "classname" "info_player_start"
 "origin" "240 80 32"
 "team" "1"
 }
-// entity 13
+// entity 12
 {
 "classname" "info_player_start"
 "origin" "272 16 32"
 "team" "1"
 }
-// entity 14
+// entity 13
 {
 "classname" "info_player_start"
 "origin" "272 48 32"
 "team" "1"
 }
-// entity 15
+// entity 14
 {
 "classname" "info_player_start"
 "origin" "304 80 32"
 "team" "1"
 }
-// entity 16
+// entity 15
 {
 "classname" "info_player_start"
 "origin" "240 16 32"
 "team" "1"
 }
-// entity 17
+// entity 16
 {
 "classname" "misc_model"
 "model" "models/aircraft/drop_raptor/drop_raptor_landed.md2"
@@ -901,35 +896,35 @@
 "spawnflags" "254"
 "angles" "0 -90 0"
 }
-// entity 18
+// entity 17
 {
 "classname" "light"
 "_color" "0 0.8 1"
 "light" "100"
 "origin" "87 227 77"
 }
-// entity 19
+// entity 18
 {
 "classname" "light"
 "_color" "0 0.8 1"
 "light" "100"
 "origin" "135 227 77"
 }
-// entity 20
+// entity 19
 {
 "classname" "light"
 "_color" "0 0.8 1"
 "light" "100"
 "origin" "375 227 77"
 }
-// entity 21
+// entity 20
 {
 "classname" "light"
 "_color" "0 0.8 1"
 "light" "100"
 "origin" "423 227 77"
 }
-// entity 22
+// entity 21
 {
 "classname" "misc_model"
 "model" "models/aircraft/drop_raptor/drop_raptor_gear.md2"
@@ -937,7 +932,7 @@
 "spawnflags" "255"
 "angles" "0 -90 0"
 }
-// entity 23
+// entity 22
 {
 "classname" "trigger_rescue"
 "team" "1"
@@ -950,4 +945,40 @@
 ( 128 160 0 ) ( 128 160 96 ) ( 128 0 0 ) tex_common/trigger 0 0 0 0.25 0.25 0 0 0
 ( 160 160 0 ) ( 288 160 0 ) ( 160 160 96 ) tex_common/trigger 0 0 0 0.25 0.25 0 0 0
 }
+}
+// entity 23
+{
+"classname" "info_human_start"
+"origin" "336 16 32"
+}
+// entity 24
+{
+"classname" "info_human_start"
+"origin" "336 48 32"
+}
+// entity 25
+{
+"classname" "info_human_start"
+"origin" "336 80 32"
+}
+// entity 26
+{
+"classname" "info_2x2_start"
+"origin" "96 128 28"
+"team" "1"
+"angle" "180"
+}
+// entity 27
+{
+"classname" "info_2x2_start"
+"origin" "448 128 28"
+"team" "1"
+"angle" "-1.4033e-014"
+}
+// entity 28
+{
+"classname" "info_2x2_start"
+"origin" "352 704 28"
+"team" "1"
+"angle" "-1.4033e-014"
 }

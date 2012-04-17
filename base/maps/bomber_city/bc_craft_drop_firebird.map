@@ -498,3 +498,21 @@
 ( 192 466 0 ) ( 320 466 0 ) ( 192 466 96 ) tex_common/trigger 0 0 0 0.25 0.25 0 0 0
 }
 }
+// entity 20
+{
+"classname" "info_2x2_start"
+"origin" "416 96 28"
+"team" "1"
+}
+// entity 21
+{
+"classname" "info_2x2_start"
+"origin" "416 576 28"
+"team" "1"
+}
+// entity 22
+{
+"classname" "info_2x2_start"
+"origin" "160 672 28"
+"team" "1"
+}
