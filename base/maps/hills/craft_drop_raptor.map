@@ -1206,10 +1206,9 @@
 }
 // entity 10
 {
-"origin" "368 688 29"
-"angle" "90"
 "classname" "info_human_start"
 "origin" "368 688 29"
+"angle" "90"
 "angles" "0 0 90"
 }
 // entity 11
@@ -1255,4 +1254,37 @@
 "origin" "144 144 29"
 "angles" "0 0 90"
 "angle" "180"
+}
+// entity 18
+{
+"classname" "info_human_start"
+"origin" "464 528 29"
+"angles" "0 0 90"
+}
+// entity 19
+{
+"classname" "info_human_start"
+"origin" "48 528 29"
+"angles" "0 0 90"
+"angle" "180"
+}
+// entity 20
+{
+"classname" "info_2x2_start"
+"origin" "448 704 28"
+"team" "1"
+}
+// entity 21
+{
+"classname" "info_2x2_start"
+"origin" "64 704 28"
+"team" "1"
+"angle" "90"
+}
+// entity 22
+{
+"classname" "info_2x2_start"
+"origin" "256 32 28"
+"team" "1"
+"angle" "0"
 }
