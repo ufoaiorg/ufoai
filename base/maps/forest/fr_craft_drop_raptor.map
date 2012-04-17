@@ -965,3 +965,43 @@
 "origin" "80 368 28"
 "angle" "90"
 }
+// entity 24
+{
+"classname" "info_2x2_start"
+"origin" "672 160 26"
+"team" "1"
+"angle" "180"
+}
+// entity 25
+{
+"classname" "info_2x2_start"
+"origin" "96 192 26"
+"team" "1"
+"angle" "180"
+}
+// entity 26
+{
+"classname" "info_2x2_start"
+"origin" "160 544 26"
+"team" "1"
+"angle" "180"
+}
+// entity 27
+{
+"classname" "info_2x2_start"
+"origin" "672 576 26"
+"team" "1"
+"angle" "180"
+}
+// entity 28
+{
+"classname" "info_human_start"
+"origin" "368 624 28"
+"angle" "180"
+}
+// entity 29
+{
+"classname" "info_human_start"
+"origin" "528 48 28"
+"angle" "180"
+}

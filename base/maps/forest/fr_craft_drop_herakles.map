@@ -267,22 +267,22 @@
 // entity 2
 {
 "classname" "info_human_start"
-"origin" "528 304 51"
+"origin" "432 304 51"
 }
 // entity 3
 {
 "classname" "info_human_start"
-"origin" "528 240 51"
+"origin" "432 240 51"
 }
 // entity 4
 {
 "classname" "info_human_start"
-"origin" "464 304 51"
+"origin" "304 304 51"
 }
 // entity 5
 {
 "classname" "info_human_start"
-"origin" "464 240 51"
+"origin" "304 240 51"
 }
 // entity 6
 {
@@ -395,4 +395,50 @@
 "noise" "ambience/ufo_night_atm"
 "attenuation" "0.1"
 "volume" "0.01"
+}
+// entity 22
+{
+"classname" "info_human_start"
+"origin" "368 304 51"
+}
+// entity 23
+{
+"classname" "info_human_start"
+"origin" "368 240 51"
+}
+// entity 24
+{
+"classname" "info_human_start"
+"origin" "272 304 51"
+}
+// entity 25
+{
+"classname" "info_human_start"
+"origin" "272 240 51"
+}
+// entity 26
+{
+"classname" "info_2x2_start"
+"origin" "480 320 51"
+"team" "1"
+}
+// entity 27
+{
+"classname" "info_2x2_start"
+"origin" "480 224 51"
+"team" "1"
+}
+// entity 28
+{
+"classname" "info_2x2_start"
+"origin" "288 448 26"
+"team" "1"
+"angle" "180"
+}
+// entity 29
+{
+"classname" "info_2x2_start"
+"origin" "352 96 26"
+"team" "1"
+"angle" "180"
 }
