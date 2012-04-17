@@ -1527,7 +1527,7 @@
 // entity 5
 {
 "classname" "info_player_start"
-"origin" "560 624 28"
+"origin" "592 624 28"
 "team" "1"
 "angle" "-90"
 }
@@ -1574,7 +1574,7 @@
 // entity 12
 {
 "classname" "info_human_start"
-"origin" "560 656 28"
+"origin" "592 656 28"
 "angle" "-90"
 }
 // entity 13
@@ -1631,7 +1631,7 @@
 // entity 21
 {
 "classname" "info_human_start"
-"origin" "496 656 28"
+"origin" "688 720 28"
 "angle" "-90"
 }
 // entity 22
@@ -1656,4 +1656,25 @@
 "model" "models/aircraft/drop_firebird/firebird.md2"
 "spawnflags" "255"
 "angles" "0 -180 0"
+}
+// entity 25
+{
+"classname" "info_2x2_start"
+"origin" "512 384 28"
+"team" "1"
+"angle" "180"
+}
+// entity 26
+{
+"classname" "info_2x2_start"
+"origin" "512 640 28"
+"team" "1"
+"angle" "180"
+}
+// entity 27
+{
+"classname" "info_2x2_start"
+"origin" "64 512 28"
+"team" "1"
+"angle" "-90"
 }
