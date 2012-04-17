@@ -3,6 +3,7 @@
 {
 "classname" "worldspawn"
 "maxlevel" "4"
+"randomspawn" "1"
 // brush 0
 {
 ( 440 512 0 ) ( 416 512 0 ) ( 416 432 0 ) tex_common/nodraw 192 128 0 0.5 0.5 65280 0 0
@@ -1392,4 +1393,11 @@
 ( 256 512 0 ) ( 256 512 96 ) ( 256 352 0 ) tex_common/trigger 0 0 0 0.25 0.25 0 0 0
 ( 256 512 0 ) ( 384 512 0 ) ( 256 512 96 ) tex_common/trigger 0 0 0 0.25 0.25 0 0 0
 }
+}
+// entity 37
+{
+"classname" "info_2x2_start"
+"origin" "192 704 28"
+"team" "1"
+"angle" "90"
 }
