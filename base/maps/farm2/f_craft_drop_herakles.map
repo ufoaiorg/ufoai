@@ -6,7 +6,7 @@
 "maxteams" "2"
 // brush 0
 {
-( 476 -988 0 ) ( 492 -988 0 ) ( 492 -972 0 ) tex_common/nodraw 16 -0 0 0.5 0.5 65280 128 0
+( 476 -988 0 ) ( 492 -988 0 ) ( 492 -972 0 ) tex_common/nodraw 16 0 0 0.5 0.5 65280 128 0
 ( 212 -1056 4 ) ( 212 -804 4 ) ( 532 -804 4 ) tex_nature/grass001 24 192 0 0.5 0.5 65280 0 0
 ( -516 0 64 ) ( -516 0 68 ) ( 96 0 68 ) tex_common/nodraw 16 0 0 0.5 0.5 65280 128 0
 ( 50 112 4 ) ( 50 112 0 ) ( 50 32 0 ) tex_common/nodraw 0 0 0 0.5 0.5 65280 128 0
@@ -15,7 +15,7 @@
 }
 // brush 1
 {
-( 132 0 0 ) ( 50 352 0 ) ( 50 0 0 ) tex_common/nodraw 0 -0 0 0.5 0.5 65280 128 0
+( 132 0 0 ) ( 50 352 0 ) ( 50 0 0 ) tex_common/nodraw 0 0 0 0.5 0.5 65280 128 0
 ( 132 352 4 ) ( 50 0 4 ) ( 50 352 4 ) tex_streets/street008 64.00024 181.6667 -90 0.3 0.3 65280 0 0
 ( 132 0 4 ) ( 50 0 0 ) ( 50 0 4 ) tex_common/nodraw 48 0 0 0.5 0.5 65280 128 0
 ( 132 -738 82 ) ( 132 -736 82 ) ( 132 -736 44 ) tex_common/nodraw 0 0 0 0.5 0.5 65280 128 0
@@ -24,7 +24,7 @@
 }
 // brush 2
 {
-( 476 -988 0 ) ( 492 -988 0 ) ( 492 -972 0 ) tex_common/nodraw 0 -0 0 0.5 0.5 65280 128 0
+( 476 -988 0 ) ( 492 -988 0 ) ( 492 -972 0 ) tex_common/nodraw 0 0 0 0.5 0.5 65280 128 0
 ( 212 -1056 4 ) ( 212 -804 4 ) ( 532 -804 4 ) tex_nature/grass001 4 252 0 0.5 0.5 65280 0 0
 ( 672 352 4 ) ( 416 352 4 ) ( 416 352 0 ) tex_common/nodraw 0 0 0 0.5 0.5 65280 128 0
 ( 132 -736 16 ) ( 132 -738 16 ) ( 132 -738 12 ) tex_common/nodraw 0 0 0 0.5 0.5 65280 128 0
@@ -210,10 +210,10 @@
 }
 // brush 22
 {
-( 128 256 96 ) ( 320 256 96 ) ( 128 224 96 ) tex_common/actorclip 32 -0 90 1 1 65536 0 0
+( 128 256 96 ) ( 320 256 96 ) ( 128 224 96 ) tex_common/actorclip 32 0 90 1 1 65536 0 0
 ( 256 256 64 ) ( 256 224 64 ) ( 256 256 32 ) tex_common/actorclip 32 0 0 1 1 65536 0 0
 ( 128 256 64 ) ( 128 256 32 ) ( 320 256 64 ) tex_common/actorclip 0 0 0 -1 1 65536 0 0
-( 320 224 0 ) ( 320 256 0 ) ( 128 224 0 ) tex_common/actorclip 32 -0 90 1 1 65536 0 0
+( 320 224 0 ) ( 320 256 0 ) ( 128 224 0 ) tex_common/actorclip 32 0 90 1 1 65536 0 0
 ( 320 224 32 ) ( 320 224 64 ) ( 320 256 32 ) tex_common/actorclip 32 0 0 1 1 65536 0 0
 ( 320 224 32 ) ( 128 224 32 ) ( 320 224 64 ) tex_common/actorclip 0 0 0 -1 1 65536 0 0
 }
@@ -318,9 +318,9 @@
 // entity 14
 {
 "classname" "info_player_start"
-"origin" "592 336 32"
+"origin" "464 336 32"
 "team" "1"
-"angle" "-90"
+"angle" "90"
 }
 // entity 15
 {
@@ -390,11 +390,55 @@
 "team" "1"
 // brush 0
 {
-( 128 256 80 ) ( 256 256 80 ) ( 128 96 80 ) tex_common/trigger 0 -0 90 0.25 0.25
+( 128 256 80 ) ( 256 256 80 ) ( 128 96 80 ) tex_common/trigger 0 0 90 0.25 0.25
 ( 64 256 96 ) ( 64 96 96 ) ( 64 256 0 ) tex_common/trigger 0 0 0 0.25 0.25
 ( 128 256 64 ) ( 128 256 -32 ) ( 256 256 64 ) tex_common/trigger 0 0 0 -0.25 0.25
-( 256 96 0 ) ( 256 256 0 ) ( 128 96 0 ) tex_common/trigger 0 -0 90 0.25 0.25
+( 256 96 0 ) ( 256 256 0 ) ( 128 96 0 ) tex_common/trigger 0 0 90 0.25 0.25
 ( 576 96 0 ) ( 576 96 96 ) ( 576 256 0 ) tex_common/trigger 0 0 0 0.25 0.25
 ( 256 96 0 ) ( 128 96 0 ) ( 256 96 96 ) tex_common/trigger 0 0 0 -0.25 0.25
 }
+}
+// entity 24
+{
+"classname" "info_2x2_start"
+"origin" "640 320 32"
+"team" "1"
+"angle" "90"
+}
+// entity 25
+{
+"classname" "info_2x2_start"
+"origin" "384 320 32"
+"team" "1"
+"angle" "90"
+}
+// entity 26
+{
+"classname" "info_2x2_start"
+"origin" "448 32 32"
+"team" "1"
+"angle" "-90"
+}
+// entity 27
+{
+"classname" "info_human_start"
+"origin" "272 336 28"
+"angle" "135"
+}
+// entity 28
+{
+"classname" "info_human_start"
+"origin" "560 336 28"
+"angle" "45"
+}
+// entity 29
+{
+"classname" "info_human_start"
+"origin" "656 144 28"
+}
+// entity 30
+{
+"classname" "info_human_start"
+"origin" "16 144 28"
+"angle" "180"
 }
