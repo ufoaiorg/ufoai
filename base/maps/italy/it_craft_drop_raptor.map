@@ -1315,3 +1315,24 @@
 "origin" "176 176 28"
 "angle" "90"
 }
+// entity 34
+{
+"classname" "info_2x2_start"
+"origin" "288 352 28"
+"angle" "90"
+"team" "1"
+}
+// entity 35
+{
+"classname" "info_2x2_start"
+"origin" "384 352 28"
+"angle" "90"
+"team" "1"
+}
+// entity 36
+{
+"classname" "info_2x2_start"
+"origin" "544 448 28"
+"angle" "90"
+"team" "1"
+}
