@@ -771,13 +771,13 @@
 // entity 1
 {
 "classname" "info_civilian_start"
-"origin" "688 144 28"
-"angle" "270"
+"origin" "688 208 28"
+"angle" "-90"
 }
 // entity 2
 {
 "classname" "info_civilian_start"
-"origin" "48 240 28"
+"origin" "48 400 28"
 "angle" "45"
 }
 // entity 3
@@ -819,7 +819,7 @@
 // entity 9
 {
 "classname" "info_human_start"
-"origin" "592 80 28"
+"origin" "528 48 28"
 }
 // entity 10
 {
@@ -846,7 +846,7 @@
 // entity 14
 {
 "classname" "info_human_start"
-"origin" "48 336 28"
+"origin" "16 336 28"
 "angle" "135"
 }
 // entity 15
@@ -858,7 +858,7 @@
 // entity 16
 {
 "classname" "info_human_start"
-"origin" "656 112 28"
+"origin" "656 176 28"
 "angle" "-90"
 }
 // entity 17
@@ -924,4 +924,25 @@
 ( 32 480 0 ) ( 32 480 96 ) ( 32 320 0 ) tex_common/trigger 0 0 0 0.25 0.25 0 0 0
 ( 32 480 0 ) ( 160 480 0 ) ( 32 480 96 ) tex_common/trigger 0 0 0 0.25 0.25 0 0 0
 }
+}
+// entity 25
+{
+"classname" "info_2x2_start"
+"origin" "704 64 28"
+"team" "1"
+"angle" "-1.4033e-014"
+}
+// entity 26
+{
+"classname" "info_2x2_start"
+"origin" "704 448 28"
+"team" "1"
+"angle" "-1.4033e-014"
+}
+// entity 27
+{
+"classname" "info_2x2_start"
+"origin" "32 256 28"
+"team" "1"
+"angle" "180"
 }
