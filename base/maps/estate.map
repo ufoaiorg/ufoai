@@ -8290,7 +8290,8 @@
 // entity 64
 {
 "classname" "info_human_start"
-"origin" "144 -496 32"
+"origin" "48 -496 32"
+"angle" "90"
 }
 // entity 65
 {
@@ -8301,36 +8302,43 @@
 {
 "classname" "info_human_start"
 "origin" "112 -464 32"
+"angle" "90"
 }
 // entity 67
 {
 "classname" "info_human_start"
 "origin" "112 -400 32"
+"angle" "90"
 }
 // entity 68
 {
 "classname" "info_human_start"
 "origin" "-48 -400 32"
+"angle" "90"
 }
 // entity 69
 {
 "classname" "info_human_start"
 "origin" "-112 -432 32"
+"angle" "135"
 }
 // entity 70
 {
 "classname" "info_human_start"
 "origin" "-80 -368 32"
+"angle" "180"
 }
 // entity 71
 {
 "classname" "info_human_start"
 "origin" "-48 -496 32"
+"angle" "90"
 }
 // entity 72
 {
 "classname" "info_human_start"
 "origin" "-16 -304 32"
+"angle" "90"
 }
 // entity 73
 {
@@ -12085,10 +12093,54 @@
 // brush 0
 {
 ( 224 -480 64 ) ( 96 -480 64 ) ( 224 -320 64 ) tex_common/trigger 0 0 0 0.25 0.25 0 0 0
-( 288 -480 96 ) ( 288 -320 96 ) ( 288 -480 0 ) tex_common/trigger 0 0 0 0.25 0.25 0 0 0
+( 352 -480 96 ) ( 352 -320 96 ) ( 352 -480 0 ) tex_common/trigger 0 0 0 0.25 0.25 0 0 0
 ( 224 -512 64 ) ( 224 -512 -32 ) ( 96 -512 64 ) tex_common/trigger 0 0 0 0.25 0.25 0 0 0
 ( 96 -320 0 ) ( 96 -480 0 ) ( 224 -320 0 ) tex_common/trigger 0 0 0 0.25 0.25 0 0 0
 ( 96 -320 0 ) ( 96 -320 96 ) ( 96 -480 0 ) tex_common/trigger 0 0 0 0.25 0.25 0 0 0
-( 96 -320 0 ) ( 224 -320 0 ) ( 96 -320 96 ) tex_common/trigger 0 0 0 0.25 0.25 0 0 0
+( 64 -288 0 ) ( 192 -288 0 ) ( 64 -288 96 ) tex_common/trigger 0 0 0 0.25 0.25 0 0 0
 }
+}
+// entity 179
+{
+"classname" "info_2x2_start"
+"origin" "-192 -448 28"
+"team" "1"
+"angle" "90"
+}
+// entity 180
+{
+"classname" "info_2x2_start"
+"origin" "288 -448 28"
+"team" "1"
+"angle" "90"
+}
+// entity 181
+{
+"classname" "info_2x2_start"
+"origin" "-448 -288 28"
+"team" "1"
+"angle" "45"
+}
+// entity 182
+{
+"classname" "info_human_start"
+"origin" "176 -368 32"
+}
+// entity 183
+{
+"classname" "info_human_start"
+"origin" "176 -464 32"
+"angle" "90"
+}
+// entity 184
+{
+"classname" "info_human_start"
+"origin" "304 -336 32"
+"angle" "90"
+}
+// entity 185
+{
+"classname" "info_human_start"
+"origin" "368 -464 32"
+"angle" "90"
 }
