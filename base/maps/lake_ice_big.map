@@ -13608,3 +13608,21 @@
 ( 288 -96 0 ) ( 416 -96 0 ) ( 288 -96 96 ) tex_common/trigger 0 0 0 0.25 0.25 0 0 0
 }
 }
+// entity 239
+{
+"classname" "info_2x2_start"
+"origin" "768 -352 28"
+"angle" "135"
+}
+// entity 240
+{
+"classname" "info_2x2_start"
+"origin" "224 32 28"
+"angle" "90"
+}
+// entity 241
+{
+"classname" "info_2x2_start"
+"origin" "224 -352 28"
+"angle" "135"
+}
