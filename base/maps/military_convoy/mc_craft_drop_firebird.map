@@ -370,7 +370,7 @@
 // entity 3
 {
 "classname" "info_human_start"
-"origin" "432 400 32"
+"origin" "496 432 32"
 "angle" "-90"
 }
 // entity 4
@@ -488,4 +488,25 @@
 ( 224 528 0 ) ( 224 528 96 ) ( 224 368 0 ) tex_common/trigger 0 -1 0 0.25 0.2 65280 0 0
 ( 224 528 0 ) ( 352 528 0 ) ( 224 528 96 ) tex_common/trigger 0 -1 0 0.25 0.2 65280 0 0
 }
+}
+// entity 20
+{
+"classname" "info_2x2_start"
+"origin" "128 288 28"
+"team" "1"
+"angle" "180"
+}
+// entity 21
+{
+"classname" "info_2x2_start"
+"origin" "192 704 28"
+"team" "1"
+"angle" "90"
+}
+// entity 22
+{
+"classname" "info_2x2_start"
+"origin" "416 384 28"
+"team" "1"
+"angle" "-90"
 }

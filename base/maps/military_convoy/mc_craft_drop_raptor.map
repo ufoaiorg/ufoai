@@ -789,13 +789,13 @@
 // entity 2
 {
 "classname" "info_player_start"
-"origin" "80 688 28"
+"origin" "48 560 28"
 "team" "1"
 }
 // entity 3
 {
 "classname" "info_player_start"
-"origin" "80 752 28"
+"origin" "48 624 28"
 "team" "1"
 }
 // entity 4
@@ -822,21 +822,21 @@
 // entity 7
 {
 "classname" "info_player_start"
-"origin" "432 752 28"
+"origin" "496 592 28"
 "team" "1"
 "angle" "-90"
 }
 // entity 8
 {
 "classname" "info_player_start"
-"origin" "432 688 28"
+"origin" "496 528 28"
 "team" "1"
 "angle" "-90"
 }
 // entity 9
 {
 "classname" "info_player_start"
-"origin" "400 688 28"
+"origin" "464 528 28"
 "team" "1"
 "angle" "-90"
 }
@@ -849,7 +849,7 @@
 // entity 11
 {
 "classname" "info_player_start"
-"origin" "400 752 28"
+"origin" "464 592 28"
 "team" "1"
 "angle" "-90"
 }
@@ -914,7 +914,7 @@
 // entity 13
 {
 "classname" "info_player_start"
-"origin" "240 80 28"
+"origin" "400 80 28"
 "team" "1"
 "angle" "180"
 }
@@ -1032,7 +1032,7 @@
 // entity 31
 {
 "classname" "info_human_start"
-"origin" "80 656 28"
+"origin" "48 528 28"
 "angle" "90"
 }
 // entity 32
@@ -1078,4 +1078,31 @@
 ( 64 288 0 ) ( 64 288 96 ) ( 64 128 0 ) tex_common/trigger 0 0 0 0.25 0.25 0 0 0
 ( 352 704 0 ) ( 480 704 0 ) ( 352 704 96 ) tex_common/trigger 0 0 0 0.25 0.25 0 0 0
 }
+}
+// entity 38
+{
+"classname" "info_2x2_start"
+"origin" "64 704 28"
+"team" "1"
+"angle" "90"
+}
+// entity 39
+{
+"classname" "info_2x2_start"
+"origin" "416 704 28"
+"team" "1"
+"angle" "90"
+}
+// entity 40
+{
+"classname" "info_2x2_start"
+"origin" "256 64 28"
+"team" "1"
+"angle" "-90"
+}
+// entity 41
+{
+"classname" "info_human_start"
+"origin" "464 624 28"
+"angle" "-1.4033e-014"
 }
