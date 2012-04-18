@@ -248,7 +248,10 @@ static void BS_MarketClick_f (void)
 	case MAX_FILTERTYPES:
 		break;
 	default:
-		INV_ItemDescription(buyList.l[num].item);
+		if (buyList.l[num].item->craftitem.type != MAX_ACITEMS)
+			UP_AircraftItemDescription(buyList.l[num].item);
+		else
+			INV_ItemDescription(buyList.l[num].item);
 		currentSelectedMenuEntry = buyList.l[num].item;
 		break;
 	}
