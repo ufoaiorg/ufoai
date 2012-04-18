@@ -371,22 +371,22 @@
 // entity 20
 {
 "classname" "info_human_start"
-"origin" "528 272 51"
+"origin" "368 272 51"
 }
 // entity 21
 {
 "classname" "info_human_start"
-"origin" "528 208 51"
+"origin" "368 208 51"
 }
 // entity 22
 {
 "classname" "info_human_start"
-"origin" "464 272 51"
+"origin" "432 272 51"
 }
 // entity 23
 {
 "classname" "info_human_start"
-"origin" "464 208 51"
+"origin" "432 208 51"
 }
 // entity 24
 {
@@ -456,4 +456,52 @@
 ( 96 320 0 ) ( 96 320 96 ) ( 96 160 0 ) tex_common/trigger 0 0 0 0.25 0.25 0 0 0
 ( 96 320 0 ) ( 224 320 0 ) ( 96 320 96 ) tex_common/trigger 0 0 0 0.25 0.25 0 0 0
 }
+}
+// entity 34
+{
+"classname" "info_2x2_start"
+"origin" "480 288 48"
+"team" "1"
+}
+// entity 35
+{
+"classname" "info_2x2_start"
+"origin" "480 192 48"
+"team" "1"
+}
+// entity 36
+{
+"classname" "info_2x2_start"
+"origin" "192 224 48"
+"team" "1"
+}
+// entity 37
+{
+"classname" "info_human_start"
+"origin" "304 272 51"
+}
+// entity 38
+{
+"classname" "info_human_start"
+"origin" "304 208 51"
+}
+// entity 39
+{
+"classname" "info_human_start"
+"origin" "272 272 51"
+}
+// entity 40
+{
+"classname" "info_human_start"
+"origin" "272 208 51"
+}
+// entity 41
+{
+"classname" "info_human_start"
+"origin" "240 272 51"
+}
+// entity 42
+{
+"classname" "info_human_start"
+"origin" "240 208 51"
 }
