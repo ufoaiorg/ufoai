@@ -1651,16 +1651,22 @@
 }
 // entity 69
 {
-"origin" "480 96 28"
-"angle" "-90"
 "classname" "info_2x2_start"
 "origin" "480 96 28"
+"angle" "-90"
 "team" "1"
 }
 // entity 70
 {
 "classname" "info_2x2_start"
-"origin" "64 352 28"
+"origin" "64 256 28"
+"angle" "180"
+"team" "1"
+}
+// entity 71
+{
+"classname" "info_2x2_start"
+"origin" "64 608 28"
 "angle" "180"
 "team" "1"
 }

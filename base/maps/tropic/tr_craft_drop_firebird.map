@@ -1524,3 +1524,10 @@
 "team" "1"
 "angle" "90"
 }
+// entity 64
+{
+"classname" "info_2x2_start"
+"origin" "384 448 28"
+"team" "1"
+"angle" "-1.4033e-014"
+}
