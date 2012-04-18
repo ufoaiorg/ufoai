@@ -13491,6 +13491,7 @@
 {
 "classname" "trigger_rescue"
 "team" "1"
+"spawnflags" "252"
 // brush 0
 {
 ( 1696 1600 192 ) ( 1568 1600 192 ) ( 1696 1760 192 ) tex_common/trigger 0 0 0 0.25 0.25 0 0 0
@@ -13500,4 +13501,49 @@
 ( 1568 1760 128 ) ( 1568 1760 224 ) ( 1568 1600 128 ) tex_common/trigger 0 0 0 0.25 0.25 0 0 0
 ( 1568 1760 128 ) ( 1696 1760 128 ) ( 1568 1760 224 ) tex_common/trigger 0 0 0 0.25 0.25 0 0 0
 }
+}
+// entity 198
+{
+"classname" "info_human_start"
+"origin" "1584 1808 163"
+"angle" "180"
+}
+// entity 199
+{
+"classname" "info_human_start"
+"origin" "1712 1808 163"
+"angle" "180"
+}
+// entity 200
+{
+"classname" "info_human_start"
+"origin" "1712 1552 163"
+"angle" "180"
+}
+// entity 201
+{
+"classname" "info_human_start"
+"origin" "1584 1552 163"
+"angle" "180"
+}
+// entity 202
+{
+"classname" "info_2x2_start"
+"origin" "1536 1664 156"
+"team" "1"
+"angle" "180"
+}
+// entity 203
+{
+"classname" "info_2x2_start"
+"origin" "1856 1664 156"
+"team" "1"
+"angle" "180"
+}
+// entity 204
+{
+"classname" "info_2x2_start"
+"origin" "1664 1440 156"
+"team" "1"
+"angle" "180"
 }
