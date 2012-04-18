@@ -1925,3 +1925,10 @@
 ( 416 544 68 ) ( 416 416 68 ) ( 416 544 164 ) tex_common/trigger 0 16 0 -0.25 0.25 65024 0 0
 }
 }
+// entity 38
+{
+"classname" "info_2x2_start"
+"origin" "96 352 92"
+"angle" "-90"
+"team" "1"
+}

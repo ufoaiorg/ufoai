@@ -1903,3 +1903,10 @@
 ( 672 464 68 ) ( 672 336 68 ) ( 672 464 164 ) tex_common/trigger 0 0 0 0.25 0.25 65024 0 0
 }
 }
+// entity 39
+{
+"classname" "info_2x2_start"
+"origin" "64 512 92"
+"angle" "-180"
+"team" "1"
+}

@@ -2572,3 +2572,21 @@
 ( 0 768 -64 ) ( 0 792 -64 ) ( 0 768 64 ) tex_common/lightclip 0 0 0 0.25 0.25 65024 0 0
 }
 }
+// entity 42
+{
+"classname" "info_player_start"
+"team" "1"
+"origin" "720 304 92"
+}
+// entity 43
+{
+"classname" "info_human_start"
+"origin" "688 304 92"
+}
+// entity 44
+{
+"classname" "info_2x2_start"
+"origin" "192 224 92"
+"angle" "-90"
+"team" "1"
+}
