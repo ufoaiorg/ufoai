@@ -347,7 +347,10 @@ static void BS_ShowInfo_f (void)
 		if (!BS_IsOnMarket(od))
 			return;
 
-		INV_ItemDescription(od);
+		if (od->craftitem.type != MAX_ACITEMS)
+			UP_AircraftItemDescription(od);
+		else
+			INV_ItemDescription(od);
 		return;
 	}
 	Com_Printf("Invalid item ID\n");
