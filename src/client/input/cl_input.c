@@ -238,6 +238,26 @@ static void IN_ShiftLeftUp_f (void)
 {
 	IN_KeyUp(&in_shiftleft);
 }
+static void IN_ShiftLeftUpDown_f (void)
+{
+	IN_KeyDown(&in_shiftleft);
+	IN_KeyDown(&in_shiftup);
+}
+static void IN_ShiftLeftUpUp_f (void)
+{
+	IN_KeyUp(&in_shiftleft);
+	IN_KeyUp(&in_shiftup);
+}
+static void IN_ShiftLeftDownDown_f (void)
+{
+	IN_KeyDown(&in_shiftleft);
+	IN_KeyDown(&in_shiftdown);
+}
+static void IN_ShiftLeftDownUp_f (void)
+{
+	IN_KeyUp(&in_shiftleft);
+	IN_KeyUp(&in_shiftdown);
+}
 static void IN_ShiftRightDown_f (void)
 {
 	IN_KeyDown(&in_shiftright);
@@ -245,6 +265,26 @@ static void IN_ShiftRightDown_f (void)
 static void IN_ShiftRightUp_f (void)
 {
 	IN_KeyUp(&in_shiftright);
+}
+static void IN_ShiftRightUpDown_f (void)
+{
+	IN_KeyDown(&in_shiftright);
+	IN_KeyDown(&in_shiftup);
+}
+static void IN_ShiftRightUpUp_f (void)
+{
+	IN_KeyUp(&in_shiftright);
+	IN_KeyUp(&in_shiftup);
+}
+static void IN_ShiftRightDownDown_f (void)
+{
+	IN_KeyDown(&in_shiftright);
+	IN_KeyDown(&in_shiftdown);
+}
+static void IN_ShiftRightDownUp_f (void)
+{
+	IN_KeyUp(&in_shiftright);
+	IN_KeyUp(&in_shiftdown);
 }
 static void IN_ShiftUpDown_f (void)
 {
@@ -291,7 +331,7 @@ static void CL_LevelUp_f (void)
 }
 
 /**
- * @brief Switch on worldlevel down
+ * @brief Switch one worldlevel down
  */
 static void CL_LevelDown_f (void)
 {
@@ -338,7 +378,7 @@ static void CL_SelectUp_f (void)
 }
 
 /**
- * @brief Mouse click
+ * @brief Middle mouse click
  */
 static void CL_ActionDown_f (void)
 {
@@ -970,8 +1010,16 @@ void IN_Init (void)
 	Cmd_AddCommand("-pantilt", IN_PanTiltUp_f, NULL);
 	Cmd_AddCommand("+shiftleft", IN_ShiftLeftDown_f, N_("Move battlescape camera left"));
 	Cmd_AddCommand("-shiftleft", IN_ShiftLeftUp_f, NULL);
+	Cmd_AddCommand("+shiftleftup", IN_ShiftLeftUpDown_f, N_("Move battlescape camera top left"));
+	Cmd_AddCommand("-shiftleftup", IN_ShiftLeftUpUp_f, NULL);
+	Cmd_AddCommand("+shiftleftdown", IN_ShiftLeftDownDown_f, N_("Move battlescape camera bottom left"));
+	Cmd_AddCommand("-shiftleftdown", IN_ShiftLeftDownUp_f, NULL);
 	Cmd_AddCommand("+shiftright", IN_ShiftRightDown_f, N_("Move battlescape camera right"));
 	Cmd_AddCommand("-shiftright", IN_ShiftRightUp_f, NULL);
+	Cmd_AddCommand("+shiftrightup", IN_ShiftRightUpDown_f, N_("Move battlescape camera top right"));
+	Cmd_AddCommand("-shiftrightup", IN_ShiftRightUpUp_f, NULL);
+	Cmd_AddCommand("+shiftrightdown", IN_ShiftRightDownDown_f, N_("Move battlescape camera bottom right"));
+	Cmd_AddCommand("-shiftrightdown", IN_ShiftRightDownUp_f, NULL);
 	Cmd_AddCommand("+shiftup", IN_ShiftUpDown_f, N_("Move battlescape camera forward"));
 	Cmd_AddCommand("-shiftup", IN_ShiftUpUp_f, NULL);
 	Cmd_AddCommand("+shiftdown", IN_ShiftDownDown_f, N_("Move battlescape camera backward"));
