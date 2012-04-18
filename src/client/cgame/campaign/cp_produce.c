@@ -777,7 +777,7 @@ void PR_UpdateProductionCap (base_t *base)
 
 	for (int i = 0; i < q->numItems; i++) {
 		production_t *prod = &q->items[i];
-		prod->totalFrames = PR_CalculateTotalFrames(base, &prod->data);
+		prod->totalFrames = max(prod->frame, PR_CalculateTotalFrames(base, &prod->data));
 	}
 }
 
