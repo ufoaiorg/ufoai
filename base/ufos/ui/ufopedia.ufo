@@ -548,8 +548,7 @@ window ufopedia extends objectinfo
 			cmd "mn_upupdate;"
 		} elif ( *cvar:ufopedia_content eq "stats" ) {
 			*node:root.content.ufopedia@invis = true
-			// just because it looks better
-			*node:root.content.ufopedia_scroll@invis = false
+			*node:root.content.ufopedia_scroll@invis = true
 			*node:root.content.description@invis = false
 			*node:root.content.description_scroll@invis = true
 			*node:root.content.requirement@invis = false
@@ -562,8 +561,7 @@ window ufopedia extends objectinfo
 			*node:root.content.mdl_bigpicture@invis = true
 		} elif ( *cvar:ufopedia_content eq "bigpicture" ) {
 			*node:root.content.ufopedia@invis = true
-			// just because it looks better
-			*node:root.content.ufopedia_scroll@invis = false
+			*node:root.content.ufopedia_scroll@invis = true
 			*node:root.content.description@invis = true
 			*node:root.content.description_scroll@invis = true
 			*node:root.content.requirement@invis = true
