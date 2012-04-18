@@ -1149,3 +1149,24 @@
 ( 320 320 0 ) ( 448 320 0 ) ( 320 320 96 ) tex_common/trigger 0 0 0 0.25 0.25 0 0 0
 }
 }
+// entity 31
+{
+"classname" "info_2x2_start"
+"origin" "96 128 28"
+"angle" "180"
+"team" "1"
+}
+// entity 32
+{
+"classname" "info_2x2_start"
+"origin" "96 448 28"
+"angle" "90"
+"team" "1"
+}
+// entity 33
+{
+"classname" "info_2x2_start"
+"origin" "416 384 28"
+"angle" "90"
+"team" "1"
+}
