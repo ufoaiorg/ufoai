@@ -15291,3 +15291,48 @@
 ( -128 -160 256 ) ( 0 -160 256 ) ( -128 -160 352 ) tex_common/trigger 0 0 0 0.25 0.25 14336 0 0
 }
 }
+// entity 222
+{
+"classname" "info_2x2_start"
+"origin" "-32 -288 284"
+"team" "1"
+"angle" "-90"
+}
+// entity 223
+{
+"classname" "info_2x2_start"
+"origin" "352 -192 284"
+"team" "1"
+"angle" "90"
+}
+// entity 224
+{
+"classname" "info_2x2_start"
+"origin" "384 -32 284"
+"team" "1"
+"angle" "-3.50824e-015"
+}
+// entity 225
+{
+"classname" "info_human_start"
+"origin" "336 -112 280"
+"angle" "-90"
+}
+// entity 226
+{
+"classname" "info_human_start"
+"origin" "112 -112 280"
+"angle" "-90"
+}
+// entity 227
+{
+"classname" "info_human_start"
+"origin" "272 -112 280"
+"angle" "90"
+}
+// entity 228
+{
+"classname" "info_human_start"
+"origin" "176 -112 280"
+"angle" "90"
+}
