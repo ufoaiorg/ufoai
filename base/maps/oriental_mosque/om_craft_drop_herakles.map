@@ -83,7 +83,7 @@
 ( 608 0 96 ) ( 608 0 0 ) ( 64 0 96 ) tex_common/actorclip 32 0 0 1 1 65536 0 0
 ( -96 416 0 ) ( -96 -96 0 ) ( 672 416 0 ) tex_common/actorclip 32 32 -90 1 1 65536 0 0
 ( 480 32 0 ) ( 480 32 96 ) ( 480 0 0 ) tex_common/actorclip 32 0 0 -1 1 65536 0 0
-( 96 32 0 ) ( 640 32 0 ) ( 96 32 96 ) tex_common/actorclip -0 0 0 1 1 65536 0 0
+( 96 32 0 ) ( 640 32 0 ) ( 96 32 96 ) tex_common/actorclip 0 0 0 1 1 65536 0 0
 }
 // brush 9
 {
@@ -194,10 +194,10 @@
 {
 ( 512 64 96 ) ( 320 64 96 ) ( 512 96 96 ) tex_common/actorclip 32 0 -90 1 1 65536 0 0
 ( 384 64 64 ) ( 384 96 64 ) ( 384 64 32 ) tex_common/actorclip 32 0 0 -1 1 65536 0 0
-( 512 64 64 ) ( 512 64 32 ) ( 320 64 64 ) tex_common/actorclip -0 0 0 1 1 65536 0 0
+( 512 64 64 ) ( 512 64 32 ) ( 320 64 64 ) tex_common/actorclip 0 0 0 1 1 65536 0 0
 ( 320 96 0 ) ( 320 64 0 ) ( 512 96 0 ) tex_common/actorclip 32 0 -90 1 1 65536 0 0
 ( 320 96 32 ) ( 320 96 64 ) ( 320 64 32 ) tex_common/actorclip 32 0 0 -1 1 65536 0 0
-( 320 96 32 ) ( 512 96 32 ) ( 320 96 64 ) tex_common/actorclip -0 0 0 1 1 65536 0 0
+( 320 96 32 ) ( 512 96 32 ) ( 320 96 64 ) tex_common/actorclip 0 0 0 1 1 65536 0 0
 }
 // brush 21
 {
@@ -233,163 +233,108 @@
 // entity 3
 {
 "classname" "info_player_start"
-"origin" "16 272 32"
-"team" "1"
-}
-// entity 4
-{
-"classname" "info_player_start"
 "origin" "208 304 32"
 "team" "1"
 }
-// entity 5
+// entity 4
 {
 "classname" "info_player_start"
 "origin" "688 176 32"
 "team" "1"
 "angle" "45"
 }
-// entity 6
+// entity 5
 {
 "classname" "info_player_start"
 "origin" "656 144 32"
 "team" "1"
 "angle" "45"
 }
-// entity 7
+// entity 6
 {
 "classname" "info_player_start"
 "origin" "368 272 28"
 "team" "1"
 "angle" "45"
 }
-// entity 8
-{
-"classname" "info_player_start"
-"origin" "688 80 28"
-"team" "1"
-"angle" "45"
-}
-// entity 9
+// entity 7
 {
 "classname" "info_player_start"
 "origin" "464 272 32"
 "team" "1"
 "angle" "45"
 }
-// entity 10
-{
-"classname" "info_player_start"
-"origin" "688 240 32"
-"team" "1"
-"angle" "-45"
-}
-// entity 11
+// entity 8
 {
 "classname" "info_player_start"
 "origin" "112 304 32"
 "team" "1"
 "angle" "-45"
 }
-// entity 12
-{
-"classname" "info_player_start"
-"origin" "624 272 28"
-"team" "1"
-"angle" "-45"
-}
-// entity 13
+// entity 9
 {
 "classname" "info_player_start"
 "origin" "176 304 32"
 "team" "1"
 "angle" "-135"
 }
-// entity 14
-{
-"classname" "info_player_start"
-"origin" "688 304 28"
-"team" "1"
-"angle" "-135"
-}
-// entity 15
+// entity 10
 {
 "classname" "info_player_start"
 "origin" "432 304 28"
 "team" "1"
 "angle" "-135"
 }
-// entity 16
+// entity 11
 {
 "classname" "info_player_start"
 "origin" "528 304 28"
 "team" "1"
 "angle" "-135"
 }
-// entity 17
-{
-"classname" "info_player_start"
-"origin" "624 304 28"
-"team" "1"
-"angle" "135"
-}
-// entity 18
-{
-"classname" "info_player_start"
-"origin" "656 16 28"
-"team" "1"
-"angle" "135"
-}
-// entity 19
+// entity 12
 {
 "classname" "info_player_start"
 "origin" "368 304 28"
 "team" "1"
 "angle" "135"
 }
-// entity 20
-{
-"classname" "info_player_start"
-"origin" "48 304 32"
-"team" "1"
-"angle" "135"
-}
-// entity 21
+// entity 13
 {
 "classname" "info_player_start"
 "origin" "208 272 32"
 "team" "1"
 "angle" "135"
 }
-// entity 22
+// entity 14
 {
 "classname" "info_human_start"
 "origin" "176 272 28"
 }
-// entity 23
+// entity 15
 {
 "classname" "info_human_start"
 "origin" "592 16 28"
 }
-// entity 24
+// entity 16
 {
 "classname" "info_human_start"
-"origin" "656 272 28"
+"origin" "560 272 28"
 "angle" "45"
 }
-// entity 25
+// entity 17
 {
 "classname" "info_human_start"
-"origin" "688 112 28"
-"angle" "180"
+"origin" "624 112 28"
+"angle" "90"
 }
-// entity 26
+// entity 18
 {
 "classname" "info_human_start"
 "origin" "272 304 28"
 "angle" "-135"
 }
-// entity 27
+// entity 19
 {
 "classname" "misc_model"
 "origin" "364 142 30"
@@ -397,71 +342,63 @@
 "spawnflags" "254"
 "angles" "0 -180 0"
 }
+// entity 20
+{
+"classname" "info_human_start"
+"origin" "496 176 51"
+"angle" "180"
+"angles" "0 0 90"
+}
+// entity 21
+{
+"classname" "info_human_start"
+"origin" "496 112 51"
+"angle" "180"
+"angles" "0 0 90"
+}
+// entity 22
+{
+"classname" "info_human_start"
+"origin" "432 176 51"
+"angle" "180"
+"angles" "0 0 90"
+}
+// entity 23
+{
+"classname" "info_human_start"
+"origin" "432 112 51"
+"angle" "180"
+"angles" "0 0 90"
+}
+// entity 24
+{
+"classname" "info_human_start"
+"origin" "368 176 51"
+"angle" "180"
+"angles" "0 0 90"
+}
+// entity 25
+{
+"classname" "info_human_start"
+"origin" "368 112 51"
+"angle" "180"
+"angles" "0 0 90"
+}
+// entity 26
+{
+"classname" "info_human_start"
+"origin" "304 176 51"
+"angle" "180"
+"angles" "0 0 90"
+}
+// entity 27
+{
+"classname" "info_human_start"
+"origin" "304 112 51"
+"angle" "180"
+"angles" "0 0 90"
+}
 // entity 28
-{
-"origin" "496 176 51"
-"angle" "180"
-"classname" "info_human_start"
-"origin" "496 176 51"
-"angles" "0 0 90"
-}
-// entity 29
-{
-"origin" "496 112 51"
-"angle" "180"
-"classname" "info_human_start"
-"origin" "496 112 51"
-"angles" "0 0 90"
-}
-// entity 30
-{
-"origin" "432 176 51"
-"angle" "180"
-"classname" "info_human_start"
-"origin" "432 176 51"
-"angles" "0 0 90"
-}
-// entity 31
-{
-"origin" "432 112 51"
-"angle" "180"
-"classname" "info_human_start"
-"origin" "432 112 51"
-"angles" "0 0 90"
-}
-// entity 32
-{
-"origin" "368 176 51"
-"angle" "180"
-"classname" "info_human_start"
-"origin" "368 176 51"
-"angles" "0 0 90"
-}
-// entity 33
-{
-"origin" "368 112 51"
-"angle" "180"
-"classname" "info_human_start"
-"origin" "368 112 51"
-"angles" "0 0 90"
-}
-// entity 34
-{
-"origin" "304 176 51"
-"angle" "180"
-"classname" "info_human_start"
-"origin" "304 176 51"
-"angles" "0 0 90"
-}
-// entity 35
-{
-"origin" "304 112 51"
-"angle" "180"
-"classname" "info_human_start"
-"origin" "304 112 51"
-"angles" "0 0 90"
-}
-// entity 36
 {
 "classname" "misc_model"
 "model" "models/aircraft/drop_herakles/herakles_int.md2"
@@ -469,7 +406,7 @@
 "spawnflags" "255"
 "angles" "0 0 0"
 }
-// entity 37
+// entity 29
 {
 "classname" "misc_model"
 "model" "models/aircraft/drop_herakles/herakles_int_top.md2"
@@ -477,7 +414,7 @@
 "spawnflags" "254"
 "angles" "0 0 0"
 }
-// entity 38
+// entity 30
 {
 "classname" "misc_model"
 "model" "models/aircraft/drop_herakles/seats.md2"
@@ -485,7 +422,7 @@
 "spawnflags" "1"
 "angles" "0 0 0"
 }
-// entity 39
+// entity 31
 {
 "classname" "misc_model"
 "model" "models/aircraft/drop_herakles/seats_2.md2"
@@ -493,7 +430,7 @@
 "spawnflags" "1"
 "angles" "0 0 0"
 }
-// entity 40
+// entity 32
 {
 "classname" "misc_model"
 "model" "models/aircraft/drop_herakles/herakles_pod_back.md2"
@@ -501,17 +438,37 @@
 "spawnflags" "255"
 "angles" "0 0 0"
 }
-// entity 41
+// entity 33
 {
 "classname" "trigger_rescue"
 "team" "1"
 // brush 0
 {
-( 512 64 80 ) ( 384 64 80 ) ( 512 224 80 ) tex_common/trigger -0 0 -90 0.25 0.25
-( 576 64 96 ) ( 576 224 96 ) ( 576 64 0 ) tex_common/trigger -0 0 0 -0.25 0.25
-( 512 64 64 ) ( 512 64 -32 ) ( 384 64 64 ) tex_common/trigger -0 0 0 0.25 0.25
-( 384 224 0 ) ( 384 64 0 ) ( 512 224 0 ) tex_common/trigger -0 0 -90 0.25 0.25
-( 64 224 0 ) ( 64 224 96 ) ( 64 64 0 ) tex_common/trigger -0 0 0 -0.25 0.25
-( 384 224 0 ) ( 512 224 0 ) ( 384 224 96 ) tex_common/trigger -0 0 0 0.25 0.25
+( 512 64 80 ) ( 384 64 80 ) ( 512 224 80 ) tex_common/trigger 0 0 -90 0.25 0.25
+( 576 64 96 ) ( 576 224 96 ) ( 576 64 0 ) tex_common/trigger 0 0 0 -0.25 0.25
+( 512 64 64 ) ( 512 64 -32 ) ( 384 64 64 ) tex_common/trigger 0 0 0 0.25 0.25
+( 384 224 0 ) ( 384 64 0 ) ( 512 224 0 ) tex_common/trigger 0 0 -90 0.25 0.25
+( 64 224 0 ) ( 64 224 96 ) ( 64 64 0 ) tex_common/trigger 0 0 0 -0.25 0.25
+( 384 224 0 ) ( 512 224 0 ) ( 384 224 96 ) tex_common/trigger 0 0 0 0.25 0.25
 }
+}
+// entity 34
+{
+"classname" "info_2x2_start"
+"origin" "640 256 28"
+"team" "1"
+"angle" "180"
+}
+// entity 35
+{
+"classname" "info_2x2_start"
+"origin" "672 32 28"
+"team" "1"
+"angle" "90"
+}
+// entity 36
+{
+"classname" "info_2x2_start"
+"origin" "32 288 28"
+"team" "1"
 }
