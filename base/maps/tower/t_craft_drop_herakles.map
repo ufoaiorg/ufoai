@@ -7,44 +7,44 @@
 // brush 0
 {
 ( 128 384 0 ) ( 768 380 0 ) ( 768 384 0 ) tex_common/nodraw 0 0 -90 0.5 0.5 65280 0 0
-( 128 384 8 ) ( 768 384 8 ) ( 768 380 8 ) tex_streets/street004 31.99997 0 -0 0.4999999 0.5 65280 0 0
+( 128 384 8 ) ( 768 384 8 ) ( 768 380 8 ) tex_streets/street004 31.99997 0 0 0.4999999 0.5 65280 0 0
 ( 128 384 8 ) ( 132 380 8 ) ( 132 380 0 ) tex_streets/street004 0 0 90 0.4999999 -0.5 65280 0 0
 ( 132 380 0 ) ( 768 380 8 ) ( 768 380 0 ) tex_streets/street004 31.99997 0 0 0.4999999 0.5 65280 0 0
-( 768 384 8 ) ( 768 380 0 ) ( 768 380 8 ) tex_streets/street004 15.99994 0 -0 0.4999999 0.5 65280 0 0
+( 768 384 8 ) ( 768 380 0 ) ( 768 380 8 ) tex_streets/street004 15.99994 0 0 0.4999999 0.5 65280 0 0
 ( 128 384 8 ) ( 768 384 0 ) ( 768 384 8 ) tex_streets/street004 31.99997 0 0 0.4999999 0.5 65280 0 0
 }
 // brush 1
 {
-( 128 384 0 ) ( 0 0 0 ) ( 128 0 0 ) tex_common/nodraw -0 0 0 0.5 0.5 65280 128 0
+( 128 384 0 ) ( 0 0 0 ) ( 128 0 0 ) tex_common/nodraw 0 0 0 0.5 0.5 65280 128 0
 ( 0 384 4 ) ( 128 0 4 ) ( 0 0 4 ) tex_streets/street001 16 256 0 0.25 0.25 65280 0 0
-( 0 0 4 ) ( 128 0 4 ) ( 128 0 0 ) tex_streets/street001 -0 0 0 0.25 0.25 65280 0 0
+( 0 0 4 ) ( 128 0 4 ) ( 128 0 0 ) tex_streets/street001 0 0 0 0.25 0.25 65280 0 0
 ( 128 384 4 ) ( 128 0 0 ) ( 128 0 4 ) tex_common/nodraw 0 0 0 0.5 0.5 65280 128 0
-( -132 384 188 ) ( -134 384 188 ) ( -134 384 136 ) tex_common/nodraw -0 0 0 0.5 0.5 65280 128 0
+( -132 384 188 ) ( -134 384 188 ) ( -134 384 136 ) tex_common/nodraw 0 0 0 0.5 0.5 65280 128 0
 ( 0 384 4 ) ( 0 0 4 ) ( 0 0 0 ) tex_common/nodraw 0 0 0 0.5 0.5 65280 128 0
 }
 // brush 2
 {
-( 0 384 0 ) ( 768 384 0 ) ( 768 512 0 ) tex_common/nodraw -0 0 0 0.5 0.5 65280 128 0
+( 0 384 0 ) ( 768 384 0 ) ( 768 512 0 ) tex_common/nodraw 0 0 0 0.5 0.5 65280 128 0
 ( 0 512 4 ) ( 768 512 4 ) ( 768 384 4 ) tex_streets/street001 16 256 0 0.25 0.25 65280 0 0
-( 0 384 4 ) ( 768 384 4 ) ( 768 384 0 ) tex_streets/street001 -0 0 0 0.25 0.25 65280 0 0
+( 0 384 4 ) ( 768 384 4 ) ( 768 384 0 ) tex_streets/street001 0 0 0 0.25 0.25 65280 0 0
 ( 768 512 4 ) ( 768 384 0 ) ( 768 384 4 ) tex_streets/street001 256 0 0 0.25 0.25 65280 0 0
-( 0 512 4 ) ( 768 512 0 ) ( 768 512 4 ) tex_streets/street001 -0 0 0 0.25 0.25 65280 0 0
+( 0 512 4 ) ( 768 512 0 ) ( 768 512 4 ) tex_streets/street001 0 0 0 0.25 0.25 65280 0 0
 ( 0 1048 44 ) ( 0 1046 44 ) ( 0 1046 30 ) tex_common/nodraw 0 0 0 0.5 0.5 65280 128 0
 }
 // brush 3
 {
-( 132 0 0 ) ( 768 0 0 ) ( 768 380 0 ) tex_common/nodraw -0 0 0 0.5 0.5 65280 128 0
-( 132 380 4 ) ( 768 380 4 ) ( 768 0 4 ) tex_nature/grass001 -0 128 0 0.5 0.5 65280 0 0
-( 132 0 4 ) ( 768 0 4 ) ( 768 0 0 ) tex_nature/dirt002 -0 0 0 0.1875 0.1875 65280 0 0
+( 132 0 0 ) ( 768 0 0 ) ( 768 380 0 ) tex_common/nodraw 0 0 0 0.5 0.5 65280 128 0
+( 132 380 4 ) ( 768 380 4 ) ( 768 0 4 ) tex_nature/grass001 0 128 0 0.5 0.5 65280 0 0
+( 132 0 4 ) ( 768 0 4 ) ( 768 0 0 ) tex_nature/dirt002 0 0 0 0.1875 0.1875 65280 0 0
 ( 768 0 0 ) ( 768 380 4 ) ( 768 380 0 ) tex_nature/dirt002 341.3333 0 0 0.1875 0.1875 65280 0 0
-( 132 380 4 ) ( 768 380 0 ) ( 768 380 4 ) tex_common/nodraw -0 0 0 0.5 0.5 65280 128 0
+( 132 380 4 ) ( 768 380 0 ) ( 768 380 4 ) tex_common/nodraw 0 0 0 0.5 0.5 65280 128 0
 ( 132 380 4 ) ( 132 0 4 ) ( 132 0 0 ) tex_common/nodraw 0 0 0 0.5 0.5 65280 128 0
 }
 // brush 4
 {
-( 128 384 0 ) ( 128 0 0 ) ( 132 0 0 ) tex_common/nodraw -0 0 0 0.5 0.5 65280 0 0
-( 128 384 8 ) ( 132 0 8 ) ( 128 0 8 ) tex_streets/street004 32 -0 90 0.4999999 0.5 65280 0 0
-( 128 0 8 ) ( 132 0 8 ) ( 132 0 0 ) tex_streets/street004 48 -0 90 0.4999999 0.5 65280 0 0
+( 128 384 0 ) ( 128 0 0 ) ( 132 0 0 ) tex_common/nodraw 0 0 0 0.5 0.5 65280 0 0
+( 128 384 8 ) ( 132 0 8 ) ( 128 0 8 ) tex_streets/street004 32 0 90 0.4999999 0.5 65280 0 0
+( 128 0 8 ) ( 132 0 8 ) ( 132 0 0 ) tex_streets/street004 48 0 90 0.4999999 0.5 65280 0 0
 ( 132 380 8 ) ( 132 0 0 ) ( 132 0 8 ) tex_streets/street004 32 0 0 0.4999999 0.5 65280 0 0
 ( -138 650 146 ) ( -138 650 148 ) ( -140 652 148 ) tex_common/nodraw 0 0 0 0.5 0.5 65280 128 0
 ( 128 384 8 ) ( 128 0 8 ) ( 128 0 0 ) tex_streets/street004 32 0 0 0.4999999 0.5 65280 0 0
@@ -265,50 +265,42 @@
 // entity 2
 {
 "classname" "info_human_start"
-"origin" "560 240 51"
-"angle" "90"
+"origin" "464 240 51"
 }
 // entity 3
 {
 "classname" "info_human_start"
-"origin" "560 176 51"
-"angle" "90"
+"origin" "464 176 51"
 }
 // entity 4
 {
 "classname" "info_human_start"
-"origin" "496 240 51"
-"angle" "90"
+"origin" "400 240 51"
 }
 // entity 5
 {
 "classname" "info_human_start"
-"origin" "496 176 51"
-"angle" "90"
+"origin" "400 176 51"
 }
 // entity 6
 {
 "classname" "info_human_start"
 "origin" "432 240 51"
-"angle" "90"
 }
 // entity 7
 {
 "classname" "info_human_start"
 "origin" "432 176 51"
-"angle" "90"
 }
 // entity 8
 {
 "classname" "info_human_start"
 "origin" "368 240 51"
-"angle" "90"
 }
 // entity 9
 {
 "classname" "info_human_start"
 "origin" "368 176 51"
-"angle" "90"
 }
 // entity 10
 {
@@ -356,11 +348,59 @@
 "team" "1"
 // brush 0
 {
-( 576 128 80 ) ( 448 128 80 ) ( 576 288 80 ) tex_common/trigger -0 0 -90 0.25 0.25 0 0 0
-( 640 128 96 ) ( 640 288 96 ) ( 640 128 0 ) tex_common/trigger -0 0 0 -0.25 0.25 0 0 0
-( 576 128 64 ) ( 576 128 -32 ) ( 448 128 64 ) tex_common/trigger -0 0 0 0.25 0.25 0 0 0
-( 448 288 0 ) ( 448 128 0 ) ( 576 288 0 ) tex_common/trigger -0 0 -90 0.25 0.25 0 0 0
-( 128 288 0 ) ( 128 288 96 ) ( 128 128 0 ) tex_common/trigger -0 0 0 -0.25 0.25 0 0 0
-( 448 288 0 ) ( 576 288 0 ) ( 448 288 96 ) tex_common/trigger -0 0 0 0.25 0.25 0 0 0
+( 576 128 80 ) ( 448 128 80 ) ( 576 288 80 ) tex_common/trigger 0 0 -90 0.25 0.25 0 0 0
+( 640 128 96 ) ( 640 288 96 ) ( 640 128 0 ) tex_common/trigger 0 0 0 -0.25 0.25 0 0 0
+( 576 128 64 ) ( 576 128 -32 ) ( 448 128 64 ) tex_common/trigger 0 0 0 0.25 0.25 0 0 0
+( 448 288 0 ) ( 448 128 0 ) ( 576 288 0 ) tex_common/trigger 0 0 -90 0.25 0.25 0 0 0
+( 128 288 0 ) ( 128 288 96 ) ( 128 128 0 ) tex_common/trigger 0 0 0 -0.25 0.25 0 0 0
+( 448 288 0 ) ( 576 288 0 ) ( 448 288 96 ) tex_common/trigger 0 0 0 0.25 0.25 0 0 0
 }
+}
+// entity 16
+{
+"classname" "info_2x2_start"
+"origin" "512 160 66"
+"team" "1"
+}
+// entity 17
+{
+"classname" "info_2x2_start"
+"origin" "512 256 66"
+"team" "1"
+}
+// entity 18
+{
+"classname" "info_2x2_start"
+"origin" "224 192 66"
+"team" "1"
+}
+// entity 19
+{
+"classname" "info_human_start"
+"origin" "336 240 51"
+}
+// entity 20
+{
+"classname" "info_human_start"
+"origin" "336 176 51"
+}
+// entity 21
+{
+"classname" "info_human_start"
+"origin" "304 240 51"
+}
+// entity 22
+{
+"classname" "info_human_start"
+"origin" "304 176 51"
+}
+// entity 23
+{
+"classname" "info_human_start"
+"origin" "272 240 51"
+}
+// entity 24
+{
+"classname" "info_human_start"
+"origin" "272 176 51"
 }
