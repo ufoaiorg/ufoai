@@ -3310,3 +3310,10 @@
 "angle" "180"
 "team" "1"
 }
+// entity 61
+{
+"classname" "info_2x2_start"
+"origin" "384 1184 156"
+"angle" "180"
+"team" "1"
+}
