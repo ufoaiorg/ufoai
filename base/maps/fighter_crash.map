@@ -13430,3 +13430,34 @@
 ( 960 -512 64 ) ( 1088 -512 64 ) ( 960 -512 160 ) tex_common/trigger 0 0 0 0.25 0.25 0 0 0
 }
 }
+// entity 168
+{
+"classname" "info_2x2_start"
+"origin" "800 -640 104"
+"team" "1"
+"angle" "90"
+}
+// entity 169
+{
+"classname" "info_human_start"
+"origin" "976 -432 104"
+"angle" "135"
+}
+// entity 170
+{
+"classname" "info_human_start"
+"origin" "1072 -592 104"
+"angle" "90"
+}
+// entity 171
+{
+"classname" "info_human_start"
+"origin" "816 -432 98"
+"angle" "135"
+}
+// entity 172
+{
+"classname" "info_human_start"
+"origin" "720 -528 108"
+"angle" "90"
+}
