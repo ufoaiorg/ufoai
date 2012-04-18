@@ -40401,7 +40401,7 @@
 // entity 387
 {
 "classname" "func_breakable"
-"spawnflags" "255"
+"spawnflags" "254"
 "health" "25"
 // brush 0
 {
@@ -40416,7 +40416,7 @@
 // entity 388
 {
 "classname" "func_breakable"
-"spawnflags" "255"
+"spawnflags" "254"
 "health" "25"
 // brush 0
 {
