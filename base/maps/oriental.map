@@ -19666,3 +19666,21 @@
 ( -800 576 0 ) ( -672 576 0 ) ( -800 576 96 ) tex_common/trigger 0 0 0 0.25 0.25 0 0 0
 }
 }
+// entity 234
+{
+"classname" "info_2x2_start"
+"origin" "-736 256 28"
+"team" "1"
+}
+// entity 235
+{
+"classname" "info_2x2_start"
+"origin" "-576 704 28"
+"team" "1"
+}
+// entity 236
+{
+"classname" "info_2x2_start"
+"origin" "-960 640 28"
+"team" "1"
+}
