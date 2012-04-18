@@ -14162,7 +14162,7 @@
 // entity 127
 {
 "classname" "info_player_start"
-"origin" "912 -1040 28"
+"origin" "944 -1104 28"
 "team" "2"
 "angle" "90"
 }
@@ -16291,56 +16291,56 @@
 // entity 203
 {
 "classname" "info_player_start"
-"origin" "656 -1232 28"
+"origin" "656 -1264 28"
 "team" "2"
 "angle" "90"
 }
 // entity 204
 {
 "classname" "info_player_start"
-"origin" "816 -1136 28"
+"origin" "848 -1136 28"
 "team" "2"
 "angle" "180"
 }
 // entity 205
 {
 "classname" "info_player_start"
-"origin" "720 -880 28"
+"origin" "720 -912 28"
 "team" "2"
 "angle" "90"
 }
 // entity 206
 {
 "classname" "info_player_start"
-"origin" "880 -1104 28"
+"origin" "880 -1136 28"
 "team" "2"
 "angle" "90"
 }
 // entity 207
 {
 "classname" "info_player_start"
-"origin" "656 -1072 28"
+"origin" "656 -1104 28"
 "team" "2"
 "angle" "90"
 }
 // entity 208
 {
 "classname" "info_player_start"
-"origin" "752 -976 28"
+"origin" "720 -976 28"
 "team" "2"
 "angle" "90"
 }
 // entity 209
 {
 "classname" "info_player_start"
-"origin" "720 -784 28"
+"origin" "752 -784 28"
 "team" "2"
 "angle" "90"
 }
 // entity 210
 {
 "classname" "info_player_start"
-"origin" "752 -1136 28"
+"origin" "784 -1136 28"
 "team" "2"
 "angle" "180"
 }
@@ -16568,6 +16568,7 @@
 {
 "classname" "info_human_start"
 "origin" "656 -1232 28"
+"angle" "180"
 }
 // entity 231
 {
@@ -16592,7 +16593,8 @@
 // entity 235
 {
 "classname" "info_human_start"
-"origin" "912 -1040 28"
+"origin" "944 -1072 28"
+"angle" "90"
 }
 // entity 236
 {
@@ -18464,6 +18466,7 @@
 {
 "classname" "trigger_rescue"
 "team" "1"
+"spawnflags" "255"
 // brush 0
 {
 ( 832 -1280 64 ) ( 704 -1280 64 ) ( 832 -1120 64 ) tex_common/trigger 0 0 0 0.25 0.25 0 0 0
@@ -18473,4 +18476,43 @@
 ( 672 -1120 0 ) ( 672 -1120 96 ) ( 672 -1280 0 ) tex_common/trigger 0 0 0 0.25 0.25 0 0 0
 ( 704 -1120 0 ) ( 832 -1120 0 ) ( 704 -1120 96 ) tex_common/trigger 0 0 0 0.25 0.25 0 0 0
 }
+}
+// entity 299
+{
+"classname" "info_human_start"
+"origin" "752 -1232 28"
+"angle" "180"
+}
+// entity 300
+{
+"classname" "info_human_start"
+"origin" "848 -1232 28"
+"angle" "90"
+}
+// entity 301
+{
+"classname" "info_2x2_start"
+"origin" "544 -1280 28"
+"team" "1"
+"angle" "180"
+}
+// entity 302
+{
+"classname" "info_2x2_start"
+"origin" "544 -1088 28"
+"team" "1"
+"angle" "90"
+}
+// entity 303
+{
+"classname" "info_2x2_start"
+"origin" "896 -1024 28"
+"team" "1"
+"angle" "90"
+}
+// entity 304
+{
+"classname" "info_human_start"
+"origin" "528 -1200 28"
+"angle" "180"
 }
