@@ -20949,7 +20949,7 @@
 ( 808 40 210 ) ( 828 40 210 ) ( 828 40 206 ) tex_material/c_black 12 7 -180 0.5 -0.5 65025 0 0
 ( 808 60 216 ) ( 804 60 216 ) ( 804 60 212 ) tex_material/c_black 12 7 -180 0.5 -0.5 65025 0 0
 ( 1078 218 80 ) ( 990 218 80 ) ( 990 202 80 ) tex_common/nodraw 12 -7 -180 0.5 0.5 65025 0 0
-( 990 202 84 ) ( 990 218 84 ) ( 1078 218 84 ) tex_furniture/seat001 48 -0 180 0.25 0.3125 65025 0 0
+( 990 202 84 ) ( 990 218 84 ) ( 1078 218 84 ) tex_furniture/seat001 48 0 180 0.25 0.3125 65025 0 0
 }
 }
 // entity 175
@@ -28255,13 +28255,52 @@
 {
 "classname" "trigger_rescue"
 "team" "1"
+"spawnflags" "255"
 // brush 0
 {
 ( 160 -736 64 ) ( 32 -736 64 ) ( 160 -576 64 ) tex_common/trigger 0 0 0 0.25 0.25 0 0 0
-( 224 -736 96 ) ( 224 -576 96 ) ( 224 -736 0 ) tex_common/trigger 0 0 0 0.25 0.25 0 0 0
+( 320 -736 96 ) ( 320 -576 96 ) ( 320 -736 0 ) tex_common/trigger 0 0 0 0.25 0.25 0 0 0
 ( 160 -768 64 ) ( 160 -768 -32 ) ( 32 -768 64 ) tex_common/trigger 0 0 0 0.25 0.25 0 0 0
 ( 32 -576 0 ) ( 32 -736 0 ) ( 160 -576 0 ) tex_common/trigger 0 0 0 0.25 0.25 0 0 0
 ( 32 -576 0 ) ( 32 -576 96 ) ( 32 -736 0 ) tex_common/trigger 0 0 0 0.25 0.25 0 0 0
-( 32 -576 0 ) ( 160 -576 0 ) ( 32 -576 96 ) tex_common/trigger 0 0 0 0.25 0.25 0 0 0
+( 32 -480 0 ) ( 160 -480 0 ) ( 32 -480 96 ) tex_common/trigger 0 0 0 0.25 0.25 0 0 0
 }
+}
+// entity 356
+{
+"classname" "info_2x2_start"
+"origin" "64 -544 64"
+"team" "1"
+}
+// entity 357
+{
+"classname" "info_2x2_start"
+"origin" "160 -800 64"
+"team" "1"
+}
+// entity 358
+{
+"classname" "info_2x2_start"
+"origin" "320 -512 64"
+"team" "1"
+}
+// entity 359
+{
+"classname" "info_human_start"
+"origin" "48 -400 64"
+}
+// entity 360
+{
+"classname" "info_human_start"
+"origin" "112 -496 64"
+}
+// entity 361
+{
+"classname" "info_human_start"
+"origin" "240 -464 64"
+}
+// entity 362
+{
+"classname" "info_human_start"
+"origin" "48 -784 64"
 }
