@@ -331,7 +331,7 @@ static void CL_LevelUp_f (void)
 }
 
 /**
- * @brief Switch on worldlevel down
+ * @brief Switch one worldlevel down
  */
 static void CL_LevelDown_f (void)
 {
