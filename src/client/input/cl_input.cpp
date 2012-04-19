@@ -804,7 +804,7 @@ void IN_EventEnqueue (unsigned int keyNum, unsigned short keyUnicode, qboolean k
 }
 
 /**
- * @brief Handle input events like keys presses and joystick movement as well
+ * @brief Handle input events like key presses and joystick movement as well
  * as window events
  * @sa CL_Frame
  * @sa IN_Parse
@@ -834,7 +834,7 @@ void IN_Frame (void)
 			Com_Printf("Switch grab input on\n");
 			SDL_WM_GrabInput(SDL_GRAB_ON);
 		} else {
-			Com_Printf("No input grabbing in fullscreen mode\n");
+			Com_Printf("No input grabbing in fullscreen mode!\n");
 			Cvar_SetValue("vid_grabmouse", 0);
 		}
 	}
@@ -929,7 +929,7 @@ void IN_Frame (void)
 			break;
 
 		case SDL_ACTIVEEVENT:
-			/* make sure menu no more capture input when the game window lose the focus */
+			/* make sure the menu no more captures the input when the game window loses focus */
 			if (event.active.state == SDL_APPINPUTFOCUS && event.active.gain == 0)
 				UI_ReleaseInput();
 			break;
