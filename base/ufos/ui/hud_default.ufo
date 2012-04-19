@@ -523,8 +523,6 @@ window hud_default extends hud
 			size	"64 37"
 			icon	"icons/rescue_zone"
 			invis	false
-			onMouseEnter	{ *node:this@icon = "icons/rescue_zone_hover" }
-			onMouseLeave	{ *node:this@icon = "icons/rescue_zone" }
 			onClick			{ cmd "toggle_rescuezone;" }
 		}
 
