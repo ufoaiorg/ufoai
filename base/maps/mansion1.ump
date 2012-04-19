@@ -5,7 +5,7 @@
 // by Holger 'ShipIt' Gellrich
 
 // this is an extension of the +mansion map
-// the dropships land on mansion_craft_ufo_empty here
+// the dropships land on mansion_hangar here
 
 extends mansion
 base mansion1/m1_
@@ -68,6 +68,6 @@ assembly medium
 title "_Mansion"
 size "10 5"
 fix mansion/mansion_main "1 1"
-fix mansion/mansion_craft_ufo_empty "7 1"
+fix mansion/mansion_hangar "7 1"
 fix *rm_drop +craft_drop_firebird "7 1"
 }

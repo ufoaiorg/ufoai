@@ -27,7 +27,7 @@
 
 base mansion/mansion_
 
-tile +craft_drop_empty
+tile +quarters
 	// this is the basement for all mansion_craft_drop_*
 	// 8 x info_player_start for team 3
 {
@@ -318,7 +318,7 @@ gu    +e     +e    +o    0
 0     e      et    o     0
 }
 
-tile +craft_ufo_empty
+tile +hangar
 	// this is the basement for every _craft_ufo.*
 	// this is the basement for all m1_craft_drop_*
 	// 2 x info_civilian_start
@@ -431,9 +431,9 @@ fix +ocean1 "1 7"
 fix +ocean1 "2 7"
 fix +ocean1 "1 8"
 fix +ocean2 "2 8"
-fix +craft_drop_empty "6 12"
+fix +quarters "6 12"
 fix *rm_drop +craft_drop_firebird "6 12"
-fix +craft_ufo_empty "11 4"
+fix +hangar "11 4"
 fix *rm_ufo +craft_ufo_scout "11 4"
 }
 
