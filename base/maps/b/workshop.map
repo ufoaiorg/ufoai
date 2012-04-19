@@ -4774,7 +4774,6 @@
 {
 "classname" "func_door"
 "spawnflags" "764"
-"group" "3_a"
 // brush 0
 {
 ( 544 108 128 ) ( 544 108 132 ) ( 544 296 132 ) tex_common/origin 256 182 0 0.007812 0.109375 16777216 0 0
@@ -4798,8 +4797,6 @@
 {
 "classname" "func_door"
 "spawnflags" "252"
-"group" "3_a"
-"targetname" "d3_1"
 // brush 0
 {
 ( 482 290 187 ) ( 480 290 187 ) ( 482 290 131 ) tex_mattn/door036 256 182.8574 0 0.125 0.109375 64512 0 0
@@ -4821,23 +4818,8 @@
 }
 // entity 69
 {
-"classname" "trigger_touch"
-"target" "d3_1"
-// brush 0
-{
-( 416 256 192 ) ( 416 192 192 ) ( 384 256 192 ) tex_common/trigger 0 0 0 0.2 0.2 1024 0 0
-( 416 256 192 ) ( 384 256 192 ) ( 416 256 128 ) tex_common/trigger 0 0 0 0.2 0.2 1024 0 0
-( 416 256 192 ) ( 416 256 128 ) ( 416 192 192 ) tex_common/trigger 0 0 0 0.2 0.2 1024 0 0
-( 384 192 128 ) ( 416 192 128 ) ( 384 256 128 ) tex_common/trigger 0 0 0 0.2 0.2 1024 0 0
-( 384 192 128 ) ( 384 192 192 ) ( 416 192 128 ) tex_common/trigger 0 0 0 0.2 0.2 1024 0 0
-( 384 192 128 ) ( 384 256 128 ) ( 384 192 192 ) tex_common/trigger 0 0 0 0.2 0.2 1024 0 0
-}
-}
-// entity 70
-{
 "classname" "func_door"
 "spawnflags" "764"
-"group" "3_b"
 // brush 0
 {
 ( 736 61 132 ) ( 736 63 132 ) ( 736 61 188 ) tex_mattn/door036 0 0 0 1 1 64512 0 0
@@ -4857,11 +4839,10 @@
 ( 736 61 132 ) ( 736 63 132 ) ( 736 61 188 ) tex_common/origin 0 0 0 0.2 0.2 16777216 0 0
 }
 }
-// entity 71
+// entity 70
 {
 "classname" "func_door"
 "spawnflags" "252"
-"group" "3_b"
 // brush 0
 {
 ( 800 63 188 ) ( 798 63 188 ) ( 800 63 132 ) tex_mattn/door036 255 182 0 -0.125 0.109375 64512 0 0
@@ -4881,7 +4862,7 @@
 ( 798 61 132 ) ( 798 63 132 ) ( 798 61 188 ) tex_common/origin 0 0 0 0.2 0.2 16777216 0 0
 }
 }
-// entity 72
+// entity 71
 {
 "classname" "func_group"
 // brush 0
