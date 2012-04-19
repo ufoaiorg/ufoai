@@ -65,8 +65,8 @@ a     +a    +a    +a    +a    +a    a
 
 // multiplayer tiles ------------------------------------------------
 
-tile +craft_drop_empty
-	// for testing and multiplayer
+tile +mp_team_4
+	// for multiplayer
 {
 7 7
 0     a     a     a     a     a     0
@@ -93,5 +93,5 @@ assembly city2mp
 title "city2"
 size "5 5"
 fix +main "0 0"
-fix +craft_drop_empty "0 0"
+fix +mp_team_4 "0 0"
 }
