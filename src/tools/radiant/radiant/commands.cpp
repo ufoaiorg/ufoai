@@ -192,7 +192,7 @@ void PasteToCamera ()
 
 void OpenHelpURL ()
 {
-	OpenURL("http://ufoai.ninex.info/wiki/index.php/Category:Mapping");
+	OpenURL("http://www.ufoai.org/wiki/index.php/Category:Mapping");
 }
 
 void OpenBugReportURL ()

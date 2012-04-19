@@ -335,7 +335,7 @@ void UI_RegisterAbstractNode (uiBehaviour_t *behaviour)
 	 * LAYOUTALIGN_BOTTOM, LAYOUTALIGN_BOTTOMRIGHT, LAYOUTALIGN_FILL.
 	 * Allowed value depend the layout manager used. The update to date list is into
 	 * ui_node_panel.c
-	 * @image html http://ufoai.ninex.info/wiki/images/Layout.png
+	 * @image html http://www.ufoai.org/wiki/images/Layout.png
 	 */
 	UI_RegisterNodeProperty(behaviour, "align", V_INT, uiNode_t, align);
 

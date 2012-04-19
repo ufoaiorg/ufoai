@@ -10,7 +10,7 @@
  * This node extends spinner node and only override the draw method. Then the behaviour
  * is the same as the spinner.
  *
- * @image html http://ufoai.ninex.info/wiki/images/Spinner2.svg
+ * @image html http://www.ufoai.org/wiki/images/Spinner2.svg
  */
 
 /*

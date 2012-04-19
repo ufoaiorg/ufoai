@@ -402,7 +402,7 @@ void UI_RegisterWindowNode (uiBehaviour_t *behaviour)
 	 * Graphically we see only a 1 pixel margin, because, for a problem of
 	 * lossy compression of texture it's not nice to have a pure transparent
 	 * pixel near the last colored one, when we cut or stretch textures.
-	 * @image html http://ufoai.ninex.info/wiki/images/Popup_alpha_tile.png
+	 * @image html http://www.ufoai.org/wiki/images/Popup_alpha_tile.png
 	 */
 	UI_RegisterOveridedNodeProperty(behaviour, "image");
 

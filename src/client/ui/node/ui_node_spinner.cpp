@@ -212,7 +212,7 @@ void UI_RegisterSpinnerNode (uiBehaviour_t *behaviour)
 	/* Texture used for the widget. Its a 64x64 template image with all four
 	 * status. The top button take the first vertical 9 pixels, the bottom
 	 * button use the last 10 pixels. See the sample image.
-	 * @image html http://ufoai.ninex.info/wiki/images/Spinner_blue.png
+	 * @image html http://www.ufoai.org/wiki/images/Spinner_blue.png
 	 */
 	UI_RegisterOveridedNodeProperty(behaviour, "image");
 }
