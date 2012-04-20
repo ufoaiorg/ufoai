@@ -30,7 +30,7 @@
 #include "ufotypes.h"
 #include "byte.h"
 #include "../common/filesys.h"
-#include <SDL_image.h>
+#include <SDL_video.h>
 
 char const* const* Img_GetImageTypes(void);
 SDL_Surface* Img_LoadImage(char const* name);

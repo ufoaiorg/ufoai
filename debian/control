@@ -2,14 +2,14 @@ Source: ufoai
 Section: games
 Priority: optional
 Maintainer: UFOAI Team <tlh2000@users.sourceforge.net>
-Build-Depends: debhelper (>= 5.0.0), libpng-dev, libjpeg-dev,
+Build-Depends: debhelper (>= 5.0.0), libpng-dev, libjpeg8-dev,
  libgl1-mesa-dev, libsdl-dev, libsdl-ttf2.0-dev, libsdl-mixer1.2-dev,
  libcurl3-openssl-dev | libcurl4-openssl-dev | libcurl4-gnutls-dev,
  zip, libgtk2.0-dev (>=2.4.0), libxml2-dev, libgtkglext1-dev,
  libtheora-dev | libxvidcore4-dev, dpatch,
  libglib2.0-dev, zlib1g-dev, gettext, libmxml-dev,
  pkg-config, libopenal-dev, libgtksourceview2.0-dev,
- libsdl-image1.2-dev, python2.6 | python2.7, binutils-dev,
+ python2.6 | python2.7, binutils-dev,
  libx11-xcb-dev, texlive-latex-base, texlive-latex-recommended,
  texlive-latex-extra
 Build-Conflicts: nvidia-glx, nvidia-current

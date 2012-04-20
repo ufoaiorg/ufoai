@@ -69,7 +69,6 @@
 		</Compiler>
 		<Linker>
 			<Add library="SDL" />
-			<Add library="SDL_image" />
 			<Add library="z" />
 			<Add library="jpeg" />
 			<Add library="png" />

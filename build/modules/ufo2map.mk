@@ -8,8 +8,8 @@ endif
 
 $(TARGET)_LINKER   := $(CC)
 $(TARGET)_FILE     := $(TARGET)$(EXE_EXT)
-$(TARGET)_CFLAGS   += -DCOMPILE_MAP -ffloat-store $(SDL_CFLAGS) $(SDL_IMAGE_CFLAGS)
-$(TARGET)_LDFLAGS  += -lm -lpng -ljpeg -lz $(SDL_LIBS) $(SDL_IMAGE_LIBS)
+$(TARGET)_CFLAGS   += -DCOMPILE_MAP -ffloat-store $(SDL_CFLAGS)
+$(TARGET)_LDFLAGS  += -lm -lpng -ljpeg -lz $(SDL_LIBS)
 
 ifeq ($(SSE),1)
    $(TARGET)_CFLAGS := $(filter-out -ffloat-store,$($(TARGET)_CFLAGS))
