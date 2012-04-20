@@ -183,7 +183,7 @@ static void GAME_SK_Results (struct dbuffer *msg, int winner, int *numSpawned, i
 	cgi->CL_Drop();
 
 	if (winner == 0) {
-		cgi->UI_Popup(_("Game Drawn!"), "%s", _("The game was a draw!\n\nNo survivors left on any side."));
+		cgi->UI_Popup(_("Game Drawn!"), "%s\n", _("The game was a draw!\n\nNo survivors left on any side."));
 		return;
 	}
 
@@ -196,18 +196,17 @@ static void GAME_SK_Results (struct dbuffer *msg, int winner, int *numSpawned, i
 	}
 
 	Com_sprintf(resultText, sizeof(resultText),
-			_("Enemies killed:\t\t%i\n"
-			  "Team survivors:\t\t%i\n"
-			  "Enemy survivors:\t\t%i\n"
-			  "Friendly fire:\t\t%i\n"
-			  "Civilians killed:\t\t%i\n"
-			  "Civilians killed by enemy:\t\t%i\n"),
-			enemiesKilled + enemiesStunned, numAlive[team], numAlive[TEAM_ALIEN],
-			numKilled[team][team], numKilled[team][TEAM_CIVILIAN], numKilled[TEAM_ALIEN][TEAM_CIVILIAN]);
+			_("%i of %i enemies killed, %i stunned, %i survived.\n"
+			  "%i of %i team members survived, %i enemy kills, %i friendly fire kills.\n"
+			  "%i of %i civilians saved, %i enemy kills, %i friendly fire kills.\n"),
+			enemiesKilled, numSpawned[TEAM_ALIEN], enemiesStunned, numAlive[TEAM_ALIEN],
+			numAlive[team], numSpawned[team], numKilled[TEAM_ALIEN][team], numKilled[team][team],
+			numAlive[TEAM_CIVILIAN], numSpawned[TEAM_CIVILIAN], numKilled[TEAM_ALIEN][TEAM_CIVILIAN],
+			numKilled[team][TEAM_CIVILIAN]);
 	if (winner == team) {
-		cgi->UI_Popup(_("Congratulations"), "%s\n%s", _("You won the game!"), resultText);
+		cgi->UI_Popup(_("Congratulations"), "%s\n%s", _("You won the game!\n"), resultText);
 	} else {
-		cgi->UI_Popup(_("Better luck next time"), "%s\n%s", _("You've lost the game!"), resultText);
+		cgi->UI_Popup(_("Better luck next time"), "%s\n%s", _("You've lost the game!\n"), resultText);
 	}
 }
 
