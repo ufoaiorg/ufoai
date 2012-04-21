@@ -10482,8 +10482,8 @@ msgid "Keyinfo and General Help"
 msgstr "info-tasti e aiuto"
 
 #: ../base/ufos/ui/_menu.ufo:606
-msgid "Visit our forums and join the community at http://ufoai.ninex.info."
-msgstr "Visita i nostri forum e unisciti alla community: http://ufoai.ninex.info."
+msgid "Visit our forums and join the community at http://ufoai.org."
+msgstr "Visita i nostri forum e unisciti alla community: http://ufoai.org."
 
 #: ../base/ufos/ui/_menu.ufo:607
 msgid "Note: Campaign-specific keybindings visible in Campaign mode only."

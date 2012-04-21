@@ -10465,7 +10465,7 @@ msgid "Keyinfo and General Help"
 msgstr ""
 
 #: ../base/ufos/ui/_menu.ufo:606
-msgid "Visit our forums and join the community at http://ufoai.ninex.info."
+msgid "Visit our forums and join the community at http://ufoai.org."
 msgstr ""
 
 #: ../base/ufos/ui/_menu.ufo:607
