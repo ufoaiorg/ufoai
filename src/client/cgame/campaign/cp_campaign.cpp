@@ -192,42 +192,28 @@ static qboolean CP_MapIsSelectable (mission_t *mission, mapDef_t *md, const vec2
  */
 qboolean CP_ChooseMap (mission_t *mission, const vec2_t pos)
 {
-	int maxHits = 1;	/**< Total number of maps fulfilling mission conditions. */
-	int hits = 0;		/**< Number of maps fulfilling mission conditions and that appeared less often during game. */
-	int minMissionAppearance = 9999;
-	int randomNum;
-
 	if (mission->mapDef)
 		return qtrue;
 
-	/* Set maxHits and hits. */
-	while (maxHits) {
-		mapDef_t *md;
-		maxHits = 0;
-		MapDef_ForeachSingleplayerCampaign(md) {
-			/* Check if mission fulfill conditions */
-			if (!CP_MapIsSelectable(mission, md, pos))
-				continue;
+	int countMinimal = 0;	/**< Number of maps fulfilling mission conditions and appeared less often during game. */
+	int minMapDefAppearance = -1;
+	mapDef_t* md = NULL;
+	MapDef_ForeachSingleplayerCampaign(md) {
+		/* Check if mission fulfill conditions */
+		if (!CP_MapIsSelectable(mission, md, pos))
+			continue;
 
-			maxHits++;
-			if (md->timesAlreadyUsed < minMissionAppearance) {
-				/* at least one fulfilling mission as been used less time than minMissionAppearance:
-				 * restart the loop with this number of time.
-				 * note: this implies that hits must be > 0 after the loop */
-				hits = 0;
-				minMissionAppearance = md->timesAlreadyUsed;
-				break;
-			} else if (md->timesAlreadyUsed == minMissionAppearance)
-				hits++;
+		if (minMapDefAppearance < 0 || md->timesAlreadyUsed < minMapDefAppearance) {
+			minMapDefAppearance = md->timesAlreadyUsed;
+			countMinimal = 1;
+			continue;
 		}
-
-		if (md == NULL) {
-			/* We scanned all maps in memory without finding a map used less than minMissionAppearance: exit while loop */
-			break;
-		}
+		if (md->timesAlreadyUsed > minMapDefAppearance)
+			continue;
+		countMinimal++;
 	}
 
-	if (!maxHits) {
+	if (countMinimal == 0) {
 		/* no map fulfill the conditions */
 		if (mission->category == INTERESTCATEGORY_RESCUE) {
 			/* default map for rescue mission is the rescue random map assembly */
@@ -236,56 +222,53 @@ qboolean CP_ChooseMap (mission_t *mission, const vec2_t pos)
 				Com_Error(ERR_DROP, "Could not find mapdef: rescue");
 			mission->mapDef->timesAlreadyUsed++;
 			return qtrue;
-		} else if (mission->crashed) {
+		}
+		if (mission->crashed) {
 			/* default map for crashsite mission is the crashsite random map assembly */
 			mission->mapDef = Com_GetMapDefinitionByID("ufocrash");
 			if (!mission->mapDef)
 				Com_Error(ERR_DROP, "Could not find mapdef: ufocrash");
 			mission->mapDef->timesAlreadyUsed++;
 			return qtrue;
-		} else {
-			Com_Printf("CP_ChooseMap: Could not find map with required conditions:\n");
-			Com_Printf("  ufo: %s -- pos: ", mission->ufo ? Com_UFOTypeToShortName(mission->ufo->ufotype) : "none");
-			if (pos)
-				Com_Printf("%s", MapIsWater(MAP_GetColor(pos, MAPTYPE_TERRAIN, NULL)) ? " (in water) " : "");
-			if (pos)
-				Com_Printf("(%.02f, %.02f)\n", pos[0], pos[1]);
-			else
-				Com_Printf("none\n");
-			return qfalse;
 		}
+
+		Com_Printf("CP_ChooseMap: Could not find map with required conditions:\n");
+		Com_Printf("  ufo: %s -- pos: ", mission->ufo ? Com_UFOTypeToShortName(mission->ufo->ufotype) : "none");
+		if (pos)
+			Com_Printf("%s", MapIsWater(MAP_GetColor(pos, MAPTYPE_TERRAIN, NULL)) ? " (in water) " : "");
+		if (pos)
+			Com_Printf("(%.02f, %.02f)\n", pos[0], pos[1]);
+		else
+			Com_Printf("none\n");
+		return qfalse;
 	}
 
-	/* If we reached this point, that means that at least 1 map fulfills the conditions of the mission
-	 * set number of mission to select randomly between 0 and hits - 1 */
-	randomNum = rand() % hits;
-
-	/* Select mission mission number 'randomnumber' that fulfills the conditions */
-	mapDef_t *md;
+	/* select a map randomly from the selected */
+	int randomNum = rand() % countMinimal;
+	md = NULL;
 	MapDef_ForeachSingleplayerCampaign(md) {
 		/* Check if mission fulfill conditions */
 		if (!CP_MapIsSelectable(mission, md, pos))
 			continue;
-
-		if (md->timesAlreadyUsed > minMissionAppearance)
+		if (md->timesAlreadyUsed > minMapDefAppearance)
 			continue;
-
 		/* There shouldn't be mission fulfilling conditions used less time than minMissionAppearance */
-		assert(md->timesAlreadyUsed == minMissionAppearance);
+		assert(md->timesAlreadyUsed == minMapDefAppearance);
 
-		if (!randomNum)
+		if (randomNum == 0) {
+			mission->mapDef = md;
 			break;
-		else
+		} else {
 			randomNum--;
+		}
 	}
 
 	/* A mission must have been selected */
-	mission->mapDef = md;
 	mission->mapDef->timesAlreadyUsed++;
 	if (cp_missiontest->integer)
-		Com_Printf("Selected map '%s' (among %i possible maps)\n", mission->mapDef->id, hits);
+		Com_Printf("Selected map '%s' (among %i possible maps)\n", mission->mapDef->id, countMinimal);
 	else
-		Com_DPrintf(DEBUG_CLIENT, "Selected map '%s' (among %i possible maps)\n", mission->mapDef->id, hits);
+		Com_DPrintf(DEBUG_CLIENT, "Selected map '%s' (among %i possible maps)\n", mission->mapDef->id, countMinimal);
 
 	return qtrue;
 }
