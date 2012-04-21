@@ -11,6 +11,7 @@ msgcategory "_install_equipment"
 	installation_replaced
 	aircraft_refueled
 	aircraft_cannotrefuel
+	aircraft_arrivedhome
 }
 
 msgcategory "_installation_construction"

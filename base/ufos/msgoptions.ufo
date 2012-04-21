@@ -19,6 +19,8 @@ msgoptions default
 	aircraft_cannotrefuel pause
 	aircraft_cannotrefuel notify
 	aircraft_cannotrefuel sound
+	aircraft_arrivedhome notify
+	aircraft_arrivedhome sound
 	installation_build_started notify
 	installation_build_started sound
 	installation_build_finished notify

@@ -1147,6 +1147,9 @@ static void AIR_Move (aircraft_t* aircraft, int deltaTime)
 			/* aircraft entered in homebase */
 			aircraft->status = AIR_REFUEL;
 			B_AircraftReturnedToHomeBase(aircraft);
+			Com_sprintf(cp_messageBuffer, lengthof(cp_messageBuffer),
+				_("Craft %s has returned to %s."), aircraft->name, aircraft->homebase->name);
+			MSO_CheckAddNewMessage(NT_AIRCRAFT_ARRIVEDHOME, _("Notice"), cp_messageBuffer, qfalse, MSG_STANDARD, NULL);
 			break;
 		case AIR_TRANSFER:
 		case AIR_UFO:

@@ -1,9 +1,10 @@
 /**
  * @file
+ * @brief In-game message settings
  */
 
 /*
-Copyright (C) 2002-2011 UFO: Alien Invasion.
+Copyright (C) 2002-2012 UFO: Alien Invasion.
 
 This program is free software; you can redistribute it and/or
 modify it under the terms of the GNU General Public License
@@ -19,7 +20,6 @@ See the GNU General Public License for more details.
 You should have received a copy of the GNU General Public License
 along with this program; if not, write to the Free Software
 Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
-
 */
 
 #include "../../cl_shared.h"
@@ -38,6 +38,7 @@ char const* const nt_strings[NT_NUM_NOTIFYTYPE] = {
 	N_("installation_replaced"),
 	N_("aircraft_refueled"),
 	N_("aircraft_cannotrefuel"),
+	N_("aircraft_arrivedhome"),
 	N_("installation_build_started"),
 	N_("installation_build_finished"),
 	N_("installation_destroyed"),
