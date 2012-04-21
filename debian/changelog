@@ -1,3 +1,10 @@
+ufoai (2.4) oneiric; urgency=low
+
+  [ Martin Gerhardy ]
+  * New major release
+
+ -- Martin Gerhardy <tlh2000@users.sourceforge.net>  Sat, 21 Apr 2012 09:18:02 -0100
+
 ufoai (2.4-dev-3) oneiric; urgency=low
 
   [ Sander van Grieken ]
