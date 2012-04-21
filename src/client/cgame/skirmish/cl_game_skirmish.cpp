@@ -204,9 +204,9 @@ static void GAME_SK_Results (struct dbuffer *msg, int winner, int *numSpawned, i
 			numAlive[TEAM_CIVILIAN], numSpawned[TEAM_CIVILIAN], numKilled[TEAM_ALIEN][TEAM_CIVILIAN],
 			numKilled[team][TEAM_CIVILIAN]);
 	if (winner == team) {
-		cgi->UI_Popup(_("Congratulations"), "%s\n%s", _("You won the game!\n"), resultText);
+		cgi->UI_Popup(_("Congratulations"), "%s\n%s\n", _("You won the game!"), resultText);
 	} else {
-		cgi->UI_Popup(_("Better luck next time"), "%s\n%s", _("You've lost the game!\n"), resultText);
+		cgi->UI_Popup(_("Better luck next time"), "%s\n%s\n", _("You've lost the game!"), resultText);
 	}
 }
 
