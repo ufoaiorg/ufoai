@@ -59,10 +59,10 @@ bool uiAbstractScrollableNode::isSizeChange (uiNode_t *node)
 bool uiScroll_t::move (int viewPos)
 {
 	/* clap position */
+	if (viewPos > this->fullSize - this->viewSize)
+		viewPos = this->fullSize - this->viewSize;
 	if (viewPos < 0)
 		viewPos = 0;
-	else if (viewPos > this->fullSize - this->viewSize)
-		viewPos = this->fullSize - this->viewSize;
 
 	/* no changes */
 	if (this->viewPos == viewPos) {
