@@ -534,7 +534,7 @@ void UI_MouseMove (int x, int y)
 
 	hoveredNode = UI_GetNodeAtPosition(x, y);
 
-	/* update nodes: send 'in' and 'out' event */
+	/* update houvered node by sending messages */
 	if (oldHoveredNode != hoveredNode) {
 		uiNode_t *commonNode = hoveredNode;
 		uiNode_t *node;
@@ -555,7 +555,7 @@ void UI_MouseMove (int x, int y)
 		/* send 'leave' event from old node to common node */
 		node = oldHoveredNode;
 		while (node != commonNode) {
-			UI_ExecuteEventActions(node, node->onMouseLeave);
+			UI_Node_MouseLeave(node);
 			node = node->parent;
 		}
 		if (oldHoveredNode)
@@ -568,13 +568,14 @@ void UI_MouseMove (int x, int y)
 			while (node->parent != commonNode)
 				node = node->parent;
 			commonNode = node;
-			UI_ExecuteEventActions(node, node->onMouseEnter);
+			UI_Node_MouseEnter(node);
 		}
 		if (hoveredNode) {
 			hoveredNode->state = qtrue;
-			UI_ExecuteEventActions(hoveredNode, hoveredNode->onMouseEnter);
+			UI_Node_MouseEnter(node);
 		}
 	}
+
 	oldHoveredNode = hoveredNode;
 
 	/* send the move event */

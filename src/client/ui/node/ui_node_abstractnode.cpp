@@ -101,6 +101,22 @@ static void UI_NodeSetProperty_f (void)
 }
 #endif
 
+/**
+ * Mouse enter on the node (a child node is part of the node)
+ */
+void uiLocatedNode::mouseEnter(uiNode_t* node)
+{
+	UI_ExecuteEventActions(node, node->onMouseEnter);
+}
+
+/**
+ * Mouse leave the node (a child node is part of the node)
+ */
+void uiLocatedNode::mouseLeave(uiNode_t* node)
+{
+	UI_ExecuteEventActions(node, node->onMouseLeave);
+}
+
 bool uiLocatedNode::dndEnter (uiNode_t *node)
 {
 	return qfalse;
@@ -124,6 +140,9 @@ bool uiLocatedNode::dndFinished (uiNode_t *node, bool isDroped)
 {
 	return isDroped;
 }
+
+
+
 
 /**
  * @brief Activate the node. Can be used without the mouse (ie. a button will execute onClick)

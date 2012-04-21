@@ -164,6 +164,18 @@ void UI_Node_MouseUp(uiNode_t* node, int x, int y, int button)
 	b->mouseUp(node, x, y, button);
 }
 
+void UI_Node_MouseEnter(uiNode_t* node)
+{
+	uiLocatedNode *b = dynamic_cast<uiLocatedNode*>(node->behaviour->manager);
+	b->mouseEnter(node);
+}
+
+void UI_Node_MouseLeave(uiNode_t* node)
+{
+	uiLocatedNode *b = dynamic_cast<uiLocatedNode*>(node->behaviour->manager);
+	b->mouseLeave(node);
+}
+
 void UI_Node_CapturedMouseMove(uiNode_t* node, int x, int y)
 {
 	uiLocatedNode *b = dynamic_cast<uiLocatedNode*>(node->behaviour->manager);

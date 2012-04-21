@@ -97,6 +97,10 @@ public:
 	virtual void mouseDown(uiNode_t* node, int x, int y, int button) {}
 	/** Mouse button up event in the node */
 	virtual void mouseUp(uiNode_t* node, int x, int y, int button) {}
+	/** Mouse entered on the node (a child node is part of the node) */
+	virtual void mouseEnter(uiNode_t* node);
+	/** Mouse left the node */
+	virtual void mouseLeave(uiNode_t* node);
 	/** Mouse move event in the node when captured */
 	virtual void capturedMouseMove(uiNode_t* node, int x, int y) {}
 	/** Capture is finished */

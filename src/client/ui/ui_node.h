@@ -51,6 +51,8 @@ void UI_Node_MiddleClick (uiNode_t* node, int x, int y);
 bool UI_Node_Scroll (uiNode_t* node, int deltaX, int deltaY);
 void UI_Node_MouseMove (uiNode_t* node, int x, int y);
 void UI_Node_MouseDown (uiNode_t* node, int x, int y, int button);
+void UI_Node_MouseEnter (uiNode_t* node);
+void UI_Node_MouseLeave (uiNode_t* node);
 void UI_Node_MouseUp (uiNode_t* node, int x, int y, int button);
 void UI_Node_CapturedMouseMove (uiNode_t* node, int x, int y);
 void UI_Node_CapturedMouseLost (uiNode_t* node);
