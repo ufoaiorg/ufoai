@@ -320,6 +320,7 @@ static SDL_Surface* Img_LoadPNG(char const* const name)
 				png_get_IHDR(png, info, &width, &height, &bit_depth, &color_type, 0, 0, 0);
 
 				/* Ensure that we always get a RGBA image with 8 bits per channel. */
+				png_set_gray_to_rgb(png);
 				png_set_strip_16(png);
 				png_set_packing(png);
 				png_set_expand(png);
