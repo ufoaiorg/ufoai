@@ -27,9 +27,11 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #include "../ui_behaviour.h"
 #include "../ui_render.h"
 #include "../ui_actions.h"
+#include "../ui_input.h"
 #include "ui_node_abstractnode.h"
 #include "ui_node_panel.h"
 #include "../../../common/scripts.h"
+#include "../../input/cl_keys.h"
 
 #define EXTRADATA_TYPE panelExtraData_t
 #define EXTRADATA(node) UI_EXTRADATA(node, EXTRADATA_TYPE)
@@ -474,6 +476,44 @@ void uiPanelNode::loading (uiNode_t *node)
 {
 	uiLocatedNode::loading(node);
 	EXTRADATA(node).wheelScrollable = qtrue;
+}
+
+/* Used for drag&drop-like scrolling */
+static int mouseScrollX;
+static int mouseScrollY;
+
+bool uiPanelNode::mouseLongPress(uiNode_t* node, int x, int y, int button)
+{
+	bool hasSomethingToScroll = EXTRADATA(node).super.scrollX.fullSize > EXTRADATA(node).super.scrollX.viewSize
+			|| EXTRADATA(node).super.scrollY.fullSize > EXTRADATA(node).super.scrollY.viewSize;
+	if (!UI_GetMouseCapture() && button == K_MOUSE1 && hasSomethingToScroll) {
+		UI_SetMouseCapture(node);
+		mouseScrollX = x;
+		mouseScrollY = y;
+		return true;
+	}
+	return false;
+}
+
+bool uiPanelNode::startDragging(uiNode_t* node, int startX, int startY, int x, int y, int button)
+{
+	return mouseLongPress(node, startX, startY, button);
+}
+
+void uiPanelNode::mouseUp (uiNode_t* node, int x, int y, int button)
+{
+	if (UI_GetMouseCapture() == node)  /* More checks can never hurt */
+		UI_MouseRelease();
+}
+
+void uiPanelNode::capturedMouseMove (uiNode_t *node, int x, int y)
+{
+	/** @todo do it as well for x */
+	if (mouseScrollY != y) {
+		scrollY(node, mouseScrollY - y);
+		mouseScrollX = x;
+		mouseScrollY = y;
+	}
 }
 
 /**

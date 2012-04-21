@@ -795,7 +795,7 @@ void UI_MouseDown (int x, int y, int button)
 	if (pressedNode == NULL) {
 		pressedNode = node;
 		pressedNodeLocationX = x;
-		pressedNodeLocationX = y;
+		pressedNodeLocationY = y;
 		pressedNodeButton = button;
 		/** @todo find a way to create the timer when UI loading and remove "if (longPressTimer)" */
 		if (longPressTimer == NULL) {
@@ -835,11 +835,12 @@ void UI_MouseUp (int x, int y, int button)
 		}
 	}
 
-	/* captured or hover node */
-	uiNode_t *node = capturedNode ? capturedNode : hoveredNode;
-	if (pressedNode != node) {
-		pressedNode = NULL;
-		return;
+	/* captured or hovered node */
+	uiNode_t *node = NULL;
+	if (capturedNode) {
+		node = capturedNode;
+	} else if (pressedNode == hoveredNode) {
+		node = hoveredNode;
 	}
 
 	pressedNode = NULL;

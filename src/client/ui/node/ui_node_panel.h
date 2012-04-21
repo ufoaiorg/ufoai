@@ -35,6 +35,10 @@ class uiPanelNode : public uiAbstractScrollableNode {
 	void getClientPosition(uiNode_t const* node, vec2_t position) OVERRIDE;
 	void propertyChanged(uiNode_t* node, const value_t *property) OVERRIDE;
 	bool scroll(uiNode_t* node, int deltaX, int deltaY) OVERRIDE;
+	void mouseUp(uiNode_t* node, int x, int y, int button) OVERRIDE;
+	bool mouseLongPress(uiNode_t* node, int x, int y, int button) OVERRIDE;
+	bool startDragging(uiNode_t* node, int startX, int startY, int currentX, int currentY, int button) OVERRIDE;
+	void capturedMouseMove(uiNode_t* node, int x, int y) OVERRIDE;
 };
 
 struct uiBehaviour_s;
