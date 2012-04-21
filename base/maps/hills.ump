@@ -523,6 +523,7 @@ fix +road_1c1 "4 0"
 tileset fillers_1s_common "0 6"
 
 +filler_1s3 "1 1"
++filler_1s6 "0 1"
 +filler_1s5 "0 1"
 
 +filler_2s1 "0 5"
