@@ -219,7 +219,7 @@ typedef struct craftitem_s {
 
 /**
  * @brief Defines all attributes of objects used in the inventory.
- * @note See also http://ufoai.ninex.info/wiki/index.php/UFO-Scripts/weapon_%2A.ufo
+ * @note See also http://ufoai.org/wiki/index.php/UFO-Scripts/weapon_%2A.ufo
  */
 typedef struct objDef_s {
 	/* Common */

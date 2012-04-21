@@ -201,7 +201,7 @@ const image_t *UI_DrawNormImageByName (qboolean flip, float x, float y, float w,
 
 /**
  * @brief draw a panel from a texture as we can see on the image
- * @image html http://ufoai.ninex.info/wiki/images/Inline_draw_panel.png
+ * @image html http://ufoai.org/wiki/images/Inline_draw_panel.png
  * @param[in] pos Position of the output panel
  * @param[in] size Size of the output panel
  * @param[in] texture Texture contain the template of the panel
@@ -274,7 +274,7 @@ void UI_DrawPanel (const vec2_t pos, const vec2_t size, const char *texture, int
  * @param[in] height Current height of the bounded box
  * @param[in] text The string to draw
  * @param[in] method Truncation method
- * @image html http://ufoai.ninex.info/wiki/images/Text_position.png
+ * @image html http://ufoai.org/wiki/images/Text_position.png
  * @note the x, y, width and height values are all normalized here - don't use the
  * viddef settings for drawstring calls - make them all relative to VID_NORM_WIDTH
  * and VID_NORM_HEIGHT

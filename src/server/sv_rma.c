@@ -2,7 +2,7 @@
  * @file sv_rma.c
  * @brief Random map assembly code
  * More info on map-assembly can be found at:
- * http://ufoai.ninex.info/wiki/index.php/Mapping/Random_map_assembly
+ * http://ufoai.org/wiki/index.php/Mapping/Random_map_assembly
  */
 
 /*

@@ -2,7 +2,7 @@
 
 ## Generate 2 files postats.wiki and postats.json from translation status
 # JSON file is not used
-# WIKI data must be pasted into http://ufoai.ninex.info/wiki/index.php/Template:Translation_status/Data
+# WIKI data must be pasted into http://ufoai.org/wiki/index.php/Template:Translation_status/Data
 #
 # Usage
 # move to ./src/po

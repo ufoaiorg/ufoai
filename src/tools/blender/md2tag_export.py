@@ -10,7 +10,7 @@ Tooltip: 'Export to Quake2 tag file format for UFO:AI (.tag).'
 __author__ = 'Werner Hoehrer'
 __version__ = '0.0.13'
 __url__ = ["UFO: Alien Invasion, http://ufoai.sourceforge.net",
-     "Support forum, http://ufoai.ninex.info/forum/", "blender", "ufoai"]
+     "Support forum, http://ufoai.org/forum/", "blender", "ufoai"]
 __email__ = ["Werner Hoehrer, bill_spam2:yahoo*de", "scripts"]
 __bpydoc__ = """\
 This script exports a Quake 2 tag file as used in UFO:AI (MD2 TAG).

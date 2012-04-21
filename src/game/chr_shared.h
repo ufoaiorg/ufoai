@@ -58,7 +58,7 @@ typedef struct chrTemplate_s {
 
 /**
  * @brief Structure of all stats collected in a mission.
- * @note More general Info: http://ufoai.ninex.info/wiki/index.php/Proposals/Attribute_Increase
+ * @note More general Info: http://ufoai.org/wiki/index.php/Proposals/Attribute_Increase
  * @note Mostly collected in g_client.c and not used anywhere else (at least that's the plan ;)).
  * The result is parsed into chrScoreGlobal_t which is stored in savegames.
  * @note BTAxis about "hit" count:
@@ -100,7 +100,7 @@ typedef struct chrScoreMission_s {
 
 /**
  * @brief Structure of all stats collected for an actor over time.
- * @note More general Info: http://ufoai.ninex.info/wiki/index.php/Proposals/Attribute_Increase
+ * @note More general Info: http://ufoai.org/wiki/index.php/Proposals/Attribute_Increase
  * @note This information is stored in savegames (in contract to chrScoreMission_t).
  * @note WARNING: if you change something here you'll have to make sure all the network and savegame stuff is updated as well!
  * Additionally you have to check the size of the network-transfer in G_SendCharacterData and GAME_CP_Results

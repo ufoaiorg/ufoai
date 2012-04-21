@@ -143,7 +143,7 @@ void UI_RegisterCheckBoxNode (uiBehaviour_t *behaviour)
 	 * three status according to the value, and four status according to the
 	 * interaction. From left to right: unchecked, checked, and invalidate.
 	 * From top to bottom: normal, hovered by the mouse, clicked, disabled.
-	 * @image html http://ufoai.ninex.info/wiki/images/Checkbox_template.png
+	 * @image html http://ufoai.org/wiki/images/Checkbox_template.png
 	 */
 	UI_RegisterOveridedNodeProperty(behaviour, "image");
 

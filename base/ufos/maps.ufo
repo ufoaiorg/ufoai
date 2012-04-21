@@ -6,7 +6,7 @@
 // * eastern, western, oriental, african
 // valid population values:
 // * urban, suburban, village, rural, nopopulation
-// See also http://ufoai.ninex.info/wiki/index.php/Mapping/Terrain_Types
+// See also http://ufoai.org/wiki/index.php/Mapping/Terrain_Types
 // valid civilianteam values:
 // * Nation Civilians: africa, asia, europe, latin, middle, states, oceania, russia
 // * Non-Nation Civilians: armysoldier, miner, scientist, worker

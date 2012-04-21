@@ -14,7 +14,7 @@
 
 
 language=$1
-url="http://ufoai.ninex.info"
+url="http://ufoai.org"
 wiki_url="/wiki/index.php/List_of_msgid/"
 chapters="Research Armour Equipment Buildings Aircraft Aircraft_Equipment UGVs UGV_Equipment Aliens Campaigns Story Mail_Headers Mail_Bodies"
 index="List_of_msgid_"${language}

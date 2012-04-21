@@ -1,4 +1,4 @@
-Some of the textures are non-free - a list is here http://ufoai.ninex.info/licenses/
+Some of the textures are non-free - a list is here http://ufoai.org/licenses/
 We are working on replacing them with free versions.
 
 Textures from http://www.mayang.com/textures/

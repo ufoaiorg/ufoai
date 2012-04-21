@@ -49,7 +49,7 @@ Section "UFORadiant"
 		SetOutPath "$INSTDIR"
 		CreateDirectory "$SMPROGRAMS\${PRODUCT_NAME}\"
 		CreateShortCut "$SMPROGRAMS\${PRODUCT_NAME}\MAP-Editor.lnk" "$INSTDIR\uforadiant.exe" "" "$INSTDIR\uforadiant.exe" 0
-		WriteIniStr "$INSTDIR\Mapping Tutorials.url" "InternetShortcut" "URL" "http://ufoai.ninex.info/wiki/index.php/Mapping"
+		WriteIniStr "$INSTDIR\Mapping Tutorials.url" "InternetShortcut" "URL" "http://ufoai.org/wiki/index.php/Mapping"
 SectionEnd
 
 

@@ -111,7 +111,7 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #  define BUILDSTRING BUILDSTRING_OS " " BUILDSTRING_VARIANT
 #endif
 
-#define MASTER_SERVER "http://ufoai.ninex.info/" /* sponsored by NineX */
+#define MASTER_SERVER "http://ufoai.org/" /* sponsored by NineX */
 
 /*
 ==============================================================
