@@ -229,8 +229,6 @@ qboolean MSO_SaveXML (xmlNode_t *p)
 qboolean MSO_LoadXML (xmlNode_t *p)
 {
 	xmlNode_t *n, *s;
-	/* reset current message settings (default to set for undefined settings)*/
-	OBJSET(messageSettings, 1);
 
 	n = XML_GetNode(p, SAVE_MESSAGEOPTIONS_MESSAGEOPTIONS);
 	if (!n)
