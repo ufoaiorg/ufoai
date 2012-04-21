@@ -176,6 +176,12 @@ void UI_Node_MouseLeave(uiNode_t* node)
 	b->mouseLeave(node);
 }
 
+bool UI_Node_StartDragging(uiNode_t* node, int startX, int startY, int currentX, int currentY, int button)
+{
+	uiLocatedNode *b = dynamic_cast<uiLocatedNode*>(node->behaviour->manager);
+	return b->startDragging(node, startX, startY, currentX, currentY, button);
+}
+
 void UI_Node_CapturedMouseMove(uiNode_t* node, int x, int y)
 {
 	uiLocatedNode *b = dynamic_cast<uiLocatedNode*>(node->behaviour->manager);

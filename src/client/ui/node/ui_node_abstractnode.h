@@ -105,6 +105,13 @@ public:
 	virtual void capturedMouseMove(uiNode_t* node, int x, int y) {}
 	/** Capture is finished */
 	virtual void capturedMouseLost(uiNode_t* node) {}
+	/*
+	 * Send mouse event when a pressed mouse button is dragged
+	 * @return True if the event is used
+	 */
+	virtual bool startDragging(uiNode_t* node, int startX, int startY, int currentX, int currentY, int button) {
+		return false;
+	}
 
 	/* drag and drop callback */
 

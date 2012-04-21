@@ -75,6 +75,26 @@ static uiNode_t* capturedNode;
 static uiNode_t *pressedNode;
 
 /**
+ * @brief X position of the mouse when pressedNode != NULL
+ */
+static int pressedNodeLocationX;
+
+/**
+ * @brief Y position of the mouse when pressedNode != NULL
+ */
+static int pressedNodeLocationY;
+
+/**
+ * @brief Button pressed when pressedNode != NULL
+ */
+static int pressedNodeButton;
+
+/**
+ * @brief Value of pressedNodeLocationX when event already sent
+ */
+#define UI_STARTDRAG_ALREADY_SENT -1
+
+/**
  * @brief Execute the current focused action node
  * @note Action nodes are nodes with click defined
  * @sa Key_Event
@@ -531,6 +551,21 @@ void UI_MouseMove (int x, int y)
 	if (UI_DNDIsDragging())
 		return;
 
+	if (pressedNode && !capturedNode) {
+		if (pressedNodeLocationX != UI_STARTDRAG_ALREADY_SENT) {
+			int dist = abs(pressedNodeLocationX - x) + abs(pressedNodeLocationY - y);
+			if (dist > 4) {
+				uiNode_t *node = pressedNode;
+				while (node) {
+					if (UI_Node_StartDragging(node, pressedNodeLocationX, pressedNodeLocationY, x, y, pressedNodeButton))
+						break;
+					node = node->parent;
+				}
+				pressedNodeLocationX = UI_STARTDRAG_ALREADY_SENT;
+			}
+		}
+	}
+
 	/* send the captured move mouse event */
 	if (capturedNode) {
 		UI_Node_CapturedMouseMove(capturedNode, x, y);
@@ -722,6 +757,9 @@ void UI_MouseDown (int x, int y, int button)
 	/* select clickableNode on button up, and detect multipress button */
 	if (pressedNode == NULL) {
 		pressedNode = node;
+		pressedNodeLocationX = x;
+		pressedNodeLocationX = y;
+		pressedNodeButton = button;
 	} else {
 		pressedNode = NULL;
 	}
