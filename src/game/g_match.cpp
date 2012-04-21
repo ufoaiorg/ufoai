@@ -339,7 +339,7 @@ qboolean G_MatchDoEnd (void)
 }
 
 /**
- * @brief Checks whether there are still actors to fight with left. If non
+ * @brief Checks whether there are still actors to fight with left. If none
  * are the match end will be triggered.
  * @sa G_MatchEndTrigger
  */
