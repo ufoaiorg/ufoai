@@ -70,6 +70,11 @@ static int oldMousePosX, oldMousePosY;
 static uiNode_t* capturedNode;
 
 /**
+ * @brief Store node which receive a mouse down event
+ */
+static uiNode_t *pressedNode;
+
+/**
  * @brief Execute the current focused action node
  * @note Action nodes are nodes with click defined
  * @sa Key_Event
@@ -608,16 +613,16 @@ static void UI_LeftClick (int x, int y)
 	/** @todo need to refactoring it with the focus code (cleaner) */
 	/** @todo at least should be moved on the mouse down event (when the focus should change) */
 	/** @todo this code must be on mouse down */
-	if (!hoveredNode && ui_global.windowStackPos != 0) {
+	if (!pressedNode && ui_global.windowStackPos != 0) {
 		uiNode_t *window = ui_global.windowStack[ui_global.windowStackPos - 1];
 		if (UI_WindowIsDropDown(window)) {
 			UI_PopWindow(qfalse);
 		}
 	}
 
-	disabled = (hoveredNode == NULL) || (hoveredNode->disabled) || (hoveredNode->parent && hoveredNode->parent->disabled);
+	disabled = (pressedNode == NULL) || (pressedNode->disabled) || (pressedNode->parent && pressedNode->parent->disabled);
 	if (!disabled) {
-		UI_Node_LeftClick(hoveredNode, x, y);
+		UI_Node_LeftClick(pressedNode, x, y);
 	}
 }
 
@@ -640,9 +645,9 @@ static void UI_RightClick (int x, int y)
 		return;
 	}
 
-	disabled = (hoveredNode == NULL) || (hoveredNode->disabled) || (hoveredNode->parent && hoveredNode->parent->disabled);
+	disabled = (pressedNode == NULL) || (pressedNode->disabled) || (pressedNode->parent && pressedNode->parent->disabled);
 	if (!disabled) {
-		UI_Node_RightClick(hoveredNode, x, y);
+		UI_Node_RightClick(pressedNode, x, y);
 	}
 }
 
@@ -663,9 +668,9 @@ static void UI_MiddleClick (int x, int y)
 		return;
 	}
 
-	disabled = (hoveredNode == NULL) || (hoveredNode->disabled) || (hoveredNode->parent && hoveredNode->parent->disabled);
+	disabled = (pressedNode == NULL) || (pressedNode->disabled) || (pressedNode->parent && pressedNode->parent->disabled);
 	if (!disabled) {
-		UI_Node_MiddleClick(hoveredNode, x, y);
+		UI_Node_MiddleClick(pressedNode, x, y);
 	}
 }
 
@@ -695,8 +700,6 @@ void UI_MouseScroll (int deltaX, int deltaY)
 		node = node->parent;
 	}
 }
-
-static uiNode_t *pressedNode;
 
 /**
  * @brief Called when we are in UI mode and down a mouse button
@@ -732,10 +735,9 @@ void UI_MouseDown (int x, int y, int button)
  */
 void UI_MouseUp (int x, int y, int button)
 {
-	uiNode_t *node;
-
 	/* send click event */
-	if (pressedNode) {
+	/** @todo it is really need to clean up this subfunctions */
+	if (pressedNode || capturedNode) {
 		switch (button) {
 		case K_MOUSE1:
 			UI_LeftClick(x, y);
@@ -748,11 +750,15 @@ void UI_MouseUp (int x, int y, int button)
 			break;
 		}
 	}
-	pressedNode = NULL;
 
 	/* captured or hover node */
-	node = capturedNode ? capturedNode : hoveredNode;
+	uiNode_t *node = capturedNode ? capturedNode : hoveredNode;
+	if (pressedNode != node) {
+		pressedNode = NULL;
+		return;
+	}
 
+	pressedNode = NULL;
 	if (node == NULL)
 		return;
 
