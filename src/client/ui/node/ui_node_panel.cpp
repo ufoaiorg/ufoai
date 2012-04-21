@@ -517,7 +517,6 @@ void uiPanelNode::propertyChanged (uiNode_t *node, const value_t *property)
  */
 bool uiPanelNode::scroll (uiNode_t *node, int deltaX, int deltaY)
 {
-	bool down = deltaY > 0;
 	bool updated;
 
 	/* @todo remove wheelScrollable after 2.4 release */
@@ -530,11 +529,11 @@ bool uiPanelNode::scroll (uiNode_t *node, int deltaX, int deltaY)
 		UI_ExecuteEventActions(node, EXTRADATA(node).super.onViewChange);
 
 	/* @todo use super behaviour */
-	if (node->onWheelUp && !down) {
+	if (node->onWheelUp && deltaY < 0) {
 		UI_ExecuteEventActions(node, node->onWheelUp);
 		updated = true;
 	}
-	if (node->onWheelDown && down) {
+	if (node->onWheelDown && deltaY > 0) {
 		UI_ExecuteEventActions(node, node->onWheelDown);
 		updated = true;
 	}
