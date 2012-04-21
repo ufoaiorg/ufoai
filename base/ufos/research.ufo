@@ -1543,7 +1543,7 @@ tech rs_weapon_electrolaser
 }
 
 // Generic laser ammo
-// See http://ufoai.ninex.info/wiki/index.php/Equipment/Ammunition/D-F_Cartridge for more.
+// See http://ufoai.org/wiki/index.php/Equipment/Ammunition/D-F_Cartridge for more.
 // TODO fix the "provides" info. Which model should we use? I currently set it to use the laserrifle ammo.
 tech rs_weapon_laserammo
 {
@@ -5042,7 +5042,7 @@ tech rs_item_alienmaterials
 // News
 //========================
 
-// http://ufoai.ninex.info/wiki/index.php/Storyline/Final#.22Political_Situation_Before_The_Invasion.22
+// http://ufoai.org/wiki/index.php/Storyline/Final#.22Political_Situation_Before_The_Invasion.22
 tech news_init_political_situation
 {
 	type	news
@@ -5055,7 +5055,7 @@ tech news_init_political_situation
 	time	0
 }
 
-// http://ufoai.ninex.info/wiki/index.php/Storyline/Final#.22After_the_War.22
+// http://ufoai.org/wiki/index.php/Storyline/Final#.22After_the_War.22
 tech news_after_the_war
 {
 	type	news
@@ -5068,7 +5068,7 @@ tech news_after_the_war
 	time	0
 }
 
-// http://ufoai.ninex.info/wiki/index.php/Storyline/Final#.22PHALANX_And_The_Mumbai_Aftermath.22
+// http://ufoai.org/wiki/index.php/Storyline/Final#.22PHALANX_And_The_Mumbai_Aftermath.22
 tech news_phalanx_mumbai_aftermath
 {
 	type	news
@@ -5081,7 +5081,7 @@ tech news_phalanx_mumbai_aftermath
 	time	0
 }
 
-// http://ufoai.ninex.info/wiki/index.php/Storyline/A_New_Twist
+// http://ufoai.org/wiki/index.php/Storyline/A_New_Twist
 tech news_new_twist
 {
 	name		"_A New Twist"
@@ -5111,7 +5111,7 @@ tech news_new_twist
 	time		0
 }
 
-// http://ufoai.ninex.info/wiki/index.php/Aliens/The_Enemy_On_Earth
+// http://ufoai.org/wiki/index.php/Aliens/The_Enemy_On_Earth
 tech rs_enemy_on_earth
 {
 	name		"_The Enemy On Earth"
@@ -5151,7 +5151,7 @@ tech rs_enemy_on_earth
 	image		"techs/enemy_on_earth"
 }
 
-// http://ufoai.ninex.info/wiki/index.php/Research/XVI_Census
+// http://ufoai.org/wiki/index.php/Research/XVI_Census
 tech rs_xvi_census
 {
 	name		"_XVI Census"
@@ -5192,7 +5192,7 @@ tech rs_xvi_census
 	image		"techs/xvi"
 }
 
-// http://ufoai.ninex.info/wiki/index.php/Aliens/The_Enemy_On_Earth_(late)
+// http://ufoai.org/wiki/index.php/Aliens/The_Enemy_On_Earth_(late)
 tech rs_enemy_on_earth_revisited
 {
 	name		"_The Enemy On Earth - Revisited"
@@ -5232,7 +5232,7 @@ tech rs_enemy_on_earth_revisited
 	time		7000
 }
 
-// http://ufoai.ninex.info/wiki/index.php/Research/The_Alien_Strategy
+// http://ufoai.org/wiki/index.php/Research/The_Alien_Strategy
 tech rs_alien_strategy
 {
 	name		"_The Alien Strategy"
@@ -5260,7 +5260,7 @@ tech rs_alien_strategy
 	image		"techs/alien_strategy"
 }
 
-// http://ufoai.ninex.info/wiki/index.php/Research/Orbital_UFO_Activity
+// http://ufoai.org/wiki/index.php/Research/Orbital_UFO_Activity
 // TODO: Deactivate for 2.3 - because it requires some kind of cutscene and a specially scripted mission
 tech rs_orbital_ufo_activity
 {

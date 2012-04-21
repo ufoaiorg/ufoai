@@ -14,7 +14,7 @@
  splashpos="top"
  nomenuitems="no"
  reinstallfast="yes"
- update_url="http://ufoai.ninex.info/updates/updates.txt"
+ update_url="http://ufoai.org/updates/updates.txt"
 >
 
  <readme>

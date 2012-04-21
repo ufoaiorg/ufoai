@@ -423,7 +423,7 @@ aircraft craft_inter_stingray
 // *********************************
 // UFOS
 // Notes
-// UFOs are listed in order of appearance. See also: http://ufoai.ninex.info/wiki/index.php/Aircraft
+// UFOs are listed in order of appearance. See also: http://ufoai.org/wiki/index.php/Aircraft
 // adding or renaming ufos: change the assembly name or add the assembly to corresponding ump files
 // *********************************
 

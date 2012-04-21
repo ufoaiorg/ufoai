@@ -18,7 +18,7 @@ UFOAI_ROOT = os.path.realpath(sys.path[0] + '/../..')
 
 INTERACTIVE_REPLY = 'query'
 
-REPOSITORY = 'http://ufoai.ninex.info/maps'
+REPOSITORY = 'http://ufoai.org/maps'
 __version__ = '0.0.4.2'
 
 displayDownloadStatus = True

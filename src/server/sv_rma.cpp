@@ -2,7 +2,7 @@
  * @file
  * @brief Random map assembly code
  * More info on map-assembly can be found at:
- * http://www.ufoai.org/wiki/index.php/Mapping/Random_map_assembly
+ * http://ufoai.org/wiki/index.php/Mapping/Random_map_assembly
  */
 
 /*

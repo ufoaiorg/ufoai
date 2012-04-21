@@ -359,7 +359,7 @@ static void UI_ClientLayout (uiNode_t *node)
  * Check to first row to see the needed size of columns, and the height. All rows
  * will use the same row.
  * @todo Use child\@align to align each nodes inside respective cell.
- * @image html http://www.ufoai.org/wiki/images/Layout_column.png
+ * @image html http://ufoai.org/wiki/images/Layout_column.png
  */
 static void UI_ColumnLayout (uiNode_t *node)
 {
@@ -564,7 +564,7 @@ void UI_RegisterPanelNode (uiBehaviour_t *behaviour)
 	 * <li>LAYOUT_BORDER: Align nodes at a know position. Its look like pack layout, but the order is not the same.
 	 * top and bottom child first, then left and right, then middle. We can show the difference into the image.
 	 * <li>LAYOUT_STAR: Align the corner of child into the corner of the node. Child size do not change.
-	 * @image html http://www.ufoai.org/wiki/images/Layout.png
+	 * @image html http://ufoai.org/wiki/images/Layout.png
 	 */
 	UI_RegisterExtradataNodeProperty(behaviour, "layout", V_INT, panelExtraData_t, layout);
 	/**

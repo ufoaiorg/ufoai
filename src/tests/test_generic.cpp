@@ -513,9 +513,9 @@ static void testHttpHelperFunctions (void)
 	CU_ASSERT_EQUAL(port, 80);
 	CU_ASSERT_STRING_EQUAL(uriPath, "/");
 
-	url = "http://www.ufoai.org/ufo/masterserver.php?query";
+	url = "http://ufoai.org/ufo/masterserver.php?query";
 	CU_ASSERT_TRUE(HTTP_ExtractComponents(url, server, sizeof(server), uriPath, sizeof(uriPath), &port));
-	CU_ASSERT_STRING_EQUAL(server, "www.ufoai.org")
+	CU_ASSERT_STRING_EQUAL(server, "ufoai.org")
 	CU_ASSERT_EQUAL(port, 80);
 	CU_ASSERT_STRING_EQUAL(uriPath, "/ufo/masterserver.php?query");
 }

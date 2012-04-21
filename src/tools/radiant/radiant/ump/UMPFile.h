@@ -25,7 +25,7 @@ namespace map
 		/**
 		 * An ump file is a file that defines a theme for the RMA (random map assembly). It contains a list of UMPTiles objects
 		 * that are part of the definition. Besides the tiles there are some UMPAssembly objects that defines a set of UMPTiles
-		 * to be used for the assembling of the map. See http://www.ufoai.org/wiki/index.php/Mapping/Random_map_assembly/Algorithm
+		 * to be used for the assembling of the map. See http://ufoai.org/wiki/index.php/Mapping/Random_map_assembly/Algorithm
 		 */
 		class UMPFile
 		{

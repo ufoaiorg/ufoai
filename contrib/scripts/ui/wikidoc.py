@@ -2,7 +2,7 @@
 #
 # @brief extract wiki documentation about behaviour from .h and .c files
 # @license Public domain
-# @return a MediaWiki document into stdout (http://ufoai.ninex.info/wiki/index.php/UI_node_behaviours)
+# @return a MediaWiki document into stdout (http://ufoai.org/wiki/index.php/UI_node_behaviours)
 # @todo generate confunc too
 #
 
@@ -18,8 +18,8 @@ def genDoxygenContent(doc):
 		elif d.startswith("@image"):
 			params = d.split(" ")
 			image = params[2]
-			if image.startswith("http://ufoai.ninex.info/wiki/images/"):
-				image = image.replace("http://ufoai.ninex.info/wiki/images/", "")
+			if image.startswith("http://ufoai.org/wiki/images/"):
+				image = image.replace("http://ufoai.org/wiki/images/", "")
 				image = "[[Image:" + image + "|thumb]]"
 				result = image + result
 			else:

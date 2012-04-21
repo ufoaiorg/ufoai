@@ -15,7 +15,7 @@ KEYWORDS="-*"
 IUSE="debug dedicated doc editor"
 
 # Dependencies and more instructions can be found here:
-# http://ufoai.ninex.info/wiki/index.php/Compile_for_Linux
+# http://ufoai.org/wiki/index.php/Compile_for_Linux
 RDEPEND="!dedicated? (
 		virtual/opengl
 		virtual/glu

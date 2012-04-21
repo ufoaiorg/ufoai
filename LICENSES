@@ -2609,12 +2609,12 @@ base/music/David04.ogg | Creative Commons Attribution 3.0 Unported | David Reeve
 base/music/David05.ogg | Creative Commons Attribution 3.0 Unported | David Reeves (Destructavator)
 base/music/Marine01.ogg | Creative Commons Attribution-Share Alike 3.0 | "Marine" Baklund
 base/music/Marine02.ogg | Creative Commons Attribution-Share Alike 3.0 | "Marine" Baklund
-base/music/MarineAlienRaid.ogg | Creative Commons Attribution-Share Alike 3.0 | "Marine" Baklund | http://ufoai.ninex.info/forum/index.php?topic=4168.0
-base/music/MarineBacktheAttack.ogg | Creative Commons Attribution-Share Alike 3.0 | "Marine" Baklund | http://ufoai.ninex.info/forum/index.php?topic=4168.0
-base/music/MarineFireFight.ogg | Creative Commons Attribution-Share Alike 3.0 | "Marine" Baklund | http://ufoai.ninex.info/forum/index.php?topic=4168.0
-base/music/MarineIndustrial.ogg | Creative Commons Attribution-Share Alike 3.0 | "Marine" Baklund | http://ufoai.ninex.info/forum/index.php?topic=4168.0
-base/music/MarineStrikingIntoTheUnknown.ogg | Creative Commons Attribution-Share Alike 3.0 | "Marine" Baklund | http://ufoai.ninex.info/forum/index.php?topic=4168.0
-base/music/MarineUrbanWarfare.ogg | Creative Commons Attribution-Share Alike 3.0 | "Marine" Baklund | http://ufoai.ninex.info/forum/index.php?topic=4168.0
+base/music/MarineAlienRaid.ogg | Creative Commons Attribution-Share Alike 3.0 | "Marine" Baklund | http://ufoai.org/forum/index.php?topic=4168.0
+base/music/MarineBacktheAttack.ogg | Creative Commons Attribution-Share Alike 3.0 | "Marine" Baklund | http://ufoai.org/forum/index.php?topic=4168.0
+base/music/MarineFireFight.ogg | Creative Commons Attribution-Share Alike 3.0 | "Marine" Baklund | http://ufoai.org/forum/index.php?topic=4168.0
+base/music/MarineIndustrial.ogg | Creative Commons Attribution-Share Alike 3.0 | "Marine" Baklund | http://ufoai.org/forum/index.php?topic=4168.0
+base/music/MarineStrikingIntoTheUnknown.ogg | Creative Commons Attribution-Share Alike 3.0 | "Marine" Baklund | http://ufoai.org/forum/index.php?topic=4168.0
+base/music/MarineUrbanWarfare.ogg | Creative Commons Attribution-Share Alike 3.0 | "Marine" Baklund | http://ufoai.org/forum/index.php?topic=4168.0
 base/music/PsymongN1.ogg | GNU General Public License 2.0 | Simon Green (Psymong)
 base/music/PsymongN2.ogg | GNU General Public License 2.0 | Simon Green (Psymong)
 base/music/PsymongN3.ogg | GNU General Public License 2.0 | Simon Green (Psymong)
@@ -3012,7 +3012,7 @@ base/pics/maps/loading/construction.jpg | GNU General Public License 2.0 or late
 base/pics/maps/loading/corrupter_crash.jpg | GNU General Public License 2.0 or later | Martin Gerhardy
 base/pics/maps/loading/country.jpg | GNU General Public License 2.0 or later
 base/pics/maps/loading/dam.jpg | GNU General Public License 2.0 or later | Martin Gerhardy
-base/pics/maps/loading/default.png | GNU General Public License 2.0 or later | RaXaR | http://ufoai.ninex.info/forum/index.php?topic=873.msg8627#msg8627
+base/pics/maps/loading/default.png | GNU General Public License 2.0 or later | RaXaR | http://ufoai.org/forum/index.php?topic=873.msg8627#msg8627
 base/pics/maps/loading/desert.jpg | GNU General Public License 2.0 or later | Martin Gerhardy
 base/pics/maps/loading/druglord.jpg | GNU General Public License 2.0 or later | Martin Gerhardy
 base/pics/maps/loading/eaglenest.jpg | GNU General Public License 2.0 or later | Martin Gerhardy
@@ -4402,8 +4402,8 @@ base/textures/tex_base/sign08.png | GNU General Public License 2.0 or later | Ma
 base/textures/tex_base/sign09.png | GNU General Public License 2.0 or later | Martin Gerhardy
 base/textures/tex_base/steptop_mtl.jpg | GNU General Public License 2.0 | Nexuiz GPLed Data
 base/textures/tex_base/steptop_mtl2.jpg | GNU General Public License 2.0 | Nexuiz GPLed Data
-base/textures/tex_base/tank001.jpg | GNU General Public License 2.0 | wotwot | http://ufoai.ninex.info/forum/index.php?topic=2389.0
-base/textures/tex_base/tank002.jpg | GNU General Public License 2.0 | wotwot | http://ufoai.ninex.info/forum/index.php?topic=2389.0
+base/textures/tex_base/tank001.jpg | GNU General Public License 2.0 | wotwot | http://ufoai.org/forum/index.php?topic=2389.0
+base/textures/tex_base/tank002.jpg | GNU General Public License 2.0 | wotwot | http://ufoai.org/forum/index.php?topic=2389.0
 base/textures/tex_base/trim001.jpg | GNU General Public License 2.0 | Nexuiz GPLed Data | trim_cem_grt.jpg
 base/textures/tex_base/trim003.jpg | GNU General Public License 2.0 | Nexuiz GPLed Data | trim_cementwall2.jpg
 base/textures/tex_base/trim_drkmtl.jpg | GNU General Public License 2.0 | Nexuiz GPLed Data
@@ -4613,7 +4613,7 @@ base/textures/tex_buildings/floor002_nm.png | MIT License | MCR
 base/textures/tex_buildings/floor003.png | GNU General Public License 2.0 or later
 base/textures/tex_buildings/floor003_nm.png | GNU General Public License 2.0 or later
 base/textures/tex_buildings/floor003_sm.png | GNU General Public License 2.0 or later
-base/textures/tex_buildings/floor004.png | GNU General Public License 2.0 or later | Matthias "voller" Volmer | http://ufoai.ninex.info/forum/index.php?topic=3181.msg22120#msg22120
+base/textures/tex_buildings/floor004.png | GNU General Public License 2.0 or later | Matthias "voller" Volmer | http://ufoai.org/forum/index.php?topic=3181.msg22120#msg22120
 base/textures/tex_buildings/floor004_nm.png | GNU General Public License 2.0 or later | Martin Gerhardy
 base/textures/tex_buildings/floor005.png | Public Domain | Nobiax | http://opengameart.org/
 base/textures/tex_buildings/floor005_sm.png | Public Domain | Nobiax | http://opengameart.org/
@@ -6060,7 +6060,7 @@ base/textures/tex_misc/d_tech_dw2.jpg | GNU General Public License 2.0 | Nexuiz 
 base/textures/tex_misc/d_tech_dw2gb.jpg | GNU General Public License 2.0 | Nexuiz GPLed Data
 base/textures/tex_misc/display_basketball.png | GNU General Public License 2.0 or later | FWishbringer
 base/textures/tex_misc/display_basketball_gm.png | GNU General Public License 2.0 or later | MCR | FWishbringer
-base/textures/tex_misc/drawer001.jpg | GNU General Public License 2.0 | wotwot | http://ufoai.ninex.info/forum/index.php?topic=2389.0
+base/textures/tex_misc/drawer001.jpg | GNU General Public License 2.0 | wotwot | http://ufoai.org/forum/index.php?topic=2389.0
 base/textures/tex_misc/drkmtl_grlpltmech.jpg | GNU General Public License 2.0 | Nexuiz GPLed Data
 base/textures/tex_misc/dvd_side.png | GNU General Public License 2.0 or later | Martin Gerhardy
 base/textures/tex_misc/dvd_tilt.png | GNU General Public License 2.0 or later | Martin Gerhardy
@@ -6080,7 +6080,7 @@ base/textures/tex_misc/exit_clean.png | GNU General Public License 2.0 |  | Open
 base/textures/tex_misc/exit_clean_gm.png | GNU General Public License 2.0 |  | OpenArena
 base/textures/tex_misc/exit_dirty.png | GNU General Public License 2.0 |  | OpenArena
 base/textures/tex_misc/exit_dirty_gm.png | GNU General Public License 2.0 |  | OpenArena
-base/textures/tex_misc/fridge001.jpg | GNU General Public License 2.0 | wotwot | http://ufoai.ninex.info/forum/index.php?topic=2389.0
+base/textures/tex_misc/fridge001.jpg | GNU General Public License 2.0 | wotwot | http://ufoai.org/forum/index.php?topic=2389.0
 base/textures/tex_misc/fridge001_gm.png | GNU General Public License 2.0 | MCR | wotwot
 base/textures/tex_misc/fridge001_nm.png | GNU General Public License 2.0 | MCR | wotwot
 base/textures/tex_misc/gas001.png | GNU General Public License 2.0 or later | FWishbringer
@@ -6091,12 +6091,12 @@ base/textures/tex_misc/glasses_dirty.png | GNU General Public License 2.0 |  | O
 base/textures/tex_misc/grate_rusty.png | GNU General Public License 2.0 or later | Nate Wright
 base/textures/tex_misc/grate_rusty_nm.png | GNU General Public License 2.0 or later | Nate Wright
 base/textures/tex_misc/jgong.png | GNU General Public License 2.0 or later | Nate Wright, MCR, Nexuiz, Erin Silversmith (Wikimedia)
-base/textures/tex_misc/laminate001.jpg | GNU General Public License 2.0 | wotwot | http://ufoai.ninex.info/forum/index.php?topic=2389.0
+base/textures/tex_misc/laminate001.jpg | GNU General Public License 2.0 | wotwot | http://ufoai.org/forum/index.php?topic=2389.0
 base/textures/tex_misc/metalgrid.png | GNU General Public License 2.0 | OpenArana GPLed Data
-base/textures/tex_misc/microwave001.jpg | GNU General Public License 2.0 | wotwot | http://ufoai.ninex.info/forum/index.php?topic=2389.0
+base/textures/tex_misc/microwave001.jpg | GNU General Public License 2.0 | wotwot | http://ufoai.org/forum/index.php?topic=2389.0
 base/textures/tex_misc/microwave001_gm.png | GNU General Public License 2.0 | MCR | wotwot
 base/textures/tex_misc/microwave001_nm.png | GNU General Public License 2.0 | MCR | wotwot
-base/textures/tex_misc/microwave001_side.jpg | GNU General Public License 2.0 | wotwot | http://ufoai.ninex.info/forum/index.php?topic=2389.0
+base/textures/tex_misc/microwave001_side.jpg | GNU General Public License 2.0 | wotwot | http://ufoai.org/forum/index.php?topic=2389.0
 base/textures/tex_misc/microwave001_side_nm.png | GNU General Public License 2.0 | MCR | wotwot
 base/textures/tex_misc/mtl_l1.jpg | GNU General Public License 2.0 | Nexuiz GPLed Data
 base/textures/tex_misc/mtl_l1_fx.jpg | GNU General Public License 2.0 | Nexuiz GPLed Data
@@ -6203,7 +6203,7 @@ base/textures/tex_misc/soft_drinks1_nm.png | GNU General Public License 2.0 or l
 base/textures/tex_misc/soft_drinks2.png | GNU General Public License 2.0 or later | Martin Gerhardy
 base/textures/tex_misc/soft_drinks2_gm.png | GNU General Public License 2.0 or later | MCR
 base/textures/tex_misc/soft_drinks2_nm.png | GNU General Public License 2.0 or later
-base/textures/tex_misc/stainless001.jpg | GNU General Public License 2.0 | wotwot | http://ufoai.ninex.info/forum/index.php?topic=2389.0
+base/textures/tex_misc/stainless001.jpg | GNU General Public License 2.0 | wotwot | http://ufoai.org/forum/index.php?topic=2389.0
 base/textures/tex_misc/straw.png | GNU General Public License 2.0 | Werner Höhrer (hoehrer) | GPL2'ed photo by Martin Gerhardy (mattn)
 base/textures/tex_misc/straw_nm.png | GNU General Public License 2.0 | Werner Höhrer (hoehrer);MCR | GPL2'ed photo by Martin Gerhardy (mattn)
 base/textures/tex_misc/straw_zyl.png | GNU General Public License 2.0 | Werner Höhrer (hoehrer) | GPL2'ed photo by Martin Gerhardy (mattn)
