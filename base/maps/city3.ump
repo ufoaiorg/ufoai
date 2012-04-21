@@ -85,8 +85,7 @@ a     +a    +a    +a    a
 
 // multiplayer tiles ------------------------------------------------
 
-tile +craft_drop_empty
-	// for testing and multiplayer
+tile +mp_team_1
 {
 5 3
 0     m     m     m     0
