@@ -4,7 +4,7 @@
  */
 
 /*
-Copyright (C) 2002-2011 UFO: Alien Invasion.
+Copyright (C) 2002-2012 UFO: Alien Invasion.
 
 This program is free software; you can redistribute it and/or
 modify it under the terms of the GNU General Public License
@@ -196,9 +196,9 @@ static void GAME_SK_Results (struct dbuffer *msg, int winner, int *numSpawned, i
 	}
 
 	Com_sprintf(resultText, sizeof(resultText),
-			_("%i of %i enemies killed, %i stunned, %i survived.\n"
+			_("\n%i of %i enemies killed, %i stunned, %i survived.\n"
 			  "%i of %i team members survived, %i enemy kills, %i friendly fire kills.\n"
-			  "%i of %i civilians saved, %i enemy kills, %i friendly fire kills.\n"),
+			  "%i of %i civilians saved, %i enemy kills, %i friendly fire kills."),
 			enemiesKilled, numSpawned[TEAM_ALIEN], enemiesStunned, numAlive[TEAM_ALIEN],
 			numAlive[team], numSpawned[team], numKilled[TEAM_ALIEN][team], numKilled[team][team],
 			numAlive[TEAM_CIVILIAN], numSpawned[TEAM_CIVILIAN], numKilled[TEAM_ALIEN][TEAM_CIVILIAN],
