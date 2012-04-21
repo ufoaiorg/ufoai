@@ -32,6 +32,7 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #include "ui_parse.h"
 #include "ui_draw.h"
 #include "ui_dragndrop.h"
+#include "ui_timer.h"
 
 #include "../input/cl_keys.h"
 #include "../input/cl_input.h"
@@ -93,6 +94,18 @@ static int pressedNodeButton;
  * @brief Value of pressedNodeLocationX when event already sent
  */
 #define UI_STARTDRAG_ALREADY_SENT -1
+
+/**
+ * @brief Value of the delay to wait before sending a long press event
+ * This value is used for Qt 4.7. Maybe we can use a cvar
+ */
+#define LONGPRESS_DELAY 800
+
+/**
+ * @brief Timer used to manage long press event
+ */
+static uiTimer_t *longPressTimer;
+
 
 /**
  * @brief Execute the current focused action node
@@ -553,6 +566,7 @@ void UI_MouseMove (int x, int y)
 
 	if (pressedNode && !capturedNode) {
 		if (pressedNodeLocationX != UI_STARTDRAG_ALREADY_SENT) {
+			UI_TimerStop(longPressTimer);
 			int dist = abs(pressedNodeLocationX - x) + abs(pressedNodeLocationY - y);
 			if (dist > 4) {
 				uiNode_t *node = pressedNode;
@@ -737,6 +751,25 @@ void UI_MouseScroll (int deltaX, int deltaY)
 }
 
 /**
+ * Callback function waked up to send long click event
+ */
+static void UI_LongPressCallback (uiNode_t *, uiTimer_t *timer)
+{
+	UI_TimerStop(timer);
+
+	/* make sure the event still make sense */
+	if (pressedNode == NULL)
+		return;
+
+	uiNode_t *node = pressedNode;
+	while (node) {
+		if (UI_Node_MouseLongPress(node, pressedNodeLocationX, pressedNodeLocationY, pressedNodeButton))
+			break;
+		node = node->parent;
+	}
+}
+
+/**
  * @brief Called when we are in UI mode and down a mouse button
  * @sa UI_LeftClick
  * @sa UI_RightClick
@@ -744,6 +777,10 @@ void UI_MouseScroll (int deltaX, int deltaY)
  */
 void UI_MouseDown (int x, int y, int button)
 {
+	/* disable old long click event */
+	if (longPressTimer)
+		UI_TimerStop(longPressTimer);
+
 	uiNode_t *node;
 
 	/* captured or hover node */
@@ -760,6 +797,11 @@ void UI_MouseDown (int x, int y, int button)
 		pressedNodeLocationX = x;
 		pressedNodeLocationX = y;
 		pressedNodeButton = button;
+		/** @todo find a way to create the timer when UI loading and remove "if (longPressTimer)" */
+		if (longPressTimer == NULL) {
+			longPressTimer = UI_AllocTimer(NULL, LONGPRESS_DELAY, UI_LongPressCallback);
+		}
+		UI_TimerStart(longPressTimer);
 	} else {
 		pressedNode = NULL;
 	}
@@ -773,6 +815,10 @@ void UI_MouseDown (int x, int y, int button)
  */
 void UI_MouseUp (int x, int y, int button)
 {
+	/* disable long click event */
+	if (longPressTimer)
+		UI_TimerStop(longPressTimer);
+
 	/* send click event */
 	/** @todo it is really need to clean up this subfunctions */
 	if (pressedNode || capturedNode) {

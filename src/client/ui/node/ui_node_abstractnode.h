@@ -97,6 +97,13 @@ public:
 	virtual void mouseDown(uiNode_t* node, int x, int y, int button) {}
 	/** Mouse button up event in the node */
 	virtual void mouseUp(uiNode_t* node, int x, int y, int button) {}
+	/**
+	 * @brief Send mouse event when a pressed mouse button is dragged
+	 * @return True if the event is used
+	 */
+	virtual bool mouseLongPress(uiNode_t* node, int x, int y, int button) {
+		return false;
+	}
 	/** Mouse entered on the node (a child node is part of the node) */
 	virtual void mouseEnter(uiNode_t* node);
 	/** Mouse left the node */
@@ -105,8 +112,8 @@ public:
 	virtual void capturedMouseMove(uiNode_t* node, int x, int y) {}
 	/** Capture is finished */
 	virtual void capturedMouseLost(uiNode_t* node) {}
-	/*
-	 * Send mouse event when a pressed mouse button is dragged
+	/**
+	 * @brief Send mouse event when a pressed mouse button is dragged
 	 * @return True if the event is used
 	 */
 	virtual bool startDragging(uiNode_t* node, int startX, int startY, int currentX, int currentY, int button) {
