@@ -84,13 +84,6 @@ public:
 	virtual void middleClick(uiNode_t* node, int x, int y);
 	/** Mouse wheel event in the node */
 	virtual bool scroll(uiNode_t* node, int deltaX, int deltaY);
-	/* Planned */
-#if 0
-	/* mouse move event */
-	virtual void mouseEnter(uiNode_t* node);
-	virtual void mouseLeave(uiNode_t* node);
-#endif
-
 	/** Mouse move event in the node */
 	virtual void mouseMove(uiNode_t* node, int x, int y) {}
 	/** Mouse button down event in the node */
