@@ -571,9 +571,9 @@ msgstr "Kampania, poziom bardzo trudny"
 #: ../base/ufos/campaign.ufo:4
 msgid "veryhard_campaign_txt"
 msgstr ""
-"To jest ekstremalnie trudna wersja Normalnej Kampanii. W tym scenariuszu wszystkio będzie działało na twoją niekorzyść. Otrzymasz kilku rekrutów, a narody będą niesamowicie wymagające. Obcy nie okażą ci żadnej litości.\n"
+"To jest ekstremalnie trudna wersja Normalnej Kampanii. W tym scenariuszu wszystko będzie działało na Twoją niekorzyść. Otrzymasz kilku rekrutów, a narody będą niesamowicie wymagające. Obcy nie okażą Ci żadnej litości.\n"
 "\n"
-"Ta opcja reprezentuje Poziom Bardzo Trudny i jest zalecana dla tych, którzy ukończyli Poziom Trudny, a wciąż czują potrzebę dalszego[still feel the need to further punish themselves.]"
+"Ta opcja reprezentuje Poziom Bardzo Trudny i jest zalecana dla tych, którzy ukończyli Poziom Trudny, a mimo to nie zaspokoili swych masochistycznych skłonności."
 
 #: ../base/ufos/campaign.ufo:31
 msgid "Hard Campaign"
@@ -582,7 +582,7 @@ msgstr "Kampania, poziom trudny"
 #: ../base/ufos/campaign.ufo:32
 msgid "hard_campaign_txt"
 msgstr ""
-"To jest trudniejsza wersja Normalnej Kampanii. Otrzymasz mniej żołnieży, inżynierów i naukowców, narody trudniej będzie zadowolić, badania będą miały większe wymagania i będą trwały dłużej, a obcy będą wytrzymalsi.\n"
+"To jest trudniejsza wersja Normalnej Kampanii. Otrzymasz mniej żołnierzy, inżynierów i naukowców, narody trudniej będzie zadowolić, badania będą miały większe wymagania i będą trwały dłużej, a Obcy będą bardziej wytrzymali.\n"
 "\n"
 "Ta opcja reprezentuje Poziom Trudny i jest zalecana dla doświadczonych graczy."
 
@@ -593,9 +593,9 @@ msgstr "Kampania, poziom standardowy"
 #: ../base/ufos/campaign.ufo:63
 msgid "standard_campaign_txt"
 msgstr ""
-"To jest militarny scenariusz inwazji, przeznaczony dla jednego gracza. Gracz obejmuje kontolę nad Projektem PHALANX, odpowiedzią Ziemii na zagrożenie ze strony obcych, i bierze udział w dynamicznej rozgrywce zawierającej zarówno ważne elementy losowe, jak i najważniejszą fabułę.\n"
+"To jest militarny scenariusz inwazji przeznaczony dla jednego gracza. Gracz obejmuje kontrolę nad Projektem PHALANX, odpowiedzią Ziemi na zagrożenie ze strony Obcych, i bierze udział w dynamicznej rozgrywce zawierającej zarówno ważne elementy losowe, jak i najważniejszą fabułę.\n"
 "\n"
-"Ta kampania jest dostępna na kilku poziomach trudności. Ta opcja reprezentuje Normalny poziom trudności i jest zalecana dla początkujących graczy, którzy lubią wyzwania."
+"Kampania jest dostępna na kilku poziomach trudności. Ta opcja reprezentuje Normalny poziom trudności i jest zalecana dla początkujących graczy, którzy lubią wyzwania."
 
 #: ../base/ufos/campaign.ufo:113
 msgid "Easy Campaign"
@@ -604,7 +604,7 @@ msgstr "Kampania, poziom łatwy"
 #: ../base/ufos/campaign.ufo:114
 msgid "easy_campaign_txt"
 msgstr ""
-"To jest mniej wymagająca wersja Normalnej Kampanii. Obcy będą mniej groźnie, ataki UFO żadsze, a ty otrzymasz więcej nowych rerutów do uzupełniania strat po walce.\n"
+"To jest mniej wymagająca wersja Normalnej Kampanii. Obcy będą mniej groźni, ataki UFO rzadsze, a Ty otrzymasz więcej nowych rekrutów do uzupełniania strat po walce.\n"
 "\n"
 "Ta kampania reprezentuje Poziom Łatwy i jest to opcja dla początkujących graczy, którzy wolą grę łagodniejszą niż w Normalnej Kampanii."
 
@@ -615,9 +615,9 @@ msgstr "Kampania, poziom bardzo łatwy"
 #: ../base/ufos/campaign.ufo:145
 msgid "veryeasy_campaign_txt"
 msgstr ""
-"To jest najłatwiejsza wersja Normalnej Kampanii. Twoje siły będą potężniejsze, obcy mniej groźni, a ty doznasz podczas kampanii niewielu strat.\n"
+"To jest najłatwiejsza wersja Normalnej Kampanii. Twoje siły będą potężniejsze, Obcy mniej groźni, nie doznasz podczas tej kampanii poważnych strat.\n"
 "\n"
-"Ta kampania reprezentuje Poziom Bardzo Łatwy i jest zalecana dla początkujących graczy, którzy narazie tylko testują UFO: AI."
+"Ta opcja reprezentuje Poziom Bardzo Łatwy i jest zalecana dla początkujących graczy, którzy na razie tylko testują UFO: AI."
 
 #: ../base/ufos/campaign.ufo:195
 msgid "Play the aliens"

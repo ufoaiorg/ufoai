@@ -3505,7 +3505,6 @@ msgid "Continuous Wave Laser Operation"
 msgstr "Kontinuerlig bølgelaseroperasjon"
 
 #: ../base/ufos/research.ufo:132
-#, fuzzy
 msgid "laser_txt"
 msgstr ""
 "Commander, I'm extremely pleased to report that our project has been succesful. I've included images of our prototype laser weapon, which achieves continuous wave output in a man-portable package.\n"
@@ -3527,7 +3526,6 @@ msgstr ""
 "--Cdr. Navarre"
 
 #: ../base/ufos/research.ufo:135
-#, fuzzy
 msgid "laser_pre_txt"
 msgstr ""
 "Our collected UN research files have yielded a lot of valuable information about weapon development done on Earth since the beginning of this century. One of the most interesting topics has been the production of DEWs (Directed Energy Weapons), weapons that transfer energy to a target by means other than a projectile. We are particularly interested in the files on Continuous Wave Lasers.\n"
@@ -3541,7 +3539,6 @@ msgstr ""
 "--Cdr. Navarre"
 
 #: ../base/ufos/research.ufo:165 ../base/ufos/research.ufo:3193
-#, fuzzy
 msgid "b_baselaser_txt"
 msgstr ""
 "Commander, my team and I are happy to report our test weapons are living up to all our expectations, and I'm submitting a new set of blueprints to your system for a laser-based defensive facility. You will now be able greenlight them for construction.\n"
@@ -3559,7 +3556,6 @@ msgstr ""
 "--Cdr. Navarre"
 
 #: ../base/ufos/research.ufo:168
-#, fuzzy
 msgid "b_baselaser_pre_txt"
 msgstr ""
 "This is one of several proposals I'm submitting for the research and development of new laser weaponry. Each of these will have to be developed separately due to the size differences, power levels and complexity of the systems involved.\n"
@@ -3573,7 +3569,6 @@ msgstr ""
 "--Cdr. Navarre"
 
 #: ../base/ufos/research.ufo:214 ../base/ufos/research.ufo:252
-#, fuzzy
 msgid "antimatter_txt"
 msgstr ""
 "Our study on antimatter is complete, Commander, and we're ready to present our results. I'm afraid the news is mostly bad.\n"
@@ -3593,7 +3588,6 @@ msgstr ""
 "--Cdr. Navarre"
 
 #: ../base/ufos/research.ufo:215
-#, fuzzy
 msgid "antimatter_extra_txt"
 msgstr ""
 "Our study on antimatter is complete, Commander, and we're ready to present our results. I'm afraid the news is mostly bad.\n"
@@ -3615,7 +3609,6 @@ msgstr ""
 "--Cdr. Navarre"
 
 #: ../base/ufos/research.ufo:218
-#, fuzzy
 msgid "antimatter_pre_txt"
 msgstr ""
 "Commander, based on the extremely interesting findings we've made during our examination of the UFO we dismantled, I'd like your permission to use some lab time in order to more closely analyse the aliens' extensive use of antimatter and its implications on this war.\n"
@@ -3625,7 +3618,6 @@ msgstr ""
 "--Cdr. Navarre"
 
 #: ../base/ufos/research.ufo:219
-#, fuzzy
 msgid "antimatter_extra_pre_txt"
 msgstr ""
 "Commander, based on the extremely interesting findings we've made during our examination of alien UFO technology, I'd like your permission to use some lab time in order to more closely analyse the aliens' extensive use of antimatter and its implications on this war.\n"
@@ -3639,7 +3631,6 @@ msgid "Live Alien"
 msgstr "Levende romvesen"
 
 #: ../base/ufos/research.ufo:273
-#, fuzzy
 msgid "alien_live_txt"
 msgstr ""
 "Commander,\n"
@@ -3655,7 +3646,6 @@ msgstr ""
 "Dr. Connor"
 
 #: ../base/ufos/research.ufo:276
-#, fuzzy
 msgid "alien_live_pre_txt"
 msgstr ""
 "Commander,\n"
@@ -3692,7 +3682,6 @@ msgid "Alien Breathing Apparatus"
 msgstr "Romvesen pusteapparat"
 
 #: ../base/ufos/research.ufo:313
-#, fuzzy
 msgid "alien_breathing_txt"
 msgstr ""
 "Commander,\n"
@@ -3718,7 +3707,6 @@ msgstr ""
 "Dr. Connor"
 
 #: ../base/ufos/research.ufo:316
-#, fuzzy
 msgid "alien_breathing_pre_txt"
 msgstr ""
 "Commander,\n"
@@ -3754,7 +3742,6 @@ msgstr ""
 "Dr. Connor"
 
 #: ../base/ufos/research.ufo:356
-#, fuzzy
 msgid "alien_mind_txt"
 msgstr ""
 "Commander,\n"
@@ -3774,7 +3761,6 @@ msgstr ""
 "Dr. Connor"
 
 #: ../base/ufos/research.ufo:359
-#, fuzzy
 msgid "alien_mind_pre_txt"
 msgstr ""
 "Commander,\n"
@@ -3794,7 +3780,6 @@ msgid "Odd Behaviour"
 msgstr "Merkelig oppførsel"
 
 #: ../base/ufos/research.ufo:396
-#, fuzzy
 msgid "alien_odd_behaviour_txt"
 msgstr ""
 "Commander,\n"
@@ -3820,7 +3805,6 @@ msgstr ""
 "Dr. Connor"
 
 #: ../base/ufos/research.ufo:399
-#, fuzzy
 msgid "alien_odd_behaviour_pre_txt"
 msgstr ""
 "Commander,\n"
@@ -3840,7 +3824,6 @@ msgid "Alien Communication"
 msgstr "Romvesenkommunikation"
 
 #: ../base/ufos/research.ufo:436
-#, fuzzy
 msgid "alien_communication_txt"
 msgstr ""
 "Commander,\n"
@@ -3860,7 +3843,6 @@ msgstr ""
 "Dr. Connor"
 
 #: ../base/ufos/research.ufo:439
-#, fuzzy
 msgid "alien_communication_pre_txt"
 msgstr ""
 "Commander,\n"
@@ -3885,7 +3867,6 @@ msgid "Alien base"
 msgstr "Fremmed base"
 
 #: ../base/ufos/research.ufo:474
-#, fuzzy
 msgid "alien_base_txt"
 msgstr ""
 "Proposal\n"
@@ -3921,7 +3902,6 @@ msgid "The Universal Serum"
 msgstr "Universielt serum"
 
 #: ../base/ufos/research.ufo:501
-#, fuzzy
 msgid "universal_serum_txt"
 msgstr ""
 "Commander,\n"
@@ -3941,7 +3921,6 @@ msgstr ""
 "Dr. Connor"
 
 #: ../base/ufos/research.ufo:504
-#, fuzzy
 msgid "universal_serum_pre_txt"
 msgstr ""
 "Commander,\n"
@@ -3959,7 +3938,6 @@ msgid "Alien Origins"
 msgstr "Romvesnenes opprinnelse"
 
 #: ../base/ufos/research.ufo:540
-#, fuzzy
 msgid "alien_origins_txt"
 msgstr ""
 "Good morning, Sir.\n"
@@ -3991,7 +3969,6 @@ msgstr ""
 "Col. Falkland"
 
 #: ../base/ufos/research.ufo:543
-#, fuzzy
 msgid "alien_origins_pre_txt"
 msgstr ""
 "Good morning, Sir.\n"
@@ -4019,7 +3996,6 @@ msgid "UFO Theory"
 msgstr "Ufo-teori"
 
 #: ../base/ufos/research.ufo:575
-#, fuzzy
 msgid "alien_theory_txt"
 msgstr ""
 "Commander, my team and I have finished our analysis of the UFO we captured. It's a real miracle of engineering, and we're all looking forward to getting a chance to sink our own hooks into all this lovely technology.\n"
@@ -4043,7 +4019,6 @@ msgstr ""
 "--Cdr. Navarre"
 
 #: ../base/ufos/research.ufo:578
-#, fuzzy
 msgid "alien_theory_pre_txt"
 msgstr ""
 "Commander, we've captured our first UFO of the war. I don't have to tell you that this is a unique research opportunity. However, before we can begin to think about studying it in-depth and dismantling it for parts, we need to do a broader overview of UFO construction as a whole. Are any of its systems still active or boobytrapped? What kind of materials is it made of? What dangers might it pose during storage or disassembly? All these questions and more need to be answered before we do anything further.\n"
@@ -4053,7 +4028,6 @@ msgstr ""
 "--Cdr. Navarre"
 
 #: ../base/ufos/research.ufo:623
-#, fuzzy
 msgid "pistol_txt"
 msgstr ""
 "Technical Specifications: P-12 Pistol\n"
@@ -4103,7 +4077,6 @@ msgstr ""
 "Despite good penetration against organics, this weapon performs very poorly against robotic targets."
 
 #: ../base/ufos/research.ufo:642
-#, fuzzy
 msgid "pistol_mag_txt"
 msgstr ""
 "Technical Specifications: 7.62mm Pistol Magazine\n"
@@ -4137,7 +4110,6 @@ msgstr ""
 "None."
 
 #: ../base/ufos/research.ufo:664
-#, fuzzy
 msgid "pistol2_txt"
 msgstr ""
 "Technical Specifications: MP-699 Machine Pistol\n"
@@ -4185,7 +4157,6 @@ msgstr ""
 "None."
 
 #: ../base/ufos/research.ufo:683
-#, fuzzy
 msgid "pistol2_mag_txt"
 msgstr ""
 "Technical Specifications: 4.2mm MP Magazine\n"
@@ -4253,7 +4224,6 @@ msgstr ""
 "None."
 
 #: ../base/ufos/research.ufo:720
-#, fuzzy
 msgid "assault_txt"
 msgstr ""
 "Technical Specifications: AR-80 Assault Rifle\n"
@@ -4297,7 +4267,6 @@ msgstr ""
 "While the AR-80 is a fine rifle in all respects, it was not designed to fight an alien invasion force. We should develop our own purpose-built weapons as soon as it becomes feasible to do so."
 
 #: ../base/ufos/research.ufo:738
-#, fuzzy
 msgid "assault_mag_txt"
 msgstr ""
 "Technical Specifications: Assault Rifle Magazine\n"
@@ -4331,7 +4300,6 @@ msgstr ""
 "None."
 
 #: ../base/ufos/research.ufo:757
-#, fuzzy
 msgid "machinegun_txt"
 msgstr ""
 "Technical Specifications: MG12 Machine Gun\n"
@@ -4379,7 +4347,6 @@ msgstr ""
 "None."
 
 #: ../base/ufos/research.ufo:775
-#, fuzzy
 msgid "machinegun_mag_txt"
 msgstr ""
 "Technical Specifications: Machine Gun Drum\n"
@@ -4415,7 +4382,6 @@ msgstr ""
 "None."
 
 #: ../base/ufos/research.ufo:794
-#, fuzzy
 msgid "rpg_txt"
 msgstr ""
 "Technical Specifications: HPML Rocket Launcher\n"
@@ -4463,7 +4429,6 @@ msgstr ""
 "Along with sniper rifles and grenades, this is one of the few standard-issue human weapons that are fully effective against robotic aliens."
 
 #: ../base/ufos/research.ufo:813
-#, fuzzy
 msgid "rpg_ammo_txt"
 msgstr ""
 "Technical Specifications: HE Rocket\n"
@@ -4499,7 +4464,6 @@ msgstr ""
 "None."
 
 #: ../base/ufos/research.ufo:833
-#, fuzzy
 msgid "rpg_incendiary_ammo_txt"
 msgstr ""
 "Technical Specifications: IC Rocket\n"
@@ -4542,7 +4506,6 @@ msgid "xaw95_txt"
 msgstr "<TODO>"
 
 #: ../base/ufos/research.ufo:857
-#, fuzzy
 msgid "xaw95_pre_txt"
 msgstr "<TODO>"
 
@@ -4552,7 +4515,6 @@ msgid "bombkit1_txt"
 msgstr "<TODO>"
 
 #: ../base/ufos/research.ufo:887
-#, fuzzy
 msgid "bombkit1_pre_txt"
 msgstr "<TODO>"
 
@@ -4562,7 +4524,6 @@ msgid "bombkit2_txt"
 msgstr "<TODO>"
 
 #: ../base/ufos/research.ufo:905
-#, fuzzy
 msgid "bombkit2_pre_txt"
 msgstr "<TODO>"
 
@@ -4572,7 +4533,6 @@ msgid "chaingun_txt"
 msgstr "<TODO>"
 
 #: ../base/ufos/research.ufo:923
-#, fuzzy
 msgid "chaingun_pre_txt"
 msgstr "<TODO>"
 
@@ -4626,7 +4586,6 @@ msgid "Electromagnetic Rifle"
 msgstr "Elektromagnetisk gevær"
 
 #: ../base/ufos/research.ufo:997
-#, fuzzy
 msgid "bolterrifle_txt"
 msgstr ""
 "The EM rifle project has been a resounding success! For the first time in human history, we've created a viable man-portable electromagnetic weapon. We have named our weapon the Bolter Rifle to avoid ambiguity with other existing MAG (Magnetic Accelerator Gun) implementations. I'll do my best to explain its operation in this short summary.\n"
@@ -4646,7 +4605,6 @@ msgstr ""
 "--Cdr. Navarre"
 
 #: ../base/ufos/research.ufo:1000
-#, fuzzy
 msgid "bolterrifle_pre_txt"
 msgstr ""
 "Commander, we've received a number of research files from several UN nations concerning research and development for man-portable electromagnetic weaponry; various designs have been proposed and even prototyped for railguns, coilguns and quench guns. Of course, all these experiments have failed, since electromagnetic weapons require huge amounts of power -- and therefore banks of capacitors so heavy that no human soldier could possibly carry them. Even atomic batteries have not given us the power output we need to make man-portable electromagnetic guns a reality. It is impossible.\n"
@@ -4664,7 +4622,6 @@ msgid "Electromagnetic Rifle Magazine"
 msgstr "Elektromagnetisk geværmagasin"
 
 #: ../base/ufos/research.ufo:1052
-#, fuzzy
 msgid "combatknife_txt"
 msgstr ""
 "Technical Specifications: Combat Knife\n"
@@ -4710,7 +4667,6 @@ msgid "Monomolecular Blades"
 msgstr "Monomolekulære klinger"
 
 #: ../base/ufos/research.ufo:1073
-#, fuzzy
 msgid "monoknife_txt"
 msgstr ""
 "Commander, I'm hereby reporting our success in the creation of alien blade materials. We've loaded the production specs into our Workshop machinery and have constructed a small forge for shaping our new monomolecular knives.\n"
@@ -4726,7 +4682,6 @@ msgstr ""
 "--Cdr. Navarre"
 
 #: ../base/ufos/research.ufo:1076
-#, fuzzy
 msgid "monoknife_pre_txt"
 msgstr ""
 "Commander, now that we've had a good look at the alien blade technology from several sources -- the Bloodspider's 'fangs' and the Kerrblade -- we're starting to form a picture of how to recreate the unknown or ill-understood materials used in their construction.\n"
@@ -4742,7 +4697,6 @@ msgstr ""
 "--Cdr. Navarre"
 
 #: ../base/ufos/research.ufo:1118
-#, fuzzy
 msgid "flamer_txt"
 msgstr ""
 "Technical Specifications: CRC-FL Flamethrower\n"
@@ -4790,7 +4744,6 @@ msgstr ""
 "This weapon should not be fired if there are civilians in or near the target zone."
 
 #: ../base/ufos/research.ufo:1137
-#, fuzzy
 msgid "flamer_mag_txt"
 msgstr ""
 "Technical Specifications: C90 Canister\n"
@@ -4824,7 +4777,6 @@ msgstr ""
 "None."
 
 #: ../base/ufos/research.ufo:1156
-#, fuzzy
 msgid "flashbang_txt"
 msgstr ""
 "Technical Specifications: Flashbang\n"
@@ -4868,7 +4820,6 @@ msgstr ""
 "Naturally the flashbang is only effective against organic aliens with eyes and ears."
 
 #: ../base/ufos/research.ufo:1175
-#, fuzzy
 msgid "fraggren_txt"
 msgstr ""
 "Technical Specifications: Fragmentation Grenade\n"
@@ -4910,7 +4861,6 @@ msgstr ""
 "None."
 
 #: ../base/ufos/research.ufo:1194
-#, fuzzy
 msgid "incgren_txt"
 msgstr ""
 "Technical Specifications: Incendiary Grenade\n"
@@ -4954,7 +4904,6 @@ msgstr ""
 "None."
 
 #: ../base/ufos/research.ufo:1213
-#, fuzzy
 msgid "grenl_txt"
 msgstr ""
 "Technical Specifications: HPGL Grenade Launcher\n"
@@ -5006,7 +4955,6 @@ msgstr ""
 "Along with sniper rifles and rocket launchers, this is one of the few standard-issue human weapons that are fully effective against robotic aliens."
 
 #: ../base/ufos/research.ufo:1231
-#, fuzzy
 msgid "grenl_ammo_txt"
 msgstr ""
 "Technical Specifications: 25mm HIT Grenades\n"
@@ -5040,7 +4988,6 @@ msgstr ""
 "None."
 
 #: ../base/ufos/research.ufo:1250
-#, fuzzy
 msgid "grenl_fle_ammo_txt"
 msgstr ""
 "Technical Specifications: 25mm Flechette Grenades\n"
@@ -5074,7 +5021,6 @@ msgstr ""
 "None."
 
 #: ../base/ufos/research.ufo:1269
-#, fuzzy
 msgid "grenl_incendiary_ammo_txt"
 msgstr ""
 "Technical Specifications: 25mm IC Grenades\n"
@@ -5112,7 +5058,6 @@ msgid "Plasma And The Grenade Launcher"
 msgstr "Plasma og granatkasteren"
 
 #: ../base/ufos/research.ufo:1290
-#, fuzzy
 msgid "grenl_plasma_ammo_txt"
 msgstr ""
 "Commander, we've finished the testing and prototype phase of our new 25mm plasma grenades. We're ready to move it to mass-production and full field deployment.\n"
@@ -5126,7 +5071,6 @@ msgstr ""
 "--Cdr. Navarre"
 
 #: ../base/ufos/research.ufo:1293
-#, fuzzy
 msgid "grenl_plasma_ammo_pre_txt"
 msgstr ""
 "Commander, my team and I have drawn up a research proposal for a new tac weapon based on our plasma grenade research.\n"
@@ -5140,7 +5084,6 @@ msgstr ""
 "--Cdr. Navarre"
 
 #: ../base/ufos/research.ufo:1329
-#, fuzzy
 msgid "irgoggles_txt"
 msgstr ""
 "Technical Specifications: IR Goggles\n"
@@ -5192,7 +5135,6 @@ msgid "Alien Artifact - Kerrblade"
 msgstr "Romvesengjenstand - Kerrblade"
 
 #: ../base/ufos/research.ufo:1349
-#, fuzzy
 msgid "kerrblade_txt"
 msgstr ""
 "Our analysis of the Kerrblade is complete, Commander. Here is my summary for your review.\n"
@@ -5212,7 +5154,6 @@ msgstr ""
 "--Cdr. Navarre"
 
 #: ../base/ufos/research.ufo:1352
-#, fuzzy
 msgid "kerrblade_pre_txt"
 msgstr ""
 "Commander, we've recovered an interesting alien weapon from the battlefield. It looks to be some kind of knife or sword with an edge sharper than anything on Earth. It can slice steel like tissue paper and goes through our soldiers' body armour as if it wasn't even there. The troops have named it the 'Kerrblade' after the distinctive sound it makes when shredding our armour.\n"
@@ -5224,7 +5165,6 @@ msgstr ""
 "--Cdr. Navarre"
 
 #: ../base/ufos/research.ufo:1394
-#, fuzzy
 msgid "laserpistol_txt"
 msgstr ""
 "Commander, I apologise in advance if my typing isn't up to standard in this message. We've had a lot of sleepless nights down here in DivEngine working on the laser pistol project. It's been a gruelling amount of work, but I'm very proud to say that we've pulled it off. We have prototyped a working laser pistol.\n"
@@ -5244,7 +5184,6 @@ msgstr ""
 "--Cdr. Navarre"
 
 #: ../base/ufos/research.ufo:1397
-#, fuzzy
 msgid "laserpistol_pre_txt"
 msgstr ""
 "This is one of several proposals I'm submitting for the research and development of new laser weaponry. Each of these will have to be developed separately due to the size differences, power levels and complexity of the systems involved.\n"
@@ -5260,7 +5199,6 @@ msgstr ""
 "--Cdr. Navarre"
 
 #: ../base/ufos/research.ufo:1432
-#, fuzzy
 msgid "laserrifle_txt"
 msgstr ""
 "It's done, Commander. We are now the proud owners of a working laser rifle, with full production plans loaded into our computers. We've eliminated several moving parts and refined the electronics to bring production and maintenance costs down into our budget range. I believe you'll find the weapon's specs to your satisfaction.\n"
@@ -5278,7 +5216,6 @@ msgstr ""
 "--Cdr. Navarre"
 
 #: ../base/ufos/research.ufo:1435
-#, fuzzy
 msgid "laserrifle_pre_txt"
 msgstr ""
 "This is one of several proposals I'm submitting for the research and development of new laser weaponry. Each of these will have to be developed separately due to the size differences, power levels and complexity of the systems involved.\n"
@@ -5292,7 +5229,6 @@ msgstr ""
 "--Cdr. Navarre"
 
 #: ../base/ufos/research.ufo:1471
-#, fuzzy
 msgid "heavylaser_txt"
 msgstr ""
 "Commander, our heavy laser program has been a success. We've got it prototyped and ready to go into production at your say-so.\n"
@@ -5312,7 +5248,6 @@ msgstr ""
 "--Cdr. Navarre"
 
 #: ../base/ufos/research.ufo:1474
-#, fuzzy
 msgid "heavylaser_pre_txt"
 msgstr ""
 "This is one of several proposals I'm submitting for the research and development of new laser weaponry. Each of these will have to be developed separately due to the size differences, power levels and complexity of the systems involved.\n"
@@ -5326,7 +5261,6 @@ msgstr ""
 "--Cdr. Navarre"
 
 #: ../base/ufos/research.ufo:1510
-#, fuzzy
 msgid "electrolaser_txt"
 msgstr ""
 "Commander, I'd like to report that we've successfully prototyped the new electrolaser design and have approved final plans for a production model. We can now begin to utilise it in combat. As per usual, I've written up the specs and deployment advice here for you.\n"
@@ -5348,7 +5282,6 @@ msgstr ""
 "--Cdr. Navarre"
 
 #: ../base/ufos/research.ufo:1513
-#, fuzzy
 msgid "electrolaser_pre_txt"
 msgstr ""
 "Commander, I have a new research proposal for you, something you might find interesting. Please hear me out.\n"
@@ -5362,7 +5295,6 @@ msgstr ""
 "--Cdr. Navarre"
 
 #: ../base/ufos/research.ufo:1554 ../base/ufos/research.ufo:1591
-#, fuzzy
 msgid "laser_ammo_txt"
 msgstr ""
 "Commander, we've finalised the design of the Deuterium-Fluoride Cartridges and they're now ready for mass production. They'll be expensive to make and use, but we've done everything we can to keep the costs down.\n"
@@ -5376,7 +5308,6 @@ msgstr ""
 "--Cdr. Navarre"
 
 #: ../base/ufos/research.ufo:1557 ../base/ufos/research.ufo:1594
-#, fuzzy
 msgid "laser_ammo_pre_txt"
 msgstr ""
 "This is one of several proposals I'm submitting for the research and development of new laser weaponry. Each of these will have to be developed separately due to the size differences, power levels and complexity of the systems involved.\n"
@@ -5390,7 +5321,6 @@ msgstr ""
 "--Cdr. Navarre"
 
 #: ../base/ufos/research.ufo:1627
-#, fuzzy
 msgid "medikit_txt"
 msgstr ""
 "Technical Specifications: Medikit\n"
@@ -5438,7 +5368,6 @@ msgid "Alien Artifact - Plasma Pistol"
 msgstr "Romvesengjenstand - plasmapistol"
 
 #: ../base/ufos/research.ufo:1647
-#, fuzzy
 msgid "plasatomizer_txt"
 msgstr ""
 "When the aliens need a sidearm, they don't screw around.\n"
@@ -5458,7 +5387,6 @@ msgstr ""
 "--Cdr. Navarre"
 
 #: ../base/ufos/research.ufo:1650
-#, fuzzy
 msgid "plasatomizer_pre_txt"
 msgstr ""
 "Commander, we've recovered the first alien plasma weapon of the war. I don't need to tell you how important this is. The alien armaments are highly-advanced, powerful and extremely lethal; we must figure out how they work in order to arm and armour ourselves against them.\n"
@@ -5474,7 +5402,6 @@ msgid "Alien Artifact - Plasma Blaster"
 msgstr "Romvesengjenstand - plasmablaster"
 
 #: ../base/ufos/research.ufo:1718
-#, fuzzy
 msgid "plasblaster_txt"
 msgstr ""
 "Commander, here's my report on our alien plasma blaster research.\n"
@@ -5490,7 +5417,6 @@ msgstr ""
 "--Cdr. Navarre"
 
 #: ../base/ufos/research.ufo:1721
-#, fuzzy
 msgid "plasblaster_pre_txt"
 msgstr ""
 "Commander, we've recovered an alien plasma blaster from the field. This is an extremely powerful new plasma weapon that warrants immediate research. Preliminary testing confirms that blaster shots tear right through our Combat Armour and have a far longer range than the other plasma weapons we've recovered.\n"
@@ -5504,7 +5430,6 @@ msgid "Alien Artifact - Plasma Blade"
 msgstr "Romvesengjenstand - Plasmablad"
 
 #: ../base/ufos/research.ufo:1788
-#, fuzzy
 msgid "plasblade_txt"
 msgstr ""
 "Commander, we've figured out the secrets of the alien weapon. I'm afraid the news is not good.\n"
@@ -5524,7 +5449,6 @@ msgstr ""
 "--Cdr. Navarre"
 
 #: ../base/ufos/research.ufo:1791
-#, fuzzy
 msgid "plasblade_pre_txt"
 msgstr ""
 "Commander, our last tactical mission brought back a strange alien weapon in the form of a plasma chamber with a handle. At least, we assume it's a weapon; the shape seems to suggest some kind of plasma-based knife, though I have no idea how this would work. We can't quite figure out how to turn it on or what purpose it serves in the alien arsenal.\n"
@@ -5538,7 +5462,6 @@ msgid "Alien Artifact - Plasma Grenade"
 msgstr "Romvesengjenstand - plasmagranat"
 
 #: ../base/ufos/research.ufo:1834
-#, fuzzy
 msgid "plasmagren_txt"
 msgstr ""
 "Commander, our assessment of the alien plasma grenade is complete. Like all the alien weapons, it's very nasty and very dangerous.\n"
@@ -5554,7 +5477,6 @@ msgstr ""
 "--Cdr. Navarre"
 
 #: ../base/ufos/research.ufo:1837
-#, fuzzy
 msgid "plasmagren_pre_txt"
 msgstr ""
 "Commander, our last tac mission has brought back an alien plasma grenade. This is a highly powerful grenade-type weapon that, once thrown, explodes in a shower of superheated plasma. It's somewhat larger and appears to be a good deal more dangerous than our standard frag grenades.\n"
@@ -5570,7 +5492,6 @@ msgid "Alien Artifact - Plasma Rifle"
 msgstr "Romvesengjenstand - Plasmarifle"
 
 #: ../base/ufos/research.ufo:1879
-#, fuzzy
 msgid "plasrifle_txt"
 msgstr ""
 "Commander, here's my report on our alien plasma rifle research.\n"
@@ -5588,7 +5509,6 @@ msgstr ""
 "--Cdr. Navarre"
 
 #: ../base/ufos/research.ufo:1882
-#, fuzzy
 msgid "plasrifle_pre_txt"
 msgstr ""
 "Commander, my department is ready to begin studying the recovered alien plasma rifle. This is a highly dangerous and versatile weapon, vastly outstripping the plasma pistol in range and power; something we should try to put into the hands of our own soldiers ASAP. Please approve lab time and funding as soon as our schedule permits.\n"
@@ -5601,7 +5521,6 @@ msgid "Needler Gun"
 msgstr "Tennålsgevær"
 
 #: ../base/ufos/research.ufo:1949
-#, fuzzy
 msgid "needlergun_txt"
 msgstr ""
 "Commander, we've finished analysing the alien needler gun, and I've prepared a threat assessment and technical overview for you.\n"
@@ -5619,7 +5538,6 @@ msgstr ""
 "--Cdr. Navarre"
 
 #: ../base/ufos/research.ufo:1952
-#, fuzzy
 msgid "needlergun_pre_txt"
 msgstr ""
 "Commander, it seems we've recovered a new alien weapon, some kind of fully-automatic sniper rifle that fires masses of paper-thin needles made from silicon steel. Preliminary testing shows that the needles are virtually unaffected by ordinary body armour and will pass through most surfaces without even slowing down. It's a very interesting design and we'd like to figure out exactly how it's meant to work.\n"
@@ -5638,12 +5556,10 @@ msgid "needlerheavy_txt"
 msgstr "<TODO>"
 
 #: ../base/ufos/research.ufo:1998
-#, fuzzy
 msgid "needlerheavy_pre_txt"
 msgstr "<TODO>"
 
 #: ../base/ufos/research.ufo:2064
-#, fuzzy
 msgid "coilgun_txt"
 msgstr ""
 "Commander, I'd like to present you with the finished plans and prototype for our Coilgun.\n"
@@ -5663,7 +5579,6 @@ msgstr ""
 "--Cdr. Navarre"
 
 #: ../base/ufos/research.ufo:2067
-#, fuzzy
 msgid "coilgun_pre_txt"
 msgstr ""
 "Commander, our brainstorms down at DivEngine have come up with an interesting idea based on the alien Needler technology. When combining the alien fast-changing magnetic generators -- and, even more importantly, their power source -- with human-engineered EM rifle technology, some amazing man-portable weaponry becomes possible. I'd hereby like to propose a new design for a coilgun in the role of a sniper rifle.\n"
@@ -5698,7 +5613,6 @@ msgstr ""
 "--Cdr. Navarre"
 
 #: ../base/ufos/research.ufo:2132
-#, fuzzy
 msgid "shotgun2_txt"
 msgstr ""
 "Technical Specifications: CRC-212 Riot Shotgun\n"
@@ -5744,7 +5658,6 @@ msgstr ""
 "None."
 
 #: ../base/ufos/research.ufo:2151
-#, fuzzy
 msgid "shotgun2_slug_ammo_txt"
 msgstr ""
 "Technical Specifications: Saboted Slugs\n"
@@ -5778,7 +5691,6 @@ msgstr ""
 "None."
 
 #: ../base/ufos/research.ufo:2172
-#, fuzzy
 msgid "shotgun_micro_txt"
 msgstr ""
 "Technical Specifications: CRC-M9 Micro Shotgun\n"
@@ -5828,7 +5740,6 @@ msgstr ""
 "None."
 
 #: ../base/ufos/research.ufo:2191
-#, fuzzy
 msgid "shotgun_micro_ammo_txt"
 msgstr ""
 "Technical Specifications: Flechette Shells\n"
@@ -5864,7 +5775,6 @@ msgstr ""
 "None."
 
 #: ../base/ufos/research.ufo:2211
-#, fuzzy
 msgid "smg_txt"
 msgstr ""
 "Technical Specifications: CRC-8 SMG\n"
@@ -5910,7 +5820,6 @@ msgstr ""
 "Despite good penetration against organics, this weapon performs very poorly against robotic targets."
 
 #: ../base/ufos/research.ufo:2230
-#, fuzzy
 msgid "smg_mag_txt"
 msgstr ""
 "Technical Specifications: SMG Magazine\n"
@@ -5944,7 +5853,6 @@ msgstr ""
 "None."
 
 #: ../base/ufos/research.ufo:2250
-#, fuzzy
 msgid "smokegren_txt"
 msgstr ""
 "Technical Specifications: Smoke Grenade\n"
@@ -5986,7 +5894,6 @@ msgstr ""
 "None."
 
 #: ../base/ufos/research.ufo:2269
-#, fuzzy
 msgid "sniper_txt"
 msgstr ""
 "Technical Specifications: S-1 Sniper Rifle\n"
@@ -6032,7 +5939,6 @@ msgstr ""
 "Along with high-explosive rockets and grenades, this is one of the few standard-issue human weapons that are fully effective against robotic aliens."
 
 #: ../base/ufos/research.ufo:2288
-#, fuzzy
 msgid "sniper_mag_txt"
 msgstr ""
 "Technical Specifications: Sniper Rifle Magazine\n"
@@ -6070,7 +5976,6 @@ msgid "Anti-Alien Gas"
 msgstr "Antiromvesengass"
 
 #: ../base/ufos/research.ufo:2311
-#, fuzzy
 msgid "stungren_txt"
 msgstr ""
 "Commander,\n"
@@ -6092,7 +5997,6 @@ msgstr ""
 "Dr. Connor"
 
 #: ../base/ufos/research.ufo:2314
-#, fuzzy
 msgid "stungren_pre_txt"
 msgstr ""
 "Commander,\n"
@@ -6119,12 +6023,10 @@ msgid "stungren_alien_txt"
 msgstr "<TODO>"
 
 #: ../base/ufos/research.ufo:2361
-#, fuzzy
 msgid "stungren_alien_pre_txt"
 msgstr "<TODO>"
 
 #: ../base/ufos/research.ufo:2400
-#, fuzzy
 msgid "stunrod_txt"
 msgstr ""
 "Commander,\n"
@@ -6148,7 +6050,6 @@ msgstr ""
 "Dr. Connor"
 
 #: ../base/ufos/research.ufo:2403
-#, fuzzy
 msgid "stunrod_pre_txt"
 msgstr ""
 "Commander,\n"
@@ -6172,7 +6073,6 @@ msgid "Alien Artifact - Particle Beam Pistol"
 msgstr "Romvesengjenstand - Strålepartikkelpistol"
 
 #: ../base/ufos/research.ufo:2443
-#, fuzzy
 msgid "pbeampistol_txt"
 msgstr ""
 "Commander, I've got the specs of the new alien pistol for you, and they're not good.\n"
@@ -6192,7 +6092,6 @@ msgstr ""
 "--Cdr. Navarre"
 
 #: ../base/ufos/research.ufo:2446
-#, fuzzy
 msgid "pbeampistol_pre_txt"
 msgstr ""
 "Commander, we've recovered a dangerous new alien pistol that seems to fire high-energy particle beams -- more deadly than lasers, more accurate than plasma weapons, and an extremely nasty new threat to our troops on the battlefield. Preliminary tests against our armour have produced distressing results. We need to perform more research on these weapons immediately.\n"
@@ -6206,7 +6105,6 @@ msgid "Alien Artifact - Particle Beam Cannon"
 msgstr "Romvesengjenstand - partikkelstrålekanon"
 
 #: ../base/ufos/research.ufo:2512
-#, fuzzy
 msgid "pbeamcannon_txt"
 msgstr ""
 "Commander, we've finished work on this big damned cannon we brought back.\n"
@@ -6226,7 +6124,6 @@ msgstr ""
 "--Cdr. Navarre"
 
 #: ../base/ufos/research.ufo:2515
-#, fuzzy
 msgid "pbeamcannon_pre_txt"
 msgstr ""
 "Commander, we've recovered a large alien cannon that fires high-energy particle beams. It is extremely deadly and has frightening effects on our armour during preliminary testing. We need to perform more research on these weapons immediately.\n"
@@ -6240,7 +6137,6 @@ msgid "Alien Artifact - Particle Beam Rifle"
 msgstr "Romvesengjenstand - Strålepartikkelrifle"
 
 #: ../base/ufos/research.ufo:2582
-#, fuzzy
 msgid "pbeamrifle_txt"
 msgstr ""
 "Commander, we've gotten all the info we can from this new alien rifle. It's more bad news, I'm afraid.\n"
@@ -6262,7 +6158,6 @@ msgstr ""
 "--Cdr. Navarre"
 
 #: ../base/ufos/research.ufo:2585
-#, fuzzy
 msgid "pbeamrifle_pre_txt"
 msgstr ""
 "Commander, we've recovered an alien rifle that fires high-energy particle beams. It's more deadly than lasers, more accurate than plasma weapons, and an extremely nasty new threat to our troops on the battlefield. Preliminary tests against our armour confirm that the aliens have seriously upgunned their troops. We need to perform more research on these weapons immediately.\n"
@@ -6276,7 +6171,6 @@ msgid "Man-Portable Particle Beams"
 msgstr "Bærbar partikkelstråler"
 
 #: ../base/ufos/research.ufo:2652
-#, fuzzy
 msgid "pbeamammo_txt"
 msgstr ""
 "Commander, my method worked. I think we've managed to crack the secrets of the mysterious particle beam weaponry. Here are my conclusions.\n"
@@ -6296,7 +6190,6 @@ msgstr ""
 "--Cdr. Navarre"
 
 #: ../base/ufos/research.ufo:2655
-#, fuzzy
 msgid "pbeamammo_pre_txt"
 msgstr ""
 "Commander, we've decided that more research is badly needed on the particle beam weaponry, especially their mysterious power source, the magazines which we've been utterly unable to examine. No amount of finesse or ingenuity has been able to open them. That's why I'm hereby proposing extreme measures.\n"
@@ -6310,7 +6203,6 @@ msgstr ""
 "--Cdr. Navarre"
 
 #: ../base/ufos/research.ufo:2699
-#, fuzzy
 msgid "combat_armour_txt"
 msgstr ""
 "Technical Specifications: Combat Armour\n"
@@ -6370,7 +6262,6 @@ msgstr ""
 "--Cdr. Navarre"
 
 #: ../base/ufos/research.ufo:2728
-#, fuzzy
 msgid "nano_armour_txt"
 msgstr ""
 "Commander, I would like to report the success of our nanocomposite production research!\n"
@@ -6390,7 +6281,6 @@ msgstr ""
 "--Cdr. Navarre"
 
 #: ../base/ufos/research.ufo:2731
-#, fuzzy
 msgid "nano_armour_pre_txt"
 msgstr ""
 "Our examination of the alien body armour has led us to many interesting realisations. Obviously, the key to creating more effective mobile armour based on the alien suits lies in the direction of nanocomposites. This will require large amounts of carbon nanotubes.\n"
@@ -6404,7 +6294,6 @@ msgstr ""
 "--Cdr. Navarre"
 
 #: ../base/ufos/research.ufo:2807
-#, fuzzy
 msgid "alien_body_armour_txt"
 msgstr ""
 "Commander, we've got a full report on the alien armour for you.\n"
@@ -6422,7 +6311,6 @@ msgstr ""
 "--Cdr. Navarre"
 
 #: ../base/ufos/research.ufo:2810
-#, fuzzy
 msgid "alien_body_armour_pre_txt"
 msgstr ""
 "Commander, we've recovered a suit of alien body armour from the battlefield. This armour has been a plague to our soldiers due to its very high resistance to various types of damage; aliens wearing it have shrugged off shots that would have torn their unarmoured friends apart. It's not surprising that we still haven't managed to cut it open to perform an initial survey of its composition. We should investigate the armour's weaknesses as soon as we can, and perhaps ascertain a way to adapt it for our own uses.\n"
@@ -6432,7 +6320,6 @@ msgstr ""
 "--Cdr. Navarre"
 
 #: ../base/ufos/research.ufo:2844
-#, fuzzy
 msgid "alien_medium_armour_txt"
 msgstr ""
 "Where armour is concerned, the aliens' design philosophy seems to be, \"If it works, let's use more of it.\" This new armour is similar in design to the alien body armour, but it does away with the compromises and delicate balances of light armour. Instead of just protecting the torso and head, the medium armour attempts to cover all vital areas with much more dense nanopolymer plates, including major arteries and sensitive nerve clusters. In comparison with the alien body armour, the medium suit has double the number of nanotube strands per square centimetre. As a result these plates are nearly impenetrable to standard human firearms and even the softer mesh covering the joints can stop bullets with disturbing ease.\n"
@@ -6450,7 +6337,6 @@ msgstr ""
 "--Cdr. Navarre"
 
 #: ../base/ufos/research.ufo:2847
-#, fuzzy
 msgid "alien_medium_armour_pre_txt"
 msgstr ""
 "Commander, we've salvaged a new suit of alien armour from the field. It's much heavier than the alien armour we've encountered previously, and it seems to stop ordinary firearms without taking so much as a scratch. Its trauma plates are made of the densest CNT (Carbon Nanotube) weave I've ever seen. We need to research this armour right away to determine which weapons will remain effective against aliens wearing it, and to try and find a method to replicate it for our own troops. As long as we can't match this technology, we are at a severe disadvantage.\n"
@@ -6541,7 +6427,6 @@ msgstr "Fartsegenskap"
 
 # Kunne også være karantenestasjon
 #: ../base/ufos/research.ufo:3126
-#, fuzzy
 msgid "b_aliencontainment_txt"
 msgstr ""
 "Blueprints -- Alien Containment Facility\n"
@@ -6581,7 +6466,6 @@ msgstr ""
 "To whatever future Commanders might be reviewing this file: Keep in mind that the machinery in the Containment Facility, like a fair portion of PHALANX equipment, has yet to undergo its true acid test against an extraterrestrial force. Upgrades or adjustments may be required for it to perform up to its design spec."
 
 #: ../base/ufos/research.ufo:3144
-#, fuzzy
 msgid "b_command_txt"
 msgstr ""
 "Blueprints -- Command Centre\n"
@@ -6623,7 +6507,6 @@ msgstr ""
 "The old CC blueprints have been updated by our engineers to replace the ancient H-9000 mainframe and terminals with up-to-date holo-workstations and a fresh supercomputer installation. All other components are still viable and effective."
 
 #: ../base/ufos/research.ufo:3162
-#, fuzzy
 msgid "b_entrance_txt"
 msgstr ""
 "Blueprints -- Entrance\n"
@@ -6657,7 +6540,6 @@ msgstr ""
 "None."
 
 #: ../base/ufos/research.ufo:3175 ../base/ufos/research.ufo:4490
-#, fuzzy
 msgid "b_missile_txt"
 msgstr ""
 "Blueprints -- Missile Battery\n"
@@ -6703,7 +6585,6 @@ msgstr ""
 "None."
 
 #: ../base/ufos/research.ufo:3214
-#, fuzzy
 msgid "b_large_hangar_txt"
 msgstr ""
 "Blueprints -- Large Hangar\n"
@@ -6749,7 +6630,6 @@ msgstr ""
 "None."
 
 #: ../base/ufos/research.ufo:3232
-#, fuzzy
 msgid "b_hospital_txt"
 msgstr ""
 "Blueprints -- Hospital\n"
@@ -6793,7 +6673,6 @@ msgstr ""
 "None."
 
 #: ../base/ufos/research.ufo:3250
-#, fuzzy
 msgid "b_small_hangar_txt"
 msgstr ""
 "Blueprints -- Small Hangar\n"
@@ -6839,7 +6718,6 @@ msgstr ""
 "None."
 
 #: ../base/ufos/research.ufo:3268
-#, fuzzy
 msgid "b_lab_txt"
 msgstr ""
 "Blueprints -- Laboratory\n"
@@ -6885,7 +6763,6 @@ msgstr ""
 "Reviewing the files on PHALANX laboratory facilities, I have concluded that these blueprints were well ahead of their time. The design is still viable and can be adapted to our use with only minor equipment upgrades."
 
 #: ../base/ufos/research.ufo:3286
-#, fuzzy
 msgid "b_powerplant_txt"
 msgstr ""
 "Blueprints -- Power Plant\n"
@@ -6927,7 +6804,6 @@ msgstr ""
 "None."
 
 #: ../base/ufos/research.ufo:3304
-#, fuzzy
 msgid "b_quarters_txt"
 msgstr ""
 "Blueprints -- Living Quarters\n"
@@ -6969,7 +6845,6 @@ msgstr ""
 "None."
 
 #: ../base/ufos/research.ufo:3317
-#, fuzzy
 msgid "b_radar_txt"
 msgstr ""
 "Blueprints -- Radar\n"
@@ -7017,7 +6892,6 @@ msgstr ""
 "We should not consider the Radar facility to be an end-all solution to UFO detection. Even with supplemental systems our coverage is not fully reliable, and we should research ways to improve our detection technology if we're to have any chance of stopping the bastards."
 
 #: ../base/ufos/research.ufo:3335
-#, fuzzy
 msgid "b_radar_adv_txt"
 msgstr ""
 "Proposal\n"
@@ -7039,7 +6913,6 @@ msgstr ""
 "--Cdr. Navarre"
 
 #: ../base/ufos/research.ufo:3354
-#, fuzzy
 msgid "b_storage_txt"
 msgstr ""
 "Blueprints -- Storage\n"
@@ -7083,7 +6956,6 @@ msgstr ""
 "None."
 
 #: ../base/ufos/research.ufo:3372
-#, fuzzy
 msgid "b_workshop_txt"
 msgstr ""
 "Blueprints -- Workshop\n"
@@ -7123,7 +6995,6 @@ msgstr ""
 "None."
 
 #: ../base/ufos/research.ufo:3393
-#, fuzzy
 msgid "b_antimatter_txt"
 msgstr ""
 "Overview\n"
@@ -7155,7 +7026,6 @@ msgstr ""
 "None."
 
 #: ../base/ufos/research.ufo:3420
-#, fuzzy
 msgid "drop_firebird_txt"
 msgstr ""
 "Aircraft Evaluation -- Firebird-class Dropship\n"
@@ -7206,7 +7076,6 @@ msgid "drop_herakles_txt"
 msgstr "<TODO>"
 
 #: ../base/ufos/research.ufo:3439
-#, fuzzy
 msgid "drop_herakles_pre_txt"
 msgstr "<TODO>"
 
@@ -7216,12 +7085,10 @@ msgid "drop_raptor_txt"
 msgstr "<TODO>"
 
 #: ../base/ufos/research.ufo:3476
-#, fuzzy
 msgid "drop_raptor_pre_txt"
 msgstr "<TODO>"
 
 #: ../base/ufos/research.ufo:3518
-#, fuzzy
 msgid "inter_stiletto_txt"
 msgstr ""
 "Aircraft Evaluation -- Stiletto-class Interceptor\n"
@@ -7275,7 +7142,6 @@ msgstr ""
 "This is simply the best knife-fighting aircraft I have ever laid eyes on. We're going to need it."
 
 #: ../base/ufos/research.ufo:3534
-#, fuzzy
 msgid "inter_saracen_txt"
 msgstr ""
 "Aircraft Evaluation -- Saracen-class Interceptor\n"
@@ -7319,7 +7185,6 @@ msgstr ""
 "None."
 
 #: ../base/ufos/research.ufo:3550
-#, fuzzy
 msgid "inter_dragon_txt"
 msgstr ""
 "Commander, I'm extremely proud to present you with the plans for our new interceptor, the Dragon. As you can see we've taken more than one page out of the aliens' book and the radical styling truly pays off.\n"
@@ -7335,7 +7200,6 @@ msgstr ""
 "--Cdr. Navarre"
 
 #: ../base/ufos/research.ufo:3553
-#, fuzzy
 msgid "inter_dragon_pre_txt"
 msgstr ""
 "Commander, let me preface this by saying it's obvious that the aliens have been severely outperforming us in every way, but nowhere is this more evident than in the air. We were in a bad position at the start of the war and despite our efforts there has been little improvement.\n"
@@ -7347,7 +7211,6 @@ msgstr ""
 "--Cdr. Navarre"
 
 #: ../base/ufos/research.ufo:3595
-#, fuzzy
 msgid "inter_starchaser_txt"
 msgstr ""
 "Commander, excuse me if I sound a little incoherent, but I've been up all night finishing the final blueprints. It is with great pleasure that I present you the Starchaser Space Superiority Fighter. Yes, you read that right, space superiority. One of the most striking improvements over the Dragon - though it's certainly not the only one! - is the ability of sustained orbital flight and combat. We now have the ability of intercepting the enemy outside our own atmosphere, and while this seems a minor boon so long as we don't know where the enemy is coming from, I'm certain that we're going to need this capability sooner or later.\n"
@@ -7359,7 +7222,6 @@ msgstr ""
 "--Cdr. Navarre"
 
 #: ../base/ufos/research.ufo:3598
-#, fuzzy
 msgid "inter_starchaser_pre_txt"
 msgstr ""
 "Commander, as you will be well aware, our enemies have been fielding increasingly heavier craft and weaponry in our skies, perhaps in a response to our leveling the playing field with the new Dragon interceptors. Once again, we're feeling the pressure. My team and I have believe it is time for the next evolution in our air combat arsenal.\n"
@@ -7376,12 +7238,10 @@ msgid "inter_stingray_txt"
 msgstr "<TODO>"
 
 #: ../base/ufos/research.ufo:3642
-#, fuzzy
 msgid "inter_stingray_pre_txt"
 msgstr "By: Cdr. Paul Navarre, R&D: Engineering Division, PHALANX, Atlantic Operations Command"
 
 #: ../base/ufos/research.ufo:3692
-#, fuzzy
 msgid "ufo_scout_txt"
 msgstr ""
 "This small UFO is the first type we've observed visually and on radar. Although they don't seem to take part in actual raids, they're no less a threat; so far they've paved the way for every instance of alien activity on Earth.\n"
@@ -7403,7 +7263,6 @@ msgstr ""
 "--Cdr. Navarre"
 
 #: ../base/ufos/research.ufo:3695
-#, fuzzy
 msgid "ufo_scout_pre_txt"
 msgstr ""
 "Commander, we've recovered a new UFO type which is now waiting in our hangar for disassembly. We're ready to start studying and dismantling the craft whenever you say, but we will need some lab time and funding to make a proper assessment of its function and capabilities.\n"
@@ -7411,7 +7270,6 @@ msgstr ""
 "--Cdr. Navarre"
 
 #: ../base/ufos/research.ufo:3734
-#, fuzzy
 msgid "ufo_fighter_txt"
 msgstr ""
 "Commander, my team and I have just finished another UFO report for you. Here is my summary for your review.\n"
@@ -7431,7 +7289,6 @@ msgstr ""
 "--Cdr. Navarre"
 
 #: ../base/ufos/research.ufo:3737
-#, fuzzy
 msgid "ufo_fighter_pre_txt"
 msgstr ""
 "Commander, we've recovered a new UFO type which is now waiting in our hangar for disassembly. Recovering a Fighter-class UFO has been one of the things we at DivEngine have been praying for. This is the first armed combat UFO that PHALANX has observed; it is vital that we study these alien craft and weapons and learn their weaknesses, if they have any.\n"
@@ -7441,7 +7298,6 @@ msgstr ""
 "--Cdr. Navarre"
 
 #: ../base/ufos/research.ufo:3777
-#, fuzzy
 msgid "ufo_supply_txt"
 msgstr ""
 "Commander, my team and I have just finished another UFO report for you. Here is my summary for your review.\n"
@@ -7461,7 +7317,6 @@ msgstr ""
 "--Cdr. Navarre"
 
 #: ../base/ufos/research.ufo:3780
-#, fuzzy
 msgid "ufo_supply_pre_txt"
 msgstr ""
 "Commander, we've recovered a new UFO type which is now waiting in our hangar for disassembly. Larger than any of the other UFOs we've seen so far, it seems to be unarmed, and its large cargo hold suggests that it may be a supply carrier of some sort, supporting alien assets on the surface of the Earth. These craft can be found at the centre of many alien formations and will drastically increase the alien presence on our planet if we allow them to complete their missions.\n"
@@ -7476,7 +7331,6 @@ msgid "ufo_carrier_txt"
 msgstr "<TODO>"
 
 #: ../base/ufos/research.ufo:3823
-#, fuzzy
 msgid "ufo_carrier_pre_txt"
 msgstr "<TODO>"
 
@@ -7486,12 +7340,10 @@ msgid "ufo_bomber_txt"
 msgstr "<TODO>"
 
 #: ../base/ufos/research.ufo:3866
-#, fuzzy
 msgid "ufo_bomber_pre_txt"
 msgstr "<TODO>"
 
 #: ../base/ufos/research.ufo:3906
-#, fuzzy
 msgid "ufo_corrupter_txt"
 msgstr ""
 "Commander, my team and I have just finished another UFO report for you. Here is my summary for your review.\n"
@@ -7511,7 +7363,6 @@ msgstr ""
 "--Cdr. Navarre"
 
 #: ../base/ufos/research.ufo:3909
-#, fuzzy
 msgid "ufo_corrupter_pre_txt"
 msgstr ""
 "Commander, we've recovered a new UFO type which is now waiting in our hangar for disassembly. This is one of the largest UFOs we have observed so far, but the relatively light armament indicates that it's not a combat craft. Our preliminary walkabout of the interior has given us only tantalizing clues about its intended function.\n"
@@ -7523,7 +7374,6 @@ msgstr ""
 "--Cdr. Navarre"
 
 #: ../base/ufos/research.ufo:3949
-#, fuzzy
 msgid "ufo_gunboat_txt"
 msgstr ""
 "Commander, my team and I have just finished another UFO report for you. Here is my summary for your review.\n"
@@ -7541,7 +7391,6 @@ msgstr ""
 "--Cdr. Navarre"
 
 #: ../base/ufos/research.ufo:3952
-#, fuzzy
 msgid "ufo_gunboat_pre_txt"
 msgstr ""
 "Commander, we've recovered a new UFO type which is now waiting in our hangar for disassembly. Going by the extremely heavy armament it seems to be some kind of heavy fighter or fire support model, its size class somewhere in between those of the UFOs we've observed so far.\n"
@@ -7558,12 +7407,10 @@ msgid "ufo_ripper_txt"
 msgstr "<TODO>"
 
 #: ../base/ufos/research.ufo:3995
-#, fuzzy
 msgid "ufo_ripper_pre_txt"
 msgstr "<TODO>"
 
 #: ../base/ufos/research.ufo:4035
-#, fuzzy
 msgid "ufo_harvester_txt"
 msgstr ""
 "Commander, my team and I have just finished another UFO report for you. Here is my summary for your review.\n"
@@ -7572,11 +7419,7 @@ msgstr ""
 "\n"
 "The Harvester seems to bear out our theories about fuel capacity being the main limiting factor for UFO speed, as it is both larger and faster than any other we've previously observed. It's able to carry more antimatter fuel and protect it far more effectively, with a tougher hull, thicker armour, and more effective emergency antimatter-dumping measures. Even if an explosion does occur, most of the blast will be contained by the UFO's extremely strong construction.\n"
 "\n"
-"The Harvester's fuel tank can take up to 0.6 grammes of antimatter and possesses a potential explosive force of approximately 25 kilotons when full.\n"
-"\n"
-"There are three front-facing weapon mounts arranged in a triangle around the craft's cockpit. Two of these are equipped with the particle beam weapon we've observed in other UFOs, but the remaining mount features an interesting kind of alien missile launcher. The missiles have highly sophisticated homing systems and are propelled by matter-antimatter reaction rockets similar to UFO engines. These missiles are insanely fast, so fast that they don't need explosive warheads to kill their prey, relying solely on kinetic impact and the sympathetic detonation of any remaining fuel. More research into this weapon will be a high priority.\n"
-"\n"
-"In the air, the Harvester is extremely dangerous and should be a high-priority target. Between the twin particle beams and the alien launcher, its firepower is more than a match for anything we can currently field. Its only obvious drawback is low manoeuvrability compared to smaller UFO types. Our interceptors are significantly more agile and we have far more combat experience in Earth atmosphere than the aliens do. This is one of the few advantages we'll have over the Harvester, and it would be wise to upgrade our equipment in order to mitigate some of the aliens' tech superiority.\n"
+"In the air, the Harvester is extremely dangerous and should be a high-priority target. Its firepower is more than a match for anything we can currently field. Its only obvious drawback is low manoeuvrability compared to smaller UFO types. Our interceptors are significantly more agile and we have far more combat experience in Earth atmosphere than the aliens do. This is one of the few advantages we'll have over the Harvester, and it would be wise to upgrade our equipment in order to mitigate some of the aliens' tech superiority.\n"
 "\n"
 "When encountered, we should concentrate our best pilots and craft on any Harvesters in the area and take them out as fast as possible. Only then should we concern ourselves with shooting down any escorts.\n"
 "\n"
@@ -7587,7 +7430,6 @@ msgstr ""
 "--Cdr. Navarre"
 
 #: ../base/ufos/research.ufo:4038
-#, fuzzy
 msgid "ufo_harvester_pre_txt"
 msgstr ""
 "Commander, we've recovered a new UFO type which is now waiting in our hangar for disassembly. This one is significantly larger than previous UFOs we've observed and seems to be the centre of many alien formations, making it an especially important target for our research. Uncovering the craft's purpose and examining its special equipment may give us essential new insights into the aliens' mission here on Earth.\n"
@@ -7602,7 +7444,6 @@ msgid "ufo_mothership_txt"
 msgstr "<TODO>"
 
 #: ../base/ufos/research.ufo:4081
-#, fuzzy
 msgid "ufo_mothership_pre_txt"
 msgstr "<TODO>"
 
@@ -7616,7 +7457,6 @@ msgid "bloodspider_notes_txt"
 msgstr "<TODO>"
 
 #: ../base/ufos/research.ufo:4128
-#, fuzzy
 msgid "bloodspider_notes_pre_txt"
 msgstr "<TODO>"
 
@@ -7625,7 +7465,6 @@ msgid "Alien Autopsy - Bloodspider"
 msgstr "Romvesenobduksjon - blodedderkop"
 
 #: ../base/ufos/research.ufo:4149
-#, fuzzy
 msgid "bloodspider_autopsy_txt"
 msgstr ""
 "Commander,\n"
@@ -7649,7 +7488,6 @@ msgstr ""
 "Dr. Connor"
 
 #: ../base/ufos/research.ufo:4152
-#, fuzzy
 msgid "bloodspider_autopsy_pre_txt"
 msgstr ""
 "Commander,\n"
@@ -7665,7 +7503,6 @@ msgid "Alien Autopsy - Ortnok"
 msgstr "Romvesenobduksjon - Ortnok"
 
 #: ../base/ufos/research.ufo:4206
-#, fuzzy
 msgid "ortnok_autopsy_txt"
 msgstr ""
 "Commander,\n"
@@ -7703,7 +7540,6 @@ msgstr ""
 "Dr. Connor"
 
 #: ../base/ufos/research.ufo:4207
-#, fuzzy
 msgid "ortnok_autopsy_extra_txt"
 msgstr ""
 "Commander,\n"
@@ -7739,7 +7575,6 @@ msgstr ""
 "Dr. Connor"
 
 #: ../base/ufos/research.ufo:4210
-#, fuzzy
 msgid "ortnok_autopsy_pre_txt"
 msgstr ""
 "Commander,\n"
@@ -7751,7 +7586,6 @@ msgstr ""
 "Dr. Connor"
 
 #: ../base/ufos/research.ufo:4211
-#, fuzzy
 msgid "ortnok_autopsy_extra_pre_txt"
 msgstr ""
 "Commander,\n"
@@ -7767,7 +7601,6 @@ msgid "Alien Autopsy - Taman"
 msgstr "Romvesenobduksjon - Taman"
 
 #: ../base/ufos/research.ufo:4250
-#, fuzzy
 msgid "taman_autopsy_txt"
 msgstr ""
 "Commander,\n"
@@ -7807,7 +7640,6 @@ msgstr ""
 "Dr. Connor"
 
 #: ../base/ufos/research.ufo:4251
-#, fuzzy
 msgid "taman_autopsy_extra_txt"
 msgstr ""
 "Commander,\n"
@@ -7845,7 +7677,6 @@ msgstr ""
 "Dr. Connor"
 
 #: ../base/ufos/research.ufo:4254
-#, fuzzy
 msgid "taman_autopsy_pre_txt"
 msgstr ""
 "Commander,\n"
@@ -7857,7 +7688,6 @@ msgstr ""
 "Dr. Connor"
 
 #: ../base/ufos/research.ufo:4255
-#, fuzzy
 msgid "taman_autopsy_extra_pre_txt"
 msgstr ""
 "Commander,\n"
@@ -7873,7 +7703,6 @@ msgid "Alien Autopsy - Shevaar"
 msgstr "Romvesenobduksjon - shevaar"
 
 #: ../base/ufos/research.ufo:4294
-#, fuzzy
 msgid "shevaar_autopsy_txt"
 msgstr ""
 "Commander,\n"
@@ -7911,7 +7740,6 @@ msgstr ""
 "Dr. Connor"
 
 #: ../base/ufos/research.ufo:4295
-#, fuzzy
 msgid "shevaar_autopsy_extra_txt"
 msgstr ""
 "Commander,\n"
@@ -7947,7 +7775,6 @@ msgstr ""
 "Dr. Connor"
 
 #: ../base/ufos/research.ufo:4298
-#, fuzzy
 msgid "shevaar_autopsy_pre_txt"
 msgstr ""
 "Commander,\n"
@@ -7959,7 +7786,6 @@ msgstr ""
 "Dr. Connor"
 
 #: ../base/ufos/research.ufo:4299
-#, fuzzy
 msgid "shevaar_autopsy_extra_pre_txt"
 msgstr ""
 "Commander,\n"
@@ -7980,7 +7806,6 @@ msgid "ugv_phoenix_txt"
 msgstr "<TODO>"
 
 #: ../base/ufos/research.ufo:4395
-#, fuzzy
 msgid "ugv_phoenix_pre_txt"
 msgstr "<TODO>"
 
@@ -7994,7 +7819,6 @@ msgid "ugv_ares_w_txt"
 msgstr "<TODO>"
 
 #: ../base/ufos/research.ufo:4415
-#, fuzzy
 msgid "ugv_ares_w_pre_txt"
 msgstr "<TODO>"
 
@@ -8004,7 +7828,6 @@ msgid "ugv_chaingun_txt"
 msgstr "<TODO>"
 
 #: ../base/ufos/research.ufo:4434
-#, fuzzy
 msgid "ugv_chaingun_pre_txt"
 msgstr "<TODO>"
 
@@ -8014,7 +7837,6 @@ msgid "ugv_chaingun_belt_txt"
 msgstr "<TODO>"
 
 #: ../base/ufos/research.ufo:4453
-#, fuzzy
 msgid "ugv_chaingun_belt_pre_txt"
 msgstr "<TODO>"
 
@@ -8024,7 +7846,6 @@ msgid "ugv_weapon_autocannon_txt"
 msgstr "By: Cdr. Paul Navarre, R&D: Engineering Division, PHALANX, Atlantic Operations Command"
 
 #: ../base/ufos/research.ufo:4471
-#, fuzzy
 msgid "ugv_weapon_autocannon_pre_txt"
 msgstr "By: Cdr. Paul Navarre, R&D: Engineering Division, PHALANX, Atlantic Operations Command"
 
@@ -8033,7 +7854,6 @@ msgid "'Raven' ECM Unit"
 msgstr "'Raven' ECM-enhet"
 
 #: ../base/ufos/research.ufo:4521
-#, fuzzy
 msgid "craft_electronics_raven_txt"
 msgstr ""
 "Technical Specifications: \"Raven\" ECM Unit\n"
@@ -8073,7 +7893,6 @@ msgstr ""
 "None."
 
 #: ../base/ufos/research.ufo:4538
-#, fuzzy
 msgid "craft_shield_light_txt"
 msgstr ""
 "Technical Specifications: Polymer Aircraft Armour\n"
@@ -8094,7 +7913,7 @@ msgstr ""
 "\n"
 "Under the continuing efforts of the Excalibur Program, we have scoured the globe for the best components on Earth in order to fit our aircraft with the equipment they need to survive against the alien threat. As always, only the very best equipment has been selected for the defence of our planet.\n"
 "\n"
-"One of the fundamental truths in aircraft design is that it's easier to dish out damage than it is to take it and keep coming. Heavy objects don't really belong in the sky; it takes a constant input of power to keep things like aircraft, birds and balloons from coming back down, and if the source of this power is damaged in mid-flight, a crash is unavoidable. PHALANX uses exclusively multi-engine aircraft, but even though it's possible for our interceptors to land on only one engine, the loss of an engine during combat will immediately render the aircraft combat-ineffective. With such a drastic loss of speed and manoeuvring power, continuing the engagement would be suicide\n"
+"One of the fundamental truths in aircraft design is that it's easier to dish out damage than it is to take it and keep coming. Heavy objects don't really belong in the sky; it takes a constant input of power to keep things like aircraft, birds and balloons from coming back down, and if the source of this power is damaged in mid-flight, a crash is unavoidable. PHALANX uses exclusively multi-engine aircraft, but even though it's possible for our interceptors to land on only one engine, the loss of an engine during combat will immediately render the aircraft combat-ineffective. With such a drastic loss of speed and manoeuvring power, continuing the engagement would be suicide.\n"
 "\n"
 "Adding extra armour to our aircraft is a weighty but effective solution to keeping them in the sky, protecting critical systems from damage and allowing the aircraft to stay in the fight longer than would otherwise be possible. It will reduce the severity of hits to the fuel tank and other vital systems that might otherwise result in the craft's instant destruction.\n"
 "\n"
@@ -8117,7 +7936,6 @@ msgstr ""
 "None."
 
 #: ../base/ufos/research.ufo:4554
-#, fuzzy
 msgid "craft_shield_plating_pre_txt"
 msgstr ""
 "Commander, now that we have the ability to produce and work the alien materials, a whole new range of options has opened up to us. These materials are so strong and flexible that they can be used for almost anything. Their most promising uses, however, have been in aircraft design -- specifically armour.\n"
@@ -8131,7 +7949,6 @@ msgstr ""
 "--Cdr. Navarre"
 
 #: ../base/ufos/research.ufo:4557
-#, fuzzy
 msgid "craft_shield_plating_txt"
 msgstr ""
 "Commander, I've got some good news. My team and I have finished prototyping the alien aircraft plating project. Our new armour is now ready for full PHALANX production.\n"
@@ -8149,7 +7966,6 @@ msgstr ""
 "--Cdr. Navarre"
 
 #: ../base/ufos/research.ufo:4597
-#, fuzzy
 msgid "craft_alien_astrogation_pre_txt"
 msgstr ""
 "Commander, the recovery of an intact alien astrogation unit is an important milestone. Although this unit doesn't seem to contain a star chart, it will allow us to decipher alien astronomical notations and upgrade the power of our own astrogation systems by several orders of magnitude. Eventually the work we do here may help us backtrack the aliens to their home planet.\n"
@@ -8159,7 +7975,6 @@ msgstr ""
 "--Cdr. Navarre"
 
 #: ../base/ufos/research.ufo:4600
-#, fuzzy
 msgid "craft_alien_astrogation_txt"
 msgstr ""
 "Commander, we've finished work on the captured alien astrogation unit. Here is a summary of my report.\n"
@@ -8179,7 +7994,6 @@ msgstr ""
 "--Cdr. Navarre"
 
 #: ../base/ufos/research.ufo:4635
-#, fuzzy
 msgid "craft_alien_propulsion_pre_txt"
 msgstr ""
 "Commander, the alien antimatter engines we recovered have been fascinating my team ever since they arrived. With our new understanding of the alien materials, I think we can work out the details and duplication of this technology. Excitingly, it now seems to be within our capabilities to replicate these engines, if we can just figure out the function and creation of the different parts.\n"
@@ -8189,7 +8003,6 @@ msgstr ""
 "--Cdr. Navarre"
 
 #: ../base/ufos/research.ufo:4638
-#, fuzzy
 msgid "craft_alien_propulsion_txt"
 msgstr ""
 "Commander, I'm happy to report the success of our alien propulsion program. We've cracked the mysteries of the alien engine set-up and we finally understand the path of the antimatter from fuel tank to reaction chamber.\n"
@@ -8213,7 +8026,6 @@ msgstr ""
 "--Cdr. Navarre"
 
 #: ../base/ufos/research.ufo:4672
-#, fuzzy
 msgid "craft_alien_detection_pre_txt"
 msgstr ""
 "Commander, the alien sensor suite appears to be a very powerful set of passive and active scanning systems, including radar, lidar, magnetic and UV/infrared reception, and -- most interestingly -- a kind of detection unknown to us, but which seems to have far more success at detecting UFOs than anything we have.\n"
@@ -8225,7 +8037,6 @@ msgstr ""
 "--Cdr. Navarre"
 
 #: ../base/ufos/research.ufo:4675
-#, fuzzy
 msgid "craft_alien_detection_txt"
 msgstr ""
 "The project on alien detection is complete, Commander. We now have a full understanding of the machinery, its controls, and the modifications needed for human use.\n"
@@ -8249,7 +8060,6 @@ msgstr ""
 "--Cdr. Navarre"
 
 #: ../base/ufos/research.ufo:4708
-#, fuzzy
 msgid "craft_weapon_alc_pre_txt"
 msgstr ""
 "This is one of several proposals I'm submitting for the research and development of new laser weaponry. Each of these will have to be developed separately due to the size differences, power levels and complexity of the systems involved.\n"
@@ -8265,7 +8075,6 @@ msgstr ""
 "--Cdr. Navarre"
 
 #: ../base/ufos/research.ufo:4711
-#, fuzzy
 msgid "craft_weapon_alc_txt"
 msgstr ""
 "Commander, I've just finished my report on our latest laser program. We've successfully prototyped the new Aerial Laser Cannon and are ready to put it into production.\n"
@@ -8285,7 +8094,6 @@ msgid "SHIVA Rotary Cannon"
 msgstr "SHIVA roterende kanon"
 
 #: ../base/ufos/research.ufo:4759
-#, fuzzy
 msgid "craft_weapon_shiva_txt"
 msgstr ""
 "Technical Specifications: SHIVA Rotary Cannon\n"
@@ -8329,7 +8137,6 @@ msgstr ""
 "None."
 
 #: ../base/ufos/research.ufo:4776
-#, fuzzy
 msgid "craft_ammo_shiva_1_txt"
 msgstr ""
 "Technical Specifications: SHIVA 20mm API Rounds\n"
@@ -8369,7 +8176,6 @@ msgstr ""
 "None."
 
 #: ../base/ufos/research.ufo:4797
-#, fuzzy
 msgid "craft_ammo_shiva_2_txt"
 msgstr ""
 "Technical Specifications: SHIVA 20mm HEI Rounds\n"
@@ -8413,7 +8219,6 @@ msgid "'Sparrowhawk' AA Missile Rack"
 msgstr "'Sparrowhawk' AA Missilrack"
 
 #: ../base/ufos/research.ufo:4818
-#, fuzzy
 msgid "craft_weapon_sparrowhawk_txt"
 msgstr ""
 "Technical Specifications: \"Sparrowhawk\" AA Missile Rack\n"
@@ -8467,7 +8272,6 @@ msgid "'Sparrowhawk' Missile"
 msgstr "'Sparrowhawk'-Missil"
 
 #: ../base/ufos/research.ufo:4835
-#, fuzzy
 msgid "craft_ammo_sparrowhawk_txt"
 msgstr ""
 "Technical Specifications: \"Sparrowhawk\" Missile\n"
@@ -8511,7 +8315,6 @@ msgstr ""
 "None."
 
 #: ../base/ufos/research.ufo:4856
-#, fuzzy
 msgid "craft_weapon_tr20_txt"
 msgstr ""
 "Technical Specifications: TR-20 Rocket Pod\n"
@@ -8555,7 +8358,6 @@ msgstr ""
 "None."
 
 #: ../base/ufos/research.ufo:4873
-#, fuzzy
 msgid "craft_ammo_tr20_txt"
 msgstr ""
 "Technical Specifications: TR-20 Rocket\n"
@@ -8601,128 +8403,128 @@ msgstr ""
 #: ../base/ufos/research.ufo:4894
 msgid "craft_weapon_particle_beam_pre_txt"
 msgstr ""
-"Kommandant, Ufoen vi reddet var utstyrt med et meget interessant type våpen som vi ønsker å utforske med en gang. Det synes å avfyre en form for høy hastighets partikkelstråle, hvis vi kan mestre denne teknologien, eller i det minste tilpasse den til bruk på våre egne fly kunne vi lage luftengasjementer med væpnet fremmede fartøyer betydelig mer overlevingsdyktige for våre fly og piloter. \n"
+"Commander, the UFO we recovered was equipped with a very interesting type of weapon that we'd like to research right away. It seems to fire some kind of high-velocity particle beam; if we can master this technology, or at least adapt it for use on our own aircraft, we could make air engagements with armed alien craft significantly more survivable for our craft and pilots.\n"
 "\n"
-"- Cdr. Navarre"
+"--Cdr. Navarre"
 
 #: ../base/ufos/research.ufo:4897
 msgid "craft_weapon_particle_beam_txt"
 msgstr ""
-"Vår rapport om utenomjordisk PBW (Particle Beam Weapon) er klar for gjennomsyn, Kommandant. \n"
+"Our report on the alien PBW (Particle Beam Weapon) is ready for your review, Commander.\n"
 "\n"
-"Den generelle ideen om partikkelstrålevåpen er å treffe et målobjekt med en strøm av akselererte partikler som beveger seg i nær lyshastighet, og således bærer enorm kinetisk energi. Det fremmede våpenet er en elegant enkel anvendelse av dette konseptet. Det er i hovedsak ikke noe mer enn en stor partikkelakselerator og et sett med fokus utstyr, bestående av en kraftig magnetisk inneslutning og klype system. \n"
+"The general idea of particle-beam weaponry is to hit a target object with a stream of accelerated particles moving at near-light velocities, therefore carrying tremendous kinetic energy. The alien weapon is an elegantly simple application of this concept. It is essentially nothing more than a big particle accelerator and a set of focusing equipment, consisting of a high-powered magnetic containment and pinch system.\n"
 "\n"
-"Teamet mitt kunne ha bygget en partikkelakselerator til nesten de samme standardene, men fokus matrisen viser oss hvor langt foran de utenomjordiske egentlig er. Akseleratoren er litt mer enn en høy-energi synkrotron, påskynde partikler rundt og rundt i en sirkel til de har oppnådd tilstrekkelig hastighet. Partiklene blir deretter viderekoblet via et magnetisk felt inn i fokus matrisen, hvor de er magnetisk sammentrengt - 'klemt' - til en sammenhengende stråle. Nivået av magnetisk kontroll romvesenene oppnår her er langt større enn noe vi har klart før. Det klypesystemet er intelligent styrt av Ufoens målrettingsdatamaskin, styrer strålen til målet sitt med meget stor nøyaktighet. \n"
+"My team could've built a particle accelerator to nearly the same standards, but the focusing array shows us just how far ahead the aliens really are. The accelerator is little more than a high-energy synchrotron, speeding particles round and round in a circle until they've achieved sufficient velocity. The particles are then diverted via a magnetic field into the focusing array, where they are magnetically constricted -- 'pinched' -- into a coherent beam. The level of magnetic control the aliens achieve here is far greater than anything we've managed before. The pinch system is intelligently controlled by the UFO's targeting computer, directing the beam to its target with dead-on accuracy.\n"
 "\n"
-"Når det aktiveres er våpenet drevet direkte fra Ufoens elektriske system, med konstant sporing av et valgfritt mål. Når målet er ødelagt vil datamaskinen umiddelbart låse videre til neste fiendtlig kontakt i kjeden, hvis noen. \n"
+"When active, the weapon is powered directly from the UFO's electrical system, constantly tracking one target of choice. Once the target has been destroyed, the computer will immediately lock on to the next hostile contact in the chain, if any.\n"
 "\n"
-"Forsvar mot dette våpenet kommer til å bli en utfordring, Kommandant. Det er svært lite som kan gjøres mot en partikkelstråle som farer nær  lysets hastighet, som bærer tilstrekkelig energi til å slå hva som helst vi kan stille opp med rett ut av himmelen. Ekstra rustning til flyene våre skal beskytte mot slag, men i tilfelle en fulltreffer kunne det like gjerne ikke vært der. Det synes som eneste realistiske forsvar mot dette våpenet er å få det til å bomme. Vi bør undersøke en inntakt fremmed ECM enheten så snart vi kan. \n"
+"Defending against this weapon is going to be a challenge, Commander. There is very little that can be done against a particle beam travelling at near the speed of light, carrying enough energy to knock anything we can field right out of the sky. Additional armour for our aircraft will protect against glancing blows, but in the case of a direct hit, it may as well not be there. It seems the only realistic defence against this weapon is to cause it to miss. We should recover and investigate an intact alien ECM unit as soon as we can.\n"
 "\n"
-"Det vil være en lignende utfordring for oss å passe PBW til vår egen farkost. Vi har rigget opp fester at vi kan montere noen mellomstore utgaver, men vi kan ikke generere nok strøm for å dekke dette våpenet kun fra in-flight-elektrisitet. Hvis vi ønsker å bruke PBW i kamp er vi nødt til å kjøre den med sin egen antimateriedrevne elektriske system. Dette kan kreve mer forskning på antimaterielagring og kontroll, og det betyr at ammunisjon ganske sikkert vilvære begrenset. \n"
+"It will be a similar challenge for us to fit the PBW to our own craft. We've rigged up brackets that we can mount to any medium-sized hardpoint, but we can't generate enough power to suit this weapon just from in-flight electricity. If we want to use the PBW in combat, we're going to have to run it off its own antimatter-powered electrical system. This may require more research into antimatter storage and control, and it means that ammunition will certainly be limited.\n"
 "\n"
-"På den annen side har vi bekreftet at alle våpenkomponentene er innenfor vår gjenskapelsesevne, og deres spesifikasjoner har blitt lastet inn i våre verkstedmaskiner. Vi bør kunne starte produksjon med en gang. \n"
+"On a brighter note, we've confirmed that all the weapon's components are within our ability to replicate, and their specs have been loaded into our Workshop machinery. We should be able to begin production straight away.\n"
 "\n"
-"- Cdr. Navarre"
+"--Cdr. Navarre"
 
 #: ../base/ufos/research.ufo:4954
 msgid "craft_electronics_targeting_txt"
 msgstr ""
-"Tekniske spesifikasjoner: Målrettingsdatamaskin \n"
+"Technical Specifications: Targeting Computer\n"
 "\n"
-"KVALIFISERINGSNIVÅ SORT \n"
+"CLASSIFIED LEVEL BLACK\n"
 "\n"
-"Falanks Utenomjordisk utrykningsenhet \n"
+"PHALANX Extraterrestrial Response Unit\n"
 "\n"
-"Teknisk dokument, Sigmaklarering - Kun for øverstkommanderende \n"
+"Technical Document, Sigma Clearance -- Commander's Eyes Only\n"
 "\n"
-"Arkivert: 19 mars 2084 \n"
+"Filed: 19 March 2084\n"
 "\n"
-"Av: cdr. Paul Navarre, R&D: Ingeniøravdeling, Falanks, Atlanterhavskommandoen \n"
-"\n"
-"\n"
-"\n"
-"Oversikt \n"
-"\n"
-"Under det videre innsatsen til Excaliburprogrammet har vi finkjemmet verden for de beste komponentene på jorden for å tilpasse våre fly med det utstyret de trenger for å overleve mot den fremmede trusselen. Som alltid har kun det aller beste utstyret blitt valgt for forsvaret av planeten vår. \n"
-"\n"
-"Alle våre fly kommer som standard med high-tech målrettingssystemer, men de har fortsatt vanskjer med å spore fremmede fartøyer og holde missillås. Fremmed elektronikk er altfor langt frem for at vi realistisk kan motvirke deres forsvar. Våre systemer mister lås, blir hindret av bluss eller lokkeduer, eller rett og slett blir skutt til helvete av de fremmedes strålevåpen. \n"
-"\n"
-"Disse er alle problemer som vi ikke har noen klar løsning på for øyeblikket. Men det vi kan gjøre er å montere ekstra målrettingsutstyr med spesialbygde filtreringsprogramvare som våre standardsystemer ikke kan kjøre. Denne pakken ble spesielt bygget av mitt team ved hjelp av det nyeste og mest nøyaktige data om fremmede fartøysignaturer og deteksjonsmetoder. Det vet mye mer om de mønstre og svakheter i fremmede signaler, og bidrar til å trenge gjennom veggen av elektroniskkrigføringsaktivitet rundt et fremmed fartøy. Dette vil vesentlig oppgradere nøyaktigheten av alle våpen montert på avskjæringsjageren. \n"
-"\n"
-"Den kraftige maskinvareinstallasjonen involvert i denne oppgraderingen vil ta opp et komplett modulært utstyrsspor på en av våre fly. \n"
+"By: Cdr. Paul Navarre, R&D: Engineering Division, PHALANX, Atlantic Operations Command\n"
 "\n"
 "\n"
-"Anbefalt lære\n"
 "\n"
-"Denne oppgraderingen har flere effektive formål. Det kan hjelpe å forbedre effektiviteten av lavpresisjons våpensystemer på et fly, kan brukes i en ildstøtterolle for å bistå sperring av langtrekkende missilild, eller den kan brukes i hopetall av hele formasjoner avskjærerne for å bringe overveldende ild mot våre fiender på alle områder. \n"
+"Overview\n"
 "\n"
-"Dens eneste ulempe er at det tar opp et helt modulbasert spor som kan brukes til forsvarselektronikk eller annet utstyr. Det kan gjøre våre avskjærerne svake på andre områder. \n"
+"Under the continuing efforts of the Excalibur Program, we have scoured the globe for the best components on Earth in order to fit our aircraft with the equipment they need to survive against the alien threat. As always, only the very best equipment has been selected for the defence of our planet.\n"
 "\n"
-"\r\n"
-"\rTilføyelser \n"
+"All our aircraft come standard with high-tech targeting systems, but they still have an extremely difficult time tracking alien craft and holding missile lock. Alien electronics are too far in advance of ours for us to be able to realistically counter their defences. Our systems lose lock, get suckered by flares or decoys, or simply get shot to hell by the aliens' beam weapons.\n"
 "\n"
-"Med alle de muligheter og ulike scenarier ventende i vår fremtid er det ingen gylden regel som vil hjelpe med å bestemme når du skal distribuere Målrettingsdatamaskin. Det er klart for bruk ved Kommandantens skjønn."
+"These are all problems that we have no clear solution for at the moment. However, what we can do is mount additional targeting equipment with purpose-built filtering software that our standard systems can't load. This package was specially built by my team using the latest, most accurate data on alien craft signatures and detection methods. It knows much more about the patterns and weaknesses of alien signals, helping to penetrate the wall of Electronic Warfare activity around an alien craft. This will significantly upgrade the accuracy of all weapons mounted on the carrying interceptor.\n"
+"\n"
+"The powerful hardware installation involved in this upgrade will take up one complete modular equipment slot on one of our aircraft.\n"
+"\n"
+"\n"
+"Recommended Doctrine\n"
+"\n"
+"This upgrade has several effective purposes. It can help to improve the effectiveness of low-accuracy weapons systems on a single aircraft, it can be used in a fire support role assisting barrages of long-range missile fire, or it can be used en masse by whole flights of interceptors to bring overwhelming fire to bear on our enemies at all ranges.\n"
+"\n"
+"Its only downside is that it takes up a whole modular slot that could be used for defensive electronics or other equipment. This may leave our interceptors weak in other areas.\n"
+"\n"
+"\n"
+"Addenda\n"
+"\n"
+"With all the possibilities and different scenarios waiting in our future, there is no golden rule that will help decide when to deploy the Targeting Computer. It is ready for use at the Commander's discretion."
 
 #: ../base/ufos/research.ufo:4971
 msgid "craft_electronics_fuelpod_txt"
 msgstr ""
-"Tekniske spesifikasjoner: Drivstoff holder \n"
+"Technical Specifications: Fuel Pod\n"
 "\n"
-"KVALIFISERINGSNIVÅ SORT \n"
+"CLASSIFIED LEVEL BLACK\n"
 "\n"
-"Falanks Utenomjordisk utrykningsenhet \n"
+"PHALANX Extraterrestrial Response Unit\n"
 "\n"
-"Teknisk dokument, Sigmaklarering - Kun for øverstkommanderende \n"
+"Technical Document, Sigma Clearance -- Commander's Eyes Only\n"
 "\n"
-"Arkivert: 19 mars 2084 \n"
+"Filed: 19 March 2084\n"
 "\n"
-"Av: cdr. Paul Navarre, R & D: Ingeniør avdeling, Falanks, Atlanterhavskommandoen \n"
-"\n"
-"\n"
-"\n"
-"Oversikt\n"
-"\n"
-"Vi har fastslått at de modulære utstyr brønner på våre fly kan brukes til å akseptere ekstra drivstoff reserver. Ved å installere disse spesielle men veldig enkel drivstoff holdere, kan vi øke rekkevidden av et fly ved å laste mer drivstoff om bord, og forbedre fartøy hastighet ved å gi motorene tilstrekkelig juice til å kjøre på maks hele veien. Det lar også pilotene gjøre langt mer liberal bruk av etterbrenner, ytterligere økning av hastigheten, slik at vi kan bedre konkurrere med fiendtlige Ufoer. \n"
-"\n"
-"Vær imidlertid oppmerksom på at å installere en drivstoffkapsel vil legge en betydelig mengde vekt på farkosten. Forsiktighet må utvises for ikke å overbelaste våre flyskrog. Dersom et fly er for tungt for sikker start vil våre kommandosenterdatamaskiner automatisk nekte det startklarering. \n"
+"By: Cdr. Paul Navarre, R&D: Engineering Division, PHALANX, Atlantic Operations Command\n"
 "\n"
 "\n"
-"Anbefalt Lære\n"
 "\n"
-"Vi bør gjøre bruk av disse holdere i enhver situasjon hvor våre fly er ute av stand til å nå sine destinasjoner, eller hvor de ender opp med for lite drivstoff til å fortsette å engasjere en Ufo, eller hvor en stor del av bakken er udekket av vårt nettverk av baser. De vil bidra til å utvide vår rekkevidde og gir mer beskyttelse til Jorden og vårt folk. \n"
+"Overview\n"
+"\n"
+"We've determined that the modular equipment bays on our aircraft can be used to accept extra fuel reserves. By installing these special but very simple fuel pods, we can greatly increase the range of an aircraft by loading more fuel on board, and improve the craft's speed by allowing the engines enough juice to run on maximum all the way. It also lets pilots make far more liberal use of the afterburner, further upping the speed, allowing us to better compete with hostile UFOs.\n"
+"\n"
+"Take note, however, that installing a fuel pod will add a significant amount of weight to the craft. Care must be taken not to overload our airframes. If an aircraft is too heavy to safely launch, our Command Centre computers will automatically deny it launch clearance.\n"
 "\n"
 "\n"
-"Tilføyelser \n"
+"Recommended Doctrine\n"
 "\n"
-"Tillegg, Konsulent Abel S. Howard, 20 mars 2084: \n"
+"We should make use of these pods in any situation where our aircraft are unable to reach their destinations, or where they end up with too little fuel to continue engaging a UFO, or where a large section of ground is left uncovered by our network of bases. They will help to extend our reach and provide more protection to Earth and our people.\n"
 "\n"
-"Etter å ha lest cdr. Navarre rapport, Kommandant, må jeg understreke at vårt charter fastslår at vi må stoppe enhver utenomjordisk aktivitet på jorden. Vi har ikke råd til å la noe av det fortsette fordi det er bare like utenfor våre flys rekkevidde. Dersom sivile skulle dø fordi landingsflyet ikke helt kunne klare det ville vårt bilde bli knust, og vår støtte kan lide under konsekvensene. Vi bør ha noen drivstoffkapselutstyrte fly klare til å håndtere fjerntliggende hendelser."
+"\n"
+"Addenda\n"
+"\n"
+"Addendum, Executive Officer Abel S. Howard, 20 March 2084:\n"
+"\n"
+"Having read Cdr. Navarre's report, Commander, I have to stress that our charter stipulates we must stop any and all alien activity on Earth. We can't afford to let some of it continue because it's just out of our planes' reach. If civilians were to die because the dropship couldn't quite make it, our image would be shattered and our funding may suffer the consequences. We should keep some fuel pod-equipped planes on standby to deal with distant incidents."
 
 #: ../base/ufos/research.ufo:4993 ../base/ufos/research.ufo:5029
 msgid "alien_materials_txt"
 msgstr ""
-"Kommandant, jeg tror vi har avdekket hemmeligheten til de fremmede materialer. Etter noen endringer i vårt verkstedutstyr, bør vi nå være i stand til å bruke ting og 'programmere' det inn i avanserte nye former. \n"
+"Commander, I think we've uncovered the secret to the alien materials. After some modifications to our Workshop equipment, we should now be able to use the stuff and 'program' it into advanced new shapes.\n"
 "\n"
-"Som jeg har nevnt før danner de fremmede materialer en 'minnelegering', som husker flere former det kan endre på hvis materialene gis rett stimulans. Utrolig nok kan den fremmede legeringen bli stimulert av to forskjellige ting: varme og elektrisitet. Varme er et opplagt valg for å gjøre Ufo flykroppen spriker ut under atmosfærisk flytur, for å gi bedre løft. Skjønt, elektrisitet var en ny en. \n"
+"As I've mentioned before, the alien materials form a 'memory alloy', remembering several shapes that it can change into if the materials are given the right stimulus. Amazingly, the alien alloy can be stimulated by two different things: heat and electricity. Heat is an obvious choice to make the UFO fuselage splay out during atmospheric flight, to provide better lift. Electricity, though, is a new one.\n"
 "\n"
-"Ved påføring av elektrisitet svarer legeringen kun en konstant lavspent strøm ved en veldig bestemt strømstyrke. Materialets fasong vil deformeres og forbli deformert så lenge strømmen opprettholdes. Når strømmen blir slått av vil legeringen gå tilbake til sin normale form eller en varmeindusert form hvis nok varme er tilstede. Elektrisitetsindusert form har forrang over varmeindusert form. \n"
+"When applying electricity, the alloy responds only to a constant, low-voltage current at a very specific amperage. The material's shape will deform and stay deformed for as long as that current is maintained. Once the current is switched off, the alloy will revert to its normal 'at rest' shape or a heat-induced shape if enough heat is present. The electricity-induced shape takes precedence over the heat-induced shape.\n"
 "\n"
-"Dette betyr at formen på et Ufoskrog (og noe annet laget med disse materialene) kan endres etter behov, enten ved en kommando fra brukeren eller av automatisert elektronikk. \n"
+"This means that the shape of a UFO fuselage (and anything else made with these materials) can be changed at will, either by a command from the operator or by automated electronics.\n"
 "\n"
-"Dette har gitt oss mange fantastiske nye ideer. Vi vil bare være i stand til å utvikle noen av disse ideene i tide til bruk i krigen, da noen av dem vil ta år med forskningstid, men de bør likevel tillate oss å bygge ting vi aldri kunne ha prøvd før. \n"
+"This has given us a lot of amazing new ideas. We'll only be able to develop a few of these ideas in time for use in the war, as some of them would take years of research time, but they should nevertheless allow us to build things we could never have attempted before.\n"
 "\n"
-"Fremmede materialer skal nå være tilgjengelig for bruk i produksjon. Dessverre krever de mange sjeldne og dyre komponenter, hvorav noen bare finnes på jorden i små mengder. Det finnes ingen måte vi kan få tak i de materialene som trengs i de mengder som ville gjøre ikketriviell produksjon mulig. Vi må berge det vi trenger av romvesenene, fordi vi ikke ikke være i stand til å produsere noe av det i overskuelig fremtid. \n"
+"Alien Materials should now be available for use in production. Unfortunately, they require a lot of rare and expensive components, some of which can only be found on Earth in trace quantities. There's no way we could obtain the materials needed in quantities that would make non-trivial production possible. We'll have to salvage what we need off the aliens, because we won't be able to produce any of it for the forseeable future.\n"
 "\n"
-"- Cdr. Navarre"
+"--Cdr. Navarre"
 
 #: ../base/ufos/research.ufo:4996
 msgid "alien_materials_pre_txt"
 msgstr ""
-"Kommandant, som jeg nevnte i min forrige rapport var Ufoen vi reddet belagt med en svært interessant legering som blander plast og metall sammen til et enkelt materiale. Disse materialene ser ut til å bli brukt nesten universelt i de utenomjordiskes teknologibase. Det er avanserte ting, massivt allsidig og med tusen mulige bruksområder. \n"
+"Commander, as I mentioned in my previous report, the UFO we recovered was plated with a highly interesting alloy which blends plastic and metal together into a single material. These materials seem to be used almost universally throughout the alien technology base. It's advanced stuff, massively versatile and with a thousand possible uses.\n"
 "\n"
-"Jeg tror det berettiger forskningen for å se om vi kan reprodusere disse tingene i våre verksteder, men selv om vi ikke kan virker det sannsynlig vi kommer til å få hendene våre på store mengder av det for hver Ufo vi berger. Vi vil definitivt være i stand til å finne nye menneskelige bruksområder for det som skal forlenge og utvide vår stridende evner. \n"
+"I think it warrants the research to see if we can reproduce this stuff in our Workshops, but even if we can't, it seems likely we'll be getting our hands on large quantities of it with every UFO we salvage. We'll definitely be able to find new, human applications for it that will extend and expand our combat capabilities.\n"
 "\n"
-"- Cdr. Navarre"
+"--Cdr. Navarre"
 
 #: ../base/ufos/research.ufo:5049
 msgid "Political Situation Before The Invasion"
@@ -8962,87 +8764,87 @@ msgstr "Fienden på jorden"
 #: ../base/ufos/research.ufo:5122
 msgid "enemy_on_earth_alt_txt"
 msgstr ""
-"Forslag \n"
+"Proposal\n"
 "\n"
-"TIL: Base kommandant, Falanks, Atlanterhavskommandoen \n"
+"TO: Base Commander, PHALANX, Atlantic Operations Command\n"
 "\n"
-"FRA: Dr. Connor, R & D: Bio & forvaring Division, Falanks, Atlanterhavskommandoen \n"
+"FROM: Dr. Connor, R&D: Bio & Containment Division, PHALANX, Atlantic Operations Command\n"
 "\n"
-"DATO: %02i %s %i\n"
+"DATE: %02i %s %i\n"
 "\n"
-"EMNE: Forslag: Fienden på jorden \n"
+"SUB: Proposal: The Enemy On Earth\n"
 "\n"
-"kommandant, \n"
+"Commander,\n"
 "\n"
-"Mitt team og jeg er dypt bekymret over de siste rapportene om menneskets fiendskap mot Falankspersonell, som jeg er sikker på at du også er. Vi har alle sett på slagmarkopptakene. Det er ingen tvil om at angriperne var mennesker som deg og meg, men det er også klart at de brukte utenomjordiske våpen og utstyr - noen som selv Falanks aldri har sett før \n"
-".\n"
-"De urovekkende spørsmål synes å tårne seg opp. Men først må vi gå igjennom de fakta vi har. \n"
+"My team and I are deeply troubled by the recent reports of human hostility against PHALANX personnel, as I'm sure you are. We've all seen the battlefield footage. There's no doubt that the attackers were humans like you and me, but it's also clear they were using alien weaponry and equipment -- some of which even PHALANX has never seen before.\n"
 "\n"
-"Har romvesenene aktive sympatisører på jorden? Ja. \n"
+"The worrying questions seem to mount up. First, however, we need to review the facts we have.\n"
 "\n"
-"Forsyner romvesenene disse menneskelige tjenere? Mest sannsynlig er det den eneste fornuftige forklaringen på deres avanserte utenomjordisk utstyr. \n"
+"Do the aliens have active sympathisers on Earth? Yes.\n"
 "\n"
-"Vil tjenerne utgjøre en trussel? Absolutt. Kanskje en større en enn det fremmede trusselen selv. \n"
+"Are the aliens supplying these human servants? Most likely, it's the only reasonable explanation for their advanced alien equipment.\n"
 "\n"
-"Vi må gå dypere inn hva som trigger disse menneskene. Hvis vi kan finne ut de vanligste årsakene til utenomjordisk infiltrasjon bør vår informasjonsavdeling kunne utarbeide en langt mer vellykket propagandastrategi, noe som kan øke våre antall frivillige, samt redusere den utenomjordisk infiltrasjonsraten verden over. DivBio har også en eierandel, vi ønsker å undersøke minst én levende menneskefange i vår forvaringsenhet slik at vi kan kjøre en full fysisk undersøkelse. Hvis de utenomjordiske har kroppslig endret disse menneskene i tillegg til å trene og levere dem, vil vi gjerne finne ut av det. \n"
+"Do the servants present a threat? Absolutely. Perhaps a greater one than the alien menace itself.\n"
 "\n"
-"Direktør Wong (DivInfo) har også bedt meg om å nevne at hvis vi venter med å implementere en ny informasjonsstrategi for lenge, kan vi snart møte rekrutteringsmangler og økt menneskelig motstand ettersom sympatisører begynner å få ut sine synspunkter. Jeg er nok enig. Vi trenger å holde denne planeten sammen hvis vi skal ha noen sjanse mot den fremmede trusselen. \n"
+"We need to delve deeper into what makes these people tick. If we can find out the most common causes for alien infiltration, our Information Division should be able to devise a far more successful propaganda strategy, which could increase our number of volunteers as well as decrease the alien infiltration rate across the globe. DivBio also has a stake; we'd like to examine at least one live human prisoner in our Containment unit so we can run a full physical examination. If the aliens have bodily altered these people in addition to training and supplying them, we'd like to find out about it.\n"
 "\n"
-"Vennlig hilsen, \n"
+"Director Wong (DivInfo) also asked me to mention that, if we hold off on implementing a new info strategy for too long, we could soon face recruitment shortfalls and increased human resistance as the sympathisers begin getting their word out. I tend to agree. We need to keep this planet together if we are to have any chance against the alien threat.\n"
+"\n"
+"Sincerely,\n"
 "\n"
 "Dr. Connor"
 
 #: ../base/ufos/research.ufo:5123
 msgid "enemy_on_earth_txt"
 msgstr ""
-"Kommandant, \n"
+"Commander,\n"
 "\n"
-"Du må lese dette en gang. Med din tillatelse har vi utført flere obduksjoner og gjort vårt beste for å undersøke levende fanger, tatt på våre oppdrag mot fremmede sympatisører. Resultatene er alarmerende. \n"
+"You need to read this right away. With your authorisation, we've performed several autopsies and done our best to examine the live prisoners taken on our mission against the alien sympathisers. The results are alarming.\n"
 "\n"
-"Husker du rapporten jeg sendte deg om det første levende fremmede eksemplar vi fanget? Som du kanskje husker mistet det alt sitt intellekt og ble i stor grad uresponsivt uten kamerater å styrke kubesinnet. Forbered deg, Kommandant: De menneskelige fanger i vår forvaringsenhet viser de samme symptomene. De tror ikke selv. Deres tankeprosesser er godt undertrykt og fortrengt av det fremmede bikubesinnet gjennom en prosess vi ennå ikke forstår. \n"
+"Do you remember the report I sent you about the first live alien specimen we captured? As you may remember, it lost all its intellect and became largely unresponsive without fellows to empower the hive mind. Prepare yourself, Commander: The human prisoners in our Containment unit exhibit the very same symptoms. They do not think for themselves. Their thought processes are firmly suppressed and supplanted by the alien hive mind through a process we currently fail to understand.\n"
 "\n"
-"Vi har kjørt og kjører undersøkelser og blodprøver på disse menneskene til det kjedsommelige, og det kan være noen feil. Blodprøvene er fulle av fremmed DNA. Alle disse menneskene bærer på noe i blodet - en slags enkeltcellulær organisme tilstede i store mengder, som synes å replikeres som et virus når den plasseres i en infisert menneskekropp og raskt tar over og slavebinder offeret for å få det fremmede bikubesinnet . \n"
+"We've run and re-run examinations and blood tests on these people ad nauseum, and there can be no mistake. The blood samples are full of foreign DNA. All these people are carrying something in their bloodstream -- a kind of single-cellular organism present in huge numbers, which appears to replicate like a virus when placed in an uninfected human body and rapidly takes over, enslaving the victim to the alien hive mind.\n"
 "\n"
-"Disse personer utgjør hele skalaen av den menneskelige rase, det synes ikke å være noen preferanse for IQ eller fysisk potensiale. Vi vet ennå ikke hvordan infeksjonen slår rot, men selv noen få av disse organismene i blodet kan være nok til å infisere og slavebinde en individuell helt. Ikke engang våre egne ansatte er immune, noe vi oppdaget til vår forskrekkelse da vi sjekket vårt basepersonell. \n"
+"These subjects run the gamut of the human race; there seems to be no preference for IQ or physical potential. We don't yet know how the infection takes root, but even a few of these organisms entering the bloodstream may be enough to infect and enslave an individual entirely. Not even our own employees are immune, as we discovered to our horror when we screened our base personnel.\n"
 "\n"
-"Våre feltagenter forblir rene, takk Gud - bare tenk hvis vi hadde gått inn i en kamp sone med soldater kapable til å snu mot sine lagkamerater til enhver tid! - Men jeg frykter har vi funnet en konkluderende resultat. Det er Dr. Eisenhower, vår administrasjonsleder. Han har vært borte på forretningsreise til FN siden forrige uke, men vi kjørte en eldre prøve som har kommet opp positiv. Vi vet ikke når eller hvordan han ble undergravd eller om han selv sluttet i Falanks med hederlige intensjoner, men det er tydelig at han har opptrådt som en fremmede spion i noen uker. Dessverre kan vi ikke å finne ham på noen av de stedene han var planlagt å besøke. Intern Sikkerhet har tatt ansvaret for arbeidsstasjonen hans og er i ferd med informasjonskontroll. \n"
+"Our field agents remain clean, thank God -- just think if we'd gone into a combat zone with soldiers capable of turning on their teammates at any moment! -- but I fear we have found one conclusive result. It's Dr. Eisenhower, our Director of Administration. He's been away on business to the UN since last week, but we ran an older sample which has come up positive. We don't know when or how he was subverted or if he even joined PHALANX with honourable intentions, but it's clear he has acted as an alien spy for some weeks. Unfortunately we can't seem to find him at any of the locations he was scheduled to visit. Internal Security has taken charge of his workstation and is in the process of information control.\n"
 "\n"
-"Ting er litt hektisk akkurat nå. Dr. Eisenhowers infeksjon innebærer at øvrige medlemmer av et bikubesinn - menneskelig eller fremmed - var i nær nok tilknytning til å tillate ham å fungere med menneskelig intelligens. Han kunne ha koblet seg opp med våre personer i forvaring, eller en nærliggende utenomjordisk celle, eller også andre infiltratører inne i basen vår. Akkurat nå vet vi ikke. Karanteneprosedyrer har blitt strammet til det absolutte maksimum, og vi kjørte raskt et nytt stort parti tester på alle våre ansatte. Vi er alle skremt her nede i DivBio. Min assistent har \"hoppet på skygger\" hele dagen. \n"
+"Things are a bit hectic right now. Dr. Eisenhower's infection implies that other members of a hive mind -- human or alien -- were in close enough proximity to allow him to function at human intelligence. He could have linked up with our subjects in Containment, or a nearby alien cell, or even other infiltrators inside our base. Right now, we don't know. Quarantine procedures have been tightened to the absolute maximum, and we're rushing another full batch of tests on all our personnel. We're all frightened down here in DivBio. My assistant has been jumping at shadows all day.\n"
 "\n"
-"Interessant, våre forsøk på å infisere andre jordisk liv - selv intelligente virveldyr som hyperoodon delfiner og elefanter - har sviktet fullstendig. Denne organismen må ha blitt konstruert helt eller delvis å spesifikt infisere den menneskelige arter. \n"
+"Interestingly, our attempts to infect other terrestrial life -- even intelligent vertebrates such as bottlenose dolphins and elephants -- have failed completely. This organism must have been engineered wholly or in part to specifically infect the human species.\n"
 "\n"
-"Vi har kalt organismen 'Extraterrestrial Virusinfeksjon ', eller XVI. Dette kan være misvisende i mikrobiologiske vilkår; XVI er en kompleks flercellede organisme langt større enn noen jordisk virus, men det fungerer og replikerer akkurat som en \n"
-".\n"
-"Egentlig det vi ser på her er et biologisk våpen av enestående proporsjoner. I stedet for å drepe sine ofre tar det kontrollen over dem med ingen mulighet for motstand og - i øyeblikket - ingen tilgjengelig kur eller forsvar. Den mest ydmyke og ufarlig sivile kan være smittet, og med umiddelbar felles kompetanse av det større bikubesinnet, bli en effektiv kriger for de utenomjordiske og samtidig redusere våre tall. Når romvesenene også forsyner dem med våpen kan vi se det sanne ansikt av skrekk. \n"
+"We've dubbed the organism the 'EXtraterrestrial Viral Infection', or XVI. This may be somewhat of a misnomer in microbiological terms; XVI is a complex multi-celled organism far larger than any terrestrial virus, but it acts and replicates exactly like one.\n"
 "\n"
-"Jeg kan ikke forestille meg et mer marerittaktig scenario for oss. Våre tropper vil utvilsomt komme opp mot flere og flere menneskelige motstandere under utenomjordisk angrep på Jorden. Vi kan til og med finne folk som bemanner Ufoer for romvesener. Det er galskap. \n"
+"Really, what we're looking at here is a bio-weapon of unprecedented proportions. Instead of killing its victims it takes control of them with no option of resistance and -- at the moment -- no available cure or defence. The most humble and harmless civilian can be infected and, with the instant shared expertise of the larger hive mind, become an effective warrior for the aliens while reducing our numbers. When the aliens also supply them with weapons, we can see the true face of horror.\n"
 "\n"
-"Kommandant, vi må utvikle en vaksine mot XVI så snart som mulig. Faren for at våre soldater og bergingsteknikere blir offer for infeksjon i felten er for stor til å ignorere selv for et øyeblikk, enn si slik at den generelle befolkningen å bli offer for denne vederstyggeligheten. jeg søker herved om tillatelse til å starte arbeidet med et vaksine straks. Vær så snill å svar så snart som mulig. \n"
+"I couldn't imagine a more nightmarish scenario for us. Our troops will undoubtedly be coming up against more and more human opponents during alien attacks on Earth. We may even find people crewing UFOs for the aliens. It's madness.\n"
 "\n"
-"Vennlig hilsen, \n"
+"Commander, we must develop a vaccine against XVI as soon as possible. The danger of our soldiers and salvage technicians falling victim to the infection in the field is too great to ignore even for a moment, let alone allowing the general population to fall prey to this abomination. I hereby request your permission to start work on a vaccine immediately. Please, please respond at your earliest convenience.\n"
+"\n"
+"Sincerely,\n"
 "\n"
 "Dr. Connor"
 
 #: ../base/ufos/research.ufo:5126
 msgid "enemy_on_earth_pre_txt"
 msgstr ""
-"Kommandant, \n"
+"Commander,\n"
 "\n"
-"Teamet mitt og jeg er dypt bekymret over de siste rapportene om menneskets fiendskap mot Falankspersonell, som jeg er sikker på at du er. Vi har alle sett på slagmarksopptakene. Det er ingen tvil om at angriperne var mennesker som deg og meg, men det er også klart at de brukte utenomjordiske våpen og utstyr - noen av de har selv Falanks aldri sett før \n"
-".\n"
-"Urovekkende spørsmål synes å tårne seg opp. Men først må vi gå igjennom de fakta vi har. \n"
+"My team and I are deeply troubled by the recent reports of human hostility against PHALANX personnel, as I'm sure you are. We've all seen the battlefield footage. There's no doubt that the attackers were humans like you and me, but it's also clear they were using alien weaponry and equipment -- some of which even PHALANX has never seen before.\n"
 "\n"
-"Har romvesenene aktive sympatisører på jorden? Ja. \n"
+"The worrying questions seem to mount up. First, however, we need to review the facts we have.\n"
 "\n"
-"Forsyner romvesenene disse menneskelige tjenere? Mest sannsynlig er det den eneste fornuftige forklaringen på deres avanserte utenomjordisk utstyr. \n"
+"Do the aliens have active sympathisers on Earth? Yes.\n"
 "\n"
-"Vil tjenerne utgjøre en trussel? Absolutt. Kanskje en større en enn den fremmede trusselen selv. \n"
+"Are the aliens supplying these human servants? Most likely, it's the only reasonable explanation for their advanced alien equipment.\n"
 "\n"
-"Vi må gå dypere inn hva som trigger disse menneskene. Hvis vi kan finne ut de vanligste årsakene til utenomjordisk infiltrasjon bør vår informasjonsavdeling kunne utarbeide en langt mer vellykket propagandastrategi, noe som kan øke våre antall frivillige, samt redusere den fremmede infiltrasjonsraten verden over. DivBio har også en eierandel, vi ønsker å undersøke minst én levende menneskefange i vår forvaringsenhet slik at vi kan kjøre en full fysisk undersøkelse. Hvis de utenomjordiske kroppslig har endret disse menneskene i tillegg til å trene og levere dem, vil vi gjerne finne det ut. \n"
+"Do the servants present a threat? Absolutely. Perhaps a greater one than the alien menace itself.\n"
 "\n"
-"Regissør Wong (DivInfo) rapporterer at hvis vi venter for lenge med å implementere en ny informasjonsstrategi, kunne vi snart møte rekrutteringsmangler og økt menneskelig motstand ettersom mengden sympatisører øker. Jeg er nok enig. Vi trenger å holde denne planeten sammen hvis vi skal ha noen sjanse mot den fremmede trusselen. \n"
+"We need to delve deeper into what makes these people tick. If we can find out the most common causes for alien infiltration, our Information Division should be able to devise a far more successful propaganda strategy, which could increase our number of volunteers as well as decrease the alien infiltration rate across the globe. DivBio also has a stake; we'd like to examine at least one live human prisoner in our Containment unit so we can run a full physical examination. If the aliens have bodily altered these people in addition to training and supplying them, we'd like to find out about it.\n"
 "\n"
-"Vennlig hilsen, \n"
+"Director Wong (DivInfo) reports that if we hold off too long on implementing a new info strategy, we could soon face recruitment shortfalls and increased human resistance as the sympathisers begin to grow. I tend to agree. We need to keep this planet together if we are to have any chance against the alien threat.\n"
+"\n"
+"Sincerely,\n"
 "\n"
 "Dr. Connor"
 
@@ -9053,42 +8855,42 @@ msgstr "XVI Census"
 #: ../base/ufos/research.ufo:5162
 msgid "xvi_census_txt"
 msgstr ""
-"God morgen, Sir. \n"
+"Good morning, Sir.\n"
 "\n"
-"XVI-folketellingsprogrammet har nettopp trådt i kraft. Ukentlig rullerende tester startet i morges, og jeg har fått en full rapport om våre estimerte ytelsesnivåer og operasjonelle detaljer. \n"
+"The XVI census program has just gone into effect. Weekly rolling tests have commenced this morning, and I've got a full report on our estimated performance levels and operational details.\n"
 "\n"
-"Vår strategi er basert på lokale medisinske sentre, der XVI-testene er utført av eksisterende sykepleiere under tilsyn av en beskjeden politi- eller militærvakt. Dersom en test skulle vise seg å være positivt, vil denne vakten utføre en pågripelse og overgi de infiserte fangene til FN for kontroll og studier. Når romvesener finner ut av denne ordningen - jeg tror ikke det vil ta dem lenge - vil infiserte folk begynne å unngå folketellingen og dermed gi oss de dataene vi trenger rett og slett med sitt fravær \n"
+"Our strategy is based around local medical centres, where the XVI tests are performed by existing nursing staff under the supervision of a small police or military guard. If a test turns out positive, this guard will perform the arrest and turn the infected prisoners over to the UN for containment and study. Once the aliens figure out this scheme -- I don't think it'll take them long -- the infected people will start avoiding the census, thereby giving us the data we need simply by their absence.\n"
 "\n"
-"Som alltid er det gode nyheter og dårlige nyheter. Jeg begynner med de dårlige nyhetene. \n"
+"As always there's good news and bad news. I'll start with the bad news.\n"
 "\n"
-"Til tross for våre beste anstrengelser vil folketellingsdata har noen begrensninger. 99,9% av klodens befolkning er registrert med en eller annen nasjonal myndighet, men av ti milliarder mennesker etterlater det flere millioner  som det ikke er redegjort for. Vi vil være i stand til å ekstrapolere tall som er nøyaktige innenfor flere tusen hoder, men statistikken vi genererer vil aldri være nøyaktig. Dette betyr at programmet er mindre nyttig for å identifisere dem som har blitt infisert, men fortsatt himmelsendt for å holde orden på XVI-spredning og utenomjordisk aktivitet på global basis. Vi trenger tross alt å vite hva slags fremskritt vi gjør mot denne nye trusselen. \n"
+"Despite our best efforts, the census data will have some limitations. 99.9% of the planet's population is registered with one national authority or another, but out of ten billion people that still leaves several million unaccounted for. We will be able to extrapolate figures that are accurate to within several thousand heads, but the statistics we generate won't ever be exact. This means the program is less useful for identifying those who have been infected, but still a godsend for keeping track of XVI spread and alien activity on a global basis. After all, we need to know what kind of progress we're making against this new threat.\n"
 "\n"
-"Den gode nyheten er at FN og medlemslandene er enige om å bære hele kostnaden av folketellingsprogrammet. De håndterer alt utstyr og arbeidskraft lokalt, med anstrengende sjekker som påliteligheten av personell og gyldigheten av resultatene. Opplysningene skal føres direkte til vår kommandosentral uten ekstra kostnader for oss. \n"
+"The good news is that the UN and the member nations have agreed to shoulder the entire cost of the census program. They are handling all the equipment and manpower locally, with strenuous checks as to the reliability of personnel and the validity of the results. The information will be piped directly to our command centre at no charge to us.\n"
 "\n"
-"Det beste med dette programmet er at vi nå kan holde styr på infeksjonsnivåer og hvor mye trussel hver region er under fra XVI. Dette vil fungere sammen med våre vanlige deteksjonsmetoder for å advare oss hvor utenomjordisk aktivitet er verst og tillater oss å gripe inn før situasjonen blir kritisk.\n"
+"The best thing about this program is that we can now keep track of infection levels and how much threat each region is under from XVI. This will work in conjunction with our normal detection methods to warn us where alien activity is worst and allow us to intervene before the situation becomes critical.\n"
 "\n"
-"Alle områder hvor XVI ser ut til å få fotfeste bør legges til med ytterligere luftpatruljeringen, og vi bør være på utkikk etter eventuelle forsøk fra romvesener på å forsterke sitt grep på bakken. Utenomjordiske aktivitetsrapporter i dette området bør undersøkes og besvares med ekstreme fordommer. \n"
+"Any area where XVI seems to be gaining ground should be posted with additional air patrols, and we should be on the lookout for any attempts by the aliens to solidify their hold on the ground. Alien activity reports in this area should be investigated and responded to with extreme prejudice.\n"
 "\n"
-"Med vennlig hilsen, \n"
+"With kind regards,\n"
 "\n"
-"Col Falkland"
+"Col. Falkland"
 
 #: ../base/ufos/research.ufo:5165
 msgid "xvi_census_pre_txt"
 msgstr ""
-"God morgen, Sir. \n"
+"Good morning, Sir.\n"
 "\n"
-"Med disse nye utbygginger når det gjelder smitte av jordens sivilbefolkning ved denne fremmede organismen, oppstår behovet for en måte å bestemme antallet smittede mennesker i ulike regioner og hastigheten av spredning. Lettere sagt enn gjort, jeg vet, men det kan være like viktig som å finne en kur. Vi kan ikke hjelpe alle hvis vi ikke vet de er syke. \n"
+"With these new developments regarding the infection of Earth's civilian population by this alien organism, the need arises for a way to determine the number of infected people in various regions and the rate of spread. Easier said than done, I know, but it may be every bit as important as finding a cure. We can't help anyone if we don't know they're sick.\n"
 "\n"
-"Det jeg foreslår å gjøre er å skape en langsiktig rullende folketelling som sjekker alle registrerte individer på hele planeten for XVI infeksjon i form av en liten blodprøve. Alle vil bli pålagt å sende til denne testen en gang i uken for å sørge for at de er rene - oftere hvis de faller inn under mistanke om infeksjon. Prøvene vil kun trenge å bli så stor som en eneste dråpe blod, tatt fra en tilfeldig blodåre for å hindre manipulering. Heldigvis er XVI organismen stort og utbredt nok til at vi kan teste disse prøvene på stedet med nesten 100% tillit til resultatene. \n"
+"What I propose to do is to create a long-term rolling census that checks all registered individuals on the entire planet for XVI infection by way of a small blood test. Everyone will be required to submit to this test once a week to make sure they're clean -- more frequently if they fall under suspicion of infection. Samples will only need to be as large as a single drop of blood, taken from a random vein to prevent tampering. Fortunately the XVI organism is large and prevalent enough that we can test these samples on the spot with near-100%-confidence results.\n"
 "\n"
-"Dette kommer til å bli en stor oppgave som krever nøye samarbeid med etterretningstjenester av jordens åtte store nasjoner. Jeg har allerede forberedt planer og simuleringer for å demonstrere drift og effektiviteten av dette programmet. Med litt tid og finansiering kan vi overbevise dem om prosjektets betydning og ha alt operativt i løpet av noen uker. \n"
+"This is going to be a major undertaking that requires careful liaising with the intelligence services of Earth's eight big nations. I've already prepared plans and simulations to demonstrate the operation and effectiveness of this program. With some time and funding, we can convince them of the project's importance and have everything operational in a matter of weeks.\n"
 "\n"
-"Alt vi trenger er din signatur på den stiplede linjen, Sir. \n"
+"All we need is your signature on the dotted line, Sir.\n"
 "\n"
-"Med vennlig hilsen, \n"
+"With kind regards,\n"
 "\n"
-"Col Falkland"
+"Col. Falkland"
 
 #: ../base/ufos/research.ufo:5198
 msgid "The Enemy On Earth - Revisited"
@@ -9101,7 +8903,7 @@ msgstr "<TODO>"
 
 #: ../base/ufos/research.ufo:5206
 msgid "enemy_on_earth_rev_pre_txt"
-msgstr "Ingen pre-forskningsinformasjon tilgjengelig"
+msgstr "<TODO>"
 
 #: ../base/ufos/research.ufo:5238
 msgid "The Alien Strategy"
@@ -9110,29 +8912,29 @@ msgstr "Romvesenes strategi"
 #: ../base/ufos/research.ufo:5243
 msgid "alien_strategy_txt"
 msgstr ""
-"Forslag \n"
+"Proposal\n"
 "\n"
-"TIL: Base kommandør, Falanks, Atlanterhavskommandoen \n"
+"TO: Base Commander, PHALANX, Atlantic Operations Command\n"
 "\n"
-"FRA: Col Ingrid Falkland, etterretning avdelingen, Falanks, Atlanterhavskommandoen \n"
+"FROM: Col. Ingrid Falkland, Intelligence Division, PHALANX, Atlantic Operations Command\n"
 "\n"
-"DATO: %02i %s %i \n"
+"DATE: %02i %s %i\n"
 "\n"
-"EMNE: Forslag: Romvesenes strategi \n"
+"SUB: Proposal: The Alien Strategy\n"
 "\n"
-"God morgen, Sir. \n"
+"Good morning, Sir.\n"
 "\n"
-"Jeg er redd dette ikke er et sosialt budskap. Jeg skriver deg på grunn av våre presserende behov for mer informasjon. Vi i DivIntel har gjort vår del med sporing, logging og dobbeltsjekket alle rapporterte utenomjordisk aktivitet på jorden, men vi møter stadig vår mangel på data om de overordnede målene for invasjonen. Vi har ingen måte å forutse de fremmedes neste trekk fordi vi har ingen anelse om hvilken slagplan de følger. Derfor har jeg sendt inn et nytt prosjekt for din godkjenning. \n"
+"I'm afraid this isn't a social message; I'm writing you because of our pressing need for more information. We at DivIntel have been doing our part with tracking, logging and double-checking all reported alien activity on Earth, but we're increasingly being faced with our lack of data about the overarching goals of the alien invasion. We have no means of anticipating the aliens' next move because we have no clue as to what game plan they're following. That's why I am submitting a new project for your authorisation.\n"
 "\n"
-"Jeg har tenkt å analysere nærmere på mønstre av utenomjordisk aktivitet på jorden, de tiltenkte oppdrag og mål for Ufo-aggresjonen mot luftrommet vårt, og noen av de finere detaljene på våre egne forskningsdokumenter vedrørende fremmede skapninger og deres teknologi. De bitene og deler av intelligens vi har samlet så langt er bare biter av et puslespill, men akkurat nå har vi ingen anelse hvordan de passer sammen. Den stadige dempede aggresjon, mysteriene i den fremmedes bikubesinn, høsting av menneskelig materiale... Et sted der inne ligger svarene vi trenger for å avdekke de fremmedes overordnede mål og strategi for Jorden og for menneskeheten. Hvis vi kan bare legge alle bitene sammen vil vi endelig kunne se det store bildet, så skremmende det enn kan være. \n"
+"I intend to analyse more closely the patterns of alien activity on Earth, the intended missions and targets of UFO incursions into our airspace, and some of the finer details of our own research documents regarding the alien creatures and their technology. The bits and pieces of intelligence we've gathered so far are just pieces of a puzzle, but right now we have no clue how they fit together. The continual low-key incursions, the mysteries of the alien hive mind, the harvesting of human material . . . Somewhere in there lie the answers we need to unravel the aliens' overall goals and strategy for Earth and for humanity. If we can just put all the pieces together, we'll finally be able to see the bigger picture, as frightening as it may be.\n"
 "\n"
-"Naturligvis vil dette prosjektet kreve en viss lab-tid og midler til å bygge opp et komplett bilde. Det bør ikke sette tilbake våre andre undersøkelser for mye, og det vil være en viktig del av å utforme nye, mer effektive motstrategier til invasjonen. \n"
+"Naturally this project will require a certain amount of lab time and funding to build up a complete picture. It shouldn't set back our other research too much, and it will be an important part of formulating new, more effective counterstrategies to the alien invasion.\n"
 "\n"
-"Forslaget er i køen, Sir. Vennligst skriv tilbake når du vil at vi skal starte arbeidet. \n"
+"The proposal is in your queue, Sir. Please write back when you'd like us to start work.\n"
 "\n"
-"Med vennlig hilsen, \n"
+"With kind regards,\n"
 "\n"
-"Col Falkland"
+"Col. Falkland"
 
 #: ../base/ufos/research.ufo:5267
 msgid "Orbital UFO Activity"
@@ -9141,47 +8943,47 @@ msgstr "Orbital UFO-aktivitet"
 #: ../base/ufos/research.ufo:5272
 msgid "orbital_ufo_activity_txt"
 msgstr ""
-"Forslag \n"
+"Proposal\n"
 "\n"
-"TIL: Basekommandør, Falanks, Atlanterhavskommandoen \n"
+"TO: Base Commander, PHALANX, Atlantic Operations Command\n"
 "\n"
-"FRA: Col Ingrid Falkland, Intelligence Division, Falanks, Atlanterhavskommandoen \n"
+"FROM: Col. Ingrid Falkland, Intelligence Division, PHALANX, Atlantic Operations Command\n"
 "\n"
-"DATO: %02i %s %i \n"
+"DATE: %02i %s %i\n"
 "\n"
-"EMNE: Forslag: Orbital UFO-aktivitet \n"
+"SUB: Proposal: Orbital UFO Activity\n"
 "\n"
-"God morgen, Sir. \n"
+"Good morning, Sir.\n"
 "\n"
-"La meg begynne med å oppgi noen stygge realiteter. \n"
+"Let me begin by stating a few ugly realities.\n"
 "\n"
-"1) Alle menneskehetens rombaserte eiendeler har blitt evakuert etter de første angrep på Jorden. Bare et fåtall stasjoner og utposter er fremdeles i gang, og de er blitt underlagt militær kontroll, med bare minimalt mannskap av frivillig militært og sivilt personell. \n"
+"1) All of humanity's space-based assets have been evacuated after the initial attack on Earth. Only a few stations and outposts are still running, and they have been remanded to military control, with only skeleton crews of volunteer military and civilian personnel.\n"
 "\n"
-"2) Vi har bare en håndfull rombaserte våpenplattformer, hvorav ingen er utstyrt for å kunne skade fremmede fartøyer. Romvesenene har evnen til å øyeblikkelig utrydde eventuelle menneskelige bestrebelser i solsystemet. \n"
+"2) We have just a handful of space-based weapons platforms, none of which are equipped to harm alien craft. The aliens have the ability to instantly exterminate any human endeavours in the solar system.\n"
 "\n"
-"3) Vårt satellittnett er vidåpne og kan tørkes av kartet på et øyeblikk. Beredskaps-fasttelefoner eksisterer, men kun for militært bruk. Hvis nettet blir angrepet vil kommunikasjonen mellom Falanks' kommandosentre og eiendeler i felten - fly og bakkelag - bli rammet \n"
-".\n"
-"4) Det er ingen tvil om at det er fremmede fartøyer som beveger seg i bane, lastet med gjenstander og Ufoer mellom Jorden og den fremmede hjemplaneten, og akkurat nå er det ingenting vi kan gjøre for å stoppe dem. \n"
+"3) Our satellite grid is wide open and could be wiped off the map in an instant. Emergency landlines exist, but only for military use. If the grid does come under attack, comms between PHALANX command centres and assets in the field -- aircraft and ground teams -- will be hamstrung.\n"
 "\n"
-"Dette leder oss til én konklusjon: Rommet rundt Jorden er ikke lenger under vår kontroll. Den eneste grunnen til at menneskeheten beholder noe kontroll i det hele tatt er fordi romvesenene har valgt å ikke ødelegge det ennå. \n"
+"4) There is no doubt that there are alien craft moving in orbit, ferrying items and UFOs between Earth and the alien homeworld, and right now there is nothing we can do to stop them.\n"
 "\n"
-"Vår sjokkerende sårbarhet fra rommet er demonstrert i det faktum at vi har kjempet denne krigen utelukkende på bakken og i luften. Vi har ingen romfly som kan tilpasses for kamp, og design for å bygge dem er år fra ferdigstillelse. Ikke engang Falanks kunne lage et brukbart kampfly i tide til å påvirke utfallet av krigen med den teknologien vi for tiden har til rådighet. \n"
+"This leads us to only one conclusion: The space around Earth is no longer under our control. The only reason humanity retains any space capability at all is because the aliens have chosen not to destroy it yet.\n"
 "\n"
-"Hvilke lite omløp våpen vi har er sterkt mangelfulle. Det finnes kjernefysiske raketter som FN ikke vil la oss bruke, og som ville være altfor ødeleggende for å hjelpe vår forskningsinnsats dersom en av de kolossale tingene noensinne klarte å score et treff. Det er eksperimentelle laser og Maser plattformer som er for underdimensjonert til selv det å lage en bulk i tung Ufo-rustning. Hvis romvesenene beslutter at de ønsker å bombe oss inn i utryddelse kan de bare lene litt på fingrene. Dette er en situasjon som må rettes. \n"
+"Our shocking vulnerability from space is demonstrated in the fact that we've fought this war exclusively on the ground and in the air. We have no space-planes that can be adapted for combat, and designs for building them are years from completion. Not even PHALANX could create a workable combat plane in time to affect the outcome of the war with the technologies currently at our disposal.\n"
 "\n"
-"Det eneste spørsmålet vi kan spørre om denne orbitale Ufo-aktiviteten er hvordan vi skal møte den. Inntil nå har vi ikke vært i stand til å påvirke situasjonen, men med budsjettøkninger og vårt voksende rykte i FN er biter begynt å falle på plass for et nytt steg i vår strategi. \n"
+"What little orbital weaponry we have is severely inadequate. There are nuclear missiles which the UN won't let us use, and which would be far too destructive to help our research efforts if one of the colossal things ever managed to score a hit. There are experimental laser and maser platforms which are too underpowered to put a dent in heavy UFO armour. If the aliens decide they want to bomb us into extinction, they can just walk right up and knock. This is a situation that has to be remedied.\n"
 "\n"
-"Den klart mest lovende idé for et kortsiktig orbitalt responsvåpen er å tilpasse en av romvåpnene som brukes av NASA og den europeiske romfartsorganisasjonen til å lansere satellitter og - før invasjonen tvang oss til å evakuere våre interplanetariske installasjoner - avfyre forsyningspakker mot Tranquilitybasen på månen. Disse romvåpnene er essensielt gigantiske \"railguns\" med nok strøm til å sende en satellittstor nyttelast i bane. Med vårt bibliotek med FNs forskning på elektromagnetiske våpen kan vi oppgradere ett av disse våpnene til et antiorbitalt våpen i stand til å slå fremmede skip ut av himmelen. Vi er sikre på at vi kan overbevise minst ett av jordens romorganisasjoner å låne oss et egnet våpen for jobben. \n"
+"The only question we can ask about this orbital UFO activity is how we're going to counter it. Until now we've not been able to affect the situation, but with budget increases and our growing reputation in the UN, pieces are starting to fall into place for a new step to our strategy.\n"
 "\n"
-"Det er imidlertid noen problemer. Tydeligvis kan ikke disse våpnene bevege seg under bygging inn i siden av et fjell, så målet måtte passere rett foran våpenet for at vi skal ha en sjanse til å treffe den. Siden vi ikke kan stole på romvesenene å gi oss et direkteskudd, har dette vært en stor snublestein, men vi tror det kan være en løsning: Hvis våpenet ikke kan bevege seg for å treffe noe, må kulene bevege seg i stedet. \n"
+"By far the most promising idea for a short-term orbital response weapon is to adapt one of the 'space guns' used by NASA and the European Space Agency to launch satellites and -- before the invasion forced us to evacuate our extraplanetary installations -- fire resupply packages at Tranquility Base colony on the moon. These space guns are essentially giant railguns with enough power to send a satellite-sized payload into orbit. With our library of UN research on electromagnetic weaponry, we can upgrade one of these guns into an anti-orbital weapon capable of knocking alien ships out of the sky. We're confident we can convince at least one of Earth's space agencies to lend us a suitable gun for the job.\n"
 "\n"
-"Planen for utvikling av en spesiell hylse som er i stand til å justere sin egen bane med en rekke innebygde raketter. Vi har presser for tiden FN for å la oss bruke et miniatyr kjernefysisk stridshode - ikke mer enn 3 kilotonn - for å sikre at eventuelle treff vil drepe. Dette orbitale skallet vil bli store, tunge, og et helvete av en utfordring å laste inn i våpenet, men det er absolutt nødvendig for å gi prosjektet en realistisk mulighet til å lykkes.\n"
+"There are problems, however. Obviously these guns can't move, being built into the side of a mountain, so the target would have to pass directly in front of the gun for us to have a chance to hit it. Since we can't count on the aliens to give us a point-blank shot, this has been a big stumbling block, but we believe there may be a solution: If the gun can't move in order to hit something, the bullets will have to move instead.\n"
 "\n"
-"Som du ser kan disse problemene alle være overvunnet, men vi trenger å gjøre en del alvorlig forskning og utvikling og forplikter en god del finansiering for å få det hele til å fungerer. Vennligst gi din tillatelse så snart som mulig. \n"
+"The plan calls for development of a special shell that is able to adjust its own trajectory with a suite of onboard rockets. We're currently pushing the UN to let us use a miniature nuclear warhead -- no more than 3 kilotons -- to make sure that any hit will kill. This orbital shell will be large, heavy, and a hell of a challenge to load into the gun, but it's absolutely necessary to give the project a realistic chance of success.\n"
 "\n"
-"Med vennlig hilsen, \n"
+"As you see, Sir, these problems can all be overcome, but we need to do some serious R&D and commit a good deal of funding to get it all working. Please lend your authorisation as soon as is feasible.\n"
 "\n"
-"Col Falkland"
+"With kind regards,\n"
+"\n"
+"Col. Falkland"
 
 #: ../base/ufos/seq_credits.ufo:139 ../base/ufos/seq_credits.ufo:172
 msgid "Project leader"

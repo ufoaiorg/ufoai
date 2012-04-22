@@ -2667,7 +2667,8 @@ msgstr "Alien Base Discovered -- %s"
 
 #: ../base/ufos/events.ufo:56
 msgid "mail_alien_base_discovered"
-msgstr "Sir, our operatives have discovered the location of a large alien installation on Earth. This installation represents a serious threat to PHALANX and to humanity at large, we must take it out ASAP."
+msgstr ""
+"Sir, our operatives have discovered the location of a large alien installation on Earth. This installation represents a serious threat to PHALANX and to humanity at large, we must take it out ASAP."
 
 #: ../base/ufos/fonts.ufo:11 ../base/ufos/fonts.ufo:18
 #: ../base/ufos/fonts.ufo:24 ../base/ufos/fonts.ufo:31
@@ -7078,7 +7079,8 @@ msgstr "<TODO>"
 
 #: ../base/ufos/research.ufo:3642
 msgid "inter_stingray_pre_txt"
-msgstr "By: Cdr. Paul Navarre, R&D: Engineering Division, PHALANX, Atlantic Operations Command"
+msgstr ""
+"By: Cdr. Paul Navarre, R&D: Engineering Division, PHALANX, Atlantic Operations Command"
 
 #: ../base/ufos/research.ufo:3692
 msgid "ufo_scout_txt"
@@ -7255,11 +7257,7 @@ msgstr ""
 "\n"
 "The Harvester seems to bear out our theories about fuel capacity being the main limiting factor for UFO speed, as it is both larger and faster than any other we've previously observed. It's able to carry more antimatter fuel and protect it far more effectively, with a tougher hull, thicker armour, and more effective emergency antimatter-dumping measures. Even if an explosion does occur, most of the blast will be contained by the UFO's extremely strong construction.\n"
 "\n"
-"The Harvester's fuel tank can take up to 0.6 grammes of antimatter and possesses a potential explosive force of approximately 25 kilotons when full.\n"
-"\n"
-"There are three front-facing weapon mounts arranged in a triangle around the craft's cockpit. Two of these are equipped with the particle beam weapon we've observed in other UFOs, but the remaining mount features an interesting kind of alien missile launcher. The missiles have highly sophisticated homing systems and are propelled by matter-antimatter reaction rockets similar to UFO engines. These missiles are insanely fast, so fast that they don't need explosive warheads to kill their prey, relying solely on kinetic impact and the sympathetic detonation of any remaining fuel. More research into this weapon will be a high priority.\n"
-"\n"
-"In the air, the Harvester is extremely dangerous and should be a high-priority target. Between the twin particle beams and the alien launcher, its firepower is more than a match for anything we can currently field. Its only obvious drawback is low manoeuvrability compared to smaller UFO types. Our interceptors are significantly more agile and we have far more combat experience in Earth atmosphere than the aliens do. This is one of the few advantages we'll have over the Harvester, and it would be wise to upgrade our equipment in order to mitigate some of the aliens' tech superiority.\n"
+"In the air, the Harvester is extremely dangerous and should be a high-priority target. Its firepower is more than a match for anything we can currently field. Its only obvious drawback is low manoeuvrability compared to smaller UFO types. Our interceptors are significantly more agile and we have far more combat experience in Earth atmosphere than the aliens do. This is one of the few advantages we'll have over the Harvester, and it would be wise to upgrade our equipment in order to mitigate some of the aliens' tech superiority.\n"
 "\n"
 "When encountered, we should concentrate our best pilots and craft on any Harvesters in the area and take them out as fast as possible. Only then should we concern ourselves with shooting down any escorts.\n"
 "\n"
@@ -7696,7 +7694,8 @@ msgstr ""
 
 #: ../base/ufos/research.ufo:4471
 msgid "ugv_weapon_autocannon_pre_txt"
-msgstr "By: Cdr. Paul Navarre, R&D: Engineering Division, PHALANX, Atlantic Operations Command"
+msgstr ""
+"By: Cdr. Paul Navarre, R&D: Engineering Division, PHALANX, Atlantic Operations Command"
 
 #: ../base/ufos/research.ufo:4518
 msgid "'Raven' ECM Unit"
@@ -7762,7 +7761,7 @@ msgstr ""
 "\n"
 "Under the continuing efforts of the Excalibur Program, we have scoured the globe for the best components on Earth in order to fit our aircraft with the equipment they need to survive against the alien threat. As always, only the very best equipment has been selected for the defence of our planet.\n"
 "\n"
-"One of the fundamental truths in aircraft design is that it's easier to dish out damage than it is to take it and keep coming. Heavy objects don't really belong in the sky; it takes a constant input of power to keep things like aircraft, birds and balloons from coming back down, and if the source of this power is damaged in mid-flight, a crash is unavoidable. PHALANX uses exclusively multi-engine aircraft, but even though it's possible for our interceptors to land on only one engine, the loss of an engine during combat will immediately render the aircraft combat-ineffective. With such a drastic loss of speed and manoeuvring power, continuing the engagement would be suicide\n"
+"One of the fundamental truths in aircraft design is that it's easier to dish out damage than it is to take it and keep coming. Heavy objects don't really belong in the sky; it takes a constant input of power to keep things like aircraft, birds and balloons from coming back down, and if the source of this power is damaged in mid-flight, a crash is unavoidable. PHALANX uses exclusively multi-engine aircraft, but even though it's possible for our interceptors to land on only one engine, the loss of an engine during combat will immediately render the aircraft combat-ineffective. With such a drastic loss of speed and manoeuvring power, continuing the engagement would be suicide.\n"
 "\n"
 "Adding extra armour to our aircraft is a weighty but effective solution to keeping them in the sky, protecting critical systems from damage and allowing the aircraft to stay in the fight longer than would otherwise be possible. It will reduce the severity of hits to the fuel tank and other vital systems that might otherwise result in the craft's instant destruction.\n"
 "\n"
@@ -8774,7 +8773,7 @@ msgstr ""
 "\n"
 "I intend to analyse more closely the patterns of alien activity on Earth, the intended missions and targets of UFO incursions into our airspace, and some of the finer details of our own research documents regarding the alien creatures and their technology. The bits and pieces of intelligence we've gathered so far are just pieces of a puzzle, but right now we have no clue how they fit together. The continual low-key incursions, the mysteries of the alien hive mind, the harvesting of human material . . . Somewhere in there lie the answers we need to unravel the aliens' overall goals and strategy for Earth and for humanity. If we can just put all the pieces together, we'll finally be able to see the bigger picture, as frightening as it may be.\n"
 "\n"
-"Naturally this project will require a certain amount of lab time and funding to build up a complete picture. It shouldn't set back our other research too much, and it will be an important part of formatulating new, more effective counterstrategies to the alien invasion.\n"
+"Naturally this project will require a certain amount of lab time and funding to build up a complete picture. It shouldn't set back our other research too much, and it will be an important part of formulating new, more effective counterstrategies to the alien invasion.\n"
 "\n"
 "The proposal is in your queue, Sir. Please write back when you'd like us to start work.\n"
 "\n"
@@ -9021,35 +9020,43 @@ msgstr "Copyright 2004-2011 by UFO: AI Team"
 
 #: ../base/ufos/seq_intro.ufo:46
 msgid "intro_sentence1"
-msgstr "It is the year 2084. Earth, never the most stable of places, enjoys a time of relative peace. The violent beginnings of the 21st century are far away now; distant memories, but not so distant that they've been forgotten. To most of Earth's people, the Second Cold War is a dark shadow from the past, much like the World Wars were to the children of the late 20th."
+msgstr ""
+"It is the year 2084. Earth, never the most stable of places, enjoys a time of relative peace. The violent beginnings of the 21st century are far away now; distant memories, but not so distant that they've been forgotten. To most of Earth's people, the Second Cold War is a dark shadow from the past, much like the World Wars were to the children of the late 20th."
 
 #: ../base/ufos/seq_intro.ufo:58
 msgid "intro_sentence2"
-msgstr "Conflicts have gotten rarer near the end of the century as new technology and universal health-care finally became available to the third world. Even the fires of terrorism have cooled in the wake of the Second Cold War, with its horrors and inhumanities still fresh in the minds of the people, from the old United States to the ravaged Indian subcontinent. Class struggles are ascending to the political battlefield now that every nation is guaranteed fair representation in the UN, and the global standard of living is slowly on the rise down to the most impoverished corners of the planet. Countries have solidified, stabilised around a restructured United Nations that successfully polices the world governments. Fragmented clumps of smaller nations, frightened at first by the vast power blocks accumulating around China and the European Union, have banded together into powerful political leagues of their own -- then found themselves with no neighbours they could safely fight. For the first time in the history of mankind, there is law and order across more than three quarters of the world."
+msgstr ""
+"Conflicts have gotten rarer near the end of the century as new technology and universal health-care finally became available to the third world. Even the fires of terrorism have cooled in the wake of the Second Cold War, with its horrors and inhumanities still fresh in the minds of the people, from the old United States to the ravaged Indian subcontinent. Class struggles are ascending to the political battlefield now that every nation is guaranteed fair representation in the UN, and the global standard of living is slowly on the rise down to the most impoverished corners of the planet. Countries have solidified, stabilised around a restructured United Nations that successfully polices the world governments. Fragmented clumps of smaller nations, frightened at first by the vast power blocks accumulating around China and the European Union, have banded together into powerful political leagues of their own -- then found themselves with no neighbours they could safely fight. For the first time in the history of mankind, there is law and order across more than three quarters of the world."
 
 #: ../base/ufos/seq_intro.ufo:70
 msgid "intro_sentence3"
-msgstr "To many people on Earth, it seems like things are going all right."
+msgstr ""
+"To many people on Earth, it seems like things are going all right."
 
 #: ../base/ufos/seq_intro.ufo:115
 msgid "intro_sentence4"
-msgstr "The first attack hits the city of Mumbai on the 3rd of March, 2084. Six small UFOs appear out of nowhere and come screaming down from orbit, undetected by the vast radar installations covering the skies over Mumbai, and set down in the single most densely-populated city on Earth. They offer no warning, no explanation. Twenty thousand innocent civilians and three battalions of elite troops are massacred over the course of twelve brutal hours before massed Commonwealth soldiers manage to bring the aliens' advance to a standstill. Then, as suddenly as they appeared, they retreat to their craft and vanish back into orbit, leaving only the ravaged streets of Mumbai as evidence."
+msgstr ""
+"The first attack hits the city of Mumbai on the 3rd of March, 2084. Six small UFOs appear out of nowhere and come screaming down from orbit, undetected by the vast radar installations covering the skies over Mumbai, and set down in the single most densely-populated city on Earth. They offer no warning, no explanation. Twenty thousand innocent civilians and three battalions of elite troops are massacred over the course of twelve brutal hours before massed Commonwealth soldiers manage to bring the aliens' advance to a standstill. Then, as suddenly as they appeared, they retreat to their craft and vanish back into orbit, leaving only the ravaged streets of Mumbai as evidence."
 
 #: ../base/ufos/seq_intro.ufo:133
 msgid "intro_sentence5"
-msgstr "An emergency meeting of the UN provides no conclusive direction. The incursions continue faster, larger and more savage than before, this time in Bonn, Johannesburg and Bangkok. Some nations attempt diplomacy, sending messages in a thousand different languages to the aliens ravaging across the countryside. Their words are ignored. Within hours, all three cities are emptied of human life. The attack is over by the time the various militaries are given permission to strike back. The aliens leave nothing behind them but concrete and blood. All the UFOs disappear without a trace -- but no one doubts they'll be back."
+msgstr ""
+"An emergency meeting of the UN provides no conclusive direction. The incursions continue faster, larger and more savage than before, this time in Bonn, Johannesburg and Bangkok. Some nations attempt diplomacy, sending messages in a thousand different languages to the aliens ravaging across the countryside. Their words are ignored. Within hours, all three cities are emptied of human life. The attack is over by the time the various militaries are given permission to strike back. The aliens leave nothing behind them but concrete and blood. All the UFOs disappear without a trace -- but no one doubts they'll be back."
 
 #: ../base/ufos/seq_intro.ufo:196
 msgid "intro_sentence6"
-msgstr "Eighty-seven hours after the initial attack on Mumbai, Earth declares war. For two weeks, the armies of humanity each try to fend off the mysterious alien attackers to the best of their ability. They score precious few successes."
+msgstr ""
+"Eighty-seven hours after the initial attack on Mumbai, Earth declares war. For two weeks, the armies of humanity each try to fend off the mysterious alien attackers to the best of their ability. They score precious few successes."
 
 #: ../base/ufos/seq_intro.ufo:207
 msgid "intro_sentence7"
-msgstr "Left with only one alternative, the UN takes action. Ancient equipment is dusted off, some of it more than a century old, and the long-defunct anti-extraterrestrial agency of the former United States -- PHALANX -- is resurrected under a new UN banner. Its sworn duty is to combat the alien threat, and to ensure the survival of the human race at all costs."
+msgstr ""
+"Left with only one alternative, the UN takes action. Ancient equipment is dusted off, some of it more than a century old, and the long-defunct anti-extraterrestrial agency of the former United States -- PHALANX -- is resurrected under a new UN banner. Its sworn duty is to combat the alien threat, and to ensure the survival of the human race at all costs."
 
 #: ../base/ufos/seq_intro.ufo:218
 msgid "intro_sentence8"
-msgstr "Funded by all eight of the political powers, and drawing its soldiers from the elite of their armies, PHALANX is the best of the best. It is Earth's first and only line of defence. It can't afford to fail; because if it does, humanity doesn't stand a chance."
+msgstr ""
+"Funded by all eight of the political powers, and drawing its soldiers from the elite of their armies, PHALANX is the best of the best. It is Earth's first and only line of defence. It can't afford to fail; because if it does, humanity doesn't stand a chance."
 
 #: ../base/ufos/seq_tutorials.ufo:3 ../base/ufos/ui/options.ufo:75
 msgid "Gameplay"
@@ -17335,17 +17342,17 @@ msgstr "Take a screenshot"
 
 #~ msgid "mail_alien_ufo_crashed"
 #~ msgstr ""
-#~ "Sir, %s is too damaged to be recovered. However we were able to salvage some viable equipment from the wreckage. The following items will arrive in %s with our dropship:\n"
-#~ "\n"
-#~ "%s"
+#"Sir, %s is too damaged to be recovered. However we were able to salvage some viable equipment from the wreckage. The following items will arrive in %s with our dropship:\n"
+#"\n"
+#"%s"
 
 #~ msgid "mail_alien_ufo_recovered"
 #~ msgstr ""
-#~ "Sir, our team has secured a %s in the field. I've arranged it to be escorted to %s, ETA within two days.\n"
-#~ "\n"
-#~ "We'll want to disassemble it for parts when it arrives. Our engineers list the following equipment as viable:\n"
-#~ "\n"
-#~ "%s"
+#"Sir, our team has secured a %s in the field. I've arranged it to be escorted to %s, ETA within two days.\n"
+#"\n"
+#"We'll want to disassemble it for parts when it arrives. Our engineers list the following equipment as viable:\n"
+#"\n"
+#"%s"
 
 #~ msgid "Not Enough Money -- %s"
 #~ msgstr "Not Enough Money -- %s"
@@ -17364,9 +17371,9 @@ msgstr "Take a screenshot"
 
 #~ msgid "mail_production_finished"
 #~ msgstr ""
-#~ "The engineering team has completed production of {item} at {location}. All equipment is tested and ready for use.\n"
-#~ "\n"
-#~ "--Cdr. Navarre"
+#"The engineering team has completed production of {item} at {location}. All equipment is tested and ready for use.\n"
+#"\n"
+#"--Cdr. Navarre"
 
 #~ msgid "Monthly Report -- %s"
 #~ msgstr "Monthly Report -- %s"
@@ -17445,13 +17452,13 @@ msgstr "Take a screenshot"
 
 #~ msgid "mail_alien_activity_reported"
 #~ msgstr ""
-#~ "Good morning, Sir.\n"
-#~ "\n"
-#~ "We have a confirmed sighting of live aliens in %s. Civilians are at risk; I recommend we send troops over there right away. Good luck and good hunting.\n"
-#~ "\n"
-#~ "With kind regards,\n"
-#~ "\n"
-#~ "Col. Falkland"
+#"Good morning, Sir.\n"
+#"\n"
+#"We have a confirmed sighting of live aliens in %s. Civilians are at risk; I recommend we send troops over there right away. Good luck and good hunting.\n"
+#"\n"
+#"With kind regards,\n"
+#"\n"
+#"Col. Falkland"
 
 #~ msgid "mail_from_air_cdr"
 #~ msgstr "Cdr. (Air) Subakh al-Kuhar, Air Wing, PHALANX, Atlantic Operations Command"
@@ -17467,36 +17474,36 @@ msgstr "Take a screenshot"
 
 #~ msgid "mail_aircraft_lost_target"
 #~ msgstr ""
-#~ "Commander, %s has lost radar tracking of %s and is unable to reacquire. Please provide further orders.\n"
-#~ "\n"
-#~ "-- COMAIR"
+#"Commander, %s has lost radar tracking of %s and is unable to reacquire. Please provide further orders.\n"
+#"\n"
+#"-- COMAIR"
 
 #~ msgid "Aircraft Ready -- %s"
 #~ msgstr "Aircraft Ready -- %s"
 
 #~ msgid "mail_aircraft_ready"
 #~ msgstr ""
-#~ "Commander, %s has been %s and is ready for action.\n"
-#~ "\n"
-#~ "-- COMAIR"
+#"Commander, %s has been %s and is ready for action.\n"
+#"\n"
+#"-- COMAIR"
 
 #~ msgid "Aircraft Bingo Fuel -- %s"
 #~ msgstr "Aircraft Bingo Fuel -- %s"
 
 #~ msgid "mail_aircraft_bingo_fuel"
 #~ msgstr ""
-#~ "Commander, %s has run out of flight time. It has only enough fuel left to return to %s. Mission has been aborted.\n"
-#~ "\n"
-#~ "-- COMAIR"
+#"Commander, %s has run out of flight time. It has only enough fuel left to return to %s. Mission has been aborted.\n"
+#"\n"
+#"-- COMAIR"
 
 #~ msgid "Aircraft Landed -- %s"
 #~ msgstr "Aircraft Landed -- %s"
 
 #~ msgid "mail_aircraft_landed"
 #~ msgstr ""
-#~ "Commander, %s has landed at %s. It is now being %s. Estimated work time on this craft before she can be launched again is %s hours.\n"
-#~ "\n"
-#~ "-- COMAIR"
+#"Commander, %s has landed at %s. It is now being %s. Estimated work time on this craft before she can be launched again is %s hours.\n"
+#"\n"
+#"-- COMAIR"
 
 #~ msgid "Watch out for Reaction Fire! A soldier can fall under Reaction Fire even if another soldier is moving."
 #~ msgstr "Watch out for Reaction Fire! A soldier can fall under Reaction Fire even if another soldier is moving."

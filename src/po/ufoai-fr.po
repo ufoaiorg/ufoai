@@ -592,7 +592,7 @@ msgstr "Campagne Standard"
 #: ../base/ufos/campaign.ufo:63
 msgid "standard_campaign_txt"
 msgstr ""
-"Il s'agit d'un scénario pour un joueur, sur une thématique militaire. Le joueur assume le commandement du Projet PHALANX, mis en place en réponse à la menace alienne. Il évoluera dans un jeu dynamique qui intègre de nombreux éléments aléatoires à une forte trame narrative.\n"
+"Il s'agit d'un scénario pour un joueur, sur une thématique militaire. Le joueur assume le commandement du Projet PHALANX, mis en place en réponse à la menace alien. Il évoluera dans un jeu dynamique qui intègre de nombreux éléments aléatoires à une forte trame narrative.\n"
 "\n"
 "Cette campagne est disponible en plusieurs niveaux de difficulté. Cette option représente le niveau de difficulté Standard, et est recommandée pour les nouveaux joueurs qui apprécient les défis."
 
@@ -2682,7 +2682,8 @@ msgstr "Base alienne découverte -- %s"
 
 #: ../base/ufos/events.ufo:56
 msgid "mail_alien_base_discovered"
-msgstr "Monsieur, nos hommes ont découvert l'emplacement d'une grande construction alien sur Terre, dans un territoire appartenant à %s. Elle représente une menace sérieuse pour PHALANX et plus généralement pour l'humanité : nous devons l'éliminer le plus rapidement possible."
+msgstr ""
+"Monsieur, nos hommes ont découvert l'emplacement d'une grande construction alien sur Terre, dans un territoire appartenant à %s. Elle représente une menace sérieuse pour PHALANX et plus généralement pour l'humanité : nous devons l'éliminer le plus rapidement possible."
 
 #: ../base/ufos/fonts.ufo:11 ../base/ufos/fonts.ufo:18
 #: ../base/ufos/fonts.ufo:24 ../base/ufos/fonts.ufo:31
@@ -7109,7 +7110,8 @@ msgstr "inter_stingray_txt"
 
 #: ../base/ufos/research.ufo:3642
 msgid "inter_stingray_pre_txt"
-msgstr "By: Cdr. Paul Navarre, R&D: Engineering Division, PHALANX, Atlantic Operations Command"
+msgstr ""
+"By: Cdr. Paul Navarre, R&D: Engineering Division, PHALANX, Atlantic Operations Command"
 
 #: ../base/ufos/research.ufo:3692
 msgid "ufo_scout_txt"
@@ -7777,7 +7779,8 @@ msgstr "ugv_weapon_autocannon_txt"
 
 #: ../base/ufos/research.ufo:4471
 msgid "ugv_weapon_autocannon_pre_txt"
-msgstr "Par : Cdt Paul Navarre, R&D: Division Ingénierie, PHALANX, Commandement des Opérations Atlantique"
+msgstr ""
+"Par : Cdt Paul Navarre, R&D: Division Ingénierie, PHALANX, Commandement des Opérations Atlantique"
 
 #: ../base/ufos/research.ufo:4518
 msgid "'Raven' ECM Unit"
@@ -8851,13 +8854,13 @@ msgstr ""
 "\n"
 "Bonjour monsieur\n"
 "\n"
-"J'ai bien peur que ce message ne soit pas un tract social; je le rédige car nous avons grandement besoin d'information. Ici, à la division d'Intelligence, nous avons fait pas mal de boulot : de la recherche, de la répertoriassions et de la double vérification de toutes les activités alien sur Terre, mais nous sommes de plus en plus gênés car nous ignorons les buts fondamentaux de l'invasion alien. Nous ne sommes pas capables de prédire le prochain mouvement car nous n'avons aucune idée des règles du jeu. C'est la raison pour laquelle je demande votre autorisation sur ce nouveau projet.\n"
+"J'ai bien peur que ce message ne soit pas un tract social; je le rédige en raison de notre urgent besoin d'informations. Ici, à la division d'Intelligence, nous avons fait pas mal de boulot : localisation, journalisation et double vérification de chaque activité alien sur Terre signalée, mais nous faisons de plus en plus face à notre manque de données concernant les buts fondamentaux de l'invasion alien. Nous n'avons aucun moyen d'anticiper leur prochain mouvement car nous n'avons aucune idée de leur plan. C'est pourquoi je demande votre autorisation pour ce nouveau projet.\n"
 "\n"
-"J'ai l'intention d'analyser de plus près les schémas d'activité alien sur Terre : le but des missions, les cibles des OVNI entrant dans notre espace aérien, ou encore d’informations spécifiques indiqués dans nos propres documents de recherche sur les créatures aliens et leur technologie. Les quelques pièces rassembler ça et là font partie d'un puzzle, mais nous ne sommes pas capable de les assembler. Les incursions non stratégiques continuelles, le mystère de l'esprit de ruche alien, la récolte de matières humaines ... Il y a quelque part la dedans la réponse qui nous permettra de comprendre les objectifs aliens fondamentaux et la stratégie utilisée sur Terre et sur l'humanité. Si nous arrivons à tout rassembler, nous serons peut être en mesure de voir le tableau, aussi effrayant qu'il puisse être.\n"
+"J'ai l'intention d'analyser de plus près les schémas d'activité alien sur Terre : les missions et cibles des incursions OVNI dans notre espace aérien, ainsi que certaines de nos meilleures informations issues de nos propres recherches sur les créatures aliens et leur technologie. Les fragments d'informations rassemblés jusque là ne sont que les pièces d'un puzzle, mais nous n'avons actuellement aucun indice quant leur manière de s'assembler. Les incursions continuelles de faible valeur stratégique, le mystère de l'esprit de ruche alien, la récolte de matériel humain... Quelque part dans tout ceci se trouve les réponses dont nous avons besoins afin d'éclaircir les buts des aliens, ainsi que leur stratégie concernant aussi bien la Terre que l'humanité. Si nous parvenions simplement à assembler toutes ces pièces, nous serions enfin en mesure de voir le tableau dans son ensemble, aussi effrayant qu'il puisse être.\n"
 "\n"
-"Naturellement ce projet va nécessiter du temps en laboratoire et des fonds avant de pouvoir dresser une image. Les autres projets ne devraient pas trop en être impactés, et elle nous aidera considérablement à créer de nouvelles stratégies de contre attaque plus performantes face à l'invasion alien.\n"
+"Naturellement ce projet va nécessiter du temps en laboratoire et des fonds avant de pouvoir dresser une image complète. Les autres projets ne devraient pas trop en pâtir, et cela nous aidera considérablement à créer de nouvelles stratégies de contre attaque plus performantes face à l'invasion alien.\n"
 "\n"
-"Le projet est dans la liste monsieur. Merci de répondre dès que vous souhaitez nous voir le commencer.\n"
+"Le projet est dans la file d'attente monsieur. Merci de répondre dès que vous souhaitez nous voir le commencer.\n"
 "\n"
 "Très cordialement,\n"
 "\n"
@@ -9103,35 +9106,43 @@ msgstr "Copyright 2004-2009 de l'équipe de UFO: AI "
 
 #: ../base/ufos/seq_intro.ufo:46
 msgid "intro_sentence1"
-msgstr "Nous sommes en 2084. Pour la première fois depuis longtemps, la Terre connaît une période de paix. Les violences du début du XXIème siècle sont passées, mais restent encore ancrées dans la mémoire de chacun. Pour la plupart des habitants de la Terre, la Seconde Guerre Froide est une ombre du passé, comme le furent les guerres mondiales pour les enfants de la fin du XXème siècle."
+msgstr ""
+"Nous sommes en 2084. Pour la première fois depuis longtemps, la Terre connaît une période de paix. Les violences du début du XXIème siècle sont du passé, mais restent encore ancrées dans la mémoire de chacun. Pour la plupart des habitants de la Terre, la Seconde Guerre Froide est une ombre du passé, comme le furent les guerres mondiales pour les enfants de la fin du XXème siècle."
 
 #: ../base/ufos/seq_intro.ufo:58
 msgid "intro_sentence2"
-msgstr "La fin du siècle a vu les conflits se raréfier avec l'avènement des nouvelles technologies et l'amélioration considérable des conditions de santé dans le tiers monde. Même les violentes actions terroristes ont disparu avec le début de la Deuxième Guerre Froide, laissant un souvenir macabre aux habitants du nord de l'Amérique et à ceux des terres ravagées du continent Indien... La lutte des classes passe désormais au cœur des débats politiques, depuis que chaque nation est équitablement représentée à l'ONU. Partout dans le monde, la qualité de vie s'améliore. Les états se sont renforcés et stabilisés autour des Nations Unies, qui sont parvenues à s'imposer sur les gouvernements du monde entier depuis leur restructuration. Des groupes de petits états, tout d'abord intimidés par la puissance des blocs chinois et européens, se sont réunis pour former une puissante coalition politique. Pour la première fois dans l'histoire de l'humanité, la loi et l'ordre règnent sur plus des trois quarts du globe."
+msgstr ""
+"La fin du siècle a vu les conflits se raréfier avec l'avènement des nouvelles technologies et l'amélioration considérable des conditions de santé dans le tiers-monde. Même les violentes actions terroristes ont disparu avec le début de la Deuxième Guerre Froide, laissant un souvenir macabre aux habitants nord-américains et à ceux des terres ravagées de l'Inde... La lutte des classes est désormais au cœur des débats politiques, depuis que chaque nation est équitablement représentée à l'ONU. Partout dans le monde, la qualité de vie s'améliore. Les états se sont renforcés et stabilisés autour des Nations-Unies, qui sont parvenues à s'imposer sur les gouvernements du monde entier depuis leur restructuration. Des groupes de petits états, tout d'abord intimidés par la puissance des blocs chinois et européens, se sont réunis pour former une puissante coalition politique. Pour la première fois dans l'histoire de l'humanité, la loi et l'ordre règnent sur plus des trois quarts du globe."
 
 #: ../base/ufos/seq_intro.ufo:70
 msgid "intro_sentence3"
-msgstr "Pour la plupart des gens, la vie semble avoir repris son cours."
+msgstr ""
+"Pour la plupart des gens, la vie semble avoir repris son cours."
 
 #: ../base/ufos/seq_intro.ufo:115
 msgid "intro_sentence4"
-msgstr "La première attaque touche la ville de Mumbai le 3 mai 2084. Six petits OVNI sortent du néant et déferlent sur la ville, sans qu'aucune des énormes installations radar couvrant le ciel de Mumbai ne les détecte. Il n'y a ni avertissements, ni explications. Les pertes de la ville la plus peuplée du monde sont colossales : vingt mille civils innocents, et trois bataillons de troupes d'élite sont massacrés en moins d'une douzaine d'heures. C'est à ce prix que les soldats du Commonwealth parviennent à repousser l'avancée des aliens. Puis, aussi soudainement qu'ils étaient apparus, ils retournent à leurs vaisseaux qui s'évanouissent dans le ciel, laissant derrière eux les rues ravagées de Mumbai."
+msgstr ""
+"La première attaque touche la ville de Mumbai le 3 mai 2084. Six petits OVNI sortent du néant et déferlent sur la ville, sans qu'aucune des énormes installations radar couvrant le ciel de Mumbai ne les détecte. Il n'y a ni avertissement, ni explication. Les pertes de la ville la plus peuplée du monde sont colossales : vingt mille civils innocents, et trois bataillons de troupes d'élite sont massacrés en moins d'une douzaine d'heures. C'est à ce prix que les soldats du Commonwealth parviennent à repousser l'avancée des aliens. Puis, aussi soudainement qu'ils étaient apparus, ils retournent à leurs vaisseaux qui s'évanouissent dans le ciel, laissant derrière eux les rues ravagées de Mumbai."
 
 #: ../base/ufos/seq_intro.ufo:133
 msgid "intro_sentence5"
-msgstr "Une réunion d'urgence des Nations Unies ne parvient à aucune conclusion. Les attaques s'enchaînent rapidement, encore plus importantes et mortelles, touchant Bonn, Johannesburg et Bangkok. Quelques nations tentent la voie diplomatique, envoyant des messages en un millier de langues différentes aux aliens qui ravagent le globe. Leurs tentatives sont ignorées. En quelques heures, toute vie humaine est anéantie dans les trois villes. L'attaque est terminée avant que les armées terriennes ne reçoivent l'autorisation de contre-attaquer. Les aliens ne laissent derrière eux que du béton et du sang. Une fois encore, ils disparaissent sans laisser de trace... Mais nul ne doute qu'ils reviendront."
+msgstr ""
+"Une réunion d'urgence des Nations Unies ne parvient à aucune conclusion. Les attaques s'enchaînent rapidement, encore plus importantes et mortelles, touchant Bonn, Johannesburg et Bangkok. Quelques nations tentent la voie diplomatique, envoyant des messages en un millier de langues différentes aux aliens qui ravagent le globe. Leurs tentatives sont ignorées. En quelques heures, toute vie humaine est anéantie dans les trois villes. L'attaque est terminée avant que les armées terriennes ne reçoivent l'autorisation de contre-attaquer. Les aliens ne laissent derrière eux que du béton et du sang. Une fois encore, ils disparaissent sans laisser de trace... Mais nul ne doute qu'ils reviendront."
 
 #: ../base/ufos/seq_intro.ufo:196
 msgid "intro_sentence6"
-msgstr "Quatre vingt sept heures après la première attaque sur Mumbai, la Terre entre en guerre. Pendant deux semaines, toutes les armées de l'humanité tentent de repousser les mystérieux assaillants aliens, en faisant de leur mieux à chaque fois. Les succès sont peu nombreux."
+msgstr ""
+"Quatre-vingt sept heures après la première attaque sur Mumbai, la Terre entre en guerre. Pendant deux semaines, toutes les armées de l'humanité tentent de repousser les mystérieux assaillants aliens, en faisant de leur mieux à chaque fois. Les succès sont peu nombreux."
 
 #: ../base/ufos/seq_intro.ufo:207
 msgid "intro_sentence7"
-msgstr "Sans autre alternative, les Nations Unies prennent les choses en main. La défunte agence anti-extraterrestre \"PHALANX\" des anciens États Unis est ressuscitée sous la bannière de l'ONU. Son ancien équipement est remis en service, certains éléments datant de plus d'un siècle. Sa mission : combattre la menace extraterrestre et garantir la survie de l'espèce humaine à tout prix."
+msgstr ""
+"Sans autre alternative, les Nations-Unies prennent les choses en main. La défunte agence anti-extraterrestre \"PHALANX\" des anciens États-Unis est ressuscitée sous la bannière de l'ONU. Son ancien équipement est remis en service, certains éléments datant de plus d'un siècle. Sa mission : combattre la menace extraterrestre et garantir la survie de l'espèce humaine à tout prix."
 
 #: ../base/ufos/seq_intro.ufo:218
 msgid "intro_sentence8"
-msgstr "Financée par les huit puissances politiques mondiales, et recrutant ses soldats parmi les meilleurs de leurs armées, PHALANX est la crème de l'élite. Elle est la première et unique ligne de défense de la Terre. Elle ne peut échouer, car si tel était le cas, l'humanité n'aurait plus aucun espoir."
+msgstr ""
+"Financée par les huit puissances politiques mondiales, et recrutant ses soldats parmi les meilleurs de leurs armées, PHALANX est la crème de l'élite. Elle est la première et unique ligne de défense de la Terre. Elle ne peut échouer, car si tel était le cas, l'humanité n'aurait plus aucun espoir."
 
 #: ../base/ufos/seq_tutorials.ufo:3 ../base/ufos/ui/options.ufo:75
 msgid "Gameplay"
@@ -17481,17 +17492,17 @@ msgstr "Faire une capture d'écran"
 
 #~ msgid "mail_alien_ufo_crashed"
 #~ msgstr ""
-#~ "Monsieur, %s est trop endommagé pour être rapatrié. Nous sommes cependant parvenus à récupérer certains équipements parmi les décombres. La liste des éléments suivants arriveront à la base %s avec notre transport :\n"
-#~ "\n"
-#~ "%s"
+#"Monsieur, %s est trop endommagé pour être rapatrié. Nous sommes cependant parvenus à récupérer certains équipements parmi les décombres. La liste des éléments suivants arriveront à la base %s avec notre transport :\n"
+#"\n"
+#"%s"
 
 #~ msgid "mail_alien_ufo_recovered"
 #~ msgstr ""
-#~ "Monsieur, notre équipe est parvenu à sécuriser un %s sur le champ de bataille. J'ai organisé son rapatriement à %s.\n"
-#~ "\n"
-#~ "Il serait profitable de le désassembler une fois arrivé à la base, dans deux jours normalement. Nos ingénieurs espèrent pouvoir en extraire l'équipement suivant :\n"
-#~ "\n"
-#~ "%s"
+#"Monsieur, notre équipe est parvenu à sécuriser un %s sur le champ de bataille. J'ai organisé son rapatriement à %s.\n"
+#"\n"
+#"Il serait profitable de le désassembler une fois arrivé à la base, dans deux jours normalement. Nos ingénieurs espèrent pouvoir en extraire l'équipement suivant :\n"
+#"\n"
+#"%s"
 
 #~ msgid "Not Enough Money -- %s"
 #~ msgstr "Pas assez d'agent -- %s"

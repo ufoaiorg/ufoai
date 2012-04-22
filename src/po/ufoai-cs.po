@@ -9048,7 +9048,7 @@ msgstr "První útok zasáhl Bombaj třetího března 2084. Z prázdnoty se zjev
 
 #: ../base/ufos/seq_intro.ufo:133
 msgid "intro_sentence5"
-msgstr "Krizové shromáždění Spojených Národů nestanovilo jakýkoliv rozhodný pokyn. Invaze pokračovaly rychleji, ve větším rozsahu a byly krutější než poprvé, tentokráte v Bonnu, Johannesburgu a Bangkoku. Některé státy se pokoušely o diplomacii, posílajíc zprávy v tisíci různých jazycích cizákům drancujícím oblast. Jejich slova nebyla vyslyšena. Během několika hodin byli obyvatelé všech tří měst vyhlazeni. Útok skončil dříve než většina armád dostala povolení k protiakci. Cizáci za sebou nenechali nic kromě rozvalin a krve. Všechny cizácké lodě zmizely beze stop, ale nikdo nepochyboval o tom, že se vrátí."
+msgstr "Krizové shromáždění Spojených Národů nestanovilo jakýkoliv rozhodný pokyn. Invaze pokračovaly rychleji, ve větším rozsahu a byly krutější než poprvé, tentokráte v Bonnu, Johannesburgu a Bangkoku. Některé státy se pokoušely o diplomacii, posílajíc zprávy v tisíci různých jazycích cizákům drancujícím oblast. Jejich slova nebyla vyslyšena. Během několika hodin byli obyvatelé všech tří měst vyhlazeni. Útok skončil dříve než většina armád dostala"
 
 #: ../base/ufos/seq_intro.ufo:196
 msgid "intro_sentence6"

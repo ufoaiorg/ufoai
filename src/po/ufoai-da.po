@@ -622,7 +622,7 @@ msgstr "Standard kampagne"
 #: ../base/ufos/campaign.ufo:63
 msgid "standard_campaign_txt"
 msgstr ""
-"Dette er et enkeltspiller, militærorienteret invasionsscenarie. Spilleren har rollen som chef for projekt FALANKS, jordens svar på en trussel fra rumvæsener, og kan spille igennem et dynamisk spil med både væsentlige tilfældige elementer og en stærk historie.\n"
+"Dette er et militærorienteret invasionsscenarie for 1 spiller. Spilleren har rollen som chef for projekt FALANKS, jordens svar på en trussel fra rumvæsener, og kan spille et dynamisk spil med både væsentlige tilfældige elementer og en stærk historie.\n"
 "\n"
 "Denne kampagne er tilgængelig på flere sværhedsniveauer. Denne indstilling er standardsværhedsgraden, og anbefales for førstegangsspillere som kan lide en udfordring."
 
@@ -2893,7 +2893,8 @@ msgstr "Rumvæsenbase opdaget -- %s"
 
 #: ../base/ufos/events.ufo:56
 msgid "mail_alien_base_discovered"
-msgstr "Sir, our operatives have discovered the location of a large alien installation on Earth in territory belonging to %s. This installation represents a serious threat to PHALANX and to humanity at large, we must take it out ASAP."
+msgstr ""
+"Sir, our operatives have discovered the location of a large alien installation on Earth in territory belonging to %s. This installation represents a serious threat to PHALANX and to humanity at large, we must take it out ASAP."
 
 #: ../base/ufos/fonts.ufo:11 ../base/ufos/fonts.ufo:18
 #: ../base/ufos/fonts.ufo:24 ../base/ufos/fonts.ufo:31
@@ -7338,7 +7339,8 @@ msgstr "<TODO>"
 
 #: ../base/ufos/research.ufo:3642
 msgid "inter_stingray_pre_txt"
-msgstr "By: Cdr. Paul Navarre, R&D: Engineering Division, PHALANX, Atlantic Operations Command"
+msgstr ""
+"By: Cdr. Paul Navarre, R&D: Engineering Division, PHALANX, Atlantic Operations Command"
 
 #: ../base/ufos/research.ufo:3692
 msgid "ufo_scout_txt"
@@ -7547,11 +7549,7 @@ msgstr ""
 "\n"
 "The Harvester seems to bear out our theories about fuel capacity being the main limiting factor for UFO speed, as it is both larger and faster than any other we've previously observed. It's able to carry more antimatter fuel and protect it far more effectively, with a tougher hull, thicker armour, and more effective emergency antimatter-dumping measures. Even if an explosion does occur, most of the blast will be contained by the UFO's extremely strong construction.\n"
 "\n"
-"The Harvester's fuel tank can take up to 0.6 grammes of antimatter and possesses a potential explosive force of approximately 25 kilotons when full.\n"
-"\n"
-"There are three front-facing weapon mounts arranged in a triangle around the craft's cockpit. Two of these are equipped with the particle beam weapon we've observed in other UFOs, but the remaining mount features an interesting kind of alien missile launcher. The missiles have highly sophisticated homing systems and are propelled by matter-antimatter reaction rockets similar to UFO engines. These missiles are insanely fast, so fast that they don't need explosive warheads to kill their prey, relying solely on kinetic impact and the sympathetic detonation of any remaining fuel. More research into this weapon will be a high priority.\n"
-"\n"
-"In the air, the Harvester is extremely dangerous and should be a high-priority target. Between the twin particle beams and the alien launcher, its firepower is more than a match for anything we can currently field. Its only obvious drawback is low manoeuvrability compared to smaller UFO types. Our interceptors are significantly more agile and we have far more combat experience in Earth atmosphere than the aliens do. This is one of the few advantages we'll have over the Harvester, and it would be wise to upgrade our equipment in order to mitigate some of the aliens' tech superiority.\n"
+"In the air, the Harvester is extremely dangerous and should be a high-priority target. Its firepower is more than a match for anything we can currently field. Its only obvious drawback is low manoeuvrability compared to smaller UFO types. Our interceptors are significantly more agile and we have far more combat experience in Earth atmosphere than the aliens do. This is one of the few advantages we'll have over the Harvester, and it would be wise to upgrade our equipment in order to mitigate some of the aliens' tech superiority.\n"
 "\n"
 "When encountered, we should concentrate our best pilots and craft on any Harvesters in the area and take them out as fast as possible. Only then should we concern ourselves with shooting down any escorts.\n"
 "\n"
@@ -7986,7 +7984,8 @@ msgstr ""
 
 #: ../base/ufos/research.ufo:4471
 msgid "ugv_weapon_autocannon_pre_txt"
-msgstr "By: Cdr. Paul Navarre, R&D: Engineering Division, PHALANX, Atlantic Operations Command"
+msgstr ""
+"By: Cdr. Paul Navarre, R&D: Engineering Division, PHALANX, Atlantic Operations Command"
 
 #: ../base/ufos/research.ufo:4518
 msgid "'Raven' ECM Unit"
@@ -8052,7 +8051,7 @@ msgstr ""
 "\n"
 "Under the continuing efforts of the Excalibur Program, we have scoured the globe for the best components on Earth in order to fit our aircraft with the equipment they need to survive against the alien threat. As always, only the very best equipment has been selected for the defence of our planet.\n"
 "\n"
-"One of the fundamental truths in aircraft design is that it's easier to dish out damage than it is to take it and keep coming. Heavy objects don't really belong in the sky; it takes a constant input of power to keep things like aircraft, birds and balloons from coming back down, and if the source of this power is damaged in mid-flight, a crash is unavoidable. PHALANX uses exclusively multi-engine aircraft, but even though it's possible for our interceptors to land on only one engine, the loss of an engine during combat will immediately render the aircraft combat-ineffective. With such a drastic loss of speed and manoeuvring power, continuing the engagement would be suicide\n"
+"One of the fundamental truths in aircraft design is that it's easier to dish out damage than it is to take it and keep coming. Heavy objects don't really belong in the sky; it takes a constant input of power to keep things like aircraft, birds and balloons from coming back down, and if the source of this power is damaged in mid-flight, a crash is unavoidable. PHALANX uses exclusively multi-engine aircraft, but even though it's possible for our interceptors to land on only one engine, the loss of an engine during combat will immediately render the aircraft combat-ineffective. With such a drastic loss of speed and manoeuvring power, continuing the engagement would be suicide.\n"
 "\n"
 "Adding extra armour to our aircraft is a weighty but effective solution to keeping them in the sky, protecting critical systems from damage and allowing the aircraft to stay in the fight longer than would otherwise be possible. It will reduce the severity of hits to the fuel tank and other vital systems that might otherwise result in the craft's instant destruction.\n"
 "\n"
@@ -9027,7 +9026,7 @@ msgstr ""
 "\n"
 "I intend to analyse more closely the patterns of alien activity on Earth, the intended missions and targets of UFO incursions into our airspace, and some of the finer details of our own research documents regarding the alien creatures and their technology. The bits and pieces of intelligence we've gathered so far are just pieces of a puzzle, but right now we have no clue how they fit together. The continual low-key incursions, the mysteries of the alien hive mind, the harvesting of human material . . . Somewhere in there lie the answers we need to unravel the aliens' overall goals and strategy for Earth and for humanity. If we can just put all the pieces together, we'll finally be able to see the bigger picture, as frightening as it may be.\n"
 "\n"
-"Naturally this project will require a certain amount of lab time and funding to build up a complete picture. It shouldn't set back our other research too much, and it will be an important part of formatulating new, more effective counterstrategies to the alien invasion.\n"
+"Naturally this project will require a certain amount of lab time and funding to build up a complete picture. It shouldn't set back our other research too much, and it will be an important part of formulating new, more effective counterstrategies to the alien invasion.\n"
 "\n"
 "The proposal is in your queue, Sir. Please write back when you'd like us to start work.\n"
 "\n"
@@ -9276,35 +9275,43 @@ msgstr "Ophavsret 2004-2009 UFO: AI-holdet"
 
 #: ../base/ufos/seq_intro.ufo:46
 msgid "intro_sentence1"
-msgstr "Året er 2084. Jorden, aldrig det mest stabile sted, oplever en fredelig tid. Den voldsomme start på 2000-tallet er for længst forbi, gamle minder, men ikke så langt væk, at 2000-tallet er blevet glemt. For de fleste af jordens befolkning er den 2. kolde krig en mørk skygge i det forgangne, præcis som verdenskrigen var for deres børn."
+msgstr ""
+"Året er 2084. Jorden, aldrig det mest stabile sted, oplever en fredelig tid. Den voldsomme start på 2000-tallet er for længst forbi, gamle minder, men ikke så langt væk, at 2000-tallet er blevet glemt. For de fleste af jordens befolkning er den 2. kolde krig en mørk skygge i det forgangne, præcis som verdenskrigen var for deres børn."
 
 #: ../base/ufos/seq_intro.ufo:58
 msgid "intro_sentence2"
-msgstr "Konflikter er blevet mindre udbredte nær slutningen af århundredet da ny teknologi og medicin er blevet tilgængelig for den tredje verden. Selv om terrorismen er blevet mindre efter den 2. kolde krig, med al dens smerte og umenneskelige gerninger, findes den stadig i tankerne hos folket, fra det gamle Amerika til det indiske kontinent. Klassekampen sker nu igennem den politiske magtkamp da alle nationer er garanteret en lige repræsentation i FN, og den globale levestandard stiger langsomt selv for de mest udsatte hjørner af planeten. Landene er styrket og har stabiliseret sig omkring et omorganiseret Forenede Nationer som det er lykkedes at få verdens lande til at enes om. Mindre nationer, først skræmte af de magtfulde nationer Kina og Den Europæiske Union, er selv gået sammen til magtfulde politiske fællesskaber - og har siden opdaget at de ikke har nogle naboer som de kan slås imod. For første gang i menneskenes historie er der lov og orden i mere end 3/4 af verdenen."
+msgstr ""
+"Konflikter er blevet mindre udbredte nær slutningen af århundredet da ny teknologi og medicin er blevet tilgængelig for den tredje verden. Selv om terrorismen er blevet mindre efter den 2. kolde krig, med al dens smerte og umenneskelige gerninger, findes den stadig i tankerne hos folket, fra det gamle Amerika til det indiske kontinent. Klassekampen sker nu igennem den politiske magtkamp da alle nationer er garanteret en lige repræsentation i FN, og den globale levestandard stiger langsomt selv for de mest udsatte hjørner af planeten. Landene er styrket og har stabiliseret sig omkring et omorganiseret Forenede Nationer som det er lykkedes at få verdens lande til at enes om. Mindre nationer, først skræmte af de magtfulde nationer Kina og Den Europæiske Union, er selv gået sammen til magtfulde politiske fællesskaber - og har siden opdaget at de ikke har nogle naboer som de kan slås imod. For første gang i menneskenes historie er der lov og orden i mere end 3/4 af verdenen."
 
 #: ../base/ufos/seq_intro.ufo:70
 msgid "intro_sentence3"
-msgstr "For mange mennesker ser verden lys ud."
+msgstr ""
+"For mange mennesker ser verden lys ud."
 
 #: ../base/ufos/seq_intro.ufo:115
 msgid "intro_sentence4"
-msgstr "Det første angreb sker mod byen Mumbai den 3. marts 2084. Seks små ufoer dukker op ud af ingenting og flyver skrigende mod jorden, uden at de bliver opdaget af de store radarinstallationer som dækker skyerne over Mumbai og lander i den højest befolket by på jorden. De giver ingen advarsler, ingen forklaring. 20.000 uskyldige civile og tre bataljoner fra elitetropperne bliver massakreret igennem tolv brutale timer inden en stor fælles styrke får stoppet de udenjordiske raseringer. Lige så hurtigt som de kom, lige så hurtigt trækker de deres fartøjer tilbage og forsvinder ud i rummet igen og efterlader kun de stille gader i Mumbai som bevis for hvad der er sket."
+msgstr ""
+"Det første angreb sker mod byen Mumbai den 3. marts 2084. Seks små ufoer dukker op ud af ingenting og flyver skrigende mod jorden, uden at de bliver opdaget af de store radarinstallationer som dækker skyerne over Mumbai og lander i den højest befolket by på jorden. De giver ingen advarsler, ingen forklaring. 20.000 uskyldige civile og tre bataljoner fra elitetropperne bliver massakreret igennem tolv brutale timer inden en stor fælles styrke får stoppet de udenjordiske raseringer. Lige så hurtigt som de kom, lige så hurtigt trækker de deres fartøjer tilbage og forsvinder ud i rummet igen og efterlader kun de stille gader i Mumbai som bevis for hvad der er sket."
 
 #: ../base/ufos/seq_intro.ufo:133
 msgid "intro_sentence5"
-msgstr "Et ekstraordinært møde i FN fører ikke til noget. Angrebene fortsætter med kortere og kortere mellemrum, større og kraftigere end tidligere, denne gang i Bonn, Johannesburg og Bangkok. Nogen nationer forsøger med diplomati og sender beskeder på tusindtals forskellig sprog til de fremmede som hærger i de forskellige lande. Deres beskeder ignoreres. Inden for et par timer er alle tre byer tømt for menneskeligt liv. Angrebene er ovre præcis når de forskellige militære styrker har fået bekræftelse på at slå igen. Rumvæsenerne efterlader intet uden beton og blod. Alle ufoer forsvinder uden spor - men ingen tvivler på, at de kommer tilbage."
+msgstr ""
+"Et ekstraordinært møde i FN fører ikke til noget. Angrebene fortsætter med kortere og kortere mellemrum, større og kraftigere end tidligere, denne gang i Bonn, Johannesburg og Bangkok. Nogen nationer forsøger med diplomati og sender beskeder på tusindtals forskellig sprog til de fremmede som hærger i de forskellige lande. Deres beskeder ignoreres. Inden for et par timer er alle tre byer tømt for menneskeligt liv. Angrebene er ovre præcis når de forskellige militære styrker har fået bekræftelse på at slå igen. Rumvæsenerne efterlader intet uden beton og blod. Alle ufoer forsvinder uden spor - men ingen tvivler på, at de kommer tilbage."
 
 #: ../base/ufos/seq_intro.ufo:196
 msgid "intro_sentence6"
-msgstr "87 timer efter det første angreb på Mumbai erklærer jorden krig mod rumvæsenerne. I over to uger kæmper menneskenes styrker så godt de kan for at afværge de angribende rumvæsener. De taber oftere end de vinder."
+msgstr ""
+"87 timer efter det første angreb på Mumbai erklærer jorden krig mod rumvæsenerne. I over to uger kæmper menneskenes styrker så godt de kan for at afværge de angribende rumvæsener. De taber oftere end de vinder."
 
 #: ../base/ufos/seq_intro.ufo:207
 msgid "intro_sentence7"
-msgstr "Da kun et alternativ står tilbage tager FN aktion. Forældet udstyr hentes frem, noget af det ældre end et århundrede, og det tidligere sovende antirumvæsenbureau fra det tidligere Amerika - FALANKS - genopstår under FN's auspicier. Dets opgave er at kæmpe mod truslen fra rumvæsenerne og sikre, at den menneskelige race kan overleve, uanset prisen."
+msgstr ""
+"Da kun et alternativ står tilbage tager FN aktion. Forældet udstyr hentes frem, noget af det ældre end et århundrede, og det tidligere sovende antirumvæsenbureau fra det tidligere Amerika - FALANKS - genopstår under FN's auspicier. Dets opgave er at kæmpe mod truslen fra rumvæsenerne og sikre, at den menneskelige race kan overleve, uanset prisen."
 
 #: ../base/ufos/seq_intro.ufo:218
 msgid "intro_sentence8"
-msgstr "Finansieret af alle otte politiske kræfter, og sammenlægningen af disses elitesoldater, er FALANKS det bedste af de bedste. Det er jordens første og eneste forsvarslinje. De må ikke fejle, for hvis de gør, vil menneskeheden ikke overleve."
+msgstr ""
+"Finansieret af alle otte politiske kræfter, og sammenlægningen af disses elitesoldater, er FALANKS det bedste af de bedste. Det er jordens første og eneste forsvarslinje. De må ikke fejle, for hvis de gør, vil menneskeheden ikke overleve."
 
 #: ../base/ufos/seq_tutorials.ufo:3 ../base/ufos/ui/options.ufo:75
 msgid "Gameplay"
@@ -17827,17 +17834,17 @@ msgstr "Tag et skærmbillede"
 
 #~ msgid "mail_alien_ufo_crashed"
 #~ msgstr ""
-#~ "Sir, %s er for skadet til at vi kan bringe den tilbage. Vi har dog været i stand til at indsamle noget brugbart udstyr fra vraget. Følgende udstyr vil ankomme til % med vores transportfly:\n"
-#~ "\n"
-#~ "%s"
+#"Sir, %s er for skadet til at vi kan bringe den tilbage. Vi har dog været i stand til at indsamle noget brugbart udstyr fra vraget. Følgende udstyr vil ankomme til % med vores transportfly:\n"
+#"\n"
+#"%s"
 
 #~ msgid "mail_alien_ufo_recovered"
 #~ msgstr ""
-#~ "Sir, vores hold har sikret sig en %s i felten. Jeg har sørget for at den bliver eskorteret til %s, ankomst indenfor to dage.\n"
-#~ "\n"
-#~ "Vi bør skille den ad i enkeltdele når den ankommer. Vores ingeniører mener følgende udstyr er anvendeligt:\n"
-#~ "\n"
-#~ "%s"
+#"Sir, vores hold har sikret sig en %s i felten. Jeg har sørget for at den bliver eskorteret til %s, ankomst indenfor to dage.\n"
+#"\n"
+#"Vi bør skille den ad i enkeltdele når den ankommer. Vores ingeniører mener følgende udstyr er anvendeligt:\n"
+#"\n"
+#"%s"
 
 #~ msgid "Not Enough Money -- %s"
 #~ msgstr "Ikke nok penge -- %s"
@@ -17856,9 +17863,9 @@ msgstr "Tag et skærmbillede"
 
 #~ msgid "mail_production_finished"
 #~ msgstr ""
-#~ "The engineering team has completed production of {item} at {location}. All equipment is tested and ready for use.\n"
-#~ "\n"
-#~ "--Cdr. Navarre"
+#"The engineering team has completed production of {item} at {location}. All equipment is tested and ready for use.\n"
+#"\n"
+#"--Cdr. Navarre"
 
 #~ msgid "Monthly Report -- %s"
 #~ msgstr "Månedlig rapport -- %s"
@@ -17937,13 +17944,13 @@ msgstr "Tag et skærmbillede"
 
 #~ msgid "mail_alien_activity_reported"
 #~ msgstr ""
-#~ "Good morning, Sir.\n"
-#~ "\n"
-#~ "We have a confirmed sighting of live aliens in %s. Civilians are at risk; I recommend we send troops over there right away. Good luck and good hunting.\n"
-#~ "\n"
-#~ "With kind regards,\n"
-#~ "\n"
-#~ "Col. Falkland"
+#"Good morning, Sir.\n"
+#"\n"
+#"We have a confirmed sighting of live aliens in %s. Civilians are at risk; I recommend we send troops over there right away. Good luck and good hunting.\n"
+#"\n"
+#"With kind regards,\n"
+#"\n"
+#"Col. Falkland"
 
 #~ msgid "mail_from_air_cdr"
 #~ msgstr "Kommandør Subakh al-Kuhar, Luftstyrkerne, FALANKS, Hovedkvarteret"
@@ -17959,36 +17966,36 @@ msgstr "Tag et skærmbillede"
 
 #~ msgid "mail_aircraft_lost_target"
 #~ msgstr ""
-#~ "Commander, %s has lost radar tracking of %s and is unable to reacquire. Please provide further orders.\n"
-#~ "\n"
-#~ "-- COMAIR"
+#"Commander, %s has lost radar tracking of %s and is unable to reacquire. Please provide further orders.\n"
+#"\n"
+#"-- COMAIR"
 
 #~ msgid "Aircraft Ready -- %s"
 #~ msgstr "Luftfartøj klar -- %s"
 
 #~ msgid "mail_aircraft_ready"
 #~ msgstr ""
-#~ "Commander, %s has been %s and is ready for action.\n"
-#~ "\n"
-#~ "-- COMAIR"
+#"Commander, %s has been %s and is ready for action.\n"
+#"\n"
+#"-- COMAIR"
 
 #~ msgid "Aircraft Bingo Fuel -- %s"
 #~ msgstr "Luftfartøj bingobrændstof -- %s"
 
 #~ msgid "mail_aircraft_bingo_fuel"
 #~ msgstr ""
-#~ "Commander, %s has run out of flight time. It has only enough fuel left to return to %s. Mission has been aborted.\n"
-#~ "\n"
-#~ "-- COMAIR"
+#"Commander, %s has run out of flight time. It has only enough fuel left to return to %s. Mission has been aborted.\n"
+#"\n"
+#"-- COMAIR"
 
 #~ msgid "Aircraft Landed -- %s"
 #~ msgstr "Luftfartøj landet -- %s"
 
 #~ msgid "mail_aircraft_landed"
 #~ msgstr ""
-#~ "Kommandør, %s er landet i base %s. Den bliver nu %s. Vi anslår at luftfartøjet er klar til afgang igen om %s timer.\n"
-#~ "\n"
-#~ "-- COMAIR"
+#"Kommandør, %s er landet i base %s. Den bliver nu %s. Vi anslår at luftfartøjet er klar til afgang igen om %s timer.\n"
+#"\n"
+#"-- COMAIR"
 
 #~ msgid "Watch out for Reaction Fire! A soldier can fall under Reaction Fire even if another soldier is moving."
 #~ msgstr "Pas på reaktionsild! En soldat kan falde i reaktionsild selv hvis en anden soldat bevæger sig."

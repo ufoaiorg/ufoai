@@ -569,9 +569,9 @@ msgstr "Sehr schwere Kampagne"
 #: ../base/ufos/campaign.ufo:4
 msgid "veryhard_campaign_txt"
 msgstr ""
-"Dies ist eine extrem schwere Version der Standardkampagne. In diesem Szenario sind die Chancen stark gegen Sie. Sie erhalten wenig Rekruten und die Nationen sind sehr anspruchsvoll. Die Außerirdischen zeigen keine Gnade.\n"
+"Dies ist eine extrem schwierige Variante der Standardkampagne. In diesem Szenario stehen alle Chancen gegen Sie. Sie erhalten wenig Rekruten und die Nationen zeigen sich sehr anspruchsvoll. Die Außerirdischen werden Ihnen gegenüber keinerlei Gnade zeigen.\n"
 "\n"
-"Diese Option stellt die sehr schwere Schwierigkeitsstufe dar und wird für Spieler empfohlen, die die schwere Stufe bereits geschafft haben und sich eine noch schwerere Herausforderung wünschen."
+"Diese Option stellt die sehr schwere Schwierigkeitsstufe dar und wird für Spieler empfohlen, die die schwere Stufe bereits geschafft haben und sich eine noch größere Herausforderung wünschen."
 
 #: ../base/ufos/campaign.ufo:31
 msgid "Hard Campaign"
@@ -580,7 +580,7 @@ msgstr "Schwierige Kampagne"
 #: ../base/ufos/campaign.ufo:32
 msgid "hard_campaign_txt"
 msgstr ""
-"Dies ist eine schwerere Version der Standardkampagne. Sie bekommen weniger Soldaten, Techniker und Wissenschaftler. Die Nationen sind schwerer zufriedenzustellen, die Forschung ist langsamer und braucht mehr Mittel und die Außerirdischen sind stärker.\n"
+"Dies ist eine schwierigere Variante der Standardkampagne. Sie bekommen weniger Soldaten, Techniker und Wissenschaftler. Die Nationen sind schwerer zufriedenzustellen, die Forschung ist langsamer und braucht mehr Mittel und die Außerirdischen sind stärker.\n"
 "\n"
 "Diese Option stellt die schwere Schwierigkeitsstufe dar und wird für fortgeschrittene Spieler empfohlen."
 
@@ -602,7 +602,7 @@ msgstr "Einfache Kampagne"
 #: ../base/ufos/campaign.ufo:114
 msgid "easy_campaign_txt"
 msgstr ""
-"Dies ist eine leichtere Version der Standardkampagne. Die Außerirdischen sind schwächer, UFO Angriffe finden seltener statt und Sie erhalten mehr neue Rekruten, um Verluste auszugleichen.\n"
+"Dies ist eine leichtere Variante der Standardkampagne. Die Außerirdischen sind schwächer, UFO Angriffe finden seltener statt und Sie erhalten mehr neue Rekruten, um Verluste auszugleichen.\n"
 "\n"
 "Diese Kampagne stellt die leichte Schwierigkeitsstufe dar und ist eine gute Wahl für Spieler, die zum ersten Mal spielen und einfacheres Spielen wünschen, als es die Standardkampagne erlaubt."
 
@@ -613,9 +613,9 @@ msgstr "Sehr leichte Kampagne"
 #: ../base/ufos/campaign.ufo:145
 msgid "veryeasy_campaign_txt"
 msgstr ""
-"Dies ist eine sehr leichte Version der Standardkampagne. Ihre Streitkräfte sind stärker, die Außerirdischen weniger gefährlich und Sie werden weniger Verluste während der Kampagne haben.\n"
+"Dies ist eine sehr leichte Variante der Standardkampagne. Ihre Streitkräfte sind mächtiger, die Außerirdischen weniger gefährlich und Sie werden nur wenige Verluste über die Kampagne erleben.\n"
 "\n"
-"Diese Kampagne repräsentiert den sehr leichten Schwierigkeitsgrad und ist eine gute Option für Spieler, die zum ersten Mal spielen und erst mal UFO: AI antesten wollen."
+"Diese Kampagne repräsentiert den sehr leichten Schwierigkeitsgrad und ist eine Alternative für Neueinsteiger, die UFO: AI antesten wollen."
 
 #: ../base/ufos/campaign.ufo:195
 msgid "Play the aliens"
@@ -3951,7 +3951,7 @@ msgstr ""
 "\n"
 "Sind einige der Systeme noch aktiv oder gibt es gar eingebaute Fallen, die wir auslösen könnten? Aus welchem Material wurde es hergestellt? Welche Gefahren birgt die Lagerung oder Demontage des UFOs und seiner Systeme? Diese und weitere Fragen müssen beantwortet werden, bevor wir die nächsten Schritte einleiten können.\n"
 "\n"
-"Wir sind einsatzbereit und können damit starten, wann immer Sie uns den Befehl erteilen - allerdings brauchen wir Laborzeit und finanzielle Unterstützung, um eine aussagefähige Beurteilung dieser erstaunlichen Technologie machen zu können.\n"
+"Wir sind einsatzbereit und können damit starten, wann immer Sie uns den Befehl erteilen - allerdings brauchen wir Zeit für Forschung und finanzielle Unterstützung, um eine aussagefähige Beurteilung dieser erstaunlichen Technologie machen zu können.\n"
 "\n"
 "--Cdr. Navarre"
 
@@ -7468,7 +7468,8 @@ msgstr ""
 
 #: ../base/ufos/research.ufo:3642
 msgid "inter_stingray_pre_txt"
-msgstr "By: Cdr. Paul Navarre, R&D: Engineering Division, PHALANX, Atlantic Operations Command"
+msgstr ""
+"By: Cdr. Paul Navarre, R&D: Engineering Division, PHALANX, Atlantic Operations Command"
 
 #: ../base/ufos/research.ufo:3692
 msgid "ufo_scout_txt"
@@ -8203,7 +8204,8 @@ msgstr ""
 
 #: ../base/ufos/research.ufo:4471
 msgid "ugv_weapon_autocannon_pre_txt"
-msgstr "By: Cdr. Paul Navarre, F&E: Technische Abteilung, PHALANX, Atlantisches Operationskommando"
+msgstr ""
+"By: Cdr. Paul Navarre, F&E: Technische Abteilung, PHALANX, Atlantisches Operationskommando"
 
 #: ../base/ufos/research.ufo:4518
 msgid "'Raven' ECM Unit"
@@ -8744,14 +8746,14 @@ msgstr ""
 "\n"
 "Gewichts- und treibstoffbedingt hat die TR-20 Rakete eine effektive Reichweite von 4 Kilometern, über der hinaus die Rakete schnell an Durchschlagskraft verliert.\n"
 "\n"
-"Eine einzelne Rakete wiegt etwas unter 4 Kilogramm, ein vollgeladener Werfer knapp 540 kg.\n"
+"Eine einzelne Rakete wiegt etwas unter 4 Kilogramm, ein voll geladener Werfer knapp 540 kg.\n"
 "\n"
 "\n"
 "Empfohlener Einsatz\n"
 "\n"
 "Wir rechnen damit, dass sich der TR-20 gegen langsamere oder sich langsam bewegende UFOs bewähren wird, vor allem, wenn deren Antriebssysteme in irgendeiner Weise beschädigt wurden. In diesen Situationen werden die TR-20-Raketen glänzen und gnadenlos in das Ziel einschlagen. Jedoch sinkt die Zielgenauigkeit rapide bei schnelleren Gegnern. Schadenspotential an sich ist irrelevant, wenn wir keinen einzigen Treffer verbuchen können.\n"
 "\n"
-"Aus diesem Grund wird empfohlen, den TR-20 in Maßen und vorwiegend in Situationen einzusetzen, die seinen Stärken entgegenspielen, wie zum Beispiel der Angriff eines UFOs mit mehreren Flugzeugen. Der Staffelführer kann das Ziel mit Geschützen und Lenkwaffen in die Angriffzone seiner Flügelmänner lenken, von wo diese dann eine klare Schusslinie mit ihren Raketen hat. Selbst dann sollte nicht mehr als ein einzelner TR-20-Raketenwerfer auf ein Flugzeug geladen werden, um maximale Luft-Luft-Effizienz zu gewährleisten.\n"
+"Aus diesem Grund wird empfohlen, den TR-20 in Maßen und vorwiegend in Situationen einzusetzen, die seinen Stärken entgegenspielen, wie zum Beispiel der Angriff eines UFOs mit mehreren Flugzeugen. Der Staffelführer kann das Ziel mit Geschützen und Lenkwaffen in die Angriffszone seiner Flügelmänner lenken, von wo diese dann eine klare Schusslinie mit ihren Raketen hat. Selbst dann sollte nicht mehr als ein einzelner TR-20-Raketenwerfer auf ein Flugzeug geladen werden, um maximale Luft-Luft-Effizienz zu gewährleisten.\n"
 "\n"
 "Wenn das Missionsziel stationär oder bodengebunden ist, werden diese Raketen ideal sein, um jedwed geartete Verteidigung vor einer taktischen Mission aufzuweichen.\n"
 "\n"
@@ -9565,35 +9567,43 @@ msgstr "Copyright 2004-2010 by UFO: AI Team"
 
 #: ../base/ufos/seq_intro.ufo:46
 msgid "intro_sentence1"
-msgstr "Wir schreiben das Jahr 2084. Die Erde, die nie der ruhigste Ort war, erfreut sich einer Zeit des relativen Friedens. Die gewaltätigen Anfänge des 21. Jahrhunderts gehören der Vergangenheit an; ferne Erinnerungen, aber nicht so weit weg, als dass sie in Vergessenheit geraten sind. Für die meisten Menschen ist der zweite Kalte Krieg ein dunkler Schatten der Vergangenheit, so wie die Weltkriege es für die Kinder des späten 20. Jahrhunderts waren."
+msgstr ""
+"Wir schreiben das Jahr 2084. Die Erde, die nie der ruhigste Ort war, erfreut sich einer Zeit des relativen Friedens. Die gewalttätigen Anfänge des 21. Jahrhunderts gehören der Vergangenheit an; ferne Erinnerungen, aber nicht so weit weg, als dass sie in Vergessenheit geraten sind. Für die meisten Menschen ist der zweite Kalte Krieg ein dunkler Schatten der Vergangenheit, so wie die Weltkriege es für die Kinder des späten 20. Jahrhunderts waren."
 
 #: ../base/ufos/seq_intro.ufo:58
 msgid "intro_sentence2"
-msgstr "Konflikte wurden gegen Ende des Jahrhunderts seltener, nachdem Hochtechnologie und das allgemeine Gesundheitswesen für die dritte Welt verfügbar wurden. Sogar die Feuer des Terrorismus sind als Folge des zweiten Kalten Krieges abgekühlt, mit den Schrecken und Unmenschlichkeiten immer noch frisch im Gedächtnis der Menschen, von den alten Vereinigten Staaten bis hin zum verwüsteten indischen Subkontinent. Klassenkämpfe haben sich auf das politische Schlachtfeld verlagert, da nun jedem Land eine gerechte Vertretung in der UN garantiert ist und der globale Lebensstandard auch in den entlegensten Teilen der Welt zunimmt. Länder haben sich gefestigt, sich um eine umstrukturierte UN stabilisiert, welche erfolgreich die Regierungen der Welt kontrolliert. Verteilte Grüppchen kleinerer Länder, zuerst verängstigt durch die starken Machtblöcke um China und die Europäische Union, haben sich in mächtigen politischen Lagern zusammengeschlossen -- um dann herauszufinden, dass es keine Nachbarn gibt, die man sicher bekämpfen könnte. Zum ersten Mal in der Geschichte der Menschheit gibt es Recht und Ordnung auf mehr als drei Vierteln der Erde."
+msgstr ""
+"Konflikte wurden gegen Ende des Jahrhunderts seltener, nachdem Hochtechnologie und das allgemeine Gesundheitswesen für die dritte Welt verfügbar wurden. Sogar die Feuer des Terrorismus sind als Folge des zweiten Kalten Krieges abgekühlt, mit den Schrecken und Unmenschlichkeiten immer noch frisch im Gedächtnis der Menschen, von den alten Vereinigten Staaten bis hin zum verwüsteten indischen Subkontinent. Klassenkämpfe haben sich auf das politische Schlachtfeld verlagert, da nun jedem Land eine gerechte Vertretung in der UN garantiert ist und der globale Lebensstandard auch in den entlegensten Teilen der Welt zunimmt. Länder haben sich gefestigt, sich um eine umstrukturierte UN stabilisiert, welche erfolgreich die Regierungen der Welt kontrolliert. Verteilte Grüppchen kleinerer Länder, zuerst verängstigt durch die starken Machtblöcke um China und die Europäische Union, haben sich in mächtigen politischen Lagern zusammengeschlossen -- um dann herauszufinden, dass es keine Nachbarn gibt, die man sicher bekämpfen könnte. Zum ersten Mal in der Geschichte der Menschheit gibt es Recht und Ordnung auf mehr als drei Vierteln der Erde."
 
 #: ../base/ufos/seq_intro.ufo:70
 msgid "intro_sentence3"
-msgstr "Für viele Menschen scheint es, als würde alles gut laufen."
+msgstr ""
+"Für viele Menschen scheint es, als würde alles gut laufen."
 
 #: ../base/ufos/seq_intro.ufo:115
 msgid "intro_sentence4"
-msgstr "Der erste Angriff trifft die Stadt Mumbai am 3. März 2084. Sechs kleine UFOs erscheinen aus dem Nirgendwo, stürzen unentdeckt von den riesigen Radaranlagen um Mumbai herum aus der Erdumlaufbahn herunter und landen in der wohl bevölkerungsreichsten Stadt der Welt. Es gibt keine Warnung, keine Erklärung. Zwanzigtausend unschuldige Zivilisten und drei Bataillone Elitesoldaten werden innerhalb von zwölf Stunden brutal massakriert, bevor eine große Zahl von Soldaten des Commonwealth es schafft, den Alienvormarsch aufzuhalten. Dann, so plötzlich wie sie erschienen sind, ziehen sie sich zu ihren Schiffen zurück und verschwinden wieder in der Erdumlaufbahn. Der einzige Beweis für ihr Dasein sind die verwüsteten Straßen Mumbais."
+msgstr ""
+"Der erste Angriff trifft die Stadt Mumbai am 3. März 2084. Sechs kleine UFOs erscheinen aus dem Nirgendwo, stürzen unentdeckt von den riesigen Radaranlagen um Mumbai herum aus der Erdumlaufbahn herunter und landen in der wohl bevölkerungsreichsten Stadt der Welt. Es gibt keine Warnung, keine Erklärung. Zwanzigtausend unschuldige Zivilisten und drei Bataillone Elitesoldaten werden innerhalb von zwölf Stunden brutal massakriert, bevor eine große Zahl von Soldaten des Commonwealth es schafft, den Alienvormarsch aufzuhalten. Dann, so plötzlich wie sie erschienen sind, ziehen sie sich zu ihren Schiffen zurück und verschwinden wieder in der Erdumlaufbahn. Der einzige Beweis für ihr Dasein sind die verwüsteten Straßen Mumbais."
 
 #: ../base/ufos/seq_intro.ufo:133
 msgid "intro_sentence5"
-msgstr "Eine Notfallversammlung der UN ergibt keine schlüssige Richtung. Die Einfälle der Aliens häufen sich, größer und grausamer als vorher, diesmal in Bonn, Johannesburg und Bangkok. Einige Nationen versuchen es mit Diplomatie und schicken Nachrichten in tausend verschiedenen Sprachen an die Aliens, die das Land verwüsten. Ihre Worte werden ignoriert. Innerhalb weniger Stunden sind diese drei Städte jedes Lebens beraubt. Der Angriff ist schon vorbei, als die verschiedenen Truppen die Erlaubnis zum Zurückschlagen bekommen. Die Aliens lassen nichts zurück außer Beton und Blut. Alle UFOs verschwinden, ohne Spuren zu hinterlassen -- aber niemand zweifelt daran, dass sie zurückkehren werden."
+msgstr ""
+"Eine Notfallversammlung der UN ergibt keine schlüssige Richtung. Die Einfälle der Aliens häufen sich, größer und grausamer als vorher, diesmal in Bonn, Johannesburg und Bangkok. Einige Nationen versuchen es mit Diplomatie und schicken Nachrichten in tausend verschiedenen Sprachen an die Aliens, die das Land verwüsten. Ihre Worte werden ignoriert. Innerhalb weniger Stunden sind diese drei Städte jedes Lebens beraubt. Der Angriff ist schon vorbei, als die verschiedenen Truppen die Erlaubnis zum Zurückschlagen bekommen. Die Aliens lassen nichts zurück außer Beton und Blut. Alle UFOs verschwinden, ohne Spuren zu hinterlassen -- aber niemand zweifelt daran, dass sie zurückkehren werden."
 
 #: ../base/ufos/seq_intro.ufo:196
 msgid "intro_sentence6"
-msgstr "87 Stunden nach dem Angriff auf Mumbai erklärt die Erde den Aliens den Krieg. Zwei Wochen lang versuchen die Armeen der Menschen, die Alienangriffe abzuwehren. Sie erzielen sehr wenig Erfolge."
+msgstr ""
+"87 Stunden nach dem Angriff auf Mumbai erklärt die Erde den Aliens den Krieg. Zwei Wochen lang versuchen die Armeen der Menschen, die Alienangriffe abzuwehren. Sie erzielen sehr wenig Erfolge."
 
 #: ../base/ufos/seq_intro.ufo:207
 msgid "intro_sentence7"
-msgstr "Mit dem letzten Ausweg in der Hand tritt die UN in Aktion. Uralte Ausrüstung wird entstaubt, einiges älter als ein Jahrhundert, und die lange nicht mehr bestehende Anti-Alien-Behörde der früheren Vereinigten Staaten -- PHALANX -- entsteht unter dem Banner der UN neu. Ihre Pflicht ist es, die Alienbedrohung zu bekämpfen und das Überleben der Menschheit unter allen Umständen zu sichern."
+msgstr ""
+"Mit dem letzten Ausweg in der Hand tritt die UN in Aktion. Uralte Ausrüstung wird entstaubt, einiges älter als ein Jahrhundert, und die lange nicht mehr bestehende Anti-Alien-Behörde der früheren Vereinigten Staaten -- PHALANX -- entsteht unter dem Banner der UN neu. Ihre Pflicht ist es, die Alienbedrohung zu bekämpfen und das Überleben der Menschheit unter allen Umständen zu sichern."
 
 #: ../base/ufos/seq_intro.ufo:218
 msgid "intro_sentence8"
-msgstr "Finanziert durch alle acht politischen Mächte und durch das Rekrutieren der besten Soldaten aller Armeen, ist PHALANX das Beste vom Besten. Diese Soldaten sind die erste und einzige Verteidigungslinie der Erde. Diese darf nicht fallen; denn wenn sie es tut, hat die Menschheit keine Chance mehr."
+msgstr ""
+"Finanziert durch alle acht politischen Mächte und durch das Rekrutieren der besten Soldaten aller Armeen, ist PHALANX das Beste vom Besten. Diese Soldaten sind die erste und einzige Verteidigungslinie der Erde. Diese darf nicht fallen; denn wenn sie es tut, hat die Menschheit keine Chance mehr."
 
 #: ../base/ufos/seq_tutorials.ufo:3 ../base/ufos/ui/options.ufo:75
 msgid "Gameplay"
@@ -17861,25 +17871,25 @@ msgstr "Screenshot speichern"
 
 #~ msgid "mail_alien_ufo_crashed"
 #~ msgstr ""
-#~ "Herr Kommandant, %s ist zu sehr beschädigt, um geborgen zu werden.\n"
-#~ "\n"
-#~ "Allerdings ist es uns gelungen einiges an verwertbarer Ausrüstung aus dem Wrack zu bergen.\n"
-#~ "\n"
-#~ "Die folgenden Gegenstände werden mit dem Landungsschiff in %s eintreffen:\n"
-#~ "\n"
-#~ "%s"
+#"Herr Kommandant, %s ist zu sehr beschädigt, um geborgen zu werden.\n"
+#"\n"
+#"Allerdings ist es uns gelungen einiges an verwertbarer Ausrüstung aus dem Wrack zu bergen.\n"
+#"\n"
+#"Die folgenden Gegenstände werden mit dem Landungsschiff in %s eintreffen:\n"
+#"\n"
+#"%s"
 
 #~ msgid "mail_alien_ufo_recovered"
 #~ msgstr ""
-#~ "Herr Kommandant, es ist uns gelungen ein funktionsfähiges UFO vom Typ %s zu bergen.\n"
-#~ "\n"
-#~ "Es wird zur Basis %s eskortiert und wird dort in zwei Tagen ankommen.\n"
-#~ "\n"
-#~ "Wir werden es demontieren müssen falls wir Teile davon verwenden wollen. Folgendes könnte dabei herauskommen:\n"
-#~ "\n"
-#~ "%s\n"
-#~ "\n"
-#~ "(sate is: do not translate - archived translation here in case current version becomes final)"
+#"Herr Kommandant, es ist uns gelungen ein funktionsfähiges UFO vom Typ %s zu bergen.\n"
+#"\n"
+#"Es wird zur Basis %s eskortiert und wird dort in zwei Tagen ankommen.\n"
+#"\n"
+#"Wir werden es demontieren müssen falls wir Teile davon verwenden wollen. Folgendes könnte dabei herauskommen:\n"
+#"\n"
+#"%s\n"
+#"\n"
+#"(sate is: do not translate - archived translation here in case current version becomes final)"
 
 #~ msgid "Not Enough Money -- %s"
 #~ msgstr "Nicht genügend Geld -- %s"
@@ -17993,11 +18003,11 @@ msgstr "Screenshot speichern"
 
 #~ msgid "mail_alien_activity_reported"
 #~ msgstr ""
-#~ "Herr Kommandant,Wir haben die Bestätigung von Aktivitäten Außerirdischer in %s. Zivilisten sind in Gefahr; Ich schlage vor, dass wir sofort Truppen dorthin entsenden. Weidmanns Heil.\n"
-#~ "\n"
-#~ "Mit freundlichen Grüßen,\n"
-#~ "\n"
-#~ "Col. Falkland"
+#"Herr Kommandant,Wir haben die Bestätigung von Aktivitäten Außerirdischer in %s. Zivilisten sind in Gefahr; Ich schlage vor, dass wir sofort Truppen dorthin entsenden. Weidmanns Heil.\n"
+#"\n"
+#"Mit freundlichen Grüßen,\n"
+#"\n"
+#"Col. Falkland"
 
 #~ msgid "mail_from_air_cdr"
 #~ msgstr "Cdr. (Luft) Subakh al-Kuhar, Luftgeschwader, PHALANX, Atlantisches Operationskommando"
