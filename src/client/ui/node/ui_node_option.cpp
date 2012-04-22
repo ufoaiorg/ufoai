@@ -91,13 +91,13 @@ void uiOptionNode::doLayout (uiNode_t *node)
 	node->invalidated = qfalse;
 }
 
-void uiOptionNode::propertyChanged (uiNode_t *node, const value_t *property)
+void uiOptionNode::onPropertyChanged (uiNode_t *node, const value_t *property)
 {
 	if (property == propertyCollapsed) {
 		UI_Invalidate(node);
 		return;
 	}
-	uiLocatedNode::propertyChanged(node, property);
+	uiLocatedNode::onPropertyChanged(node, property);
 }
 
 /**

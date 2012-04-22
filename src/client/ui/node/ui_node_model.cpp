@@ -412,7 +412,7 @@ void UI_DrawModelNode (uiNode_t *node, const char *source)
 static int oldMousePosX = 0;
 static int oldMousePosY = 0;
 
-void uiModelNode::capturedMouseMove (uiNode_t *node, int x, int y)
+void uiModelNode::onCapturedMouseMove (uiNode_t *node, int x, int y)
 {
 	float *rotateAngles = EXTRADATA(node).angles;
 
@@ -435,7 +435,7 @@ void uiModelNode::capturedMouseMove (uiNode_t *node, int x, int y)
 	oldMousePosY = y;
 }
 
-void uiModelNode::mouseDown (uiNode_t *node, int x, int y, int button)
+void uiModelNode::onMouseDown (uiNode_t *node, int x, int y, int button)
 {
 	if (button != K_MOUSE1)
 		return;
@@ -446,7 +446,7 @@ void uiModelNode::mouseDown (uiNode_t *node, int x, int y, int button)
 	oldMousePosY = y;
 }
 
-void uiModelNode::mouseUp (uiNode_t *node, int x, int y, int button)
+void uiModelNode::onMouseUp (uiNode_t *node, int x, int y, int button)
 {
 	if (button != K_MOUSE1)
 		return;
@@ -458,7 +458,7 @@ void uiModelNode::mouseUp (uiNode_t *node, int x, int y, int button)
 /**
  * @brief Called before loading. Used to set default attribute values
  */
-void uiModelNode::loading (uiNode_t *node)
+void uiModelNode::onLoading (uiNode_t *node)
 {
 	Vector4Set(node->color, 1, 1, 1, 1);
 	VectorSet(EXTRADATA(node).scale, 1, 1, 1);
@@ -487,7 +487,7 @@ void uiModelNode::deleteNode (uiNode_t *node)
 	EXTRADATA(node).oldRefValue = NULL;
 }
 
-void uiModelNode::loaded (uiNode_t *node)
+void uiModelNode::onLoaded (uiNode_t *node)
 {
 	/* a tag without but not a submodel */
 	if (EXTRADATA(node).tag != NULL && node->behaviour != node->parent->behaviour) {

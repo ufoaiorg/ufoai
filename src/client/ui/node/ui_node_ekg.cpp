@@ -103,7 +103,7 @@ void uiEkgNode::draw (uiNode_t *node)
 /**
  * @brief Called at the begin of the load from script
  */
-void uiEkgNode::loading (uiNode_t *node)
+void uiEkgNode::onLoading (uiNode_t *node)
 {
 	EXTRADATA(node).scaleCvarValue = 1.0f;
 	EXTRADATA(node).scrollSpeed = 0.07f;

@@ -472,9 +472,9 @@ void uiPanelNode::doLayout (uiNode_t *node)
 /**
  * @brief Handled after the end of the load of the node from script (all data and/or child are set)
  */
-void uiPanelNode::loading (uiNode_t *node)
+void uiPanelNode::onLoading (uiNode_t *node)
 {
-	uiLocatedNode::loading(node);
+	uiLocatedNode::onLoading(node);
 	EXTRADATA(node).wheelScrollable = qtrue;
 }
 
@@ -482,7 +482,7 @@ void uiPanelNode::loading (uiNode_t *node)
 static int mouseScrollX;
 static int mouseScrollY;
 
-bool uiPanelNode::mouseLongPress(uiNode_t* node, int x, int y, int button)
+bool uiPanelNode::onMouseLongPress(uiNode_t* node, int x, int y, int button)
 {
 	bool hasSomethingToScroll = EXTRADATA(node).super.scrollX.fullSize > EXTRADATA(node).super.scrollX.viewSize
 			|| EXTRADATA(node).super.scrollY.fullSize > EXTRADATA(node).super.scrollY.viewSize;
@@ -495,18 +495,18 @@ bool uiPanelNode::mouseLongPress(uiNode_t* node, int x, int y, int button)
 	return false;
 }
 
-bool uiPanelNode::startDragging(uiNode_t* node, int startX, int startY, int x, int y, int button)
+bool uiPanelNode::onStartDragging(uiNode_t* node, int startX, int startY, int x, int y, int button)
 {
-	return mouseLongPress(node, startX, startY, button);
+	return onMouseLongPress(node, startX, startY, button);
 }
 
-void uiPanelNode::mouseUp (uiNode_t* node, int x, int y, int button)
+void uiPanelNode::onMouseUp (uiNode_t* node, int x, int y, int button)
 {
 	if (UI_GetMouseCapture() == node)  /* More checks can never hurt */
 		UI_MouseRelease();
 }
 
-void uiPanelNode::capturedMouseMove (uiNode_t *node, int x, int y)
+void uiPanelNode::onCapturedMouseMove (uiNode_t *node, int x, int y)
 {
 	/** @todo do it as well for x */
 	if (mouseScrollY != y) {
@@ -519,7 +519,7 @@ void uiPanelNode::capturedMouseMove (uiNode_t *node, int x, int y)
 /**
  * @brief Handled after the end of the load of the node from script (all data and/or child are set)
  */
-void uiPanelNode::loaded (uiNode_t *node)
+void uiPanelNode::onLoaded (uiNode_t *node)
 {
 #ifdef DEBUG
 	if (node->size[0] < CORNER_SIZE + MID_SIZE + CORNER_SIZE || node->size[1] < CORNER_SIZE + MID_SIZE + CORNER_SIZE)
@@ -535,7 +535,7 @@ void uiPanelNode::getClientPosition (const uiNode_t *node, vec2_t position)
 	position[1] = -EXTRADATACONST(node).super.scrollY.viewPos;
 }
 
-void uiPanelNode::propertyChanged (uiNode_t *node, const value_t *property)
+void uiPanelNode::onPropertyChanged (uiNode_t *node, const value_t *property)
 {
 	/** @todo move it to registration code when it is possible */
 	if (propertyPadding == NULL) {
@@ -546,7 +546,7 @@ void uiPanelNode::propertyChanged (uiNode_t *node, const value_t *property)
 		UI_Invalidate(node);
 		return;
 	}
-	uiAbstractScrollableNode::propertyChanged(node, property);
+	uiAbstractScrollableNode::onPropertyChanged(node, property);
 }
 
 /**
@@ -555,7 +555,7 @@ void uiPanelNode::propertyChanged (uiNode_t *node, const value_t *property)
  * @param[in] deltaX horizontal scrolling value (not used)
  * @param[in] deltaX vertical scrolling value
  */
-bool uiPanelNode::scroll (uiNode_t *node, int deltaX, int deltaY)
+bool uiPanelNode::onScroll (uiNode_t *node, int deltaX, int deltaY)
 {
 	bool updated;
 

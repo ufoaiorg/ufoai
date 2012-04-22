@@ -254,7 +254,7 @@ void uiMessageListNode::draw (uiNode_t *node)
 	}
 }
 
-bool uiMessageListNode::scroll (uiNode_t *node, int deltaX, int deltaY)
+bool uiMessageListNode::onScroll (uiNode_t *node, int deltaX, int deltaY)
 {
 	bool down = deltaY > 0;
 	bool updated;
@@ -292,7 +292,7 @@ static void UI_MessageDebugUseAllIcons_f (void)
 }
 #endif
 
-void uiMessageListNode::loading (uiNode_t *node)
+void uiMessageListNode::onLoading (uiNode_t *node)
 {
 	Vector4Set(node->color, 1.0, 1.0, 1.0, 1.0);
 }
@@ -301,7 +301,7 @@ void uiMessageListNode::loading (uiNode_t *node)
  * @brief Track mouse down/up events to implement drag&drop-like scrolling, for touchscreen devices
  * @sa UI_TextNodeMouseUp, UI_TextNodeCapturedMouseMove
 */
-void uiMessageListNode::mouseDown (uiNode_t* node, int x, int y, int button)
+void uiMessageListNode::onMouseDown (uiNode_t* node, int x, int y, int button)
 {
 	if (!UI_GetMouseCapture() && button == K_MOUSE1 &&
 		EXTRADATA(node).scrollY.fullSize > EXTRADATA(node).scrollY.viewSize) {
@@ -311,13 +311,13 @@ void uiMessageListNode::mouseDown (uiNode_t* node, int x, int y, int button)
 	}
 }
 
-void uiMessageListNode::mouseUp (uiNode_t* node, int x, int y, int button)
+void uiMessageListNode::onMouseUp (uiNode_t* node, int x, int y, int button)
 {
 	if (UI_GetMouseCapture() == node)  /* More checks can never hurt */
 		UI_MouseRelease();
 }
 
-void uiMessageListNode::capturedMouseMove (uiNode_t *node, int x, int y)
+void uiMessageListNode::onCapturedMouseMove (uiNode_t *node, int x, int y)
 {
 	const int lineHeight = getCellHeight(node);
 	const int deltaY = (mouseScrollY - y) / lineHeight;
@@ -328,7 +328,7 @@ void uiMessageListNode::capturedMouseMove (uiNode_t *node, int x, int y)
 		mouseScrollX = x;
 		mouseScrollY = y;
 	}
-	mouseMove(node, x, y);
+	onMouseMove(node, x, y);
 }
 
 /**

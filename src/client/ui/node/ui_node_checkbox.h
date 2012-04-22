@@ -29,9 +29,9 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 
 class uiCheckBoxNode : public uiAbstractValueNode {
 	void draw(uiNode_t* node) OVERRIDE;
-	void loading(uiNode_t* node) OVERRIDE;
-	void leftClick(uiNode_t* node, int x, int y) OVERRIDE;
-	void activate(uiNode_t* node) OVERRIDE;
+	void onLoading(uiNode_t* node) OVERRIDE;
+	void onLeftClick(uiNode_t* node, int x, int y) OVERRIDE;
+	void onActivate(uiNode_t* node) OVERRIDE;
 };
 
 void UI_RegisterCheckBoxNode(struct uiBehaviour_s *behaviour);

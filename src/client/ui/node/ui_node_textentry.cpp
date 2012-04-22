@@ -113,7 +113,7 @@ static void UI_TextEntryNodeFocus (uiNode_t *node, const uiCallContext_t *contex
 /**
  * @brief Called when the user click with the right mouse button
  */
-void uiTextEntryNode::leftClick (uiNode_t *node, int x, int y)
+void uiTextEntryNode::onLeftClick (uiNode_t *node, int x, int y)
 {
 	if (node->disabled)
 		return;
@@ -135,7 +135,7 @@ void uiTextEntryNode::leftClick (uiNode_t *node, int x, int y)
 /**
  * @brief Called when the node got the focus
  */
-void uiTextEntryNode::focusGained (uiNode_t *node)
+void uiTextEntryNode::onFocusGained (uiNode_t *node)
 {
 	assert(editedCvar == NULL);
 	/* skip '*cvar ' */
@@ -148,7 +148,7 @@ void uiTextEntryNode::focusGained (uiNode_t *node)
 /**
  * @brief Called when the node lost the focus
  */
-void uiTextEntryNode::focusLost (uiNode_t *node)
+void uiTextEntryNode::onFocusLost (uiNode_t *node)
 {
 	/* already aborted/changed with the keyboard */
 	if (editedCvar == NULL)
@@ -194,7 +194,7 @@ static void UI_TextEntryNodeEdit (uiNode_t *node, unsigned int key)
  * @brief Called when we press a key when the node got the focus
  * @return True, if we use the event
  */
-bool uiTextEntryNode::keyPressed (uiNode_t *node, unsigned int key, unsigned short unicode)
+bool uiTextEntryNode::onKeyPressed (uiNode_t *node, unsigned int key, unsigned short unicode)
 {
 	switch (key) {
 	/* remove the last char */
@@ -294,7 +294,7 @@ void uiTextEntryNode::draw (uiNode_t *node)
 /**
  * @brief Call before the script initialization of the node
  */
-void uiTextEntryNode::loading (uiNode_t *node)
+void uiTextEntryNode::onLoading (uiNode_t *node)
 {
 	node->padding = 8;
 	node->contentAlign = ALIGN_CL;

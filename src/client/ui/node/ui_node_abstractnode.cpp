@@ -104,7 +104,7 @@ static void UI_NodeSetProperty_f (void)
 /**
  * Mouse enter on the node (a child node is part of the node)
  */
-void uiLocatedNode::mouseEnter(uiNode_t* node)
+void uiLocatedNode::onMouseEnter(uiNode_t* node)
 {
 	UI_ExecuteEventActions(node, node->onMouseEnter);
 }
@@ -112,31 +112,31 @@ void uiLocatedNode::mouseEnter(uiNode_t* node)
 /**
  * Mouse leave the node (a child node is part of the node)
  */
-void uiLocatedNode::mouseLeave(uiNode_t* node)
+void uiLocatedNode::onMouseLeave(uiNode_t* node)
 {
 	UI_ExecuteEventActions(node, node->onMouseLeave);
 }
 
-bool uiLocatedNode::dndEnter (uiNode_t *node)
+bool uiLocatedNode::onDndEnter (uiNode_t *node)
 {
 	return qfalse;
 }
 
-bool uiLocatedNode::dndMove (uiNode_t *node, int x, int y)
+bool uiLocatedNode::onDndMove (uiNode_t *node, int x, int y)
 {
 	return qtrue;
 }
 
-void uiLocatedNode::dndLeave (uiNode_t *node)
+void uiLocatedNode::onDndLeave (uiNode_t *node)
 {
 }
 
-bool uiLocatedNode::dndDrop (uiNode_t *node, int x, int y)
+bool uiLocatedNode::onDndDrop (uiNode_t *node, int x, int y)
 {
 	return qtrue;
 }
 
-bool uiLocatedNode::dndFinished (uiNode_t *node, bool isDroped)
+bool uiLocatedNode::onDndFinished (uiNode_t *node, bool isDroped)
 {
 	return isDroped;
 }
@@ -147,7 +147,7 @@ bool uiLocatedNode::dndFinished (uiNode_t *node, bool isDroped)
 /**
  * @brief Activate the node. Can be used without the mouse (ie. a button will execute onClick)
  */
-void uiNode::activate (uiNode_t *node)
+void uiNode::onActivate (uiNode_t *node)
 {
 	if (node->onClick)
 		UI_ExecuteEventActions(node, node->onClick);
@@ -169,7 +169,7 @@ void uiLocatedNode::doLayout (uiNode_t *node)
 	node->invalidated = qfalse;
 }
 
-void uiNode::windowOpened (uiNode_t *node, linkedList_t *params)
+void uiNode::onWindowOpened (uiNode_t *node, linkedList_t *params)
 {
 	uiNode_t* child;
 	for (child = node->firstChild; child; child = child->next) {
@@ -177,7 +177,7 @@ void uiNode::windowOpened (uiNode_t *node, linkedList_t *params)
 	}
 }
 
-void uiNode::windowClosed (uiNode_t *node)
+void uiNode::onWindowClosed (uiNode_t *node)
 {
 	uiNode_t* child;
 	for (child = node->firstChild; child; child = child->next) {
@@ -188,7 +188,7 @@ void uiNode::windowClosed (uiNode_t *node)
 /**
  * @brief Callback stub
  */
-void uiLocatedNode::sizeChanged (uiNode_t *node)
+void uiLocatedNode::onSizeChanged (uiNode_t *node)
 {
 	if (node->firstChild != NULL)
 		UI_Invalidate(node);
@@ -205,7 +205,7 @@ static const value_t *propertyHeight;
 static const value_t *propertySize;
 static const value_t *propertyInvis;
 
-void uiNode::propertyChanged (uiNode_t *node, const value_t *property)
+void uiNode::onPropertyChanged (uiNode_t *node, const value_t *property)
 {
 	if (property == propertyWidth || property == propertyHeight || property == propertySize) {
 		UI_Node_SizeChanged(node);
@@ -262,7 +262,7 @@ static void UI_AbstractNodeCallDelete (uiNode_t *node, const uiCallContext_t *co
 	UI_DeleteNode(node);
 }
 
-bool uiLocatedNode::scroll (uiNode_t *node, int deltaX, int deltaY)
+bool uiLocatedNode::onScroll (uiNode_t *node, int deltaX, int deltaY)
 {
 	if (node->onWheelUp && deltaY < 0) {
 		UI_ExecuteEventActions(node, node->onWheelUp);
@@ -284,7 +284,7 @@ void uiLocatedNode::drawTooltip(uiNode_t* node, int x, int y)
 	UI_Tooltip(node, x, y);
 }
 
-void uiLocatedNode::leftClick(uiNode_t* node, int x, int y)
+void uiLocatedNode::onLeftClick(uiNode_t* node, int x, int y)
 {
 	if (node->onClick != NULL) {
 		UI_ExecuteEventActions(node, node->onClick);
@@ -292,7 +292,7 @@ void uiLocatedNode::leftClick(uiNode_t* node, int x, int y)
 	}
 }
 
-void uiLocatedNode::rightClick(uiNode_t* node, int x, int y)
+void uiLocatedNode::onRightClick(uiNode_t* node, int x, int y)
 {
 	if (node->onRightClick != NULL) {
 		UI_ExecuteEventActions(node, node->onRightClick);
@@ -300,7 +300,7 @@ void uiLocatedNode::rightClick(uiNode_t* node, int x, int y)
 	}
 }
 
-void uiLocatedNode::middleClick(uiNode_t* node, int x, int y)
+void uiLocatedNode::onMiddleClick(uiNode_t* node, int x, int y)
 {
 	if (node->onMiddleClick != NULL) {
 		UI_ExecuteEventActions(node, node->onMiddleClick);

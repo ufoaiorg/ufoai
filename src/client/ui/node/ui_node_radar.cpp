@@ -627,7 +627,7 @@ void uiRadarNode::draw (uiNode_t *node)
 /**
  * @brief Called when the node is captured by the mouse
  */
-void uiRadarNode::capturedMouseMove (uiNode_t *node, int x, int y)
+void uiRadarNode::onCapturedMouseMove (uiNode_t *node, int x, int y)
 {
 	const float mapWidth = cl.mapData->mapMax[0] - cl.mapData->mapMin[0];
 	const float mapHeight = cl.mapData->mapMax[1] - cl.mapData->mapMin[1];
@@ -646,28 +646,28 @@ void uiRadarNode::capturedMouseMove (uiNode_t *node, int x, int y)
 	VectorCopy(pos, cl.cam.origin);
 }
 
-void uiRadarNode::mouseDown (uiNode_t *node, int x, int y, int button)
+void uiRadarNode::onMouseDown (uiNode_t *node, int x, int y, int button)
 {
 	if (node->disabled)
 		return;
 
 	if (button == K_MOUSE1) {
 		UI_SetMouseCapture(node);
-		capturedMouseMove(node, x, y);
+		onCapturedMouseMove(node, x, y);
 	}
 }
 
-void uiRadarNode::mouseUp (uiNode_t *node, int x, int y, int button)
+void uiRadarNode::onMouseUp (uiNode_t *node, int x, int y, int button)
 {
 	if (button == K_MOUSE1)
 		UI_MouseRelease();
 }
 
-void uiRadarNode::windowClosed (uiNode_t *node)
+void uiRadarNode::onWindowClosed (uiNode_t *node)
 {
 }
 
-void uiRadarNode::windowOpened (uiNode_t *node, linkedList_t *params)
+void uiRadarNode::onWindowOpened (uiNode_t *node, linkedList_t *params)
 {
 }
 

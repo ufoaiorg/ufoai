@@ -63,7 +63,7 @@ static int oldMousePosX = 0;
 static int oldMousePosY = 0;
 static mapDragMode_t mode = MODE_NULL;
 
-void uiMapNode::capturedMouseMove (uiNode_t *node, int x, int y)
+void uiMapNode::onCapturedMouseMove (uiNode_t *node, int x, int y)
 {
 	switch (mode) {
 	case MODE_SHIFT2DMAP:
@@ -139,14 +139,14 @@ static void UI_MapNodeStartMouseShifting (uiNode_t *node, int x, int y)
 	oldMousePosY = y;
 }
 
-void uiMapNode::leftClick(uiNode_t* node, int x, int y)
+void uiMapNode::onLeftClick(uiNode_t* node, int x, int y)
 {
 	if (mode != MODE_NULL)
 		return;
 	MAP_MapClick(node, x, y);
 }
 
-bool uiMapNode::startDragging(uiNode_t* node, int startX, int startY, int x, int y, int button)
+bool uiMapNode::onStartDragging(uiNode_t* node, int startX, int startY, int x, int y, int button)
 {
 	switch (button) {
 	case K_MOUSE1:
@@ -163,7 +163,7 @@ bool uiMapNode::startDragging(uiNode_t* node, int startX, int startY, int x, int
 	return false;
 }
 
-void uiMapNode::mouseUp (uiNode_t *node, int x, int y, int button)
+void uiMapNode::onMouseUp (uiNode_t *node, int x, int y, int button)
 {
 	if (mode != MODE_NULL) {
 		UI_MouseRelease();
@@ -175,7 +175,7 @@ void uiMapNode::mouseUp (uiNode_t *node, int x, int y, int button)
  * @brief Called when the node have lost the captured node
  * We clean cached data
  */
-void uiMapNode::capturedMouseLost (uiNode_t *node)
+void uiMapNode::onCapturedMouseLost (uiNode_t *node)
 {
 	mode = MODE_NULL;
 }
@@ -197,7 +197,7 @@ static void UI_MapNodeZoom (uiNode_t *node, qboolean out)
 	MAP_StopSmoothMovement();
 }
 
-bool uiMapNode::scroll (uiNode_t *node, int deltaX, int deltaY)
+bool uiMapNode::onScroll (uiNode_t *node, int deltaX, int deltaY)
 {
 	bool down = deltaY > 0;
 	if (deltaY == 0)
@@ -219,7 +219,7 @@ static void UI_MapNodeZoomOut (uiNode_t *node, const uiCallContext_t *context)
 /**
  * @brief Called before loading. Used to set default attribute values
  */
-void uiMapNode::loading (uiNode_t *node)
+void uiMapNode::onLoading (uiNode_t *node)
 {
 	Vector4Set(node->color, 1, 1, 1, 1);
 }

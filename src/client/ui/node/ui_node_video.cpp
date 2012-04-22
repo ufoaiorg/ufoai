@@ -86,12 +86,12 @@ void uiVideoNode::draw (uiNode_t *node)
 	drawOverWindow(node);
 }
 
-void uiVideoNode::windowOpened (uiNode_t *node, linkedList_t *params)
+void uiVideoNode::onWindowOpened (uiNode_t *node, linkedList_t *params)
 {
 	CIN_InitCinematic(&(EXTRADATA(node).cin));
 }
 
-void uiVideoNode::windowClosed (uiNode_t *node)
+void uiVideoNode::onWindowClosed (uiNode_t *node)
 {
 	/* If playing a cinematic, stop it */
 	CIN_CloseCinematic(&(EXTRADATA(node).cin));

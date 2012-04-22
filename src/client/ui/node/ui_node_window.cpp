@@ -219,7 +219,7 @@ void uiWindowNode::doLayout (uiNode_t *node)
  * @brief Called when we init the node on the screen
  * @todo we can move generic code into abstract node
  */
-void uiWindowNode::windowOpened (uiNode_t *node, linkedList_t *params)
+void uiWindowNode::onWindowOpened (uiNode_t *node, linkedList_t *params)
 {
 	uiNode_t *child;
 
@@ -242,7 +242,7 @@ void uiWindowNode::windowOpened (uiNode_t *node, linkedList_t *params)
  * @brief Called when we close the node on the screen
  * @todo we can move generic code into abstract node
  */
-void uiWindowNode::windowClosed (uiNode_t *node)
+void uiWindowNode::onWindowClosed (uiNode_t *node)
 {
 	uiNode_t *child;
 
@@ -259,7 +259,7 @@ void uiWindowNode::windowClosed (uiNode_t *node)
 /**
  * @brief Called at the begin of the load from script
  */
-void uiWindowNode::loading (uiNode_t *node)
+void uiWindowNode::onLoading (uiNode_t *node)
 {
 	node->size[0] = VID_NORM_WIDTH;
 	node->size[1] = VID_NORM_HEIGHT;
@@ -270,7 +270,7 @@ void uiWindowNode::loading (uiNode_t *node)
 /**
  * @brief Called at the end of the load from script
  */
-void uiWindowNode::loaded (uiNode_t *node)
+void uiWindowNode::onLoaded (uiNode_t *node)
 {
 	static const char* closeCommand = "ui_close <path:root>;";
 

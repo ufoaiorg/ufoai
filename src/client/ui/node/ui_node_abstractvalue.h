@@ -29,8 +29,8 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 
 class uiAbstractValueNode : public uiLocatedNode {
 public:
-	void loaded(uiNode_t* node) OVERRIDE;
-	void loading(uiNode_t* node) OVERRIDE;
+	void onLoaded(uiNode_t* node) OVERRIDE;
+	void onLoading(uiNode_t* node) OVERRIDE;
 	void clone(uiNode_t const* source, uiNode_t* clone) OVERRIDE;
 	void newNode(uiNode_t* node) OVERRIDE;
 	void deleteNode(uiNode_t* node) OVERRIDE;

@@ -29,11 +29,11 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 
 class uiMessageListNode : public uiAbstractScrollableNode {
 	void draw(uiNode_t* node) OVERRIDE;
-	void loading(uiNode_t* node) OVERRIDE;
-	bool scroll(uiNode_t* node, int deltaX, int deltaY) OVERRIDE;
-	void mouseDown(uiNode_t* node, int x, int y, int button) OVERRIDE;
-	void mouseUp(uiNode_t* node, int x, int y, int button) OVERRIDE;
-	void capturedMouseMove(uiNode_t* node, int x, int y) OVERRIDE;
+	void onLoading(uiNode_t* node) OVERRIDE;
+	bool onScroll(uiNode_t* node, int deltaX, int deltaY) OVERRIDE;
+	void onMouseDown(uiNode_t* node, int x, int y, int button) OVERRIDE;
+	void onMouseUp(uiNode_t* node, int x, int y, int button) OVERRIDE;
+	void onCapturedMouseMove(uiNode_t* node, int x, int y) OVERRIDE;
 	int getCellHeight (uiNode_t *node) OVERRIDE;
 };
 

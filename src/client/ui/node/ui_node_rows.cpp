@@ -56,7 +56,7 @@ void uiRowsNode::draw (uiNode_t *node)
 	}
 }
 
-void uiRowsNode::loaded (uiNode_t *node)
+void uiRowsNode::onLoaded (uiNode_t *node)
 {
 	/* prevent infinite loop into the draw */
 	if (EXTRADATA(node).lineHeight == 0) {

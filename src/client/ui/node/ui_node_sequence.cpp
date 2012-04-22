@@ -69,7 +69,7 @@ void uiSequenceNode::draw (uiNode_t *node)
 	}
 }
 
-void uiSequenceNode::windowOpened (uiNode_t *node, linkedList_t *params)
+void uiSequenceNode::onWindowOpened (uiNode_t *node, linkedList_t *params)
 {
 	if (EXTRADATA(node).context == NULL)
 		EXTRADATA(node).context = SEQ_AllocContext();
@@ -79,7 +79,7 @@ void uiSequenceNode::windowOpened (uiNode_t *node, linkedList_t *params)
 	}
 }
 
-void uiSequenceNode::windowClosed (uiNode_t *node)
+void uiSequenceNode::onWindowClosed (uiNode_t *node)
 {
 	if (EXTRADATA(node).context != NULL) {
 		SEQ_FreeContext(EXTRADATA(node).context);
@@ -88,24 +88,24 @@ void uiSequenceNode::windowClosed (uiNode_t *node)
 	EXTRADATA(node).playing = qfalse;
 }
 
-void uiSequenceNode::leftClick (uiNode_t *node, int x, int y)
+void uiSequenceNode::onLeftClick (uiNode_t *node, int x, int y)
 {
 	if (EXTRADATA(node).context != NULL) {
 		SEQ_SendClickEvent(EXTRADATA(node).context);
 	}
 }
 
-void uiSequenceNode::propertyChanged (uiNode_t *node, const value_t *property)
+void uiSequenceNode::onPropertyChanged (uiNode_t *node, const value_t *property)
 {
 	if (property == propertySource) {
 		if (node->image != NULL) {
-			windowOpened(node, NULL);
+			onWindowOpened(node, NULL);
 		} else if (EXTRADATA(node).context != NULL) {
-			windowClosed(node);
+			onWindowClosed(node);
 		}
 		return;
 	}
-	uiLocatedNode::propertyChanged(node, property);
+	uiLocatedNode::onPropertyChanged(node, property);
 }
 
 void UI_RegisterSequenceNode (uiBehaviour_t* behaviour)

@@ -29,7 +29,7 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 
 class uiRowsNode : public uiLocatedNode {
 	void draw(uiNode_t* node) OVERRIDE;
-	void loaded(uiNode_t* node) OVERRIDE;
+	void onLoaded(uiNode_t* node) OVERRIDE;
 };
 
 typedef struct rowsExtraData_s {

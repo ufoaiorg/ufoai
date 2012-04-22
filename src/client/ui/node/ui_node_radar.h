@@ -30,11 +30,11 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 
 class uiRadarNode : public uiLocatedNode {
 	void draw(uiNode_t* node) OVERRIDE;
-	void windowOpened(uiNode_t* node, linkedList_t *params) OVERRIDE;
-	void windowClosed(uiNode_t* node) OVERRIDE;
-	void mouseDown(uiNode_t* node, int x, int y, int button) OVERRIDE;
-	void mouseUp(uiNode_t* node, int x, int y, int button) OVERRIDE;
-	void capturedMouseMove(uiNode_t* node, int x, int y) OVERRIDE;
+	void onWindowOpened(uiNode_t* node, linkedList_t *params) OVERRIDE;
+	void onWindowClosed(uiNode_t* node) OVERRIDE;
+	void onMouseDown(uiNode_t* node, int x, int y, int button) OVERRIDE;
+	void onMouseUp(uiNode_t* node, int x, int y, int button) OVERRIDE;
+	void onCapturedMouseMove(uiNode_t* node, int x, int y) OVERRIDE;
 };
 
 void UI_RegisterRadarNode(struct uiBehaviour_s *behaviour);

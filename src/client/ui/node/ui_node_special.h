@@ -28,19 +28,19 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #include "../ui_nodes.h"
 
 class uiConFuncNode : public uiNode {
-	void loaded(uiNode_t* node) OVERRIDE;
-	void windowOpened(uiNode_t* node, linkedList_t *params) OVERRIDE;
-	void windowClosed(uiNode_t* node) OVERRIDE;
+	void onLoaded(uiNode_t* node) OVERRIDE;
+	void onWindowOpened(uiNode_t* node, linkedList_t *params) OVERRIDE;
+	void onWindowClosed(uiNode_t* node) OVERRIDE;
 	void clone(uiNode_t const* source, uiNode_t* clone) OVERRIDE;
 };
 
 class uiFuncNode : public uiNode {
-	void loaded(uiNode_t* node);
+	void onLoaded(uiNode_t* node);
 };
 
 class uiCvarNode : public uiNode {
-	void windowOpened(uiNode_t* node, linkedList_t *params);
-	void windowClosed(uiNode_t* node);
+	void onWindowOpened(uiNode_t* node, linkedList_t *params);
+	void onWindowClosed(uiNode_t* node);
 	void clone(uiNode_t const* source, uiNode_t* clone);
 	void deleteNode(uiNode_t* node);
 };

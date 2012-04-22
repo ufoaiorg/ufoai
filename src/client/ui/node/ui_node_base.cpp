@@ -40,7 +40,7 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 
 static const vec4_t white = {1.0f, 1.0f, 1.0f, 0.8f};
 
-void uiAbstractBaseNode::loading (uiNode_t * node)
+void uiAbstractBaseNode::onLoading (uiNode_t * node)
 {
 	EXTRADATA(node).baseid = -1;
 }
@@ -48,7 +48,7 @@ void uiAbstractBaseNode::loading (uiNode_t * node)
 /**
  * @brief Called after the end of the node load from script (all data and/or child are set)
  */
-void uiAbstractBaseNode::loaded (uiNode_t * node)
+void uiAbstractBaseNode::onLoaded (uiNode_t * node)
 {
 	/* it do not make any sens to check it here */
 #if 0
@@ -272,7 +272,7 @@ void uiBaseMapNode::drawTooltip (uiNode_t *node, int x, int y)
  * @param[in] x Absolute X mouse position into the screen
  * @param[in] y Absolute Y mouse position into the screen
  */
-void uiBaseMapNode::leftClick (uiNode_t *node, int x, int y)
+void uiBaseMapNode::onLeftClick (uiNode_t *node, int x, int y)
 {
 	int row, col;
 	base_t *base = getBase(node);
@@ -323,7 +323,7 @@ void uiBaseMapNode::leftClick (uiNode_t *node, int x, int y)
  * @param[in] x Absolute x mouse coordinate (screen coordinates)
  * @param[in] y Absolute y mouse coordinate (screen coordinates)
  */
-void uiBaseMapNode::rightClick (uiNode_t *node, int x, int y)
+void uiBaseMapNode::onRightClick (uiNode_t *node, int x, int y)
 {
 	int row, col;
 	const base_t *base = getBase(node);
@@ -349,7 +349,7 @@ void uiBaseMapNode::rightClick (uiNode_t *node, int x, int y)
  * @param[in] y The y screen coordinate
  * @note relies on @c baseCurrent
  */
-void uiBaseMapNode::middleClick (uiNode_t *node, int x, int y)
+void uiBaseMapNode::onMiddleClick (uiNode_t *node, int x, int y)
 {
 	int row, col;
 	const base_t *base = getBase(node);
@@ -374,9 +374,9 @@ void uiBaseMapNode::middleClick (uiNode_t *node, int x, int y)
 /**
  * @brief Called before loading. Used to set default attribute values
  */
-void uiBaseLayoutNode::loading (uiNode_t *node)
+void uiBaseLayoutNode::onLoading (uiNode_t *node)
 {
-	uiAbstractBaseNode::loading(node);
+	uiAbstractBaseNode::onLoading(node);
 	node->padding = 3;
 	Vector4Set(node->color, 1, 1, 1, 1);
 }

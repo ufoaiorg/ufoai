@@ -90,7 +90,7 @@ void uiBarNode::draw (uiNode_t *node)
 /**
  * @brief Called when the node is captured by the mouse
  */
-void uiBarNode::capturedMouseMove (uiNode_t *node, int x, int y)
+void uiBarNode::onCapturedMouseMove (uiNode_t *node, int x, int y)
 {
 	UI_NodeAbsoluteToRelativePos(node, &x, &y);
 
@@ -129,18 +129,18 @@ void uiBarNode::capturedMouseMove (uiNode_t *node, int x, int y)
 	setValue(node, min + frac * (max - min));
 }
 
-void uiBarNode::mouseDown (uiNode_t *node, int x, int y, int button)
+void uiBarNode::onMouseDown (uiNode_t *node, int x, int y, int button)
 {
 	if (node->disabled || EXTRADATA(node).readOnly)
 		return;
 
 	if (button == K_MOUSE1) {
 		UI_SetMouseCapture(node);
-		capturedMouseMove(node, x, y);
+		onCapturedMouseMove(node, x, y);
 	}
 }
 
-void uiBarNode::mouseUp (uiNode_t *node, int x, int y, int button)
+void uiBarNode::onMouseUp (uiNode_t *node, int x, int y, int button)
 {
 	if (button == K_MOUSE1)
 		UI_MouseRelease();
@@ -149,7 +149,7 @@ void uiBarNode::mouseUp (uiNode_t *node, int x, int y, int button)
 /**
  * @brief Called before loading. Used to set default attribute values
  */
-void uiBarNode::loading (uiNode_t *node)
+void uiBarNode::onLoading (uiNode_t *node)
 {
 	Vector4Set(node->color, 1, 1, 1, 1);
 	EXTRADATA(node).orientation = ALIGN_CR;

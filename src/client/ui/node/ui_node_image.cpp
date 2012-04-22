@@ -52,7 +52,7 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 /**
  * @brief Handled after the end of the load of the node from the script (all data and/or child are set)
  */
-void uiImageNode::loaded (uiNode_t *node)
+void uiImageNode::onLoaded (uiNode_t *node)
 {
 	/* update the size when its possible */
 	if (Vector2Empty(node->size)) {

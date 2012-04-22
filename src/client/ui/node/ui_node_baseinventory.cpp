@@ -259,7 +259,7 @@ static void UI_GetItemTooltip (item_t item, char *tooltipText, size_t stringMaxL
  * into the node (uses the @c invDef_t shape bitmask to determine the size)
  * @param[in,out] node The node to get the size for
  */
-void uiBaseInventoryNode::loaded (uiNode_t* const node)
+void uiBaseInventoryNode::onLoaded (uiNode_t* const node)
 {
 	EXTRADATA(node).super.container = INVSH_GetInventoryDefinitionByID("equip");
 }
@@ -688,7 +688,7 @@ static void UI_ContainerNodeAutoPlace (uiNode_t* node, int mouseX, int mouseY)
 static int oldMouseX = 0;
 static int oldMouseY = 0;
 
-void uiBaseInventoryNode::capturedMouseMove (uiNode_t *node, int x, int y)
+void uiBaseInventoryNode::onCapturedMouseMove (uiNode_t *node, int x, int y)
 {
 	const int delta = abs(oldMouseX - x) + abs(oldMouseY - y);
 	if (delta > 15) {
@@ -697,7 +697,7 @@ void uiBaseInventoryNode::capturedMouseMove (uiNode_t *node, int x, int y)
 	}
 }
 
-void uiBaseInventoryNode::mouseDown (uiNode_t *node, int x, int y, int button)
+void uiBaseInventoryNode::onMouseDown (uiNode_t *node, int x, int y, int button)
 {
 	switch (button) {
 	case K_MOUSE1:
@@ -731,7 +731,7 @@ void uiBaseInventoryNode::mouseDown (uiNode_t *node, int x, int y, int button)
 	}
 }
 
-void uiBaseInventoryNode::mouseUp (uiNode_t *node, int x, int y, int button)
+void uiBaseInventoryNode::onMouseUp (uiNode_t *node, int x, int y, int button)
 {
 	if (button != K_MOUSE1)
 		return;
@@ -743,7 +743,7 @@ void uiBaseInventoryNode::mouseUp (uiNode_t *node, int x, int y, int button)
 	}
 }
 
-bool uiBaseInventoryNode::scroll (uiNode_t *node, int deltaX, int deltaY)
+bool uiBaseInventoryNode::onScroll (uiNode_t *node, int deltaX, int deltaY)
 {
 	if (deltaY == 0)
 		return false;
@@ -755,7 +755,7 @@ bool uiBaseInventoryNode::scroll (uiNode_t *node, int deltaX, int deltaY)
 	return false;
 }
 
-void uiBaseInventoryNode::loading (uiNode_t *node)
+void uiBaseInventoryNode::onLoading (uiNode_t *node)
 {
 	EXTRADATA(node).super.container = NULL;
 	EXTRADATA(node).columns = 1;
@@ -765,7 +765,7 @@ void uiBaseInventoryNode::loading (uiNode_t *node)
 /**
  * @brief Call when a DND enter into the node
  */
-bool uiBaseInventoryNode::dndEnter (uiNode_t *target)
+bool uiBaseInventoryNode::onDndEnter (uiNode_t *target)
 {
 	/* The node is invalide */
 	if (EXTRADATA(target).super.container == NULL)
@@ -778,7 +778,7 @@ bool uiBaseInventoryNode::dndEnter (uiNode_t *target)
  * @brief Call into the target when the DND hover it
  * @return True if the DND is accepted
  */
-bool uiBaseInventoryNode::dndMove (uiNode_t *target, int x, int y)
+bool uiBaseInventoryNode::onDndMove (uiNode_t *target, int x, int y)
 {
 	return true;
 }
@@ -786,14 +786,14 @@ bool uiBaseInventoryNode::dndMove (uiNode_t *target, int x, int y)
 /**
  * @brief Call when a DND enter into the node
  */
-void uiBaseInventoryNode::dndLeave (uiNode_t *node)
+void uiBaseInventoryNode::onDndLeave (uiNode_t *node)
 {
 }
 
 /**
  * @brief Call when we open the window containing the node
  */
-void uiBaseInventoryNode::windowOpened (uiNode_t *node, linkedList_t *params)
+void uiBaseInventoryNode::onWindowOpened (uiNode_t *node, linkedList_t *params)
 {
 }
 

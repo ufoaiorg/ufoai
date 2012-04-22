@@ -131,7 +131,7 @@ void uiEditorNode::drawOverWindow (uiNode_t *node)
 		UI_EditorNodeHighlightNode(anchoredNode, red, qtrue);
 }
 
-void uiEditorNode::capturedMouseMove (uiNode_t *node, int x, int y)
+void uiEditorNode::onCapturedMouseMove (uiNode_t *node, int x, int y)
 {
 	vec2_t size;
 	const int diffX = x - startX;
@@ -186,12 +186,12 @@ void uiEditorNode::capturedMouseMove (uiNode_t *node, int x, int y)
 /**
  * @brief Called when the node have lost the captured node
  */
-void uiEditorNode::capturedMouseLost (uiNode_t *node)
+void uiEditorNode::onCapturedMouseLost (uiNode_t *node)
 {
 	dragStatus = ZONE_NONE;
 }
 
-void uiEditorNode::mouseUp (uiNode_t *node, int x, int y, int button)
+void uiEditorNode::onMouseUp (uiNode_t *node, int x, int y, int button)
 {
 	if (UI_GetMouseCapture() != node)
 		return;
@@ -212,7 +212,7 @@ static void UI_EditorNodeSelectNode (uiNode_t *node, uiNode_t *selected)
 	Cvar_Set("ui_sys_editor_window", anchoredNode->root->name);
 }
 
-void uiEditorNode::mouseDown (uiNode_t *node, int x, int y, int button)
+void uiEditorNode::onMouseDown (uiNode_t *node, int x, int y, int button)
 {
 	uiNode_t* hovered;
 

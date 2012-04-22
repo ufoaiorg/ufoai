@@ -71,12 +71,12 @@ void uiTodoNode::drawOverWindow (uiNode_t *node)
 	UI_TodoNodeDrawTooltip(node, mousePosX, mousePosY);
 }
 
-void uiTodoNode::loading (uiNode_t *node)
+void uiTodoNode::onLoading (uiNode_t *node)
 {
 	Vector4Set(node->color, 1.0, 1.0, 1.0, 1.0);
 }
 
-void uiTodoNode::loaded (uiNode_t *node)
+void uiTodoNode::onLoaded (uiNode_t *node)
 {
 #ifndef DEBUG
 	node->invis = qtrue;

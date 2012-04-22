@@ -29,16 +29,16 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 
 class uiPanelNode : public uiAbstractScrollableNode {
 	void draw(uiNode_t* node) OVERRIDE;
-	void loaded(uiNode_t* node) OVERRIDE;
-	void loading(uiNode_t* node) OVERRIDE;
+	void onLoaded(uiNode_t* node) OVERRIDE;
+	void onLoading(uiNode_t* node) OVERRIDE;
 	void doLayout(uiNode_t* node) OVERRIDE;
 	void getClientPosition(uiNode_t const* node, vec2_t position) OVERRIDE;
-	void propertyChanged(uiNode_t* node, const value_t *property) OVERRIDE;
-	bool scroll(uiNode_t* node, int deltaX, int deltaY) OVERRIDE;
-	void mouseUp(uiNode_t* node, int x, int y, int button) OVERRIDE;
-	bool mouseLongPress(uiNode_t* node, int x, int y, int button) OVERRIDE;
-	bool startDragging(uiNode_t* node, int startX, int startY, int currentX, int currentY, int button) OVERRIDE;
-	void capturedMouseMove(uiNode_t* node, int x, int y) OVERRIDE;
+	void onPropertyChanged(uiNode_t* node, const value_t *property) OVERRIDE;
+	bool onScroll(uiNode_t* node, int deltaX, int deltaY) OVERRIDE;
+	void onMouseUp(uiNode_t* node, int x, int y, int button) OVERRIDE;
+	bool onMouseLongPress(uiNode_t* node, int x, int y, int button) OVERRIDE;
+	bool onStartDragging(uiNode_t* node, int startX, int startY, int currentX, int currentY, int button) OVERRIDE;
+	void onCapturedMouseMove(uiNode_t* node, int x, int y) OVERRIDE;
 };
 
 struct uiBehaviour_s;

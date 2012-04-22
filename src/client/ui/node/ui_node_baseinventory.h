@@ -31,16 +31,16 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 class uiBaseInventoryNode : public uiContainerNode {
 	void draw(uiNode_t* node) OVERRIDE;
 	void drawTooltip(uiNode_t* node, int x, int y) OVERRIDE;
-	void mouseDown(uiNode_t* node, int x, int y, int button) OVERRIDE;
-	void mouseUp(uiNode_t* node, int x, int y, int button) OVERRIDE;
-	bool scroll(uiNode_t* node, int deltaX, int deltaY) OVERRIDE;
-	void capturedMouseMove(uiNode_t* node, int x, int y) OVERRIDE;
-	void windowOpened(uiNode_t* node, linkedList_t *params) OVERRIDE;
-	void loading(uiNode_t* node) OVERRIDE;
-	void loaded(uiNode_t* node) OVERRIDE;
-	bool dndEnter(uiNode_t* node) OVERRIDE;
-	bool dndMove(uiNode_t* node, int x, int y) OVERRIDE;
-	void dndLeave(uiNode_t* node) OVERRIDE;
+	void onMouseDown(uiNode_t* node, int x, int y, int button) OVERRIDE;
+	void onMouseUp(uiNode_t* node, int x, int y, int button) OVERRIDE;
+	bool onScroll(uiNode_t* node, int deltaX, int deltaY) OVERRIDE;
+	void onCapturedMouseMove(uiNode_t* node, int x, int y) OVERRIDE;
+	void onWindowOpened(uiNode_t* node, linkedList_t *params) OVERRIDE;
+	void onLoading(uiNode_t* node) OVERRIDE;
+	void onLoaded(uiNode_t* node) OVERRIDE;
+	bool onDndEnter(uiNode_t* node) OVERRIDE;
+	bool onDndMove(uiNode_t* node, int x, int y) OVERRIDE;
+	void onDndLeave(uiNode_t* node) OVERRIDE;
 };
 
 /* prototypes */

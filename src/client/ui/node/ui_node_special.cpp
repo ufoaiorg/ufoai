@@ -35,7 +35,7 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
  * @brief Call after the script initialized the node
  * @todo special cases should be managed as a common property event of the parent node
  */
-void uiFuncNode::loaded (uiNode_t *node)
+void uiFuncNode::onLoaded (uiNode_t *node)
 {
 	/** @todo move this code into the parser (it should not create a node) */
 	const value_t *prop = UI_GetPropertyFromBehaviour(node->parent->behaviour, node->name);
@@ -90,7 +90,7 @@ static qboolean UI_ConFuncIsVirtual (const uiNode_t *const node)
 /**
  * @brief Call after the script initialized the node
  */
-void uiConFuncNode::loaded (uiNode_t *node)
+void uiConFuncNode::onLoaded (uiNode_t *node)
 {
 	/* register confunc non inherited */
 	if (node->super == NULL) {
@@ -118,13 +118,13 @@ void uiConFuncNode::loaded (uiNode_t *node)
 
 void uiConFuncNode::clone (const uiNode_t *source, uiNode_t *clone)
 {
-	loaded(clone);
+	onLoaded(clone);
 }
 
 /**
  * @brief Callback every time the parent window is opened (pushed into the active window stack)
  */
-void uiConFuncNode::windowOpened (uiNode_t *node, linkedList_t *params)
+void uiConFuncNode::onWindowOpened (uiNode_t *node, linkedList_t *params)
 {
 	if (UI_ConFuncIsVirtual(node)) {
 		const value_t *property = UI_GetPropertyFromBehaviour(node->behaviour, "onClick");
@@ -136,7 +136,7 @@ void uiConFuncNode::windowOpened (uiNode_t *node, linkedList_t *params)
 /**
  * @brief Callback every time the parent window is closed (pop from the active window stack)
  */
-void uiConFuncNode::windowClosed (uiNode_t *node)
+void uiConFuncNode::onWindowClosed (uiNode_t *node)
 {
 	if (UI_ConFuncIsVirtual(node)) {
 		const value_t *property = UI_GetPropertyFromBehaviour(node->behaviour, "onClick");
@@ -185,7 +185,7 @@ static void UI_CvarListenerNodeBind (uiNode_t *node)
 /**
  * @brief Callback every time the parent window is closed (pop from the active window stack)
  */
-void uiCvarNode::windowClosed (uiNode_t *node)
+void uiCvarNode::onWindowClosed (uiNode_t *node)
 {
 	cvar_t *var;
 
@@ -206,14 +206,14 @@ void uiCvarNode::windowClosed (uiNode_t *node)
 	}
 }
 
-void uiCvarNode::windowOpened (uiNode_t *node, linkedList_t *params)
+void uiCvarNode::onWindowOpened (uiNode_t *node, linkedList_t *params)
 {
 	UI_CvarListenerNodeBind(node);
 }
 
 void uiCvarNode::deleteNode (uiNode_t *node)
 {
-	windowClosed(node);
+	onWindowClosed(node);
 }
 
 void uiCvarNode::clone (const uiNode_t *source, uiNode_t *clone)

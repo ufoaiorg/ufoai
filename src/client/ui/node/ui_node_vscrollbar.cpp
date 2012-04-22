@@ -217,7 +217,7 @@ static void UI_ActiveVScrollbarNode_f ()
 	UI_VScrollbarNodeAction(node, actionId, qfalse);
 }
 
-void uiVScrollbarNode::mouseDown (uiNode_t *node, int x, int y, int button)
+void uiVScrollbarNode::onMouseDown (uiNode_t *node, int x, int y, int button)
 {
 	int hoveredElement = -1;
 	int description[5];
@@ -232,7 +232,7 @@ void uiVScrollbarNode::mouseDown (uiNode_t *node, int x, int y, int button)
 	UI_VScrollbarNodeAction(node, hoveredElement, qtrue);
 }
 
-void uiVScrollbarNode::mouseUp (uiNode_t *node, int x, int y, int button)
+void uiVScrollbarNode::onMouseUp (uiNode_t *node, int x, int y, int button)
 {
 	if (EXTRADATA(node).fullsize == 0 || EXTRADATA(node).fullsize < EXTRADATA(node).viewsize)
 		return;
@@ -248,7 +248,7 @@ void uiVScrollbarNode::mouseUp (uiNode_t *node, int x, int y, int button)
  * @brief Called when the node have lost the captured node
  * We clean cached data
  */
-void uiVScrollbarNode::capturedMouseLost (uiNode_t *node)
+void uiVScrollbarNode::onCapturedMouseLost (uiNode_t *node)
 {
 	if (capturedTimer) {
 		UI_TimerRelease(capturedTimer);
@@ -259,7 +259,7 @@ void uiVScrollbarNode::capturedMouseLost (uiNode_t *node)
 /**
  * @brief Called when the user wheel the mouse over the node
  */
-bool uiVScrollbarNode::scroll (uiNode_t *node, int deltaX, int deltaY)
+bool uiVScrollbarNode::onScroll (uiNode_t *node, int deltaX, int deltaY)
 {
 	if (deltaY == 0)
 		return false;
@@ -272,7 +272,7 @@ bool uiVScrollbarNode::scroll (uiNode_t *node, int deltaX, int deltaY)
 /**
  * @brief Called when the node is captured by the mouse
  */
-void uiVScrollbarNode::capturedMouseMove (uiNode_t *node, int x, int y)
+void uiVScrollbarNode::onCapturedMouseMove (uiNode_t *node, int x, int y)
 {
 	const int posSize = EXTRADATA(node).fullsize;
 	const int graphicSize = node->size[1] - (4 * ELEMENT_HEIGHT);
@@ -411,12 +411,12 @@ void uiVScrollbarNode::draw (uiNode_t *node)
 
 }
 
-void uiVScrollbarNode::loading (uiNode_t *node)
+void uiVScrollbarNode::onLoading (uiNode_t *node)
 {
 	node->size[0] = 19;
 }
 
-void uiVScrollbarNode::loaded (uiNode_t *node)
+void uiVScrollbarNode::onLoaded (uiNode_t *node)
 {
 #ifdef DEBUG
 	if (node->size[1] - (ELEMENT_HEIGHT * 4) < 0)

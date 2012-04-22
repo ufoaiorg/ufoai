@@ -31,14 +31,14 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 
 class uiModelNode : public uiLocatedNode {
 	void draw(uiNode_t* node) OVERRIDE;
-	void mouseDown(uiNode_t* node, int x, int y, int button) OVERRIDE;
-	void mouseUp(uiNode_t* node, int x, int y, int button) OVERRIDE;
-	void loading(uiNode_t* node) OVERRIDE;
-	void loaded(uiNode_t* node) OVERRIDE;
+	void onMouseDown(uiNode_t* node, int x, int y, int button) OVERRIDE;
+	void onMouseUp(uiNode_t* node, int x, int y, int button) OVERRIDE;
+	void onLoading(uiNode_t* node) OVERRIDE;
+	void onLoaded(uiNode_t* node) OVERRIDE;
 	void clone(uiNode_t const* source, uiNode_t* clone) OVERRIDE;
 	void newNode(uiNode_t* node) OVERRIDE;
 	void deleteNode(uiNode_t* node) OVERRIDE;
-	void capturedMouseMove(uiNode_t* node, int x, int y) OVERRIDE;
+	void onCapturedMouseMove(uiNode_t* node, int x, int y) OVERRIDE;
 };
 
 #define UI_MAX_MODELS		128

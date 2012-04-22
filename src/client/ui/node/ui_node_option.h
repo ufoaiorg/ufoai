@@ -29,7 +29,7 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #include "ui_node_abstractnode.h"
 
 class uiOptionNode : public uiLocatedNode {
-	void propertyChanged(uiNode_t* node, const value_t *property) OVERRIDE;
+	void onPropertyChanged(uiNode_t* node, const value_t *property) OVERRIDE;
 	void doLayout(uiNode_t* node) OVERRIDE;
 };
 

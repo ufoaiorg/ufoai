@@ -31,8 +31,8 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 class uiTabNode : public uiAbstractOptionNode {
 	void draw(uiNode_t* node) OVERRIDE;
 	void drawTooltip(uiNode_t* node, int x, int y) OVERRIDE;
-	void leftClick(uiNode_t* node, int x, int y) OVERRIDE;
-	void windowOpened(uiNode_t* node, linkedList_t *params) OVERRIDE;
+	void onLeftClick(uiNode_t* node, int x, int y) OVERRIDE;
+	void onWindowOpened(uiNode_t* node, linkedList_t *params) OVERRIDE;
 };
 
 void UI_RegisterTabNode(struct uiBehaviour_s *behaviour);

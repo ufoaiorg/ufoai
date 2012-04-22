@@ -126,7 +126,7 @@ static uiNode_t* UI_TabNodeTabAtPosition (const uiNode_t *node, int x, int y)
 /**
  * @brief Handles tab clicks
  */
-void uiTabNode::leftClick (uiNode_t * node, int x, int y)
+void uiTabNode::onLeftClick (uiNode_t * node, int x, int y)
 {
 	uiNode_t* option;
 
@@ -317,7 +317,7 @@ void uiTabNode::drawTooltip (uiNode_t *node, int x, int y)
  * check cvar then, reduce runtime check
  * @todo move cvar check to AbstractOption
  */
-void uiTabNode::windowOpened (uiNode_t *node, linkedList_t *params)
+void uiTabNode::onWindowOpened (uiNode_t *node, linkedList_t *params)
 {
 	/* no cvar given? */
 	if (!(EXTRADATA(node).cvar))

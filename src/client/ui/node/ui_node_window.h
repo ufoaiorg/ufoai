@@ -37,10 +37,10 @@ struct uiKeyBinding_s;
 class uiWindowNode : public uiLocatedNode {
 	void draw(uiNode_t* node) OVERRIDE;
 	void doLayout(uiNode_t* node) OVERRIDE;
-	void loading(uiNode_t* node) OVERRIDE;
-	void loaded(uiNode_t* node) OVERRIDE;
-	void windowOpened(uiNode_t* node, linkedList_t *params) OVERRIDE;
-	void windowClosed(uiNode_t* node) OVERRIDE;
+	void onLoading(uiNode_t* node) OVERRIDE;
+	void onLoaded(uiNode_t* node) OVERRIDE;
+	void onWindowOpened(uiNode_t* node, linkedList_t *params) OVERRIDE;
+	void onWindowClosed(uiNode_t* node) OVERRIDE;
 	void clone(uiNode_t const* source, uiNode_t* clone) OVERRIDE;
 };
 

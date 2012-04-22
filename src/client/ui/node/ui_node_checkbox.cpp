@@ -81,7 +81,7 @@ void uiCheckBoxNode::draw (uiNode_t* node)
 /**
  * @brief Activate the node. Can be used without the mouse (ie. a button will execute onClick)
  */
-void uiCheckBoxNode::activate (uiNode_t *node)
+void uiCheckBoxNode::onActivate (uiNode_t *node)
 {
 	const float last = getValue(node);
 	float value;
@@ -106,20 +106,20 @@ static void UI_CheckBoxNodeCallActivate (uiNode_t *node, const uiCallContext_t *
 /**
  * @brief Handles checkboxes clicks
  */
-void uiCheckBoxNode::leftClick (uiNode_t * node, int x, int y)
+void uiCheckBoxNode::onLeftClick (uiNode_t * node, int x, int y)
 {
 	if (node->onClick)
 		UI_ExecuteEventActions(node, node->onClick);
 	UI_PlaySound("click1");
-	activate(node);
+	onActivate(node);
 }
 
 /**
  * @brief Handled before the begin of the load of the node from the script
  */
-void uiCheckBoxNode::loading (uiNode_t *node)
+void uiCheckBoxNode::onLoading (uiNode_t *node)
 {
-	uiAbstractValueNode::loading(node);
+	uiAbstractValueNode::onLoading(node);
 	setRange(node, -1, 1);
 }
 

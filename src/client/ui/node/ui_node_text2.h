@@ -30,11 +30,11 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 
 class uiText2Node : public uiTextNode {
 	void draw(uiNode_t* node) OVERRIDE;
-	void leftClick(uiNode_t* node, int x, int y) OVERRIDE;
-	void rightClick(uiNode_t* node, int x, int y) OVERRIDE;
-	void mouseMove(uiNode_t* node, int x, int y) OVERRIDE;
-	void loading(uiNode_t* node) OVERRIDE;
-	void loaded(uiNode_t* node) OVERRIDE;
+	void onLeftClick(uiNode_t* node, int x, int y) OVERRIDE;
+	void onRightClick(uiNode_t* node, int x, int y) OVERRIDE;
+	void onMouseMove(uiNode_t* node, int x, int y) OVERRIDE;
+	void onLoading(uiNode_t* node) OVERRIDE;
+	void onLoaded(uiNode_t* node) OVERRIDE;
 	void updateCache (uiNode_t* node) OVERRIDE;
 protected:
 	void drawText (uiNode_t* node, const linkedList_t* list, bool noDraw);

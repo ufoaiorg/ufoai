@@ -128,7 +128,7 @@ static int UI_TextNodeGetLine (const uiNode_t *node, int x, int y)
 	return line;
 }
 
-void uiTextNode::mouseMove (uiNode_t *node, int x, int y)
+void uiTextNode::onMouseMove (uiNode_t *node, int x, int y)
 {
 	EXTRADATA(node).lineUnderMouse = UI_TextNodeGetLine(node, x, y);
 }
@@ -405,7 +405,7 @@ void uiTextNode::draw (uiNode_t *node)
  * @brief Calls the script command for a text node that is clickable
  * @sa UI_TextNodeRightClick
  */
-void uiTextNode::leftClick (uiNode_t * node, int x, int y)
+void uiTextNode::onLeftClick (uiNode_t * node, int x, int y)
 {
 	int line = UI_TextNodeGetLine(node, x, y);
 
@@ -422,7 +422,7 @@ void uiTextNode::leftClick (uiNode_t * node, int x, int y)
  * @brief Calls the script command for a text node that is clickable via right mouse button
  * @sa UI_TextNodeClick
  */
-void uiTextNode::rightClick (uiNode_t * node, int x, int y)
+void uiTextNode::onRightClick (uiNode_t * node, int x, int y)
 {
 	int line = UI_TextNodeGetLine(node, x, y);
 
@@ -437,7 +437,7 @@ void uiTextNode::rightClick (uiNode_t * node, int x, int y)
 
 /**
  */
-bool uiTextNode::scroll (uiNode_t *node, int deltaX, int deltaY)
+bool uiTextNode::onScroll (uiNode_t *node, int deltaX, int deltaY)
 {
 	bool updated;
 	bool down = deltaY > 0;
@@ -461,14 +461,14 @@ bool uiTextNode::scroll (uiNode_t *node, int deltaX, int deltaY)
 	return updated;
 }
 
-void uiTextNode::loading (uiNode_t *node)
+void uiTextNode::onLoading (uiNode_t *node)
 {
 	EXTRADATA(node).textLineSelected = -1; /**< Invalid/no line selected per default. */
 	Vector4Set(node->selectedColor, 1.0, 1.0, 1.0, 1.0);
 	Vector4Set(node->color, 1.0, 1.0, 1.0, 1.0);
 }
 
-void uiTextNode::loaded (uiNode_t *node)
+void uiTextNode::onLoaded (uiNode_t *node)
 {
 	int lineheight = EXTRADATA(node).lineHeight;
 	/* auto compute lineheight */
@@ -513,7 +513,7 @@ void uiTextNode::loaded (uiNode_t *node)
  * @brief Track mouse down/up events to implement drag&drop-like scrolling, for touchscreen devices
  * @sa UI_TextNodeMouseUp, UI_TextNodeCapturedMouseMove
 */
-void uiTextNode::mouseDown (uiNode_t* node, int x, int y, int button)
+void uiTextNode::onMouseDown (uiNode_t* node, int x, int y, int button)
 {
 	if (!UI_GetMouseCapture() && button == K_MOUSE1 &&
 		EXTRADATA(node).super.scrollY.fullSize > EXTRADATA(node).super.scrollY.viewSize) {
@@ -523,13 +523,13 @@ void uiTextNode::mouseDown (uiNode_t* node, int x, int y, int button)
 	}
 }
 
-void uiTextNode::mouseUp (uiNode_t* node, int x, int y, int button)
+void uiTextNode::onMouseUp (uiNode_t* node, int x, int y, int button)
 {
 	if (UI_GetMouseCapture() == node)  /* More checks can never hurt */
 		UI_MouseRelease();
 }
 
-void uiTextNode::capturedMouseMove (uiNode_t *node, int x, int y)
+void uiTextNode::onCapturedMouseMove (uiNode_t *node, int x, int y)
 {
 	const int lineHeight = getCellHeight(node);
 	const int deltaY = (mouseScrollY - y) / lineHeight;
@@ -540,7 +540,7 @@ void uiTextNode::capturedMouseMove (uiNode_t *node, int x, int y)
 		mouseScrollX = x;
 		mouseScrollY = y;
 	}
-	mouseMove(node, x, y);
+	onMouseMove(node, x, y);
 }
 
 /**

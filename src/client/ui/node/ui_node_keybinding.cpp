@@ -49,7 +49,7 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 /**
  * @brief Called when the user click with the right mouse button
  */
-void uiKeyBindingNode::leftClick (uiNode_t *node, int x, int y)
+void uiKeyBindingNode::onLeftClick (uiNode_t *node, int x, int y)
 {
 	if (node->disabled)
 		return;
@@ -72,7 +72,7 @@ void uiKeyBindingNode::leftClick (uiNode_t *node, int x, int y)
  * @brief Called when we press a key when the node got the focus
  * @return True, if we use the event
  */
-bool uiKeyBindingNode::keyPressed (uiNode_t *node, unsigned int key, unsigned short unicode)
+bool uiKeyBindingNode::onKeyPressed (uiNode_t *node, unsigned int key, unsigned short unicode)
 {
 	const char *binding;
 
@@ -176,7 +176,7 @@ void uiKeyBindingNode::draw (uiNode_t *node)
 /**
  * @brief Call before the script initialization of the node
  */
-void uiKeyBindingNode::loading (uiNode_t *node)
+void uiKeyBindingNode::onLoading (uiNode_t *node)
 {
 	node->padding = 8;
 	node->contentAlign = ALIGN_CL;

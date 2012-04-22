@@ -399,7 +399,7 @@ static void UI_ContainerNodeDrawFreeSpace (uiNode_t *node, inventory_t *inv)
  * into the node (uses the @c invDef_t shape bitmask to determine the size)
  * @param[in,out] node The node to get the size for
  */
-void uiContainerNode::loaded (uiNode_t* const node)
+void uiContainerNode::onLoaded (uiNode_t* const node)
 {
 	const char *name;
 	const invDef_t *container;
@@ -822,7 +822,7 @@ static void UI_ContainerNodeAutoPlace (uiNode_t* node, int mouseX, int mouseY)
 static int oldMouseX = 0;
 static int oldMouseY = 0;
 
-void uiContainerNode::capturedMouseMove (uiNode_t *node, int x, int y)
+void uiContainerNode::onCapturedMouseMove (uiNode_t *node, int x, int y)
 {
 	const int delta = abs(oldMouseX - x) + abs(oldMouseY - y);
 	if (delta > 15) {
@@ -831,7 +831,7 @@ void uiContainerNode::capturedMouseMove (uiNode_t *node, int x, int y)
 	}
 }
 
-void uiContainerNode::mouseDown (uiNode_t *node, int x, int y, int button)
+void uiContainerNode::onMouseDown (uiNode_t *node, int x, int y, int button)
 {
 	switch (button) {
 	case K_MOUSE1:
@@ -865,7 +865,7 @@ void uiContainerNode::mouseDown (uiNode_t *node, int x, int y, int button)
 	}
 }
 
-void uiContainerNode::mouseUp (uiNode_t *node, int x, int y, int button)
+void uiContainerNode::onMouseUp (uiNode_t *node, int x, int y, int button)
 {
 	if (button != K_MOUSE1)
 		return;
@@ -877,7 +877,7 @@ void uiContainerNode::mouseUp (uiNode_t *node, int x, int y, int button)
 	}
 }
 
-void uiContainerNode::loading (uiNode_t *node)
+void uiContainerNode::onLoading (uiNode_t *node)
 {
 	EXTRADATA(node).container = NULL;
 	node->color[3] = 1.0;
@@ -886,7 +886,7 @@ void uiContainerNode::loading (uiNode_t *node)
 /**
  * @brief Call when a DND enter into the node
  */
-bool uiContainerNode::dndEnter (uiNode_t *target)
+bool uiContainerNode::onDndEnter (uiNode_t *target)
 {
 	/* accept items only, if we have a container */
 	return UI_DNDGetType() == DND_ITEM && EXTRADATA(target).container && (!UI_IsScrollContainerNode(target) || UI_DNDGetSourceNode() !=  target);
@@ -896,7 +896,7 @@ bool uiContainerNode::dndEnter (uiNode_t *target)
  * @brief Call into the target when the DND hover it
  * @return True if the DND is accepted
  */
-bool uiContainerNode::dndMove (uiNode_t *target, int x, int y)
+bool uiContainerNode::onDndMove (uiNode_t *target, int x, int y)
 {
 	vec2_t nodepos;
 	qboolean exists;
@@ -973,7 +973,7 @@ bool uiContainerNode::dndMove (uiNode_t *target, int x, int y)
 /**
  * @brief Call when a DND enter into the node
  */
-void uiContainerNode::dndLeave (uiNode_t *node)
+void uiContainerNode::onDndLeave (uiNode_t *node)
 {
 	dragInfoToX = -1;
 	dragInfoToY = -1;
@@ -982,7 +982,7 @@ void uiContainerNode::dndLeave (uiNode_t *node)
 /**
  * @brief Call into the source when the DND end
  */
-bool uiContainerNode::dndFinished (uiNode_t *source, bool isDropped)
+bool uiContainerNode::onDndFinished (uiNode_t *source, bool isDropped)
 {
 	item_t *dragItem = UI_DNDGetItem();
 	const invDef_t *sourceContainer = EXTRADATACONST(source).container;

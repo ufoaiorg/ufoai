@@ -82,7 +82,7 @@ static void UI_SpinnerNodeRepeat (uiNode_t *node, uiTimer_t *timer)
 	b->repeat(node, timer);
 }
 
-void uiSpinnerNode::mouseDown (uiNode_t *node, int x, int y, int button)
+void uiSpinnerNode::onMouseDown (uiNode_t *node, int x, int y, int button)
 {
 	const qboolean disabled = node->disabled || node->parent->disabled;
 	if (disabled)
@@ -98,7 +98,7 @@ void uiSpinnerNode::mouseDown (uiNode_t *node, int x, int y, int button)
 	}
 }
 
-void uiSpinnerNode::mouseUp (uiNode_t *node, int x, int y, int button)
+void uiSpinnerNode::onMouseUp (uiNode_t *node, int x, int y, int button)
 {
 	if (button == K_MOUSE1 && UI_GetMouseCapture() == node) {
 		UI_MouseRelease();
@@ -109,7 +109,7 @@ void uiSpinnerNode::mouseUp (uiNode_t *node, int x, int y, int button)
  * @brief Called when the node have lost the captured node
  * We clean cached data
  */
-void uiSpinnerNode::capturedMouseLost (uiNode_t *node)
+void uiSpinnerNode::onCapturedMouseLost (uiNode_t *node)
 {
 	if (capturedTimer) {
 		UI_TimerRelease(capturedTimer);
@@ -120,7 +120,7 @@ void uiSpinnerNode::capturedMouseLost (uiNode_t *node)
 /**
  * @note Mouse wheel is not inhibited when node is disabled
  */
-bool uiSpinnerNode::scroll (uiNode_t *node, int deltaX, int deltaY)
+bool uiSpinnerNode::onScroll (uiNode_t *node, int deltaX, int deltaY)
 {
 	bool down = deltaY > 0;
 	const bool disabled = node->disabled || node->parent->disabled;
@@ -191,9 +191,9 @@ void uiSpinnerNode::draw (uiNode_t *node)
 		bottomTexX + SPINNER_WIDTH, bottomTexY + SPINNER_HEIGHT, bottomTexX, bottomTexY + SPINNER_HEIGHT - BUTTON_BOTTOM_SIZE, image);
 }
 
-void uiSpinnerNode::loading (uiNode_t *node)
+void uiSpinnerNode::onLoading (uiNode_t *node)
 {
-	uiAbstractValueNode::loading(node);
+	uiAbstractValueNode::onLoading(node);
 	node->size[0] = SPINNER_WIDTH;
 	node->size[1] = SPINNER_HEIGHT;
 }

@@ -27,11 +27,11 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 
 class uiBattleScapeNode : public uiLocatedNode {
 	void draw(uiNode_t* node) OVERRIDE;
-	void sizeChanged(uiNode_t* node) OVERRIDE;
-	void windowOpened(uiNode_t* node, linkedList_t *params) OVERRIDE;
-	void windowClosed(uiNode_t* node) OVERRIDE;
-	void loading(uiNode_t* node) OVERRIDE;
-	bool scroll(uiNode_t* node, int deltaX, int deltaY) OVERRIDE;
+	void onSizeChanged(uiNode_t* node) OVERRIDE;
+	void onWindowOpened(uiNode_t* node, linkedList_t *params) OVERRIDE;
+	void onWindowClosed(uiNode_t* node) OVERRIDE;
+	void onLoading(uiNode_t* node) OVERRIDE;
+	bool onScroll(uiNode_t* node, int deltaX, int deltaY) OVERRIDE;
 };
 
 struct uiBehaviour_s;

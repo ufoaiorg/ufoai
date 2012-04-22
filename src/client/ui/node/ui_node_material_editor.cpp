@@ -325,7 +325,7 @@ static int UI_MaterialEditorNameToStage (const char *stageName)
 	return -1;
 }
 
-void uiMaterialEditorNode::mouseDown (uiNode_t *node, int x, int y, int button)
+void uiMaterialEditorNode::onMouseDown (uiNode_t *node, int x, int y, int button)
 {
 	int id;
 	if (button != K_MOUSE1)
@@ -351,7 +351,7 @@ void uiMaterialEditorNode::mouseDown (uiNode_t *node, int x, int y, int button)
 /**
  * @brief Called when we push a window with this node
  */
-void uiMaterialEditorNode::windowOpened (uiNode_t *node, linkedList_t *params)
+void uiMaterialEditorNode::onWindowOpened (uiNode_t *node, linkedList_t *params)
 {
 	node->num = -1;
 	updateView(node, true);
@@ -360,7 +360,7 @@ void uiMaterialEditorNode::windowOpened (uiNode_t *node, linkedList_t *params)
 /**
  * @brief Called when the user wheel the mouse over the node
  */
-bool uiMaterialEditorNode::scroll (uiNode_t *node, int deltaX, int deltaY)
+bool uiMaterialEditorNode::onScroll (uiNode_t *node, int deltaX, int deltaY)
 {
 	bool down = deltaY > 0;
 	const int diff = (down) ? 1 : -1;

@@ -36,9 +36,9 @@ public:
 	/* system allocation */
 
 	/** Called before script initialization, initialized default values */
-	virtual void loading(uiNode_t* node) {}
+	virtual void onLoading(uiNode_t* node) {}
 	/** only called one time, when node parsing was finished */
-	virtual void loaded(uiNode_t* node) {}
+	virtual void onLoaded(uiNode_t* node) {}
 	/** call to initialize a cloned node */
 	virtual void clone(uiNode_t const* source, uiNode_t* clone) {}
 	/** call to initialize a dynamic node */
@@ -49,13 +49,13 @@ public:
 	/* system callback */
 
 	/** Invoked when the window is added to the rendering stack */
-	virtual void windowOpened(uiNode_t* node, linkedList_t *params);
+	virtual void onWindowOpened(uiNode_t* node, linkedList_t *params);
 	/** Invoked when the window is removed from the rendering stack */
-	virtual void windowClosed(uiNode_t* node);
+	virtual void onWindowClosed(uiNode_t* node);
 	/** Activate the node. Can be used without the mouse (ie. a button will execute onClick) */
-	virtual void activate(uiNode_t* node);
+	virtual void onActivate(uiNode_t* node);
 	/** Called when a property change */
-	virtual void propertyChanged(uiNode_t* node, const value_t *property);
+	virtual void onPropertyChanged(uiNode_t* node, const value_t *property);
 
 	virtual ~uiNode() {}
 };
@@ -72,65 +72,65 @@ public:
 	/** Called to update node layout */
 	virtual void doLayout(uiNode_t* node);
 	/** Called when the node size change */
-	virtual void sizeChanged(uiNode_t* node);
+	virtual void onSizeChanged(uiNode_t* node);
 
 	/* mouse events */
 
 	/** Left mouse click event in the node */
-	virtual void leftClick(uiNode_t* node, int x, int y);
+	virtual void onLeftClick(uiNode_t* node, int x, int y);
 	/** Right mouse button click event in the node */
-	virtual void rightClick(uiNode_t* node, int x, int y);
+	virtual void onRightClick(uiNode_t* node, int x, int y);
 	/** Middle mouse button click event in the node */
-	virtual void middleClick(uiNode_t* node, int x, int y);
+	virtual void onMiddleClick(uiNode_t* node, int x, int y);
 	/** Mouse wheel event in the node */
-	virtual bool scroll(uiNode_t* node, int deltaX, int deltaY);
+	virtual bool onScroll(uiNode_t* node, int deltaX, int deltaY);
 	/** Mouse move event in the node */
-	virtual void mouseMove(uiNode_t* node, int x, int y) {}
+	virtual void onMouseMove(uiNode_t* node, int x, int y) {}
 	/** Mouse button down event in the node */
-	virtual void mouseDown(uiNode_t* node, int x, int y, int button) {}
+	virtual void onMouseDown(uiNode_t* node, int x, int y, int button) {}
 	/** Mouse button up event in the node */
-	virtual void mouseUp(uiNode_t* node, int x, int y, int button) {}
+	virtual void onMouseUp(uiNode_t* node, int x, int y, int button) {}
 	/**
 	 * @brief Send mouse event when a pressed mouse button is dragged
 	 * @return True if the event is used
 	 */
-	virtual bool mouseLongPress(uiNode_t* node, int x, int y, int button) {
+	virtual bool onMouseLongPress(uiNode_t* node, int x, int y, int button) {
 		return false;
 	}
 	/** Mouse entered on the node (a child node is part of the node) */
-	virtual void mouseEnter(uiNode_t* node);
+	virtual void onMouseEnter(uiNode_t* node);
 	/** Mouse left the node */
-	virtual void mouseLeave(uiNode_t* node);
+	virtual void onMouseLeave(uiNode_t* node);
 	/** Mouse move event in the node when captured */
-	virtual void capturedMouseMove(uiNode_t* node, int x, int y) {}
+	virtual void onCapturedMouseMove(uiNode_t* node, int x, int y) {}
 	/** Capture is finished */
-	virtual void capturedMouseLost(uiNode_t* node) {}
+	virtual void onCapturedMouseLost(uiNode_t* node) {}
 	/**
 	 * @brief Send mouse event when a pressed mouse button is dragged
 	 * @return True if the event is used
 	 */
-	virtual bool startDragging(uiNode_t* node, int startX, int startY, int currentX, int currentY, int button) {
+	virtual bool onStartDragging(uiNode_t* node, int startX, int startY, int currentX, int currentY, int button) {
 		return false;
 	}
 
 	/* drag and drop callback */
 
 	/** Send to the target when we enter first, return true if we can drop the DND somewhere on the node */
-	virtual bool dndEnter(uiNode_t* node);
+	virtual bool onDndEnter(uiNode_t* node);
 	/** Send to the target when we enter first, return true if we can drop the DND here */
-	virtual bool dndMove(uiNode_t* node, int x, int y);
+	virtual bool onDndMove(uiNode_t* node, int x, int y);
 	/** Send to the target when the DND is canceled */
-	virtual void dndLeave(uiNode_t* node);
+	virtual void onDndLeave(uiNode_t* node);
 	/** Send to the target to finalize the drop */
-	virtual bool dndDrop(uiNode_t* node, int x, int y);
+	virtual bool onDndDrop(uiNode_t* node, int x, int y);
 	/** Sent to the source to finalize the drop */
-	virtual bool dndFinished(uiNode_t* node, bool isDroped);
+	virtual bool onDndFinished(uiNode_t* node, bool isDroped);
 
 	/* focus and keyboard events */
-	virtual void focusGained(uiNode_t* node) {}
-	virtual void focusLost(uiNode_t* node) {}
-	virtual bool keyPressed(uiNode_t* node, unsigned int key, unsigned short unicode) {return false;}
-	virtual bool keyReleased(uiNode_t* node, unsigned int key, unsigned short unicode) {return false;}
+	virtual void onFocusGained(uiNode_t* node) {}
+	virtual void onFocusLost(uiNode_t* node) {}
+	virtual bool onKeyPressed(uiNode_t* node, unsigned int key, unsigned short unicode) {return false;}
+	virtual bool onKeyReleased(uiNode_t* node, unsigned int key, unsigned short unicode) {return false;}
 
 	/** Return the position of the client zone into the node */
 	virtual void getClientPosition(uiNode_t const* node, vec2_t position) {}

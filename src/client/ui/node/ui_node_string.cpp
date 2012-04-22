@@ -104,7 +104,7 @@ void uiStringNode::drawTooltip (uiNode_t *node, int x, int y)
 	}
 }
 
-void uiStringNode::loading (uiNode_t *node)
+void uiStringNode::onLoading (uiNode_t *node)
 {
 	node->padding = 3;
 	Vector4Set(node->color, 1.0, 1.0, 1.0, 1.0);

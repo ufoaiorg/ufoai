@@ -31,8 +31,8 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 class uiVideoNode : public uiLocatedNode {
 	void draw(uiNode_t* node) OVERRIDE;
 	void drawOverWindow(uiNode_t* node) OVERRIDE;
-	void windowOpened(uiNode_t* node, linkedList_t *params) OVERRIDE;
-	void windowClosed(uiNode_t* node) OVERRIDE;
+	void onWindowOpened(uiNode_t* node, linkedList_t *params) OVERRIDE;
+	void onWindowClosed(uiNode_t* node) OVERRIDE;
 };
 
 void UI_RegisterVideoNode(struct uiBehaviour_s *behaviour);

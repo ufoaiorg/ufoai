@@ -212,7 +212,7 @@ static uiNode_t* UI_OptionListNodeGetOptionAtPosition (uiNode_t * node, int x, i
 /**
  * @brief Handles selectboxes clicks
  */
-void uiOptionListNode::leftClick (uiNode_t * node, int x, int y)
+void uiOptionListNode::onLeftClick (uiNode_t * node, int x, int y)
 {
 	uiNode_t* option;
 
@@ -230,7 +230,7 @@ void uiOptionListNode::leftClick (uiNode_t * node, int x, int y)
 /**
  * @brief Auto scroll the list
  */
-bool uiOptionListNode::scroll (uiNode_t *node, int deltaX, int deltaY)
+bool uiOptionListNode::onScroll (uiNode_t *node, int deltaX, int deltaY)
 {
 	bool down = deltaY > 0;
 	bool updated;
@@ -259,14 +259,14 @@ bool uiOptionListNode::scroll (uiNode_t *node, int deltaX, int deltaY)
 /**
  * @brief Called before loading. Used to set default attribute values
  */
-void uiOptionListNode::loading (uiNode_t *node)
+void uiOptionListNode::onLoading (uiNode_t *node)
 {
 	Vector4Set(node->color, 1, 1, 1, 1);
 	EXTRADATA(node).versionId = -1;
 	node->padding = 3;
 }
 
-void uiOptionListNode::loaded (uiNode_t *node)
+void uiOptionListNode::onLoaded (uiNode_t *node)
 {
 }
 
@@ -274,7 +274,7 @@ void uiOptionListNode::loaded (uiNode_t *node)
  * @brief Track mouse down/up events to implement drag&drop-like scrolling, for touchscreen devices
  * @sa UI_OptionListNodeMouseUp, UI_OptionListNodeCapturedMouseMove
 */
-void uiOptionListNode::mouseDown (uiNode_t* node, int x, int y, int button)
+void uiOptionListNode::onMouseDown (uiNode_t* node, int x, int y, int button)
 {
 	if (!UI_GetMouseCapture() && button == K_MOUSE1 &&
 		EXTRADATA(node).scrollY.fullSize > EXTRADATA(node).scrollY.viewSize) {
@@ -284,13 +284,13 @@ void uiOptionListNode::mouseDown (uiNode_t* node, int x, int y, int button)
 	}
 }
 
-void uiOptionListNode::mouseUp (uiNode_t* node, int x, int y, int button)
+void uiOptionListNode::onMouseUp (uiNode_t* node, int x, int y, int button)
 {
 	if (UI_GetMouseCapture() == node)  /* More checks can never hurt */
 		UI_MouseRelease();
 }
 
-void uiOptionListNode::capturedMouseMove (uiNode_t *node, int x, int y)
+void uiOptionListNode::onCapturedMouseMove (uiNode_t *node, int x, int y)
 {
 	const int lineHeight = getCellHeight(node);
 	const int deltaY = (mouseScrollY - y) / lineHeight;
@@ -304,7 +304,7 @@ void uiOptionListNode::capturedMouseMove (uiNode_t *node, int x, int y)
 		mouseScrollX = x;
 		mouseScrollY = y;
 	}
-	mouseMove(node, x, y);
+	onMouseMove(node, x, y);
 }
 
 /**

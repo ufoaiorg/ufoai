@@ -44,12 +44,12 @@ static inline void UI_InitCvarOrFloat (float** adress, float defaultValue)
 	}
 }
 
-void uiAbstractValueNode::loading (uiNode_t * node)
+void uiAbstractValueNode::onLoading (uiNode_t * node)
 {
 	EXTRADATA(node).shiftIncreaseFactor = 2.0F;
 }
 
-void uiAbstractValueNode::loaded (uiNode_t * node)
+void uiAbstractValueNode::onLoaded (uiNode_t * node)
 {
 	UI_InitCvarOrFloat((float**)&EXTRADATA(node).value, 0);
 	UI_InitCvarOrFloat((float**)&EXTRADATA(node).delta, 1);

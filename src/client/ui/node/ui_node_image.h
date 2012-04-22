@@ -32,7 +32,7 @@ void UI_ImageNodeDraw(uiNode_t* node);
 
 class uiImageNode : public uiLocatedNode {
 public:
-	void loaded(uiNode_t* node) OVERRIDE;
+	void onLoaded(uiNode_t* node) OVERRIDE;
 	void draw(uiNode_t* node) OVERRIDE;
 };
 

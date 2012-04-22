@@ -112,7 +112,7 @@ void uiRadioButtonNode::draw (uiNode_t *node)
 /**
  * @brief Activate the node. Can be used without the mouse (ie. a button will execute onClick)
  */
-void uiRadioButtonNode::activate (uiNode_t * node)
+void uiRadioButtonNode::onActivate (uiNode_t * node)
 {
 	/* no cvar given? */
 	if (!EXTRADATA(node).cvar || !*(char*)(EXTRADATA(node).cvar)) {
@@ -143,12 +143,12 @@ void uiRadioButtonNode::activate (uiNode_t * node)
 /**
  * @brief Handles radio button clicks
  */
-void uiRadioButtonNode::leftClick (uiNode_t * node, int x, int y)
+void uiRadioButtonNode::onLeftClick (uiNode_t * node, int x, int y)
 {
 	if (node->onClick)
 		UI_ExecuteEventActions(node, node->onClick);
 
-	activate(node);
+	onActivate(node);
 }
 
 void UI_RegisterRadioButtonNode (uiBehaviour_t *behaviour)

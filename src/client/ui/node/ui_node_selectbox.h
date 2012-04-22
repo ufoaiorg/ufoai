@@ -30,10 +30,10 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 class uiSelectBoxNode : public uiAbstractOptionNode {
 	void draw(uiNode_t* node) OVERRIDE;
 	void drawOverWindow(uiNode_t* node) OVERRIDE;
-	void leftClick(uiNode_t* node, int x, int y) OVERRIDE;
-	void capturedMouseMove(uiNode_t* node, int x, int y) OVERRIDE;
-	void loading(uiNode_t* node) OVERRIDE;
-	void loaded(uiNode_t* node) OVERRIDE;
+	void onLeftClick(uiNode_t* node, int x, int y) OVERRIDE;
+	void onCapturedMouseMove(uiNode_t* node, int x, int y) OVERRIDE;
+	void onLoading(uiNode_t* node) OVERRIDE;
+	void onLoaded(uiNode_t* node) OVERRIDE;
 };
 
 void UI_RegisterSelectBoxNode(struct uiBehaviour_s *behaviour);

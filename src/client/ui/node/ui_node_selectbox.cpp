@@ -71,7 +71,7 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
  * @brief call when the mouse move is the node is captured
  * @todo we can remove the loop if we save the current element in the node
  */
-void uiSelectBoxNode::capturedMouseMove (uiNode_t *node, int x, int y)
+void uiSelectBoxNode::onCapturedMouseMove (uiNode_t *node, int x, int y)
 {
 	uiNode_t* option;
 	int posy;
@@ -233,7 +233,7 @@ void uiSelectBoxNode::drawOverWindow (uiNode_t *node)
 /**
  * @brief Handles selectboxes clicks
  */
-void uiSelectBoxNode::leftClick (uiNode_t *node, int x, int y)
+void uiSelectBoxNode::onLeftClick (uiNode_t *node, int x, int y)
 {
 	uiNode_t* option;
 	int clickedAtOption;
@@ -288,12 +288,12 @@ void uiSelectBoxNode::leftClick (uiNode_t *node, int x, int y)
 /**
  * @brief Called before loading. Used to set default attribute values
  */
-void uiSelectBoxNode::loading (uiNode_t *node)
+void uiSelectBoxNode::onLoading (uiNode_t *node)
 {
 	Vector4Set(node->color, 0.6, 0.6, 0.6, 0.3);
 }
 
-void uiSelectBoxNode::loaded (uiNode_t *node)
+void uiSelectBoxNode::onLoaded (uiNode_t *node)
 {
 	/* force a size (according to the texture) */
 	node->size[1] = SELECTBOX_DEFAULT_HEIGHT;

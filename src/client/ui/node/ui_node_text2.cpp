@@ -127,7 +127,7 @@ static int UI_TextNodeGetLine (const uiNode_t *node, int x, int y)
 	return line;
 }
 
-void uiText2Node::mouseMove (uiNode_t *node, int x, int y)
+void uiText2Node::onMouseMove (uiNode_t *node, int x, int y)
 {
 	EXTRADATA(node).super.lineUnderMouse = UI_TextNodeGetLine(node, x, y);
 }
@@ -283,7 +283,7 @@ void uiText2Node::draw (uiNode_t *node)
  * @brief Calls the script command for a text node that is clickable
  * @sa UI_TextNodeRightClick
  */
-void uiText2Node::leftClick (uiNode_t * node, int x, int y)
+void uiText2Node::onLeftClick (uiNode_t * node, int x, int y)
 {
 	int line = UI_TextNodeGetLine(node, x, y);
 
@@ -300,7 +300,7 @@ void uiText2Node::leftClick (uiNode_t * node, int x, int y)
  * @brief Calls the script command for a text node that is clickable via right mouse button
  * @sa UI_TextNodeClick
  */
-void uiText2Node::rightClick (uiNode_t * node, int x, int y)
+void uiText2Node::onRightClick (uiNode_t * node, int x, int y)
 {
 	int line = UI_TextNodeGetLine(node, x, y);
 
@@ -313,14 +313,14 @@ void uiText2Node::rightClick (uiNode_t * node, int x, int y)
 		UI_ExecuteEventActions(node, node->onRightClick);
 }
 
-void uiText2Node::loading (uiNode_t *node)
+void uiText2Node::onLoading (uiNode_t *node)
 {
 	EXTRADATA(node).super.textLineSelected = -1; /**< Invalid/no line selected per default. */
 	Vector4Set(node->selectedColor, 1.0, 1.0, 1.0, 1.0);
 	Vector4Set(node->color, 1.0, 1.0, 1.0, 1.0);
 }
 
-void uiText2Node::loaded (uiNode_t *node)
+void uiText2Node::onLoaded (uiNode_t *node)
 {
 	int lineheight = EXTRADATA(node).super.lineHeight;
 	/* auto compute lineheight */
