@@ -29,12 +29,13 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 
 class uiMapNode : public uiLocatedNode {
 	void draw(uiNode_t* node) OVERRIDE;
-	void mouseDown(uiNode_t* node, int x, int y, int button) OVERRIDE;
 	void mouseUp(uiNode_t* node, int x, int y, int button) OVERRIDE;
 	void capturedMouseMove(uiNode_t* node, int x, int y) OVERRIDE;
 	void capturedMouseLost(uiNode_t* node) OVERRIDE;
 	void loading(uiNode_t* node) OVERRIDE;
 	bool scroll(uiNode_t* node, int deltaX, int deltaY) OVERRIDE;
+	void leftClick(uiNode_t* node, int x, int y) OVERRIDE;
+	bool startDragging(uiNode_t* node, int startX, int startY, int currentX, int currentY, int button) OVERRIDE;
 };
 
 #define UI_MAPEXTRADATA_TYPE mapExtraData_t

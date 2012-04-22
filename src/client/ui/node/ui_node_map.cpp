@@ -139,27 +139,28 @@ static void UI_MapNodeStartMouseShifting (uiNode_t *node, int x, int y)
 	oldMousePosY = y;
 }
 
-void uiMapNode::mouseDown (uiNode_t *node, int x, int y, int button)
+void uiMapNode::leftClick(uiNode_t* node, int x, int y)
 {
-	/* finish the last drag before */
 	if (mode != MODE_NULL)
 		return;
+	MAP_MapClick(node, x, y);
+}
 
+bool uiMapNode::startDragging(uiNode_t* node, int startX, int startY, int x, int y, int button)
+{
 	switch (button) {
 	case K_MOUSE1:
-		if (!MAP_MapClick(node, x, y))
-			UI_MapNodeStartMouseShifting(node, x, y);
-		break;
 	case K_MOUSE2:
-		UI_MapNodeStartMouseShifting(node, x, y);
-		break;
+		UI_MapNodeStartMouseShifting(node, startX, startY);
+		return true;
 	case K_MOUSE3:
 		UI_SetMouseCapture(node);
 		mode = MODE_ZOOMMAP;
-		oldMousePosX = x;
-		oldMousePosY = y;
-		break;
+		oldMousePosX = startX;
+		oldMousePosY = startY;
+		return true;
 	}
+	return false;
 }
 
 void uiMapNode::mouseUp (uiNode_t *node, int x, int y, int button)
