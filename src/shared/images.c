@@ -352,13 +352,18 @@ static SDL_Surface* Img_LoadPNG(char const* const name)
 	return res;
 }
 
+typedef struct jpeg_error_mgr jpeg_error_mgr;
+typedef struct jpeg_decompress_struct jpeg_decompress_struct;
+
 #if JPEG_LIB_VERSION < 80
-static void djepg_nop(jpeg_decompress_struct*) {}
+typedef struct jpeg_source_mgr jpeg_source_mgr;
+
+static void djepg_nop(jpeg_decompress_struct* unused) {}
 
 static boolean djepg_fill_input_buffer(jpeg_decompress_struct* const cinfo)
 {
 	ERREXIT(cinfo, JERR_INPUT_EOF);
-	return false;
+	return qfalse;
 }
 
 static void djepg_skip_input_data(jpeg_decompress_struct* const cinfo, long const num_bytes)
@@ -366,12 +371,12 @@ static void djepg_skip_input_data(jpeg_decompress_struct* const cinfo, long cons
 	if (num_bytes < 0)
 		return;
 
-	jpeg_source_mgr& src = *cinfo->src;
-	if (src.bytes_in_buffer < (size_t)num_bytes)
+	jpeg_source_mgr* src = cinfo->src;
+	if (src->bytes_in_buffer < (size_t)num_bytes)
 		ERREXIT(cinfo, JERR_INPUT_EOF);
 
-	src.next_input_byte += num_bytes;
-	src.bytes_in_buffer -= num_bytes;
+	src->next_input_byte += num_bytes;
+	src->bytes_in_buffer -= num_bytes;
 }
 #endif
 
@@ -381,8 +386,8 @@ static SDL_Surface* Img_LoadJPG(char const* const name)
 	size_t       len;
 	byte         *buf;
 	if ((buf = readFile(name, "jpg", &len)) != NULL) {
-		struct jpeg_decompress_struct cinfo;
-		struct jpeg_error_mgr         jerr;
+		jpeg_decompress_struct cinfo;
+		jpeg_error_mgr         jerr;
 
 		cinfo.err = jpeg_std_error(&jerr);
 		jpeg_create_decompress(&cinfo);
