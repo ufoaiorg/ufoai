@@ -517,6 +517,27 @@ image_t* R_RenderToTexture (const char *name, int x, int y, int w, int h)
 }
 
 /**
+ * @brief Set up new image type and change texturemapping paramenters accordingly
+ * @note Mipmapping mode is not updated
+ */
+static void R_ChangeImageType(image_t *img, imagetype_t type)
+{
+	if (!img)
+		return;
+
+	img->type = type;
+	R_BindTexture(img->texnum);
+
+	if (R_IsClampedImageType(type)) {
+		glTexParameterf(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_CLAMP_TO_EDGE);
+		glTexParameterf(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_CLAMP_TO_EDGE);
+	} else {
+		glTexParameterf(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_REPEAT);
+		glTexParameterf(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_REPEAT);
+	}
+}
+
+/**
  * @brief Finds or loads the given image
  * @sa R_RegisterImage
  * @param[in] pname Image name Path relative to the game dir (e.g. textures/tex_common/nodraw)
@@ -542,8 +563,14 @@ image_t *R_FindImage (const char *pname, imagetype_t type)
 	image = R_GetImage(lname);
 	if (image) {
 		/* Warn if game tries to use same image with different texture mapping modes */
-		if (R_IsClampedImageType(image->type) != R_IsClampedImageType(type)) /** @todo should also check the mipmapping */
+		if (R_IsClampedImageType(image->type) != R_IsClampedImageType(type)) { /** @todo should also check the mipmapping */
 			Com_Printf("Warning: inconsistent usage of image %s (%i,%i)\n", image->name, image->type, type);
+			R_ChangeImageType(image, type);
+			R_ChangeImageType(image->normalmap, type);
+			R_ChangeImageType(image->roughnessmap, type);
+			R_ChangeImageType(image->specularmap, type);
+			R_ChangeImageType(image->glowmap, type);
+		}
 		return image;
 	}
 
