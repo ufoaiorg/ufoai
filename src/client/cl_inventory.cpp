@@ -91,23 +91,31 @@ qboolean INV_MoveItem (inventory_t* inv, const invDef_t * toContainer, int px, i
  */
 qboolean INV_LoadWeapon (const invList_t *weaponList, inventory_t *inv, const invDef_t *srcContainer, const invDef_t *destContainer)
 {
-	itemFilterTypes_t equipType;
 	invList_t *ic = NULL;
-	int i = 0;
 	const objDef_t *weapon;
 
 	assert(weaponList);
 
 	weapon = weaponList->item.t;
-	equipType = INV_GetFilterFromItem(weapon);
-	/* search an ammo */
-	while (i < weapon->numAmmos && !ic) {
-		const objDef_t *ammo = weapon->ammos[i];
-		ic = INV_SearchInInventoryWithFilter(inv, srcContainer, ammo, equipType);
-		i++;
+	if (weapon->oneshot) {
+		ic = INVSH_FindInInventory(inv, destContainer, &weaponList->item);
+		if (ic) {
+			ic->item.a = weapon->ammo;
+			ic->item.m = weapon;
+			return qtrue;
+		}
+	} else {
+		const itemFilterTypes_t equipType = INV_GetFilterFromItem(weapon);
+		int i = 0;
+		/* search an ammo */
+		while (i < weapon->numAmmos && !ic) {
+			const objDef_t *ammo = weapon->ammos[i];
+			ic = INV_SearchInInventoryWithFilter(inv, srcContainer, ammo, equipType);
+			i++;
+		}
+		if (ic)
+			return INV_MoveItem(inv, destContainer, weaponList->x, weaponList->y, srcContainer, ic);
 	}
-	if (ic)
-		return INV_MoveItem(inv, destContainer, weaponList->x, weaponList->y, srcContainer, ic);
 
 	return qfalse;
 }

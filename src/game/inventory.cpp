@@ -894,7 +894,8 @@ static void I_EquipActor (inventoryInterface_t* self, inventory_t* const inv, co
 				if (miscItem->isMisc && !miscItem->weapon) {
 					randNumber -= ed->numItems[i];
 					if (randNumber < 0) {
-						const item_t item = {NONE_AMMO, NULL, miscItem, 0, 0};
+						const qboolean oneShot = miscItem->oneshot;
+						const item_t item = {oneShot ? miscItem->ammo : NONE_AMMO, oneShot ? miscItem : NULL, miscItem, 0, 0};
 						containerIndex_t container;
 						if (miscItem->headgear)
 							container = self->csi->idHeadgear;

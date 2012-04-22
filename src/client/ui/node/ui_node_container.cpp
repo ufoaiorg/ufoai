@@ -758,7 +758,7 @@ void UI_ContainerNodeAutoPlaceItem (uiNode_t* node, invList_t *ic)
 					target = idxArray[i];
 					packed = UI_ContainerNodeAddItem(container, ic, target);
 					if (packed) {
-						if (ic->item.t->weapon && !ic->item.a)
+						if ((ic->item.t->weapon && !ic->item.a) || ic->item.t->oneshot)
 							ammoChanged = INV_LoadWeapon(ic, ui_inventory, container, INVDEF(target));
 						break;
 					}
@@ -1015,14 +1015,14 @@ bool uiContainerNode::dndFinished (uiNode_t *source, bool isDropped)
 
 			/** @todo We must split the move in two. Here, we should not know how to add the item to the target (see dndDrop) */
 			/* Remove ammo on removing weapon from a soldier */
-			if (UI_IsScrollContainerNode(target) && fItem->item.m && fItem->item.m != fItem->item.t)
+			if (UI_IsScrollContainerNode(target) && fItem->item.m && fItem->item.m != fItem->item.t && fItem->item.a)
 				INV_UnloadWeapon(fItem, ui_inventory, targetContainer);
 
 			/* move the item */
 			INV_MoveItem(ui_inventory, targetContainer, dragInfoToX, dragInfoToY, sourceContainer, fItem);
 
 			/* Add ammo on adding weapon to a soldier  */
-			if (UI_IsScrollContainerNode(source) && fItem->item.t->weapon && !fItem->item.a)
+			if (UI_IsScrollContainerNode(source) && ((fItem->item.t->weapon && !fItem->item.a) || fItem->item.t->oneshot))
 				INV_LoadWeapon(fItem, ui_inventory, sourceContainer, targetContainer);
 
 			/* Run onChange events */
