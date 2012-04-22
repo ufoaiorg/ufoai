@@ -21,7 +21,24 @@ base shelter/shelter_
 
 // ---------------------------------
 // Shelter entrance
-tile +entrance
+tile +craft_drop_firebird
+{
+6 4
+0      b       b       b       b       0
+x      +a      +a      +a      +a      x
+x      +a      +a      +a      +a      x
+0      0       0       0       0       0
+}
+tile +craft_drop_herakles
+{
+6 4
+0      b       b       b       b       0
+x      +a      +a      +a      +a      x
+x      +a      +a      +a      +a      x
+0      0       0       0       0       0
+}
+
+tile +craft_drop_raptor
 {
 6 4
 0      b       b       b       b       0
@@ -153,7 +170,6 @@ size "8 8"
 grid "2 2"
 fix +solid "0 0"
 fix +solid "6 0"
-fix +entrance "2 0"
 fix +corridor_ne "6 6"
 fix +corridor_nw "0 6"
 +room_w_a "0 2"
@@ -166,4 +182,5 @@ fix +corridor_nw "0 6"
 +hallsouth_b "0 1"
 +hallnorth_a "0 1"
 +hallnorth_b "0 1"
+fix *rm_drop +craft_drop_firebird "2 0"
 }

@@ -2920,16 +2920,20 @@ mapdef shelter
 		coop4
 	}
 	maxaliens		21 //TODO: This is an arbitrary value right now.
+		// randomspawn enabled
 	civilianteam	armysoldier
 
 	aircraft
 	{
 		craft_drop_firebird
+		craft_drop_herakles
+		craft_drop_raptor
 	}
 
-//	ufos
-//	{
-//	}
+	ufos
+	{
+		// any
+	}
 
 	terrains
 	{
