@@ -3,6 +3,7 @@
 /*-Results.xml
 /*.bz2
 /*.dmg
+/.cproject
 /config.h
 /config.mk
 /debug-*/
