@@ -748,11 +748,14 @@ static void I_EquipActor (inventoryInterface_t* self, inventory_t* const inv, co
 					if (ed->numItems[ammo] && INVSH_LoadableInWeapon(&self->csi->ods[ammo], primaryWeapon))
 						break;
 				if (ammo < self->csi->numODs) {
-					primary =
-						/* To avoid two particle weapons. */
+					if (/* To avoid two particle weapons. */
 						!(self->csi->ods[ammo].dmgtype == self->csi->damParticle)
 						/* To avoid SMG + Assault Rifle */
-						&& !(self->csi->ods[ammo].dmgtype == self->csi->damNormal);
+						&& !(self->csi->ods[ammo].dmgtype == self->csi->damNormal)) {
+						primary = WEAPON_OTHER;
+					} else {
+						primary = WEAPON_PARTICLE_OR_NORMAL;
+					}
 				}
 				/* reset missedPrimary: we got a primary weapon */
 				missedPrimary = 0;
@@ -891,7 +894,8 @@ static void I_EquipActor (inventoryInterface_t* self, inventory_t* const inv, co
 				if (miscItem->isMisc && !miscItem->weapon) {
 					randNumber -= ed->numItems[i];
 					if (randNumber < 0) {
-						const item_t item = {NONE_AMMO, NULL, miscItem, 0, 0};
+						const qboolean oneShot = miscItem->oneshot;
+						const item_t item = {oneShot ? miscItem->ammo : NONE_AMMO, oneShot ? miscItem : NULL, miscItem, 0, 0};
 						containerIndex_t container;
 						if (miscItem->headgear)
 							container = self->csi->idHeadgear;
