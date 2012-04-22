@@ -544,6 +544,18 @@ window options
 				size		"20 18"
 				image		"ui/checkbox_blue"
 			}
+			// =============================================
+			// INFORM THE PLAYER ABOUT CTRL+G MOUSEGRABBING
+			// =============================================
+			string mousegrabbing_info_str
+			{
+				tooltip		"_Prevent the mousepointer from leaving the game window."
+				string		"_Hint: Press CTRL+G to grab/release the mousepointer."
+				pos			"32 110"
+				size		"410 20"
+				visiblewhen	"*cvar:vid_fullscreen == 0"
+				font		"f_verysmall"
+			}
 			// =====================================
 			// MONITOR CALIBRATION CONTROLS SUBMENU
 			// =====================================
