@@ -3,7 +3,7 @@ msgstr ""
 "Project-Id-Version: UFO: Alien Invasion\n"
 "Report-Msgid-Bugs-To: tlh2000@users.sourceforge.net\n"
 "POT-Creation-Date: 2012-03-28 13:18+0700\n"
-"PO-Revision-Date: 2012-04-05 14:11+0100\n"
+"PO-Revision-Date: 2012-04-22 16:36+0100\n"
 "Last-Translator: Tamás Fehérvári <geever@users.sourceforge.net>\n"
 "Language-Team: \n"
 "Language: hu\n"
@@ -98,9 +98,8 @@ msgid "Gasstation"
 msgstr "Benzinkút"
 
 #: ../base/maps/harbour2.ump:475
-#, fuzzy
 msgid "Harbour"
-msgstr "Harbin"
+msgstr "Kikötő"
 
 #: ../base/maps/harbour2.ump:520
 msgid "Pier"
@@ -142,9 +141,8 @@ msgstr "Laboratórium"
 #: ../base/maps/mansion.ump:398
 #: ../base/maps/mansion.ump:442
 #: ../base/maps/mansion1.ump:68
-#, fuzzy
 msgid "Mansion"
-msgstr "Küldetések"
+msgstr "Palota"
 
 #: ../base/maps/mart.ump:64
 msgid "Mart"
@@ -2684,18 +2682,7 @@ msgstr "Sok szerencsét"
 
 #: ../base/ufos/events.ufo:37
 msgid "mail_prolog"
-msgstr ""
-"Welcome to your new post, Commander. You now have full command over the PHALANX Extraterrestrial Response Unit. Your mission is to protect the citizens of Earth and stop the alien threat at all costs. How you accomplish this is up to you; our only requirement is that you succeed.\n"
-"\n"
-"Your first order of business is to set up a headquarters. The UN has access to military bases all over the world, so you may consider any region for your base of operations. Choose the location wisely, because it will have great influence on the success of the PHALANX project.\n"
-"\n"
-"A recent analysis of the attacks on Mumbai and Bonn reveal that UFO sightings and alien activity seems to focus on the most densely populated regions of Earth, including coastal North- and South-America, Europe, Eastasia, South and Mediterranean Africa, and Australia. You should consider including these territories in your field of operations.\n"
-"\n"
-"Once you've established your first base, you must prepare your soldiers. The recruits we have assigned to PHALANX must be stationed on your dropship, then equipped for battle.\n"
-"\n"
-"Take care of them, Commander. The rest of us are all counting on you, and praying for you.\n"
-"\n"
-"That is all. Good luck and good hunting."
+msgstr "Üdvözöljük az új posztján parancsnok úr! Mostantól PHALANX Földönkívüli-ellenes Gyorsreagálású Egység teljes mértékben az ön parancsnoksága alá tartozik. Feladata megvédeni a Föld polgári lakosságát és elhárítani az idegen fenyegetést, bármi áron! Hogy ezt hogyan éri el, csak önön múlik. Mi mindössze azt várjuk el, hogy sikerrel járjon. A legelső teendő a főhadiszállás felállítása. Az ENSZ hozzáférést biztosít minden katonai bázishoz a világon, ezért műveleteink bázisául bármely régiót választhatja. Válasszon bölcsen, az elhelyezkedés nagyban fogja befolyásolni a PHALANX projekt sikerét. A bombay-i és a bonni támadásokról készült legfrissebb elemzések rámutattak, hogy az UFO észlelések és az idegenek aktivitása a legsűrűbben lakott földi területekre összpontosul: Észak- és Dél-Amerika partvidéke, Európa, Kelet-Ázsia, Dél-Afrika és a Földközi-tenger afrikai partvidéke, valamint Ausztrália. Fontolja meg ezen területek bevonását működési hatókörünkbe.Amint felépült az első bázis, a katonáit kell felkészítenie! A PHALANX rendelkezésére bocsátott újoncok beosztását a csapatszállító gépre, azok felfegyverzését önnek kell elvégezni. Viselje gondjukat parancsnok úr. Mindannyian számítunk önre és imádkozunk sikeréért. Ez volna minden. Sok szerencsét, jó vadászatot! "
 
 #: ../base/ufos/events.ufo:43
 #: ../base/ufos/research.ufo:140
@@ -2822,9 +2809,8 @@ msgid "mail_from_xo"
 msgstr "Abel S. Howard par. hely., PHALANX, Atlanti Műveleti Parancsnokság, Parancsnokság"
 
 #: ../base/ufos/events.ufo:55
-#, fuzzy
 msgid "Alien Base Discovered"
-msgstr "Idegen bázis felfedezve: %s"
+msgstr "Idegen bázis felfedezve"
 
 #: ../base/ufos/events.ufo:56
 msgid "mail_alien_base_discovered"
@@ -2846,9 +2832,8 @@ msgid "media/DejaVuSans.ttf"
 msgstr "media/DejaVuSans.ttf"
 
 #: ../base/ufos/fonts.ufo:89
-#, fuzzy
 msgid "media/languages.ttf"
-msgstr "media/DejaVuSans.ttf"
+msgstr "media/languages.ttf"
 
 #: ../base/ufos/gamemodes.ufo:16
 #, fuzzy
@@ -2856,9 +2841,8 @@ msgid "Full Campaign"
 msgstr "Hadjárat"
 
 #: ../base/ufos/gamemodes.ufo:21
-#, fuzzy
 msgid "Simple Campaign"
-msgstr "Hadjárat"
+msgstr ""
 
 #: ../base/ufos/gamemodes.ufo:26
 msgid "Skirmish"
@@ -3060,7 +3044,6 @@ msgid "A suburb that has been visited by an UFO."
 msgstr ""
 
 #: ../base/ufos/maps.ufo:165
-#, fuzzy
 msgid "An UFO crashsite."
 msgstr "Lezuhant UFÓ."
 
@@ -3258,9 +3241,8 @@ msgid "A small industry city area."
 msgstr "Egy kis ipari telep."
 
 #: ../base/ufos/maps.ufo:3219
-#, fuzzy
 msgid "A crashed UFO-Corrupter."
-msgstr "Lezuhant UFÓ - Felderítő"
+msgstr ""
 
 #: ../base/ufos/maps.ufo:3265
 msgid "A hydroelectricity dam that is threatened by the alien invaders."
@@ -3375,7 +3357,6 @@ msgstr "Érme"
 #: ../base/ufos/medals.ufo:30
 #: ../base/ufos/team_humans.ufo:668
 #: client/cgame/campaign/cp_employee.c:202
-#, fuzzy
 msgid "Scientist"
 msgid_plural "Scientists"
 msgstr[0] "Tudós"
@@ -3384,7 +3365,6 @@ msgstr[1] "Tudós"
 #: ../base/ufos/medals.ufo:38
 #: ../base/ufos/team_humans.ufo:1258
 #: client/cgame/campaign/cp_employee.c:206
-#, fuzzy
 msgid "Pilot"
 msgid_plural "Pilots"
 msgstr[0] "Pilóta"
@@ -3402,7 +3382,6 @@ msgstr[1] ""
 #: ../base/ufos/medals.ufo:54
 #: ../base/ufos/team_humans.ufo:1682
 #: client/cgame/campaign/cp_employee.c:204
-#, fuzzy
 msgid "Worker"
 msgid_plural "Workers"
 msgstr[0] "Munkás"
@@ -8074,37 +8053,11 @@ msgstr ""
 
 #: ../base/ufos/research.ufo:4672
 msgid "craft_alien_detection_pre_txt"
-msgstr ""
-"Commander, the alien sensor suite appears to be a very powerful set of passive and active scanning systems, including radar, lidar, magnetic and UV/infrared reception, and -- most interestingly -- a kind of detection unknown to us, but which seems to have far more success at detecting UFOs than anything we have.\n"
-"\n"
-"If you'll let us take the suite apart, I believe we can find out what everything does and how to operate it, and how to replicate most if not all of the alien detection equipment. It would be an immense boost to our defence efforts on Earth if we can get this technology working for us, and its long-term potential for spacecraft development is vital. There's no way we could build a viable space-capable fighter with human sensors.\n"
-"\n"
-"Along with Alien Propulsion and Alien Astrogation, Alien Detection is one of the three pillars of UFO design. Understanding it will bring us a big step closer to the ability to build an atmosphere-capable interplanetary defence craft.\n"
-"\n"
-"--Cdr. Navarre"
+msgstr "Parancsnok, az idegen érzékelő berendezés egy nagyon erős passzív és aktív letapogató rendszernek tűnik, mely magában foglalja a radart, a fény-, és mágneses mező érzékelést, az UV és infravörös érzékelést, illetve - legérdekesebbként - egy számunkra ismeretlen letapogatást, mely az eddigi legsikeresebb UFO észlelési technikának tűnik.Amennyiben engedélyt ad a berendezés szétszerelésére, úgy hiszem, megismerhetjük működését és működtetését, illetve, hogy hogyan sokszorosíthatjuk a legtöbb, vagy akár az összes idegen észlelő berendezést. Hatalmas lökést adhat a földi védekező rendszerünknek, ha a magunk hasznára fordítjuk ezt a technológiát. Ez létfontosságú a hosszú távú űrhajó fejlesztésekben. Nem lehetsége egy életképes űrvadászt építeni pusztán emberi szenzorokkal.Az Űrnavigációval és az Idegen Lökhajtással együtt az Idegen Észlelés az UFO konstrukció három alappillére. Megértésével egy hatalmas lépést teszünk afelé, hogy megépíthessünk egy bolygóközi védelmi űrrepülőt.--Navarre alezr. "
 
 #: ../base/ufos/research.ufo:4675
 msgid "craft_alien_detection_txt"
-msgstr ""
-"The project on alien detection is complete, Commander. We now have a full understanding of the machinery, its controls, and the modifications needed for human use.\n"
-"\n"
-"Our initial assessment looks to have been correct. The detection suite makes use mostly of standard, reliable detection methods that humanity either uses or knows about. The equipment is more advanced than ours and will be useful, but by and large the aliens apply the same concepts and use the same physics as we do. As I mentioned in my proposal, radar, lidar and other such old reliables are all well-represented in the suite.\n"
-"\n"
-"And then there's the mystery sensor.\n"
-"\n"
-"It had us confounded for a long time, because now that it's here on the Earth's surface, it spits out mostly overpowering background noise. Up in the air, however, the picture is quite different. We think we've now identified the detector and have figured out how it works.\n"
-"\n"
-"In the simplest terms, it's a gravity sensor, scanning for minute changes in a background gravitational field. Everything travelling through a gravity field disturbs the field to some degree based on its size, mass and composition. The sensor can identify these changes as natural or artificial objects based on course, speed and acceleration with 95% accuracy. If there is any doubt about a contact, the system will report it anyway. It seems to be more effective in stronger fields like the one around Earth, but we surmise that it will work to some extent anywhere within the gravity range of a star.\n"
-"\n"
-"All of this detection power is linked into an advanced computer system which automatically puts all results through a series of filters, which can be adjusted at any time to suit the needs of the pilot and crew. This helps alternately sifting out targets from a mess of background noise or increasing sensitivity to search for something stealthy.\n"
-"\n"
-"Interestingly, the detection computer seems to have a direct link to fire control, assisting in anticipating target manoeuvres and point defence control if the craft has that capability.\n"
-"\n"
-"Parts of this technology can be adapted to our existing ground-based installations and aircraft radar. It should extend their detection range and increase resolution across the board, making it a good deal harder for UFOs to hide. However, the biggest practical gains will come from using this tech in creating new aircraft instrumentation to increase the combat survivability of our interceptors.\n"
-"\n"
-"Of course, it's not the immediate uses that are the most important. These detectors are vital for any future PHALANX spacecraft. In space, without the support of ground radar, we're going to need the extra power very badly.\n"
-"\n"
-"--Cdr. Navarre"
+msgstr "Az idegen észlelés projekt a végéhez ért, Parancsnok. Teljesen megértettük szerkezetét, irányítását és az emberi felhasználáshoz szükséges változtatásokat is ismerjük.Az elsődleges értékelésünk valósnak bizonyult. Az észlelő berendezés leginkább általunk már ismert, megbízható, standard észlelési technikákat alkalmaz. A berendezés fejlettebb, mint a miénk, de az idegenek nagyjából ugyanazokat az elképzeléseket és ugyanazokat a fizikai alapelveket alkalmazzák, mint mi. Ahogyan a tervemben is említettem, a radar, a fényérzékelés és más hasonló régi technikák megtalálhatók a berendezésben.De itt van még egy rejtélyes szenzor.Sokáig összezavart bennünket, mivel most, hogy itt van a Föld felszínén leginkább erős háttérzajt bocsájt ki magából. Viszont a levegőben teljesen más a helyzet. Úgy gondoljuk, hogy azonosítottuk a detektort és rájöttünk, hogyan működik.Egyszerűen leírva ez egy gravitációs szenzor, mely a háttérben lévő gravitációs mező változásait méri. Minden, ami átmegy egy graitációs mezőn, megváltoztatja azt, a nagyságának, tömegének és összetételének megfelelően. A szenzor képes ezeknek a változásoknak az észlelésére és 95%-os pontossággal megállapítja az áthaladó természetes vagy mesterséges test irányát, sebességét, és gyorsulását. Amennyiben kétséges a test bemérése, a rendszer mindenképp jelzi azt. Úgy tűnik, hogy a berendezés hatékonyabb erősebb mezőkben, mint például a földi, de úgy gondoljuk, hogy bizonyos mértékig bárhol képes működni egy csillag gravitációs hatókörében.Mindez az észlelési erőforrás egy fejlett számítógépes rendszerbe folyik össze, mely minden eredményt egy automatikus szűrőrendszerbe irányít, melyet bármikor a pilóta és a személyzet igényeihez lehet igazítani. Így segít kiszűrni a célpontokat a kusza háttérzajból vagy megnövelt érzékenységgel lopakodó célpontokat keresni.Érdekes módon a szenzor számítógép közvetlen összeköttetésben áll a tűzrendszerrel, így a célpont mozgásának követését segíti, valamint támogatja a pont-védelem irányítását, amennyiben a jármű rendelkezik ezzel a képességgel.A technológia egyes elemeit átvehetjük földifelszíni építményekbe és alkalmazhatjuk radarokban is. Ez kiterjeszti hatótávolságukat és növeli felbontásukat, így nagymértékben megnehezíti az UFO-k rejtőzködését. Mégis, a technika használatának legnagyobb előnyét az elfogó-vadászok építésénél látjuk, melyeknél a berendezés használatával megnő a túlélés esélye.Természetesen nem az azonnali, rövid távú felhasználás a legfontosabb. Ezek a szenzorok létfontosságúak minden jövőbeni PHALANX űrhajónak. Az űrben, a földi radarok támogatása nélkül, óriási szükségünk lesz erre a rendkívüli erőre.--Navarre alezr. "
 
 #: ../base/ufos/research.ufo:4708
 msgid "craft_weapon_alc_pre_txt"
@@ -10122,9 +10075,8 @@ msgid "Start autopsy"
 msgstr "Boncolás"
 
 #: ../base/ufos/ui/aliencont.ufo:143
-#, fuzzy
 msgid "Live Alien Containment Info"
-msgstr "Következő idegen tároló"
+msgstr "Idegen tároló információ"
 
 #: ../base/ufos/ui/aliencont.ufo:156
 msgid "Base capacity:"
@@ -10605,7 +10557,6 @@ msgstr "Következő tüzelésimód"
 
 #: ../base/ufos/ui/equipment.ufo:606
 #: ../base/ufos/ui/team.ufo:592
-#, fuzzy
 msgid "Soldier Abilities"
 msgstr "Katona képességei"
 
@@ -10980,9 +10931,8 @@ msgstr ""
 
 #: ../base/ufos/ui/hud_.ufo:85
 #: ../base/ufos/ui/hud_phone.ufo:100
-#, fuzzy
 msgid "Shots:"
-msgstr "Lövések: %i"
+msgstr "Lövések:"
 
 #: ../base/ufos/ui/hud_.ufo:447
 msgid "Chat"
@@ -11006,9 +10956,8 @@ msgid "Team chat"
 msgstr "Csapatcset"
 
 #: ../base/ufos/ui/hud_alt.ufo:521
-#, fuzzy
 msgid "LMB:Inventory/RMB:Physical Stats"
-msgstr "Felszerelések és fizikai adatok"
+msgstr ""
 
 #: ../base/ufos/ui/hud_alt.ufo:557
 #: ../base/ufos/ui/hud_alt.ufo:567
@@ -11116,16 +11065,14 @@ msgstr "Kör befejezése"
 #: ../base/ufos/ui/hud_alt.ufo:1076
 #: ../base/ufos/ui/hud_default.ufo:1066
 #: ../base/ufos/ui/hud_mini.ufo:2138
-#, fuzzy
 msgid "Reaction fire"
-msgstr "Nincs reakció"
+msgstr ""
 
 #: ../base/ufos/ui/hud_alt.ufo:1081
 #: ../base/ufos/ui/hud_default.ufo:1072
 #: ../base/ufos/ui/hud_mini.ufo:2143
-#, fuzzy
 msgid "Reaction fire (not possible)"
-msgstr "Egy lövéses reakció (nem lehetséges)"
+msgstr ""
 
 #: ../base/ufos/ui/hud_alt.ufo:1087
 #: ../base/ufos/ui/hud_default.ufo:1078
@@ -11186,18 +11133,16 @@ msgstr "8. szint"
 
 #: ../base/ufos/ui/hud_default.ufo:520
 #: ../base/ufos/ui/hud_default.ufo:1039
-#, fuzzy
 msgid "Show rescue zone"
-msgstr "A katona elhagyta az evakuációs zónát\n"
+msgstr "Mutasd az evakuációs zónát"
 
 #: ../base/ufos/ui/hud_default.ufo:576
 msgid "Primary fire mode"
 msgstr "Elsődleges tüzelésimód"
 
 #: ../base/ufos/ui/hud_default.ufo:922
-#, fuzzy
 msgid "LMB:Show/RMB:Hide Physical stats"
-msgstr "Fizikai adatok"
+msgstr ""
 
 #: ../base/ufos/ui/hud_default.ufo:934
 #: ../base/ufos/ui/hud_mini.ufo:1623
@@ -11205,9 +11150,8 @@ msgid "LMB:Show/RMB:Hide Inventory"
 msgstr ""
 
 #: ../base/ufos/ui/hud_default.ufo:1036
-#, fuzzy
 msgid "Hide rescue zone"
-msgstr "A katona elhagyta az evakuációs zónát\n"
+msgstr "Rejtsd el az evakuációs zónát"
 
 #: ../base/ufos/ui/hud_default.ufo:1100
 msgid "Original HUD"
@@ -11371,32 +11315,28 @@ msgid "Use Headgear"
 msgstr ""
 
 #: ../base/ufos/ui/hud_mini.ufo:1982
-#, fuzzy
 msgid "Chat Messages"
 msgstr "Cset üzenetek"
 
 #: ../base/ufos/ui/hud_mini.ufo:2028
-#, fuzzy
 msgid "Message Log"
-msgstr "Üzenet beállítások"
+msgstr "Üzenet lista"
 
 #: ../base/ufos/ui/hud_mini.ufo:2037
 msgid "Menu"
 msgstr ""
 
 #: ../base/ufos/ui/hud_mini.ufo:2047
-#, fuzzy
 msgid "Stop Music"
-msgstr "Zene"
+msgstr "Zene lellítása"
 
 #: ../base/ufos/ui/hud_mini.ufo:2057
 msgid "Play Next Random Track"
 msgstr ""
 
 #: ../base/ufos/ui/hud_mini.ufo:2216
-#, fuzzy
 msgid "Minimal HUD"
-msgstr "Eredeti"
+msgstr "Minimál HUD"
 
 #: ../base/ufos/ui/hud_phone.ufo:180
 msgid "Reload"
@@ -12435,18 +12375,16 @@ msgid "Sets the OpenGL Shader Quality - or disables them"
 msgstr ""
 
 #: ../base/ufos/ui/options.ufo:879
-#, fuzzy
 msgid "Disabled"
-msgstr "Mindet ki"
+msgstr "Letiltva"
 
 #: ../base/ufos/ui/options.ufo:884
 msgid "Low quality"
 msgstr ""
 
 #: ../base/ufos/ui/options.ufo:889
-#, fuzzy
 msgid "Medium quality"
-msgstr "Közepes súlyú"
+msgstr "Közepes minőség"
 
 #: ../base/ufos/ui/options.ufo:894
 msgid "High quality"
@@ -12771,7 +12709,6 @@ msgid "EKG"
 msgstr ""
 
 #: ../base/ufos/ui/popup_baseattack.ufo:19
-#, fuzzy
 msgid "Add/remove soldier to the team"
 msgstr "Katona hozzáadása/eltávolítása"
 
@@ -12780,7 +12717,6 @@ msgid "Assemble Team"
 msgstr ""
 
 #: ../base/ufos/ui/popup_baseattack.ufo:299
-#, fuzzy
 msgid "Equip"
 msgstr "Felszerelés"
 
@@ -12815,25 +12751,21 @@ msgid "free"
 msgstr ""
 
 #: ../base/ufos/ui/popup_installations.ufo:138
-#, fuzzy
 msgid "UFO Yards"
-msgstr "UFÓtároló"
+msgstr "UFÓtárolók"
 
 #: ../base/ufos/ui/popup_installations.ufo:292
-#, fuzzy
 msgid "Rename Installation"
 msgstr "Állomás átnevezése"
 
 #: ../base/ufos/ui/popup_installations.ufo:303
 #: ../base/ufos/ui/popup_installations.ufo:418
-#, fuzzy
 msgid "Location:"
-msgstr "Nemzet:"
+msgstr "Hely:"
 
 #: ../base/ufos/ui/popup_installations.ufo:329
-#, fuzzy
 msgid "Capacity:"
-msgstr "Bázis kapacitás:"
+msgstr "Kapacitás:"
 
 #: ../base/ufos/ui/popup_installations.ufo:341
 msgid "Free Space:"
@@ -12841,43 +12773,36 @@ msgstr ""
 
 #: ../base/ufos/ui/popup_installations.ufo:353
 #: ../base/ufos/ui/popup_installations.ufo:454
-#, fuzzy
 msgid "Confirm destroying"
-msgstr "Megerősítés kérése:"
+msgstr "Megsemmistítés megerősítése"
 
 #: ../base/ufos/ui/popup_installations.ufo:394
-#, fuzzy
 msgid "Condition:"
-msgstr "Megerősítés kérése:"
+msgstr "Állapot:"
 
 #: ../base/ufos/ui/popup_installations.ufo:443
-#, fuzzy
 msgid "Transfer UFO"
-msgstr "Átcsoportosítás"
+msgstr "UFÓ szállítás"
 
 #: ../base/ufos/ui/popup_installations.ufo:462
 msgid "Destroy UFO"
 msgstr "UFÓ elpusztítása"
 
 #: ../base/ufos/ui/popup_installations.ufo:626
-#, fuzzy
 msgid "disassembling"
-msgstr "Tárgyak szétszerelése"
+msgstr "szétszerelés alatt"
 
 #: ../base/ufos/ui/popup_installations.ufo:632
-#, fuzzy
 msgid "transfering"
-msgstr "szállítmányozás"
+msgstr "szállítás alatt"
 
 #: ../base/ufos/ui/popup_installations.ufo:638
-#, fuzzy
 msgid "stored"
-msgstr "Raktár"
+msgstr "eltárolva"
 
 #: ../base/ufos/ui/popup_installations.ufo:644
-#, fuzzy
 msgid "unknown"
-msgstr "Ismeretlen"
+msgstr "ismeretlen"
 
 #: ../base/ufos/ui/production.ufo:88
 #: client/cgame/campaign/cp_produce_callbacks.c:295
@@ -12926,12 +12851,10 @@ msgid "Requirements"
 msgstr ""
 
 #: ../base/ufos/ui/research.ufo:17
-#, fuzzy
 msgid "Open UFOPaedia"
-msgstr "UFÓpédia"
+msgstr "UFÓpédia megnyitása"
 
 #: ../base/ufos/ui/research.ufo:43
-#, fuzzy
 msgid "Add/Remove scientist"
 msgstr "Tudós hozzáadása/elvétele"
 
@@ -12940,9 +12863,8 @@ msgid "Switch to another base"
 msgstr "Váltás másik bázisra"
 
 #: ../base/ufos/ui/research.ufo:347
-#, fuzzy
 msgid "Base Research Info"
-msgstr "Bázis információ"
+msgstr "Kutatás információ"
 
 #: ../base/ufos/ui/research.ufo:500
 msgid "Start research"
@@ -13164,9 +13086,8 @@ msgid "List"
 msgstr ""
 
 #: ../base/ufos/ui/transfer.ufo:455
-#, fuzzy
 msgid "List active transfers"
-msgstr "Átszállítás megkezdése"
+msgstr "Szállítmánylista"
 
 #: ../base/ufos/ui/transfer.ufo:468
 msgid "Start the transfer"
@@ -13193,9 +13114,8 @@ msgid "To:"
 msgstr ""
 
 #: ../base/ufos/ui/transfer.ufo:661
-#, fuzzy
 msgid "Actual transfers"
-msgstr "szállítmányozás"
+msgstr "Szállítmányok"
 
 #: ../base/ufos/ui/ufopedia.ufo:90
 msgid "Pre-Research Report"
@@ -13292,9 +13212,8 @@ msgstr ""
 
 #: ../base/ufos/weapons_aliens.ufo:64
 #: ../base/ufos/weapons_aliens.ufo:138
-#, fuzzy
 msgid "Short Burst"
-msgstr "5 lövéses sorozat"
+msgstr ""
 
 #: ../base/ufos/weapons_aliens.ufo:88
 #: ../base/ufos/weapons_aliens.ufo:162
@@ -13766,9 +13685,8 @@ msgid "Outstanding"
 msgstr ""
 
 #: client/battlescape/cl_actor.c:122
-#, fuzzy
 msgid "Impressive"
-msgstr "Tömörítés:"
+msgstr "Figyelemre méltó"
 
 #: client/battlescape/cl_actor.c:124
 msgid "Superhuman"
@@ -13788,14 +13706,12 @@ msgid "Unknown alien race"
 msgstr "Ismeretlen idegen faj"
 
 #: client/battlescape/cl_actor.c:2480
-#, fuzzy
 msgid "Toggle to next living actor"
 msgstr "Következő katona"
 
 #: client/battlescape/cl_actor.c:2481
-#, fuzzy
 msgid "Toggle to previous living actor"
-msgstr "Következő katona"
+msgstr "Előző katona"
 
 #: client/battlescape/cl_actor.c:2482
 msgid "Select an actor from list"
@@ -13826,14 +13742,12 @@ msgid "Toggle to the next alien in sight of the selected actor."
 msgstr ""
 
 #: client/battlescape/cl_actor.c:2490
-#, fuzzy
 msgid "Toggle camera to the next visible alien."
 msgstr "Következő idegen."
 
 #: client/battlescape/cl_actor.c:2491
-#, fuzzy
 msgid "Toggle camera to the previous visible alien."
-msgstr "Következő idegen."
+msgstr "Előző idegen."
 
 #: client/battlescape/cl_hud.c:94
 #: client/battlescape/cl_hud.c:97
@@ -14481,14 +14395,12 @@ msgid "You've captured new aliens."
 msgstr ""
 
 #: client/cgame/campaign/cp_aliencont_callbacks.c:202
-#, fuzzy
 msgid "Researched"
-msgstr "Kutatás"
+msgstr "Kikutatva"
 
 #: client/cgame/campaign/cp_aliencont_callbacks.c:204
-#, fuzzy
 msgid "Awaiting autopsy"
-msgstr "Boncolás"
+msgstr "Boncolásra vár"
 
 #: client/cgame/campaign/cp_aliencont_callbacks.c:227
 msgid "Free slot"
@@ -15027,7 +14939,6 @@ msgid "Rank: %s"
 msgstr "Rang: %s"
 
 #: client/cgame/campaign/cp_employee.c:200
-#, fuzzy
 msgid "Soldier"
 msgid_plural "Soldiers"
 msgstr[0] "Katona"
@@ -16035,7 +15946,7 @@ msgid "Not researched in any base."
 msgstr "Nem kutatják sehol."
 
 #: client/cgame/campaign/cp_research_callbacks.c:116
-#, fuzzy, c-format
+#, c-format
 msgid "Researched in %s."
 msgstr "Kutatja: %s"
 
@@ -16065,9 +15976,8 @@ msgid "Status: research paused"
 msgstr "Állapot: kutatás szünetel"
 
 #: client/cgame/campaign/cp_research_callbacks.c:143
-#, fuzzy
 msgid "Status: research topic currently paused"
-msgstr "Állapot: a kutatás jelenleg szünetel."
+msgstr "Állapot: a kutatás jelenleg szünetel"
 
 #: client/cgame/campaign/cp_research_callbacks.c:146
 #: client/cgame/campaign/cp_research_callbacks.c:147
@@ -16079,9 +15989,8 @@ msgid "Status: not possible to research"
 msgstr "Állapot: nem kutatható"
 
 #: client/cgame/campaign/cp_research_callbacks.c:153
-#, fuzzy
 msgid "Status: the materials or background knowledge needed to research this topic are not available yet"
-msgstr "Állapot: Nincs meg minden szükséges nyersanyagunk vagy háttértudásunk, ami ehhez a kutatáshoz szükséges."
+msgstr "Állapot: Nincs meg minden szükséges nyersanyagunk vagy háttértudásunk, ami ehhez a kutatáshoz szükséges"
 
 #: client/cgame/campaign/cp_research_callbacks.c:155
 #: client/cgame/campaign/cp_research_callbacks.c:156
@@ -16120,14 +16029,12 @@ msgid "No research proposal available for this project."
 msgstr ""
 
 #: client/cgame/campaign/cp_research_callbacks.c:822
-#, fuzzy
 msgid "Nothing to research."
-msgstr "Nincs mit kutatni"
+msgstr "Nincs mit kutatni."
 
 #: client/cgame/campaign/cp_research_callbacks.c:825
-#, fuzzy
 msgid "Build a laboratory first."
-msgstr "Előbb építs labort"
+msgstr "Előbb építs labort."
 
 #: client/cgame/campaign/cp_save.c:185
 msgid "Error decompressing data"
@@ -16638,14 +16545,12 @@ msgid "No power supplies in this base.\n"
 msgstr ""
 
 #: client/cgame/campaign/cp_transfer_callbacks.c:1528
-#, fuzzy
 msgid "Employee"
 msgstr "Alkalmazottak"
 
 #: client/cgame/campaign/cp_transfer_callbacks.c:1548
-#, fuzzy
 msgid "alive"
-msgstr "Élő:"
+msgstr "élő"
 
 #: client/cgame/campaign/cp_transfer_callbacks.c:1552
 msgid "dead"
@@ -16878,9 +16783,8 @@ msgid "UFO Recovered"
 msgstr "UFÓt zsákmányoltunk"
 
 #: client/cgame/campaign/cp_uforecovery.c:62
-#, fuzzy
 msgid "UFO Transfered"
-msgstr "%s [Átszállítva]"
+msgstr "UFO átszállítva"
 
 #: client/cgame/campaign/cp_uforecovery.c:261
 #, c-format
@@ -16888,9 +16792,8 @@ msgid "UFO transport started, cargo is being transported to %s"
 msgstr ""
 
 #: client/cgame/campaign/cp_uforecovery.c:262
-#, fuzzy
 msgid "UFO transport"
-msgstr "Csapatszállító"
+msgstr "UFÓ szállítás"
 
 #: client/cgame/campaign/cp_uforecovery_callbacks.c:114
 #, c-format
@@ -16932,14 +16835,12 @@ msgstr ""
 
 #: client/cgame/campaign/cp_uforecovery_callbacks.c:584
 #: client/cgame/campaign/cp_uforecovery_callbacks.c:585
-#, fuzzy
 msgid "Destroy stored UFO"
 msgstr "Pusztítsd el az UFÓt"
 
 #: client/cgame/campaign/cp_uforecovery_callbacks.c:584
-#, fuzzy
 msgid "Do you really want to destroy this stored UFO?"
-msgstr "Biztos, hogy le akarod rombolni ezt az állomást?"
+msgstr "Biztos, hogy meg akarod semmisíteni ezt az UFÓt?"
 
 #: client/cgame/campaign/missions/cp_mission_baseattack.c:121
 #, c-format
@@ -17387,9 +17288,8 @@ msgid "Select objects/Walk to a square/In fire mode, fire etc"
 msgstr ""
 
 #: client/input/cl_input.c:994
-#, fuzzy
 msgid "Rotate Battlescape/In fire mode, cancel action"
-msgstr "Kamera forgatása az óramutató járásával szembe"
+msgstr ""
 
 #: client/input/cl_input.c:996
 msgid "Turn soldier toward mouse pointer"
