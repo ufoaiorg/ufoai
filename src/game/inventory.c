@@ -546,49 +546,47 @@ static int I_PackAmmoAndWeapon (inventoryInterface_t *self, inventory_t* const i
 	/* are we going to allow trying the left hand */
 	allowLeft = !(inv->c[self->csi->idRight] && inv->c[self->csi->idRight]->item.t->fireTwoHanded);
 
-	if (!weapon->reload) {
+	if (weapon->oneshot) {
+		/* The weapon provides its own ammo (i.e. it is charged or loaded in the base.) */
+		item.a = weapon->ammo;
+		item.m = weapon;
+		Com_DPrintf(DEBUG_SHARED, "I_PackAmmoAndWeapon: oneshot weapon '%s' in equipment '%s' (%s).\n",
+				weapon->id, ed->id, self->name);
+	} else if (!weapon->reload) {
 		item.m = item.t; /* no ammo needed, so fire definitions are in t */
 	} else {
-		if (weapon->oneshot) {
-			/* The weapon provides its own ammo (i.e. it is charged or loaded in the base.) */
-			item.a = weapon->ammo;
-			item.m = weapon;
-			Com_DPrintf(DEBUG_SHARED, "I_PackAmmoAndWeapon: oneshot weapon '%s' in equipment '%s' (%s).\n",
-					weapon->id, ed->id, self->name);
-		} else {
-			/* find some suitable ammo for the weapon (we will have at least one if there are ammos for this
-			 * weapon in equipment definition) */
-			int totalAvailableAmmo = 0;
-			int i;
+		/* find some suitable ammo for the weapon (we will have at least one if there are ammos for this
+		 * weapon in equipment definition) */
+		int totalAvailableAmmo = 0;
+		int i;
+		for (i = 0; i < self->csi->numODs; i++) {
+			const objDef_t *obj = INVSH_GetItemByIDX(i);
+			if (ed->numItems[i] && INVSH_LoadableInWeapon(obj, weapon)) {
+				totalAvailableAmmo++;
+			}
+		}
+		if (totalAvailableAmmo) {
+			int randNumber = rand() % totalAvailableAmmo;
 			for (i = 0; i < self->csi->numODs; i++) {
 				const objDef_t *obj = INVSH_GetItemByIDX(i);
 				if (ed->numItems[i] && INVSH_LoadableInWeapon(obj, weapon)) {
-					totalAvailableAmmo++;
-				}
-			}
-			if (totalAvailableAmmo) {
-				int randNumber = rand() % totalAvailableAmmo;
-				for (i = 0; i < self->csi->numODs; i++) {
-					const objDef_t *obj = INVSH_GetItemByIDX(i);
-					if (ed->numItems[i] && INVSH_LoadableInWeapon(obj, weapon)) {
-						randNumber--;
-						if (randNumber < 0) {
-							ammo = obj;
-							break;
-						}
+					randNumber--;
+					if (randNumber < 0) {
+						ammo = obj;
+						break;
 					}
 				}
 			}
-
-			if (!ammo) {
-				Com_DPrintf(DEBUG_SHARED, "I_PackAmmoAndWeapon: no ammo for sidearm or primary weapon '%s' in equipment '%s' (%s).\n",
-						weapon->id, ed->id, self->name);
-				return 0;
-			}
-			/* load ammo */
-			item.a = weapon->ammo;
-			item.m = ammo;
 		}
+
+		if (!ammo) {
+			Com_DPrintf(DEBUG_SHARED, "I_PackAmmoAndWeapon: no ammo for sidearm or primary weapon '%s' in equipment '%s' (%s).\n",
+					weapon->id, ed->id, self->name);
+			return 0;
+		}
+		/* load ammo */
+		item.a = weapon->ammo;
+		item.m = ammo;
 	}
 
 	if (!item.m) {
