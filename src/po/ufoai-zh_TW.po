@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: UFO Alien Invasion\n"
 "Report-Msgid-Bugs-To: tlh2000@users.sourceforge.net\n"
-"POT-Creation-Date: 2012-03-28 13:18+0700\n"
+"POT-Creation-Date: 2012-04-22 18:01+0200\n"
 "PO-Revision-Date: 2010-10-10 21:31+0100\n"
 "Last-Translator: \n"
 "Language-Team: \n"
@@ -547,7 +547,7 @@ msgstr "雷達室"
 msgid "Advanced Radar"
 msgstr "超級雷達室"
 
-#: ../base/ufos/basemanagement.ufo:216 ../base/ufos/ui/bases.ufo:164
+#: ../base/ufos/basemanagement.ufo:216 ../base/ufos/ui/bases.ufo:174
 #: client/cgame/campaign/cp_base_callbacks.c:338
 msgid "Hospital"
 msgstr "醫務所"
@@ -2773,7 +2773,7 @@ msgstr ""
 "毀之，因此建議在雷達站附近建造對空導彈發射場\n"
 "以提供火力掩護。"
 
-#: ../base/ufos/installation.ufo:23 ../base/ufos/ui/geoscape.ufo:998
+#: ../base/ufos/installation.ufo:23 ../base/ufos/ui/geoscape.ufo:1000
 #: ../base/ufos/ui/lostwon.ufo:227
 msgid "UFO Yard"
 msgstr "UFO收集場"
@@ -2787,7 +2787,7 @@ msgstr ""
 "這些行動的效率會隨著收集場和與基地間的距離而\n"
 "有所下降。"
 
-#: ../base/ufos/installation.ufo:38 ../base/ufos/ui/geoscape.ufo:956
+#: ../base/ufos/installation.ufo:38 ../base/ufos/ui/geoscape.ufo:958
 msgid "SAM Site"
 msgstr "地對空導彈基地"
 
@@ -2938,7 +2938,7 @@ msgstr "UFO墜落地點。"
 msgid "A Bomber has landed in the middle of a city."
 msgstr "一架轟炸型UFO降落在市中心。"
 
-#: ../base/ufos/maps.ufo:264 ../base/ufos/maps.ufo:3502
+#: ../base/ufos/maps.ufo:264 ../base/ufos/maps.ufo:3508
 msgid "A small UFO has crashed in this mining region."
 msgstr "有架小型UFO墜落在採礦區裡。"
 
@@ -2969,255 +2969,255 @@ msgstr "無人森林區。"
 msgid "UFO crashed in this sparsely populated forest region."
 msgstr "有架UFO墜落在無人森林區裡。"
 
-#: ../base/ufos/maps.ufo:801 ../base/ufos/maps.ufo:843
-#: ../base/ufos/maps.ufo:885
+#: ../base/ufos/maps.ufo:801 ../base/ufos/maps.ufo:844
+#: ../base/ufos/maps.ufo:887
 msgid "An industrial area in a cold region."
 msgstr "一個寒冷地帶的工業區。"
 
-#: ../base/ufos/maps.ufo:924
+#: ../base/ufos/maps.ufo:928
 msgid "An underpopulated area in a cold region."
 msgstr "一個寒冷地帶的無人區。"
 
-#: ../base/ufos/maps.ufo:965
+#: ../base/ufos/maps.ufo:971
 msgid "An important container harbour is attacked by alien invaders."
 msgstr ""
 
-#: ../base/ufos/maps.ufo:1020 ../base/ufos/maps.ufo:1065
-#: ../base/ufos/maps.ufo:1107
+#: ../base/ufos/maps.ufo:1026 ../base/ufos/maps.ufo:1071
+#: ../base/ufos/maps.ufo:1113
 msgid "UFO landed in hills area."
 msgstr ""
 
-#: ../base/ufos/maps.ufo:1154 ../base/ufos/maps.ufo:1198
+#: ../base/ufos/maps.ufo:1160 ../base/ufos/maps.ufo:1204
 msgid "Industrial theme."
 msgstr "工業區。"
 
-#: ../base/ufos/maps.ufo:1245 ../base/ufos/maps.ufo:1293
-#: ../base/ufos/maps.ufo:2572
+#: ../base/ufos/maps.ufo:1251 ../base/ufos/maps.ufo:1299
+#: ../base/ufos/maps.ufo:2578
 msgid "A classic eastern suburban area."
 msgstr "一個典型的東方郊區。"
 
-#: ../base/ufos/maps.ufo:1344
+#: ../base/ufos/maps.ufo:1350
 msgid "A laboratory where they examined found UFO wreck tiles."
 msgstr "一間檢查UFO墜落殘骸的研究室。"
 
-#: ../base/ufos/maps.ufo:1401
+#: ../base/ufos/maps.ufo:1407
 msgid "A mansion near the coast."
 msgstr ""
 
-#: ../base/ufos/maps.ufo:1455 ../base/ufos/maps.ufo:1503
+#: ../base/ufos/maps.ufo:1461 ../base/ufos/maps.ufo:1509
 msgid "A mansion. An important and influential person lives here."
 msgstr ""
 
-#: ../base/ufos/maps.ufo:1556 ../base/ufos/maps.ufo:1596
-#: ../base/ufos/maps.ufo:1679
+#: ../base/ufos/maps.ufo:1562 ../base/ufos/maps.ufo:1602
+#: ../base/ufos/maps.ufo:1685
 msgid "A suburban district of an oriental area."
 msgstr "一個東方的市郊。"
 
-#: ../base/ufos/maps.ufo:1638
+#: ../base/ufos/maps.ufo:1644
 msgid "Crashed UFO in oriental suburban district."
 msgstr "有架UFO墜落在東方舊郊裡。"
 
-#: ../base/ufos/maps.ufo:1722 ../base/ufos/maps.ufo:1762
-#: ../base/ufos/maps.ufo:1803
+#: ../base/ufos/maps.ufo:1728 ../base/ufos/maps.ufo:1768
+#: ../base/ufos/maps.ufo:1809
 msgid "A cleared stretch of land in the middle of the jungle."
 msgstr "一片叢林裡的空地。"
 
-#: ../base/ufos/maps.ufo:1844 ../base/ufos/maps.ufo:1884
+#: ../base/ufos/maps.ufo:1850 ../base/ufos/maps.ufo:1890
 msgid "A river runs through this piece of jungle."
 msgstr "一條叢林裡的溪流。"
 
-#: ../base/ufos/maps.ufo:1930
+#: ../base/ufos/maps.ufo:1936
 msgid "UFO Crashsite."
 msgstr "UFO墜落地點。"
 
-#: ../base/ufos/maps.ufo:1962 ../base/ufos/maps.ufo:2004
-#: ../base/ufos/maps.ufo:2045 ../base/ufos/maps.ufo:2088
+#: ../base/ufos/maps.ufo:1968 ../base/ufos/maps.ufo:2010
+#: ../base/ufos/maps.ufo:2051 ../base/ufos/maps.ufo:2094
 msgid "A peaceful neighbourhood on the outskirts of a centre of population."
 msgstr "一個在大城市郊外的寧靜小鎮。"
 
-#: ../base/ufos/maps.ufo:2135
+#: ../base/ufos/maps.ufo:2141
 msgid "Cemetery terror mission."
 msgstr "墳地恐怖活動任務。"
 
-#: ../base/ufos/maps.ufo:2176 ../base/ufos/maps.ufo:4384
+#: ../base/ufos/maps.ufo:2182 ../base/ufos/maps.ufo:4390
 msgid "A city high rise."
 msgstr ""
 
-#: ../base/ufos/maps.ufo:2216 ../base/ufos/maps.ufo:3171
+#: ../base/ufos/maps.ufo:2222 ../base/ufos/maps.ufo:3177
 msgid "A small neighbourhood in a warm urban region."
 msgstr "一個大城市內的小型住宅區。"
 
-#: ../base/ufos/maps.ufo:2266
+#: ../base/ufos/maps.ufo:2272
 msgid "A place where people come to relax and mingle."
 msgstr "一個公園。"
 
-#: ../base/ufos/maps.ufo:2318
+#: ../base/ufos/maps.ufo:2324
 msgid "An office complex under construction."
 msgstr "一個建造中的辦公樓。"
 
-#: ../base/ufos/maps.ufo:2368
+#: ../base/ufos/maps.ufo:2374
 msgid "A tropical area where several suspected criminals have made their homes."
 msgstr "一個被匪徒佔據的雨林地帶。"
 
-#: ../base/ufos/maps.ufo:2429
+#: ../base/ufos/maps.ufo:2435
 #, fuzzy
 msgid "A small estate in the mountains."
 msgstr "一間山中大宅。"
 
-#: ../base/ufos/maps.ufo:2470
+#: ../base/ufos/maps.ufo:2476
 msgid "A place where citizens come to replenish their vehicles' fuel supply."
 msgstr "一個加油站。"
 
-#: ../base/ufos/maps.ufo:2521
+#: ../base/ufos/maps.ufo:2527
 msgid "A small office in a mountainous region."
 msgstr "一間山中辦公樓。"
 
-#: ../base/ufos/maps.ufo:2625
+#: ../base/ufos/maps.ufo:2631
 msgid "A kind of communal gathering centre annex foraging facility, known as a supermarket."
 msgstr "一間社區超市。"
 
-#: ../base/ufos/maps.ufo:2678
+#: ../base/ufos/maps.ufo:2684
 msgid "A military convoy has caught the eye of the aliens."
 msgstr "一隊被外星人追擊的運兵車隊伍。"
 
-#: ../base/ufos/maps.ufo:2728
+#: ../base/ufos/maps.ufo:2734
 msgid "A shelter that was built to house people in times of major disasters. Some internal blast doors may have been closed."
 msgstr "一個防空洞。"
 
-#: ../base/ufos/maps.ufo:2781
+#: ../base/ufos/maps.ufo:2787
 msgid "A small industrial area."
 msgstr "一個小型工業區。"
 
-#: ../base/ufos/maps.ufo:2832
+#: ../base/ufos/maps.ufo:2838
 msgid "A stadium used for various recreational events."
 msgstr "一間體育館。"
 
-#: ../base/ufos/maps.ufo:2884
+#: ../base/ufos/maps.ufo:2890
 msgid "An office complex in the centre of town."
 msgstr "一個市中心辦公樓。"
 
-#: ../base/ufos/maps.ufo:2939
+#: ../base/ufos/maps.ufo:2945
 msgid "An industrial area, used for loading and unloading goods."
 msgstr "一個工業貨運站。"
 
-#: ../base/ufos/maps.ufo:2987 ../base/ufos/maps.ufo:3032
+#: ../base/ufos/maps.ufo:2993 ../base/ufos/maps.ufo:3038
 msgid "A small bungalow."
 msgstr ""
 
-#: ../base/ufos/maps.ufo:3079
+#: ../base/ufos/maps.ufo:3085
 msgid "A bunker used in a previous conflict."
 msgstr "一個上次大戰時遺下的碉堡。"
 
-#: ../base/ufos/maps.ufo:3128
+#: ../base/ufos/maps.ufo:3134
 #, fuzzy
 msgid "A small industry city area."
 msgstr "一個小型工業區。"
 
-#: ../base/ufos/maps.ufo:3219
+#: ../base/ufos/maps.ufo:3225
 #, fuzzy
 msgid "A crashed UFO-Corrupter."
 msgstr "UFO－滲透型"
 
-#: ../base/ufos/maps.ufo:3265
+#: ../base/ufos/maps.ufo:3271
 msgid "A hydroelectricity dam that is threatened by the alien invaders."
 msgstr "一個外星人正試圖侵入的水壩。"
 
-#: ../base/ufos/maps.ufo:3312
+#: ../base/ufos/maps.ufo:3318
 #, fuzzy
 msgid "A small village."
 msgstr "一個英格蘭小鎮。"
 
-#: ../base/ufos/maps.ufo:3360
+#: ../base/ufos/maps.ufo:3366
 msgid "An estate owned by rich and influential people."
 msgstr "一個貴族莊園。"
 
-#: ../base/ufos/maps.ufo:3404
+#: ../base/ufos/maps.ufo:3410
 msgid "An excavation site that has fallen under alien attack."
 msgstr "一個被外星人襲擊的礦井。"
 
-#: ../base/ufos/maps.ufo:3453
+#: ../base/ufos/maps.ufo:3459
 msgid "A ferry."
 msgstr "一艘渡輪。"
 
-#: ../base/ufos/maps.ufo:3550
+#: ../base/ufos/maps.ufo:3556
 msgid "A fuel depot the aliens try to destroy."
 msgstr "一個外星人正試圖毀滅的油庫。"
 
-#: ../base/ufos/maps.ufo:3589
+#: ../base/ufos/maps.ufo:3595
 msgid "A depot with the name 'The Gate' where secret technology is stored."
 msgstr ""
 
-#: ../base/ufos/maps.ufo:3635
+#: ../base/ufos/maps.ufo:3641
 msgid "A local harbour."
 msgstr "一個港口。"
 
-#: ../base/ufos/maps.ufo:3689 ../base/ufos/maps.ufo:3725
+#: ../base/ufos/maps.ufo:3695 ../base/ufos/maps.ufo:3731
 msgid "A small settlement in winter."
 msgstr "一間冬季小屋。"
 
-#: ../base/ufos/maps.ufo:3773
+#: ../base/ufos/maps.ufo:3779
 msgid "An old mine."
 msgstr "一個廢棄礦井。"
 
-#: ../base/ufos/maps.ufo:3826
+#: ../base/ufos/maps.ufo:3832
 msgid "Neighbourhood."
 msgstr ""
 
-#: ../base/ufos/maps.ufo:3869
+#: ../base/ufos/maps.ufo:3875
 msgid "An office complex on the outskirts of town."
 msgstr "一個小鎮的辦公樓。"
 
-#: ../base/ufos/maps.ufo:3914 ../base/ufos/maps.ufo:3959
+#: ../base/ufos/maps.ufo:3920 ../base/ufos/maps.ufo:3965
 msgid "An urban district in an oriental region."
 msgstr "一個東方舊城區。"
 
-#: ../base/ufos/maps.ufo:4006
+#: ../base/ufos/maps.ufo:4012
 msgid "Underground pipe construction site."
 msgstr "地下管道施工點。"
 
-#: ../base/ufos/maps.ufo:4053
+#: ../base/ufos/maps.ufo:4059
 msgid "A luxurious vacation resort."
 msgstr "一個豪華度假區。"
 
-#: ../base/ufos/maps.ufo:4101
+#: ../base/ufos/maps.ufo:4107
 msgid "A rather old-fashioned suburban district."
 msgstr "一個比較老式的近郊區。"
 
-#: ../base/ufos/maps.ufo:4163
+#: ../base/ufos/maps.ufo:4169
 #, fuzzy
 msgid "A crashed Scout UFO."
 msgstr "一架墜毀的偵察型UFO"
 
-#: ../base/ufos/maps.ufo:4248
+#: ../base/ufos/maps.ufo:4254
 msgid "A subway station in a suburban part of town."
 msgstr "一個地鐵車站。"
 
-#: ../base/ufos/maps.ufo:4289
+#: ../base/ufos/maps.ufo:4295
 msgid "A suburban district."
 msgstr "一個市郊。"
 
-#: ../base/ufos/maps.ufo:4335
+#: ../base/ufos/maps.ufo:4341
 msgid "Wilderness terror mission."
 msgstr "荒野中的恐怖活動任務。"
 
-#: ../base/ufos/maps.ufo:4417
+#: ../base/ufos/maps.ufo:4423
 msgid "An alien base."
 msgstr "一個外星人基地。"
 
-#: ../base/ufos/maps.ufo:4438
+#: ../base/ufos/maps.ufo:4444
 msgid "Base is under attack."
 msgstr "基地正受到攻擊。"
 
-#: ../base/ufos/maps.ufo:4450
+#: ../base/ufos/maps.ufo:4456
 #, fuzzy
 msgid "Rescue mission."
 msgstr "自動進行任務"
 
-#: ../base/ufos/maps.ufo:4480
+#: ../base/ufos/maps.ufo:4486
 msgid "Training Zone: Alpha"
 msgstr ""
 
-#: ../base/ufos/maps.ufo:4497
+#: ../base/ufos/maps.ufo:4503
 msgid "Training Zone: Bravo"
 msgstr ""
 
@@ -3230,7 +3230,7 @@ msgid "Coin"
 msgstr "硬幣"
 
 #: ../base/ufos/medals.ufo:30 ../base/ufos/team_humans.ufo:668
-#: client/cgame/campaign/cp_employee.c:202
+#: client/cgame/campaign/cp_employee.c:197
 #, fuzzy
 msgid "Scientist"
 msgid_plural "Scientists"
@@ -3238,7 +3238,7 @@ msgstr[0] "研究員"
 msgstr[1] "研究員"
 
 #: ../base/ufos/medals.ufo:38 ../base/ufos/team_humans.ufo:1258
-#: client/cgame/campaign/cp_employee.c:206
+#: client/cgame/campaign/cp_employee.c:201
 #, fuzzy
 msgid "Pilot"
 msgid_plural "Pilots"
@@ -3246,15 +3246,13 @@ msgstr[0] "飛行員"
 msgstr[1] "飛行員"
 
 #: ../base/ufos/medals.ufo:46 ../base/ufos/team_humans.ufo:2103
-#: ../base/ufos/team_humans.ufo:2168 client/cgame/campaign/cp_employee.c:208
+#: ../base/ufos/team_humans.ufo:2168
 #, fuzzy
 msgid "UGV"
-msgid_plural "UGVS"
-msgstr[0] "無人戰車"
-msgstr[1] "無人戰車"
+msgstr "無人戰車"
 
 #: ../base/ufos/medals.ufo:54 ../base/ufos/team_humans.ufo:1682
-#: client/cgame/campaign/cp_employee.c:204
+#: client/cgame/campaign/cp_employee.c:199
 #, fuzzy
 msgid "Worker"
 msgid_plural "Workers"
@@ -3441,11 +3439,11 @@ msgstr "刺殺"
 msgid "Background"
 msgstr "背景"
 
-#: ../base/ufos/research.ufo:112 ../base/ufos/ui/bases.ufo:115
-#: ../base/ufos/ui/geoscape.ufo:1666 ../base/ufos/ui/market.ufo:100
+#: ../base/ufos/research.ufo:112 ../base/ufos/ui/bases.ufo:125
+#: ../base/ufos/ui/geoscape.ufo:1668 ../base/ufos/ui/market.ufo:100
 #: ../base/ufos/ui/production.ufo:80 ../base/ufos/ui/transfer.ufo:58
 #: ../base/ufos/ui/transfer.ufo:78 client/cgame/campaign/cp_map.c:339
-#: client/cgame/campaign/cp_transfer_callbacks.c:1558
+#: client/cgame/campaign/cp_transfer_callbacks.c:1542
 msgid "Aircraft"
 msgstr "航空機"
 
@@ -9472,7 +9470,7 @@ msgid "Or via the keys 1-8 or Tab"
 msgstr "用鍵盤1-8鍵或者TAB切換"
 
 #: ../base/ufos/seq_tutorials.ufo:477
-#: ../base/ufos/ui/aircraft_soldiers.ufo:362
+#: ../base/ufos/ui/aircraft_soldiers.ufo:361
 #: ../base/ufos/ui/popup_baseattack.ufo:142
 msgid "Physical stats"
 msgstr "身體狀況"
@@ -9517,7 +9515,7 @@ msgstr "切換蹲下或站立"
 msgid "Cycle through visible enemies"
 msgstr "檢索可見的敵人"
 
-#: ../base/ufos/seq_tutorials.ufo:752 ../base/ufos/ui/hud_mini.ufo:1594
+#: ../base/ufos/seq_tutorials.ufo:752 ../base/ufos/ui/hud_mini.ufo:1366
 msgid "End round"
 msgstr "回合結束"
 
@@ -9930,7 +9928,7 @@ msgstr "資金"
 msgid "Organisation capital"
 msgstr "合計資金"
 
-#: ../base/ufos/ui/_menu.ufo:140 ../base/ufos/ui/hospital.ufo:68
+#: ../base/ufos/ui/_menu.ufo:140 ../base/ufos/ui/hospital.ufo:74
 msgid "Back to baseview"
 msgstr "返回基地瀏覽窗口"
 
@@ -9938,7 +9936,7 @@ msgstr "返回基地瀏覽窗口"
 msgid "Name of this base"
 msgstr "本基地名稱"
 
-#: ../base/ufos/ui/_menu.ufo:179 ../base/ufos/ui/geoscape.ufo:823
+#: ../base/ufos/ui/_menu.ufo:179 ../base/ufos/ui/geoscape.ufo:825
 msgid "Rename your base"
 msgstr "重新命名基地"
 
@@ -10035,7 +10033,8 @@ msgstr "搭載/移除此士兵"
 msgid "Description"
 msgstr "詳情"
 
-#: ../base/ufos/ui/aircraft.ufo:97 ../base/ufos/ui/hire.ufo:607
+#: ../base/ufos/ui/aircraft.ufo:97 ../base/ufos/ui/bases.ufo:226
+#: ../base/ufos/ui/bases.ufo:233 ../base/ufos/ui/hire.ufo:607
 msgid "Pilots"
 msgstr "飛行員"
 
@@ -10043,8 +10042,8 @@ msgstr "飛行員"
 msgid "Tanks"
 msgstr "坦克"
 
-#: ../base/ufos/ui/aircraft.ufo:113 ../base/ufos/ui/bases.ufo:200
-#: ../base/ufos/ui/bases.ufo:206 ../base/ufos/ui/hire.ufo:602
+#: ../base/ufos/ui/aircraft.ufo:113 ../base/ufos/ui/bases.ufo:210
+#: ../base/ufos/ui/bases.ufo:217 ../base/ufos/ui/hire.ufo:602
 msgid "Soldiers"
 msgstr "士兵"
 
@@ -10092,7 +10091,7 @@ msgstr "裝甲"
 
 #: ../base/ufos/ui/aircraft_equip.ufo:225
 #: client/cgame/campaign/cp_fightequip_callbacks.c:139
-#: client/cgame/campaign/cp_transfer_callbacks.c:1514
+#: client/cgame/campaign/cp_transfer_callbacks.c:1502
 msgid "Items"
 msgstr "設備"
 
@@ -10120,15 +10119,15 @@ msgstr "可裝備的彈藥"
 msgid "Select this slot"
 msgstr "選擇此欄位"
 
-#: ../base/ufos/ui/aircraft_info.ufo:42 ../base/ufos/ui/geoscape.ufo:1405
-#: ../base/ufos/ui/geoscape.ufo:1547
+#: ../base/ufos/ui/aircraft_info.ufo:42 ../base/ufos/ui/geoscape.ufo:1407
+#: ../base/ufos/ui/geoscape.ufo:1549
 #: ../base/ufos/ui/popup_installations.ufo:406
 msgid "Status:"
 msgstr "狀態："
 
 #: ../base/ufos/ui/aircraft_info.ufo:66
-#: ../base/ufos/ui/aircraft_soldiers.ufo:472 ../base/ufos/ui/hire.ufo:450
-#: ../base/ufos/ui/hospital.ufo:530 ../base/ufos/ui/popup_baseattack.ufo:262
+#: ../base/ufos/ui/aircraft_soldiers.ufo:471 ../base/ufos/ui/hire.ufo:450
+#: ../base/ufos/ui/hospital.ufo:536 ../base/ufos/ui/popup_baseattack.ufo:262
 msgid "Health:"
 msgstr "生命力："
 
@@ -10149,24 +10148,24 @@ msgstr "回航"
 msgid "Add/remove this pilot"
 msgstr "搭載/移除此駕駛員"
 
-#: ../base/ufos/ui/aircraft_pilots.ufo:144
+#: ../base/ufos/ui/aircraft_pilots.ufo:143
 msgid "Pilot is assigned to another craft"
 msgstr "飛行員已指派給另一架航空機"
 
-#: ../base/ufos/ui/aircraft_pilots.ufo:162
+#: ../base/ufos/ui/aircraft_pilots.ufo:161
 msgid "A pilot is already assigned to this craft"
 msgstr "此航空機已有飛行員。"
 
-#: ../base/ufos/ui/aircraft_pilots.ufo:164
+#: ../base/ufos/ui/aircraft_pilots.ufo:163
 msgid "Assign pilot to this craft"
 msgstr "指派此飛行員駕駛本航空機"
 
-#: ../base/ufos/ui/aircraft_pilots.ufo:175
+#: ../base/ufos/ui/aircraft_pilots.ufo:174
 msgid "Remove pilot from this craft"
 msgstr "航空機飛行員退役"
 
 #: ../base/ufos/ui/aircraft_soldiers.ufo:140
-#: ../base/ufos/ui/aircraft_soldiers.ufo:547
+#: ../base/ufos/ui/aircraft_soldiers.ufo:546
 msgid "Equip soldiers"
 msgstr "裝備士兵"
 
@@ -10194,94 +10193,94 @@ msgstr "士兵有攜帶裝備"
 msgid "Soldier carries no equipment"
 msgstr "士兵無攜帶任何裝備"
 
-#: ../base/ufos/ui/aircraft_soldiers.ufo:366
+#: ../base/ufos/ui/aircraft_soldiers.ufo:365
 #: ../base/ufos/ui/popup_baseattack.ufo:146
 msgid "Missions info"
 msgstr "任務資料"
 
-#: ../base/ufos/ui/aircraft_soldiers.ufo:383 ../base/ufos/ui/equipment.ufo:452
-#: ../base/ufos/ui/hire.ufo:329 ../base/ufos/ui/hospital.ufo:442
-#: ../base/ufos/ui/physdat.ufo:109 ../base/ufos/ui/popup_baseattack.ufo:173
+#: ../base/ufos/ui/aircraft_soldiers.ufo:382 ../base/ufos/ui/equipment.ufo:452
+#: ../base/ufos/ui/hire.ufo:329 ../base/ufos/ui/hospital.ufo:448
+#: ../base/ufos/ui/physdat.ufo:108 ../base/ufos/ui/popup_baseattack.ufo:173
 #: ../base/ufos/ui/team.ufo:477
 msgid "Strength:"
 msgstr "體力："
 
-#: ../base/ufos/ui/aircraft_soldiers.ufo:392 ../base/ufos/ui/equipment.ufo:466
-#: ../base/ufos/ui/hire.ufo:343 ../base/ufos/ui/hospital.ufo:451
-#: ../base/ufos/ui/options.ufo:1747 ../base/ufos/ui/physdat.ufo:123
+#: ../base/ufos/ui/aircraft_soldiers.ufo:391 ../base/ufos/ui/equipment.ufo:466
+#: ../base/ufos/ui/hire.ufo:343 ../base/ufos/ui/hospital.ufo:457
+#: ../base/ufos/ui/options.ufo:1765 ../base/ufos/ui/physdat.ufo:122
 #: ../base/ufos/ui/popup_baseattack.ufo:182 ../base/ufos/ui/team.ufo:486
 msgid "Speed:"
 msgstr "速度："
 
-#: ../base/ufos/ui/aircraft_soldiers.ufo:401 ../base/ufos/ui/equipment.ufo:480
-#: ../base/ufos/ui/hire.ufo:357 ../base/ufos/ui/hospital.ufo:460
-#: ../base/ufos/ui/physdat.ufo:137 ../base/ufos/ui/popup_baseattack.ufo:191
+#: ../base/ufos/ui/aircraft_soldiers.ufo:400 ../base/ufos/ui/equipment.ufo:480
+#: ../base/ufos/ui/hire.ufo:357 ../base/ufos/ui/hospital.ufo:466
+#: ../base/ufos/ui/physdat.ufo:136 ../base/ufos/ui/popup_baseattack.ufo:191
 #: ../base/ufos/ui/team.ufo:495
 msgid "Accuracy:"
 msgstr "精確度："
 
-#: ../base/ufos/ui/aircraft_soldiers.ufo:410 ../base/ufos/ui/equipment.ufo:494
-#: ../base/ufos/ui/hire.ufo:371 ../base/ufos/ui/hospital.ufo:469
-#: ../base/ufos/ui/physdat.ufo:151 ../base/ufos/ui/popup_baseattack.ufo:200
+#: ../base/ufos/ui/aircraft_soldiers.ufo:409 ../base/ufos/ui/equipment.ufo:494
+#: ../base/ufos/ui/hire.ufo:371 ../base/ufos/ui/hospital.ufo:475
+#: ../base/ufos/ui/physdat.ufo:150 ../base/ufos/ui/popup_baseattack.ufo:200
 #: ../base/ufos/ui/team.ufo:504
 msgid "Mind:"
 msgstr "精神力："
 
-#: ../base/ufos/ui/aircraft_soldiers.ufo:419 ../base/ufos/ui/equipment.ufo:508
-#: ../base/ufos/ui/hire.ufo:385 ../base/ufos/ui/hospital.ufo:478
-#: ../base/ufos/ui/physdat.ufo:165 ../base/ufos/ui/popup_baseattack.ufo:209
+#: ../base/ufos/ui/aircraft_soldiers.ufo:418 ../base/ufos/ui/equipment.ufo:508
+#: ../base/ufos/ui/hire.ufo:385 ../base/ufos/ui/hospital.ufo:484
+#: ../base/ufos/ui/physdat.ufo:164 ../base/ufos/ui/popup_baseattack.ufo:209
 #: ../base/ufos/ui/team.ufo:513
 msgid "Close Combat:"
 msgstr "近戰武器："
 
-#: ../base/ufos/ui/aircraft_soldiers.ufo:429 ../base/ufos/ui/equipment.ufo:522
-#: ../base/ufos/ui/hire.ufo:399 ../base/ufos/ui/hospital.ufo:487
-#: ../base/ufos/ui/physdat.ufo:179 ../base/ufos/ui/popup_baseattack.ufo:219
+#: ../base/ufos/ui/aircraft_soldiers.ufo:428 ../base/ufos/ui/equipment.ufo:522
+#: ../base/ufos/ui/hire.ufo:399 ../base/ufos/ui/hospital.ufo:493
+#: ../base/ufos/ui/physdat.ufo:178 ../base/ufos/ui/popup_baseattack.ufo:219
 #: ../base/ufos/ui/team.ufo:522
 msgid "Heavy Weapons:"
 msgstr "重型武器："
 
-#: ../base/ufos/ui/aircraft_soldiers.ufo:439 ../base/ufos/ui/equipment.ufo:536
-#: ../base/ufos/ui/hire.ufo:413 ../base/ufos/ui/hospital.ufo:496
-#: ../base/ufos/ui/physdat.ufo:193 ../base/ufos/ui/popup_baseattack.ufo:229
+#: ../base/ufos/ui/aircraft_soldiers.ufo:438 ../base/ufos/ui/equipment.ufo:536
+#: ../base/ufos/ui/hire.ufo:413 ../base/ufos/ui/hospital.ufo:502
+#: ../base/ufos/ui/physdat.ufo:192 ../base/ufos/ui/popup_baseattack.ufo:229
 #: ../base/ufos/ui/team.ufo:531
 msgid "Assault Weapons:"
 msgstr "射擊武器："
 
-#: ../base/ufos/ui/aircraft_soldiers.ufo:449 ../base/ufos/ui/equipment.ufo:550
-#: ../base/ufos/ui/hire.ufo:427 ../base/ufos/ui/hospital.ufo:505
-#: ../base/ufos/ui/physdat.ufo:207 ../base/ufos/ui/popup_baseattack.ufo:239
+#: ../base/ufos/ui/aircraft_soldiers.ufo:448 ../base/ufos/ui/equipment.ufo:550
+#: ../base/ufos/ui/hire.ufo:427 ../base/ufos/ui/hospital.ufo:511
+#: ../base/ufos/ui/physdat.ufo:206 ../base/ufos/ui/popup_baseattack.ufo:239
 #: ../base/ufos/ui/team.ufo:540
 msgid "Sniper Rifles:"
 msgstr "狙擊武器："
 
-#: ../base/ufos/ui/aircraft_soldiers.ufo:459 ../base/ufos/ui/equipment.ufo:564
-#: ../base/ufos/ui/hospital.ufo:514 ../base/ufos/ui/physdat.ufo:221
+#: ../base/ufos/ui/aircraft_soldiers.ufo:458 ../base/ufos/ui/equipment.ufo:564
+#: ../base/ufos/ui/hospital.ufo:520 ../base/ufos/ui/physdat.ufo:220
 #: ../base/ufos/ui/popup_baseattack.ufo:249 ../base/ufos/ui/team.ufo:549
 msgid "High-Explosives:"
 msgstr "爆破武器："
 
-#: ../base/ufos/ui/aircraft_soldiers.ufo:494
+#: ../base/ufos/ui/aircraft_soldiers.ufo:493
 #: ../base/ufos/ui/popup_baseattack.ufo:284
 msgid "Missions performed:"
 msgstr "參與任務："
 
-#: ../base/ufos/ui/aircraft_soldiers.ufo:497
+#: ../base/ufos/ui/aircraft_soldiers.ufo:496
 #: ../base/ufos/ui/popup_baseattack.ufo:287
 msgid "Enemies killed:"
 msgstr "殺死敵人："
 
-#: ../base/ufos/ui/aircraft_soldiers.ufo:500
+#: ../base/ufos/ui/aircraft_soldiers.ufo:499
 #: ../base/ufos/ui/popup_baseattack.ufo:290
 msgid "Civilians killed:"
 msgstr "殺死平民："
 
-#: ../base/ufos/ui/aircraft_soldiers.ufo:503
+#: ../base/ufos/ui/aircraft_soldiers.ufo:502
 #: ../base/ufos/ui/popup_baseattack.ufo:293
 msgid "Our team killed:"
 msgstr "殺死隊友："
 
-#: ../base/ufos/ui/aircraft_soldiers.ufo:550
+#: ../base/ufos/ui/aircraft_soldiers.ufo:549
 msgid "No soldiers assigned"
 msgstr "未分配士兵"
 
@@ -10375,9 +10374,9 @@ msgstr "選擇物品"
 msgid "Surface to Air defences"
 msgstr "地對空防禦設施"
 
-#: ../base/ufos/ui/basedefence.ufo:309 ../base/ufos/ui/geoscape.ufo:809
-#: ../base/ufos/ui/geoscape.ufo:1171 ../base/ufos/ui/geoscape.ufo:1280
-#: ../base/ufos/ui/geoscape.ufo:1540 ../base/ufos/ui/geoscape.ufo:1612
+#: ../base/ufos/ui/basedefence.ufo:309 ../base/ufos/ui/geoscape.ufo:811
+#: ../base/ufos/ui/geoscape.ufo:1173 ../base/ufos/ui/geoscape.ufo:1282
+#: ../base/ufos/ui/geoscape.ufo:1542 ../base/ufos/ui/geoscape.ufo:1614
 #: ../base/ufos/ui/irc.ufo:202 ../base/ufos/ui/main.ufo:115
 #: ../base/ufos/ui/multiplayer.ufo:409
 #: ../base/ufos/ui/popup_installations.ufo:273
@@ -10388,8 +10387,8 @@ msgstr "名稱："
 msgid "Targetted UFO:"
 msgstr "目標UFO："
 
-#: ../base/ufos/ui/basedefence.ufo:344 ../base/ufos/ui/geoscape.ufo:1200
-#: ../base/ufos/ui/geoscape.ufo:1298
+#: ../base/ufos/ui/basedefence.ufo:344 ../base/ufos/ui/geoscape.ufo:1202
+#: ../base/ufos/ui/geoscape.ufo:1300
 #: ../base/ufos/ui/popup_installations.ufo:315
 msgid "Time to build:"
 msgstr "離完工還有："
@@ -10398,7 +10397,7 @@ msgstr "離完工還有："
 msgid "Autofire"
 msgstr "自動開火"
 
-#: ../base/ufos/ui/basedefence.ufo:373 ../base/ufos/ui/geoscape.ufo:1326
+#: ../base/ufos/ui/basedefence.ufo:373 ../base/ufos/ui/geoscape.ufo:1328
 #: ../base/ufos/ui/popup_installations.ufo:360
 #: ../base/ufos/ui/popup_installations.ufo:461
 #: client/cgame/campaign/cp_base_callbacks.c:565
@@ -10410,45 +10409,45 @@ msgstr "自動開火"
 msgid "Destroy"
 msgstr "摧毀"
 
-#: ../base/ufos/ui/basedefence.ufo:374 ../base/ufos/ui/geoscape.ufo:1327
+#: ../base/ufos/ui/basedefence.ufo:374 ../base/ufos/ui/geoscape.ufo:1329
 #: ../base/ufos/ui/popup_installations.ufo:361
 #: client/cgame/campaign/cp_installation_callbacks.c:214
 msgid "Destroy installation"
 msgstr "拆除基站"
 
-#: ../base/ufos/ui/basedefence.ufo:384 ../base/ufos/ui/geoscape.ufo:1099
-#: ../base/ufos/ui/geoscape.ufo:1311 ../base/ufos/ui/inventory.ufo:241
-#: ../base/ufos/ui/main.ufo:321 ../base/ufos/ui/physdat.ufo:320
+#: ../base/ufos/ui/basedefence.ufo:384 ../base/ufos/ui/geoscape.ufo:1101
+#: ../base/ufos/ui/geoscape.ufo:1313 ../base/ufos/ui/inventory.ufo:241
+#: ../base/ufos/ui/main.ufo:321 ../base/ufos/ui/physdat.ufo:319
 #: ../base/ufos/ui/popup_baseattack.ufo:309 ../base/ufos/ui/transfer.ufo:689
 msgid "Close"
 msgstr "關閉"
 
-#: ../base/ufos/ui/bases.ufo:80
+#: ../base/ufos/ui/bases.ufo:90
 msgid "Back to geoscape"
 msgstr "返回地球視界"
 
-#: ../base/ufos/ui/bases.ufo:108
+#: ../base/ufos/ui/bases.ufo:118
 msgid "Buildings"
 msgstr "建設"
 
-#: ../base/ufos/ui/bases.ufo:109
+#: ../base/ufos/ui/bases.ufo:119
 msgid "Build base facilities"
 msgstr "建造基地設施"
 
-#: ../base/ufos/ui/bases.ufo:116 client/cgame/campaign/cp_base_callbacks.c:298
+#: ../base/ufos/ui/bases.ufo:126 client/cgame/campaign/cp_base_callbacks.c:298
 msgid "Aircraft management and crew equipment"
 msgstr "航空機和士兵裝備管理"
 
-#: ../base/ufos/ui/bases.ufo:122
+#: ../base/ufos/ui/bases.ufo:132
 msgid "Buy/Sell"
 msgstr "買賣物品"
 
-#: ../base/ufos/ui/bases.ufo:123 client/cgame/campaign/cp_base_callbacks.c:306
+#: ../base/ufos/ui/bases.ufo:133 client/cgame/campaign/cp_base_callbacks.c:306
 #, fuzzy
 msgid "Buy/Sell equipment, aircraft and UGV"
 msgstr "買（100%)賣(90%)裝備和載具"
 
-#: ../base/ufos/ui/bases.ufo:129 ../base/ufos/ui/popup_installations.ufo:97
+#: ../base/ufos/ui/bases.ufo:139 ../base/ufos/ui/popup_installations.ufo:97
 #: ../base/ufos/ui/popup_installations.ufo:247
 #: ../base/ufos/ui/popup_installations.ufo:442
 #: ../base/ufos/ui/transfer.ufo:467
@@ -10458,64 +10457,64 @@ msgstr "買（100%)賣(90%)裝備和載具"
 msgid "Transfer"
 msgstr "運送"
 
-#: ../base/ufos/ui/bases.ufo:130
+#: ../base/ufos/ui/bases.ufo:140
 #, fuzzy
 msgid "Transfer equipment, aircraft, UGV, aliens and employees to other bases"
 msgstr "運送裝備，載具，外星人和員工到其他基地"
 
-#: ../base/ufos/ui/bases.ufo:136
+#: ../base/ufos/ui/bases.ufo:146
 msgid "Research"
 msgstr "研究"
 
-#: ../base/ufos/ui/bases.ufo:137 client/cgame/campaign/cp_base_callbacks.c:316
+#: ../base/ufos/ui/bases.ufo:147 client/cgame/campaign/cp_base_callbacks.c:316
 msgid "Research new technology"
 msgstr "研究新科技"
 
-#: ../base/ufos/ui/bases.ufo:143
+#: ../base/ufos/ui/bases.ufo:153
 msgid "Production"
 msgstr "生產"
 
-#: ../base/ufos/ui/bases.ufo:144 client/cgame/campaign/cp_base_callbacks.c:321
+#: ../base/ufos/ui/bases.ufo:154 client/cgame/campaign/cp_base_callbacks.c:321
 #, fuzzy
 msgid "Produce equipment, aircraft and UGV"
 msgstr "生產裝備和載具"
 
-#: ../base/ufos/ui/bases.ufo:150 ../base/ufos/ui/stats.ufo:96
+#: ../base/ufos/ui/bases.ufo:160 ../base/ufos/ui/stats.ufo:96
 #: ../base/ufos/ui/transfer.ufo:54 ../base/ufos/ui/transfer.ufo:68
 msgid "Employees"
 msgstr "員工"
 
-#: ../base/ufos/ui/bases.ufo:151 client/cgame/campaign/cp_base_callbacks.c:326
+#: ../base/ufos/ui/bases.ufo:161 client/cgame/campaign/cp_base_callbacks.c:326
 msgid "Hire or dismiss employees"
 msgstr "僱用/解僱員工"
 
-#: ../base/ufos/ui/bases.ufo:157 client/cgame/campaign/cp_base_callbacks.c:333
+#: ../base/ufos/ui/bases.ufo:167 client/cgame/campaign/cp_base_callbacks.c:333
 msgid "Containment"
 msgstr "外星人收容所"
 
-#: ../base/ufos/ui/bases.ufo:158 client/cgame/campaign/cp_base_callbacks.c:331
+#: ../base/ufos/ui/bases.ufo:168 client/cgame/campaign/cp_base_callbacks.c:331
 msgid "Manage captured aliens"
 msgstr "管理俘虜的外星人"
 
-#: ../base/ufos/ui/bases.ufo:165 client/cgame/campaign/cp_base_callbacks.c:336
+#: ../base/ufos/ui/bases.ufo:175 client/cgame/campaign/cp_base_callbacks.c:336
 #, fuzzy
 msgid "Treat wounded soldiers and perform implant surgery"
 msgstr "治療受傷的士兵"
 
-#: ../base/ufos/ui/bases.ufo:171
+#: ../base/ufos/ui/bases.ufo:181
 msgid "Base Summary"
 msgstr "基地摘要"
 
-#: ../base/ufos/ui/bases.ufo:172
+#: ../base/ufos/ui/bases.ufo:182
 msgid "Information about this base (available storage space, production, research, etc.)"
 msgstr "本基地的資料（倉儲量，生產進度和研究進度等）。"
 
-#: ../base/ufos/ui/bases.ufo:215 ../base/ufos/ui/bases.ufo:221
+#: ../base/ufos/ui/bases.ufo:242 ../base/ufos/ui/bases.ufo:249
 #: ../base/ufos/ui/hire.ufo:617
 msgid "Scientists"
 msgstr "研究員"
 
-#: ../base/ufos/ui/bases.ufo:230 ../base/ufos/ui/bases.ufo:236
+#: ../base/ufos/ui/bases.ufo:258 ../base/ufos/ui/bases.ufo:265
 #: ../base/ufos/ui/hire.ufo:612
 msgid "Workers"
 msgstr "工人"
@@ -10524,7 +10523,7 @@ msgstr "工人"
 msgid "Open/close Building preview window"
 msgstr "開/關建築預覽窗口"
 
-#: ../base/ufos/ui/buildings.ufo:95 ../base/ufos/ui/buildings.ufo:139
+#: ../base/ufos/ui/buildings.ufo:95 ../base/ufos/ui/buildings.ufo:141
 msgid "Building preview"
 msgstr "建築預覽"
 
@@ -10532,7 +10531,7 @@ msgstr "建築預覽"
 msgid "Select building"
 msgstr "選擇建築"
 
-#: ../base/ufos/ui/buildings.ufo:179 ../base/ufos/ui/geoscape.ufo:549
+#: ../base/ufos/ui/buildings.ufo:181 ../base/ufos/ui/geoscape.ufo:549
 #: ../base/ufos/ui/market.ufo:363 client/cgame/campaign/cp_ufopedia.c:119
 #: client/cgame/campaign/cp_ufopedia.c:611
 #: client/cgame/campaign/cp_ufopedia.c:664
@@ -10800,15 +10799,15 @@ msgstr "統計資料"
 msgid "Create installation"
 msgstr "建立新基站"
 
-#: ../base/ufos/ui/geoscape.ufo:579 ../base/ufos/ui/geoscape.ufo:1781
+#: ../base/ufos/ui/geoscape.ufo:579 ../base/ufos/ui/geoscape.ufo:1783
 msgid "Highlight nation borders"
 msgstr "顯示國際組織邊界"
 
-#: ../base/ufos/ui/geoscape.ufo:589 ../base/ufos/ui/geoscape.ufo:1806
+#: ../base/ufos/ui/geoscape.ufo:589 ../base/ufos/ui/geoscape.ufo:1808
 msgid "Show radar range"
 msgstr "顯示雷達範圍"
 
-#: ../base/ufos/ui/geoscape.ufo:600 ../base/ufos/ui/geoscape.ufo:1827
+#: ../base/ufos/ui/geoscape.ufo:600 ../base/ufos/ui/geoscape.ufo:1829
 msgid "Show XVI map"
 msgstr "顯示XVI地圖"
 
@@ -10841,153 +10840,157 @@ msgstr "進入戰場"
 msgid "Auto mission"
 msgstr "自動進行任務"
 
-#: ../base/ufos/ui/geoscape.ufo:772
+#: ../base/ufos/ui/geoscape.ufo:772 ../base/ufos/ui/geoscape.ufo:781
 msgid "Automatically finish mission"
 msgstr "自動完成任務"
 
-#: ../base/ufos/ui/geoscape.ufo:804
+#: ../base/ufos/ui/geoscape.ufo:784
+msgid "This kind of mission cannot be done automatically"
+msgstr ""
+
+#: ../base/ufos/ui/geoscape.ufo:806
 msgid "New base"
 msgstr "新基地"
 
-#: ../base/ufos/ui/geoscape.ufo:833 ../base/ufos/ui/geoscape.ufo:1188
+#: ../base/ufos/ui/geoscape.ufo:835 ../base/ufos/ui/geoscape.ufo:1190
 msgid "Cost:"
 msgstr "費用："
 
-#: ../base/ufos/ui/geoscape.ufo:854 ../base/ufos/ui/geoscape.ufo:1242
+#: ../base/ufos/ui/geoscape.ufo:856 ../base/ufos/ui/geoscape.ufo:1244
 msgid "Build"
 msgstr "建造"
 
-#: ../base/ufos/ui/geoscape.ufo:855
+#: ../base/ufos/ui/geoscape.ufo:857
 msgid "Build the base"
 msgstr "建立基地"
 
-#: ../base/ufos/ui/geoscape.ufo:874
+#: ../base/ufos/ui/geoscape.ufo:876
 msgid "New installation"
 msgstr "新基站"
 
-#: ../base/ufos/ui/geoscape.ufo:879
+#: ../base/ufos/ui/geoscape.ufo:881
 msgid "Type"
 msgstr "種類"
 
-#: ../base/ufos/ui/geoscape.ufo:886
+#: ../base/ufos/ui/geoscape.ufo:888
 msgid "Build Time"
 msgstr "建造需時"
 
-#: ../base/ufos/ui/geoscape.ufo:894
+#: ../base/ufos/ui/geoscape.ufo:896
 msgid "Cost"
 msgstr "費用"
 
-#: ../base/ufos/ui/geoscape.ufo:914
+#: ../base/ufos/ui/geoscape.ufo:916
 msgid "Radar tower"
 msgstr "雷達站"
 
-#: ../base/ufos/ui/geoscape.ufo:1045 client/cgame/campaign/cp_map.c:346
+#: ../base/ufos/ui/geoscape.ufo:1047 client/cgame/campaign/cp_map.c:346
 msgid "Base"
 msgstr "基地"
 
-#: ../base/ufos/ui/geoscape.ufo:1053
+#: ../base/ufos/ui/geoscape.ufo:1055
 msgid "0 day"
 msgstr "當日"
 
-#: ../base/ufos/ui/geoscape.ufo:1082
+#: ../base/ufos/ui/geoscape.ufo:1084
 msgid "Installation limit reached. Build more bases."
 msgstr "基站已達上限。需要建立更多基地。"
 
-#: ../base/ufos/ui/geoscape.ufo:1089
+#: ../base/ufos/ui/geoscape.ufo:1091
 msgid "Base limit reached."
 msgstr "已達到基地上限。"
 
-#: ../base/ufos/ui/geoscape.ufo:1243
+#: ../base/ufos/ui/geoscape.ufo:1245
 msgid "Build the radar tower"
 msgstr "建立雷達站"
 
-#: ../base/ufos/ui/geoscape.ufo:1256
+#: ../base/ufos/ui/geoscape.ufo:1258
 msgid "New radar tower"
 msgstr "新的雷達站"
 
-#: ../base/ufos/ui/geoscape.ufo:1259
+#: ../base/ufos/ui/geoscape.ufo:1261
 msgid "New SAM site"
 msgstr "新的地對空導彈基地"
 
-#: ../base/ufos/ui/geoscape.ufo:1262
+#: ../base/ufos/ui/geoscape.ufo:1264
 msgid "New UFO yard"
 msgstr "新的UFO收集場"
 
-#: ../base/ufos/ui/geoscape.ufo:1275
+#: ../base/ufos/ui/geoscape.ufo:1277
 msgid "Installation Status"
 msgstr "基站狀態"
 
-#: ../base/ufos/ui/geoscape.ufo:1317
+#: ../base/ufos/ui/geoscape.ufo:1319
 msgid "Manage"
 msgstr "管理"
 
-#: ../base/ufos/ui/geoscape.ufo:1318
+#: ../base/ufos/ui/geoscape.ufo:1320
 msgid "Manage installation"
 msgstr "基站管理"
 
-#: ../base/ufos/ui/geoscape.ufo:1367
+#: ../base/ufos/ui/geoscape.ufo:1369
 msgid "Anti-UFO defence"
 msgstr "對UFO防禦設施"
 
-#: ../base/ufos/ui/geoscape.ufo:1380
+#: ../base/ufos/ui/geoscape.ufo:1382
 msgid "Aircraft interception"
 msgstr "航空機攔截"
 
-#: ../base/ufos/ui/geoscape.ufo:1384
+#: ../base/ufos/ui/geoscape.ufo:1386
 msgid "SAM defence"
 msgstr "地對空導彈防禦"
 
-#: ../base/ufos/ui/geoscape.ufo:1398
+#: ../base/ufos/ui/geoscape.ufo:1400
 msgid "Aircraft:"
 msgstr "航空機："
 
-#: ../base/ufos/ui/geoscape.ufo:1412 ../base/ufos/ui/geoscape.ufo:1554
+#: ../base/ufos/ui/geoscape.ufo:1414 ../base/ufos/ui/geoscape.ufo:1556
 msgid "Base:"
 msgstr "基地："
 
-#: ../base/ufos/ui/geoscape.ufo:1460
+#: ../base/ufos/ui/geoscape.ufo:1462
 msgid "Surface-to-air missile site:"
 msgstr "地對空導彈基地："
 
-#: ../base/ufos/ui/geoscape.ufo:1535
+#: ../base/ufos/ui/geoscape.ufo:1537
 msgid "Select aircraft"
 msgstr "選擇航空機"
 
-#: ../base/ufos/ui/geoscape.ufo:1561
+#: ../base/ufos/ui/geoscape.ufo:1563
 #: ../base/ufos/ui/popup_installations.ufo:430
 #: ../base/ufos/ui/transfer.ufo:601
 msgid "ETA:"
 msgstr "估計到達時間："
 
-#: ../base/ufos/ui/geoscape.ufo:1599
+#: ../base/ufos/ui/geoscape.ufo:1601
 msgid "Select item"
 msgstr "選擇物品"
 
-#: ../base/ufos/ui/geoscape.ufo:1604
+#: ../base/ufos/ui/geoscape.ufo:1606
 msgid "Type:"
 msgstr "種類："
 
-#: ../base/ufos/ui/geoscape.ufo:1671
+#: ../base/ufos/ui/geoscape.ufo:1673
 msgid "Action:"
 msgstr "行動："
 
-#: ../base/ufos/ui/geoscape.ufo:1679
+#: ../base/ufos/ui/geoscape.ufo:1681
 msgid "Description:"
 msgstr "詳情："
 
-#: ../base/ufos/ui/geoscape.ufo:1734
+#: ../base/ufos/ui/geoscape.ufo:1736
 msgid "Geoscape options"
 msgstr "地球視界選項"
 
-#: ../base/ufos/ui/geoscape.ufo:1746
+#: ../base/ufos/ui/geoscape.ufo:1748
 msgid "Geoscape projection mode:"
 msgstr "地球視界投影模式："
 
-#: ../base/ufos/ui/geoscape.ufo:1756
+#: ../base/ufos/ui/geoscape.ufo:1758
 msgid "2D"
 msgstr "2D"
 
-#: ../base/ufos/ui/geoscape.ufo:1760
+#: ../base/ufos/ui/geoscape.ufo:1762
 msgid "3D"
 msgstr "3D"
 
@@ -11016,11 +11019,11 @@ msgstr "重新命名員工"
 msgid "High Explosives:"
 msgstr "爆破武器："
 
-#: ../base/ufos/ui/hire.ufo:454 ../base/ufos/ui/physdat.ufo:332
+#: ../base/ufos/ui/hire.ufo:454 ../base/ufos/ui/physdat.ufo:331
 msgid "Missions Performed:"
 msgstr "參與任務："
 
-#: ../base/ufos/ui/hire.ufo:457 ../base/ufos/ui/physdat.ufo:333
+#: ../base/ufos/ui/hire.ufo:457 ../base/ufos/ui/physdat.ufo:332
 msgid "Enemies Killed:"
 msgstr "殺死敵人："
 
@@ -11028,36 +11031,36 @@ msgstr "殺死敵人："
 msgid "Occupation"
 msgstr "人口"
 
-#: ../base/ufos/ui/hospital.ufo:40 ../base/ufos/ui/hospital.ufo:85
-#: ../base/ufos/ui/hospital.ufo:109
+#: ../base/ufos/ui/hospital.ufo:46 ../base/ufos/ui/hospital.ufo:91
+#: ../base/ufos/ui/hospital.ufo:115
 msgid "Unused"
 msgstr "未使用"
 
-#: ../base/ufos/ui/hospital.ufo:94
+#: ../base/ufos/ui/hospital.ufo:100
 msgid "Heavily wounded"
 msgstr "重傷"
 
-#: ../base/ufos/ui/hospital.ufo:99
+#: ../base/ufos/ui/hospital.ufo:105
 msgid "Medium wounds"
 msgstr "中等創傷"
 
-#: ../base/ufos/ui/hospital.ufo:104
+#: ../base/ufos/ui/hospital.ufo:110
 msgid "Slightly wounded"
 msgstr "輕傷"
 
-#: ../base/ufos/ui/hospital.ufo:332
+#: ../base/ufos/ui/hospital.ufo:338
 msgid "Scroll up"
 msgstr "前一頁"
 
-#: ../base/ufos/ui/hospital.ufo:342
+#: ../base/ufos/ui/hospital.ufo:348
 msgid "Scroll down"
 msgstr "後一頁"
 
-#: ../base/ufos/ui/hospital.ufo:554
+#: ../base/ufos/ui/hospital.ufo:560
 msgid "Implants"
 msgstr ""
 
-#: ../base/ufos/ui/hospital.ufo:560 ../base/ufos/ui/popup_baseattack.ufo:378
+#: ../base/ufos/ui/hospital.ufo:566 ../base/ufos/ui/popup_baseattack.ufo:378
 #: ../base/ufos/ui/popup_baseattack.ufo:386
 #: ../base/ufos/ui/popup_baseattack.ufo:393
 #: ../base/ufos/ui/popup_baseattack.ufo:401
@@ -11105,16 +11108,13 @@ msgid "LMB:Inventory/RMB:Physical Stats"
 msgstr "詳情"
 
 #: ../base/ufos/ui/hud_alt.ufo:557 ../base/ufos/ui/hud_alt.ufo:567
-#: ../base/ufos/ui/hud_default.ufo:642 ../base/ufos/ui/hud_mini.ufo:1793
-#: ../base/ufos/ui/hud_mini.ufo:1803
+#: ../base/ufos/ui/hud_default.ufo:642 ../base/ufos/ui/hud_mini.ufo:1532
+#: ../base/ufos/ui/hud_mini.ufo:1542
 msgid "Use Item"
 msgstr "使用物品"
 
 #: ../base/ufos/ui/hud_alt.ufo:607 ../base/ufos/ui/hud_alt.ufo:668
-#: ../base/ufos/ui/hud_mini.ufo:812 ../base/ufos/ui/hud_mini.ufo:843
-#: ../base/ufos/ui/hud_mini.ufo:874 ../base/ufos/ui/hud_mini.ufo:905
-#: ../base/ufos/ui/hud_mini.ufo:936 ../base/ufos/ui/hud_mini.ufo:967
-#: ../base/ufos/ui/hud_mini.ufo:998 ../base/ufos/ui/hud_mini.ufo:1029
+#: ../base/ufos/ui/hud_mini.ufo:88
 msgid "TUs"
 msgstr "活動時間"
 
@@ -11127,21 +11127,13 @@ msgid "TUs reserved"
 msgstr "預留活動時間"
 
 #: ../base/ufos/ui/hud_alt.ufo:639 ../base/ufos/ui/hud_alt.ufo:676
-#: ../base/ufos/ui/hud_mini.ufo:802 ../base/ufos/ui/hud_mini.ufo:833
-#: ../base/ufos/ui/hud_mini.ufo:864 ../base/ufos/ui/hud_mini.ufo:895
-#: ../base/ufos/ui/hud_mini.ufo:926 ../base/ufos/ui/hud_mini.ufo:957
-#: ../base/ufos/ui/hud_mini.ufo:988 ../base/ufos/ui/hud_mini.ufo:1019
-#: ../base/ufos/ui/hud_mini.ufo:1390 ../base/ufos/ui/physdat.ufo:296
-#: ../base/ufos/ui/physdat.ufo:306
+#: ../base/ufos/ui/hud_mini.ufo:81 ../base/ufos/ui/hud_mini.ufo:1162
+#: ../base/ufos/ui/physdat.ufo:295 ../base/ufos/ui/physdat.ufo:305
 msgid "Morale"
 msgstr "士氣"
 
-#: ../base/ufos/ui/hud_alt.ufo:660 ../base/ufos/ui/hud_mini.ufo:792
-#: ../base/ufos/ui/hud_mini.ufo:823 ../base/ufos/ui/hud_mini.ufo:854
-#: ../base/ufos/ui/hud_mini.ufo:885 ../base/ufos/ui/hud_mini.ufo:916
-#: ../base/ufos/ui/hud_mini.ufo:947 ../base/ufos/ui/hud_mini.ufo:978
-#: ../base/ufos/ui/hud_mini.ufo:1009 ../base/ufos/ui/hud_mini.ufo:1355
-#: ../base/ufos/ui/physdat.ufo:269
+#: ../base/ufos/ui/hud_alt.ufo:660 ../base/ufos/ui/hud_mini.ufo:74
+#: ../base/ufos/ui/hud_mini.ufo:1127 ../base/ufos/ui/physdat.ufo:268
 msgid "Health"
 msgstr "生命力"
 
@@ -11153,11 +11145,11 @@ msgstr ""
 msgid "Use headgear"
 msgstr "使用護目鏡"
 
-#: ../base/ufos/ui/hud_alt.ufo:840 ../base/ufos/ui/hud_mini.ufo:1933
+#: ../base/ufos/ui/hud_alt.ufo:840 ../base/ufos/ui/hud_mini.ufo:1672
 msgid "Switch to right hand weapon"
 msgstr "切換至右手武器"
 
-#: ../base/ufos/ui/hud_alt.ufo:852 ../base/ufos/ui/hud_mini.ufo:1951
+#: ../base/ufos/ui/hud_alt.ufo:852 ../base/ufos/ui/hud_mini.ufo:1690
 msgid "Switch to left hand weapon"
 msgstr "切換至左手武器"
 
@@ -11182,24 +11174,24 @@ msgid "Finish round"
 msgstr "回合結束"
 
 #: ../base/ufos/ui/hud_alt.ufo:1076 ../base/ufos/ui/hud_default.ufo:1066
-#: ../base/ufos/ui/hud_mini.ufo:2138
+#: ../base/ufos/ui/hud_mini.ufo:1877
 #, fuzzy
 msgid "Reaction fire"
 msgstr "無自動還擊"
 
 #: ../base/ufos/ui/hud_alt.ufo:1081 ../base/ufos/ui/hud_default.ufo:1072
-#: ../base/ufos/ui/hud_mini.ufo:2143
+#: ../base/ufos/ui/hud_mini.ufo:1882
 #, fuzzy
 msgid "Reaction fire (not possible)"
 msgstr "無法實行一次自動還擊模式 "
 
 #: ../base/ufos/ui/hud_alt.ufo:1087 ../base/ufos/ui/hud_default.ufo:1078
-#: ../base/ufos/ui/hud_mini.ufo:2149
+#: ../base/ufos/ui/hud_mini.ufo:1888
 msgid "No reaction fire"
 msgstr "無自動還擊"
 
 #: ../base/ufos/ui/hud_alt.ufo:1096 ../base/ufos/ui/hud_default.ufo:1046
-#: ../base/ufos/ui/hud_mini.ufo:2158 client/battlescape/cl_hud.c:888
+#: ../base/ufos/ui/hud_mini.ufo:1897 client/battlescape/cl_hud.c:888
 msgid "Reserve TUs for shooting."
 msgstr "為射擊保留活動時間。"
 
@@ -11254,7 +11246,7 @@ msgstr "首選攻擊模式"
 msgid "LMB:Show/RMB:Hide Physical stats"
 msgstr "身體狀況"
 
-#: ../base/ufos/ui/hud_default.ufo:934 ../base/ufos/ui/hud_mini.ufo:1623
+#: ../base/ufos/ui/hud_default.ufo:934 ../base/ufos/ui/hud_mini.ufo:1395
 msgid "LMB:Show/RMB:Hide Inventory"
 msgstr ""
 
@@ -11284,74 +11276,71 @@ msgstr "Gen this level"
 msgid "Gen all levels"
 msgstr "Gen all levels"
 
-#: ../base/ufos/ui/hud_mini.ufo:211 ../base/ufos/ui/hud_mini.ufo:223
-#: ../base/ufos/ui/hud_mini.ufo:235 ../base/ufos/ui/hud_mini.ufo:247
-#: ../base/ufos/ui/hud_mini.ufo:259 ../base/ufos/ui/hud_mini.ufo:271
-#: ../base/ufos/ui/hud_mini.ufo:283 ../base/ufos/ui/hud_mini.ufo:295
+#: ../base/ufos/ui/hud_mini.ufo:29
 msgid "Wheel:Select Next/Prev"
 msgstr ""
 
-#: ../base/ufos/ui/hud_mini.ufo:309
+#: ../base/ufos/ui/hud_mini.ufo:299
 msgid ""
 "LMB/RMB:Select\n"
 "Wheel:Select Next/Prev\n"
 "Key:1"
 msgstr ""
 
-#: ../base/ufos/ui/hud_mini.ufo:333
+#: ../base/ufos/ui/hud_mini.ufo:318
 msgid ""
 "LMB/RMB:Select\n"
 "Wheel:Select Next/Prev\n"
 "Key:2"
 msgstr ""
 
-#: ../base/ufos/ui/hud_mini.ufo:357
+#: ../base/ufos/ui/hud_mini.ufo:337
 msgid ""
 "LMB/RMB:Select\n"
 "Wheel:Select Next/Prev\n"
 "Key:3"
 msgstr ""
 
-#: ../base/ufos/ui/hud_mini.ufo:381
+#: ../base/ufos/ui/hud_mini.ufo:356
 msgid ""
 "LMB/RMB:Select\n"
 "Wheel:Select Next/Prev\n"
 "Key:4"
 msgstr ""
 
-#: ../base/ufos/ui/hud_mini.ufo:405
+#: ../base/ufos/ui/hud_mini.ufo:375
 msgid ""
 "LMB/RMB:Select\n"
 "Wheel:Select Next/Prev\n"
 "Key:5"
 msgstr ""
 
-#: ../base/ufos/ui/hud_mini.ufo:429
+#: ../base/ufos/ui/hud_mini.ufo:394
 msgid ""
 "LMB/RMB:Select\n"
 "Wheel:Select Next/Prev\n"
 "Key:6"
 msgstr ""
 
-#: ../base/ufos/ui/hud_mini.ufo:453
+#: ../base/ufos/ui/hud_mini.ufo:413
 msgid ""
 "LMB/RMB:Select\n"
 "Wheel:Select Next/Prev\n"
 "Key:7"
 msgstr ""
 
-#: ../base/ufos/ui/hud_mini.ufo:477
+#: ../base/ufos/ui/hud_mini.ufo:432
 msgid ""
 "LMB/RMB:Select\n"
 "Wheel:Select Next/Prev\n"
 "Key:8"
 msgstr ""
 
-#: ../base/ufos/ui/hud_mini.ufo:694
+#: ../base/ufos/ui/hud_mini.ufo:586
 msgid "Wheel:Select Next/Previous"
 msgstr ""
 
-#: ../base/ufos/ui/hud_mini.ufo:1152
+#: ../base/ufos/ui/hud_mini.ufo:924
 msgid ""
 "Current Level\n"
 "LMB:Level up/RMB:Level down\n"
@@ -11359,94 +11348,94 @@ msgid ""
 "Keys:Cursor Up/Down"
 msgstr ""
 
-#: ../base/ufos/ui/hud_mini.ufo:1216
+#: ../base/ufos/ui/hud_mini.ufo:988
 msgid ""
 "LMB:Next visible enemy\n"
 "RMB:Previous visible enemy\n"
 "Wheel:Cycle visible enemies"
 msgstr ""
 
-#: ../base/ufos/ui/hud_mini.ufo:1317
+#: ../base/ufos/ui/hud_mini.ufo:1089
 msgid ""
 "LMB:Inventory\n"
 "RMB:Physical Stats\n"
 "Wheel:Switch Soldier"
 msgstr ""
 
-#: ../base/ufos/ui/hud_mini.ufo:1490
+#: ../base/ufos/ui/hud_mini.ufo:1262
 msgid ""
 "LMB/Wheel Down:Left Hand\n"
 "RMB/Wheel Up:Right Hand"
 msgstr ""
 
-#: ../base/ufos/ui/hud_mini.ufo:1543
+#: ../base/ufos/ui/hud_mini.ufo:1315
 msgid ""
 "LMB:Reload\n"
 "Wheel Down:Left Hand"
 msgstr ""
 
-#: ../base/ufos/ui/hud_mini.ufo:1572
+#: ../base/ufos/ui/hud_mini.ufo:1344
 msgid ""
 "LMB:Reload\n"
 "Wheel Up:Right Hand"
 msgstr ""
 
-#: ../base/ufos/ui/hud_mini.ufo:1607
+#: ../base/ufos/ui/hud_mini.ufo:1379
 msgid "LMB:Show/RMB:Hide Physical Data"
 msgstr ""
 
-#: ../base/ufos/ui/hud_mini.ufo:1639
+#: ../base/ufos/ui/hud_mini.ufo:1411
 msgid "LMB:Show/RMB:Hide Radar"
 msgstr ""
 
-#: ../base/ufos/ui/hud_mini.ufo:1655
+#: ../base/ufos/ui/hud_mini.ufo:1427
 msgid ""
 "LMB:Show/RMB:Hide Keyinfo/General Help\n"
 "Key:F4"
 msgstr ""
 
-#: ../base/ufos/ui/hud_mini.ufo:1674
-msgid "LMB:Show/RMB:Hide Soldier Panel"
-msgstr ""
-
-#: ../base/ufos/ui/hud_mini.ufo:1710
+#: ../base/ufos/ui/hud_mini.ufo:1446
 msgid "LMB:Show/RMB:Hide Top Panel"
 msgstr ""
 
-#: ../base/ufos/ui/hud_mini.ufo:1742
+#: ../base/ufos/ui/hud_mini.ufo:1467
+msgid "LMB:Show/RMB:Hide Soldier Panel"
+msgstr ""
+
+#: ../base/ufos/ui/hud_mini.ufo:1492
 msgid "LMB:Show/RMB:Hide Decoration"
 msgstr ""
 
-#: ../base/ufos/ui/hud_mini.ufo:1850
+#: ../base/ufos/ui/hud_mini.ufo:1589
 #, fuzzy
 msgid "Use Headgear"
 msgstr "使用護目鏡"
 
-#: ../base/ufos/ui/hud_mini.ufo:1982
+#: ../base/ufos/ui/hud_mini.ufo:1721
 #, fuzzy
 msgid "Chat Messages"
 msgstr "對話訊息"
 
-#: ../base/ufos/ui/hud_mini.ufo:2028
+#: ../base/ufos/ui/hud_mini.ufo:1767
 #, fuzzy
 msgid "Message Log"
 msgstr "訊息設定"
 
-#: ../base/ufos/ui/hud_mini.ufo:2037
+#: ../base/ufos/ui/hud_mini.ufo:1776
 #, fuzzy
 msgid "Menu"
 msgstr "棉蘭"
 
-#: ../base/ufos/ui/hud_mini.ufo:2047
+#: ../base/ufos/ui/hud_mini.ufo:1786
 #, fuzzy
 msgid "Stop Music"
 msgstr "音樂"
 
-#: ../base/ufos/ui/hud_mini.ufo:2057
+#: ../base/ufos/ui/hud_mini.ufo:1796
 msgid "Play Next Random Track"
 msgstr ""
 
-#: ../base/ufos/ui/hud_mini.ufo:2216
+#: ../base/ufos/ui/hud_mini.ufo:1955
 #, fuzzy
 msgid "Minimal HUD"
 msgstr "原始HUD"
@@ -11473,7 +11462,7 @@ msgstr ""
 msgid "Floor"
 msgstr "地板"
 
-#: ../base/ufos/ui/inventory.ufo:213 ../base/ufos/ui/physdat.ufo:234
+#: ../base/ufos/ui/inventory.ufo:213 ../base/ufos/ui/physdat.ufo:233
 msgid ""
 "LMB:Drag/RMB:Close\n"
 "Wheel:Next/Previous Soldier"
@@ -11642,7 +11631,7 @@ msgstr "初始化設定"
 msgid "User Information"
 msgstr "玩家訊息"
 
-#: ../base/ufos/ui/main.ufo:138 ../base/ufos/ui/options.ufo:1280
+#: ../base/ufos/ui/main.ufo:138 ../base/ufos/ui/options.ufo:1298
 msgid "Volume Control"
 msgstr "音量控制"
 
@@ -11650,7 +11639,7 @@ msgstr "音量控制"
 msgid "Effects:"
 msgstr "聲效："
 
-#: ../base/ufos/ui/main.ufo:164 ../base/ufos/ui/options.ufo:1307
+#: ../base/ufos/ui/main.ufo:164 ../base/ufos/ui/options.ufo:1325
 msgid "Music:"
 msgstr "音樂："
 
@@ -11704,7 +11693,7 @@ msgid "Craft items"
 msgstr "機載物"
 
 #: ../base/ufos/ui/market.ufo:104 ../base/ufos/ui/options.ufo:423
-#: ../base/ufos/ui/options.ufo:1123 ../base/ufos/ui/production.ufo:84
+#: ../base/ufos/ui/options.ufo:1141 ../base/ufos/ui/production.ufo:84
 msgid "Other"
 msgstr "其它"
 
@@ -12394,12 +12383,12 @@ msgstr ""
 "為 8192 x 8192 點。"
 
 #: ../base/ufos/ui/options.ufo:718 ../base/ufos/ui/options.ufo:1068
-#: ../base/ufos/ui/options.ufo:1219
+#: ../base/ufos/ui/options.ufo:1237
 msgid "Low"
 msgstr "低"
 
 #: ../base/ufos/ui/options.ufo:722 ../base/ufos/ui/options.ufo:1072
-#: ../base/ufos/ui/options.ufo:1233
+#: ../base/ufos/ui/options.ufo:1251
 msgid "Medium"
 msgstr "中"
 
@@ -12409,7 +12398,7 @@ msgid "Normal"
 msgstr "一般"
 
 #: ../base/ufos/ui/options.ufo:730 ../base/ufos/ui/options.ufo:1080
-#: ../base/ufos/ui/options.ufo:1247
+#: ../base/ufos/ui/options.ufo:1265
 msgid "High"
 msgstr "高"
 
@@ -12678,170 +12667,184 @@ msgstr "從太陽照射到地球的光源量。"
 msgid "Geo Ambient Lighting:"
 msgstr "環境光源："
 
-#: ../base/ufos/ui/options.ufo:1133
+#: ../base/ufos/ui/options.ufo:1114
+msgid "Enabled by default for compatibility reasons."
+msgstr ""
+
+#: ../base/ufos/ui/options.ufo:1115
+msgid "Intel Graphics Hardware Hack:"
+msgstr ""
+
+#: ../base/ufos/ui/options.ufo:1121
+msgid ""
+"Disable the Intel graphics hardware hack.\n"
+"This hack enables texture compression and disables GLSL shaders on Intel chips for compatibility reasons with older Intel graphics hardware. Disable this if you are playing on modern hardware to be able to turn on advanced rendering features."
+msgstr ""
+
+#: ../base/ufos/ui/options.ufo:1151
 msgid "Flares are used to display light reflection effects. Flare visibility is calculated according to the angle of the surface emitting the light."
 msgstr ""
 
-#: ../base/ufos/ui/options.ufo:1134
+#: ../base/ufos/ui/options.ufo:1152
 #, fuzzy
 msgid "Flares:"
 msgstr "困難度："
 
-#: ../base/ufos/ui/options.ufo:1150
+#: ../base/ufos/ui/options.ufo:1168
 msgid "Coronas are soft, alpha-blended, rounded polygons."
 msgstr ""
 
-#: ../base/ufos/ui/options.ufo:1151
+#: ../base/ufos/ui/options.ufo:1169
 #, fuzzy
 msgid "Coronas:"
 msgstr "對比度："
 
-#: ../base/ufos/ui/options.ufo:1167
+#: ../base/ufos/ui/options.ufo:1185
 msgid "Fog does not relate to any weather effect here, but when enabled distant textures on the battlescape are faded out."
 msgstr ""
 
-#: ../base/ufos/ui/options.ufo:1168
+#: ../base/ufos/ui/options.ufo:1186
 msgid "Fog:"
 msgstr ""
 
-#: ../base/ufos/ui/options.ufo:1184
+#: ../base/ufos/ui/options.ufo:1202
 #, fuzzy
 msgid "Weather effects like rain or snow."
 msgstr ""
 "開啟天氣效果，例如\n"
 "下雨（還未完成）或下雪。"
 
-#: ../base/ufos/ui/options.ufo:1185
+#: ../base/ufos/ui/options.ufo:1203
 msgid "Weather Effects:"
 msgstr "天氣效果："
 
-#: ../base/ufos/ui/options.ufo:1201
+#: ../base/ufos/ui/options.ufo:1219
 msgid "The material system is used to display texture animations, effects like rotating or stretching or scrolling textures and manipulate rendering through applying special material properties like specularity or hardness to defined textures."
 msgstr ""
 
-#: ../base/ufos/ui/options.ufo:1202
+#: ../base/ufos/ui/options.ufo:1220
 #, fuzzy
 msgid "Material System:"
 msgstr "材料編輯"
 
-#: ../base/ufos/ui/options.ufo:1216
+#: ../base/ufos/ui/options.ufo:1234
 #, fuzzy
 msgid "Switch to low video settings"
 msgstr "前一個基地"
 
-#: ../base/ufos/ui/options.ufo:1230
+#: ../base/ufos/ui/options.ufo:1248
 #, fuzzy
 msgid "Switch to medium video settings"
 msgstr "前一個基地"
 
-#: ../base/ufos/ui/options.ufo:1244
+#: ../base/ufos/ui/options.ufo:1262
 #, fuzzy
 msgid "Switch to very high video settings"
 msgstr "切換至右手武器"
 
-#: ../base/ufos/ui/options.ufo:1273
+#: ../base/ufos/ui/options.ufo:1291
 msgid "Audio Settings"
 msgstr "音效選項"
 
-#: ../base/ufos/ui/options.ufo:1290
+#: ../base/ufos/ui/options.ufo:1308
 msgid "Enable or disable sound."
 msgstr "啟用/停用聲效。"
 
-#: ../base/ufos/ui/options.ufo:1291
+#: ../base/ufos/ui/options.ufo:1309
 msgid "Enable Audio:"
 msgstr "啓用音效："
 
-#: ../base/ufos/ui/options.ufo:1331
+#: ../base/ufos/ui/options.ufo:1349
 msgid "Sound Effects:"
 msgstr "聲效："
 
-#: ../base/ufos/ui/options.ufo:1356
+#: ../base/ufos/ui/options.ufo:1374
 #, fuzzy
 msgid "Menu Sounds:"
 msgstr "中等創傷"
 
-#: ../base/ufos/ui/options.ufo:1362
+#: ../base/ufos/ui/options.ufo:1380
 #, fuzzy
 msgid "Turn the menu sounds on or off."
 msgstr "切換是否自動還擊"
 
-#: ../base/ufos/ui/options.ufo:1388
+#: ../base/ufos/ui/options.ufo:1406
 msgid "Advanced Audio Options"
 msgstr "高級音效設定"
 
-#: ../base/ufos/ui/options.ufo:1398
+#: ../base/ufos/ui/options.ufo:1416
 #, fuzzy
 msgid "The sample rate frequency in kHz. Use higher values for better sound quality."
 msgstr ""
 "聲音取樣率（kHz）。\n"
 "愈高則聲效愈佳。"
 
-#: ../base/ufos/ui/options.ufo:1399
+#: ../base/ufos/ui/options.ufo:1417
 #, fuzzy
 msgid "Audio Sample Rate:"
 msgstr "音效位元率："
 
-#: ../base/ufos/ui/options.ufo:1433
+#: ../base/ufos/ui/options.ufo:1451
 msgid "Restart the sound-engine and apply your settings."
 msgstr "重啟聲效引擎並套用新設定。"
 
-#: ../base/ufos/ui/options.ufo:1455
+#: ../base/ufos/ui/options.ufo:1473
 #, fuzzy
 msgid "Gameplay Settings"
 msgstr "戰鬥流程設定"
 
-#: ../base/ufos/ui/options.ufo:1462
+#: ../base/ufos/ui/options.ufo:1480
 msgid "Battlescape Camera Settings"
 msgstr "戰鬥視角設定"
 
-#: ../base/ufos/ui/options.ufo:1472
+#: ../base/ufos/ui/options.ufo:1490
 msgid "Scroll Speed:"
 msgstr "捲動速度："
 
-#: ../base/ufos/ui/options.ufo:1496
+#: ../base/ufos/ui/options.ufo:1514
 msgid "Rotation Speed:"
 msgstr "旋轉速度："
 
-#: ../base/ufos/ui/options.ufo:1520
+#: ../base/ufos/ui/options.ufo:1538
 msgid "The move deceleration of the battlescape camera. Lower this value if you want smoother camera movement, increase it if you want cameramovement to decelerate faster or stop immediately."
 msgstr ""
 
-#: ../base/ufos/ui/options.ufo:1521
+#: ../base/ufos/ui/options.ufo:1539
 #, fuzzy
 msgid "Move Deceleration:"
 msgstr "移動速度："
 
-#: ../base/ufos/ui/options.ufo:1545
+#: ../base/ufos/ui/options.ufo:1563
 msgid "Isometric Mode means the 3D world will be rendered without perspective correction."
 msgstr "等距模式表示3D場景沒有透視校正。"
 
-#: ../base/ufos/ui/options.ufo:1546
+#: ../base/ufos/ui/options.ufo:1564
 msgid "Isometric Mode:"
 msgstr "等距模式："
 
-#: ../base/ufos/ui/options.ufo:1562
+#: ../base/ufos/ui/options.ufo:1580
 msgid "Center the camera view automatically at the soldier when selecting it, or at the enemy when he is shooting or appearing."
 msgstr "自動設定視角到選擇的士兵或者開火/出現的敵人。"
 
-#: ../base/ufos/ui/options.ufo:1563
+#: ../base/ufos/ui/options.ufo:1581
 msgid "Center View:"
 msgstr "置中視角："
 
-#: ../base/ufos/ui/options.ufo:1579
+#: ../base/ufos/ui/options.ufo:1597
 msgid "Battlescape Gameplay Settings"
 msgstr "戰鬥流程設定"
 
-#: ../base/ufos/ui/options.ufo:1589
+#: ../base/ufos/ui/options.ufo:1607
 msgid "Actor Speed:"
 msgstr "士兵速度："
 
-#: ../base/ufos/ui/options.ufo:1600
+#: ../base/ufos/ui/options.ufo:1618
 msgid "Choose between 0-9, higher values mean higher actor speed."
 msgstr ""
 "可選擇0-9，愈高值則\n"
 "人物行動速度愈高。"
 
-#: ../base/ufos/ui/options.ufo:1613
+#: ../base/ufos/ui/options.ufo:1631
 #, fuzzy
 msgid "Enabling this will give you a preview of your actions on the battlescape which you then have to confirm."
 msgstr ""
@@ -12849,11 +12852,11 @@ msgstr ""
 "行動，然後再行確認。\n"
 "* 一定要試試喔！"
 
-#: ../base/ufos/ui/options.ufo:1614
+#: ../base/ufos/ui/options.ufo:1632
 msgid "Confirm Actions:"
 msgstr "操作確認："
 
-#: ../base/ufos/ui/options.ufo:1621
+#: ../base/ufos/ui/options.ufo:1639
 msgid "'No' means all your orders on the battlescape will be executed immediately. 'Yes' means you will be prompted to confirm all of your orders before the soldier begins to execute them. 'Only for moving' means the path will be displayed before you confirm a soldier's move."
 msgstr ""
 "'否'表示在戰場上下達的命令\n"
@@ -12863,69 +12866,69 @@ msgstr ""
 "'移動時先確認'表示所有移動\n"
 "路徑都會先被顯示然後確認。"
 
-#: ../base/ufos/ui/options.ufo:1627 po/OTHER_STRINGS:4
+#: ../base/ufos/ui/options.ufo:1645 po/OTHER_STRINGS:4
 msgid "Yes"
 msgstr "是"
 
-#: ../base/ufos/ui/options.ufo:1631 po/OTHER_STRINGS:5
+#: ../base/ufos/ui/options.ufo:1649 po/OTHER_STRINGS:5
 msgid "No"
 msgstr "否"
 
-#: ../base/ufos/ui/options.ufo:1635
+#: ../base/ufos/ui/options.ufo:1653
 #, fuzzy
 msgid "Moving only"
 msgstr "香港"
 
-#: ../base/ufos/ui/options.ufo:1644
+#: ../base/ufos/ui/options.ufo:1662
 msgid "Autostand regulates if your soldier should automatically stand up when he is getting the order to move while being crouched."
 msgstr "自動站立可以令士兵從蹲下中自動站起後移動。"
 
-#: ../base/ufos/ui/options.ufo:1645
+#: ../base/ufos/ui/options.ufo:1663
 msgid "Autostand:"
 msgstr "自動站立："
 
-#: ../base/ufos/ui/options.ufo:1661
+#: ../base/ufos/ui/options.ufo:1679
 msgid "Select the Head-Up-Display for the battlescape."
 msgstr "選擇戰場HUD。"
 
-#: ../base/ufos/ui/options.ufo:1662
+#: ../base/ufos/ui/options.ufo:1680
 msgid "HUD Design:"
 msgstr "戰鬥界面："
 
-#: ../base/ufos/ui/options.ufo:1679
+#: ../base/ufos/ui/options.ufo:1697
 msgid "Joystick Settings"
 msgstr "搖桿設定"
 
-#: ../base/ufos/ui/options.ufo:1689
+#: ../base/ufos/ui/options.ufo:1707
 msgid "Enable:"
 msgstr "啓用搖桿或手制："
 
-#: ../base/ufos/ui/options.ufo:1705
+#: ../base/ufos/ui/options.ufo:1723
 msgid "Joystick or Joypad:"
 msgstr "搖桿或手制："
 
-#: ../base/ufos/ui/options.ufo:1711
+#: ../base/ufos/ui/options.ufo:1729
 msgid "Available game controllers."
 msgstr ""
 
-#: ../base/ufos/ui/options.ufo:1722
+#: ../base/ufos/ui/options.ufo:1740
 msgid "Adjust the joystick threshold to a high enough value, so movement of the analogue stick will be recognized."
 msgstr "請調整搖桿閾值至最高以記錄榣桿速度。"
 
-#: ../base/ufos/ui/options.ufo:1723
+#: ../base/ufos/ui/options.ufo:1741
 msgid "Threshold:"
 msgstr "閾值："
 
-#: ../base/ufos/ui/options.ufo:1771
+#: ../base/ufos/ui/options.ufo:1789
 msgid "Show Keys"
 msgstr "顯示按鍵"
 
-#: ../base/ufos/ui/options.ufo:1805
+#: ../base/ufos/ui/options.ufo:1823
 #, fuzzy
 msgid "Key Bindings"
 msgstr "顯示按鍵設定"
 
-#: ../base/ufos/ui/physdat.ufo:279
+#: ../base/ufos/ui/physdat.ufo:278
 msgid "EKG"
 msgstr ""
 
@@ -13328,7 +13331,7 @@ msgstr "加入/移除運輸項目"
 
 #: ../base/ufos/ui/transfer.ufo:56 ../base/ufos/ui/transfer.ufo:73
 #: client/cgame/campaign/cp_cgame_callbacks.c:137
-#: client/cgame/campaign/cp_transfer_callbacks.c:1543
+#: client/cgame/campaign/cp_transfer_callbacks.c:1527
 msgid "Aliens"
 msgstr "外星人"
 
@@ -14424,10 +14427,10 @@ msgstr "一架新的 %s 已經在 %s 待命"
 #: client/cgame/campaign/cp_aliencont.c:185
 #: client/cgame/campaign/cp_aliencont.c:204
 #: client/cgame/campaign/cp_aliencont.c:213
+#: client/cgame/campaign/cp_auto_mission.c:757
+#: client/cgame/campaign/cp_auto_mission.c:759
 #: client/cgame/campaign/cp_auto_mission.c:762
-#: client/cgame/campaign/cp_auto_mission.c:764
-#: client/cgame/campaign/cp_auto_mission.c:767
-#: client/cgame/campaign/cp_auto_mission.c:828
+#: client/cgame/campaign/cp_auto_mission.c:823
 #: client/cgame/campaign/cp_base.c:1349 client/cgame/campaign/cp_base.c:1399
 #: client/cgame/campaign/cp_base.c:2294 client/cgame/campaign/cp_base.c:2299
 #: client/cgame/campaign/cp_base.c:2928
@@ -14450,19 +14453,19 @@ msgstr "一架新的 %s 已經在 %s 待命"
 #: client/cgame/campaign/cp_mapfightequip.c:370
 #: client/cgame/campaign/cp_mapfightequip.c:376
 #: client/cgame/campaign/cp_mapfightequip.c:388
-#: client/cgame/campaign/cp_market_callbacks.c:631
-#: client/cgame/campaign/cp_market_callbacks.c:636
+#: client/cgame/campaign/cp_market_callbacks.c:535
+#: client/cgame/campaign/cp_market_callbacks.c:540
 #: client/cgame/campaign/cp_mission_callbacks.c:64
 #: client/cgame/campaign/cp_missions.c:689
 #: client/cgame/campaign/cp_missions.c:1037
 #: client/cgame/campaign/cp_nation.c:808 client/cgame/campaign/cp_nation.c:821
 #: client/cgame/campaign/cp_nation.c:834 client/cgame/campaign/cp_nation.c:843
 #: client/cgame/campaign/cp_nation.c:849 client/cgame/campaign/cp_nation.c:857
-#: client/cgame/campaign/cp_popup.c:487 client/cgame/campaign/cp_produce.c:502
-#: client/cgame/campaign/cp_produce.c:511
-#: client/cgame/campaign/cp_produce.c:522
-#: client/cgame/campaign/cp_produce.c:531
-#: client/cgame/campaign/cp_produce.c:542
+#: client/cgame/campaign/cp_popup.c:487 client/cgame/campaign/cp_produce.c:505
+#: client/cgame/campaign/cp_produce.c:514
+#: client/cgame/campaign/cp_produce.c:525
+#: client/cgame/campaign/cp_produce.c:534
+#: client/cgame/campaign/cp_produce.c:545
 #: client/cgame/campaign/cp_research_callbacks.c:570
 #: client/cgame/campaign/cp_research_callbacks.c:588
 #: client/cgame/campaign/cp_research_callbacks.c:594
@@ -14601,7 +14604,7 @@ msgid "UFO interception successful -- UFO lost to sea."
 msgstr "UFO攔截成功 -- UFO墜落海中。"
 
 #: client/cgame/campaign/cp_airfight.c:472
-#: client/cgame/campaign/cp_auto_mission.c:767
+#: client/cgame/campaign/cp_auto_mission.c:762
 msgid "You've lost the battle"
 msgstr "戰鬥失敗"
 
@@ -14642,15 +14645,15 @@ msgstr "空位"
 msgid "None"
 msgstr "無"
 
-#: client/cgame/campaign/cp_auto_mission.c:762
+#: client/cgame/campaign/cp_auto_mission.c:757
 msgid "You've won the battle"
 msgstr "戰鬥勝利"
 
-#: client/cgame/campaign/cp_auto_mission.c:764
+#: client/cgame/campaign/cp_auto_mission.c:759
 msgid "You've defeated the enemy, but did poorly, and many civialians were killed"
 msgstr ""
 
-#: client/cgame/campaign/cp_auto_mission.c:828
+#: client/cgame/campaign/cp_auto_mission.c:823
 #, fuzzy
 msgid "Collected alien bodies"
 msgstr "已收集外星人屍體"
@@ -14718,11 +14721,11 @@ msgid "No aircraft in this base - You first have to purchase or transfer an airc
 msgstr "基地里沒有航空機－你需要先購買或運送一架航空機\n"
 
 #: client/cgame/campaign/cp_base.c:2046 client/cgame/campaign/cp_base.c:2048
+#: client/cgame/campaign/cp_market_callbacks.c:512
+#: client/cgame/campaign/cp_market_callbacks.c:517
+#: client/cgame/campaign/cp_market_callbacks.c:522
+#: client/cgame/campaign/cp_market_callbacks.c:606
 #: client/cgame/campaign/cp_market_callbacks.c:608
-#: client/cgame/campaign/cp_market_callbacks.c:613
-#: client/cgame/campaign/cp_market_callbacks.c:618
-#: client/cgame/campaign/cp_market_callbacks.c:702
-#: client/cgame/campaign/cp_market_callbacks.c:704
 #: client/cgame/campaign/cp_save.c:390 client/cgame/cl_game_team.c:264
 #: client/cgame/cl_game_team.c:285
 msgid "Note"
@@ -15026,7 +15029,7 @@ msgstr "%s\t\t\t\t\t\t%d\t\t\t\t%1.2f%%\n"
 
 #: client/cgame/campaign/cp_base_callbacks.c:942
 #: client/cgame/campaign/cp_campaign.c:655
-#: client/cgame/campaign/cp_market_callbacks.c:306
+#: client/cgame/campaign/cp_market_callbacks.c:291
 #, c-format
 msgid "%i c"
 msgstr "%i c"
@@ -15178,18 +15181,18 @@ msgstr[1] "飛行員"
 msgid "Rank: %s"
 msgstr "軍階：%s"
 
-#: client/cgame/campaign/cp_employee.c:200
+#: client/cgame/campaign/cp_employee.c:195
 #, fuzzy
 msgid "Soldier"
 msgid_plural "Soldiers"
 msgstr[0] "士兵"
 msgstr[1] "士兵"
 
-#: client/cgame/campaign/cp_employee.c:397
+#: client/cgame/campaign/cp_employee.c:336
 msgid "Not enough quarters"
 msgstr "居住空間不足"
 
-#: client/cgame/campaign/cp_employee.c:397
+#: client/cgame/campaign/cp_employee.c:336
 msgid ""
 "You don't have enough quarters for your employees.\n"
 "Build more quarters."
@@ -15506,12 +15509,10 @@ msgid "Unknown weight"
 msgstr "未知重量"
 
 #: client/cgame/campaign/cp_market.c:163
-#: client/cgame/campaign/cp_market_callbacks.c:760
 msgid "Not enough storage space"
 msgstr "倉庫空間不足"
 
 #: client/cgame/campaign/cp_market.c:163
-#: client/cgame/campaign/cp_market_callbacks.c:760
 msgid ""
 "You cannot buy this item.\n"
 "Not enough space in storage.\n"
@@ -15521,7 +15522,7 @@ msgstr ""
 "倉庫空間已滿。\n"
 "要建造更多的倉庫。"
 
-#: client/cgame/campaign/cp_market_callbacks.c:608
+#: client/cgame/campaign/cp_market_callbacks.c:512
 #, fuzzy
 msgid ""
 "No command centre in this base.\n"
@@ -15530,7 +15531,7 @@ msgstr ""
 "電力供應不足。\n"
 "機庫無法運作。"
 
-#: client/cgame/campaign/cp_market_callbacks.c:613
+#: client/cgame/campaign/cp_market_callbacks.c:517
 msgid ""
 "No power supplies in this base.\n"
 "Hangars are not functional."
@@ -15538,11 +15539,11 @@ msgstr ""
 "電力供應不足。\n"
 "機庫無法運作。"
 
-#: client/cgame/campaign/cp_market_callbacks.c:618
+#: client/cgame/campaign/cp_market_callbacks.c:522
 msgid "Build a hangar first."
 msgstr "要先建造一個機庫。"
 
-#: client/cgame/campaign/cp_market_callbacks.c:631
+#: client/cgame/campaign/cp_market_callbacks.c:535
 msgid ""
 "You cannot buy this aircraft.\n"
 "Not enough space in hangars.\n"
@@ -15550,7 +15551,7 @@ msgstr ""
 "無法購買這架航空機。\n"
 "機庫空間不足。\n"
 
-#: client/cgame/campaign/cp_market_callbacks.c:636
+#: client/cgame/campaign/cp_market_callbacks.c:540
 msgid ""
 "You cannot buy this aircraft.\n"
 "Not enough credits.\n"
@@ -15558,11 +15559,11 @@ msgstr ""
 "無法購買這架航空機。\n"
 "資金不足。\n"
 
-#: client/cgame/campaign/cp_market_callbacks.c:702
+#: client/cgame/campaign/cp_market_callbacks.c:606
 msgid "You can't sell an aircraft if it still has a team assigned"
 msgstr "無法出售載有士兵隊伍的航空機。"
 
-#: client/cgame/campaign/cp_market_callbacks.c:704
+#: client/cgame/campaign/cp_market_callbacks.c:608
 msgid "You can't sell an aircraft that is not in base"
 msgstr "無法出售不在基地的航空機"
 
@@ -16029,38 +16030,38 @@ msgstr "%s 的生產線處於閒置中"
 msgid "Production queue empty"
 msgstr "生產線處於閒置中"
 
-#: client/cgame/campaign/cp_produce.c:501
-#: client/cgame/campaign/cp_produce.c:521
+#: client/cgame/campaign/cp_produce.c:504
+#: client/cgame/campaign/cp_produce.c:524
 #, fuzzy, c-format
 msgid "Not enough credits to finish production in %s."
 msgstr "%s 的生產線資金不足。\n"
 
-#: client/cgame/campaign/cp_produce.c:510
+#: client/cgame/campaign/cp_produce.c:513
 #, fuzzy, c-format
 msgid "Not enough free storage space in %s. Production postponed."
 msgstr "%s 的倉庫空間不足。生產延期。\n"
 
-#: client/cgame/campaign/cp_produce.c:530
+#: client/cgame/campaign/cp_produce.c:533
 #, fuzzy, c-format
 msgid "Not enough free hangar space in %s. Production postponed."
 msgstr "%s 的機庫空間不足。生產延期。\n"
 
-#: client/cgame/campaign/cp_produce.c:541
+#: client/cgame/campaign/cp_produce.c:544
 #, fuzzy, c-format
 msgid "Not enough free storage space in %s. Disassembling postponed."
 msgstr "%s 的倉庫空間不足。分解延期。\n"
 
-#: client/cgame/campaign/cp_produce.c:586
+#: client/cgame/campaign/cp_produce.c:589
 #, c-format
 msgid "The production of %s at %s has finished."
 msgstr "%s 已在 %s 生產完畢。"
 
-#: client/cgame/campaign/cp_produce.c:587
-#: client/cgame/campaign/cp_produce.c:611
+#: client/cgame/campaign/cp_produce.c:590
+#: client/cgame/campaign/cp_produce.c:614
 msgid "Production finished"
 msgstr "生產完畢"
 
-#: client/cgame/campaign/cp_produce.c:609
+#: client/cgame/campaign/cp_produce.c:612
 #, c-format
 msgid "The disassembling of %s at %s has finished."
 msgstr "%s 在 %s 的分解工序已完畢。"
@@ -16474,7 +16475,7 @@ msgstr ""
 "異星病毒感染數目上限：%i%%\n"
 "目前的異星病毒感染數：%i%%"
 
-#: client/cgame/campaign/cp_team.c:243
+#: client/cgame/campaign/cp_team.c:222
 #, c-format
 msgid "%i of %i"
 msgstr "%i / %i"
@@ -16729,127 +16730,127 @@ msgstr "士兵 %s %s"
 msgid "Pilot %s"
 msgstr "飛行員 %s"
 
-#: client/cgame/campaign/cp_transfer_callbacks.c:470
-#: client/cgame/campaign/cp_transfer_callbacks.c:644
+#: client/cgame/campaign/cp_transfer_callbacks.c:467
+#: client/cgame/campaign/cp_transfer_callbacks.c:638
 #, c-format
 msgid "Corpse of %s"
 msgstr "%s 的屍體"
 
-#: client/cgame/campaign/cp_transfer_callbacks.c:487
-#: client/cgame/campaign/cp_transfer_callbacks.c:678
+#: client/cgame/campaign/cp_transfer_callbacks.c:484
+#: client/cgame/campaign/cp_transfer_callbacks.c:672
 #, c-format
 msgid "Aircraft %s"
 msgstr "航空機 %s"
 
-#: client/cgame/campaign/cp_transfer_callbacks.c:555
+#: client/cgame/campaign/cp_transfer_callbacks.c:552
 msgid "Storage is empty."
 msgstr "倉庫空置中。"
 
-#: client/cgame/campaign/cp_transfer_callbacks.c:559
+#: client/cgame/campaign/cp_transfer_callbacks.c:556
 #, fuzzy
 msgid "Transfer is not possible - the base doesn't have a working Storage."
 msgstr "不能運送－這個基地沒有倉庫。"
 
-#: client/cgame/campaign/cp_transfer_callbacks.c:619
+#: client/cgame/campaign/cp_transfer_callbacks.c:613
 msgid "Living Quarters empty."
 msgstr "居住區空置中。"
 
-#: client/cgame/campaign/cp_transfer_callbacks.c:623
+#: client/cgame/campaign/cp_transfer_callbacks.c:617
 msgid "Transfer is not possible - the base doesn't have Living Quarters."
 msgstr "不能運送－這個基地沒有居住區。"
 
-#: client/cgame/campaign/cp_transfer_callbacks.c:651
+#: client/cgame/campaign/cp_transfer_callbacks.c:645
 #, c-format
 msgid "Alive %s"
 msgstr "活的 %s"
 
-#: client/cgame/campaign/cp_transfer_callbacks.c:657
+#: client/cgame/campaign/cp_transfer_callbacks.c:651
 msgid "Alien Containment is empty."
 msgstr "外星人收容所空置中。"
 
-#: client/cgame/campaign/cp_transfer_callbacks.c:661
+#: client/cgame/campaign/cp_transfer_callbacks.c:655
 msgid "Transfer is not possible - the base doesn't have an Alien Containment."
 msgstr "不能運送－這個基地沒有外星人收容所。"
 
-#: client/cgame/campaign/cp_transfer_callbacks.c:664
+#: client/cgame/campaign/cp_transfer_callbacks.c:658
 msgid "Transfer is not possible - the base does not have power supplies."
 msgstr "不能運送－這個基地沒有電力供應。"
 
-#: client/cgame/campaign/cp_transfer_callbacks.c:684
+#: client/cgame/campaign/cp_transfer_callbacks.c:678
 msgid "No aircraft available for transfer."
 msgstr "沒有可以運送的航空機。"
 
-#: client/cgame/campaign/cp_transfer_callbacks.c:688
+#: client/cgame/campaign/cp_transfer_callbacks.c:682
 msgid "Transfer is not possible - the base doesn't have a functional hangar."
 msgstr "不能運送－這個基地沒有運作中的機庫。"
 
-#: client/cgame/campaign/cp_transfer_callbacks.c:1045
+#: client/cgame/campaign/cp_transfer_callbacks.c:1036
 msgid "No target base selected"
 msgstr "未選擇目的基地"
 
-#: client/cgame/campaign/cp_transfer_callbacks.c:1045
+#: client/cgame/campaign/cp_transfer_callbacks.c:1036
 msgid "Please select the target base from the list"
 msgstr "請從列表中選擇目的基地"
 
-#: client/cgame/campaign/cp_transfer_callbacks.c:1083
+#: client/cgame/campaign/cp_transfer_callbacks.c:1074
 msgid "You can transfer equipment - this base has a Storage.\n"
 msgstr "您可以運送物品－這個基地有倉庫。\n"
 
-#: client/cgame/campaign/cp_transfer_callbacks.c:1086
+#: client/cgame/campaign/cp_transfer_callbacks.c:1077
 msgid "No Storage in this base.\n"
 msgstr "這個基地沒有倉庫。\n"
 
-#: client/cgame/campaign/cp_transfer_callbacks.c:1090
+#: client/cgame/campaign/cp_transfer_callbacks.c:1081
 msgid "You can transfer employees - this base has Living Quarters.\n"
 msgstr "你可以運送員工－這個基地有居住區。\n"
 
-#: client/cgame/campaign/cp_transfer_callbacks.c:1092
+#: client/cgame/campaign/cp_transfer_callbacks.c:1083
 msgid "No Living Quarters in this base.\n"
 msgstr "這個基地沒有居住區。\n"
 
-#: client/cgame/campaign/cp_transfer_callbacks.c:1096
+#: client/cgame/campaign/cp_transfer_callbacks.c:1087
 msgid "You can transfer Aliens - this base has an Alien Containment.\n"
 msgstr "你可以運送外星人－這個基地有外星人收容所。\n"
 
-#: client/cgame/campaign/cp_transfer_callbacks.c:1098
+#: client/cgame/campaign/cp_transfer_callbacks.c:1089
 msgid "No Alien Containment in this base.\n"
 msgstr "這個基地沒有外星人收容所。\n"
 
-#: client/cgame/campaign/cp_transfer_callbacks.c:1102
+#: client/cgame/campaign/cp_transfer_callbacks.c:1093
 msgid "You can transfer antimatter - this base has an Antimatter Storage.\n"
 msgstr "你可以運送反物質－這個基地有反物質倉庫。\n"
 
-#: client/cgame/campaign/cp_transfer_callbacks.c:1104
+#: client/cgame/campaign/cp_transfer_callbacks.c:1095
 msgid "No Antimatter Storage in this base.\n"
 msgstr "這個基地沒有反物質倉庫。\n"
 
-#: client/cgame/campaign/cp_transfer_callbacks.c:1108
+#: client/cgame/campaign/cp_transfer_callbacks.c:1099
 msgid "You can transfer aircraft - this base has a Hangar.\n"
 msgstr "你可以運送航空機－這個基地有機庫。\n"
 
-#: client/cgame/campaign/cp_transfer_callbacks.c:1110
+#: client/cgame/campaign/cp_transfer_callbacks.c:1101
 msgid "Aircraft transfer not possible - this base does not have a Command Centre.\n"
 msgstr "不能運送航空機－這個基地沒有司令部。\n"
 
-#: client/cgame/campaign/cp_transfer_callbacks.c:1112
+#: client/cgame/campaign/cp_transfer_callbacks.c:1103
 msgid "No Hangar in this base.\n"
 msgstr "這個基地沒有機庫。\n"
 
-#: client/cgame/campaign/cp_transfer_callbacks.c:1116
+#: client/cgame/campaign/cp_transfer_callbacks.c:1107
 msgid "No power supplies in this base.\n"
 msgstr "這基地沒有電力供應。\n"
 
-#: client/cgame/campaign/cp_transfer_callbacks.c:1528
+#: client/cgame/campaign/cp_transfer_callbacks.c:1516
 #, fuzzy
 msgid "Employee"
 msgstr "員工"
 
-#: client/cgame/campaign/cp_transfer_callbacks.c:1548
+#: client/cgame/campaign/cp_transfer_callbacks.c:1532
 #, fuzzy
 msgid "alive"
 msgstr "外星人"
 
-#: client/cgame/campaign/cp_transfer_callbacks.c:1552
+#: client/cgame/campaign/cp_transfer_callbacks.c:1536
 #, fuzzy
 msgid "dead"
 msgstr "死的："
@@ -17530,94 +17531,114 @@ msgstr "下載中 [%s]"
 msgid "Loading Map [%s]"
 msgstr "讀取地圖 [%s]"
 
-#: client/input/cl_input.c:961
+#: client/input/cl_input.c:1001
 msgid "Rotate battlescape camera anti-clockwise"
 msgstr "逆時針旋轉戰鬥視角"
 
-#: client/input/cl_input.c:963
+#: client/input/cl_input.c:1003
 msgid "Rotate battlescape camera clockwise"
 msgstr "順時針旋轉戰鬥視角"
 
-#: client/input/cl_input.c:965
+#: client/input/cl_input.c:1005
 msgid "Tilt battlescape camera up"
 msgstr "調高戰鬥視角"
 
-#: client/input/cl_input.c:967
+#: client/input/cl_input.c:1007
 msgid "Tilt battlescape camera down"
 msgstr "降低戰鬥視角"
 
-#: client/input/cl_input.c:969
+#: client/input/cl_input.c:1009
 #, fuzzy
 msgid "Move battlescape camera"
 msgstr "左移戰鬥視角"
 
-#: client/input/cl_input.c:971
+#: client/input/cl_input.c:1011
 msgid "Move battlescape camera left"
 msgstr "左移戰鬥視角"
 
-#: client/input/cl_input.c:973
+#: client/input/cl_input.c:1013
+#, fuzzy
+msgid "Move battlescape camera top left"
+msgstr "左移戰鬥視角"
+
+#: client/input/cl_input.c:1015
+#, fuzzy
+msgid "Move battlescape camera bottom left"
+msgstr "左移戰鬥視角"
+
+#: client/input/cl_input.c:1017
 msgid "Move battlescape camera right"
 msgstr "右移戰鬥視角"
 
-#: client/input/cl_input.c:975
+#: client/input/cl_input.c:1019
+#, fuzzy
+msgid "Move battlescape camera top right"
+msgstr "右移戰鬥視角"
+
+#: client/input/cl_input.c:1021
+#, fuzzy
+msgid "Move battlescape camera bottom right"
+msgstr "右移戰鬥視角"
+
+#: client/input/cl_input.c:1023
 msgid "Move battlescape camera forward"
 msgstr "前移戰鬥視角"
 
-#: client/input/cl_input.c:977
+#: client/input/cl_input.c:1025
 msgid "Move battlescape camera backward"
 msgstr "後移戰鬥視角"
 
-#: client/input/cl_input.c:979 client/input/cl_input.c:1003
+#: client/input/cl_input.c:1027 client/input/cl_input.c:1051
 msgid "Zoom in"
 msgstr "放大"
 
-#: client/input/cl_input.c:981 client/input/cl_input.c:1004
+#: client/input/cl_input.c:1029 client/input/cl_input.c:1052
 msgid "Zoom out"
 msgstr "縮小"
 
-#: client/input/cl_input.c:984
+#: client/input/cl_input.c:1032
 msgid "Left mouse button click (menu)"
 msgstr "鼠標左鍵點擊（選單）"
 
-#: client/input/cl_input.c:986
+#: client/input/cl_input.c:1034
 msgid "Middle mouse button click (menu)"
 msgstr "鼠標中鍵點擊（選單）"
 
-#: client/input/cl_input.c:988
+#: client/input/cl_input.c:1036
 msgid "Right mouse button click (menu)"
 msgstr "鼠標右鍵點擊（選單）"
 
-#: client/input/cl_input.c:990
+#: client/input/cl_input.c:1038
 msgid "Mouse wheel up"
 msgstr ""
 
-#: client/input/cl_input.c:991
+#: client/input/cl_input.c:1039
 #, fuzzy
 msgid "Mouse wheel down"
 msgstr "關閉窗口"
 
-#: client/input/cl_input.c:992
+#: client/input/cl_input.c:1040
 msgid "Select objects/Walk to a square/In fire mode, fire etc"
 msgstr "選擇目標，移動目標或射擊等等"
 
-#: client/input/cl_input.c:994
+#: client/input/cl_input.c:1042
 #, fuzzy
 msgid "Rotate Battlescape/In fire mode, cancel action"
 msgstr "移動到指定地點或取消射擊模式"
 
-#: client/input/cl_input.c:996
+#: client/input/cl_input.c:1044
 msgid "Turn soldier toward mouse pointer"
 msgstr "使士兵面向鼠標方向"
 
-#: client/input/cl_input.c:998
+#: client/input/cl_input.c:1046
 msgid "Toggles the hud radar mode"
 msgstr "切換至雷達模式"
 
-#: client/input/cl_input.c:1001
+#: client/input/cl_input.c:1049
 msgid "Slice through terrain at a higher level"
 msgstr "調整視角高度到上一層"
 
-#: client/input/cl_input.c:1002
+#: client/input/cl_input.c:1050
 msgid "Slice through terrain at a lower level"
 msgstr "調整視角高度到下一層"
 
