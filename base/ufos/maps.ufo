@@ -3983,7 +3983,7 @@ mapdef lake_ice
 
 	aircraft
 	{
-		craft_drop_firebird
+		// any
 	}
 
 	ufos
