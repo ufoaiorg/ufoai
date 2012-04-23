@@ -4219,11 +4219,12 @@ mapdef oriental
 		coop4
 	}
 	maxaliens		14
+		// randomspawn enabled
 	civilianteam	middle
 
 	aircraft
 	{
-		craft_drop_firebird
+		// any
 	}
 
 	ufos
