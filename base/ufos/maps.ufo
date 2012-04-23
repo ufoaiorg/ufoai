@@ -4017,6 +4017,7 @@ mapdef lake_ice_big
 	teams			3
 	description		"_A small settlement in winter."
 	maxaliens		28
+		// randomspawn enabled
 	gametypes {
 		1on1
 		1on1on1
@@ -4031,7 +4032,7 @@ mapdef lake_ice_big
 
 	aircraft
 	{
-		craft_drop_firebird
+		// any
 	}
 
 	ufos
