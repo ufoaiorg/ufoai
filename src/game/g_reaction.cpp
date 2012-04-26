@@ -91,17 +91,36 @@ static void G_ReactionFireTargetsReset (void)
 }
 
 /**
+ * @brief Find the given edict's table of reaction fire targets.
+ * @param[in] shooter The reaction firing actor
+ */
+static ReactionFireTargetList* G_ReactionFireTargetsFind (const edict_t *shooter)
+{
+	int i;
+	ReactionFireTargetList *rfts = NULL;
+
+	for (i = 0; i < MAX_RF_DATA; i++) {
+		if (rfData[i].entnum == shooter->number) {
+			rfts = &rfData[i];
+			break;
+		}
+	}
+	return rfts;
+}
+
+
+/**
  * @brief Create a table of reaction fire targets for the given edict.
  * @param[in] shooter The reaction firing actor
  */
 void G_ReactionFireTargetsCreate (const edict_t *shooter)
 {
 	int i;
+	ReactionFireTargetList *rfts = G_ReactionFireTargetsFind(shooter);
 
-	for (i = 0; i < MAX_RF_DATA; i++) {
-		if (rfData[i].entnum == shooter->number)
-			gi.Error("Entity already has rfData");
-	}
+	if (rfts)
+		gi.Error("Entity already has rfData");
+
 	for (i = 0; i < MAX_RF_DATA; i++) {
 		if (rfData[i].entnum == -1) {
 			rfData[i].entnum = shooter->number;
@@ -123,12 +142,7 @@ void G_ReactionFireTargetsCreate (const edict_t *shooter)
 static void G_ReactionFireTargetsAdd (const edict_t *shooter, const edict_t *target, const int tusForShot)
 {
 	int i;
-	ReactionFireTargetList *rfts = NULL;
-
-	for (i = 0; i < MAX_RF_DATA; i++) {
-		if (rfData[i].entnum == shooter->number)
-			rfts = &rfData[i];
-	}
+	ReactionFireTargetList *rfts = G_ReactionFireTargetsFind(shooter);
 
 	assert(rfts);
 	assert(target);
@@ -151,12 +165,7 @@ static void G_ReactionFireTargetsAdd (const edict_t *shooter, const edict_t *tar
 static void G_ReactionFireTargetsRemove (edict_t *shooter, const edict_t *target)
 {
 	int i;
-	ReactionFireTargetList *rfts = NULL;
-
-	for (i = 0; i < MAX_RF_DATA; i++) {
-		if (rfData[i].entnum == shooter->number)
-			rfts = &rfData[i];
-	}
+	ReactionFireTargetList *rfts = G_ReactionFireTargetsFind(shooter);
 
 	assert(rfts);
 	assert(target);
@@ -181,14 +190,7 @@ static void G_ReactionFireTargetsRemove (edict_t *shooter, const edict_t *target
 static qboolean G_ReactionFireTargetsExpired (const edict_t *shooter, const edict_t *target, const int tusTarget)
 {
 	int i;
-	ReactionFireTargetList *rfts = NULL;
-
-	for (i = 0; i < MAX_RF_DATA; i++) {
-		if (rfData[i].entnum == shooter->number) {
-			rfts = &rfData[i];
-			break;
-		}
-	}
+	ReactionFireTargetList *rfts = G_ReactionFireTargetsFind(shooter);
 
 	if (!rfts)
 		return qfalse;	/* the shooter doesn't aim at anything */
@@ -213,14 +215,7 @@ static qboolean G_ReactionFireTargetsExpired (const edict_t *shooter, const edic
 static void G_ReactionFireTargetsAdvance (const edict_t *shooter, const edict_t *target, const int tusShot)
 {
 	int i;
-	ReactionFireTargetList *rfts = NULL;
-
-	for (i = 0; i < MAX_RF_DATA; i++) {
-		if (rfData[i].entnum == shooter->number) {
-			rfts = &rfData[i];
-			break;
-		}
-	}
+	ReactionFireTargetList *rfts = G_ReactionFireTargetsFind(shooter);
 
 	assert(rfts);
 	assert(target);
