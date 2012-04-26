@@ -57,6 +57,11 @@ public:
 	int entnum;
 	int count;
 	ReactionFireTarget targets[MAX_RF_TARGETS];
+
+	inline void Init(void) {entnum = -1; count = 0;}
+	inline void Reset(void) {count = 0;}
+
+protected:
 };
 
 static ReactionFireTargetList rfData[MAX_RF_DATA];
@@ -69,8 +74,7 @@ void G_ReactionFireTargetsInit (void)
 	int i;
 
 	for (i = 0; i < MAX_RF_DATA; i++) {
-		rfData[i].entnum = -1;
-		rfData[i].count = 0;
+		rfData[i].Init();
 	}
 }
 
@@ -82,7 +86,7 @@ static void G_ReactionFireTargetsReset (void)
 	int i;
 
 	for (i = 0; i < MAX_RF_DATA; i++) {
-		rfData[i].count = 0;
+		rfData[i].Reset();
 	}
 }
 
