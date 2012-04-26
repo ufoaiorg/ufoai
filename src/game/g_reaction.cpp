@@ -51,14 +51,15 @@ public:
 	int triggerTUs;		/* the amount of TUS of the target(!) at which the reaction takes place */
 };
 
-typedef struct reactionFireTargets
+class ReactionFireTargetList
 {
+public:
 	int entnum;
 	int count;
 	ReactionFireTarget targets[MAX_RF_TARGETS];
-} reactionFireTargets_t;
+};
 
-static reactionFireTargets_t rfData[MAX_RF_DATA];
+static ReactionFireTargetList rfData[MAX_RF_DATA];
 
 /**
  * @brief Initialize the reaction fire table for all entities.
@@ -118,7 +119,7 @@ void G_ReactionFireTargetsCreate (const edict_t *shooter)
 static void G_ReactionFireTargetsAdd (const edict_t *shooter, const edict_t *target, const int tusForShot)
 {
 	int i;
-	reactionFireTargets_t *rfts = NULL;
+	ReactionFireTargetList *rfts = NULL;
 
 	for (i = 0; i < MAX_RF_DATA; i++) {
 		if (rfData[i].entnum == shooter->number)
@@ -146,7 +147,7 @@ static void G_ReactionFireTargetsAdd (const edict_t *shooter, const edict_t *tar
 static void G_ReactionFireTargetsRemove (edict_t *shooter, const edict_t *target)
 {
 	int i;
-	reactionFireTargets_t *rfts = NULL;
+	ReactionFireTargetList *rfts = NULL;
 
 	for (i = 0; i < MAX_RF_DATA; i++) {
 		if (rfData[i].entnum == shooter->number)
@@ -176,7 +177,7 @@ static void G_ReactionFireTargetsRemove (edict_t *shooter, const edict_t *target
 static qboolean G_ReactionFireTargetsExpired (const edict_t *shooter, const edict_t *target, const int tusTarget)
 {
 	int i;
-	reactionFireTargets_t *rfts = NULL;
+	ReactionFireTargetList *rfts = NULL;
 
 	for (i = 0; i < MAX_RF_DATA; i++) {
 		if (rfData[i].entnum == shooter->number) {
@@ -208,7 +209,7 @@ static qboolean G_ReactionFireTargetsExpired (const edict_t *shooter, const edic
 static void G_ReactionFireTargetsAdvance (const edict_t *shooter, const edict_t *target, const int tusShot)
 {
 	int i;
-	reactionFireTargets_t *rfts = NULL;
+	ReactionFireTargetList *rfts = NULL;
 
 	for (i = 0; i < MAX_RF_DATA; i++) {
 		if (rfData[i].entnum == shooter->number) {
