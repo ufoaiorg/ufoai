@@ -726,9 +726,6 @@ static void IN_TranslateKey (const SDL_keysym *keysym, unsigned int *ascii, unsi
 	case SDLK_KP0:
 		*ascii = K_KP_INS;
 		break;
-	case SDLK_KP_MULTIPLY:
-		*ascii = '*';
-		break;
 	case SDLK_KP_PLUS:
 		*ascii = K_KP_PLUS;
 		break;
@@ -737,6 +734,9 @@ static void IN_TranslateKey (const SDL_keysym *keysym, unsigned int *ascii, unsi
 		break;
 	case SDLK_KP_DIVIDE:
 		*ascii = K_KP_SLASH;
+		break;
+	case SDLK_KP_MULTIPLY:
+		*ascii = K_KP_MULTIPLY;
 		break;
 	case SDLK_MODE:
 		*ascii = K_MODE;

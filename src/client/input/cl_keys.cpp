@@ -145,6 +145,7 @@ static const keyName_t keyNames[] = {
 	M(KP_INS),
 	M(KP_DEL),
 	M(KP_SLASH),
+	M(KP_MULTIPLY),
 	M(KP_MINUS),
 	M(KP_PLUS),
 
@@ -376,6 +377,9 @@ static void Key_Console (int key, int unicode)
 	}
 
 	switch (key) {
+	case K_KP_MULTIPLY:
+		key = '*';
+		break;
 	case K_KP_SLASH:
 		key = '/';
 		break;
