@@ -27,8 +27,7 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #include "../ui_parse.h"
 #include "../ui_behaviour.h"
 #include "../ui_actions.h"
-#include "ui_node_abstractnode.h"
-#include "ui_node_map.h"
+#include "ui_node_geoscape.h"
 
 #include "../../client.h"
 #include "../../cgame/campaign/cp_campaign.h"
@@ -79,7 +78,7 @@ static int oldMousePosY = 0;
  */
 static mapDragMode_t mode = MODE_NULL;
 
-void uiMapNode::draw (uiNode_t *node)
+void uiGeoscapeNode::draw (uiNode_t *node)
 {
 	if (CP_IsRunning()) {
 		vec2_t screenPos;
@@ -92,7 +91,7 @@ void uiMapNode::draw (uiNode_t *node)
 	}
 }
 
-void uiMapNode::onCapturedMouseMove (uiNode_t *node, int x, int y)
+void uiGeoscapeNode::onCapturedMouseMove (uiNode_t *node, int x, int y)
 {
 	switch (mode) {
 	case MODE_SHIFT2DMAP:
@@ -156,7 +155,7 @@ void uiMapNode::onCapturedMouseMove (uiNode_t *node, int x, int y)
 	oldMousePosY = y;
 }
 
-void uiMapNode::startMouseShifting (uiNode_t *node, int x, int y)
+void uiGeoscapeNode::startMouseShifting (uiNode_t *node, int x, int y)
 {
 	UI_SetMouseCapture(node);
 	if (!cl_3dmap->integer)
@@ -168,14 +167,14 @@ void uiMapNode::startMouseShifting (uiNode_t *node, int x, int y)
 	oldMousePosY = y;
 }
 
-void uiMapNode::onLeftClick(uiNode_t* node, int x, int y)
+void uiGeoscapeNode::onLeftClick(uiNode_t* node, int x, int y)
 {
 	if (mode != MODE_NULL)
 		return;
 	MAP_MapClick(node, x, y);
 }
 
-bool uiMapNode::onStartDragging(uiNode_t* node, int startX, int startY, int x, int y, int button)
+bool uiGeoscapeNode::onStartDragging(uiNode_t* node, int startX, int startY, int x, int y, int button)
 {
 	switch (button) {
 	case K_MOUSE1:
@@ -192,7 +191,7 @@ bool uiMapNode::onStartDragging(uiNode_t* node, int startX, int startY, int x, i
 	return false;
 }
 
-void uiMapNode::onMouseUp (uiNode_t *node, int x, int y, int button)
+void uiGeoscapeNode::onMouseUp (uiNode_t *node, int x, int y, int button)
 {
 	if (mode != MODE_NULL) {
 		UI_MouseRelease();
@@ -204,7 +203,7 @@ void uiMapNode::onMouseUp (uiNode_t *node, int x, int y, int button)
  * @brief Called when the node have lost the captured node
  * We clean cached data
  */
-void uiMapNode::onCapturedMouseLost (uiNode_t *node)
+void uiGeoscapeNode::onCapturedMouseLost (uiNode_t *node)
 {
 	mode = MODE_NULL;
 }
@@ -213,7 +212,7 @@ void uiMapNode::onCapturedMouseLost (uiNode_t *node)
  * Zoom on the node
  * @todo it shound use an int param for smooth zoom
  */
-void uiMapNode::zoom (uiNode_t *node, bool out)
+void uiGeoscapeNode::zoom (uiNode_t *node, bool out)
 {
 	ccs.zoom *= pow(0.995, (out ? 10: -10));
 	if (ccs.zoom < cl_mapzoommin->value)
@@ -230,7 +229,7 @@ void uiMapNode::zoom (uiNode_t *node, bool out)
 	MAP_StopSmoothMovement();
 }
 
-bool uiMapNode::onScroll (uiNode_t *node, int deltaX, int deltaY)
+bool uiGeoscapeNode::onScroll (uiNode_t *node, int deltaX, int deltaY)
 {
 	bool down = deltaY > 0;
 	if (deltaY == 0)
@@ -239,36 +238,36 @@ bool uiMapNode::onScroll (uiNode_t *node, int deltaX, int deltaY)
 	return true;
 }
 
-static void UI_MapNodeZoomIn (uiNode_t *node, const uiCallContext_t *context)
-{
-	uiMapNode* m = static_cast<uiMapNode*>(node->behaviour->manager);
-	m->zoom(node, false);
-}
-
-static void UI_MapNodeZoomOut (uiNode_t *node, const uiCallContext_t *context)
-{
-	uiMapNode* m = static_cast<uiMapNode*>(node->behaviour->manager);
-	m->zoom(node, true);
-}
-
 /**
  * @brief Called before loading. Used to set default attribute values
  */
-void uiMapNode::onLoading (uiNode_t *node)
+void uiGeoscapeNode::onLoading (uiNode_t *node)
 {
 	Vector4Set(node->color, 1, 1, 1, 1);
 }
 
-void UI_RegisterMapNode (uiBehaviour_t *behaviour)
+static void UI_GeoscapeNodeZoomIn (uiNode_t *node, const uiCallContext_t *context)
 {
-	behaviour->name = "map";
-	behaviour->manager = new uiMapNode();
+	uiGeoscapeNode* m = static_cast<uiGeoscapeNode*>(node->behaviour->manager);
+	m->zoom(node, false);
+}
+
+static void UI_GeoscapeNodeZoomOut (uiNode_t *node, const uiCallContext_t *context)
+{
+	uiGeoscapeNode* m = static_cast<uiGeoscapeNode*>(node->behaviour->manager);
+	m->zoom(node, true);
+}
+
+void UI_RegisterGeoscapeNode (uiBehaviour_t *behaviour)
+{
+	behaviour->name = "geoscape";
+	behaviour->manager = new uiGeoscapeNode();
 	behaviour->extraDataSize = sizeof(EXTRADATA_TYPE);
 
 	/* Use a right padding. */
 	UI_RegisterExtradataNodeProperty(behaviour, "padding-right", V_FLOAT, EXTRADATA_TYPE, paddingRight);
 	/* Call it to zoom out of the map */
-	UI_RegisterNodeMethod(behaviour, "zoomin", UI_MapNodeZoomIn);
+	UI_RegisterNodeMethod(behaviour, "zoomin", UI_GeoscapeNodeZoomIn);
 	/* Call it to zoom into the map */
-	UI_RegisterNodeMethod(behaviour, "zoomout", UI_MapNodeZoomOut);
+	UI_RegisterNodeMethod(behaviour, "zoomout", UI_GeoscapeNodeZoomOut);
 }

@@ -153,11 +153,11 @@ $(TARGET)_SRCS      = \
 	client/ui/node/ui_node_data.cpp \
 	client/ui/node/ui_node_editor.cpp \
 	client/ui/node/ui_node_ekg.cpp \
+	client/ui/node/ui_node_geoscape.cpp \
 	client/ui/node/ui_node_image.cpp \
 	client/ui/node/ui_node_item.cpp \
 	client/ui/node/ui_node_keybinding.cpp \
 	client/ui/node/ui_node_linechart.cpp \
-	client/ui/node/ui_node_map.cpp \
 	client/ui/node/ui_node_material_editor.cpp \
 	client/ui/node/ui_node_model.cpp \
 	client/ui/node/ui_node_messagelist.cpp \

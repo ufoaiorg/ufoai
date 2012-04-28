@@ -321,7 +321,7 @@
 		<Unit filename="..\..\src\client\ui\node\ui_node_item.cpp" />
 		<Unit filename="..\..\src\client\ui\node\ui_node_keybinding.cpp" />
 		<Unit filename="..\..\src\client\ui\node\ui_node_linechart.cpp" />
-		<Unit filename="..\..\src\client\ui\node\ui_node_map.cpp" />
+		<Unit filename="..\..\src\client\ui\node\ui_node_geoscape.cpp" />
 		<Unit filename="..\..\src\client\ui\node\ui_node_material_editor.cpp" />
 		<Unit filename="..\..\src\client\ui\node\ui_node_messagelist.cpp" />
 		<Unit filename="..\..\src\client\ui\node\ui_node_model.cpp" />

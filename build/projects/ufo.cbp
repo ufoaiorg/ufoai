@@ -599,8 +599,8 @@
 		<Unit filename="..\..\src\client\ui\node\ui_node_keybinding.h" />
 		<Unit filename="..\..\src\client\ui\node\ui_node_linechart.cpp" />
 		<Unit filename="..\..\src\client\ui\node\ui_node_linechart.h" />
-		<Unit filename="..\..\src\client\ui\node\ui_node_map.cpp" />
-		<Unit filename="..\..\src\client\ui\node\ui_node_map.h" />
+		<Unit filename="..\..\src\client\ui\node\ui_node_geoscape.cpp" />
+		<Unit filename="..\..\src\client\ui\node\ui_node_geoscape.h" />
 		<Unit filename="..\..\src\client\ui\node\ui_node_material_editor.cpp" />
 		<Unit filename="..\..\src\client\ui\node\ui_node_material_editor.h" />
 		<Unit filename="..\..\src\client\ui\node\ui_node_messagelist.cpp" />

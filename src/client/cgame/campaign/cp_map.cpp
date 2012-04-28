@@ -31,7 +31,7 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #include "../../ui/ui_font.h" /* UI_GetFontFromNode */
 #include "../../ui/ui_render.h" /* UI_DrawString */
 #include "../../ui/node/ui_node_abstractnode.h" /* UI_GetNodeAbsPos */
-#include "../../ui/node/ui_node_map.h" /* paddingRight */
+#include "../../ui/node/ui_node_geoscape.h" /* paddingRight */
 #include "cp_overlay.h"
 #include "cp_campaign.h"
 #include "cp_popup.h"

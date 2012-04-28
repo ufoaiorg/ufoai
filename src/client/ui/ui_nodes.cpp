@@ -40,16 +40,15 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #include "node/ui_node_button.h"
 #include "node/ui_node_checkbox.h"
 #include "node/ui_node_controls.h"
-#include "node/ui_node_video.h"
 #include "node/ui_node_container.h"
 #include "node/ui_node_custombutton.h"
 #include "node/ui_node_data.h"
 #include "node/ui_node_editor.h"
 #include "node/ui_node_ekg.h"
+#include "node/ui_node_geoscape.h"
 #include "node/ui_node_image.h"
 #include "node/ui_node_item.h"
 #include "node/ui_node_linechart.h"
-#include "node/ui_node_map.h"
 #include "node/ui_node_material_editor.h"
 #include "node/ui_node_messagelist.h"
 #include "node/ui_node_model.h"
@@ -75,6 +74,7 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #include "node/ui_node_texture.h"
 #include "node/ui_node_keybinding.h"
 #include "node/ui_node_todo.h"
+#include "node/ui_node_video.h"
 #include "node/ui_node_vscrollbar.h"
 #include "node/ui_node_zone.h"
 
@@ -108,11 +108,11 @@ static const registerFunction_t registerFunctions[] = {
 	UI_RegisterEditorNode,
 	UI_RegisterEKGNode,
 	UI_RegisterFuncNode,
+	UI_RegisterGeoscapeNode,
 	UI_RegisterImageNode,
 	UI_RegisterItemNode,
 	UI_RegisterKeyBindingNode,
 	UI_RegisterLineChartNode,
-	UI_RegisterMapNode,
 	UI_RegisterMaterialEditorNode,
 	UI_RegisterMessageListNode,
 	UI_RegisterModelNode,

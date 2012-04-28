@@ -26,8 +26,9 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #define CLIENT_UI_UI_NODE_MAP_H
 
 #include "../ui_nodes.h"
+#include "ui_node_abstractnode.h"
 
-class uiMapNode : public uiLocatedNode {
+class uiGeoscapeNode : public uiLocatedNode {
 public:
 	void draw(uiNode_t* node) OVERRIDE;
 	void onMouseUp(uiNode_t* node, int x, int y, int button) OVERRIDE;
@@ -49,6 +50,6 @@ typedef struct mapExtraData_s {
 	float paddingRight;
 } mapExtraData_t;
 
-void UI_RegisterMapNode(struct uiBehaviour_s *behaviour);
+void UI_RegisterGeoscapeNode(struct uiBehaviour_s *behaviour);
 
 #endif
