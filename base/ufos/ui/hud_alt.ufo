@@ -1555,7 +1555,7 @@ window hud_alt extends hud
 	}
 
 	confunc hudselect {
-		*node:root.floor.bar_selbox@left = ( *node:root.floor.bar_teambox<1>@left - 7 )
+		*node:root.floor.bar_selbox@left = ( *node:root.floor.bar_teambox<1>@left )
 	}
 
 	// CROUCH/STAND UP BUTTON
