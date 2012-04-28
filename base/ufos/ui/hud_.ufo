@@ -41,7 +41,7 @@ component image cmp_bar_teambox
 
 component string cmp_str_soldier_shadow
 {
-	size		"20 20"
+	size		"24 20"
 	color		"0 0 0 1"
 	ghost		true
 	font		"f_verysmall"
@@ -49,7 +49,7 @@ component string cmp_str_soldier_shadow
 }
 component string cmp_str_soldier
 {
-	size		"20 20"
+	size		"24 20"
 	color		"0 .6 0 1"
 	ghost		true
 	font		"f_verysmall"
