@@ -499,7 +499,7 @@ window skirmish
 		*cvar:mn_svmapid = "none"
 		cmd "mn_requestmaplist sk_maplist_listener;"
 		call *node:root.sk_update_config_navigation
-		cmd "game_teamcomments;define cl_teamdef phalanx;sk_initequip cl_equip;sk_initequip ai_equipment;"
+		cmd "game_teamcomments;sk_initequip cl_equip;sk_initequip ai_equipment;"
 		cmd "define g_endlessaliens 0;"
 	}
 }
