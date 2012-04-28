@@ -64,7 +64,7 @@ typedef enum {
 	K_KP_PGUP = 265,
 	K_KP_DEL = 266,
 	K_KP_SLASH = 267,
-	K_KP_MULTIPLY = 42,
+	K_KP_MULTIPLY = 268,
 	K_KP_MINUS = 269,
 	K_KP_PLUS = 270,
 	K_KP_ENTER = 271,
