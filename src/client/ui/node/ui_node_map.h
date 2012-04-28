@@ -28,6 +28,7 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #include "../ui_nodes.h"
 
 class uiMapNode : public uiLocatedNode {
+public:
 	void draw(uiNode_t* node) OVERRIDE;
 	void onMouseUp(uiNode_t* node, int x, int y, int button) OVERRIDE;
 	void onCapturedMouseMove(uiNode_t* node, int x, int y) OVERRIDE;
@@ -36,6 +37,8 @@ class uiMapNode : public uiLocatedNode {
 	bool onScroll(uiNode_t* node, int deltaX, int deltaY) OVERRIDE;
 	void onLeftClick(uiNode_t* node, int x, int y) OVERRIDE;
 	bool onStartDragging(uiNode_t* node, int startX, int startY, int currentX, int currentY, int button) OVERRIDE;
+	void zoom(uiNode_t *node, bool out);
+	void startMouseShifting(uiNode_t *node, int x, int y);
 };
 
 #define UI_MAPEXTRADATA_TYPE mapExtraData_t

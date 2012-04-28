@@ -39,6 +39,46 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #define EXTRADATA(node) UI_EXTRADATA(node, EXTRADATA_TYPE)
 #define EXTRADATACONST(node) UI_EXTRADATACONST(node, EXTRADATA_TYPE)
 
+/**
+ * Status of the node
+ */
+enum mapDragMode_t {
+	/**
+	 * No interaction
+	 */
+	MODE_NULL,
+	/**
+	 * Mouse captured to move the 2D geoscape
+	 */
+	MODE_SHIFT2DMAP,
+	/**
+	 * Mouse captured to move the 3D geoscape
+	 */
+	MODE_SHIFT3DMAP,
+	/**
+	 * Mouse captured to zoom on the geoscape
+	 */
+	MODE_ZOOMMAP
+};
+
+/**
+ * Old X-location of the mouse, when the node is captured.
+ * It is related to a captured node (only one at a time), that why it is global.
+ */
+static int oldMousePosX = 0;
+
+/**
+ * Old y-location of the mouse, when the node is captured.
+ * It is related to a captured node (only one at a time), that why it is global.
+ */
+static int oldMousePosY = 0;
+
+/**
+ * Status of the node.
+ * It is related to a captured node (only one at a time), that why it is global.
+ */
+static mapDragMode_t mode = MODE_NULL;
+
 void uiMapNode::draw (uiNode_t *node)
 {
 	if (CP_IsRunning()) {
@@ -51,17 +91,6 @@ void uiMapNode::draw (uiNode_t *node)
 		R_PopClipRect();
 	}
 }
-
-typedef enum {
-	MODE_NULL,
-	MODE_SHIFT2DMAP,
-	MODE_SHIFT3DMAP,
-	MODE_ZOOMMAP
-} mapDragMode_t;
-
-static int oldMousePosX = 0;
-static int oldMousePosY = 0;
-static mapDragMode_t mode = MODE_NULL;
 
 void uiMapNode::onCapturedMouseMove (uiNode_t *node, int x, int y)
 {
@@ -127,7 +156,7 @@ void uiMapNode::onCapturedMouseMove (uiNode_t *node, int x, int y)
 	oldMousePosY = y;
 }
 
-static void UI_MapNodeStartMouseShifting (uiNode_t *node, int x, int y)
+void uiMapNode::startMouseShifting (uiNode_t *node, int x, int y)
 {
 	UI_SetMouseCapture(node);
 	if (!cl_3dmap->integer)
@@ -151,7 +180,7 @@ bool uiMapNode::onStartDragging(uiNode_t* node, int startX, int startY, int x, i
 	switch (button) {
 	case K_MOUSE1:
 	case K_MOUSE2:
-		UI_MapNodeStartMouseShifting(node, startX, startY);
+		startMouseShifting(node, startX, startY);
 		return true;
 	case K_MOUSE3:
 		UI_SetMouseCapture(node);
@@ -180,7 +209,11 @@ void uiMapNode::onCapturedMouseLost (uiNode_t *node)
 	mode = MODE_NULL;
 }
 
-static void UI_MapNodeZoom (uiNode_t *node, qboolean out)
+/**
+ * Zoom on the node
+ * @todo it shound use an int param for smooth zoom
+ */
+void uiMapNode::zoom (uiNode_t *node, bool out)
 {
 	ccs.zoom *= pow(0.995, (out ? 10: -10));
 	if (ccs.zoom < cl_mapzoommin->value)
@@ -202,18 +235,20 @@ bool uiMapNode::onScroll (uiNode_t *node, int deltaX, int deltaY)
 	bool down = deltaY > 0;
 	if (deltaY == 0)
 		return false;
-	UI_MapNodeZoom(node, down);
+	zoom(node, down);
 	return true;
 }
 
 static void UI_MapNodeZoomIn (uiNode_t *node, const uiCallContext_t *context)
 {
-	UI_MapNodeZoom(node, qfalse);
+	uiMapNode* m = static_cast<uiMapNode*>(node->behaviour->manager);
+	m->zoom(node, false);
 }
 
 static void UI_MapNodeZoomOut (uiNode_t *node, const uiCallContext_t *context)
 {
-	UI_MapNodeZoom(node, qtrue);
+	uiMapNode* m = static_cast<uiMapNode*>(node->behaviour->manager);
+	m->zoom(node, true);
 }
 
 /**
