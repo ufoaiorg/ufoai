@@ -35,7 +35,7 @@ class uiVideoNode : public uiLocatedNode {
 	void onWindowClosed(uiNode_t* node) OVERRIDE;
 };
 
-void UI_RegisterVideoNode(struct uiBehaviour_s *behaviour);
+void UI_RegisterVideoNode(uiBehaviour_t *behaviour);
 
 #define UI_VIDEOEXTRADATA_TYPE videoExtraData_t
 #define UI_VIDEOEXTRADATA(node) UI_EXTRADATA(node, UI_VIDEOEXTRADATA_TYPE)

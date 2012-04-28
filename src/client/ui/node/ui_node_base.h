@@ -57,10 +57,10 @@ typedef struct baseExtraData_s {
 	int baseid;		/**< the baseid */
 } baseExtraData_t;
 
-struct uiBehaviour_s;
+struct uiBehaviour_t;
 
-void UI_RegisterAbstractBaseNode(struct uiBehaviour_s *behaviour);
-void UI_RegisterBaseMapNode(struct uiBehaviour_s *behaviour);
-void UI_RegisterBaseLayoutNode(struct uiBehaviour_s *behaviour);
+void UI_RegisterAbstractBaseNode(uiBehaviour_t *behaviour);
+void UI_RegisterBaseMapNode(uiBehaviour_t *behaviour);
+void UI_RegisterBaseLayoutNode(uiBehaviour_t *behaviour);
 
 #endif

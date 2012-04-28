@@ -40,10 +40,10 @@ protected:
 	void drawText (uiNode_t* node, const linkedList_t* list, bool noDraw);
 };
 
-struct uiBehaviour_s;
+struct uiBehaviour_t;
 struct uiAction_s;
 
-void UI_RegisterText2Node(struct uiBehaviour_s *behaviour);
+void UI_RegisterText2Node(uiBehaviour_t *behaviour);
 
 typedef struct {
 	textExtraData_t super;

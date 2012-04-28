@@ -36,6 +36,6 @@ class uiSelectBoxNode : public uiAbstractOptionNode {
 	void onLoaded(uiNode_t* node) OVERRIDE;
 };
 
-void UI_RegisterSelectBoxNode(struct uiBehaviour_s *behaviour);
+void UI_RegisterSelectBoxNode(uiBehaviour_t *behaviour);
 
 #endif

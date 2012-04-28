@@ -33,9 +33,9 @@ class uiOptionNode : public uiLocatedNode {
 	void doLayout(uiNode_t* node) OVERRIDE;
 };
 
-void UI_RegisterOptionNode(struct uiBehaviour_s *behaviour);
+void UI_RegisterOptionNode(uiBehaviour_t *behaviour);
 
-extern const struct uiBehaviour_s *ui_optionBehaviour;
+extern const uiBehaviour_t *ui_optionBehaviour;
 
 #define OPTIONEXTRADATA_TYPE optionExtraData_t
 #define OPTIONEXTRADATA(node) UI_EXTRADATA(node, OPTIONEXTRADATA_TYPE)

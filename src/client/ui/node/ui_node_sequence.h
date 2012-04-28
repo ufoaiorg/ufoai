@@ -36,7 +36,7 @@ class uiSequenceNode : public uiLocatedNode {
 	void onPropertyChanged(uiNode_t* node, const value_t *property) OVERRIDE;
 };
 
-void UI_RegisterSequenceNode(struct uiBehaviour_s *behaviour);
+void UI_RegisterSequenceNode(uiBehaviour_t *behaviour);
 
 typedef struct {
 	qboolean playing;

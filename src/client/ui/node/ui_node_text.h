@@ -47,13 +47,13 @@ protected:
 	virtual void updateCache (uiNode_t* node);
 };
 
-struct uiBehaviour_s;
+struct uiBehaviour_t;
 struct uiAction_s;
 
 void UI_TextScrollEnd(const char* nodePath);
 void UI_TextNodeSelectLine(uiNode_t* node, int num);
 
-void UI_RegisterTextNode(struct uiBehaviour_s *behaviour);
+void UI_RegisterTextNode(uiBehaviour_t *behaviour);
 
 typedef struct {
 	abstractScrollableExtraData_t super;

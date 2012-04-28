@@ -31,6 +31,6 @@ class uiItemNode : public uiModelNode {
 	void draw(uiNode_t* node) OVERRIDE;
 };
 
-void UI_RegisterItemNode(struct uiBehaviour_s *behaviour);
+void UI_RegisterItemNode(uiBehaviour_t *behaviour);
 
 #endif

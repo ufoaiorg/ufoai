@@ -35,6 +35,6 @@ class uiTabNode : public uiAbstractOptionNode {
 	void onWindowOpened(uiNode_t* node, linkedList_t *params) OVERRIDE;
 };
 
-void UI_RegisterTabNode(struct uiBehaviour_s *behaviour);
+void UI_RegisterTabNode(uiBehaviour_t *behaviour);
 
 #endif

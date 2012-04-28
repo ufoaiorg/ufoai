@@ -34,8 +34,8 @@ class uiBattleScapeNode : public uiLocatedNode {
 	bool onScroll(uiNode_t* node, int deltaX, int deltaY) OVERRIDE;
 };
 
-struct uiBehaviour_s;
+struct uiBehaviour_t;
 
-void UI_RegisterBattlescapeNode(struct uiBehaviour_s *behaviour);
+void UI_RegisterBattlescapeNode(uiBehaviour_t *behaviour);
 
 #endif

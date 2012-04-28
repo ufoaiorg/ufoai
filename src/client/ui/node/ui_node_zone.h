@@ -37,8 +37,8 @@ typedef struct {
 	int clickDelay;				/**< delay for the next "click" */
 } zoneExtraData_t;
 
-struct uiBehaviour_s;
+struct uiBehaviour_t;
 
-void UI_RegisterZoneNode(struct uiBehaviour_s *behaviour);
+void UI_RegisterZoneNode(uiBehaviour_t *behaviour);
 
 #endif

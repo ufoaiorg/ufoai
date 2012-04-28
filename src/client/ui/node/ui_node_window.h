@@ -31,7 +31,7 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 /* prototype */
 struct uiNode_t;
 struct uiAction_s;
-struct uiBehaviour_s;
+struct uiBehaviour_t;
 struct uiKeyBinding_s;
 
 class uiWindowNode : public uiLocatedNode {
@@ -85,7 +85,7 @@ typedef struct {
 
 } windowExtraData_t;
 
-void UI_RegisterWindowNode(struct uiBehaviour_s *behaviour);
+void UI_RegisterWindowNode(uiBehaviour_t *behaviour);
 
 qboolean UI_WindowIsFullScreen(uiNode_t const* window);
 qboolean UI_WindowIsDropDown(uiNode_t const* window);

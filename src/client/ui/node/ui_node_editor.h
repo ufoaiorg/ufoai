@@ -34,6 +34,6 @@ class uiEditorNode : public uiLocatedNode {
 	void onCapturedMouseLost(uiNode_t* node) OVERRIDE;
 };
 
-void UI_RegisterEditorNode(struct uiBehaviour_s* behaviour);
+void UI_RegisterEditorNode(uiBehaviour_t* behaviour);
 
 #endif

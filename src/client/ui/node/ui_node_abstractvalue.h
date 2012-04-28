@@ -59,8 +59,8 @@ typedef struct abstractValueExtraData_s {
 	float shiftIncreaseFactor;
 } abstractValueExtraData_t;
 
-struct uiBehaviour_s; /* prototype */
+struct uiBehaviour_t; /* prototype */
 
-void UI_RegisterAbstractValueNode(struct uiBehaviour_s *behaviour);
+void UI_RegisterAbstractValueNode(uiBehaviour_t *behaviour);
 
 #endif

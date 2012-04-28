@@ -41,7 +41,7 @@ class uiPanelNode : public uiAbstractScrollableNode {
 	void onCapturedMouseMove(uiNode_t* node, int x, int y) OVERRIDE;
 };
 
-struct uiBehaviour_s;
+struct uiBehaviour_t;
 
 typedef enum {
 	LAYOUT_NONE,
@@ -113,7 +113,7 @@ typedef struct {
 	qboolean wheelScrollable;	/**< If scrolling with mouse wheel is enabled */
 } panelExtraData_t;
 
-void UI_RegisterPanelNode(struct uiBehaviour_s *behaviour);
+void UI_RegisterPanelNode(uiBehaviour_t *behaviour);
 
 void UI_StarLayout(uiNode_t* node);
 

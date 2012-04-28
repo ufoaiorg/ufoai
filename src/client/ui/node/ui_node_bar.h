@@ -36,7 +36,7 @@ class uiBarNode : public uiAbstractValueNode {
 };
 
 /* prototype */
-struct uiBehaviour_s;
+struct uiBehaviour_t;
 
 /**
  * @brief extradata for the panel node
@@ -48,6 +48,6 @@ typedef struct {
 	qboolean noHover;	/**< True to show the bar at 100% opacity - even if not hovered */
 } barExtraData_t;
 
-void UI_RegisterBarNode(struct uiBehaviour_s *behaviour);
+void UI_RegisterBarNode(uiBehaviour_t *behaviour);
 
 #endif

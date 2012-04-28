@@ -34,6 +34,6 @@ class uiTodoNode : public uiStringNode {
 	void onLoaded(uiNode_t* node) OVERRIDE;
 };
 
-void UI_RegisterTodoNode(struct uiBehaviour_s *behaviour);
+void UI_RegisterTodoNode(uiBehaviour_t *behaviour);
 
 #endif

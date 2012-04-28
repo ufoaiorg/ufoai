@@ -29,14 +29,14 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #include "node/ui_node_abstractnode.h"
 
 struct value_s;
-struct uiBehaviour_s;
+struct uiBehaviour_t;
 struct uiNode_t;
 
 /**
  * @brief node behaviour, how a node work
  * @sa virtualFunctions
  */
-typedef struct uiBehaviour_s {
+struct uiBehaviour_t {
 	/* behaviour attributes */
 	const char* name;				/**< name of the behaviour: string type of a node */
 	const char* extends;			/**< name of the extends behaviour */
@@ -52,11 +52,11 @@ typedef struct uiBehaviour_s {
 	const value_t** localProperties;	/**< list of properties of the node */
 	int propertyCount;				/**< number of the properties into the propertiesList. Cache value to speedup search */
 	intptr_t extraDataSize;			/**< Size of the extra data used (it come from "u" attribute) @note use intptr_t because we use the virtual inheritance function (see virtualFunctions) */
-	struct uiBehaviour_s *super;	/**< link to the extended node */
+	uiBehaviour_t *super;	/**< link to the extended node */
 #ifdef DEBUG
 	int count;						/**< number of node allocated */
 #endif
-} uiBehaviour_t;
+};
 
 /**
  * @brief Signature of a function to bind a node method.
@@ -75,7 +75,7 @@ typedef void (*uiNodeMethod_t)(uiNode_t* node, const struct uiCallContext_s *con
  * @see UI_RegisterExtradataNodeProperty
  * @return A link to the node property
  */
-const struct value_s *UI_RegisterNodePropertyPosSize_(struct uiBehaviour_s *behaviour, const char* name, int type, size_t pos, size_t size);
+const struct value_s *UI_RegisterNodePropertyPosSize_(uiBehaviour_t *behaviour, const char* name, int type, size_t pos, size_t size);
 
 /**
  * @brief Initialize a property
@@ -120,7 +120,7 @@ const struct value_s *UI_RegisterNodePropertyPosSize_(struct uiBehaviour_s *beha
  * @param function function to execute the node method
  * @return A link to the node property
  */
-const struct value_s *UI_RegisterNodeMethod(struct uiBehaviour_s *behaviour, const char* name, uiNodeMethod_t function);
+const struct value_s *UI_RegisterNodeMethod(uiBehaviour_t *behaviour, const char* name, uiNodeMethod_t function);
 
 /**
  * @brief Return a property from a node behaviour

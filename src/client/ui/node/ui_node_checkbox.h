@@ -34,6 +34,6 @@ class uiCheckBoxNode : public uiAbstractValueNode {
 	void onActivate(uiNode_t* node) OVERRIDE;
 };
 
-void UI_RegisterCheckBoxNode(struct uiBehaviour_s *behaviour);
+void UI_RegisterCheckBoxNode(uiBehaviour_t *behaviour);
 
 #endif

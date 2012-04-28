@@ -87,7 +87,7 @@ void UI_Node_DebugCountWidget (uiNode_t* node, int count);
 #endif
 
 bool UI_NodeInstanceOf(const uiNode_t *node, const char* behaviourName);
-bool UI_NodeInstanceOfPointer(const uiNode_t *node, const struct uiBehaviour_s* behaviour);
+bool UI_NodeInstanceOfPointer(const uiNode_t *node, const uiBehaviour_t* behaviour);
 bool UI_NodeSetProperty(uiNode_t* node, const value_t *property, const char* value);
 void UI_NodeSetPropertyFromRAW(uiNode_t* node, const value_t *property, const void* rawValue, int rawType);
 float UI_GetFloatFromNodeProperty(uiNode_t const* node, const value_t* property);

@@ -29,9 +29,9 @@ class uiDataNode : public uiNode {
 
 };
 
-struct uiBehaviour_s;
+struct uiBehaviour_t;
 
-void UI_RegisterDataNode(struct uiBehaviour_s* behaviour);
+void UI_RegisterDataNode(uiBehaviour_t* behaviour);
 
 typedef struct dataExtraData_s {
 	/** @todo Add it again when "string" from  uiNode_t is removed / or property "string" from abstract node

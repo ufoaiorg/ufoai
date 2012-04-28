@@ -79,6 +79,6 @@ typedef struct modelExtraData_s {
 
 uiModel_t *UI_GetUIModel(const char *modelName);
 void UI_DrawModelNode(uiNode_t* node, const char *source);
-void UI_RegisterModelNode(struct uiBehaviour_s *behaviour);
+void UI_RegisterModelNode(uiBehaviour_t *behaviour);
 
 #endif

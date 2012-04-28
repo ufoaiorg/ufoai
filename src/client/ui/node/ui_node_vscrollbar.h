@@ -37,6 +37,6 @@ class uiVScrollbarNode : public uiAbstractScrollbarNode {
 	void onCapturedMouseLost(uiNode_t* node) OVERRIDE;
 };
 
-void UI_RegisterVScrollbarNode(struct uiBehaviour_s *behaviour);
+void UI_RegisterVScrollbarNode(uiBehaviour_t *behaviour);
 
 #endif

@@ -34,6 +34,7 @@ struct value_s;
 struct nodeKeyBinding_s;
 struct uiCallContext_s;
 struct uiModel_s;
+struct uiBehaviour_t;
 
 typedef struct uiExcludeRect_s {
 	/** position of the exclude rect relative to node position */
@@ -50,7 +51,7 @@ typedef struct uiExcludeRect_s {
 struct uiNode_t {
 	/* common identification */
 	char name[MAX_VAR];			/**< name from the script files */
-	struct uiBehaviour_s *behaviour;
+	uiBehaviour_t *behaviour;
 	uiNode_t const* super;      /**< Node inherited, else NULL */
 	qboolean dynamic;			/** If true, it use dynamic memory */
 	qboolean indexed;			/** If true, the node name indexed into his window */
@@ -133,8 +134,8 @@ void UI_DeleteNode(uiNode_t* node);
 
 /* behaviours */
 /* @todo move it to main */
-struct uiBehaviour_s* UI_GetNodeBehaviour(const char* name) __attribute__ ((warn_unused_result));
-struct uiBehaviour_s* UI_GetNodeBehaviourByIndex(int index) __attribute__ ((warn_unused_result));
+uiBehaviour_t* UI_GetNodeBehaviour(const char* name) __attribute__ ((warn_unused_result));
+uiBehaviour_t* UI_GetNodeBehaviourByIndex(int index) __attribute__ ((warn_unused_result));
 int UI_GetNodeBehaviourCount(void) __attribute__ ((warn_unused_result));
 
 #endif

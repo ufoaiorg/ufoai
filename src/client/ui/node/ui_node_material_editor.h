@@ -35,7 +35,7 @@ protected:
 	void updateView (uiNode_t* node, bool reset);
 };
 
-struct uiBehaviour_s;
-void UI_RegisterMaterialEditorNode(struct uiBehaviour_s *behaviour);
+struct uiBehaviour_t;
+void UI_RegisterMaterialEditorNode(uiBehaviour_t *behaviour);
 
 #endif

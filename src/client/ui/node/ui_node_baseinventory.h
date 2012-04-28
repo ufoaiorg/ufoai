@@ -44,7 +44,7 @@ class uiBaseInventoryNode : public uiContainerNode {
 };
 
 /* prototypes */
-struct uiBehaviour_s;
+struct uiBehaviour_t;
 
 typedef struct baseInventoryExtraData_s {
 	containerExtraData_t super;
@@ -72,6 +72,6 @@ typedef struct baseInventoryExtraData_s {
  */
 CASSERT(offsetof(baseInventoryExtraData_t, super) == 0);
 
-void UI_RegisterBaseInventoryNode(struct uiBehaviour_s *behaviour);
+void UI_RegisterBaseInventoryNode(uiBehaviour_t *behaviour);
 
 #endif

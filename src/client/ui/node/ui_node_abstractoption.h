@@ -51,9 +51,9 @@ typedef struct {
 	struct uiAction_s *onViewChange;	/**< called when view change (number of elements...) */
 } abstractOptionExtraData_t;
 
-struct uiBehaviour_s;
+struct uiBehaviour_t;
 
-void UI_RegisterAbstractOptionNode(struct uiBehaviour_s *behaviour);
+void UI_RegisterAbstractOptionNode(uiBehaviour_t *behaviour);
 void UI_OptionNodeSortOptions(uiNode_t* node);
 uiNode_t* UI_AbstractOptionGetFirstOption(uiNode_t* node);
 const char *UI_AbstractOptionGetCurrentValue(uiNode_t * node);

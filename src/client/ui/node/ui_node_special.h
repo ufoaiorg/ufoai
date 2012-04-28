@@ -46,9 +46,9 @@ class uiCvarNode : public uiNode {
 };
 
 
-void UI_RegisterConFuncNode(struct uiBehaviour_s *behaviour);
-void UI_RegisterCvarFuncNode(struct uiBehaviour_s *behaviour);
-void UI_RegisterFuncNode(struct uiBehaviour_s *behaviour);
-void UI_RegisterNullNode(struct uiBehaviour_s *behaviour);
+void UI_RegisterConFuncNode(uiBehaviour_t *behaviour);
+void UI_RegisterCvarFuncNode(uiBehaviour_t *behaviour);
+void UI_RegisterFuncNode(uiBehaviour_t *behaviour);
+void UI_RegisterNullNode(uiBehaviour_t *behaviour);
 
 #endif

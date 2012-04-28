@@ -45,6 +45,6 @@ typedef struct keyBindingExtraData_s {
 	int bindingWidth;
 } keyBindingExtraData_t;
 
-void UI_RegisterKeyBindingNode(struct uiBehaviour_s *behaviour);
+void UI_RegisterKeyBindingNode(uiBehaviour_t *behaviour);
 
 #endif

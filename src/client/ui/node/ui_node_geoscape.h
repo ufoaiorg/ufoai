@@ -50,6 +50,6 @@ typedef struct mapExtraData_s {
 	float paddingRight;
 } mapExtraData_t;
 
-void UI_RegisterGeoscapeNode(struct uiBehaviour_s *behaviour);
+void UI_RegisterGeoscapeNode(uiBehaviour_t *behaviour);
 
 #endif

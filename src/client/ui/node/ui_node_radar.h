@@ -37,6 +37,6 @@ class uiRadarNode : public uiLocatedNode {
 	void onCapturedMouseMove(uiNode_t* node, int x, int y) OVERRIDE;
 };
 
-void UI_RegisterRadarNode(struct uiBehaviour_s *behaviour);
+void UI_RegisterRadarNode(uiBehaviour_t *behaviour);
 
 #endif

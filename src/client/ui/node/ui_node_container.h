@@ -30,7 +30,7 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 
 /* prototypes */
 struct base_s;
-struct uiBehaviour_s;
+struct uiBehaviour_t;
 struct uiNode_t;
 
 class uiContainerNode : public uiLocatedNode {
@@ -49,7 +49,7 @@ class uiContainerNode : public uiLocatedNode {
 
 extern inventory_t *ui_inventory;
 
-void UI_RegisterContainerNode(struct uiBehaviour_s *behaviour);
+void UI_RegisterContainerNode(uiBehaviour_t *behaviour);
 void UI_DrawItem(uiNode_t* node, const vec3_t org, const struct item_s *item, int x, int y, const vec3_t scale, const vec4_t color);
 void UI_ContainerNodeUpdateEquipment(inventory_t *inv, const equipDef_t *ed);
 uiNode_t *UI_GetContainerNodeByContainerIDX(const uiNode_t* const parent, const int index);

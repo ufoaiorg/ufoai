@@ -41,6 +41,6 @@ protected:
 	bool step (uiNode_t *node, bool down);
 };
 
-void UI_RegisterSpinnerNode(struct uiBehaviour_s *behaviour);
+void UI_RegisterSpinnerNode(uiBehaviour_t *behaviour);
 
 #endif

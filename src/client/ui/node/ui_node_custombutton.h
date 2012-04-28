@@ -35,7 +35,7 @@ class uiCustomButtonNode : public uiButtonNode {
 /* prototype */
 struct uiSprite_s;
 
-void UI_RegisterCustomButtonNode(struct uiBehaviour_s *behaviour);
+void UI_RegisterCustomButtonNode(uiBehaviour_t *behaviour);
 
 typedef struct customButtonExtraData_s {
 	buttonExtraData_t super;

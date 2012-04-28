@@ -40,6 +40,6 @@ typedef struct ekgExtraData_s {
 	float scaleCvarValue;
 } ekgExtraData_t;
 
-void UI_RegisterEKGNode(struct uiBehaviour_s *behaviour);
+void UI_RegisterEKGNode(uiBehaviour_t *behaviour);
 
 #endif

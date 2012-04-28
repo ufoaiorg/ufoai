@@ -27,7 +27,7 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 
 #include "ui_node_abstractnode.h"
 
-void UI_RegisterImageNode(struct uiBehaviour_s* behaviour);
+void UI_RegisterImageNode(uiBehaviour_t* behaviour);
 void UI_ImageNodeDraw(uiNode_t* node);
 
 class uiImageNode : public uiLocatedNode {

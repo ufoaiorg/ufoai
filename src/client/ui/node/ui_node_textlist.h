@@ -35,9 +35,9 @@ protected:
 	void drawText (uiNode_t* node, const linkedList_t* list);
 };
 
-struct uiBehaviour_s;
+struct uiBehaviour_t;
 struct uiAction_s;
 
-void UI_RegisterTextListNode(struct uiBehaviour_s *behaviour);
+void UI_RegisterTextListNode(uiBehaviour_t *behaviour);
 
 #endif

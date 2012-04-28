@@ -302,7 +302,7 @@ void uiTextEntryNode::onLoading (uiNode_t *node)
 	Vector4Set(node->selectedColor, 1, 1, 1, 1);
 }
 
-void UI_RegisterTextEntryNode (struct uiBehaviour_s *behaviour)
+void UI_RegisterTextEntryNode (uiBehaviour_t *behaviour)
 {
 	behaviour->name = "textentry";
 	behaviour->manager = new uiTextEntryNode();

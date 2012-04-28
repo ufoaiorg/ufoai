@@ -29,7 +29,7 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #include "../../../shared/mathlib.h"
 #include "ui_node_abstractnode.h"
 
-struct uiBehaviour_s;
+struct uiBehaviour_t;
 struct uiAction_s;
 struct uiNode_t;
 
@@ -73,6 +73,6 @@ typedef struct {
 	struct uiAction_s *onViewChange;	/**< called when view change (number of elements...) */
 } abstractScrollableExtraData_t;
 
-void UI_RegisterAbstractScrollableNode(struct uiBehaviour_s *behaviour);
+void UI_RegisterAbstractScrollableNode(uiBehaviour_t *behaviour);
 
 #endif
