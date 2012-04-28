@@ -2,94 +2,6 @@
 // MINIMAL HUD MAIN
 // =================
 
-// Components for the soldier decoration panel
-
-component image cmp_bar_teambox_deco
-{
-	src		"minihud/bar_teambox_deco"
-	ghost	true
-	size	"64 128"
-}
-component image cmp_bar_teamsep_deco
-{
-	src		"minihud/bar_teamsep_deco"
-	ghost	true
-	size	"16 128"
-}
-
-// Components for the soldier selection panel
-
-component image cmp_bar_teambox_disabled
-{
-	src		"minihud/bar_teambox_disabled"
-	size		"87 98"
-	texh		"87 98"
-	onWheelUp	{ cmd "actor_next;"}
-	onWheelDown	{ cmd "actor_prev;"}
-	tooltip		"_Wheel:Select Next/Prev"
-}
-
-component image cmp_bar_teambox
-{
-	src		"minihud/bar_teambox_full"
-	size		"87 98"
-	texh		"87 98"
-	onWheelUp	{ cmd "actor_next;"}
-	onWheelDown	{ cmd "actor_prev;"}
-}
-
-// Components for the soldier number strings
-
-component string cmp_str_soldier_shadow
-{
-	size		"20 20"
-	color		"0 0 0 1"
-	ghost		true
-	font		"f_verysmall"
-	contentalign	ALIGN_CL
-}
-component string cmp_str_soldier
-{
-	size		"20 20"
-	color		"0 .6 0 1"
-	ghost		true
-	font		"f_verysmall"
-	contentalign	ALIGN_CL
-}
-
-// Component for the soldier head models
-
-component model cmp_model_head
-{
-	autoscale	true
-	size		"50 78"
-	ghost		true
-}
-
-// Components for the soldier status bars
-
-component bar cmp_bar_health
-{
-	size		"66 6"
-	color		".8 0 0 0.7"
-	disabled	true
-	tooltip		"_Health"
-}
-component bar cmp_bar_morale
-{
-	size		"66 6"
-	color		".8 .8 0 0.7"
-	disabled	true
-	tooltip		"_Morale"
-}
-component bar cmp_bar_time
-{
-	size		"66 6"
-	color		".2 .2 1 0.9"
-	disabled	true
-	tooltip		"_TUs"
-}
-
 window hud_mini extends hud
 {
 
@@ -2049,7 +1961,17 @@ window hud_mini extends hud
 			texl	"96 0"
 			size	"160 55"
 		}
-
+/*
+		custombutton bt_rescuezone
+		{
+			tooltip	"_Show rescue zone"
+			background	"buttons/bigred"
+			pos		"164 11"
+			size	"64 37"
+			icon	"icons/rescue_zone"
+			invis	false
+			onClick			{ cmd "toggle_rescuezone;" }
+		}
 		image messagelog
 		{
 			tooltip		"_Message Log"
@@ -2058,7 +1980,7 @@ window hud_mini extends hud
 			texl		"43 0"
 			texh		"83 34"
 			mousefx		true
-		}
+		}	*/
 		image menu
 		{
 			tooltip		"_Menu"
