@@ -199,11 +199,10 @@ window options
 		// ====================
 		string geoscape_deco_str
 		{
-			tooltip		"_Show/Hide the decoration on the 3D geoscape."
+			tooltip		"_Show/Hide the panel decoration on the geoscape."
 			string		"_Show decoration:"
 			pos			"72 465"
 			size		"280 20"
-			visiblewhen "*cvar:cl_3dmap == 1"
 		}
 		checkbox geoscape_deco
 		{
