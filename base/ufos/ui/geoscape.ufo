@@ -638,34 +638,23 @@ window geoscape
 			onClick		{ cmd "ui_pop;" }
 		}
 
-		image deco_switch
+		button deco_switch
 		{
 			tooltip		"_Show/Hide decoration"
-			src			"icons/on"
-			mousefx		true
-			pos			"232 744"
-			size		"16 16"
+			icon		"icons/on"
+			pos			"224 744"
+			size		"24 16"
 			onClick
 			{
 				*cvar:mn_geoscape_deco = 1
 				*node:root.control.back_deco@invis = false
-				*node:this@image = "icons/on"
+				*node:this@icon = "icons/on"
 			}
 			onRClick
 			{
 				*cvar:mn_geoscape_deco = 0
 				*node:root.control.back_deco@invis = true
-				*node:this@image = "icons/off"
-			}
-			onMouseEnter
-			{
-				if ( *cvar:mn_geoscape_deco == 1 ) { *node:this@image = "icons/on_hovered" }
-				else { *node:this@image = "icons/off_hovered" }
-			}
-			onMouseLeave
-			{
-				if ( *cvar:mn_geoscape_deco == 1 ) { *node:this@image = "icons/on" }
-				else { *node:this@image = "icons/off" }
+				*node:this@icon = "icons/off"
 			}
 		}
 
@@ -761,9 +750,12 @@ window geoscape
 		if ( not exists *cvar:mn_messagesystem ) {
 			*cvar:mn_messagesystem = 0
 			cmd "messagesystem_changemode;"
+		}
 		// check if geoscape deco is turned on and adjust the button
-		if ( *cvar:mn_geoscape_deco == 1) { *node:root.control.deco_switch@image = "icons/on" }
-		else { *node:root.control.deco_switch@image = "icons/off" }
+		if ( *cvar:mn_geoscape_deco == 1) {
+			*node:root.control.deco_switch@icon = "icons/on"
+		} else {
+			*node:root.control.deco_switch@icon = "icons/off"
 		}
 	}
 
