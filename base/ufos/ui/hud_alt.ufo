@@ -1340,6 +1340,8 @@ window hud_alt extends hud
 			*node:root.right.bt_primaryleft@invis = true
 			*node:root.right.bt_reloadright@invis = false
 			*node:root.right.bt_reloadleft@invis = true
+			// store the info about this soldier's selected hand
+			*cvar:mn_left_hand<cvar:mn_selected_soldier> = "0"
 		}
 		func show_leftweapon
 		{
@@ -1353,6 +1355,8 @@ window hud_alt extends hud
 			*node:root.right.bt_primaryleft@invis = false
 			*node:root.right.bt_reloadright@invis = true
 			*node:root.right.bt_reloadleft@invis = false
+			// store the info about this soldier's selected hand
+			*cvar:mn_left_hand<cvar:mn_selected_soldier> = "1"
 		}
 
 		button switch_to_right_hand
@@ -1556,6 +1560,13 @@ window hud_alt extends hud
 
 	confunc hudselect {
 		*node:root.floor.bar_selbox@left = ( *node:root.floor.bar_teambox<1>@left )
+		*cvar:mn_selected_soldier = <1>
+		// we switch to the left hand weapon if it was previously selected for this soldier, otherwise we switch to the right hand
+		if ( *cvar:mn_left_hand<cvar:mn_selected_soldier> == "1" ) {
+			call *node:root.right.show_leftweapon cmd "hud_switchfiremodelist firemode_listener l;"
+		} else {
+			call *node:root.right.show_rightweapon cmd "hud_switchfiremodelist firemode_listener r;"
+		}
 	}
 
 	// CROUCH/STAND UP BUTTON
@@ -1639,6 +1650,7 @@ window hud_alt extends hud
 	{
 		cmd "music_change battlescape;"
 		call *node:root.right.show_rightweapon
+		*cvar:mn_selected_soldier = 0
 	}
 
 	func onScriptLoaded {
@@ -1646,4 +1658,21 @@ window hud_alt extends hud
 		cmd "add_hud_name <path:root> \"_Alternative HUD\""
 	}
 
+	func onWindowClosed
+	{
+		delete *cvar:mn_selected_soldier
+		// TODO: delete currently only supports cvarname, that is why a loop is not possible here
+		if ( exists *cvar:mn_left_hand0 ) { delete *cvar:mn_Left_hand0 }
+		if ( exists *cvar:mn_left_hand1 ) { delete *cvar:mn_Left_hand1 }
+		if ( exists *cvar:mn_left_hand2 ) { delete *cvar:mn_Left_hand2 }
+		if ( exists *cvar:mn_left_hand3 ) { delete *cvar:mn_Left_hand3 }
+		if ( exists *cvar:mn_left_hand4 ) { delete *cvar:mn_Left_hand4 }
+		if ( exists *cvar:mn_left_hand5 ) { delete *cvar:mn_Left_hand5 }
+		if ( exists *cvar:mn_left_hand6 ) { delete *cvar:mn_Left_hand6 }
+		if ( exists *cvar:mn_left_hand7 ) { delete *cvar:mn_Left_hand7 }
+		if ( exists *cvar:mn_left_hand8 ) { delete *cvar:mn_Left_hand8 }
+		if ( exists *cvar:mn_left_hand9 ) { delete *cvar:mn_Left_hand9 }
+		if ( exists *cvar:mn_left_hand10 ) { delete *cvar:mn_Left_hand10 }
+		if ( exists *cvar:mn_left_hand11 ) { delete *cvar:mn_Left_hand11 }
+	}
 }
