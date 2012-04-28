@@ -4,6 +4,7 @@
 /*.bz2
 /*.dmg
 /.cproject
+/.project
 /config.h
 /config.mk
 /debug-*/
