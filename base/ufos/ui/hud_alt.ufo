@@ -249,19 +249,19 @@ window hud_alt extends hud
 		cmp_bar_teambox_disabled bar_teambox9_disabled
 		{
 			pos			"741 22"
-			visiblewhen	"*cvar:mn_hp8 < 1"
+			visiblewhen	"*cvar:mn_hp9 < 1"
 		}
 
 		cmp_bar_teambox_disabled bar_teambox10_disabled
 		{
 			pos			"821 22"
-			visiblewhen	"*cvar:mn_hp8 < 1"
+			visiblewhen	"*cvar:mn_hp10 < 1"
 		}
 
 		cmp_bar_teambox_disabled bar_teambox11_disabled
 		{
 			pos			"901 22"
-			visiblewhen	"*cvar:mn_hp8 < 1"
+			visiblewhen	"*cvar:mn_hp11 < 1"
 		}
 
 		cmp_bar_teambox bar_teambox0
