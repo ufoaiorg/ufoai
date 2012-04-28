@@ -194,6 +194,24 @@ window options
 			size		"20 18"
 			image		"ui/checkbox_blue"
 		}
+		// ====================
+		// GEOSCAPE DECORATION
+		// ====================
+		string geoscape_deco_str
+		{
+			tooltip		"_Show/Hide the decoration on the 3D geoscape."
+			string		"_Show decoration:"
+			pos			"72 465"
+			size		"280 20"
+			visiblewhen "*cvar:cl_3dmap == 1"
+		}
+		checkbox geoscape_deco
+		{
+			current		*cvar:mn_geoscape_deco
+			pos			"485 465"
+			size		"20 18"
+			image		"ui/checkbox_blue"
+		}
 		// =====================================
 		// GEOSCAPE CAMERA MINIMUM/MAXIMUM ZOOM
 		// =====================================
@@ -201,7 +219,7 @@ window options
 		{
 			tooltip		"_The minimum/maximum zoom of the geoscape camera"
 			string		"_Min/Max Geo-Cam Zoom:"
-			pos			"72 465"
+			pos			"72 490"
 			size		"280 20"
 		}
 		selectbox geocamzoom_min
@@ -209,7 +227,7 @@ window options
 			{
 				tooltip		"_Minimum zoom level of the geoscape camera"
 				cvar		*cvar:cl_mapzoommin
-				pos			"355 465"
+				pos			"355 490"
 				size		"75 20"
 				contentalign	ALIGN_CR
 			}
@@ -250,7 +268,7 @@ window options
 			{
 				tooltip		"_Maximum zoom level of the geoscape camera"
 				cvar		*cvar:cl_mapzoommax
-				pos			"430 465"
+				pos			"430 490"
 				size		"75 20"
 			}
 			option geocamzoom_max20
@@ -601,29 +619,6 @@ window options
 				size		"256 20"
 				color		"1.0 0.75 0 1"
 			}
-			// ========================
-			// JPEG SCREENSHOT QUALITY
-			// ========================
-			string jpeg_quality_str
-			{
-				string		"_jpeg Quality:"
-				pos			"32 345"
-				size		"170 20"
-			}
-			image jpeg_quality_rahmen
-			{
-				src		"ui/bar_rahmen"
-				pos			"208 347"
-			}
-			bar jpeg_quality_bar
-			{
-				current		*cvar:r_screenshot_jpeg_quality
-				pos			"217 352"
-				size		"238 6"
-				color		"0 0.8 0 1"
-				max			100
-				onClick		{ }
-			}
 			// ==================
 			// SCREENSHOT FORMAT
 			// ==================
@@ -631,14 +626,14 @@ window options
 			{
 				tooltip		"_The file format used for compressing and saving your screenshots."
 				string		"_Screenshot Format:"
-				pos			"32 370"
+				pos			"32 345"
 				size		"320 20"
 			}
 			selectbox screenshot_format
 			{
 				{
 					cvar		*cvar:r_screenshot_format
-					pos			"340 370"
+					pos			"340 345"
 					size		"125 20"
 				}
 				option screenshot_format_jpeg
@@ -651,6 +646,29 @@ window options
 					label	"png"
 					value	"png"
 				}
+			}
+			// ========================
+			// JPEG SCREENSHOT QUALITY
+			// ========================
+			string jpeg_quality_str
+			{
+				string		"_jpeg Quality:"
+				pos			"32 370"
+				size		"170 20"
+			}
+			image jpeg_quality_rahmen
+			{
+				src		"ui/bar_rahmen"
+				pos			"208 372"
+			}
+			bar jpeg_quality_bar
+			{
+				current		*cvar:r_screenshot_jpeg_quality
+				pos			"217 377"
+				size		"238 6"
+				color		"0 0.8 0 1"
+				max			100
+				onClick		{ }
 			}
 			// ==============================
 			// OTHER DISPLAY OPTIONS SUBMENU
@@ -1350,11 +1368,13 @@ window options
 			string		"_Music:"
 			pos			"72 160"
 			size		"150 20"
+			visiblewhen "*cvar:snd_init == 1"
 		}
 		image music_rahmen
 		{
 			src		"ui/bar_rahmen"
 			pos			"248 162"
+			visiblewhen "*cvar:snd_init == 1"
 		}
 		bar music_bar
 		{
@@ -1364,6 +1384,7 @@ window options
 			color		"0 .8 0 1"
 			max			128
 			onClick		{ }
+			visiblewhen "*cvar:snd_init == 1"
 		}
 
 		// =====================
@@ -1374,11 +1395,13 @@ window options
 			string		"_Sound Effects:"
 			pos			"72 185"
 			size		"170 20"
+			visiblewhen "*cvar:snd_init == 1"
 		}
 		image effects_rahmen
 		{
 			src		"ui/bar_rahmen"
 			pos			"248 187"
+			visiblewhen "*cvar:snd_init == 1"
 		}
 		bar effects_bar
 		{
@@ -1388,6 +1411,7 @@ window options
 			color		"0 .8 0 1"
 			max			1.0
 			onClick		{ }
+			visiblewhen "*cvar:snd_init == 1"
 		}
 		// ============
 		// MENU SOUNDS
@@ -1399,6 +1423,7 @@ window options
 			string		"_Menu Sounds:"
 			pos			"72 210"
 			size		"170 20"
+			visiblewhen "*cvar:snd_init == 1"
 		}
 		checkbox menu_sounds_checkbox
 		{
@@ -1407,22 +1432,8 @@ window options
 			pos			"485 210"
 			size		"20 18"
 			image		"ui/checkbox_blue"
+			visiblewhen "*cvar:snd_init == 1"
 		}
-		//image menu_sounds_rahmen
-		//{
-		//	src		"ui/bar_rahmen"
-		//	pos			"244 212"
-		//}
-		//bar menu_sounds_bar
-		//{
-		//	tooltip		"_You can just turn on/off the menu sounds at the moment."
-		//	current		*cvar:mn_sounds
-		//	pos			"253 217"
-		//	size		"238 6"
-		//	color		"0 .8 0 1"
-		//	max			1.0
-		//	onClick		{ }
-		//}
 		// ============================
 		// OTHER AUDIO OPTIONS SUBMENU
 		// ============================
@@ -1432,6 +1443,7 @@ window options
 			pos			"62 265"
 			size		"240 20"
 			color		"1.0 0.75 0 1"
+			visiblewhen "*cvar:snd_init == 1"
 		}
 		// ==================
 		// AUDIO SAMPLE RATE
@@ -1442,6 +1454,7 @@ window options
 			string		"_Audio Sample Rate:"
 			pos			"72 290"
 			size		"240 20"
+			visiblewhen "*cvar:snd_init == 1"
 		}
 		selectbox rate_box
 		{
@@ -1449,6 +1462,7 @@ window options
 				cvar		*cvar:snd_rate
 				pos			"359 295"
 				size		"125 20"
+				visiblewhen "*cvar:snd_init == 1"
 			}
 			option low_value
 			{
@@ -1479,6 +1493,7 @@ window options
 			size		"16 16"
 			padding		0
 			onClick		{ cmd "snd_restart;" }
+			visiblewhen "*cvar:snd_init == 1"
 		}
 	}
 	// ========================================
@@ -1748,6 +1763,7 @@ window options
 			string		"_Joystick or Joypad:"
 			pos			"72 545"
 			size		"250 20"
+			visiblewhen "*cvar:in_joystick == 1"
 		}
 		selectbox select_joystick
 		{
@@ -1756,6 +1772,7 @@ window options
 			dataid		OPTION_JOYSTICKS
 			pos			"350 545"
 			size		"155 20"
+			visiblewhen "*cvar:in_joystick == 1"
 		}
 		// ===================
 		// JOYSTICK THRESHOLD
@@ -1766,11 +1783,13 @@ window options
 			string		"_Threshold:"
 			pos			"72 570"
 			size		"150 20"
+			visiblewhen "*cvar:in_joystick == 1"
 		}
 		image joystick_threshold_rahmen
 		{
 			src		"ui/bar_rahmen"
 			pos			"248 572"
+			visiblewhen "*cvar:in_joystick == 1"
 		}
 		bar joystick_threshold_bar
 		{
@@ -1781,6 +1800,7 @@ window options
 			min			0.0
 			max			1.0
 			onClick		{ }
+			visiblewhen "*cvar:in_joystick == 1"
 		}
 		// ===============
 		// JOYSTICK SPEED
@@ -1790,11 +1810,13 @@ window options
 			string		"_Speed:"
 			pos			"72 595"
 			size		"150 20"
+			visiblewhen "*cvar:in_joystick == 1"
 		}
 		image joystick_speed_rahmen
 		{
 			src		"ui/bar_rahmen"
 			pos			"248 597"
+			visiblewhen "*cvar:in_joystick == 1"
 		}
 		bar joystick_speed_bar
 		{
@@ -1805,6 +1827,7 @@ window options
 			min			5
 			max			30
 			onClick		{ }
+			visiblewhen "*cvar:in_joystick == 1"
 		}
 		// =============
 		// KEY BINDINGS
