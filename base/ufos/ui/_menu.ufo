@@ -591,6 +591,7 @@ window popup_keyinfo
 		size		"536 577"
 		dragbutton	true
 		closebutton	true
+		onRClick	{ cmd "ui_pop;"}
 	}
 
 	string keyinfo_label
@@ -600,6 +601,7 @@ window popup_keyinfo
 		contentalign	ALIGN_CC
 		pos			"20 58"
 		size		"498 20"
+		ghost		true
 	}
 
 	func onWindowOpened {
@@ -644,6 +646,7 @@ window popup_keyinfo
 			*node:root.keyinfoscroll@fullsize = <fullsize>
 			*node:root.keyinfoscroll@viewsize = <viewsize>
 		}
+		onRClick	{ cmd "ui_pop;"}
 	}
 	vscrollbar keyinfoscroll
 	{
