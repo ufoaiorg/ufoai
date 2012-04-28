@@ -2158,9 +2158,9 @@ window hud_mini extends hud
 		if ( exists *cvar:mn_left_hand6 ) { delete *cvar:mn_Left_hand6 }
 		if ( exists *cvar:mn_left_hand7 ) { delete *cvar:mn_Left_hand7 }
 		if ( exists *cvar:mn_left_hand8 ) { delete *cvar:mn_Left_hand8 }
-		if ( exists *cvar:mn_left_hand8 ) { delete *cvar:mn_Left_hand9 }
-		if ( exists *cvar:mn_left_hand8 ) { delete *cvar:mn_Left_hand10 }
-		if ( exists *cvar:mn_left_hand8 ) { delete *cvar:mn_Left_hand11 }
+		if ( exists *cvar:mn_left_hand9 ) { delete *cvar:mn_Left_hand9 }
+		if ( exists *cvar:mn_left_hand10 ) { delete *cvar:mn_Left_hand10 }
+		if ( exists *cvar:mn_left_hand11 ) { delete *cvar:mn_Left_hand11 }
 	}
 
 	func onScriptLoaded {
