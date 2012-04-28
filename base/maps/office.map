@@ -18429,7 +18429,9 @@
 {
 "classname" "misc_sound"
 "origin" "-32 336 16"
-"noise" "sound/ambience/earth-news"
+"noise" "ambience/tv_newswav"
+"attenuation" "3.0"
+"volume" "0.7"
 }
 // entity 310
 {
