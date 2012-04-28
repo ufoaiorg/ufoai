@@ -2032,11 +2032,11 @@ window hud_mini extends hud
 	// soldierselection
 	confunc hudselect {
 		*node:root.floor.bar_selbox@left = ( *node:root.floor.bar_teambox<1>@left )
-			*cvar:i = 0
-			while ( *cvar:i < 12 ) {
-				*node:root.floor.str_soldier<cvar:i>@color = "0 .6 0 1"
-				*cvar:i = ( *cvar:i + 1 )
-			}
+		*cvar:i = 0
+		while ( *cvar:i < 12 ) {
+			*node:root.floor.str_soldier<cvar:i>@color = "0 .6 0 1"
+			*cvar:i = ( *cvar:i + 1 )
+		}
 		delete *cvar:i
 		*node:root.floor.str_soldier<1>@color = "1 1 1 1"
 		*cvar:mn_selected_soldier = <1>
