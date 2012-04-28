@@ -109,6 +109,9 @@ component panel cmpFiremodeEntry {
 			cmd "ui_close <path:root>;"
 			cmd "hud_executeaction <node:parent.actionid@string>;"
 		}
+		onRClick {
+			cmd "ui_close <path:root>;"
+		}
 	}
 
 	image cb
