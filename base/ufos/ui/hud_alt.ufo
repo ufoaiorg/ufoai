@@ -1426,6 +1426,7 @@ window hud_alt extends hud
 			size		"40 117"
 		}
 
+		// levelselector buttons
 		image bt_floorup
 		{
 			tooltip		"_Level up"
@@ -1454,24 +1455,35 @@ window hud_alt extends hud
 				}
 			}
 		}
-
+		// levelselector string
 		string str_floor
 		{
 			string		*cvar:cl_worldlevel
 			pos			"1 49"
 			size		"40 20"
 			contentalign	ALIGN_CC
-			onWheelUp
-			{
+			onWheelUp {
 				if (*cvar:cl_worldlevel < *cvar:cl_maxworldlevel) {
 					*cvar:cl_worldlevel = (*cvar:cl_worldlevel + 1)
 				}
 			}
-			onWheelDown	{
+			onWheelDown {
 				if (*cvar:cl_worldlevel > 0) {
 					*cvar:cl_worldlevel = (*cvar:cl_worldlevel - 1)
 				}
 			}
+			onClick {
+				if (*cvar:cl_worldlevel < *cvar:cl_maxworldlevel) {
+					*cvar:cl_worldlevel = (*cvar:cl_worldlevel + 1)
+				}
+			}
+			onRClick {
+				if (*cvar:cl_worldlevel > 0) {
+					*cvar:cl_worldlevel = (*cvar:cl_worldlevel - 1)
+				}
+			}
+			onMouseEnter { *node:this@font = "f_small_bold" }
+			onMouseLeave { *node:this@font = "f_small" }
 		}
 	}
 
@@ -1519,6 +1531,8 @@ window hud_alt extends hud
 			onRClick	{ cmd "prevalien;" }
 			onWheelUp	{ cmd "nextalien;" }
 			onWheelDown	{ cmd "prevalien;" }
+			onMouseEnter { *node:this@font = "f_small_bold" }
+			onMouseLeave { *node:this@font = "f_small" }
 			contentalign	ALIGN_CC
 		}
 		image nextround
