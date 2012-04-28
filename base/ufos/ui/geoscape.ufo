@@ -65,6 +65,8 @@ window geoscape
 		onRClick		{ cmd "mn_mapaction_reset;" }
 		align			LAYOUTALIGN_FILL
 		padding-right	256
+//		onMouseEnter	{ *node:root.control.back_mini@image = "ui/geo_menu_inside" }
+//		onMouseLeave	{ *node:root.control.back_mini@image = "ui/geo_menu_inside_hovered" }
 	}
 
 	confunc clean_geoscape_object {
