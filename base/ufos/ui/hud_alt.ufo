@@ -26,135 +26,619 @@ window hud_alt extends hud
 		align		LAYOUTALIGN_FILL
 	}
 
-	// ==================
-	// floor
-	// ==================
+	// ================================
+	// floor deco (soldier panel deco)
+	// ================================
+
+	panel floor_deco {
+		{
+			pos		"94 640"
+			size	"1012 128"
+			align	LAYOUTALIGN_BOTTOM
+			ghost	true
+		}
+
+		image bar_teamleft_deco
+		{
+			src		"minihud/bar_teamleft_deco"
+			pos			"0 0"
+			size		"32 128"
+			ghost	true
+		}
+
+		cmp_bar_teambox_deco teambox_deco0
+		{
+			pos			"32 0"
+		}
+
+		cmp_bar_teamsep_deco teamsep_deco1
+		{
+			pos			"96 0"
+		}
+		cmp_bar_teambox_deco teambox_deco1
+		{
+			pos			"112 0"
+
+		}
+
+		cmp_bar_teamsep_deco teamsep_deco2
+		{
+			pos			"176 0"
+		}
+		cmp_bar_teambox_deco teambox_deco2
+		{
+			pos			"192 0"
+		}
+
+		cmp_bar_teamsep_deco teamsep_deco3
+		{
+			pos			"256 0"
+		}
+		cmp_bar_teambox_deco teambox_deco3
+		{
+			pos			"272 0"
+		}
+
+		cmp_bar_teamsep_deco teamsep_deco4
+		{
+			pos			"336 0"
+		}
+		cmp_bar_teambox_deco teambox_deco4
+		{
+			pos			"352 0"
+		}
+
+		cmp_bar_teamsep_deco teamsep_deco5
+		{
+			pos			"416 0"
+		}
+		cmp_bar_teambox_deco teambox_deco5
+		{
+			pos			"432 0"
+		}
+
+		cmp_bar_teamsep_deco teamsep_deco6
+		{
+			pos			"496 0"
+		}
+		cmp_bar_teambox_deco teambox_deco6
+		{
+			pos			"512 0"
+		}
+
+		cmp_bar_teamsep_deco teamsep_deco7
+		{
+			pos			"576 0"
+		}
+		cmp_bar_teambox_deco teambox_deco7
+		{
+			pos			"592 0"
+		}
+
+		cmp_bar_teamsep_deco teamsep_deco8
+		{
+			pos			"656 0"
+		}
+		cmp_bar_teambox_deco teambox_deco8
+		{
+			pos			"672 0"
+		}
+
+		cmp_bar_teamsep_deco teamsep_deco9
+		{
+			pos			"736 0"
+		}
+		cmp_bar_teambox_deco teambox_deco9
+		{
+			pos			"752 0"
+		}
+
+		cmp_bar_teamsep_deco teamsep_deco10
+		{
+			pos			"816 0"
+		}
+		cmp_bar_teambox_deco teambox_deco10
+		{
+			pos			"832 0"
+		}
+
+		cmp_bar_teamsep_deco teamsep_deco11
+		{
+			pos			"896 0"
+		}
+		cmp_bar_teambox_deco teambox_deco11
+		{
+			pos			"912 0"
+		}
+
+		image bar_teamright_deco
+		{
+			src		"minihud/bar_teamright_deco"
+			pos			"976 0"
+			size		"32 128"
+			ghost	true
+		}
+
+		func hudenable_floor_deco
+		{
+			*cvar:tmp = ( <1> + 1 )
+			*cvar:i = 1
+			while ( *cvar:i < *cvar:tmp ) {
+				*node:root.floor_deco.teambox_deco<cvar:i>@invis = false  *node:root.floor_deco.teamsep_deco<cvar:i>@invis = false
+				*cvar:i = ( *cvar:i + 1 )
+			}
+
+			while ( *cvar:tmp < 12 ) {
+				*node:root.floor_deco.teambox_deco<cvar:tmp>@invis = true  *node:root.floor_deco.teamsep_deco<cvar:tmp>@invis = true
+				*cvar:tmp = ( *cvar:tmp + 1 )
+			}
+
+			delete *cvar:tmp
+			delete *cvar:i
+
+			*node:root.floor_deco.bar_teamright_deco@left = ( *node:root.floor_deco.teambox_deco<1>@left + *node:root.floor_deco.teambox_deco<1>@width )
+		}
+	}
+
+	// ======================
+	// floor (soldier panel)
+	// ======================
 
 	panel floor {
 		{
-			pos		"256 640"
-			size	"688 128"
+			pos		"94 640"
+			size	"1012 128"
 			align	LAYOUTALIGN_BOTTOM
+			ghost	true
 		}
 
-		image bar_teamleft
+		cmp_bar_teambox_disabled bar_teambox0_disabled
 		{
-			src		"althud/bar_teamleft"
-			pos			"0 0"
-			size		"32 128"
+			pos			"21 22"
+			visiblewhen	"*cvar:mn_hp0 < 1"
 		}
 
-		image bar_teambox0
+		cmp_bar_teambox_disabled bar_teambox1_disabled
 		{
-			src		"althud/bar_teambox"
-			pos			"32 0"
-			size		"64 128"
+			pos			"101 22"
+			visiblewhen	"*cvar:mn_hp1 < 1"
+		}
+
+		cmp_bar_teambox_disabled bar_teambox2_disabled
+		{
+			pos			"181 22"
+			visiblewhen	"*cvar:mn_hp2 < 1"
+		}
+
+		cmp_bar_teambox_disabled bar_teambox3_disabled
+		{
+			pos			"261 22"
+			visiblewhen	"*cvar:mn_hp3 < 1"
+		}
+
+		cmp_bar_teambox_disabled bar_teambox4_disabled
+		{
+			pos			"341 22"
+			visiblewhen	"*cvar:mn_hp4 < 1"
+		}
+
+		cmp_bar_teambox_disabled bar_teambox5_disabled
+		{
+			pos			"421 22"
+			visiblewhen	"*cvar:mn_hp5 < 1"
+		}
+
+		cmp_bar_teambox_disabled bar_teambox6_disabled
+		{
+			pos			"501 22"
+			visiblewhen	"*cvar:mn_hp6 < 1"
+		}
+
+		cmp_bar_teambox_disabled bar_teambox7_disabled
+		{
+			pos			"581 22"
+			visiblewhen	"*cvar:mn_hp7 < 1"
+		}
+
+		cmp_bar_teambox_disabled bar_teambox8_disabled
+		{
+			pos			"661 22"
+			visiblewhen	"*cvar:mn_hp8 < 1"
+		}
+
+		cmp_bar_teambox_disabled bar_teambox9_disabled
+		{
+			pos			"741 22"
+			visiblewhen	"*cvar:mn_hp8 < 1"
+		}
+
+		cmp_bar_teambox_disabled bar_teambox10_disabled
+		{
+			pos			"821 22"
+			visiblewhen	"*cvar:mn_hp8 < 1"
+		}
+
+		cmp_bar_teambox_disabled bar_teambox11_disabled
+		{
+			pos			"901 22"
+			visiblewhen	"*cvar:mn_hp8 < 1"
+		}
+
+		cmp_bar_teambox bar_teambox0
+		{
+			pos			"21 22"
 			onClick		{ cmd "actor_select 0;" }
+			onRClick	{ cmd "actor_select 0;" }
+			tooltip		"_LMB/RMB:Select\nWheel:Select Next/Prev\nKey:1"
+			visiblewhen	"*cvar:mn_hp0 > 0"
+			onMouseEnter {
+				*node:this@src = "minihud/bar_teambox_hovered"
+				*node:root.floor.str_soldier0_shadow@font = "f_verysmall_bold"
+				*node:root.floor.str_soldier0@font = "f_verysmall_bold"
+			}
+			onMouseLeave {
+				*node:this@src = "minihud/bar_teambox_full"
+				*node:root.floor.str_soldier0_shadow@font = "f_verysmall"
+				*node:root.floor.str_soldier0@font = "f_verysmall"
+			}
 		}
 
-		image bar_teamsep1
+		cmp_bar_teambox bar_teambox1
 		{
-			src		"althud/bar_teamsep"
-			pos			"96 0"
-			size		"16 128"
-		}
-		image bar_teambox1
-		{
-			src		"althud/bar_teambox"
-			pos			"112 0"
-			size		"64 128"
+			pos			"101 22"
 			onClick		{ cmd "actor_select 1;" }
+			onRClick	{ cmd "actor_select 1;" }
+			tooltip		"_LMB/RMB:Select\nWheel:Select Next/Prev\nKey:2"
+			visiblewhen	"*cvar:mn_hp1 > 0"
+			onMouseEnter {
+				*node:this@src = "minihud/bar_teambox_hovered"
+				*node:root.floor.str_soldier1_shadow@font = "f_verysmall_bold"
+				*node:root.floor.str_soldier1@font = "f_verysmall_bold"
+			}
+			onMouseLeave {
+				*node:this@src = "minihud/bar_teambox_full"
+				*node:root.floor.str_soldier1_shadow@font = "f_verysmall"
+				*node:root.floor.str_soldier1@font = "f_verysmall"
+			}
 		}
 
-		image bar_teamsep2
+		cmp_bar_teambox bar_teambox2
 		{
-			src		"althud/bar_teamsep"
-			pos			"176 0"
-			size		"16 128"
-		}
-		image bar_teambox2
-		{
-			src		"althud/bar_teambox"
-			pos			"192 0"
-			size		"64 128"
+			pos			"181 22"
 			onClick		{ cmd "actor_select 2;" }
+			onRClick	{ cmd "actor_select 2;" }
+			tooltip		"_LMB/RMB:Select\nWheel:Select Next/Prev\nKey:3"
+			visiblewhen	"*cvar:mn_hp2 > 0"
+			onMouseEnter {
+				*node:this@src = "minihud/bar_teambox_hovered"
+				*node:root.floor.str_soldier2_shadow@font = "f_verysmall_bold"
+				*node:root.floor.str_soldier2@font = "f_verysmall_bold"
+			}
+			onMouseLeave {
+				*node:this@src = "minihud/bar_teambox_full"
+				*node:root.floor.str_soldier2_shadow@font = "f_verysmall"
+				*node:root.floor.str_soldier2@font = "f_verysmall"
+			}
 		}
 
-		image bar_teamsep3
+		cmp_bar_teambox bar_teambox3
 		{
-			src		"althud/bar_teamsep"
-			pos			"256 0"
-			size		"16 128"
-		}
-		image bar_teambox3
-		{
-			src		"althud/bar_teambox"
-			pos			"272 0"
-			size		"64 128"
+			pos			"261 22"
 			onClick		{ cmd "actor_select 3;" }
+			onRClick	{ cmd "actor_select 3;" }
+			tooltip		"_LMB/RMB:Select\nWheel:Select Next/Prev\nKey:4"
+			visiblewhen	"*cvar:mn_hp3 > 0"
+			onMouseEnter {
+				*node:this@src = "minihud/bar_teambox_hovered"
+				*node:root.floor.str_soldier3_shadow@font = "f_verysmall_bold"
+				*node:root.floor.str_soldier3@font = "f_verysmall_bold"
+			}
+			onMouseLeave {
+				*node:this@src = "minihud/bar_teambox_full"
+				*node:root.floor.str_soldier3_shadow@font = "f_verysmall"
+				*node:root.floor.str_soldier3@font = "f_verysmall"
+			}
 		}
 
-		image bar_teamsep4
+		cmp_bar_teambox bar_teambox4
 		{
-			src		"althud/bar_teamsep"
-			pos			"336 0"
-			size		"16 128"
-		}
-		image bar_teambox4
-		{
-			src		"althud/bar_teambox"
-			pos			"352 0"
-			size		"64 128"
+			pos			"341 22"
 			onClick		{ cmd "actor_select 4;" }
+			onRClick	{ cmd "actor_select 4;" }
+			tooltip		"_LMB/RMB:Select\nWheel:Select Next/Prev\nKey:5"
+			visiblewhen	"*cvar:mn_hp4 > 0"
+			onMouseEnter {
+				*node:this@src = "minihud/bar_teambox_hovered"
+				*node:root.floor.str_soldier4_shadow@font = "f_verysmall_bold"
+				*node:root.floor.str_soldier4@font = "f_verysmall_bold"
+			}
+			onMouseLeave {
+				*node:this@src = "minihud/bar_teambox_full"
+				*node:root.floor.str_soldier4_shadow@font = "f_verysmall"
+				*node:root.floor.str_soldier4@font = "f_verysmall"
+			}
 		}
 
-		image bar_teamsep5
+		cmp_bar_teambox bar_teambox5
 		{
-			src		"althud/bar_teamsep"
-			pos			"416 0"
-			size		"16 128"
-		}
-		image bar_teambox5
-		{
-			src		"althud/bar_teambox"
-			pos			"432 0"
-			size		"64 128"
+			pos			"421 22"
 			onClick		{ cmd "actor_select 5;" }
+			onRClick	{ cmd "actor_select 5;" }
+			tooltip		"_LMB/RMB:Select\nWheel:Select Next/Prev\nKey:6"
+			visiblewhen	"*cvar:mn_hp5 > 0"
+			onMouseEnter {
+				*node:this@src = "minihud/bar_teambox_hovered"
+				*node:root.floor.str_soldier5_shadow@font = "f_verysmall_bold"
+				*node:root.floor.str_soldier5@font = "f_verysmall_bold"
+			}
+			onMouseLeave {
+				*node:this@src = "minihud/bar_teambox_full"
+				*node:root.floor.str_soldier5_shadow@font = "f_verysmall"
+				*node:root.floor.str_soldier5@font = "f_verysmall"
+			}
 		}
 
-		image bar_teamsep6
+		cmp_bar_teambox bar_teambox6
 		{
-			src		"althud/bar_teamsep"
-			pos			"496 0"
-			size		"16 128"
-		}
-		image bar_teambox6
-		{
-			src		"althud/bar_teambox"
-			pos			"512 0"
-			size		"64 128"
+			pos			"501 22"
 			onClick		{ cmd "actor_select 6;" }
+			onRClick	{ cmd "actor_select 6;" }
+			tooltip		"_LMB/RMB:Select\nWheel:Select Next/Prev\nKey:7"
+			visiblewhen	"*cvar:mn_hp6 > 0"
+			onMouseEnter {
+				*node:this@src = "minihud/bar_teambox_hovered"
+				*node:root.floor.str_soldier6_shadow@font = "f_verysmall_bold"
+				*node:root.floor.str_soldier6@font = "f_verysmall_bold"
+			}
+			onMouseLeave {
+				*node:this@src = "minihud/bar_teambox_full"
+				*node:root.floor.str_soldier6_shadow@font = "f_verysmall"
+				*node:root.floor.str_soldier6@font = "f_verysmall"
+			}
 		}
 
-		image bar_teamsep7
+		cmp_bar_teambox bar_teambox7
 		{
-			src		"althud/bar_teamsep"
-			pos			"576 0"
-			size		"16 128"
-		}
-		image bar_teambox7
-		{
-			src		"althud/bar_teambox"
-			pos			"592 0"
-			size		"64 128"
+			pos			"581 22"
 			onClick		{ cmd "actor_select 7;" }
+			onRClick	{ cmd "actor_select 7;" }
+			tooltip		"_LMB/RMB:Select\nWheel:Select Next/Prev\nKey:8"
+			visiblewhen	"*cvar:mn_hp7 > 0"
+			onMouseEnter {
+				*node:this@src = "minihud/bar_teambox_hovered"
+				*node:root.floor.str_soldier7_shadow@font = "f_verysmall_bold"
+				*node:root.floor.str_soldier7@font = "f_verysmall_bold"
+			}
+			onMouseLeave {
+				*node:this@src = "minihud/bar_teambox_full"
+				*node:root.floor.str_soldier7_shadow@font = "f_verysmall"
+				*node:root.floor.str_soldier7@font = "f_verysmall"
+			}
 		}
 
-		image bar_teamright
+		cmp_bar_teambox bar_teambox8
 		{
-			src		"althud/bar_teamright"
-			pos			"656 0"
-			size		"32 128"
+			pos			"661 22"
+			onClick		{ cmd "actor_select 8;" }
+			onRClick	{ cmd "actor_select 8;" }
+			tooltip		"_LMB/RMB:Select\nWheel:Select Next/Prev\nKey:9"
+			visiblewhen	"*cvar:mn_hp8 > 0"
+			onMouseEnter {
+				*node:this@src = "minihud/bar_teambox_hovered"
+				*node:root.floor.str_soldier8_shadow@font = "f_verysmall_bold"
+				*node:root.floor.str_soldier8@font = "f_verysmall_bold"
+			}
+			onMouseLeave {
+				*node:this@src = "minihud/bar_teambox_full"
+				*node:root.floor.str_soldier8_shadow@font = "f_verysmall"
+				*node:root.floor.str_soldier8@font = "f_verysmall"
+			}
+		}
+
+		cmp_bar_teambox bar_teambox9
+		{
+			pos			"741 22"
+			onClick		{ cmd "actor_select 9;" }
+			onRClick	{ cmd "actor_select 9;" }
+			tooltip		"_LMB/RMB:Select\nWheel:Select Next/Prev\nKey:0"
+			visiblewhen	"*cvar:mn_hp9 > 0"
+			onMouseEnter {
+				*node:this@src = "minihud/bar_teambox_hovered"
+				*node:root.floor.str_soldier9_shadow@font = "f_verysmall_bold"
+				*node:root.floor.str_soldier9@font = "f_verysmall_bold"
+			}
+			onMouseLeave {
+				*node:this@src = "minihud/bar_teambox_full"
+				*node:root.floor.str_soldier9_shadow@font = "f_verysmall"
+				*node:root.floor.str_soldier9@font = "f_verysmall"
+			}
+		}
+
+		cmp_bar_teambox bar_teambox10
+		{
+			pos			"821 22"
+			onClick		{ cmd "actor_select 10;" }
+			onRClick	{ cmd "actor_select 10;" }
+			tooltip		"_LMB/RMB:Select\nWheel:Select Next/Prev"
+			visiblewhen	"*cvar:mn_hp10 > 0"
+			onMouseEnter {
+				*node:this@src = "minihud/bar_teambox_hovered"
+				*node:root.floor.str_soldier10_shadow@font = "f_verysmall_bold"
+				*node:root.floor.str_soldier10@font = "f_verysmall_bold"
+			}
+			onMouseLeave {
+				*node:this@src = "minihud/bar_teambox_full"
+				*node:root.floor.str_soldier10_shadow@font = "f_verysmall"
+				*node:root.floor.str_soldier10@font = "f_verysmall"
+			}
+		}
+
+		cmp_bar_teambox bar_teambox11
+		{
+			pos			"901 22"
+			onClick		{ cmd "actor_select 11;" }
+			onRClick	{ cmd "actor_select 11;" }
+			tooltip		"_LMB/RMB:Select\nWheel:Select Next/Prev"
+			visiblewhen	"*cvar:mn_hp11 > 0"
+			onMouseEnter {
+				*node:this@src = "minihud/bar_teambox_hovered"
+				*node:root.floor.str_soldier11_shadow@font = "f_verysmall_bold"
+				*node:root.floor.str_soldier11@font = "f_verysmall_bold"
+			}
+			onMouseLeave {
+				*node:this@src = "minihud/bar_teambox_full"
+				*node:root.floor.str_soldier11_shadow@font = "f_verysmall"
+				*node:root.floor.str_soldier11@font = "f_verysmall"
+			}
+		}
+
+		// soldier numbers strings
+		cmp_str_soldier_shadow str_soldier0_shadow
+		{
+			pos			"91 26"
+			string		"1"
+			visiblewhen	"*cvar:mn_hp0 > 0"
+		}
+		cmp_str_soldier str_soldier0
+		{
+			pos			"90 25"
+			string		"1"
+			visiblewhen	"*cvar:mn_hp0 > 0"
+			// first soldier is selected
+			color		"1 1 1 1"
+		}
+		cmp_str_soldier_shadow str_soldier1_shadow
+		{
+			pos			"171 26"
+			string		"2"
+			visiblewhen	"*cvar:mn_hp1 > 0"
+		}
+		cmp_str_soldier str_soldier1
+		{
+			pos			"170 25"
+			string		"2"
+			visiblewhen	"*cvar:mn_hp1 > 0"
+		}
+		cmp_str_soldier_shadow str_soldier2_shadow
+		{
+			pos			"251 26"
+			string		"3"
+			visiblewhen	"*cvar:mn_hp2 > 0"
+		}
+		cmp_str_soldier str_soldier2
+		{
+			pos			"250 25"
+			string		"3"
+			visiblewhen	"*cvar:mn_hp2 > 0"
+		}
+		cmp_str_soldier_shadow str_soldier3_shadow
+		{
+			pos			"331 26"
+			string		"4"
+			visiblewhen	"*cvar:mn_hp3 > 0"
+		}
+		cmp_str_soldier str_soldier3
+		{
+			pos			"330 25"
+			string		"4"
+			visiblewhen	"*cvar:mn_hp3 > 0"
+		}
+		cmp_str_soldier_shadow str_soldier4_shadow
+		{
+			pos			"411 26"
+			string		"5"
+			visiblewhen	"*cvar:mn_hp4 > 0"
+		}
+		cmp_str_soldier str_soldier4
+		{
+			pos			"410 25"
+			string		"5"
+			visiblewhen	"*cvar:mn_hp4 > 0"
+		}
+		cmp_str_soldier_shadow str_soldier5_shadow
+		{
+			pos			"491 26"
+			string		"6"
+			visiblewhen	"*cvar:mn_hp5 > 0"
+		}
+		cmp_str_soldier str_soldier5
+		{
+			pos			"490 25"
+			string		"6"
+			visiblewhen	"*cvar:mn_hp5 > 0"
+		}
+		cmp_str_soldier_shadow str_soldier6_shadow
+		{
+			pos			"571 26"
+			string		"7"
+			visiblewhen	"*cvar:mn_hp6 > 0"
+		}
+		cmp_str_soldier str_soldier6
+		{
+			pos			"570 25"
+			string		"7"
+			visiblewhen	"*cvar:mn_hp6 > 0"
+		}
+		cmp_str_soldier_shadow str_soldier7_shadow
+		{
+			pos			"651 26"
+			string		"8"
+			visiblewhen	"*cvar:mn_hp7 > 0"
+		}
+		cmp_str_soldier str_soldier7
+		{
+			pos			"650 25"
+			string		"8"
+			visiblewhen	"*cvar:mn_hp7 > 0"
+		}
+		cmp_str_soldier_shadow str_soldier8_shadow
+		{
+			pos			"731 26"
+			string		"9"
+			visiblewhen	"*cvar:mn_hp8 > 0"
+		}
+		cmp_str_soldier str_soldier8
+		{
+			pos			"730 25"
+			string		"9"
+			visiblewhen	"*cvar:mn_hp8 > 0"
+		}
+		// we have to move 7 points to the left compared to the other single digit strings
+		cmp_str_soldier_shadow str_soldier9_shadow
+		{
+			pos			"804 26"
+			string		"10"
+			visiblewhen	"*cvar:mn_hp9 > 0"
+		}
+		cmp_str_soldier str_soldier9
+		{
+			pos			"803 25"
+			string		"10"
+			visiblewhen	"*cvar:mn_hp9 > 0"
+		}
+		cmp_str_soldier_shadow str_soldier10_shadow
+		{
+			pos			"884 26"
+			string		"11"
+			visiblewhen	"*cvar:mn_hp10 > 0"
+		}
+		cmp_str_soldier str_soldier10
+		{
+			pos			"883 25"
+			string		"11"
+			visiblewhen	"*cvar:mn_hp10 > 0"
+		}
+		cmp_str_soldier_shadow str_soldier11_shadow
+		{
+			pos			"964 26"
+			string		"12"
+			visiblewhen	"*cvar:mn_hp11 > 0"
+		}
+		cmp_str_soldier str_soldier11
+		{
+			pos			"963 25"
+			string		"12"
+			visiblewhen	"*cvar:mn_hp11 > 0"
 		}
 
 		func hudenable_floor
@@ -162,323 +646,359 @@ window hud_alt extends hud
 			*cvar:tmp = ( <1> + 1 )
 			*cvar:i = 1
 			while ( *cvar:i < *cvar:tmp ) {
-				*node:root.floor.bar_teambox<cvar:i>@invis = false  *node:root.floor.bar_teamsep<cvar:i>@invis = false  *node:root.floor.head<cvar:i>@invis = false
+				*node:root.floor.bar_teambox<cvar:i>@invis = false
+				*node:root.floor.bar_teambox<cvar:i>_disabled@invis = false
+				*node:root.floor.str_soldier<cvar:i>_shadow@invis = false
+				*node:root.floor.str_soldier<cvar:i>@invis = false
+				*node:root.floor.head<cvar:i>@invis = false
+				*node:root.floor.health<cvar:i>@invis = false
+				*node:root.floor.morale<cvar:i>@invis = false
+				*node:root.floor.time<cvar:i>@invis = false
 				*cvar:i = ( *cvar:i + 1 )
 			}
 
-			while ( *cvar:tmp < 8 ) {
-				*node:root.floor.bar_teambox<cvar:tmp>@invis = true  *node:root.floor.bar_teamsep<cvar:tmp>@invis = true  *node:root.floor.head<cvar:tmp>@invis = true
+			while ( *cvar:tmp < 12 ) {
+				*node:root.floor.bar_teambox<cvar:tmp>@invis = true
+				*node:root.floor.bar_teambox<cvar:tmp>_disabled@invis = true
+				*node:root.floor.str_soldier<cvar:tmp>_shadow@invis = true
+				*node:root.floor.str_soldier<cvar:tmp>@invis = true
+				*node:root.floor.head<cvar:tmp>@invis = true
+				*node:root.floor.health<cvar:tmp>@invis = true
+				*node:root.floor.morale<cvar:tmp>@invis = true
+				*node:root.floor.time<cvar:tmp>@invis = true
 				*cvar:tmp = ( *cvar:tmp + 1 )
 			}
 
 			delete *cvar:tmp
 			delete *cvar:i
-
-			*node:root.floor.bar_teamright@left = ( *node:root.floor.bar_teambox<1>@left + *node:root.floor.bar_teambox<1>@width )
 		}
 
 		image bar_selbox
 		{
-			src		"althud/bar_selbox"
-			pos			"25 26"
-			size		"79 90"
-			texh		"79 90"
+			src		"minihud/bar_selbox"
+			pos			"22 22"
+			size		"87 98"
+			texh		"87 98"
+			onWheelUp	{ cmd "actor_next;"}
+			onWheelDown	{ cmd "actor_prev;"}
+			tooltip		"_Wheel:Select Next/Previous"
+			onMouseEnter {
+				*node:this@src = "minihud/bar_selbox_hovered"
+			}
+			onMouseLeave {
+				*node:this@src = "minihud/bar_selbox"
+			}
 		}
 
 		// ==================
-		// models
+		// head models
 		// ==================
 
-		model head0
+		cmp_model_head head0
 		{
 			src			*cvar:mn_head0
 			angles		"15 60 100"
-			autoscale	true
 			pos			"40 20"
-			size		"50 78"
-			ghost		true
 		}
-		model head1
+		cmp_model_head head1
 		{
 			src			*cvar:mn_head1
-			angles		"15 60 100"
-			autoscale	true
+			angles		"15 65 100"
 			pos			"120 20"
-			size		"50 78"
-			ghost		true
 		}
-		model head2
+		cmp_model_head head2
 		{
 			src			*cvar:mn_head2
-			angles		"15 60 100"
-			autoscale	true
+			angles		"15 70 100"
 			pos			"200 20"
-			size		"50 78"
-			ghost		true
 		}
-		model head3
+		cmp_model_head head3
 		{
 			src			*cvar:mn_head3
-			angles		"15 60 100"
-			autoscale	true
+			angles		"15 75 100"
 			pos			"280 20"
-			size		"50 78"
-			ghost		true
 		}
-		model head4
+		cmp_model_head head4
 		{
 			src			*cvar:mn_head4
-			angles		"15 60 100"
-			autoscale	true
+			angles		"15 80 100"
 			pos			"360 20"
-			size		"50 78"
-			ghost		true
 		}
-		model head5
+		cmp_model_head head5
 		{
 			src			*cvar:mn_head5
-			angles		"15 60 100"
-			autoscale	true
+			angles		"15 85 100"
 			pos			"440 20"
-			size		"50 78"
-			ghost		true
 		}
-		model head6
+		cmp_model_head head6
 		{
 			src			*cvar:mn_head6
-			angles		"15 60 100"
-			autoscale	true
+			angles		"15 95 100"
 			pos			"520 20"
-			size		"50 78"
-			ghost		true
 		}
-		model head7
+		cmp_model_head head7
 		{
 			src			*cvar:mn_head7
-			angles		"15 60 100"
-			autoscale	true
+			angles		"15 100 100"
 			pos			"600 20"
-			size		"50 78"
-			ghost		true
+		}
+		cmp_model_head head8
+		{
+			src			*cvar:mn_head8
+			angles		"15 105 100"
+			pos			"680 20"
+		}
+		cmp_model_head head9
+		{
+			src			*cvar:mn_head9
+			angles		"15 110 100"
+			pos			"760 20"
+		}
+		cmp_model_head head10
+		{
+			src			*cvar:mn_head10
+			angles		"15 115 100"
+			pos			"840 20"
+		}
+		cmp_model_head head11
+		{
+			src			*cvar:mn_head11
+			angles		"15 120 100"
+			pos			"920 20"
 		}
 
-		bar morale0
+		// ==================
+		// status bars
+		// ==================
+
+		cmp_bar_health health0
 		{
 			pos			"32 90"
-			size		"64 4"
-			color		".7 .7 0 1"
-			current		*cvar:mn_morale0
-			max			*cvar:mn_moralemax0
-			disabled	true
-		}
-		bar health0
-		{
-			pos			"32 97"
-			size		"64 4"
-			color		".7 0 0 1"
 			current		*cvar:mn_hp0
 			max			*cvar:mn_hpmax0
-			disabled	true
 		}
-		bar time0
+		cmp_bar_morale morale0
+		{
+			pos			"32 97"
+			current		*cvar:mn_morale0
+			max			*cvar:mn_moralemax0
+		}
+		cmp_bar_time time0
 		{
 			pos			"32 104"
-			size		"64 4"
-			color		".2 .2 1 1"
 			current		*cvar:mn_tu0
 			max			*cvar:mn_tumax0
-			disabled	true
 		}
 
-		bar morale1
+		cmp_bar_health health1
 		{
 			pos			"112 90"
-			size		"64 4"
-			color		".7 .7 0 1"
-			current		*cvar:mn_morale1
-			max			*cvar:mn_moralemax1
-			disabled	true
-		}
-		bar health1
-		{
-			pos			"112 97"
-			size		"64 4"
-			color		".7 0 0 1"
 			current		*cvar:mn_hp1
 			max			*cvar:mn_hpmax1
-			disabled	true
 		}
-		bar time1
+		cmp_bar_morale morale1
+		{
+			pos			"112 97"
+			current		*cvar:mn_morale1
+			max			*cvar:mn_moralemax1
+		}
+		cmp_bar_time time1
 		{
 			pos			"112 104"
-			size		"64 4"
-			color		".2 .2 1 1"
 			current		*cvar:mn_tu1
 			max			*cvar:mn_tumax1
-			disabled	true
 		}
-		bar morale2
+
+		cmp_bar_health health2
 		{
 			pos			"192 90"
-			size		"64 4"
-			color		".7 .7 0 1"
-			current		*cvar:mn_morale2
-			max			*cvar:mn_moralemax2
-			disabled	true
-		}
-		bar health2
-		{
-			pos			"192 97"
-			size		"64 4"
-			color		".7 0 0 1"
 			current		*cvar:mn_hp2
 			max			*cvar:mn_hpmax2
-			disabled	true
 		}
-		bar time2
+		cmp_bar_morale morale2
+		{
+			pos			"192 97"
+			current		*cvar:mn_morale2
+			max			*cvar:mn_moralemax2
+		}
+		cmp_bar_time time2
 		{
 			pos			"192 104"
-			size		"64 4"
-			color		".2 .2 1 1"
 			current		*cvar:mn_tu2
 			max			*cvar:mn_tumax2
-			disabled	true
 		}
-		bar morale3
+
+		cmp_bar_health health3
 		{
 			pos			"272 90"
-			size		"64 4"
-			color		".7 .7 0 1"
-			current		*cvar:mn_morale3
-			max			*cvar:mn_moralemax3
-			disabled	true
-		}
-		bar health3
-		{
-			pos			"272 97"
-			size		"64 4"
-			color		".7 0 0 1"
 			current		*cvar:mn_hp3
 			max			*cvar:mn_hpmax3
-			disabled	true
 		}
-		bar time3
+		cmp_bar_morale morale3
+		{
+			pos			"272 97"
+			current		*cvar:mn_morale3
+			max			*cvar:mn_moralemax3
+		}
+		cmp_bar_time time3
 		{
 			pos			"272 104"
-			size		"64 4"
-			color		".2 .2 1 1"
 			current		*cvar:mn_tu3
 			max			*cvar:mn_tumax3
-			disabled	true
 		}
-		bar morale4
+
+		cmp_bar_health health4
 		{
 			pos			"352 90"
-			size		"64 4"
-			color		".7 .7 0 1"
-			current		*cvar:mn_morale4
-			max			*cvar:mn_moralemax4
-			disabled	true
-		}
-		bar health4
-		{
-			pos			"352 97"
-			size		"64 4"
-			color		".7 0 0 1"
 			current		*cvar:mn_hp4
 			max			*cvar:mn_hpmax4
-			disabled	true
 		}
-		bar time4
+		cmp_bar_morale morale4
+		{
+			pos			"352 97"
+			current		*cvar:mn_morale4
+			max			*cvar:mn_moralemax4
+		}
+		cmp_bar_time time4
 		{
 			pos			"352 104"
-			size		"64 4"
-			color		".2 .2 1 1"
 			current		*cvar:mn_tu4
 			max			*cvar:mn_tumax4
-			disabled	true
 		}
-		bar morale5
+
+		cmp_bar_health health5
 		{
 			pos			"432 90"
-			size		"64 4"
-			color		".7 .7 0 1"
-			current		*cvar:mn_morale5
-			max			*cvar:mn_moralemax5
-			disabled	true
-		}
-		bar health5
-		{
-			pos			"432 97"
-			size		"64 4"
-			color		".7 0 0 1"
 			current		*cvar:mn_hp5
 			max			*cvar:mn_hpmax5
-			disabled	true
 		}
-		bar time5
+		cmp_bar_morale morale5
+		{
+			pos			"432 97"
+			current		*cvar:mn_morale5
+			max			*cvar:mn_moralemax5
+		}
+		cmp_bar_time time5
 		{
 			pos			"432 104"
-			size		"64 4"
-			color		".2 .2 1 1"
 			current		*cvar:mn_tu5
 			max			*cvar:mn_tumax5
-			disabled	true
 		}
-		bar morale6
+
+		cmp_bar_health health6
 		{
 			pos			"512 90"
-			size		"64 4"
-			color		".7 .7 0 1"
-			current		*cvar:mn_morale6
-			max			*cvar:mn_moralemax6
-			disabled	true
-		}
-		bar health6
-		{
-			pos			"512 97"
-			size		"64 4"
-			color		".7 0 0 1"
 			current		*cvar:mn_hp6
 			max			*cvar:mn_hpmax6
-			disabled	true
 		}
-		bar time6
+		cmp_bar_morale morale6
+		{
+			pos			"512 97"
+			current		*cvar:mn_morale6
+			max			*cvar:mn_moralemax6
+		}
+		cmp_bar_time time6
 		{
 			pos			"512 104"
-			size		"64 4"
-			color		".2 .2 1 1"
 			current		*cvar:mn_tu6
 			max			*cvar:mn_tumax6
-			disabled	true
 		}
-		bar morale7
+
+		cmp_bar_health health7
 		{
 			pos			"592 90"
-			size		"64 4"
-			color		".7 .7 0 1"
-			current		*cvar:mn_morale7
-			max			*cvar:mn_moralemax7
-			disabled	true
-		}
-		bar health7
-		{
-			pos			"592 97"
-			size		"64 4"
-			color		".7 0 0 1"
 			current		*cvar:mn_hp7
 			max			*cvar:mn_hpmax7
-			disabled	true
 		}
-		bar time7
+		cmp_bar_morale morale7
+		{
+			pos			"592 97"
+			current		*cvar:mn_morale7
+			max			*cvar:mn_moralemax7
+		}
+		cmp_bar_time time7
 		{
 			pos			"592 104"
-			size		"64 4"
-			color		".2 .2 1 1"
 			current		*cvar:mn_tu7
 			max			*cvar:mn_tumax7
-			disabled	true
 		}
+
+		cmp_bar_health health8
+		{
+			pos			"672 90"
+			current		*cvar:mn_hp8
+			max			*cvar:mn_hpmax8
+		}
+		cmp_bar_morale morale8
+		{
+			pos			"672 97"
+			current		*cvar:mn_morale8
+			max			*cvar:mn_moralemax8
+		}
+		cmp_bar_time time8
+		{
+			pos			"672 104"
+			current		*cvar:mn_tu8
+			max			*cvar:mn_tumax8
+		}
+
+		cmp_bar_health health9
+		{
+			pos			"752 90"
+			current		*cvar:mn_hp9
+			max			*cvar:mn_hpmax9
+		}
+		cmp_bar_morale morale9
+		{
+			pos			"752 97"
+			current		*cvar:mn_morale9
+			max			*cvar:mn_moralemax9
+		}
+		cmp_bar_time time9
+		{
+			pos			"752 104"
+			current		*cvar:mn_tu9
+			max			*cvar:mn_tumax9
+		}
+
+		cmp_bar_health health10
+		{
+			pos			"832 90"
+			current		*cvar:mn_hp10
+			max			*cvar:mn_hpmax10
+		}
+		cmp_bar_morale morale10
+		{
+			pos			"832 97"
+			current		*cvar:mn_morale10
+			max			*cvar:mn_moralemax10
+		}
+		cmp_bar_time time10
+		{
+			pos			"832 104"
+			current		*cvar:mn_tu10
+			max			*cvar:mn_tumax10
+		}
+
+		cmp_bar_health health11
+		{
+			pos			"912 90"
+			current		*cvar:mn_hp11
+			max			*cvar:mn_hpmax11
+		}
+		cmp_bar_morale morale11
+		{
+			pos			"912 97"
+			current		*cvar:mn_morale11
+			max			*cvar:mn_moralemax11
+		}
+		cmp_bar_time time11
+		{
+			pos			"912 104"
+			current		*cvar:mn_tu11
+			max			*cvar:mn_tumax11
+		}
+
 	}
 
 	// ==================
@@ -882,11 +1402,11 @@ window hud_alt extends hud
 		}
 	}
 
-	panel lowerright {
+	panel topleft {
 		{
 			pos		"984 651"
 			size	"40 117"
-			align	LAYOUTALIGN_BOTTOMRIGHT
+			align	LAYOUTALIGN_TOPLEFT
 			ghost	true
 		}
 
@@ -1108,6 +1628,7 @@ window hud_alt extends hud
 	confunc hudenable
 	{
 		call *node:root.floor.hudenable_floor ( <1> )
+		call *node:root.floor_deco.hudenable_floor_deco ( <1> )
 	}
 
 	// ==================
