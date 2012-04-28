@@ -646,6 +646,11 @@ window options
 					label	"png"
 					value	"png"
 				}
+				option screenshot_format_tga
+				{
+					label	"tga"
+					value	"tga"
+				}
 			}
 			// ========================
 			// JPEG SCREENSHOT QUALITY
