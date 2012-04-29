@@ -30,12 +30,12 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 
 const value_t ui_spriteProperties[] = {
 	{"size", V_POS, offsetof(uiSprite_t, size), MEMBER_SIZEOF(uiSprite_t, size)},
-	{"single", V_BOOL, offsetof(uiSprite_t, single), 0},
-	{"blend", V_BOOL, offsetof(uiSprite_t, blend), 0},
-	{"pack64", V_BOOL, offsetof(uiSprite_t, pack64), 0},
-	{"tiled_17_1_3", V_BOOL, offsetof(uiSprite_t, tiled_17_1_3), 0},
-	{"tiled_25_1_3", V_BOOL, offsetof(uiSprite_t, tiled_25_1_3), 0},
-	{"tiled_popup", V_BOOL, offsetof(uiSprite_t, tiled_popup), 0},
+	{"single", V_CPPBOOL, offsetof(uiSprite_t, single), 0},
+	{"blend", V_CPPBOOL, offsetof(uiSprite_t, blend), 0},
+	{"pack64", V_CPPBOOL, offsetof(uiSprite_t, pack64), 0},
+	{"tiled_17_1_3", V_CPPBOOL, offsetof(uiSprite_t, tiled_17_1_3), 0},
+	{"tiled_25_1_3", V_CPPBOOL, offsetof(uiSprite_t, tiled_25_1_3), 0},
+	{"tiled_popup", V_CPPBOOL, offsetof(uiSprite_t, tiled_popup), 0},
 
 	{"texl", V_POS, offsetof(uiSprite_t, pos[SPRITE_STATUS_NORMAL]), MEMBER_SIZEOF(uiSprite_t, pos[SPRITE_STATUS_NORMAL])},
 	{"hoveredtexl", V_POS, offsetof(uiSprite_t, pos[SPRITE_STATUS_HOVER]), MEMBER_SIZEOF(uiSprite_t, pos[SPRITE_STATUS_HOVER])},

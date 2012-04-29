@@ -42,12 +42,12 @@ typedef enum {
 struct uiSprite_t {
 	char name[MAX_VAR];
 	vec2_t size;
-	qboolean single;
-	qboolean blend;
-	qboolean pack64;
-	qboolean tiled_17_1_3;
-	qboolean tiled_25_1_3;
-	qboolean tiled_popup;
+	bool single;
+	bool blend;
+	bool pack64;
+	bool tiled_17_1_3;
+	bool tiled_25_1_3;
+	bool tiled_popup;
 
 	vec4_t color[SPRITE_STATUS_MAX];
 	char* image[SPRITE_STATUS_MAX];
