@@ -642,7 +642,7 @@ window geoscape
 		{
 			tooltip		"_Show/Hide decoration"
 			icon		"icons/on"
-			pos			"224 744"
+			pos			"232 744"
 			size		"24 16"
 			onClick
 			{

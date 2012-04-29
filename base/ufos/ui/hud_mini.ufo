@@ -1645,7 +1645,7 @@ window hud_mini extends hud
 		{
 			tooltip		"_LMB:Show/RMB:Hide Top Panel"
 			icon		"icons/on"
-			pos			"114 490"
+			pos			"122 490"
 			size		"24 16"
 			onClick
 			{
@@ -1666,7 +1666,7 @@ window hud_mini extends hud
 		{
 			tooltip		"_LMB:Show/RMB:Hide Soldier Panel"
 			icon		"icons/on"
-			pos			"94 490"
+			pos			"102 490"
 			size		"24 16"
 			onClick
 			{
@@ -1691,7 +1691,7 @@ window hud_mini extends hud
 		{
 			tooltip		"_LMB:Show/RMB:Hide Decoration"
 			icon		"icons/on"
-			pos			"195 490"
+			pos			"203 490"
 			size		"24 16"
 			onClick
 			{
