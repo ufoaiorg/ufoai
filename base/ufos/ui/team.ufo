@@ -350,7 +350,7 @@ window game_team_edit extends objectinfo
 			pos 		"0 30"
 			size 		"350 100"
 			src			*cvar:mn_item
-			angles		"-10 160 70"
+			angles		"0 180 90"
 			autoscale	true
 		}
 
