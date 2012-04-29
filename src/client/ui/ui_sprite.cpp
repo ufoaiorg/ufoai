@@ -33,6 +33,7 @@ const value_t ui_spriteProperties[] = {
 	{"single", V_BOOL, offsetof(uiSprite_t, single), 0},
 	{"blend", V_BOOL, offsetof(uiSprite_t, blend), 0},
 	{"pack64", V_BOOL, offsetof(uiSprite_t, pack64), 0},
+	{"tiled_17_1_3", V_BOOL, offsetof(uiSprite_t, tiled_17_1_3), 0},
 
 	{"texl", V_POS, offsetof(uiSprite_t, pos[SPRITE_STATUS_NORMAL]), MEMBER_SIZEOF(uiSprite_t, pos[SPRITE_STATUS_NORMAL])},
 	{"hoveredtexl", V_POS, offsetof(uiSprite_t, pos[SPRITE_STATUS_HOVER]), MEMBER_SIZEOF(uiSprite_t, pos[SPRITE_STATUS_HOVER])},
@@ -144,6 +145,17 @@ uiSprite_t* UI_AllocStaticSprite (const char* name)
 }
 
 /**
+ * Template to draw a tiled texture with
+ * corner size of 17 pixels, middle size of 1 pixel,
+ * margin between tiles of 3 pixels
+ */
+static const int tile_template_17_1_3[] = {
+	17, 1, 17,
+	17, 1, 17,
+	3
+};
+
+/**
  * @param[in] status The state of the sprite node
  * @param[in] sprite Context sprite
  * @param[in] posX Absolute X position of the top-left corner
@@ -188,17 +200,23 @@ void UI_DrawSpriteInBox (qboolean flip, const uiSprite_t* sprite, uiSpriteStatus
 	if (!image)
 		return;
 
-	posX += (sizeX - sprite->size[0]) / 2;
-	posY += (sizeY - sprite->size[1]) / 2;
-
 	if (sprite->blend) {
 		const vec_t *color;
 		color = sprite->color[status];
 		R_Color(color);
 	}
 
-	UI_DrawNormImageByName(flip, posX, posY, sprite->size[0], sprite->size[1],
-		texX + sprite->size[0], texY + sprite->size[1], texX, texY, image);
+	if (sprite->tiled_17_1_3) {
+		vec2_t pos = {posX, posY};
+		vec2_t size = {sizeX, sizeY};
+		UI_DrawPanel(pos, size, image, texX, texY, tile_template_17_1_3);
+	} else {
+		posX += (sizeX - sprite->size[0]) / 2;
+		posY += (sizeY - sprite->size[1]) / 2;
+		UI_DrawNormImageByName(flip, posX, posY, sprite->size[0], sprite->size[1],
+			texX + sprite->size[0], texY + sprite->size[1], texX, texY, image);
+	}
+
 	if (sprite->blend)
 		R_Color(NULL);
 }
