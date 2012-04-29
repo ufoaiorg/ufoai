@@ -49,6 +49,7 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 typedef enum {
 	V_NULL,
 	V_BOOL,
+	V_CPPBOOL,
 	V_CHAR,
 	V_INT,
 	V_INT2,

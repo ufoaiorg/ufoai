@@ -309,6 +309,7 @@ static void Com_ParseVersion (const char *version)
 const char *const vt_names[] = {
 	"",
 	"bool",
+	"cppbool",
 	"char",
 	"int",
 	"int2",
@@ -364,6 +365,7 @@ CASSERT(lengthof(fade_names) == FADE_LAST);
 static const size_t vt_sizes[] = {
 	0,	/* V_NULL */
 	sizeof(qboolean),	/* V_BOOL */
+	sizeof(bool),	/* V_CPPBOOL */
 	sizeof(char),	/* V_CHAR */
 	sizeof(int),	/* V_INT */
 	2 * sizeof(int),	/* V_INT2 */
@@ -399,6 +401,7 @@ CASSERT(lengthof(vt_sizes) == V_NUM_TYPES);
 static const size_t vt_aligns[] = {
 	0,	/* V_NULL */
 	sizeof(qboolean),	/* V_BOOL */
+	sizeof(bool),	/* V_CPPBOOL */
 	sizeof(char),	/* V_CHAR */
 	sizeof(int),	/* V_INT */
 	sizeof(int),	/* V_INT2 */
@@ -514,6 +517,18 @@ resultStatus_t Com_ParseValue (void *base, const char *token, valueTypes_t type,
 			return RESULT_ERROR;
 		}
 		*writtenBytes = sizeof(qboolean);
+		break;
+
+	case V_CPPBOOL:
+		if (Q_streq(token, "true") || *token == '1')
+			*(bool *)b = qtrue;
+		else if (Q_streq(token, "false") || *token == '0')
+			*(bool *)b = qfalse;
+		else {
+			snprintf(parseErrorMessage, sizeof(parseErrorMessage), "Illegal bool statement '%s'", token);
+			return RESULT_ERROR;
+		}
+		*writtenBytes = sizeof(bool);
 		break;
 
 	case V_CHAR:
@@ -954,6 +969,13 @@ int Com_SetValue (void *base, const void *set, valueTypes_t type, int ofs, size_
 			*(qboolean *)b = qfalse;
 		return sizeof(qboolean);
 
+	case V_CPPBOOL:
+		if (*(const bool *) set)
+			*(bool *)b = true;
+		else
+			*(bool *)b = false;
+		return sizeof(bool);
+
 	case V_CHAR:
 		*(char *) b = *(const char *) set;
 		return sizeof(char);
@@ -1173,6 +1195,12 @@ const char *Com_ValueToStr (const void *base, const valueTypes_t type, const int
 
 	case V_BOOL:
 		if (*b)
+			return "true";
+		else
+			return "false";
+
+	case V_CPPBOOL:
+		if (*(bool *)b)
 			return "true";
 		else
 			return "false";
