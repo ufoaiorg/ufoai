@@ -35,8 +35,12 @@ class uiButtonNode : public uiLocatedNode {
 };
 
 typedef struct buttonExtraData_s {
-	struct uiSprite_s *icon;	/**< Link to an icon */
-	qboolean flipIcon;			/**< Flip the icon rendering (horizontal) */
+	/** Sprite used as an icon */
+	struct uiSprite_s *icon;
+	/** Flip the icon rendering (horizontal) */
+	qboolean flipIcon;
+	/** Sprite used as a background */
+	struct uiSprite_s *background;
 } buttonExtraData_t;
 
 void UI_RegisterButtonNode(uiBehaviour_t *behaviour);

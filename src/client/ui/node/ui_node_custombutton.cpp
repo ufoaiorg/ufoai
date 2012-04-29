@@ -96,8 +96,8 @@ void uiCustomButtonNode::draw (uiNode_t *node)
 			texX + node->size[0], texY + node->size[1], texX, texY, image);
 	}
 
-	if (EXTRADATA(node).background) {
-		UI_DrawSpriteInBox(qfalse, EXTRADATA(node).background, iconStatus, pos[0], pos[1], node->size[0], node->size[1]);
+	if (EXTRADATA(node).super.background) {
+		UI_DrawSpriteInBox(qfalse, EXTRADATA(node).super.background, iconStatus, pos[0], pos[1], node->size[0], node->size[1]);
 	}
 
 	if (EXTRADATA(node).super.icon) {
@@ -125,6 +125,4 @@ void UI_RegisterCustomButtonNode (uiBehaviour_t *behaviour)
 	/* Skin position. Define the top-left position of the skin we will used from the image.
 	 * Y should not be bigger than 64. To compute the high corner we use the node size. */
 	UI_RegisterExtradataNodeProperty(behaviour, "texl", V_POS, EXTRADATA_TYPE, texl);
-	/* Sprite used to display the background */
-	UI_RegisterExtradataNodeProperty(behaviour, "background", V_UI_SPRITEREF, EXTRADATA_TYPE, background);
 }

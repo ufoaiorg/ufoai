@@ -105,6 +105,10 @@ void uiButtonNode::draw (uiNode_t *node)
 	if (image)
 		UI_DrawPanel(pos, node->size, image, texX, texY, panelTemplate);
 
+	if (EXTRADATA(node).background) {
+		UI_DrawSpriteInBox(qfalse, EXTRADATA(node).background, iconStatus, pos[0], pos[1], node->size[0], node->size[1]);
+	}
+
 	/* display the icon at the left */
 	/** @todo should we move it according to the text align? */
 	if (EXTRADATA(node).icon) {
@@ -174,4 +178,7 @@ void UI_RegisterButtonNode (uiBehaviour_t *behaviour)
 	 */
 	UI_RegisterExtradataNodeProperty(behaviour, "icon", V_UI_SPRITEREF, EXTRADATA_TYPE, icon);
 	UI_RegisterExtradataNodeProperty(behaviour, "flipicon", V_BOOL, EXTRADATA_TYPE, flipIcon);
+
+	/* Sprite used to display the background */
+	UI_RegisterExtradataNodeProperty(behaviour, "background", V_UI_SPRITEREF, EXTRADATA_TYPE, background);
 }
