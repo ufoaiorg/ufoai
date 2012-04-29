@@ -327,6 +327,12 @@ window popup_assembleteam
 		*node:parent.soldierlist.soldier<1>.name@string = <2>
 		*node:parent.soldierlist.soldier<1>.selected@current = <3>
 
+		 if ( *cvar:cpteam_size > 0 ) {
+			*node:parent.equip@disabled = false
+		} else {
+			*node:parent.equip@disabled = true
+		}
+
 		if ( "<4>" ne "" ) {
 			*node:parent.soldierlist.soldier<1>.selected@tooltip = <4>
 			*node:parent.soldierlist.soldier<1>.selected@disabled = true
