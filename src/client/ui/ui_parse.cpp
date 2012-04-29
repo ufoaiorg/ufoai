@@ -1047,7 +1047,7 @@ static uiNode_t *UI_ParseNode (uiNode_t * parent, const char **text, const char 
 		component = UI_GetComponent(*token);
 	}
 	if (behaviour == NULL && component == NULL) {
-		Com_Printf("UI_ParseNode: node behaviour/component '%s' doesn't exists\n", *token);
+		Com_Printf("UI_ParseNode: node behaviour/component '%s' doesn't exists (%s)\n", *token, UI_GetPath(parent));
 		return NULL;
 	}
 
