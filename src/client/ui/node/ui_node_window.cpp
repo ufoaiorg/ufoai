@@ -290,7 +290,7 @@ void uiWindowNode::onLoaded (uiNode_t *node)
 
 	/* create a close button, if it is requested */
 	if (EXTRADATA(node).closeButton) {
-		uiNode_t *button = UI_AllocNode("close_window_button", "custombutton", node->dynamic);
+		uiNode_t *button = UI_AllocNode("close_window_button", "button", node->dynamic);
 		const int positionFromRight = CONTROLS_PADDING;
 
 		button->root = node;
