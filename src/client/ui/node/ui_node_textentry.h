@@ -45,7 +45,7 @@ typedef struct textEntryExtraData_s {
 	qboolean clickOutAbort;	/**< If we click out an activated node, it abort the edition */
 	struct uiAction_s *onAbort;
 	/** Sprite used as a background */
-	struct uiSprite_s *background;
+	uiSprite_t *background;
 } textEntryExtraData_t;
 
 void UI_RegisterTextEntryNode(uiBehaviour_t *behaviour);

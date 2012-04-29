@@ -46,7 +46,7 @@ typedef struct optionExtraData_s {
 	char label[MAX_VAR];	/**< text for the select box */
 	char value[MAX_VAR];	/**< the value the cvar should get */
 
-	struct uiSprite_s *icon;	/**< Link to an icon */
+	uiSprite_t *icon;	/**< Link to an icon */
 	qboolean flipIcon;		/**< Flip the icon rendering (horizontal) */
 
 	/* status */

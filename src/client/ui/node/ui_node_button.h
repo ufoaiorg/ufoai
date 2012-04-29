@@ -37,11 +37,11 @@ public:
 
 typedef struct buttonExtraData_s {
 	/** Sprite used as an icon */
-	struct uiSprite_s *icon;
+	uiSprite_t *icon;
 	/** Flip the icon rendering (horizontal) */
 	qboolean flipIcon;
 	/** Sprite used as a background */
-	struct uiSprite_s *background;
+	uiSprite_t *background;
 } buttonExtraData_t;
 
 void UI_RegisterButtonNode(uiBehaviour_t *behaviour);

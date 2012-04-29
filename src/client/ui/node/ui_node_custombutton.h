@@ -35,7 +35,7 @@ public:
 };
 
 /* prototype */
-struct uiSprite_s;
+struct uiSprite_t;
 
 void UI_RegisterCustomButtonNode(uiBehaviour_t *behaviour);
 

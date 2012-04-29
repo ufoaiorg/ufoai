@@ -35,9 +35,9 @@ class uiSpinner2Node : public uiSpinnerNode {
 typedef struct spinner2ExtraData_s {
 	abstractValueExtraData_s super;
 
-	struct uiSprite_s *background;	/**< Link to the background */
-	struct uiSprite_s *bottomIcon;		/**< Link to the icon used for the bottom button */
-	struct uiSprite_s *topIcon;		/**< Link to the icon used for the top button */
+	uiSprite_t *background;	/**< Link to the background */
+	uiSprite_t *bottomIcon;		/**< Link to the icon used for the bottom button */
+	uiSprite_t *topIcon;		/**< Link to the icon used for the top button */
 
 } spinner2ExtraData_t;
 

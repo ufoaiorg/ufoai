@@ -37,8 +37,8 @@ typedef struct radioButtonExtraData_s {
 	char* cvar;
 	float value;
 	char *string;
-	struct uiSprite_s *background;
-	struct uiSprite_s *icon;	/**< Link to an icon */
+	uiSprite_t *background;
+	uiSprite_t *icon;	/**< Link to an icon */
 	qboolean flipIcon;			/**< Flip the icon rendering (horizontal) */
 } radioButtonExtraData_t;
 

@@ -39,7 +39,7 @@ typedef enum {
 	SPRITE_STATUS_MAX          /**< ICON_STATUS_MAX */
 } uiSpriteStatus_t;
 
-typedef struct uiSprite_s {
+struct uiSprite_t {
 	char name[MAX_VAR];
 	vec2_t size;
 	qboolean single;
@@ -50,7 +50,7 @@ typedef struct uiSprite_s {
 	vec4_t color[SPRITE_STATUS_MAX];
 	char* image[SPRITE_STATUS_MAX];
 	vec2_t pos[SPRITE_STATUS_MAX];
-} uiSprite_t;
+};
 
 extern const value_t ui_spriteProperties[];
 
