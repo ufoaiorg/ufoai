@@ -121,7 +121,7 @@ void uiCustomButtonNode::draw (uiNode_t *node)
 void uiCustomButtonNode::onLoading (uiNode_t *node)
 {
 	uiButtonNode::onLoading(node);
-	Com_Printf("Please rename \"custombutton\" node to \"button\"");
+	Com_Printf("Please rename \"custombutton\" node to \"button\"\n");
 }
 
 void UI_RegisterCustomButtonNode (uiBehaviour_t *behaviour)
