@@ -634,6 +634,10 @@ window options
 					cvar		*cvar:r_screenshot_format
 					pos			"340 345"
 					size		"125 20"
+
+					onChange {
+						call *node:root.options_video.options_general_video.show_jpeg_options
+					}
 				}
 				option screenshot_format_jpeg
 				{
@@ -654,25 +658,35 @@ window options
 			// ========================
 			// JPEG SCREENSHOT QUALITY
 			// ========================
-			string jpeg_quality_str
-			{
-				string		"_jpeg Quality:"
-				pos			"32 370"
-				size		"170 20"
+			func show_jpeg_options {
+				if ( *cvar:r_screenshot_format eq "jpg" ) {
+					*node:parent.jpeg_options@invis = false
+				} else {
+					*node:parent.jpeg_options@invis = true
+				}
 			}
-			image jpeg_quality_rahmen
-			{
-				src		"ui/bar_rahmen"
-				pos			"208 372"
-			}
-			bar jpeg_quality_bar
-			{
-				current		*cvar:r_screenshot_jpeg_quality
-				pos			"217 377"
-				size		"238 6"
-				color		"0 0.8 0 1"
-				max			100
-				onClick		{ }
+			panel jpeg_options {
+				{
+					pos		"30 370"
+					size	"440 25"
+				}
+
+				string jpeg_quality_str {
+					string	"_jpeg Quality:"
+					pos		"0 0"
+					size	"170 20"
+				}
+				image jpeg_quality_rahmen {
+					src		"ui/bar_rahmen"
+					pos		"178 2"
+				}
+				bar jpeg_quality_bar {
+					current	*cvar:r_screenshot_jpeg_quality
+					pos		"187 7"
+					size	"180 6"
+					color	"0 0.8 0 1"
+					max		100
+				}
 			}
 			// ==============================
 			// OTHER DISPLAY OPTIONS SUBMENU
@@ -1922,5 +1936,7 @@ window options
 		*node:root.options_video.options_general_video@invis = false
 
 		*node:root.options_overall@invis = false
+
+		call *node:root.options_video.options_general_video.show_jpeg_options
 	}
 }
