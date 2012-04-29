@@ -34,7 +34,7 @@ component panel cmpBuildingSpace
 	}
 	bar data_bar
 	{
-		pos		"4 15"
+		pos		"3 15"
 		size	"224 5"
 		color	"0 0.8 0 1"
 		bordercolor	"0 0.8 0 1"
@@ -209,7 +209,7 @@ window bases
 			{
 				tooltip	"_Soldiers"
 				icon	"icons/bighead_soldier"
-				pos		"0 0"
+				pos		"4 0"
 				size	"42 42"
 			}
 			string soldier_val
@@ -225,7 +225,7 @@ window bases
 			{
 				tooltip	"_Pilots"
 				icon	"icons/bighead_pilot"
-				pos		"60 0"
+				pos		"64 0"
 				size	"42 42"
 			}
 			string pilot_val
@@ -241,7 +241,7 @@ window bases
 			{
 				tooltip	"_Scientists"
 				icon	"icons/bighead_scientist"
-				pos		"120 0"
+				pos		"124 0"
 				size	"42 42"
 			}
 			string scientist_val
@@ -257,7 +257,7 @@ window bases
 			{
 				tooltip	"_Workers"
 				icon	"icons/bighead_worker"
-				pos		"180 0"
+				pos		"184 0"
 				size	"42 42"
 			}
 			string worker_val
