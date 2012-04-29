@@ -267,7 +267,7 @@ window serverinfo
 		tooltip		"_Add server to bookmarks"
 		pos			"150 720"
 		size		"178 35"
-		image		"ui/button_blue"
+		background		"ui/button_blue"
 		font		"f_normal_bold"
 		color		"1 1 1 0.8"
 		selectcolor	"1 1 1 1"
@@ -392,7 +392,7 @@ window mp_serverbrowser extends abstract_multiplayer_join
 		button button_serverbrowser_refresh
 		{
 			string		"_Refresh"
-			image		"ui/button_green_small"
+			background		"ui/button_green_small"
 			color		"0 0.8 0 1"
 			font		"f_small"
 			pos			"335 490"
@@ -414,7 +414,7 @@ window mp_serverbrowser extends abstract_multiplayer_join
 		textentry slot_name
 		{
 			string		*cvar:cl_name
-			image		"ui/button_green_verysmall"
+			background		"ui/button_green_verysmall"
 			color		"0 .78 0 1"
 			selectcolor	"1 1 1 1"
 			contentalign	ALIGN_CL
@@ -438,7 +438,7 @@ window mp_serverbrowser extends abstract_multiplayer_join
 		textentry slot_ip
 		{
 			string		*cvar:mn_server_ip
-			image		"ui/button_green_verysmall"
+			background		"ui/button_green_verysmall"
 			color		"0 .78 0 1"
 			selectcolor	"1 1 1 1"
 			contentalign	ALIGN_CL
@@ -450,7 +450,7 @@ window mp_serverbrowser extends abstract_multiplayer_join
 		button button_inet_connect_to_ip
 		{
 			string		"_Connect"
-			image		"ui/button_green_small"
+			background		"ui/button_green_small"
 			color		"0 0.8 0 1"
 			font		"f_small"
 			pos			"335 540"
@@ -594,7 +594,7 @@ window mp_create_server extends abstract_multiplayer
 		textentry slot_hostname
 		{
 			string		*cvar:sv_hostname
-			image		"ui/button_green_verysmall"
+			background		"ui/button_green_verysmall"
 			color 		"0 .78 0 1"
 			selectcolor	"1 1 1 1"
 			contentalign	ALIGN_CL
@@ -929,7 +929,7 @@ window mp_create_server extends abstract_multiplayer
 		textentry slot_server_pwd
 		{
 			string		*cvar:password
-			image		"ui/button_green_verysmall"
+			background		"ui/button_green_verysmall"
 			color 		"0 .78 0 1"
 			selectcolor	"1 1 1 1"
 			contentalign	ALIGN_CL
@@ -952,7 +952,7 @@ window mp_create_server extends abstract_multiplayer
 		textentry slot_rcon_pwd
 		{
 			string		*cvar:rcon_password
-			image		"ui/button_green_verysmall"
+			background		"ui/button_green_verysmall"
 			color 		"0 .78 0 1"
 			selectcolor	"1 1 1 1"
 			contentalign	ALIGN_CL
@@ -1272,7 +1272,7 @@ window multiplayer_wait extends levelbuttons
 			visiblewhen "*cvar:cl_admin == 1"
 			string		"_Force start"
 			tooltip		"_Start the game even if not all teams is ready or have joined"
-			image		"ui/button_blue"
+			background		"ui/button_blue"
 			pos			"35 130"
 			size		"150 30"
 			color		"0.8 0.8 0.8 1"
@@ -1300,7 +1300,7 @@ window multiplayer_wait extends levelbuttons
 
 	button invite_players {
 		string		"_Invite others"
-		image		"ui/button_blue"
+		background		"ui/button_blue"
 		tooltip		"_Invite players that are online in the lobby"
 		pos			"30 650"
 		size		"150 40"
@@ -1410,7 +1410,7 @@ window serverpassword
 	}
 	textentry slot_password
 	{
-		image		"ui/button_green_verysmall"
+		background		"ui/button_green_verysmall"
 		color		"0 .78 0 1"
 		selectcolor	"1 1 1 1"
 		contentalign	ALIGN_CL
@@ -1425,7 +1425,7 @@ window serverpassword
 	button set_password
 	{
 		string		"_OK"
-		image		"ui/button_green_small"
+		background		"ui/button_green_small"
 		pos			"260 170"
 		width		"200"
 		font		"f_menu"
@@ -1462,7 +1462,7 @@ window multiplayer_invite
 	{
 		string		"_Server info"
 		tooltip		"_Show server information"
-		image		"ui/button_green_small"
+		background		"ui/button_green_small"
 		pos			"30 170"
 		width		"200"
 		font		"f_menu"
@@ -1478,7 +1478,7 @@ window multiplayer_invite
 	{
 		string		"_Lobby"
 		tooltip		"_Go into the lobby"
-		image		"ui/button_green_small"
+		background		"ui/button_green_small"
 		pos			"260 170"
 		width		"200"
 		font		"f_menu"

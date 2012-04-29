@@ -104,7 +104,7 @@ window team extends iaircraft
 		string "_Equip soldiers"
 		pos		"482 129"
 		size	"198 40"
-		image	"ui/button_blue"
+		background	"ui/button_blue"
 		color	"1 1 1 0.8"
 		selectcolor "1 1 1 1"
 

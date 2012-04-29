@@ -559,7 +559,7 @@ window hospital_employee
 	{
 		string		"_Implants"
 		color		"0 0.8 0 1"
-		image		"ui/button_green_small"
+		background		"ui/button_green_small"
 		pos			"60 270"
 		size		"207 48"
 		font		"f_menu"

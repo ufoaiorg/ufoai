@@ -118,7 +118,7 @@ window options
 		textentry slot_name
 		{
 			string		*cvar:cl_name
-			image		"ui/button_green_verysmall"
+			background		"ui/button_green_verysmall"
 			color 		"0 .78 0 1"
 			selectcolor	"1 1 1 1"
 			contentalign	ALIGN_CL
@@ -1282,7 +1282,7 @@ window options
 				pos		"32 200"
 				size	"120 40"
 				string	"_Low"
-				image	"ui/button_green_small"
+				background	"ui/button_green_small"
 				color	"0 0.5 0 1"
 				selectcolor "1 1 1 1"
 				onClick
@@ -1296,7 +1296,7 @@ window options
 				pos		"162 200"
 				size	"120 40"
 				string	"_Medium"
-				image	"ui/button_green_small"
+				background	"ui/button_green_small"
 				color	"0 0.5 0 1"
 				selectcolor "1 1 1 1"
 				onClick
@@ -1310,7 +1310,7 @@ window options
 				pos		"292 200"
 				size	"120 40"
 				string	"_High"
-				image	"ui/button_green_small"
+				background	"ui/button_green_small"
 				color	"0 0.5 0 1"
 				selectcolor "1 1 1 1"
 				onClick

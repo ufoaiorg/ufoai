@@ -159,7 +159,7 @@ window basedefence extends objectinfo
 			icon		"icons/varrow_swap"
 			string		"_Add"
 			tooltip		"_Equip the selected slot with this weapon"
-			image		"ui/button_green_small"
+			background		"ui/button_green_small"
 			pos			"10 130"
 			size		"200 32"
 			onClick		{
@@ -171,7 +171,7 @@ window basedefence extends objectinfo
 			icon		"icons/varrow_top_bottom"
 			string		"_Remove"
 			tooltip		"_Remove weapon from the selected slot"
-			image		"ui/button_green_small"
+			background		"ui/button_green_small"
 			pos			"230 130"
 			size		"200 32"
 			onClick		{
@@ -316,7 +316,7 @@ window basedefence extends objectinfo
 			string		*cvar:mn_installation_title
 			pos			"310 90"
 			size		"256 34"
-			image		"ui/button_green_verysmall"
+			background		"ui/button_green_verysmall"
 			color		"0 .78 0 1"
 			selectcolor	"1 1 1 1"
 			contentalign	ALIGN_CL
@@ -374,7 +374,7 @@ window basedefence extends objectinfo
 			tooltip		"_Destroy installation"
 			color		"0 0.5 0 1"
 			font		"f_menu"
-			image		"ui/button_green_small"
+			background		"ui/button_green_small"
 			pos			"50 250"
 			size		"200 32"
 			onClick		{ cmd "ui_pop; mn_installation_destroy;" }
@@ -384,7 +384,7 @@ window basedefence extends objectinfo
 			string		"_Close"
 			color		"0 0.5 0 1"
 			font		"f_menu"
-			image		"ui/button_green_small"
+			background		"ui/button_green_small"
 			pos			"549 250"
 			size		"200 32"
 			onClick		{ cmd "ui_pop;" }

@@ -30,7 +30,7 @@ window irc
 	{
 		string		"_Disconnect"
 		tooltip		"_Close menu and disconnect"
-		image		"ui/button_blue"
+		background		"ui/button_blue"
 		pos			"780 720"
 		size		"160 37"
 		selectcolor "1 1 1 1"
@@ -138,7 +138,7 @@ window irc
 	textentry slot_irc_send_buffer
 	{
 		string		*cvar:irc_send_buffer
-		image		"ui/button_green_verysmall"
+		background		"ui/button_green_verysmall"
 		color 		"0 .78 0 1"
 		selectcolor	"1 1 1 1"
 		contentalign	ALIGN_CL
@@ -207,7 +207,7 @@ window irc_changename
 	textentry slot_name
 	{
 		string		*cvar:cl_name
-		image		"ui/button_green_verysmall"
+		background		"ui/button_green_verysmall"
 		color		"0 .78 0 1"
 		selectcolor	"1 1 1 1"
 		contentalign	ALIGN_CL

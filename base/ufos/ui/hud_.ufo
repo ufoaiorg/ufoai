@@ -656,7 +656,7 @@ window hud_chat
 
 				textentry say {
 					align		LAYOUTALIGN_FILL
-					image		"ui/button_green_verysmall"
+					background		"ui/button_green_verysmall"
 					string		*cvar:irc_send_buffer
 					color 		"0 .78 0 1"
 					selectcolor	"1 1 1 1"
@@ -728,7 +728,7 @@ window hud_chat
 
 				textentry say {
 					align		LAYOUTALIGN_FILL
-					image		"ui/button_green_verysmall"
+					background		"ui/button_green_verysmall"
 					string		*cvar:mn_entry
 					color 		"0 .78 0 1"
 					selectcolor	"1 1 1 1"

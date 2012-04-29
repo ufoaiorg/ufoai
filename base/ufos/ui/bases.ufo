@@ -4,7 +4,7 @@
 
 component button cmpBaseButton
 {
-	image		"ui/button_green_small"
+	background		"ui/button_green_small"
 	size		"230 35"
 	color		"0 0.8 0 1"
 	selectcolor "1 1 1 1"

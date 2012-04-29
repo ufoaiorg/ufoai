@@ -10,7 +10,7 @@
 component button cmpMenuButton
 {
 	size "256 64"
-	image	"ui/button_green_big"
+	background	"ui/button_green_big"
 	font	"f_menubig"
 	color	"0 0.5 0 1"
 	selectcolor "1 1 1 1"
@@ -72,7 +72,7 @@ component panel cmpMapSlot
 
 	textentry slot_map
 	{
-		image		"ui/button_green_verysmall"
+		background		"ui/button_green_verysmall"
 		color 		"0 .78 0 1"
 		string		*cvar:mn_svmapname
 		selectcolor	"1 1 1 1"
@@ -219,7 +219,7 @@ component button cmpPopupButton
 	color		"0 0.5 0 1"
 	selectcolor	"1 1 1 1"
 	font		"f_menu"
-	image		"ui/button_green_small"
+	background		"ui/button_green_small"
 	size		"176 32"
 }
 
@@ -349,7 +349,7 @@ component panel cmpTeamPanel
 
 	button slot_team0
 	{
-		image		"ui/button_green_verysmall"
+		background		"ui/button_green_verysmall"
 		color		"0 .78 0 1"
 		selectcolor	"1 1 1 1"
 		contentalign	ALIGN_CC
@@ -364,7 +364,7 @@ component panel cmpTeamPanel
 
 	button slot_team1
 	{
-		image		"ui/button_green_verysmall"
+		background		"ui/button_green_verysmall"
 		color		"0 .78 0 1"
 		selectcolor	"1 1 1 1"
 		contentalign	ALIGN_CC
@@ -379,7 +379,7 @@ component panel cmpTeamPanel
 
 	button slot_team2
 	{
-		image		"ui/button_green_verysmall"
+		background		"ui/button_green_verysmall"
 		color		"0 .78 0 1"
 		selectcolor	"1 1 1 1"
 		contentalign	ALIGN_CC
@@ -394,7 +394,7 @@ component panel cmpTeamPanel
 
 	button slot_team3
 	{
-		image		"ui/button_green_verysmall"
+		background		"ui/button_green_verysmall"
 		color		"0 .78 0 1"
 		selectcolor	"1 1 1 1"
 		contentalign	ALIGN_CC
@@ -409,7 +409,7 @@ component panel cmpTeamPanel
 
 	button slot_team4
 	{
-		image		"ui/button_green_verysmall"
+		background		"ui/button_green_verysmall"
 		color		"0 .78 0 1"
 		selectcolor	"1 1 1 1"
 		contentalign	ALIGN_CC
@@ -424,7 +424,7 @@ component panel cmpTeamPanel
 
 	button slot_team5
 	{
-		image		"ui/button_green_verysmall"
+		background		"ui/button_green_verysmall"
 		color		"0 .78 0 1"
 		selectcolor	"1 1 1 1"
 		contentalign	ALIGN_CC
@@ -441,7 +441,7 @@ component panel cmpTeamPanel
 
 	button slot_team6
 	{
-		image		"ui/button_green_verysmall"
+		background		"ui/button_green_verysmall"
 		color		"0 .78 0 1"
 		selectcolor	"1 1 1 1"
 		contentalign	ALIGN_CC
@@ -456,7 +456,7 @@ component panel cmpTeamPanel
 
 	button slot_team7
 	{
-		image		"ui/button_green_verysmall"
+		background		"ui/button_green_verysmall"
 		color		"0 .78 0 1"
 		selectcolor	"1 1 1 1"
 		contentalign	ALIGN_CC
@@ -471,7 +471,7 @@ component panel cmpTeamPanel
 
 	button slot_team8
 	{
-		image		"ui/button_green_verysmall"
+		background		"ui/button_green_verysmall"
 		color		"0 .78 0 1"
 		selectcolor	"1 1 1 1"
 		contentalign	ALIGN_CC
@@ -486,7 +486,7 @@ component panel cmpTeamPanel
 
 	button slot_team9
 	{
-		image		"ui/button_green_verysmall"
+		background		"ui/button_green_verysmall"
 		color		"0 .78 0 1"
 		selectcolor	"1 1 1 1"
 		contentalign	ALIGN_CC
@@ -501,7 +501,7 @@ component panel cmpTeamPanel
 
 	button slot_team10
 	{
-		image		"ui/button_green_verysmall"
+		background		"ui/button_green_verysmall"
 		color		"0 .78 0 1"
 		selectcolor	"1 1 1 1"
 		contentalign	ALIGN_CC
@@ -516,7 +516,7 @@ component panel cmpTeamPanel
 
 	button slot_team11
 	{
-		image		"ui/button_green_verysmall"
+		background		"ui/button_green_verysmall"
 		color		"0 .78 0 1"
 		selectcolor	"1 1 1 1"
 		contentalign	ALIGN_CC
@@ -539,7 +539,7 @@ component panel cmpTeamPanel
 		size "200 40"
 		tooltip	"_Generate a new random team"
 		onClick	{ cmd "game_autoteam;ui_push game_team_edit;" }
-		image	"ui/button_green_small"
+		background	"ui/button_green_small"
 		font	"f_menusmall"
 		color	"0 0.5 0 1"
 		selectcolor "1 1 1 1"
@@ -552,7 +552,7 @@ component panel cmpTeamPanel
 		size "200 40"
 		tooltip	"_Save the current team"
 		onClick	{ cmd "ui_push game_team_save_popup;" }
-		image	"ui/button_green_small"
+		background	"ui/button_green_small"
 		font	"f_menusmall"
 		color	"0 0.5 0 1"
 		selectcolor "1 1 1 1"

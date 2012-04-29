@@ -506,7 +506,7 @@ window geoscape
 			pos			"41 560"
 			size		"175 34"
 			selectcolor	"1 1 1 1"
-			image		"ui/button_geoscape"
+			background		"ui/button_geoscape"
 
 			onClick		{ cmd "ui_push messageoptions;" }
 		}
@@ -522,7 +522,7 @@ window geoscape
 			pos			"41 595"
 			size		"175 34"
 			selectcolor	"1 1 1 1"
-			image		"ui/button_geoscape"
+			background		"ui/button_geoscape"
 
 			onClick		{ cmd "ui_push mailclient;" }
 		}
@@ -538,7 +538,7 @@ window geoscape
 			pos			"41 595"
 			size		"175 34"
 			selectcolor	"1 1 1 1"
-			image		"ui/button_geoscape"
+			background		"ui/button_geoscape"
 
 			onClick		{ cmd "ui_push mailclient;" }
 		}
@@ -552,7 +552,7 @@ window geoscape
 			color		"0 0.5 0 1"
 			font	 	"f_small"
 			selectcolor	"1 1 1 1"
-			image		"ui/button_geoscape"
+			background		"ui/button_geoscape"
 
 			onClick		{ cmd "ui_push stats;" }
 		}
@@ -565,7 +565,7 @@ window geoscape
 			color		"0 0.5 0 1"
 			font	 	"f_small"
 			selectcolor	"1 1 1 1"
-			image		"ui/button_geoscape"
+			background		"ui/button_geoscape"
 
 			onClick		{ cmd "ui_push ufopedia;" }
 		}
@@ -578,7 +578,7 @@ window geoscape
 			size		"175 34"
 			font	 	"f_small"
 			selectcolor	"1 1 1 1"
-			image		"ui/button_geoscape"
+			background		"ui/button_geoscape"
 
 			onClick		{ cmd "ui_push popup_newinstallation_type;" }
 		}

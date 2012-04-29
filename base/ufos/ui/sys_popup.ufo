@@ -48,7 +48,7 @@ window popup
 	{
 		string		"_OK"
 		tooltip		"_Close this dialogue"
-		image		"ui/button_green_small"
+		background		"ui/button_green_small"
 		pos			"260 180"
 		width		"200"
 		font		"f_menu"

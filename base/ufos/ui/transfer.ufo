@@ -453,7 +453,7 @@ window transfer
 	{
 		string		"_List"
 		tooltip		"_List active transfers"
-		image		"ui/button_blue"
+		background		"ui/button_blue"
 		pos			"580 711"
 		size		"128 52"
 		color		"1 1 1 0.6"
@@ -466,7 +466,7 @@ window transfer
 	{
 		string		"_Transfer"
 		tooltip		"_Start the transfer"
-		image		"ui/button_blue"
+		background		"ui/button_blue"
 		pos			"725 711"
 		size		"128 52"
 		color		"1 1 1 0.6"
@@ -479,7 +479,7 @@ window transfer
 	{
 		string		"_Cancel"
 		tooltip		"_Empty the aircraft storage"
-		image		"ui/button_blue"
+		background		"ui/button_blue"
 		pos			"870 711"
 		size		"128 52"
 		color		"1 1 1 0.6"

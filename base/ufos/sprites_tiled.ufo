@@ -1,0 +1,51 @@
+// Contains tiles sprites usually used to display node background
+
+sprite ui/button_blue {
+	image "banks/button_blue"
+	tiled_17_1_3	true
+	size "64 64"
+	texl "0 0"
+	hoveredtexl "64 0"
+	disabledtexl "64 64"
+	clickedtexl "0 64"
+}
+
+sprite ui/button_geoscape {
+	image "banks/button_geoscape"
+	tiled_17_1_3	true
+	size "64 64"
+	texl "0 0"
+	hoveredtexl "64 0"
+	disabledtexl "64 64"
+	clickedtexl "0 64"
+}
+
+sprite ui/button_green_big {
+	image "banks/button_green_big"
+	tiled_17_1_3	true
+	size "64 64"
+	texl "0 0"
+	hoveredtexl "64 0"
+	disabledtexl "64 64"
+	clickedtexl "0 64"
+}
+
+sprite ui/button_green_small {
+	image "banks/button_green_small"
+	tiled_17_1_3	true
+	size "64 64"
+	texl "0 0"
+	hoveredtexl "64 0"
+	disabledtexl "64 64"
+	clickedtexl "0 64"
+}
+
+sprite ui/button_green_verysmall {
+	image "banks/button_green_verysmall"
+	tiled_17_1_3	true
+	size "64 64"
+	texl "0 0"
+	hoveredtexl "64 0"
+	disabledtexl "64 64"
+	clickedtexl "0 64"
+}

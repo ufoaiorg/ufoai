@@ -406,7 +406,7 @@ window production
 	button prod_new
 	{
 		string		"_Start this production"
-		image		"ui/button_green_small"
+		background		"ui/button_green_small"
 		pos			"670 480"
 		size		"250 32"
 		font		"f_small"

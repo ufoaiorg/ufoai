@@ -38,7 +38,7 @@ window won
 	button bt_continue
 	{
 		string		"_Continue"
-		image		"ui/button_blue"
+		background		"ui/button_blue"
 		invis		true
 		pos			"865 700"
 		size		"128 53"
@@ -112,7 +112,7 @@ window lost
 		string		"_Try again"
 		tooltip		"_Retry this mission"
 		invis		true
-		image		"ui/button_blue"
+		background		"ui/button_blue"
 		pos			"480 700"
 		size		"128 53"
 		color		"1 1 1 0.8"
@@ -128,7 +128,7 @@ window lost
 	{
 		string		"_Continue"
 		invis		true
-		image		"ui/button_blue"
+		background		"ui/button_blue"
 		pos			"865 700"
 		size		"128 53"
 		color		"1 1 1 0.8"

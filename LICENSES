@@ -2694,6 +2694,11 @@ base/pics/background/stats_bg.jpg | GNU General Public License 2.0 or later |  |
 base/pics/background/wingame_bg.jpg | GNU General Public License 2.0 or later |  | Based on original menu artwork by SparX and Rasta
 base/pics/background/won_bg.jpg | GNU General Public License 2.0 or later |  | Based on original menu artwork by SparX and Rasta
 base/pics/background/world_bg.png | GNU General Public License 2.0 or later
+base/pics/banks/button_blue.png | GNU General Public License 2.0 or later |  | Based on original menu artwork by SparX and Rasta
+base/pics/banks/button_geoscape.png | GNU General Public License 2.0 or later | bayo
+base/pics/banks/button_green_big.png | GNU General Public License 2.0 or later | bayo
+base/pics/banks/button_green_small.png | GNU General Public License 2.0 or later | bayo
+base/pics/banks/button_green_verysmall.png | GNU General Public License 2.0 or later | bayo
 base/pics/banks/pack1.png | GNU General Public License 2.0 or later | MCR | based on images from http://sourceforge.net/projects/openiconlibrary
 base/pics/banks/pack2.png | GNU General Public License 2.0 or later | MCR | based on images from http://sourceforge.net/projects/openiconlibrary
 base/pics/banks/pack_hud.png | GNU General Public License 2.0 or later
@@ -3803,11 +3808,6 @@ base/pics/ui/base_lr.png | GNU General Public License 2.0 or later |  | Based on
 base/pics/ui/base_ul.png | GNU General Public License 2.0 or later |  | Based on original menu artwork by SparX and Rasta
 base/pics/ui/base_ur.png | GNU General Public License 2.0 or later |  | Based on original menu artwork by SparX and Rasta
 base/pics/ui/button_big_menu.png | GNU General Public License 2.0 or later |  | Based on original menu artwork by SparX and Rasta
-base/pics/ui/button_blue.png | GNU General Public License 2.0 or later |  | Based on original menu artwork by SparX and Rasta
-base/pics/ui/button_geoscape.png | GNU General Public License 2.0 or later | bayo
-base/pics/ui/button_green_big.png | GNU General Public License 2.0 or later | bayo
-base/pics/ui/button_green_small.png | GNU General Public License 2.0 or later | bayo
-base/pics/ui/button_green_verysmall.png | GNU General Public License 2.0 or later | bayo
 base/pics/ui/button_square.png | GNU General Public License 2.0 or later |  | Based on original menu artwork by SparX and Rasta
 base/pics/ui/checkbox_blue.png | GNU General Public License 2.0 or later | MCR | Source: Based on original menu artwork by SparX and Rasta and images from http://sourceforge.net/projects/openiconlibrary
 base/pics/ui/checkbox_green.png | GNU General Public License 2.0 or later | bayo;MCR | Source: Based on original menu artwork by SparX and Rasta and images from http://sourceforge.net/projects/openiconlibrary

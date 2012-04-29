@@ -120,7 +120,7 @@ window checkcvars
 	textentry slot_name
 	{
 		string		*cvar:cl_name
-		image		"ui/button_green_verysmall"
+		background		"ui/button_green_verysmall"
 		color		"0 .78 0 1"
 		selectcolor	"1 1 1 1"
 		contentalign	ALIGN_CL
@@ -298,7 +298,7 @@ window popup_tipoftheday
 	{
 		string		"_Next"
 		tooltip		"_Next tip"
-		image		"ui/button_green_small"
+		background		"ui/button_green_small"
 		width		"176"
 		pos			"266 188"
 		font		"f_menu"

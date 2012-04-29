@@ -31,7 +31,7 @@ window editor {
 			icon		"icons/system_capture"
 			align		LAYOUTALIGN_LEFT
 			size		"35 35"
-			image		"ui/button_green_small"
+			background		"ui/button_green_small"
 			font		"f_verysmall"
 			color		"0 0.5 0 1"
 			selectcolor	"1 1 1 1"
@@ -43,7 +43,7 @@ window editor {
 			icon		"icons/system_parent"
 			align		LAYOUTALIGN_LEFT
 			size		"35 35"
-			image		"ui/button_green_small"
+			background		"ui/button_green_small"
 			font		"f_verysmall"
 			color		"0 0.5 0 1"
 			selectcolor	"1 1 1 1"
@@ -55,7 +55,7 @@ window editor {
 			icon		"icons/system_child"
 			align		LAYOUTALIGN_LEFT
 			size		"35 35"
-			image		"ui/button_green_small"
+			background		"ui/button_green_small"
 			font		"f_verysmall"
 			color		"0 0.5 0 1"
 			selectcolor	"1 1 1 1"
@@ -67,7 +67,7 @@ window editor {
 			icon		"icons/system_next"
 			align		LAYOUTALIGN_LEFT
 			size		"35 35"
-			image		"ui/button_green_small"
+			background		"ui/button_green_small"
 			font		"f_verysmall"
 			color		"0 0.5 0 1"
 			selectcolor	"1 1 1 1"
@@ -80,7 +80,7 @@ window editor {
 		tooltip		"_Extract the window of the last/current selected node"
 		pos			"25 95"
 		size		"150 35"
-		image		"ui/button_green_small"
+		background		"ui/button_green_small"
 		font		"f_verysmall"
 		color		"0 0.5 0 1"
 		selectcolor	"1 1 1 1"

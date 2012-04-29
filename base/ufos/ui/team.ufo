@@ -766,7 +766,7 @@ window game_team_save_popup
 
 	textentry slot_team0
 	{
-		image		"ui/button_green_verysmall"
+		background		"ui/button_green_verysmall"
 		color		"0 .78 0 1"
 		selectcolor	"1 1 1 1"
 		contentalign	ALIGN_CL
@@ -780,7 +780,7 @@ window game_team_save_popup
 
 	textentry slot_team1
 	{
-		image		"ui/button_green_verysmall"
+		background		"ui/button_green_verysmall"
 		color		"0 .78 0 1"
 		selectcolor	"1 1 1 1"
 		contentalign	ALIGN_CC
@@ -794,7 +794,7 @@ window game_team_save_popup
 
 	textentry slot_team2
 	{
-		image		"ui/button_green_verysmall"
+		background		"ui/button_green_verysmall"
 		color		"0 .78 0 1"
 		selectcolor	"1 1 1 1"
 		contentalign	ALIGN_CC
@@ -808,7 +808,7 @@ window game_team_save_popup
 
 	textentry slot_team3
 	{
-		image		"ui/button_green_verysmall"
+		background		"ui/button_green_verysmall"
 		color		"0 .78 0 1"
 		selectcolor	"1 1 1 1"
 		contentalign	ALIGN_CC
@@ -822,7 +822,7 @@ window game_team_save_popup
 
 	textentry slot_team4
 	{
-		image		"ui/button_green_verysmall"
+		background		"ui/button_green_verysmall"
 		color		"0 .78 0 1"
 		selectcolor	"1 1 1 1"
 		contentalign	ALIGN_CC
@@ -836,7 +836,7 @@ window game_team_save_popup
 
 	textentry slot_team5
 	{
-		image		"ui/button_green_verysmall"
+		background		"ui/button_green_verysmall"
 		color		"0 .78 0 1"
 		selectcolor	"1 1 1 1"
 		contentalign	ALIGN_CC
@@ -850,7 +850,7 @@ window game_team_save_popup
 
 	textentry slot_team6
 	{
-		image		"ui/button_green_verysmall"
+		background		"ui/button_green_verysmall"
 		color		"0 .78 0 1"
 		selectcolor	"1 1 1 1"
 		contentalign	ALIGN_CC
@@ -864,7 +864,7 @@ window game_team_save_popup
 
 	textentry slot_team7
 	{
-		image		"ui/button_green_verysmall"
+		background		"ui/button_green_verysmall"
 		color		"0 .78 0 1"
 		selectcolor	"1 1 1 1"
 		contentalign	ALIGN_CC
@@ -878,7 +878,7 @@ window game_team_save_popup
 
 	textentry slot_team8
 	{
-		image		"ui/button_green_verysmall"
+		background		"ui/button_green_verysmall"
 		color		"0 .78 0 1"
 		selectcolor	"1 1 1 1"
 		contentalign	ALIGN_CC
@@ -892,7 +892,7 @@ window game_team_save_popup
 
 	textentry slot_team9
 	{
-		image		"ui/button_green_verysmall"
+		background		"ui/button_green_verysmall"
 		color		"0 .78 0 1"
 		selectcolor	"1 1 1 1"
 		contentalign	ALIGN_CC
@@ -906,7 +906,7 @@ window game_team_save_popup
 
 	textentry slot_team10
 	{
-		image		"ui/button_green_verysmall"
+		background		"ui/button_green_verysmall"
 		color		"0 .78 0 1"
 		selectcolor	"1 1 1 1"
 		contentalign	ALIGN_CC
@@ -920,7 +920,7 @@ window game_team_save_popup
 
 	textentry slot_team11
 	{
-		image		"ui/button_green_verysmall"
+		background		"ui/button_green_verysmall"
 		color		"0 .78 0 1"
 		selectcolor	"1 1 1 1"
 		contentalign	ALIGN_CC
