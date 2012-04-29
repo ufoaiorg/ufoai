@@ -18,11 +18,11 @@ component panel cmpGeoscapeDocklet {
 	}
 
 	model siteModel {
-		pos		"5 5"
-		size	"50 50"
+		pos		"5 2"
+		size	"50 56"
 		autoscale	true
 		ghost	true
-		angles	"0 0 150"
+		angles	"0 0 160"
 	}
 
 	string	message {
