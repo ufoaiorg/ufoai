@@ -1152,6 +1152,11 @@ static inline void R_VerifyDriver (void)
 	} else {
 		r_config.hardwareType = GLHW_GENERIC;
 	}
+	/* disable intel hack for non intel cards */
+	if (!R_SearchForVendor("Intel")) {
+		Cvar_Set("r_intel_hack", "0");
+		Cvar_Set("r_vendor_non_intel", "1");
+	}
 }
 
 qboolean R_Init (void)

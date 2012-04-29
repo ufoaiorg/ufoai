@@ -1184,23 +1184,38 @@ window options
 					value	"2048"
 				}
 			}
-			// ====================
-			// RENDERER INTEL HACK
-			// ====================
-			string intelhack_str
-			{
-				tooltip		"_Enabled by default for compatibility reasons."
-				string		"_Intel Graphics Hardware Hack:"
-				pos			"32 485"
-				size		"320 20"
+			// we only show the option to disable the intel hack if we are using the intel driver
+			func show_intel_hack_option {
+				if ( *cvar:r_vendor_non_intel == "1" ) {
+					*node:parent.intel_hack_option@invis = true
+				} else {
+					*node:parent.intel_hack_option@invis = false
+				}
 			}
-			checkbox intelhack
-			{
-				tooltip		"_This hack activates texture compression and deactivates GLSL shaders on Intel chips. Disable it to be able to turn on advanced rendering features."
-				current		*cvar:r_intel_hack
-				pos			"445 485"
-				size		"20 18"
-				image		"ui/checkbox_blue"
+			panel intel_hack_option {
+				{
+					pos		"0 0"
+					size	"608 768"
+					ghost	true
+				}
+				// ====================
+				// RENDERER INTEL HACK
+				// ====================
+				string intelhack_str
+				{
+					tooltip		"_Enabled by default for compatibility reasons."
+					string		"_Intel Graphics Hardware Hack:"
+					pos			"32 485"
+					size		"320 20"
+				}
+				checkbox intelhack
+				{
+					tooltip		"_This hack activates texture compression and deactivates GLSL shaders on Intel chips. Disable it to be able to turn on advanced rendering features."
+					current		*cvar:r_intel_hack
+					pos			"445 485"
+					size		"20 18"
+					image		"ui/checkbox_blue"
+				}
 			}
 		}
 
@@ -1972,7 +1987,8 @@ window options
 
 		// hide unnecessary options
 		call *node:root.options_video.options_general_video.show_jpeg_options
-		call *node:root.options_video.options_advanced_video.opengl_options
+		call *node:root.options_video.options_advanced_video.show_opengl_options
+		call *node:root.options_video.options_advanced_video.show_intel_hack_option
 		call *node:root.options_sound.show_advanced_sound_options
 		call *node:root.options_gameplay.show_joystick_options
 	}
