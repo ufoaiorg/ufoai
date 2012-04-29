@@ -46,6 +46,7 @@ struct uiSprite_t {
 	qboolean blend;
 	qboolean pack64;
 	qboolean tiled_17_1_3;
+	qboolean tiled_25_1_3;
 
 	vec4_t color[SPRITE_STATUS_MAX];
 	char* image[SPRITE_STATUS_MAX];
