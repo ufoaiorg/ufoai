@@ -929,7 +929,7 @@ window options
 			selectbox glsl_ver
 			{
 				{
-					tooltip	"_Sets the OpenGL Shader Quality - or disables them"
+					tooltip	"_Set the OpenGL shader quality - or disable them."
 					cvar	*cvar:r_programs
 					pos	"300 190"
 					size	"165 20"
@@ -1036,7 +1036,7 @@ window options
 				// ==============================
 				string postprocess_str
 				{
-					tooltip		"_Post-processing shader effects like glowing textures (only available if GLSL Shaders are turned on)."
+					tooltip		"_Post-processing shader effects like glowing textures."
 					string		"_Post-Processing Shader Effects:"
 					pos			"32 265"
 					size		"370 20"
