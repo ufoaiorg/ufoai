@@ -29,6 +29,7 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #include "../ui_nodes.h"
 #include "../ui_internal.h"
 #include "../ui_render.h"
+#include "../ui_sprite.h"
 #include "ui_node_window.h"
 #include "ui_node_panel.h"
 #include "ui_node_custombutton.h"
@@ -165,6 +166,10 @@ void uiWindowNode::draw (uiNode_t *node)
 	image = UI_GetReferenceString(node, node->image);
 	if (image)
 		UI_DrawPanel(pos, node->size, image, 0, 0, windowTemplate);
+
+	if (EXTRADATA(node).background) {
+		UI_DrawSpriteInBox(qfalse, EXTRADATA(node).background, SPRITE_STATUS_NORMAL, pos[0], pos[1], node->size[0], node->size[1]);
+	}
 
 	/* draw the title */
 	text = UI_GetReferenceString(node, node->text);
@@ -441,4 +446,6 @@ void UI_RegisterWindowNode (uiBehaviour_t *behaviour)
 	/* Invoked after all UI scripts are loaded. */
 	UI_RegisterExtradataNodeProperty(behaviour, "onScriptLoaded", V_UI_ACTION, windowExtraData_t, onScriptLoaded);
 
+	/* Sprite used to display the background */
+	UI_RegisterExtradataNodeProperty(behaviour, "background", V_UI_SPRITEREF, EXTRADATA_TYPE, background);
 }

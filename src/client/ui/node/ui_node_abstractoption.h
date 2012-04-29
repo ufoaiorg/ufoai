@@ -49,6 +49,9 @@ typedef struct {
 	uiScroll_t scrollY;				/**< Scroll position, if need */
 
 	struct uiAction_s *onViewChange;	/**< called when view change (number of elements...) */
+
+	/** Sprite used as a background */
+	uiSprite_t *background;
 } abstractOptionExtraData_t;
 
 struct uiBehaviour_t;

@@ -28,6 +28,7 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #include "../ui_render.h"
 #include "../ui_actions.h"
 #include "../ui_input.h"
+#include "../ui_sprite.h"
 #include "ui_node_abstractnode.h"
 #include "ui_node_panel.h"
 #include "../../../common/scripts.h"
@@ -65,6 +66,10 @@ void uiPanelNode::draw (uiNode_t *node)
 	image = UI_GetReferenceString(node, node->image);
 	if (image)
 		UI_DrawPanel(pos, node->size, image, 0, 0, panelTemplate);
+
+	if (EXTRADATA(node).background) {
+		UI_DrawSpriteInBox(qfalse, EXTRADATA(node).background, SPRITE_STATUS_NORMAL, pos[0], pos[1], node->size[0], node->size[1]);
+	}
 }
 
 /**
@@ -618,6 +623,9 @@ void UI_RegisterPanelNode (uiBehaviour_t *behaviour)
 	 * If scrolling via mousewheel is enabled
 	 */
 	UI_RegisterExtradataNodeProperty(behaviour, "wheelscrollable", V_BOOL, panelExtraData_t, wheelScrollable);
+
+	/* Sprite used to display the background */
+	UI_RegisterExtradataNodeProperty(behaviour, "background", V_UI_SPRITEREF, EXTRADATA_TYPE, background);
 
 	Com_RegisterConstInt("LAYOUTALIGN_TOPLEFT", LAYOUTALIGN_TOPLEFT);
 	Com_RegisterConstInt("LAYOUTALIGN_TOP", LAYOUTALIGN_TOP);

@@ -111,6 +111,8 @@ typedef struct {
 	int layoutMargin;			/**< The margin between all children nodes of the panel */
 	int layoutColumns;			/**< The number of columns (only used by LAYOUT_COLUMN)  */
 	qboolean wheelScrollable;	/**< If scrolling with mouse wheel is enabled */
+	/** Sprite used as a background */
+	uiSprite_t *background;
 } panelExtraData_t;
 
 void UI_RegisterPanelNode(uiBehaviour_t *behaviour);

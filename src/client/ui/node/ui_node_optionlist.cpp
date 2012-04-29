@@ -39,7 +39,8 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 
 #include "../../client.h" /* gettext _() */
 
-#define EXTRADATA(node) UI_EXTRADATA(node, abstractOptionExtraData_t)
+#define EXTRADATA_TYPE abstractOptionExtraData_t
+#define EXTRADATA(node) UI_EXTRADATA(node, EXTRADATA_TYPE)
 
 #define CORNER_SIZE 25
 #define MID_SIZE 1
@@ -98,6 +99,10 @@ void uiOptionListNode::draw (uiNode_t *node)
 	image = UI_GetReferenceString(node, node->image);
 	if (image)
 		UI_DrawPanel(pos, node->size, image, 0, 0, panelTemplate);
+
+	if (EXTRADATA(node).background) {
+		UI_DrawSpriteInBox(qfalse, EXTRADATA(node).background, SPRITE_STATUS_NORMAL, pos[0], pos[1], node->size[0], node->size[1]);
+	}
 
 	font = UI_GetFontFromNode(node);
 
@@ -326,4 +331,7 @@ void UI_RegisterOptionListNode (uiBehaviour_t *behaviour)
 	behaviour->extends = "abstractoption";
 	behaviour->manager = new uiOptionListNode();
 	behaviour->drawItselfChild = qtrue;
+
+	/* Sprite used to display the background */
+	UI_RegisterExtradataNodeProperty(behaviour, "background", V_UI_SPRITEREF, EXTRADATA_TYPE, background);
 }

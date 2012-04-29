@@ -83,6 +83,8 @@ typedef struct {
 	node_index_t *index;
 	node_index_t *index_hash[INDEXEDCHILD_HASH_SIZE];
 
+	/** Sprite used as a background */
+	uiSprite_t *background;
 } windowExtraData_t;
 
 void UI_RegisterWindowNode(uiBehaviour_t *behaviour);

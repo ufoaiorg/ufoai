@@ -32,6 +32,7 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #include "../ui_input.h"
 #include "../ui_actions.h"
 #include "../ui_render.h"
+#include "../ui_sprite.h"
 #include "ui_node_keybinding.h"
 #include "ui_node_abstractnode.h"
 #include "ui_node_panel.h"
@@ -122,11 +123,13 @@ void uiKeyBindingNode::draw (uiNode_t *node)
 	const int descriptionWidth = node->size[0] - bindingWidth;
 	vec2_t descriptionPos, descriptionSize;
 	vec2_t bindingPos, bindingSize;
+	uiSpriteStatus_t iconStatus = SPRITE_STATUS_NORMAL;
 
 	if (node->state) {
 		textColor = node->color;
 		texX = TILE_SIZE;
 		texY = 0;
+		iconStatus = SPRITE_STATUS_HOVER;
 	} else {
 		textColor = node->color;
 		texX = 0;
@@ -146,6 +149,11 @@ void uiKeyBindingNode::draw (uiNode_t *node)
 	if (image) {
 		UI_DrawPanel(descriptionPos, descriptionSize, image, texX, texY, panelTemplate);
 		UI_DrawPanel(bindingPos, bindingSize, image, texX, texY, panelTemplate);
+	}
+
+	if (EXTRADATA(node).background) {
+		UI_DrawSpriteInBox(qfalse, EXTRADATA(node).background, iconStatus, descriptionPos[0], descriptionPos[1], descriptionSize[0], descriptionSize[1]);
+		UI_DrawSpriteInBox(qfalse, EXTRADATA(node).background, iconStatus, bindingPos[0], bindingPos[1], bindingSize[0], bindingSize[1]);
 	}
 
 	binding = UI_GetReferenceString(node, node->text);
@@ -193,4 +201,6 @@ void UI_RegisterKeyBindingNode (uiBehaviour_t *behaviour)
 
 	UI_RegisterExtradataNodeProperty(behaviour, "keyspace", V_INT, keyBindingExtraData_t, keySpace);
 	UI_RegisterExtradataNodeProperty(behaviour, "bindingwidth", V_INT, keyBindingExtraData_t, bindingWidth);
+	/* Sprite used to display the background */
+	UI_RegisterExtradataNodeProperty(behaviour, "background", V_UI_SPRITEREF, EXTRADATA_TYPE, background);
 }
