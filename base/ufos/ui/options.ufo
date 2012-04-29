@@ -1067,31 +1067,49 @@ window options
 				}
 				spinner dynamiclights_change
 				{
-					tooltip		"_Change the number of allowed hardware accelerated dynamic lights. ATTENTION: Realtime lighting has to be turned on for this setting to work."
+					tooltip		"_Change the number of allowed hardware accelerated dynamic lights."
 					current		*cvar:r_dynamic_lights
 					image		"ui/spinner_blue"
 					pos			"448 345"
 					min			0
-					max			8
+					max			7
 					delta		1
+					onChange {
+						call *node:root.options_video.options_advanced_video.opengl_options.show_lighting_options
+					}
 				}
-				// ====================
-				// NORMAL-/BUMPMAPPING
-				// ====================
-				string bumpmapping_str
-				{
-					tooltip		"_Also known as bumpmapping."
-					string		"_Texture Normalmapping:"
-					pos			"32 370"
-					size		"320 20"
+				// we only show lighting options if realtime lighting is enabled
+				func show_lighting_options {
+					if ( *cvar:r_dynamic_lights == "0" ) {
+						*node:parent.lighting_options@invis = true
+					} else {
+						*node:parent.lighting_options@invis = false
+					}
 				}
-				checkbox bumpmapping
-				{
-					tooltip		"_Enable normal-/bumpmapping. ATTENTION: Realtime lighting must be turned on for normalmapping to work."
-					current		*cvar:r_bumpmap
-					pos			"445 370"
-					size		"20 18"
-					image		"ui/checkbox_blue"
+				panel lighting_options {
+					{
+						pos		"0 0"
+						size	"608 768"
+						ghost	true
+					}
+					// ====================
+					// NORMAL-/BUMPMAPPING
+					// ====================
+					string bumpmapping_str
+					{
+						tooltip		"_Also known as bumpmapping."
+						string		"_Texture Normalmapping:"
+						pos			"32 370"
+						size		"320 20"
+					}
+					checkbox bumpmapping
+					{
+						tooltip		"_Enable normal-/bumpmapping."
+						current		*cvar:r_bumpmap
+						pos			"445 370"
+						size		"20 18"
+						image		"ui/checkbox_blue"
+					}
 				}
 				// ========================
 				// GEOSCAPE 3DMAP LIGHTING
@@ -1988,6 +2006,7 @@ window options
 		// hide unnecessary options
 		call *node:root.options_video.options_general_video.show_jpeg_options
 		call *node:root.options_video.options_advanced_video.show_opengl_options
+		call *node:root.options_video.options_advanced_video.opengl_options.show_lighting_options
 		call *node:root.options_video.options_advanced_video.show_intel_hack_option
 		call *node:root.options_sound.show_advanced_sound_options
 		call *node:root.options_gameplay.show_joystick_options
