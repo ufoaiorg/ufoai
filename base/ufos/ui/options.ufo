@@ -670,7 +670,6 @@ window options
 					pos		"30 370"
 					size	"440 25"
 				}
-
 				string jpeg_quality_str {
 					string	"_jpeg Quality:"
 					pos		"0 0"
@@ -934,6 +933,9 @@ window options
 					cvar	*cvar:r_programs
 					pos	"300 190"
 					size	"165 20"
+					onChange {
+						call *node:root.options_video.options_advanced_video.show_opengl_options
+					}
 				}
 				option disabled_value
 				{
@@ -956,82 +958,186 @@ window options
 					value   "3"
 				}
 			}
-			// ===============
-			// VERTEX BUFFERS
-			// ===============
-			string vbo_str
-			{
-				tooltip		"_Vertex Buffers are submitting extensible arrays of vertex attributes to be mapped into the GPU for fast drawing."
-				string		"_Vertex Buffers:"
-				pos			"32 215"
-				size		"240 20"
+			// we only show OpenGL options if shaders are enabled
+			func show_opengl_options {
+				if ( *cvar:r_programs == "0" ) {
+					*node:parent.opengl_options@invis = true
+				} else {
+					*node:parent.opengl_options@invis = false
+				}
 			}
-			checkbox vbo
-			{
-				current		*cvar:r_vertexbuffers
-				pos			"445 215"
-				size		"20 18"
-				image		"ui/checkbox_blue"
-			}
-			// ==================================================================
-			// MULTISAMPLE BUFFERS AND MULTISAMPLE BUFFERS SWAP CONTROL (V-SYNC)
-			// ==================================================================
-			string samplebuf_swapcontrol_str
-			{
-				tooltip		"_OpenGL multisample buffers provide a mechanism to antialias all GL primitives. / The Swap Interval selects when a buffer swap will occur. The value '0' means that the swap will occur immediately (also known as 'v-sync off')."
-				string		"_Multisample Buffers / Swap Interval:"
-				pos			"32 240"
-				size		"320 20"
-			}
-			string samplebuf_value
-			{
-				tooltip		"_Choose between 0-4 Multisample Buffers. Higher values will provide better antialiasing and will enhance picture quality."
-				string		*cvar:r_multisample
-				pos			"360 240"
-				size		"24 20"
-			}
-			spinner samplebuf_change
-			{
-				current		*cvar:r_multisample
-				image		"ui/spinner_blue"
-				pos			"388 240"
-				min			0
-				max			4
-				delta		1
-			}
-			string swapcontrol_value
-			{
-				tooltip		"_Set to '0' to turn v-sync off (faster). Set to '1' or higher to turn v-sync on (better quality)."
-				string		*cvar:r_swapinterval
-				pos			"420 240"
-				size		"20 20"
-			}
-			spinner swapinterval_change
-			{
-				current		*cvar:r_swapinterval
-				image		"ui/spinner_blue"
-				pos			"448 240"
-				min			0
-				max			2
-				delta		1
-			}
-			// ==============================
-			// POSTPROCESSING SHADER EFFECTS
-			// ==============================
-			string postprocess_str
-			{
-				tooltip		"_Post-processing shader effects like glowing textures (only available if GLSL Shaders are turned on)."
-				string		"_Post-Processing Shader Effects:"
-				pos			"32 265"
-				size		"370 20"
-			}
-			checkbox postprocess
-			{
-				tooltip		"_Enable post processing shader effects. ATTENTION: May require restart to take effect."
-				current		*cvar:r_postprocess
-				pos			"445 265"
-				size		"20 18"
-				image		"ui/checkbox_blue"
+			panel opengl_options {
+				{
+					pos		"0 0"
+					size	"608 768"
+					ghost	true
+				}
+				// ===============
+				// VERTEX BUFFERS
+				// ===============
+				string vbo_str
+				{
+					tooltip		"_Vertex Buffers are submitting extensible arrays of vertex attributes to be mapped into the GPU for fast drawing."
+					string		"_Vertex Buffers:"
+					pos			"32 215"
+					size		"240 20"
+				}
+				checkbox vbo
+				{
+					current		*cvar:r_vertexbuffers
+					pos			"445 215"
+					size		"20 18"
+					image		"ui/checkbox_blue"
+				}
+				// ==================================================================
+				// MULTISAMPLE BUFFERS AND MULTISAMPLE BUFFERS SWAP CONTROL (V-SYNC)
+				// ==================================================================
+				string samplebuf_swapcontrol_str
+				{
+					tooltip		"_OpenGL multisample buffers provide a mechanism to antialias all GL primitives. / The Swap Interval selects when a buffer swap will occur. The value '0' means that the swap will occur immediately (also known as 'v-sync off')."
+					string		"_Multisample Buffers / Swap Interval:"
+					pos			"32 240"
+					size		"320 20"
+				}
+				string samplebuf_value
+				{
+					tooltip		"_Choose between 0-4 Multisample Buffers. Higher values will provide better antialiasing and will enhance picture quality."
+					string		*cvar:r_multisample
+					pos			"360 240"
+					size		"24 20"
+				}
+				spinner samplebuf_change
+				{
+					current		*cvar:r_multisample
+					image		"ui/spinner_blue"
+					pos			"388 240"
+					min			0
+					max			4
+					delta		1
+				}
+				string swapcontrol_value
+				{
+					tooltip		"_Set to '0' to turn v-sync off (faster). Set to '1' or higher to turn v-sync on (better quality)."
+					string		*cvar:r_swapinterval
+					pos			"420 240"
+					size		"20 20"
+				}
+				spinner swapinterval_change
+				{
+					current		*cvar:r_swapinterval
+					image		"ui/spinner_blue"
+					pos			"448 240"
+					min			0
+					max			2
+					delta		1
+				}
+				// ==============================
+				// POSTPROCESSING SHADER EFFECTS
+				// ==============================
+				string postprocess_str
+				{
+					tooltip		"_Post-processing shader effects like glowing textures (only available if GLSL Shaders are turned on)."
+					string		"_Post-Processing Shader Effects:"
+					pos			"32 265"
+					size		"370 20"
+				}
+				checkbox postprocess
+				{
+					tooltip		"_Enable post processing shader effects."
+					current		*cvar:r_postprocess
+					pos			"445 265"
+					size		"20 18"
+					image		"ui/checkbox_blue"
+				}
+				// =======================================================
+				// REALTIME LIGHTING AND MAXIMUM NUMBER OF DYNAMIC LIGHTS
+				// =======================================================
+				string light_dynamiclights_str
+				{
+					tooltip		"_Realtime lighting of the 3D world in UFO:AI. / Maximum number of dynamic hardware accelerated lights allowed."
+					string		"_Realtime Lighting / Max Dynamic Lights:"
+					pos			"32 345"
+					size		"320 20"
+				}
+				string dynamiclights_value
+				{
+					string		*cvar:r_dynamic_lights
+					pos			"420 345"
+					size		"100 20"
+				}
+				spinner dynamiclights_change
+				{
+					tooltip		"_Change the number of allowed hardware accelerated dynamic lights. ATTENTION: Realtime lighting has to be turned on for this setting to work."
+					current		*cvar:r_dynamic_lights
+					image		"ui/spinner_blue"
+					pos			"448 345"
+					min			0
+					max			8
+					delta		1
+				}
+				// ====================
+				// NORMAL-/BUMPMAPPING
+				// ====================
+				string bumpmapping_str
+				{
+					tooltip		"_Also known as bumpmapping."
+					string		"_Texture Normalmapping:"
+					pos			"32 370"
+					size		"320 20"
+				}
+				checkbox bumpmapping
+				{
+					tooltip		"_Enable normal-/bumpmapping. ATTENTION: Realtime lighting must be turned on for normalmapping to work."
+					current		*cvar:r_bumpmap
+					pos			"445 370"
+					size		"20 18"
+					image		"ui/checkbox_blue"
+				}
+				// ========================
+				// GEOSCAPE 3DMAP LIGHTING
+				// ========================
+				string m3dmapambient_str
+				{
+					tooltip		"_Amount of light emitting from the sun and shining on the earth."
+					string		"_Geo Ambient Lighting:"
+					pos			"32 395"
+					size		"320 20"
+				}
+				image m3dmapambient_rahmen
+				{
+					src		"ui/bar_rahmen"
+					pos			"204 422"
+				}
+				bar m3dmapambient_bar
+				{
+					current		*cvar:cl_3dmapAmbient
+					pos			"213 427"
+					size		"238 6"
+					color		"0 .8 0 1"
+					min			-1
+					max			3
+					onClick		{ }
+				}
+				// ========
+				// SHADOWS
+				// ========
+				/*
+				string shadows_str
+				{
+					tooltip		"_At the moment these are just drop-shadows."
+					string		"_Shadows:"
+					pos			"32 370"
+					size		"240 20"
+				}
+				checkbox shadows
+				{
+					tooltip		"_Enable shadows."
+					current		*cvar:r_shadows
+					pos			"445 370"
+					size		"20 18"
+					image		"ui/checkbox_blue"
+				}
+				*/
 			}
 			// ==================================
 			// LIGHT AND SHADOW SETTINGS SUBMENU
@@ -1043,70 +1149,6 @@ window options
 				size		"256 20"
 				color		"1.0 0.75 0 1"
 			}
-			// =======================================================
-			// REALTIME LIGHTING AND MAXIMUM NUMBER OF DYNAMIC LIGHTS
-			// =======================================================
-			string light_dynamiclights_str
-			{
-				tooltip		"_Realtime lighting of the 3D world in UFO:AI. / Maximum number of dynamic hardware accelerated lights allowed."
-				string		"_Realtime Lighting / Max Dynamic Lights:"
-				pos			"32 320"
-				size		"320 20"
-			}
-			string dynamiclights_value
-			{
-				string		*cvar:r_dynamic_lights
-				pos			"420 320"
-				size		"100 20"
-			}
-			spinner dynamiclights_change
-			{
-				tooltip		"_Change the number of allowed hardware accelerated dynamic lights. ATTENTION: Realtime lighting has to be turned on for this setting to work."
-				current		*cvar:r_dynamic_lights
-				image		"ui/spinner_blue"
-				pos			"448 320"
-				min			0
-				max			8
-				delta		1
-			}
-			// ====================
-			// NORMAL-/BUMPMAPPING
-			// ====================
-			string bumpmapping_str
-			{
-				tooltip		"_Also known as bumpmapping."
-				string		"_Texture Normalmapping:"
-				pos			"32 345"
-				size		"320 20"
-			}
-			checkbox bumpmapping
-			{
-				tooltip		"_Enable normal-/bumpmapping. ATTENTION: Realtime lighting must be turned on for normalmapping to work."
-				current		*cvar:r_bumpmap
-				pos			"445 345"
-				size		"20 18"
-				image		"ui/checkbox_blue"
-			}
-			// ========
-			// SHADOWS
-			// ========
-			/*
-			string shadows_str
-			{
-				tooltip		"_At the moment these are just drop-shadows."
-				string		"_Shadows:"
-				pos			"32 370"
-				size		"240 20"
-			}
-			checkbox shadows
-			{
-				tooltip		"_Enable shadows."
-				current		*cvar:r_shadows
-				pos			"445 370"
-				size		"20 18"
-				image		"ui/checkbox_blue"
-			}
-			*/
 			// ===============================
 			// LIGHTMAP RESOLUTION BLOCK SIZE
 			// ===============================
@@ -1114,7 +1156,7 @@ window options
 			{
 				tooltip		"_The lightmap block size defines the resolution of the lightmap. Higher block size means using more detailed lightmaps."
 				string		"_Lightmap Block Size:"
-				pos			"32 370"
+				pos			"32 320"
 				size		"240 20"
 			}
 			selectbox lightmapres_box
@@ -1122,7 +1164,7 @@ window options
 				{
 					tooltip		"_Low means a maximum lightmap resolution of 512x512 pixel. High means up to 2048x2048 pixel."
 					cvar		*cvar:r_maxlightmap
-					pos			"339 372"
+					pos			"339 322"
 					size		"125 20"
 				}
 				option low_value {
@@ -1141,31 +1183,6 @@ window options
 					label	"_High"
 					value	"2048"
 				}
-			}
-			// ========================
-			// GEOSCAPE 3DMAP LIGHTING
-			// ========================
-			string m3dmapambient_str
-			{
-				tooltip		"_Amount of light emitting from the sun and shining on the earth."
-				string		"_Geo Ambient Lighting:"
-				pos			"32 395"
-				size		"320 20"
-			}
-			image m3dmapambient_rahmen
-			{
-				src		"ui/bar_rahmen"
-				pos			"204 422"
-			}
-			bar m3dmapambient_bar
-			{
-				current		*cvar:cl_3dmapAmbient
-				pos			"213 427"
-				size		"238 6"
-				color		"0 .8 0 1"
-				min			-1
-				max			3
-				onClick		{ }
 			}
 			// ====================
 			// RENDERER INTEL HACK
@@ -1955,6 +1972,7 @@ window options
 
 		// hide unnecessary options
 		call *node:root.options_video.options_general_video.show_jpeg_options
+		call *node:root.options_video.options_advanced_video.opengl_options
 		call *node:root.options_sound.show_advanced_sound_options
 		call *node:root.options_gameplay.show_joystick_options
 	}
