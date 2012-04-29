@@ -28,6 +28,7 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #include "../ui_nodes.h"
 
 class uiButtonNode : public uiLocatedNode {
+public:
 	void draw(uiNode_t* node) OVERRIDE;
 	void onLoading(uiNode_t* node) OVERRIDE;
 	void onLoaded(uiNode_t* node) OVERRIDE;

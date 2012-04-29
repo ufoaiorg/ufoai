@@ -1962,7 +1962,7 @@ window hud_mini extends hud
 			size	"160 55"
 		}
 /*
-		custombutton bt_rescuezone
+		button bt_rescuezone
 		{
 			tooltip	"_Show rescue zone"
 			background	"buttons/bigred"

@@ -115,6 +115,15 @@ void uiCustomButtonNode::draw (uiNode_t *node)
 	}
 }
 
+/**
+ * @brief Handles Button before loading. Used to set default attribute values
+ */
+void uiCustomButtonNode::onLoading (uiNode_t *node)
+{
+	uiButtonNode::onLoading(node);
+	Com_Printf("Please rename \"custombutton\" node to \"button\"");
+}
+
 void UI_RegisterCustomButtonNode (uiBehaviour_t *behaviour)
 {
 	behaviour->name = "custombutton";

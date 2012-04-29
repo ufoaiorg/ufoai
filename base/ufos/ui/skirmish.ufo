@@ -263,7 +263,7 @@ window skirmish
 			onWheelUp	{ cmd "sk_prevequip cl_equip;" }
 			onWheelDown	{ cmd "sk_nextequip cl_equip;" }
 		}
-		custombutton prev_equipment
+		button prev_equipment
 		{
 			pos			"0 80"
 			size		"35 35"
@@ -272,7 +272,7 @@ window skirmish
 			onWheelDown	{ cmd "sk_nextequip cl_equip;" }
 			onClick		{ cmd "sk_prevequip cl_equip;" }
 		}
-		custombutton next_equipment
+		button next_equipment
 		{
 			pos			"284 80"
 			size		"35 35"
@@ -304,7 +304,7 @@ window skirmish
 			onWheelUp	{ cmd "sk_prevequip ai_equipment;" }
 			onWheelDown	{ cmd "sk_nextequip ai_equipment;" }
 		}
-		custombutton prev_alien_equipment
+		button prev_alien_equipment
 		{
 			pos			"0 180"
 			size		"35 35"
@@ -313,7 +313,7 @@ window skirmish
 			onWheelDown	{ cmd "sk_nextequip ai_equipment;" }
 			onClick		{ cmd "sk_prevequip ai_equipment;" }
 		}
-		custombutton next_alien_equipment
+		button next_alien_equipment
 		{
 			pos			"284 180"
 			size		"35 35"

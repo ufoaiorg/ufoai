@@ -515,7 +515,7 @@ window hud_default extends hud
 			ghost	true
 		}
 
-		custombutton bt_rescuezone
+		button bt_rescuezone
 		{
 			tooltip	"_Show rescue zone"
 			background	"buttons/large_blue"
@@ -526,7 +526,7 @@ window hud_default extends hud
 			onClick			{ cmd "toggle_rescuezone;" }
 		}
 
-		custombutton bt_nextround
+		button bt_nextround
 		{
 			tooltip	"_Finish round"
 			background	"buttons/large_blue"

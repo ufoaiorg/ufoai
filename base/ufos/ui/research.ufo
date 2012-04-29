@@ -495,7 +495,7 @@ window research
 	// buttons
 	// ==================
 
-	custombutton bt_start
+	button bt_start
 	{
 		tooltip		"_Start research"
 		background	"buttons/big_blue"
@@ -505,7 +505,7 @@ window research
 		onClick		{ cmd "mn_start_research;" }
 	}
 
-	custombutton bt_stop
+	button bt_stop
 	{
 		tooltip		"_Stop research"
 		background	"buttons/big_blue"
@@ -515,7 +515,7 @@ window research
 		onClick		{ cmd "mn_stop_research;" }
 	}
 
-	custombutton bt_pedia
+	button bt_pedia
 	{
 		tooltip		"_Show research proposal"
 		background	"buttons/big_blue"

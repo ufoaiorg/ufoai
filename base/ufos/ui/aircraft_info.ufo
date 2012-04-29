@@ -54,7 +54,7 @@ window aircraft extends iaircraft
 		contentalign	ALIGN_UL
 	}
 
-	custombutton aircraft_return
+	button aircraft_return
 	{
 		pos			"726 510"
 		icon		"icons/aircraft_return"

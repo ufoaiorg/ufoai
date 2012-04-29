@@ -189,7 +189,7 @@ window aliencont
 	// kill living aliens button
 	// ==========================
 
-	custombutton bt_alc_killaliens
+	button bt_alc_killaliens
 	{
 		tooltip		"_Kill all aliens in this base"
 		pos			"275 165"

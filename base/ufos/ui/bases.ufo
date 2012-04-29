@@ -85,7 +85,7 @@ window bases
 	}
 
 	// here we need the back-to-geoscape button
-	custombutton bt_back_to_geoscape
+	button bt_back_to_geoscape
 	{
 		tooltip		"_Back to geoscape"
 		icon		"icons/geoscape"
@@ -205,7 +205,7 @@ window bases
 			{
 				size	"230 70"
 			}
-			custombutton soldier
+			button soldier
 			{
 				tooltip	"_Soldiers"
 				icon	"icons/bighead_soldier"
@@ -221,7 +221,7 @@ window bases
 				color			"0 0.8 0 1"
 				contentalign	ALIGN_CL
 			}
-			custombutton pilot
+			button pilot
 			{
 				tooltip	"_Pilots"
 				icon	"icons/bighead_pilot"
@@ -237,7 +237,7 @@ window bases
 				color			"0 0.8 0 1"
 				contentalign	ALIGN_CL
 			}
-			custombutton scientist
+			button scientist
 			{
 				tooltip	"_Scientists"
 				icon	"icons/bighead_scientist"
@@ -253,7 +253,7 @@ window bases
 				color			"0 0.8 0 1"
 				contentalign	ALIGN_CL
 			}
-			custombutton worker
+			button worker
 			{
 				tooltip	"_Workers"
 				icon	"icons/bighead_worker"

@@ -20,14 +20,14 @@ window objectinfo
 	panel itemdescription {
 		{ }
 		string header_item { }
-		custombutton action_dec { }
+		button action_dec { }
 		string item_name { }
-		custombutton action_inc { }
+		button action_inc { }
 
 		string header_firemode { }
-		custombutton firemode_dec { }
+		button firemode_dec { }
 		string firemode_name { }
-		custombutton firemode_inc { }
+		button firemode_inc { }
 	}
 
 	/**

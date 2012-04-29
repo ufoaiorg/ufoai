@@ -499,7 +499,7 @@ window employees
 			contentalign	ALIGN_UC
 		}
 
-		custombutton icon_soldier {
+		button icon_soldier {
 			icon	"icons/bighead_soldier"
 			pos		"190 28"
 			size	"42 42"
@@ -518,7 +518,7 @@ window employees
 			contentalign	ALIGN_UR
 		}
 
-		custombutton icon_pilot {
+		button icon_pilot {
 			icon	"icons/bighead_pilot"
 			pos		"250 28"
 			size	"42 42"
@@ -537,7 +537,7 @@ window employees
 			contentalign	ALIGN_UR
 		}
 
-		custombutton icon_worker {
+		button icon_worker {
 			icon	"icons/bighead_worker"
 			pos		"310 28"
 			size	"42 42"
@@ -556,7 +556,7 @@ window employees
 			contentalign	ALIGN_UR
 		}
 
-		custombutton icon_scientist {
+		button icon_scientist {
 			icon	"icons/bighead_scientist"
 			pos		"370 28"
 			size	"42 42"

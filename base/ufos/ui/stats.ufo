@@ -16,7 +16,7 @@ window stats
 		src		"background/stats_bg"
 	}
 
-	custombutton button_exit
+	button button_exit
 	{
 		background	"buttons/large_blue"
 		pos			"950 720"
@@ -195,7 +195,7 @@ window nations
 		src		"background/stats_bg"
 	}
 
-	custombutton button_exit
+	button button_exit
 	{
 		background	"buttons/large_blue"
 		pos			"950 720"

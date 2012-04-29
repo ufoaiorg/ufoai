@@ -86,7 +86,7 @@ component panel cmpMapSlot
 		onWheelDown	{ cmd "mn_nextmap;" }
 	}
 
-	custombutton prev_map
+	button prev_map
 	{
 		pos			"0 0"
 		size		"35 35"
@@ -95,7 +95,7 @@ component panel cmpMapSlot
 		onWheelDown	{ cmd "mn_nextmap;" }
 		onClick		{ cmd "mn_prevmap;" }
 	}
-	custombutton next_map
+	button next_map
 	{
 		pos			"285 0"
 		size		"35 35"
@@ -135,7 +135,7 @@ component panel cmpDefBaseHeader {
 		contentalign	ALIGN_UR
 	}
 
-	custombutton bt_back_to_baseview
+	button bt_back_to_baseview
 	{
 		tooltip		"_Back to baseview"
 		background	"buttons/big_blue"
@@ -187,7 +187,7 @@ component cmpDefBaseHeader cmpBaseHeader
 		}
 	}
 
-	custombutton prev_base
+	button prev_base
 	{
 		tooltip	"_Switch to the previous base"
 		icon	"icons/prev"
@@ -198,7 +198,7 @@ component cmpDefBaseHeader cmpBaseHeader
 		onWheelDown	{ cmd "ui_pop; mn_base_prev;" }
 	}
 
-	custombutton next_base
+	button next_base
 	{
 		tooltip	"_Switch to the next base"
 		icon	"icons/next"

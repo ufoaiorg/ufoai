@@ -10,7 +10,7 @@ component panel cmpAdr {
 		onClick { cmd "server_info *cvar:adr<node:parent@num>;" }
 		onRClick { cmd "set adr<node:parent@num> \"\"; check_bookmarks;" }
 	}
-	custombutton resetadr { pos "0 1" size "22 22" icon "icons/garbage" tooltip "_Delete this bookmark"
+	button resetadr { pos "0 1" size "22 22" icon "icons/garbage" tooltip "_Delete this bookmark"
 		onClick { cmd "set adr<node:parent@num> \"\"; check_bookmarks;" }
 		onRClick { cmd "set adr<node:parent@num> \"\"; check_bookmarks;" }
 	}
@@ -250,7 +250,7 @@ window serverinfo
 		onClick		{ cmd "connect *cvar:mn_server_ip;" }
 	}
 
-	custombutton button_exit
+	button button_exit
 	{
 		tooltip		"_Leave Serverbrowser"
 		background	"buttons/large_blue"
@@ -324,7 +324,7 @@ window mp_serverbrowser extends abstract_multiplayer_join
 			size		"150 20"
 			contentalign	ALIGN_UC
 		}
-		custombutton status_dec
+		button status_dec
 		{
 			pos			"455 7"
 			size		"16 16"
@@ -338,7 +338,7 @@ window mp_serverbrowser extends abstract_multiplayer_join
 				cmd "pingservers refresh;"
 			}
 		}
-		custombutton status_inc
+		button status_inc
 		{
 			pos			"470 7"
 			size		"16 16"
@@ -627,7 +627,7 @@ window mp_create_server extends abstract_multiplayer
 			onWheelUp	{ cmd "mp_prevgametype;" }
 			onWheelDown	{ cmd "mp_nextgametype;" }
 		}
-		custombutton gametype_dec
+		button gametype_dec
 		{
 			pos			"364 40"
 			size		"16 16"
@@ -636,7 +636,7 @@ window mp_create_server extends abstract_multiplayer
 			onWheelUp	{ cmd "mp_prevgametype;" }
 			onWheelDown	{ cmd "mp_nextgametype;" }
 		}
-		custombutton gametype_inc
+		button gametype_inc
 		{
 			pos			"460 40"
 			size		"16 16"

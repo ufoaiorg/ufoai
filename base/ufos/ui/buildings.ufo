@@ -175,7 +175,7 @@ window popup_buildingpreview
 		}
 
 
-		custombutton ufopedia_link
+		button ufopedia_link
 		{
 			icon		"icons/bordered_magnifying_glass"
 			tooltip		"_UFOpaedia"

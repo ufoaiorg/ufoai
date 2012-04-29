@@ -38,7 +38,7 @@ window irc
 		onClick		{ cmd "irc_disconnect; ui_pop;" }
 	}
 
-	custombutton button_exit
+	button button_exit
 	{
 		tooltip		"_Close menu but stay connected"
 		background	"buttons/large_blue"

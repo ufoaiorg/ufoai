@@ -395,7 +395,7 @@ window game_team_edit extends objectinfo
 			font	"f_small"
 		}
 
-		custombutton action_dec
+		button action_dec
 		{
 			pos		"120 290"
 			icon	"icons/prev"
@@ -412,7 +412,7 @@ window game_team_edit extends objectinfo
 			font	"f_small"
 		}
 
-		custombutton action_inc
+		button action_inc
 		{
 			pos		"334 290"
 			icon	"icons/next"
@@ -432,7 +432,7 @@ window game_team_edit extends objectinfo
 			font	"f_small"
 		}
 
-		custombutton firemode_dec
+		button firemode_dec
 		{
 			tooltip "_Previous firemode"
 			pos		"120 314"
@@ -450,7 +450,7 @@ window game_team_edit extends objectinfo
 			font	"f_small"
 		}
 
-		custombutton firemode_inc
+		button firemode_inc
 		{
 			tooltip "_Next firemode"
 			pos		"334 314"
@@ -714,7 +714,7 @@ window game_team_edit extends objectinfo
 	// additional stuff
 	// ==================
 
-	custombutton bt_go
+	button bt_go
 	{
 		tooltip	"_Done"
 		background	"buttons/large_blue"

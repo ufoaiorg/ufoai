@@ -69,7 +69,7 @@ window hospital
 	cmpBaseHeader baseHeader {
 	}
 
-	custombutton bt_continue
+	button bt_continue
 	{
 		tooltip	"_Back to baseview"
 		background	"buttons/big_blue"

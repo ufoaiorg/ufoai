@@ -362,7 +362,7 @@ window market extends objectinfo {
 			contentalign	ALIGN_UC
 		}
 
-		custombutton ufopedia_link
+		button ufopedia_link
 		{
 			icon		"icons/bordered_magnifying_glass"
 			tooltip		"_UFOpaedia"
@@ -426,7 +426,7 @@ window market extends objectinfo {
 			font	"f_small"
 		}
 
-		custombutton action_dec
+		button action_dec
 		{
 			pos		"142 390"
 			icon	"icons/prev"
@@ -443,7 +443,7 @@ window market extends objectinfo {
 			font	"f_small"
 		}
 
-		custombutton action_inc
+		button action_inc
 		{
 			pos		"356 390"
 			icon	"icons/next"
@@ -463,7 +463,7 @@ window market extends objectinfo {
 			font	"f_small"
 		}
 
-		custombutton firemode_dec
+		button firemode_dec
 		{
 			tooltip "_Previous firemode"
 			pos		"142 414"
@@ -481,7 +481,7 @@ window market extends objectinfo {
 			font	"f_small"
 		}
 
-		custombutton firemode_inc
+		button firemode_inc
 		{
 			tooltip "_Next firemode"
 			pos		"356 414"

@@ -553,7 +553,7 @@ window mailclient
 		}
 	}
 
-	custombutton button_exit
+	button button_exit
 	{
 		tooltip		"_Leave mailclient"
 		background	"buttons/large_blue"

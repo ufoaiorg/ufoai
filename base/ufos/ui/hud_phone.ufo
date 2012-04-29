@@ -77,7 +77,7 @@ component panel hud_phone_firemodeentry {
 		ghost		true
 	}
 
-	custombutton time_indicator {
+	button time_indicator {
 		pos	"180 70"
 		size	"30 70"
 		icon	"hudphone/sprites/indicator_time"
@@ -338,7 +338,7 @@ window hud_phone extends hud
 			}
 		}
 
-		custombutton health_indicator {
+		button health_indicator {
 			pos	"11 208"
 			size	"42 42"
 			icon	"hudphone/sprites/indicator_health"
@@ -375,7 +375,7 @@ window hud_phone extends hud
 			}
 		}
 
-		custombutton moral_indicator {
+		button moral_indicator {
 			pos	"11 262"
 			size	"42 42"
 			icon	"hudphone/sprites/indicator_moral"
@@ -434,7 +434,7 @@ window hud_phone extends hud
 			}
 		}
 
-		custombutton time_indicator {
+		button time_indicator {
 			pos	"11 318"
 			size	"42 42"
 			icon	"hudphone/sprites/indicator_time"
@@ -523,7 +523,7 @@ window hud_phone extends hud
 			ghost	true
 			layout	LAYOUT_TOP_DOWN_FLOW
 		}
-		custombutton standup {
+		button standup {
 			size		"122 148"
 			background	"hudphone/sprites/button"
 			icon		"hudphone/sprites/standup"
@@ -532,7 +532,7 @@ window hud_phone extends hud
 				cmd "actor_standcrouch;"
 			}
 		}
-		custombutton crouch {
+		button crouch {
 			size		"122 148"
 			background	"hudphone/sprites/button"
 			icon		"hudphone/sprites/crouch"
@@ -541,7 +541,7 @@ window hud_phone extends hud
 				cmd "actor_standcrouch;"
 			}
 		}
-		custombutton cancel {
+		button cancel {
 			size		"122 148"
 			background	"hudphone/sprites/button"
 			icon		"hudphone/sprites/cancel"
@@ -559,7 +559,7 @@ window hud_phone extends hud
 			ghost	true
 			layout	LAYOUT_TOP_DOWN_FLOW
 		}
-		custombutton prev {
+		button prev {
 			size		"122 148"
 			background	"hudphone/sprites/button"
 			icon		"hudphone/sprites/soldier_prev"
@@ -567,7 +567,7 @@ window hud_phone extends hud
 			onClick {
 			}
 		}
-		custombutton next {
+		button next {
 			size		"122 148"
 			background	"hudphone/sprites/button"
 			icon		"hudphone/sprites/soldier_next"
@@ -575,7 +575,7 @@ window hud_phone extends hud
 				cmd "actor_next;"
 			}
 		}
-		custombutton cancel {
+		button cancel {
 			size		"122 148"
 			background	"hudphone/sprites/button"
 			icon		"hudphone/sprites/cancel"
@@ -593,7 +593,7 @@ window hud_phone extends hud
 			ghost	true
 			layout	LAYOUT_TOP_DOWN_FLOW
 		}
-		custombutton action {
+		button action {
 			size		"122 148"
 			background	"hudphone/sprites/button"
 			icon		"hudphone/sprites/list"
@@ -603,7 +603,7 @@ window hud_phone extends hud
 				call *node:root.update_control_mode
 			}
 		}
-		custombutton cancel {
+		button cancel {
 			size		"122 148"
 			background	"hudphone/sprites/button"
 			icon		"hudphone/sprites/cancel"
@@ -631,7 +631,7 @@ window hud_phone extends hud
 				ghost	true
 				layout	LAYOUT_TOP_DOWN_FLOW
 			}
-			custombutton up {
+			button up {
 				size		"122 148"
 				background	"hudphone/sprites/button"
 				icon		"hudphone/sprites/arrowup"
@@ -639,7 +639,7 @@ window hud_phone extends hud
 					*node:parent.parent.elements@viewpos = ( *node:parent.parent.elements@viewpos - 150 )
 				}
 			}
-			custombutton down {
+			button down {
 				size		"122 148"
 				background	"hudphone/sprites/button"
 				icon		"hudphone/sprites/arrowdown"
@@ -647,7 +647,7 @@ window hud_phone extends hud
 					*node:parent.parent.elements@viewpos = ( *node:parent.parent.elements@viewpos + 150 )
 				}
 			}
-			custombutton cancel {
+			button cancel {
 				size		"122 148"
 				background	"hudphone/sprites/button"
 				icon		"hudphone/sprites/cancel"

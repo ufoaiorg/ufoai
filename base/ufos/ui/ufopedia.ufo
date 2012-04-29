@@ -345,7 +345,7 @@ window ufopedia extends objectinfo
 			font	"f_small"
 		}
 
-		custombutton action_dec
+		button action_dec
 		{
 			pos		"120 0"
 			icon	"icons/prev"
@@ -362,7 +362,7 @@ window ufopedia extends objectinfo
 			font	"f_small"
 		}
 
-		custombutton action_inc
+		button action_inc
 		{
 			pos		"334 0"
 			icon	"icons/next"
@@ -382,7 +382,7 @@ window ufopedia extends objectinfo
 			font	"f_small"
 		}
 
-		custombutton firemode_dec
+		button firemode_dec
 		{
 			tooltip "_Previous firemode"
 			pos		"120 20"
@@ -400,7 +400,7 @@ window ufopedia extends objectinfo
 			font	"f_small"
 		}
 
-		custombutton firemode_inc
+		button firemode_inc
 		{
 			tooltip "_Next firemode"
 			pos		"334 20"

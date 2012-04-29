@@ -236,7 +236,7 @@ window inventory
 	// buttons
 	// ==================
 
-	custombutton bt_exit
+	button bt_exit
 	{
 		tooltip		"_Close"
 		background	"buttons/large_blue"

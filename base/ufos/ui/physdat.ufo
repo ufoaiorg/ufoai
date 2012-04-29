@@ -314,7 +314,7 @@ window physdata
 	// buttons
 	// ==================
 
-	custombutton button_exit
+	button button_exit
 	{
 		tooltip		"_Close"
 		background	"buttons/large_blue"
