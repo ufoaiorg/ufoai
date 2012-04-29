@@ -114,8 +114,6 @@ void uiButtonNode::draw (uiNode_t *node)
 	if (EXTRADATA(node).icon) {
 		/* use at least a box size equals to button height */
 		int size = node->size[1] - node->padding - node->padding;
-		if (size < EXTRADATA(node).icon->size[0])
-			size = EXTRADATA(node).icon->size[0];
 		UI_DrawSpriteInBox(EXTRADATA(node).flipIcon, EXTRADATA(node).icon, iconStatus, pos[0] + node->padding, pos[1] + node->padding, size,
 				node->size[1] - node->padding - node->padding);
 		iconPadding = size + node->padding;
