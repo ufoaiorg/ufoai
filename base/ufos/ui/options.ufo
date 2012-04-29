@@ -1377,141 +1377,147 @@ window options
 			pos			"485 135"
 			size		"20 18"
 			image		"ui/checkbox_blue"
+			onChange {
+				call *node:root.options_sound.show_advanced_sound_options
+			}
 		}
-		// =============
-		// MUSIC VOLUME
-		// =============
-		string music_str
-		{
-			string		"_Music:"
-			pos			"72 160"
-			size		"150 20"
-			visiblewhen "*cvar:snd_init == 1"
+		// we only show advanced_sound_options if audio is enabled
+		func show_advanced_sound_options {
+			if ( *cvar:snd_init == 1 ) {
+				*node:parent.advanced_sound_options@invis = false
+			} else {
+				*node:parent.advanced_sound_options@invis = true
+			}
 		}
-		image music_rahmen
-		{
-			src		"ui/bar_rahmen"
-			pos			"248 162"
-			visiblewhen "*cvar:snd_init == 1"
-		}
-		bar music_bar
-		{
-			current		*cvar:snd_music_volume
-			pos			"257 167"
-			size		"238 6"
-			color		"0 .8 0 1"
-			max			128
-			onClick		{ }
-			visiblewhen "*cvar:snd_init == 1"
-		}
+		panel advanced_sound_options {
+			{
+				pos		"0 0"
+				size	"640 600"
+				ghost	true
+			}
+			// =============
+			// MUSIC VOLUME
+			// =============
+			string music_str
+			{
+				string		"_Music:"
+				pos			"72 160"
+				size		"150 20"
+			}
+			image music_rahmen
+			{
+				src		"ui/bar_rahmen"
+				pos			"248 162"
+			}
+			bar music_bar
+			{
+				current		*cvar:snd_music_volume
+				pos			"257 167"
+				size		"238 6"
+				color		"0 .8 0 1"
+				max			128
+				onClick		{ }
+			}
 
-		// =====================
-		// SOUND EFFECTS VOLUME
-		// =====================
-		string effects_str
-		{
-			string		"_Sound Effects:"
-			pos			"72 185"
-			size		"170 20"
-			visiblewhen "*cvar:snd_init == 1"
-		}
-		image effects_rahmen
-		{
-			src		"ui/bar_rahmen"
-			pos			"248 187"
-			visiblewhen "*cvar:snd_init == 1"
-		}
-		bar effects_bar
-		{
-			current		*cvar:snd_volume
-			pos			"257 192"
-			size		"238 6"
-			color		"0 .8 0 1"
-			max			1.0
-			onClick		{ }
-			visiblewhen "*cvar:snd_init == 1"
-		}
-		// ============
-		// MENU SOUNDS
-		// ============
-		// on/off only at the moment
-		//
-		string menusounds_str
-		{
-			string		"_Menu Sounds:"
-			pos			"72 210"
-			size		"170 20"
-			visiblewhen "*cvar:snd_init == 1"
-		}
-		checkbox menu_sounds_checkbox
-		{
-			tooltip		"_Turn the menu sounds on or off."
-			current		*cvar:ui_sounds
-			pos			"485 210"
-			size		"20 18"
-			image		"ui/checkbox_blue"
-			visiblewhen "*cvar:snd_init == 1"
-		}
-		// ============================
-		// OTHER AUDIO OPTIONS SUBMENU
-		// ============================
-		string settings_sound_other
-		{
-			string		"_Advanced Audio Options"
-			pos			"62 265"
-			size		"240 20"
-			color		"1.0 0.75 0 1"
-			visiblewhen "*cvar:snd_init == 1"
-		}
-		// ==================
-		// AUDIO SAMPLE RATE
-		// ==================
-		string rate_str
-		{
-			tooltip		"_The sample rate frequency in kHz. Use higher values for better sound quality."
-			string		"_Audio Sample Rate:"
-			pos			"72 290"
-			size		"240 20"
-			visiblewhen "*cvar:snd_init == 1"
-		}
-		selectbox rate_box
-		{
+			// =====================
+			// SOUND EFFECTS VOLUME
+			// =====================
+			string effects_str
 			{
-				cvar		*cvar:snd_rate
-				pos			"359 295"
-				size		"125 20"
-				visiblewhen "*cvar:snd_init == 1"
+				string		"_Sound Effects:"
+				pos			"72 185"
+				size		"170 20"
 			}
-			option low_value
+			image effects_rahmen
 			{
-				label	"11025"
-				value	"11025"
+				src		"ui/bar_rahmen"
+				pos			"248 187"
 			}
-			option medium_value
+			bar effects_bar
 			{
-				label	"22050"
-				value	"22050"
+				current		*cvar:snd_volume
+				pos			"257 192"
+				size		"238 6"
+				color		"0 .8 0 1"
+				max			1.0
+				onClick		{ }
 			}
-			option normal_value
+			// ============
+			// MENU SOUNDS
+			// ============
+			// on/off only at the moment
+			//
+			string menusounds_str
 			{
-				label	"44100"
-				value	"44100"
+				string		"_Menu Sounds:"
+				pos			"72 210"
+				size		"170 20"
 			}
-			option high_value
+			checkbox menu_sounds_checkbox
 			{
-				label	"48000"
-				value	"48000"
+				tooltip		"_Turn the menu sounds on or off."
+				current		*cvar:ui_sounds
+				pos			"485 210"
+				size		"20 18"
+				image		"ui/checkbox_blue"
 			}
-		}
-		button rate_test_pic
-		{
-			tooltip		"_Restart the sound-engine and apply your settings."
-			icon		"icons/bordered_magnifying_glass"
-			pos			"486 297"
-			size		"16 16"
-			padding		0
-			onClick		{ cmd "snd_restart;" }
-			visiblewhen "*cvar:snd_init == 1"
+			// ============================
+			// OTHER AUDIO OPTIONS SUBMENU
+			// ============================
+			string settings_sound_other
+			{
+				string		"_Advanced Audio Options"
+				pos			"62 265"
+				size		"240 20"
+				color		"1.0 0.75 0 1"
+			}
+			// ==================
+			// AUDIO SAMPLE RATE
+			// ==================
+			string rate_str
+			{
+				tooltip		"_The sample rate frequency in kHz. Use higher values for better sound quality."
+				string		"_Audio Sample Rate:"
+				pos			"72 290"
+				size		"240 20"
+			}
+			selectbox rate_box
+			{
+				{
+					cvar		*cvar:snd_rate
+					pos			"359 295"
+					size		"125 20"
+				}
+				option low_value
+				{
+					label	"11025"
+					value	"11025"
+				}
+				option medium_value
+				{
+					label	"22050"
+					value	"22050"
+				}
+				option normal_value
+				{
+					label	"44100"
+					value	"44100"
+				}
+				option high_value
+				{
+					label	"48000"
+					value	"48000"
+				}
+			}
+			button rate_test_pic
+			{
+				tooltip		"_Restart the sound-engine and apply your settings."
+				icon		"icons/bordered_magnifying_glass"
+				pos			"486 297"
+				size		"16 16"
+				padding		0
+				onClick		{ cmd "snd_restart;" }
+			}
 		}
 	}
 	// ========================================
@@ -1937,6 +1943,8 @@ window options
 
 		*node:root.options_overall@invis = false
 
+		// hide unnecessary options
 		call *node:root.options_video.options_general_video.show_jpeg_options
+		call *node:root.options_sound.show_advanced_sound_options
 	}
 }
