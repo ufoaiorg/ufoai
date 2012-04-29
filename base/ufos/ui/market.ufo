@@ -379,7 +379,7 @@ window market extends objectinfo {
 			src			*cvar:mn_item
 			pos			"13 55"
 			size		"384 200"
-			angles		"-10 160 70"
+			angles		"0 180 90"
 			omega		"0 10 0"
 			autoscale	true
 		}

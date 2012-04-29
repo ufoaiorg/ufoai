@@ -342,7 +342,7 @@ window production
 			src			*cvar:mn_item
 			pos			"17 17"
 			size		"386 152"
-			angles		"-10 160 90"
+			angles		"0 180 90"
 			omega		"0 10 0"
 			autoscale	true
 		}
