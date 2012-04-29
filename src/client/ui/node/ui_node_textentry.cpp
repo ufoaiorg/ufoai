@@ -37,6 +37,7 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #include "../ui_input.h"
 #include "../ui_actions.h"
 #include "../ui_render.h"
+#include "../ui_sprite.h"
 #include "ui_node_textentry.h"
 #include "ui_node_abstractnode.h"
 #include "ui_node_panel.h"
@@ -236,29 +237,37 @@ void uiTextEntryNode::draw (uiNode_t *node)
 	vec2_t pos;
 	static vec4_t disabledColor = {0.5, 0.5, 0.5, 1.0};
 	const char *font = UI_GetFontFromNode(node);
+	uiSpriteStatus_t iconStatus = SPRITE_STATUS_NORMAL;
 
 	if (node->disabled) {
 		/** @todo need custom color when node is disabled */
 		textColor = disabledColor;
 		texX = TILE_SIZE;
 		texY = TILE_SIZE;
+		iconStatus = SPRITE_STATUS_DISABLED;
 	} else if (node->state) {
 		textColor = node->color;
 		texX = TILE_SIZE;
 		texY = 0;
+		iconStatus = SPRITE_STATUS_HOVER;
 	} else {
 		textColor = node->color;
 		texX = 0;
 		texY = 0;
 	}
-	if (UI_HasFocus(node))
+	if (UI_HasFocus(node)) {
 		textColor = node->selectedColor;
+	}
 
 	UI_GetNodeAbsPos(node, pos);
 
 	image = UI_GetReferenceString(node, node->image);
 	if (image)
 		UI_DrawPanel(pos, node->size, image, texX, texY, panelTemplate);
+
+	if (EXTRADATA(node).background) {
+		UI_DrawSpriteInBox(qfalse, EXTRADATA(node).background, iconStatus, pos[0], pos[1], node->size[0], node->size[1]);
+	}
 
 	if (char const* const text = UI_GetReferenceString(node, node->text)) {
 		char  buf[MAX_VAR];
@@ -336,4 +345,6 @@ void UI_RegisterTextEntryNode (uiBehaviour_t *behaviour)
 	UI_RegisterExtradataNodeProperty(behaviour, "onAbort", V_UI_ACTION, textEntryExtraData_t, onAbort);
 	/* Call it to force node edition */
 	UI_RegisterNodeMethod(behaviour, "edit", UI_TextEntryNodeFocus);
+	/* Sprite used to display the background */
+	UI_RegisterExtradataNodeProperty(behaviour, "background", V_UI_SPRITEREF, EXTRADATA_TYPE, background);
 }
