@@ -62,13 +62,13 @@ window team extends iaircraft
 	panel actors_background {
 		pos		"18 443"
 		size	"329 321"
-		image	"ui/panel_grey_green_large"
+		background	"ui/panel_grey_green_large"
 	}
 
 	panel tab_background {
 		pos		"24 386"
 		size	"986 56"
-		image	"ui/panel_tab"
+		background	"ui/panel_tab"
 	}
 	// ==================
 	// aircraft
@@ -167,14 +167,14 @@ window team extends iaircraft
 	{
 		pos		"358 443"
 		size	"663 321"
-		image	"ui/panel_grey_black"
+		background	"ui/panel_grey_black"
 	}
 
 	panel actormodel_background {
 	{
 		pos		"12 12"
 		size	"179 296"
-		image	"ui/panel_green"
+		background	"ui/panel_green"
 	}
 
 	image	rank_img {
@@ -244,7 +244,7 @@ window team extends iaircraft
 	{
 		pos		"208 44"
 		size	"440 264"
-		image	"ui/panel_green_tab"
+		background	"ui/panel_green_tab"
 	}
 	cmpNamedBar pwr {
 		{
@@ -351,7 +351,7 @@ window team extends iaircraft
 	{
 		pos		"208 44"
 		size	"440 264"
-		image	"ui/panel_green_tab"
+		background	"ui/panel_green_tab"
 		invis true
 	}
 

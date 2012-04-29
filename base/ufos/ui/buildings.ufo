@@ -137,7 +137,7 @@ window popup_buildingpreview
 		size		"650 245"
 		dragbutton	true
 		closebutton	true
-		image		"ui/popup_alpha_tile"
+		background		"ui/popup_alpha_tile"
 		string		"_Building preview"
 	}
 

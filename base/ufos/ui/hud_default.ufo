@@ -224,7 +224,7 @@ window hud_default extends hud
 			{
 				pos		"0 80"
 				size	"520 200"
-				image	"ui/panel_rounded_green"
+				background	"ui/panel_rounded_green"
 			}
 
 			image right_bg

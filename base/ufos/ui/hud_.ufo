@@ -531,7 +531,7 @@ window hud_chat
 	{
 		pos				"200 500"
 		size			"800 250"
-		image	"ui/popup_alpha_tile"
+		background	"ui/popup_alpha_tile"
 		dragbutton	true
 		closebutton	true
 		string	"_Chat"

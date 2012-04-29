@@ -144,7 +144,7 @@ window options
 			font		"f_language"
 			pos			"297 135"
 			cvar		*cvar:s_language
-			image		"ui/panel_green_slim"
+			background		"ui/panel_green_slim"
 			size		"185 250"
 			color		"0 .78 0 1"
 			selectcolor	"1 1 1 1"

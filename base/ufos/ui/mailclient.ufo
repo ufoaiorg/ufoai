@@ -13,7 +13,7 @@ window mail
 		size		"1000 700"
 		dragbutton	true
 		closebutton	true
-		image		"ui/popup_alpha_tile"
+		background		"ui/popup_alpha_tile"
 		string		"*cvar:mn_mail_subject"
 	}
 

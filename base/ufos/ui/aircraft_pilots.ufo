@@ -11,19 +11,19 @@ window aircraft_pilots extends iaircraft
 	panel actors_background {
 		pos		"18 443"
 		size	"329 321"
-		image	"ui/panel_grey_green_large"
+		background	"ui/panel_grey_green_large"
 	}
 
 	panel actormodel_background {
 		pos		"358 443"
 		size	"205 321"
-		image	"ui/panel_grey_green_large"
+		background	"ui/panel_grey_green_large"
 	}
 
 	panel actorstats_background {
 		pos		"564 443"
 		size	"458 321"
-		image	"ui/panel_grey_green_large"
+		background	"ui/panel_grey_green_large"
 	}
 
 	// ==================

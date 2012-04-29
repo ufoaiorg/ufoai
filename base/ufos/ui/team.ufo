@@ -755,7 +755,7 @@ window game_team_save_popup
 		dragbutton	true
 		closebutton	true
 		modal		true
-		image		"ui/popup_alpha_tile"
+		background		"ui/popup_alpha_tile"
 		string		"_Save your team"
 	}
 

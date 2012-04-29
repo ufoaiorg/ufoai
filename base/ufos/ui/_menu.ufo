@@ -586,7 +586,7 @@ window popup_keyinfo
 {
 	{
 		string		"_Keyinfo and General Help"
-		image		"ui/popup_alpha_tile"
+		background		"ui/popup_alpha_tile"
 		pos			"239 58"
 		size		"536 577"
 		dragbutton	true

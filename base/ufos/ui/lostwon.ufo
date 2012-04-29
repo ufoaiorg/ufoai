@@ -174,7 +174,7 @@ window uforecovery
 		dragbutton	true
 		modal		true
 		preventtypingescape true		// we can't use ESC
-		image		"ui/popup_alpha_tile"
+		background		"ui/popup_alpha_tile"
 		string		"_UFO recovery"
 	}
 

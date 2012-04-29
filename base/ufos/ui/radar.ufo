@@ -27,7 +27,7 @@ window radarwindow {
 		size		"547 580"
 		dragbutton	true
 		closebutton	true
-		image		"ui/popup_alpha_tile"
+		background		"ui/popup_alpha_tile"
 		string		"_Radar"
 	}
 

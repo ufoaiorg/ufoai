@@ -36,7 +36,7 @@ window popup_assembleteam
 		dragbutton		true
 		closebutton		true
 		modal			true				// we can't click out
-		image			"ui/popup_alpha_tile"
+		background			"ui/popup_alpha_tile"
 		string			"_Assemble Team"
 	}
 
@@ -79,7 +79,7 @@ window popup_assembleteam
 		{
 			pos		"375 70"
 			size	"179 300"
-			image	"ui/panel_green"
+			background	"ui/panel_green"
 		}
 
 		image	rank_img {
@@ -166,7 +166,7 @@ window popup_assembleteam
 			{
 				pos		"0 33"
 				size	"440 264"
-				image	"ui/panel_green_tab"
+				background	"ui/panel_green_tab"
 			}
 			cmpNamedBar pwr {
 				{
@@ -273,7 +273,7 @@ window popup_assembleteam
 				{
 					pos		"0 33"
 					size	"440 264"
-					image	"ui/panel_green_tab"
+					background	"ui/panel_green_tab"
 					invis true
 				}
 
@@ -366,7 +366,7 @@ window popup_baseattack
 		dragbutton	true
 		modal		true				// we can't click out
 		preventtypingescape true		// we can't use ESC
-		image		"ui/popup_alpha_tile"
+		background		"ui/popup_alpha_tile"
 		string		"_Base is under attack"
 	}
 

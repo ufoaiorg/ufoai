@@ -182,7 +182,7 @@ window irc_changename
 		size		"496 247"
 		dragbutton	true
 		closebutton	true
-		image		"ui/popup_alpha_tile"
+		background		"ui/popup_alpha_tile"
 		string		"_Name is already in use"
 	}
 
@@ -241,7 +241,7 @@ window irc_popup
 		size		"496 247"
 		dragbutton	true
 		closebutton	true
-		image		"ui/popup_alpha_tile"
+		background		"ui/popup_alpha_tile"
 		string		"_Not connected"
 	}
 

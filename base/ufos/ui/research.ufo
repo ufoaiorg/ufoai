@@ -335,7 +335,7 @@ window research
 	panel infopanel {
 		pos			"645 93"
 		size		"352 660"
-		image		"ui/panel_grey_green_large"
+		background		"ui/panel_grey_green_large"
 	}
 
 	// ===================================

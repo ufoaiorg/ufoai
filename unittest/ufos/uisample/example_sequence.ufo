@@ -6,7 +6,7 @@ window example_sequence
 		size		"500 525"
 		dragbutton	true
 		closebutton	true
-		image		"ui/popup_alpha_tile"
+		background		"ui/popup_alpha_tile"
 		string		"Example of sequence"
 	}
 

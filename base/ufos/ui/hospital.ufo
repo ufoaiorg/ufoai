@@ -405,7 +405,7 @@ window hospital_employee
 	panel actorinfo {
 		pos		"457 101"
 		size	"555 471"
-		image	"ui/panel_grey_green_large"
+		background	"ui/panel_grey_green_large"
 	}
 
 	string txt_name
@@ -552,7 +552,7 @@ window hospital_employee
 	panel buttonpanel {
 		pos		"26 101"
 		size	"276 471"
-		image	"ui/panel_grey_green_large"
+		background	"ui/panel_grey_green_large"
 	}
 
 	button button_hosp_bionic_start

@@ -38,7 +38,7 @@ window transfer
 	panel tab_background {
 		pos		"24 96"
 		size	"986 56"
-		image	"ui/panel_tab"
+		background	"ui/panel_tab"
 	}
 
 	tab trans_navigation {
@@ -382,7 +382,7 @@ window transfer
 		{
 			pos		"580 160"
 			size	"420 260"
-			image	"ui/panel_grey_green_large"
+			background	"ui/panel_grey_green_large"
 		}
 
 		string s_current_base
@@ -523,7 +523,7 @@ window popup_transferbaselist
 		pos			"264 262"
 		size		"496 247"
 		dragbutton	true
-		image		"ui/popup_alpha_tile"
+		background		"ui/popup_alpha_tile"
 		string		"_Select base to transfer to"
 	}
 
@@ -657,7 +657,7 @@ window popup_transferlist
 		pos			"226 226"
 		size		"542 512"
 		dragbutton	true
-		image		"ui/popup_alpha_tile"
+		background		"ui/popup_alpha_tile"
 		string		"_Actual transfers"
 		modal		true
 	}

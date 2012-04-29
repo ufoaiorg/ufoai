@@ -15,7 +15,7 @@ window popup
 		size		"496 247"
 		dragbutton	true
 		closebutton	true
-		image		"ui/popup_alpha_tile"
+		background		"ui/popup_alpha_tile"
 		string		*cvar:ui_sys_popup_title
 	}
 
@@ -68,7 +68,7 @@ window popup_list
 		size		"496 247"
 		dragbutton	true
 		closebutton	true
-		image		"ui/popup_alpha_tile"
+		background		"ui/popup_alpha_tile"
 		string		*cvar:ui_sys_popup_title
 	}
 
@@ -126,7 +126,7 @@ window popup_button
 		size		"496 247"
 		dragbutton	true
 		closebutton	true
-		image		"ui/popup_alpha_tile"
+		background		"ui/popup_alpha_tile"
 		string		*cvar:ui_sys_popup_title
 	}
 

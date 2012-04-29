@@ -775,7 +775,7 @@ window popup_intercept_ready
 		pos			"264 262"
 		size		"496 247"
 		dragbutton	true
-		image		"ui/popup_alpha_tile"
+		background		"ui/popup_alpha_tile"
 		string		"_Ready"
 		modal		true
 	}
@@ -841,7 +841,7 @@ window popup_newbase
 		size		"496 247"
 		dragbutton	true
 		modal		true
-		image		"ui/popup_alpha_tile"
+		background		"ui/popup_alpha_tile"
 		string		"_New base"
 	}
 
@@ -911,7 +911,7 @@ window popup_newinstallation_type
 		size		"496 247"
 		dragbutton	true
 		closebutton	true
-		image		"ui/popup_alpha_tile"
+		background		"ui/popup_alpha_tile"
 		string		"_New installation"
 	}
 
@@ -1197,7 +1197,7 @@ window popup_newinstallation
 		dragbutton	true
 		closebutton	true
 		modal		true
-		image		"ui/popup_alpha_tile"
+		background		"ui/popup_alpha_tile"
 	}
 
 	string title
@@ -1312,7 +1312,7 @@ window popup_installationstatus
 		pos			"264 262"
 		size		"496 220"
 		dragbutton	true
-		image		"ui/popup_alpha_tile"
+		background		"ui/popup_alpha_tile"
 		string		"_Installation Status"
 	}
 
@@ -1404,7 +1404,7 @@ window popup_intercept
 		pos			"124 192"
 		size		"548 459"
 		dragbutton	true
-		image		"ui/popup_alpha_tile"
+		background		"ui/popup_alpha_tile"
 		string		"_Anti-UFO defence"
 	}
 
@@ -1572,7 +1572,7 @@ window popup_mission
 		pos			"124 192"
 		size		"777 402"
 		dragbutton	true
-		image		"ui/popup_alpha_tile"
+		background		"ui/popup_alpha_tile"
 		string		"_Select aircraft"
 	}
 
@@ -1636,7 +1636,7 @@ window popup_multi_selection
 		size		"496 247"
 		dragbutton	true
 		modal		true
-		image		"ui/popup_alpha_tile"
+		background		"ui/popup_alpha_tile"
 		string		"_Select item"
 	}
 
@@ -1703,7 +1703,7 @@ window popup_aircraft
 		pos			"264 262"
 		size		"496 247"
 		dragbutton	true
-		image		"ui/popup_alpha_tile"
+		background		"ui/popup_alpha_tile"
 		string		"_Aircraft"
 	}
 
@@ -1771,7 +1771,7 @@ window geoscape_options {
 		size		"350 300"
 		dragbutton	true
 		closebutton	true
-		image		"ui/popup_alpha_tile"
+		background		"ui/popup_alpha_tile"
 		string		"_Geoscape options"
 	}
 

@@ -1154,7 +1154,7 @@ window multiplayer_wait extends levelbuttons
 			pos		"520 30"
 			size	"400 250"
 			padding	5
-			image	"ui/panel_window"
+			background	"ui/panel_window"
 		}
 
 		string title
@@ -1208,7 +1208,7 @@ window multiplayer_wait extends levelbuttons
 			pos		"520 290"
 			size	"400 200"
 			padding	10
-			image	"ui/panel_window"
+			background	"ui/panel_window"
 		}
 
 		string title
@@ -1396,7 +1396,7 @@ window serverpassword
 		size		"496 247"
 		dragbutton	true
 		closebutton	true
-		image		"ui/popup_alpha_tile"
+		background		"ui/popup_alpha_tile"
 	}
 
 	// ===================
@@ -1446,7 +1446,7 @@ window multiplayer_invite
 		size		"496 247"
 		dragbutton	true
 		closebutton	true
-		image		"ui/popup_alpha_tile"
+		background		"ui/popup_alpha_tile"
 	}
 
 	/* store popup data */

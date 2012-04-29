@@ -44,7 +44,7 @@ window messageoptions
 		dragbutton	true
 		closebutton	true
 		modal		true
-		image		"ui/popup_alpha_tile"
+		background		"ui/popup_alpha_tile"
 		string		"_Pause/message settings"
 	}
 

@@ -80,7 +80,7 @@ window aircraft_equip extends iaircraft
 		{
 			pos		"317 441"
 			size	"252 319"
-			image	"ui/panel_grey_green"
+			background	"ui/panel_grey_green"
 		}
 
 		string airequip_selected
@@ -184,7 +184,7 @@ window aircraft_equip extends iaircraft
 		{
 			pos		"24 441"
 			size	"292 319"
-			image	"ui/panel_grey_green"
+			background	"ui/panel_grey_green"
 		}
 
 		string airequip_available

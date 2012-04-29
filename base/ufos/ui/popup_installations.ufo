@@ -136,7 +136,7 @@ component panel cmp_ufotransfer_ufoentry {
 window popup_ufoyards {
 	{
 		string		"_UFO Yards"
-		image		"ui/popup_alpha_tile"
+		background		"ui/popup_alpha_tile"
 		pos			"64 250"
 		size		"768 370"
 		dragbutton	true

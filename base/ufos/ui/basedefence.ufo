@@ -6,7 +6,7 @@ window basedefence extends objectinfo
 		dragbutton	true
 		closebutton	true
 		modal		true
-		image		"ui/popup_alpha_tile"
+		background		"ui/popup_alpha_tile"
 		string		"_Equip Defence Weapons"
 	}
 
@@ -235,7 +235,7 @@ window basedefence extends objectinfo
 			{
 				pos		"455 5"
 				size	"334 285"
-				image	"ui/panel_green"
+				background	"ui/panel_green"
 			}
 
 			string description_title

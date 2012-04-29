@@ -237,7 +237,7 @@ window employees
 		{
 			pos		"451 300"
 			size	"448 60"
-			image	"ui/panel_grey_green"
+			background	"ui/panel_grey_green"
 		}
 	}
 
@@ -265,7 +265,7 @@ window employees
 		{
 			pos		"451 364"
 			size	"561 388"
-			image	"ui/panel_grey_green"
+			background	"ui/panel_grey_green"
 		}
 	}
 
@@ -466,7 +466,7 @@ window employees
 		{
 			pos		"483 180"
 			size	"455 111"
-			image	"ui/panel_grey"
+			background	"ui/panel_grey"
 		}
 		string label_people_shadow {
 			string	"_Occupation"
@@ -583,7 +583,7 @@ window employees
 	panel tab_background {
 		pos		"24 96"
 		size	"986 56"
-		image	"ui/panel_tab"
+		background	"ui/panel_tab"
 	}
 
 	tab empl_switch {

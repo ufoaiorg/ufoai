@@ -220,7 +220,7 @@ window quickload
 		string		"_Reload campaign"
 		pos			"264 262"
 		size		"496 247"
-		image		"ui/popup_alpha_tile"
+		background		"ui/popup_alpha_tile"
 		dragbutton	true
 		closebutton	true
 	}
@@ -769,7 +769,7 @@ window popup_exit_confirmation
 {
 	{
 		string		"_Exit Campaign Confirmation"
-		image		"ui/popup_alpha_tile"
+		background		"ui/popup_alpha_tile"
 		pos			"264 262"
 		size		"486 247"
 		dragbutton	true

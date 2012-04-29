@@ -45,7 +45,7 @@ window basesummary
 		{
 			pos		"621 115"
 			size	"338 211"
-			image	"ui/panel_grey"
+			background	"ui/panel_grey"
 			onWheelUp	{ cmd "mn_base_next;" }
 			onWheelDown	{ cmd "mn_base_prev;" }
 		}
@@ -54,7 +54,7 @@ window basesummary
 			{
 				pos		"19 20"
 				size	"298 170"
-				image	"ui/panel_grey_black"
+				background	"ui/panel_grey_black"
 			}
 		}
 
@@ -117,7 +117,7 @@ window basesummary
 	panel base_summary_bg {
 		pos	"12 103"
 		size	"551 655"
-		image	"ui/panel_grey_green_large"
+		background	"ui/panel_grey_green_large"
 	}
 
 	text txt_base_summary
@@ -155,7 +155,7 @@ window basesummary
 	panel info_bg {
 		pos	"588 337"
 		size	"408 423"
-		image	"ui/panel_grey_green_large"
+		background	"ui/panel_grey_green_large"
 	}
 
 	text txt_info

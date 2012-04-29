@@ -8,7 +8,7 @@ window editor {
 		size "200 300"
 		dragbutton	true
 		closebutton true
-		image		"ui/popup_alpha_tile"
+		background		"ui/popup_alpha_tile"
 		string		"_Node editor"
 		font		"f_menusmall"
 	}

@@ -131,7 +131,7 @@ window aliencont
 		{
 			pos		"11 93"
 			size	"333 145"
-			image	"ui/panel_grey_green_large"
+			background	"ui/panel_grey_green_large"
 		}
 
 		// ==================
@@ -207,7 +207,7 @@ window aliencont
 		{
 			pos		"347 93"
 			size	"333 145"
-			image	"ui/panel_grey_green_large"
+			background	"ui/panel_grey_green_large"
 		}
 
 		// ==================
@@ -321,7 +321,7 @@ window aliencont
 		{
 			pos "11 245"
 			size "670 513"
-			image	"ui/panel_grey_green_large"
+			background	"ui/panel_grey_green_large"
 		}
 
 		cmpAlienContainment ac0 {
@@ -435,7 +435,7 @@ window aliencont
 		{
 			pos		"700 93"
 			size	"314 665"
-			image	"ui/panel_grey_green_large"
+			background	"ui/panel_grey_green_large"
 		}
 
 		cmpAlienImage ai { }

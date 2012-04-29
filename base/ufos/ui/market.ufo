@@ -97,7 +97,7 @@ window market extends objectinfo {
 	panel tab_background {
 		pos		"24 96"
 		size	"986 56"
-		image	"ui/panel_tab"
+		background	"ui/panel_tab"
 	}
 
 	tab market_navigation {
@@ -303,7 +303,7 @@ window market extends objectinfo {
 		{
 			pos		"588 167"
 			size	"410 115"
-			image	"ui/panel_grey_green"
+			background	"ui/panel_grey_green"
 		}
 
 		// ==================
@@ -338,7 +338,7 @@ window market extends objectinfo {
 		{
 			pos		"588 303"
 			size	"410 455"
-			image	"ui/panel_grey_green"
+			background	"ui/panel_grey_green"
 		}
 
 		// ==================
