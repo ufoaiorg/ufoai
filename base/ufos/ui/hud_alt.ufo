@@ -13,7 +13,7 @@ window hud_alt extends hud
 
 	func showinventory
 	{
-		cmd "ui_push ahudinv;"
+		cmd "ui_push hudinv;"
 	}
 
 	// ==================
@@ -1052,7 +1052,7 @@ window hud_alt extends hud
 				onClick {
 					// a second click will close the inventory window again
 					if ( *cvar:inventory_window_open == 1 ) {
-						cmd "ui_close ahudinv;"
+						cmd "ui_close hudinv;"
 					} else {
 						call *node:root.showinventory
 					}
@@ -1060,9 +1060,9 @@ window hud_alt extends hud
 				onRClick {
 					// a second click will close the physdat window again
 					if ( *cvar:physdat_window_open == 1 ) {
-						cmd "ui_close ahudphysdat;"
+						cmd "ui_close hudphysdat;"
 					} else {
-						cmd "ui_push ahudphysdat;"
+						cmd "ui_push hudphysdat;"
 					}
 				}
 				onWheelUp	{ cmd "actor_next;"}

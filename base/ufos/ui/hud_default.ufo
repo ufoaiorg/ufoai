@@ -574,6 +574,7 @@ window hud_default extends hud
 			pos		"64 10"
 			size	"64 37"
 			icon	"icons/rescue_zone"
+			contentalign	ALIGN_CC
 			invis	false
 			onClick			{ cmd "toggle_rescuezone;" }
 		}

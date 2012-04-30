@@ -256,7 +256,7 @@ window inventory
 			else { *node:root.bar_inventory_deco@invis = false }
 		}
 		// the physdat window will automatically be closed if open
-		if ( *cvar:physdat_window_open == 1 ) { cmd "ui_close ahudphysdat;" }
+		if ( *cvar:physdat_window_open == 1 ) { cmd "ui_close hudphysdat;" }
 	}
 
 	func onWindowClosed {
@@ -269,13 +269,5 @@ window inventory
 // ==================
 
 window hudinv extends inventory
-{
-}
-
-// ==================
-// ALT HUD INVENTORY
-// ==================
-
-window ahudinv extends inventory
 {
 }

@@ -14,7 +14,7 @@ window hud_mini extends hud
 
 	func showinventory
 	{
-		cmd "ui_push ahudinv;"
+		cmd "ui_push hudinv;"
 	}
 
 	// ===============================
@@ -1269,7 +1269,7 @@ window hud_mini extends hud
 			onClick {
 				// a second click will close the inventory window again
 				if ( *cvar:inventory_window_open == 1 ) {
-					cmd "ui_close ahudinv;"
+					cmd "ui_close hudinv;"
 				} else {
 					call *node:root.showinventory
 				}
@@ -1277,9 +1277,9 @@ window hud_mini extends hud
 			onRClick {
 				// a second click will close the physdat window again
 				if ( *cvar:physdat_window_open == 1 ) {
-					cmd "ui_close ahudphysdat;"
+					cmd "ui_close hudphysdat;"
 				} else {
-					cmd "ui_push ahudphysdat;"
+					cmd "ui_push hudphysdat;"
 				}
 			}
 			onWheelUp	{ cmd "actor_next;"}
@@ -1576,11 +1576,11 @@ window hud_mini extends hud
 			size		"16 16"
 			onClick
 			{
-				cmd "ui_push ahudphysdat;"
+				cmd "ui_push hudphysdat;"
 			}
 			onRClick
 			{
-				if ( exists *cvar:physdat_window_open ) { cmd "ui_close ahudphysdat;" }
+				if ( exists *cvar:physdat_window_open ) { cmd "ui_close hudphysdat;" }
 			}
 		}
 		image minihud_bt_inventory
@@ -1592,11 +1592,11 @@ window hud_mini extends hud
 			size		"16 16"
 			onClick
 			{
-				cmd "ui_push ahudinv;"
+				cmd "ui_push hudinv;"
 			}
 			onRClick
 			{
-				if ( exists *cvar:inventory_window_open ) { cmd "ui_close ahudinv;" }
+				if ( exists *cvar:inventory_window_open ) { cmd "ui_close hudinv;" }
 			}
 		}
 		image minihud_bt_radar
@@ -1695,10 +1695,10 @@ window hud_mini extends hud
 				*cvar:mn_minihud_deco = 1
 				// we close the windows (if open) so the decoration change can update
 				if ( exists *cvar:physdat_window_open ) {
-					cmd "ui_close ahudphysdat;"
+					cmd "ui_close hudphysdat;"
 					}
 				if ( exists *cvar:inventory_window_open ) {
-					cmd "ui_close ahudinv;"
+					cmd "ui_close hudinv;"
 					}
 			}
 			onRClick
@@ -1710,10 +1710,10 @@ window hud_mini extends hud
 				*cvar:mn_minihud_deco = 0
 				// we close the windows (if open) so the decoration change can update
 				if ( exists *cvar:physdat_window_open ) {
-					cmd "ui_close ahudphysdat;"
+					cmd "ui_close hudphysdat;"
 				}
 				if ( exists *cvar:inventory_window_open ) {
-					cmd "ui_close ahudinv;"
+					cmd "ui_close hudinv;"
 				}
 			}
 		}
