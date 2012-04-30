@@ -86,7 +86,6 @@ static qboolean HUD_CheckShooting (const le_t* le, invList_t *weapon)
 		HUD_DisplayMessage(_("No item in hand.\n"));
 		return qfalse;
 	}
-
 	/* Cannot shoot because of lack of ammo. */
 	if (weapon->item.a <= 0 && weapon->item.t->reload) {
 		HUD_DisplayMessage(_("Can't perform action:\nOut of ammo.\n"));
@@ -162,7 +161,6 @@ static void HUD_SetMoveMode_f (void)
 	CL_ActorSetMode(actor, M_MOVE);
 }
 
-
 /**
  * @brief Toggles if the current actor reserves TUs for crouching.
  */
@@ -176,9 +174,11 @@ static void HUD_ToggleCrouchReservation_f (void)
 	if (CL_ActorReservedTUs(actor, RES_CROUCH) >= TU_CROUCH) {
 		/* Reset reserved TUs to 0 */
 		CL_ActorReserveTUs(actor, RES_CROUCH, 0);
+		HUD_DisplayMessage(_("Disabled automatic crouching/standing up."));
 	} else {
 		/* Reserve the exact amount for crouching/standing up (if we have enough to do so). */
 		CL_ActorReserveTUs(actor, RES_CROUCH, TU_CROUCH);
+		HUD_DisplayMessage(va(_("Reserved %i TUs for crouching/standing up."), TU_CROUCH));
 	}
 }
 
@@ -193,10 +193,13 @@ static void HUD_ToggleReaction_f (void)
 	if (!CL_ActorCheckAction(actor))
 		return;
 
-	if (!(actor->state & STATE_REACTION))
+	if (!(actor->state & STATE_REACTION)) {
 		state = STATE_REACTION;
-	else
+		HUD_DisplayMessage(_("Reaction fire enabled."));
+	} else {
 		state = ~STATE_REACTION;
+		HUD_DisplayMessage(_("Reaction fire disabled."));
+	}
 
 	/* Send request to update actor's reaction state to the server. */
 	MSG_Write_PA(PA_STATE, actor->entnum, state);
@@ -291,6 +294,7 @@ static void HUD_ReloadLeft_f (void)
 	if (!HUD_CheckReload(actor, HUD_GetLeftHandWeapon(actor, &container), container))
 		return;
 	CL_ActorReload(actor, container);
+	HUD_DisplayMessage(_("Left hand weapon reloaded."));
 }
 
 /**
@@ -303,6 +307,7 @@ static void HUD_ReloadRight_f (void)
 	if (!actor || !HUD_CheckReload(actor, RIGHT(actor), csi.idRight))
 		return;
 	CL_ActorReload(actor, csi.idRight);
+	HUD_DisplayMessage(_("Right hand weapon reloaded."));
 }
 
 /**
