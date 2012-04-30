@@ -10,11 +10,6 @@ window hud_nohud extends hud
 		starlayout	true
 	}
 
-	func showinventory
-	{
-		cmd "ui_push hudinv;"
-	}
-
 	// ==================
 	// render rectangle
 	// ==================

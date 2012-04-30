@@ -11,11 +11,6 @@ window hud_default extends hud
 		timeout		10000
 	}
 
-	func showinventory
-	{
-		cmd "ui_push hudinv;"
-	}
-
 	// ==================
 	// render rectangle
 	// ==================
@@ -179,22 +174,8 @@ window hud_default extends hud
 			pos		"20 20"
 			size	"74 66"
 			origin	"0 0 0"
-			onClick {
-				// a second click will close the inventory window again
-				if ( *cvar:inventory_window_open == 1 ) {
-					cmd "ui_close hudinv;"
-				} else {
-					call *node:root.showinventory
-				}
-			}
-			onRClick {
-				// a second click will close the physdat window again
-				if ( *cvar:physdat_window_open == 1 ) {
-					cmd "ui_close hudphysdat;"
-				} else {
-					cmd "ui_push hudphysdat;"
-				}
-			}
+			onClick { cmd "show_hide_inventory;" }
+			onRClick { cmd "show_hide_physdat;" }
 			onWheelUp	{ cmd "actor_next;"}
 			onWheelDown	{ cmd "actor_prev;"}
 		}
@@ -204,22 +185,8 @@ window hud_default extends hud
 			string	*cvar:mn_name
 			pos		"130 13"
 			size	"170 20"
-			onClick {
-				// a second click will close the inventory window again
-				if ( *cvar:inventory_window_open == 1 ) {
-					cmd "ui_close hudinv;"
-				} else {
-					call *node:root.showinventory
-				}
-			}
-			onRClick {
-				// a second click will close the physdat window again
-				if ( *cvar:physdat_window_open == 1 ) {
-					cmd "ui_close hudphysdat;"
-				} else {
-					cmd "ui_push hudphysdat;"
-				}
-			}
+			onClick { cmd "show_hide_inventory;" }
+			onRClick { cmd "show_hide_physdat;" }
 			onWheelUp	{ cmd "actor_next;"}
 			onWheelDown	{ cmd "actor_prev;"}
 		}
@@ -972,8 +939,8 @@ window hud_default extends hud
 			pos		"6 201"
 			texl	"202 0"
 			texh	"238 75"
-			onClick	{ cmd "ui_push hudphysdat;" }
-			onRClick	{ if ( exists *cvar:physdat_window_open ) { cmd "ui_close hudphysdat;" } }
+			onClick	{ cmd "show_hide_physdat;" }
+			onRClick	{ cmd "show_hide_physdat;" }
 		}
 
 		image bt_inventory
@@ -984,8 +951,8 @@ window hud_default extends hud
 			pos		"6 311"
 			texl	"128 0"
 			texh	"164 75"
-			onClick	{ call *node:root.showinventory }
-			onRClick	{ if ( exists *cvar:inventory_window_open ) { cmd "ui_close hudinv;" } }
+			onClick { cmd "show_hide_inventory;" }
+			onRClick	{ cmd "show_hide_inventory;" }
 		}
 	}
 

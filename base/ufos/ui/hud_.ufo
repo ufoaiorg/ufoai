@@ -540,6 +540,27 @@ window hud_general {
 			cmd "echo firemode_listener: unknown \"<1>\" command;"
 		}
 	}
+
+	// confuncs to show/hide inventory and physdat windows
+
+	confunc show_hide_inventory
+	{
+		// a second click will close the inventory window again
+		if ( *cvar:inventory_window_open == 1 ) {
+			cmd "ui_close hudinv;"
+		} else {
+			cmd "ui_push hudinv;"
+		}
+	}
+	confunc show_hide_physdat
+	{
+		// a second click will close the physdat window again
+		if ( *cvar:physdat_window_open == 1 ) {
+			cmd "ui_close hudphysdat;"
+		} else {
+			cmd "ui_push hudphysdat;"
+		}
+	}
 }
 
 window hud_chat

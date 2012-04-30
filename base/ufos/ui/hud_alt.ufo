@@ -11,11 +11,6 @@ window hud_alt extends hud
 		fill		true
 	}
 
-	func showinventory
-	{
-		cmd "ui_push hudinv;"
-	}
-
 	// ==================
 	// render rectangle
 	// ==================
@@ -1049,22 +1044,8 @@ window hud_alt extends hud
 				size		"120 260"
 				scale		"4 4 4"
 
-				onClick {
-					// a second click will close the inventory window again
-					if ( *cvar:inventory_window_open == 1 ) {
-						cmd "ui_close hudinv;"
-					} else {
-						call *node:root.showinventory
-					}
-				}
-				onRClick {
-					// a second click will close the physdat window again
-					if ( *cvar:physdat_window_open == 1 ) {
-						cmd "ui_close hudphysdat;"
-					} else {
-						cmd "ui_push hudphysdat;"
-					}
-				}
+				onClick { cmd "show_hide_inventory;" }
+				onRClick { cmd "show_hide_physdat;" }
 				onWheelUp	{ cmd "actor_next;"}
 				onWheelDown	{ cmd "actor_prev;"}
 			}

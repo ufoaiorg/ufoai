@@ -12,11 +12,6 @@ window genradarhud extends hud
 		starlayout	true
 	}
 
-	func showinventory
-	{
-		cmd "ui_push hudinv;"
-	}
-
 	// ==================
 	// render rectangle
 	// ==================

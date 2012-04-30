@@ -218,11 +218,6 @@ window hud_phone extends hud
 		timeout		10000
 	}
 
-	func showinventory
-	{
-		cmd "ui_push hudinv;"
-	}
-
 	// ==================
 	// render rectangle
 	// ==================
