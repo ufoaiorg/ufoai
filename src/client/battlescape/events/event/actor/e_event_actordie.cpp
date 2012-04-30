@@ -121,9 +121,9 @@ void CL_ActorDie (const eventRegister_t *self, struct dbuffer *msg)
 			break;
 		default:
 			if (LE_IsStunned(le))
-				HUD_DisplayMessage(va(_("A member of team %i was stunned.\n"), le->team));
+				HUD_DisplayMessage(va(_("A member of team %i was stunned."), le->team));
 			else
-				HUD_DisplayMessage(va(_("A member of team %i was killed.\n"), le->team));
+				HUD_DisplayMessage(va(_("A member of team %i was killed."), le->team));
 			break;
 		}
 	}
