@@ -72,16 +72,16 @@ void CL_ActorRevitalised (const eventRegister_t *self, struct dbuffer *msg)
 	} else {
 		switch (le->team) {
 		case (TEAM_CIVILIAN):
-			HUD_DisplayMessage(_("A civilian was revitalised.\n"));
+			HUD_DisplayMessage(_("A civilian was revitalised."));
 			break;
 		case (TEAM_ALIEN):
-			HUD_DisplayMessage(_("An alien was revitalised.\n"));
+			HUD_DisplayMessage(_("An alien was revitalised."));
 			break;
 		case (TEAM_PHALANX):
-			HUD_DisplayMessage(_("A soldier was revitalised.\n"));
+			HUD_DisplayMessage(_("A soldier was revitalised."));
 			break;
 		default:
-			HUD_DisplayMessage(va(_("A member of team %i was revitalised.\n"), le->team));
+			HUD_DisplayMessage(va(_("A member of team %i was revitalised."), le->team));
 			break;
 		}
 	}
