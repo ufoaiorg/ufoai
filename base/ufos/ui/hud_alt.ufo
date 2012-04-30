@@ -1049,8 +1049,22 @@ window hud_alt extends hud
 				size		"120 260"
 				scale		"4 4 4"
 
-				onClick		{ call *node:root.showinventory }
-				onRClick	{ cmd "ui_push ahudphysdat;" }
+				onClick {
+					// a second click will close the inventory window again
+					if ( *cvar:inventory_window_open == 1 ) {
+						cmd "ui_close ahudinv;"
+					} else {
+						call *node:root.showinventory
+					}
+				}
+				onRClick {
+					// a second click will close the physdat window again
+					if ( *cvar:physdat_window_open == 1 ) {
+						cmd "ui_close ahudphysdat;"
+					} else {
+						cmd "ui_push ahudphysdat;"
+					}
+				}
 				onWheelUp	{ cmd "actor_next;"}
 				onWheelDown	{ cmd "actor_prev;"}
 			}
