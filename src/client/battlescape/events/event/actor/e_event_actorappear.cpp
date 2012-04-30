@@ -164,9 +164,9 @@ void CL_ActorAppear (const eventRegister_t *self, struct dbuffer *msg)
 					Com_sprintf(tmpbuf, sizeof(tmpbuf), _("Enemy spotted: %s!"), _(le->teamDef->name));
 					HUD_DisplayMessage(tmpbuf);
 				} else
-					HUD_DisplayMessage(_("Enemy spotted!"));
+					HUD_DisplayMessage(_("Unknown enemy spotted!"));
 			} else
-				HUD_DisplayMessage(_("Civilian spotted!"));
+				HUD_DisplayMessage(_("Civilian spotted."));
 
 			/* update pathing as new actor could block path */
 			CL_ActorConditionalMoveCalc(leResponsible ? leResponsible : selActor);
