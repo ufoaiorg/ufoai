@@ -179,6 +179,10 @@ window hud_default extends hud
 			pos		"20 20"
 			size	"74 66"
 			origin	"0 0 0"
+			onClick		{ call *node:root.showinventory }
+			onRClick	{ cmd "ui_push hudphysdat;" }
+			onWheelUp	{ cmd "actor_next;"}
+			onWheelDown	{ cmd "actor_prev;"}
 		}
 
 		string actorname
@@ -186,6 +190,10 @@ window hud_default extends hud
 			string	*cvar:mn_name
 			pos		"130 13"
 			size	"170 20"
+			onClick		{ call *node:root.showinventory }
+			onRClick	{ cmd "ui_push hudphysdat;" }
+			onWheelUp	{ cmd "actor_next;"}
+			onWheelDown	{ cmd "actor_prev;"}
 		}
 	}
 
@@ -409,6 +417,8 @@ window hud_default extends hud
 				cvar		*cvar:selected_soldier
 				icon		"icons/number_1"
 				onClick		{ cmd "actor_select 0;" }
+				onWheelUp	{ cmd "actor_next;"}
+				onWheelDown	{ cmd "actor_prev;"}
 				onMouseEnter { call *node:root.popup_soldier_hovered.select ( 0 ) }
 			}
 
@@ -421,6 +431,8 @@ window hud_default extends hud
 				cvar		*cvar:selected_soldier
 				icon		"icons/number_2"
 				onClick		{ cmd "actor_select 1;" }
+				onWheelUp	{ cmd "actor_next;"}
+				onWheelDown	{ cmd "actor_prev;"}
 				onMouseEnter { call *node:root.popup_soldier_hovered.select ( 1 ) }
 			}
 
@@ -433,6 +445,8 @@ window hud_default extends hud
 				cvar		*cvar:selected_soldier
 				icon		"icons/number_3"
 				onClick		{ cmd "actor_select 2;" }
+				onWheelUp	{ cmd "actor_next;"}
+				onWheelDown	{ cmd "actor_prev;"}
 				onMouseEnter { call *node:root.popup_soldier_hovered.select ( 2 ) }
 			}
 
@@ -445,6 +459,8 @@ window hud_default extends hud
 				cvar		*cvar:selected_soldier
 				icon		"icons/number_4"
 				onClick		{ cmd "actor_select 3;" }
+				onWheelUp	{ cmd "actor_next;"}
+				onWheelDown	{ cmd "actor_prev;"}
 				onMouseEnter { call *node:root.popup_soldier_hovered.select ( 3 ) }
 			}
 
@@ -457,6 +473,8 @@ window hud_default extends hud
 				cvar		*cvar:selected_soldier
 				icon		"icons/number_5"
 				onClick		{ cmd "actor_select 4;" }
+				onWheelUp	{ cmd "actor_next;"}
+				onWheelDown	{ cmd "actor_prev;"}
 				onMouseEnter { call *node:root.popup_soldier_hovered.select ( 4 ) }
 			}
 
@@ -469,6 +487,8 @@ window hud_default extends hud
 				cvar		*cvar:selected_soldier
 				icon		"icons/number_6"
 				onClick		{ cmd "actor_select 5;" }
+				onWheelUp	{ cmd "actor_next;"}
+				onWheelDown	{ cmd "actor_prev;"}
 				onMouseEnter { call *node:root.popup_soldier_hovered.select ( 5 ) }
 			}
 
@@ -481,6 +501,8 @@ window hud_default extends hud
 				cvar		*cvar:selected_soldier
 				icon		"icons/number_7"
 				onClick		{ cmd "actor_select 6;" }
+				onWheelUp	{ cmd "actor_next;"}
+				onWheelDown	{ cmd "actor_prev;"}
 				onMouseEnter { call *node:root.popup_soldier_hovered.select ( 6 ) }
 			}
 
@@ -493,6 +515,8 @@ window hud_default extends hud
 				cvar		*cvar:selected_soldier
 				icon		"icons/number_8"
 				onClick		{ cmd "actor_select 7;" }
+				onWheelUp	{ cmd "actor_next;"}
+				onWheelDown	{ cmd "actor_prev;"}
 				onMouseEnter { call *node:root.popup_soldier_hovered.select ( 7 ) }
 			}
 
