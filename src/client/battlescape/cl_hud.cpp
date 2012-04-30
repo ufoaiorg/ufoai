@@ -1193,11 +1193,11 @@ static int HUD_UpdateActorMove (const le_t *actor)
 		static char mouseText[UI_MAX_SMALLTEXTLEN];
 		const int moveMode = CL_ActorMoveMode(actor, actor->actorMoveLength);
 		if (reservedTUs > 0)
-			Com_sprintf(infoText, lengthof(infoText), _("Morale  %i | Reserved TUs: %i\n%s %i (%i|%i TU left)\n"),
+			Com_sprintf(infoText, lengthof(infoText), _("Morale  %i | Reserved TUs: %i\n%s %i (%i|%i TUs left)\n"),
 				actor->morale, reservedTUs, _(moveModeDescriptions[moveMode]), actor->actorMoveLength,
 				actor->TU - actor->actorMoveLength, actor->TU - reservedTUs - actor->actorMoveLength);
 		else
-			Com_sprintf(infoText, lengthof(infoText), _("Morale  %i\n%s %i (%i TU left)\n"), actor->morale,
+			Com_sprintf(infoText, lengthof(infoText), _("Morale  %i\n%s %i (%i TUs left)\n"), actor->morale,
 				_(moveModeDescriptions[moveMode]), actor->actorMoveLength, actor->TU - actor->actorMoveLength);
 
 		if (actor->actorMoveLength <= CL_ActorUsableTUs(actor))
@@ -1543,7 +1543,7 @@ void HUD_InitStartup (void)
 	HUD_InitCallbacks();
 
 	Cmd_AddCommand("hud_remainingtus", HUD_RemainingTUs_f, "Define if remaining TUs should be displayed in the TU-bar for some hovered-over button.");
-	Cmd_AddCommand("hud_shotreserve", HUD_ShotReserve_f, "Reserve The TUs for the selected entry in the popup.");
+	Cmd_AddCommand("hud_shotreserve", HUD_ShotReserve_f, "Reserve TUs for the selected entry in the popup.");
 	Cmd_AddCommand("hud_shotreservationpopup", HUD_PopupFiremodeReservation_f, "Pop up a list of possible firemodes for reservation in the current turn.");
 	Cmd_AddCommand("hud_switchfiremodelist", HUD_SwitchFiremodeList_f, "Switch firemode-list to one for the given hand, but only if the list is visible already.");
 	Cmd_AddCommand("hud_selectreactionfiremode", HUD_SelectReactionFiremode_f, "Change/Select firemode used for reaction fire.");
