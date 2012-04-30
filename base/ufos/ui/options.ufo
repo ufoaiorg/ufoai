@@ -312,13 +312,13 @@ window options
 			size		"320 20"
 			color		"1.0 0.75 0 1"
 		}
-		// ===================
-		// MOUSEOVER TOOLTIPS
-		// ===================
+		// =================================
+		// MOUSEOVER CURSOR TOOLTIPS (MENU)
+		// =================================
 		string tooltip_str
 		{
-			tooltip		"_Enable mouseover tooltips"
-			string		"_Tooltips:"
+			tooltip		"_Show cursor tooltips in menus."
+			string		"_Tooltips (menu):"
 			pos			"72 545"
 			size		"280 20"
 		}
@@ -330,13 +330,13 @@ window options
 			image		"ui/checkbox_blue"
 		}
 
-		// ================
-		// CURSOR TOOLTIPS
-		// ================
+		// ========================================
+		// MOUSEOVER CURSOR TOOLTIPS (BATTLESCAPE)
+		// ========================================
 		string c_tooltip_str
 		{
-			tooltip		"_Enable tooltips for the cursor"
-			string		"_Cursor Tooltips:"
+			tooltip		"_Show cursor tooltips in tactical mode."
+			string		"_Tooltips (battlescape):"
 			pos			"72 570"
 			size		"280 20"
 		}
