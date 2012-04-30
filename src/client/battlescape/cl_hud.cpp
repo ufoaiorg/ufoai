@@ -1143,7 +1143,7 @@ static int HUD_UpdateActorFireMode (le_t *actor)
 		}
 
 		if (!GAME_ItemIsUseable(selWeapon->item.t)) {
-			HUD_DisplayMessage(_("You cannot use this unknown item.\nYou need to research it first.\n"));
+			HUD_DisplayMessage(_("You cannot use this unknown item.\nYou need to research it first."));
 			CL_ActorSetMode(actor, M_MOVE);
 		} else if (actor->fd) {
 			const int hitProbability = CL_GetHitProbability(actor);

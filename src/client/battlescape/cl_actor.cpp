@@ -948,7 +948,7 @@ void CL_ActorReload (le_t *le, containerIndex_t containerID)
 		return;
 
 	if (!GAME_ItemIsUseable(weapon)) {
-		HUD_DisplayMessage(_("You cannot reload this unknown item.\n"));
+		HUD_DisplayMessage(_("You cannot reload this unknown item."));
 		return;
 	}
 

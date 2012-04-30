@@ -54,7 +54,7 @@ void CL_DoEndRound (const eventRegister_t *self, struct dbuffer *msg)
 		/* check whether a particle has to go */
 		CL_ParticleCheckRounds();
 		UI_ExecuteConfunc("startround");
-		HUD_DisplayMessage(_("Your round started!\n"));
+		HUD_DisplayMessage(_("Your round started!"));
 		S_StartLocalSample("misc/roundstart", SND_VOLUME_DEFAULT);
 		CL_ActorConditionalMoveCalc(selActor);
 	}

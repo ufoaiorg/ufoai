@@ -83,17 +83,17 @@ static qboolean HUD_CheckShooting (const le_t* le, invList_t *weapon)
 
 	/* No item in hand. */
 	if (!weapon || !weapon->item.t) {
-		HUD_DisplayMessage(_("No item in hand.\n"));
+		HUD_DisplayMessage(_("No item in hand."));
 		return qfalse;
 	}
 	/* Cannot shoot because of lack of ammo. */
 	if (weapon->item.a <= 0 && weapon->item.t->reload) {
-		HUD_DisplayMessage(_("Can't perform action:\nOut of ammo.\n"));
+		HUD_DisplayMessage(_("Can't perform action:\nOut of ammo."));
 		return qfalse;
 	}
 	/* Cannot shoot because weapon is fireTwoHanded, yet both hands handle items. */
 	if (weapon->item.t->fireTwoHanded && LEFT(le)) {
-		HUD_DisplayMessage(_("This weapon cannot be fired\none handed.\n"));
+		HUD_DisplayMessage(_("This weapon cannot be fired\none handed."));
 		return qfalse;
 	}
 
@@ -147,7 +147,7 @@ static void HUD_FireWeapon_f (void)
 	} else {
 		/* Cannot shoot because of not enough TUs - every other
 		 * case should be checked previously in this function. */
-		HUD_DisplayMessage(_("Can't perform action:\nNot enough TUs.\n"));
+		HUD_DisplayMessage(_("Can't perform action:\nNot enough TUs."));
 	}
 }
 
@@ -255,25 +255,25 @@ static qboolean HUD_CheckReload (const le_t* le, const invList_t *weapon, contai
 
 	/* No item in hand. */
 	if (!weapon || !weapon->item.t) {
-		HUD_DisplayMessage(_("No item in hand.\n"));
+		HUD_DisplayMessage(_("No item in hand."));
 		return qfalse;
 	}
 
 	/* Cannot reload because this item is not reloadable. */
 	if (!weapon->item.t->reload) {
-		HUD_DisplayMessage(_("Can't perform action:\nThis item is not reloadable.\n"));
+		HUD_DisplayMessage(_("Can't perform action:\nThis item is not reloadable."));
 		return qfalse;
 	}
 
 	tus = HUD_CalcReloadTime(le, weapon->item.t, container);
 	/* Cannot reload because of no ammo in inventory. */
 	if (tus == -1) {
-		HUD_DisplayMessage(_("Can't perform action:\nAmmo not available.\n"));
+		HUD_DisplayMessage(_("Can't perform action:\nAmmo not available."));
 		return qfalse;
 	}
 	/* Cannot reload because of not enough TUs. */
 	if (le->TU < tus) {
-		HUD_DisplayMessage(_("Can't perform action:\nNot enough TUs.\n"));
+		HUD_DisplayMessage(_("Can't perform action:\nNot enough TUs."));
 		return qfalse;
 	}
 

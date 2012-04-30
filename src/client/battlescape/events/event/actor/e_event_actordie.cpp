@@ -103,21 +103,21 @@ void CL_ActorDie (const eventRegister_t *self, struct dbuffer *msg)
 		switch (le->team) {
 		case (TEAM_CIVILIAN):
 			if (LE_IsStunned(le))
-				HUD_DisplayMessage(_("A civilian was stunned.\n"));
+				HUD_DisplayMessage(_("A civilian was stunned."));
 			else
-				HUD_DisplayMessage(_("A civilian was killed.\n"));
+				HUD_DisplayMessage(_("A civilian was killed."));
 			break;
 		case (TEAM_ALIEN):
 			if (LE_IsStunned(le))
-				HUD_DisplayMessage(_("An alien was stunned.\n"));
+				HUD_DisplayMessage(_("An alien was stunned."));
 			else
-				HUD_DisplayMessage(_("An alien was killed.\n"));
+				HUD_DisplayMessage(_("An alien was killed."));
 			break;
 		case (TEAM_PHALANX):
 			if (LE_IsStunned(le))
-				HUD_DisplayMessage(_("A soldier was stunned.\n"));
+				HUD_DisplayMessage(_("A soldier was stunned."));
 			else
-				HUD_DisplayMessage(_("A soldier was killed.\n"));
+				HUD_DisplayMessage(_("A soldier was killed."));
 			break;
 		default:
 			if (LE_IsStunned(le))
