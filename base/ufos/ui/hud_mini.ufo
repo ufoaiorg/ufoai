@@ -1181,29 +1181,12 @@ window hud_mini extends hud
 			ghost			true
 			visiblewhen		"*cvar:mn_numaliensspotted >= 1"
 		}
-		string numspotted
+		cmp_str_numspotted str_numspotted
 		{
-			string		*cvar:mn_numaliensspotted
 			color			".6 0 0 1"
-			tooltip		"_LMB:Next visible enemy\nRMB:Previous visible enemy\nWheel:Cycle visible enemies"
 			pos			"224 217"
 			size	    "20 20"
 			visiblewhen		"*cvar:mn_numaliensspotted >= 1"
-			onClick		{ cmd "nextalien;" }
-			onRClick	{ cmd "prevalien;" }
-			onWheelUp	{ cmd "nextalien;" }
-			onWheelDown	{ cmd "prevalien;" }
-			onMouseEnter {
-				*node:root.right.numspotted_shadow@font = "f_small_bold"
-				*node:this@font = "f_small_bold"
-				*node:root.right.mini_enemy@image = "minihud/mini_enemy_hovered"
-			}
-			onMouseLeave {
-				*node:root.right.numspotted_shadow@font = "f_small"
-				*node:this@font = "f_small"
-				*node:root.right.mini_enemy@image = "minihud/mini_enemy"
-			}
-			contentalign	ALIGN_CC
 		}
 
 		// ==================
