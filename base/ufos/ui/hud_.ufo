@@ -353,6 +353,26 @@ window hud extends levelbuttons {
 
 	func openradar { cmd "openradar;" }
 
+	// confuncs to show/hide inventory and physdat windows
+	confunc show_hide_inventory
+	{
+		// a second click will close the inventory window again
+		if ( *cvar:inventory_window_open == 1 ) {
+			cmd "ui_close hudinv;"
+		} else {
+			cmd "ui_push hudinv;"
+		}
+	}
+	confunc show_hide_physdat
+	{
+		// a second click will close the physdat window again
+		if ( *cvar:physdat_window_open == 1 ) {
+			cmd "ui_close hudphysdat;"
+		} else {
+			cmd "ui_push hudphysdat;"
+		}
+	}
+
 	/**
 	 * @param <1> the id of the soldier (starting at 0)
 	 * @param <2> the model path of the head model
@@ -541,26 +561,6 @@ window hud_general {
 		}
 	}
 
-	// confuncs to show/hide inventory and physdat windows
-
-	confunc show_hide_inventory
-	{
-		// a second click will close the inventory window again
-		if ( *cvar:inventory_window_open == 1 ) {
-			cmd "ui_close hudinv;"
-		} else {
-			cmd "ui_push hudinv;"
-		}
-	}
-	confunc show_hide_physdat
-	{
-		// a second click will close the physdat window again
-		if ( *cvar:physdat_window_open == 1 ) {
-			cmd "ui_close hudphysdat;"
-		} else {
-			cmd "ui_push hudphysdat;"
-		}
-	}
 }
 
 window hud_chat
