@@ -2122,6 +2122,8 @@ window hud_mini extends hud
 		elif ( *node:root.right_deco@invis == false ) { *cvar:mn_minihud_deco = 1 }
 		*cvar:mn_selected_soldier = 0
 		*cvar:mn_minihud_enabled = 1
+		// Hide the rescue zone on startup
+		*cvar:cl_map_draw_rescue_zone = 0
 	}
 
 	func onWindowClosed

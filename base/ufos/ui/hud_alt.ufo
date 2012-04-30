@@ -1672,6 +1672,8 @@ window hud_alt extends hud
 		cmd "music_change battlescape;"
 		call *node:root.right.show_rightweapon
 		*cvar:mn_selected_soldier = 0
+		// Hide the rescue zone on startup
+		*cvar:cl_map_draw_rescue_zone = 0
 	}
 
 	func onScriptLoaded {
