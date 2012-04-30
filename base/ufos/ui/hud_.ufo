@@ -89,6 +89,22 @@ component bar cmp_bar_time
 	tooltip		"_TUs"
 }
 
+// Component for the spotted enemies string (used by altHUD and defaultHUD)
+
+component string cmp_str_numspotted
+{
+	string		*cvar:mn_numaliensspotted
+	tooltip		"_LMB:Next visible enemy\nRMB:Previous visible enemy\nWheel:Cycle visible enemies"
+	onClick		{ cmd "nextalien;" }
+	onRClick	{ cmd "prevalien;" }
+	onWheelUp	{ cmd "nextalien;" }
+	onWheelDown	{ cmd "prevalien;" }
+	onMouseEnter { *node:this@font = "f_small_bold" }
+	onMouseLeave { *node:this@font = "f_small" }
+	contentalign	ALIGN_CC
+}
+
+
 component panel cmpFiremodeEntry {
 	{
 		pos		"0 0"

@@ -535,15 +535,11 @@ window hud_default extends hud
 			icon	"icons/return"
 			onClick	{ cmd "nextround;" }
 		}
-
-		string numspotted
+		// number of spotted enemies string
+		cmp_str_numspotted str_numspotted
 		{
-			string	*cvar:mn_numaliensspotted
-			tooltip	"_Click to cycle through spotted enemies"
 			pos		"8 11"
 			size	"48 34"
-			contentalign	ALIGN_CC
-			onClick	{ cmd "nextalien;" }
 		}
 	}
 

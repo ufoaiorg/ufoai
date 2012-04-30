@@ -1521,19 +1521,10 @@ window hud_alt extends hud
 		}
 
 		// number of spotted enemies string
-		string numspotted
+		cmp_str_numspotted str_numspotted
 		{
-			string		*cvar:mn_numaliensspotted
-			tooltip		"_LMB:Next visible enemy\nRMB:Previous visible enemy\nWheel:Cycle visible enemies"
 			pos			"78 13"
 			size	    "48 34"
-			onClick		{ cmd "nextalien;" }
-			onRClick	{ cmd "prevalien;" }
-			onWheelUp	{ cmd "nextalien;" }
-			onWheelDown	{ cmd "prevalien;" }
-			onMouseEnter { *node:this@font = "f_small_bold" }
-			onMouseLeave { *node:this@font = "f_small" }
-			contentalign	ALIGN_CC
 		}
 		image nextround
 		{
