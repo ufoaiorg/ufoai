@@ -166,7 +166,7 @@ void UI_RegisterRadioButtonNode (uiBehaviour_t *behaviour)
 	UI_RegisterExtradataNodeProperty(behaviour, "cvar", V_UI_CVAR, EXTRADATA_TYPE, cvar);
 	/* Icon used to display the node */
 	UI_RegisterExtradataNodeProperty(behaviour, "icon", V_UI_SPRITEREF, EXTRADATA_TYPE, icon);
-	UI_RegisterExtradataNodeProperty(behaviour, "flipicon", V_BOOL, EXTRADATA_TYPE, flipIcon);
+	UI_RegisterExtradataNodeProperty(behaviour, "flipicon", V_CPPBOOL, EXTRADATA_TYPE, flipIcon);
 	/* Sprite used to display the background */
 	UI_RegisterExtradataNodeProperty(behaviour, "background", V_UI_SPRITEREF, EXTRADATA_TYPE, background);
 }

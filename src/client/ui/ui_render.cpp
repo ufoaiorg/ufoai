@@ -106,7 +106,7 @@ const struct image_s *UI_LoadWrappedImage (const char *name)
  * @param[in] tl The t part of the texture coordinate (vertical)
  * @param[in] image The image to draw
  */
-void UI_DrawNormImage (qboolean flip, float x, float y, float w, float h, float sh, float th, float sl, float tl, const image_t *image)
+void UI_DrawNormImage (bool flip, float x, float y, float w, float h, float sh, float th, float sl, float tl, const image_t *image)
 {
 	float nw, nh, x1, x2, x3, x4, y1, y2, y3, y4;
 
@@ -185,7 +185,7 @@ void UI_DrawNormImage (qboolean flip, float x, float y, float w, float h, float 
  * @note All these parameter are normalized to VID_NORM_WIDTH and VID_NORM_HEIGHT
  * they are adjusted in this function
  */
-const image_t *UI_DrawNormImageByName (qboolean flip, float x, float y, float w, float h, float sh, float th, float sl, float tl, const char *name)
+const image_t *UI_DrawNormImageByName (bool flip, float x, float y, float w, float h, float sh, float th, float sl, float tl, const char *name)
 {
 	const struct image_s *image;
 

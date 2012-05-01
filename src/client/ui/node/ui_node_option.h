@@ -47,7 +47,7 @@ typedef struct optionExtraData_s {
 	char value[MAX_VAR];	/**< the value the cvar should get */
 
 	uiSprite_t *icon;	/**< Link to an icon */
-	qboolean flipIcon;		/**< Flip the icon rendering (horizontal) */
+	bool flipIcon;		/**< Flip the icon rendering (horizontal) */
 
 	/* status */
 	qboolean collapsed;		/**< If true, child are not displayed */

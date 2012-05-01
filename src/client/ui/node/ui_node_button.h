@@ -39,7 +39,7 @@ typedef struct buttonExtraData_s {
 	/** Sprite used as an icon */
 	uiSprite_t *icon;
 	/** Flip the icon rendering (horizontal) */
-	qboolean flipIcon;
+	bool flipIcon;
 	/** Sprite used as a background */
 	uiSprite_t *background;
 } buttonExtraData_t;

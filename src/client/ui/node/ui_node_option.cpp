@@ -152,7 +152,7 @@ void UI_RegisterOptionNode (uiBehaviour_t *behaviour)
 	/* Icon used to display the node
 	 */
 	UI_RegisterExtradataNodeProperty(behaviour, "icon", V_UI_SPRITEREF, EXTRADATA_TYPE, icon);
-	UI_RegisterExtradataNodeProperty(behaviour, "flipicon", V_BOOL, EXTRADATA_TYPE, flipIcon);
+	UI_RegisterExtradataNodeProperty(behaviour, "flipicon", V_CPPBOOL, EXTRADATA_TYPE, flipIcon);
 
 	ui_optionBehaviour = behaviour;
 }

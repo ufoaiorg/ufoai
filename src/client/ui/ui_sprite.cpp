@@ -187,7 +187,7 @@ static const int tile_template_popup[] = {
  * @param[in] sizeY Height of the bounded box
  * @todo use named const for status
  */
-void UI_DrawSpriteInBox (qboolean flip, const uiSprite_t* sprite, uiSpriteStatus_t status, int posX, int posY, int sizeX, int sizeY)
+void UI_DrawSpriteInBox (bool flip, const uiSprite_t* sprite, uiSpriteStatus_t status, int posX, int posY, int sizeX, int sizeY)
 {
 	int texX;
 	int texY;
