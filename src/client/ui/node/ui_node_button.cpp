@@ -77,7 +77,7 @@ void uiButtonNode::draw (uiNode_t *node)
 	const float *textColor;
 	const char *image;
 	vec2_t pos;
-	static vec4_t disabledColor = {0.5, 0.5, 0.5, 1.0};
+	static const vec4_t disabledColor = {0.5, 0.5, 0.5, 1.0};
 	uiSpriteStatus_t iconStatus = SPRITE_STATUS_NORMAL;
 	const char *font = UI_GetFontFromNode(node);
 
@@ -108,8 +108,8 @@ void uiButtonNode::draw (uiNode_t *node)
 		UI_DrawSpriteInBox(qfalse, EXTRADATA(node).background, iconStatus, pos[0], pos[1], node->size[0], node->size[1]);
 	}
 
-	vec2_t insidePos = {pos[0] + node->padding, pos[1] + node->padding};
-	vec2_t insideSize = {node->size[0] - node->padding * 2, node->size[1] - node->padding * 2};
+	const vec2_t insidePos = {pos[0] + node->padding, pos[1] + node->padding};
+	const vec2_t insideSize = {node->size[0] - node->padding * 2, node->size[1] - node->padding * 2};
 
 	/* display the icon at the left */
 	/** @todo should we move it according to the text align? */
