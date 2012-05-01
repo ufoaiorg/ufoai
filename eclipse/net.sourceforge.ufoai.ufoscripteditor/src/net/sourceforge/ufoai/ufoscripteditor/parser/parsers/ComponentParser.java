@@ -18,14 +18,6 @@ public class ComponentParser extends WindowParser {
 		public String getID() {
 			return "component";
 		}
-
-		/**
-		 * Components have a none standard layout.
-		 */
-		@Override
-		public boolean isNameAfterID() {
-			return false;
-		}
 	};
 
 	@Override
