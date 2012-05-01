@@ -1,8 +1,6 @@
 package net.sourceforge.ufoai.ufoscripteditor.parser;
 
-import java.io.BufferedReader;
 import java.io.IOException;
-import java.io.StringReader;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -14,7 +12,6 @@ import org.eclipse.jface.text.IDocument;
 import org.eclipse.jface.text.source.IAnnotationModel;
 
 public class UFOScriptParser {
-	private boolean inComment;
 	private final List<UFOScriptBlock> blocks = new ArrayList<UFOScriptBlock>();
 	private final IAnnotationModel annotations;
 	private final IDocument doc;
@@ -36,58 +33,13 @@ public class UFOScriptParser {
 			throws IOException {
 		this.doc = doc;
 		this.annotations = annotations;
-		final BufferedReader reader = new BufferedReader(new StringReader(
-				script));
-		final StringBuilder b = new StringBuilder();
-		for (;;) {
-			final String s = reader.readLine();
-			if (s == null)
-				break;
-
-			if (s.trim().isEmpty()) {
-				b.append('\n');
-				continue;
-			}
-
-			if (isComment(s)) {
-				b.append('\n');
-				continue;
-			}
-
-			final String cleanString = cleanString(s);
-			if (cleanString.isEmpty()) {
-				b.append('\n');
-				continue;
-			}
-			b.append(cleanString).append('\n');
-		}
 
 		try {
-			parse(b.toString());
+			String regex = "(/\\*([^*]|[\\r\\n]|(\\*+([^*/]|[\\r\\n])))*\\*+/)|(//.*)";
+			parse(script.replaceAll(regex, ""));
 		} catch (BadLocationException e) {
 			throw new IOException(e);
 		}
-	}
-
-	private String cleanString(String s) {
-		if (inComment && s.contains("*/")) {
-			inComment = false;
-			final String replaceAll = s.replaceAll(".*\\*/", "");
-			return replaceAll.trim();
-		}
-		if (s.contains("/*") && !s.contains("*/")) {
-			inComment = true;
-			final String replaceAll = s.replaceAll("/\\*.*", "");
-			return replaceAll.trim();
-		}
-
-		if (inComment)
-			return "";
-
-		if (s.contains("//"))
-			s = s.replaceAll("//.*", "");
-		final String replaceAll = s.replaceAll("/\\*.*\\*/", "");
-		return replaceAll.trim();
 	}
 
 	private void parse(final String script) throws BadLocationException {
@@ -120,8 +72,8 @@ public class UFOScriptParser {
 				 * opening block is more than 5 tokens away
 				 */
 				if (i > 5) {
-					ParserUtil.addProblem(getParserContext(), tokenizer
-							.getLine(),
+					ParserUtil.addProblem(getParserContext(),
+							tokenizer.getLine(),
 							"Could not parse the name for script id " + id);
 					tokenizer.skipBlock();
 					break;
@@ -139,8 +91,8 @@ public class UFOScriptParser {
 				 * opening block is more than 5 tokens away
 				 */
 				if (i > 5) {
-					ParserUtil.addProblem(getParserContext(), tokenizer
-							.getLine(),
+					ParserUtil.addProblem(getParserContext(),
+							tokenizer.getLine(),
 							"Could not parse the name for script id " + id);
 					tokenizer.skipBlock();
 					break;
@@ -179,20 +131,6 @@ public class UFOScriptParser {
 		final IUFOParserFactory factory = UFOParserRegistry.get().getFactory(
 				token);
 		return factory;
-	}
-
-	private boolean isComment(final String s) {
-		if (s.startsWith("//"))
-			return true;
-		if (inComment && s.contains("*/")) {
-			inComment = false;
-			return true;
-		}
-		if (s.startsWith("/*") && !s.contains("*/")) {
-			inComment = true;
-			return true;
-		}
-		return inComment;
 	}
 
 	public List<UFOScriptBlock> getBlocks() {

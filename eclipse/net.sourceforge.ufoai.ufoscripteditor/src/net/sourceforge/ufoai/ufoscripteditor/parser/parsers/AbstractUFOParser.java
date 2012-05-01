@@ -3,6 +3,7 @@ package net.sourceforge.ufoai.ufoscripteditor.parser.parsers;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import net.sourceforge.ufoai.ufoscripteditor.parser.IParserContext;
 import net.sourceforge.ufoai.ufoscripteditor.parser.IUFOParser;
@@ -15,8 +16,8 @@ import net.sourceforge.ufoai.ufoscripteditor.parser.validators.IUFOScriptValidat
 import net.sourceforge.ufoai.ufoscripteditor.parser.validators.UFOScriptValidateException;
 
 public abstract class AbstractUFOParser implements IUFOParser {
-	private final HashMap<String, IUFOSubParserFactory> subParsers = new HashMap<String, IUFOSubParserFactory>();
-	private final HashMap<String, IUFOScriptValidator> validators = new HashMap<String, IUFOScriptValidator>();
+	private final Map<String, IUFOSubParserFactory> subParsers = new HashMap<String, IUFOSubParserFactory>();
+	private final Map<String, IUFOScriptValidator> validators = new HashMap<String, IUFOScriptValidator>();
 	private final IParserContext ctx;
 	private final List<UFOScriptBlock> blocks = new ArrayList<UFOScriptBlock>();
 
@@ -138,8 +139,8 @@ public abstract class AbstractUFOParser implements IUFOParser {
 				try {
 					validator.validate(block);
 				} catch (final UFOScriptValidateException e) {
-					ParserUtil.addProblem(getParserContext(), e.getLine(), e
-							.getMessage());
+					ParserUtil.addProblem(getParserContext(), e.getLine(),
+							e.getMessage());
 				}
 			}
 		}
@@ -154,7 +155,7 @@ public abstract class AbstractUFOParser implements IUFOParser {
 		subParsers.put(parser.getID().toLowerCase(), parser);
 	}
 
-	protected HashMap<String, IUFOSubParserFactory> getSubParsers() {
+	protected Map<String, IUFOSubParserFactory> getSubParsers() {
 		return subParsers;
 	}
 
