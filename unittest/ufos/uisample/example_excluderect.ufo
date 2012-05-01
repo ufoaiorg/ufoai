@@ -3,7 +3,7 @@
  * Move it into the ui ufo script directory (/base/ufos/ui/), run the game, and run the command "ui_push unittest_excluderect"
  */
 
-component panel cmp_unittest_excluderect {
+component cmp_unittest_excluderect extends panel {
 	pos			"0 0"
 	size		"50 50"
 	border		3
@@ -49,7 +49,7 @@ window unittest_excluderect
 		}
 	}
 
-	/* component which share same list of excluderect */
+	/* component share extends which same list of excluderect */
 
 	cmp_unittest_excluderect foo2 {
 		pos			"200 100"

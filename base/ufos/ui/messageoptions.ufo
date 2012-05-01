@@ -2,7 +2,7 @@
 // MENU FOR PAUSE/MESSAGES
 // ==================
 
-component panel cmpMessageOptions {
+component cmpMessageOptions extends panel {
 	{
 		size	"90 20"
 		invis	true

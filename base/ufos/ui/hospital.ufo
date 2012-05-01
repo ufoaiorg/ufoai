@@ -2,7 +2,7 @@
 // HOSPITAL MENU
 // ==================
 
-component cmpDefNamedTbar cmpHospitalNamedTbar {
+component cmpHospitalNamedTbar extends cmpDefNamedTbar {
 	/** @todo Remove me */
 	{ } // empty properties to fix parsing problem with "image" token (behaviour or property?)
 
@@ -17,7 +17,7 @@ component cmpDefNamedTbar cmpHospitalNamedTbar {
 	}
 }
 
-component panel cmpHospitalPanel {
+component cmpHospitalPanel extends panel {
 	{
 	size "300 85"
 	}

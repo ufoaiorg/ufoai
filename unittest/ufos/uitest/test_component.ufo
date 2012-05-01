@@ -1,10 +1,10 @@
 
-component button test_component_myButton {
+component test_component_myButton extends button {
 	bgcolor		"0 1 0 0.5"
 	size		"100 50"
 }
 
-component panel test_component_myFunkyPanel {
+component test_component_myFunkyPanel extends panel {
 	{
 		size		"100 100"
 		bgcolor		"0 0 1 0.5"

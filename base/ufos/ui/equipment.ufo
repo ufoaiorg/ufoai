@@ -2,7 +2,7 @@
 // EQUIPMENT MENU
 // ==================
 
-component panel equipSoldier {
+component equipSoldier extends panel {
 	{
 		size		"260 25"
 	}

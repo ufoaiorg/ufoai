@@ -7,7 +7,7 @@
  * We should only use it for the main UI (outside game)
  */
 
-component button cmpMenuButton
+component cmpMenuButton extends button
 {
 	size "256 64"
 	background	"ui/button_green_big"
@@ -22,7 +22,7 @@ component button cmpMenuButton
  * This version is used in menu "employees" and "game_team"
  */
 
-component panel cmpDefNamedTbar
+component cmpDefNamedTbar extends panel
 {
 	{
 		size	"450 32"
@@ -54,7 +54,7 @@ component panel cmpDefNamedTbar
  * screenshot of the map. Used in skirmish and mp.
  */
 
-component image cmpMapImage
+component cmpMapImage extends image
 {
 	texl			"0 0"
 	texh			"128 96"
@@ -64,7 +64,7 @@ component image cmpMapImage
 	onRClick		{ cmd "mn_prevmap;" }
 }
 
-component panel cmpMapSlot
+component cmpMapSlot extends panel
 {
 	{
 		size "315 35"
@@ -111,7 +111,7 @@ component panel cmpMapSlot
  * Header for the base. Used in all baseview screens
  */
 
-component panel cmpDefBaseHeader {
+component cmpDefBaseHeader extends panel {
 	{
 		pos "0 0"
 		size "1024 90"
@@ -147,7 +147,7 @@ component panel cmpDefBaseHeader {
 
 }
 
-component cmpDefBaseHeader cmpBaseHeader
+component cmpBaseHeader extends cmpDefBaseHeader
 {
 	{
 		pos "0 0"
@@ -214,7 +214,7 @@ component cmpDefBaseHeader cmpBaseHeader
 /**
  * button on popups
  */
-component button cmpPopupButton
+component cmpPopupButton extends button
 {
 	color		"0 0.5 0 1"
 	selectcolor	"1 1 1 1"
@@ -226,13 +226,13 @@ component button cmpPopupButton
 /**
  * Cancel button on popups
  */
-component cmpPopupButton cmpCancelButton
+component cmpCancelButton extends cmpPopupButton
 {
 	string		"_Cancel"
 	tooltip		"_Close this dialogue"
 }
 
-component panel cmpMapPanel
+component cmpMapPanel extends panel
 {
 	{ }
 
@@ -327,7 +327,7 @@ component panel cmpMapPanel
 */
 }
 
-component panel cmpTeamPanel
+component cmpTeamPanel extends panel
 {
 	{
 		pos			"0 50"
@@ -660,7 +660,7 @@ window popup_keyinfo
 	}
 }
 
-component checkbox checkbox_blue
+component checkbox_blue extends checkbox
 {
 	iconChecked      "icons/checkbox_blue_checked"
 	iconUnchecked    "icons/checkbox_blue_unchecked"
@@ -668,7 +668,7 @@ component checkbox checkbox_blue
 	size "22 22"
 }
 
-component checkbox checkbox_green
+component checkbox_green extends checkbox
 {
 	iconChecked      "icons/checkbox_green_checked"
 	iconUnchecked    "icons/checkbox_green_unchecked"

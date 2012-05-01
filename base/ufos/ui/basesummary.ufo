@@ -2,7 +2,7 @@
 // BASE STATISTICS MENU
 // ======================
 
-component baselayout cmpBase
+component cmpBase extends baselayout
 {
 	size		"67 72"
 	color		"1 0 0 0.4"

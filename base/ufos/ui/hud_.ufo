@@ -3,13 +3,13 @@
 // ==================
 // Components for the soldier decoration panel
 
-component image cmp_bar_teambox_deco
+component cmp_bar_teambox_deco extends image
 {
 	src		"minihud/bar_teambox_deco"
 	ghost	true
 	size	"64 128"
 }
-component image cmp_bar_teamsep_deco
+component cmp_bar_teamsep_deco extends image
 {
 	src		"minihud/bar_teamsep_deco"
 	ghost	true
@@ -18,7 +18,7 @@ component image cmp_bar_teamsep_deco
 
 // Components for the soldier selection panel
 
-component image cmp_bar_teambox_disabled
+component cmp_bar_teambox_disabled extends image
 {
 	src		"minihud/bar_teambox_disabled"
 	size		"87 98"
@@ -28,7 +28,7 @@ component image cmp_bar_teambox_disabled
 	tooltip		"_Wheel:Select Next/Prev"
 }
 
-component image cmp_bar_teambox
+component cmp_bar_teambox extends image
 {
 	src		"minihud/bar_teambox_full"
 	size		"87 98"
@@ -39,7 +39,7 @@ component image cmp_bar_teambox
 
 // Components for the soldier number strings
 
-component string cmp_str_soldier_shadow
+component cmp_str_soldier_shadow extends string
 {
 	size		"24 20"
 	color		"0 0 0 1"
@@ -47,7 +47,7 @@ component string cmp_str_soldier_shadow
 	font		"f_verysmall"
 	contentalign	ALIGN_CL
 }
-component string cmp_str_soldier
+component cmp_str_soldier extends string
 {
 	size		"24 20"
 	color		"0 .6 0 1"
@@ -56,9 +56,9 @@ component string cmp_str_soldier
 	contentalign	ALIGN_CL
 }
 
-// Component for the soldier head models
+// Component the extends for soldier head models
 
-component model cmp_model_head
+component cmp_model_head extends model
 {
 	autoscale	true
 	size		"50 78"
@@ -67,21 +67,21 @@ component model cmp_model_head
 
 // Components for the soldier status bars
 
-component bar cmp_bar_health
+component cmp_bar_health extends bar
 {
 	size		"66 6"
 	color		".8 0 0 0.7"
 	disabled	true
 	tooltip		"_Health"
 }
-component bar cmp_bar_morale
+component cmp_bar_morale extends bar
 {
 	size		"66 6"
 	color		".8 .8 0 0.7"
 	disabled	true
 	tooltip		"_Morale"
 }
-component bar cmp_bar_time
+component cmp_bar_time extends bar
 {
 	size		"66 6"
 	color		".2 .2 1 0.9"
@@ -91,7 +91,7 @@ component bar cmp_bar_time
 
 // Component for the spotted enemies string (used by altHUD and defaultHUD)
 
-component string cmp_str_numspotted
+component cmp_str_numspotted extends string
 {
 	string		*cvar:mn_numaliensspotted
 	tooltip		"_LMB:Next visible enemy\nRMB:Previous visible enemy\nWheel:Cycle visible enemies"
@@ -105,7 +105,7 @@ component string cmp_str_numspotted
 }
 
 
-component panel cmpFiremodeEntry {
+component cmpFiremodeEntry extends panel {
 	{
 		pos		"0 0"
 		size	"214 63"

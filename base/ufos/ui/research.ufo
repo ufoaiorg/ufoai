@@ -2,7 +2,7 @@
 // BASE RESEARCH MENU
 // ===================
 
-component panel cmpResearchItem {
+component cmpResearchItem extends panel {
 	{
 		size		"590 25"
 	}

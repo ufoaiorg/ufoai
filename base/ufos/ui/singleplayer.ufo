@@ -2,7 +2,7 @@
 // SINGLE PLAYER MENU
 // ==================
 
-component cmpMenuButton cmpGameModeButton
+component cmpGameModeButton extends cmpMenuButton
 {
 	{
 		pos		"0 0"

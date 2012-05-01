@@ -2,7 +2,7 @@
 // OPTIONS MENU
 // =============
 
-component string cmpMenuPageHeader {
+component cmpMenuPageHeader extends string {
 			pos			"55 67"
 			size		"465 35"
 			font		"f_menubig"

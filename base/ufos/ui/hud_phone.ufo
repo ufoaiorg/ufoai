@@ -2,7 +2,7 @@
 // HUD MAIN
 // ==================
 
-component panel hud_phone_firemodeentry {
+component hud_phone_firemodeentry extends panel {
 	{
 		pos	"0 0"
 		size	"500 150"

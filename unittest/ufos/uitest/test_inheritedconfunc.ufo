@@ -1,5 +1,5 @@
 
-component panel test_inheritedconfunc_component {
+component test_inheritedconfunc_component extends panel {
 	{
 		bgcolor		"0 1 0 0.5"
 		size		"50 20"
@@ -78,7 +78,7 @@ window test_inheritedconfunc {
 		color	"0 1 0 1"	// <-- nothing should edit it, else it is an error
 	}
 
-	// all this tree component listen the same confunc
+	// all this tree component the extends listen same confunc
 
 	test_inheritedconfunc_component foo1 { pos "10 10" }
 

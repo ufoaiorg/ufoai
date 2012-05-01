@@ -32,7 +32,7 @@ struct uiAction_s;
 struct value_s;
 
 qboolean UI_ParseWindow(const char *type, const char *name, const char **text);
-qboolean UI_ParseComponent(const char *type, const char **text);
+qboolean UI_ParseComponent(const char *type, const char *name, const char **text);
 qboolean UI_ParseSprite(const char *name, const char **text);
 qboolean UI_ParseUIModel(const char *name, const char **text);
 float UI_GetReferenceFloat(uiNode_t const* node, const void *ref);

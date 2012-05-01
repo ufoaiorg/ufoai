@@ -1,6 +1,6 @@
 //
 
-component panel cmp_soldierentry {
+component cmp_soldierentry extends panel {
 	{
 		size		"310 25"
 	}

@@ -1,6 +1,6 @@
 // Installation popup windows
 
-component panel cmp_ufoyard_entry {
+component cmp_ufoyard_entry extends panel {
 	{
 		size		"250 40"
 		border		0
@@ -36,7 +36,7 @@ component panel cmp_ufoyard_entry {
 	}
 }
 
-component panel cmp_ufotransfer_entry {
+component cmp_ufotransfer_entry extends panel {
 	{
 		size		"420 40"
 		border		0
@@ -117,7 +117,7 @@ component panel cmp_ufotransfer_entry {
 	}
 }
 
-component panel cmp_ufotransfer_ufoentry {
+component cmp_ufotransfer_ufoentry extends panel {
 	{
 		size		"40 40"
 		border		0

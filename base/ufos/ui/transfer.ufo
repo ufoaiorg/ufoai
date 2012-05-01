@@ -2,7 +2,7 @@
 // TRANSFER MENU
 // ==================
 
-component spinner cmp_t_spinner
+component cmp_t_spinner extends spinner
 {
 	tooltip		"_Add/Remove item to transfer cargo, hold SHIFT for speed increase."
 	image		"ui/spinner_blue"
@@ -559,7 +559,7 @@ window popup_transferbaselist
 // POPUP TRANSFER LIST
 // ===================
 
-component panel trListEntry
+component trListEntry extends panel
 {
 	{
 		size		"472 150"

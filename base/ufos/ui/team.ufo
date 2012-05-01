@@ -2,7 +2,7 @@
 // MULTIPLAYER TEAM CREATION MENU
 // ==============================
 
-component checkbox_green gameTeamCheckbox
+component gameTeamCheckbox extends checkbox_green
 {
 	size		"20 20"
 	onChange	{ cmd "game_toggleactor <num> <current>;" }

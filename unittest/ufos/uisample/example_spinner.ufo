@@ -1,4 +1,4 @@
-component spinner2 myFunkySpinner {
+component myFunkySpinner extends spinner2 {
 	size "20 20"
 	background	"test/spinner"
 	topIcon	"test/spinner_top"

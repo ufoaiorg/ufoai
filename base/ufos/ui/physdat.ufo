@@ -2,7 +2,7 @@
 // BATTLESCAPE PHYSDATA WINDOW
 // ============================
 
-component cmpDefNamedTbar cmpPhysNamedTbar {
+component cmpPhysNamedTbar extends cmpDefNamedTbar {
 	/** @todo Remove me */
 	{ } // empty properties to fix parsing problem with "image" token (behaviour or property?)
 

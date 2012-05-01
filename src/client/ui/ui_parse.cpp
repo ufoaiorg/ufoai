@@ -1234,10 +1234,9 @@ qboolean UI_ParseSprite (const char *name, const char **text)
  * }
  * @endcode
  */
-qboolean UI_ParseComponent (const char *type, const char **text)
+qboolean UI_ParseComponent (const char *type, const char *name, const char **text)
 {
 	const char *errhead = "UI_ParseComponent: unexpected end of file (component";
-	uiNode_t *component;
 	const char *token;
 
 	if (!Q_streq(type, "component")) {
@@ -1245,13 +1244,56 @@ qboolean UI_ParseComponent (const char *type, const char **text)
 		return qfalse;	/* never reached */
 	}
 
-	/* CL_ParseClientData read the real type as name */
-	Com_UnParseLastToken();
-	token = Com_Parse(text);
-
-	component = UI_ParseNode(NULL, text, &token, errhead);
-	if (!component)
+	/* check the name */
+	if (!UI_TokenIsName(name, qfalse)) {
+		Com_Printf("UI_ParseNode: \"%s\" is not a well formed node name ([a-zA-Z_][a-zA-Z0-9_]*)\n", name);
 		return qfalse;
+	}
+	if (UI_TokenIsReserved(name)) {
+		Com_Printf("UI_ParseNode: \"%s\" is a reserved token, we can't call a node with it\n", name);
+		return qfalse;
+	}
+
+	token = Com_EParse(text, errhead, "");
+	if (text == NULL)
+		return qfalse;
+
+	/* get keyword */
+	if (!Q_streq(token, "extends")) {
+		Com_Printf("UI_ParseComponent: \"extends\" expected but \"%s\" found (component %s)\n", token, name);
+		return qfalse;
+	}
+	token = Com_EParse(text, errhead, "");
+	if (text == NULL)
+		return qfalse;
+
+	/* initialize component */
+	uiNode_t *component = NULL;
+	const uiBehaviour_t *behaviour = UI_GetNodeBehaviour(token);
+	if (behaviour) {
+		/* initialize a new node from behaviour */
+		component = UI_AllocNode(name, behaviour->name, qfalse);
+	} else {
+		const uiNode_t *inheritedComponent = UI_GetComponent(token);
+		if (inheritedComponent) {
+			/* initialize from a component */
+			component = UI_CloneNode(inheritedComponent, NULL, qtrue, name, qfalse);
+		} else {
+			Com_Printf("UI_ParseComponent: node behaviour/component '%s' doesn't exists (component %s)\n", token, name);
+			return qfalse;
+		}
+	}
+
+	/* get body */
+	token = Com_EParse(text, errhead, "");
+	if (!*text)
+		return qfalse;
+	int result = UI_ParseNodeBody(component, text, &token, errhead);
+	if (!result)
+		return qfalse;
+
+	/* validate properties */
+	UI_Node_Loaded(component);
 
 	UI_InsertComponent(component);
 	return qtrue;

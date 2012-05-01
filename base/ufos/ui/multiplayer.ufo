@@ -2,7 +2,7 @@
 // MULTIPLAYER MENU
 // ==================
 
-component panel cmpAdr {
+component cmpAdr extends panel {
 {
 	size "350 25"
 }

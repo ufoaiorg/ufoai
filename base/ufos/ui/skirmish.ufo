@@ -2,7 +2,7 @@
 // SKIRMISH MENU
 // ==============
 
-component radiobutton cmpMapPreviewButton
+component cmpMapPreviewButton extends radiobutton
 {
 	{
 		icon	"icons/mapselection"

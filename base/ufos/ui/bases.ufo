@@ -2,7 +2,7 @@
 // BASEMANAGEMENT
 // ===============
 
-component button cmpBaseButton
+component cmpBaseButton extends button
 {
 	background		"ui/button_green_small"
 	size		"230 35"
@@ -11,7 +11,7 @@ component button cmpBaseButton
 	font		"f_menu"
 }
 
-component panel cmpBuildingSpace
+component cmpBuildingSpace extends panel
 {
 	{
 		size	"230 25"

@@ -808,7 +808,7 @@ qboolean CL_ParseClientData (const char *type, const char *name, const char **te
 	else if (Q_streq(type, "window"))
 		return UI_ParseWindow(type, name, text);
 	else if (Q_streq(type, "component"))
-		return UI_ParseComponent(type, text);
+		return UI_ParseComponent(type, name, text);
 	else if (Q_streq(type, "actorskin"))
 		CL_ParseActorSkin(name, text);
 	else if (Q_streq(type, "cgame"))

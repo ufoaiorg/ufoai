@@ -2,7 +2,7 @@
 // MARKET MENU
 // ==================
 
-component panel cmpMarketItem {
+component cmpMarketItem extends panel {
 	{
 		size "425 25"
 		onClick {

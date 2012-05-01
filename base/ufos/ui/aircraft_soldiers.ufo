@@ -2,7 +2,7 @@
 // TEAM MENU
 // ==================
 
-component cmpDefNamedTbar cmpNamedTbar {
+component cmpNamedTbar extends cmpDefNamedTbar {
 	{
 		size	"450 20"
 	}
@@ -18,7 +18,7 @@ component cmpDefNamedTbar cmpNamedTbar {
 	}
 }
 
-component panel cmpNamedBar {
+component cmpNamedBar extends panel {
 	{
 		size	"450 20"
 	}

@@ -2,7 +2,7 @@
 // EMPLOYEES MENU
 // ==================
 
-component checkbox_green cmpSelect
+component cmpSelect extends checkbox_green
 {
 		current		0
 		size		"20 20"

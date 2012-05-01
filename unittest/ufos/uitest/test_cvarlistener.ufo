@@ -57,7 +57,7 @@ window test_cvarlistener_commontest {
 
 }
 
-component panel test_cvarlistener_dyn {
+component test_cvarlistener_dyn extends panel {
 	cvarlistener test_cvarlistener_cvar4 {
 		*node:root.count@integer = (*node:root.count@integer + 1)
 	}

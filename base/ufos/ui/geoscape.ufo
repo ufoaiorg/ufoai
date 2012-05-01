@@ -2,7 +2,7 @@
 // MAP MENU
 // ==================
 
-component panel cmpGeoscapeDocklet {
+component cmpGeoscapeDocklet extends panel {
 	{
 		pos		"0 0"
 		size	"280 60"

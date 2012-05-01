@@ -6,7 +6,7 @@
 // Alien Image Component
 // ======================
 
-	component image cmpAlienImage
+	component cmpAlienImage extends image
 	{
 		src			*cvar:mn_al_alienimage
 		pos				"18 19"
@@ -19,7 +19,7 @@
 // Aliencontainment Component
 // ===========================
 
-component image cmpAlienContainment {
+component cmpAlienContainment extends image {
 	{
 		src				"ui/hosp_button_green"
 		onClick			{ cmd "aliencont_click <num>;" }

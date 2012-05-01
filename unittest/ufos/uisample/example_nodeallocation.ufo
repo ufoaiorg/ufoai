@@ -1,6 +1,6 @@
 
 
-component panel myAllocatedPanel {
+component myAllocatedPanel extends panel {
 
 	{
 		size "200 20"
