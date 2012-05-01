@@ -95,15 +95,15 @@ static uiSprite_t* UI_AutoGenerateSprite (const char* name)
  * @return True if the sprite exists
  * @note not very fast; if we use it often we should improve the search
  */
-static qboolean UI_SpriteExists (const char* name)
+static bool UI_SpriteExists (const char* name)
 {
 	int i;
 	for (i = 0; i < ui_global.numSprites; i++) {
 		if (strncmp(name, ui_global.sprites[i].name, MEMBER_SIZEOF(uiSprite_t, name)) != 0)
 			continue;
-		return qtrue;
+		return true;
 	}
-	return qfalse;
+	return false;
 }
 
 /**
