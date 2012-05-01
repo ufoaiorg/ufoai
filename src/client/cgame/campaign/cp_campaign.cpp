@@ -177,8 +177,6 @@ static qboolean CP_MapIsSelectable (mission_t *mission, mapDef_t *md, const vec2
 
 		if (!LIST_ContainsString(md->ufos, ufoID))
 			return qfalse;
-	} else {
-		return qfalse;
 	}
 
 	return qtrue;
