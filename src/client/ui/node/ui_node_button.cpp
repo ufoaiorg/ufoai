@@ -78,7 +78,6 @@ void uiButtonNode::draw (uiNode_t *node)
 	const char *image;
 	vec2_t pos;
 	static vec4_t disabledColor = {0.5, 0.5, 0.5, 1.0};
-	int iconPadding = 0;
 	uiSpriteStatus_t iconStatus = SPRITE_STATUS_NORMAL;
 	const char *font = UI_GetFontFromNode(node);
 
@@ -109,14 +108,14 @@ void uiButtonNode::draw (uiNode_t *node)
 		UI_DrawSpriteInBox(qfalse, EXTRADATA(node).background, iconStatus, pos[0], pos[1], node->size[0], node->size[1]);
 	}
 
+	vec2_t insidePos = {pos[0] + node->padding, pos[1] + node->padding};
+	vec2_t insideSize = {node->size[0] - node->padding * 2, node->size[1] - node->padding * 2};
+
 	/* display the icon at the left */
 	/** @todo should we move it according to the text align? */
 	if (EXTRADATA(node).icon) {
-		/* use at least a box size equals to button height */
-		int size = node->size[1] - node->padding - node->padding;
-		UI_DrawSpriteInBox(EXTRADATA(node).flipIcon, EXTRADATA(node).icon, iconStatus, pos[0] + node->padding, pos[1] + node->padding, size,
-				node->size[1] - node->padding - node->padding);
-		iconPadding = size + node->padding;
+		UI_DrawSpriteInBox(EXTRADATA(node).flipIcon, EXTRADATA(node).icon, iconStatus,
+				insidePos[0], insidePos[1], insideSize[0], insideSize[1]);
 	}
 
 	text = UI_GetReferenceString(node, node->text);
@@ -124,8 +123,7 @@ void uiButtonNode::draw (uiNode_t *node)
 		R_Color(textColor);
 		text = _(text);
 		UI_DrawStringInBox(font, (align_t) node->contentAlign,
-			pos[0] + node->padding + iconPadding, pos[1] + node->padding,
-			node->size[0] - node->padding - node->padding - iconPadding, node->size[1] - node->padding - node->padding,
+			insidePos[0], insidePos[1], insideSize[0], insideSize[1],
 			text, LONGLINES_PRETTYCHOP);
 		R_Color(NULL);
 	}
