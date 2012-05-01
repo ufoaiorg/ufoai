@@ -1,12 +1,17 @@
+/*
 window radarwindow {
 	{
 		fill		true
 		starlayout	true
 	}
 
-	func closeradar
-	{
-		cmd "closeradar;"
+	func onWindowOpened {
+		*cvar:radar_window_open = 1
+	}
+
+	func onWindowClosed {
+		delete *cvar:radar_window_open
+		}
 	}
 
 	radar hudradar
@@ -20,7 +25,7 @@ window radarwindow {
 	}
 }
 
-/*
+*/
 window radarwindow {
 	{
 		pos			"256 100"
@@ -29,6 +34,15 @@ window radarwindow {
 		closebutton	true
 		background		"ui/popup_alpha_tile"
 		string		"_Radar"
+	}
+
+	func onWindowOpened {
+		*cvar:radar_window_open = 1
+	}
+
+	func onWindowClosed {
+		delete *cvar:radar_window_open
+		}
 	}
 
 	func closeradar
@@ -42,4 +56,3 @@ window radarwindow {
 		size "500 500"
 	}
 }
-*/

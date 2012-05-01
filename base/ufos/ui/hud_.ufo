@@ -351,9 +351,7 @@ window hud extends levelbuttons {
 	confunc startround { }
 	confunc endround { }
 
-	func openradar { cmd "openradar;" }
-
-	// confuncs to show/hide inventory and physdat windows
+	// confuncs to show/hide inventory, physdat and radar windows
 	confunc show_hide_inventory
 	{
 		// a second click will close the inventory window again
@@ -370,6 +368,15 @@ window hud extends levelbuttons {
 			cmd "ui_close hudphysdat;"
 		} else {
 			cmd "ui_push hudphysdat;"
+		}
+	}
+	confunc show_hide_radar
+	{
+		// a second click will close the radar window again
+		if ( *cvar:radar_window_open == 1 ) {
+			cmd "closeradar;"
+		} else {
+			cmd "openradar;"
 		}
 	}
 
