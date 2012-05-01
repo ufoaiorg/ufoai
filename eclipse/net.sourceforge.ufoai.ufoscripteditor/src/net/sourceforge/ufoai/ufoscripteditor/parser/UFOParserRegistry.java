@@ -1,6 +1,7 @@
 package net.sourceforge.ufoai.ufoscripteditor.parser;
 
 import java.util.HashMap;
+import java.util.Map;
 
 import net.sourceforge.ufoai.ufoscripteditor.parser.parsers.AircraftParser;
 import net.sourceforge.ufoai.ufoscripteditor.parser.parsers.AlienTeamParser;
@@ -46,7 +47,7 @@ import net.sourceforge.ufoai.ufoscripteditor.parser.parsers.WindowParser;
 
 public class UFOParserRegistry {
 	private static final UFOParserRegistry registry = new UFOParserRegistry();
-	private final HashMap<String, IUFOParserFactory> parsers = new HashMap<String, IUFOParserFactory>();
+	private final Map<String, IUFOParserFactory> parsers = new HashMap<String, IUFOParserFactory>();
 
 	private UFOParserRegistry() {
 		register(AlienTeamParser.FACTORY);
