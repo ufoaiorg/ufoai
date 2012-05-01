@@ -155,7 +155,6 @@ $(TARGET)_SRCS      = \
 	client/ui/node/ui_node_string.cpp \
 	client/ui/node/ui_node_special.cpp \
 	client/ui/node/ui_node_spinner.cpp \
-	client/ui/node/ui_node_spinner2.cpp \
 	client/ui/node/ui_node_tab.cpp \
 	client/ui/node/ui_node_tbar.cpp \
 	client/ui/node/ui_node_text.cpp \

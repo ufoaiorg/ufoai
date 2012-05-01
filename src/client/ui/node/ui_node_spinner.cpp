@@ -31,13 +31,14 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #include "../ui_timer.h"
 #include "../ui_actions.h"
 #include "../ui_render.h"
+#include "../ui_sprite.h"
 #include "ui_node_spinner.h"
 #include "ui_node_abstractnode.h"
 
 #include "../../input/cl_input.h"
 #include "../../input/cl_keys.h"
 
-#define EXTRADATA_TYPE abstractValueExtraData_t;
+#define EXTRADATA_TYPE spinnerExtraData_t
 #define EXTRADATA(node) UI_EXTRADATA(node, EXTRADATA_TYPE)
 #define EXTRADATACONST(node) UI_EXTRADATACONST(node, EXTRADATA_TYPE)
 
@@ -189,6 +190,48 @@ void uiSpinnerNode::draw (uiNode_t *node)
 	/* draw bottom button */
 	UI_DrawNormImageByName(qfalse, pos[0], pos[1] + BUTTON_TOP_SIZE, SPINNER_WIDTH, BUTTON_BOTTOM_SIZE,
 		bottomTexX + SPINNER_WIDTH, bottomTexY + SPINNER_HEIGHT, bottomTexX, bottomTexY + SPINNER_HEIGHT - BUTTON_BOTTOM_SIZE, image);
+
+	/* new draw code */
+
+	uiSpriteStatus_t status;
+	uiSpriteStatus_t topStatus;
+	uiSpriteStatus_t bottomStatus;
+
+	if (disabled || delta == 0) {
+		status = SPRITE_STATUS_DISABLED;
+		topStatus = SPRITE_STATUS_DISABLED;
+		bottomStatus = SPRITE_STATUS_DISABLED;
+	} else {
+		const float value = getValue(node);
+		const float min = getMin(node);
+		const float max = getMax(node);
+
+		status = SPRITE_STATUS_NORMAL;
+
+		/* top button status */
+		if (value >= max) {
+			topStatus = SPRITE_STATUS_DISABLED;
+		} else if (node->state && mousePosY < pos[1] + node->size[1] * 0.5) {
+			topStatus = SPRITE_STATUS_HOVER;
+		} else {
+			topStatus = SPRITE_STATUS_NORMAL;
+		}
+		/* bottom button status */
+		if (value <= min) {
+			bottomStatus = SPRITE_STATUS_DISABLED;
+		} else if (node->state && mousePosY > pos[1] + node->size[1] * 0.5) {
+			bottomStatus = SPRITE_STATUS_HOVER;
+		} else {
+			bottomStatus = SPRITE_STATUS_NORMAL;
+		}
+	}
+
+	if (EXTRADATA(node).background)
+		UI_DrawSpriteInBox(qfalse, EXTRADATA(node).background, status, pos[0], pos[1], node->size[0], node->size[1]);
+	if (EXTRADATA(node).topIcon)
+		UI_DrawSpriteInBox(qfalse, EXTRADATA(node).topIcon, topStatus, pos[0], pos[1], node->size[0], node->size[1]);
+	if (EXTRADATA(node).bottomIcon)
+		UI_DrawSpriteInBox(qfalse, EXTRADATA(node).bottomIcon, bottomStatus, pos[0], pos[1], node->size[0], node->size[1]);
 }
 
 void uiSpinnerNode::onLoading (uiNode_t *node)
@@ -204,6 +247,7 @@ void UI_RegisterSpinnerNode (uiBehaviour_t *behaviour)
 	behaviour->name = "spinner";
 	behaviour->extends = "abstractvalue";
 	behaviour->manager = new uiSpinnerNode();
+	behaviour->extraDataSize = sizeof(EXTRADATA_TYPE);
 
 	/* The size of the widget is uneditable. Fixed to 15x19.
 	 */
@@ -215,4 +259,20 @@ void UI_RegisterSpinnerNode (uiBehaviour_t *behaviour)
 	 * @image html http://ufoai.org/wiki/images/Spinner_blue.png
 	 */
 	UI_RegisterOveridedNodeProperty(behaviour, "image");
+
+
+	/**
+	 * @brief Backround used to display the spinner. It is displayed in the center of the node.
+	 */
+	UI_RegisterExtradataNodeProperty(behaviour, "background", V_UI_SPRITEREF, EXTRADATA_TYPE, background);
+
+	/**
+	 * @brief Top icon used to decorate the top button of the spinner. It is displayed in the center of the node.
+	 */
+	UI_RegisterExtradataNodeProperty(behaviour, "topIcon", V_UI_SPRITEREF, EXTRADATA_TYPE, topIcon);
+
+	/**
+	 * @brief Sprite used to decorate the bottom button of the spinner. It is displayed in the center of the node.
+	 */
+	UI_RegisterExtradataNodeProperty(behaviour, "bottomIcon", V_UI_SPRITEREF, EXTRADATA_TYPE, bottomIcon);
 }

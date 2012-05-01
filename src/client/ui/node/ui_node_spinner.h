@@ -41,6 +41,15 @@ protected:
 	bool step (uiNode_t *node, bool down);
 };
 
+struct spinnerExtraData_t {
+	abstractValueExtraData_s super;
+
+	uiSprite_t *background;	/**< Link to the background */
+	uiSprite_t *bottomIcon;		/**< Link to the icon used for the bottom button */
+	uiSprite_t *topIcon;		/**< Link to the icon used for the top button */
+
+};
+
 void UI_RegisterSpinnerNode(uiBehaviour_t *behaviour);
 
 #endif

@@ -629,8 +629,6 @@
 		<Unit filename="..\..\src\client\ui\node\ui_node_special.h" />
 		<Unit filename="..\..\src\client\ui\node\ui_node_spinner.cpp" />
 		<Unit filename="..\..\src\client\ui\node\ui_node_spinner.h" />
-		<Unit filename="..\..\src\client\ui\node\ui_node_spinner2.cpp" />
-		<Unit filename="..\..\src\client\ui\node\ui_node_spinner2.h" />
 		<Unit filename="..\..\src\client\ui\node\ui_node_string.cpp" />
 		<Unit filename="..\..\src\client\ui\node\ui_node_string.h" />
 		<Unit filename="..\..\src\client\ui\node\ui_node_tab.cpp" />

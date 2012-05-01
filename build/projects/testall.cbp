@@ -336,7 +336,6 @@
 		<Unit filename="..\..\src\client\ui\node\ui_node_sequence.cpp" />
 		<Unit filename="..\..\src\client\ui\node\ui_node_special.cpp" />
 		<Unit filename="..\..\src\client\ui\node\ui_node_spinner.cpp" />
-		<Unit filename="..\..\src\client\ui\node\ui_node_spinner2.cpp" />
 		<Unit filename="..\..\src\client\ui\node\ui_node_string.cpp" />
 		<Unit filename="..\..\src\client\ui\node\ui_node_tab.cpp" />
 		<Unit filename="..\..\src\client\ui\node\ui_node_tbar.cpp" />
