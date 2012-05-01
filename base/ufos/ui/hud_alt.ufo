@@ -1280,10 +1280,9 @@ window hud_alt extends hud
 			onMouseLeave			{ cmd "hud_remainingtus crouch 0;" }
 		}
 
-		checkbox bt_crouch_reservation
+		checkbox_blue bt_crouch_reservation
 		{
 			tooltip		*cvar:mn_crouch_reservation_tt
-			image		"ui/checkbox_blue"
 			pos			"201 472"
 			size		"20 18"
 			current		0

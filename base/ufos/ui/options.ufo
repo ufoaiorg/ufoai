@@ -187,12 +187,11 @@ window options
 			pos			"72 440"
 			size		"280 20"
 		}
-		checkbox m3dmap
+		checkbox_blue m3dmap
 		{
 			current		*cvar:cl_3dmap
 			pos			"485 440"
 			size		"20 18"
-			image		"ui/checkbox_blue"
 		}
 		// ====================
 		// GEOSCAPE DECORATION
@@ -204,12 +203,11 @@ window options
 			pos			"72 465"
 			size		"280 20"
 		}
-		checkbox geoscape_deco
+		checkbox_blue geoscape_deco
 		{
 			current		*cvar:mn_geoscape_deco
 			pos			"485 465"
 			size		"20 18"
-			image		"ui/checkbox_blue"
 		}
 		// =====================================
 		// GEOSCAPE CAMERA MINIMUM/MAXIMUM ZOOM
@@ -322,12 +320,11 @@ window options
 			pos			"72 545"
 			size		"280 20"
 		}
-		checkbox tooltip
+		checkbox_blue tooltip
 		{
 			current		*cvar:mn_show_tooltips
 			pos			"485 545"
 			size		"20 18"
-			image		"ui/checkbox_blue"
 		}
 
 		// ========================================
@@ -340,12 +337,11 @@ window options
 			pos			"72 570"
 			size		"280 20"
 		}
-		checkbox c_tooltip
+		checkbox_blue c_tooltip
 		{
 			current		*cvar:cl_show_cursor_tooltips
 			pos			"485 570"
 			size		"20 18"
-			image		"ui/checkbox_blue"
 		}
 		// ===============
 		// TIP OF THE DAY
@@ -357,12 +353,11 @@ window options
 			size		"280 20"
 			font		"f_small"
 		}
-		checkbox tipoftheday
+		checkbox_blue tipoftheday
 		{
 			current		*cvar:cl_showTipOfTheDay
 			pos			"485 595"
 			size		"20 18"
-			image		"ui/checkbox_blue"
 		}
 		// =====================
 		// MENU OPTIONS SUBMENU
@@ -383,13 +378,12 @@ window options
 			pos			"72 675"
 			size		"320 20"
 		}
-		checkbox precache
+		checkbox_blue precache
 		{
 			tooltip		"_Precaching of models means having faster menus."
 			current		*cvar:cl_precache
 			pos			"485 675"
 			size		"20 18"
-			image		"ui/checkbox_blue"
 		}
 	}
 	// ========================
@@ -537,13 +531,12 @@ window options
 				pos			"32 60"
 				size		"320 20"
 			}
-			checkbox fullscreen
+			checkbox_blue fullscreen
 			{
 				tooltip		"_Play UFO:AI in fullscreen."
 				current		*cvar:vid_fullscreen
 				pos			"445 60"
 				size		"20 18"
-				image		"ui/checkbox_blue"
 			}
 			// ===============
 			// STRETCH SCREEN
@@ -554,12 +547,11 @@ window options
 				pos			"32 85"
 				size		"370 20"
 			}
-			checkbox stretch
+			checkbox_blue stretch
 			{
 				current		*cvar:vid_stretch
 				pos			"445 85"
 				size		"20 18"
-				image		"ui/checkbox_blue"
 			}
 			// =============================================
 			// INFORM THE PLAYER ABOUT CTRL+G MOUSEGRABBING
@@ -707,13 +699,12 @@ window options
 				pos			"32 465"
 				size		"320 20"
 			}
-			checkbox fps
+			checkbox_blue fps
 			{
 				tooltip		"_Display the number of rendered frames per second."
 				current		*cvar:cl_fps
 				pos			"445 465"
 				size		"20 18"
-				image		"ui/checkbox_blue"
 			}
 
 			// ================
@@ -726,13 +717,12 @@ window options
 				pos			"32 490"
 				size		"320 20"
 			}
-			checkbox intro
+			checkbox_blue intro
 			{
 				tooltip		"_Default is to play the intro video just once at the first game start."
 				current		*cvar:cl_introshown
 				pos			"445 490"
 				size		"20 18"
-				image		"ui/checkbox_blue"
 			}
 		}
 
@@ -854,12 +844,11 @@ window options
 				pos			"32 85"
 				size		"320 20"
 			}
-			checkbox compression
+			checkbox_blue compression
 			{
 				current		*cvar:r_ext_texture_compression
 				pos			"445 85"
 				size		"20 18"
-				image		"ui/checkbox_blue"
 			}
 			// ============
 			// TEXTURE LOD
@@ -871,12 +860,11 @@ window options
 				pos			"32 110"
 				size		"250 20"
 			}
-			checkbox lod
+			checkbox_blue lod
 			{
 				current		*cvar:r_texture_lod
 				pos			"445 110"
 				size		"20 18"
-				image		"ui/checkbox_blue"
 			}
 			// ======================
 			// ANISOTROPIC FILTERING
@@ -982,12 +970,11 @@ window options
 					pos			"32 215"
 					size		"240 20"
 				}
-				checkbox vbo
+				checkbox_blue vbo
 				{
 					current		*cvar:r_vertexbuffers
 					pos			"445 215"
 					size		"20 18"
-					image		"ui/checkbox_blue"
 				}
 				// ==================================================================
 				// MULTISAMPLE BUFFERS AND MULTISAMPLE BUFFERS SWAP CONTROL (V-SYNC)
@@ -1041,13 +1028,12 @@ window options
 					pos			"32 265"
 					size		"370 20"
 				}
-				checkbox postprocess
+				checkbox_blue postprocess
 				{
 					tooltip		"_Enable post processing shader effects."
 					current		*cvar:r_postprocess
 					pos			"445 265"
 					size		"20 18"
-					image		"ui/checkbox_blue"
 				}
 				// =======================================================
 				// REALTIME LIGHTING AND MAXIMUM NUMBER OF DYNAMIC LIGHTS
@@ -1102,13 +1088,12 @@ window options
 						pos			"32 370"
 						size		"320 20"
 					}
-					checkbox bumpmapping
+					checkbox_blue bumpmapping
 					{
 						tooltip		"_Enable normal-/bumpmapping."
 						current		*cvar:r_bumpmap
 						pos			"445 370"
 						size		"20 18"
-						image		"ui/checkbox_blue"
 					}
 				}
 				// ========================
@@ -1147,13 +1132,12 @@ window options
 					pos			"32 370"
 					size		"240 20"
 				}
-				checkbox shadows
+				checkbox_blue shadows
 				{
 					tooltip		"_Enable shadows."
 					current		*cvar:r_shadows
 					pos			"445 370"
 					size		"20 18"
-					image		"ui/checkbox_blue"
 				}
 				*/
 			}
@@ -1226,13 +1210,12 @@ window options
 					pos			"32 485"
 					size		"320 20"
 				}
-				checkbox intelhack
+				checkbox_blue intelhack
 				{
 					tooltip		"_This hack activates texture compression and deactivates GLSL shaders on Intel chips. Disable it to be able to turn on advanced rendering features."
 					current		*cvar:r_intel_hack
 					pos			"445 485"
 					size		"20 18"
-					image		"ui/checkbox_blue"
 				}
 			}
 		}
@@ -1264,12 +1247,11 @@ window options
 				pos			"32 35"
 				size		"240 20"
 			}
-			checkbox flares
+			checkbox_blue flares
 			{
 				current		*cvar:r_flares
 				pos			"445 35"
 				size		"20 18"
-				image		"ui/checkbox_blue"
 			}
 			// ========
 			// CORONAS
@@ -1281,12 +1263,11 @@ window options
 				pos			"32 60"
 				size		"240 20"
 			}
-			checkbox coronas
+			checkbox_blue coronas
 			{
 				current		*cvar:r_coronas
 				pos			"445 60"
 				size		"20 18"
-				image		"ui/checkbox_blue"
 			}
 			// ====
 			// FOG
@@ -1298,12 +1279,11 @@ window options
 				pos			"32 85"
 				size		"240 20"
 			}
-			checkbox fog
+			checkbox_blue fog
 			{
 				current		*cvar:r_fog
 				pos			"445 85"
 				size		"20 18"
-				image		"ui/checkbox_blue"
 			}
 			// =========================
 			// WEATHER PARTICLE EFFECTS
@@ -1315,12 +1295,11 @@ window options
 				pos			"32 110"
 				size		"240 20"
 			}
-			checkbox ptlweather
+			checkbox_blue ptlweather
 			{
 				current		*cvar:cl_particleweather
 				pos			"445 110"
 				size		"20 18"
-				image		"ui/checkbox_blue"
 			}
 			// ================
 			// MATERIAL SYSTEM
@@ -1332,12 +1311,11 @@ window options
 				pos			"32 135"
 				size		"240 20"
 			}
-			checkbox materialsys
+			checkbox_blue materialsys
 			{
 				current		*cvar:r_materials
 				pos			"445 135"
 				size		"20 18"
-				image		"ui/checkbox_blue"
 			}
 
 			button video_low
@@ -1421,12 +1399,11 @@ window options
 			pos			"72 135"
 			size		"240 20"
 		}
-		checkbox sound_init
+		checkbox_blue sound_init
 		{
 			current		*cvar:snd_init
 			pos			"485 135"
 			size		"20 18"
-			image		"ui/checkbox_blue"
 			onChange {
 				call *node:root.options_sound.show_advanced_sound_options
 			}
@@ -1503,13 +1480,12 @@ window options
 				pos			"72 210"
 				size		"170 20"
 			}
-			checkbox menu_sounds_checkbox
+			checkbox_blue menu_sounds_checkbox
 			{
 				tooltip		"_Turn the menu sounds on or off."
 				current		*cvar:ui_sounds
 				pos			"485 210"
 				size		"20 18"
-				image		"ui/checkbox_blue"
 			}
 			// ============================
 			// OTHER AUDIO OPTIONS SUBMENU
@@ -1679,12 +1655,11 @@ window options
 			pos			"72 210"
 			size		"320 20"
 		}
-		checkbox isomode
+		checkbox_blue isomode
 		{
 			current		*cvar:r_isometric
 			pos			"485 210"
 			size		"20 18"
-			image		"ui/checkbox_blue"
 		}
 		// ===============================
 		// BATTLESCAPE CAMERA CENTER VIEW
@@ -1696,12 +1671,11 @@ window options
 			pos			"72 235"
 			size		"320 20"
 		}
-		checkbox centerview_value
+		checkbox_blue centerview_value
 		{
 			current		*cvar:cl_centerview
 			pos			"485 235"
 			size		"20 18"
-			image		"ui/checkbox_blue"
 		}
 		// ======================================
 		// BATTLESCAPE GAMEPLAY SETTINGS SUBMENU
@@ -1778,12 +1752,11 @@ window options
 			pos			"72 415"
 			size		"320 20"
 		}
-		checkbox autostand_value
+		checkbox_blue autostand_value
 		{
 			current		*cvar:cl_autostand
 			pos			"485 415"
 			size		"20 18"
-			image		"ui/checkbox_blue"
 		}
 		// ================
 		// BATTLESCAPE HUD
@@ -1822,12 +1795,11 @@ window options
 			pos			"72 520"
 			size		"240 20"
 		}
-		checkbox joystick_enable
+		checkbox_blue joystick_enable
 		{
 			current		*cvar:in_joystick
 			pos			"485 520"
 			size		"20 18"
-			image		"ui/checkbox_blue"
 			onChange {
 				call *node:root.options_gameplay.show_joystick_options
 			}

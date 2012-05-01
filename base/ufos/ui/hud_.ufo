@@ -760,9 +760,8 @@ window hud_chat
 					contentalign	ALIGN_CL
 					string		"_Say:"
 				}
-				checkbox chat_team
+				checkbox_green chat_team
 				{
-					image		"ui/checkbox_green"
 					width		"20"
 					pos			"0 4"
 					current		*cvar:mn_chat_team

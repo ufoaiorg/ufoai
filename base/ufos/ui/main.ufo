@@ -265,11 +265,10 @@ window popup_tipoftheday
 		string		"_Tip of the day"
 	}
 
-	checkbox activate
+	checkbox_blue activate
 	{
 		current		*cvar:cl_showTipOfTheDay
 		pos			"36 194"
-		image		"ui/checkbox_blue"
 		size		"20 18"
 		onChange		{ cmd "check_nexttip;" }
 	}

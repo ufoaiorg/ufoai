@@ -358,9 +358,8 @@ window basedefence extends objectinfo
 			pos			"50 200"
 			size		"250 25"
 		}
-		checkbox autofire
+		checkbox_green autofire
 		{
-			image		"ui/checkbox_green"
 			pos			"310 200"
 			size		"20 20"
 			current		0

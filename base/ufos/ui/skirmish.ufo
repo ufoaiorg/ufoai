@@ -411,12 +411,11 @@ window skirmish
 			size		"300 20"
 			tooltip		"_Enemies respawn when killed."
 		}
-		checkbox alienrush_value
+		checkbox_blue alienrush_value
 		{
 			current		*cvar:g_endlessaliens
 			pos			"366 325"
 			size		"20 18"
-			image		"ui/checkbox_blue"
 		}
 		// ========================
 		// TEAM STRING & SELECTBOX

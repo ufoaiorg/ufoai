@@ -13,9 +13,8 @@ component panel cmpMarketItem {
 	data id {
 	}
 
-	checkbox autosell {
+	checkbox_blue autosell {
 		current		0
-		image		"ui/checkbox_blue"
 		pos			"0 0"
 		size		"22 18"
 

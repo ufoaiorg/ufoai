@@ -20,9 +20,8 @@ component panel aircraft_teammember {
 		}
 	}
 
-	checkbox selected {
+	checkbox_green selected {
 		tooltip		"_Add/remove soldier to the team"
-		image		"ui/checkbox_green"
 		pos			"230 0"
 		size		"25 25"
 

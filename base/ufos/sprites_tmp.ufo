@@ -1,0 +1,56 @@
+// Contains sprites from banks we should split
+// then this script will became useless
+
+sprite icons/checkbox_blue_unchecked {
+	image "banks/checkbox_blue"
+	size "22 22"
+	texl "0 0"
+	hoveredtexl "0 32"
+	clickedtexl "0 64"
+	disabledtexl "0 96"
+}
+
+sprite icons/checkbox_blue_checked {
+	image "banks/checkbox_blue"
+	size "22 22"
+	texl "32 0"
+	hoveredtexl "32 32"
+	clickedtexl "32 64"
+	disabledtexl "32 96"
+}
+
+sprite icons/checkbox_blue_indeterminate {
+	image "banks/checkbox_blue"
+	size "22 22"
+	texl "64 0"
+	hoveredtexl "64 32"
+	clickedtexl "64 64"
+	disabledtexl "64 96"
+}
+
+sprite icons/checkbox_green_unchecked {
+	image "banks/checkbox_green"
+	size "20 20"
+	texl "0 0"
+	hoveredtexl "0 32"
+	clickedtexl "0 64"
+	disabledtexl "0 96"
+}
+
+sprite icons/checkbox_green_checked {
+	image "banks/checkbox_green"
+	size "20 20"
+	texl "32 0"
+	hoveredtexl "32 32"
+	clickedtexl "32 64"
+	disabledtexl "32 96"
+}
+
+sprite icons/checkbox_green_indeterminate {
+	image "banks/checkbox_green"
+	size "20 20"
+	texl "64 0"
+	hoveredtexl "64 32"
+	clickedtexl "64 64"
+	disabledtexl "64 96"
+}

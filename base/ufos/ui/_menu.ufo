@@ -659,3 +659,19 @@ window popup_keyinfo
 		onChange	{ *node:root.keyinfolist@viewpos = <current> }
 	}
 }
+
+component checkbox checkbox_blue
+{
+	iconChecked      "icons/checkbox_blue_checked"
+	iconUnchecked    "icons/checkbox_blue_unchecked"
+	iconIndeterminate "icons/checkbox_blue_indeterminate"
+	size "22 22"
+}
+
+component checkbox checkbox_green
+{
+	iconChecked      "icons/checkbox_green_checked"
+	iconUnchecked    "icons/checkbox_green_unchecked"
+	iconIndeterminate "icons/checkbox_green_indeterminate"
+	size "20 20"
+}

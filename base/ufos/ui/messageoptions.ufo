@@ -8,29 +8,26 @@ component panel cmpMessageOptions {
 		invis	true
 	}
 
-	checkbox notify {
+	checkbox_blue notify {
 		tooltip		"_enable or disable displaying a notification message"
 		pos			"0 0"
 		size		"20 18"
-		image		"ui/checkbox_blue"
 		current		0
 		onChange	{ cmd "msgoptions_toggle <node:parent@num> notify;" }
 	}
 
-	checkbox pause {
+	checkbox_blue pause {
 		tooltip		"_enable or disable game stopping"
 		pos			"30 0"
 		size		"20 18"
-		image		"ui/checkbox_blue"
 		current		0
 		onChange	{ cmd "msgoptions_toggle <node:parent@num> pause;" }
 	}
 
-	checkbox sound {
+	checkbox_blue sound {
 		tooltip		"_enable or disable playing sound"
 		pos			"60 0"
 		size		"20 18"
-		image		"ui/checkbox_blue"
 		current		0
 		onChange	{ cmd "msgoptions_toggle <node:parent@num> sound;" }
 	}

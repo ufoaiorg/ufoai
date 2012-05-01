@@ -2,10 +2,9 @@
 // EMPLOYEES MENU
 // ==================
 
-component checkbox cmpSelect
+component checkbox_green cmpSelect
 {
 		current		0
-		image		"ui/checkbox_green"
 		size		"20 20"
 		onChange	{ cmd "employee_hire <num>;" }
 		onRClick		{ cmd "employee_delete <num>;" }

@@ -16,9 +16,8 @@ component panel cmp_soldierentry {
 		}
 	}
 
-	checkbox selected {
+	checkbox_green selected {
 		tooltip		"_Add/remove soldier to the team"
-		image		"ui/checkbox_green"
 		pos			"275 0"
 		size		"25 25"
 
@@ -383,24 +382,22 @@ window popup_baseattack
 		lineheight	16
 	}
 
-	checkbox killaliens {
+	checkbox_blue killaliens {
 		current		0
 		pos			"26 120"
 		size		"20 18"
-		image		"ui/checkbox_blue"
 	}
 	string killaliens_str {
 		string		"_Kill aliens in container"
 		pos			"55 120"
 		size		"220 20"
 	}
-	checkbox liftcrafts {
+	checkbox_blue liftcrafts {
 		current		0
 		disabled	true
 		tooltip		"_Not implemented"
 		pos			"26 145"
 		size		"20 18"
-		image		"ui/checkbox_blue"
 	}
 	string liftcrafts_str {
 		string		"_Lift aircraft"
@@ -409,13 +406,12 @@ window popup_baseattack
 		pos			"55 145"
 		size		"220 20"
 	}
-	checkbox powerdown {
+	checkbox_blue powerdown {
 		current		0
 		disabled	true
 		tooltip		"_Not implemented"
 		pos			"26 170"
 		size		"20 18"
-		image		"ui/checkbox_blue"
 	}
 	string powerdown_str {
 		string		"_Disable Power Plant"
