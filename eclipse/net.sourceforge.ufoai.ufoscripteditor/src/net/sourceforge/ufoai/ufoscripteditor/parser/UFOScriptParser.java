@@ -71,7 +71,7 @@ public class UFOScriptParser {
 				 * this is no longer valid - there is no script syntax where the
 				 * opening block is more than 5 tokens away
 				 */
-				if (i > 5) {
+				if (i > 6) {
 					ParserUtil.addProblem(getParserContext(),
 							tokenizer.getLine(),
 							"Could not parse the name for script id " + id);
