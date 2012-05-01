@@ -521,9 +521,9 @@ resultStatus_t Com_ParseValue (void *base, const char *token, valueTypes_t type,
 
 	case V_CPPBOOL:
 		if (Q_streq(token, "true") || *token == '1')
-			*(bool *)b = qtrue;
+			*(bool *)b = true;
 		else if (Q_streq(token, "false") || *token == '0')
-			*(bool *)b = qfalse;
+			*(bool *)b = false;
 		else {
 			snprintf(parseErrorMessage, sizeof(parseErrorMessage), "Illegal bool statement '%s'", token);
 			return RESULT_ERROR;
