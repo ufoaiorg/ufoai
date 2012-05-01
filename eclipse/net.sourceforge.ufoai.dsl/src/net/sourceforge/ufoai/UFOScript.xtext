@@ -1,0 +1,9 @@
+grammar net.sourceforge.ufoai.UFOScript with org.eclipse.xtext.common.Terminals
+
+generate ufoScript "http://ufoai.org/UFOScript"
+
+Model:
+	greetings+=Greeting*;
+
+Greeting:
+	'Hello' name=ID '!';
