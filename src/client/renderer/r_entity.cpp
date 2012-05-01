@@ -255,13 +255,15 @@ void R_DrawEntityEffects (void)
 			int texnum;
 			/* draw the circles for team-members and allied troops */
 			vec4_t color = {1, 1, 1, 1};
-			const vec3_t points[] = { { -size, size, -GROUND_DELTA }, { size, size, -GROUND_DELTA }, { size, -size,
-					-GROUND_DELTA }, { -size, -size, -GROUND_DELTA } };
+			const vec3_t points[] = { { -size, size, -SELECTION_DELTA }, { size, size, -SELECTION_DELTA }, { size, -size,
+					-SELECTION_DELTA }, { -size, -size, -SELECTION_DELTA } };
 			/** @todo use default_texcoords */
 			const vec2_t texcoords[] = { { 0.0, 1.0 }, { 1.0, 1.0 }, { 1.0, 0.0 }, { 0.0, 0.0 } };
 
-			if (e->flags & RF_MEMBER)
+			if (e->flags & RF_SELECTED)
 				Vector4Set(color, 0, 1, 0, 0.5);
+			else if (e->flags & RF_MEMBER)
+				Vector4Set(color, 0, 0.8, 0, 0.5);
 			else if (e->flags & RF_ALLIED)
 				Vector4Set(color, 0, 1, 0.5, 0.5);
 			else if (e->flags & RF_NEUTRAL)
@@ -269,7 +271,7 @@ void R_DrawEntityEffects (void)
 			else if (e->flags & RF_OPPONENT)
 				Vector4Set(color, 1, 0, 0, 0.5);
 			else
-				Vector4Set(color, 0.4, 0.4, 0.4, 0.5);
+				Vector4Set(color, 0.3, 0.3, 0.3, 0.5);
 
 			if (e->flags & RF_SELECTED)
 				texnum = selectedActorIndicator->texnum;
@@ -288,7 +290,7 @@ void R_DrawEntityEffects (void)
 
 			refdef.batchCount++;
 
-			/* add transparency when something is other the circle */
+			/* add transparency when something is in front of the circle */
 			color[3] *= 0.25;
 			R_Color(color);
 			glDepthFunc(GL_GREATER);

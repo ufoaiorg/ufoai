@@ -123,6 +123,9 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 /* substract this from the ent->pos[z] to get the ground position */
 #define	GROUND_DELTA	28
 
+/* substract this from the ent->pos[z] to get the selection circles' z position */
+#define	SELECTION_DELTA	30
+
 /* important units */
 #define UNIT_SIZE   32
 #define UNIT_HEIGHT 64
