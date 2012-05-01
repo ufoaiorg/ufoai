@@ -1034,13 +1034,6 @@ static uiNode_t *UI_ParseNode (uiNode_t * parent, const char **text, const char 
 	uiNode_t *component = NULL;
 	qboolean result;
 
-	/* allow to begin with the identifier "node" before the behaviour name */
-	if (!Q_strcasecmp(*token, "node")) {
-		*token = Com_EParse(text, errhead, "");
-		if (!*text)
-			return NULL;
-	}
-
 	/* get the behaviour */
 	behaviour = UI_GetNodeBehaviour(*token);
 	if (!behaviour) {
