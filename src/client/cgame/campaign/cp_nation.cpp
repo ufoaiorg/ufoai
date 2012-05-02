@@ -817,6 +817,10 @@ void NAT_HandleBudget (const campaign_t *campaign)
 					+ employee->chr.score.rank * CP_GetSalaryRankBonusEmployee(salary, employee->type);
 		}
 		totalExpenditure += cost;
+
+		if (cost == 0)
+			continue;
+
 		Com_sprintf(message, sizeof(message), _("Paid %i credits to: %s"), cost, E_GetEmployeeString((employeeType_t)i, 1));
 		MS_AddNewMessageSound(_("Notice"), message, qfalse, MSG_STANDARD, NULL, qfalse);
 	}
