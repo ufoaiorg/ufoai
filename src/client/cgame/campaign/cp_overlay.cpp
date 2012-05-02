@@ -37,8 +37,8 @@ static const int INITIAL_ALPHA_VALUE = 60;
 #define XVI_HEIGHT		256
 #define RADAR_WIDTH		512
 #define RADAR_HEIGHT	256
-#define DAN_WIDTH	512
-#define DAN_HEIGHT	256
+#define DAN_WIDTH		2048
+#define DAN_HEIGHT		1024
 
 #define DAWN		0.03
 
@@ -329,8 +329,8 @@ void CP_InitializeXVIOverlay (const byte *data)
 
 /**
  * @brief Radar overlay code description
- * The radar overlay is handled in 2 times : bases radar range and aircraft radar range.
- * Bases radar range needs to be updated only when a radar facilities is built or destroyed.
+ * The radar overlay is handled 2 times: bases radar range and aircraft radar range.
+ * Bases radar range needs to be updated only when a radar facility is built or destroyed.
  * The base radar overlay is stored in r_radarSourcePic.
  * Aircraft radar overlay needs to be updated every time an aircraft moves, because the position of the radar moves.
  * this overlay is created by duplicating r_radarSourcePic, and then adding any aircraft radar coverage. It is stored in r_radarTexture
