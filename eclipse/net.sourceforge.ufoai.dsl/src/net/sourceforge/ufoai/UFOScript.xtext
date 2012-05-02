@@ -1,9 +1,245 @@
 grammar net.sourceforge.ufoai.UFOScript with org.eclipse.xtext.common.Terminals
 
+import "http://www.eclipse.org/emf/2002/Ecore" as ecore
 generate ufoScript "http://ufoai.org/UFOScript"
 
-Model:
-	greetings+=Greeting*;
+// starting point for parsing a ufo script file
+//UFOScript:
+//	UINodes*;
+UINodes:
+	UINodeImage | UINodeData | UINodePanel | UINodeComponent | UINodeTab | UINodeTextList
+	| UINodeVScrollbar | UINodeBar | UINodeButton | UINodeZone | UINodeFunc | UINodeConfunc | UINodeWindow | UINodeTodo |
+	UINodeRows | UINodeSelectBox | UINodeOptionList | UINodeOptionTree | UINodeLineChart | UINodeText | UINodeGeoscape |
+	UINodeItem | UINodeModel;
 
-Greeting:
-	'Hello' name=ID '!';
+/** a window can only extend another window */
+UINodeWindow:
+	"window" name=ID ("extends" superWindow=[UINodeWindow])?
+	"{"
+	(BLOCK? & properties?=UINodeProperties)
+	nodes+=UINodes
+	"}";
+
+/** components can extend any ui node */
+UINodeComponent:
+	"component" ID ("extends" superComponent=[UINodes])?
+	"{"
+	(BLOCK? & properties?=UINodeProperties)
+	nodes+=UINodes
+	"}";
+
+UINodeImage:
+	"image" ID
+	"{"
+	properties?=UINodeProperties
+	"}";
+
+UINodeData:
+	"data" ID
+	"{"
+	properties?=UINodeProperties
+	"}";
+
+UINodePanel:
+	"panel" ID
+	"{"
+	properties+=UINodeProperties
+	nodes+=UINodes
+	"}";
+
+/** TODO: different nodes have different properties */
+UINodeProperties:
+	(("pos" UFO_2D_INT) |
+	("size" UFO_2D_INT) |
+	("background" STRING) |
+	("string" STRING) |
+	("label" STRING) |
+	("value" STRING) |
+	("icon" UISprite) |
+	("ghost" UFO_BOOL) |
+	("max" UFO_INT) |
+	("color" STRING) |
+	("font" UIFont)
+	("contentalign" UFO_ALIGN) |
+	("tooltip" STRING) |
+	("disabled" UFO_BOOL) | UIEventHandler);
+
+UISprite:
+	"sprite" ID
+	"{"
+	ANY_OTHER*
+	"}";
+
+UIFont:
+	"font" ID "{"
+	("font" STRING)?
+	("size" UFO_INT)?
+	("style" UFO_FONT_STYLE)?
+	"}";
+
+UINodeTab:
+	"tab" ID
+	"{"
+	properties+=UINodeProperties
+	options+=UINodeTabOptions
+	"}";
+
+UINodeTabOptions:
+	"option" ID
+	"{"
+	properties+=UINodeProperties
+	"}";
+
+UINodeFunc:
+	"func" ID
+	"{"
+	properties+=UINodeProperties
+	/** TODO */
+	//(("call" NODEPATH ("(" parameter=STRING ")")?) |
+	//("*cvar" ":" cvar=TEXT "=" TEXT))?
+	"}";
+
+UINodeConfunc:
+	"confunc" ID
+	"{"
+	properties+=UINodeProperties
+	"}";
+
+UINodeTodo:
+	"todo" ID
+	"{"
+	properties+=UINodeProperties
+	"}";
+
+UINodeRows:
+	"rows" ID
+	"{"
+	properties+=UINodeProperties
+	"}";
+
+UINodeOptionList:
+	"optionlist" ID
+	"{"
+	properties+=UINodeProperties
+	"}";
+
+UINodeOptionTree:
+	"optiontree" ID
+	"{"
+	properties+=UINodeProperties
+	"}";
+
+UINodeSelectBox:
+	"selectbox" ID
+	"{"
+	properties+=UINodeProperties
+	"}";
+
+UINodeBar:
+	"bar" ID
+	"{"
+	properties+=UINodeProperties
+	"}";
+
+UINodeZone:
+	"zone" ID
+	"{"
+	properties+=UINodeProperties
+	"}";
+
+UINodeButton:
+	"button" ID
+	"{"
+	properties+=UINodeProperties
+	"}";
+
+UINodeText:
+	"text" ID
+	"{"
+	properties+=UINodeProperties
+	"}";
+
+UINodeLineChart:
+	"linechart" ID
+	"{"
+	properties+=UINodeProperties
+	"}";
+
+UINodeModel:
+	"model" ID
+	"{"
+	properties+=UINodeProperties
+	"}";
+
+UINodeItem:
+	"item" ID
+	"{"
+	properties+=UINodeProperties
+	"}";
+
+UINodeGeoscape:
+	"geoscape" ID
+	"{"
+	properties+=UINodeProperties
+	"}";
+
+UINodeTextList:
+	"textlist" ID
+	"{"
+	properties+=UINodeProperties
+	"}";
+
+UINodeVScrollbar:
+	"vscrollbar" ID
+	"{"
+	properties+=UINodeProperties
+	"}";
+
+UIEventHandler:
+	("onClick" | "onRClick" | "onMouseEnter" | "onMouseLeave") "{"
+	(("cmd" STRING) | UIIfStatement | UIWhileStatement)+
+	"}";
+
+UIIfStatement:
+	"if" "(" CONDITION ")" BLOCK;
+
+CONDITION:
+	(NODEPATH) COMPARATOR (NODEPATH);
+
+COMPARATOR:
+	"==" | "!=" | "<" | ">" | ">=" | "<=";
+
+/** TODO: add property listing support via *nodename.child@property */
+NODEPATH:
+	STRING;
+
+/** TODO */
+UIWhileStatement:
+	"while" "(" CONDITION ")" "{" "}";
+
+UFO_ALIGN:
+	"ALIGN_UL" | "ALIGN_UC" | "ALIGN_UR" | "ALIGN_CL" | "ALIGN_CC" | "ALIGN_CR" | "ALIGN_LL" | "ALIGN_LC" | "ALIGN_LR" |
+	"ALIGN_UL_RSL" | "ALIGN_UC_RSL" | "ALIGN_UR_RSL" | "ALIGN_CL_RSL" | "ALIGN_CC_RSL" | "ALIGN_CR_RSL" | "ALIGN_LL_RSL" |
+	"ALIGN_LC_RSL" | "ALIGN_LR_RSL";
+
+UFO_FONT_STYLE:
+	"TTF_STYLE_NORMAL" | "TTF_STYLE_BOLD" | "TTF_STYLE_ITALIC" | "TTF_STYLE_UNDERLINE";
+
+/** there might be empty blocks in each node header */
+terminal BLOCK:
+	'{'
+	ANY_OTHER*
+	'}';
+
+terminal DOUBLE returns ecore::EDouble:
+	('0'..'9')* '.' ('0'..'9')+;
+
+terminal UFO_2D_INT:
+	('"' INT INT '"') |
+	("'" INT INT "'");
+
+terminal UFO_BOOL:
+	("true" | "false");
+
+terminal UFO_INT:
+	('"' INT '"') | ("'" INT "'") | INT;

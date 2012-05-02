@@ -43,16 +43,7 @@ crashdump.txt
 eclipse/net.sourceforge.ufoai.dsl.tests/bin/
 eclipse/net.sourceforge.ufoai.dsl.tests/src-gen/
 eclipse/net.sourceforge.ufoai.dsl.ui/bin/
-eclipse/net.sourceforge.ufoai.dsl.ui/plugin.xml
 eclipse/net.sourceforge.ufoai.dsl.ui/src-gen/
-eclipse/net.sourceforge.ufoai.dsl.ui/src/
-eclipse/net.sourceforge.ufoai.dsl/.antlr-generator-3.2.0.jar
-eclipse/net.sourceforge.ufoai.dsl/plugin.xml
 eclipse/net.sourceforge.ufoai.dsl/src-gen/
-eclipse/net.sourceforge.ufoai.dsl/src/net/sourceforge/ufoai/UFOScriptRuntimeModule.java
-eclipse/net.sourceforge.ufoai.dsl/src/net/sourceforge/ufoai/UFOScriptStandaloneSetup.java
-eclipse/net.sourceforge.ufoai.dsl/src/net/sourceforge/ufoai/formatting/
-eclipse/net.sourceforge.ufoai.dsl/src/net/sourceforge/ufoai/generator/
-eclipse/net.sourceforge.ufoai.dsl/src/net/sourceforge/ufoai/scoping/
-eclipse/net.sourceforge.ufoai.dsl/src/net/sourceforge/ufoai/validation/
 eclipse/net.sourceforge.ufoai.dsl/xtend-gen/
+eclipse/net.sourceforge.ufoai.dsl/.antlr-generator-3.2.0.jar

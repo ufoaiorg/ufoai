@@ -17,7 +17,8 @@ Require-Bundle: org.eclipse.xtext;bundle-version="2.1.0";visibility:=reexport,
  org.eclipse.emf.ecore,
  org.eclipse.emf.common,
  org.antlr.runtime,
- org.eclipse.xtext.common.types
+ org.eclipse.xtext.common.types,
+ org.eclipse.xtend2.lib
 Import-Package: org.apache.log4j,
  org.apache.commons.logging,
  org.eclipse.xtext.xbase.lib,
@@ -34,4 +35,5 @@ Export-Package: net.sourceforge.ufoai,
  net.sourceforge.ufoai.validation,
  net.sourceforge.ufoai.scoping,
  net.sourceforge.ufoai.generator,
- net.sourceforge.ufoai.formatting
+ net.sourceforge.ufoai.formatting,
+ net.sourceforge.ufoai.jvmmodel
