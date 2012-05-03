@@ -65,8 +65,6 @@ window geoscape
 		onRClick		{ cmd "mn_mapaction_reset;" }
 		align			LAYOUTALIGN_FILL
 		padding-right	256
-//		onMouseEnter	{ *node:root.control.back_mini@image = "ui/geo_menu_inside" }
-//		onMouseLeave	{ *node:root.control.back_mini@image = "ui/geo_menu_inside_hovered" }
 	}
 
 	confunc clean_geoscape_object {
@@ -636,26 +634,6 @@ window geoscape
 			pos			"190 520"
 			size		"28 25"
 			onClick		{ cmd "ui_pop;" }
-		}
-
-		button deco_switch
-		{
-			tooltip		"_Show/Hide decoration"
-			icon		"icons/on"
-			pos			"232 744"
-			size		"24 16"
-			onClick
-			{
-				*cvar:mn_geoscape_deco = 1
-				*node:root.control.back_deco@invis = false
-				*node:this@icon = "icons/on"
-			}
-			onRClick
-			{
-				*cvar:mn_geoscape_deco = 0
-				*node:root.control.back_deco@invis = true
-				*node:this@icon = "icons/off"
-			}
 		}
 
 	}
