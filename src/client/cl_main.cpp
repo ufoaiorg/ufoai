@@ -1144,12 +1144,12 @@ static void CL_InitMemPools (void)
 
 static void CL_RContextCvarChange (const char *cvarName, const char *oldValue, const char *newValue, void *data)
 {
-	UI_DisplayNotice(_("This change requires a restart"), 2000, NULL);
+	UI_DisplayNotice(_("This change requires a restart!"), 2000, NULL);
 }
 
 static void CL_RImagesCvarChange (const char *cvarName, const char *oldValue, const char *newValue, void *data)
 {
-	UI_DisplayNotice(_("This change might require a restart"), 2000, NULL);
+	UI_DisplayNotice(_("This change might require a restart."), 2000, NULL);
 }
 
 /**

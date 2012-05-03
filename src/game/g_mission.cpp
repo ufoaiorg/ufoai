@@ -45,7 +45,7 @@ qboolean G_MissionTouch (edict_t *self, edict_t *activator)
 		if (G_IsAlien(activator)) {
 			if (!self->count) {
 				self->count = level.actualRound;
-				gi.BroadcastPrintf(PRINT_HUD, _("Aliens entered target zone\n"));
+				gi.BroadcastPrintf(PRINT_HUD, _("Aliens entered target zone!"));
 			}
 			return qtrue;
 		} else {
@@ -76,14 +76,14 @@ qboolean G_MissionTouch (edict_t *self, edict_t *activator)
 								/* drop the weapon - even if out of TUs */
 								G_ActorInvMove(activator, invDef, ic, INVDEF(gi.csi->idFloor),
 									NONE, NONE, qfalse);
-								gi.BroadcastPrintf(PRINT_HUD, _("Item was placed\n"));
+								gi.BroadcastPrintf(PRINT_HUD, _("Item was placed."));
 								self->owner->count = level.actualRound;
 								return qtrue;
 							}
 						}
 					}
 				} else {
-					gi.BroadcastPrintf(PRINT_HUD, _("Target zone is occupied\n"));
+					gi.BroadcastPrintf(PRINT_HUD, _("Target zone is occupied!"));
 				}
 			}
 			return qtrue;

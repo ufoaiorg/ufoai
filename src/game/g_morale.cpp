@@ -33,7 +33,7 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
  */
 static void G_MoralePanic (edict_t * ent, qboolean sanity)
 {
-	G_ClientPrintf(G_PLAYER_FROM_ENT(ent), PRINT_HUD, _("%s panics!\n"), ent->chr.name);
+	G_ClientPrintf(G_PLAYER_FROM_ENT(ent), PRINT_HUD, _("%s panics!"), ent->chr.name);
 
 	/* drop items in hands */
 	if (!sanity && ent->chr.teamDef->weapons) {
@@ -94,9 +94,9 @@ static void G_MoraleRage (edict_t * ent, qboolean sanity)
 	G_EventSendState(G_VisToPM(ent->visflags), ent);
 
 	if (sanity)
-		gi.BroadcastPrintf(PRINT_HUD, _("%s is on a rampage.\n"), ent->chr.name);
+		gi.BroadcastPrintf(PRINT_HUD, _("%s is on a rampage!"), ent->chr.name);
 	else
-		gi.BroadcastPrintf(PRINT_HUD, _("%s is consumed by mad rage!\n"), ent->chr.name);
+		gi.BroadcastPrintf(PRINT_HUD, _("%s is consumed by mad rage!"), ent->chr.name);
 	AI_ActorThink(G_PLAYER_FROM_ENT(ent), ent);
 }
 
@@ -173,7 +173,7 @@ void G_MoraleBehaviour (int team)
 					G_SetShaken(ent);
 					G_SetState(ent, STATE_REACTION);
 					G_EventSendState(G_VisToPM(ent->visflags), ent);
-					G_ClientPrintf(G_PLAYER_FROM_ENT(ent), PRINT_HUD, _("%s is currently shaken.\n"),
+					G_ClientPrintf(G_PLAYER_FROM_ENT(ent), PRINT_HUD, _("%s is currently shaken."),
 							ent->chr.name);
 				} else {
 					if (G_IsPaniced(ent))

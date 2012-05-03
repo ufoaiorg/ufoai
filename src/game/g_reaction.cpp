@@ -400,17 +400,17 @@ static qboolean G_ReactionFireCanBeEnabled (const edict_t *ent)
 		return qfalse;
 
 	if (!G_ActorHasReactionFireEnabledWeapon(ent)) {
-		G_ClientPrintf(G_PLAYER_FROM_ENT(ent), PRINT_HUD, _("No reaction fire enabled weapon.\n"));
+		G_ClientPrintf(G_PLAYER_FROM_ENT(ent), PRINT_HUD, _("No reaction fire enabled weapon."));
 		return qfalse;
 	}
 
 	if (!G_ActorHasWorkingFireModeSet(ent)) {
-		G_ClientPrintf(G_PLAYER_FROM_ENT(ent), PRINT_HUD, _("No fire mode selected for reaction fire.\n"));
+		G_ClientPrintf(G_PLAYER_FROM_ENT(ent), PRINT_HUD, _("No fire mode selected for reaction fire."));
 		return qfalse;
 	}
 
 	if (!G_ActorHasEnoughTUsReactionFire(ent)) {
-		G_ClientPrintf(G_PLAYER_FROM_ENT(ent), PRINT_HUD, _("Not enough TUs left for activating reaction fire.\n"));
+		G_ClientPrintf(G_PLAYER_FROM_ENT(ent), PRINT_HUD, _("Not enough TUs left for activating reaction fire."));
 		return qfalse;
 	}
 

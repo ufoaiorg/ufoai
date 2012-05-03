@@ -46,22 +46,22 @@ void G_CheckForceEndRound (void)
 	diff = level.roundstartTime + sv_roundtimelimit->integer - level.time;
 	switch (diff) {
 	case 240:
-		gi.BroadcastPrintf(PRINT_HUD, _("4 minutes left until forced turn end.\n"));
+		gi.BroadcastPrintf(PRINT_HUD, _("4 minutes left until forced turn end."));
 		return;
 	case 180:
-		gi.BroadcastPrintf(PRINT_HUD, _("3 minutes left until forced turn end.\n"));
+		gi.BroadcastPrintf(PRINT_HUD, _("3 minutes left until forced turn end."));
 		return;
 	case 120:
-		gi.BroadcastPrintf(PRINT_HUD, _("2 minutes left until forced turn end.\n"));
+		gi.BroadcastPrintf(PRINT_HUD, _("2 minutes left until forced turn end."));
 		return;
 	case 60:
-		gi.BroadcastPrintf(PRINT_HUD, _("1 minute left until forced turn end.\n"));
+		gi.BroadcastPrintf(PRINT_HUD, _("1 minute left until forced turn end."));
 		return;
 	case 30:
-		gi.BroadcastPrintf(PRINT_HUD, _("30 seconds left until forced turn end.\n"));
+		gi.BroadcastPrintf(PRINT_HUD, _("30 seconds left until forced turn end."));
 		return;
 	case 15:
-		gi.BroadcastPrintf(PRINT_HUD, _("15 seconds left until forced turn end.\n"));
+		gi.BroadcastPrintf(PRINT_HUD, _("15 seconds left until forced turn end."));
 		return;
 	}
 
@@ -69,7 +69,7 @@ void G_CheckForceEndRound (void)
 	if (level.time < level.roundstartTime + sv_roundtimelimit->integer)
 		return;
 
-	gi.BroadcastPrintf(PRINT_HUD, _("Current active team hit the max round time\n"));
+	gi.BroadcastPrintf(PRINT_HUD, _("Current active team hit the max round time."));
 
 	/* store this in a local variable, as the global variable is changed in G_ClientEndRound */
 	activeTeam = level.activeTeam;

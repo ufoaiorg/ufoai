@@ -139,7 +139,7 @@ static qboolean Touch_NextMapTrigger (edict_t *self, edict_t *activator)
 	if (activator != NULL && activator->team == self->team) {
 		char command[MAX_VAR];
 		self->inuse = qfalse;
-		G_ClientPrintf(G_PLAYER_FROM_ENT(activator), PRINT_HUD, _("Switching map!\n"));
+		G_ClientPrintf(G_PLAYER_FROM_ENT(activator), PRINT_HUD, _("Switching map!"));
 		Com_sprintf(command, sizeof(command), "map %s %s\n",
 				level.day ? "day" : "night", self->nextmap);
 		level.mapEndCommand = (char *)G_TagMalloc(strlen(command) + 1, TAG_GAME);
@@ -168,7 +168,7 @@ void Think_NextMapTrigger (edict_t *self)
 	VecToPos(center, centerPos);
 	G_EventCenterViewAt(PM_ALL, centerPos);
 
-	gi.BroadcastPrintf(PRINT_HUD, _("You are now ready to switch the map\n"));
+	gi.BroadcastPrintf(PRINT_HUD, _("You are now ready to switch the map."));
 
 	self->touch = Touch_NextMapTrigger;
 	self->think = NULL;

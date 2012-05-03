@@ -644,11 +644,11 @@ qboolean G_ActorInvMove (edict_t *ent, const invDef_t * from, invList_t *fItem, 
 		/* No action possible - abort */
 		return qfalse;
 	case IA_NOTIME:
-		G_ClientPrintf(player, PRINT_HUD, _("Can't perform action - not enough TUs!\n"));
+		G_ClientPrintf(player, PRINT_HUD, _("Can't perform action - not enough TUs!"));
 		return qfalse;
 	case IA_NORELOAD:
 		G_ClientPrintf(player, PRINT_HUD,
-				_("Can't perform action - weapon already fully loaded with the same ammunition!\n"));
+				_("Can't perform action - weapon already fully loaded with the same ammunition!"));
 		return qfalse;
 	default:
 		/* Continue below. */

@@ -323,32 +323,32 @@ static qboolean G_ActionCheck (const player_t *player, edict_t *ent)
 		return qtrue;
 
 	if (!ent || !ent->inuse) {
-		G_ClientPrintf(player, PRINT_HUD, _("Can't perform action - object not present!\n"));
+		G_ClientPrintf(player, PRINT_HUD, _("Can't perform action - object not present!"));
 		return qfalse;
 	}
 
 	if (ent->type != ET_ACTOR && ent->type != ET_ACTOR2x2) {
-		G_ClientPrintf(player, PRINT_HUD, _("Can't perform action - not an actor!\n"));
+		G_ClientPrintf(player, PRINT_HUD, _("Can't perform action - not an actor!"));
 		return qfalse;
 	}
 
 	if (G_IsStunned(ent)) {
-		G_ClientPrintf(player, PRINT_HUD, _("Can't perform action - actor is stunned!\n"));
+		G_ClientPrintf(player, PRINT_HUD, _("Can't perform action - actor is stunned!"));
 		return qfalse;
 	}
 
 	if (G_IsDead(ent)) {
-		G_ClientPrintf(player, PRINT_HUD, _("Can't perform action - actor is dead!\n"));
+		G_ClientPrintf(player, PRINT_HUD, _("Can't perform action - actor is dead!"));
 		return qfalse;
 	}
 
 	if (ent->team != player->pers.team) {
-		G_ClientPrintf(player, PRINT_HUD, _("Can't perform action - not on same team!\n"));
+		G_ClientPrintf(player, PRINT_HUD, _("Can't perform action - not on same team!"));
 		return qfalse;
 	}
 
 	if (ent->pnum != player->num) {
-		G_ClientPrintf(player, PRINT_HUD, _("Can't perform action - no control over allied actors!\n"));
+		G_ClientPrintf(player, PRINT_HUD, _("Can't perform action - no control over allied actors!"));
 		return qfalse;
 	}
 
@@ -371,7 +371,7 @@ qboolean G_ActionCheckForCurrentTeam (const player_t *player, edict_t *ent, int 
 
 	/* a generic tester if an action could be possible */
 	if (level.activeTeam != player->pers.team) {
-		G_ClientPrintf(player, PRINT_HUD, _("Can't perform action - it is not your turn!\n"));
+		G_ClientPrintf(player, PRINT_HUD, _("Can't perform action - it is not your turn!"));
 		return qfalse;
 	}
 
@@ -482,7 +482,7 @@ void G_ClientStateChange (const player_t* player, edict_t* ent, int reqState, qb
 	case ~STATE_REACTION: /* Request to turn off reaction fire. */
 		if (G_IsReaction(ent)) {
 			if (G_IsShaken(ent)) {
-				G_ClientPrintf(player, PRINT_HUD, _("Currently shaken, won't let their guard down.\n"));
+				G_ClientPrintf(player, PRINT_HUD, _("Currently shaken, won't let their guard down."));
 			} else {
 				/* Turn off reaction fire. */
 				G_RemoveReaction(ent);
