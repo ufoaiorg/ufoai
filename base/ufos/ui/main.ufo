@@ -77,6 +77,8 @@ window main
 	{
 		cmd "music_change main;"
 		cmd "ui_push_child popup_tipoftheday main;check_cvars;"
+		// enable geoscape decoration by default
+		*cvar:mn_geoscape_deco = 1
 		if ( *cvar:cl_introshown != 1 ) {
 			cmd "ui_push intro;"
 			*cvar:cl_introshown = 1
