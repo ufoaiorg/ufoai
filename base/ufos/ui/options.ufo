@@ -167,146 +167,13 @@ window options
 				*node:root.options_overall.select_language@viewpos = <current>
 			}
 		}
-		// =========================
-		// GEOSCAPE OPTIONS SUBMENU
-		// =========================
-		string settings_geoscape
-		{
-			string 		"_Geoscape Options"
-			pos			"62 415"
-			size		"320 20"
-			color		"1.0 0.75 0 1"
-		}
-		// ==================
-		// GEOSCAPE 2D/3DMAP
-		// ==================
-		string m3dmap_str
-		{
-			tooltip		"_3D or 2D geoscape. To enable this option you have to start a new campaign first."
-			string		"_3D Geoscape:"
-			pos			"72 440"
-			size		"280 20"
-		}
-		checkbox_blue m3dmap
-		{
-			current		*cvar:cl_3dmap
-			pos			"485 440"
-			size		"20 18"
-		}
-		// ====================
-		// GEOSCAPE DECORATION
-		// ====================
-		string geoscape_deco_str
-		{
-			tooltip		"_Show/Hide the panel decoration on the geoscape."
-			string		"_Show decoration:"
-			pos			"72 465"
-			size		"280 20"
-		}
-		checkbox_blue geoscape_deco
-		{
-			current		*cvar:mn_geoscape_deco
-			pos			"485 465"
-			size		"20 18"
-		}
-		// =====================================
-		// GEOSCAPE CAMERA MINIMUM/MAXIMUM ZOOM
-		// =====================================
-		string geocamzoommin_str
-		{
-			tooltip		"_The minimum/maximum zoom of the geoscape camera"
-			string		"_Min/Max Geo-Cam Zoom:"
-			pos			"72 490"
-			size		"280 20"
-		}
-		selectbox geocamzoom_min
-		{
-			{
-				tooltip		"_Minimum zoom level of the geoscape camera"
-				cvar		*cvar:cl_mapzoommin
-				pos			"355 490"
-				size		"75 20"
-				contentalign	ALIGN_CR
-			}
-			option geocamzoom_min000
-			{
-				label	"0.00"
-				value	"0"
-			}
-			option geocamzoom_min020
-			{
-				label	"0.20"
-				value	"0.20"
-			}
-			option geocamzoom_min040
-			{
-				label	"0.40"
-				value	"0.40"
-			}
-			option geocamzoom_min060
-			{
-				label	"0.60"
-				value	"0.60"
-			}
-			option geocamzoom_min080
-			{
-				label	"0.80"
-				value	"0.80"
-			}
-			// default
-			option geocamzoom_min100
-			{
-				label	"_1.00"
-				value	"1.0"
-			}
-		}
-		selectbox geocamzoom_max
-		{
-			{
-				tooltip		"_Maximum zoom level of the geoscape camera"
-				cvar		*cvar:cl_mapzoommax
-				pos			"430 490"
-				size		"75 20"
-			}
-			option geocamzoom_max20
-			{
-				label	"_2.0"
-				value	"2.0"
-			}
-			option geocamzoom_max40
-			{
-				label	"_4.00"
-				value	"4.0"
-			}
-			// default
-			option geocamzoom_max60
-			{
-				label	"_6.00"
-				value	"6.0"
-			}
-			option geocamzoom_max80
-			{
-				label	"_8.00"
-				value	"8.0"
-			}
-			option geocamzoom_max100
-			{
-				label	"_10.00"
-				value	"10.0"
-			}
-			option geocamzoom_max120
-			{
-				label	"_12.00"
-				value	"12.0"
-			}
-		}
 		// =====================
 		// SEVERAL TIPS SUBMENU
 		// =====================
 		string settings_tips
 		{
 			string 		"_Several Tips"
-			pos			"62 520"
+			pos			"62 445"
 			size		"320 20"
 			color		"1.0 0.75 0 1"
 		}
@@ -317,13 +184,13 @@ window options
 		{
 			tooltip		"_Show cursor tooltips in menus."
 			string		"_Tooltips (menu):"
-			pos			"72 545"
+			pos			"72 470"
 			size		"280 20"
 		}
 		checkbox_blue tooltip
 		{
 			current		*cvar:mn_show_tooltips
-			pos			"485 545"
+			pos			"485 470"
 			size		"20 18"
 		}
 
@@ -334,13 +201,13 @@ window options
 		{
 			tooltip		"_Show cursor tooltips in tactical mode."
 			string		"_Tooltips (battlescape):"
-			pos			"72 570"
+			pos			"72 495"
 			size		"280 20"
 		}
 		checkbox_blue c_tooltip
 		{
 			current		*cvar:cl_show_cursor_tooltips
-			pos			"485 570"
+			pos			"485 495"
 			size		"20 18"
 		}
 		// ===============
@@ -349,14 +216,14 @@ window options
 		string tipoftheday_string
 		{
 			string		"_Show 'Tip of the Day':"
-			pos			"72 595"
+			pos			"72 520"
 			size		"280 20"
 			font		"f_small"
 		}
 		checkbox_blue tipoftheday
 		{
 			current		*cvar:cl_showTipOfTheDay
-			pos			"485 595"
+			pos			"485 520"
 			size		"20 18"
 		}
 		// =====================
@@ -365,7 +232,7 @@ window options
 		string settings_menu
 		{
 			string 		"_Menu Options"
-			pos			"62 650"
+			pos			"62 575"
 			size		"256 20"
 			color		"1.0 0.75 0 1"
 		}
@@ -375,14 +242,14 @@ window options
 		string precache_str
 		{
 			string		"_Precache Models:"
-			pos			"72 675"
+			pos			"72 600"
 			size		"320 20"
 		}
 		checkbox_blue precache
 		{
 			tooltip		"_Precaching of models means having faster menus."
 			current		*cvar:cl_precache
-			pos			"485 675"
+			pos			"485 600"
 			size		"20 18"
 		}
 	}
@@ -436,6 +303,9 @@ window options
 			}
 		}
 
+		// ================================
+		// GENERAL VIDEO OPTIONS TAB PANEL
+		// ================================
 		panel options_general_video
 		{
 			{
@@ -572,7 +442,7 @@ window options
 			{
 				tooltip		"_Calibrate your display here."
 				string 		"_Monitor Calibration Controls"
-				pos			"22 140"
+				pos			"22 165"
 				size		"320 20"
 				color		"1.0 0.75 0 1"
 			}
@@ -582,18 +452,18 @@ window options
 			string gamma_str
 			{
 				string		"_Gamma:"
-				pos			"32 165"
+				pos			"32 190"
 				size		"170 20"
 			}
 			image gamma_rahmen
 			{
 				src		"ui/bar_rahmen"
-				pos			"208 167"
+				pos			"208 192"
 			}
 			bar gamma_bar
 			{
 				current		*cvar:vid_gamma
-				pos			"217 172"
+				pos			"217 197"
 				size		"238 6"
 				color		"0 0.8 0 1"
 				max			3.0
@@ -726,9 +596,9 @@ window options
 			}
 		}
 
-		// =======================
-		// ADVANCED VIDEO OPTIONS
-		// =======================
+		// =================================
+		// ADVANCED VIDEO OPTIONS TAB PANEL
+		// =================================
 		panel options_advanced_video
 		{
 			{
@@ -900,7 +770,7 @@ window options
 			string settings_opengl
 			{
 				string 		"_OpenGL Settings"
-				pos			"22 165"
+				pos			"22 190"
 				size		"256 20"
 				color		"1.0 0.75 0 1"
 			}
@@ -911,7 +781,7 @@ window options
 			{
 				tooltip		"_OpenGL GLSL Shaders are available only if your graphics-card driver fully supports OpenGL 2.0+ and will enhance UFO:AI using advanced shading techniques."
 				string		"_GLSL Shaders:"
-				pos			"32 190"
+				pos			"32 215"
 				size		"240 20"
 			}
 			selectbox glsl_ver
@@ -919,7 +789,7 @@ window options
 				{
 					tooltip	"_Set the OpenGL shader quality - or disable them."
 					cvar	*cvar:r_programs
-					pos	"300 190"
+					pos		"300 215"
 					size	"165 20"
 					onChange {
 						call *node:root.options_video.options_advanced_video.show_opengl_options
@@ -967,13 +837,13 @@ window options
 				{
 					tooltip		"_Vertex Buffers are submitting extensible arrays of vertex attributes to be mapped into the GPU for fast drawing."
 					string		"_Vertex Buffers:"
-					pos			"32 215"
+					pos			"32 240"
 					size		"240 20"
 				}
 				checkbox_blue vbo
 				{
 					current		*cvar:r_vertexbuffers
-					pos			"445 215"
+					pos			"445 240"
 					size		"20 18"
 				}
 				// ==================================================================
@@ -983,21 +853,21 @@ window options
 				{
 					tooltip		"_OpenGL multisample buffers provide a mechanism to antialias all GL primitives. / The Swap Interval selects when a buffer swap will occur. The value '0' means that the swap will occur immediately (also known as 'v-sync off')."
 					string		"_Multisample Buffers / Swap Interval:"
-					pos			"32 240"
+					pos			"32 265"
 					size		"320 20"
 				}
 				string samplebuf_value
 				{
 					tooltip		"_Choose between 0-4 Multisample Buffers. Higher values will provide better antialiasing and will enhance picture quality."
 					string		*cvar:r_multisample
-					pos			"360 240"
+					pos			"360 265"
 					size		"24 20"
 				}
 				spinner samplebuf_change
 				{
 					current		*cvar:r_multisample
 					image		"ui/spinner_blue"
-					pos			"388 240"
+					pos			"388 265"
 					min			0
 					max			4
 					delta		1
@@ -1006,14 +876,14 @@ window options
 				{
 					tooltip		"_Set to '0' to turn v-sync off (faster). Set to '1' or higher to turn v-sync on (better quality)."
 					string		*cvar:r_swapinterval
-					pos			"420 240"
+					pos			"420 265"
 					size		"20 20"
 				}
 				spinner swapinterval_change
 				{
 					current		*cvar:r_swapinterval
 					image		"ui/spinner_blue"
-					pos			"448 240"
+					pos			"448 265"
 					min			0
 					max			2
 					delta		1
@@ -1025,14 +895,14 @@ window options
 				{
 					tooltip		"_Post-processing shader effects like glowing textures."
 					string		"_Post-Processing Shader Effects:"
-					pos			"32 265"
+					pos			"32 290"
 					size		"370 20"
 				}
 				checkbox_blue postprocess
 				{
 					tooltip		"_Enable post processing shader effects."
 					current		*cvar:r_postprocess
-					pos			"445 265"
+					pos			"445 290"
 					size		"20 18"
 				}
 				// =======================================================
@@ -1042,13 +912,13 @@ window options
 				{
 					tooltip		"_Realtime lighting of the 3D world in UFO:AI. / Maximum number of dynamic hardware accelerated lights allowed."
 					string		"_Realtime Lighting / Max Dynamic Lights:"
-					pos			"32 345"
+					pos			"32 395"
 					size		"320 20"
 				}
 				string dynamiclights_value
 				{
 					string		*cvar:r_dynamic_lights
-					pos			"420 345"
+					pos			"420 395"
 					size		"100 20"
 				}
 				spinner dynamiclights_change
@@ -1056,7 +926,7 @@ window options
 					tooltip		"_Change the number of allowed hardware accelerated dynamic lights."
 					current		*cvar:r_dynamic_lights
 					image		"ui/spinner_blue"
-					pos			"448 345"
+					pos			"448 395"
 					min			0
 					max			7
 					delta		1
@@ -1085,14 +955,14 @@ window options
 					{
 						tooltip		"_Also known as bumpmapping."
 						string		"_Texture Normalmapping:"
-						pos			"32 370"
+						pos			"32 420"
 						size		"320 20"
 					}
 					checkbox_blue bumpmapping
 					{
 						tooltip		"_Enable normal-/bumpmapping."
 						current		*cvar:r_bumpmap
-						pos			"445 370"
+						pos			"445 420"
 						size		"20 18"
 					}
 				}
@@ -1103,18 +973,18 @@ window options
 				{
 					tooltip		"_Amount of light emitting from the sun and shining on the earth."
 					string		"_Geo Ambient Lighting:"
-					pos			"32 395"
+					pos			"32 445"
 					size		"320 20"
 				}
 				image m3dmapambient_rahmen
 				{
 					src		"ui/bar_rahmen"
-					pos			"204 422"
+					pos			"204 472"
 				}
 				bar m3dmapambient_bar
 				{
 					current		*cvar:cl_3dmapAmbient
-					pos			"213 427"
+					pos			"213 477"
 					size		"238 6"
 					color		"0 .8 0 1"
 					min			-1
@@ -1147,7 +1017,7 @@ window options
 			string settings_light_shadow
 			{
 				string 		"_Light and Shadow"
-				pos			"22 295"
+				pos			"22 345"
 				size		"256 20"
 				color		"1.0 0.75 0 1"
 			}
@@ -1158,7 +1028,7 @@ window options
 			{
 				tooltip		"_The lightmap block size defines the resolution of the lightmap. Higher block size means using more detailed lightmaps."
 				string		"_Lightmap Block Size:"
-				pos			"32 320"
+				pos			"32 370"
 				size		"240 20"
 			}
 			selectbox lightmapres_box
@@ -1166,7 +1036,7 @@ window options
 				{
 					tooltip		"_Low means a maximum lightmap resolution of 512x512 pixel. High means up to 2048x2048 pixel."
 					cvar		*cvar:r_maxlightmap
-					pos			"339 322"
+					pos			"339 372"
 					size		"125 20"
 				}
 				option low_value {
@@ -1207,19 +1077,22 @@ window options
 				{
 					tooltip		"_Enabled by default for compatibility reasons."
 					string		"_Intel Graphics Hardware Hack:"
-					pos			"32 485"
+					pos			"32 535"
 					size		"320 20"
 				}
 				checkbox_blue intelhack
 				{
 					tooltip		"_This hack activates texture compression and deactivates GLSL shaders on Intel chips. Disable it to be able to turn on advanced rendering features."
 					current		*cvar:r_intel_hack
-					pos			"445 485"
+					pos			"445 535"
 					size		"20 18"
 				}
 			}
 		}
 
+		// ================
+		// OTHER TAB PANEL
+		// ================
 		panel options_other_video
 		{
 			{
@@ -1683,33 +1556,26 @@ window options
 		string settings_gameplay
 		{
 			string		"_Battlescape Gameplay Settings"
-			pos			"62 340"
+			pos			"62 290"
 			size		"320 20"
 			color		"1.0 0.75 0 1"
 		}
-		// ============
-		// ACTOR SPEED
-		// ============
-		string actorsspeed_str
+		// ================
+		// BATTLESCAPE HUD
+		// ================
+		string hud_str
 		{
-			string		"_Actor Speed:"
-			pos			"72 365"
-			size		"170 20"
+			tooltip		"_Select the Head-Up-Display for the battlescape."
+			string		"_HUD Design:"
+			pos			"72 315"
+			size		"250 20"
 		}
-		image actorsspeed_rahmen
+		// @note selectbox completed by the confunc add_hud_name
+		selectbox select_hud
 		{
-			src		"ui/bar_rahmen"
-			pos			"248 367"
-		}
-		bar actorsspeed_bar
-		{
-			tooltip		"_Choose between 0-9, higher values mean higher actor speed."
-			current		*cvar:g_actorspeed
-			pos			"257 372"
-			size		"238 6"
-			color		"0 .8 0 1"
-			max			9
-			onClick		{ }
+			cvar		*cvar:cl_hud
+			pos			"350 315"
+			size		"155 20"
 		}
 		// ============================
 		// BATTLESCAPE CONFIRM ACTIONS
@@ -1718,7 +1584,7 @@ window options
 		{
 			tooltip		"_Enabling this will give you a preview of your actions on the battlescape which you then have to confirm."
 			string		"_Confirm Actions:"
-			pos			"72 390"
+			pos			"72 340"
 			size		"240 20"
 		}
 		selectbox select_confirmactions
@@ -1726,7 +1592,7 @@ window options
 			{
 				tooltip		"_'No' means all your orders on the battlescape will be executed immediately. 'Yes' means you will be prompted to confirm all of your orders before the soldier begins to execute them. 'Only for moving' means the path will be displayed before you confirm a soldier's move."
 				cvar		*cvar:confirm_actions
-				pos			"350 390"
+				pos			"350 340"
 				size		"155 20"
 			}
 			option confirm_value {
@@ -1749,32 +1615,171 @@ window options
 		{
 			tooltip		"_Autostand regulates if your soldier should automatically stand up when he is getting the order to move while being crouched."
 			string		"_Autostand:"
-			pos			"72 415"
+			pos			"72 365"
 			size		"320 20"
 		}
 		checkbox_blue autostand_value
 		{
 			current		*cvar:cl_autostand
-			pos			"485 415"
+			pos			"485 365"
 			size		"20 18"
 		}
-		// ================
-		// BATTLESCAPE HUD
-		// ================
-		string hud_str
+		// ============
+		// ACTOR SPEED
+		// ============
+		string actorsspeed_str
 		{
-			tooltip		"_Select the Head-Up-Display for the battlescape."
-			string		"_HUD Design:"
-			pos			"72 440"
-			size		"250 20"
+			string		"_Actor Speed:"
+			pos			"72 390"
+			size		"170 20"
 		}
-
-		// @note selectbox completed by the confunc add_hud_name
-		selectbox select_hud
+		image actorsspeed_rahmen
 		{
-			cvar		*cvar:cl_hud
-			pos			"350 440"
-			size		"155 20"
+			src		"ui/bar_rahmen"
+			pos			"248 392"
+		}
+		bar actorsspeed_bar
+		{
+			tooltip		"_Choose between 0-9, higher values mean higher actor speed."
+			current		*cvar:g_actorspeed
+			pos			"257 397"
+			size		"238 6"
+			color		"0 .8 0 1"
+			max			9
+			onClick		{ }
+		}
+		// =========================
+		// GEOSCAPE OPTIONS SUBMENU
+		// =========================
+		string settings_geoscape
+		{
+			string 		"_Geoscape Options"
+			pos			"62 445"
+			size		"320 20"
+			color		"1.0 0.75 0 1"
+		}
+		// ==================
+		// GEOSCAPE 2D/3DMAP
+		// ==================
+		string m3dmap_str
+		{
+			tooltip		"_3D or 2D geoscape. To enable this option you have to start a new campaign first."
+			string		"_3D Geoscape:"
+			pos			"72 470"
+			size		"280 20"
+		}
+		checkbox_blue m3dmap
+		{
+			current		*cvar:cl_3dmap
+			pos			"485 470"
+			size		"20 18"
+		}
+		// ====================
+		// GEOSCAPE DECORATION
+		// ====================
+		string geoscape_deco_str
+		{
+			tooltip		"_Show/Hide the panel decoration on the geoscape."
+			string		"_Show decoration:"
+			pos			"72 495"
+			size		"280 20"
+		}
+		checkbox_blue geoscape_deco
+		{
+			current		*cvar:mn_geoscape_deco
+			pos			"485 495"
+			size		"20 18"
+		}
+		// =====================================
+		// GEOSCAPE CAMERA MINIMUM/MAXIMUM ZOOM
+		// =====================================
+		string geocamzoommin_str
+		{
+			tooltip		"_The minimum/maximum zoom of the geoscape camera"
+			string		"_Min/Max Geo-Cam Zoom:"
+			pos			"72 520"
+			size		"280 20"
+		}
+		selectbox geocamzoom_min
+		{
+			{
+				tooltip		"_Minimum zoom level of the geoscape camera"
+				cvar		*cvar:cl_mapzoommin
+				pos			"355 520"
+				size		"75 20"
+				contentalign	ALIGN_CR
+			}
+			option geocamzoom_min000
+			{
+				label	"0.00"
+				value	"0"
+			}
+			option geocamzoom_min020
+			{
+				label	"0.20"
+				value	"0.20"
+			}
+			option geocamzoom_min040
+			{
+				label	"0.40"
+				value	"0.40"
+			}
+			option geocamzoom_min060
+			{
+				label	"0.60"
+				value	"0.60"
+			}
+			option geocamzoom_min080
+			{
+				label	"0.80"
+				value	"0.80"
+			}
+			// default
+			option geocamzoom_min100
+			{
+				label	"_1.00"
+				value	"1.0"
+			}
+		}
+		selectbox geocamzoom_max
+		{
+			{
+				tooltip		"_Maximum zoom level of the geoscape camera"
+				cvar		*cvar:cl_mapzoommax
+				pos			"430 520"
+				size		"75 20"
+			}
+			option geocamzoom_max20
+			{
+				label	"_2.0"
+				value	"2.0"
+			}
+			option geocamzoom_max40
+			{
+				label	"_4.00"
+				value	"4.0"
+			}
+			// default
+			option geocamzoom_max60
+			{
+				label	"_6.00"
+				value	"6.0"
+			}
+			option geocamzoom_max80
+			{
+				label	"_8.00"
+				value	"8.0"
+			}
+			option geocamzoom_max100
+			{
+				label	"_10.00"
+				value	"10.0"
+			}
+			option geocamzoom_max120
+			{
+				label	"_12.00"
+				value	"12.0"
+			}
 		}
 		// =================================
 		// JOYSTICK/JOYPAD SETTINGS SUBMENU
@@ -1782,7 +1787,7 @@ window options
 		string settings_joystick
 		{
 			string		"_Joystick Settings"
-			pos			"62 495"
+			pos			"62 575"
 			size		"320 20"
 			color		"1.0 0.75 0 1"
 		}
@@ -1792,13 +1797,13 @@ window options
 		string joystick_enable_str
 		{
 			string		"_Enable:"
-			pos			"72 520"
+			pos			"72 600"
 			size		"240 20"
 		}
 		checkbox_blue joystick_enable
 		{
 			current		*cvar:in_joystick
-			pos			"485 520"
+			pos			"485 600"
 			size		"20 18"
 			onChange {
 				call *node:root.options_gameplay.show_joystick_options
