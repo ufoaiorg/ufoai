@@ -85,9 +85,9 @@ void G_ActorSetInRescueZone (edict_t* actor, qboolean inRescueZone)
 		return;
 
 	if (inRescueZone)
-		G_ClientPrintf(G_PLAYER_FROM_ENT(actor), PRINT_HUD, _("Soldier entered the rescue zone\n"));
+		G_ClientPrintf(G_PLAYER_FROM_ENT(actor), PRINT_HUD, _("Soldier entered the rescue zone."));
 	else
-		G_ClientPrintf(G_PLAYER_FROM_ENT(actor), PRINT_HUD, _("Soldier left the rescue zone\n"));
+		G_ClientPrintf(G_PLAYER_FROM_ENT(actor), PRINT_HUD, _("Soldier left the rescue zone."));
 
 	actor->inRescueZone = inRescueZone;
 }
