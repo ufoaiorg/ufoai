@@ -729,12 +729,6 @@ window geoscape
 			*cvar:mn_messagesystem = 0
 			cmd "messagesystem_changemode;"
 		}
-		// check if geoscape deco is turned on and adjust the button
-		if ( *cvar:mn_geoscape_deco == 1) {
-			*node:root.control.deco_switch@icon = "icons/on"
-		} else {
-			*node:root.control.deco_switch@icon = "icons/off"
-		}
 	}
 
 }
