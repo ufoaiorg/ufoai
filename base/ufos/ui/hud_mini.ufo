@@ -1605,7 +1605,7 @@ window hud_mini extends hud
 		{
 			tooltip		"_LMB:Show/RMB:Hide Top Panel"
 			icon		"icons/on"
-			pos			"122 490"
+			pos			"118 490"
 			size		"24 16"
 			onClick
 			{
@@ -1626,7 +1626,7 @@ window hud_mini extends hud
 		{
 			tooltip		"_LMB:Show/RMB:Hide Soldier Panel"
 			icon		"icons/on"
-			pos			"102 490"
+			pos			"98 490"
 			size		"24 16"
 			onClick
 			{
@@ -1651,7 +1651,7 @@ window hud_mini extends hud
 		{
 			tooltip		"_LMB:Show/RMB:Hide Decoration"
 			icon		"icons/on"
-			pos			"203 490"
+			pos			"198 490"
 			size		"24 16"
 			onClick
 			{
@@ -1772,7 +1772,7 @@ window hud_mini extends hud
 		{
 			tooltip		*cvar:mn_crouch_reservation_tt
 			pos			"201 472"
-			size		"20 18"
+			size		"20 20"
 			current		0
 			onChange	{ cmd "hud_togglecrouchreserve;" }
 		}
