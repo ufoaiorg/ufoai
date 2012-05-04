@@ -857,7 +857,12 @@ void FS_InitFilesystem (qboolean writeToHomeDir)
 #ifdef COMPILE_UFO
 	const char *fsGameDir = Cvar_GetString("fs_gamedir");
 	if (Q_strvalid(fsGameDir)) {
-		FS_AddGameDirectory(va("./%s", fsGameDir), !writeToHomeDir);
+		char path[MAX_QPATH];
+		Com_sprintf(path, sizeof(path), "./%s", fsGameDir);
+		if (!FS_FileExists(path)) {
+			Com_sprintf(path, sizeof(path), "./mods/%s", fsGameDir);
+		}
+		FS_AddGameDirectory(path, !writeToHomeDir);
 		FS_AddHomeAsGameDirectory(fsGameDir, writeToHomeDir);
 	}
 #endif
