@@ -467,3 +467,8 @@ void SCR_Init (void)
 
 	screenInitialized = qtrue;
 }
+
+void SCR_Shutdown (void)
+{
+	screenInitialized = qfalse;
+}

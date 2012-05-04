@@ -1260,4 +1260,5 @@ void CL_Shutdown (void)
 	GAME_Shutdown();
 	CL_LanguageShutdown();
 	TOTD_Shutdown();
+	SCR_Shutdown();
 }

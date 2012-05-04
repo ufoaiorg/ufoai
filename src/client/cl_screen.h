@@ -30,6 +30,7 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #define CLIENT_SCREEN_H
 
 void SCR_Init(void);
+void SCR_Shutdown(void);
 void SCR_ChangeCursor(int cursor);
 void SCR_UpdateScreen(void);
 void SCR_DrawLoading(int percent, const char *loadingMessages);
