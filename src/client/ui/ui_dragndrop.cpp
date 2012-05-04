@@ -254,6 +254,6 @@ void UI_DrawDragAndDrop (int mousePosX, int mousePosY)
 		break;
 
 	default:
-		assert(qfalse);
+		assert(false);
 	}
 }

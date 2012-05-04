@@ -117,7 +117,7 @@ static inline void UI_InitModelInfoView (uiNode_t *node, modelInfo_t *mi, uiMode
  */
 static void UI_DrawModelNodeWithUIModel (uiNode_t *node, const char *source, modelInfo_t *mi, uiModel_t *model)
 {
-	qboolean autoScaleComputed = qfalse;
+	bool autoScaleComputed = false;
 	vec3_t autoScale;
 	vec3_t autoCenter;
 
@@ -207,7 +207,7 @@ static void UI_DrawModelNodeWithUIModel (uiNode_t *node, const char *source, mod
 					size[0] = node->size[0] - node->padding;
 					size[1] = node->size[1] - node->padding;
 					R_ModelAutoScale(size, mi, autoScale, autoCenter);
-					autoScaleComputed = qtrue;
+					autoScaleComputed = true;
 				} else {
 					mi->scale = autoScale;
 					mi->center = autoCenter;
@@ -462,7 +462,7 @@ void uiModelNode::onLoading (uiNode_t *node)
 {
 	Vector4Set(node->color, 1, 1, 1, 1);
 	VectorSet(EXTRADATA(node).scale, 1, 1, 1);
-	EXTRADATA(node).clipOverflow = qtrue;
+	EXTRADATA(node).clipOverflow = true;
 }
 
 /**
@@ -527,11 +527,11 @@ void UI_RegisterModelNode (uiBehaviour_t *behaviour)
 	/* Main model only. Auto compute the "better" scale for the model. The function dont work
 	 * very well at the moment because it dont check the angle and no more submodel bounding box.
 	 */
-	UI_RegisterExtradataNodeProperty(behaviour, "autoscale", V_BOOL, modelExtraData_t, autoscale);
+	UI_RegisterExtradataNodeProperty(behaviour, "autoscale", V_CPPBOOL, modelExtraData_t, autoscale);
 	/* Main model only. Allow to change the POV of the model with the mouse (only for main model) */
-	UI_RegisterExtradataNodeProperty(behaviour, "rotatewithmouse", V_BOOL, modelExtraData_t, rotateWithMouse);
+	UI_RegisterExtradataNodeProperty(behaviour, "rotatewithmouse", V_CPPBOOL, modelExtraData_t, rotateWithMouse);
 	/* Main model only. Clip the model with the node rect */
-	UI_RegisterExtradataNodeProperty(behaviour, "clipoverflow", V_BOOL, modelExtraData_t, clipOverflow);
+	UI_RegisterExtradataNodeProperty(behaviour, "clipoverflow", V_CPPBOOL, modelExtraData_t, clipOverflow);
 	/* Source of the model. The path to the model, relative to <code>base/models</code> */
 	UI_RegisterExtradataNodeProperty(behaviour, "src", V_CVAR_OR_STRING, modelExtraData_t, model);
 	/* Both. Name of the skin for the model. */

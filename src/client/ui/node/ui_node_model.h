@@ -71,10 +71,10 @@ typedef struct modelExtraData_s {
 	const char* tag;					/**< the tag to place the model onto */
 	animState_t* animationState;		/**< holds then anim state for the current model */
 	const char* animation;			/**< Anim string from the *.anm files */
-	qboolean autoscale;			/**< If true autoscale the model when we draw it */
-	qboolean rotateWithMouse;	/**< If true the user can rotate the model with the mouse */
-	qboolean clipOverflow;		/**< If true (default) model outside the node are clipped */
-	qboolean containerLike;		/**< Display an item like an item from the container */
+	bool autoscale;			/**< If true autoscale the model when we draw it */
+	bool rotateWithMouse;	/**< If true the user can rotate the model with the mouse */
+	bool clipOverflow;		/**< If true (default) model outside the node are clipped */
+	bool containerLike;		/**< Display an item like an item from the container */
 } modelExtraData_t;
 
 uiModel_t *UI_GetUIModel(const char *modelName);

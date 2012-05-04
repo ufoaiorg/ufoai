@@ -116,9 +116,9 @@ static void UI_ContainerItemIteratorNext (containerItemIterator_t *iterator)
 
 		/* iterate all item type*/
 		for (;iterator->itemID < csi.numODs; iterator->itemID++) {
-			qboolean isAmmo;
-			qboolean isWeapon;
-			qboolean isArmour;
+			bool isAmmo;
+			bool isWeapon;
+			bool isArmour;
 			const objDef_t *obj = INVSH_GetItemByIDX(iterator->itemID);
 
 			/* gameplay filter */
@@ -277,7 +277,7 @@ static const vec4_t colorDisabledLoadable = {0.5, 0.25, 0.25, 1.0};
  */
 static int UI_BaseInventoryNodeDrawItems (uiNode_t *node, const objDef_t *highlightType)
 {
-	qboolean outOfNode = qfalse;
+	bool outOfNode = false;
 	vec2_t nodepos;
 	int items = 0;
 	int rowHeight = 0;
@@ -294,7 +294,7 @@ static int UI_BaseInventoryNodeDrawItems (uiNode_t *node, const objDef_t *highli
 		vec3_t pos;
 		vec3_t ammopos;
 		const float *color;
-		qboolean isHighlight = qfalse;
+		bool isHighlight = false;
 		int amount;
 		const int col = items % EXTRADATA(node).columns;
 		int cellHeight = 0;
@@ -409,7 +409,7 @@ static int UI_BaseInventoryNodeDrawItems (uiNode_t *node, const objDef_t *highli
 			currentHeight += rowHeight;
 			rowHeight = 0;
 			if (currentHeight - EXTRADATA(node).scrollY.viewPos >= node->size[1])
-				outOfNode = qtrue;
+				outOfNode = true;
 		}
 
 		/* count items */
@@ -427,7 +427,7 @@ static int UI_BaseInventoryNodeDrawItems (uiNode_t *node, const objDef_t *highli
  */
 static void UI_BaseInventoryNodeDraw2 (uiNode_t *node, const objDef_t *highlightType)
 {
-	qboolean updateScroll = qfalse;
+	bool updateScroll = false;
 	int visibleHeight = 0;
 	int needHeight = 0;
 	vec2_t screenPos;
@@ -451,15 +451,15 @@ static void UI_BaseInventoryNodeDraw2 (uiNode_t *node, const objDef_t *highlight
 	if (visibleHeight != EXTRADATA(node).scrollY.viewSize || needHeight != EXTRADATA(node).scrollY.fullSize) {
 		EXTRADATA(node).scrollY.fullSize = needHeight;
 		EXTRADATA(node).scrollY.viewSize = visibleHeight;
-		updateScroll = qtrue;
+		updateScroll = true;
 	}
 	if (EXTRADATA(node).scrollY.viewPos > needHeight - visibleHeight) {
 		EXTRADATA(node).scrollY.viewPos = needHeight - visibleHeight;
-		updateScroll = qtrue;
+		updateScroll = true;
 	}
 	if (EXTRADATA(node).scrollY.viewPos < 0) {
 		EXTRADATA(node).scrollY.viewPos = 0;
-		updateScroll = qtrue;
+		updateScroll = true;
 	}
 
 	if (updateScroll)
@@ -494,7 +494,7 @@ void uiBaseInventoryNode::draw (uiNode_t *node)
  */
 static invList_t *UI_BaseInventoryNodeGetItem (const uiNode_t* const node, int mouseX, int mouseY, int* contX, int* contY)
 {
-	qboolean outOfNode = qfalse;
+	bool outOfNode = false;
 	vec2_t nodepos;
 	int items = 0;
 	int rowHeight = 0;
@@ -769,7 +769,7 @@ bool uiBaseInventoryNode::onDndEnter (uiNode_t *target)
 {
 	/* The node is invalide */
 	if (EXTRADATA(target).super.container == NULL)
-		return qfalse;
+		return false;
 	/* accept items only, if we have a container */
 	return UI_DNDGetType() == DND_ITEM && UI_DNDGetSourceNode() != target;
 }
@@ -805,17 +805,17 @@ void UI_RegisterBaseInventoryNode (uiBehaviour_t* behaviour)
 	behaviour->extraDataSize = sizeof(EXTRADATA_TYPE);
 
 	/* Display/hide weapons. */
-	UI_RegisterExtradataNodeProperty(behaviour, "displayweapon", V_BOOL, baseInventoryExtraData_t, displayWeapon);
+	UI_RegisterExtradataNodeProperty(behaviour, "displayweapon", V_CPPBOOL, baseInventoryExtraData_t, displayWeapon);
 	/* Display/hide ammo. */
-	UI_RegisterExtradataNodeProperty(behaviour, "displayammo", V_BOOL, baseInventoryExtraData_t, displayAmmo);
+	UI_RegisterExtradataNodeProperty(behaviour, "displayammo", V_CPPBOOL, baseInventoryExtraData_t, displayAmmo);
 	/* Display/hide out of stock items. */
-	UI_RegisterExtradataNodeProperty(behaviour, "displayunavailableitem", V_BOOL, baseInventoryExtraData_t, displayUnavailableItem);
+	UI_RegisterExtradataNodeProperty(behaviour, "displayunavailableitem", V_CPPBOOL, baseInventoryExtraData_t, displayUnavailableItem);
 	/* Sort the list to display in stock items on top of the list. */
-	UI_RegisterExtradataNodeProperty(behaviour, "displayavailableontop", V_BOOL, baseInventoryExtraData_t, displayAvailableOnTop);
+	UI_RegisterExtradataNodeProperty(behaviour, "displayavailableontop", V_CPPBOOL, baseInventoryExtraData_t, displayAvailableOnTop);
 	/* Display/hide ammo near weapons. */
-	UI_RegisterExtradataNodeProperty(behaviour, "displayammoofweapon", V_BOOL, baseInventoryExtraData_t, displayAmmoOfWeapon);
+	UI_RegisterExtradataNodeProperty(behaviour, "displayammoofweapon", V_CPPBOOL, baseInventoryExtraData_t, displayAmmoOfWeapon);
 	/* Display/hide out of stock ammo near weapons. <code>displayammoofweapon</code> must be activated first. */
-	UI_RegisterExtradataNodeProperty(behaviour, "displayunavailableammoofweapon", V_BOOL, baseInventoryExtraData_t, displayUnavailableAmmoOfWeapon);
+	UI_RegisterExtradataNodeProperty(behaviour, "displayunavailableammoofweapon", V_CPPBOOL, baseInventoryExtraData_t, displayUnavailableAmmoOfWeapon);
 	/* Custom the number of column we must use to display items. */
 	UI_RegisterExtradataNodeProperty(behaviour, "columns", V_INT, baseInventoryExtraData_t, columns);
 	/* Filter items by a category. */

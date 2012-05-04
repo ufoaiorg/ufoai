@@ -42,7 +42,7 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 static const int TOOLTIP_DELAY = 500; /* delay that msecs before showing tooltip */
 
 static cvar_t *ui_show_tooltips;
-static qboolean tooltipVisible = qfalse;
+static bool tooltipVisible = false;
 static uiTimer_t *tooltipTimer;
 
 static int noticeTime;
@@ -202,7 +202,7 @@ static void UI_DrawDebugNodeNames (void)
 
 static void UI_CheckTooltipDelay (uiNode_t *node, uiTimer_t *timer)
 {
-	tooltipVisible = qtrue;
+	tooltipVisible = true;
 	UI_TimerStop(timer);
 }
 
@@ -246,11 +246,11 @@ static void UI_DrawNode (uiNode_t *node)
 
 	/* draw all child */
 	if (!UI_Node_IsDrawItselfChild(node) && node->firstChild) {
-		qboolean hasClient = qfalse;
+		bool hasClient = false;
 		vec2_t clientPosition;
 		if (UI_Node_IsScrollableContainer(node)) {
 			UI_Node_GetClientPosition(node, clientPosition);
-			hasClient = qtrue;
+			hasClient = true;
 		}
 
 		R_PushClipRect(pos[0] + globalTransX, pos[1] + globalTransY, node->size[0], node->size[1]);
@@ -350,7 +350,7 @@ void UI_Draw (void)
 	/* handle delay time for tooltips */
 	if (mouseMoved && tooltipVisible) {
 		UI_TimerStop(tooltipTimer);
-		tooltipVisible = qfalse;
+		tooltipVisible = false;
 	} else if (!tooltipVisible && !mouseMoved && !tooltipTimer->isRunning && ui_show_tooltips->integer && hoveredNode) {
 		UI_TimerStart(tooltipTimer);
 	}

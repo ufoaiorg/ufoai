@@ -169,9 +169,9 @@ void UI_RegisterBarNode (uiBehaviour_t *behaviour)
 	/**
 	 * if true, the user can't edit the content
 	 */
-	UI_RegisterExtradataNodeProperty(behaviour, "readonly", V_BOOL, barExtraData_t, readOnly);
+	UI_RegisterExtradataNodeProperty(behaviour, "readonly", V_CPPBOOL, barExtraData_t, readOnly);
 	/**
 	 * there is no hover effect if this is true
 	 */
-	UI_RegisterExtradataNodeProperty(behaviour, "nohover", V_BOOL, barExtraData_t, noHover);
+	UI_RegisterExtradataNodeProperty(behaviour, "nohover", V_CPPBOOL, barExtraData_t, noHover);
 }

@@ -90,7 +90,7 @@ void uiAbstractOptionNode::doLayout (uiNode_t *node)
 		EXTRADATA(node).count = count;
 	}
 
-	node->invalidated = qfalse;
+	node->invalidated = false;
 }
 
 /**
@@ -107,7 +107,7 @@ uiNode_t* UI_AbstractOptionGetFirstOption (uiNode_t * node)
 			int count = 0;
 			uiNode_t *option = UI_GetOption(EXTRADATA(node).dataId);
 			while (option) {
-				if (option->invis == qfalse)
+				if (!option->invis)
 					count++;
 				option = option->next;
 			}

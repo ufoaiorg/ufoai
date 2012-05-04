@@ -148,7 +148,7 @@ void uiGeoscapeNode::onCapturedMouseMove (uiNode_t *node, int x, int y)
 		break;
 	}
 	default:
-		assert(qfalse);
+		assert(false);
 		break;
 	}
 	oldMousePosX = x;

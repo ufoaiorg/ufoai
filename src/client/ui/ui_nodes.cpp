@@ -151,11 +151,11 @@ static uiBehaviour_t nodeBehaviourList[NUMBER_OF_BEHAVIOURS];
  * @sa V_UI_IF
  * @returns qfalse if the node is not drawn due to not meet if conditions
  */
-qboolean UI_CheckVisibility (uiNode_t *node)
+bool UI_CheckVisibility (uiNode_t *node)
 {
 	uiCallContext_t context;
 	if (!node->visibilityCondition)
-		return qtrue;
+		return true;
 	context.source = node;
 	context.useCmdParam = qfalse;
 	return UI_GetBooleanFromExpression(node->visibilityCondition, &context);
@@ -305,7 +305,7 @@ uiNode_t* UI_GetNodeByPath (const char* path)
  * @param[in] type Name of the node behavior
  * @param[in] isDynamic Allocate a node in static or dynamic memory
  */
-static uiNode_t* UI_AllocNodeWithoutNew (const char* name, const char* type, qboolean isDynamic)
+static uiNode_t* UI_AllocNodeWithoutNew (const char* name, const char* type, bool isDynamic)
 {
 	uiNode_t* node;
 	uiBehaviour_t *behaviour;
@@ -325,7 +325,7 @@ static uiNode_t* UI_AllocNodeWithoutNew (const char* name, const char* type, qbo
 		ui_global.numNodes++;
 	} else {
 		node = (uiNode_t*)Mem_PoolAlloc(nodeSize, ui_dynPool, 0);
-		node->dynamic = qtrue;
+		node->dynamic = true;
 	}
 
 	node->behaviour = behaviour;
@@ -355,7 +355,7 @@ static uiNode_t* UI_AllocNodeWithoutNew (const char* name, const char* type, qbo
  * @param[in] type Name of the node behavior
  * @param[in] isDynamic Allocate a node in static or dynamic memory
  */
-uiNode_t* UI_AllocNode (const char* name, const char* type, qboolean isDynamic)
+uiNode_t* UI_AllocNode (const char* name, const char* type, bool isDynamic)
 {
 	uiNode_t* node = UI_AllocNodeWithoutNew(name, type, isDynamic);
 
@@ -580,7 +580,7 @@ void UI_DeleteNode (uiNode_t* node)
  * @todo exclude rect is not safe cloned.
  * @todo actions are not cloned. It is be a problem if we use add/remove listener into a cloned node.
  */
-uiNode_t* UI_CloneNode (const uiNode_t* node, uiNode_t *newWindow, qboolean recursive, const char *newName, qboolean isDynamic)
+uiNode_t* UI_CloneNode (const uiNode_t* node, uiNode_t *newWindow, bool recursive, const char *newName, bool isDynamic)
 {
 	uiNode_t* newNode = UI_AllocNodeWithoutNew(NULL, UI_Node_GetWidgetName(node), isDynamic);
 

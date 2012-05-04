@@ -110,7 +110,7 @@ typedef struct {
 	panelLayout_t layout;		/**< The layout manager the panel is using to render all its children */
 	int layoutMargin;			/**< The margin between all children nodes of the panel */
 	int layoutColumns;			/**< The number of columns (only used by LAYOUT_COLUMN)  */
-	qboolean wheelScrollable;	/**< If scrolling with mouse wheel is enabled */
+	bool wheelScrollable;	/**< If scrolling with mouse wheel is enabled */
 	/** Sprite used as a background */
 	uiSprite_t *background;
 } panelExtraData_t;

@@ -336,11 +336,11 @@ void UI_RegisterTextEntryNode (uiBehaviour_t *behaviour)
 	UI_RegisterOveridedNodeProperty(behaviour, "onChange");
 
 	/* Custom the draw behaviour by hiding each character of the text with a star (''*''). */
-	UI_RegisterExtradataNodeProperty(behaviour, "isPassword", V_BOOL, textEntryExtraData_t, isPassword);
+	UI_RegisterExtradataNodeProperty(behaviour, "isPassword", V_CPPBOOL, textEntryExtraData_t, isPassword);
 	/* ustom the mouse event behaviour. When we are editing the text, if we click out of the node, the edition is aborted. Changes on
 	 * the text are canceled, and no change event are fired.
 	 */
-	UI_RegisterExtradataNodeProperty(behaviour, "clickOutAbort", V_BOOL, textEntryExtraData_t, clickOutAbort);
+	UI_RegisterExtradataNodeProperty(behaviour, "clickOutAbort", V_CPPBOOL, textEntryExtraData_t, clickOutAbort);
 	/* Call it when we abort the edition */
 	UI_RegisterExtradataNodeProperty(behaviour, "onAbort", V_UI_ACTION, textEntryExtraData_t, onAbort);
 	/* Call it to force node edition */

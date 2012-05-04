@@ -53,8 +53,8 @@ struct uiNode_t {
 	char name[MAX_VAR];			/**< name from the script files */
 	uiBehaviour_t *behaviour;
 	uiNode_t const* super;      /**< Node inherited, else NULL */
-	qboolean dynamic;			/** If true, it use dynamic memory */
-	qboolean indexed;			/** If true, the node name indexed into his window */
+	bool dynamic;			/** If true, it use dynamic memory */
+	bool indexed;			/** If true, the node name indexed into his window */
 
 	/* common navigation */
 	uiNode_t* firstChild; /**< first element of linked list of child */
@@ -70,11 +70,11 @@ struct uiNode_t {
 	/* common attributes */
 	const char* tooltip;		/**< holds the tooltip */
 	struct uiKeyBinding_s *key;	/**< key bindings - used as tooltip */
-	qboolean invis;				/**< true if the node is invisible */
-	qboolean disabled;			/**< true if the node is inactive */
-	qboolean invalidated;		/**< true if we need to update the layout */
-	qboolean ghost;				/**< true if the node is not tangible */
-	qboolean state;				/**< is node hovered */
+	bool invis;				/**< true if the node is invisible */
+	bool disabled;			/**< true if the node is inactive */
+	bool invalidated;		/**< true if we need to update the layout */
+	bool ghost;				/**< true if the node is not tangible */
+	bool state;				/**< is node hovered */
 	int padding;				/**< padding for this node - default 3 - see bgcolor */
 	int align;					/**< used to identify node position into a parent using a layout manager. Else it do nothing. */
 	int num;					/**< used to identify child into a parent; not sure it is need @todo delete it */
@@ -122,13 +122,13 @@ struct uiNode_t {
 void UI_InitNodes(void);
 
 /* nodes */
-uiNode_t* UI_AllocNode(const char* name, const char* type, qboolean isDynamic);
+uiNode_t* UI_AllocNode(const char* name, const char* type, bool isDynamic);
 uiNode_t* UI_GetNodeByPath(const char* path) __attribute__ ((warn_unused_result));
 void UI_ReadNodePath(const char* path, const uiNode_t *relativeNode, uiNode_t** resultNode, const value_t **resultProperty);
 uiNode_t* UI_GetNodeAtPosition(int x, int y) __attribute__ ((warn_unused_result));
 const char* UI_GetPath(const uiNode_t* node) __attribute__ ((warn_unused_result));
-uiNode_t* UI_CloneNode(uiNode_t const* node, uiNode_t* newWindow, qboolean recursive, const char *newName, qboolean isDynamic) __attribute__ ((warn_unused_result));
-qboolean UI_CheckVisibility(uiNode_t *node);
+uiNode_t* UI_CloneNode(uiNode_t const* node, uiNode_t* newWindow, bool recursive, const char *newName, bool isDynamic) __attribute__ ((warn_unused_result));
+bool UI_CheckVisibility(uiNode_t *node);
 void UI_DeleteAllChild(uiNode_t* node);
 void UI_DeleteNode(uiNode_t* node);
 

@@ -41,8 +41,8 @@ class uiTextEntryNode : public uiLocatedNode {
  * @brief extradata for the textentry, to custom draw and behaviour
  */
 typedef struct textEntryExtraData_s {
-	qboolean isPassword;	/**< Display '*' instead of the real text */
-	qboolean clickOutAbort;	/**< If we click out an activated node, it abort the edition */
+	bool isPassword;	/**< Display '*' instead of the real text */
+	bool clickOutAbort;	/**< If we click out an activated node, it abort the edition */
 	struct uiAction_s *onAbort;
 	/** Sprite used as a background */
 	uiSprite_t *background;

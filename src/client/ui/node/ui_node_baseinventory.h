@@ -53,12 +53,12 @@ typedef struct baseInventoryExtraData_s {
 	int filterEquipType;
 
 	int columns;
-	qboolean displayWeapon;
-	qboolean displayAmmo;
-	qboolean displayUnavailableItem;
-	qboolean displayAmmoOfWeapon;
-	qboolean displayUnavailableAmmoOfWeapon;
-	qboolean displayAvailableOnTop;
+	bool displayWeapon;
+	bool displayAmmo;
+	bool displayUnavailableItem;
+	bool displayAmmoOfWeapon;
+	bool displayUnavailableAmmoOfWeapon;
+	bool displayAvailableOnTop;
 
 	/* scroll status */
 	uiScroll_t scrollY;

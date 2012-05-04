@@ -596,7 +596,7 @@ void UI_RegisterTextNode (uiBehaviour_t *behaviour)
 	/** Highlight each node elements when the mouse move over the node.
 	 * @todo delete it went its possible (need to create a textlist...)
 	 */
-	UI_RegisterExtradataNodeProperty(behaviour, "mousefx", V_BOOL, textExtraData_t, mousefx);
+	UI_RegisterExtradataNodeProperty(behaviour, "mousefx", V_CPPBOOL, textExtraData_t, mousefx);
 
 	Com_RegisterConstInt("LONGLINES_WRAP", LONGLINES_WRAP);
 	Com_RegisterConstInt("LONGLINES_CHOP", LONGLINES_CHOP);

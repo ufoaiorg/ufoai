@@ -480,7 +480,7 @@ void uiPanelNode::doLayout (uiNode_t *node)
 void uiPanelNode::onLoading (uiNode_t *node)
 {
 	uiLocatedNode::onLoading(node);
-	EXTRADATA(node).wheelScrollable = qtrue;
+	EXTRADATA(node).wheelScrollable = true;
 }
 
 /* Used for drag&drop-like scrolling */
@@ -622,7 +622,7 @@ void UI_RegisterPanelNode (uiBehaviour_t *behaviour)
 	/**
 	 * If scrolling via mousewheel is enabled
 	 */
-	UI_RegisterExtradataNodeProperty(behaviour, "wheelscrollable", V_BOOL, panelExtraData_t, wheelScrollable);
+	UI_RegisterExtradataNodeProperty(behaviour, "wheelscrollable", V_CPPBOOL, panelExtraData_t, wheelScrollable);
 
 	/* Sprite used to display the background */
 	UI_RegisterExtradataNodeProperty(behaviour, "background", V_UI_SPRITEREF, EXTRADATA_TYPE, background);

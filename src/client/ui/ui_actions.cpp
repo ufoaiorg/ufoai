@@ -488,7 +488,7 @@ static inline void UI_ExecuteCallAction (const uiAction_t* action, const uiCallC
 		func(callNode, &newContext);
 	} else {
 		/* unreachable, already checked few line before */
-		assert(qfalse);
+		assert(false);
 	}
 
 	LIST_Delete(&newContext.params);

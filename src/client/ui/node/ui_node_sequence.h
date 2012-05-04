@@ -39,7 +39,7 @@ class uiSequenceNode : public uiLocatedNode {
 void UI_RegisterSequenceNode(uiBehaviour_t *behaviour);
 
 typedef struct {
-	qboolean playing;
+	bool playing;
 
 	/** Called when the sequence end */
 	struct uiAction_s *onEnd;

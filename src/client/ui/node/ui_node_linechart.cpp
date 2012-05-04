@@ -90,7 +90,7 @@ void UI_RegisterLineChartNode (uiBehaviour_t *behaviour)
 	/* Identity the shared data the node use. It must be a LINESTRIP data. */
 	UI_RegisterExtradataNodeProperty(behaviour, "dataid", V_UI_DATAID, lineChartExtraData_t, dataId);
 	/* If true, it display axes of the chart. */
-	UI_RegisterExtradataNodeProperty(behaviour, "displayaxes", V_BOOL, lineChartExtraData_t, displayAxes);
+	UI_RegisterExtradataNodeProperty(behaviour, "displayaxes", V_CPPBOOL, lineChartExtraData_t, displayAxes);
 	/* Axe color. */
 	UI_RegisterExtradataNodeProperty(behaviour, "axescolor", V_COLOR, lineChartExtraData_t, axesColor);
 }

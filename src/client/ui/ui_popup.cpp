@@ -122,10 +122,10 @@ static void UI_SetOneButton (uiNode_t* window, const char *button, const char *c
 
 	if (clickAction) {
 		UI_PoolAllocAction(&buttonNode->onClick, EA_CMD, clickAction);
-		buttonNode->invis = qfalse;
+		buttonNode->invis = false;
 	} else {
 		buttonNode->onClick = NULL;
-		buttonNode->invis = qtrue;
+		buttonNode->invis = true;
 	}
 }
 

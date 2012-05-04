@@ -320,9 +320,9 @@ void UI_UpdateInvisOptions (uiNode_t *option, const linkedList_t *stringList)
 
 	while (option) {
 		if (LIST_ContainsString(stringList, option->name))
-			option->invis = qfalse;
+			option->invis = false;
 		else
-			option->invis = qtrue;
+			option->invis = true;
 		option = option->next;
 	}
 }
@@ -388,7 +388,7 @@ static uiNode_t* UI_FindOptionAtIndex (int index, uiNode_t* option, uiOptionIter
 		/* its a child */
 		if (index < OPTIONEXTRADATA(option).childCount) {
 			if (iterator->depthPos >= MAX_DEPTH_OPTIONITERATORCACHE)
-				assert(qfalse);
+				assert(false);
 			iterator->depthCache[iterator->depthPos] = option;
 			iterator->depthPos++;
 			return UI_FindOptionAtIndex(index, option->firstChild, iterator);

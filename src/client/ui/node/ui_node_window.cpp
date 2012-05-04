@@ -415,21 +415,21 @@ void UI_RegisterWindowNode (uiBehaviour_t *behaviour)
 	 * the settings take effects) you can define the position of those messages with this option. */
 	UI_RegisterExtradataNodeProperty(behaviour, "noticepos", V_POS, windowExtraData_t, noticePos);
 	/* Create subnode allowing to move the window when we click on the header. Updating this attribute at the runtime will change nothing. */
-	UI_RegisterExtradataNodeProperty(behaviour, "dragbutton", V_BOOL, windowExtraData_t, dragButton);
+	UI_RegisterExtradataNodeProperty(behaviour, "dragbutton", V_CPPBOOL, windowExtraData_t, dragButton);
 	/* Add a button on the top right the window to close it. Updating this attribute at the runtime will change nothing. */
-	UI_RegisterExtradataNodeProperty(behaviour, "closebutton", V_BOOL, windowExtraData_t, closeButton);
+	UI_RegisterExtradataNodeProperty(behaviour, "closebutton", V_CPPBOOL, windowExtraData_t, closeButton);
 	/* If true, the user can't select something outside the modal window. He must first close the window. */
-	UI_RegisterExtradataNodeProperty(behaviour, "modal", V_BOOL, windowExtraData_t, modal);
+	UI_RegisterExtradataNodeProperty(behaviour, "modal", V_CPPBOOL, windowExtraData_t, modal);
 	/* If true, if the user click outside the window, it will close it. */
-	UI_RegisterExtradataNodeProperty(behaviour, "dropdown", V_BOOL, windowExtraData_t, dropdown);
+	UI_RegisterExtradataNodeProperty(behaviour, "dropdown", V_CPPBOOL, windowExtraData_t, dropdown);
 	/* If true, the user can't use ''ESC'' key to close the window. */
-	UI_RegisterExtradataNodeProperty(behaviour, "preventtypingescape", V_BOOL, windowExtraData_t, preventTypingEscape);
+	UI_RegisterExtradataNodeProperty(behaviour, "preventtypingescape", V_CPPBOOL, windowExtraData_t, preventTypingEscape);
 	/* If true, the window is filled according to the widescreen. */
-	UI_RegisterExtradataNodeProperty(behaviour, "fill", V_BOOL, windowExtraData_t, fill);
+	UI_RegisterExtradataNodeProperty(behaviour, "fill", V_CPPBOOL, windowExtraData_t, fill);
 	/* If true, when the window size change, the window content position is updated according to the "star" layout.
 	 * @todo Need more documentation.
 	 */
-	UI_RegisterExtradataNodeProperty(behaviour, "starlayout", V_BOOL, windowExtraData_t, starLayout);
+	UI_RegisterExtradataNodeProperty(behaviour, "starlayout", V_CPPBOOL, windowExtraData_t, starLayout);
 
 	/* This property control milliseconds between each calls of <code>onEvent</code>.
 	 * If value is 0 (the default value) nothing is called. We can change the

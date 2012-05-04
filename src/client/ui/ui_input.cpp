@@ -222,7 +222,7 @@ void UI_RequestFocus (uiNode_t* node)
 /**
  * @brief check if a node got the focus
  */
-qboolean UI_HasFocus (const uiNode_t* node)
+bool UI_HasFocus (const uiNode_t* node)
 {
 	return node == focusNode;
 }
@@ -623,7 +623,7 @@ void UI_MouseMove (int x, int y)
 			node = node->parent;
 		}
 		if (oldHoveredNode)
-			oldHoveredNode->state = qfalse;
+			oldHoveredNode->state = false;
 
 		/* send 'enter' event from common node to new node */
 		while (commonNode != hoveredNode) {
@@ -635,7 +635,7 @@ void UI_MouseMove (int x, int y)
 			UI_Node_MouseEnter(node);
 		}
 		if (hoveredNode) {
-			hoveredNode->state = qtrue;
+			hoveredNode->state = true;
 			UI_Node_MouseEnter(node);
 		}
 	}
@@ -658,7 +658,6 @@ void UI_MouseMove (int x, int y)
  */
 static void UI_LeftClick (int x, int y)
 {
-	qboolean disabled;
 	if (UI_IsMouseInvalidate())
 		return;
 
@@ -679,7 +678,7 @@ static void UI_LeftClick (int x, int y)
 		}
 	}
 
-	disabled = (pressedNode == NULL) || (pressedNode->disabled) || (pressedNode->parent && pressedNode->parent->disabled);
+	const bool disabled = (pressedNode == NULL) || (pressedNode->disabled) || (pressedNode->parent && pressedNode->parent->disabled);
 	if (!disabled) {
 		UI_Node_LeftClick(pressedNode, x, y);
 	}
@@ -694,7 +693,6 @@ static void UI_LeftClick (int x, int y)
  */
 static void UI_RightClick (int x, int y)
 {
-	qboolean disabled;
 	if (UI_IsMouseInvalidate())
 		return;
 
@@ -704,7 +702,7 @@ static void UI_RightClick (int x, int y)
 		return;
 	}
 
-	disabled = (pressedNode == NULL) || (pressedNode->disabled) || (pressedNode->parent && pressedNode->parent->disabled);
+	const bool disabled = (pressedNode == NULL) || (pressedNode->disabled) || (pressedNode->parent && pressedNode->parent->disabled);
 	if (!disabled) {
 		UI_Node_RightClick(pressedNode, x, y);
 	}
@@ -717,7 +715,6 @@ static void UI_RightClick (int x, int y)
  */
 static void UI_MiddleClick (int x, int y)
 {
-	qboolean disabled;
 	if (UI_IsMouseInvalidate())
 		return;
 
@@ -727,7 +724,7 @@ static void UI_MiddleClick (int x, int y)
 		return;
 	}
 
-	disabled = (pressedNode == NULL) || (pressedNode->disabled) || (pressedNode->parent && pressedNode->parent->disabled);
+	const bool disabled = (pressedNode == NULL) || (pressedNode->disabled) || (pressedNode->parent && pressedNode->parent->disabled);
 	if (!disabled) {
 		UI_Node_MiddleClick(pressedNode, x, y);
 	}

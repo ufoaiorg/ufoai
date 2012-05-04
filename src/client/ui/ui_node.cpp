@@ -370,9 +370,9 @@ bool UI_NodeInstanceOf (const uiNode_t *node, const char* behaviourName)
 	const uiBehaviour_t *behaviour;
 	for (behaviour = node->behaviour; behaviour; behaviour = behaviour->super) {
 		if (Q_streq(behaviour->name, behaviourName))
-			return qtrue;
+			return true;
 	}
-	return qfalse;
+	return false;
 }
 
 /**
@@ -386,9 +386,9 @@ bool UI_NodeInstanceOfPointer (const uiNode_t *node, const uiBehaviour_t* behavi
 	const uiBehaviour_t *b;
 	for (b = node->behaviour; b; b = b->super) {
 		if (b == behaviour)
-			return qtrue;
+			return true;
 	}
-	return qfalse;
+	return false;
 }
 
 /**
@@ -552,7 +552,7 @@ void UI_NodeAbsoluteToRelativePos (const uiNode_t* node, int *x, int *y)
 void UI_HideNode (uiNode_t* node)
 {
 	if (node)
-		node->invis = qtrue;
+		node->invis = true;
 	else
 		Com_Printf("UI_HideNode: No node given\n");
 }
@@ -564,7 +564,7 @@ void UI_HideNode (uiNode_t* node)
 void UI_UnHideNode (uiNode_t* node)
 {
 	if (node)
-		node->invis = qfalse;
+		node->invis = false;
 	else
 		Com_Printf("UI_UnHideNode: No node given\n");
 }
@@ -862,6 +862,8 @@ float UI_GetFloatFromNodeProperty (const uiNode_t* node, const value_t* property
 		}
 	} else if (property->type == V_INT) {
 		return Com_GetValue<int>(node, property);
+	} else if (property->type == V_CPPBOOL) {
+		return Com_GetValue<bool>(node, property);
 	} else if (property->type == V_BOOL) {
 		return Com_GetValue<qboolean>(node, property);
 	} else {
@@ -883,7 +885,7 @@ void UI_Invalidate (uiNode_t *node)
 	while (node) {
 		if (node->invalidated)
 			return;
-		node->invalidated = qtrue;
+		node->invalidated = true;
 		node = node->parent;
 	}
 }

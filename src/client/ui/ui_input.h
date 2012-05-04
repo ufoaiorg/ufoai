@@ -53,7 +53,7 @@ void UI_ResetInput(void);
 
 /* focus */
 void UI_RequestFocus(uiNode_t* node);
-qboolean UI_HasFocus(uiNode_t const* node);
+bool UI_HasFocus(uiNode_t const* node);
 void UI_RemoveFocus(void);
 qboolean UI_KeyRelease(unsigned int key, unsigned short unicode);
 qboolean UI_KeyPressed(unsigned int key, unsigned short unicode);

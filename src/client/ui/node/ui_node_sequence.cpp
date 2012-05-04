@@ -64,7 +64,7 @@ void uiSequenceNode::draw (uiNode_t *node)
 
 		if (finished && EXTRADATA(node).onEnd) {
 			UI_ExecuteEventActions(node, EXTRADATA(node).onEnd);
-			EXTRADATA(node).playing = qtrue;
+			EXTRADATA(node).playing = true;
 		}
 	}
 }
@@ -75,7 +75,7 @@ void uiSequenceNode::onWindowOpened (uiNode_t *node, linkedList_t *params)
 		EXTRADATA(node).context = SEQ_AllocContext();
 	if (node->image != NULL) {
 		SEQ_InitContext(EXTRADATA(node).context, node->image);
-		EXTRADATA(node).playing = qtrue;
+		EXTRADATA(node).playing = true;
 	}
 }
 
@@ -85,7 +85,7 @@ void uiSequenceNode::onWindowClosed (uiNode_t *node)
 		SEQ_FreeContext(EXTRADATA(node).context);
 		EXTRADATA(node).context = NULL;
 	}
-	EXTRADATA(node).playing = qfalse;
+	EXTRADATA(node).playing = false;
 }
 
 void uiSequenceNode::onLeftClick (uiNode_t *node, int x, int y)

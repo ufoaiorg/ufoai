@@ -33,7 +33,7 @@ class uiZoneNode : public uiLocatedNode {
 };
 
 typedef struct {
-	qboolean repeat;			/**< repeat action when "click" is held */
+	bool repeat;			/**< repeat action when "click" is held */
 	int clickDelay;				/**< delay for the next "click" */
 } zoneExtraData_t;
 

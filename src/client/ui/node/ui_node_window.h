@@ -58,14 +58,14 @@ typedef struct node_index_s {
 typedef struct {
 	int eventTime;
 	vec2_t noticePos; 				/**< the position where the cl.msgText messages are rendered */
-	qboolean dragButton;			/**< If true, we init the window with a header to move it */
-	qboolean closeButton;			/**< If true, we init the window with a header button to close it */
-	qboolean preventTypingEscape;	/**< If true, we can't use ESC button to close the window */
-	qboolean modal;					/**< If true, we can't click outside the window */
-	qboolean dropdown;				/**< very special property force the window to close if we click outside */
-	qboolean isFullScreen;			/**< Internal data to allow fullscreen windows without the same size */
-	qboolean fill;					/**< If true, use all the screen space allowed */
-	qboolean starLayout;			/**< If true, do a star layout (move child into a corner according to his num) */
+	bool dragButton;			/**< If true, we init the window with a header to move it */
+	bool closeButton;			/**< If true, we init the window with a header button to close it */
+	bool preventTypingEscape;	/**< If true, we can't use ESC button to close the window */
+	bool modal;					/**< If true, we can't click outside the window */
+	bool dropdown;				/**< very special property force the window to close if we click outside */
+	bool isFullScreen;			/**< Internal data to allow fullscreen windows without the same size */
+	bool fill;					/**< If true, use all the screen space allowed */
+	bool starLayout;			/**< If true, do a star layout (move child into a corner according to his num) */
 
 	int timeOut;					/**< ms value until calling onTimeOut (see cl.time) */
 	int lastTime;					/**< when a window was pushed this value is set to cl.time */

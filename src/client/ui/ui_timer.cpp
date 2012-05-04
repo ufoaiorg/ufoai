@@ -141,7 +141,7 @@ uiTimer_t* UI_AllocTimer (uiNode_t *node, int firstDelay, timerCallback_t callba
 	timer->calledTime = 0;
 	timer->prev = NULL;
 	timer->next = NULL;
-	timer->isRunning = qfalse;
+	timer->isRunning = false;
 	return timer;
 }
 
@@ -154,7 +154,7 @@ void UI_TimerStart (uiTimer_t *timer)
 		return;
 	assert(ui_firstTimer != timer && timer->prev == NULL && timer->next == NULL);
 	timer->nextTime = CL_Milliseconds() + timer->delay;
-	timer->isRunning = qtrue;
+	timer->isRunning = true;
 	UI_InsertTimerInActiveList(ui_firstTimer, timer);
 }
 
@@ -168,7 +168,7 @@ void UI_TimerStop (uiTimer_t *timer)
 	UI_RemoveTimerFromActiveList(timer);
 	timer->prev = NULL;
 	timer->next = NULL;
-	timer->isRunning = qfalse;
+	timer->isRunning = false;
 }
 
 /**

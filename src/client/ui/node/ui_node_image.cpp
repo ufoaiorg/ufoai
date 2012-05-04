@@ -200,11 +200,11 @@ void UI_RegisterImageNode (uiBehaviour_t* behaviour)
 	behaviour->extraDataSize = sizeof(EXTRADATA_TYPE);
 
 	/* Do not change the image ratio. The image will be proportionally stretched. */
-	UI_RegisterExtradataNodeProperty(behaviour, "preventratio", V_BOOL, imageExtraData_t, preventRatio);
+	UI_RegisterExtradataNodeProperty(behaviour, "preventratio", V_CPPBOOL, imageExtraData_t, preventRatio);
 	/* Now this property do nothing. But we use it like a tag, to remember nodes we should convert into button...
 	 * @todo delete it when its possible (use more button instead of image)
 	 */
-	UI_RegisterExtradataNodeProperty(behaviour, "mousefx", V_BOOL, imageExtraData_t, mousefx);
+	UI_RegisterExtradataNodeProperty(behaviour, "mousefx", V_CPPBOOL, imageExtraData_t, mousefx);
 
 	/* Texture high. Optional. Define the higher corner of the texture we want to display. Used with texl to crop the image. */
 	UI_RegisterExtradataNodeProperty(behaviour, "texh", V_POS, imageExtraData_t, texh);

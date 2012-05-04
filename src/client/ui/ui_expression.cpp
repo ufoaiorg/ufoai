@@ -425,10 +425,10 @@ const char* UI_GetStringFromExpression (uiAction_t *expression, const uiCallCont
  * @brief Check if an expression is true
  * @return True if the expression is true
  */
-qboolean UI_GetBooleanFromExpression (uiAction_t *expression, const uiCallContext_t *context)
+bool UI_GetBooleanFromExpression (uiAction_t *expression, const uiCallContext_t *context)
 {
 	if (expression == NULL)
-		return qfalse;
+		return false;
 
 	switch (expression->type & EA_HIGHT_MASK) {
 	case EA_VALUE:
@@ -436,8 +436,8 @@ qboolean UI_GetBooleanFromExpression (uiAction_t *expression, const uiCallContex
 
 	case EA_OPERATOR_BOOLEAN2BOOLEAN:
 		{
-			const qboolean value1 = UI_GetBooleanFromExpression(expression->d.nonTerminal.left, context);
-			const qboolean value2 = UI_GetBooleanFromExpression(expression->d.nonTerminal.right, context);
+			const bool value1 = UI_GetBooleanFromExpression(expression->d.nonTerminal.left, context);
+			const bool value2 = UI_GetBooleanFromExpression(expression->d.nonTerminal.right, context);
 
 			switch (expression->type) {
 			case EA_OPERATOR_AND:

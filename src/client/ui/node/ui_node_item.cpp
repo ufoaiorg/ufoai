@@ -84,5 +84,5 @@ void UI_RegisterItemNode (uiBehaviour_t *behaviour)
 	behaviour->manager = new uiItemNode();
 
 	/* Display an item like a container node do it */
-	UI_RegisterExtradataNodeProperty(behaviour, "containerlike", V_BOOL, modelExtraData_t, containerLike);
+	UI_RegisterExtradataNodeProperty(behaviour, "containerlike", V_CPPBOOL, modelExtraData_t, containerLike);
 }

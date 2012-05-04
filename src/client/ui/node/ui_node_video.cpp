@@ -52,7 +52,7 @@ void uiVideoNode::drawOverWindow (uiNode_t *node)
 
 	if (EXTRADATA(node).cin.status == CIN_STATUS_NONE) {
 		vec2_t pos;
-		qboolean nosound = UI_VIDEOEXTRADATACONST(node).nosound;
+		bool nosound = UI_VIDEOEXTRADATACONST(node).nosound;
 
 		CIN_OpenCinematic(&(EXTRADATA(node).cin), va("videos/%s", (const char *)node->image));
 		if (EXTRADATA(node).cin.status == CIN_STATUS_INVALID) {
@@ -106,7 +106,7 @@ void UI_RegisterVideoNode (uiBehaviour_t* behaviour)
 	/** Source of the video. File name without prefix ./base/videos and without extension */
 	UI_RegisterNodeProperty(behaviour, "src", V_CVAR_OR_STRING, uiNode_t, image);
 	/** Use or not the music from the video. */
-	UI_RegisterExtradataNodeProperty(behaviour, "nosound", V_BOOL, EXTRADATA_TYPE, nosound);
+	UI_RegisterExtradataNodeProperty(behaviour, "nosound", V_CPPBOOL, EXTRADATA_TYPE, nosound);
 	/** Invoked when video end. */
 	UI_RegisterExtradataNodeProperty(behaviour, "onEnd", V_UI_ACTION, EXTRADATA_TYPE, onEnd);
 }

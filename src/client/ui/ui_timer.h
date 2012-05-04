@@ -44,7 +44,7 @@ typedef struct uiTimer_s {
 
 	int delay;					/**< delay in millisecond between each call of */
 	void *userData;				/**< free to use data, not used by the core functions */
-	qboolean isRunning;			/**< true if the timer is running */
+	bool isRunning;			/**< true if the timer is running */
 } uiTimer_t;
 
 uiTimer_t* UI_AllocTimer(uiNode_t* node, int firstDelay, timerCallback_t callback) __attribute__ ((warn_unused_result));

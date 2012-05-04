@@ -209,10 +209,10 @@ void UI_Shutdown (void)
  */
 void UI_FinishInit (void)
 {
-	static qboolean initialized = qfalse;
+	static bool initialized = false;
 	if (initialized)
 		return;
-	initialized = qtrue;
+	initialized = true;
 
 	UI_FinishWindowsInit();
 }

@@ -45,7 +45,7 @@ struct uiAction_s;
 
 typedef struct {
 	cinematic_t cin;
-	qboolean nosound;
+	bool nosound;
 	struct uiAction_s *onEnd;
 } videoExtraData_t;
 

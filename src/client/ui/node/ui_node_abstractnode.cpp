@@ -119,12 +119,12 @@ void uiLocatedNode::onMouseLeave(uiNode_t* node)
 
 bool uiLocatedNode::onDndEnter (uiNode_t *node)
 {
-	return qfalse;
+	return false;
 }
 
 bool uiLocatedNode::onDndMove (uiNode_t *node, int x, int y)
 {
-	return qtrue;
+	return true;
 }
 
 void uiLocatedNode::onDndLeave (uiNode_t *node)
@@ -133,7 +133,7 @@ void uiLocatedNode::onDndLeave (uiNode_t *node)
 
 bool uiLocatedNode::onDndDrop (uiNode_t *node, int x, int y)
 {
-	return qtrue;
+	return true;
 }
 
 bool uiLocatedNode::onDndFinished (uiNode_t *node, bool isDroped)
@@ -166,7 +166,7 @@ void uiLocatedNode::doLayout (uiNode_t *node)
 		UI_Node_DoLayout(child);
 	}
 
-	node->invalidated = qfalse;
+	node->invalidated = false;
 }
 
 void uiNode::onWindowOpened (uiNode_t *node, linkedList_t *params)
@@ -330,13 +330,13 @@ void UI_RegisterAbstractNode (uiBehaviour_t *behaviour)
 	/* If true, the node name is indexed into the window. We can access to the node with
 	 * the path "windowName#nodeName"
 	 */
-	UI_RegisterNodeProperty(behaviour, "indexed", V_BOOL, uiNode_t, indexed);
+	UI_RegisterNodeProperty(behaviour, "indexed", V_CPPBOOL, uiNode_t, indexed);
 	/* If true, the node is not displayed nor or activatable. */
-	propertyInvis = UI_RegisterNodeProperty(behaviour, "invis", V_BOOL, uiNode_t, invis);
+	propertyInvis = UI_RegisterNodeProperty(behaviour, "invis", V_CPPBOOL, uiNode_t, invis);
 	/* If true, the node is disabled. Few nodes support it, fell free to request an update. */
-	UI_RegisterNodeProperty(behaviour, "disabled", V_BOOL, uiNode_t, disabled);
+	UI_RegisterNodeProperty(behaviour, "disabled", V_CPPBOOL, uiNode_t, disabled);
 	/* If true, the node is not ''tangible''. We click through it, then it will not receive mouse event. */
-	UI_RegisterNodeProperty(behaviour, "ghost", V_BOOL, uiNode_t, ghost);
+	UI_RegisterNodeProperty(behaviour, "ghost", V_CPPBOOL, uiNode_t, ghost);
 	/* Border size we want to display. */
 	UI_RegisterNodeProperty(behaviour, "border", V_INT, uiNode_t, border);
 	/* Padding size we want to use. Few node support it. */

@@ -147,7 +147,7 @@ void UI_RegisterOptionNode (uiBehaviour_t *behaviour)
 	/**
 	 * If true, child are not displayed
 	 */
-	propertyCollapsed = UI_RegisterExtradataNodeProperty(behaviour, "collapsed", V_BOOL, EXTRADATA_TYPE, collapsed);
+	propertyCollapsed = UI_RegisterExtradataNodeProperty(behaviour, "collapsed", V_CPPBOOL, EXTRADATA_TYPE, collapsed);
 
 	/* Icon used to display the node
 	 */

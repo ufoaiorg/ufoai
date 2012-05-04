@@ -44,8 +44,8 @@ struct uiBehaviour_t;
 typedef struct {
 	abstractValueExtraData_t super;
 	align_t orientation;	/**< Orientation of the bar (left, right, top, down) */
-	qboolean readOnly;	/**< True if the user can't edit the content */
-	qboolean noHover;	/**< True to show the bar at 100% opacity - even if not hovered */
+	bool readOnly;	/**< True if the user can't edit the content */
+	bool noHover;	/**< True to show the bar at 100% opacity - even if not hovered */
 } barExtraData_t;
 
 void UI_RegisterBarNode(uiBehaviour_t *behaviour);

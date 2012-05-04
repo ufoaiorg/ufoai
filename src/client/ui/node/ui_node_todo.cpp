@@ -79,7 +79,7 @@ void uiTodoNode::onLoading (uiNode_t *node)
 void uiTodoNode::onLoaded (uiNode_t *node)
 {
 #ifndef DEBUG
-	node->invis = qtrue;
+	node->invis = true;
 #endif
 	node->size[0] = 10;
 	node->size[1] = 10;

@@ -66,7 +66,7 @@ typedef struct {
 	int lineHeight;				/**< size between two lines */
 	int tabWidth;				/**< max size of a tabulation */
 	int longlines;				/**< what to do with long lines */
-	qboolean mousefx;
+	bool mousefx;
 
 } textExtraData_t;
 

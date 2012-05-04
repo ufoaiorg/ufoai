@@ -366,7 +366,7 @@ static void UI_ContainerNodeDrawFreeSpace (uiNode_t *node, inventory_t *inv)
 	} else {
 		/* The shape of the free positions. */
 		uint32_t free[SHAPE_BIG_MAX_HEIGHT];
-		qboolean showTUs = qtrue;
+		bool showTUs = true;
 		int x, y;
 
 		OBJZERO(free);
@@ -386,7 +386,7 @@ static void UI_ContainerNodeDrawFreeSpace (uiNode_t *node, inventory_t *inv)
 				if (INVSH_CheckShape(EXTRADATA(node).container->shape, x, y)) {
 					if (INVSH_CheckShape(free, x, y)) {
 						UI_DrawFree(EXTRADATA(node).container->id, node, nodepos[0] + x * C_UNIT, nodepos[1] + y * C_UNIT, C_UNIT, C_UNIT, showTUs);
-						showTUs = qfalse;
+						showTUs = false;
 					}
 				}
 			}
@@ -477,7 +477,7 @@ static void UI_ContainerNodeDrawSingle (uiNode_t *node, const objDef_t *highligh
 			}
 		}
 	} else if (ui_inventory->c[EXTRADATA(node).container->id]) {
-		qboolean disabled = qfalse;
+		bool disabled = false;
 		const item_t *item;
 
 		if (ui_inventory->c[csi.idRight]) {
@@ -488,7 +488,7 @@ static void UI_ContainerNodeDrawSingle (uiNode_t *node, const objDef_t *highligh
 			assert(item);
 			assert(item->t);
 			if (INV_IsRightDef(EXTRADATA(node).container) && item->t->fireTwoHanded && ui_inventory->c[csi.idLeft]) {
-				disabled = qtrue;
+				disabled = true;
 				UI_DrawDisabled(node);
 			}
 		}
@@ -608,7 +608,7 @@ void uiContainerNode::draw (uiNode_t *node)
 		UI_ContainerNodeDrawSingle(node, highlightType);
 	} else {
 		if (UI_IsScrollContainerNode(node)) {
-			assert(qfalse);
+			assert(false);
 		} else {
 			UI_ContainerNodeDrawGrid(node, highlightType);
 		}
@@ -692,13 +692,9 @@ void uiContainerNode::drawTooltip (uiNode_t *node, int x, int y)
 static qboolean UI_ContainerNodeAddItem (const invDef_t *container, invList_t *ic, containerIndex_t containerID)
 {
 	int px, py;
-	qboolean packed;
 	const invDef_t *target = INVDEF(containerID);
-
 	INVSH_FindSpace(ui_inventory, &ic->item, target, &px, &py, NULL);
-	packed = INV_MoveItem(ui_inventory, target, px, py, container, ic);
-
-	return packed;
+	return INV_MoveItem(ui_inventory, target, px, py, container, ic);
 }
 
 /**
@@ -899,7 +895,7 @@ bool uiContainerNode::onDndEnter (uiNode_t *target)
 bool uiContainerNode::onDndMove (uiNode_t *target, int x, int y)
 {
 	vec2_t nodepos;
-	qboolean exists;
+	bool exists;
 	int itemX = 0;
 	int itemY = 0;
 	item_t *dragItem = UI_DNDGetItem();
@@ -927,11 +923,11 @@ bool uiContainerNode::onDndMove (uiNode_t *target, int x, int y)
 	dragInfoToY = (mousePosY - nodepos[1] - itemY) / C_UNIT;
 
 	/* Check if the items already exists in the container. i.e. there is already at least one item. */
-	exists = qfalse;
+	exists = false;
 	if ((INV_IsFloorDef(EXTRADATA(target).container) || INV_IsEquipDef(EXTRADATA(target).container))
 		&& (dragInfoToX < 0 || dragInfoToY < 0 || dragInfoToX >= SHAPE_BIG_MAX_WIDTH || dragInfoToY >= SHAPE_BIG_MAX_HEIGHT)
 		&& INVSH_ExistsInInventory(ui_inventory, EXTRADATA(target).container, dragItem)) {
-		exists = qtrue;
+		exists = true;
 	}
 
 	/* Search for a suitable position to render the item at if

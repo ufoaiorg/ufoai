@@ -50,12 +50,12 @@ typedef struct optionExtraData_s {
 	bool flipIcon;		/**< Flip the icon rendering (horizontal) */
 
 	/* status */
-	qboolean collapsed;		/**< If true, child are not displayed */
+	bool collapsed;		/**< If true, child are not displayed */
 
 	/* cache */
-	qboolean truncated;		/**< If true, the label is not fully displayed */
+	bool truncated;		/**< If true, the label is not fully displayed */
 	int childCount;			/**< Number of visible recursive child */
-	qboolean hovered;		/**< true if the element is hovered. Deprecated */
+	bool hovered;		/**< true if the element is hovered. Deprecated */
 
 } optionExtraData_t;
 

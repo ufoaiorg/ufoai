@@ -47,7 +47,7 @@ static void UI_SetRenderRect (int x, int y, int width, int height)
  */
 void uiBattleScapeNode::onLoading (uiNode_t *node)
 {
-	/* node->ghost = qtrue; */
+	/* node->ghost = true; */
 }
 
 void uiBattleScapeNode::draw (uiNode_t *node)
