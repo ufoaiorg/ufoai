@@ -12,7 +12,7 @@
 
 // Large earth
 sprite icons/earthlrg {
-	image "icons/iconpack_gen2"
+	image "banks/iconpack_gen2"
 	texl "102 150"
 	size "102 102"
 	single true
@@ -21,39 +21,39 @@ sprite icons/earthlrg {
 // Double Arrow (Right) 48x48
 // use: end-turn button
 sprite icons/dblarrowrgt0 {
-	image "icons/iconpack_gen"
+	image "banks/iconpack_gen"
 	texl "0 0"
 	size "48 48"
 	single true
 }
 sprite icons/dblarrowrgt {
-	image "icons/iconpack_gen"
+	image "banks/iconpack_gen"
 	texl "48 0"
 	size "48 48"
 	single true
 }
 // Options
 sprite icons/options0 {
-	image "icons/iconpack_gen"
+	image "banks/iconpack_gen"
 	texl "0 144"
 	size "48 48"
 	single true
 }
 sprite icons/options {
-	image "icons/iconpack_gen"
+	image "banks/iconpack_gen"
 	texl "48 144"
 	size "48 48"
 	single true
 }
 // Info
 sprite icons/info0 {
-	image "icons/iconpack_gen"
+	image "banks/iconpack_gen"
 	texl "96 96"
 	size "48 48"
 	single true
 }
 sprite icons/info {
-	image "icons/iconpack_gen"
+	image "banks/iconpack_gen"
 	texl "144 96"
 	size "48 48"
 	single true
@@ -62,13 +62,13 @@ sprite icons/info {
 // Wrench (3D) 48x48
 // use: options in hud
 sprite icons/wrench0 {
-	image "icons/iconpack_gen"
+	image "banks/iconpack_gen"
 	texl "96 0"
 	size "48 48"
 	single true
 }
 sprite icons/wrench{
-	image "icons/iconpack_gen"
+	image "banks/iconpack_gen"
 	texl "144 0"
 	size "48 48"
 	single true
@@ -76,13 +76,13 @@ sprite icons/wrench{
 
 // Radar
 sprite icons/radar0 {
-	image "icons/iconpack_gen"
+	image "banks/iconpack_gen"
 	texl "0 48"
 	size "48 48"
 	single true
 }
 sprite icons/radar {
-	image "icons/iconpack_gen"
+	image "banks/iconpack_gen"
 	texl "48 48"
 	size "48 48"
 	single true
@@ -90,13 +90,13 @@ sprite icons/radar {
 
 // Stats
 sprite icons/stats {
-	image "icons/iconpack_gen"
+	image "banks/iconpack_gen"
 	texl "0 192"
 	size "48 48"
 	single true
 }
 sprite icons/stats0 {
-	image "icons/iconpack_gen"
+	image "banks/iconpack_gen"
 	texl "48 192"
 	size "48 48"
 	single true
@@ -104,13 +104,13 @@ sprite icons/stats0 {
 
 // Inventory
 sprite icons/inv {
-	image "icons/iconpack_gen"
+	image "banks/iconpack_gen"
 	texl "96 192"
 	size "48 48"
 	single true
 }
 sprite icons/inv0 {
-	image "icons/iconpack_gen"
+	image "banks/iconpack_gen"
 	texl "144 192"
 	size "48 48"
 	single true
@@ -118,42 +118,42 @@ sprite icons/inv0 {
 
 // Facilities
 sprite icons/facilities {
-	image "icons/iconpack_gen"
+	image "banks/iconpack_gen"
 	texl "96 48"
 	size "48 48"
 	single true
 }
 // Aircraft
 sprite icons/aircraft {
-	image "icons/iconpack_gen"
+	image "banks/iconpack_gen"
 	texl "192 96"
 	size "48 48"
 	single true
 }
 // Research
 sprite icons/research {
-	image "icons/iconpack_gen"
+	image "banks/iconpack_gen"
 	texl "96 144"
 	size "48 48"
 	single true
 }
 // Alien containment
 sprite icons/aliens {
-	image "icons/iconpack_gen"
+	image "banks/iconpack_gen"
 	texl "144 144"
 	size "48 48"
 	single true
 }
 // Market
 sprite icons/market {
-	image "icons/iconpack_gen"
+	image "banks/iconpack_gen"
 	texl "192 144"
 	size "48 48"
 	single true
 }
 // Transfer arrow
 sprite icons/transfer {
-	image "icons/iconpack_gen"
+	image "banks/iconpack_gen"
 	texl "192 192"
 	size "48 48"
 	single true
@@ -167,13 +167,13 @@ sprite icons/transfer {
 
 // Close Window button (x)
 sprite icons/windowclose {
-	image "icons/iconpack_gen2"
+	image "banks/iconpack_gen2"
 	texl "192 0"
 	size "18 18"
 	single true
 }
 sprite icons/windowclose0 {
-	image "icons/iconpack_gen2"
+	image "banks/iconpack_gen2"
 	texl "192 18"
 	size "18 18"
 	single true
@@ -181,25 +181,25 @@ sprite icons/windowclose0 {
 // Prev/Next buttons (>) (<)
 // use: hud inventory
 sprite icons/windownext {
-	image "icons/iconpack_gen2"
+	image "banks/iconpack_gen2"
 	texl "210 0"
 	size "18 18"
 	single true
 }
 sprite icons/windownext0 {
-	image "icons/iconpack_gen2"
+	image "banks/iconpack_gen2"
 	texl "210 18"
 	size "18 18"
 	single true
 }
 sprite icons/windowprev {
-	image "icons/iconpack_gen2"
+	image "banks/iconpack_gen2"
 	texl "228 0"
 	size "18 18"
 	single true
 }
 sprite icons/windowprev0 {
-	image "icons/iconpack_gen2"
+	image "banks/iconpack_gen2"
 	texl "228 18"
 	size "18 18"
 	single true
@@ -207,25 +207,25 @@ sprite icons/windowprev0 {
 // Up/Down buttons (>) (<)
 // use: level selection
 sprite icons/windowup {
-	image "icons/iconpack_gen2"
+	image "banks/iconpack_gen2"
 	texl "210 36"
 	size "18 18"
 	single true
 }
 sprite icons/windowup0 {
-	image "icons/iconpack_gen2"
+	image "banks/iconpack_gen2"
 	texl "210 54"
 	size "18 18"
 	single true
 }
 sprite icons/windowdown {
-	image "icons/iconpack_gen2"
+	image "banks/iconpack_gen2"
 	texl "228 36"
 	size "18 18"
 	single true
 }
 sprite icons/windowdown0 {
-	image "icons/iconpack_gen2"
+	image "banks/iconpack_gen2"
 	texl "228 54"
 	size "18 18"
 	single true
@@ -233,70 +233,70 @@ sprite icons/windowdown0 {
 // Plus-minus buttons (+) (-)
 // Blue
 sprite icons/windowplusb {
-	image "icons/iconpack_gen2"
+	image "banks/iconpack_gen2"
 	texl "192 36"
 	size "18 18"
 	single true
 }
 sprite icons/windowplusb0 {
-	image "icons/iconpack_gen2"
+	image "banks/iconpack_gen2"
 	texl "192 54"
 	size "18 18"
 	single true
 }
 sprite icons/windowminusb {
-	image "icons/iconpack_gen2"
+	image "banks/iconpack_gen2"
 	texl "192 72"
 	size "18 18"
 	single true
 }
 sprite icons/windowminusb0 {
-	image "icons/iconpack_gen2"
+	image "banks/iconpack_gen2"
 	texl "192 90"
 	size "18 18"
 	single true
 }
 //Yellow
 sprite icons/windowplusy {
-	image "icons/iconpack_gen2"
+	image "banks/iconpack_gen2"
 	texl "210 72"
 	size "18 18"
 	single true
 }
 sprite icons/windowplusy0 {
-	image "icons/iconpack_gen2"
+	image "banks/iconpack_gen2"
 	texl "228 72"
 	size "18 18"
 	single true
 }
 sprite icons/windowminusy {
-	image "icons/iconpack_gen2"
+	image "banks/iconpack_gen2"
 	texl "210 90"
 	size "18 18"
 	single true
 }
 sprite icons/windowminusy0 {
-	image "icons/iconpack_gen2"
+	image "banks/iconpack_gen2"
 	texl "228 90"
 	size "18 18"
 	single true
 }
 // Warning button (!)
 sprite icons/windowalert {
-	image "icons/iconpack_gen2"
+	image "banks/iconpack_gen2"
 	texl "192 108"
 	size "18 18"
 	single true
 }
 // Info button (i)
 sprite icons/windowinfo {
-	image "icons/iconpack_gen2"
+	image "banks/iconpack_gen2"
 	texl "210 108"
 	size "18 18"
 	single true
 }
 sprite icons/windowinfo0 {
-	image "icons/iconpack_gen2"
+	image "banks/iconpack_gen2"
 	texl "228 108"
 	size "18 18"
 	single true
@@ -310,31 +310,31 @@ sprite icons/windowinfo0 {
 // ==================
 
 sprite icons/building_quarters {
-	image "icons/iconpack_hud"
+	image "banks/iconpack_hud"
 	texl "211 40"
 	size "17 17"
 	single true
 }
 sprite icons/building_storage {
-	image "icons/iconpack_gen"
+	image "banks/iconpack_gen"
 	texl "146 50"
 	size "17 17"
 	single true
 }
 sprite icons/building_lab {
-	image "icons/iconpack_gen"
+	image "banks/iconpack_gen"
 	texl "170 49"
 	size "17 17"
 	single true
 }
 sprite icons/building_workshop {
-	image "icons/iconpack_gen"
+	image "banks/iconpack_gen"
 	texl "146 74"
 	size "17 17"
 	single true
 }
 sprite icons/building_amstorage {
-	image "icons/iconpack_gen"
+	image "banks/iconpack_gen"
 	texl "170 73"
 	size "17 17"
 	single true
@@ -342,25 +342,25 @@ sprite icons/building_amstorage {
 
 // Employee heads
 sprite icons/head_scientist {
-	image "icons/iconpack_gen2"
+	image "banks/iconpack_gen2"
 	texl "0 0"
 	size "48 48"
 	single true
 }
 sprite icons/head_worker {
-	image "icons/iconpack_gen2"
+	image "banks/iconpack_gen2"
 	texl "48 0"
 	size "48 48"
 	single true
 }
 sprite icons/head_soldier {
-	image "icons/iconpack_gen2"
+	image "banks/iconpack_gen2"
 	texl "96 0"
 	size "48 48"
 	single true
 }
 sprite icons/head_injured {
-	image "icons/iconpack_gen2"
+	image "banks/iconpack_gen2"
 	texl "144 0"
 	size "48 48"
 	single true
@@ -368,97 +368,97 @@ sprite icons/head_injured {
 
 // Aircraft
 sprite icons/craft_inter_stiletto {
-	image "icons/iconpack_craft"
+	image "banks/iconpack_craft"
 	texl "0 0"
 	size "48 48"
 	single true
 }
 sprite icons/craft_inter_stiletto_off {
-	image "icons/iconpack_craft"
+	image "banks/iconpack_craft"
 	texl "48 0"
 	size "48 48"
 	single true
 }
 sprite icons/craft_inter_starchaser {
-	image "icons/iconpack_craft"
+	image "banks/iconpack_craft"
 	texl "96 0"
 	size "48 48"
 	single true
 }
 sprite icons/craft_inter_starchaser_off {
-	image "icons/iconpack_craft"
+	image "banks/iconpack_craft"
 	texl "144 0"
 	size "48 48"
 	single true
 }
 sprite icons/craft_inter_saracen {
-	image "icons/iconpack_craft"
+	image "banks/iconpack_craft"
 	texl "192 0"
 	size "48 48"
 	single true
 }
 sprite icons/craft_inter_saracen_off {
-	image "icons/iconpack_craft"
+	image "banks/iconpack_craft"
 	texl "192 48"
 	size "48 48"
 	single true
 }
 sprite icons/craft_inter_dragon {
-	image "icons/iconpack_craft"
+	image "banks/iconpack_craft"
 	texl "0 48"
 	size "48 48"
 	single true
 }
 sprite icons/craft_inter_dragon_off {
-	image "icons/iconpack_craft"
+	image "banks/iconpack_craft"
 	texl "48 48"
 	size "48 48"
 	single true
 }
 sprite icons/craft_inter_stingray {
-	image "icons/iconpack_craft"
+	image "banks/iconpack_craft"
 	texl "96 48"
 	size "48 48"
 	single true
 }
 sprite icons/craft_inter_stingray_off {
-	image "icons/iconpack_craft"
+	image "banks/iconpack_craft"
 	texl "144 48"
 	size "48 48"
 	single true
 }
 sprite icons/craft_drop_firebird {
-	image "icons/iconpack_craft"
+	image "banks/iconpack_craft"
 	texl "0 96"
 	size "48 48"
 	single true
 }
 sprite icons/craft_drop_firebird_off {
-	image "icons/iconpack_craft"
+	image "banks/iconpack_craft"
 	texl "48 96"
 	size "48 48"
 	single true
 }
 sprite icons/craft_drop_herakles {
-	image "icons/iconpack_craft"
+	image "banks/iconpack_craft"
 	texl "96 96"
 	size "48 48"
 	single true
 }
 sprite icons/craft_drop_herakles_off {
-	image "icons/iconpack_craft"
+	image "banks/iconpack_craft"
 	texl "144 96"
 	size "48 48"
 	single true
 }
 sprite icons/craft_drop_raptor {
-	image "icons/iconpack_craft"
+	image "banks/iconpack_craft"
 	texl "192 96"
 	size "48 48"
 	single true
 }
 sprite icons/craft_drop_raptor_off {
-	image "icons/iconpack_craft"
+	image "banks/iconpack_craft"
 	texl "192 144"
 	size "48 48"
 	single true
@@ -466,13 +466,13 @@ sprite icons/craft_drop_raptor_off {
 
 // Alien containment
 sprite icons/autopsy0 {
-	image "icons/iconpack_gen2"
+	image "banks/iconpack_gen2"
 	texl "144 48"
 	size "48 48"
 	single true
 }
 sprite icons/autopsy {
-	image "icons/iconpack_gen2"
+	image "banks/iconpack_gen2"
 	texl "144 96"
 	size "48 48"
 	single true
@@ -485,13 +485,13 @@ sprite icons/autopsy {
 
 // Large circle
 sprite icons/circlelrg {
-	image "icons/iconpack_gen2"
+	image "banks/iconpack_gen2"
 	texl "0 48"
 	size "102 102"
 	single true
 }
 sprite icons/circlelrg0 {
-	image "icons/iconpack_gen2"
+	image "banks/iconpack_gen2"
 	texl "0 150"
 	size "102 102"
 	single true
@@ -499,25 +499,25 @@ sprite icons/circlelrg0 {
 
 // Circle button elements
 sprite icons/circle {
-	image "icons/iconpack_hud"
+	image "banks/iconpack_hud"
 	texl "96 144"
 	size "48 48"
 	single true
 }
 sprite icons/circle0 {
-	image "icons/iconpack_hud"
+	image "banks/iconpack_hud"
 	texl "144 144"
 	size "48 48"
 	single true
 }
 sprite icons/circle_halo {
-	image "icons/iconpack_hud"
+	image "banks/iconpack_hud"
 	texl "192 144"
 	size "48 48"
 	single true
 }
 sprite icons/circle_disabled {
-	image "icons/iconpack_hud"
+	image "banks/iconpack_hud"
 	texl "96 192"
 	size "48 48"
 	single true
@@ -529,25 +529,25 @@ sprite icons/circle_disabled {
 
 // Reload weapon
 sprite icons/reload {
-	image "icons/iconpack_hud"
+	image "banks/iconpack_hud"
 	texl "0 0"
 	size "48 48"
 	single true
 }
 sprite icons/reload0 {
-	image "icons/iconpack_hud"
+	image "banks/iconpack_hud"
 	texl "48 0"
 	size "48 48"
 	single true
 }
 sprite icons/reload_disabled {
-	image "icons/iconpack_hud"
+	image "banks/iconpack_hud"
 	texl "96 0"
 	size "48 48"
 	single true
 }
 sprite icons/reload_full {
-	image "icons/iconpack_hud"
+	image "banks/iconpack_hud"
 	texl "144 0"
 	size "48 48"
 	single true
@@ -555,13 +555,13 @@ sprite icons/reload_full {
 
 // Headgear
 sprite icons/headgear {
-	image "icons/iconpack_hud"
+	image "banks/iconpack_hud"
 	texl "0 144"
 	size "48 48"
 	single true
 }
 sprite icons/headgear0 {
-	image "icons/iconpack_hud"
+	image "banks/iconpack_hud"
 	texl "48 144"
 	size "48 48"
 	single true
@@ -569,19 +569,19 @@ sprite icons/headgear0 {
 
 // Reaction fire
 sprite icons/reaction0 {
-	image "icons/iconpack_hud"
+	image "banks/iconpack_hud"
 	texl "96 96"
 	size "48 48"
 	single true
 }
 sprite icons/reaction1 {
-	image "icons/iconpack_hud"
+	image "banks/iconpack_hud"
 	texl "144 96"
 	size "48 48"
 	single true
 }
 sprite icons/reaction2 {
-	image "icons/iconpack_hud"
+	image "banks/iconpack_hud"
 	texl "192 96"
 	size "48 48"
 	single true
@@ -589,25 +589,25 @@ sprite icons/reaction2 {
 
 // Standing and Crouching
 sprite icons/stand {
-	image "icons/iconpack_hud"
+	image "banks/iconpack_hud"
 	texl "0 48"
 	size "48 48"
 	single true
 }
 sprite icons/stand0 {
-	image "icons/iconpack_hud"
+	image "banks/iconpack_hud"
 	texl "48 48"
 	size "48 48"
 	single true
 }
 sprite icons/crouch {
-	image "icons/iconpack_hud"
+	image "banks/iconpack_hud"
 	texl "96 48"
 	size "48 48"
 	single true
 }
 sprite icons/crouch0 {
-	image "icons/iconpack_hud"
+	image "banks/iconpack_hud"
 	texl "144 48"
 	size "48 48"
 	single true
@@ -615,13 +615,13 @@ sprite icons/crouch0 {
 
 // Fire weapon
 sprite icons/fire0 {
-	image "icons/iconpack_hud"
+	image "banks/iconpack_hud"
 	texl "0 192"
 	size "48 48"
 	single true
 }
 sprite icons/fire {
-	image "icons/iconpack_hud"
+	image "banks/iconpack_hud"
 	texl "48 192"
 	size "48 48"
 	single true
@@ -629,13 +629,13 @@ sprite icons/fire {
 
 // Abort mission
 sprite icons/abortmission {
-	image "icons/iconpack_hud"
+	image "banks/iconpack_hud"
 	texl "144 192"
 	size "48 48"
 	single true
 }
 sprite icons/abortmission0 {
-	image "icons/iconpack_hud"
+	image "banks/iconpack_hud"
 	texl "192 192"
 	size "48 48"
 	single true
@@ -643,13 +643,13 @@ sprite icons/abortmission0 {
 
 // Health (small icon)
 sprite icons/healthsml {
-	image "icons/iconpack_hud"
+	image "banks/iconpack_hud"
 	texl "192 0"
 	size "18 19"
 	single true
 }
 sprite icons/healthsml0 {
-	image "icons/iconpack_hud"
+	image "banks/iconpack_hud"
 	texl "192 20"
 	size "18 19"
 	single true
@@ -657,13 +657,13 @@ sprite icons/healthsml0 {
 
 // Time units (small icon)
 sprite icons/tusml {
-	image "icons/iconpack_hud"
+	image "banks/iconpack_hud"
 	texl "212 0"
 	size "18 19"
 	single true
 }
 sprite icons/tusml0 {
-	image "icons/iconpack_hud"
+	image "banks/iconpack_hud"
 	texl "212 20"
 	size "18 19"
 	single true
@@ -671,13 +671,13 @@ sprite icons/tusml0 {
 
 // Time units (small icon)
 sprite icons/moralesml {
-	image "icons/iconpack_hud"
+	image "banks/iconpack_hud"
 	texl "232 0"
 	size "18 19"
 	single true
 }
 sprite icons/moralesml0 {
-	image "icons/iconpack_hud"
+	image "banks/iconpack_hud"
 	texl "232 20"
 	size "18 19"
 	single true
@@ -685,13 +685,13 @@ sprite icons/moralesml0 {
 
 // Alien and civ heads
 sprite icons/alienhead {
-	image "icons/iconpack_hud"
+	image "banks/iconpack_hud"
 	texl "192 39"
 	size "17 19"
 	single true
 }
 sprite icons/civhead {
-	image "icons/iconpack_hud"
+	image "banks/iconpack_hud"
 	texl "211 39"
 	size "17 19"
 	single true
@@ -699,7 +699,7 @@ sprite icons/civhead {
 
 // Level selection icon
 sprite icons/levels {
-	image "icons/iconpack_hud"
+	image "banks/iconpack_hud"
 	texl "229 39"
 	size "19 19"
 	single true
@@ -707,7 +707,7 @@ sprite icons/levels {
 
 // Shots/Ammo indicator (small)
 sprite icons/ammosml {
-	image "icons/iconpack_hud"
+	image "banks/iconpack_hud"
 	texl "192 60"
 	size "12 15"
 	single true
@@ -715,19 +715,19 @@ sprite icons/ammosml {
 
 // Reaction Firemode Selection (small)
 sprite icons/firemodesml0 {
-	image "icons/iconpack_hud"
+	image "banks/iconpack_hud"
 	texl "205 60"
 	size "15 15"
 	single true
 }
 sprite icons/firemodesml {
-	image "icons/iconpack_hud"
+	image "banks/iconpack_hud"
 	texl "221 60"
 	size "15 15"
 	single true
 }
 sprite icons/firemodesmlhover {
-	image "icons/iconpack_hud"
+	image "banks/iconpack_hud"
 	texl "236 60"
 	size "15 15"
 	single true
