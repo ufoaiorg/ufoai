@@ -1,0 +1,93 @@
+// ====================================
+// Battlescape Hud Assets
+// ====================================
+
+// Circular button background
+component CircleBtn extends panel
+{
+	{
+		size	"48 48"
+		onMouseEnter 	{ *node:this.CircleBtn_halo@invis = false }
+		onMouseLeave 	{ *node:this.CircleBtn_halo@invis = true }
+	}
+
+	// Mouseover effect
+	button CircleBtn_halo
+	{
+		icon	"icons/circle_halo"
+		pos		"0 0"
+		size	"48 48"
+		invis	true
+		ghost	true
+	}
+}
+
+// Disabled icon
+component CircleBtnDisabled extends button
+{
+	size		"48 48"
+	icon		"icons/circle_disabled"
+	invis		true
+}
+
+// Soldier head for soldier selection
+component SoldierSelect extends panel
+{
+	{
+		size			"40 40"
+		bgcolor			"0 0.1 0 0.7"
+		border			"2"
+		bordercolor		"0.527 0.6 0.21 1"
+		onMouseEnter	{ *node:this@bgcolor = "0 0 0 1" }
+		onMouseLeave	{ *node:this@bgcolor = "0 0 0 0.7" }
+		onClick			{ cmd "actor_select <node:this@num>;" }
+	}
+	model head
+	{
+		angles		"15 60 100"
+		autoscale	true
+		pos			"1 1"
+		size		"38 34"
+		ghost 		true
+	}
+	texture bar_bg
+	{
+		pos			"1 34"
+		size		"38 4"
+		src			"ui/bar_bg"
+		bgcolor		"0 0 0 0.5"
+		ghost		true
+	}
+	bar health
+	{
+		pos			"1 34"
+		size		"38 4"
+		color		".1875 .65625 .164 1"
+		direction	"cr"
+		disabled	true
+		ghost		true
+		nohover		true
+	}
+	bar tu
+	{
+		pos			"1 34"
+		size		"38 4"
+		color		".582 .808 .758 1"
+		direction	"cr"
+		disabled	true
+		invis		true
+		ghost		true
+		nohover		true
+	}
+	bar morale
+	{
+		pos			"1 34"
+		size		"38 4"
+		color		".825 .92 .437 1"
+		direction	"cr"
+		disabled	true
+		invis		true
+		ghost		true
+		nohover		true
+	}
+}

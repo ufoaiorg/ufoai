@@ -1,0 +1,393 @@
+// Back to geoscape button
+component Geoscape extends button
+{
+	pos				"-17 -17"
+	size			"100 100"
+	icon			"icons/earthlrg"
+	background		"icons/circlelrg0"
+	onMouseEnter	{ *node:this@background = "icons/circlelrg" }
+	onMouseLeave	{ *node:this@background = "icons/circlelrg0" }
+	onClick			{ cmd "ui_pop;" }
+}
+
+// Main panel button for base sections
+component BaseSection extends panel
+{
+	{
+		size		"298 48"
+		onMouseEnter	{
+			*node:this.bg@bgcolor = "0.527 0.6 0.21 0.4"
+			*node:this.icon@background = "icons/circle"
+		}
+		onMouseLeave	{
+			*node:this.bg@bgcolor = "0.527 0.6 0.21 0.2"
+			*node:this.icon@background = "icons/circle0"
+		}
+	}
+	panel bg
+	{
+		{
+			pos		"0 8"
+			size	"298 32"
+			bgcolor	"0.527 0.6 0.21 0.2"
+			ghost	true
+		}
+	}
+	button icon
+	{
+		pos			"12 0"
+		size 		"48 48"
+		background	"icons/circle0"
+		ghost		true
+	}
+	string label
+	{
+		pos				"75 8"
+		size			"170 32"
+		contentalign	ALIGN_CL
+		color			"0.56 0.81 0.76 1"
+		ghost			true
+	}
+}
+
+// Stats bar for building space
+component BuildingSpace extends panel
+{
+	{
+		size	"298 30"
+		ghost	true
+	}
+	button smlicon
+	{
+		pos		"29 0"
+		size	"17 17"
+		ghost	true
+	}
+	string data
+	{
+		string			"0/0"
+		pos				"49 0"
+		size			"190 20"
+		font			"f_verysmall"
+		contentalign	ALIGN_LL
+		color			"0.56 0.81 0.76 1"
+		ghost			true
+	}
+	texture data_bg
+	{
+		pos			"29 18"
+		size		"224 6"
+		src			"ui/bar_bg"
+		ghost		true
+	}
+	bar data_bar
+	{
+		pos			"29 18"
+		size		"224 6"
+		color		"0.56 0.81 0.76 1"
+		current		0
+		max			1
+		readonly	true
+		ghost		true
+	}
+	button alert
+	{
+		icon			"icons/windowplusb0"
+		pos				"256 12"
+		size			"18 18"
+		onMouseEnter	{ *node:this@icon = "icons/windowplusb" }
+		onMouseLeave	{ *node:this@icon = "icons/windowplusb0" }
+		onClick			{ cmd "build_facility true;" }
+	}
+}
+
+// Aircraft image/button
+component AircraftIcon extends panel
+{
+	{
+		pos		"0 0"
+		size		"48 48"
+	}
+	button icon
+	{
+		pos		"0 0"
+		size	"48 48"
+	}
+	data aircraft_id { }
+}
+
+// Research/Production
+component ProgressBar extends panel
+{
+	{
+		pos			"0 0"
+		size 		"250 28"
+	}
+	string label
+	{
+		pos				"0 0"
+		size			"250 20"
+		font			"f_verysmall"
+		contentalign	ALIGN_LL
+		color			"0.56 0.81 0.76 1"
+		ghost			true
+	}
+	texture data_bg
+	{
+		pos			"0 20"
+		size		"224 6"
+		src			"ui/bar_bg"
+		ghost		true
+	}
+	bar data_bar
+	{
+		pos			"0 20"
+		size		"224 6"
+		color		"0.56 0.81 0.76 1"
+		current		0
+		max			100
+		ghost		true
+	}
+}
+
+
+// Employee count
+component EmployeeCount extends panel
+{
+	{
+		size	"110 48"
+	}
+	button icon
+	{
+		pos		"0 0"
+		size	"48 48"
+		ghost	true
+	}
+	string data
+	{
+		pos				"36 0"
+		size			"74 48"
+		color			"0.56 0.81 0.76 1"
+		font			"f_small_bold"
+		contentalign	ALIGN_CL
+		ghost			true
+	}
+	string label
+	{
+		pos				"36 27"
+		size			"74 17"
+		color			"0.56 0.81 0.76 1"
+		font			"f_verysmall"
+		contentalign	ALIGN_UL
+		ghost			true
+	}
+}
+
+// Alien in alien containment
+component AlienPanel extends panel
+{
+	{
+		size 			"425 64"
+		border			"2"
+		bordercolor		"0.56 0.81 0.76 1"
+		bgcolor			"0.56 0.81 0.76 0.1"
+		onClick			{ cmd "aliencont_click <node:this.alien_num@string>; select_alien <node:this.alien_num@string>;" }
+	}
+	button action
+	{
+		pos				"366 6"
+		size			"48 48"
+	}
+	string label
+	{
+		pos				"6 6"
+		size			"360 20"
+		color			"0.56 0.81 0.76 1"
+		font			"f_small_bold"
+		contentalign	ALIGN_CL
+		ghost			true
+	}
+	string status
+	{
+		pos				"6 26"
+		size			"360 20"
+		color			"0.56 0.81 0.76 1"
+		contentalign	ALIGN_CL
+		ghost			true
+	}
+	texture data_bg
+	{
+		pos			"8 48"
+		size		"409 8"
+		src			"ui/bar_bg"
+		ghost		true
+	}
+	bar data_bar
+	{
+		pos			"8 48"
+		size		"408 8"
+		color		"0.56 0.81 0.76 1"
+		current		0
+		max			100
+		ghost		true
+	}
+	data alien_num { string "" }
+}
+
+// Research item (items researched in base)
+component ResearchItem extends panel
+{
+	{
+		pos				"0 0"
+		size 			"713 28"
+		bgcolor			"0.56 0.81 0.76 0.1"
+		onMouseEnter	{ *node:this@bgcolor = "0.56 0.81 0.76 0.2" }
+		onMouseLeave	{ *node:this@bgcolor = "0.56 0.81 0.76 0.1" }
+		onClick			{
+			cmd "research_select <node:this.itemnum@integer>;"
+			call *node:root.base_container.research.techs@removeAllChild
+			call *node:root.base_container.research_ext.techs_ext@removeAllChild
+			}
+	}
+	data itemnum { }
+	bar status
+	{
+		pos		"0 0"
+		size	"713 28"
+		color	"0.56 0.81 0.76 0.3"
+		current 0
+		max		100
+		ghost	true
+	}
+	button ufopaedia
+	{
+		icon	"icons/windowinfo0"
+		pos		"5 5"
+		size	"18 18"
+		onMouseEnter	{ *node:this@icon = "icons/windowinfo" }
+		onMouseLeave	{ *node:this@icon = "icons/windowinfo0" }
+		/*
+		 * This onClick is an ugly workaround because research_select calls research_init,
+		 * which would produce duplicates of the tech entries if the existing entries
+		 * weren't removed. The code destroying the nodes must be called AFTER
+		 * research_select so that the integer can be retrieved, but research_select
+		 * does not actually process until AFTER the nodes because (I believe) it
+		 * doesn't get called until the next frame. Because of how the timing works,
+		 * this onClick code can not be placed into a confunc because all commands
+		 * would be processed in the order they are called. This means we couldn't
+		 * slip the @removeAllChild commands in between the time when research_select
+		 * is called and when it is executed.
+		 * @sa ExtResearchItem.ufopaedia@onClick
+		 */
+		onClick			{
+			cmd "research_select <node:parent.itemnum@integer>;"
+			cmd "mn_show_ufopedia;"
+			call *node:root.base_container.research.techs@removeAllChild
+			call *node:root.base_container.research_ext.techs_ext@removeAllChild
+		}
+	}
+	string title
+	{
+		pos				"30 0"
+		size			"480 28"
+		color			"0.56 0.81 0.76 1"
+		contentalign	ALIGN_CL
+		ghost			true
+	}
+	string scientists
+	{
+		pos				"560 0"
+		size			"35 28"
+		color			"0.56 0.81 0.76 1"
+		contentalign	ALIGN_CL
+		ghost			true
+	}
+	button remove_scientist
+	{
+		icon	"icons/windowminusb0"
+		pos		"600 5"
+		size	"18 18"
+		onMouseEnter	{ *node:this@icon = "icons/windowminusb" }
+		onMouseLeave	{ *node:this@icon = "icons/windowminusb0" }
+		onClick			{
+			cmd "mn_rs_change <node:parent.itemnum@integer> -1;"
+			call *node:root.base_container.research.techs@removeAllChild
+			call *node:root.base_container.research_ext.techs_ext@removeAllChild
+			cmd "get_lab_space_string;"
+			}
+	}
+	button add_scientist
+	{
+		icon	"icons/windowplusb0"
+		pos		"625 5"
+		size	"18 18"
+		onMouseEnter	{ *node:this@icon = "icons/windowplusb"	}
+		onMouseLeave	{ *node:this@icon = "icons/windowplusb0" }
+		onClick			{
+			cmd "mn_rs_change <node:parent.itemnum@integer> 1;"
+			call *node:root.base_container.research.techs@removeAllChild
+			call *node:root.base_container.research_ext.techs_ext@removeAllChild
+			cmd "get_lab_space_string;"
+			}
+	}
+}
+
+// External research item (items researched in other bases)
+component ExtResearchItem extends panel
+{
+	{
+		pos				"0 0"
+		size 			"713 28"
+		bgcolor			"0.56 0.81 0.76 0.1"
+		onMouseEnter	{ *node:this@bgcolor = "0.56 0.81 0.76 0.2" }
+		onMouseLeave	{ *node:this@bgcolor = "0.56 0.81 0.76 0.1" }
+		onClick			{
+			cmd "research_select <node:this.itemnum@integer>;"
+			call *node:root.base_container.research.techs@removeAllChild
+			call *node:root.base_container.research_ext.techs_ext@removeAllChild
+			}
+	}
+	data itemnum { }
+	bar status
+	{
+		pos		"0 0"
+		size	"713 28"
+		color	"0.56 0.81 0.76 0.3"
+		current 0
+		max		100
+		ghost	true
+	}
+	button ufopaedia
+	{
+		icon	"icons/windowinfo0"
+		pos		"5 5"
+		size	"18 18"
+		onMouseEnter	{ *node:this@icon = "icons/windowinfo" }
+		onMouseLeave	{ *node:this@icon = "icons/windowinfo0" }
+		/*
+		 * @sa ResearchItem.ufopaedia@onClick for explanation of this hack
+		 */
+		onClick			{
+			cmd "research_select <node:parent.itemnum@integer>;"
+			cmd "mn_show_ufopedia;"
+			call *node:root.base_container.research.techs@removeAllChild
+			call *node:root.base_container.research_ext.techs_ext@removeAllChild
+		}
+	}
+	string title
+	{
+		pos				"30 0"
+		size			"480 28"
+		color			"0.56 0.81 0.76 1"
+		contentalign	ALIGN_CL
+		ghost			true
+	}
+	string base
+	{
+		pos				"560 0"
+		size			"130 28"
+		color			"0.56 0.81 0.76 1"
+		contentalign	ALIGN_CL
+		ghost			true
+	}
+}

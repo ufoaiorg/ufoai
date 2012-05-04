@@ -1,0 +1,185 @@
+// ==============================
+// Reusable components for the UI
+// ==============================
+
+/**
+ * Main menu background
+ */
+component main_bg extends image
+{
+	src	"ui/main_bg"
+}
+
+
+/**
+ * Fuzzy screen effect
+ */
+component screen extends texture
+{
+	pos 		"0 0"
+	size		"2048 1536"
+	bgcolor		"0 0 0 0"
+	src			"ui/screen"
+	ghost		true
+}
+
+/**
+ * Title text top center
+ */
+component maintitle extends string
+{
+	string			"_UFO: ALIEN INVASION"
+	size			"500 50"
+	pos				"262 0"
+	font			"f_title"
+	color			"0.59 0.78 0.56 1"
+	contentalign	LAYOUTALIGN_MIDDLE
+}
+
+/**
+ * Toolbar for main menus
+ * @TODO: Currently, the player can jump from battlescape to
+ * 			options, then use this to jump to the main menu
+ *			and launch another mission. Before implementing
+ *			this idea, need to prevent this from happening.
+ */
+component MainMenuToolbar extends panel
+{
+	{
+		size		"1024 20"
+		pos			"0 0"
+	}
+/*
+
+	string main_menu_str
+	{
+		pos				"10 0"
+		size			"50 20"
+		string			"_HOME"
+		color			"1 1 1 0.5"
+		contentalign	ALIGN_CC
+		onMouseEnter 	{ *node:this@color = "1 1 1 0.9" }
+		onMouseLeave 	{ *node:this@color = "1 1 1 0.5" }
+		onClick			{ cmd "ui_push main;" }
+	}
+*/
+}
+
+/**
+ * Main button templates. Can be resized as needed
+ */
+component MainMenuBtn extends button
+{
+	pos				"0 0"
+	size 			"400 30"
+	font			"f_normal_bold"
+	color			"0.065 0.065 0.065 1"
+	bgcolor			"0.4 0.52 0.5 1"
+	align			LAYOUTALIGN_MIDDLE
+	contentalign	ALIGN_CC
+	onMouseEnter 	{ *node:this@bgcolor = "0.58 0.81 0.76 1" }
+	onMouseLeave 	{ *node:this@bgcolor = "0.4 0.52 0.5 1" }
+}
+
+component MainMenu2Btn extends button
+{
+	pos				"0 0"
+	size 			"400 30"
+	font			"f_normal_bold"
+	color			"0.065 0.065 0.065 1"
+	bgcolor			"0.53 0.61 0.21 1"
+	align			LAYOUTALIGN_MIDDLE
+	contentalign	ALIGN_CC
+	onMouseEnter 	{ *node:this@bgcolor = "0.82 0.92 0.44 1" }
+	onMouseLeave 	{ *node:this@bgcolor = "0.53 0.61 0.21 1" }
+}
+
+component MainMenu3Btn extends button
+{
+	pos				"0 0"
+	size 			"400 30"
+	font			"f_normal_bold"
+	color			"1 1 1 0.9"
+	selectcolor		"0 0 0 0.9"
+	bgcolor			"0.38 0.48 0.36 1"
+	align			LAYOUTALIGN_MIDDLE
+	contentalign	ALIGN_CC
+	onMouseEnter 	{ *node:this@bgcolor = "0.88 0.20 0.075 1" }
+	onMouseLeave 	{ *node:this@bgcolor = "0.65 0.13 0 1" }
+}
+
+component MainMenuExitBtn extends button
+{
+	pos				"0 0"
+	size 			"400 30"
+	font			"f_normal_bold"
+	color			"1 0.68 0.61 1"
+	selectcolor		"1 0.68 0.61 1"
+	bgcolor			"0.65 0.13 0 1"
+	align			LAYOUTALIGN_MIDDLE
+	contentalign	ALIGN_CC
+	onMouseEnter 	{ *node:this@bgcolor = "0.88 0.20 0.075 1" }
+	onMouseLeave 	{ *node:this@bgcolor = "0.65 0.13 0 1" }
+}
+
+component MainMenuTab extends button
+{
+	size 		"125 30"
+	font		"f_small_bold"
+	bgcolor		"0.4 0.515 0.5 0.25"
+	color		"1 1 1 0.5"
+}
+
+/**
+ * Simple text button, left aligned. Light color.
+ */
+component TextBtn extends button {
+	size			"250 20"
+	color			"1 1 1 0.5"
+	contentalign	ALIGN_CL
+}
+
+/**
+ * Stats bar
+ * @TODO: should change color (red/yellow/green) depending
+ * on how good the value is.
+ */
+component StatBar extends panel
+{
+	{
+		size		"180 25"
+	}
+	string label
+	{
+		pos				"-3 0"
+		size			"80 15"
+		font			"f_verysmall"
+		color			"0.56 0.81 0.76 1"
+		longlines		LONGLINES_CHOP
+		contentalign	ALIGN_UL
+	}
+	texture bg
+	{
+		pos			"0 14"
+		size		"180 10"
+		src			"ui/bar_bg"
+	}
+	bar valuebar
+	{
+		pos			"0 14"
+		size		"180 10"
+		color		".1875 .65625 .164 1"
+		max			100
+		disabled	true
+		nohover		true
+	}
+	string valuenum
+	{
+		pos				"90 0"
+		size			"90 0"
+		font			"f_verysmall"
+		color			"0.56 0.81 0.76 1"
+		longlines		LONGLINES_CHOP
+		contentalign	ALIGN_UR
+	}
+}
