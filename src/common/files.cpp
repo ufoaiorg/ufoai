@@ -40,6 +40,7 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 static int fs_openedFiles;
 static filelink_t *fs_links;
 static searchpath_t *fs_searchpaths;
+#define MODS_DIR "mods"
 
 void FS_CreateOpenPipeFile (const char *filename, qFILE *f)
 {
@@ -649,6 +650,24 @@ const char *FS_NextPath (const char *prevpath)
 	return NULL;
 }
 
+static qboolean FS_GetHomeDirectory(char *gdir, size_t length)
+{
+	char *homedir = Sys_GetHomeDirectory();
+
+	if (homedir) {
+#ifdef _WIN32
+		Com_sprintf(gdir, length, "%s/" UFO_VERSION, homedir);
+#elif defined (__APPLE__) || defined (MACOSX)
+		Com_sprintf(gdir, length, "%s/Documents/UFOAI-" UFO_VERSION, homedir);
+#else
+		Com_sprintf(gdir, length, "%s/.ufoai/" UFO_VERSION, homedir);
+#endif
+		return qtrue;
+	}
+	Com_Printf("could not find the home directory\n");
+	return qfalse;
+}
+
 /**
  * @note e.g. *nix: Use ~/.ufoai/dir as gamedir
  * @sa Sys_GetHomeDirectory
@@ -656,25 +675,78 @@ const char *FS_NextPath (const char *prevpath)
 static void FS_AddHomeAsGameDirectory (const char *dir, qboolean write)
 {
 	char gdir[MAX_OSPATH];
-	char *homedir = Sys_GetHomeDirectory();
 
-	if (homedir) {
-#ifdef _WIN32
-		Com_sprintf(gdir, sizeof(gdir), "%s/" UFO_VERSION "/%s", homedir, dir);
-#elif defined (__APPLE__) || defined (MACOSX)
-		Com_sprintf(gdir, sizeof(gdir), "%s/Documents/UFOAI-" UFO_VERSION "/%s", homedir, dir);
-#else
-		Com_sprintf(gdir, sizeof(gdir), "%s/.ufoai/" UFO_VERSION "/%s", homedir, dir);
-#endif
+	if (FS_GetHomeDirectory(gdir, sizeof(gdir))) {
+		Q_strcat(gdir, "/", sizeof(gdir));
+		Q_strcat(gdir, dir, sizeof(gdir));
 		FS_CreatePath(va("%s/", gdir));
-
 		FS_AddGameDirectory(gdir, write);
-	} else {
-		Com_Printf("could not find the home directory\n");
 	}
 }
 
+/**
+ * @brief Adds the directory to the head of the search path
+ * @note No ending slash here
+ * @param[in] dir The directory name relative to the game dir
+ * @param[in] write Add this directory as writable (config files, save games)
+ */
+int FS_GetModList (linkedList_t **mods)
+{
+	char gdir[MAX_OSPATH];
+	const char *homedir;
+
+	if (FS_GetHomeDirectory(gdir, sizeof(gdir))) {
+		char const * const append = "/" MODS_DIR;
+		Q_strcat(gdir, append, sizeof(gdir));
+		homedir = gdir;
+	} else {
+		homedir = NULL;
+	}
+
+	char const * searchpaths[] = {
+#ifdef PKGDATADIR
+			PKGDATADIR "/" MODS_DIR,
+#endif
+			"./" MODS_DIR,
+			homedir,
+			NULL
+	};
+
+	int numberMods = 0;
+	/* it is likely that we have duplicate names now, which we will cleanup below */
+	for (const char **path = searchpaths; *path; path++) {
+		const char *pattern = *path;
+		int ndirs = 0;
+		char **dirnames = FS_ListFiles(va("%s/*", pattern), &ndirs, SFF_SUBDIR, SFF_HIDDEN | SFF_SYSTEM);
+		if (dirnames != NULL) {
+			int i;
+			for (i = 0; i < ndirs - 1; i++) {
+				LIST_AddString(mods, dirnames[i] + (strlen(pattern) + 1));
+				numberMods++;
+				Mem_Free(dirnames[i]);
+			}
+			Mem_Free(dirnames);
+		}
+	}
+
+	return numberMods;
+}
+
 #ifdef COMPILE_UFO
+
+static void FS_Mod_f (void)
+{
+	if (Cmd_Argc() == 1) {
+		linkedList_t *list = NULL;
+		FS_GetModList(&list);
+		LIST_Foreach(list, const char, mod) {
+			Com_Printf("mod: %s\n", mod);
+		}
+		LIST_Delete(&list);
+	} else {
+		Cmd_ExecuteText("fs_restart %s", Cmd_Argv(1));
+	}
+}
 /**
  * @brief Adds the execution of the autoexec.cfg to the command buffer
  */
@@ -818,6 +890,7 @@ static const cmdList_t fs_commands[] = {
 	{"dir", FS_Dir_f, "Show the filesystem contents per game dir - also supports wildcarding"},
 	{"ls", FS_List_f, "Show the filesystem contents"},
 	{"fs_info", FS_Info_f, "Show information about the virtual filesystem"},
+	{"mod", FS_Mod_f, "Show or activate mods"},
 
 	{NULL, NULL, NULL}
 };
@@ -860,7 +933,7 @@ void FS_InitFilesystem (qboolean writeToHomeDir)
 		char path[MAX_QPATH];
 		Com_sprintf(path, sizeof(path), "./%s", fsGameDir);
 		if (!FS_FileExists(path)) {
-			Com_sprintf(path, sizeof(path), "./mods/%s", fsGameDir);
+			Com_sprintf(path, sizeof(path), "./" MODS_DIR "/%s", fsGameDir);
 		}
 		FS_AddGameDirectory(path, !writeToHomeDir);
 		FS_AddHomeAsGameDirectory(fsGameDir, writeToHomeDir);
