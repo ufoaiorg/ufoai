@@ -208,12 +208,11 @@ window options
 					color		"1 1 1 0.5"
 				}
 
-				checkbox mtooltips_opt
+				checkbox_ui2 mtooltips_opt
 				{
 					current		*cvar:mn_show_tooltips
 					pos			"472 6"
 					size		"20 18"
-					image		"ui/checkbox"
 				}
 			}
 
@@ -235,12 +234,11 @@ window options
 					color		"1 1 1 0.5"
 				}
 
-				checkbox ctooltips_opt
+				checkbox_ui2 ctooltips_opt
 				{
 					current		*cvar:cl_show_cursor_tooltips
 					pos			"472 6"
 					size		"20 18"
-					image		"ui/checkbox"
 				}
 			}
 
@@ -262,12 +260,11 @@ window options
 					color		"1 1 1 0.5"
 				}
 
-				checkbox tipoftheday_opt
+				checkbox_ui2 tipoftheday_opt
 				{
 					current		*cvar:cl_showTipOfTheDay
 					pos			"472 6"
 					size		"20 18"
-					image		"ui/checkbox"
 				}
 			}
 
@@ -290,12 +287,11 @@ window options
 					color		"1 1 1 0.5"
 				}
 
-				checkbox precache_opt
+				checkbox_ui2 precache_opt
 				{
 					current		*cvar:cl_precache
 					pos			"472 6"
 					size		"20 18"
-					image		"ui/checkbox"
 				}
 			}
 
@@ -333,12 +329,11 @@ window options
 					color		"1 1 1 0.5"
 				}
 
-				checkbox geo3d_opt
+				checkbox_ui2 geo3d_opt
 				{
 					current		*cvar:cl_3dmap
 					pos			"472 6"
 					size		"20 18"
-					image		"ui/checkbox"
 				}
 			}
 
@@ -478,12 +473,11 @@ window options
 					color		"1 1 1 0.5"
 				}
 
-				checkbox show_fps_opt
+				checkbox_ui2 show_fps_opt
 				{
 					current		*cvar:cl_fps
 					pos			"472 6"
 					size		"20 18"
-					image		"ui/checkbox"
 				}
 			}
 
@@ -506,12 +500,11 @@ window options
 					color		"1 1 1 0.5"
 				}
 
-				checkbox intro_video_opt
+				checkbox_ui2 intro_video_opt
 				{
 					current		*cvar:cl_introshown
 					pos			"472 6"
 					size		"20 18"
-					image		"ui/checkbox"
 				}
 			}
 		}
@@ -627,12 +620,11 @@ window options
 					color		"1 1 1 0.5"
 				}
 
-				checkbox fullscreen_opt
+				checkbox_ui2 fullscreen_opt
 				{
 					current		*cvar:vid_fullscreen
 					pos			"472 6"
 					size		"20 18"
-					image		"ui/checkbox"
 				}
 			}
 
@@ -655,12 +647,11 @@ window options
 					color		"1 1 1 0.5"
 				}
 
-				checkbox stretch_opt
+				checkbox_ui2 stretch_opt
 				{
 					current		*cvar:vid_strech
 					pos			"472 6"
 					size		"20 18"
-					image		"ui/checkbox"
 				}
 			}
 
@@ -905,12 +896,11 @@ window options
 					color		"1 1 1 0.5"
 				}
 
-				checkbox opengl_opt
+				checkbox_ui2 opengl_opt
 				{
 					current		*cvar:r_programs
 					pos			"472 6"
 					size		"20 18"
-					image		"ui/checkbox"
 					onClick		{ cmd "toggle_panel opengl_opts;"	}
 				}
 
@@ -935,12 +925,11 @@ window options
 						color		"1 1 1 0.5"
 					}
 
-					checkbox postprocessing_opt
+					checkbox_ui2 postprocessing_opt
 					{
 						current		*cvar:r_postprocess
 						pos			"472 6"
 						size		"20 18"
-						image		"ui/checkbox"
 					}
 				}
 
@@ -987,12 +976,11 @@ window options
 					color		"1 1 1 0.5"
 				}
 
-				checkbox light_realtime_opt
+				checkbox_ui2 light_realtime_opt
 				{
 					current		*cvar:r_lights
 					pos			"472 6"
 					size		"20 18"
-					image		"ui/checkbox"
 					onClick		{ cmd "toggle_realtime_lighting_opts;"	}
 				}
 
@@ -1057,12 +1045,11 @@ window options
 						color		"1 1 1 0.5"
 					}
 
-					checkbox light_bumpmapping_opt
+					checkbox_ui2 light_bumpmapping_opt
 					{
 						current		*cvar:r_bumpmap
 						pos			"472 6"
 						size		"20 18"
-						image		"ui/checkbox"
 					}
 				}
 
@@ -1108,12 +1095,11 @@ window options
 					onMouseEnter 	{ *node:this@color = "1 1 1 0.9" }
 					onMouseLeave 	{ *node:this@color = "1 1 1 0.5" }
 				}
-				checkbox env_effects_coronas_opt
+				checkbox_ui2 env_effects_coronas_opt
 				{
 					current		*cvar:r_coronas
 					pos			"270 6"
 					size		"20 18"
-					image		"ui/checkbox"
 				}
 
 				string env_effects_fog_label
@@ -1128,12 +1114,11 @@ window options
 					onMouseEnter 	{ *node:this@color = "1 1 1 0.9" }
 					onMouseLeave 	{ *node:this@color = "1 1 1 0.5" }
 				}
-				checkbox env_effects_fog_opt
+				checkbox_ui2 env_effects_fog_opt
 				{
 					current		*cvar:r_fog
 					pos			"370 6"
 					size		"20 18"
-					image		"ui/checkbox"
 				}
 
 				string env_effects_weather_label
@@ -1148,12 +1133,11 @@ window options
 					onMouseEnter 	{ *node:this@color = "1 1 1 0.9" }
 					onMouseLeave 	{ *node:this@color = "1 1 1 0.5" }
 				}
-				checkbox env_effects_weather_opt
+				checkbox_ui2 env_effects_weather_opt
 				{
 					current		*cvar:cl_particleweather
 					pos			"472 6"
 					size		"20 18"
-					image		"ui/checkbox"
 				}
 
 				string env_effects_flares_label
@@ -1168,12 +1152,11 @@ window options
 					onMouseEnter 	{ *node:this@color = "1 1 1 0.9" }
 					onMouseLeave 	{ *node:this@color = "1 1 1 0.5" }
 				}
-				checkbox env_effects_flares_opt
+				checkbox_ui2 env_effects_flares_opt
 				{
 					current		*cvar:r_flares
 					pos			"472 36"
 					size		"20 18"
-					image		"ui/checkbox"
 				}
 
 				string env_effects_materials_label
@@ -1188,12 +1171,11 @@ window options
 					onMouseEnter 	{ *node:this@color = "1 1 1 0.9" }
 					onMouseLeave 	{ *node:this@color = "1 1 1 0.5" }
 				}
-				checkbox env_effects_materials_opt
+				checkbox_ui2 env_effects_materials_opt
 				{
 					current		*cvar:r_materials
 					pos			"370 36"
 					size		"20 18"
-					image		"ui/checkbox"
 				}
 			}
 
@@ -1257,12 +1239,11 @@ window options
 					color		"1 1 1 0.5"
 				}
 
-				checkbox audio_toggle_opt
+				checkbox_ui2 audio_toggle_opt
 				{
 					current		*cvar:snd_init
 					pos			"472 6"
 					size		"20 18"
-					image		"ui/checkbox"
 				}
 			}
 
@@ -1346,12 +1327,11 @@ window options
 					color		"1 1 1 0.5"
 				}
 
-				checkbox audio_menu_opt
+				checkbox_ui2 audio_menu_opt
 				{
 					current		*cvar:ui_sounds
 					pos			"472 6"
 					size		"20 18"
-					image		"ui/checkbox"
 				}
 			}
 
@@ -1858,12 +1838,11 @@ window options
 						color		"1 1 1 0.5"
 					}
 
-					checkbox camera_center_opt
+					checkbox_ui2 camera_center_opt
 					{
 						current		*cvar:cl_centerview
 						pos			"472 6"
 						size		"20 18"
-						image		"ui/checkbox"
 					}
 				}
 
@@ -1887,12 +1866,11 @@ window options
 						color		"1 1 1 0.5"
 					}
 
-					checkbox camera_iso_opt
+					checkbox_ui2 camera_iso_opt
 					{
 						current		*cvar:r_isometric
 						pos			"472 6"
 						size		"20 18"
-						image		"ui/checkbox"
 					}
 				}
 			}
@@ -2012,12 +1990,11 @@ window options
 						color		"1 1 1 0.5"
 					}
 
-					checkbox battle_autostand_opt
+					checkbox_ui2 battle_autostand_opt
 					{
 						current		*cvar:cl_autostand
 						pos			"472 6"
 						size		"20 18"
-						image		"ui/checkbox"
 					}
 				}
 
@@ -2215,12 +2192,11 @@ window options
 					color		"1 1 1 0.5"
 				}
 
-				checkbox tex_compression_opt
+				checkbox_ui2 tex_compression_opt
 				{
 					current		*cvar:r_ext_texture_compression
 					pos			"472 6"
 					size		"20 18"
-					image		"ui/checkbox"
 				}
 			}
 
@@ -2243,12 +2219,11 @@ window options
 					color		"1 1 1 0.5"
 				}
 
-				checkbox tex_lod_opt
+				checkbox_ui2 tex_lod_opt
 				{
 					current		*cvar:r_texture_lod
 					pos			"472 6"
 					size		"20 18"
-					image		"ui/checkbox"
 				}
 			}
 
@@ -2425,12 +2400,11 @@ window options
 					color		"1 1 1 0.5"
 				}
 
-				checkbox vertexbuffers_opt
+				checkbox_ui2 vertexbuffers_opt
 				{
 					current		*cvar:r_vertexbuffers
 					pos			"472 6"
 					size		"20 18"
-					image		"ui/checkbox"
 				}
 			}
 

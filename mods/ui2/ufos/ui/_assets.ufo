@@ -183,3 +183,11 @@ component StatBar extends panel
 		contentalign	ALIGN_UR
 	}
 }
+
+component checkbox_ui2 extends checkbox
+{
+	iconChecked      "icons/checkbox_ui2_checked"
+	iconUnchecked    "icons/checkbox_ui2_unchecked"
+	iconIndeterminate "icons/checkbox_ui2_indeterminate"
+	size "20 20"
+}
