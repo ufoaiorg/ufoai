@@ -744,7 +744,7 @@ static void FS_Mod_f (void)
 		}
 		LIST_Delete(&list);
 	} else {
-		Cmd_ExecuteText("fs_restart %s", Cmd_Argv(1));
+		FS_RestartFilesystem(Cmd_Argv(1));
 	}
 }
 /**
@@ -879,13 +879,21 @@ static void FS_Info_f (void)
 		Com_Printf("...link: %s : %s\n", l->from, l->to);
 }
 
+static void FS_RestartFilesystem_f (void)
+{
+	if (Cmd_Argc() == 2)
+		FS_RestartFilesystem(Cmd_Argv(1));
+	else
+		FS_RestartFilesystem(NULL);
+}
+
 /**
  * @brief filesystem console commands
  * @sa FS_InitFilesystem
  * @sa FS_RestartFilesystem
  */
 static const cmdList_t fs_commands[] = {
-	{"fs_restart", FS_RestartFilesystem, "Reloads the file subsystem"},
+	{"fs_restart", FS_RestartFilesystem_f, "Reloads the file subsystem"},
 	{"link", FS_Link_f, "Create file links"},
 	{"dir", FS_Dir_f, "Show the filesystem contents per game dir - also supports wildcarding"},
 	{"ls", FS_List_f, "Show the filesystem contents"},
@@ -1682,9 +1690,9 @@ void FS_Shutdown (void)
  * @sa FS_Shutdown
  * @sa FS_InitFilesystem
  */
-void FS_RestartFilesystem (void)
+void FS_RestartFilesystem (const char *gamedir)
 {
-	throw comRestart_t();
+	throw comRestart_t(gamedir);
 }
 
 /**

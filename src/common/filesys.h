@@ -128,7 +128,7 @@ int FS_Write(const void *buffer, int len, qFILE * f);
 int FS_Printf(qFILE *f, const char *msg, ...) __attribute__((format(__printf__, 2, 3)));
 void FS_InitFilesystem(qboolean writeToHomeDir);
 void FS_AddGameDirectory(const char *dir, qboolean write);
-void FS_RestartFilesystem(void);
+void FS_RestartFilesystem(const char *gamedir);
 const char *FS_Gamedir(void);
 void FS_CreateOpenPipeFile(const char *filename, qFILE *f);
 const char *FS_NextPath(const char *prevpath);

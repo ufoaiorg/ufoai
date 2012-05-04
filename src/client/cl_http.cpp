@@ -704,7 +704,7 @@ static void CL_FinishHTTPDownload (void)
 			/* a pk3 file is very special... */
 			i = strlen(tempName);
 			if (Q_streq(tempName + i - 4, ".pk3")) {
-				FS_RestartFilesystem();
+				FS_RestartFilesystem(NULL);
 				CL_ReVerifyHTTPQueue();
 				downloadingPK3 = qfalse;
 			}

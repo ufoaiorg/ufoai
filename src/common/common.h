@@ -228,7 +228,12 @@ typedef void (*exceptionCallback_t)(void);
  * Thrown by Com_Drop().
  */
 struct comDrop_t {};
-struct comRestart_t {};
+class comRestart_t {
+public:
+	const char *gamedir;
+	comRestart_t (const char *_gamedir) : gamedir(strdup(_gamedir)) {}
+	virtual ~comRestart_t () { free(static_cast<void*>(const_cast<char*>(gamedir))); }
+};
 
 void Com_Drop(void) __attribute__((noreturn));
 void Com_Quit(void);

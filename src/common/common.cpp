@@ -1460,11 +1460,16 @@ void Qcommon_Frame (void)
 			/* Dispatch the event */
 			event->func(event->when, event->data);
 		}
-	} catch (comRestart_t const&) {
+	} catch (comRestart_t const& restart) {
 		SV_Shutdown("Restart.", qfalse);
 		CL_Shutdown();
 		Qcommon_Shutdown();
-		Qcommon_Init(0, NULL);
+		if (restart.gamedir != NULL) {
+			const char *restartArgv[] = {"", "+set", "fs_gamedir", restart.gamedir};
+			Qcommon_Init(4, const_cast<char **>(restartArgv));
+		} else {
+			Qcommon_Init(0, NULL);
+		}
 	} catch (comDrop_t const&) {
 		return;
 	}
