@@ -79,6 +79,7 @@ static cvar_t *cl_ready;
 cvar_t *cl_teamnum;
 
 client_static_t cls;
+static qboolean isdown;
 
 memPool_t* cl_genericPool;	/**< permanent client data - menu, fonts */
 memPool_t* vid_genericPool;	/**< also holds all the static models */
@@ -818,10 +819,10 @@ qboolean CL_ParseClientData (const char *type, const char *name, const char **te
 
 /** @brief Cvars for initial check (popup at first start) */
 static cvarList_t checkcvar[] = {
-	{"cl_name", NULL, NULL},
-	{"s_language", NULL, NULL},
+	{"cl_name", NULL},
+	{"s_language", NULL},
 
-	{NULL, NULL, NULL}
+	{NULL, NULL}
 };
 /**
  * @brief Check cvars for some initial values that should/must be set
@@ -831,10 +832,9 @@ static void CL_CheckCvars_f (void)
 	cvarList_t *c;
 
 	for (c = checkcvar; c->name != NULL; c++) {
-		if (!c->var)
-			c->var = Cvar_Get(c->name);
-		if (c->var->string[0] == '\0') {
-			Com_Printf("%s has no value\n", c->var->name);
+		cvar_t *var = Cvar_Get(c->name);
+		if (var->string[0] == '\0') {
+			Com_Printf("%s has no value\n", var->name);
 			UI_PushWindow("checkcvars", NULL, NULL);
 			break;
 		}
@@ -1164,6 +1164,8 @@ void CL_Init (void)
 	char languagePath[MAX_OSPATH];
 	cvar_t *fs_i18ndir;
 
+	isdown = qfalse;
+
 	if (sv_dedicated->integer)
 		return;					/* nothing running on the client */
 
@@ -1229,7 +1231,6 @@ int CL_Milliseconds (void)
 void CL_Shutdown (void)
 {
 	const cvar_t *var;
-	static qboolean isdown = qfalse;
 
 	if (isdown) {
 		printf("recursive shutdown\n");
@@ -1255,5 +1256,8 @@ void CL_Shutdown (void)
 	R_Shutdown();
 	UI_Shutdown();
 	CIN_Shutdown();
+	SEQ_Shutdown();
 	GAME_Shutdown();
+	CL_LanguageShutdown();
+	TOTD_Shutdown();
 }

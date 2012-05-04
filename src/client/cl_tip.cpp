@@ -120,3 +120,9 @@ void TOTD_InitStartup (void)
 	/* commands */
 	Cmd_AddCommand("tipoftheday", CL_GetTipOfTheDay_f, "Get the next tip of the day from the script files - called from tip of the day menu");
 }
+
+void TOTD_Shutdown (void)
+{
+	tipList = NULL;
+	tipCount = 0;
+}

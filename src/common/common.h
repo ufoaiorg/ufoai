@@ -228,6 +228,7 @@ typedef void (*exceptionCallback_t)(void);
  * Thrown by Com_Drop().
  */
 struct comDrop_t {};
+struct comRestart_t {};
 
 void Com_Drop(void) __attribute__((noreturn));
 void Com_Quit(void);

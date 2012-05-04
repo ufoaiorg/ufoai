@@ -138,8 +138,7 @@ s_sample_t *S_GetSample (const int soundIdx)
 {
 	if (soundIdx > 0 && soundIdx <= sampleIndexLast)
 		return sampleIndex[soundIdx];
-	else
-		return NULL;
+	return NULL;
 }
 
 void S_FreeSamples (void)

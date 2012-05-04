@@ -49,6 +49,7 @@ void UI_MouseUp(int x, int y, int button);
 void UI_InvalidateMouse(void);
 qboolean UI_CheckMouseMove(void);
 uiNode_t* UI_GetHoveredNode(void);
+void UI_ResetInput(void);
 
 /* focus */
 void UI_RequestFocus(uiNode_t* node);

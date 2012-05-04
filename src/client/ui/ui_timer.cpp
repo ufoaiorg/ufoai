@@ -183,6 +183,12 @@ void UI_TimerRelease (uiTimer_t *timer)
 	timer->callback = NULL;
 }
 
+void UI_ResetTimers (void)
+{
+	OBJZERO(ui_timerSlots);
+	ui_firstTimer = NULL;
+}
+
 #ifdef COMPILE_UNITTESTS
 
 /**

@@ -1107,8 +1107,15 @@ void Cmd_Shutdown (void)
 	OBJZERO(cmd_functions_hash);
 	cmd_functions = NULL;
 
+	OBJZERO(cmd_alias_hash);
+	cmd_alias = NULL;
+	alias_count = 0;
+
 	OBJZERO(cmd_argv);
 	cmd_argc = 0;
+
+	cmdWait = qfalse;
+	cmdClosed = qfalse;
 
 	Mem_FreePool(com_cmdSysPool);
 }

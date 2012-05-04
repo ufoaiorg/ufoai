@@ -152,7 +152,7 @@ void R_FontShutdown (void)
 	for (i = 0; i < numFonts; i++)
 		if (fonts[i].font) {
 			TTF_CloseFont(fonts[i].font);
-			FS_FreeFile(fonts[i].buffer);
+			Mem_Free(fonts[i].buffer);
 			SDL_RWclose(fonts[i].rw);
 		}
 
@@ -181,10 +181,13 @@ static font_t *R_FontAnalyze (const char *name, const char *path, int renderStyl
 	/* copy fontname */
 	f->name = name;
 
-	ttfSize = FS_LoadFile(path, &f->buffer);
+	byte *buf;
+	ttfSize = FS_LoadFile(path, &buf);
 	if (ttfSize == -1)
 		Com_Error(ERR_FATAL, "...could not load font file %s", path);
 
+	/* duplicate the memory to survive a filesystem restart */
+	f->buffer = Mem_Dup(byte, buf, ttfSize);
 	f->rw = SDL_RWFromMem(f->buffer, ttfSize);
 
 	f->font = TTF_OpenFontRW(f->rw, 0, size);

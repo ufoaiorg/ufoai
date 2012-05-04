@@ -519,6 +519,16 @@ void UI_MouseRelease (void)
 	UI_InvalidateMouse();
 }
 
+void UI_ResetInput (void)
+{
+	hoveredNode = NULL;
+	oldHoveredNode = NULL;
+	focusNode = NULL;
+	capturedNode = NULL;
+	pressedNode = NULL;
+	longPressTimer = NULL;
+}
+
 /**
  * @brief Get the current hovered node
  * @return A node, else NULL if the mouse hover nothing

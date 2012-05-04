@@ -45,7 +45,6 @@ cvar_t *http_proxy;
 cvar_t *http_timeout;
 static const char *consoleLogName = "ufoconsole.log";
 static cvar_t *logfile_active; /* 1 = buffer log, 2 = flush after each print */
-static cvar_t *com_pipefile; /* name of the pipe to send commands to */
 cvar_t *sv_dedicated;
 #ifndef DEDICATED_ONLY
 static cvar_t *cl_maxfps;
@@ -1078,6 +1077,9 @@ vPrintfPtr_t Qcommon_GetPrintFunction (void)
  */
 void Qcommon_Init (int argc, char **argv)
 {
+	event_queue = NULL;
+	logfile_active = NULL;
+
 	Sys_InitSignals();
 
 	/* random seed */
@@ -1205,7 +1207,7 @@ void Qcommon_Init (int argc, char **argv)
 			SCR_EndLoadingPlaque();
 		}
 
-		com_pipefile = Cvar_Get("com_pipefile", "", CVAR_ARCHIVE, "Filename of the pipe that is used to send commands to the game");
+		const cvar_t *com_pipefile = Cvar_Get("com_pipefile", "", CVAR_ARCHIVE, "Filename of the pipe that is used to send commands to the game");
 		if (com_pipefile->string[0] != '\0') {
 			FS_CreateOpenPipeFile(com_pipefile->string, &pipefile);
 		}
@@ -1458,6 +1460,11 @@ void Qcommon_Frame (void)
 			/* Dispatch the event */
 			event->func(event->when, event->data);
 		}
+	} catch (comRestart_t const&) {
+		SV_Shutdown("Restart.", qfalse);
+		CL_Shutdown();
+		Qcommon_Shutdown();
+		Qcommon_Init(0, NULL);
 	} catch (comDrop_t const&) {
 		return;
 	}

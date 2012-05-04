@@ -87,7 +87,6 @@ typedef struct cvar_s {
 typedef struct cvarList_s {
 	const char *name;
 	const char *value;
-	cvar_t *var;
 } cvarList_t;
 
 /**

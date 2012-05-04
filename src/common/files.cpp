@@ -1611,20 +1611,7 @@ void FS_Shutdown (void)
  */
 void FS_RestartFilesystem (void)
 {
-	/* free anything we currently have loaded */
-	FS_Shutdown();
-
-	/* try to start up normally */
-	FS_InitFilesystem(qtrue);
-
-	/**
-	 * if we can't find default.cfg, assume that the paths are
-	 * busted and error out now, rather than getting an unreadable
-	 * graphics screen when the font fails to load
-	 */
-	if (FS_CheckFile("default.cfg") < 0) {
-		Sys_Error("Couldn't load default.cfg");
-	}
+	throw comRestart_t();
 }
 
 /**

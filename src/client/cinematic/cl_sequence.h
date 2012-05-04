@@ -37,7 +37,7 @@ qboolean SEQ_InitContext(pSequenceContext_t context, const char *sequenceName);
 qboolean SEQ_Render(pSequenceContext_t context);
 void SEQ_SendClickEvent(pSequenceContext_t context);
 void SEQ_SetView(pSequenceContext_t context, vec2_t pos, vec2_t size);
-
+void SEQ_Shutdown(void);
 void CL_ParseSequence(const char *name, const char **text);
 
 #endif

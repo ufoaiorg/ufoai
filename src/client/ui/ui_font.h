@@ -40,6 +40,7 @@ const uiFont_t *UI_GetFontByID(const char *fontID);
 /* this is the function where all the sdl_ttf fonts are parsed */
 qboolean UI_ParseFont(const char *name, const char **text);
 void UI_InitFonts(void);
+void UI_FontShutdown(void);
 int UI_FontGetHeight(const char *font);
 
 #endif

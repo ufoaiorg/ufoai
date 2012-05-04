@@ -974,3 +974,11 @@ void CL_ParseSequence (const char *name, const char **text)
 		}
 	} while (*text);
 }
+
+void SEQ_Shutdown (void)
+{
+	OBJZERO(sequences);
+	numSequences = 0;
+	seqCmds = NULL;
+	numSeqCmds = 0;
+}

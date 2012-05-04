@@ -184,3 +184,8 @@ void UI_InitFonts (void)
 	for (i = 0; i < numFonts; i++)
 		UI_RegisterFont(&fonts[i]);
 }
+
+void UI_FontShutdown (void)
+{
+	numFonts = 0;
+}

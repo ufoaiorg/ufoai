@@ -51,7 +51,7 @@ uiTimer_t* UI_AllocTimer(uiNode_t* node, int firstDelay, timerCallback_t callbac
 void UI_TimerStart(uiTimer_t *timer);
 void UI_TimerStop(uiTimer_t *timer);
 void UI_TimerRelease(uiTimer_t *timer);
-
+void UI_ResetTimers(void);
 void UI_HandleTimers(void);
 
 #ifdef COMPILE_UNITTESTS

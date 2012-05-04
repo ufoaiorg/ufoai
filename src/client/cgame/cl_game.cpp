@@ -1483,4 +1483,8 @@ void GAME_InitStartup (void)
 
 void GAME_Shutdown (void)
 {
+	OBJZERO(cgameTypes);
+	numCGameTypes = 0;
+	OBJZERO(equipDefStandard);
+	OBJZERO(characters);
 }

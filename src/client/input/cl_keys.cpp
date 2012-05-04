@@ -789,6 +789,12 @@ void Key_Init (void)
 {
 	int i;
 
+	OBJZERO(keyBindings);
+	OBJZERO(menuKeyBindings);
+	OBJZERO(battleKeyBindings);
+
+	OBJZERO(keyDown);
+
 	for (i = 0; i < MAXKEYLINES; i++) {
 		keyLines[i][0] = CONSOLE_PROMPT_CHAR;
 		keyLines[i][1] = 0;

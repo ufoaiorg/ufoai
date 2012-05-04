@@ -756,6 +756,8 @@ void R_ShutdownImages (void)
 		R_DeleteImage(image);
 	}
 	OBJZERO(imageHash);
+	OBJZERO(r_images);
+	r_numImages = 0;
 }
 
 

@@ -187,9 +187,12 @@ void UI_Shutdown (void)
 		}
 	}
 
+	UI_FontShutdown();
+	UI_ResetInput();
+	UI_ResetTimers();
+
 	Mem_Free(ui_global.adata);
-	ui_global.adata = NULL;
-	ui_global.adataize = 0;
+	OBJZERO(ui_global);
 
 	/* release pools */
 	Mem_FreePool(ui_sysPool);

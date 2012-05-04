@@ -344,6 +344,11 @@ void M_Shutdown (void)
 {
 	M_Stop();
 
+	OBJZERO(musicArrays);
+	OBJZERO(musicArrayLength);
+	OBJZERO(music);
+	musicTrackCount = 0;
+
 	Cmd_RemoveCommand("music_play");
 	Cmd_RemoveCommand("music_change");
 	Cmd_RemoveCommand("music_stop");

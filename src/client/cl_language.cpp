@@ -221,6 +221,12 @@ static qboolean CL_LanguageTest (const char *localeID)
 	return qfalse;
 }
 
+void CL_LanguageShutdown (void)
+{
+	languageCount = 0;
+	languageList = NULL;
+}
+
 /**
  * @brief Fills the options language menu node with the parsed language mappings
  * @sa CL_InitAfter
