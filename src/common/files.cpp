@@ -898,7 +898,7 @@ static const cmdList_t fs_commands[] = {
 	{"dir", FS_Dir_f, "Show the filesystem contents per game dir - also supports wildcarding"},
 	{"ls", FS_List_f, "Show the filesystem contents"},
 	{"fs_info", FS_Info_f, "Show information about the virtual filesystem"},
-	{"mod", FS_Mod_f, "Show or activate mods"},
+	{"fs_mod", FS_Mod_f, "Show or activate mods"},
 
 	{NULL, NULL, NULL}
 };
