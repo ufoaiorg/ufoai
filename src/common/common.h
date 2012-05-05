@@ -231,7 +231,7 @@ struct comDrop_t {};
 class comRestart_t {
 public:
 	const char *gamedir;
-	comRestart_t (const char *_gamedir) : gamedir(strdup(_gamedir)) {}
+	comRestart_t (const char *_gamedir) : gamedir(_gamedir ? strdup(_gamedir) : NULL) {}
 	virtual ~comRestart_t () { free(static_cast<void*>(const_cast<char*>(gamedir))); }
 };
 
