@@ -515,7 +515,7 @@ void uiTextNode::onLoaded (uiNode_t *node)
 */
 void uiTextNode::onMouseDown (uiNode_t* node, int x, int y, int button)
 {
-	if (!UI_GetMouseCapture() && button == K_MOUSE1 &&
+	if (button == K_MOUSE1 && !UI_GetMouseCapture() &&
 		EXTRADATA(node).super.scrollY.fullSize > EXTRADATA(node).super.scrollY.viewSize) {
 		UI_SetMouseCapture(node);
 		mouseScrollX = x;
@@ -594,7 +594,7 @@ void UI_RegisterTextNode (uiBehaviour_t *behaviour)
 	UI_RegisterExtradataNodeProperty(behaviour, "lines", V_INT, textExtraData_t, super.scrollY.fullSize);
 
 	/** Highlight each node elements when the mouse move over the node.
-	 * @todo delete it went its possible (need to create a textlist...)
+	 * @todo delete it when its possible (need to create a textlist...)
 	 */
 	UI_RegisterExtradataNodeProperty(behaviour, "mousefx", V_CPPBOOL, textExtraData_t, mousefx);
 
