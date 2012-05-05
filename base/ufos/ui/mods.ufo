@@ -1,0 +1,69 @@
+// ==================
+// MODS MENU
+// ==================
+
+window mods
+{
+	{
+		pos			"264 262"
+		size		"496 247"
+		dragbutton	true
+		closebutton	true
+		background	"ui/popup_alpha_tile"
+		string		"_Mods"
+	}
+
+	/**
+	 * @param <1> The mod directory to select (empty to go back to base)
+	 */
+	func select_mod {
+		*cvar:fs_gamedir = <1>
+	}
+
+	/* textlist using tabbed text */
+	textlist mods
+	{
+		pos			"25 55"
+		width		"468"
+		lineheight	20
+		color		"0.60 0.60 0.60 1"
+		rows		"6"
+		selectcolor	"1 1 1 1"
+		dataid		TEXT_LIST
+		onClick		{ call *node:root.select_mod( <textselected> ) }
+		onViewChange {
+			*node:root.mods_scroll@fullsize = <fullsize>
+			*node:root.mods_scroll@current = <viewpos>
+			*node:root.mods_scroll@viewsize = <viewsize>
+		}
+	}
+
+	vscrollbar mods_scroll
+	{
+		image		"ui/scrollbar_v_green"
+		pos			"486 100"
+		height		"120"
+		current		0
+		viewsize	6
+		fullsize	6
+		onChange	{ *node:parent.mods@viewpos = <current> }
+	}
+
+	cmpPopupButton bt_ok
+	{
+		pos			"110 192"
+		string		"_Load"
+		onClick		{ cmd "fs_restart *cvar:fs_gamedir;" }
+	}
+
+	cmpCancelButton bt_cancel
+	{
+		pos			"296 192"
+		onClick		{ cmd "ui_pop;" }
+	}
+
+	func onWindowOpened
+	{
+		cmd "mn_mods;"
+	}
+}
