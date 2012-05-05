@@ -712,7 +712,8 @@ int FS_GetModList (linkedList_t **mods)
 			NULL
 	};
 
-	int numberMods = 0;
+	LIST_AddString(mods, BASEDIRNAME);
+	int numberMods = 1;
 	/* it is likely that we have duplicate names now, which we will cleanup below */
 	for (const char **path = searchpaths; *path; path++) {
 		const char *pattern = *path;

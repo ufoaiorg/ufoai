@@ -91,6 +91,13 @@ static void CLMN_InitKeyList_f (void)
 	UI_RegisterLinkedListText(TEXT_LIST, list);
 }
 
+static void CLMN_Mods_f (void)
+{
+	linkedList_t *mods = NULL;
+	FS_GetModList(&mods);
+	UI_RegisterLinkedListText(TEXT_LIST, mods);
+}
+
 /**
  * @brief Initialize the menu data hunk, add cvars and commands
  * @note This function is called once
@@ -101,6 +108,7 @@ void CLMN_InitStartup (void)
 {
 	/* print the keyBindings to mn.menuText */
 	Cmd_AddCommand("mn_init_keylist", CLMN_InitKeyList_f);
+	Cmd_AddCommand("mn_mods", CLMN_Mods_f);
 
 	UI_Init();
 }
