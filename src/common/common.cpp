@@ -1079,6 +1079,7 @@ void Qcommon_Init (int argc, char **argv)
 {
 	event_queue = NULL;
 	logfile_active = NULL;
+	developer = NULL;
 
 	Sys_InitSignals();
 
