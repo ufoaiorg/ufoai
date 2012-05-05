@@ -3,7 +3,6 @@
 // ==================
 
 // TODO
-// - Save text is centered instead of left aligned
 // - Add alert if user tries to begin without selecting a load game
 // - Add info about a save when it becomes available
 // - Once we can get the data about a campaign in not just one chunk, display them better

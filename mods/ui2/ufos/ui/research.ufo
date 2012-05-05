@@ -6,6 +6,8 @@
  * - Scientists hired are not correct values, just place-holder text
  * --- Need new code in the callbacks to get hired/unhired scientists and to hire/fire them.
  * - Make research scrollable and find a way to test it.
+ * - Clicking on another base name should take the player to that base (see research_changebase).
+ * -- Maybe we need an icon that suggests clicking will switch bases.
  */
 
 window research

@@ -5,6 +5,7 @@
 /*
  * @TODO
  * - Joystick options and key configuration display not implemented yet
+ * - Add new tab for mods
  */
 
 window options
