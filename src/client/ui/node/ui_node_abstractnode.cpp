@@ -141,9 +141,6 @@ bool uiLocatedNode::onDndFinished (uiNode_t *node, bool isDroped)
 	return isDroped;
 }
 
-
-
-
 /**
  * @brief Activate the node. Can be used without the mouse (ie. a button will execute onClick)
  */

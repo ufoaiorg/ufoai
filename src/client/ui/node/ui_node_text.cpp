@@ -145,8 +145,7 @@ void uiTextNode::onMouseMove (uiNode_t *node, int x, int y)
  */
 void uiTextNode::drawText (uiNode_t* node, const char *text, const linkedList_t* list, bool noDraw)
 {
-	/** @todo verry big, what about static, rendering is not multi threaded */
-	char textCopy[UI_TEXTNODE_BUFFERSIZE];
+	static char textCopy[UI_TEXTNODE_BUFFERSIZE];
 	char newFont[MAX_VAR];
 	const char* oldFont = NULL;
 	vec4_t colorHover;
