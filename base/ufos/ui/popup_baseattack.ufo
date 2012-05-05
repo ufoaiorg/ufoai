@@ -164,7 +164,7 @@ window popup_assembleteam
 		panel stats_phys {
 			{
 				pos		"0 33"
-				size	"440 264"
+				size	"440 267"
 				background	"ui/panel_green_tab"
 			}
 			cmpNamedBar pwr {
@@ -271,7 +271,7 @@ window popup_assembleteam
 			panel stats_missions {
 				{
 					pos		"0 33"
-					size	"440 264"
+					size	"440 267"
 					background	"ui/panel_green_tab"
 					invis true
 				}
