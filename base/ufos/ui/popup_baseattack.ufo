@@ -30,7 +30,7 @@ component cmp_soldierentry extends panel {
 window popup_assembleteam
 {
 	{
-		pos				"128 256"
+		pos				"0 256"
 		size			"1024 445"
 		dragbutton		true
 		closebutton		true
