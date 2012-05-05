@@ -316,6 +316,7 @@ void uiText2Node::onRightClick (uiNode_t * node, int x, int y)
 void uiText2Node::onLoading (uiNode_t *node)
 {
 	EXTRADATA(node).super.textLineSelected = -1; /**< Invalid/no line selected per default. */
+	EXTRADATA(node).super.textSelected = "";
 	Vector4Set(node->selectedColor, 1.0, 1.0, 1.0, 1.0);
 	Vector4Set(node->color, 1.0, 1.0, 1.0, 1.0);
 }

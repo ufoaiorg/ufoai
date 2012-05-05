@@ -168,6 +168,14 @@ const char *UI_GetText (int textId)
 	return ui_global.sharedData[textId].data.text;
 }
 
+const char *UI_GetTextFromList (int textId, int line)
+{
+	if (ui_global.sharedData[textId].type != UI_SHARED_LINKEDLISTTEXT)
+		return NULL;
+	linkedList_t *list = ui_global.sharedData[textId].data.linkedListText;
+	return static_cast<const char*>(LIST_GetByIdx(list, line));
+}
+
 int UI_GetDataVersion (int textId)
 {
 	return ui_global.sharedData[textId].versionId;

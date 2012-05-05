@@ -160,6 +160,7 @@ void UI_InitData(void);
 /* text */
 void UI_RegisterText(int textId, const char *text);
 const char *UI_GetText(int textId) __attribute__ ((warn_unused_result));
+const char *UI_GetTextFromList(int textId, int line) __attribute__ ((warn_unused_result));
 
 /* linked list */
 void UI_RegisterLinkedListText(int textId, linkedList_t *text);

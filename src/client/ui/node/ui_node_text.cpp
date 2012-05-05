@@ -56,6 +56,14 @@ void uiTextNode::validateCache (uiNode_t *node)
 	}
 }
 
+const char *UI_TextNodeGetSelectedText (uiNode_t *node, int num)
+{
+	const char *text = UI_GetTextFromList(EXTRADATA(node).dataID, num);
+	if (text == NULL)
+		return "";
+	return text;
+}
+
 /**
  * @brief Change the selected line
  */
@@ -64,6 +72,7 @@ void UI_TextNodeSelectLine (uiNode_t *node, int num)
 	if (EXTRADATA(node).textLineSelected == num)
 		return;
 	EXTRADATA(node).textLineSelected = num;
+	EXTRADATA(node).textSelected = UI_TextNodeGetSelectedText(node, num);
 	if (node->onChange)
 		UI_ExecuteEventActions(node, node->onChange);
 }
@@ -309,7 +318,7 @@ void uiTextNode::drawText (uiNode_t* node, const char *text, const linkedList_t*
 			} else {
 				if (noDraw) {
 					int lines = 0;
-					R_FontTextSize (font, cur, width, (longlines_t)EXTRADATA(node).longlines, NULL, NULL, &lines, NULL);
+					R_FontTextSize(font, cur, width, (longlines_t)EXTRADATA(node).longlines, NULL, NULL, &lines, NULL);
 					fullSizeY += lines;
 				} else
 					UI_DrawString(font, (align_t)node->contentAlign, x1, y, x, width, EXTRADATA(node).lineHeight, cur, viewSizeY, EXTRADATA(node).super.scrollY.viewPos, &fullSizeY, qtrue, (longlines_t)EXTRADATA(node).longlines);
@@ -463,6 +472,7 @@ bool uiTextNode::onScroll (uiNode_t *node, int deltaX, int deltaY)
 void uiTextNode::onLoading (uiNode_t *node)
 {
 	EXTRADATA(node).textLineSelected = -1; /**< Invalid/no line selected per default. */
+	EXTRADATA(node).textSelected = "";
 	Vector4Set(node->selectedColor, 1.0, 1.0, 1.0, 1.0);
 	Vector4Set(node->color, 1.0, 1.0, 1.0, 1.0);
 }
@@ -564,6 +574,10 @@ void UI_RegisterTextNode (uiBehaviour_t *behaviour)
 
 	/* Current selected line  */
 	UI_RegisterExtradataNodeProperty(behaviour, "lineselected", V_INT, textExtraData_t, textLineSelected);
+
+	/* Text of the current selected line */
+	UI_RegisterExtradataNodeProperty(behaviour, "textselected", V_CVAR_OR_STRING, textExtraData_t, textSelected);
+
 	/* One of the list TEXT_STANDARD, TEXT_LIST, TEXT_UFOPEDIA, TEXT_BUILDINGS,
 	 * TEXT_BUILDING_INFO, TEXT_RESEARCH, TEXT_RESEARCH_INFO, TEXT_POPUP,
 	 * TEXT_POPUP_INFO, TEXT_AIRCRAFT_LIST, TEXT_AIRCRAFT, TEXT_AIRCRAFT_INFO,

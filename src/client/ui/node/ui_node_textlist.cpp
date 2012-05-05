@@ -185,6 +185,7 @@ void uiTextListNode::onLeftClick (uiNode_t * node, int x, int y)
 
 	if (line != EXTRADATA(node).textLineSelected) {
 		EXTRADATA(node).textLineSelected = line;
+		EXTRADATA(node).textSelected = UI_TextNodeGetSelectedText(node, line);
 		if (node->onChange)
 			UI_ExecuteEventActions(node, node->onChange);
 	}
@@ -206,6 +207,7 @@ void uiTextListNode::onRightClick (uiNode_t * node, int x, int y)
 
 	if (line != EXTRADATA(node).textLineSelected) {
 		EXTRADATA(node).textLineSelected = line;
+		EXTRADATA(node).textSelected = UI_TextNodeGetSelectedText(node, line);
 		if (node->onChange)
 			UI_ExecuteEventActions(node, node->onChange);
 	}
@@ -217,6 +219,7 @@ void uiTextListNode::onRightClick (uiNode_t * node, int x, int y)
 void uiTextListNode::onLoading (uiNode_t *node)
 {
 	EXTRADATA(node).textLineSelected = -1; /**< Invalid/no line selected per default. */
+	EXTRADATA(node).textSelected = "";
 	Vector4Set(node->selectedColor, 1.0, 1.0, 1.0, 1.0);
 	Vector4Set(node->color, 1.0, 1.0, 1.0, 1.0);
 	node->contentAlign = ALIGN_CL;	/**< left center of each cells */

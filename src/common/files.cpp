@@ -1693,6 +1693,8 @@ void FS_Shutdown (void)
  */
 void FS_RestartFilesystem (const char *gamedir)
 {
+	if (gamedir != NULL)
+		Com_Printf("restarting with gamedir set to %s\n", gamedir);
 	throw comRestart_t(gamedir);
 }
 

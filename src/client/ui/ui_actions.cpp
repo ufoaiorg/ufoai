@@ -634,7 +634,7 @@ static void UI_ExecuteActions (const uiAction_t* firstAction, uiCallContext_t *c
 	static int callnumber = 0;
 	const uiAction_t *action;
 	if (callnumber++ > 20) {
-		Com_Printf("UI_ExecuteActions: Break possible infinit recursion\n");
+		Com_Printf("UI_ExecuteActions: Break possible infinite recursion\n");
 		return;
 	}
 	for (action = firstAction; action; action = action->next) {
