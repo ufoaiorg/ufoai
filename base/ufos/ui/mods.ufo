@@ -39,7 +39,6 @@ window mods
 
 	game_mod_listener listener {
 		confunc mn_mods_result {
-			cmd "echo mod = <1>"
 			call *node:root.mods@createchild("option<1>", "option")
 			*node:root.mods.option<1>@value = <1>
 			*node:root.mods.option<1>@label = <1>
