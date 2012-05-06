@@ -45,6 +45,33 @@ typedef struct uiExcludeRect_s {
 	struct uiExcludeRect_s* next;
 } uiExcludeRect_t;
 
+struct uiBox_t {
+	vec2_t pos;
+	vec2_t size;
+
+	void clear() {
+		Vector2Clear(pos);
+		Vector2Clear(size);
+	}
+
+	void set(vec2_t pos, vec2_t size) {
+		Vector2Copy(pos, this->pos);
+		Vector2Copy(size, this->size);
+	}
+
+	void expand(int dist) {
+		pos[0] -= dist;
+		pos[1] -= dist;
+		size[0] += 2 * dist;
+		size[1] += 2 * dist;
+	}
+
+	/**
+	 * Align an inner box to this box.
+	 */
+	void alignBox(uiBox_t& inner, align_t direction);
+};
+
 /**
  * @brief Atomic structure used to define most of the UI
  */

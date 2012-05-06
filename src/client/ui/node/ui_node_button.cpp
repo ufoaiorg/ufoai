@@ -72,7 +72,6 @@ void uiButtonNode::draw (uiNode_t *node)
 		CORNER_SIZE, MID_SIZE, CORNER_SIZE,
 		MARGE
 	};
-	const char *text;
 	int texX, texY;
 	const float *textColor;
 	const char *image;
@@ -108,22 +107,62 @@ void uiButtonNode::draw (uiNode_t *node)
 		UI_DrawSpriteInBox(qfalse, EXTRADATA(node).background, iconStatus, pos[0], pos[1], node->size[0], node->size[1]);
 	}
 
-	const vec2_t insidePos = {pos[0] + node->padding, pos[1] + node->padding};
-	const vec2_t insideSize = {node->size[0] - node->padding * 2, node->size[1] - node->padding * 2};
+	/* compute node box with padding */
+	uiBox_t inside;
+	inside.set(pos, node->size);
+	inside.expand(-node->padding);
+	uiBox_t content;
+	content.clear();
+
+	const bool hasIcon = EXTRADATA(node).icon != NULL;
+	const char* text = UI_GetReferenceString(node, node->text);
+	const bool hasText = text != NULL && *text != '\0';
+	if (hasText) {
+		text = _(text);
+	}
+
+	vec2_t iconPos;
+	Vector2Clear(iconPos);
+	if (hasIcon) {
+		content.size[0] += EXTRADATA(node).icon->size[0];
+		content.size[1] += EXTRADATA(node).icon->size[1];
+	}
+
+	vec2_t textPos;
+	Vector2Clear(textPos);
+	int textWidth;
+	if (hasText) {
+		textPos[0] = content.size[0];
+		const int availableTextWidth = inside.size[0] - content.size[0];
+		int height;
+		R_FontTextSize(font, text, availableTextWidth, LONGLINES_PRETTYCHOP, &textWidth, &height, NULL, NULL);
+		content.size[0] += textWidth;
+		if (height > content.size[1]) {
+			content.size[1] = height;
+			iconPos[1] = (height - content.size[1]) * 0.5;
+		} else {
+			textPos[1] = (content.size[1] - height) * 0.5;
+		}
+	}
+
+	inside.alignBox(content, (align_t)node->contentAlign);
 
 	/* display the icon at the left */
 	/** @todo should we move it according to the text align? */
-	if (EXTRADATA(node).icon) {
+	if (hasIcon) {
+		iconPos[0] += content.pos[0];
+		iconPos[1] += content.pos[1];
 		UI_DrawSpriteInBox(EXTRADATA(node).flipIcon, EXTRADATA(node).icon, iconStatus,
-				insidePos[0], insidePos[1], insideSize[0], insideSize[1]);
+				iconPos[0], iconPos[1], EXTRADATA(node).icon->size[0], EXTRADATA(node).icon->size[1]);
 	}
 
-	text = UI_GetReferenceString(node, node->text);
-	if (text != NULL && *text != '\0') {
+	if (hasText) {
+		textPos[0] += content.pos[0];
+		textPos[1] += content.pos[1];
 		R_Color(textColor);
-		text = _(text);
+		/* @todo here IMO we should not use contentalign. need to check other toolkits to check layout */
 		UI_DrawStringInBox(font, (align_t) node->contentAlign,
-			insidePos[0], insidePos[1], insideSize[0], insideSize[1],
+			textPos[0], content.pos[1], textWidth, content.size[1],
 			text, LONGLINES_PRETTYCHOP);
 		R_Color(NULL);
 	}

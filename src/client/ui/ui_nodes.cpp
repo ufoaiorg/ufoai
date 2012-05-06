@@ -661,3 +661,32 @@ void UI_InitNodes (void)
 		current++;
 	}
 }
+
+void uiBox_t::alignBox (uiBox_t& inner, align_t direction)
+{
+	switch (direction % 3) {
+	case 0:	/* left */
+		inner.pos[0] = this->pos[0];
+		break;
+	case 1:	/* middle */
+		inner.pos[0] = this->pos[0] + (this->size[0] * 0.5) - (inner.size[0] * 0.5);
+		break;
+	case 2:	/* right */
+		inner.pos[0] = this->pos[0] + this->size[0] - inner.size[0];
+		break;
+	}
+	switch (direction / 3) {
+	case 0:	/* top */
+		inner.pos[1] = this->pos[1];
+		break;
+	case 1:	/* middle */
+		inner.pos[1] = this->pos[1] + (this->size[1] * 0.5) - (inner.size[1] * 0.5);
+		break;
+	case 2:	/* bottom */
+		inner.pos[1] = this->pos[1] + this->size[1] - inner.size[1];
+		break;
+	default:
+		inner.pos[1] = this->pos[1];
+		Com_Error(ERR_FATAL, "UI_ImageAlignBoxInBox: Align %d not supported\n", direction);
+	}
+}

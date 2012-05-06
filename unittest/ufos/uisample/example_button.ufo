@@ -1,0 +1,82 @@
+window unittest_button
+{
+	{
+		pos "100 100"
+		size "400 300"
+		dragbutton	true
+		closebutton	true
+		string		"_Unittest button"
+		bgcolor		"0 0 0 1"
+	}
+
+	button text {
+		string "foo bar text"
+		pos "50 50"
+		size "300 50"
+		border		1
+		bordercolor "0 1 0 1"
+		bgcolor		"0.1 0.1 0.1 1"
+	}
+
+	button icon {
+		icon "icons/alien_surgery"
+		pos "50 110"
+		size "300 50"
+		border		1
+		bordercolor "0 1 0 1"
+		bgcolor		"0.2 0.2 0.2 1"
+	}
+
+	button text_icon {
+		icon "icons/alien_surgery"
+		string "foo bar text icon"
+		pos "50 170"
+		size "300 50"
+		border		1
+		bordercolor "0 1 0 1"
+		bgcolor		"0.3 0.3 0.3 1"
+	}
+
+	button cc {
+		string "CC"
+		pos "10 50"
+		size "30 30"
+		border		1
+		bordercolor "0 1 0 1"
+		bgcolor		"0.1 0.1 0.1 1"
+		onClick {
+			*node:parent.text@contentAlign = ALIGN_CC
+			*node:parent.icon@contentAlign = ALIGN_CC
+			*node:parent.text_icon@contentAlign = ALIGN_CC
+		}
+	}
+
+	button ul {
+		string "UL"
+		pos "10 90"
+		size "30 30"
+		border		1
+		bordercolor "0 1 0 1"
+		bgcolor		"0.1 0.1 0.1 1"
+		onClick {
+			*node:parent.text@contentAlign = ALIGN_UL
+			*node:parent.icon@contentAlign = ALIGN_UL
+			*node:parent.text_icon@contentAlign = ALIGN_UL
+		}
+	}
+
+	button lr {
+		string "LR"
+		pos "10 130"
+		size "30 30"
+		border		1
+		bordercolor "0 1 0 1"
+		bgcolor		"0.1 0.1 0.1 1"
+		onClick {
+			*node:parent.text@contentAlign = ALIGN_LR
+			*node:parent.icon@contentAlign = ALIGN_LR
+			*node:parent.text_icon@contentAlign = ALIGN_LR
+		}
+	}
+
+}
