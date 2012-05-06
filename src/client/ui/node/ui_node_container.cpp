@@ -320,7 +320,7 @@ static void UI_DrawDisabled (const uiNode_t* node)
 	vec2_t nodepos;
 
 	UI_GetNodeAbsPos(node, nodepos);
-	UI_DrawFill(nodepos[0], nodepos[1], node->size[0], node->size[1], color);
+	UI_DrawFill(nodepos[0], nodepos[1], node->box.size[0], node->box.size[1], color);
 }
 
 /**
@@ -339,7 +339,7 @@ static void UI_DrawFree (containerIndex_t container, const uiNode_t *node, int p
 	 * and we are connected to a game */
 	if (showTUs && CL_BattlescapeRunning()) {
 		UI_DrawString("f_verysmall", ALIGN_UL, nodepos[0] + 3, nodepos[1] + 3,
-			nodepos[0] + 3, node->size[0] - 6, 0,
+			nodepos[0] + 3, node->box.size[0] - 6, 0,
 			va(_("In: %i Out: %i"), inv->in, inv->out), 0, 0, NULL, qfalse, LONGLINES_WRAP);
 	}
 }
@@ -362,7 +362,7 @@ static void UI_ContainerNodeDrawFreeSpace (uiNode_t *node, inventory_t *inv)
 	if (EXTRADATA(node).container->single) {
 		/* if container is free or the dragged-item is in it */
 		if (UI_DNDIsSourceNode(node) || INVSH_CheckToInventory(inv, od, EXTRADATA(node).container, 0, 0, dragInfoIC))
-			UI_DrawFree(EXTRADATA(node).container->id, node, nodepos[0], nodepos[1], node->size[0], node->size[1], qtrue);
+			UI_DrawFree(EXTRADATA(node).container->id, node, nodepos[0], nodepos[1], node->box.size[0], node->box.size[1], qtrue);
 	} else {
 		/* The shape of the free positions. */
 		uint32_t free[SHAPE_BIG_MAX_HEIGHT];
@@ -427,13 +427,13 @@ void uiContainerNode::onLoaded (uiNode_t* const node)
 			if (j < SHAPE_BIG_MAX_HEIGHT)
 				break;
 		}
-		node->size[0] = C_UNIT * (i + 1) + 0.01;
+		node->box.size[0] = C_UNIT * (i + 1) + 0.01;
 
 		/* start on the lower row of the shape mask */
 		for (i = SHAPE_BIG_MAX_HEIGHT - 1; i >= 0; i--)
 			if (container->shape[i] & ~0x0)
 				break;
-		node->size[1] = C_UNIT * (i + 1) + 0.01;
+		node->box.size[1] = C_UNIT * (i + 1) + 0.01;
 	}
 }
 
@@ -456,8 +456,8 @@ static void UI_ContainerNodeDrawSingle (uiNode_t *node, const objDef_t *highligh
 	vec3_t pos;
 
 	UI_GetNodeAbsPos(node, pos);
-	pos[0] += node->size[0] / 2.0;
-	pos[1] += node->size[1] / 2.0;
+	pos[0] += node->box.size[0] / 2.0;
+	pos[1] += node->box.size[1] / 2.0;
 	pos[2] = 0;
 
 	/* Single item container (special case for left hand). */
@@ -566,8 +566,8 @@ static void UI_ContainerNodeDrawDropPreview (uiNode_t *target)
 
 	/* Get center of single container for placement of preview item */
 	if (EXTRADATA(target).container->single) {
-		origine[0] += target->size[0] / 2.0;
-		origine[1] += target->size[1] / 2.0;
+		origine[0] += target->box.size[0] / 2.0;
+		origine[1] += target->box.size[1] / 2.0;
 	/* This is a "grid" container - we need to calculate the item-position
 	 * (on the screen) from stored placement in the container and the
 	 * calculated rotation info. */

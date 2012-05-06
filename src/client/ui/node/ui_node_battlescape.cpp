@@ -55,14 +55,14 @@ void uiBattleScapeNode::draw (uiNode_t *node)
 	/** Note: hack to fix everytime renderrect (for example when we close hud_nohud) */
 	vec2_t pos;
 	UI_GetNodeAbsPos(node, pos);
-	UI_SetRenderRect(pos[0], pos[1], node->size[0], node->size[1]);
+	UI_SetRenderRect(pos[0], pos[1], node->box.size[0], node->box.size[1]);
 }
 
 void uiBattleScapeNode::onWindowOpened (uiNode_t *node, linkedList_t *params)
 {
 	vec2_t pos;
 	UI_GetNodeAbsPos(node, pos);
-	UI_SetRenderRect(pos[0], pos[1], node->size[0], node->size[1]);
+	UI_SetRenderRect(pos[0], pos[1], node->box.size[0], node->box.size[1]);
 }
 
 
@@ -70,7 +70,7 @@ void uiBattleScapeNode::onSizeChanged (uiNode_t *node)
 {
 	vec2_t pos;
 	UI_GetNodeAbsPos(node, pos);
-	UI_SetRenderRect(pos[0], pos[1], node->size[0], node->size[1]);
+	UI_SetRenderRect(pos[0], pos[1], node->box.size[0], node->box.size[1]);
 }
 
 void uiBattleScapeNode::onWindowClosed (uiNode_t *node)

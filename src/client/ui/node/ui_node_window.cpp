@@ -146,14 +146,14 @@ void uiWindowNode::draw (uiNode_t *node)
 			UI_DrawFill(0, 0, viddef.virtualWidth, pos[1], anamorphicBorder);
 		/* left-right */
 		if (pos[0] != 0)
-			UI_DrawFill(0, pos[1], pos[0], node->size[1], anamorphicBorder);
-		if (pos[0] + node->size[0] < viddef.virtualWidth) {
-			const int width = viddef.virtualWidth - (pos[0] + node->size[0]);
-			UI_DrawFill(viddef.virtualWidth - width, pos[1], width, node->size[1], anamorphicBorder);
+			UI_DrawFill(0, pos[1], pos[0], node->box.size[1], anamorphicBorder);
+		if (pos[0] + node->box.size[0] < viddef.virtualWidth) {
+			const int width = viddef.virtualWidth - (pos[0] + node->box.size[0]);
+			UI_DrawFill(viddef.virtualWidth - width, pos[1], width, node->box.size[1], anamorphicBorder);
 		}
 		/* bottom */
-		if (pos[1] + node->size[1] < viddef.virtualHeight) {
-			const int height = viddef.virtualHeight - (pos[1] + node->size[1]);
+		if (pos[1] + node->box.size[1] < viddef.virtualHeight) {
+			const int height = viddef.virtualHeight - (pos[1] + node->box.size[1]);
 			UI_DrawFill(0, viddef.virtualHeight - height, viddef.virtualWidth, height, anamorphicBorder);
 		}
 	}
@@ -165,16 +165,16 @@ void uiWindowNode::draw (uiNode_t *node)
 	/* draw the background */
 	image = UI_GetReferenceString(node, node->image);
 	if (image)
-		UI_DrawPanel(pos, node->size, image, 0, 0, windowTemplate);
+		UI_DrawPanel(pos, node->box.size, image, 0, 0, windowTemplate);
 
 	if (EXTRADATA(node).background) {
-		UI_DrawSpriteInBox(qfalse, EXTRADATA(node).background, SPRITE_STATUS_NORMAL, pos[0], pos[1], node->size[0], node->size[1]);
+		UI_DrawSpriteInBox(qfalse, EXTRADATA(node).background, SPRITE_STATUS_NORMAL, pos[0], pos[1], node->box.size[0], node->box.size[1]);
 	}
 
 	/* draw the title */
 	text = UI_GetReferenceString(node, node->text);
 	if (text)
-		UI_DrawStringInBox(font, ALIGN_CC, pos[0] + node->padding, pos[1] + node->padding, node->size[0] - node->padding - node->padding, TOP_HEIGHT + 10 - node->padding - node->padding, text, LONGLINES_PRETTYCHOP);
+		UI_DrawStringInBox(font, ALIGN_CC, pos[0] + node->padding, pos[1] + node->padding, node->box.size[0] - node->padding - node->padding, TOP_HEIGHT + 10 - node->padding - node->padding, text, LONGLINES_PRETTYCHOP);
 
 	/* embedded timer */
 	if (EXTRADATA(node).onTimeOut && EXTRADATA(node).timeOut) {
@@ -196,18 +196,18 @@ void uiWindowNode::doLayout (uiNode_t *node)
 
 	/* use a the space */
 	if (EXTRADATA(node).fill) {
-		if (node->size[0] != viddef.virtualWidth) {
-			node->size[0] = viddef.virtualWidth;
+		if (node->box.size[0] != viddef.virtualWidth) {
+			node->box.size[0] = viddef.virtualWidth;
 		}
-		if (node->size[1] != viddef.virtualHeight) {
-			node->size[1] = viddef.virtualHeight;
+		if (node->box.size[1] != viddef.virtualHeight) {
+			node->box.size[1] = viddef.virtualHeight;
 		}
 	}
 
 	/* move fullscreen window on the center of the screen */
 	if (UI_WindowIsFullScreen(node)) {
-		node->pos[0] = (int) ((viddef.virtualWidth - node->size[0]) / 2);
-		node->pos[1] = (int) ((viddef.virtualHeight - node->size[1]) / 2);
+		node->box.pos[0] = (int) ((viddef.virtualWidth - node->box.size[0]) / 2);
+		node->box.pos[1] = (int) ((viddef.virtualHeight - node->box.size[1]) / 2);
 	}
 
 	/** @todo check and fix here window outside the screen */
@@ -266,8 +266,8 @@ void uiWindowNode::onWindowClosed (uiNode_t *node)
  */
 void uiWindowNode::onLoading (uiNode_t *node)
 {
-	node->size[0] = VID_NORM_WIDTH;
-	node->size[1] = VID_NORM_HEIGHT;
+	node->box.size[0] = VID_NORM_WIDTH;
+	node->box.size[1] = VID_NORM_HEIGHT;
 	node->font = "f_big";
 	node->padding = 5;
 }
@@ -285,10 +285,10 @@ void uiWindowNode::onLoaded (uiNode_t *node)
 		control->root = node;
 		control->image = NULL;
 		/** @todo Once @c image_t is known on the client, use @c image->width resp. @c image->height here */
-		control->size[0] = node->size[0];
-		control->size[1] = TOP_HEIGHT;
-		control->pos[0] = 0;
-		control->pos[1] = 0;
+		control->box.size[0] = node->box.size[0];
+		control->box.size[1] = TOP_HEIGHT;
+		control->box.pos[0] = 0;
+		control->box.pos[1] = 0;
 		control->tooltip = _("Drag to move window");
 		UI_AppendNode(node, control);
 	}
@@ -301,23 +301,23 @@ void uiWindowNode::onLoaded (uiNode_t *node)
 		button->root = node;
 		UI_NodeSetProperty(button, UI_GetPropertyFromBehaviour(button->behaviour, "icon"), "icons/system_close");
 		/** @todo Once @c image_t is known on the client, use @c image->width resp. @c image->height here */
-		button->size[0] = CONTROLS_IMAGE_DIMENSIONS;
-		button->size[1] = CONTROLS_IMAGE_DIMENSIONS;
-		button->pos[0] = node->size[0] - positionFromRight - button->size[0];
-		button->pos[1] = CONTROLS_PADDING;
+		button->box.size[0] = CONTROLS_IMAGE_DIMENSIONS;
+		button->box.size[1] = CONTROLS_IMAGE_DIMENSIONS;
+		button->box.pos[0] = node->box.size[0] - positionFromRight - button->box.size[0];
+		button->box.pos[1] = CONTROLS_PADDING;
 		button->tooltip = _("Close the window");
 		button->onClick = UI_AllocStaticCommandAction(closeCommand);
 		UI_AppendNode(node, button);
 	}
 
-	EXTRADATA(node).isFullScreen = node->size[0] == VID_NORM_WIDTH
-			&& node->size[1] == VID_NORM_HEIGHT;
+	EXTRADATA(node).isFullScreen = node->box.size[0] == VID_NORM_WIDTH
+			&& node->box.size[1] == VID_NORM_HEIGHT;
 
 	if (EXTRADATA(node).starLayout)
 		UI_Invalidate(node);
 
 #ifdef DEBUG
-	if (node->size[0] < LEFT_WIDTH + MID_WIDTH + RIGHT_WIDTH || node->size[1] < TOP_HEIGHT + MID_HEIGHT + BOTTOM_HEIGHT)
+	if (node->box.size[0] < LEFT_WIDTH + MID_WIDTH + RIGHT_WIDTH || node->box.size[1] < TOP_HEIGHT + MID_HEIGHT + BOTTOM_HEIGHT)
 		Com_DPrintf(DEBUG_CLIENT, "Node '%s' too small. It can create graphical bugs\n", node->name);
 #endif
 }

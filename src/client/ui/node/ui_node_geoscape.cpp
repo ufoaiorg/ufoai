@@ -85,7 +85,7 @@ void uiGeoscapeNode::draw (uiNode_t *node)
 
 		/* Draw geoscape */
 		UI_GetNodeScreenPos(node, screenPos);
-		R_PushClipRect(screenPos[0], screenPos[1], node->size[0], node->size[1]);
+		R_PushClipRect(screenPos[0], screenPos[1], node->box.size[0], node->box.size[1]);
 		MAP_DrawMap(node, ccs.curCampaign);
 		R_PopClipRect();
 	}

@@ -82,15 +82,15 @@ void uiCheckBoxNode::draw (uiNode_t* node)
 	UI_GetNodeAbsPos(node, pos);
 
 	if (!Q_strnull(image)) {
-		UI_DrawNormImageByName(qfalse, pos[0], pos[1], node->size[0], node->size[1],
-			texx + node->size[0], texy + node->size[1], texx, texy, image);
+		UI_DrawNormImageByName(qfalse, pos[0], pos[1], node->box.size[0], node->box.size[1],
+			texx + node->box.size[0], texy + node->box.size[1], texx, texy, image);
 	}
 
 	if (EXTRADATA(node).background) {
-		UI_DrawSpriteInBox(qfalse, EXTRADATA(node).background, status, pos[0], pos[1], node->size[0], node->size[1]);
+		UI_DrawSpriteInBox(qfalse, EXTRADATA(node).background, status, pos[0], pos[1], node->box.size[0], node->box.size[1]);
 	}
 	if (icon) {
-		UI_DrawSpriteInBox(qfalse, icon, status, pos[0], pos[1], node->size[0], node->size[1]);
+		UI_DrawSpriteInBox(qfalse, icon, status, pos[0], pos[1], node->box.size[0], node->box.size[1]);
 	}
 }
 

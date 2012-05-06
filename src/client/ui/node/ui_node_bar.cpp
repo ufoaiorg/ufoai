@@ -70,16 +70,16 @@ void uiBarNode::draw (uiNode_t *node)
 
 	switch (EXTRADATA(node).orientation) {
 	case ALIGN_UC:
-		UI_DrawFill(nodepos[0] + node->padding, nodepos[1] + node->padding + node->size[1] - fac * node->size[1], node->size[0] - 2 * node->padding, fac * node->size[1] - 2 * node->padding , color);
+		UI_DrawFill(nodepos[0] + node->padding, nodepos[1] + node->padding + node->box.size[1] - fac * node->box.size[1], node->box.size[0] - 2 * node->padding, fac * node->box.size[1] - 2 * node->padding , color);
 		break;
 	case ALIGN_LC:
-		UI_DrawFill(nodepos[0] + node->padding, nodepos[1] + node->padding, node->size[0] - 2 * node->padding, fac * node->size[1] - 2 * node->padding, color);
+		UI_DrawFill(nodepos[0] + node->padding, nodepos[1] + node->padding, node->box.size[0] - 2 * node->padding, fac * node->box.size[1] - 2 * node->padding, color);
 		break;
 	case ALIGN_CR:
-		UI_DrawFill(nodepos[0] + node->padding, nodepos[1] + node->padding, fac * node->size[0] - 2 * node->padding, node->size[1] - 2 * node->padding, color);
+		UI_DrawFill(nodepos[0] + node->padding, nodepos[1] + node->padding, fac * node->box.size[0] - 2 * node->padding, node->box.size[1] - 2 * node->padding, color);
 		break;
 	case ALIGN_CL:
-		UI_DrawFill(nodepos[0] + node->padding + node->size[0] - fac * node->size[0], nodepos[1] + node->padding, fac * node->size[0] - 2 * node->padding, node->size[1] - 2 * node->padding, color);
+		UI_DrawFill(nodepos[0] + node->padding + node->box.size[0] - fac * node->box.size[0], nodepos[1] + node->padding, fac * node->box.size[0] - 2 * node->padding, node->box.size[1] - 2 * node->padding, color);
 		break;
 	default:
 		Com_Printf("UI_BarNodeDraw: Orientation %d not supported\n", EXTRADATA(node).orientation);
@@ -96,12 +96,12 @@ void uiBarNode::onCapturedMouseMove (uiNode_t *node, int x, int y)
 
 	if (x < 0)
 		x = 0;
-	else if (x > node->size[0])
-		x = node->size[0];
+	else if (x > node->box.size[0])
+		x = node->box.size[0];
 	if (y < 0)
 		y = 0;
-	else if (y > node->size[1])
-		y = node->size[1];
+	else if (y > node->box.size[1])
+		y = node->box.size[1];
 
 	float frac;
 	const float min = getMin(node);
@@ -109,16 +109,16 @@ void uiBarNode::onCapturedMouseMove (uiNode_t *node, int x, int y)
 
 	switch (EXTRADATA(node).orientation) {
 	case ALIGN_UC:
-		frac = (node->size[1] - (float) y) / node->size[1];
+		frac = (node->box.size[1] - (float) y) / node->box.size[1];
 		break;
 	case ALIGN_LC:
-		frac = (float) y / node->size[1];
+		frac = (float) y / node->box.size[1];
 		break;
 	case ALIGN_CR:
-		frac = (float) x / node->size[0];
+		frac = (float) x / node->box.size[0];
 		break;
 	case ALIGN_CL:
-		frac = (node->size[0] - (float) x) / node->size[0];
+		frac = (node->box.size[0] - (float) x) / node->box.size[0];
 		break;
 	default:
 		frac = 0;

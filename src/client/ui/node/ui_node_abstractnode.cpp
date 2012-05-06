@@ -312,17 +312,17 @@ void UI_RegisterAbstractNode (uiBehaviour_t *behaviour)
 	behaviour->manager = new uiLocatedNode();
 
 	/* Top-left position of the node */
-	UI_RegisterNodeProperty(behaviour, "pos", V_POS, uiNode_t, pos);
+	UI_RegisterNodeProperty(behaviour, "pos", V_POS, uiNode_t, box.pos);
 	/* Size of the node */
-	propertySize = UI_RegisterNodeProperty(behaviour, "size", V_POS, uiNode_t, size);
+	propertySize = UI_RegisterNodeProperty(behaviour, "size", V_POS, uiNode_t, box.size);
 	/* Width of the node (see also <code>size</code>) */
-	propertyWidth = UI_RegisterNodeProperty(behaviour, "width", V_FLOAT, uiNode_t, size[0]);
+	propertyWidth = UI_RegisterNodeProperty(behaviour, "width", V_FLOAT, uiNode_t, box.size[0]);
 	/* Height of the node (see also <code>size</code>) */
-	propertyHeight = UI_RegisterNodeProperty(behaviour, "height", V_FLOAT, uiNode_t, size[1]);
+	propertyHeight = UI_RegisterNodeProperty(behaviour, "height", V_FLOAT, uiNode_t, box.size[1]);
 	/* Left position of the node (see also <code>pos</code>) */
-	UI_RegisterNodeProperty(behaviour, "left", V_FLOAT, uiNode_t, pos[0]);
+	UI_RegisterNodeProperty(behaviour, "left", V_FLOAT, uiNode_t, box.pos[0]);
 	/* Top position of the node (see also <code>pos</code>) */
-	UI_RegisterNodeProperty(behaviour, "top", V_FLOAT, uiNode_t, pos[1]);
+	UI_RegisterNodeProperty(behaviour, "top", V_FLOAT, uiNode_t, box.pos[1]);
 
 	/* If true, the node name is indexed into the window. We can access to the node with
 	 * the path "windowName#nodeName"

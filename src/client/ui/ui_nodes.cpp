@@ -381,11 +381,11 @@ static uiNode_t *UI_GetNodeInTreeAtPosition (uiNode_t *node, int rx, int ry)
 		return NULL;
 
 	/* relative to the node */
-	rx -= node->pos[0];
-	ry -= node->pos[1];
+	rx -= node->box.pos[0];
+	ry -= node->box.pos[1];
 
 	/* check bounding box */
-	if (rx < 0 || ry < 0 || rx >= node->size[0] || ry >= node->size[1])
+	if (rx < 0 || ry < 0 || rx >= node->box.size[0] || ry >= node->box.size[1])
 		return NULL;
 
 	/** @todo we should improve the loop (last-to-first) */

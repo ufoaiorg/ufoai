@@ -200,7 +200,7 @@ void uiMessageListNode::draw (uiNode_t *node)
 	/* text box */
 	x = pos[0] + node->padding;
 	y = pos[1] + node->padding;
-	width = node->size[0] - node->padding - node->padding;
+	width = node->box.size[0] - node->padding - node->padding;
 
 	/* update message cache */
 	if (isSizeChange(node)) {
@@ -225,11 +225,11 @@ void uiMessageListNode::draw (uiNode_t *node)
 	/* update scroll status */
 #ifdef AUTOSCROLL
 	if (autoscroll)
-		setScrollY(node, lineNumber, node->size[1] / defaultHeight, lineNumber);
+		setScrollY(node, lineNumber, node->box.size[1] / defaultHeight, lineNumber);
 	else
-		setScrollY(node, -1, node->size[1] / defaultHeight, lineNumber);
+		setScrollY(node, -1, node->box.size[1] / defaultHeight, lineNumber);
 #else
-	setScrollY(node, -1, node->size[1] / defaultHeight, lineNumber);
+	setScrollY(node, -1, node->box.size[1] / defaultHeight, lineNumber);
 #endif
 
 	/* found the first message we must display */

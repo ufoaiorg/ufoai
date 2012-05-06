@@ -42,15 +42,15 @@ void uiRowsNode::draw (uiNode_t *node)
 	vec2_t pos;
 	UI_GetNodeAbsPos(node, pos);
 
-	while (current < node->size[1]) {
+	while (current < node->box.size[1]) {
 		const float *color;
-		const int height = min(EXTRADATA(node).lineHeight, node->size[1] - current);
+		const int height = min(EXTRADATA(node).lineHeight, node->box.size[1] - current);
 
 		if (i % 2)
 			color = node->color;
 		else
 			color = node->selectedColor;
-		UI_DrawFill(pos[0], pos[1] + current, node->size[0], height, color);
+		UI_DrawFill(pos[0], pos[1] + current, node->box.size[0], height, color);
 		current += height;
 		i++;
 	}

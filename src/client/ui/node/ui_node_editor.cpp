@@ -64,13 +64,13 @@ static void UI_EditorNodeHighlightNode (uiNode_t *node, const vec4_t color, qboo
 	vec2_t pos;
 	UI_GetNodeAbsPos(node, pos);
 
-	R_DrawRect(pos[0] - 1, pos[1] - 1, node->size[0] + 2, node->size[1] + 2, color, 1.0, 0x3333);
+	R_DrawRect(pos[0] - 1, pos[1] - 1, node->box.size[0] + 2, node->box.size[1] + 2, color, 1.0, 0x3333);
 
 	if (displayAnchor) {
 		UI_DrawFill(pos[0] - anchorSize, pos[1] - anchorSize, anchorSize, anchorSize, color);
-		UI_DrawFill(pos[0] - anchorSize, pos[1] + node->size[1], anchorSize, anchorSize, color);
-		UI_DrawFill(pos[0] + node->size[0], pos[1] + node->size[1], anchorSize, anchorSize, color);
-		UI_DrawFill(pos[0] + node->size[0], pos[1] - anchorSize, anchorSize, anchorSize, color);
+		UI_DrawFill(pos[0] - anchorSize, pos[1] + node->box.size[1], anchorSize, anchorSize, color);
+		UI_DrawFill(pos[0] + node->box.size[0], pos[1] + node->box.size[1], anchorSize, anchorSize, color);
+		UI_DrawFill(pos[0] + node->box.size[0], pos[1] - anchorSize, anchorSize, anchorSize, color);
 	}
 }
 
@@ -78,20 +78,20 @@ static zoneNode_t UI_EditorNodeGetElementAtPosition (uiNode_t *node, int x, int 
 {
 	UI_NodeAbsoluteToRelativePos(anchoredNode, &x, &y);
 
-	if (x > 0 && x < node->size[0] && y > 0 && y < node->size[1]) {
+	if (x > 0 && x < node->box.size[0] && y > 0 && y < node->box.size[1]) {
 		return ZONE_BODY;
 	}
 
 	if (y > -anchorSize && y < 0) {
 		if (x > -anchorSize && x < 0) {
 			return ZONE_TOPLEFT_CORNER;
-		} else if (x > node->size[0] && x < node->size[0] + anchorSize) {
+		} else if (x > node->box.size[0] && x < node->box.size[0] + anchorSize) {
 			return ZONE_TOPRIGHT_CORNER;
 		}
-	} else if (y > node->size[1] && y < node->size[1] + anchorSize) {
+	} else if (y > node->box.size[1] && y < node->box.size[1] + anchorSize) {
 		if (x > -anchorSize && x < 0) {
 			return ZONE_BOTTOMLEFT_CORNER;
-		} else if (x > node->size[0] && x < node->size[0] + anchorSize) {
+		} else if (x > node->box.size[0] && x < node->box.size[0] + anchorSize) {
 			return ZONE_BOTTOMRIGHT_CORNER;
 		}
 	}
@@ -146,30 +146,30 @@ void uiEditorNode::onCapturedMouseMove (uiNode_t *node, int x, int y)
 	case ZONE_NONE:
 		return;
 	case ZONE_TOPLEFT_CORNER:
-		anchoredNode->pos[0] += diffX;
-		anchoredNode->pos[1] += diffY;
-		size[0] = anchoredNode->size[0] - diffX;
-		size[1] = anchoredNode->size[1] - diffY;
+		anchoredNode->box.pos[0] += diffX;
+		anchoredNode->box.pos[1] += diffY;
+		size[0] = anchoredNode->box.size[0] - diffX;
+		size[1] = anchoredNode->box.size[1] - diffY;
 		break;
 	case ZONE_TOPRIGHT_CORNER:
-		anchoredNode->pos[1] += diffY;
-		size[0] = anchoredNode->size[0] + diffX;
-		size[1] = anchoredNode->size[1] - diffY;
+		anchoredNode->box.pos[1] += diffY;
+		size[0] = anchoredNode->box.size[0] + diffX;
+		size[1] = anchoredNode->box.size[1] - diffY;
 		break;
 	case ZONE_BOTTOMLEFT_CORNER:
-		anchoredNode->pos[0] += diffX;
-		size[0] = anchoredNode->size[0] - diffX;
-		size[1] = anchoredNode->size[1] + diffY;
+		anchoredNode->box.pos[0] += diffX;
+		size[0] = anchoredNode->box.size[0] - diffX;
+		size[1] = anchoredNode->box.size[1] + diffY;
 		break;
 	case ZONE_BOTTOMRIGHT_CORNER:
-		size[0] = anchoredNode->size[0] + diffX;
-		size[1] = anchoredNode->size[1] + diffY;
+		size[0] = anchoredNode->box.size[0] + diffX;
+		size[1] = anchoredNode->box.size[1] + diffY;
 		break;
 	case ZONE_BODY:
-		anchoredNode->pos[0] += diffX;
-		anchoredNode->pos[1] += diffY;
-		size[0] = anchoredNode->size[0];
-		size[1] = anchoredNode->size[1];
+		anchoredNode->box.pos[0] += diffX;
+		anchoredNode->box.pos[1] += diffY;
+		size[0] = anchoredNode->box.size[0];
+		size[1] = anchoredNode->box.size[1];
 		break;
 	default:
 		Sys_Error("UI_EditorNodeCapturedMouseMove: Invalid status of %i", dragStatus);
@@ -306,12 +306,12 @@ static void UI_EditorNodeExtractNode (qFILE *file, uiNode_t *node, int depth)
 	/* properties */
 	if (child) {
 		FS_Printf(file, "%s\t{\n", tab);
-		FS_Printf(file, "%s\t\tpos\t\"%d %d\"\n", tab, (int)node->pos[0], (int)node->pos[1]);
-		FS_Printf(file, "%s\t\tsize\t\"%d %d\"\n", tab, (int)node->size[0], (int)node->size[1]);
+		FS_Printf(file, "%s\t\tpos\t\"%d %d\"\n", tab, (int)node->box.pos[0], (int)node->box.pos[1]);
+		FS_Printf(file, "%s\t\tsize\t\"%d %d\"\n", tab, (int)node->box.size[0], (int)node->box.size[1]);
 		FS_Printf(file, "%s\t}\n", tab);
 	} else {
-		FS_Printf(file, "%s\tpos\t\"%d %d\"\n", tab, (int)node->pos[0], (int)node->pos[1]);
-		FS_Printf(file, "%s\tsize\t\"%d %d\"\n", tab, (int)node->size[0], (int)node->size[1]);
+		FS_Printf(file, "%s\tpos\t\"%d %d\"\n", tab, (int)node->box.pos[0], (int)node->box.pos[1]);
+		FS_Printf(file, "%s\tsize\t\"%d %d\"\n", tab, (int)node->box.size[0], (int)node->box.size[1]);
 	}
 
 	/* child */

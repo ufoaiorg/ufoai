@@ -92,16 +92,16 @@ void uiCustomButtonNode::draw (uiNode_t *node)
 	if (image) {
 		const int texX = rint(EXTRADATA(node).texl[0]);
 		texY += EXTRADATA(node).texl[1];
-		UI_DrawNormImageByName(qfalse, pos[0], pos[1], node->size[0], node->size[1],
-			texX + node->size[0], texY + node->size[1], texX, texY, image);
+		UI_DrawNormImageByName(qfalse, pos[0], pos[1], node->box.size[0], node->box.size[1],
+			texX + node->box.size[0], texY + node->box.size[1], texX, texY, image);
 	}
 
 	if (EXTRADATA(node).super.background) {
-		UI_DrawSpriteInBox(qfalse, EXTRADATA(node).super.background, iconStatus, pos[0], pos[1], node->size[0], node->size[1]);
+		UI_DrawSpriteInBox(qfalse, EXTRADATA(node).super.background, iconStatus, pos[0], pos[1], node->box.size[0], node->box.size[1]);
 	}
 
 	if (EXTRADATA(node).super.icon) {
-		UI_DrawSpriteInBox(EXTRADATA(node).super.flipIcon, EXTRADATA(node).super.icon, iconStatus, pos[0], pos[1], node->size[0], node->size[1]);
+		UI_DrawSpriteInBox(EXTRADATA(node).super.flipIcon, EXTRADATA(node).super.icon, iconStatus, pos[0], pos[1], node->box.size[0], node->box.size[1]);
 	}
 
 	text = UI_GetReferenceString(node, node->text);
@@ -109,7 +109,7 @@ void uiCustomButtonNode::draw (uiNode_t *node)
 		R_Color(textColor);
 		UI_DrawStringInBox(font, (align_t) node->contentAlign,
 			pos[0] + node->padding, pos[1] + node->padding,
-			node->size[0] - node->padding - node->padding, node->size[1] - node->padding - node->padding,
+			node->box.size[0] - node->padding - node->padding, node->box.size[1] - node->padding - node->padding,
 			text, LONGLINES_PRETTYCHOP);
 		R_Color(NULL);
 	}

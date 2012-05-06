@@ -86,7 +86,7 @@ void uiTextListNode::drawText (uiNode_t* node, const linkedList_t* list)
 		lineHeight = UI_FontGetHeight(font);
 
 	if (isSizeChange(node))
-		viewSizeY = node->size[1] / lineHeight;
+		viewSizeY = node->box.size[1] / lineHeight;
 	else
 		viewSizeY = EXTRADATA(node).super.scrollY.viewSize;
 
@@ -109,9 +109,9 @@ void uiTextListNode::drawText (uiNode_t* node, const linkedList_t* list)
 	}
 
 	currentY = pos[1];
-	maxHeight = currentY + node->size[1] - node->padding - node->padding - node->padding - lineHeight;
+	maxHeight = currentY + node->box.size[1] - node->padding - node->padding - node->padding - lineHeight;
 	while (list) {
-		const int width = node->size[0] - node->padding - node->padding;
+		const int width = node->box.size[0] - node->padding - node->padding;
 		const char* text = (const char*) list->data;
 		if (currentY > maxHeight)
 			break;

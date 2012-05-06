@@ -94,7 +94,7 @@ static void UI_HighlightNode (const uiNode_t *node, const vec4_t color)
 
 	if (debugPositionX != 0) {
 		lineDefinition[0] = debugPositionX + 20;
-		lineDefinition[2] = pos[0] + node->size[0];
+		lineDefinition[2] = pos[0] + node->box.size[0];
 	} else {
 		lineDefinition[0] = debugPositionX + 20 + width;
 		lineDefinition[2] = pos[0];
@@ -119,7 +119,7 @@ static void UI_HighlightNode (const uiNode_t *node, const vec4_t color)
 	}
 
 	/* bounded box */
-	R_DrawRect(pos[0] - 1, pos[1] - 1, node->size[0] + 2, node->size[1] + 2, color, 2.0, 0x3333);
+	R_DrawRect(pos[0] - 1, pos[1] - 1, node->box.size[0] + 2, node->box.size[1] + 2, color, 2.0, 0x3333);
 }
 
 /**
@@ -229,12 +229,12 @@ static void UI_DrawNode (uiNode_t *node)
 	 * we can create a 'box' node with this properties,
 	 * but we often don't need it */
 	/* check node size x and y value to check whether they are zero */
-	if (Vector2NotEmpty(node->size)) {
+	if (Vector2NotEmpty(node->box.size)) {
 		if (node->bgcolor[3] != 0)
-			UI_DrawFill(pos[0], pos[1], node->size[0], node->size[1], node->bgcolor);
+			UI_DrawFill(pos[0], pos[1], node->box.size[0], node->box.size[1], node->bgcolor);
 
 		if (node->border && node->bordercolor[3] != 0) {
-			R_DrawRect(pos[0], pos[1], node->size[0], node->size[1],
+			R_DrawRect(pos[0], pos[1], node->box.size[0], node->box.size[1],
 				node->bordercolor, node->border, 0xFFFF);
 		}
 	}
@@ -253,7 +253,7 @@ static void UI_DrawNode (uiNode_t *node)
 			hasClient = true;
 		}
 
-		R_PushClipRect(pos[0] + globalTransX, pos[1] + globalTransY, node->size[0], node->size[1]);
+		R_PushClipRect(pos[0] + globalTransX, pos[1] + globalTransY, node->box.size[0], node->box.size[1]);
 
 		/** @todo move it at the right position */
 		if (hasClient) {
@@ -311,8 +311,8 @@ static void UI_DrawNotice (void)
 	}
 
 	/* relative to the window */
-	x += noticeWindow->pos[0];
-	y += noticeWindow->pos[1];
+	x += noticeWindow->box.pos[0];
+	y += noticeWindow->box.pos[1];
 
 	R_FontTextSize(font, noticeText, maxWidth, LONGLINES_WRAP, &width, &height, NULL, NULL);
 

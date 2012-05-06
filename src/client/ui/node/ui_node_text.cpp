@@ -175,7 +175,7 @@ void uiTextNode::drawText (uiNode_t* node, const char *text, const linkedList_t*
 			const char *font = UI_GetFontFromNode(node);
 			lineHeight = UI_FontGetHeight(font);
 		}
-		viewSizeY = node->size[1] / lineHeight;
+		viewSizeY = node->box.size[1] / lineHeight;
 	} else {
 		viewSizeY = EXTRADATA(node).super.scrollY.viewSize;
 	}
@@ -183,7 +183,7 @@ void uiTextNode::drawText (uiNode_t* node, const char *text, const linkedList_t*
 	/* text box */
 	x = pos[0] + node->padding;
 	y = pos[1] + node->padding;
-	width = node->size[0] - node->padding - node->padding;
+	width = node->box.size[0] - node->padding - node->padding;
 
 	if (text) {
 		Q_strncpyz(textCopy, text, sizeof(textCopy));
@@ -490,8 +490,8 @@ void uiTextNode::onLoaded (uiNode_t *node)
 
 	/* auto compute rows (super.viewSizeY) */
 	if (EXTRADATA(node).super.scrollY.viewSize == 0) {
-		if (node->size[1] != 0 && lineheight != 0) {
-			EXTRADATA(node).super.scrollY.viewSize = node->size[1] / lineheight;
+		if (node->box.size[1] != 0 && lineheight != 0) {
+			EXTRADATA(node).super.scrollY.viewSize = node->box.size[1] / lineheight;
 		} else {
 			EXTRADATA(node).super.scrollY.viewSize = 1;
 			Com_Printf("UI_TextNodeLoaded: node '%s' has no rows value\n", UI_GetPath(node));
@@ -499,8 +499,8 @@ void uiTextNode::onLoaded (uiNode_t *node)
 	}
 
 	/* auto compute height */
-	if (node->size[1] == 0) {
-		node->size[1] = EXTRADATA(node).super.scrollY.viewSize * lineheight;
+	if (node->box.size[1] == 0) {
+		node->box.size[1] = EXTRADATA(node).super.scrollY.viewSize * lineheight;
 	}
 
 	/* is text slot exists */
@@ -508,9 +508,9 @@ void uiTextNode::onLoaded (uiNode_t *node)
 		Com_Error(ERR_DROP, "Error in node %s - max shared data id num exceeded (num: %i, max: %i)", UI_GetPath(node), EXTRADATA(node).dataID, UI_MAX_DATAID);
 
 #ifdef DEBUG
-	if (EXTRADATA(node).super.scrollY.viewSize != (int)(node->size[1] / lineheight)) {
+	if (EXTRADATA(node).super.scrollY.viewSize != (int)(node->box.size[1] / lineheight)) {
 		Com_Printf("UI_TextNodeLoaded: rows value (%i) of node '%s' differs from size (%.0f) and format (%i) values\n",
-			EXTRADATA(node).super.scrollY.viewSize, UI_GetPath(node), node->size[1], lineheight);
+			EXTRADATA(node).super.scrollY.viewSize, UI_GetPath(node), node->box.size[1], lineheight);
 	}
 #endif
 

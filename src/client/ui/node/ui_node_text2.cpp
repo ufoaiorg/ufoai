@@ -159,7 +159,7 @@ void uiText2Node::drawText (uiNode_t* node, const linkedList_t* list, bool noDra
 			const char *font = UI_GetFontFromNode(node);
 			lineHeight = UI_FontGetHeight(font);
 		}
-		viewSizeY = node->size[1] / lineHeight;
+		viewSizeY = node->box.size[1] / lineHeight;
 	} else {
 		viewSizeY = EXTRADATA(node).super.super.scrollY.viewSize;
 	}
@@ -167,7 +167,7 @@ void uiText2Node::drawText (uiNode_t* node, const linkedList_t* list, bool noDra
 	/* text box */
 	x = pos[0] + node->padding;
 	y = pos[1] + node->padding;
-	width = node->size[0] - node->padding - node->padding;
+	width = node->box.size[0] - node->padding - node->padding;
 
 	/* fix position of the start of the draw according to the align */
 	switch (node->contentAlign % 3) {
@@ -334,8 +334,8 @@ void uiText2Node::onLoaded (uiNode_t *node)
 
 	/* auto compute rows (super.viewSizeY) */
 	if (EXTRADATA(node).super.super.scrollY.viewSize == 0) {
-		if (node->size[1] != 0 && lineheight != 0) {
-			EXTRADATA(node).super.super.scrollY.viewSize = node->size[1] / lineheight;
+		if (node->box.size[1] != 0 && lineheight != 0) {
+			EXTRADATA(node).super.super.scrollY.viewSize = node->box.size[1] / lineheight;
 		} else {
 			EXTRADATA(node).super.super.scrollY.viewSize = 1;
 			Com_Printf("UI_TextNodeLoaded: node '%s' has no rows value\n", UI_GetPath(node));
@@ -343,8 +343,8 @@ void uiText2Node::onLoaded (uiNode_t *node)
 	}
 
 	/* auto compute height */
-	if (node->size[1] == 0) {
-		node->size[1] = EXTRADATA(node).super.super.scrollY.viewSize * lineheight;
+	if (node->box.size[1] == 0) {
+		node->box.size[1] = EXTRADATA(node).super.super.scrollY.viewSize * lineheight;
 	}
 
 	/* is text slot exists */
@@ -352,9 +352,9 @@ void uiText2Node::onLoaded (uiNode_t *node)
 		Com_Error(ERR_DROP, "Error in node %s - max shared data id exceeded (num: %i, max: %i)", UI_GetPath(node), EXTRADATA(node).super.dataID, UI_MAX_DATAID);
 
 #ifdef DEBUG
-	if (EXTRADATA(node).super.super.scrollY.viewSize != (int)(node->size[1] / lineheight)) {
+	if (EXTRADATA(node).super.super.scrollY.viewSize != (int)(node->box.size[1] / lineheight)) {
 		Com_Printf("UI_TextNodeLoaded: rows value (%i) of node '%s' differs from size (%.0f) and format (%i) values\n",
-			EXTRADATA(node).super.super.scrollY.viewSize, UI_GetPath(node), node->size[1], lineheight);
+			EXTRADATA(node).super.super.scrollY.viewSize, UI_GetPath(node), node->box.size[1], lineheight);
 	}
 #endif
 

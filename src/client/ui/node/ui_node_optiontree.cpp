@@ -73,7 +73,7 @@ static void UI_OptionTreeNodeUpdateScroll (uiNode_t *node)
 	if (fontHeight == 0)
 		fontHeight = UI_FontGetHeight(font);
 
-	elements = (node->size[1] - node->padding - node->padding) / fontHeight;
+	elements = (node->box.size[1] - node->padding - node->padding) / fontHeight;
 	updated = EXTRADATA(node).scrollY.set(-1, elements, EXTRADATA(node).count);
 	if (updated && EXTRADATA(node).onViewChange)
 		UI_ExecuteEventActions(node, EXTRADATA(node).onViewChange);
@@ -143,10 +143,10 @@ void uiOptionTreeNode::draw (uiNode_t *node)
 
 	image = UI_GetReferenceString(node, node->image);
 	if (image)
-		UI_DrawPanel(pos, node->size, image, 0, 0, panelTemplate);
+		UI_DrawPanel(pos, node->box.size, image, 0, 0, panelTemplate);
 
 	if (EXTRADATA(node).background) {
-		UI_DrawSpriteInBox(qfalse, EXTRADATA(node).background, SPRITE_STATUS_NORMAL, pos[0], pos[1], node->size[0], node->size[1]);
+		UI_DrawSpriteInBox(qfalse, EXTRADATA(node).background, SPRITE_STATUS_NORMAL, pos[0], pos[1], node->box.size[0], node->box.size[1]);
 	}
 
 	font = UI_GetFontFromNode(node);
@@ -170,14 +170,14 @@ void uiOptionTreeNode::draw (uiNode_t *node)
 		const char *label;
 
 		/* outside the node */
-		if (currentY + fontHeight > pos[1] + node->size[1] - node->padding) {
+		if (currentY + fontHeight > pos[1] + node->box.size[1] - node->padding) {
 			count++;
 			break;
 		}
 
 		/* draw the hover effect */
 		if (OPTIONEXTRADATA(option).hovered)
-			UI_DrawFill(pos[0] + node->padding, currentY, node->size[0] - node->padding - node->padding, fontHeight, node->color);
+			UI_DrawFill(pos[0] + node->padding, currentY, node->box.size[0] - node->padding - node->padding, fontHeight, node->color);
 
 		/* text color */
 		if (Q_streq(OPTIONEXTRADATA(option).value, ref)) {
@@ -216,7 +216,7 @@ void uiOptionTreeNode::draw (uiNode_t *node)
 
 		R_Color(textColor);
 		UI_DrawString(font, ALIGN_UL, decX, currentY + currentDecY,
-			pos[0], node->size[0] - node->padding - node->padding,
+			pos[0], node->box.size[0] - node->padding - node->padding,
 			0, label, 0, 0, NULL, qfalse, LONGLINES_PRETTYCHOP);
 
 		/* next entries' position */

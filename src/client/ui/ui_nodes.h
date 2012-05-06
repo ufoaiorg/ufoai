@@ -91,8 +91,7 @@ struct uiNode_t {
 	uiNode_t* root;       /**< Shortcut to the root node */
 
 	/* common pos */
-	vec2_t pos;
-	vec2_t size;
+	uiBox_t box;
 
 	/* common attributes */
 	const char* tooltip;		/**< holds the tooltip */

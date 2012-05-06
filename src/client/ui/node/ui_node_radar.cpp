@@ -279,8 +279,8 @@ static void UI_InitRadar (const uiNode_t *node)
 	UI_BuildRadarImageList(CL_GetConfigString(CS_TILES), CL_GetConfigString(CS_POSITIONS));
 
 	UI_GetNodeAbsPos(node, nodepos);
-	radar.x = nodepos[0] + node->size[0] / 2;
-	radar.y = nodepos[1] + node->size[1] / 2;
+	radar.x = nodepos[0] + node->box.size[0] / 2;
+	radar.y = nodepos[1] + node->box.size[1] / 2;
 
 	/* only check once per map whether all the needed images exist */
 	for (j = 0; j < radar.numImages; j++) {
@@ -525,18 +525,18 @@ void uiRadarNode::draw (uiNode_t *node)
 	const float mapHeight = cl.mapData->mapMax[1] - cl.mapData->mapMin[1];
 
 	/** @todo use the same coef for x and y */
-	const float mapCoefX = (float) node->size[0] / (float) mapWidth;
-	const float mapCoefY = (float) node->size[1] / (float) mapHeight;
+	const float mapCoefX = (float) node->box.size[0] / (float) mapWidth;
+	const float mapCoefY = (float) node->box.size[1] / (float) mapHeight;
 
 	if (cls.state != ca_active)
 		return;
 
 	UI_GetNodeAbsPos(node, pos);
 	UI_GetNodeScreenPos(node, screenPos);
-	R_CleanupDepthBuffer(pos[0], pos[1], node->size[0], node->size[1]);
+	R_CleanupDepthBuffer(pos[0], pos[1], node->box.size[0], node->box.size[1]);
 	UI_DrawFill(pos[0], pos[1], mapWidth * mapCoefX, mapHeight * mapCoefY, backgroundColor);
 #ifndef RADARSIZE_DEBUG
-	R_PushClipRect(screenPos[0], screenPos[1], node->size[0], node->size[1]);
+	R_PushClipRect(screenPos[0], screenPos[1], node->box.size[0], node->box.size[1]);
 #endif
 
 	/* the cl struct is wiped with every new map */
@@ -548,8 +548,8 @@ void uiRadarNode::draw (uiNode_t *node)
 	/* update context */
 	radar.x = pos[0];
 	radar.y = pos[1];
-	radar.w = node->size[0];
-	radar.h = node->size[1];
+	radar.w = node->box.size[0];
+	radar.h = node->box.size[1];
 	if (radar.gridWidth < 6)
 		radar.gridWidth = 6;
 	if (radar.gridHeight < 6)
@@ -631,8 +631,8 @@ void uiRadarNode::onCapturedMouseMove (uiNode_t *node, int x, int y)
 {
 	const float mapWidth = cl.mapData->mapMax[0] - cl.mapData->mapMin[0];
 	const float mapHeight = cl.mapData->mapMax[1] - cl.mapData->mapMin[1];
-	const float mapCoefX = (float) node->size[0] / (float) mapWidth;
-	const float mapCoefY = (float) node->size[1] / (float) mapHeight;
+	const float mapCoefX = (float) node->box.size[0] / (float) mapWidth;
+	const float mapCoefY = (float) node->box.size[1] / (float) mapHeight;
 	vec3_t pos;
 
 	/* from absolute to relative to node */

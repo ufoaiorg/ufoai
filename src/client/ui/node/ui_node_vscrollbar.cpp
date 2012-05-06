@@ -55,7 +55,7 @@ static int capturedElement;
  */
 static void UI_VScrollbarNodeGetElementSize (uiNode_t *node, int description[5])
 {
-	const int cuttableSize = node->size[1] - (ELEMENT_HEIGHT * 4);
+	const int cuttableSize = node->box.size[1] - (ELEMENT_HEIGHT * 4);
 	const int low = cuttableSize * ((float)(EXTRADATA(node).pos + 0) / (float)EXTRADATA(node).fullsize);
 	const int middle = cuttableSize * ((float)(EXTRADATA(node).viewsize) / (float)EXTRADATA(node).fullsize);
 	const int hight = cuttableSize - low - middle;
@@ -64,7 +64,7 @@ static void UI_VScrollbarNodeGetElementSize (uiNode_t *node, int description[5])
 	description[2] = middle + 2 * ELEMENT_HEIGHT;
 	description[3] = hight;
 	description[4] = ELEMENT_HEIGHT;
-	assert(description[0] + description[1] + description[2] + description[3] + description[4] == node->size[1]);
+	assert(description[0] + description[1] + description[2] + description[3] + description[4] == node->box.size[1]);
 }
 
 /**
@@ -275,7 +275,7 @@ bool uiVScrollbarNode::onScroll (uiNode_t *node, int deltaX, int deltaY)
 void uiVScrollbarNode::onCapturedMouseMove (uiNode_t *node, int x, int y)
 {
 	const int posSize = EXTRADATA(node).fullsize;
-	const int graphicSize = node->size[1] - (4 * ELEMENT_HEIGHT);
+	const int graphicSize = node->box.size[1] - (4 * ELEMENT_HEIGHT);
 	int pos = 0;
 
 	if (capturedElement != 2)
@@ -326,12 +326,12 @@ void uiVScrollbarNode::draw (uiNode_t *node)
 		y += ELEMENT_HEIGHT;
 
 		/* top to bottom */
-		UI_DrawNormImage(qfalse, pos[0], y, ELEMENT_WIDTH, node->size[1] - (ELEMENT_HEIGHT * 2),
+		UI_DrawNormImage(qfalse, pos[0], y, ELEMENT_WIDTH, node->box.size[1] - (ELEMENT_HEIGHT * 2),
 			texX + ELEMENT_WIDTH, texY + ELEMENT_HEIGHT, texX, texY,
 			image);
 		texY += TILE_HEIGHT * 5;
-		y += node->size[1] - (ELEMENT_HEIGHT * 2);
-		assert(y == pos[1] + node->size[1] - ELEMENT_HEIGHT);
+		y += node->box.size[1] - (ELEMENT_HEIGHT * 2);
+		assert(y == pos[1] + node->box.size[1] - ELEMENT_HEIGHT);
 
 		/* bottom */
 		UI_DrawNormImage(qfalse, pos[0], y, ELEMENT_WIDTH, ELEMENT_HEIGHT,
@@ -400,7 +400,7 @@ void uiVScrollbarNode::draw (uiNode_t *node)
 			y += description[3];
 		}
 		texY += TILE_HEIGHT;
-		assert(y == pos[1] + node->size[1] - ELEMENT_HEIGHT);
+		assert(y == pos[1] + node->box.size[1] - ELEMENT_HEIGHT);
 
 		/* bottom */
 		texX = (houveredElement == 4)?TILE_WIDTH:0;
@@ -413,13 +413,13 @@ void uiVScrollbarNode::draw (uiNode_t *node)
 
 void uiVScrollbarNode::onLoading (uiNode_t *node)
 {
-	node->size[0] = 19;
+	node->box.size[0] = 19;
 }
 
 void uiVScrollbarNode::onLoaded (uiNode_t *node)
 {
 #ifdef DEBUG
-	if (node->size[1] - (ELEMENT_HEIGHT * 4) < 0)
+	if (node->box.size[1] - (ELEMENT_HEIGHT * 4) < 0)
 		Com_DPrintf(DEBUG_CLIENT, "Node '%s' too small. It can create graphical glitches\n", UI_GetPath(node));
 #endif
 }

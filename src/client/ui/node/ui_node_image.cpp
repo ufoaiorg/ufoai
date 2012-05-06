@@ -55,20 +55,20 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 void uiImageNode::onLoaded (uiNode_t *node)
 {
 	/* update the size when its possible */
-	if (Vector2Empty(node->size)) {
+	if (Vector2Empty(node->box.size)) {
 		if (EXTRADATA(node).texl[0] != 0 || EXTRADATA(node).texh[0]) {
-			node->size[0] = EXTRADATA(node).texh[0] - EXTRADATA(node).texl[0];
-			node->size[1] = EXTRADATA(node).texh[1] - EXTRADATA(node).texl[1];
+			node->box.size[0] = EXTRADATA(node).texh[0] - EXTRADATA(node).texl[0];
+			node->box.size[1] = EXTRADATA(node).texh[1] - EXTRADATA(node).texl[1];
 		} else if (node->image) {
 			const image_t *image = UI_LoadImage(node->image);
 			if (image) {
-				node->size[0] = image->width;
-				node->size[1] = image->height;
+				node->box.size[0] = image->width;
+				node->box.size[1] = image->height;
 			}
 		}
 	}
 #ifdef DEBUG
-	if (Vector2Empty(node->size)) {
+	if (Vector2Empty(node->box.size)) {
 		if (node->onClick || node->onRightClick || node->onMouseEnter || node->onMouseLeave || node->onWheelUp || node->onWheelDown || node->onWheel || node->onMiddleClick) {
 			Com_DPrintf(DEBUG_CLIENT, "Node '%s' is an active image without size\n", UI_GetPath(node));
 		}
@@ -148,7 +148,7 @@ void uiImageNode::draw (uiNode_t *node)
 #endif
 
 	UI_GetNodeAbsPos(node, nodepos);
-	Vector2Copy(node->size, nodesize);
+	Vector2Copy(node->box.size, nodesize);
 	nodesize[0] -= node->padding + node->padding;
 	if (nodesize[0] < 0)
 		nodesize[0] = 0;
@@ -157,12 +157,12 @@ void uiImageNode::draw (uiNode_t *node)
 		nodesize[1] = 0;
 
 	/** @todo code is duplicated in the ekg node code */
-	if (node->size[0] && !node->size[1]) {
-		const float scale = image->width / node->size[0];
-		Vector2Set(size, node->size[0], image->height / scale);
-	} else if (node->size[1] && !node->size[0]) {
-		const float scale = image->height / node->size[1];
-		Vector2Set(size, image->width / scale, node->size[1]);
+	if (node->box.size[0] && !node->box.size[1]) {
+		const float scale = image->width / node->box.size[0];
+		Vector2Set(size, node->box.size[0], image->height / scale);
+	} else if (node->box.size[1] && !node->box.size[0]) {
+		const float scale = image->height / node->box.size[1];
+		Vector2Set(size, image->width / scale, node->box.size[1]);
 	} else {
 		Vector2Copy(nodesize, size);
 

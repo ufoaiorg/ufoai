@@ -120,7 +120,7 @@ void uiKeyBindingNode::draw (uiNode_t *node)
 	vec2_t pos;
 	const char *font = UI_GetFontFromNode(node);
 	const int bindingWidth = EXTRADATA(node).bindingWidth;
-	const int descriptionWidth = node->size[0] - bindingWidth;
+	const int descriptionWidth = node->box.size[0] - bindingWidth;
 	vec2_t descriptionPos, descriptionSize;
 	vec2_t bindingPos, bindingSize;
 	uiSpriteStatus_t iconStatus = SPRITE_STATUS_NORMAL;
@@ -140,8 +140,8 @@ void uiKeyBindingNode::draw (uiNode_t *node)
 
 	UI_GetNodeAbsPos(node, pos);
 
-	Vector2Set(descriptionSize, descriptionWidth, node->size[1]);
-	Vector2Set(bindingSize, bindingWidth, node->size[1]);
+	Vector2Set(descriptionSize, descriptionWidth, node->box.size[1]);
+	Vector2Set(bindingSize, bindingWidth, node->box.size[1]);
 	Vector2Set(descriptionPos, pos[0], pos[1]);
 	Vector2Set(bindingPos, pos[0] + descriptionWidth + node->padding, pos[1]);
 

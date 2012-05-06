@@ -65,10 +65,10 @@ void uiPanelNode::draw (uiNode_t *node)
 
 	image = UI_GetReferenceString(node, node->image);
 	if (image)
-		UI_DrawPanel(pos, node->size, image, 0, 0, panelTemplate);
+		UI_DrawPanel(pos, node->box.size, image, 0, 0, panelTemplate);
 
 	if (EXTRADATA(node).background) {
-		UI_DrawSpriteInBox(qfalse, EXTRADATA(node).background, SPRITE_STATUS_NORMAL, pos[0], pos[1], node->size[0], node->size[1]);
+		UI_DrawSpriteInBox(qfalse, EXTRADATA(node).background, SPRITE_STATUS_NORMAL, pos[0], pos[1], node->box.size[0], node->box.size[1]);
 	}
 }
 
@@ -82,7 +82,7 @@ void uiPanelNode::draw (uiNode_t *node)
  */
 static void UI_TopDownFlowLayout (uiNode_t *node, int margin)
 {
-	const int width = node->size[0] - node->padding - node->padding;
+	const int width = node->box.size[0] - node->padding - node->padding;
 	int positionY = node->padding;
 	uiNode_t *child = node->firstChild;
 	vec2_t newSize = {width, 0};
@@ -92,11 +92,11 @@ static void UI_TopDownFlowLayout (uiNode_t *node, int margin)
 			child = child->next;
 			continue;
 		}
-		newSize[1] = child->size[1];
+		newSize[1] = child->box.size[1];
 		UI_NodeSetSize(child, newSize);
-		child->pos[0] = node->padding;
-		child->pos[1] = positionY;
-		positionY += child->size[1] + margin;
+		child->box.pos[0] = node->padding;
+		child->box.pos[1] = positionY;
+		positionY += child->box.size[1] + margin;
 		child = child->next;
 	}
 
@@ -104,8 +104,8 @@ static void UI_TopDownFlowLayout (uiNode_t *node, int margin)
 	{
 		bool updated;
 
-		updated = EXTRADATA(node).super.scrollX.set(-1, node->size[0], node->size[0]);
-		updated = EXTRADATA(node).super.scrollY.set(-1, node->size[1], positionY + node->padding) || updated;
+		updated = EXTRADATA(node).super.scrollX.set(-1, node->box.size[0], node->box.size[0]);
+		updated = EXTRADATA(node).super.scrollY.set(-1, node->box.size[1], positionY + node->padding) || updated;
 		if (updated && EXTRADATA(node).super.onViewChange)
 			UI_ExecuteEventActions(node, EXTRADATA(node).super.onViewChange);
 	}
@@ -121,7 +121,7 @@ static void UI_TopDownFlowLayout (uiNode_t *node, int margin)
  */
 static void UI_LeftRightFlowLayout (uiNode_t *node, int margin)
 {
-	const int height = node->size[1] - node->padding - node->padding;
+	const int height = node->box.size[1] - node->padding - node->padding;
 	int positionX = node->padding;
 	uiNode_t *child = node->firstChild;
 	vec2_t newSize = {0, height};
@@ -131,11 +131,11 @@ static void UI_LeftRightFlowLayout (uiNode_t *node, int margin)
 			child = child->next;
 			continue;
 		}
-		newSize[0] = child->size[0];
+		newSize[0] = child->box.size[0];
 		UI_NodeSetSize(child, newSize);
-		child->pos[0] = positionX;
-		child->pos[1] = node->padding;
-		positionX += child->size[0] + margin;
+		child->box.pos[0] = positionX;
+		child->box.pos[1] = node->padding;
+		positionX += child->box.size[0] + margin;
 		child = child->next;
 	}
 }
@@ -156,9 +156,9 @@ static void UI_BorderLayout (uiNode_t *node, int margin)
 	uiNode_t *child;
 	vec2_t newSize;
 	int minX = node->padding;
-	int maxX = node->size[0] - node->padding;
+	int maxX = node->box.size[0] - node->padding;
 	int minY = node->padding;
-	int maxY = node->size[1] - node->padding;
+	int maxY = node->box.size[1] - node->padding;
 
 	/* top */
 	for (child = node->firstChild; child; child = child->next) {
@@ -167,11 +167,11 @@ static void UI_BorderLayout (uiNode_t *node, int margin)
 		if (child->invis)
 			continue;
 		newSize[0] = maxX - minX;
-		newSize[1] = child->size[1];
+		newSize[1] = child->box.size[1];
 		UI_NodeSetSize(child, newSize);
-		child->pos[0] = minX;
-		child->pos[1] = minY;
-		minY += child->size[1] + margin;
+		child->box.pos[0] = minX;
+		child->box.pos[1] = minY;
+		minY += child->box.size[1] + margin;
 	}
 
 	/* bottom */
@@ -181,11 +181,11 @@ static void UI_BorderLayout (uiNode_t *node, int margin)
 		if (child->invis)
 			continue;
 		newSize[0] = maxX - minX;
-		newSize[1] = child->size[1];
+		newSize[1] = child->box.size[1];
 		UI_NodeSetSize(child, newSize);
-		child->pos[0] = minX;
-		child->pos[1] = maxY - child->size[1];
-		maxY -= child->size[1] + margin;
+		child->box.pos[0] = minX;
+		child->box.pos[1] = maxY - child->box.size[1];
+		maxY -= child->box.size[1] + margin;
 	}
 
 	/* left */
@@ -194,12 +194,12 @@ static void UI_BorderLayout (uiNode_t *node, int margin)
 			continue;
 		if (child->invis)
 			continue;
-		newSize[0] = child->size[0];
+		newSize[0] = child->box.size[0];
 		newSize[1] = maxY - minY;
 		UI_NodeSetSize(child, newSize);
-		child->pos[0] = minX;
-		child->pos[1] = minY;
-		minX += child->size[0] + margin;
+		child->box.pos[0] = minX;
+		child->box.pos[1] = minY;
+		minX += child->box.size[0] + margin;
 	}
 
 	/* right */
@@ -208,12 +208,12 @@ static void UI_BorderLayout (uiNode_t *node, int margin)
 			continue;
 		if (child->invis)
 			continue;
-		newSize[0] = child->size[0];
+		newSize[0] = child->box.size[0];
 		newSize[1] = maxY - minY;
 		UI_NodeSetSize(child, newSize);
-		child->pos[0] = maxX - child->size[0];
-		child->pos[1] = minY;
-		maxX -= child->size[0] + margin;
+		child->box.pos[0] = maxX - child->box.size[0];
+		child->box.pos[1] = minY;
+		maxX -= child->box.size[0] + margin;
 	}
 
 	/* middle */
@@ -225,8 +225,8 @@ static void UI_BorderLayout (uiNode_t *node, int margin)
 		newSize[0] = maxX - minX;
 		newSize[1] = maxY - minY;
 		UI_NodeSetSize(child, newSize);
-		child->pos[0] = minX;
-		child->pos[1] = minY;
+		child->box.pos[0] = minX;
+		child->box.pos[1] = minY;
 	}
 }
 
@@ -245,9 +245,9 @@ static void UI_PackLayout (uiNode_t *node, int margin)
 	uiNode_t *child;
 	vec2_t newSize;
 	int minX = node->padding;
-	int maxX = node->size[0] - node->padding;
+	int maxX = node->box.size[0] - node->padding;
 	int minY = node->padding;
-	int maxY = node->size[1] - node->padding;
+	int maxY = node->box.size[1] - node->padding;
 
 	/* top */
 	for (child = node->firstChild; child; child = child->next) {
@@ -256,42 +256,42 @@ static void UI_PackLayout (uiNode_t *node, int margin)
 		switch (child->align) {
 		case LAYOUTALIGN_TOP:
 			newSize[0] = maxX - minX;
-			newSize[1] = child->size[1];
+			newSize[1] = child->box.size[1];
 			UI_NodeSetSize(child, newSize);
-			child->pos[0] = minX;
-			child->pos[1] = minY;
-			minY += child->size[1] + margin;
+			child->box.pos[0] = minX;
+			child->box.pos[1] = minY;
+			minY += child->box.size[1] + margin;
 			break;
 		case LAYOUTALIGN_BOTTOM:
 			newSize[0] = maxX - minX;
-			newSize[1] = child->size[1];
+			newSize[1] = child->box.size[1];
 			UI_NodeSetSize(child, newSize);
-			child->pos[0] = minX;
-			child->pos[1] = maxY - child->size[1];
-			maxY -= child->size[1] + margin;
+			child->box.pos[0] = minX;
+			child->box.pos[1] = maxY - child->box.size[1];
+			maxY -= child->box.size[1] + margin;
 			break;
 		case LAYOUTALIGN_LEFT:
-			newSize[0] = child->size[0];
+			newSize[0] = child->box.size[0];
 			newSize[1] = maxY - minY;
 			UI_NodeSetSize(child, newSize);
-			child->pos[0] = minX;
-			child->pos[1] = minY;
-			minX += child->size[0] + margin;
+			child->box.pos[0] = minX;
+			child->box.pos[1] = minY;
+			minX += child->box.size[0] + margin;
 			break;
 		case LAYOUTALIGN_RIGHT:
-			newSize[0] = child->size[0];
+			newSize[0] = child->box.size[0];
 			newSize[1] = maxY - minY;
 			UI_NodeSetSize(child, newSize);
-			child->pos[0] = maxX - child->size[0];
-			child->pos[1] = minY;
-			maxX -= child->size[0] + margin;
+			child->box.pos[0] = maxX - child->box.size[0];
+			child->box.pos[1] = minY;
+			maxX -= child->box.size[0] + margin;
 			break;
 		case LAYOUTALIGN_FILL:
 			newSize[0] = maxX - minX;
 			newSize[1] = maxY - minY;
 			UI_NodeSetSize(child, newSize);
-			child->pos[0] = minX;
-			child->pos[1] = minY;
+			child->box.pos[0] = minX;
+			child->box.pos[1] = minY;
 			break;
 		default:
 			break;
@@ -318,17 +318,17 @@ void UI_StarLayout (uiNode_t *node)
 			continue;
 
 		if (child->align == LAYOUTALIGN_FILL) {
-			child->pos[0] = 0;
-			child->pos[1] = 0;
-			UI_NodeSetSize(child, node->size);
+			child->box.pos[0] = 0;
+			child->box.pos[1] = 0;
+			UI_NodeSetSize(child, node->box.size);
 			UI_Node_DoLayout(child);
 		} else if (child->align < LAYOUTALIGN_SPECIAL) {
 			UI_NodeGetPoint(node, destination, child->align);
 			UI_NodeRelativeToAbsolutePoint(node, destination);
 			UI_NodeGetPoint(child, source, child->align);
 			UI_NodeRelativeToAbsolutePoint(child, source);
-			child->pos[0] += destination[0] - source[0];
-			child->pos[1] += destination[1] - source[1];
+			child->box.pos[0] += destination[0] - source[0];
+			child->box.pos[1] += destination[1] - source[1];
 		}
 	}
 }
@@ -344,10 +344,10 @@ static void UI_ClientLayout (uiNode_t *node)
 	qboolean updated;
 	for (child = node->firstChild; child; child = child->next) {
 		int value;
-		value = child->pos[0] + child->size[0];
+		value = child->box.pos[0] + child->box.size[0];
 		if (value > width)
 			width = value;
-		value = child->pos[1] + child->size[1];
+		value = child->box.pos[1] + child->box.size[1];
 		if (value > height)
 			height = value;
 	}
@@ -355,8 +355,8 @@ static void UI_ClientLayout (uiNode_t *node)
 	width += node->padding;
 	height += node->padding;
 
-	updated = EXTRADATA(node).super.scrollX.set(-1, node->size[0], width);
-	updated = EXTRADATA(node).super.scrollY.set(-1, node->size[1], height) || updated;
+	updated = EXTRADATA(node).super.scrollX.set(-1, node->box.size[0], width);
+	updated = EXTRADATA(node).super.scrollY.set(-1, node->box.size[1], height) || updated;
 	if (updated && EXTRADATA(node).super.onViewChange)
 		UI_ExecuteEventActions(node, EXTRADATA(node).super.onViewChange);
 }
@@ -388,9 +388,9 @@ static void UI_ColumnLayout (uiNode_t *node)
 	for (i = 0; i < EXTRADATA(node).layoutColumns; i++) {
 		if (child == NULL)
 			break;
-		columnSize[i] = child->size[0];
-		if (child->size[1] > rowHeight) {
-			rowHeight = child->size[1];
+		columnSize[i] = child->box.size[0];
+		if (child->box.size[1] > rowHeight) {
+			rowHeight = child->box.size[1];
 		}
 		child = child->next;
 	}
@@ -413,9 +413,9 @@ static void UI_ColumnLayout (uiNode_t *node)
 				y += rowHeight + EXTRADATA(node).layoutMargin;
 			}
 		}
-		child->pos[0] = columnPos[column];
-		child->pos[1] = y;
-		/*UI_NodeSetSize(child, node->size);*/
+		child->box.pos[0] = columnPos[column];
+		child->box.pos[1] = y;
+		/*UI_NodeSetSize(child, node->box.size);*/
 		UI_Node_DoLayout(child);
 		i++;
 	}
@@ -427,8 +427,8 @@ static void UI_ColumnLayout (uiNode_t *node)
 		int height = y + rowHeight + node->padding;
 		qboolean updated;
 
-		updated = EXTRADATA(node).super.scrollX.set(-1, node->size[0], width);
-		updated = EXTRADATA(node).super.scrollY.set(-1, node->size[1], height) || updated;
+		updated = EXTRADATA(node).super.scrollX.set(-1, node->box.size[0], width);
+		updated = EXTRADATA(node).super.scrollY.set(-1, node->box.size[1], height) || updated;
 		if (updated && EXTRADATA(node).super.onViewChange)
 			UI_ExecuteEventActions(node, EXTRADATA(node).super.onViewChange);
 	}
@@ -527,7 +527,7 @@ void uiPanelNode::onCapturedMouseMove (uiNode_t *node, int x, int y)
 void uiPanelNode::onLoaded (uiNode_t *node)
 {
 #ifdef DEBUG
-	if (node->size[0] < CORNER_SIZE + MID_SIZE + CORNER_SIZE || node->size[1] < CORNER_SIZE + MID_SIZE + CORNER_SIZE)
+	if (node->box.size[0] < CORNER_SIZE + MID_SIZE + CORNER_SIZE || node->box.size[1] < CORNER_SIZE + MID_SIZE + CORNER_SIZE)
 		Com_DPrintf(DEBUG_CLIENT, "Node '%s' too small. It can create graphical glitches\n", UI_GetPath(node));
 #endif
 	if (EXTRADATA(node).layout != LAYOUT_NONE)

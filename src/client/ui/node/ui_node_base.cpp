@@ -83,8 +83,8 @@ void uiBaseLayoutNode::draw (uiNode_t * node)
 		return;
 
 	totalMarge = node->padding * (BASE_SIZE + 1);
-	width = (node->size[0] - totalMarge) / BASE_SIZE;
-	height = (node->size[1] - totalMarge) / BASE_SIZE;
+	width = (node->box.size[0] - totalMarge) / BASE_SIZE;
+	height = (node->box.size[1] - totalMarge) / BASE_SIZE;
 
 	UI_GetNodeAbsPos(node, nodepos);
 
@@ -123,13 +123,13 @@ void uiBaseMapNode::getCellAtPos (const uiNode_t *node, int x, int y, int *col, 
 	assert(col);
 	assert(row);
 	UI_NodeAbsoluteToRelativePos(node, &x, &y);
-	if (x < 0 || y < 0 || x >= node->size[0] || y >= node->size[1]) {
+	if (x < 0 || y < 0 || x >= node->box.size[0] || y >= node->box.size[1]) {
 		*col = -1;
 		*row = -1;
 		return;
 	}
-	*col = x / (node->size[0] / BASE_SIZE);
-	*row = y / (node->size[1] / BASE_SIZE);
+	*col = x / (node->box.size[0] / BASE_SIZE);
+	*row = y / (node->box.size[1] / BASE_SIZE);
 	assert(*col >= 0 && *col < BASE_SIZE);
 	assert(*row >= 0 && *row < BASE_SIZE);
 }
@@ -152,8 +152,8 @@ void uiBaseMapNode::draw (uiNode_t * node)
 	/* reset the used flag */
 	OBJZERO(used);
 
-	width = node->size[0] / BASE_SIZE;
-	height = node->size[1] / BASE_SIZE + BASE_IMAGE_OVERLAY;
+	width = node->box.size[0] / BASE_SIZE;
+	height = node->box.size[1] / BASE_SIZE + BASE_IMAGE_OVERLAY;
 
 	for (row = 0; row < BASE_SIZE; row++) {
 		const char *image = NULL;
@@ -197,7 +197,7 @@ void uiBaseMapNode::draw (uiNode_t * node)
 					{
 						const float time = max(0.0, B_GetConstructionTimeRemain(building));
 						const char* text = va(ngettext("%3.1f day left", "%3.1f days left", time), time);
-						UI_DrawString("f_small", ALIGN_UL, pos[0] + 10, pos[1] + 10, pos[0] + 10, node->size[0], 0, text, 0, 0, NULL, qfalse, LONGLINES_WRAP);
+						UI_DrawString("f_small", ALIGN_UL, pos[0] + 10, pos[1] + 10, pos[0] + 10, node->box.size[0], 0, text, 0, 0, NULL, qfalse, LONGLINES_WRAP);
 						break;
 					}
 					default:

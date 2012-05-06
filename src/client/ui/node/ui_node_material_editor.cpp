@@ -113,8 +113,8 @@ static int UI_MaterialEditorNodeGetImageCount (uiNode_t *node)
 void uiMaterialEditorNode::updateView (uiNode_t *node, bool reset)
 {
 	const int imageCount = UI_MaterialEditorNodeGetImageCount(node);
-	const int imagesPerLine = (node->size[0] - node->padding) / (IMAGE_WIDTH + node->padding);
-	const int imagesPerColumn = (node->size[1] - node->padding) / (IMAGE_WIDTH + node->padding);
+	const int imagesPerLine = (node->box.size[0] - node->padding) / (IMAGE_WIDTH + node->padding);
+	const int imagesPerColumn = (node->box.size[1] - node->padding) / (IMAGE_WIDTH + node->padding);
 
 	/* update view */
 	if (imagesPerLine > 0 && imagesPerColumn > 0) {
@@ -133,7 +133,7 @@ void uiMaterialEditorNode::draw (uiNode_t *node)
 	vec2_t pos;
 	int cnt = 0;
 	int cntView = 0;
-	const int imagesPerLine = (node->size[0] - node->padding) / (IMAGE_WIDTH + node->padding);
+	const int imagesPerLine = (node->box.size[0] - node->padding) / (IMAGE_WIDTH + node->padding);
 
 	if (isSizeChange(node))
 		updateView(node, false);
@@ -169,7 +169,7 @@ void uiMaterialEditorNode::draw (uiNode_t *node)
 		imagepos[1] = pos[1] + node->padding + (cntView / imagesPerLine) * (IMAGE_WIDTH + node->padding);
 
 		/* vertical overflow */
-		if (imagepos[1] + IMAGE_WIDTH + node->padding >= pos[1] + node->size[1])
+		if (imagepos[1] + IMAGE_WIDTH + node->padding >= pos[1] + node->box.size[1])
 			break;
 
 		if (i == node->num) {
@@ -194,8 +194,8 @@ static int UI_MaterialEditorNodeGetImageAtPosition (uiNode_t *node, int x, int y
 	vec2_t pos;
 	int cnt = 0;
 	int cntView = 0;
-	const int imagesPerLine = (node->size[0] - node->padding) / (IMAGE_WIDTH + node->padding);
-	const int imagesPerColumn = (node->size[1] - node->padding) / (IMAGE_WIDTH + node->padding);
+	const int imagesPerLine = (node->box.size[0] - node->padding) / (IMAGE_WIDTH + node->padding);
+	const int imagesPerColumn = (node->box.size[1] - node->padding) / (IMAGE_WIDTH + node->padding);
 	int columnRequested;
 	int lineRequested;
 

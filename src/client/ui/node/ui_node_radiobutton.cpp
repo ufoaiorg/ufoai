@@ -96,16 +96,16 @@ void uiRadioButtonNode::draw (uiNode_t *node)
 	image = UI_GetReferenceString(node, node->image);
 	if (image) {
 		const int texX = 0;
-		UI_DrawNormImageByName(qfalse, pos[0], pos[1], node->size[0], node->size[1],
-			texX + node->size[0], texY + node->size[1], texX, texY, image);
+		UI_DrawNormImageByName(qfalse, pos[0], pos[1], node->box.size[0], node->box.size[1],
+			texX + node->box.size[0], texY + node->box.size[1], texX, texY, image);
 	}
 
 	if (EXTRADATA(node).background) {
-		UI_DrawSpriteInBox(qfalse, EXTRADATA(node).background, iconStatus, pos[0], pos[1], node->size[0], node->size[1]);
+		UI_DrawSpriteInBox(qfalse, EXTRADATA(node).background, iconStatus, pos[0], pos[1], node->box.size[0], node->box.size[1]);
 	}
 
 	if (EXTRADATA(node).icon) {
-		UI_DrawSpriteInBox(EXTRADATA(node).flipIcon, EXTRADATA(node).icon, iconStatus, pos[0], pos[1], node->size[0], node->size[1]);
+		UI_DrawSpriteInBox(EXTRADATA(node).flipIcon, EXTRADATA(node).icon, iconStatus, pos[0], pos[1], node->box.size[0], node->box.size[1]);
 	}
 }
 

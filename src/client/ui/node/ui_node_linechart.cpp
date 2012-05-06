@@ -60,9 +60,9 @@ void uiLineChartNode::draw (uiNode_t *node)
 		axes[0] = 0;
 		axes[1] = 0;
 		axes[2] = 0;
-		axes[3] = (int) node->size[1];
-		axes[4] = (int) node->size[0];
-		axes[5] = (int) node->size[1];
+		axes[3] = (int) node->box.size[1];
+		axes[4] = (int) node->box.size[0];
+		axes[5] = (int) node->box.size[1];
 		R_Color(EXTRADATA(node).axesColor);
 		R_DrawLineStrip(3, axes);
 	}

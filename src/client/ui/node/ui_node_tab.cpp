@@ -75,10 +75,10 @@ static uiNode_t* UI_TabNodeTabAtPosition (const uiNode_t *node, int x, int y)
 	UI_NodeAbsoluteToRelativePos(node, &x, &y);
 
 	/** @todo this dont work when an option is hidden */
-	allowedWidth = node->size[0] - TILE_WIDTH * (EXTRADATACONST(node).count + 1);
+	allowedWidth = node->box.size[0] - TILE_WIDTH * (EXTRADATACONST(node).count + 1);
 
 	/* Bounded box test (shound not need, but there are problem) */
-	if (x < 0 || y < 0 || x >= node->size[0] || y >= node->size[1])
+	if (x < 0 || y < 0 || x >= node->box.size[0] || y >= node->box.size[1])
 		return NULL;
 
 	font = UI_GetFontFromNode(node);
@@ -206,7 +206,7 @@ void uiTabNode::draw (uiNode_t *node)
 	option = node->firstChild;
 	assert(option->behaviour == ui_optionBehaviour);
 	/** @todo this dont work when an option is hidden */
-	allowedWidth = node->size[0] - TILE_WIDTH * (EXTRADATA(node).count + 1);
+	allowedWidth = node->box.size[0] - TILE_WIDTH * (EXTRADATA(node).count + 1);
 
 	while (option) {
 		int fontHeight;
@@ -270,7 +270,7 @@ void uiTabNode::draw (uiNode_t *node)
 
 		/** @todo fontWidth can be =0, maybe a bug from the font cache */
 		OPTIONEXTRADATA(option).truncated = tabWidth < fontWidth || tabWidth == 0;
-		UI_DrawString(font, ALIGN_UL, textPos, pos[1] + ((node->size[1] - fontHeight) / 2),
+		UI_DrawString(font, ALIGN_UL, textPos, pos[1] + ((node->box.size[1] - fontHeight) / 2),
 			textPos, tabWidth + 1, 0, label, 0, 0, NULL, qfalse, LONGLINES_PRETTYCHOP);
 		currentX += tabWidth;
 		allowedWidth -= tabWidth;
@@ -283,8 +283,8 @@ void uiTabNode::draw (uiNode_t *node)
 	/* Display last junction and end of header */
 	UI_TabNodeDrawJunction(image, currentX, pos[1], lastStatus, UI_TAB_NOTHING);
 	currentX += TILE_WIDTH;
-	if (currentX < pos[0] + node->size[0])
-		UI_TabNodeDrawPlain(image, currentX, pos[1], pos[0] + node->size[0] - currentX, UI_TAB_NOTHING);
+	if (currentX < pos[0] + node->box.size[0])
+		UI_TabNodeDrawPlain(image, currentX, pos[1], pos[0] + node->box.size[0] - currentX, UI_TAB_NOTHING);
 }
 
 /**

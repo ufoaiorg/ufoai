@@ -51,7 +51,7 @@ void uiItemNode::draw (uiNode_t *node)
 		return;
 
 	UI_GetNodeAbsPos(node, pos);
-	R_CleanupDepthBuffer(pos[0], pos[1], node->size[0], node->size[1]);
+	R_CleanupDepthBuffer(pos[0], pos[1], node->box.size[0], node->box.size[1]);
 
 	od = INVSH_GetItemByIDSilent(ref);
 	if (od) {
@@ -64,8 +64,8 @@ void uiItemNode::draw (uiNode_t *node)
 			/* We position the model of the item ourself (in the middle of the item
 			 * node). See the "-1, -1" parameter of UI_DrawItem. */
 			UI_GetNodeAbsPos(node, itemNodePos);
-			itemNodePos[0] += node->size[0] / 2.0;
-			itemNodePos[1] += node->size[1] / 2.0;
+			itemNodePos[0] += node->box.size[0] / 2.0;
+			itemNodePos[1] += node->box.size[1] / 2.0;
 			itemNodePos[2] = 0;
 			/** @todo we should not use DrawItem but draw the image with render function (remove dependency with container) */
 			UI_DrawItem(node, itemNodePos, &item, -1, -1, EXTRADATA(node).scale, color);

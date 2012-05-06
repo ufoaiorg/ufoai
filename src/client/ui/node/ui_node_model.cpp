@@ -101,8 +101,8 @@ static inline void UI_InitModelInfoView (uiNode_t *node, modelInfo_t *mi, uiMode
 {
 	vec3_t nodeorigin;
 	UI_GetNodeAbsPos(node, nodeorigin);
-	nodeorigin[0] += node->size[0] / 2 + EXTRADATA(node).origin[0];
-	nodeorigin[1] += node->size[1] / 2 + EXTRADATA(node).origin[1];
+	nodeorigin[0] += node->box.size[0] / 2 + EXTRADATA(node).origin[0];
+	nodeorigin[1] += node->box.size[1] / 2 + EXTRADATA(node).origin[1];
 	nodeorigin[2] = EXTRADATA(node).origin[2];
 
 	VectorCopy(EXTRADATA(node).scale, mi->scale);
@@ -174,8 +174,8 @@ static void UI_DrawModelNodeWithUIModel (uiNode_t *node, const char *source, mod
 			pmi.origin[1] = parentModel->origin[1] + mi->origin[1];
 			pmi.origin[2] = parentModel->origin[2];
 			/* don't count window offset twice for tagged models */
-			mi->origin[0] -= node->root->pos[0];
-			mi->origin[1] -= node->root->pos[1];
+			mi->origin[0] -= node->root->box.pos[0];
+			mi->origin[1] -= node->root->box.pos[1];
 
 			/* autoscale? */
 			if (EXTRADATA(node).autoscale) {
@@ -204,8 +204,8 @@ static void UI_DrawModelNodeWithUIModel (uiNode_t *node, const char *source, mod
 			if (EXTRADATA(node).autoscale) {
 				if (!autoScaleComputed) {
 					vec2_t size;
-					size[0] = node->size[0] - node->padding;
-					size[1] = node->size[1] - node->padding;
+					size[0] = node->box.size[0] - node->padding;
+					size[1] = node->box.size[1] - node->padding;
 					R_ModelAutoScale(size, mi, autoScale, autoCenter);
 					autoScaleComputed = true;
 				} else {
@@ -275,12 +275,12 @@ void UI_DrawModelNode (uiNode_t *node, const char *source)
 	/* compute the absolute origin ('origin' property is relative to the node center) */
 	UI_GetNodeScreenPos(node, screenPos);
 	UI_GetNodeAbsPos(node, nodeorigin);
-	R_CleanupDepthBuffer(nodeorigin[0], nodeorigin[1], node->size[0], node->size[1]);
+	R_CleanupDepthBuffer(nodeorigin[0], nodeorigin[1], node->box.size[0], node->box.size[1]);
 	if (EXTRADATA(node).clipOverflow) {
-		R_PushClipRect(screenPos[0], screenPos[1], node->size[0], node->size[1]);
+		R_PushClipRect(screenPos[0], screenPos[1], node->box.size[0], node->box.size[1]);
 	}
-	nodeorigin[0] += node->size[0] / 2 + EXTRADATA(node).origin[0];
-	nodeorigin[1] += node->size[1] / 2 + EXTRADATA(node).origin[1];
+	nodeorigin[0] += node->box.size[0] / 2 + EXTRADATA(node).origin[0];
+	nodeorigin[1] += node->box.size[1] / 2 + EXTRADATA(node).origin[1];
 	nodeorigin[2] = EXTRADATA(node).origin[2];
 
 	VectorMA(EXTRADATA(node).angles, cls.frametime, EXTRADATA(node).omega, EXTRADATA(node).angles);
@@ -308,7 +308,7 @@ void UI_DrawModelNode (uiNode_t *node, const char *source)
 
 	/* autoscale? */
 	if (EXTRADATA(node).autoscale) {
-		const vec2_t size = {node->size[0] - node->padding, node->size[1] - node->padding};
+		const vec2_t size = {node->box.size[0] - node->padding, node->box.size[1] - node->padding};
 		R_ModelAutoScale(size, &mi, autoScale, autoCenter);
 	}
 
@@ -499,7 +499,7 @@ void uiModelNode::onLoaded (uiNode_t *node)
 		EXTRADATA(node).oldRefValue = UI_AllocStaticString("", MAX_OLDREFVALUE);
 
 	/* no tag but no size */
-	if (EXTRADATA(node).tag == NULL && (node->size[0] == 0 || node->size[1] == 0)) {
+	if (EXTRADATA(node).tag == NULL && (node->box.size[0] == 0 || node->box.size[1] == 0)) {
 		Com_Printf("UI_ModelNodeLoaded: Please set a pos and size to the node '%s'. Note: 'origin' is a relative value to the center of the node\n", UI_GetPath(node));
 	}
 }

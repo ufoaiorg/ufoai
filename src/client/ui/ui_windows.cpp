@@ -319,8 +319,8 @@ static void UI_PushDropDownWindow_f (void)
 		return;
 	}
 	node = node->root;
-	node->pos[0] += destination[0] - source[0];
-	node->pos[1] += destination[1] - source[1];
+	node->box.pos[0] += destination[0] - source[0];
+	node->box.pos[1] += destination[1] - source[1];
 	UI_PushWindow(node->name, NULL, NULL);
 }
 
@@ -626,7 +626,7 @@ void UI_InvalidateStack (void)
 void UI_SetNewWindowPos (uiNode_t* window, int x, int y)
 {
 	if (window)
-		Vector2Set(window->pos, x, y);
+		Vector2Set(window->box.pos, x, y);
 }
 
 /**

@@ -44,8 +44,8 @@ bool uiAbstractScrollableNode::isSizeChange (uiNode_t *node)
 {
 	assert(UI_Node_IsScrollableContainer(node));
 
-	if (!Vector2Equal(node->size, EXTRADATA(node).cacheSize)) {
-		Vector2Copy(node->size, EXTRADATA(node).cacheSize);
+	if (!Vector2Equal(node->box.size, EXTRADATA(node).cacheSize)) {
+		Vector2Copy(node->box.size, EXTRADATA(node).cacheSize);
 		return true;
 	}
 	return false;

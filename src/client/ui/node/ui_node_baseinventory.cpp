@@ -281,7 +281,7 @@ static int UI_BaseInventoryNodeDrawItems (uiNode_t *node, const objDef_t *highli
 	vec2_t nodepos;
 	int items = 0;
 	int rowHeight = 0;
-	const int cellWidth = node->size[0] / EXTRADATA(node).columns;
+	const int cellWidth = node->box.size[0] / EXTRADATA(node).columns;
 	containerItemIterator_t iterator;
 	int currentHeight = 0;
 	UI_GetNodeAbsPos(node, nodepos);
@@ -408,7 +408,7 @@ static int UI_BaseInventoryNodeDrawItems (uiNode_t *node, const objDef_t *highli
 		if (col == EXTRADATA(node).columns - 1) {
 			currentHeight += rowHeight;
 			rowHeight = 0;
-			if (currentHeight - EXTRADATA(node).scrollY.viewPos >= node->size[1])
+			if (currentHeight - EXTRADATA(node).scrollY.viewPos >= node->box.size[1])
 				outOfNode = true;
 		}
 
@@ -433,16 +433,16 @@ static void UI_BaseInventoryNodeDraw2 (uiNode_t *node, const objDef_t *highlight
 	vec2_t screenPos;
 
 	UI_GetNodeScreenPos(node, screenPos);
-	R_PushClipRect(screenPos[0], screenPos[1], node->size[0], node->size[1]);
+	R_PushClipRect(screenPos[0], screenPos[1], node->box.size[0], node->box.size[1]);
 
 	needHeight = UI_BaseInventoryNodeDrawItems(node, highlightType);
 
 	R_PopClipRect();
-	visibleHeight = node->size[1];
+	visibleHeight = node->box.size[1];
 
 #if 0
 	R_FontDrawString("f_verysmall", ALIGN_UL,
-		node->pos[0], node->pos[1], node->pos[0], node->pos[1],
+		node->box.pos[0], node->box.pos[1], node->box.pos[0], node->box.pos[1],
 		0,	0,	/* maxWidth/maxHeight */
 		0, va("%i %i/%i", EXTRADATA(node).scrollCur, visibleRows, totalRows), 0, 0, NULL, qfalse, 0);
 #endif
@@ -498,7 +498,7 @@ static invList_t *UI_BaseInventoryNodeGetItem (const uiNode_t* const node, int m
 	vec2_t nodepos;
 	int items = 0;
 	int rowHeight = 0;
-	const int cellWidth = node->size[0] / EXTRADATACONST(node).columns;
+	const int cellWidth = node->box.size[0] / EXTRADATACONST(node).columns;
 	int tempX, tempY;
 	containerItemIterator_t iterator;
 	int currentHeight = 0;
@@ -606,7 +606,7 @@ static invList_t *UI_BaseInventoryNodeGetItem (const uiNode_t* const node, int m
 		if (col == EXTRADATACONST(node).columns - 1) {
 			currentHeight += rowHeight;
 			rowHeight = 0;
-			if (currentHeight - EXTRADATACONST(node).scrollY.viewPos >= node->size[1])
+			if (currentHeight - EXTRADATACONST(node).scrollY.viewPos >= node->box.size[1])
 				return NULL;
 		}
 

@@ -61,7 +61,7 @@ void uiVideoNode::drawOverWindow (uiNode_t *node)
 		}
 
 		UI_GetNodeAbsPos(node, pos);
-		CIN_SetParameters(&(EXTRADATA(node).cin), pos[0], pos[1], node->size[0], node->size[1], CIN_STATUS_PLAYING, nosound);
+		CIN_SetParameters(&(EXTRADATA(node).cin), pos[0], pos[1], node->box.size[0], node->box.size[1], CIN_STATUS_PLAYING, nosound);
 	}
 
 	if (EXTRADATA(node).cin.status == CIN_STATUS_PLAYING || EXTRADATA(node).cin.status == CIN_STATUS_PAUSE) {

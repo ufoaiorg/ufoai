@@ -92,7 +92,7 @@ void uiSpinnerNode::onMouseDown (uiNode_t *node, int x, int y, int button)
 	if (button == K_MOUSE1) {
 		UI_SetMouseCapture(node);
 		UI_NodeAbsoluteToRelativePos(node, &x, &y);
-		capturedDownButton = y > (node->size[1] * 0.5);
+		capturedDownButton = y > (node->box.size[1] * 0.5);
 		step(node, capturedDownButton);
 		capturedTimer = UI_AllocTimer(node, 500, UI_SpinnerNodeRepeat);
 		UI_TimerStart(capturedTimer);
@@ -160,7 +160,7 @@ void uiSpinnerNode::draw (uiNode_t *node)
 		if (value >= max) {
 			topTexX = TILE_SIZE;
 			topTexY = TILE_SIZE;
-		} else if (node->state && mousePosY < pos[1] + node->size[1] * 0.5) {
+		} else if (node->state && mousePosY < pos[1] + node->box.size[1] * 0.5) {
 			topTexX = TILE_SIZE;
 			topTexY = 0;
 		} else {
@@ -171,7 +171,7 @@ void uiSpinnerNode::draw (uiNode_t *node)
 		if (value <= min) {
 			bottomTexX = TILE_SIZE;
 			bottomTexY = TILE_SIZE;
-		} else if (node->state && mousePosY > pos[1] + node->size[1] * 0.5) {
+		} else if (node->state && mousePosY > pos[1] + node->box.size[1] * 0.5) {
 			bottomTexX = TILE_SIZE;
 			bottomTexY = 0;
 		} else {
@@ -181,8 +181,8 @@ void uiSpinnerNode::draw (uiNode_t *node)
 	}
 
 	/* center the spinner */
-	pos[0] += (node->size[0] - SPINNER_WIDTH) * 0.5;
-	pos[1] += (node->size[1] - SPINNER_HEIGHT) * 0.5;
+	pos[0] += (node->box.size[0] - SPINNER_WIDTH) * 0.5;
+	pos[1] += (node->box.size[1] - SPINNER_HEIGHT) * 0.5;
 
 	/* draw top button */
 	UI_DrawNormImageByName(qfalse, pos[0], pos[1], SPINNER_WIDTH, BUTTON_TOP_SIZE,
@@ -211,7 +211,7 @@ void uiSpinnerNode::draw (uiNode_t *node)
 		/* top button status */
 		if (value >= max) {
 			topStatus = SPRITE_STATUS_DISABLED;
-		} else if (node->state && mousePosY < pos[1] + node->size[1] * 0.5) {
+		} else if (node->state && mousePosY < pos[1] + node->box.size[1] * 0.5) {
 			topStatus = SPRITE_STATUS_HOVER;
 		} else {
 			topStatus = SPRITE_STATUS_NORMAL;
@@ -219,7 +219,7 @@ void uiSpinnerNode::draw (uiNode_t *node)
 		/* bottom button status */
 		if (value <= min) {
 			bottomStatus = SPRITE_STATUS_DISABLED;
-		} else if (node->state && mousePosY > pos[1] + node->size[1] * 0.5) {
+		} else if (node->state && mousePosY > pos[1] + node->box.size[1] * 0.5) {
 			bottomStatus = SPRITE_STATUS_HOVER;
 		} else {
 			bottomStatus = SPRITE_STATUS_NORMAL;
@@ -227,18 +227,18 @@ void uiSpinnerNode::draw (uiNode_t *node)
 	}
 
 	if (EXTRADATA(node).background)
-		UI_DrawSpriteInBox(qfalse, EXTRADATA(node).background, status, pos[0], pos[1], node->size[0], node->size[1]);
+		UI_DrawSpriteInBox(qfalse, EXTRADATA(node).background, status, pos[0], pos[1], node->box.size[0], node->box.size[1]);
 	if (EXTRADATA(node).topIcon)
-		UI_DrawSpriteInBox(qfalse, EXTRADATA(node).topIcon, topStatus, pos[0], pos[1], node->size[0], node->size[1]);
+		UI_DrawSpriteInBox(qfalse, EXTRADATA(node).topIcon, topStatus, pos[0], pos[1], node->box.size[0], node->box.size[1]);
 	if (EXTRADATA(node).bottomIcon)
-		UI_DrawSpriteInBox(qfalse, EXTRADATA(node).bottomIcon, bottomStatus, pos[0], pos[1], node->size[0], node->size[1]);
+		UI_DrawSpriteInBox(qfalse, EXTRADATA(node).bottomIcon, bottomStatus, pos[0], pos[1], node->box.size[0], node->box.size[1]);
 }
 
 void uiSpinnerNode::onLoading (uiNode_t *node)
 {
 	uiAbstractValueNode::onLoading(node);
-	node->size[0] = SPINNER_WIDTH;
-	node->size[1] = SPINNER_HEIGHT;
+	node->box.size[0] = SPINNER_WIDTH;
+	node->box.size[1] = SPINNER_HEIGHT;
 }
 
 void UI_RegisterSpinnerNode (uiBehaviour_t *behaviour)

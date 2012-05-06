@@ -66,7 +66,7 @@ static void UI_OptionListNodeUpdateScroll (uiNode_t *node)
 		lineHeight = UI_FontGetHeight(font);
 	}
 
-	elements = (node->size[1] - node->padding - node->padding) / lineHeight;
+	elements = (node->box.size[1] - node->padding - node->padding) / lineHeight;
 	updated = EXTRADATA(node).scrollY.set(-1, elements, EXTRADATA(node).count);
 	if (updated && EXTRADATA(node).onViewChange)
 		UI_ExecuteEventActions(node, EXTRADATA(node).onViewChange);
@@ -98,10 +98,10 @@ void uiOptionListNode::draw (uiNode_t *node)
 
 	image = UI_GetReferenceString(node, node->image);
 	if (image)
-		UI_DrawPanel(pos, node->size, image, 0, 0, panelTemplate);
+		UI_DrawPanel(pos, node->box.size, image, 0, 0, panelTemplate);
 
 	if (EXTRADATA(node).background) {
-		UI_DrawSpriteInBox(qfalse, EXTRADATA(node).background, SPRITE_STATUS_NORMAL, pos[0], pos[1], node->size[0], node->size[1]);
+		UI_DrawSpriteInBox(qfalse, EXTRADATA(node).background, SPRITE_STATUS_NORMAL, pos[0], pos[1], node->box.size[0], node->box.size[1]);
 	}
 
 	font = UI_GetFontFromNode(node);
@@ -123,14 +123,14 @@ void uiOptionListNode::draw (uiNode_t *node)
 		const char *label;
 		int decX = pos[0] + node->padding;
 		/* outside the node */
-		if (currentY + lineHeight > pos[1] + node->size[1] - node->padding) {
+		if (currentY + lineHeight > pos[1] + node->box.size[1] - node->padding) {
 			count++;
 			break;
 		}
 
 		/* draw the hover effect */
 		if (OPTIONEXTRADATA(option).hovered)
-			UI_DrawFill(pos[0] + node->padding, currentY, node->size[0] - node->padding - node->padding, lineHeight, node->color);
+			UI_DrawFill(pos[0] + node->padding, currentY, node->box.size[0] - node->padding - node->padding, lineHeight, node->color);
 
 		/* text color */
 		if (Q_streq(OPTIONEXTRADATA(option).value, ref)) {
@@ -159,7 +159,7 @@ void uiOptionListNode::draw (uiNode_t *node)
 
 		R_Color(textColor);
 		UI_DrawString(font, ALIGN_UL, decX, currentY,
-			pos[0], node->size[0] - node->padding - node->padding,
+			pos[0], node->box.size[0] - node->padding - node->padding,
 			0, label, 0, 0, NULL, qfalse, LONGLINES_PRETTYCHOP);
 
 		/* next entries' position */
@@ -207,7 +207,7 @@ static uiNode_t* UI_OptionListNodeGetOptionAtPosition (uiNode_t * node, int x, i
 	for (; option; option = option->next) {
 		if (y < currentY + lineHeight)
 			return option;
-		if (currentY + lineHeight > pos[1] + node->size[1] - node->padding)
+		if (currentY + lineHeight > pos[1] + node->box.size[1] - node->padding)
 			break;
 		currentY += lineHeight;
 	}

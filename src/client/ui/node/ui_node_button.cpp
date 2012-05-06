@@ -101,15 +101,15 @@ void uiButtonNode::draw (uiNode_t *node)
 
 	image = UI_GetReferenceString(node, node->image);
 	if (image)
-		UI_DrawPanel(pos, node->size, image, texX, texY, panelTemplate);
+		UI_DrawPanel(pos, node->box.size, image, texX, texY, panelTemplate);
 
 	if (EXTRADATA(node).background) {
-		UI_DrawSpriteInBox(qfalse, EXTRADATA(node).background, iconStatus, pos[0], pos[1], node->size[0], node->size[1]);
+		UI_DrawSpriteInBox(qfalse, EXTRADATA(node).background, iconStatus, pos[0], pos[1], node->box.size[0], node->box.size[1]);
 	}
 
 	/* compute node box with padding */
 	uiBox_t inside;
-	inside.set(pos, node->size);
+	inside.set(pos, node->box.size);
 	inside.expand(-node->padding);
 	uiBox_t content;
 	content.clear();
@@ -185,12 +185,12 @@ void uiButtonNode::onLoading (uiNode_t *node)
 void uiButtonNode::onLoaded (uiNode_t *node)
 {
 	/* auto calc the size if none was given via script files */
-	if (node->size[1] == 0) {
+	if (node->box.size[1] == 0) {
 		const char *font = UI_GetFontFromNode(node);
-		node->size[1] = (UI_FontGetHeight(font) / 2) + (node->padding * 2);
+		node->box.size[1] = (UI_FontGetHeight(font) / 2) + (node->padding * 2);
 	}
 #ifdef DEBUG
-	if (node->size[0] < CORNER_SIZE + MID_SIZE + CORNER_SIZE || node->size[1] < CORNER_SIZE + MID_SIZE + CORNER_SIZE)
+	if (node->box.size[0] < CORNER_SIZE + MID_SIZE + CORNER_SIZE || node->box.size[1] < CORNER_SIZE + MID_SIZE + CORNER_SIZE)
 		Com_DPrintf(DEBUG_CLIENT, "Node '%s' too small. It can create graphical glitches\n", UI_GetPath(node));
 #endif
 }

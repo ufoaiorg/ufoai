@@ -49,10 +49,10 @@ void uiEkgNode::draw (uiNode_t *node)
 
 	image = UI_LoadWrappedImage(imageName);
 	if (image) {
-		const int ekgHeight = node->size[1];
+		const int ekgHeight = node->box.size[1];
 		const int ekgWidth = image->width;
 		/* we have different ekg parts in each ekg image... */
-		const int ekgImageParts = image->height / node->size[1];
+		const int ekgImageParts = image->height / node->box.size[1];
 		const int ekgMaxIndex = ekgImageParts - 1;
 		/* we change the index of the image part in 20s steps */
 		/** @todo this magic number should be replaced with a sane calculation of the value */
@@ -74,25 +74,25 @@ void uiEkgNode::draw (uiNode_t *node)
 		EXTRADATA(node).super.texl[1] = (ekgMaxIndex - (int)(ekgValue / ekgDivide)) * ekgHeight;
 		EXTRADATA(node).super.texh[1] = EXTRADATA(node).super.texl[1] + ekgHeight;
 		EXTRADATA(node).super.texl[0] = -(int) (EXTRADATA(node).scrollSpeed * CL_Milliseconds()) % ekgWidth;
-		EXTRADATA(node).super.texh[0] = EXTRADATA(node).super.texl[0] + node->size[0];
+		EXTRADATA(node).super.texh[0] = EXTRADATA(node).super.texl[0] + node->box.size[0];
 		/** @todo code is duplicated in the image node code */
-		if (node->size[0] && !node->size[1]) {
-			const float scale = image->width / node->size[0];
-			Vector2Set(size, node->size[0], image->height / scale);
-		} else if (node->size[1] && !node->size[0]) {
-			const float scale = image->height / node->size[1];
-			Vector2Set(size, image->width / scale, node->size[1]);
+		if (node->box.size[0] && !node->box.size[1]) {
+			const float scale = image->width / node->box.size[0];
+			Vector2Set(size, node->box.size[0], image->height / scale);
+		} else if (node->box.size[1] && !node->box.size[0]) {
+			const float scale = image->height / node->box.size[1];
+			Vector2Set(size, image->width / scale, node->box.size[1]);
 		} else {
 			if (EXTRADATA(node).super.preventRatio) {
 				/* maximize the image into the bounding box */
 				const float ratio = (float) image->width / (float) image->height;
-				if (node->size[1] * ratio > node->size[0]) {
-					Vector2Set(size, node->size[0], node->size[0] / ratio);
+				if (node->box.size[1] * ratio > node->box.size[0]) {
+					Vector2Set(size, node->box.size[0], node->box.size[0] / ratio);
 				} else {
-					Vector2Set(size, node->size[1] * ratio, node->size[1]);
+					Vector2Set(size, node->box.size[1] * ratio, node->box.size[1]);
 				}
 			} else {
-				Vector2Copy(node->size, size);
+				Vector2Copy(node->box.size, size);
 			}
 		}
 		UI_DrawNormImage(qfalse, nodepos[0], nodepos[1], size[0], size[1],

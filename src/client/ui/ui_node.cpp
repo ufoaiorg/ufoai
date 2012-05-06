@@ -405,10 +405,10 @@ void UI_NodeGetPoint (const uiNode_t* node, vec2_t pos, int direction)
 		pos[0] = 0;
 		break;
 	case LAYOUTALIGN_H_MIDDLE:
-		pos[0] = (int)(node->size[0] / 2);
+		pos[0] = (int)(node->box.size[0] / 2);
 		break;
 	case LAYOUTALIGN_H_RIGHT:
-		pos[0] = node->size[0];
+		pos[0] = node->box.size[0];
 		break;
 	default:
 		Com_Printf("UI_NodeGetPoint: Align '%d' (0x%X) is not a common alignment", direction, direction);
@@ -422,10 +422,10 @@ void UI_NodeGetPoint (const uiNode_t* node, vec2_t pos, int direction)
 		pos[1] = 0;
 		break;
 	case LAYOUTALIGN_V_MIDDLE:
-		pos[1] = (int)(node->size[1] / 2);
+		pos[1] = (int)(node->box.size[1] / 2);
 		break;
 	case LAYOUTALIGN_V_BOTTOM:
-		pos[1] = node->size[1];
+		pos[1] = node->box.size[1];
 		break;
 	default:
 		Com_Printf("UI_NodeGetPoint: Align '%d' (0x%X) is not a common alignment", direction, direction);
@@ -452,11 +452,11 @@ void UI_GetNodeAbsPos (const uiNode_t* node, vec2_t pos)
 	Vector2Set(pos, 0, 0);
 	while (node) {
 #ifdef DEBUG
-		if (node->pos[0] != (int)node->pos[0] || node->pos[1] != (int)node->pos[1])
-			Com_Error(ERR_FATAL, "UI_GetNodeAbsPos: Node '%s' position %f,%f is not integer", UI_GetPath(node), node->pos[0], node->pos[1]);
+		if (node->box.pos[0] != (int)node->box.pos[0] || node->box.pos[1] != (int)node->box.pos[1])
+			Com_Error(ERR_FATAL, "UI_GetNodeAbsPos: Node '%s' position %f,%f is not integer", UI_GetPath(node), node->box.pos[0], node->box.pos[1]);
 #endif
-		pos[0] += node->pos[0];
-		pos[1] += node->pos[1];
+		pos[0] += node->box.pos[0];
+		pos[1] += node->box.pos[1];
 		node = node->parent;
 	}
 }
@@ -480,11 +480,11 @@ void UI_GetNodeScreenPos (const uiNode_t* node, vec2_t pos)
 	Vector2Set(pos, 0, 0);
 	while (node) {
 #ifdef DEBUG
-		if (node->pos[0] != (int)node->pos[0] || node->pos[1] != (int)node->pos[1])
-			Com_Error(ERR_FATAL, "UI_GetNodeAbsPos: Node '%s' position %f,%f is not integer", UI_GetPath(node), node->pos[0], node->pos[1]);
+		if (node->box.pos[0] != (int)node->box.pos[0] || node->box.pos[1] != (int)node->box.pos[1])
+			Com_Error(ERR_FATAL, "UI_GetNodeAbsPos: Node '%s' position %f,%f is not integer", UI_GetPath(node), node->box.pos[0], node->box.pos[1]);
 #endif
-		pos[0] += node->pos[0];
-		pos[1] += node->pos[1];
+		pos[0] += node->box.pos[0];
+		pos[1] += node->box.pos[1];
 		node = node->parent;
 
 		if (node && UI_Node_IsScrollableContainer(node)) {
@@ -506,8 +506,8 @@ void UI_NodeRelativeToAbsolutePoint (const uiNode_t* node, vec2_t pos)
 	assert(node);
 	assert(pos);
 	while (node) {
-		pos[0] += node->pos[0];
-		pos[1] += node->pos[1];
+		pos[0] += node->box.pos[0];
+		pos[1] += node->box.pos[1];
 		node = node->parent;
 	}
 }
@@ -531,8 +531,8 @@ void UI_NodeAbsoluteToRelativePos (const uiNode_t* node, int *x, int *y)
 		Com_Error(ERR_DROP, "UI_NodeAbsoluteToRelativePos: Node '%s' doesn't have a position", node->name);
 
 	while (node) {
-		*x -= node->pos[0];
-		*y -= node->pos[1];
+		*x -= node->box.pos[0];
+		*y -= node->box.pos[1];
 
 		if (UI_Node_IsScrollableContainer(node)) {
 			vec2_t clientPosition = {0, 0};
@@ -574,10 +574,10 @@ void UI_UnHideNode (uiNode_t* node)
  */
 void UI_NodeSetSize (uiNode_t* node, vec2_t size)
 {
-	if (Vector2Equal(node->size, size))
+	if (Vector2Equal(node->box.size, size))
 		return;
-	node->size[0] = size[0];
-	node->size[1] = size[1];
+	node->box.size[0] = size[0];
+	node->box.size[1] = size[1];
 	UI_Node_SizeChanged(node);
 }
 

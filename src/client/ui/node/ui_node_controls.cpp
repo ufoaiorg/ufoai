@@ -47,8 +47,8 @@ void uiControlNode::onMouseDown (uiNode_t *node, int x, int y, int button)
 
 		/* save position between mouse and node pos */
 		UI_NodeAbsoluteToRelativePos(node, &x, &y);
-		deltaMouseX = x + node->pos[0];
-		deltaMouseY = y + node->pos[1];
+		deltaMouseX = x + node->box.pos[0];
+		deltaMouseY = y + node->box.pos[1];
 	}
 }
 
@@ -67,15 +67,15 @@ void uiControlNode::onCapturedMouseMove (uiNode_t *node, int x, int y)
 	x -= deltaMouseX;
 	if (x < 0)
 		x = 0;
-	if (x + node->root->size[0] > viddef.virtualWidth)
-		x = viddef.virtualWidth - node->root->size[0];
+	if (x + node->root->box.size[0] > viddef.virtualWidth)
+		x = viddef.virtualWidth - node->root->box.size[0];
 
 	/* compute new y position of the window */
 	y -= deltaMouseY;
 	if (y < 0)
 		y = 0;
-	if (y + node->root->size[1] > viddef.virtualHeight)
-		y = viddef.virtualHeight - node->root->size[1];
+	if (y + node->root->box.size[1] > viddef.virtualHeight)
+		y = viddef.virtualHeight - node->root->box.size[1];
 
 	UI_SetNewWindowPos(node->root, x, y);
 }

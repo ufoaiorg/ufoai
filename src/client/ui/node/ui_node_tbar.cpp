@@ -66,9 +66,9 @@ void uiTBarNode::draw (uiNode_t *node)
 		shx += round(ps * pointWidth); /* add size from 0..TEXTURE_WIDTH */
 	}
 
-	width = (shx * node->size[0]) / TEXTURE_WIDTH;
+	width = (shx * node->box.size[0]) / TEXTURE_WIDTH;
 
-	UI_DrawNormImageByName(qfalse, nodepos[0], nodepos[1], width, node->size[1],
+	UI_DrawNormImageByName(qfalse, nodepos[0], nodepos[1], width, node->box.size[1],
 		shx, EXTRADATA(node).texh[1], EXTRADATA(node).texl[0], EXTRADATA(node).texl[1], ref);
 }
 

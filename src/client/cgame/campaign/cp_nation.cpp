@@ -541,8 +541,8 @@ static void CL_NationDrawStats (const nation_t *nation, uiNode_t *node, lineStri
 		return;
 
 	/** @todo should be into the chart node code */
-	width	= (int)node->size[0];
-	height	= (int)node->size[1];
+	width	= (int)node->box.size[0];
+	height	= (int)node->box.size[1];
 	dx = (int)(width / MONTHS_PER_YEAR);
 
 	if (minFunding != maxFunding)
@@ -602,7 +602,7 @@ static void CL_NationStatsUpdate_f (void)
 
 	colorNode = UI_GetNodeByPath("nations.nation_graph_colors");
 	if (colorNode) {
-		dy = (int)(colorNode->size[1] / MAX_NATIONS);
+		dy = (int)(colorNode->box.size[1] / MAX_NATIONS);
 	}
 
 	for (i = 0; i < ccs.numNations; i++) {
@@ -625,8 +625,8 @@ static void CL_NationStatsUpdate_f (void)
 
 		if (colorNode) {
 			colorLinePts[usedColPtslists][0].x = 0;
-			colorLinePts[usedColPtslists][0].y = (int)colorNode->size[1] - (int)colorNode->size[1] + dy * i;
-			colorLinePts[usedColPtslists][1].x = (int)colorNode->size[0];
+			colorLinePts[usedColPtslists][0].y = (int)colorNode->box.size[1] - (int)colorNode->box.size[1] + dy * i;
+			colorLinePts[usedColPtslists][1].x = (int)colorNode->box.size[0];
 			colorLinePts[usedColPtslists][1].y = colorLinePts[usedColPtslists][0].y;
 
 			color->pointList = (int*)colorLinePts[usedColPtslists];

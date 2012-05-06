@@ -263,10 +263,10 @@ void uiTextEntryNode::draw (uiNode_t *node)
 
 	image = UI_GetReferenceString(node, node->image);
 	if (image)
-		UI_DrawPanel(pos, node->size, image, texX, texY, panelTemplate);
+		UI_DrawPanel(pos, node->box.size, image, texX, texY, panelTemplate);
 
 	if (EXTRADATA(node).background) {
-		UI_DrawSpriteInBox(qfalse, EXTRADATA(node).background, iconStatus, pos[0], pos[1], node->size[0], node->size[1]);
+		UI_DrawSpriteInBox(qfalse, EXTRADATA(node).background, iconStatus, pos[0], pos[1], node->box.size[0], node->box.size[1]);
 	}
 
 	if (char const* const text = UI_GetReferenceString(node, node->text)) {
@@ -292,7 +292,7 @@ void uiTextEntryNode::draw (uiNode_t *node)
 			R_Color(textColor);
 			UI_DrawStringInBox(font, (align_t)node->contentAlign,
 				pos[0] + node->padding, pos[1] + node->padding,
-				node->size[0] - node->padding - node->padding, node->size[1] - node->padding - node->padding,
+				node->box.size[0] - node->padding - node->padding, node->box.size[1] - node->padding - node->padding,
 				buf, LONGLINES_PRETTYCHOP);
 			R_Color(NULL);
 		}

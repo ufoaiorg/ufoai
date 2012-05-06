@@ -60,7 +60,7 @@ void uiTodoNode::draw (uiNode_t *node)
 	vec2_t pos;
 
 	UI_GetNodeAbsPos(node, pos);
-	UI_DrawFill(pos[0], pos[1], node->size[0], node->size[1], red);
+	UI_DrawFill(pos[0], pos[1], node->box.size[0], node->box.size[1], red);
 
 	if (node->state)
 		UI_CaptureDrawOver(node);
@@ -81,8 +81,8 @@ void uiTodoNode::onLoaded (uiNode_t *node)
 #ifndef DEBUG
 	node->invis = true;
 #endif
-	node->size[0] = 10;
-	node->size[1] = 10;
+	node->box.size[0] = 10;
+	node->box.size[1] = 10;
 }
 
 void UI_RegisterTodoNode (uiBehaviour_t *behaviour)

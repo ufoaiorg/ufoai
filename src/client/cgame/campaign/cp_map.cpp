@@ -1907,7 +1907,7 @@ void MAP_DrawMap (const uiNode_t* node, const campaign_t *campaign)
 	/* store these values in ccs struct to be able to handle this even in the input code */
 	UI_GetNodeAbsPos(node, pos);
 	Vector2Copy(pos, ccs.mapPos);
-	Vector2Copy(node->size, ccs.mapSize);
+	Vector2Copy(node->box.size, ccs.mapSize);
 	if (cl_3dmap->integer) {
 		/* remove the left padding */
 		ccs.mapSize[0] -= UI_MAPEXTRADATACONST(node).paddingRight;
