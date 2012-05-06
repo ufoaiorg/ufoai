@@ -1,0 +1,15 @@
+// =======================================
+// COMPONENTS INTERFACE TO RECEIVE EVENT FROM GAME
+// =======================================
+
+component game_mod_listener extends panel {
+
+	/**
+	 * Callback for mn_mods commands
+	 * @param <1> name of a mod
+	 */
+	confunc mn_mods_result {
+		cmd "echo mod2 = <1>"
+	}
+
+}

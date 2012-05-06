@@ -13,24 +13,15 @@ window mods
 		string		"_Mods"
 	}
 
-	/**
-	 * @param <1> The mod directory to select (empty to go back to base)
-	 */
-	func select_mod {
-		*cvar:fs_gamedir = <1>
-	}
-
 	/* textlist using tabbed text */
-	textlist mods
+	optionlist mods
 	{
+		cvar		*cvar:fs_gamedir
 		pos			"25 55"
 		width		"468"
-		lineheight	20
+		height		"200"
 		color		"0.60 0.60 0.60 1"
-		rows		"6"
 		selectcolor	"1 1 1 1"
-		dataid		TEXT_LIST
-		onClick		{ call *node:root.select_mod( <textselected> ) }
 		onViewChange {
 			*node:root.mods_scroll@fullsize = <fullsize>
 			*node:root.mods_scroll@current = <viewpos>
@@ -43,10 +34,16 @@ window mods
 		image		"ui/scrollbar_v_green"
 		pos			"486 100"
 		height		"120"
-		current		0
-		viewsize	6
-		fullsize	6
 		onChange	{ *node:parent.mods@viewpos = <current> }
+	}
+
+	game_mod_listener listener {
+		confunc mn_mods_result {
+			cmd "echo mod = <1>"
+			call *node:root.mods@createchild("option<1>", "option")
+			*node:root.mods.option<1>@value = <1>
+			*node:root.mods.option<1>@label = <1>
+		}
 	}
 
 	cmpPopupButton bt_ok
@@ -59,11 +56,14 @@ window mods
 	cmpCancelButton bt_cancel
 	{
 		pos			"296 192"
-		onClick		{ cmd "ui_pop;" }
+		onClick		{
+			cmd "ui_pop;"
+		}
 	}
 
 	func onWindowOpened
 	{
+		call *node:root.mods@removeallchild
 		cmd "mn_mods;"
 	}
 }
