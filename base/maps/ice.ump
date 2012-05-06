@@ -15,14 +15,14 @@ base ice/ice_
 
 tile +craft_drop_firebird
 	// 8 x info_human_start
-	// 2 info_2x2_start
+	// 3 info_2x2_start
 {
-4 5
-0      a      a     0
-x     +d     +d     a
-x     +d     +d     a
-x     +d     +d     a
-0      a      a     0
+5 5
+0      a      a     a     0
+x     +d     +d     +d    a
+x     +d     +d     +d    a
+x     +d     +d     +d    a
+0      a      a     a     0
 }
 
 // crashed UFO´s-----------------------------------------------------
@@ -127,7 +127,7 @@ adu     +a     adu
 
 assembly test
 {
-size "6 4"
+size "7 4"
 title "_Ice"
 +r01 "0 1"
 +r02 "0 1"
