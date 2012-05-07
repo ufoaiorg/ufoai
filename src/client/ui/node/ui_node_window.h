@@ -56,7 +56,6 @@ typedef struct node_index_s {
  * @brief extradata for the window node
  */
 typedef struct {
-	int eventTime;
 	vec2_t noticePos; 				/**< the position where the cl.msgText messages are rendered */
 	bool dragButton;			/**< If true, we init the window with a header to move it */
 	bool closeButton;			/**< If true, we init the window with a header button to close it */
