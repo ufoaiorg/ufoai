@@ -175,18 +175,6 @@ void uiWindowNode::draw (uiNode_t *node)
 	text = UI_GetReferenceString(node, node->text);
 	if (text)
 		UI_DrawStringInBox(font, ALIGN_CC, pos[0] + node->padding, pos[1] + node->padding, node->box.size[0] - node->padding - node->padding, TOP_HEIGHT + 10 - node->padding - node->padding, text, LONGLINES_PRETTYCHOP);
-
-	/* embedded timer */
-	if (EXTRADATA(node).onTimeOut && EXTRADATA(node).timeOut) {
-		if (EXTRADATA(node).lastTime == 0)
-			EXTRADATA(node).lastTime = CL_Milliseconds();
-		if (EXTRADATA(node).lastTime + EXTRADATA(node).timeOut < CL_Milliseconds()) {
-			/* allow to reset timeOut on the event, and restart it, with an uptodate lastTime */
-			EXTRADATA(node).lastTime = 0;
-			Com_DPrintf(DEBUG_CLIENT, "UI_WindowNodeDraw: timeout for node '%s'\n", node->name);
-			UI_ExecuteEventActions(node, EXTRADATA(node).onTimeOut);
-		}
-	}
 }
 
 void uiWindowNode::doLayout (uiNode_t *node)
@@ -227,9 +215,6 @@ void uiWindowNode::doLayout (uiNode_t *node)
 void uiWindowNode::onWindowOpened (uiNode_t *node, linkedList_t *params)
 {
 	uiNode_t *child;
-
-	/* init the embeded timer */
-	EXTRADATA(node).lastTime = CL_Milliseconds();
 
 	/* init child */
 	for (child = node->firstChild; child; child = child->next) {
@@ -431,18 +416,10 @@ void UI_RegisterWindowNode (uiBehaviour_t *behaviour)
 	 */
 	UI_RegisterExtradataNodeProperty(behaviour, "starlayout", V_CPPBOOL, windowExtraData_t, starLayout);
 
-	/* This property control milliseconds between each calls of <code>onEvent</code>.
-	 * If value is 0 (the default value) nothing is called. We can change the
-	 * value at the runtime.
-	 */
-	UI_RegisterExtradataNodeProperty(behaviour, "timeout", V_INT,windowExtraData_t, timeOut);
-
 	/* Invoked when the window is added to the rendering stack. */
 	UI_RegisterExtradataNodeProperty(behaviour, "onWindowOpened", V_UI_ACTION, windowExtraData_t, onWindowOpened);
 	/* Invoked when the window is removed from the rendering stack. */
 	UI_RegisterExtradataNodeProperty(behaviour, "onWindowClosed", V_UI_ACTION, windowExtraData_t, onWindowClosed);
-	/* Invoked periodically. See <code>timeout</code>. */
-	UI_RegisterExtradataNodeProperty(behaviour, "onEvent", V_UI_ACTION, windowExtraData_t, onTimeOut);
 	/* Invoked after all UI scripts are loaded. */
 	UI_RegisterExtradataNodeProperty(behaviour, "onScriptLoaded", V_UI_ACTION, windowExtraData_t, onScriptLoaded);
 

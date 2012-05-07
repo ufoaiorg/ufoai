@@ -67,9 +67,6 @@ typedef struct {
 	bool fill;					/**< If true, use all the screen space allowed */
 	bool starLayout;			/**< If true, do a star layout (move child into a corner according to his num) */
 
-	int timeOut;					/**< ms value until calling onTimeOut (see cl.time) */
-	int lastTime;					/**< when a window was pushed this value is set to cl.time */
-
 	uiNode_t* parent;	/**< to create child window */
 
 	struct uiKeyBinding_s *keyList;	/** list of key binding */
@@ -77,7 +74,6 @@ typedef struct {
 	/** @todo think about converting it to action instead of node */
 	struct uiAction_s *onWindowOpened; 	/**< Invoked when the window is added to the rendering stack */
 	struct uiAction_s *onWindowClosed;	/**< Invoked when the window is removed from the rendering stack */
-	struct uiAction_s *onTimeOut;	/**< Call when the own timer of the window out */
 	struct uiAction_s *onScriptLoaded;	/**< Invoked after all UI scripts are loaded */
 
 	node_index_t *index;
