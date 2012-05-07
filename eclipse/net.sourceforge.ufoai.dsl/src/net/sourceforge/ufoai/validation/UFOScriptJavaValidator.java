@@ -10,12 +10,12 @@ public class UFOScriptJavaValidator extends AbstractUFOScriptJavaValidator {
 	@Check
 	public void checkWindowName(UINodeWindow window) {
 		String name = window.getName();
-		if (name == null || name.isEmpty())
-			error("Window name must not be empty",
-					UfoScriptPackage.Literals.UI_NODE_WINDOW__NAME);
-		else if (!name.equals(name.toLowerCase()))
-			warning("Window name should be lowercase",
-					UfoScriptPackage.Literals.UI_NODE_WINDOW__NAME);
+		// if (name == null || name.isEmpty())
+		// error("Window name must not be empty",
+		// UfoScriptPackage.Literals.UI_NODE_WINDOW__NAME);
+		// else if (!name.equals(name.toLowerCase()))
+		// warning("Window name should be lowercase",
+		// UfoScriptPackage.Literals.UI_NODE_WINDOW__NAME);
 	}
 
 	@Check

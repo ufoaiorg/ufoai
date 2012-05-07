@@ -4,242 +4,83 @@ import "http://www.eclipse.org/emf/2002/Ecore" as ecore
 generate ufoScript "http://ufoai.org/UFOScript"
 
 // starting point for parsing a ufo script file
-//UFOScript:
-//	UINodes*;
-UINodes:
-	UINodeImage | UINodeData | UINodePanel | UINodeComponent | UINodeTab | UINodeTextList
-	| UINodeVScrollbar | UINodeBar | UINodeButton | UINodeZone | UINodeFunc | UINodeConfunc | UINodeWindow | UINodeTodo |
-	UINodeRows | UINodeSelectBox | UINodeOptionList | UINodeOptionTree | UINodeLineChart | UINodeText | UINodeGeoscape |
-	UINodeItem | UINodeModel;
+UFOScript:
+	(blocks+=UITopLevelNode)*;
+
+UITopLevelNode:
+	UINodeComponent | UINodeWindow;
 
 /** a window can only extend another window */
 UINodeWindow:
-	"window" name=ID ("extends" superWindow=[UINodeWindow])?
-	"{"
-	(BLOCK? & properties?=UINodeProperties)
-	nodes+=UINodes
-	"}";
+	"window" name=ID ("extends" superWindow=[UINodeWindow])? "{" ("{" properties+=UINodeProperties* "}")?
+	(nodes+=UINode)* "}";
 
 /** components can extend any ui node */
 UINodeComponent:
-	"component" ID ("extends" superComponent=[UINodes])?
-	"{"
-	(BLOCK? & properties?=UINodeProperties)
-	nodes+=UINodes
-	"}";
+	"component" name=ID "extends" (superComponent=[UINodeComponent] | superType=UINodeType) "{" ("{"
+	properties+=UINodeProperties* "}")? (nodes+=UINode)* "}";
+
+UINodeType:
+	"image" | "panel" | "button" | "model" | "text" | "string";
+
+UINode:
+	UINodeImage | UINodePanel | UINodeButton | UINodeModel | UINodeText | UINodeString;
 
 UINodeImage:
-	"image" ID
-	"{"
-	properties?=UINodeProperties
-	"}";
-
-UINodeData:
-	"data" ID
-	"{"
-	properties?=UINodeProperties
-	"}";
+	"image" name=ID "{" properties+=UIImageProperties* "}";
 
 UINodePanel:
-	"panel" ID
-	"{"
-	properties+=UINodeProperties
-	nodes+=UINodes
-	"}";
-
-/** TODO: different nodes have different properties */
-UINodeProperties:
-	(("pos" UFO_2D_INT) |
-	("size" UFO_2D_INT) |
-	("background" STRING) |
-	("string" STRING) |
-	("label" STRING) |
-	("value" STRING) |
-	("icon" UISprite) |
-	("ghost" UFO_BOOL) |
-	("max" UFO_INT) |
-	("color" STRING) |
-	("font" UIFont)
-	("contentalign" UFO_ALIGN) |
-	("tooltip" STRING) |
-	("disabled" UFO_BOOL) | UIEventHandler);
-
-UISprite:
-	"sprite" ID
-	"{"
-	ANY_OTHER*
-	"}";
-
-UIFont:
-	"font" ID "{"
-	("font" STRING)?
-	("size" UFO_INT)?
-	("style" UFO_FONT_STYLE)?
-	"}";
-
-UINodeTab:
-	"tab" ID
-	"{"
-	properties+=UINodeProperties
-	options+=UINodeTabOptions
-	"}";
-
-UINodeTabOptions:
-	"option" ID
-	"{"
-	properties+=UINodeProperties
-	"}";
-
-UINodeFunc:
-	"func" ID
-	"{"
-	properties+=UINodeProperties
-	/** TODO */
-	//(("call" NODEPATH ("(" parameter=STRING ")")?) |
-	//("*cvar" ":" cvar=TEXT "=" TEXT))?
-	"}";
-
-UINodeConfunc:
-	"confunc" ID
-	"{"
-	properties+=UINodeProperties
-	"}";
-
-UINodeTodo:
-	"todo" ID
-	"{"
-	properties+=UINodeProperties
-	"}";
-
-UINodeRows:
-	"rows" ID
-	"{"
-	properties+=UINodeProperties
-	"}";
-
-UINodeOptionList:
-	"optionlist" ID
-	"{"
-	properties+=UINodeProperties
-	"}";
-
-UINodeOptionTree:
-	"optiontree" ID
-	"{"
-	properties+=UINodeProperties
-	"}";
-
-UINodeSelectBox:
-	"selectbox" ID
-	"{"
-	properties+=UINodeProperties
-	"}";
-
-UINodeBar:
-	"bar" ID
-	"{"
-	properties+=UINodeProperties
-	"}";
-
-UINodeZone:
-	"zone" ID
-	"{"
-	properties+=UINodeProperties
-	"}";
+	"panel" name=ID "{" properties+=UIPanelProperties* "}";
 
 UINodeButton:
-	"button" ID
-	"{"
-	properties+=UINodeProperties
-	"}";
-
-UINodeText:
-	"text" ID
-	"{"
-	properties+=UINodeProperties
-	"}";
-
-UINodeLineChart:
-	"linechart" ID
-	"{"
-	properties+=UINodeProperties
-	"}";
+	"button" name=ID "{" properties+=UIButtonProperties* "}";
 
 UINodeModel:
-	"model" ID
-	"{"
-	properties+=UINodeProperties
-	"}";
+	"model" name=ID "{" properties+=UIModelProperties* "}";
 
-UINodeItem:
-	"item" ID
-	"{"
-	properties+=UINodeProperties
-	"}";
+UINodeText:
+	"text" name=ID "{" properties+=UITextProperties* "}";
 
-UINodeGeoscape:
-	"geoscape" ID
-	"{"
-	properties+=UINodeProperties
-	"}";
+UINodeString:
+	"string" name=ID "{" properties+=UIStringProperties* "}";
 
-UINodeTextList:
-	"textlist" ID
-	"{"
-	properties+=UINodeProperties
-	"}";
+UIStringProperties:
+	UINodeProperties | ("longlines" STRING);
 
-UINodeVScrollbar:
-	"vscrollbar" ID
-	"{"
-	properties+=UINodeProperties
-	"}";
+UITextProperties:
+	UINodeProperties | UINodeScrollabelProperties | ("lineselected" STRING) | ("textselected" STRING) | ("dataid" STRING)
+	| ("lineheight" STRING) | ("tabwidth" STRING) | ("longlines" STRING) | ("rows" STRING) | ("lines" STRING) | ("mousefx"
+	STRING);
 
-UIEventHandler:
-	("onClick" | "onRClick" | "onMouseEnter" | "onMouseLeave") "{"
-	(("cmd" STRING) | UIIfStatement | UIWhileStatement)+
-	"}";
+UIModelProperties:
+	UINodeProperties | ("anim" STRING) | ("angles" STRING) | ("origin" STRING) | ("omega" STRING) | ("scale" STRING) |
+	("tag" STRING) | ("autoscale" STRING) | ("rotatewithmouse" STRING) | ("clipoverflow" STRING) | ("skin" STRING);
 
-UIIfStatement:
-	"if" "(" CONDITION ")" BLOCK;
+UIButtonProperties:
+	UINodeProperties | ("icon" STRING) | ("flipicon" STRING) | ("background" STRING);
 
-CONDITION:
-	(NODEPATH) COMPARATOR (NODEPATH);
+UIImageProperties:
+	UINodeProperties | ("preventratio" STRING) | ("mousefx" STRING) | ("texh" STRING) | ("texl" STRING) | ("src" STRING);
 
-COMPARATOR:
-	"==" | "!=" | "<" | ">" | ">=" | "<=";
+UIPanelProperties:
+	UINodeProperties | UINodeScrollabelProperties | ("layout" STRING) | ("layoutMargin" STRING) | ("layoutColumns" STRING)
+	| ("wheelscrollable" STRING) | ("background" STRING);
 
-/** TODO: add property listing support via *nodename.child@property */
-NODEPATH:
-	STRING;
+UINodeScrollabelProperties:
+	("viewpos" STRING) | ("viewsize" STRING) | ("fullsize" STRING) | ("onviewchange" STRING);
 
-/** TODO */
-UIWhileStatement:
-	"while" "(" CONDITION ")" "{" "}";
+/* abstract node properties */
+UINodeProperties:
+	UINodeCallbacks | ("pos" STRING) | ("size" STRING) | ("width" STRING) | ("height" STRING) | ("left" STRING) | ("top"
+	STRING) | ("indexed" STRING) | ("invis" STRING) | ("disabled" STRING) | ("ghost" STRING) | ("border" STRING) |
+	("padding" STRING) | ("bgcolor" STRING) | ("bordercolor" STRING) | ("align" STRING) | ("num" STRING) | ("tooltip"
+	STRING) | ("image" STRING) | ("string" STRING) | ("font" STRING) | ("color" STRING) | ("selectcolor" STRING) |
+	("contentalign" STRING) | ("visiblewhen" STRING) | ("excluderect" STRING);
 
-UFO_ALIGN:
-	"ALIGN_UL" | "ALIGN_UC" | "ALIGN_UR" | "ALIGN_CL" | "ALIGN_CC" | "ALIGN_CR" | "ALIGN_LL" | "ALIGN_LC" | "ALIGN_LR" |
-	"ALIGN_UL_RSL" | "ALIGN_UC_RSL" | "ALIGN_UR_RSL" | "ALIGN_CL_RSL" | "ALIGN_CC_RSL" | "ALIGN_CR_RSL" | "ALIGN_LL_RSL" |
-	"ALIGN_LC_RSL" | "ALIGN_LR_RSL";
+/* abstract node callbacks */
+UINodeCallbacks:
+	("onclick" STRING) | ("onrclick" STRING) | ("onmclick" STRING) | ("onwheel" STRING) | ("onwheelup" STRING) |
+	("onwheeldown" STRING) | ("onmouseenter" STRING) | ("onmouseleave" STRING) | ("onchange" STRING);
 
-UFO_FONT_STYLE:
-	"TTF_STYLE_NORMAL" | "TTF_STYLE_BOLD" | "TTF_STYLE_ITALIC" | "TTF_STYLE_UNDERLINE";
-
-/** there might be empty blocks in each node header */
-terminal BLOCK:
-	'{'
-	ANY_OTHER*
-	'}';
-
-terminal DOUBLE returns ecore::EDouble:
-	('0'..'9')* '.' ('0'..'9')+;
-
-terminal UFO_2D_INT:
-	('"' INT INT '"') |
-	("'" INT INT "'");
-
-terminal UFO_BOOL:
-	("true" | "false");
-
-terminal UFO_INT:
-	('"' INT '"') | ("'" INT "'") | INT;
+UINodePath:
+	"*node" ID (=> '.' ID)*;
