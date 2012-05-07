@@ -1,7 +1,6 @@
 // Abort options window
 // Called from battlescape and within code. Hides behind battlescape
 // and appears when player hits escape
-// @TODO: Other options necessary for MP. check multiplayeringame.ufo
 window singleplayermission
 {
 	{
