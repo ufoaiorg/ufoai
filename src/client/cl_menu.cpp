@@ -96,7 +96,7 @@ static void CLMN_Mods_f (void)
 	linkedList_t *mods = NULL;
 	FS_GetModList(&mods);
 	while (mods) {
-		Cbuf_AddText(va("mn_mods_result %s\n", mods->data));
+		Cbuf_AddText(va("mn_mods_result %s\n", (char*)mods->data));
 		mods = mods->next;
 	}
 }
