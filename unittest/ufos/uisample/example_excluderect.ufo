@@ -28,7 +28,6 @@ window unittest_excluderect
 		closebutton	true
 		string		"_Unittest texture"
 		bgcolor		"0 0 0 1"
-		timeout		1000
 	}
 
 	/* excluderect */

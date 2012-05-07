@@ -12,7 +12,6 @@ window unittest_option
 		closebutton	true
 		string		"_Unittest option"
 		bgcolor		"0 0 0 1"
-		timeout		1000
 	}
 
 	todo addSelectbox {

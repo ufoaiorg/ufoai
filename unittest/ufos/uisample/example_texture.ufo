@@ -12,7 +12,6 @@ window unittest_texture
 		closebutton	true
 		string		"_Unittest texture"
 		bgcolor		"0 0 0 1"
-		timeout		1000
 	}
 
 	texture imagetest

@@ -7,7 +7,6 @@ window unittest_scrollmodel
 		closebutton	true
 		string		"_Unittest scrollmodel"
 		bgcolor		"0 0 0 1"
-		timeout		1000
 	}
 
 	panel scrollable {

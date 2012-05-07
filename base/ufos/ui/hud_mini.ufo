@@ -7,7 +7,6 @@ window hud_mini extends hud
 
 	{
 		noticepos	"512 20"
-		timeout	10000
 		starlayout	true
 		fill		true
 	}

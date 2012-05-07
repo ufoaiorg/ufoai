@@ -36,7 +36,6 @@ window unittest_nodeallocation
 		closebutton	true
 		string		"_Unittest node allocation"
 		bgcolor		"0 0 0 1"
-		timeout		1000
 	}
 
 	panel dyn {

@@ -12,7 +12,6 @@ window unittest_imagealign
 		closebutton	true
 		string		"_Unittest image align"
 		bgcolor		"0 0 0 1"
-		timeout		1000
 	}
 
 	image imagetest

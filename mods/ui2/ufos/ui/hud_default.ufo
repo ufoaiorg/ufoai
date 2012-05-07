@@ -32,7 +32,6 @@ window hud_default extends hud
 		fill		true
 		starlayout	true
 		noticepos	"256 10"
-		timeout		10000
 	}
 
 	func onScriptLoaded {

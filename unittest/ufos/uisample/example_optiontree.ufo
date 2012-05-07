@@ -7,7 +7,6 @@ window unittest_optiontree
 		closebutton	true
 		string		"_Unittest optiontree"
 		bgcolor		"0 0 0 1"
-		timeout		1000
 	}
 
 	optiontree tree {

@@ -8,7 +8,6 @@ window hud_default extends hud
 		fill		true
 		starlayout	true
 		noticepos	"512 50"
-		timeout		10000
 	}
 
 	// ==================

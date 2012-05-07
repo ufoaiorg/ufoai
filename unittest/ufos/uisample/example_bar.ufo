@@ -7,7 +7,6 @@ window unittest_bar
 		closebutton	true
 		string		"_Unittest bar"
 		bgcolor		"0 0 0 1"
-		timeout		1000
 	}
 
 	bar default {
