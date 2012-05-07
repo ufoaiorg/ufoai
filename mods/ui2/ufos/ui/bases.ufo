@@ -596,22 +596,20 @@ window bases
 	 */
 	confunc show_bld_space
 	{
-		if (param2 ne "building_entrance") {
-			// Set the appropriate size of the panel
-			*node:parent.sections.bld_space.height@integer = (<node:parent.sections.bld_space.height@integer> + 30)
-			*node:parent.sections.bld_space@size = "298 <node:parent.sections.bld_space.height@integer>"
+		// Set the appropriate size of the panel
+		*node:parent.sections.bld_space.height@integer = (<node:parent.sections.bld_space.height@integer> + 30)
+		*node:parent.sections.bld_space@size = "298 <node:parent.sections.bld_space.height@integer>"
 
-			// Add the capacity bar
-			call *node:parent.sections.bld_space@createChild ( "<2>", "BuildingSpace" )
-			*node:parent.sections.bld_space.<2>.smlicon@icon = "icons/<2>"
-			*node:parent.sections.bld_space.<2>@tooltip = "<1>"
-			*node:parent.sections.bld_space.<2>.data_bar@current = <3>
-			*node:parent.sections.bld_space.<2>.data_bar@max = <4>
+		// Add the capacity bar
+		call *node:parent.sections.bld_space@createChild ( "<2>", "BuildingSpace" )
+		*node:parent.sections.bld_space.<2>.smlicon@icon = "icons/<2>"
+		*node:parent.sections.bld_space.<2>@tooltip = "<1>"
+		*node:parent.sections.bld_space.<2>.data_bar@current = <3>
+		*node:parent.sections.bld_space.<2>.data_bar@max = <4>
 
-			// Only show the capacity string if max isn't 0
-			if (param4 ne 0) {
-				*node:parent.sections.bld_space.<2>.data@string = <3>/<4>
-			}
+		// Only show the capacity string if max isn't 0
+		if (param4 ne 0) {
+			*node:parent.sections.bld_space.<2>.data@string = <3>/<4>
 		}
 	}
 

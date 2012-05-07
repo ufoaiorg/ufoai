@@ -4,7 +4,7 @@
  */
 
 /*
-Copyright (C) 2002-2011 UFO: Alien Invasion.
+Copyright (C) 2002-2012 UFO: Alien Invasion.
 
 This program is free software; you can redistribute it and/or
 modify it under the terms of the GNU General Public License
@@ -442,15 +442,22 @@ static void B_BuildingSpace_f (void)
 	UI_ExecuteConfunc("clear_bld_space");
 	for (i = 0; i < ccs.numBuildingTemplates; i++) {
 		const building_t* b = &ccs.buildingTemplates[i];
-		baseCapacities_t cap;
+		const baseCapacities_t capType = B_GetCapacityFromBuildingType(b->buildingType);
+		capacities_t cap;
 
+		/* skip mandatory buildings (like Entrance) which are built automatically */
+		if (b->mandatory)
+			continue;
 		/* only show already researched buildings */
 		if (!RS_IsResearched_ptr(b->tech))
 			continue;
 
-		cap = B_GetCapacityFromBuildingType(b->buildingType);
+		if (capType != MAX_CAP)
+			cap = *CAP_Get(base, capType);
+		else
+			OBJZERO(cap);
 
-		UI_ExecuteConfunc("show_bld_space \"%s\" \"%s\" %i %i", _(b->name), b->id, CAP_GetCurrent(base, cap), CAP_GetMax(base, cap));
+		UI_ExecuteConfunc("show_bld_space \"%s\" \"%s\" %i %i", _(b->name), b->id, cap.cur, cap.max);
 	}
 }
 
