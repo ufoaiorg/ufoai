@@ -3555,7 +3555,8 @@ mapdef dam
 		coop4
 	}
 
-	maxaliens		10
+	maxaliens		12
+			// randomspawn enabled
 
 	civilianteam	worker
 
