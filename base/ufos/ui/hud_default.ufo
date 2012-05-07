@@ -239,7 +239,7 @@ window hud_default extends hud
 	confunc updateLevelStatus {
 		if ( <2> == 0 ) {
 			*node:root.floor.bt<1>@disabled = true
-			*node:root.floor.bt<1>@tooltip = "Wheel:Level Up/Down\nKeys:Cursor Up/Down"
+			*node:root.floor.bt<1>@tooltip = "_Wheel:Level Up/Down\nKeys:Cursor Up/Down"
 		}
 		elif ( <2> >= 1 ) { *node:root.floor.bt<1>@disabled = false }
 	}
