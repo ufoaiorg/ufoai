@@ -1,4 +1,4 @@
-/*
+// fullscreen battlescape radar
 window radarwindow {
 	{
 		fill		true
@@ -11,7 +11,6 @@ window radarwindow {
 
 	func onWindowClosed {
 		delete *cvar:radar_window_open
-		}
 	}
 
 	radar hudradar
@@ -25,11 +24,11 @@ window radarwindow {
 	}
 }
 
-*/
-window radarwindow {
+// this is the popup-version of the radar, but is currently unused
+window radarwindow_popup {
 	{
-		pos			"256 100"
-		size		"547 580"
+		pos			"206 100"
+		size		"647 580"
 		dragbutton	true
 		closebutton	true
 		background		"ui/popup_alpha_tile"
@@ -42,7 +41,6 @@ window radarwindow {
 
 	func onWindowClosed {
 		delete *cvar:radar_window_open
-		}
 	}
 
 	func closeradar
