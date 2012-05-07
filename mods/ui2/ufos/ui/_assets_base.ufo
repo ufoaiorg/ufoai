@@ -55,7 +55,6 @@ component BuildingSpace extends panel
 {
 	{
 		size	"298 30"
-		ghost	true
 	}
 	button smlicon
 	{

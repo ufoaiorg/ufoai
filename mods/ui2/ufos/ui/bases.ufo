@@ -322,10 +322,11 @@ window bases
 		panel bld_space
 		{
 			{
-				size			"298 120"
+				size			"298 0"
 				layout			LAYOUT_TOP_DOWN_FLOW
 				layoutMargin	0
 			}
+			data height { integer 0 }
 		}
 		// Show BUILD or VIEW STATS button depending
 		panel facilities_options
@@ -334,7 +335,7 @@ window bases
 				size			"298 0"
 				invis			true
 			}
-			data state { string "build" }
+			data state { string "true" }
 			MainMenu3Btn build_button
 			{
 				string			"_BUILD"
@@ -587,53 +588,35 @@ window bases
 	}
 
 	/*
-	 * Passes information on building space for living quarters, storage
-	 * workshop, lab and antimatter.
+	 * Passes information on capacity for available buildings
 	 * param1 = name
-	 * param2 = type (building_lab,building_quarters,building_storage,building_workshop,building_amstorage)
+	 * param2 = type (building_lab,building_quarters,building_storage,building_workshop,building_amstorage, etc.)
 	 * param3 = current
 	 * param4 = capacity
 	 */
 	confunc show_bld_space
 	{
-		// Don't show building space if building is not completed (max = 0)
-		if (param4 != 0) {
-			// If base has antimatter storage, node must be created
-			if (param2 eq "building_amstorage") {
-				call *node:parent.sections.bld_space@createChild ( "<2>", "BuildingSpace" )
-				*node:parent.sections.bld_space@size = "298 150"
-			}
-			*node:parent.sections.bld_space.<2>.smlicon@icon = "icons/<2>"
-			*node:parent.sections.bld_space.<2>@tooltip = "<1>"
-			*node:parent.sections.bld_space.<2>.data@string = <3>/<4>
-			*node:parent.sections.bld_space.<2>.data_bar@current = <3>
-			*node:parent.sections.bld_space.<2>.data_bar@max = <4>
-		}
+		// Set the appropriate size of the panel
+		*node:parent.sections.bld_space.height@integer = (<node:parent.sections.bld_space.height@integer> + 30)
+		*node:parent.sections.bld_space@size = "298 <node:parent.sections.bld_space.height@integer>"
+
+		// Add the capacity bar
+		call *node:parent.sections.bld_space@createChild ( "<2>", "BuildingSpace" )
+		*node:parent.sections.bld_space.<2>.smlicon@icon = "icons/<2>"
+		*node:parent.sections.bld_space.<2>@tooltip = "<1>"
+		*node:parent.sections.bld_space.<2>.data@string = <3>/<4>
+		*node:parent.sections.bld_space.<2>.data_bar@current = <3>
+		*node:parent.sections.bld_space.<2>.data_bar@max = <4>
 	}
 
 	/*
-	 * Prepare the building space indicators.
-	 * Bases which are missing a facility will not call show_bld_space.
-	 * This ensures all indicators appear even if there is no bld space.
-	 * @TODO: Make anti-matter show 0/0 if it is researched but no bld
-	 *        is present.
+	 * Clear building space indicators in preparation for updating the list
 	 */
 	confunc clear_bld_space
 	{
 		call *node:parent.sections.bld_space@removeAllChild
-		*node:parent.sections.bld_space@size = "298 128"
-		call *node:parent.sections.bld_space@createChild ( "building_quarters", "BuildingSpace" )
-		*node:parent.sections.bld_space.building_quarters.smlicon@icon = "icons/building_quarters"
-		*node:parent.sections.bld_space.building_quarters@tooltip = "_Living Quarters"
-		call *node:parent.sections.bld_space@createChild ( "building_storage", "BuildingSpace" )
-		*node:parent.sections.bld_space.building_storage.smlicon@icon = "icons/building_storage"
-		*node:parent.sections.bld_space.building_storage@tooltip = "_Storage"
-		call *node:parent.sections.bld_space@createChild ( "building_lab", "BuildingSpace" )
-		*node:parent.sections.bld_space.building_lab.smlicon@icon = "icons/building_lab"
-		*node:parent.sections.bld_space.building_lab@tooltip = "_Laboratory"
-		call *node:parent.sections.bld_space@createChild ( "building_workshop", "BuildingSpace" )
-		*node:parent.sections.bld_space.building_workshop.smlicon@icon = "icons/building_workshop"
-		*node:parent.sections.bld_space.building_workshop@tooltip = "_Workshop"
+		*node:parent.sections.bld_space@size = "298 0"
+		*node:parent.sections.bld_space.height@integer = 0
 	}
 
 	/*
@@ -731,13 +714,15 @@ window bases
 	{
 		if (param1 eq "true") {
 
+			// Show capacity for all base buildings
+			cmd "base_building_space;"
+
 			// Show the build button
 			*node:parent.sections.facilities_options@invis = false
 			*node:parent.sections.facilities_options@size = "298 26"
 
 			// Set the state for subsequent clicks
 			*node:parent.sections.facilities.state@string = "false"
-
 		} else {
 
 			// Resets list selection
@@ -755,7 +740,10 @@ window bases
 			// Set the state/invis for subsequent clicks
 			*node:parent.sections.facilities.state@string = "true"
 			*node:parent.sections.bld_list.preview@invis = true
-			*node:parent.sections.facilities_options.state@string = "build"
+			*node:parent.sections.facilities_options.state@string = "true"
+
+			// Show capacity for just main base buildings
+			cmd "base_init;"
 		}
 
 		// Hide/show the other base sections
@@ -769,7 +757,7 @@ window bases
 
 	/*
 	 * Show the list of buildings available for construction
-	 * param1 = true (show building list) or false (hide building list)
+	 * param1 = true (show building list) or false (show stats)
 	 */
 	confunc build_facility
 	{
@@ -779,7 +767,10 @@ window bases
 //		*cvar:mn_building_status = ""
 		cmd "ui_resetdata TEXT_BUILDING_INFO;"
 
-		if (param1 eq "build") {
+		if (param1 eq "true") {
+			// Reset building status to just basic buildings
+			cmd "base_init;"
+
 			// Call to cp_base.c, populates TEXT_BUILDINGS with list of available buildings
 			cmd "building_init;"
 
@@ -791,9 +782,12 @@ window bases
 			*node:parent.sections.facilities_options.build_button@string = "_VIEW STATS"
 
 			// Set the state for subsequent clicks
-			*node:parent.sections.facilities_options.state@string = "stats"
+			*node:parent.sections.facilities_options.state@string = "false"
 
 		} else {
+
+			// Show capacity for all base buildings
+			cmd "base_building_space;"
 
 			// Resets list selection
 			cmd "reset_building_current 0;"
@@ -806,16 +800,8 @@ window bases
 			*node:parent.sections.facilities_options.build_button@string = "_BUILD"
 
 			// Set the state/invis for subsequent clicks
-			*node:parent.sections.facilities_options.state@string = "build"
+			*node:parent.sections.facilities_options.state@string = "true"
 		}
-
-		// Hide/show the other base sections
-		*node:parent.sections.aircraft@invis = <1>
-		*node:parent.sections.soldiers@invis = <1>
-		*node:parent.sections.buysell@invis = <1>
-		*node:parent.sections.research@invis = <1>
-		*node:parent.sections.production@invis = <1>
-		*node:parent.sections.containment@invis = <1>
 	}
 
 	/*
@@ -921,7 +907,7 @@ window bases
 	 */
 	confunc reset_base
 	{
-		cmd "build_facility false; alien_containment false;"
+		cmd "show_facility false; alien_containment false;"
 	}
 
 	// Fuzzy screen effect (see assets.ufo)

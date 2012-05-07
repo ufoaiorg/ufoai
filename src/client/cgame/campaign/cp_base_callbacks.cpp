@@ -427,6 +427,34 @@ static void B_BaseInit_f (void)
 }
 
 /**
+ * @brief Update the display of building space for all researched facilities
+ * @sa B_BaseInit_f
+ */
+static void B_BuildingSpace_f (void)
+{
+	int i;
+	base_t *base = B_GetCurrentSelectedBase();
+
+	if (!base)
+		return;
+
+	// Clear existing entries from the UI panel
+	UI_ExecuteConfunc("clear_bld_space");
+	for (i = 0; i < ccs.numBuildingTemplates; i++) {
+		const building_t* b = &ccs.buildingTemplates[i];
+		baseCapacities_t cap;
+
+		/* only show already researched buildings */
+		if (!RS_IsResearched_ptr(b->tech))
+			continue;
+
+		cap = B_GetCapacityFromBuildingType(b->buildingType);
+
+		UI_ExecuteConfunc("show_bld_space \"%s\" \"%s\" %i %i", _(b->name), b->id, CAP_GetCurrent(base, cap), CAP_GetMax(base, cap));
+	}
+}
+
+/**
  * @brief Update the building-list.
  * @sa B_BuildingInit_f
  */
@@ -955,6 +983,7 @@ void B_InitCallbacks (void)
 	Cmd_AddCommand("base_changename", B_ChangeBaseName_f, "Called after editing the cvar base name");
 	Cmd_AddCommand("base_init", B_BaseInit_f);
 	Cmd_AddCommand("base_assemble", B_AssembleMap_f, "Called to assemble the current selected base");
+	Cmd_AddCommand("base_building_space", B_BuildingSpace_f, "Called to display building capacity in current selected base");
 	Cmd_AddCommand("building_init", B_BuildingInit_f);
 	Cmd_AddCommand("building_status", B_BuildingStatus_f);
 	Cmd_AddCommand("building_destroy", B_BuildingDestroy_f, "Function to destroy a building (select via right click in baseview first)");
@@ -979,6 +1008,7 @@ void B_ShutdownCallbacks (void)
 	Cmd_RemoveCommand("mn_set_base_title");
 	Cmd_RemoveCommand("base_init");
 	Cmd_RemoveCommand("base_assemble");
+	Cmd_RemoveCommand("base_building_space");
 	Cmd_RemoveCommand("building_init");
 	Cmd_RemoveCommand("building_status");
 	Cmd_RemoveCommand("building_destroy");
