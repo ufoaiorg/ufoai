@@ -100,6 +100,22 @@ component BuildingSpace extends panel
 	}
 }
 
+// Small base selector layout
+component BaseLayoutMini extends baselayout
+{
+	pos				"1 1"
+	size			"10 10"
+	color			"0.56 0.81 0.76 1"
+	bgcolor			"0.56 0.81 0.76 0.1"
+	border			"1"
+	bordercolor		"0.56 0.81 0.76 0.1"
+	padding			0
+	selectcolor		"0.56 0.81 0.76 0.2"
+	onMouseEnter	{ *node:this@bordercolor = "0.56 0.81 0.76 0.5" }
+	onMouseLeave	{ *node:this@bordercolor = "0.56 0.81 0.76 0.1" }
+	onClick			{ cmd "mn_base_select <baseid>;" }
+}
+
 // Aircraft image/button
 component AircraftIcon extends panel
 {
