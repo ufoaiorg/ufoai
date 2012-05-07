@@ -180,6 +180,7 @@ $(TARGET)_SRCS      = \
 	client/ui/node/ui_node_textlist.cpp \
 	client/ui/node/ui_node_textentry.cpp \
 	client/ui/node/ui_node_texture.cpp \
+	client/ui/node/ui_node_timer.cpp \
 	client/ui/node/ui_node_todo.cpp \
 	client/ui/node/ui_node_vscrollbar.cpp \
 	client/ui/node/ui_node_window.cpp \
