@@ -346,24 +346,25 @@ static void B_BaseInit_f (void)
 	UI_ExecuteConfunc("clear_bld_space");
 	for (i = 0; i < ccs.numBuildingTemplates; i++) {
 		const building_t* b = &ccs.buildingTemplates[i];
-		baseCapacities_t cap;
+		const baseCapacities_t capType = B_GetCapacityFromBuildingType(b->buildingType);
+		capacities_t cap;
 
+		if (capType == MAX_CAP)
+			continue;
 		/* Check if building matches one of our four types */
 		if (b->buildingType != B_QUARTERS && b->buildingType != B_STORAGE && b->buildingType != B_WORKSHOP && b->buildingType != B_LAB && b->buildingType != B_ANTIMATTER)
 			continue;
-
 		/* only show already researched buildings */
 		if (!RS_IsResearched_ptr(b->tech))
 			continue;
+		cap = *CAP_Get(base, capType);
 
-		cap = B_GetCapacityFromBuildingType(b->buildingType);
-		if (cap == MAX_CAP)
+		assert(b->tpl);
+		const int count = B_GetNumberOfBuildingsInBaseByTemplate(base, b->tpl);
+		if (count < 1)
 			continue;
 
-		if (!B_GetNumberOfBuildingsInBaseByBuildingType(base, b->buildingType))
-			continue;
-
-		UI_ExecuteConfunc("show_bld_space \"%s\" \"%s\" %i %i", _(b->name), b->id, CAP_GetCurrent(base, cap), CAP_GetMax(base, cap));
+		UI_ExecuteConfunc("show_bld_space \"%s\" \"%s\" %i %i %i %i", _(b->name), b->id, cap.cur, cap.max, count, b->tpl->maxCount);
 	}
 
 	/*
@@ -457,7 +458,10 @@ static void B_BuildingSpace_f (void)
 		else
 			OBJZERO(cap);
 
-		UI_ExecuteConfunc("show_bld_space \"%s\" \"%s\" %i %i", _(b->name), b->id, cap.cur, cap.max);
+		assert(b->tpl);
+		const int count = B_GetNumberOfBuildingsInBaseByTemplate(base, b->tpl);
+
+		UI_ExecuteConfunc("show_bld_space \"%s\" \"%s\" %i %i %i %i", _(b->name), b->id, cap.cur, cap.max, count, b->tpl->maxCount);
 	}
 }
 

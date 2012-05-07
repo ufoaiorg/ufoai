@@ -589,10 +589,12 @@ window bases
 
 	/*
 	 * Passes information on capacity for available buildings
-	 * param1 = name
-	 * param2 = type (building_lab,building_quarters,building_storage,building_workshop,building_amstorage, etc.)
-	 * param3 = current
-	 * param4 = capacity
+	 * param1 = building name
+	 * param2 = building id (building_lab, building_quarters, building_storage, etc.)
+	 * param3 = currently used capacity
+	 * param4 = actual max capacity
+	 * param5 = number of buildings built of this type
+	 * param5 = max number of buildings can be built from this type
 	 */
 	confunc show_bld_space
 	{
@@ -610,6 +612,15 @@ window bases
 		// Only show the capacity string if max isn't 0
 		if (param4 ne 0) {
 			*node:parent.sections.bld_space.<2>.data@string = <3>/<4>
+		} elif (param6 > 0) {
+			// Show current/max number of buildings of a type if limited
+			*node:parent.sections.bld_space.<2>.data@string = <5>/<6>
+		}
+		// Show/Hide "add" building button
+		if (param5 == param6 ) {
+			*node:parent.sections.bld_space.<2>.alert@invis = true
+		} else {
+			*node:parent.sections.bld_space.<2>.alert@invis = false
 		}
 	}
 
