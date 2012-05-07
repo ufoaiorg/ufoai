@@ -64,7 +64,7 @@ component BuildingSpace extends panel
 	}
 	string data
 	{
-		string			"0/0"
+		string			""
 		pos				"49 0"
 		size			"190 20"
 		font			"f_verysmall"
