@@ -604,6 +604,7 @@ window bases
 
 		// Add the capacity bar
 		call *node:parent.sections.bld_space@createChild ( "<2>", "BuildingSpace" )
+		*node:parent.sections.bld_space.<2>.id@string = "<2>"
 		*node:parent.sections.bld_space.<2>.smlicon@icon = "icons/<2>"
 		*node:parent.sections.bld_space.<2>@tooltip = "<1>"
 		*node:parent.sections.bld_space.<2>.data_bar@current = <3>

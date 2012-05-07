@@ -134,6 +134,7 @@ typedef struct building_s {
 void B_ParseBuildings(const char *name, const char **text, qboolean link);
 qboolean B_BuildingScriptSanityCheck(void);
 building_t *B_GetBuildingTemplate(const char *buildingName);
+building_t *B_GetBuildingTemplateSilent(const char *buildingName);
 buildingType_t B_GetBuildingTypeByBuildingID(const char *buildingID);
 qboolean B_CheckBuildingDependencesStatus(const building_t* building);
 qboolean B_IsBuildingBuiltUp(const building_t *building);

@@ -56,6 +56,7 @@ component BuildingSpace extends panel
 	{
 		size	"298 30"
 	}
+	data id {}
 	button smlicon
 	{
 		pos		"29 0"
@@ -96,7 +97,7 @@ component BuildingSpace extends panel
 		size			"18 18"
 		onMouseEnter	{ *node:this@icon = "icons/windowplusb" }
 		onMouseLeave	{ *node:this@icon = "icons/windowplusb0" }
-		onClick			{ cmd "build_facility true;" }
+		onClick			{ cmd "buildings_click <node:parent.id@string>;" }
 	}
 }
 

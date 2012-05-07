@@ -537,7 +537,6 @@ static void B_BuildingInfoClick_f (void)
  */
 static void B_BuildingClick_f (void)
 {
-	int num;
 	building_t *building;
 	base_t *base = B_GetCurrentSelectedBase();
 
@@ -545,19 +544,20 @@ static void B_BuildingClick_f (void)
 		return;
 
 	if (Cmd_Argc() < 2) {
-		Com_Printf("Usage: %s <building list index>\n", Cmd_Argv(0));
+		Com_Printf("Usage: %s <building_id|building list index>\n", Cmd_Argv(0));
 		return;
 	}
 
 	/* which building? */
-	num = atoi(Cmd_Argv(1));
-
-	if (num > buildingNumber || num < 0) {
-		Com_DPrintf(DEBUG_CLIENT, "B_BuildingClick_f: max exceeded %i/%i\n", num, buildingNumber);
-		return;
+	building = B_GetBuildingTemplateSilent(Cmd_Argv(1));
+	if (!building) {
+		int num = atoi(Cmd_Argv(1));
+		if (num > buildingNumber || num < 0) {
+			Com_DPrintf(DEBUG_CLIENT, "B_BuildingClick_f: max exceeded %i/%i\n", num, buildingNumber);
+			return;
+		}
+		building = buildingConstructionList[num];
 	}
-
-	building = buildingConstructionList[num];
 
 	base->buildingCurrent = building;
 	B_DrawBuilding(building);
