@@ -178,10 +178,10 @@ bool uiGeoscapeNode::onStartDragging(uiNode_t* node, int startX, int startY, int
 {
 	switch (button) {
 	case K_MOUSE1:
-	case K_MOUSE2:
+	case K_MOUSE3:
 		startMouseShifting(node, startX, startY);
 		return true;
-	case K_MOUSE3:
+	case K_MOUSE2:
 		UI_SetMouseCapture(node);
 		mode = MODE_ZOOMMAP;
 		oldMousePosX = startX;
