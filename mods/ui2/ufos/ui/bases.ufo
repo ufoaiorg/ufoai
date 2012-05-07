@@ -311,7 +311,7 @@ window bases
 		}
 		BaseSection facilities {
 			{
-				onClick		{ cmd "alien_containment false; build_facility <node:this.state@string>;" }
+				onClick		{ cmd "alien_containment false; show_facility <node:this.state@string>;" }
 			}
 			string label { string "_Facilities" }
 			button icon { icon "icons/facilities" }
@@ -325,6 +325,25 @@ window bases
 				size			"298 120"
 				layout			LAYOUT_TOP_DOWN_FLOW
 				layoutMargin	0
+			}
+		}
+		// Show BUILD or VIEW STATS button depending
+		panel facilities_options
+		{
+			{
+				size			"298 0"
+				invis			true
+			}
+			data state { string "build" }
+			MainMenu3Btn build_button
+			{
+				string			"_BUILD"
+				pos				"29 0"
+				size			"224 26"
+				font			"f_small_bold"
+				color			"0 0 0 0.9"
+				selectcolor		"0 0 0 1"
+				onClick			{ cmd "build_facility <node:parent.state@string>;" }
 			}
 		}
 		// List of buildings available for construction
@@ -705,6 +724,50 @@ window bases
 	}
 
 	/*
+	 * Show the facilities panel
+	 * param1 = true (show) or false (hide)
+	 */
+	confunc show_facility
+	{
+		if (param1 eq "true") {
+
+			// Show the build button
+			*node:parent.sections.facilities_options@invis = false
+			*node:parent.sections.facilities_options@size = "298 26"
+
+			// Set the state for subsequent clicks
+			*node:parent.sections.facilities.state@string = "false"
+
+		} else {
+
+			// Resets list selection
+			cmd "reset_building_current 0;"
+
+			// Hide the list of buildings and the build button
+			*node:parent.sections.bld_list@invis = true
+			*node:parent.sections.bld_list@size = "298 0"
+			*node:parent.sections.facilities_options@invis = true
+			*node:parent.sections.facilities_options@size = "298 0"
+
+			// Reset button name
+			*node:parent.sections.facilities_options.build_button@string = "_BUILD"
+
+			// Set the state/invis for subsequent clicks
+			*node:parent.sections.facilities.state@string = "true"
+			*node:parent.sections.bld_list.preview@invis = true
+			*node:parent.sections.facilities_options.state@string = "build"
+		}
+
+		// Hide/show the other base sections
+		*node:parent.sections.aircraft@invis = <1>
+		*node:parent.sections.soldiers@invis = <1>
+		*node:parent.sections.buysell@invis = <1>
+		*node:parent.sections.research@invis = <1>
+		*node:parent.sections.production@invis = <1>
+		*node:parent.sections.containment@invis = <1>
+	}
+
+	/*
 	 * Show the list of buildings available for construction
 	 * param1 = true (show building list) or false (hide building list)
 	 */
@@ -716,7 +779,7 @@ window bases
 //		*cvar:mn_building_status = ""
 		cmd "ui_resetdata TEXT_BUILDING_INFO;"
 
-		if (param1 eq "true") {
+		if (param1 eq "build") {
 			// Call to cp_base.c, populates TEXT_BUILDINGS with list of available buildings
 			cmd "building_init;"
 
@@ -724,8 +787,11 @@ window bases
 			*node:parent.sections.bld_list@invis = false
 			*node:parent.sections.bld_list@size = "298 515"
 
+			// Change button name
+			*node:parent.sections.facilities_options.build_button@string = "_VIEW STATS"
+
 			// Set the state for subsequent clicks
-			*node:parent.sections.facilities.state@string = "false"
+			*node:parent.sections.facilities_options.state@string = "stats"
 
 		} else {
 
@@ -736,9 +802,11 @@ window bases
 			*node:parent.sections.bld_list@invis = true
 			*node:parent.sections.bld_list@size = "298 0"
 
+			// Change button name
+			*node:parent.sections.facilities_options.build_button@string = "_BUILD"
+
 			// Set the state/invis for subsequent clicks
-			*node:parent.sections.facilities.state@string = "true"
-			*node:parent.sections.bld_list.preview@invis = true
+			*node:parent.sections.facilities_options.state@string = "build"
 		}
 
 		// Hide/show the other base sections
