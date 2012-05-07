@@ -436,18 +436,18 @@ bool UI_GetBooleanFromExpression (uiAction_t *expression, const uiCallContext_t 
 
 	case EA_OPERATOR_BOOLEAN2BOOLEAN:
 		{
-			const bool value1 = UI_GetBooleanFromExpression(expression->d.nonTerminal.left, context);
-			const bool value2 = UI_GetBooleanFromExpression(expression->d.nonTerminal.right, context);
+#define VALUE1 UI_GetBooleanFromExpression(expression->d.nonTerminal.left, context)
+#define VALUE2 UI_GetBooleanFromExpression(expression->d.nonTerminal.right, context)
 
 			switch (expression->type) {
 			case EA_OPERATOR_AND:
-				return value1 && value2;
+				return VALUE1 && VALUE2;
 			case EA_OPERATOR_OR:
-				return value1 || value2;
+				return VALUE1 || VALUE2;
 			case EA_OPERATOR_XOR:
-				return value1 ^ value2;
+				return VALUE1 ^ VALUE2;
 			case EA_OPERATOR_NOT:
-				return !value1;
+				return !VALUE1;
 			default:
 				Com_Error(ERR_FATAL, "UI_GetBooleanFromExpression: (BOOL2BOOL) Invalid expression type");
 			}
