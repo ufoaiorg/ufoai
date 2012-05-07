@@ -1456,6 +1456,15 @@ window hud_mini extends hud
 				*node:root.right.mini_hand@image = "minihud/mini_hand"
 			}
 		}
+		model mdl_lefthand
+		{
+			pos			"184 392"
+			size		"55 30"
+			src			*cvar:mn_lweapon
+			angles		"0 180 90"
+			autoscale	true
+			ghost		true
+		}
 		container left
 		{
 			pos			"114 340"
@@ -1467,6 +1476,15 @@ window hud_mini extends hud
 			onMouseLeave {
 				*node:root.right.mini_hand@image = "minihud/mini_hand"
 			}
+		}
+		model mdl_righthand
+		{
+			pos			"184 392"
+			size		"55 30"
+			src			*cvar:mn_rweapon
+			angles		"0 180 90"
+			autoscale	true
+			ghost		true
 		}
 
 		// ammostrings
@@ -1791,6 +1809,8 @@ window hud_mini extends hud
 
 		func show_rightweapon
 		{
+			*node:root.right.mdl_righthand@invis = true
+			*node:root.right.mdl_lefthand@invis = false
 			*node:root.right.right@invis = false
 			*node:root.right.switch_to_right_hand@invis = true
 			*node:root.right.switch_to_left_hand@invis = false
@@ -1808,6 +1828,8 @@ window hud_mini extends hud
 		}
 		func show_leftweapon
 		{
+			*node:root.right.mdl_lefthand@invis = true
+			*node:root.right.mdl_righthand@invis = false
 			*node:root.right.right@invis = true
 			*node:root.right.switch_to_left_hand@invis = true
 			*node:root.right.switch_to_right_hand@invis = false
@@ -1830,7 +1852,7 @@ window hud_mini extends hud
 		{
 			tooltip		"_Switch to right hand weapon"
 			icon		"icons/next"
-			pos			"212 400"
+			pos			"166 400"
 			size		"16 16"
 			padding		0
 			/** @todo we should not use hud_switchfiremodelist */
@@ -1848,7 +1870,7 @@ window hud_mini extends hud
 		{
 			tooltip		"_Switch to left hand weapon"
 			icon		"icons/prev"
-			pos			"196 400"
+			pos			"150 400"
 			size		"16 16"
 			padding		0
 			/** @todo we should not use hud_switchfiremodelist */
