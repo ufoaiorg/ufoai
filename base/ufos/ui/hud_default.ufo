@@ -32,7 +32,6 @@ window hud_default extends hud
 			excluderect	{ pos "0 0" size "40 4" }
 			excluderect	{ pos "6 358" size "35 6" }
 			excluderect	{ pos "32 350" size "8 8" }
-			tooltip		"Wheel:Level Up/Down\nKeys:Cursor Up/Down"
 			onWheelUp {
 				if (*cvar:cl_worldlevel < *cvar:cl_maxworldlevel) {
 					*cvar:cl_worldlevel = (*cvar:cl_worldlevel + 1)
@@ -238,9 +237,17 @@ window hud_default extends hud
 	confunc updateLevelStatus {
 		if ( <2> == 0 ) {
 			*node:root.floor.bt<1>@disabled = true
-			*node:root.floor.bt<1>@tooltip = "_Wheel:Level Up/Down\nKeys:Cursor Up/Down"
+			*node:root.floor.bt<1>@ghost = true
+		} elif ( <2> >= 1 ) {
+			*node:root.floor.bt<1>@disabled = false
 		}
-		elif ( <2> >= 1 ) { *node:root.floor.bt<1>@disabled = false }
+		if ( *cvar:cl_worldlevel == 0 ) {
+			*node:root.floor@tooltip = "_Wheel:Level Up\nKey:Cursor Up"
+		} elif ( *cvar:cl_worldlevel == *cvar:cl_maxworldlevel ) {
+			*node:root.floor@tooltip = "_Wheel:Level Down\nKey:Cursor Down"
+		} else {
+			*node:root.floor@tooltip = "_Wheel:Level Up/Down\nKeys:Cursor Up/Down"
+		}
 	}
 
 	// ==================
