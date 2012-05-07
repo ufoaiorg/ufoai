@@ -289,8 +289,11 @@ window serverinfo
 // ==================
 window mp_serverbrowser extends abstract_multiplayer_join
 {
-	{
+	timer event {
 		timeout	60000
+		onEvent {
+			cmd "pingservers refresh;"
+		}
 	}
 
 	func set_mn_serverliststr_from_id {
@@ -467,11 +470,6 @@ window mp_serverbrowser extends abstract_multiplayer_join
 		*cvar:cl_serverlist = 0
 		cmd "pingservers refresh;"
 		call *node:root.set_mn_serverliststr_from_id( *cvar:cl_serverlist )
-	}
-
-	func onEvent
-	{
-		cmd "pingservers refresh;"
 	}
 }
 
@@ -1024,9 +1022,16 @@ window mp_create_server extends abstract_multiplayer
 window multiplayer_wait extends levelbuttons
 {
 	{
-		timeout 	2000
 		fill		true
 		starlayout	true
+	}
+
+	timer event {
+		timeout 	2000
+		// update every 2 sec
+		onEvent {
+			cmd "mp_selectteam_init;"
+		}
 	}
 
 	battlescape render {
@@ -1356,12 +1361,6 @@ window multiplayer_wait extends levelbuttons
 	// ===================
 	// EVENTS
 	// ===================
-
-	// update every 2 sec
-	func onEvent
-	{
-		cmd "mp_selectteam_init;"
-	}
 
 	func onWindowOpened
 	{
