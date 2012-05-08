@@ -363,11 +363,6 @@ void UI_RegisterAbstractNode (uiBehaviour_t *behaviour)
 
 	/* Tooltip we want to use. */
 	UI_RegisterNodeProperty(behaviour, "tooltip", V_CVAR_OR_LONGSTRING, uiNode_t, tooltip);
-	/* Image to use. Each behaviour use it like they want.
-	 * @todo Move it into behaviour need it.
-	 * @todo use V_REF_OF_STRING when its possible ('image' is never a cvar)
-	 */
-	UI_RegisterNodeProperty(behaviour, "image", V_CVAR_OR_STRING, uiNode_t, image);
 	/* Text the node will display.
 	 */
 	UI_RegisterNodeProperty(behaviour, "string", V_CVAR_OR_LONGSTRING, uiNode_t, text);

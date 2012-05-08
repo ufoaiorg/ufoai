@@ -258,7 +258,7 @@ void UI_RegisterSpinnerNode (uiBehaviour_t *behaviour)
 	 * button use the last 10 pixels. See the sample image.
 	 * @image html http://ufoai.org/wiki/images/Spinner_blue.png
 	 */
-	UI_RegisterOveridedNodeProperty(behaviour, "image");
+	UI_RegisterNodeProperty(behaviour, "image", V_CVAR_OR_STRING, uiNode_t, image);
 
 
 	/**

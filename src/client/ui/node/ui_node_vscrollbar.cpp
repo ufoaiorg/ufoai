@@ -430,6 +430,11 @@ void UI_RegisterVScrollbarNode (uiBehaviour_t *behaviour)
 	behaviour->extends = "abstractscrollbar";
 	behaviour->manager = new uiVScrollbarNode();
 
+	/* Image to use. Each behaviour use it like they want.
+	 * @todo use V_REF_OF_STRING when its possible ('image' is never a cvar)
+	 */
+	UI_RegisterNodeProperty(behaviour, "image", V_CVAR_OR_STRING, uiNode_t, image);
+
 	/** @todo convert it to a node function */
 	Cmd_AddCommand("ui_active_vscrollbar", UI_ActiveVScrollbarNode_f, "Active an element of a scrollbar node, (dummy mouse/user)");
 }

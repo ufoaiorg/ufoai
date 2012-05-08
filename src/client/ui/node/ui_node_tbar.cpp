@@ -79,6 +79,11 @@ void UI_RegisterTBarNode (uiBehaviour_t *behaviour)
 	behaviour->manager = new uiTBarNode();
 	behaviour->extraDataSize = sizeof(EXTRADATA_TYPE);
 
+	/* Image to use. Each behaviour use it like they want.
+	 * @todo use V_REF_OF_STRING when its possible ('image' is never a cvar)
+	 */
+	UI_RegisterNodeProperty(behaviour, "image", V_CVAR_OR_STRING, uiNode_t, image);
+
 	/* @todo Need documentation */
 	UI_RegisterExtradataNodeProperty(behaviour, "texh", V_POS, tbarExtraData_t, texh);
 	/* @todo Need documentation */
