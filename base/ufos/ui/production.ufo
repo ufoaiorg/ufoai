@@ -121,7 +121,7 @@ window production
 	panel itemlist {
 		pos		"12 160"
 		size	"553 597"
-		image	"ui/panel_grey_green_large2"
+		background	"ui/panel_grey_green_large2"
 	}
 
 	// ==================

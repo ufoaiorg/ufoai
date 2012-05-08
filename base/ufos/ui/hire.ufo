@@ -45,7 +45,7 @@ window employees
 	panel list_border {
 		pos		"13 155"
 		size	"393 605"
-		image	"ui/panel_grey_green_large2"
+		background	"ui/panel_grey_green_large2"
 	}
 
 	/**

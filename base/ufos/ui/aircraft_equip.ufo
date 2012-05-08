@@ -32,13 +32,13 @@ window aircraft_equip extends iaircraft
 			*node:root.airequip_zone_select1@image  = "ui/airequip_selected_element"
 			*node:root.airequip_zone_select2@image  = ""
 			*cvar:mn_aircraft_item_selected = -1
-			*node:root.itemlist@image = "ui/panel_grey_green"
+			*node:root.itemlist@background = "ui/panel_grey_green"
 			cmd "airequip_zone_select 1;"
 		} elif ( <1> eq "zone2" ) {
 			*node:root.airequip_zone_select1@image  = ""
 			*node:root.airequip_zone_select2@image  = "ui/airequip_selected_element"
 			*cvar:mn_aircraft_item_selected = -1
-			*node:root.itemlist@image = "ui/panel_grey_green"
+			*node:root.itemlist@background = "ui/panel_grey_green"
 			cmd "airequip_zone_select 2;"
 		} elif ( <1> eq "slot" ) {
 			*cvar:tmp = ""
@@ -54,7 +54,7 @@ window aircraft_equip extends iaircraft
 		} elif ( <1> eq "item" ) {
 			*node:root.airequip_zone_select1@image  = ""
 			*node:root.airequip_zone_select2@image  = ""
-			*node:root.itemlist@image = "ui/panel_grey_white"
+			*node:root.itemlist@background = "ui/panel_grey_white"
 			*cvar:mn_aircraft_item_selected = <2>
 			cmd "airequip_list_click <2>;"
 		}

@@ -249,17 +249,17 @@ component cmpMapPanel extends panel
 
 	cmpMapImage mappic
 	{
-		image		*cvar:mn_mappic
+		src		*cvar:mn_mappic
 		pos			"20 30"
 	}
 	cmpMapImage mappic2
 	{
-		image		*cvar:mn_mappic2
+		src		*cvar:mn_mappic2
 		pos			"155 30"
 	}
 	cmpMapImage mappic3
 	{
-		image		*cvar:mn_mappic3
+		src		*cvar:mn_mappic3
 		pos			"290 30"
 	}
 

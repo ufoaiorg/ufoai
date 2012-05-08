@@ -276,7 +276,7 @@ window physdata
 	ekg hp
 	{
 		tooltip		"_EKG"
-		image		"hud/phys_ekg"
+		src		"hud/phys_ekg"
 		pos			"78 367"
 		size		"324 32"
 	}
@@ -303,7 +303,7 @@ window physdata
 	ekg morale
 	{
 		tooltip		"_Morale"
-		image		"hud/phys_mor"
+		src		"hud/phys_mor"
 		pos			"78 406"
 		size		"324 32"
 		scrollspeed	0.12

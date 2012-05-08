@@ -90,7 +90,7 @@ window research
 	panel techlist {
 		pos			"29 93"
 		size		"587 597"
-		image		"ui/panel_grey_green_large2"
+		background		"ui/panel_grey_green_large2"
 	}
 
 	// ==================
@@ -434,7 +434,7 @@ window research
 	// research image
 	image image_top
 	{
-		image		*cvar:mn_research_image
+		src		*cvar:mn_research_image
 		pos			"663 260"
 		size		"317 350"
 		preventratio	true

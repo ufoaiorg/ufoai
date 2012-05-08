@@ -89,7 +89,7 @@ window transfer
 		{
 			pos			"12 160"
 			size		"552 582"
-			image		"ui/panel_grey_green_large2"
+			background		"ui/panel_grey_green_large2"
 		}
 
 		rows lines {
@@ -312,7 +312,7 @@ window transfer
 		{
 			pos		"580 440"
 			size	"420 257"
-			image	"ui/panel_grey_green_large2"
+			background	"ui/panel_grey_green_large2"
 		}
 
 		rows lines_transfer_cargolist {
