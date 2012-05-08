@@ -257,7 +257,7 @@ component cmpMapSlot extends panel
 
 	textentry slot_map
 	{
-		image		"ui/button_green_verysmall"
+		background		"ui/button_green_verysmall"
 		color 		"0 .78 0 1"
 		string		*cvar:mn_svmapname
 		selectcolor	"1 1 1 1"
@@ -308,17 +308,17 @@ component MapOptions extends panel
 	// Preview images
 	MapImage mappic
 	{
-		image		*cvar:mn_mappic
+		src		*cvar:mn_mappic
 		pos			"20 0"
 	}
 	MapImage mappic2
 	{
-		image		*cvar:mn_mappic2
+		src		*cvar:mn_mappic2
 		pos			"175 0"
 	}
 	MapImage mappic3
 	{
-		image		*cvar:mn_mappic3
+		src		*cvar:mn_mappic3
 		pos			"330 0"
 	}
 

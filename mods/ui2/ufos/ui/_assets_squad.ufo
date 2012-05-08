@@ -33,7 +33,7 @@ component EnemyEquip extends panel
 		pos			"260 0"
 		size		"200 30"
 		string		*cvar:ai_equipmentname
-		image		"ui/button_green_verysmall"
+		background		"ui/button_green_verysmall"
 		color		"0 .78 0 1"
 		selectcolor	"1 1 1 1"
 		contentalign	ALIGN_CC

@@ -137,7 +137,7 @@ window options
 					string			*cvar:cl_name
 					pos				"292 5"
 					size			"200 20"
-					image			"ui/textentry"
+					background			"ui/textentry"
 					color			"1 1 1 0.5"
 					selectcolor		"1 1 1 0.9"
 					contentalign	ALIGN_CL
@@ -167,7 +167,7 @@ window options
 					pos				"292 5"
 					size			"200 135"
 					cvar			*cvar:s_language
-					image			"ui/panel"
+					background			"ui/panel"
 					color			"1 1 1 0.5"
 					selectcolor		"1 1 1 0.9"
 					padding			6

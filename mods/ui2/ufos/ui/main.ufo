@@ -92,7 +92,7 @@ window checkcvars
 		size		"777 402"
 		dragbutton	true
 		modal		true
-		image		"ui/popup_alpha_tile"
+		background		"ui/popup_alpha_tile"
 		string		"_Initial settings"
 	}
 
@@ -117,7 +117,7 @@ window checkcvars
 	textentry slot_name
 	{
 		string		*cvar:cl_name
-		image		"ui/button_green_verysmall"
+		background		"ui/button_green_verysmall"
 		color		"0 .78 0 1"
 		selectcolor	"1 1 1 1"
 		contentalign	ALIGN_CL
@@ -196,7 +196,7 @@ window checkcvars
 	{
 		pos			"531 78"
 		cvar		*cvar:s_language
-		image		"ui/panel_green_slim"
+		background		"ui/panel_green_slim"
 		size		"155 226"
 		color		"0 .78 0 1"
 		selectcolor	"1 1 1 1"

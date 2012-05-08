@@ -375,7 +375,7 @@ window research
 		}
 		image img
 		{
-			image			*cvar:mn_research_image
+			src			*cvar:mn_research_image
 			pos				"0 80"
 			size			"277 632"
 			preventratio	true
