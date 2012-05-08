@@ -105,15 +105,13 @@ component BuildingSpace extends panel
 component BaseLayoutMini extends baselayout
 {
 	pos				"1 1"
-	size			"10 10"
-	color			"0.56 0.81 0.76 1"
+	size			"20 20"
+	color			"0.56 0.81 0.76 0.5"
 	bgcolor			"0.56 0.81 0.76 0.1"
-	border			"1"
-	bordercolor		"0.56 0.81 0.76 0.1"
-	padding			0
+	padding			1
 	selectcolor		"0.56 0.81 0.76 0.2"
-	onMouseEnter	{ *node:this@bordercolor = "0.56 0.81 0.76 0.5" }
-	onMouseLeave	{ *node:this@bordercolor = "0.56 0.81 0.76 0.1" }
+	onMouseEnter	{ *node:this@color = "0.56 0.81 0.76 1" }
+	onMouseLeave	{ *node:this@color = "0.56 0.81 0.76 0.5" }
 	onClick			{ cmd "mn_base_select <baseid>;" }
 }
 

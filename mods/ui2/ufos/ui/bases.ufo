@@ -65,6 +65,25 @@ window bases
 			contentalign	ALIGN_CL
 			onChange 	{ cmd "base_changename" } 	// stores the value of the cvar in the base structure
 		}
+		// Base selector
+		panel base_selector
+		{
+			{
+				pos		"480 5"
+				size	"120 22"
+				layout			LAYOUT_COLUMN
+				layoutColumns	8
+				layoutMargin	4
+			}
+			BaseLayoutMini base0 { baseid 0 }
+			BaseLayoutMini base1 { baseid 1 }
+			BaseLayoutMini base2 { baseid 2 }
+			BaseLayoutMini base3 { baseid 3 }
+			BaseLayoutMini base4 { baseid 4 }
+			BaseLayoutMini base5 { baseid 5 }
+			BaseLayoutMini base6 { baseid 6 }
+			BaseLayoutMini base7 { baseid 7 }
+		}
 		string credits
 		{
 			string		*cvar:mn_credits
