@@ -263,7 +263,6 @@ window hud_alt extends hud
 			pos			"21 22"
 			onClick		{ cmd "actor_select 0;" }
 			onRClick	{ cmd "actor_select 0;" }
-			tooltip		"_LMB/RMB:Select\nWheel:Select Next/Prev\nKey:1"
 			visiblewhen	"*cvar:mn_hp0 > 0"
 			onMouseEnter {
 				*node:this@src = "minihud/bar_teambox_hovered"
@@ -282,7 +281,6 @@ window hud_alt extends hud
 			pos			"101 22"
 			onClick		{ cmd "actor_select 1;" }
 			onRClick	{ cmd "actor_select 1;" }
-			tooltip		"_LMB/RMB:Select\nWheel:Select Next/Prev\nKey:2"
 			visiblewhen	"*cvar:mn_hp1 > 0"
 			onMouseEnter {
 				*node:this@src = "minihud/bar_teambox_hovered"
@@ -301,7 +299,6 @@ window hud_alt extends hud
 			pos			"181 22"
 			onClick		{ cmd "actor_select 2;" }
 			onRClick	{ cmd "actor_select 2;" }
-			tooltip		"_LMB/RMB:Select\nWheel:Select Next/Prev\nKey:3"
 			visiblewhen	"*cvar:mn_hp2 > 0"
 			onMouseEnter {
 				*node:this@src = "minihud/bar_teambox_hovered"
@@ -320,7 +317,6 @@ window hud_alt extends hud
 			pos			"261 22"
 			onClick		{ cmd "actor_select 3;" }
 			onRClick	{ cmd "actor_select 3;" }
-			tooltip		"_LMB/RMB:Select\nWheel:Select Next/Prev\nKey:4"
 			visiblewhen	"*cvar:mn_hp3 > 0"
 			onMouseEnter {
 				*node:this@src = "minihud/bar_teambox_hovered"
@@ -339,7 +335,6 @@ window hud_alt extends hud
 			pos			"341 22"
 			onClick		{ cmd "actor_select 4;" }
 			onRClick	{ cmd "actor_select 4;" }
-			tooltip		"_LMB/RMB:Select\nWheel:Select Next/Prev\nKey:5"
 			visiblewhen	"*cvar:mn_hp4 > 0"
 			onMouseEnter {
 				*node:this@src = "minihud/bar_teambox_hovered"
@@ -358,7 +353,6 @@ window hud_alt extends hud
 			pos			"421 22"
 			onClick		{ cmd "actor_select 5;" }
 			onRClick	{ cmd "actor_select 5;" }
-			tooltip		"_LMB/RMB:Select\nWheel:Select Next/Prev\nKey:6"
 			visiblewhen	"*cvar:mn_hp5 > 0"
 			onMouseEnter {
 				*node:this@src = "minihud/bar_teambox_hovered"
@@ -377,7 +371,6 @@ window hud_alt extends hud
 			pos			"501 22"
 			onClick		{ cmd "actor_select 6;" }
 			onRClick	{ cmd "actor_select 6;" }
-			tooltip		"_LMB/RMB:Select\nWheel:Select Next/Prev\nKey:7"
 			visiblewhen	"*cvar:mn_hp6 > 0"
 			onMouseEnter {
 				*node:this@src = "minihud/bar_teambox_hovered"
@@ -396,7 +389,6 @@ window hud_alt extends hud
 			pos			"581 22"
 			onClick		{ cmd "actor_select 7;" }
 			onRClick	{ cmd "actor_select 7;" }
-			tooltip		"_LMB/RMB:Select\nWheel:Select Next/Prev\nKey:8"
 			visiblewhen	"*cvar:mn_hp7 > 0"
 			onMouseEnter {
 				*node:this@src = "minihud/bar_teambox_hovered"
@@ -415,7 +407,6 @@ window hud_alt extends hud
 			pos			"661 22"
 			onClick		{ cmd "actor_select 8;" }
 			onRClick	{ cmd "actor_select 8;" }
-			tooltip		"_LMB/RMB:Select\nWheel:Select Next/Prev\nKey:9"
 			visiblewhen	"*cvar:mn_hp8 > 0"
 			onMouseEnter {
 				*node:this@src = "minihud/bar_teambox_hovered"
@@ -434,7 +425,6 @@ window hud_alt extends hud
 			pos			"741 22"
 			onClick		{ cmd "actor_select 9;" }
 			onRClick	{ cmd "actor_select 9;" }
-			tooltip		"_LMB/RMB:Select\nWheel:Select Next/Prev\nKey:0"
 			visiblewhen	"*cvar:mn_hp9 > 0"
 			onMouseEnter {
 				*node:this@src = "minihud/bar_teambox_hovered"
@@ -453,7 +443,6 @@ window hud_alt extends hud
 			pos			"821 22"
 			onClick		{ cmd "actor_select 10;" }
 			onRClick	{ cmd "actor_select 10;" }
-			tooltip		"_LMB/RMB:Select\nWheel:Select Next/Prev"
 			visiblewhen	"*cvar:mn_hp10 > 0"
 			onMouseEnter {
 				*node:this@src = "minihud/bar_teambox_hovered"
@@ -472,7 +461,6 @@ window hud_alt extends hud
 			pos			"901 22"
 			onClick		{ cmd "actor_select 11;" }
 			onRClick	{ cmd "actor_select 11;" }
-			tooltip		"_LMB/RMB:Select\nWheel:Select Next/Prev"
 			visiblewhen	"*cvar:mn_hp11 > 0"
 			onMouseEnter {
 				*node:this@src = "minihud/bar_teambox_hovered"
@@ -675,7 +663,6 @@ window hud_alt extends hud
 			texh		"87 98"
 			onWheelUp	{ cmd "actor_next;"}
 			onWheelDown	{ cmd "actor_prev;"}
-			tooltip		"_Wheel:Select Next/Previous"
 			onMouseEnter {
 				*node:this@src = "minihud/bar_selbox_hovered"
 			}
@@ -1033,8 +1020,6 @@ window hud_alt extends hud
 		model right_actor
 		{
 			{
-				tooltip		"_LMB:Inventory\nRMB:Physical Stats\nWheel:Select Next/Prev"
-
 				src			*cvar:mn_body
 				skin		*cvar:mn_skin
 				anim		*cvar:mn_anim
@@ -1204,7 +1189,7 @@ window hud_alt extends hud
 
 		image minihud_bt_help
 		{
-			tooltip		"_LMB:Show/RMB:Hide Keyinfo/General Help window"
+			tooltip		"_Keyinfo/General Help window"
 			src			"minihud/bt_help"
 			mousefx		true
 			pos			"203 490"
@@ -1313,7 +1298,7 @@ window hud_alt extends hud
 			string		*cvar:mn_ammoright
 			pos			"117 401"
 			size		"40 20"
-			tooltip		"LMB:Reload"
+			tooltip		"Reload"
 			onClick		{ cmd "hud_reloadright;" }
 		}
 		string ammoleft
@@ -1321,7 +1306,7 @@ window hud_alt extends hud
 			string		*cvar:mn_ammoleft
 			pos			"117 401"
 			size		"40 20"
-			tooltip		"LMB:Reload"
+			tooltip		"Reload"
 			onClick		{ cmd "hud_reloadleft;" }
 		}
 

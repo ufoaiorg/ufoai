@@ -62,7 +62,6 @@ window hud_default extends hud
 			value	0
 			cvar	*cvar:cl_worldlevel
 			icon	"icons/number_1"
-			tooltip		"_LMB:Select Level 1\nWheel:Level Up/Down\nKeys:Cursor Up/Down"
 			onWheelUp {
 				if (*cvar:cl_worldlevel < *cvar:cl_maxworldlevel) {
 					*cvar:cl_worldlevel = (*cvar:cl_worldlevel + 1)
@@ -84,7 +83,6 @@ window hud_default extends hud
 			value	1
 			cvar	*cvar:cl_worldlevel
 			icon	"icons/number_2"
-			tooltip		"_LMB:Select Level 2\nWheel:Level Up/Down\nKeys:Cursor Up/Down"
 			onWheelUp {
 				if (*cvar:cl_worldlevel < *cvar:cl_maxworldlevel) {
 					*cvar:cl_worldlevel = (*cvar:cl_worldlevel + 1)
@@ -106,7 +104,6 @@ window hud_default extends hud
 			value	2
 			cvar	*cvar:cl_worldlevel
 			icon	"icons/number_3"
-			tooltip		"_LMB:Select Level 3\nWheel:Level Up/Down\nKeys:Cursor Up/Down"
 			onWheelUp {
 				if (*cvar:cl_worldlevel < *cvar:cl_maxworldlevel) {
 					*cvar:cl_worldlevel = (*cvar:cl_worldlevel + 1)
@@ -128,7 +125,6 @@ window hud_default extends hud
 			value	3
 			cvar	*cvar:cl_worldlevel
 			icon	"icons/number_4"
-			tooltip		"_LMB:Select Level 4\nWheel:Level Up/Down\nKeys:Cursor Up/Down"
 			onWheelUp {
 				if (*cvar:cl_worldlevel < *cvar:cl_maxworldlevel) {
 					*cvar:cl_worldlevel = (*cvar:cl_worldlevel + 1)
@@ -150,7 +146,6 @@ window hud_default extends hud
 			value	4
 			cvar	*cvar:cl_worldlevel
 			icon	"icons/number_5"
-			tooltip		"_LMB:Select Level 5\nWheel:Level Up/Down\nKeys:Cursor Up/Down"
 			onWheelUp {
 				if (*cvar:cl_worldlevel < *cvar:cl_maxworldlevel) {
 					*cvar:cl_worldlevel = (*cvar:cl_worldlevel + 1)
@@ -172,7 +167,6 @@ window hud_default extends hud
 			value	5
 			cvar	*cvar:cl_worldlevel
 			icon	"icons/number_6"
-			tooltip		"_LMB:Select Level 6\nWheel:Level Up/Down\nKeys:Cursor Up/Down"
 			onWheelUp {
 				if (*cvar:cl_worldlevel < *cvar:cl_maxworldlevel) {
 					*cvar:cl_worldlevel = (*cvar:cl_worldlevel + 1)
@@ -194,7 +188,6 @@ window hud_default extends hud
 			value	6
 			cvar	*cvar:cl_worldlevel
 			icon	"icons/number_7"
-			tooltip		"_LMB:Select Level 7\nWheel:Level Up/Down\nKeys:Cursor Up/Down"
 			onWheelUp {
 				if (*cvar:cl_worldlevel < *cvar:cl_maxworldlevel) {
 					*cvar:cl_worldlevel = (*cvar:cl_worldlevel + 1)
@@ -216,7 +209,6 @@ window hud_default extends hud
 			value	7
 			cvar	*cvar:cl_worldlevel
 			icon	"icons/number_8"
-			tooltip		"_LMB:Select Level 8\nWheel:Level Up/Down\nKeys:Cursor Up/Down"
 			onWheelUp {
 				if (*cvar:cl_worldlevel < *cvar:cl_maxworldlevel) {
 					*cvar:cl_worldlevel = (*cvar:cl_worldlevel + 1)
@@ -240,13 +232,6 @@ window hud_default extends hud
 			*node:root.floor.bt<1>@ghost = true
 		} elif ( <2> >= 1 ) {
 			*node:root.floor.bt<1>@disabled = false
-		}
-		if ( *cvar:cl_worldlevel == 0 ) {
-			*node:root.floor@tooltip = "_Wheel:Level Up\nKey:Cursor Up"
-		} elif ( *cvar:cl_worldlevel == *cvar:cl_maxworldlevel ) {
-			*node:root.floor@tooltip = "_Wheel:Level Down\nKey:Cursor Down"
-		} else {
-			*node:root.floor@tooltip = "_Wheel:Level Up/Down\nKeys:Cursor Up/Down"
 		}
 	}
 
@@ -301,7 +286,6 @@ window hud_default extends hud
 	}
 
 	/**
-	 * TODO remove bt_actor7 tooltip from script and C code
 	 * TODO update hovered actor content
 	 *
 	 */
@@ -863,7 +847,7 @@ window hud_default extends hud
 
 		image minihud_bt_help
 		{
-			tooltip		"_LMB:Show/RMB:Hide Keyinfo/General Help window"
+			tooltip		"_Keyinfo/General Help window"
 			src			"minihud/bt_help"
 			mousefx		true
 			pos			"46 74"
@@ -1040,7 +1024,7 @@ window hud_default extends hud
 
 		image bt_physdata
 		{
-			tooltip	"_LMB:Show/RMB:Hide Physical stats"
+			tooltip	"_Physical stats"
 			src	"hud/buttons1"
 			mousefx true
 			pos		"6 201"
@@ -1052,7 +1036,7 @@ window hud_default extends hud
 
 		image bt_inventory
 		{
-			tooltip	"_LMB:Show/RMB:Hide Inventory"
+			tooltip	"_Inventory"
 			src	"hud/buttons1"
 			mousefx true
 			pos		"6 311"
