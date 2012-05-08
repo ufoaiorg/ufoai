@@ -59,8 +59,8 @@ void uiImageNode::onLoaded (uiNode_t *node)
 		if (EXTRADATA(node).texl[0] != 0 || EXTRADATA(node).texh[0]) {
 			node->box.size[0] = EXTRADATA(node).texh[0] - EXTRADATA(node).texl[0];
 			node->box.size[1] = EXTRADATA(node).texh[1] - EXTRADATA(node).texl[1];
-		} else if (node->image) {
-			const image_t *image = UI_LoadImage(node->image);
+		} else if (EXTRADATA(node).source) {
+			const image_t *image = UI_LoadImage(EXTRADATA(node).source);
 			if (image) {
 				node->box.size[0] = image->width;
 				node->box.size[1] = image->height;
@@ -126,7 +126,7 @@ void uiImageNode::draw (uiNode_t *node)
 	vec2_t imagepos;
 	vec2_t nodesize;
 
-	const char* imageName = UI_GetReferenceString(node, node->image);
+	const char* imageName = UI_GetReferenceString(node, EXTRADATA(node).source);
 	if (Q_strnull(imageName))
 		return;
 
@@ -200,17 +200,17 @@ void UI_RegisterImageNode (uiBehaviour_t* behaviour)
 	behaviour->extraDataSize = sizeof(EXTRADATA_TYPE);
 
 	/* Do not change the image ratio. The image will be proportionally stretched. */
-	UI_RegisterExtradataNodeProperty(behaviour, "preventratio", V_CPPBOOL, imageExtraData_t, preventRatio);
+	UI_RegisterExtradataNodeProperty(behaviour, "preventratio", V_CPPBOOL, EXTRADATA_TYPE, preventRatio);
 	/* Now this property do nothing. But we use it like a tag, to remember nodes we should convert into button...
 	 * @todo delete it when its possible (use more button instead of image)
 	 */
-	UI_RegisterExtradataNodeProperty(behaviour, "mousefx", V_CPPBOOL, imageExtraData_t, mousefx);
+	UI_RegisterExtradataNodeProperty(behaviour, "mousefx", V_CPPBOOL, EXTRADATA_TYPE, mousefx);
 
 	/* Texture high. Optional. Define the higher corner of the texture we want to display. Used with texl to crop the image. */
-	UI_RegisterExtradataNodeProperty(behaviour, "texh", V_POS, imageExtraData_t, texh);
+	UI_RegisterExtradataNodeProperty(behaviour, "texh", V_POS, EXTRADATA_TYPE, texh);
 	/* Texture low. Optional. Define the lower corner of the texture we want to display. Used with texh to crop the image. */
-	UI_RegisterExtradataNodeProperty(behaviour, "texl", V_POS, imageExtraData_t, texl);
+	UI_RegisterExtradataNodeProperty(behaviour, "texl", V_POS, EXTRADATA_TYPE, texl);
 
 	/* Source of the image */
-	UI_RegisterNodeProperty(behaviour, "src", V_CVAR_OR_STRING, uiNode_t, image);
+	UI_RegisterExtradataNodeProperty(behaviour, "src", V_CVAR_OR_STRING, EXTRADATA_TYPE, source);
 }

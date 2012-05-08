@@ -41,7 +41,7 @@ void uiTBarNode::draw (uiNode_t *node)
 	/* dataImageOrModel is the texture name */
 	float shx;
 	vec2_t nodepos;
-	const char* ref = UI_GetReferenceString(node, node->image);
+	const char* ref = UI_GetReferenceString(node, EXTRADATA(node).image);
 	float pointWidth;
 	float width;
 	if (Q_strnull(ref))
@@ -82,10 +82,10 @@ void UI_RegisterTBarNode (uiBehaviour_t *behaviour)
 	/* Image to use. Each behaviour use it like they want.
 	 * @todo use V_REF_OF_STRING when its possible ('image' is never a cvar)
 	 */
-	UI_RegisterNodeProperty(behaviour, "image", V_CVAR_OR_STRING, uiNode_t, image);
+	UI_RegisterExtradataNodeProperty(behaviour, "image", V_CVAR_OR_STRING, EXTRADATA_TYPE, image);
 
 	/* @todo Need documentation */
-	UI_RegisterExtradataNodeProperty(behaviour, "texh", V_POS, tbarExtraData_t, texh);
+	UI_RegisterExtradataNodeProperty(behaviour, "texh", V_POS, EXTRADATA_TYPE, texh);
 	/* @todo Need documentation */
-	UI_RegisterExtradataNodeProperty(behaviour, "texl", V_POS, tbarExtraData_t, texl);
+	UI_RegisterExtradataNodeProperty(behaviour, "texl", V_POS, EXTRADATA_TYPE, texl);
 }

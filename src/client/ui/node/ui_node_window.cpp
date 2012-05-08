@@ -246,8 +246,6 @@ void uiWindowNode::onLoaded (uiNode_t *node)
 	if (EXTRADATA(node).dragButton) {
 		uiNode_t *control = UI_AllocNode("move_window_button", "controls", node->dynamic);
 		control->root = node;
-		control->image = NULL;
-		/** @todo Once @c image_t is known on the client, use @c image->width resp. @c image->height here */
 		control->box.size[0] = node->box.size[0];
 		control->box.size[1] = TOP_HEIGHT;
 		control->box.pos[0] = 0;

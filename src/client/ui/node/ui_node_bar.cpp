@@ -162,21 +162,16 @@ void UI_RegisterBarNode (uiBehaviour_t *behaviour)
 	behaviour->manager = new uiBarNode();
 	behaviour->extraDataSize = sizeof(EXTRADATA_TYPE);
 
-	/* Image to use. Each behaviour use it like they want.
-	 * @todo use V_REF_OF_STRING when its possible ('image' is never a cvar)
-	 */
-	UI_RegisterNodeProperty(behaviour, "image", V_CVAR_OR_STRING, uiNode_t, image);
-
 	/**
 	 * Orientation of the bar. Default value "cr". Other available values are "uc", "lc", "cr", "cl"
 	 */
-	UI_RegisterExtradataNodeProperty(behaviour, "direction", V_ALIGN, barExtraData_t, orientation);
+	UI_RegisterExtradataNodeProperty(behaviour, "direction", V_ALIGN, EXTRADATA_TYPE, orientation);
 	/**
 	 * if true, the user can't edit the content
 	 */
-	UI_RegisterExtradataNodeProperty(behaviour, "readonly", V_CPPBOOL, barExtraData_t, readOnly);
+	UI_RegisterExtradataNodeProperty(behaviour, "readonly", V_CPPBOOL, EXTRADATA_TYPE, readOnly);
 	/**
 	 * there is no hover effect if this is true
 	 */
-	UI_RegisterExtradataNodeProperty(behaviour, "nohover", V_CPPBOOL, barExtraData_t, noHover);
+	UI_RegisterExtradataNodeProperty(behaviour, "nohover", V_CPPBOOL, EXTRADATA_TYPE, noHover);
 }

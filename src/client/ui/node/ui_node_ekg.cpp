@@ -41,7 +41,7 @@ void uiEkgNode::draw (uiNode_t *node)
 	vec2_t nodepos;
 	const image_t *image;
 
-	const char* imageName = UI_GetReferenceString(node, node->image);
+	const char* imageName = UI_GetReferenceString(node, EXTRADATA(node).super.source);
 	if (Q_strnull(imageName))
 		return;
 

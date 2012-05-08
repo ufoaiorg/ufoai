@@ -73,8 +73,8 @@ void uiSequenceNode::onWindowOpened (uiNode_t *node, linkedList_t *params)
 {
 	if (EXTRADATA(node).context == NULL)
 		EXTRADATA(node).context = SEQ_AllocContext();
-	if (node->image != NULL) {
-		SEQ_InitContext(EXTRADATA(node).context, node->image);
+	if (EXTRADATA(node).source != NULL) {
+		SEQ_InitContext(EXTRADATA(node).context, EXTRADATA(node).source);
 		EXTRADATA(node).playing = true;
 	}
 }
@@ -98,7 +98,7 @@ void uiSequenceNode::onLeftClick (uiNode_t *node, int x, int y)
 void uiSequenceNode::onPropertyChanged (uiNode_t *node, const value_t *property)
 {
 	if (property == propertySource) {
-		if (node->image != NULL) {
+		if (EXTRADATA(node).source != NULL) {
 			onWindowOpened(node, NULL);
 		} else if (EXTRADATA(node).context != NULL) {
 			onWindowClosed(node);
@@ -116,7 +116,7 @@ void UI_RegisterSequenceNode (uiBehaviour_t* behaviour)
 	behaviour->extraDataSize = sizeof(EXTRADATA_TYPE);
 
 	/** Source of the video. File name without prefix ./base/videos and without extension */
-	propertySource = UI_RegisterNodeProperty(behaviour, "src", V_CVAR_OR_STRING, uiNode_t, image);
+	propertySource = UI_RegisterExtradataNodeProperty(behaviour, "src", V_CVAR_OR_STRING, EXTRADATA_TYPE, source);
 
 	/** Called when the sequence end */
 	UI_RegisterExtradataNodeProperty(behaviour, "onEnd", V_UI_ACTION, EXTRADATA_TYPE, onEnd);
