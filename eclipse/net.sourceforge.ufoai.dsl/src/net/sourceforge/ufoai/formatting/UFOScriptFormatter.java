@@ -5,7 +5,6 @@ package net.sourceforge.ufoai.formatting;
 
 import net.sourceforge.ufoai.services.UFOScriptGrammarAccess;
 
-import org.eclipse.xtext.IGrammarAccess;
 import org.eclipse.xtext.Keyword;
 import org.eclipse.xtext.formatting.impl.AbstractDeclarativeFormatter;
 import org.eclipse.xtext.formatting.impl.FormattingConfig;
@@ -28,21 +27,17 @@ public class UFOScriptFormatter extends AbstractDeclarativeFormatter {
 			cfg.setNoSpace().after(pair.getFirst());
 			cfg.setNoSpace().before(pair.getSecond());
 		}
-		for (Keyword comma : g.findKeywords(",")) {
-			cfg.setNoSpace().before(comma);
-		}
-
-		for (Pair<Keyword, Keyword> pair : g.findKeywordPairs(":", ";")) {
-			cfg.setNoSpace().before(pair.getFirst());
-			cfg.setNoSpace().before(pair.getSecond());
-			cfg.setLinewrap().after(pair.getFirst());
+		for (Pair<Keyword, Keyword> pair : g.findKeywordPairs("{", "}")) {
 			cfg.setLinewrap().after(pair.getSecond());
 			cfg.setIndentation(pair.getFirst(), pair.getSecond());
-			cfg.setLinewrap(0, 0, 1).range(pair.getFirst(), pair.getSecond());
+		}
+		for (Keyword comma : g.findKeywords(",")) {
+			cfg.setNoSpace().before(comma);
+			cfg.setSpace(" ").after(comma);
 		}
 
-		cfg.setLinewrap().around(g.getUINodeRule());
-		cfg.setLinewrap().around(g.getUITopLevelNodeRule());
+		cfg.setLinewrap().after(g.getUINodeRule());
+		cfg.setLinewrap().after(g.getUITopLevelNodeRule());
 
 		// formatting for Comments
 		cfg.setLinewrap(0, 1, 2).before(g.getSL_COMMENTRule());

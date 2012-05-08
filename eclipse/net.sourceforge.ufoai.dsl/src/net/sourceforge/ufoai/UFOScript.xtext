@@ -7,80 +7,161 @@ generate ufoScript "http://ufoai.org/UFOScript"
 UFOScript:
 	(blocks+=UITopLevelNode)*;
 
+/* ==================== UI TOP LEVEL NODES ================================ */
 UITopLevelNode:
 	UINodeComponent | UINodeWindow;
 
 /** a window can only extend another window */
 UINodeWindow:
 	"window" name=ID ("extends" superWindow=[UINodeWindow])? "{" ("{" properties+=UINodeProperties* "}")?
-	(nodes+=UINode)* "}";
+	((nodes+=UINode) | (panels+=UINodePanel))* "}";
 
 /** components can extend any ui node */
 UINodeComponent:
 	"component" name=ID "extends" (superComponent=[UINodeComponent] | superType=UINodeType) "{" ("{"
 	properties+=UINodeProperties* "}")? (nodes+=UINode)* "}";
 
+/* ==================== NODES ================================ */
 UINodeType:
-	"image" | "panel" | "button" | "model" | "text" | "string";
+	"panel" | "image" | "button" | "model" | "text" | "string" | "confunc" | "func" | "textentry";
+
+/* panels are a little bit special */
+UINodePanel:
+	"panel" name=ID "{" ("{" properties+=UIPanelProperties* "}")? (panelNodes+=UINode)* "}";
 
 UINode:
-	UINodeImage | UINodePanel | UINodeButton | UINodeModel | UINodeText | UINodeString;
+	UINodeImage | UINodeButton | UINodeModel | UINodeText | UINodeString | UINodeConfunc | UINodeFunc | UINodeTextEntry;
 
 UINodeImage:
-	"image" name=ID "{" properties+=UIImageProperties* "}";
-
-UINodePanel:
-	"panel" name=ID "{" properties+=UIPanelProperties* "}";
+	"image" name=ID "{" (properties+=UIImageProperties)* "}";
 
 UINodeButton:
-	"button" name=ID "{" properties+=UIButtonProperties* "}";
+	"button" name=ID "{" (properties+=UIButtonProperties)* "}";
 
 UINodeModel:
-	"model" name=ID "{" properties+=UIModelProperties* "}";
+	"model" name=ID "{" (properties+=UIModelProperties)* "}";
 
 UINodeText:
-	"text" name=ID "{" properties+=UITextProperties* "}";
+	"text" name=ID "{" (properties+=UITextProperties)* "}";
 
 UINodeString:
-	"string" name=ID "{" properties+=UIStringProperties* "}";
+	"string" name=ID "{" (properties+=UIStringProperties)* "}";
+
+UINodeConfunc:
+	"confunc" name=ID "{" (statements+=UIFuncStatements)* "}";
+
+UINodeFunc:
+	"func" name=ID "{" (statements+=UIFuncStatements)* "}";
+
+UINodeTextEntry:
+	"textentry" name=ID "{" (statements+=UITextEntryProperties)* "}";
+
+/* ==================== NODE PROPERTIES ================================ */
+UITextEntryProperties:
+	UINodeProperties | ("isPassword" isPassword=UIValue) | ("clickOutAbort" clickOutAbort=UIValue) | ("onAbort"
+	onAbort=UIValue);
 
 UIStringProperties:
-	UINodeProperties | ("longlines" STRING);
+	UINodeProperties | ("longlines" longlines=UIValue);
 
 UITextProperties:
-	UINodeProperties | UINodeScrollabelProperties | ("lineselected" STRING) | ("textselected" STRING) | ("dataid" STRING)
-	| ("lineheight" STRING) | ("tabwidth" STRING) | ("longlines" STRING) | ("rows" STRING) | ("lines" STRING) | ("mousefx"
-	STRING);
+	UINodeProperties | UINodeScrollabelProperties | ("lineselected" lineselected=UIValue) | ("textselected"
+	textselected=UIValue) | ("dataid" dataid=UIValue) | ("lineheight" lineheight=UIValue) | ("tabwidth" tabwidth=UIValue)
+	| ("longlines" longlines2=UIValue) | ("rows" rows=UIValue) | ("lines" lines=UIValue) | ("mousefx" mousefx=STRING);
 
 UIModelProperties:
-	UINodeProperties | ("anim" STRING) | ("angles" STRING) | ("origin" STRING) | ("omega" STRING) | ("scale" STRING) |
-	("tag" STRING) | ("autoscale" STRING) | ("rotatewithmouse" STRING) | ("clipoverflow" STRING) | ("skin" STRING);
+	UINodeProperties | ("anim" anim=UIValue) | ("angles" angles=UIValue) | ("origin" origin=UIValue) | ("omega"
+	omega=UIValue) | ("scale" scale=UIValue) | ("tag" tag=UIValue) | ("autoscale" autoscale=UIValue) | ("rotatewithmouse"
+	rotatewithmouse=UIValue) | ("clipoverflow" clipoverflow=UIValue) | ("skin" skin=UIValue);
 
 UIButtonProperties:
-	UINodeProperties | ("icon" STRING) | ("flipicon" STRING) | ("background" STRING);
+	UINodeProperties | ("icon" icon=UIValue) | ("flipicon" flipicon=UIValue) | ("background" background2=UIValue);
 
 UIImageProperties:
-	UINodeProperties | ("preventratio" STRING) | ("mousefx" STRING) | ("texh" STRING) | ("texl" STRING) | ("src" STRING);
+	UINodeProperties | ("preventratio" preventratio=UIValue) | ("mousefx" mousefx2=UIValue) | ("texh" texh=UIValue) |
+	("texl" texl=UIValue)
+	("src" src=UIValue);
 
 UIPanelProperties:
-	UINodeProperties | UINodeScrollabelProperties | ("layout" STRING) | ("layoutMargin" STRING) | ("layoutColumns" STRING)
-	| ("wheelscrollable" STRING) | ("background" STRING);
+	UINodeProperties | UINodeScrollabelProperties | ("layout" layout=UIValue) | ("layoutMargin" layoutMargin=UIValue) |
+	("layoutColumns" layoutColumns=UIValue) | ("wheelscrollable" wheelscrollable=UIValue) | ("background"
+	background=UIValue);
 
 UINodeScrollabelProperties:
-	("viewpos" STRING) | ("viewsize" STRING) | ("fullsize" STRING) | ("onviewchange" STRING);
+	("viewpos" viewpos=UIValue) | ("viewsize" viewsize=UIValue) | ("fullsize" fullsize=UIValue) | ("onViewChange"
+	onViewChange=UIFuncStatements);
 
 /* abstract node properties */
 UINodeProperties:
-	UINodeCallbacks | ("pos" STRING) | ("size" STRING) | ("width" STRING) | ("height" STRING) | ("left" STRING) | ("top"
-	STRING) | ("indexed" STRING) | ("invis" STRING) | ("disabled" STRING) | ("ghost" STRING) | ("border" STRING) |
-	("padding" STRING) | ("bgcolor" STRING) | ("bordercolor" STRING) | ("align" STRING) | ("num" STRING) | ("tooltip"
-	STRING) | ("image" STRING) | ("string" STRING) | ("font" STRING) | ("color" STRING) | ("selectcolor" STRING) |
-	("contentalign" STRING) | ("visiblewhen" STRING) | ("excluderect" STRING);
+	UINodeCallbacks | ("pos" pos=UIValue) | ("size" size=UIValue) | ("width" width=UIValue) | ("height" height=UIValue) |
+	("left" left=UIValue) | ("top" top=UIValue) | ("indexed" indexed=UIValue) | ("invis" invis=UIValue) | ("disabled"
+	disabled=UIValue) | ("ghost" ghost=UIValue) | ("border" border=UIValue) | ("padding" padding=UIValue) | ("bgcolor"
+	bgcolor=UIValue) | ("bordercolor" bordercolor=UIValue) | ("align" align=UIValue) | ("num" num=UIValue) | ("tooltip"
+	tooltip=UIValue) | ("image" image=UIValue) | ("string" string=UIValue) | ("font" font=UIValue) | ("color"
+	color=UIValue) | ("selectcolor" selectcolor=UIValue) | ("contentalign" contentalign=UIValue) | ("visiblewhen"
+	visiblewhen=UIValue) | ("excluderect" excluderect=UIValue);
 
 /* abstract node callbacks */
 UINodeCallbacks:
-	("onclick" STRING) | ("onrclick" STRING) | ("onmclick" STRING) | ("onwheel" STRING) | ("onwheelup" STRING) |
-	("onwheeldown" STRING) | ("onmouseenter" STRING) | ("onmouseleave" STRING) | ("onchange" STRING);
+	("onClick" UIFuncStatements) | ("onRClick" UIFuncStatements) | ("onMClick" UIFuncStatements) | ("onWheel"
+	UIFuncStatements) | ("onWheelUp" UIFuncStatements) | ("onWheelDown" UIFuncStatements) | ("onMouseEnter"
+	UIFuncStatements) | ("onMouseLeave" UIFuncStatements) | ("onChange" UIFuncStatements);
+
+/* ==================== GENERAL UI STUFF ================================ */
+UIFuncStatements:
+	UICvarAssignment | UINodePropertyAssignment | UIFuncIfStatement | UIFuncDeleteCvar | UICommand;
+
+UICommand:
+	"cmd" name=UFO_STRING;
+
+UIFuncDeleteCvar:
+	"delete" name=UICvar;
+
+UICvarAssignment:
+	name=UICvar "=" value=UIValue;
+
+UINodePropertyAssignment:
+	UINodePath "@" property=UINodeProperty "=" value=UIValue;
+
+UIFuncIfStatement:
+	"if" "(" conditions=UIConditionalExpressions ")" "{" statements+=UIFuncStatements "}" ("elif" "{"
+	statements+=UIFuncStatements "}")* ("else" "{" statements+=UIFuncStatements "}")?;
+
+UIConditionalExpressions:
+	conditionalorexpression=UIConditionalOrExpression;
+
+UIConditionalOrExpression:
+	conditionalandexpression+=UIConditionalAndExpression ('||' conditionalandexpression+=UIConditionalAndExpression)*;
+
+UIConditionalAndExpression:
+	equalityexpression+=UIEqualityExpression ('&&' equalityexpression+=UIEqualityExpression)*;
+
+UIEqualityExpression:
+	expression+=UIConditionalExpression (('==' | '!=') expression+=UIConditionalExpression)*;
+
+UIConditionalExpression:
+	{UIConditionalExpression} (name=UIValue comparator=UIComparator value=UIValue);
+
+UIValue:
+	UFO_STRING | INT | UIFuncParameter | UICvar;
+
+UIFuncParameter:
+	"<" INT ">";
+
+UIComparator:
+	">" | "<" | "eq" | "ne" | "!=" | "==" | "<=" | ">=";
 
 UINodePath:
-	"*node" ID (=> '.' ID)*;
+	"*node:" ((("this" ("." "parent")?) | "root") ".")? name=[UINode] (=> '.' ID)*;
+
+UICvar:
+	"*cvar:" ID;
+
+UINodeProperty:
+	name=ID;
+
+terminal fragment UFO_STRING_:
+	('a'..'z' | 'A'..'Z' | '_') ('a'..'z' | 'A'..'Z' | '_' | '0'..'9')*;
+
+terminal UFO_STRING:
+	'"' UFO_STRING_ '"' | "'" UFO_STRING_ "'" | UFO_STRING_;
