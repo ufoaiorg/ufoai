@@ -32,7 +32,6 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #include "../ui_sprite.h"
 #include "ui_node_window.h"
 #include "ui_node_panel.h"
-#include "ui_node_custombutton.h"
 #include "ui_node_abstractnode.h"
 
 #include "../../client.h" /* gettext _() */

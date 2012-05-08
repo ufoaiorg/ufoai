@@ -313,7 +313,6 @@
 		<Unit filename="..\..\src\client\ui\node\ui_node_checkbox.cpp" />
 		<Unit filename="..\..\src\client\ui\node\ui_node_container.cpp" />
 		<Unit filename="..\..\src\client\ui\node\ui_node_controls.cpp" />
-		<Unit filename="..\..\src\client\ui\node\ui_node_custombutton.cpp" />
 		<Unit filename="..\..\src\client\ui\node\ui_node_data.cpp" />
 		<Unit filename="..\..\src\client\ui\node\ui_node_editor.cpp" />
 		<Unit filename="..\..\src\client\ui\node\ui_node_ekg.cpp" />

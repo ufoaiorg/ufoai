@@ -41,7 +41,6 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #include "node/ui_node_checkbox.h"
 #include "node/ui_node_controls.h"
 #include "node/ui_node_container.h"
-#include "node/ui_node_custombutton.h"
 #include "node/ui_node_data.h"
 #include "node/ui_node_editor.h"
 #include "node/ui_node_ekg.h"
@@ -102,7 +101,6 @@ static const registerFunction_t registerFunctions[] = {
 	UI_RegisterConFuncNode,
 	UI_RegisterContainerNode,
 	UI_RegisterControlsNode,
-	UI_RegisterCustomButtonNode,
 	UI_RegisterCvarFuncNode,
 	UI_RegisterDataNode,
 	UI_RegisterEditorNode,

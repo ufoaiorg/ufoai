@@ -132,7 +132,6 @@ $(TARGET)_SRCS      = \
 	client/ui/node/ui_node_video.cpp \
 	client/ui/node/ui_node_container.cpp \
 	client/ui/node/ui_node_controls.cpp \
-	client/ui/node/ui_node_custombutton.cpp \
 	client/ui/node/ui_node_editor.cpp \
 	client/ui/node/ui_node_ekg.cpp \
 	client/ui/node/ui_node_geoscape.cpp \
