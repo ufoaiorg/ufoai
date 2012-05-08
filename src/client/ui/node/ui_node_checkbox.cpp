@@ -50,41 +50,28 @@ void uiCheckBoxNode::draw (uiNode_t* node)
 {
 	const float value = getValue(node);
 	vec2_t pos;
-	const char *image = UI_GetReferenceString(node, node->image);
-	int texx, texy;
 	uiSprite_t *icon = NULL;
 	uiSpriteStatus_t status = SPRITE_STATUS_NORMAL;
 
 	/* outer status */
 	if (node->disabled) {
-		texy = 96;
 		status = SPRITE_STATUS_DISABLED;
 	} else if (node->state) {
-		texy = 32;
 		status = SPRITE_STATUS_HOVER;
 	} else {
-		texy = 0;
 		status = SPRITE_STATUS_NORMAL;
 	}
 
 	/* inner status */
 	if (value == 0) {
 		icon = EXTRADATA(node).iconUnchecked;
-		texx = 0;
 	} else if (value > 0) {
 		icon = EXTRADATA(node).iconChecked;
-		texx = 32;
 	} else { /* value < 0 */
 		icon = EXTRADATA(node).iconIndeterminate;
-		texx = 64;
 	}
 
 	UI_GetNodeAbsPos(node, pos);
-
-	if (!Q_strnull(image)) {
-		UI_DrawNormImageByName(qfalse, pos[0], pos[1], node->box.size[0], node->box.size[1],
-			texx + node->box.size[0], texy + node->box.size[1], texx, texy, image);
-	}
 
 	if (EXTRADATA(node).background) {
 		UI_DrawSpriteInBox(qfalse, EXTRADATA(node).background, status, pos[0], pos[1], node->box.size[0], node->box.size[1]);
@@ -145,14 +132,6 @@ void UI_RegisterCheckBoxNode (uiBehaviour_t *behaviour)
 	behaviour->extends = "abstractvalue";
 	behaviour->manager = new uiCheckBoxNode();
 	behaviour->extraDataSize = sizeof(EXTRADATA_TYPE);
-
-	/* Texture used for the widget. Its a 128x128 template image with all
-	 * three status according to the value, and four status according to the
-	 * interaction. From left to right: unchecked, checked, and invalidate.
-	 * From top to bottom: normal, hovered by the mouse, clicked, disabled.
-	 * @image html http://ufoai.org/wiki/images/Checkbox_template.png
-	 */
-	UI_RegisterOveridedNodeProperty(behaviour, "image");
 
 	/** Sprite used as an icon for checked state */
 	UI_RegisterExtradataNodeProperty(behaviour, "iconChecked", V_UI_SPRITEREF, EXTRADATA_TYPE, iconChecked);

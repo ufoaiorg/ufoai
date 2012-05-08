@@ -74,17 +74,11 @@ static void UI_OptionListNodeUpdateScroll (uiNode_t *node)
 
 void uiOptionListNode::draw (uiNode_t *node)
 {
-	static const int panelTemplate[] = {
-		CORNER_SIZE, MID_SIZE, CORNER_SIZE,
-		CORNER_SIZE, MID_SIZE, CORNER_SIZE,
-		MARGE
-	};
 	uiNode_t* option;
 	const char *ref;
 	const char *font;
 	int lineHeight;
 	vec2_t pos;
-	const char* image;
 	int currentY;
 	const float *textColor;
 	static vec4_t disabledColor = {0.5, 0.5, 0.5, 1.0};
@@ -95,10 +89,6 @@ void uiOptionListNode::draw (uiNode_t *node)
 		return;
 
 	UI_GetNodeAbsPos(node, pos);
-
-	image = UI_GetReferenceString(node, node->image);
-	if (image)
-		UI_DrawPanel(pos, node->box.size, image, 0, 0, panelTemplate);
 
 	if (EXTRADATA(node).background) {
 		UI_DrawSpriteInBox(qfalse, EXTRADATA(node).background, SPRITE_STATUS_NORMAL, pos[0], pos[1], node->box.size[0], node->box.size[1]);

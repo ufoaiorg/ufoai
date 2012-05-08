@@ -43,10 +43,6 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #define EXTRADATA_TYPE abstractOptionExtraData_t
 #define EXTRADATA(node) UI_EXTRADATA(node, EXTRADATA_TYPE)
 
-#define CORNER_SIZE 25
-#define MID_SIZE 1
-#define MARGE 3
-
 static const int COLLAPSEBUTTON_WIDTH = 20;		/**< Size used for the collapse button */
 static const int DEPTH_WIDTH = 25;				/**< Width between each depth level */
 
@@ -112,16 +108,10 @@ static uiNode_t* UI_OptionTreeNodeGetFirstOption (uiNode_t * node)
 
 void uiOptionTreeNode::draw (uiNode_t *node)
 {
-	static const int panelTemplate[] = {
-		CORNER_SIZE, MID_SIZE, CORNER_SIZE,
-		CORNER_SIZE, MID_SIZE, CORNER_SIZE,
-		MARGE
-	};
 	uiNode_t* option;
 	const char *ref;
 	const char *font;
 	vec2_t pos;
-	const char* image;
 	int fontHeight;
 	int currentY;
 	int currentDecY = 0;
@@ -140,10 +130,6 @@ void uiOptionTreeNode::draw (uiNode_t *node)
 		return;
 
 	UI_GetNodeAbsPos(node, pos);
-
-	image = UI_GetReferenceString(node, node->image);
-	if (image)
-		UI_DrawPanel(pos, node->box.size, image, 0, 0, panelTemplate);
 
 	if (EXTRADATA(node).background) {
 		UI_DrawSpriteInBox(qfalse, EXTRADATA(node).background, SPRITE_STATUS_NORMAL, pos[0], pos[1], node->box.size[0], node->box.size[1]);

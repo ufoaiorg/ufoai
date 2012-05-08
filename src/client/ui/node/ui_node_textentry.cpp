@@ -48,11 +48,6 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #define EXTRADATA_TYPE textEntryExtraData_t
 #define EXTRADATA(node) UI_EXTRADATA(node, EXTRADATA_TYPE)
 
-#define TILE_SIZE 64
-#define CORNER_SIZE 17
-#define MID_SIZE 1
-#define MARGE 3
-
 static const char CURSOR = '|';		/**< Use as the cursor when we edit the text */
 static const char HIDECHAR = '*';	/**< use as a mask for password */
 
@@ -226,14 +221,7 @@ bool uiTextEntryNode::onKeyPressed (uiNode_t *node, unsigned int key, unsigned s
 
 void uiTextEntryNode::draw (uiNode_t *node)
 {
-	static const int panelTemplate[] = {
-		CORNER_SIZE, MID_SIZE, CORNER_SIZE,
-		CORNER_SIZE, MID_SIZE, CORNER_SIZE,
-		MARGE
-	};
-	int texX, texY;
 	const float *textColor;
-	const char *image;
 	vec2_t pos;
 	static vec4_t disabledColor = {0.5, 0.5, 0.5, 1.0};
 	const char *font = UI_GetFontFromNode(node);
@@ -242,28 +230,18 @@ void uiTextEntryNode::draw (uiNode_t *node)
 	if (node->disabled) {
 		/** @todo need custom color when node is disabled */
 		textColor = disabledColor;
-		texX = TILE_SIZE;
-		texY = TILE_SIZE;
 		iconStatus = SPRITE_STATUS_DISABLED;
 	} else if (node->state) {
 		textColor = node->color;
-		texX = TILE_SIZE;
-		texY = 0;
 		iconStatus = SPRITE_STATUS_HOVER;
 	} else {
 		textColor = node->color;
-		texX = 0;
-		texY = 0;
 	}
 	if (UI_HasFocus(node)) {
 		textColor = node->selectedColor;
 	}
 
 	UI_GetNodeAbsPos(node, pos);
-
-	image = UI_GetReferenceString(node, node->image);
-	if (image)
-		UI_DrawPanel(pos, node->box.size, image, texX, texY, panelTemplate);
 
 	if (EXTRADATA(node).background) {
 		UI_DrawSpriteInBox(qfalse, EXTRADATA(node).background, iconStatus, pos[0], pos[1], node->box.size[0], node->box.size[1]);
@@ -316,14 +294,6 @@ void UI_RegisterTextEntryNode (uiBehaviour_t *behaviour)
 	behaviour->name = "textentry";
 	behaviour->manager = new uiTextEntryNode();
 	behaviour->extraDataSize = sizeof(EXTRADATA_TYPE);
-
-	/* Texture used by the button. It's a normalized texture of 128x128.
-	 * Normal button start at 0x0, mouse over start at 64x0, mouse click
-	 * start at 0x64 (but not yet implemented), and disabled start at 64x64.
-	 * See the image to have a usable template for this node.
-	 * @image html http://ufoai.org/wiki/images/Button_blue.png
-	 */
-	UI_RegisterOveridedNodeProperty(behaviour, "image");
 
 	/* Call back event called when we click on the node. If the click select the node,
 	 * it called before we start the cvar edition.

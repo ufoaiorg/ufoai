@@ -38,10 +38,6 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #define EXTRADATA(node) UI_EXTRADATA(node, EXTRADATA_TYPE)
 #define EXTRADATACONST(node) UI_EXTRADATACONST(node, EXTRADATA_TYPE)
 
-#define CORNER_SIZE 25
-#define MID_SIZE 1
-#define MARGE 3
-
 static const value_t *propertyLayoutMargin;
 static const value_t *propertyLayoutColumns;
 static const value_t *propertyPadding;
@@ -53,19 +49,9 @@ static const uiBehaviour_t *localBehaviour;
  */
 void uiPanelNode::draw (uiNode_t *node)
 {
-	static const int panelTemplate[] = {
-		CORNER_SIZE, MID_SIZE, CORNER_SIZE,
-		CORNER_SIZE, MID_SIZE, CORNER_SIZE,
-		MARGE
-	};
-	const char *image;
 	vec2_t pos;
 
 	UI_GetNodeAbsPos(node, pos);
-
-	image = UI_GetReferenceString(node, node->image);
-	if (image)
-		UI_DrawPanel(pos, node->box.size, image, 0, 0, panelTemplate);
 
 	if (EXTRADATA(node).background) {
 		UI_DrawSpriteInBox(qfalse, EXTRADATA(node).background, SPRITE_STATUS_NORMAL, pos[0], pos[1], node->box.size[0], node->box.size[1]);
@@ -526,10 +512,6 @@ void uiPanelNode::onCapturedMouseMove (uiNode_t *node, int x, int y)
  */
 void uiPanelNode::onLoaded (uiNode_t *node)
 {
-#ifdef DEBUG
-	if (node->box.size[0] < CORNER_SIZE + MID_SIZE + CORNER_SIZE || node->box.size[1] < CORNER_SIZE + MID_SIZE + CORNER_SIZE)
-		Com_DPrintf(DEBUG_CLIENT, "Node '%s' too small. It can create graphical glitches\n", UI_GetPath(node));
-#endif
 	if (EXTRADATA(node).layout != LAYOUT_NONE)
 		UI_Invalidate(node);
 }

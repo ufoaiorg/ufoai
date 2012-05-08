@@ -41,26 +41,10 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #define EXTRADATA(node) UI_EXTRADATA(node, EXTRADATA_TYPE)
 #define EXTRADATACONST(node) UI_EXTRADATACONST(node, EXTRADATA_TYPE)
 
-/* constants defining all tile of the texture */
-
-#define LEFT_WIDTH 20
-#define MID_WIDTH 1
-#define RIGHT_WIDTH 19
-
 #define TOP_HEIGHT 46
-#define MID_HEIGHT 1
-#define BOTTOM_HEIGHT 19
-
-#define MARGE 3
 
 static const int CONTROLS_IMAGE_DIMENSIONS = 25;
 static const int CONTROLS_PADDING = 18;
-
-static const int windowTemplate[] = {
-	LEFT_WIDTH, MID_WIDTH, RIGHT_WIDTH,
-	TOP_HEIGHT, MID_HEIGHT, BOTTOM_HEIGHT,
-	MARGE
-};
 
 static const vec4_t modalBackground = {0, 0, 0, 0.6};
 static const vec4_t anamorphicBorder = {0, 0, 0, 1};
@@ -130,7 +114,6 @@ qboolean UI_WindowIsFullScreen (const uiNode_t* const node)
 
 void uiWindowNode::draw (uiNode_t *node)
 {
-	const char* image;
 	const char* text;
 	vec2_t pos;
 	const char *font = UI_GetFontFromNode(node);
@@ -158,14 +141,9 @@ void uiWindowNode::draw (uiNode_t *node)
 		}
 	}
 
-	/* darker background if last window is a modal */
+	/* hide background if window is modal */
 	if (EXTRADATA(node).modal && ui_global.windowStack[ui_global.windowStackPos - 1] == node)
 		UI_DrawFill(0, 0, viddef.virtualWidth, viddef.virtualHeight, modalBackground);
-
-	/* draw the background */
-	image = UI_GetReferenceString(node, node->image);
-	if (image)
-		UI_DrawPanel(pos, node->box.size, image, 0, 0, windowTemplate);
 
 	if (EXTRADATA(node).background) {
 		UI_DrawSpriteInBox(qfalse, EXTRADATA(node).background, SPRITE_STATUS_NORMAL, pos[0], pos[1], node->box.size[0], node->box.size[1]);
@@ -300,11 +278,6 @@ void uiWindowNode::onLoaded (uiNode_t *node)
 
 	if (EXTRADATA(node).starLayout)
 		UI_Invalidate(node);
-
-#ifdef DEBUG
-	if (node->box.size[0] < LEFT_WIDTH + MID_WIDTH + RIGHT_WIDTH || node->box.size[1] < TOP_HEIGHT + MID_HEIGHT + BOTTOM_HEIGHT)
-		Com_DPrintf(DEBUG_CLIENT, "Node '%s' too small. It can create graphical bugs\n", node->name);
-#endif
 }
 
 void uiWindowNode::clone (const uiNode_t *source, uiNode_t *clone)
@@ -385,16 +358,6 @@ void UI_RegisterWindowNode (uiBehaviour_t *behaviour)
 	behaviour->name = "window";
 	behaviour->manager = new uiWindowNode();
 	behaviour->extraDataSize = sizeof(EXTRADATA_TYPE);
-
-	/* Texture to use. The texture is a cut of 9 portions
-	 * (left, middle, right x top, middle, bottom). Between all this elements,
-	 * we use a margin of 3 pixels (purple mark into the sample).
-	 * Graphically we see only a 1 pixel margin, because, for a problem of
-	 * lossy compression of texture it's not nice to have a pure transparent
-	 * pixel near the last colored one, when we cut or stretch textures.
-	 * @image html http://ufoai.org/wiki/images/Popup_alpha_tile.png
-	 */
-	UI_RegisterOveridedNodeProperty(behaviour, "image");
 
 	/* In windows where notify messages appear (like e.g. the video options window when you have to restart the game until
 	 * the settings take effects) you can define the position of those messages with this option. */

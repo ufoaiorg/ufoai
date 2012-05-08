@@ -39,11 +39,6 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 
 #include "../../client.h"
 
-#define TILE_SIZE 64
-#define CORNER_SIZE 17
-#define MID_SIZE 1
-#define MARGE 3
-
 #define EXTRADATA_TYPE keyBindingExtraData_t
 #define EXTRADATA(node) UI_EXTRADATA(node, EXTRADATA_TYPE)
 
@@ -108,15 +103,8 @@ bool uiKeyBindingNode::onKeyPressed (uiNode_t *node, unsigned int key, unsigned 
 
 void uiKeyBindingNode::draw (uiNode_t *node)
 {
-	static const int panelTemplate[] = {
-		CORNER_SIZE, MID_SIZE, CORNER_SIZE,
-		CORNER_SIZE, MID_SIZE, CORNER_SIZE,
-		MARGE
-	};
 	const char *binding, *description, *command;
-	int texX, texY;
 	const float *textColor;
-	const char *image;
 	vec2_t pos;
 	const char *font = UI_GetFontFromNode(node);
 	const int bindingWidth = EXTRADATA(node).bindingWidth;
@@ -127,13 +115,9 @@ void uiKeyBindingNode::draw (uiNode_t *node)
 
 	if (node->state) {
 		textColor = node->color;
-		texX = TILE_SIZE;
-		texY = 0;
 		iconStatus = SPRITE_STATUS_HOVER;
 	} else {
 		textColor = node->color;
-		texX = 0;
-		texY = 0;
 	}
 	if (UI_HasFocus(node))
 		textColor = node->selectedColor;
@@ -144,12 +128,6 @@ void uiKeyBindingNode::draw (uiNode_t *node)
 	Vector2Set(bindingSize, bindingWidth, node->box.size[1]);
 	Vector2Set(descriptionPos, pos[0], pos[1]);
 	Vector2Set(bindingPos, pos[0] + descriptionWidth + node->padding, pos[1]);
-
-	image = UI_GetReferenceString(node, node->image);
-	if (image) {
-		UI_DrawPanel(descriptionPos, descriptionSize, image, texX, texY, panelTemplate);
-		UI_DrawPanel(bindingPos, bindingSize, image, texX, texY, panelTemplate);
-	}
 
 	if (EXTRADATA(node).background) {
 		UI_DrawSpriteInBox(qfalse, EXTRADATA(node).background, iconStatus, descriptionPos[0], descriptionPos[1], descriptionSize[0], descriptionSize[1]);
