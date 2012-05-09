@@ -111,8 +111,8 @@ strip-$(1): $($(1)_FILE)
 
 install-$(1): $($(1)_FILE)
 	@echo 'Install $$<'
-	$(Q)$(INSTALL_DIR) $(PKGDATADIR)/$(dir $($(1)_FILE))
-	$(Q)$(INSTALL_PROGRAM) $$< $(PKGDATADIR)/$$<
+	$(Q)$(INSTALL_DIR) $(DESTDIR)$(PKGDATADIR)/$(dir $($(1)_FILE))
+	$(Q)$(INSTALL_PROGRAM) $$< $(DESTDIR)$(PKGDATADIR)/$$<
 
 else
 # if this target is ignored, just do nothing

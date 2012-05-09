@@ -62,23 +62,24 @@ install-pre: pk3 lang
 	@echo "Data:      $(PKGDATADIR)"
 	@echo "Libraries: $(PKGLIBDIR)"
 	@echo "Locales:   $(LOCALEDIR)"
-	$(Q)$(INSTALL_DIR) $(PKGDATADIR)/base
+	$(Q)$(INSTALL_DIR) $(DESTDIR)$(PKGDATADIR)/base
 	@echo "Install locales"
 	$(Q)LCDIR=$(LOCALEDIR); \
 	LCDIR=$${LCDIR:-$(PKGDATADIR)/base/i18n}; \
 	cd base/i18n/; for dir in *; do \
-		$(INSTALL_DIR) $$LCDIR/$$dir/LC_MESSAGES && \
-		$(INSTALL_DATA) $$dir/LC_MESSAGES/ufoai.mo $$LCDIR/$$dir/LC_MESSAGES/ufoai.mo; \
+		$(INSTALL_DIR) $(DESTDIR)$$LCDIR/$$dir/LC_MESSAGES && \
+		$(INSTALL_DATA) $$dir/LC_MESSAGES/ufoai.mo $(DESTDIR)$$LCDIR/$$dir/LC_MESSAGES/ufoai.mo; \
 	done
 	@echo "#!/bin/sh" > ufo.sh
 	@echo "cd $(PKGDATADIR); ./ufo \$$*; exit \$$?" >> ufo.sh
-	$(Q)$(INSTALL_DIR) $(PKGBINDIR)
-	$(Q)$(INSTALL_SCRIPT) ufo.sh $(PKGBINDIR)/ufo
+	$(Q)$(INSTALL_DIR) $(DESTDIR)$(PKGBINDIR)
+	$(Q)$(INSTALL_SCRIPT) ufo.sh -D $(DESTDIR)$(PKGBINDIR)/ufo
 	@echo "#!/bin/sh" > ufoded.sh
 	@echo "cd $(PKGDATADIR); ./ufoded \$$*; exit \$$?" >> ufoded.sh
-	$(Q)$(INSTALL_SCRIPT) ufoded.sh $(PKGBINDIR)/ufoded
+	$(Q)$(INSTALL_SCRIPT) ufoded.sh $(DESTDIR)$(PKGBINDIR)/ufoded
+	@echo "#!/bin/sh" > uforadiant.sh
 	@echo "cd $(PKGDATADIR)/radiant; ./uforadiant \$$*; exit \$$?" >> uforadiant.sh
-	$(Q)$(INSTALL_SCRIPT) uforadiant.sh $(PKGBINDIR)/uforadiant
+	$(Q)$(INSTALL_SCRIPT) uforadiant.sh $(DESTDIR)$(PKGBINDIR)/uforadiant
 	$(Q)rm ufoded.sh ufo.sh uforadiant.sh
 	@echo "Install pk3s"
-	$(Q)$(INSTALL_DATA) base/*.pk3 $(PKGDATADIR)/base
+	$(Q)$(INSTALL_DATA) base/*.pk3 $(DESTDIR)$(PKGDATADIR)/base
