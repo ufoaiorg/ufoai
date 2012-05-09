@@ -13,13 +13,16 @@ UITopLevelNode:
 
 /** a window can only extend another window */
 UINodeWindow:
-	"window" name=ID ("extends" superWindow=[UINodeWindow])? "{" ("{" (properties+=UIWindowNodeProperties)* "}")?
+	"window" name=ID ("extends" superWindow=[UINodeWindow])? "{"
+	/* optional block with window properties that might be empty */
+	("{" (properties+=UIWindowNodeProperties)* "}")?
+	/* nodes (and panels) */
 	((nodes+=UINode) | (panels+=UINodePanel))* "}";
 
 /** components can extend any ui node */
 UINodeComponent:
 	"component" name=ID "extends" superComponent=[UINodeComponent|UINodeType] "{" ("{"
-	(properties+=UINodeProperties)* "}")? (nodes+=UINode)* "}";
+	(properties+=UINodeProperties)* "}")? ((nodes+=UINode) | (panels+=UINodePanel))* "}";
 
 /* ==================== NODES ================================ */
 UINodeType:
@@ -57,65 +60,138 @@ UINodeTextEntry:
 	"textentry" name=ID "{" (statements+=UITextEntryProperties)* "}";
 
 /* ==================== NODE PROPERTIES ================================ */
-UIWindowNodeProperties returns UINodeProperties:
-	UIAbstractNodeProperties | ("noticepos" noticepos=UIValue) | ("dragbutton" dragbutton=UIValue) | ("closebutton"
-	closebutton=UIValue) | ("modal" modal=UIValue) | ("dropdown" dropdown=UIValue) | ("preventtypingescape"
-	preventtypingescape=UIValue) | ("fill" fill=UIValue) | ("starlayout" starlayout=UIValue)
-	| ("onWindowOpened" onWindowOpened=UIFuncStatements) | ("onWindowClosed" onWindowClosed=UIFuncStatements) |
-	("onScriptLoaded" onScriptLoaded=UIFuncStatements) | ("background" background=UIValue);
+UIWindowNodeProperties:
+	(UIAbstractNodeProperties) |
+	{UIWindowNodeProperties}
+	(("noticepos" noticepos=UIValue)? &
+	("dragbutton" dragbutton=UIValue)? &
+	("closebutton" closebutton=UIValue)? &
+	("modal" modal=UIValue)? &
+	("dropdown" dropdown=UIValue)? &
+	("preventtypingescape" preventtypingescape=UIValue)? &
+	("fill" fill=UIValue)? &
+	("starlayout" starlayout=UIValue)? &
+	("onWindowOpened" onWindowOpened=UIFuncStatements)? &
+	("onWindowClosed" onWindowClosed=UIFuncStatements)? &
+	("onScriptLoaded" onScriptLoaded=UIFuncStatements)?);
 
-UITextEntryProperties returns UINodeProperties:
-	UIAbstractNodeProperties | ("isPassword" isPassword=UIValue) | ("clickOutAbort" clickOutAbort=UIValue) | ("onAbort"
-	onAbort=UIValue);
+UITextEntryProperties:
+	(UIAbstractNodeProperties) |
+	{UITextEntryProperties}
+	(("isPassword" isPassword=UIValue)? &
+	("clickOutAbort" clickOutAbort=UIValue)? &
+	("onAbort" onAbort=UIFuncStatements)?);
 
-UIStringProperties returns UINodeProperties:
-	UIAbstractNodeProperties | ("longlines" longlines=UIValue);
+UIStringProperties:
+	(UIAbstractNodeProperties) |
+	{UIStringProperties}
+	(("longlines" longlinesStr=UIValue)?);
 
-UITextProperties returns UINodeProperties:
-	UIAbstractNodeProperties | UINodeScrollabelProperties | ("lineselected" lineselected=UIValue) | ("textselected"
-	textselected=UIValue) | ("dataid" dataid=UIValue) | ("lineheight" lineheight=UIValue) | ("tabwidth" tabwidth=UIValue)
-	| ("longlines" longlines2=UIValue) | ("rows" rows=UIValue) | ("lines" lines=UIValue) | ("mousefx" mousefx=STRING);
+UITextProperties:
+	(UIAbstractNodeScrollabelProperties) |
+	{UITextProperties}
+	(("lineselected" lineselected=UIValue)? &
+	("textselected" textselected=UIValue)? &
+	("dataid" dataid=UIValue)? &
+	("lineheight" lineheight=UIValue)? &
+	("tabwidth" tabwidth=UIValue)? &
+	("longlines" longlinesText=UIValue)? &
+	("rows" rows=UIValue)? &
+	("lines" lines=UIValue)? &
+	("mousefx" mousefxText=STRING)?);
 
-UIModelProperties returns UINodeProperties:
-	UIAbstractNodeProperties | ("anim" anim=UIValue) | ("angles" angles=UIValue) | ("origin" origin=UIValue) | ("omega"
-	omega=UIValue) | ("scale" scale=UIValue) | ("tag" tag=UIValue) | ("autoscale" autoscale=UIValue) | ("rotatewithmouse"
-	rotatewithmouse=UIValue) | ("clipoverflow" clipoverflow=UIValue) | ("skin" skin=UIValue);
+UIModelProperties:
+	(UIAbstractNodeProperties) |
+	{UIModelProperties}
+	(("anim" anim=UIValue)? &
+	("angles" angles=UIValue)? &
+	("origin" origin=UIValue)? &
+	("omega" omega=UIValue)? &
+	("scale" scale=UIValue)? &
+	("tag" tag=UIValue)? &
+	("autoscale" autoscale=UIValue)? &
+	("rotatewithmouse" rotatewithmouse=UIValue)? &
+	("clipoverflow" clipoverflow=UIValue)? &
+	("skin" skin=UIValue)?);
 
-UIButtonProperties returns UINodeProperties:
-	UIAbstractNodeProperties | ("icon" icon=UIValue) | ("flipicon" flipicon=UIValue) | ("background" background2=UIValue);
+UIButtonProperties:
+	(UIAbstractNodeProperties) |
+	{UIButtonProperties}
+	(("icon" icon=UIValue)? &
+	("flipicon" flipicon=UIValue)? &
+	("background" background=UIValue)?);
 
-UIImageProperties returns UINodeProperties:
-	UIAbstractNodeProperties | ("preventratio" preventratio=UIValue) | ("mousefx" mousefx2=UIValue) | ("texh"
-	texh=UIValue) | ("texl" texl=UIValue) | ("src" src=UIValue);
+UIImageProperties:
+	(UIAbstractNodeProperties) |
+	{UIImageProperties}
+	(("preventratio" preventratio=UIValue)? &
+	("mousefx" mousefxImg=UIValue)? &
+	("texh" texh=UIValue)? &
+	("texl" texl=UIValue)? &
+	("src" src=UIValue)?);
 
-UIPanelProperties returns UINodeProperties:
-	UIAbstractNodeProperties | UINodeScrollabelProperties | ("layout" layout=UIValue) | ("layoutMargin"
-	layoutMargin=UIValue) | ("layoutColumns" layoutColumns=UIValue) | ("wheelscrollable" wheelscrollable=UIValue) |
-	("background" background=UIValue);
+UIPanelProperties:
+	(UIAbstractNodeScrollabelProperties) |
+	{UIPanelProperties}
+	(("layout" layout=UIValue)? &
+	("layoutMargin" layoutMargin=UIValue)? &
+	("layoutColumns" layoutColumns=UIValue)? &
+	("wheelscrollable" wheelscrollable=UIValue)?);
 
-UINodeScrollabelProperties returns UINodeProperties:
-	("viewpos" viewpos=UIValue) | ("viewsize" viewsize=UIValue) | ("fullsize" fullsize=UIValue) | ("onViewChange"
-	onViewChange=UIFuncStatements);
+UIAbstractNodeScrollabelProperties:
+	(UIAbstractNodeProperties) |
+	{UINodeScrollabelProperties}
+	(("viewpos" viewpos=UIValue)? &
+	("viewsize" viewsize=UIValue)? &
+	("fullsize" fullsize=UIValue)? &
+	("onViewChange" onViewChange=UIFuncStatements)?);
 
 /* abstract node properties */
-UIAbstractNodeProperties returns UINodeProperties:
-	UINodeCallbacks | ("pos" pos=UIValue) | ("size" size=UIValue) | ("width" width=UIValue) | ("height" height=UIValue) |
-	("left" left=UIValue) | ("top" top=UIValue) | ("indexed" indexed=UIValue) | ("invis" invis=UIValue) | ("disabled"
-	disabled=UIValue) | ("ghost" ghost=UIValue) | ("border" border=UIValue) | ("padding" padding=UIValue) | ("bgcolor"
-	bgcolor=UIValue) | ("bordercolor" bordercolor=UIValue) | ("align" align=UIValue) | ("num" num=UIValue) | ("tooltip"
-	tooltip=UIValue) | ("image" image=UIValue) | ("string" string=UIValue) | ("font" font=UIValue) | ("color"
-	color=UIValue) | ("selectcolor" selectcolor=UIValue) | ("contentalign" contentalign=UIValue) | ("visiblewhen"
-	visiblewhen=UIValue) | ("excluderect" excluderect=UIValue);
+UIAbstractNodeProperties:
+	(UINodeCallbacks) |
+	{UIAbstractNodeProperties}
+	(("pos" pos=UIValue)? &
+	("size" size=UIValue)? &
+	("width" width=UIValue)? &
+	("height" height=UIValue)? &
+	("left" left=UIValue)? &
+	("top" top=UIValue)? &
+	("indexed" indexed=UIValue)? &
+	("invis" invis=UIValue)? &
+	("disabled" disabled=UIValue)? &
+	("ghost" ghost=UIValue)? &
+	("border" border=UIValue)? &
+	("padding" padding=UIValue)? &
+	("bgcolor" bgcolor=UIValue)? &
+	("bordercolor" bordercolor=UIValue)? &
+	("align" align=UIValue)? &
+	("num" num=UIValue)? &
+	("tooltip" tooltip=UIValue)? &
+	("image" image=UIValue)? &
+	("string" string=UIValue)? &
+	("font" font=UIValue)? &
+	("color" color=UIValue)? &
+	("selectcolor" selectcolor=UIValue)? &
+	("contentalign" contentalign=UIValue)? &
+	("visiblewhen" visiblewhen=UIValue)? &
+	("excluderect" excluderect=UIValue)?);
 
 /* abstract node callbacks */
-UINodeCallbacks returns UINodeProperties:
-	("onClick" UIFuncStatements) | ("onRClick" UIFuncStatements) | ("onMClick" UIFuncStatements) | ("onWheel"
-	UIFuncStatements) | ("onWheelUp" UIFuncStatements) | ("onWheelDown" UIFuncStatements) | ("onMouseEnter"
-	UIFuncStatements) | ("onMouseLeave" UIFuncStatements) | ("onChange" UIFuncStatements);
+UINodeCallbacks:
+	{UINodeCallbacks}
+	(("onClick" onClick=UIFuncStatements)? &
+	("onRClick" onRClick=UIFuncStatements)? &
+	("onMClick" onMClick=UIFuncStatements)? &
+	("onWheel" onWheel=UIFuncStatements)? &
+	("onWheelUp" onWheelUp=UIFuncStatements)? &
+	("onWheelDown" onWheelDown=UIFuncStatements)? &
+	("onMouseEnter" onMouseEnter=UIFuncStatements)? &
+	("onMouseLeave" onMouseLeave=UIFuncStatements)? &
+	("onChange" onChange=UIFuncStatements)?);
 
 UINodeProperties:
 	UIWindowNodeProperties | UITextEntryProperties | UIStringProperties | UITextProperties | UIModelProperties |
-	UIButtonProperties | UIImageProperties | UIPanelProperties | UINodeScrollabelProperties | UIAbstractNodeProperties;
+	UIButtonProperties | UIImageProperties | UIPanelProperties;
 
 /* ==================== GENERAL UI STUFF ================================ */
 UIFuncStatements:
@@ -137,8 +213,9 @@ UINodePropertyAssignment:
 	UINodePath "@" property=UINodeProperty "=" value=UIValue;
 
 UIFuncIfStatement:
-	"if" "(" conditions=UIConditionalExpressions ")" "{" statements+=UIFuncStatements "}" ("elif" "{"
-	statements+=UIFuncStatements "}")* ("else" "{" statements+=UIFuncStatements "}")?;
+	"if" "(" conditions=UIConditionalExpressions ")" "{" statements+=UIFuncStatements "}" ("elif" "("
+	conditionsElif+=UIConditionalExpressions ")" "{" statements+=UIFuncStatements "}")* ("else" "{"
+	statements+=UIFuncStatements "}")?;
 
 UIConditionalExpressions:
 	conditionalorexpression=UIConditionalOrExpression;
@@ -165,7 +242,7 @@ UIComparator:
 	">" | "<" | "eq" | "ne" | "!=" | "==" | "<=" | ">=";
 
 UINodePath:
-	"*node:" ((("this" ("." "parent")?) | "root") ".")? name=[UINode] (=> '.' ID)*;
+	"*node:" ((("this" ("." "parent")?) | "root") ".")? name=ID (=> '.' ID)*;
 
 UICvar:
 	"*cvar:" ID;

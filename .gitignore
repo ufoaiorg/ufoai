@@ -40,10 +40,3 @@ crashdump.txt
 /debian/*.log
 /debian/ufoai-uforadiant
 /stamps
-eclipse/net.sourceforge.ufoai.dsl.tests/bin/
-eclipse/net.sourceforge.ufoai.dsl.tests/src-gen/
-eclipse/net.sourceforge.ufoai.dsl.ui/bin/
-eclipse/net.sourceforge.ufoai.dsl.ui/src-gen/
-eclipse/net.sourceforge.ufoai.dsl/src-gen/
-eclipse/net.sourceforge.ufoai.dsl/xtend-gen/
-eclipse/net.sourceforge.ufoai.dsl/.antlr-generator-3.2.0.jar

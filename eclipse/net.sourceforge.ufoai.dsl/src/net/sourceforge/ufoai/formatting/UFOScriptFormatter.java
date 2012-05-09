@@ -28,7 +28,6 @@ public class UFOScriptFormatter extends AbstractDeclarativeFormatter {
 			cfg.setNoSpace().before(pair.getSecond());
 		}
 		for (Pair<Keyword, Keyword> pair : g.findKeywordPairs("{", "}")) {
-			cfg.setLinewrap().after(pair.getSecond());
 			cfg.setIndentation(pair.getFirst(), pair.getSecond());
 		}
 		for (Keyword comma : g.findKeywords(",")) {

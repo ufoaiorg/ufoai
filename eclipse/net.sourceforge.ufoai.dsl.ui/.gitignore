@@ -1,4 +1,3 @@
-bin/
-*.jar
+bin
 plugin.xml_gen
 .settings
