@@ -263,5 +263,8 @@ UINodeProperty:
 terminal fragment UFO_STRING_:
 	('a'..'z' | 'A'..'Z' | '_') ('a'..'z' | 'A'..'Z' | '_' | '0'..'9')*;
 
+terminal fragment UFO_I18N_STRING:
+	'"_' UFO_STRING_ '"' | "'_" UFO_STRING_ "'";
+
 terminal UFO_STRING:
-	'"' UFO_STRING_ '"' | "'" UFO_STRING_ "'" | UFO_STRING_;
+	'"' UFO_STRING_ '"' | "'" UFO_STRING_ "'";
