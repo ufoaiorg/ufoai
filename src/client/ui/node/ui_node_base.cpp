@@ -75,7 +75,6 @@ void uiBaseLayoutNode::draw (uiNode_t * node)
 	const base_t *base;
 	int height, width, y;
 	int row, col;
-	const vec4_t c_gray = {0.5, 0.5, 0.5, 1.0};
 	vec2_t nodepos;
 	int totalMarge;
 
@@ -95,7 +94,7 @@ void uiBaseLayoutNode::draw (uiNode_t * node)
 		int x = nodepos[0] + node->padding;
 		for (col = 0; col < BASE_SIZE; col++) {
 			if (B_IsTileBlocked(base, col, row)) {
-				UI_DrawFill(x, y, width, height, c_gray);
+				UI_DrawFill(x, y, width, height, node->bgcolor);
 			} else if (B_GetBuildingAt(base, col, row) != NULL) {
 				/* maybe destroyed in the meantime */
 				if (base->founded)
@@ -379,6 +378,7 @@ void uiBaseLayoutNode::onLoading (uiNode_t *node)
 	uiAbstractBaseNode::onLoading(node);
 	node->padding = 3;
 	Vector4Set(node->color, 1, 1, 1, 1);
+	Vector4Set(node->bgcolor, 0.5, 0.5, 0.5, 1);
 }
 
 void UI_RegisterAbstractBaseNode (uiBehaviour_t *behaviour)
