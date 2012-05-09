@@ -254,7 +254,7 @@ int CL_ActorReservedTUs (const le_t * le, const reservation_types_t type)
 		return reservedReaction + reservedCrouch + reservedShot;
 	case RES_ALL_ACTIVE: {
 		/* A summary of ALL TUs that are reserved depending on their "status". */
-		/* Only use reaction-value if we are have RF activated. */
+		/* Only use reaction-value if we have RF activated. */
 		if ((le->state & STATE_REACTION))
 			return reservedReaction + reservedShot + reservedCrouch;
 		else

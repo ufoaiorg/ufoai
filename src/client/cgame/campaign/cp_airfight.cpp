@@ -142,7 +142,7 @@ static void AIRFIGHT_ProjectileList_f (void)
 		if (ccs.projectiles[i].aimedAircraft)
 			Com_Printf("... aiming aircraft '%s'\n", ccs.projectiles[i].aimedAircraft->id);
 		else
-			Com_Printf("... aiming iddle target at (%.02f, %.02f)\n",
+			Com_Printf("... aiming idle target at (%.02f, %.02f)\n",
 				ccs.projectiles[i].idleTarget[0], ccs.projectiles[i].idleTarget[1]);
 	}
 }
