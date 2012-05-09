@@ -1151,12 +1151,12 @@ window hud_mini extends hud
 			onMouseEnter {
 				*node:root.right.str_level_shadow@font = "f_small_bold"
 				*node:this@font = "f_small_bold"
-				*node:root.right.mini_level@image = "minihud/mini_level_hovered"
+				*node:root.right.mini_level@src = "minihud/mini_level_hovered"
 			}
 			onMouseLeave {
 				*node:root.right.str_level_shadow@font = "f_small"
 				*node:this@font = "f_small"
-				*node:root.right.mini_level@image = "minihud/mini_level"
+				*node:root.right.mini_level@src = "minihud/mini_level"
 			}
 		}
 
@@ -1265,11 +1265,11 @@ window hud_mini extends hud
 			onWheelUp	{ cmd "actor_next;"}
 			onWheelDown	{ cmd "actor_prev;"}
 			onMouseEnter {
-				*node:root.right.mini_name@image = "minihud/mini_name_hovered"
+				*node:root.right.mini_name@src = "minihud/mini_name_hovered"
 				*node:root.right.str_name@color = "1 1 1 1"
 			}
 			onMouseLeave {
-				*node:root.right.mini_name@image = "minihud/mini_name"
+				*node:root.right.mini_name@src = "minihud/mini_name"
 				*node:root.right.str_name@color = ".8 .8 .8 1"
 			}
 		}
@@ -1302,13 +1302,13 @@ window hud_mini extends hud
 				*node:root.right.str_hp_shadow@font = "f_small_bold"
 				*node:this@font = "f_small_bold"
 				*node:root.floor.health<cvar:mn_selected_soldier>@color = ".9 0 0 1"
-				*node:root.right.mini_info@image = "minihud/mini_info_hovered"
+				*node:root.right.mini_info@src = "minihud/mini_info_hovered"
 			}
 			onMouseLeave {
 				*node:root.right.str_hp_shadow@font = "f_small"
 				*node:this@font = "f_small"
 				*node:root.floor.health<cvar:mn_selected_soldier>@color = ".8 0 0 .7"
-				*node:root.right.mini_info@image = "minihud/mini_info"
+				*node:root.right.mini_info@src = "minihud/mini_info"
 			}
 		}
 
@@ -1338,13 +1338,13 @@ window hud_mini extends hud
 				*node:root.right.str_morale_shadow@font = "f_small_bold"
 				*node:this@font = "f_small_bold"
 				*node:root.floor.morale<cvar:mn_selected_soldier>@color = ".85 .85 0 1"
-				*node:root.right.mini_info@image = "minihud/mini_info_hovered"
+				*node:root.right.mini_info@src = "minihud/mini_info_hovered"
 			}
 			onMouseLeave {
 				*node:root.right.str_morale_shadow@font = "f_small"
 				*node:this@font = "f_small"
 				*node:root.floor.morale<cvar:mn_selected_soldier>@color = ".8 .8 0 0.7"
-				*node:root.right.mini_info@image = "minihud/mini_info"
+				*node:root.right.mini_info@src = "minihud/mini_info"
 			}
 		}
 
@@ -1374,13 +1374,13 @@ window hud_mini extends hud
 				*node:root.right.str_tu_shadow@font = "f_small_bold"
 				*node:this@font = "f_small_bold"
 				*node:root.floor.time<cvar:mn_selected_soldier>@color = ".25 .25 1 1"
-				*node:root.right.mini_info@image = "minihud/mini_info_hovered"
+				*node:root.right.mini_info@src = "minihud/mini_info_hovered"
 			}
 			onMouseLeave {
 				*node:root.right.str_tu_shadow@font = "f_small"
 				*node:this@font = "f_small"
 				*node:root.floor.time<cvar:mn_selected_soldier>@color = ".2 .2 1 0.7"
-				*node:root.right.mini_info@image = "minihud/mini_info"
+				*node:root.right.mini_info@src = "minihud/mini_info"
 			}
 		}
 
@@ -1409,12 +1409,12 @@ window hud_mini extends hud
 			onMouseEnter {
 				*node:root.right.str_tu_reserved_shadow@font = "f_small_bold"
 				*node:this@font = "f_small_bold"
-				*node:root.right.mini_info@image = "minihud/mini_info_hovered"
+				*node:root.right.mini_info@src = "minihud/mini_info_hovered"
 			}
 			onMouseLeave {
 				*node:root.right.str_tu_reserved_shadow@font = "f_small"
 				*node:this@font = "f_small"
-				*node:root.right.mini_info@image = "minihud/mini_info"
+				*node:root.right.mini_info@src = "minihud/mini_info"
 			}
 		}
 
@@ -1434,10 +1434,10 @@ window hud_mini extends hud
 			onWheelDown	{ call *node:root.right.show_leftweapon cmd "hud_switchfiremodelist firemode_listener l;" }
 			tooltip		"_LMB/Wheel Down:Left Hand\nRMB/Wheel Up:Right Hand"
 			onMouseEnter {
-				*node:root.right.mini_hand@image = "minihud/mini_hand_hovered"
+				*node:root.right.mini_hand@src = "minihud/mini_hand_hovered"
 			}
 			onMouseLeave {
-				*node:root.right.mini_hand@image = "minihud/mini_hand"
+				*node:root.right.mini_hand@src = "minihud/mini_hand"
 			}
 		}
 
@@ -1449,10 +1449,10 @@ window hud_mini extends hud
 			onRClick	{ cmd "hud_reloadright;" }
 			onWheelDown	{ call *node:root.right.show_leftweapon cmd "hud_switchfiremodelist firemode_listener l;" }
 			onMouseEnter {
-				*node:root.right.mini_hand@image = "minihud/mini_hand_hovered"
+				*node:root.right.mini_hand@src = "minihud/mini_hand_hovered"
 			}
 			onMouseLeave {
-				*node:root.right.mini_hand@image = "minihud/mini_hand"
+				*node:root.right.mini_hand@src = "minihud/mini_hand"
 			}
 		}
 		model mdl_lefthand
@@ -1470,10 +1470,10 @@ window hud_mini extends hud
 			onRClick	{ cmd "hud_reloadleft;" }
 			onWheelUp	{ call *node:root.right.show_rightweapon cmd "hud_switchfiremodelist firemode_listener r;" }
 			onMouseEnter {
-				*node:root.right.mini_hand@image = "minihud/mini_hand_hovered"
+				*node:root.right.mini_hand@src = "minihud/mini_hand_hovered"
 			}
 			onMouseLeave {
-				*node:root.right.mini_hand@image = "minihud/mini_hand"
+				*node:root.right.mini_hand@src = "minihud/mini_hand"
 			}
 		}
 		model mdl_righthand
@@ -1509,12 +1509,12 @@ window hud_mini extends hud
 			onMouseEnter {
 				*node:root.right.ammoright_shadow@font = "f_small_bold"
 				*node:this@font = "f_small_bold"
-				*node:root.right.mini_hand@image = "minihud/mini_hand_hovered"
+				*node:root.right.mini_hand@src = "minihud/mini_hand_hovered"
 			}
 			onMouseLeave {
 				*node:root.right.ammoright_shadow@font = "f_small"
 				*node:this@font = "f_small"
-				*node:root.right.mini_hand@image = "minihud/mini_hand"
+				*node:root.right.mini_hand@src = "minihud/mini_hand"
 			}
 		}
 		string ammoleft_shadow
@@ -1538,12 +1538,12 @@ window hud_mini extends hud
 			onMouseEnter {
 				*node:root.right.ammoleft_shadow@font = "f_small_bold"
 				*node:this@font = "f_small_bold"
-				*node:root.right.mini_hand@image = "minihud/mini_hand_hovered"
+				*node:root.right.mini_hand@src = "minihud/mini_hand_hovered"
 			}
 			onMouseLeave {
 				*node:root.right.ammoleft_shadow@font = "f_small"
 				*node:this@font = "f_small"
-				*node:root.right.mini_hand@image = "minihud/mini_hand"
+				*node:root.right.mini_hand@src = "minihud/mini_hand"
 			}
 		}
 
@@ -1859,10 +1859,10 @@ window hud_mini extends hud
 			onWheelDown	{ call *node:root.right.show_leftweapon cmd "hud_switchfiremodelist firemode_listener l;" }
 			onClick		{ call *node:root.right.show_rightweapon cmd "hud_switchfiremodelist firemode_listener r;" }
 			onMouseEnter {
-				*node:root.right.mini_hand@image = "minihud/mini_hand_hovered"
+				*node:root.right.mini_hand@src = "minihud/mini_hand_hovered"
 			}
 			onMouseLeave {
-				*node:root.right.mini_hand@image = "minihud/mini_hand"
+				*node:root.right.mini_hand@src = "minihud/mini_hand"
 			}
 		}
 		button switch_to_left_hand
@@ -1877,10 +1877,10 @@ window hud_mini extends hud
 			onWheelDown	{ call *node:root.right.show_leftweapon cmd "hud_switchfiremodelist firemode_listener l;" }
 			onClick		{ call *node:root.right.show_leftweapon cmd "hud_switchfiremodelist firemode_listener l;" }
 			onMouseEnter {
-				*node:root.right.mini_hand@image = "minihud/mini_hand_hovered"
+				*node:root.right.mini_hand@src = "minihud/mini_hand_hovered"
 			}
 			onMouseLeave {
-				*node:root.right.mini_hand@image = "minihud/mini_hand"
+				*node:root.right.mini_hand@src = "minihud/mini_hand"
 			}
 		}
 	}
@@ -1978,8 +1978,8 @@ window hud_mini extends hud
 			pos			"100 12"
 			size	"32 32"
 			onClick		{ cmd	"music_stop;" }
-			onMouseEnter { *node:this@image = "minihud/bt_stop_hovered" }
-			onMouseLeave { *node:this@image = "minihud/bt_stop" }
+			onMouseEnter { *node:this@src = "minihud/bt_stop_hovered" }
+			onMouseLeave { *node:this@src = "minihud/bt_stop" }
 		}
 		image bt_forward
 		{
@@ -1988,8 +1988,8 @@ window hud_mini extends hud
 			pos			"130 12"
 			size	"32 32"
 			onClick		{ cmd	"music_randomtrack;" }
-			onMouseEnter { *node:this@image = "minihud/bt_forward_hovered" }
-			onMouseLeave { *node:this@image = "minihud/bt_forward" }
+			onMouseEnter { *node:this@src = "minihud/bt_forward_hovered" }
+			onMouseLeave { *node:this@src = "minihud/bt_forward" }
 		}
 	}
 
@@ -2029,13 +2029,13 @@ window hud_mini extends hud
 	}
 
 	// CROUCH/STAND UP BUTTON
-	confunc deselect_stand  { *node:root.right.bt_duck@texl = "27 37" *node:root.right.bt_duck@texh = "52 70" *node:root.right.bt_duck@image = "althud/buttons_althud1" }
-	confunc deselect_crouch { *node:root.right.bt_duck@texl = "54 37" *node:root.right.bt_duck@texh = "79 70" *node:root.right.bt_duck@image = "althud/buttons_althud1" }
-	confunc disable_stand    { *node:root.right.bt_duck@texl = "27 37" *node:root.right.bt_duck@texh = "52 70" *node:root.right.bt_duck@image = "althud/buttons_althud1g" }
-	confunc disable_crouch   { *node:root.right.bt_duck@texl = "54 37" *node:root.right.bt_duck@texh = "79 70" *node:root.right.bt_duck@image = "althud/buttons_althud1g" }
+	confunc deselect_stand  { *node:root.right.bt_duck@texl = "27 37" *node:root.right.bt_duck@texh = "52 70" *node:root.right.bt_duck@src = "althud/buttons_althud1" }
+	confunc deselect_crouch { *node:root.right.bt_duck@texl = "54 37" *node:root.right.bt_duck@texh = "79 70" *node:root.right.bt_duck@src = "althud/buttons_althud1" }
+	confunc disable_stand    { *node:root.right.bt_duck@texl = "27 37" *node:root.right.bt_duck@texh = "52 70" *node:root.right.bt_duck@src = "althud/buttons_althud1g" }
+	confunc disable_crouch   { *node:root.right.bt_duck@texl = "54 37" *node:root.right.bt_duck@texh = "79 70" *node:root.right.bt_duck@src = "althud/buttons_althud1g" }
 
-	confunc deselect_headgear { *node:root.right.minihud_bt_use_headgear@image = "althud/buttons_althud1a" }
-	confunc disable_headgear { *node:root.right.minihud_bt_use_headgear@image = "althud/buttons_althud1g" }
+	confunc deselect_headgear { *node:root.right.minihud_bt_use_headgear@src = "althud/buttons_althud1a" }
+	confunc disable_headgear { *node:root.right.minihud_bt_use_headgear@src = "althud/buttons_althud1g" }
 
 	// ==================
 	// round events
@@ -2043,57 +2043,57 @@ window hud_mini extends hud
 
 	confunc startround
 	{
-		*node:root.right.nextturn@image = "althud/buttons_althud1"
+		*node:root.right.nextturn@src = "althud/buttons_althud1"
 	}
 	confunc endround
 	{
-		*node:root.right.nextturn@image = "althud/buttons_althud1g"
+		*node:root.right.nextturn@src = "althud/buttons_althud1g"
 		cmd "hud_movemode;"
 	}
 
-	confunc deselect_primaryleft { *node:root.right.bt_primaryleft@image		= "althud/buttons_althud1" }
-	confunc deselect_primaryright { *node:root.right.bt_primaryright@image	= "althud/buttons_althud1" }
-	confunc deselect_reloadleft { *node:root.right.bt_reloadleft@image		= "althud/buttons_althud1" }
-	confunc deselect_reloadright { *node:root.right.bt_reloadright@image		= "althud/buttons_althud1" }
+	confunc deselect_primaryleft { *node:root.right.bt_primaryleft@src		= "althud/buttons_althud1" }
+	confunc deselect_primaryright { *node:root.right.bt_primaryright@src	= "althud/buttons_althud1" }
+	confunc deselect_reloadleft { *node:root.right.bt_reloadleft@src		= "althud/buttons_althud1" }
+	confunc deselect_reloadright { *node:root.right.bt_reloadright@src		= "althud/buttons_althud1" }
 
-	confunc disable_primaryleft { *node:root.right.bt_primaryleft@image	= "althud/buttons_althud1g" }
-	confunc disable_primaryright { *node:root.right.bt_primaryright@image	= "althud/buttons_althud1g" }
-	confunc disable_reloadleft { *node:root.right.bt_reloadleft@image		= "althud/buttons_althud1g" }
-	confunc disable_reloadright { *node:root.right.bt_reloadright@image	= "althud/buttons_althud1g" }
+	confunc disable_primaryleft { *node:root.right.bt_primaryleft@src	= "althud/buttons_althud1g" }
+	confunc disable_primaryright { *node:root.right.bt_primaryright@src	= "althud/buttons_althud1g" }
+	confunc disable_reloadleft { *node:root.right.bt_reloadleft@src		= "althud/buttons_althud1g" }
+	confunc disable_reloadright { *node:root.right.bt_reloadright@src	= "althud/buttons_althud1g" }
 
 	confunc startreaction
 	{
-		*node:root.right.bt_reaction_a@image		= "althud/buttons_althud1a"
+		*node:root.right.bt_reaction_a@src		= "althud/buttons_althud1a"
 		*node:root.right.bt_reaction_a@tooltip	= "_Reaction fire"
 	}
 	confunc startreaction_impos
 	{
-		*node:root.right.bt_reaction_a@image		= "althud/buttons_althud1ar"
+		*node:root.right.bt_reaction_a@src		= "althud/buttons_althud1ar"
 		*node:root.right.bt_reaction_a@tooltip	= "_Reaction fire (not possible)"
 	}
 
 	confunc deselect_reaction
 	{
-		*node:root.right.bt_reaction_a@image		= "althud/buttons_althud1"
+		*node:root.right.bt_reaction_a@src		= "althud/buttons_althud1"
 		*node:root.right.bt_reaction_a@tooltip	= "_No reaction fire"
 	}
 	confunc disable_reaction {
-		*node:root.right.bt_reaction_a@image		= "althud/buttons_althud1g"
+		*node:root.right.bt_reaction_a@src		= "althud/buttons_althud1g"
 	}
 
 	// "RESERVATION FOR SHOT" BUTTON
 	confunc reserve_shot_clear
 	{
 		*cvar:mn_shot_reservation_tt		= "_Reserve TUs for shooting."
-		*node:root.right.bt_shot_reservation@image	= "althud/buttons_althud1"
+		*node:root.right.bt_shot_reservation@src	= "althud/buttons_althud1"
 	}
 	confunc reserve_shot_check
 	{
-		*node:root.right.bt_shot_reservation@image = "althud/buttons_althud1"
+		*node:root.right.bt_shot_reservation@src = "althud/buttons_althud1"
 	}
 	confunc reserve_shot_disable
 	{
-		*node:root.right.bt_shot_reservation@image = "althud/buttons_althud1g"
+		*node:root.right.bt_shot_reservation@src = "althud/buttons_althud1g"
 	}
 
 	confunc hudenable

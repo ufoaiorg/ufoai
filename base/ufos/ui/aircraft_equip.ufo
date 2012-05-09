@@ -29,14 +29,14 @@ window aircraft_equip extends iaircraft
 	 */
 	confunc airequip_select {
 		if ( <1> eq "zone1" ) {
-			*node:root.airequip_zone_select1@image  = "ui/airequip_selected_element"
-			*node:root.airequip_zone_select2@image  = ""
+			*node:root.airequip_zone_select1@src = "ui/airequip_selected_element"
+			*node:root.airequip_zone_select2@src = ""
 			*cvar:mn_aircraft_item_selected = -1
 			*node:root.itemlist@background = "ui/panel_grey_green"
 			cmd "airequip_zone_select 1;"
 		} elif ( <1> eq "zone2" ) {
-			*node:root.airequip_zone_select1@image  = ""
-			*node:root.airequip_zone_select2@image  = "ui/airequip_selected_element"
+			*node:root.airequip_zone_select1@src = ""
+			*node:root.airequip_zone_select2@src = "ui/airequip_selected_element"
 			*cvar:mn_aircraft_item_selected = -1
 			*node:root.itemlist@background = "ui/panel_grey_green"
 			cmd "airequip_zone_select 2;"
@@ -44,7 +44,7 @@ window aircraft_equip extends iaircraft
 			*cvar:tmp = ""
 			if ( *cvar:mn_aircraft_item_selected != -1 ) {
 				*cvar:tmp = "item"
-			} elif ( *node:parent.airequip_zone_select2@image eq "" ) {
+			} elif ( *node:parent.airequip_zone_select2@src eq "" ) {
 				*cvar:tmp = "zone1"
 			} else {
 				*cvar:tmp = "zone2"
@@ -52,8 +52,8 @@ window aircraft_equip extends iaircraft
 			cmd "airequip_slot_select <2> <cvar:tmp>;"
 			delete *cvar:tmp
 		} elif ( <1> eq "item" ) {
-			*node:root.airequip_zone_select1@image  = ""
-			*node:root.airequip_zone_select2@image  = ""
+			*node:root.airequip_zone_select1@src = ""
+			*node:root.airequip_zone_select2@src = ""
 			*node:root.itemlist@background = "ui/panel_grey_white"
 			*cvar:mn_aircraft_item_selected = <2>
 			cmd "airequip_list_click <2>;"

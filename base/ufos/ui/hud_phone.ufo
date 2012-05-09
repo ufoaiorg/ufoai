@@ -16,8 +16,8 @@ component hud_phone_firemodeentry extends panel {
 		texl	"0 0"
 		texh	"150 150"
 		size	"500 150"
-//		onMouseEnter { *node:this@image = "hudphone/firemode_bg_hovered" }
-//		onMouseLeave { *node:this@image = "hudphone/firemode_bg" }
+//		onMouseEnter { *node:this@src = "hudphone/firemode_bg_hovered" }
+//		onMouseLeave { *node:this@src = "hudphone/firemode_bg" }
 		onClick	{
 			if (*node:parent.actionid@string eq "cancel") {
 			} elif (*node:parent.actionid@string ne "") {

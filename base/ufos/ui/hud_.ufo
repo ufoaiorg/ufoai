@@ -119,8 +119,8 @@ component cmpFiremodeEntry extends panel {
 		texl	"0 0"
 		texh	"214  63"
 		size	"214  63"
-		onMouseEnter { *node:this@image = "hud/firemode_hover" }
-		onMouseLeave { *node:this@image = "hud/firemode" }
+		onMouseEnter { *node:this@src = "hud/firemode_hover" }
+		onMouseLeave { *node:this@src = "hud/firemode" }
 		onClick	{
 			cmd "ui_close <path:root>;"
 			cmd "hud_executeaction <node:parent.actionid@string>;"

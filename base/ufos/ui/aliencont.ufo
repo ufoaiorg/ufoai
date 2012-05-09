@@ -277,7 +277,7 @@ window aliencont
 	{
 		*cvar:i = 0
 		while ( *cvar:i < 10 ) {
-			*node:root.ac.ac<cvar:i>@image = "ui/hosp_button_green"
+			*node:root.ac.ac<cvar:i>@src = "ui/hosp_button_green"
 			*node:root.ac.ac<cvar:i>.icon@icon = "icons/alien_unused"
 			*node:root.ac.ac<cvar:i>.kill_zone@invis = true
 			*node:root.ac.ac<cvar:i>.autopsy_zone@invis = true
@@ -290,7 +290,7 @@ window aliencont
 	 * @param[in] <1> index of the field
 	 */
 	confunc aliencontneedautopsy {
-		*node:root.ac.ac<1>@image = "ui/hosp_button_light"
+		*node:root.ac.ac<1>@src = "ui/hosp_button_light"
 		*node:root.ac.ac<1>.icon@icon = "icons/alien_surgery"
 		*node:root.ac.ac<1>.icon@tooltip = "_Start autopsy"
 
@@ -306,7 +306,7 @@ window aliencont
 	{
 		*node:root.ac.ac<1>.icon@icon = "icons/alien_kill"
 		*node:root.ac.ac<1>.icon@tooltip = "_Kill this alien"
-		*node:root.ac.ac<1>@image = "ui/hosp_button_light"
+		*node:root.ac.ac<1>@src = "ui/hosp_button_light"
 
 		/* hide autopsy */
 		*node:root.ac.ac<1>.kill_zone@invis = false

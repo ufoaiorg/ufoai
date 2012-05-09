@@ -1569,13 +1569,13 @@ window hud_alt extends hud
 	}
 
 	// CROUCH/STAND UP BUTTON
-	confunc deselect_stand  { *node:root.right.bt_duck@texl = "27 37" *node:root.right.bt_duck@texh = "52 70" *node:root.right.bt_duck@image = "althud/buttons_althud1" }
-	confunc deselect_crouch { *node:root.right.bt_duck@texl = "54 37" *node:root.right.bt_duck@texh = "79 70" *node:root.right.bt_duck@image = "althud/buttons_althud1" }
-	confunc disable_stand    { *node:root.right.bt_duck@texl = "27 37" *node:root.right.bt_duck@texh = "52 70" *node:root.right.bt_duck@image = "althud/buttons_althud1g" }
-	confunc disable_crouch   { *node:root.right.bt_duck@texl = "54 37" *node:root.right.bt_duck@texh = "79 70" *node:root.right.bt_duck@image = "althud/buttons_althud1g" }
+	confunc deselect_stand  { *node:root.right.bt_duck@texl = "27 37" *node:root.right.bt_duck@texh = "52 70" *node:root.right.bt_duck@src = "althud/buttons_althud1" }
+	confunc deselect_crouch { *node:root.right.bt_duck@texl = "54 37" *node:root.right.bt_duck@texh = "79 70" *node:root.right.bt_duck@src = "althud/buttons_althud1" }
+	confunc disable_stand    { *node:root.right.bt_duck@texl = "27 37" *node:root.right.bt_duck@texh = "52 70" *node:root.right.bt_duck@src = "althud/buttons_althud1g" }
+	confunc disable_crouch   { *node:root.right.bt_duck@texl = "54 37" *node:root.right.bt_duck@texh = "79 70" *node:root.right.bt_duck@src = "althud/buttons_althud1g" }
 
-	confunc deselect_headgear { *node:root.right.althud_bt_use_headgear@image = "althud/buttons_althud1a" }
-	confunc disable_headgear { *node:root.right.althud_bt_use_headgear@image = "althud/buttons_althud1g" }
+	confunc deselect_headgear { *node:root.right.althud_bt_use_headgear@src = "althud/buttons_althud1a" }
+	confunc disable_headgear { *node:root.right.althud_bt_use_headgear@src = "althud/buttons_althud1g" }
 
 	// ==================
 	// round events
@@ -1583,56 +1583,56 @@ window hud_alt extends hud
 
 	confunc startround
 	{
-		*node:root.upperright.nextround@image = "althud/buttons_althud1"
+		*node:root.upperright.nextround@src = "althud/buttons_althud1"
 	}
 	confunc endround
 	{
-		*node:root.upperright.nextround@image = "althud/buttons_althud1g"
+		*node:root.upperright.nextround@src = "althud/buttons_althud1g"
 		cmd "hud_movemode;"
 	}
 
-	confunc deselect_primaryleft { *node:root.right.bt_primaryleft@image		= "althud/buttons_althud1" }
-	confunc deselect_primaryright { *node:root.right.bt_primaryright@image	= "althud/buttons_althud1" }
-	confunc deselect_reloadleft { *node:root.right.bt_reloadleft@image		= "althud/buttons_althud1" }
-	confunc deselect_reloadright { *node:root.right.bt_reloadright@image		= "althud/buttons_althud1" }
+	confunc deselect_primaryleft { *node:root.right.bt_primaryleft@src		= "althud/buttons_althud1" }
+	confunc deselect_primaryright { *node:root.right.bt_primaryright@src	= "althud/buttons_althud1" }
+	confunc deselect_reloadleft { *node:root.right.bt_reloadleft@src		= "althud/buttons_althud1" }
+	confunc deselect_reloadright { *node:root.right.bt_reloadright@src		= "althud/buttons_althud1" }
 
-	confunc disable_primaryleft { *node:root.right.bt_primaryleft@image	= "althud/buttons_althud1g" }
-	confunc disable_primaryright { *node:root.right.bt_primaryright@image	= "althud/buttons_althud1g" }
-	confunc disable_reloadleft { *node:root.right.bt_reloadleft@image		= "althud/buttons_althud1g" }
-	confunc disable_reloadright { *node:root.right.bt_reloadright@image	= "althud/buttons_althud1g" }
+	confunc disable_primaryleft { *node:root.right.bt_primaryleft@src	= "althud/buttons_althud1g" }
+	confunc disable_primaryright { *node:root.right.bt_primaryright@src	= "althud/buttons_althud1g" }
+	confunc disable_reloadleft { *node:root.right.bt_reloadleft@src		= "althud/buttons_althud1g" }
+	confunc disable_reloadright { *node:root.right.bt_reloadright@src	= "althud/buttons_althud1g" }
 	confunc startreaction
 	{
-		*node:root.right.bt_reaction_a@image		= "althud/buttons_althud1a"
+		*node:root.right.bt_reaction_a@src		= "althud/buttons_althud1a"
 		*node:root.right.bt_reaction_a@tooltip	= "_Reaction fire"
 	}
 	confunc startreaction_impos
 	{
-		*node:root.right.bt_reaction_a@image		= "althud/buttons_althud1ar"
+		*node:root.right.bt_reaction_a@src		= "althud/buttons_althud1ar"
 		*node:root.right.bt_reaction_a@tooltip	= "_Reaction fire (not possible)"
 	}
 
 	confunc deselect_reaction
 	{
-		*node:root.right.bt_reaction_a@image		= "althud/buttons_althud1"
+		*node:root.right.bt_reaction_a@src		= "althud/buttons_althud1"
 		*node:root.right.bt_reaction_a@tooltip	= "_No reaction fire"
 	}
 	confunc disable_reaction {
-		*node:root.right.bt_reaction_a@image		= "althud/buttons_althud1g"
+		*node:root.right.bt_reaction_a@src		= "althud/buttons_althud1g"
 	}
 
 	// "RESERVATION FOR SHOT" BUTTON
 	confunc reserve_shot_clear
 	{
 		*cvar:mn_shot_reservation_tt		= "_Reserve TUs for shooting."
-		*node:root.right.bt_shot_reservation@image	= "althud/buttons_althud1"
+		*node:root.right.bt_shot_reservation@src = "althud/buttons_althud1"
 	}
 	confunc reserve_shot_check
 	{
-		*node:root.right.bt_shot_reservation@image = "althud/buttons_althud1"
+		*node:root.right.bt_shot_reservation@src = "althud/buttons_althud1"
 	}
 	confunc reserve_shot_disable
 	{
-		*node:root.right.bt_shot_reservation@image = "althud/buttons_althud1g"
+		*node:root.right.bt_shot_reservation@src = "althud/buttons_althud1g"
 	}
 
 	confunc hudenable

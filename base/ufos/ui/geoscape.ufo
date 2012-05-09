@@ -12,8 +12,8 @@ component cmpGeoscapeDocklet extends panel {
 	image bg {
 		src			"geoscape/docklet_bg"
 		size			"280 60"
-		onMouseEnter	{ *node:this@image = "geoscape/docklet_bg_hovered" }
-		onMouseLeave	{ *node:this@image = "geoscape/docklet_bg" }
+		onMouseEnter	{ *node:this@src = "geoscape/docklet_bg_hovered" }
+		onMouseLeave	{ *node:this@src = "geoscape/docklet_bg" }
 		onClick			{ cmd "map_selectobject <node:parent.type@string> <node:parent.id@string>;" }
 	}
 
@@ -405,8 +405,8 @@ window geoscape
 				repeat		true
 				clickdelay	100
 				onClick		{ cmd "map_scroll up;" }
-				onMouseEnter { *node:parent.globe_effect@image = "ui/geo_miniglobe_n" }
-				onMouseLeave { *node:parent.globe_effect@image = "" }
+				onMouseEnter { *node:parent.globe_effect@src = "ui/geo_miniglobe_n" }
+				onMouseLeave { *node:parent.globe_effect@src = "" }
 			}
 
 			zone panel_scroll_down
@@ -416,8 +416,8 @@ window geoscape
 				repeat		true
 				clickdelay	100
 				onClick		{ cmd "map_scroll down;" }
-				onMouseEnter { *node:parent.globe_effect@image = "ui/geo_miniglobe_s" }
-				onMouseLeave { *node:parent.globe_effect@image = "" }
+				onMouseEnter { *node:parent.globe_effect@src = "ui/geo_miniglobe_s" }
+				onMouseLeave { *node:parent.globe_effect@src = "" }
 			}
 
 			zone panel_scroll_left
@@ -427,8 +427,8 @@ window geoscape
 				repeat		true
 				clickdelay	100
 				onClick		{ cmd "map_scroll left;" }
-				onMouseEnter { *node:parent.globe_effect@image = "ui/geo_miniglobe_w" }
-				onMouseLeave { *node:parent.globe_effect@image = "" }
+				onMouseEnter { *node:parent.globe_effect@src = "ui/geo_miniglobe_w" }
+				onMouseLeave { *node:parent.globe_effect@src = "" }
 			}
 
 			zone panel_scroll_right
@@ -438,8 +438,8 @@ window geoscape
 				repeat		true
 				clickdelay		100
 				onClick		{ cmd "map_scroll right;" }
-				onMouseEnter { *node:parent.globe_effect@image = "ui/geo_miniglobe_e" }
-				onMouseLeave { *node:parent.globe_effect@image = "" }
+				onMouseEnter { *node:parent.globe_effect@src = "ui/geo_miniglobe_e" }
+				onMouseLeave { *node:parent.globe_effect@src = "" }
 			}
 
 			zone panel_zoom_in
@@ -449,8 +449,8 @@ window geoscape
 				repeat		true
 				clickdelay	100
 				onClick		{ cmd "map_zoom in" }
-				onMouseEnter { *node:parent.globe_effect@image = "ui/geo_miniglobe_in" }
-				onMouseLeave { *node:parent.globe_effect@image = "" }
+				onMouseEnter { *node:parent.globe_effect@src = "ui/geo_miniglobe_in" }
+				onMouseLeave { *node:parent.globe_effect@src = "" }
 			}
 
 			zone panel_zoom_out
@@ -460,34 +460,34 @@ window geoscape
 				repeat		true
 				clickdelay	100
 				onClick		{ cmd "map_zoom out" }
-				onMouseEnter { *node:parent.globe_effect@image = "ui/geo_miniglobe_out" }
-				onMouseLeave { *node:parent.globe_effect@image = "" }
+				onMouseEnter { *node:parent.globe_effect@src = "ui/geo_miniglobe_out" }
+				onMouseLeave { *node:parent.globe_effect@src = "" }
 			}
 
 			// geoscape camera functions
 			func cam_up {
 				cmd "map_scroll up;"
-				*node:parent.globe_effect@image = "ui/geo_miniglobe_n"
+				*node:parent.globe_effect@src = "ui/geo_miniglobe_n"
 			}
 			func cam_left {
 				cmd "map_scroll left;"
-				*node:parent.globe_effect@image = "ui/geo_miniglobe_w"
+				*node:parent.globe_effect@src = "ui/geo_miniglobe_w"
 			}
 			func cam_right {
 				cmd "map_scroll right;"
-				*node:parent.globe_effect@image = "ui/geo_miniglobe_e"
+				*node:parent.globe_effect@src = "ui/geo_miniglobe_e"
 			}
 			func cam_down {
 				cmd "map_scroll down;"
-				*node:parent.globe_effect@image = "ui/geo_miniglobe_s"
+				*node:parent.globe_effect@src = "ui/geo_miniglobe_s"
 			}
 			func zoom_in {
 				cmd "map_zoom in;"
-				*node:parent.globe_effect@image = "ui/geo_miniglobe_in"
+				*node:parent.globe_effect@src = "ui/geo_miniglobe_in"
 			}
 			func zoom_out {
 				cmd "map_zoom out;"
-				*node:parent.globe_effect@image = "ui/geo_miniglobe_out"
+				*node:parent.globe_effect@src = "ui/geo_miniglobe_out"
 			}
 		}
 

@@ -1084,23 +1084,23 @@ window hud_default extends hud
 	}
 
 	// CROUCH/STAND UP BUTTON
-	confunc deselect_stand { *node:root.left.bt_duck@texl = "52 75" *node:root.left.bt_duck@texh = "104 112" *node:root.left.bt_duck@image = "hud/buttons2" }
-	confunc deselect_crouch { *node:root.left.bt_duck@texl = "0 75" *node:root.left.bt_duck@texh = "52 112" *node:root.left.bt_duck@image = "hud/buttons2" }
-	confunc disable_stand { *node:root.left.bt_duck@texl = "52 75" *node:root.left.bt_duck@texh = "104 112" *node:root.left.bt_duck@image = "hud/buttons2g" }
-	confunc disable_crouch { *node:root.left.bt_duck@texl = "0 75" *node:root.left.bt_duck@texh = "52 112" *node:root.left.bt_duck@image = "hud/buttons2g" }
+	confunc deselect_stand { *node:root.left.bt_duck@texl = "52 75" *node:root.left.bt_duck@texh = "104 112" *node:root.left.bt_duck@src = "hud/buttons2" }
+	confunc deselect_crouch { *node:root.left.bt_duck@texl = "0 75" *node:root.left.bt_duck@texh = "52 112" *node:root.left.bt_duck@src = "hud/buttons2" }
+	confunc disable_stand { *node:root.left.bt_duck@texl = "52 75" *node:root.left.bt_duck@texh = "104 112" *node:root.left.bt_duck@src = "hud/buttons2g" }
+	confunc disable_crouch { *node:root.left.bt_duck@texl = "0 75" *node:root.left.bt_duck@texh = "52 112" *node:root.left.bt_duck@src = "hud/buttons2g" }
 
-	confunc deselect_primaryleft { *node:root.left.bt_pfire@image = "hud/buttons1" }
-	confunc deselect_primaryright { *node:root.right.bt_pfire@image = "hud/buttons1" }
-	confunc deselect_reloadleft { *node:root.left.bt_reload@image = "hud/buttons2" }
-	confunc deselect_reloadright { *node:root.right.bt_reload@image = "hud/buttons2" }
+	confunc deselect_primaryleft { *node:root.left.bt_pfire@src = "hud/buttons1" }
+	confunc deselect_primaryright { *node:root.right.bt_pfire@src = "hud/buttons1" }
+	confunc deselect_reloadleft { *node:root.left.bt_reload@src = "hud/buttons2" }
+	confunc deselect_reloadright { *node:root.right.bt_reload@src = "hud/buttons2" }
 
-	confunc disable_primaryleft { *node:root.left.bt_pfire@image = "hud/buttons1g" }
-	confunc disable_primaryright { *node:root.right.bt_pfire@image = "hud/buttons1g" }
-	confunc disable_reloadleft { *node:root.left.bt_reload@image = "hud/buttons2g" }
-	confunc disable_reloadright { *node:root.right.bt_reload@image = "hud/buttons2g" }
+	confunc disable_primaryleft { *node:root.left.bt_pfire@src = "hud/buttons1g" }
+	confunc disable_primaryright { *node:root.right.bt_pfire@src = "hud/buttons1g" }
+	confunc disable_reloadleft { *node:root.left.bt_reload@src = "hud/buttons2g" }
+	confunc disable_reloadright { *node:root.right.bt_reload@src = "hud/buttons2g" }
 
-	confunc deselect_headgear { *node:root.right.hud_bt_use_headgear@image = "hud/buttons2" }
-	confunc disable_headgear { *node:root.right.hud_bt_use_headgear@image = "hud/buttons2g" }
+	confunc deselect_headgear { *node:root.right.hud_bt_use_headgear@src = "hud/buttons2" }
+	confunc disable_headgear { *node:root.right.hud_bt_use_headgear@src = "hud/buttons2g" }
 
 	// ==================
 	// round events
