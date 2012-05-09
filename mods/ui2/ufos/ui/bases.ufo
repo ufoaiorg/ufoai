@@ -69,8 +69,8 @@ window bases
 		panel base_selector
 		{
 			{
-				pos		"480 5"
-				size	"120 22"
+				pos		"440 7"
+				size	"160 16"
 				layout			LAYOUT_COLUMN
 				layoutColumns	8
 				layoutMargin	4
@@ -88,7 +88,7 @@ window bases
 		{
 			string		*cvar:mn_credits
 			pos			"600 0"
-			size		"119 32"
+			size		"120 32"
 			font		"f_small_bold"
 			color			"0.56 0.81 0.76 1"
 			contentalign	ALIGN_CR

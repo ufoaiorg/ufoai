@@ -104,16 +104,16 @@ component BuildingSpace extends panel
 // Small base selector layout
 component BaseLayoutMini extends baselayout
 {
-	pos				"1 1"
-	size			"20 20"
+	pos				"0 0"
+	size			"16 16"
 	color			"0.56 0.81 0.76 0.5"
 	bgcolor			"0.56 0.81 0.76 0.1"
 	padding			1
-	selectcolor		"0.56 0.81 0.76 0.2"
 	onMouseEnter	{ *node:this@color = "0.56 0.81 0.76 1" }
 	onMouseLeave	{ *node:this@color = "0.56 0.81 0.76 0.5" }
-	onClick			{ cmd "mn_base_select <baseid>;" }
+	onClick			{ cmd "ui_pop; mn_base_select <baseid>;" }
 }
+
 
 // Aircraft image/button
 component AircraftIcon extends panel
