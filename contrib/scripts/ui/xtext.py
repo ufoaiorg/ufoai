@@ -28,7 +28,7 @@ def genBehaviourXText(node):
 		next = ""
 		for name in list:
 			e = node.properties[name]
-			result += "\t(\"%s\" %s=UIValue)?\n" % (e.name, e.name)
+			result += "\t(\"%s\" %s=UIValue)\n" % (e.name, e.name)
 			next = "& "
 
 	list = node.callbacks.keys()
