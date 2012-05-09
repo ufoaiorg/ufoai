@@ -2310,6 +2310,82 @@ mapdef village_small
 // ===================== //
 
 //////////////////////////
+//// BASE RANDOM MAPS ////
+//////////////////////////
+
+mapdef base_initial
+{
+	map			"+baseattack"
+	param		"initial"
+	description	"_Base is under attack."
+	campaign	false
+	multiplayer	false
+	maxaliens	14
+		// randomspawn enabled
+
+	aircraft
+        {
+				// any
+        }
+
+        ufos
+        {
+                // any
+        }
+
+        terrains
+        {
+                // any
+        }
+
+        cultures
+        {
+                // any
+        }
+
+        populations
+        {
+                // any
+        }
+}
+
+mapdef base_random
+{
+	map			"+baseattack"
+	param		"random"
+	description	"_Base is under attack."
+	campaign	false
+	multiplayer	false
+	maxaliens	16
+		// randomspawn enabled
+
+	aircraft
+        {
+				// any
+        }
+
+        ufos
+        {
+                // any
+        }
+
+        terrains
+        {
+                // any
+        }
+
+        cultures
+        {
+                // any
+        }
+
+        populations
+        {
+                // any
+        }
+}
+
+//////////////////////////
 // CEMETERY RANDOM MAPS //
 //////////////////////////
 
