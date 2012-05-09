@@ -1,9 +1,8 @@
 #!/usr/bin/env python
 #
-# @brief extract wiki documentation about behaviour from .h and .c files
+# @brief Generate an xtext fragment from source code of the UI engine
 # @license Public domain
-# @return a MediaWiki document into stdout (http://ufoai.org/wiki/index.php/UI_node_behaviours)
-# @todo generate confunc too
+# @return an xtext fragment to stdout
 #
 
 import os, os.path, sys
@@ -13,33 +12,33 @@ def genBehaviourXText(node):
 	result = ""
 	label = ""
 
+	# node properties
 	result += 'UI%sNodeProperties:\n' % node.name.title()
+	result += '\t('
 	if node.extends != None:
-		result += '\t{UI%sNodeProperties}\n' % node.extends.title()
+		result += 'UI%sNodeProperties | ' % node.extends.title()
+	result += 'UI%sNodePropertiesBase)\n' % node.name.title()
+	result += '\n'
 
-	if len(node.properties) > 0 or len(node.callbacks) > 0:
-		result += "\t(\n"
+	# base properties
+	result += 'UI%sNodePropertiesBase:\n' % node.name.title()
+	list = node.properties.keys()
+	if len(list) != 0:
+		list.sort()
 		next = ""
+		for name in list:
+			e = node.properties[name]
+			result += "\t(\"%s\" %s=UIValue)?\n" % (e.name, e.name)
+			next = "& "
 
-		list = node.properties.keys()
-		if len(list) != 0:
-			list.sort()
-			next = ""
-			for name in list:
-				e = node.properties[name]
-				result += "\t\t%s(\"%s\" %s=UIValue)?\n" % (next, e.name, e.name)
-				next = "& "
-
-		list = node.callbacks.keys()
-		if len(list) != 0:
-			list.sort()
-			for name in list:
-				e = node.callbacks[name]
-				result += "\t\t%s(\"%s\" %s=UIFuncStatements)?\n" % (next, e.name, e.name)
-				next = "& "
-		result += "\t)\n"
-
+	list = node.callbacks.keys()
+	if len(list) != 0:
+		list.sort()
+		for name in list:
+			e = node.callbacks[name]
+			result += "\t(\"%s\" %s=UIFuncStatements)?\n" % (e.name, e.name)
 	result += '\t;\n'
+
 	return result
 
 def genXText(package):
@@ -48,9 +47,36 @@ def genXText(package):
 	list.sort()
 	result += """// autogen xtext from source code\n"""
 	result += "\n"
+
+	result += "//================ NODES ================\n\n"
+
+	result += 'UINode:\n'
+	next = ""
+	for name in list:
+		result += "\t%sUI%sNode\n" % (next, name.title())
+		next = "| "
+	result += "\t;\n"
+	result += "\n"
+
+	for name in list:
+		result += 'UINode%s:\n' % name.title()
+		result += '\t"%s" name=ID "{" (properties+=UI%sProperties)* "}";\n' % (name, name.title())
+		result += "\n"
+
+	result += "//================ PROPERTIES ================\n\n"
+
 	for name in list:
 		result += genBehaviourXText(package.getBehaviour(name))
 		result += "\n"
+
+	result += 'UINodeProperties:\n'
+	next = ""
+	for name in list:
+		result += "\t%sUI%sNodePropertiesBase\n" % (next, name.title())
+		next = "| "
+	result += "\t;"
+
+
 	return result
 
 def getXText():
