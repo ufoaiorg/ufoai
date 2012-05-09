@@ -17,7 +17,7 @@ def genBehaviourXText(node):
 	result += '\t('
 	if node.extends != None:
 		result += 'UI%sNodeProperties | ' % node.extends.title()
-	result += 'UI%sNodePropertiesBase)\n' % node.name.title()
+	result += 'UI%sNodePropertiesBase);\n' % node.name.title()
 	result += '\n'
 
 	# base properties
