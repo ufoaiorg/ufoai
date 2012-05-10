@@ -11192,7 +11192,7 @@ msgid "Buy and sell item"
 msgstr ""
 
 #: ../base/ufos/ui/market.ufo:96 ../base/ufos/ui/production.ufo:76
-msgid "Craft items"
+msgid "Aircraft items"
 msgstr ""
 
 #: ../base/ufos/ui/market.ufo:104 ../base/ufos/ui/options.ufo:423

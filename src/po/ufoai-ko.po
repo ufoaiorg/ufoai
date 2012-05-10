@@ -11849,7 +11849,7 @@ msgid "Buy and sell item"
 msgstr "물품 구매/매각"
 
 #: ../base/ufos/ui/market.ufo:96 ../base/ufos/ui/production.ufo:76
-msgid "Craft items"
+msgid "Aircraft items"
 msgstr "항공 기자재"
 
 #: ../base/ufos/ui/market.ufo:104 ../base/ufos/ui/options.ufo:423

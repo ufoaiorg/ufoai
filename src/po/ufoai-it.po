@@ -12381,7 +12381,7 @@ msgstr "Compra e vendi oggetto"
 
 #: ../base/ufos/ui/market.ufo:96
 #: ../base/ufos/ui/production.ufo:76
-msgid "Craft items"
+msgid "Aircraft items"
 msgstr "Oggetti velivolo"
 
 #: ../base/ufos/ui/market.ufo:104

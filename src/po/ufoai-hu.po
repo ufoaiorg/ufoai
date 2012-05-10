@@ -10562,7 +10562,7 @@ msgstr "Felszerelés vásárlása/eladása"
 msgid "Hamburg"
 msgstr "Hamburg"
 
-msgid "Craft items"
+msgid "Aircraft items"
 msgstr "Gépfelszerelés"
 
 msgid "Hanoi"
