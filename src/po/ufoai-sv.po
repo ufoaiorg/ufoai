@@ -11736,7 +11736,7 @@ msgstr "Köp eller sälj objekt"
 
 #: ../base/ufos/ui/market.ufo:96 ../base/ufos/ui/production.ufo:76
 #, fuzzy
-msgid "Aircraft items"
+msgid "Craft items"
 msgstr "Skapa"
 
 #: ../base/ufos/ui/market.ufo:104 ../base/ufos/ui/options.ufo:423

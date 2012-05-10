@@ -12124,7 +12124,7 @@ msgid "Buy and sell item"
 msgstr "买卖"
 
 #: ../base/ufos/ui/market.ufo:96 ../base/ufos/ui/production.ufo:76
-msgid "Aircraft items"
+msgid "Craft items"
 msgstr "机载物"
 
 #: ../base/ufos/ui/market.ufo:104 ../base/ufos/ui/options.ufo:423

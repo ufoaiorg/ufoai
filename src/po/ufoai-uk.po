@@ -11730,7 +11730,7 @@ msgstr "Купівля/продаж"
 
 #: ../base/ufos/ui/market.ufo:96
 #: ../base/ufos/ui/production.ufo:76
-msgid "Aircraft items"
+msgid "Craft items"
 msgstr "Авіаспорядження"
 
 #: ../base/ufos/ui/market.ufo:104

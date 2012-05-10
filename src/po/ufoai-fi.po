@@ -11276,7 +11276,7 @@ msgid "Buy and sell item"
 msgstr "Osta ja myy tavaraa"
 
 #: ../base/ufos/ui/market.ufo:96 ../base/ufos/ui/production.ufo:76
-msgid "Aircraft items"
+msgid "Craft items"
 msgstr "Aluksien varusteet"
 
 #: ../base/ufos/ui/market.ufo:104 ../base/ufos/ui/options.ufo:423

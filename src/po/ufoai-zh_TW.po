@@ -12060,7 +12060,7 @@ msgid "Buy and sell item"
 msgstr "買賣物品"
 
 #: ../base/ufos/ui/market.ufo:96 ../base/ufos/ui/production.ufo:76
-msgid "Aircraft items"
+msgid "Craft items"
 msgstr "機載物"
 
 #: ../base/ufos/ui/market.ufo:104 ../base/ufos/ui/options.ufo:423
