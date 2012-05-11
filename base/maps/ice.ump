@@ -14,19 +14,38 @@ base ice/ice_
 // Dropships --------------------------------------------------------
 
 tile +craft_drop_firebird
-	// 8 x info_human_start
-	// 3 info_2x2_start
 {
 5 5
 0      a      a     a     0
-x     +d     +d     +d    a
-x     +d     +d     +d    a
-x     +d     +d     +d    a
+a     +d     +d     +d    a
+a     +d     +d     +d    a
+a     +d     +d     +d    a
 0      a      a     a     0
 }
 
-// crashed UFO´s-----------------------------------------------------
+tile +craft_drop_herakles
+{
+5 5
+0      a      a     a     0
+a     +d     +d     +d    a
+a     +d     +d     +d    a
+a     +d     +d     +d    a
+0      a      a     a     0
+}
 
+tile +craft_drop_raptor
+{
+5 5
+0      a      a     a     0
+a     +d     +d     +d    a
+a     +d     +d     +d    a
+a     +d     +d     +d    a
+0      a      a     a     0
+}
+
+// UFO´s ------------------------------------------------------------
+
+// crashed UFO´s ----------------------------------------------------
 
 // Common tiles -----------------------------------------------------
 
