@@ -258,7 +258,6 @@ void CL_CameraRoute (const pos3_t from, const pos3_t target)
 	VectorClear(cl.cam.speed);
 	cameraRoute = qtrue;
 
-	CL_BlockBattlescapeEvents(qtrue);
 }
 
 /**

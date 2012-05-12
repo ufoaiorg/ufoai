@@ -366,9 +366,11 @@ base/maps/hills/road_2h2.map | GNU General Public License 2.0 or later | Kostia 
 base/maps/hills/road_2v1.map | GNU General Public License 2.0 or later | Kostia "Kildor" Romanov
 base/maps/hills/road_2v2.map | GNU General Public License 2.0 or later | Kostia "Kildor" Romanov
 base/maps/ice.ump | GNU General Public License 2.0 or later
+base/maps/ice/ice_craft_crash_scout.map | GNU General Public License 2.0 or later | Holger 'ShipIt' Gellrich
 base/maps/ice/ice_craft_drop_firebird.map | GNU General Public License 2.0 or later
 base/maps/ice/ice_craft_drop_herakles.map | GNU General Public License 2.0 or later | Holger 'ShipIt' Gellrich
 base/maps/ice/ice_craft_drop_raptor.map | GNU General Public License 2.0 or later | Holger 'ShipIt' Gellrich
+base/maps/ice/ice_craft_ufo_scout.map | GNU General Public License 2.0 or later | Holger 'ShipIt' Gellrich
 base/maps/ice/ice_r01.map | GNU General Public License 2.0 or later
 base/maps/ice/ice_r02.map | GNU General Public License 2.0 or later
 base/maps/ice/ice_r03.map | GNU General Public License 2.0 or later

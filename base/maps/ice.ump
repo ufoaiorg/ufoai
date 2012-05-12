@@ -45,7 +45,27 @@ a     +d     +d     +d    a
 
 // UFO´s ------------------------------------------------------------
 
+tile +craft_ufo_scout
+{
+5 5
+0      a      a     a     0
+a     +d     +d     +d    a
+a     +d     +d     +d    a
+a     +d     +d     +d    a
+0      a      a     a     0
+}
+
 // crashed UFO´s ----------------------------------------------------
+
+tile +craft_crash_scout
+{
+5 5
+0      a      a     a     0
+a     +d     +d     +d    a
+a     +d     +d     +d    a
+a     +d     +d     +d    a
+0      a      a     a     0
+}
 
 // Common tiles -----------------------------------------------------
 
@@ -144,18 +164,19 @@ adu     +a     adu
 
 // map assemblies ---------------------------------------------------
 
-assembly test
+assembly small
 {
-size "7 4"
+size "8 5"
 title "_Ice"
 +r01 "0 1"
 +r02 "0 1"
 +r03 "0 1"
 +r04 "0 1"
 +r05 "0 1"
-+r06 "0 2"
-+r07 "0 2"
++r06 "0 4"
++r07 "0 4"
 +r08 "0 1"
 +r09 "0 1"
+*rm_ufo +craft_ufo_scout "1 1"
 *rm_drop +craft_drop_firebird "1 1"
 }
