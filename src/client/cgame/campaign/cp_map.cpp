@@ -183,7 +183,7 @@ static void MAP_MultiSelectExecuteAction_f (void)
 		selected = 0;
 	} else {
 		/* Call from a geoscape popup menu (popup_multi_selection) */
-		UI_PopWindow(qfalse);
+		cgi->UI_PopWindow(qfalse);
 		selected = atoi(Cmd_Argv(1));
 		multiSelection = qtrue;
 	}
@@ -295,7 +295,7 @@ qboolean MAP_MapClick (uiNode_t* node, int x, int y)
 				Vector2Copy(pos, ccs.newBasePos);
 				CP_GameTimeStop();
 				Cmd_ExecuteString("mn_set_base_title");
-				UI_PushWindow("popup_newbase", NULL, NULL);
+				cgi->UI_PushWindow("popup_newbase");
 				return qtrue;
 			}
 			return qfalse;
@@ -305,12 +305,12 @@ qboolean MAP_MapClick (uiNode_t* node, int x, int y)
 		if (!MapIsWater(MAP_GetColor(pos, MAPTYPE_TERRAIN, NULL))) {
 			Vector2Copy(pos, ccs.newBasePos);
 			CP_GameTimeStop();
-			UI_PushWindow("popup_newinstallation", NULL, NULL);
+			cgi->UI_PushWindow("popup_newinstallation");
 			return qtrue;
 		}
 		break;
 	case MA_UFORADAR:
-		UI_PushWindow("popup_intercept_ufo", NULL, NULL);
+		cgi->UI_PushWindow("popup_intercept_ufo");
 		break;
 	default:
 		break;
@@ -363,9 +363,9 @@ qboolean MAP_MapClick (uiNode_t* node, int x, int y)
 		return qtrue;
 	} else if (multiSelect.nbSelect > 1) {
 		/* Display popup for multi selection */
-		UI_RegisterText(TEXT_MULTISELECTION, multiSelect.popupText);
+		cgi->UI_RegisterText(TEXT_MULTISELECTION, multiSelect.popupText);
 		CP_GameTimeStop();
-		UI_PushWindow("popup_multi_selection", NULL, NULL);
+		cgi->UI_PushWindow("popup_multi_selection");
 		return qtrue;
 	} else {
 		aircraft_t *aircraft = MAP_GetSelectedAircraft();
@@ -374,7 +374,8 @@ qboolean MAP_MapClick (uiNode_t* node, int x, int y)
 			MAP_ResetAction();
 			return qfalse;
 		}
-		else if (AIR_IsAircraftOnGeoscape(aircraft) && AIR_AircraftHasEnoughFuel(aircraft, pos)) {
+
+		if (AIR_IsAircraftOnGeoscape(aircraft) && AIR_AircraftHasEnoughFuel(aircraft, pos)) {
 			/* Move the selected aircraft to the position clicked */
 			MAP_MapCalcLine(aircraft->pos, pos, &aircraft->route);
 			aircraft->status = AIR_TRANSIT;
@@ -1214,7 +1215,7 @@ static void MAP_GetGeoscapeAngle (float *vector)
  */
 void MAP_CenterOnPoint_f (void)
 {
-	if (!Q_streq(UI_GetActiveWindowName(), "geoscape"))
+	if (!Q_streq(cgi->UI_GetActiveWindowName(), "geoscape"))
 		return;
 
 	centerOnEventIdx++;
@@ -1283,8 +1284,8 @@ static void MAP3D_SmoothRotate (void)
 
 /**
  * @brief stop smooth translation on geoscape
- * @sa UI_RightClick
- * @sa UI_MouseWheel
+ * @sa cgi->UI_RightClick
+ * @sa cgi->UI_MouseWheel
  */
 void MAP_StopSmoothMovement (void)
 {
@@ -1709,13 +1710,13 @@ void MAP_UpdateGeoscapeDock (void)
 	char buf[512];
 	aircraft_t *ufo;
 
-	UI_ExecuteConfunc("clean_geoscape_object");
+	cgi->UI_ExecuteConfunc("clean_geoscape_object");
 
 	/* draw mission pics */
 	MIS_Foreach(mission) {
 		if (!mission->onGeoscape)
 			continue;
-		UI_ExecuteConfunc("add_geoscape_object mission %i \"%s\" %s \"%s\"",
+		cgi->UI_ExecuteConfunc("add_geoscape_object mission %i \"%s\" %s \"%s\"",
 				mission->idx, mission->location, MAP_GetMissionModel(mission), MAP_GetShortMissionText(buf, sizeof(buf), mission));
 	}
 
@@ -1723,7 +1724,7 @@ void MAP_UpdateGeoscapeDock (void)
 	ufo = NULL;
 	while ((ufo = UFO_GetNextOnGeoscape(ufo)) != NULL) {
 		const unsigned int ufoIDX = UFO_GetGeoscapeIDX(ufo);
-		UI_ExecuteConfunc("add_geoscape_object ufo %i %i %s \"%s\"",
+		cgi->UI_ExecuteConfunc("add_geoscape_object ufo %i %i %s \"%s\"",
 				ufoIDX, ufoIDX, ufo->model, MAP_GetUFOText(buf, sizeof(buf), ufo));
 	}
 }
@@ -1883,9 +1884,9 @@ static void MAP_DrawMapMarkers (const uiNode_t* node)
 		}
 	}
 	if (showXVI)
-		UI_RegisterText(TEXT_XVI, buffer);
+		cgi->UI_RegisterText(TEXT_XVI, buffer);
 	else
-		UI_ResetData(TEXT_XVI);
+		cgi->UI_ResetData(TEXT_XVI);
 
 	cgi->R_Color(NULL);
 }
@@ -1955,28 +1956,28 @@ void MAP_DrawMap (const uiNode_t* node, const campaign_t *campaign)
 
 	mission = MAP_GetSelectedMission();
 	/* display text */
-	UI_ResetData(TEXT_STANDARD);
+	cgi->UI_ResetData(TEXT_STANDARD);
 	switch (ccs.mapAction) {
 	case MA_NEWBASE:
-		UI_RegisterText(TEXT_STANDARD, _("Select the desired location of the new base on the map.\n"));
+		cgi->UI_RegisterText(TEXT_STANDARD, _("Select the desired location of the new base on the map.\n"));
 		return;
 	case MA_NEWINSTALLATION:
-		UI_RegisterText(TEXT_STANDARD, _("Select the desired location of the new installation on the map.\n"));
+		cgi->UI_RegisterText(TEXT_STANDARD, _("Select the desired location of the new installation on the map.\n"));
 		return;
 	case MA_BASEATTACK:
 		if (mission)
 			break;
-		UI_RegisterText(TEXT_STANDARD, _("Aliens are attacking our base at this very moment.\n"));
+		cgi->UI_RegisterText(TEXT_STANDARD, _("Aliens are attacking our base at this very moment.\n"));
 		return;
 	case MA_INTERCEPT:
 		if (mission)
 			break;
-		UI_RegisterText(TEXT_STANDARD, _("Select ufo or mission on map\n"));
+		cgi->UI_RegisterText(TEXT_STANDARD, _("Select ufo or mission on map\n"));
 		return;
 	case MA_UFORADAR:
 		if (mission)
 			break;
-		UI_RegisterText(TEXT_STANDARD, _("UFO in radar range\n"));
+		cgi->UI_RegisterText(TEXT_STANDARD, _("UFO in radar range\n"));
 		return;
 	case MA_NONE:
 		break;
@@ -1984,26 +1985,26 @@ void MAP_DrawMap (const uiNode_t* node, const campaign_t *campaign)
 
 	/* Nothing is displayed yet */
 	if (mission) {
-		UI_RegisterText(TEXT_STANDARD, MAP_GetMissionText(textStandard, sizeof(textStandard), mission));
+		cgi->UI_RegisterText(TEXT_STANDARD, MAP_GetMissionText(textStandard, sizeof(textStandard), mission));
 	} else if (MAP_GetSelectedAircraft() != NULL) {
 		const aircraft_t *aircraft = MAP_GetSelectedAircraft();
 		if (AIR_IsAircraftInBase(aircraft)) {
-			UI_RegisterText(TEXT_STANDARD, NULL);
+			cgi->UI_RegisterText(TEXT_STANDARD, NULL);
 			MAP_ResetAction();
 			return;
 		}
-		UI_RegisterText(TEXT_STANDARD, MAP_GetAircraftText(textStandard, sizeof(textStandard), aircraft));
+		cgi->UI_RegisterText(TEXT_STANDARD, MAP_GetAircraftText(textStandard, sizeof(textStandard), aircraft));
 	} else if (MAP_GetSelectedUFO() != NULL) {
-		UI_RegisterText(TEXT_STANDARD, MAP_GetUFOText(textStandard, sizeof(textStandard), MAP_GetSelectedUFO()));
+		cgi->UI_RegisterText(TEXT_STANDARD, MAP_GetUFOText(textStandard, sizeof(textStandard), MAP_GetSelectedUFO()));
 	} else {
 #ifdef DEBUG
 		if (debug_showInterest->integer) {
 			static char t[64];
 			Com_sprintf(t, lengthof(t), "Interest level: %i\n", ccs.overallInterest);
-			UI_RegisterText(TEXT_STANDARD, t);
+			cgi->UI_RegisterText(TEXT_STANDARD, t);
 		} else
 #endif
-		UI_RegisterText(TEXT_STANDARD, "");
+		cgi->UI_RegisterText(TEXT_STANDARD, "");
 	}
 }
 

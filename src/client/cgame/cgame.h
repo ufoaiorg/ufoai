@@ -90,7 +90,7 @@ typedef struct cgame_import_s {
 	/* UI functions */
 	void (IMPORT *UI_ExecuteConfunc) (const char *fmt, ...) __attribute__((format(printf, 1, 2)));
 	void (IMPORT *UI_PopWindow) (qboolean all);
-	uiNode_t* (IMPORT *UI_PushWindow) (const char *name, const char *parentName, linkedList_t *params);
+	void (IMPORT *UI_PushWindow) (const char *name);
 	void (IMPORT *UI_InitStack) (const char* activeMenu, const char* mainMenu, qboolean popAll, qboolean pushActive);
 	void (IMPORT *UI_Popup) (const char *title, const char *format, ...);
 	uiNode_t* (IMPORT *UI_AddOption) (uiNode_t** tree, const char* name, const char* label, const char* value);

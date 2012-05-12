@@ -287,9 +287,9 @@ void GAME_CP_Results (struct dbuffer *msg, int winner, int *numSpawned, int *num
 	cgi->UI_InitStack("geoscape", "campaign_main", qtrue, qtrue);
 
 	if (won)
-		cgi->UI_PushWindow("won", NULL, NULL);
+		cgi->UI_PushWindow("won");
 	else
-		cgi->UI_PushWindow("lost", NULL, NULL);
+		cgi->UI_PushWindow("lost");
 
 	cgi->CL_Disconnect();
 	SV_Shutdown("Mission end", qfalse);

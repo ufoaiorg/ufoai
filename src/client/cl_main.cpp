@@ -405,7 +405,7 @@ static void CL_ConnectionlessPacket (struct dbuffer *msg)
 		/* special reject messages needs proper handling */
 		/** @todo this is in the userinfo string, but not clearly announced via print - see SVC_DirectConnect */
 		if (strstr(s, REJ_PASSWORD_REQUIRED_OR_INCORRECT))
-			UI_PushWindow("serverpassword", NULL, NULL);
+			UI_PushWindow("serverpassword");
 		UI_Popup(_("Notice"), _(popupText));
 		return;
 	}
@@ -835,7 +835,7 @@ static void CL_CheckCvars_f (void)
 		cvar_t *var = Cvar_Get(c->name);
 		if (var->string[0] == '\0') {
 			Com_Printf("%s has no value\n", var->name);
-			UI_PushWindow("checkcvars", NULL, NULL);
+			UI_PushWindow("checkcvars");
 			break;
 		}
 	}

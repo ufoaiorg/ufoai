@@ -1739,7 +1739,7 @@ void B_SelectBase (const base_t *base)
 	} else {
 		Com_DPrintf(DEBUG_CLIENT, "B_SelectBase_f: select base with id %i\n", base->idx);
 		ccs.mapAction = MA_NONE;
-		cgi->UI_PushWindow("bases", NULL, NULL);
+		cgi->UI_PushWindow("bases");
 		B_SetCurrentSelectedBase(base);
 	}
 }
@@ -2009,46 +2009,46 @@ void B_BuildingOpenAfterClick (const building_t *building)
 		switch (building->buildingType) {
 		case B_LAB:
 			if (RS_ResearchAllowed(base))
-				cgi->UI_PushWindow("research", NULL, NULL);
+				cgi->UI_PushWindow("research");
 			else
 				UP_OpenWith(building->pedia);
 			break;
 		case B_HOSPITAL:
 			if (HOS_HospitalAllowed(base))
-				cgi->UI_PushWindow("hospital", NULL, NULL);
+				cgi->UI_PushWindow("hospital");
 			else
 				UP_OpenWith(building->pedia);
 			break;
 		case B_ALIEN_CONTAINMENT:
 			if (AC_ContainmentAllowed(base))
-				cgi->UI_PushWindow("aliencont", NULL, NULL);
+				cgi->UI_PushWindow("aliencont");
 			else
 				UP_OpenWith(building->pedia);
 			break;
 		case B_QUARTERS:
 			if (E_HireAllowed(base))
-				cgi->UI_PushWindow("employees", NULL, NULL);
+				cgi->UI_PushWindow("employees");
 			else
 				UP_OpenWith(building->pedia);
 			break;
 		case B_WORKSHOP:
 			if (PR_ProductionAllowed(base))
-				cgi->UI_PushWindow("production", NULL, NULL);
+				cgi->UI_PushWindow("production");
 			else
 				UP_OpenWith(building->pedia);
 			break;
 		case B_DEFENCE_LASER:
 		case B_DEFENCE_MISSILE:
-			cgi->UI_PushWindow("basedefence", NULL, NULL);
+			cgi->UI_PushWindow("basedefence");
 			break;
 		case B_HANGAR:
 		case B_SMALL_HANGAR:
 			if (!AIR_AircraftAllowed(base)) {
 				UP_OpenWith(building->pedia);
 			} else if (AIR_BaseHasAircraft(base)) {
-				cgi->UI_PushWindow("aircraft", NULL, NULL);
+				cgi->UI_PushWindow("aircraft");
 			} else {
-				cgi->UI_PushWindow("buyaircraft", NULL, NULL);
+				cgi->UI_PushWindow("buyaircraft");
 				/* transfer is only possible when there are at least two bases */
 				if (B_GetCount() > 1)
 					CP_Popup(_("Note"), _("No aircraft in this base - You first have to purchase or transfer an aircraft\n"));
@@ -2058,7 +2058,7 @@ void B_BuildingOpenAfterClick (const building_t *building)
 			break;
 		case B_STORAGE:
 			if (BS_BuySellAllowed(base))
-				cgi->UI_PushWindow("market", NULL, NULL);
+				cgi->UI_PushWindow("market");
 			else
 				UP_OpenWith(building->pedia);
 			break;

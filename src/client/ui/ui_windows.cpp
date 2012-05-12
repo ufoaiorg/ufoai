@@ -230,7 +230,7 @@ int UI_CompleteWithWindow (const char *partial, const char **match)
 static void UI_PushChildWindow_f (void)
 {
 	if (Cmd_Argc() > 1)
-		UI_PushWindow(Cmd_Argv(1), Cmd_Argv(2), NULL);
+		UI_PushWindow(Cmd_Argv(1), Cmd_Argv(2));
 	else
 		Com_Printf("Usage: %s <name> <parentname>\n", Cmd_Argv(0));
 }
@@ -321,7 +321,7 @@ static void UI_PushDropDownWindow_f (void)
 	node = node->root;
 	node->box.pos[0] += destination[0] - source[0];
 	node->box.pos[1] += destination[1] - source[1];
-	UI_PushWindow(node->name, NULL, NULL);
+	UI_PushWindow(node->name);
 }
 
 static void UI_RemoveWindowAtPositionFromStack (int position)
@@ -376,7 +376,7 @@ void UI_InitStack (const char* activeWindow, const char* mainWindow, qboolean po
 		/* prevent calls before UI script initialization */
 		if (ui_global.numWindows != 0) {
 			if (pushActive)
-				UI_PushWindow(activeWindow, NULL, NULL);
+				UI_PushWindow(activeWindow);
 		}
 	}
 
@@ -466,14 +466,14 @@ void UI_PopWindow (qboolean all)
 			 * right now) */
 			if (Q_streq(oldfirst->name, ui_sys_main->string)) {
 				if (ui_sys_active->string[0] != '\0')
-					UI_PushWindow(ui_sys_active->string, NULL, NULL);
+					UI_PushWindow(ui_sys_active->string);
 				if (!ui_global.windowStackPos)
-					UI_PushWindow(ui_sys_main->string, NULL, NULL);
+					UI_PushWindow(ui_sys_main->string);
 			} else {
 				if (ui_sys_main->string[0] != '\0')
-					UI_PushWindow(ui_sys_main->string, NULL, NULL);
+					UI_PushWindow(ui_sys_main->string);
 				if (!ui_global.windowStackPos)
-					UI_PushWindow(ui_sys_active->string, NULL, NULL);
+					UI_PushWindow(ui_sys_active->string);
 			}
 		}
 	}

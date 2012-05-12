@@ -225,9 +225,9 @@ static void GAME_MP_Results (struct dbuffer *msg, int winner, int *numSpawned, i
 	cgi->LIST_AddString(&list, va(_("Team survivors:\t%i"), numAlive[team]));
 	cgi->UI_RegisterLinkedListText(TEXT_LIST2, list);
 	if (winner == team) {
-		cgi->UI_PushWindow("won", NULL, NULL);
+		cgi->UI_PushWindow("won");
 	} else {
-		cgi->UI_PushWindow("lost", NULL, NULL);
+		cgi->UI_PushWindow("lost");
 	}
 }
 

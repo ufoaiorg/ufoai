@@ -64,7 +64,7 @@ static void CL_Connect_f (void)
 	}
 
 	if (cgi->Cvar_GetInteger("mn_server_need_password")) {
-		cgi->UI_PushWindow("serverpassword", NULL, NULL);
+		cgi->UI_PushWindow("serverpassword");
 		return;
 	}
 

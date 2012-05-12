@@ -153,7 +153,7 @@ static void TR_TransferAliensFromMission_f (void)
 
 	if (baseList != NULL){
 		cgi->UI_RegisterOption(OPTION_BASELIST, baseList);
-		cgi->UI_PushWindow("popup_transferbaselist", NULL, NULL);
+		cgi->UI_PushWindow("popup_transferbaselist");
 	} else {
 		/** @todo send a message (?) */
 		Com_Printf("TR_TransferAliensFromMission_f: No base with alien containment available.\n");

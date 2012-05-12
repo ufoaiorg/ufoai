@@ -38,7 +38,7 @@ static uiTimer_t* timer;
 
 static void CL_BattlescapeRadarOpen_f (void)
 {
-	UI_PushWindow("radarwindow", NULL, NULL);
+	UI_PushWindow("radarwindow");
 }
 
 static void CL_BattlescapeRadarClose_f (void)

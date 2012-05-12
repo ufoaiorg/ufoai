@@ -244,7 +244,7 @@ void CL_DisplayPopupAircraft (aircraft_t* aircraft)
 	}
 
 	/* Display popup_aircraft menu */
-	cgi->UI_PushWindow("popup_aircraft", NULL, NULL);
+	cgi->UI_PushWindow("popup_aircraft");
 }
 
 /**
@@ -359,7 +359,7 @@ void CL_DisplayPopupInterceptMission (mission_t* mission)
 	CP_GameTimeStop();
 
 	/* Display the popup */
-	cgi->UI_PushWindow("popup_mission", NULL, NULL);
+	cgi->UI_PushWindow("popup_mission");
 }
 
 
@@ -441,7 +441,7 @@ void CL_DisplayPopupInterceptUFO (aircraft_t* ufo)
 	CP_GameTimeStop();
 
 	/* Display the popup */
-	cgi->UI_PushWindow("popup_intercept", NULL, NULL);
+	cgi->UI_PushWindow("popup_intercept");
 }
 
 /**
@@ -512,7 +512,7 @@ static void CL_PopupInterceptRClick_f (void)
 	AIR_AircraftSelect(aircraft);
 	MAP_ResetAction();
 	B_SelectBase(aircraft->homebase);
-	cgi->UI_PushWindow("aircraft", NULL, NULL);
+	cgi->UI_PushWindow("aircraft");
 }
 
 /**

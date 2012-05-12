@@ -960,7 +960,7 @@ static void B_MakeBaseMapShot_f (void)
 	Cvar_SetValue("r_isometric", 1);
 	/* we are interested in the second level only */
 	Cvar_SetValue("cl_worldlevel", 1);
-	cgi->UI_PushWindow("hud_nohud", NULL, NULL);
+	cgi->UI_PushWindow("hud_nohud");
 	/* hide any active console */
 	Cmd_ExecuteString("toggleconsole");
 	Cmd_ExecuteString("r_screenshot tga");

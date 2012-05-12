@@ -114,7 +114,7 @@ static void UR_DialogInit_f (void)
 		else
 			Cvar_Set("mn_uforecovery_actualufo", va(_("\nSecured landed %s\n"), UFO_AircraftToIDOnGeoscape(ufoCraft)));
 
-		cgi->UI_PushWindow("uforecovery", NULL, NULL);
+		cgi->UI_PushWindow("uforecovery");
 	}
 }
 

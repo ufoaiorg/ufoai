@@ -49,7 +49,7 @@ void UI_Popup (const char *title, const char *text)
 	Cvar_Set("ui_sys_popup_title", title);
 	UI_RegisterText(TEXT_POPUP_INFO, text);
 	if (!UI_IsWindowOnStack(POPUP_WINDOW_NAME))
-		UI_PushWindow(POPUP_WINDOW_NAME, NULL, NULL);
+		UI_PushWindow(POPUP_WINDOW_NAME);
 }
 
 /**
@@ -93,7 +93,7 @@ uiNode_t *UI_PopupList (const char *title, const char *headline, linkedList_t* e
 	}
 
 	if (!UI_IsWindowOnStack(window->name))
-		UI_PushWindow(window->name, NULL, NULL);
+		UI_PushWindow(window->name);
 	return listNode;
 }
 
@@ -190,5 +190,5 @@ void UI_PopupButton (const char *title, const char *text,
 	}
 
 	if (!UI_IsWindowOnStack(window->name))
-		UI_PushWindow(window->name, NULL, NULL);
+		UI_PushWindow(window->name);
 }

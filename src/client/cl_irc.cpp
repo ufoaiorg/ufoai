@@ -974,7 +974,7 @@ static void Irc_Client_CmdPrivmsg (const char *prefix, const char *params, const
 			/** get the ip and port into the menu */
 			UI_ExecuteConfunc("multiplayer_invite_server_info %s %s", serverIPAndPort, port);
 
-			UI_PushWindow("multiplayer_invite", NULL, NULL);
+			UI_PushWindow("multiplayer_invite");
 		} else if (!Irc_AppendToBuffer("<%s> %s", nick, trailing)) {
 			/* check whether this is no message to the channel - but to the user */
 			if (params && !Q_streq(params, irc_defaultChannel->string)) {
@@ -1123,7 +1123,7 @@ static qboolean Irc_Proto_ProcessServerMsg (const irc_server_msg_t *msg)
 		case ERR_ERRONEUSNICKNAME:
 		case ERR_NICKCOLLISION:
 			Irc_AppendToBuffer("%s : %s", msg->params, msg->trailing);
-			UI_PushWindow("irc_changename", NULL, NULL);
+			UI_PushWindow("irc_changename");
 			break;
 		/* error codes */
 		case ERR_NOSUCHSERVER:
@@ -1853,7 +1853,7 @@ static void Irc_Client_Invite_f (void)
 	}
 
 	if (!chan) {
-		UI_PushWindow("irc_popup", NULL, NULL);
+		UI_PushWindow("irc_popup");
 		return;
 	}
 
@@ -1953,7 +1953,7 @@ static void Irc_Input_Activate_f (void)
 	} else {
 		Com_DPrintf(DEBUG_CLIENT, "Irc_Input_Activate: Warning - IRC not connected\n");
 		UI_PopWindow(qfalse);
-		UI_PushWindow("irc_popup", NULL, NULL);
+		UI_PushWindow("irc_popup");
 		/* cancel any active editing */
 		return;
 	}

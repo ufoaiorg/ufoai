@@ -1141,7 +1141,7 @@ static void AIR_Move (aircraft_t* aircraft, int deltaTime)
 			MAP_SelectMission(aircraft->mission);
 			MAP_SetInterceptorAircraft(aircraft);
 			CP_GameTimeStop();
-			cgi->UI_PushWindow("popup_intercept_ready", NULL, NULL);
+			cgi->UI_PushWindow("popup_intercept_ready");
 			break;
 		case AIR_RETURNING:
 			/* aircraft entered in homebase */
@@ -1322,7 +1322,7 @@ qboolean AIR_SendAircraftToMission (aircraft_t *aircraft, mission_t *mission)
 	if (B_IsUnderAttack(aircraft->homebase) && AIR_IsAircraftInBase(aircraft)) {
 		aircraft->mission = mission;
 		mission->active = qtrue;
-		cgi->UI_PushWindow("popup_baseattack", NULL, NULL);
+		cgi->UI_PushWindow("popup_baseattack");
 		return qtrue;
 	}
 

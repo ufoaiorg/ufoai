@@ -208,7 +208,7 @@ void CP_BaseAttackStartMission (mission_t *mission)
 	cgi->UI_RegisterText(TEXT_POPUP, popupText);
 
 	CP_GameTimeStop();
-	cgi->UI_PushWindow("popup_baseattack", NULL, NULL);
+	cgi->UI_PushWindow("popup_baseattack");
 }
 
 

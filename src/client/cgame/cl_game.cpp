@@ -406,6 +406,11 @@ static int UI_DrawString_ (const char *fontID, align_t align, int x, int y, cons
 	return UI_DrawString(fontID, align, x, y, 0, 0, 0, c);
 }
 
+static void UI_PushWindow_ (const char *name)
+{
+	UI_PushWindow(name);
+}
+
 static const cgame_import_t* GAME_GetImportData (const cgameType_t *t)
 {
 	static cgame_import_t gameImport;
@@ -456,7 +461,7 @@ static const cgame_import_t* GAME_GetImportData (const cgameType_t *t)
 		cgi->UI_Popup = GAME_UI_Popup;
 		/*cgi->UI_PopupList = UI_PopupList;*/
 		cgi->UI_PopWindow = UI_PopWindow;
-		cgi->UI_PushWindow = UI_PushWindow;
+		cgi->UI_PushWindow = UI_PushWindow_;
 		cgi->UI_RegisterLinkedListText = UI_RegisterLinkedListText;
 		cgi->UI_TextScrollEnd = UI_TextScrollEnd;
 		cgi->UI_RegisterOption = UI_RegisterOption;

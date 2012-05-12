@@ -88,14 +88,14 @@ void INS_SelectInstallation (installation_t *installation)
 
 		switch (INS_GetType(installation)) {
 		case INSTALLATION_UFOYARD:
-			cgi->UI_PushWindow("popup_ufoyards", NULL, NULL);
+			cgi->UI_PushWindow("popup_ufoyards");
 			break;
 		case INSTALLATION_DEFENCE:
-			cgi->UI_PushWindow("basedefence", NULL, NULL);
+			cgi->UI_PushWindow("basedefence");
 			break;
 		case INSTALLATION_RADAR:
 		default:
-			cgi->UI_PushWindow("popup_installationstatus", NULL, NULL);
+			cgi->UI_PushWindow("popup_installationstatus");
 			break;
 		}
 	}

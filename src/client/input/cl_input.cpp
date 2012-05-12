@@ -422,7 +422,7 @@ static void CL_HudRadarDown_f (void)
 {
 	if (!CL_BattlescapeRunning())
 		return;
-	UI_PushWindow("radarmenu", NULL, NULL);
+	UI_PushWindow("radarmenu");
 }
 
 /**
