@@ -403,8 +403,7 @@ static void UFO_SearchAircraftTarget (const campaign_t* campaign, aircraft_t *uf
 				distance = dist;
 				if (UFO_SendPursuingAircraft(ufo, phalanxAircraft) && UFO_IsUFOSeenOnGeoscape(ufo)) {
 					/* stop time and notify */
-					MSO_CheckAddNewMessage(NT_UFO_ATTACKING, _("Notice"), va(_("A UFO is flying toward %s"), phalanxAircraft->name), qfalse,
-						MSG_STANDARD, NULL);
+					MSO_CheckAddNewMessage(NT_UFO_ATTACKING, _("Notice"), va(_("A UFO is flying toward %s"), phalanxAircraft->name));
 					/** @todo present a popup with possible orders like: return to base, attack the ufo, try to flee the rockets */
 				}
 			}
@@ -813,18 +812,16 @@ qboolean UFO_CampaignCheckEvents (void)
 				/* if UFO is aiming a PHALANX aircraft, warn player */
 				if (ufo->aircraftTarget) {
 					/* stop time and notify */
-					MSO_CheckAddNewMessage(NT_UFO_ATTACKING, _("Notice"), va(_("A UFO is flying toward %s"), ufo->aircraftTarget->name), qfalse,
-							MSG_STANDARD, NULL);
+					MSO_CheckAddNewMessage(NT_UFO_ATTACKING, _("Notice"), va(_("A UFO is flying toward %s"), ufo->aircraftTarget->name));
 					/** @todo present a popup with possible orders like: return to base, attack the ufo, try to flee the rockets
 					 * @sa UFO_SearchAircraftTarget */
 				} else {
-					MSO_CheckAddNewMessage(NT_UFO_SPOTTED, _("Notice"), va(_("Our radar detected a new UFO near %s"), detectedBy), qfalse,
-							MSG_UFOSPOTTED, NULL);
+					MSO_CheckAddNewMessage(NT_UFO_SPOTTED, _("Notice"), va(_("Our radar detected a new UFO near %s"), detectedBy), MSG_UFOSPOTTED);
 				}
 				newDetection = qtrue;
 				UFO_DetectNewUFO(ufo);
 			} else if (!detected) {
-				MSO_CheckAddNewMessage(NT_UFO_SIGNAL_LOST, _("Notice"), _("Our radar has lost the tracking on a UFO"), qfalse, MSG_UFOLOST, NULL);
+				MSO_CheckAddNewMessage(NT_UFO_SIGNAL_LOST, _("Notice"), _("Our radar has lost the tracking on a UFO"), MSG_UFOLOST);
 				/* Make this UFO undetected */
 				ufo->detected = qfalse;
 				/* Notify that ufo disappeared */

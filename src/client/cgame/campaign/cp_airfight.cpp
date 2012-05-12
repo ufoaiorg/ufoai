@@ -341,7 +341,7 @@ void AIRFIGHT_ExecuteActions (const campaign_t* campaign, aircraft_t* shooter, a
 				/* an undetected UFO within radar range and firing should become detected */
 				if (!shooter->detected && RADAR_CheckRadarSensored(shooter->pos)) {
 					/* stop time and notify */
-					MSO_CheckAddNewMessage(NT_UFO_ATTACKING,_("Notice"), va(_("A UFO is shooting at %s"), target->name), qfalse, MSG_STANDARD, NULL);
+					MSO_CheckAddNewMessage(NT_UFO_ATTACKING,_("Notice"), va(_("A UFO is shooting at %s"), target->name));
 					RADAR_AddDetectedUFOToEveryRadar(shooter);
 					UFO_DetectNewUFO(shooter);
 				}
@@ -361,7 +361,7 @@ void AIRFIGHT_ExecuteActions (const campaign_t* campaign, aircraft_t* shooter, a
 			shooter->aircraftTarget = NULL;		/* reset target */
 			CP_UFOProceedMission(campaign, shooter);
 		} else {
-			MS_AddNewMessage(_("Notice"), _("Our aircraft has no more ammo left - returning to home base now."), qfalse, MSG_STANDARD, NULL);
+			MS_AddNewMessage(_("Notice"), _("Our aircraft has no more ammo left - returning to home base now."));
 			AIR_AircraftReturnToBase(shooter);
 		}
 	}
@@ -441,7 +441,7 @@ void AIRFIGHT_ActionsAfterAirfight (const campaign_t* campaign, aircraft_t *shoo
 			CP_SpawnCrashSiteMission(aircraft);
 		} else {
 			Com_DPrintf(DEBUG_CLIENT, "AIRFIGHT_ActionsAfterAirfight: zone: %s (%i:%i:%i)\n", MAP_GetTerrainType(color), color[0], color[1], color[2]);
-			MS_AddNewMessage(_("Interception"), _("UFO interception successful -- UFO lost to sea."), qfalse, MSG_STANDARD, NULL);
+			MS_AddNewMessage(_("Interception"), _("UFO interception successful -- UFO lost to sea."));
 			CP_MissionIsOverByUFO(aircraft);
 		}
 	} else {
@@ -468,7 +468,7 @@ void AIRFIGHT_ActionsAfterAirfight (const campaign_t* campaign, aircraft_t *shoo
 		if (shooter)
 			CP_UFOProceedMission(campaign, shooter);
 
-		MS_AddNewMessage(_("Interception"), _("You've lost the battle"), qfalse, MSG_DEATH, NULL);
+		MS_AddNewMessage(_("Interception"), _("You've lost the battle"), MSG_DEATH);
 	}
 }
 

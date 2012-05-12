@@ -706,7 +706,7 @@ static void PR_ProductionIncrease_f (void)
 
 		/* messages */
 		Com_sprintf(cp_messageBuffer, sizeof(cp_messageBuffer), _("Production of %s started"), _(name));
-		MSO_CheckAddNewMessage(NT_PRODUCTION_STARTED, _("Production started"), cp_messageBuffer, qfalse, MSG_PRODUCTION, tech);
+		MSO_CheckAddNewMessage(NT_PRODUCTION_STARTED, _("Production started"), cp_messageBuffer, MSG_PRODUCTION, tech);
 	}
 
 	PR_ProductionInfo(base);

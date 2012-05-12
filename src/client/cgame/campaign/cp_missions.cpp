@@ -687,7 +687,7 @@ void CP_MissionAddToGeoscape (mission_t *mission, qboolean force)
 #endif
 
 	/* Notify the player */
-	MS_AddNewMessage(_("Notice"), CP_MissionGetMessage(mission), qfalse, CP_MissionGetMessageLevel(mission), NULL);
+	MS_AddNewMessage(_("Notice"), CP_MissionGetMessage(mission), CP_MissionGetMessageLevel(mission));
 
 	mission->onGeoscape = qtrue;
 	CP_GameTimeStop();
@@ -1035,7 +1035,7 @@ void CP_MissionEndActions (mission_t *mission, aircraft_t *aircraft, qboolean wo
 
 			Com_sprintf(cp_messageBuffer, sizeof(cp_messageBuffer), _("Defence of base: %s successful!"),
 					aircraft->homebase->name);
-			MS_AddNewMessage(_("Notice"), cp_messageBuffer, qfalse, MSG_STANDARD, NULL);
+			MS_AddNewMessage(_("Notice"), cp_messageBuffer);
 			CP_BaseAttackMissionIsFailure(mission);
 		} else
 			CP_BaseAttackMissionDestroyBase(mission);

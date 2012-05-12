@@ -66,7 +66,7 @@ static void B_Destroy_AntimaterStorage_f (void)
 		return;
 
 	if (prob < atof(Cmd_Argv(1))) {
-		MS_AddNewMessage(_("Notice"), va(_("%s has been destroyed by an antimatter storage breach."), base->name), qfalse, MSG_STANDARD, NULL);
+		MS_AddNewMessage(_("Notice"), va(_("%s has been destroyed by an antimatter storage breach."), base->name));
 		cgi->UI_PopWindow(qfalse);
 		B_Destroy(base);
 	}
@@ -197,7 +197,7 @@ static void B_SetBaseTitle_f (void)
 
 		Cvar_Set("mn_base_title", baseName);
 	} else {
-		MS_AddNewMessage(_("Notice"), _("You've reached the base limit."), qfalse, MSG_STANDARD, NULL);
+		MS_AddNewMessage(_("Notice"), _("You've reached the base limit."));
 		cgi->UI_PopWindow(qfalse);		/* remove the new base popup */
 	}
 }
@@ -230,7 +230,7 @@ static void B_BuildBase_f (void)
 			Com_sprintf(cp_messageBuffer, sizeof(cp_messageBuffer), _("A new base has been built: %s (nation: %s)"), mn_base_title->string, _(nation->name));
 		else
 			Com_sprintf(cp_messageBuffer, sizeof(cp_messageBuffer), _("A new base has been built: %s"), mn_base_title->string);
-		MS_AddNewMessage(_("Base built"), cp_messageBuffer, qfalse, MSG_CONSTRUCTION, NULL);
+		MS_AddNewMessage(_("Base built"), cp_messageBuffer, MSG_CONSTRUCTION);
 
 		/* First base */
 		if (ccs.campaignStats.basesBuilt == 1)

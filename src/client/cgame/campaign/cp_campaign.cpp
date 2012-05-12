@@ -913,7 +913,7 @@ void CP_UpdateCharacterStats (const base_t *base, const aircraft_t *aircraft)
 							Com_sprintf(cp_messageBuffer, sizeof(cp_messageBuffer), _("%s has been promoted to %s.\n"), chr->name, _(rank->name));
 						else
 							Com_sprintf(cp_messageBuffer, sizeof(cp_messageBuffer), _("%s has been awarded the posthumous rank of %s\nfor inspirational gallantry in the face of overwhelming odds.\n"), chr->name, _(rank->name));
-						MS_AddNewMessage(_("Soldier promoted"), cp_messageBuffer, qfalse, MSG_PROMOTION, NULL);
+						MS_AddNewMessage(_("Soldier promoted"), cp_messageBuffer, MSG_PROMOTION);
 						break;
 					}
 				}

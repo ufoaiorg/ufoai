@@ -107,7 +107,7 @@ static void AIM_AircraftStart_f (void)
 		/* reload its ammunition */
 		AII_ReloadAircraftWeapons(aircraft);
 	}
-	MS_AddNewMessage(_("Notice"), _("Aircraft started"), qfalse, MSG_STANDARD, NULL);
+	MS_AddNewMessage(_("Notice"), _("Aircraft started"));
 	aircraft->status = AIR_IDLE;
 
 	MAP_SelectAircraft(aircraft);

@@ -753,12 +753,12 @@ static void AM_DisplayResults (const autoMissionBattle_t *battle)
 	if (battle->results->won) {
 		cgi->UI_PushWindow("won");
 		if (battle->teamAccomplishment[AUTOMISSION_TEAM_TYPE_PLAYER] > battle->teamAccomplishment[AUTOMISSION_TEAM_TYPE_ALIEN])
-			MS_AddNewMessage(_("Notice"), _("You've won the battle"), qfalse, MSG_STANDARD, NULL);
+			MS_AddNewMessage(_("Notice"), _("You've won the battle"));
 		else
-			MS_AddNewMessage(_("Notice"), _("You've defeated the enemy, but did poorly, and many civialians were killed"), qfalse, MSG_STANDARD, NULL);
+			MS_AddNewMessage(_("Notice"), _("You've defeated the enemy, but did poorly, and many civilians were killed"));
 	} else {
 		cgi->UI_PushWindow("lost");
-		MS_AddNewMessage(_("Notice"), _("You've lost the battle"), qfalse, MSG_STANDARD, NULL);
+		MS_AddNewMessage(_("Notice"), _("You've lost the battle"));
 	}
 }
 
@@ -819,7 +819,7 @@ static void AM_AlienCollect (aircraft_t *aircraft, const autoMissionBattle_t *ba
 	}
 
 	if (collected > 0)
-		MS_AddNewMessage(_("Notice"), _("Collected alien bodies"), qfalse, MSG_STANDARD, NULL);
+		MS_AddNewMessage(_("Notice"), _("Collected alien bodies"));
 }
 
 /**

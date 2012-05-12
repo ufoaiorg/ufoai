@@ -119,7 +119,7 @@ void CP_BaseAttackMissionDestroyBase (mission_t *mission)
 	assert(base);
 	/* Base attack is over, alien won */
 	Com_sprintf(cp_messageBuffer, sizeof(cp_messageBuffer), _("Your base: %s has been destroyed! All employees killed and all equipment destroyed."), base->name);
-	MS_AddNewMessage(_("Notice"), cp_messageBuffer, qfalse, MSG_STANDARD, NULL);
+	MS_AddNewMessage(_("Notice"), cp_messageBuffer);
 	B_Destroy(base);
 	CP_GameTimeStop();
 
@@ -161,7 +161,7 @@ void CP_BaseAttackStartMission (mission_t *mission)
 		return;
 	}
 
-	MSO_CheckAddNewMessage(NT_BASE_ATTACK, _("Base attack"), va(_("Base '%s' is under attack!"), base->name), qfalse, MSG_BASEATTACK, NULL);
+	MSO_CheckAddNewMessage(NT_BASE_ATTACK, _("Base attack"), va(_("Base '%s' is under attack!"), base->name), MSG_BASEATTACK);
 
 	base->baseStatus = BASE_UNDER_ATTACK;
 	ccs.campaignStats.basesAttacked++;

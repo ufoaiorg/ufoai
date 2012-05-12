@@ -60,7 +60,7 @@ static void AM_Go_f (void)
 
 	if (mission->stage != STAGE_BASE_ATTACK) {
 		if (!mission->active) {
-			MS_AddNewMessage(_("Notice"), _("Your dropship is not near the landing zone"), qfalse, MSG_STANDARD, NULL);
+			MS_AddNewMessage(_("Notice"), _("Your dropship is not near the landing zone"));
 			return;
 		} else if (mission->mapDef->storyRelated) {
 			Com_DPrintf(DEBUG_CLIENT, "You have to play this mission, because it's story related\n");

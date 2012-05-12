@@ -314,7 +314,7 @@ void CL_EventAddMail_f (void)
 		eventMail->date = Mem_PoolStrDup(dateBuf, cp_campaignPool, 0);
 	}
 
-	m = MS_AddNewMessage("", va(_("You've got a new mail: %s"), _(eventMail->subject)), qfalse, MSG_EVENT, NULL);
+	m = MS_AddNewMessage("", va(_("You've got a new mail: %s"), _(eventMail->subject)), MSG_EVENT);
 	if (m)
 		m->eventMail = eventMail;
 	else

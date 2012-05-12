@@ -194,7 +194,7 @@ static void UR_DialogStartStore_f (void)
 
 	Com_sprintf(cp_messageBuffer, lengthof(cp_messageBuffer), _("Recovered %s from the battlefield. UFO is being transported to %s."),
 			UFO_AircraftToIDOnGeoscape(ufoRecovery.ufoTemplate), installation->name);
-	MS_AddNewMessage(_("UFO Recovery"), cp_messageBuffer, qfalse, MSG_STANDARD, NULL);
+	MS_AddNewMessage(_("UFO Recovery"), cp_messageBuffer);
 	date = ccs.date;
 	date.day += (int) RECOVERY_DELAY;
 
@@ -484,7 +484,7 @@ static void UR_DialogStartSell_f (void)
 	{
 		Com_sprintf(cp_messageBuffer, sizeof(cp_messageBuffer), _("Recovered %s from the battlefield. UFO sold to nation %s, gained %i credits."), UFO_AircraftToIDOnGeoscape(ufoRecovery.ufoTemplate), _(nation->name), price);
 	}
-	MS_AddNewMessage(_("UFO Recovery"), cp_messageBuffer, qfalse, MSG_STANDARD, NULL);
+	MS_AddNewMessage(_("UFO Recovery"), cp_messageBuffer);
 	CP_UpdateCredits(ccs.credits + price);
 
 	/* update nation happiness */

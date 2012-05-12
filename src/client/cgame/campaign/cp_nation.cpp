@@ -197,7 +197,7 @@ void NAT_SetHappiness (const float minhappiness, nation_t *nation, const float h
 		return;
 	}
 
-	MSO_CheckAddNewMessage(notifyType, _("Nation changed happiness"), cp_messageBuffer, qfalse, MSG_STANDARD, NULL);
+	MSO_CheckAddNewMessage(notifyType, _("Nation changed happiness"), cp_messageBuffer);
 }
 
 /**
@@ -804,7 +804,7 @@ void NAT_HandleBudget (const campaign_t *campaign)
 					newPilots, ngettext("pilot", "pilots", newPilots),
 					newWorkers, ngettext("worker", "workers", newWorkers),
 					_(nation->name), NAT_GetHappinessString(nation));
-		MS_AddNewMessageSound(_("Notice"), message, qfalse, MSG_STANDARD, NULL, qfalse);
+		MS_AddNewMessage(_("Notice"), message);
 	}
 
 	for (i = 0; i < MAX_EMPL; i++) {
@@ -821,7 +821,7 @@ void NAT_HandleBudget (const campaign_t *campaign)
 			continue;
 
 		Com_sprintf(message, sizeof(message), _("Paid %i credits to: %s"), cost, E_GetEmployeeString((employeeType_t)i, 1));
-		MS_AddNewMessageSound(_("Notice"), message, qfalse, MSG_STANDARD, NULL, qfalse);
+		MS_AddNewMessage(_("Notice"), message);
 	}
 
 	cost = 0;
@@ -834,7 +834,7 @@ void NAT_HandleBudget (const campaign_t *campaign)
 
 	if (cost != 0) {
 		Com_sprintf(message, sizeof(message), _("Paid %i credits for aircraft"), cost);
-		MS_AddNewMessageSound(_("Notice"), message, qfalse, MSG_STANDARD, NULL, qfalse);
+		MS_AddNewMessage(_("Notice"), message);
 	}
 
 	base = NULL;
@@ -843,13 +843,13 @@ void NAT_HandleBudget (const campaign_t *campaign)
 		totalExpenditure += cost;
 
 		Com_sprintf(message, sizeof(message), _("Paid %i credits for upkeep of %s"), cost, base->name);
-		MS_AddNewMessageSound(_("Notice"), message, qfalse, MSG_STANDARD, NULL, qfalse);
+		MS_AddNewMessage(_("Notice"), message);
 	}
 
 	cost = CP_GetSalaryAdministrative(salary);
 	Com_sprintf(message, sizeof(message), _("Paid %i credits for administrative overhead."), cost);
 	totalExpenditure += cost;
-	MS_AddNewMessageSound(_("Notice"), message, qfalse, MSG_STANDARD, NULL, qfalse);
+	MS_AddNewMessage(_("Notice"), message);
 
 	if (initialCredits < 0) {
 		const float interest = initialCredits * campaign->salaries.debtInterest;
@@ -857,7 +857,7 @@ void NAT_HandleBudget (const campaign_t *campaign)
 		cost = (int)ceil(interest);
 		Com_sprintf(message, sizeof(message), _("Paid %i credits in interest on your debt."), cost);
 		totalExpenditure += cost;
-		MS_AddNewMessageSound(_("Notice"), message, qfalse, MSG_STANDARD, NULL, qfalse);
+		MS_AddNewMessage(_("Notice"), message);
 	}
 	CP_UpdateCredits(ccs.credits - totalExpenditure + totalIncome);
 	CP_GameTimeStop();

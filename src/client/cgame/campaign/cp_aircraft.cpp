@@ -798,7 +798,7 @@ aircraft_t* AIR_NewAircraft (base_t *base, const aircraft_t *aircraftTemplate)
 	AIR_ResetAircraftTeam(aircraft);
 
 	Com_sprintf(cp_messageBuffer, sizeof(cp_messageBuffer), _("A new %s is ready in %s"), _(aircraft->tpl->name), base->name);
-	MS_AddNewMessage(_("Notice"), cp_messageBuffer, qfalse, MSG_STANDARD, NULL);
+	MS_AddNewMessage(_("Notice"), cp_messageBuffer);
 	Com_DPrintf(DEBUG_CLIENT, "Setting aircraft to pos: %.0f:%.0f\n", base->pos[0], base->pos[1]);
 	Vector2Copy(base->pos, aircraft->pos);
 	RADAR_Initialise(&aircraft->radar, RADAR_AIRCRAFTRANGE, RADAR_AIRCRAFTTRACKINGRANGE, 1.0f, qfalse);
@@ -1149,7 +1149,7 @@ static void AIR_Move (aircraft_t* aircraft, int deltaTime)
 			B_AircraftReturnedToHomeBase(aircraft);
 			Com_sprintf(cp_messageBuffer, lengthof(cp_messageBuffer),
 				_("Craft %s has returned to %s."), aircraft->name, aircraft->homebase->name);
-			MSO_CheckAddNewMessage(NT_AIRCRAFT_ARRIVEDHOME, _("Notice"), cp_messageBuffer, qfalse, MSG_STANDARD, NULL);
+			MSO_CheckAddNewMessage(NT_AIRCRAFT_ARRIVEDHOME, _("Notice"), cp_messageBuffer);
 			break;
 		case AIR_TRANSFER:
 		case AIR_UFO:
@@ -1190,7 +1190,7 @@ static void AIR_Refuel (aircraft_t *aircraft, int deltaTime)
 			if (!aircraft->notifySent[AIR_CANNOT_REFUEL]) {
 				Com_sprintf(cp_messageBuffer, lengthof(cp_messageBuffer),
 						_("Craft %s couldn't be completely refueled at %s. Not enough antimatter."), aircraft->name, aircraft->homebase->name);
-				MSO_CheckAddNewMessage(NT_AIRCRAFT_CANNOTREFUEL, _("Notice"), cp_messageBuffer, qfalse, MSG_STANDARD, NULL);
+				MSO_CheckAddNewMessage(NT_AIRCRAFT_CANNOTREFUEL, _("Notice"), cp_messageBuffer);
 				aircraft->notifySent[AIR_CANNOT_REFUEL] = qtrue;
 			}
 		}
@@ -1206,7 +1206,7 @@ static void AIR_Refuel (aircraft_t *aircraft, int deltaTime)
 		aircraft->status = AIR_HOME;
 		Com_sprintf(cp_messageBuffer, lengthof(cp_messageBuffer),
 				_("Craft %s has refueled at %s."), aircraft->name, aircraft->homebase->name);
-		MSO_CheckAddNewMessage(NT_AIRCRAFT_REFUELED, _("Notice"), cp_messageBuffer, qfalse, MSG_STANDARD, NULL);
+		MSO_CheckAddNewMessage(NT_AIRCRAFT_REFUELED, _("Notice"), cp_messageBuffer);
 		aircraft->notifySent[AIR_CANNOT_REFUEL] = qfalse;
 	}
 
@@ -1249,7 +1249,7 @@ void AIR_CampaignRun (const campaign_t* campaign, int dt, qboolean updateRadarOv
 		if (aircraft->status != AIR_RETURNING && AIR_IsAircraftOnGeoscape(aircraft) &&
 			!AIR_AircraftHasEnoughFuel(aircraft, aircraft->pos)) {
 			/** @todo check if aircraft can go to a closer base with free space */
-			MS_AddNewMessage(_("Notice"), va(_("Craft %s is low on fuel and must return to base."), aircraft->name), qfalse, MSG_STANDARD, NULL);
+			MS_AddNewMessage(_("Notice"), va(_("Craft %s is low on fuel and must return to base."), aircraft->name));
 			AIR_AircraftReturnToBase(aircraft);
 		}
 
@@ -1327,7 +1327,7 @@ qboolean AIR_SendAircraftToMission (aircraft_t *aircraft, mission_t *mission)
 	}
 
 	if (!AIR_AircraftHasEnoughFuel(aircraft, mission->pos)) {
-		MS_AddNewMessage(_("Notice"), _("Insufficient fuel."), qfalse, MSG_STANDARD, NULL);
+		MS_AddNewMessage(_("Notice"), _("Insufficient fuel."));
 		return qfalse;
 	}
 
@@ -2048,7 +2048,7 @@ qboolean AIR_SendAircraftPursuingUFO (aircraft_t* aircraft, aircraft_t* ufo)
 			Com_DPrintf(DEBUG_CLIENT, "AIR_SendAircraftPursuingUFO: not enough fuel to anticipate target movement: go directly to target position\n");
 			Vector2Copy(ufo->pos, dest);
 		} else {
-			MS_AddNewMessage(_("Notice"), va(_("Craft %s has not enough fuel to intercept UFO: fly back to %s."), aircraft->name, aircraft->homebase->name), qfalse, MSG_STANDARD, NULL);
+			MS_AddNewMessage(_("Notice"), va(_("Craft %s has not enough fuel to intercept UFO: fly back to %s."), aircraft->name, aircraft->homebase->name));
 			AIR_AircraftReturnToBase(aircraft);
 			return qfalse;
 		}

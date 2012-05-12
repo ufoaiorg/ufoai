@@ -65,8 +65,7 @@ typedef struct message_s {
 	int lineUsed;		/**< used my the node to cache the number of lines need (often =1) */
 } message_t;
 
-message_t *MS_AddNewMessage(const char *title, const char *text, qboolean popup, messageType_t type, struct technology_s *pedia);
-message_t *MS_AddNewMessageSound(const char *title, const char *text, qboolean popup, messageType_t type, struct technology_s *pedia, qboolean playSound);
+message_t *MS_AddNewMessage(const char *title, const char *text, messageType_t type = MSG_STANDARD, struct technology_s *pedia = NULL, qboolean popup = qfalse, qboolean playSound = qtrue);
 void MS_MessageInit(void);
 
 extern char cp_messageBuffer[MAX_MESSAGE_TEXT];

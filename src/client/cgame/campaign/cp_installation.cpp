@@ -142,7 +142,7 @@ void INS_DestroyInstallation (installation_t *installation)
 	CP_MissionNotifyInstallationDestroyed(installation);
 
 	Com_sprintf(cp_messageBuffer, sizeof(cp_messageBuffer), _("Installation %s was destroyed."), installation->name);
-	MSO_CheckAddNewMessage(NT_INSTALLATION_DESTROY, _("Installation destroyed"), cp_messageBuffer, qfalse, MSG_CONSTRUCTION, NULL);
+	MSO_CheckAddNewMessage(NT_INSTALLATION_DESTROY, _("Installation destroyed"), cp_messageBuffer, MSG_CONSTRUCTION);
 
 	LIST_Remove(&ccs.installations, installation);
 	Cvar_Set("mn_installation_count", va("%i", INS_GetCount()));
@@ -315,7 +315,7 @@ void INS_UpdateInstallationData (void)
 			INS_FinishInstallation(installation);
 
 			Com_sprintf(cp_messageBuffer, lengthof(cp_messageBuffer), _("Construction of installation %s finished."), installation->name);
-			MSO_CheckAddNewMessage(NT_INSTALLATION_BUILDFINISH, _("Installation finished"), cp_messageBuffer, qfalse, MSG_CONSTRUCTION, NULL);
+			MSO_CheckAddNewMessage(NT_INSTALLATION_BUILDFINISH, _("Installation finished"), cp_messageBuffer, MSG_CONSTRUCTION);
 		}
 	}
 }

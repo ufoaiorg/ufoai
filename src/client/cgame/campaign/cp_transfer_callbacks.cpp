@@ -189,7 +189,7 @@ static void TR_TransferStart_f (void)
 	LIST_Delete(&td.aircraft);
 
 	Com_sprintf(message, sizeof(message), _("Transport mission started, cargo is being transported to %s"), td.transferBase->name);
-	MSO_CheckAddNewMessage(NT_TRANSFER_STARTED, _("Transport mission"), message, qfalse, MSG_TRANSFERFINISHED, NULL);
+	MSO_CheckAddNewMessage(NT_TRANSFER_STARTED, _("Transport mission"), message, MSG_TRANSFERFINISHED);
 	cgi->UI_PopWindow(qfalse);
 }
 

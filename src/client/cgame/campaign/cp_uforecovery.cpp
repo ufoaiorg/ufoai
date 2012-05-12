@@ -56,10 +56,10 @@ void UR_ProcessActive (void)
 		Com_sprintf(cp_messageBuffer, sizeof(cp_messageBuffer), _("%s was transfered to %s."), UFO_TypeToName(ufo->ufoTemplate->ufotype), ufo->installation->name);
 		switch (ufo->status) {
 		case SUFO_RECOVERED:
-			MSO_CheckAddNewMessage(NT_TRANSFER_UFORECOVERY_FINISHED, _("UFO Recovered"), cp_messageBuffer, qfalse, MSG_TRANSFERFINISHED, NULL);
+			MSO_CheckAddNewMessage(NT_TRANSFER_UFORECOVERY_FINISHED, _("UFO Recovered"), cp_messageBuffer, MSG_TRANSFERFINISHED);
 			break;
 		case SUFO_TRANSFERED:
-			MSO_CheckAddNewMessage(NT_TRANSFER_UFORECOVERY_FINISHED, _("UFO Transfered"), cp_messageBuffer, qfalse, MSG_TRANSFERFINISHED, NULL);
+			MSO_CheckAddNewMessage(NT_TRANSFER_UFORECOVERY_FINISHED, _("UFO Transfered"), cp_messageBuffer, MSG_TRANSFERFINISHED);
 			break;
 		default:
 			break;
@@ -259,7 +259,7 @@ qboolean US_TransferUFO (storedUFO_t *ufo, installation_t *ufoyard)
 	ufoyard->ufoCapacity.cur++;
 
 	Com_sprintf(cp_messageBuffer, sizeof(cp_messageBuffer), _("UFO transport started, cargo is being transported to %s"), ufoyard->name);
-	MSO_CheckAddNewMessage(NT_TRANSFER_STARTED, _("UFO transport"), cp_messageBuffer, qfalse, MSG_TRANSFERFINISHED, NULL);
+	MSO_CheckAddNewMessage(NT_TRANSFER_STARTED, _("UFO transport"), cp_messageBuffer, MSG_TRANSFERFINISHED);
 
 	return qtrue;
 }

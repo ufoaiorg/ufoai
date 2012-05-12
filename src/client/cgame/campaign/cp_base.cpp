@@ -2234,7 +2234,7 @@ void B_UpdateBaseData (void)
 			if (B_CheckBuildingConstruction(building)) {
 				Com_sprintf(cp_messageBuffer, lengthof(cp_messageBuffer),
 						_("Construction of %s building finished in %s."), _(building->name), base->name);
-				MS_AddNewMessage(_("Building finished"), cp_messageBuffer, qfalse, MSG_CONSTRUCTION, NULL);
+				MS_AddNewMessage(_("Building finished"), cp_messageBuffer, MSG_CONSTRUCTION);
 			}
 		}
 	}
@@ -2298,12 +2298,12 @@ static void B_SellOrAddItems (aircraft_t *aircraft)
 	if (numitems > 0) {
 		Com_sprintf(cp_messageBuffer, lengthof(cp_messageBuffer), _("By selling %s you gathered %i credits."),
 			va(ngettext("%i collected item", "%i collected items", numitems), numitems), gained);
-		MS_AddNewMessage(_("Notice"), cp_messageBuffer, qfalse, MSG_STANDARD, NULL);
+		MS_AddNewMessage(_("Notice"), cp_messageBuffer);
 	}
 	if (forcedsold > 0) {
 		Com_sprintf(cp_messageBuffer, lengthof(cp_messageBuffer), _("Not enough storage space in %s. %s"),
 			base->name, va(ngettext("%i item was sold for %i credits.", "%i items were sold for %i credits.", forcedsold), forcedsold, forcedgained));
-		MS_AddNewMessage(_("Notice"), cp_messageBuffer, qfalse, MSG_STANDARD, NULL);
+		MS_AddNewMessage(_("Notice"), cp_messageBuffer);
 	}
 
 	/* ship no longer has cargo aboard */
@@ -2932,7 +2932,7 @@ void B_ManageAntimatter (base_t *base, int amount, qboolean add)
 		Com_sprintf(cp_messageBuffer, lengthof(cp_messageBuffer),
 			_("%s does not have Antimatter Storage Facility. %i units of antimatter got removed."),
 			base->name, amount);
-		MS_AddNewMessage(_("Notice"), cp_messageBuffer, qfalse, MSG_STANDARD, NULL);
+		MS_AddNewMessage(_("Notice"), cp_messageBuffer);
 		return;
 	}
 

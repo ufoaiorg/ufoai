@@ -74,7 +74,7 @@ void RS_ResearchFinish (technology_t* tech)
 	/* send a new message and add it to the mailclient */
 	if (tech->mailSent < MAILSENT_FINISHED && tech->type != RS_LOGIC) {
 		Com_sprintf(cp_messageBuffer, sizeof(cp_messageBuffer), _("A research project has been completed: %s\n"), _(tech->name));
-		MSO_CheckAddNewMessage( NT_RESEARCH_COMPLETED, _("Research finished"), cp_messageBuffer, qfalse, MSG_RESEARCH_FINISHED, tech);
+		MSO_CheckAddNewMessage( NT_RESEARCH_COMPLETED, _("Research finished"), cp_messageBuffer, MSG_RESEARCH_FINISHED, tech);
 		tech->mailSent = MAILSENT_FINISHED;
 	}
 }
@@ -120,7 +120,7 @@ void RS_MarkOneResearchable (technology_t* tech)
 
 	if (tech->mailSent < MAILSENT_PROPOSAL) {
 		Com_sprintf(cp_messageBuffer, sizeof(cp_messageBuffer), _("New research proposal: %s\n"), _(tech->name));
-		MSO_CheckAddNewMessage(NT_RESEARCH_PROPOSED, _("Unknown Technology researchable"), cp_messageBuffer, qfalse, MSG_RESEARCH_PROPOSAL, tech);
+		MSO_CheckAddNewMessage(NT_RESEARCH_PROPOSED, _("Unknown Technology researchable"), cp_messageBuffer, MSG_RESEARCH_PROPOSAL, tech);
 		tech->mailSent = MAILSENT_PROPOSAL;
 	}
 
@@ -298,7 +298,7 @@ void RS_MarkCollected (technology_t* tech)
 	if (tech->mailSent < MAILSENT_PROPOSAL) {
 		if (tech->statusResearch < RS_FINISH) {
 			Com_sprintf(cp_messageBuffer, sizeof(cp_messageBuffer), _("New research proposal: %s\n"), _(tech->name));
-			MSO_CheckAddNewMessage(NT_RESEARCH_PROPOSED, _("Unknown Technology found"), cp_messageBuffer, qfalse, MSG_RESEARCH_PROPOSAL, tech);
+			MSO_CheckAddNewMessage(NT_RESEARCH_PROPOSED, _("Unknown Technology found"), cp_messageBuffer, MSG_RESEARCH_PROPOSAL, tech);
 		}
 		tech->mailSent = MAILSENT_PROPOSAL;
 	}
@@ -783,7 +783,7 @@ int RS_ResearchRun (void)
 
 		if (!RS_RequirementsMet(&tech->requireAND, &tech->requireOR, tech->base)) {
 			Com_sprintf(cp_messageBuffer, sizeof(cp_messageBuffer), _("Research prerequisites of %s do not met at %s. Research halted!"), _(tech->name), tech->base->name);
-			MSO_CheckAddNewMessage(NT_RESEARCH_HALTED, _("Research halted"), cp_messageBuffer, qfalse, MSG_RESEARCH_HALTED, NULL);
+			MSO_CheckAddNewMessage(NT_RESEARCH_HALTED, _("Research halted"), cp_messageBuffer, MSG_RESEARCH_HALTED);
 
 			RS_StopResearch(tech);
 			continue;

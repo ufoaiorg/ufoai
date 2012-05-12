@@ -59,25 +59,7 @@ static void MS_TimestampedText (char *text, message_t *message, size_t textsize)
  * @sa CL_EventAddMail_f
  * @note this method forwards to @c MS_AddNewMessageSound with @code playSound = qtrue @endcode
  */
-message_t *MS_AddNewMessage (const char *title, const char *text, qboolean popup, messageType_t type, technology_t *pedia)
-{
-	return MS_AddNewMessageSound(title, text, popup, type, pedia, qtrue);
-}
-
-/**
- * @brief Adds a new message to message stack
- * @note These are the messages that are displayed at geoscape
- * @param[in] title Already translated message/mail title
- * @param[in] text Already translated message/mail body
- * @param[in] popup Show this as a popup, too?
- * @param[in] type The message type
- * @param[in] pedia Pointer to technology (only if needed)
- * @param[in] playSound Play notification sound?
- * @return message_t pointer
- * @sa UP_OpenMail_f
- * @sa CL_EventAddMail_f
- */
-message_t *MS_AddNewMessageSound (const char *title, const char *text, qboolean popup, messageType_t type, technology_t *pedia, qboolean playSound)
+message_t *MS_AddNewMessage (const char *title, const char *text, messageType_t type, technology_t *pedia, qboolean popup, qboolean playSound)
 {
 	const char *sound = NULL;
 
@@ -267,7 +249,7 @@ qboolean MS_LoadXML (xmlNode_t *p)
 			/** No tech found drop message. */
 			continue;
 		}
-		mess = MS_AddNewMessageSound(title, text, qfalse, (messageType_t)mtype, tech, qfalse);
+		mess = MS_AddNewMessage(title, text, (messageType_t)mtype, tech);
 		mess->eventMail = mail;
 		XML_GetDate(sn, SAVE_MESSAGES_DATE, &mess->date.day, &mess->date.sec);
 		/* redo timestamp text after setting date */

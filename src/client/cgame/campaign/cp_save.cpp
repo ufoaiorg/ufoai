@@ -602,7 +602,7 @@ static void SAV_GameQuickSave_f (void)
 	if (!SAV_QuickSave())
 		Com_Printf("Could not save the campaign\n");
 	else
-		MS_AddNewMessage(_("Quicksave"), _("Campaign was successfully saved."), qfalse, MSG_INFO, NULL);
+		MS_AddNewMessage(_("Quicksave"), _("Campaign was successfully saved."), MSG_INFO);
 }
 
 /**
@@ -622,7 +622,7 @@ static void SAV_GameQuickLoad_f (void)
 		Cbuf_Execute(); /* wipe outstanding campaign commands */
 		CP_Popup(_("Error"), "%s\n%s", _("Error loading game."), error ? error : "");
 	} else {
-		MS_AddNewMessage(_("Campaign loaded"), _("Quicksave campaign was successfully loaded."), qfalse, MSG_INFO, NULL);
+		MS_AddNewMessage(_("Campaign loaded"), _("Quicksave campaign was successfully loaded."), MSG_INFO);
 		CP_CheckBaseAttacks();
 	}
 }

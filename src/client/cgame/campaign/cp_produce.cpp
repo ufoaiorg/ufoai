@@ -408,7 +408,7 @@ void PR_QueueNext (base_t *base)
 
 	if (queue->numItems == 0) {
 		Com_sprintf(cp_messageBuffer, sizeof(cp_messageBuffer), _("Production queue for %s is empty"), base->name);
-		MSO_CheckAddNewMessage(NT_PRODUCTION_QUEUE_EMPTY, _("Production queue empty"), cp_messageBuffer, qfalse, MSG_PRODUCTION, NULL);
+		MSO_CheckAddNewMessage(NT_PRODUCTION_QUEUE_EMPTY, _("Production queue empty"), cp_messageBuffer, MSG_PRODUCTION);
 	}
 }
 
@@ -492,7 +492,7 @@ static qboolean PR_CheckFrame (base_t *base, production_t *prod)
 		if (PR_HasInsufficientCredits(od)) {
 			if (!prod->creditMessage) {
 				Com_sprintf(cp_messageBuffer, sizeof(cp_messageBuffer), _("Not enough credits to finish production in %s."), base->name);
-				MSO_CheckAddNewMessage(NT_PRODUCTION_FAILED, _("Notice"), cp_messageBuffer, qfalse, MSG_STANDARD, NULL);
+				MSO_CheckAddNewMessage(NT_PRODUCTION_FAILED, _("Notice"), cp_messageBuffer);
 				prod->creditMessage = qtrue;
 			}
 			state = qfalse;
@@ -501,7 +501,7 @@ static qboolean PR_CheckFrame (base_t *base, production_t *prod)
 		else if (CAP_GetFreeCapacity(base, CAP_ITEMS) < od->size) {
 			if (!prod->spaceMessage) {
 				Com_sprintf(cp_messageBuffer, sizeof(cp_messageBuffer), _("Not enough free storage space in %s. Production postponed."), base->name);
-				MSO_CheckAddNewMessage(NT_PRODUCTION_FAILED, _("Notice"), cp_messageBuffer, qfalse, MSG_STANDARD, NULL);
+				MSO_CheckAddNewMessage(NT_PRODUCTION_FAILED, _("Notice"), cp_messageBuffer);
 				prod->spaceMessage = qtrue;
 			}
 			state = qfalse;
@@ -512,7 +512,7 @@ static qboolean PR_CheckFrame (base_t *base, production_t *prod)
 		if (PR_HasInsufficientCredits(aircraft)) {
 			if (!prod->creditMessage) {
 				Com_sprintf(cp_messageBuffer, sizeof(cp_messageBuffer), _("Not enough credits to finish production in %s."), base->name);
-				MSO_CheckAddNewMessage(NT_PRODUCTION_FAILED, _("Notice"), cp_messageBuffer, qfalse, MSG_STANDARD, NULL);
+				MSO_CheckAddNewMessage(NT_PRODUCTION_FAILED, _("Notice"), cp_messageBuffer);
 				prod->creditMessage = qtrue;
 			}
 			state = qfalse;
@@ -521,7 +521,7 @@ static qboolean PR_CheckFrame (base_t *base, production_t *prod)
 		else if (AIR_CalculateHangarStorage(aircraft, base, 0) <= 0) {
 			if (!prod->spaceMessage) {
 				Com_sprintf(cp_messageBuffer, sizeof(cp_messageBuffer), _("Not enough free hangar space in %s. Production postponed."), base->name);
-				MSO_CheckAddNewMessage(NT_PRODUCTION_FAILED, _("Notice"), cp_messageBuffer, qfalse, MSG_STANDARD, NULL);
+				MSO_CheckAddNewMessage(NT_PRODUCTION_FAILED, _("Notice"), cp_messageBuffer);
 				prod->spaceMessage = qtrue;
 			}
 			state = qfalse;
@@ -532,7 +532,7 @@ static qboolean PR_CheckFrame (base_t *base, production_t *prod)
 		if (CAP_GetFreeCapacity(base, CAP_ITEMS) < PR_DisassembleItem(base, ufo->comp, ufo->condition, qtrue)) {
 			if (!prod->spaceMessage) {
 				Com_sprintf(cp_messageBuffer, sizeof(cp_messageBuffer), _("Not enough free storage space in %s. Disassembling postponed."), base->name);
-				MSO_CheckAddNewMessage(NT_PRODUCTION_FAILED, _("Notice"), cp_messageBuffer, qfalse, MSG_STANDARD, NULL);
+				MSO_CheckAddNewMessage(NT_PRODUCTION_FAILED, _("Notice"), cp_messageBuffer);
 				prod->spaceMessage = qtrue;
 			}
 			state = qfalse;
@@ -577,7 +577,7 @@ static void PR_ProductionFrame (base_t* base, production_t *prod)
 		/* queue the next production */
 		if (prod->amount <= 0) {
 			Com_sprintf(cp_messageBuffer, sizeof(cp_messageBuffer), _("The production of %s at %s has finished."), name, base->name);
-			MSO_CheckAddNewMessage(NT_PRODUCTION_FINISHED, _("Production finished"), cp_messageBuffer, qfalse, MSG_PRODUCTION, tech);
+			MSO_CheckAddNewMessage(NT_PRODUCTION_FINISHED, _("Production finished"), cp_messageBuffer, MSG_PRODUCTION, tech);
 			PR_QueueNext(base);
 		}
 	}
@@ -601,7 +601,7 @@ static void PR_DisassemblingFrame (base_t* base, production_t* prod)
 
 		Com_sprintf(cp_messageBuffer, sizeof(cp_messageBuffer), _("The disassembling of %s at %s has finished."),
 				UFO_TypeToName(ufo->ufoTemplate->ufotype), base->name);
-		MSO_CheckAddNewMessage(NT_PRODUCTION_FINISHED, _("Production finished"), cp_messageBuffer, qfalse, MSG_PRODUCTION, ufo->ufoTemplate->tech);
+		MSO_CheckAddNewMessage(NT_PRODUCTION_FINISHED, _("Production finished"), cp_messageBuffer, MSG_PRODUCTION, ufo->ufoTemplate->tech);
 
 		/* Removing UFO will remove the production too */
 		US_RemoveStoredUFO(ufo);

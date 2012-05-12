@@ -346,7 +346,7 @@ static void AII_UpdateOneInstallationDelay (base_t* base, installation_t* instal
 				Com_sprintf(cp_messageBuffer, lengthof(cp_messageBuffer), _("%s was successfully installed at %s."),
 						_(slot->item->name), base->name);
 			}
-			MSO_CheckAddNewMessage(NT_INSTALLATION_INSTALLED, _("Notice"), cp_messageBuffer, qfalse, MSG_STANDARD, NULL);
+			MSO_CheckAddNewMessage(NT_INSTALLATION_INSTALLED, _("Notice"), cp_messageBuffer);
 		}
 	} else if (slot->installationTime < 0) {
 		const objDef_t *olditem;
@@ -367,14 +367,12 @@ static void AII_UpdateOneInstallationDelay (base_t* base, installation_t* instal
 					Com_sprintf(cp_messageBuffer, lengthof(cp_messageBuffer),
 							_("%s was successfully removed from aircraft %s at %s."),
 							_(olditem->name), aircraft->name, base->name);
-					MSO_CheckAddNewMessage(NT_INSTALLATION_REMOVED, _("Notice"), cp_messageBuffer, qfalse,
-							MSG_STANDARD, NULL);
+					MSO_CheckAddNewMessage(NT_INSTALLATION_REMOVED, _("Notice"), cp_messageBuffer);
 				} else {
 					Com_sprintf(cp_messageBuffer, lengthof(cp_messageBuffer),
 							_ ("%s was successfully removed, starting installation of %s into aircraft %s at %s"),
 							_(olditem->name), _(slot->item->name), aircraft->name, base->name);
-					MSO_CheckAddNewMessage(NT_INSTALLATION_REPLACE, _("Notice"), cp_messageBuffer, qfalse,
-							MSG_STANDARD, NULL);
+					MSO_CheckAddNewMessage(NT_INSTALLATION_REPLACE, _("Notice"), cp_messageBuffer);
 				}
 			} else if (!slot->item) {
 				if (installation) {
@@ -385,7 +383,7 @@ static void AII_UpdateOneInstallationDelay (base_t* base, installation_t* instal
 					Com_sprintf(cp_messageBuffer, lengthof(cp_messageBuffer), _("%s was successfully removed from %s."),
 							_(olditem->name), base->name);
 				}
-				MSO_CheckAddNewMessage(NT_INSTALLATION_REMOVED, _("Notice"), cp_messageBuffer, qfalse, MSG_STANDARD, NULL);
+				MSO_CheckAddNewMessage(NT_INSTALLATION_REMOVED, _("Notice"), cp_messageBuffer);
 			}
 		}
 	}

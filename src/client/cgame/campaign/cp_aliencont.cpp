@@ -156,7 +156,7 @@ void AL_AddAliens (aircraft_t *aircraft)
 		return;
 
 	if (!B_GetBuildingStatus(toBase, B_ALIEN_CONTAINMENT)) {
-		MS_AddNewMessage(_("Notice"), _("You cannot process aliens yet. Alien Containment not ready in this base."), qfalse, MSG_STANDARD, NULL);
+		MS_AddNewMessage(_("Notice"), _("You cannot process aliens yet. Alien Containment not ready in this base."));
 		return;
 	}
 
@@ -182,7 +182,7 @@ void AL_AddAliens (aircraft_t *aircraft)
 					ac->amountDead += cargo[i].amountAlive;
 					/* only once */
 					if (!messageAlreadySet) {
-						MS_AddNewMessage(_("Notice"), _("You can't hold live aliens yet. Aliens died."), qfalse, MSG_DEATH, NULL);
+						MS_AddNewMessage(_("Notice"), _("You can't hold live aliens yet. Aliens died."), MSG_DEATH);
 						messageAlreadySet = qtrue;
 					}
 					if (!ccs.breathingMailSent) {
@@ -201,7 +201,7 @@ void AL_AddAliens (aircraft_t *aircraft)
 							 * Display a message only when first one is killed */
 							if (!limit) {
 								CAP_SetCurrent(toBase, CAP_ALIENS, CAP_GetMax(toBase, CAP_ALIENS));
-								MS_AddNewMessage(_("Notice"), _("You don't have enough space in Alien Containment. Some aliens got killed."), qfalse, MSG_STANDARD, NULL);
+								MS_AddNewMessage(_("Notice"), _("You don't have enough space in Alien Containment. Some aliens got killed."));
 								limit = qtrue;
 							}
 							/* Just kill aliens which don't fit the limit. */
@@ -210,7 +210,7 @@ void AL_AddAliens (aircraft_t *aircraft)
 					}
 					/* only once */
 					if (!messageAlreadySet) {
-						MS_AddNewMessage(_("Notice"), _("You've captured new aliens."), qfalse, MSG_STANDARD, NULL);
+						MS_AddNewMessage(_("Notice"), _("You've captured new aliens."));
 						messageAlreadySet = qtrue;
 					}
 				}
