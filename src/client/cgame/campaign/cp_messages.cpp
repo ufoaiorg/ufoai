@@ -151,7 +151,7 @@ message_t *MS_AddNewMessageSound (const char *title, const char *text, qboolean 
 	}
 
 	if (playSound)
-		S_StartLocalSample(sound, SND_VOLUME_DEFAULT);
+		cgi->S_StartLocalSample(sound, SND_VOLUME_DEFAULT);
 
 	return mess;
 }
@@ -224,7 +224,7 @@ qboolean MS_LoadXML (xmlNode_t *p)
 	/* we have to set this a little bit higher here, otherwise the samples that are played when adding
 	 * a message to the stack would all played a few milliseconds after each other - that doesn't sound
 	 * nice */
-	S_SetSampleRepeatRate(500);
+	cgi->S_SetSampleRepeatRate(500);
 
 	Com_RegisterConstList(saveMessageConstants);
 	for (sn = XML_GetNode(n, SAVE_MESSAGES_MESSAGE), i = 0; sn; sn = XML_GetNextNode(sn, n, SAVE_MESSAGES_MESSAGE), i++) {
@@ -286,7 +286,7 @@ qboolean MS_LoadXML (xmlNode_t *p)
 	Com_UnregisterConstList(saveMessageConstants);
 
 	/* reset the sample repeat rate */
-	S_SetSampleRepeatRate(0);
+	cgi->S_SetSampleRepeatRate(0);
 
 	return qtrue;
 }

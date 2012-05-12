@@ -27,8 +27,8 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 
 #include "../../cl_shared.h"
 #include "../../cl_inventory.h"
-#include "../../ui/ui_main.h"
-#include "../../ui/ui_sprite.h"
+#include "../../ui/ui_textids.h"
+#include "../../ui/node/ui_node_option.h" /* OPTIONEXTRADATA */
 #include "../../../shared/parse.h"
 #include "cp_campaign.h"
 #include "cp_mapfightequip.h"
@@ -102,11 +102,11 @@ static void UP_ChangeDisplay (int newDisplay)
 	Cvar_SetValue("mn_uppreavailable", 0);
 
 	/* make sure, that we leave the mail header space */
-	UI_ResetData(TEXT_UFOPEDIA_MAILHEADER);
-	UI_ResetData(TEXT_UFOPEDIA_MAIL);
-	UI_ResetData(TEXT_UFOPEDIA_REQUIREMENT);
-	UI_ResetData(TEXT_ITEMDESCRIPTION);
-	UI_ResetData(TEXT_UFOPEDIA);
+	cgi->UI_ResetData(TEXT_UFOPEDIA_MAILHEADER);
+	cgi->UI_ResetData(TEXT_UFOPEDIA_MAIL);
+	cgi->UI_ResetData(TEXT_UFOPEDIA_REQUIREMENT);
+	cgi->UI_ResetData(TEXT_ITEMDESCRIPTION);
+	cgi->UI_ResetData(TEXT_UFOPEDIA);
 
 	switch (upDisplay) {
 	case UFOPEDIA_CHAPTERS:
@@ -115,7 +115,7 @@ static void UP_ChangeDisplay (int newDisplay)
 		Cvar_Set("mn_upmodel_top", "");
 		Cvar_Set("mn_upmodel_bottom", "");
 		Cvar_Set("mn_upimage_top", "base/empty");
-		UI_ExecuteConfunc("mn_up_empty");
+		cgi->UI_ExecuteConfunc("mn_up_empty");
 		Cvar_Set("mn_uptitle", _("UFOpaedia"));
 		break;
 	case UFOPEDIA_INDEX:
@@ -124,7 +124,7 @@ static void UP_ChangeDisplay (int newDisplay)
 		Cvar_Set("mn_upimage_top", "base/empty");
 		/* no break here */
 	case UFOPEDIA_ARTICLE:
-		UI_ExecuteConfunc("mn_up_article");
+		cgi->UI_ExecuteConfunc("mn_up_article");
 		break;
 	}
 	Cvar_SetValue("mn_updisplay", upDisplay);
@@ -212,7 +212,7 @@ static void UP_DisplayTechTree (const technology_t* t)
 
 	/* and now register the buffer */
 	Cvar_Set("mn_uprequirement", "1");
-	UI_RegisterLinkedListText(TEXT_UFOPEDIA_REQUIREMENT, upTechtree);
+	cgi->UI_RegisterLinkedListText(TEXT_UFOPEDIA_REQUIREMENT, upTechtree);
 }
 
 /**
@@ -233,7 +233,7 @@ static void UP_BuildingDescription (const technology_t* t)
 	}
 
 	Cvar_Set("mn_upmetadata", "1");
-	UI_RegisterText(TEXT_ITEMDESCRIPTION, upBuffer);
+	cgi->UI_RegisterText(TEXT_ITEMDESCRIPTION, upBuffer);
 	UP_DisplayTechTree(t);
 }
 
@@ -259,7 +259,7 @@ void UP_AircraftItemDescription (const objDef_t *item)
 		Cvar_Set("mn_item", "");
 		Cvar_Set("mn_itemname", "");
 		Cvar_Set("mn_upmodel_top", "");
-		UI_ResetData(TEXT_ITEMDESCRIPTION);
+		cgi->UI_ResetData(TEXT_ITEMDESCRIPTION);
 		return;
 	}
 
@@ -310,7 +310,7 @@ void UP_AircraftItemDescription (const objDef_t *item)
 	}
 
 	Cvar_Set("mn_upmetadata", "1");
-	UI_RegisterText(TEXT_ITEMDESCRIPTION, itemText);
+	cgi->UI_RegisterText(TEXT_ITEMDESCRIPTION, itemText);
 }
 
 /**
@@ -365,7 +365,7 @@ void UP_AircraftDescription (const technology_t* tech)
 	}
 
 	Cvar_Set("mn_upmetadata", "1");
-	UI_RegisterText(TEXT_ITEMDESCRIPTION, upBuffer);
+	cgi->UI_RegisterText(TEXT_ITEMDESCRIPTION, upBuffer);
 	UP_DisplayTechTree(tech);
 }
 
@@ -401,7 +401,7 @@ void UP_UGVDescription (const ugv_t *ugvType)
 	} else {
 		Com_sprintf(itemText, sizeof(itemText), _("Unknown - need to research this"));
 	}
-	UI_RegisterText(TEXT_ITEMDESCRIPTION, itemText);
+	cgi->UI_RegisterText(TEXT_ITEMDESCRIPTION, itemText);
 }
 
 /**
@@ -530,7 +530,7 @@ static void UP_SetMailHeader (technology_t* tech, techMailType_t type, eventMail
 				}
 			}
 		} else {
-			UI_ResetData(TEXT_UFOPEDIA_MAILHEADER);
+			cgi->UI_ResetData(TEXT_UFOPEDIA_MAILHEADER);
 			return;
 		}
 	}
@@ -541,7 +541,7 @@ static void UP_SetMailHeader (technology_t* tech, techMailType_t type, eventMail
 	Cvar_Set("mn_mail_subject", va("%s%s", subjectType, _(subject)));
 	Cvar_Set("mn_mail_to", _(to));
 	Cvar_Set("mn_mail_date", dateBuf);
-	UI_RegisterText(TEXT_UFOPEDIA_MAILHEADER, mailHeader);
+	cgi->UI_RegisterText(TEXT_UFOPEDIA_MAILHEADER, mailHeader);
 }
 
 /**
@@ -588,15 +588,15 @@ static void UP_Article (technology_t* tech, eventMail_t *mail)
 		Cvar_Set("mn_upmetadata", "");
 	}
 
-	UI_ResetData(TEXT_UFOPEDIA);
-	UI_ResetData(TEXT_UFOPEDIA_REQUIREMENT);
+	cgi->UI_ResetData(TEXT_UFOPEDIA);
+	cgi->UI_ResetData(TEXT_UFOPEDIA_REQUIREMENT);
 
 	if (mail) {
 		/* event mail */
 		Cvar_SetValue("mn_uppreavailable", 0);
 		Cvar_SetValue("mn_updisplay", UFOPEDIA_CHAPTERS);
 		UP_SetMailHeader(NULL, TECHMAIL_PRE, mail);
-		UI_RegisterText(TEXT_UFOPEDIA, _(mail->body));
+		cgi->UI_RegisterText(TEXT_UFOPEDIA, _(mail->body));
 		/* This allows us to use the index button in the UFOpaedia,
 		 * eventMails don't have any chapter to go back to. */
 		upDisplay = UFOPEDIA_INDEX;
@@ -605,16 +605,16 @@ static void UP_Article (technology_t* tech, eventMail_t *mail)
 		upCurrentTech = tech;
 
 		/* Reset itemdescription */
-		UI_ExecuteConfunc("itemdesc_view 0 0;");
+		cgi->UI_ExecuteConfunc("itemdesc_view 0 0;");
 		if (RS_IsResearched_ptr(tech)) {
 			int i;
 			Cvar_Set("mn_uptitle", va("%s: %s %s", _("UFOpaedia"), _(tech->name), _("(complete)")));
 			/* If researched -> display research text */
-			UI_RegisterText(TEXT_UFOPEDIA, _(RS_GetDescription(&tech->description)));
+			cgi->UI_RegisterText(TEXT_UFOPEDIA, _(RS_GetDescription(&tech->description)));
 			if (tech->preDescription.numDescriptions > 0) {
 				/* Display pre-research text and the buttons if a pre-research text is available. */
 				if (mn_uppretext->integer) {
-					UI_RegisterText(TEXT_UFOPEDIA, _(RS_GetDescription(&tech->preDescription)));
+					cgi->UI_RegisterText(TEXT_UFOPEDIA, _(RS_GetDescription(&tech->preDescription)));
 					UP_SetMailHeader(tech, TECHMAIL_PRE, NULL);
 				} else {
 					UP_SetMailHeader(tech, TECHMAIL_RESEARCHED, NULL);
@@ -664,14 +664,14 @@ static void UP_Article (technology_t* tech, eventMail_t *mail)
 			Cvar_Set("mn_uptitle", va("%s: %s", _("UFOpaedia"), _(tech->name)));
 			/* Not researched but some items collected -> display pre-research text if available. */
 			if (tech->preDescription.numDescriptions > 0) {
-				UI_RegisterText(TEXT_UFOPEDIA, _(RS_GetDescription(&tech->preDescription)));
+				cgi->UI_RegisterText(TEXT_UFOPEDIA, _(RS_GetDescription(&tech->preDescription)));
 				UP_SetMailHeader(tech, TECHMAIL_PRE, NULL);
 			} else {
-				UI_RegisterText(TEXT_UFOPEDIA, _("No pre-research description available."));
+				cgi->UI_RegisterText(TEXT_UFOPEDIA, _("No pre-research description available."));
 			}
 		} else {
 			Cvar_Set("mn_uptitle", va("%s: %s", _("UFOpaedia"), _(tech->name)));
-			UI_ResetData(TEXT_UFOPEDIA);
+			cgi->UI_ResetData(TEXT_UFOPEDIA);
 		}
 	} else {
 		Com_Error(ERR_DROP, "UP_Article: No mail or tech given");
@@ -688,7 +688,7 @@ void UP_OpenEventMail (const char *eventMailID)
 	if (!mail)
 		return;
 
-	UI_PushWindow("mail", NULL, NULL);
+	cgi->UI_PushWindow("mail", NULL, NULL);
 	UP_Article(NULL, mail);
 }
 
@@ -702,7 +702,7 @@ static void UP_OpenMailWith (const char *techID)
 	if (!techID)
 		return;
 
-	UI_PushWindow("mail", NULL, NULL);
+	cgi->UI_PushWindow("mail", NULL, NULL);
 	Cbuf_AddText(va("ufopedia %s\n", techID));
 }
 
@@ -716,7 +716,7 @@ void UP_OpenWith (const char *techID)
 	if (!techID)
 		return;
 
-	UI_PushWindow("ufopedia", NULL, NULL);
+	cgi->UI_PushWindow("ufopedia", NULL, NULL);
 	Cbuf_AddText(va("ufopedia %s; update_ufopedia_layout;\n", techID));
 }
 
@@ -779,12 +779,12 @@ static uiNode_t* UP_GenerateArticlesSummary (pediaChapter_t *parentChapter)
 	while (tech) {
 		if (UP_TechGetsDisplayed(tech)) {
 			const char* id = va("@%i", tech->idx);
-			UI_AddOption(&first, id, va("_%s", tech->name), id);
+			cgi->UI_AddOption(&first, id, va("_%s", tech->name), id);
 		}
 		tech = tech->upNext;
 	}
 
-	UI_SortOptions(&first);
+	cgi->UI_SortOptions(&first);
 
 	return first;
 }
@@ -822,15 +822,16 @@ static void UP_GenerateSummary (void)
 			upChaptersDisplayList[numChaptersDisplayList++] = chapter;
 
 			/* chapter section*/
-			chapterOption = UI_AddOption(&chapters, chapter->id, va("_%s", chapter->name), va("%i", num));
-			OPTIONEXTRADATA(chapterOption).icon = UI_GetSpriteByName(va("icons/ufopedia_%s", chapter->id));
+			chapterOption = cgi->UI_AddOption(&chapters, chapter->id, va("_%s", chapter->name), va("%i", num));
+			/** @todo use a confunc */
+			OPTIONEXTRADATA(chapterOption).icon = cgi->UI_GetSpriteByName(va("icons/ufopedia_%s", chapter->id));
 			chapterOption->firstChild = UP_GenerateArticlesSummary(chapter);
 
 			num++;
 		}
 	}
 
-	UI_RegisterOption(OPTION_UFOPEDIA, chapters);
+	cgi->UI_RegisterOption(OPTION_UFOPEDIA, chapters);
 	Cvar_Set("mn_uptitle", _("UFOpaedia"));
 }
 
@@ -865,7 +866,7 @@ static void UP_Click_f (void)
 		return;
 	} else {
 		/* Reset itemdescription */
-		UI_ExecuteConfunc("itemdesc_view 0 0;");
+		cgi->UI_ExecuteConfunc("itemdesc_view 0 0;");
 	}
 
 	/* it clean up the display */
@@ -1176,7 +1177,7 @@ static void UP_OpenMail_f (void)
 		}
 		m = m->next;
 	}
-	UI_RegisterText(TEXT_UFOPEDIA_MAIL, mailBuffer);
+	cgi->UI_RegisterText(TEXT_UFOPEDIA_MAIL, mailBuffer);
 
 	UP_SetMailButtons_f();
 }
@@ -1219,7 +1220,7 @@ static void UP_SetAllMailsRead_f (void)
 }
 
 /**
- * @sa UI_InitStartup
+ * @sa cgi->UI_InitStartup
  */
 void UP_InitStartup (void)
 {

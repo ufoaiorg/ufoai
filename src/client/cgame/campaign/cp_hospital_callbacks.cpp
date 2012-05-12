@@ -24,7 +24,7 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 
 #include "../../cl_shared.h"
 #include "../../cl_team.h" /* CL_UpdateCharacterValues */
-#include "../../ui/ui_main.h"
+#include "../../ui/ui_textids.h"
 #include "cp_campaign.h"
 #include "cp_hospital_callbacks.h"
 
@@ -59,7 +59,7 @@ static void HOS_UpdateMenu (void)
 		return;
 
 	/* Reset list. */
-	UI_ExecuteConfunc("hospital_clear");
+	cgi->UI_ExecuteConfunc("hospital_clear");
 
 	for (type = 0, j = 0, entry = 0; type < MAX_EMPL; type++) {
 		E_Foreach(type, employee) {
@@ -84,12 +84,12 @@ static void HOS_UpdateMenu (void)
 				Com_DPrintf(DEBUG_CLIENT, "%s ucn: %i entry: %i\n", name, employee->chr.ucn, entry);
 				/* If the employee is seriously wounded (HP <= 50% maxHP), make him red. */
 				if (employee->chr.HP <= (int) (employee->chr.maxHP * 0.5))
-					UI_ExecuteConfunc("hospitalserious %i", entry);
+					cgi->UI_ExecuteConfunc("hospitalserious %i", entry);
 				/* If the employee is semi-seriously wounded (HP <= 85% maxHP), make him yellow. */
 				else if (employee->chr.HP <= (int) (employee->chr.maxHP * 0.85))
-					UI_ExecuteConfunc("hospitalmedium %i", entry);
+					cgi->UI_ExecuteConfunc("hospitalmedium %i", entry);
 				else
-					UI_ExecuteConfunc("hospitallight %i", entry);
+					cgi->UI_ExecuteConfunc("hospitallight %i", entry);
 
 				/* Display name in the correct list-entry. */
 				Cvar_Set(va("mn_hos_item%i", entry), name);
@@ -112,7 +112,7 @@ static void HOS_UpdateMenu (void)
 		Cvar_Set(va("mn_hos_rank%i", entry), "");
 		Cvar_Set(va("mn_hos_hp%i", entry), "0");
 		Cvar_Set(va("mn_hos_hpmax%i", entry), "1");
-		UI_ExecuteConfunc("hospitalunused %i", entry);
+		cgi->UI_ExecuteConfunc("hospitalunused %i", entry);
 	}
 }
 
@@ -128,14 +128,13 @@ static void HOS_Init_f (void)
 		return;
 
 	if (!B_GetBuildingStatus(base, B_HOSPITAL)) {
-		UI_PopWindow(qfalse);
+		cgi->UI_PopWindow(qfalse);
 		return;
 	}
 
 	hospitalFirstEntry = 0;
 
 	HOS_UpdateMenu();
-
 }
 
 /**
@@ -204,7 +203,7 @@ static void HOS_ListClick_f (void)
 
 	/* open the hospital menu for this employee */
 	if (type != MAX_EMPL)
-		UI_PushWindow("hospital_employee", NULL, NULL);
+		cgi->UI_PushWindow("hospital_employee", NULL, NULL);
 }
 
 /**
@@ -219,7 +218,7 @@ static void HOS_EmployeeInit_f (void)
 		return;
 	}
 
-	UI_ResetData(TEXT_STANDARD);
+	cgi->UI_ResetData(TEXT_STANDARD);
 
 	c = &currentEmployeeInHospital->chr;
 	CL_UpdateCharacterValues(c, "mn_");

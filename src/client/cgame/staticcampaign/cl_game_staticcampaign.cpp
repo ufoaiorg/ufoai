@@ -92,7 +92,7 @@ const cgame_export_t *GetCGameStaticCampaignAPI (const cgame_import_t *import)
 	e.RunFrame = GAME_SCP_Frame;
 	e.GetTeamDef = GAME_CP_GetTeamDef;
 
-	cgImport = import;
+	cgi = import;
 
 	return &e;
 }

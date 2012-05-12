@@ -27,7 +27,7 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 */
 
 #include "../../cl_shared.h"
-#include "../../ui/ui_main.h"
+#include "../../ui/ui_textids.h"
 #include "../../../shared/parse.h"
 #include "cp_campaign.h"
 #include "cp_mapfightequip.h"
@@ -1141,7 +1141,7 @@ static void AIR_Move (aircraft_t* aircraft, int deltaTime)
 			MAP_SelectMission(aircraft->mission);
 			MAP_SetInterceptorAircraft(aircraft);
 			CP_GameTimeStop();
-			UI_PushWindow("popup_intercept_ready", NULL, NULL);
+			cgi->UI_PushWindow("popup_intercept_ready", NULL, NULL);
 			break;
 		case AIR_RETURNING:
 			/* aircraft entered in homebase */
@@ -1322,7 +1322,7 @@ qboolean AIR_SendAircraftToMission (aircraft_t *aircraft, mission_t *mission)
 	if (B_IsUnderAttack(aircraft->homebase) && AIR_IsAircraftInBase(aircraft)) {
 		aircraft->mission = mission;
 		mission->active = qtrue;
-		UI_PushWindow("popup_baseattack", NULL, NULL);
+		cgi->UI_PushWindow("popup_baseattack", NULL, NULL);
 		return qtrue;
 	}
 
@@ -3085,7 +3085,6 @@ void AIR_AssignInitial (aircraft_t *aircraft)
 
 /**
  * @brief Init actions for aircraft-subsystem
- * @sa UI_InitStartup
  */
 void AIR_InitStartup (void)
 {

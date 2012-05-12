@@ -106,6 +106,17 @@ typedef struct cgame_import_s {
 	void (IMPORT *HUD_DisplayMessage) (const char *text);
 	uiNode_t* (IMPORT *UI_GetOption) (int dataId);
 	void (IMPORT *UI_SortOptions) (uiNode_t** first);
+	int (IMPORT *UI_DrawString) (const char *fontID, align_t align, int x, int y, const char *c);
+	const char * (IMPORT *UI_GetFontFromNode) (const uiNode_t * const node);
+	void (IMPORT *UI_GetNodeAbsPos) (const uiNode_t* node, vec2_t pos);
+	void (IMPORT *UI_PopupButton) (const char *title, const char *text, const char *clickAction1, const char *clickText1, const char *tooltip1,
+		const char *clickAction2, const char *clickText2, const char *tooltip2, const char *clickAction3, const char *clickText3, const char *tooltip3);
+	uiSprite_t* (IMPORT *UI_GetSpriteByName) (const char* name);
+	void (IMPORT *UI_ContainerNodeUpdateEquipment) (inventory_t *inv, const equipDef_t *ed);
+	void (IMPORT *UI_RegisterLineStrip) (int dataId, struct lineStrip_s *lineStrip);
+	uiNode_t* (IMPORT *UI_GetNodeByPath) (const char* path);
+	void (IMPORT *UI_DisplayNotice) (const char *text, int time, const char* windowName);
+	const char* (IMPORT *UI_GetActiveWindowName) (void);
 
 	void (IMPORT *LIST_AddString) (linkedList_t** listDest, const char* data);
 	const linkedList_t* (IMPORT *LIST_ContainsString) (const linkedList_t* list, const char* string);
@@ -144,6 +155,7 @@ typedef struct cgame_import_s {
 	void (IMPORT *R_SoftenTexture) (byte *in, int width, int height, int bpp);
 	void (IMPORT *R_LoadImage) (const char *name, byte **pic, int *width, int *height);
 	qboolean (IMPORT *R_ImageExists) (const char *pname, ...) __attribute__((format(printf, 1, 2)));
+	void (IMPORT *R_Color) (const vec4_t rgba);
 
 	struct dbuffer *(IMPORT *NET_ReadMsg)  (struct net_stream *s);
 	int (IMPORT *NET_ReadByte)  (struct dbuffer *buf);

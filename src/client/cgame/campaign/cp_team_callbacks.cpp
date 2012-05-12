@@ -25,13 +25,16 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #include "../../cl_shared.h"
 #include "../../cl_team.h"
 #include "../../cgame/cl_game_team.h"
-#include "../../ui/ui_main.h"
+#include "../../ui/ui_textids.h"
 
 #include "cp_campaign.h"
 #include "cp_team.h"
 #include "cp_team_callbacks.h"
+#ifdef DEBUG
 #include "cp_map.h" /* MAP_GetSelectedAircraft */
-#include "../../ui/node/ui_node_container.h"
+#endif
+
+extern inventory_t *ui_inventory;
 
 /**
  * @brief Adds or removes a soldier to/from an aircraft using his/her UCN as reference.
@@ -73,7 +76,7 @@ static void CP_TEAM_AssignSoldierByUCN_f (void)
 
 	CP_UpdateActorAircraftVar(aircraft, employeeType);
 	Cvar_SetValue("cpteam_size", AIR_GetTeamSize(aircraft));
-	UI_ExecuteConfunc("aircraft_status_change");
+	cgi->UI_ExecuteConfunc("aircraft_status_change");
 }
 
 /**
@@ -97,7 +100,7 @@ static void CP_TEAM_SelectActorByUCN_f (void)
 
 	ucn = atoi(Cmd_Argv(1));
 	if (ucn < 0) {
-		UI_ExecuteConfunc("reset_character_cvars");
+		cgi->UI_ExecuteConfunc("reset_character_cvars");
 		return;
 	}
 
@@ -182,7 +185,7 @@ static void CP_TEAM_FillEmployeeList_f (void)
 	if (!aircraft)
 		return;
 
-	UI_ExecuteConfunc("aircraft_soldierlist_clear");
+	cgi->UI_ExecuteConfunc("aircraft_soldierlist_clear");
 	const int teamSize = employeeType == EMPL_PILOT ? (AIR_GetPilot(aircraft) != NULL ? 1 : 0) : AIR_GetTeamSize(aircraft);
 	const int maxTeamSize = employeeType == EMPL_PILOT ? 1 : aircraft->maxTeamSize;
 	E_Foreach(employeeType, employee) {
@@ -213,7 +216,7 @@ static void CP_TEAM_FillEmployeeList_f (void)
 				tooltip = _("Employee is assigned to another aircraft");
 		}
 
-		UI_ExecuteConfunc("aircraft_soldierlist_add %d \"%s\" \"%s\" %d \"%s\"", employee->chr.ucn, typeId, employee->chr.name, assignedCraft == aircraft, tooltip);
+		cgi->UI_ExecuteConfunc("aircraft_soldierlist_add %d \"%s\" \"%s\" %d \"%s\"", employee->chr.ucn, typeId, employee->chr.name, assignedCraft == aircraft, tooltip);
 	}
 }
 
@@ -238,9 +241,9 @@ static void CP_TEAM_FillEquipSoldierList_f (void)
 		return;
 
 	/* add soldiers to list */
-	UI_ExecuteConfunc("equipment_soldierlist_clear");
+	cgi->UI_ExecuteConfunc("equipment_soldierlist_clear");
 	LIST_Foreach(aircraft->acTeam, employee_t, employee) {
-		UI_ExecuteConfunc("equipment_soldierlist_add %d \"%s\"", employee->chr.ucn, employee->chr.name);
+		cgi->UI_ExecuteConfunc("equipment_soldierlist_add %d \"%s\"", employee->chr.ucn, employee->chr.name);
 	}
 
 	/* clean up aircraft crew for upcoming mission */
@@ -251,7 +254,7 @@ static void CP_TEAM_FillEquipSoldierList_f (void)
 		if (aircraftInBase->homebase == base)
 			CP_CleanupAircraftCrew(aircraftInBase, &unused);
 	}
-	UI_ContainerNodeUpdateEquipment(&aircraft->homebase->bEquipment, &unused);
+	cgi->UI_ContainerNodeUpdateEquipment(&aircraft->homebase->bEquipment, &unused);
 }
 
 /**
@@ -265,7 +268,7 @@ static void CP_TEAM_FillBDEFEmployeeList_f (void)
 	if (!aircraft)
 		return;
 
-	UI_ExecuteConfunc("soldierlist_clear");
+	cgi->UI_ExecuteConfunc("soldierlist_clear");
 	const int teamSize = AIR_GetTeamSize(aircraft);
 	const int maxTeamSize = aircraft->maxTeamSize;
 	E_Foreach(EMPL_SOLDIER, employee) {
@@ -280,13 +283,13 @@ static void CP_TEAM_FillBDEFEmployeeList_f (void)
 
 		isInTeam = AIR_IsEmployeeInAircraft(employee, aircraft) != NULL;
 		if (E_IsAwayFromBase(employee))
-				tooltip = _("Employee is away from base");
+			tooltip = _("Employee is away from base");
 		else if (!isInTeam && teamSize >= maxTeamSize)
-				tooltip = _("No more employee can be assigned to this team");
+			tooltip = _("No more employee can be assigned to this team");
 		else
 			tooltip = "";
 
-		UI_ExecuteConfunc("soldierlist_add %d \"%s %s\" %d \"%s\"", employee->chr.ucn, (rank) ? _(rank->shortname) : "", employee->chr.name, isInTeam, tooltip);
+		cgi->UI_ExecuteConfunc("soldierlist_add %d \"%s %s\" %d \"%s\"", employee->chr.ucn, (rank) ? _(rank->shortname) : "", employee->chr.name, isInTeam, tooltip);
 	}
 }
 

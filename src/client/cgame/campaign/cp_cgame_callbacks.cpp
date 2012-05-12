@@ -22,6 +22,7 @@
  */
 
 #include "../../cl_shared.h"
+#include "../../ui/ui_textids.h"
 #include "cp_cgame_callbacks.h"
 #include "cp_campaign.h"
 #include "cp_missions.h"
@@ -29,11 +30,9 @@
 #include "cp_team.h"
 #include "cp_map.h"
 #include "../../battlescape/cl_hud.h"
-#include "../../ui/ui_main.h"
-#include "../../ui/node/ui_node_text.h"
 #include "cp_mission_callbacks.h"
 
-const cgame_import_t *cgImport;
+const cgame_import_t *cgi;
 
 /**
  * @sa CL_ParseResults
@@ -101,10 +100,10 @@ static void GAME_CP_GetCampaigns_f (void)
 	for (i = 0; i < ccs.numCampaigns; i++) {
 		const campaign_t *c = &ccs.campaigns[i];
 		if (c->visible)
-			UI_AddOption(&campaignOption, "", va("_%s", c->name), c->id);
+			cgi->UI_AddOption(&campaignOption, "", va("_%s", c->name), c->id);
 	}
 
-	UI_RegisterOption(OPTION_CAMPAIGN_LIST, campaignOption);
+	cgi->UI_RegisterOption(OPTION_CAMPAIGN_LIST, campaignOption);
 }
 
 #define MAXCAMPAIGNTEXT 4096
@@ -148,7 +147,7 @@ static void GAME_CP_CampaignDescription_f (void)
 		campaign->credits, CP_ToDifficultyName(campaign->difficulty),
 		(int)(round(campaign->minhappiness * 100.0f)), campaign->negativeCreditsUntilLost,
 		_(campaign->text));
-	UI_RegisterText(TEXT_STANDARD, campaignDesc);
+	cgi->UI_RegisterText(TEXT_STANDARD, campaignDesc);
 }
 
 /**
@@ -285,12 +284,12 @@ void GAME_CP_Results (struct dbuffer *msg, int winner, int *numSpawned, int *num
 		ccs.missionResultCallback(results);
 	}
 
-	UI_InitStack("geoscape", "campaign_main", qtrue, qtrue);
+	cgi->UI_InitStack("geoscape", "campaign_main", qtrue, qtrue);
 
 	if (won)
-		UI_PushWindow("won", NULL, NULL);
+		cgi->UI_PushWindow("won", NULL, NULL);
 	else
-		UI_PushWindow("lost", NULL, NULL);
+		cgi->UI_PushWindow("lost", NULL, NULL);
 
 	cgi->CL_Disconnect();
 	SV_Shutdown("Mission end", qfalse);
@@ -346,7 +345,7 @@ qboolean GAME_CP_TeamIsKnown (const teamDef_t *teamDef)
 void GAME_CP_Drop (void)
 {
 	/** @todo maybe create a savegame? */
-	UI_InitStack("geoscape", "campaign_main", qtrue, qtrue);
+	cgi->UI_InitStack("geoscape", "campaign_main", qtrue, qtrue);
 
 	SV_Shutdown("Mission end", qfalse);
 	cgi->CL_Disconnect();
@@ -443,7 +442,7 @@ void GAME_CP_InitStartup (void)
 	Cmd_AddCommand("cp_getcampaigns", GAME_CP_GetCampaigns_f, "Fill the campaign list with available campaigns");
 	Cmd_AddCommand("cp_start", GAME_CP_Start_f, "Start the new campaign");
 
-	CP_InitStartup(cgImport);
+	CP_InitStartup();
 
 	cp_start_employees = Cvar_Get("cp_start_employees", "1", CVAR_ARCHIVE, "Start with hired employees");
 	/* cvars might have been changed by other gametypes */

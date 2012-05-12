@@ -29,7 +29,6 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #include "cp_map.h"
 #include "cp_missions.h"
 #include "cp_mission_triggers.h"
-#include "../../ui/ui_windows.h"
 #include "../../../shared/mathlib_extra.h"
 #include "math.h"
 #include "cp_mission_callbacks.h"
@@ -752,13 +751,13 @@ static void AM_DisplayResults (const autoMissionBattle_t *battle)
 
 	Cvar_SetValue("cp_mission_tryagain", 0);
 	if (battle->results->won) {
-		UI_PushWindow("won", NULL, NULL);
+		cgi->UI_PushWindow("won", NULL, NULL);
 		if (battle->teamAccomplishment[AUTOMISSION_TEAM_TYPE_PLAYER] > battle->teamAccomplishment[AUTOMISSION_TEAM_TYPE_ALIEN])
 			MS_AddNewMessage(_("Notice"), _("You've won the battle"), qfalse, MSG_STANDARD, NULL);
 		else
 			MS_AddNewMessage(_("Notice"), _("You've defeated the enemy, but did poorly, and many civialians were killed"), qfalse, MSG_STANDARD, NULL);
 	} else {
-		UI_PushWindow("lost", NULL, NULL);
+		cgi->UI_PushWindow("lost", NULL, NULL);
 		MS_AddNewMessage(_("Notice"), _("You've lost the battle"), qfalse, MSG_STANDARD, NULL);
 	}
 }

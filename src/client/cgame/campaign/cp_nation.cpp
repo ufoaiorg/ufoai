@@ -24,15 +24,14 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 */
 
 #include "../../cl_shared.h"
-#include "../../cl_shared.h"
-#include "../../ui/ui_main.h"
-#include "../../ui/node/ui_node_linechart.h"
 #include "../../../shared/parse.h"
 #include "cp_campaign.h"
 #include "cp_map.h"
 #include "cp_ufo.h"
 #include "cp_time.h"
 #include "save/save_nation.h"
+#include "../../ui/ui_main.h" /* ui_node_linechart.h */
+#include "../../ui/node/ui_node_linechart.h" /* lineStrip_t */
 
 nation_t *NAT_GetNationByIDX (const int index)
 {
@@ -465,7 +464,7 @@ static void CP_NationStatsClick_f (void)
 	if (num < 0 || num >= ccs.numNations)
 		return;
 
-	UI_PushWindow("nations", NULL, NULL);
+	cgi->UI_PushWindow("nations", NULL, NULL);
 	Cbuf_AddText(va("nation_select %i;", num));
 }
 
@@ -600,7 +599,7 @@ static void CL_NationStatsUpdate_f (void)
 
 	usedColPtslists = 0;
 
-	colorNode = UI_GetNodeByPath("nations.nation_graph_colors");
+	colorNode = cgi->UI_GetNodeByPath("nations.nation_graph_colors");
 	if (colorNode) {
 		dy = (int)(colorNode->box.size[1] / MAX_NATIONS);
 	}
@@ -616,9 +615,9 @@ static void CL_NationStatsUpdate_f (void)
 			colorLineStrip[i - 1].next = color;
 
 		if (selectedNation == i) {
-			UI_ExecuteConfunc("nation_marksel %i", i);
+			cgi->UI_ExecuteConfunc("nation_marksel %i", i);
 		} else {
-			UI_ExecuteConfunc("nation_markdesel %i", i);
+			cgi->UI_ExecuteConfunc("nation_markdesel %i", i);
 		}
 		Cvar_Set(va("mn_nat_name%i",i), _(nation->name));
 		Cvar_Set(va("mn_nat_fund%i",i), va("%i", funding));
@@ -642,17 +641,17 @@ static void CL_NationStatsUpdate_f (void)
 		}
 	}
 
-	UI_RegisterLineStrip(LINESTRIP_COLOR, &colorLineStrip[0]);
+	cgi->UI_RegisterLineStrip(LINESTRIP_COLOR, &colorLineStrip[0]);
 
 	/* Hide unused nation-entries. */
 	for (i = ccs.numNations; i < MAX_NATIONS; i++) {
-		UI_ExecuteConfunc("nation_hide %i", i);
+		cgi->UI_ExecuteConfunc("nation_hide %i", i);
 	}
 
 	/** @todo Display summary of nation info */
 
 	/* Display graph of nations-values so far. */
-	graphNode = UI_GetNodeByPath("nations.nation_graph_funding");
+	graphNode = cgi->UI_GetNodeByPath("nations.nation_graph_funding");
 	if (graphNode) {
 		const int maxFunding = CL_NationsMaxFunding();
 		usedFundPtslist = 0;
@@ -673,7 +672,7 @@ static void CL_NationStatsUpdate_f (void)
 			}
 		}
 
-		UI_RegisterLineStrip(LINESTRIP_FUNDING, &fundingLineStrip[0]);
+		cgi->UI_RegisterLineStrip(LINESTRIP_FUNDING, &fundingLineStrip[0]);
 	}
 }
 
@@ -889,7 +888,6 @@ void NAT_BackupMonthlyData (void)
 
 /**
  * @brief Init actions for nation-subsystem
- * @sa UI_InitStartup
  */
 void NAT_InitStartup (void)
 {

@@ -25,14 +25,13 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 */
 
 #include "../../cl_shared.h"
+#include "../../ui/ui_textids.h"
 #include "cp_campaign.h"
 #include "cp_ufo.h"
 #include "cp_uforecovery.h"
 #include "cp_uforecovery_callbacks.h"
 #include "cp_map.h"
 #include "cp_time.h"
-#include "../../ui/ui_popup.h" /* UI_PopupButton */
-#include "../../ui/ui_main.h"
 
 /**
  * @brief Entries on Sell UFO dialog
@@ -115,7 +114,7 @@ static void UR_DialogInit_f (void)
 		else
 			Cvar_Set("mn_uforecovery_actualufo", va(_("\nSecured landed %s\n"), UFO_AircraftToIDOnGeoscape(ufoCraft)));
 
-		UI_PushWindow("uforecovery", NULL, NULL);
+		cgi->UI_PushWindow("uforecovery", NULL, NULL);
 	}
 }
 
@@ -151,14 +150,14 @@ static void UR_DialogInitStore_f (void)
 	if (count == 0) {
 		/* No UFO base with proper conditions, show a hint and disable list. */
 		LIST_AddString(&recoveryYardName, _("No free UFO yard available."));
-		UI_ExecuteConfunc("uforecovery_tabselect sell");
-		UI_ExecuteConfunc("btbasesel disable");
+		cgi->UI_ExecuteConfunc("uforecovery_tabselect sell");
+		cgi->UI_ExecuteConfunc("btbasesel disable");
 	} else {
-		UI_ExecuteConfunc("cp_basesel_select 0");
-		UI_ExecuteConfunc("btbasesel enable");
+		cgi->UI_ExecuteConfunc("cp_basesel_select 0");
+		cgi->UI_ExecuteConfunc("btbasesel enable");
 	}
-	UI_RegisterLinkedListText(TEXT_UFORECOVERY_UFOYARDS, recoveryYardName);
-	UI_RegisterLinkedListText(TEXT_UFORECOVERY_CAPACITIES, recoveryYardCapacity);
+	cgi->UI_RegisterLinkedListText(TEXT_UFORECOVERY_UFOYARDS, recoveryYardName);
+	cgi->UI_RegisterLinkedListText(TEXT_UFORECOVERY_CAPACITIES, recoveryYardCapacity);
 }
 
 /**
@@ -221,7 +220,7 @@ static void UR_DialogFillNations (void)
 		}
 	}
 
-	UI_RegisterLinkedListText(TEXT_UFORECOVERY_NATIONS, nationList);
+	cgi->UI_RegisterLinkedListText(TEXT_UFORECOVERY_NATIONS, nationList);
 }
 
 /**
@@ -358,7 +357,7 @@ static void UR_DialogInitSell_f (void)
 	}
 	UR_SortNations(UR_GetSortFunctionByColumn(ufoRecovery.sortedColumn), ufoRecovery.sortDescending);
 	UR_DialogFillNations();
-	UI_ExecuteConfunc("btnatsel disable");
+	cgi->UI_ExecuteConfunc("btnatsel disable");
 }
 
 /**
@@ -423,7 +422,7 @@ static void UR_DialogSortByColumn_f (void)
 		/* changed line selection corresponding to current nation */
 		index = UR_DialogGetCurrentNationIndex();
 		if (index != -1)
-			UI_ExecuteConfunc("cp_nationsel_select %d", index);
+			cgi->UI_ExecuteConfunc("cp_nationsel_select %d", index);
 	}
 }
 
@@ -454,7 +453,7 @@ static void UR_DialogSelectSellNation_f (void)
 	Com_DPrintf(DEBUG_CLIENT, "CP_UFORecoveryNationSelectPopup_f: picked nation: %s\n", nation->name);
 
 	Cvar_Set("mission_recoverynation", _(nation->name));
-	UI_ExecuteConfunc("btnatsel enable");
+	cgi->UI_ExecuteConfunc("btnatsel enable");
 }
 
 /**
@@ -539,7 +538,7 @@ static void US_SelectStoredUfo_f (void)
 	const storedUFO_t *ufo;
 
 	if (Cmd_Argc() < 2 || (ufo = US_GetStoredUFOByIDX(atoi(Cmd_Argv(1)))) == NULL) {
-		UI_ExecuteConfunc("show_storedufo -");
+		cgi->UI_ExecuteConfunc("show_storedufo -");
 	} else {
 		const char *ufoName = UFO_AircraftToIDOnGeoscape(ufo->ufoTemplate);
 		const char *status = US_StoredUFOStatus(ufo);
@@ -552,7 +551,7 @@ static void US_SelectStoredUfo_f (void)
 			eta = "-";
 		}
 
-		UI_ExecuteConfunc("show_storedufo %d \"%s\" %3.0f \"%s\" \"%s\" \"%s\" \"%s\"", ufo->idx, ufoName, ufo->condition * 100, ufo->ufoTemplate->model, status, eta, ufo->installation->name);
+		cgi->UI_ExecuteConfunc("show_storedufo %d \"%s\" %3.0f \"%s\" \"%s\" \"%s\" \"%s\"", ufo->idx, ufoName, ufo->condition * 100, ufo->ufoTemplate->model, status, eta, ufo->installation->name);
 	}
 }
 
@@ -581,7 +580,7 @@ static void US_DestroySoredUFO_f (void)
 		char command[128];
 
 		Com_sprintf(command, sizeof(command), "ui_destroystoredufo %d 1;ui_pop; mn_installation_select %d;", ufo->idx, ufo->installation->idx);
-		UI_PopupButton(_("Destroy stored UFO"), _("Do you really want to destroy this stored UFO?"),
+		cgi->UI_PopupButton(_("Destroy stored UFO"), _("Do you really want to destroy this stored UFO?"),
 			command, _("Destroy"), _("Destroy stored UFO"),
 			"ui_pop;", _("Cancel"), _("Forget it"),
 			NULL, NULL, NULL);
@@ -609,7 +608,7 @@ static void US_FillUFOTransfer_f (void)
 		}
 	}
 
-	UI_ExecuteConfunc("ufotransferlist_clear");
+	cgi->UI_ExecuteConfunc("ufotransferlist_clear");
 	INS_Foreach(ins) {
 		nation_t *nat = MAP_GetNation(ins->pos);
 		const char *nationName = nat ? _(nat->name) : "";
@@ -619,7 +618,7 @@ static void US_FillUFOTransfer_f (void)
 			continue;
 		if (INS_GetType(ins) != INSTALLATION_UFOYARD)
 			continue;
-		UI_ExecuteConfunc("ufotransferlist_addyard %d \"%s\" \"%s\" %d %d", ins->idx, ins->name, nationName, freeSpace, ins->ufoCapacity.max);
+		cgi->UI_ExecuteConfunc("ufotransferlist_addyard %d \"%s\" \"%s\" %d %d", ins->idx, ins->name, nationName, freeSpace, ins->ufoCapacity.max);
 	}
 }
 
@@ -641,11 +640,11 @@ static void US_FillUFOTransferUFOs_f (void)
 		}
 	}
 
-	UI_ExecuteConfunc("ufotransferlist_clearufos %d", ins->idx);
+	cgi->UI_ExecuteConfunc("ufotransferlist_clearufos %d", ins->idx);
 	US_Foreach(ufo) {
 		if (ufo->installation != ins)
 			continue;
-		UI_ExecuteConfunc("ufotransferlist_addufos %d %d \"%s\"", ins->idx, ufo->idx, ufo->ufoTemplate->model);
+		cgi->UI_ExecuteConfunc("ufotransferlist_addufos %d %d \"%s\"", ins->idx, ufo->idx, ufo->ufoTemplate->model);
 	}
 }
 

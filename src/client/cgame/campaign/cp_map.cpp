@@ -28,9 +28,6 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #include "../../renderer/r_draw.h"
 #include "../../renderer/r_geoscape.h"
 #include "../../ui/ui_main.h"
-#include "../../ui/ui_font.h" /* UI_GetFontFromNode */
-#include "../../ui/ui_render.h" /* UI_DrawString */
-#include "../../ui/node/ui_node_abstractnode.h" /* UI_GetNodeAbsPos */
 #include "../../ui/node/ui_node_geoscape.h" /* paddingRight */
 #include "cp_overlay.h"
 #include "cp_campaign.h"
@@ -720,7 +717,7 @@ static void MAP_MapDrawLine (const uiNode_t* node, const mapline_t* line)
 	int i, start, old;
 
 	/* draw */
-	R_Color(color);
+	cgi->R_Color(color);
 	start = 0;
 	old = ccs.mapSize[0] / 2;
 	for (i = 0, p = pts; i < line->numPoints; i++, p++) {
@@ -751,7 +748,7 @@ static void MAP_MapDrawLine (const uiNode_t* node, const mapline_t* line)
 	}
 
 	R_DrawLineStrip(i - start, (int*)(&pts));
-	R_Color(NULL);
+	cgi->R_Color(NULL);
 }
 
 /**
@@ -770,7 +767,7 @@ static void MAP_3DMapDrawLine (const uiNode_t* node, const mapline_t* line)
 	start = 0;
 
 	/* draw only when the point of the path is visible */
-	R_Color(color);
+	cgi->R_Color(color);
 	for (i = 0, numPoints = 0; i < line->numPoints; i++) {
 		if (MAP_3DMapToScreen(node, line->point[i], &pts[i].x, &pts[i].y, NULL))
 			numPoints++;
@@ -780,7 +777,7 @@ static void MAP_3DMapDrawLine (const uiNode_t* node, const mapline_t* line)
 	}
 
 	R_DrawLineStrip(numPoints, (int*)(&pts[start]));
-	R_Color(NULL);
+	cgi->R_Color(NULL);
 }
 
 #define CIRCLE_DRAW_POINTS	60
@@ -802,7 +799,7 @@ void MAP_MapDrawEquidistantPoints (const uiNode_t* node, const vec2_t center, co
 	int numPoints = 0;
 	vec3_t initialVector, rotationAxis, currentPoint, centerPos;
 
-	R_Color(color);
+	cgi->R_Color(color);
 
 	/* Set centerPos corresponding to cartesian coordinates of the center point */
 	PolarToVec(center, centerPos);
@@ -841,7 +838,7 @@ void MAP_MapDrawEquidistantPoints (const uiNode_t* node, const vec2_t center, co
 
 	/* Draw the last path */
 	R_DrawLineStrip(numPoints, (int*)(&pts));
-	R_Color(NULL);
+	cgi->R_Color(NULL);
 }
 
 /**
@@ -1353,9 +1350,9 @@ static void MAP_DrawBeam (const uiNode_t* node, const vec3_t start, const vec3_t
 	if (!MAP_AllMapToScreen(node, end, &(points[2]), &(points[3]), NULL))
 		return;
 
-	R_Color(color);
+	cgi->R_Color(color);
 	R_DrawLine(points, 2.0);
-	R_Color(NULL);
+	cgi->R_Color(NULL);
 }
 
 #define SELECT_CIRCLE_RADIUS	1.5f + 3.0f / ccs.zoom
@@ -1400,7 +1397,7 @@ static void MAP_DrawMapOneMission (const uiNode_t* node, const mission_t *ms)
 		R_DrawImage(x - image->width / 2, y - image->height / 2, image);
 	}
 
-	UI_DrawString("f_verysmall", ALIGN_UL, x + 10, y, 0, 0, 0, _(ms->location));
+	cgi->UI_DrawString("f_verysmall", ALIGN_UL, x + 10, y, _(ms->location));
 }
 
 /**
@@ -1444,7 +1441,7 @@ static void MAP_DrawMapOneInstallation (const uiNode_t* node, const installation
 
 	/* Draw installation names */
 	if (MAP_AllMapToScreen(node, installation->pos, &x, &y, NULL))
-		UI_DrawString(font, ALIGN_UL, x, y + 10, 0, 0, 0, installation->name);
+		cgi->UI_DrawString(font, ALIGN_UL, x, y + 10, installation->name);
 }
 
 /**
@@ -1501,7 +1498,7 @@ static void MAP_DrawMapOneBase (const uiNode_t* node, const base_t *base,
 
 	/* Draw base names */
 	if (MAP_AllMapToScreen(node, base->pos, &x, &y, NULL))
-		UI_DrawString(font, ALIGN_UL, x, y + 10, 0, 0, 0, base->name);
+		cgi->UI_DrawString(font, ALIGN_UL, x, y + 10, base->name);
 }
 
 /**
@@ -1756,9 +1753,9 @@ static void MAP_DrawMapMarkers (const uiNode_t* node)
 	assert(node);
 
 	/* font color on geoscape */
-	R_Color(node->color);
+	cgi->R_Color(node->color);
 	/* default font */
-	font = UI_GetFontFromNode(node);
+	font = cgi->UI_GetFontFromNode(node);
 
 	/* check if at least 1 UFO is visible */
 	oneUFOVisible = UFO_GetNextOnGeoscape(NULL) != NULL;
@@ -1879,7 +1876,7 @@ static void MAP_DrawMapMarkers (const uiNode_t* node)
 	for (i = 0; i < ccs.numNations; i++) {
 		const nation_t *nation = NAT_GetNationByIDX(i);
 		if (MAP_AllMapToScreen(node, nation->pos, &x, &y, NULL))
-			UI_DrawString("f_verysmall", ALIGN_UC, x , y, 0, 0, 0, _(nation->name));
+			cgi->UI_DrawString("f_verysmall", ALIGN_UC, x , y, _(nation->name));
 		if (showXVI) {
 			const nationInfo_t *stats = NAT_GetCurrentMonthInfo(nation);
 			Q_strcat(buffer, va(_("%s\t%i%%\n"), _(nation->name), stats->xviInfection), sizeof(buffer));
@@ -1890,7 +1887,7 @@ static void MAP_DrawMapMarkers (const uiNode_t* node)
 	else
 		UI_ResetData(TEXT_XVI);
 
-	R_Color(NULL);
+	cgi->R_Color(NULL);
 }
 
 /**
@@ -1905,7 +1902,7 @@ void MAP_DrawMap (const uiNode_t* node, const campaign_t *campaign)
 	mission_t *mission;
 
 	/* store these values in ccs struct to be able to handle this even in the input code */
-	UI_GetNodeAbsPos(node, pos);
+	cgi->UI_GetNodeAbsPos(node, pos);
 	Vector2Copy(pos, ccs.mapPos);
 	Vector2Copy(node->box.size, ccs.mapSize);
 	if (cl_3dmap->integer) {
@@ -2495,22 +2492,22 @@ void MAP_Shutdown (void)
 void MAP_Init (const char *map)
 {
 	/* load terrain mask */
-	R_LoadImage(va("pics/geoscape/%s_terrain", map), &terrainPic, &terrainWidth, &terrainHeight);
+	cgi->R_LoadImage(va("pics/geoscape/%s_terrain", map), &terrainPic, &terrainWidth, &terrainHeight);
 	if (!terrainPic || !terrainWidth || !terrainHeight)
 		Com_Error(ERR_DROP, "Couldn't load map mask %s_terrain in pics/geoscape", map);
 
 	/* load culture mask */
-	R_LoadImage(va("pics/geoscape/%s_culture", map), &culturePic, &cultureWidth, &cultureHeight);
+	cgi->R_LoadImage(va("pics/geoscape/%s_culture", map), &culturePic, &cultureWidth, &cultureHeight);
 	if (!culturePic || !cultureWidth || !cultureHeight)
 		Com_Error(ERR_DROP, "Couldn't load map mask %s_culture in pics/geoscape", map);
 
 	/* load population mask */
-	R_LoadImage(va("pics/geoscape/%s_population", map), &populationPic, &populationWidth, &populationHeight);
+	cgi->R_LoadImage(va("pics/geoscape/%s_population", map), &populationPic, &populationWidth, &populationHeight);
 	if (!populationPic || !populationWidth || !populationHeight)
 		Com_Error(ERR_DROP, "Couldn't load map mask %s_population in pics/geoscape", map);
 
 	/* load nations mask */
-	R_LoadImage(va("pics/geoscape/%s_nations", map), &nationsPic, &nationsWidth, &nationsHeight);
+	cgi->R_LoadImage(va("pics/geoscape/%s_nations", map), &nationsPic, &nationsWidth, &nationsHeight);
 	if (!nationsPic || !nationsWidth || !nationsHeight)
 		Com_Error(ERR_DROP, "Couldn't load map mask %s_nations in pics/geoscape", map);
 }

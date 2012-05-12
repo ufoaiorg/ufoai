@@ -24,12 +24,12 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 */
 
 #include "../../cl_shared.h"
-#include "../../ui/ui_main.h"
-#include "../../ui/ui_popup.h" /* popupText */
+#include "../../ui/ui_textids.h"
 #include "cp_campaign.h"
 #include "cp_installation_callbacks.h"
 #include "cp_installation.h"
 #include "cp_map.h"
+#include "cp_popup.h"
 #include "cp_ufo.h"
 #include "cp_uforecovery_callbacks.h"
 
@@ -45,9 +45,9 @@ static void INS_SetInstallationTitle (void)
 	Com_sprintf(insName, lengthof(insName), "%s #%i", (insTemp) ? _(insTemp->name) : _("Installation"), ccs.campaignStats.installationsBuilt + 1);
 	Cvar_Set("mn_installation_title", insName);
 	if (!insTemp || !insTemp->description || !strlen(insTemp->description))
-		UI_ResetData(TEXT_BUILDING_INFO);
+		cgi->UI_ResetData(TEXT_BUILDING_INFO);
 	else
-		UI_RegisterText(TEXT_BUILDING_INFO, _(insTemp->description));
+		cgi->UI_RegisterText(TEXT_BUILDING_INFO, _(insTemp->description));
 }
 
 /**
@@ -88,14 +88,14 @@ void INS_SelectInstallation (installation_t *installation)
 
 		switch (INS_GetType(installation)) {
 		case INSTALLATION_UFOYARD:
-			UI_PushWindow("popup_ufoyards", NULL, NULL);
+			cgi->UI_PushWindow("popup_ufoyards", NULL, NULL);
 			break;
 		case INSTALLATION_DEFENCE:
-			UI_PushWindow("basedefence", NULL, NULL);
+			cgi->UI_PushWindow("basedefence", NULL, NULL);
 			break;
 		case INSTALLATION_RADAR:
 		default:
-			UI_PushWindow("popup_installationstatus", NULL, NULL);
+			cgi->UI_PushWindow("popup_installationstatus", NULL, NULL);
 			break;
 		}
 	}
@@ -147,7 +147,7 @@ static void INS_BuildInstallation_f (void)
 		if (ccs.mapAction == MA_NEWINSTALLATION)
 			ccs.mapAction = MA_NONE;
 
-		UI_Popup(_("Notice"), _("Not enough credits to set up a new installation."));
+		CP_Popup(_("Notice"), _("Not enough credits to set up a new installation."));
 	}
 	ccs.mapAction = MA_NONE;
 }
@@ -210,7 +210,7 @@ static void INS_DestroyInstallation_f (void)
 		char command[MAX_VAR];
 
 		Com_sprintf(command, sizeof(command), "mn_installation_destroy %d 1; ui_pop;", installation->idx);
-		UI_PopupButton(_("Destroy Installation"), _("Do you really want to destroy this installation?"),
+		cgi->UI_PopupButton(_("Destroy Installation"), _("Do you really want to destroy this installation?"),
 			command, _("Destroy"), _("Destroy installation"),
 			"ui_pop;", _("Cancel"), _("Forget it"),
 			NULL, NULL, NULL);
@@ -234,7 +234,7 @@ static void INS_FillUFOYardData_f (void)
 {
 	installation_t *ins;
 
-	UI_ExecuteConfunc("ufolist_clear");
+	cgi->UI_ExecuteConfunc("ufolist_clear");
 	if (Cmd_Argc() < 2 || atoi(Cmd_Argv(1)) < 0) {
 		ins = INS_GetCurrentSelectedInstallation();
 		if (!ins || INS_GetType(ins) != INSTALLATION_UFOYARD)
@@ -252,7 +252,7 @@ static void INS_FillUFOYardData_f (void)
 		const int freeCap = max(0, ins->ufoCapacity.max - ins->ufoCapacity.cur);
 		const char *nationName = nat ? _(nat->name) : "";
 
-		UI_ExecuteConfunc("ufolist_addufoyard %d \"%s\" \"%s\" %d %d \"%s\"", ins->idx, ins->name, nationName, ins->ufoCapacity.max, freeCap, buildTime);
+		cgi->UI_ExecuteConfunc("ufolist_addufoyard %d \"%s\" \"%s\" %d %d \"%s\"", ins->idx, ins->name, nationName, ins->ufoCapacity.max, freeCap, buildTime);
 
 		US_Foreach(ufo) {
 			const char *ufoName = UFO_AircraftToIDOnGeoscape(ufo->ufoTemplate);
@@ -261,7 +261,7 @@ static void INS_FillUFOYardData_f (void)
 
 			if (ufo->installation != ins)
 				continue;
-			UI_ExecuteConfunc("ufolist_addufo %d \"%s\" \"%s\" \"%s\" \"%s\"", ufo->idx, ufoName, condition, ufo->ufoTemplate->model, status);
+			cgi->UI_ExecuteConfunc("ufolist_addufo %d \"%s\" \"%s\" \"%s\" \"%s\"", ufo->idx, ufoName, condition, ufo->ufoTemplate->model, status);
 		}
 	}
 }

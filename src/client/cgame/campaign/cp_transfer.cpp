@@ -31,7 +31,6 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #include "cp_time.h"
 #include "save/save_transfer.h"
 #include "cp_transfer_callbacks.h"
-#include "../../ui/ui_main.h"
 
 /**
  * @brief Unloads transfer cargo when finishing the transfer or destroys it when no buildings/base.
@@ -233,7 +232,7 @@ void TR_TransferAlienAfterMissionStart (const base_t *base, aircraft_t *transfer
 
 	Com_sprintf(message, sizeof(message), _("Transport mission started, cargo is being transported to %s"), transfer.destBase->name);
 	MSO_CheckAddNewMessage(NT_TRANSFER_ALIENBODIES_DEFERED, _("Transport mission"), message, qfalse, MSG_TRANSFERFINISHED, NULL);
-	UI_PopWindow(qfalse);
+	cgi->UI_PopWindow(qfalse);
 
 	LIST_Add(&ccs.transfers, transfer);
 }

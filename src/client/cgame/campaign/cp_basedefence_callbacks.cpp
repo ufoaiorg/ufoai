@@ -23,8 +23,7 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 */
 
 #include "../../cl_shared.h"
-#include "../../ui/ui_data.h"
-#include "../../ui/ui_main.h" /* UI_ExecuteConfunc */
+#include "../../ui/ui_textids.h"
 #include "cp_campaign.h"
 #include "cp_basedefence_callbacks.h"
 #include "cp_fightequip_callbacks.h"
@@ -83,7 +82,7 @@ static void BDEF_UpdateAircraftItemList (const aircraftSlot_t *slot)
 	}
 
 	/* copy buffer to mn.menuText to display it on screen */
-	UI_RegisterLinkedListText(TEXT_LIST, itemList);
+	cgi->UI_RegisterLinkedListText(TEXT_LIST, itemList);
 }
 
 /**
@@ -200,9 +199,9 @@ static void BDEF_BaseDefenceMenuUpdate_f (void)
 		Q_strncpyz(type, Cmd_Argv(1), sizeof(type));
 
 	/* don't let old links appear on this menu */
-	UI_ResetData(TEXT_BASEDEFENCE_LIST);
-	UI_ResetData(TEXT_LIST);
-	UI_ResetData(TEXT_ITEMDESCRIPTION);
+	cgi->UI_ResetData(TEXT_BASEDEFENCE_LIST);
+	cgi->UI_ResetData(TEXT_LIST);
+	cgi->UI_ResetData(TEXT_ITEMDESCRIPTION);
 
 	/* base or installation should not be NULL because we are in the menu of this base or installation */
 	if (!base && !installation)
@@ -243,11 +242,11 @@ static void BDEF_BaseDefenceMenuUpdate_f (void)
 
 	/* Check if we can change to laser or missile */
 	if (base) {
-		UI_ExecuteConfunc("set_defencetypes %s %s",
+		cgi->UI_ExecuteConfunc("set_defencetypes %s %s",
 				(!missileResearched) ? "na" : (base && base->numBatteries > 0) ? "enable" : "disable",
 				(!laserResearched) ? "na" : (base && base->numLasers > 0) ? "enable" : "disable");
 	} else if (installation) {
-		UI_ExecuteConfunc("set_defencetypes %s %s",
+		cgi->UI_ExecuteConfunc("set_defencetypes %s %s",
 				(!missileResearched) ? "na" : (installation && installation->installationStatus == INSTALLATION_WORKING
 						&& installation->numBatteries > 0) ? "enable" : "disable", "na");
 	}
@@ -300,7 +299,7 @@ static void BDEF_BaseDefenceMenuUpdate_f (void)
 		Com_Printf("BDEF_BaseDefenceMenuUpdate_f: unknown bdefType.\n");
 		return;
 	}
-	UI_RegisterLinkedListText(TEXT_BASEDEFENCE_LIST, slotList);
+	cgi->UI_RegisterLinkedListText(TEXT_BASEDEFENCE_LIST, slotList);
 }
 
 /**

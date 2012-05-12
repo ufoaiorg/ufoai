@@ -25,7 +25,7 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #include "../../cl_shared.h"
 #include "../../cl_team.h"
 #include "../cl_game.h"
-#include "../../ui/ui_main.h"
+#include "../../ui/ui_textids.h"
 #include "cp_campaign.h"
 #include "cp_map.h"
 #include "cp_ufo.h"
@@ -91,7 +91,7 @@ void CP_StartMissionMap (mission_t* mission, const battleParam_t *battleParamete
 	const char *param = NULL;
 
 	/* prepare */
-	UI_InitStack(NULL, "singleplayermission", qtrue, qfalse);
+	cgi->UI_InitStack(NULL, "singleplayermission", qtrue, qfalse);
 
 	assert(mission->mapDef->map);
 

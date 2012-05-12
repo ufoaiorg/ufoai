@@ -26,8 +26,7 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 
 #include "cp_mission_callbacks.h"
 #include "../../cl_shared.h"
-#include "../../ui/ui_windows.h"
-#include "../../ui/ui_data.h"
+#include "../../ui/ui_textids.h"
 #include "cp_campaign.h"
 #include "cp_map.h"
 #include "cp_missions.h"
@@ -57,7 +56,7 @@ static void AM_Go_f (void)
 		return;
 	}
 
-	UI_PopWindow(qfalse);
+	cgi->UI_PopWindow(qfalse);
 
 	if (mission->stage != STAGE_BASE_ATTACK) {
 		if (!mission->active) {
@@ -112,7 +111,7 @@ void MIS_InitResultScreen (const missionResults_t *results)
 	linkedList_t *list = NULL;
 
 	/* init result text */
-	UI_ResetData(TEXT_LIST2);
+	cgi->UI_ResetData(TEXT_LIST2);
 
 	/* aliens */
 	LIST_AddString(&list, va("%s\t%i", _("Aliens killed"), results->aliensKilled));
@@ -134,7 +133,7 @@ void MIS_InitResultScreen (const missionResults_t *results)
 	if (results->itemTypes > 0 && results->itemAmount > 0)
 		LIST_AddString(&list, va("%s\t%i/%i", _("Gathered items (types/all)"), results->itemTypes, results->itemAmount));
 
-	UI_RegisterLinkedListText(TEXT_LIST2, list);
+	cgi->UI_RegisterLinkedListText(TEXT_LIST2, list);
 }
 
 /**

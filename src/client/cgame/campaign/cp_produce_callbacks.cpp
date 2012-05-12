@@ -25,7 +25,7 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 
 #include "../../cl_shared.h"
 #include "../../cl_inventory.h"
-#include "../../ui/ui_main.h"
+#include "../../ui/ui_textids.h"
 #include "cp_campaign.h"
 #include "cp_market.h"
 #include "cp_ufo.h"
@@ -179,11 +179,11 @@ static void PR_UpdateProductionList (const base_t* base)
 	}
 
 	/* bind the menu text to our static char array */
-	UI_RegisterLinkedListText(TEXT_PRODUCTION_LIST, productionList);
+	cgi->UI_RegisterLinkedListText(TEXT_PRODUCTION_LIST, productionList);
 	/* bind the amount of available items */
-	UI_RegisterLinkedListText(TEXT_PRODUCTION_AMOUNT, productionAmount);
+	cgi->UI_RegisterLinkedListText(TEXT_PRODUCTION_AMOUNT, productionAmount);
 	/* bind the amount of queued items */
-	UI_RegisterLinkedListText(TEXT_PRODUCTION_QUEUED, productionQueued);
+	cgi->UI_RegisterLinkedListText(TEXT_PRODUCTION_QUEUED, productionQueued);
 }
 
 static void PR_RequirementsInfo (const base_t *base, const requirements_t *reqs) {
@@ -197,7 +197,7 @@ static void PR_RequirementsInfo (const base_t *base, const requirements_t *reqs)
 	uiNode_t *req_technots = NULL;
 #endif
 
-	UI_ResetData(OPTION_PRODUCTION_REQUIREMENTS);
+	cgi->UI_ResetData(OPTION_PRODUCTION_REQUIREMENTS);
 
 	if (!reqs->numLinks)
 		return;
@@ -207,7 +207,7 @@ static void PR_RequirementsInfo (const base_t *base, const requirements_t *reqs)
 
 		switch (req->type) {
 		case RS_LINK_ITEM: {
-				uiNode_t *node = UI_AddOption(&req_items, req->link.od->id, va("%i %s", req->amount, _(req->link.od->name)), va("%i", i));
+				uiNode_t *node = cgi->UI_AddOption(&req_items, req->link.od->id, va("%i %s", req->amount, _(req->link.od->name)), va("%i", i));
 				if (B_ItemInBase(req->link.od, base) >= req->amount)
 					Vector4Copy(green, node->color);
 				else
@@ -219,7 +219,7 @@ static void PR_RequirementsInfo (const base_t *base, const requirements_t *reqs)
 				uiNode_t *node;
 
 				assert(tech);
-				node = UI_AddOption(&req_items, ANTIMATTER_TECH_ID, va("%i %s", req->amount, _(tech->name)), va("%i", i));
+				node = cgi->UI_AddOption(&req_items, ANTIMATTER_TECH_ID, va("%i %s", req->amount, _(tech->name)), va("%i", i));
 				if (B_AntimatterInBase(base) >= req->amount)
 					Vector4Copy(green, node->color);
 				else
@@ -239,10 +239,10 @@ static void PR_RequirementsInfo (const base_t *base, const requirements_t *reqs)
 		}
 	}
 	if (req_items) {
-		uiNode_t *node = UI_AddOption(&req_root, "items", "_Items", "item");
+		uiNode_t *node = cgi->UI_AddOption(&req_root, "items", "_Items", "item");
 		node->firstChild = req_items;
 	}
-	UI_RegisterOption(OPTION_PRODUCTION_REQUIREMENTS, req_root);
+	cgi->UI_RegisterOption(OPTION_PRODUCTION_REQUIREMENTS, req_root);
 }
 
 /**
@@ -275,7 +275,7 @@ static void PR_ItemProductionInfo (const base_t *base, const objDef_t *od, int r
 		PR_RequirementsInfo(base, &tech->requireForProduction);
 		Cmd_ExecuteString(va("show_requirements %i", tech->requireForProduction.numLinks));
 	}
-	UI_RegisterText(TEXT_PRODUCTION_INFO, productionInfo);
+	cgi->UI_RegisterText(TEXT_PRODUCTION_INFO, productionInfo);
 }
 
 /**
@@ -307,7 +307,7 @@ static void PR_DisassemblyInfo (const storedUFO_t *ufo, int remainingHours)
 		assert(compOd);
 		Q_strcat(productionInfo, va("  %s (%i)\n", _(compOd->name), amount), sizeof(productionInfo));
 	}
-	UI_RegisterText(TEXT_PRODUCTION_INFO, productionInfo);
+	cgi->UI_RegisterText(TEXT_PRODUCTION_INFO, productionInfo);
 	Cvar_Set("mn_item", ufo->id);
 	Cmd_ExecuteString("show_requirements 0");
 }
@@ -327,7 +327,7 @@ static void PR_AircraftInfo (const base_t *base, const aircraft_t *aircraftTempl
 	Q_strcat(productionInfo, va(_("Production costs\t%i c\n"), PR_GetPrice(aircraftTemplate)),
 		sizeof(productionInfo));
 	Q_strcat(productionInfo, va(_("Production time\t%ih\n"), remainingHours), sizeof(productionInfo));
-	UI_RegisterText(TEXT_PRODUCTION_INFO, productionInfo);
+	cgi->UI_RegisterText(TEXT_PRODUCTION_INFO, productionInfo);
 	Cvar_Set("mn_item", aircraftTemplate->id);
 	PR_RequirementsInfo(base, &aircraftTemplate->tech->requireForProduction);
 	Cmd_ExecuteString(va("show_requirements %i", aircraftTemplate->tech->requireForProduction.numLinks));
@@ -345,31 +345,31 @@ static void PR_ProductionInfo (const base_t *base)
 	if (selectedProduction) {
 		const production_t *prod = selectedProduction;
 		const int time = PR_GetRemainingHours(prod);
-		UI_ExecuteConfunc("prod_taskselected");
+		cgi->UI_ExecuteConfunc("prod_taskselected");
 
 		if (PR_IsAircraft(prod)) {
 			PR_AircraftInfo(base, prod->data.data.aircraft, time);
-			UI_ExecuteConfunc("amountsetter enable");
+			cgi->UI_ExecuteConfunc("amountsetter enable");
 		} else if (PR_IsItem(prod)) {
 			PR_ItemProductionInfo(base, prod->data.data.item, time);
-			UI_ExecuteConfunc("amountsetter enable");
+			cgi->UI_ExecuteConfunc("amountsetter enable");
 		} else if (PR_IsDisassembly(prod)) {
 			PR_DisassemblyInfo(prod->data.data.ufo, time);
-			UI_ExecuteConfunc("amountsetter disable");
+			cgi->UI_ExecuteConfunc("amountsetter disable");
 		} else {
 			Com_Error(ERR_DROP, "PR_ProductionInfo: Selected production is not item nor aircraft nor ufo.\n");
 		}
 		Cvar_SetValue("mn_production_amount", selectedProduction->amount);
 	} else {
 		if (!PR_IsDataValid(&selectedData)) {
-			UI_ExecuteConfunc("prod_nothingselected");
+			cgi->UI_ExecuteConfunc("prod_nothingselected");
 			if (produceCategory == FILTER_AIRCRAFT)
-				UI_RegisterText(TEXT_PRODUCTION_INFO, _("No aircraft selected."));
+				cgi->UI_RegisterText(TEXT_PRODUCTION_INFO, _("No aircraft selected."));
 			else
-				UI_RegisterText(TEXT_PRODUCTION_INFO, _("No item selected"));
+				cgi->UI_RegisterText(TEXT_PRODUCTION_INFO, _("No item selected"));
 			Cvar_Set("mn_item", "");
 		} else {
-			UI_ExecuteConfunc("prod_availableselected");
+			cgi->UI_ExecuteConfunc("prod_availableselected");
 			if (PR_IsAircraftData(&selectedData)) {
 				PR_AircraftInfo(base, selectedData.data.aircraft, PR_GetProductionHours(base, &selectedData));
 			} else if (PR_IsItemData(&selectedData)) {
@@ -565,7 +565,7 @@ static void PR_ProductionType_f (void)
 	/* update selection index if first entry of actual list was chosen */
 	if (!selectedProduction) {
 		const production_queue_t *prod = PR_GetProductionForBase(base);
-		UI_ExecuteConfunc("prod_selectline %i", prod->numItems + QUEUE_SPACERS);
+		cgi->UI_ExecuteConfunc("prod_selectline %i", prod->numItems + QUEUE_SPACERS);
 	}
 
 	/* Update displayed info about selected entry (if any). */
@@ -615,7 +615,6 @@ static void PR_ProductionIncrease_f (void)
 	technology_t *tech = NULL;
 	int amount = 1;
 	int producibleAmount;
-	static char productionPopup[1024];
 
 	if (!base)
 		return;
@@ -660,8 +659,7 @@ static void PR_ProductionIncrease_f (void)
 			Cvar_SetValue("mn_production_amount", prod->amount);
 			return;
 		} else if (amount != producibleAmount) {
-			Com_sprintf(productionPopup, lengthof(productionPopup), _("You don't have enough material to produce all (%i) additional items. Only %i could be added."), amount, producibleAmount);
-			CP_Popup(_("Not enough material!"), productionPopup);
+			CP_Popup(_("Not enough material!"), _("You don't have enough material to produce all (%i) additional items. Only %i could be added."), amount, producibleAmount);
 		}
 
 		PR_IncreaseProduction(prod, producibleAmount);
@@ -683,8 +681,7 @@ static void PR_ProductionIncrease_f (void)
 			CP_Popup(_("Not enough materials"), _("You don't have the materials needed for producing this item.\n"));
 			return;
 		} else if (amount != producibleAmount) {
-			Com_sprintf(productionPopup, lengthof(productionPopup), _("You don't have enough material to produce all (%i) items. Production will continue with a reduced (%i) number."), amount, producibleAmount);
-			CP_Popup(_("Not enough material!"), productionPopup);
+			CP_Popup(_("Not enough material!"), _("You don't have enough material to produce all (%i) items. Production will continue with a reduced (%i) number."), amount, producibleAmount);
 		}
 		/** @todo
 		 *  -) need to popup something like: "You need the following items in order to produce more of ITEM:   x of ITEM, x of ITEM, etc..."
@@ -705,7 +702,7 @@ static void PR_ProductionIncrease_f (void)
 
 		/* Now we select the item we just created. */
 		selectedProduction = prod;
-		UI_ExecuteConfunc("prod_selectline %i", selectedProduction->idx);
+		cgi->UI_ExecuteConfunc("prod_selectline %i", selectedProduction->idx);
 
 		/* messages */
 		Com_sprintf(cp_messageBuffer, sizeof(cp_messageBuffer), _("Production of %s started"), _(name));
@@ -735,10 +732,10 @@ static void PR_ProductionStop_f (void)
 
 	if (queue->numItems == 0) {
 		selectedProduction = NULL;
-		UI_ExecuteConfunc("prod_selectline -1");
+		cgi->UI_ExecuteConfunc("prod_selectline -1");
 	} else if (prodIDX >= queue->numItems) {
 		selectedProduction = &queue->items[queue->numItems - 1];
-		UI_ExecuteConfunc("prod_selectline %i", prodIDX);
+		cgi->UI_ExecuteConfunc("prod_selectline %i", prodIDX);
 	}
 
 	PR_ProductionInfo(base);
@@ -819,7 +816,7 @@ static void PR_ProductionUp_f (void)
 	PR_QueueMove(queue, selectedProduction->idx, -1);
 
 	selectedProduction = &queue->items[selectedProduction->idx - 1];
-	UI_ExecuteConfunc("prod_selectline %i", selectedProduction->idx);
+	cgi->UI_ExecuteConfunc("prod_selectline %i", selectedProduction->idx);
 	PR_UpdateProductionList(base);
 }
 
@@ -842,7 +839,7 @@ static void PR_ProductionDown_f (void)
 	PR_QueueMove(queue, selectedProduction->idx, 1);
 
 	selectedProduction = &queue->items[selectedProduction->idx + 1];
-	UI_ExecuteConfunc("prod_selectline %i", selectedProduction->idx);
+	cgi->UI_ExecuteConfunc("prod_selectline %i", selectedProduction->idx);
 	PR_UpdateProductionList(base);
 }
 

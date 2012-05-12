@@ -41,6 +41,7 @@ struct campaign_s;
 /** @todo rename this after merging with savegame breakage branch and also change the value to -1 */
 #define	BYTES_NONE	0xFF
 
+#include "cp_cgame_callbacks.h"
 #include "cp_rank.h"
 #include "cp_save.h"
 #include "cp_parse.h"
@@ -577,7 +578,7 @@ extern cvar_t *cp_start_employees;
 extern const cgame_import_t *cgi;
 
 /* Campaign functions */
-void CP_InitStartup(const struct cgame_import_s *import);
+void CP_InitStartup(void);
 campaign_t* CP_GetCampaign(const char *name);
 void CP_CampaignInit(campaign_t *campaign, qboolean load);
 void CP_ParseCampaignData(void);

@@ -23,8 +23,6 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 */
 
 #include "../../cl_shared.h"
-#include "../../ui/ui_main.h"
-#include "../../ui/ui_popup.h" /* UI_PopupButton, popupText */
 #include "cp_campaign.h"
 #include "cp_base_callbacks.h"
 #include "cp_base.h"
@@ -33,6 +31,7 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #include "cp_popup.h"
 #include "cp_time.h"
 #include "cp_ufo.h"
+#include "../../ui/ui_textids.h"
 
 /** @brief Used from menu scripts as parameter for mn_base_select */
 #define CREATE_NEW_BASE_ID -1
@@ -68,7 +67,7 @@ static void B_Destroy_AntimaterStorage_f (void)
 
 	if (prob < atof(Cmd_Argv(1))) {
 		MS_AddNewMessage(_("Notice"), va(_("%s has been destroyed by an antimatter storage breach."), base->name), qfalse, MSG_STANDARD, NULL);
-		UI_PopWindow(qfalse);
+		cgi->UI_PopWindow(qfalse);
 		B_Destroy(base);
 	}
 }
@@ -199,7 +198,7 @@ static void B_SetBaseTitle_f (void)
 		Cvar_Set("mn_base_title", baseName);
 	} else {
 		MS_AddNewMessage(_("Notice"), _("You've reached the base limit."), qfalse, MSG_STANDARD, NULL);
-		UI_PopWindow(qfalse);		/* remove the new base popup */
+		cgi->UI_PopWindow(qfalse);		/* remove the new base popup */
 	}
 }
 
@@ -297,53 +296,53 @@ static void B_BaseInit_f (void)
 	/* activate or deactivate the aircraft button */
 	if (AIR_AircraftAllowed(base)) {
 		if (AIR_BaseHasAircraft(base))
-			UI_ExecuteConfunc("update_basebutton aircraft false \"%s\"", _("Aircraft management and crew equipment"));
+			cgi->UI_ExecuteConfunc("update_basebutton aircraft false \"%s\"", _("Aircraft management and crew equipment"));
 		else
-			UI_ExecuteConfunc("update_basebutton aircraft true \"%s\"", _("Buy or produce at least one aircraft first."));
+			cgi->UI_ExecuteConfunc("update_basebutton aircraft true \"%s\"", _("Buy or produce at least one aircraft first."));
 	} else {
-		UI_ExecuteConfunc("update_basebutton aircraft true \"%s\"", _("No Hangar functional in base."));
+		cgi->UI_ExecuteConfunc("update_basebutton aircraft true \"%s\"", _("No Hangar functional in base."));
 	}
 
 	if (BS_BuySellAllowed(base))
-		UI_ExecuteConfunc("update_basebutton buysell false \"%s\"", _("Buy/Sell equipment, aircraft and UGV"));
+		cgi->UI_ExecuteConfunc("update_basebutton buysell false \"%s\"", _("Buy/Sell equipment, aircraft and UGV"));
 	else
-		UI_ExecuteConfunc("update_basebutton buysell true \"%s\"", va(_("No %s functional in base."), _("Storage")));
+		cgi->UI_ExecuteConfunc("update_basebutton buysell true \"%s\"", va(_("No %s functional in base."), _("Storage")));
 
 	if (B_GetCount() > 1)
-		UI_ExecuteConfunc("update_basebutton transfer false \"%s\"", _("Transfer equipment, vehicles, aliens and employees to other bases"));
+		cgi->UI_ExecuteConfunc("update_basebutton transfer false \"%s\"", _("Transfer equipment, vehicles, aliens and employees to other bases"));
 	else
-		UI_ExecuteConfunc("update_basebutton transfer true \"%s\"", _("Build at least a second base to transfer equipment or personnel"));
+		cgi->UI_ExecuteConfunc("update_basebutton transfer true \"%s\"", _("Build at least a second base to transfer equipment or personnel"));
 
 	if (RS_ResearchAllowed(base))
-		UI_ExecuteConfunc("update_basebutton research false \"%s\"", _("Research new technology"));
+		cgi->UI_ExecuteConfunc("update_basebutton research false \"%s\"", _("Research new technology"));
 	else
-		UI_ExecuteConfunc("update_basebutton research true \"%s\"", va(_("No %s functional in base."), _("Laboratory")));
+		cgi->UI_ExecuteConfunc("update_basebutton research true \"%s\"", va(_("No %s functional in base."), _("Laboratory")));
 
 	if (PR_ProductionAllowed(base))
-		UI_ExecuteConfunc("update_basebutton production false \"%s\"", _("Produce equipment, aircraft and UGV"));
+		cgi->UI_ExecuteConfunc("update_basebutton production false \"%s\"", _("Produce equipment, aircraft and UGV"));
 	else
-		UI_ExecuteConfunc("update_basebutton production true \"%s\"", va(_("No %s functional in base."), _("Workshop")));
+		cgi->UI_ExecuteConfunc("update_basebutton production true \"%s\"", va(_("No %s functional in base."), _("Workshop")));
 
 	if (E_HireAllowed(base))
-		UI_ExecuteConfunc("update_basebutton hire false \"%s\"", _("Hire or dismiss employees"));
+		cgi->UI_ExecuteConfunc("update_basebutton hire false \"%s\"", _("Hire or dismiss employees"));
 	else
-		UI_ExecuteConfunc("update_basebutton hire true \"%s\"", va(_("No %s functional in base."), _("Living Quarters")));
+		cgi->UI_ExecuteConfunc("update_basebutton hire true \"%s\"", va(_("No %s functional in base."), _("Living Quarters")));
 
 	if (AC_ContainmentAllowed(base))
-		UI_ExecuteConfunc("update_basebutton containment false \"%s\"", _("Manage captured aliens"));
+		cgi->UI_ExecuteConfunc("update_basebutton containment false \"%s\"", _("Manage captured aliens"));
 	else
-		UI_ExecuteConfunc("update_basebutton containment true \"%s\"", va(_("No %s functional in base."), _("Containment")));
+		cgi->UI_ExecuteConfunc("update_basebutton containment true \"%s\"", va(_("No %s functional in base."), _("Containment")));
 
 	if (HOS_HospitalAllowed(base))
-		UI_ExecuteConfunc("update_basebutton hospital false \"%s\"", _("Treat wounded soldiers and perform implant surgery"));
+		cgi->UI_ExecuteConfunc("update_basebutton hospital false \"%s\"", _("Treat wounded soldiers and perform implant surgery"));
 	else
-		UI_ExecuteConfunc("update_basebutton hospital true \"%s\"", va(_("No %s functional in base."), _("Hospital")));
+		cgi->UI_ExecuteConfunc("update_basebutton hospital true \"%s\"", va(_("No %s functional in base."), _("Hospital")));
 
 	/*
 	 * Gather data on current/max space for living quarters, storage, lab and workshop
 	 * clear_bld_space ensures 0/0 data for facilities which may not exist in base
 	 */
-	UI_ExecuteConfunc("clear_bld_space");
+	cgi->UI_ExecuteConfunc("clear_bld_space");
 	for (i = 0; i < ccs.numBuildingTemplates; i++) {
 		const building_t* b = &ccs.buildingTemplates[i];
 		const baseCapacities_t capType = B_GetCapacityFromBuildingType(b->buildingType);
@@ -364,19 +363,19 @@ static void B_BaseInit_f (void)
 		if (count < 1)
 			continue;
 
-		UI_ExecuteConfunc("show_bld_space \"%s\" \"%s\" %i %i %i %i", _(b->name), b->id, cap.cur, cap.max, count, b->tpl->maxCount);
+		cgi->UI_ExecuteConfunc("show_bld_space \"%s\" \"%s\" %i %i %i %i", _(b->name), b->id, cap.cur, cap.max, count, b->tpl->maxCount);
 	}
 
 	/*
 	 * Get the number of different employees in the base
 	 * @todo: Get the number of injured soldiers if hospital exists
 	 */
-	UI_ExecuteConfunc("current_employees %i %i %i %i", E_CountHired(base, EMPL_SOLDIER), E_CountHired(base, EMPL_PILOT), E_CountHired(base, EMPL_SCIENTIST), E_CountHired(base, EMPL_WORKER));
+	cgi->UI_ExecuteConfunc("current_employees %i %i %i %i", E_CountHired(base, EMPL_SOLDIER), E_CountHired(base, EMPL_PILOT), E_CountHired(base, EMPL_SCIENTIST), E_CountHired(base, EMPL_WORKER));
 
 	/*
 	 * List the first five aircraft in the base if they exist
 	 */
-	UI_ExecuteConfunc("clear_aircraft");
+	cgi->UI_ExecuteConfunc("clear_aircraft");
 	if (AIR_AircraftAllowed(base)) {
 		if (AIR_BaseHasAircraft(base)) {
 			i = 0;
@@ -387,14 +386,14 @@ static void B_BaseInit_f (void)
 				 * UI node should use global IDX to identify aircraft but it uses order of aircraft in base (i)
 				 * See @todo in cp_aircraft_callbacks.c in AIR_AircraftSelect()
 				 */
-				UI_ExecuteConfunc("show_aircraft %i \"%s\" \"%s\" \"%s\" %i", i, aircraft->name, aircraft->id, AIR_AircraftStatusToName(aircraft), AIR_IsAircraftInBase(aircraft));
+				cgi->UI_ExecuteConfunc("show_aircraft %i \"%s\" \"%s\" \"%s\" %i", i, aircraft->name, aircraft->id, AIR_AircraftStatusToName(aircraft), AIR_IsAircraftInBase(aircraft));
 				i++;
 			}
 		}
 	}
 
 	/* Get the research item closest to completion in the base if it exists */
-	UI_ExecuteConfunc("clear_research");
+	cgi->UI_ExecuteConfunc("clear_research");
 	if (RS_ResearchAllowed(base)) {
 		const technology_t *closestTech = NULL;
 		double finished = -1;
@@ -413,16 +412,16 @@ static void B_BaseInit_f (void)
 			}
 		}
 		if (closestTech != NULL)
-			UI_ExecuteConfunc("show_research \"%s\" %i %3.0f", closestTech->name, closestTech->scientists, finished);
+			cgi->UI_ExecuteConfunc("show_research \"%s\" %i %3.0f", closestTech->name, closestTech->scientists, finished);
 	}
 
 	/* Get the production item closest to completion in the base if it exists */
-	UI_ExecuteConfunc("clear_production");
+	cgi->UI_ExecuteConfunc("clear_production");
 	if (PR_ProductionAllowed(base)) {
 		const production_queue_t *queue = PR_GetProductionForBase(base);
 		if (queue->numItems > 0) {
 			const production_t *production = &queue->items[0];
-			UI_ExecuteConfunc("show_production \"%s\" %3.0f", PR_GetName(&production->data), PR_GetProgress(production) * 100);
+			cgi->UI_ExecuteConfunc("show_production \"%s\" %3.0f", PR_GetName(&production->data), PR_GetProgress(production) * 100);
 		}
 	}
 }
@@ -440,7 +439,7 @@ static void B_BuildingSpace_f (void)
 		return;
 
 	// Clear existing entries from the UI panel
-	UI_ExecuteConfunc("clear_bld_space");
+	cgi->UI_ExecuteConfunc("clear_bld_space");
 	for (i = 0; i < ccs.numBuildingTemplates; i++) {
 		const building_t* b = &ccs.buildingTemplates[i];
 		const baseCapacities_t capType = B_GetCapacityFromBuildingType(b->buildingType);
@@ -461,7 +460,7 @@ static void B_BuildingSpace_f (void)
 		assert(b->tpl);
 		const int count = B_GetNumberOfBuildingsInBaseByTemplate(base, b->tpl);
 
-		UI_ExecuteConfunc("show_bld_space \"%s\" \"%s\" %i %i %i %i", _(b->name), b->id, cap.cur, cap.max, count, b->tpl->maxCount);
+		cgi->UI_ExecuteConfunc("show_bld_space \"%s\" \"%s\" %i %i %i %i", _(b->name), b->id, cap.cur, cap.max, count, b->tpl->maxCount);
 	}
 }
 
@@ -499,10 +498,10 @@ static void B_BuildingInit (base_t* base)
 	if (base->buildingCurrent)
 		B_DrawBuilding(base->buildingCurrent);
 	else
-		UI_ExecuteConfunc("mn_buildings_reset");
+		cgi->UI_ExecuteConfunc("mn_buildings_reset");
 
 	buildingNumber = LIST_Count(buildingList);
-	UI_RegisterLinkedListText(TEXT_BUILDINGS, buildingList);
+	cgi->UI_RegisterLinkedListText(TEXT_BUILDINGS, buildingList);
 }
 
 /**
@@ -601,7 +600,7 @@ static void B_MarkBuildingDestroy (building_t* building)
 		case B_HANGAR:
 		case B_SMALL_HANGAR:
 			if (CAP_GetFreeCapacity(base, cap) <= 0) {
-				UI_PopupButton(_("Destroy Hangar"), _("If you destroy this hangar, you will also destroy the aircraft inside.\nAre you sure you want to destroy this building?"),
+				cgi->UI_PopupButton(_("Destroy Hangar"), _("If you destroy this hangar, you will also destroy the aircraft inside.\nAre you sure you want to destroy this building?"),
 					"ui_pop;ui_push aircraft;aircraft_select;", _("Go to hangar"), _("Go to hangar without destroying building"),
 					va("building_destroy %i %i confirmed; ui_pop;", base->idx, building->idx), _("Destroy"), _("Destroy the building"),
 					hasMoreBases ? "ui_pop;ui_push transfer;" : NULL, hasMoreBases ? _("Transfer") : NULL,
@@ -611,7 +610,7 @@ static void B_MarkBuildingDestroy (building_t* building)
 			break;
 		case B_QUARTERS:
 			if (CAP_GetFreeCapacity(base, cap) < building->capacity) {
-				UI_PopupButton(_("Destroy Quarter"), _("If you destroy this Quarters, every employee inside will be killed.\nAre you sure you want to destroy this building?"),
+				cgi->UI_PopupButton(_("Destroy Quarter"), _("If you destroy this Quarters, every employee inside will be killed.\nAre you sure you want to destroy this building?"),
 					"ui_pop;ui_push employees;employee_list 0;", _("Dismiss"), _("Go to hiring menu without destroying building"),
 					va("building_destroy %i %i confirmed; ui_pop;", base->idx, building->idx), _("Destroy"), _("Destroy the building"),
 					hasMoreBases ? "ui_pop;ui_push transfer;" : NULL, hasMoreBases ? _("Transfer") : NULL,
@@ -621,7 +620,7 @@ static void B_MarkBuildingDestroy (building_t* building)
 			break;
 		case B_STORAGE:
 			if (CAP_GetFreeCapacity(base, cap) < building->capacity) {
-				UI_PopupButton(_("Destroy Storage"), _("If you destroy this Storage, every items inside will be destroyed.\nAre you sure you want to destroy this building?"),
+				cgi->UI_PopupButton(_("Destroy Storage"), _("If you destroy this Storage, every items inside will be destroyed.\nAre you sure you want to destroy this building?"),
 					"ui_pop;ui_push market;buy_type *mn_itemtype", _("Go to storage"), _("Go to buy/sell menu without destroying building"),
 					va("building_destroy %i %i confirmed; ui_pop;", base->idx, building->idx), _("Destroy"), _("Destroy the building"),
 					hasMoreBases ? "ui_pop;ui_push transfer;" : NULL, hasMoreBases ? _("Transfer") : NULL,
@@ -634,7 +633,7 @@ static void B_MarkBuildingDestroy (building_t* building)
 		}
 	}
 
-	UI_PopupButton(_("Destroy building"), _("Are you sure you want to destroy this building?"),
+	cgi->UI_PopupButton(_("Destroy building"), _("Are you sure you want to destroy this building?"),
 		NULL, NULL, NULL,
 		va("building_destroy %i %i confirmed; ui_pop;", base->idx, building->idx), _("Destroy"), _("Destroy the building"),
 		NULL, NULL, NULL);
@@ -759,9 +758,8 @@ static void B_CheckBuildingStatusForMenu_f (void)
 				}
 			}
 
-			Com_sprintf(popupText, sizeof(popupText), ngettext("Construction of building will be over in %i day.\nPlease wait to enter.", "Construction of building will be over in %i days.\nPlease wait to enter.",
-				minDay), minDay);
-			CP_Popup(_("Notice"), popupText);
+			CP_Popup(_("Notice"), ngettext("Construction of building will be over in %i day.\nPlease wait to enter.", "Construction of building will be over in %i days.\nPlease wait to enter.",
+					minDay), minDay);
 			return;
 		}
 
@@ -770,8 +768,7 @@ static void B_CheckBuildingStatusForMenu_f (void)
 			assert(building->dependsBuilding);
 			if (B_GetNumberOfBuildingsInBaseByBuildingType(base, dependenceBuilding->buildingType) <= 0) {
 				/* the dependence of the building is not built */
-				Com_sprintf(popupText, sizeof(popupText), _("You need a building %s to make building %s functional."), _(dependenceBuilding->name), _(building->name));
-				CP_Popup(_("Notice"), popupText);
+				CP_Popup(_("Notice"), _("You need a building %s to make building %s functional."), _(dependenceBuilding->name), _(building->name));
 				return;
 			} else {
 				/* maybe the dependence of the building is under construction
@@ -781,34 +778,29 @@ static void B_CheckBuildingStatusForMenu_f (void)
 
 				while ((b = B_GetNextBuildingByType(base, b, dependenceBuilding->buildingType))) {
 					if (!B_IsBuildingBuiltUp(b)) {
-						Com_sprintf(popupText, sizeof(popupText), _("Building %s is not finished yet, and is needed to use building %s."),
-							_(dependenceBuilding->name), _(building->name));
-						CP_Popup(_("Notice"), popupText);
+						CP_Popup(_("Notice"), _("Building %s is not finished yet, and is needed to use building %s."),
+								_(dependenceBuilding->name), _(building->name));
 						return;
 					}
 				}
 				/* the dependence is built but doesn't work - must be because of their dependendes */
-				Com_sprintf(popupText, sizeof(popupText), _("Make sure that the dependencies of building %s (%s) are operational, so that building %s may be used."),
-					_(dependenceBuilding->name), _(dependenceBuilding->dependsBuilding->name), _(building->name));
-				CP_Popup(_("Notice"), popupText);
+				CP_Popup(_("Notice"), _("Make sure that the dependencies of building %s (%s) are operational, so that building %s may be used."),
+						_(dependenceBuilding->name), _(dependenceBuilding->dependsBuilding->name), _(building->name));
 				return;
 			}
 		}
 		/* all buildings are OK: employees must be missing */
 		if (building->buildingType == B_WORKSHOP && E_CountHired(base, EMPL_WORKER) <= 0) {
-			Com_sprintf(popupText, sizeof(popupText), _("You need to recruit %s to use building %s."),
-				E_GetEmployeeString(EMPL_WORKER, 2), _(building->name));
-			CP_Popup(_("Notice"), popupText);
+			CP_Popup(_("Notice"), _("You need to recruit %s to use building %s."),
+					E_GetEmployeeString(EMPL_WORKER, 2), _(building->name));
 			return;
 		} else if (building->buildingType == B_LAB && E_CountHired(base, EMPL_SCIENTIST) <= 0) {
-			Com_sprintf(popupText, sizeof(popupText), _("You need to recruit %s to use building %s."),
-				E_GetEmployeeString(EMPL_SCIENTIST, 2), _(building->name));
-			CP_Popup(_("Notice"), popupText);
+			CP_Popup(_("Notice"), _("You need to recruit %s to use building %s."),
+					E_GetEmployeeString(EMPL_SCIENTIST, 2), _(building->name));
 			return;
 		}
 	} else {
-		Com_sprintf(popupText, sizeof(popupText), _("Build a %s first."), _(building->name));
-		CP_Popup(_("Notice"), popupText);
+		CP_Popup(_("Notice"), _("Build a %s first."), _(building->name));
 		return;
 	}
 }
@@ -862,7 +854,7 @@ static void BaseSummary_Init (const base_t *base)
 	}
 
 	/* link into the menu */
-	UI_RegisterText(TEXT_STANDARD, textInfoBuffer);
+	cgi->UI_RegisterText(TEXT_STANDARD, textInfoBuffer);
 
 	Q_strcat(textStatsBuffer, _("^BBuildings\t\t\t\t\t\tCapacity\t\t\t\tAmount\n"), sizeof(textStatsBuffer));
 	for (i = 0; i < ccs.numBuildingTemplates; i++) {
@@ -926,7 +918,7 @@ static void BaseSummary_Init (const base_t *base)
 		Q_strcat(textStatsBuffer, _("Nothing\n"), sizeof(textStatsBuffer));
 
 	/* link into the menu */
-	UI_RegisterText(TEXT_STATS_BASESUMMARY, textStatsBuffer);
+	cgi->UI_RegisterText(TEXT_STATS_BASESUMMARY, textStatsBuffer);
 }
 
 /**
@@ -949,7 +941,7 @@ static void BaseSummary_SelectBase_f (void)
 
 	if (base != NULL) {
 		BaseSummary_Init(base);
-		UI_ExecuteConfunc("basesummary_change_color %i", base->idx);
+		cgi->UI_ExecuteConfunc("basesummary_change_color %i", base->idx);
 	}
 }
 
@@ -968,7 +960,7 @@ static void B_MakeBaseMapShot_f (void)
 	Cvar_SetValue("r_isometric", 1);
 	/* we are interested in the second level only */
 	Cvar_SetValue("cl_worldlevel", 1);
-	UI_PushWindow("hud_nohud", NULL, NULL);
+	cgi->UI_PushWindow("hud_nohud", NULL, NULL);
 	/* hide any active console */
 	Cmd_ExecuteString("toggleconsole");
 	Cmd_ExecuteString("r_screenshot tga");

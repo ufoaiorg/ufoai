@@ -23,10 +23,8 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 */
 
 #include "../../cl_shared.h"
-#include "../../cl_renderer.h" /* R_Color */
 #include "../../renderer/r_image.h"
 #include "../../renderer/r_draw.h" /* R_DrawLineStrip */
-#include "../../ui/ui_nodes.h"
 #include "cp_campaign.h"
 #include "cp_overlay.h"
 #include "cp_map.h"
@@ -138,7 +136,7 @@ void RADAR_DrawInMap (const uiNode_t *node, const radar_t *radar, const vec2_t p
 		return;
 
 	/* Set color */
-	R_Color(color);
+	cgi->R_Color(color);
 
 	/* Draw lines from radar to ufos sensored */
 	display = MAP_AllMapToScreen(node, pos, &x, &y, NULL);
@@ -159,7 +157,7 @@ void RADAR_DrawInMap (const uiNode_t *node, const radar_t *radar, const vec2_t p
 		}
 	}
 
-	R_Color(NULL);
+	cgi->R_Color(NULL);
 }
 
 /**

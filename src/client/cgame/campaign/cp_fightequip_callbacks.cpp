@@ -23,7 +23,7 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 
 */
 #include "../../cl_shared.h"
-#include "../../ui/ui_main.h" /* UI_ExecuteConfunc - otherwise only ui_data.h would be needed */
+#include "../../ui/ui_textids.h"
 #include "cp_campaign.h"
 #include "cp_fightequip_callbacks.h"
 #include "cp_mapfightequip.h"
@@ -218,15 +218,15 @@ static void AIM_UpdateAircraftItemList (const aircraftSlot_t *slot)
 			const int amount = B_ItemInBase(item, base);
 
 			LIST_AddString(&amountList, va("%d", amount));
-			option = UI_AddOption(&AIM_items, (*currentTech)->name, _((*currentTech)->name), va("%d", (*currentTech)->idx));
+			option = cgi->UI_AddOption(&AIM_items, (*currentTech)->name, _((*currentTech)->name), va("%d", (*currentTech)->idx));
 			if (!AIM_SelectableCraftItem(slot, *currentTech))
 				option->disabled = qtrue;
 		}
 		currentTech++;
 	}
 
-	UI_RegisterOption(TEXT_LIST, AIM_items);
-	UI_RegisterLinkedListText(TEXT_LIST2, amountList);
+	cgi->UI_RegisterOption(TEXT_LIST, AIM_items);
+	cgi->UI_RegisterLinkedListText(TEXT_LIST2, amountList);
 }
 
 /**
@@ -246,7 +246,7 @@ static void AIM_DrawAircraftSlots (const aircraft_t *aircraft)
 		int max, j;
 
 		/* Default value */
-		UI_ExecuteConfunc("airequip_display_slot %i 0", i);
+		cgi->UI_ExecuteConfunc("airequip_display_slot %i 0", i);
 
 		/* Draw available slots */
 		switch (airequipID) {
@@ -268,9 +268,9 @@ static void AIM_DrawAircraftSlots (const aircraft_t *aircraft)
 			if (slot->pos == i) {
 				/* draw in white if this is the selected slot */
 				if (j == airequipSelectedSlot) {
-					UI_ExecuteConfunc("airequip_display_slot %i 2", i);
+					cgi->UI_ExecuteConfunc("airequip_display_slot %i 2", i);
 				} else {
-					UI_ExecuteConfunc("airequip_display_slot %i 1", i);
+					cgi->UI_ExecuteConfunc("airequip_display_slot %i 1", i);
 				}
 				if (slot->item) {
 					Cvar_Set(va("mn_aircraft_item_model_slot%i", i), RS_GetTechForItem(slot->item)->mdl);
@@ -288,7 +288,7 @@ static void AIM_DrawAircraftSlots (const aircraft_t *aircraft)
  */
 static inline void AIM_EmphazeAmmoSlotText (void)
 {
-	UI_ExecuteConfunc("airequip_zone2_color \"1 0 0 1\"");
+	cgi->UI_ExecuteConfunc("airequip_zone2_color \"1 0 0 1\"");
 }
 
 /**
@@ -298,7 +298,7 @@ static inline void AIM_EmphazeAmmoSlotText (void)
  */
 static inline void AIM_NoEmphazeAmmoSlotText (void)
 {
-	UI_ExecuteConfunc("airequip_zone2_color \"1 1 1 1\"");
+	cgi->UI_ExecuteConfunc("airequip_zone2_color \"1 1 1 1\"");
 }
 
 static void AIM_AircraftEquipMenuUpdate (void)
@@ -314,10 +314,10 @@ static void AIM_AircraftEquipMenuUpdate (void)
 		return;
 
 	/* don't let old links appear on this menu */
-	UI_ResetData(TEXT_AIREQUIP_1);
-	UI_ResetData(TEXT_AIREQUIP_2);
-	UI_ResetData(TEXT_ITEMDESCRIPTION);
-	UI_ResetData(TEXT_LIST);
+	cgi->UI_ResetData(TEXT_AIREQUIP_1);
+	cgi->UI_ResetData(TEXT_AIREQUIP_2);
+	cgi->UI_ResetData(TEXT_ITEMDESCRIPTION);
+	cgi->UI_ResetData(TEXT_LIST);
 
 	aircraft = base->aircraftCurrent;
 
@@ -380,7 +380,7 @@ static void AIM_AircraftEquipMenuUpdate (void)
 				-slot->installationTime), sizeof(smallbuffer1));
 		}
 	}
-	UI_RegisterText(TEXT_AIREQUIP_1, smallbuffer1);
+	cgi->UI_RegisterText(TEXT_AIREQUIP_1, smallbuffer1);
 
 	/* Second slot: ammo slot (only used for weapons) */
 	if ((airequipID == AC_ITEM_WEAPON || airequipID == AC_ITEM_AMMO) && slot->item) {
@@ -399,7 +399,7 @@ static void AIM_AircraftEquipMenuUpdate (void)
 	} else
 		*smallbuffer2 = '\0';
 
-	UI_RegisterText(TEXT_AIREQUIP_2, smallbuffer2);
+	cgi->UI_RegisterText(TEXT_AIREQUIP_2, smallbuffer2);
 
 	/* Draw existing slots for this aircraft */
 	AIM_DrawAircraftSlots(aircraft);
@@ -550,15 +550,15 @@ static void AIM_UpdateItemDescription (qboolean fromList, qboolean fromSlot)
 	}
 
 	if (*Cvar_GetString("mn_item") == '\0') {
-		UI_ExecuteConfunc("airequip_no_item");
+		cgi->UI_ExecuteConfunc("airequip_no_item");
 	} else {
 		if (fromSlot) {
-			UI_ExecuteConfunc("airequip_installed_item");
+			cgi->UI_ExecuteConfunc("airequip_installed_item");
 		} else {
 			if (status == AIM_LOADING_OK)
-				UI_ExecuteConfunc("airequip_installable_item");
+				cgi->UI_ExecuteConfunc("airequip_installable_item");
 			else
-				UI_ExecuteConfunc("airequip_noinstallable_item");
+				cgi->UI_ExecuteConfunc("airequip_noinstallable_item");
 		}
 	}
 }
@@ -581,12 +581,12 @@ static void AIM_AircraftEquipMenuUpdate_f (void)
 		case AC_ITEM_ELECTRONICS:
 		case AC_ITEM_SHIELD:
 			airequipID = type;
-			UI_ExecuteConfunc("airequip_zone2_off");
+			cgi->UI_ExecuteConfunc("airequip_zone2_off");
 			break;
 		case AC_ITEM_AMMO:
 		case AC_ITEM_WEAPON:
 			airequipID = type;
-			UI_ExecuteConfunc("airequip_zone2_on");
+			cgi->UI_ExecuteConfunc("airequip_zone2_on");
 			break;
 		default:
 			airequipID = AC_ITEM_WEAPON;

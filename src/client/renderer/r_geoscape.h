@@ -31,6 +31,10 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
  * @sa GLOBE_RADIUS */
 #define STANDARD_3D_ZOOM 40.0f
 
+#define EARTH_RADIUS 8192.0f
+#define MOON_RADIUS 1024.0f
+#define SUN_RADIUS 1024.0f
+
 void R_Draw3DGlobe(int x, int y, int w, int h, int day, int second, const vec3_t rotate, float zoom, const char *map, qboolean disableSolarRender, float ambient, qboolean overlayNation, qboolean overlayXVI, qboolean overlayRadar, image_t *r_xviTexture, image_t *r_radarTexture, qboolean renderNationGlow);
 void R_Draw2DMapMarkers(const vec2_t screenPos, float direction, const char *model, int skin);
 void R_Draw3DMapMarkers(int x, int y, int w, int h, const vec3_t rotate, const vec2_t pos, float direction, float earthRadius, const char *model, int skin);

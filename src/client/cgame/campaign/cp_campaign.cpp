@@ -60,7 +60,6 @@ ccs_t ccs;
 cvar_t *cp_campaign;
 cvar_t *cp_start_employees;
 cvar_t *cp_missiontest;
-const cgame_import_t *cgi;
 
 typedef struct {
 	int ucn;
@@ -279,9 +278,9 @@ void CP_EndCampaign (qboolean won)
 	Cmd_ExecuteString("game_exit");
 
 	if (won)
-		UI_InitStack("endgame", NULL, qtrue, qtrue);
+		cgi->UI_InitStack("endgame", NULL, qtrue, qtrue);
 	else
-		UI_InitStack("lostgame", NULL, qtrue, qtrue);
+		cgi->UI_InitStack("lostgame", NULL, qtrue, qtrue);
 
 	Com_Drop();
 }
@@ -299,7 +298,7 @@ void CP_CheckLostCondition (const campaign_t *campaign)
 		return;
 
 	if (!endCampaign && ccs.credits < -campaign->negativeCreditsUntilLost) {
-		UI_RegisterText(TEXT_STANDARD, _("You've gone too far into debt."));
+		cgi->UI_RegisterText(TEXT_STANDARD, _("You've gone too far into debt."));
 		endCampaign = qtrue;
 	}
 
@@ -307,13 +306,13 @@ void CP_CheckLostCondition (const campaign_t *campaign)
 	 * until he has set up a base again, the aliens might have invaded the whole
 	 * world ;) - i mean, removing the credits check here. */
 	if (ccs.credits < campaign->basecost - campaign->negativeCreditsUntilLost && !B_AtLeastOneExists()) {
-		UI_RegisterText(TEXT_STANDARD, _("You've lost your bases and don't have enough money to build new ones."));
+		cgi->UI_RegisterText(TEXT_STANDARD, _("You've lost your bases and don't have enough money to build new ones."));
 		endCampaign = qtrue;
 	}
 
 	if (!endCampaign) {
 		if (CP_GetAverageXVIRate() > campaign->maxAllowedXVIRateUntilLost) {
-			UI_RegisterText(TEXT_STANDARD, _("You have failed in your charter to protect Earth."
+			cgi->UI_RegisterText(TEXT_STANDARD, _("You have failed in your charter to protect Earth."
 				" Our home and our people have fallen to the alien infection. Only a handful"
 				" of people on Earth remain human, and the remaining few no longer have a"
 				" chance to stem the tide. Your command is no more; PHALANX is no longer"
@@ -332,7 +331,7 @@ void CP_CheckLostCondition (const campaign_t *campaign)
 			}
 			if (nationBelowLimit >= nationBelowLimitPercentage * ccs.numNations) {
 				/* lost the game */
-				UI_RegisterText(TEXT_STANDARD, _("Under your command, PHALANX operations have"
+				cgi->UI_RegisterText(TEXT_STANDARD, _("Under your command, PHALANX operations have"
 					" consistently failed to protect nations."
 					" The UN, highly unsatisfied with your performance, has decided to remove"
 					" you from command and subsequently disbands the PHALANX project as an"
@@ -452,7 +451,7 @@ static void CP_CampaignFunctionPeriodicCall (campaign_t* campaign, int dt, qbool
  */
 qboolean CP_OnGeoscape (void)
 {
-	return Q_streq("geoscape", UI_GetActiveWindowName());
+	return Q_streq("geoscape", cgi->UI_GetActiveWindowName());
 }
 
 /**
@@ -490,7 +489,7 @@ static inline qboolean CP_IsBudgetDue (const dateLong_t *oldDate, const dateLong
 
 /**
  * @brief Called every frame when we are in geoscape view
- * @note Called for node types UI_MAP and UI_3DMAP
+ * @note Called for node types cgi->UI_MAP and cgi->UI_3DMAP
  * @sa NAT_HandleBudget
  * @sa B_UpdateBaseData
  * @sa AIR_CampaignRun
@@ -1113,7 +1112,7 @@ void CP_CampaignInit (campaign_t *campaign, qboolean load)
 
 	CP_XVIInit();
 
-	UI_InitStack("geoscape", "campaign_main", qtrue, qtrue);
+	cgi->UI_InitStack("geoscape", "campaign_main", qtrue, qtrue);
 
 	if (load) {
 		return;
@@ -1441,9 +1440,8 @@ int CP_GetSalaryUpKeepBase (const salary_t *salary, const base_t *base)
 }
 
 /** @todo remove me and move all the included stuff to proper places */
-void CP_InitStartup (const cgame_import_t *import)
+void CP_InitStartup (void)
 {
-	cgi = import;
 	cp_campaignPool = Mem_CreatePool("Client: Local (per game)");
 
 	SAV_Init();

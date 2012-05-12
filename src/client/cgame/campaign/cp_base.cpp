@@ -26,8 +26,7 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 
 #include "../../cl_shared.h"
 #include "../../cl_inventory.h" /* INV_GetEquipmentDefinitionByID */
-#include "../../ui/ui_main.h"
-#include "../../ui/ui_popup.h" /* popupText */
+#include "../../ui/ui_textids.h"
 #include "../../../shared/parse.h"
 #include "cp_campaign.h"
 #include "cp_mapfightequip.h"
@@ -1475,7 +1474,7 @@ void B_DrawBuilding (const building_t* building)
 		Cvar_Set("mn_building_image", "base/empty");
 
 	/* link into menu text array */
-	UI_RegisterText(TEXT_BUILDING_INFO, buildingText);
+	cgi->UI_RegisterText(TEXT_BUILDING_INFO, buildingText);
 }
 
 /**
@@ -1740,7 +1739,7 @@ void B_SelectBase (const base_t *base)
 	} else {
 		Com_DPrintf(DEBUG_CLIENT, "B_SelectBase_f: select base with id %i\n", base->idx);
 		ccs.mapAction = MA_NONE;
-		UI_PushWindow("bases", NULL, NULL);
+		cgi->UI_PushWindow("bases", NULL, NULL);
 		B_SetCurrentSelectedBase(base);
 	}
 }
@@ -2010,46 +2009,46 @@ void B_BuildingOpenAfterClick (const building_t *building)
 		switch (building->buildingType) {
 		case B_LAB:
 			if (RS_ResearchAllowed(base))
-				UI_PushWindow("research", NULL, NULL);
+				cgi->UI_PushWindow("research", NULL, NULL);
 			else
 				UP_OpenWith(building->pedia);
 			break;
 		case B_HOSPITAL:
 			if (HOS_HospitalAllowed(base))
-				UI_PushWindow("hospital", NULL, NULL);
+				cgi->UI_PushWindow("hospital", NULL, NULL);
 			else
 				UP_OpenWith(building->pedia);
 			break;
 		case B_ALIEN_CONTAINMENT:
 			if (AC_ContainmentAllowed(base))
-				UI_PushWindow("aliencont", NULL, NULL);
+				cgi->UI_PushWindow("aliencont", NULL, NULL);
 			else
 				UP_OpenWith(building->pedia);
 			break;
 		case B_QUARTERS:
 			if (E_HireAllowed(base))
-				UI_PushWindow("employees", NULL, NULL);
+				cgi->UI_PushWindow("employees", NULL, NULL);
 			else
 				UP_OpenWith(building->pedia);
 			break;
 		case B_WORKSHOP:
 			if (PR_ProductionAllowed(base))
-				UI_PushWindow("production", NULL, NULL);
+				cgi->UI_PushWindow("production", NULL, NULL);
 			else
 				UP_OpenWith(building->pedia);
 			break;
 		case B_DEFENCE_LASER:
 		case B_DEFENCE_MISSILE:
-			UI_PushWindow("basedefence", NULL, NULL);
+			cgi->UI_PushWindow("basedefence", NULL, NULL);
 			break;
 		case B_HANGAR:
 		case B_SMALL_HANGAR:
 			if (!AIR_AircraftAllowed(base)) {
 				UP_OpenWith(building->pedia);
 			} else if (AIR_BaseHasAircraft(base)) {
-				UI_PushWindow("aircraft", NULL, NULL);
+				cgi->UI_PushWindow("aircraft", NULL, NULL);
 			} else {
-				UI_PushWindow("buyaircraft", NULL, NULL);
+				cgi->UI_PushWindow("buyaircraft", NULL, NULL);
 				/* transfer is only possible when there are at least two bases */
 				if (B_GetCount() > 1)
 					CP_Popup(_("Note"), _("No aircraft in this base - You first have to purchase or transfer an aircraft\n"));
@@ -2059,13 +2058,12 @@ void B_BuildingOpenAfterClick (const building_t *building)
 			break;
 		case B_STORAGE:
 			if (BS_BuySellAllowed(base))
-				UI_PushWindow("market", NULL, NULL);
+				cgi->UI_PushWindow("market", NULL, NULL);
 			else
 				UP_OpenWith(building->pedia);
 			break;
 		case B_ANTIMATTER:
-			Com_sprintf(popupText, sizeof(popupText), "%s %d/%d", _("Antimatter (current/max):"), CAP_GetCurrent(base, CAP_ANTIMATTER), CAP_GetMax(base, CAP_ANTIMATTER));
-			CP_Popup(_("Information"), popupText);
+			CP_Popup(_("Information"), "%s %d/%d", _("Antimatter (current/max):"), CAP_GetCurrent(base, CAP_ANTIMATTER), CAP_GetMax(base, CAP_ANTIMATTER));
 			break;
 		default:
 			UP_OpenWith(building->pedia);
@@ -2180,7 +2178,6 @@ static void B_CheckCoherency_f (void)
 
 /**
  * @brief Resets console commands.
- * @sa UI_InitStartup
  */
 void B_InitStartup (void)
 {

@@ -23,7 +23,7 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 */
 
 #include "../../cl_shared.h"
-#include "../../ui/ui_main.h"
+#include "../../ui/ui_textids.h"
 #include "cp_campaign.h"
 #include "cp_map.h"
 #include "cp_aircraft_callbacks.h"
@@ -112,8 +112,8 @@ static void AIM_AircraftStart_f (void)
 
 	MAP_SelectAircraft(aircraft);
 	/* Return to geoscape. */
-	UI_PopWindow(qfalse);
-	UI_PopWindow(qfalse);
+	cgi->UI_PopWindow(qfalse);
+	cgi->UI_PopWindow(qfalse);
 }
 
 #define SOLDIER_EQUIP_MENU_BUTTON_NO_AIRCRAFT_IN_BASE 1
@@ -192,7 +192,7 @@ void AIR_AircraftSelect (aircraft_t* aircraft)
 		base = NULL;
 
 	if (!AIR_BaseHasAircraft(base)) {
-		UI_ResetData(TEXT_AIRCRAFT_INFO);
+		cgi->UI_ResetData(TEXT_AIRCRAFT_INFO);
 		return;
 	}
 
@@ -219,7 +219,7 @@ void AIR_AircraftSelect (aircraft_t* aircraft)
 	Q_strcat(aircraftInfo, va(_("Armour:\t%i of 1\n"), AIR_GetSlotItems(AC_ITEM_SHIELD, aircraft)), sizeof(aircraftInfo));
 	Q_strcat(aircraftInfo, va(_("Electronics:\t%i of %i"), AIR_GetSlotItems(AC_ITEM_ELECTRONICS, aircraft), aircraft->maxElectronics), sizeof(aircraftInfo));
 
-	UI_RegisterText(TEXT_AIRCRAFT_INFO, aircraftInfo);
+	cgi->UI_RegisterText(TEXT_AIRCRAFT_INFO, aircraftInfo);
 
 	/** @todo This shouldn't exist. UI should use the global idx as reference */
 	/* compute the ID and... */
@@ -234,7 +234,7 @@ void AIR_AircraftSelect (aircraft_t* aircraft)
 	Cvar_SetValue("mn_aircraft_id", id);
 
 	/* ...update the GUI */
-	UI_ExecuteConfunc("aircraft_change %i", id);
+	cgi->UI_ExecuteConfunc("aircraft_change %i", id);
 }
 
 /**
@@ -249,7 +249,7 @@ static void AIR_AircraftUpdateList_f (void)
 		LIST_AddString(&list, aircraft->name);
 	}
 
-	UI_RegisterLinkedListText(TEXT_AIRCRAFT_LIST, list);
+	cgi->UI_RegisterLinkedListText(TEXT_AIRCRAFT_LIST, list);
 }
 
 /**

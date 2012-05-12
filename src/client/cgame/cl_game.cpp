@@ -30,12 +30,18 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #include "../battlescape/cl_hud.h"
 #include "../battlescape/cl_parse.h"
 #include "../ui/ui_main.h"
+#include "../ui/ui_draw.h"
 #include "../ui/ui_nodes.h"
 #include "../ui/ui_popup.h"
+#include "../ui/ui_render.h"
+#include "../ui/ui_windows.h"
+#include "../ui/ui_sprite.h"
+#include "../ui/ui_font.h"
+#include "../ui/node/ui_node_container.h"
+#include "../ui/node/ui_node_model.h"
 #include "../cl_team.h"
 #include "../battlescape/events/e_main.h"
 #include "../cl_inventory.h"
-#include "../ui/node/ui_node_model.h"
 #include "../../shared/parse.h"
 #include "../../common/filesys.h"
 
@@ -395,6 +401,11 @@ static void GAME_CollectAliens (void *data, void (*collect)(void*, const teamDef
 	}
 }
 
+static int UI_DrawString_ (const char *fontID, align_t align, int x, int y, const char *c)
+{
+	return UI_DrawString(fontID, align, x, y, 0, 0, 0, c);
+}
+
 static const cgame_import_t* GAME_GetImportData (const cgameType_t *t)
 {
 	static cgame_import_t gameImport;
@@ -454,6 +465,17 @@ static const cgame_import_t* GAME_GetImportData (const cgameType_t *t)
 		cgi->UI_UpdateInvisOptions = UI_UpdateInvisOptions;
 		cgi->UI_GetOption = UI_GetOption;
 		cgi->UI_SortOptions = UI_SortOptions;
+		cgi->UI_DrawString = UI_DrawString_;
+		cgi->UI_GetFontFromNode = UI_GetFontFromNode;
+		cgi->UI_GetNodeAbsPos = UI_GetNodeAbsPos;
+		cgi->UI_PopupButton = UI_PopupButton;
+		cgi->UI_GetSpriteByName = UI_GetSpriteByName;
+		cgi->UI_ContainerNodeUpdateEquipment = UI_ContainerNodeUpdateEquipment;
+		cgi->UI_RegisterLineStrip = UI_RegisterLineStrip;
+		cgi->UI_GetNodeByPath = UI_GetNodeByPath;
+		cgi->UI_DisplayNotice = UI_DisplayNotice;
+		cgi->UI_GetActiveWindowName = UI_GetActiveWindowName;
+
 		/*gi->UI_TextNodeSelectLine = UI_TextNodeSelectLine;*/
 
 		cgi->NET_StreamSetCallback = NET_StreamSetCallback;
@@ -517,6 +539,7 @@ static const cgame_import_t* GAME_GetImportData (const cgameType_t *t)
 		cgi->R_LoadImage = R_LoadImage;
 		cgi->R_SoftenTexture = R_SoftenTexture;
 		cgi->R_ImageExists = R_ImageExists;
+		cgi->R_Color = R_Color;
 
 		/*cgi->S_SetSampleRepeatRate = S_SetSampleRepeatRate;*/
 		cgi->S_StartLocalSample = S_StartLocalSample;

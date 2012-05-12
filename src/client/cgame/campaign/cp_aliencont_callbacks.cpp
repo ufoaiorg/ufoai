@@ -23,7 +23,7 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 */
 
 #include "../../cl_shared.h"
-#include "../../ui/ui_main.h"
+#include "../../ui/ui_textids.h"
 #include "cp_campaign.h"
 #include "cp_aliencont.h"
 #include "cp_aliencont_callbacks.h"
@@ -106,7 +106,7 @@ static void AC_ResearchAlien_f (void)
 		Com_Error(ERR_DROP, "aliencontCurrent without tech pointer");
 
 	if (!RS_IsResearched_ptr(tech))
-		UI_PushWindow("research", NULL, NULL);
+		cgi->UI_PushWindow("research", NULL, NULL);
 }
 
 /**
@@ -180,7 +180,7 @@ static void AC_UpdateMenu (const base_t *base)
 	Cvar_SetValue("mn_al_capacity_max", CAP_GetMax(base, CAP_ALIENS));
 
 	/* Reset list. */
-	UI_ExecuteConfunc("aliencont_clear");
+	cgi->UI_ExecuteConfunc("aliencont_clear");
 	if (B_GetBuildingStatus(base, B_ALIEN_CONTAINMENT)) {
 		const aliensCont_t *containment = base->alienscont;
 		int i, j;
@@ -203,9 +203,9 @@ static void AC_UpdateMenu (const base_t *base)
 						} else {
 							Cvar_Set(va("mn_ac_statusstr%i", j), _("Awaiting autopsy"));
 							if (!containment[i].amountDead) {
-								UI_ExecuteConfunc("aliencontkill %i", j);
+								cgi->UI_ExecuteConfunc("aliencontkill %i", j);
 							} else {
-								UI_ExecuteConfunc("aliencontneedautopsy %i", j);
+								cgi->UI_ExecuteConfunc("aliencontneedautopsy %i", j);
 							}
 						}
 						Cvar_SetValue(va("mn_ac_progress%i", j), (1 - tech->time / tech->overallTime) * 100);

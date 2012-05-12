@@ -23,8 +23,6 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 */
 
 #include "../../cl_shared.h"
-#include "../../ui/ui_main.h"
-#include "../../ui/ui_popup.h"
 #include "cp_campaign.h"
 #include "cp_mapfightequip.h"
 #include "cp_map.h"
@@ -32,6 +30,7 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #include "cp_missions.h"
 #include "cp_time.h"
 #include "cp_aircraft_callbacks.h"
+#include "../../ui/ui_textids.h"
 
 /* popup_aircraft display the actions availables for an aircraft */
 
@@ -143,10 +142,10 @@ qboolean CL_DisplayHomebasePopup (aircraft_t *aircraft, qboolean alwaysDisplay)
 
 	if (alwaysDisplay || numAvailableBases > 0) {
 		CP_GameTimeStop();
-		popupListNode = UI_PopupList(_("Change homebase of aircraft"), _("Base\tStatus"), popupListText, "change_homebase <lineselected>;");
+		popupListNode = cgi->UI_PopupList(_("Change homebase of aircraft"), _("Base\tStatus"), popupListText, "change_homebase <lineselected>;");
 		VectorSet(popupListNode->selectedColor, 0.0, 0.78, 0.0);	/**< Set color for selected entry. */
 		popupListNode->selectedColor[3] = 1.0;
-		UI_TextNodeSelectLine(popupListNode, homebase);
+		cgi->UI_TextNodeSelectLine(popupListNode, homebase);
 		MAP_SelectAircraft(aircraft);
 		return qtrue;
 	}
@@ -199,7 +198,7 @@ static void CL_PopupChangeHomebase_f (void)
 
 	AIR_MoveAircraftIntoNewHomebase(aircraft, base);
 
-	UI_PopWindow(qfalse);
+	cgi->UI_PopWindow(qfalse);
 	CL_DisplayHomebasePopup(aircraft, qtrue);
 }
 
@@ -219,7 +218,7 @@ void CL_DisplayPopupAircraft (aircraft_t* aircraft)
 	popupAircraft.aircraft = aircraft;
 	popupAircraft.numItems = 0;
 	OBJZERO(popupAircraft.textPopup);
-	UI_RegisterText(TEXT_POPUP, popupAircraft.textPopup);
+	cgi->UI_RegisterText(TEXT_POPUP, popupAircraft.textPopup);
 
 	/* Set static datas in popup_aircraft */
 	popupAircraft.itemsAction[popupAircraft.numItems++] = POPUP_AIRCRAFT_ACTION_BACKTOBASE;
@@ -245,7 +244,7 @@ void CL_DisplayPopupAircraft (aircraft_t* aircraft)
 	}
 
 	/* Display popup_aircraft menu */
-	UI_PushWindow("popup_aircraft", NULL, NULL);
+	cgi->UI_PushWindow("popup_aircraft", NULL, NULL);
 }
 
 /**
@@ -267,7 +266,7 @@ static void CL_PopupAircraftClick_f (void)
 	if (num < 0 || num >= popupAircraft.numItems)
 		return;
 
-	UI_PopWindow(qfalse); /* Close popup */
+	cgi->UI_PopWindow(qfalse); /* Close popup */
 
 	/* Get aircraft associated with the popup_aircraft */
 	aircraft = popupAircraft.aircraft;
@@ -294,6 +293,7 @@ static void CL_PopupAircraftClick_f (void)
 		break;
 	default:
 		Com_Printf("CL_PopupAircraftClick: type of action unknow %i\n", popupAircraft.itemsAction[num]);
+		break;
 	}
 }
 
@@ -351,15 +351,15 @@ void CL_DisplayPopupInterceptMission (mission_t* mission)
 	LIST_Delete(&aircraftListSorted);
 
 	if (popupIntercept.numAircraft)
-		UI_RegisterLinkedListText(TEXT_AIRCRAFT_LIST, aircraftList);
+		cgi->UI_RegisterLinkedListText(TEXT_AIRCRAFT_LIST, aircraftList);
 	else
-		UI_RegisterText(TEXT_AIRCRAFT_LIST, _("No craft available, no pilot assigned, or no tactical teams assigned to available craft."));
+		cgi->UI_RegisterText(TEXT_AIRCRAFT_LIST, _("No craft available, no pilot assigned, or no tactical teams assigned to available craft."));
 
 	/* Stop time */
 	CP_GameTimeStop();
 
 	/* Display the popup */
-	UI_PushWindow("popup_mission", NULL, NULL);
+	cgi->UI_PushWindow("popup_mission", NULL, NULL);
 }
 
 
@@ -421,9 +421,9 @@ void CL_DisplayPopupInterceptUFO (aircraft_t* ufo)
 	}	/* bases */
 
 	if (popupIntercept.numAircraft)
-		UI_RegisterLinkedListText(TEXT_AIRCRAFT_LIST, aircraftList);
+		cgi->UI_RegisterLinkedListText(TEXT_AIRCRAFT_LIST, aircraftList);
 	else
-		UI_RegisterText(TEXT_AIRCRAFT_LIST, _("No craft available, no pilot assigned, or no weapon or ammo equipped."));
+		cgi->UI_RegisterText(TEXT_AIRCRAFT_LIST, _("No craft available, no pilot assigned, or no weapon or ammo equipped."));
 
 	INS_Foreach(installation) {
 		/* Check if the installation should be displayed in base list
@@ -433,15 +433,15 @@ void CL_DisplayPopupInterceptUFO (aircraft_t* ufo)
 	}
 
 	if (baseList)
-		UI_RegisterLinkedListText(TEXT_BASE_LIST, baseList);
+		cgi->UI_RegisterLinkedListText(TEXT_BASE_LIST, baseList);
 	else
-		UI_RegisterText(TEXT_BASE_LIST, _("No defence system operational or no weapon or ammo equipped."));
+		cgi->UI_RegisterText(TEXT_BASE_LIST, _("No defence system operational or no weapon or ammo equipped."));
 
 	/* Stop time */
 	CP_GameTimeStop();
 
 	/* Display the popup */
-	UI_PushWindow("popup_intercept", NULL, NULL);
+	cgi->UI_PushWindow("popup_intercept", NULL, NULL);
 }
 
 /**
@@ -460,7 +460,7 @@ static aircraft_t* CL_PopupInterceptGetAircraft (void)
 	if (num < 0 || num >= popupIntercept.numAircraft)
 		return NULL;
 
-	UI_PopWindow(qfalse);
+	cgi->UI_PopWindow(qfalse);
 	if (!popupIntercept.aircraft[num])
 		return NULL;
 	return popupIntercept.aircraft[num];
@@ -484,7 +484,7 @@ static void CL_PopupInterceptClick_f (void)
 	base = aircraft->homebase;
 	if (!B_GetBuildingStatus(base, B_COMMAND)) {
 		/** @todo are these newlines really needed? at least the first should be handled by the menu code */
-		UI_Popup(_("Notice"), _("No Command Centre operational in homebase\nof this aircraft.\n\nAircraft cannot start.\n"));
+		CP_Popup(_("Notice"), _("No Command Centre operational in homebase\nof this aircraft.\n\nAircraft cannot start.\n"));
 		return;
 	}
 
@@ -512,7 +512,7 @@ static void CL_PopupInterceptRClick_f (void)
 	AIR_AircraftSelect(aircraft);
 	MAP_ResetAction();
 	B_SelectBase(aircraft->homebase);
-	UI_PushWindow("aircraft", NULL, NULL);
+	cgi->UI_PushWindow("aircraft", NULL, NULL);
 }
 
 /**
@@ -584,7 +584,7 @@ static void CL_PopupInterceptBaseClick_f (void)
 			base->lasers[i].target = MAP_GetSelectedUFO();
 	}
 
-	UI_PopWindow(qfalse);
+	cgi->UI_PopWindow(qfalse);
 }
 
 /**
@@ -613,13 +613,20 @@ void CL_PopupInit (void)
 void CP_PopupList (const char *title, const char *text)
 {
 	CP_GameTimeStop();
-	CP_Popup(title, text);
+	CP_Popup(title, "%s", text);
 }
 
 /**
  * @brief Wrapper around @c UI_Popup
  */
-void CP_Popup (const char *title, const char *text)
+void CP_Popup (const char *title, const char *text, ...)
 {
-	UI_Popup(title, text);
+	static char msg[1024];
+	va_list argptr;
+
+	va_start(argptr, text);
+	Q_vsnprintf(msg, sizeof(msg), text, argptr);
+	va_end(argptr);
+
+	cgi->UI_Popup(title, msg);
 }

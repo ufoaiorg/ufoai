@@ -24,8 +24,7 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 */
 #include "../../cl_shared.h"
 #include "../../cl_team.h" /* CL_UpdateCharacterValues */
-#include "../../ui/ui_main.h"
-#include "../../ui/ui_draw.h" /* UI_DisplayNotice */
+#include "../../ui/ui_textids.h"
 #include "cp_campaign.h"
 #include "cp_employee_callbacks.h"
 #include "cp_employee.h"
@@ -116,11 +115,11 @@ static void E_EmployeeListScroll_f (void)
 		/* change the buttons */
 		if (E_IsHired(employee)) {
 			if (E_IsAwayFromBase(employee))
-				UI_ExecuteConfunc("employeedisable %i", cnt);
+				cgi->UI_ExecuteConfunc("employeedisable %i", cnt);
 			else
-				UI_ExecuteConfunc("employeefire %i", cnt);
+				cgi->UI_ExecuteConfunc("employeefire %i", cnt);
 		} else {
-			UI_ExecuteConfunc("employeehire %i", cnt);
+			cgi->UI_ExecuteConfunc("employeehire %i", cnt);
 		}
 
 		cnt++;
@@ -132,10 +131,10 @@ static void E_EmployeeListScroll_f (void)
 
 	for (;cnt < maxEmployeesPerPage; cnt++) {
 		Cvar_Set(va("mn_name%i", cnt), "");
-		UI_ExecuteConfunc("employeehide %i", cnt);
+		cgi->UI_ExecuteConfunc("employeehide %i", cnt);
 	}
 
-	UI_ExecuteConfunc("hire_fix_scroll %i", employeeScrollPos);
+	cgi->UI_ExecuteConfunc("hire_fix_scroll %i", employeeScrollPos);
 }
 
 /**
@@ -171,7 +170,7 @@ static void E_EmployeeList_f (void)
 
 	LIST_Delete(&employeeList);
 	/* make sure, that we are using the linked list */
-	UI_ResetData(TEXT_LIST);
+	cgi->UI_ResetData(TEXT_LIST);
 	employeeListName = NULL;
 
 	E_Foreach(employeeCategory, e) {
@@ -185,7 +184,7 @@ static void E_EmployeeList_f (void)
 		LIST_AddPointer(&employeeList, e);
 		employeesInCurrentList++;
 	}
-	UI_RegisterLinkedListText(TEXT_LIST, employeeListName);
+	cgi->UI_RegisterLinkedListText(TEXT_LIST, employeeListName);
 
 	/* If the list is empty OR we are in pilots/scientists/workers-mode: don't show the model&stats. */
 	/** @note
@@ -212,8 +211,8 @@ static void E_EmployeeList_f (void)
 	E_EmployeeSelect(employee);
 
 	/* update scroll */
-	UI_ExecuteConfunc("hire_update_number %i", employeesInCurrentList);
-	UI_ExecuteConfunc("employee_scroll 0");
+	cgi->UI_ExecuteConfunc("hire_update_number %i", employeesInCurrentList);
+	cgi->UI_ExecuteConfunc("employee_scroll 0");
 }
 
 
@@ -273,7 +272,7 @@ static void E_EmployeeDelete_f (void)
 
 	if (E_IsHired(employee)) {
 		if (!E_UnhireEmployee(employee)) {
-			UI_DisplayNotice(_("Could not fire employee"), 2000, "employees");
+			cgi->UI_DisplayNotice(_("Could not fire employee"), 2000, "employees");
 			Com_DPrintf(DEBUG_CLIENT, "Couldn't fire employee\n");
 			return;
 		}
@@ -327,17 +326,17 @@ static void E_EmployeeHire_f (void)
 	if (E_IsHired(employee)) {
 		if (!E_UnhireEmployee(employee)) {
 			Com_DPrintf(DEBUG_CLIENT, "Couldn't fire employee\n");
-			UI_DisplayNotice(_("Could not fire employee"), 2000, "employees");
+			cgi->UI_DisplayNotice(_("Could not fire employee"), 2000, "employees");
 		} else {
-			UI_ExecuteConfunc("employeehire %i", button);
+			cgi->UI_ExecuteConfunc("employeehire %i", button);
 		}
 	} else {
 		if (!E_HireEmployee(base, employee)) {
 			Com_DPrintf(DEBUG_CLIENT, "Couldn't hire employee\n");
-			UI_DisplayNotice(_("Could not hire employee"), 2000, "employees");
-			UI_ExecuteConfunc("employeehire %i", button);
+			cgi->UI_DisplayNotice(_("Could not hire employee"), 2000, "employees");
+			cgi->UI_ExecuteConfunc("employeehire %i", button);
 		} else {
-			UI_ExecuteConfunc("employeefire %i", button);
+			cgi->UI_ExecuteConfunc("employeefire %i", button);
 		}
 	}
 	E_EmployeeSelect(employee);

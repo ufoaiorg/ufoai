@@ -28,8 +28,7 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #include "cp_transfer.h"
 #include "cp_popup.h"
 #include "cp_time.h"
-#include "../../ui/ui_main.h"
-#include "../../ui/ui_popup.h" /* popupText */
+#include "../../ui/ui_textids.h"
 
 /**
  * @brief transfer typeID strings
@@ -137,7 +136,7 @@ static void TR_TransferAliensFromMission_f (void)
 
 		string = va(ngettext("(can host %i live alien)", "(can host %i live aliens)", freeSpace), freeSpace);
 		string = va("%s %s", base->name, string);
-		option = UI_AddOption(&baseList, va("base%i", base->idx), string, va("%i", base->idx));
+		option = cgi->UI_AddOption(&baseList, va("base%i", base->idx), string, va("%i", base->idx));
 
 		/** @todo tooltip assigining wrong here, also ui doesn't yet support tooltip on options */
 		if (freeSpace >= stunnedAliens) {
@@ -153,8 +152,8 @@ static void TR_TransferAliensFromMission_f (void)
 	}
 
 	if (baseList != NULL){
-		UI_RegisterOption(OPTION_BASELIST, baseList);
-		UI_PushWindow("popup_transferbaselist", NULL, NULL);
+		cgi->UI_RegisterOption(OPTION_BASELIST, baseList);
+		cgi->UI_PushWindow("popup_transferbaselist", NULL, NULL);
 	} else {
 		/** @todo send a message (?) */
 		Com_Printf("TR_TransferAliensFromMission_f: No base with alien containment available.\n");
@@ -191,7 +190,7 @@ static void TR_TransferStart_f (void)
 
 	Com_sprintf(message, sizeof(message), _("Transport mission started, cargo is being transported to %s"), td.transferBase->name);
 	MSO_CheckAddNewMessage(NT_TRANSFER_STARTED, _("Transport mission"), message, qfalse, MSG_TRANSFERFINISHED, NULL);
-	UI_PopWindow(qfalse);
+	cgi->UI_PopWindow(qfalse);
 }
 
 
@@ -294,18 +293,16 @@ static qboolean TR_CheckEmployee (const employee_t *employee, const base_t *dest
 		/* Is this a soldier assigned to aircraft? */
 		if (AIR_IsEmployeeInAircraft(employee, NULL)) {
 			const rank_t *rank = CL_GetRankByIdx(employee->chr.score.rank);
-			Com_sprintf(popupText, sizeof(popupText), _("%s %s is assigned to aircraft and cannot be\ntransfered to another base.\n"),
-				_(rank->shortname), employee->chr.name);
-			CP_Popup(_("Soldier in aircraft"), popupText);
+			CP_Popup(_("Soldier in aircraft"), _("%s %s is assigned to aircraft and cannot be\ntransfered to another base.\n"),
+					_(rank->shortname), employee->chr.name);
 			return qfalse;
 		}
 		break;
 	case EMPL_PILOT:
 		/* Is this a pilot assigned to aircraft? */
 		if (AIR_IsEmployeeInAircraft(employee, NULL)) {
-			Com_sprintf(popupText, sizeof(popupText), _("%s is assigned to aircraft and cannot be\ntransfered to another base.\n"),
-				employee->chr.name);
-			CP_Popup(_("Pilot in aircraft"), popupText);
+			CP_Popup(_("Pilot in aircraft"), _("%s is assigned to aircraft and cannot be\ntransfered to another base.\n"),
+					employee->chr.name);
 			return qfalse;
 		}
 		break;
@@ -490,8 +487,8 @@ static void TR_CargoList (void)
 		TR_AddData(&td, CARGO_TYPE_AIRCRAFT, aircraft);
 	}
 
-	UI_RegisterLinkedListText(TEXT_CARGO_LIST, cargoList);
-	UI_RegisterLinkedListText(TEXT_CARGO_LIST_AMOUNT, cargoListAmount);
+	cgi->UI_RegisterLinkedListText(TEXT_CARGO_LIST, cargoList);
+	cgi->UI_RegisterLinkedListText(TEXT_CARGO_LIST_AMOUNT, cargoListAmount);
 }
 
 /**
@@ -708,27 +705,27 @@ static void TR_TransferSelect (const base_t *srcbase, const base_t *destbase, tr
 	linkedList_t *transfers = NULL;
 
 	/* reset for every new call */
-	UI_ResetData(TEXT_TRANSFER_LIST);
-	UI_ResetData(TEXT_TRANSFER_LIST_AMOUNT);
-	UI_ResetData(TEXT_TRANSFER_LIST_TRANSFERED);
+	cgi->UI_ResetData(TEXT_TRANSFER_LIST);
+	cgi->UI_ResetData(TEXT_TRANSFER_LIST_AMOUNT);
+	cgi->UI_ResetData(TEXT_TRANSFER_LIST_TRANSFERED);
 
 	switch (transferType) {
 	case TRANS_TYPE_ITEM: {
 		const int cnt = TR_FillItems(srcbase, destbase, &names, &amounts, &transfers);
-		UI_ExecuteConfunc("trans_display_spinners %i", cnt);
+		cgi->UI_ExecuteConfunc("trans_display_spinners %i", cnt);
 		break;
 	}
 	case TRANS_TYPE_EMPLOYEE:
 		TR_FillEmployees(srcbase, destbase, &names, &amounts, &transfers);
-		UI_ExecuteConfunc("trans_display_spinners 0");
+		cgi->UI_ExecuteConfunc("trans_display_spinners 0");
 		break;
 	case TRANS_TYPE_ALIEN:
 		TR_FillAliens(srcbase, destbase, &names, &amounts, &transfers);
-		UI_ExecuteConfunc("trans_display_spinners 0");
+		cgi->UI_ExecuteConfunc("trans_display_spinners 0");
 		break;
 	case TRANS_TYPE_AIRCRAFT:
 		TR_FillAircraft(srcbase, destbase, &names, &amounts, &transfers);
-		UI_ExecuteConfunc("trans_display_spinners 0");
+		cgi->UI_ExecuteConfunc("trans_display_spinners 0");
 		break;
 	default:
 		Com_Error(ERR_DROP, "invalid transfertype given: %i", transferType);
@@ -738,9 +735,9 @@ static void TR_TransferSelect (const base_t *srcbase, const base_t *destbase, tr
 	TR_CargoList();
 
 	td.currentTransferType = transferType;
-	UI_RegisterLinkedListText(TEXT_TRANSFER_LIST, names);
-	UI_RegisterLinkedListText(TEXT_TRANSFER_LIST_AMOUNT, amounts);
-	UI_RegisterLinkedListText(TEXT_TRANSFER_LIST_TRANSFERED, transfers);
+	cgi->UI_RegisterLinkedListText(TEXT_TRANSFER_LIST, names);
+	cgi->UI_RegisterLinkedListText(TEXT_TRANSFER_LIST_AMOUNT, amounts);
+	cgi->UI_RegisterLinkedListText(TEXT_TRANSFER_LIST_TRANSFERED, transfers);
 }
 
 /**
@@ -807,7 +804,7 @@ static void TR_TransferListClear_f (void)
 	/* Update cargo list and items list. */
 	TR_CargoList();
 	TR_TransferSelect(base, td.transferBase, td.currentTransferType);
-	UI_ExecuteConfunc("trans_resetscroll");
+	cgi->UI_ExecuteConfunc("trans_resetscroll");
 }
 
 /**
@@ -1117,7 +1114,7 @@ static void TR_TransferBaseSelect (base_t *srcbase, base_t *destbase)
 	if (!powercomm)
 		Q_strcat(baseInfo, _("No power supplies in this base.\n"), sizeof(baseInfo));
 
-	UI_RegisterText(TEXT_BASE_INFO, baseInfo);
+	cgi->UI_RegisterText(TEXT_BASE_INFO, baseInfo);
 
 	/* Set global pointer to current selected base. */
 	td.transferBase = destbase;
@@ -1141,10 +1138,10 @@ static void TR_InitBaseList (void)
 		if (base == currentBase)
 			continue;
 
-		UI_AddOption(&baseList, va("base%i", base->idx), base->name, va("%i", base->idx));
+		cgi->UI_AddOption(&baseList, va("base%i", base->idx), base->name, va("%i", base->idx));
 	}
 
-	UI_RegisterOption(OPTION_BASELIST, baseList);
+	cgi->UI_RegisterOption(OPTION_BASELIST, baseList);
 }
 
 /**
@@ -1423,7 +1420,7 @@ static void TR_Init_f (void)
 	Cmd_ExecuteString(va("trans_type %s", transferTypeIDs[0]));
 
 	/* Reset scrolling for item-in-base list */
-	UI_ExecuteConfunc("trans_resetscroll");
+	cgi->UI_ExecuteConfunc("trans_resetscroll");
 }
 
 /**
@@ -1480,7 +1477,7 @@ static void TR_TransferList_Scroll_f (void)
 
 	if (B_GetBuildingStatus(td.transferBase, B_ANTIMATTER) && (antimatterCargo || B_AntimatterInBase(srcBase))) {
 		if (cnt >= viewPos && cnt < viewPos + MAX_TRANSLIST_MENU_ENTRIES)
-			UI_ExecuteConfunc("trans_updatespinners %i %i %i %i", cnt - viewPos,
+			cgi->UI_ExecuteConfunc("trans_updatespinners %i %i %i %i", cnt - viewPos,
 					antimatterCargo, 0, B_AntimatterInBase(srcBase) + antimatterCargo);
 		cnt++;
 	}
@@ -1493,7 +1490,7 @@ static void TR_TransferList_Scroll_f (void)
 			if (cnt >= viewPos + MAX_TRANSLIST_MENU_ENTRIES)
 				break;
 			if (cnt >= viewPos)
-				UI_ExecuteConfunc("trans_updatespinners %i %i %i %i", cnt - viewPos,
+				cgi->UI_ExecuteConfunc("trans_updatespinners %i %i %i %i", cnt - viewPos,
 						itemCargoAmount, 0, B_ItemInBase(od, srcBase) + itemCargoAmount);
 			cnt++;
 		}
@@ -1507,38 +1504,38 @@ static void TR_List_f (void)
 {
 	int i = 0;
 
-	UI_ExecuteConfunc("tr_listclear");
+	cgi->UI_ExecuteConfunc("tr_listclear");
 	TR_Foreach(transfer) {
 		const char *source = transfer->srcBase ? transfer->srcBase->name : "mission";
 		date_t time = Date_Substract(transfer->event, ccs.date);
 
-		UI_ExecuteConfunc("tr_listaddtransfer %d \"%s\" \"%s\" \"%s\"", ++i, source, transfer->destBase->name, CP_SecondConvert(Date_DateToSeconds(&time)));
+		cgi->UI_ExecuteConfunc("tr_listaddtransfer %d \"%s\" \"%s\" \"%s\"", ++i, source, transfer->destBase->name, CP_SecondConvert(Date_DateToSeconds(&time)));
 
 		/* Items */
 		if (transfer->hasItems) {
 			int j;
 
-			UI_ExecuteConfunc("tr_listaddcargo %d \"%s\" \"%s\" \"%s\"", i, "tr_cargo", "items", _("Items"));
+			cgi->UI_ExecuteConfunc("tr_listaddcargo %d \"%s\" \"%s\" \"%s\"", i, "tr_cargo", "items", _("Items"));
 			for (j = 0; j < csi.numODs; j++) {
 				const objDef_t *od = INVSH_GetItemByIDX(j);
 
 				if (transfer->itemAmount[od->idx] <= 0)
 					continue;
 
-				UI_ExecuteConfunc("tr_listaddcargo %d \"%s\" \"%s\" \"%s\"", i, "tr_cargo.items" ,od->id, va("%i %s", transfer->itemAmount[od->idx], _(od->name)));
+				cgi->UI_ExecuteConfunc("tr_listaddcargo %d \"%s\" \"%s\" \"%s\"", i, "tr_cargo.items" ,od->id, va("%i %s", transfer->itemAmount[od->idx], _(od->name)));
 			}
 		}
 		/* Employee */
 		if (transfer->hasEmployees) {
 			int j;
-			UI_ExecuteConfunc("tr_listaddcargo %d \"%s\" \"%s\" \"%s\"", i, "tr_cargo", "employee", _("Employee"));
+			cgi->UI_ExecuteConfunc("tr_listaddcargo %d \"%s\" \"%s\" \"%s\"", i, "tr_cargo", "employee", _("Employee"));
 			for (j = EMPL_SOLDIER; j < MAX_EMPL; j++) {
 				const employeeType_t emplType = (employeeType_t)j;
 				TR_ForeachEmployee(employee, transfer, emplType) {
 					if (employee->ugv) {
 						/** @todo: add ugv listing when they're implemented */
 					} else {
-						UI_ExecuteConfunc("tr_listaddcargo %d \"%s\" \"%s\" \"%s\"", i, "tr_cargo.employee", va("ucn%i", employee->chr.ucn), va("%s %s", E_GetEmployeeString(employee->type, 1), employee->chr.name));
+						cgi->UI_ExecuteConfunc("tr_listaddcargo %d \"%s\" \"%s\" \"%s\"", i, "tr_cargo.employee", va("ucn%i", employee->chr.ucn), va("%s %s", E_GetEmployeeString(employee->type, 1), employee->chr.name));
 					}
 				}
 			}
@@ -1547,25 +1544,25 @@ static void TR_List_f (void)
 		if (transfer->hasAliens) {
 			int j;
 
-			UI_ExecuteConfunc("tr_listaddcargo %d \"%s\" \"%s\" \"%s\"", i, "tr_cargo", "aliens", _("Aliens"));
+			cgi->UI_ExecuteConfunc("tr_listaddcargo %d \"%s\" \"%s\" \"%s\"", i, "tr_cargo", "aliens", _("Aliens"));
 			for (j = 0; j < csi.numTeamDefs; j++) {
 				const teamDef_t *team = &csi.teamDef[j];
 
 				if (transfer->alienAmount[j][TRANS_ALIEN_ALIVE]) {
-					UI_ExecuteConfunc("tr_listaddcargo %d \"%s\" \"%s\" \"%s\"", i, "tr_cargo.aliens", va("%s_alive", team->id), va("%i %s %s", transfer->alienAmount[j][TRANS_ALIEN_ALIVE], _("alive"), _(team->name)));
+					cgi->UI_ExecuteConfunc("tr_listaddcargo %d \"%s\" \"%s\" \"%s\"", i, "tr_cargo.aliens", va("%s_alive", team->id), va("%i %s %s", transfer->alienAmount[j][TRANS_ALIEN_ALIVE], _("alive"), _(team->name)));
 				}
 
 				if (transfer->alienAmount[j][TRANS_ALIEN_DEAD]) {
-					UI_ExecuteConfunc("tr_listaddcargo %d \"%s\" \"%s\" \"%s\"", i, "tr_cargo.aliens", va("%s_dead", team->id), va("%i %s %s", transfer->alienAmount[j][TRANS_ALIEN_DEAD], _("dead"), _(team->name)));
+					cgi->UI_ExecuteConfunc("tr_listaddcargo %d \"%s\" \"%s\" \"%s\"", i, "tr_cargo.aliens", va("%s_dead", team->id), va("%i %s %s", transfer->alienAmount[j][TRANS_ALIEN_DEAD], _("dead"), _(team->name)));
 				}
 			}
 		}
 		/* Aircraft */
 		if (transfer->hasAircraft) {
-			UI_ExecuteConfunc("tr_listaddcargo %d \"%s\" \"%s\" \"%s\"", i, "tr_cargo", "aircraft", _("Aircraft"));
+			cgi->UI_ExecuteConfunc("tr_listaddcargo %d \"%s\" \"%s\" \"%s\"", i, "tr_cargo", "aircraft", _("Aircraft"));
 
 			TR_ForeachAircraft(aircraft, transfer) {
-				UI_ExecuteConfunc("tr_listaddcargo %d \"%s\" \"%s\" \"%s\"", i, "tr_cargo.aircraft", va("craft%i", aircraft->idx), aircraft->name);
+				cgi->UI_ExecuteConfunc("tr_listaddcargo %d \"%s\" \"%s\" \"%s\"", i, "tr_cargo.aircraft", va("craft%i", aircraft->idx), aircraft->name);
 			}
 		}
 	}

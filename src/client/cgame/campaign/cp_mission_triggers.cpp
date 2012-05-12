@@ -24,7 +24,7 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 */
 
 #include "../../cl_shared.h"
-#include "../../ui/ui_main.h" /* TEXT_STANDARD */
+#include "../../ui/ui_textids.h" /* TEXT_STANDARD */
 #include "cp_campaign.h"
 #include "cp_map.h"
 #include "cp_missions.h"
@@ -121,7 +121,7 @@ static void CP_ChangeNationHappiness_f (void)
  */
 static void CP_EndGame_f (void)
 {
-	UI_RegisterText(TEXT_STANDARD, _("Congratulations! You have reached the end of the UFO:AI campaign.\n"
+	cgi->UI_RegisterText(TEXT_STANDARD, _("Congratulations! You have reached the end of the UFO:AI campaign.\n"
 		"However, this is not the end of the road. The game remains in development.\n"
 		"The campaign will be expanded with new missions, new enemies, "
 		"new UFOs, new player controllable craft and more research.\n\n"

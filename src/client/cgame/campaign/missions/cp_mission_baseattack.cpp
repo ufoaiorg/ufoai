@@ -23,14 +23,14 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 */
 
 #include "../../../cl_shared.h"
-#include "../../../ui/ui_main.h" /* TEXT_POPUP */
-#include "../../../ui/ui_popup.h" /* popupText */
+#include "../../../ui/ui_textids.h"
 #include "../cp_campaign.h"
 #include "../cp_capacity.h"
 #include "../cp_map.h"
 #include "../cp_ufo.h"
 #include "../cp_missions.h"
 #include "../cp_time.h"
+#include "../cp_popup.h"
 #include "../cp_alien_interest.h"
 
 /**
@@ -203,11 +203,12 @@ void CP_BaseAttackStartMission (mission_t *mission)
 	MAP_SetInterceptorAircraft(&baseAttackFakeAircraft);	/* needed for updating soldier stats sa CP_UpdateCharacterStats*/
 	B_SetCurrentSelectedBase(base);						/* needed for equipment menu */
 
+	static char popupText[1024];
 	Com_sprintf(popupText, sizeof(popupText), _("Base '%s' is under attack! What to do ?"), base->name);
-	UI_RegisterText(TEXT_POPUP, popupText);
+	cgi->UI_RegisterText(TEXT_POPUP, popupText);
 
 	CP_GameTimeStop();
-	UI_PushWindow("popup_baseattack", NULL, NULL);
+	cgi->UI_PushWindow("popup_baseattack", NULL, NULL);
 }
 
 

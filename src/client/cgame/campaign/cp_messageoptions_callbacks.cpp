@@ -24,6 +24,7 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 */
 
 #include "../../cl_shared.h"
+/* UI_InitOptionIteratorAtIndex */
 #include "../../ui/ui_main.h"
 #include "../../ui/ui_data.h"
 #include "cp_campaign.h"
@@ -47,35 +48,36 @@ static void MSO_InitList (void)
 	int idx;
 
 	/* option already allocated, nothing to do */
-	if (UI_GetOption(TEXT_MESSAGEOPTIONS) != NULL)
+	if (cgi->UI_GetOption(TEXT_MESSAGEOPTIONS) != NULL)
 		return;
 
-	UI_ResetData(TEXT_MESSAGEOPTIONS);
+	cgi->UI_ResetData(TEXT_MESSAGEOPTIONS);
 	for (idx = 0; idx < ccs.numMsgCategoryEntries; idx++) {
 		const msgCategoryEntry_t *entry = &ccs.msgCategoryEntries[idx];
 		const char *id = va("%d", idx);
 
 		if (entry->isCategory) {
-			lastCategory = UI_AddOption(&messageSetting, id, va("_%s", entry->notifyType), id);
+			lastCategory = cgi->UI_AddOption(&messageSetting, id, va("_%s", entry->notifyType), id);
 		} else {
 			if (!lastCategory)
 				Sys_Error("MSO_InitList: The first entry must be a category");
-			UI_AddOption(&lastCategory->firstChild, id, va("_%s", entry->notifyType), id);
+			cgi->UI_AddOption(&lastCategory->firstChild, id, va("_%s", entry->notifyType), id);
 		}
 	}
-	UI_RegisterOption(TEXT_MESSAGEOPTIONS, messageSetting);
+	cgi->UI_RegisterOption(TEXT_MESSAGEOPTIONS, messageSetting);
 	MSO_SetMenuState(MSO_MSTATE_PREPARED, qfalse, qtrue);
 }
 
 /**
  * @brief Executes confuncs to update visible message options lines.
  * @sa MSO_Init_f
+ * @todo move this into scripts
  */
 static void MSO_UpdateVisibleButtons (void)
 {
 	int visible;/* current line */
 	uiOptionIterator_t iterator;
-	uiNode_t *messageSetting = UI_GetOption(TEXT_MESSAGEOPTIONS);
+	uiNode_t *messageSetting = cgi->UI_GetOption(TEXT_MESSAGEOPTIONS);
 
 	UI_InitOptionIteratorAtIndex(messageList_scroll, messageSetting, &iterator);
 
@@ -94,12 +96,12 @@ static void MSO_UpdateVisibleButtons (void)
 			break;
 		if (entry->isCategory) {
 			/* category is visible anyway*/
-			UI_ExecuteConfunc("ms_disable %i", visible);
+			cgi->UI_ExecuteConfunc("ms_disable %i", visible);
 
 		} else {
 			assert(entry->category);
-			UI_ExecuteConfunc("ms_enable %i", visible);
-			UI_ExecuteConfunc("ms_btnstate %i %i %i %i", visible, entry->settings->doPause,
+			cgi->UI_ExecuteConfunc("ms_enable %i", visible);
+			cgi->UI_ExecuteConfunc("ms_btnstate %i %i %i %i", visible, entry->settings->doPause,
 				entry->settings->doNotify, entry->settings->doSound);
 		}
 
@@ -107,7 +109,7 @@ static void MSO_UpdateVisibleButtons (void)
 	}
 
 	for (; visible < messageList_size; visible++)
-		UI_ExecuteConfunc("ms_disable %i", visible);
+		cgi->UI_ExecuteConfunc("ms_disable %i", visible);
 }
 
 /**
@@ -146,6 +148,7 @@ static void MSO_Init_f (void)
 /**
  * @brief Function for menu buttons to update message settings.
  * @sa MSO_Set
+ * @todo move this into scripts
  */
 static void MSO_Toggle_f (void)
 {
@@ -159,7 +162,7 @@ static void MSO_Toggle_f (void)
 		int optionType;
 		qboolean activate;
 		int type;
-		uiNode_t *messageSetting = UI_GetOption(TEXT_MESSAGEOPTIONS);
+		uiNode_t *messageSetting = cgi->UI_GetOption(TEXT_MESSAGEOPTIONS);
 
 		UI_InitOptionIteratorAtIndex(messageList_scroll + listIndex, messageSetting, &iterator);
 		if (!iterator.option)
@@ -239,7 +242,6 @@ void MSO_SetMenuState (const msoMenuState_t newState, const qboolean callInit, c
 	}
 	if (callInit)
 		MSOCB_Init();
-
 }
 
 void MSO_InitCallbacks (void)
@@ -260,5 +262,5 @@ void MSO_ShutdownCallbacks (void)
 	Cmd_RemoveCommand("msgoptions_init");
 	Cmd_RemoveCommand("msgoptions_backup");
 	Cmd_RemoveCommand("msgoptions_restore");
-	UI_ResetData(TEXT_MESSAGEOPTIONS);
+	cgi->UI_ResetData(TEXT_MESSAGEOPTIONS);
 }

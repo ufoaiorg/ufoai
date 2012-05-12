@@ -23,7 +23,7 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 
 #include "../../cl_shared.h"
 #include "../../cl_inventory.h"
-#include "../../ui/ui_main.h"
+#include "../../ui/ui_textids.h"
 #include "cp_campaign.h"
 #include "cp_market.h"
 #include "cp_market_callbacks.h"
@@ -376,7 +376,7 @@ static void BS_FillMarket_f (void)
 	}
 
 	type = INV_GetFilterTypeID(Cmd_Argv(1));
-	UI_ExecuteConfunc("ui_market_clear");
+	cgi->UI_ExecuteConfunc("ui_market_clear");
 	switch (type) {
 	case FILTER_UGVITEM:
 		/* show own UGV */
@@ -387,7 +387,7 @@ static void BS_FillMarket_f (void)
 			if (!E_IsInBase(robot, base))
 				continue;
 
-			UI_ExecuteConfunc("ui_market_add \"ugv-%d\" \"%s\" 1 0 0 %d - \"%s\"", robot->chr.ucn, _(tech->name), ugv->price, E_IsAwayFromBase(robot) ? _("UGV is away from home") : "-");
+			cgi->UI_ExecuteConfunc("ui_market_add \"ugv-%d\" \"%s\" 1 0 0 %d - \"%s\"", robot->chr.ucn, _(tech->name), ugv->price, E_IsAwayFromBase(robot) ? _("UGV is away from home") : "-");
 		}
 		/* show buyable UGV */
 		for (int i = 0; i < csi.numUGV; i++) {
@@ -402,7 +402,7 @@ static void BS_FillMarket_f (void)
 			if (buyable <= 0)
 				continue;
 
-			UI_ExecuteConfunc("ui_market_add %s \"%s\" 0 %d %d %d - -", ugv->id, _(tech->name), buyable, ugv->price, ugv->price);
+			cgi->UI_ExecuteConfunc("ui_market_add %s \"%s\" 0 %d %d %d - -", ugv->id, _(tech->name), buyable, ugv->price, ugv->price);
 		}
 		/* show (UGV) items */
 	case FILTER_S_PRIMARY:
@@ -423,13 +423,13 @@ static void BS_FillMarket_f (void)
 				continue;
 			if (type != MAX_FILTERTYPES && !INV_ItemMatchesFilter(od, type))
 				continue;
-			UI_ExecuteConfunc("ui_market_add %s \"%s\" %d %d %d %d %s -", od->id, _(od->name), B_ItemInBase(od, base), BS_GetItemOnMarket(od), BS_GetItemBuyingPrice(od), BS_GetItemSellingPrice(od), RS_IsResearched_ptr(tech) ? va("%d", ccs.eMarket.autosell[i]) : "-");
+			cgi->UI_ExecuteConfunc("ui_market_add %s \"%s\" %d %d %d %d %s -", od->id, _(od->name), B_ItemInBase(od, base), BS_GetItemOnMarket(od), BS_GetItemBuyingPrice(od), BS_GetItemSellingPrice(od), RS_IsResearched_ptr(tech) ? va("%d", ccs.eMarket.autosell[i]) : "-");
 		}
 		break;
 	}
 	case FILTER_AIRCRAFT: {
 		AIR_Foreach(aircraft) {
-			UI_ExecuteConfunc("ui_market_add \"aircraft-%d\" \"%s\" 1 0 0 %d - \"%s\"", aircraft->idx, aircraft->name, BS_GetAircraftSellingPrice(aircraft), AIR_IsAircraftInBase(aircraft) ? "-" : _("Aircraft is away from home"));
+			cgi->UI_ExecuteConfunc("ui_market_add \"aircraft-%d\" \"%s\" 1 0 0 %d - \"%s\"", aircraft->idx, aircraft->name, BS_GetAircraftSellingPrice(aircraft), AIR_IsAircraftInBase(aircraft) ? "-" : _("Aircraft is away from home"));
 		}
 		for (int i = 0; i < ccs.numAircraftTemplates; i++) {
 		const aircraft_t *aircraft = &ccs.aircraftTemplates[i];
@@ -437,7 +437,7 @@ static void BS_FillMarket_f (void)
 				continue;
 			if (!RS_IsResearched_ptr(aircraft->tech))
 				continue;
-			UI_ExecuteConfunc("ui_market_add \"%s\" \"%s\" 0 %d %d %d - -", aircraft->id, _(aircraft->tech->name), BS_GetAircraftOnMarket(aircraft), BS_GetAircraftBuyingPrice(aircraft), BS_GetAircraftSellingPrice(aircraft));
+			cgi->UI_ExecuteConfunc("ui_market_add \"%s\" \"%s\" 0 %d %d %d - -", aircraft->id, _(aircraft->tech->name), BS_GetAircraftOnMarket(aircraft), BS_GetAircraftBuyingPrice(aircraft), BS_GetAircraftSellingPrice(aircraft));
 		}
 		break;
 	}

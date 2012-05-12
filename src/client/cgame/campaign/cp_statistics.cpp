@@ -23,7 +23,7 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 */
 
 #include "../../cl_shared.h"
-#include "../../ui/ui_data.h"
+#include "../../ui/ui_textids.h"
 #include "cp_campaign.h"
 #include "cp_xvi.h"
 #include "save/save_statistics.h"
@@ -50,18 +50,18 @@ void CP_StatsUpdate_f (void)
 	pos = statsBuffer;
 
 	/* missions */
-	UI_RegisterText(TEXT_STATS_MISSION, pos);
+	cgi->UI_RegisterText(TEXT_STATS_MISSION, pos);
 	Com_sprintf(pos, MAX_STATS_BUFFER, _("Won:\t%i\nLost:\t%i\n\n"), ccs.campaignStats.missionsWon, ccs.campaignStats.missionsLost);
 
 	/* bases */
 	pos += (strlen(pos) + 1);
-	UI_RegisterText(TEXT_STATS_BASES, pos);
+	cgi->UI_RegisterText(TEXT_STATS_BASES, pos);
 	Com_sprintf(pos, (ptrdiff_t)(&statsBuffer[MAX_STATS_BUFFER] - pos), _("Built:\t%i\nActive:\t%i\nAttacked:\t%i\n"),
 			ccs.campaignStats.basesBuilt, B_GetCount(), ccs.campaignStats.basesAttacked),
 
 	/* installations */
 	pos += (strlen(pos) + 1);
-	UI_RegisterText(TEXT_STATS_INSTALLATIONS, pos);
+	cgi->UI_RegisterText(TEXT_STATS_INSTALLATIONS, pos);
 
 	INS_Foreach(inst) {
 		Q_strcat(pos, va("%s\n", inst->name), (ptrdiff_t)(&statsBuffer[MAX_STATS_BUFFER] - pos));
@@ -69,7 +69,7 @@ void CP_StatsUpdate_f (void)
 
 	/* nations */
 	pos += (strlen(pos) + 1);
-	UI_RegisterText(TEXT_STATS_NATIONS, pos);
+	cgi->UI_RegisterText(TEXT_STATS_NATIONS, pos);
 	for (i = 0; i < ccs.numNations; i++) {
 		const nation_t *nation = NAT_GetNationByIDX(i);
 		Q_strcat(pos, va(_("%s\t%s\n"), _(nation->name), NAT_GetHappinessString(nation)), (ptrdiff_t)(&statsBuffer[MAX_STATS_BUFFER] - pos));
@@ -90,7 +90,7 @@ void CP_StatsUpdate_f (void)
 
 	/* employees - this is between the two costs parts to count the hired employees */
 	pos += (strlen(pos) + 1);
-	UI_RegisterText(TEXT_STATS_EMPLOYEES, pos);
+	cgi->UI_RegisterText(TEXT_STATS_EMPLOYEES, pos);
 	for (i = 0; i < MAX_EMPL; i++) {
 		const employeeType_t type = (employeeType_t)i;
 		Q_strcat(pos, va(_("%s\t%i\n"), E_GetEmployeeString(type, hired[i]), hired[i]), (ptrdiff_t)(&statsBuffer[MAX_STATS_BUFFER] - pos));
@@ -98,7 +98,7 @@ void CP_StatsUpdate_f (void)
 
 	/* costs - second part */
 	pos += (strlen(pos) + 1);
-	UI_RegisterText(TEXT_STATS_COSTS, pos);
+	cgi->UI_RegisterText(TEXT_STATS_COSTS, pos);
 	Q_strcat(pos, va(_("Employees:\t%i c\n"), costs), (ptrdiff_t)(&statsBuffer[MAX_STATS_BUFFER] - pos));
 	sum += costs;
 
@@ -133,7 +133,7 @@ void CP_StatsUpdate_f (void)
 
 	/* campaign */
 	pos += (strlen(pos) + 1);
-	UI_RegisterText(TEXT_GENERIC, pos);
+	cgi->UI_RegisterText(TEXT_GENERIC, pos);
 	Q_strcat(pos, va(_("Max. allowed debts: %ic\n"), campaign->negativeCreditsUntilLost),
 		(ptrdiff_t)(&statsBuffer[MAX_STATS_BUFFER] - pos));
 

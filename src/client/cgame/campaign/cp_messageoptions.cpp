@@ -23,7 +23,6 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 */
 
 #include "../../cl_shared.h"
-#include "../../ui/ui_main.h"
 #include "../../../shared/parse.h"
 #include "cp_campaign.h"
 #include "cp_messageoptions.h"
@@ -102,7 +101,7 @@ void MSO_Set (const int listIndex, const notify_t type, const int optionType, co
 	}
 
 	if (sendCommands)
-		UI_ExecuteConfunc("ms_btnstate %i %i %i %i", listIndex, settings->doPause, settings->doNotify, settings->doSound);
+		cgi->UI_ExecuteConfunc("ms_btnstate %i %i %i %i", listIndex, settings->doPause, settings->doNotify, settings->doSound);
 	else
 		/* ensure that message buttons will be initialized correctly if menu is shown next time */
 		MSO_SetMenuState(MSO_MSTATE_PREPARED,qfalse, qfalse);
