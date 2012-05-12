@@ -509,7 +509,7 @@ static void LE_PlaySoundFileAndParticleForSurface (le_t* le, const char *texture
 	if (t->particle) {
 		/* check whether actor is visible */
 		if (!LE_IsStunned(le) && LE_IsLivingAndVisibleActor(le))
-			CL_ParticleSpawn(t->particle, 0, origin, NULL, NULL);
+			CL_ParticleSpawn(t->particle, 0, origin);
 	}
 	if (t->footStepSound) {
 		Com_DPrintf(DEBUG_SOUND, "LE_PlaySoundFileAndParticleForSurface: volume %.2f\n", t->footStepVolume);
@@ -615,7 +615,7 @@ static void LE_ActorBodyHit (const le_t * le, const vec3_t impact, int normal)
 	if (le->teamDef) {
 		/* Spawn "hit_particle" if defined in teamDef. */
 		if (le->teamDef->hitParticle[0] != '\0')
-			CL_ParticleSpawn(le->teamDef->hitParticle, 0, impact, bytedirs[normal], NULL);
+			CL_ParticleSpawn(le->teamDef->hitParticle, 0, impact, bytedirs[normal]);
 	}
 }
 
@@ -692,7 +692,7 @@ static void LET_Projectile (le_t * le)
 		le->inuse = qfalse;
 		if (Q_strvalid(le->ref1)) {
 			VectorCopy(le->ptl->s, impact);
-			le->ptl = CL_ParticleSpawn(le->ref1, 0, impact, bytedirs[le->angle], NULL);
+			le->ptl = CL_ParticleSpawn(le->ref1, 0, impact, bytedirs[le->angle]);
 			VecToAngles(bytedirs[le->state], le->ptl->angles);
 		}
 		if (Q_strvalid(le->ref2)) {
@@ -730,7 +730,7 @@ void LE_AddProjectile (const fireDef_t *fd, int flags, const vec3_t muzzle, cons
 		return;
 	le->invis = !cl_leshowinvis->integer;
 	/* bind particle */
-	le->ptl = CL_ParticleSpawn(fd->projectile, 0, muzzle, NULL, NULL);
+	le->ptl = CL_ParticleSpawn(fd->projectile, 0, muzzle);
 	if (!le->ptl) {
 		le->inuse = qfalse;
 		return;
@@ -758,7 +758,7 @@ void LE_AddProjectile (const fireDef_t *fd, int flags, const vec3_t muzzle, cons
 					S_LoadAndPlaySample(fd->hitBodySound, le->origin, le->fd->impactAttenuation, SND_VOLUME_WEAPONS);
 				}
 				if (fd->hitBody != NULL)
-					ptl = CL_ParticleSpawn(fd->hitBody, 0, impact, dir, NULL);
+					ptl = CL_ParticleSpawn(fd->hitBody, 0, impact, dir);
 
 				/* Spawn blood particles (if defined) if actor(-body) was hit. Even if actor is dead. */
 				/** @todo Special particles for stun attack (mind you that there is
@@ -773,7 +773,7 @@ void LE_AddProjectile (const fireDef_t *fd, int flags, const vec3_t muzzle, cons
 					S_LoadAndPlaySample(fd->impactSound, le->origin, le->fd->impactAttenuation, SND_VOLUME_WEAPONS);
 				}
 				if (fd->impact != NULL)
-					ptl = CL_ParticleSpawn(fd->impact, 0, impact, dir, NULL);
+					ptl = CL_ParticleSpawn(fd->impact, 0, impact, dir);
 			}
 			if (ptl)
 				VecToAngles(dir, ptl->angles);
@@ -1484,7 +1484,7 @@ void LE_AddToScene (void)
 			R_AddEntity(&ent);
 
 			if (cl_le_debug->integer)
-				CL_ParticleSpawn("cross", 0, le->origin, NULL, NULL);
+				CL_ParticleSpawn("cross", 0, le->origin);
 		}
 	}
 }

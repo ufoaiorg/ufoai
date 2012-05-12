@@ -64,7 +64,7 @@ static void CL_DrawLineOfSight (const le_t *watcher, const le_t *target)
 	else
 		eyes[2] += EYE_HT_STAND;
 
-	ptl = CL_ParticleSpawn("fadeTracer", 0, eyes, target->origin, NULL);
+	ptl = CL_ParticleSpawn("fadeTracer", 0, eyes, target->origin);
 
 	if (LE_IsCivilian(target))
 		VectorSet(ptl->color, 0.2, 0.2, 1);

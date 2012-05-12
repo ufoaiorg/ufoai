@@ -763,11 +763,11 @@ static qboolean CL_ActorTraceMove (const pos3_t to)
 		Com_DPrintf(DEBUG_PATHING, "Next pos: (%i, %i, %i, %i) [%i].\n", pos[0], pos[1], pos[2], crouchingState, dvec);
 		Grid_PosToVec(cl.mapData->map, selActor->fieldSize, pos, vec);
 		if (length > CL_ActorUsableTUs(selActor))
-			CL_ParticleSpawn("longRangeTracer", 0, vec, oldVec, NULL);
+			CL_ParticleSpawn("longRangeTracer", 0, vec, oldVec);
 		else if (crouchingState)
-			CL_ParticleSpawn("crawlTracer", 0, vec, oldVec, NULL);
+			CL_ParticleSpawn("crawlTracer", 0, vec, oldVec);
 		else
-			CL_ParticleSpawn("moveTracer", 0, vec, oldVec, NULL);
+			CL_ParticleSpawn("moveTracer", 0, vec, oldVec);
 		VectorCopy(vec, oldVec);
 	}
 	return qtrue;
@@ -1435,7 +1435,7 @@ qboolean CL_AddActor (le_t * le, entity_t * ent)
 
 	if (LE_IsStunned(le)) {
 		if (!le->ptl)
-			le->ptl = CL_ParticleSpawn("stunnedactor", 0, le->origin, NULL, NULL);
+			le->ptl = CL_ParticleSpawn("stunnedactor", 0, le->origin);
 	} else if (!LE_IsDead(le)) {
 		/* add the weapons to the actor's hands */
 		const qboolean addLeftHandWeapon = CL_AddActorWeapon(le->left);
@@ -1552,7 +1552,7 @@ TARGETING GRAPHICS
  */
 static void CL_TargetingRadius (const vec3_t center, const float radius)
 {
-	ptl_t *particle = CL_ParticleSpawn("circle", 0, center, NULL, NULL);
+	ptl_t *particle = CL_ParticleSpawn("circle", 0, center);
 	if (particle != NULL)
 		particle->size[0] = radius;
 }
@@ -1626,12 +1626,12 @@ static void CL_TargetingStraight (const pos3_t fromPos, actorSizeEnum_t fromActo
 	}
 
 	/* spawn particles */
-	CL_ParticleSpawn("inRangeTracer", 0, start, mid, NULL);
+	CL_ParticleSpawn("inRangeTracer", 0, start, mid);
 	if (crossNo) {
-		CL_ParticleSpawn("longRangeTracer", 0, mid, end, NULL);
-		CL_ParticleSpawn("cross_no", 0, end, NULL, NULL);
+		CL_ParticleSpawn("longRangeTracer", 0, mid, end);
+		CL_ParticleSpawn("cross_no", 0, end);
 	} else {
-		CL_ParticleSpawn("cross", 0, end, NULL, NULL);
+		CL_ParticleSpawn("cross", 0, end);
 	}
 }
 
@@ -1681,7 +1681,7 @@ static void CL_TargetingGrenade (const pos3_t fromPos, actorSizeEnum_t fromActor
 	/* calculate parabola */
 	dt = Com_GrenadeTarget(from, at, selActor->fd->range, selActor->fd->launched, selActor->fd->rolled, v0);
 	if (!dt) {
-		CL_ParticleSpawn("cross_no", 0, cross, NULL, NULL);
+		CL_ParticleSpawn("cross_no", 0, cross);
 		return;
 	}
 
@@ -1712,16 +1712,16 @@ static void CL_TargetingGrenade (const pos3_t fromPos, actorSizeEnum_t fromActor
 		/** @todo character strength should be used here, too
 		 * the stronger the character, the further the throw */
 		if (obstructed || VectorLength(at) > selActor->fd->range)
-			CL_ParticleSpawn("longRangeTracer", 0, from, next, NULL);
+			CL_ParticleSpawn("longRangeTracer", 0, from, next);
 		else
-			CL_ParticleSpawn("inRangeTracer", 0, from, next, NULL);
+			CL_ParticleSpawn("inRangeTracer", 0, from, next);
 		VectorCopy(next, from);
 	}
 	/* draw targeting cross */
 	if (obstructed || VectorLength(at) > selActor->fd->range)
-		CL_ParticleSpawn("cross_no", 0, cross, NULL, NULL);
+		CL_ParticleSpawn("cross_no", 0, cross);
 	else
-		CL_ParticleSpawn("cross", 0, cross, NULL, NULL);
+		CL_ParticleSpawn("cross", 0, cross);
 
 	if (selActor->fd->splrad > 0.0) {
 		Grid_PosToVec(cl.mapData->map, toActorSize, toPos, at);
@@ -2354,7 +2354,7 @@ static void CL_NextAlienVisibleFromActor_f (void)
 			if (CL_ActorVis(selActor, le)) {
 				lastAlien = i;
 				CL_ViewCenterAtGridPosition(le->pos);
-				CL_ParticleSpawn("fadeTracer", 0, selActor->origin, le->origin, NULL);
+				CL_ParticleSpawn("fadeTracer", 0, selActor->origin, le->origin);
 				return;
 			}
 		}

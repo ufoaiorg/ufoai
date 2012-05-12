@@ -1200,7 +1200,7 @@ void CL_RunMapParticles (void)
 	for (i = 0, mp = mapParticles; i < cl.numMapParticles; i++, mp++)
 		if (mp->nextTime && cl.time >= mp->nextTime) {
 			/* spawn a new particle */
-			ptl = CL_ParticleSpawn(mp->ptl, mp->levelflags, mp->origin, NULL, NULL);
+			ptl = CL_ParticleSpawn(mp->ptl, mp->levelflags, mp->origin);
 			if (!ptl) {
 				Com_Printf(S_COLOR_YELLOW "Could not spawn particle '%s'\n", mp->ptl);
 				mp->nextTime = 0;
@@ -1504,7 +1504,7 @@ static void PTL_DebugSpawnMarker_f (void)
 	worldOrigin[1] = atof(Cmd_Argv(2));
 	worldOrigin[2] = atof(Cmd_Argv(3));
 
-	CL_ParticleSpawn("debug_marker", 0, worldOrigin, NULL, NULL);
+	CL_ParticleSpawn("debug_marker", 0, worldOrigin);
 }
 
 static void PTL_DebugList_f (void)
