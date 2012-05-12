@@ -196,6 +196,7 @@ static void R_ModLoadTexinfo (const lump_t *l)
 	r_worldmodel->bsp.texinfo = out;
 	r_worldmodel->bsp.numtexinfo = count;
 
+	const char *mapZone = Cvar_GetString("sv_mapzone");
 	for (i = 0; i < count; i++, in++, out++) {
 		for (j = 0; j < 3; j++) {
 			out->uv[j] = LittleFloat(in->vecs[0][j]);
@@ -207,8 +208,8 @@ static void R_ModLoadTexinfo (const lump_t *l)
 		out->flags = LittleLong(in->surfaceFlags);
 
 		/* exchange the textures with the ones that are needed for base assembly */
-		if (refdef.mapZone && strstr(in->texture, "tex_terrain/dummy"))
-			Com_sprintf(name, sizeof(name), "textures/tex_terrain/%s", refdef.mapZone);
+		if (mapZone && strstr(in->texture, "tex_terrain/dummy"))
+			Com_sprintf(name, sizeof(name), "textures/tex_terrain/%s", mapZone);
 		else
 			Com_sprintf(name, sizeof(name), "textures/%s", in->texture);
 

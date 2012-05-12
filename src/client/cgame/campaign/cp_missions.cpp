@@ -23,7 +23,6 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 */
 
 #include "../../cl_shared.h"
-#include "../../cl_renderer.h" /* refdef */
 #include "../../cl_team.h"
 #include "../cl_game.h"
 #include "../../ui/ui_main.h"
@@ -96,8 +95,6 @@ void CP_StartMissionMap (mission_t* mission, const battleParam_t *battleParamete
 
 	assert(mission->mapDef->map);
 
-	refdef.mapZone = battleParameters->zoneType;
-
 	/* base attack maps starts with a dot */
 	if (mission->mapDef->map[0] == '.') {
 		const base_t *base = mission->data.base;
@@ -119,6 +116,12 @@ void CP_StartMissionMap (mission_t* mission, const battleParam_t *battleParamete
 		param = battleParameters->param;
 	else
 		param = mission->mapDef->param;
+
+	/* set the mapZone - this allows us to replace the ground texture
+	 * with the suitable terrain texture - just use tex_terrain/dummy for the
+	 * brushes you want the terrain textures on
+	 * @sa R_ModLoadTexinfo */
+	Cvar_Set("sv_mapzone", battleParameters->zoneType);
 
 	if (mission->mapDef->hurtAliens)
 		Cvar_Set("sv_hurtaliens", "1");

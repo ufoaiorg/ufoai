@@ -226,12 +226,6 @@ typedef struct {
 	struct entity_s *traceEntity;
 
 	mapTiles_t *mapTiles;
-
-	/** @note set the mapZone - this allows us to replace the ground texture
-	 * with the suitable terrain texture - just use tex_terrain/dummy for the
-	 * brushes you want the terrain textures on
-	 * @sa R_ModLoadTexinfo */
-	const char *mapZone;
 } rendererData_t;
 
 extern rendererData_t refdef;
