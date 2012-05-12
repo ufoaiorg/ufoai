@@ -130,7 +130,7 @@ void uiTextListNode::drawText (uiNode_t* node, const linkedList_t* list)
 				R_Color(colorHover);
 		}
 
-		UI_DrawStringInBox(font, (align_t)node->contentAlign, pos[0], currentY, width, lineHeight, text, LONGLINES_PRETTYCHOP);
+		UI_DrawStringInBox(font, (align_t)node->contentAlign, pos[0], currentY, width, lineHeight, text);
 
 		/* next entries' position */
 		currentY += lineHeight;

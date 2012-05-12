@@ -151,7 +151,7 @@ void uiWindowNode::draw (uiNode_t *node)
 	/* draw the title */
 	text = UI_GetReferenceString(node, node->text);
 	if (text)
-		UI_DrawStringInBox(font, ALIGN_CC, pos[0] + node->padding, pos[1] + node->padding, node->box.size[0] - node->padding - node->padding, TOP_HEIGHT + 10 - node->padding - node->padding, text, LONGLINES_PRETTYCHOP);
+		UI_DrawStringInBox(font, ALIGN_CC, pos[0] + node->padding, pos[1] + node->padding, node->box.size[0] - node->padding - node->padding, TOP_HEIGHT + 10 - node->padding - node->padding, text);
 }
 
 void uiWindowNode::doLayout (uiNode_t *node)

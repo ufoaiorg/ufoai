@@ -140,7 +140,7 @@ void uiButtonNode::draw (uiNode_t *node)
 		/* @todo here IMO we should not use contentalign. need to check other toolkits to check layout */
 		UI_DrawStringInBox(font, (align_t) node->contentAlign,
 			textPos[0], content.pos[1], textWidth, content.size[1],
-			text, LONGLINES_PRETTYCHOP);
+			text);
 		R_Color(NULL);
 	}
 }

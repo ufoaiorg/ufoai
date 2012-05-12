@@ -556,9 +556,9 @@ void uiRadarNode::draw (uiNode_t *node)
 		radar.gridHeight = 6;
 
 #ifdef RADARSIZE_DEBUG
-		UI_DrawStringInBox("f_small", 0, 50, textposy, 500, 25, va("%fx%f %fx%f map", mapMin[0], mapMin[1], mapMax[0], mapMax[1]), LONGLINES_PRETTYCHOP);
+		UI_DrawStringInBox("f_small", 0, 50, textposy, 500, 25, va("%fx%f %fx%f map", mapMin[0], mapMin[1], mapMax[0], mapMax[1]));
 		textposy += 25;
-		UI_DrawStringInBox("f_small", 0, 50, textposy, 500, 25, va("%fx%f map", mapWidth, mapHeight), LONGLINES_PRETTYCHOP);
+		UI_DrawStringInBox("f_small", 0, 50, textposy, 500, 25, va("%fx%f map", mapWidth, mapHeight));
 		textposy += 25;
 #endif
 
@@ -579,10 +579,10 @@ void uiRadarNode::draw (uiNode_t *node)
 				mapCoefX * tile->mapWidth, mapCoefY * tile->mapHeight,
 				0, 0, 0, 0, tile->path[maxlevel]);
 #ifdef RADARSIZE_DEBUG
-		UI_DrawStringInBox("f_small", 0, 50, textposy, 500, 25, va("%dx%d %dx%d %s", tile->x, tile->y, tile->width, tile->height, tile->path[maxlevel]), LONGLINES_PRETTYCHOP);
+		UI_DrawStringInBox("f_small", 0, 50, textposy, 500, 25, va("%dx%d %dx%d %s", tile->x, tile->y, tile->width, tile->height, tile->path[maxlevel]));
 		textposy += 25;
 		UI_DrawStringInBox("f_small", 0, imagePos[0], imagePos[1],
-				500, 25, va("%dx%d", tile->gridX, tile->gridY), LONGLINES_PRETTYCHOP);
+				500, 25, va("%dx%d", tile->gridX, tile->gridY));
 #endif
 	}
 
@@ -612,7 +612,7 @@ void uiRadarNode::draw (uiNode_t *node)
 			break;
 		}
 #ifdef RADARSIZE_DEBUG
-		UI_DrawStringInBox("f_small", 0, 50, textposy, 500, 25, va("%fx%f %dx%d actor", le->origin[0], le->origin[1], le->pos[0], le->pos[1]), LONGLINES_PRETTYCHOP);
+		UI_DrawStringInBox("f_small", 0, 50, textposy, 500, 25, va("%fx%f %dx%d actor", le->origin[0], le->origin[1], le->pos[0], le->pos[1]));
 		textposy += 25;
 		UI_DrawFill(itempos[0], itempos[1], UNIT_SIZE * mapCoefX, 1, red);
 		UI_DrawFill(itempos[0], itempos[1], 1, UNIT_SIZE * mapCoefY, red);

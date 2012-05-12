@@ -326,7 +326,7 @@ static void UI_DrawNotice (void)
 
 	UI_DrawFill((x - 2 + dx) - ((width + 2) / 2), (y - 2) - ((height + 2) / 2), width + 4, height + 4, noticeBG);
 	R_Color(noticeColor);
-	UI_DrawString(font, ALIGN_CC, x + 1 + dx, y + 1, x + 1, maxWidth, 0, noticeText, lines, 0, NULL, qfalse, LONGLINES_WRAP);
+	UI_DrawString(font, ALIGN_CC, x + 1 + dx, y + 1, x + 1, maxWidth, 0, noticeText, lines);
 	R_Color(NULL);
 }
 

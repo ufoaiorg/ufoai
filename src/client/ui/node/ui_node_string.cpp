@@ -70,7 +70,7 @@ void uiStringNode::draw (uiNode_t *node)
 
 	R_Color(color);
 	if (node->box.size[0] == 0)
-		UI_DrawString(font, (align_t)node->contentAlign, nodepos[0], nodepos[1], nodepos[0], node->box.size[0], 0, ref, 0, 0, NULL, qfalse, LONGLINES_WRAP);
+		UI_DrawString(font, (align_t)node->contentAlign, nodepos[0], nodepos[1], nodepos[0], node->box.size[0], 0, ref);
 	else
 		UI_DrawStringInBox(font, (align_t)node->contentAlign, nodepos[0] + node->padding, nodepos[1] + node->padding, node->box.size[0] - node->padding - node->padding, node->box.size[1] - node->padding - node->padding, ref, (longlines_t) EXTRADATA(node).longlines);
 	R_Color(NULL);

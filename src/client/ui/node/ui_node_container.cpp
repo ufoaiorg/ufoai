@@ -340,7 +340,7 @@ static void UI_DrawFree (containerIndex_t container, const uiNode_t *node, int p
 	if (showTUs && CL_BattlescapeRunning()) {
 		UI_DrawString("f_verysmall", ALIGN_UL, nodepos[0] + 3, nodepos[1] + 3,
 			nodepos[0] + 3, node->box.size[0] - 6, 0,
-			va(_("In: %i Out: %i"), inv->in, inv->out), 0, 0, NULL, qfalse, LONGLINES_WRAP);
+			va(_("In: %i Out: %i"), inv->in, inv->out));
 	}
 }
 

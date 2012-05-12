@@ -149,12 +149,12 @@ void uiKeyBindingNode::draw (uiNode_t *node)
 	UI_DrawStringInBox(font, (align_t)node->contentAlign,
 		descriptionPos[0] + node->padding, descriptionPos[1] + node->padding,
 		descriptionSize[0] - node->padding - node->padding, descriptionSize[1] - node->padding - node->padding,
-		description, LONGLINES_PRETTYCHOP);
+		description);
 
 	UI_DrawStringInBox(font, (align_t)node->contentAlign,
 		bindingPos[0] + node->padding, bindingPos[1] + node->padding,
 		bindingSize[0] - node->padding - node->padding, bindingSize[1] - node->padding - node->padding,
-		binding, LONGLINES_PRETTYCHOP);
+		binding);
 
 	R_Color(NULL);
 }

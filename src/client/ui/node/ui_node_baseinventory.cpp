@@ -355,7 +355,7 @@ static int UI_BaseInventoryNodeDrawItems (uiNode_t *node, const objDef_t *highli
 		UI_DrawString("f_verysmall", ALIGN_LC,
 			pos[0] + obj->sx * C_UNIT / 2.0, pos[1] + obj->sy * C_UNIT / 2.0,
 			pos[0] + obj->sx * C_UNIT / 2.0, cellWidth - 5, /* maxWidth */
-			0, va("x%i", amount), 0, 0, NULL, qfalse, LONGLINES_WRAP);
+			0, va("x%i", amount));
 		pos[0] -= obj->sx * C_UNIT / 2.0;
 		pos[1] += obj->sy * C_UNIT / 2.0;
 		cellHeight += obj->sy * C_UNIT;
@@ -369,7 +369,7 @@ static int UI_BaseInventoryNodeDrawItems (uiNode_t *node, const objDef_t *highli
 		cellHeight += UI_DrawString("f_verysmall", ALIGN_UL,
 			pos[0], pos[1],
 			pos[0], cellWidth - 5, /* max width */
-			0, _(obj->name), 0, 0, NULL, qfalse, LONGLINES_WRAP);
+			0, _(obj->name));
 
 		/* draw ammos of weapon */
 		if (obj->weapon && EXTRADATA(node).displayAmmoOfWeapon) {
@@ -393,7 +393,7 @@ static int UI_BaseInventoryNodeDrawItems (uiNode_t *node, const objDef_t *highli
 				UI_DrawString("f_verysmall", ALIGN_LC,
 					ammopos[0] + icItem->item.t->sx * C_UNIT / 2.0, ammopos[1] + icItem->item.t->sy * C_UNIT / 2.0,
 					ammopos[0] + icItem->item.t->sx * C_UNIT / 2.0, cellWidth - 5 - ammopos[0],	/* maxWidth */
-					0, va("x%i", icItem->item.amount), 0, 0, NULL, qfalse, LONGLINES_WRAP);
+					0, va("x%i", icItem->item.amount));
 				ammopos[0] += icItem->item.t->sx * C_UNIT / 2.0;
 				ammopos[1] += icItem->item.t->sy * C_UNIT / 2.0;
 			}

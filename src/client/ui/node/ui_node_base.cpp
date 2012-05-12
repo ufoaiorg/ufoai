@@ -196,7 +196,7 @@ void uiBaseMapNode::draw (uiNode_t * node)
 					{
 						const float time = max(0.0, B_GetConstructionTimeRemain(building));
 						const char* text = va(ngettext("%3.1f day left", "%3.1f days left", time), time);
-						UI_DrawString("f_small", ALIGN_UL, pos[0] + 10, pos[1] + 10, pos[0] + 10, node->box.size[0], 0, text, 0, 0, NULL, qfalse, LONGLINES_WRAP);
+						UI_DrawString("f_small", ALIGN_UL, pos[0] + 10, pos[1] + 10, pos[0] + 10, node->box.size[0], 0, text);
 						break;
 					}
 					default:

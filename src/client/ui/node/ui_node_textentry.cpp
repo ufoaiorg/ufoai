@@ -271,7 +271,7 @@ void uiTextEntryNode::draw (uiNode_t *node)
 			UI_DrawStringInBox(font, (align_t)node->contentAlign,
 				pos[0] + node->padding, pos[1] + node->padding,
 				node->box.size[0] - node->padding - node->padding, node->box.size[1] - node->padding - node->padding,
-				buf, LONGLINES_PRETTYCHOP);
+				buf);
 			R_Color(NULL);
 		}
 	}
