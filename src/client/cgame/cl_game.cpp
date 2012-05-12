@@ -546,7 +546,7 @@ static const cgame_import_t* GAME_GetImportData (const cgameType_t *t)
 		cgi->R_ImageExists = R_ImageExists;
 		cgi->R_Color = R_Color;
 
-		/*cgi->S_SetSampleRepeatRate = S_SetSampleRepeatRate;*/
+		cgi->S_SetSampleRepeatRate = S_SetSampleRepeatRate;
 		cgi->S_StartLocalSample = S_StartLocalSample;
 
 		cgi->CL_GenerateCharacter = CL_GenerateCharacter;
