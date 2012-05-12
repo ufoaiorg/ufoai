@@ -118,7 +118,7 @@ void MIS_InitResultScreen (const missionResults_t *results)
 	LIST_AddString(&list, va("%s\t%i", _("Aliens captured"), results->aliensStunned));
 	LIST_AddString(&list, va("%s\t%i", _("Alien survivors"), results->aliensSurvived));
 	LIST_AddString(&list, "");
-	/* pahanx */
+	/* phalanx */
 	LIST_AddString(&list, va("%s\t%i", _("PHALANX soldiers killed by Aliens"), results->ownKilled));
 	LIST_AddString(&list, va("%s\t%i", _("PHALANX soldiers missing in action"), results->ownStunned));
 	LIST_AddString(&list, va("%s\t%i", _("PHALANX friendly fire losses"), results->ownKilledFriendlyFire));
