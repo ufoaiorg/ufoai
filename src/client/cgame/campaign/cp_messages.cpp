@@ -22,7 +22,6 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 
 */
 #include "../../cl_shared.h"
-#include "../../sound/s_main.h"
 #include "cp_campaign.h"
 #include "cp_popup.h"
 #include "cp_messages.h"
@@ -133,7 +132,7 @@ message_t *MS_AddNewMessage (const char *title, const char *text, messageType_t 
 	}
 
 	if (playSound)
-		cgi->S_StartLocalSample(sound, SND_VOLUME_DEFAULT);
+		cgi->S_StartLocalSample(sound, 1.0f);
 
 	return mess;
 }
