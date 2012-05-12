@@ -328,141 +328,98 @@ window bases
 			layout		LAYOUT_TOP_DOWN_FLOW
 			layoutMargin	2
 		}
-		BaseSection facilities {
+		BaseSection facilities
+		{
 			{
 				onClick		{ cmd "alien_containment false; show_facility <node:this.state@string>;" }
 			}
 			string label { string "_Facilities" }
 			button icon { icon "icons/facilities" }
 			data state { string "true" }
-		}
-		// Current and maximum building capacity for key buildings
-		// Living space, production, lab, storage, antimatter storage
-		panel bld_space
-		{
+
+			panel bld_panel
 			{
-				size			"298 0"
-				layout			LAYOUT_TOP_DOWN_FLOW
-				layoutMargin	0
-			}
-			data height { integer 0 }
-		}
-		// Show BUILD or VIEW STATS button depending
-		panel facilities_options
-		{
-			{
-				size			"298 0"
-				invis			true
-			}
-			data state { string "true" }
-			MainMenu3Btn build_button
-			{
-				string			"_BUILD"
-				pos				"29 0"
-				size			"224 26"
-				font			"f_small_bold"
-				color			"0 0 0 0.9"
-				selectcolor		"0 0 0 1"
-				onClick			{ cmd "build_facility <node:parent.state@string>;" }
-			}
-		}
-		// List of buildings available for construction
-		panel bld_list
-		{
-			{
-				size			"298 0"
-				invis			true
-			}
-			textlist options
-			{
-				dataid			TEXT_BUILDINGS
-				pos				"29 5"
-				size			"224 300"
-				lineheight		20
-				color			"0.56 0.81 0.76 1"
-				selectcolor		"1 1 1 1"
-				rows			"19"
-				longlines		LONGLINES_PRETTYCHOP
-				contentalign	ALIGN_CL
-				onClick			{
-					cmd "buildings_click <lineselected>;"
-					*node:parent.preview@invis = false
+				{
+					pos 			"0 48"
+					size 			"298 0"
+					layout			LAYOUT_TOP_DOWN_FLOW
+					layoutMargin	0
+				}
+				data height { integer 1 }
+
+				// Current and maximum building capacity for buildings
+				// Shows living space, production, lab, storage, antimatter storage
+				// OR shows all when facilities tab is clicked on.
+				panel bld_space
+				{
+					{
+						size			"298 0"
+						layout			LAYOUT_TOP_DOWN_FLOW
+						layoutMargin	0
 					}
-				onViewChange 	{
-					*node:parent.scrollbar@fullsize = <fullsize>
-					*node:parent.scrollbar@current = <viewpos>
+					data nodeheight { integer 1 }
+					data test { integer 1 }
 				}
-				onWheel {
-					*node:parent.scrollbar@current = <viewpos>
-				}
-			}
-			vscrollbar scrollbar {
-				image			"ui/scrollbar_v_green"
-				pos				"233 5"
-				height			"300"
-				current			0
-				viewsize		19
-				fullsize		19
-				hidewhenunused	true
-				onChange	{
-					*node:parent.options@viewpos = <current>
-				}
-			}
-			// Preview of currently selected building
-			panel preview
-			{
+				// Preview of currently selected building
+				panel preview
 				{
-					pos			"0 310"
-					size		"298 185"
-					invis		true
-					onClick		{ cmd "building_ufopedia;" }
-				}
-				image bld_image
-				{
-					src				*cvar:mn_building_image
-					preventratio	true
-					pos				"29 0"
-					size			"224 90"
-					contentalign	ALIGN_UL
-					ghost			true
-				}
-				button ufopedia
-				{
-					icon		"icons/bordered_magnifying_glass"
-					tooltip		"_UFOpaedia"
-					pos			"29 74"
-					size		"16 16"
-					ghost		true
-				}
-				text info
-				{
-					pos				"29 100"
-					size			"224 60"
-					lineheight		15
-					tabwidth		140
-					font			"f_verysmall"
-					color			"0.56 0.81 0.76 1"
-					dataid			TEXT_BUILDING_INFO
-					rows			4
-					contentalign	ALIGN_UL
-					ghost			true
-				}
-				string status
-				{
-					string			*cvar:mn_building_status
-					pos				"29 160"
-					size			"224 20"
-					font			"f_verysmall"
-					color			"0.56 0.81 0.76 1"
-					contentalign	ALIGN_UL
-					ghost			true
+					{
+						size		"298 185"
+						onClick		{ cmd "building_ufopedia;" }
+					}
+					image bld_image
+					{
+						src				*cvar:mn_building_image
+						preventratio	true
+						pos				"29 0"
+						size			"224 90"
+						contentalign	ALIGN_UL
+						ghost			true
+					}
+					/*
+					button ufopedia
+					{
+						icon		"icons/bordered_magnifying_glass"
+						tooltip		"_UFOpaedia"
+						pos			"29 74"
+						size		"16 16"
+						ghost		true
+					}
+					*/
+					text info
+					{
+						pos				"29 100"
+						size			"224 60"
+						lineheight		15
+						tabwidth		140
+						font			"f_verysmall"
+						color			"0.56 0.81 0.76 1"
+						dataid			TEXT_BUILDING_INFO
+						rows			4
+						contentalign	ALIGN_UL
+						ghost			true
+					}
+					string status
+					{
+						string			*cvar:mn_building_status
+						pos				"29 160"
+						size			"224 20"
+						font			"f_verysmall"
+						color			"0.56 0.81 0.76 1"
+						contentalign	ALIGN_UL
+						ghost			true
+					}
 				}
 			}
 		}
+
+
+
+
 		BaseSection aircraft
 		{
 			{
-				onClick		{ cmd "alien_containment false; build_facility false; ui_push aircraft;" }
+				onClick		{ cmd "alien_containment false; show_facility false; ui_push aircraft;" }
 			}
 			string label { string "_Aircraft" }
 			button icon { icon "icons/aircraft" }
@@ -483,7 +440,7 @@ window bases
 		BaseSection soldiers
 		{
 			{
-				onClick		{ cmd "alien_containment false; build_facility false; echo soldiers_pushed;" }
+				onClick		{ cmd "alien_containment false; show_facility false; echo soldiers_pushed;" }
 			}
 			string label { string "_Soldiers" }
 			button icon { icon "icons/crouch" }
@@ -491,7 +448,7 @@ window bases
 		BaseSection buysell
 		{
 			{
-				onClick		{ cmd "alien_containment false; build_facility false; ui_push market;" }
+				onClick		{ cmd "alien_containment false; show_facility false; ui_push market;" }
 			}
 			string label { string "_Market" }
 			button icon { icon "icons/market" }
@@ -499,7 +456,7 @@ window bases
 		BaseSection research
 		{
 			{
-				onClick		{ cmd "alien_containment false; build_facility false; ui_push research;" }
+				onClick		{ cmd "alien_containment false; show_facility false; ui_push research;" }
 			}
 			string label { string "_Research" }
 			button icon { icon "icons/research" }
@@ -519,7 +476,7 @@ window bases
 		BaseSection production
 		{
 			{
-				onClick		{ cmd "alien_containment false; build_facility false; ui_push production;" }
+				onClick		{ cmd "alien_containment false; show_facility false; ui_push production;" }
 			}
 			string label { string "_Production" }
 			button icon { icon "icons/wrench" }
@@ -539,7 +496,7 @@ window bases
 		BaseSection containment
 		{
 			{
-				onClick		{ cmd "build_facility false; aliencont_init; alien_containment <node:this.state@string>;" }
+				onClick		{ cmd "show_facility false; aliencont_init; alien_containment <node:this.state@string>;" }
 			}
 			string label { string "_Alien Containment" }
 			button icon { icon "icons/aliens" }
@@ -582,7 +539,7 @@ window bases
 				*node:parent.sections.soldiers.bg@bgcolor = "0.527 0.6 0.21 0.2"
 				*node:parent.sections.soldiers@onMouseEnter = { *node:this.bg@bgcolor = "0.527 0.6 0.21 0.4" *node:this.icon@background = "icons/circle" }
 				*node:parent.sections.soldiers@onMouseLeave = { *node:this.bg@bgcolor = "0.527 0.6 0.21 0.2" *node:this.icon@background = "icons/circle0" }
-				*node:parent.sections.soldiers@onClick = { cmd "alien_containment false; build_facility false; ui_push aliencont;" }
+				*node:parent.sections.soldiers@onClick = { cmd "alien_containment false; show_facility false; ui_push aliencont;" }
 				*node:parent.sections.soldiers@tooltip = ""
 			} elif (param1 eq "hospital") {
 			} elif (param1 eq "transfer") {
@@ -592,15 +549,15 @@ window bases
 				*node:parent.sections.<1>@onMouseLeave = { *node:this.bg@bgcolor = "0.527 0.6 0.21 0.2" *node:this.icon@background = "icons/circle0" }
 				*node:parent.sections.<1>@tooltip = ""
 				if (param1 eq "aircraft") {
-					*node:parent.sections.<1>@onClick = { cmd "alien_containment false; build_facility false; ui_push aircraft;" }
+					*node:parent.sections.<1>@onClick = { cmd "alien_containment false; show_facility false; ui_push aircraft;" }
 				} elif (param1 eq "buysell") {
-					*node:parent.sections.<1>@onClick = { cmd "alien_containment false; build_facility false; ui_push market;" }
+					*node:parent.sections.<1>@onClick = { cmd "alien_containment false; show_facility false; ui_push market;" }
 				} elif (param1 eq "research") {
-					*node:parent.sections.<1>@onClick = { cmd "alien_containment false; build_facility false; ui_push research;" }
+					*node:parent.sections.<1>@onClick = { cmd "alien_containment false; show_facility false; ui_push research;" }
 				} elif (param1 eq "production") {
-					*node:parent.sections.<1>@onClick = { cmd "alien_containment false; build_facility false; ui_push production;" }
+					*node:parent.sections.<1>@onClick = { cmd "alien_containment false; show_facility false; ui_push production;" }
 				} elif (param1 eq "containment") {
-					*node:parent.sections.<1>@onClick = { cmd "build_facility false; aliencont_init; alien_containment <node:this.state@string>;" }
+					*node:parent.sections.<1>@onClick = { cmd "show_facility false; aliencont_init; alien_containment <node:this.state@string>;" }
 				}
 			}
 		}
@@ -617,30 +574,38 @@ window bases
 	 */
 	confunc show_bld_space
 	{
+
 		// Set the appropriate size of the panel
-		*node:parent.sections.bld_space.height@integer = (<node:parent.sections.bld_space.height@integer> + 30)
-		*node:parent.sections.bld_space@size = "298 <node:parent.sections.bld_space.height@integer>"
+		cmd "echo test <node:root.sections.facilities.bld_panel.bld_space.test@integer>"
+		cmd "echo nodeheight1 <node:root.sections.facilities.bld_panel.bld_space.nodeheight@integer>"
+		/*
+		*node:parent.sections.facilities.bld_panel.bld_space.height@integer = (<node:parent.sections.facilities.bld_panel.bld_space.height@integer> + 30)
+		*node:parent.sections.facilities.bld_panel.bld_space@size = "298 <node:parent.sections.facilities.bld_panel.bld_space.height@integer>"
+		*node:parent.sections.facilities.bld_panel.height@integer = (<node:parent.sections.facilities.bld_panel.bld_space.height@integer> + 185)
+		*node:parent.sections.facilities.bld_panel@size = "298 <node:parent.sections.facilities.bld_panel.height@integer>"
+		*/
+		cmd "echo nodeheight2 <node:root.sections.facilities.bld_panel.bld_space.nodeheight@integer>"
 
 		// Add the capacity bar
-		call *node:parent.sections.bld_space@createChild ( "<2>", "BuildingSpace" )
-		*node:parent.sections.bld_space.<2>.id@string = "<2>"
-		*node:parent.sections.bld_space.<2>.smlicon@icon = "icons/<2>"
-		*node:parent.sections.bld_space.<2>@tooltip = "<1>"
-		*node:parent.sections.bld_space.<2>.data_bar@current = <3>
-		*node:parent.sections.bld_space.<2>.data_bar@max = <4>
+		call *node:parent.sections.facilities.bld_panel.bld_space@createChild ( "<2>", "BuildingSpace" )
+		*node:parent.sections.facilities.bld_panel.bld_space.<2>.id@string = "<2>"
+		*node:parent.sections.facilities.bld_panel.bld_space.<2>.smlicon@icon = "icons/<2>"
+		*node:parent.sections.facilities.bld_panel.bld_space.<2>@tooltip = "<1>"
+		*node:parent.sections.facilities.bld_panel.bld_space.<2>.data_bar@current = <3>
+		*node:parent.sections.facilities.bld_panel.bld_space.<2>.data_bar@max = <4>
 
 		// Only show the capacity string if max isn't 0
 		if (param4 ne 0) {
-			*node:parent.sections.bld_space.<2>.data@string = <3>/<4>
+			*node:parent.sections.facilities.bld_panel.bld_space.<2>.data@string = <3>/<4>
 		} elif (param6 > 0) {
 			// Show current/max number of buildings of a type if limited
-			*node:parent.sections.bld_space.<2>.data@string = <5>/<6>
+			*node:parent.sections.facilities.bld_panel.bld_space.<2>.data@string = <5>/<6>
 		}
 		// Show/Hide "add" building button
 		if (param5 == param6 ) {
-			*node:parent.sections.bld_space.<2>.alert@invis = true
+			*node:parent.sections.facilities.bld_panel.bld_space.<2>.alert@invis = true
 		} else {
-			*node:parent.sections.bld_space.<2>.alert@invis = false
+			*node:parent.sections.facilities.bld_panel.bld_space.<2>.alert@invis = false
 		}
 	}
 
@@ -649,9 +614,9 @@ window bases
 	 */
 	confunc clear_bld_space
 	{
-		call *node:parent.sections.bld_space@removeAllChild
-		*node:parent.sections.bld_space@size = "298 0"
-		*node:parent.sections.bld_space.height@integer = 0
+		call *node:parent.sections.facilities.bld_panel.bld_space@removeAllChild
+		*node:parent.sections.facilities.bld_panel.bld_space@size = "298 0"
+		*node:parent.sections.facilities.bld_panel.bld_space.height@integer = 0
 	}
 
 	/*
@@ -752,10 +717,6 @@ window bases
 			// Show capacity for all base buildings
 			cmd "base_building_space;"
 
-			// Show the build button
-			*node:parent.sections.facilities_options@invis = false
-			*node:parent.sections.facilities_options@size = "298 26"
-
 			// Set the state for subsequent clicks
 			*node:parent.sections.facilities.state@string = "false"
 		} else {
@@ -763,19 +724,8 @@ window bases
 			// Resets list selection
 			cmd "reset_building_current 0;"
 
-			// Hide the list of buildings and the build button
-			*node:parent.sections.bld_list@invis = true
-			*node:parent.sections.bld_list@size = "298 0"
-			*node:parent.sections.facilities_options@invis = true
-			*node:parent.sections.facilities_options@size = "298 0"
-
-			// Reset button name
-			*node:parent.sections.facilities_options.build_button@string = "_BUILD"
-
 			// Set the state/invis for subsequent clicks
 			*node:parent.sections.facilities.state@string = "true"
-			*node:parent.sections.bld_list.preview@invis = true
-			*node:parent.sections.facilities_options.state@string = "true"
 
 			// Show capacity for just main base buildings
 			cmd "base_init;"
@@ -788,55 +738,6 @@ window bases
 		*node:parent.sections.research@invis = <1>
 		*node:parent.sections.production@invis = <1>
 		*node:parent.sections.containment@invis = <1>
-	}
-
-	/*
-	 * Show the list of buildings available for construction
-	 * param1 = true (show building list) or false (show stats)
-	 */
-	confunc build_facility
-	{
-		// Resets list selection and builing preview when shown/hidden
-		*node:parent.sections.bld_list.options@lineselected = -1
-		*cvar:mn_building_image	= ""
-//		*cvar:mn_building_status = ""
-		cmd "ui_resetdata TEXT_BUILDING_INFO;"
-
-		if (param1 eq "true") {
-			// Reset building status to just basic buildings
-			cmd "base_init;"
-
-			// Call to cp_base.c, populates TEXT_BUILDINGS with list of available buildings
-			cmd "building_init;"
-
-			// Show the list of buildings
-			*node:parent.sections.bld_list@invis = false
-			*node:parent.sections.bld_list@size = "298 515"
-
-			// Change button name
-			*node:parent.sections.facilities_options.build_button@string = "_VIEW STATS"
-
-			// Set the state for subsequent clicks
-			*node:parent.sections.facilities_options.state@string = "false"
-
-		} else {
-
-			// Show capacity for all base buildings
-			cmd "base_building_space;"
-
-			// Resets list selection
-			cmd "reset_building_current 0;"
-
-			// Hide the list of buildings
-			*node:parent.sections.bld_list@invis = true
-			*node:parent.sections.bld_list@size = "298 0"
-
-			// Change button name
-			*node:parent.sections.facilities_options.build_button@string = "_BUILD"
-
-			// Set the state/invis for subsequent clicks
-			*node:parent.sections.facilities_options.state@string = "true"
-		}
 	}
 
 	/*
