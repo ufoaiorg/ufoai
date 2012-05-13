@@ -1034,9 +1034,9 @@ void AI_ActorThink (player_t * player, edict_t * ent)
 		/* no shots left, but possible targets left - maybe they shoot back
 		 * or maybe they are still close after hiding */
 
-		/* decide whether the actor maybe wants to go crouched */
+		/* decide whether the actor wants to crouch */
 		if (AI_CheckCrouch(ent))
-			G_ClientStateChange(player, ent, STATE_CROUCHED, qfalse);
+			G_ClientStateChange(player, ent, STATE_CROUCHED, qtrue);
 
 		/* actor is still alive - try to turn into the appropriate direction to see the target
 		 * actor once he sees the ai, too */
