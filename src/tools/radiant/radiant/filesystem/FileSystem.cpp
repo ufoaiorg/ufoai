@@ -84,7 +84,6 @@ void FileSystem::initDirectory (const std::string& directory)
 			g_message("vfs directory: %s\n", path.c_str());
 
 			Archives archives;
-			Archives archivesOverride;
 			for (;;) {
 				const char* name = g_dir_read_name(dir);
 				if (name == 0)
@@ -100,10 +99,6 @@ void FileSystem::initDirectory (const std::string& directory)
 			g_dir_close(dir);
 
 			// add the entries to the vfs
-			for (Archives::iterator i = archivesOverride.begin(); i != archivesOverride.end(); ++i) {
-				std::string filename = path + *i;
-				initPK3File(filename);
-			}
 			for (Archives::iterator i = archives.begin(); i != archives.end(); ++i) {
 				std::string filename = path + *i;
 				initPK3File(filename);
