@@ -7681,7 +7681,6 @@
 "classname" "misc_model"
 "origin" "1615 851 42"
 "modelscale_vec" "1.5 1.66667 1.8"
-"skin" "1"
 "spawnflags" "255"
 "model" "models/objects/vegi/bush/bush01.md2"
 }
@@ -11711,7 +11710,6 @@
 "origin" "1939 847 42"
 "modelscale_vec" "1.5 1.66667 1.8"
 "angles" "0 65 0"
-"skin" "1"
 "spawnflags" "255"
 "model" "models/objects/vegi/bush/bush01.md2"
 }

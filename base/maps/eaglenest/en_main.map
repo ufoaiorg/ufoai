@@ -7630,7 +7630,6 @@
 "spawnflags" "254"
 "model" "models/objects/vegi/bush/bush01.md2"
 "origin" "680 692 154"
-"skin" "2"
 }
 // entity 63
 {
