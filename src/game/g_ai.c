@@ -455,7 +455,6 @@ static edict_t *AI_SearchDestroyableObject (const edict_t *ent, const fireDef_t 
  */
 static void AI_SearchBestTarget (aiAction_t *aia, const edict_t *ent, edict_t *check, const item_t *item, shoot_types_t shootType, int tu, float *maxDmg, int *bestTime, const fireDef_t *fdArray)
 {
-	const objDef_t *ad;
 	qboolean visChecked = qfalse;	/* only check visibily once for an actor */
 	fireDefIndex_t fdIdx;
 	float dist;
@@ -500,8 +499,8 @@ static void AI_SearchBestTarget (aiAction_t *aia, const edict_t *ent, edict_t *c
 
 			/* take into account armour */
 			if (CONTAINER(check, gi.csi->idArmour)) {
-				ad = CONTAINER(check, gi.csi->idArmour)->item.t;
-				dmg *= 1.0 - ad->protection[ad->dmgtype] * 0.01;
+				const objDef_t *ad = CONTAINER(check, gi.csi->idArmour)->item.t;
+				dmg *= 1.0 - ad->protection[fd->dmgweight] * 0.01;
 			}
 
 			if (dmg > check->HP && G_IsReaction(check))
