@@ -1516,7 +1516,7 @@ void RT_UpdateConnectionColumn (mapTiles_t *mapTiles, routing_t * map, const int
 #ifdef DEBUG
 	/** @todo remove me */
 	/* just a place to place a breakpoint */
-	if (x == 126 && y == 121 && dir == 3) {
+	if (x == 135 && y == 120 && dir == 1) {
 		z = 7;
 	}
 #endif
