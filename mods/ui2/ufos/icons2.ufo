@@ -303,43 +303,6 @@ sprite icons/windowinfo0 {
 }
 
 
-
-
-// ==================
-// BASE ICONS
-// ==================
-
-sprite icons/building_quarters {
-	image "banks/iconpack_hud"
-	texl "211 40"
-	size "17 17"
-	single true
-}
-sprite icons/building_storage {
-	image "banks/iconpack_gen"
-	texl "146 50"
-	size "17 17"
-	single true
-}
-sprite icons/building_lab {
-	image "banks/iconpack_gen"
-	texl "170 49"
-	size "17 17"
-	single true
-}
-sprite icons/building_workshop {
-	image "banks/iconpack_gen"
-	texl "146 74"
-	size "17 17"
-	single true
-}
-sprite icons/building_amstorage {
-	image "banks/iconpack_gen"
-	texl "170 73"
-	size "17 17"
-	single true
-}
-
 // Employee heads
 sprite icons/head_scientist {
 	image "banks/iconpack_gen2"
