@@ -208,7 +208,7 @@ const char* UI_GenInjectedString (const char* input, qboolean addNewLine, const 
 {
 	static char cmd[256];
 	int length = sizeof(cmd) - (addNewLine ? 2 : 1);
-	static char propertyName[MAX_VAR];
+	static char propertyName[256];
 	const char *cin = input;
 	char *cout = cmd;
 
