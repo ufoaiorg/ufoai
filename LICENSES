@@ -6858,6 +6858,10 @@ base/textures/tex_ufo/ufo2_16.png | GNU General Public License 2.0 or later | "S
 base/textures/tex_ufo/ufo2_16_nm.png | GNU General Public License 2.0 or later | Martin Gerhardy
 base/textures/tex_ufo/ufo2_17.png | GNU General Public License 2.0 or later | "SparX" Beyeler
 base/textures/tex_ufo/ufo2_17_nm.png | GNU General Public License 2.0 or later | Martin Gerhardy
+base/textures/tex_ufo/ufo2_18.png | GNU General Public License 2.0 or later | Kostia "Kildor" Romanov
+base/textures/tex_ufo/ufo2_light.png | GNU General Public License 2.0 or later | Kostia "Kildor" Romanov
+base/textures/tex_ufo/ufo2_light_glow.png | GNU General Public License 2.0 or later | Kostia "Kildor" Romanov
+base/textures/tex_ufo/ufo2_light_gm.png | GNU General Public License 2.0 or later | Kostia "Kildor" Romanov
 base/textures/tex_ufo/ufo2_medic01.png | GNU General Public License 2.0 or later | "SparX" Beyeler
 base/textures/tex_ufo/ufo2_medic02.png | GNU General Public License 2.0 or later | "SparX" Beyeler
 base/textures/tex_vehicles/car_a.png | GNU General Public License 2.0 or later | Nate Wright
