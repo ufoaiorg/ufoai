@@ -65,8 +65,8 @@ components craft_ufo_harvester {
 	item	craft_alien_astrogation		2	%
 	item	craft_alien_detection		1	%
 	item	craft_weapon_particle_beam	2	%
-	//item	alien_launcher				1	%
-	//item	alien_antimatter_missile	12	%
+	item	craft_weapon_alien_launcher 1	%
+	item	craft_ammo_am_missile 12	%
 }
 
 // UFO -- Supply Transport
@@ -77,6 +77,19 @@ components craft_ufo_supply {
 	item	craft_alien_propulsion		2	%
 	item	craft_alien_astrogation		2	%
 	item	craft_alien_detection		1	%
+}
+
+// UFO -- Gunboat
+components craft_ufo_gunboat {
+	time	500
+	item	alienmaterials				600	%
+	item	antimatter					500	0
+	item	craft_alien_propulsion		4	%
+	item	craft_alien_astrogation		2	%
+	item	craft_alien_detection		1	%
+	item	craft_weapon_particle_beam	2	%
+	item	craft_weapon_alien_launcher	2	%
+	item	craft_ammo_am_missile 24	%
 }
 
 // UFO -- Corrupter

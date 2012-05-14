@@ -4944,6 +4944,154 @@ tech rs_craft_ammo_particle
 	producetime	-1
 }
 
+tech rs_craft_weapon_alien_launcher
+{
+	name		"_Alien Launcher"
+	type		craftitem
+	up_chapter	crafts
+
+	pre_description {
+		default "_craft_weapon_alien_launcher_pre_txt"
+	}
+	description {
+		default "_craft_weapon_alien_launcher_txt"
+	}
+
+	provides	craft_weapon_alien_launcher
+
+	mail_pre
+	{
+		from	"_mail_from_paul_navarre"
+		to		"_mail_to_base_commander"
+		// subject	defined by "name"
+		icon	icons/mail_tech
+	}
+
+	mail
+	{
+		from	"_mail_from_paul_navarre"
+		to		"_mail_to_base_commander"
+		// subject	defined by "name"
+		icon	icons/mail_tech
+	}
+
+	require_AND
+	{
+		tech rs_fighter_OR_harvester	// LOGIC tech - see there for more
+		item craft_weapon_alien_launcher 1
+	}
+
+	require_for_production
+	{
+	    item alienmaterials 250
+	}
+
+	time		8000
+	producetime	150
+
+	mdl		"aircraft/craft_weapon_launcher/alien_launcher"
+}
+
+tech rs_craft_ammo_am_missile
+{
+	name		"_Antimatter Missile"
+	type		craftitem
+	up_chapter	crafts
+
+	pre_description {
+		default "_alien_antimatter_missile_pre_txt"
+	}
+	description {
+		default "_alien_antimatter_missile_txt"
+	}
+
+	provides	craft_ammo_am_missile
+
+	mail_pre
+	{
+		from	"_mail_from_paul_navarre"
+		to		"_mail_to_base_commander"
+		// subject	defined by "name"
+		icon	icons/mail_tech
+	}
+
+	mail
+	{
+		from	"_mail_from_paul_navarre"
+		to		"_mail_to_base_commander"
+		// subject	defined by "name"
+		icon	icons/mail_tech
+	}
+
+	require_AND
+	{
+//		tech rs_craft_ufo_fighter
+//		tech rs_craft_ufo_harvester
+		tech rs_antimatter
+		item craft_ammo_am_missile 1
+	}
+
+	require_for_production
+	{
+	    item alienmaterials 50
+	    item antimatter 3
+	}
+
+	time		5000
+	producetime	100
+
+	mdl		"aircraft/craft_weapon_launcher/antimatter"
+}
+
+tech rs_craft_ammo_hybrid_missile
+{
+	name		"_Hybrid Missile"
+	type		craftitem
+	up_chapter	crafts
+
+	pre_description {
+		default "_craft_ammo_hybrid_missile_pre_txt"
+	}
+	description {
+		default "_craft_ammo_hybrid_missile_txt"
+	}
+
+	provides	craft_ammo_hybrid_missile
+
+	mail_pre
+	{
+		from	"_mail_from_paul_navarre"
+		to		"_mail_to_base_commander"
+		// subject	defined by "name"
+		icon	icons/mail_tech
+	}
+
+	mail
+	{
+		from	"_mail_from_paul_navarre"
+		to		"_mail_to_base_commander"
+		// subject	defined by "name"
+		icon	icons/mail_tech
+	}
+
+	require_AND
+	{
+//		tech rs_craft_ufo_fighter
+//		tech rs_craft_ufo_harvester
+		tech rs_craft_ammo_am_missile
+	}
+
+	require_for_production
+	{
+	    item alienmaterials 50
+	}
+
+	time		4500
+	producetime	75
+
+	mdl		"aircraft/craft_weapon_launcher/hybrid" // @todo add the model
+}
+
 tech rs_craft_el_targeting
 {
 	type		craftitem

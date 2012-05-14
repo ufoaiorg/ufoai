@@ -471,13 +471,13 @@ aircraft craft_ufo_fighter
 	building	building_small_ufo_hangar
 	price		12000
 	image		"geoscape/air_ufo"
+	interestlevel 0
 	slot {
 		type		weapon
 		size		heavy
 		contains	rs_craft_weapon_particle
 		ammo		rs_craft_ammo_particle
 	}
-	interestlevel 0
 }
 
 aircraft craft_ufo_harvester
@@ -500,25 +500,25 @@ aircraft craft_ufo_harvester
 	building	building_big_ufo_hangar
 	price		18000
 	image		"geoscape/air_ufo"
-	slot {
-		type		weapon
-		size		heavy
-		contains	rs_craft_weapon_particle
-		ammo		rs_craft_ammo_particle
-	}
-	slot {
-		type		weapon
-		size		heavy
-		contains	rs_craft_weapon_particle
-		ammo		rs_craft_ammo_particle
-	}
-	slot {
-		type		weapon
-		size		heavy
-		contains	rs_craft_weapon_particle
-		ammo		rs_craft_ammo_particle
-	}
 	interestlevel 0
+	slot {
+		type		weapon
+		size		heavy
+		contains	rs_craft_weapon_particle
+		ammo		rs_craft_ammo_particle
+	}
+	slot {
+		type		weapon
+		size		heavy
+		contains	rs_craft_weapon_particle
+		ammo		rs_craft_ammo_particle
+	}
+	slot {
+		type		weapon
+		size		heavy
+		contains	rs_craft_weapon_alien_launcher
+		ammo		rs_craft_ammo_am_missile
+	}
 }
 
 aircraft craft_ufo_gunboat
@@ -526,10 +526,10 @@ aircraft craft_ufo_gunboat
 	param {
 		speed		13
 		maxspeed	17
-		shield		4
-		ecm			100
-		damage		300
-		accuracy	80
+		shield		6
+		ecm			120
+		damage		350
+		accuracy	50
 		range		347
 	}
 	name		"_UFO - Gunboat"
@@ -537,27 +537,34 @@ aircraft craft_ufo_gunboat
 	type		ufo
 	model		"geoscape/ufo_gunboat"
 	size		2
-	numteam		10
+	numteam		8
 	building	building_big_ufo_hangar
 	price		23000
 	image		"geoscape/air_ufo"
+	interestlevel 300
 	slot {
 		type		weapon
 		size		heavy
-		contains	rs_craft_weapon_sparrowhawk
-		ammo		rs_craft_ammo_sparrowhawk
+		contains	rs_craft_weapon_particle
+		ammo		rs_craft_ammo_particle
 	}
 	slot {
 		type		weapon
 		size		heavy
-		contains	rs_craft_weapon_sparrowhawk
-		ammo		rs_craft_ammo_sparrowhawk
+		contains	rs_craft_weapon_particle
+		ammo		rs_craft_ammo_particle
 	}
 	slot {
 		type		weapon
 		size		heavy
-		contains	rs_craft_weapon_sparrowhawk
-		ammo		rs_craft_ammo_sparrowhawk
+		contains	rs_craft_weapon_alien_launcher
+		ammo		rs_craft_ammo_am_missile
+	}
+	slot {
+		type		weapon
+		size		heavy
+		contains	rs_craft_weapon_alien_launcher
+		ammo		rs_craft_ammo_am_missile
 	}
 }
 
@@ -934,6 +941,50 @@ craftitem craft_ammo_particle_beam
 	delay				200
 	size				10 // light
 }
+
+craftitem craft_weapon_alien_launcher
+{
+	name "_Alien Launcher"
+	crafttype weapon
+	size 90
+	installationTime 5
+	price 12000
+	model "aircraft/craft_weapon_antim/launcher_a"
+}
+
+craftitem craft_ammo_am_missile
+{
+	name		"_Antimatter Missile"
+	crafttype	ammo
+	craftweapon	craft_weapon_alien_launcher
+	price		3000
+	size		60 // medium
+	model		"geoscape/missile_antimatter"
+
+	ammo		3
+	wdamage		100
+	accuracy	0.4
+	wrange		2.5
+	wspeed		35
+	delay		800
+}
+
+craftitem craft_ammo_hybrid_missile
+{
+	name		"_Hybrid Missile"
+	crafttype	ammo
+	craftweapon	craft_weapon_alien_launcher
+	price		2700
+	size		50 // light
+	model		"geoscape/missile" // @todo fixme!!!
+	ammo		6
+	wdamage		80
+	accuracy	0.4
+	wrange		2.5
+	wspeed		35
+	delay		800
+}
+
 
 craftitem craft_el_targeting
 {
