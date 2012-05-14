@@ -568,7 +568,7 @@ static float AI_FighterCalcBestAction (edict_t * ent, pos3_t to, aiAction_t * ai
 
 	move = gi.MoveLength(level.pathingMap, to,
 			G_IsCrouched(ent) ? 1 : 0, qtrue);
-	tu = ent->TU - move;
+	tu = G_ActorUsableTUs(ent) - move;
 
 	/* test for time */
 	if (tu < 0 || move == ROUTING_NOT_REACHABLE)
@@ -585,7 +585,7 @@ static float AI_FighterCalcBestAction (edict_t * ent, pos3_t to, aiAction_t * ai
 	maxDmg = 0.0;
 	/* search best target */
 	while ((check = G_EdictsGetNextLivingActor(check))) {
-		if (ent != check && (check->team != ent->team || G_IsInsane(ent))) {
+		if (ent != check && (check->team != ent->team || G_IsInsane(ent)) && !G_EdictPosIsSameAs(check, to)) {
 			/* don't shoot civilians in mp */
 			if (G_IsCivilian(check) && sv_maxclients->integer > 1 && !G_IsInsane(ent))
 				continue;
