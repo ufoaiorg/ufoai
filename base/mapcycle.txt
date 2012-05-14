@@ -5,7 +5,10 @@
  * [mapname] [day|night] [gametype]
  */
 
-"fueldump" day coop2
+training_a day 1on1
+training_b day 1on1
+"+oriental medium" day 1on1
+"+bridge mp" day 1on1
 "+africa small" day 1on1
 "+frozen small" day 1on1
 "+italy default" day 1on1
