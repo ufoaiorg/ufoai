@@ -1,0 +1,99 @@
+/**
+ * @brief Unittest for injection
+ * Every thing must be green and it must not print any text or warning into the console.
+ */
+
+window test_foobar {
+	{
+		size		"220 220"
+		bgcolor		"0 0 0 1"
+	}
+
+	string test1 {
+		pos		"100 60"
+		string	"t1"
+	}
+
+	string test2 {
+		pos		"100 70"
+		string	"t2"
+	}
+
+	string test3 {
+		pos		"100 80"
+		string	"t3"
+	}
+
+	string test4 {
+		pos		"100 90"
+		string	"t4"
+	}
+
+	string test5 {
+		pos		"100 100"
+		string	"t5"
+	}
+
+	string test6 {
+		pos		"100 110"
+		string	"t6"
+	}
+
+	string test7 {
+		pos		"100 120"
+		string	"t7"
+	}
+
+	panel aaaaaaaaaa {
+		{ size "10 10" }
+		panel bbbbbbbbbb {
+			{ size "10 10" }
+			panel cccccccccc {
+				{ size "10 10" }
+				panel dddddddddd {
+					{ size "10 10" }
+					panel eeeeeeeeee {
+						{ size "10 10" }
+						panel ffffffffff {
+							{ size "10 10" }
+							panel gggggggggg {
+								{ size "10 10" }
+							}
+						}
+					}
+				}
+			}
+		}
+	}
+
+	func onWindowOpened {
+
+		*cvar:test = "<node:root.aaaaaaaaaa@height>"
+		if ( *cvar:test == 10 ) { *node:root.test1@color = "0 1 0 1" }
+		else { *node:root.test1@color = "1 0 0 1" }
+
+		*cvar:test = "<node:root.aaaaaaaaaa.bbbbbbbbbb@height>"
+		if ( *cvar:test == 10 ) { *node:root.test2@color = "0 1 0 1" }
+		else { *node:root.test2@color = "1 0 0 1" }
+
+		*cvar:test = "<node:root.aaaaaaaaaa.bbbbbbbbbb.cccccccccc@height>"
+		if ( *cvar:test == 10 ) { *node:root.test3@color = "0 1 0 1" }
+		else { *node:root.test3@color = "1 0 0 1" }
+
+		*cvar:test = "<node:root.aaaaaaaaaa.bbbbbbbbbb.cccccccccc.dddddddddd@height>"
+		if ( *cvar:test == 10 ) { *node:root.test4@color = "0 1 0 1" }
+		else { *node:root.test4@color = "1 0 0 1" }
+
+		*cvar:test = "<node:root.aaaaaaaaaa.bbbbbbbbbb.cccccccccc.dddddddddd.eeeeeeeeee@height>"
+		if ( *cvar:test == 10 ) { *node:root.test5@color = "0 1 0 1" }
+		else { *node:root.test5@color = "1 0 0 1" }
+
+		*cvar:test = "<node:root.aaaaaaaaaa.bbbbbbbbbb.cccccccccc.dddddddddd.eeeeeeeeee.ffffffffff@height>"
+		if ( *cvar:test == 10 ) { *node:root.test6@color = "0 1 0 1" }
+		else { *node:root.test6@color = "1 0 0 1" }
+
+		*cvar:test = "<node:root.aaaaaaaaaa.bbbbbbbbbb.cccccccccc.dddddddddd.eeeeeeeeee.ffffffffff.gggggggggg@height>"
+		if ( *cvar:test == 10 ) { *node:root.test7@color = "0 1 0 1" }
+		else { *node:root.test7@color = "1 0 0 1" }
+	}
+}
