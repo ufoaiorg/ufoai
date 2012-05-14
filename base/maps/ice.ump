@@ -55,9 +55,29 @@ a     +d     +d     +d    a
 0      a      a     a     0
 }
 
+tile +craft_ufo_fighter
+{
+5 5
+0      a      a     a     0
+a     +d     +d     +d    a
+a     +d     +d     +d    a
+a     +d     +d     +d    a
+0      a      a     a     0
+}
+
 // crashed UFO´s ----------------------------------------------------
 
 tile +craft_crash_scout
+{
+5 5
+0      a      a     a     0
+a     +d     +d     +d    a
+a     +d     +d     +d    a
+a     +d     +d     +d    a
+0      a      a     a     0
+}
+
+tile +craft_crash_fighter
 {
 5 5
 0      a      a     a     0
