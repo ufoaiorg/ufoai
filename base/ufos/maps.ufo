@@ -1238,6 +1238,46 @@ mapdef hills_small
 // ICE RANDOM MAPS //
 /////////////////////
 
+mapdef ice_medium
+{
+        map             "+ice"
+        description     "_An icy environment."
+		param           "medium"
+		campaign 		true
+		singleplayer	true
+		multiplayer     false
+		maxaliens       5
+			// randomspawn enabled
+
+		aircraft
+        {
+			craft_drop_firebird
+			craft_drop_raptor
+			craft_drop_herakles
+        }
+
+        ufos
+        {
+			craft_ufo_harvester
+			craft_ufo_gunboat
+		}
+
+        terrains
+        {
+            arctic
+        }
+
+        cultures
+        {
+            // any
+        }
+
+        populations
+        {
+            nopopulation
+        }
+}
+
 mapdef ice_small
 {
         map             "+ice"

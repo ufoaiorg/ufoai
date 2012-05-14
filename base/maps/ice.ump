@@ -65,6 +65,29 @@ a     +d     +d     +d    a
 0      a      a     a     0
 }
 
+tile +craft_ufo_harvester
+{
+7 6
+0      a      a     a     a     a     0
+a     +d     +d     +d    +d    +d    a
+a     +d     +d     +d    +d    +d    a
+a     +d     +d     +d    +d    +d    a
+a     +d     +d     +d    +d    +d    a
+0      a      a     a     a     a     0
+}
+
+tile +craft_ufo_gunboat
+{
+6 7
+0      a      a     a     0     0
+a     +d     +d     +d    +d    a
+a     +d     +d     +d    +d    a
+a     +d     +d     +d    +d    a
+a     +d     +d     +d    +d    a
+a     +d     +d     +d    +d    a
+0      a      a     a     a     0
+}
+
 // crashed UFO´s ----------------------------------------------------
 
 tile +craft_crash_scout
@@ -198,5 +221,22 @@ title "_Ice"
 +r08 "0 1"
 +r09 "0 1"
 *rm_ufo +craft_ufo_scout "1 1"
+*rm_drop +craft_drop_firebird "1 1"
+}
+
+assembly medium
+{
+size "8 8"
+title "_Ice"
++r01 "0 2"
++r02 "0 2"
++r03 "0 2"
++r04 "0 2"
++r05 "0 2"
++r06 "0 15"
++r07 "0 15"
++r08 "0 2"
++r09 "0 1"
+*rm_ufo +craft_ufo_harvester "1 1"
 *rm_drop +craft_drop_firebird "1 1"
 }
