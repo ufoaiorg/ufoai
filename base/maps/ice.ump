@@ -100,7 +100,7 @@ a     +d     +d     +d    +d    a
 0      a      a     a     a     0
 }
 
-// crashed UFO´s ----------------------------------------------------
+// crashed UFOs ----------------------------------------------------
 
 tile +craft_crash_scout
 {
@@ -208,7 +208,7 @@ adu     +a     adu
 }
 
 tile +r09
-	// the ship´s bridge
+	// the ships bridge
 {
 3 4
 0      adu     0
