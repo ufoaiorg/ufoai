@@ -197,6 +197,7 @@ void uiSelectBoxNode::drawOverWindow (uiNode_t *node)
 		23.0f, 28.0f, 16.0f, 21.0f, image);
 
 	/* now draw all available options for this selectbox */
+	int check = 0;
 	for (option = UI_AbstractOptionGetFirstOption(node); option; option = option->next) {
 		const char *label;
 		if (option->invis)
@@ -214,7 +215,16 @@ void uiSelectBoxNode::drawOverWindow (uiNode_t *node)
 			0, label, 0, 0, NULL, qfalse, LONGLINES_PRETTYCHOP);
 		/* next entries' position */
 		selBoxY += node->box.size[1];
+		check++;
 	}
+
+	/** detect inconsistency */
+	if (check != EXTRADATA(node).count) {
+		/** force clean up cache */
+		Com_Printf("uiSelectBoxNode::drawOverWindow: Node '%s' contains unsynchronized option list. Fixed.\n", UI_GetPath(node));
+		EXTRADATA(node).versionId = 0;
+	}
+
 	/* left side */
 	UI_DrawNormImage(qfalse, nodepos[0], selBoxY - SELECTBOX_SPACER, SELECTBOX_SIDE_WIDTH, SELECTBOX_BOTTOM_HEIGHT,
 		7.0f, 32.0f, 0.0f, 28.0f, image);
