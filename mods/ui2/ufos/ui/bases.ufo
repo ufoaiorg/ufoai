@@ -336,6 +336,7 @@ window bases
 			string label { string "_Facilities" }
 			button icon { icon "icons/facilities" }
 			data state { string "true" }
+			data height { integer 48 }
 
 			panel bld_panel
 			{
@@ -345,7 +346,7 @@ window bases
 					layout			LAYOUT_TOP_DOWN_FLOW
 					layoutMargin	0
 				}
-				data height { integer 1 }
+				data height { integer 0 }
 
 				// Current and maximum building capacity for buildings
 				// Shows living space, production, lab, storage, antimatter storage
@@ -357,8 +358,7 @@ window bases
 						layout			LAYOUT_TOP_DOWN_FLOW
 						layoutMargin	0
 					}
-					data nodeheight { integer 1 }
-					data test { integer 1 }
+					data height { integer 0 }
 				}
 				// Preview of currently selected building
 				panel preview
@@ -576,15 +576,20 @@ window bases
 	{
 
 		// Set the appropriate size of the panel
-		cmd "echo test <node:root.sections.facilities.bld_panel.bld_space.test@integer>"
-		cmd "echo nodeheight1 <node:root.sections.facilities.bld_panel.bld_space.nodeheight@integer>"
-		/*
 		*node:parent.sections.facilities.bld_panel.bld_space.height@integer = (<node:parent.sections.facilities.bld_panel.bld_space.height@integer> + 30)
 		*node:parent.sections.facilities.bld_panel.bld_space@size = "298 <node:parent.sections.facilities.bld_panel.bld_space.height@integer>"
-		*node:parent.sections.facilities.bld_panel.height@integer = (<node:parent.sections.facilities.bld_panel.bld_space.height@integer> + 185)
+
+		// If showing a few facilities, don't show building preview panel
+		if (*node:parent.sections.facilities.state@string eq "true") {
+			*node:parent.sections.facilities.bld_panel.height@integer = <node:parent.sections.facilities.bld_panel.bld_space.height@integer>
+		// Show building preview panel for all facilities
+		} else {
+			*node:parent.sections.facilities.bld_panel.height@integer = (<node:parent.sections.facilities.bld_panel.bld_space.height@integer> + 185)
+		}
+		// Expand parent panels appropriately
 		*node:parent.sections.facilities.bld_panel@size = "298 <node:parent.sections.facilities.bld_panel.height@integer>"
-		*/
-		cmd "echo nodeheight2 <node:root.sections.facilities.bld_panel.bld_space.nodeheight@integer>"
+		*node:parent.sections.facilities.height@integer = (<node:parent.sections.facilities.bld_panel.height@integer> + 48)
+		*node:parent.sections.facilities@size = "298 <node:parent.sections.facilities.height@integer>"
 
 		// Add the capacity bar
 		call *node:parent.sections.facilities.bld_panel.bld_space@createChild ( "<2>", "BuildingSpace" )
@@ -617,6 +622,44 @@ window bases
 		call *node:parent.sections.facilities.bld_panel.bld_space@removeAllChild
 		*node:parent.sections.facilities.bld_panel.bld_space@size = "298 0"
 		*node:parent.sections.facilities.bld_panel.bld_space.height@integer = 0
+		*node:parent.sections.facilities.bld_panel@size = "298 0"
+		*node:parent.sections.facilities.bld_panel.height@integer = 0
+		*node:parent.sections.facilities@size = "298 48"
+		*node:parent.sections.facilities.height@integer = 48
+	}
+
+	/*
+	 * Show the facilities panel
+	 * param1 = true (show) or false (hide)
+	 */
+	confunc show_facility
+	{
+		if (param1 eq "true") {
+
+			// Show capacity for all base buildings
+			cmd "base_building_space;"
+
+			// Set the state for subsequent clicks
+			*node:parent.sections.facilities.state@string = "false"
+		} else {
+
+			// Resets list selection
+			cmd "reset_building_current 0;"
+
+			// Set the state/invis for subsequent clicks
+			*node:parent.sections.facilities.state@string = "true"
+
+			// Show capacity for just main base buildings
+			cmd "base_init;"
+		}
+
+		// Hide/show the other base sections
+		*node:parent.sections.aircraft@invis = <1>
+		*node:parent.sections.soldiers@invis = <1>
+		*node:parent.sections.buysell@invis = <1>
+		*node:parent.sections.research@invis = <1>
+		*node:parent.sections.production@invis = <1>
+		*node:parent.sections.containment@invis = <1>
 	}
 
 	/*
@@ -704,40 +747,6 @@ window bases
 		call *node:parent.sections.production.production_list@createChild("<1>", "ProgressBar")
 		*node:parent.sections.production.production_list.<1>.label@string = _<1>
 		*node:parent.sections.production.production_list.<1>.data_bar@current = <2>
-	}
-
-	/*
-	 * Show the facilities panel
-	 * param1 = true (show) or false (hide)
-	 */
-	confunc show_facility
-	{
-		if (param1 eq "true") {
-
-			// Show capacity for all base buildings
-			cmd "base_building_space;"
-
-			// Set the state for subsequent clicks
-			*node:parent.sections.facilities.state@string = "false"
-		} else {
-
-			// Resets list selection
-			cmd "reset_building_current 0;"
-
-			// Set the state/invis for subsequent clicks
-			*node:parent.sections.facilities.state@string = "true"
-
-			// Show capacity for just main base buildings
-			cmd "base_init;"
-		}
-
-		// Hide/show the other base sections
-		*node:parent.sections.aircraft@invis = <1>
-		*node:parent.sections.soldiers@invis = <1>
-		*node:parent.sections.buysell@invis = <1>
-		*node:parent.sections.research@invis = <1>
-		*node:parent.sections.production@invis = <1>
-		*node:parent.sections.containment@invis = <1>
 	}
 
 	/*
