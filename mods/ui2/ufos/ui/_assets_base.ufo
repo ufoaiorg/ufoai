@@ -55,35 +55,58 @@ component BuildingSpace extends panel
 {
 	{
 		size	"298 30"
+		onMouseEnter
+		{
+			*node:this.label@color = "0.56 0.81 0.76 1"
+			*node:this.data@color = "0.56 0.81 0.76 1"
+			*node:this.alert@icon = "icons/windowplusb"
+		}
+		onMouseLeave
+		{
+			*node:this.label@color = "0.56 0.81 0.76 0.5"
+			*node:this.data@color = "0.56 0.81 0.76 0.5"
+			*node:this.alert@icon = "icons/windowplusb0"
+		}
+		onClick			{ cmd "buildings_click <node:this.id@string>;" }
 	}
 	data id {}
 	button smlicon
 	{
-		pos		"29 0"
+		pos		"16 0"
 		size	"17 17"
 		ghost	true
+	}
+	string label
+	{
+		string			""
+		pos				"35 0"
+		size			"120 20"
+		font			"f_verysmall"
+		contentalign	ALIGN_LL
+		color			"0.56 0.81 0.76 0.7"
+		ghost			true
 	}
 	string data
 	{
 		string			""
-		pos				"133 0"
-		size			"120 20"
+		pos				"155 0"
+		size			"107 20"
 		font			"f_verysmall"
 		contentalign	ALIGN_LR
-		color			"0.56 0.81 0.76 1"
+		color			"0.56 0.81 0.76 0.7"
 		ghost			true
 	}
 	texture data_bg
 	{
-		pos			"29 18"
-		size		"224 6"
+		pos			"16 18"
+		size		"246 6"
 		src			"ui/bar_bg"
 		ghost		true
 	}
 	bar data_bar
 	{
-		pos			"29 18"
-		size		"224 6"
+		pos			"16 18"
+		size		"246 6"
 		color		"0.56 0.81 0.76 1"
 		current		0
 		max			1
@@ -93,11 +116,12 @@ component BuildingSpace extends panel
 	button alert
 	{
 		icon			"icons/windowplusb0"
-		pos				"256 12"
+		pos				"266 12"
 		size			"18 18"
-		onMouseEnter	{ *node:this@icon = "icons/windowplusb" }
-		onMouseLeave	{ *node:this@icon = "icons/windowplusb0" }
-		onClick			{ cmd "buildings_click <node:parent.id@string>;" }
+//		onMouseEnter	{ *node:this@icon = "icons/windowplusb" }
+//		onMouseLeave	{ *node:this@icon = "icons/windowplusb0" }
+//		onClick			{ cmd "buildings_click <node:parent.id@string>;" }
+		ghost		true
 	}
 }
 

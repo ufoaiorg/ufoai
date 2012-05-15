@@ -596,6 +596,7 @@ window bases
 		*node:parent.sections.facilities.bld_panel.bld_space.<2>.id@string = "<2>"
 		*node:parent.sections.facilities.bld_panel.bld_space.<2>.smlicon@icon = "icons/<2>"
 		*node:parent.sections.facilities.bld_panel.bld_space.<2>@tooltip = "<1>"
+		*node:parent.sections.facilities.bld_panel.bld_space.<2>.label@string = "<1>"
 		*node:parent.sections.facilities.bld_panel.bld_space.<2>.data_bar@current = <3>
 		*node:parent.sections.facilities.bld_panel.bld_space.<2>.data_bar@max = <4>
 
@@ -612,6 +613,7 @@ window bases
 		} else {
 			*node:parent.sections.facilities.bld_panel.bld_space.<2>.alert@invis = false
 		}
+		cmd "echo <1> <2> <3> <4> <5> <6>;"
 	}
 
 	/*
