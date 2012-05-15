@@ -570,7 +570,7 @@ window bases
 	 * param3 = currently used capacity
 	 * param4 = actual max capacity
 	 * param5 = number of buildings built of this type
-	 * param5 = max number of buildings can be built from this type
+	 * param6 = max number of buildings can be built from this type
 	 */
 	confunc show_bld_space
 	{
