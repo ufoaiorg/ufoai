@@ -1,0 +1,18 @@
+// Contains tiles sprites usually used to display node background
+
+sprite ui/textentry {
+	image "banks/textentry"
+	tiled_17_1_3	true
+	size "64 64"
+	texl "0 0"
+	hoveredtexl "64 0"
+	disabledtexl "64 64"
+	clickedtexl "0 64"
+}
+
+sprite ui/panel {
+	image "tiled/panel"
+	tiled_25_1_3	true
+	size "64 64"
+	texl "0 0"
+}
