@@ -22,11 +22,11 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 
 */
 
-#ifndef CLIENT_UI_UI_TEXTIDS_H
-#define CLIENT_UI_UI_TEXTIDS_H
+#ifndef CLIENT_UI_UI_DATAIDS_H
+#define CLIENT_UI_UI_DATAIDS_H
 
-/** @brief linked into ui_global.sharedData - defined in UI scripts via dataID property */
-typedef enum {
+/** @brief linked into ui_global.sharedData - defined in UI scripts via dataId property */
+enum uiDataIDs_t {
 	TEXT_NULL,		/**< default value, should not be used */
 	TEXT_STANDARD,
 	TEXT_LIST,
@@ -107,6 +107,6 @@ typedef enum {
 	LINESTRIP_COLOR,
 
 	UI_MAX_DATAID
-} uiTextIDs_t;
+};
 
 #endif

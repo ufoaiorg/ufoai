@@ -26,7 +26,7 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 
 #include "../../cl_shared.h"
 #include "../../cl_inventory.h" /* INV_GetEquipmentDefinitionByID */
-#include "../../ui/ui_textids.h"
+#include "../../ui/ui_dataids.h"
 #include "../../../shared/parse.h"
 #include "cp_campaign.h"
 #include "cp_mapfightequip.h"

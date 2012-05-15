@@ -28,7 +28,7 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #include "cp_transfer.h"
 #include "cp_popup.h"
 #include "cp_time.h"
-#include "../../ui/ui_textids.h"
+#include "../../ui/ui_dataids.h"
 
 /**
  * @brief transfer typeID strings

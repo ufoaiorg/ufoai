@@ -25,7 +25,7 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 */
 
 #include "../../cl_shared.h"
-#include "../../ui/ui_textids.h"
+#include "../../ui/ui_dataids.h"
 #include "cp_campaign.h"
 #include "cp_popup.h"
 #include "cp_research_callbacks.h"

@@ -31,7 +31,7 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #include "cp_popup.h"
 #include "cp_time.h"
 #include "cp_ufo.h"
-#include "../../ui/ui_textids.h"
+#include "../../ui/ui_dataids.h"
 
 /** @brief Used from menu scripts as parameter for mn_base_select */
 #define CREATE_NEW_BASE_ID -1

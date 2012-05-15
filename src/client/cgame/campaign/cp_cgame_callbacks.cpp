@@ -22,7 +22,7 @@
  */
 
 #include "../../cl_shared.h"
-#include "../../ui/ui_textids.h"
+#include "../../ui/ui_dataids.h"
 #include "cp_cgame_callbacks.h"
 #include "cp_campaign.h"
 #include "cp_missions.h"
