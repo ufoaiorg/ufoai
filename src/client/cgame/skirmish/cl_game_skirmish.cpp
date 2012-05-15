@@ -225,6 +225,7 @@ static inline void GAME_SK_HideDropships (const linkedList_t *dropships)
 		const char *rma = GAME_SK_GetRandomMapAssemblyNameForCraft((const char *)dropships->data);
 		cgi->Cvar_Set("rm_drop", rma);
 		cgi->UI_UpdateInvisOptions(cgi->UI_GetOption(OPTION_DROPSHIPS), dropships);
+		cgi->UI_RegisterOption(OPTION_DROPSHIPS, cgi->UI_GetOption(OPTION_DROPSHIPS));
 
 		cgi->UI_ExecuteConfunc("skirmish_hide_dropships false");
 	}
@@ -245,6 +246,7 @@ static inline void GAME_SK_HideUFOs (const linkedList_t *ufos)
 		const char *rma = GAME_SK_GetRandomMapAssemblyNameForCraft((const char *)ufos->data);
 		cgi->Cvar_Set("rm_ufo", rma);
 		cgi->UI_UpdateInvisOptions(cgi->UI_GetOption(OPTION_UFOS), ufos);
+		cgi->UI_RegisterOption(OPTION_UFOS, cgi->UI_GetOption(OPTION_UFOS));
 
 		cgi->UI_ExecuteConfunc("skirmish_hide_ufos false");
 	}
