@@ -1258,6 +1258,7 @@ mapdef ice_medium
 
         ufos
         {
+			craft_ufo_supply
 			craft_ufo_harvester
 			craft_ufo_gunboat
 		}

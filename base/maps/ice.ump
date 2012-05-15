@@ -88,6 +88,18 @@ a     +d     +d     +d    +d    a
 0      a      a     a     a     0
 }
 
+tile +craft_ufo_supply
+{
+6 7
+0      a      a     a     0     0
+a     +d     +d     +d    +d    a
+a     +d     +d     +d    +d    a
+a     +d     +d     +d    +d    a
+a     +d     +d     +d    +d    a
+a     +d     +d     +d    +d    a
+0      a      a     a     a     0
+}
+
 // crashed UFO´s ----------------------------------------------------
 
 tile +craft_crash_scout
