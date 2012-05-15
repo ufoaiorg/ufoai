@@ -66,10 +66,10 @@ component BuildingSpace extends panel
 	string data
 	{
 		string			""
-		pos				"49 0"
-		size			"190 20"
+		pos				"133 0"
+		size			"120 20"
 		font			"f_verysmall"
-		contentalign	ALIGN_LL
+		contentalign	ALIGN_LR
 		color			"0.56 0.81 0.76 1"
 		ghost			true
 	}
