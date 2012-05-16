@@ -1,0 +1,197 @@
+// ==================
+// MARKET MENU
+// ==================
+
+window market  {
+	{ size	"1024 768" }
+
+	// Base name and container panel
+	panel base_container
+	{
+		{
+			pos				"5 5"
+			size			"723 758"
+			border			"2"
+			bordercolor		"0.56 0.81 0.76 1"
+		}
+
+		// @TODO: make next/prev base btns work
+		button prev
+		{
+			icon			"icons/windowprev"
+			tooltip			"_Previous base"
+			pos				"90 6"
+			size			"18	18"
+			onMouseEnter	{ *node:this@icon = "icons/windowprev0" }
+			onMouseLeave	{ *node:this@icon = "icons/windowprev" }
+			onClick			{ cmd "ui_pop; mn_base_prev;" }
+		}
+		button next
+		{
+			icon			"icons/windownext"
+			tooltip			"_Next base"
+			pos				"115 6"
+			size			"18	18"
+			onMouseEnter	{ *node:this@icon = "icons/windownext0" }
+			onMouseLeave	{ *node:this@icon = "icons/windownext" }
+			onClick			{ cmd "ui_pop; mn_base_next;" }
+		}
+		// Base name
+		textentry name
+		{
+			string		*cvar:mn_base_title
+			pos			"135 0"
+			size		"465 32"
+			font		"f_small_bold"
+			color			"0.56 0.81 0.76 1"
+			contentalign	ALIGN_CL
+			onChange 	{ cmd "base_changename" } 	// stores the value of the cvar in the base structure
+		}
+		// Base selector
+		panel base_selector
+		{
+			{
+				pos		"440 7"
+				size	"160 16"
+				layout			LAYOUT_COLUMN
+				layoutColumns	8
+				layoutMargin	4
+			}
+			BaseLayoutMini base0 { baseid 0 }
+			BaseLayoutMini base1 { baseid 1 }
+			BaseLayoutMini base2 { baseid 2 }
+			BaseLayoutMini base3 { baseid 3 }
+			BaseLayoutMini base4 { baseid 4 }
+			BaseLayoutMini base5 { baseid 5 }
+			BaseLayoutMini base6 { baseid 6 }
+			BaseLayoutMini base7 { baseid 7 }
+		}
+		string credits
+		{
+			string		*cvar:mn_credits
+			pos			"600 0"
+			size		"120 32"
+			font		"f_small_bold"
+			color			"0.56 0.81 0.76 1"
+			contentalign	ALIGN_CR
+		}
+
+		// Market panel
+		panel market
+		{
+			{
+				pos				"4 30"
+				size			"715 550"
+				border			"2"
+				bordercolor		"0.527 0.6 0.21 1"
+			}
+			// Title bar
+			panel header
+			{
+				{
+					pos			"1 1"
+					size		"713 32"
+					bgcolor		"0.527 0.6 0.21 0.2"
+				}
+				string title
+				{
+					string			"_Market"
+					pos				"90 1"
+					size			"593 32"
+					contentalign	ALIGN_CL
+					color			"0.56 0.81 0.76 1"
+				}
+				button back
+				{
+					icon			"icons/windownext"
+					tooltip			"_Back to base"
+					pos				"683 7"
+					size			"18	18"
+					onMouseEnter	{ *node:this@icon = "icons/windownext0" }
+					onMouseLeave	{ *node:this@icon = "icons/windownext" }
+					onClick			{ cmd "ui_pop; base_init; reset_base;" }
+				}
+			}
+			// Market list headings (base / market)
+			panel list_header
+			{
+				{
+					pos			"0 40"
+					size		"715 32"
+				}
+				string base
+				{
+					string			"_Base"
+					pos				"400 0"
+					size			"60 32"
+					color			"0.56 0.81 0.76 1"
+					contentalign	ALIGN_CR
+				}
+				string market
+				{
+					string			"_Market"
+					pos				"600 0"
+					size			"60 32"
+					color			"0.56 0.81 0.76 1"
+					contentalign	ALIGN_CL
+				}
+			}
+			// Market items list
+			panel list
+			{
+				{
+					pos				"1 80"
+					size			"713 420"
+					layout			LAYOUT_TOP_DOWN_FLOW
+					layoutMargin	2
+				}
+			}
+		}
+		// Object description panel
+		ObjectInfo details
+		{
+			{
+				pos				"4 580"
+				border			"2"
+				bordercolor		"0.527 0.6 0.21 1"
+			}
+		}
+	}
+
+	// Storage count
+	BuildingSpace storage {	{ pos "770 0" } }
+
+	// Shopping cart / confirm transaction window
+	panel transaction
+	{
+		{
+			pos		"770 30"
+			size	"250 736"
+			border			"2"
+			bordercolor		"0.56 0.81 0.76 1"
+		}
+		string label
+		{
+			string			"_Transactions"
+			pos				"1 1"
+			size			"248 734"
+			contentalign	ALIGN_CC
+			color			"0.56 0.81 0.76 1"
+			bgcolor			"0.56 0.81 0.76 0.3"
+		}
+	}
+
+	// ==================
+	// init
+	// ==================
+
+	func onWindowOpened {
+		cmd "ui_market_fill \"<cvar:ui_market_category>\";"
+	}
+
+	func onWindowClosed {
+
+		// Call base_init so that storage data can be updated
+		cmd "base_init;"
+	}
+}
