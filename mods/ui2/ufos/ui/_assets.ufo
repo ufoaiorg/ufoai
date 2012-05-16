@@ -191,3 +191,117 @@ component checkbox_ui2 extends checkbox
 	iconIndeterminate "icons/checkbox_ui2_indeterminate"
 	size "20 20"
 }
+
+/*
+ * Shared window to display item details.
+ * Used in market, soldier equipping, etc.
+ */
+component ObjectInfo extends panel
+{
+	{
+		size			"715 180"
+		border			"2"
+		bordercolor		"0.527 0.6 0.21 1"
+	}
+	// Object titles
+	panel header
+	{
+		{
+			pos			"1 1"
+			size		"713 32"
+			bgcolor		"0.527 0.6 0.21 0.2"
+		}
+		button ufopedia
+		{
+			icon		"icons/bordered_magnifying_glass"
+			tooltip		"_View UFOpaedia entry"
+			pos			"10 9"
+			size		"16 16"
+			onClick		{ cmd "market_openpedia;" }
+		}
+		string title
+		{
+			string			*cvar:mn_itemname
+			pos				"30 1"
+			size			"670 32"
+			contentalign	ALIGN_CL
+			color			"0.56 0.81 0.76 1"
+		}
+	}
+	// Model and weapon/firemode panel
+	panel display
+	{
+		{
+			pos			"450 33"
+			size		"265 147"
+		}
+		model object_model
+		{
+			src			*cvar:mn_item
+			pos			"0 0"
+			size		"265 147"
+			angles		"0 180 90"
+			autoscale	true
+		}
+		string object_weapon
+		{
+			string	*cvar:mn_linkname
+			pos		"0 115"
+			size	"130 32"
+			color	"0.56 0.81 0.76 0.7"
+			bgcolor "0 0 0 0.5"
+			font	"f_small"
+			contentalign	ALIGN_CC
+			onClick { cmd "mn_increaseitem;" }
+		}
+		string object_firemode
+		{
+			string	*cvar:mn_firemodename
+			pos		"135 115"
+			size	"130 32"
+			color	"0.56 0.81 0.76 0.7"
+			bgcolor "0 0 0 0.5"
+			font	"f_small"
+			contentalign	ALIGN_CC
+			onClick { cmd "mn_increasefiremode;" }
+		}
+	}
+	// Object info and stats
+	panel info
+	{
+		{
+			pos			"0 33"
+			size		"450 147"
+		}
+		text description
+		{
+			dataid		TEXT_ITEMDESCRIPTION
+			pos			"30 0"
+			size		"420 145"
+			rows		"8"
+			lineheight	15
+			tabwidth	168
+			font		"f_verysmall"
+			onViewChange {
+				*node:parent.description_scroll@fullsize = <fullsize>
+				*node:parent.description_scroll@current = <viewpos>
+			}
+			onWheel {
+				*node:parent.description_scroll@current = <viewpos>
+			}
+		}
+		vscrollbar description_scroll
+		{
+			image		"ui/scrollbar_v_green"
+			pos			"30 0"
+			size		"420 145"
+			current		0
+			viewsize	8
+			fullsize	8
+			hidewhenunused true
+			onChange {
+				*node:parent.description@viewpos = <current>
+			}
+		}
+	}
+}
