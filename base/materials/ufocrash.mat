@@ -60,3 +60,21 @@
 		lightmap
 	}
 }
+
+{
+	material tex_ufo/ufo2_12
+	{
+		texture tex_ufo/ufo2_12
+		blend GL_SRC_COLOR GL_SRC_ALPHA
+		pulse 0.5
+	}
+}
+
+{
+	material tex_lights/land_li_green
+	{
+		texture tex_lights/land_li_green
+		blend GL_SRC_COLOR GL_SRC_ALPHA
+		pulse 0.5
+	}
+}
