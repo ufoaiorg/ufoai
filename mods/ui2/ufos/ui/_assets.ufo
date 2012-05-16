@@ -246,7 +246,7 @@ component ObjectInfo extends panel
 		string object_weapon
 		{
 			string	*cvar:mn_linkname
-			pos		"0 115"
+			pos		"0 114"
 			size	"130 32"
 			color	"0.56 0.81 0.76 0.7"
 			bgcolor "0 0 0 0.5"
@@ -257,7 +257,7 @@ component ObjectInfo extends panel
 		string object_firemode
 		{
 			string	*cvar:mn_firemodename
-			pos		"135 115"
+			pos		"134 114"
 			size	"130 32"
 			color	"0.56 0.81 0.76 0.7"
 			bgcolor "0 0 0 0.5"
