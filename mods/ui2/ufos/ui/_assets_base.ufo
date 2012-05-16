@@ -429,3 +429,86 @@ component ExtResearchItem extends panel
 		ghost			true
 	}
 }
+
+
+// Market item
+component MarketItem extends panel
+{
+	{
+		pos				"0 0"
+		size 			"713 28"
+		bgcolor			"0.56 0.81 0.76 0.1"
+		onMouseEnter	{ *node:this@bgcolor = "0.56 0.81 0.76 0.2" }
+		onMouseLeave	{ *node:this@bgcolor = "0.56 0.81 0.76 0.1" }
+		onClick			{ cmd "ui_market_select <node:this.id@string>;" }
+	}
+	data id { }
+	button ufopaedia
+	{
+		icon	"icons/windowinfo0"
+		pos		"5 5"
+		size	"18 18"
+		onMouseEnter	{ *node:this@icon = "icons/windowinfo" }
+		onMouseLeave	{ *node:this@icon = "icons/windowinfo0" }
+		onClick			{ cmd "market_openpedia;" }
+	}
+	string name
+	{
+		pos				"30 0"
+		size			"400 28"
+		color			"0.56 0.81 0.76 1"
+		contentalign	ALIGN_CL
+		ghost			true
+	}
+	// Count of items in base
+	string base
+	{
+		pos				"435 0"
+		size			"80 28"
+		color			"0.56 0.81 0.76 1"
+		contentalign	ALIGN_CR
+		ghost			true
+	}
+	// Buy items
+	// @TODO: Make buying items work
+	button buy
+	{
+		icon			"icons/windowprev"
+		tooltip			"_Buy"
+		pos				"520 5"
+		size			"18	18"
+		onMouseEnter	{ *node:this@icon = "icons/windowprev0" }
+		onMouseLeave	{ *node:this@icon = "icons/windowprev" }
+	}
+	// Autosell
+	// @TODO: this is a place-holder that needs proper implementation
+	button autosell
+	{
+		icon			"icons/circle_lock0"
+		tooltip			"_Lock current stock level"
+		pos				"544 5"
+		size			"18	18"
+		onMouseEnter	{ *node:this@icon = "icons/circle_lock" }
+		onMouseLeave	{ *node:this@icon = "icons/circle_lock0" }
+	}
+	// Sell items
+	// @TODO: Make selling items work
+	button sell
+	{
+		icon			"icons/windownext"
+		tooltip			"_Sell"
+		pos				"568 5"
+		size			"18	18"
+		onMouseEnter	{ *node:this@icon = "icons/windownext0" }
+		onMouseLeave	{ *node:this@icon = "icons/windownext" }
+	}
+	// Count of items in base
+	string market
+	{
+		pos				"584 0"
+		size			"100 28"
+		color			"0.56 0.81 0.76 1"
+		contentalign	ALIGN_CL
+		ghost			true
+	}
+}

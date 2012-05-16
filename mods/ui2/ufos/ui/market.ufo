@@ -2,6 +2,10 @@
 // MARKET MENU
 // ==================
 
+/*
+ * @TODO
+ * - Make autosell button work properly
+ */
 window market  {
 	{ size	"1024 768" }
 
@@ -180,6 +184,34 @@ window market  {
 			color			"0.56 0.81 0.76 1"
 			bgcolor			"0.56 0.81 0.76 0.3"
 		}
+	}
+
+	/*
+	 * @brief Confunc to clear the market list
+	 */
+	confunc ui_market_clear {
+		call *node:root.base_container.market.list@removeAllchild
+	}
+
+	/*
+	 * @brief Confunc to add the item to market's itemlist
+	 * <1> reference id
+	 * <2> name
+	 * <3> count at base
+	 * <4> count on market
+	 * <5> buy price
+	 * <6> sell price
+	 * <7> autosell (0: off, 1: on, -: not available"
+	 * <8> tooltip for disabled entries, "-" otherwise
+     */
+	confunc ui_market_add {
+		call *node:root.base_container.market.list@createChild("item_<1>", "MarketItem")
+
+		// Temporary implementation for layout
+		*node:root.base_container.market.list.item_<1>.id@string = <1>
+		*node:root.base_container.market.list.item_<1>.name@string = <2>
+		*node:root.base_container.market.list.item_<1>.base@string = <3>
+		*node:root.base_container.market.list.item_<1>.market@string = <4>
 	}
 
 	// ==================
