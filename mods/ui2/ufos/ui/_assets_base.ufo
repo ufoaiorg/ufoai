@@ -39,6 +39,8 @@ component BaseSection extends panel
 		size 		"48 48"
 		background	"icons/circle0"
 		ghost		true
+		// else the button is disabled
+		onClick		{ }
 	}
 	string label
 	{
