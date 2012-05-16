@@ -149,6 +149,7 @@ window market  {
 					layout			LAYOUT_TOP_DOWN_FLOW
 					layoutMargin	2
 				}
+				data selected { string "" }
 			}
 		}
 		// Object description panel
@@ -160,11 +161,17 @@ window market  {
 				bordercolor		"0.527 0.6 0.21 1"
 			}
 		}
-		// 758 - 520 = 238
 	}
 
 	// Storage count
-	BuildingSpace storage {	{ pos "739 0" } }
+	BuildingSpace storage
+	{
+		{ pos "739 0" }
+
+		button smlicon { icon	"icons/building_storage" }
+		string label { string	"_Storage" }
+		button alert { invis true }
+	}
 
 	// Shopping cart / confirm transaction window
 	panel transaction
@@ -212,6 +219,21 @@ window market  {
 		*node:root.base_container.market.list.item_<1>.name@string = <2>
 		*node:root.base_container.market.list.item_<1>.base@string = <3>
 		*node:root.base_container.market.list.item_<1>.market@string = <4>
+	}
+
+	/*
+	 * @brief Select an item from the list
+	 * <1> item id
+	 */
+	confunc ui_market_select {
+		if ( *node:root.base_container.market.list.selected@string ne "" ) {
+			*node:root.base_container.market.list.item_<node:root.base_container.market.list.selected@string>.name@color = "0.56 0.81 0.76 0.7"
+		}
+		*node:root.base_container.market.list.selected@string = <1>
+		if ( *node:root.base_container.market.list.selected@string ne "" ) {
+			*node:root.base_container.market.list.item_<node:root.base_container.market.list.selected@string>.name@color = "0.56 0.81 0.76 1"
+			cmd "ui_market_showinfo <1>;"
+		}
 	}
 
 	// ==================

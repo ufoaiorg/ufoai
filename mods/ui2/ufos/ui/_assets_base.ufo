@@ -450,13 +450,13 @@ component MarketItem extends panel
 		size	"18 18"
 		onMouseEnter	{ *node:this@icon = "icons/windowinfo" }
 		onMouseLeave	{ *node:this@icon = "icons/windowinfo0" }
-		onClick			{ cmd "market_openpedia;" }
+		onClick			{ cmd "ui_market_select <node:parent.id@string>;market_openpedia;" }
 	}
 	string name
 	{
 		pos				"30 0"
 		size			"400 28"
-		color			"0.56 0.81 0.76 1"
+		color			"0.56 0.81 0.76 0.7"
 		contentalign	ALIGN_CL
 		ghost			true
 	}
@@ -505,7 +505,7 @@ component MarketItem extends panel
 	// Count of items in base
 	string market
 	{
-		pos				"584 0"
+		pos				"590 0"
 		size			"100 28"
 		color			"0.56 0.81 0.76 1"
 		contentalign	ALIGN_CL
