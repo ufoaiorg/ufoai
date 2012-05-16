@@ -613,7 +613,6 @@ window bases
 		} else {
 			*node:parent.sections.facilities.bld_panel.bld_space.<2>.alert@invis = false
 		}
-		cmd "echo <1> <2> <3> <4> <5> <6>;"
 	}
 
 	/*
