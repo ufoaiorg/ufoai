@@ -81,7 +81,7 @@ window market  {
 		{
 			{
 				pos				"4 30"
-				size			"715 550"
+				size			"715 534"
 				border			"2"
 				bordercolor		"0.527 0.6 0.21 1"
 			}
@@ -140,8 +140,8 @@ window market  {
 			panel list
 			{
 				{
-					pos				"1 80"
-					size			"713 420"
+					pos				"1 70"
+					size			"713 463"
 					layout			LAYOUT_TOP_DOWN_FLOW
 					layoutMargin	2
 				}
@@ -151,22 +151,23 @@ window market  {
 		ObjectInfo details
 		{
 			{
-				pos				"4 580"
+				pos				"4 574"
 				border			"2"
 				bordercolor		"0.527 0.6 0.21 1"
 			}
 		}
+		// 758 - 520 = 238
 	}
 
 	// Storage count
-	BuildingSpace storage {	{ pos "770 0" } }
+	BuildingSpace storage {	{ pos "739 0" } }
 
 	// Shopping cart / confirm transaction window
 	panel transaction
 	{
 		{
-			pos		"770 30"
-			size	"250 736"
+			pos		"739 35"
+			size	"285 728"
 			border			"2"
 			bordercolor		"0.56 0.81 0.76 1"
 		}
@@ -174,7 +175,7 @@ window market  {
 		{
 			string			"_Transactions"
 			pos				"1 1"
-			size			"248 734"
+			size			"283 727"
 			contentalign	ALIGN_CC
 			color			"0.56 0.81 0.76 1"
 			bgcolor			"0.56 0.81 0.76 0.3"
