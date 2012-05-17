@@ -154,4 +154,7 @@ void Environment::initPaths() {
 
 	_bitmapsPath = _appPath + "bitmaps/";
 	BitmapsPath_set(_bitmapsPath);
+
+	g_message("paths:\nhome='%s'\nsettings='%s'\nbutmaps='%s'\n",
+			_homePath.c_str(), _settingsPath.c_str(), _bitmapsPath.c_str());
 }
