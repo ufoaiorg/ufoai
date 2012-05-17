@@ -198,5 +198,4 @@ typedef Static<ImageGDKModule> StaticImageGDKModule;
 
 StaticRegisterModule staticRegisterImagePNG(StaticImagePNGModule::instance());
 StaticRegisterModule staticRegisterImageJPG(StaticImageJPGModule::instance());
-StaticRegisterModule staticRegisterImageTGA(StaticImageTGAModule::instance());
 StaticRegisterModule staticRegisterImageGDK(StaticImageGDKModule::instance());
