@@ -112,12 +112,17 @@ sub installlib {
 		$oldperms = $fs->mode;
 		$writable = ($oldperms & S_IWUSR) >> 7;
 
+		if ($libname =~ /libiconv/) {
+			$libname = "libiconv.dylib";
+		} elsif ($libname =~ /libintl/) {
+			$libname = "libintl.dylib";
+		}
 		$newpath = "$libdir/$libname";
 		if ( !$writable ) {
 			my $newperms = (S_IWUSR | $oldperms);
 			chmod $newperms, $newpath;
 		}
-		`cp -L -f $lib $libdir/` && die "failed\n";
+		`cp -L -f $lib $newpath` && die "failed\n";
 
 		installnametool $libname,$newpath;
 	} else {
@@ -139,6 +144,11 @@ sub installlib {
 		my $libname2;
 		if($i =~ /.*\/([^\/]+)$/) {
 			$libname2 = $1;
+			if ($libname2 =~ /libiconv/) {
+				$libname2 = "libiconv.dylib";
+			} elsif ($libname2 =~ /libintl/) {
+				$libname2 = "libintl.dylib";
+			}
 		} else {
 			die "wtf?\n";
 		}
@@ -162,6 +172,33 @@ sub main {
 		next if $lib =~ /^\./;
 		print "converting $lib\n";
 		installnametool $lib,"$libdir/$lib";
+
+		my @libs = findlibs "$libdir/$lib";
+		foreach my $i (@libs) {
+			next if $i eq $lib;
+
+			# update references to dylibs, but not to frameworks,
+			# since we just copy frameworks wholesale to the app bundle
+			if($i!~/\.dylib$/) {
+				next;
+			}
+
+			my $ni = fixframeworkpath $i;
+			my $libname2;
+			if($i =~ /.*\/([^\/]+)$/) {
+				$libname2 = $1;
+				if ($libname2 =~ /libiconv/) {
+					$libname2 = "libiconv.dylib";
+				} elsif ($libname2 =~ /libintl/) {
+					$libname2 = "libintl.dylib";
+				}
+			} else {
+				die "wtf?\n";
+			}
+
+			#print "install_name_tool -change $i \@executable_path/../Libraries/$libname2 $newpath\n";
+			`install_name_tool -change $ni \@executable_path/../Libraries/$libname2 "$libdir/$lib"\n` && die "failed\n";
+		}
 	}
 	closedir(DIR);
 
@@ -192,6 +229,11 @@ sub main {
 
 			if($i =~ /.*\/([^\/]+)$/) {
 				$libname2 = $1;
+				if ($libname2 =~ /libiconv/) {
+					$libname2 = "libiconv.dylib";
+				} elsif ($libname2 =~ /libintl/) {
+					$libname2 = "libintl.dylib";
+				}
 			} else {
 				die "wtf?\n";
 			}

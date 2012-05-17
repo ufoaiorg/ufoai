@@ -1,6 +1,6 @@
 #!/bin/sh
 
-BASE_DIR=$(dirname $(readlink -f ${0}))
+BASE_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
 BASE_DIR="${BASE_DIR%/*}" # cut off MacOS
 APP_DIR="${BASE_DIR%/*}" # cut off Contents
 
