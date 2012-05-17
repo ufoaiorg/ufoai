@@ -55,6 +55,7 @@ sub findlibs {
 			### ignore standard mac/darwin system libs and frameworks:
 			next if $lib =~ /\/System\/Library\/Frameworks/;
 			next if $lib =~ /\/usr\/lib/;
+			next if $lib =~ /\/usr\/X11\/lib/;
 			next if $lib =~ /$target/; #skip self
 			doit: push @libs, $lib;
 		}
