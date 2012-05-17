@@ -184,7 +184,6 @@ sub main {
 				next;
 			}
 
-			my $ni = fixframeworkpath $i;
 			my $libname2;
 			if($i =~ /.*\/([^\/]+)$/) {
 				$libname2 = $1;
@@ -196,6 +195,11 @@ sub main {
 			} else {
 				die "wtf?\n";
 			}
+			my $newpath = "$libdir/$libname2";
+			`cp -L -f $i $newpath` && die "failed\n";
+			installnametool $libname2,$newpath;
+
+			my $ni = fixframeworkpath $i;
 
 			#print "install_name_tool -change $i \@executable_path/../Libraries/$libname2 $newpath\n";
 			`install_name_tool -change $ni \@executable_path/../Libraries/$libname2 "$libdir/$lib"\n` && die "failed\n";
