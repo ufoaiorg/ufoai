@@ -10,18 +10,18 @@ LDFLAGS                  += -framework IOKit -framework Foundation -framework Co
 ### if they are using macports, or in /sw if they are using fink,
 ### check for that, and if present, add to CFLAGS/LDFLAGS (really convenient!)
 ifneq ($(wildcard /opt/local),)
-	BASE_DIR         ?= /opt/local
+	LIB_BASE_DIR     ?= /opt/local
 	FRAMEWORK_DIR    ?= $(BASE_DIR)/Library/Frameworks
 else
 ifneq ($(wildcard /sw),)
-	BASE_DIR         ?= /sw
+	LIB_BASE_DIR     ?= /sw
 	FRAMEWORK_DIR    ?=
 endif
 endif
 
 ifneq ($(BASE_DIR),)
-	CFLAGS           += -I$(BASE_DIR)/include
-	LDFLAGS          += -L$(BASE_DIR)/lib
+	CFLAGS           += -I$(LIB_BASE_DIR)/include
+	LDFLAGS          += -L$(LIB_BASE_DIR)/lib
 endif
 
 ifneq ($(FRAMEWORK_DIR),)

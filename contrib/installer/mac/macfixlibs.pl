@@ -5,8 +5,10 @@ use Fcntl ':mode';
 
 my $appdir = shift;
 my @apps = @ARGV;
-
 my @explicit_libs = ('libcurl');
+my $libdir = "$appdir/Contents/Libraries";
+my $fwdir = "$appdir/Contents/Frameworks";
+my %alllibs;
 
 # Replaces the relative framework path returned by otool with
 # the path to the library in the framework top level directory.
@@ -60,12 +62,6 @@ sub findlibs {
 	return @libs;
 }
 
-my $libdir = "$appdir/Contents/Libraries";
-my $fwdir = "$appdir/Contents/Frameworks";
-my $binpath = "$appdir/Contents/MacOS/$apps[0]";
-my @a = findlibs "$appdir/Contents/MacOS/$apps[0]";
-my %alllibs;
-
 sub addtoall {
 	my $aref = shift;
 	my @a = @{$aref};
@@ -83,7 +79,13 @@ sub addtoall {
 	}
 }
 
-addtoall \@a;
+sub installnametool {
+	my ($libname, $newpath) = @_;
+
+	# change my id
+	#print "install_name_tool -id \@executable_path/../Libraries/$libname $newpath\n";
+	`install_name_tool -id \@executable_path/../Libraries/$libname $newpath` && die "failed\n";
+}
 
 sub installlib {
 	my ($lib, $libsref) = @_;
@@ -110,41 +112,31 @@ sub installlib {
 		$oldperms = $fs->mode;
 		$writable = ($oldperms & S_IWUSR) >> 7;
 
-		`cp -f $lib $libdir/` && die "failed\n";
-
 		$newpath = "$libdir/$libname";
 		if ( !$writable ) {
 			my $newperms = (S_IWUSR | $oldperms);
 			chmod $newperms, $newpath;
 		}
-		$fworlib = "Libraries";
+		`cp -L -f $lib $libdir/` && die "failed\n";
 
-		# change my id
-		#print "install_name_tool -id \@executable_path/../$fworlib/$libname $newpath\n";
-		`install_name_tool -id \@executable_path/../$fworlib/$libname $newpath` && die "failed\n";
+		installnametool $libname,$newpath;
 	} else {
 		my $framedir = frameworkdir $lib;
-		`cp -R $framedir $fwdir/` && die "failed\n";
+		`cp -L -R $framedir $fwdir/` && die "failed\n";
 		$newpath = "$fwdir/$libname";
-		$fworlib = "Frameworks";
 	}
 
 	# change my deps
 	foreach my $i (@libs) {
 		next if $i eq $lib;
 
-		my $fworlib2;
-		my $libname2;
-
 		# update references to dylibs, but not to frameworks,
 		# since we just copy frameworks wholesale to the app bundle
-		if($i=~/\.dylib$/) {
-			# dylibs in Contents/Libraries
-			$fworlib2 = "Libraries";
-		} else {
+		if($i!~/\.dylib$/) {
 			next;
 		}
 
+		my $libname2;
 		if($i =~ /.*\/([^\/]+)$/) {
 			$libname2 = $1;
 		} else {
@@ -153,8 +145,8 @@ sub installlib {
 
 		my $ni = fixframeworkpath $i;
 
-		#print "install_name_tool -change $i \@executable_path/../$fworlib2/$libname2 $newpath\n";
-		`install_name_tool -change $ni \@executable_path/../$fworlib2/$libname2 $newpath\n` && die "failed\n";
+		#print "install_name_tool -change $i \@executable_path/../Libraries/$libname2 $newpath\n";
+		`install_name_tool -change $ni \@executable_path/../Libraries/$libname2 $newpath\n` && die "failed\n";
 	}
 
 	if ( !$writable ) {
@@ -164,33 +156,51 @@ sub installlib {
 	print "done\n";
 }
 
-while ( my ($x,$y) = each %alllibs ) {
-	installlib $x,$y,"yes";
-}
-
-## and, finally, change for app(s) itself
-foreach my $app (@apps) {
-	print "Finalizing $app...\n";
-	$binpath = "$appdir/Contents/MacOS/$app";
-	@a = findlibs $binpath;
-	foreach my $i (@a) {
-		my $fworlib2;
-		my $libname2;
-
-		if($i=~/\.dylib$/) {
-			$fworlib2 = "Libraries";
-		} else {
-			$fworlib2 = "Frameworks";
-		}
-
-		if($i =~ /.*\/([^\/]+)$/) {
-			$libname2 = $1;
-		} else {
-			die "wtf?\n";
-		}
-
-		#print "install_name_tool -change $i \@executable_path/../$fworlib2/$libname2 $binpath\n";
-		`install_name_tool -change $i \@executable_path/../$fworlib2/$libname2 $binpath\n` && die "failed\n";
+sub main {
+	opendir(DIR, $libdir) or die $!;
+	while (my $lib = readdir(DIR)) {
+		next if $lib =~ /^\./;
+		print "converting $lib\n";
+		installnametool $lib,"$libdir/$lib";
 	}
+	closedir(DIR);
+
+	foreach my $app (@apps) {
+		my $binpath = "$appdir/Contents/$app";
+		my @a = findlibs "$binpath";
+		addtoall \@a;
+	}
+
+	while ( my ($x,$y) = each %alllibs ) {
+		installlib $x,$y,"yes";
+	}
+
+	## and, finally, change for app(s) itself
+	foreach my $app (@apps) {
+		print "Finalizing $app...\n";
+		my $binpath = "$appdir/Contents/$app";
+		my @a = findlibs $binpath;
+		foreach my $i (@a) {
+			my $fworlib2;
+			my $libname2;
+
+			if($i=~/\.dylib$/) {
+				$fworlib2 = "Libraries";
+			} else {
+				$fworlib2 = "Frameworks";
+			}
+
+			if($i =~ /.*\/([^\/]+)$/) {
+				$libname2 = $1;
+			} else {
+				die "wtf?\n";
+			}
+
+			#print "install_name_tool -change $i \@executable_path/../$fworlib2/$libname2 $binpath\n";
+			`install_name_tool -change $i \@executable_path/../$fworlib2/$libname2 $binpath\n` && die "failed\n";
+		}
+	}
+	print "done\n";
 }
-print "done\n";
+
+main
