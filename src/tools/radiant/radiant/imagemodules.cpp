@@ -82,6 +82,8 @@ static Image* LoadImageGDK (ArchiveFile& file)
 		g_object_unref(G_OBJECT(rawPixbuf));
 
 		return image;
+	} else {
+		g_warning("image could not get loaded: '%s'\n", file.getName().c_str());
 	}
 
 	// No image could be loaded, return NULL
@@ -96,9 +98,14 @@ static Image* LoadImage (ArchiveFile& file, const char *extension)
 	ScopedArchiveBuffer buffer(file);
 
 	GdkPixbufLoader *loader = gdk_pixbuf_loader_new_with_type(extension, (GError**) 0);
+	if (loader == (GdkPixbufLoader*)0) {
+		g_warning("could not get a loader for: '%s'\n", extension);
+		return image;
+	}
 
+	GError *error = (GError *) 0;
 	if (gdk_pixbuf_loader_write(loader, (const guchar *) buffer.buffer, static_cast<gsize> (buffer.length),
-			(GError**) 0)) {
+			&error)) {
 		int pos = 0;
 		GdkPixbuf *pixbuf = gdk_pixbuf_loader_get_pixbuf(loader);
 		const int width = gdk_pixbuf_get_width(pixbuf);
@@ -123,6 +130,11 @@ static Image* LoadImage (ArchiveFile& file, const char *extension)
 		}
 
 		g_object_unref(pixbuf);
+	} else {
+		g_warning("image could not get loaded: '%s' %s\n",
+				file.getName().c_str(), (error != (GError *) 0) ? error->message : "");
+		if (error)
+			g_error_free(error);
 	}
 
 	gdk_pixbuf_loader_close(loader, (GError**) 0);
