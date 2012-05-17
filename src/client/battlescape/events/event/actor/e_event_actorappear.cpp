@@ -134,7 +134,10 @@ void CL_ActorAppear (const eventRegister_t *self, struct dbuffer *msg)
 	Grid_PosToVec(cl.mapData->map, le->fieldSize, le->pos, le->origin);
 	le->angles[YAW] = directionAngles[le->angle];
 
-	le->contents = CONTENTS_ACTOR;
+	if (LE_IsDead(le) && !LE_IsStunned(le))
+		le->contents = CONTENTS_DEADACTOR;
+	else
+		le->contents = CONTENTS_ACTOR;
 	VectorCopy(player_mins, le->mins);
 	if (LE_IsDead(le))
 		VectorCopy(player_dead_maxs, le->maxs);

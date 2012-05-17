@@ -135,6 +135,8 @@ void CL_ActorDie (const eventRegister_t *self, struct dbuffer *msg)
 	CL_ActorPlaySound(le, SND_DEATH);
 
 	VectorCopy(player_dead_maxs, le->maxs);
+	if (!LE_IsStunned(le))
+		le->contents = CONTENTS_DEADACTOR;
 	CL_ActorRemoveFromTeamList(le);
 
 	/* update pathing as we maybe can walk onto the dead actor now */

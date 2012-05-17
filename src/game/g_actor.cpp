@@ -369,6 +369,7 @@ static qboolean G_ActorStun (edict_t * ent, const edict_t *attacker)
 
 	/* no other state should be set here */
 	ent->state = STATE_STUN;
+	G_ActorSetMaxs(ent);
 	ent->link = attacker;
 
 	G_ActorModifyCounters(attacker, ent, -1, 0, 1);
@@ -451,7 +452,6 @@ static void G_ActorRevitalise (edict_t *ent)
 {
 	if (G_IsStunned(ent)) {
 		G_RemoveStunned(ent);
-		ent->solid = SOLID_BBOX;
 		/** @todo have a look at the morale value of
 		 * the ent and maybe get into rage or panic? */
 		G_ActorModifyCounters(ent->link, ent, 1, 0, -1);
@@ -527,7 +527,8 @@ qboolean G_ActorDieOrStun (edict_t * ent, edict_t *attacker)
 		return qfalse;
 	}
 
-	ent->solid = SOLID_NOT;
+	if (!G_IsStunned(ent))
+		ent->solid = SOLID_NOT;
 
 	/* send death */
 	G_EventActorDie(ent);
