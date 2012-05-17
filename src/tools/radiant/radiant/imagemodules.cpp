@@ -130,29 +130,6 @@ static Image* LoadImage (ArchiveFile& file, const char *extension)
 	return image;
 }
 
-class ImageTGAAPI: public IImageModule
-{
-	public:
-
-		typedef IImageModule Type;
-		STRING_CONSTANT(Name, "tga");
-
-		IImageModule* getTable ()
-		{
-			return this;
-		}
-
-	public:
-
-		Image* loadImage (ArchiveFile& file) const
-		{
-			return LoadImage(file, "tga");
-		}
-};
-
-typedef SingletonModule<ImageTGAAPI> ImageTGAModule;
-typedef Static<ImageTGAModule> StaticImageTGAModule;
-
 class ImageJPGAPI: public IImageModule
 {
 	public:
