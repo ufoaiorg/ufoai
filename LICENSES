@@ -3064,7 +3064,7 @@ base/pics/maps/loading/oriental.jpg | GNU General Public License 2.0 or later | 
 base/pics/maps/loading/oriental_mosque.jpg | GNU General Public License 2.0 or later | Martin Gerhardy
 base/pics/maps/loading/pipes_const.jpg | GNU General Public License 2.0 or later
 base/pics/maps/loading/resort.jpg | GNU General Public License 2.0 or later | Martin Gerhardy
-base/pics/maps/loading/rivertown.jpg | GNU General Public License 2.0 or later | Martin Gerhardy
+base/pics/maps/loading/rivertown.png | GNU General Public License 2.0 or later | Martin Gerhardy
 base/pics/maps/loading/scout_crash.jpg | GNU General Public License 2.0 or later | Martin Gerhardy
 base/pics/maps/loading/shelter.jpg | GNU General Public License 2.0 or later
 base/pics/maps/loading/small_house.png | GNU General Public License 2.0 or later | Martin Gerhardy
@@ -3222,9 +3222,9 @@ base/pics/maps/shots/pipes_const_3.jpg | GNU General Public License 2.0 or later
 base/pics/maps/shots/resort.jpg | GNU General Public License 2.0 or later | Martin Gerhardy
 base/pics/maps/shots/resort_2.jpg | GNU General Public License 2.0 or later | Martin Gerhardy
 base/pics/maps/shots/resort_3.jpg | GNU General Public License 2.0 or later | Martin Gerhardy
-base/pics/maps/shots/rivertown.jpg | GNU General Public License 2.0 or later | Martin Gerhardy
-base/pics/maps/shots/rivertown_2.jpg | GNU General Public License 2.0 or later | Martin Gerhardy
-base/pics/maps/shots/rivertown_3.jpg | GNU General Public License 2.0 or later | Martin Gerhardy
+base/pics/maps/shots/rivertown.png | GNU General Public License 2.0 or later | Martin Gerhardy
+base/pics/maps/shots/rivertown_2.png | GNU General Public License 2.0 or later | Martin Gerhardy
+base/pics/maps/shots/rivertown_3.png | GNU General Public License 2.0 or later | Martin Gerhardy
 base/pics/maps/shots/scout_crash.jpg | GNU General Public License 2.0 or later | Martin Gerhardy
 base/pics/maps/shots/scout_crash_2.jpg | GNU General Public License 2.0 or later | Martin Gerhardy
 base/pics/maps/shots/scout_crash_3.jpg | GNU General Public License 2.0 or later | Martin Gerhardy
