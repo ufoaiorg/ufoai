@@ -4,6 +4,7 @@
 "classname" "worldspawn"
 "maxteams" "4"
 "maxlevel" "5"
+"randomspawn" "1"
 // brush 0
 {
 ( 384 128 76 ) ( 384 128 78 ) ( 384 0 78 ) tex_common/nodraw 0 0 0 0.4 0.4 65025 128 0
@@ -11197,7 +11198,7 @@
 // entity 1
 {
 "classname" "info_human_start"
-"origin" "720 -336 90"
+"origin" "880 -272 26"
 "angle" "180"
 }
 // entity 2
@@ -11907,7 +11908,7 @@
 // entity 90
 {
 "classname" "info_alien_start"
-"origin" "-464 -48 26"
+"origin" "-976 16 26"
 }
 // entity 91
 {
@@ -11917,12 +11918,12 @@
 // entity 92
 {
 "classname" "info_alien_start"
-"origin" "-208 -752 26"
+"origin" "-144 -848 26"
 }
 // entity 93
 {
 "classname" "info_alien_start"
-"origin" "-624 -880 90"
+"origin" "-752 -848 26"
 }
 // entity 94
 {
@@ -11952,7 +11953,7 @@
 // entity 99
 {
 "classname" "info_alien_start"
-"origin" "-880 -848 90"
+"origin" "-912 -848 26"
 }
 // entity 100
 {
@@ -12049,61 +12050,61 @@
 // entity 117
 {
 "classname" "info_human_start"
-"origin" "848 -144 26"
+"origin" "880 -176 26"
 "angle" "180"
 }
 // entity 118
 {
 "classname" "info_human_start"
-"origin" "848 -240 26"
+"origin" "944 -240 26"
 "angle" "180"
 }
 // entity 119
 {
 "classname" "info_human_start"
-"origin" "880 -528 26"
+"origin" "880 -240 26"
 "angle" "180"
 }
 // entity 120
 {
 "classname" "info_human_start"
-"origin" "912 -176 26"
+"origin" "944 -176 26"
 "angle" "180"
 }
 // entity 121
 {
 "classname" "info_human_start"
-"origin" "752 -144 26"
+"origin" "912 -208 26"
 "angle" "180"
 }
 // entity 122
 {
 "classname" "info_human_start"
-"origin" "752 -400 26"
+"origin" "912 -272 26"
 "angle" "180"
 }
 // entity 123
 {
 "classname" "info_human_start"
-"origin" "912 -48 26"
+"origin" "944 -208 26"
 "angle" "180"
 }
 // entity 124
 {
 "classname" "info_human_start"
-"origin" "944 48 26"
+"origin" "912 -176 26"
 "angle" "180"
 }
 // entity 125
 {
 "classname" "info_human_start"
-"origin" "912 -336 26"
+"origin" "944 -272 26"
 "angle" "180"
 }
 // entity 126
 {
 "classname" "info_human_start"
-"origin" "912 -432 26"
+"origin" "912 -240 26"
 "angle" "180"
 }
 // entity 127
@@ -19821,13 +19822,13 @@
 // entity 292
 {
 "classname" "info_human_start"
-"origin" "880 16 26"
+"origin" "880 -208 26"
 "angle" "180"
 }
 // entity 293
 {
 "classname" "info_2x2_start"
-"origin" "928 128 28"
+"origin" "832 -224 28"
 "angle" "180"
 "team" "1"
 }
@@ -19841,7 +19842,54 @@
 // entity 295
 {
 "classname" "info_2x2_start"
-"origin" "864 -672 28"
+"origin" "896 -320 28"
 "angle" "180"
 "team" "1"
+}
+// entity 296
+{
+"classname" "info_alien_start"
+"origin" "-880 -848 90"
+}
+// entity 297
+{
+"classname" "info_alien_start"
+"origin" "-624 -880 90"
+}
+// entity 298
+{
+"classname" "info_alien_start"
+"origin" "-176 -592 26"
+"angle" "180"
+}
+// entity 299
+{
+"classname" "info_alien_start"
+"origin" "-208 -752 26"
+}
+// entity 300
+{
+"classname" "info_alien_start"
+"origin" "-464 304 26"
+"angle" "-90"
+}
+// entity 301
+{
+"classname" "info_alien_start"
+"origin" "-720 -112 26"
+}
+// entity 302
+{
+"classname" "info_alien_start"
+"origin" "-976 -624 26"
+}
+// entity 303
+{
+"classname" "info_alien_start"
+"origin" "-944 -240 26"
+}
+// entity 304
+{
+"classname" "info_alien_start"
+"origin" "-464 -48 26"
 }
