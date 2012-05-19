@@ -36,6 +36,20 @@ tile +craft_crash_fighter
 0      0      0      0      0      0      0      0      0      0      0      0      0
 }
 
+// Crashed UFO (Scout)
+tile +craft_crash_scout
+{
+13 7
+
+0      0      0      0      0      0      0      0      0      0      0      0      0
+0      +a     +a     +a     +a     +a     +a     +a     +a     +a     +a     +a     0
+0      +a     +a     +a     +a     +a     +a     +a     +a     +a     +a     +a     0
+0      +a     +a     +a     +a     +a     +a     +a     +a     +a     +a     +a     0
+0      +a     +a     +a     +a     +a     +a     +a     +a     +a     +a     +a     0
+0      +a     +a     +a     +a     +a     +a     +a     +a     +a     +a     +a     0
+0      0      0      0      0      0      0      0      0      0      0      0      0
+}
+
 // Dropship (Firebird)
 tile +craft_drop_firebird
 {
