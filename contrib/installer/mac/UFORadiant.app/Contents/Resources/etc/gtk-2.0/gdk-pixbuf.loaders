@@ -3,38 +3,38 @@
 # Created by gdk-pixbuf-query-loaders from gtk+-2.18.9
 #
 # LoaderDir = /sw/lib/gtk-2.0/2.10.0/loaders
-"./libpixbufloader-bmp.so"
+"@executable_path/../Libraries/libpixbufloader-bmp.so"
 "bmp" 5 "gtk20" "The BMP image format"
 "image/bmp" "image/x-bmp" "image/x-MS-bmp" ""
 "bmp" ""
 "BM" "" 100
 
-"./libpixbufloader-icns.so"
+"@executable_path/../Libraries/libpixbufloader-icns.so"
 "icns" 4 "gtk20" "The ICNS image format" "GPL"
 "image/x-icns" ""
 "icns" ""
 "icns" "" 100
 
-"./libpixbufloader-ico.so"
+"@executable_path/../Libraries/libpixbufloader-ico.so"
 "ico" 5 "gtk20" "The ICO image format" "LGPL"
 "image/x-icon" "image/x-ico" "image/x-win-bitmap" ""
 "ico" "cur" ""
 "  \001   " "zz znz" 100
 "  \002   " "zz znz" 100
 
-"./libpixbufloader-jpeg.so"
+"@executable_path/../Libraries/libpixbufloader-jpeg.so"
 "jpeg" 5 "gtk20" "The JPEG image format" "LGPL"
 "image/jpeg" ""
 "jpeg" "jpe" "jpg" ""
 "\377\330" "" 100
 
-"./libpixbufloader-png.so"
+"@executable_path/../Libraries/libpixbufloader-png.so"
 "png" 5 "gtk20" "The PNG image format" "LGPL"
 "image/png" ""
 "png" ""
 "\211PNG\r\n\032\n" "" 100
 
-"./libpixbufloader-tga.so"
+"@executable_path/../Libraries/libpixbufloader-tga.so"
 "tga" 4 "gtk20" "The Targa image format" "LGPL"
 "image/x-tga" ""
 "tga" "targa" ""
@@ -45,7 +45,7 @@
 "  \n" "xz " 100
 "  \013" "xz " 100
 
-"./libpixbufloader-xpm.so"
+"@executable_path/../Libraries/libpixbufloader-xpm.so"
 "xpm" 4 "gtk20" "The XPM image format" "LGPL"
 "image/x-xpixmap" ""
 "xpm" ""
