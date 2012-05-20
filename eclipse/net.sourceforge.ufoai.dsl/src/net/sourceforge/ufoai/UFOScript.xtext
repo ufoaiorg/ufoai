@@ -9,7 +9,7 @@ UFOScript:
 
 /* ==================== UI TOP LEVEL NODES ================================ */
 UITopLevelNode:
-	UINodeComponent | UINodeWindow;
+	UINodeComponent | UINodeWindow | UIFont;
 
 /** a window can only extend another window */
 UINodeWindow:
@@ -24,6 +24,7 @@ UINodeWindow:
 UINodeComponent:
 	"component" name=UINodeID "extends" ((superComponent=[UINodeComponent]) | (type=UINodeType)) "{"
 	("{" (properties+=UINodeProperties)* "}")?
+	(properties+=UINodeProperties)*
 	(nodes+=UINode)*
 	"}";
 
@@ -181,6 +182,9 @@ UINodeVscrollbar:
 
 UINodeZone:
 	"zone" name=UINodeID "{" (properties+=UIZoneNodeProperties)* "}";
+
+UIFont:
+	"font" name=ID "{" => "}";
 
 /* ==================== NODE PROPERTIES ================================ */
 UIWindowNodeProperties:
@@ -468,7 +472,7 @@ UIAbstractNodePropertiesBase:
 	("contentalign" contentalign=UIValue)
 	("disabled" disabled=UIValue)
 	("excluderect" excluderect=UIValue)
-	("font" font=UIValue)
+	("font" QUOTES? font=[UIFont] QUOTES?)
 	("ghost" ghost=UIValue)
 	("height" height=UIValue)
 	("indexed" indexed=UIValue)
@@ -587,9 +591,12 @@ UICvar:
 UINodeID:
 	'background' | UINodeType | ID;
 
-// TODO: add the property keywords
+	// TODO: add the property keywords
 UINodeProperty:
 	'invis' | ID;
+
+terminal QUOTES:
+	"\"" | "'";
 
 terminal UFO_BOOLEAN:
 	'true' | 'false';
