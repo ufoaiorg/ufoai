@@ -16,15 +16,15 @@ UINodeWindow:
 	"window" name=ID ("extends" superWindow=[UINodeWindow])? "{"
 	/* optional block with window properties that might be empty */
 	("{" (properties+=UIWindowNodeProperties)* "}")?
-	/* nodes (and panels) */
-	((nodes+=UINode) | (panels+=UINodePanel))*
+	/* nodes */
+	(nodes+=UINode)*
 	"}";
 
 /** components can extend any ui node */
 UINodeComponent:
 	"component" name=ID "extends" ((superComponent=[UINodeComponent]) | (type=UINodeType)) "{"
 	("{" (properties+=UINodeProperties)* "}")?
-	((nodes+=UINode) | (panels+=UINodePanel))*
+	(nodes+=UINode)*
 	"}";
 
 /* ==================== NODES ================================ */
@@ -35,18 +35,17 @@ UINodeType:
 	"optionlist" | "option" | "radar" | "optiontree" | "rows" | "radiobutton" | "sequence" | "selectbox" | "tab" |
 	"spinner" | "text2" | "tbar" | "texture" | "textlist" | "todo" | "timer" | "video" | "zone" | "vscrollbar";
 
-/* panels are a little bit special */
-UINodePanel:
-	"panel" name=ID "{" ("{" (properties+=UIPanelNodeProperties)* "}")? (panelNodes+=UINode)* "}";
-
 UINode:
-	UINodeImage | UINodeButton | UINodeModel | UINodeText | UINodeString | UINodeConfunc | UINodeFunc | UINodeTextEntry |
+	UINodePanel | UINodeImage | UINodeButton | UINodeModel | UINodeText | UINodeString | UINodeConfunc | UINodeFunc | UINodeTextEntry |
 	UINodeBaseinventory | UINodeBar | UINodeBasemap | UINodeBaselayout | UINodeCheckbox | UINodeBattlescape |
 	UINodeControls | UINodeContainer | UINodeData | UINodeCvarlistener | UINodeEkg | UINodeEditor | UINodeItem |
 	UINodeGeoscape | UINodeLinechart | UINodeKeybinding | UINodeMessagelist | UINodeMaterial_Editor | UINodeOptionlist |
 	UINodeOption | UINodeRadar | UINodeOptiontree | UINodeRows | UINodeRadiobutton | UINodeSequence | UINodeSelectbox |
 	UINodeTab | UINodeSpinner | UINodeText2 | UINodeTbar | UINodeTexture | UINodeTextlist | UINodeTodo | UINodeTimer |
 	UINodeVideo | UINodeZone | UINodeVscrollbar;
+
+UINodePanel:
+	"panel" name=ID "{" ("{" (properties+=UIPanelNodeProperties)* "}")? (panelNodes+=UINode)* "}";
 
 UINodeImage:
 	"image" name=ID "{" (properties+=UIImageNodeProperties)* "}";

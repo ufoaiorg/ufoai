@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import net.sourceforge.ufoai.ufoScript.UINode;
+import net.sourceforge.ufoai.ufoScript.UINodeComponent;
 import net.sourceforge.ufoai.ufoScript.UINodePanel;
 import net.sourceforge.ufoai.ufoScript.UINodeWindow;
 import net.sourceforge.ufoai.ufoScript.UITopLevelNode;
@@ -45,26 +46,27 @@ public class UFOAIPropertyInfo implements IAdaptable, IPropertySource {
 		addProperty("Java Object", "Type", object.getClass().getSimpleName());
 
 		if (object instanceof UINode) {
-			addProperty("Node", "Name", ((UINode) object).getName());
-		}
-		if (object instanceof UITopLevelNode) {
-			addProperty("Node", "Name", ((UITopLevelNode) object).getName());
-		}
-		if (object instanceof UINodePanel) {
-			addProperty("Node", "Name", ((UINodePanel) object).getName());
-		}
-		if (object instanceof UINodeWindow) {
+			String category = "Node";
+			addProperty(category, "Name", ((UINode) object).getName());
+		} else if (object instanceof UINodeComponent) {
+			UINodeComponent component = (UINodeComponent) object;
+			String category = "Component";
+			addProperty(category, "Name", component.getName());
+			addProperty(category, "Child count", String.valueOf(component.getNodes().size()));
+			addProperty(category, "Properties count", String.valueOf(component.getProperties().size()));
+		} else if (object instanceof UINodeWindow) {
 			UINodeWindow window = (UINodeWindow) object;
-			addProperty("Window", "Child count", String.valueOf(window.getNodes().size()));
-			addProperty("Window", "Panel child count", String.valueOf(window.getPanels().size()));
-			addProperty("Window", "Properties count", String.valueOf(window.getProperties().size()));
+			String category = "Window";
+			addProperty(category, "Name", window.getName());
+			addProperty(category, "Child count", String.valueOf(window.getNodes().size()));
+			addProperty(category, "Properties count", String.valueOf(window.getProperties().size()));
 
 			EList<UIWindowNodeProperties> properties = window.getProperties();
 			for (UIWindowNodeProperties prop : properties) {
 				if (prop instanceof UIWindowNodePropertiesBase) {
 					UIWindowNodePropertiesBase windowProp = (UIWindowNodePropertiesBase) prop;
-					addProperty("Window", "Close button", windowProp.getClosebutton());
-					addProperty("Window", "Fill", windowProp.getFill());
+					addProperty(category, "Close button", windowProp.getClosebutton());
+					addProperty(category, "Fill", windowProp.getFill());
 					// TODO and so on for all properties...
 				}
 			}
