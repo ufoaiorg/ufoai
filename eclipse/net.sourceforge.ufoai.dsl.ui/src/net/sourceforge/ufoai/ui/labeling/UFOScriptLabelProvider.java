@@ -3,7 +3,17 @@
  */
 package net.sourceforge.ufoai.ui.labeling;
 
+import java.io.InputStream;
+import java.util.HashMap;
+import java.util.Map;
+
+import net.sourceforge.ufoai.ufoScript.UINode;
+import net.sourceforge.ufoai.ufoScript.UINodeComponent;
+import net.sourceforge.ufoai.ufoScript.UINodeWindow;
+
 import org.eclipse.emf.edit.ui.provider.AdapterFactoryLabelProvider;
+import org.eclipse.swt.graphics.Image;
+import org.eclipse.swt.widgets.Display;
 import org.eclipse.xtext.ui.label.DefaultEObjectLabelProvider;
 
 import com.google.inject.Inject;
@@ -13,14 +23,41 @@ import com.google.inject.Inject;
  * http://www.eclipse.org/Xtext/documentation/latest/xtext.html#labelProvider
  */
 public class UFOScriptLabelProvider extends DefaultEObjectLabelProvider {
+	private final Map<String, Image> iconCache;
+
 	@Inject
 	public UFOScriptLabelProvider(AdapterFactoryLabelProvider delegate) {
 		super(delegate);
+		iconCache = new HashMap<String, Image>();
 	}
 
-	/*
-	 * //Labels and icons can be computed like this: String text(MyModel ele) {
-	 * return "my "+ele.getName(); } String image(MyModel ele) { return
-	 * "MyModel.gif"; }
-	 */
+	private Image getIcon(String name) {
+		Image image = iconCache.get(name);
+		if (image == null) {
+			final String uri = "/net/sourceforge/ufoai/ui/icons/" + name + ".png";
+			InputStream stream = this.getClass().getResourceAsStream(uri);
+			if (stream == null) {
+				System.out.println("Image at uri " + uri + " was not found.");
+				return null;
+			}
+			image = new Image(Display.getDefault(), stream);
+			iconCache.put(name, image);
+		}
+		return image;
+	}
+
+	public Image image(UINodeWindow window) {
+		return getIcon("window");
+	}
+
+	public Image image(UINodeComponent component) {
+		return getIcon("component");
+	}
+
+	public Image image(UINode node) {
+		// FIXME node type should be inside the EObject, class can be something not expected
+		String name = node.getClass().getSimpleName();
+		name = name.replaceFirst("UINode", "").replaceFirst("Impl", "").toLowerCase();
+		return getIcon(name);
+	}
 }

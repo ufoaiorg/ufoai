@@ -15,9 +15,4 @@ public class UFOScriptDescriptionLabelProvider extends DefaultDescriptionLabelPr
 	public String text(IEObjectDescription ele) {
 		return ele.getName().toString();
 	}
-
-	@Override
-	public String image(IEObjectDescription ele) {
-		return text(ele) + ".png";
-	}
 }
