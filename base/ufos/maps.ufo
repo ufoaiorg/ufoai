@@ -1432,18 +1432,16 @@ mapdef industrial_small
 
 	terrains
 	{
-		mountain
-		grass
 	}
 
 	cultures
 	{
-		western
-		eastern
 	}
 
 	populations
 	{
+		rural
+		village
 		suburban
 		urban
 	}
