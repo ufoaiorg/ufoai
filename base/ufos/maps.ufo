@@ -1391,18 +1391,15 @@ mapdef industrial_large
 
 	terrains
 	{
-		mountain
-		grass
 	}
 
 	cultures
 	{
-		western
-		eastern
 	}
 
 	populations
 	{
+		rural
 		village
 		suburban
 		urban
