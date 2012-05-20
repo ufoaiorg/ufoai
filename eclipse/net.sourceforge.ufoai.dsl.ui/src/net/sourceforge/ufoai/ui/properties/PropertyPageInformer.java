@@ -13,27 +13,28 @@ public class PropertyPageInformer {
 	public static void informPropertyView(XtextEditor editor, EObject object) {
 		PropertySheet propertyView = null;
 
-		//fetch the properties view
-		try{
-			propertyView = (PropertySheet)PlatformUI.getWorkbench().
-					getActiveWorkbenchWindow().getActivePage().
-					findView(IPageLayout.ID_PROP_SHEET);
+		// fetch the properties view
+		try {
+			propertyView = (PropertySheet) PlatformUI.getWorkbench()
+					.getActiveWorkbenchWindow().getActivePage()
+					.findView(IPageLayout.ID_PROP_SHEET);
 		} catch (Exception e) {
 		}
 
-		if(propertyView != null) {
-			//make sure our editor is marked as active part
-			//otherwise the selectionChanged-call will be ignored
+		if (propertyView != null) {
+			// make sure our editor is marked as active part
+			// otherwise the selectionChanged-call will be ignored
 			propertyView.partActivated(editor);
-			//feed the view with our custom selection
+			// feed the view with our custom selection
 			propertyView.selectionChanged(editor, constructSelection(object));
 		}
 	}
 
 	private static ISelection constructSelection(final EObject object) {
-		return new StructuredSelection(){
+		return new StructuredSelection() {
+			@Override
 			public Object[] toArray() {
-				return new Object[] {new UFOAIPropertyInfo(object)};
+				return new Object[] { new UFOAIPropertyInfo(object) };
 			}
 		};
 	}

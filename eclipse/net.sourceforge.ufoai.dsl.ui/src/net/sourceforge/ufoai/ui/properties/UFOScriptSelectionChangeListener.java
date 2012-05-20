@@ -15,35 +15,43 @@ import org.eclipse.xtext.resource.XtextResource;
 import org.eclipse.xtext.ui.editor.XtextEditor;
 import org.eclipse.xtext.util.concurrent.IUnitOfWork;
 
-public class UFOScriptSelectionChangeListener implements ISelectionChangedListener {
-
-	private XtextEditor editor;
+public class UFOScriptSelectionChangeListener implements
+		ISelectionChangedListener {
+	private final XtextEditor editor;
 
 	public UFOScriptSelectionChangeListener(XtextEditor editor) {
 		this.editor = editor;
 	}
 
+	@Override
 	public void selectionChanged(SelectionChangedEvent event) {
 		try {
 			ISelection selection = event.getSelection();
 			if (!selection.isEmpty() && selection instanceof ITextSelection) {
 				final ITextSelection textSel = (ITextSelection) selection;
-				//determine the Model element at the offset and invoke the
-				//invoke the information of the properties view
+				// determine the Model element at the offset and invoke the
+				// invoke the information of the properties view
 
-				editor.getDocument().readOnly(new IUnitOfWork.Void<XtextResource>() {
-					public void process(XtextResource resource) throws Exception {
-						IParseResult parseResult = resource.getParseResult();
-						if (parseResult == null)
-							return;
-						ICompositeNode rootNode = parseResult.getRootNode();
-						int offset = textSel.getOffset();
-						ILeafNode node = NodeModelUtils.findLeafNodeAtOffset(rootNode, offset);
-						EObject object = node.getSemanticElement();
+				editor.getDocument().readOnly(
+						new IUnitOfWork.Void<XtextResource>() {
+							@Override
+							public void process(XtextResource resource)
+									throws Exception {
+								IParseResult parseResult = resource
+										.getParseResult();
+								if (parseResult == null)
+									return;
+								ICompositeNode rootNode = parseResult
+										.getRootNode();
+								int offset = textSel.getOffset();
+								ILeafNode node = NodeModelUtils
+										.findLeafNodeAtOffset(rootNode, offset);
+								EObject object = node.getSemanticElement();
 
-						PropertyPageInformer.informPropertyView(editor, object);
-					}
-				});
+								PropertyPageInformer.informPropertyView(editor,
+										object);
+							}
+						});
 
 			}
 		} catch (Exception e) {
@@ -52,7 +60,8 @@ public class UFOScriptSelectionChangeListener implements ISelectionChangedListen
 	}
 
 	/**
-	 * install and uninstall is basically copied form AbstractSelectionChangedListener
+	 * install and uninstall is basically copied from
+	 * AbstractSelectionChangedListener
 	 * @param selectionProvider
 	 */
 	public void install(ISelectionProvider selectionProvider) {
@@ -62,8 +71,7 @@ public class UFOScriptSelectionChangeListener implements ISelectionChangedListen
 		if (selectionProvider instanceof IPostSelectionProvider) {
 			IPostSelectionProvider provider = (IPostSelectionProvider) selectionProvider;
 			provider.addPostSelectionChangedListener(this);
-		}
-		else {
+		} else {
 			selectionProvider.addSelectionChangedListener(this);
 		}
 	}
@@ -75,8 +83,7 @@ public class UFOScriptSelectionChangeListener implements ISelectionChangedListen
 		if (selectionProvider instanceof IPostSelectionProvider) {
 			IPostSelectionProvider provider = (IPostSelectionProvider) selectionProvider;
 			provider.removePostSelectionChangedListener(this);
-		}
-		else {
+		} else {
 			selectionProvider.removeSelectionChangedListener(this);
 		}
 	}

@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import net.sourceforge.ufoai.ufoScript.UINode;
+import net.sourceforge.ufoai.ufoScript.UINodePanel;
 import net.sourceforge.ufoai.ufoScript.UINodeWindow;
 import net.sourceforge.ufoai.ufoScript.UITopLevelNode;
 import net.sourceforge.ufoai.ufoScript.UIWindowNodeProperties;
@@ -16,14 +17,15 @@ import org.eclipse.ui.views.properties.IPropertyDescriptor;
 import org.eclipse.ui.views.properties.IPropertySource;
 import org.eclipse.ui.views.properties.PropertyDescriptor;
 
-public class UFOAIPropertyInfo  implements IAdaptable, IPropertySource {
-	List<PropertyEntry> properties;
+public class UFOAIPropertyInfo implements IAdaptable, IPropertySource {
+	private final List<PropertyEntry> properties = new ArrayList<UFOAIPropertyInfo.PropertyEntry>();
 
 	private static class PropertyEntry extends PropertyDescriptor {
-		String category;
-		String value;
+		private final String category;
+		private final String value;
 
-		public PropertyEntry(Object id, String category, String label, String value) {
+		public PropertyEntry(Object id, String category, String label,
+				String value) {
 			super(id, label);
 			this.category = category;
 			this.value = value;
@@ -41,7 +43,6 @@ public class UFOAIPropertyInfo  implements IAdaptable, IPropertySource {
 	}
 
 	public UFOAIPropertyInfo(EObject object) {
-		properties = new ArrayList<UFOAIPropertyInfo.PropertyEntry>();
 		addProperty("Java Object", "Type", object.getClass().getSimpleName());
 
 		if (object instanceof UINode) {
@@ -50,16 +51,25 @@ public class UFOAIPropertyInfo  implements IAdaptable, IPropertySource {
 		if (object instanceof UITopLevelNode) {
 			addProperty("Node", "Name", ((UITopLevelNode) object).getName());
 		}
+		if (object instanceof UINodePanel) {
+			addProperty("Node", "Name", ((UINodePanel) object).getName());
+		}
 		if (object instanceof UINodeWindow) {
-			addProperty("Window", "Child count", ""+((UINodeWindow) object).getNodes().size());
-			addProperty("Window", "Panel child count", ""+((UINodeWindow) object).getPanels().size());
-			addProperty("Window", "Properties count", ""+((UINodeWindow) object).getProperties().size());
+			UINodeWindow window = (UINodeWindow) object;
+			addProperty("Window", "Child count",
+					String.valueOf(window.getNodes().size()));
+			addProperty("Window", "Panel child count",
+					String.valueOf(window.getPanels().size()));
+			addProperty("Window", "Properties count",
+					String.valueOf(window.getProperties().size()));
 
-			EList<UIWindowNodeProperties> properties = ((UINodeWindow) object).getProperties();
-			for (UIWindowNodeProperties prop: properties) {
+			EList<UIWindowNodeProperties> properties = window.getProperties();
+			for (UIWindowNodeProperties prop : properties) {
 				if (prop instanceof UIWindowNodePropertiesBase) {
-					addProperty("Window", "Close button", ((UIWindowNodePropertiesBase) prop).getClosebutton());
-					addProperty("Window", "Fill", ((UIWindowNodePropertiesBase) prop).getFill());
+					UIWindowNodePropertiesBase windowProp = (UIWindowNodePropertiesBase) prop;
+					addProperty("Window", "Close button",
+							windowProp.getClosebutton());
+					addProperty("Window", "Fill", windowProp.getFill());
 					// TODO and so on for all properties...
 				}
 			}
@@ -73,34 +83,41 @@ public class UFOAIPropertyInfo  implements IAdaptable, IPropertySource {
 		properties.add(entry);
 	}
 
+	@Override
 	@SuppressWarnings("rawtypes")
 	public Object getAdapter(Class adapter) {
-		if(adapter.equals(IPropertySource.class)){
+		if (adapter.equals(IPropertySource.class)) {
 			return this;
 		}
 		return null;
 	}
 
+	@Override
 	public boolean isPropertySet(Object id) {
 		return false;
 	}
 
+	@Override
 	public Object getPropertyValue(Object id) {
-		return ((PropertyEntry)id).value;
+		return ((PropertyEntry) id).value;
 	}
 
+	@Override
 	public IPropertyDescriptor[] getPropertyDescriptors() {
-		return properties.toArray(new IPropertyDescriptor[]{});
+		return properties.toArray(new IPropertyDescriptor[] {});
 	}
 
+	@Override
 	public Object getEditableValue() {
-		return null;
+		return this;
 	}
 
+	@Override
 	public void setPropertyValue(Object id, Object value) {
 		System.out.println("setPropertyValue Not implemented");
 	}
 
+	@Override
 	public void resetPropertyValue(Object id) {
 		System.out.println("resetPropertyValue Not implemented");
 	}
