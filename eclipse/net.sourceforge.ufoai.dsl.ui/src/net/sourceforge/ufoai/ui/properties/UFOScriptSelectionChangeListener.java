@@ -15,8 +15,7 @@ import org.eclipse.xtext.resource.XtextResource;
 import org.eclipse.xtext.ui.editor.XtextEditor;
 import org.eclipse.xtext.util.concurrent.IUnitOfWork;
 
-public class UFOScriptSelectionChangeListener implements
-		ISelectionChangedListener {
+public class UFOScriptSelectionChangeListener implements ISelectionChangedListener {
 	private final XtextEditor editor;
 
 	public UFOScriptSelectionChangeListener(XtextEditor editor) {
@@ -32,26 +31,20 @@ public class UFOScriptSelectionChangeListener implements
 				// determine the Model element at the offset and invoke the
 				// invoke the information of the properties view
 
-				editor.getDocument().readOnly(
-						new IUnitOfWork.Void<XtextResource>() {
-							@Override
-							public void process(XtextResource resource)
-									throws Exception {
-								IParseResult parseResult = resource
-										.getParseResult();
-								if (parseResult == null)
-									return;
-								ICompositeNode rootNode = parseResult
-										.getRootNode();
-								int offset = textSel.getOffset();
-								ILeafNode node = NodeModelUtils
-										.findLeafNodeAtOffset(rootNode, offset);
-								EObject object = node.getSemanticElement();
+				editor.getDocument().readOnly(new IUnitOfWork.Void<XtextResource>() {
+					@Override
+					public void process(XtextResource resource) throws Exception {
+						IParseResult parseResult = resource.getParseResult();
+						if (parseResult == null)
+							return;
+						ICompositeNode rootNode = parseResult.getRootNode();
+						int offset = textSel.getOffset();
+						ILeafNode node = NodeModelUtils.findLeafNodeAtOffset(rootNode, offset);
+						EObject object = node.getSemanticElement();
 
-								PropertyPageInformer.informPropertyView(editor,
-										object);
-							}
-						});
+						PropertyPageInformer.informPropertyView(editor, object);
+					}
+				});
 
 			}
 		} catch (Exception e) {
@@ -62,7 +55,6 @@ public class UFOScriptSelectionChangeListener implements
 	/**
 	 * install and uninstall is basically copied from
 	 * AbstractSelectionChangedListener
-	 * @param selectionProvider
 	 */
 	public void install(ISelectionProvider selectionProvider) {
 		if (selectionProvider == null)

@@ -15,8 +15,7 @@ public class PropertyPageInformer {
 
 		// fetch the properties view
 		try {
-			propertyView = (PropertySheet) PlatformUI.getWorkbench()
-					.getActiveWorkbenchWindow().getActivePage()
+			propertyView = (PropertySheet) PlatformUI.getWorkbench().getActiveWorkbenchWindow().getActivePage()
 					.findView(IPageLayout.ID_PROP_SHEET);
 		} catch (Exception e) {
 		}

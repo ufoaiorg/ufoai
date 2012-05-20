@@ -15,8 +15,7 @@ import com.google.inject.name.Named;
 /**
  * Use this class to register components to be used within the IDE.
  */
-public class UFOScriptUiModule extends
-net.sourceforge.ufoai.ui.AbstractUFOScriptUiModule {
+public class UFOScriptUiModule extends net.sourceforge.ufoai.ui.AbstractUFOScriptUiModule {
 	public UFOScriptUiModule(AbstractUIPlugin plugin) {
 		super(plugin);
 	}
@@ -24,8 +23,7 @@ net.sourceforge.ufoai.ui.AbstractUFOScriptUiModule {
 	@Override
 	public void configure(Binder binder) {
 		super.configure(binder);
-		Named named = com.google.inject.name.Names
-				.named(XtextContentAssistProcessor.COMPLETION_AUTO_ACTIVATION_CHARS);
+		Named named = com.google.inject.name.Names.named(XtextContentAssistProcessor.COMPLETION_AUTO_ACTIVATION_CHARS);
 		binder.bind(String.class).annotatedWith(named).toInstance(".,:");
 	}
 

@@ -15,10 +15,8 @@ import org.eclipse.xtext.ui.editor.contentassist.ICompletionProposalAcceptor;
  * http://www.eclipse.org/Xtext/documentation/latest/xtext.html#contentAssist on
  * how to customize content assistant
  */
-public class UFOScriptProposalProvider extends
-		AbstractUFOScriptProposalProvider {
-	public void complete_UFOScript(UFOScript model, RuleCall ruleCall,
-			ContentAssistContext context, ICompletionProposalAcceptor acceptor) {
+public class UFOScriptProposalProvider extends AbstractUFOScriptProposalProvider {
+	public void complete_UFOScript(UFOScript model, RuleCall ruleCall, ContentAssistContext context, ICompletionProposalAcceptor acceptor) {
 		// call implementation in superclass
 		super.complete_UFOScript(model, ruleCall, context, acceptor);
 
@@ -32,8 +30,7 @@ public class UFOScriptProposalProvider extends
 		// the result may be null as the createCompletionProposal(..) methods
 		// check for valid prefixes
 		// and terminal token conflicts
-		ICompletionProposal completionProposal = createCompletionProposal(
-				proposal, context);
+		ICompletionProposal completionProposal = createCompletionProposal(proposal, context);
 
 		// register the proposal, the acceptor handles null-values gracefully
 		acceptor.accept(completionProposal);

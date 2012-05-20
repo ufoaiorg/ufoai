@@ -15,15 +15,13 @@ import org.eclipse.xtext.validation.Issue;
 public class UFOScriptQuickfixProvider extends DefaultQuickfixProvider {
 	@Fix(UFOScriptJavaValidator.INVALID_NAME)
 	public void fixName(final Issue issue, IssueResolutionAcceptor acceptor) {
-		acceptor.accept(issue, "Convert to lowercase", "Convert to lowercase '"
-				+ issue.getData()[0] + "'", "upcase.png", new IModification() {
-			public void apply(IModificationContext context)
-					throws BadLocationException {
-				IXtextDocument xtextDocument = context.getXtextDocument();
-				String firstLetter = xtextDocument.get(issue.getOffset(), 1);
-				xtextDocument.replace(issue.getOffset(), 1,
-						Strings.toFirstLower(firstLetter));
-			}
-		});
+		acceptor.accept(issue, "Convert to lowercase", "Convert to lowercase '" + issue.getData()[0] + "'", "upcase.png",
+				new IModification() {
+					public void apply(IModificationContext context) throws BadLocationException {
+						IXtextDocument xtextDocument = context.getXtextDocument();
+						String firstLetter = xtextDocument.get(issue.getOffset(), 1);
+						xtextDocument.replace(issue.getOffset(), 1, Strings.toFirstLower(firstLetter));
+					}
+				});
 	}
 }

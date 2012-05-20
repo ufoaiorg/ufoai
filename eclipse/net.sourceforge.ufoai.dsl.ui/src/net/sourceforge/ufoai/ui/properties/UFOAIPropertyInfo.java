@@ -24,8 +24,7 @@ public class UFOAIPropertyInfo implements IAdaptable, IPropertySource {
 		private final String category;
 		private final String value;
 
-		public PropertyEntry(Object id, String category, String label,
-				String value) {
+		public PropertyEntry(Object id, String category, String label, String value) {
 			super(id, label);
 			this.category = category;
 			this.value = value;
@@ -56,19 +55,15 @@ public class UFOAIPropertyInfo implements IAdaptable, IPropertySource {
 		}
 		if (object instanceof UINodeWindow) {
 			UINodeWindow window = (UINodeWindow) object;
-			addProperty("Window", "Child count",
-					String.valueOf(window.getNodes().size()));
-			addProperty("Window", "Panel child count",
-					String.valueOf(window.getPanels().size()));
-			addProperty("Window", "Properties count",
-					String.valueOf(window.getProperties().size()));
+			addProperty("Window", "Child count", String.valueOf(window.getNodes().size()));
+			addProperty("Window", "Panel child count", String.valueOf(window.getPanels().size()));
+			addProperty("Window", "Properties count", String.valueOf(window.getProperties().size()));
 
 			EList<UIWindowNodeProperties> properties = window.getProperties();
 			for (UIWindowNodeProperties prop : properties) {
 				if (prop instanceof UIWindowNodePropertiesBase) {
 					UIWindowNodePropertiesBase windowProp = (UIWindowNodePropertiesBase) prop;
-					addProperty("Window", "Close button",
-							windowProp.getClosebutton());
+					addProperty("Window", "Close button", windowProp.getClosebutton());
 					addProperty("Window", "Fill", windowProp.getFill());
 					// TODO and so on for all properties...
 				}
