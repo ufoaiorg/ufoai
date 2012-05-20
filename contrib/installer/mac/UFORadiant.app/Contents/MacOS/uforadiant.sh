@@ -13,6 +13,12 @@ export FONTCONFIG_FILE="$BASE_DIR/Resources/etc/fonts/fonts.conf"
 export GTK_DATA_PREFIX="$BASE_DIR/Resources"
 export GTK_EXE_PREFIX="$BASE_DIR/Resources"
 export GTK_PATH="$BASE_DIR/Resources"
+export XDG_DATA_HOME="$BASE_DIR/Resources"
+export XDG_DATA_DIRS="$BASE_DIR/Resources"
+
+if test -f "$BASE_DIR/Resources/etc/charset.alias"; then
+    export CHARSETALIASDIR="$BASE_DIR/Resources/etc"
+fi
 
 cd ${APP_DIR}
 if [ -x /usr/bin/open-x11 ]; then

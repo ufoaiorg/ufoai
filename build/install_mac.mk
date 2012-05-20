@@ -49,6 +49,8 @@ copybinaries-uforadiant: bundle-dirs-uforadiant
 	$(Q)cp $(BINARIES_RADIANT) $(MAC_INST_DIR)/UFORadiant.app/Contents/MacOS
 	$(Q)cp -L $(LIB_BASE_DIR)/lib/pango*/lib/pango/*/modules/pango-basic-*.so $(MAC_INST_DIR)/UFORadiant.app/Contents/Libraries
 	$(Q)cp -L $(LIB_BASE_DIR)/lib/gtk-2.0/*/loaders/libpixbufloader-*.so $(MAC_INST_DIR)/UFORadiant.app/Contents/Libraries
+	$(Q)mkdir -p $(MAC_INST_DIR)/UFORadiant.app/Contents/Resources/share/mime
+	$(Q)cp -r $(LIB_BASE_DIR)/share/mime $(MAC_INST_DIR)/UFORadiant.app/Contents/Resources/mime
 
 # =======================
 
