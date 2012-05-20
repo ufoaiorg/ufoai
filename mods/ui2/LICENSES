@@ -83,10 +83,13 @@ mods/ui2/pics/icons/windowdown.png | GNU General Public License 2.0 or later | N
 mods/ui2/pics/icons/windowdown0.png | GNU General Public License 2.0 or later | Nate Wright
 mods/ui2/pics/icons/windowinfo.png | GNU General Public License 2.0 or later | Nate Wright
 mods/ui2/pics/icons/windowinfo0.png | GNU General Public License 2.0 or later | Nate Wright
+mods/ui2/pics/icons/windowlock.png | GNU General Public License 2.0 or later | Nate Wright
+mods/ui2/pics/icons/windowlock_light.png | GNU General Public License 2.0 or later | Nate Wright
 mods/ui2/pics/icons/windowminusb.png | GNU General Public License 2.0 or later | Nate Wright
 mods/ui2/pics/icons/windowminusb0.png | GNU General Public License 2.0 or later | Nate Wright
 mods/ui2/pics/icons/windowminusy.png | GNU General Public License 2.0 or later | Nate Wright
 mods/ui2/pics/icons/windowminusy0.png | GNU General Public License 2.0 or later | Nate Wright
+mods/ui2/pics/icons/windowmulti.png | GNU General Public License 2.0 or later | Nate Wright
 mods/ui2/pics/icons/windownext.png | GNU General Public License 2.0 or later | Nate Wright
 mods/ui2/pics/icons/windownext0.png | GNU General Public License 2.0 or later | Nate Wright
 mods/ui2/pics/icons/windowplusb.png | GNU General Public License 2.0 or later | Nate Wright
@@ -95,6 +98,7 @@ mods/ui2/pics/icons/windowplusy.png | GNU General Public License 2.0 or later | 
 mods/ui2/pics/icons/windowplusy0.png | GNU General Public License 2.0 or later | Nate Wright
 mods/ui2/pics/icons/windowprev.png | GNU General Public License 2.0 or later | Nate Wright
 mods/ui2/pics/icons/windowprev0.png | GNU General Public License 2.0 or later | Nate Wright
+mods/ui2/pics/icons/windowsingle.png | GNU General Public License 2.0 or later | Nate Wright
 mods/ui2/pics/icons/windowup.png | GNU General Public License 2.0 or later | Nate Wright
 mods/ui2/pics/icons/windowup0.png | GNU General Public License 2.0 or later | Nate Wright
 mods/ui2/pics/icons/wrench.png | GNU General Public License 2.0 or later | Nate Wright
