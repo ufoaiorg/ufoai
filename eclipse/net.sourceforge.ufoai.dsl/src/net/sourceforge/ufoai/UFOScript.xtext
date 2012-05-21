@@ -5,7 +5,11 @@ generate ufoScript "http://ufoai.org/UFOScript"
 
 // starting point for parsing a ufo script file
 UFOScript:
-	(blocks+=UITopLevelNode)*;
+	(blocks+=TopLevelNode*);
+
+TopLevelNode:
+	UITopLevelNode | Aircraft | Tech | Building | Item | Equipment | Sprite | Particle | Tips | Chrtemplate | Team |
+	Terrain | Sequence | MapDef;
 
 /* ==================== UI TOP LEVEL NODES ================================ */
 UITopLevelNode:
@@ -595,6 +599,144 @@ UINodeID:
 UINodeProperty:
 	'invis' | ID;
 
+/* ==================== non-ui stuff============================== */
+Tech:
+	"tech" name=ID "{"
+	"provides" provides=[Item]
+	"}";
+
+Sprite:
+	"sprite" name=ID "{"
+	"image" image=UFO_STRING
+	"texl" texl=UFO_STRING
+	"size" size=UFO_STRING
+	"pack64" pack64=UFO_BOOLEAN
+	"}";
+
+Team:
+	"team" name=ID "{" => "}";
+
+Terrain:
+	"terrain" name=ID "{" => "}";
+
+Chrtemplate:
+	"chrtemplate" name=ID "{"
+	"rate" rate=UFO_STRING
+	"strength" strength=UFO_STRING
+	"speed" speed=UFO_STRING
+	"accuracy" accuracy=UFO_STRING
+	"mind" mind=UFO_STRING
+	"close" close=UFO_STRING
+	"heavy" heavy=UFO_STRING
+	"assault" assault=UFO_STRING
+	"sniper" sniper=UFO_STRING
+	"explosive" explosive=UFO_STRING
+	"health" health=UFO_STRING
+	"}";
+
+Particle:
+	"particle" name=ID "{"
+	(stages+=ParticleStages*)
+	"}";
+
+ParticleStages:
+	ParticleInitStage | ParticleRunStage | ParticleThinkStage | ParticlePhysicsStage;
+
+ParticlePhysicsStage:
+	"physics" "{" => "}";
+
+ParticleThinkStage:
+	"think" "{" => "}";
+
+ParticleRunStage:
+	"run" "{" => "}";
+
+ParticleInitStage:
+	"init" "{" => "}";
+
+MapDef:
+	"mapdef" name=ID "{" => "}";
+
+Tips:
+	"tips" name=ID "{" => "}";
+
+Sequence:
+	"sequence" name=ID "{" => "}";
+
+Item:
+	"item" name=ID "{" => "}";
+
+Equipment:
+	"equipment" name=ID "{"
+	"name" equipName=UFO_I18N_STRING
+	(items+=[Item] UFO_STRING)+
+	"}";
+
+Building:
+	"building" name=ID "{"
+	"name" buildingName=UFO_I18N_STRING
+	"size" size=UFO_STRING
+	"image" image=UFO_STRING
+	"type" type=BuildingType
+	"depends" depends=[Building]
+	"pedia" pedia=[Tech]
+	"fixcosts" fixcosts=UFO_STRING
+	"build_time" buildTime=UFO_STRING
+	"varcosts" varCosts=UFO_STRING
+	"map_name" mapName=UFO_STRING
+	"capacity" capacity=UFO_STRING
+	"ondisable" onDisable=UFO_STRING
+	"onenable" onEnable=UFO_STRING
+	"ondestroy" onDestroy=UFO_STRING
+	"onconstruct" onConstruct=UFO_STRING
+	"mandatory" mandatory=UFO_BOOLEAN
+	"max_count" maxCount=UFO_STRING
+	"starting_employees" startingEmployees=UFO_STRING
+	"level" level=UFO_STRING
+	"}";
+
+BuildingType:
+	"lab" | "hospital" | "aliencont" | "storage" | "hangar" | "smallhangar" | "quarters" | "workshop" |
+	"power" | "command" | "amstorage" | "entrance" | "missile" | "laser" | "radar";
+
+Aircraft:
+	"aircraft" name=ID "{"
+	params=AircraftParam
+	(slots+=AircraftSlot)*
+	"building" building=[Building]
+	"name" aircraftName=UFO_I18N_STRING
+	"defaultname" defaultName=UFO_I18N_STRING
+	"type" type=AircraftType
+	"model" model=UFO_STRING
+	"price" price=UFO_STRING
+	"numteam" numTeam=UFO_STRING
+	"size" size=UFO_STRING
+	"image" image=UFO_STRING
+	"}";
+
+AircraftType:
+	"ufo" | "interceptor" | "transporter";
+
+AircraftSlot:
+	"slot" "{"
+	"type" type=UFO_STRING
+	"position" position=UFO_STRING
+	"size" size=UFO_STRING
+	"}";
+
+AircraftParam:
+	"param" "{"
+	"speed" speed=UFO_STRING
+	"maxspeed" maxspeed=UFO_STRING
+	"shield" shield=UFO_STRING
+	"ecm" ecm=UFO_STRING
+	"damage" damage=UFO_STRING
+	"accuracy" accuracy=UFO_STRING
+	"range" range=UFO_STRING
+	"antimatter" antimatter=UFO_STRING
+	"}";
+
+/* ==================== terminals ================================ */
 terminal QUOTES:
 	"\"" | "'";
 
@@ -604,7 +746,7 @@ terminal UFO_BOOLEAN:
 terminal fragment UFO_STRING_:
 	('a'..'z' | 'A'..'Z' | '_') ('a'..'z' | 'A'..'Z' | '_' | '0'..'9')*;
 
-terminal fragment UFO_I18N_STRING:
+terminal UFO_I18N_STRING:
 	'"_' UFO_STRING_ '"' | "'_" UFO_STRING_ "'";
 
 terminal UFO_STRING:
