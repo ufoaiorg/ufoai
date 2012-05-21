@@ -30,7 +30,6 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #define QFILES_H
 
 #include "../shared/defines.h"
-#include "unzip.h"
 
 #define IDMDXHEADER "UFOMDX"
 #define MDX_VERSION		1
