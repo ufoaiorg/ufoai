@@ -8,6 +8,11 @@ import java.util.List;
 import net.sourceforge.ufoai.ufoScript.UINode;
 import net.sourceforge.ufoai.ufoScript.UINodeComponent;
 import net.sourceforge.ufoai.ufoScript.UINodeWindow;
+import net.sourceforge.ufoai.ufoScript.UIPropertyDefinition;
+import net.sourceforge.ufoai.ufoScript.UIPropertyValueBoolean;
+import net.sourceforge.ufoai.ufoScript.UIPropertyValueFunction;
+import net.sourceforge.ufoai.ufoScript.UIPropertyValueNumber;
+import net.sourceforge.ufoai.ufoScript.UIPropertyValueString;
 
 import org.eclipse.core.runtime.IAdaptable;
 import org.eclipse.emf.common.util.EList;
@@ -49,23 +54,24 @@ public class UFOAIPropertyInfo implements IAdaptable, IPropertySource {
 		addProperty("Java Object", "Type", object.getClass().getSimpleName());
 
 		if (object instanceof UINode) {
+			UINode node = (UINode) object;
 			String category = "Node";
-			addProperty(category, "Name", ((UINode) object).getName());
-			addPropertiesFromNode(object);
+			addProperty(category, "Name", node.getName());
+			addPropertiesFromNode(node);
 		} else if (object instanceof UINodeComponent) {
 			UINodeComponent component = (UINodeComponent) object;
 			String category = "Component";
 			addProperty(category, "Name", component.getName());
 			addProperty(category, "Child count", String.valueOf(component.getNodes().size()));
 			addProperty(category, "Properties count", String.valueOf(component.getProperties().size()));
-			addPropertiesFromNode(object);
+			addObjectProperties(component.getProperties());
 		} else if (object instanceof UINodeWindow) {
 			UINodeWindow window = (UINodeWindow) object;
 			String category = "Window";
 			addProperty(category, "Name", window.getName());
 			addProperty(category, "Child count", String.valueOf(window.getNodes().size()));
 			addProperty(category, "Properties count", String.valueOf(window.getProperties().size()));
-			addPropertiesFromNode(object);
+			addObjectProperties(window.getProperties());
 		}
 	}
 
@@ -100,33 +106,41 @@ public class UFOAIPropertyInfo implements IAdaptable, IPropertySource {
 
 		EList<?> list = (EList<?>) propertyHolders;
 		for (Object propertyHolder : list) {
-			addPropertiesFromHolders(propertyHolder);
+			addObjectProperties((UIPropertyDefinition) propertyHolder);
 		}
 	}
 
-	private void addPropertiesFromHolders(Object propertyHolder) {
-		Method[] getters = propertyHolder.getClass().getMethods();
-		String category = propertyHolder.getClass().getSimpleName();
-		for (Method getter: getters) {
-			if (!getter.getName().startsWith("get"))
-				continue;
-			String label = getter.getName().replaceFirst("get", "");
-			String value;
-			try {
-				value = "" + getter.invoke(propertyHolder, new Object[]{});
-			} catch (IllegalArgumentException e) {
-				e.printStackTrace();
-				continue;
-			} catch (IllegalAccessException e) {
-				e.printStackTrace();
-				continue;
-			} catch (InvocationTargetException e) {
-				e.printStackTrace();
-				continue;
-			}
-
-			addProperty(category, label, value);
+	private void addObjectProperties(EList<UIPropertyDefinition> properties) {
+		for (UIPropertyDefinition property : properties) {
+			addObjectProperties(property);
 		}
+	}
+
+	private void addObjectProperties(UIPropertyDefinition property) {
+		String value = null;
+		String type = null;
+		if (property.getValue() instanceof UIPropertyValueBoolean) {
+			UIPropertyValueBoolean v = (UIPropertyValueBoolean) property.getValue();
+			// TODO create an EBoolean and update the lexer
+			value = v.getValue();
+			type = "Boolean";
+		}
+		else if (property.getValue() instanceof UIPropertyValueNumber) {
+			UIPropertyValueNumber v = (UIPropertyValueNumber) property.getValue();
+			value = "" + v.getValue();
+			type = "Number";
+		}
+		else if (property.getValue() instanceof UIPropertyValueString) {
+			UIPropertyValueString v = (UIPropertyValueString) property.getValue();
+			value = v.getValue();
+			type = "String";
+		}
+		else if (property.getValue() instanceof UIPropertyValueFunction) {
+			value = "{ ... }";
+			type = "Function";
+		}
+
+		addProperty("Properties", property.getName() + ": " + type, value);
 	}
 
 	private void addProperty(String category, String label, String value) {

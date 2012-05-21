@@ -19,7 +19,7 @@ UITopLevelNode:
 UINodeWindow:
 	"window" name=UINodeID ("extends" superWindow=[UINodeWindow])? "{"
 	/* optional block with window properties that might be empty */
-	("{" (properties+=UIWindowNodeProperties)* "}")?
+	("{" (properties+=UIPropertyDefinition)* "}")?
 	/* nodes */
 	(nodes+=UINode)*
 	"}";
@@ -27,8 +27,8 @@ UINodeWindow:
 /** components can extend any ui node */
 UINodeComponent:
 	"component" name=UINodeID "extends" ((superComponent=[UINodeComponent]) | (type=UINodeType)) "{"
-	("{" (properties+=UINodeProperties)* "}")?
-	(properties+=UINodeProperties)*
+	("{" (properties+=UIPropertyDefinition)* "}")?
+	(properties+=UIPropertyDefinition)*
 	(nodes+=UINode)*
 	"}";
 
@@ -50,22 +50,22 @@ UINode:
 	UINodeTimer | UINodeVideo | UINodeZone | UINodeVscrollbar;
 
 UINodePanel:
-	"panel" name=UINodeID "{" ("{" (properties+=UIPanelNodeProperties)* "}")? (panelNodes+=UINode)* "}";
+	"panel" name=UINodeID "{" ("{" (properties+=UIPropertyDefinition)* "}")? (panelNodes+=UINode)* "}";
 
 UINodeImage:
-	"image" name=UINodeID "{" (properties+=UIImageNodeProperties)* "}";
+	"image" name=UINodeID "{" (properties+=UIPropertyDefinition)* "}";
 
 UINodeButton:
-	"button" name=UINodeID "{" (properties+=UIButtonNodeProperties)* "}";
+	"button" name=UINodeID "{" (properties+=UIPropertyDefinition)* "}";
 
 UINodeModel:
-	"model" name=UINodeID "{" (properties+=UIModelNodeProperties)* "}";
+	"model" name=UINodeID "{" (properties+=UIPropertyDefinition)* "}";
 
 UINodeText:
-	"text" name=UINodeID "{" (properties+=UITextNodeProperties)* "}";
+	"text" name=UINodeID "{" (properties+=UIPropertyDefinition)* "}";
 
 UINodeString:
-	"string" name=UINodeID "{" (properties+=UIStringNodeProperties)* "}";
+	"string" name=UINodeID "{" (properties+=UIPropertyDefinition)* "}";
 
 UINodeConfunc:
 	"confunc" name=UINodeID "{" (statements+=UIFuncStatements)* "}";
@@ -74,466 +74,141 @@ UINodeFunc:
 	"func" name=UINodeID "{" (statements+=UIFuncStatements)* "}";
 
 UINodeTextEntry:
-	"textentry" name=UINodeID "{" (statements+=UITextEntryProperties)* "}";
+	"textentry" name=UINodeID "{" (statements+=UIPropertyDefinition)* "}";
 
 UINodeBar:
-	"bar" name=UINodeID "{" (properties+=UIBarNodeProperties)* "}";
+	"bar" name=UINodeID "{" (properties+=UIPropertyDefinition)* "}";
 
 UINodeBaseinventory:
-	"baseinventory" name=UINodeID "{" (properties+=UIBaseinventoryNodeProperties)* "}";
+	"baseinventory" name=UINodeID "{" (properties+=UIPropertyDefinition)* "}";
 
 UINodeBaselayout:
-	"baselayout" name=UINodeID "{" (properties+=UIAbstractNodeProperties)* "}";
+	"baselayout" name=UINodeID "{" (properties+=UIPropertyDefinition)* "}";
 
 UINodeBasemap:
-	"basemap" name=UINodeID "{" (properties+=UIAbstractNodeProperties)* "}";
+	"basemap" name=UINodeID "{" (properties+=UIPropertyDefinition)* "}";
 
 UINodeBattlescape:
-	"battlescape" name=UINodeID "{" (properties+=UIAbstractNodeProperties)* "}";
+	"battlescape" name=UINodeID "{" (properties+=UIPropertyDefinition)* "}";
 
 UINodeCheckbox:
-	"checkbox" name=UINodeID "{" (properties+=UICheckboxNodeProperties)* "}";
+	"checkbox" name=UINodeID "{" (properties+=UIPropertyDefinition)* "}";
 
 UINodeContainer:
-	"container" name=UINodeID "{" (properties+=UIContainerNodeProperties)* "}";
+	"container" name=UINodeID "{" (properties+=UIPropertyDefinition)* "}";
 
 UINodeControls:
-	"controls" name=UINodeID "{" (properties+=UIAbstractNodeProperties)* "}";
+	"controls" name=UINodeID "{" (properties+=UIPropertyDefinition)* "}";
 
 UINodeCvarlistener:
-	"cvarlistener" name=UINodeID "{" (properties+=UIAbstractNodeProperties)* "}";
+	"cvarlistener" name=UINodeID "{" (properties+=UIPropertyDefinition)* "}";
 
 UINodeData:
-	"data" name=UINodeID "{" (properties+=UIDataNodeProperties)* "}";
+	"data" name=UINodeID "{" (properties+=UIPropertyDefinition)* "}";
 
 UINodeEditor:
-	"editor" name=UINodeID "{" (properties+=UIAbstractNodeProperties)* "}";
+	"editor" name=UINodeID "{" (properties+=UIPropertyDefinition)* "}";
 
 UINodeEkg:
-	"ekg" name=UINodeID "{" (properties+=UIEkgNodeProperties)* "}";
+	"ekg" name=UINodeID "{" (properties+=UIPropertyDefinition)* "}";
 
 UINodeGeoscape:
-	"geoscape" name=UINodeID "{" (properties+=UIGeoscapeNodeProperties)* "}";
+	"geoscape" name=UINodeID "{" (properties+=UIPropertyDefinition)* "}";
 
 UINodeItem:
-	"item" name=UINodeID "{" (properties+=UIItemNodeProperties)* "}";
+	"item" name=UINodeID "{" (properties+=UIPropertyDefinition)* "}";
 
 UINodeKeybinding:
-	"keybinding" name=UINodeID "{" (properties+=UIKeybindingNodeProperties)* "}";
+	"keybinding" name=UINodeID "{" (properties+=UIPropertyDefinition)* "}";
 
 UINodeLinechart:
-	"linechart" name=UINodeID "{" (properties+=UILinechartNodeProperties)* "}";
+	"linechart" name=UINodeID "{" (properties+=UIPropertyDefinition)* "}";
 
 UINodeMaterial_Editor:
-	"material_editor" name=UINodeID "{" (properties+=UIAbstractNodeProperties)* "}";
+	"material_editor" name=UINodeID "{" (properties+=UIPropertyDefinition)* "}";
 
 UINodeMessagelist:
-	"messagelist" name=UINodeID "{" (properties+=UIAbstractNodeProperties)* "}";
+	"messagelist" name=UINodeID "{" (properties+=UIPropertyDefinition)* "}";
 
 UINodeOption:
-	"option" name=UINodeID "{" (properties+=UIOptionNodeProperties)* "}";
+	"option" name=UINodeID "{" (properties+=UIPropertyDefinition)* "}";
 
 UINodeOptionlist:
-	"optionlist" name=UINodeID "{" (properties+=UIOptionlistNodeProperties)* "}";
+	"optionlist" name=UINodeID "{" (properties+=UIPropertyDefinition)* "}";
 
 UINodeOptiontree:
-	"optiontree" name=UINodeID "{" (properties+=UIOptiontreeNodeProperties)* "}";
+	"optiontree" name=UINodeID "{" (properties+=UIPropertyDefinition)* "}";
 
 UINodeRadar:
-	"radar" name=UINodeID "{" (properties+=UIAbstractNodeProperties)* "}";
+	"radar" name=UINodeID "{" (properties+=UIPropertyDefinition)* "}";
 
 UINodeRadiobutton:
-	"radiobutton" name=UINodeID "{" (properties+=UIRadiobuttonNodeProperties)* "}";
+	"radiobutton" name=UINodeID "{" (properties+=UIPropertyDefinition)* "}";
 
 UINodeRows:
-	"rows" name=UINodeID "{" (properties+=UIRowsNodeProperties)* "}";
+	"rows" name=UINodeID "{" (properties+=UIPropertyDefinition)* "}";
 
 UINodeSelectbox:
-	"selectbox" name=UINodeID "{" (properties+=UIAbstractNodeProperties)* "}";
+	"selectbox" name=UINodeID "{" (properties+=UIPropertyDefinition)* "}";
 
 UINodeSequence:
-	"sequence" name=UINodeID "{" (properties+=UISequenceNodeProperties)* "}";
+	"sequence" name=UINodeID "{" (properties+=UIPropertyDefinition)* "}";
 
 UINodeSpinner:
-	"spinner" name=UINodeID "{" (properties+=UISpinnerNodeProperties)* "}";
+	"spinner" name=UINodeID "{" (properties+=UIPropertyDefinition)* "}";
 
 UINodeTab:
-	"tab" name=UINodeID "{" (properties+=UIAbstractNodeProperties)* "}";
+	"tab" name=UINodeID "{" (properties+=UIPropertyDefinition)* "}";
 
 UINodeTbar:
-	"tbar" name=UINodeID "{" (properties+=UITbarNodeProperties)* "}";
+	"tbar" name=UINodeID "{" (properties+=UIPropertyDefinition)* "}";
 
 UINodeText2:
-	"text2" name=UINodeID "{" (properties+=UIAbstractNodeProperties)* "}";
+	"text2" name=UINodeID "{" (properties+=UIPropertyDefinition)* "}";
 
 UINodeTextlist:
-	"textlist" name=UINodeID "{" (properties+=UIAbstractNodeProperties)* "}";
+	"textlist" name=UINodeID "{" (properties+=UIPropertyDefinition)* "}";
 
 UINodeTexture:
-	"texture" name=UINodeID "{" (properties+=UITextureNodeProperties)* "}";
+	"texture" name=UINodeID "{" (properties+=UIPropertyDefinition)* "}";
 
 UINodeTimer:
-	"timer" name=UINodeID "{" (properties+=UITimerNodeProperties)* "}";
+	"timer" name=UINodeID "{" (properties+=UIPropertyDefinition)* "}";
 
 UINodeTodo:
-	"todo" name=UINodeID "{" (properties+=UIAbstractNodeProperties)* "}";
+	"todo" name=UINodeID "{" (properties+=UIPropertyDefinition)* "}";
 
 UINodeVideo:
-	"video" name=UINodeID "{" (properties+=UIVideoNodeProperties)* "}";
+	"video" name=UINodeID "{" (properties+=UIPropertyDefinition)* "}";
 
 UINodeVscrollbar:
-	"vscrollbar" name=UINodeID "{" (properties+=UIVscrollbarNodeProperties)* "}";
+	"vscrollbar" name=UINodeID "{" (properties+=UIPropertyDefinition)* "}";
 
 UINodeZone:
-	"zone" name=UINodeID "{" (properties+=UIZoneNodeProperties)* "}";
+	"zone" name=UINodeID "{" (properties+=UIPropertyDefinition)* "}";
 
 UIFont:
 	"font" name=ID "{" => "}";
 
 /* ==================== NODE PROPERTIES ================================ */
-UIWindowNodeProperties:
-	(UIAbstractNodeProperties | UIWindowNodePropertiesBase);
 
-UIWindowNodePropertiesBase:
-	("noticepos" noticepos=UIValue)
-	("dragbutton" dragbutton=UIValue)
-	("closebutton" closebutton=UIValue)
-	("modal" modal=UIValue)
-	("dropdown" dropdown=UIValue)
-	("preventtypingescape" preventtypingescape=UIValue)
-	("fill" fill=UIValue)
-	("starlayout" starlayout=UIValue)
-	("onWindowOpened" onWindowOpened=UIFuncStatements)
-	("onWindowClosed" onWindowClosed=UIFuncStatements)
-	("onScriptLoaded" onScriptLoaded=UIFuncStatements);
-
-UITextEntryProperties:
-	(UIAbstractNodeProperties | UITextEntryPropertiesBase);
-
-UITextEntryPropertiesBase:
-	("isPassword" isPassword=UIValue)
-	("clickOutAbort" clickOutAbort=UIValue)
-	("onAbort" onAbort=UIFuncStatements);
-
-UIBarNodeProperties:
-	(UIAbstractNodeProperties | UIBarNodePropertiesBase);
-
-UIBarNodePropertiesBase:
-	("direction" direction=UIValue)
-	("nohover" nohover=UIValue)
-	("readonly" readonly=UIValue);
-
-UIOptionNodeProperties:
-	(UIAbstractNodeProperties | UIOptionNodePropertiesBase);
-
-UIOptionNodePropertiesBase:
-	("collapsed" collapsed=UIValue)
-	("flipicon" flipicon=UIValue)
-	("icon" icon=UIValue)
-	("label" label=UIValue)
-	("value" value=UIValue);
-
-UIOptionlistNodeProperties:
-	(UIAbstractNodeProperties | UINodeBackgroundProperty);
-
-UIOptiontreeNodeProperties:
-	(UIAbstractNodeProperties | UINodeBackgroundProperty);
-
-UIGeoscapeNodeProperties:
-	(UIAbstractNodeProperties | UIGeoscapeNodePropertiesBase);
-
-UIGeoscapeNodePropertiesBase:
-	("padding-right" paddingright=UIValue);
-
-UIBaseinventoryNodeProperties:
-	(UIContainerNodeProperties | UIBaseinventoryNodePropertiesBase);
-
-UIBaseinventoryNodePropertiesBase:
-	("columns" columns=UIValue)
-	("displayammo" displayammo=UIValue)
-	("displayammoofweapon" displayammoofweapon=UIValue)
-	("displayavailableontop" displayavailableontop=UIValue)
-	("displayunavailableammoofweapon" displayunavailableammoofweapon=UIValue)
-	("displayunavailableitem" displayunavailableitem=UIValue)
-	("displayweapon" displayweapon=UIValue)
-	("filter" filter=UIValue)
-	("fullsize" fullsize=UIValue)
-	("viewpos" viewpos=UIValue)
-	("viewsize" viewsize=UIValue)
-	("onviewchange" onviewchange=UIFuncStatements);
-
-UICheckboxNodeProperties:
-	(UIAbstractNodeProperties | UICheckboxNodePropertiesBase | UINodeBackgroundProperty);
-
-UICheckboxNodePropertiesBase:
-	("iconChecked" iconChecked=UIValue)
-	("iconIndeterminate" iconIndeterminate=UIValue)
-	("iconUnchecked" iconUnchecked=UIValue);
-
-UIStringNodeProperties:
-	(UIAbstractNodeProperties | UIStringNodePropertiesBase);
-
-UIStringNodePropertiesBase:
-	("longlines" longlinesStr=UIValue);
-
-UITextNodeProperties:
-	(UIAbstractNodeScrollabelProperties | UITextNodePropertiesBase);
-
-UITextNodePropertiesBase:
-	("lineselected" lineselected=UIValue)
-	("textselected" textselected=UIValue)
-	("dataid" dataid=UIValue)
-	("lineheight" lineheight=UIValue)
-	("tabwidth" tabwidth=UIValue)
-	("longlines" longlinesText=UIValue)
-	("rows" rows=UIValue)
-	("lines" lines=UIValue)
-	("mousefx" mousefxText=STRING);
-
-UIModelNodeProperties:
-	(UIAbstractNodeProperties | UIModelNodePropertiesBase);
-
-UIModelNodePropertiesBase:
-	("anim" anim=UIValue)
-	("angles" angles=UIValue)
-	("origin" origin=UIValue)
-	("omega" omega=UIValue)
-	("scale" scale=UIValue)
-	("tag" tag=UIValue)
-	("autoscale" autoscale=UIValue)
-	("rotatewithmouse" rotatewithmouse=UIValue)
-	("clipoverflow" clipoverflow=UIValue)
-	("skin" skin=UIValue);
-
-UIButtonNodeProperties:
-	(UIAbstractNodeProperties | UIButtonNodePropertiesBase | UINodeBackgroundProperty);
-
-UIButtonNodePropertiesBase:
-	("icon" icon=UIValue)
-	("flipicon" flipicon=UIValue);
-
-UIImageNodeProperties:
-	(UIAbstractNodeProperties | UIImageNodePropertiesBase);
-
-UIImageNodePropertiesBase:
-	("preventratio" preventratio=UIValue)
-	("mousefx" mousefxImg=UIValue)
-	("texh" texh=UIValue)
-	("texl" texl=UIValue)
-	("src" src=UIImage);
-
-UIPanelNodeProperties:
-	(UIAbstractNodeScrollabelProperties | UIPanelNodePropertiesBase);
-
-UIPanelNodePropertiesBase:
-	("layout" layout=UIValue)
-	("layoutMargin" layoutMargin=UIValue)
-	("layoutColumns" layoutColumns=UIValue)
-	("wheelscrollable" wheelscrollable=UIValue);
-
-UIZoneNodeProperties:
-	(UIAbstractNodeProperties | UIZoneNodePropertiesBase);
-
-UIZoneNodePropertiesBase:
-	("clickdelay" clickdelay=UIValue)
-	("repeat" repeat=UIValue);
-
-UIContainerNodeProperties:
-	(UIAbstractNodeProperties | UIContainerNodePropertiesBase);
-
-UIContainerNodePropertiesBase:
-	("lastselectedid" lastselectedid=UIValue)
-	("onselect" onselect=UIFuncStatements);
-
-UIDataNodeProperties:
-	(UIAbstractNodeProperties | UIDataNodePropertiesBase);
-
-UIDataNodePropertiesBase:
-	("integer" integer=UIValue)
-	("number" number=UIValue)
-	("string" string=UIValue);
-
-UIEkgNodeProperties:
-	(UIImageNodeProperties | UIEkgNodePropertiesBase);
-
-UIEkgNodePropertiesBase:
-	("scale" scale=UIValue)
-	("scrollspeed" scrollspeed=UIValue);
-
-UIKeybindingNodeProperties:
-	(UIAbstractNodeProperties | UIKeybindingNodePropertiesBase | UINodeBackgroundProperty);
-
-UIKeybindingNodePropertiesBase:
-	("bindingwidth" bindingwidth=UIValue)
-	("keyspace" keyspace=UIValue);
-
-UILinechartNodeProperties:
-	(UIAbstractNodeProperties | UILinechartNodePropertiesBase);
-
-UILinechartNodePropertiesBase:
-	("axescolor" axescolor=UIValue)
-	("dataid" dataid=UIValue)
-	("displayaxes" displayaxes=UIValue);
-
-UIItemNodeProperties:
-	(UIModelNodeProperties | UIItemNodePropertiesBase);
-
-UIItemNodePropertiesBase:
-	("containerlike" containerlike=UIValue);
-
-UIRadiobuttonNodeProperties:
-	(UIAbstractNodeProperties | UIRadiobuttonNodePropertiesBase | UINodeBackgroundProperty);
-
-UIRadiobuttonNodePropertiesBase:
-	("cvar" cvar=UIValue)
-	("flipicon" flipicon=UIValue)
-	("icon" icon=UIValue)
-	("stringValue" stringValue=UIValue)
-	("value" value=UIValue);
-
-UIRowsNodeProperties:
-	(UIAbstractNodeProperties | UIRowsNodePropertiesBase);
-
-UIRowsNodePropertiesBase:
-	("color1" color1=UIValue)
-	("color2" color2=UIValue)
-	("current" currentVal=UIValue)
-	("lineheight" lineheight=UIValue);
-
-UISequenceNodeProperties:
-	(UIAbstractNodeProperties | UISequenceNodePropertiesBase);
-
-UISequenceNodePropertiesBase:
-	("src" src=UIValue)
-	("onEnd" onEnd=UIFuncStatements);
-
-UITbarNodeProperties:
-	(UIAbstractNodeProperties | UITbarNodePropertiesBase);
-
-UITbarNodePropertiesBase:
-	("image" image=UIImage)
-	("texh" texh=UIValue)
-	("texl" texl=UIValue);
-
-UISpinnerNodeProperties:
-	(UIAbstractNodeProperties | UISpinnerNodePropertiesBase | UINodeBackgroundProperty);
-
-UISpinnerNodePropertiesBase:
-	("bottomIcon" bottomIcon=UIValue)
-	("image" image=UIImage)
-	("size" size=UIValue)
-	("topIcon" topIcon=UIValue);
-
-UITextureNodeProperties:
-	(UIAbstractNodeProperties | UITextureNodePropertiesBase);
-
-UITextureNodePropertiesBase:
-	("src" src=UIImage);
-
-UITimerNodeProperties:
-	(UIAbstractNodeProperties | UITimerNodePropertiesBase);
-
-UITimerNodePropertiesBase:
-	("timeout" timeout=UIValue)
-	("onEvent" onEvent=UIFuncStatements);
-
-UIVideoNodeProperties:
-	(UIAbstractNodeProperties | UIVideoNodePropertiesBase);
-
-UIVideoNodePropertiesBase:
-	("nosound" nosound=UIValue)
-	("src" src=UIValue)
-	("onEnd" onEnd=UIFuncStatements);
-
-UIVscrollbarNodeProperties:
-	(UIAbstractNodeScrollabelProperties | UIVscrollbarNodePropertiesBase);
-
-UIVscrollbarNodePropertiesBase:
-	("image" image=UIImage);
-
-UIAbstractNodeScrollabelProperties:
-	(UIAbstractNodeProperties | UIAbstractNodeScrollabelPropertiesBase);
-
-UIAbstractNodeScrollabelPropertiesBase:
-	("viewpos" viewpos=UIValue)
-	("viewsize" viewsize=UIValue)
-	("fullsize" fullsize=UIValue)
-	("onViewChange" onViewChange=UIFuncStatements);
-
-/* abstract node properties */
-UINodeBackgroundProperty:
-	("background" background=UIImage);
-
-UIAbstractNodeProperties:
-	UINodeCallbacks | UIAbstractNodePropertiesBase;
-
-UIAbstractNodePropertiesBase:
-	("align" align=UIValue)
-	("bgcolor" bgcolor=UIValue)
-	("border" border=UIValue)
-	("bordercolor" bordercolor=UIValue)
-	("color" color=UIValue)
-	("contentalign" contentalign=UIValue)
-	("disabled" disabled=UIValue)
-	("excluderect" excluderect=UIValue)
-	("font" QUOTES? font=[UIFont] QUOTES?)
-	("ghost" ghost=UIValue)
-	("height" height=UIValue)
-	("indexed" indexed=UIValue)
-	("invis" invis=UIValue)
-	("left" left=UIValue)
-	("num" num=UIValue)
-	("padding" padding=UIValue)
-	("pos" pos=UIValue)
-	("selectcolor" selectcolor=UIValue)
-	("size" size=UIValue)
-	("string" string=UIValue)
-	("tooltip" tooltip=UIValue)
-	("top" top=UIValue)
-	("visiblewhen" visiblewhen=UIValue)
-	("width" width=UIValue);
-
-/* abstract node callbacks */
-UINodeCallbacks:
-	("onClick" onClick=UIFuncStatements)
-	("onRClick" onRClick=UIFuncStatements)
-	("onMClick" onMClick=UIFuncStatements)
-	("onWheel" onWheel=UIFuncStatements)
-	("onWheelUp" onWheelUp=UIFuncStatements)
-	("onWheelDown" onWheelDown=UIFuncStatements)
-	("onMouseEnter" onMouseEnter=UIFuncStatements)
-	("onMouseLeave" onMouseLeave=UIFuncStatements)
-	("onChange" onChange=UIFuncStatements);
-
-UINodeProperties:
-	UIBarNodePropertiesBase
-	| UIBaseinventoryNodePropertiesBase
-	| UIButtonNodePropertiesBase
-	| UICheckboxNodePropertiesBase
-	| UIContainerNodePropertiesBase
-	| UIDataNodePropertiesBase
-	| UIEkgNodePropertiesBase
-	| UIGeoscapeNodePropertiesBase
-	| UIImageNodePropertiesBase
-	| UIItemNodePropertiesBase
-	| UIKeybindingNodePropertiesBase
-	| UILinechartNodePropertiesBase
-	| UIModelNodePropertiesBase
-	| UIOptionNodePropertiesBase
-	| UIPanelNodePropertiesBase
-	| UIRadiobuttonNodePropertiesBase
-	| UIRowsNodePropertiesBase
-	| UISequenceNodePropertiesBase
-	| UISpinnerNodePropertiesBase
-	| UIStringNodePropertiesBase
-	| UITbarNodePropertiesBase
-	| UITextNodePropertiesBase
-	| UITextureNodePropertiesBase
-	| UITimerNodePropertiesBase
-	| UIVideoNodePropertiesBase
-	| UIVscrollbarNodePropertiesBase
-	| UIWindowNodePropertiesBase
-	| UIZoneNodePropertiesBase;
+/**
+ * TODO hide this object from the scope, i check creating UFO_ID
+ * from fragment UFO_STRING_ but it everytime generate many warnings
+ */
+UIPropertyDefinition:
+	name=ID value=UIPropertyValue;
+
+UIPropertyValue:
+	UIPropertyValueString
+	| UIPropertyValueBoolean
+	| UIPropertyValueNumber
+	| UIPropertyValueFunction;
+
+UIPropertyValueString: value=STRING;
+UIPropertyValueBoolean: value=UFO_BOOLEAN;
+UIPropertyValueNumber: value=INT;
+UIPropertyValueFunction: "{" {UIPropertyValueFunction} (statements+=UIFuncStatements)* "}";
 
 /* ==================== GENERAL UI STUFF ================================ */
 UIFuncStatements:
