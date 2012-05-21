@@ -194,7 +194,7 @@ UIFont:
 
 /**
  * TODO hide this object from the scope, i check creating UFO_ID
- * from fragment UFO_STRING_ but it everytime generate many warnings
+ * from fragment STRING_ but it everytime generate many warnings
  */
 UIPropertyDefinition:
 	name=ID value=UIPropertyValue;
@@ -218,7 +218,7 @@ UIFuncCall:
 	"call" UINodePath;
 
 UICommand:
-	"cmd" name=UFO_STRING;
+	"cmd" name=STRING;
 
 UIFuncDeleteCvar:
 	"delete" name=UICvar;
@@ -250,10 +250,10 @@ UIConditionalExpression:
 	{UIConditionalExpression} (name=UIValue comparator=UIComparator value=UIValue);
 
 UIValue:
-	UFO_STRING | INT | UIFuncParameter | UICvar | UFO_BOOLEAN;
+	STRING | INT | UIFuncParameter | UICvar | UFO_BOOLEAN;
 
 UIImage:
-	UFO_STRING | UIFuncParameter | UICvar;
+	STRING | UIFuncParameter | UICvar;
 
 UIFuncParameter:
 	"<" INT ">";
@@ -282,9 +282,9 @@ Tech:
 
 Sprite:
 	"sprite" name=ID "{"
-	"image" image=UFO_STRING
-	"texl" texl=UFO_STRING
-	"size" size=UFO_STRING
+	"image" image=STRING
+	"texl" texl=STRING
+	"size" size=STRING
 	"pack64" pack64=UFO_BOOLEAN
 	"}";
 
@@ -296,17 +296,17 @@ Terrain:
 
 Chrtemplate:
 	"chrtemplate" name=ID "{"
-	"rate" rate=UFO_STRING
-	"strength" strength=UFO_STRING
-	"speed" speed=UFO_STRING
-	"accuracy" accuracy=UFO_STRING
-	"mind" mind=UFO_STRING
-	"close" close=UFO_STRING
-	"heavy" heavy=UFO_STRING
-	"assault" assault=UFO_STRING
-	"sniper" sniper=UFO_STRING
-	"explosive" explosive=UFO_STRING
-	"health" health=UFO_STRING
+	"rate" rate=STRING
+	"strength" strength=STRING
+	"speed" speed=STRING
+	"accuracy" accuracy=STRING
+	"mind" mind=STRING
+	"close" close=STRING
+	"heavy" heavy=STRING
+	"assault" assault=STRING
+	"sniper" sniper=STRING
+	"explosive" explosive=STRING
+	"health" health=STRING
 	"}";
 
 Particle:
@@ -343,31 +343,31 @@ Item:
 
 Equipment:
 	"equipment" name=ID "{"
-	"name" equipName=UFO_I18N_STRING
-	(items+=[Item] UFO_STRING)+
+	"name" equipName=STRING
+	(items+=[Item] STRING)+
 	"}";
 
 Building:
 	"building" name=ID "{"
-	"name" buildingName=UFO_I18N_STRING
-	"size" size=UFO_STRING
-	"image" image=UFO_STRING
+	"name" buildingName=STRING
+	"size" size=STRING
+	"image" image=STRING
 	"type" type=BuildingType
 	"depends" depends=[Building]
 	"pedia" pedia=[Tech]
-	"fixcosts" fixcosts=UFO_STRING
-	"build_time" buildTime=UFO_STRING
-	"varcosts" varCosts=UFO_STRING
-	"map_name" mapName=UFO_STRING
-	"capacity" capacity=UFO_STRING
-	"ondisable" onDisable=UFO_STRING
-	"onenable" onEnable=UFO_STRING
-	"ondestroy" onDestroy=UFO_STRING
-	"onconstruct" onConstruct=UFO_STRING
+	"fixcosts" fixcosts=STRING
+	"build_time" buildTime=STRING
+	"varcosts" varCosts=STRING
+	"map_name" mapName=STRING
+	"capacity" capacity=STRING
+	"ondisable" onDisable=STRING
+	"onenable" onEnable=STRING
+	"ondestroy" onDestroy=STRING
+	"onconstruct" onConstruct=STRING
 	"mandatory" mandatory=UFO_BOOLEAN
-	"max_count" maxCount=UFO_STRING
-	"starting_employees" startingEmployees=UFO_STRING
-	"level" level=UFO_STRING
+	"max_count" maxCount=STRING
+	"starting_employees" startingEmployees=STRING
+	"level" level=STRING
 	"}";
 
 BuildingType:
@@ -379,14 +379,14 @@ Aircraft:
 	params=AircraftParam
 	(slots+=AircraftSlot)*
 	"building" building=[Building]
-	"name" aircraftName=UFO_I18N_STRING
-	"defaultname" defaultName=UFO_I18N_STRING
+	"name" aircraftName=STRING
+	"defaultname" defaultName=STRING
 	"type" type=AircraftType
-	"model" model=UFO_STRING
-	"price" price=UFO_STRING
-	"numteam" numTeam=UFO_STRING
-	"size" size=UFO_STRING
-	"image" image=UFO_STRING
+	"model" model=STRING
+	"price" price=STRING
+	"numteam" numTeam=STRING
+	"size" size=STRING
+	"image" image=STRING
 	"}";
 
 AircraftType:
@@ -394,35 +394,24 @@ AircraftType:
 
 AircraftSlot:
 	"slot" "{"
-	"type" type=UFO_STRING
-	"position" position=UFO_STRING
-	"size" size=UFO_STRING
+	"type" type=STRING
+	"position" position=STRING
+	"size" size=STRING
 	"}";
 
 AircraftParam:
 	"param" "{"
-	"speed" speed=UFO_STRING
-	"maxspeed" maxspeed=UFO_STRING
-	"shield" shield=UFO_STRING
-	"ecm" ecm=UFO_STRING
-	"damage" damage=UFO_STRING
-	"accuracy" accuracy=UFO_STRING
-	"range" range=UFO_STRING
-	"antimatter" antimatter=UFO_STRING
+	"speed" speed=STRING
+	"maxspeed" maxspeed=STRING
+	"shield" shield=STRING
+	"ecm" ecm=STRING
+	"damage" damage=STRING
+	"accuracy" accuracy=STRING
+	"range" range=STRING
+	"antimatter" antimatter=STRING
 	"}";
 
 /* ==================== terminals ================================ */
-terminal QUOTES:
-	"\"" | "'";
 
 terminal UFO_BOOLEAN:
 	'true' | 'false';
-
-terminal fragment UFO_STRING_:
-	('a'..'z' | 'A'..'Z' | '_') ('a'..'z' | 'A'..'Z' | '_' | '0'..'9')*;
-
-terminal UFO_I18N_STRING:
-	'"_' UFO_STRING_ '"' | "'_" UFO_STRING_ "'";
-
-terminal UFO_STRING:
-	'"' UFO_STRING_ '"' | "'" UFO_STRING_ "'";
