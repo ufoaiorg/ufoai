@@ -85,8 +85,6 @@ buildingType_t B_GetBuildingTypeByBuildingID (const char *buildingID)
 		return B_SMALL_HANGAR;
 	} else if (Q_streq(buildingID, "quarters")) {
 		return B_QUARTERS;
-	} else if (Q_streq(buildingID, "workshop")) {
-		return B_WORKSHOP;
 	} else if (Q_streq(buildingID, "power")) {
 		return B_POWER;
 	} else if (Q_streq(buildingID, "command")) {
