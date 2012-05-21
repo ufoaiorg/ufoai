@@ -276,11 +276,12 @@ component ObjectInfo extends panel
 		text description
 		{
 			dataid		TEXT_ITEMDESCRIPTION
-			pos			"30 0"
+			pos			"30 10"
 			size		"420 145"
 			rows		"8"
 			lineheight	15
 			tabwidth	168
+			color		"0.56 0.81 0.76 1"
 			font		"f_verysmall"
 			onViewChange {
 				*node:parent.description_scroll@fullsize = <fullsize>

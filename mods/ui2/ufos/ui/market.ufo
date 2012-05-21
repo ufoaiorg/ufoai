@@ -219,6 +219,12 @@ window market  {
 		*node:root.base_container.market.list.item_<1>.name@string = <2>
 		*node:root.base_container.market.list.item_<1>.base@string = <3>
 		*node:root.base_container.market.list.item_<1>.market@string = <4>
+		// Set autosell
+		if ( param7 eq "-" ) {
+			*node:root.base_container.market.list.item_<1>.autosell@invis = true
+		} else {
+			*node:root.base_container.market.list.item_<1>.autosell@current = <7>
+		}
 	}
 
 	/*
