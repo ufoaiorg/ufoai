@@ -11,14 +11,14 @@ sequence credits
 		aircraft/ufo_fighter/ufo_fighter_wings
 		aircraft/inter_starchaser/starchaser
 		soldiers/male/body
-		soldiers/male/head01b
-		soldiers/male/head03a
+		soldiers/male/head01
+		soldiers/male/head03
 		soldiers/malelight/body
-		soldiers/malelight/head01a
-		soldiers/malelight/head02a
+		soldiers/malelight/head01
+		soldiers/malelight/head02
 		soldiers/malemedium/body
-		soldiers/malemedium/head02b
-		soldiers/malemedium/head03a
+		soldiers/malemedium/head02
+		soldiers/malemedium/head03
 	}
 	precache pics
 	{
@@ -43,7 +43,7 @@ sequence credits
 	}
 	model head1
 	{
-		model	soldiers/malelight/head01a
+		model	soldiers/malelight/head01
 		parent	body1
 		tag		tag_head
 	}
@@ -56,7 +56,7 @@ sequence credits
 	}
 	model head2
 	{
-		model	soldiers/malemedium/head02b
+		model	soldiers/malemedium/head02
 		parent	body2
 		tag		tag_head
 	}
@@ -70,7 +70,7 @@ sequence credits
 	}
 	model head3
 	{
-		model	soldiers/male/head03a
+		model	soldiers/male/head03
 		parent	body3
 		tag		tag_head
 	}
@@ -83,7 +83,7 @@ sequence credits
 	}
 	model head4
 	{
-		model	soldiers/malelight/head02a
+		model	soldiers/malelight/head02
 		parent	body4
 		tag		tag_head
 	}
@@ -97,7 +97,7 @@ sequence credits
 
 	model head5
 	{
-		model	soldiers/malemedium/head03a
+		model	soldiers/malemedium/head03
 		parent	body5
 		tag		tag_head
 	}
@@ -111,7 +111,7 @@ sequence credits
 	}
 	model head6
 	{
-		model	soldiers/male/head01b
+		model	soldiers/male/head01
 		parent	body6
 		tag		tag_head
 	}
@@ -125,7 +125,7 @@ sequence credits
 	}
 	model head7
 	{
-		model	soldiers/male/head03a
+		model	soldiers/male/head03
 		parent	body7
 		tag		tag_head
 	}
