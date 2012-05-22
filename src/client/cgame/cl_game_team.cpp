@@ -724,7 +724,9 @@ qboolean GAME_LoadCharacter (xmlNode_t *p, character_t *chr)
 	Q_strncpyz(chr->path, XML_GetString(p, SAVE_CHARACTER_PATH), sizeof(chr->path));
 	Q_strncpyz(chr->head, XML_GetString(p, SAVE_CHARACTER_HEAD), sizeof(chr->head));
 
-	chr->skin = XML_GetInt(p, SAVE_CHARACTER_SKIN, 0);
+	const int maxSkins = CL_GetActorSkinCount() - 1;
+	const int skin = XML_GetInt(p, SAVE_CHARACTER_SKIN, 0);
+	chr->skin = min(maxSkins, skin);
 	chr->gender = XML_GetInt(p, SAVE_CHARACTER_GENDER, 0);
 	chr->ucn = XML_GetInt(p, SAVE_CHARACTER_UCN, 0);
 	chr->maxHP = XML_GetInt(p, SAVE_CHARACTER_MAXHP, 0);
