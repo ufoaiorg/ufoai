@@ -1488,7 +1488,7 @@ qboolean CL_AddActor (le_t * le, entity_t * ent)
 	add.model = le->model2;
 	if (!add.model)
 		Com_Error(ERR_DROP, "Actor model wasn't found!");
-	add.skinnum = le->bodySkin;
+	add.skinnum = le->headSkin;
 
 	/* point to the body ent which will be added last */
 	add.tagent = R_GetFreeEntity() + 1;
@@ -1498,6 +1498,8 @@ qboolean CL_AddActor (le_t * le, entity_t * ent)
 		add.flags |= RF_IRGOGGLES;
 
 	R_AddEntity(&add);
+
+	add.skinnum = le->bodySkin;
 
 	/** Add actor special effects.
 	 * Only draw blood if the actor is dead or (if stunned) was damaged more than half its maximum HPs. */
