@@ -177,7 +177,6 @@ equipment multiplayer_phalanx
 	item kerrblade			2
 	item plasblade			2
 	item armour_light		2
-	item armour_lightadv		2
 	item armour_medium		2
 	item armour_light_alien	2
 	item armour_medium_alien	2
@@ -370,7 +369,6 @@ equipment campaign_initial_market
 equipment campaign_asymptotic_market
 {
 	name "_Asymptotic Market"
-//	item armour_lightadv			3
 	item armour_medium			3
 	item armour_power			3
 	item coilgun					2

@@ -20,33 +20,3 @@ actorskin default {
 	singleplayer	true
 	multiplayer		true
 }
-
-actorskin jungle {
-	name			"_Jungle"
-	singleplayer	true
-	multiplayer		true
-}
-
-actorskin desert {
-	name			"_Desert"
-	singleplayer	true
-	multiplayer		true
-}
-
-actorskin arctic {
-	name			"_Arctic"
-	singleplayer	true
-	multiplayer		true
-}
-
-actorskin yellow {
-	name			"_Yellow"
-	singleplayer	false
-	multiplayer		true
-}
-
-actorskin cccp {
-	name			"_CCCP"
-	singleplayer	false
-	multiplayer		true
-}

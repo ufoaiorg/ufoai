@@ -2705,20 +2705,6 @@ tech rs_combat_armour
 	producetime	72
 }
 
-tech rs_advanced_combat_armour
-{
-	type		armour
-	up_chapter	equipment
-	description {
-		default "_advanced_combat_armour_txt"
-	}
-	// pre_description	"_advanced_combat_armour_pre_txt"
-
-	provides	armour_lightadv
-	time		-1
-	producetime	-1
-}
-
 tech rs_nano_armour
 {
 	type		armour

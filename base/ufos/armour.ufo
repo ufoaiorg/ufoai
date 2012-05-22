@@ -119,69 +119,6 @@ item armour_light
 	}
 }
 
-item armour_lightadv
-{
-	name		"_Advanced Combat Armour"
-	image		armour/lightadv
-	type		armour
-	shape		"0 0 3 4"
-	center		"0 0 -5"
-	scale		0.7
-	price		1600
-	size		60
-	weight		100
-	useable		phalanx
-	armourpath	"lightadv"
-
-	protection {
-		normal_light		25
-		normal_medium		20
-		normal_heavy		15
-		normal_spray            10
-
-		normal_steelblade			18
-		normal_monomolecularblade	12
-		normal_needle		4
-
-		blast				25
-
-		fire_medium			19
-		fire_heavy			19
-		fire_flamer         2
-
-		incendiary			19
-
-		shock				10
-
-		plasma_light		18
-		plasma_medium		16
-		plasma_heavy		15
-
-		laser_light			20
-		laser_medium		18
-		laser_heavy			17
-
-		particlebeam_light	10
-		particlebeam_medium	10
-		particlebeam_heavy	8
-
-		stun_electro		5
-		stun_gas			0
-	}
-
-	rating {
-		normal				35
-		blast				35
-		fire				25
-		shock				15
-		plasma				15
-		laser				25
-		particlebeam		15
-		stun_electro		15
-		stun_gas			10
-	}
-}
-
 item armour_medium
 {
 	name		"_Nanocomposite Armour"
