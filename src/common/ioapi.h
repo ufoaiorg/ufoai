@@ -31,6 +31,10 @@
 #endif
 #endif
 
+#ifndef OF
+#define OF(args) args
+#endif
+
 #ifdef __cplusplus
 extern "C" {
 #endif
