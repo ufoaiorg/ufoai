@@ -1499,8 +1499,6 @@ qboolean CL_AddActor (le_t * le, entity_t * ent)
 
 	R_AddEntity(&add);
 
-	add.skinnum = le->bodySkin;
-
 	/** Add actor special effects.
 	 * Only draw blood if the actor is dead or (if stunned) was damaged more than half its maximum HPs. */
 	/** @todo Better value for this?	*/
