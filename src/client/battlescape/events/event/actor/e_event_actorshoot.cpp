@@ -119,7 +119,7 @@ static void CL_ActorGetMuzzle (const le_t* actor, vec3_t muzzle, shoot_types_t s
 	if (R_GetTagIndexByName(model, "tag_muzzle") == -1)
 		return;
 
-	if (!R_GetTagMatrix(actor->model1, tag, 0, modifiedMatrix))
+	if (!R_GetTagMatrix(actor->model1, tag, actor->as.frame, modifiedMatrix))
 		Com_Error(ERR_DROP, "Could not find tag %s for actor model %s", tag, actor->model1->name);
 
 	GLMatrixAssemble(actor->origin, actor->angles, mc);
