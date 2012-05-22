@@ -2,6 +2,17 @@
 // HUD MAIN
 // ==================
 
+component actorButton extends radiobutton
+{
+	size		"27 35"
+	background	"buttons/blue2-1"
+	cvar		*cvar:selected_soldier
+	onClick		{ cmd "actor_select <value>;" }
+	onWheelUp	{ cmd "actor_next;"}
+	onWheelDown	{ cmd "actor_prev;"}
+	onMouseEnter { call *node:root.popup_soldier_hovered.select ( <value> ) }
+}
+
 window hud_default extends hud
 {
 	{
@@ -464,149 +475,115 @@ window hud_default extends hud
 				max			*cvar:mn_hovered_moralemax
 				readonly	true
 			}
-
 		}
-
 	}
 
 	panel team_selection {
 		{
-			pos		"415 0"
-			size	"275 56"
+			pos		"465 0"
+			size	"415 56"
 			align	LAYOUTALIGN_TOP
-			/** @note excluderect should be for the background, but like that we can move all the panel with the editor */
-			excluderect { pos	"264 17"	size	"44 40" }
-			excluderect { pos	"308 28"	size	"193 28" }
 		}
 
 		image background
 		{
 			src	"hud/bar_teammember"
-			pos		"0 0"
-			size	"275 56"
-			texh	"275 56"
+			pos		"20 0"
+			size	"395 56"
+			texh	"395 56"
 			ghost	true
 		}
 
 		panel buttonList {
 			{
-				pos "29 10"
-				size "275 35"
+				pos "49 10"
+				size "395 35"
 				onMouseLeave { *node:root.popup_soldier_hovered@invis = true }
 			}
 
-			radiobutton bt_actor0
+			actorButton bt_actor0
 			{
 				pos			"0 0"
-				size		"27 35"
-				background	"buttons/blue2-1"
 				value		0
-				cvar		*cvar:selected_soldier
 				icon		"icons/number_1"
-				onClick		{ cmd "actor_select 0;" }
-				onWheelUp	{ cmd "actor_next;"}
-				onWheelDown	{ cmd "actor_prev;"}
-				onMouseEnter { call *node:root.popup_soldier_hovered.select ( 0 ) }
 			}
 
-			radiobutton bt_actor1
+			actorButton bt_actor1
 			{
 				pos			"29 0"
-				size		"27 35"
-				background	"buttons/blue2-1"
 				value		1
-				cvar		*cvar:selected_soldier
 				icon		"icons/number_2"
-				onClick		{ cmd "actor_select 1;" }
-				onWheelUp	{ cmd "actor_next;"}
-				onWheelDown	{ cmd "actor_prev;"}
-				onMouseEnter { call *node:root.popup_soldier_hovered.select ( 1 ) }
 			}
 
-			radiobutton bt_actor2
+			actorButton bt_actor2
 			{
 				pos			"59 0"
-				size		"27 35"
-				background	"buttons/blue2-1"
 				value		2
-				cvar		*cvar:selected_soldier
 				icon		"icons/number_3"
-				onClick		{ cmd "actor_select 2;" }
-				onWheelUp	{ cmd "actor_next;"}
-				onWheelDown	{ cmd "actor_prev;"}
-				onMouseEnter { call *node:root.popup_soldier_hovered.select ( 2 ) }
 			}
 
-			radiobutton bt_actor3
+			actorButton bt_actor3
 			{
 				pos			"89 0"
-				size		"27 35"
-				background	"buttons/blue2-1"
 				value		3
-				cvar		*cvar:selected_soldier
 				icon		"icons/number_4"
-				onClick		{ cmd "actor_select 3;" }
-				onWheelUp	{ cmd "actor_next;"}
-				onWheelDown	{ cmd "actor_prev;"}
-				onMouseEnter { call *node:root.popup_soldier_hovered.select ( 3 ) }
 			}
 
-			radiobutton bt_actor4
+			actorButton bt_actor4
 			{
 				pos			"119 0"
-				size		"27 35"
-				background	"buttons/blue2-1"
 				value		4
-				cvar		*cvar:selected_soldier
 				icon		"icons/number_5"
-				onClick		{ cmd "actor_select 4;" }
-				onWheelUp	{ cmd "actor_next;"}
-				onWheelDown	{ cmd "actor_prev;"}
-				onMouseEnter { call *node:root.popup_soldier_hovered.select ( 4 ) }
 			}
 
-			radiobutton bt_actor5
+			actorButton bt_actor5
 			{
 				pos			"149 0"
-				size		"27 35"
-				background	"buttons/blue2-1"
 				value		5
-				cvar		*cvar:selected_soldier
 				icon		"icons/number_6"
-				onClick		{ cmd "actor_select 5;" }
-				onWheelUp	{ cmd "actor_next;"}
-				onWheelDown	{ cmd "actor_prev;"}
-				onMouseEnter { call *node:root.popup_soldier_hovered.select ( 5 ) }
 			}
 
-			radiobutton bt_actor6
+			actorButton bt_actor6
 			{
 				pos			"179 0"
-				size		"27 35"
-				background	"buttons/blue2-1"
 				value		6
-				cvar		*cvar:selected_soldier
 				icon		"icons/number_7"
-				onClick		{ cmd "actor_select 6;" }
-				onWheelUp	{ cmd "actor_next;"}
-				onWheelDown	{ cmd "actor_prev;"}
-				onMouseEnter { call *node:root.popup_soldier_hovered.select ( 6 ) }
 			}
 
-			radiobutton bt_actor7
+			actorButton bt_actor7
 			{
 				pos			"209 0"
-				size		"27 35"
-				background	"buttons/blue2-1"
 				value		7
-				cvar		*cvar:selected_soldier
 				icon		"icons/number_8"
-				onClick		{ cmd "actor_select 7;" }
-				onWheelUp	{ cmd "actor_next;"}
-				onWheelDown	{ cmd "actor_prev;"}
-				onMouseEnter { call *node:root.popup_soldier_hovered.select ( 7 ) }
 			}
 
+			actorButton bt_actor8
+			{
+				pos			"239 0"
+				value		8
+				icon		"icons/number_9"
+			}
+
+			actorButton bt_actor9
+			{
+				pos			"269 0"
+				value		9
+				icon		"icons/number_10"
+			}
+
+			actorButton bt_actor10
+			{
+				pos			"299 0"
+				value		10
+				icon		"icons/number_11"
+			}
+
+			actorButton bt_actor11
+			{
+				pos			"329 0"
+				value		11
+				icon		"icons/number_12"
+			}
 		}
 	}
 
@@ -1065,7 +1042,7 @@ window hud_default extends hud
 
 	confunc hudinit {
 		*cvar:i = 0
-		while ( *cvar:i < 8 ) {
+		while ( *cvar:i < 12 ) {
 			*node:root.team_selection.buttonList.bt_actor<cvar:i>@disabled = true
 			*cvar:i = ( *cvar:i + 1 )
 		}
