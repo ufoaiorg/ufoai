@@ -582,25 +582,25 @@ team phalanx
 
 	models {
 		female {
-			soldiers/female body head01 0 // White Female with long dark brown hair
-			soldiers/female body head02 0 // Latino Female with black pigtails
-			soldiers/female body head02 1 // White Female with blond pigtails
-			soldiers/female body head03 0 // White Female with red hair, bun and sports cap
-			soldiers/female body head04 0 // Black Female with short black hair
-			soldiers/female body head05 0 // Black Female with thick cornrows
-			soldiers/female body head06 0 // Asian Female with chin-length hair pulled back
-			soldiers/female body head07 0 // Black Female with shaved head
+			soldiers/female body head01 0
+			soldiers/female body head02 0
+			soldiers/female body head02 0
+			soldiers/female body head03 0
+			soldiers/female body head04 0
+			soldiers/female body head05 0
+			soldiers/female body head06 0
+			soldiers/female body head07 0
 		}
 
 		male {
-			soldiers/male body head01 0 // White Male with short grey hair
-			soldiers/male body head01 1 // White Male with beard
-			soldiers/male body head01 2 // Black Male with goatee
-			soldiers/male body head01 3 // Black Male with short black hair
-			soldiers/male body head02 0 // Latino Male with messy black and grey hair
-			soldiers/male body head03 0 // Asian Male with nearly shaved head
-			soldiers/male body head04 0 // Asian Male with cap
-			soldiers/male body head05 0 // White Male with crop-top haircut
+			soldiers/male body head01 0
+			soldiers/male body head01 0
+			soldiers/male body head01 0
+			soldiers/male body head01 0
+			soldiers/male body head02 0
+			soldiers/male body head03 0
+			soldiers/male body head04 0
+			soldiers/male body head05 0
 		}
 	}
 
