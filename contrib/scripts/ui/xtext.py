@@ -8,7 +8,11 @@
 import os, os.path, sys
 from ExtractNodeBehaviour import *
 
+nodeProperties = set([])
+
 def genBehaviourXText(node):
+	global nodeProperties
+
 	result = ""
 	label = ""
 
@@ -28,6 +32,7 @@ def genBehaviourXText(node):
 		next = ""
 		for name in list:
 			e = node.properties[name]
+			nodeProperties.add('"' + e.name + '"')
 			result += "\t(\"%s\" %s=UIValue)\n" % (e.name, e.name)
 			next = "& "
 
@@ -36,12 +41,14 @@ def genBehaviourXText(node):
 		list.sort()
 		for name in list:
 			e = node.callbacks[name]
+			nodeProperties.add('"' + e.name + '"')
 			result += "\t(\"%s\" %s=UIFuncStatements)?\n" % (e.name, e.name)
 	result += '\t;\n'
 
 	return result
 
 def genXText(package):
+	global nodeProperties
 	result = ""
 	list = package.getBehaviourNames()
 	list.sort()
@@ -68,6 +75,9 @@ def genXText(package):
 	for name in list:
 		result += genBehaviourXText(package.getBehaviour(name))
 		result += "\n"
+
+	result += 'UINodePropertieNames:\n'
+	result += "\t" + " | ".join(nodeProperties) + "\n\n"
 
 	result += 'UINodeProperties:\n'
 	next = ""
