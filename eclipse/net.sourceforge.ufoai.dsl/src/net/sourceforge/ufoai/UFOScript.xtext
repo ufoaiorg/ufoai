@@ -47,10 +47,13 @@ UINode:
 	UINodeItem | UINodeGeoscape | UINodeLinechart | UINodeKeybinding | UINodeMessagelist | UINodeMaterial_Editor |
 	UINodeOptionlist | UINodeOption | UINodeRadar | UINodeOptiontree | UINodeRows | UINodeRadiobutton | UINodeSequence |
 	UINodeSelectbox | UINodeTab | UINodeSpinner | UINodeText2 | UINodeTbar | UINodeTexture | UINodeTextlist | UINodeTodo |
-	UINodeTimer | UINodeVideo | UINodeZone | UINodeVscrollbar;
+	UINodeTimer | UINodeVideo | UINodeZone | UINodeVscrollbar | UIComponentUse;
 
 UINodePanel:
-	"panel" name=UINodeID "{" ("{" (properties+=UIPropertyDefinition)* "}")? (panelNodes+=UINode)* "}";
+	"panel" name=UINodeID "{" ("{" (properties+=UIPropertyDefinition)* "}")? (nodes+=UINode)* "}";
+
+UIComponentUse:
+	component=[UINodeComponent] name=UINodeID "{" ("{" (properties+=UIPropertyDefinition)* "}" (nodes+=UINode)* | (properties+=UIPropertyDefinition)*) "}";
 
 UINodeImage:
 	"image" name=UINodeID "{" (properties+=UIPropertyDefinition)* "}";
