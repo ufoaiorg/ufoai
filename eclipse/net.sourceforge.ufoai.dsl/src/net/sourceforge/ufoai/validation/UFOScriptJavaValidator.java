@@ -24,7 +24,7 @@ public class UFOScriptJavaValidator extends AbstractUFOScriptJavaValidator {
 	public void checkTranslatable(TranslatableString translatable) {
 		final String value = translatable.getValue();
 		if (!value.startsWith("_")) {
-			warning("String should be prefixed by'_' to became translatable.",
+			warning("String should be prefixed by '_' to became translatable.",
 				UfoScriptPackage.Literals.TRANSLATABLE_STRING__VALUE);
 		}
 	}
