@@ -106,7 +106,7 @@ void CL_ActorAppear (const eventRegister_t *self, struct dbuffer *msg)
 	NET_ReadFormat(msg, self->formatString,
 			&le->team, &teamDefID, &le->gender, &le->ucn, &le->pnum, &le->pos,
 			&le->angle, &le->right, &le->left,
-			&modelnum1, &modelnum2, &le->skinnum,
+			&modelnum1, &modelnum2, &le->bodySkin, &le->headSkin,
 			&le->state, &le->fieldSize,
 			&le->maxTU, &le->maxMorale, &le->maxHP);
 

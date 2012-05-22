@@ -510,7 +510,8 @@ void G_EventActorAppear (unsigned int playerMask, const edict_t *check, const ed
 	}
 	gi.WriteShort(check->body);
 	gi.WriteShort(check->head);
-	gi.WriteByte(check->chr.skin);
+	gi.WriteByte(check->chr.bodySkin);
+	gi.WriteByte(check->chr.headSkin);
 	/* strip the server private states */
 	gi.WriteShort(check->state & STATE_PUBLIC);
 	gi.WriteByte(check->fieldSize);

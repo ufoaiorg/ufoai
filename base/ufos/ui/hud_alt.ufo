@@ -1021,7 +1021,7 @@ window hud_alt extends hud
 		{
 			{
 				src			*cvar:mn_body
-				skin		*cvar:mn_skin
+				skin		*cvar:mn_body_skin
 				anim		*cvar:mn_anim
 				angles		"0 80 90"
 				pos			"116 0"
@@ -1037,7 +1037,7 @@ window hud_alt extends hud
 			model right_head
 			{
 				src			*cvar:mn_head
-				skin		*cvar:mn_skin
+				skin		*cvar:mn_head_skin
 				tag			"tag_head"
 			}
 

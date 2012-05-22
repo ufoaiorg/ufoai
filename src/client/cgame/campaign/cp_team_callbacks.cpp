@@ -299,11 +299,11 @@ static void CP_TEAM_FillBDEFEmployeeList_f (void)
 static void CP_TEAM_ChangeSkin_f (void)
 {
 	if (Cmd_Argc() < 3 ) {
-		Com_Printf("Usage: %s <ucn> <skinidx>\n", Cmd_Argv(0));
+		Com_Printf("Usage: %s <ucn> <bodyskinidx>\n", Cmd_Argv(0));
 		return;
 	}
 	int ucn = atoi(Cmd_Argv(1));
-	int skinIdx = atoi(Cmd_Argv(2));
+	int bodySkinIdx = atoi(Cmd_Argv(2));
 
 	employee_t *soldier = E_GetEmployeeFromChrUCN(ucn);
 	if (soldier == NULL|| soldier->type != EMPL_SOLDIER) {
@@ -315,11 +315,11 @@ static void CP_TEAM_ChangeSkin_f (void)
 	/** @todo Or remove skins from models and convert character_t->skin to string */
 	/** @todo these functions are not accessible from here and maybe I shouldn't use them directly but set up a cgame import stuff? */
 #if 0
-	skinIdx = CL_FixActorSkinIDX(skinIdx);
-	Cvar_Set("mn_skinname", CL_GetTeamSkinName(skinIdx));
+	bodySkinIdx = CL_FixActorSkinIDX(bodySkinIdx);
+	Cvar_Set("mn_skinname", CL_GetTeamSkinName(bodySkinIdx));
 #endif
-	Cvar_SetValue("mn_skin", skinIdx);
-	soldier->chr.skin = skinIdx;
+	Cvar_SetValue("mn_body_skin", bodySkinIdx);
+	soldier->chr.bodySkin = bodySkinIdx;
 }
 
 /**

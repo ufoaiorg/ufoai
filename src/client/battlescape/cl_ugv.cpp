@@ -68,7 +68,7 @@ qboolean CL_AddUGV (le_t * le, entity_t * ent)
 
 	add.alpha = le->alpha;
 	add.model = le->model2;
-	add.skinnum = le->skinnum;
+	add.skinnum = le->bodySkin;
 
 	/** @todo */
 	add.tagent = R_GetFreeEntity() + 1;

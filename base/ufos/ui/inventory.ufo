@@ -190,7 +190,7 @@ window inventory
 	{
 		{
 			src		*cvar:mn_body
-			skin	*cvar:mn_skin
+			skin	*cvar:mn_body_skin
 			anim	"stand_menu"
 			origin	"0 -25 0"
 			angles	"0 82 90"
@@ -202,7 +202,7 @@ window inventory
 		model head
 		{
 			src		*cvar:mn_head
-			skin	*cvar:mn_skin
+			skin	*cvar:mn_head_skin
 			tag		"tag_head"
 			scale	"1.0 1.0 1.0"
 		}

@@ -224,7 +224,8 @@ typedef struct teamDef_s {
 		char* path;
 		char* body;
 		char* head;
-		int   skin;
+		int   bodySkin;
+		int   headSkin;
 	};
 
 	linkedList_t *models[NAME_LAST];	/**< Models list per gender. */
@@ -259,7 +260,8 @@ typedef struct character_s {
 	char path[MAX_VAR];
 	char body[MAX_VAR];
 	char head[MAX_VAR];
-	int skin;					/**< Index of skin. */
+	int bodySkin;					/**< Index of skin. */
+	int headSkin;					/**< Index of skin. */
 
 	int HP;						/**< Health points (current ones). */
 	int minHP;					/**< Minimum hp during combat */

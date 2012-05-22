@@ -1433,7 +1433,7 @@ void LE_AddToScene (void)
 
 			VectorCopy(le->angles, ent.angles);
 			ent.model = le->model1;
-			ent.skinnum = le->skinnum;
+			ent.skinnum = le->bodySkin;
 			ent.lighting = &le->lighting;
 
 			switch (le->contents) {

@@ -582,25 +582,25 @@ team phalanx
 
 	models {
 		female {
-			soldiers/female body head01 0
-			soldiers/female body head02 0
-			soldiers/female body head02 1
-			soldiers/female body head03 0
-			soldiers/female body head04 0
-			soldiers/female body head05 0
-			soldiers/female body head06 0
-			soldiers/female body head07 0
+			soldiers/female body head01 0 0
+			soldiers/female body head02 0 0
+			soldiers/female body head02 0 1
+			soldiers/female body head03 0 0
+			soldiers/female body head04 0 0
+			soldiers/female body head05 0 0
+			soldiers/female body head06 0 0
+			soldiers/female body head07 0 0
 		}
 
 		male {
-			soldiers/male body head01 0
-			soldiers/male body head01 1
-			soldiers/male body head01 2
-			soldiers/male body head01 3
-			soldiers/male body head02 0
-			soldiers/male body head03 0
-			soldiers/male body head04 0
-			soldiers/male body head05 0
+			soldiers/male body head01 0 0
+			soldiers/male body head01 0 1
+			soldiers/male body head01 0 2
+			soldiers/male body head01 0 3
+			soldiers/male body head02 0 0
+			soldiers/male body head03 0 0
+			soldiers/male body head04 0 0
+			soldiers/male body head05 0 0
 		}
 	}
 
@@ -1188,15 +1188,15 @@ team phalanx_scientist
 
 	models {
 		female {
-			civilians/female scientist01 head05a 0
-			civilians/female scientist01 head04a2 0
+			civilians/female scientist01 head05a 0 0
+			civilians/female scientist01 head04a2 0 0
 		}
 		male {
-			civilians/male scientist01 sci_head01 0
-			civilians/male scientist01 sci_head02a 0
-			civilians/male scientist01 sci_head02b 0
-			civilians/male scientist01 sci_head03a 0
-			civilians/male scientist01 sci_head03b 0
+			civilians/male scientist01 sci_head01 0 0
+			civilians/male scientist01 sci_head02a 0 0
+			civilians/male scientist01 sci_head02b 0 0
+			civilians/male scientist01 sci_head03a 0 0
+			civilians/male scientist01 sci_head03b 0 0
 		}
 	}
 
@@ -1616,10 +1616,10 @@ team phalanx_pilot
 
 	models {
 		male {
-			pilots/male body head01 0
+			pilots/male body head01 0 0
 		}
 //		female {
-//			pilots/female body head01 0 //TODO: Animate the female pilot model
+//			pilots/female body head01 0 0 //TODO: Animate the female pilot model
 //		}
 	}
 
@@ -2041,10 +2041,10 @@ team phalanx_worker
 
 	models {
 		male {
-			civilians/male worker01 worker01_head 0
-			civilians/male worker01 worker01_head 1
-			civilians/male worker01 worker02_head 0
-			civilians/male worker01 worker02_head 1
+			civilians/male worker01 worker01_head 0 0
+			civilians/male worker01 worker01_head 1 1
+			civilians/male worker01 worker02_head 0 0
+			civilians/male worker01 worker02_head 1 1
 		}
 	}
 
@@ -2101,7 +2101,7 @@ team phalanx_ugv_phoenix
 
 	models {
 		neutral {
-			soldiers/ugv_phoenix phoenix phoenix_turret 0
+			soldiers/ugv_phoenix phoenix phoenix_turret 0 0
 		}
 	}
 
@@ -2166,7 +2166,7 @@ team phalanx_ugv_ares_w
 
 	models {
 		neutral {
-			soldiers/ugv_ares ares_w ares_w_turret 0
+			soldiers/ugv_ares ares_w ares_w_turret 0 0
 		}
 	}
 

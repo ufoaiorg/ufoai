@@ -261,7 +261,7 @@ window hud_default extends hud
 		model head
 		{
 			src		*cvar:mn_head
-			skin	*cvar:mn_skin
+			skin	*cvar:mn_head_skin
 			angles	"0 60 90"
 			autoscale	true
 			pos		"20 20"

@@ -2299,7 +2299,8 @@ void Com_GetCharacterValues (const char *teamDefition, character_t * chr)
 		Q_strncpyz(chr->path, model->path, sizeof(chr->path));
 		Q_strncpyz(chr->body, model->body, sizeof(chr->body));
 		Q_strncpyz(chr->head, model->head, sizeof(chr->head));
-		chr->skin = model->skin;
+		chr->bodySkin = model->bodySkin;
+		chr->headSkin = model->headSkin;
 		return;
 	}
 	Com_Error(ERR_DROP, "Could not set character values for team '%s'\n", teamDefition);
@@ -2423,7 +2424,7 @@ static void Com_ParseActorModels (const char *name, const char **text, teamDef_t
 				do {
 					/* get the path, body, head and skin */
 					teamDef_t::model_t model;
-					for (j = 0; j < 4; j++) {
+					for (j = 0; j < 5; j++) {
 						token = Com_EParse(text, errhead, name);
 						if (!*text) {
 							Com_Printf("Com_ParseActors: Premature end of script at j=%i\n", j);
@@ -2443,7 +2444,10 @@ static void Com_ParseActorModels (const char *name, const char **text, teamDef_t
 							model.head = Mem_StrDup(token);
 							break;
 						case 3:
-							model.skin = atoi(token);
+							model.bodySkin = atoi(token);
+							break;
+						case 4:
+							model.headSkin = atoi(token);
 							break;
 						}
 					}
@@ -2452,7 +2456,7 @@ static void Com_ParseActorModels (const char *name, const char **text, teamDef_t
 						break;
 
 					/* only add complete actor info */
-					if (j == 4) {
+					if (j == 5) {
 						LIST_Add(&td->models[i], model);
 						td->numModels[i]++;
 					} else {

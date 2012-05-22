@@ -99,8 +99,8 @@ static void CL_CharacterSkillAndScoreCvars (const character_t *chr, const char* 
 	Cvar_ForceSet(va("%s%s", cvarPrefix, "name"), chr->name);
 	Cvar_ForceSet(va("%s%s", cvarPrefix, "body"), CHRSH_CharGetBody(chr));
 	Cvar_ForceSet(va("%s%s", cvarPrefix, "head"), CHRSH_CharGetHead(chr));
-	Cvar_ForceSet(va("%s%s", cvarPrefix, "skin"), va("%i", chr->skin));
-	Cvar_ForceSet(va("%s%s", cvarPrefix, "skinname"), CL_GetTeamSkinName(chr->skin));
+	Cvar_ForceSet(va("%s%s", cvarPrefix, "skin"), va("%i", chr->bodySkin));
+	Cvar_ForceSet(va("%s%s", cvarPrefix, "skinname"), CL_GetTeamSkinName(chr->bodySkin));
 
 	Cvar_Set(va("%s%s", cvarPrefix, "vpwr"), va("%i", score->skills[ABILITY_POWER]));
 	Cvar_Set(va("%s%s", cvarPrefix, "vspd"), va("%i", score->skills[ABILITY_SPEED]));
@@ -273,16 +273,16 @@ static void CL_ChangeSkin_f (void)
 	const int sel = cl_selected->integer;
 
 	if (sel >= 0 && sel < chrDisplayList.num) {
-		int newSkin = Cvar_GetInteger("mn_skin");
+		int newSkin = Cvar_GetInteger("mn_body_skin");
 		character_t *chr = chrDisplayList.chr[sel];
 		newSkin = CL_FixActorSkinIDX(newSkin);
 
 		if (chr) {
 			/** @todo Get the skin id from the model by using the actorskin id */
 			/** @todo Or remove skins from models and convert character_t->skin to string */
-			chr->skin = newSkin;
+			chr->bodySkin = newSkin;
 
-			Cvar_SetValue("mn_skin", newSkin);
+			Cvar_SetValue("mn_body_skin", newSkin);
 			Cvar_Set("mn_skinname", CL_GetTeamSkinName(newSkin));
 		}
 	}
@@ -296,7 +296,7 @@ static void CL_ChangeSkinForWholeTeam_f (void)
 	int newSkin, i;
 
 	/* Get selected skin and fall back to default skin if it is not valid. */
-	newSkin = Cvar_GetInteger("mn_skin");
+	newSkin = Cvar_GetInteger("mn_body_skin");
 	newSkin = CL_FixActorSkinIDX(newSkin);
 
 	/* Apply new skin to all (shown/displayed) team-members. */
@@ -306,7 +306,7 @@ static void CL_ChangeSkinForWholeTeam_f (void)
 		assert(chr);
 		/** @todo Get the skin id from the model by using the actorskin id */
 		/** @todo Or remove skins from models and convert character_t->skin to string */
-		chr->skin = newSkin;
+		chr->bodySkin = newSkin;
 	}
 }
 

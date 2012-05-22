@@ -63,7 +63,7 @@ window physdata
 	{
 		{
 			src			*cvar:mn_body
-			skin		*cvar:mn_skin
+			skin		*cvar:mn_body_skin
 			anim		"stand2"
 			angles		"0 70 90"
 			pos			"27 20"
@@ -74,7 +74,7 @@ window physdata
 		model head
 		{
 			src			*cvar:mn_head
-			skin		*cvar:mn_skin
+			skin		*cvar:mn_head_skin
 			tag			"tag_head"
 		}
 

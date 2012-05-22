@@ -98,7 +98,8 @@ typedef struct le_s {
 	char inlineModelName[8];	/**< for bmodels */
 	unsigned int modelnum1;	/**< the number of the body model in the cl.model_draw array */
 	unsigned int modelnum2;	/**< the number of the head model in the cl.model_draw array */
-	unsigned int skinnum;	/**< the skin number of the body and head model */
+	unsigned int bodySkin;	/**< the skin number of the body */
+	unsigned int headSkin;	/**< the skin number of the head */
 	model_t *model1, *model2;	/**< pointers to the cl.model_draw array
 					 * that holds the models for body and head - model1 is body,
 					 * model2 is head */

@@ -566,7 +566,7 @@ window equipment extends objectinfo
 	{
 		{
 			src		*cvar:mn_body
-			skin	*cvar:mn_skin
+			skin	*cvar:mn_body_skin
 			anim	"stand_menu"
 			angles	"0 105 90"
 			scale	"5 5 5"
@@ -578,7 +578,7 @@ window equipment extends objectinfo
 		model head
 		{
 			src		*cvar:mn_head
-			skin	*cvar:mn_skin
+			skin	*cvar:mn_head_skin
 			tag		"tag_head"
 			scale	"1.0 1.0 1.0"
 		}
@@ -591,8 +591,8 @@ window equipment extends objectinfo
 	selectbox skins {
 		pos		"660 290"
 		size	"120 40"
-		cvar	*cvar:mn_skin
-		onChange { cmd "ui_team_changeskin <node:root.selected@integer> <cvar:mn_skin>;" }
+		cvar	*cvar:mn_body_skin
+		onChange { cmd "ui_team_changeskin <node:root.selected@integer> <cvar:mn_body_skin>;" }
 		dataid	OPTION_SINGLEPLAYER_SKINS
 	}
 

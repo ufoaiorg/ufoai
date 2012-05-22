@@ -1129,7 +1129,8 @@ static void G_ClientReadCharacter (edict_t *ent)
 	gi.ReadString(ent->chr.path, sizeof(ent->chr.path));
 	gi.ReadString(ent->chr.body, sizeof(ent->chr.body));
 	gi.ReadString(ent->chr.head, sizeof(ent->chr.head));
-	ent->chr.skin = gi.ReadByte();
+	ent->chr.bodySkin = gi.ReadByte();
+	ent->chr.headSkin = gi.ReadByte();
 
 	ent->chr.HP = gi.ReadShort();
 	ent->chr.minHP = ent->chr.HP;

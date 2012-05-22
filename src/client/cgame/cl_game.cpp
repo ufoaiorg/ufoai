@@ -1125,7 +1125,8 @@ static void GAME_NetSendCharacter (struct dbuffer * buf, const character_t *chr)
 	NET_WriteString(buf, chr->path);
 	NET_WriteString(buf, chr->body);
 	NET_WriteString(buf, chr->head);
-	NET_WriteByte(buf, chr->skin);
+	NET_WriteByte(buf, chr->bodySkin);
+	NET_WriteByte(buf, chr->headSkin);
 
 	NET_WriteShort(buf, chr->HP);
 	NET_WriteShort(buf, chr->maxHP);

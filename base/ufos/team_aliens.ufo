@@ -58,22 +58,22 @@ team taman
 
 	models {
 		neutral {
-			aliens/taman body01 head01 0 // Body: very high rank, Head: yellow eyes
-			aliens/taman body01 head02 1 // Body: high rank, Head: green eyes
-			aliens/taman body01 head03 2 // Body: medium rank, Head: red eyes
-			aliens/taman body01 head04 3 // Body: low rank, Head: blue eyes
-			aliens/taman body01 head01 1 // Body: high rank, Head: yellow eyes
-			aliens/taman body01 head02 2 // Body: medium rank, Head: green eyes
-			aliens/taman body01 head03 3 // Body: low rank, Head: red eyes
-			aliens/taman body01 head04 0 // Body: very high rank, Head: blue eyes
-			aliens/taman body01 head01 2 // Body: medium rank, Head: yellow eyes
-			aliens/taman body01 head02 3 // Body: low rank, Head: green eyes
-			aliens/taman body01 head03 0 // Body: very high rank, Head: red eyes
-			aliens/taman body01 head04 1 // Body: high rank, Head: blue eyes
-			aliens/taman body01 head01 3 // Body: low rank, Head: yellow eyes
-			aliens/taman body01 head02 0 // Body: very high rank, Head: green eyes
-			aliens/taman body01 head03 1 // Body: high rank, Head: red eyes
-			aliens/taman body01 head04 2 // Body: medium rank, Head: blue eyes
+			aliens/taman body01 head01 0 0 // Body: very high rank, Head: yellow eyes
+			aliens/taman body01 head02 1 1 // Body: high rank, Head: green eyes
+			aliens/taman body01 head03 2 2 // Body: medium rank, Head: red eyes
+			aliens/taman body01 head04 3 3 // Body: low rank, Head: blue eyes
+			aliens/taman body01 head01 1 1 // Body: high rank, Head: yellow eyes
+			aliens/taman body01 head02 2 2 // Body: medium rank, Head: green eyes
+			aliens/taman body01 head03 3 3 // Body: low rank, Head: red eyes
+			aliens/taman body01 head04 0 0 // Body: very high rank, Head: blue eyes
+			aliens/taman body01 head01 2 2 // Body: medium rank, Head: yellow eyes
+			aliens/taman body01 head02 3 3 // Body: low rank, Head: green eyes
+			aliens/taman body01 head03 0 0 // Body: very high rank, Head: red eyes
+			aliens/taman body01 head04 1 1 // Body: high rank, Head: blue eyes
+			aliens/taman body01 head01 3 3 // Body: low rank, Head: yellow eyes
+			aliens/taman body01 head02 0 0 // Body: very high rank, Head: green eyes
+			aliens/taman body01 head03 1 1 // Body: high rank, Head: red eyes
+			aliens/taman body01 head04 2 2 // Body: medium rank, Head: blue eyes
 		}
 	}
 
@@ -180,15 +180,15 @@ team ortnok
 
 	models {
 		neutral {
-			aliens/ortnok body01 head01 0 // Body: Big open wound, Head: 2 small scars over the left eye
-			aliens/ortnok body01 head02 1 // Body: Big scar, Head: Big scar over the right eye
-			aliens/ortnok body01 head03 2 // Body: Scared legs, Head: One-eyed Ortnok
-			aliens/ortnok body01 head01 1 // Body: Big scar, Head: 2 small scars over the left eye
-			aliens/ortnok body01 head02 2 // Body: Scared legs, Head: Big scar over the right eye
-			aliens/ortnok body01 head03 0 // Body: Big open wound, Head: One-eyed Ortnok
-			aliens/ortnok body01 head01 2 // Body: Scared legs, Head: 2 small scars over the left eye
-			aliens/ortnok body01 head02 0 // Body: Big open wound, Head: One-eyed Ortnok
-			aliens/ortnok body01 head03 1 // Body: Big scar, Head: Big scar over the right eye
+			aliens/ortnok body01 head01 0 0 // Body: Big open wound, Head: 2 small scars over the left eye
+			aliens/ortnok body01 head02 1 1 // Body: Big scar, Head: Big scar over the right eye
+			aliens/ortnok body01 head03 2 2 // Body: Scared legs, Head: One-eyed Ortnok
+			aliens/ortnok body01 head01 1 1 // Body: Big scar, Head: 2 small scars over the left eye
+			aliens/ortnok body01 head02 2 2 // Body: Scared legs, Head: Big scar over the right eye
+			aliens/ortnok body01 head03 0 0 // Body: Big open wound, Head: One-eyed Ortnok
+			aliens/ortnok body01 head01 2 2 // Body: Scared legs, Head: 2 small scars over the left eye
+			aliens/ortnok body01 head02 0 0 // Body: Big open wound, Head: One-eyed Ortnok
+			aliens/ortnok body01 head03 1 1 // Body: Big scar, Head: Big scar over the right eye
 		}
 	}
 
@@ -292,15 +292,15 @@ team shevaar
 
 	models {
 		neutral {
-			aliens/shevaar body01 head01 0 // Body: Original brown skin, blue trousers, Head: Original brown skin
-			aliens/shevaar body01 head01 1 // Body: Dark red skin, light cyan trousers, Head: Original brown skin
-			aliens/shevaar body01 head01 2 // Body: Dark green skin, red trousers, Head: Original brown skin
-			aliens/shevaar body01 head02 0 // Body: Original brown skin, blue trousers, Head: dual-colored red skin
-			aliens/shevaar body01 head02 1 // Body: Dark red skin, light cyan trousers, Head: dual-colored red skin
-			aliens/shevaar body01 head02 2 // Body: Dark green skin, red trousers, Head: dual-colored red skin
-			aliens/shevaar body01 head03 0 // Body: Original brown skin, blue trousers, Head: dual-colored green skin
-			aliens/shevaar body01 head03 1 // Body: Dark red skin, light cyan trousers, Head: dual-colored green skin
-			aliens/shevaar body01 head03 2 // Body: Dark green skin, red trousers, Head: dual-colored green skin
+			aliens/shevaar body01 head01 0 0 // Body: Original brown skin, blue trousers, Head: Original brown skin
+			aliens/shevaar body01 head01 1 1 // Body: Dark red skin, light cyan trousers, Head: Original brown skin
+			aliens/shevaar body01 head01 2 2 // Body: Dark green skin, red trousers, Head: Original brown skin
+			aliens/shevaar body01 head02 0 0 // Body: Original brown skin, blue trousers, Head: dual-colored red skin
+			aliens/shevaar body01 head02 1 1 // Body: Dark red skin, light cyan trousers, Head: dual-colored red skin
+			aliens/shevaar body01 head02 2 2 // Body: Dark green skin, red trousers, Head: dual-colored red skin
+			aliens/shevaar body01 head03 0 0 // Body: Original brown skin, blue trousers, Head: dual-colored green skin
+			aliens/shevaar body01 head03 1 1 // Body: Dark red skin, light cyan trousers, Head: dual-colored green skin
+			aliens/shevaar body01 head03 2 2 // Body: Dark green skin, red trousers, Head: dual-colored green skin
 		}
 	}
 
@@ -399,10 +399,10 @@ team bloodspider
 
 	models {
 		neutral {
-			aliens/bloodspider bloodspider head 0
-			aliens/bloodspider bloodspider head 1
-			aliens/bloodspider bloodspider head 2
-			aliens/bloodspider bloodspider head 3
+			aliens/bloodspider bloodspider head 0 0
+			aliens/bloodspider bloodspider head 1 1
+			aliens/bloodspider bloodspider head 2 2
+			aliens/bloodspider bloodspider head 3 3
 		}
 	}
 

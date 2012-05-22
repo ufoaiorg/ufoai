@@ -651,7 +651,8 @@ qboolean GAME_SaveCharacter (xmlNode_t *p, const character_t* chr)
 	XML_AddString(p, SAVE_CHARACTER_BODY, chr->body);
 	XML_AddString(p, SAVE_CHARACTER_PATH, chr->path);
 	XML_AddString(p, SAVE_CHARACTER_HEAD, chr->head);
-	XML_AddInt(p, SAVE_CHARACTER_SKIN, chr->skin);
+	XML_AddInt(p, SAVE_CHARACTER_BDOY_SKIN, chr->bodySkin);
+	XML_AddInt(p, SAVE_CHARACTER_HEAD_SKIN, chr->headSkin);
 	XML_AddString(p, SAVE_CHARACTER_TEAMDEF, chr->teamDef->id);
 	XML_AddInt(p, SAVE_CHARACTER_GENDER, chr->gender);
 	XML_AddInt(p, SAVE_CHARACTER_UCN, chr->ucn);
@@ -725,8 +726,9 @@ qboolean GAME_LoadCharacter (xmlNode_t *p, character_t *chr)
 	Q_strncpyz(chr->head, XML_GetString(p, SAVE_CHARACTER_HEAD), sizeof(chr->head));
 
 	const int maxSkins = CL_GetActorSkinCount() - 1;
-	const int skin = XML_GetInt(p, SAVE_CHARACTER_SKIN, 0);
-	chr->skin = min(maxSkins, skin);
+	const int bodySkin = XML_GetInt(p, SAVE_CHARACTER_BDOY_SKIN, 0);
+	chr->bodySkin = min(maxSkins, bodySkin);
+	chr->headSkin = XML_GetInt(p, SAVE_CHARACTER_HEAD_SKIN, 0);
 	chr->gender = XML_GetInt(p, SAVE_CHARACTER_GENDER, 0);
 	chr->ucn = XML_GetInt(p, SAVE_CHARACTER_UCN, 0);
 	chr->maxHP = XML_GetInt(p, SAVE_CHARACTER_MAXHP, 0);

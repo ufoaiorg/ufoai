@@ -1488,7 +1488,7 @@ qboolean CL_AddActor (le_t * le, entity_t * ent)
 	add.model = le->model2;
 	if (!add.model)
 		Com_Error(ERR_DROP, "Actor model wasn't found!");
-	add.skinnum = le->skinnum;
+	add.skinnum = le->bodySkin;
 
 	/* point to the body ent which will be added last */
 	add.tagent = R_GetFreeEntity() + 1;

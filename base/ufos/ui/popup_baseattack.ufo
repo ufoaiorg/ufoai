@@ -90,7 +90,7 @@ window popup_assembleteam
 		model body {
 			{
 				src		*cvar:mn_body
-				skin	*cvar:mn_skin
+				skin	*cvar:mn_body_skin
 				anim	"stand2"
 				angles	"0 70 90"
 				scale	"5.5 5.5 5.5"
@@ -100,7 +100,7 @@ window popup_assembleteam
 			}
 			model head {
 				src		*cvar:mn_head
-				skin	*cvar:mn_skin
+				skin	*cvar:mn_head_skin
 				tag		"tag_head"
 				scale	"1.0 1.0 1.0"
 			}
