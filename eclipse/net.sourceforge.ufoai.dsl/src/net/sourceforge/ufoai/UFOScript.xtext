@@ -408,13 +408,13 @@ Item:
 
 Equipment:
 	"equipment" name=ID "{"
-	"name" equipName=STRING
+	"name" equipName=TranslatableString
 	(items+=[Item] STRING)+
 	"}";
 
 Building:
 	"building" name=ID "{"
-	"name" buildingName=STRING
+	"name" buildingName=TranslatableString
 	"size" size=STRING
 	"image" image=STRING
 	"type" type=BuildingType
@@ -442,8 +442,8 @@ Aircraft:
 	"aircraft" name=ID "{"
 	params=AircraftParam (slots+=AircraftSlot)*
 	"building" building=[Building]
-	"name" aircraftName=STRING
-	"defaultname" defaultName=STRING
+	"name" aircraftName=TranslatableString
+	"defaultname" defaultName=TranslatableString
 	"type" type=AircraftType
 	"model" model=STRING
 	"price" price=STRING
@@ -473,6 +473,11 @@ AircraftParam:
 	"range" range=STRING
 	"antimatter" antimatter=STRING
 	"}";
+
+/* ==================== terminals ================================ */
+
+TranslatableString:
+	value=STRING;
 
 /* ==================== terminals ================================ */
 terminal UFO_BOOLEAN:
