@@ -124,11 +124,9 @@ static void CL_ActorGetMuzzle (const le_t* actor, vec3_t muzzle, shoot_types_t s
 
 	GLMatrixAssemble(actor->origin, actor->angles, mc);
 
-	modifiedMatrix[12] = -modifiedMatrix[12];
 	GLMatrixMultiply(mc, modifiedMatrix, matrix);
 
 	R_GetTagMatrix(model, "tag_muzzle", 0, modifiedMatrix);
-	modifiedMatrix[12] = -modifiedMatrix[12];
 	GLMatrixMultiply(matrix, modifiedMatrix, mc);
 
 	muzzle[0] = mc[12];
