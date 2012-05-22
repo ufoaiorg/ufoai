@@ -205,10 +205,17 @@ UIPropertyValue:
 	| UIPropertyValueNumber
 	| UIPropertyValueFunction;
 
-UIPropertyValueString: value=STRING;
-UIPropertyValueBoolean: value=UFO_BOOLEAN;
-UIPropertyValueNumber: value=INT;
-UIPropertyValueFunction: "{" {UIPropertyValueFunction} (statements+=UIFuncStatements)* "}";
+UIPropertyValueString:
+	value=STRING;
+
+UIPropertyValueBoolean:
+	value=UFO_BOOLEAN;
+
+UIPropertyValueNumber:
+	value=INT;
+
+UIPropertyValueFunction:
+	"{" {UIPropertyValueFunction} (statements+=UIFuncStatements)* "}";
 
 /* ==================== GENERAL UI STUFF ================================ */
 UIFuncStatements:
@@ -289,7 +296,63 @@ Sprite:
 	"}";
 
 Team:
-	"team" name=ID "{" => "}";
+	"team" name=ID "{"
+	"size" size=STRING
+	"hit_particle" hitParticle=[Particle]
+	"armour" armour=UFO_BOOLEAN
+	"tech" tech=[Tech]
+	"race" race=STRING
+	"name" teamName=STRING
+	"death_texture" deathTexture=STRING
+	"weapons" weapons=UFO_BOOLEAN
+	"onlyWeapon" onlyWeapon=[Item]
+	names+=TeamNames
+	models+=TeamModels
+	sounds+=TeamSounds
+	templates=TeamTemplates
+	resistance=TeamResistance
+	"}";
+
+TeamSounds:
+	"sounds" "{"
+	names+=TeamGender
+	"}";
+
+TeamModels:
+	"models" "{"
+	names+=TeamGender
+	"}";
+
+TeamNames:
+	"names" "{"
+	names+=TeamGenderNames
+	"}";
+
+TeamGenderNames:
+	TeamGender | TeamLastNames;
+
+TeamLastNames:
+	"lastname" "{" => "}";
+
+TeamTemplates:
+	"templates" "{"
+	templates+=[Chrtemplate]+
+	"}";
+
+TeamResistance:
+	"resistance" "{" => "}";
+
+TeamGender:
+	TeamFemale | TeamMale | TeamNeutral;
+
+TeamFemale:
+	"female" "{" => "}";
+
+TeamMale:
+	"male" "{" => "}";
+
+TeamNeutral:
+	"neutral" "{" => "}";
 
 Terrain:
 	"terrain" name=ID "{" => "}";
@@ -306,13 +369,10 @@ Chrtemplate:
 	"assault" assault=STRING
 	"sniper" sniper=STRING
 	"explosive" explosive=STRING
-	"health" health=STRING
-	"}";
+	"health" health=STRING "}";
 
 Particle:
-	"particle" name=ID "{"
-	(stages+=ParticleStages*)
-	"}";
+	"particle" name=ID "{" (stages+=ParticleStages*) "}";
 
 ParticleStages:
 	ParticleInitStage | ParticleRunStage | ParticleThinkStage | ParticlePhysicsStage;
@@ -342,76 +402,36 @@ Item:
 	"item" name=ID "{" => "}";
 
 Equipment:
-	"equipment" name=ID "{"
-	"name" equipName=STRING
-	(items+=[Item] STRING)+
-	"}";
+	"equipment" name=ID "{" "name" equipName=STRING (items+=[Item] STRING)+ "}";
 
 Building:
-	"building" name=ID "{"
-	"name" buildingName=STRING
-	"size" size=STRING
-	"image" image=STRING
-	"type" type=BuildingType
-	"depends" depends=[Building]
-	"pedia" pedia=[Tech]
-	"fixcosts" fixcosts=STRING
-	"build_time" buildTime=STRING
-	"varcosts" varCosts=STRING
-	"map_name" mapName=STRING
-	"capacity" capacity=STRING
-	"ondisable" onDisable=STRING
-	"onenable" onEnable=STRING
-	"ondestroy" onDestroy=STRING
-	"onconstruct" onConstruct=STRING
-	"mandatory" mandatory=UFO_BOOLEAN
-	"max_count" maxCount=STRING
-	"starting_employees" startingEmployees=STRING
-	"level" level=STRING
-	"}";
+	"building" name=ID "{" "name" buildingName=STRING "size" size=STRING "image" image=STRING "type" type=BuildingType
+	"depends" depends=[Building] "pedia" pedia=[Tech] "fixcosts" fixcosts=STRING "build_time" buildTime=STRING "varcosts"
+	varCosts=STRING "map_name" mapName=STRING "capacity" capacity=STRING "ondisable" onDisable=STRING "onenable"
+	onEnable=STRING "ondestroy" onDestroy=STRING "onconstruct" onConstruct=STRING "mandatory" mandatory=UFO_BOOLEAN
+	"max_count" maxCount=STRING "starting_employees" startingEmployees=STRING "level" level=STRING "}";
 
 BuildingType:
-	"lab" | "hospital" | "aliencont" | "storage" | "hangar" | "smallhangar" | "quarters" | "workshop" |
-	"power" | "command" | "amstorage" | "entrance" | "missile" | "laser" | "radar";
+	"lab" | "hospital" | "aliencont" | "storage" | "hangar" | "smallhangar" | "quarters" | "workshop" | "power" |
+	"command"
+	| "amstorage" | "entrance" | "missile" | "laser" | "radar";
 
 Aircraft:
-	"aircraft" name=ID "{"
-	params=AircraftParam
-	(slots+=AircraftSlot)*
-	"building" building=[Building]
-	"name" aircraftName=STRING
-	"defaultname" defaultName=STRING
-	"type" type=AircraftType
-	"model" model=STRING
-	"price" price=STRING
-	"numteam" numTeam=STRING
-	"size" size=STRING
-	"image" image=STRING
-	"}";
+	"aircraft" name=ID "{" params=AircraftParam (slots+=AircraftSlot)* "building" building=[Building] "name"
+	aircraftName=STRING "defaultname" defaultName=STRING "type" type=AircraftType "model" model=STRING "price"
+	price=STRING
+	"numteam" numTeam=STRING "size" size=STRING "image" image=STRING "}";
 
 AircraftType:
 	"ufo" | "interceptor" | "transporter";
 
 AircraftSlot:
-	"slot" "{"
-	"type" type=STRING
-	"position" position=STRING
-	"size" size=STRING
-	"}";
+	"slot" "{" "type" type=STRING "position" position=STRING "size" size=STRING "}";
 
 AircraftParam:
-	"param" "{"
-	"speed" speed=STRING
-	"maxspeed" maxspeed=STRING
-	"shield" shield=STRING
-	"ecm" ecm=STRING
-	"damage" damage=STRING
-	"accuracy" accuracy=STRING
-	"range" range=STRING
-	"antimatter" antimatter=STRING
-	"}";
+	"param" "{" "speed" speed=STRING "maxspeed" maxspeed=STRING "shield" shield=STRING "ecm" ecm=STRING "damage"
+	damage=STRING "accuracy" accuracy=STRING "range" range=STRING "antimatter" antimatter=STRING "}";
 
 /* ==================== terminals ================================ */
-
 terminal UFO_BOOLEAN:
 	'true' | 'false';
