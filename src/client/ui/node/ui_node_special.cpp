@@ -177,9 +177,9 @@ static void UI_CvarListenerNodeBind (uiNode_t *node)
 		Com_Printf("Node %s is not binded: cvar %s not found\n", UI_GetPath(node), node->name);
 		return;
 	}
-	linkedList_t *list = static_cast<linkedList_t*>(l->data);
-	if (LIST_GetPointer(list, node) == NULL) {
-		LIST_AddPointer(&list, node);
+
+	if (LIST_GetPointer(static_cast<linkedList_t*>(l->data), node) == NULL) {
+		LIST_AddPointer(reinterpret_cast<linkedList_t**>(&l->data), node);
 	}
 }
 
@@ -197,9 +197,8 @@ void uiCvarNode::onWindowClosed (uiNode_t *node)
 	cvarChangeListener_t *l = var->changeListener;
 	while (l) {
 		if (l->exec == UI_CvarListenerNodeCallback) {
-			linkedList_t *list = static_cast<linkedList_t*>(l->data);
-			LIST_Remove(&list, node);
-			if (LIST_IsEmpty(list)) {
+			LIST_Remove(reinterpret_cast<linkedList_t**>(&l->data), node);
+			if (LIST_IsEmpty(static_cast<linkedList_t*>(l->data))) {
 				Cvar_UnRegisterChangeListener(node->name, UI_CvarListenerNodeCallback);
 			}
 			break;
