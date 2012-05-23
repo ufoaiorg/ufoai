@@ -1266,7 +1266,7 @@ static void testTerrorMissions (void)
 		if (!ufo)
 			continue;
 
-		ccs.overallInterest = max(ccs.overallInterest, ufo->ufoInterestOnGeoscape);
+		ccs.overallInterest = std::max(ccs.overallInterest, ufo->ufoInterestOnGeoscape);
 	}
 
 	/* Search without UFO */

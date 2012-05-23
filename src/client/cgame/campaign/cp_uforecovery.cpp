@@ -135,7 +135,7 @@ storedUFO_t *US_StoreUFO (const aircraft_t *ufoTemplate, installation_t *install
 	} else {
 		ufo.status = SUFO_RECOVERED;
 	}
-	ufo.condition = min(max(0, condition), 1);
+	ufo.condition = std::min(std::max(0.0f, condition), 1.0f);
 
 	return &LIST_Add(&ccs.storedUFOs, ufo);
 }

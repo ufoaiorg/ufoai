@@ -377,13 +377,13 @@ static qboolean Grid_StepCheckFlyingDirections (step_t *step, const pos3_t pos, 
 	if (toPos[2] > pos[2]) {
 		/* If the actor is moving up, check the passage at the current cell.
 		 * The minimum height is the actor's height plus the distance from the current floor to the top of the cell. */
-		neededHeight = step->actorHeight + CELL_HEIGHT - max(0, RT_FLOOR_POS(step->map, actorSize, pos));
+		neededHeight = step->actorHeight + CELL_HEIGHT - std::max((const signed char)0, RT_FLOOR_POS(step->map, actorSize, pos));
 		RT_CONN_TEST_POS(step->map, actorSize, pos, coreDir);
 		passageHeight = RT_CONN_POS(step->map, actorSize, pos, coreDir);
 	} else if (toPos[2] < pos[2]) {
 		/* If the actor is moving down, check from the destination cell back. *
 		 * The minimum height is the actor's height plus the distance from the destination floor to the top of the cell. */
-		neededHeight = step->actorHeight + CELL_HEIGHT - max(0, RT_FLOOR_POS(step->map, actorSize, toPos));
+		neededHeight = step->actorHeight + CELL_HEIGHT - std::max((const signed char)0, RT_FLOOR_POS(step->map, actorSize, toPos));
 		RT_CONN_TEST_POS(step->map, actorSize, toPos, coreDir ^ 1);
 		passageHeight = RT_CONN_POS(step->map, actorSize, toPos, coreDir ^ 1);
 	} else {
@@ -822,7 +822,8 @@ void Grid_PosToVec (const routing_t *map, const actorSizeEnum_t actorSize, const
 		Com_Printf("Grid_PosToVec: Warning - z level bigger than 7 (%i - source: %.02f)\n", pos[2], vec[2]);
 #endif
 	/* Clamp the floor value between 0 and UNIT_HEIGHT */
-	vec[2] += max(0, min(UNIT_HEIGHT, Grid_Floor(map, actorSize, pos)));
+	const int gridFloor = Grid_Floor(map, actorSize, pos);
+	vec[2] += std::max(0, std::min(UNIT_HEIGHT, gridFloor));
 }
 
 
@@ -849,8 +850,8 @@ void Grid_RecalcBoxRouting (mapTiles_t *mapTiles, routing_t *map, const pos3_t m
 		const int maxY = max[1] + actorSize;
 		const int maxX = max[0] + actorSize;
 		/* Offset the initial X and Y to compensate for larger actors when needed. */
-		for (y = max(min[1] - actorSize + 1, 0); y < maxY; y++) {
-			for (x = max(min[0] - actorSize + 1, 0); x < maxX; x++) {
+		for (y = std::max(min[1] - actorSize + 1, 0); y < maxY; y++) {
+			for (x = std::max(min[0] - actorSize + 1, 0); x < maxX; x++) {
 				/** @note RT_CheckCell goes from top (7) to bottom (0) */
 				for (z = max[2]; z >= 0; z--) {
 					const int newZ = RT_CheckCell(mapTiles, map, actorSize, x, y, z, list);
@@ -863,10 +864,10 @@ void Grid_RecalcBoxRouting (mapTiles_t *mapTiles, routing_t *map, const pos3_t m
 
 	/* check connections */
 	for (actorSize = 1; actorSize <= ACTOR_MAX_SIZE; actorSize++) {
-		const int minX = max(min[0] - actorSize, 0);
-		const int minY = max(min[1] - actorSize, 0);
-		const int maxX = min(max[0] + actorSize, PATHFINDING_WIDTH - 1);
-		const int maxY = min(max[1] + actorSize, PATHFINDING_WIDTH - 1);
+		const int minX = std::max(min[0] - actorSize, 0);
+		const int minY = std::max(min[1] - actorSize, 0);
+		const int maxX = std::min(max[0] + actorSize, PATHFINDING_WIDTH - 1);
+		const int maxY = std::min(max[1] + actorSize, PATHFINDING_WIDTH - 1);
 		/* Offset the initial X and Y to compensate for larger actors when needed.
 		 * Also sweep further out to catch the walls back into our box. */
 		for (y = minY; y <= maxY; y++) {
@@ -976,11 +977,11 @@ void Grid_RecalcRouting (mapTiles_t *mapTiles, routing_t *map, const char *name,
 	}
 
 	/* fit min/max into the world size */
-	max[0] = min(max[0], PATHFINDING_WIDTH - 1);
-	max[1] = min(max[1], PATHFINDING_WIDTH - 1);
-	max[2] = min(max[2], PATHFINDING_HEIGHT - 1);
+	max[0] = std::min(max[0], (pos_t)(PATHFINDING_WIDTH - 1));
+	max[1] = std::min(max[1], (pos_t)(PATHFINDING_WIDTH - 1));
+	max[2] = std::min(max[2], (pos_t)(PATHFINDING_HEIGHT - 1));
 	for (i = 0; i < 3; i++)
-		min[i] = max(min[i], 0);
+		min[i] = std::max(min[i], (pos_t)0);
 
 	/* We now have the dimensions, call the generic rerouting function. */
 	Grid_RecalcBoxRouting(mapTiles, map, min, max, list);

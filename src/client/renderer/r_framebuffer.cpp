@@ -215,7 +215,7 @@ r_framebuffer_t * R_CreateFramebuffer (int width, int height, int ntextures, qbo
 	if (depth) {
 		/** @todo also check if we are running on older (SM2.0) hardware, which doesn't support antialiased MRT */
 		if (qglRenderbufferStorageMultisampleEXT && qglBlitFramebuffer) {
-			int samples = min(4, max(0, r_multisample->integer));
+			int samples = std::min(4, std::max(0, r_multisample->integer));
 			if (samples>1)
 				buf->samples = samples;
 		}

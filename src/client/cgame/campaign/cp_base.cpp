@@ -550,7 +550,7 @@ float B_GetMaxBuildingLevel (const base_t* base, const buildingType_t type)
 		building_t *building = NULL;
 		while ((building = B_GetNextBuildingByType(base, building, type)))
 			if (building->buildingStatus == B_STATUS_WORKING)
-				max = max(building->level, max);
+				max = std::max(building->level, max);
 	}
 
 	return max;
@@ -2823,13 +2823,14 @@ int B_AddToStorage (base_t* base, const objDef_t *obj, int amount)
 		if (obj->size > 0) {
 			const int freeSpace = cap->max - cap->cur;
 			/* correct amount and update capacity */
-			amount = min(amount, freeSpace / obj->size);
+			amount = std::min(amount, freeSpace / obj->size);
 			cap->cur += (amount * obj->size);
 		}
 		base->storage.numItems[obj->idx] += amount;
 	} else if (amount < 0) {
 		/* correct amount */
-		amount = max(amount, -B_ItemInBase(obj, base));
+		const int itemInBase = B_ItemInBase(obj, base);
+		amount = std::max(amount, -itemInBase);
 		if (obj->size > 0)
 			cap->cur += (amount * obj->size);
 		base->storage.numItems[obj->idx] += amount;
@@ -2942,7 +2943,7 @@ void B_ManageAntimatter (base_t *base, int amount, qboolean add)
 
 	cap = CAP_Get(base, CAP_ANTIMATTER);
 	if (add) {	/* Adding. */
-		const int a = min(amount, cap->max - cap->cur);
+		const int a = std::min(amount, cap->max - cap->cur);
 		base->storage.numItems[od->idx] += a;
 		cap->cur += a;
 	} else {	/* Removing. */
@@ -2950,7 +2951,7 @@ void B_ManageAntimatter (base_t *base, int amount, qboolean add)
 			cap->cur = 0;
 			base->storage.numItems[od->idx] = 0;
 		} else {
-			const int a = min(amount, cap->cur);
+			const int a = std::min(amount, cap->cur);
 			cap->cur -= a;
 			base->storage.numItems[od->idx] -= a;
 		}

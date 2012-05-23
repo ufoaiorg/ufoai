@@ -540,12 +540,12 @@ static void CMod_LoadRouting (mapTile_t *tile, mapData_t *mapData, const byte *b
 	 * model data is adjacent to a cell with existing model data. */
 
 	/* Copy the routing information into our master table */
-	minX = max(tile->wpMins[0], 0);
-	minY = max(tile->wpMins[1], 0);
-	minZ = max(tile->wpMins[2], 0);
-	maxX = min(tile->wpMaxs[0], PATHFINDING_WIDTH - 1);
-	maxY = min(tile->wpMaxs[1], PATHFINDING_WIDTH - 1);
-	maxZ = min(tile->wpMaxs[2], PATHFINDING_HEIGHT - 1);
+	minX = std::max(tile->wpMins[0], 0);
+	minY = std::max(tile->wpMins[1], 0);
+	minZ = std::max(tile->wpMins[2], 0);
+	maxX = std::min(tile->wpMaxs[0], PATHFINDING_WIDTH - 1);
+	maxY = std::min(tile->wpMaxs[1], PATHFINDING_WIDTH - 1);
+	maxZ = std::min(tile->wpMaxs[2], PATHFINDING_HEIGHT - 1);
 
 	assert(minX <= maxX);
 	assert(minY <= maxY);
@@ -866,11 +866,11 @@ static void CMod_RerouteMap (mapTiles_t *mapTiles, mapData_t *mapData)
 	VecToPos(mapData->mapMax, maxs);
 
 	/* fit min/max into the world size */
-	maxs[0] = min(maxs[0], PATHFINDING_WIDTH - 1);
-	maxs[1] = min(maxs[1], PATHFINDING_WIDTH - 1);
-	maxs[2] = min(maxs[2], PATHFINDING_HEIGHT - 1);
+	maxs[0] = std::min(maxs[0], (pos_t)(PATHFINDING_WIDTH - 1));
+	maxs[1] = std::min(maxs[1], (pos_t)(PATHFINDING_WIDTH - 1));
+	maxs[2] = std::min(maxs[2], (pos_t)(PATHFINDING_HEIGHT - 1));
 	for (i = 0; i < 3; i++)
-		mins[i] = max(mins[i], 0);
+		mins[i] = std::max(mins[i], (pos_t)0);
 
 	Com_DPrintf(DEBUG_PATHING, "rerouting (%i %i %i) (%i %i %i)\n",
 		(int)mins[0], (int)mins[1], (int)mins[2],

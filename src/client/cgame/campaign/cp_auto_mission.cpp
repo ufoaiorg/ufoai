@@ -581,7 +581,7 @@ static qboolean AM_CheckFire (autoMissionBattle_t *battle, autoUnit_t *currUnit,
 		battle->teamAccomplishment[currUnit->team] -= strikeDamage;
 	}
 
-	eChr->HP = max(0, eChr->HP - strikeDamage);
+	eChr->HP = std::max(0, eChr->HP - strikeDamage);
 
 	/* If target is still active, continue */
 	if (AM_IsUnitActive(eUnit))
@@ -836,7 +836,7 @@ static void AM_UpdateSurivorsAfterBattle (const autoMissionBattle_t *battle, str
 	assert(battle);
 	assert(battle->results);
 
-	battleExperience = max(0, battle->teamAccomplishment[AUTOMISSION_TEAM_TYPE_PLAYER]);
+	battleExperience = std::max(0, battle->teamAccomplishment[AUTOMISSION_TEAM_TYPE_PLAYER]);
 
 	LIST_Foreach(aircraft->acTeam, employee_t, soldier) {
 		character_t *chr = &soldier->chr;

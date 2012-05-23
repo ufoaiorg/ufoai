@@ -222,7 +222,8 @@ static qboolean AI_HideNeeded (const edict_t *ent)
 				}
 				/* search the (visible) inventory (by just checking the weapon in the hands of the enemy */
 				if (fd != NULL && fd->range * fd->range >= VectorDistSqr(ent->origin, from->origin)) {
-					const int damage = max(0, fd->damage[0] + (fd->damage[1] * crand()));
+					const int damageRand = fd->damage[0] + (fd->damage[1] * crand());
+					const int damage = std::max(0, damageRand);
 					if (damage >= ent->HP / 3) {
 						const int hidingTeam = AI_GetHidingTeam(ent);
 						/* now check whether this enemy is visible for this alien */
@@ -309,7 +310,7 @@ qboolean AI_FindHidingLocation (int team, edict_t *ent, const pos3_t from, int *
 {
 	byte minX, maxX, minY, maxY;
 	const byte crouchingState = G_IsCrouched(ent) ? 1 : 0;
-	const int distance = min(*tuLeft, HIDE_DIST * 2);
+	const int distance = std::min(*tuLeft, HIDE_DIST * 2);
 
 	/* We need a local table to calculate the hiding steps */
 	if (!hidePathingTable)
@@ -317,10 +318,10 @@ qboolean AI_FindHidingLocation (int team, edict_t *ent, const pos3_t from, int *
 	/* search hiding spot */
 	G_MoveCalcLocal(hidePathingTable, 0, ent, from, crouchingState, distance);
 	ent->pos[2] = from[2];
-	minX = max(from[0] - HIDE_DIST, 0);
-	minY = max(from[1] - HIDE_DIST, 0);
-	maxX = min(from[0] + HIDE_DIST, PATHFINDING_WIDTH - 1);
-	maxY = min(from[1] + HIDE_DIST, PATHFINDING_WIDTH - 1);
+	minX = std::max(from[0] - HIDE_DIST, 0);
+	minY = std::max(from[1] - HIDE_DIST, 0);
+	maxX = std::min(from[0] + HIDE_DIST, PATHFINDING_WIDTH - 1);
+	maxY = std::min(from[1] + HIDE_DIST, PATHFINDING_WIDTH - 1);
 
 	for (ent->pos[1] = minY; ent->pos[1] <= maxY; ent->pos[1]++) {
 		for (ent->pos[0] = minX; ent->pos[0] <= maxX; ent->pos[0]++) {
@@ -355,7 +356,7 @@ qboolean AI_FindHerdLocation (edict_t *ent, const pos3_t from, const vec3_t targ
 {
 	byte minX, maxX, minY, maxY;
 	const byte crouchingState = G_IsCrouched(ent) ? 1 : 0;
-	const int distance = min(tu, HERD_DIST * 2);
+	const int distance = std::min(tu, HERD_DIST * 2);
 	vec_t length;
 	vec_t bestlength = 0.0f;
 	pos3_t bestpos;
@@ -378,10 +379,10 @@ qboolean AI_FindHerdLocation (edict_t *ent, const pos3_t from, const vec3_t targ
 	/* calculate move table */
 	G_MoveCalcLocal(herdPathingTable, 0, ent, from, crouchingState, distance);
 	ent->pos[2] = from[2];
-	minX = max(from[0] - HERD_DIST, 0);
-	minY = max(from[1] - HERD_DIST, 0);
-	maxX = min(from[0] + HERD_DIST, PATHFINDING_WIDTH - 1);
-	maxY = min(from[1] + HERD_DIST, PATHFINDING_WIDTH - 1);
+	minX = std::max(from[0] - HERD_DIST, 0);
+	minY = std::max(from[1] - HERD_DIST, 0);
+	maxX = std::min(from[0] + HERD_DIST, PATHFINDING_WIDTH - 1);
+	maxY = std::min(from[1] + HERD_DIST, PATHFINDING_WIDTH - 1);
 
 	/* search the location */
 	VectorCopy(from, bestpos);
@@ -629,7 +630,7 @@ static float AI_FighterCalcBestAction (edict_t * ent, pos3_t to, aiAction_t * ai
 			 * e.g. they may now choose only the closer doors;
 			 * however it's still better than going three times around soldier
 			 * and only then firing at him */
-			bestActionPoints += max(GUETE_CLOSE_IN - move, 0);
+			bestActionPoints += std::max(GUETE_CLOSE_IN - move, 0);
 
 			if (!AI_FindHidingLocation(hidingTeam, ent, to, &tu)) {
 				/* nothing found */
@@ -651,7 +652,7 @@ static float AI_FighterCalcBestAction (edict_t * ent, pos3_t to, aiAction_t * ai
 	while ((check = G_EdictsGetNextLivingActor(check))) {
 		if (check->team != ent->team) {
 			const float dist = VectorDist(ent->origin, check->origin);
-			minDist = min(dist, minDist);
+			minDist = std::min(dist, minDist);
 		}
 	}
 	bestActionPoints += GUETE_CLOSE_IN * (1.0 - minDist / CLOSE_IN_DIST);
@@ -868,10 +869,10 @@ static aiAction_t AI_PrepBestAction (const player_t *player, edict_t * ent)
 
 	/* set borders */
 	dist = (ent->TU + 1) / 2;
-	xl = max((int) ent->pos[0] - dist, 0);
-	yl = max((int) ent->pos[1] - dist, 0);
-	xh = min((int) ent->pos[0] + dist, PATHFINDING_WIDTH);
-	yh = min((int) ent->pos[1] + dist, PATHFINDING_WIDTH);
+	xl = std::max((int) ent->pos[0] - dist, 0);
+	yl = std::max((int) ent->pos[1] - dist, 0);
+	xh = std::min((int) ent->pos[0] + dist, PATHFINDING_WIDTH);
+	yh = std::min((int) ent->pos[1] + dist, PATHFINDING_WIDTH);
 
 	/* search best action */
 	best = AI_ACTION_NOTHING_FOUND;

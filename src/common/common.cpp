@@ -778,7 +778,7 @@ qboolean Com_ConsoleCompleteCommand (const char *s, char *target, size_t bufSize
 			if (cntCvar != 1)
 				append = qfalse;
 		} else if (cmd && cvar) {
-			int maxLength = min(strlen(cmdBackup),strlen(cvar));
+			int maxLength = std::min(strlen(cmdBackup),strlen(cvar));
 			int idx = 0;
 			/* try to find similar content of cvar and cmd match */
 			Q_strncpyz(cmdLine,cmdBackup,sizeof(cmdLine));
@@ -1278,18 +1278,18 @@ static void tick_timer (int now, void *data)
 
 		/* When we stay above the high water mark, increase the interval */
 		if (mean > TIMER_LATENESS_HIGH)
-			timer->checks_high = min(TIMER_CHECK_LAG, timer->checks_high + 1);
+			timer->checks_high = std::min(TIMER_CHECK_LAG, timer->checks_high + 1);
 		else
-			timer->checks_high = max(0, timer->checks_high - 1);
+			timer->checks_high = std::max(0, timer->checks_high - 1);
 
 		if (timer->checks_high > TIMER_CHECK_LAG)
 			timer->interval += 2;
 
 		/* When we stay below the low water mark, decrease the interval */
 		if (mean < TIMER_LATENESS_LOW)
-			timer->checks_low = min(TIMER_CHECK_LAG, timer->checks_high + 1);
+			timer->checks_low = std::min(TIMER_CHECK_LAG, timer->checks_high + 1);
 		else
-			timer->checks_low = max(0, timer->checks_low - 1);
+			timer->checks_low = std::max(0, timer->checks_low - 1);
 
 		if (timer->checks_low > TIMER_CHECK_LAG)
 			timer->interval -= 1;
@@ -1301,7 +1301,7 @@ static void tick_timer (int now, void *data)
 		timer->next_check = TIMER_CHECK_INTERVAL;
 	}
 
-	timer->interval = max(timer->interval, 1000 / timer->min_freq->integer);
+	timer->interval = std::max(timer->interval, 1000 / timer->min_freq->integer);
 
 	if (timer->interval != old_interval)
 		Com_DPrintf(DEBUG_ENGINE, "Adjusted timer on %s to interval %d\n", timer->min_freq->name, timer->interval);
@@ -1334,16 +1334,6 @@ static void Schedule_Timer (cvar_t *freq, event_func *func, event_check_func *ch
 		timer->recent_lateness[i] = 0;
 
 	Schedule_Event(Sys_Milliseconds() + timer->interval, &tick_timer, check, NULL, timer);
-}
-
-void* scheduleEvent_t::operator new(size_t const size)
-{
-	return Mem_PoolAlloc(size, com_genericPool, 0);
-}
-
-void scheduleEvent_t::operator delete(void* const p)
-{
-	Mem_Free(p);
 }
 
 /**

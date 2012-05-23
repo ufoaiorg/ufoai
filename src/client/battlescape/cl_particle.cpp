@@ -961,7 +961,7 @@ static void CL_ParticleRun2 (ptl_t *p)
 	if (p->physics) {
 		trace_t tr;
 		vec3_t mins, maxs;
-		const float size = max(p->size[0], p->size[1]);
+		const float size = std::max(p->size[0], p->size[1]);
 
 		if (p->hitSolid && p->bounce) {
 			VectorCopy(p->oldV, p->v);

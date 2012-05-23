@@ -111,7 +111,7 @@ static inline void RT_PlaceInit (const routing_t *map, const actorSizeEnum_t act
 	p->cell[2] = z;
 	p->floor = RT_FLOOR(map, actorSize, x, y, z) + z * CELL_HEIGHT;
 	p->ceiling = relCeiling + z * CELL_HEIGHT;
-	p->floorZ = max(0, p->floor / CELL_HEIGHT) ;
+	p->floorZ = std::max(0, p->floor / CELL_HEIGHT) ;
 	p->usable = (relCeiling && p->floor > -1 && p->ceiling - p->floor >= PATHFINDING_MIN_OPENING) ? qtrue : qfalse;
 }
 
@@ -122,7 +122,7 @@ static inline qboolean RT_PlaceIsUsable (const place_t* p)
 
 static inline qboolean RT_PlaceDoesIntersectEnough (const place_t* p, const place_t* other)
 {
-	return (min(p->ceiling, other->ceiling) - max(p->floor, other->floor) >= PATHFINDING_MIN_OPENING);
+	return (std::min(p->ceiling, other->ceiling) - std::max(p->floor, other->floor) >= PATHFINDING_MIN_OPENING);
 }
 
 /**
@@ -566,8 +566,10 @@ int RT_CheckCell (mapTiles_t *mapTiles, routing_t * map, const int actorSize, co
 		 * floor (one sided brush).  If this is the case, we set the ceiling to QUANT below the floor of the above
 		 * ceiling if it is lower than our found ceiling.
 		 */
-		if (tr.endpos[2] > (z + 1) * UNIT_HEIGHT)
-			top = min(tr.endpos[2], (z + 1) * UNIT_HEIGHT + QuantToModel(RT_FLOOR(map, actorSize, x, y, z + 1) - 1));
+		if (tr.endpos[2] > (z + 1) * UNIT_HEIGHT) {
+			const float topf = (z + 1) * UNIT_HEIGHT + QuantToModel(RT_FLOOR(map, actorSize, x, y, z + 1) - 1);
+			top = std::min(tr.endpos[2], topf);
+		}
 
 		/* We found the ceiling. */
 		top = tr.endpos[2];
@@ -587,7 +589,7 @@ int RT_CheckCell (mapTiles_t *mapTiles, routing_t * map, const int actorSize, co
 	topQ = ModelCeilingToQuant(top); /* Convert to QUANT units to ensure the floor is rounded down to the correct value. */
 	fz = floor(bottomQ / CELL_HEIGHT); /* Ensure we round down to get the bottom-most affected cell */
 	/** @note Remember that ceiling values of 1-16 belong to a cell.  We need to adjust topQ by 1 to round to the correct z value. */
-	cz = min(z, (int)(floor((topQ - 1) / CELL_HEIGHT))); /* Use the lower of z or the calculated ceiling */
+	cz = std::min(z, (int)(floor((topQ - 1) / CELL_HEIGHT))); /* Use the lower of z or the calculated ceiling */
 
 	assert(fz <= cz);
 
@@ -652,7 +654,8 @@ static int RT_FillPassageData (RT_data_t *rtd, const int dir, const int  x, cons
 	 */
 
 	fz = z;
-	cz = min(PATHFINDING_HEIGHT - 1, ceil((float)openingTop / CELL_HEIGHT) - 1);
+	cz = ceil((float)openingTop / CELL_HEIGHT) - 1;
+	cz = std::min(PATHFINDING_HEIGHT - 1, cz);
 
 	/* last chance- if cz < z, then bail (and there is an error with the ceiling data somewhere */
 	if (cz < z) {
@@ -673,7 +676,7 @@ static int RT_FillPassageData (RT_data_t *rtd, const int dir, const int  x, cons
 		int oh;
 		RT_CONN_TEST(rtd->map, rtd->actorSize, x, y, i, dir);
 		/* Offset from the floor or the bottom of the current cell, whichever is higher. */
-		oh = openingTop - max(openingBase, i * CELL_HEIGHT);
+		oh = openingTop - std::max(openingBase, i * CELL_HEIGHT);
 		/* Only if > 0 */
 		assert (oh >= 0);
 		RT_ConnSet(rtd, x, y, i, dir, oh);
@@ -817,11 +820,11 @@ static int RT_FindOpeningFloor (RT_data_t *rtd, const vec3_t start, const vec3_t
 		midfloor2 = RT_FindOpeningFloorFrac(rtd, start, end, 0.66, startingHeight);
 		if (debugTrace)
 			Com_Printf("2/3floor:%i.\n", midfloor2);
-		midfloor = max(midfloor, midfloor2);
+		midfloor = std::max(midfloor, midfloor2);
 	}
 
 	/* return the highest floor. */
-	return max(floorLimit, midfloor);
+	return std::max(floorLimit, midfloor);
 }
 
 
@@ -856,11 +859,11 @@ static int RT_FindOpeningCeiling (RT_data_t *rtd, const vec3_t start, const vec3
 		midceil2 = RT_FindOpeningCeilingFrac(rtd, start, end, 0.66, startingHeight);
 		if (debugTrace)
 			Com_Printf("2/3ceil:%i.\n", midceil2);
-		midceil = min(midceil, midceil2);
+		midceil = std::min(midceil, midceil2);
 	}
 
 	/* return the lowest ceiling. */
-	return min(ceilLimit, midceil);
+	return std::min(ceilLimit, midceil);
 }
 
 
@@ -868,7 +871,8 @@ static int RT_CalcNewZ (RT_data_t *rtd, const int ax, const int ay, const int to
 {
 	int temp_z, adj_lo;
 
-	temp_z = min(floor((hi - 1) / CELL_HEIGHT), PATHFINDING_HEIGHT - 1);
+	temp_z = floor((hi - 1) / CELL_HEIGHT);
+	temp_z = std::min(temp_z, PATHFINDING_HEIGHT - 1);
 	adj_lo = RT_FLOOR(rtd->map, rtd->actorSize, ax, ay, temp_z) + temp_z * CELL_HEIGHT;
 	if (adj_lo > hi) {
 		temp_z--;
@@ -953,7 +957,7 @@ static int RT_FindOpening (RT_data_t *rtd, const place_t* from, const int ax, co
 	int temp_z;
 
 	const int endfloor = RT_FLOOR(rtd->map, rtd->actorSize, ax, ay, from->cell[2]) + from->cell[2] * CELL_HEIGHT;
-	const int hifloor = max(endfloor, bottom);
+	const int hifloor = std::max(endfloor, bottom);
 
 	if (debugTrace)
 		Com_Printf("ef:%i t:%i b:%i\n", endfloor, top, bottom);
@@ -1065,7 +1069,8 @@ static int RT_MicroTrace (RT_data_t *rtd, const place_t* from, const int ax, con
 
 	/* First prepare the two known end values. */
 	bases[0] = from->floor;
-	bases[steps] = last_step = max(0, RT_FLOOR(rtd->map, rtd->actorSize, ax, ay, az)) + az * CELL_HEIGHT;
+	const int floorVal = RT_FLOOR(rtd->map, rtd->actorSize, ax, ay, az);
+	bases[steps] = last_step = std::max(0, floorVal) + az * CELL_HEIGHT;
 
 	/* Initialize the starting vector */
 	SizedPosToVec(from->cell, rtd->actorSize, start);
@@ -1084,7 +1089,7 @@ static int RT_MicroTrace (RT_data_t *rtd, const place_t* from, const int ax, con
 	ex = end[0];
 	ey = end[1];
 
-	newBottom = max(bases[0], bases[steps]);
+	newBottom = std::max(bases[0], bases[steps]);
 	/* Now calculate the rest of the microheights. */
 	for (i = 1; i < steps; i++) {
 		start[0] = end[0] = sx + (ex - sx) * (i / (float)steps);
@@ -1113,7 +1118,7 @@ static int RT_MicroTrace (RT_data_t *rtd, const place_t* from, const int ax, con
 			Com_Printf("Microstep %i from (%f, %f, %f) to (%f, %f, %f) = %i [%f]\n",
 				i, start[0], start[1], start[2], end[0], end[1], end[2], bases[i], tr.endpos[2]);\
 
-		newBottom = max(newBottom, bases[i]);
+		newBottom = std::max(newBottom, (int)bases[i]);
 	}
 
 	if (debugTrace)
@@ -1138,7 +1143,7 @@ static int RT_MicroTrace (RT_data_t *rtd, const place_t* from, const int ax, con
 				if (debugTrace)
 					Com_Printf(" Skipped too many steps, reverting to i:%i\n", i);
 			}
-			opening->stepup = max(opening->stepup, bases[i] - current_h);
+			opening->stepup = std::max(opening->stepup, bases[i] - current_h);
 			current_h = bases[i];
 			highest_h = -2;
 			highest_i = i + 1;
@@ -1182,7 +1187,7 @@ static int RT_MicroTrace (RT_data_t *rtd, const place_t* from, const int ax, con
 				if (debugTrace)
 					Com_Printf(" Skipped too many steps, reverting to i:%i\n", i);
 			}
-			opening->invstepup = max(opening->invstepup, bases[i] - current_h);
+			opening->invstepup = std::max(opening->invstepup, bases[i] - current_h);
 			current_h = bases[i];
 			highest_h = -2;
 			highest_i = i - 1;
@@ -1247,8 +1252,8 @@ static int RT_TraceOnePassage (RT_data_t *rtd, const place_t* from, const place_
 	int hi; /**< absolute ceiling of the passage found. */
 	const int z = from->cell[2];
 	int az; /**< z height of the actor after moving in this direction. */
-	const int lower = max(from->floor, to->floor);
-	const int upper = min(from->ceiling, to->ceiling);
+	const int lower = std::max(from->floor, to->floor);
+	const int upper = std::min(from->ceiling, to->ceiling);
 	const int ax = to->cell[0];
 	const int ay = to->cell[1];
 
@@ -1276,8 +1281,8 @@ static int RT_TraceOnePassage (RT_data_t *rtd, const place_t* from, const place_
 			opening->size = hi - opening->base;	/* re-calculate */
 		} else {
 			/* Skipping microtracing, just set the stepup values. */
-			opening->stepup = max(0, opening->base - srcFloor);
-			opening->invstepup = max(0, opening->base - dstFloor);
+			opening->stepup = std::max(0, opening->base - srcFloor);
+			opening->invstepup = std::max(0, opening->base - dstFloor);
 		}
 
 		/* Now place an upper bound on stepup */
@@ -1336,7 +1341,7 @@ static void RT_TracePassage (RT_data_t *rtd, const int x, const int y, const int
 	RT_PlaceInit(rtd->map, rtd->actorSize, &to, ax, ay, z);
 
 	aboveCeil = (z < PATHFINDING_HEIGHT - 1) ? RT_CEILING(rtd->map, rtd->actorSize, ax, ay, z + 1) + (z + 1) * CELL_HEIGHT : to.ceiling;
-	lowCeil = min(from.ceiling, (RT_CEILING(rtd->map, rtd->actorSize, ax, ay, z) == 0 || to.ceiling - from.floor < PATHFINDING_MIN_OPENING) ? aboveCeil : to.ceiling);
+	lowCeil = std::min(from.ceiling, (RT_CEILING(rtd->map, rtd->actorSize, ax, ay, z) == 0 || to.ceiling - from.floor < PATHFINDING_MIN_OPENING) ? aboveCeil : to.ceiling);
 
 	/*
 	 * First check the ceiling for the cell beneath the adjacent floor to see
@@ -1482,7 +1487,7 @@ static int RT_UpdateConnection (RT_data_t *rtd, const int x, const int y, const 
 	new_z2 = RT_FillPassageData(rtd, dir ^ 1, ax, ay, az, opening.size, opening.base, opening.invstepup);
 	if (new_z2 == az && az < z)
 		new_z2++;
-	return min(new_z1, new_z2);
+	return std::min(new_z1, new_z2);
 #else
 	return new_z1;
 #endif

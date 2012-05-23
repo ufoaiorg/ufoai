@@ -343,9 +343,9 @@ static void G_Damage (edict_t *target, const fireDef_t *fd, int damage, edict_t 
 		const int nd = target->chr.teamDef->resistance[fd->dmgweight];
 		if (CONTAINER(target, gi.csi->idArmour)) {
 			const objDef_t *ad = CONTAINER(target, gi.csi->idArmour)->item.t;
-			damage = max(1, damage - ad->protection[fd->dmgweight] - nd);
+			damage = std::max(1, damage - ad->protection[fd->dmgweight] - nd);
 		} else {
-			damage = max(1, damage - nd);
+			damage = std::max(1, damage - nd);
 		}
 	} else if (damage < 0) {
 		/* Robots can't be healed. */
@@ -437,14 +437,14 @@ void G_CheckDeathOrKnockout (edict_t *target, edict_t *attacker, const fireDef_t
 			G_UpdateCharacterBodycount(attacker, fd, target);
 		}
 	} else {
-		target->chr.minHP = min(target->chr.minHP, target->HP);
+		target->chr.minHP = std::min(target->chr.minHP, target->HP);
 		if (damage > 0) {
 			if (mor_panic->integer)
 				G_Morale(ML_WOUND, target, attacker, damage);
 		} else { /* medikit, etc. */
 			const int hp = GET_HP(target->chr.score.skills[ABILITY_POWER]);
 			if (target->HP > hp) {
-				target->HP = min(max(hp, 0), target->chr.maxHP);
+				target->HP = std::min(std::max(hp, 0), target->chr.maxHP);
 			}
 		}
 		G_SendStats(target);
@@ -870,7 +870,7 @@ static void G_ShootSingle (edict_t *ent, const fireDef_t *fd, const vec3_t from,
 	if (FIRESH_IsMedikit(fd))
 		damage = fd->damage[0] + (fd->damage[1] * crand());
 	else
-		damage = max(0, fd->damage[0] + (fd->damage[1] * crand()));
+		damage = std::max(0.0f, fd->damage[0] + (fd->damage[1] * crand()));
 
 	VectorMA(cur_loc, UNIT_SIZE, dir, impact);
 	tr = G_Trace(cur_loc, impact, ent, MASK_SHOT);
@@ -1103,7 +1103,7 @@ qboolean G_ClientShoot (const player_t * player, edict_t* ent, const pos3_t at, 
 
 	ammo = weapon->a;
 	/* if this is reaction fire, don't keep trying to reserve TUs for reaction fire */
-	reactionLeftover = IS_SHOT_REACTION(shootType) ? max(0, player->reactionLeftover - ent->chr.reservedTus.reaction) : 0;
+	reactionLeftover = IS_SHOT_REACTION(shootType) ? std::max(0, player->reactionLeftover - ent->chr.reservedTus.reaction) : 0;
 
 	/* check if action is possible
 	 * if allowReaction is false, it is a shot from reaction fire, so don't check the active team */
@@ -1268,11 +1268,11 @@ qboolean G_ClientShoot (const player_t * player, edict_t* ent, const pos3_t at, 
 
 	if (!mock) {
 		if (fd->obj->dmgtype == gi.csi->damSmoke) {
-			const int rounds = max(2, fd->rounds);
+			const int rounds = std::max(2, fd->rounds);
 			G_SpawnSmokeField(impact, "smokefield", rounds);
 		} else if (fd->obj->dmgtype == gi.csi->damIncendiary) {
-			const int damage = max(0, fd->damage[0] + (fd->damage[1] * crand()));
-			const int rounds = max(2, fd->rounds);
+			const int damage = std::max(0.0f, fd->damage[0] + (fd->damage[1] * crand()));
+			const int rounds = std::max(2, fd->rounds);
 			G_SpawnFireField(impact, "firefield", rounds, damage);
 		}
 

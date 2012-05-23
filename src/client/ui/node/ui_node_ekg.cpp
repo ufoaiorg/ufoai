@@ -69,7 +69,7 @@ void uiEkgNode::draw (uiNode_t *node)
 		else
 			current = Cvar_GetValue("mn_hp") / EXTRADATA(node).scaleCvarValue;
 
-		ekgValue = min(current, ekgMaxValue);
+		ekgValue = std::min((int)current, ekgMaxValue);
 
 		EXTRADATA(node).super.texl[1] = (ekgMaxIndex - (int)(ekgValue / ekgDivide)) * ekgHeight;
 		EXTRADATA(node).super.texh[1] = EXTRADATA(node).super.texl[1] + ekgHeight;

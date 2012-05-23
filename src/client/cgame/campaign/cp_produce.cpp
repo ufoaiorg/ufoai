@@ -54,7 +54,7 @@ static double PR_CalculateProductionTimeInMinutes (const base_t *base, const pro
 	/* Check how many workers hired in this base. */
 	const signed int allWorkers = E_CountHired(base, EMPL_WORKER);
 	/* We will not use more workers than workspace capacity in this base. */
-	const signed int maxWorkers = min(allWorkers, CAP_GetMax(base, CAP_WORKSPACE));
+	const signed int maxWorkers = std::min(allWorkers, CAP_GetMax(base, CAP_WORKSPACE));
 
 	double timeDefault;
 	if (PR_IsProductionData(prodData)) {
@@ -67,12 +67,12 @@ static double PR_CalculateProductionTimeInMinutes (const base_t *base, const pro
 		timeDefault = storedUFO->comp->time;
 		/* Production is 4 times longer when installation is on Antipodes
 		 * Penalty starts when distance is greater than 45 degrees */
-		timeDefault *= max(1.0, GetDistanceOnGlobe(storedUFO->installation->pos, base->pos) / 45.0);
+		timeDefault *= std::max(1.0, GetDistanceOnGlobe(storedUFO->installation->pos, base->pos) / 45.0);
 	}
 	/* Calculate the time needed for production of the item for our amount of workers. */
 	double const timeScaled = timeDefault * (MINUTES_PER_HOUR * PRODUCE_WORKERS) / maxWorkers;
 	/* Don't allow to return a time of less than 1 (you still need at least 1 minute to produce an item). */
-	return max(1.0, timeScaled);
+	return std::max(1.0, timeScaled);
 }
 
 /**
@@ -171,13 +171,13 @@ int PR_RequirementsMet (int amount, const requirements_t *reqs, base_t *base)
 
 		switch (req->type) {
 		case RS_LINK_ITEM: {
-				const int items = min(amount, B_ItemInBase(req->link.od, base) / ((req->amount) ? req->amount : 1));
-				producibleAmount = min(producibleAmount, items);
+				const int items = std::min(amount, B_ItemInBase(req->link.od, base) / ((req->amount) ? req->amount : 1));
+				producibleAmount = std::min(producibleAmount, items);
 				break;
 			}
 		case RS_LINK_ANTIMATTER: {
-				const int am = min(amount, B_AntimatterInBase(base) / ((req->amount) ? req->amount : 1));
-				producibleAmount = min(producibleAmount, am);
+				const int am = std::min(amount, B_AntimatterInBase(base) / ((req->amount) ? req->amount : 1));
+				producibleAmount = std::min(producibleAmount, am);
 				break;
 			}
 		case RS_LINK_TECH:
@@ -207,9 +207,9 @@ int PR_QueueFreeSpace (const base_t* base)
 	assert(queue);
 	assert(base);
 
-	numWorkshops = max(B_GetNumberOfBuildingsInBaseByBuildingType(base, B_WORKSHOP), 0);
+	numWorkshops = std::max(B_GetNumberOfBuildingsInBaseByBuildingType(base, B_WORKSHOP), 0);
 
-	return min(MAX_PRODUCTIONS, numWorkshops * MAX_PRODUCTIONS_PER_WORKSHOP - queue->numItems);
+	return std::min(MAX_PRODUCTIONS, numWorkshops * MAX_PRODUCTIONS_PER_WORKSHOP - queue->numItems);
 }
 
 /**
@@ -360,7 +360,7 @@ void PR_QueueDelete (base_t *base, production_queue_t *queue, int index)
  */
 void PR_QueueMove (production_queue_t *queue, int index, int offset)
 {
-	const int newIndex = max(0, min(index + offset, queue->numItems - 1));
+	const int newIndex = std::max(0, std::min(index + offset, queue->numItems - 1));
 	int i;
 	production_t saved;
 
@@ -627,7 +627,7 @@ int PR_IncreaseProduction (production_t *prod, int amount)
 
 	/* amount limit per one production */
 	if (prod->amount + amount > MAX_PRODUCTION_AMOUNT) {
-		amount = max(0, MAX_PRODUCTION_AMOUNT - prod->amount);
+		amount = std::max(0, MAX_PRODUCTION_AMOUNT - prod->amount);
 	}
 
 	tech = PR_GetTech(&prod->data);
@@ -767,7 +767,7 @@ void PR_UpdateProductionCap (base_t *base)
 
 	for (int i = 0; i < q->numItems; i++) {
 		production_t *prod = &q->items[i];
-		prod->totalFrames = max(prod->frame, PR_CalculateTotalFrames(base, &prod->data));
+		prod->totalFrames = std::max(prod->frame, PR_CalculateTotalFrames(base, &prod->data));
 	}
 }
 

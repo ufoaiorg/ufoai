@@ -44,6 +44,7 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #include <limits.h>
 #include <stddef.h>
 #include "ufotypes.h"	/* needed for Com_sprintf */
+#include <algorithm>
 
 /* to support the gnuc __attribute__ command */
 #if defined __ICC || !defined __GNUC__

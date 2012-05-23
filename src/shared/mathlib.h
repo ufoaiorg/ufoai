@@ -51,16 +51,8 @@ extern const vec4_t color_white;
 qboolean Q_IsPowerOfTwo(int i);
 
 /* Used to compare floats when rounding errors could occur  */
-#ifndef equal
-#define equal(a,b) (fabs((a)-(b))<0.0000000001)
-#endif
-
-#ifndef max
-#define max(a,b) ((a)>(b)?(a):(b))
-#endif
-
-#ifndef min
-#define min(a,b) ((a)<(b)?(a):(b))
+#ifndef EQUAL
+#define EQUAL(a,b) (fabs((a)-(b))<0.0000000001)
 #endif
 
 /* microsoft's fabs seems to be ungodly slow... */
@@ -114,7 +106,7 @@ extern const byte dvleft[CORE_DIRECTIONS];
 #define VecToPos(v, p) (                  \
 	(p)[0] = ((int)(v)[0] + MAX_WORLD_WIDTH) / UNIT_SIZE,  \
 	(p)[1] = ((int)(v)[1] + MAX_WORLD_WIDTH) / UNIT_SIZE,  \
-	(p)[2] =  min((PATHFINDING_HEIGHT - 1), ((int)(v)[2] / UNIT_HEIGHT)) \
+	(p)[2] =  std::min((PATHFINDING_HEIGHT - 1), ((int)(v)[2] / UNIT_HEIGHT)) \
 )
 /** @brief Pos boundary size is +/- 128 - to get into the positive area we add
  * the possible max negative value and multiply with the grid unit size to get
@@ -148,9 +140,9 @@ extern const byte dvleft[CORE_DIRECTIONS];
 #define Vector2Set(v, x, y)     ((v)[0]=(x), (v)[1]=(y))
 #define Vector4Set(v, r, g, b, a)   ((v)[0]=(r), (v)[1]=(g), (v)[2]=(b), (v)[3]=(a))
 #define VectorCompare(a,b)      ((a)[0]==(b)[0]?(a)[1]==(b)[1]?(a)[2]==(b)[2]?1:0:0:0)
-#define VectorEqual(a,b)      (equal((a)[0],(b)[0])?equal((a)[1],(b)[1])?equal((a)[2],(b)[2])?1:0:0:0)
+#define VectorEqual(a,b)      (EQUAL((a)[0],(b)[0])?EQUAL((a)[1],(b)[1])?EQUAL((a)[2],(b)[2])?1:0:0:0)
 #define Vector2Compare(a,b)     ((a)[0]==(b)[0]?(a)[1]==(b)[1]?1:0:0)
-#define Vector2Equal(a,b)      (equal((a)[0],(b)[0])?equal((a)[1],(b)[1])?1:0:0)
+#define Vector2Equal(a,b)      (EQUAL((a)[0],(b)[0])?EQUAL((a)[1],(b)[1])?1:0:0)
 #define VectorDistSqr(a,b)      (((b)[0]-(a)[0])*((b)[0]-(a)[0])+((b)[1]-(a)[1])*((b)[1]-(a)[1])+((b)[2]-(a)[2])*((b)[2]-(a)[2]))
 #define VectorDist(a,b)         (sqrt(((b)[0]-(a)[0])*((b)[0]-(a)[0])+((b)[1]-(a)[1])*((b)[1]-(a)[1])+((b)[2]-(a)[2])*((b)[2]-(a)[2])))
 #define Vector2Dist(a,b)         (sqrt(((b)[0]-(a)[0])*((b)[0]-(a)[0])+((b)[1]-(a)[1])*((b)[1]-(a)[1])))
@@ -159,7 +151,7 @@ extern const byte dvleft[CORE_DIRECTIONS];
 #define VectorEmpty(a)           (VectorEqual((a), vec3_origin))
 #define Vector2Empty(a)			 (Vector2Equal((a), vec2_origin))
 #define Vector2NotEmpty(a)		    (!Vector2Empty((a)))
-#define Vector4NotEmpty(a)          (VectorNotEmpty(a) || !equal((a)[3],0.0))
+#define Vector4NotEmpty(a)          (VectorNotEmpty(a) || !EQUAL((a)[3],0.0))
 #define LinearInterpolation(a, b, x, y)   ((y)=(a)[1] + ((((x) - (a)[0]) * ((b)[1] - (a)[1])) / ((b)[0] - (a)[0])))
 #define VectorScale(in,scale,out) ((out)[0] = (in)[0] * (scale),(out)[1] = (in)[1] * (scale),(out)[2] = (in)[2] * (scale))
 #define VectorInterpolation(p1,p2,frac,mid)	((mid)[0]=(p1)[0]+(frac)*((p2)[0]-(p1)[0]),(mid)[1]=(p1)[1]+(frac)*((p2)[1]-(p1)[1]),(mid)[2]=(p1)[2]+(frac)*((p2)[2]-(p1)[2]))

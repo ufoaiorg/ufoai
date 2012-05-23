@@ -1248,10 +1248,10 @@ static void MAP3D_SmoothRotate (void)
 			float rotationSpeed;
 			/* Append the old speed to the new speed if this is the first half of a new rotation, but never exceed the max speed.
 			 * This allows the globe to rotate at maximum speed when the button is held down. */
+			rotationSpeed = sin(3.05f * diffAngle / ccs.smoothDeltaLength) * diffAngle;
 			if (diffAngle / ccs.smoothDeltaLength > 0.5)
-				rotationSpeed = min(diffAngle, ccs.curRotationSpeed + sin(3.05f * diffAngle / ccs.smoothDeltaLength) * diffAngle * 0.5);
-			else
-				rotationSpeed = sin(3.05f * diffAngle / ccs.smoothDeltaLength) * diffAngle;
+				rotationSpeed = std::min(diffAngle, ccs.curRotationSpeed + rotationSpeed * 0.5f);
+
 			ccs.curRotationSpeed = rotationSpeed;
 			VectorScale(diff, smoothAcceleration / diffAngle * rotationSpeed, diff);
 			VectorAdd(ccs.angles, diff, ccs.angles);
@@ -1266,7 +1266,7 @@ static void MAP3D_SmoothRotate (void)
 			/* Append the old speed to the new speed if this is the first half of a new zoom operation, but never exceed the max speed.
 			 * This allows the globe to zoom at maximum speed when the button is held down. */
 			if (fabs(diffZoom) / ccs.smoothDeltaZoom > 0.5)
-				speed = min(smoothAcceleration * 2.0, ccs.curZoomSpeed + sin(3.05f * (fabs(diffZoom) / ccs.smoothDeltaZoom)) * smoothAcceleration);
+				speed = std::min(smoothAcceleration * 2.0, ccs.curZoomSpeed + sin(3.05f * (fabs(diffZoom) / ccs.smoothDeltaZoom)) * smoothAcceleration);
 			else {
 				speed = sin(3.05f * (fabs(diffZoom) / ccs.smoothDeltaZoom)) * smoothAcceleration * 2.0;
 			}

@@ -306,8 +306,8 @@ date_t Date_Substract (date_t a, date_t b)
  */
 date_t Date_Random (date_t minFrame, date_t maxFrame)
 {
-	maxFrame.sec = max(minFrame.day * SECONDS_PER_DAY + minFrame.sec,
-		(maxFrame.day * SECONDS_PER_DAY + maxFrame.sec) * frand());
+	const int random = (maxFrame.day * SECONDS_PER_DAY + maxFrame.sec) * frand();
+	maxFrame.sec = std::max(minFrame.day * SECONDS_PER_DAY + minFrame.sec, random);
 
 	maxFrame.day = maxFrame.sec / SECONDS_PER_DAY;
 	maxFrame.sec = maxFrame.sec % SECONDS_PER_DAY;

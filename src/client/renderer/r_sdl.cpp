@@ -179,7 +179,7 @@ qboolean R_InitGraphics (const viddefContext_t *context)
 	SDL_GL_SetAttribute(SDL_GL_DOUBLEBUFFER, 1);
 
 	/* valid values are between 0 and 4 */
-	i = min(4, max(0, context->multisample));
+	i = std::min(4, std::max(0, context->multisample));
 	Com_Printf("I: set multisample buffers to %i\n", i);
 	if (i > 0) {
 		SDL_GL_SetAttribute(SDL_GL_MULTISAMPLEBUFFERS, 1);
@@ -190,7 +190,7 @@ qboolean R_InitGraphics (const viddefContext_t *context)
 	}
 
 	/* valid values are between 0 and 2 */
-	i = min(2, max(0, context->swapinterval));
+	i = std::min(2, std::max(0, context->swapinterval));
 	Com_Printf("I: set swap control to %i\n", i);
 #if SDL_VERSION_ATLEAST(1,3,0)
 	SDL_GL_SetSwapInterval(1);

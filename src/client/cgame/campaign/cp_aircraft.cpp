@@ -1169,7 +1169,7 @@ static void AIR_Refuel (aircraft_t *aircraft, int deltaTime)
 	if (aircraft->fuel < 0)
 		aircraft->fuel = 0;
 	/* amount of fuel we would like to load */
-	fillup = min(deltaTime * AIRCRAFT_REFUEL_FACTOR, aircraft->stats[AIR_STATS_FUELSIZE] - aircraft->fuel);
+	fillup = std::min(deltaTime * AIRCRAFT_REFUEL_FACTOR, aircraft->stats[AIR_STATS_FUELSIZE] - aircraft->fuel);
 	/* This craft uses antimatter as fuel */
 	assert(aircraft->homebase);
 	if (aircraft->stats[AIR_STATS_ANTIMATTER] > 0 && fillup > 0) {
@@ -2870,13 +2870,13 @@ int AIR_CalculateHangarStorage (const aircraft_t *aircraftTemplate, const base_t
 
 	if (!base->founded) {
 		return -1;
-	} else {
-		const baseCapacities_t aircraftCapacity = AIR_GetCapacityByAircraftWeight(aircraftTemplate);
-		/* If this is a small aircraft, we will check space in small hangar.
-		 * If this is a large aircraft, we will check space in big hangar. */
-		const int freespace = CAP_GetFreeCapacity(base, aircraftCapacity) - used;
-		return max(freespace, 0);
 	}
+
+	const baseCapacities_t aircraftCapacity = AIR_GetCapacityByAircraftWeight(aircraftTemplate);
+	/* If this is a small aircraft, we will check space in small hangar.
+	 * If this is a large aircraft, we will check space in big hangar. */
+	const int freespace = CAP_GetFreeCapacity(base, aircraftCapacity) - used;
+	return std::max(freespace, 0);
 }
 
 /**
@@ -2951,8 +2951,8 @@ const aircraft_t *AIR_IsEmployeeInAircraft (const employee_t *employee, const ai
 
 	if (AIR_IsInAircraftTeam(aircraft, employee))
 		return aircraft;
-	else
-		return NULL;
+
+	return NULL;
 }
 
 /**

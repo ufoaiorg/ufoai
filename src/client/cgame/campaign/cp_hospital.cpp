@@ -50,9 +50,9 @@ qboolean HOS_HealCharacter (character_t* chr, qboolean hospital)
 		 * method of allocating hitpoints.  So just give the character "healing" as Hitpoints, otherwise
 		 * allocate "healing" as a percentage of the characters total hitpoints. */
 		if (chr->maxHP < MAX_HP)
-			chr->HP = min(chr->HP + healing, chr->maxHP);
+			chr->HP = std::min(chr->HP + (int)healing, chr->maxHP);
 		else
-			chr->HP = min(chr->HP + ((healing / 100.0f) * chr->maxHP), chr->maxHP);
+			chr->HP = std::min(chr->HP + (int)(((healing / 100.0f) * chr->maxHP)), chr->maxHP);
 
 		if (chr->HP == chr->maxHP)
 			return qfalse;
@@ -158,7 +158,7 @@ static void HOS_HurtAll_f (void)
 			/* only those employees, that are in the current base */
 			if (!E_IsInBase(employee, base))
 				continue;
-			employee->chr.HP = max(0, employee->chr.HP - amount);
+			employee->chr.HP = std::max(0, employee->chr.HP - amount);
 		}
 	}
 }

@@ -727,7 +727,7 @@ qboolean GAME_LoadCharacter (xmlNode_t *p, character_t *chr)
 
 	const int maxSkins = CL_GetActorSkinCount() - 1;
 	const int bodySkin = XML_GetInt(p, SAVE_CHARACTER_BDOY_SKIN, 0);
-	chr->bodySkin = min(maxSkins, bodySkin);
+	chr->bodySkin = std::min(maxSkins, bodySkin);
 	chr->headSkin = XML_GetInt(p, SAVE_CHARACTER_HEAD_SKIN, 0);
 	chr->gender = XML_GetInt(p, SAVE_CHARACTER_GENDER, 0);
 	chr->ucn = XML_GetInt(p, SAVE_CHARACTER_UCN, 0);

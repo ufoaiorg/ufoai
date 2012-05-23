@@ -231,7 +231,7 @@ player_t* G_GetPlayerForTeam (int team)
 void G_TakeDamage (edict_t *ent, int damage)
 {
 	if (G_IsBreakable(ent) || G_IsActor(ent))
-		ent->HP = max(ent->HP - damage, 0);
+		ent->HP = std::max(ent->HP - damage, 0);
 }
 
 /**

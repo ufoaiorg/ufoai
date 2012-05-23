@@ -1081,7 +1081,7 @@ void AII_RepairAircraft (void)
 		AIR_ForeachFromBase(aircraft, base) {
 			if (!AIR_IsAircraftInBase(aircraft))
 				continue;
-			aircraft->damage = min(aircraft->damage + REPAIR_PER_HOUR, aircraft->stats[AIR_STATS_DAMAGE]);
+			aircraft->damage = std::min(aircraft->damage + REPAIR_PER_HOUR, aircraft->stats[AIR_STATS_DAMAGE]);
 		}
 	}
 }
@@ -1117,7 +1117,7 @@ void AII_UpdateAircraftStats (aircraft_t *aircraft)
 			item = slot->item;
 			if (fabs(item->craftitem.stats[currentStat]) > 2.0f)
 				aircraft->stats[currentStat] += (int) item->craftitem.stats[currentStat];
-			else if (!equal(item->craftitem.stats[currentStat], 0))
+			else if (!EQUAL(item->craftitem.stats[currentStat], 0))
 				aircraft->stats[currentStat] *= item->craftitem.stats[currentStat];
 		}
 
@@ -1131,7 +1131,7 @@ void AII_UpdateAircraftStats (aircraft_t *aircraft)
 			item = slot->item;
 			if (fabs(item->craftitem.stats[currentStat]) > 2.0f)
 				aircraft->stats[currentStat] += item->craftitem.stats[currentStat];
-			else if (!equal(item->craftitem.stats[currentStat], 0))
+			else if (!EQUAL(item->craftitem.stats[currentStat], 0))
 				aircraft->stats[currentStat] *= item->craftitem.stats[currentStat];
 		}
 
@@ -1140,7 +1140,7 @@ void AII_UpdateAircraftStats (aircraft_t *aircraft)
 			const objDef_t *item = aircraft->shield.item;
 			if (fabs(item->craftitem.stats[currentStat]) > 2.0f)
 				aircraft->stats[currentStat] += item->craftitem.stats[currentStat];
-			else if (!equal(item->craftitem.stats[currentStat], 0))
+			else if (!EQUAL(item->craftitem.stats[currentStat], 0))
 				aircraft->stats[currentStat] *= item->craftitem.stats[currentStat];
 		}
 	}

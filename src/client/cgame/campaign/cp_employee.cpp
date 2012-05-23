@@ -125,7 +125,7 @@ void E_HireForBuilding (base_t* base, building_t * building, int num)
 			return;
 		}
 		/* don't try to hire more that available - see E_CreateEmployee */
-		num = min(num, E_CountByType(employeeType));
+		num = std::min(num, E_CountByType(employeeType));
 		for (;num--;) {
 			assert(base);
 			if (!E_HireEmployeeByType(base, employeeType)) {

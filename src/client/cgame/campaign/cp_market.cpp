@@ -76,7 +76,7 @@ static void BS_RemoveItemFromMarket (const objDef_t *od, int amount)
 
 	assert(amount >= 0);
 
-	market->numItems[od->idx] = max(market->numItems[od->idx] - amount, 0);
+	market->numItems[od->idx] = std::max(market->numItems[od->idx] - amount, 0);
 }
 
 /**
@@ -156,7 +156,7 @@ static void BS_RemoveAircraftFromMarket (const aircraft_t *aircraft, int amount)
 	assert(amount >= 0);
 	assert(aircraft->type != AIRCRAFT_UFO);
 
-	market->numAircraft[type] = max(market->numAircraft[type] - amount, 0);
+	market->numAircraft[type] = std::max(market->numAircraft[type] - amount, 0);
 }
 
 /**

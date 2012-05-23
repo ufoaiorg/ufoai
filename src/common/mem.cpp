@@ -365,7 +365,7 @@ void* _Mem_ReAlloc (void *ptr, size_t size, const char *fileName, const int file
 	newPtr = _Mem_Alloc(size, qfalse, pool, mem->tagNum, fileName, fileLine);
 
 	/* copy old data */
-	memcpy(newPtr, ptr, min(mem->memSize, size));
+	memcpy(newPtr, ptr, std::min(mem->memSize, size));
 	if (mem->memSize < size) {
 		const size_t delta = size - mem->memSize;
 		memset((byte*)newPtr + mem->memSize, 0, delta);
@@ -649,4 +649,14 @@ void Mem_Shutdown (void)
 
 	TH_MutexDestroy(z_lock);
 	z_lock = NULL;
+}
+
+void* operator new (std::size_t size) throw (std::bad_alloc)
+{
+	return Mem_PoolAlloc(size, com_genericPool, 0);
+}
+
+void operator delete (void *p) throw ()
+{
+	Mem_Free(p);
 }

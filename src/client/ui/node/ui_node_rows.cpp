@@ -44,7 +44,7 @@ void uiRowsNode::draw (uiNode_t *node)
 
 	while (current < node->box.size[1]) {
 		const float *color;
-		const int height = min(EXTRADATA(node).lineHeight, node->box.size[1] - current);
+		const int height = std::min(EXTRADATA(node).lineHeight, (int)node->box.size[1] - current);
 
 		if (i % 2)
 			color = node->color;

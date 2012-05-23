@@ -61,7 +61,7 @@ static int UI_MessageGetLines (const uiNode_t *node, message_t *message, const c
 	int lines2;
 	R_FontTextSize(fontID, message->timestamp, column1, LONGLINES_WRAP, NULL, NULL, &lines1, NULL);
 	R_FontTextSize(fontID, message->text, column2, LONGLINES_WRAP, NULL, NULL, &lines2, NULL);
-	return max(lines1, lines2);
+	return std::max(lines1, lines2);
 }
 
 static char *lastDate;
@@ -165,7 +165,7 @@ static void UI_MessageDraw (const uiNode_t *node, message_t *message, const char
 	R_Color(node->color);
 	UI_DrawString(fontID, ALIGN_UL, x, y, x, column2, LINEHEIGHT, message->text, EXTRADATACONST(node).scrollY.viewSize, 0, &lines2, qtrue, LONGLINES_WRAP);
 	R_Color(NULL);
-	*screenLines = max(lines1, lines2);
+	*screenLines = std::max(lines1, lines2);
 	lastDate = message->timestamp;
 }
 

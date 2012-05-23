@@ -875,8 +875,8 @@ static void G_BuildForbiddenListForEntity (edict_t *ent)
 	VecToPos(shiftedMaxs, maxs);
 	VecToPos(center, origin);
 
-	xDelta = max(1, maxs[0] - mins[0]);
-	yDelta = max(1, maxs[1] - mins[1]);
+	xDelta = std::max(1, maxs[0] - mins[0]);
+	yDelta = std::max(1, maxs[1] - mins[1]);
 
 	size = xDelta * yDelta;
 	ent->forbiddenListPos = (pos3_t *)G_TagMalloc(size * sizeof(pos3_t), TAG_LEVEL);

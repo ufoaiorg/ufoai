@@ -612,7 +612,7 @@ static void US_FillUFOTransfer_f (void)
 	INS_Foreach(ins) {
 		nation_t *nat = MAP_GetNation(ins->pos);
 		const char *nationName = nat ? _(nat->name) : "";
-		const int freeSpace = max(0, ins->ufoCapacity.max - ins->ufoCapacity.cur);
+		const int freeSpace = std::max(0, ins->ufoCapacity.max - ins->ufoCapacity.cur);
 
 		if (ins == ufo->installation)
 			continue;

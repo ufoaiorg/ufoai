@@ -194,7 +194,8 @@ void uiBaseMapNode::draw (uiNode_t * node)
 					break;
 				case B_STATUS_UNDER_CONSTRUCTION:
 					{
-						const float time = max(0.0, B_GetConstructionTimeRemain(building));
+						const float remaining = B_GetConstructionTimeRemain(building);
+						const float time = std::max(0.0f, remaining);
 						const char* text = va(ngettext("%3.1f day left", "%3.1f days left", time), time);
 						UI_DrawString("f_small", ALIGN_UL, pos[0] + 10, pos[1] + 10, pos[0] + 10, node->box.size[0], 0, text);
 						break;

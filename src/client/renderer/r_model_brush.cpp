@@ -257,10 +257,10 @@ static void R_SetSurfaceExtents (mBspSurface_t *surf, const model_t* mod)
 		{  /* calculate stmins, stmaxs */
 			const float valS = DotProduct(v->position, tex->uv) + tex->u_offset;
 			const float valT = DotProduct(v->position, tex->vv) + tex->v_offset;
-			stmins[0] = min(valS, stmins[0]);
-			stmaxs[0] = max(valS, stmaxs[0]);
-			stmins[1] = min(valT, stmins[1]);
-			stmaxs[1] = max(valT, stmaxs[1]);
+			stmins[0] = std::min(valS, stmins[0]);
+			stmaxs[0] = std::max(valS, stmaxs[0]);
+			stmins[1] = std::min(valT, stmins[1]);
+			stmaxs[1] = std::max(valT, stmaxs[1]);
 		}
 	}
 

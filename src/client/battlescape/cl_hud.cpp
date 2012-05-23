@@ -388,7 +388,7 @@ static void HUD_ShotReserve_f (void)
 	if (CL_ActorUsableTUs(selActor) + CL_ActorReservedTUs(selActor, RES_SHOT) >= reserveShotData->TUs) {
 		const objDef_t *od = INVSH_GetItemByIDX(reserveShotData->weaponIndex);
 		if (GAME_ItemIsUseable(od)) {
-			HUD_SetShootReservation(selActor, max(0, reserveShotData->TUs), reserveShotData->hand, reserveShotData->fireModeIndex, od);
+			HUD_SetShootReservation(selActor, std::max(0, reserveShotData->TUs), reserveShotData->hand, reserveShotData->fireModeIndex, od);
 			if (popupListNode)
 				UI_TextNodeSelectLine(popupListNode, selectedPopupIndex);
 		}
@@ -1361,7 +1361,7 @@ static void HUD_UpdateActor (le_t *actor)
 
 	/* Calculate remaining TUs. */
 	/* We use the full count of TUs since the "reserved" bar is overlaid over this one. */
-	time = max(0, actor->TU - time);
+	time = std::max(0, actor->TU - time);
 	Cvar_Set("mn_turemain", va("%i", time));
 
 	HUD_MapDebugCursor(actor);

@@ -244,9 +244,9 @@ int CL_ActorReservedTUs (const le_t * le, const reservation_types_t type)
 		return -1;
 	}
 
-	reservedReaction = max(0, chr->reservedTus.reaction);
-	reservedCrouch = max(0, chr->reservedTus.crouch);
-	reservedShot = max(0, chr->reservedTus.shot);
+	reservedReaction = std::max(0, chr->reservedTus.reaction);
+	reservedCrouch = std::max(0, chr->reservedTus.crouch);
+	reservedShot = std::max(0, chr->reservedTus.shot);
 
 	switch (type) {
 	case RES_ALL:
@@ -1252,7 +1252,6 @@ MOUSE SCANNING
  */
 qboolean CL_ActorMouseTrace (void)
 {
-	int restingLevel;
 	float cur[2], frustumSlope[2];
 	const float projectionDistance = 2048.0f;
 	float nDotP2minusP1;
@@ -1341,10 +1340,10 @@ qboolean CL_ActorMouseTrace (void)
 	/** @todo Shouldn't we check the return value of CM_TestLineDM here - maybe
 	 * we don't have to do the second Grid_Fall call at all and can safe a lot
 	 * of traces */
-	restingLevel = Grid_Fall(cl.mapData->map, ACTOR_GET_FIELDSIZE(selActor), testPos);
+	pos_t restingLevel = Grid_Fall(cl.mapData->map, ACTOR_GET_FIELDSIZE(selActor), testPos);
 	CM_EntTestLineDM(cl.mapTiles, pA, pB, pC, TL_FLAG_ACTORCLIP, cl.leInlineModelList);
 	VecToPos(pC, testPos);
-	restingLevel = min(restingLevel, Grid_Fall(cl.mapData->map, ACTOR_GET_FIELDSIZE(selActor), testPos));
+	restingLevel = std::min(restingLevel, Grid_Fall(cl.mapData->map, ACTOR_GET_FIELDSIZE(selActor), testPos));
 
 	/* if grid below intersection level, start a trace from the intersection */
 	if (restingLevel < cl_worldlevel->integer) {
@@ -1356,7 +1355,7 @@ qboolean CL_ActorMouseTrace (void)
 	}
 
 	/* test if the selected grid is out of the world */
-	if (restingLevel < 0 || restingLevel >= PATHFINDING_HEIGHT)
+	if (restingLevel >= PATHFINDING_HEIGHT)
 		return qfalse;
 
 	/* Set truePos- test pos is under the cursor. */
@@ -1995,7 +1994,7 @@ static qboolean CL_AddPathingBox (pos3_t pos, qboolean addUnreachableCells)
 	}
 
 	/* Set the box height to the ceiling value of the cell. */
-	height = 2 + min(TUneed * (UNIT_HEIGHT - 2) / ROUTING_NOT_REACHABLE, 16);
+	height = 2 + std::min(TUneed * (UNIT_HEIGHT - 2) / ROUTING_NOT_REACHABLE, 16);
 	ent.oldorigin[2] = height;
 	ent.oldorigin[0] = TUneed;
 	ent.oldorigin[1] = TUhave;
@@ -2021,8 +2020,8 @@ void CL_AddPathing (void)
 	}
 
 	pos[2] = cl_worldlevel->integer;
-	for (pos[1] = max(mousePos[1] - 8, 0); pos[1] <= min(mousePos[1] + 8, PATHFINDING_WIDTH - 1); pos[1]++) {
-		for (pos[0] = max(mousePos[0] - 8, 0); pos[0] <= min(mousePos[0] + 8, PATHFINDING_WIDTH - 1); pos[0]++) {
+	for (pos[1] = std::max(mousePos[1] - 8, 0); pos[1] <= std::min(mousePos[1] + 8, PATHFINDING_WIDTH - 1); pos[1]++) {
+		for (pos[0] = std::max(mousePos[0] - 8, 0); pos[0] <= std::min(mousePos[0] + 8, PATHFINDING_WIDTH - 1); pos[0]++) {
 			CL_AddPathingBox(pos, qtrue);
 		}
 	}
@@ -2157,8 +2156,8 @@ static void CL_DumpTUs_f (void)
 
 	Com_Printf("TUs around (%i, %i, %i).\n", pos[0], pos[1], pos[2]);
 
-	for (y = max(0, pos[1] - 8); y <= min(PATHFINDING_WIDTH, pos[1] + 8); y++) {
-		for (x = max(0, pos[0] - 8); x <= min(PATHFINDING_WIDTH, pos[0] + 8); x++) {
+	for (y = std::max(0, pos[1] - 8); y <= std::min(PATHFINDING_WIDTH, pos[1] + 8); y++) {
+		for (x = std::max(0, pos[0] - 8); x <= std::min(PATHFINDING_WIDTH, pos[0] + 8); x++) {
 			VectorSet(loc, x, y, pos[2]);
 			Com_Printf("%3i ", Grid_MoveLength(&cl.pathMap, loc, crouchingState, qfalse));
 		}
@@ -2373,7 +2372,8 @@ static void CL_NextAlien_f (void)
 	if (cl.numLEs <= 0)
 		return;
 
-	lastAlien = max(0, min(cl.numLEs - 1, Cvar_GetValue("ui_lastalien")));
+	lastAlien = Cvar_GetInteger("ui_lastalien");
+	lastAlien = std::max(0, std::min(cl.numLEs - 1, lastAlien));
 
 	i = lastAlien;
 	do {
@@ -2403,7 +2403,8 @@ static void CL_PrevAlien_f (void)
 	if (cl.numLEs <= 0)
 		return;
 
-	lastAlien = max(0, min(cl.numLEs - 1, Cvar_GetValue("ui_lastalien")));
+	lastAlien = Cvar_GetInteger("ui_lastalien");
+	lastAlien = std::max(0, std::min(cl.numLEs - 1, lastAlien));
 
 	i = lastAlien;
 	do {

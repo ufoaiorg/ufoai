@@ -304,7 +304,7 @@ void RADAR_Initialise (radar_t *radar, float range, float trackingRange, float l
 {
 	const int oldrange = radar->range;
 
-	if (equal(level, 0.0)) {
+	if (EQUAL(level, 0.0)) {
 		radar->range = 0.0f;
 		radar->trackingRange = 0.0f;
 	} else {
@@ -316,7 +316,7 @@ void RADAR_Initialise (radar_t *radar, float range, float trackingRange, float l
 
 	assert(radar->numUFOs >= 0);
 
-	if (updateSourceRadarMap && !equal(radar->range, oldrange)) {
+	if (updateSourceRadarMap && !EQUAL(radar->range, oldrange)) {
 		RADAR_UpdateStaticRadarCoverage();
 		RADAR_UpdateWholeRadarOverlay();
 	}

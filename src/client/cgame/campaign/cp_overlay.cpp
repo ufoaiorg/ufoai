@@ -116,7 +116,7 @@ void CP_SetXVILevel (int x, int y, int value)
 	if (!value)
 		r_xviAlpha[y * XVI_WIDTH + x] = 0;
 	else
-		r_xviAlpha[y * XVI_WIDTH + x] = min(MAX_ALPHA_VALUE, value + INITIAL_ALPHA_VALUE);
+		r_xviAlpha[y * XVI_WIDTH + x] = std::min(MAX_ALPHA_VALUE, value + INITIAL_ALPHA_VALUE);
 }
 
 int CP_GetXVILevel (int x, int y)
@@ -126,7 +126,7 @@ int CP_GetXVILevel (int x, int y)
 	assert(y >= 0);
 	assert(y < XVI_HEIGHT);
 
-	return max(0, r_xviAlpha[y * XVI_WIDTH + x] - INITIAL_ALPHA_VALUE);
+	return std::max(0, r_xviAlpha[y * XVI_WIDTH + x] - INITIAL_ALPHA_VALUE);
 }
 
 /**

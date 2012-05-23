@@ -754,7 +754,8 @@ static void B_CheckBuildingStatusForMenu_f (void)
 
 			while ((b = B_GetNextBuildingByType(base, b, building->buildingType))) {
 				if (b->buildingStatus == B_STATUS_UNDER_CONSTRUCTION) {
-					minDay = min(minDay, (int)max(0.0, B_GetConstructionTimeRemain(b)));
+					const float remaining = B_GetConstructionTimeRemain(b);
+					minDay = std::min(minDay, (int)std::max(0.0f, remaining));
 				}
 			}
 
@@ -877,7 +878,8 @@ static void BaseSummary_Init (const base_t *base)
 				CAP_GetCurrent(base, cap), CAP_GetMax(base, cap)), sizeof(textStatsBuffer));
 		} else {
 			if (b->buildingStatus == B_STATUS_UNDER_CONSTRUCTION) {
-				const float timeLeft = max(0.0, B_GetConstructionTimeRemain(b));
+				const float remaining = B_GetConstructionTimeRemain(b);
+				const float timeLeft = std::max(0.0f, remaining);
 				Q_strcat(textStatsBuffer, va("%s:\t\t\t\t\t\t%3.1f %s", _(b->name), timeLeft, ngettext("day", "days", timeLeft)), sizeof(textStatsBuffer));
 			} else {
 				Q_strcat(textStatsBuffer, va("%s:\t\t\t\t\t\t%i/%i", _(b->name), CAP_GetCurrent(base, cap), 0), sizeof(textStatsBuffer));

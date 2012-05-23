@@ -724,7 +724,7 @@ static void I_EquipActor (inventoryInterface_t* self, inventory_t* const inv, co
 		const objDef_t *primaryWeapon = NULL;
 		int hasWeapon = 0;
 		/* Primary weapons */
-		const int maxWeaponIdx = min(self->csi->numODs - 1, numEquip - 1);
+		const int maxWeaponIdx = std::min(self->csi->numODs - 1, numEquip - 1);
 		int randNumber = rand() % 100;
 		for (i = 0; i < maxWeaponIdx; i++) {
 			const objDef_t *obj = INVSH_GetItemByIDX(i);
@@ -805,7 +805,7 @@ static void I_EquipActor (inventoryInterface_t* self, inventory_t* const inv, co
 				/* if ed->num[i] is greater than 100, the first number is the number of items you'll get:
 				 * don't take it into account for probability
 				 * Make sure that the probability is at least one if an item can be selected */
-				sum += ed->numItems[i] ? max(ed->numItems[i] % 100, 1) : 0;
+				sum += ed->numItems[i] ? std::max(ed->numItems[i] % 100, 1) : 0;
 			}
 		}
 		if (sum) {
@@ -816,7 +816,7 @@ static void I_EquipActor (inventoryInterface_t* self, inventory_t* const inv, co
 					const objDef_t *obj = INVSH_GetItemByIDX(i);
 					if (ed->numItems[i] && ((obj->weapon && obj->isSecondary
 					 && (!obj->reload || obj->deplete)) || obj->isMisc)) {
-						randNumber -= ed->numItems[i] ? max(ed->numItems[i] % 100, 1) : 0;
+						randNumber -= ed->numItems[i] ? std::max(ed->numItems[i] % 100, 1) : 0;
 						if (randNumber < 0) {
 							secondaryWeapon = obj;
 							break;

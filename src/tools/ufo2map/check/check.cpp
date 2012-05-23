@@ -1074,8 +1074,8 @@ void CheckNodraws (void)
 					/* run on a largish map, this section proves that the plane indices alone cannot
 					 * cannot be relied on to test for 2 planes facing each other. */
 					if (FacingAndCoincidentTo(iSide, jSide)) {
-						const int minIndex = min(iSide->planenum, jSide->planenum);
-						const int maxIndex = max(iSide->planenum, jSide->planenum);
+						const int minIndex = std::min(iSide->planenum, jSide->planenum);
+						const int maxIndex = std::max(iSide->planenum, jSide->planenum);
 						const int diff = maxIndex - minIndex, minOdd = (minIndex & 1);
 						if ((diff != 1) || minOdd) {
 							Com_Printf("CheckNodraws: facing and coincident plane indices %i %i diff:%i minOdd:%i\n",

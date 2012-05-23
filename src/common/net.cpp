@@ -400,7 +400,7 @@ static void do_accept (int sock)
 	s->addrlen = server_addrlen;
 	s->func = server_func;
 
-	maxfd = max(sock + 1, maxfd);
+	maxfd = std::max(sock + 1, maxfd);
 	FD_SET(sock, &read_fds);
 
 	server_func(s);
@@ -612,7 +612,7 @@ static struct net_stream *NET_DoConnect (const char *node, const char *service, 
 	s->addrlen = addr->ai_addrlen;
 	s->onclose = onclose;
 
-	maxfd = max(sock + 1, maxfd);
+	maxfd = std::max(sock + 1, maxfd);
 	FD_SET(sock, &read_fds);
 
 	return s;
@@ -907,7 +907,7 @@ static int NET_DoStartServer (const struct addrinfo *addr)
 		return INVALID_SOCKET;
 	}
 
-	maxfd = max(sock + 1, maxfd);
+	maxfd = std::max(sock + 1, maxfd);
 	FD_SET(sock, &read_fds);
 	server_family = addr->ai_family;
 	server_addrlen = addr->ai_addrlen;
@@ -1032,7 +1032,7 @@ static struct datagram_socket *NET_DatagramSocketDoNew (const struct addrinfo *a
 		return NULL;
 	}
 
-	maxfd = max(sock + 1, maxfd);
+	maxfd = std::max(sock + 1, maxfd);
 	FD_SET(sock, &read_fds);
 
 	datagram_socket* const s = Mem_PoolAllocType(datagram_socket, com_networkPool);

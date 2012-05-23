@@ -295,7 +295,7 @@ int SV_AreaEdicts (const vec3_t mins, const vec3_t maxs, edict_t **list, int max
 int SV_TouchEdicts (const vec3_t mins, const vec3_t maxs, edict_t **list, int maxCount, edict_t *skip)
 {
 	int num = 0;
-	const int max = min(maxCount, svs.ge->num_edicts);
+	const int max = std::min(maxCount, svs.ge->num_edicts);
 	int i;
 
 	/* skip the world */

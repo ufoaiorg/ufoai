@@ -218,7 +218,8 @@ static void INT_SetAlienInterest_f (void)
 		return;
 	}
 
-	ccs.overallInterest = max(0, atoi(Cmd_Argv(1)));
+	const int interest = atoi(Cmd_Argv(1));
+	ccs.overallInterest = std::max(0, interest);
 }
 #endif
 

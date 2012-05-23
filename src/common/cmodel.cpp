@@ -47,7 +47,7 @@ static void CM_CalculateBoundingBox (const cBspModel_t* model, vec3_t mins, vec3
 	VectorAdd(model->origin, model->maxs, maxs);
 	if (VectorNotEmpty(model->angles)) {
 		vec3_t acenter, aoffset;
-		const float offset = max(max(fabs(mins[0] - maxs[0]), fabs(mins[1] - maxs[1])), fabs(mins[2] - maxs[2])) / 2.0;
+		const float offset = std::max(std::max(fabs(mins[0] - maxs[0]), fabs(mins[1] - maxs[1])), fabs(mins[2] - maxs[2])) / 2.0;
 		VectorCenterFromMinsMaxs(mins, maxs, acenter);
 		VectorSet(aoffset, offset, offset, offset);
 		VectorAdd(acenter, aoffset, maxs);
@@ -316,10 +316,10 @@ trace_t CM_CompleteBoxTrace (mapTiles_t *mapTiles, const vec3_t start, const vec
 
 	/* Prep the mins and maxs */
 	for (i = 0; i < 3; i++) {
-		smin[i] = start[i] + min(mins[i], maxs[i]);
-		smax[i] = start[i] + max(mins[i], maxs[i]);
-		emin[i] = end[i] + min(mins[i], maxs[i]);
-		emax[i] = end[i] + max(mins[i], maxs[i]);
+		smin[i] = start[i] + std::min(mins[i], maxs[i]);
+		smax[i] = start[i] + std::max(mins[i], maxs[i]);
+		emin[i] = end[i] + std::min(mins[i], maxs[i]);
+		emax[i] = end[i] + std::max(mins[i], maxs[i]);
 	}
 
 	/* trace against all loaded map tiles */
@@ -381,8 +381,8 @@ trace_t CM_EntCompleteBoxTrace (mapTiles_t *mapTiles, const vec3_t start, const 
 		return trace;
 
 	/* Find the original bounding box for the tracing line. */
-	VectorSet(bmins, min(start[0], end[0]), min(start[1], end[1]), min(start[2], end[2]));
-	VectorSet(bmaxs, max(start[0], end[0]), max(start[1], end[1]), max(start[2], end[2]));
+	VectorSet(bmins, std::min(start[0], end[0]), std::min(start[1], end[1]), std::min(start[2], end[2]));
+	VectorSet(bmaxs, std::max(start[0], end[0]), std::max(start[1], end[1]), std::max(start[2], end[2]));
 	/* Now increase the bounding box by mins and maxs in both directions. */
 	VectorAdd(bmins, traceBox->mins, bmins);
 	VectorAdd(bmaxs, traceBox->maxs, bmaxs);

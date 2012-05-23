@@ -94,7 +94,7 @@ static void GAME_SK_Start_f (void)
 		if (maxSoldiers <= 0)
 			maxSoldiers = size;
 
-		ugvs = min(ugvs, size - maxSoldiers);
+		ugvs = std::min(ugvs, (uint32_t)(size - maxSoldiers));
 		cgi->Com_Printf("Starting skirmish with %i soldiers and %i ugvs\n", maxSoldiers, ugvs);
 		cgi->GAME_AutoTeam(name, maxSoldiers);
 		for (i = 0; i < ugvs; i++)

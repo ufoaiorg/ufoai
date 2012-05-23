@@ -264,7 +264,8 @@ static void MIS_CreateAlienTeam (mission_t *mission, battleParam_t *battleParam)
 
 	assert(mission->posAssigned);
 
-	numAliens = max(4, 4 + (int) ccs.overallInterest / 50 + (rand() % 3) - 1);
+	numAliens = 4 + (int) ccs.overallInterest / 50 + (rand() % 3) - 1;
+	numAliens = std::max(4, numAliens);
 	if (mission->ufo && mission->ufo->maxTeamSize && numAliens > mission->ufo->maxTeamSize)
 		numAliens = mission->ufo->maxTeamSize;
 	if (numAliens > mission->mapDef->maxAliens)
@@ -1411,7 +1412,8 @@ ufoType_t CP_MissionChooseUFO (const mission_t *mission)
 	if (canBeSpawnedFromGround) {
 		const int XVI_PARAM = 10;		/**< Typical XVI average value for spreading mission from earth */
 		/* The higher the XVI rate, the higher the probability to have a mission spawned from ground */
-		groundProbability = max(0.1f, 1.0f - exp(-CP_GetAverageXVIRate() / XVI_PARAM));
+		groundProbability = 1.0f - exp(-CP_GetAverageXVIRate() / XVI_PARAM);
+		groundProbability = std::max(0.1f, groundProbability);
 
 		/* Mission spawned from ground */
 		if (randNumber < groundProbability)

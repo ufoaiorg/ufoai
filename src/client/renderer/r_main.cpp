@@ -1020,7 +1020,7 @@ static void R_InitExtensions (void)
 
 	glGetIntegerv(GL_MAX_TEXTURE_COORDS, &r_config.maxTextureCoords);
 	Com_Printf("max texture coords: %i\n", r_config.maxTextureCoords);
-	r_config.maxTextureCoords = max(r_config.maxTextureUnits, r_config.maxTextureCoords);
+	r_config.maxTextureCoords = std::max(r_config.maxTextureUnits, r_config.maxTextureCoords);
 
 	glGetIntegerv(GL_MAX_VERTEX_ATTRIBS, &r_config.maxVertexAttribs);
 	Com_Printf("max vertex attributes: %i\n", r_config.maxVertexAttribs);

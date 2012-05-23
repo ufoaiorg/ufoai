@@ -75,7 +75,7 @@ void INS_SelectInstallation (installation_t *installation)
 			INS_SetInstallationTitle();
 		}
 	} else {
-		const int timetobuild = max(0, installation->installationTemplate->buildTime - (ccs.date.day - installation->buildStart));
+		const int timetobuild = std::max(0, installation->installationTemplate->buildTime - (ccs.date.day - installation->buildStart));
 
 		Com_DPrintf(DEBUG_CLIENT, "INS_SelectInstallation: select installation with id %i\n", installation->idx);
 		ccs.mapAction = MA_NONE;
@@ -247,9 +247,9 @@ static void INS_FillUFOYardData_f (void)
 
 	if (ins) {
 		const nation_t *nat = MAP_GetNation(ins->pos);
-		const int timeToBuild = max(0, ins->installationTemplate->buildTime - (ccs.date.day - ins->buildStart));
+		const int timeToBuild = std::max(0, ins->installationTemplate->buildTime - (ccs.date.day - ins->buildStart));
 		const char *buildTime = (timeToBuild > 0 && ins->installationStatus == INSTALLATION_UNDER_CONSTRUCTION) ? va(ngettext("%d day", "%d days", timeToBuild), timeToBuild) : "-";
-		const int freeCap = max(0, ins->ufoCapacity.max - ins->ufoCapacity.cur);
+		const int freeCap = std::max(0, ins->ufoCapacity.max - ins->ufoCapacity.cur);
 		const char *nationName = nat ? _(nat->name) : "";
 
 		cgi->UI_ExecuteConfunc("ufolist_addufoyard %d \"%s\" \"%s\" %d %d \"%s\"", ins->idx, ins->name, nationName, ins->ufoCapacity.max, freeCap, buildTime);

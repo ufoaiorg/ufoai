@@ -206,11 +206,11 @@ void CL_CameraMove (void)
 	if (frac > 0.1) {
 		cl.cam.zoom *= 1.0 + cls.frametime * ZOOM_SPEED * frac;
 		/* ensure zoom isn't greater than either MAX_ZOOM or cl_camzoommax */
-		cl.cam.zoom = min(min(MAX_ZOOM, cl_camzoommax->value), cl.cam.zoom);
+		cl.cam.zoom = std::min(std::min(MAX_ZOOM, cl_camzoommax->value), cl.cam.zoom);
 	} else if (frac < -0.1) {
 		cl.cam.zoom /= 1.0 - cls.frametime * ZOOM_SPEED * frac;
 		/* ensure zoom isn't less than either MIN_ZOOM or cl_camzoommin */
-		cl.cam.zoom = max(max(MIN_ZOOM, cl_camzoommin->value), cl.cam.zoom);
+		cl.cam.zoom = std::max(std::max(MIN_ZOOM, cl_camzoommin->value), cl.cam.zoom);
 	}
 	CL_ViewCalcFieldOfViewX();
 
@@ -222,7 +222,8 @@ void CL_CameraMove (void)
 		VectorMA(cl.cam.origin, -CAMERA_START_DIST + cl.cam.lerplevel * CAMERA_LEVEL_HEIGHT, cl.cam.axis[0], cl.cam.camorg);
 		cl.cam.camorg[2] += CAMERA_START_HEIGHT + cl.cam.lerplevel * CAMERA_LEVEL_HEIGHT;
 	} else {
-		CL_ClampCamToMap(min(144. * (cl.cam.zoom - cl_camzoommin->value - 0.4) / cl_camzoommax->value, 86));
+		const double border = 144.0 * (cl.cam.zoom - cl_camzoommin->value - 0.4) / cl_camzoommax->value;
+		CL_ClampCamToMap(std::min(border, 86.0));
 		VectorMA(cl.cam.origin, -CAMERA_START_DIST / cl.cam.zoom , cl.cam.axis[0], cl.cam.camorg);
 		cl.cam.camorg[2] += CAMERA_START_HEIGHT / cl.cam.zoom + cl.cam.lerplevel * CAMERA_LEVEL_HEIGHT;
 	}
@@ -280,7 +281,7 @@ void CL_CameraZoomIn (void)
 	cl.cam.zoom *= quant;
 
 	/* ensure zoom doesn't exceed either MAX_ZOOM or cl_camzoommax */
-	cl.cam.zoom = min(min(MAX_ZOOM, cl_camzoommax->value), cl.cam.zoom);
+	cl.cam.zoom = std::min(std::min(MAX_ZOOM, cl_camzoommax->value), cl.cam.zoom);
 	CL_ViewCalcFieldOfViewX();
 }
 
@@ -303,7 +304,7 @@ void CL_CameraZoomOut (void)
 	cl.cam.zoom /= quant;
 
 	/* ensure zoom isnt less than either MIN_ZOOM or cl_camzoommin */
-	cl.cam.zoom = max(max(MIN_ZOOM, cl_camzoommin->value), cl.cam.zoom);
+	cl.cam.zoom = std::max(std::max(MIN_ZOOM, cl_camzoommin->value), cl.cam.zoom);
 	CL_ViewCalcFieldOfViewX();
 }
 
@@ -344,8 +345,8 @@ static void CL_CamSetZoom_f (void)
 
 	Com_Printf("old zoom value: %.2f\n", cl.cam.zoom);
 	cl.cam.zoom = atof(Cmd_Argv(1));
-	cl.cam.zoom = min(min(MAX_ZOOM, cl_camzoommax->value), cl.cam.zoom);
-	cl.cam.zoom = max(max(MIN_ZOOM, cl_camzoommin->value), cl.cam.zoom);
+	cl.cam.zoom = std::min(std::min(MAX_ZOOM, cl_camzoommax->value), cl.cam.zoom);
+	cl.cam.zoom = std::max(std::max(MIN_ZOOM, cl_camzoommin->value), cl.cam.zoom);
 }
 
 static void CL_CenterCameraIntoMap_f (void)

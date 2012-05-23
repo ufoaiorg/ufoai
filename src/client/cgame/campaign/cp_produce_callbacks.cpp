@@ -586,7 +586,7 @@ static void PR_ProductionList_f (void)
 	if (!base)
 		return;
 
-	numWorkshops = max(0, B_GetNumberOfBuildingsInBaseByBuildingType(base, B_WORKSHOP));
+	numWorkshops = std::max(0, B_GetNumberOfBuildingsInBaseByBuildingType(base, B_WORKSHOP));
 
 	Cvar_SetValue("mn_production_limit", MAX_PRODUCTIONS_PER_WORKSHOP * numWorkshops);
 	Cvar_SetValue("mn_production_basecap", CAP_GetMax(base, CAP_WORKSPACE));
@@ -643,7 +643,7 @@ static void PR_ProductionIncrease_f (void)
 
 		/* amount limit per one production */
 		if (prod->amount + amount > MAX_PRODUCTION_AMOUNT) {
-			amount = max(0, MAX_PRODUCTION_AMOUNT - prod->amount);
+			amount = std::max(0, MAX_PRODUCTION_AMOUNT - prod->amount);
 		}
 		if (amount == 0) {
 			Cvar_SetValue("mn_production_amount", prod->amount);

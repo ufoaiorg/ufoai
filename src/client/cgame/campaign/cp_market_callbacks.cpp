@@ -240,7 +240,7 @@ static void BS_Buy_f (void)
 		if (count > 0) {
 			/* buy */
 			const int price = BS_GetItemBuyingPrice(od);
-			count = min(count, BS_GetItemOnMarket(od));
+			count = std::min(count, BS_GetItemOnMarket(od));
 
 			/* no items available on market */
 			if (count <= 0)
@@ -251,7 +251,7 @@ static void BS_Buy_f (void)
 				return;
 			}
 			/** @todo warn if player can buy less item due to available credits? */
-			count = min(count, ccs.credits / price);
+			count = std::min(count, ccs.credits / price);
 			/* not enough money for a single item */
 			if (count <= 0) {
 				CP_Popup(_("Not enough money"), _("You cannot buy this item as you don't have enough credits."));
@@ -262,7 +262,7 @@ static void BS_Buy_f (void)
 				Com_Printf("Item on market with invalid size: %s (%d)\n", od->id, od->size);
 				return;
 			}
-			count = min(count, CAP_GetFreeCapacity(base, CAP_ITEMS) / od->size);
+			count = std::min(count, CAP_GetFreeCapacity(base, CAP_ITEMS) / od->size);
 			if (count <= 0) {
 				CP_Popup(_("Not enough storage space"), _("You cannot buy this item.\nNot enough space in storage.\nBuild more storage facilities."));
 				return;
@@ -272,7 +272,7 @@ static void BS_Buy_f (void)
 			return;
 		} else {
 			/* sell */
-			count = min(-1 * count, B_ItemInBase(od, base));
+			count = std::min(-1 * count, B_ItemInBase(od, base));
 			/* no items in storage */
 			if (count <= 0)
 				return;
@@ -394,7 +394,7 @@ static void BS_FillMarket_f (void)
 			const ugv_t *ugv = &csi.ugvs[i];
 			const technology_t* tech = RS_GetTechByProvided(ugv->id);
 			const objDef_t *ugvWeapon = INVSH_GetItemByID(ugv->weapon);
-			const int buyable = min(E_CountUnhiredRobotsByType(ugv), BS_GetItemOnMarket(ugvWeapon));
+			const int buyable = std::min(E_CountUnhiredRobotsByType(ugv), BS_GetItemOnMarket(ugvWeapon));
 
 			assert(tech);
 			if (!RS_IsResearched_ptr(tech))

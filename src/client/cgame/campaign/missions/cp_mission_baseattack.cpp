@@ -180,7 +180,7 @@ void CP_BaseAttackStartMission (mission_t *mission)
 
 	/** this will be neccessary once more than 8 soldiers are working */
 	/* needed to spawn soldiers on map */
-	baseAttackFakeAircraft.maxTeamSize = min(MAX_ACTIVETEAM, E_CountByType(EMPL_SOLDIER) + E_CountByType(EMPL_ROBOT));
+	baseAttackFakeAircraft.maxTeamSize = std::min(MAX_ACTIVETEAM, E_CountByType(EMPL_SOLDIER) + E_CountByType(EMPL_ROBOT));
 
 	soldiers = 0;
 	E_Foreach(EMPL_SOLDIER, employee) {

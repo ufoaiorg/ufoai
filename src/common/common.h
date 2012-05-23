@@ -318,9 +318,6 @@ struct scheduleEvent_t {
 	event_clean_func *clean;
 	void *data;
 	scheduleEvent_t *next;
-
-	void* operator new(size_t);
-	void operator delete(void*);
 };
 
 scheduleEvent_t *Schedule_Event(int when, event_func *func, event_check_func *check, event_clean_func *clean, void *data);

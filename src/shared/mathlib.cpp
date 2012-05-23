@@ -24,6 +24,7 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 */
 
 #include "../common/common.h"
+#include <algorithm>
 
 #ifndef logf
 #define logf(x) ((float)log((double)(x)))
@@ -160,7 +161,7 @@ double GetDistanceOnGlobe (const vec2_t pos1, const vec2_t pos2)
 	double distance;
 
 	distance = cos(latitude1) * cos(latitude2) * cos(deltaLongitude) + sin(latitude1) * sin(latitude2);
-	distance = min(max(-1, distance), 1);
+	distance = std::min(std::max(-1.0, distance), 1.0);
 	distance = acos(distance) * todeg;
 
 	assert(distance >= 0.0);
@@ -182,7 +183,7 @@ vec_t ColorNormalize (const vec3_t in, vec3_t out)
 		max = in[2];
 
 	/* avoid FPE */
-	if (equal(max, 0.0)) {
+	if (EQUAL(max, 0.0)) {
 		VectorClear(out);
 		return 0;
 	}
@@ -224,7 +225,7 @@ vec_t VectorNormalize2 (const vec3_t v, vec3_t out)
 	length = DotProduct(v, v);
 	length = sqrt(length);		/** @todo */
 
-	if (!equal(length, 0.0)) {
+	if (!EQUAL(length, 0.0)) {
 		const float ilength = 1.0 / length;
 		out[0] = v[0] * ilength;
 		out[1] = v[1] * ilength;
@@ -555,12 +556,12 @@ void CalculateMinsMaxs (const vec3_t angles, const vec3_t mins, const vec3_t max
 		VectorAdd(newCenterVec, newHalfVec, tmpMaxVec);
 
 		/* rotation may have changed min and max of the box, so adjust it */
-		minVec[0] = min(tmpMinVec[0], tmpMaxVec[0]);
-		minVec[1] = min(tmpMinVec[1], tmpMaxVec[1]);
-		minVec[2] = min(tmpMinVec[2], tmpMaxVec[2]);
-		maxVec[0] = max(tmpMinVec[0], tmpMaxVec[0]);
-		maxVec[1] = max(tmpMinVec[1], tmpMaxVec[1]);
-		maxVec[2] = max(tmpMinVec[2], tmpMaxVec[2]);
+		minVec[0] = std::min(tmpMinVec[0], tmpMaxVec[0]);
+		minVec[1] = std::min(tmpMinVec[1], tmpMaxVec[1]);
+		minVec[2] = std::min(tmpMinVec[2], tmpMaxVec[2]);
+		maxVec[0] = std::max(tmpMinVec[0], tmpMaxVec[0]);
+		maxVec[1] = std::max(tmpMinVec[1], tmpMaxVec[1]);
+		maxVec[2] = std::max(tmpMinVec[2], tmpMaxVec[2]);
 
 		/* Adjust the absolute mins/maxs */
 		VectorAdd(origin, minVec, absmin);
@@ -952,7 +953,7 @@ void VecToAngles (const vec3_t value1, vec3_t angles)
 			pitch = 270.0;
 	} else {
 		const float forward = sqrt(value1[0] * value1[0] + value1[1] * value1[1]);
-		if (!equal(value1[0], 0.0))
+		if (!EQUAL(value1[0], 0.0))
 			yaw = (int) (atan2(value1[1], value1[0]) * todeg);
 		else if (value1[1] > 0)
 			yaw = 90.0;
@@ -1169,8 +1170,8 @@ qboolean RayIntersectAABB (const vec3_t start, const vec3_t end, const vec3_t mi
 			return qfalse;
 		}
 
-		t0 = max(u0, t0);
-		t1 = min(u1, t1);
+		t0 = std::max(u0, t0);
+		t1 = std::min(u1, t1);
 
 		if (t1 < t0) {
 			return qfalse;

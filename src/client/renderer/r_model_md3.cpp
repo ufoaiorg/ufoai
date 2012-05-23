@@ -92,7 +92,7 @@ void R_ModLoadAliasMD3Model (model_t *mod, byte *buffer, int bufSize)
 		}
 
 		poutframe->radius = LittleFloat(pinframe->radius);
-		mod->radius = max(mod->radius, poutframe->radius);
+		mod->radius = std::max(mod->radius, poutframe->radius);
 		AddPointToBounds(poutframe->mins, mod->mins, mod->maxs);
 		AddPointToBounds(poutframe->maxs, mod->mins, mod->maxs);
 	}

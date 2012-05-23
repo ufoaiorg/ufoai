@@ -228,7 +228,7 @@ static void SEQ_SetCamera (sequenceContext_t *context)
 
 	AngleVectors(cl.cam.angles, cl.cam.axis[0], cl.cam.axis[1], cl.cam.axis[2]);
 	VectorMA(cl.cam.origin, -context->camera.dist, cl.cam.axis[0], cl.cam.camorg);
-	cl.cam.zoom = max(context->camera.zoom, MIN_ZOOM);
+	cl.cam.zoom = std::max(context->camera.zoom, MIN_ZOOM);
 	/* fudge to get isometric and perspective modes looking similar */
 	if (cl_isometric->integer)
 		cl.cam.zoom /= 1.35;

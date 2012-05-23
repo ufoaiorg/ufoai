@@ -643,10 +643,10 @@ static void BDEF_UpdateActiveBattery_f (void)
 	type = Cmd_Argv(1);
 	if (Q_streq(type, "missile")) {
 		B_CheckBuildingTypeStatus(base, B_DEFENCE_MISSILE, B_STATUS_WORKING, &count);
-		base->numActiveBatteries = min(count, base->numBatteries);
+		base->numActiveBatteries = std::min(count, base->numBatteries);
 	} else if (Q_streq(type, "laser")) {
 		B_CheckBuildingTypeStatus(base, B_DEFENCE_LASER, B_STATUS_WORKING, &count);
-		base->numActiveLasers = min(count, base->numLasers);
+		base->numActiveLasers = std::min(count, base->numLasers);
 	} else {
 		Com_Printf("BDEF_UpdateActiveBattery_f: base defence type %s doesn't exist.\n", type);
 		return;

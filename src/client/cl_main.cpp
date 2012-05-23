@@ -785,7 +785,7 @@ qboolean CL_ParseClientData (const char *type, const char *name, const char **te
 
 	progressCurrent++;
 	if (progressCurrent % 10 == 0)
-		SCR_DrawLoadingScreen(qfalse, min(progressCurrent * 30 / 1500, 30));
+		SCR_DrawLoadingScreen(qfalse, std::min(progressCurrent * 30 / 1500, 30));
 #endif
 
 	if (Q_streq(type, "font"))

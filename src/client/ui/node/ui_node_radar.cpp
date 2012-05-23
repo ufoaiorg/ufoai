@@ -233,7 +233,7 @@ static void UI_GetRadarWidth (const uiNode_t *node, vec2_t gridSize)
 	 * The problem is that some tiles may have L or T shape.
 	 * But we now that the tile in the lower left follows for sure the side of the map on it's whole length
 	 * at least either on its height or on its width.*/
-	ratioConversion = max((secondTileGridX - radar.gridMin[0]) / (tileWidth[0] - ROUNDING_PIXEL),
+	ratioConversion = std::max((secondTileGridX - radar.gridMin[0]) / (tileWidth[0] - ROUNDING_PIXEL),
 		(secondTileGridY - radar.gridMin[1]) / (tileHeight[0] - ROUNDING_PIXEL));
 
 	/* And now we fill radar.w and radar.h */
@@ -363,8 +363,8 @@ static void UI_InitRadar (const uiNode_t *node)
 	/* shift the x and y values according to their grid width/height and
 	 * their gridX and gridY position */
 	{
-		const float radarLength = max(1, abs(gridSize[0]));
-		const float radarHeight = max(1, abs(gridSize[1]));
+		const float radarLength = std::max(1.0, fabs(gridSize[0]));
+		const float radarHeight = std::max(1.0, fabs(gridSize[1]));
 		/* image grid relations */
 		const float gridFactorX = radar.w / radarLength;
 		const float gridFactorY = radar.h / radarHeight;

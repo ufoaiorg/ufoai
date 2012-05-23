@@ -204,9 +204,9 @@ void CL_ViewCalcFieldOfViewX (void)
 {
 	if (cl_isometric->integer) {
 		const float zoom =  3.6 * (cl.cam.zoom - cl_camzoommin->value) + 0.3 * cl_camzoommin->value;
-		refdef.fieldOfViewX = max(min(FOV / zoom, 140.0), 1.0);
+		refdef.fieldOfViewX = std::max(std::min(FOV / zoom, 140.0), 1.0);
 	} else {
-		refdef.fieldOfViewX = max(min(FOV / cl.cam.zoom, 95.0), 55.0);
+		refdef.fieldOfViewX = std::max(std::min(FOV / cl.cam.zoom, 95.0), 55.0);
 	}
 }
 

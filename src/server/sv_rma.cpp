@@ -1157,7 +1157,7 @@ static qboolean SV_AddMissingTiles_r (mapInfo_t *map, int rec, int posListCnt, s
 		const int ti = availableTiles[i][0];
 		const int allowed = mToPlace[ti].max - mToPlace[ti].cnt;
 		const int possible = availableTiles[i][1];
-		const int remaining = min(allowed, possible);
+		const int remaining = std::min(allowed, possible);
 		solids += remaining * mToPlace[ti].tile->area;
 	}
 	if (solids < gapCount) {
@@ -1781,7 +1781,7 @@ static int SV_ParallelSearch (mapInfo_t *map)
 	mapInfo_t *maps[ASSEMBLE_THREADS];
 	int i;
 	static int timeout = 5000;  /* wait for 5 sec initially, double it every time it times out */
-	const int threadno = min(sv_threads->integer, ASSEMBLE_THREADS);
+	const int threadno = std::min(sv_threads->integer, ASSEMBLE_THREADS);
 
 	assert(mapLock == NULL);
 	mapLock = TH_MutexCreate("rma");

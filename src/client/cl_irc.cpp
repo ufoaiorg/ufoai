@@ -1366,7 +1366,7 @@ static void Irc_Proto_RefillBucket (void)
 	const double char_delta = (ms_delta * characterBucketRate) / 1000;
 	const double char_new = irc_bucket.character_token + char_delta;
 	/* refill token (but do not exceed maximum) */
-	irc_bucket.character_token = min(char_new, characterBucketSize);
+	irc_bucket.character_token = std::min(char_new, characterBucketSize);
 	/* set timestamp so next refill can calculate delta */
 	irc_bucket.last_refill = ms;
 }
@@ -1909,7 +1909,7 @@ static void Irc_UserClick_f (void)
 	if (num < 0 || num >= chan->users || num >= IRC_MAX_USERLIST)
 		return;
 
-	cnt = min(chan->users, IRC_MAX_USERLIST);
+	cnt = std::min(chan->users, IRC_MAX_USERLIST);
 	cnt -= num + 1;
 
 	name = irc_userListOrdered[cnt];
@@ -1935,7 +1935,7 @@ static void Irc_UserRightClick_f (void)
 	if (num < 0 || num >= chan->users || num >= IRC_MAX_USERLIST)
 		return;
 
-	cnt = min(chan->users, IRC_MAX_USERLIST);
+	cnt = std::min(chan->users, IRC_MAX_USERLIST);
 	cnt -= num + 1;
 
 	name = irc_userListOrdered[cnt];

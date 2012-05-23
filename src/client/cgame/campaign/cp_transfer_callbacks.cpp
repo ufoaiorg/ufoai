@@ -244,7 +244,7 @@ static int TR_CheckItem (const objDef_t *od, const base_t *destbase, int amount)
 			CP_Popup(_("Missing storage"), _("Destination base does not have an Antimatter Storage.\n"));
 			return 0;
 		}
-		amount = min(amount, CAP_GetFreeCapacity(destbase, CAP_ANTIMATTER) - amtransfer);
+		amount = std::min(amount, CAP_GetFreeCapacity(destbase, CAP_ANTIMATTER) - amtransfer);
 		if (amount <= 0) {
 			CP_Popup(_("Not enough space"), _("Destination base does not have enough\nAntimatter Storage space to store more antimatter.\n"));
 			return 0;
@@ -254,7 +254,7 @@ static int TR_CheckItem (const objDef_t *od, const base_t *destbase, int amount)
 			return 0;
 
 		/* Does the destination base has enough space in storage? */
-		amount = min(amount, CAP_GetFreeCapacity(destbase, CAP_ITEMS) - intransfer / od->size);
+		amount = std::min(amount, CAP_GetFreeCapacity(destbase, CAP_ITEMS) - intransfer / od->size);
 		if (amount <= 0) {
 			CP_Popup(_("Not enough space"), _("Destination base does not have enough\nStorage space to store this item.\n"));
 			return 0;
@@ -852,13 +852,13 @@ static void TR_AddItemToTransferList (base_t *base, transferData_t *td, int num,
 			if (cnt == num) {
 				/* you can't transfer more item than you have */
 				if (amount > 0) {
-					amount = min(amount, B_AntimatterInBase(base));
+					amount = std::min(amount, B_AntimatterInBase(base));
 					if (amount == 0)
 						return;
 					/* you can only transfer items that destination base can accept */
 					amount = TR_CheckItem(od, td->transferBase, amount);
 				} else if (amount < 0) {
-					amount = max(amount, -itemCargoAmount);
+					amount = std::max(amount, -itemCargoAmount);
 				}
 
 				if (amount) {
@@ -879,13 +879,13 @@ static void TR_AddItemToTransferList (base_t *base, transferData_t *td, int num,
 			if (cnt == num) {
 				/* you can't transfer more item than you have */
 				if (amount > 0) {
-					amount = min(amount, B_ItemInBase(od, base));
+					amount = std::min(amount, B_ItemInBase(od, base));
 					if (amount == 0)
 						return;
 					/* you can only transfer items that destination base can accept */
 					amount = TR_CheckItem(od, td->transferBase, amount);
 				} else if (amount < 0) {
-					amount = max(amount, -itemCargoAmount);
+					amount = std::max(amount, -itemCargoAmount);
 				}
 
 				if (amount) {
@@ -1173,7 +1173,7 @@ static void TR_RemoveItemFromCargoList (base_t *base, transferData_t *transferDa
 		const int itemCargoAmount = transferData->trItemsTmp[od->idx];
 		if (itemCargoAmount > 0) {
 			if (cnt == num) {
-				const int amount = min(TR_GetTransferFactor(), itemCargoAmount);
+				const int amount = std::min(TR_GetTransferFactor(), itemCargoAmount);
 				/* you can't transfer more item than there are in current transfer */
 				transferData->trItemsTmp[i] -= amount;
 				if (Q_streq(od->id, ANTIMATTER_TECH_ID))

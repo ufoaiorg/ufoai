@@ -49,10 +49,10 @@ static int G_GetEarnedExperience (abilityskills_t skill, edict_t *ent)
 		if (penalty == 0)
 			break;
 		int moving = chr->scoreMission->movedNormal / 2 + chr->scoreMission->movedCrouched;
-		penalty = min(penalty, 2);
+		penalty = std::min(penalty, 2);
 		int training = penalty * moving;
-		training = min(training, 200);
-		experience += max(168 * training / 200, 0);
+		training = std::min(training, 200);
+		experience += std::max(168 * training / 200, 0);
 		break;
 	}
 	case ABILITY_SPEED:
@@ -161,7 +161,7 @@ static void G_UpdateCharacterSkills (edict_t *ent)
 		maxXP = G_CharacterGetMaxExperiencePerMission(skill);
 		gainedXP = G_GetEarnedExperience(skill, ent);
 
-		gainedXP = min(gainedXP, maxXP);
+		gainedXP = std::min(gainedXP, maxXP);
 		chr->score.experience[i] += gainedXP;
 		totalGainedXP += gainedXP;
 		chr->score.skills[i] = chr->score.initialSkills[i] + (int) (pow((float) (chr->score.experience[i]) / 100, 0.6f));
@@ -172,7 +172,7 @@ static void G_UpdateCharacterSkills (edict_t *ent)
 	/* Health isn't part of abilityskills_t, so it needs to be handled separately. */
 	assert(i == SKILL_NUM_TYPES);	/**< We need to get sure that index for health-experience is correct. */
 	maxXP = G_CharacterGetMaxExperiencePerMission((abilityskills_t)i);
-	gainedXP = min(maxXP, totalGainedXP / 2);
+	gainedXP = std::min(maxXP, totalGainedXP / 2);
 
 	chr->score.experience[i] += gainedXP;
 	chr->maxHP = chr->score.initialSkills[i] + (int) (pow((float) (chr->score.experience[i]) / 100, 0.6f));

@@ -205,7 +205,7 @@ void CAP_UpdateStorageCap (base_t *base)
  */
 void CAP_SetMax (base_t* base, baseCapacities_t capacity, int value)
 {
-	base->capacities[capacity].max = max(0, value);
+	base->capacities[capacity].max = std::max(0, value);
 }
 
 /**
@@ -216,7 +216,7 @@ void CAP_SetMax (base_t* base, baseCapacities_t capacity, int value)
  */
 void CAP_AddMax (base_t* base, baseCapacities_t capacity, int value)
 {
-	base->capacities[capacity].max = max(0, base->capacities[capacity].max + value);
+	base->capacities[capacity].max = std::max(0, base->capacities[capacity].max + value);
 }
 
 /**
@@ -227,7 +227,7 @@ void CAP_AddMax (base_t* base, baseCapacities_t capacity, int value)
  */
 void CAP_SetCurrent (base_t* base, baseCapacities_t capacity, int value)
 {
-	base->capacities[capacity].cur = max(0, value);
+	base->capacities[capacity].cur = std::max(0, value);
 }
 
 /**
@@ -238,7 +238,7 @@ void CAP_SetCurrent (base_t* base, baseCapacities_t capacity, int value)
  */
 void CAP_AddCurrent (base_t* base, baseCapacities_t capacity, int value)
 {
-	base->capacities[capacity].cur = max(0, base->capacities[capacity].cur + value);
+	base->capacities[capacity].cur = std::max(0, base->capacities[capacity].cur + value);
 }
 
 /**

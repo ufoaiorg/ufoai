@@ -514,7 +514,7 @@ void AL_RemoveAliensExceedingCapacity (base_t *base)
 	assert(max >= 0);
 
 	for (i = 0; i < ccs.numAliensTD; i++) {
-		const int remove = min(base->alienscont[i].amountAlive, current - max);
+		const int remove = std::min(base->alienscont[i].amountAlive, current - max);
 
 		if (!base->alienscont[i].teamDef)
 			continue;
