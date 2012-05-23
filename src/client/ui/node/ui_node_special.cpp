@@ -67,7 +67,7 @@ void UI_RegisterNullNode (uiBehaviour_t *behaviour)
  */
 static void UI_ConfuncCommand_f (void)
 {
-	uiNode_t *node = (uiNode_t *) Cmd_Userdata();
+	uiNode_t *node = static_cast<uiNode_t*>(Cmd_Userdata());
 	assert(node);
 	assert(UI_NodeInstanceOf(node, "confunc"));
 	UI_ExecuteConFuncActions(node, node->onClick);
@@ -81,7 +81,7 @@ static void UI_ConfuncCommand_f (void)
 static qboolean UI_ConFuncIsVirtual (const uiNode_t *const node)
 {
 	/* magic way to know if it is a dummy node (used for inherited confunc) */
-	const uiNode_t *dummy = (const uiNode_t*) Cmd_GetUserdata(node->name);
+	const uiNode_t *dummy = static_cast<const uiNode_t*>(Cmd_GetUserdata(node->name));
 	assert(node);
 	assert(UI_NodeInstanceOf(node, "confunc"));
 	return (dummy != NULL && dummy->parent == NULL);
@@ -128,7 +128,7 @@ void uiConFuncNode::onWindowOpened (uiNode_t *node, linkedList_t *params)
 {
 	if (UI_ConFuncIsVirtual(node)) {
 		const value_t *property = UI_GetPropertyFromBehaviour(node->behaviour, "onClick");
-		uiNode_t *userData = (uiNode_t*) Cmd_GetUserdata(node->name);
+		uiNode_t *userData = static_cast<uiNode_t*>(Cmd_GetUserdata(node->name));
 		UI_AddListener(userData, property, node);
 	}
 }
@@ -140,7 +140,7 @@ void uiConFuncNode::onWindowClosed (uiNode_t *node)
 {
 	if (UI_ConFuncIsVirtual(node)) {
 		const value_t *property = UI_GetPropertyFromBehaviour(node->behaviour, "onClick");
-		uiNode_t *userData = (uiNode_t*) Cmd_GetUserdata(node->name);
+		uiNode_t *userData = static_cast<uiNode_t*>(Cmd_GetUserdata(node->name));
 		UI_RemoveListener(userData, property, node);
 	}
 }
@@ -155,12 +155,12 @@ void UI_RegisterConFuncNode (uiBehaviour_t *behaviour)
 
 static void UI_CvarListenerNodeCallback (const char *cvarName, const char *oldValue, const char *newValue, void *data)
 {
-	linkedList_t *list = (linkedList_t *) data;
+	linkedList_t *list = static_cast<linkedList_t*>(data);
 	linkedList_t *params = NULL;
 	LIST_AddString(&params, oldValue);
 	LIST_AddString(&params, newValue);
 	while (list) {
-		uiNode_t *node = (uiNode_t *) list->data;
+		uiNode_t *node = static_cast<uiNode_t*>(list->data);
 		UI_ExecuteEventActionsEx(node, node->onClick, params);
 		list = list->next;
 	}
@@ -177,8 +177,9 @@ static void UI_CvarListenerNodeBind (uiNode_t *node)
 		Com_Printf("Node %s is not binded: cvar %s not found\n", UI_GetPath(node), node->name);
 		return;
 	}
-	if (LIST_GetPointer((linkedList_t*)l->data, node) == NULL) {
-		LIST_AddPointer((linkedList_t**)&l->data, node);
+	linkedList_t *list = static_cast<linkedList_t*>(l->data);
+	if (LIST_GetPointer(list, node) == NULL) {
+		LIST_AddPointer(&list, node);
 	}
 }
 
@@ -196,8 +197,9 @@ void uiCvarNode::onWindowClosed (uiNode_t *node)
 	cvarChangeListener_t *l = var->changeListener;
 	while (l) {
 		if (l->exec == UI_CvarListenerNodeCallback) {
-			LIST_Remove((linkedList_t**)&l->data, node);
-			if (LIST_IsEmpty((linkedList_t*)l->data)) {
+			linkedList_t *list = static_cast<linkedList_t*>(l->data);
+			LIST_Remove(&list, node);
+			if (LIST_IsEmpty(list)) {
 				Cvar_UnRegisterChangeListener(node->name, UI_CvarListenerNodeCallback);
 			}
 			break;

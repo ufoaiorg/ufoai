@@ -903,7 +903,7 @@ static void UI_RemoveListener_f (void)
 
 static void UI_CvarChangeListener (const char *cvarName, const char *oldValue, const char *newValue, void *data)
 {
-	linkedList_t *list = (linkedList_t *) data;
+	linkedList_t *list = static_cast<linkedList_t*>(data);
 	LIST_Foreach(list, char const, confunc) {
 		UI_ExecuteConfunc("%s %s %s", confunc, oldValue, newValue);
 	}
@@ -923,7 +923,7 @@ static void UI_AddCvarListener_f (void)
 	cvarName = Cmd_Argv(1);
 	confuncName = Cmd_Argv(2);
 	l = Cvar_RegisterChangeListener(cvarName, UI_CvarChangeListener);
-	LIST_AddString((linkedList_t**)&l->data, confuncName);
+	LIST_AddString(reinterpret_cast<linkedList_t**>(&l->data), confuncName);
 }
 
 static void UI_RemoveCvarListener_f (void)
@@ -947,8 +947,9 @@ static void UI_RemoveCvarListener_f (void)
 	cvarChangeListener_t *l = var->changeListener;
 	while (l) {
 		if (l->exec == UI_CvarChangeListener) {
-			LIST_Remove((linkedList_t**)&l->data, confuncName);
-			if (LIST_IsEmpty((linkedList_t*)l->data)) {
+			linkedList_t *list = static_cast<linkedList_t*>(l->data);
+			LIST_Remove(&list, confuncName);
+			if (LIST_IsEmpty(list)) {
 				Cvar_UnRegisterChangeListener(cvarName, UI_CvarChangeListener);
 			}
 			return;

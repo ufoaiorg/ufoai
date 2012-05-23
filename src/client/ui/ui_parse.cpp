@@ -783,13 +783,13 @@ static bool UI_ParseProperty (void* object, const value_t *property, const char*
 
 		switch ((int)property->type) {
 		case V_UI_ACTION:
-			result = UI_ParseEventProperty((uiNode_t *)object, property, text, token, errhead);
+			result = UI_ParseEventProperty(static_cast<uiNode_t*>(object), property, text, token, errhead);
 			if (!result)
 				return false;
 			break;
 
 		case V_UI_EXCLUDERECT:
-			result = UI_ParseExcludeRect((uiNode_t *)object, text, token, errhead);
+			result = UI_ParseExcludeRect(static_cast<uiNode_t*>(object), text, token, errhead);
 			if (!result)
 				return false;
 			break;
@@ -928,7 +928,6 @@ static bool UI_ParseNodeProperties (uiNode_t * node, const char **text, const ch
 					UI_GetPath(node), val->string);
 			return false;
 		}
-
 	} while (*text);
 
 	return true;
