@@ -98,7 +98,7 @@ struct net_stream {
 	bool ready;
 	bool closed;
 	bool finished;		/**< finished but maybe not yet closed */
-	int socket;
+	SOCKET socket;
 	int index;
 	int family;
 	int addrlen;
@@ -119,7 +119,7 @@ struct datagram {
 };
 
 struct datagram_socket {
-	int socket;
+	SOCKET socket;
 	int index;
 	int family;
 	int addrlen;
@@ -130,14 +130,14 @@ struct datagram_socket {
 
 static fd_set read_fds;
 static fd_set write_fds;
-static int maxfd;
+static SOCKET maxfd;
 static struct net_stream *streams[MAX_STREAMS];
 static struct datagram_socket *datagram_sockets[MAX_DATAGRAM_SOCKETS];
 
 static bool loopback_ready = false;
 static bool server_running = false;
 static stream_callback_func *server_func = NULL;
-static int server_socket = INVALID_SOCKET;
+static SOCKET server_socket = INVALID_SOCKET;
 static int server_family, server_addrlen;
 
 #ifdef _WIN32
@@ -382,7 +382,7 @@ static void NET_StreamClose (struct net_stream *s)
 		s->onclose();
 }
 
-static void do_accept (int sock)
+static void do_accept (SOCKET sock)
 {
 	const int index = NET_StreamGetFree();
 	struct net_stream *s;
@@ -446,7 +446,7 @@ void NET_Wait (int timeout)
 		return;
 
 	if (server_socket != INVALID_SOCKET && FD_ISSET(server_socket, &read_fds_out)) {
-		const int client_socket = accept(server_socket, NULL, 0);
+		const SOCKET client_socket = accept(server_socket, NULL, 0);
 		if (client_socket == INVALID_SOCKET) {
 			if (errno != EAGAIN)
 				Com_Printf("accept on socket %d failed: %s\n", server_socket, netStringError(netError));
@@ -567,7 +567,7 @@ void NET_Wait (int timeout)
 	loopback_ready = false;
 }
 
-static bool NET_SocketSetNonBlocking (int socketNum)
+static bool NET_SocketSetNonBlocking (SOCKET socketNum)
 {
 	unsigned long t = 1;
 	if (ioctlsocket(socketNum, FIONBIO, &t) == -1) {
