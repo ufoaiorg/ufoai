@@ -203,69 +203,6 @@ static inline void dbuffer_grow (struct dbuffer *buf, size_t len)
 }
 
 /**
- * @brief Merges two dbuffers
- * @param[in] old the source buffer
- * @param[in] old2 the second source buffer
- * @return the newly allocated buffer
- * Allocates a new dbuffer and initialises it to contain a copy of the
- * data in old ones
- */
-struct dbuffer *dbuffer_merge (struct dbuffer *old, struct dbuffer *old2)
-{
-	/* element we're currently reading from */
-	const struct dbuffer_element *e;
-	struct dbuffer *buf = new_dbuffer();
-	const char *p;
-
-	e = old->head;
-	p = old->start;
-	while (e && (e->len > 0)) {
-		dbuffer_add(buf, p, e->len);
-		e = e->next;
-		p = &e->data[0];
-	}
-
-	e = old2->head;
-	p = old2->start;
-	while (e && (e->len > 0)) {
-		dbuffer_add(buf, p, e->len);
-		e = e->next;
-		p = &e->data[0];
-	}
-
-	return buf;
-}
-
-/**
- * @brief Allocate a dbuffer and prepend the given data to it
- * @param[in] old The source buffer
- * @param[in] data The data to insert at the beginning
- * @param[in] len The length of that data
- * @return the newly allocated buffer
- * Allocates a new dbuffer and initialises it to contain a copy of the
- * data in old
- */
-struct dbuffer *dbuffer_prepend (struct dbuffer *old, const char *data, size_t len)
-{
-	/* element we're currently reading from */
-	const struct dbuffer_element *e;
-	struct dbuffer *buf = new_dbuffer();
-	const char *p;
-
-	dbuffer_add(buf, data, len);
-
-	e = old->head;
-	p = old->start;
-	while (e && (e->len > 0)) {
-		dbuffer_add(buf, p, e->len);
-		e = e->next;
-		p = &e->data[0];
-	}
-
-	return buf;
-}
-
-/**
  * @brief Append data to a dbuffer
  * @param[in,out] buf the target buffer
  * @param[in] data pointer to the start of the bytes to add

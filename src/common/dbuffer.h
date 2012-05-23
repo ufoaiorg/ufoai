@@ -97,10 +97,6 @@ extern size_t dbuffer_remove(struct dbuffer *, size_t);
 extern size_t dbuffer_extract(struct dbuffer *, char *, size_t);
 /* Duplicate the buffer */
 extern struct dbuffer *dbuffer_dup(struct dbuffer *);
-/* Duplicate the buffer and prepend the given data */
-extern struct dbuffer *dbuffer_prepend(struct dbuffer *old, const char *data, size_t len);
-/* Merges two dbuffers */
-struct dbuffer *dbuffer_merge(struct dbuffer *old, struct dbuffer *old2);
 
 void dbuffer_shutdown(void);
 void dbuffer_init(void);
