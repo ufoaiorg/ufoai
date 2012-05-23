@@ -33,7 +33,7 @@
 building building_aliencontainment
 {
 	name			"_Alien Containment Facility"
-	image			base/aliencont
+	image			"base/aliencont"
 	fixcosts		92000
 	depends			building_powerplant
 	type			aliencont
@@ -49,7 +49,7 @@ building building_aliencontainment
 building building_entrance
 {
 	name		"_Entrance"
-	image		base/entrance
+	image		"base/entrance"
 	fixcosts	0
 	type		entrance
 	build_time	1
@@ -63,7 +63,7 @@ building building_entrance
 building building_storage
 {
 	name			"_Storage"
-	image			base/storage
+	image			"base/storage"
 	fixcosts		36000
 	depends			building_entrance // storage base needs just entrance
 	type			storage
@@ -77,7 +77,7 @@ building building_storage
 building building_powerplant
 {
 	name			"_Power Plant"
-	image			base/powerplant
+	image			"base/powerplant"
 	fixcosts		35000
 	depends			building_entrance
 	type			power
@@ -92,14 +92,14 @@ building building_powerplant
 building building_command
 {
 	name		"_Command Centre"
-	image		base/commando
+	image		"base/commando"
 	fixcosts	58000
 	depends		building_powerplant
 	type		command
 	build_time	12
 	varcosts	3000
 	map_name	"commando"
-	pedia		rs_building_command
+	pedia		"rs_building_command"
 	max_count	1
 	onenable	"mn_installation_update_max_count"
 	ondisable	"mn_installation_update_max_count"
@@ -108,7 +108,7 @@ building building_command
 building building_quarters
 {
 	name			"_Living Quarters"
-	image			base/quarters
+	image			"base/quarters"
 	fixcosts		40000
 	build_time		5
 	varcosts		1000
@@ -121,7 +121,7 @@ building building_quarters
 building building_hangar
 {
 	name				"_Large Hangar"
-	image				base/drop
+	image				"base/drop"
 	fixcosts			68000
 	depends				building_powerplant // slow dropship operations can be coordinated from another base, so no Command Center needed
 	build_time			8
@@ -137,7 +137,7 @@ building building_hangar
 building building_intercept
 {
 	name			"_Small Hangar"
-	image			base/intercept
+	image			"base/intercept"
 	fixcosts		60000
 	depends			building_command
 	build_time		5
@@ -151,7 +151,7 @@ building building_intercept
 building building_workshop
 {
 	name				"_Workshop"
-	image				base/workshop
+	image				"base/workshop"
 	fixcosts			100000
 	depends				building_command
 	build_time			12
@@ -167,7 +167,7 @@ building building_workshop
 building building_radar
 {
 	name			"_Radar"
-	image			base/radar
+	image			"base/radar"
 	fixcosts		55000
 	depends			building_command
 	build_time		7
@@ -183,7 +183,7 @@ building building_radar
 building building_radar_adv
 {
 	name			"_Advanced Radar"
-	image			base/radar_adv
+	image			"base/radar_adv"
 	fixcosts		85000
 	depends			building_command
 	build_time		7
@@ -199,7 +199,7 @@ building building_radar_adv
 building building_lab
 {
 	name				"_Laboratory"
-	image				base/lab
+	image				"base/lab"
 	fixcosts			100000
 	depends				building_command // scientists need supervision, or...
 	build_time			12
@@ -214,7 +214,7 @@ building building_lab
 building building_hospital
 {
 	name				"_Hospital"
-	image				base/hospital
+	image				"base/hospital"
 	fixcosts			62000
 	depends				building_powerplant
 	build_time			8
@@ -229,7 +229,7 @@ building building_hospital
 building building_amstorage
 {
 	name		"_Antimatter Storage"
-	image		base/antimatter
+	image		"base/antimatter"
 	fixcosts	70000
 	build_time	20
 	varcosts	22000
@@ -244,7 +244,7 @@ building building_amstorage
 building building_laser
 {
 	name			"_Laser Battery"
-	image			base/laser
+	image			"base/laser"
 	fixcosts		10000
 	depends			building_command // need to know where to shoot
 	type			laser
@@ -263,7 +263,7 @@ building building_laser
 building building_missile
 {
 	name			"_Missile Battery"
-	image			base/missile
+	image			"base/missile"
 	fixcosts		10000
 	depends			building_command // need to know where to shoot
 	type			missile

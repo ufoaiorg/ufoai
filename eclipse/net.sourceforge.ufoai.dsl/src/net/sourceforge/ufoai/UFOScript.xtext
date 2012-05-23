@@ -414,25 +414,25 @@ Equipment:
 
 Building:
 	"building" name=ID "{"
-	"name" buildingName=TranslatableString
-	"size" size=STRING
-	"image" image=STRING
-	"type" type=BuildingType
-	"depends" depends=[Building]
-	"pedia" pedia=[Tech]
-	"fixcosts" fixcosts=STRING
-	"build_time" buildTime=STRING
-	"varcosts" varCosts=STRING
-	"map_name" mapName=STRING
-	"capacity" capacity=STRING
-	"ondisable" onDisable=STRING
-	"onenable" onEnable=STRING
-	"ondestroy" onDestroy=STRING
-	"onconstruct" onConstruct=STRING
-	"mandatory" mandatory=UFO_BOOLEAN
-	"max_count" maxCount=STRING
-	"starting_employees" startingEmployees=STRING
-	"level" level=STRING "}";
+	( "name" buildingName+=TranslatableString
+	| "size" size+=STRING
+	| "image" image+=PicsImage
+	| "type" type+=BuildingType
+	| "depends" depends+=[Building]
+	| "pedia" pedia+=[Tech]
+	| "fixcosts" fixcosts+=INT
+	| "build_time" buildTime+=INT
+	| "varcosts" varCosts+=INT
+	| "map_name" mapName+=STRING
+	| "capacity" capacity+=INT
+	| "ondisable" onDisable+=STRING
+	| "onenable" onEnable+=STRING
+	| "ondestroy" onDestroy+=STRING
+	| "onconstruct" onConstruct+=STRING
+	| "mandatory" mandatory+=UFO_BOOLEAN
+	| "max_count" maxCount+= INT
+	| "starting_employees" startingEmployees+=INT
+	| "level" level+=Double)* "}";
 
 BuildingType:
 	"lab" | "hospital" | "aliencont" | "storage" | "hangar" | "smallhangar" | "quarters" | "workshop" | "power" |
@@ -479,6 +479,19 @@ AircraftParam:
 TranslatableString:
 	value=STRING;
 
+Double:
+	(INT | REAL);
+
+/**
+ * Identify an image relative to base/pics
+ */
+PicsImage:
+	value=STRING;
+
 /* ==================== terminals ================================ */
+
+terminal REAL:
+	INT* '.' INT+;
+
 terminal UFO_BOOLEAN:
 	'true' | 'false';
