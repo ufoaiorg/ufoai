@@ -55,7 +55,7 @@ typedef struct timedParticle_s {
 	vec3_t a;	/**< acceleration vector */
 	vec3_t v;	/**< velocity vector */
 	ptl_t *parent;
-	qboolean children;	/**< spawn as children of @c parent */
+	bool children;	/**< spawn as children of @c parent */
 	int levelFlags;
 	int max;	/**< the amount of particles to spawn */
 	int n;		/**< the amount of particles already spawned */
@@ -239,7 +239,7 @@ static byte stackType[MAX_STACK_DEPTH];
  * @param[in] deltaTime The time to wait until this particle should get spawned
  * @param[in] n The amount of particles to spawn (each after deltaTime of its predecessor)
  */
-static void CL_ParticleSpawnTimed (const char *name, ptl_t *parent, qboolean children, int deltaTime, int n)
+static void CL_ParticleSpawnTimed (const char *name, ptl_t *parent, bool children, int deltaTime, int n)
 {
 	const size_t length = lengthof(timedParticles);
 	int i;
@@ -653,7 +653,7 @@ static void CL_ParticleFunction (ptl_t * p, ptlCmd_t * cmd)
 			i = *(int *) stackPtr[stackIdx];
 
 			/** @todo make the children boolean configurable */
-			CL_ParticleSpawnTimed((const char *) cmdData, p, qtrue, i, n);
+			CL_ParticleSpawnTimed((const char *) cmdData, p, true, i, n);
 
 			e -= 2 * sizeof(int);
 
@@ -760,7 +760,7 @@ ptl_t *CL_ParticleSpawn (const char *name, int levelFlags, const vec3_t s, const
 	OBJZERO(*p);
 
 	/* set basic values */
-	p->inuse = qtrue;
+	p->inuse = true;
 	p->startTime = cl.time;
 	p->ctrl = pd;
 	Vector4Set(p->color, 1.0f, 1.0f, 1.0f, 1.0f);
@@ -799,7 +799,7 @@ ptl_t *CL_ParticleSpawn (const char *name, int levelFlags, const vec3_t s, const
  * @param[in] p Particle to set the invis flags for
  * @param[in] hide Boolean value for hiding the particle
  */
-void CL_ParticleVisible (ptl_t *p, qboolean hide)
+void CL_ParticleVisible (ptl_t *p, bool hide)
 {
 	ptl_t *c;
 
@@ -819,8 +819,8 @@ void CL_ParticleFree (ptl_t *p)
 {
 	ptl_t *c;
 
-	p->inuse = qfalse;
-	p->invis = qtrue;
+	p->inuse = false;
+	p->invis = true;
 	for (c = p->children; c; c = c->next) {
 		CL_ParticleFree(c);
 	}
@@ -833,7 +833,7 @@ void CL_ParticleFree (ptl_t *p)
  * @param[in] frac The fraction to fade the color with.
  * @param[in] onlyAlpha Only fade the alpha channel of the given RGBA color.
  */
-static void CL_Fading (vec4_t color, fade_t fade, float frac, qboolean onlyAlpha)
+static void CL_Fading (vec4_t color, fade_t fade, float frac, bool onlyAlpha)
 {
 	int i;
 
@@ -966,7 +966,7 @@ static void CL_ParticleRun2 (ptl_t *p)
 		if (p->hitSolid && p->bounce) {
 			VectorCopy(p->oldV, p->v);
 			VectorNegate(p->a, p->a);
-			p->hitSolid = qfalse;
+			p->hitSolid = false;
 		}
 
 		/* if the particle hit a solid already and is sticking to the surface, no further
@@ -982,7 +982,7 @@ static void CL_ParticleRun2 (ptl_t *p)
 		if (tr.fraction < 1.0 || tr.startsolid) {
 			vec3_t temp;
 
-			p->hitSolid = qtrue;
+			p->hitSolid = true;
 
 			/* now execute the physics handler */
 			if (p->ctrl->physics)
@@ -1029,7 +1029,7 @@ static void CL_ParticleRun2 (ptl_t *p)
 
 	/* fading */
 	if (p->thinkFade || p->frameFade) {
-		const qboolean onlyAlpha = (p->blend == BLEND_BLEND);
+		const bool onlyAlpha = (p->blend == BLEND_BLEND);
 		if (!onlyAlpha)
 			Vector4Set(p->color, 1.0f, 1.0f, 1.0f, 1.0f);
 		else
@@ -1046,7 +1046,7 @@ static void CL_ParticleRun2 (ptl_t *p)
 	if (p->autohide) {
 		const int z = (int)p->s[2] / UNIT_HEIGHT;
 		if (z > cl_worldlevel->integer) {
-			p->invis = qtrue;
+			p->invis = true;
 			return;
 		} else if (z < 0) {
 			CL_ParticleFree(p);
@@ -1066,7 +1066,7 @@ static void CL_ParticleRun2 (ptl_t *p)
 	/* set the new origin */
 	VectorCopy(p->s, p->origin);
 
-	p->invis = qfalse;
+	p->invis = false;
 }
 
 /**
@@ -1133,7 +1133,7 @@ void CL_ParticleRun (void)
  * @param[in] afterwards If this is true you can modify the particle after the init
  * function for the particle was already called
  */
-static void CL_ParseMapParticle (ptl_t * ptl, const char *es, qboolean afterwards)
+static void CL_ParseMapParticle (ptl_t * ptl, const char *es, bool afterwards)
 {
 	char keyname[MAX_VAR];
 	const char *token;
@@ -1208,9 +1208,9 @@ void CL_RunMapParticles (void)
 			}
 
 			/* init the particle */
-			CL_ParseMapParticle(ptl, mp->info, qfalse);
+			CL_ParseMapParticle(ptl, mp->info, false);
 			CL_ParticleFunction(ptl, ptl->ctrl->init);
-			CL_ParseMapParticle(ptl, mp->info, qtrue);
+			CL_ParseMapParticle(ptl, mp->info, true);
 
 			/* prepare next spawning */
 			if (Vector2NotEmpty(mp->wait))

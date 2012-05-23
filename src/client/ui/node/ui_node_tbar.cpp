@@ -68,7 +68,7 @@ void uiTBarNode::draw (uiNode_t *node)
 
 	width = (shx * node->box.size[0]) / TEXTURE_WIDTH;
 
-	UI_DrawNormImageByName(qfalse, nodepos[0], nodepos[1], width, node->box.size[1],
+	UI_DrawNormImageByName(false, nodepos[0], nodepos[1], width, node->box.size[1],
 		shx, EXTRADATA(node).texh[1], EXTRADATA(node).texl[0], EXTRADATA(node).texl[1], ref);
 }
 

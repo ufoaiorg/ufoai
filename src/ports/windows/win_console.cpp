@@ -41,8 +41,8 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 typedef struct {
 	int			outLen;					/**< To keep track of output buffer len */
 	char		cmdBuffer[MAXCMDLINE];	/**< Buffered input from dedicated console */
-	qboolean	timerActive;			/**< Timer is active (for fatal errors) */
-	qboolean	flashColor;				/**< If true, flash error message to red */
+	bool	timerActive;			/**< Timer is active (for fatal errors) */
+	bool	flashColor;				/**< If true, flash error message to red */
 
 	/* Window stuff */
 	HWND		hWnd;
@@ -68,7 +68,7 @@ int SV_CountPlayers(void);
 /**
  * @brief Dispatch window messages
  */
-static void Sys_ConsoleLoop (qboolean error)
+static void Sys_ConsoleLoop (bool error)
 {
 	MSG msg;
 
@@ -96,7 +96,7 @@ const char *Sys_ConsoleInput (void)
 #ifdef DEDICATED_ONLY
 	/* the client console is not visible after init stage and thus this is only
 	 * needed for the server */
-	Sys_ConsoleLoop(qfalse);
+	Sys_ConsoleLoop(false);
 #endif
 
 	/* empty command buffer? */
@@ -187,24 +187,24 @@ void Sys_Error (const char *error, ...)
 	SetWindowText(sys_console.hWndMsg, text);
 	SetTimer(sys_console.hWnd, 1, 1000, NULL);
 
-	sys_console.timerActive = qtrue;
+	sys_console.timerActive = true;
 
 	/* Show/hide everything we need */
 	ShowWindow(sys_console.hWndMsg, SW_SHOW);
 	ShowWindow(sys_console.hWndInput, SW_HIDE);
 
-	Sys_ShowConsole(qtrue);
+	Sys_ShowConsole(true);
 
 	/* Wait for the user to quit */
 	while (1) {
-		Sys_ConsoleLoop(qtrue);
+		Sys_ConsoleLoop(true);
 		/* Don't hog the CPU */
 		Sys_Sleep(25);
 	}
 }
 
 
-void Sys_ShowConsole (qboolean show)
+void Sys_ShowConsole (bool show)
 {
 	if (!show) {
 		ShowWindow(sys_console.hWnd, SW_HIDE);
@@ -458,5 +458,5 @@ void Sys_ConsoleInit (void)
 	SendMessage(sys_console.hWndInput, EM_SETLIMITTEXT, (WPARAM)(MAXCMDLINE - 1), 0);
 
 	/* Make visible */
-	Sys_ShowConsole(qtrue);
+	Sys_ShowConsole(true);
 }

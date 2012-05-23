@@ -190,7 +190,7 @@ static void TR_TransferStart_f (void)
 
 	Com_sprintf(message, sizeof(message), _("Transport mission started, cargo is being transported to %s"), td.transferBase->name);
 	MSO_CheckAddNewMessage(NT_TRANSFER_STARTED, _("Transport mission"), message, MSG_TRANSFERFINISHED);
-	cgi->UI_PopWindow(qfalse);
+	cgi->UI_PopWindow(false);
 }
 
 
@@ -268,9 +268,9 @@ static int TR_CheckItem (const objDef_t *od, const base_t *destbase, int amount)
  * @brief Checks condition for employee transfer.
  * @param[in] employee Pointer to employee for transfer.
  * @param[in] destbase Pointer to destination base.
- * @return qtrue if transfer of this type of employee is possible.
+ * @return true if transfer of this type of employee is possible.
  */
-static qboolean TR_CheckEmployee (const employee_t *employee, const base_t *destbase)
+static bool TR_CheckEmployee (const employee_t *employee, const base_t *destbase)
 {
 	int intransfer = 0;
 	int i;
@@ -285,7 +285,7 @@ static qboolean TR_CheckEmployee (const employee_t *employee, const base_t *dest
 	/* Does the destination base has enough space in living quarters? */
 	if (CAP_GetFreeCapacity(destbase, CAP_EMPLOYEES) - intransfer < 1) {
 		CP_Popup(_("Not enough space"), _("Destination base does not have enough space\nin Living Quarters.\n"));
-		return qfalse;
+		return false;
 	}
 
 	switch (employee->type) {
@@ -295,7 +295,7 @@ static qboolean TR_CheckEmployee (const employee_t *employee, const base_t *dest
 			const rank_t *rank = CL_GetRankByIdx(employee->chr.score.rank);
 			CP_Popup(_("Soldier in aircraft"), _("%s %s is assigned to aircraft and cannot be\ntransfered to another base.\n"),
 					_(rank->shortname), employee->chr.name);
-			return qfalse;
+			return false;
 		}
 		break;
 	case EMPL_PILOT:
@@ -303,22 +303,22 @@ static qboolean TR_CheckEmployee (const employee_t *employee, const base_t *dest
 		if (AIR_IsEmployeeInAircraft(employee, NULL)) {
 			CP_Popup(_("Pilot in aircraft"), _("%s is assigned to aircraft and cannot be\ntransfered to another base.\n"),
 					employee->chr.name);
-			return qfalse;
+			return false;
 		}
 		break;
 	default:
 		break;
 	}
 
-	return qtrue;
+	return true;
 }
 
 /**
  * @brief Checks condition for live alien transfer.
  * @param[in] destbase Pointer to destination base.
- * @return qtrue if transfer of this type of alien is possible.
+ * @return true if transfer of this type of alien is possible.
  */
-static qboolean TR_CheckAlien (const base_t *destbase)
+static bool TR_CheckAlien (const base_t *destbase)
 {
 	int i, intransfer = 0;
 
@@ -336,19 +336,19 @@ static qboolean TR_CheckAlien (const base_t *destbase)
 	/* Does the destination base has enough space in alien containment? */
 	if (!AL_CheckAliveFreeSpace(destbase, NULL, intransfer)) {
 		CP_Popup(_("Not enough space"), _("Destination base does not have enough space\nin Alien Containment.\n"));
-		return qfalse;
+		return false;
 	}
 
-	return qtrue;
+	return true;
 }
 
 /**
  * @brief Checks condition for aircraft transfer.
  * @param[in] aircraft Pointer to aircraft which is going to be added to transferlist.
  * @param[in] destbase Pointer to destination base.
- * @return qtrue if transfer of this aircraft is possible.
+ * @return true if transfer of this aircraft is possible.
  */
-static qboolean TR_CheckAircraft (const aircraft_t *aircraft, const base_t *destbase)
+static bool TR_CheckAircraft (const aircraft_t *aircraft, const base_t *destbase)
 {
 	int hangarStorage;
 	int numAircraftTransfer = 0;
@@ -359,13 +359,13 @@ static qboolean TR_CheckAircraft (const aircraft_t *aircraft, const base_t *dest
 	/* Hangars in destbase functional? */
 	if (!B_GetBuildingStatus(destbase, B_POWER)) {
 		CP_Popup(_("Hangars not ready"), _("Destination base does not have hangars ready.\nProvide power supplies.\n"));
-		return qfalse;
+		return false;
 	} else if (!B_GetBuildingStatus(destbase, B_COMMAND)) {
 		CP_Popup(_("Hangars not ready"), _("Destination base does not have command centre.\nHangars not functional.\n"));
-		return qfalse;
+		return false;
 	} else if (!AIR_AircraftAllowed(destbase)) {
 		CP_Popup(_("Hangars not ready"), _("Destination base does not have any hangar."));
-		return qfalse;
+		return false;
 	}
 
 	/* Count weight and number of all aircraft already on the transfer list that goes
@@ -378,10 +378,10 @@ static qboolean TR_CheckAircraft (const aircraft_t *aircraft, const base_t *dest
 	hangarStorage = AIR_CalculateHangarStorage(aircraft->tpl, destbase, numAircraftTransfer);
 	if (hangarStorage <= 0) {
 		CP_Popup(_("Not enough space"), _("Destination base does not have enough space in hangars.\n"));
-		return qfalse;
+		return false;
 	}
 
-	return qtrue;
+	return true;
 }
 
 /**
@@ -494,16 +494,16 @@ static void TR_CargoList (void)
 /**
  * @brief Check if an aircraft should be displayed for transfer.
  * @param[in] aircraft Pointer to an aircraft
- * @return qtrue if the aircraft should be displayed, qfalse else.
+ * @return true if the aircraft should be displayed, false else.
  */
-static qboolean TR_AircraftListSelect (const aircraft_t *aircraft)
+static bool TR_AircraftListSelect (const aircraft_t *aircraft)
 {
 	if (!AIR_IsAircraftInBase(aircraft))	/* Aircraft is not in base. */
-		return qfalse;
+		return false;
 	if (LIST_GetPointer(td.aircraft, aircraft))	/* Already on transfer list. */
-		return qfalse;
+		return false;
 
-	return qtrue;
+	return true;
 }
 
 static void TR_AddListEntry (linkedList_t **names, const char *name, linkedList_t **amounts, int amount, linkedList_t **transfers, int transfered)
@@ -781,9 +781,9 @@ static void TR_TransferListClear_f (void)
 		const int itemCargoAmount = td.trItemsTmp[od->idx];
 		if (itemCargoAmount > 0) {
 			if (Q_streq(od->id, ANTIMATTER_TECH_ID))
-				B_ManageAntimatter(base, itemCargoAmount, qtrue);
+				B_ManageAntimatter(base, itemCargoAmount, true);
 			else
-				B_UpdateStorageAndCapacity(base, od, itemCargoAmount, qfalse);
+				B_UpdateStorageAndCapacity(base, od, itemCargoAmount, false);
 		}
 	}
 	for (i = 0; i < ccs.numAliensTD; i++) {	/* Return aliens. */
@@ -815,7 +815,7 @@ static int TR_GetTransferFactor (void)
 	return 1;
 }
 
-static qboolean TR_GetTransferEmployee (employeeType_t emplType, int *cnt, const base_t *base, int num)
+static bool TR_GetTransferEmployee (employeeType_t emplType, int *cnt, const base_t *base, int num)
 {
 	E_Foreach(emplType, employee) {
 		if (!E_IsInBase(employee, base))
@@ -827,18 +827,18 @@ static qboolean TR_GetTransferEmployee (employeeType_t emplType, int *cnt, const
 		if (*cnt == num) {
 			if (TR_CheckEmployee(employee, td.transferBase)) {
 				LIST_AddPointer(&td.trEmployeesTmp[employee->type], (void*) employee);
-				return qtrue;
+				return true;
 			}
 			/**
 			 * @todo we have to decide what to do if the check fails - there
 			 * are hard failures, and soft ones - soft ones should continue to add the next employee type
 			 */
-			return qfalse;
+			return false;
 		}
 		(*cnt)++;
 	}
 	(*cnt)--;
-	return qfalse;
+	return false;
 }
 
 static void TR_AddItemToTransferList (base_t *base, transferData_t *td, int num, int amount)
@@ -863,7 +863,7 @@ static void TR_AddItemToTransferList (base_t *base, transferData_t *td, int num,
 
 				if (amount) {
 					td->trItemsTmp[od->idx] += amount;
-					B_ManageAntimatter(base, amount, qfalse);
+					B_ManageAntimatter(base, amount, false);
 				}
 				return;
 			}
@@ -890,7 +890,7 @@ static void TR_AddItemToTransferList (base_t *base, transferData_t *td, int num,
 
 				if (amount) {
 					td->trItemsTmp[od->idx] += amount;
-					B_UpdateStorageAndCapacity(base, od, -amount, qfalse);
+					B_UpdateStorageAndCapacity(base, od, -amount, false);
 					break;
 				} else
 					return;
@@ -1069,7 +1069,7 @@ static void TR_TransferListSelect_f (void)
 static void TR_TransferBaseSelect (base_t *srcbase, base_t *destbase)
 {
 	static char baseInfo[1024];
-	qboolean powercomm;
+	bool powercomm;
 
 	if (!destbase || !srcbase)
 		return;
@@ -1177,9 +1177,9 @@ static void TR_RemoveItemFromCargoList (base_t *base, transferData_t *transferDa
 				/* you can't transfer more item than there are in current transfer */
 				transferData->trItemsTmp[i] -= amount;
 				if (Q_streq(od->id, ANTIMATTER_TECH_ID))
-					B_ManageAntimatter(base, amount, qfalse);
+					B_ManageAntimatter(base, amount, false);
 				else
-					B_UpdateStorageAndCapacity(base, od, amount, qfalse);
+					B_UpdateStorageAndCapacity(base, od, amount, false);
 				break;
 			}
 			cnt++;
@@ -1190,7 +1190,7 @@ static void TR_RemoveItemFromCargoList (base_t *base, transferData_t *transferDa
 static void TR_RemoveEmployeeFromCargoList (base_t *base, transferData_t *transferData, int num)
 {
 	int cnt = 0, entries = 0, i;
-	qboolean removed = qfalse;
+	bool removed = false;
 
 	for (i = 0; i < MAX_CARGO; i++) {
 		/* Count previous types on the list. */
@@ -1229,7 +1229,7 @@ static void TR_RemoveEmployeeFromCargoList (base_t *base, transferData_t *transf
 			if (!LIST_IsEmpty(td.trEmployeesTmp[emplType])) {
 				if (cnt == num) {
 					LIST_RemoveEntry(&td.trEmployeesTmp[emplType], td.trEmployeesTmp[emplType]);
-					removed = qtrue;
+					removed = true;
 				}
 				cnt++;
 			}

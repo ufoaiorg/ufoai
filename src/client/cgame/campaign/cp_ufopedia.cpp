@@ -69,10 +69,10 @@ static int upDisplay = UFOPEDIA_CHAPTERS;
  * @brief Checks If a technology/UFOpaedia-entry will be displayed in the UFOpaedia (-list).
  * @note This does not check for different display modes (only pre-research text, what statistics, etc...). The
  * content is mostly checked in @c UP_Article
- * @return qtrue if the tech gets displayed at all, otherwise qfalse.
+ * @return true if the tech gets displayed at all, otherwise false.
  * @sa UP_Article
  */
-static qboolean UP_TechGetsDisplayed (const technology_t *tech)
+static bool UP_TechGetsDisplayed (const technology_t *tech)
 {
 	const objDef_t *item;
 
@@ -80,7 +80,7 @@ static qboolean UP_TechGetsDisplayed (const technology_t *tech)
 	/* virtual items are hidden */
 	item = INVSH_GetItemByIDSilent(tech->provides);
 	if (item && item->isVirtual)
-		return qfalse;
+		return false;
 	/* Is already researched OR has collected items OR (researchable AND have description)
 	 * AND not a logical block AND not redirected */
 	return (RS_IsResearched_ptr(tech) || RS_Collected_(tech)
@@ -478,7 +478,7 @@ static void UP_SetMailHeader (technology_t* tech, techMailType_t type, eventMail
 		model = mail->model;
 		subject = mail->subject;
 		Q_strncpyz(dateBuf, _(mail->date), sizeof(dateBuf));
-		mail->read = qtrue;
+		mail->read = true;
 		/* reread the unread mails in UP_GetUnreadMails */
 		ccs.numUnreadMails = -1;
 	} else {
@@ -512,7 +512,7 @@ static void UP_SetMailHeader (technology_t* tech, techMailType_t type, eventMail
 		}
 		if (from != NULL) {
 			if (!mail->read) {
-				mail->read = qtrue;
+				mail->read = true;
 				/* reread the unread mails in UP_GetUnreadMails */
 				ccs.numUnreadMails = -1;
 			}
@@ -684,7 +684,7 @@ static void UP_Article (technology_t* tech, eventMail_t *mail)
 void UP_OpenEventMail (const char *eventMailID)
 {
 	eventMail_t* mail;
-	mail = CL_GetEventMail(eventMailID, qfalse);
+	mail = CL_GetEventMail(eventMailID, false);
 	if (!mail)
 		return;
 
@@ -803,12 +803,12 @@ static void UP_GenerateSummary (void)
 
 	for (i = 0; i < ccs.numChapters; i++) {
 		/* Check if there are any researched or collected items in this chapter ... */
-		qboolean researchedEntries = qfalse;
+		bool researchedEntries = false;
 		pediaChapter_t *chapter = &ccs.upChapters[i];
 		upCurrentTech = chapter->first;
 		do {
 			if (UP_TechGetsDisplayed(upCurrentTech)) {
-				researchedEntries = qtrue;
+				researchedEntries = true;
 				break;
 			}
 			upCurrentTech = upCurrentTech->upNext;
@@ -1193,20 +1193,20 @@ static void UP_SetAllMailsRead_f (void)
 		switch (m->type) {
 		case MSG_RESEARCH_PROPOSAL:
 			assert(m->pedia);
-			m->pedia->mail[TECHMAIL_PRE].read = qtrue;
+			m->pedia->mail[TECHMAIL_PRE].read = true;
 			break;
 		case MSG_RESEARCH_FINISHED:
 			assert(m->pedia);
-			m->pedia->mail[TECHMAIL_RESEARCHED].read = qtrue;
+			m->pedia->mail[TECHMAIL_RESEARCHED].read = true;
 			break;
 		case MSG_NEWS:
 			assert(m->pedia);
-			m->pedia->mail[TECHMAIL_PRE].read = qtrue;
-			m->pedia->mail[TECHMAIL_RESEARCHED].read = qtrue;
+			m->pedia->mail[TECHMAIL_PRE].read = true;
+			m->pedia->mail[TECHMAIL_RESEARCHED].read = true;
 			break;
 		case MSG_EVENT:
 			assert(m->eventMail);
-			m->eventMail->read = qtrue;
+			m->eventMail->read = true;
 			break;
 		default:
 			break;

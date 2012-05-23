@@ -82,7 +82,7 @@ int VID_GetModeNums (void)
 	return lengthof(vid_modes);
 }
 
-qboolean VID_GetModeInfo (int modeIndex, vidmode_t *modeInfo)
+bool VID_GetModeInfo (int modeIndex, vidmode_t *modeInfo)
 {
 	if (modeIndex < 0) {
 		modeInfo->width = vid_width->integer;
@@ -99,10 +99,10 @@ qboolean VID_GetModeInfo (int modeIndex, vidmode_t *modeInfo)
 		modeInfo->width = width;
 		modeInfo->height = height;
 	} else {
-		return qfalse;
+		return false;
 	}
 
-	return qtrue;
+	return true;
 }
 
 /**
@@ -110,7 +110,7 @@ qboolean VID_GetModeInfo (int modeIndex, vidmode_t *modeInfo)
  */
 void VID_Restart_f (void)
 {
-	refdef.ready = qfalse;
+	refdef.ready = false;
 
 	Com_Printf("renderer restart\n");
 
@@ -125,14 +125,14 @@ void VID_Restart_f (void)
 	GAME_ReloadMode();
 }
 
-static qboolean CL_CvarCheckVidGamma (cvar_t *cvar)
+static bool CL_CvarCheckVidGamma (cvar_t *cvar)
 {
-	return Cvar_AssertValue(cvar, 0.1, 3.0, qfalse);
+	return Cvar_AssertValue(cvar, 0.1, 3.0, false);
 }
 
-static qboolean CL_CvarCheckVidMode (cvar_t *cvar)
+static bool CL_CvarCheckVidMode (cvar_t *cvar)
 {
-	return Cvar_AssertValue(cvar, -1, VID_GetModeNums(), qtrue);
+	return Cvar_AssertValue(cvar, -1, VID_GetModeNums(), true);
 }
 
 /**

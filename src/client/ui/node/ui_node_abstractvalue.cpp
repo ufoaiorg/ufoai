@@ -194,7 +194,7 @@ void UI_RegisterAbstractValueNode (uiBehaviour_t *behaviour)
 {
 	behaviour->name = "abstractvalue";
 	behaviour->manager = new uiAbstractValueNode();
-	behaviour->isAbstract = qtrue;
+	behaviour->isAbstract = true;
 	behaviour->extraDataSize = sizeof(EXTRADATA_TYPE);
 
 	/* Current value of the node. It should be a cvar */

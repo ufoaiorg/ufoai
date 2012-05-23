@@ -237,9 +237,9 @@ static void UI_AbstractNodeCallCreateChild (uiNode_t *node, const uiCallContext_
 
 	component = UI_GetComponent(type);
 	if (component) {
-		child = UI_CloneNode(component, node->root, qtrue, name, qtrue);
+		child = UI_CloneNode(component, node->root, true, name, true);
 	} else {
-		child = UI_AllocNode(name, type, qtrue);
+		child = UI_AllocNode(name, type, true);
 	}
 
 	if (child == NULL) {
@@ -308,7 +308,7 @@ void uiLocatedNode::onMiddleClick(uiNode_t* node, int x, int y)
 void UI_RegisterAbstractNode (uiBehaviour_t *behaviour)
 {
 	behaviour->name = "abstractnode";
-	behaviour->isAbstract = qtrue;
+	behaviour->isAbstract = true;
 	behaviour->manager = new uiLocatedNode();
 
 	/* Top-left position of the node */
@@ -327,13 +327,13 @@ void UI_RegisterAbstractNode (uiBehaviour_t *behaviour)
 	/* If true, the node name is indexed into the window. We can access to the node with
 	 * the path "windowName#nodeName"
 	 */
-	UI_RegisterNodeProperty(behaviour, "indexed", V_CPPBOOL, uiNode_t, indexed);
+	UI_RegisterNodeProperty(behaviour, "indexed", V_BOOL, uiNode_t, indexed);
 	/* If true, the node is not displayed nor or activatable. */
-	propertyInvis = UI_RegisterNodeProperty(behaviour, "invis", V_CPPBOOL, uiNode_t, invis);
+	propertyInvis = UI_RegisterNodeProperty(behaviour, "invis", V_BOOL, uiNode_t, invis);
 	/* If true, the node is disabled. Few nodes support it, fell free to request an update. */
-	UI_RegisterNodeProperty(behaviour, "disabled", V_CPPBOOL, uiNode_t, disabled);
+	UI_RegisterNodeProperty(behaviour, "disabled", V_BOOL, uiNode_t, disabled);
 	/* If true, the node is not ''tangible''. We click through it, then it will not receive mouse event. */
-	UI_RegisterNodeProperty(behaviour, "ghost", V_CPPBOOL, uiNode_t, ghost);
+	UI_RegisterNodeProperty(behaviour, "ghost", V_BOOL, uiNode_t, ghost);
 	/* Border size we want to display. */
 	UI_RegisterNodeProperty(behaviour, "border", V_INT, uiNode_t, border);
 	/* Padding size we want to use. Few node support it. */

@@ -66,7 +66,7 @@ uiNode_t* UI_GetNodeFromExpression (uiAction_t *expression, const uiCallContext_
 			const value_t *propertyTmp;
 			const char *path = expression->d.terminal.d1.constString;
 			if (expression->type == EA_VALUE_PATHNODE_WITHINJECTION)
-				path = UI_GenInjectedString(path, qfalse, context);
+				path = UI_GenInjectedString(path, false, context);
 
 			UI_ReadNodePath(path, context->source, &node, &propertyTmp);
 			if (!node) {
@@ -86,7 +86,7 @@ uiNode_t* UI_GetNodeFromExpression (uiAction_t *expression, const uiCallContext_
 				const value_t *propertyTmp;
 				const char *path = expression->d.terminal.d1.constString;
 				if (expression->type == EA_VALUE_PATHPROPERTY_WITHINJECTION)
-					path = UI_GenInjectedString(path, qfalse, context);
+					path = UI_GenInjectedString(path, false, context);
 
 				UI_ReadNodePath(path, context->source, &node, &propertyTmp);
 				if (!node) {
@@ -188,7 +188,7 @@ float UI_GetFloatFromExpression (uiAction_t *expression, const uiCallContext_t *
 			{
 				const char* string = expression->d.terminal.d1.constString;
 				if (expression->type == EA_VALUE_STRING_WITHINJECTION)
-					string = UI_GenInjectedString(string, qfalse, context);
+					string = UI_GenInjectedString(string, false, context);
 				return atof(string);
 			}
 		case EA_VALUE_FLOAT:
@@ -199,7 +199,7 @@ float UI_GetFloatFromExpression (uiAction_t *expression, const uiCallContext_t *
 				cvar_t *cvar = NULL;
 				const char *cvarName = expression->d.terminal.d1.constString;
 				if (expression->type == EA_VALUE_CVARNAME_WITHINJECTION)
-					cvarName = UI_GenInjectedString(cvarName, qfalse, context);
+					cvarName = UI_GenInjectedString(cvarName, false, context);
 				cvar = Cvar_Get(cvarName, "", 0, "Cvar from UI script expression");
 				return cvar->value;
 			}
@@ -331,7 +331,7 @@ const char* UI_GetStringFromExpression (uiAction_t *expression, const uiCallCont
 			{
 				const char* string = expression->d.terminal.d1.constString;
 				if (expression->type == EA_VALUE_STRING_WITHINJECTION)
-					string = UI_GenInjectedString(string, qfalse, context);
+					string = UI_GenInjectedString(string, false, context);
 				return string;
 			}
 		case EA_VALUE_FLOAT:
@@ -350,7 +350,7 @@ const char* UI_GetStringFromExpression (uiAction_t *expression, const uiCallCont
 			cvar_t *cvar = NULL;
 			const char *cvarName = expression->d.terminal.d1.constString;
 			if (expression->type == EA_VALUE_CVARNAME_WITHINJECTION)
-				cvarName = UI_GenInjectedString(cvarName, qfalse, context);
+				cvarName = UI_GenInjectedString(cvarName, false, context);
 			cvar = Cvar_Get(cvarName, "", 0, "Cvar from UI script expression");
 			return cvar->string;
 		}
@@ -401,7 +401,7 @@ const char* UI_GetStringFromExpression (uiAction_t *expression, const uiCallCont
 	case EA_OPERATOR_FLOAT2BOOLEAN:
 	case EA_OPERATOR_STRING2BOOLEAN:
 		{
-			const qboolean v = UI_GetBooleanFromExpression(expression, context);
+			const bool v = UI_GetBooleanFromExpression(expression, context);
 			return (v)?"1":"0";
 		}
 
@@ -486,7 +486,7 @@ bool UI_GetBooleanFromExpression (uiAction_t *expression, const uiCallContext_t 
 				assert(e->type == EA_VALUE_CVARNAME || e->type == EA_VALUE_CVARNAME_WITHINJECTION);
 				cvarName = e->d.terminal.d1.constString;
 				if (e->type == EA_VALUE_CVARNAME_WITHINJECTION)
-					cvarName = UI_GenInjectedString(cvarName, qfalse, context);
+					cvarName = UI_GenInjectedString(cvarName, false, context);
 				return Cvar_FindVar(cvarName) != NULL;
 			}
 		case EA_OPERATOR_PATHPROPERTYFROM:

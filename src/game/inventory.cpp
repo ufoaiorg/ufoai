@@ -119,7 +119,7 @@ static invList_t *I_AddToInventory (inventoryInterface_t* self, inventory_t * co
 
 	/* don't reset an already applied rotation */
 	if (checkedTo == INV_FITS_ONLY_ROTATED)
-		ic->item.rotated = qtrue;
+		ic->item.rotated = true;
 	ic->x = x;
 	ic->y = y;
 
@@ -131,11 +131,11 @@ static invList_t *I_AddToInventory (inventoryInterface_t* self, inventory_t * co
  * @param[in] i The inventory the container is in.
  * @param[in] container The container where the item should be removed.
  * @param[in] fItem The item to be removed.
- * @return qtrue If removal was successful.
- * @return qfalse If nothing was removed or an error occurred.
+ * @return true If removal was successful.
+ * @return false If nothing was removed or an error occurred.
  * @sa I_AddToInventory
  */
-static qboolean I_RemoveFromInventory (inventoryInterface_t* self, inventory_t* const i, const invDef_t * container, invList_t *fItem)
+static bool I_RemoveFromInventory (inventoryInterface_t* self, inventory_t* const i, const invDef_t * container, invList_t *fItem)
 {
 	invList_t *ic, *previous;
 
@@ -145,7 +145,7 @@ static qboolean I_RemoveFromInventory (inventoryInterface_t* self, inventory_t* 
 
 	ic = i->c[container->id];
 	if (!ic)
-		return qfalse;
+		return false;
 
 	/** @todo the problem here is, that in case of a move inside the same container
 	 * the item don't just get updated x and y values but it is tried to remove
@@ -159,7 +159,7 @@ static qboolean I_RemoveFromInventory (inventoryInterface_t* self, inventory_t* 
 			ic->item.amount--;
 			Com_DPrintf(DEBUG_SHARED, "I_RemoveFromInventory: Amount of '%s': %i (%s)\n",
 				ic->item.t->name, ic->item.amount, self->name);
-			return qtrue;
+			return true;
 		}
 
 		if (container->single && ic->next)
@@ -175,7 +175,7 @@ static qboolean I_RemoveFromInventory (inventoryInterface_t* self, inventory_t* 
 		/* updated invUnused to be able to reuse this space later again */
 		I_RemoveInvList(self, ic);
 
-		return qtrue;
+		return true;
 	}
 
 	for (previous = i->c[container->id]; ic; ic = ic->next) {
@@ -186,7 +186,7 @@ static qboolean I_RemoveFromInventory (inventoryInterface_t* self, inventory_t* 
 				ic->item.amount--;
 				Com_DPrintf(DEBUG_SHARED, "I_RemoveFromInventory: Amount of '%s': %i (%s)\n",
 					ic->item.t->name, ic->item.amount, self->name);
-				return qtrue;
+				return true;
 			}
 
 			if (ic == i->c[container->id])
@@ -196,11 +196,11 @@ static qboolean I_RemoveFromInventory (inventoryInterface_t* self, inventory_t* 
 
 			I_RemoveInvList(self, ic);
 
-			return qtrue;
+			return true;
 		}
 		previous = ic;
 	}
-	return qfalse;
+	return false;
 }
 
 /**
@@ -229,7 +229,7 @@ static inventory_action_t I_MoveInInventory (inventoryInterface_t* self, invento
 
 	int time;
 	int checkedTo = INV_DOES_NOT_FIT;
-	qboolean alreadyRemovedSource = qfalse;
+	bool alreadyRemovedSource = false;
 
 	assert(to);
 	assert(from);
@@ -323,7 +323,7 @@ static inventory_action_t I_MoveInInventory (inventoryInterface_t* self, invento
 			return IA_NONE;
 		else
 			/* Removal successful - store this info. */
-			alreadyRemovedSource = qtrue;
+			alreadyRemovedSource = true;
 
 		cacheItem2 = self->cacheItem; /* Save/cache (source) item. The cacheItem is modified in I_MoveInInventory. */
 
@@ -406,10 +406,10 @@ static inventory_action_t I_MoveInInventory (inventoryInterface_t* self, invento
 
 	if (checkedTo == INV_FITS_ONLY_ROTATED) {
 		/* Set rotated tag */
-		fItem->item.rotated = qtrue;
+		fItem->item.rotated = true;
 	} else if (fItem->item.rotated) {
 		/* Remove rotated tag */
-		fItem->item.rotated = qfalse;
+		fItem->item.rotated = false;
 	}
 
 	/* Actually remove the item from the 'from' container (if it wasn't already removed). */
@@ -446,7 +446,7 @@ static inventory_action_t I_MoveInInventory (inventoryInterface_t* self, invento
  * @sa INVSH_FindSpace
  * @sa I_AddToInventory
  */
-static qboolean I_TryAddToInventory (inventoryInterface_t* self, inventory_t* const inv, const item_t * const item, const invDef_t * container)
+static bool I_TryAddToInventory (inventoryInterface_t* self, inventory_t* const inv, const item_t * const item, const invDef_t * container)
 {
 	int x, y;
 
@@ -454,17 +454,17 @@ static qboolean I_TryAddToInventory (inventoryInterface_t* self, inventory_t* co
 
 	if (x == NONE) {
 		assert(y == NONE);
-		return qfalse;
+		return false;
 	} else {
 		const int checkedTo = INVSH_CheckToInventory(inv, item->t, container, x, y, NULL);
 		if (!checkedTo)
-			return qfalse;
+			return false;
 		else {
 			item_t itemRotation = *item;
 			if (checkedTo == INV_FITS_ONLY_ROTATED)
-				itemRotation.rotated = qtrue;
+				itemRotation.rotated = true;
 			else
-				itemRotation.rotated = qfalse;
+				itemRotation.rotated = false;
 
 			return self->AddToInventory(self, inv, &itemRotation, container, x, y, 1) != NULL;
 		}
@@ -536,8 +536,8 @@ static int I_PackAmmoAndWeapon (inventoryInterface_t *self, inventory_t* const i
 {
 	const objDef_t *ammo = NULL;
 	item_t item = {NONE_AMMO, NULL, NULL, 0, 0};
-	qboolean allowLeft;
-	qboolean packed;
+	bool allowLeft;
+	bool packed;
 	int ammoMult = 1;
 
 	assert(!INV_IsArmour(weapon));
@@ -631,7 +631,7 @@ static int I_PackAmmoAndWeapon (inventoryInterface_t *self, inventory_t* const i
 		}
 	}
 
-	return qtrue;
+	return true;
 }
 
 
@@ -892,7 +892,7 @@ static void I_EquipActor (inventoryInterface_t* self, inventory_t* const inv, co
 				if (miscItem->isMisc && !miscItem->weapon) {
 					randNumber -= ed->numItems[i];
 					if (randNumber < 0) {
-						const qboolean oneShot = miscItem->oneshot;
+						const bool oneShot = miscItem->oneshot;
 						const item_t item = {oneShot ? miscItem->ammo : NONE_AMMO, oneShot ? miscItem : NULL, miscItem, 0, 0};
 						containerIndex_t container;
 						if (miscItem->headgear)

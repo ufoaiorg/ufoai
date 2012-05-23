@@ -74,7 +74,7 @@ void CP_ReconMissionLeave (mission_t *mission)
 		CP_MissionDisableTimeLimit(mission);
 		UFO_SetRandomDest(mission->ufo);
 		/* Display UFO on geoscape if it is detected */
-		mission->ufo->landed = qfalse;
+		mission->ufo->landed = false;
 	} else {
 		/* Go to next stage on next frame */
 		mission->finalDate = ccs.date;
@@ -85,14 +85,14 @@ void CP_ReconMissionLeave (mission_t *mission)
 /**
  * @brief Choose between aerial and ground mission.
  * @note Recon mission -- Stage 1
- * @return qtrue if recon mission is aerial, qfalse if this is a ground mission
+ * @return true if recon mission is aerial, false if this is a ground mission
  * @sa CP_ReconMissionSelect
  */
-static qboolean CP_ReconMissionChoose (mission_t *mission)
+static bool CP_ReconMissionChoose (mission_t *mission)
 {
 	/* mission without UFO is always a ground mission */
 	if (!mission->ufo)
-		return qfalse;
+		return false;
 
 	return (frand() > 0.5f);
 }
@@ -129,7 +129,7 @@ void CP_ReconMissionGroundGo (mission_t *mission)
 	/* maybe the UFO just finished a ground mission and starts a new one? */
 	if (mission->ufo) {
 		CP_MissionRemoveFromGeoscape(mission);
-		mission->ufo->landed = qfalse;
+		mission->ufo->landed = false;
 	}
 
 	/* Choose a map */
@@ -140,7 +140,7 @@ void CP_ReconMissionGroundGo (mission_t *mission)
 				continue;
 			if (MAP_PositionCloseToBase(mission->pos))
 				continue;
-			mission->posAssigned = qtrue;
+			mission->posAssigned = true;
 			break;
 		}
 		if (counter >= MAX_POS_LOOP) {
@@ -180,14 +180,14 @@ static void CP_ReconMissionGround (mission_t *mission)
 	const date_t missionDelay = {3, 0};
 
 	mission->stage = STAGE_RECON_GROUND;
-	mission->posAssigned = qtrue;
+	mission->posAssigned = true;
 
 	mission->finalDate = Date_Add(ccs.date, Date_Random(minMissionDelay, missionDelay));
 	/* ufo becomes invisible on geoscape, but don't remove it from ufo global array (may reappear)*/
 	if (mission->ufo)
-		CP_UFORemoveFromGeoscape(mission, qfalse);
+		CP_UFORemoveFromGeoscape(mission, false);
 	/* mission appear on geoscape, player can go there */
-	CP_MissionAddToGeoscape(mission, qfalse);
+	CP_MissionAddToGeoscape(mission, false);
 }
 
 /**
@@ -196,7 +196,7 @@ static void CP_ReconMissionGround (mission_t *mission)
  * @note Already one ground mission has been made
  * @sa CP_ReconMissionSelect
  */
-static qboolean CP_ReconMissionNewGroundMission (mission_t *mission)
+static bool CP_ReconMissionNewGroundMission (mission_t *mission)
 {
 	return (frand() > 0.7f);
 }

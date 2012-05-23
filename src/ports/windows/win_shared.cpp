@@ -68,7 +68,7 @@ void Sys_SetAffinityAndPriority (void)
 		else if (sys_priority->integer > 2)
 			Cvar_SetValue("sys_priority", 2);
 
-		sys_priority->modified = qfalse;
+		sys_priority->modified = false;
 
 		switch (sys_priority->integer) {
 		case 0:
@@ -90,7 +90,7 @@ void Sys_SetAffinityAndPriority (void)
 		DWORD_PTR procAffinity = 0;
 		GetSystemInfo(&sysInfo);
 		Com_Printf("Found %i processors\n", (int)sysInfo.dwNumberOfProcessors);
-		sys_affinity->modified = qfalse;
+		sys_affinity->modified = false;
 		if (sysInfo.dwNumberOfProcessors >= 2) {
 			switch (sys_affinity->integer) {
 			case 0:
@@ -138,31 +138,31 @@ static char findbase[MAX_OSPATH];
 static char findpath[MAX_OSPATH];
 static int findhandle;
 
-static qboolean CompareAttributes (unsigned found, unsigned musthave, unsigned canthave)
+static bool CompareAttributes (unsigned found, unsigned musthave, unsigned canthave)
 {
 	if ((found & _A_RDONLY) && (canthave & SFF_RDONLY))
-		return qfalse;
+		return false;
 	if ((found & _A_HIDDEN) && (canthave & SFF_HIDDEN))
-		return qfalse;
+		return false;
 	if ((found & _A_SYSTEM) && (canthave & SFF_SYSTEM))
-		return qfalse;
+		return false;
 	if ((found & _A_SUBDIR) && (canthave & SFF_SUBDIR))
-		return qfalse;
+		return false;
 	if ((found & _A_ARCH) && (canthave & SFF_ARCH))
-		return qfalse;
+		return false;
 
 	if ((musthave & SFF_RDONLY) && !(found & _A_RDONLY))
-		return qfalse;
+		return false;
 	if ((musthave & SFF_HIDDEN) && !(found & _A_HIDDEN))
-		return qfalse;
+		return false;
 	if ((musthave & SFF_SYSTEM) && !(found & _A_SYSTEM))
-		return qfalse;
+		return false;
 	if ((musthave & SFF_SUBDIR) && !(found & _A_SUBDIR))
-		return qfalse;
+		return false;
 	if ((musthave & SFF_ARCH) && !(found & _A_ARCH))
-		return qfalse;
+		return false;
 
-	return qtrue;
+	return true;
 }
 
 /**
@@ -295,7 +295,7 @@ void Sys_Quit (void)
  * @param[in] fgColor <bitmask for foreground color. FOREGROUND_BLUE, FOREGROUND_GREEN, FOREGROUND_RED, FOREGROUND_INTENSITY and combinations (yellow = green | red).>
  * @param[in] toStdOut <true write to stdout. false == stderr.>
  */
-static void Sys_ColoredOutput (const char *text, unsigned int fgColor, qboolean toStdOut)
+static void Sys_ColoredOutput (const char *text, unsigned int fgColor, bool toStdOut)
 {
 	/* paint this colors (gray on black). */
 	unsigned int cliPaintColor = FOREGROUND_BLUE | FOREGROUND_GREEN | FOREGROUND_RED;
@@ -341,7 +341,7 @@ void Sys_Error (const char *error, ...)
 	va_end(argptr);
 
 	/* red text to stderr. */
-	Sys_ColoredOutput(text, FOREGROUND_RED | FOREGROUND_INTENSITY, qfalse);
+	Sys_ColoredOutput(text, FOREGROUND_RED | FOREGROUND_INTENSITY, false);
 
 	ExitProcess(1);
 }

@@ -67,11 +67,11 @@ int G_EdictsGetNumber (const edict_t* ent)
  * @note entity must also be 'in use' to be really valid
  * @param[in] num The entity's index in the array of entities
  */
-qboolean G_EdictsIsValidNum (const int num)
+bool G_EdictsIsValidNum (const int num)
 {
 	if (num >= 0 && num < globals.num_edicts)
-		return qtrue;
-	return qfalse;
+		return true;
+	return false;
 }
 
 /**
@@ -260,9 +260,9 @@ void G_EdictSetOrigin (edict_t* ent, const pos3_t newPos)
  * @brief Set the edict's pos and origin vector to the given grid position
  * @param ent The entity
  * @param cmpPos The grid position to compare to
- * @return qtrue if positions are equal
+ * @return true if positions are equal
  */
-qboolean G_EdictPosIsSameAs (edict_t* ent, const pos3_t cmpPos)
+bool G_EdictPosIsSameAs (edict_t* ent, const pos3_t cmpPos)
 {
 	return VectorCompare(cmpPos, ent->pos);
 }

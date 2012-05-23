@@ -140,7 +140,7 @@ void CP_GameTimeStop (void)
 /**
  * @brief Check if time is stopped
  */
-qboolean CP_IsTimeStopped (void)
+bool CP_IsTimeStopped (void)
 {
 	return !ccs.gameLapse;
 }
@@ -148,12 +148,12 @@ qboolean CP_IsTimeStopped (void)
 /**
  * Time scaling is only allowed when you are on the geoscape and when you had at least one base built.
  */
-static qboolean CP_AllowTimeScale (void)
+static bool CP_AllowTimeScale (void)
 {
 	/* check the stats value - already build bases might have been destroyed
 	 * so the B_GetCount() values is pointless here */
 	if (!ccs.campaignStats.basesBuilt)
-		return qfalse;
+		return false;
 
 	return CP_OnGeoscape();
 }
@@ -240,15 +240,15 @@ int Date_DateToSeconds (const date_t *date)
  * @param[in] compare Date to compare.
  * @return True if current date is later than given one.
  */
-qboolean Date_LaterThan (const date_t *now, const date_t *compare)
+bool Date_LaterThan (const date_t *now, const date_t *compare)
 {
 	if (now->day > compare->day)
-		return qtrue;
+		return true;
 	if (now->day < compare->day)
-		return qfalse;
+		return false;
 	if (now->sec > compare->sec)
-		return qtrue;
-	return qfalse;
+		return true;
+	return false;
 }
 
 /**
@@ -256,15 +256,15 @@ qboolean Date_LaterThan (const date_t *now, const date_t *compare)
  * @param date The date to check
  * @return @c true if the given date is equal or earlier than the current campaign date, @c false otherwise
  */
-qboolean Date_IsDue (const date_t *date)
+bool Date_IsDue (const date_t *date)
 {
 	if (date->day < ccs.date.day)
-		return qtrue;
+		return true;
 
 	else if (date->day == ccs.date.day && date->sec <= ccs.date.sec)
-		return qtrue;
+		return true;
 
-	return qfalse;
+	return false;
 }
 
 /**

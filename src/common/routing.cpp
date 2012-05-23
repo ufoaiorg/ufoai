@@ -34,7 +34,7 @@ MAP TRACING DEBUGGING TABLES
 ===============================================================================
 */
 
-qboolean debugTrace = qfalse;
+bool debugTrace = false;
 
 /*
 ==========================================================
@@ -100,7 +100,7 @@ typedef struct place_s {
 	int floor;		/**< The floor of the place, given in absolute QUANTs */
 	int ceiling;	/**< The ceiling of it, given in absolute QUANTs. */
 	int floorZ;		/**< The level (0-7) of the floor. */
-	qboolean usable;/**< does an actor fit in here ? */
+	bool usable;/**< does an actor fit in here ? */
 } place_t;
 
 static inline void RT_PlaceInit (const routing_t *map, const actorSizeEnum_t actorSize, place_t *p, const int x, const int y, const int z)
@@ -112,15 +112,15 @@ static inline void RT_PlaceInit (const routing_t *map, const actorSizeEnum_t act
 	p->floor = RT_FLOOR(map, actorSize, x, y, z) + z * CELL_HEIGHT;
 	p->ceiling = relCeiling + z * CELL_HEIGHT;
 	p->floorZ = std::max(0, p->floor / CELL_HEIGHT) ;
-	p->usable = (relCeiling && p->floor > -1 && p->ceiling - p->floor >= PATHFINDING_MIN_OPENING) ? qtrue : qfalse;
+	p->usable = (relCeiling && p->floor > -1 && p->ceiling - p->floor >= PATHFINDING_MIN_OPENING) ? true : false;
 }
 
-static inline qboolean RT_PlaceIsUsable (const place_t* p)
+static inline bool RT_PlaceIsUsable (const place_t* p)
 {
 	return p->usable;
 }
 
-static inline qboolean RT_PlaceDoesIntersectEnough (const place_t* p, const place_t* other)
+static inline bool RT_PlaceDoesIntersectEnough (const place_t* p, const place_t* other)
 {
 	return (std::min(p->ceiling, other->ceiling) - std::max(p->floor, other->floor) >= PATHFINDING_MIN_OPENING);
 }
@@ -347,19 +347,19 @@ NEW MAP TRACING FUNCTIONS
  * @sa CL_AddTargetingBox
  * @todo see CL_ActorMoveMouse
  */
-qboolean RT_AllCellsBelowAreFilled (const routing_t * map, const int actorSize, const pos3_t pos)
+bool RT_AllCellsBelowAreFilled (const routing_t * map, const int actorSize, const pos3_t pos)
 {
 	int i;
 
 	/* the -1 level is considered solid ground */
 	if (pos[2] == 0)
-		return qtrue;
+		return true;
 
 	for (i = 0; i < pos[2]; i++) {
 		if (RT_CEILING(map, actorSize, pos[0], pos[1], i) != 0)
-			return qfalse;
+			return false;
 	}
-	return qtrue;
+	return true;
 }
 
 /**
@@ -439,7 +439,7 @@ int RT_CheckCell (mapTiles_t *mapTiles, routing_t * map, const int actorSize, co
 	 * 6. If the opening between the floor and the ceiling is not at least PATHFINDING_MIN_OPENING tall, then
 	 *      restart below the current floor.
 	 */
-	while (qtrue) { /* Loop forever, we will exit if we hit the model bottom or find a valid floor. */
+	while (true) { /* Loop forever, we will exit if we hit the model bottom or find a valid floor. */
 		if (debugTrace)
 			Com_Printf("[(%i, %i, %i, %i)]Casting floor (%f, %f, %f) to (%f, %f, %f)\n",
 				x, y, z, actorSize, start[0], start[1], start[2], end[0], end[1], end[2]);

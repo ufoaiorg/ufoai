@@ -9,6 +9,6 @@
 #include "../shared/typedefs.h"
 #include "../common/tracing.h"
 
-void SL_BSPSlice(const TR_TILE_TYPE *model, float thickness, int scale, qboolean singleContour, qboolean multipleContour);
+void SL_BSPSlice(const TR_TILE_TYPE *model, float thickness, int scale, bool singleContour, bool multipleContour);
 
 #endif

@@ -74,7 +74,7 @@ edict_t *G_GetFloorItems (edict_t * ent)
  * @param container The container in the inventory of the edict to remove the searched item from.
  * @return @c true if the removal was successful, @c false otherwise.
  */
-qboolean G_InventoryRemoveItemByID (const char *itemID, edict_t *ent, containerIndex_t container)
+bool G_InventoryRemoveItemByID (const char *itemID, edict_t *ent, containerIndex_t container)
 {
 	invList_t *ic = CONTAINER(ent, container);
 	while (ic) {
@@ -85,12 +85,12 @@ qboolean G_InventoryRemoveItemByID (const char *itemID, edict_t *ent, containerI
 				gi.Error("Could not remove item '%s' from inventory %i",
 						ic->item.t->id, container);
 			G_EventInventoryDelete(ent, G_VisToPM(ent->visflags), INVDEF(container), ic->x, ic->y);
-			return qtrue;
+			return true;
 		}
 		ic = ic->next;
 	}
 
-	return qfalse;
+	return false;
 }
 
 /**
@@ -101,15 +101,15 @@ qboolean G_InventoryRemoveItemByID (const char *itemID, edict_t *ent, containerI
  * @param[in] container The container of the entity inventory to check
  * @return @c true if there are items that should be dropped to floor, @c false otherwise
  */
-static qboolean G_InventoryDropToFloorCheck (edict_t* ent, containerIndex_t container)
+static bool G_InventoryDropToFloorCheck (edict_t* ent, containerIndex_t container)
 {
 	invList_t* ic = CONTAINER(ent, container);
 
 	if (container == gi.csi->idArmour)
-		return qfalse;
+		return false;
 
 	if (ic) {
-		qboolean check = qfalse;
+		bool check = false;
 		while (ic) {
 			assert(ic->item.t);
 			if (ic->item.t->isVirtual) {
@@ -121,14 +121,14 @@ static qboolean G_InventoryDropToFloorCheck (edict_t* ent, containerIndex_t cont
 				ic = next;
 			} else {
 				/* there are none virtual items left that should be send to the client */
-				check = qtrue;
+				check = true;
 				ic = ic->next;
 			}
 		}
 		return check;
 	}
 
-	return qfalse;
+	return false;
 }
 
 /**
@@ -136,14 +136,14 @@ static qboolean G_InventoryDropToFloorCheck (edict_t* ent, containerIndex_t cont
  * @param pos The grid location to spawn the item on the floor
  * @param itemID The item to spawn
  */
-qboolean G_AddItemToFloor (const pos3_t pos, const char *itemID)
+bool G_AddItemToFloor (const pos3_t pos, const char *itemID)
 {
 	edict_t *floor;
 	item_t item = {NONE_AMMO, NULL, NULL, 0, 0};
 	const objDef_t *od = INVSH_GetItemByIDSilent(itemID);
 	if (!od) {
 		gi.DPrintf("Could not find item '%s'\n", itemID);
-		return qfalse;
+		return false;
 	}
 
 	/* Also sets FLOOR(ent) to correct value. */
@@ -161,7 +161,7 @@ qboolean G_AddItemToFloor (const pos3_t pos, const char *itemID)
 /* #define ADJACENT */
 
 #ifdef ADJACENT
-static qboolean G_InventoryPlaceItemAdjacent (edict_t *ent)
+static bool G_InventoryPlaceItemAdjacent (edict_t *ent)
 {
 	vec2_t oldPos; /* if we have to place it to adjacent  */
 	edict_t *floorAdjacent;
@@ -203,13 +203,13 @@ static qboolean G_InventoryPlaceItemAdjacent (edict_t *ent)
 		/* restore original pos - if no free space, this was done
 		 * already in the for loop */
 		Vector2Copy(oldPos, ent->pos);
-		return qfalse;
+		return false;
 	}
 
 	if (floorAdjacent)
-		G_CheckVis(floorAdjacent, qtrue);
+		G_CheckVis(floorAdjacent, true);
 
-	return qtrue;
+	return true;
 }
 #endif
 
@@ -287,7 +287,7 @@ void G_InventoryToFloor (edict_t *ent)
 	FLOOR(ent) = FLOOR(floor);
 
 	/* send item info to the clients */
-	G_CheckVis(floor, qtrue);
+	G_CheckVis(floor, true);
 }
 
 /**

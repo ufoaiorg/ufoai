@@ -40,7 +40,7 @@ extern memPool_t *sv_genericPool;
 typedef struct sv_edict_s {
 	struct worldSector_s *worldSector;	/**< the sector this edict is linked into */
 	struct sv_edict_s *nextEntityInWorldSector;
-	qboolean linked;		/**< linked into the world */
+	bool linked;		/**< linked into the world */
 	edict_t *ent;
 } sv_edict_t;
 
@@ -66,7 +66,7 @@ typedef struct worldSector_s {
 
 typedef struct pending_event_s {
 	/** this is true when there was an event - and false if the event reached the end */
-	qboolean pending;
+	bool pending;
 	/** player mask of the current event */
 	int playerMask;
 	int type;
@@ -74,15 +74,15 @@ typedef struct pending_event_s {
 } pending_event_t;
 
 typedef struct {
-	qboolean initialized;		/**< sv_init has completed */
+	bool initialized;		/**< sv_init has completed */
 	int realtime;				/**< always increasing, no clamping, etc */
 	struct datagram_socket *netDatagramSocket;
 	struct client_s *clients;	/**< [sv_maxclients->value]; */
 	int lastHeartbeat;			/**< time where the last heartbeat was send to the master server
 								 * Set to a huge negative value to send immmediately */
 	int lastPing;
-	qboolean abandon;			/**< shutdown server when all clients disconnect and don't accept new connections */
-	qboolean killserver;		/**< will initiate shutdown once abandon is set */
+	bool abandon;			/**< shutdown server when all clients disconnect and don't accept new connections */
+	bool killserver;		/**< will initiate shutdown once abandon is set */
 	threads_mutex_t *serverMutex;
 	SDL_cond *gameFrameCond;	/**< the signal that the game frame threads waits for */
 	SDL_Thread *gameThread;
@@ -110,9 +110,9 @@ typedef struct {
 	char assembly[MAX_QPATH];		/**< random map assembly name */
 	struct cBspModel_s *models[MAX_MODELS];
 
-	qboolean endgame;
-	qboolean spawned;			/**< set when the actors have spawned - no further connections are allowed in this case */
-	qboolean started;			/**< set when the match has started */
+	bool endgame;
+	bool spawned;			/**< set when the actors have spawned - no further connections are allowed in this case */
+	bool started;			/**< set when the match has started */
 
 	char configstrings[MAX_CONFIGSTRINGS][MAX_TOKEN_CHARS];
 
@@ -196,7 +196,7 @@ void SV_NextMapcycle(void);
 void SV_MapcycleClear(void);
 
 /* sv_init.c */
-void SV_Map(qboolean day, const char *levelstring, const char *assembly);
+void SV_Map(bool day, const char *levelstring, const char *assembly);
 
 void SV_Multicast(int mask, struct dbuffer *msg);
 void SV_ClientCommand(client_t *client, const char *fmt, ...) __attribute__((format(printf,2,3)));
@@ -210,7 +210,7 @@ void SV_SetClientState(client_t* client, client_state_t state);
 /* sv_ccmds.c */
 void SV_SetMaster_f(void);
 void SV_Heartbeat_f(void);
-qboolean SV_CheckMap(const char *map, const char *assembly);
+bool SV_CheckMap(const char *map, const char *assembly);
 
 /* sv_game.c */
 int SV_RunGameFrameThread(void *data);
@@ -233,7 +233,7 @@ int SV_TouchEdicts(const vec3_t mins, const vec3_t maxs, edict_t **list, int max
 int SV_PointContents(vec3_t p);
 const char *SV_GetFootstepSound(const char *texture);
 float SV_GetBounceFraction(const char *texture);
-qboolean SV_LoadModelMinsMaxs(const char *model, int frame, vec3_t mins, vec3_t maxs);
+bool SV_LoadModelMinsMaxs(const char *model, int frame, vec3_t mins, vec3_t maxs);
 trace_t SV_Trace(const vec3_t start, const vec3_t mins, const vec3_t maxs, const vec3_t end, const edict_t * passedict, int contentmask);
 
 #endif /* SERVER_SERVER_H */

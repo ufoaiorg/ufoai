@@ -36,20 +36,20 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
  * @note This touch function is only executed if the func_breakable edict has a HP level of 0 (e.g. it is already destroyed)
  * @return false because this is no client action
  */
-static qboolean Touch_Breakable (edict_t *self, edict_t *activator)
+static bool Touch_Breakable (edict_t *self, edict_t *activator)
 {
 	/* not yet broken */
 	if (self->HP != 0)
-		return qfalse;
+		return false;
 
 	/** @todo check that the actor is standing upon the breakable */
 	if (G_IsActor(activator))
 		G_ActorFall(activator);
 
-	return qfalse;
+	return false;
 }
 
-static qboolean Destroy_Breakable (edict_t *self)
+static bool Destroy_Breakable (edict_t *self)
 {
 	vec3_t origin;
 	const char *model = self->model;
@@ -69,16 +69,16 @@ static qboolean Destroy_Breakable (edict_t *self)
 
 	switch (self->material) {
 	case MAT_GLASS:
-		G_EventSpawnSound(PM_ALL, qfalse, self, origin, "misc/breakglass+");
+		G_EventSpawnSound(PM_ALL, false, self, origin, "misc/breakglass+");
 		break;
 	case MAT_METAL:
-		G_EventSpawnSound(PM_ALL, qfalse, self, origin, "misc/breakmetal+");
+		G_EventSpawnSound(PM_ALL, false, self, origin, "misc/breakmetal+");
 		break;
 	case MAT_ELECTRICAL:
-		G_EventSpawnSound(PM_ALL, qfalse, self, origin, "misc/breakelectric+");
+		G_EventSpawnSound(PM_ALL, false, self, origin, "misc/breakelectric+");
 		break;
 	case MAT_WOOD:
-		G_EventSpawnSound(PM_ALL, qfalse, self, origin, "misc/breakwood+");
+		G_EventSpawnSound(PM_ALL, false, self, origin, "misc/breakwood+");
 		break;
 	case MAT_MAX:
 		break;
@@ -95,7 +95,7 @@ static qboolean Destroy_Breakable (edict_t *self)
 
 	G_RecalcRouting(model);
 
-	return qtrue;
+	return true;
 }
 
 /**
@@ -145,7 +145,7 @@ DOOR FUNCTIONS
  */
 static void Door_SlidingUse (edict_t *door)
 {
-	const qboolean open = door->doorState == STATE_OPENED;
+	const bool open = door->doorState == STATE_OPENED;
 	vec3_t moveAngles, moveDir, distanceVec;
 	int distance;
 
@@ -188,7 +188,7 @@ static void Door_SlidingUse (edict_t *door)
  * @todo Check if the door can be opened or closed - there should not be
  * anything in the way (e.g. an actor)
  */
-static qboolean Door_Use (edict_t *door, edict_t *activator)
+static bool Door_Use (edict_t *door, edict_t *activator)
 {
 	if (door->doorState == STATE_CLOSED) {
 		door->doorState = STATE_OPENED;
@@ -209,7 +209,7 @@ static qboolean Door_Use (edict_t *door, edict_t *activator)
 			/* let everybody know, that the door opens */
 			G_EventDoorOpen(door);
 			if (door->noise[0] != '\0')
-				G_EventSpawnSound(PM_ALL, qfalse, door, door->origin, door->noise);
+				G_EventSpawnSound(PM_ALL, false, door, door->origin, door->noise);
 		}
 	} else if (door->doorState == STATE_OPENED) {
 		door->doorState = STATE_CLOSED;
@@ -231,10 +231,10 @@ static qboolean Door_Use (edict_t *door, edict_t *activator)
 			/* let everybody know, that the door closes */
 			G_EventDoorClose(door);
 			if (door->noise[0] != '\0')
-				G_EventSpawnSound(PM_ALL, qfalse, door, door->origin, door->noise);
+				G_EventSpawnSound(PM_ALL, false, door, door->origin, door->noise);
 		}
 	} else
-		return qfalse;
+		return false;
 
 	/* Update model orientation */
 	gi.SetInlineModelOrientation(door->model, door->origin, door->angles);
@@ -245,13 +245,13 @@ static qboolean Door_Use (edict_t *door, edict_t *activator)
 
 	if (activator && G_IsLivingActor(activator)) {
 		/* Check if the player appears/perishes, seen from other teams. */
-		G_CheckVis(activator, qtrue);
+		G_CheckVis(activator, true);
 
 		/* Calc new vis for the activator. */
-		G_CheckVisTeamAll(activator->team, qfalse, activator);
+		G_CheckVisTeamAll(activator->team, false, activator);
 	}
 
-	return qtrue;
+	return true;
 }
 
 /**
@@ -261,7 +261,7 @@ static qboolean Door_Use (edict_t *door, edict_t *activator)
  * @sa CL_ActorDoorAction
  * @sa AI_CheckUsingDoor
  */
-static qboolean Touch_DoorTrigger (edict_t *self, edict_t *activator)
+static bool Touch_DoorTrigger (edict_t *self, edict_t *activator)
 {
 	if (self->owner && self->owner->inuse) {
 		if (G_IsAI(activator)) {
@@ -271,14 +271,14 @@ static qboolean Touch_DoorTrigger (edict_t *self, edict_t *activator)
 			if (AI_CheckUsingDoor(activator, self->owner))
 				G_ActorUseDoor(activator, self->owner);
 			/* we don't want the client action stuff to be send for ai actors */
-			return qfalse;
+			return false;
 		} else {
 			/* prepare for client action */
 			G_ActorSetClientAction(activator, self->owner);
-			return qtrue;
+			return true;
 		}
 	}
-	return qfalse;
+	return false;
 }
 
 /**

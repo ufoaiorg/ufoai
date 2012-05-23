@@ -62,11 +62,11 @@ typedef enum {
 typedef struct ufoRecovery_s {
 	const aircraft_t *ufoTemplate;					/**< the ufo type of the current ufo recovery */
 	const nation_t *nation;							/**< selected nation to sell to for current ufo recovery */
-	qboolean recoveryDone;							/**< recoveryDone? Then the buttons are disabled */
+	bool recoveryDone;							/**< recoveryDone? Then the buttons are disabled */
 	float condition;								/**< How much the UFO is damaged - used for disassembies */
 	ufoRecoveryNation_t UFONations[MAX_NATIONS];	/**< Sorted array of nations. */
 	ufoRecoveryNationOrder_t sortedColumn;			/**< Column sell sorted by */
-	qboolean sortDescending;						/**< ascending (qfalse) / descending (qtrue) */
+	bool sortDescending;						/**< ascending (false) / descending (true) */
 } ufoRecovery_t;
 
 static ufoRecovery_t ufoRecovery;
@@ -76,7 +76,7 @@ static ufoRecovery_t ufoRecovery;
  */
 static void UR_DialogRecoveryDone (void)
 {
-	ufoRecovery.recoveryDone = qtrue;
+	ufoRecovery.recoveryDone = true;
 }
 
 /**
@@ -282,12 +282,12 @@ static int UR_CompareByHappiness (ufoRecoveryNation_t *a, ufoRecoveryNation_t *b
  * @sa UR_CompareByPrice
  * @sa UR_CompareByHappiness
  */
-static void UR_SortNations (COMP_FUNCTION comp, qboolean order)
+static void UR_SortNations (COMP_FUNCTION comp, bool order)
 {
 	int i;
 
 	for (i = 0; i < ccs.numNations; i++) {
-		qboolean swapped = qfalse;
+		bool swapped = false;
 		int j;
 
 		for (j = 0; j < ccs.numNations - 1; j++) {
@@ -301,7 +301,7 @@ static void UR_SortNations (COMP_FUNCTION comp, qboolean order)
 				tmp = ufoRecovery.UFONations[j];
 				ufoRecovery.UFONations[j] = ufoRecovery.UFONations[j + 1];
 				ufoRecovery.UFONations[j + 1] = tmp;
-				swapped = qtrue;
+				swapped = true;
 			}
 		}
 		if (!swapped)
@@ -406,7 +406,7 @@ static void UR_DialogSortByColumn_f (void)
 
 	column = UR_GetOrderTypeByID(Cmd_Argv(1));
 	if (ufoRecovery.sortedColumn != column) {
-		ufoRecovery.sortDescending = qfalse;
+		ufoRecovery.sortDescending = false;
 		ufoRecovery.sortedColumn = column;
 	} else {
 		ufoRecovery.sortDescending = !ufoRecovery.sortDescending;

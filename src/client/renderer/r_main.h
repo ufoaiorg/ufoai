@@ -25,8 +25,8 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #ifndef R_MAIN_H
 #define R_MAIN_H
 
-qboolean R_Init(void);
-qboolean R_SetMode(void);
+bool R_Init(void);
+bool R_SetMode(void);
 void R_Shutdown(void);
 
 void R_BeginFrame(void);

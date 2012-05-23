@@ -75,7 +75,7 @@ void R_InitFBObjects (void)
 	OBJZERO(frameBufferObjects);
 	OBJZERO(frameBufferTextures);
 
-	r_state.frameBufferObjectsInitialized = qtrue;
+	r_state.frameBufferObjectsInitialized = true;
 
 	for (i = 0; i < DOWNSAMPLE_PASSES; i++)
 		scales[i] = powf(DOWNSAMPLE_SCALE, i + 1);
@@ -101,20 +101,20 @@ void R_InitFBObjects (void)
 	filters[1] = GL_LINEAR_MIPMAP_LINEAR;
 
 	/* setup main 3D render target */
-	r_state.renderBuffer = R_CreateFramebuffer(viddef.context.width, viddef.context.height, 2, qtrue, qfalse, filters);
+	r_state.renderBuffer = R_CreateFramebuffer(viddef.context.width, viddef.context.height, 2, true, false, filters);
 
 	/* setup bloom render targets */
-	fbo_bloom0 = R_CreateFramebuffer(viddef.context.width, viddef.context.height, 1, qfalse, qfalse, filters);
-	fbo_bloom1 = R_CreateFramebuffer(viddef.context.width, viddef.context.height, 1, qfalse, qfalse, filters);
+	fbo_bloom0 = R_CreateFramebuffer(viddef.context.width, viddef.context.height, 1, false, false, filters);
+	fbo_bloom1 = R_CreateFramebuffer(viddef.context.width, viddef.context.height, 1, false, false, filters);
 
 	filters[0] = GL_LINEAR;
 	/* setup extra framebuffers */
 	for (i = 0; i < DOWNSAMPLE_PASSES; i++) {
 		const int h = (int)((float)viddef.context.height / scales[i]);
 		const int w = (int)((float)viddef.context.width / scales[i]);
-		r_state.buffers0[i] = R_CreateFramebuffer(w, h, 1, qfalse, qfalse, filters);
-		r_state.buffers1[i] = R_CreateFramebuffer(w, h, 1, qfalse, qfalse, filters);
-		r_state.buffers2[i] = R_CreateFramebuffer(w, h, 1, qfalse, qfalse, filters);
+		r_state.buffers0[i] = R_CreateFramebuffer(w, h, 1, false, false, filters);
+		r_state.buffers1[i] = R_CreateFramebuffer(w, h, 1, false, false, filters);
+		r_state.buffers2[i] = R_CreateFramebuffer(w, h, 1, false, false, filters);
 
 		R_CheckError();
 	}
@@ -161,7 +161,7 @@ void R_ShutdownFBObjects (void)
 
 	frameBufferObjectCount = 0;
 	OBJZERO(frameBufferObjects);
-	r_state.frameBufferObjectsInitialized = qfalse;
+	r_state.frameBufferObjectsInitialized = false;
 
 	Mem_Free(colorAttachments);
 }
@@ -176,7 +176,7 @@ void R_ShutdownFBObjects (void)
  * @param[in] halfFloat Use half float pixel format
  * @param[in] filters Filters for the textures. Must have @c ntextures entries
  */
-r_framebuffer_t * R_CreateFramebuffer (int width, int height, int ntextures, qboolean depth, qboolean halfFloat, unsigned int *filters)
+r_framebuffer_t * R_CreateFramebuffer (int width, int height, int ntextures, bool depth, bool halfFloat, unsigned int *filters)
 {
 	r_framebuffer_t *buf;
 	int i;
@@ -419,10 +419,10 @@ void R_BindColorAttachments (unsigned int n, unsigned int *attachments)
  * @sa R_DrawBuffers
  * @return @c true if the fbo was bound, @c false if not supported or deactivated
  */
-qboolean R_EnableRenderbuffer (qboolean enable)
+bool R_EnableRenderbuffer (bool enable)
 {
 	if (!r_state.frameBufferObjectsInitialized || !r_config.frameBufferObject || !r_postprocess->integer || !r_programs->integer)
-		return qfalse;
+		return false;
 
 	if (enable != r_state.renderbuffer_enabled) {
 		r_state.renderbuffer_enabled = enable;
@@ -434,10 +434,10 @@ qboolean R_EnableRenderbuffer (qboolean enable)
 
 	R_DrawBuffers(1);
 
-	return qtrue;
+	return true;
 }
 
-qboolean R_RenderbufferEnabled (void)
+bool R_RenderbufferEnabled (void)
 {
 	return r_state.renderbuffer_enabled;
 }

@@ -36,20 +36,20 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
  * @return @c true if the activator is already in the list of recognized edicts or no activator
  * was given, @c false if the activator is not yet part of the list
  */
-qboolean G_TriggerIsInList (edict_t *self, edict_t *activator)
+bool G_TriggerIsInList (edict_t *self, edict_t *activator)
 {
 	edict_t *e = self->touchedNext;
 
 	if (activator == NULL)
-		return qtrue;
+		return true;
 
 	while (e) {
 		if (e == activator)
-			return qtrue;
+			return true;
 		e = e->touchedNext;
 	}
 
-	return qfalse;
+	return false;
 }
 
 /**
@@ -77,25 +77,25 @@ void G_TriggerAddToList (edict_t *self, edict_t *activator)
  * @param activator The activating edict (might be NULL)
  * @return @c true if removal was successful or not needed, @c false if the activator wasn't found in the list
  */
-qboolean G_TriggerRemoveFromList (edict_t *self, edict_t *activator)
+bool G_TriggerRemoveFromList (edict_t *self, edict_t *activator)
 {
 	edict_t *prev = self;
 	edict_t *e = self->touchedNext;
 
 	if (activator == NULL)
-		return qtrue;
+		return true;
 
 	while (e) {
 		if (e == activator) {
 			prev->touchedNext = e->touchedNext;
 			activator->touchedNext = NULL;
-			return qtrue;
+			return true;
 		}
 		prev = e;
 		e = e->touchedNext;
 	}
 
-	return qfalse;
+	return false;
 }
 
 edict_t* G_TriggerSpawn (edict_t *owner)
@@ -134,21 +134,21 @@ edict_t* G_TriggerSpawn (edict_t *owner)
  * @brief Next map trigger that is going to get active once all opponents are killed
  * @sa SP_trigger_nextmap
  */
-static qboolean Touch_NextMapTrigger (edict_t *self, edict_t *activator)
+static bool Touch_NextMapTrigger (edict_t *self, edict_t *activator)
 {
 	if (activator != NULL && activator->team == self->team) {
 		char command[MAX_VAR];
-		self->inuse = qfalse;
+		self->inuse = false;
 		G_ClientPrintf(G_PLAYER_FROM_ENT(activator), PRINT_HUD, _("Switching map!"));
 		Com_sprintf(command, sizeof(command), "map %s %s\n",
 				level.day ? "day" : "night", self->nextmap);
 		level.mapEndCommand = (char *)G_TagMalloc(strlen(command) + 1, TAG_GAME);
 		Q_strncpyz(level.mapEndCommand, command, strlen(command));
 
-		level.nextMapSwitch = qtrue;
+		level.nextMapSwitch = true;
 		G_MatchEndTrigger(self->team, 0);
 	}
-	return qtrue;
+	return true;
 }
 
 /**
@@ -215,15 +215,15 @@ void SP_trigger_nextmap (edict_t *ent)
  * @brief Hurt trigger
  * @sa SP_trigger_hurt
  */
-qboolean Touch_HurtTrigger (edict_t *self, edict_t *activator)
+bool Touch_HurtTrigger (edict_t *self, edict_t *activator)
 {
 	const int damage = self->dmg;
 
 	/* these actors should really not be able to trigger this - they don't move anymore */
 	if (G_IsDead(activator))
-		return qfalse;
+		return false;
 	if (G_IsStunned(activator))
-		return qfalse;
+		return false;
 
 	if (self->spawnflags & 2) {
 		activator->STUN += damage;
@@ -233,7 +233,7 @@ qboolean Touch_HurtTrigger (edict_t *self, edict_t *activator)
 		G_TakeDamage(activator, damage);
 	}
 
-	return qtrue;
+	return true;
 }
 
 /**
@@ -265,7 +265,7 @@ void SP_trigger_hurt (edict_t *ent)
  * @brief Touch trigger
  * @sa SP_trigger_touch
  */
-static qboolean Touch_TouchTrigger (edict_t *self, edict_t *activator)
+static bool Touch_TouchTrigger (edict_t *self, edict_t *activator)
 {
 	/* these actors should really not be able to trigger this - they don't move anymore */
 	assert(!G_IsDead(activator));
@@ -275,7 +275,7 @@ static qboolean Touch_TouchTrigger (edict_t *self, edict_t *activator)
 	if (!self->owner) {
 		gi.DPrintf("Target '%s' wasn't found for %s\n", self->target, self->classname);
 		G_FreeEdict(self);
-		return qfalse;
+		return false;
 	}
 
 	if (self->owner->flags & FL_CLIENTACTION) {
@@ -284,12 +284,12 @@ static qboolean Touch_TouchTrigger (edict_t *self, edict_t *activator)
 		if (!self->owner->use) {
 			gi.DPrintf("Owner of %s doesn't have a use function\n", self->classname);
 			G_FreeEdict(self);
-			return qfalse;
+			return false;
 		}
 		G_UseEdict(self->owner, activator);
 	}
 
-	return qfalse;
+	return false;
 }
 
 static void Reset_TouchTrigger (edict_t *self, edict_t *activator)
@@ -331,22 +331,22 @@ void SP_trigger_touch (edict_t *ent)
  * @brief Rescue trigger
  * @sa SP_trigger_resuce
  */
-static qboolean Touch_RescueTrigger (edict_t *self, edict_t *activator)
+static bool Touch_RescueTrigger (edict_t *self, edict_t *activator)
 {
 	/* these actors should really not be able to trigger this - they don't move anymore */
 	assert(!G_IsDead(activator));
 	assert(!G_IsDead(activator));
 
 	if (self->team == activator->team)
-		G_ActorSetInRescueZone(activator, qtrue);
+		G_ActorSetInRescueZone(activator, true);
 
-	return qfalse;
+	return false;
 }
 
 static void Reset_RescueTrigger (edict_t *self, edict_t *activator)
 {
 	if (self->team == activator->team)
-		G_ActorSetInRescueZone(activator, qfalse);
+		G_ActorSetInRescueZone(activator, false);
 }
 
 /**

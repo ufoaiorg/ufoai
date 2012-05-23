@@ -106,7 +106,7 @@ void UI_RegisterVideoNode (uiBehaviour_t* behaviour)
 	/** Source of the video. File name without prefix ./base/videos and without extension */
 	UI_RegisterExtradataNodeProperty(behaviour, "src", V_CVAR_OR_STRING, EXTRADATA_TYPE, source);
 	/** Use or not the music from the video. */
-	UI_RegisterExtradataNodeProperty(behaviour, "nosound", V_CPPBOOL, EXTRADATA_TYPE, nosound);
+	UI_RegisterExtradataNodeProperty(behaviour, "nosound", V_BOOL, EXTRADATA_TYPE, nosound);
 	/** Invoked when video end. */
 	UI_RegisterExtradataNodeProperty(behaviour, "onEnd", V_UI_ACTION, EXTRADATA_TYPE, onEnd);
 }

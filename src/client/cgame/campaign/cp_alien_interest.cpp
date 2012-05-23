@@ -108,7 +108,7 @@ void INT_IncreaseAlienInterest (const campaign_t *campaign)
  * @brief Save callback for savegames in XML Format
  * @param[out] parent XML Node structure, where we write the information to
  */
-qboolean INT_SaveXML (xmlNode_t *parent)
+bool INT_SaveXML (xmlNode_t *parent)
 {
 	xmlNode_t *interestsNode = XML_AddNode(parent, SAVE_INTERESTS);
 	int i;
@@ -123,18 +123,18 @@ qboolean INT_SaveXML (xmlNode_t *parent)
 		XML_AddShort(interestNode, SAVE_INTERESTS_VAL, ccs.interest[i]);
 	}
 	Com_UnregisterConstList(saveInterestConstants);
-	return qtrue;
+	return true;
 }
 
 /**
  * @brief Load callback for savegames in XML Format
  * @param[in] parent XML Node structure, where we get the information from
  */
-qboolean INT_LoadXML (xmlNode_t *parent)
+bool INT_LoadXML (xmlNode_t *parent)
 {
 	xmlNode_t *node;
 	xmlNode_t *interestsNode = XML_GetNode(parent, SAVE_INTERESTS);
-	qboolean success = qtrue;
+	bool success = true;
 
 	ccs.lastInterestIncreaseDelay = XML_GetInt(interestsNode, SAVE_INTERESTS_LASTINCREASEDELAY, 0);
 	ccs.lastMissionSpawnedDelay = XML_GetInt(interestsNode, SAVE_INTERESTS_LASTMISSIONSPAWNEDDELAY, 0);
@@ -147,7 +147,7 @@ qboolean INT_LoadXML (xmlNode_t *parent)
 
 		if (!Com_GetConstInt(categoryId, (int*) &cat)) {
 			Com_Printf("Invalid interest category '%s'\n", categoryId);
-			success = qfalse;
+			success = false;
 			break;
 		}
 		ccs.interest[cat]= XML_GetInt(node, SAVE_INTERESTS_VAL, 0);

@@ -47,7 +47,7 @@ static int UFO_InitSuiteScripts (void)
 	UI_Init();
 
 	OBJZERO(cls);
-	Com_ParseScripts(qfalse);
+	Com_ParseScripts(false);
 
 	return 0;
 }
@@ -63,60 +63,60 @@ static int UFO_CleanSuiteScripts (void)
 	return 0;
 }
 
-static qboolean TEST_CheckImage (const char *path)
+static bool TEST_CheckImage (const char *path)
 {
 	const char *extensions[] = {"png", "tga", "jpg", NULL};
 	int i = 0;
 
 	if (Q_strnull(path))
-		return qtrue;
+		return true;
 
 	while (extensions[i]) {
 		if (FS_CheckFile("pics/%s.%s", path, extensions[i]) != -1)
-			return qtrue;
+			return true;
 		i++;
 	}
 
-	return qfalse;
+	return false;
 }
 
-static qboolean TEST_CheckModel (const char *path)
+static bool TEST_CheckModel (const char *path)
 {
 	const char *extensions[] = {"md2", "md3", "dpm", "obj", NULL};
 	int i = 0;
 	if (Q_strnull(path))
-		return qtrue;
+		return true;
 
 	while (extensions[i]) {
 		if (FS_CheckFile("models/%s.%s", path, extensions[i]) != -1)
-			return qtrue;
+			return true;
 		i++;
 	}
 
-	return qfalse;
+	return false;
 }
 
-static qboolean TEST_CheckSound (const char *path)
+static bool TEST_CheckSound (const char *path)
 {
 	const char *extensions[] = {"wav", "ogg", NULL};
 	int i = 0;
 
 	if (Q_strnull(path))
-		return qtrue;
+		return true;
 
 	while (extensions[i]) {
 		if (FS_CheckFile("sound/%s.%s", path, extensions[i]) != -1)
-			return qtrue;
+			return true;
 		i++;
 	}
 
-	return qfalse;
+	return false;
 }
 
-static qboolean TEST_CheckParticle (const char *particleID)
+static bool TEST_CheckParticle (const char *particleID)
 {
 	if (Q_strnull(particleID))
-		return qtrue;
+		return true;
 
 	/* find the particle definition */
 	return CL_ParticleGet(particleID) != NULL;

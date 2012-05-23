@@ -137,11 +137,11 @@ const char *Sys_GetLocale (void)
 void Sys_SetAffinityAndPriority (void)
 {
 	if (sys_affinity->modified) {
-		sys_affinity->modified = qfalse;
+		sys_affinity->modified = false;
 	}
 
 	if (sys_priority->modified) {
-		sys_priority->modified = qfalse;
+		sys_priority->modified = false;
 	}
 }
 #endif

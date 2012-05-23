@@ -106,7 +106,7 @@ typedef struct building_s {
 	int maxCount;					/**< How many building of the same type allowed? */
 
 	vec2_t pos;						/**< location in the base. */
-	qboolean mandatory;
+	bool mandatory;
 
 	/** How many employees to hire on construction in the first base */
 	int maxEmployees;
@@ -120,26 +120,26 @@ typedef struct building_s {
 
 /**
  * @brief Macro sets a building used
- * @param[in] usedArray must be a qboolean array of the size MAX_BUILDINGS
+ * @param[in] usedArray must be a bool array of the size MAX_BUILDINGS
  * @param[in] buildingIDX Index of building to set used
  */
-#define B_BuildingSetUsed(usedArray, buildingIDX) { (usedArray)[buildingIDX] = qtrue; }
+#define B_BuildingSetUsed(usedArray, buildingIDX) { (usedArray)[buildingIDX] = true; }
 /**
  * @brief Macro returns if a building is used
- * @param[in] usedArray must be a qboolean array of the size MAX_BUILDINGS
+ * @param[in] usedArray must be a bool array of the size MAX_BUILDINGS
  * @param[in] buildingIDX Index of building to check
  */
 #define B_BuildingGetUsed(usedArray, buildingIDX) ((usedArray)[buildingIDX])
 
-void B_ParseBuildings(const char *name, const char **text, qboolean link);
-qboolean B_BuildingScriptSanityCheck(void);
+void B_ParseBuildings(const char *name, const char **text, bool link);
+bool B_BuildingScriptSanityCheck(void);
 building_t *B_GetBuildingTemplate(const char *buildingName);
 building_t *B_GetBuildingTemplateSilent(const char *buildingName);
 buildingType_t B_GetBuildingTypeByBuildingID(const char *buildingID);
-qboolean B_CheckBuildingDependencesStatus(const building_t* building);
-qboolean B_IsBuildingBuiltUp(const building_t *building);
+bool B_CheckBuildingDependencesStatus(const building_t* building);
+bool B_IsBuildingBuiltUp(const building_t *building);
 float B_GetConstructionTimeRemain(const building_t * building);
 
-qboolean B_FireEvent(const building_t * buildingTemplate, const struct base_s * base, buildingEvent_t eventType);
+bool B_FireEvent(const building_t * buildingTemplate, const struct base_s * base, buildingEvent_t eventType);
 
 #endif

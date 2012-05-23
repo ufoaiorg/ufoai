@@ -188,11 +188,11 @@ static void R_DrawPtlCircle (const ptl_t* p)
 	const float radius = p->size[0];
 	const float thickness = p->size[1];
 
-	R_EnableTexture(&texunit_diffuse, qfalse);
+	R_EnableTexture(&texunit_diffuse, false);
 
 	R_DrawCircle(radius, p->color, thickness, p->s);
 
-	R_EnableTexture(&texunit_diffuse, qtrue);
+	R_EnableTexture(&texunit_diffuse, true);
 }
 
 /**
@@ -202,7 +202,7 @@ static void R_DrawPtlLine (const ptl_t * p)
 {
 	const vec3_t points[] = { { p->s[0], p->s[1], p->s[2] }, { p->v[0], p->v[1], p->v[2] } };
 
-	R_EnableTexture(&texunit_diffuse, qfalse);
+	R_EnableTexture(&texunit_diffuse, false);
 
 	glEnable(GL_LINE_SMOOTH);
 
@@ -219,7 +219,7 @@ static void R_DrawPtlLine (const ptl_t * p)
 
 	glDisable(GL_LINE_SMOOTH);
 
-	R_EnableTexture(&texunit_diffuse, qtrue);
+	R_EnableTexture(&texunit_diffuse, true);
 }
 
 

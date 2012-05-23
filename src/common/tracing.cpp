@@ -248,7 +248,7 @@ int TR_TestLine_r (TR_TILE_TYPE *tile, int32_t nodenum, const vec3_t start, cons
  * 0x100: Actorclip bit.  If this bit is set, the actorclip level will be traced.
  * 0x200: Weaponclip bit.  If this bit is set, the weaponclip level will be traced.
  */
-static qboolean TR_TileTestLine (TR_TILE_TYPE *tile, const vec3_t start, const vec3_t stop, const int levelmask)
+static bool TR_TileTestLine (TR_TILE_TYPE *tile, const vec3_t start, const vec3_t stop, const int levelmask)
 {
 	const int corelevels = (levelmask & TL_FLAG_REGULAR_LEVELS);
 	int i;
@@ -265,9 +265,9 @@ static qboolean TR_TileTestLine (TR_TILE_TYPE *tile, const vec3_t start, const v
 		if (level == LEVEL_WEAPONCLIP && !(levelmask & TL_FLAG_WEAPONCLIP))
 			continue;
 		if (TR_TestLine_r(tile, tile->thead[i], start, stop))
-			return qtrue;
+			return true;
 	}
-	return qfalse;
+	return false;
 }
 
 /**
@@ -278,17 +278,17 @@ static qboolean TR_TileTestLine (TR_TILE_TYPE *tile, const vec3_t start, const v
  * @param[in] levelmask Indicates which special levels, if any, to include in the trace.
  * @note Special levels are LEVEL_ACTORCLIP and LEVEL_WEAPONCLIP.
  * @sa TR_TestLine_r
- * @return qfalse if not blocked
+ * @return false if not blocked
  */
-qboolean TR_TestLine (mapTiles_t *mapTiles, const vec3_t start, const vec3_t stop, const int levelmask)
+bool TR_TestLine (mapTiles_t *mapTiles, const vec3_t start, const vec3_t stop, const int levelmask)
 {
 	int tile;
 
 	for (tile = 0; tile < mapTiles->numTiles; tile++) {
 		if (TR_TileTestLine(&mapTiles->mapTiles[tile], start, stop, levelmask))
-			return qtrue;
+			return true;
 	}
-	return qfalse;
+	return false;
 }
 
 
@@ -386,9 +386,9 @@ static int TR_TestLineDist_r (TR_TILE_TYPE *tile, int32_t nodenum, const vec3_t 
  * @param[in] levelmask The bitmask of the levels (1<<[0-7]) to trace for
  * @sa TR_TestLineDM
  * @sa CL_ActorMouseTrace
- * @return qfalse if no connection between start and stop - 1 otherwise
+ * @return false if no connection between start and stop - 1 otherwise
  */
-static qboolean TR_TileTestLineDM (TR_TILE_TYPE *tile, const vec3_t start, const vec3_t stop, vec3_t end, const int levelmask)
+static bool TR_TileTestLineDM (TR_TILE_TYPE *tile, const vec3_t start, const vec3_t stop, vec3_t end, const int levelmask)
 {
 #ifdef COMPILE_MAP
 	const int corelevels = (levelmask & TL_FLAG_REGULAR_LEVELS);
@@ -416,9 +416,9 @@ static qboolean TR_TileTestLineDM (TR_TILE_TYPE *tile, const vec3_t start, const
 	}
 
 	if (VectorCompareEps(end, stop, EQUAL_EPSILON))
-		return qfalse;
+		return false;
 	else
-		return qtrue;
+		return true;
 }
 
 
@@ -431,9 +431,9 @@ static qboolean TR_TileTestLineDM (TR_TILE_TYPE *tile, const vec3_t start, const
  * @param[in] levelmask Indicates which special levels, if any, to include in the trace.
  * @sa TR_TestLineDM
  * @sa CL_ActorMouseTrace
- * @return qfalse if no connection between start and stop - 1 otherwise
+ * @return false if no connection between start and stop - 1 otherwise
  */
-qboolean TR_TestLineDM (mapTiles_t* mapTiles, const vec3_t start, const vec3_t stop, vec3_t end, const int levelmask)
+bool TR_TestLineDM (mapTiles_t* mapTiles, const vec3_t start, const vec3_t stop, vec3_t end, const int levelmask)
 {
 	int tile;
 	vec3_t t_end;
@@ -449,9 +449,9 @@ qboolean TR_TestLineDM (mapTiles_t* mapTiles, const vec3_t start, const vec3_t s
 	}
 
 	if (VectorCompareEps(end, stop, EQUAL_EPSILON))
-		return qfalse;
+		return false;
 	else
-		return qtrue;
+		return true;
 }
 
 
@@ -593,7 +593,7 @@ static void TR_ClipBoxToBrush (boxtrace_t *traceData, cBspBrush_t *brush, TR_LEA
 	float enterfrac, leavefrac;
 	vec3_t ofs;
 	float d1, d2;
-	qboolean getout, startout;
+	bool getout, startout;
 #ifdef COMPILE_UFO
 	TR_BRUSHSIDE_TYPE *leadside = NULL;
 #endif
@@ -606,8 +606,8 @@ static void TR_ClipBoxToBrush (boxtrace_t *traceData, cBspBrush_t *brush, TR_LEA
 	if (!brush || !brush->numsides)
 		return;
 
-	getout = qfalse;
-	startout = qfalse;
+	getout = false;
+	startout = false;
 	clipplanenum = 0;
 
 	for (i = 0; i < brush->numsides; i++) {
@@ -637,9 +637,9 @@ static void TR_ClipBoxToBrush (boxtrace_t *traceData, cBspBrush_t *brush, TR_LEA
 		d2 = DotProduct(traceData->end, plane->normal) - dist;
 
 		if (d2 > 0)
-			getout = qtrue;		/* endpoint is not in solid */
+			getout = true;		/* endpoint is not in solid */
 		if (d1 > 0)
-			startout = qtrue;	/* startpoint is not in solid */
+			startout = true;	/* startpoint is not in solid */
 
 		/* if completely in front of face, no intersection */
 		if (d1 > 0 && d2 >= d1)
@@ -668,9 +668,9 @@ static void TR_ClipBoxToBrush (boxtrace_t *traceData, cBspBrush_t *brush, TR_LEA
 	}
 
 	if (!startout) {			/* original point was inside brush */
-		traceData->trace.startsolid = qtrue;
+		traceData->trace.startsolid = true;
 		if (!getout)
-			traceData->trace.allsolid = qtrue;
+			traceData->trace.allsolid = true;
 		traceData->trace.leafnum = leaf - myTile->leafs;
 		return;
 	}
@@ -733,7 +733,7 @@ static void TR_TestBoxInBrush (boxtrace_t *traceData, cBspBrush_t * brush)
 	}
 
 	/* inside this brush */
-	traceData->trace.startsolid = traceData->trace.allsolid = qtrue;
+	traceData->trace.startsolid = traceData->trace.allsolid = true;
 	traceData->trace.fraction = 0;
 	traceData->trace.contentFlags = brush->contentFlags;
 }
@@ -1026,10 +1026,10 @@ trace_t TR_BoxTrace (TR_TILE_TYPE *tile, const vec3_t start, const vec3_t end, c
 
 	/* check for point special case */
 	if (VectorEmpty(amins) && VectorEmpty(amaxs)) {
-		traceData.ispoint = qtrue;
+		traceData.ispoint = true;
 		VectorClear(traceData.extents);
 	} else {
-		traceData.ispoint = qfalse;
+		traceData.ispoint = false;
 		VectorCopy(amaxs, traceData.extents);
 	}
 

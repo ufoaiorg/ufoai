@@ -91,8 +91,8 @@ static void UFO_AnalyseTestWindow (const char* windowName)
 	CU_ASSERT_FATAL(stringBehaviour != NULL);
 
 	for (node = window->firstChild; node != NULL; node = node->next) {
-		qboolean isGreen;
-		qboolean isRed;
+		bool isGreen;
+		bool isRed;
 		/* skip non "string" nodes */
 		if (node->behaviour != stringBehaviour)
 			continue;
@@ -107,7 +107,7 @@ static void UFO_AnalyseTestWindow (const char* windowName)
 
 		if (isGreen) {
 			/** @note Useful to count number of tests */
-			CU_ASSERT_TRUE(qtrue);
+			CU_ASSERT_TRUE(true);
 		} else if (isRed) {
 			const char *message = va("%s.%s failed.", windowName, node->name);
 			/*Com_Printf("Error: %s\n", message);*/

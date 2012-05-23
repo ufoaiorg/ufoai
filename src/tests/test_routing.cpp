@@ -38,7 +38,7 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 static int UFO_InitSuiteRouting (void)
 {
 	TEST_Init();
-	Com_ParseScripts(qtrue);
+	Com_ParseScripts(true);
 
 	return 0;
 }
@@ -59,8 +59,8 @@ static const char *mapName = "test_routing";
 static void testMapLoading (void)
 {
 	if (FS_CheckFile("maps/%s.bsp", mapName) != -1) {
-		CM_LoadMap(mapName, qtrue, "", &mapData, &mapTiles);
-		CM_LoadMap(mapName, qtrue, "", &mapData, &mapTiles);
+		CM_LoadMap(mapName, true, "", &mapData, &mapTiles);
+		CM_LoadMap(mapName, true, "", &mapData, &mapTiles);
 	} else {
 		UFO_CU_FAIL_MSG(va("Map resource '%s.bsp' for test is missing.", mapName));
 	}
@@ -74,8 +74,8 @@ static void testMove (void)
 	pos_t gridPos;
 
 	if (FS_CheckFile("maps/%s.bsp", mapName) != -1) {
-		CM_LoadMap(mapName, qtrue, "", &mapData, &mapTiles);
-		CM_LoadMap(mapName, qtrue, "", &mapData, &mapTiles);
+		CM_LoadMap(mapName, true, "", &mapData, &mapTiles);
+		CM_LoadMap(mapName, true, "", &mapData, &mapTiles);
 	} else {
 		UFO_CU_FAIL_MSG_FATAL(va("Map resource '%s.bsp' for test is missing.", mapName));
 	}
@@ -115,8 +115,8 @@ static void testMove (void)
 			VectorSet(vec, 80, 48, 32);
 			VecToPos(vec, to);
 
-			lengthUnstored = Grid_MoveLength(path, to, crouchingState, qfalse);
-			lengthStored = Grid_MoveLength(path, to, crouchingState, qtrue);
+			lengthUnstored = Grid_MoveLength(path, to, crouchingState, false);
+			lengthStored = Grid_MoveLength(path, to, crouchingState, true);
 			CU_ASSERT_EQUAL(lengthUnstored, lengthStored);
 			CU_ASSERT_EQUAL(lengthStored, TU_MOVE_STRAIGHT);
 		}
@@ -125,7 +125,7 @@ static void testMove (void)
 			VectorSet(vec, 80, 176, 32);
 			VecToPos(vec, to);
 
-			lengthStored = Grid_MoveLength(path, to, crouchingState, qtrue);
+			lengthStored = Grid_MoveLength(path, to, crouchingState, true);
 			CU_ASSERT_EQUAL(lengthStored, ROUTING_NOT_REACHABLE);
 		}
 		/* try move into the nodraw */
@@ -133,7 +133,7 @@ static void testMove (void)
 			VectorSet(vec, 48, 16, 32);
 			VecToPos(vec, to);
 
-			lengthStored = Grid_MoveLength(path, to, crouchingState, qtrue);
+			lengthStored = Grid_MoveLength(path, to, crouchingState, true);
 			CU_ASSERT_EQUAL(lengthStored, ROUTING_NOT_REACHABLE);
 		}
 		/* move into the lightclip */
@@ -141,7 +141,7 @@ static void testMove (void)
 			VectorSet(vec, 48, 48, 32);
 			VecToPos(vec, to);
 
-			lengthStored = Grid_MoveLength(path, to, crouchingState, qtrue);
+			lengthStored = Grid_MoveLength(path, to, crouchingState, true);
 			CU_ASSERT_EQUAL(lengthStored, TU_MOVE_DIAGONAL);
 		}
 		/* move into the passable */
@@ -149,7 +149,7 @@ static void testMove (void)
 			VectorSet(vec, 144, 48, 32);
 			VecToPos(vec, to);
 
-			lengthStored = Grid_MoveLength(path, to, crouchingState, qtrue);
+			lengthStored = Grid_MoveLength(path, to, crouchingState, true);
 			CU_ASSERT_EQUAL(lengthStored, TU_MOVE_DIAGONAL + TU_MOVE_STRAIGHT);
 		}
 		/* go to the other side - diagonal, followed by six straight moves */
@@ -157,7 +157,7 @@ static void testMove (void)
 			VectorSet(vec, -16, 48, 32);
 			VecToPos(vec, to);
 
-			lengthStored = Grid_MoveLength(path, to, crouchingState, qtrue);
+			lengthStored = Grid_MoveLength(path, to, crouchingState, true);
 			CU_ASSERT_EQUAL(lengthStored, 6 * TU_MOVE_STRAIGHT + TU_MOVE_DIAGONAL);
 		}
 		/* try to walk out of the map */
@@ -165,7 +165,7 @@ static void testMove (void)
 			VectorSet(vec, 48, 272, 32);
 			VecToPos(vec, to);
 
-			lengthStored = Grid_MoveLength(path, to, crouchingState, qtrue);
+			lengthStored = Grid_MoveLength(path, to, crouchingState, true);
 			CU_ASSERT_EQUAL(lengthStored, ROUTING_NOT_REACHABLE);
 		}
 		/* walk to the map border */
@@ -173,7 +173,7 @@ static void testMove (void)
 			VectorSet(vec, 48, 240, 32);
 			VecToPos(vec, to);
 
-			lengthStored = Grid_MoveLength(path, to, crouchingState, qtrue);
+			lengthStored = Grid_MoveLength(path, to, crouchingState, true);
 			CU_ASSERT_EQUAL(lengthStored, 4 * TU_MOVE_STRAIGHT + TU_MOVE_DIAGONAL);
 		}
 		/* walk a level upwards */
@@ -181,7 +181,7 @@ static void testMove (void)
 			VectorSet(vec, 240, 80, 96);
 			VecToPos(vec, to);
 
-			lengthStored = Grid_MoveLength(path, to, crouchingState, qtrue);
+			lengthStored = Grid_MoveLength(path, to, crouchingState, true);
 			CU_ASSERT_EQUAL(lengthStored, 5 * TU_MOVE_STRAIGHT);
 		}
 		/* move to the door (not a func_door) */
@@ -189,7 +189,7 @@ static void testMove (void)
 			VectorSet(vec, 176, -80, 32);
 			VecToPos(vec, to);
 
-			lengthStored = Grid_MoveLength(path, to, crouchingState, qtrue);
+			lengthStored = Grid_MoveLength(path, to, crouchingState, true);
 			CU_ASSERT_EQUAL(lengthStored, 4 * TU_MOVE_STRAIGHT + 2 * TU_MOVE_DIAGONAL);
 		}
 		/* move into the trigger_touch */
@@ -197,7 +197,7 @@ static void testMove (void)
 			VectorSet(vec, -48, -80, 32);
 			VecToPos(vec, to);
 
-			lengthStored = Grid_MoveLength(path, to, crouchingState, qtrue);
+			lengthStored = Grid_MoveLength(path, to, crouchingState, true);
 			CU_ASSERT_EQUAL(lengthStored, 5 * TU_MOVE_STRAIGHT + 3 * TU_MOVE_DIAGONAL);
 		}
 		/* try to walk into the actorclip */
@@ -205,7 +205,7 @@ static void testMove (void)
 			VectorSet(vec, -48, -48, 32);
 			VecToPos(vec, to);
 
-			lengthStored = Grid_MoveLength(path, to, crouchingState, qtrue);
+			lengthStored = Grid_MoveLength(path, to, crouchingState, true);
 			CU_ASSERT_EQUAL(lengthStored, ROUTING_NOT_REACHABLE);
 		}
 	}
@@ -222,7 +222,7 @@ static void testMoveEntities (void)
 	const byte crouchingState = 0;
 	const int distance = MAX_ROUTE;
 
-	SV_Map(qtrue, mapName, NULL);
+	SV_Map(true, mapName, NULL);
 
 	/* starting point */
 	VectorSet(vec, 240, -144, 32);
@@ -258,7 +258,7 @@ static void testMoveEntities (void)
 			VectorSet(vec, 112, -144, 32);
 			VecToPos(vec, to);
 
-			lengthStored = Grid_MoveLength(path, to, crouchingState, qtrue);
+			lengthStored = Grid_MoveLength(path, to, crouchingState, true);
 			CU_ASSERT_EQUAL(lengthStored, 4 * TU_MOVE_STRAIGHT);
 		}
 		/* walk over the func_breakable */
@@ -266,7 +266,7 @@ static void testMoveEntities (void)
 			VectorSet(vec, 80, -144, 32);
 			VecToPos(vec, to);
 
-			lengthStored = Grid_MoveLength(path, to, crouchingState, qtrue);
+			lengthStored = Grid_MoveLength(path, to, crouchingState, true);
 			CU_ASSERT_EQUAL(lengthStored, 5 * TU_MOVE_STRAIGHT);
 		}
 		/* walk over the func_breakable */
@@ -274,7 +274,7 @@ static void testMoveEntities (void)
 			VectorSet(vec, 16, -144, 32);
 			VecToPos(vec, to);
 
-			lengthStored = Grid_MoveLength(path, to, crouchingState, qtrue);
+			lengthStored = Grid_MoveLength(path, to, crouchingState, true);
 			CU_ASSERT_EQUAL(lengthStored, 7 * TU_MOVE_STRAIGHT);
 		}
 	}
@@ -295,7 +295,7 @@ static void testMoveEntities (void)
 			VectorSet(vec, 112, 144, 32);
 			VecToPos(vec, to);
 
-			lengthStored = Grid_MoveLength(path, to, crouchingState, qtrue);
+			lengthStored = Grid_MoveLength(path, to, crouchingState, true);
 			CU_ASSERT_EQUAL(lengthStored, TU_MOVE_STRAIGHT);
 		}
 
@@ -304,7 +304,7 @@ static void testMoveEntities (void)
 			VectorSet(vec, 144, 208, 32);
 			VecToPos(vec, to);
 
-			lengthStored = Grid_MoveLength(path, to, crouchingState, qtrue);
+			lengthStored = Grid_MoveLength(path, to, crouchingState, true);
 			CU_ASSERT_EQUAL(lengthStored, 2 * TU_MOVE_STRAIGHT + TU_MOVE_DIAGONAL);
 		}
 	}
@@ -332,10 +332,10 @@ static void testTUsForDir (void)
 	CU_ASSERT_EQUAL(Grid_GetTUsForDirection(0, 0), 2);
 	CU_ASSERT_EQUAL(Grid_GetTUsForDirection(2, 0), 2);
 	CU_ASSERT_EQUAL(Grid_GetTUsForDirection(5, 0), 3);
-	CU_ASSERT_EQUAL(Grid_GetTUsForDirection(5, qfalse), 3);
+	CU_ASSERT_EQUAL(Grid_GetTUsForDirection(5, false), 3);
 	CU_ASSERT_EQUAL(Grid_GetTUsForDirection(0, 1), 3);	/* now crouching */
 	CU_ASSERT_EQUAL(Grid_GetTUsForDirection(5, 1), 4);
-	CU_ASSERT_EQUAL(Grid_GetTUsForDirection(5, qtrue), 4);
+	CU_ASSERT_EQUAL(Grid_GetTUsForDirection(5, true), 4);
 	CU_ASSERT_EQUAL(Grid_GetTUsForDirection(16, 0), 4);	/* flying takes twice as much */
 	CU_ASSERT_EQUAL(Grid_GetTUsForDirection(16, 1), 4);	/* flying & crouching is still the same */
 }

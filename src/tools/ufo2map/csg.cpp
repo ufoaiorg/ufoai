@@ -84,24 +84,24 @@ static bspbrush_t *SubtractBrush (bspbrush_t *a, const bspbrush_t *b)
  * @return true if the two brushes definately do not intersect.
  * @note There will be false negatives for some non-axial combinations.
  */
-static qboolean BrushesDisjoint (bspbrush_t *a, bspbrush_t *b)
+static bool BrushesDisjoint (bspbrush_t *a, bspbrush_t *b)
 {
 	int i, j;
 
 	/* check bounding boxes */
 	for (i = 0; i < 3; i++)
 		if (a->mins[i] >= b->maxs[i] || a->maxs[i] <= b->mins[i])
-			return qtrue;	/* bounding boxes don't overlap */
+			return true;	/* bounding boxes don't overlap */
 
 	/* check for opposing planes */
 	for (i = 0; i < a->numsides; i++) {
 		for (j = 0; j < b->numsides; j++) {
 			if (a->sides[i].planenum == (b->sides[j].planenum ^ 1))
-				return qtrue;	/* opposite planes, so not touching */
+				return true;	/* opposite planes, so not touching */
 		}
 	}
 
-	return qfalse;	/* might intersect */
+	return false;	/* might intersect */
 }
 
 static uint16_t minplanenums[2];
@@ -144,7 +144,7 @@ static bspbrush_t *ClipBrushToBox (bspbrush_t *brush, vec3_t clipmins, vec3_t cl
 		if (p == maxplanenums[0] || p == maxplanenums[1]
 			|| p == minplanenums[0] || p == minplanenums[1]) {
 			side->texinfo = TEXINFO_NODE;
-			side->visible = qfalse;
+			side->visible = false;
 		}
 	}
 	return brush;
@@ -157,44 +157,44 @@ static bspbrush_t *ClipBrushToBox (bspbrush_t *brush, vec3_t clipmins, vec3_t cl
  * @param[in] level -1 for skipping the levelflag check
  * @return boolean value
  */
-static qboolean IsInLevel (const int contents, const int level)
+static bool IsInLevel (const int contents, const int level)
 {
 	/* special levels */
 	switch (level) {
 	case LEVEL_LIGHTCLIP:
 		if (contents & CONTENTS_LIGHTCLIP)
-			return qtrue;
+			return true;
 		else
-			return qfalse;
+			return false;
 	case LEVEL_WEAPONCLIP:
 		if (contents & CONTENTS_WEAPONCLIP)
-			return qtrue;
+			return true;
 		else
-			return qfalse;
+			return false;
 	case LEVEL_ACTORCLIP:
 		if (contents & CONTENTS_ACTORCLIP)
-			return qtrue;
+			return true;
 		else
-			return qfalse;
+			return false;
 	}
 
 	/* If the brush is any kind of clip, we are not looking for it after here. */
 	if (contents & MASK_CLIP)
-		return qfalse;
+		return false;
 
 	/* standard levels */
 	if (level == -1)
-		return qtrue;
+		return true;
 	else if (level) {
 		if (((contents >> 8) & 0xFF) == level)
-			return qtrue;
+			return true;
 		else
-			return qfalse;
+			return false;
 	} else {
 		if (contents & 0xFF00)
-			return qfalse;
+			return false;
 		else
-			return qtrue;
+			return true;
 	}
 }
 
@@ -241,15 +241,15 @@ static bspbrush_t *CullList (bspbrush_t *list, bspbrush_t *skip)
 /**
  * @brief Returns true if b1 is allowed to bite b2
  */
-static inline qboolean BrushGE (bspbrush_t *b1, bspbrush_t *b2)
+static inline bool BrushGE (bspbrush_t *b1, bspbrush_t *b2)
 {
 	/* detail brushes never bite structural brushes */
 	if ((b1->original->contentFlags & CONTENTS_DETAIL)
 		&& !(b2->original->contentFlags & CONTENTS_DETAIL))
-		return qfalse;
+		return false;
 	if (b1->original->contentFlags & CONTENTS_SOLID)
-		return qtrue;
-	return qfalse;
+		return true;
+	return false;
 }
 
 /**
@@ -351,7 +351,7 @@ bspbrush_t *MakeBspBrushList (int startbrush, int endbrush, int level, vec3_t cl
 		if (j != 3)
 			continue;
 
-		mb->finished = qtrue;
+		mb->finished = true;
 
 		/* make a copy of the brush */
 		newbrush = AllocBrush(mb->numsides);
@@ -363,7 +363,7 @@ bspbrush_t *MakeBspBrushList (int startbrush, int endbrush, int level, vec3_t cl
 			if (side->winding)
 				side->winding = CopyWinding(side->winding);
 			if (side->surfaceFlags & SURF_HINT)
-				side->visible = qtrue; /* hints are always visible */
+				side->visible = true; /* hints are always visible */
 		}
 		VectorCopy(mb->mins, newbrush->mins);
 		VectorCopy(mb->maxs, newbrush->maxs);

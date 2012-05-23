@@ -97,7 +97,7 @@ static client_t* SV_GetPlayerClientStructure (const char *s)
 /**
  * @brief Checks whether a map exists
  */
-qboolean SV_CheckMap (const char *map, const char *assembly)
+bool SV_CheckMap (const char *map, const char *assembly)
 {
 	char expanded[MAX_QPATH];
 
@@ -108,7 +108,7 @@ qboolean SV_CheckMap (const char *map, const char *assembly)
 		/* check for ump file */
 		if (FS_CheckFile("%s", expanded) < 0) {
 			Com_Printf("Can't find %s\n", expanded);
-			return qfalse;
+			return false;
 		}
 	} else if (!assembly) {
 		Com_sprintf(expanded, sizeof(expanded), "maps/%s.bsp", map);
@@ -116,10 +116,10 @@ qboolean SV_CheckMap (const char *map, const char *assembly)
 		/* check for bsp file */
 		if (FS_CheckFile("%s", expanded) < 0) {
 			Com_Printf("Can't find %s\n", expanded);
-			return qfalse;
+			return false;
 		}
 	}
-	return qtrue;
+	return true;
 }
 
 /**
@@ -132,7 +132,7 @@ static void SV_Map_f (void)
 	const char *assembly = NULL;
 	char bufMap[MAX_TOKEN_CHARS * MAX_TILESTRINGS];
 	char bufAssembly[MAX_TOKEN_CHARS * MAX_TILESTRINGS];
-	qboolean day;
+	bool day;
 
 	if (Cmd_Argc() < 3) {
 		Com_Printf("Usage: %s <day|night> <mapname> [<assembly>]\n", Cmd_Argv(0));
@@ -155,9 +155,9 @@ static void SV_Map_f (void)
 	}
 
 	if (Q_streq(Cmd_Argv(1), "day")) {
-		day = qtrue;
+		day = true;
 	} else if (Q_streq(Cmd_Argv(1), "night")) {
-		day = qfalse;
+		day = false;
 	} else {
 		Com_Printf("Invalid lightmap parameter - use day or night\n");
 		return;
@@ -216,7 +216,7 @@ static void SV_StartGame_f (void)
 	int cnt = 0;
 	while ((cl = SV_GetNextClient(cl)) != NULL) {
 		if (cl->state != cs_free) {
-			cl->player->isReady = qtrue;
+			cl->player->isReady = true;
 			cnt++;
 		}
 	}
@@ -271,7 +271,7 @@ static void SV_Status_f (void)
 			break;
 		}
 
-		s = NET_StreamPeerToName(cl->stream, buf, sizeof(buf), qfalse);
+		s = NET_StreamPeerToName(cl->stream, buf, sizeof(buf), false);
 		Com_Printf("%3i %s %-15s %14i %-5s %-21s\n", i, state, cl->name, cl->lastmessage,
 				cl->player->isReady ? "true" : "false", s);
 	}
@@ -352,7 +352,7 @@ static void SV_KillServer_f (void)
 {
 	if (!svs.initialized)
 		return;
-	SV_Shutdown("Server was killed.", qfalse);
+	SV_Shutdown("Server was killed.", false);
 }
 
 /**
@@ -421,7 +421,7 @@ static int SV_CompleteMapCommand (const char *partial, const char **match)
 		}
 	}
 
-	FS_GetMaps(qfalse);
+	FS_GetMaps(false);
 
 	int n = 0;
 	for (char* const* i = fs_maps, * const* const end = i + fs_numInstalledMaps; i != end; ++i) {
@@ -441,7 +441,7 @@ static void SV_ListMaps_f (void)
 {
 	int i;
 
-	FS_GetMaps(qtrue);
+	FS_GetMaps(true);
 
 	for (i = 0; i <= fs_numInstalledMaps; i++)
 		Com_Printf("%s\n", fs_maps[i]);

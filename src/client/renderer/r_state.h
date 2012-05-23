@@ -45,7 +45,7 @@ extern const vec2_t default_texcoords[4];
 
 /** @brief texunits maintain multitexture state */
 typedef struct gltexunit_s {
-	qboolean enabled;	/**< GL_TEXTURE_2D on / off */
+	bool enabled;	/**< GL_TEXTURE_2D on / off */
 	GLenum texture;		/**< e.g. GL_TEXTURE0 */
 	GLint texnum;		/**< e.g 123 */
 	GLenum texenv;		/**< e.g. GL_MODULATE */
@@ -86,7 +86,7 @@ typedef struct gltexunit_s {
 struct mAliasMesh_s;
 
 typedef struct rstate_s {
-	qboolean fullscreen;
+	bool fullscreen;
 
 	/* arrays */
 	GLfloat *vertex_array_3d;
@@ -114,7 +114,7 @@ typedef struct rstate_s {
 	r_framebuffer_t *buffers0[DOWNSAMPLE_PASSES];
 	r_framebuffer_t *buffers1[DOWNSAMPLE_PASSES];
 	r_framebuffer_t *buffers2[DOWNSAMPLE_PASSES];
-	qboolean frameBufferObjectsInitialized;
+	bool frameBufferObjectsInitialized;
 	const r_framebuffer_t *activeFramebuffer;
 
 	/* shaders */
@@ -136,22 +136,22 @@ typedef struct rstate_s {
 	const material_t *active_material;
 
 	/* states */
-	qboolean shell_enabled;
-	qboolean blend_enabled;
-	qboolean color_array_enabled;
-	qboolean alpha_test_enabled;
-	qboolean stencil_test_enabled;
-	qboolean lighting_enabled;
-	qboolean warp_enabled;
-	qboolean fog_enabled;
-	qboolean blur_enabled;
-	qboolean glowmap_enabled;
-	qboolean draw_glow_enabled;
-	qboolean dynamic_lighting_enabled;
-	qboolean specularmap_enabled;
-	qboolean roughnessmap_enabled;
-	qboolean animation_enabled;
-	qboolean renderbuffer_enabled; /**< renderbuffer vs screen as render target*/
+	bool shell_enabled;
+	bool blend_enabled;
+	bool color_array_enabled;
+	bool alpha_test_enabled;
+	bool stencil_test_enabled;
+	bool lighting_enabled;
+	bool warp_enabled;
+	bool fog_enabled;
+	bool blur_enabled;
+	bool glowmap_enabled;
+	bool draw_glow_enabled;
+	bool dynamic_lighting_enabled;
+	bool specularmap_enabled;
+	bool roughnessmap_enabled;
+	bool animation_enabled;
+	bool renderbuffer_enabled; /**< renderbuffer vs screen as render target*/
 
 	const struct image_s *active_normalmap;
 } rstate_t;
@@ -167,7 +167,7 @@ void R_ReallocateTexunitArray(gltexunit_t * texunit, int size);
 void R_TexEnv(GLenum value);
 void R_BlendFunc(GLenum src, GLenum dest);
 
-qboolean R_SelectTexture(gltexunit_t *texunit);
+bool R_SelectTexture(gltexunit_t *texunit);
 
 void R_BindTextureDebug(int texnum, const char *file, int line, const char *function);
 #define R_BindTexture(tn) R_BindTextureDebug(tn, __FILE__, __LINE__, __PRETTY_FUNCTION__)
@@ -178,24 +178,24 @@ void R_BindNormalmapTexture(GLuint texnum);
 void R_BindBuffer(GLenum target, GLenum type, GLuint id);
 void R_BindArray(GLenum target, GLenum type, const void *array);
 void R_BindDefaultArray(GLenum target);
-void R_EnableStencilTest(qboolean enable);
-void R_EnableTexture(gltexunit_t *texunit, qboolean enable);
-void R_EnableBlend(qboolean enable);
-void R_EnableAlphaTest(qboolean enable);
-void R_EnableColorArray(qboolean enable);
-qboolean R_EnableLighting(r_program_t *program, qboolean enable);
+void R_EnableStencilTest(bool enable);
+void R_EnableTexture(gltexunit_t *texunit, bool enable);
+void R_EnableBlend(bool enable);
+void R_EnableAlphaTest(bool enable);
+void R_EnableColorArray(bool enable);
+bool R_EnableLighting(r_program_t *program, bool enable);
 void R_EnableBumpmap(const struct image_s *normalmap);
-void R_EnableWarp(r_program_t *program, qboolean enable);
-void R_EnableBlur(r_program_t *program, qboolean enable, r_framebuffer_t *source, r_framebuffer_t *dest, int dir);
-void R_EnableShell(qboolean enable);
-void R_EnableFog(qboolean enable);
-void R_EnableDrawAsGlow(qboolean enable);
+void R_EnableWarp(r_program_t *program, bool enable);
+void R_EnableBlur(r_program_t *program, bool enable, r_framebuffer_t *source, r_framebuffer_t *dest, int dir);
+void R_EnableShell(bool enable);
+void R_EnableFog(bool enable);
+void R_EnableDrawAsGlow(bool enable);
 void R_EnableGlowMap(const struct image_s *image);
-void R_EnableSpecularMap(const struct image_s *image, qboolean enable);
-void R_EnableRoughnessMap(const struct image_s *image, qboolean enable);
+void R_EnableSpecularMap(const struct image_s *image, bool enable);
+void R_EnableRoughnessMap(const struct image_s *image, bool enable);
 void R_SetupSpotLight(int index, const light_t *light);
 void R_DisableSpotLight(int index);
-void R_EnableAnimation(const struct mAliasMesh_s *mesh, float backlerp, qboolean enable);
+void R_EnableAnimation(const struct mAliasMesh_s *mesh, float backlerp, bool enable);
 
 void R_UseMaterial (const material_t *material);
 

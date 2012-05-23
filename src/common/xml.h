@@ -27,7 +27,7 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #include "../shared/ufotypes.h"
 
 void XML_AddString(xmlNode_t *parent, const char *name, const char *value);
-void XML_AddBool(xmlNode_t *parent, const char *name, qboolean value);
+void XML_AddBool(xmlNode_t *parent, const char *name, bool value);
 void XML_AddFloat(xmlNode_t *parent, const char *name, float value);
 void XML_AddDouble(xmlNode_t *parent, const char *name, double value);
 void XML_AddByte(xmlNode_t *parent, const char *name, byte value);
@@ -39,7 +39,7 @@ void XML_AddPos2(xmlNode_t *parent, const char *name, const vec2_t pos);
 void XML_AddDate(xmlNode_t *parent, const char *name, const int day, const int sec);
 
 void XML_AddStringValue(xmlNode_t *parent, const char *name, const char *value);
-void XML_AddBoolValue(xmlNode_t *parent, const char *name, qboolean value);
+void XML_AddBoolValue(xmlNode_t *parent, const char *name, bool value);
 void XML_AddFloatValue(xmlNode_t *parent, const char *name, float value);
 void XML_AddDoubleValue(xmlNode_t *parent, const char *name, double value);
 void XML_AddByteValue(xmlNode_t *parent, const char *name, byte value);
@@ -49,7 +49,7 @@ void XML_AddLongValue(xmlNode_t *parent, const char *name, long value);
 
 xmlNode_t * XML_AddNode(xmlNode_t *parent, const char *name);
 
-qboolean XML_GetBool(xmlNode_t *parent, const char *name, const qboolean defaultval);
+bool XML_GetBool(xmlNode_t *parent, const char *name, const bool defaultval);
 int XML_GetInt(xmlNode_t *parent, const char *name, const int defaultval);
 short XML_GetShort(xmlNode_t *parent, const char *name, const short defaultval);
 long XML_GetLong(xmlNode_t *parent, const char *name, const long defaultval);

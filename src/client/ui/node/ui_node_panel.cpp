@@ -54,7 +54,7 @@ void uiPanelNode::draw (uiNode_t *node)
 	UI_GetNodeAbsPos(node, pos);
 
 	if (EXTRADATA(node).background) {
-		UI_DrawSpriteInBox(qfalse, EXTRADATA(node).background, SPRITE_STATUS_NORMAL, pos[0], pos[1], node->box.size[0], node->box.size[1]);
+		UI_DrawSpriteInBox(false, EXTRADATA(node).background, SPRITE_STATUS_NORMAL, pos[0], pos[1], node->box.size[0], node->box.size[1]);
 	}
 }
 
@@ -327,7 +327,7 @@ static void UI_ClientLayout (uiNode_t *node)
 	int width = 0;
 	int height = 0;
 	uiNode_t *child;
-	qboolean updated;
+	bool updated;
 	for (child = node->firstChild; child; child = child->next) {
 		int value;
 		value = child->box.pos[0] + child->box.size[0];
@@ -411,7 +411,7 @@ static void UI_ColumnLayout (uiNode_t *node)
 		const int column = EXTRADATA(node).layoutColumns;
 		int width = columnPos[column - 1] + columnSize[column - 1] + node->padding;
 		int height = y + rowHeight + node->padding;
-		qboolean updated;
+		bool updated;
 
 		updated = EXTRADATA(node).super.scrollX.set(-1, node->box.size[0], width);
 		updated = EXTRADATA(node).super.scrollY.set(-1, node->box.size[1], height) || updated;
@@ -604,7 +604,7 @@ void UI_RegisterPanelNode (uiBehaviour_t *behaviour)
 	/**
 	 * If scrolling via mousewheel is enabled
 	 */
-	UI_RegisterExtradataNodeProperty(behaviour, "wheelscrollable", V_CPPBOOL, panelExtraData_t, wheelScrollable);
+	UI_RegisterExtradataNodeProperty(behaviour, "wheelscrollable", V_BOOL, panelExtraData_t, wheelScrollable);
 
 	/* Sprite used to display the background */
 	UI_RegisterExtradataNodeProperty(behaviour, "background", V_UI_SPRITEREF, EXTRADATA_TYPE, background);

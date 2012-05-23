@@ -32,7 +32,7 @@ typedef enum msoMenuState_s {
 	MSO_MSTATE_INITIALIZED
 } msoMenuState_t;
 
-void MSO_SetMenuState (const msoMenuState_t newState, const qboolean initNow, const qboolean preserveIndex);
+void MSO_SetMenuState (const msoMenuState_t newState, const bool initNow, const bool preserveIndex);
 
 void MSO_InitCallbacks(void);
 void MSO_ShutdownCallbacks(void);

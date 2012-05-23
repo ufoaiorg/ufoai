@@ -56,9 +56,9 @@ static void MS_TimestampedText (char *text, message_t *message, size_t textsize)
  * @return message_t pointer
  * @sa UP_OpenMail_f
  * @sa CL_EventAddMail_f
- * @note this method forwards to @c MS_AddNewMessageSound with @code playSound = qtrue @endcode
+ * @note this method forwards to @c MS_AddNewMessageSound with @code playSound = true @endcode
  */
-message_t *MS_AddNewMessage (const char *title, const char *text, messageType_t type, technology_t *pedia, qboolean popup, qboolean playSound)
+message_t *MS_AddNewMessage (const char *title, const char *text, messageType_t type, technology_t *pedia, bool popup, bool playSound)
 {
 	const char *sound = NULL;
 
@@ -178,13 +178,13 @@ static void MS_MessageSaveXML (xmlNode_t *p, message_t *message)
  * @param[out] p XML Node structure, where we write the information to
  * @sa MS_MessageSaveXML
  */
-qboolean MS_SaveXML (xmlNode_t *p)
+bool MS_SaveXML (xmlNode_t *p)
 {
 	xmlNode_t *n = XML_AddNode(p, SAVE_MESSAGES_MESSAGES);
 
 	/* store message system items */
 	MS_MessageSaveXML(n, cp_messageStack);
-	return qtrue;
+	return true;
 }
 
 /**
@@ -193,14 +193,14 @@ qboolean MS_SaveXML (xmlNode_t *p)
  * @sa MS_SaveXML
  * @sa UI_AddNewMessageSound
  */
-qboolean MS_LoadXML (xmlNode_t *p)
+bool MS_LoadXML (xmlNode_t *p)
 {
 	int i;
 	xmlNode_t *n, *sn;
 	n = XML_GetNode(p, SAVE_MESSAGES_MESSAGES);
 
 	if (!n)
-		return qfalse;
+		return false;
 
 	/* we have to set this a little bit higher here, otherwise the samples that are played when adding
 	 * a message to the stack would all played a few milliseconds after each other - that doesn't sound
@@ -228,9 +228,9 @@ qboolean MS_LoadXML (xmlNode_t *p)
 		Q_strncpyz(text,  XML_GetString(sn, SAVE_MESSAGES_TEXT),  sizeof(text));
 
 		if (mtype == MSG_EVENT) {
-			mail = CL_GetEventMail(XML_GetString(sn, SAVE_MESSAGES_EVENTMAILID), qfalse);
+			mail = CL_GetEventMail(XML_GetString(sn, SAVE_MESSAGES_EVENTMAILID), false);
 			if (mail)
-				mail->read = XML_GetBool(sn, SAVE_MESSAGES_EVENTMAILREAD, qfalse);
+				mail->read = XML_GetBool(sn, SAVE_MESSAGES_EVENTMAILREAD, false);
 		} else
 			mail = NULL;
 
@@ -269,7 +269,7 @@ qboolean MS_LoadXML (xmlNode_t *p)
 	/* reset the sample repeat rate */
 	cgi->S_SetSampleRepeatRate(0);
 
-	return qtrue;
+	return true;
 }
 
 void MS_MessageInit (void)

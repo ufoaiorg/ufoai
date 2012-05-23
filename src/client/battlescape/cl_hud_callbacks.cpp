@@ -74,30 +74,30 @@ const fireDef_t *HUD_GetFireDefinitionForHand (const le_t * actor, const actorHa
  * TUs (i.e. "time") are are _not_ checked here, this needs to be done
  * elsewhere for the correct firemode.
  * @sa HUD_FireWeapon_f
- * @return qfalse when action is not possible, otherwise qtrue
+ * @return false when action is not possible, otherwise true
  */
-static qboolean HUD_CheckShooting (const le_t* le, invList_t *weapon)
+static bool HUD_CheckShooting (const le_t* le, invList_t *weapon)
 {
 	if (!le)
-		return qfalse;
+		return false;
 
 	/* No item in hand. */
 	if (!weapon || !weapon->item.t) {
 		HUD_DisplayMessage(_("No item in hand."));
-		return qfalse;
+		return false;
 	}
 	/* Cannot shoot because of lack of ammo. */
 	if (weapon->item.a <= 0 && weapon->item.t->reload) {
 		HUD_DisplayMessage(_("Can't perform action:\nOut of ammo."));
-		return qfalse;
+		return false;
 	}
 	/* Cannot shoot because weapon is fireTwoHanded, yet both hands handle items. */
 	if (weapon->item.t->fireTwoHanded && LEFT(le)) {
 		HUD_DisplayMessage(_("This weapon cannot be fired\none handed."));
-		return qfalse;
+		return false;
 	}
 
-	return qtrue;
+	return true;
 }
 
 /**
@@ -242,42 +242,42 @@ int HUD_CalcReloadTime (const le_t *le, const objDef_t *weapon, containerIndex_t
  * @param[in] le Pointer to local entity for which we handle an action on hud menu.
  * @param[in] weapon An item in hands.
  * @param[in] container The container to get the ammo from
- * @return qfalse when action is not possible, otherwise qtrue
+ * @return false when action is not possible, otherwise true
  * @sa HUD_ReloadLeft_f
  * @sa HUD_ReloadRight_f
  */
-static qboolean HUD_CheckReload (const le_t* le, const invList_t *weapon, containerIndex_t container)
+static bool HUD_CheckReload (const le_t* le, const invList_t *weapon, containerIndex_t container)
 {
 	int tus;
 
 	if (!le)
-		return qfalse;
+		return false;
 
 	/* No item in hand. */
 	if (!weapon || !weapon->item.t) {
 		HUD_DisplayMessage(_("No item in hand."));
-		return qfalse;
+		return false;
 	}
 
 	/* Cannot reload because this item is not reloadable. */
 	if (!weapon->item.t->reload) {
 		HUD_DisplayMessage(_("Can't perform action:\nThis item is not reloadable."));
-		return qfalse;
+		return false;
 	}
 
 	tus = HUD_CalcReloadTime(le, weapon->item.t, container);
 	/* Cannot reload because of no ammo in inventory. */
 	if (tus == -1) {
 		HUD_DisplayMessage(_("Can't perform action:\nAmmo not available."));
-		return qfalse;
+		return false;
 	}
 	/* Cannot reload because of not enough TUs. */
 	if (le->TU < tus) {
 		HUD_DisplayMessage(_("Can't perform action:\nNot enough TUs."));
-		return qfalse;
+		return false;
 	}
 
-	return qtrue;
+	return true;
 }
 
 /**

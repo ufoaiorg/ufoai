@@ -156,7 +156,7 @@ void SV_DropClient (client_t * drop, const char *message)
 	NET_StreamFinished(drop->stream);
 	drop->stream = NULL;
 
-	drop->player->inuse = qfalse;
+	drop->player->inuse = false;
 	SV_SetClientState(drop, cs_free);
 	drop->name[0] = 0;
 
@@ -167,7 +167,7 @@ void SV_DropClient (client_t * drop, const char *message)
 			if (cl->state >= cs_connected)
 				count++;
 		if (count == 0)
-			svs.killserver = qtrue;
+			svs.killserver = true;
 	}
 }
 
@@ -300,9 +300,9 @@ static void SVC_DirectConnect (struct net_stream *stream)
 	player_t *player;
 	int playernum;
 	int version;
-	qboolean connected;
+	bool connected;
 	char buf[256];
-	const char *peername = NET_StreamPeerToName(stream, buf, sizeof(buf), qfalse);
+	const char *peername = NET_StreamPeerToName(stream, buf, sizeof(buf), false);
 
 	Com_DPrintf(DEBUG_SERVER, "SVC_DirectConnect()\n");
 
@@ -379,7 +379,7 @@ static void SVC_DirectConnect (struct net_stream *stream)
 	}
 
 	/* new player */
-	cl->player->inuse = qtrue;
+	cl->player->inuse = true;
 	cl->lastmessage = svs.realtime;
 
 	/* parse some info from the info strings */
@@ -403,17 +403,17 @@ static void SVC_DirectConnect (struct net_stream *stream)
  * @brief Checks whether the remote connection is allowed (rcon_password must be
  * set on the server) - and verify the user given password with the cvar value.
  */
-static inline qboolean Rcon_Validate (const char *password)
+static inline bool Rcon_Validate (const char *password)
 {
 	/* no rcon access */
 	if (!strlen(rcon_password->string))
-		return qfalse;
+		return false;
 
 	/* password not valid */
 	if (!Q_streq(password, rcon_password->string))
-		return qfalse;
+		return false;
 
-	return qtrue;
+	return true;
 }
 
 #define SV_OUTPUTBUF_LENGTH 1024
@@ -426,8 +426,8 @@ static char sv_outputbuf[SV_OUTPUTBUF_LENGTH];
 static void SVC_RemoteCommand (struct net_stream *stream)
 {
 	char buf[256];
-	const char *peername = NET_StreamPeerToName(stream, buf, sizeof(buf), qfalse);
-	qboolean valid = Rcon_Validate(Cmd_Argv(1));
+	const char *peername = NET_StreamPeerToName(stream, buf, sizeof(buf), false);
+	bool valid = Rcon_Validate(Cmd_Argv(1));
 
 	if (!valid)
 		Com_Printf("Bad rcon from %s:\n%s\n", peername, Cmd_Argv(1));
@@ -470,7 +470,7 @@ static void SV_ConnectionlessPacket (struct net_stream *stream, struct dbuffer *
 
 	NET_ReadStringLine(msg, s, sizeof(s));
 
-	Cmd_TokenizeString(s, qfalse);
+	Cmd_TokenizeString(s, false);
 
 	c = Cmd_Argv(0);
 	Com_DPrintf(DEBUG_SERVER, "Packet : %s\n", c);
@@ -486,7 +486,7 @@ static void SV_ConnectionlessPacket (struct net_stream *stream, struct dbuffer *
 	else if (Q_streq(c, "rcon"))
 		SVC_RemoteCommand(stream);
 	else
-		Com_Printf("Bad connectionless packet from %s:\n%s\n", NET_StreamPeerToName(stream, buf, sizeof(buf), qtrue), s);
+		Com_Printf("Bad connectionless packet from %s:\n%s\n", NET_StreamPeerToName(stream, buf, sizeof(buf), true), s);
 }
 
 /**
@@ -585,7 +585,7 @@ static void SV_CheckSpawnSoldiers (void)
 		return;
 	}
 
-	sv->spawned = qtrue;
+	sv->spawned = true;
 
 	cl = NULL;
 	while ((cl = SV_GetNextClient(cl)) != NULL)
@@ -612,7 +612,7 @@ static void SV_CheckStartMatch (void)
 		return;
 	}
 
-	sv->started = qtrue;
+	sv->started = true;
 
 	cl = NULL;
 	while ((cl = SV_GetNextClient(cl)) != NULL)
@@ -674,7 +674,7 @@ void SV_Frame (int now, void *data)
 	/* change the gametype even if no server is running (e.g. the first time) */
 	if (sv_dedicated->integer && sv_gametype->modified) {
 		Com_SetGameType();
-		sv_gametype->modified = qfalse;
+		sv_gametype->modified = false;
 	}
 
 	if (sv_dedicated->integer) {
@@ -721,7 +721,7 @@ void SV_Frame (int now, void *data)
 
 	/* server is empty - so shutdown */
 	if (svs.abandon && svs.killserver)
-		SV_Shutdown("Server disconnected.", qfalse);
+		SV_Shutdown("Server disconnected.", false);
 }
 
 /**
@@ -763,10 +763,10 @@ void SV_UserinfoChanged (client_t * cl)
 	Com_DPrintf(DEBUG_SERVER, "SV_UserinfoChanged: Changed userinfo for player %s\n", cl->name);
 }
 
-static qboolean SV_CheckMaxSoldiersPerPlayer (cvar_t* cvar)
+static bool SV_CheckMaxSoldiersPerPlayer (cvar_t* cvar)
 {
 	const int max = MAX_ACTIVETEAM;
-	return Cvar_AssertValue(cvar, 1, max, qtrue);
+	return Cvar_AssertValue(cvar, 1, max, true);
 }
 
 mapData_t* SV_GetMapData (void)
@@ -824,7 +824,7 @@ void SV_Init (void)
  * connected clients before the server goes down.
  * @sa SV_Shutdown
  */
-static void SV_FinalMessage (const char *message, qboolean reconnect)
+static void SV_FinalMessage (const char *message, bool reconnect)
 {
 	client_t *cl;
 	struct dbuffer *msg = new_dbuffer();
@@ -866,7 +866,7 @@ void SV_Clear (void)
  * @param[in] reconnect True if this is only a restart (new map or map restart),
  * false if the server shutdown completely and you also want to disconnect all clients
  */
-void SV_Shutdown (const char *finalmsg, qboolean reconnect)
+void SV_Shutdown (const char *finalmsg, bool reconnect)
 {
 	unsigned int i;
 
@@ -914,7 +914,7 @@ void SV_Shutdown (const char *finalmsg, qboolean reconnect)
  */
 void SV_ShutdownWhenEmpty (void)
 {
-	svs.abandon = qtrue;
+	svs.abandon = true;
 	/* pretend server is already dead, otherwise clients may try and reconnect */
 	Com_SetServerState(ss_dead);
 }

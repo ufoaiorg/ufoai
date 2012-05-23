@@ -37,7 +37,7 @@ static cvar_t *in_joystickThreshold;
 static cvar_t *in_joystickSpeed;
 
 static struct {
-	qboolean buttons[16];
+	bool buttons[16];
 	unsigned int oldaxes;
 	unsigned int oldhats;
 } stick_state;
@@ -70,7 +70,7 @@ static const int hat_keys[16] = {
 
 void IN_JoystickMove (void)
 {
-	qboolean joy_pressed[lengthof(joy_keys)];
+	bool joy_pressed[lengthof(joy_keys)];
 	unsigned int axes = 0;
 	unsigned int hats = 0;
 	int total = 0;
@@ -114,7 +114,7 @@ void IN_JoystickMove (void)
 		if (total > lengthof(stick_state.buttons))
 			total = lengthof(stick_state.buttons);
 		for (i = 0; i < total; i++) {
-			const qboolean pressed = (SDL_JoystickGetButton(stick, i) != 0);
+			const bool pressed = (SDL_JoystickGetButton(stick, i) != 0);
 			if (pressed != stick_state.buttons[i]) {
 				IN_EventEnqueue(K_JOY1 + i, 0, pressed);
 				stick_state.buttons[i] = pressed;
@@ -138,32 +138,32 @@ void IN_JoystickMove (void)
 				/* release event */
 				switch (((Uint8 *)&stick_state.oldhats)[i]) {
 				case SDL_HAT_UP:
-					IN_EventEnqueue(hat_keys[4 * i + 0], 0, qfalse);
+					IN_EventEnqueue(hat_keys[4 * i + 0], 0, false);
 					break;
 				case SDL_HAT_RIGHT:
-					IN_EventEnqueue(hat_keys[4 * i + 1], 0, qfalse);
+					IN_EventEnqueue(hat_keys[4 * i + 1], 0, false);
 					break;
 				case SDL_HAT_DOWN:
-					IN_EventEnqueue(hat_keys[4 * i + 2], 0, qfalse);
+					IN_EventEnqueue(hat_keys[4 * i + 2], 0, false);
 					break;
 				case SDL_HAT_LEFT:
-					IN_EventEnqueue(hat_keys[4 * i + 3], 0, qfalse);
+					IN_EventEnqueue(hat_keys[4 * i + 3], 0, false);
 					break;
 				case SDL_HAT_RIGHTUP:
-					IN_EventEnqueue(hat_keys[4 * i + 0], 0, qfalse);
-					IN_EventEnqueue(hat_keys[4 * i + 1], 0, qfalse);
+					IN_EventEnqueue(hat_keys[4 * i + 0], 0, false);
+					IN_EventEnqueue(hat_keys[4 * i + 1], 0, false);
 					break;
 				case SDL_HAT_RIGHTDOWN:
-					IN_EventEnqueue(hat_keys[4 * i + 2], 0, qfalse);
-					IN_EventEnqueue(hat_keys[4 * i + 1], 0, qfalse);
+					IN_EventEnqueue(hat_keys[4 * i + 2], 0, false);
+					IN_EventEnqueue(hat_keys[4 * i + 1], 0, false);
 					break;
 				case SDL_HAT_LEFTUP:
-					IN_EventEnqueue(hat_keys[4 * i + 0], 0, qfalse);
-					IN_EventEnqueue(hat_keys[4 * i + 3], 0, qfalse);
+					IN_EventEnqueue(hat_keys[4 * i + 0], 0, false);
+					IN_EventEnqueue(hat_keys[4 * i + 3], 0, false);
 					break;
 				case SDL_HAT_LEFTDOWN:
-					IN_EventEnqueue(hat_keys[4 * i + 2], 0, qfalse);
-					IN_EventEnqueue(hat_keys[4 * i + 3], 0, qfalse);
+					IN_EventEnqueue(hat_keys[4 * i + 2], 0, false);
+					IN_EventEnqueue(hat_keys[4 * i + 3], 0, false);
 					break;
 				default:
 					break;
@@ -171,32 +171,32 @@ void IN_JoystickMove (void)
 				/* press event */
 				switch (((Uint8 *)&hats)[i]) {
 				case SDL_HAT_UP:
-					IN_EventEnqueue(hat_keys[4 * i + 0], 0, qtrue);
+					IN_EventEnqueue(hat_keys[4 * i + 0], 0, true);
 					break;
 				case SDL_HAT_RIGHT:
-					IN_EventEnqueue(hat_keys[4 * i + 1], 0, qtrue);
+					IN_EventEnqueue(hat_keys[4 * i + 1], 0, true);
 					break;
 				case SDL_HAT_DOWN:
-					IN_EventEnqueue(hat_keys[4 * i + 2], 0, qtrue);
+					IN_EventEnqueue(hat_keys[4 * i + 2], 0, true);
 					break;
 				case SDL_HAT_LEFT:
-					IN_EventEnqueue(hat_keys[4 * i + 3], 0, qtrue);
+					IN_EventEnqueue(hat_keys[4 * i + 3], 0, true);
 					break;
 				case SDL_HAT_RIGHTUP:
-					IN_EventEnqueue(hat_keys[4 * i + 0], 0, qtrue);
-					IN_EventEnqueue(hat_keys[4 * i + 1], 0, qtrue);
+					IN_EventEnqueue(hat_keys[4 * i + 0], 0, true);
+					IN_EventEnqueue(hat_keys[4 * i + 1], 0, true);
 					break;
 				case SDL_HAT_RIGHTDOWN:
-					IN_EventEnqueue(hat_keys[4 * i + 2], 0, qtrue);
-					IN_EventEnqueue(hat_keys[4 * i + 1], 0, qtrue);
+					IN_EventEnqueue(hat_keys[4 * i + 2], 0, true);
+					IN_EventEnqueue(hat_keys[4 * i + 1], 0, true);
 					break;
 				case SDL_HAT_LEFTUP:
-					IN_EventEnqueue(hat_keys[4 * i + 0], 0, qtrue);
-					IN_EventEnqueue(hat_keys[4 * i + 3], 0, qtrue);
+					IN_EventEnqueue(hat_keys[4 * i + 0], 0, true);
+					IN_EventEnqueue(hat_keys[4 * i + 3], 0, true);
 					break;
 				case SDL_HAT_LEFTDOWN:
-					IN_EventEnqueue(hat_keys[4 * i + 2], 0, qtrue);
-					IN_EventEnqueue(hat_keys[4 * i + 3], 0, qtrue);
+					IN_EventEnqueue(hat_keys[4 * i + 2], 0, true);
+					IN_EventEnqueue(hat_keys[4 * i + 3], 0, true);
 					break;
 				default:
 					break;
@@ -255,10 +255,10 @@ void IN_JoystickMove (void)
 	if (axes != stick_state.oldaxes) {
 		for (i = 2; i < 16; i++) {
 			if ((axes & (1 << i)) && !(stick_state.oldaxes & (1 << i)))
-				IN_EventEnqueue(joy_keys[i], 0, qtrue);
+				IN_EventEnqueue(joy_keys[i], 0, true);
 
 			if (!(axes & (1 << i)) && (stick_state.oldaxes & (1 << i)))
-				IN_EventEnqueue(joy_keys[i], 0, qfalse);
+				IN_EventEnqueue(joy_keys[i], 0, false);
 		}
 	}
 
@@ -321,7 +321,7 @@ void IN_StartupJoystick (void)
 
 	if (in_joystickNo->integer < 0 || in_joystickNo->integer >= total)
 		Cvar_Set("in_joystickNo", "0");
-	in_joystickNo->modified = qfalse;
+	in_joystickNo->modified = false;
 
 	stick = SDL_JoystickOpen(in_joystickNo->integer);
 

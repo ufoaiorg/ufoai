@@ -33,7 +33,7 @@
 #include "../../../common/binaryexpressionparser.h"
 #include "save/save_staticcampaign.h"
 
-static qboolean SCP_StageSetDone (const char *name)
+static bool SCP_StageSetDone (const char *name)
 {
 	setState_t *set;
 	int i;
@@ -43,7 +43,7 @@ static qboolean SCP_StageSetDone (const char *name)
 			return set->done >= set->def->quota;
 
 	/* didn't find set */
-	return qfalse;
+	return false;
 }
 
 static void SCP_CampaignActivateStageSets (stage_t *stage)
@@ -62,7 +62,7 @@ static void SCP_CampaignActivateStageSets (stage_t *stage)
 
 			Com_Printf("activate stage set '%s'\n", set->def->name);
 			/* activate it */
-			set->active = qtrue;
+			set->active = true;
 			set->start = Date_Add(ccs.date, set->def->delay);
 			set->event = Date_Add(set->start, Date_Random(zero, set->def->frame));
 			for (i = 0; i < set->def->ufos; i++) {
@@ -72,7 +72,7 @@ static void SCP_CampaignActivateStageSets (stage_t *stage)
 					category = INTERESTCATEGORY_BASE_ATTACK;
 				else if (r > 0.6f)
 					category = INTERESTCATEGORY_INTERCEPT;
-				CP_CreateNewMission(category, qtrue);
+				CP_CreateNewMission(category, true);
 			}
 		}
 	}
@@ -90,7 +90,7 @@ static stageState_t *SCP_CampaignActivateStage (const char *name)
 		if (Q_streq(stage->name, name)) {
 			/* add it to the list */
 			state = &scd->stage[i];
-			state->active = qtrue;
+			state->active = true;
 			state->def = stage;
 			state->start = ccs.date;
 
@@ -119,7 +119,7 @@ static void SCP_CampaignEndStage (const char *name)
 
 	for (i = 0, state = scd->stage; i < scd->numStages; i++, state++)
 		if (Q_streq(state->def->name, name)) {
-			state->active = qfalse;
+			state->active = false;
 			return;
 		}
 
@@ -189,13 +189,13 @@ static void SCP_CampaignAddMission (setState_t *set)
 	/* prepare next event (if any) */
 	set->num++;
 	if (set->def->number && set->num >= set->def->number) {
-		set->active = qfalse;
+		set->active = false;
 	} else {
 		const date_t minTime = {0, 0};
 		set->event = Date_Add(ccs.date, Date_Random(minTime, set->def->frame));
 	}
 
-	mission = CP_CreateNewMission(INTERESTCATEGORY_TERROR_ATTACK, qtrue);
+	mission = CP_CreateNewMission(INTERESTCATEGORY_TERROR_ATTACK, true);
 	mission->mapDef = cgi->Com_GetMapDefinitionByID(mis->def->id);
 	if (!mission->mapDef) {
 		Com_Printf("SCP_CampaignAddMission: Could not get the mapdef '%s'\n", mis->def->id);
@@ -203,7 +203,7 @@ static void SCP_CampaignAddMission (setState_t *set)
 		return;
 	}
 	Vector2Copy(mis->def->pos, mission->pos);
-	mission->posAssigned = qtrue;
+	mission->posAssigned = true;
 	nation = MAP_GetNation(mission->pos);
 	if (nation) {
 		Com_sprintf(mission->location, sizeof(mission->location), "%s", _(nation->name));
@@ -299,7 +299,7 @@ void SCP_CampaignProgress (const missionResults_t *results)
 	SCP_CampaignRemoveMission(mission);
 }
 
-qboolean SCP_Save (xmlNode_t *parent)
+bool SCP_Save (xmlNode_t *parent)
 {
 	stageState_t *stage;
 	actMis_t *mis;
@@ -339,17 +339,17 @@ qboolean SCP_Save (xmlNode_t *parent)
 		cgi->XML_AddDate(actMisNode, SAVE_STATICCAMPAIGN_MISSIONEXPIREDATE, mis->expire.day, mis->expire.sec);
 	}
 
-	return qtrue;
+	return true;
 }
 
-qboolean SCP_Load (xmlNode_t *parent)
+bool SCP_Load (xmlNode_t *parent)
 {
 	xmlNode_t *node;
 	xmlNode_t *snode;
 
 	node = cgi->XML_GetNode(parent, SAVE_STATICCAMPAIGN);
 	if (!node) {
-		return qfalse;
+		return false;
 	}
 
 	SCP_Parse();
@@ -362,7 +362,7 @@ qboolean SCP_Load (xmlNode_t *parent)
 		stageState_t *state = SCP_CampaignActivateStage(id);
 		if (!state) {
 			Com_Printf("......error: unable to load campaign, unknown stage '%s'\n", id);
-			return qfalse;
+			return false;
 		}
 
 		cgi->XML_GetDate(snode, SAVE_STATICCAMPAIGN_STAGEDATE, &state->start.day, &state->start.sec);
@@ -378,10 +378,10 @@ qboolean SCP_Load (xmlNode_t *parent)
 					break;
 			if (j >= state->def->num) {
 				Com_Printf("......error: Set '%s' not found (%i/%i)\n", name, num, state->def->num);
-				return qfalse;
+				return false;
 			}
 
-			set->active = cgi->XML_GetBool(stateNode, SAVE_STATICCAMPAIGN_SETSTATEACTIVE, qfalse);
+			set->active = cgi->XML_GetBool(stateNode, SAVE_STATICCAMPAIGN_SETSTATEACTIVE, false);
 			set->num = cgi->XML_GetInt(stateNode, SAVE_STATICCAMPAIGN_SETSTATENUM, 0);
 			set->done = cgi->XML_GetInt(stateNode, SAVE_STATICCAMPAIGN_SETSTATEDONE, 0);
 
@@ -408,7 +408,7 @@ qboolean SCP_Load (xmlNode_t *parent)
 			}
 		if (j >= scd->numStageSets) {
 			Com_Printf("......error: Stage set '%s' not found\n", name);
-			return qfalse;
+			return false;
 		}
 
 		/* get mission definition */
@@ -422,7 +422,7 @@ qboolean SCP_Load (xmlNode_t *parent)
 		/* ignore incomplete info */
 		if (!mis->cause || !mis->def) {
 			Com_Printf("......error: Incomplete mission info for mission %s\n", name);
-			return qfalse;
+			return false;
 		}
 
 		mis->def->count = cgi->XML_GetInt(snode, SAVE_STATICCAMPAIGN_MISSIONCOUNT, 0);
@@ -431,12 +431,12 @@ qboolean SCP_Load (xmlNode_t *parent)
 		mis->mission = CP_GetMissionByIDSilent(name);
 		if (!mis->mission) {
 			Com_Printf("......error: Could not find mission for %s\n", name);
-			return qfalse;
+			return false;
 		}
 
 		/* read time */
 		cgi->XML_GetDate(snode, SAVE_STATICCAMPAIGN_MISSIONEXPIREDATE, &mis->expire.day, &mis->expire.sec);
 	}
 
-	return qtrue;
+	return true;
 }

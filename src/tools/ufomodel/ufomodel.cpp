@@ -55,8 +55,8 @@ typedef enum {
 } ufoModelAction_t;
 
 typedef struct modelConfig_s {
-	qboolean overwrite;
-	qboolean verbose;
+	bool overwrite;
+	bool verbose;
 	char fileName[MAX_QPATH];
 	ufoModelAction_t action;
 	float smoothness;
@@ -118,7 +118,7 @@ image_t *R_LoadImageData (const char *name, byte * pic, int width, int height, i
 		Com_Error(ERR_DROP, "R_LoadImageData: name is empty");
 
 	image = Mem_PoolAllocType(image_t, vid_imagePool);
-	image->has_alpha = qfalse;
+	image->has_alpha = false;
 	image->type = type;
 	image->width = width;
 	image->height = height;
@@ -202,7 +202,7 @@ static model_t *LoadModel (const char *name)
 	switch (LittleLong(*(unsigned *) buf)) {
 	case IDALIASHEADER:
 		/* MD2 header */
-		R_ModLoadAliasMD2Model(mod, buf, modfilelen, qfalse);
+		R_ModLoadAliasMD2Model(mod, buf, modfilelen, false);
 		break;
 
 	case DPMHEADER:
@@ -342,7 +342,7 @@ static void UM_Parameter (int argc, char **argv)
 
 	for (i = 1; i < argc; i++) {
 		if (Q_streq(argv[i], "-overwrite")) {
-			config.overwrite = qtrue;
+			config.overwrite = true;
 		} else if (Q_streq(argv[i], "-f") && (i + 1 < argc)) {
 			Q_strncpyz(config.inputName, argv[++i], sizeof(config.inputName));
 		} else if (Q_streq(argv[i], "-s") && (i + 1 < argc)) {
@@ -368,7 +368,7 @@ static void UM_Parameter (int argc, char **argv)
 			Q_strncpyz(config.fileName, argv[i + 1], sizeof(config.fileName));
 			i++;
 		} else if (Q_streq(argv[i], "-v") || Q_streq(argv[i], "--verbose")) {
-			config.verbose = qtrue;
+			config.verbose = true;
 		} else if (Q_streq(argv[i], "-h") || Q_streq(argv[i], "--help")) {
 			Usage();
 			Exit(0);
@@ -565,7 +565,7 @@ static void MD2Check (const byte *buf, const char *fileName, int bufSize, void *
 	const char *md2Path;
 	uint32_t numSkins;
 	int i;
-	qboolean headline = qfalse;
+	bool headline = false;
 	const dMD2Model_t *md2 = (const dMD2Model_t *)buf;
 
 	MD2HeaderCheck(md2, fileName, bufSize);
@@ -591,7 +591,7 @@ static void MD2Check (const byte *buf, const char *fileName, int bufSize, void *
 		if (errors > 0) {
 			if (!headline) {
 				Com_Printf("model: %s\n", fileName);
-				headline = qtrue;
+				headline = true;
 			}
 			Com_Printf("  \\ - skin %i: %s - %i errors/warnings\n", i + 1, name, errors);
 			if (name[0] != '.')
@@ -681,7 +681,7 @@ int main (int argc, char **argv)
 	Swap_Init();
 	Mem_Init();
 
-	FS_InitFilesystem(qfalse);
+	FS_InitFilesystem(false);
 
 	r_noTexture = Mem_PoolAllocType(image_t, vid_imagePool);
 	Q_strncpyz(r_noTexture->name, "noTexture", sizeof(r_noTexture->name));

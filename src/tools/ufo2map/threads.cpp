@@ -79,7 +79,7 @@ static void (*WorkFunction) (unsigned int);
  */
 static int ThreadWork (void *p)
 {
-	while (qtrue) {
+	while (true) {
 		int work = GetThreadWork();
 		if (work == -1)
 			break;
@@ -159,7 +159,7 @@ static void RunThreads (void)
 /**
  * @brief Entry point for all thread work requests.
  */
-void RunThreadsOn (void (*func)(unsigned int), int unsigned workcount, qboolean progress, const char *id)
+void RunThreadsOn (void (*func)(unsigned int), int unsigned workcount, bool progress, const char *id)
 {
 	int start, end;
 
@@ -196,7 +196,7 @@ void RunThreadsOn (void (*func)(unsigned int), int unsigned workcount, qboolean 
 /**
  * @brief Entry point for all thread work requests.
  */
-void RunSingleThreadOn (void (*func)(unsigned int), int unsigned workcount, qboolean progress, const char *id)
+void RunSingleThreadOn (void (*func)(unsigned int), int unsigned workcount, bool progress, const char *id)
 {
 	int saved_numthreads = threadstate.numthreads;
 

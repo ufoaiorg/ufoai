@@ -30,19 +30,19 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
  * @brief Check if a team definition is alien.
  * @param[in] td Pointer to the team definition to check.
  */
-qboolean CHRSH_IsTeamDefAlien (const teamDef_t* const td)
+bool CHRSH_IsTeamDefAlien (const teamDef_t* const td)
 {
 	return td->race == RACE_TAMAN || td->race == RACE_ORTNOK
 		|| td->race == RACE_BLOODSPIDER || td->race == RACE_SHEVAAR;
 }
 
-qboolean CHRSH_IsArmourUseableForTeam (const objDef_t *od, const teamDef_t *teamDef)
+bool CHRSH_IsArmourUseableForTeam (const objDef_t *od, const teamDef_t *teamDef)
 {
 	assert(teamDef);
 	assert(INV_IsArmour(od));
 
 	if (!teamDef->armour)
-		return qfalse;
+		return false;
 
 	if (CHRSH_IsTeamDefAlien(teamDef))
 		return od->useable == TEAM_ALIEN;
@@ -51,14 +51,14 @@ qboolean CHRSH_IsArmourUseableForTeam (const objDef_t *od, const teamDef_t *team
 	else if (teamDef->race == RACE_CIVILIAN)
 		return od->useable == TEAM_CIVILIAN;
 
-	return qfalse;
+	return false;
 }
 
 /**
  * @brief Check if a team definition is a robot.
  * @param[in] td Pointer to the team definition to check.
  */
-qboolean CHRSH_IsTeamDefRobot (const teamDef_t* const td)
+bool CHRSH_IsTeamDefRobot (const teamDef_t* const td)
 {
 	return td->race == RACE_ROBOT || td->race == RACE_BLOODSPIDER;
 }
@@ -69,7 +69,7 @@ qboolean CHRSH_IsTeamDefRobot (const teamDef_t* const td)
  * @param[in] multiplayer If this is true we use the skill values from @c soldier_mp
  * mulitplayer is a special case here
  */
-void CHRSH_CharGenAbilitySkills (character_t * chr, qboolean multiplayer)
+void CHRSH_CharGenAbilitySkills (character_t * chr, bool multiplayer)
 {
 	int i;
 	const int (*chrTemplate)[2];

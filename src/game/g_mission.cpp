@@ -35,10 +35,10 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
  * @note Don't set a client action here - otherwise the movement event might
  * be corrupted
  */
-qboolean G_MissionTouch (edict_t *self, edict_t *activator)
+bool G_MissionTouch (edict_t *self, edict_t *activator)
 {
 	if (!self->owner)
-		return qfalse;
+		return false;
 
 	switch (self->owner->team) {
 	case TEAM_ALIEN:
@@ -47,7 +47,7 @@ qboolean G_MissionTouch (edict_t *self, edict_t *activator)
 				self->count = level.actualRound;
 				gi.BroadcastPrintf(PRINT_HUD, _("Aliens entered target zone!"));
 			}
-			return qtrue;
+			return true;
 		} else {
 			/* reset king of the hill counter */
 			self->count = 0;
@@ -75,10 +75,10 @@ qboolean G_MissionTouch (edict_t *self, edict_t *activator)
 							if (Q_streq(od->id, self->owner->item)) {
 								/* drop the weapon - even if out of TUs */
 								G_ActorInvMove(activator, invDef, ic, INVDEF(gi.csi->idFloor),
-									NONE, NONE, qfalse);
+									NONE, NONE, false);
 								gi.BroadcastPrintf(PRINT_HUD, _("Item was placed."));
 								self->owner->count = level.actualRound;
-								return qtrue;
+								return true;
 							}
 						}
 					}
@@ -86,33 +86,33 @@ qboolean G_MissionTouch (edict_t *self, edict_t *activator)
 					gi.BroadcastPrintf(PRINT_HUD, _("Target zone is occupied!"));
 				}
 			}
-			return qtrue;
+			return true;
 		} else {
 			/* reset king of the hill counter */
 			self->count = 0;
 		}
 	}
-	return qfalse;
+	return false;
 }
 
 /**
  * @brief Mission trigger destroy function
  */
-qboolean G_MissionDestroy (edict_t *self)
+bool G_MissionDestroy (edict_t *self)
 {
-	return qtrue;
+	return true;
 }
 
 /**
  * @brief Mission trigger use function
  */
-qboolean G_MissionUse (edict_t *self, edict_t *activator)
+bool G_MissionUse (edict_t *self, edict_t *activator)
 {
 	edict_t *target = G_FindTargetEntity(self->target);
 	if (!target) {
 		gi.DPrintf("Target '%s' wasn't found for misc_mission\n", self->target);
 		G_FreeEdict(self);
-		return qfalse;
+		return false;
 	}
 
 	if (target->destroy) {
@@ -125,7 +125,7 @@ qboolean G_MissionUse (edict_t *self, edict_t *activator)
 	} else if (target->use)
 		target->use(target, activator);
 
-	return qtrue;
+	return true;
 }
 
 /**
@@ -206,7 +206,7 @@ void G_MissionThink (edict_t *self)
 					Com_Printf("Could not remove item '%s' from floor edict %i\n",
 							chain->item, item->number);
 				} else {
-					G_AppearPerishEvent(G_VisToPM(item->visflags), qfalse, item, NULL);
+					G_AppearPerishEvent(G_VisToPM(item->visflags), false, item, NULL);
 				}
 			}
 		}
@@ -214,7 +214,7 @@ void G_MissionThink (edict_t *self)
 			/** @todo not yet working - particle stays active */
 			edict_t *particle = G_GetEdictFromPos(chain->pos, ET_PARTICLE);
 			if (particle != NULL) {
-				G_AppearPerishEvent(PM_ALL, qfalse, particle, NULL);
+				G_AppearPerishEvent(PM_ALL, false, particle, NULL);
 				G_FreeEdict(particle);
 			}
 		}

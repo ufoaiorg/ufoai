@@ -128,7 +128,7 @@ static void HOS_Init_f (void)
 		return;
 
 	if (!B_GetBuildingStatus(base, B_HOSPITAL)) {
-		cgi->UI_PopWindow(qfalse);
+		cgi->UI_PopWindow(false);
 		return;
 	}
 

@@ -49,8 +49,8 @@ typedef struct animState_s {
  * @brief entity transform matrix
  */
 typedef struct {
-	qboolean done;			/**< already calculated */
-	qboolean processing;	/**< currently doing the calculation */
+	bool done;			/**< already calculated */
+	bool processing;	/**< currently doing the calculation */
 	float matrix[16];		/**< the matrix that holds the result */
 } transform_t;
 
@@ -74,7 +74,7 @@ typedef struct entity_s {
 	int flags;
 	float distanceFromViewOrigin;
 
-	qboolean isOriginBrushModel;	/**< true for bmodels that have an origin set */
+	bool isOriginBrushModel;	/**< true for bmodels that have an origin set */
 
 	animState_t as;
 
@@ -84,7 +84,7 @@ typedef struct entity_s {
 
 	const light_t *lights[MAX_ENTITY_LIGHTS];		/**< static and dynamic lights sorted by distance */
 	int numLights;
-	qboolean inShadow; /**< true if entity is shadowed from the sun */
+	bool inShadow; /**< true if entity is shadowed from the sun */
 
 	const image_t *texture;
 

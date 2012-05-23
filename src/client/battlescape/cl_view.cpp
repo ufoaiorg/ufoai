@@ -111,7 +111,7 @@ void CL_ViewLoadMedia (void)
 
 	loadingPercent = 100.0f;
 
-	refdef.ready = qtrue;
+	refdef.ready = true;
 
 	/* waiting for EV_START */
 	Com_sprintf(loadingMessages, sizeof(loadingMessages), _("Awaiting game start"));
@@ -151,7 +151,7 @@ static float CL_PrecacheCharacterModels (float alreadyLoadedPercent)
 					Com_Printf("Com_PrecacheCharacterModels: Could not register model %s\n", model);
 
 				alreadyLoadedPercent += percent / (td->numModels[j] * csi.numTeamDefs * NAME_LAST);
-				SCR_DrawLoadingScreen(qtrue, alreadyLoadedPercent);
+				SCR_DrawLoadingScreen(true, alreadyLoadedPercent);
 			}
 		}
 	/* some genders may not have models - ensure that we do the wanted percent step */
@@ -177,7 +177,7 @@ void CL_ViewPrecacheModels (void)
 		const objDef_t *od = INVSH_GetItemByIDX(i);
 
 		alreadyLoadedPercent += percent / csi.numODs;
-		SCR_DrawLoadingScreen(qtrue, alreadyLoadedPercent);
+		SCR_DrawLoadingScreen(true, alreadyLoadedPercent);
 
 		if (od->type[0] == '\0' || od->isDummy)
 			continue;
@@ -193,7 +193,7 @@ void CL_ViewPrecacheModels (void)
 	 * otherwise they would be freed with every map change */
 	R_SwitchModelMemPoolTag();
 
-	SCR_DrawLoadingScreen(qfalse, 100.f);
+	SCR_DrawLoadingScreen(false, 100.f);
 }
 
 /**

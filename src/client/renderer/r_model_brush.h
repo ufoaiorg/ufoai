@@ -124,7 +124,7 @@ typedef struct mBspSurface_s {
 	int lightframe;				/**< dynamic lighting frame */
 	int lights;					/**< bitmask of dynamic light sources */
 
-	qboolean isOriginBrushModel;	/**< func_door, func_rotating - if this is true the vertices for this surface
+	bool isOriginBrushModel;	/**< func_door, func_rotating - if this is true the vertices for this surface
 									 * won't get shifted in case of an rma - these surfaces are translated by
 									 * their entities origin vector (which was given by the CONTENTS_ORIGIN flag
 									 * in ufo2map and removed from the bsp later) */

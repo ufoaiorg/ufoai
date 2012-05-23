@@ -203,7 +203,7 @@ static void RS_UpdateResearchStatus (int row)
  * @note See menu_research.ufo for the layout/called functions.
  * @todo Display free space in all labs in the current base for each item.
  */
-static void RS_InitGUI (base_t* base, qboolean update)
+static void RS_InitGUI (base_t* base, bool update)
 {
 	int i = 0;
 	int available[MAX_BASES];
@@ -318,7 +318,7 @@ static void RS_InitGUI (base_t* base, qboolean update)
 			Cvar_Set(va("mn_rsstatus%i", i), "");
 			break;
 		default:
-			assert(qfalse);
+			assert(false);
 		}
 	}
 
@@ -389,7 +389,7 @@ static void CL_ResearchSelect_f (void)
 
 	/** @todo improve that, don't need to update everything */
 	/* need to set previous selected tech to proper color */
-	RS_InitGUI(base, qtrue);
+	RS_InitGUI(base, true);
 }
 
 /**
@@ -428,7 +428,7 @@ static void RS_ChangeScientist_f (void)
 	}
 
 	/* Update display-list and display-info. */
-	RS_InitGUI(base, qtrue);
+	RS_InitGUI(base, true);
 }
 
 /**
@@ -479,7 +479,7 @@ static void RS_AssignScientist_f (void)
 	RS_AssignScientist(researchList2[num].tech, base, NULL);
 
 	/* Update display-list and display-info. */
-	RS_InitGUI(base, qtrue);
+	RS_InitGUI(base, true);
 }
 
 /**
@@ -507,7 +507,7 @@ static void RS_RemoveScientist_f (void)
 	RS_RemoveScientist(researchList2[num].tech, NULL);
 
 	/* Update display-list and display-info. */
-	RS_InitGUI(base, qtrue);
+	RS_InitGUI(base, true);
 }
 
 /**
@@ -520,7 +520,7 @@ static void RS_UpdateData_f (void)
 	if (!base)
 		return;
 
-	RS_InitGUI(base, qtrue);
+	RS_InitGUI(base, true);
 }
 
 /**
@@ -555,7 +555,7 @@ static void RS_ResearchStart_f (void)
 		/* If all requirements are met (includes a check for "enough-collected") mark this tech as researchable.*/
 		if (RS_RequirementsMet(&tech->requireAND, &tech->requireOR, base))
 			RS_MarkOneResearchable(tech);
-		RS_MarkResearchable(qfalse, base);	/* Re-check all other techs in case they depend on the marked one. */
+		RS_MarkResearchable(false, base);	/* Re-check all other techs in case they depend on the marked one. */
 	}
 
 	/* statusResearchable might have changed - check it again */
@@ -593,7 +593,7 @@ static void RS_ResearchStart_f (void)
 	} else
 		CP_Popup(_("Notice"), _("The research on this item is not yet possible.\nYou need to research the technologies it's based on first."));
 
-	RS_InitGUI(base, qtrue);
+	RS_InitGUI(base, true);
 }
 
 /**
@@ -638,7 +638,7 @@ static void RS_ResearchStop_f (void)
 	default:
 		break;
 	}
-	RS_InitGUI(base, qtrue);
+	RS_InitGUI(base, true);
 }
 
 /**
@@ -673,11 +673,11 @@ static void RS_InitGUIData (base_t* base)
 {
 	int i, j;
 	int row;
-	qboolean first;
+	bool first;
 
 	assert(base);
 
-	RS_MarkResearchable(qfalse, base);
+	RS_MarkResearchable(false, base);
 
 	/* update tech of the base */
 	row = 0;
@@ -711,7 +711,7 @@ static void RS_InitGUIData (base_t* base)
 	row++;
 
 	/* Items collected but not yet researchable. */
-	first = qtrue;
+	first = true;
 	for (i = 0; i < ccs.numTechnologies; i++) {
 		technology_t *tech = RS_GetTechByIDX(i);
 
@@ -734,7 +734,7 @@ static void RS_InitGUIData (base_t* base)
 			researchList2[row].base = base;
 			researchList2[row].type = RSGUI_UNRESEARCHABLEITEMTITLE;
 			row++;
-			first = qfalse;
+			first = false;
 		}
 
 		/* Assign the current tech in the global list to the correct entry in the displayed list. */
@@ -752,7 +752,7 @@ static void RS_InitGUIData (base_t* base)
 			continue;
 
 		/* skip bases without labs */
-		if (B_GetBuildingInBaseByType(b, B_LAB, qtrue) == NULL)
+		if (B_GetBuildingInBaseByType(b, B_LAB, true) == NULL)
 			continue;
 
 		researchList2[row].type = RSGUI_NOTHING;
@@ -818,10 +818,10 @@ static void CL_ResearchType_f (void)
 	/* Nothing to research here. */
 	/** @todo wrong computation: researchListLength doesn't say if there are research on this base */
 	if (!researchListLength) {
-		cgi->UI_PopWindow(qfalse);
+		cgi->UI_PopWindow(false);
 		CP_Popup(_("Notice"), _("Nothing to research."));
 	} else if (!B_GetBuildingStatus(base, B_LAB)) {
-		cgi->UI_PopWindow(qfalse);
+		cgi->UI_PopWindow(false);
 		CP_Popup(_("Notice"), _("Build a laboratory first."));
 	}
 }
@@ -838,7 +838,7 @@ static void UI_ResearchInit_f (void)
 		return;
 
 	CL_ResearchType_f();
-	RS_InitGUI(base, qfalse);
+	RS_InitGUI(base, false);
 }
 
 void RS_InitCallbacks (void)

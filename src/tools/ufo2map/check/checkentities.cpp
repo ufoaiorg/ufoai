@@ -42,20 +42,20 @@ mapbrush_t **Check_ExtraBrushesForWorldspawn (int *numBrushes);
 /**
  * @brief see if the entity is am actor start point
  * @note starts with "info_" and contains "_start"
- * @return qtrue if this is a start point
+ * @return true if this is a start point
  */
-static qboolean Check_IsInfoStart(const char *classname)
+static bool Check_IsInfoStart(const char *classname)
 {
 	return Q_strstart(classname, "info_") && strstr(classname, "_start");
 }
 
 /**
  * @brief check alignment using abstract size and mandatory origin
- * @return qtrue if OK
+ * @return true if OK
  * @todo check for brush intersection as well as alignment, and move
  * to a good position if bad.
  */
-static qboolean Check_InfoStartAligned (const entityDef_t *ed, const entity_t *e)
+static bool Check_InfoStartAligned (const entityDef_t *ed, const entity_t *e)
 {
 	static int size[6];
 	const entityKeyDef_t *sizeKd = ED_GetKeyDefEntity(ed, "size", 1); /* 1 means find abstract version of key */
@@ -68,9 +68,9 @@ static qboolean Check_InfoStartAligned (const entityDef_t *ed, const entity_t *e
 
 /**
  * @brief check targets exist (targetname), and check targetnames are targetted (target)
- * @return qfalse if there is a problem.
+ * @return false if there is a problem.
  */
-static qboolean Check_TargetExists (const epair_t *kvp)
+static bool Check_TargetExists (const epair_t *kvp)
 {
 	const char *thisKey = kvp->key;
 	const char *value = kvp->value;
@@ -82,28 +82,28 @@ static qboolean Check_TargetExists (const epair_t *kvp)
 		const char *searchVal = ValueForKey(e, otherKey);
 
 		if (searchVal && Q_streq(searchVal, value))
-			return qtrue;
+			return true;
 	}
 
-	return qfalse;
+	return false;
 }
 
 static void Check_EntityWithBrushes (entity_t *e, const char *classname, int entnum)
 {
 	if (!e->numbrushes) {
-		Check_Printf(VERB_CHECK, qtrue, entnum, -1, "%s with no brushes given - will be deleted\n", classname);
-		e->skip = qtrue;
+		Check_Printf(VERB_CHECK, true, entnum, -1, "%s with no brushes given - will be deleted\n", classname);
+		e->skip = true;
 		return;
 	}
 
 	if (e->numbrushes > 1 && Q_streq(classname, "func_breakable")) {
-		Check_Printf(VERB_CHECK, qfalse, entnum, -1, "func_breakable with more than one brush given (might break pathfinding)\n");
+		Check_Printf(VERB_CHECK, false, entnum, -1, "func_breakable with more than one brush given (might break pathfinding)\n");
 	}
 
 	if (e->numbrushes == 1 && Q_streq(classname, "func_group")) {
-		Check_Printf(VERB_CHECK, qtrue, entnum, -1, "%s with one brush only - will be moved to worldspawn\n", classname);
+		Check_Printf(VERB_CHECK, true, entnum, -1, "%s with one brush only - will be moved to worldspawn\n", classname);
 		numToMoveToWorldspawn++;
-		e->skip = qtrue;
+		e->skip = true;
 	}
 }
 
@@ -124,13 +124,13 @@ void CheckEntities (void)
 		const entityKeyDef_t *kd;
 
 		if (!ed) { /* check that a definition exists */
-			Check_Printf(VERB_CHECK, qfalse, i, -1, "Not defined in entities.ufo: %s\n", name);
+			Check_Printf(VERB_CHECK, false, i, -1, "Not defined in entities.ufo: %s\n", name);
 			continue;
 		}
 
 		/* check alignment of info_.+_start */
 		if (Check_IsInfoStart(name) && !Check_InfoStartAligned(ed, e))
-			Check_Printf(VERB_CHECK, qfalse, i, -1, "Misaligned %s\n", name);
+			Check_Printf(VERB_CHECK, false, i, -1, "Misaligned %s\n", name);
 
 		if (Q_strstart(name, "func_")) /* func_* entities should have brushes */
 			Check_EntityWithBrushes(e, name, i);
@@ -140,18 +140,18 @@ void CheckEntities (void)
 			kd = ED_GetKeyDefEntity(ed, kvp->key, 0); /* zero means ignore abstract (radiant only) keys */
 
 			if (!kd) { /* make sure it has a definition */
-				Check_Printf(VERB_CHECK, qfalse, i, -1, "Not defined in entities.ufo: %s in %s\n", kvp->key,name);
+				Check_Printf(VERB_CHECK, false, i, -1, "Not defined in entities.ufo: %s in %s\n", kvp->key,name);
 				continue;
 			}
 
 			if (ED_CheckKey(kd, kvp->value) == ED_ERROR) { /* check values against type and range definitions in entities.ufo */
-				Check_Printf(VERB_CHECK, qfalse, i, -1, "%s\n", ED_GetLastError());
+				Check_Printf(VERB_CHECK, false, i, -1, "%s\n", ED_GetLastError());
 				continue;
 			}
 
 			if (Q_streq("target", kvp->key) || Q_streq("targetname", kvp->key)) {
 				if (!Check_TargetExists(kvp)) {
-					Check_Printf(VERB_CHECK, qfalse, i, -1,
+					Check_Printf(VERB_CHECK, false, i, -1,
 						"%s with %s of %s: no corresponding entity with %s with matching value\n",
 						ed->classname, kvp->key, kvp->value, Q_streq("target", kvp->key) ? "targetname" : "target");
 				}
@@ -164,7 +164,7 @@ void CheckEntities (void)
 				const char *keyNameInEnt = ValueForKey(e, kd->name);
 				if (keyNameInEnt[0] == '\0') {
 					const char *defaultVal = kd->defaultVal;
-					const qboolean hasDefault = defaultVal ? qtrue : qfalse;
+					const bool hasDefault = defaultVal ? true : false;
 					Check_Printf(VERB_CHECK, hasDefault, i, -1, "Mandatory key missing from entity: %s in %s", kd->name, name);
 					if (defaultVal) {
 						Check_Printf(VERB_CHECK, hasDefault, i, -1, ", supplying default: %s", defaultVal);

@@ -143,13 +143,13 @@ void Info_RemoveKey (char *s, const char *key)
 /**
  * @brief Some characters are illegal in info strings because they can mess up the server's parsing
  */
-qboolean Info_Validate (const char *s)
+bool Info_Validate (const char *s)
 {
 	if (strstr(s, "\""))
-		return qfalse;
+		return false;
 	if (strstr(s, ";"))
-		return qfalse;
-	return qtrue;
+		return false;
+	return true;
 }
 
 /**

@@ -64,7 +64,7 @@ void uiTextureNode::draw (uiNode_t *node)
 
 	UI_GetNodeAbsPos(node, nodepos);
 
-	UI_DrawNormImage(qfalse, nodepos[0], nodepos[1], node->box.size[0], node->box.size[1], node->box.size[0], node->box.size[1], 0, 0, image);
+	UI_DrawNormImage(false, nodepos[0], nodepos[1], node->box.size[0], node->box.size[1], node->box.size[0], node->box.size[1], 0, 0, image);
 }
 
 void UI_RegisterTextureNode (uiBehaviour_t* behaviour)

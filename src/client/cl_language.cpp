@@ -153,9 +153,9 @@ void CL_ParseLanguages (const char *name, const char **text)
 /**
  * @brief Test given language by trying to set locale.
  * @param[in] localeID language abbreviation.
- * @return qtrue if setting given language is possible.
+ * @return true if setting given language is possible.
  */
-static qboolean CL_LanguageTest (const char *localeID)
+static bool CL_LanguageTest (const char *localeID)
 {
 #ifndef _WIN32
 	int i;
@@ -182,13 +182,13 @@ static qboolean CL_LanguageTest (const char *localeID)
 	/* No *.mo file -> no language. */
 	if (!FS_FileExists(languagePath)) {
 		Com_DPrintf(DEBUG_CLIENT, "CL_LanguageTest: locale '%s' not found.\n", localeID);
-		return qfalse;
+		return false;
 	}
 
 #ifdef _WIN32
 	if (Sys_Setenv("LANGUAGE=%s", localeID) == 0) {
 		Com_DPrintf(DEBUG_CLIENT, "CL_LanguageTest: locale '%s' found.\n", localeID);
-		return qtrue;
+		return true;
 	}
 #else
 	for (i = 0, language = languageList; i < languageCount; language = language->next, i++) {
@@ -197,20 +197,20 @@ static qboolean CL_LanguageTest (const char *localeID)
 	}
 	if (i == languageCount) {
 		Com_DPrintf(DEBUG_CLIENT, "CL_LanguageTest: Could not find locale with id '%s'\n", localeID);
-		return qfalse;
+		return false;
 	}
 
 	mapping = language->localeMapping;
 	if (!mapping) {
 		Com_DPrintf(DEBUG_CLIENT, "No locale mappings for locale with id '%s'\n", localeID);
-		return qfalse;
+		return false;
 	}
 	/* Cycle through all mappings, but stop at first locale possible to set. */
 	do {
 		/* setlocale() will return NULL if no setting possible. */
 		if (setlocale(LC_MESSAGES, mapping->localeMapping)) {
 			Com_DPrintf(DEBUG_CLIENT, "CL_LanguageTest: language '%s' with locale '%s' found.\n", localeID, mapping->localeMapping);
-			return qtrue;
+			return true;
 		} else
 			Com_DPrintf(DEBUG_CLIENT, "CL_LanguageTest: language '%s' with locale '%s' not found on your system.\n", localeID, mapping->localeMapping);
 		mapping = mapping->next;
@@ -218,7 +218,7 @@ static qboolean CL_LanguageTest (const char *localeID)
 	Com_DPrintf(DEBUG_CLIENT, "CL_LanguageTest: not possible to use language '%s'.\n", localeID);
 #endif
 
-	return qfalse;
+	return false;
 }
 
 void CL_LanguageShutdown (void)
@@ -260,7 +260,7 @@ void CL_LanguageInit (void)
 	Com_DPrintf(DEBUG_CLIENT, "CL_LanguageInit: system language is: '%s'\n", systemLanguage);
 
 	for (i = 0, language = languageList; i < languageCount; language = language->next, i++) {
-		qboolean available;
+		bool available;
 		available = Q_streq(language->localeID, "none") || CL_LanguageTest(language->localeID);
 		uiNode_t *option;
 #if 0
@@ -295,7 +295,7 @@ static void CL_NewLanguage (void)
  * @param[in] localeID the locale id parsed from scriptfiles (e.g. en or de [the short id])
  * @sa CL_LocaleSet
  */
-qboolean CL_LanguageTryToSet (const char *localeID)
+bool CL_LanguageTryToSet (const char *localeID)
 {
 	int i;
 	language_t* language;
@@ -304,7 +304,7 @@ qboolean CL_LanguageTryToSet (const char *localeID)
 	assert(localeID);
 
 	/* in case of an error we really don't want a flooded console */
-	s_language->modified = qfalse;
+	s_language->modified = false;
 
 	for (i = 0, language = languageList; i < languageCount; language = language->next, i++) {
 		if (Q_streq(localeID, language->localeID))
@@ -313,23 +313,23 @@ qboolean CL_LanguageTryToSet (const char *localeID)
 
 	if (i == languageCount) {
 		Com_Printf("Could not find locale with id '%s'\n", localeID);
-		return qfalse;
+		return false;
 	}
 
 	mapping = language->localeMapping;
 	if (!mapping) {
 		Com_Printf("No locale mappings for locale with id '%s'\n", localeID);
-		return qfalse;
+		return false;
 	}
 
 	Cvar_Set("s_language", localeID);
-	s_language->modified = qfalse;
+	s_language->modified = false;
 
 	do {
 		Com_DPrintf(DEBUG_CLIENT, "CL_LanguageTryToSet: %s (%s)\n", mapping->localeMapping, localeID);
 		if (Sys_SetLocale(mapping->localeMapping)) {
 			CL_NewLanguage();
-			return qtrue;
+			return true;
 		}
 		mapping = mapping->next;
 	} while (mapping);
@@ -340,5 +340,5 @@ qboolean CL_LanguageTryToSet (const char *localeID)
 	CL_NewLanguage();
 #endif
 
-	return qfalse;
+	return false;
 }

@@ -121,12 +121,12 @@ typedef struct rlocals_s {
 
 extern rlocals_t r_locals;
 
-qboolean R_CullMeshModel(const entity_t *e);
+bool R_CullMeshModel(const entity_t *e);
 
 void R_DrawModelParticle(modelInfo_t *mi);
 void R_DrawBspNormals(int tile);
-qboolean R_CullBspModel(const entity_t *e);
-qboolean R_CullSphere(const vec3_t centre, const float radius, const unsigned int clipflags);
+bool R_CullBspModel(const entity_t *e);
+bool R_CullSphere(const vec3_t centre, const float radius, const unsigned int clipflags);
 void R_GetLevelSurfaceLists(void);
 void R_GetEntityLists(void);
 void R_DrawInitLocal(void);
@@ -134,7 +134,7 @@ void R_DrawParticles(void);
 void R_SetupFrustum(void);
 
 void R_ClearBspRRefs(void);
-void R_AddBspRRef(const mBspModel_t *model, const vec3_t origin, const vec3_t angles, const qboolean forceVisibility);
+void R_AddBspRRef(const mBspModel_t *model, const vec3_t origin, const vec3_t angles, const bool forceVisibility);
 void R_RenderOpaqueBspRRefs(void);
 void R_RenderOpaqueWarpBspRRefs(void);
 void R_RenderAlphaTestBspRRefs(void);
@@ -180,12 +180,12 @@ typedef struct {
 
 	int videoMemory;
 
-	qboolean hwgamma;
+	bool hwgamma;
 
 	int32_t maxAnisotropic;
-	qboolean anisotropic;
-	qboolean frameBufferObject;
-	qboolean drawBuffers;
+	bool anisotropic;
+	bool frameBufferObject;
+	bool drawBuffers;
 
 	int gl_solid_format;
 	int gl_alpha_format;
@@ -196,9 +196,9 @@ typedef struct {
 	int gl_filter_min;	/**< filter to use if the image is smaller than the original texture or stretched on the screen */
 	int gl_filter_max;	/**< filter to use if the image is larger than the original texture or stretched on the screen */
 
-	qboolean lod_bias;
+	bool lod_bias;
 
-	qboolean nonPowerOfTwo;	/**< support for non power of two textures */
+	bool nonPowerOfTwo;	/**< support for non power of two textures */
 
 	hardwareType_t hardwareType;
 } rconfig_t;
@@ -211,8 +211,8 @@ IMPLEMENTATION SPECIFIC FUNCTIONS
 ====================================================================
 */
 
-qboolean Rimp_Init(void);
+bool Rimp_Init(void);
 void Rimp_Shutdown(void);
-qboolean R_InitGraphics(const viddefContext_t *context);
+bool R_InitGraphics(const viddefContext_t *context);
 
 #endif /* R_LOCAL_H */

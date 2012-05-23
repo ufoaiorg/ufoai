@@ -34,7 +34,7 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 static technology_t *rsAlienXVI;
 
 /** @brief boolean used to know if each nation XVI level should be updated this day. */
-static qboolean xviNationInfectionNeedsUpdate = qfalse;
+static bool xviNationInfectionNeedsUpdate = false;
 
 /**
  * @brief The factor that is used to determine XVI radius spreading.
@@ -59,7 +59,7 @@ void CP_SpreadXVIAtPos (const vec2_t pos)
 
 	CP_ChangeXVILevel(pos, XVI_FACTOR);
 
-	xviNationInfectionNeedsUpdate = qtrue;
+	xviNationInfectionNeedsUpdate = true;
 }
 
 /**
@@ -77,7 +77,7 @@ void CP_ReduceXVIEverywhere (void)
 
 	CP_DecreaseXVILevelEverywhere();
 
-	xviNationInfectionNeedsUpdate = qtrue;
+	xviNationInfectionNeedsUpdate = true;
 }
 
 /**
@@ -157,7 +157,7 @@ void CP_UpdateNationXVIInfection (void)
 		nation->stats[0].xviInfection = ceil(xviInfection[nation->idx]);
 	}
 
-	xviNationInfectionNeedsUpdate = qfalse;
+	xviNationInfectionNeedsUpdate = false;
 }
 
 /**
@@ -204,7 +204,7 @@ void CP_SpreadXVI (void)
  * able to the map of XVI
  * @see css.XVIShowMap
  */
-qboolean CP_IsXVIResearched (void)
+bool CP_IsXVIResearched (void)
 {
 	return RS_IsResearched_ptr(rsAlienXVI);
 }
@@ -223,7 +223,7 @@ void CP_XVIInit (void)
  * @sa SAV_InitXML
  * @sa XVI_LoadXML
  */
-qboolean XVI_SaveXML (xmlNode_t *p)
+bool XVI_SaveXML (xmlNode_t *p)
 {
 	int y;
 	int width;
@@ -249,7 +249,7 @@ qboolean XVI_SaveXML (xmlNode_t *p)
 			}
 		}
 	}
-	return qtrue;
+	return true;
 }
 
 /**
@@ -258,7 +258,7 @@ qboolean XVI_SaveXML (xmlNode_t *p)
  * @sa SAV_InitXML
  * @sa XVI_SaveXML
  */
-qboolean XVI_LoadXML (xmlNode_t *p)
+bool XVI_LoadXML (xmlNode_t *p)
 {
 	int width, height;
 	xmlNode_t *s;
@@ -266,7 +266,7 @@ qboolean XVI_LoadXML (xmlNode_t *p)
 	/* If there is no XVI, it will not be loaded */
 	if (!n) {
 		CP_InitializeXVIOverlay(NULL);
-		return qtrue;
+		return true;
 	}
 
 	width = XML_GetInt(n, SAVE_XVI_WIDTH, 0);
@@ -280,7 +280,7 @@ qboolean XVI_LoadXML (xmlNode_t *p)
 		if (x >= 0 && x < width && y >= 0 && y <= height)
 			CP_SetXVILevel(x, y, level);
 	}
-	return qtrue;
+	return true;
 }
 
 /**
@@ -296,7 +296,7 @@ void CP_StartXVISpreading_f (void)
 	 * CP_IsXVIResearched(): ccs.XVIShowMap means that PHALANX has a map of
 	 * XVI, whereas CP_IsXVIResearched() means that aliens started
 	 * spreading XVI */
-	ccs.XVIShowMap = qtrue;
+	ccs.XVIShowMap = true;
 
 	/* Spawn a few alien bases depending on difficulty level */
 	if (campaign->difficulty > 0)
@@ -307,7 +307,7 @@ void CP_StartXVISpreading_f (void)
 		numAlienBases = 2;
 
 	for (i = 0; i < numAlienBases; i++)
-		CP_CreateNewMission(INTERESTCATEGORY_BUILDING, qfalse);
+		CP_CreateNewMission(INTERESTCATEGORY_BUILDING, false);
 }
 
 /**

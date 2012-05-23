@@ -123,11 +123,11 @@ static inline void UI_VScrollbarNodeDiff (uiNode_t *node, int value)
 	UI_VScrollbarNodeSet(node, EXTRADATA(node).pos + value);
 }
 
-static inline void UI_VScrollbarNodeAction(uiNode_t *node, int hoveredElement, qboolean allowCapture);
+static inline void UI_VScrollbarNodeAction(uiNode_t *node, int hoveredElement, bool allowCapture);
 
 static void UI_VScrollbarNodeRepeat (uiNode_t *node, uiTimer_t *timer)
 {
-	UI_VScrollbarNodeAction(node, capturedElement, qfalse);
+	UI_VScrollbarNodeAction(node, capturedElement, false);
 	switch (timer->calledTime) {
 	case 1:
 		timer->delay = 50;
@@ -135,7 +135,7 @@ static void UI_VScrollbarNodeRepeat (uiNode_t *node, uiTimer_t *timer)
 	}
 }
 
-static inline void UI_VScrollbarNodeAction (uiNode_t *node, int hoveredElement, qboolean allowCapture)
+static inline void UI_VScrollbarNodeAction (uiNode_t *node, int hoveredElement, bool allowCapture)
 {
 	switch (hoveredElement) {
 	case 0:
@@ -214,7 +214,7 @@ static void UI_ActiveVScrollbarNode_f ()
 	}
 
 	actionId = atoi(Cmd_Argv(2));
-	UI_VScrollbarNodeAction(node, actionId, qfalse);
+	UI_VScrollbarNodeAction(node, actionId, false);
 }
 
 void uiVScrollbarNode::onMouseDown (uiNode_t *node, int x, int y, int button)
@@ -229,7 +229,7 @@ void uiVScrollbarNode::onMouseDown (uiNode_t *node, int x, int y, int button)
 
 	UI_VScrollbarNodeGetElementSize(node, description);
 	hoveredElement = UI_VScrollbarNodeGetElement(node, description, x, y);
-	UI_VScrollbarNodeAction(node, hoveredElement, qtrue);
+	UI_VScrollbarNodeAction(node, hoveredElement, true);
 }
 
 void uiVScrollbarNode::onMouseUp (uiNode_t *node, int x, int y, int button)
@@ -319,14 +319,14 @@ void uiVScrollbarNode::draw (uiNode_t *node)
 		texX = TILE_WIDTH * 3;
 
 		/* top */
-		UI_DrawNormImage(qfalse, pos[0], y, ELEMENT_WIDTH, ELEMENT_HEIGHT,
+		UI_DrawNormImage(false, pos[0], y, ELEMENT_WIDTH, ELEMENT_HEIGHT,
 			texX + ELEMENT_WIDTH, texY + ELEMENT_HEIGHT, texX, texY,
 			image);
 		texY += TILE_HEIGHT;
 		y += ELEMENT_HEIGHT;
 
 		/* top to bottom */
-		UI_DrawNormImage(qfalse, pos[0], y, ELEMENT_WIDTH, node->box.size[1] - (ELEMENT_HEIGHT * 2),
+		UI_DrawNormImage(false, pos[0], y, ELEMENT_WIDTH, node->box.size[1] - (ELEMENT_HEIGHT * 2),
 			texX + ELEMENT_WIDTH, texY + ELEMENT_HEIGHT, texX, texY,
 			image);
 		texY += TILE_HEIGHT * 5;
@@ -334,7 +334,7 @@ void uiVScrollbarNode::draw (uiNode_t *node)
 		assert(y == pos[1] + node->box.size[1] - ELEMENT_HEIGHT);
 
 		/* bottom */
-		UI_DrawNormImage(qfalse, pos[0], y, ELEMENT_WIDTH, ELEMENT_HEIGHT,
+		UI_DrawNormImage(false, pos[0], y, ELEMENT_WIDTH, ELEMENT_HEIGHT,
 			texX + ELEMENT_WIDTH, texY + ELEMENT_HEIGHT, texX, texY,
 			image);
 
@@ -349,7 +349,7 @@ void uiVScrollbarNode::draw (uiNode_t *node)
 
 		/* top */
 		texX = (houveredElement == 0)?TILE_WIDTH:0;
-		UI_DrawNormImage(qfalse, pos[0], y, ELEMENT_WIDTH, ELEMENT_HEIGHT,
+		UI_DrawNormImage(false, pos[0], y, ELEMENT_WIDTH, ELEMENT_HEIGHT,
 			texX + ELEMENT_WIDTH, texY + ELEMENT_HEIGHT, texX, texY,
 			image);
 		texY += TILE_HEIGHT;
@@ -358,7 +358,7 @@ void uiVScrollbarNode::draw (uiNode_t *node)
 		/* top to slider */
 		if (description[1]) {
 			texX = (houveredElement == 1)?TILE_WIDTH:0;
-			UI_DrawNormImage(qfalse, pos[0], y, ELEMENT_WIDTH, description[1],
+			UI_DrawNormImage(false, pos[0], y, ELEMENT_WIDTH, description[1],
 				texX + ELEMENT_WIDTH, texY + ELEMENT_HEIGHT, texX, texY,
 				image);
 			y += description[1];
@@ -369,7 +369,7 @@ void uiVScrollbarNode::draw (uiNode_t *node)
 		texX = (houveredElement == 2)?TILE_WIDTH:0;
 
 		/* top slider */
-		UI_DrawNormImage(qfalse, pos[0], y, ELEMENT_WIDTH, ELEMENT_HEIGHT,
+		UI_DrawNormImage(false, pos[0], y, ELEMENT_WIDTH, ELEMENT_HEIGHT,
 			texX + ELEMENT_WIDTH, texY + ELEMENT_HEIGHT, texX, texY,
 			image);
 		texY += TILE_HEIGHT;
@@ -377,7 +377,7 @@ void uiVScrollbarNode::draw (uiNode_t *node)
 
 		/* middle slider */
 		if (description[2]) {
-			UI_DrawNormImage(qfalse, pos[0], y, ELEMENT_WIDTH, description[2]-ELEMENT_HEIGHT-ELEMENT_HEIGHT,
+			UI_DrawNormImage(false, pos[0], y, ELEMENT_WIDTH, description[2]-ELEMENT_HEIGHT-ELEMENT_HEIGHT,
 				texX + ELEMENT_WIDTH, texY + ELEMENT_HEIGHT, texX, texY,
 				image);
 			y += description[2]-ELEMENT_HEIGHT-ELEMENT_HEIGHT;
@@ -385,7 +385,7 @@ void uiVScrollbarNode::draw (uiNode_t *node)
 		texY += TILE_HEIGHT;
 
 		/* bottom slider */
-		UI_DrawNormImage(qfalse, pos[0], y, ELEMENT_WIDTH, ELEMENT_HEIGHT,
+		UI_DrawNormImage(false, pos[0], y, ELEMENT_WIDTH, ELEMENT_HEIGHT,
 			texX + ELEMENT_WIDTH, texY + ELEMENT_HEIGHT, texX, texY,
 			image);
 		texY += TILE_HEIGHT;
@@ -394,7 +394,7 @@ void uiVScrollbarNode::draw (uiNode_t *node)
 		/* slider to bottom */
 		if (description[3]) {
 			texX = (houveredElement == 3)?TILE_WIDTH:0;
-			UI_DrawNormImage(qfalse, pos[0], y, ELEMENT_WIDTH, description[3],
+			UI_DrawNormImage(false, pos[0], y, ELEMENT_WIDTH, description[3],
 				texX + ELEMENT_WIDTH, texY + ELEMENT_HEIGHT, texX, texY,
 				image);
 			y += description[3];
@@ -404,7 +404,7 @@ void uiVScrollbarNode::draw (uiNode_t *node)
 
 		/* bottom */
 		texX = (houveredElement == 4)?TILE_WIDTH:0;
-		UI_DrawNormImage(qfalse, pos[0], y, ELEMENT_WIDTH, ELEMENT_HEIGHT,
+		UI_DrawNormImage(false, pos[0], y, ELEMENT_WIDTH, ELEMENT_HEIGHT,
 			texX + ELEMENT_WIDTH, texY + ELEMENT_HEIGHT, texX, texY,
 			image);
 	}

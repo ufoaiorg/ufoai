@@ -219,13 +219,13 @@ typedef struct aircraft_s {
 
 	technology_t* tech;		/**< link to the aircraft tech */
 
-	qboolean notifySent[MAX_AIR_NOTIFICATIONS];	/* stores if a notification was already sent */
+	bool notifySent[MAX_AIR_NOTIFICATIONS];	/* stores if a notification was already sent */
 
-	qboolean detected;		/**< Is the ufo detected by a radar? (note that a detected landed ufo has @c detected set to qtrue
-							 * and @c visible set to qfalse: we can't see it on geoscape) */
-	qboolean landed;		/**< Is ufo landed for a mission? This is used when a UFO lands (a UFO must have both
+	bool detected;		/**< Is the ufo detected by a radar? (note that a detected landed ufo has @c detected set to true
+							 * and @c visible set to false: we can't see it on geoscape) */
+	bool landed;		/**< Is ufo landed for a mission? This is used when a UFO lands (a UFO must have both
 							 * @c detected and @c visible set to true to be actually seen on geoscape) */
-	qboolean notOnGeoscape;	/**< don't let this aircraft appear ever on geoscape (e.g. ufo_carrier) */
+	bool notOnGeoscape;	/**< don't let this aircraft appear ever on geoscape (e.g. ufo_carrier) */
 	int ufoInterestOnGeoscape;	/**< interest level at which this ufo should be available on geoscape first */
 	int detectionIdx;		/**< detected UFO number (for descriptions "UFO #4")*/
 	date_t lastSpotted;		/**< date the UFO was detected last time */
@@ -245,7 +245,7 @@ void AIR_ListCraftIndexes_f(void);
 #define AIR_Foreach(var) LIST_Foreach(ccs.aircraft, aircraft_t, var)
 
 aircraft_t *AIR_Add(struct base_s *base, const aircraft_t *aircraftTemplate);
-qboolean AIR_Delete(struct base_s *base, const aircraft_t *aircraft);
+bool AIR_Delete(struct base_s *base, const aircraft_t *aircraft);
 
 #define AIR_ForeachFromBase(var, base) \
 	AIR_Foreach(var) \
@@ -255,39 +255,39 @@ qboolean AIR_Delete(struct base_s *base, const aircraft_t *aircraft);
 
 aircraft_t* AIR_GetFirstFromBase(const struct base_s *base);
 
-qboolean AIR_BaseHasAircraft(const struct base_s *base);
+bool AIR_BaseHasAircraft(const struct base_s *base);
 int AIR_BaseCountAircraft(const struct base_s *base);
 int AIR_GetAircraftIDXInBase(const aircraft_t* aircraft);
 aircraft_t *AIR_GetAircraftFromBaseByIDXSafe(const struct base_s *base, int index);
 const char *AIR_AircraftStatusToName(const aircraft_t *aircraft);
-qboolean AIR_IsAircraftInBase(const aircraft_t *aircraft);
-qboolean AIR_IsAircraftOnGeoscape(const aircraft_t *aircraft);
+bool AIR_IsAircraftInBase(const aircraft_t *aircraft);
+bool AIR_IsAircraftOnGeoscape(const aircraft_t *aircraft);
 
 void AIR_DeleteAircraft(aircraft_t *aircraft);
 void AIR_DestroyAircraft(aircraft_t *aircraft);
-qboolean AIR_MoveAircraftIntoNewHomebase(aircraft_t *aircraft, struct base_s *base);
+bool AIR_MoveAircraftIntoNewHomebase(aircraft_t *aircraft, struct base_s *base);
 
 void AIR_ResetAircraftTeam(aircraft_t *aircraft);
-qboolean AIR_AddToAircraftTeam(aircraft_t *aircraft, struct employee_s* employee);
-qboolean AIR_IsInAircraftTeam(const aircraft_t *aircraft, const struct employee_s* employee);
+bool AIR_AddToAircraftTeam(aircraft_t *aircraft, struct employee_s* employee);
+bool AIR_IsInAircraftTeam(const aircraft_t *aircraft, const struct employee_s* employee);
 int AIR_GetTeamSize(const aircraft_t *aircraft);
 
-void AIR_CampaignRun(const struct campaign_s* campaign, int dt, qboolean updateRadarOverlay);
+void AIR_CampaignRun(const struct campaign_s* campaign, int dt, bool updateRadarOverlay);
 const aircraft_t *AIR_GetAircraftSilent(const char *name);
 const aircraft_t *AIR_GetAircraft(const char *name);
 aircraft_t* AIR_AircraftGetFromIDX(int idx);
-qboolean AIR_AircraftMakeMove(int dt, aircraft_t* aircraft);
-void AIR_ParseAircraft(const char *name, const char **text, qboolean assignAircraftItems);
-qboolean AIR_AircraftHasEnoughFuel(const aircraft_t *aircraft, const vec2_t destination);
-qboolean AIR_AircraftHasEnoughFuelOneWay(const aircraft_t *aircraft, const vec2_t destination);
+bool AIR_AircraftMakeMove(int dt, aircraft_t* aircraft);
+void AIR_ParseAircraft(const char *name, const char **text, bool assignAircraftItems);
+bool AIR_AircraftHasEnoughFuel(const aircraft_t *aircraft, const vec2_t destination);
+bool AIR_AircraftHasEnoughFuelOneWay(const aircraft_t *aircraft, const vec2_t destination);
 void AIR_AircraftReturnToBase(aircraft_t *aircraft);
-qboolean AIR_SendAircraftToMission(aircraft_t* aircraft, struct mission_s* mission);
+bool AIR_SendAircraftToMission(aircraft_t* aircraft, struct mission_s* mission);
 void AIR_GetDestinationWhilePursuing(const aircraft_t *shooter, const aircraft_t *target, vec2_t *dest);
-qboolean AIR_SendAircraftPursuingUFO(aircraft_t* aircraft, aircraft_t* ufo);
-void AIR_AircraftsNotifyUFORemoved(const aircraft_t *const ufo, qboolean destroyed);
+bool AIR_SendAircraftPursuingUFO(aircraft_t* aircraft, aircraft_t* ufo);
+void AIR_AircraftsNotifyUFORemoved(const aircraft_t *const ufo, bool destroyed);
 void AIR_AircraftsUFODisappear(const aircraft_t *const ufo);
 void AIR_UpdateHangarCapForAll(struct base_s *base);
-qboolean AIR_ScriptSanityCheck(void);
+bool AIR_ScriptSanityCheck(void);
 int AIR_CalculateHangarStorage(const aircraft_t *aircraft, const struct base_s *base, int used) __attribute__((nonnull (1, 2)));
 int AIR_AircraftMenuStatsValues(const int value, const int stat);
 int AIR_CountTypeInBase(const struct base_s *base, aircraftType_t aircraftType);
@@ -302,19 +302,19 @@ const char *AIR_CheckMoveIntoNewHomebase(const aircraft_t *aircraft, const struc
 void AII_CollectItem(aircraft_t *aircraft, const objDef_t *item, int amount);
 void AII_CollectingItems(aircraft_t *aircraft, int won);
 
-qboolean AIR_SetPilot(aircraft_t *aircraft, struct employee_s* pilot);
+bool AIR_SetPilot(aircraft_t *aircraft, struct employee_s* pilot);
 struct employee_s* AIR_GetPilot(const aircraft_t *aircraft);
 void AIR_AutoAddPilotToAircraft(const struct base_s* base, struct employee_s* pilot);
 void AIR_RemovePilotFromAssignedAircraft(const struct base_s* base, const struct employee_s* pilot);
 void AIR_RemoveEmployees(aircraft_t* aircraft);
-qboolean AIR_AddEmployee(struct employee_s *employee, aircraft_t *aircraft);
-qboolean AIR_RemoveEmployee(struct employee_s *employee, aircraft_t* aircraft);
+bool AIR_AddEmployee(struct employee_s *employee, aircraft_t *aircraft);
+bool AIR_RemoveEmployee(struct employee_s *employee, aircraft_t* aircraft);
 const aircraft_t *AIR_IsEmployeeInAircraft(const struct employee_s *employee, const aircraft_t* aircraft);
 void AIR_MoveEmployeeInventoryIntoStorage(const aircraft_t *aircraft, equipDef_t *equip);
 
 void AIR_AssignInitial(aircraft_t *aircraft);
 
-qboolean AIR_CanIntercept(const aircraft_t *aircraft);
+bool AIR_CanIntercept(const aircraft_t *aircraft);
 
 int AIR_GetOperationRange(const aircraft_t *aircraft);
 int AIR_GetRemainingRange(const aircraft_t *aircraft);

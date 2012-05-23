@@ -130,7 +130,7 @@ static void CP_EndGame_f (void)
 		"come by and talk about the game, or find other players for a multiplayer game.\n\n"
 		"Thank you for playing, and we hope to see you around.\n\n"
 		"   - The UFO:AI development team"));
-	CP_EndCampaign(qtrue);
+	CP_EndCampaign(true);
 }
 
 /** @brief mission trigger functions */
@@ -148,7 +148,7 @@ static const cmdList_t cp_commands[] = {
  * @note These function can be defined via onwin/onlose parameters in missions.ufo
  * @param[in] add If true, add the trigger functions, otherwise delete them
  */
-static void CP_MissionTriggerFunctions (qboolean add)
+static void CP_MissionTriggerFunctions (bool add)
 {
 	const cmdList_t *commands;
 
@@ -167,7 +167,7 @@ static void CP_MissionTriggerFunctions (qboolean add)
  * Can execute console commands (triggers) on win and lose
  * This can be used for story dependent missions
  */
-void CP_ExecuteMissionTrigger (const mission_t *mission, qboolean won)
+void CP_ExecuteMissionTrigger (const mission_t *mission, bool won)
 {
 	Com_DPrintf(DEBUG_CLIENT, "Execute mission triggers\n");
 
@@ -175,7 +175,7 @@ void CP_ExecuteMissionTrigger (const mission_t *mission, qboolean won)
 		return;
 
 	/* we add them only here - and remove them afterwards to prevent cheating */
-	CP_MissionTriggerFunctions(qtrue);
+	CP_MissionTriggerFunctions(true);
 
 	if (won) {
 		if (mission->onwin[0] != '\0') {
@@ -197,5 +197,5 @@ void CP_ExecuteMissionTrigger (const mission_t *mission, qboolean won)
 		}
 	}
 
-	CP_MissionTriggerFunctions(qfalse);
+	CP_MissionTriggerFunctions(false);
 }

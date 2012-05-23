@@ -70,7 +70,7 @@ void S_Frame (void)
 {
 	if (snd_init && snd_init->modified) {
 		S_Restart_f();
-		snd_init->modified = qfalse;
+		snd_init->modified = false;
 	}
 
 	if (!s_env.initialized)
@@ -184,7 +184,7 @@ void S_Init (void)
 	OBJZERO(s_env);
 
 	snd_init = Cvar_Get("snd_init", "1", CVAR_ARCHIVE, "Should the sound renderer get initialized");
-	snd_init->modified = qfalse; /* don't restart right away */
+	snd_init->modified = false; /* don't restart right away */
 	Cmd_AddCommand("snd_restart", S_Restart_f, "Restart the sound renderer");
 
 	if (!snd_init->integer) {
@@ -202,7 +202,7 @@ void S_Init (void)
 	snd_chunkbufsize = Cvar_Get("snd_chunkbufsize", "1024", CVAR_ARCHIVE, "The sound buffer chunk size");
 	/* set volumes to be changed so they are applied again for next sound/music playing */
 	/** @todo implement the volume change for already loaded sample chunks */
-	snd_volume->modified = qtrue;
+	snd_volume->modified = true;
 
 	Cmd_AddCommand("snd_play", S_Play_f, "Plays a sound fx file. Pass path relative to base/sound without file extension");
 	Cmd_AddParamCompleteFunction("snd_play", S_CompleteSounds);
@@ -249,7 +249,7 @@ void S_Init (void)
 		Com_Printf("... loaded ogg vorbis support\n");
 #endif
 
-	s_env.initialized = qtrue;
+	s_env.initialized = true;
 
 	M_Init();
 }
@@ -287,7 +287,7 @@ void S_Shutdown (void)
 	Mix_Quit();
 #endif
 
-	s_env.initialized = qfalse;
+	s_env.initialized = false;
 }
 
 /**
@@ -297,13 +297,13 @@ void S_Shutdown (void)
  * @param attenuation how to reduce volume by distance
  * @param volume well, the volume
  */
-qboolean S_LoadAndPlaySample(const char *s, const vec3_t origin, float attenuation, float volume)
+bool S_LoadAndPlaySample(const char *s, const vec3_t origin, float attenuation, float volume)
 {
 	s_sample_t *sample = S_LoadSample(s);
 	if (!sample)
-		return qfalse;
+		return false;
 	S_PlaySample(origin, sample, attenuation, volume);
-	return qtrue;
+	return true;
 }
 
 /**

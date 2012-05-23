@@ -72,7 +72,7 @@ int CL_ActorDoShootTime (const eventRegister_t *self, struct dbuffer *msg, event
 			eventTiming->nextTime = CL_GetNextTime(self, eventTiming, eventTiming->impactTime);
 		}
 	}
-	eventTiming->parsedDeath = qfalse;
+	eventTiming->parsedDeath = false;
 
 	return eventTime;
 }

@@ -76,8 +76,8 @@ void R_DrawFlareSurfaces (const mBspSurfaces_t *surfs)
 	vec3_t view, verts[4];
 	vec3_t right, up, upright, downright;
 	float dot, dist, scale, alpha;
-	qboolean visible;
-	qboolean oldblend;
+	bool visible;
+	bool oldblend;
 
 	if (!r_flares->integer)
 		return;
@@ -87,13 +87,13 @@ void R_DrawFlareSurfaces (const mBspSurfaces_t *surfs)
 
 	oldblend = r_state.blend_enabled;
 
-	R_EnableColorArray(qtrue);
+	R_EnableColorArray(true);
 
 	R_ResetArrayState();
 
 	/** @todo better GL state handling */
 	glDisable(GL_DEPTH_TEST);
-	R_EnableBlend(qtrue);
+	R_EnableBlend(true);
 	R_BlendFunc(GL_SRC_ALPHA, GL_ONE);
 
 	image = r_flaretextures[0];
@@ -190,7 +190,7 @@ void R_DrawFlareSurfaces (const mBspSurfaces_t *surfs)
 	R_EnableBlend(oldblend);
 	glEnable(GL_DEPTH_TEST);
 
-	R_EnableColorArray(qfalse);
+	R_EnableColorArray(false);
 
 	R_Color(NULL);
 }

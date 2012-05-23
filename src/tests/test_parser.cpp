@@ -36,7 +36,7 @@ static int UFO_InitSuiteParser (void)
 {
 	TEST_Init();
 	/* default state */
-	Com_EnableFunctionScriptToken(qfalse);
+	Com_EnableFunctionScriptToken(false);
 	return 0;
 }
 
@@ -47,7 +47,7 @@ static int UFO_InitSuiteParser (void)
 static int UFO_CleanSuiteParser (void)
 {
 	TEST_Shutdown();
-	Com_EnableFunctionScriptToken(qfalse);
+	Com_EnableFunctionScriptToken(false);
 	return 0;
 }
 
@@ -182,7 +182,7 @@ static void testParserWithFunctionScriptToken (void)
 	const char* cursor = string;
 	const char *token;
 
-	Com_EnableFunctionScriptToken(qtrue);
+	Com_EnableFunctionScriptToken(true);
 
 	token = Com_Parse(&cursor);
 	CU_ASSERT_FALSE(Com_ParsedTokenIsQuoted());
@@ -239,7 +239,7 @@ static void testParserWithFunctionScriptToken (void)
 static void testParserCommonType (void)
 {
 	int ivalue;
-	qboolean bvalue;
+	bool bvalue;
 	float fvalue;
 	align_t align;
 	blend_t blend;
@@ -251,16 +251,16 @@ static void testParserCommonType (void)
 	/* boolean */
 
 	bytes = 0;
-	result = Com_ParseValue (&bvalue, "true", V_BOOL, 0, sizeof(qboolean), &bytes);
+	result = Com_ParseValue (&bvalue, "true", V_BOOL, 0, sizeof(bool), &bytes);
 	CU_ASSERT_EQUAL(result, RESULT_OK);
 	CU_ASSERT_EQUAL(bvalue, 1);
-	CU_ASSERT_EQUAL(bytes, sizeof(qboolean));
+	CU_ASSERT_EQUAL(bytes, sizeof(bool));
 
 	bytes = 0;
-	result = Com_ParseValue (&bvalue, "false", V_BOOL, 0, sizeof(qboolean), &bytes);
+	result = Com_ParseValue (&bvalue, "false", V_BOOL, 0, sizeof(bool), &bytes);
 	CU_ASSERT_EQUAL(result, RESULT_OK);
 	CU_ASSERT_EQUAL(bvalue, 0);
-	CU_ASSERT_EQUAL(bytes, sizeof(qboolean));
+	CU_ASSERT_EQUAL(bytes, sizeof(bool));
 
 	bytes = 0;
 	result = Com_ParseValue (&bvalue, "foo", V_INT, 0, sizeof(int), &bytes);

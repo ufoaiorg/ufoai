@@ -36,9 +36,9 @@ typedef enum {
  * @brief Test if point is "visible" from team.
  * @param[in] team A team to test.
  * @param[in] point A point to check.
- * @return qtrue if point is "visible"
+ * @return true if point is "visible"
  */
-static qboolean G_TeamPointVis (int team, const vec3_t point)
+static bool G_TeamPointVis (int team, const vec3_t point)
 {
 	edict_t *from = NULL;
 	vec3_t eye;
@@ -55,12 +55,12 @@ static qboolean G_TeamPointVis (int team, const vec3_t point)
 
 			/* line of sight */
 			if (!G_TestLine(eye, point))
-				return qtrue;
+				return true;
 		}
 	}
 
 	/* not visible */
-	return qfalse;
+	return false;
 }
 
 /**
@@ -90,7 +90,7 @@ static void G_Morale (int type, const edict_t * victim, const edict_t * attacker
 				if (type == ML_DEATH)
 					mod += mob_death->value;
 				/* seeing how someone gets shot increases the morale change */
-				if (ent == victim || (G_FrustumVis(ent, victim->origin) && G_ActorVis(ent->origin, ent, victim, qfalse)))
+				if (ent == victim || (G_FrustumVis(ent, victim->origin) && G_ActorVis(ent->origin, ent, victim, false)))
 					mod *= mof_watching->value;
 				if (attacker != NULL && ent->team == attacker->team) {
 					/* teamkills are considered to be bad form, but won't cause an increased morale boost for the enemy */
@@ -261,12 +261,12 @@ static void G_UpdateHitScore (edict_t * attacker, const edict_t * target, const 
 		if (attacker->team == target->team && !score->firedHit[KILLED_TEAM]) {
 			/* Increase friendly fire counter. */
 			score->hits[fd->weaponSkill][KILLED_TEAM]++;
-			score->firedHit[KILLED_TEAM] = qtrue;
+			score->firedHit[KILLED_TEAM] = true;
 		}
 
 		if (!score->firedHit[type]) {
 			score->hits[fd->weaponSkill][type]++;
-			score->firedHit[type] = qtrue;
+			score->firedHit[type] = true;
 		}
 	} else {
 		if (attacker->team == target->team) {
@@ -274,14 +274,14 @@ static void G_UpdateHitScore (edict_t * attacker, const edict_t * target, const 
 			score->hitsSplashDamage[fd->weaponSkill][KILLED_TEAM] += splashDamage;
 			if (!score->firedSplashHit[KILLED_TEAM]) {
 				score->hitsSplash[fd->weaponSkill][KILLED_TEAM]++;
-				score->firedSplashHit[KILLED_TEAM] = qtrue;
+				score->firedSplashHit[KILLED_TEAM] = true;
 			}
 		}
 
 		score->hitsSplashDamage[fd->weaponSkill][type] += splashDamage;
 		if (!score->firedSplashHit[type]) {
 			score->hitsSplash[fd->weaponSkill][type]++;
-			score->firedSplashHit[type] = qtrue;
+			score->firedSplashHit[type] = true;
 		}
 	}
 }
@@ -299,11 +299,11 @@ static void G_UpdateHitScore (edict_t * attacker, const edict_t * target, const 
  */
 static void G_Damage (edict_t *target, const fireDef_t *fd, int damage, edict_t *attacker, shot_mock_t *mock)
 {
-	const qboolean stunEl = (fd->obj->dmgtype == gi.csi->damStunElectro);
-	const qboolean stunGas = (fd->obj->dmgtype == gi.csi->damStunGas);
-	const qboolean shock = (fd->obj->dmgtype == gi.csi->damShock);
-	const qboolean smoke = (fd->obj->dmgtype == gi.csi->damSmoke);
-	qboolean isRobot;
+	const bool stunEl = (fd->obj->dmgtype == gi.csi->damStunElectro);
+	const bool stunGas = (fd->obj->dmgtype == gi.csi->damStunGas);
+	const bool shock = (fd->obj->dmgtype == gi.csi->damShock);
+	const bool smoke = (fd->obj->dmgtype == gi.csi->damSmoke);
+	bool isRobot;
 
 	assert(target);
 
@@ -320,10 +320,10 @@ static void G_Damage (edict_t *target, const fireDef_t *fd, int damage, edict_t 
 			target->destroy(target);
 
 			/* maybe the attacker is seeing something new? */
-			G_CheckVisTeamAll(attacker->team, qfalse, attacker);
+			G_CheckVisTeamAll(attacker->team, false, attacker);
 
 			/* check if attacker appears/perishes for any other team */
-			G_CheckVis(attacker, qtrue);
+			G_CheckVis(attacker, true);
 		} else {
 			G_TakeDamage(target, damage);
 		}
@@ -460,18 +460,18 @@ void G_CheckDeathOrKnockout (edict_t *target, edict_t *attacker, const fireDef_t
  * @todo Such function should check notonly fire - it should be generic function to check
  * surface vulnerability for given damagetype.
  */
-static inline qboolean G_FireAffectedSurface (const cBspSurface_t *surface, const fireDef_t *fd)
+static inline bool G_FireAffectedSurface (const cBspSurface_t *surface, const fireDef_t *fd)
 {
 	if (!surface)
-		return qfalse;
+		return false;
 
 	if (!(surface->surfaceFlags & SURF_BURN))
-		return qfalse;
+		return false;
 
 	if (fd->obj->dmgtype == gi.csi->damIncendiary || fd->obj->dmgtype == gi.csi->damFire || fd->obj->dmgtype == gi.csi->damBlast)
-		return qtrue;
+		return true;
 
-	return qfalse;
+	return false;
 }
 
 /**
@@ -489,7 +489,7 @@ static void G_SplashDamage (edict_t *ent, const fireDef_t *fd, vec3_t impact, sh
 	float dist;
 	int damage;
 
-	const qboolean shock = (fd->obj->dmgtype == gi.csi->damShock);
+	const bool shock = (fd->obj->dmgtype == gi.csi->damShock);
 
 	assert(fd->splrad > 0.0);
 
@@ -517,7 +517,7 @@ static void G_SplashDamage (edict_t *ent, const fireDef_t *fd, vec3_t impact, sh
 			if (G_FrustumVis(ent, check->origin)) {
 				if (!mock) {
 					const unsigned int playerMask = G_TeamToPM(ent->team) ^ G_VisToPM(check->visflags);
-					G_AppearPerishEvent(playerMask, qtrue, check, ent);
+					G_AppearPerishEvent(playerMask, true, check, ent);
 					G_VisFlagsAdd(check, G_PMToVis(playerMask));
 				}
 				continue;
@@ -525,7 +525,7 @@ static void G_SplashDamage (edict_t *ent, const fireDef_t *fd, vec3_t impact, sh
 		}
 
 		/* check for walls */
-		if (G_IsLivingActor(check) && !G_ActorVis(impact, ent, check, qfalse))
+		if (G_IsLivingActor(check) && !G_ActorVis(impact, ent, check, false))
 			continue;
 
 		/* do damage */
@@ -535,10 +535,10 @@ static void G_SplashDamage (edict_t *ent, const fireDef_t *fd, vec3_t impact, sh
 			damage = fd->spldmg[0] * (1.0 - dist / fd->splrad);
 
 		if (mock)
-			mock->allow_self = qtrue;
+			mock->allow_self = true;
 		G_Damage(check, fd, damage, ent, mock);
 		if (mock)
-			mock->allow_self = qfalse;
+			mock->allow_self = false;
 	}
 
 	/** @todo splash might also hit other surfaces and the trace doesn't handle that */
@@ -568,7 +568,7 @@ static void G_SpawnItemOnFloor (const pos3_t pos, const item_t *item)
 			edict_t *actor = G_GetLivingActorFromPos(pos);
 
 			/* send the inventory */
-			G_CheckVis(floor, qtrue);
+			G_CheckVis(floor, true);
 
 			if (actor != NULL)
 				G_GetFloorItems(actor);
@@ -578,7 +578,7 @@ static void G_SpawnItemOnFloor (const pos3_t pos, const item_t *item)
 			/* make it invisible to send the inventory in the below vis check */
 			G_EventPerish(floor);
 			G_VisFlagsReset(floor);
-			G_CheckVis(floor, qtrue);
+			G_CheckVis(floor, true);
 		}
 	}
 }
@@ -919,11 +919,11 @@ static void G_ShootSingle (edict_t *ent, const fireDef_t *fd, const vec3_t from,
 
 		if (!mock) {
 			/* send shot */
-			const qboolean firstShot = (i == 0);
+			const bool firstShot = (i == 0);
 			G_EventShoot(ent, mask, fd, firstShot, shootType, flags, &tr, tracefrom, impact);
 
 			/* send shot sound to the others */
-			G_EventShootHidden(mask, fd, qfalse);
+			G_EventShootHidden(mask, fd, false);
 
 			if (i == 0 && G_FireAffectedSurface(tr.surface, fd)) {
 				vec3_t origin;
@@ -1020,10 +1020,10 @@ void G_GetShotOrigin (const edict_t *shooter, const fireDef_t *fd, const vec3_t 
  * @param[in,out] weapon Weapon being used. It is NULL when calling this function.
  * @param[in,out] container Container with weapon being used. It is 0 when calling this function.
  * @param[in,out] fd Firemode being used. It is NULL when calling this function.
- * @return qtrue if function is able to check and set everything correctly.
+ * @return true if function is able to check and set everything correctly.
  * @sa G_ClientShoot
  */
-static qboolean G_PrepareShot (edict_t *ent, shoot_types_t shootType, fireDefIndex_t firemode, item_t **weapon, containerIndex_t *container, const fireDef_t **fd)
+static bool G_PrepareShot (edict_t *ent, shoot_types_t shootType, fireDefIndex_t firemode, item_t **weapon, containerIndex_t *container, const fireDef_t **fd)
 {
 	const fireDef_t *fdArray;
 	item_t *item;
@@ -1033,17 +1033,17 @@ static qboolean G_PrepareShot (edict_t *ent, shoot_types_t shootType, fireDefInd
 
 	if (IS_SHOT_HEADGEAR(shootType)) {
 		if (!HEADGEAR(ent))
-			return qfalse;
+			return false;
 		item = &HEADGEAR(ent)->item;
 		*container = gi.csi->idHeadgear;
 	} else if (IS_SHOT_RIGHT(shootType)) {
 		if (!RIGHT(ent))
-			return qfalse;
+			return false;
 		item = &RIGHT(ent)->item;
 		*container = gi.csi->idRight;
 	} else {
 		if (!LEFT(ent))
-			return qfalse;
+			return false;
 		item = &LEFT(ent)->item;
 		*container = gi.csi->idLeft;
 	}
@@ -1051,14 +1051,14 @@ static qboolean G_PrepareShot (edict_t *ent, shoot_types_t shootType, fireDefInd
 	/* Get firedef from the weapon entry instead */
 	fdArray = FIRESH_FiredefForWeapon(item);
 	if (fdArray == NULL)
-		return qfalse;
+		return false;
 
 	*weapon = item;
 
 	assert(firemode >= 0);
 	*fd = &fdArray[firemode];
 
-	return qtrue;
+	return true;
 }
 
 /**
@@ -1069,15 +1069,15 @@ static qboolean G_PrepareShot (edict_t *ent, shoot_types_t shootType, fireDefInd
  * @param[in] shootType What type of shot this is (left, right reaction-left etc...).
  * @param[in] firemode The firemode index of the ammo for the used weapon.
  * @param[in] mock pseudo shooting - only for calculating mock values - NULL for real shots
- * @param[in] allowReaction Set to qtrue to check whether this has forced any reaction fire, otherwise qfalse.
- * @return qtrue if everything went ok (i.e. the shot(s) where fired ok), otherwise qfalse.
+ * @param[in] allowReaction Set to true to check whether this has forced any reaction fire, otherwise false.
+ * @return true if everything went ok (i.e. the shot(s) where fired ok), otherwise false.
  * @param[in] z_align This value may change the target z height - often @c GROUND_DELTA is used to calculate
  * the alignment. This can be used for splash damage weapons. It's often useful to target the ground close to the
  * victim. That way you don't need a 100 percent chance to hit your target. Even if you don't hit it, the splash
  * damage might reduce the health of your target.
  */
-qboolean G_ClientShoot (const player_t * player, edict_t* ent, const pos3_t at, shoot_types_t shootType,
-		fireDefIndex_t firemode, shot_mock_t *mock, qboolean allowReaction, int z_align)
+bool G_ClientShoot (const player_t * player, edict_t* ent, const pos3_t at, shoot_types_t shootType,
+		fireDefIndex_t firemode, shot_mock_t *mock, bool allowReaction, int z_align)
 {
 	const fireDef_t *fd;
 	item_t *weapon;
@@ -1085,7 +1085,7 @@ qboolean G_ClientShoot (const player_t * player, edict_t* ent, const pos3_t at, 
 	int i, ammo, prevDir, reactionLeftover, shots;
 	containerIndex_t container;
 	int mask;
-	qboolean quiet;
+	bool quiet;
 	vec3_t impact;
 
 	/* just in 'test-whether-it's-possible'-mode or the player is an
@@ -1098,7 +1098,7 @@ qboolean G_ClientShoot (const player_t * player, edict_t* ent, const pos3_t at, 
 	if (!G_PrepareShot(ent, shootType, firemode, &weapon, &container, &fd)) {
 		if (!weapon && !quiet)
 			G_ClientPrintf(player, PRINT_HUD, _("Can't perform action - object not activatable!"));
-		return qfalse;
+		return false;
 	}
 
 	ammo = weapon->a;
@@ -1109,28 +1109,28 @@ qboolean G_ClientShoot (const player_t * player, edict_t* ent, const pos3_t at, 
 	 * if allowReaction is false, it is a shot from reaction fire, so don't check the active team */
 	if (allowReaction) {
 		if (!G_ActionCheckForCurrentTeam(player, ent, fd->time + reactionLeftover))
-			return qfalse;
+			return false;
 	} else {
 		if (!G_ActionCheckForReaction(player, ent, fd->time + reactionLeftover))
-			return qfalse;
+			return false;
 	}
 
 	/* Don't allow to shoot yourself */
 	if (!fd->irgoggles && G_EdictPosIsSameAs(ent, at))
-		return qfalse;
+		return false;
 
 	/* check that we're not firing a twohanded weapon with one hand! */
 	if (weapon->t->fireTwoHanded &&	LEFT(ent)) {
 		if (!quiet)
 			G_ClientPrintf(player, PRINT_HUD, _("Can't perform action - weapon cannot be fired one handed!"));
-		return qfalse;
+		return false;
 	}
 
 	/* check we're not out of ammo */
 	if (!ammo && fd->ammo && !weapon->t->thrown) {
 		if (!quiet)
 			G_ClientPrintf(player, PRINT_HUD, _("Can't perform action - no ammo!"));
-		return qfalse;
+		return false;
 	}
 
 	/* check target is not out of range */
@@ -1138,7 +1138,7 @@ qboolean G_ClientShoot (const player_t * player, edict_t* ent, const pos3_t at, 
 	if (fd->range < VectorDist(ent->origin, target)) {
 		if (!quiet)
 			G_ClientPrintf(player, PRINT_HUD, _("Can't perform action - target out of range!"));
-		return qfalse;
+		return false;
 	}
 
 	/* Count for stats if it's no mock-shot and it's a Phalanx soldier (aliens do not have this info yet). */
@@ -1151,7 +1151,7 @@ qboolean G_ClientShoot (const player_t * player, edict_t* ent, const pos3_t at, 
 			ent->chr.scoreMission->firedSplash[fd->weaponSkill]++;
 			for (i = 0; i < KILLED_NUM_TYPES; i++) {
 				/** Reset status. @see G_UpdateHitScore for the check. */
-				ent->chr.scoreMission->firedSplashHit[i] = qfalse;
+				ent->chr.scoreMission->firedSplashHit[i] = false;
 			}
 		} else {
 			/* Direct hits */
@@ -1159,7 +1159,7 @@ qboolean G_ClientShoot (const player_t * player, edict_t* ent, const pos3_t at, 
 			ent->chr.scoreMission->fired[fd->weaponSkill]++;
 			for (i = 0; i < KILLED_NUM_TYPES; i++) {
 				/** Reset status. @see G_UpdateHitScore for the check. */
-				ent->chr.scoreMission->firedHit[i] = qfalse;
+				ent->chr.scoreMission->firedHit[i] = false;
 			}
 		}
 	}
@@ -1184,7 +1184,7 @@ qboolean G_ClientShoot (const player_t * player, edict_t* ent, const pos3_t at, 
 		if (shots < 1) {
 			if (!quiet)
 				G_ClientPrintf(player, PRINT_HUD, _("Can't perform action - not enough ammo!"));
-			return qfalse;
+			return false;
 		}
 	}
 
@@ -1200,7 +1200,7 @@ qboolean G_ClientShoot (const player_t * player, edict_t* ent, const pos3_t at, 
 		assert(ent->dir < CORE_DIRECTIONS);
 
 		if (!mock) {
-			G_CheckVisTeamAll(ent->team, qfalse, ent);
+			G_CheckVisTeamAll(ent->team, false, ent);
 			G_EventActorTurn(ent);
 		}
 	}
@@ -1216,21 +1216,21 @@ qboolean G_ClientShoot (const player_t * player, edict_t* ent, const pos3_t at, 
 
 	if (!mock) {
 		/* State info so we can check if an item was already removed. */
-		qboolean itemAlreadyRemoved = qfalse;
+		bool itemAlreadyRemoved = false;
 
 		/* check whether this has forced any reaction fire */
 		if (allowReaction) {
 			G_ReactionFirePreShot(ent, fd->time);
 			if (G_IsDead(ent))
 				/* dead men can't shoot */
-				return qfalse;
+				return false;
 		}
 
 		/* start shoot */
 		G_EventStartShoot(ent, mask, shootType, at);
 
 		/* send shot sound to the others */
-		G_EventShootHidden(mask, fd, qtrue);
+		G_EventShootHidden(mask, fd, true);
 
 		/* ammo... */
 		if (fd->ammo) {
@@ -1240,7 +1240,7 @@ qboolean G_ClientShoot (const player_t * player, edict_t* ent, const pos3_t at, 
 			} else { /* delete the knife or the rifle without ammo */
 				const invDef_t *invDef = INVDEF(container);
 				assert(invDef->single);
-				itemAlreadyRemoved = qtrue;	/* for assert only */
+				itemAlreadyRemoved = true;	/* for assert only */
 				game.i.EmptyContainer(&game.i, &ent->chr.i, invDef);
 				G_EventInventoryDelete(ent, G_VisToPM(ent->visflags), invDef, 0, 0);
 			}
@@ -1295,5 +1295,5 @@ qboolean G_ClientShoot (const player_t * player, edict_t* ent, const pos3_t at, 
 		ent->dir = prevDir;
 		assert(ent->dir < CORE_DIRECTIONS);
 	}
-	return qtrue;
+	return true;
 }

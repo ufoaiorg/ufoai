@@ -99,14 +99,14 @@ static int PlaneTypeForNormal (const vec3_t normal)
  * @param dist
  * @return true if the normal and the distance vector are the same (by some epsilon) as in the given plane
  */
-static inline qboolean PlaneEqual (const plane_t *p, const vec3_t normal, const vec_t dist)
+static inline bool PlaneEqual (const plane_t *p, const vec3_t normal, const vec_t dist)
 {
 	if (fabs(p->normal[0] - normal[0]) < NORMAL_EPSILON
 	 && fabs(p->normal[1] - normal[1]) < NORMAL_EPSILON
 	 && fabs(p->normal[2] - normal[2]) < NORMAL_EPSILON
 	 && fabs(p->dist - dist) < MAP_DIST_EPSILON)
-		return qtrue;
-	return qfalse;
+		return true;
+	return false;
 }
 
 static inline void AddPlaneToHash (plane_t *p)
@@ -160,7 +160,7 @@ static uint16_t CreateNewFloatPlane (vec3_t normal, vec_t dist)
  * @param[in,out] normal the normal vector to snap
  * @note Can be used to save net bandwidth
  */
-static inline qboolean SnapVector (vec3_t normal)
+static inline bool SnapVector (vec3_t normal)
 {
 	int i;
 
@@ -168,15 +168,15 @@ static inline qboolean SnapVector (vec3_t normal)
 		if (fabs(normal[i] - 1) < NORMAL_EPSILON) {
 			VectorClear(normal);
 			normal[i] = 1;
-			return qtrue;
+			return true;
 		}
 		if (fabs(normal[i] - -1) < NORMAL_EPSILON) {
 			VectorClear(normal);
 			normal[i] = -1;
-			return qtrue;
+			return true;
 		}
 	}
-	return qfalse;
+	return false;
 }
 
 /**
@@ -320,7 +320,7 @@ static void AddBrushBevels (mapbrush_t *b)
 				s->planenum = FindOrCreateFloatPlane(normal, dist);
 				s->texinfo = b->original_sides[0].texinfo;
 				s->contentFlags = b->original_sides[0].contentFlags;
-				s->bevel = qtrue;
+				s->bevel = true;
 				c_boxbevels++;
 			}
 
@@ -423,7 +423,7 @@ static void AddBrushBevels (mapbrush_t *b)
 					s2->planenum = FindOrCreateFloatPlane(normal, dist);
 					s2->texinfo = b->original_sides[0].texinfo;
 					s2->contentFlags = b->original_sides[0].contentFlags;
-					s2->bevel = qtrue;
+					s2->bevel = true;
 					c_edgebevels++;
 					b->numsides++;
 				}
@@ -435,7 +435,7 @@ static void AddBrushBevels (mapbrush_t *b)
 /**
  * @brief makes basewindings for sides and mins / maxs for the brush
  */
-static qboolean MakeBrushWindings (mapbrush_t *brush)
+static bool MakeBrushWindings (mapbrush_t *brush)
 {
 	int i, j;
 	side_t *side;
@@ -460,7 +460,7 @@ static qboolean MakeBrushWindings (mapbrush_t *brush)
 		side = &brush->original_sides[i];
 		side->winding = w;
 		if (w) {
-			side->visible = qtrue;
+			side->visible = true;
 			for (j = 0; j < w->numpoints; j++)
 				AddPointToBounds(w->p[j], brush->mins, brush->maxs);
 		}
@@ -477,7 +477,7 @@ static qboolean MakeBrushWindings (mapbrush_t *brush)
 		}
 	}
 
-	return qtrue;
+	return true;
 }
 
 /**
@@ -502,7 +502,7 @@ static int materialsCnt = 0;
 static void GenerateMaterialFile (const char *filename, int mipTexIndex, side_t *s)
 {
 	qFILE f;
-	qboolean terrainByTexture = qfalse;
+	bool terrainByTexture = false;
 	char fileBase[MAX_OSPATH], materialPath[MAX_OSPATH];
 
 	if (!config.generateMaterialFile)
@@ -520,19 +520,19 @@ static void GenerateMaterialFile (const char *filename, int mipTexIndex, side_t 
 	FS_OpenFile(materialPath, &f, FILE_APPEND);
 	if (!f.f) {
 		Com_Printf("Could not open material file '%s' for writing\n", materialPath);
-		config.generateMaterialFile = qfalse;
+		config.generateMaterialFile = false;
 		return;
 	}
 
 	if (strstr(textureref[mipTexIndex].name, "dirt")
 	 || strstr(textureref[mipTexIndex].name, "rock")
 	 || strstr(textureref[mipTexIndex].name, "grass")) {
-		terrainByTexture = qtrue;
+		terrainByTexture = true;
 	}
 
 	if ((s->contentFlags & CONTENTS_TERRAIN) || terrainByTexture) {
 		FS_Printf(&f, "{\n\tmaterial %s\n\t{\n\t\ttexture <fillme>\n\t\tterrain 0 64\n\t\tlightmap\n\t}\n}\n", textureref[mipTexIndex].name);
-		textureref[mipTexIndex].materialMarked = qtrue;
+		textureref[mipTexIndex].materialMarked = true;
 		materialsCnt++;
 	}
 
@@ -541,19 +541,19 @@ static void GenerateMaterialFile (const char *filename, int mipTexIndex, side_t 
 	 || strstr(textureref[mipTexIndex].name, "glass")
 	 || strstr(textureref[mipTexIndex].name, "window")) {
 		FS_Printf(&f, "{\n\tmaterial %s\n\tspecular 2.0\n\t{\n\t\tenvmap 0\n\t}\n}\n", textureref[mipTexIndex].name);
-		textureref[mipTexIndex].materialMarked = qtrue;
+		textureref[mipTexIndex].materialMarked = true;
 		materialsCnt++;
 	}
 
 	if (strstr(textureref[mipTexIndex].name, "wood")) {
 		FS_Printf(&f, "{\n\tmaterial %s\n\tspecular 0.2\n}\n", textureref[mipTexIndex].name);
-		textureref[mipTexIndex].materialMarked = qtrue;
+		textureref[mipTexIndex].materialMarked = true;
 		materialsCnt++;
 	}
 
 	if (strstr(textureref[mipTexIndex].name, "wall")) {
 		FS_Printf(&f, "{\n\tmaterial %s\n\tspecular 0.6\n\tbump 2.0\n}\n", textureref[mipTexIndex].name);
-		textureref[mipTexIndex].materialMarked = qtrue;
+		textureref[mipTexIndex].materialMarked = true;
 		materialsCnt++;
 	}
 
@@ -589,7 +589,7 @@ static void GenerateFootstepList (const char *filename, int mipTexIndex)
 	FS_OpenFile(va("%s.footsteps", fileBase), &f, FILE_APPEND);
 	if (!f.f) {
 		Com_Printf("Could not open footstep file '%s.footsteps' for writing\n", fileBase);
-		config.generateFootstepFile = qfalse;
+		config.generateFootstepFile = false;
 		return;
 	}
 #ifdef _WIN32
@@ -599,7 +599,7 @@ static void GenerateFootstepList (const char *filename, int mipTexIndex)
 #endif
 	FS_CloseFile(&f);
 	footstepsCnt++;
-	textureref[mipTexIndex].footstepMarked = qtrue;
+	textureref[mipTexIndex].footstepMarked = true;
 }
 
 /**
@@ -628,7 +628,7 @@ static void ParseBrush (entity_t *mapent, const char *filename)
 	b->brushnum = nummapbrushes - mapent->firstbrush;
 
 	do {
-		if (!GetToken(qtrue))
+		if (!GetToken(true))
 			break;
 		if (*parsedToken == '}')
 			break;
@@ -640,22 +640,22 @@ static void ParseBrush (entity_t *mapent, const char *filename)
 		/* read the three point plane definition */
 		for (i = 0; i < 3; i++) {
 			if (i != 0)
-				GetToken(qtrue);
+				GetToken(true);
 			if (*parsedToken != '(')
 				Sys_Error("parsing brush at line %i", GetScriptLine());
 
 			for (j = 0; j < 3; j++) {
-				GetToken(qfalse);
+				GetToken(false);
 				planepts[i][j] = atof(parsedToken);
 			}
 
-			GetToken(qfalse);
+			GetToken(false);
 			if (*parsedToken != ')')
 				Sys_Error("parsing brush at line %i", GetScriptLine());
 		}
 
 		/* read the texturedef */
-		GetToken(qfalse);
+		GetToken(false);
 		if (strlen(parsedToken) >= MAX_TEXPATH) {
 			if (config.performMapCheck || config.fixMap)
 				Com_Printf("  ");/* hack to make this look like output from Check_Printf() */
@@ -665,15 +665,15 @@ static void ParseBrush (entity_t *mapent, const char *filename)
 		}
 		Q_strncpyz(td.name, parsedToken, sizeof(td.name));
 
-		GetToken(qfalse);
+		GetToken(false);
 		td.shift[0] = atof(parsedToken);
-		GetToken(qfalse);
+		GetToken(false);
 		td.shift[1] = atof(parsedToken);
-		GetToken(qfalse);
+		GetToken(false);
 		td.rotate = atof(parsedToken);
-		GetToken(qfalse);
+		GetToken(false);
 		td.scale[0] = atof(parsedToken);
-		GetToken(qfalse);
+		GetToken(false);
 		td.scale[1] = atof(parsedToken);
 
 		/* find default flags and values */
@@ -681,11 +681,11 @@ static void ParseBrush (entity_t *mapent, const char *filename)
 		side->surfaceFlags = td.surfaceFlags = side->contentFlags = td.value = 0;
 
 		if (TokenAvailable()) {
-			GetToken(qfalse);
+			GetToken(false);
 			side->contentFlags = atoi(parsedToken);
-			GetToken(qfalse);
+			GetToken(false);
 			side->surfaceFlags = td.surfaceFlags = atoi(parsedToken);
-			GetToken(qfalse);
+			GetToken(false);
 			td.value = atoi(parsedToken);
 		}
 
@@ -913,9 +913,9 @@ static void AdjustBrushesForOrigin (const entity_t *ent)
  * @param[in] entName
  * @return true if the name of the entity implies, that this is an inline model
  */
-static inline qboolean IsInlineModelEntity (const char *entName)
+static inline bool IsInlineModelEntity (const char *entName)
 {
-	const qboolean inlineModelEntity = (Q_streq("func_breakable", entName)
+	const bool inlineModelEntity = (Q_streq("func_breakable", entName)
 			|| Q_streq("func_door", entName)
 			|| Q_streq("func_door_sliding", entName)
 			|| Q_streq("func_rotating", entName)
@@ -947,15 +947,15 @@ entity_t *FindTargetEntity (const char *target)
  * @sa ParseBrush
  * @param[in] filename The map filename
  */
-static qboolean ParseMapEntity (const char *filename)
+static bool ParseMapEntity (const char *filename)
 {
 	entity_t *mapent;
 	const char *entName;
 	static int worldspawnCount = 0;
 	int notCheckOrFix = !(config.performMapCheck || config.fixMap);
 
-	if (!GetToken(qtrue))
-		return qfalse;
+	if (!GetToken(true))
+		return false;
 
 	if (*parsedToken != '{')
 		Sys_Error("ParseMapEntity: { not found");
@@ -969,7 +969,7 @@ static qboolean ParseMapEntity (const char *filename)
 	mapent->numbrushes = 0;
 
 	do {
-		if (!GetToken(qtrue))
+		if (!GetToken(true))
 			Sys_Error("ParseMapEntity: EOF without closing brace");
 		if (*parsedToken == '}')
 			break;
@@ -980,7 +980,7 @@ static qboolean ParseMapEntity (const char *filename)
 			e->next = mapent->epairs;
 			mapent->epairs = e;
 		}
-	} while (qtrue);
+	} while (true);
 
 	GetVectorForKey(mapent, "origin", mapent->origin);
 
@@ -1007,7 +1007,7 @@ static qboolean ParseMapEntity (const char *filename)
 		if (worldspawnCount > 1)
 			Com_Printf("Warning: more than one %s in one map\n", entName);
 	}
-	return qtrue;
+	return true;
 }
 
 /**

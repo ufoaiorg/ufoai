@@ -67,7 +67,7 @@ void CP_InterceptMissionIsFailure (mission_t *mission)
  * @param[in] destroyed true if the UFO actually destroyed the installation, false else
  * @note Intercept mission -- Stage 3
  */
-void CP_InterceptMissionLeave (mission_t *mission, qboolean destroyed)
+void CP_InterceptMissionLeave (mission_t *mission, bool destroyed)
 {
 	installation_t *installation;
 
@@ -90,7 +90,7 @@ void CP_InterceptMissionLeave (mission_t *mission, qboolean destroyed)
 	UFO_SetRandomDest(mission->ufo);
 	CP_MissionRemoveFromGeoscape(mission);
 	/* Display UFO on geoscape if it is detected */
-	mission->ufo->landed = qfalse;
+	mission->ufo->landed = false;
 }
 
 /**
@@ -182,7 +182,7 @@ void CP_InterceptGoToInstallation (mission_t *mission)
 	mission->data.installation = installation;
 
 	Vector2Copy(installation->pos, mission->pos);
-	mission->posAssigned = qtrue;
+	mission->posAssigned = true;
 
 	Com_sprintf(mission->location, sizeof(mission->location), "%s", installation->name);
 
@@ -257,7 +257,7 @@ void CP_InterceptNextStage (mission_t *mission)
 			const date_t AdditionalDelay = {0, 3600};	/* check every hour if there is still ammos */
 			mission->finalDate = Date_Add(ccs.date, AdditionalDelay);
 		} else
-			CP_InterceptMissionLeave(mission, qtrue);
+			CP_InterceptMissionLeave(mission, true);
 		break;
 	case STAGE_RETURN_TO_ORBIT:
 		/* mission is over, remove mission */

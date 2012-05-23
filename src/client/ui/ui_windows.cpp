@@ -365,12 +365,12 @@ static void UI_CloseAllWindow (void)
  * @todo Update the code: pushActive should be every time true
  * @todo Illustration about when/how we should use UI_InitStack http://ufoai.org/wiki/index.php/Image:UI_InitStack.jpg
  */
-void UI_InitStack (const char* activeWindow, const char* mainWindow, qboolean popAll, qboolean pushActive)
+void UI_InitStack (const char* activeWindow, const char* mainWindow, bool popAll, bool pushActive)
 {
 	UI_FinishInit();
 
 	if (popAll)
-		UI_PopWindow(qtrue);
+		UI_PopWindow(true);
 	if (activeWindow) {
 		Cvar_Set("ui_sys_active", activeWindow);
 		/* prevent calls before UI script initialization */
@@ -387,7 +387,7 @@ void UI_InitStack (const char* activeWindow, const char* mainWindow, qboolean po
 /**
  * @brief Check if a named window is on the stack if active windows
  */
-qboolean UI_IsWindowOnStack (const char* name)
+bool UI_IsWindowOnStack (const char* name)
 {
 	return UI_GetWindowPositionFromStackByName(name) != -1;
 }
@@ -446,7 +446,7 @@ void UI_CloseWindow (const char* name)
  * @param[in] all If true pop all windows from stack
  * @sa UI_PopWindow_f
  */
-void UI_PopWindow (qboolean all)
+void UI_PopWindow (bool all)
 {
 	uiNode_t *oldfirst = ui_global.windowStack[0];
 
@@ -508,7 +508,7 @@ void UI_PopWindowWithEscKey (void)
 	if (WINDOWEXTRADATACONST(window).preventTypingEscape)
 		return;
 
-	UI_PopWindow(qfalse);
+	UI_PopWindow(false);
 }
 
 /**
@@ -522,7 +522,7 @@ static void UI_PopWindow_f (void)
 		return;
 	}
 
-	UI_PopWindow(qfalse);
+	UI_PopWindow(false);
 }
 
 /**
@@ -552,28 +552,28 @@ const char* UI_GetActiveWindowName (void)
  * @brief Check if a point is over a window from the stack
  * @sa IN_Parse
  */
-qboolean UI_IsMouseOnWindow (void)
+bool UI_IsMouseOnWindow (void)
 {
 	const uiNode_t *hovered;
 
 	if (UI_GetMouseCapture() != NULL)
-		return qtrue;
+		return true;
 
 	if (ui_global.windowStackPos != 0) {
 		if (WINDOWEXTRADATA(ui_global.windowStack[ui_global.windowStackPos - 1]).dropdown)
-			return qtrue;
+			return true;
 	}
 
 	hovered = UI_GetHoveredNode();
 	if (hovered) {
 		/* else if it is a render node */
 		if (UI_Node_IsBattleScape(hovered)) {
-			return qfalse;
+			return false;
 		}
-		return qtrue;
+		return true;
 	}
 
-	return qtrue;
+	return true;
 }
 
 /**
@@ -685,7 +685,7 @@ static void UI_InitStack_f (void) {
 		optionWindow = Cmd_Argv(2);
 	}
 
-	UI_InitStack(mainWindow, optionWindow, qtrue, qtrue);
+	UI_InitStack(mainWindow, optionWindow, true, true);
 }
 
 /**

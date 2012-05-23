@@ -82,19 +82,19 @@ static void R_UploadLightmapBlock (void)
 	memset(r_lightmaps.sample_buffer, 0, r_lightmaps.size * r_lightmaps.size * sizeof(unsigned));
 	memset(r_lightmaps.direction_buffer, 0, r_lightmaps.size * r_lightmaps.size * sizeof(unsigned));
 
-	r_lightmaps.incomplete_atlas = qfalse;
+	r_lightmaps.incomplete_atlas = false;
 }
 
 /**
  * @brief returns a texture number and the position inside it
  */
-static qboolean R_AllocLightmapBlock (int w, int h, int *x, int *y)
+static bool R_AllocLightmapBlock (int w, int h, int *x, int *y)
 {
 	int i, j;
 	int best;
 
 	if (!r_lightmaps.incomplete_atlas) {
-		r_lightmaps.incomplete_atlas = qtrue;
+		r_lightmaps.incomplete_atlas = true;
 		glGenTextures(1, &r_lightmaps.lightmap_texnums[++r_lightmaps.lightmap_count]);
 		glGenTextures(1, &r_lightmaps.deluxemap_texnums[++r_lightmaps.deluxemap_count]);
 	}
@@ -118,12 +118,12 @@ static qboolean R_AllocLightmapBlock (int w, int h, int *x, int *y)
 	}
 
 	if (best + h > r_lightmaps.size)
-		return qfalse;
+		return false;
 
 	for (i = 0; i < w; i++)
 		r_lightmaps.allocated[*x + i] = best + h;
 
-	return qtrue;
+	return true;
 }
 
 /**
@@ -330,12 +330,12 @@ static void R_DisposeLightmaps (void)
  */
 void R_BeginBuildingLightmaps (void)
 {
-	static qboolean gotAllocatedLightmaps = qfalse;
+	static bool gotAllocatedLightmaps = false;
 
 	if (gotAllocatedLightmaps)
 		R_DisposeLightmaps();
 
-	gotAllocatedLightmaps = qtrue;
+	gotAllocatedLightmaps = true;
 
 	/* users can tune lightmap size for their card */
 	r_lightmaps.size = r_maxlightmap->integer;
@@ -346,7 +346,7 @@ void R_BeginBuildingLightmaps (void)
 
 	r_lightmaps.lightmap_count = 0;
 	r_lightmaps.deluxemap_count = 0;
-	r_lightmaps.incomplete_atlas = qfalse;
+	r_lightmaps.incomplete_atlas = false;
 }
 
 /**

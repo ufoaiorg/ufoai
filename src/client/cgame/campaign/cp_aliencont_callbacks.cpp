@@ -44,7 +44,7 @@ static int numAliensOnList = 0;			/**< Number of aliens on AC menu list. */
  * @param[in] alive boolean whether the alien is alive or already dead
  * @return amount of killed aliens of given type
  */
-static int AL_CountForMenu (int alienidx, qboolean alive)
+static int AL_CountForMenu (int alienidx, bool alive)
 {
 	int amount = 0;
 	base_t *base;
@@ -140,8 +140,8 @@ static void AC_AlienClick (const base_t *base, int num)
 		Cvar_Set("mn_al_alienimage", aliencontCurrent->tech->image);
 		assert(aliencontCurrent->teamDef);
 		Cvar_Set("mn_al_alientype", _(aliencontCurrent->teamDef->name));
-		Cvar_Set("mn_al_alive", va("%i (%i)", aliencontCurrent->amountAlive, AL_CountForMenu(aliencontCurrent->teamDef->idx, qtrue)));
-		Cvar_Set("mn_al_dead",  va("%i (%i)", aliencontCurrent->amountDead, AL_CountForMenu(aliencontCurrent->teamDef->idx, qfalse)));
+		Cvar_Set("mn_al_alive", va("%i (%i)", aliencontCurrent->amountAlive, AL_CountForMenu(aliencontCurrent->teamDef->idx, true)));
+		Cvar_Set("mn_al_dead",  va("%i (%i)", aliencontCurrent->amountDead, AL_CountForMenu(aliencontCurrent->teamDef->idx, false)));
 	}
 }
 

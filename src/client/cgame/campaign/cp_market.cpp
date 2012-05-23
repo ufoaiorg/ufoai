@@ -36,7 +36,7 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
  * @param[in] item Pointer to the item to check
  * @note this function doesn't check if the item is available on market (buyable > 0)
  */
-qboolean BS_IsOnMarket (const objDef_t *item)
+bool BS_IsOnMarket (const objDef_t *item)
 {
 	assert(item);
 	return !(item->isVirtual || item->notOnMarket);
@@ -106,14 +106,14 @@ int BS_GetItemBuyingPrice (const objDef_t *od)
  * @param aircraft The aircraft to check
  * @return @c true if the aircraft should appear on the market
  */
-qboolean BS_AircraftIsOnMarket (const aircraft_t *aircraft)
+bool BS_AircraftIsOnMarket (const aircraft_t *aircraft)
 {
 	if (aircraft->type == AIRCRAFT_UFO)
-		return qfalse;
+		return false;
 	if (aircraft->price == -1)
-		return qfalse;
+		return false;
 
-	return  qtrue;
+	return  true;
 }
 
 /**
@@ -228,7 +228,7 @@ static void BS_ProcessCraftItemSale (const objDef_t *craftitem, const int numIte
  * @param[out] base Base to buy at
  * @return @c true if the aircraft could get bought, @c false otherwise
  */
-qboolean BS_BuyAircraft (const aircraft_t *aircraftTemplate, base_t *base)
+bool BS_BuyAircraft (const aircraft_t *aircraftTemplate, base_t *base)
 {
 	int freeSpace;
 	int price;
@@ -239,29 +239,29 @@ qboolean BS_BuyAircraft (const aircraft_t *aircraftTemplate, base_t *base)
 		Com_Error(ERR_DROP, "BS_BuyAircraft: No aircraft template given.");
 
 	if (!B_GetBuildingStatus(base, B_COMMAND))
-		return qfalse;
+		return false;
 	/* We cannot buy aircraft if there is no power in our base. */
 	if (!B_GetBuildingStatus(base, B_POWER))
-		return qfalse;
+		return false;
 	/* We cannot buy aircraft without any hangar. */
 	if (!AIR_AircraftAllowed(base))
-		return qfalse;
+		return false;
 
 	/* Check free space in hangars. */
 	freeSpace = AIR_CalculateHangarStorage(aircraftTemplate, base, 0);
 	if (freeSpace <= 0)
-		return qfalse;
+		return false;
 
 	price = BS_GetAircraftBuyingPrice(aircraftTemplate);
 	if (ccs.credits < price)
-		return qfalse;
+		return false;
 
 	/* Hangar capacities are being updated in AIR_NewAircraft().*/
 	BS_RemoveAircraftFromMarket(aircraftTemplate, 1);
 	CP_UpdateCredits(ccs.credits - price);
 	AIR_NewAircraft(base, aircraftTemplate);
 
-	return qtrue;
+	return true;
 }
 
 /**
@@ -269,15 +269,15 @@ qboolean BS_BuyAircraft (const aircraft_t *aircraftTemplate, base_t *base)
  * @param aircraft The aircraft to sell
  * @return @c true if the aircraft could get sold, @c false otherwise
  */
-qboolean BS_SellAircraft (aircraft_t *aircraft)
+bool BS_SellAircraft (aircraft_t *aircraft)
 {
 	int j;
 
 	if (AIR_GetTeamSize(aircraft) > 0)
-		return qfalse;
+		return false;
 
 	if (!AIR_IsAircraftInBase(aircraft))
-		return qfalse;
+		return false;
 
 	/* sell off any items which are mounted on it */
 	for (j = 0; j < aircraft->maxWeapons; j++) {
@@ -302,7 +302,7 @@ qboolean BS_SellAircraft (aircraft_t *aircraft)
 	CP_UpdateCredits(ccs.credits + BS_GetAircraftSellingPrice(aircraft));
 	AIR_DeleteAircraft(aircraft);
 
-	return qtrue;
+	return true;
 }
 
 /**
@@ -312,7 +312,7 @@ qboolean BS_SellAircraft (aircraft_t *aircraft)
  * @return @c true if the ugv could get bought, @c false otherwise
  * @TODO Implement this correctly once we have UGV
  */
-qboolean BS_BuyUGV (const ugv_t *ugv, base_t *base)
+bool BS_BuyUGV (const ugv_t *ugv, base_t *base)
 {
 	const objDef_t *ugvWeapon;
 
@@ -325,21 +325,21 @@ qboolean BS_BuyUGV (const ugv_t *ugv, base_t *base)
 		Com_Error(ERR_DROP, "BS_BuyItem_f: Could not get weapon '%s' for ugv/tank '%s'.", ugv->weapon, ugv->id);
 
 	if (ccs.credits < ugv->price)
-		return qfalse;
+		return false;
 	if (E_CountUnhiredRobotsByType(ugv) <= 0)
-		return qfalse;
+		return false;
 	if (BS_GetItemOnMarket(ugvWeapon) <= 0)
-		return qfalse;
+		return false;
 	if (CAP_GetFreeCapacity(base, CAP_ITEMS) < UGV_SIZE + ugvWeapon->size)
-		return qfalse;
+		return false;
 	if (!E_HireRobot(base, ugv))
-		return qfalse;
+		return false;
 
 	BS_RemoveItemFromMarket(ugvWeapon, 1);
 	CP_UpdateCredits(ccs.credits - ugv->price);
-	B_UpdateStorageAndCapacity(base, ugvWeapon, 1, qfalse);
+	B_UpdateStorageAndCapacity(base, ugvWeapon, 1, false);
 
-	return qtrue;
+	return true;
 }
 
 /**
@@ -348,7 +348,7 @@ qboolean BS_BuyUGV (const ugv_t *ugv, base_t *base)
  * @return @c true if the ugv could get sold, @c false otherwise
  * @TODO Implement this correctly once we have UGV
  */
-qboolean BS_SellUGV (employee_t *robot)
+bool BS_SellUGV (employee_t *robot)
 {
 	const objDef_t *ugvWeapon;
 	const ugv_t *ugv;
@@ -369,14 +369,14 @@ qboolean BS_SellUGV (employee_t *robot)
 	if (!E_UnhireEmployee(robot)) {
 		/** @todo message - Couldn't fire employee. */
 		Com_DPrintf(DEBUG_CLIENT, "Couldn't sell/fire robot/ugv.\n");
-		return qfalse;
+		return false;
 	}
 
 	BS_AddItemToMarket(ugvWeapon, 1);
 	CP_UpdateCredits(ccs.credits + ugv->price);
-	B_UpdateStorageAndCapacity(base, ugvWeapon, -1, qfalse);
+	B_UpdateStorageAndCapacity(base, ugvWeapon, -1, false);
 
-	return qtrue;
+	return true;
 }
 
 /**
@@ -386,7 +386,7 @@ qboolean BS_SellUGV (employee_t *robot)
  * @param[in ] count Number of items to buy
  * @return @c true if the ugv could get bought, @c false otherwise
  */
-qboolean BS_BuyItem (const objDef_t *od, base_t *base, int count)
+bool BS_BuyItem (const objDef_t *od, base_t *base, int count)
 {
 	if (!od)
 		Com_Error(ERR_DROP, "BS_BuyItem: Called on NULL objDef!");
@@ -394,21 +394,21 @@ qboolean BS_BuyItem (const objDef_t *od, base_t *base, int count)
 		Com_Error(ERR_DROP, "BS_BuyItem: Called on NULL base!");
 
 	if (!BS_IsOnMarket(od))
-		return qfalse;
+		return false;
 	if (count <= 0)
-		return qfalse;
+		return false;
 	if (ccs.credits < BS_GetItemBuyingPrice(od) * count)
-		return qfalse;
+		return false;
 	if (BS_GetItemOnMarket(od) < count)
-		return qfalse;
+		return false;
 	if (CAP_GetFreeCapacity(base, CAP_ITEMS) < od->size * count)
-		return qfalse;
+		return false;
 
-	B_UpdateStorageAndCapacity(base, od, count, qfalse);
+	B_UpdateStorageAndCapacity(base, od, count, false);
 	BS_RemoveItemFromMarket(od, count);
 	CP_UpdateCredits(ccs.credits - BS_GetItemBuyingPrice(od) * count);
 
-	return qtrue;
+	return true;
 }
 
 /**
@@ -418,26 +418,26 @@ qboolean BS_BuyItem (const objDef_t *od, base_t *base, int count)
  * @param[in ] count Number of items to sell
  * @return @c true if the ugv could get sold, @c false otherwise
  */
-qboolean BS_SellItem (const objDef_t *od, base_t *base, int count)
+bool BS_SellItem (const objDef_t *od, base_t *base, int count)
 {
 	if (!od)
 		Com_Error(ERR_DROP, "BS_SellItem: Called on NULL objDef!");
 
 	if (!BS_IsOnMarket(od))
-		return qfalse;
+		return false;
 	if (count <= 0)
-		return qfalse;
+		return false;
 
 	if (base) {
 		if (B_ItemInBase(od, base) < count)
-			return qfalse;
-		B_UpdateStorageAndCapacity(base, od, -1 * count, qfalse);
+			return false;
+		B_UpdateStorageAndCapacity(base, od, -1 * count, false);
 	}
 
 	BS_AddItemToMarket(od, count);
 	CP_UpdateCredits(ccs.credits + BS_GetItemSellingPrice(od) * count);
 
-	return qtrue;
+	return true;
 }
 
 /**
@@ -446,7 +446,7 @@ qboolean BS_SellItem (const objDef_t *od, base_t *base, int count)
  * @sa BS_LoadXML
  * @sa SAV_GameSaveXML
  */
-qboolean BS_SaveXML (xmlNode_t *parent)
+bool BS_SaveXML (xmlNode_t *parent)
 {
 	int i;
 	xmlNode_t *node;
@@ -477,7 +477,7 @@ qboolean BS_SaveXML (xmlNode_t *parent)
 			XML_AddDoubleValue(snode, SAVE_MARKET_EVO, market->currentEvolutionAircraft[i]);
 		}
 	}
-	return qtrue;
+	return true;
 }
 
 /**
@@ -486,14 +486,14 @@ qboolean BS_SaveXML (xmlNode_t *parent)
  * @sa BS_Save
  * @sa SAV_GameLoad
  */
-qboolean BS_LoadXML (xmlNode_t *parent)
+bool BS_LoadXML (xmlNode_t *parent)
 {
 	xmlNode_t *node, *snode;
 	market_t *market = BS_GetMarket();
 
 	node = XML_GetNode(parent, SAVE_MARKET_MARKET);
 	if (!node)
-		return qfalse;
+		return false;
 
 	for (snode = XML_GetNode(node, SAVE_MARKET_ITEM); snode; snode = XML_GetNextNode(snode, node, SAVE_MARKET_ITEM)) {
 		const char *s = XML_GetString(snode, SAVE_MARKET_ID);
@@ -508,7 +508,7 @@ qboolean BS_LoadXML (xmlNode_t *parent)
 		market->bidItems[od->idx] = XML_GetInt(snode, SAVE_MARKET_BID, 0);
 		market->askItems[od->idx] = XML_GetInt(snode, SAVE_MARKET_ASK, 0);
 		market->currentEvolutionItems[od->idx] = XML_GetDouble(snode, SAVE_MARKET_EVO, 0.0);
-		market->autosell[od->idx] = XML_GetBool(snode, SAVE_MARKET_AUTOSELL, qfalse);
+		market->autosell[od->idx] = XML_GetBool(snode, SAVE_MARKET_AUTOSELL, false);
 	}
 	for (snode = XML_GetNode(node, SAVE_MARKET_AIRCRAFT); snode; snode = XML_GetNextNode(snode, node, SAVE_MARKET_AIRCRAFT)) {
 		const char *s = XML_GetString(snode, SAVE_MARKET_ID);
@@ -520,7 +520,7 @@ qboolean BS_LoadXML (xmlNode_t *parent)
 		market->currentEvolutionAircraft[type] = XML_GetDouble(snode, SAVE_MARKET_EVO, 0.0);
 	}
 
-	return qtrue;
+	return true;
 }
 
 /**
@@ -657,7 +657,7 @@ void CP_CampaignRunMarket (campaign_t *campaign)
  * @param[in] base Pointer to base to check on
  * @sa B_BaseInit_f
  */
-qboolean BS_BuySellAllowed (const base_t* base)
+bool BS_BuySellAllowed (const base_t* base)
 {
 	return !B_IsUnderAttack(base) && B_GetBuildingStatus(base, B_STORAGE);
 }

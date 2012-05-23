@@ -55,20 +55,20 @@ static void AIRFIGHT_RemoveProjectile (aircraftProjectile_t *projectile)
  * @sa AIRFIGHT_RemoveProjectile
  * @sa AII_ReloadWeapon for the aircraft item reload code
  */
-static qboolean AIRFIGHT_AddProjectile (const base_t* attackingBase, const installation_t* attackingInstallation, aircraft_t *attacker, aircraft_t *target, aircraftSlot_t *weaponSlot)
+static bool AIRFIGHT_AddProjectile (const base_t* attackingBase, const installation_t* attackingInstallation, aircraft_t *attacker, aircraft_t *target, aircraftSlot_t *weaponSlot)
 {
 	aircraftProjectile_t *projectile;
 
 	if (ccs.numProjectiles >= MAX_PROJECTILESONGEOSCAPE) {
 		Com_DPrintf(DEBUG_CLIENT, "Too many projectiles on map\n");
-		return qfalse;
+		return false;
 	}
 
 	projectile = &ccs.projectiles[ccs.numProjectiles];
 
 	if (!weaponSlot->ammo) {
 		Com_Printf("AIRFIGHT_AddProjectile: Error - no ammo assigned\n");
-		return qfalse;
+		return false;
 	}
 
 	assert(weaponSlot->item);
@@ -99,8 +99,8 @@ static qboolean AIRFIGHT_AddProjectile (const base_t* attackingBase, const insta
 	projectile->time = 0;
 	projectile->angle = 0.0f;
 
-	projectile->bullets = (weaponSlot->item->craftitem.bullets) ? qtrue : qfalse;
-	projectile->beam = (weaponSlot->item->craftitem.beam) ? qtrue : qfalse;
+	projectile->bullets = (weaponSlot->item->craftitem.bullets) ? true : false;
+	projectile->beam = (weaponSlot->item->craftitem.beam) ? true : false;
 
 	weaponSlot->ammoLeft--;
 	if (weaponSlot->ammoLeft <= 0)
@@ -120,7 +120,7 @@ static qboolean AIRFIGHT_AddProjectile (const base_t* attackingBase, const insta
 	if (sound != NULL)
 		S_StartLocalSample(sound, 1.0f);
 
-	return qtrue;
+	return true;
 }
 
 #ifdef DEBUG
@@ -152,7 +152,7 @@ static void AIRFIGHT_ProjectileList_f (void)
  * @brief Change destination of projectile to an idle point of the map, close to its former target.
  * @param[in] projectile The projectile to update
  */
-static void AIRFIGHT_MissTarget (aircraftProjectile_t *projectile, qboolean returnToBase)
+static void AIRFIGHT_MissTarget (aircraftProjectile_t *projectile, bool returnToBase)
 {
 	vec3_t newTarget;
 	float distance;
@@ -332,7 +332,7 @@ void AIRFIGHT_ExecuteActions (const campaign_t* campaign, aircraft_t* shooter, a
 			const float probability = frand();
 			shooter->weapons[slotIdx].delayNextShot = ammo->craftitem.weaponDelay;
 			if (probability > AIRFIGHT_ProbabilityToHit(shooter, target, shooter->weapons + slotIdx))
-				AIRFIGHT_MissTarget(&ccs.projectiles[ccs.numProjectiles - 1], qfalse);
+				AIRFIGHT_MissTarget(&ccs.projectiles[ccs.numProjectiles - 1], false);
 
 			if (shooter->type != AIRCRAFT_UFO) {
 				/* Maybe UFO is going to shoot back ? */
@@ -383,7 +383,7 @@ void AIRFIGHT_RemoveProjectileAimingAircraft (const aircraft_t * aircraft)
 
 	for (projectile = ccs.projectiles; idx < ccs.numProjectiles; projectile++, idx++) {
 		if (projectile->aimedAircraft == aircraft)
-			AIRFIGHT_MissTarget(projectile, qtrue);
+			AIRFIGHT_MissTarget(projectile, true);
 	}
 }
 
@@ -410,14 +410,14 @@ static void AIRFIGHT_UpdateProjectileForDestroyedAircraft (const aircraft_t * ai
  * @param[in] campaign The campaign data structure
  * @param[in] shooter Pointer to the aircraft that fired the projectile.
  * @param[in] aircraft Pointer to the aircraft which was destroyed (alien or phalanx).
- * @param[in] phalanxWon qtrue if PHALANX won, qfalse if UFO won.
+ * @param[in] phalanxWon true if PHALANX won, false if UFO won.
  * @note Some of these mission values are redone (and not reloaded) in CP_Load
  * @note shooter may be NULL
  * @sa UFO_DestroyAllUFOsOnGeoscape_f
  * @sa CP_Load
  * @sa CP_SpawnCrashSiteMission
  */
-void AIRFIGHT_ActionsAfterAirfight (const campaign_t* campaign, aircraft_t *shooter, aircraft_t* aircraft, qboolean phalanxWon)
+void AIRFIGHT_ActionsAfterAirfight (const campaign_t* campaign, aircraft_t *shooter, aircraft_t* aircraft, bool phalanxWon)
 {
 	if (phalanxWon) {
 		const byte *color;
@@ -479,7 +479,7 @@ void AIRFIGHT_ActionsAfterAirfight (const campaign_t* campaign, aircraft_t *shoo
  * @param[in] movement distance that the projectile will do up to next draw of geoscape
  * @sa AIRFIGHT_CampaignRunProjectiles
  */
-static qboolean AIRFIGHT_ProjectileReachedTarget (const aircraftProjectile_t *projectile, float movement)
+static bool AIRFIGHT_ProjectileReachedTarget (const aircraftProjectile_t *projectile, float movement)
 {
 	float distance;
 
@@ -493,16 +493,16 @@ static qboolean AIRFIGHT_ProjectileReachedTarget (const aircraftProjectile_t *pr
 
 	/* projectile reaches its target */
 	if (distance < movement)
-		return qtrue;
+		return true;
 
 	assert(projectile->aircraftItem);
 
 	/* check if the projectile went farther than it's range */
 	distance = (float) projectile->time * projectile->aircraftItem->craftitem.weaponSpeed / (float)SECONDS_PER_HOUR;
 	if (distance > projectile->aircraftItem->craftitem.stats[AIR_STATS_WRANGE])
-		return qtrue;
+		return true;
 
-	return qfalse;
+	return false;
 }
 
 /**
@@ -615,7 +615,7 @@ void AIRFIGHT_CampaignRunProjectiles (const campaign_t* campaign, int dt)
 		aircraftProjectile_t *projectile = &ccs.projectiles[idx];
 		const float movement = (float) dt * projectile->aircraftItem->craftitem.weaponSpeed / (float)SECONDS_PER_HOUR;
 		projectile->time += dt;
-		projectile->hasMoved = qtrue;
+		projectile->hasMoved = true;
 		projectile->numInterpolationPoints = 0;
 
 		/* Check if the projectile reached its destination (aircraft or idle point) */
@@ -698,7 +698,7 @@ static void AIRFIGHT_BaseShoot (const base_t *base, baseWeapon_t *weapons, int m
 			slot->delayNextShot = slot->ammo->craftitem.weaponDelay;
 			/* will we miss the target ? */
 			if (frand() > AIRFIGHT_ProbabilityToHit(NULL, target, slot))
-				AIRFIGHT_MissTarget(&ccs.projectiles[ccs.numProjectiles - 1], qfalse);
+				AIRFIGHT_MissTarget(&ccs.projectiles[ccs.numProjectiles - 1], false);
 		}
 	}
 }
@@ -754,7 +754,7 @@ static void AIRFIGHT_InstallationShoot (const installation_t *installation, base
 			slot->delayNextShot = slot->ammo->craftitem.weaponDelay;
 			/* will we miss the target ? */
 			if (frand() > AIRFIGHT_ProbabilityToHit(NULL, target, slot))
-				AIRFIGHT_MissTarget(&ccs.projectiles[ccs.numProjectiles - 1], qfalse);
+				AIRFIGHT_MissTarget(&ccs.projectiles[ccs.numProjectiles - 1], false);
 		}
 	}
 }
@@ -825,7 +825,7 @@ void AIRFIGHT_CampaignRunBaseDefence (int dt)
  * @brief Save callback for savegames in XML Format
  * @param[out] parent XML Node structure, where we write the information to
  */
-qboolean AIRFIGHT_SaveXML (xmlNode_t *parent)
+bool AIRFIGHT_SaveXML (xmlNode_t *parent)
 {
 	int i;
 
@@ -865,14 +865,14 @@ qboolean AIRFIGHT_SaveXML (xmlNode_t *parent)
 		}
 	}
 
-	return qtrue;
+	return true;
 }
 
 /**
  * @brief Load callback for savegames in XML Format
  * @param[in] parent XML Node structure, where we get the information from
  */
-qboolean AIRFIGHT_LoadXML (xmlNode_t *parent)
+bool AIRFIGHT_LoadXML (xmlNode_t *parent)
 {
 	int i;
 	xmlNode_t *node;
@@ -888,7 +888,7 @@ qboolean AIRFIGHT_LoadXML (xmlNode_t *parent)
 
 		if (!tech) {
 			Com_Printf("AIR_Load: Could not get technology of projectile %i\n", i);
-			return qfalse;
+			return false;
 		}
 
 		projectile->aircraftItem = INVSH_GetItemByID(tech->provides);
@@ -901,11 +901,11 @@ qboolean AIRFIGHT_LoadXML (xmlNode_t *parent)
 
 		projectile->time = XML_GetInt(node, SAVE_AIRFIGHT_TIME, 0);
 		projectile->angle = XML_GetFloat(node, SAVE_AIRFIGHT_ANGLE, 0.0);
-		projectile->bullets = XML_GetBool(node, SAVE_AIRFIGHT_BULLET, qfalse);
-		projectile->beam = XML_GetBool(node, SAVE_AIRFIGHT_BEAM, qfalse);
+		projectile->bullets = XML_GetBool(node, SAVE_AIRFIGHT_BULLET, false);
+		projectile->beam = XML_GetBool(node, SAVE_AIRFIGHT_BEAM, false);
 
 		if ((attackingAircraft = XML_GetNode(node, SAVE_AIRFIGHT_ATTACKINGAIRCRAFT))) {
-			if (XML_GetBool(attackingAircraft, SAVE_AIRFIGHT_ISUFO, qfalse))
+			if (XML_GetBool(attackingAircraft, SAVE_AIRFIGHT_ISUFO, false))
 				/** @todo 0 as default might be incorrect */
 				projectile->attackingAircraft = UFO_GetByIDX(XML_GetInt(attackingAircraft, SAVE_AIRFIGHT_AIRCRAFTIDX, 0));
 			else
@@ -914,7 +914,7 @@ qboolean AIRFIGHT_LoadXML (xmlNode_t *parent)
 			projectile->attackingAircraft = NULL;
 		}
 		if ((aimedAircraft = XML_GetNode(node, SAVE_AIRFIGHT_AIMEDAIRCRAFT))) {
-			if (XML_GetBool(aimedAircraft, SAVE_AIRFIGHT_ISUFO, qfalse))
+			if (XML_GetBool(aimedAircraft, SAVE_AIRFIGHT_ISUFO, false))
 				/** @todo 0 as default might be incorrect */
 				projectile->aimedAircraft = UFO_GetByIDX(XML_GetInt(aimedAircraft, SAVE_AIRFIGHT_AIRCRAFTIDX, 0));
 			else
@@ -925,7 +925,7 @@ qboolean AIRFIGHT_LoadXML (xmlNode_t *parent)
 	}
 	ccs.numProjectiles = i;
 
-	return qtrue;
+	return true;
 }
 
 /**

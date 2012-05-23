@@ -141,9 +141,9 @@ int uiAbstractOptionNode::getCellHeight (uiNode_t *node)
 void UI_RegisterAbstractOptionNode (uiBehaviour_t *behaviour)
 {
 	behaviour->name = "abstractoption";
-	behaviour->isAbstract = qtrue;
+	behaviour->isAbstract = true;
 	behaviour->extraDataSize = sizeof(EXTRADATA_TYPE);
-	behaviour->drawItselfChild = qtrue;
+	behaviour->drawItselfChild = true;
 	behaviour->manager = new uiAbstractOptionNode();
 
 	/** Optional. Data ID we want to use. It must be an option list. It substitute to the inline options */

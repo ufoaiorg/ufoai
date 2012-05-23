@@ -29,7 +29,7 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
  * @param[in] ent The edict to perform the check for
  * @sa LE_IsLivingActor
  */
-qboolean G_IsLivingActor (const edict_t *ent)
+bool G_IsLivingActor (const edict_t *ent)
 {
 	return G_IsActor(ent) && (G_IsStunned(ent) || !G_IsDead(ent));
 }
@@ -69,7 +69,7 @@ void G_ActorUseDoor (edict_t *actor, edict_t *door)
  * @param[in] actor The actor to check
  * @return @c true if the actor is standing in a rescue zone, @c false otherwise.
  */
-qboolean G_ActorIsInRescueZone (const edict_t* actor)
+bool G_ActorIsInRescueZone (const edict_t* actor)
 {
 	return actor->inRescueZone;
 }
@@ -79,7 +79,7 @@ qboolean G_ActorIsInRescueZone (const edict_t* actor)
  * @param[out] actor The actor to set the rescue zone flag for
  * @param[in] inRescueZone @c true if the actor is in the rescue zone, @c false otherwise
  */
-void G_ActorSetInRescueZone (edict_t* actor, qboolean inRescueZone)
+void G_ActorSetInRescueZone (edict_t* actor, bool inRescueZone)
 {
 	if (inRescueZone == G_ActorIsInRescueZone(actor))
 		return;
@@ -257,7 +257,7 @@ int G_ActorDoTurn (edict_t * ent, byte dir)
 	for (i = 0; i < num; i++) {
 		ent->dir = rot[ent->dir];
 		assert(ent->dir < CORE_DIRECTIONS);
-		status |= G_CheckVisTeamAll(ent->team, qfalse, ent);
+		status |= G_CheckVisTeamAll(ent->team, false, ent);
 	}
 
 	if (status & VIS_STOP) {
@@ -361,11 +361,11 @@ void G_ActorUseTU (edict_t *ent, int tus)
 	G_ActorSetTU(ent, ent->TU - tus);
 }
 
-static qboolean G_ActorStun (edict_t * ent, const edict_t *attacker)
+static bool G_ActorStun (edict_t * ent, const edict_t *attacker)
 {
 	/* already dead or stunned? */
 	if (G_IsDead(ent))
-		return qfalse;
+		return false;
 
 	/* no other state should be set here */
 	ent->state = STATE_STUN;
@@ -374,7 +374,7 @@ static qboolean G_ActorStun (edict_t * ent, const edict_t *attacker)
 
 	G_ActorModifyCounters(attacker, ent, -1, 0, 1);
 
-	return qtrue;
+	return true;
 }
 
 void G_ActorModifyCounters (const edict_t *attacker, const edict_t *victim, int deltaAlive, int deltaKills, int deltaStuns)
@@ -460,10 +460,10 @@ static void G_ActorRevitalise (edict_t *ent)
 	G_ActorSetMaxs(ent);
 
 	/* check if the player appears/perishes, seen from other teams */
-	G_CheckVis(ent, qtrue);
+	G_CheckVis(ent, true);
 
 	/* calc new vis for this player */
-	G_CheckVisTeamAll(ent->team, qfalse, ent);
+	G_CheckVisTeamAll(ent->team, false, ent);
 }
 
 void G_ActorCheckRevitalise (edict_t *ent)
@@ -484,14 +484,14 @@ void G_ActorCheckRevitalise (edict_t *ent)
 	}
 }
 
-static qboolean G_ActorDie (edict_t * ent, const edict_t *attacker)
+static bool G_ActorDie (edict_t * ent, const edict_t *attacker)
 {
-	const qboolean stunned = G_IsStunned(ent);
+	const bool stunned = G_IsStunned(ent);
 
 	G_RemoveStunned(ent);
 
 	if (G_IsDead(ent))
-		return qfalse;
+		return false;
 
 	G_SetState(ent, 1 + rand() % MAX_DEATH);
 	G_ActorSetMaxs(ent);
@@ -501,7 +501,7 @@ static qboolean G_ActorDie (edict_t * ent, const edict_t *attacker)
 	else
 		G_ActorModifyCounters(attacker, ent, -1, 1, 0);
 
-	return qtrue;
+	return true;
 }
 
 /**
@@ -512,9 +512,9 @@ static qboolean G_ActorDie (edict_t * ent, const edict_t *attacker)
  * @todo Discuss whether stunned actor should really drop everything to floor. Maybe
  * it should drop only what he has in hands? Stunned actor can wake later during mission.
  */
-qboolean G_ActorDieOrStun (edict_t * ent, edict_t *attacker)
+bool G_ActorDieOrStun (edict_t * ent, edict_t *attacker)
 {
-	qboolean state;
+	bool state;
 
 	if (ent->HP == 0)
 		state = G_ActorDie(ent, attacker);
@@ -524,7 +524,7 @@ qboolean G_ActorDieOrStun (edict_t * ent, edict_t *attacker)
 	/* no state change performed? */
 	if (!state) {
 		Com_Printf("State wasn't changed\n");
-		return qfalse;
+		return false;
 	}
 
 	if (!G_IsStunned(ent))
@@ -537,19 +537,19 @@ qboolean G_ActorDieOrStun (edict_t * ent, edict_t *attacker)
 	G_InventoryToFloor(ent);
 
 	/* check if the player appears/perishes, seen from other teams */
-	G_CheckVis(ent, qtrue);
+	G_CheckVis(ent, true);
 
 	/* check if the attacker appears/perishes, seen from other teams */
 	if (attacker)
-		G_CheckVis(attacker, qtrue);
+		G_CheckVis(attacker, true);
 
 	/* calc new vis for this player */
-	G_CheckVisTeamAll(ent->team, qfalse, attacker);
+	G_CheckVisTeamAll(ent->team, false, attacker);
 
 	/* unlink the floor container */
 	FLOOR(ent) = NULL;
 
-	return qtrue;
+	return true;
 }
 
 /**
@@ -560,16 +560,16 @@ qboolean G_ActorDieOrStun (edict_t * ent, edict_t *attacker)
  * @param[in] to The container (-id) the item should be moved to.
  * @param[in] tx x position where you want the item to go in the destination container
  * @param[in] ty y position where you want the item to go in the destination container
- * @param[in] checkaction Set this to qtrue if you want to check for TUs, otherwise qfalse.
+ * @param[in] checkaction Set this to true if you want to check for TUs, otherwise false.
  * @sa event PA_INVMOVE
  * @sa AI_ActorThink
  */
-qboolean G_ActorInvMove (edict_t *ent, const invDef_t * from, invList_t *fItem, const invDef_t * to, int tx,
-		int ty, qboolean checkaction)
+bool G_ActorInvMove (edict_t *ent, const invDef_t * from, invList_t *fItem, const invDef_t * to, int tx,
+		int ty, bool checkaction)
 {
 	player_t *player;
 	edict_t *floor;
-	qboolean newFloor;
+	bool newFloor;
 	invList_t *ic, *tc;
 	item_t item;
 	int mask;
@@ -602,21 +602,21 @@ qboolean G_ActorInvMove (edict_t *ent, const invDef_t * from, invList_t *fItem, 
 	/* Check if action is possible */
 	/* TUs are 1 here - but this is only a dummy - the real TU check is done in the inventory functions below */
 	if (checkaction && !G_ActionCheckForCurrentTeam(player, ent, 1))
-		return qfalse;
+		return false;
 
 	/* "get floor ready" - searching for existing floor-edict */
 	floor = G_GetFloorItems(ent);
 	if (INV_IsFloorDef(to) && !floor) {
 		/* We are moving to the floor, but no existing edict for this floor-tile found -> create new one */
 		floor = G_SpawnFloor(ent->pos);
-		newFloor = qtrue;
+		newFloor = true;
 	} else if (INV_IsFloorDef(from) && !floor) {
 		/* We are moving from the floor, but no existing edict for this floor-tile found -> this should never be the case. */
 		gi.DPrintf("G_ClientInvMove: No source-floor found.\n");
-		return qfalse;
+		return false;
 	} else {
 		/* There already exists an edict for this floor-tile. */
-		newFloor = qfalse;
+		newFloor = false;
 	}
 
 	/* search for space */
@@ -625,7 +625,7 @@ qboolean G_ActorInvMove (edict_t *ent, const invDef_t * from, invList_t *fItem, 
 		if (ic)
 			INVSH_FindSpace(&ent->chr.i, &ic->item, to, &tx, &ty, fItem);
 		if (tx == NONE)
-			return qfalse;
+			return false;
 	}
 
 	/** @todo what if we don't have enough TUs after subtracting the reserved ones? */
@@ -643,14 +643,14 @@ qboolean G_ActorInvMove (edict_t *ent, const invDef_t * from, invList_t *fItem, 
 	switch (ia) {
 	case IA_NONE:
 		/* No action possible - abort */
-		return qfalse;
+		return false;
 	case IA_NOTIME:
 		G_ClientPrintf(player, PRINT_HUD, _("Can't perform action - not enough TUs!"));
-		return qfalse;
+		return false;
 	case IA_NORELOAD:
 		G_ClientPrintf(player, PRINT_HUD,
 				_("Can't perform action - weapon already fully loaded with the same ammunition!"));
-		return qfalse;
+		return false;
 	default:
 		/* Continue below. */
 		break;
@@ -697,7 +697,7 @@ qboolean G_ActorInvMove (edict_t *ent, const invDef_t * from, invList_t *fItem, 
 		G_EventInventoryReload(INV_IsFloorDef(to) ? floor : ent, mask, &item, to, ic);
 
 		if (ia == IA_RELOAD) {
-			return qtrue;
+			return true;
 		} else { /* ia == IA_RELOAD_SWAP */
 			item.a = NONE_AMMO;
 			item.m = NULL;
@@ -731,7 +731,7 @@ qboolean G_ActorInvMove (edict_t *ent, const invDef_t * from, invList_t *fItem, 
 		/* A new container was created for the floor. */
 		if (newFloor) {
 			/* Send item info to the clients */
-			G_CheckVis(floor, qtrue);
+			G_CheckVis(floor, true);
 		} else {
 			/* use the backup item to use the old amount values, because the clients have to use the same actions
 			 * on the original amount. Otherwise they would end in a different amount of items as the server (+1) */
@@ -764,7 +764,7 @@ qboolean G_ActorInvMove (edict_t *ent, const invDef_t * from, invList_t *fItem, 
 		}
 	}
 
-	return qtrue;
+	return true;
 }
 
 /**
@@ -821,5 +821,5 @@ void G_ActorReload (edict_t* ent, const invDef_t *invDef)
 
 	/* send request */
 	if (bestContainer)
-		G_ActorInvMove(ent, bestContainer, icFinal, invDef, 0, 0, qtrue);
+		G_ActorInvMove(ent, bestContainer, icFinal, invDef, 0, 0, true);
 }

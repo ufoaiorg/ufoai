@@ -69,7 +69,7 @@ static inline int AL_GetCargoIndexForTeamDefinition (const aircraft_t *aircraft,
  * @todo Return false for cases where the alien race could not be added to the alien cargo of the aircraft
  * @returns Currently always true
  */
-qboolean AL_AddAlienTypeToAircraftCargo (aircraft_t *aircraft, const teamDef_t *teamDef, int amount, qboolean dead)
+bool AL_AddAlienTypeToAircraftCargo (aircraft_t *aircraft, const teamDef_t *teamDef, int amount, bool dead)
 {
 	aliensTmp_t *cargo = AL_GetAircraftAlienCargo(aircraft);
 	const int alienCargoTypes = AL_GetAircraftAlienCargoTypes(aircraft);
@@ -85,7 +85,7 @@ qboolean AL_AddAlienTypeToAircraftCargo (aircraft_t *aircraft, const teamDef_t *
 	else
 		c->amountAlive += amount;
 
-	return qtrue;
+	return true;
 }
 
 /**
@@ -140,10 +140,10 @@ void AL_AddAliens (aircraft_t *aircraft)
 	int alienCargoTypes;
 	int i;
 	int j;
-	qboolean limit = qfalse;
-	qboolean messageAlreadySet = qfalse;
+	bool limit = false;
+	bool messageAlreadySet = false;
 	technology_t *breathingTech;
-	qboolean alienBreathing = qfalse;
+	bool alienBreathing = false;
 
 	assert(aircraft);
 	toBase = aircraft->homebase;
@@ -172,7 +172,7 @@ void AL_AddAliens (aircraft_t *aircraft)
 			assert(cargo[i].teamDef);
 
 			if (ac->teamDef == cargo[i].teamDef) {
-				const qboolean isRobot = CHRSH_IsTeamDefRobot(cargo[i].teamDef);
+				const bool isRobot = CHRSH_IsTeamDefRobot(cargo[i].teamDef);
 				ac->amountDead += cargo[i].amountDead;
 
 				if (cargo[i].amountAlive <= 0)
@@ -183,11 +183,11 @@ void AL_AddAliens (aircraft_t *aircraft)
 					/* only once */
 					if (!messageAlreadySet) {
 						MS_AddNewMessage(_("Notice"), _("You can't hold live aliens yet. Aliens died."), MSG_DEATH);
-						messageAlreadySet = qtrue;
+						messageAlreadySet = true;
 					}
 					if (!ccs.breathingMailSent) {
 						Cmd_ExecuteString("addeventmail alienbreathing");
-						ccs.breathingMailSent = qtrue;
+						ccs.breathingMailSent = true;
 					}
 				} else {
 					int k;
@@ -202,7 +202,7 @@ void AL_AddAliens (aircraft_t *aircraft)
 							if (!limit) {
 								CAP_SetCurrent(toBase, CAP_ALIENS, CAP_GetMax(toBase, CAP_ALIENS));
 								MS_AddNewMessage(_("Notice"), _("You don't have enough space in Alien Containment. Some aliens got killed."));
-								limit = qtrue;
+								limit = true;
 							}
 							/* Just kill aliens which don't fit the limit. */
 							ac->amountDead++;
@@ -211,7 +211,7 @@ void AL_AddAliens (aircraft_t *aircraft)
 					/* only once */
 					if (!messageAlreadySet) {
 						MS_AddNewMessage(_("Notice"), _("You've captured new aliens."));
-						messageAlreadySet = qtrue;
+						messageAlreadySet = true;
 					}
 				}
 				break;
@@ -336,7 +336,7 @@ void AL_RemoveAliens (base_t *base, const teamDef_t *alienType, int amount, cons
  * @todo use this function more often - the containment[j].amountDead and containment[j].amountAlive counter
  * are used all over the code
  */
-static void AL_AddAliens2 (base_t *base, const teamDef_t *alienType, const qboolean dead)
+static void AL_AddAliens2 (base_t *base, const teamDef_t *alienType, const bool dead)
 {
 	int j;
 	aliensCont_t *containment;
@@ -451,7 +451,7 @@ int AL_GetAlienAmount (const teamDef_t *alienType, requirementType_t reqtype, co
  * @brief Counts live aliens in base.
  * @param[in] base Pointer to the base
  * @return amount of all live aliens stored in containment
- * @note must not return 0 if hasBuilding[B_ALIEN_CONTAINMENT] is qfalse: used to update capacity
+ * @note must not return 0 if hasBuilding[B_ALIEN_CONTAINMENT] is false: used to update capacity
  * @sa AL_ChangeAliveAlienNumber
  * @sa B_ResetAllStatusAndCapacities_f
  */
@@ -539,27 +539,27 @@ void AL_RemoveAliensExceedingCapacity (base_t *base)
  * @param[in] containment Pointer to the containment (may be @c NULL when adding
  * aliens or if you don't care about alien type of alien you're removing)
  * @param[in] num Number of alien to be added/removed
- * @return qtrue if action may be performed in base
+ * @return true if action may be performed in base
  */
-qboolean AL_CheckAliveFreeSpace (const base_t *base, const aliensCont_t *containment, const int num)
+bool AL_CheckAliveFreeSpace (const base_t *base, const aliensCont_t *containment, const int num)
 {
 	if (num > 0) {
 		/* We add aliens */
 		/* you need Alien Containment and it's dependencies to handle aliens */
 		if (!B_GetBuildingStatus(base, B_ALIEN_CONTAINMENT))
-			return qfalse;
+			return false;
 		if (CAP_GetFreeCapacity(base, CAP_ALIENS) < num)
-			return qfalse;
+			return false;
 	} else {
 		/* @note don't check building status here.
 		 * dependencies may have been destroyed before alien container (B_Destroy) */
 		if (CAP_GetCurrent(base, CAP_ALIENS) + num < 0)
-			return qfalse;
+			return false;
 		if (containment && (containment->amountAlive + num < 0))
-			return qfalse;
+			return false;
 	}
 
-	return qtrue;
+	return true;
 }
 
 /**
@@ -600,14 +600,14 @@ int AL_CountAll (void)
 void AC_KillAll (base_t *base)
 {
 	int i;
-	qboolean aliens = qfalse;
+	bool aliens = false;
 
 	assert(base);
 
 	/* Are there aliens here at all? */
 	for (i = 0; i < ccs.numAliensTD; i++) {
 		if (base->alienscont[i].amountAlive > 0) {
-			aliens = qtrue;
+			aliens = true;
 			break;
 		}
 	}
@@ -628,7 +628,7 @@ static void AC_AddOne_f (void)
 	const char *alienName;
 	const teamDef_t *alienType;
 	aliensCont_t *containment;
-	qboolean updateAlive = qtrue;
+	bool updateAlive = true;
 	int j;
 	base_t *base = B_GetCurrentSelectedBase();
 
@@ -699,7 +699,7 @@ void AC_InitStartup (void)
  * @sa B_SaveXML
  * @sa SAV_GameSaveXML
  */
-qboolean AC_SaveXML (xmlNode_t * parent)
+bool AC_SaveXML (xmlNode_t * parent)
 {
 	xmlNode_t *aliencont;
 	base_t *base;
@@ -730,7 +730,7 @@ qboolean AC_SaveXML (xmlNode_t * parent)
 		}
 	}
 
-	return qtrue;
+	return true;
 }
 
 /**
@@ -739,14 +739,14 @@ qboolean AC_SaveXML (xmlNode_t * parent)
  * @sa B_SaveXML
  * @sa SAV_GameLoadXML
  */
-qboolean AC_LoadXML (xmlNode_t * parent)
+bool AC_LoadXML (xmlNode_t * parent)
 {
 	xmlNode_t *aliencont;
 	xmlNode_t *contNode;
 	int i;
 
 	aliencont = XML_GetNode(parent, SAVE_ALIENCONT_ALIENCONT);
-	ccs.breathingMailSent = XML_GetBool(aliencont, SAVE_ALIENCONT_BREATHINGMAILSENT, qfalse);
+	ccs.breathingMailSent = XML_GetBool(aliencont, SAVE_ALIENCONT_BREATHINGMAILSENT, false);
 
 	/* Init alienContainers */
 	for (i = 0; i < MAX_BASES; i++) {
@@ -778,7 +778,7 @@ qboolean AC_LoadXML (xmlNode_t * parent)
 		}
 	}
 
-	return qtrue;
+	return true;
 }
 
 /**
@@ -786,11 +786,11 @@ qboolean AC_LoadXML (xmlNode_t * parent)
  * @sa B_BaseInit_f
  * @note Alien cont. must be accessible during base attack to kill aliens.
  */
-qboolean AC_ContainmentAllowed (const base_t* base)
+bool AC_ContainmentAllowed (const base_t* base)
 {
 	if (B_GetBuildingStatus(base, B_ALIEN_CONTAINMENT)) {
-		return qtrue;
+		return true;
 	} else {
-		return qfalse;
+		return false;
 	}
 }

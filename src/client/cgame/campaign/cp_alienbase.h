@@ -44,9 +44,9 @@ alienBase_t* AB_BuildBase(const vec2_t pos);
 void AB_DestroyBase(alienBase_t *base);
 void AB_UpdateStealthForAllBase(void);
 void AB_BaseSearchedByNations(void);
-qboolean AB_CheckSupplyMissionPossible(void);
+bool AB_CheckSupplyMissionPossible(void);
 alienBase_t* AB_ChooseBaseToSupply(void);
-void AB_SupplyBase(alienBase_t *base, qboolean decreaseStealth);
+void AB_SupplyBase(alienBase_t *base, bool decreaseStealth);
 int AB_GetAlienBaseNumber(void);
 void CP_SpawnAlienBaseMission(alienBase_t *alienBase);
 

@@ -98,7 +98,7 @@ POPUP_HOMEBASE
  * @param[in] alwaysDisplay False if popup should be displayed only if at least one base is available.
  * @return true if popup is displayed.
  */
-qboolean CL_DisplayHomebasePopup (aircraft_t *aircraft, qboolean alwaysDisplay)
+bool CL_DisplayHomebasePopup (aircraft_t *aircraft, bool alwaysDisplay)
 {
 	int homebase;
 	int numAvailableBases = 0;
@@ -147,10 +147,10 @@ qboolean CL_DisplayHomebasePopup (aircraft_t *aircraft, qboolean alwaysDisplay)
 		popupListNode->selectedColor[3] = 1.0;
 		cgi->UI_TextNodeSelectLine(popupListNode, homebase);
 		MAP_SelectAircraft(aircraft);
-		return qtrue;
+		return true;
 	}
 
-	return qfalse;
+	return false;
 }
 
 /**
@@ -198,8 +198,8 @@ static void CL_PopupChangeHomebase_f (void)
 
 	AIR_MoveAircraftIntoNewHomebase(aircraft, base);
 
-	cgi->UI_PopWindow(qfalse);
-	CL_DisplayHomebasePopup(aircraft, qtrue);
+	cgi->UI_PopWindow(false);
+	CL_DisplayHomebasePopup(aircraft, true);
 }
 
 /*========================================
@@ -266,7 +266,7 @@ static void CL_PopupAircraftClick_f (void)
 	if (num < 0 || num >= popupAircraft.numItems)
 		return;
 
-	cgi->UI_PopWindow(qfalse); /* Close popup */
+	cgi->UI_PopWindow(false); /* Close popup */
 
 	/* Get aircraft associated with the popup_aircraft */
 	aircraft = popupAircraft.aircraft;
@@ -282,7 +282,7 @@ static void CL_PopupAircraftClick_f (void)
 		aircraft->status = AIR_IDLE;
 		break;
 	case POPUP_AIRCRAFT_CHANGE_HOMEBASE:		/* Change Aircraft homebase */
-		CL_DisplayHomebasePopup(aircraft, qtrue);
+		CL_DisplayHomebasePopup(aircraft, true);
 		break;
 	case POPUP_AIRCRAFT_ACTION_MOVETOMISSION:	/* Aircraft move to mission */
 		mission = MAP_GetMissionByIDX(popupAircraft.itemsId[num]);
@@ -460,7 +460,7 @@ static aircraft_t* CL_PopupInterceptGetAircraft (void)
 	if (num < 0 || num >= popupIntercept.numAircraft)
 		return NULL;
 
-	cgi->UI_PopWindow(qfalse);
+	cgi->UI_PopWindow(false);
 	if (!popupIntercept.aircraft[num])
 		return NULL;
 	return popupIntercept.aircraft[num];
@@ -524,7 +524,7 @@ static void CL_PopupInterceptBaseClick_f (void)
 	int num, i;
 	base_t* base;
 	installation_t *installation;
-	qboolean atLeastOneBase = qfalse;
+	bool atLeastOneBase = false;
 
 	if (Cmd_Argc() < 2) {
 		Com_Printf("Usage: %s <num>\tnum=num in base list\n", Cmd_Argv(0));
@@ -542,7 +542,7 @@ static void CL_PopupInterceptBaseClick_f (void)
 		/* Check if the base should be displayed in base list */
 		if (AII_BaseCanShoot(base)) {
 			num--;
-			atLeastOneBase = qtrue;
+			atLeastOneBase = true;
 			if (num < 0)
 				break;
 		}
@@ -554,7 +554,7 @@ static void CL_PopupInterceptBaseClick_f (void)
 			/* Check if the installation should be displayed in base list */
 			if (AII_InstallationCanShoot(inst)) {
 				num--;
-				atLeastOneBase = qtrue;
+				atLeastOneBase = true;
 				if (num < 0) {
 					installation = inst;
 					break;
@@ -584,7 +584,7 @@ static void CL_PopupInterceptBaseClick_f (void)
 			base->lasers[i].target = MAP_GetSelectedUFO();
 	}
 
-	cgi->UI_PopWindow(qfalse);
+	cgi->UI_PopWindow(false);
 }
 
 /**

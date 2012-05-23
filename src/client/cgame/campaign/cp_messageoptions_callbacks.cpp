@@ -65,7 +65,7 @@ static void MSO_InitList (void)
 		}
 	}
 	cgi->UI_RegisterOption(TEXT_MESSAGEOPTIONS, messageSetting);
-	MSO_SetMenuState(MSO_MSTATE_PREPARED, qfalse, qtrue);
+	MSO_SetMenuState(MSO_MSTATE_PREPARED, false, true);
 }
 
 /**
@@ -160,7 +160,7 @@ static void MSO_Toggle_f (void)
 		int idx;
 		const msgCategoryEntry_t *selectedEntry;
 		int optionType;
-		qboolean activate;
+		bool activate;
 		int type;
 		uiNode_t *messageSetting = cgi->UI_GetOption(TEXT_MESSAGEOPTIONS);
 
@@ -195,7 +195,7 @@ static void MSO_Toggle_f (void)
 			optionType = MSO_SOUND;
 			activate = !selectedEntry->settings->doSound;
 		}
-		MSO_Set(listIndex, (notify_t)type, optionType, activate, qtrue);
+		MSO_Set(listIndex, (notify_t)type, optionType, activate, true);
 	}
 }
 
@@ -230,10 +230,10 @@ static void MSO_BackupSettings_f (void)
 static void MSO_RestoreSettings_f (void)
 {
 	memcpy(messageSettings, backupMessageSettings, sizeof(messageSettings));
-	MSO_SetMenuState(MSO_MSTATE_REINIT,qfalse,qtrue);
+	MSO_SetMenuState(MSO_MSTATE_REINIT,false,true);
 }
 
-void MSO_SetMenuState (const msoMenuState_t newState, const qboolean callInit, const qboolean preserveIndex)
+void MSO_SetMenuState (const msoMenuState_t newState, const bool callInit, const bool preserveIndex)
 {
 	msoMenuState = newState;
 	if (newState == MSO_MSTATE_REINIT && !preserveIndex) {

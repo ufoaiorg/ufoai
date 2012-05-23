@@ -34,16 +34,16 @@ static const cgame_import_t *cgi;
 
 CGAME_HARD_LINKED_FUNCTIONS
 
-static void GAME_MP_StartBattlescape (qboolean isTeamPlay)
+static void GAME_MP_StartBattlescape (bool isTeamPlay)
 {
 	cgi->UI_ExecuteConfunc("multiplayer_setTeamplay %i", isTeamPlay);
-	cgi->UI_InitStack("multiplayer_wait", NULL, qtrue, qtrue);
+	cgi->UI_InitStack("multiplayer_wait", NULL, true, true);
 }
 
 static void GAME_MP_NotifyEvent (event_t eventType)
 {
 	if (eventType == EV_RESET)
-		cgi->HUD_InitUI("multiplayerInGame", qtrue);
+		cgi->HUD_InitUI("multiplayerInGame", true);
 }
 
 static void GAME_MP_EndRoundAnnounce (int playerNum, int team)
@@ -102,7 +102,7 @@ static void GAME_MP_StartServer_f (void)
 
 	cgi->Cmd_ExecuteString(map);
 
-	cgi->UI_InitStack("multiplayer_wait", "multiplayerInGame", qfalse, qtrue);
+	cgi->UI_InitStack("multiplayer_wait", "multiplayerInGame", false, true);
 }
 
 /**
@@ -121,7 +121,7 @@ static void GAME_MP_ChangeGametype_f (void)
 {
 	const mapDef_t *md;
 	const char *newGameTypeID = NULL;
-	qboolean next = qtrue;
+	bool next = true;
 	const int numGTs = cgi->csi->numGTs;
 	const char *gameType = cgi->Cvar_GetString("sv_gametype");
 
@@ -137,7 +137,7 @@ static void GAME_MP_ChangeGametype_f (void)
 
 	/* previous? */
 	if (Q_streq(cgi->Cmd_Argv(0), "mp_prevgametype")) {
-		next = qfalse;
+		next = false;
 	}
 
 	if (md->gameTypes) {
@@ -206,7 +206,7 @@ static void GAME_MP_ChangeGametype_f (void)
  * @param numStunned The amount of stunned actors for all teams. The first dimension contains
  * the attacker team, the second the victim team
  */
-static void GAME_MP_Results (struct dbuffer *msg, int winner, int *numSpawned, int *numAlive, int numKilled[][MAX_TEAMS], int numStunned[][MAX_TEAMS], qboolean nextmap)
+static void GAME_MP_Results (struct dbuffer *msg, int winner, int *numSpawned, int *numAlive, int numKilled[][MAX_TEAMS], int numStunned[][MAX_TEAMS], bool nextmap)
 {
 	linkedList_t *list = NULL;
 	int enemiesKilled, enemiesStunned;
@@ -277,15 +277,15 @@ static void GAME_MP_AddChatMessage (const char *text)
 	cgi->UI_TextScrollEnd("hud_chat.allchats.chatscreen.chat");
 }
 
-static qboolean GAME_MP_HandleServerCommand (const char *command, struct dbuffer *msg)
+static bool GAME_MP_HandleServerCommand (const char *command, struct dbuffer *msg)
 {
 	/* teaminfo command */
 	if (Q_streq(command, "teaminfo")) {
 		CL_ParseTeamInfoMessage(msg);
-		return qtrue;
+		return true;
 	}
 
-	return qfalse;
+	return false;
 }
 
 static void GAME_MP_InitStartup (void)
@@ -319,7 +319,7 @@ static void GAME_MP_Shutdown (void)
 	MP_CallbacksShutdown();
 	MP_ServerListShutdown();
 
-	cgi->SV_Shutdown("Game mode shutdown", qfalse);
+	cgi->SV_Shutdown("Game mode shutdown", false);
 
 	OBJZERO(teamData);
 }

@@ -79,7 +79,7 @@ static cvar_t *cl_ready;
 cvar_t *cl_teamnum;
 
 client_static_t cls;
-static qboolean isdown;
+static bool isdown;
 
 memPool_t* cl_genericPool;	/**< permanent client data - menu, fonts */
 memPool_t* vid_genericPool;	/**< also holds all the static models */
@@ -198,7 +198,7 @@ static void CL_FreeClientStream (void)
  */
 static void CL_Connect (void)
 {
-	Com_SetUserinfoModified(qfalse);
+	Com_SetUserinfoModified(false);
 
 	assert(!cls.netStream);
 
@@ -278,7 +278,7 @@ void CL_Disconnect (void)
 
 	S_Stop();
 
-	R_ShutdownModels(qfalse);
+	R_ShutdownModels(false);
 	R_FreeWorldImages();
 
 	CL_SetClientState(ca_disconnected);
@@ -345,7 +345,7 @@ static void CL_ConnectionlessPacket (struct dbuffer *msg)
 
 	NET_ReadStringLine(msg, s, sizeof(s));
 
-	Cmd_TokenizeString(s, qfalse);
+	Cmd_TokenizeString(s, false);
 
 	c = Cmd_Argv(0);
 
@@ -456,7 +456,7 @@ static void CL_SpawnSoldiers_f (void)
 	if (cl.spawned)
 		return;
 
-	cl.spawned = qtrue;
+	cl.spawned = true;
 	GAME_SpawnSoldiers();
 }
 
@@ -468,15 +468,15 @@ static void CL_StartMatch_f (void)
 	if (cl.started)
 		return;
 
-	cl.started = qtrue;
+	cl.started = true;
 	GAME_StartMatch();
 }
 
-static qboolean CL_DownloadUMPMap (const char *tiles)
+static bool CL_DownloadUMPMap (const char *tiles)
 {
 	char name[MAX_VAR];
 	char base[MAX_QPATH];
-	qboolean startedDownload = qfalse;
+	bool startedDownload = false;
 
 	/* load tiles */
 	while (tiles) {
@@ -503,9 +503,9 @@ static qboolean CL_DownloadUMPMap (const char *tiles)
 	return startedDownload;
 }
 
-static qboolean CL_DownloadMap (const char *map)
+static bool CL_DownloadMap (const char *map)
 {
-	qboolean startedDownload;
+	bool startedDownload;
 	if (map[0] != '+') {
 		startedDownload = !CL_CheckOrDownloadFile(va("maps/%s.bsp", map));
 	} else {
@@ -524,7 +524,7 @@ static qboolean CL_DownloadMap (const char *map)
  * @c false if the start of the match must get a little bit postponed (running downloads).
  * @note throws ERR_DISCONNECT if we are not compatible to the server
  */
-static qboolean CL_CanMultiplayerStart (void)
+static bool CL_CanMultiplayerStart (void)
 {
 	const int day = CL_GetConfigStringInteger(CS_LIGHTMAP);
 	const char *serverVersion = CL_GetConfigString(CS_VERSION);
@@ -546,13 +546,13 @@ static qboolean CL_CanMultiplayerStart (void)
 	/* check download */
 	if (cls.downloadMaps) { /* confirm map */
 		if (CL_DownloadMap(CL_GetConfigString(CS_NAME)))
-			return qfalse;
-		cls.downloadMaps = qfalse;
+			return false;
+		cls.downloadMaps = false;
 	}
 
 	/* map might still be downloading? */
 	if (CL_PendingHTTPDownloads())
-		return qfalse;
+		return false;
 
 	if (Com_GetScriptChecksum() != CL_GetConfigStringInteger(CS_UFOCHECKSUM))
 		Com_Printf("You are using modified ufo script files - might produce problems\n");
@@ -565,7 +565,7 @@ static qboolean CL_CanMultiplayerStart (void)
 			cl.mapData->mapChecksum, CL_GetConfigStringInteger(CS_MAPCHECKSUM));
 	}
 
-	return qtrue;
+	return true;
 }
 
 /**
@@ -613,7 +613,7 @@ void CL_RequestNextDownload (void)
  */
 static void CL_Precache_f (void)
 {
-	cls.downloadMaps = qtrue;
+	cls.downloadMaps = true;
 
 	CL_RequestNextDownload();
 }
@@ -623,8 +623,8 @@ static void CL_SetRatioFilter_f (void)
 	uiNode_t* firstOption = UI_GetOption(OPTION_VIDEO_RESOLUTIONS);
 	uiNode_t* option = firstOption;
 	float requestedRation = atof(Cmd_Argv(1));
-	qboolean all = qfalse;
-	qboolean custom = qfalse;
+	bool all = false;
+	bool custom = false;
 	const float delta = 0.01;
 
 	if (Cmd_Argc() != 2) {
@@ -633,9 +633,9 @@ static void CL_SetRatioFilter_f (void)
 	}
 
 	if (Q_streq(Cmd_Argv(1), "all"))
-		all = qtrue;
+		all = true;
 	else if (Q_streq(Cmd_Argv(1), "custom"))
-		custom = qtrue;
+		custom = true;
 	else
 		requestedRation = atof(Cmd_Argv(1));
 
@@ -643,14 +643,14 @@ static void CL_SetRatioFilter_f (void)
 		int width;
 		int height;
 		float ratio;
-		qboolean visible = qfalse;
+		bool visible = false;
 		int result = sscanf(OPTIONEXTRADATA(option).label, "%i x %i", &width, &height);
 		if (result != 2)
 			Com_Error(ERR_FATAL, "CL_SetRatioFilter_f: Impossible to decode resolution label.\n");
 		ratio = (float)width / (float)height;
 
 		if (all)
-			visible = qtrue;
+			visible = true;
 		else if (custom)
 			/** @todo We should check the ratio list and remove matched resolutions, here it is a hack */
 			visible = ratio > 2 || (ratio > 1.7 && ratio < 1.76);
@@ -778,14 +778,14 @@ void CL_InitAfter (void)
  * @note This data is persistent until you shutdown the game
  * @return True if the parsing function succeeded.
  */
-qboolean CL_ParseClientData (const char *type, const char *name, const char **text)
+bool CL_ParseClientData (const char *type, const char *name, const char **text)
 {
 #ifndef COMPILE_UNITTESTS
 	static int progressCurrent = 0;
 
 	progressCurrent++;
 	if (progressCurrent % 10 == 0)
-		SCR_DrawLoadingScreen(qfalse, std::min(progressCurrent * 30 / 1500, 30));
+		SCR_DrawLoadingScreen(false, std::min(progressCurrent * 30 / 1500, 30));
 #endif
 
 	if (Q_streq(type, "font"))
@@ -814,7 +814,7 @@ qboolean CL_ParseClientData (const char *type, const char *name, const char **te
 		CL_ParseActorSkin(name, text);
 	else if (Q_streq(type, "cgame"))
 		GAME_ParseModes(name, text);
-	return qtrue;
+	return true;
 }
 
 /** @brief Cvars for initial check (popup at first start) */
@@ -967,7 +967,7 @@ static void CL_SendChangedUserinfos (void)
 			NET_WriteByte(msg, clc_userinfo);
 			NET_WriteString(msg, Cvar_Userinfo());
 			NET_WriteMsg(cls.netStream, msg);
-			Com_SetUserinfoModified(qfalse);
+			Com_SetUserinfoModified(false);
 		}
 	}
 }
@@ -1164,7 +1164,7 @@ void CL_Init (void)
 	char languagePath[MAX_OSPATH];
 	cvar_t *fs_i18ndir;
 
-	isdown = qfalse;
+	isdown = false;
 
 	if (sv_dedicated->integer)
 		return;					/* nothing running on the client */
@@ -1198,7 +1198,7 @@ void CL_Init (void)
 	CIN_Init();
 
 	VID_Init();
-	SCR_DrawLoadingScreen(qfalse, 0);
+	SCR_DrawLoadingScreen(false, 0);
 	S_Init();
 	SCR_Init();
 
@@ -1240,7 +1240,7 @@ void CL_Shutdown (void)
 		printf("recursive shutdown\n");
 		return;
 	}
-	isdown = qtrue;
+	isdown = true;
 
 	/* remove cvar feedback */
 	for (var = Cvar_GetFirst(); var; var = var->next) {

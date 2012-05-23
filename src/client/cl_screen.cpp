@@ -54,7 +54,7 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 static float scr_con_current;			/* approaches scr_conlines at scr_conspeed */
 static float scr_conlines;				/* 0.0 to 1.0 lines of console to display */
 
-static qboolean screenInitialized = qfalse;/* ready to draw */
+static bool screenInitialized = false;/* ready to draw */
 
 static cvar_t *scr_conspeed;
 static cvar_t *scr_consize;
@@ -93,9 +93,9 @@ static void SCR_DrawLoadingBar (int x, int y, int w, int h, int percent)
  * @brief Precache and loading screen at startup
  * @sa CL_InitAfter
  * @param[in] string Draw the loading string - if the scripts are not parsed, this is
- * not possible, so use qfalse for very early calls
+ * not possible, so use false for very early calls
  */
-void SCR_DrawLoadingScreen (qboolean string, int percent)
+void SCR_DrawLoadingScreen (bool string, int percent)
 {
 	const image_t *image;
 
@@ -257,7 +257,7 @@ static void SCR_DrawCursor (void)
 		return;
 
 	if (scr_cursor->modified) {
-		scr_cursor->modified = qfalse;
+		scr_cursor->modified = false;
 		SCR_TouchPics();
 	}
 
@@ -465,10 +465,10 @@ void SCR_Init (void)
 
 	SCR_TouchPics();
 
-	screenInitialized = qtrue;
+	screenInitialized = true;
 }
 
 void SCR_Shutdown (void)
 {
-	screenInitialized = qfalse;
+	screenInitialized = false;
 }

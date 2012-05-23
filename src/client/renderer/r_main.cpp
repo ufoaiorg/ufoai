@@ -220,7 +220,7 @@ void R_BeginFrame (void)
 
 		/* prevent reloading of some rendering cvars */
 		Cvar_ClearVars(CVAR_R_MASK);
-		Com_SetRenderModified(qfalse);
+		Com_SetRenderModified(false);
 	}
 
 	if (r_anisotropic->modified) {
@@ -229,12 +229,12 @@ void R_BeginFrame (void)
 			Cvar_SetValue("r_anisotropic", r_config.maxAnisotropic);
 		}
 		/*R_UpdateAnisotropy();*/
-		r_anisotropic->modified = qfalse;
+		r_anisotropic->modified = false;
 	}
 
 	/* draw buffer stuff */
 	if (r_drawbuffer->modified) {
-		r_drawbuffer->modified = qfalse;
+		r_drawbuffer->modified = false;
 
 		if (Q_strcasecmp(r_drawbuffer->string, "GL_FRONT") == 0)
 			glDrawBuffer(GL_FRONT);
@@ -247,17 +247,17 @@ void R_BeginFrame (void)
 	/* Realtime set level of anisotropy filtering and change texture lod bias */
 	if (r_texturemode->modified) {
 		R_TextureMode(r_texturemode->string);
-		r_texturemode->modified = qfalse;
+		r_texturemode->modified = false;
 	}
 
 	if (r_texturealphamode->modified) {
 		R_TextureAlphaMode(r_texturealphamode->string);
-		r_texturealphamode->modified = qfalse;
+		r_texturealphamode->modified = false;
 	}
 
 	if (r_texturesolidmode->modified) {
 		R_TextureSolidMode(r_texturesolidmode->string);
-		r_texturesolidmode->modified = qfalse;
+		r_texturesolidmode->modified = false;
 	}
 
 	/* threads */
@@ -266,7 +266,7 @@ void R_BeginFrame (void)
 			R_InitThreads();
 		else
 			R_ShutdownThreads();
-		r_threads->modified = qfalse;
+		r_threads->modified = false;
 	}
 
 	R_Setup2D();
@@ -309,12 +309,12 @@ void R_RenderFrame (void)
 			const model_t *mapTile = r_mapTiles[tile];
 			const mBspModel_t *bsp = &mapTile->bsp;
 
-			R_AddBspRRef(bsp, vec3_origin, vec3_origin, qfalse);
+			R_AddBspRRef(bsp, vec3_origin, vec3_origin, false);
 		}
 
 		R_GetEntityLists();
 
-		R_EnableFog(qtrue);
+		R_EnableFog(true);
 
 		R_RenderOpaqueBspRRefs();
 		R_RenderOpaqueWarpBspRRefs();
@@ -322,18 +322,18 @@ void R_RenderFrame (void)
 
 		R_RenderAlphaTestBspRRefs();
 
-		R_EnableBlend(qtrue);
+		R_EnableBlend(true);
 		R_RenderMaterialBspRRefs();
 
-		R_EnableFog(qfalse);
+		R_EnableFog(false);
 
 		R_RenderBlendBspRRefs();
 		R_RenderBlendWarpBspRRefs();
 		R_DrawBlendMeshEntities(r_blend_mesh_entities);
 
-		R_EnableFog(qtrue);
+		R_EnableFog(true);
 		R_RenderFlareBspRRefs();
-		R_EnableFog(qfalse);
+		R_EnableFog(false);
 
 		if (r_debug_lights->integer) {
 			int i;
@@ -349,7 +349,7 @@ void R_RenderFrame (void)
 		}
 
 		R_DrawCoronas();
-		R_EnableBlend(qfalse);
+		R_EnableBlend(false);
 
 		for (tile = 0; tile < r_numMapTiles; tile++) {
 			R_DrawBspNormals(tile);
@@ -369,7 +369,7 @@ void R_RenderFrame (void)
 		R_DrawOpaqueMeshEntities(r_opaque_mesh_entities);
 		R_RenderAlphaTestBspRRefs();
 
-		R_EnableBlend(qtrue);
+		R_EnableBlend(true);
 
 		R_RenderMaterialBspRRefs();
 
@@ -379,7 +379,7 @@ void R_RenderFrame (void)
 
 		R_RenderFlareBspRRefs();
 
-		R_EnableBlend(qfalse);
+		R_EnableBlend(false);
 
 		R_Color(NULL);
 		R_DrawSpecialEntities(r_special_entities);
@@ -387,11 +387,11 @@ void R_RenderFrame (void)
 		R_DrawEntityEffects();
 	}
 
-	R_EnableBlend(qtrue);
+	R_EnableBlend(true);
 
 	R_DrawParticles();
 
-	R_EnableBlend(qfalse);
+	R_EnableBlend(false);
 
 	/* leave wire mode again */
 	if (r_wire->integer)
@@ -415,21 +415,21 @@ void R_RenderFrame (void)
  */
 void R_EndFrame (void)
 {
-	R_EnableBlend(qtrue);
+	R_EnableBlend(true);
 
 	R_DrawChars();  /* draw all chars accumulated above */
 
 	/* restore draw color */
 	R_Color(NULL);
 
-	R_EnableBlend(qfalse);
+	R_EnableBlend(false);
 
 	if (vid_gamma->modified) {
 		if (!vid_ignoregamma->integer) {
 			const float g = vid_gamma->value;
 			SDL_SetGamma(g, g, g);
 		}
-		vid_gamma->modified = qfalse;
+		vid_gamma->modified = false;
 	}
 
 	R_ClearScene();
@@ -448,70 +448,70 @@ static const cmdList_t r_commands[] = {
 	{NULL, NULL, NULL}
 };
 
-static qboolean R_CvarCheckMaxLightmap (cvar_t *cvar)
+static bool R_CvarCheckMaxLightmap (cvar_t *cvar)
 {
 	if (r_config.maxTextureSize && cvar->integer > r_config.maxTextureSize) {
 		Com_Printf("%s exceeded max supported texture size\n", cvar->name);
 		Cvar_SetValue(cvar->name, r_config.maxTextureSize);
-		return qfalse;
+		return false;
 	}
 
 	if (!Q_IsPowerOfTwo(cvar->integer)) {
 		Com_Printf("%s must be power of two\n", cvar->name);
 		Cvar_SetValue(cvar->name, LIGHTMAP_BLOCK_WIDTH);
-		return qfalse;
+		return false;
 	}
 
-	return Cvar_AssertValue(cvar, 128, LIGHTMAP_BLOCK_WIDTH, qtrue);
+	return Cvar_AssertValue(cvar, 128, LIGHTMAP_BLOCK_WIDTH, true);
 }
 
-static qboolean R_CvarCheckDynamicLights (cvar_t *cvar)
+static bool R_CvarCheckDynamicLights (cvar_t *cvar)
 {
 	float maxLights = r_config.maxLights;
 
 	if (maxLights > MAX_ENTITY_LIGHTS)
 		maxLights = MAX_ENTITY_LIGHTS;
 
-	return Cvar_AssertValue(cvar, 0, maxLights, qtrue);
+	return Cvar_AssertValue(cvar, 0, maxLights, true);
 }
 
-static qboolean R_CvarPrograms (cvar_t *cvar)
+static bool R_CvarPrograms (cvar_t *cvar)
 {
 	if (qglUseProgram) {
-		return Cvar_AssertValue(cvar, 0, 3, qtrue);
+		return Cvar_AssertValue(cvar, 0, 3, true);
 	}
 
 	Cvar_SetValue(cvar->name, 0);
-	return qtrue;
+	return true;
 }
 
 /**
  * @brief Callback that is called when the r_glsl_version cvar is changed,
  */
-static qboolean R_CvarGLSLVersionCheck (cvar_t *cvar)
+static bool R_CvarGLSLVersionCheck (cvar_t *cvar)
 {
 	int glslVersionMajor, glslVersionMinor;
 	sscanf(cvar->string, "%d.%d", &glslVersionMajor, &glslVersionMinor);
 	if (glslVersionMajor > r_config.glslVersionMajor) {
 		Cvar_Reset(cvar);
-		return qfalse;
+		return false;
 	}
 
 	if (glslVersionMajor == r_config.glslVersionMajor && glslVersionMinor > r_config.glslVersionMinor) {
 		Cvar_Reset(cvar);
-		return qfalse;
+		return false;
 	}
 
-	return qtrue;
+	return true;
 }
 
-static qboolean R_CvarPostProcess (cvar_t *cvar)
+static bool R_CvarPostProcess (cvar_t *cvar)
 {
 	if (r_config.frameBufferObject && r_config.drawBuffers)
-		return Cvar_AssertValue(cvar, 0, 1, qtrue);
+		return Cvar_AssertValue(cvar, 0, 1, true);
 
 	Cvar_SetValue(cvar->name, 0);
-	return qtrue;
+	return true;
 }
 
 static void R_RegisterSystemVars (void)
@@ -544,13 +544,13 @@ static void R_RegisterSystemVars (void)
 	r_wire = Cvar_Get("r_wire", "0", 0, "Draw the scene in wireframe mode");
 	r_showbox = Cvar_Get("r_showbox", "0", CVAR_ARCHIVE, "1=Shows model bounding box, 2=show also the brushes bounding boxes");
 	r_lightmap = Cvar_Get("r_lightmap", "0", CVAR_R_PROGRAMS, "Draw only the lightmap");
-	r_lightmap->modified = qfalse;
+	r_lightmap->modified = false;
 	r_deluxemap = Cvar_Get("r_deluxemap", "0", CVAR_R_PROGRAMS, "Draw only the deluxemap");
-	r_deluxemap->modified = qfalse;
+	r_deluxemap->modified = false;
 	r_debug_normals = Cvar_Get("r_debug_normals", "0", CVAR_R_PROGRAMS, "Draw dot(normal, light_0 direction)");
-	r_debug_normals->modified = qfalse;
+	r_debug_normals->modified = false;
 	r_debug_tangents = Cvar_Get("r_debug_tangents", "0", CVAR_R_PROGRAMS, "Draw tangent, bitangent, and normal dotted with light dir as RGB espectively");
-	r_debug_tangents->modified = qfalse;
+	r_debug_tangents->modified = false;
 	r_debug_lights = Cvar_Get("r_debug_lights", "0", CVAR_ARCHIVE, "Draw active light sources");
 	r_ext_texture_compression = Cvar_Get("r_ext_texture_compression", "0", CVAR_ARCHIVE | CVAR_R_CONTEXT);
 	r_ext_nonpoweroftwo = Cvar_Get("r_ext_nonpoweroftwo", "1", CVAR_ARCHIVE, "Enable or disable the non power of two extension");
@@ -604,11 +604,11 @@ static void R_UpdateVidDef (const viddefContext_t *context)
 	Cvar_SetValue("vid_fullscreen", viddef.context.fullscreen);
 	Cvar_SetValue("r_multisample", viddef.context.multisample);
 	Cvar_SetValue("r_swapinterval", viddef.context.swapinterval);
-	vid_stretch->modified = qfalse;
-	vid_fullscreen->modified = qfalse;
-	vid_mode->modified = qfalse;
-	r_multisample->modified = qfalse;
-	r_swapinterval->modified = qfalse;
+	vid_stretch->modified = false;
+	vid_fullscreen->modified = false;
+	vid_mode->modified = false;
+	r_multisample->modified = false;
+	r_swapinterval->modified = false;
 
 	/* update cache values */
 	if (viddef.stretch) {
@@ -636,9 +636,9 @@ static void R_UpdateVidDef (const viddefContext_t *context)
 	viddef.ry = (float)viddef.context.height / viddef.virtualHeight;
 }
 
-qboolean R_SetMode (void)
+bool R_SetMode (void)
 {
-	qboolean result;
+	bool result;
 	viddefContext_t prevCtx;
 	viddefContext_t newCtx;
 	vidmode_t vidmode;
@@ -646,7 +646,7 @@ qboolean R_SetMode (void)
 	Com_Printf("I: setting mode %d\n", vid_mode->integer);
 
 	/* not values we must restitute */
-	r_ext_texture_compression->modified = qfalse;
+	r_ext_texture_compression->modified = false;
 	viddef.stretch = vid_stretch->integer;
 
 	/* store old values if new ones will fail */
@@ -661,7 +661,7 @@ qboolean R_SetMode (void)
 	if (!VID_GetModeInfo(newCtx.mode, &vidmode)) {
 		Com_Printf("I: invalid mode\n");
 		Cvar_Set("vid_mode", "-1");
-		return qfalse;
+		return false;
 	}
 	newCtx.width = vidmode.width;
 	newCtx.height = vidmode.height;
@@ -673,7 +673,7 @@ qboolean R_SetMode (void)
 				(newCtx.fullscreen ? "fullscreen" : "windowed"));
 		result = R_InitGraphics(&prevCtx);
 		if (!result)
-			return qfalse;
+			return false;
 		newCtx = prevCtx;
 	}
 
@@ -682,7 +682,7 @@ qboolean R_SetMode (void)
 	R_InitFBObjects();
 	UI_InvalidateStack();
 	Com_Printf("I: %dx%d (fullscreen: %s)\n", viddef.context.width, viddef.context.height, viddef.context.fullscreen ? "yes" : "no");
-	return qtrue;
+	return true;
 }
 
 /** @note SDL_GL_GetProcAddress returns a void*, which is not on all
@@ -725,9 +725,9 @@ static uintptr_t R_GetProcAddressExt (const char *functionName)
  * GL_ARB_framebuffer_object
  * @return @c true if the extension was announced by the OpenGL driver, @c false otherwise.
  */
-static inline qboolean R_CheckExtension (const char *extension)
+static inline bool R_CheckExtension (const char *extension)
 {
-	qboolean found;
+	bool found;
 	const char *s = strstr(extension, "###");
 	if (s == NULL) {
 		found = strstr(r_config.extensionsString, extension) != NULL;
@@ -740,13 +740,13 @@ static inline qboolean R_CheckExtension (const char *extension)
 		for (i = 0; i < replaceNo; i++) {
 			if (Q_strreplace(extension, "###", replace[i], targetBuf, length)) {
 				if (strstr(r_config.extensionsString, targetBuf) != NULL) {
-					found = qtrue;
+					found = true;
 					break;
 				}
 			}
 		}
 		if (i == replaceNo)
-			found = qfalse;
+			found = false;
 	}
 
 	if (found)
@@ -855,16 +855,16 @@ static void R_InitExtensions (void)
 	if (R_CheckExtension("GL_ARB_texture_non_power_of_two")) {
 		if (r_ext_nonpoweroftwo->integer) {
 			Com_Printf("using GL_ARB_texture_non_power_of_two\n");
-			r_config.nonPowerOfTwo = qtrue;
+			r_config.nonPowerOfTwo = true;
 		} else {
-			r_config.nonPowerOfTwo = qfalse;
+			r_config.nonPowerOfTwo = false;
 			Com_Printf("ignoring GL_ARB_texture_non_power_of_two\n");
 		}
 	} else {
 		if (R_CheckGLVersion(2, 0)) {
 			r_config.nonPowerOfTwo = r_ext_nonpoweroftwo->integer == 1;
 		} else {
-			r_config.nonPowerOfTwo = qfalse;
+			r_config.nonPowerOfTwo = false;
 		}
 	}
 
@@ -879,12 +879,12 @@ static void R_InitExtensions (void)
 			}
 
 			if (r_config.maxAnisotropic)
-				r_config.anisotropic = qtrue;
+				r_config.anisotropic = true;
 		}
 	}
 
 	if (R_CheckExtension("GL_EXT_texture_lod_bias"))
-		r_config.lod_bias = qtrue;
+		r_config.lod_bias = true;
 
 	/* vertex buffer objects */
 	if (R_CheckExtension("GL_ARB_vertex_buffer_object")) {
@@ -971,7 +971,7 @@ static void R_InitExtensions (void)
 			glGetIntegerv(GL_MAX_COLOR_ATTACHMENTS_EXT, &r_config.maxColorAttachments);
 			glGetIntegerv(GL_MAX_RENDERBUFFER_SIZE_EXT, &r_config.maxRenderbufferSize);
 
-			r_config.frameBufferObject = qtrue;
+			r_config.frameBufferObject = true;
 
 			Com_Printf("using GL_ARB_framebuffer_object\n");
 			Com_Printf("max draw buffers: %i\n", r_config.maxDrawBuffers);
@@ -983,16 +983,16 @@ static void R_InitExtensions (void)
 
 		if (r_config.maxDrawBuffers > 1 && R_CheckExtension("GL_###_draw_buffers")) {
 			Com_Printf("using GL_ARB_draw_buffers\n");
-			r_config.drawBuffers = qtrue;
+			r_config.drawBuffers = true;
 		} else {
-			r_config.drawBuffers = qfalse;
+			r_config.drawBuffers = false;
 		}
 	} else {
 		Com_Printf("Framebuffer objects unsupported by OpenGL implementation.\n");
 	}
 
 	r_programs = Cvar_Get("r_programs", "1", CVAR_ARCHIVE | CVAR_R_PROGRAMS, "GLSL shaders level: 0 - disabled, 1 - low, 2 - medium, 3 - high");
-	r_programs->modified = qfalse;
+	r_programs->modified = false;
 	Cvar_SetCheckFunction("r_programs", R_CvarPrograms);
 
 	r_glsl_version = Cvar_Get("r_glsl_version", "1.10", CVAR_ARCHIVE | CVAR_R_PROGRAMS, "GLSL Version");
@@ -1109,7 +1109,7 @@ static inline void R_EnforceVersion (void)
 /**
  * @brief Searches vendor and renderer GL strings for the given vendor id
  */
-static qboolean R_SearchForVendor (const char *vendor)
+static bool R_SearchForVendor (const char *vendor)
 {
 	return Q_stristr(r_config.vendorString, vendor)
 		|| Q_stristr(r_config.rendererString, vendor);
@@ -1141,7 +1141,7 @@ static inline void R_VerifyDriver (void)
 			Com_Printf("Set max. texture resolution to %i - see cvar r_intel_hack\n", INTEL_TEXTURE_RESOLUTION);
 			Cvar_SetValue("r_maxtexres", INTEL_TEXTURE_RESOLUTION);
 		}
-		r_ext_texture_compression->modified = qfalse;
+		r_ext_texture_compression->modified = false;
 		r_config.hardwareType = GLHW_INTEL;
 	} else if (R_SearchForVendor("NVIDIA")) {
 		r_config.hardwareType = GLHW_NVIDIA;
@@ -1159,7 +1159,7 @@ static inline void R_VerifyDriver (void)
 	}
 }
 
-qboolean R_Init (void)
+bool R_Init (void)
 {
 	R_RegisterSystemVars();
 
@@ -1176,7 +1176,7 @@ qboolean R_Init (void)
 
 	/* initialize OS-specific parts of OpenGL */
 	if (!Rimp_Init())
-		return qfalse;
+		return false;
 
 	/* get our various GL strings */
 	r_config.vendorString = (const char *)glGetString(GL_VENDOR);
@@ -1207,7 +1207,7 @@ qboolean R_Init (void)
 
 	R_CheckError();
 
-	return qtrue;
+	return true;
 }
 
 /**
@@ -1222,7 +1222,7 @@ void R_Shutdown (void)
 
 	R_ShutdownThreads();
 
-	R_ShutdownModels(qtrue);
+	R_ShutdownModels(true);
 	R_ShutdownImages();
 
 	R_ShutdownPrograms();

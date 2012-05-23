@@ -50,7 +50,7 @@ void S_Stop(void);
 void S_PlayStdSample(const stdsound_t sId, const vec3_t origin, float atten, float volume);
 void S_StartLocalSample(const char *s, float volume);
 int S_LoadSampleIdx (const char *soundFile);
-qboolean S_LoadAndPlaySample(const char *s, const vec3_t origin, float atten, float volume);
+bool S_LoadAndPlaySample(const char *s, const vec3_t origin, float atten, float volume);
 void S_SetSampleRepeatRate(int sampleRepeatRate);
 void S_LoadSamples(void);
 

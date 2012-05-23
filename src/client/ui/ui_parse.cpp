@@ -88,7 +88,7 @@ static bool UI_TokenIsReserved (const char *name)
 	return false;
 }
 
-static bool UI_TokenIsValue (const char *name, qboolean isQuoted)
+static bool UI_TokenIsValue (const char *name, bool isQuoted)
 {
 	assert(name);
 	if (isQuoted)
@@ -121,7 +121,7 @@ static bool UI_TokenIsValue (const char *name, qboolean isQuoted)
 	return false;
 }
 
-static bool UI_TokenIsName (const char *name, qboolean isQuoted)
+static bool UI_TokenIsName (const char *name, bool isQuoted)
 {
 	assert(name);
 	if (isQuoted)
@@ -170,7 +170,7 @@ float* UI_AllocStaticFloat (int count)
 {
 	float *result;
 	assert(count > 0);
-	result = (float*) UI_AllocHunkMemory(sizeof(float) * count, sizeof(float), qfalse);
+	result = (float*) UI_AllocHunkMemory(sizeof(float) * count, sizeof(float), false);
 	if (result == NULL)
 		Com_Error(ERR_FATAL, "UI_AllocFloat: UI memory hunk exceeded - increase the size");
 	return result;
@@ -186,7 +186,7 @@ vec4_t* UI_AllocStaticColor (int count)
 {
 	vec4_t *result;
 	assert(count > 0);
-	result = (vec4_t*) UI_AllocHunkMemory(sizeof(vec_t) * 4 * count, sizeof(vec_t), qfalse);
+	result = (vec4_t*) UI_AllocHunkMemory(sizeof(vec_t) * 4 * count, sizeof(vec_t), false);
 	if (result == NULL)
 		Com_Error(ERR_FATAL, "UI_AllocColor: UI memory hunk exceeded - increase the size");
 	return result;
@@ -205,7 +205,7 @@ char* UI_AllocStaticString (const char* string, int size)
 	if (size == 0) {
 		size = strlen(string) + 1;
 	}
-	result = (char*) UI_AllocHunkMemory(size, sizeof(char), qfalse);
+	result = (char*) UI_AllocHunkMemory(size, sizeof(char), false);
 	if (result == NULL)
 		Com_Error(ERR_FATAL, "UI_AllocString: UI memory hunk exceeded - increase the size");
 	Q_strncpyz(result, string, size);
@@ -614,7 +614,7 @@ static bool UI_ParseExcludeRect (uiNode_t * node, const char **text, const char 
 		}
 	} while ((*token)[0] != '}');
 
-	newRect = (uiExcludeRect_t*) UI_AllocHunkMemory(sizeof(*newRect), STRUCT_MEMORY_ALIGN, qfalse);
+	newRect = (uiExcludeRect_t*) UI_AllocHunkMemory(sizeof(*newRect), STRUCT_MEMORY_ALIGN, false);
 	if (newRect == NULL) {
 		Com_Printf("UI_ParseExcludeRect: ui hunk memory exceeded.");
 		return false;
@@ -643,13 +643,13 @@ static bool UI_ParseEventProperty (uiNode_t * node, const value_t *event, const 
 		return false;
 	}
 
-	Com_EnableFunctionScriptToken(qtrue);
+	Com_EnableFunctionScriptToken(true);
 
 	*action = UI_ParseActionList(node, text, token);
 	if (*action == NULL)
 		return false;
 
-	Com_EnableFunctionScriptToken(qfalse);
+	Com_EnableFunctionScriptToken(false);
 
 	/* block terminal already read */
 	assert((*token)[0] == '}');
@@ -858,14 +858,14 @@ static bool UI_ParseFunction (uiNode_t * node, const char **text, const char **t
 	uiAction_t **action;
 	assert(UI_Node_IsFunction(node));
 
-	Com_EnableFunctionScriptToken(qtrue);
+	Com_EnableFunctionScriptToken(true);
 
 	action = &node->onClick;
 	*action = UI_ParseActionList(node, text, token);
 	if (*action == NULL)
 		return false;
 
-	Com_EnableFunctionScriptToken(qfalse);
+	Com_EnableFunctionScriptToken(false);
 
 	return (*token)[0] == '}';
 }
@@ -893,7 +893,7 @@ static bool UI_ParseNodeProperties (uiNode_t * node, const char **text, const ch
 	bool nextTokenAlreadyRead = false;
 
 	if ((*token)[0] != '{')
-		nextTokenAlreadyRead = qtrue;
+		nextTokenAlreadyRead = true;
 
 	do {
 		const value_t *val;
@@ -1242,7 +1242,7 @@ bool UI_ParseComponent (const char *type, const char *name, const char **text)
 	}
 
 	/* check the name */
-	if (!UI_TokenIsName(name, qfalse)) {
+	if (!UI_TokenIsName(name, false)) {
 		Com_Printf("UI_ParseNode: \"%s\" is not a well formed node name ([a-zA-Z_][a-zA-Z0-9_]*)\n", name);
 		return false;
 	}
@@ -1274,7 +1274,7 @@ bool UI_ParseComponent (const char *type, const char *name, const char **text)
 		const uiNode_t *inheritedComponent = UI_GetComponent(token);
 		if (inheritedComponent) {
 			/* initialize from a component */
-			component = UI_CloneNode(inheritedComponent, NULL, qtrue, name, false);
+			component = UI_CloneNode(inheritedComponent, NULL, true, name, false);
 		} else {
 			Com_Printf("UI_ParseComponent: node behaviour/component '%s' doesn't exists (component %s)\n", token, name);
 			return false;
@@ -1350,7 +1350,7 @@ bool UI_ParseWindow (const char *type, const char *name, const char **text)
 		superWindow = UI_GetWindow(token);
 		if (superWindow == NULL)
 			Sys_Error("Could not get the super window \"%s\"", token);
-		window = UI_CloneNode(superWindow, NULL, qtrue, name, false);
+		window = UI_CloneNode(superWindow, NULL, true, name, false);
 		token = Com_Parse(text);
 	} else {
 		window = UI_AllocNode(name, type, false);

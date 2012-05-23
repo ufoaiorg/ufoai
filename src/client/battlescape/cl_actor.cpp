@@ -411,7 +411,7 @@ void CL_ActorRemoveFromTeamList (le_t * le)
  * @sa CL_UGVCvars
  * @sa CL_ActorCvars
  */
-qboolean CL_ActorSelect (le_t * le)
+bool CL_ActorSelect (le_t * le)
 {
 	int actorIdx;
 	character_t* chr;
@@ -419,26 +419,26 @@ qboolean CL_ActorSelect (le_t * le)
 	/* test team */
 	if (!le) {
 		if (selActor)
-			selActor->selected = qfalse;
+			selActor->selected = false;
 		selActor = NULL;
 		ui_inventory = NULL;
-		return qfalse;
+		return false;
 	}
 
 	if (le->pnum != cl.pnum || LE_IsDead(le) || !le->inuse)
-		return qfalse;
+		return false;
 
 	if (le->selected) {
 		mousePosTargettingAlign = 0;
-		return qtrue;
+		return true;
 	}
 
 	if (selActor)
-		selActor->selected = qfalse;
+		selActor->selected = false;
 
 	mousePosTargettingAlign = 0;
 	selActor = le;
-	selActor->selected = qtrue;
+	selActor->selected = true;
 	ui_inventory = &selActor->i;
 
 	if (le->state & RF_IRGOGGLESSHOT)
@@ -453,7 +453,7 @@ qboolean CL_ActorSelect (le_t * le)
 
 	actorIdx = CL_ActorGetNumber(le);
 	if (actorIdx == -1)
-		return qfalse;
+		return false;
 
 	/* console commands, update cvars */
 	Cvar_ForceSet("cl_selected", va("%i", actorIdx));
@@ -466,7 +466,7 @@ qboolean CL_ActorSelect (le_t * le)
 
 	CL_ActorConditionalMoveCalc(le);
 
-	return qtrue;
+	return true;
 }
 
 /**
@@ -478,32 +478,32 @@ qboolean CL_ActorSelect (le_t * le)
  * @param num The index value from the list of actors
  *
  * @sa CL_ActorSelect
- * @return qtrue if selection was possible otherwise qfalse
+ * @return true if selection was possible otherwise false
  */
-qboolean CL_ActorSelectList (int num)
+bool CL_ActorSelectList (int num)
 {
 	le_t *le;
 
 	/* check if actor exists */
 	if (num >= cl.numTeamList || num < 0)
-		return qfalse;
+		return false;
 
 	/* select actor */
 	le = cl.teamList[num];
 	if (!le || !CL_ActorSelect(le))
-		return qfalse;
+		return false;
 
 	/* center view (if wanted) */
 	LE_CenterView(le);
 	Cvar_SetValue("cl_worldlevel", le->pos[2]);
 
-	return qtrue;
+	return true;
 }
 
 /**
  * @brief selects the next actor
  */
-qboolean CL_ActorSelectNext (void)
+bool CL_ActorSelectNext (void)
 {
 	int selIndex = -1;
 	const int num = cl.numTeamList;
@@ -518,24 +518,24 @@ qboolean CL_ActorSelectNext (void)
 		}
 	}
 	if (selIndex < 0)
-		return qfalse;			/* no one selected? */
+		return false;			/* no one selected? */
 
 	/* cycle round */
 	i = selIndex;
-	while (qtrue) {
+	while (true) {
 		i = (i + 1) % num;
 		if (i == selIndex)
 			break;
 		if (CL_ActorSelectList(i))
-			return qtrue;
+			return true;
 	}
-	return qfalse;
+	return false;
 }
 
 /**
  * @brief selects the previous actor
  */
-qboolean CL_ActorSelectPrev (void)
+bool CL_ActorSelectPrev (void)
 {
 	int selIndex = -1;
 	const int num = cl.numTeamList;
@@ -550,19 +550,19 @@ qboolean CL_ActorSelectPrev (void)
 		}
 	}
 	if (selIndex < 0)
-		return qfalse;			/* no one selected? */
+		return false;			/* no one selected? */
 
 	/* cycle round */
 	i = selIndex;
-	while (qtrue) {
+	while (true) {
 	/*	i = (i - 1) % num; */
 		i--; if (i < 0) i = num - 1;
 		if (i == selIndex)
 			break;
 		if (CL_ActorSelectList(i))
-			return qtrue;
+			return true;
 	}
-	return qfalse;
+	return false;
 }
 
 
@@ -685,23 +685,23 @@ void CL_ActorConditionalMoveCalc (le_t *le)
 /**
  * @brief Checks that an action is valid.
  * @param[in] le Pointer to actor for which we check an action.
- * @return qtrue if action is valid.
+ * @return true if action is valid.
  */
 int CL_ActorCheckAction (const le_t *le)
 {
 	if (!le)
-		return qfalse;
+		return false;
 
 	/* already moving */
 	if (le->pathLength)
-		return qfalse;
+		return false;
 
 	if (cls.team != cl.actTeam) {
 		HUD_DisplayMessage(_("It is not your turn!"));
-		return qfalse;
+		return false;
 	}
 
-	return qtrue;
+	return true;
 }
 
 /**
@@ -715,7 +715,7 @@ int CL_ActorCheckAction (const le_t *le)
 static byte CL_ActorMoveLength (const le_t *le, const pos3_t to)
 {
 	const byte crouchingState = LE_IsCrouched(le) ? 1 : 0;
-	const byte length = Grid_MoveLength(&cl.pathMap, to, crouchingState, qfalse);
+	const byte length = Grid_MoveLength(&cl.pathMap, to, crouchingState, false);
 	return length;
 }
 
@@ -731,11 +731,11 @@ void CL_ActorResetMoveLength (le_t *le)
 /**
  * @brief Draws the way to walk when confirm actions is activated.
  * @param[in] to The location we draw the line to (starting with the location of selActor)
- * @return qtrue if everything went ok, otherwise qfalse.
+ * @return true if everything went ok, otherwise false.
  * @sa CL_MaximumMove (similar algo.)
  * @sa CL_AddTargetingBox
  */
-static qboolean CL_ActorTraceMove (const pos3_t to)
+static bool CL_ActorTraceMove (const pos3_t to)
 {
 	byte length;
 	vec3_t vec, oldVec;
@@ -744,11 +744,11 @@ static qboolean CL_ActorTraceMove (const pos3_t to)
 	byte crouchingState;
 
 	if (!selActor)
-		return qfalse;
+		return false;
 
 	length = CL_ActorMoveLength(selActor, to);
 	if (!length || length >= ROUTING_NOT_REACHABLE)
-		return qfalse;
+		return false;
 
 	crouchingState = LE_IsCrouched(selActor) ? 1 : 0;
 
@@ -770,7 +770,7 @@ static qboolean CL_ActorTraceMove (const pos3_t to)
 			CL_ParticleSpawn("moveTracer", 0, vec, oldVec);
 		VectorCopy(vec, oldVec);
 	}
-	return qtrue;
+	return true;
 }
 
 /**
@@ -1030,7 +1030,7 @@ static void CL_ActorUse_f (void)
  * @param mode The actor mode
  * @return @c true if we are in fire mode, @c false otherwise
  */
-qboolean CL_ActorFireModeActivated (const actorModes_t mode)
+bool CL_ActorFireModeActivated (const actorModes_t mode)
 {
 	return IS_MODE_FIRE_RIGHT(mode) || IS_MODE_FIRE_LEFT(mode) || IS_MODE_FIRE_HEADGEAR(mode);
 }
@@ -1250,7 +1250,7 @@ MOUSE SCANNING
  * @note Sets global var mouseActor to current selected le
  * @sa IN_Parse
  */
-qboolean CL_ActorMouseTrace (void)
+bool CL_ActorMouseTrace (void)
 {
 	float cur[2], frustumSlope[2];
 	const float projectionDistance = 2048.0f;
@@ -1332,7 +1332,7 @@ qboolean CL_ActorMouseTrace (void)
 	 * this could result in different problems like the zooming issue (where you can't zoom
 	 * in again, because in_zoomout->state is not reseted). */
 	if (CL_OutsideMap(pA, MAP_SIZE_OFFSET))
-		return qfalse;
+		return false;
 
 	VectorCopy(pA, pB);
 	pA[2] += UNIT_HEIGHT;
@@ -1356,7 +1356,7 @@ qboolean CL_ActorMouseTrace (void)
 
 	/* test if the selected grid is out of the world */
 	if (restingLevel >= PATHFINDING_HEIGHT)
-		return qfalse;
+		return false;
 
 	/* Set truePos- test pos is under the cursor. */
 	VectorCopy(testPos, truePos);
@@ -1366,7 +1366,7 @@ qboolean CL_ActorMouseTrace (void)
 	testPos[2] = restingLevel;
 	VectorCopy(testPos, mousePos);
 
-	interactLe = CL_BattlescapeSearchAtGridPos(mousePos, qfalse, selActor);
+	interactLe = CL_BattlescapeSearchAtGridPos(mousePos, false, selActor);
 	if (interactLe != NULL && LE_IsActor(interactLe)) {
 		mouseActor = interactLe;
 		interactEntity = NULL;
@@ -1390,7 +1390,7 @@ qboolean CL_ActorMouseTrace (void)
 		CL_ActorResetMoveLength(selActor);
 	}
 
-	return qtrue;
+	return true;
 }
 
 /*
@@ -1405,15 +1405,15 @@ ACTOR GRAPHICS
  * @return true if the weapon is a valid item and false if it's a dummy item or the actor has nothing
  * in the given hand
  */
-static inline qboolean CL_AddActorWeapon (int objID)
+static inline bool CL_AddActorWeapon (int objID)
 {
 	if (objID != NONE) {
 		const objDef_t *od = INVSH_GetItemByIDX(objID);
 		if (od->isVirtual)
-			return qfalse;
-		return qtrue;
+			return false;
+		return true;
 	}
-	return qfalse;
+	return false;
 }
 
 /**
@@ -1425,20 +1425,20 @@ static inline qboolean CL_AddActorWeapon (int objID)
  * @sa CL_ActorAppear
  * @note Called via addfunc for each local entity in every frame
  */
-qboolean CL_AddActor (le_t * le, entity_t * ent)
+bool CL_AddActor (le_t * le, entity_t * ent)
 {
 	entity_t add;
 
 	if (!cl_showactors->integer)
-		return qfalse;
+		return false;
 
 	if (LE_IsStunned(le)) {
 		if (!le->ptl)
 			le->ptl = CL_ParticleSpawn("stunnedactor", 0, le->origin);
 	} else if (!LE_IsDead(le)) {
 		/* add the weapons to the actor's hands */
-		const qboolean addLeftHandWeapon = CL_AddActorWeapon(le->left);
-		const qboolean addRightHandWeapon = CL_AddActorWeapon(le->right);
+		const bool addLeftHandWeapon = CL_AddActorWeapon(le->left);
+		const bool addRightHandWeapon = CL_AddActorWeapon(le->right);
 		/* add left hand weapon */
 		if (addLeftHandWeapon) {
 			OBJZERO(add);
@@ -1535,7 +1535,7 @@ qboolean CL_AddActor (le_t * le, entity_t * ent)
 		ent->texture = R_FindImage(deathTextureName, it_effect);
 	}
 
-	return qtrue;
+	return true;
 }
 
 /*
@@ -1571,7 +1571,7 @@ static void CL_TargetingStraight (const pos3_t fromPos, actorSizeEnum_t fromActo
 	vec3_t start, end;
 	vec3_t dir, mid, temp;
 	trace_t tr;
-	qboolean crossNo;
+	bool crossNo;
 	le_t *target = NULL;
 	actorSizeEnum_t toActorSize;
 
@@ -1579,7 +1579,7 @@ static void CL_TargetingStraight (const pos3_t fromPos, actorSizeEnum_t fromActo
 		return;
 
 	/* search for an actor at target */
-	target = CL_BattlescapeSearchAtGridPos(toPos, qtrue, NULL);
+	target = CL_BattlescapeSearchAtGridPos(toPos, true, NULL);
 
 	/* Determine the target's size. */
 	toActorSize = target
@@ -1598,10 +1598,10 @@ static void CL_TargetingStraight (const pos3_t fromPos, actorSizeEnum_t fromActo
 	/* calculate 'out of range point' if there is one */
 	if (VectorDistSqr(start, end) > selActor->fd->range * selActor->fd->range) {
 		VectorMA(start, selActor->fd->range, dir, mid);
-		crossNo = qtrue;
+		crossNo = true;
 	} else {
 		VectorCopy(end, mid);
-		crossNo = qfalse;
+		crossNo = false;
 	}
 
 	VectorMA(start, UNIT_SIZE * 1.4, dir, temp);
@@ -1621,7 +1621,7 @@ static void CL_TargetingStraight (const pos3_t fromPos, actorSizeEnum_t fromActo
 	if (tr.fraction < 1.0 && (!tr.le || !VectorCompare(tr.le->pos, toPos))) {
 		const float d = VectorDist(temp, mid);
 		VectorMA(start, tr.fraction * d, dir, mid);
-		crossNo = qtrue;
+		crossNo = true;
 	}
 
 	/* spawn particles */
@@ -1650,7 +1650,7 @@ static void CL_TargetingGrenade (const pos3_t fromPos, actorSizeEnum_t fromActor
 	float vz, dt;
 	vec3_t v0, ds, next;
 	trace_t tr;
-	qboolean obstructed = qfalse;
+	bool obstructed = false;
 	int i;
 	le_t *target = NULL;
 	actorSizeEnum_t toActorSize;
@@ -1659,7 +1659,7 @@ static void CL_TargetingGrenade (const pos3_t fromPos, actorSizeEnum_t fromActor
 		return;
 
 	/* search for an actor at target */
-	target = CL_BattlescapeSearchAtGridPos(toPos, qtrue, NULL);
+	target = CL_BattlescapeSearchAtGridPos(toPos, true, NULL);
 
 	/* Determine the target's size. */
 	toActorSize = target
@@ -1704,7 +1704,7 @@ static void CL_TargetingGrenade (const pos3_t fromPos, actorSizeEnum_t fromActor
 
 		/* something was hit */
 		if (tr.fraction < 1.0 && (!tr.le || !VectorCompare(tr.le->pos, toPos))) {
-			obstructed = qtrue;
+			obstructed = true;
 		}
 
 		/* draw particles */
@@ -1741,7 +1741,7 @@ static const vec3_t boxSize = { BOX_DELTA_WIDTH, BOX_DELTA_LENGTH, BOX_DELTA_HEI
  * @sa CL_ParseClientinfo
  * @sa CL_TraceMove
  */
-static void CL_AddTargetingBox (pos3_t pos, qboolean pendBox)
+static void CL_AddTargetingBox (pos3_t pos, bool pendBox)
 {
 	entity_t ent;
 	vec3_t realBoxSize;
@@ -1915,11 +1915,11 @@ void CL_AddTargeting (void)
 			return;
 
 		/* Display Move-cursor. */
-		CL_AddTargetingBox(mousePos, qfalse);
+		CL_AddTargetingBox(mousePos, false);
 
 		if (selActor->actorMode == M_PEND_MOVE) {
 			/* Also display a box for the pending move if we have one. */
-			CL_AddTargetingBox(selActor->mousePendPos, qtrue);
+			CL_AddTargetingBox(selActor->mousePendPos, true);
 			if (!CL_ActorTraceMove(selActor->mousePendPos))
 				CL_ActorSetMode(selActor, M_MOVE);
 		}
@@ -1940,10 +1940,10 @@ void CL_AddTargeting (void)
 			return;
 
 		/* Draw cursor at mousepointer */
-		CL_AddTargetingBox(mousePos, qfalse);
+		CL_AddTargetingBox(mousePos, false);
 
 		/* Draw (pending) Cursor at target */
-		CL_AddTargetingBox(selActor->mousePendPos, qtrue);
+		CL_AddTargetingBox(selActor->mousePendPos, true);
 
 		if (!selActor->fd->gravity)
 			CL_TargetingStraight(selActor->pos, selActor->fieldSize, selActor->mousePendPos);
@@ -1961,17 +1961,17 @@ static const vec3_t boxShift = { PLAYER_WIDTH, PLAYER_WIDTH, UNIT_HEIGHT / 2 - D
  * @brief create a targeting box at the given position
  * @sa CL_ParseClientinfo
  */
-static qboolean CL_AddPathingBox (pos3_t pos, qboolean addUnreachableCells)
+static bool CL_AddPathingBox (pos3_t pos, bool addUnreachableCells)
 {
 	entity_t ent;
 	int height; /* The total opening size */
 	int base; /* The floor relative to this cell */
 
 	const byte crouchingState = LE_IsCrouched(selActor) ? 1 : 0;
-	const int TUneed = Grid_MoveLength(&cl.pathMap, pos, crouchingState, qfalse);
+	const int TUneed = Grid_MoveLength(&cl.pathMap, pos, crouchingState, false);
 	const int TUhave = CL_ActorUsableTUs(selActor);
 	if (!addUnreachableCells && TUhave < TUneed)
-		return qfalse;
+		return false;
 
 	OBJZERO(ent);
 	ent.flags = RF_PATH;
@@ -2003,7 +2003,7 @@ static qboolean CL_AddPathingBox (pos3_t pos, qboolean addUnreachableCells)
 
 	/* add it */
 	R_AddEntity(&ent);
-	return qtrue;
+	return true;
 }
 
 /**
@@ -2022,7 +2022,7 @@ void CL_AddPathing (void)
 	pos[2] = cl_worldlevel->integer;
 	for (pos[1] = std::max(mousePos[1] - 8, 0); pos[1] <= std::min(mousePos[1] + 8, PATHFINDING_WIDTH - 1); pos[1]++) {
 		for (pos[0] = std::max(mousePos[0] - 8, 0); pos[0] <= std::min(mousePos[0] + 8, PATHFINDING_WIDTH - 1); pos[0]++) {
-			CL_AddPathingBox(pos, qtrue);
+			CL_AddPathingBox(pos, true);
 		}
 	}
 }
@@ -2047,7 +2047,7 @@ void CL_AddActorPathing (void)
 		for (x = 0; x <= PATHFINDING_WIDTH; x++) {
 			pos[0] = (pos_t)x;
 			pos[1] = (pos_t)y;
-			i += CL_AddPathingBox(pos, qfalse);
+			i += CL_AddPathingBox(pos, false);
 			if (i > 1024)
 				return;
 		}
@@ -2159,11 +2159,11 @@ static void CL_DumpTUs_f (void)
 	for (y = std::max(0, pos[1] - 8); y <= std::min(PATHFINDING_WIDTH, pos[1] + 8); y++) {
 		for (x = std::max(0, pos[0] - 8); x <= std::min(PATHFINDING_WIDTH, pos[0] + 8); x++) {
 			VectorSet(loc, x, y, pos[2]);
-			Com_Printf("%3i ", Grid_MoveLength(&cl.pathMap, loc, crouchingState, qfalse));
+			Com_Printf("%3i ", Grid_MoveLength(&cl.pathMap, loc, crouchingState, false));
 		}
 		Com_Printf("\n");
 	}
-	Com_Printf("TUs at (%i, %i, %i) = %i\n", pos[0], pos[1], pos[2], Grid_MoveLength(&cl.pathMap, pos, crouchingState, qfalse));
+	Com_Printf("TUs at (%i, %i, %i) = %i\n", pos[0], pos[1], pos[2], Grid_MoveLength(&cl.pathMap, pos, crouchingState, false));
 }
 
 /**
@@ -2279,7 +2279,7 @@ static void CL_ActorUpdate_f (void)
  * @param[in] check The local entity to check the visibility for
  * @return @c true if the given edict is visible from the given world coordinate, @c false otherwise.
  */
-static qboolean CL_ActorVis (const le_t *le, const le_t *check)
+static bool CL_ActorVis (const le_t *le, const le_t *check)
 {
 	vec3_t test, dir;
 	float delta;
@@ -2315,16 +2315,16 @@ static qboolean CL_ActorVis (const le_t *le, const le_t *check)
 		if (tr.fraction < 1.0) {
 			/* look further down or stop */
 			if (!delta)
-				return qfalse;
+				return false;
 			VectorMA(test, 7, dir, test);
 			test[2] -= delta;
 			continue;
 		}
 
-		return qtrue;
+		return true;
 	}
 
-	return qfalse;
+	return false;
 }
 
 /**

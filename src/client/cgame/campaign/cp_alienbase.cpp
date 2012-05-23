@@ -51,7 +51,7 @@ void AB_SetAlienBasePosition (vec2_t pos)
 		float distance = 0.0f;
 
 		/* Get a random position */
-		CP_GetRandomPosOnGeoscape(randomPos, qtrue);
+		CP_GetRandomPosOnGeoscape(randomPos, true);
 
 		/* Alien base must not be too close from phalanx base */
 		if (MAP_PositionCloseToBase(randomPos))
@@ -137,7 +137,7 @@ void CP_SpawnAlienBaseMission (alienBase_t *alienBase)
 {
 	mission_t *mission;
 
-	mission = CP_CreateNewMission(INTERESTCATEGORY_ALIENBASE, qtrue);
+	mission = CP_CreateNewMission(INTERESTCATEGORY_ALIENBASE, true);
 	if (!mission) {
 		Com_Printf("CP_SpawnAlienBaseMission: Could not add mission, abort\n");
 		return;
@@ -151,14 +151,14 @@ void CP_SpawnAlienBaseMission (alienBase_t *alienBase)
 		Com_Error(ERR_FATAL, "Could not find mapdef " MAPDEF_ALIENBASE);
 
 	Vector2Copy(alienBase->pos, mission->pos);
-	mission->posAssigned = qtrue;
+	mission->posAssigned = true;
 
 	Com_sprintf(mission->location, sizeof(mission->location), _("Alien base"));
 
 	/* Alien base stay until it's destroyed */
 	CP_MissionDisableTimeLimit(mission);
 	/* mission appear on geoscape, player can go there */
-	CP_MissionAddToGeoscape(mission, qfalse);
+	CP_MissionAddToGeoscape(mission, false);
 
 	if (!RS_MarkStoryLineEventResearched(ALIENBASE_DISCOVERED_TECH))
 		Com_DPrintf(DEBUG_CLIENT, ALIENBASE_DISCOVERED_TECH" is not marked as researched\n");
@@ -267,7 +267,7 @@ void AB_BaseSearchedByNations (void)
  * @brief Check if a supply mission is possible.
  * @return True if there is at least one base to supply.
  */
-qboolean AB_CheckSupplyMissionPossible (void)
+bool AB_CheckSupplyMissionPossible (void)
 {
 	return AB_Exists();
 }
@@ -287,7 +287,7 @@ alienBase_t* AB_ChooseBaseToSupply (void)
  * @param[in] base Pointer to the supplied base.
  * @param[in] decreaseStealth If the stealth level of the base should be decreased.
  */
-void AB_SupplyBase (alienBase_t *base, qboolean decreaseStealth)
+void AB_SupplyBase (alienBase_t *base, bool decreaseStealth)
 {
 	const float decreasedStealthValue = 5.0f;				/**< How much stealth is reduced because Supply UFO was seen */
 
@@ -342,14 +342,14 @@ static void AB_AlienBaseList_f (void)
  * @param[in] p XML Node structure, where we get the information from
  * @sa AB_SaveXML
  */
-qboolean AB_LoadXML (xmlNode_t *p)
+bool AB_LoadXML (xmlNode_t *p)
 {
 	int i; /**< @todo this is for old saves now only */
 	xmlNode_t *n, *s;
 
 	n = XML_GetNode(p, SAVE_ALIENBASE_ALIENBASES);
 	if (!n)
-		return qfalse;
+		return false;
 
 	for (i = 0, s = XML_GetNode(n, SAVE_ALIENBASE_BASE); s; i++, s = XML_GetNextNode(s, n, SAVE_ALIENBASE_BASE)) {
 		alienBase_t base;
@@ -357,18 +357,18 @@ qboolean AB_LoadXML (xmlNode_t *p)
 		base.idx = XML_GetInt(s, SAVE_ALIENBASE_IDX, -1);
 		if (base.idx < 0) {
 			Com_Printf("Invalid or no IDX defined for Alienbase %d.\n", i);
-			return qfalse;
+			return false;
 		}
 		if (!XML_GetPos2(s, SAVE_ALIENBASE_POS, base.pos)) {
 			Com_Printf("Position is invalid for Alienbase (idx %d)\n", base.idx);
-			return qfalse;
+			return false;
 		}
 		base.supply = XML_GetInt(s, SAVE_ALIENBASE_SUPPLY, 0);
 		base.stealth = XML_GetFloat(s, SAVE_ALIENBASE_STEALTH, 0.0);
 		LIST_Add(&ccs.alienBases, base);
 	}
 
-	return qtrue;
+	return true;
 }
 
 /**
@@ -376,7 +376,7 @@ qboolean AB_LoadXML (xmlNode_t *p)
  * @param[out] p XML Node structure, where we write the information to
  * @sa AB_LoadXML
  */
-qboolean AB_SaveXML (xmlNode_t *p)
+bool AB_SaveXML (xmlNode_t *p)
 {
 	xmlNode_t *n = XML_AddNode(p, SAVE_ALIENBASE_ALIENBASES);
 
@@ -388,7 +388,7 @@ qboolean AB_SaveXML (xmlNode_t *p)
 		XML_AddFloatValue(s, SAVE_ALIENBASE_STEALTH, base->stealth);
 	}
 
-	return qtrue;
+	return true;
 }
 
 /**

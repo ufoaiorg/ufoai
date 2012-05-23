@@ -186,7 +186,7 @@ void Com_Printf (const char *format, ...)
  * less important. The message will first be printed if the msgVerbLevel is equal to the config.verbosity.
  * @sa verbosityLevel_t
  */
-qboolean AbortPrint (const verbosityLevel_t msgVerbLevel)
+bool AbortPrint (const verbosityLevel_t msgVerbLevel)
 {
 	return (msgVerbLevel > config.verbosity);
 }
@@ -230,11 +230,11 @@ static void U2M_Parameter (int argc, char **argv)
 		} else if (Q_streq(argv[i], "-noweld")) {
 			/* make every point unique */
 			Verb_Printf(VERB_LESS, "noweld = true\n");
-			config.noweld = qtrue;
+			config.noweld = true;
 		} else if (Q_streq(argv[i], "--statistics") || Q_streq(argv[i], "-stats")) {
 			Verb_Printf(VERB_LESS, "statistics mode\n");
-			config.stats = qtrue;
-			config.performMapCheck = qtrue;
+			config.stats = true;
+			config.performMapCheck = true;
 		} else if (Q_streq(argv[i], "-check") || Q_streq(argv[i], "-fix")) {
 			/* check for subparameters terminate loop before last arg (path) or
 			 * when we hit a param (as opposed to a subparam).
@@ -243,42 +243,42 @@ static void U2M_Parameter (int argc, char **argv)
 
 			if (Q_streq(argv[i], "-check")) {
 				Verb_Printf(VERB_LESS, "check = true\n");
-				config.performMapCheck = qtrue;
+				config.performMapCheck = true;
 			}
 			if (Q_streq(argv[i], "-fix")) {
 				Verb_Printf(VERB_LESS, "fix = true\n");
-				config.fixMap = qtrue;
+				config.fixMap = true;
 			}
 			while (++i < (argc - 1) && argv[i][0] != '-') {
 				if (Q_streq(argv[i], "entities") || Q_streq(argv[i], "ent")) {
 					Verb_Printf(VERB_LESS, "  %s entities\n", config.fixMap ? "fixing" : "checking");
-					config.chkEntities = qtrue;
+					config.chkEntities = true;
 				} else if (Q_streq(argv[i], "brushes") || Q_streq(argv[i], "bru")) {
 					Verb_Printf(VERB_LESS, "  %s brushes\n", config.fixMap ? "fixing" : "checking");
-					config.chkBrushes = qtrue;
+					config.chkBrushes = true;
 				} else if (Q_streq(argv[i], "contained") || Q_streq(argv[i], "con")) {
 					Verb_Printf(VERB_LESS, "  %s contained brushes\n", config.fixMap ? "fixing" : "checking");
-					config.chkContained = qtrue;
+					config.chkContained = true;
 				} else if (Q_streq(argv[i], "filllevelflags") || Q_streq(argv[i], "flv")) {
 					Verb_Printf(VERB_LESS, "  %s filllevelflags\n", config.fixMap ? "fixing" : "checking");
-					config.chkFillLevelFlags = qtrue;
+					config.chkFillLevelFlags = true;
 				} else if (Q_streq(argv[i], "levelflags") || Q_streq(argv[i], "lvl")) {
 					Verb_Printf(VERB_LESS, "  %s levelflags\n", config.fixMap ? "fixing" : "checking");
-					config.chkLevelFlags = qtrue;
+					config.chkLevelFlags = true;
 				} else if (Q_streq(argv[i], "textures") || Q_streq(argv[i], "tex")) {
 					Verb_Printf(VERB_LESS, "  %s textures\n", config.fixMap ? "fixing" : "checking");
-					config.chkTextures = qtrue;
+					config.chkTextures = true;
 				} else if (Q_streq(argv[i], "nodraws") || Q_streq(argv[i], "ndr")) {
 					Verb_Printf(VERB_LESS, "  %s nodraws\n", config.fixMap ? "fixing" : "checking");
-					config.chkNodraws = qtrue;
+					config.chkNodraws = true;
 				} else if (Q_streq(argv[i], "intersection") || Q_streq(argv[i], "isc")) {
 					Verb_Printf(VERB_LESS, "  %s intersection\n", config.fixMap ? "fixing" : "checking");
-					config.chkIntersection = qtrue;
+					config.chkIntersection = true;
 				} else if (Q_streq(argv[i], "mixedfacecontents") || Q_streq(argv[i], "mfc")) {
 					Verb_Printf(VERB_LESS, "  %s mixedfacecontents\n", config.fixMap ? "fixing" : "checking");
-					config.chkMixedFaceContents = qtrue;
+					config.chkMixedFaceContents = true;
 				} else if (Q_streq(argv[i], "microbrush") || Q_streq(argv[i], "mbr")) {
-					config.chkMMicro = qtrue;
+					config.chkMMicro = true;
 					if (atof(argv[i + 1]) > 0.0001) {
 						config.mapMicrovol = atof(argv[i + 1]);
 						i++;
@@ -286,10 +286,10 @@ static void U2M_Parameter (int argc, char **argv)
 					Verb_Printf(VERB_LESS, "  checking map for microbrushes smaller than %f unit^3\n", config.mapMicrovol);
 				} else if (Q_streq(argv[i], "zfighting") || Q_streq(argv[i], "zft")) {
 					Verb_Printf(VERB_LESS, "  %s for z-fighting\n", config.fixMap ? "fixing" : "checking");
-					config.chkZFight = qtrue;
+					config.chkZFight = true;
 				} else if (Q_streq(argv[i], "all")) {
 					Verb_Printf(VERB_LESS, "  %s all (entites brushes)\n", config.fixMap ? "fixing" : "checking");
-					config.chkAll = qtrue;
+					config.chkAll = true;
 				} else {
 					Verb_Printf(VERB_LESS, "  WARNING: %s subparameter not understood:%s  try --help for more info\n", config.fixMap ? "fix" : "check", argv[i]);
 				}
@@ -298,7 +298,7 @@ static void U2M_Parameter (int argc, char **argv)
 			/* if no subparams set, assume all */
 			if (i == iInitial) {
 				Verb_Printf(VERB_LESS, "  no %s subparameters set, assuming all\n", config.fixMap ? "fix" : "check");
-				config.chkAll = qtrue;
+				config.chkAll = true;
 			}
 		} else if (Q_streq(argv[i], "-h") || Q_streq(argv[i], "--help")) {
 			Usage();
@@ -307,23 +307,23 @@ static void U2M_Parameter (int argc, char **argv)
 			threadstate.numthreads = atoi(argv[++i]);
 			Verb_Printf(VERB_LESS, "threads: #%i\n", threadstate.numthreads);
 		} else if (Q_streq(argv[i], "-info")) {
-			config.info = qtrue;
+			config.info = true;
 		} else if (Q_streq(argv[i], "-nocsg")) {
 			Verb_Printf(VERB_LESS, "nocsg = true\n");
-			config.nocsg = qtrue;
+			config.nocsg = true;
 		} else if (Q_streq(argv[i], "-gamedir")) {
 			Q_strncpyz(config.gamedir, argv[i + 1], sizeof(config.gamedir));
 			Verb_Printf(VERB_LESS, "additional gamedir = %s\n", config.gamedir);
 			i++;
 		} else if (Q_streq(argv[i], "-noshare")) {
 			Verb_Printf(VERB_LESS, "noshare = true\n");
-			config.noshare = qtrue;
+			config.noshare = true;
 		} else if (Q_streq(argv[i], "-notjunc")) {
 			Verb_Printf(VERB_LESS, "notjunc = true\n");
-			config.notjunc = qtrue;
+			config.notjunc = true;
 		} else if (Q_streq(argv[i], "-nowater")) {
 			Verb_Printf(VERB_LESS, "nowater = true\n");
-			config.nowater = qtrue;
+			config.nowater = true;
 		} else if (Q_streq(argv[i], "-nice")) {
 #if defined _WIN32
 			HANDLE proc = GetCurrentProcess();
@@ -352,44 +352,44 @@ static void U2M_Parameter (int argc, char **argv)
 #endif
 		} else if (Q_streq(argv[i], "-noprune")) {
 			Verb_Printf(VERB_LESS, "noprune = true\n");
-			config.noprune = qtrue;
+			config.noprune = true;
 		} else if (Q_streq(argv[i],"-nofootstep")) {
-			config.generateFootstepFile = qfalse;
+			config.generateFootstepFile = false;
 			Verb_Printf(VERB_LESS, "generateFootstepFile = false\n");
 		} else if (Q_streq(argv[i],"-tracefile")) {
-			config.generateTraceFile = qtrue;
+			config.generateTraceFile = true;
 			Verb_Printf(VERB_NORMAL, "generateTraceFile = true\n");
 		} else if (Q_streq(argv[i],"-debugtrace")) {
-			config.generateDebugTrace = qtrue;
+			config.generateDebugTrace = true;
 			Verb_Printf(VERB_NORMAL, "generateDebugTrace = true\n");
 		} else if (Q_streq(argv[i],"-material")) {
-			config.generateMaterialFile = qtrue;
+			config.generateMaterialFile = true;
 			Verb_Printf(VERB_LESS, "generateMaterialFile = true\n");
 		} else if (Q_streq(argv[i], "-nomerge")) {
 			Verb_Printf(VERB_LESS, "nomerge = true\n");
-			config.nomerge = qtrue;
+			config.nomerge = true;
 		} else if (Q_streq(argv[i], "-nosubdiv")) {
 			Verb_Printf(VERB_LESS, "nosubdiv = true\n");
-			config.nosubdiv = qtrue;
+			config.nosubdiv = true;
 		} else if (Q_streq(argv[i], "-nodetail")) {
 			Verb_Printf(VERB_LESS, "nodetail = true\n");
-			config.nodetail = qtrue;
+			config.nodetail = true;
 		} else if (Q_streq(argv[i], "-fulldetail")) {
 			Verb_Printf(VERB_LESS, "fulldetail = true\n");
-			config.fulldetail = qtrue;
+			config.fulldetail = true;
 		} else if (Q_streq(argv[i], "-onlyents")) {
 			Verb_Printf(VERB_LESS, "onlyents = true\n");
-			config.onlyents = qtrue;
+			config.onlyents = true;
 		} else if (Q_streq(argv[i], "-exportlightmaps")) {
 			Verb_Printf(VERB_LESS, "exportlightmaps = true\n");
-			config.exportLightmaps = qtrue;
+			config.exportLightmaps = true;
 		} else if (Q_streq(argv[i], "-micro")) {
 			config.microvolume = atof(argv[i + 1]);
 			Verb_Printf(VERB_LESS, "microvolume = %f\n", config.microvolume);
 			i++;
 		} else if (Q_streq(argv[i], "-verboseentities")) {
 			Verb_Printf(VERB_LESS, "verboseentities = true\n");
-			config.verboseentities = qtrue;
+			config.verboseentities = true;
 		} else if (Q_streq(argv[i], "-subdivide")) {
 			config.subdivideSize = atof(argv[i + 1]);
 			Verb_Printf(VERB_LESS, "subdivide_size = %f\n", config.subdivideSize);
@@ -409,13 +409,13 @@ static void U2M_Parameter (int argc, char **argv)
 			i += 4;
 		} else if (Q_streq(argv[i], "-nobackclip")) {
 			Verb_Printf(VERB_LESS, "nobackclip = true\n");
-			config.nobackclip = qtrue;
+			config.nobackclip = true;
 		} else if (Q_streq(argv[i], "-extra")) {
-			config.extrasamples = qtrue;
+			config.extrasamples = true;
 			Verb_Printf(VERB_LESS, "extrasamples = true\n");
 		} else if (Q_streq(argv[i], "-soft")) {
-			config.extrasamples = qtrue;
-			config.soft = qtrue;
+			config.extrasamples = true;
+			config.soft = true;
 			Verb_Printf(VERB_LESS, "extrasamples = true\n");
 			Verb_Printf(VERB_LESS, "soft = true\n");
 		} else if (Q_streq(argv[i], "-quant")) {
@@ -476,8 +476,8 @@ static void U2M_Parameter (int argc, char **argv)
 
 	/* if any check or fix option is active then skip footsteps and materials */
 	if (config.performMapCheck || config.fixMap) {
-		config.generateFootstepFile = qfalse;
-		config.generateMaterialFile = qfalse;
+		config.generateFootstepFile = false;
+		config.generateMaterialFile = false;
 	}
 }
 
@@ -519,10 +519,10 @@ static void U2M_SetDefaultConfigValues (void)
 	config.surface_scale = 0.4f;
 	config.entity_scale = 1.0f;
 
-	config.generateFootstepFile = qtrue;
+	config.generateFootstepFile = true;
 
-	config.generateTraceFile = qfalse;
-	config.generateDebugTrace = qfalse;
+	config.generateTraceFile = false;
+	config.generateDebugTrace = false;
 }
 
 /**
@@ -575,9 +575,9 @@ int main (int argc, char **argv)
 
 	Verb_Printf(VERB_NORMAL, "path: '%s'\n", argv[argc - 1]);
 
-	FS_InitFilesystem(qfalse);
+	FS_InitFilesystem(false);
 	if (config.gamedir[0] != '\0')
-		FS_AddGameDirectory(config.gamedir, qtrue);
+		FS_AddGameDirectory(config.gamedir, true);
 
 	Com_StripExtension(argv[argc - 1], mapFilename, sizeof(mapFilename));
 	strncpy(baseFilename, mapFilename, sizeof(baseFilename) - 1);

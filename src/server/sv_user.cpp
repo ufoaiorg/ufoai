@@ -121,7 +121,7 @@ static void SV_New_f (client_t *cl)
  */
 static void SV_Begin_f (client_t *cl)
 {
-	qboolean began;
+	bool began;
 
 	Com_DPrintf(DEBUG_SERVER, "Begin() from %s\n", cl->name);
 
@@ -211,7 +211,7 @@ static void SV_ExecuteUserCommand (client_t * cl, const char *s)
 {
 	const ucmd_t *u;
 
-	Cmd_TokenizeString(s, qfalse);
+	Cmd_TokenizeString(s, false);
 
 	for (u = ucmds; u->name; u++)
 		if (Q_streq(Cmd_Argv(0), u->name)) {

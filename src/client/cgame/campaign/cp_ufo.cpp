@@ -122,7 +122,7 @@ const aircraft_t* UFO_GetByType (const ufoType_t type)
  * @param type The UFO type to check the interest level for
  * @return @c true if the UFO may appear on geoscape, @c false otherwise
  */
-qboolean UFO_ShouldAppearOnGeoscape (const ufoType_t type)
+bool UFO_ShouldAppearOnGeoscape (const ufoType_t type)
 {
 	const aircraft_t *ufo = UFO_GetByType(type);
 
@@ -167,7 +167,7 @@ void UFO_SetRandomDest (aircraft_t* ufocraft)
 {
 	vec2_t pos;
 
-	CP_GetRandomPosOnGeoscape(pos, qfalse);
+	CP_GetRandomPosOnGeoscape(pos, false);
 
 	UFO_SendToDestination(ufocraft, pos);
 }
@@ -202,7 +202,7 @@ static void UFO_SetRandomPos (aircraft_t* ufocraft)
 {
 	vec2_t pos;
 
-	CP_GetRandomPosOnGeoscape(pos, qfalse);
+	CP_GetRandomPosOnGeoscape(pos, false);
 
 	Vector2Copy(pos, ufocraft->pos);
 }
@@ -417,7 +417,7 @@ static void UFO_SearchAircraftTarget (const campaign_t* campaign, aircraft_t *uf
  * @param[in,out] aircraft Pointer to the target aircraft.
  * @sa UFO_SendAttackBase
  */
-qboolean UFO_SendPursuingAircraft (aircraft_t* ufo, aircraft_t* aircraft)
+bool UFO_SendPursuingAircraft (aircraft_t* ufo, aircraft_t* aircraft)
 {
 	int slotIdx;
 	vec2_t dest;
@@ -430,7 +430,7 @@ qboolean UFO_SendPursuingAircraft (aircraft_t* ufo, aircraft_t* aircraft)
 	if (slotIdx == AIRFIGHT_WEAPON_CAN_NEVER_SHOOT) {
 		/* no ammo left: stop attack */
 		ufo->status = AIR_TRANSIT;
-		return qfalse;
+		return false;
 	}
 
 	AIR_GetDestinationWhilePursuing(ufo, aircraft, &dest);
@@ -440,7 +440,7 @@ qboolean UFO_SendPursuingAircraft (aircraft_t* ufo, aircraft_t* aircraft)
 	ufo->point = 0;
 	ufo->aircraftTarget = aircraft;
 
-	return qtrue;
+	return true;
 }
 
 /**
@@ -547,7 +547,7 @@ static void UFO_DestroyUFOs_f (void)
 	campaign_t* campaign = ccs.curCampaign;
 
 	for (ufo = ccs.ufos; ufo < ccs.ufos + ccs.numUFOs; ufo++) {
-		AIRFIGHT_ActionsAfterAirfight(campaign, NULL, ufo, qtrue);
+		AIRFIGHT_ActionsAfterAirfight(campaign, NULL, ufo, true);
 	}
 }
 
@@ -670,8 +670,8 @@ aircraft_t *UFO_AddToGeoscape (ufoType_t ufoType, const vec2_t destination, miss
 	/* Initialise ufo data */
 	UFO_SetRandomPos(ufo);
 	AII_ReloadAircraftWeapons(ufo); /* Load its weapons */
-	ufo->landed = qfalse;
-	ufo->detected = qfalse; /* Not visible in radars (just for now) */
+	ufo->landed = false;
+	ufo->detected = false; /* Not visible in radars (just for now) */
 	ufo->mission = mission;
 	if (destination)
 		UFO_SendToDestination(ufo, destination);
@@ -718,7 +718,7 @@ void UFO_DetectNewUFO (aircraft_t *ufocraft)
 		return;
 
 	/* Make this UFO detected */
-	ufocraft->detected = qtrue;
+	ufocraft->detected = true;
 	if (!ufocraft->detectionIdx) {
 		ufocraft->detectionIdx = ++ccs.campaignStats.ufosDetected;
 	}
@@ -733,14 +733,14 @@ void UFO_DetectNewUFO (aircraft_t *ufocraft)
 
 /**
  * @brief Check events for UFOs: Appears or disappears on radars
- * @return qtrue if any new ufo was detected during this iteration, qfalse otherwise
+ * @return true if any new ufo was detected during this iteration, false otherwise
  */
-qboolean UFO_CampaignCheckEvents (void)
+bool UFO_CampaignCheckEvents (void)
 {
-	qboolean newDetection;
+	bool newDetection;
 	aircraft_t *ufo;
 
-	newDetection = qfalse;
+	newDetection = false;
 
 	/* For each ufo in geoscape */
 	ufo = NULL;
@@ -749,7 +749,7 @@ qboolean UFO_CampaignCheckEvents (void)
 		float minDistance = -1;
 		/* detected tells us whether or not a UFO is detected NOW, whereas ufo->detected tells
 		 * us whether or not the UFO was detected PREVIOUSLY. */
-		qboolean detected = qfalse;
+		bool detected = false;
 		base_t *base;
 
 		/* don't update UFO status id UFO is landed or crashed */
@@ -767,7 +767,7 @@ qboolean UFO_CampaignCheckEvents (void)
 			/* maybe the ufo is already detected, don't reset it */
 			if (RADAR_CheckUFOSensored(&aircraft->radar, aircraft->pos, ufo, detected | ufo->detected)) {
 				const int distance = GetDistanceOnGlobe(aircraft->pos, ufo->pos);
-				detected = qtrue;
+				detected = true;
 				if (minDistance < 0 || minDistance > distance) {
 					minDistance = distance;
 					Q_strncpyz(detectedBy, aircraft->name, sizeof(detectedBy));
@@ -784,7 +784,7 @@ qboolean UFO_CampaignCheckEvents (void)
 			/* maybe the ufo is already detected, don't reset it */
 			if (RADAR_CheckUFOSensored(&base->radar, base->pos, ufo, detected | ufo->detected)) {
 				const int distance = GetDistanceOnGlobe(base->pos, ufo->pos);
-				detected = qtrue;
+				detected = true;
 				if (minDistance < 0 || minDistance > distance) {
 					minDistance = distance;
 					Q_strncpyz(detectedBy, base->name, sizeof(detectedBy));
@@ -798,7 +798,7 @@ qboolean UFO_CampaignCheckEvents (void)
 			/* maybe the ufo is already detected, don't reset it */
 			if (RADAR_CheckUFOSensored(&installation->radar, installation->pos, ufo, detected | ufo->detected)) {
 				const int distance = GetDistanceOnGlobe(installation->pos, ufo->pos);
-				detected = qtrue;
+				detected = true;
 				if (minDistance < 0 || minDistance > distance) {
 					minDistance = distance;
 					Q_strncpyz(detectedBy, installation->name, sizeof(detectedBy));
@@ -818,12 +818,12 @@ qboolean UFO_CampaignCheckEvents (void)
 				} else {
 					MSO_CheckAddNewMessage(NT_UFO_SPOTTED, _("Notice"), va(_("Our radar detected a new UFO near %s"), detectedBy), MSG_UFOSPOTTED);
 				}
-				newDetection = qtrue;
+				newDetection = true;
 				UFO_DetectNewUFO(ufo);
 			} else if (!detected) {
 				MSO_CheckAddNewMessage(NT_UFO_SIGNAL_LOST, _("Notice"), _("Our radar has lost the tracking on a UFO"), MSG_UFOLOST);
 				/* Make this UFO undetected */
-				ufo->detected = qfalse;
+				ufo->detected = false;
 				/* Notify that ufo disappeared */
 				AIR_AircraftsUFODisappear(ufo);
 				MAP_NotifyUFODisappear(ufo);
@@ -859,7 +859,7 @@ void UFO_NotifyPhalanxAircraftRemoved (const aircraft_t * const aircraft)
  * @return true or false wether UFO should be seen or not on geoscape.
  * @sa AIR_IsAircraftOnGeoscape
  */
-qboolean UFO_IsUFOSeenOnGeoscape (const aircraft_t *ufo)
+bool UFO_IsUFOSeenOnGeoscape (const aircraft_t *ufo)
 {
 #ifdef DEBUG
 	if (ufo->notOnGeoscape)

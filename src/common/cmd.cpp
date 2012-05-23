@@ -43,15 +43,15 @@ void Cmd_ForwardToServer(void);
 typedef struct cmd_alias_s {
 	char name[MAX_ALIAS_NAME];
 	char *value;
-	qboolean archive;	/**< store the alias and reload it on the next game start */
+	bool archive;	/**< store the alias and reload it on the next game start */
 	struct cmd_alias_s *hash_next;
 	struct cmd_alias_s *next;
 } cmd_alias_t;
 
 static cmd_alias_t *cmd_alias;
 static cmd_alias_t *cmd_alias_hash[ALIAS_HASH_SIZE];
-static qboolean cmdWait;
-static qboolean cmdClosed;
+static bool cmdWait;
+static bool cmdClosed;
 
 #define	ALIAS_LOOP_COUNT	16
 static int alias_count;				/* for detecting runaway loops */
@@ -64,18 +64,18 @@ static int alias_count;				/* for detecting runaway loops */
 static void Cmd_Open_f (void)
 {
 	Com_DPrintf(DEBUG_COMMANDS, "Cmd_Close_f: command buffer opened again\n");
-	cmdClosed = qfalse;
+	cmdClosed = false;
 }
 
 /**
  * @brief Will no longer add any command to command buffer
- * ...until cmd_close is qfalse again
+ * ...until cmd_close is false again
  * @sa Cmd_Open_f
  */
 static void Cmd_Close_f (void)
 {
 	Com_DPrintf(DEBUG_COMMANDS, "Cmd_Close_f: command buffer closed\n");
-	cmdClosed = qtrue;
+	cmdClosed = true;
 }
 
 /**
@@ -85,7 +85,7 @@ static void Cmd_Close_f (void)
  */
 static void Cmd_Wait_f (void)
 {
-	cmdWait = qtrue;
+	cmdWait = true;
 }
 
 /*
@@ -250,7 +250,7 @@ void Cbuf_Execute (void)
 		if (cmdWait) {
 			/* skip out while text still remains in buffer, leaving it
 			 * for next frame */
-			cmdWait = qfalse;
+			cmdWait = false;
 			break;
 		}
 	}
@@ -265,7 +265,7 @@ void Cbuf_Execute (void)
  * Other commands are added late, after all initialization is complete.
  * @sa Cbuf_AddLateCommands
  */
-void Cbuf_AddEarlyCommands (qboolean clear)
+void Cbuf_AddEarlyCommands (bool clear)
 {
 	int i;
 
@@ -289,13 +289,13 @@ void Cbuf_AddEarlyCommands (qboolean clear)
  * @return true if any late commands were added
  * @sa Cbuf_AddEarlyCommands
  */
-qboolean Cbuf_AddLateCommands (void)
+bool Cbuf_AddLateCommands (void)
 {
 	int i, j;
 	int s;
 	char *text, *build, c;
 	int argc;
-	qboolean ret;
+	bool ret;
 
 	/* build the combined string to parse from */
 	s = 0;
@@ -304,7 +304,7 @@ qboolean Cbuf_AddLateCommands (void)
 		s += strlen(Com_Argv(i)) + 1;
 	}
 	if (!s)
-		return qfalse;
+		return false;
 
 	text = Mem_AllocTypeN(char, s + 1);
 	text[0] = 0;
@@ -453,7 +453,7 @@ static void Cmd_Alias_f (void)
 	}
 
 	if (Q_streq(Cmd_Argv(0), "aliasa"))
-		a->archive = qtrue;
+		a->archive = true;
 
 	a->value = Mem_PoolStrDup(cmd, com_aliasSysPool, 0);
 }
@@ -574,7 +574,7 @@ void Cmd_BufClear (void)
  * @param[in] text The text to parse and tokenize
  * @param[in] macroExpand expand cvar string with their values
  */
-void Cmd_TokenizeString (const char *text, qboolean macroExpand)
+void Cmd_TokenizeString (const char *text, bool macroExpand)
 {
 	const char *com_token, *expanded;
 
@@ -843,7 +843,7 @@ void Cmd_RemoveCommand (const char *cmd_name)
  * @brief Checks whether a function exists already
  * @param[in] cmd_name The script interface function name to search for
  */
-qboolean Cmd_Exists (const char *cmd_name)
+bool Cmd_Exists (const char *cmd_name)
 {
 	cmd_function_t *cmd;
 	unsigned int hash;
@@ -851,10 +851,10 @@ qboolean Cmd_Exists (const char *cmd_name)
 
 	for (cmd = cmd_functions_hash[hash]; cmd; cmd = cmd->hash_next) {
 		if (Q_streq(cmd_name, cmd->name))
-			return qtrue;
+			return true;
 	}
 
-	return qfalse;
+	return false;
 }
 
 /**
@@ -931,7 +931,7 @@ void Cmd_ExecuteString (const char *text)
 
 	Com_DPrintf(DEBUG_COMMANDS, "ExecuteString: '%s'\n", text);
 
-	Cmd_TokenizeString(text, qtrue);
+	Cmd_TokenizeString(text, true);
 
 	/* execute the command line */
 	if (!Cmd_Argc())
@@ -1114,8 +1114,8 @@ void Cmd_Shutdown (void)
 	OBJZERO(cmd_argv);
 	cmd_argc = 0;
 
-	cmdWait = qfalse;
-	cmdClosed = qfalse;
+	cmdWait = false;
+	cmdClosed = false;
 
 	Mem_FreePool(com_cmdSysPool);
 }

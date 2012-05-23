@@ -104,7 +104,7 @@ void SV_UnlinkEdict (edict_t * ent)
 	sv_edict_t *scan;
 	worldSector_t *ws;
 
-	sv_ent->linked = qfalse;
+	sv_ent->linked = false;
 
 	ws = sv_ent->worldSector;
 	if (!ws)
@@ -176,7 +176,7 @@ void SV_LinkEdict (edict_t * ent)
 	sv_ent->nextEntityInWorldSector = node->entities;
 	node->entities = sv_ent;
 
-	sv_ent->linked = qtrue;
+	sv_ent->linked = true;
 	sv_ent->worldSector = node;
 	sv_ent->ent = ent;
 
@@ -203,13 +203,13 @@ void SV_LinkEdict (edict_t * ent)
  * @param ent The edict to check the intersection for
  * @return @c true if intersect, @c false otherwise
  */
-static qboolean SV_BoundingBoxesIntersect (const vec3_t mins, const vec3_t maxs, const edict_t *ent)
+static bool SV_BoundingBoxesIntersect (const vec3_t mins, const vec3_t maxs, const edict_t *ent)
 {
-	const qboolean outsideMaxs = ent->absmin[0] > maxs[0] || ent->absmin[1] > maxs[1] || ent->absmin[2] > maxs[2];
-	const qboolean outsideMins = ent->absmax[0] < mins[0] || ent->absmax[1] < mins[1] || ent->absmax[2] < mins[2];
+	const bool outsideMaxs = ent->absmin[0] > maxs[0] || ent->absmin[1] > maxs[1] || ent->absmin[2] > maxs[2];
+	const bool outsideMins = ent->absmax[0] < mins[0] || ent->absmax[1] < mins[1] || ent->absmax[2] < mins[2];
 	if (outsideMaxs || outsideMins)
-		return qfalse; /* not touching */
-	return qtrue;
+		return false; /* not touching */
+	return true;
 }
 
 typedef struct {
@@ -421,7 +421,7 @@ static void SV_ClipMoveToEntities (moveclip_t *clip)
 #endif
 
 		if (trace.fraction < clip->trace.fraction) {
-			qboolean oldStart;
+			bool oldStart;
 
 			/* make sure we keep a startsolid from a previous trace */
 			oldStart = clip->trace.startsolid;
@@ -433,7 +433,7 @@ static void SV_ClipMoveToEntities (moveclip_t *clip)
 			clip->trace = trace;
 		} else if (trace.startsolid) {
 			trace.ent = touch;
-			clip->trace.startsolid = qtrue;
+			clip->trace.startsolid = true;
 		}
 	}
 }
@@ -659,7 +659,7 @@ static void SV_ModLoadObjModel (sv_model_t* mod, const byte *buffer, int bufferL
  * @param[out] mins The mins vector of the model - this is absolute to the worldorigin (0,0,0)
  * @param[out] maxs The maxs vector of the model - this is absolute to the worldorigin (0,0,0)
  */
-qboolean SV_LoadModelMinsMaxs (const char *model, int frame, vec3_t mins, vec3_t maxs)
+bool SV_LoadModelMinsMaxs (const char *model, int frame, vec3_t mins, vec3_t maxs)
 {
 	sv_model_t *mod;
 	byte *buf;
@@ -674,7 +674,7 @@ qboolean SV_LoadModelMinsMaxs (const char *model, int frame, vec3_t mins, vec3_t
 		if (mod->frame == frame && Q_streq(mod->name, model)) {
 			VectorCopy(mod->mins, mins);
 			VectorCopy(mod->maxs, maxs);
-			return qtrue;
+			return true;
 		}
 
 	/* find a free model slot spot */
@@ -696,7 +696,7 @@ qboolean SV_LoadModelMinsMaxs (const char *model, int frame, vec3_t mins, vec3_t
 	modfilelen = FS_LoadFile(model, &buf);
 	if (!buf) {
 		sv->numSVModels--;
-		return qfalse;
+		return false;
 	}
 
 	OBJZERO(*mod);
@@ -723,7 +723,7 @@ qboolean SV_LoadModelMinsMaxs (const char *model, int frame, vec3_t mins, vec3_t
 			SV_ModLoadObjModel(mod, buf, modfilelen);
 		else {
 			FS_FreeFile(buf);
-			return qfalse;
+			return false;
 		}
 		break;
 	}
@@ -732,5 +732,5 @@ qboolean SV_LoadModelMinsMaxs (const char *model, int frame, vec3_t mins, vec3_t
 	VectorCopy(mod->maxs, maxs);
 
 	FS_FreeFile(buf);
-	return qtrue;
+	return true;
 }

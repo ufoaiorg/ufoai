@@ -172,7 +172,7 @@ void G_ClientEndRound (player_t * player)
 	if (!G_IsAIPlayer(player) && sv_teamplay->integer) {
 		/* check if all team members are ready */
 		if (!player->roundDone) {
-			player->roundDone = qtrue;
+			player->roundDone = true;
 			G_EventEndRoundAnnounce(player);
 			gi.EndEvents();
 		}
@@ -185,14 +185,14 @@ void G_ClientEndRound (player_t * player)
 			if (p->pers.team == level.activeTeam && !p->roundDone && G_PlayerSoldiersCount(p) > 0)
 				return;
 	} else {
-		player->roundDone = qtrue;
+		player->roundDone = true;
 	}
 
 	/* clear any remaining reaction fire */
 	G_ReactionFireOnEndTurn();
 
 	/* let all the invisible players perish now */
-	G_CheckVisTeamAll(level.activeTeam, qtrue, NULL);
+	G_CheckVisTeamAll(level.activeTeam, true, NULL);
 
 	G_GetNextActiveTeam();
 
@@ -234,10 +234,10 @@ void G_ClientEndRound (player_t * player)
 	p = NULL;
 	while ((p = G_PlayerGetNextActiveHuman(p)))
 		if (p->pers.team == level.activeTeam)
-			p->roundDone = qfalse;
+			p->roundDone = false;
 
 	p = NULL;
 	while ((p = G_PlayerGetNextActiveAI(p)))
 		if (p->pers.team == level.activeTeam)
-			p->roundDone = qfalse;
+			p->roundDone = false;
 }

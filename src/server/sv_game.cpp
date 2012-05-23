@@ -98,7 +98,7 @@ static void SV_error (const char *fmt, ...)
  * @param create if @c true the value will get written into the config strings (appended)
  * @return @c 0 if not found
  */
-static unsigned int SV_FindIndex (const char *name, int start, int max, qboolean create)
+static unsigned int SV_FindIndex (const char *name, int start, int max, bool create)
 {
 	int i;
 
@@ -132,7 +132,7 @@ static unsigned int SV_FindIndex (const char *name, int start, int max, qboolean
 
 static unsigned int SV_ModelIndex (const char *name)
 {
-	return SV_FindIndex(name, CS_MODELS, MAX_MODELS, qtrue);
+	return SV_FindIndex(name, CS_MODELS, MAX_MODELS, true);
 }
 
 /**
@@ -328,7 +328,7 @@ static void SV_AbortEvents (void)
 	if (!p->pending)
 		return;
 
-	p->pending = qfalse;
+	p->pending = false;
 	free_dbuffer(p->buf);
 	p->buf = NULL;
 }
@@ -345,7 +345,7 @@ static void SV_EndEvents (void)
 
 	NET_WriteByte(p->buf, EV_NULL);
 	SV_Multicast(p->playerMask, p->buf);
-	p->pending = qfalse;
+	p->pending = false;
 	/* freed in SV_Multicast */
 	p->buf = NULL;
 }
@@ -424,7 +424,7 @@ static void SV_AddEvent (unsigned int mask, int eType)
 		SV_EndEvents();
 
 	/* start the new event */
-	p->pending = qtrue;
+	p->pending = true;
 	p->playerMask = mask;
 	p->type = eType;
 	p->buf = new_dbuffer();
@@ -454,7 +454,7 @@ static void *SV_TagAlloc (int size, int tagNum, const char *file, int line)
 	if (tagNum < 0)
 		tagNum *= -1;
 
-	return _Mem_Alloc(size, qtrue, sv->gameSysPool, tagNum, file, line);
+	return _Mem_Alloc(size, true, sv->gameSysPool, tagNum, file, line);
 }
 
 static void SV_MemFree (void *ptr, const char *file, int line)
@@ -473,15 +473,15 @@ static void SV_FreeTags (int tagNum, const char *file, int line)
 	_Mem_FreeTag(sv->gameSysPool, tagNum, file, line);
 }
 
-static qboolean SV_TestLine (const vec3_t start, const vec3_t stop, const int levelmask)
+static bool SV_TestLine (const vec3_t start, const vec3_t stop, const int levelmask)
 {
 	return TR_TestLine(&sv->mapTiles, start, stop, levelmask);
 }
 
-static qboolean SV_TestLineWithEnt (const vec3_t start, const vec3_t stop, const int levelmask, const char **entlist)
+static bool SV_TestLineWithEnt (const vec3_t start, const vec3_t stop, const int levelmask, const char **entlist)
 {
 	/* do the line test */
-	const qboolean hit = CM_EntTestLine(&sv->mapTiles, start, stop, levelmask, entlist);
+	const bool hit = CM_EntTestLine(&sv->mapTiles, start, stop, levelmask, entlist);
 	return hit;
 }
 
@@ -506,7 +506,7 @@ static void SV_UnloadGame (void)
 }
 
 #ifndef HARD_LINKED_GAME
-static qboolean SV_LoadGame (const char *path)
+static bool SV_LoadGame (const char *path)
 {
 	char name[MAX_OSPATH];
 
@@ -519,11 +519,11 @@ static qboolean SV_LoadGame (const char *path)
 
 	if (svs.gameLibrary) {
 		Com_Printf("found at '%s'\n", path);
-		return qtrue;
+		return true;
 	} else {
 		Com_Printf("not found at '%s'\n", path);
 		Com_DPrintf(DEBUG_SYSTEM, "%s\n", SDL_GetError());
-		return qfalse;
+		return false;
 	}
 }
 #endif
@@ -635,7 +635,7 @@ void SV_RunGameFrame (void)
 {
 	sv->endgame = svs.ge->RunFrame();
 	if (sv->state == ss_game_shutdown)
-		sv->endgame = qtrue;
+		sv->endgame = true;
 }
 
 /**

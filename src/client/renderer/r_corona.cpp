@@ -49,9 +49,9 @@ void R_DrawCoronas (void)
 	if (!refdef.numCoronas)
 		return;
 
-	R_EnableTexture(&texunit_diffuse, qfalse);
+	R_EnableTexture(&texunit_diffuse, false);
 
-	R_EnableColorArray(qtrue);
+	R_EnableColorArray(true);
 
 	R_ResetArrayState();
 
@@ -94,9 +94,9 @@ void R_DrawCoronas (void)
 
 	R_BlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
 
-	R_EnableColorArray(qfalse);
+	R_EnableColorArray(false);
 
-	R_EnableTexture(&texunit_diffuse, qtrue);
+	R_EnableTexture(&texunit_diffuse, true);
 
 	R_Color(NULL);
 }

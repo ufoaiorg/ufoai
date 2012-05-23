@@ -176,15 +176,15 @@ void GAME_ReloadMode (void)
 	}
 }
 
-qboolean GAME_IsMultiplayer (void)
+bool GAME_IsMultiplayer (void)
 {
 	const cgame_export_t *list = GAME_GetCurrentType();
 	if (list != NULL) {
-		const qboolean isMultiplayer = list->isMultiplayer == 1;
+		const bool isMultiplayer = list->isMultiplayer == 1;
 		return isMultiplayer;
 	}
 
-	return qfalse;
+	return false;
 }
 
 /**
@@ -238,11 +238,11 @@ static void CL_QueryMasterServer (const char *action, http_callback_t callback)
 	HTTP_GetURL(va("%s/ufo/masterserver.php?%s", masterserver_url->string, action), callback);
 }
 
-qboolean GAME_HandleServerCommand (const char *command, struct dbuffer *msg)
+bool GAME_HandleServerCommand (const char *command, struct dbuffer *msg)
 {
 	const cgame_export_t *list = GAME_GetCurrentType();
 	if (!list || list->HandleServerCommand == NULL)
-		return qfalse;
+		return false;
 
 	return list->HandleServerCommand(command, msg);
 }
@@ -265,7 +265,7 @@ void GAME_AddChatMessage (const char *format, ...)
 	list->AddChatMessage(string);
 }
 
-qboolean GAME_IsTeamEmpty (void)
+bool GAME_IsTeamEmpty (void)
 {
 	return chrDisplayList.num == 0;
 }
@@ -335,7 +335,7 @@ static void GAME_EquipActorRobot (inventory_t* const inv, const objDef_t* weapon
 	cls.i.EquipActorRobot(&cls.i, inv, weapon);
 }
 
-static qboolean GAME_RemoveFromInventory (inventory_t* const i, const invDef_t * container, invList_t *fItem)
+static bool GAME_RemoveFromInventory (inventory_t* const i, const invDef_t * container, invList_t *fItem)
 {
 	return cls.i.RemoveFromInventory(&cls.i, i, container, fItem);
 }
@@ -385,7 +385,7 @@ static void GAME_CollectItems (void *data, int won, void (*item)(void*, const ob
 /**
  * @brief Collecting stunned and dead alien bodies after the mission.
  */
-static void GAME_CollectAliens (void *data, void (*collect)(void*, const teamDef_t*, int, qboolean))
+static void GAME_CollectAliens (void *data, void (*collect)(void*, const teamDef_t*, int, bool))
 {
 	le_t *le = NULL;
 
@@ -394,9 +394,9 @@ static void GAME_CollectAliens (void *data, void (*collect)(void*, const teamDef
 			assert(le->teamDef);
 
 			if (LE_IsStunned(le))
-				collect(data, le->teamDef, 1, qfalse);
+				collect(data, le->teamDef, 1, false);
 			else if (LE_IsDead(le))
-				collect(data, le->teamDef, 1, qtrue);
+				collect(data, le->teamDef, 1, true);
 		}
 	}
 }
@@ -682,7 +682,7 @@ void GAME_SetMode (const cgame_export_t *gametype)
 
 		/* we dont need to go back to "main" stack if we are already on this stack */
 		if (!UI_IsWindowOnStack("main"))
-			UI_InitStack("main", "", qtrue, qtrue);
+			UI_InitStack("main", "", true, true);
 	}
 
 	cls.gametype = gametype;
@@ -777,7 +777,7 @@ static void UI_RequestMapList_f (void)
 {
 	const char *callbackCmd;
 	const mapDef_t *md;
-	const qboolean multiplayer = GAME_IsMultiplayer();
+	const bool multiplayer = GAME_IsMultiplayer();
 
 	if (Cmd_Argc() != 2) {
 		Com_Printf("Usage: %s <callback>\n", Cmd_Argv(0));
@@ -912,7 +912,7 @@ void GAME_ParseModes (const char *name, const char **text)
 }
 
 #ifndef HARD_LINKED_CGAME
-static qboolean GAME_LoadGame (const char *path, const char *name)
+static bool GAME_LoadGame (const char *path, const char *name)
 {
 	char fullPath[MAX_OSPATH];
 
@@ -925,11 +925,11 @@ static qboolean GAME_LoadGame (const char *path, const char *name)
 
 	if (cls.cgameLibrary) {
 		Com_Printf("found at '%s'\n", path);
-		return qtrue;
+		return true;
 	} else {
 		Com_Printf("not found at '%s'\n", path);
 		Com_DPrintf(DEBUG_SYSTEM, "%s\n", SDL_GetError());
-		return qfalse;
+		return false;
 	}
 }
 #endif
@@ -1018,7 +1018,7 @@ static void GAME_SetMode_f (void)
 	Com_Printf("GAME_SetMode_f: Mode '%s' not found\n", modeName);
 }
 
-qboolean GAME_ItemIsUseable (const objDef_t *od)
+bool GAME_ItemIsUseable (const objDef_t *od)
 {
 	const cgame_export_t *list = GAME_GetCurrentType();
 
@@ -1028,13 +1028,13 @@ qboolean GAME_ItemIsUseable (const objDef_t *od)
 
 		/* Don't allow armour for other teams */
 		if (teamDef != NULL && !CHRSH_IsArmourUseableForTeam(od, teamDef))
-			return qfalse;
+			return false;
 	}
 
 	if (list && list->IsItemUseable)
 		return list->IsItemUseable(od);
 
-	return qtrue;
+	return true;
 }
 
 /**
@@ -1048,7 +1048,7 @@ qboolean GAME_ItemIsUseable (const objDef_t *od)
  * @param numStunned The amount of stunned actors for all teams. The first dimension contains
  * the attacker team, the second the victim team
  */
-void GAME_HandleResults (struct dbuffer *msg, int winner, int *numSpawned, int *numAlive, int numKilled[][MAX_TEAMS], int numStunned[][MAX_TEAMS], qboolean nextmap)
+void GAME_HandleResults (struct dbuffer *msg, int winner, int *numSpawned, int *numAlive, int numKilled[][MAX_TEAMS], int numStunned[][MAX_TEAMS], bool nextmap)
 {
 	const cgame_export_t *list = GAME_GetCurrentType();
 	if (list)
@@ -1195,7 +1195,7 @@ const char* GAME_GetTeamDef (void)
 	return teamDefID;
 }
 
-static qboolean GAME_Spawn (chrList_t *chrList)
+static bool GAME_Spawn (chrList_t *chrList)
 {
 	const size_t size = GAME_GetCharacterArraySize();
 	int i;
@@ -1216,7 +1216,7 @@ static qboolean GAME_Spawn (chrList_t *chrList)
 		chrList->chr[i] = chrDisplayList.chr[i];
 	chrList->num = chrDisplayList.num;
 
-	return qtrue;
+	return true;
 }
 
 /**
@@ -1225,7 +1225,7 @@ static qboolean GAME_Spawn (chrList_t *chrList)
  * multiplayer based game types
  * @sa GAME_EndBattlescape
  */
-void GAME_StartBattlescape (qboolean isTeamPlay)
+void GAME_StartBattlescape (bool isTeamPlay)
 {
 	const cgame_export_t *list = GAME_GetCurrentType();
 
@@ -1235,7 +1235,7 @@ void GAME_StartBattlescape (qboolean isTeamPlay)
 	if (list != NULL && list->StartBattlescape) {
 		list->StartBattlescape(isTeamPlay);
 	} else {
-		HUD_InitUI(NULL, qtrue);
+		HUD_InitUI(NULL, true);
 	}
 }
 
@@ -1267,7 +1267,7 @@ static void GAME_InitializeBattlescape (chrList_t *team)
 void GAME_SpawnSoldiers (void)
 {
 	const cgame_export_t *list = GAME_GetCurrentType();
-	qboolean spawnStatus;
+	bool spawnStatus;
 	chrList_t *chrList = &cl.chrList;
 
 	/* this callback is responsible to set up the teamlist */
@@ -1316,16 +1316,16 @@ void GAME_NofityEvent (event_t eventType)
 		list->NotifyEvent(eventType);
 }
 
-qboolean GAME_TeamIsKnown (const teamDef_t *teamDef)
+bool GAME_TeamIsKnown (const teamDef_t *teamDef)
 {
 	const cgame_export_t *list = GAME_GetCurrentType();
 
 	if (!teamDef)
-		return qfalse;
+		return false;
 
 	if (list && list->IsTeamKnown != NULL)
 		return list->IsTeamKnown(teamDef);
-	return qtrue;
+	return true;
 }
 
 void GAME_CharacterCvars (const character_t *chr)
@@ -1351,12 +1351,12 @@ void GAME_Drop (void)
 	if (list && list->Drop) {
 		list->Drop();
 	} else {
-		SV_Shutdown("Drop", qfalse);
+		SV_Shutdown("Drop", false);
 		GAME_SetMode(NULL);
 
 		GAME_UnloadGame();
 
-		UI_InitStack("main", NULL, qfalse, qtrue);
+		UI_InitStack("main", NULL, false, true);
 	}
 }
 

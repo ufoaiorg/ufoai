@@ -163,11 +163,11 @@ static void G_Init (void)
 	/* enable moralestates in multiplayer */
 	sv_enablemorale = gi.Cvar_Get("sv_enablemorale", "1", CVAR_ARCHIVE | CVAR_SERVERINFO | CVAR_LATCH, "Enable morale behaviour for actors");
 	sv_roundtimelimit = gi.Cvar_Get("sv_roundtimelimit", "90", CVAR_ARCHIVE | CVAR_SERVERINFO, "Timelimit in seconds for multiplayer rounds");
-	sv_roundtimelimit->modified = qfalse;
+	sv_roundtimelimit->modified = false;
 	sv_maxentities = gi.Cvar_Get("sv_maxentities", "1024", CVAR_LATCH, NULL);
 
 	sv_maxteams = gi.Cvar_Get("sv_maxteams", "2", CVAR_SERVERINFO, "How many teams for current running map");
-	sv_maxteams->modified = qfalse;
+	sv_maxteams->modified = false;
 
 	/* change anytime vars */
 	password = gi.Cvar_Get("password", "", CVAR_USERINFO, NULL);
@@ -378,7 +378,7 @@ static void CheckNeedPass (void)
 {
 	if (password->modified) {
 		const char *need = "0";
-		password->modified = qfalse;
+		password->modified = false;
 
 		if (password->string[0] != '\0' && Q_strcasecmp(password->string, "none"))
 			need = "1";
@@ -402,7 +402,7 @@ static void G_SendBoundingBoxes (void)
  * @sa AI_Run
  * @return true if game reaches its end - false otherwise
  */
-qboolean G_RunFrame (void)
+bool G_RunFrame (void)
 {
 	level.framenum++;
 	/* server is running at 10 fps */
@@ -410,7 +410,7 @@ qboolean G_RunFrame (void)
 
 	/* this doesn't belong here, but it works */
 	if (!level.routed) {
-		level.routed = qtrue;
+		level.routed = true;
 		G_CompleteRecalcRouting();
 	}
 
@@ -419,7 +419,7 @@ qboolean G_RunFrame (void)
 		if (sv_maxteams->modified) {
 			/* inform the client */
 			gi.ConfigString(CS_MAXTEAMS, "%i", sv_maxteams->integer);
-			sv_maxteams->modified = qfalse;
+			sv_maxteams->modified = false;
 		}
 	}
 
@@ -432,14 +432,14 @@ qboolean G_RunFrame (void)
 				gi.DPrintf("The minimum value for sv_roundtimelimit is 30\n");
 				gi.Cvar_Set("sv_roundtimelimit", "30");
 			}
-			sv_roundtimelimit->modified = qfalse;
+			sv_roundtimelimit->modified = false;
 		}
 		G_CheckForceEndRound();
 	}
 
 	/* end this game? */
 	if (G_MatchDoEnd())
-		return qtrue;
+		return true;
 
 	CheckNeedPass();
 
@@ -449,5 +449,5 @@ qboolean G_RunFrame (void)
 
 	G_SendBoundingBoxes();
 
-	return qfalse;
+	return false;
 }

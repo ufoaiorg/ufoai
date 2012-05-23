@@ -218,7 +218,7 @@ void uiTextNode::drawText (uiNode_t* node, const char *text, const linkedList_t*
 
 	fullSizeY = 0;
 	do {
-		qboolean haveTab;
+		bool haveTab;
 		/* new line starts from node x position */
 		x1 = x;
 		if (oldFont) {
@@ -299,7 +299,7 @@ void uiTextNode::drawText (uiNode_t* node, const char *text, const linkedList_t*
 					tabwidth = 0;
 
 				if (tabwidth != 0)
-					UI_DrawString(font, (align_t)node->contentAlign, x1, y, x1, tabwidth - 1, EXTRADATA(node).lineHeight, cur, viewSizeY, EXTRADATA(node).super.scrollY.viewPos, &fullSizeY, qfalse, LONGLINES_PRETTYCHOP);
+					UI_DrawString(font, (align_t)node->contentAlign, x1, y, x1, tabwidth - 1, EXTRADATA(node).lineHeight, cur, viewSizeY, EXTRADATA(node).super.scrollY.viewPos, &fullSizeY, false, LONGLINES_PRETTYCHOP);
 
 				/* next */
 				x1 += tabwidth;
@@ -321,7 +321,7 @@ void uiTextNode::drawText (uiNode_t* node, const char *text, const linkedList_t*
 					R_FontTextSize(font, cur, width, (longlines_t)EXTRADATA(node).longlines, NULL, NULL, &lines, NULL);
 					fullSizeY += lines;
 				} else
-					UI_DrawString(font, (align_t)node->contentAlign, x1, y, x, width, EXTRADATA(node).lineHeight, cur, viewSizeY, EXTRADATA(node).super.scrollY.viewPos, &fullSizeY, qtrue, (longlines_t)EXTRADATA(node).longlines);
+					UI_DrawString(font, (align_t)node->contentAlign, x1, y, x, width, EXTRADATA(node).lineHeight, cur, viewSizeY, EXTRADATA(node).super.scrollY.viewPos, &fullSizeY, true, (longlines_t)EXTRADATA(node).longlines);
 			}
 		}
 
@@ -360,11 +360,11 @@ void uiTextNode::updateCache (uiNode_t *node)
 			const char* t = shared->data.text;
 			if (t[0] == '_')
 				t = _(++t);
-			drawText(node, t, NULL, qtrue);
+			drawText(node, t, NULL, true);
 		}
 		break;
 	case UI_SHARED_LINKEDLISTTEXT:
-		drawText(node, NULL, shared->data.linkedListText, qtrue);
+		drawText(node, NULL, shared->data.linkedListText, true);
 		break;
 	default:
 		break;
@@ -384,7 +384,7 @@ void uiTextNode::draw (uiNode_t *node)
 		const char* t = UI_GetReferenceString(node, node->text);
 		if (t[0] == '_')
 			t = _(++t);
-		drawText(node, t, NULL, qfalse);
+		drawText(node, t, NULL, false);
 		return;
 	}
 
@@ -396,11 +396,11 @@ void uiTextNode::draw (uiNode_t *node)
 		const char* t = shared->data.text;
 		if (t[0] == '_')
 			t = _(++t);
-		drawText(node, t, NULL, qfalse);
+		drawText(node, t, NULL, false);
 		break;
 	}
 	case UI_SHARED_LINKEDLISTTEXT:
-		drawText(node, NULL, shared->data.linkedListText, qfalse);
+		drawText(node, NULL, shared->data.linkedListText, false);
 		break;
 	default:
 		break;
@@ -609,7 +609,7 @@ void UI_RegisterTextNode (uiBehaviour_t *behaviour)
 	/** Highlight each node elements when the mouse move over the node.
 	 * @todo delete it when its possible (need to create a textlist...)
 	 */
-	UI_RegisterExtradataNodeProperty(behaviour, "mousefx", V_CPPBOOL, textExtraData_t, mousefx);
+	UI_RegisterExtradataNodeProperty(behaviour, "mousefx", V_BOOL, textExtraData_t, mousefx);
 
 	Com_RegisterConstInt("LONGLINES_WRAP", LONGLINES_WRAP);
 	Com_RegisterConstInt("LONGLINES_CHOP", LONGLINES_CHOP);

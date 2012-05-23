@@ -54,7 +54,7 @@ struct memBlock_t {
 
 struct memPool_t {
     char        name[MEM_MAX_POOLNAME]; /**< Name of pool */
-    qboolean    inUse;                  /**< Slot in use? */
+    bool    inUse;                  /**< Slot in use? */
 
     memBlock_t* blocks[MEM_HASH];       /**< Allocated blocks */
 
@@ -134,7 +134,7 @@ memPool_t *_Mem_CreatePool (const char *name, const char *fileName, const int fi
 	pool->byteCount = 0;
 	pool->createFile = fileName;
 	pool->createLine = fileLine;
-	pool->inUse = qtrue;
+	pool->inUse = true;
 	Q_strncpyz(pool->name, name, sizeof(pool->name));
 
 	return pool;
@@ -154,7 +154,7 @@ void _Mem_DeletePool (memPool_t *pool, const char *fileName, const int fileLine)
 	_Mem_FreePool(pool, fileName, fileLine);
 
 	/* Simple, yes? */
-	pool->inUse = qfalse;
+	pool->inUse = false;
 	pool->name[0] = '\0';
 }
 
@@ -289,7 +289,7 @@ void _Mem_FreePool (memPool_t *pool, const char *fileName, const int fileLine)
 /**
  * @brief Optionally returns 0 filled memory allocated in a pool with a tag
  */
-void *_Mem_Alloc (size_t size, qboolean zeroFill, memPool_t *pool, const int tagNum, const char *fileName, const int fileLine)
+void *_Mem_Alloc (size_t size, bool zeroFill, memPool_t *pool, const int tagNum, const char *fileName, const int fileLine)
 {
 	memBlock_t *mem;
 
@@ -362,7 +362,7 @@ void* _Mem_ReAlloc (void *ptr, size_t size, const char *fileName, const int file
 	pool = mem->pool;
 
 	/* allocate memory for the new size */
-	newPtr = _Mem_Alloc(size, qfalse, pool, mem->tagNum, fileName, fileLine);
+	newPtr = _Mem_Alloc(size, false, pool, mem->tagNum, fileName, fileLine);
 
 	/* copy old data */
 	memcpy(newPtr, ptr, std::min(mem->memSize, size));
@@ -407,7 +407,7 @@ void *_Mem_PoolDup (const void *in, size_t size, memPool_t *pool, const int tagN
 	assert(in != NULL);
 	assert(size > 0);
 
-	copy = _Mem_Alloc(size, qfalse, pool, tagNum, fileName, fileLine);
+	copy = _Mem_Alloc(size, false, pool, tagNum, fileName, fileLine);
 	memcpy(copy, in, size);
 	return copy;
 }
@@ -424,7 +424,7 @@ char *_Mem_PoolStrDup (const char *in, memPool_t *pool, const int tagNum, const 
 {
 	char *out;
 
-	out = (char *)_Mem_Alloc((size_t)(strlen(in) + 1), qtrue, pool, tagNum, fileName, fileLine);
+	out = (char *)_Mem_Alloc((size_t)(strlen(in) + 1), true, pool, tagNum, fileName, fileLine);
 	strcpy(out, in);
 
 	return out;

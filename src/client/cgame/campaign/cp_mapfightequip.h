@@ -73,34 +73,34 @@ void BDEF_AutoSelectTarget(void);
 
 technology_t **AII_GetCraftitemTechsByType(aircraftItemType_t type);
 void AII_UpdateInstallationDelay(void);
-qboolean AII_AddItemToSlot(base_t* base, const technology_t *tech, aircraftSlot_t *slot, qboolean nextItem);
-qboolean AII_AddAmmoToSlot(base_t* base, const technology_t *tech, aircraftSlot_t *slot);
-void AII_RemoveItemFromSlot(base_t* base, aircraftSlot_t *slot, qboolean ammo);
-void AII_RemoveNextItemFromSlot(base_t* base, aircraftSlot_t *slot, qboolean ammo);
-qboolean AIM_PilotAssignedAircraft(const base_t* base, const employee_t* pilot);
+bool AII_AddItemToSlot(base_t* base, const technology_t *tech, aircraftSlot_t *slot, bool nextItem);
+bool AII_AddAmmoToSlot(base_t* base, const technology_t *tech, aircraftSlot_t *slot);
+void AII_RemoveItemFromSlot(base_t* base, aircraftSlot_t *slot, bool ammo);
+void AII_RemoveNextItemFromSlot(base_t* base, aircraftSlot_t *slot, bool ammo);
+bool AIM_PilotAssignedAircraft(const base_t* base, const employee_t* pilot);
 void AIM_AutoEquipAircraft(aircraft_t *aircraft);
 void AII_InitialiseSlot(aircraftSlot_t *slot, aircraft_t *aircraft, base_t *base, installation_t *installation, aircraftItemType_t type);
 float AIR_GetMaxAircraftWeaponRange(const aircraftSlot_t *slot, int maxSlot);
 void AII_RepairAircraft(void);
 void AII_UpdateAircraftStats(aircraft_t *aircraft);
 int AII_BaseCanShoot(const base_t *base);
-qboolean AII_InstallationCanShoot(const installation_t *installation);
+bool AII_InstallationCanShoot(const installation_t *installation);
 
 itemWeight_t AII_GetItemWeightBySize(const objDef_t *od);
 
 const char* AII_WeightToName(itemWeight_t weight);
 void AII_AutoAddAmmo(aircraftSlot_t *slot);
-qboolean AIM_SelectableCraftItem(const aircraftSlot_t *slot, const technology_t *tech);
+bool AIM_SelectableCraftItem(const aircraftSlot_t *slot, const technology_t *tech);
 
 aircraftSlot_t *BDEF_GetBaseSlotByIDX(base_t *base, aircraftItemType_t type, int idx);
 aircraftSlot_t *BDEF_GetInstallationSlotByIDX(installation_t *installation, aircraftItemType_t type, int idx);
 aircraftSlot_t *AII_GetAircraftSlotByIDX(aircraft_t *aircraft, aircraftItemType_t type, int idx);
 
-qboolean AII_ReloadWeapon(aircraftSlot_t *slot);
+bool AII_ReloadWeapon(aircraftSlot_t *slot);
 void AII_ReloadAircraftWeapons(aircraft_t *aircraft);
 void BDEF_ReloadBaseWeapons(base_t *base, installation_t *installation);
 
-void AII_SaveOneSlotXML(xmlNode_t *p, const aircraftSlot_t *slot, qboolean weapon);
-void AII_LoadOneSlotXML(xmlNode_t *node, aircraftSlot_t* slot, qboolean weapon);
+void AII_SaveOneSlotXML(xmlNode_t *p, const aircraftSlot_t *slot, bool weapon);
+void AII_LoadOneSlotXML(xmlNode_t *node, aircraftSlot_t* slot, bool weapon);
 
 #endif /* CLIENT_CL_MAPFIGHTEQUIP_H */

@@ -141,7 +141,7 @@ void R_EnableWorldLights (void)
  * @param inShadow Whether model is shadowed from the sun
  * @param enable Whether to turn realtime lighting on or off
  */
-void R_EnableModelLights (const light_t **lights, int numLights, qboolean inShadow, qboolean enable)
+void R_EnableModelLights (const light_t **lights, int numLights, bool inShadow, bool enable)
 {
 	int i;
 	int maxLights = r_dynamic_lights->integer;
@@ -204,7 +204,7 @@ void R_EnableModelLights (const light_t **lights, int numLights, qboolean inShad
 			}
 		}
 
-		r_state.dynamic_lighting_enabled = qfalse;
+		r_state.dynamic_lighting_enabled = false;
 		return;
 	}
 
@@ -212,7 +212,7 @@ void R_EnableModelLights (const light_t **lights, int numLights, qboolean inShad
 	if (numLights > maxLights)
 		numLights = maxLights;
 
-	r_state.dynamic_lighting_enabled = qtrue;
+	r_state.dynamic_lighting_enabled = true;
 
 	R_EnableAttribute("TANGENTS");
 
@@ -397,7 +397,7 @@ void R_UpdateLightList (entity_t *ent)
 		R_Trace(pos, fakeSunPos, 0, MASK_SOLID);
 		ent->inShadow = refdef.trace.fraction != 1.0;
 	} else {
-		ent->inShadow = qfalse;
+		ent->inShadow = false;
 	}
 
 	if (!r_dynamic_lights->integer)

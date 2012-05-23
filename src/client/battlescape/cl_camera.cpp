@@ -31,7 +31,7 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #include "../input/cl_input.h"
 #include "events/e_parse.h"
 
-static qboolean cameraRoute = qfalse;
+static bool cameraRoute = false;
 static vec3_t routeFrom, routeDelta;
 static float routeDist;
 
@@ -150,9 +150,9 @@ void CL_CameraMove (void)
 			VectorMA(cl.cam.speed, -frac, routeDelta, cl.cam.speed);
 			VectorNormalize2(cl.cam.speed, delta);
 			if (DotProduct(delta, routeDelta) < 0.05) {
-				cameraRoute = qfalse;
+				cameraRoute = false;
 
-				CL_BlockBattlescapeEvents(qfalse);
+				CL_BlockBattlescapeEvents(false);
 			}
 		} else
 			VectorMA(cl.cam.speed, frac, routeDelta, cl.cam.speed);
@@ -257,9 +257,9 @@ void CL_CameraRoute (const pos3_t from, const pos3_t target)
 	Cvar_SetValue("cl_worldlevel", target[2]);
 
 	VectorClear(cl.cam.speed);
-	cameraRoute = qtrue;
+	cameraRoute = true;
 
-	CL_BlockBattlescapeEvents(qtrue);
+	CL_BlockBattlescapeEvents(true);
 }
 
 /**

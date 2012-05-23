@@ -37,7 +37,7 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 static int UFO_InitSuiteRandomMapAssembly (void)
 {
 	TEST_Init();
-	Com_ParseScripts(qtrue);
+	Com_ParseScripts(true);
 
 	sv_dumpmapassembly = Cvar_Get("sv_dumpassembly", "0");
 	sv_rma = Cvar_Get("sv_rma_tmp", "2");

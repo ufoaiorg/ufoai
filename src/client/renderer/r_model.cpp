@@ -115,7 +115,7 @@ model_t *R_AllocModelSlot (void)
  * @param[inout] mod Structure to initialize
  * @return True if the loading was succeed. True or false structure mod was edited.
  */
-static qboolean R_LoadModel (model_t *mod, const char *filename)
+static bool R_LoadModel (model_t *mod, const char *filename)
 {
 	byte *buf;
 	int modfilelen;
@@ -127,7 +127,7 @@ static qboolean R_LoadModel (model_t *mod, const char *filename)
 	/* load the file */
 	modfilelen = FS_LoadFile(filename, &buf);
 	if (!buf)
-		return qfalse;
+		return false;
 
 	OBJZERO(*mod);
 	Q_strncpyz(mod->name, filename, sizeof(mod->name));
@@ -136,7 +136,7 @@ static qboolean R_LoadModel (model_t *mod, const char *filename)
 	switch (LittleLong(*(unsigned *) buf)) {
 	case IDALIASHEADER:
 		/* MD2 header */
-		R_ModLoadAliasMD2Model(mod, buf, modfilelen, qtrue);
+		R_ModLoadAliasMD2Model(mod, buf, modfilelen, true);
 		break;
 
 	case DPMHEADER:
@@ -173,7 +173,7 @@ static qboolean R_LoadModel (model_t *mod, const char *filename)
 
 	FS_FreeFile(buf);
 
-	return qtrue;
+	return true;
 }
 
 /**
@@ -192,7 +192,7 @@ model_t *R_FindModel (const char *name)
 {
 	model_t *mod;
 	model_t model;
-	qboolean loaded = qfalse;
+	bool loaded = false;
 	int i;
 
 	if (!name || !name[0])
@@ -324,7 +324,7 @@ int R_ModAllocateActorSkin (const char* name)
 	return r_numActorSkinName++;
 }
 
-qboolean R_UseActorSkin (void)
+bool R_UseActorSkin (void)
 {
 	return r_numActorSkinName != 0;
 }
@@ -371,7 +371,7 @@ void R_LoadActorSkinsFromModel (mAliasMesh_t *outMesh, image_t * defaultSkin)
  * @param complete If this is true the static mesh models are freed, too
  * @sa R_SwitchModelMemPoolTag
  */
-void R_ShutdownModels (qboolean complete)
+void R_ShutdownModels (bool complete)
 {
 	int i;
 	const int start = complete ? 0 : r_numModelsStatic;

@@ -148,7 +148,7 @@ static void UI_MessageDraw (const uiNode_t *node, message_t *message, const char
 	/* display the date */
 	if (lastDate == NULL || !Q_streq(lastDate, message->timestamp)) {
 		R_Color(node->color);
-		UI_DrawString(fontID, ALIGN_UL, x, y, x, column1, LINEHEIGHT, message->timestamp, EXTRADATACONST(node).scrollY.viewSize, 0, &lines1, qtrue, LONGLINES_WRAP);
+		UI_DrawString(fontID, ALIGN_UL, x, y, x, column1, LINEHEIGHT, message->timestamp, EXTRADATACONST(node).scrollY.viewSize, 0, &lines1, true, LONGLINES_WRAP);
 		R_Color(NULL);
 	}
 
@@ -158,12 +158,12 @@ static void UI_MessageDraw (const uiNode_t *node, message_t *message, const char
 	if (lines2 >= 0) {
 		const uiSprite_t *icon = UI_MessageGetIcon(message);
 		R_Color(NULL);
-		UI_DrawSpriteInBox(qfalse, icon, SPRITE_STATUS_NORMAL, x - 25, y + LINEHEIGHT * lines2 - 1, 19, 19);
+		UI_DrawSpriteInBox(false, icon, SPRITE_STATUS_NORMAL, x - 25, y + LINEHEIGHT * lines2 - 1, 19, 19);
 	}
 
 	/* draw the message */
 	R_Color(node->color);
-	UI_DrawString(fontID, ALIGN_UL, x, y, x, column2, LINEHEIGHT, message->text, EXTRADATACONST(node).scrollY.viewSize, 0, &lines2, qtrue, LONGLINES_WRAP);
+	UI_DrawString(fontID, ALIGN_UL, x, y, x, column2, LINEHEIGHT, message->text, EXTRADATACONST(node).scrollY.viewSize, 0, &lines2, true, LONGLINES_WRAP);
 	R_Color(NULL);
 	*screenLines = std::max(lines1, lines2);
 	lastDate = message->timestamp;
@@ -186,7 +186,7 @@ void uiMessageListNode::draw (uiNode_t *node)
 
 /* #define AUTOSCROLL */		/**< if newer messages are on top, autoscroll is not need */
 #ifdef AUTOSCROLL
-	qboolean autoscroll;
+	bool autoscroll;
 #endif
 	UI_GetNodeAbsPos(node, pos);
 

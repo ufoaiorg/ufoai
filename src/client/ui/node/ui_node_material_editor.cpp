@@ -178,7 +178,7 @@ void uiMaterialEditorNode::draw (uiNode_t *node)
 #undef MARGIN
 		}
 
-		UI_DrawNormImage(qfalse, imagepos[0], imagepos[1], IMAGE_WIDTH, IMAGE_WIDTH, 0, 0, 0, 0, image);
+		UI_DrawNormImage(false, imagepos[0], imagepos[1], IMAGE_WIDTH, IMAGE_WIDTH, 0, 0, 0, 0, image);
 
 		cnt++;
 		cntView++;
@@ -375,7 +375,7 @@ static void UI_MaterialEditorStart_f (void)
 #ifndef ANYIMAGES
 	if (cls.state != ca_active) {
 		Com_Printf("Material editor is only usable in battlescape mode\n");
-		UI_PopWindow(qfalse);
+		UI_PopWindow(false);
 		return;
 	}
 #endif

@@ -35,22 +35,22 @@ const vec2_t default_texcoords[4] = {
 static r_program_t* lastProgram = NULL;
 
 /**
- * @brief Returns qfalse if the texunit is not supported
+ * @brief Returns false if the texunit is not supported
  */
-qboolean R_SelectTexture (gltexunit_t *texunit)
+bool R_SelectTexture (gltexunit_t *texunit)
 {
 	if (texunit == r_state.active_texunit)
-		return qtrue;
+		return true;
 
 	/* not supported */
 	if (texunit->texture >= r_config.maxTextureCoords + GL_TEXTURE0)
-		return qfalse;
+		return false;
 
 	r_state.active_texunit = texunit;
 
 	qglActiveTexture(texunit->texture);
 	qglClientActiveTexture(texunit->texture);
-	return qtrue;
+	return true;
 }
 
 static void R_BindTexture_ (int texnum)
@@ -233,7 +233,7 @@ void R_BlendFunc (GLenum src, GLenum dest)
 	glBlendFunc(src, dest);
 }
 
-void R_EnableBlend (qboolean enable)
+void R_EnableBlend (bool enable)
 {
 	if (r_state.blend_enabled == enable)
 		return;
@@ -249,7 +249,7 @@ void R_EnableBlend (qboolean enable)
 	}
 }
 
-void R_EnableAlphaTest (qboolean enable)
+void R_EnableAlphaTest (bool enable)
 {
 	if (r_state.alpha_test_enabled == enable)
 		return;
@@ -262,7 +262,7 @@ void R_EnableAlphaTest (qboolean enable)
 		glDisable(GL_ALPHA_TEST);
 }
 
-void R_EnableStencilTest (qboolean enable)
+void R_EnableStencilTest (bool enable)
 {
 	if (r_state.stencil_test_enabled == enable)
 		return;
@@ -275,7 +275,7 @@ void R_EnableStencilTest (qboolean enable)
 		glDisable(GL_STENCIL_TEST);
 }
 
-void R_EnableTexture (gltexunit_t *texunit, qboolean enable)
+void R_EnableTexture (gltexunit_t *texunit, bool enable)
 {
 	if (enable == texunit->enabled)
 		return;
@@ -304,7 +304,7 @@ void R_EnableTexture (gltexunit_t *texunit, qboolean enable)
 	R_SelectTexture(&texunit_diffuse);
 }
 
-void R_EnableColorArray (qboolean enable)
+void R_EnableColorArray (bool enable)
 {
 	if (r_state.color_array_enabled == enable)
 		return;
@@ -322,7 +322,7 @@ void R_EnableColorArray (qboolean enable)
  * should be called after any texture units which will be active for lighting
  * have been enabled.
  */
-qboolean R_EnableLighting (r_program_t *program, qboolean enable)
+bool R_EnableLighting (r_program_t *program, bool enable)
 {
 	if (!r_programs->integer)
 		return r_state.lighting_enabled;
@@ -402,7 +402,7 @@ void R_DisableSpotLight (int index)
  * @param backlerp The temporal proximity to the previous keyframe (in the range 0.0 to 1.0)
  * @param enable Whether to turn animation on or off
  */
-void R_EnableAnimation (const mAliasMesh_t *mesh, float backlerp, qboolean enable)
+void R_EnableAnimation (const mAliasMesh_t *mesh, float backlerp, bool enable)
 {
 	if (!r_programs->integer || !r_state.lighting_enabled)
 		return;
@@ -468,7 +468,7 @@ void R_EnableBumpmap (const image_t *normalmap)
 	r_state.active_normalmap = normalmap;
 }
 
-void R_EnableWarp (r_program_t *program, qboolean enable)
+void R_EnableWarp (r_program_t *program, bool enable)
 {
 	if (!r_programs->integer)
 		return;
@@ -495,7 +495,7 @@ void R_EnableWarp (r_program_t *program, qboolean enable)
 	R_SelectTexture(&texunit_diffuse);
 }
 
-void R_EnableBlur (r_program_t *program, qboolean enable, r_framebuffer_t *source, r_framebuffer_t *dest, int dir)
+void R_EnableBlur (r_program_t *program, bool enable, r_framebuffer_t *source, r_framebuffer_t *dest, int dir)
 {
 	if (!r_programs->integer)
 		return;
@@ -523,7 +523,7 @@ void R_EnableBlur (r_program_t *program, qboolean enable, r_framebuffer_t *sourc
 	R_SelectTexture(&texunit_diffuse);
 }
 
-void R_EnableShell (qboolean enable)
+void R_EnableShell (bool enable)
 {
 	if (enable == r_state.shell_enabled)
 		return;
@@ -534,16 +534,16 @@ void R_EnableShell (qboolean enable)
 		glEnable(GL_POLYGON_OFFSET_FILL);
 		glPolygonOffset(-1.0, 1.0);
 
-		R_EnableDrawAsGlow(qtrue);
-		R_EnableBlend(qtrue);
+		R_EnableDrawAsGlow(true);
+		R_EnableBlend(true);
 		R_BlendFunc(GL_SRC_ALPHA, GL_ONE);
 
 		if (r_state.lighting_enabled)
 			R_ProgramParameter1f("OFFSET", refdef.time / 3.0);
 	} else {
 		R_BlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
-		R_EnableBlend(qfalse);
-		R_EnableDrawAsGlow(qfalse);
+		R_EnableBlend(false);
+		R_EnableDrawAsGlow(false);
 
 		glPolygonOffset(0.0, 0.0);
 		glDisable(GL_POLYGON_OFFSET_FILL);
@@ -558,17 +558,17 @@ void R_EnableShell (qboolean enable)
 
 vec2_t fogRange = {FOG_START, FOG_END};
 
-void R_EnableFog (qboolean enable)
+void R_EnableFog (bool enable)
 {
 	if (!r_fog->integer || r_state.fog_enabled == enable)
 		return;
 
-	r_state.fog_enabled = qfalse;
+	r_state.fog_enabled = false;
 
 	/* This is ugly. Shaders could be enabled or disabled between this and rendering call, so we have to setup both FFP and GLSL */
 	if (enable) {
 		if (((refdef.weather & WEATHER_FOG) && r_fog->integer) || r_fog->integer == 2) {
-			r_state.fog_enabled = qtrue;
+			r_state.fog_enabled = true;
 
 			glFogfv(GL_FOG_COLOR, refdef.fogColor);
 			glFogf(GL_FOG_DENSITY, refdef.fogColor[3]);
@@ -662,7 +662,7 @@ void R_EnableGlowMap (const image_t *image)
 	R_UpdateGlowBufferBinding();
 }
 
-void R_EnableDrawAsGlow (qboolean enable)
+void R_EnableDrawAsGlow (bool enable)
 {
 	if (!r_programs->integer)
 		return;
@@ -677,7 +677,7 @@ void R_EnableDrawAsGlow (qboolean enable)
 	R_UpdateGlowBufferBinding();
 }
 
-void R_EnableSpecularMap (const image_t *image, qboolean enable)
+void R_EnableSpecularMap (const image_t *image, bool enable)
 {
 	if (!r_state.dynamic_lighting_enabled)
 		return;
@@ -691,11 +691,11 @@ void R_EnableSpecularMap (const image_t *image, qboolean enable)
 		r_state.specularmap_enabled = enable;
 	} else {
 		R_ProgramParameter1i("SPECULARMAP", 0);
-		r_state.specularmap_enabled = qfalse;
+		r_state.specularmap_enabled = false;
 	}
 }
 
-void R_EnableRoughnessMap (const image_t *image, qboolean enable)
+void R_EnableRoughnessMap (const image_t *image, bool enable)
 {
 	if (!r_state.dynamic_lighting_enabled)
 		return;
@@ -706,7 +706,7 @@ void R_EnableRoughnessMap (const image_t *image, qboolean enable)
 		r_state.roughnessmap_enabled = enable;
 	} else {
 		R_ProgramParameter1i("ROUGHMAP", 0);
-		r_state.roughnessmap_enabled = qfalse;
+		r_state.roughnessmap_enabled = false;
 	}
 }
 
@@ -787,7 +787,7 @@ void R_Setup3D (void)
 	glEnable(GL_DEPTH_TEST);
 
 	/* set up framebuffers for postprocessing */
-	R_EnableRenderbuffer(qtrue);
+	R_EnableRenderbuffer(true);
 
 	R_CheckError();
 }
@@ -825,7 +825,7 @@ void R_Setup2D (void)
 	glDisable(GL_LIGHTING);
 
 	/* disable render-to-framebuffer */
-	R_EnableRenderbuffer(qfalse);
+	R_EnableRenderbuffer(false);
 
 	R_CheckError();
 }
@@ -849,9 +849,9 @@ void R_SetDefaultState (void)
 	glEnableClientState(GL_VERTEX_ARRAY);
 	R_BindDefaultArray(GL_VERTEX_ARRAY);
 
-	R_EnableColorArray(qtrue);
+	R_EnableColorArray(true);
 	R_BindDefaultArray(GL_COLOR_ARRAY);
-	R_EnableColorArray(qfalse);
+	R_EnableColorArray(false);
 
 	glEnableClientState(GL_NORMAL_ARRAY);
 	R_BindDefaultArray(GL_NORMAL_ARRAY);
@@ -865,12 +865,12 @@ void R_SetDefaultState (void)
 		gltexunit_t *tex = &r_state.texunits[i];
 		tex->texture = GL_TEXTURE0 + i;
 
-		R_EnableTexture(tex, qtrue);
+		R_EnableTexture(tex, true);
 
 		R_BindDefaultArray(GL_TEXTURE_COORD_ARRAY);
 
 		if (i > 0)  /* turn them off for now */
-			R_EnableTexture(tex, qfalse);
+			R_EnableTexture(tex, false);
 
 		R_CheckError();
 	}

@@ -52,23 +52,23 @@ static struct datagram_socket *netDatagramSocket;
  * @return @c true if the server is compatible, @c msg is not @c null and the server
  * wasn't pinged already, @c false otherwise
  */
-static qboolean CL_ProcessPingReply (serverList_t *server, const char *msg)
+static bool CL_ProcessPingReply (serverList_t *server, const char *msg)
 {
 	if (!msg)
-		return qfalse;
+		return false;
 
 	if (PROTOCOL_VERSION != Info_IntegerForKey(msg, "sv_protocol")) {
 		Com_DPrintf(DEBUG_CLIENT, "CL_ProcessPingReply: Protocol mismatch\n");
-		return qfalse;
+		return false;
 	}
 	if (!Q_streq(UFO_VERSION, Info_ValueForKey(msg, "sv_version"))) {
 		Com_DPrintf(DEBUG_CLIENT, "CL_ProcessPingReply: Version mismatch\n");
 	}
 
 	if (server->pinged)
-		return qfalse;
+		return false;
 
-	server->pinged = qtrue;
+	server->pinged = true;
 	Q_strncpyz(server->sv_hostname, Info_ValueForKey(msg, "sv_hostname"),
 		sizeof(server->sv_hostname));
 	Q_strncpyz(server->version, Info_ValueForKey(msg, "sv_version"),
@@ -80,7 +80,7 @@ static qboolean CL_ProcessPingReply (serverList_t *server, const char *msg)
 	server->clients = Info_IntegerForKey(msg, "clients");
 	server->sv_dedicated = Info_IntegerForKey(msg, "sv_dedicated");
 	server->sv_maxclients = Info_IntegerForKey(msg, "sv_maxclients");
-	return qtrue;
+	return true;
 }
 
 typedef enum {
@@ -94,16 +94,16 @@ typedef enum {
  * @param[in] server The server data
  * @return @c true if the server should be visible for the current filter settings, @c false otherwise
  */
-static inline qboolean CL_ShowServer (const serverList_t *server)
+static inline bool CL_ShowServer (const serverList_t *server)
 {
 	if (cl_serverlist->integer == SERVERLIST_SHOWALL)
-		return qtrue;
+		return true;
 	if (cl_serverlist->integer == SERVERLIST_HIDEFULL && server->clients < server->sv_maxclients)
-		return qtrue;
+		return true;
 	if (cl_serverlist->integer == SERVERLIST_HIDEEMPTY && server->clients > 0)
-		return qtrue;
+		return true;
 
-	return qfalse;
+	return false;
 }
 
 /**
@@ -366,7 +366,7 @@ static void CL_ServerInfoCallback (struct net_stream *s)
 
 		if (cmd == clc_oob && Q_streq(str, "print")) {
 			char hostname[256];
-			cgi->NET_StreamPeerToName(s, hostname, sizeof(hostname), qtrue);
+			cgi->NET_StreamPeerToName(s, hostname, sizeof(hostname), true);
 			CL_ParseServerInfoMessage(buf, hostname);
 		}
 	}
@@ -522,7 +522,7 @@ static void CL_ServerListClick_f (void)
 }
 
 /** this is true if pingservers was already executed */
-static qboolean serversAlreadyQueried = qfalse;
+static bool serversAlreadyQueried = false;
 static int lastServerQuery = 0;
 /** ms until the server query timed out */
 #define SERVERQUERYTIMEOUT 40000
@@ -541,7 +541,7 @@ void CL_PingServers_f (void)
 		int i;
 		/* reset current list */
 		serverText[0] = 0;
-		serversAlreadyQueried = qfalse;
+		serversAlreadyQueried = false;
 		for (i = 0; i < serverListLength; i++) {
 			cgi->Free(serverList[i].node);
 			cgi->Free(serverList[i].service);
@@ -569,7 +569,7 @@ void CL_PingServers_f (void)
 		if (lastServerQuery + SERVERQUERYTIMEOUT > cgi->CL_Milliseconds())
 			return;
 	} else
-		serversAlreadyQueried = qtrue;
+		serversAlreadyQueried = true;
 
 	lastServerQuery = cgi->CL_Milliseconds();
 

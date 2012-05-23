@@ -59,7 +59,7 @@ void CL_EntAppear (const eventRegister_t *self, struct dbuffer *msg)
 		le = LE_Add(entnum);
 	} else {
 		Com_DPrintf(DEBUG_CLIENT, "CL_EntAppear: Entity appearing already visible... overwriting the old one\n");
-		le->inuse = qtrue;
+		le->inuse = true;
 	}
 
 	le->type = type;

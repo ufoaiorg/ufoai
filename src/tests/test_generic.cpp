@@ -261,7 +261,7 @@ static void testLinkedListIterator (void)
 	LIST_Foreach(list, char, string) {
 		(void)string;
 		/* we should not be here, because the list is empty */
-		CU_ASSERT_TRUE(qfalse);
+		CU_ASSERT_TRUE(false);
 	}
 }
 
@@ -566,7 +566,7 @@ static void testEntitiesDef (void)
 	byte *fileBuffer;
 	const char *buf;
 	int i;
-	qboolean worldSpawnFound;
+	bool worldSpawnFound;
 
 	FS_LoadFile("ufos/entities.ufo", &fileBuffer);
 
@@ -575,7 +575,7 @@ static void testEntitiesDef (void)
 
 	CU_ASSERT_TRUE(numEntityDefs > 0);
 
-	worldSpawnFound = qfalse;
+	worldSpawnFound = false;
 	for (i = 0; i < numEntityDefs; i++) {
 		const entityDef_t* e = &entityDefs[i];
 
@@ -583,7 +583,7 @@ static void testEntitiesDef (void)
 		if (Q_streq(e->classname, "worldspawn")) {
 			int j;
 
-			worldSpawnFound = qtrue;
+			worldSpawnFound = true;
 
 			CU_ASSERT_TRUE(e->numKeyDefs > 10);
 			for (j = 0; j < e->numKeyDefs; j++) {

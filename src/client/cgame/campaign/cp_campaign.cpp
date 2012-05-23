@@ -139,7 +139,7 @@ void CP_ParseCharacterData (struct dbuffer *msg)
 /**
  * @brief Checks whether a campaign mode game is running
  */
-qboolean CP_IsRunning (void)
+bool CP_IsRunning (void)
 {
 	return ccs.curCampaign != NULL;
 }
@@ -149,20 +149,20 @@ qboolean CP_IsRunning (void)
  * @param[in] mission Pointer to the mission where mapDef should be added
  * @param[in] pos position of the mission (NULL if the position will be chosen afterwards)
  * @param[in] mapIdx idx of the map in the mapdef array
- * @return qfalse if map is not selectable
+ * @return false if map is not selectable
  */
-static qboolean CP_MapIsSelectable (mission_t *mission, mapDef_t *md, const vec2_t pos)
+static bool CP_MapIsSelectable (mission_t *mission, mapDef_t *md, const vec2_t pos)
 {
 	if (md->storyRelated)
-		return qfalse;
+		return false;
 
 	if (pos && !MAP_PositionFitsTCPNTypes(pos, md->terrains, md->cultures, md->populations, NULL))
-		return qfalse;
+		return false;
 
 	if (!mission->ufo) {
 		/* a mission without UFO should not use a map with UFO */
 		if (md->ufos)
-			return qfalse;
+			return false;
 	} else if (md->ufos) {
 		/* A mission with UFO should use a map with UFO
 		 * first check that list is not empty */
@@ -175,22 +175,22 @@ static qboolean CP_MapIsSelectable (mission_t *mission, mapDef_t *md, const vec2
 			ufoID = Com_UFOTypeToShortName(type);
 
 		if (!LIST_ContainsString(md->ufos, ufoID))
-			return qfalse;
+			return false;
 	}
 
-	return qtrue;
+	return true;
 }
 
 /**
  * @brief Choose a map for given mission.
  * @param[in,out] mission Pointer to the mission where a new map should be added
  * @param[in] pos position of the mission (NULL if the position will be chosen afterwards)
- * @return qfalse if could not set mission
+ * @return false if could not set mission
  */
-qboolean CP_ChooseMap (mission_t *mission, const vec2_t pos)
+bool CP_ChooseMap (mission_t *mission, const vec2_t pos)
 {
 	if (mission->mapDef)
-		return qtrue;
+		return true;
 
 	int countMinimal = 0;	/**< Number of maps fulfilling mission conditions and appeared less often during game. */
 	int minMapDefAppearance = -1;
@@ -218,7 +218,7 @@ qboolean CP_ChooseMap (mission_t *mission, const vec2_t pos)
 			if (!mission->mapDef)
 				Com_Error(ERR_DROP, "Could not find mapdef: rescue");
 			mission->mapDef->timesAlreadyUsed++;
-			return qtrue;
+			return true;
 		}
 		if (mission->crashed) {
 			/* default map for crashsite mission is the crashsite random map assembly */
@@ -226,7 +226,7 @@ qboolean CP_ChooseMap (mission_t *mission, const vec2_t pos)
 			if (!mission->mapDef)
 				Com_Error(ERR_DROP, "Could not find mapdef: ufocrash");
 			mission->mapDef->timesAlreadyUsed++;
-			return qtrue;
+			return true;
 		}
 
 		Com_Printf("CP_ChooseMap: Could not find map with required conditions:\n");
@@ -237,7 +237,7 @@ qboolean CP_ChooseMap (mission_t *mission, const vec2_t pos)
 			Com_Printf("(%.02f, %.02f)\n", pos[0], pos[1]);
 		else
 			Com_Printf("none\n");
-		return qfalse;
+		return false;
 	}
 
 	/* select a map randomly from the selected */
@@ -267,20 +267,20 @@ qboolean CP_ChooseMap (mission_t *mission, const vec2_t pos)
 	else
 		Com_DPrintf(DEBUG_CLIENT, "Selected map '%s' (among %i possible maps)\n", mission->mapDef->id, countMinimal);
 
-	return qtrue;
+	return true;
 }
 
 /**
  * @brief Function to handle the campaign end
  */
-void CP_EndCampaign (qboolean won)
+void CP_EndCampaign (bool won)
 {
 	Cmd_ExecuteString("game_exit");
 
 	if (won)
-		cgi->UI_InitStack("endgame", NULL, qtrue, qtrue);
+		cgi->UI_InitStack("endgame", NULL, true, true);
 	else
-		cgi->UI_InitStack("lostgame", NULL, qtrue, qtrue);
+		cgi->UI_InitStack("lostgame", NULL, true, true);
 
 	Com_Drop();
 }
@@ -290,7 +290,7 @@ void CP_EndCampaign (qboolean won)
  */
 void CP_CheckLostCondition (const campaign_t *campaign)
 {
-	qboolean endCampaign = qfalse;
+	bool endCampaign = false;
 	/* fraction of nation that can be below min happiness before the game is lost */
 	const float nationBelowLimitPercentage = 0.5f;
 
@@ -299,7 +299,7 @@ void CP_CheckLostCondition (const campaign_t *campaign)
 
 	if (!endCampaign && ccs.credits < -campaign->negativeCreditsUntilLost) {
 		cgi->UI_RegisterText(TEXT_STANDARD, _("You've gone too far into debt."));
-		endCampaign = qtrue;
+		endCampaign = true;
 	}
 
 	/** @todo Should we make the campaign lost when a player loses all his bases?
@@ -307,7 +307,7 @@ void CP_CheckLostCondition (const campaign_t *campaign)
 	 * world ;) - i mean, removing the credits check here. */
 	if (ccs.credits < campaign->basecost - campaign->negativeCreditsUntilLost && !B_AtLeastOneExists()) {
 		cgi->UI_RegisterText(TEXT_STANDARD, _("You've lost your bases and don't have enough money to build new ones."));
-		endCampaign = qtrue;
+		endCampaign = true;
 	}
 
 	if (!endCampaign) {
@@ -318,7 +318,7 @@ void CP_CheckLostCondition (const campaign_t *campaign)
 				" chance to stem the tide. Your command is no more; PHALANX is no longer"
 				" able to operate as a functioning unit. Nothing stands between the aliens"
 				" and total victory."));
-			endCampaign = qtrue;
+			endCampaign = true;
 		} else {
 			/* check for nation happiness */
 			int j, nationBelowLimit = 0;
@@ -338,13 +338,13 @@ void CP_CheckLostCondition (const campaign_t *campaign)
 					" effective task force. No further attempts at global cooperation are made."
 					" Earth's nations each try to stand alone against the aliens, and eventually"
 					" fall one by one."));
-				endCampaign = qtrue;
+				endCampaign = true;
 			}
 		}
 	}
 
 	if (endCampaign)
-		CP_EndCampaign(qfalse);
+		CP_EndCampaign(false);
 }
 
 /* Initial fraction of the population in the country where a mission has been lost / won */
@@ -427,7 +427,7 @@ static void CP_CheckMissionEnd (const campaign_t* campaign)
  * @param[in] updateRadarOverlay true if radar overlay should be updated (only for drawing purpose)
  * @sa CP_CampaignRun
  */
-static void CP_CampaignFunctionPeriodicCall (campaign_t* campaign, int dt, qboolean updateRadarOverlay)
+static void CP_CampaignFunctionPeriodicCall (campaign_t* campaign, int dt, bool updateRadarOverlay)
 {
 	UFO_CampaignRunUFOs(campaign, dt);
 	AIR_CampaignRun(campaign, dt, updateRadarOverlay);
@@ -449,7 +449,7 @@ static void CP_CampaignFunctionPeriodicCall (campaign_t* campaign, int dt, qbool
  * @brief Returns if we are currently on the Geoscape
  * @todo This relies on scripted content. Should work other way!
  */
-qboolean CP_OnGeoscape (void)
+bool CP_OnGeoscape (void)
 {
 	return Q_streq("geoscape", cgi->UI_GetActiveWindowName());
 }
@@ -479,10 +479,10 @@ static inline void CP_AdvanceTimeBySeconds (int seconds)
 /**
  * @return @c true if a month has passed
  */
-static inline qboolean CP_IsBudgetDue (const dateLong_t *oldDate, const dateLong_t *date)
+static inline bool CP_IsBudgetDue (const dateLong_t *oldDate, const dateLong_t *date)
 {
 	if (oldDate->year < date->year) {
-		return qtrue;
+		return true;
 	}
 	return oldDate->month < date->month;
 }
@@ -527,7 +527,7 @@ void CP_CampaignRun (campaign_t *campaign, float secondsSinceLastFrame)
 			ccs.timer -= dt;
 			currentsecond += dt;
 			CP_AdvanceTimeBySeconds(dt);
-			CP_CampaignFunctionPeriodicCall(campaign, dt, qfalse);
+			CP_CampaignFunctionPeriodicCall(campaign, dt, false);
 
 			/* if something stopped time, we must stop here the loop */
 			if (CP_IsTimeStopped()) {
@@ -584,7 +584,7 @@ void CP_CampaignRun (campaign_t *campaign, float secondsSinceLastFrame)
 			/* check for campaign events
 			 * aircraft and UFO already moved during radar detection (see above),
 			 * just make them move the missing part -- if any */
-			CP_CampaignFunctionPeriodicCall(campaign, dt, qtrue);
+			CP_CampaignFunctionPeriodicCall(campaign, dt, true);
 		}
 
 		CP_CheckMissionEnd(campaign);
@@ -600,9 +600,9 @@ void CP_CampaignRun (campaign_t *campaign, float secondsSinceLastFrame)
 		if (CP_IsBudgetDue(&oldDate, &date) && ccs.paid && B_AtLeastOneExists()) {
 			NAT_BackupMonthlyData();
 			NAT_HandleBudget(campaign);
-			ccs.paid = qfalse;
+			ccs.paid = false;
 		} else if (date.day > 1)
-			ccs.paid = qtrue;
+			ccs.paid = true;
 
 		CP_UpdateXVIMapButton();
 		/* set time cvars */
@@ -614,11 +614,11 @@ void CP_CampaignRun (campaign_t *campaign, float secondsSinceLastFrame)
  * @brief Checks whether you have enough credits for something
  * @param[in] costs costs to check
  */
-qboolean CP_CheckCredits (int costs)
+bool CP_CheckCredits (int costs)
 {
 	if (costs > ccs.credits)
-		return qfalse;
-	return qtrue;
+		return false;
+	return true;
 }
 
 /**
@@ -639,7 +639,7 @@ void CP_UpdateCredits (int credits)
  * @brief Load mapDef statistics
  * @param[in] parent XML Node structure, where we get the information from
  */
-static qboolean CP_LoadMapDefStatXML (xmlNode_t *parent)
+static bool CP_LoadMapDefStatXML (xmlNode_t *parent)
 {
 	xmlNode_t *node;
 
@@ -659,14 +659,14 @@ static qboolean CP_LoadMapDefStatXML (xmlNode_t *parent)
 		map->timesAlreadyUsed = XML_GetInt(node, SAVE_CAMPAIGN_MAPDEF_COUNT, 0);
 	}
 
-	return qtrue;
+	return true;
 }
 
 /**
  * @brief Load callback for savegames in XML Format
  * @param[in] parent XML Node structure, where we get the information from
  */
-qboolean CP_LoadXML (xmlNode_t *parent)
+bool CP_LoadXML (xmlNode_t *parent)
 {
 	xmlNode_t *campaignNode;
 	xmlNode_t *mapNode;
@@ -677,26 +677,26 @@ qboolean CP_LoadXML (xmlNode_t *parent)
 	campaignNode = XML_GetNode(parent, SAVE_CAMPAIGN_CAMPAIGN);
 	if (!campaignNode) {
 		Com_Printf("Did not find campaign entry in xml!\n");
-		return qfalse;
+		return false;
 	}
 	if (!(name = XML_GetString(campaignNode, SAVE_CAMPAIGN_ID))) {
 		Com_Printf("couldn't locate campaign name in savegame\n");
-		return qfalse;
+		return false;
 	}
 
 	campaign = CP_GetCampaign(name);
 	if (!campaign) {
 		Com_Printf("......campaign \"%s\" doesn't exist.\n", name);
-		return qfalse;
+		return false;
 	}
 
-	CP_CampaignInit(campaign, qtrue);
+	CP_CampaignInit(campaign, true);
 	/* init the map images and reset the map actions */
 	MAP_Reset(campaign->map);
 
 	/* read credits */
 	CP_UpdateCredits(XML_GetLong(campaignNode, SAVE_CAMPAIGN_CREDITS, 0));
-	ccs.paid = XML_GetBool(campaignNode, SAVE_CAMPAIGN_PAID, qfalse);
+	ccs.paid = XML_GetBool(campaignNode, SAVE_CAMPAIGN_PAID, false);
 
 	cgi->SetNextUniqueCharacterNumber(XML_GetInt(campaignNode, SAVE_CAMPAIGN_NEXTUNIQUECHARACTERNUMBER, 0));
 
@@ -720,23 +720,23 @@ qboolean CP_LoadXML (xmlNode_t *parent)
 	* and we never set r_geoscape_overlay->string in game: cl_geoscape_overlay won't be updated if the loaded
 	* value is 0 (and that's a problem if you're loading a game when cl_geoscape_overlay is set to another value */
 	cl_geoscape_overlay->integer = XML_GetInt(mapNode, SAVE_CAMPAIGN_CL_GEOSCAPE_OVERLAY, 0);
-	radarOverlayWasSet = XML_GetBool(mapNode, SAVE_CAMPAIGN_RADAROVERLAYWASSET, qfalse);
-	ccs.XVIShowMap = XML_GetBool(mapNode, SAVE_CAMPAIGN_XVISHOWMAP, qfalse);
+	radarOverlayWasSet = XML_GetBool(mapNode, SAVE_CAMPAIGN_RADAROVERLAYWASSET, false);
+	ccs.XVIShowMap = XML_GetBool(mapNode, SAVE_CAMPAIGN_XVISHOWMAP, false);
 	CP_UpdateXVIMapButton();
 
 	mapDefStat = XML_GetNode(campaignNode, SAVE_CAMPAIGN_MAPDEFSTAT);
 	if (mapDefStat && !CP_LoadMapDefStatXML(mapDefStat))
-		return qfalse;
+		return false;
 
 	mxmlDelete(campaignNode);
-	return qtrue;
+	return true;
 }
 
 /**
  * @brief Save mapDef statistics
  * @param[out] parent XML Node structure, where we write the information to
  */
-static qboolean CP_SaveMapDefStatXML (xmlNode_t *parent)
+static bool CP_SaveMapDefStatXML (xmlNode_t *parent)
 {
 	const mapDef_t *md;
 
@@ -748,14 +748,14 @@ static qboolean CP_SaveMapDefStatXML (xmlNode_t *parent)
 		}
 	}
 
-	return qtrue;
+	return true;
 }
 
 /**
  * @brief Save callback for savegames in XML Format
  * @param[out] parent XML Node structure, where we write the information to
  */
-qboolean CP_SaveXML (xmlNode_t *parent)
+bool CP_SaveXML (xmlNode_t *parent)
 {
 	xmlNode_t *campaign;
 	xmlNode_t *map;
@@ -785,9 +785,9 @@ qboolean CP_SaveXML (xmlNode_t *parent)
 
 	mapDefStat = XML_AddNode(campaign, SAVE_CAMPAIGN_MAPDEFSTAT);
 	if (!CP_SaveMapDefStatXML(mapDefStat))
-		return qfalse;
+		return false;
 
-	return qtrue;
+	return true;
 }
 
 /**
@@ -833,7 +833,7 @@ void CP_StartSelectedMission (void)
 	}
 
 	/* if we retry a mission we have to drop from the current game before */
-	SV_Shutdown("Server quit.", qfalse);
+	SV_Shutdown("Server quit.", false);
 	cgi->CL_Disconnect();
 
 	CP_CreateBattleParameters(mis, battleParam, aircraft);
@@ -857,24 +857,24 @@ void CP_StartSelectedMission (void)
  * @param[in] chr The character to check a potential promotion for
  * @todo (Zenerka 20080301) extend ranks and change calculations here.
  */
-static qboolean CP_ShouldUpdateSoldierRank (const rank_t *rank, const character_t* chr)
+static bool CP_ShouldUpdateSoldierRank (const rank_t *rank, const character_t* chr)
 {
 	if (rank->type != EMPL_SOLDIER)
-		return qfalse;
+		return false;
 
 	/* mind is not yet enough */
 	if (chr->score.skills[ABILITY_MIND] < rank->mind)
-		return qfalse;
+		return false;
 
 	/* not enough killed enemies yet */
 	if (chr->score.kills[KILLED_ENEMIES] < rank->killedEnemies)
-		return qfalse;
+		return false;
 
 	/* too many civilians and team kills */
 	if (chr->score.kills[KILLED_CIVILIANS] + chr->score.kills[KILLED_TEAM] > rank->killedOthers)
-		return qfalse;
+		return false;
 
-	return qtrue;
+	return true;
 }
 
 /**
@@ -949,7 +949,7 @@ static void CP_DebugAllItems_f (void)
 		const objDef_t *obj = INVSH_GetItemByIDX(i);
 		if (!obj->weapon && !obj->numWeapons)
 			continue;
-		B_UpdateStorageAndCapacity(base, obj, 1, qtrue);
+		B_UpdateStorageAndCapacity(base, obj, 1, true);
 		if (B_ItemInBase(obj, base) > 0) {
 			technology_t *tech = RS_GetTechForItem(obj);
 			RS_MarkCollected(tech);
@@ -1084,7 +1084,7 @@ static void CP_RemoveCampaignCommands (void)
  * @param[in] load @c true if we are loading game, @c false otherwise
  * @param[in] campaign Pointer to campaign - it will be set to @c ccs.curCampaign here.
  */
-void CP_CampaignInit (campaign_t *campaign, qboolean load)
+void CP_CampaignInit (campaign_t *campaign, bool load)
 {
 	ccs.curCampaign = campaign;
 
@@ -1112,7 +1112,7 @@ void CP_CampaignInit (campaign_t *campaign, qboolean load)
 
 	CP_XVIInit();
 
-	cgi->UI_InitStack("geoscape", "campaign_main", qtrue, qtrue);
+	cgi->UI_InitStack("geoscape", "campaign_main", true, true);
 
 	if (load) {
 		return;
@@ -1120,7 +1120,7 @@ void CP_CampaignInit (campaign_t *campaign, qboolean load)
 
 	Cmd_ExecuteString("addeventmail prolog");
 
-	RS_MarkResearchable(qtrue, NULL);
+	RS_MarkResearchable(true, NULL);
 	BS_InitMarket(campaign);
 
 	/* create initial employees */
@@ -1288,7 +1288,7 @@ static void CP_DebugChangeCharacterStats_f (void)
  * @note The random positions should be roughly uniform thanks to the non-uniform distribution used.
  * @note This function always returns a value.
  */
-void CP_GetRandomPosOnGeoscape (vec2_t pos, qboolean noWater)
+void CP_GetRandomPosOnGeoscape (vec2_t pos, bool noWater)
 {
 	do {
 		pos[0] = (frand() - 0.5f) * 360.0f;
@@ -1312,7 +1312,7 @@ void CP_GetRandomPosOnGeoscape (vec2_t pos, qboolean noWater)
  * @note When all parameters are NULL, the algorithm assumes that it does not need to include "water" terrains when determining a random position
  * @note You should rather use CP_GetRandomPosOnGeoscape if there are no parameters (except water) to choose a random position
  */
-qboolean CP_GetRandomPosOnGeoscapeWithParameters (vec2_t pos, const linkedList_t* terrainTypes, const linkedList_t* cultureTypes, const linkedList_t* populationTypes, const linkedList_t* nations)
+bool CP_GetRandomPosOnGeoscapeWithParameters (vec2_t pos, const linkedList_t* terrainTypes, const linkedList_t* cultureTypes, const linkedList_t* populationTypes, const linkedList_t* nations)
 {
 	float x, y;
 	int num;
@@ -1350,7 +1350,7 @@ qboolean CP_GetRandomPosOnGeoscapeWithParameters (vec2_t pos, const linkedList_t
 
 	/* if there have been no hits, the function failed to find a position */
 	if (hits == 0)
-		return qfalse;
+		return false;
 
 	/* the 2nd iteration goes through the locations again, but does so only until a random point */
 	/* prepare 2nd iteration */
@@ -1371,7 +1371,7 @@ qboolean CP_GetRandomPosOnGeoscapeWithParameters (vec2_t pos, const linkedList_t
 					Vector2Set(pos, posX, posY);
 					Com_DPrintf(DEBUG_CLIENT, "CP_GetRandomPosOnGeoscapeWithParameters: New random coords for a mission are %.0f:%.0f, chosen as #%i out of %i possible locations\n",
 						pos[0], pos[1], randomNum, hits);
-					return qtrue;
+					return true;
 				}
 			}
 		}
@@ -1387,7 +1387,7 @@ qboolean CP_GetRandomPosOnGeoscapeWithParameters (vec2_t pos, const linkedList_t
 	assert(pos[1] >= -90);
 	assert(pos[1] <= 90);
 
-	return qtrue;
+	return true;
 }
 
 const city_t * CP_GetCity (const char *id)

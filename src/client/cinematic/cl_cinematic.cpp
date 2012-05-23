@@ -44,7 +44,7 @@ void CIN_InitCinematic (cinematic_t *cin)
  * @note Coordinates should be relative to VID_NORM_WIDTH and VID_NORM_HEIGHT
  * they are normalized inside this function
  */
-void CIN_SetParameters (cinematic_t *cin, int x, int y, int w, int h, int status, qboolean noSound)
+void CIN_SetParameters (cinematic_t *cin, int x, int y, int w, int h, int status, bool noSound)
 {
 	cin->x = x * viddef.rx;
 	cin->y = y * viddef.ry;
@@ -73,7 +73,7 @@ void CIN_RunCinematic (cinematic_t *cin)
 		char name[MAX_QPATH];
 		Q_strncpyz(name, cin->name, sizeof(name));
 		CIN_OpenCinematic(cin, name);
-		cin->replay = qtrue;
+		cin->replay = true;
 	} else {
 		CIN_CloseCinematic(cin);
 	}

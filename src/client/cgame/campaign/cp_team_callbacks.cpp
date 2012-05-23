@@ -274,7 +274,7 @@ static void CP_TEAM_FillBDEFEmployeeList_f (void)
 	E_Foreach(EMPL_SOLDIER, employee) {
 		const rank_t *rank = CL_GetRankByIdx(employee->chr.score.rank);
 		const char *tooltip;
-		qboolean isInTeam;
+		bool isInTeam;
 
 		if (!E_IsInBase(employee, base))
 			continue;

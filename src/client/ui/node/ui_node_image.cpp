@@ -178,7 +178,7 @@ void uiImageNode::draw (uiNode_t *node)
 	}
 
 	UI_ImageAlignBoxInBox(nodepos, nodesize, size, (align_t) node->contentAlign, imagepos);
-	UI_DrawNormImage(qfalse, imagepos[0] + node->padding, imagepos[1] + node->padding, size[0], size[1],
+	UI_DrawNormImage(false, imagepos[0] + node->padding, imagepos[1] + node->padding, size[0], size[1],
 			EXTRADATA(node).texh[0], EXTRADATA(node).texh[1],
 			EXTRADATA(node).texl[0], EXTRADATA(node).texl[1], image);
 
@@ -200,11 +200,11 @@ void UI_RegisterImageNode (uiBehaviour_t* behaviour)
 	behaviour->extraDataSize = sizeof(EXTRADATA_TYPE);
 
 	/* Do not change the image ratio. The image will be proportionally stretched. */
-	UI_RegisterExtradataNodeProperty(behaviour, "preventratio", V_CPPBOOL, EXTRADATA_TYPE, preventRatio);
+	UI_RegisterExtradataNodeProperty(behaviour, "preventratio", V_BOOL, EXTRADATA_TYPE, preventRatio);
 	/* Now this property do nothing. But we use it like a tag, to remember nodes we should convert into button...
 	 * @todo delete it when its possible (use more button instead of image)
 	 */
-	UI_RegisterExtradataNodeProperty(behaviour, "mousefx", V_CPPBOOL, EXTRADATA_TYPE, mousefx);
+	UI_RegisterExtradataNodeProperty(behaviour, "mousefx", V_BOOL, EXTRADATA_TYPE, mousefx);
 
 	/* Texture high. Optional. Define the higher corner of the texture we want to display. Used with texl to crop the image. */
 	UI_RegisterExtradataNodeProperty(behaviour, "texh", V_POS, EXTRADATA_TYPE, texh);

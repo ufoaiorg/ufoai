@@ -99,7 +99,7 @@ void CL_RecalcRouting (const le_t* le)
 	CL_ActorConditionalMoveCalc(selActor);
 }
 
-static void LM_AddToSceneOrder (qboolean parents)
+static void LM_AddToSceneOrder (bool parents)
 {
 	localModel_t *lm;
 	entity_t ent;
@@ -168,8 +168,8 @@ static void LM_AddToSceneOrder (qboolean parents)
  */
 void LM_AddToScene (void)
 {
-	LM_AddToSceneOrder(qtrue);
-	LM_AddToSceneOrder(qfalse);
+	LM_AddToSceneOrder(true);
+	LM_AddToSceneOrder(false);
 }
 
 /**
@@ -203,7 +203,7 @@ void LE_LinkFloorContainer (le_t *le)
  * @param[in] le The local entity to perform the check for
  * @sa G_IsLivingActor
  */
-qboolean LE_IsActor (const le_t *le)
+bool LE_IsActor (const le_t *le)
 {
 	assert(le);
 	return le->type == ET_ACTOR || le->type == ET_ACTOR2x2 || le->type == ET_ACTORHIDDEN;
@@ -215,7 +215,7 @@ qboolean LE_IsActor (const le_t *le)
  * @sa G_IsLivingActor
  * @sa LE_IsActor
  */
-qboolean LE_IsLivingActor (const le_t *le)
+bool LE_IsLivingActor (const le_t *le)
 {
 	assert(le);
 	return LE_IsActor(le) && (LE_IsStunned(le) || !LE_IsDead(le));
@@ -227,11 +227,11 @@ qboolean LE_IsLivingActor (const le_t *le)
  * @sa G_IsLivingActor
  * @sa LE_IsActor
  */
-qboolean LE_IsLivingAndVisibleActor (const le_t *le)
+bool LE_IsLivingAndVisibleActor (const le_t *le)
 {
 	assert(le);
 	if (le->invis)
-		return qfalse;
+		return false;
 
 	assert(le->type != ET_ACTORHIDDEN);
 
@@ -257,7 +257,7 @@ void LM_Register (void)
 						lm->name, lm->animname);
 		}
 		if (!lm->model)
-			lm->inuse = qfalse;
+			lm->inuse = false;
 	}
 }
 
@@ -313,7 +313,7 @@ localModel_t *LM_AddModel (const char *model, const vec3_t origin, const vec3_t 
 	lm->entnum = entnum;
 	lm->levelflags = levelflags;
 	lm->renderFlags = renderFlags;
-	lm->inuse = qtrue;
+	lm->inuse = true;
 	VectorCopy(scale, lm->scale);
 
 	return lm;
@@ -689,7 +689,7 @@ static void LET_Projectile (le_t * le)
 		VectorCopy(le->origin, impact);
 		CL_ParticleFree(le->ptl);
 		/* don't run the think function again */
-		le->inuse = qfalse;
+		le->inuse = false;
 		if (Q_strvalid(le->ref1)) {
 			VectorCopy(le->ptl->s, impact);
 			le->ptl = CL_ParticleSpawn(le->ref1, 0, impact, bytedirs[le->angle]);
@@ -710,7 +710,7 @@ static void LET_Projectile (le_t * le)
 		le->endTime = cl.time;
 		CL_ParticleFree(le->ptl);
 		/* don't run the think function again */
-		le->inuse = qfalse;
+		le->inuse = false;
 	}
 }
 
@@ -732,7 +732,7 @@ void LE_AddProjectile (const fireDef_t *fd, int flags, const vec3_t muzzle, cons
 	/* bind particle */
 	le->ptl = CL_ParticleSpawn(fd->projectile, 0, muzzle);
 	if (!le->ptl) {
-		le->inuse = qfalse;
+		le->inuse = false;
 		return;
 	}
 
@@ -747,7 +747,7 @@ void LE_AddProjectile (const fireDef_t *fd, int flags, const vec3_t muzzle, cons
 
 	/* infinite speed projectile? */
 	if (!fd->speed) {
-		le->inuse = qfalse;
+		le->inuse = false;
 		le->ptl->size[0] = dist;
 		VectorMA(muzzle, 0.5, delta, le->ptl->s);
 		if ((flags & (SF_IMPACT | SF_BODY)) || (fd->splrad && !fd->bounce)) {
@@ -863,7 +863,7 @@ void LE_PlaceItem (le_t *le)
 	} else {
 		/* If no items in floor inventory, don't draw this le - the container is
 		 * maybe empty because an actor picked up the last items here */
-		le->removeNextFrame = qtrue;
+		le->removeNextFrame = true;
 	}
 }
 
@@ -890,7 +890,7 @@ void LE_AddGrenade (const fireDef_t *fd, int flags, const vec3_t muzzle, const v
 	VectorSet(accel, 0, 0, -GRAVITY);
 	le->ptl = CL_ParticleSpawn(fd->projectile, 0, muzzle, v0, accel);
 	if (!le->ptl) {
-		le->inuse = qfalse;
+		le->inuse = false;
 		return;
 	}
 	/* particle properties */
@@ -923,7 +923,7 @@ void LE_AddGrenade (const fireDef_t *fd, int flags, const vec3_t muzzle, const v
  * @brief Add function for brush models
  * @sa LE_AddToScene
  */
-qboolean LE_BrushModelAction (le_t * le, entity_t * ent)
+bool LE_BrushModelAction (le_t * le, entity_t * ent)
 {
 	switch (le->type) {
 	case ET_ROTATING:
@@ -944,7 +944,7 @@ qboolean LE_BrushModelAction (le_t * le, entity_t * ent)
 		const int drawFlags = cl_map_draw_rescue_zone->integer;
 
 		if (!((1 << cl_worldlevel->integer) & le->levelflags))
-			return qfalse;
+			return false;
 
 		ent->flags = 0; /* Do not draw anything at all, if drawFlags set to 0 */
 		enum { DRAW_TEXTURE = 0x1, DRAW_CIRCLES = 0x2 };
@@ -960,7 +960,7 @@ qboolean LE_BrushModelAction (le_t * le, entity_t * ent)
 		VectorCopy(le->maxs, ent->maxs);
 
 		if (!(drawFlags & DRAW_CIRCLES))
-			return qfalse;
+			return false;
 
 		/* There should be an easier way than calculating the grid coords back from the world coords */
 		z = roundf(le->mins[2] / UNIT_HEIGHT) * UNIT_HEIGHT + UNIT_HEIGHT / 8.0f;
@@ -983,13 +983,13 @@ qboolean LE_BrushModelAction (le_t * le, entity_t * ent)
 		}
 
 		/* no other rendering entities should be added for the local entity */
-		return qfalse;
+		return false;
 	}
 	default:
 		break;
 	}
 
-	return qtrue;
+	return true;
 }
 
 void LET_BrushModel (le_t *le)
@@ -1036,7 +1036,7 @@ void LMT_Init (localModel_t* localModel)
 void LET_SlideDoor (le_t *le, int speed)
 {
 	vec3_t moveAngles, moveDir;
-	qboolean endPos = qfalse;
+	bool endPos = false;
 	int distance;
 
 	/* get the movement angle vector */
@@ -1057,13 +1057,13 @@ void LET_SlideDoor (le_t *le, int speed)
 		/* check whether the distance the door may slide is slided already
 		 * - if so, stop the movement of the door */
 		if (fabs(le->origin[le->dir & 3]) >= distance)
-			endPos = qtrue;
+			endPos = true;
 	} else {
 		/* the sliding door has not origin set - except when it is opened. This door type is no
 		 * origin brush based bmodel entity. So whenever the origin vector is not the zero vector,
 		 * the door is opened. */
 		if (VectorEmpty(le->origin))
-			endPos = qtrue;
+			endPos = true;
 	}
 
 	if (endPos) {
@@ -1161,7 +1161,7 @@ le_t *LE_Add (int entnum)
 
 	/* initialize the new LE */
 	OBJZERO(*le);
-	le->inuse = qtrue;
+	le->inuse = true;
 	le->entnum = entnum;
 	le->fieldSize = ACTOR_SIZE_NORMAL;
 	return le;
@@ -1223,7 +1223,7 @@ le_t *LE_Get (int entnum)
  * @param entnum the entnum of the le_t struct involved.
  * @return true if the le_t is locked (used by another event), false if it's not or if it doesn't exist.
  */
-qboolean LE_IsLocked (int entnum)
+bool LE_IsLocked (int entnum)
 {
 	le_t *le = LE_Get(entnum);
 	return (le != NULL && le->locked);
@@ -1241,7 +1241,7 @@ void LE_Lock (le_t *le)
 	if (le->locked)
 		Com_Error(ERR_DROP, "LE_Lock: Trying to lock %i which is already locked\n", le->entnum);
 
-	le->locked = qtrue;
+	le->locked = true;
 }
 
 /**
@@ -1260,7 +1260,7 @@ void LE_Unlock (le_t *le)
 	if (!le->locked)
 		Com_Error(ERR_DROP, "LE_Unlock: Trying to unlock %i which is already unlocked\n", le->entnum);
 
-	le->locked = qfalse;
+	le->locked = false;
 }
 
 /**
@@ -1379,7 +1379,7 @@ le_t *LE_Find (entity_type_t type, const pos3_t pos)
  * @param le The local entity to check
  * @return @c true if the given local entity is a func_door or func_rotating
  */
-static inline qboolean LE_IsOriginBrush (const le_t *const le)
+static inline bool LE_IsOriginBrush (const le_t *const le)
 {
 	return (le->type == ET_DOOR || le->type == ET_ROTATING);
 }
@@ -1415,8 +1415,8 @@ void LE_AddToScene (void)
 
 	for (i = 0, le = cl.LEs; i < cl.numLEs; i++, le++) {
 		if (le->removeNextFrame) {
-			le->inuse = qfalse;
-			le->removeNextFrame = qfalse;
+			le->inuse = false;
+			le->removeNextFrame = false;
 		}
 		if (le->inuse && !le->invis) {
 			if (le->contents & CONTENTS_SOLID) {
@@ -1452,7 +1452,7 @@ void LE_AddToScene (void)
 			}
 
 			if (LE_IsOriginBrush(le)) {
-				ent.isOriginBrushModel = qtrue;
+				ent.isOriginBrushModel = true;
 				R_EntitySetOrigin(&ent, le->origin);
 				VectorCopy(le->origin, ent.oldorigin);
 			}
@@ -1507,7 +1507,7 @@ void LE_Cleanup (void)
 		else if (LE_IsItem(le))
 			cls.i.EmptyContainer(&cls.i, &le->i, INVDEF(csi.idFloor));
 
-		le->inuse = qfalse;
+		le->inuse = false;
 	}
 }
 
@@ -1658,7 +1658,7 @@ static void CL_ClipMoveToLEs (moveclip_t * clip)
 				headnode, clip->contentmask, 0, origin, angles, shift, 1.0);
 
 		if (trace.fraction < clip->trace.fraction) {
-			qboolean oldStart;
+			bool oldStart;
 
 			/* make sure we keep a startsolid from a previous trace */
 			oldStart = clip->trace.startsolid;
@@ -1672,7 +1672,7 @@ static void CL_ClipMoveToLEs (moveclip_t * clip)
 		/* if true, the initial point was in a solid area */
 		} else if (trace.startsolid) {
 			trace.le = le;
-			clip->trace.startsolid = qtrue;
+			clip->trace.startsolid = true;
 		}
 	}
 }

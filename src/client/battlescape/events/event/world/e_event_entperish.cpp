@@ -79,7 +79,7 @@ void CL_EntPerish (const eventRegister_t *self, struct dbuffer *msg)
 		break;
 	}
 
-	le->invis = qtrue;
+	le->invis = true;
 	/* decrease the count of spotted aliens (also stunned) */
 	cl.numEnemiesSpotted = CL_CountVisibleEnemies();
 }

@@ -770,7 +770,7 @@ static void CM_InitBoxHull (mapTile_t *tile)
  * @sa CM_LoadMap
  * @sa R_ModAddMapTile
  */
-static void CM_AddMapTile (const char *name, const qboolean day, const int sX, const int sY, const byte sZ, mapData_t *mapData, mapTiles_t *mapTiles)
+static void CM_AddMapTile (const char *name, const bool day, const int sX, const int sY, const byte sZ, mapData_t *mapData, mapTiles_t *mapTiles)
 {
 	char filename[MAX_QPATH];
 	unsigned checksum;
@@ -939,7 +939,7 @@ static void CMod_RerouteMap (mapTiles_t *mapTiles, mapData_t *mapData)
  * @sa CM_AddMapTile
  * @sa R_ModBeginLoading
  */
-void CM_LoadMap (const char *tiles, qboolean day, const char *pos, mapData_t *mapData, mapTiles_t *mapTiles)
+void CM_LoadMap (const char *tiles, bool day, const char *pos, mapData_t *mapData, mapTiles_t *mapTiles)
 {
 	const char *token;
 	char name[MAX_VAR];

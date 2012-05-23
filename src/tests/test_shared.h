@@ -56,7 +56,7 @@ void TEST_Shutdown(void);
 
 /** interface to allow to custom tests with command line */
 void TEST_RegisterProperty(const char* name, const char* value);
-qboolean TEST_ExistsProperty (const char* name);
+bool TEST_ExistsProperty (const char* name);
 int TEST_GetIntProperty(const char* name);
 long TEST_GetLongProperty(const char* name);
 const char* TEST_GetStringProperty(const char* name);

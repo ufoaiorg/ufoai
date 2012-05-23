@@ -30,7 +30,7 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 /**
  * @brief Draw the bounding boxes for the server side edicts
  */
-static qboolean CL_AddEdictFunc (le_t *le, entity_t *ent)
+static bool CL_AddEdictFunc (le_t *le, entity_t *ent)
 {
 	ent->flags = RF_BOX;
 	VectorSet(ent->color, 1, 1, 1);
@@ -38,7 +38,7 @@ static qboolean CL_AddEdictFunc (le_t *le, entity_t *ent)
 	VectorCopy(le->mins, ent->mins);
 	VectorCopy(le->maxs, ent->maxs);
 	R_EntitySetOrigin(ent, le->origin);
-	return qtrue;
+	return true;
 }
 
 /**
@@ -61,7 +61,7 @@ void CL_AddEdict (const eventRegister_t *self, struct dbuffer * msg)
 		le = LE_Add(entnum + MAX_EDICTS);
 	} else {
 		Com_DPrintf(DEBUG_CLIENT, "CL_AddEdict: Entity appearing already visible... overwriting the old one\n");
-		le->inuse = qtrue;
+		le->inuse = true;
 	}
 
 	VectorCopy(mins, le->mins);

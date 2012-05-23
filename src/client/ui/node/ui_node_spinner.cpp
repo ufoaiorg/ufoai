@@ -50,7 +50,7 @@ static const int SPINNER_HEIGHT = 19;
 static const int BUTTON_TOP_SIZE = 9;
 static const int BUTTON_BOTTOM_SIZE = 10;
 
-static qboolean capturedDownButton;
+static bool capturedDownButton;
 static uiTimer_t *capturedTimer = NULL;
 
 /**
@@ -85,7 +85,7 @@ static void UI_SpinnerNodeRepeat (uiNode_t *node, uiTimer_t *timer)
 
 void uiSpinnerNode::onMouseDown (uiNode_t *node, int x, int y, int button)
 {
-	const qboolean disabled = node->disabled || node->parent->disabled;
+	const bool disabled = node->disabled || node->parent->disabled;
 	if (disabled)
 		return;
 
@@ -139,7 +139,7 @@ void uiSpinnerNode::draw (uiNode_t *node)
 	int bottomTexX, bottomTexY;
 	const char* image = UI_GetReferenceString(node, node->image);
 	const float delta = getDelta(node);
-	const qboolean disabled = node->disabled || node->parent->disabled;
+	const bool disabled = node->disabled || node->parent->disabled;
 
 	if (!image)
 		return;
@@ -185,10 +185,10 @@ void uiSpinnerNode::draw (uiNode_t *node)
 	pos[1] += (node->box.size[1] - SPINNER_HEIGHT) * 0.5;
 
 	/* draw top button */
-	UI_DrawNormImageByName(qfalse, pos[0], pos[1], SPINNER_WIDTH, BUTTON_TOP_SIZE,
+	UI_DrawNormImageByName(false, pos[0], pos[1], SPINNER_WIDTH, BUTTON_TOP_SIZE,
 		topTexX + SPINNER_WIDTH, topTexY + BUTTON_TOP_SIZE, topTexX, topTexY, image);
 	/* draw bottom button */
-	UI_DrawNormImageByName(qfalse, pos[0], pos[1] + BUTTON_TOP_SIZE, SPINNER_WIDTH, BUTTON_BOTTOM_SIZE,
+	UI_DrawNormImageByName(false, pos[0], pos[1] + BUTTON_TOP_SIZE, SPINNER_WIDTH, BUTTON_BOTTOM_SIZE,
 		bottomTexX + SPINNER_WIDTH, bottomTexY + SPINNER_HEIGHT, bottomTexX, bottomTexY + SPINNER_HEIGHT - BUTTON_BOTTOM_SIZE, image);
 
 	/* new draw code */
@@ -227,11 +227,11 @@ void uiSpinnerNode::draw (uiNode_t *node)
 	}
 
 	if (EXTRADATA(node).background)
-		UI_DrawSpriteInBox(qfalse, EXTRADATA(node).background, status, pos[0], pos[1], node->box.size[0], node->box.size[1]);
+		UI_DrawSpriteInBox(false, EXTRADATA(node).background, status, pos[0], pos[1], node->box.size[0], node->box.size[1]);
 	if (EXTRADATA(node).topIcon)
-		UI_DrawSpriteInBox(qfalse, EXTRADATA(node).topIcon, topStatus, pos[0], pos[1], node->box.size[0], node->box.size[1]);
+		UI_DrawSpriteInBox(false, EXTRADATA(node).topIcon, topStatus, pos[0], pos[1], node->box.size[0], node->box.size[1]);
 	if (EXTRADATA(node).bottomIcon)
-		UI_DrawSpriteInBox(qfalse, EXTRADATA(node).bottomIcon, bottomStatus, pos[0], pos[1], node->box.size[0], node->box.size[1]);
+		UI_DrawSpriteInBox(false, EXTRADATA(node).bottomIcon, bottomStatus, pos[0], pos[1], node->box.size[0], node->box.size[1]);
 }
 
 void uiSpinnerNode::onLoading (uiNode_t *node)

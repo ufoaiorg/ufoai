@@ -33,7 +33,7 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 const char *Com_Parse(const char **data_p);
 int Com_CountTokensInBuffer(const char *buffer);
 void Com_UnParseLastToken(void);
-qboolean Com_ParsedTokenIsQuoted(void);
-void Com_EnableFunctionScriptToken(qboolean enable);
+bool Com_ParsedTokenIsQuoted(void);
+void Com_EnableFunctionScriptToken(bool enable);
 
 #endif

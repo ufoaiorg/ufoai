@@ -36,10 +36,6 @@
 typedef float float32_t;
 typedef double double64_t;
 
-typedef int qboolean;
-#define qtrue 1
-#define qfalse 0
-
 #ifndef byte
 typedef uint8_t byte;
 #endif

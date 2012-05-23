@@ -48,57 +48,57 @@ typedef enum {
 	VERB_NUM /**< the number of verbosity levels */
 } verbosityLevel_t;
 
-qboolean AbortPrint(const verbosityLevel_t importance);
+bool AbortPrint(const verbosityLevel_t importance);
 void Verb_Printf(const verbosityLevel_t importance, const char *format, ...) __attribute__((format(printf, 2, 3)));
 
 typedef struct mapConfig_s {
 	float subdivideSize;
 	int nice;
-	qboolean verbose;
+	bool verbose;
 	verbosityLevel_t verbosity;
-	qboolean noprune;		/**< If not set to true the brushlists of child nodes are combined. The bsp file will get larger
+	bool noprune;		/**< If not set to true the brushlists of child nodes are combined. The bsp file will get larger
 							 * and the compile time will increase */
-	qboolean nodetail;		/**< do not put any of the detail brushes in the bsp */
-	qboolean fulldetail;	/**< everything with content will get a detail brush */
-	qboolean onlyents;		/**< will only update the entity data without recalculating the pathfinding or the lightmaps */
-	qboolean exportLightmaps;	/**< will export the lightmaps and direction data into tga images */
-	qboolean nomerge;		/**< If set, faces that share the same edge on the same plane are not merged */
-	qboolean nowater;		/**< does not add any CONTENTS_WATER brush to the bsp */
-	qboolean nocsg;			/**< If set, the call to chop the brushes is deactivated - there will be no reduction of intersecting brushes
+	bool nodetail;		/**< do not put any of the detail brushes in the bsp */
+	bool fulldetail;	/**< everything with content will get a detail brush */
+	bool onlyents;		/**< will only update the entity data without recalculating the pathfinding or the lightmaps */
+	bool exportLightmaps;	/**< will export the lightmaps and direction data into tga images */
+	bool nomerge;		/**< If set, faces that share the same edge on the same plane are not merged */
+	bool nowater;		/**< does not add any CONTENTS_WATER brush to the bsp */
+	bool nocsg;			/**< If set, the call to chop the brushes is deactivated - there will be no reduction of intersecting brushes
 							 * with non-intersecting brushes. The resulting bsp file will also be larger with this option turned on. */
-	qboolean noweld;		/**< use vertices from curTile->vertexes array or if false, create vertices from a hash table */
-	qboolean noshare;		/**< If true, keep identical edges in the bsp */
-	qboolean nosubdiv;		/**< If this is set to false faces that are larger than the given chop size will get subdivided */
-	qboolean notjunc;		/**< If true, do not break edges on tjunctions. This will decrease the compile times and should not be used on final compiles */
-	qboolean verboseentities;	/**< prints entity sub model informations to the console */
-	qboolean nobackclip;	/**< does not filter out back clipping brushes - results in larger bsp files */
+	bool noweld;		/**< use vertices from curTile->vertexes array or if false, create vertices from a hash table */
+	bool noshare;		/**< If true, keep identical edges in the bsp */
+	bool nosubdiv;		/**< If this is set to false faces that are larger than the given chop size will get subdivided */
+	bool notjunc;		/**< If true, do not break edges on tjunctions. This will decrease the compile times and should not be used on final compiles */
+	bool verboseentities;	/**< prints entity sub model informations to the console */
+	bool nobackclip;	/**< does not filter out back clipping brushes - results in larger bsp files */
 	int nolighting;
 	int block_xl, block_xh, block_yl, block_yh;
 	float microvolume; /**< -micro test after CSG */
-	qboolean extrasamples;	/**< apply sampling to the lightmap- makes lightmap smoother */
-	qboolean soft; /**< use different supersampling pattern for lightmap, which produces softer shadows */
-	qboolean info;
-	qboolean generateFootstepFile;
-	qboolean generateMaterialFile;
+	bool extrasamples;	/**< apply sampling to the lightmap- makes lightmap smoother */
+	bool soft; /**< use different supersampling pattern for lightmap, which produces softer shadows */
+	bool info;
+	bool generateFootstepFile;
+	bool generateMaterialFile;
 
-	qboolean performMapCheck;
-	qboolean chkEntities;
-	qboolean chkContained;
-	qboolean chkFillLevelFlags;
-	qboolean chkIntersection;
-	qboolean chkNodraws;
-	qboolean chkBrushes;
-	qboolean chkLevelFlags;
-	qboolean chkTextures;
-	qboolean chkMixedFaceContents;
-	qboolean chkMMicro;
-	qboolean chkZFight;
+	bool performMapCheck;
+	bool chkEntities;
+	bool chkContained;
+	bool chkFillLevelFlags;
+	bool chkIntersection;
+	bool chkNodraws;
+	bool chkBrushes;
+	bool chkLevelFlags;
+	bool chkTextures;
+	bool chkMixedFaceContents;
+	bool chkMMicro;
+	bool chkZFight;
 	float mapMicrovol; /**< -check mbr micro test before CSG */
-	qboolean chkAll;
-	qboolean fixMap;
-	qboolean stats; /**< print stats and quit. implemented as a kind of check */
-	qboolean generateTraceFile;
-	qboolean generateDebugTrace;
+	bool chkAll;
+	bool fixMap;
+	bool stats; /**< print stats and quit. implemented as a kind of check */
+	bool generateTraceFile;
+	bool generateDebugTrace;
 
 	int sun_intensity[LIGHTMAP_MAX];
 	vec3_t sun_ambient_color[LIGHTMAP_MAX];
@@ -129,7 +129,7 @@ typedef struct threadstate_s {
 	int workcount;		/**< total work cycles */
 	int workfrac;		/**< last fraction of work completed (tenths) */
 	int worktick;		/**< Number of iterations before the progress spinner is spun */
-	qboolean progress;	/**< are we reporting progress */
+	bool progress;	/**< are we reporting progress */
 } threadstate_t;
 
 extern threadstate_t threadstate;
@@ -139,8 +139,8 @@ extern memPool_t *com_fileSysPool;
 
 void ThreadLock(void);
 void ThreadUnlock(void);
-void RunThreadsOn(void (*func)(unsigned int), unsigned int workcount, qboolean progress, const char *id);
-void RunSingleThreadOn(void (*func)(unsigned int), unsigned int workcount, qboolean progress, const char *id);
+void RunThreadsOn(void (*func)(unsigned int), unsigned int workcount, bool progress, const char *id);
+void RunSingleThreadOn(void (*func)(unsigned int), unsigned int workcount, bool progress, const char *id);
 
 #define SYS_VRB 0 /* verbose support (on/off) */
 #define SYS_STD 1 /* standard print level */

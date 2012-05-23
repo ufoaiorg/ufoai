@@ -59,14 +59,14 @@ static void G_Players_f (const player_t *player)
 /**
  * @brief Check whether the user can talk
  */
-static qboolean G_CheckFlood (player_t *player)
+static bool G_CheckFlood (player_t *player)
 {
 	int i;
 
 	if (flood_msgs->integer) {
 		if (level.time < player->pers.flood_locktill) {
 			G_ClientPrintf(player, PRINT_CHAT, _("You can't talk for %d more seconds\n"), (int)(player->pers.flood_locktill - level.time));
-			return qtrue;
+			return true;
 		}
 		i = player->pers.flood_whenhead - flood_msgs->value + 1;
 		if (i < 0)
@@ -74,16 +74,16 @@ static qboolean G_CheckFlood (player_t *player)
 		if (player->pers.flood_when[i] && level.time - player->pers.flood_when[i] < flood_persecond->value) {
 			player->pers.flood_locktill = level.time + flood_waitdelay->value;
 			G_ClientPrintf(player, PRINT_CHAT, _("Flood protection: You can't talk for %d seconds.\n"), flood_waitdelay->integer);
-			return qtrue;
+			return true;
 		}
 		player->pers.flood_whenhead = (player->pers.flood_whenhead + 1) %
 				(sizeof(player->pers.flood_when)/sizeof(player->pers.flood_when[0]));
 		player->pers.flood_when[player->pers.flood_whenhead] = level.time;
 	}
-	return qfalse;
+	return false;
 }
 
-static void G_Say_f (player_t *player, qboolean arg0, qboolean team)
+static void G_Say_f (player_t *player, bool arg0, bool team)
 {
 	char text[256];
 	player_t *p;
@@ -409,9 +409,9 @@ void G_ClientCommand (player_t * player)
 	if (Q_strcasecmp(cmd, "players") == 0)
 		G_Players_f(player);
 	else if (Q_strcasecmp(cmd, "say") == 0)
-		G_Say_f(player, qfalse, qfalse);
+		G_Say_f(player, false, false);
 	else if (Q_strcasecmp(cmd, "say_team") == 0)
-		G_Say_f(player, qfalse, qtrue);
+		G_Say_f(player, false, true);
 #ifdef DEBUG
 	else if (Q_strcasecmp(cmd, "debug_actorinvlist") == 0)
 		G_InvList_f(player);
@@ -430,5 +430,5 @@ void G_ClientCommand (player_t * player)
 #endif
 	else
 		/* anything that doesn't match a command will be a chat */
-		G_Say_f(player, qtrue, qfalse);
+		G_Say_f(player, true, false);
 }

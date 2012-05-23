@@ -70,13 +70,13 @@ static void testEvents (void)
 
 scheduleEvent_t* Dequeue_Event(int now);
 
-static qboolean delayCheck (int now, void *data)
+static bool delayCheck (int now, void *data)
 {
-	static qboolean check = qfalse;
-	const qboolean ret = check;
+	static bool check = false;
+	const bool ret = check;
 
 	if (!check) {
-		check = qtrue;
+		check = true;
 	}
 
 	return ret;

@@ -229,7 +229,7 @@ void US_RemoveUFOsExceedingCapacity (installation_t *installation)
  * @param[in,out] ufoyard Destination of the UFO transfer
  * @return success or failure indicator
  */
-qboolean US_TransferUFO (storedUFO_t *ufo, installation_t *ufoyard)
+bool US_TransferUFO (storedUFO_t *ufo, installation_t *ufoyard)
 {
 	date_t date;
 
@@ -239,15 +239,15 @@ qboolean US_TransferUFO (storedUFO_t *ufo, installation_t *ufoyard)
 		Com_Error(ERR_DROP, "UFO cannot be transfered to void!");
 	/* only stored ufo can be transfered */
 	if (ufo->status != SUFO_STORED)
-		return qfalse;
+		return false;
 	/* UFO being disassembled cannot be transfered*/
 	if (ufo->disassembly != NULL)
-		return qfalse;
+		return false;
 	/* UFO is in the same yard - no need of transfer */
 	if (ufo->installation == ufoyard)
-		return qfalse;
+		return false;
 	if (ufoyard->ufoCapacity.cur >= ufoyard->ufoCapacity.max)
-		return qfalse;
+		return false;
 
 	date = ccs.date;
 	date.day += (int) RECOVERY_DELAY;
@@ -261,7 +261,7 @@ qboolean US_TransferUFO (storedUFO_t *ufo, installation_t *ufoyard)
 	Com_sprintf(cp_messageBuffer, sizeof(cp_messageBuffer), _("UFO transport started, cargo is being transported to %s"), ufoyard->name);
 	MSO_CheckAddNewMessage(NT_TRANSFER_STARTED, _("UFO transport"), cp_messageBuffer, MSG_TRANSFERFINISHED);
 
-	return qtrue;
+	return true;
 }
 
 /**
@@ -308,7 +308,7 @@ int US_StoredUFOCount (void)
  * @sa US_LoadXML
  * @sa SAV_GameSaveXML
  */
-qboolean US_SaveXML (xmlNode_t *p)
+bool US_SaveXML (xmlNode_t *p)
 {
 	xmlNode_t *node = XML_AddNode(p, SAVE_UFORECOVERY_STOREDUFOS);
 
@@ -326,7 +326,7 @@ qboolean US_SaveXML (xmlNode_t *p)
 			XML_AddInt(snode, SAVE_UFORECOVERY_INSTALLATIONIDX, ufo->installation->idx);
 	}
 	Com_UnregisterConstList(saveStoredUFOConstants);
-	return qtrue;
+	return true;
 }
 
 /**
@@ -335,7 +335,7 @@ qboolean US_SaveXML (xmlNode_t *p)
  * @sa US_SaveXML
  * @sa SAV_GameLoadXML
  */
-qboolean US_LoadXML (xmlNode_t *p)
+bool US_LoadXML (xmlNode_t *p)
 {
 	xmlNode_t *node, *snode;
 
@@ -391,7 +391,7 @@ qboolean US_LoadXML (xmlNode_t *p)
 		LIST_Add(&ccs.storedUFOs, ufo);
 	}
 	Com_UnregisterConstList(saveStoredUFOConstants);
-	return qtrue;
+	return true;
 }
 
 #ifdef DEBUG

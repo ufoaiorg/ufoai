@@ -41,7 +41,7 @@ const int STARTING_BASEBUILD_INTEREST = 300;
  * @param mission The mission to check
  * @return
  */
-qboolean CP_BasemissionIsSubvertingGovernmentMission (const mission_t *mission)
+bool CP_BasemissionIsSubvertingGovernmentMission (const mission_t *mission)
 {
 	return mission->initialOverallInterest < STARTING_BASEBUILD_INTEREST;
 }
@@ -123,7 +123,7 @@ static void CP_BuildBaseMissionLeave (mission_t *mission)
 	CP_MissionDisableTimeLimit(mission);
 	UFO_SetRandomDest(mission->ufo);
 	/* Display UFO on geoscape if it is detected */
-	mission->ufo->landed = qfalse;
+	mission->ufo->landed = false;
 }
 
 /**
@@ -152,7 +152,7 @@ static void CP_BuildBaseSetUpBase (mission_t *mission)
 	mission->data.alienBase = base;
 
 	/* ufo becomes invisible on geoscape */
-	CP_UFORemoveFromGeoscape(mission, qfalse);
+	CP_UFORemoveFromGeoscape(mission, false);
 }
 
 /**
@@ -196,7 +196,7 @@ static void CP_BuildBaseGovernmentLeave (const campaign_t *campaign, mission_t *
 	CP_MissionDisableTimeLimit(mission);
 	UFO_SetRandomDest(mission->ufo);
 	/* Display UFO on geoscape if it is detected */
-	mission->ufo->landed = qfalse;
+	mission->ufo->landed = false;
 }
 
 /**
@@ -213,11 +213,11 @@ static void CP_BuildBaseSubvertGovernment (mission_t *mission)
 	mission->stage = STAGE_SUBVERT_GOV;
 
 	/* mission appear on geoscape, player can go there */
-	CP_MissionAddToGeoscape(mission, qfalse);
+	CP_MissionAddToGeoscape(mission, false);
 
 	mission->finalDate = Date_Add(ccs.date, Date_Random(minMissionDelay, missionDelay));
 	/* ufo becomes invisible on geoscape, but don't remove it from ufo global array (may reappear)*/
-	CP_UFORemoveFromGeoscape(mission, qfalse);
+	CP_UFORemoveFromGeoscape(mission, false);
 }
 
 /**

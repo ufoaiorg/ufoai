@@ -29,6 +29,6 @@ extern cvar_t *cl_log_battlescape_events;
 
 void CL_ParseEvent(struct dbuffer *msg);
 int CL_ClearBattlescapeEvents(void);
-void CL_BlockBattlescapeEvents(qboolean block);
+void CL_BlockBattlescapeEvents(bool block);
 
 #endif

@@ -117,7 +117,7 @@ static winding_t *WindingFromFace (const dBspSurface_t *f)
 	return w;
 }
 
-static inline qboolean HasLight (const dBspSurface_t *f)
+static inline bool HasLight (const dBspSurface_t *f)
 {
 	const dBspTexinfo_t *tex;
 

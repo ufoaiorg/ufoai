@@ -86,7 +86,7 @@ void CAP_RemoveAircraftExceedingCapacity (base_t* base, baseCapacities_t capacit
 		return;
 	/* All aircraft are away from base, pick up one and change it's homebase */
 	randomNum = rand() % numAwayAircraft;
-	if (!CL_DisplayHomebasePopup((aircraft_t*)LIST_GetByIdx(awayAircraft, randomNum), qfalse)) {
+	if (!CL_DisplayHomebasePopup((aircraft_t*)LIST_GetByIdx(awayAircraft, randomNum), false)) {
 		aircraft_t *aircraft = (aircraft_t*)LIST_GetByIdx(awayAircraft, randomNum);
 		/* No base can hold this aircraft */
 		UFO_NotifyPhalanxAircraftRemoved(aircraft);
@@ -111,7 +111,7 @@ void CAP_RemoveAntimatterExceedingCapacity (base_t *base)
 	if (amount <= 0)
 		return;
 
-	B_ManageAntimatter(base, amount, qfalse);
+	B_ManageAntimatter(base, amount, false);
 }
 
 /**
@@ -161,7 +161,7 @@ void CAP_RemoveItemsExceedingCapacity (base_t *base)
 			 *	=> destroy all items of this type */
 			const int idx = objIdx[randNumber];
 			const objDef_t *od = INVSH_GetItemByIDX(idx);
-			B_UpdateStorageAndCapacity(base, od, -B_ItemInBase(od, base), qfalse);
+			B_UpdateStorageAndCapacity(base, od, -B_ItemInBase(od, base), false);
 		}
 		REMOVE_ELEM(objIdx, randNumber, num);
 

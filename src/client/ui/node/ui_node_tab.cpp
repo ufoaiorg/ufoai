@@ -158,7 +158,7 @@ void uiTabNode::onLeftClick (uiNode_t * node, int x, int y)
 static inline void UI_TabNodeDrawPlain (const char *image, int x, int y, int width, ui_tabStatus_t type)
 {
 	/* Hack sl=1 to not use the pixel on the left border on the texture (create graphic bug) */
-	UI_DrawNormImageByName(qfalse, x, y, width, TILE_HEIGHT, TILE_WIDTH + TILE_SIZE * 0, TILE_HEIGHT + TILE_SIZE * type,
+	UI_DrawNormImageByName(false, x, y, width, TILE_HEIGHT, TILE_WIDTH + TILE_SIZE * 0, TILE_HEIGHT + TILE_SIZE * type,
 		1 + TILE_SIZE * 0, 0 + TILE_SIZE * type, image);
 }
 
@@ -172,7 +172,7 @@ static inline void UI_TabNodeDrawPlain (const char *image, int x, int y, int wid
  */
 static inline void UI_TabNodeDrawJunction (const char *image, int x, int y, ui_tabStatus_t leftType, ui_tabStatus_t rightType)
 {
-	UI_DrawNormImageByName(qfalse, x, y, TILE_WIDTH, TILE_HEIGHT, TILE_WIDTH + TILE_SIZE * (1 + rightType), TILE_HEIGHT + TILE_SIZE * leftType,
+	UI_DrawNormImageByName(false, x, y, TILE_WIDTH, TILE_HEIGHT, TILE_WIDTH + TILE_SIZE * (1 + rightType), TILE_HEIGHT + TILE_SIZE * leftType,
 		0 + TILE_SIZE * (1 + rightType), 0 + TILE_SIZE * leftType, image);
 }
 
@@ -214,7 +214,7 @@ void uiTabNode::draw (uiNode_t *node)
 		int tabWidth;
 		int textPos;
 		const char *label;
-		qboolean drawIcon = qfalse;
+		bool drawIcon = false;
 		ui_tabStatus_t status = UI_TAB_NORMAL;
 		assert(option->behaviour == ui_optionBehaviour);
 
@@ -245,7 +245,7 @@ void uiTabNode::draw (uiNode_t *node)
 		tabWidth = fontWidth;
 		if (OPTIONEXTRADATA(option).icon && OPTIONEXTRADATA(option).icon->size[0] < allowedWidth) {
 			tabWidth += OPTIONEXTRADATA(option).icon->size[0];
-			drawIcon = qtrue;
+			drawIcon = true;
 		}
 		if (tabWidth > allowedWidth) {
 			if (allowedWidth > 0)
@@ -271,7 +271,7 @@ void uiTabNode::draw (uiNode_t *node)
 		/** @todo fontWidth can be =0, maybe a bug from the font cache */
 		OPTIONEXTRADATA(option).truncated = tabWidth < fontWidth || tabWidth == 0;
 		UI_DrawString(font, ALIGN_UL, textPos, pos[1] + ((node->box.size[1] - fontHeight) / 2),
-			textPos, tabWidth + 1, 0, label, 0, 0, NULL, qfalse, LONGLINES_PRETTYCHOP);
+			textPos, tabWidth + 1, 0, label, 0, 0, NULL, false, LONGLINES_PRETTYCHOP);
 		currentX += tabWidth;
 		allowedWidth -= tabWidth;
 
@@ -346,5 +346,5 @@ void UI_RegisterTabNode (uiBehaviour_t *behaviour)
 	behaviour->name = "tab";
 	behaviour->extends = "abstractoption";
 	behaviour->manager = new uiTabNode();
-	behaviour->drawItselfChild = qtrue;
+	behaviour->drawItselfChild = true;
 }

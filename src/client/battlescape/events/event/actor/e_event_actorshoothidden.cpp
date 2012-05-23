@@ -52,7 +52,7 @@ int CL_ActorShootHiddenTime (const eventRegister_t *self, struct dbuffer *msg, e
 		if (fd->delayBetweenShots > 0.0)
 			eventTiming->shootTime += 1000 / fd->delayBetweenShots;
 	}
-	eventTiming->parsedDeath = qfalse;
+	eventTiming->parsedDeath = false;
 
 	return eventTime;
 }

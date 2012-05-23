@@ -187,13 +187,13 @@ static void G_ReactionFireTargetsRemove (edict_t *shooter, const edict_t *target
  * @param[in] target The potential reaction fire victim
  * @param[in] tusTarget The TUs the target will need for the shot, 0 for just moving
  */
-static qboolean G_ReactionFireTargetsExpired (const edict_t *shooter, const edict_t *target, const int tusTarget)
+static bool G_ReactionFireTargetsExpired (const edict_t *shooter, const edict_t *target, const int tusTarget)
 {
 	int i;
 	ReactionFireTargetList *rfts = G_ReactionFireTargetsFind(shooter);
 
 	if (!rfts)
-		return qfalse;	/* the shooter doesn't aim at anything */
+		return false;	/* the shooter doesn't aim at anything */
 
 	assert(target);
 
@@ -202,7 +202,7 @@ static qboolean G_ReactionFireTargetsExpired (const edict_t *shooter, const edic
 			return rfts->targets[i].triggerTUs >= target->TU - tusTarget;
 	}
 
-	return qfalse;	/* the shooter doesn't aim at this target */
+	return false;	/* the shooter doesn't aim at this target */
 }
 
 
@@ -269,11 +269,11 @@ static int G_ReactionFireGetTUsForItem (const edict_t *ent, const edict_t *targe
  * @param[in] ent The actor to check the weapons for
  * @return @c NULL if no actor has not reaction fire enabled weapons, the fire definition otherwise.
  */
-static qboolean G_ActorHasReactionFireEnabledWeapon (const edict_t *ent)
+static bool G_ActorHasReactionFireEnabledWeapon (const edict_t *ent)
 {
 	const objDef_t *weapon = INVSH_HasReactionFireEnabledWeapon(RIGHT(ent));
 	if (weapon)
-		return qtrue;
+		return true;
 	return INVSH_HasReactionFireEnabledWeapon(LEFT(ent)) != NULL;
 }
 
@@ -281,28 +281,28 @@ static qboolean G_ActorHasReactionFireEnabledWeapon (const edict_t *ent)
  * @brief Checks if the currently selected firemode is usable with the defined weapon.
  * @param[in] actor The actor to check the firemode for.
  */
-static qboolean G_ActorHasWorkingFireModeSet (const edict_t *actor)
+static bool G_ActorHasWorkingFireModeSet (const edict_t *actor)
 {
 	const fireDef_t *fd;
 	const chrFiremodeSettings_t *fmSettings = &actor->chr.RFmode;
 	const invList_t* invList;
 
 	if (!SANE_FIREMODE(fmSettings))
-		return qfalse;
+		return false;
 
 	invList = ACTOR_GET_INV(actor, fmSettings->hand);
 	if (!invList)
-		return qfalse;
+		return false;
 	fd = FIRESH_FiredefForWeapon(&invList->item);
 	if (fd == NULL)
-		return qfalse;
+		return false;
 
 	if (fd->obj->weapons[fd->weapFdsIdx] == fmSettings->weapon && fmSettings->fmIdx
 			< fd->obj->numFiredefs[fd->weapFdsIdx]) {
-		return qtrue;
+		return true;
 	}
 
-	return qfalse;
+	return false;
 }
 
 /**
@@ -322,7 +322,7 @@ void G_ReactionFireUpdate (edict_t *ent, fireDefIndex_t fmIdx, actorHands_t hand
 
 	if (!G_ActorHasWorkingFireModeSet(ent)) {
 		/* Disable reaction fire if no valid firemode was found. */
-		G_ClientStateChange(G_PLAYER_FROM_ENT(ent), ent, ~STATE_REACTION, qtrue);
+		G_ClientStateChange(G_PLAYER_FROM_ENT(ent), ent, ~STATE_REACTION, true);
 		return;
 	}
 
@@ -339,7 +339,7 @@ void G_ReactionFireUpdate (edict_t *ent, fireDefIndex_t fmIdx, actorHands_t hand
  * @param[in] ent The actors edict to check for TUs for
  * @return @c true if the given actor has enough TUs left to activate reaction fire, @c false otherwise.
  */
-static qboolean G_ActorHasEnoughTUsReactionFire (const edict_t *ent)
+static bool G_ActorHasEnoughTUsReactionFire (const edict_t *ent)
 {
 	const int TUs = G_ActorGetTUForReactionFire(ent);
 	const chrReservations_t *res = &ent->chr.reservedTus;
@@ -351,14 +351,14 @@ static qboolean G_ActorHasEnoughTUsReactionFire (const edict_t *ent)
  * @return @c true if the needed settings could have been made or settings are
  * already valid, @c false otherwise.
  */
-static qboolean G_ReactionFireSetDefault (edict_t *ent)
+static bool G_ReactionFireSetDefault (edict_t *ent)
 {
 	const objDef_t *weapon;
 	const invList_t *invList;
 	actorHands_t hand = ACTOR_HAND_RIGHT;
 
 	if (G_ActorHasWorkingFireModeSet(ent))
-		return qtrue;
+		return true;
 
 	invList = ACTOR_GET_INV(ent, hand);
 	if (!invList) {
@@ -368,7 +368,7 @@ static qboolean G_ReactionFireSetDefault (edict_t *ent)
 
 	weapon = INVSH_HasReactionFireEnabledWeapon(invList);
 	if (!weapon)
-		return qfalse;
+		return false;
 
 	ent->chr.RFmode.fmIdx = 0;
 	ent->chr.RFmode.hand = hand;
@@ -377,7 +377,7 @@ static qboolean G_ReactionFireSetDefault (edict_t *ent)
 	if (!G_IsAI(ent))
 		G_EventReactionFireChange(ent);
 
-	return qtrue;
+	return true;
 }
 
 /**
@@ -386,35 +386,35 @@ static qboolean G_ReactionFireSetDefault (edict_t *ent)
  * @param[in] ent The actor to check
  * @return @c true if the actor is allowed to activate it, @c false otherwise
  */
-static qboolean G_ReactionFireCanBeEnabled (const edict_t *ent)
+static bool G_ReactionFireCanBeEnabled (const edict_t *ent)
 {
 	/* check ent is a suitable shooter */
 	if (!ent->inuse || !G_IsLivingActor(ent))
-		return qfalse;
+		return false;
 
 	if (G_MatchIsRunning() && ent->team != level.activeTeam)
-		return qfalse;
+		return false;
 
 	/* actor may not carry weapons at all - so no further checking is needed */
 	if (!ent->chr.teamDef->weapons)
-		return qfalse;
+		return false;
 
 	if (!G_ActorHasReactionFireEnabledWeapon(ent)) {
 		G_ClientPrintf(G_PLAYER_FROM_ENT(ent), PRINT_HUD, _("No reaction fire enabled weapon."));
-		return qfalse;
+		return false;
 	}
 
 	if (!G_ActorHasWorkingFireModeSet(ent)) {
 		G_ClientPrintf(G_PLAYER_FROM_ENT(ent), PRINT_HUD, _("No fire mode selected for reaction fire."));
-		return qfalse;
+		return false;
 	}
 
 	if (!G_ActorHasEnoughTUsReactionFire(ent)) {
 		G_ClientPrintf(G_PLAYER_FROM_ENT(ent), PRINT_HUD, _("Not enough TUs left for activating reaction fire."));
-		return qfalse;
+		return false;
 	}
 
-	return qtrue;
+	return true;
 }
 
 /**
@@ -423,17 +423,17 @@ static qboolean G_ReactionFireCanBeEnabled (const edict_t *ent)
  * @return @c true if TUs for reaction fire were reserved, @c false if the reservation was set
  * back to @c 0
  */
-qboolean G_ReactionFireSettingsReserveTUs (edict_t *ent)
+bool G_ReactionFireSettingsReserveTUs (edict_t *ent)
 {
 	if (G_ReactionFireSetDefault(ent) && G_ReactionFireCanBeEnabled(ent)) {
 		const int TUs = G_ActorGetTUForReactionFire(ent);
 		/* Enable requested reaction fire. */
 		G_ActorReserveTUs(ent, TUs, ent->chr.reservedTus.shot, ent->chr.reservedTus.crouch);
-		return qtrue;
+		return true;
 	}
 
 	G_ActorReserveTUs(ent, 0, ent->chr.reservedTus.shot, ent->chr.reservedTus.crouch);
-	return qfalse;
+	return false;
 }
 
 /**
@@ -442,29 +442,29 @@ qboolean G_ReactionFireSettingsReserveTUs (edict_t *ent)
  * @param[in] target The entity that might be fired at
  * @return @c true if 'ent' can actually fire at 'target', @c false otherwise
  */
-static qboolean G_ReactionFireIsPossible (const edict_t *ent, const edict_t *target)
+static bool G_ReactionFireIsPossible (const edict_t *ent, const edict_t *target)
 {
 	float actorVis;
-	qboolean frustum;
+	bool frustum;
 
 	/* an entity can't reaction fire at itself */
 	if (ent == target)
-		return qfalse;
+		return false;
 
 	/* Don't react in your own turn */
 	if (ent->team == level.activeTeam)
-		return qfalse;
+		return false;
 
 	/* ent can't use RF if is in STATE_DAZED (flashbang impact) */
 	if (G_IsDazed(ent))
-		return qfalse;
+		return false;
 
 	if (G_IsDead(target))
-		return qfalse;
+		return false;
 
 	/* check ent has reaction fire enabled */
 	if (!G_IsShaken(ent) && !G_IsReaction(ent))
-		return qfalse;
+		return false;
 
 	/* check ent has weapon in RF hand */
 	/* @todo Should this situation even happen when G_IsReaction(ent) is true? */
@@ -472,33 +472,33 @@ static qboolean G_ReactionFireIsPossible (const edict_t *ent, const edict_t *tar
 		/* print character info if this happens, for now */
 		gi.DPrintf("Reaction fire enabled but no weapon for hand (name=%s,hand=%i,fmIdx=%i)\n",
 				ent->chr.name, ent->chr.RFmode.hand, ent->chr.RFmode.fmIdx);
-		return qfalse;
+		return false;
 	}
 
 	if (!G_IsVisibleForTeam(target, ent->team))
-		return qfalse;
+		return false;
 
 	/* If reaction fire is triggered by a friendly unit
 	 * and the shooter is still sane, don't shoot;
 	 * well, if the shooter isn't sane anymore... */
 	if (G_IsCivilian(target) || target->team == ent->team)
 		if (!G_IsShaken(ent) || (float) ent->morale / mor_shaken->value > frand())
-			return qfalse;
+			return false;
 
 	/* check in range and visible */
 	if (VectorDistSqr(ent->origin, target->origin) > MAX_SPOT_DIST * MAX_SPOT_DIST)
-		return qfalse;
+		return false;
 
 	frustum = G_FrustumVis(ent, target->origin);
 	if (!frustum)
-		return qfalse;
+		return false;
 
-	actorVis = G_ActorVis(ent->origin, ent, target, qtrue);
+	actorVis = G_ActorVis(ent->origin, ent, target, true);
 	if (actorVis <= 0.2)
-		return qfalse;
+		return false;
 
 	/* okay do it then */
-	return qtrue;
+	return true;
 }
 
 /**
@@ -530,10 +530,10 @@ static void G_ReactionFireTargetsUpdateAll (const edict_t *target)
  * @param[in] at Position to fire on.
  * @param[in] type What type of shot this is (left, right reaction-left etc...).
  * @param[in] firemode The firemode index of the ammo for the used weapon (objDef.fd[][x])  .
- * @return qtrue if everything went ok (i.e. the shot(s) where fired ok), otherwise qfalse.
+ * @return true if everything went ok (i.e. the shot(s) where fired ok), otherwise false.
  * @sa G_ClientShoot
  */
-static qboolean G_ReactionFireShoot (const player_t *player, edict_t *shooter, const pos3_t at, shoot_types_t type, fireDefIndex_t firemode)
+static bool G_ReactionFireShoot (const player_t *player, edict_t *shooter, const pos3_t at, shoot_types_t type, fireDefIndex_t firemode)
 {
 	const int minhit = 30;
 	shot_mock_t mock;
@@ -556,14 +556,14 @@ static qboolean G_ReactionFireShoot (const player_t *player, edict_t *shooter, c
 	 * when opening the reaction fire */
 	OBJZERO(mock);
 	for (i = 0; i < 100; i++)
-		if (!G_ClientShoot(player, shooter, at, type, firemode, &mock, qfalse, 0))
+		if (!G_ClientShoot(player, shooter, at, type, firemode, &mock, false, 0))
 			break;
 
 	ff = mock.friendCount + (G_IsAlien(shooter) ? 0 : mock.civilian);
 	if (ff <= maxff && mock.enemyCount >= minhit)
-		return G_ClientShoot(player, shooter, at, type, firemode, NULL, qfalse, 0);
+		return G_ClientShoot(player, shooter, at, type, firemode, NULL, false, 0);
 
-	return qfalse;
+	return false;
 }
 
 /**
@@ -572,9 +572,9 @@ static qboolean G_ReactionFireShoot (const player_t *player, edict_t *shooter, c
  * @param[in] target The victim of the reaction fire
  * @return true if the entity fired (or would have fired if mock), false otherwise
  */
-static qboolean G_ReactionFireTryToShoot (edict_t *shooter, const edict_t *target)
+static bool G_ReactionFireTryToShoot (edict_t *shooter, const edict_t *target)
 {
-	qboolean tookShot;
+	bool tookShot;
 
 	/* check for valid target */
 	assert(target);
@@ -583,7 +583,7 @@ static qboolean G_ReactionFireTryToShoot (edict_t *shooter, const edict_t *targe
 	 * the target is still alive */
 	if (!G_ReactionFireIsPossible(shooter, target)) {
 		G_ReactionFireTargetsRemove(shooter, target);
-		return qfalse;
+		return false;
 	}
 
 	/* take the shot */
@@ -604,10 +604,10 @@ static qboolean G_ReactionFireTryToShoot (edict_t *shooter, const edict_t *targe
  * @sa G_ReactionFireOnMovement
  * @sa G_ReactionFirePostShot
  */
-static qboolean G_ReactionFireCheckExecution (const edict_t *target)
+static bool G_ReactionFireCheckExecution (const edict_t *target)
 {
 	edict_t *shooter = NULL;
-	qboolean fired = qfalse;
+	bool fired = false;
 
 	/* check all possible shooters */
 	while ((shooter = G_EdictsGetNextLivingActor(shooter))) {
@@ -616,7 +616,7 @@ static qboolean G_ReactionFireCheckExecution (const edict_t *target)
 			if (G_ReactionFireTargetsExpired(shooter, target, 0)) {
 				if (G_ReactionFireTryToShoot(shooter, target)) {
 					G_ReactionFireTargetsAdvance(shooter, target, tus);
-					fired |= qtrue;
+					fired |= true;
 				}
 			}
 		}
@@ -630,10 +630,10 @@ static qboolean G_ReactionFireCheckExecution (const edict_t *target)
  * @return true If any shots were (or would be) taken
  * @sa G_ClientMove
  */
-qboolean G_ReactionFireOnMovement (edict_t *target)
+bool G_ReactionFireOnMovement (edict_t *target)
 {
 	/* Check to see whether this resolves any reaction fire */
-	const qboolean fired = G_ReactionFireCheckExecution(target);
+	const bool fired = G_ReactionFireCheckExecution(target);
 
 	/* Check to see whether this triggers any reaction fire */
 	G_ReactionFireTargetsUpdateAll(target);
@@ -650,7 +650,7 @@ qboolean G_ReactionFireOnMovement (edict_t *target)
 void G_ReactionFirePreShot (const edict_t *target, const int fdTime)
 {
 	edict_t *shooter = NULL;
-	qboolean repeat = qtrue;
+	bool repeat = true;
 
 	/* Check to see whether this triggers any reaction fire */
 	G_ReactionFireTargetsUpdateAll(target);
@@ -658,14 +658,14 @@ void G_ReactionFirePreShot (const edict_t *target, const int fdTime)
 	/* if any reaction fire occurs, we have to loop through all entities again to allow
 	 * multiple (fast) RF snap shots before a (slow) aimed shot from the target occurs. */
 	while (repeat) {
-		repeat = qfalse;
+		repeat = false;
 		/* check all ents to see who wins and who loses a draw */
 		while ((shooter = G_EdictsGetNextLivingActor(shooter))) {
 			int entTUs = G_ReactionFireGetTUsForItem(shooter, target, RIGHT(shooter));
 			if (entTUs > 1) {	/* indicates an RF weapon is there */
 				if (G_ReactionFireTargetsExpired(shooter, target, fdTime)) {
 					if (G_ReactionFireTryToShoot(shooter, target)) {
-						repeat = qtrue;
+						repeat = true;
 						G_ReactionFireTargetsAdvance(shooter, target, fdTime);
 					}
 				}

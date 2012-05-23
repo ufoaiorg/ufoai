@@ -161,7 +161,7 @@ static void R_SphereRenderTris (const sphere_t *sphere)
  * @param sphere The sphere to check
  * @return @c true if all needed data is loaded to use the geoscape glsl shaders, @c false otherwise
  */
-static inline qboolean R_SphereCheckGLSL (const sphere_t *sphere)
+static inline bool R_SphereCheckGLSL (const sphere_t *sphere)
 {
 	return sphere->glslProgram && qglUseProgram && r_programs->integer;
 }
@@ -177,7 +177,7 @@ static void R_SphereShade (const sphere_t *sphere)
 		R_BindTexture(sphere->texture->texnum);
 
 	if (sphere->overlayAlphaMask) {
-		R_EnableTexture(&texunit_lightmap, qtrue);
+		R_EnableTexture(&texunit_lightmap, true);
 		R_SelectTexture(&texunit_lightmap);
 		R_BindArray(GL_TEXTURE_COORD_ARRAY, GL_FLOAT, sphere->texes);
 		R_BindLightmapTexture(sphere->overlayAlphaMask->texnum);
@@ -194,7 +194,7 @@ static void R_SphereShade (const sphere_t *sphere)
 	glDisableClientState(GL_NORMAL_ARRAY);
 
 	if (sphere->overlayAlphaMask)
-		R_EnableTexture(&texunit_lightmap, qfalse);
+		R_EnableTexture(&texunit_lightmap, false);
 }
 
 /**
@@ -206,7 +206,7 @@ static void R_SphereShadeGLSL (const sphere_t *sphere)
 		glLightfv(GL_LIGHT1, GL_POSITION, sphere->nightLightPos);
 
 	/* configure openGL to use our shader program */
-	R_EnableLighting(sphere->glslProgram, qtrue);
+	R_EnableLighting(sphere->glslProgram, true);
 
 	R_BindTexture(sphere->texture->texnum);
 	if (sphere->blendTexture)
@@ -234,7 +234,7 @@ static void R_SphereShadeGLSL (const sphere_t *sphere)
 	R_SphereDeactivateTextureUnit(&texunit_2);
 
 	/* deactivate the shader program */
-	R_EnableLighting(NULL, qfalse);
+	R_EnableLighting(NULL, false);
 	R_SelectTexture(&texunit_diffuse);
 }
 

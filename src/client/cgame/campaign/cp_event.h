@@ -48,12 +48,12 @@ typedef struct eventMail_s {
 	char *body;			/**< the body of the event mail */
 	char *icon;			/**< icon in the mailclient */
 	char *model;		/**< model name of the sender */
-	qboolean read;		/**< already read the mail? */
+	bool read;		/**< already read the mail? */
 } eventMail_t;
 
 void CL_EventAddMail_f(void);
 void CL_ParseEventMails(const char *name, const char **text);
-eventMail_t* CL_GetEventMail(const char *id, qboolean createCopy);
+eventMail_t* CL_GetEventMail(const char *id, bool createCopy);
 eventMail_t* CL_NewEventMail(const char *id, const char *newID, const char *body);
 void CP_FreeDynamicEventMail(void);
 

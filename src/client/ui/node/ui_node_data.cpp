@@ -45,7 +45,7 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 void UI_RegisterDataNode (uiBehaviour_t* behaviour)
 {
 	behaviour->name = "data";
-	behaviour->isVirtual = qtrue;
+	behaviour->isVirtual = true;
 	behaviour->extraDataSize = sizeof(EXTRADATA_TYPE);
 	behaviour->manager = new uiDataNode();
 

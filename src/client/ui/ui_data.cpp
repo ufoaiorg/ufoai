@@ -430,8 +430,8 @@ uiNode_t* UI_InitOptionIteratorAtIndex (int index, uiNode_t* option, uiOptionIte
 {
 	assert(option == NULL || option->behaviour == ui_optionBehaviour);
 	OBJZERO(*iterator);
-	iterator->skipCollapsed = qtrue;
-	iterator->skipInvisible = qtrue;
+	iterator->skipCollapsed = true;
+	iterator->skipInvisible = true;
 	return UI_FindOptionAtIndex(index, option, iterator);
 }
 
@@ -453,7 +453,7 @@ uiNode_t* UI_OptionIteratorNextOption (uiOptionIterator_t* iterator)
 	else
 		option = option->firstChild;
 
-	while (qtrue) {
+	while (true) {
 		while (option) {
 			if (!option->invis || !iterator->skipInvisible) {
 				iterator->option = option;

@@ -187,14 +187,14 @@ static void G_UpdateCharacterSkills (edict_t *ent)
  */
 void G_MatchEndTrigger (int team, int timeGap)
 {
-	qboolean foundNextMap = qfalse;
+	bool foundNextMap = false;
 	edict_t *ent = NULL;
 
 	while ((ent = G_EdictsGetTriggerNextMaps(ent)) != NULL) {
 		if (ent->team == team) {
 			ent->think = Think_NextMapTrigger;
 			ent->nextthink = 1;
-			foundNextMap = qtrue;
+			foundNextMap = true;
 		}
 	}
 
@@ -244,7 +244,7 @@ static void G_SendCharacterData (const edict_t* ent)
  * @sa G_RunFrame
  * @sa CL_ParseResults
  */
-static void G_MatchSendResults (int team, qboolean nextmap)
+static void G_MatchSendResults (int team, bool nextmap)
 {
 	edict_t *ent, *attacker;
 	int i, j = 0;
@@ -316,7 +316,7 @@ static void G_MatchSendResults (int team, qboolean nextmap)
  * @brief Checks whether a match is over.
  * @return @c true if this match is over, @c false otherwise
  */
-qboolean G_MatchDoEnd (void)
+bool G_MatchDoEnd (void)
 {
 	/* check for intermission */
 	if (level.intermissionTime > 0.0 && level.time > level.intermissionTime) {
@@ -332,10 +332,10 @@ qboolean G_MatchDoEnd (void)
 
 		level.intermissionTime = 0.0;
 		level.winningTeam = 0;
-		return qtrue;
+		return true;
 	}
 
-	return qfalse;
+	return false;
 }
 
 /**
@@ -384,9 +384,9 @@ void G_MatchEndCheck (void)
  * was not yet triggered
  * @sa G_MatchEndTrigger
  */
-qboolean G_MatchIsRunning (void)
+bool G_MatchIsRunning (void)
 {
 	if (level.intermissionTime > 0.0)
-		return qfalse;
+		return false;
 	return (level.activeTeam != TEAM_NO_ACTIVE);
 }

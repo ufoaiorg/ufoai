@@ -118,7 +118,7 @@ installation_t* INS_Build (const installationTemplate_t *installationTemplate, c
 	installation.installationDamage = installation.installationTemplate->maxDamage;
 
 	/* Reset Radar */
-	RADAR_Initialise(&(installation.radar), 0.0f, 0.0f, 0.0f, qfalse);
+	RADAR_Initialise(&(installation.radar), 0.0f, 0.0f, 0.0f, false);
 
 	ccs.campaignStats.installationsBuilt++;
 	return &LIST_Add(&ccs.installations, installation);
@@ -263,10 +263,10 @@ static void INS_ConstructionFinished_f (void)
 
 /**
  * @brief returns the first installation with (free) ufostoring capacity
- * @param[in] free On qtrue it gives the first UFO Yard with free space
+ * @param[in] free On true it gives the first UFO Yard with free space
  * @return installation_t Pointer to the UFO Yard
  **/
-installation_t *INS_GetFirstUFOYard (qboolean free)
+installation_t *INS_GetFirstUFOYard (bool free)
 {
 	INS_ForeachOfType(installation, INSTALLATION_UFOYARD) {
 		if (free && installation->ufoCapacity.cur >= installation->ufoCapacity.max)
@@ -425,7 +425,7 @@ void INS_ParseInstallations (const char *name, const char **text)
  * @sa INS_LoadXML
  * @sa SAV_GameSaveXML
  */
-qboolean INS_SaveXML (xmlNode_t *p)
+bool INS_SaveXML (xmlNode_t *p)
 {
 	xmlNode_t *n;
 
@@ -449,7 +449,7 @@ qboolean INS_SaveXML (xmlNode_t *p)
 		B_SaveBaseSlotsXML(inst->batteries, inst->numBatteries, ss);
 	}
 	Com_UnregisterConstList(saveInstallationConstants);
-	return qtrue;
+	return true;
 }
 
 /**
@@ -459,14 +459,14 @@ qboolean INS_SaveXML (xmlNode_t *p)
  * @sa SAV_GameLoadXML
  * @sa INS_LoadItemSlots
  */
-qboolean INS_LoadXML (xmlNode_t *p)
+bool INS_LoadXML (xmlNode_t *p)
 {
 	xmlNode_t *n = XML_GetNode(p, SAVE_INSTALLATION_INSTALLATIONS);
 	xmlNode_t *s;
-	qboolean success = qtrue;
+	bool success = true;
 
 	if (!n)
-		return qfalse;
+		return false;
 
 	Com_RegisterConstList(saveInstallationConstants);
 	for (s = XML_GetNode(n, SAVE_INSTALLATION_INSTALLATION); s; s = XML_GetNextNode(s,n, SAVE_INSTALLATION_INSTALLATION)) {
@@ -478,19 +478,19 @@ qboolean INS_LoadXML (xmlNode_t *p)
 		inst.idx = XML_GetInt(s, SAVE_INSTALLATION_IDX, -1);
 		if (inst.idx < 0) {
 			Com_Printf("Invalid installation index %i\n", inst.idx);
-			success = qfalse;
+			success = false;
 			break;
 		}
 		inst.installationTemplate = INS_GetInstallationTemplateFromInstallationID(instID);
 		if (!inst.installationTemplate) {
 			Com_Printf("Could not find installation template '%s'\n", instID);
-			success = qfalse;
+			success = false;
 			break;
 		}
 
 		if (!Com_GetConstIntFromNamespace(SAVE_INSTALLATIONSTATUS_NAMESPACE, instStat, (int*) &inst.installationStatus)) {
 			Com_Printf("Invalid installation status '%s'\n", instStat);
-			success = qfalse;
+			success = false;
 			break;
 		}
 
@@ -503,7 +503,7 @@ qboolean INS_LoadXML (xmlNode_t *p)
 
 		/* Radar */
 		RADAR_InitialiseUFOs(&inst.radar);
-		RADAR_Initialise(&(inst.radar), 0.0f, 0.0f, 1.0f, qtrue);
+		RADAR_Initialise(&(inst.radar), 0.0f, 0.0f, 1.0f, true);
 		if (inst.installationStatus == INSTALLATION_WORKING) {
 			RADAR_UpdateInstallationRadarCoverage(&inst, inst.installationTemplate->radarRange, inst.installationTemplate->trackingRange);
 			/* UFO Yard */
@@ -517,7 +517,7 @@ qboolean INS_LoadXML (xmlNode_t *p)
 		ss = XML_GetNode(s, SAVE_INSTALLATION_BATTERIES);
 		if (!ss) {
 			Com_Printf("INS_LoadXML: Batteries not defined!\n");
-			success = qfalse;
+			success = false;
 			break;
 		}
 		inst.numBatteries = XML_GetInt(ss, SAVE_INSTALLATION_NUM, 0);

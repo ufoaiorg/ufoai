@@ -91,7 +91,7 @@ void uiOptionListNode::draw (uiNode_t *node)
 	UI_GetNodeAbsPos(node, pos);
 
 	if (EXTRADATA(node).background) {
-		UI_DrawSpriteInBox(qfalse, EXTRADATA(node).background, SPRITE_STATUS_NORMAL, pos[0], pos[1], node->box.size[0], node->box.size[1]);
+		UI_DrawSpriteInBox(false, EXTRADATA(node).background, SPRITE_STATUS_NORMAL, pos[0], pos[1], node->box.size[0], node->box.size[1]);
 	}
 
 	font = UI_GetFontFromNode(node);
@@ -150,7 +150,7 @@ void uiOptionListNode::draw (uiNode_t *node)
 		R_Color(textColor);
 		UI_DrawString(font, ALIGN_UL, decX, currentY,
 			pos[0], node->box.size[0] - node->padding - node->padding,
-			0, label, 0, 0, NULL, qfalse, LONGLINES_PRETTYCHOP);
+			0, label, 0, 0, NULL, false, LONGLINES_PRETTYCHOP);
 
 		/* next entries' position */
 		currentY += lineHeight;
@@ -291,7 +291,7 @@ void uiOptionListNode::onCapturedMouseMove (uiNode_t *node, int x, int y)
 	const int deltaY = (mouseScrollY - y) / lineHeight;
 	/* We're doing only vertical scroll, that's enough for the most instances */
 	if (deltaY != 0) {
-		qboolean updated;
+		bool updated;
 		updated = EXTRADATA(node).scrollY.moveDelta(deltaY);
 		if (EXTRADATA(node).onViewChange && updated)
 			UI_ExecuteEventActions(node, EXTRADATA(node).onViewChange);
@@ -320,7 +320,7 @@ void UI_RegisterOptionListNode (uiBehaviour_t *behaviour)
 	behaviour->name = "optionlist";
 	behaviour->extends = "abstractoption";
 	behaviour->manager = new uiOptionListNode();
-	behaviour->drawItselfChild = qtrue;
+	behaviour->drawItselfChild = true;
 
 	/* Sprite used to display the background */
 	UI_RegisterExtradataNodeProperty(behaviour, "background", V_UI_SPRITEREF, EXTRADATA_TYPE, background);

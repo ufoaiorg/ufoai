@@ -78,7 +78,7 @@ static void GAME_SK_Start_f (void)
 	const mapDef_t *md;
 
 	if (cgi->GAME_IsTeamEmpty()) {
-		cgi->GAME_LoadDefaultTeam(qfalse);
+		cgi->GAME_LoadDefaultTeam(false);
 	}
 
 	if (cgi->GAME_IsTeamEmpty()) {
@@ -113,7 +113,7 @@ static void GAME_SK_Start_f (void)
 	Com_sprintf(map, sizeof(map), "map %s %s %s;", cgi->Cvar_GetInteger("mn_serverday") ? "day" : "night", md->map, md->param ? md->param : "");
 
 	/* prepare */
-	cgi->UI_InitStack(NULL, "singleplayermission", qtrue, qfalse);
+	cgi->UI_InitStack(NULL, "singleplayermission", true, false);
 
 	cgi->Cbuf_AddText(map);
 }
@@ -170,7 +170,7 @@ static void GAME_SK_ChangeEquip_f (void)
  * @param numStunned The amount of stunned actors for all teams. The first dimension contains
  * the attacker team, the second the victim team
  */
-static void GAME_SK_Results (struct dbuffer *msg, int winner, int *numSpawned, int *numAlive, int numKilled[][MAX_TEAMS], int numStunned[][MAX_TEAMS], qboolean nextmap)
+static void GAME_SK_Results (struct dbuffer *msg, int winner, int *numSpawned, int *numAlive, int numKilled[][MAX_TEAMS], int numStunned[][MAX_TEAMS], bool nextmap)
 {
 	char resultText[1024];
 	int enemiesKilled, enemiesStunned;
@@ -217,7 +217,7 @@ static void GAME_SK_Results (struct dbuffer *msg, int winner, int *numSpawned, i
  */
 static inline void GAME_SK_HideDropships (const linkedList_t *dropships)
 {
-	const qboolean hide = (dropships == NULL);
+	const bool hide = (dropships == NULL);
 	if (hide) {
 		cgi->UI_ExecuteConfunc("skirmish_hide_dropships true");
 		cgi->Cvar_Set("rm_drop", "");
@@ -238,7 +238,7 @@ static inline void GAME_SK_HideDropships (const linkedList_t *dropships)
  */
 static inline void GAME_SK_HideUFOs (const linkedList_t *ufos)
 {
-	const qboolean hide = (ufos == NULL);
+	const bool hide = (ufos == NULL);
 	if (hide) {
 		cgi->UI_ExecuteConfunc("skirmish_hide_ufos true");
 		cgi->Cvar_Set("rm_ufo", "");
@@ -330,7 +330,7 @@ static void GAME_SK_Shutdown (void)
 	cgi->UI_ResetData(OPTION_DROPSHIPS);
 	cgi->UI_ResetData(OPTION_UFOS);
 
-	cgi->SV_Shutdown("Quitting server.", qfalse);
+	cgi->SV_Shutdown("Quitting server.", false);
 }
 
 #ifndef HARD_LINKED_CGAME

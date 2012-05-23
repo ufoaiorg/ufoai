@@ -130,8 +130,8 @@ void uiKeyBindingNode::draw (uiNode_t *node)
 	Vector2Set(bindingPos, pos[0] + descriptionWidth + node->padding, pos[1]);
 
 	if (EXTRADATA(node).background) {
-		UI_DrawSpriteInBox(qfalse, EXTRADATA(node).background, iconStatus, descriptionPos[0], descriptionPos[1], descriptionSize[0], descriptionSize[1]);
-		UI_DrawSpriteInBox(qfalse, EXTRADATA(node).background, iconStatus, bindingPos[0], bindingPos[1], bindingSize[0], bindingSize[1]);
+		UI_DrawSpriteInBox(false, EXTRADATA(node).background, iconStatus, descriptionPos[0], descriptionPos[1], descriptionSize[0], descriptionSize[1]);
+		UI_DrawSpriteInBox(false, EXTRADATA(node).background, iconStatus, bindingPos[0], bindingPos[1], bindingSize[0], bindingSize[1]);
 	}
 
 	binding = UI_GetReferenceString(node, node->text);

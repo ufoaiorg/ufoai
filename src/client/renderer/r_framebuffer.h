@@ -50,7 +50,7 @@ typedef struct {
 void R_InitFBObjects(void);
 void R_ShutdownFBObjects(void);
 
-r_framebuffer_t* R_CreateFramebuffer(int width, int height, int ntextures, qboolean depth, qboolean halfFloat, unsigned int *filters);
+r_framebuffer_t* R_CreateFramebuffer(int width, int height, int ntextures, bool depth, bool halfFloat, unsigned int *filters);
 void R_DeleteFBObject(r_framebuffer_t *buf);
 
 void R_SetupViewport(r_framebuffer_t *buf, int x, int y, int width, int height);
@@ -60,7 +60,7 @@ void R_ResolveMSAA (const r_framebuffer_t *buf);
 void R_UseFramebuffer(const r_framebuffer_t *buf);
 void R_DrawBuffers(unsigned int n);
 void R_BindColorAttachments(unsigned int n, unsigned int *attachments);
-qboolean R_EnableRenderbuffer(qboolean enable);
-qboolean R_RenderbufferEnabled(void);
+bool R_EnableRenderbuffer(bool enable);
+bool R_RenderbufferEnabled(void);
 
 #endif /* R_FRAMEBUFFER_H_ */

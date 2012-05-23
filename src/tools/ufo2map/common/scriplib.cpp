@@ -100,7 +100,7 @@ void ParseFromMemory (char *buffer, int size)
 	script->end_p = script->buffer + size;
 }
 
-static qboolean EndOfScript (qboolean crossline)
+static bool EndOfScript (bool crossline)
 {
 	assert(script);
 
@@ -109,11 +109,11 @@ static qboolean EndOfScript (qboolean crossline)
 
 	/* not if the current script is a memory buffer */
 	if (Q_streq(script->filename, "memory buffer"))
-		return qfalse;
+		return false;
 
 	Mem_Free(script->buffer);
 	if (script == scriptstack + 1)
-		return qfalse;
+		return false;
 
 	script--;
 	Com_Printf("returning to %s\n", script->filename);
@@ -126,7 +126,7 @@ static qboolean EndOfScript (qboolean crossline)
  * @param[in] crossline The next token may not be seperated by
  * comment or newline if this is true - everything must be on the same line
  */
-qboolean GetToken (qboolean crossline)
+bool GetToken (bool crossline)
 {
 	char *token_p;
 
@@ -186,14 +186,14 @@ skipspace:
 
 	*token_p = 0;
 
-	return qtrue;
+	return true;
 }
 
 
 /**
  * @brief Returns true if there is another token on the line
  */
-qboolean TokenAvailable (void)
+bool TokenAvailable (void)
 {
 	char *search_p;
 
@@ -202,15 +202,15 @@ qboolean TokenAvailable (void)
 	search_p = script->script_p;
 
 	if (search_p >= script->end_p)
-		return qfalse;
+		return false;
 
 	while (*search_p <= ' ') {
 		if (*search_p == '\n')
-			return qfalse;
+			return false;
 		search_p++;
 		if (search_p == script->end_p)
-			return qfalse;
+			return false;
 	}
 
-	return qtrue;
+	return true;
 }

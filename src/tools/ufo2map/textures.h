@@ -33,13 +33,13 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 
 typedef struct {
 	char	name[MAX_TEXPATH];
-	qboolean	footstepMarked; /**< only print it once to the footsteps file */
-	qboolean	materialMarked; /**< only print it once to the material file */
+	bool	footstepMarked; /**< only print it once to the footsteps file */
+	bool	materialMarked; /**< only print it once to the material file */
 } textureref_t;
 
 
 extern	textureref_t	textureref[MAX_MAP_TEXTURES];
 int	FindMiptex(const char *name);
-int TexinfoForBrushTexture(plane_t *plane, brush_texture_t *bt, const vec3_t origin, qboolean isTerrain);
+int TexinfoForBrushTexture(plane_t *plane, brush_texture_t *bt, const vec3_t origin, bool isTerrain);
 
 #endif

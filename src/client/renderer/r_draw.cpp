@@ -161,7 +161,7 @@ void R_DrawChars (void)
 
 	R_BindTexture(draw_chars->texnum);
 
-	R_EnableColorArray(qtrue);
+	R_EnableColorArray(true);
 
 	/* alter the array pointers */
 	R_BindArray(GL_COLOR_ARRAY, GL_UNSIGNED_BYTE, r_char_arrays.colors);
@@ -181,7 +181,7 @@ void R_DrawChars (void)
 	R_BindDefaultArray(GL_VERTEX_ARRAY);
 	R_BindDefaultArray(GL_COLOR_ARRAY);
 
-	R_EnableColorArray(qfalse);
+	R_EnableColorArray(false);
 }
 
 /**
@@ -236,9 +236,9 @@ void R_DrawFills (void)
 	if (!r_fill_arrays.vert_index)
 		return;
 
-	R_EnableTexture(&texunit_diffuse, qfalse);
+	R_EnableTexture(&texunit_diffuse, false);
 
-	R_EnableColorArray(qtrue);
+	R_EnableColorArray(true);
 
 	/* alter the array pointers */
 	R_BindArray(GL_COLOR_ARRAY, GL_UNSIGNED_BYTE, r_fill_arrays.colors);
@@ -252,9 +252,9 @@ void R_DrawFills (void)
 	R_BindDefaultArray(GL_VERTEX_ARRAY);
 	R_BindDefaultArray(GL_COLOR_ARRAY);
 
-	R_EnableColorArray(qfalse);
+	R_EnableColorArray(false);
 
-	R_EnableTexture(&texunit_diffuse, qtrue);
+	R_EnableTexture(&texunit_diffuse, true);
 
 	r_fill_arrays.vert_index = r_fill_arrays.color_index = 0;
 

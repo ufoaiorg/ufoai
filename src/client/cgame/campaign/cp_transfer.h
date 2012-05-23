@@ -55,10 +55,10 @@ typedef struct transfer_s {
 	linkedList_t *employees[MAX_EMPL];
 	linkedList_t *aircraft;
 
-	qboolean hasItems;				/**< Transfer of items. */
-	qboolean hasEmployees;			/**< Transfer of employees. */
-	qboolean hasAliens;				/**< Transfer of aliens. */
-	qboolean hasAircraft;			/**< Transfer of aircraft. */
+	bool hasItems;				/**< Transfer of items. */
+	bool hasEmployees;			/**< Transfer of employees. */
+	bool hasAliens;				/**< Transfer of aliens. */
+	bool hasAircraft;			/**< Transfer of aircraft. */
 } transfer_t;
 
 /**
@@ -120,7 +120,7 @@ typedef struct transferData_s {
 #define TR_ForeachEmployee(var, transfer, employeeType) LIST_Foreach(transfer->employees[employeeType], employee_t, var)
 #define TR_ForeachAircraft(var, transfer) LIST_Foreach(transfer->aircraft, aircraft_t, var)
 
-qboolean TR_AddData(transferData_t *transferData, transferCargoType_t type, const void* data);
+bool TR_AddData(transferData_t *transferData, transferCargoType_t type, const void* data);
 void TR_TransferRun(void);
 void TR_NotifyAircraftRemoved(const aircraft_t *aircraft);
 

@@ -42,7 +42,7 @@ static linkedList_t *eventMails = NULL;
  * @sa UP_SetMailHeader
  * @sa CL_NewEventMail
  */
-eventMail_t* CL_GetEventMail (const char *id, qboolean createCopy)
+eventMail_t* CL_GetEventMail (const char *id, bool createCopy)
 {
 	int i;
 
@@ -117,7 +117,7 @@ eventMail_t* CL_NewEventMail (const char *id, const char *newID, const char *bod
 	assert(id);
 	assert(newID);
 
-	mail = CL_GetEventMail(id, qtrue);
+	mail = CL_GetEventMail(id, true);
 	if (!mail)
 		return NULL;
 
@@ -295,7 +295,7 @@ void CL_EventAddMail_f (void)
 
 	eventMailId = Cmd_Argv(1);
 
-	eventMail = CL_GetEventMail(eventMailId, qfalse);
+	eventMail = CL_GetEventMail(eventMailId, false);
 	if (!eventMail) {
 		Com_Printf("CL_EventAddMail_f: Could not find eventmail with id '%s'\n", eventMailId);
 		return;

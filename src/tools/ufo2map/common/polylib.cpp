@@ -422,7 +422,7 @@ winding_t *ChopWinding (winding_t *in, vec3_t normal, vec_t dist)
  * @brief Returns true if the winding would be crunched out of existance by the
  * vertex snapping.
  */
-qboolean WindingIsTiny (winding_t *w)
+bool WindingIsTiny (winding_t *w)
 {
 	int i, edges;
 	vec_t len;
@@ -435,26 +435,26 @@ qboolean WindingIsTiny (winding_t *w)
 		len = VectorLength(delta);
 		if (len > EDGE_LENGTH) {
 			if (++edges == 3)
-				return qfalse;
+				return false;
 		}
 	}
-	return qtrue;
+	return true;
 }
 
 /**
  * @brief Returns true if the winding still has one of the points from
  * basewinding for plane
  */
-qboolean WindingIsHuge (const winding_t *w)
+bool WindingIsHuge (const winding_t *w)
 {
 	int i, j;
 
 	for (i = 0; i < w->numpoints; i++) {
 		for (j = 0; j < 3; j++)
 			if (w->p[i][j] < -MAX_WORLD_WIDTH || w->p[i][j] > MAX_WORLD_WIDTH)
-				return qtrue;
+				return true;
 	}
-	return qfalse;
+	return false;
 }
 
 #define SNAP_EPSILON	0.01
@@ -499,18 +499,18 @@ static void SnapWeldVector (const vec3_t a, const vec3_t b, vec3_t out)
 
 /**
  * @brief removes degenerate edges from a winding
- * @returns qtrue if the winding is valid
+ * @returns true if the winding is valid
  */
-qboolean FixWinding (winding_t *w)
+bool FixWinding (winding_t *w)
 {
-	qboolean valid;
+	bool valid;
 	int i, k;
 
 	/* dummy check */
 	if (!w)
-		return qfalse;
+		return false;
 
-	valid = qtrue;
+	valid = true;
 
 	/* check all verts */
 	for (i = 0; i < w->numpoints; i++) {
@@ -527,7 +527,7 @@ qboolean FixWinding (winding_t *w)
 		VectorSubtract(w->p[i], w->p[j], vec);
 		dist = VectorLength(vec);
 		if (dist < ON_EPSILON) {
-			valid = qfalse;
+			valid = false;
 
 			/* create an average point (ydnar 2002-01-26: using nearest-integer weld preference) */
 			SnapWeldVector(w->p[i], w->p[j], vec);
@@ -543,6 +543,6 @@ qboolean FixWinding (winding_t *w)
 
 	/* one last check and return */
 	if (w->numpoints < 3)
-		valid = qfalse;
+		valid = false;
 	return valid;
 }

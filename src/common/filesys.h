@@ -96,7 +96,7 @@ typedef struct pack_s {
 typedef struct searchpath_s {
 	char filename[MAX_OSPATH];
 	pack_t *pack;				/**< only one of filename / pack will be used */
-	qboolean write;				/**< this is the path for writing configs and savegames - may
+	bool write;				/**< this is the path for writing configs and savegames - may
 								 * only be once set to true in the whole list */
 	struct searchpath_s *next;
 } searchpath_t;
@@ -126,8 +126,8 @@ int FS_Seek(qFILE * f, long offset, int origin);
 int FS_WriteFile(const void *buffer, size_t len, const char *filename);
 int FS_Write(const void *buffer, int len, qFILE * f);
 int FS_Printf(qFILE *f, const char *msg, ...) __attribute__((format(__printf__, 2, 3)));
-void FS_InitFilesystem(qboolean writeToHomeDir);
-void FS_AddGameDirectory(const char *dir, qboolean write);
+void FS_InitFilesystem(bool writeToHomeDir);
+void FS_AddGameDirectory(const char *dir, bool write);
 void FS_RestartFilesystem(const char *gamedir);
 const char *FS_Gamedir(void);
 void FS_CreateOpenPipeFile(const char *filename, qFILE *f);
@@ -136,15 +136,15 @@ void FS_ExecAutoexec(void);
 int FS_GetModList(struct linkedList_t **mods);
 const char *FS_GetCwd(void);
 void FS_NormPath(char *path);
-qboolean FS_FileExists(const char *filename);
+bool FS_FileExists(const char *filename);
 void FS_SkipBlock(const char **text);
 
-void FS_GetMaps(qboolean reset);
+void FS_GetMaps(bool reset);
 
 int FS_OpenFile(const char *filename, qFILE * file, filemode_t mode);
 void FS_CloseFile(qFILE * f);
 
-qboolean FS_RenameFile(const char *from, const char *to, qboolean relative);
+bool FS_RenameFile(const char *from, const char *to, bool relative);
 void FS_RemoveFile(const char *osPath);
 void FS_CopyFile(const char *fromOSPath, const char *toOSPath);
 
@@ -155,7 +155,7 @@ int FS_LoadFile(const char *path, byte **buffer);
 /* a null buffer will just return the file length without loading */
 /* a -1 length is not present */
 
-int FS_Read2(void *buffer, int len, qFILE *f, qboolean failOnEmptyRead);
+int FS_Read2(void *buffer, int len, qFILE *f, bool failOnEmptyRead);
 int FS_Read(void *buffer, int len, qFILE * f);
 /* properly handles partial reads */
 

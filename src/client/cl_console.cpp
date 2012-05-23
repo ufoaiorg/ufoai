@@ -55,7 +55,7 @@ static const uint32_t g_color_table[] =
 #define CONSOLE_HISTORY_FILENAME "history"
 
 typedef struct {
-	qboolean initialized;
+	bool initialized;
 
 	short text[CON_TEXTSIZE];
 	int currentLine;			/**< line where next message will be printed */
@@ -305,7 +305,7 @@ void Con_Init (void)
 	OBJZERO(con);
 	con.lineWidth = VID_NORM_WIDTH / con_fontWidth;
 	con.totalLines = lengthof(con.text) / con.lineWidth;
-	con.initialized = qtrue;
+	con.initialized = true;
 
 	Com_Printf("Console initialized.\n");
 }
@@ -334,7 +334,7 @@ void Con_Print (const char *txt)
 {
 	int y;
 	int c, l;
-	static qboolean cr;
+	static bool cr;
 	int color;
 
 	if (!con.initialized)
@@ -363,7 +363,7 @@ void Con_Print (const char *txt)
 
 		if (cr) {
 			con.currentLine--;
-			cr = qfalse;
+			cr = false;
 		}
 
 		if (!con.pos) {
@@ -382,7 +382,7 @@ void Con_Print (const char *txt)
 		case '\r':
 			con.pos = 0;
 			color = CON_COLOR_WHITE;
-			cr = qtrue;
+			cr = true;
 			break;
 
 		default:	/* display character and advance */

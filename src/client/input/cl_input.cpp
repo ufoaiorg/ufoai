@@ -10,7 +10,7 @@
  * its key number as a parameter to the command so it can be matched up with
  * the release.
  *
- * Key_Event(unsigned int key, unsigned short unicode, qboolean down, unsigned time);
+ * Key_Event(unsigned int key, unsigned short unicode, bool down, unsigned time);
  *
  *  +mlook src time
  */
@@ -791,7 +791,7 @@ static void IN_TranslateKey (const SDL_keysym *keysym, unsigned int *ascii, unsi
 		Com_Printf("unicode: %hx keycode: %i key: %hx\n", keysym->unicode, *ascii, *ascii);
 }
 
-void IN_EventEnqueue (unsigned int keyNum, unsigned short keyUnicode, qboolean keyDown)
+void IN_EventEnqueue (unsigned int keyNum, unsigned short keyUnicode, bool keyDown)
 {
 	if (keyNum > 0 || keyUnicode > 0) {
 		if (in_debug->integer)
@@ -822,7 +822,7 @@ void IN_Frame (void)
 	IN_JoystickMove();
 
 	if (vid_grabmouse->modified) {
-		vid_grabmouse->modified = qfalse;
+		vid_grabmouse->modified = false;
 
 		if (!vid_grabmouse->integer) {
 			/* ungrab the pointer */
@@ -898,7 +898,7 @@ void IN_Frame (void)
 				} else {
 					Cvar_SetValue("vid_fullscreen", 0);
 				}
-				vid_fullscreen->modified = qfalse; /* we just changed it with SDL. */
+				vid_fullscreen->modified = false; /* we just changed it with SDL. */
 				break; /* ignore this key */
 			}
 #endif
@@ -916,7 +916,7 @@ void IN_Frame (void)
 			}
 
 			IN_TranslateKey(&event.key.keysym, &key, &unicode);
-			IN_EventEnqueue(key, unicode, qtrue);
+			IN_EventEnqueue(key, unicode, true);
 			break;
 
 		case SDL_VIDEOEXPOSE:
@@ -925,7 +925,7 @@ void IN_Frame (void)
 		case SDL_KEYUP:
 			IN_PrintKey(&event, 0);
 			IN_TranslateKey(&event.key.keysym, &key, &unicode);
-			IN_EventEnqueue(key, unicode, qfalse);
+			IN_EventEnqueue(key, unicode, false);
 			break;
 
 		case SDL_ACTIVEEVENT:
@@ -941,7 +941,7 @@ void IN_Frame (void)
 		case SDL_VIDEORESIZE:
 			/* make sure that SDL_SetVideoMode is called again after we changed the size
 			 * otherwise the mouse will make problems */
-			vid_mode->modified = qtrue;
+			vid_mode->modified = true;
 			break;
 		}
 	}
@@ -961,8 +961,8 @@ static void CL_PressKey_f (void)
 
 	keyNum = Key_StringToKeynum(Cmd_Argv(1));
 	/* @todo unicode value is wrong */
-	IN_EventEnqueue(keyNum, '?', qtrue);
-	IN_EventEnqueue(keyNum, '?', qfalse);
+	IN_EventEnqueue(keyNum, '?', true);
+	IN_EventEnqueue(keyNum, '?', false);
 }
 
 typedef struct cursorChange_s {

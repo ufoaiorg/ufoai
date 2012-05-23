@@ -83,7 +83,7 @@ static void CL_ParseServerData (struct dbuffer *msg)
 
 	if (cl.pnum >= 0) {
 		/* need to prep refresh at next opportunity */
-		refdef.ready = qfalse;
+		refdef.ready = false;
 	}
 }
 

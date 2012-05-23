@@ -80,23 +80,23 @@ static int R_CullBox (const vec3_t mins, const vec3_t maxs)
  * @param[in] clipflags Can be used to skip sides of the frustum planes
  * @return @c true if the sphere is completely outside the frustum, @c false otherwise
  */
-qboolean R_CullSphere (const vec3_t centre, const float radius, const unsigned int clipflags)
+bool R_CullSphere (const vec3_t centre, const float radius, const unsigned int clipflags)
 {
 	unsigned int i;
 	unsigned int bit;
 	const cBspPlane_t *p;
 
 	if (r_nocull->integer)
-		return qfalse;
+		return false;
 
 	for (i = lengthof(r_locals.frustum), bit = 1, p = r_locals.frustum; i > 0; i--, bit <<= 1, p++) {
 		if (!(clipflags & bit))
 			continue;
 		if (DotProduct(centre, p->normal) - p->dist <= -radius)
-			return qtrue;
+			return true;
 	}
 
-	return qfalse;
+	return false;
 }
 
 /**
@@ -105,13 +105,13 @@ qboolean R_CullSphere (const vec3_t centre, const float radius, const unsigned i
  * @param[in] e The entity to check
  * @sa R_CullBox
  */
-qboolean R_CullBspModel (const entity_t *e)
+bool R_CullBspModel (const entity_t *e)
 {
 	vec3_t mins, maxs;
 
 	/* no surfaces */
 	if (!e->model->bsp.nummodelsurfaces)
-		return qtrue;
+		return true;
 
 	if (e->isOriginBrushModel) {
 		int i;
@@ -147,7 +147,7 @@ void R_DrawBspNormals (int tile)
 	if (!r_shownormals->integer)
 		return;
 
-	R_EnableTexture(&texunit_diffuse, qfalse);
+	R_EnableTexture(&texunit_diffuse, false);
 
 	R_ResetArrayState();  /* default arrays */
 
@@ -192,7 +192,7 @@ void R_DrawBspNormals (int tile)
 
 	refdef.batchCount++;
 
-	R_EnableTexture(&texunit_diffuse, qtrue);
+	R_EnableTexture(&texunit_diffuse, true);
 
 	R_Color(NULL);
 }
@@ -387,7 +387,7 @@ void R_ClearBspRRefs (void)
  * @param[in] angles
  * @param[in] forceVisibility force model to be fully visible
  */
-void R_AddBspRRef (const mBspModel_t *model, const vec3_t origin, const vec3_t angles, const qboolean forceVisibility)
+void R_AddBspRRef (const mBspModel_t *model, const vec3_t origin, const vec3_t angles, const bool forceVisibility)
 {
 	bspRenderRef_t *bspRR;
 
@@ -466,15 +466,15 @@ static void R_RenderBspRRefs (drawSurfaceFunc drawFunc, surfaceArrayType_t surfT
  */
 void R_RenderOpaqueBspRRefs (void)
 {
-	R_EnableTexture(&texunit_lightmap, qtrue);
-	R_EnableLighting(r_state.world_program, qtrue);
+	R_EnableTexture(&texunit_lightmap, true);
+	R_EnableLighting(r_state.world_program, true);
 	R_EnableWorldLights();
 
 	R_RenderBspRRefs(R_DrawSurfaces, S_OPAQUE);
 
-	R_EnableLighting(NULL, qfalse);
+	R_EnableLighting(NULL, false);
 	R_EnableGlowMap(NULL);
-	R_EnableTexture(&texunit_lightmap, qfalse);
+	R_EnableTexture(&texunit_lightmap, false);
 }
 
 /**
@@ -482,25 +482,25 @@ void R_RenderOpaqueBspRRefs (void)
  */
 void R_RenderOpaqueWarpBspRRefs (void)
 {
-	R_EnableWarp(r_state.warp_program, qtrue);
+	R_EnableWarp(r_state.warp_program, true);
 
 	R_RenderBspRRefs(R_DrawSurfaces, S_OPAQUE_WARP);
 
-	R_EnableWarp(NULL, qfalse);
+	R_EnableWarp(NULL, false);
 	R_EnableGlowMap(NULL);
 }
 
 void R_RenderAlphaTestBspRRefs (void)
 {
-	R_EnableAlphaTest(qtrue);
-	R_EnableLighting(r_state.world_program, qtrue);
+	R_EnableAlphaTest(true);
+	R_EnableLighting(r_state.world_program, true);
 	R_EnableWorldLights();
 
 	R_RenderBspRRefs(R_DrawSurfaces, S_ALPHA_TEST);
 
-	R_EnableLighting(NULL, qfalse);
+	R_EnableLighting(NULL, false);
 	R_EnableGlowMap(NULL);
-	R_EnableAlphaTest(qfalse);
+	R_EnableAlphaTest(false);
 }
 
 void R_RenderMaterialBspRRefs (void)
@@ -519,11 +519,11 @@ void R_RenderFlareBspRRefs (void)
 void R_RenderBlendBspRRefs (void)
 {
 	assert(r_state.blend_enabled);
-	R_EnableTexture(&texunit_lightmap, qtrue);
+	R_EnableTexture(&texunit_lightmap, true);
 
 	R_RenderBspRRefs(R_DrawSurfaces, S_BLEND);
 
-	R_EnableTexture(&texunit_lightmap, qfalse);
+	R_EnableTexture(&texunit_lightmap, false);
 }
 
 /**
@@ -532,10 +532,10 @@ void R_RenderBlendBspRRefs (void)
 void R_RenderBlendWarpBspRRefs (void)
 {
 	assert(r_state.blend_enabled);
-	R_EnableWarp(r_state.warp_program, qtrue);
+	R_EnableWarp(r_state.warp_program, true);
 
 	R_RenderBspRRefs(R_DrawSurfaces, S_BLEND_WARP);
 
-	R_EnableWarp(NULL, qfalse);
+	R_EnableWarp(NULL, false);
 	R_EnableGlowMap(NULL);
 }

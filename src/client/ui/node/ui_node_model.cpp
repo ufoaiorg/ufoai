@@ -508,7 +508,7 @@ void UI_RegisterModelNode (uiBehaviour_t *behaviour)
 {
 	localBehaviour = behaviour;
 	behaviour->name = "model";
-	behaviour->drawItselfChild = qtrue;
+	behaviour->drawItselfChild = true;
 	behaviour->manager = new uiModelNode();
 	behaviour->extraDataSize = sizeof(EXTRADATA_TYPE);
 
@@ -527,11 +527,11 @@ void UI_RegisterModelNode (uiBehaviour_t *behaviour)
 	/* Main model only. Auto compute the "better" scale for the model. The function dont work
 	 * very well at the moment because it dont check the angle and no more submodel bounding box.
 	 */
-	UI_RegisterExtradataNodeProperty(behaviour, "autoscale", V_CPPBOOL, modelExtraData_t, autoscale);
+	UI_RegisterExtradataNodeProperty(behaviour, "autoscale", V_BOOL, modelExtraData_t, autoscale);
 	/* Main model only. Allow to change the POV of the model with the mouse (only for main model) */
-	UI_RegisterExtradataNodeProperty(behaviour, "rotatewithmouse", V_CPPBOOL, modelExtraData_t, rotateWithMouse);
+	UI_RegisterExtradataNodeProperty(behaviour, "rotatewithmouse", V_BOOL, modelExtraData_t, rotateWithMouse);
 	/* Main model only. Clip the model with the node rect */
-	UI_RegisterExtradataNodeProperty(behaviour, "clipoverflow", V_CPPBOOL, modelExtraData_t, clipOverflow);
+	UI_RegisterExtradataNodeProperty(behaviour, "clipoverflow", V_BOOL, modelExtraData_t, clipOverflow);
 	/* Source of the model. The path to the model, relative to <code>base/models</code> */
 	UI_RegisterExtradataNodeProperty(behaviour, "src", V_CVAR_OR_STRING, modelExtraData_t, model);
 	/* Both. Name of the skin for the model. */

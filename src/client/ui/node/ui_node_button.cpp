@@ -81,7 +81,7 @@ void uiButtonNode::draw (uiNode_t *node)
 	UI_GetNodeAbsPos(node, pos);
 
 	if (EXTRADATA(node).background) {
-		UI_DrawSpriteInBox(qfalse, EXTRADATA(node).background, iconStatus, pos[0], pos[1], node->box.size[0], node->box.size[1]);
+		UI_DrawSpriteInBox(false, EXTRADATA(node).background, iconStatus, pos[0], pos[1], node->box.size[0], node->box.size[1]);
 	}
 
 	/* compute node box with padding */
@@ -177,7 +177,7 @@ void UI_RegisterButtonNode (uiBehaviour_t *behaviour)
 	/* Icon used to display the node
 	 */
 	UI_RegisterExtradataNodeProperty(behaviour, "icon", V_UI_SPRITEREF, EXTRADATA_TYPE, icon);
-	UI_RegisterExtradataNodeProperty(behaviour, "flipicon", V_CPPBOOL, EXTRADATA_TYPE, flipIcon);
+	UI_RegisterExtradataNodeProperty(behaviour, "flipicon", V_BOOL, EXTRADATA_TYPE, flipIcon);
 
 	/* Sprite used to display the background */
 	UI_RegisterExtradataNodeProperty(behaviour, "background", V_UI_SPRITEREF, EXTRADATA_TYPE, background);

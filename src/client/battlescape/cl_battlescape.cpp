@@ -34,7 +34,7 @@ clientBattleScape_t cl;
  * @param[in] includingStunned Also search for stunned actors if @c true.
  * @param[in] actor The current selected actor
  */
-le_t* CL_BattlescapeSearchAtGridPos (const pos3_t pos, qboolean includingStunned, const le_t *actor)
+le_t* CL_BattlescapeSearchAtGridPos (const pos3_t pos, bool includingStunned, const le_t *actor)
 {
 	le_t *le;
 	le_t *nonActor = NULL;
@@ -79,7 +79,7 @@ le_t* CL_BattlescapeSearchAtGridPos (const pos3_t pos, qboolean includingStunned
  * @sa CL_OnBattlescape
  * @return @c true when we are in battlefield and have soldiers spawned (game is running)
  */
-qboolean CL_BattlescapeRunning (void)
+bool CL_BattlescapeRunning (void)
 {
 	return cl.spawned;
 }
@@ -92,17 +92,17 @@ qboolean CL_BattlescapeRunning (void)
  * @sa CL_BattlescapeRunning
  * @return true when we are in battlefield
  */
-qboolean CL_OnBattlescape (void)
+bool CL_OnBattlescape (void)
 {
 	/* server_state is set to zero (ss_dead) on every battlefield shutdown */
 	if (Com_ServerState())
-		return qtrue; /* server */
+		return true; /* server */
 
 	/* client */
 	if (cls.state >= ca_connected)
-		return qtrue;
+		return true;
 
-	return qfalse;
+	return false;
 }
 
 
@@ -158,7 +158,7 @@ static float CL_LookupErrorFunction (float z)
 	return lookup[iint] + (z - ifloat / 10.0f) * lookupdiff[iint];
 }
 
-static inline qboolean CL_TestLine (const vec3_t start, const vec3_t stop, const int levelmask)
+static inline bool CL_TestLine (const vec3_t start, const vec3_t stop, const int levelmask)
 {
 	return TR_TestLine(cl.mapTiles, start, stop, levelmask);
 }
@@ -293,23 +293,23 @@ static const float mapZBorder = -(UNIT_HEIGHT * 5);
  * @return @c true if the given position is out of the map boundaries, @c false
  * otherwise.
  */
-qboolean CL_OutsideMap (const vec3_t position, const float delta)
+bool CL_OutsideMap (const vec3_t position, const float delta)
 {
 	if (position[0] < cl.mapData->mapMin[0] - delta || position[0] > cl.mapData->mapMax[0] + delta)
-		return qtrue;
+		return true;
 
 	if (position[1] < cl.mapData->mapMin[1] - delta || position[1] > cl.mapData->mapMax[1] + delta)
-		return qtrue;
+		return true;
 
 	/* if a le is deeper than 5 levels below the latest walkable level (0) then
 	 * we can assume that it is outside the world
 	 * This is needed because some maps (e.g. the dam map) has unwalkable levels
 	 * that just exists for detail reasons */
 	if (position[2] < mapZBorder)
-		return qtrue;
+		return true;
 
 	/* still inside the map borders */
-	return qfalse;
+	return false;
 }
 
 /**

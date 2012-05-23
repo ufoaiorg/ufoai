@@ -475,9 +475,9 @@ void BuildLights (void)
  * @param[in] stop The position where the trace ends.
  * @sa TR_TestLine
  * @sa GatherSampleLight
- * @return qfalse if not blocked
+ * @return false if not blocked
  */
-static qboolean TR_TestLineSingleTile (const vec3_t start, const vec3_t stop, int *headhint)
+static bool TR_TestLineSingleTile (const vec3_t start, const vec3_t stop, int *headhint)
 {
 	int i;
 	static int shared_lastthead = 0;
@@ -495,7 +495,7 @@ static qboolean TR_TestLineSingleTile (const vec3_t start, const vec3_t stop, in
 	 * as the last trace, so test that one first. */
 	if (curTile->theadlevel[lastthead] <= LEVEL_LASTLIGHTBLOCKING
 		&& TR_TestLine_r(curTile, curTile->thead[lastthead], start, stop))
-		return qtrue;
+		return true;
 
 	for (i = 0; i < curTile->numtheads; i++) {
 		const int level = curTile->theadlevel[i];
@@ -505,10 +505,10 @@ static qboolean TR_TestLineSingleTile (const vec3_t start, const vec3_t stop, in
 			continue;
 		if (TR_TestLine_r(curTile, curTile->thead[i], start, stop)) {
 			shared_lastthead = *headhint = i;
-			return qtrue;
+			return true;
 		}
 	}
-	return qfalse;
+	return false;
 }
 
 /**
@@ -953,7 +953,7 @@ static void CalcTextureSize (const dBspSurface_t *s, vec2_t texsize, int scale)
  * @param name The name of the map to export the lightmap for
  * @param day @c true to export the day lightmap data, @c false to export the night lightmap data
  */
-static void ExportLightmap (const char *path, const char *name, qboolean day)
+static void ExportLightmap (const char *path, const char *name, bool day)
 {
 	int i;
 	const int lightmapIndex = day ? 1 : 0;
@@ -999,8 +999,8 @@ void ExportLightmaps (const char *bspFileName)
 
 	BuildFaceExtents();
 
-	ExportLightmap(path, lightmapName, qtrue);
-	ExportLightmap(path, lightmapName, qfalse);
+	ExportLightmap(path, lightmapName, true);
+	ExportLightmap(path, lightmapName, false);
 }
 
 static const vec3_t luminosity = {0.2125, 0.7154, 0.0721};

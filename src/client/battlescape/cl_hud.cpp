@@ -52,7 +52,7 @@ enum {
 
 	REMAINING_TU_MAX
 };
-static qboolean displayRemainingTus[REMAINING_TU_MAX];
+static bool displayRemainingTus[REMAINING_TU_MAX];
 
 typedef enum {
 	BT_RIGHT_FIRE,
@@ -192,16 +192,16 @@ static int HUD_UsableReactionTUs (const le_t * le)
 
 /**
  * @brief Check if at least one firemode is available for reservation.
- * @return qtrue if there is at least one firemode - qfalse otherwise.
+ * @return true if there is at least one firemode - false otherwise.
  * @sa HUD_RefreshButtons
  * @sa HUD_PopupFiremodeReservation_f
  */
-static qboolean HUD_CheckFiremodeReservation (void)
+static bool HUD_CheckFiremodeReservation (void)
 {
 	actorHands_t hand = ACTOR_HAND_RIGHT;
 
 	if (!selActor)
-		return qfalse;
+		return false;
 
 	do {	/* Loop for the 2 hands (l/r) to avoid unnecessary code-duplication and abstraction. */
 		const fireDef_t *fireDef;
@@ -214,7 +214,7 @@ static qboolean HUD_CheckFiremodeReservation (void)
 			for (i = 0; i < ammo->numFiredefs[fireDef->weapFdsIdx]; i++) {
 				/* Check if at least one firemode is available for reservation. */
 				if (CL_ActorUsableTUs(selActor) + CL_ActorReservedTUs(selActor, RES_SHOT) >= ammo->fd[fireDef->weapFdsIdx][i].time)
-					return qtrue;
+					return true;
 			}
 		}
 
@@ -223,10 +223,10 @@ static qboolean HUD_CheckFiremodeReservation (void)
 			hand = ACTOR_HAND_LEFT;
 		else
 			break;
-	} while (qtrue);
+	} while (true);
 
 	/* No reservation possible */
-	return qfalse;
+	return false;
 }
 
 
@@ -259,7 +259,7 @@ static uiNode_t* popupListNode;
  * @sa HUD_CheckFiremodeReservation
  * @todo use components and confuncs here
  */
-static void HUD_PopupFiremodeReservation (const le_t *le, qboolean popupReload)
+static void HUD_PopupFiremodeReservation (const le_t *le, bool popupReload)
 {
 	actorHands_t hand = ACTOR_HAND_RIGHT;
 	int i;
@@ -321,7 +321,7 @@ static void HUD_PopupFiremodeReservation (const le_t *le, qboolean popupReload)
 			hand = ACTOR_HAND_LEFT;
 		else
 			break;
-	} while (qtrue);
+	} while (true);
 
 	if (LIST_Count(popupListData) > 1 || popupReload) {
 		/* We have more entries than the "0 TUs" one
@@ -348,7 +348,7 @@ static void HUD_PopupFiremodeReservation_f (void)
 	if (Cmd_Argc() == 2) {
 		HUD_SetShootReservation(selActor, 0, ACTOR_HAND_NOT_SET, -1, NULL);
 	} else {
-		HUD_PopupFiremodeReservation(selActor, qfalse);
+		HUD_PopupFiremodeReservation(selActor, false);
 	}
 }
 
@@ -403,7 +403,7 @@ static void HUD_DisplayFiremodeEntry (const char* callback, const le_t* actor, c
 {
 	int usableTusForRF;
 	char tuString[MAX_VAR];
-	qboolean status;
+	bool status;
 	const fireDef_t *fd;
 	const char *tooltip;
 	char id[32];
@@ -437,7 +437,7 @@ static void HUD_DisplayFiremodeEntry (const char* callback, const le_t* actor, c
 	/* Display checkbox for reaction firemode */
 	if (fd->reaction) {
 		character_t* chr = CL_ActorGetChr(actor);
-		const qboolean active = THIS_FIREMODE(&chr->RFmode, hand, fd->fdIdx);
+		const bool active = THIS_FIREMODE(&chr->RFmode, hand, fd->fdIdx);
 		/* Change the state of the checkbox. */
 		UI_ExecuteConfunc("%s reaction %s %c %i", callback, id, ACTOR_GET_HAND_CHAR(hand), active);
 	}
@@ -453,7 +453,7 @@ static void HUD_DisplayFiremodeEntry (const char* callback, const le_t* actor, c
  * @param reloadLeft if true, list left weapon reload actions
  * @todo we can extend it with short cut equip action, more reload, action on the map (like open doors)...
  */
-static void HUD_DisplayActions (const char* callback, const le_t* actor, qboolean right, qboolean left, qboolean reloadRight, qboolean reloadLeft)
+static void HUD_DisplayActions (const char* callback, const le_t* actor, bool right, bool left, bool reloadRight, bool reloadLeft)
 {
 	const objDef_t *ammo;
 	const fireDef_t *fd;
@@ -493,8 +493,8 @@ static void HUD_DisplayActions (const char* callback, const le_t* actor, qboolea
 		if (weapon && weapon->item.t && weapon->item.t->reload) {
 			int tus;
 			containerIndex_t container = csi.idRight;
-			qboolean noAmmo;
-			qboolean noTU;
+			bool noAmmo;
+			bool noTU;
 			const char *actionId = "reload_handr";
 
 			tus = HUD_CalcReloadTime(actor, weapon->item.t, container);
@@ -530,8 +530,8 @@ static void HUD_DisplayActions (const char* callback, const le_t* actor, qboolea
 		if (weapon && weapon->item.t && weapon->item.t->reload) {
 			int tus;
 			containerIndex_t container = csi.idLeft;
-			qboolean noAmmo;
-			qboolean noTU;
+			bool noAmmo;
+			bool noTU;
 			const char *actionId = "reload_handl";
 
 			tus = HUD_CalcReloadTime(actor, weapon->item.t, container);
@@ -550,10 +550,10 @@ static void HUD_DisplayActions (const char* callback, const le_t* actor, qboolea
 static void HUD_DisplayActions_f (void)
 {
 	char callback[32];
-	qboolean right;
-	qboolean left;
-	qboolean rightReload;
-	qboolean leftReload;
+	bool right;
+	bool left;
+	bool rightReload;
+	bool leftReload;
 
 	if (!selActor)
 		return;
@@ -585,7 +585,7 @@ static void HUD_DisplayFiremodes_f (void)
 		hand = ACTOR_GET_HAND_INDEX(Cmd_Argv(2)[0]);
 
 	Q_strncpyz(callback, Cmd_Argv(1), sizeof(callback));
-	HUD_DisplayActions(callback, selActor, hand == ACTOR_HAND_RIGHT, hand == ACTOR_HAND_LEFT, qfalse, qfalse);
+	HUD_DisplayActions(callback, selActor, hand == ACTOR_HAND_RIGHT, hand == ACTOR_HAND_LEFT, false, false);
 }
 
 /**
@@ -605,7 +605,7 @@ static void HUD_SwitchFiremodeList_f (void)
 		actorHands_t hand;
 		hand = ACTOR_GET_HAND_INDEX(Cmd_Argv(2)[0]);
 		Q_strncpyz(callback, Cmd_Argv(1), sizeof(callback));
-		HUD_DisplayActions(callback, selActor, hand == ACTOR_HAND_RIGHT, hand == ACTOR_HAND_LEFT, qfalse, qfalse);
+		HUD_DisplayActions(callback, selActor, hand == ACTOR_HAND_RIGHT, hand == ACTOR_HAND_LEFT, false, false);
 	}
 }
 
@@ -668,7 +668,7 @@ static void HUD_SelectReactionFiremode_f (void)
  */
 static void HUD_RemainingTUs_f (void)
 {
-	qboolean state;
+	bool state;
 	const char *type;
 
 	if (Cmd_Argc() < 3) {
@@ -772,35 +772,35 @@ static int HUD_WeaponCanBeReloaded (const le_t *le, containerIndex_t containerID
  * @brief Checks if there is a weapon in the hand that can be used for reaction fire.
  * @param[in] actor What actor to check.
  */
-static qboolean HUD_WeaponWithReaction (const le_t * actor)
+static bool HUD_WeaponWithReaction (const le_t * actor)
 {
 	const objDef_t *weapon = INVSH_HasReactionFireEnabledWeapon(RIGHT(actor));
 	if (weapon)
-		return qtrue;
+		return true;
 	return INVSH_HasReactionFireEnabledWeapon(LEFT(actor)) != NULL;
 }
 
 /**
  * @brief Display 'impossible" (red) reaction buttons.
  * @param[in] actor the actor to check for his reaction state.
- * @return qtrue if nothing changed message was sent otherwise qfalse.
+ * @return true if nothing changed message was sent otherwise false.
  */
-static qboolean HUD_DisplayImpossibleReaction (const le_t * actor)
+static bool HUD_DisplayImpossibleReaction (const le_t * actor)
 {
 	if (!actor)
-		return qfalse;
+		return false;
 
 	/* Given actor does not equal the currently selected actor. */
 	if (!actor->selected)
-		return qfalse;
+		return false;
 
 	/* Display 'impossible" (red) reaction buttons */
 	if (actor->state & STATE_REACTION) {
 		UI_ExecuteConfunc("startreaction_impos");
-		return qfalse;
+		return false;
 	}
 
-	return qtrue;
+	return true;
 }
 
 /**
@@ -962,7 +962,7 @@ static void HUD_RefreshButtons (const le_t *le)
 		if (menuName[0] != '\0' && strstr(UI_GetActiveWindowName(), POPUPLIST_NODE_NAME)) {
 			/* Update firemode reservation popup. */
 			/** @todo this is called every frames... is this really needed? */
-			HUD_PopupFiremodeReservation(le, qtrue);
+			HUD_PopupFiremodeReservation(le, true);
 		}
 	}
 }
@@ -1393,7 +1393,7 @@ void HUD_Update (void)
 				status = 1;
 			UI_ExecuteConfunc("updateLevelStatus %i %i", i, status);
 		}
-		cl_worldlevel->modified = qfalse;
+		cl_worldlevel->modified = false;
 	}
 
 	/* set Cvars for all actors */
@@ -1480,10 +1480,10 @@ static void HUD_TUChangeListener (const char *cvarName, const char *oldValue, co
 	HUD_RefreshButtons(selActor);
 }
 
-static qboolean CL_CvarWorldLevel (cvar_t *cvar)
+static bool CL_CvarWorldLevel (cvar_t *cvar)
 {
 	const int maxLevel = cl.mapMaxLevel ? cl.mapMaxLevel - 1 : PATHFINDING_HEIGHT - 1;
-	return Cvar_AssertValue(cvar, 0, maxLevel, qtrue);
+	return Cvar_AssertValue(cvar, 0, maxLevel, true);
 }
 
 /**
@@ -1491,15 +1491,15 @@ static qboolean CL_CvarWorldLevel (cvar_t *cvar)
  * @param cvar The cvar to check
  * @return @c true if cvar is valid, @c false otherwise
  */
-static qboolean HUD_CheckCLHud (cvar_t *cvar)
+static bool HUD_CheckCLHud (cvar_t *cvar)
 {
 	uiNode_t *window = UI_GetWindow(cvar->string);
 	if (window == NULL) {
-		return qfalse;
+		return false;
 	}
 
 	if (window->super == NULL) {
-		return qfalse;
+		return false;
 	}
 
 	/**
@@ -1514,12 +1514,12 @@ static qboolean HUD_CheckCLHud (cvar_t *cvar)
  * @param popAll If true
  * @todo Remove popAll when it is possible. It should always be true
  */
-void HUD_InitUI (const char *optionWindowName, qboolean popAll)
+void HUD_InitUI (const char *optionWindowName, bool popAll)
 {
 	if (!HUD_CheckCLHud(cl_hud)) {
 		Cvar_Set("cl_hud", "hud_default");
 	}
-	UI_InitStack(cl_hud->string, optionWindowName, popAll, qtrue);
+	UI_InitStack(cl_hud->string, optionWindowName, popAll, true);
 
 	UI_ExecuteConfunc("hudinit");
 }
@@ -1529,13 +1529,13 @@ void HUD_InitUI (const char *optionWindowName, qboolean popAll)
  * @param cvar The cvar to check and to modify if the value is invalid
  * @return @c true if the valid is invalid, @c false otherwise
  */
-static qboolean HUD_CvarCheckMNHud (cvar_t *cvar)
+static bool HUD_CvarCheckMNHud (cvar_t *cvar)
 {
 	if (!HUD_CheckCLHud(cl_hud)) {
 		Cvar_Reset(cvar);
-		return qtrue;
+		return true;
 	}
-	return qfalse;
+	return false;
 }
 
 void HUD_InitStartup (void)
@@ -1557,7 +1557,7 @@ void HUD_InitStartup (void)
 
 	cl_worldlevel = Cvar_Get("cl_worldlevel", "0", 0, "Current worldlevel in tactical mode.");
 	Cvar_SetCheckFunction("cl_worldlevel", CL_CvarWorldLevel);
-	cl_worldlevel->modified = qfalse;
+	cl_worldlevel->modified = false;
 
 	Cvar_Get("mn_ammoleft", "", 0, "The remaining amount of ammunition in the left hand weapon.");
 	Cvar_Get("mn_lweapon", "", 0, "The left hand weapon model of the current selected actor - empty if no weapon.");

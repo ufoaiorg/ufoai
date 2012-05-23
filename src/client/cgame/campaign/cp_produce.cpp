@@ -141,9 +141,9 @@ void PR_UpdateRequiredItemsInBasestorage (base_t *base, int amount, const requir
 		}
 		case RS_LINK_ANTIMATTER:
 			if (req->amount > 0)
-				B_ManageAntimatter(base, req->amount * amount, qtrue);
+				B_ManageAntimatter(base, req->amount * amount, true);
 			else if (req->amount < 0)
-				B_ManageAntimatter(base, req->amount * -amount, qfalse);
+				B_ManageAntimatter(base, req->amount * -amount, false);
 			break;
 		case RS_LINK_TECH:
 		case RS_LINK_TECH_NOT:
@@ -447,7 +447,7 @@ static void PR_ProductionRollBottom (base_t *base)
  * @param[in] calculate True if this is only calculation of item size, false if this is real disassembling.
  * @return Size of all components in this disassembling.
  */
-static int PR_DisassembleItem (base_t *base, const components_t *comp, float condition, qboolean calculate)
+static int PR_DisassembleItem (base_t *base, const components_t *comp, float condition, bool calculate)
 {
 	int i;
 	int size = 0;
@@ -464,10 +464,10 @@ static int PR_DisassembleItem (base_t *base, const components_t *comp, float con
 		/* Add to base storage only if this is real disassembling, not calculation of size. */
 		if (!calculate) {
 			if (Q_streq(compOd->id, ANTIMATTER_TECH_ID)) {
-				B_ManageAntimatter(base, amount, qtrue);
+				B_ManageAntimatter(base, amount, true);
 			} else {
 				technology_t *tech = RS_GetTechForItem(compOd);
-				B_UpdateStorageAndCapacity(base, compOd, amount, qfalse);
+				B_UpdateStorageAndCapacity(base, compOd, amount, false);
 				RS_MarkCollected(tech);
 			}
 			Com_DPrintf(DEBUG_CLIENT, "PR_DisassembleItem: added %i amounts of %s\n", amount, compOd->id);
@@ -480,11 +480,11 @@ static int PR_DisassembleItem (base_t *base, const components_t *comp, float con
  * @brief Checks whether production can continue
  * @param base The base the production is running in
  * @param prod The production
- * @return @c qfalse if production is stopped, @c qtrue if production can be continued.
+ * @return @c false if production is stopped, @c true if production can be continued.
  */
-static qboolean PR_CheckFrame (base_t *base, production_t *prod)
+static bool PR_CheckFrame (base_t *base, production_t *prod)
 {
-	qboolean state = qtrue;
+	bool state = true;
 
 	if (PR_IsItem(prod)) {
 		const objDef_t *od = prod->data.data.item;
@@ -493,18 +493,18 @@ static qboolean PR_CheckFrame (base_t *base, production_t *prod)
 			if (!prod->creditMessage) {
 				Com_sprintf(cp_messageBuffer, sizeof(cp_messageBuffer), _("Not enough credits to finish production in %s."), base->name);
 				MSO_CheckAddNewMessage(NT_PRODUCTION_FAILED, _("Notice"), cp_messageBuffer);
-				prod->creditMessage = qtrue;
+				prod->creditMessage = true;
 			}
-			state = qfalse;
+			state = false;
 		}
 		/* Not enough free space in base storage for this item. */
 		else if (CAP_GetFreeCapacity(base, CAP_ITEMS) < od->size) {
 			if (!prod->spaceMessage) {
 				Com_sprintf(cp_messageBuffer, sizeof(cp_messageBuffer), _("Not enough free storage space in %s. Production postponed."), base->name);
 				MSO_CheckAddNewMessage(NT_PRODUCTION_FAILED, _("Notice"), cp_messageBuffer);
-				prod->spaceMessage = qtrue;
+				prod->spaceMessage = true;
 			}
-			state = qfalse;
+			state = false;
 		}
 	} else if (PR_IsAircraft(prod)) {
 		const aircraft_t *aircraft = prod->data.data.aircraft;
@@ -513,29 +513,29 @@ static qboolean PR_CheckFrame (base_t *base, production_t *prod)
 			if (!prod->creditMessage) {
 				Com_sprintf(cp_messageBuffer, sizeof(cp_messageBuffer), _("Not enough credits to finish production in %s."), base->name);
 				MSO_CheckAddNewMessage(NT_PRODUCTION_FAILED, _("Notice"), cp_messageBuffer);
-				prod->creditMessage = qtrue;
+				prod->creditMessage = true;
 			}
-			state = qfalse;
+			state = false;
 		}
 		/* Not enough free space in hangars for this aircraft. */
 		else if (AIR_CalculateHangarStorage(aircraft, base, 0) <= 0) {
 			if (!prod->spaceMessage) {
 				Com_sprintf(cp_messageBuffer, sizeof(cp_messageBuffer), _("Not enough free hangar space in %s. Production postponed."), base->name);
 				MSO_CheckAddNewMessage(NT_PRODUCTION_FAILED, _("Notice"), cp_messageBuffer);
-				prod->spaceMessage = qtrue;
+				prod->spaceMessage = true;
 			}
-			state = qfalse;
+			state = false;
 		}
 	} else if (PR_IsDisassembly(prod)) {
 		const storedUFO_t *ufo = prod->data.data.ufo;
 
-		if (CAP_GetFreeCapacity(base, CAP_ITEMS) < PR_DisassembleItem(base, ufo->comp, ufo->condition, qtrue)) {
+		if (CAP_GetFreeCapacity(base, CAP_ITEMS) < PR_DisassembleItem(base, ufo->comp, ufo->condition, true)) {
 			if (!prod->spaceMessage) {
 				Com_sprintf(cp_messageBuffer, sizeof(cp_messageBuffer), _("Not enough free storage space in %s. Disassembling postponed."), base->name);
 				MSO_CheckAddNewMessage(NT_PRODUCTION_FAILED, _("Notice"), cp_messageBuffer);
-				prod->spaceMessage = qtrue;
+				prod->spaceMessage = true;
 			}
-			state = qfalse;
+			state = false;
 		}
 	}
 
@@ -567,7 +567,7 @@ static void PR_ProductionFrame (base_t* base, production_t *prod)
 		if (PR_IsItem(prod)) {
 			CP_UpdateCredits(ccs.credits - PR_GetPrice(prod->data.data.item));
 			/* Now add it to equipment and update capacity. */
-			B_UpdateStorageAndCapacity(base, prod->data.data.item, 1, qfalse);
+			B_UpdateStorageAndCapacity(base, prod->data.data.item, 1, false);
 		} else if (PR_IsAircraft(prod)) {
 			CP_UpdateCredits(ccs.credits - PR_GetPrice(prod->data.data.aircraft));
 			/* Now add new aircraft. */
@@ -597,7 +597,7 @@ static void PR_DisassemblingFrame (base_t* base, production_t* prod)
 
 	if (PR_IsReady(prod)) {
 		storedUFO_t *ufo = prod->data.data.ufo;
-		CAP_AddCurrent(base, CAP_ITEMS, PR_DisassembleItem(base, ufo->comp, ufo->condition, qfalse));
+		CAP_AddCurrent(base, CAP_ITEMS, PR_DisassembleItem(base, ufo->comp, ufo->condition, false));
 
 		Com_sprintf(cp_messageBuffer, sizeof(cp_messageBuffer), _("The disassembling of %s at %s has finished."),
 				UFO_TypeToName(ufo->ufoTemplate->ufotype), base->name);
@@ -724,7 +724,7 @@ void PR_ProductionRun (void)
  * @param[in] base Pointer to the base.
  * @sa B_BaseInit_f
  */
-qboolean PR_ProductionAllowed (const base_t* base)
+bool PR_ProductionAllowed (const base_t* base)
 {
 	assert(base);
 	return !B_IsUnderAttack(base) && B_GetBuildingStatus(base, B_WORKSHOP) && E_CountHired(base, EMPL_WORKER) > 0;
@@ -775,7 +775,7 @@ void PR_UpdateProductionCap (base_t *base)
  * @brief check if an item is producable.
  * @param[in] item Pointer to the item that should be checked.
  */
-qboolean PR_ItemIsProduceable (const objDef_t *item)
+bool PR_ItemIsProduceable (const objDef_t *item)
 {
 	const technology_t *tech = RS_GetTechForItem(item);
 	return tech->produceTime != -1;
@@ -804,7 +804,7 @@ base_t *PR_ProductionBase (const production_t *production)
  * @sa PR_LoadXML
  * @sa SAV_GameSaveXML
  */
-qboolean PR_SaveXML (xmlNode_t *p)
+bool PR_SaveXML (xmlNode_t *p)
 {
 	base_t *base;
 	xmlNode_t *node = XML_AddNode(p, SAVE_PRODUCE_PRODUCTION);
@@ -831,7 +831,7 @@ qboolean PR_SaveXML (xmlNode_t *p)
 			XML_AddInt(ssnode, SAVE_PRODUCE_PROGRESS, prod->frame);
 		}
 	}
-	return qtrue;
+	return true;
 }
 
 /**
@@ -840,7 +840,7 @@ qboolean PR_SaveXML (xmlNode_t *p)
  * @sa PR_SaveXML
  * @sa SAV_GameLoadXML
  */
-qboolean PR_LoadXML (xmlNode_t *p)
+bool PR_LoadXML (xmlNode_t *p)
 {
 	xmlNode_t *node, *snode;
 
@@ -906,7 +906,7 @@ qboolean PR_LoadXML (xmlNode_t *p)
 			pq->numItems++;
 		}
 	}
-	return qtrue;
+	return true;
 }
 
 /**
@@ -914,7 +914,7 @@ qboolean PR_LoadXML (xmlNode_t *p)
  * @note it need to be done after B_PostLoadInitCapacity
  * @sa PR_PostLoadInit
  */
-static qboolean PR_PostLoadInitProgress (void)
+static bool PR_PostLoadInitProgress (void)
 {
 	base_t *base = NULL;
 	while ((base = B_GetNext(base)) != NULL) {
@@ -927,14 +927,14 @@ static qboolean PR_PostLoadInitProgress (void)
 		}
 	}
 
-	return qtrue;
+	return true;
 }
 
 /**
  * @brief actions to do with productions after loading a savegame
  * @sa SAV_GameActionsAfterLoad
  */
-qboolean PR_PostLoadInit (void)
+bool PR_PostLoadInit (void)
 {
 	return PR_PostLoadInitProgress();
 }

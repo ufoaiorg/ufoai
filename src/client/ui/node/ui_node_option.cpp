@@ -88,7 +88,7 @@ void uiOptionNode::doLayout (uiNode_t *node)
 		child = child->next;
 	}
 	EXTRADATA(node).childCount = count;
-	node->invalidated = qfalse;
+	node->invalidated = false;
 }
 
 void uiOptionNode::onPropertyChanged (uiNode_t *node, const value_t *property)
@@ -123,7 +123,7 @@ static void UI_InitOption (uiNode_t* option, const char* label, const char* valu
 uiNode_t *UI_AllocOptionNode (const char* name, const char* label, const char* value)
 {
 	uiNode_t *option;
-	option = UI_AllocNode(name, "option", qtrue);
+	option = UI_AllocNode(name, "option", true);
 	UI_InitOption(option, label, value);
 	return option;
 }
@@ -147,12 +147,12 @@ void UI_RegisterOptionNode (uiBehaviour_t *behaviour)
 	/**
 	 * If true, child are not displayed
 	 */
-	propertyCollapsed = UI_RegisterExtradataNodeProperty(behaviour, "collapsed", V_CPPBOOL, EXTRADATA_TYPE, collapsed);
+	propertyCollapsed = UI_RegisterExtradataNodeProperty(behaviour, "collapsed", V_BOOL, EXTRADATA_TYPE, collapsed);
 
 	/* Icon used to display the node
 	 */
 	UI_RegisterExtradataNodeProperty(behaviour, "icon", V_UI_SPRITEREF, EXTRADATA_TYPE, icon);
-	UI_RegisterExtradataNodeProperty(behaviour, "flipicon", V_CPPBOOL, EXTRADATA_TYPE, flipIcon);
+	UI_RegisterExtradataNodeProperty(behaviour, "flipicon", V_BOOL, EXTRADATA_TYPE, flipIcon);
 
 	ui_optionBehaviour = behaviour;
 }

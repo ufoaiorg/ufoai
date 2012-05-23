@@ -60,9 +60,9 @@ static void CM_CalculateBoundingBox (const cBspModel_t* model, vec3_t mins, vec3
  * @param[in] start The position to start the trace.
  * @param[in] stop The position where the trace ends.
  * @param[in] model The entity to check
- * @return qtrue - the line isn't anywhere near the model
+ * @return true - the line isn't anywhere near the model
  */
-static qboolean CM_LineMissesModel (const vec3_t start, const vec3_t stop, const cBspModel_t *model)
+static bool CM_LineMissesModel (const vec3_t start, const vec3_t stop, const cBspModel_t *model)
 {
 	vec3_t amins, amaxs;
 	CM_CalculateBoundingBox(model, amins, amaxs);
@@ -73,9 +73,9 @@ static qboolean CM_LineMissesModel (const vec3_t start, const vec3_t stop, const
 		|| (start[0] < amins[0] && stop[0] < amins[0])
 		|| (start[1] < amins[1] && stop[1] < amins[1])
 		|| (start[2] < amins[2] && stop[2] < amins[2]))
-		return qtrue;
+		return true;
 
-	return qfalse;
+	return false;
 }
 
 
@@ -102,7 +102,7 @@ trace_t CM_HintedTransformedBoxTrace (mapTile_t *tile, const vec3_t start, const
 	vec3_t a;
 	vec3_t forward, right, up;
 	vec3_t temp;
-	qboolean rotated;
+	bool rotated;
 
 	/* subtract origin offset */
 	VectorSubtract(start, origin, start_l);
@@ -110,9 +110,9 @@ trace_t CM_HintedTransformedBoxTrace (mapTile_t *tile, const vec3_t start, const
 
 	/* rotate start and end into the models frame of reference */
 	if (headnode != tile->box_headnode && VectorNotEmpty(angles)) {
-		rotated = qtrue;
+		rotated = true;
 	} else {
-		rotated = qfalse;
+		rotated = false;
 	}
 
 	if (rotated) {
@@ -191,10 +191,10 @@ int32_t CM_HeadnodeForBox (mapTile_t *tile, const vec3_t mins, const vec3_t maxs
  * @sa TR_TestLine
  * @sa CM_InlineModel
  * @sa CM_TransformedBoxTrace
- * @return qtrue - hit something
- * @return qfalse - hit nothing
+ * @return true - hit something
+ * @return false - hit nothing
  */
-qboolean CM_EntTestLine (mapTiles_t *mapTiles, const vec3_t start, const vec3_t stop, const int levelmask, const char **entlist)
+bool CM_EntTestLine (mapTiles_t *mapTiles, const vec3_t start, const vec3_t stop, const int levelmask, const char **entlist)
 {
 	trace_t trace;
 	const char **name;
@@ -202,11 +202,11 @@ qboolean CM_EntTestLine (mapTiles_t *mapTiles, const vec3_t start, const vec3_t 
 	/* trace against world first */
 	if (TR_TestLine(mapTiles, start, stop, levelmask))
 		/* We hit the world, so we didn't make it anyway... */
-		return qtrue;
+		return true;
 
 	/* no local models, so we made it. */
 	if (!entlist)
-		return qfalse;
+		return false;
 
 	for (name = entlist; *name; name++) {
 		const cBspModel_t *model;
@@ -227,11 +227,11 @@ qboolean CM_EntTestLine (mapTiles_t *mapTiles, const vec3_t start, const vec3_t 
 		/* if we started the trace in a wall */
 		/* or the trace is not finished */
 		if (trace.startsolid || trace.fraction < 1.0)
-			return qtrue;
+			return true;
 	}
 
 	/* not blocked */
-	return qfalse;
+	return false;
 }
 
 /**
@@ -245,7 +245,7 @@ qboolean CM_EntTestLine (mapTiles_t *mapTiles, const vec3_t start, const vec3_t 
  * @sa TR_TestLineDM
  * @sa CM_TransformedBoxTrace
  */
-qboolean CM_EntTestLineDM (mapTiles_t *mapTiles, const vec3_t start, const vec3_t stop, vec3_t end, const int levelmask, const char **entlist)
+bool CM_EntTestLineDM (mapTiles_t *mapTiles, const vec3_t start, const vec3_t stop, vec3_t end, const int levelmask, const char **entlist)
 {
 	trace_t trace;
 	const char **name;
@@ -279,11 +279,11 @@ qboolean CM_EntTestLineDM (mapTiles_t *mapTiles, const vec3_t start, const vec3_
 		/* if we started the trace in a wall */
 		if (trace.startsolid) {
 			VectorCopy(start, end);
-			return qtrue;
+			return true;
 		}
 		/* trace not finished */
 		if (trace.fraction < fraction) {
-			blocked = qtrue;
+			blocked = true;
 			fraction = trace.fraction;
 			VectorCopy(trace.endpos, end);
 		}

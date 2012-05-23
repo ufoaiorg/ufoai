@@ -343,7 +343,7 @@ static int actorL_shoot (lua_State *L)
 		shots--;
 		/** @todo actually handle fire modes */
 		G_ClientShoot(AIL_player, AIL_ent, target->ent->pos,
-				shootType, 0, NULL, qtrue, 0);
+				shootType, 0, NULL, true, 0);
 	}
 
 	/* Success. */
@@ -530,12 +530,12 @@ static int AIL_print (lua_State *L)
 
 	for (i = 1; i <= n; i++) {
 		const char *s;
-		qboolean meta = qfalse;
+		bool meta = false;
 
 		lua_pushvalue(L, i);   /* value to print */
 		if (luaL_callmeta(L, 1, "__tostring")) {
 			s = lua_tostring(L, -1);
-			meta = qtrue;
+			meta = true;
 		} else {
 			switch (lua_type(L, -1)) {
 			case LUA_TNUMBER:
@@ -662,7 +662,7 @@ static int AIL_crouch (lua_State *L)
 		if (lua_isboolean(L, 1)) {
 			const int state = lua_toboolean(L, 1);
 			G_ClientStateChange(AIL_player, AIL_ent, STATE_CROUCHED,
-				(state) ? qtrue : qfalse);
+				(state) ? true : false);
 		} else
 			AIL_invalidparameter(1);
 	}
@@ -724,7 +724,7 @@ static int AIL_reactionfire (lua_State *L)
 		if (reactionState && lua_gettop(L) > 1 && lua_isboolean(L, 2)) {
 			const int state = lua_toboolean(L, 2);
 			G_ClientStateChange(AIL_player, AIL_ent, reactionState,
-				(state) ? qtrue : qfalse);
+				(state) ? true : false);
 		} else {
 			AIL_invalidparameter(reactionState ? 2 : 1);
 		}
@@ -840,12 +840,12 @@ static int AIL_positionshoot (lua_State *L)
 				pos_t tu;
 				/* Can we see the target? */
 				gi.GridPosToVec(gi.routingMap, ent->fieldSize, to, check);
-				tu = gi.MoveLength(level.pathingMap, to, G_IsCrouched(ent) ? 1 : 0, qtrue);
+				tu = gi.MoveLength(level.pathingMap, to, G_IsCrouched(ent) ? 1 : 0, true);
 				if (tu > ent->TU || tu == ROUTING_NOT_REACHABLE)
 					continue;
 				/* Better spot (easier to get to). */
 				if (tu < min_tu) {
-					if (G_ActorVis(check, ent, target->ent, qtrue) > 0.3) {
+					if (G_ActorVis(check, ent, target->ent, true) > 0.3) {
 						VectorCopy(to, bestPos);
 						min_tu = tu;
 					}

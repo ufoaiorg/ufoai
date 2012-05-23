@@ -280,7 +280,7 @@ static void R_SetSurfaceExtents (mBspSurface_t *surf, const model_t* mod)
 	}
 }
 
-static void R_ModLoadSurfaces (qboolean day, const lump_t *l)
+static void R_ModLoadSurfaces (bool day, const lump_t *l)
 {
 	const dBspSurface_t *in;
 	int count, surfnum;
@@ -952,7 +952,7 @@ static void R_SetupWorldModel (void)
  * @param[in] sZ Shift z grid units
  * @sa UNIT_SIZE
  */
-static void R_ModAddMapTile (const char *name, qboolean day, int sX, int sY, int sZ)
+static void R_ModAddMapTile (const char *name, bool day, int sX, int sY, int sZ)
 {
 	int i;
 	byte *buffer;
@@ -1042,7 +1042,7 @@ static void R_ModEndLoading (const char *mapName)
  * and pathfinding stuff.
  * @sa UI_BuildRadarImageList
  */
-void R_ModBeginLoading (const char *tiles, qboolean day, const char *pos, const char *mapName)
+void R_ModBeginLoading (const char *tiles, bool day, const char *pos, const char *mapName)
 {
 	char name[MAX_VAR];
 	char base[MAX_QPATH];

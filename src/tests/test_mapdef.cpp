@@ -55,7 +55,7 @@ static int UFO_InitSuiteMapDef (void)
 	UI_Init();
 
 	OBJZERO(cls);
-	Com_ParseScripts(qfalse);
+	Com_ParseScripts(false);
 
 	return 0;
 }
@@ -116,7 +116,7 @@ static void testMapDefsMassRMA (void)
 			LIST_Foreach(md->aircraft, char const, craft) {
 				linkedList_t *iter;
 				const char *ufo = NULL;
-				qboolean didItOnce = qfalse;
+				bool didItOnce = false;
 
 				if (craft)
 					Cvar_Set("rm_drop", Com_GetRandomMapAssemblyNameForCraft(craft));
@@ -156,14 +156,14 @@ static void testMapDefsMassRMA (void)
 							{ -1, "ufocrash", 0,            0,                     0                     },
 						};
 
-						qboolean skip = qfalse;
+						bool skip = false;
 						for (skip_info const* e = skip_list; e != endof(skip_list); ++e) {
 							if (e->seed >= 0 && i != e->seed)                  continue;
 							if (e->map       && !Q_streq(p,         e->map))   continue;
 							if (e->param     && !Q_streq(md->param, e->param)) continue;
 							if (e->craft     && !Q_streq(craft,     e->craft)) continue;
 							if (e->ufo       && !Q_streq(ufo,       e->ufo))   continue;
-							skip = qtrue;
+							skip = true;
 							break;
 						}
 						if (skip)
@@ -183,7 +183,7 @@ static void testMapDefsMassRMA (void)
 							Com_Printf("Map: %s Assembly: %s Seed: %i tiles: %i ms: %li\n", p, md->param, i, randomMap->numPlaced, time);
 						Mem_Free(randomMap);
 					}
-					didItOnce = qtrue;
+					didItOnce = true;
 					if (!iter)
 						break;
 				}
@@ -226,7 +226,7 @@ static void testMapDefStatistic (void)
 				p++;
 			else
 				continue;
-			SV_ParseUMP(p, theMap, qfalse);
+			SV_ParseUMP(p, theMap, false);
 			theMap->mAsm = 0;
 			/* overwrite with specified, if any */
 			if (md->param && md->param[0]) {
@@ -287,7 +287,7 @@ static void testMapDefsSingleplayer (void)
 			srand(seed);
 
 			Com_Printf("testMapDefsSingleplayer: Mapdef %s (seed %u)\n", md->id, seed);
-			SV_Map(qtrue, md->map, md->param);
+			SV_Map(true, md->map, md->param);
 			SV_ShutdownGameProgs();
 			CU_PASS(md->map);
 		}
@@ -320,7 +320,7 @@ static void testMapDefsMultiplayer (void)
 		srand(seed);
 
 		Com_Printf("testMapDefsMultiplayer: Mapdef %s (seed %u)\n", md->id, seed);
-		SV_Map(qtrue, md->map, md->param);
+		SV_Map(true, md->map, md->param);
 
 		player = PLAYER_NUM(0);
 		Info_SetValueForKey(userinfo, sizeof(userinfo), "cl_teamnum", "-1");

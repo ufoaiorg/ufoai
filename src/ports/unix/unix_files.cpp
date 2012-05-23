@@ -56,28 +56,28 @@ static	char	findpath[MAX_OSPATH];
 static	char	findpattern[MAX_OSPATH];
 static	DIR		*fdir;
 
-static qboolean CompareAttributes (const char *path, const char *name, unsigned musthave, unsigned canthave)
+static bool CompareAttributes (const char *path, const char *name, unsigned musthave, unsigned canthave)
 {
 	struct stat st;
 	char fn[MAX_OSPATH];
 
 	/* . and .. never match */
 	if (Q_streq(name, ".") || Q_streq(name, ".."))
-		return qfalse;
+		return false;
 
 	Com_sprintf(fn, sizeof(fn), "%s/%s", path, name);
 	if (stat(fn, &st) == -1) {
 		Com_Printf("CompareAttributes: Warning, stat failed: %s\n", name);
-		return qfalse; /* shouldn't happen */
+		return false; /* shouldn't happen */
 	}
 
 	if ((st.st_mode & S_IFDIR) && (canthave & SFF_SUBDIR))
-		return qfalse;
+		return false;
 
 	if ((musthave & SFF_SUBDIR) && !(st.st_mode & S_IFDIR))
-		return qfalse;
+		return false;
 
-	return qtrue;
+	return true;
 }
 
 /**

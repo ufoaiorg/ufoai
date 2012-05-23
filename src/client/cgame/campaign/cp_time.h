@@ -46,14 +46,14 @@ const char* CP_SecondConvert(int second);
 
 void CP_UpdateTime(void);
 void CP_GameTimeStop(void);
-qboolean CP_IsTimeStopped(void);
+bool CP_IsTimeStopped(void);
 void CP_GameTimeFast(void);
 void CP_GameTimeSlow(void);
 void CP_SetGameTime_f(void);
 
 int Date_DateToSeconds(const date_t *date);
-qboolean Date_LaterThan(const date_t *now, const date_t *compare);
-qboolean Date_IsDue(const date_t *date);
+bool Date_LaterThan(const date_t *now, const date_t *compare);
+bool Date_IsDue(const date_t *date);
 date_t Date_Add(date_t a, date_t b);
 date_t Date_Substract(date_t a, date_t b);
 date_t Date_Random(date_t minFrame, date_t maxFrame);

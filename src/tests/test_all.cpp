@@ -83,9 +83,9 @@ void Sys_Init (void)
 }
 
 typedef struct config_s {
-	qboolean console;
-	qboolean automated;
-	qboolean log;
+	bool console;
+	bool automated;
+	bool log;
 } config_t;
 
 static const char* resultPrefix = "ufoai";
@@ -99,9 +99,9 @@ static FILE *logFile;
  */
 static CU_pSuite disabledSuites;
 
-static qboolean displayStatus;
+static bool displayStatus;
 
-static void Test_List (qboolean displayStatus)
+static void Test_List (bool displayStatus)
 {
 	CU_pTestRegistry registry;
 	CU_pSuite suite;
@@ -243,9 +243,9 @@ static void Test_Parameters (const int argc, char **argv)
 
 	for (i = 1; i < argc; i++) {
 		if (Q_streq(argv[i], "-c") || Q_streq(argv[i], "--console")) {
-			config.console = qtrue;
+			config.console = true;
 		} else if (Q_streq(argv[i], "-a") || Q_streq(argv[i], "--automated")) {
-			config.automated = qtrue;
+			config.automated = true;
 		} else if (char const* const arg = Q_strstart(argv[i], "-D")) {
 			if (char const* const value = strchr(arg, '=')) {
 				char name[32];
@@ -295,12 +295,12 @@ static void Test_Parameters (const int argc, char **argv)
 		} else if (char const* const prefix = Q_strstart(argv[i], "--output-prefix=")) {
 			resultPrefix = prefix;
 		} else if (Q_streq(argv[i], "-l") || Q_streq(argv[i], "--list")) {
-			Test_List(qfalse);
+			Test_List(false);
 			exit(0);
 		} else if (Q_streq(argv[i], "--log")) {
-			config.log = qtrue;
+			config.log = true;
 		} else if (Q_streq(argv[i], "-s") || Q_streq(argv[i], "--status")) {
-			displayStatus = qtrue;
+			displayStatus = true;
 		} else if (Q_streq(argv[i], "-h") || Q_streq(argv[i], "--help")) {
 			printf("Usage:\n");
 			printf("-h  --help                 | show this help screen\n");
@@ -367,7 +367,7 @@ int main (int argc, char **argv)
 	Test_Parameters(argc, argv);
 
 	if (displayStatus) {
-		Test_List(qtrue);
+		Test_List(true);
 		exit(0);
 	}
 

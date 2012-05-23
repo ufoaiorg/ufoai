@@ -86,7 +86,7 @@ typedef enum {
 
 typedef struct baseBuildingTile_s {
 	building_t *building;	/**< NULL if free spot */
-	qboolean	blocked;	/**< qtrue if the tile is usable for buildings otherwise it's qfalse (blocked somehow). */
+	bool	blocked;	/**< true if the tile is usable for buildings otherwise it's false (blocked somehow). */
 	/* These are only used for baseTemplates: */
 	int posX;	/**< The x screen coordinate for the building on the basemap. */
 	int posY;	/**< The y screen coordinate for the building on the basemap. */
@@ -96,7 +96,7 @@ typedef struct baseWeapon_s {
 	/* int idx; */
 	aircraftSlot_t slot;	/**< Weapon. */
 	aircraft_t *target;		/**< Aimed target for the weapon. */
-	qboolean autofire;		/**< If it should automatically open fire on ufos */
+	bool autofire;		/**< If it should automatically open fire on ufos */
 } baseWeapon_t;
 
 /** @brief A base with all it's data */
@@ -106,15 +106,15 @@ typedef struct base_s {
 	baseBuildingTile_t map[BASE_SIZE][BASE_SIZE];	/**< The base maps (holds building pointers)
 													 * @todo  maybe integrate BASE_INVALID_SPACE and BASE_FREE_SPACE here? */
 
-	qboolean founded;	/**< already founded? */
+	bool founded;	/**< already founded? */
 	vec3_t pos;		/**< pos on geoscape */
 
 	/**
-	 * @note These qbooleans does not say whether there is such building in the
+	 * @note These bools does not say whether there is such building in the
 	 * base or there is not. They are true only if such buildings are operational
 	 * (for example, in some cases, if they are provided with power).
 	 */
-	qboolean hasBuilding[MAX_BUILDING_TYPE];
+	bool hasBuilding[MAX_BUILDING_TYPE];
 
 	aircraft_t *aircraftCurrent;		/**< Currently selected aircraft in _this base_. (i.e. an entry in base_t->aircraft). */
 
@@ -142,7 +142,7 @@ typedef struct base_s {
 	/* we will allow only one active production at the same time for each base */
 	production_queue_t productions;
 
-	qboolean selected;		/**< the current selected base */
+	bool selected;		/**< the current selected base */
 	building_t *buildingCurrent; /**< needn't be saved */
 } base_t;
 
@@ -157,7 +157,7 @@ void B_UpdateBaseData(void);
 float B_GetMaxBuildingLevel(const base_t* base, const buildingType_t type);
 void B_ParseBaseTemplate(const char *name, const char **text);
 void B_BaseResetStatus(base_t* const base);
-const building_t *B_GetBuildingInBaseByType(const base_t* base, buildingType_t type, qboolean onlyWorking);
+const building_t *B_GetBuildingInBaseByType(const base_t* base, buildingType_t type, bool onlyWorking);
 const baseTemplate_t *B_GetBaseTemplate(const char *baseTemplateName);
 
 void B_InitStartup(void);
@@ -177,7 +177,7 @@ base_t *B_GetFirstUnfoundedBase(void);
 base_t *B_GetCurrentSelectedBase(void);
 void B_SetCurrentSelectedBase(const base_t *base);
 
-qboolean B_AssembleMap(const base_t *base);
+bool B_AssembleMap(const base_t *base);
 
 /* building functions */
 #define B_IsTileBlocked(base, x, y) (base)->map[(int)(y)][(int)(x)].blocked
@@ -188,14 +188,14 @@ buildingType_t B_GetBuildingTypeByCapacity(baseCapacities_t cap);
 building_t* B_GetNextBuilding(const base_t *base, building_t *lastBuilding);
 building_t* B_GetNextBuildingByType(const base_t *base, building_t *lastBuilding, buildingType_t buildingType);
 void B_BuildingStatus(const building_t* building);
-qboolean B_CheckBuildingTypeStatus(const base_t* const base, buildingType_t type, buildingStatus_t status, int *cnt);
-qboolean B_GetBuildingStatus(const base_t* const base, const buildingType_t type);
-void B_SetBuildingStatus(base_t* const base, const buildingType_t type, qboolean newStatus);
+bool B_CheckBuildingTypeStatus(const base_t* const base, buildingType_t type, buildingStatus_t status, int *cnt);
+bool B_GetBuildingStatus(const base_t* const base, const buildingType_t type);
+void B_SetBuildingStatus(base_t* const base, const buildingType_t type, bool newStatus);
 
-qboolean B_MapIsCellFree(const base_t *base, int col, int row);
+bool B_MapIsCellFree(const base_t *base, int col, int row);
 building_t* B_SetBuildingByClick(base_t *base, const building_t *buildingTemplate, int row, int col);
-qboolean B_IsBuildingDestroyable(const building_t *building);
-qboolean B_BuildingDestroy(building_t* building);
+bool B_IsBuildingDestroyable(const building_t *building);
+bool B_BuildingDestroy(building_t* building);
 
 building_t *B_GetFreeBuildingType(buildingType_t type);
 int B_GetNumberOfBuildingsInBaseByTemplate(const base_t *base, const building_t *type);
@@ -205,8 +205,8 @@ void B_BuildingOpenAfterClick(const building_t *building);
 void B_ResetBuildingCurrent(base_t* base);
 
 /* storage functions */
-qboolean B_ItemIsStoredInBaseStorage(const objDef_t *obj);
-qboolean B_BaseHasItem(const base_t *base, const objDef_t *item);
+bool B_ItemIsStoredInBaseStorage(const objDef_t *obj);
+bool B_BaseHasItem(const base_t *base, const objDef_t *item);
 int B_ItemInBase(const objDef_t *item, const base_t *base);
 
 int B_AddToStorage(base_t* base, const objDef_t *obj, int amount);
@@ -217,9 +217,9 @@ void B_DumpAircraftToHomeBase(aircraft_t *aircraft);
 
 /* capacity functions */
 void B_UpdateBaseCapacities(baseCapacities_t cap, base_t *base);
-qboolean B_UpdateStorageAndCapacity(base_t* base, const objDef_t *obj, int amount, qboolean ignorecap);
+bool B_UpdateStorageAndCapacity(base_t* base, const objDef_t *obj, int amount, bool ignorecap);
 baseCapacities_t B_GetCapacityFromBuildingType(buildingType_t type);
-void B_ResetAllStatusAndCapacities(base_t *base, qboolean firstEnable);
+void B_ResetAllStatusAndCapacities(base_t *base, bool firstEnable);
 
 /* menu functions */
 void B_BaseMenuInit(const base_t *base);
@@ -227,24 +227,24 @@ void B_DrawBuilding(const building_t* building);
 
 /* antimatter */
 int B_AntimatterInBase(const base_t *base);
-void B_ManageAntimatter(base_t *base, int amount, qboolean add);
+void B_ManageAntimatter(base_t *base, int amount, bool add);
 
 /* savesystem */
 void B_SaveBaseSlotsXML(const baseWeapon_t *weapons, const int numWeapons, xmlNode_t *p);
 int B_LoadBaseSlotsXML(baseWeapon_t* weapons, int numWeapons, xmlNode_t *p);
-qboolean B_SaveStorageXML(xmlNode_t *parent, const equipDef_t equip);
-qboolean B_LoadStorageXML(xmlNode_t *parent, equipDef_t *equip);
+bool B_SaveStorageXML(xmlNode_t *parent, const equipDef_t equip);
+bool B_LoadStorageXML(xmlNode_t *parent, equipDef_t *equip);
 
 /* other */
 int B_GetInstallationLimit(void);
 
 /* functions that checks whether the buttons in the base menu are useable */
-qboolean BS_BuySellAllowed(const base_t* base);
-qboolean AIR_AircraftAllowed(const base_t* base);
-qboolean RS_ResearchAllowed(const base_t* base);
-qboolean PR_ProductionAllowed(const base_t* base);
-qboolean E_HireAllowed(const base_t* base);
-qboolean AC_ContainmentAllowed(const base_t* base);
-qboolean HOS_HospitalAllowed(const base_t* base);
+bool BS_BuySellAllowed(const base_t* base);
+bool AIR_AircraftAllowed(const base_t* base);
+bool RS_ResearchAllowed(const base_t* base);
+bool PR_ProductionAllowed(const base_t* base);
+bool E_HireAllowed(const base_t* base);
+bool AC_ContainmentAllowed(const base_t* base);
+bool HOS_HospitalAllowed(const base_t* base);
 
 #endif

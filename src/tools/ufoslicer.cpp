@@ -19,12 +19,12 @@ mapTiles_t mapTiles;
 typedef struct slicerConfig_s {
 	float thickness;
 	int scale;
-	qboolean singleContour;
-	qboolean multipleContour;
+	bool singleContour;
+	bool multipleContour;
 	char filename[MAX_QPATH];
 } slicerConfig_t;
 
-static slicerConfig_t config = {8.0, 1, qtrue, qtrue, ""};
+static slicerConfig_t config = {8.0, 1, true, true, ""};
 
 static void Usage (void)
 {
@@ -60,9 +60,9 @@ static void SL_Parameter (int argc, char **argv)
 		} else if (Q_streq(argv[i], "-s") && (i + 1 < argc)) {
 			config.scale = atoi(argv[++i]);
 		} else if (Q_streq(argv[i], "-c")) {
-			config.singleContour = qtrue;
+			config.singleContour = true;
 		} else if (Q_streq(argv[i], "-m")) {
-			config.multipleContour = qtrue;
+			config.multipleContour = true;
 		} else if (Q_streq(argv[i], "-h") || Q_streq(argv[i], "--help")) {
 			Usage();
 		} else {
@@ -107,7 +107,7 @@ int main (int argc, char **argv)
 	Com_StripExtension(config.filename, bspFilename, sizeof(bspFilename));
 	Com_DefaultExtension(bspFilename, sizeof(bspFilename), ".bsp");
 
-	FS_InitFilesystem(qfalse);
+	FS_InitFilesystem(false);
 	SL_BSPSlice(LoadBSPFile(bspFilename), config.thickness, config.scale, config.singleContour, config.multipleContour);
 
 	Mem_Shutdown();

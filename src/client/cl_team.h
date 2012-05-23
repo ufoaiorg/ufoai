@@ -39,9 +39,9 @@ typedef struct actorSkin_s {
 	char name[MAX_VAR];
 
 	/** If true, this skin is used in singleplayer mode */
-	qboolean singleplayer;
+	bool singleplayer;
 	/** If true, this skin is used in multiplayer mode */
-	qboolean multiplayer;
+	bool multiplayer;
 } actorSkin_t;
 
 void CL_GenerateCharacter(character_t *chr, const char *teamDefName);

@@ -66,8 +66,8 @@ typedef struct production_s
 	int totalFrames;	/**< total number of frames needed to finish the production (it can change with worker count and so) */
 	int frame;			/**< the actual frame counter */
 	signed int amount;	/**< How much are we producing. */
-	qboolean spaceMessage;	/**< Used in No Free Space message adding. */
-	qboolean creditMessage;	/**< Used in No Credits message adding. */
+	bool spaceMessage;	/**< Used in No Free Space message adding. */
+	bool creditMessage;	/**< Used in No Credits message adding. */
 } production_t;
 
 #define PR_IsDisassemblyData(data)	((data)->type == PRODUCTION_TYPE_DISASSEMBLY)
@@ -108,7 +108,7 @@ typedef struct production_queue_s
 void PR_ProductionInit(void);
 void PR_ProductionRun(void);
 
-qboolean PR_ItemIsProduceable(const objDef_t *item);
+bool PR_ItemIsProduceable(const objDef_t *item);
 
 struct base_s *PR_ProductionBase(const production_t *production);
 

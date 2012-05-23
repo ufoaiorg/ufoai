@@ -45,7 +45,7 @@ void CL_Explode (const eventRegister_t *self, struct dbuffer *msg)
 	if (!le)
 		LE_NotFoundError(entnum);
 
-	le->inuse = qfalse;
+	le->inuse = false;
 	if (le->modelnum1 > 0)
 		cl.model_clip[le->modelnum1] = NULL;
 

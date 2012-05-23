@@ -119,13 +119,13 @@ void uiSelectBoxNode::draw (uiNode_t *node)
 	selBoxY = nodepos[1] + SELECTBOX_SPACER;
 
 	/* left border */
-	UI_DrawNormImage(qfalse, nodepos[0], nodepos[1], SELECTBOX_SIDE_WIDTH, node->box.size[1],
+	UI_DrawNormImage(false, nodepos[0], nodepos[1], SELECTBOX_SIDE_WIDTH, node->box.size[1],
 		SELECTBOX_SIDE_WIDTH, SELECTBOX_DEFAULT_HEIGHT, 0.0f, 0.0f, image);
 	/* stretched middle bar */
-	UI_DrawNormImage(qfalse, nodepos[0] + SELECTBOX_SIDE_WIDTH, nodepos[1], node->box.size[0]-SELECTBOX_SIDE_WIDTH-SELECTBOX_RIGHT_WIDTH, node->box.size[1],
+	UI_DrawNormImage(false, nodepos[0] + SELECTBOX_SIDE_WIDTH, nodepos[1], node->box.size[0]-SELECTBOX_SIDE_WIDTH-SELECTBOX_RIGHT_WIDTH, node->box.size[1],
 		12.0f, SELECTBOX_DEFAULT_HEIGHT, 7.0f, 0.0f, image);
 	/* right border (arrow) */
-	UI_DrawNormImage(qfalse, nodepos[0] + node->box.size[0] - SELECTBOX_RIGHT_WIDTH, nodepos[1], SELECTBOX_DEFAULT_HEIGHT, node->box.size[1],
+	UI_DrawNormImage(false, nodepos[0] + node->box.size[0] - SELECTBOX_RIGHT_WIDTH, nodepos[1], SELECTBOX_DEFAULT_HEIGHT, node->box.size[1],
 		12.0f + SELECTBOX_RIGHT_WIDTH, SELECTBOX_DEFAULT_HEIGHT, 12.0f, 0.0f, image);
 
 	/* draw the label for the current selected option */
@@ -144,7 +144,7 @@ void uiSelectBoxNode::draw (uiNode_t *node)
 
 		UI_DrawString(font, ALIGN_UL, selBoxX, selBoxY,
 			selBoxX, node->box.size[0] - 4,
-			0, label, 0, 0, NULL, qfalse, LONGLINES_PRETTYCHOP);
+			0, label, 0, 0, NULL, false, LONGLINES_PRETTYCHOP);
 
 		R_Color(NULL);
 		break;
@@ -185,15 +185,15 @@ void uiSelectBoxNode::drawOverWindow (uiNode_t *node)
 
 	/* drop down list */
 	/* left side */
-	UI_DrawNormImage(qfalse, nodepos[0], nodepos[1] + node->box.size[1], SELECTBOX_SIDE_WIDTH, node->box.size[1] * EXTRADATA(node).count,
+	UI_DrawNormImage(false, nodepos[0], nodepos[1] + node->box.size[1], SELECTBOX_SIDE_WIDTH, node->box.size[1] * EXTRADATA(node).count,
 		7.0f, 28.0f, 0.0f, 21.0f, image);
 
 	/* stretched middle bar */
-	UI_DrawNormImage(qfalse, nodepos[0] + SELECTBOX_SIDE_WIDTH, nodepos[1] + node->box.size[1], node->box.size[0] -SELECTBOX_SIDE_WIDTH-SELECTBOX_RIGHT_WIDTH, node->box.size[1] * EXTRADATA(node).count,
+	UI_DrawNormImage(false, nodepos[0] + SELECTBOX_SIDE_WIDTH, nodepos[1] + node->box.size[1], node->box.size[0] -SELECTBOX_SIDE_WIDTH-SELECTBOX_RIGHT_WIDTH, node->box.size[1] * EXTRADATA(node).count,
 		16.0f, 28.0f, 7.0f, 21.0f, image);
 
 	/* right side */
-	UI_DrawNormImage(qfalse, nodepos[0] + node->box.size[0] -SELECTBOX_SIDE_WIDTH-SELECTBOX_RIGHT_WIDTH, nodepos[1] + node->box.size[1], SELECTBOX_SIDE_WIDTH, node->box.size[1] * EXTRADATA(node).count,
+	UI_DrawNormImage(false, nodepos[0] + node->box.size[0] -SELECTBOX_SIDE_WIDTH-SELECTBOX_RIGHT_WIDTH, nodepos[1] + node->box.size[1], SELECTBOX_SIDE_WIDTH, node->box.size[1] * EXTRADATA(node).count,
 		23.0f, 28.0f, 16.0f, 21.0f, image);
 
 	/* now draw all available options for this selectbox */
@@ -212,7 +212,7 @@ void uiSelectBoxNode::drawOverWindow (uiNode_t *node)
 			label = _(label + 1);
 		UI_DrawString(font, ALIGN_UL, selBoxX, selBoxY,
 			selBoxX, node->box.size[0] - 4,
-			0, label, 0, 0, NULL, qfalse, LONGLINES_PRETTYCHOP);
+			0, label, 0, 0, NULL, false, LONGLINES_PRETTYCHOP);
 		/* next entries' position */
 		selBoxY += node->box.size[1];
 		check++;
@@ -226,16 +226,16 @@ void uiSelectBoxNode::drawOverWindow (uiNode_t *node)
 	}
 
 	/* left side */
-	UI_DrawNormImage(qfalse, nodepos[0], selBoxY - SELECTBOX_SPACER, SELECTBOX_SIDE_WIDTH, SELECTBOX_BOTTOM_HEIGHT,
+	UI_DrawNormImage(false, nodepos[0], selBoxY - SELECTBOX_SPACER, SELECTBOX_SIDE_WIDTH, SELECTBOX_BOTTOM_HEIGHT,
 		7.0f, 32.0f, 0.0f, 28.0f, image);
 
 	/* stretched middle bar */
-	UI_DrawNormImage(qfalse, nodepos[0] + SELECTBOX_SIDE_WIDTH, selBoxY - SELECTBOX_SPACER, node->box.size[0] - SELECTBOX_SIDE_WIDTH - SELECTBOX_RIGHT_WIDTH,
+	UI_DrawNormImage(false, nodepos[0] + SELECTBOX_SIDE_WIDTH, selBoxY - SELECTBOX_SPACER, node->box.size[0] - SELECTBOX_SIDE_WIDTH - SELECTBOX_RIGHT_WIDTH,
 			SELECTBOX_BOTTOM_HEIGHT,
 		16.0f, 32.0f, 7.0f, 28.0f, image);
 
 	/* right bottom side */
-	UI_DrawNormImage(qfalse, nodepos[0] + node->box.size[0] - SELECTBOX_SIDE_WIDTH - SELECTBOX_RIGHT_WIDTH, selBoxY - SELECTBOX_SPACER,
+	UI_DrawNormImage(false, nodepos[0] + node->box.size[0] - SELECTBOX_SIDE_WIDTH - SELECTBOX_RIGHT_WIDTH, selBoxY - SELECTBOX_SPACER,
 		SELECTBOX_SIDE_WIDTH, SELECTBOX_BOTTOM_HEIGHT,
 		23.0f, 32.0f, 16.0f, 28.0f, image);
 }
@@ -314,5 +314,5 @@ void UI_RegisterSelectBoxNode (uiBehaviour_t *behaviour)
 	behaviour->name = "selectbox";
 	behaviour->extends = "abstractoption";
 	behaviour->manager = new uiSelectBoxNode();
-	behaviour->drawItselfChild = qtrue;
+	behaviour->drawItselfChild = true;
 }

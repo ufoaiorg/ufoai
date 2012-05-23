@@ -95,7 +95,7 @@ void uiEkgNode::draw (uiNode_t *node)
 				Vector2Copy(node->box.size, size);
 			}
 		}
-		UI_DrawNormImage(qfalse, nodepos[0], nodepos[1], size[0], size[1],
+		UI_DrawNormImage(false, nodepos[0], nodepos[1], size[0], size[1],
 				EXTRADATA(node).super.texh[0], EXTRADATA(node).super.texh[1], EXTRADATA(node).super.texl[0], EXTRADATA(node).super.texl[1], image);
 	}
 }

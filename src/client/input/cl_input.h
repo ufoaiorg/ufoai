@@ -53,7 +53,7 @@ void IN_Frame(void);
 void IN_SendKeyEvents(void);
 void IN_SetMouseSpace(mouseSpace_t mouseSpace);
 
-void IN_EventEnqueue(unsigned int key, unsigned short, qboolean down);
+void IN_EventEnqueue(unsigned int key, unsigned short, bool down);
 float CL_GetKeyMouseState(int dir);
 
 #endif /* CLIENT_INPUT_H */

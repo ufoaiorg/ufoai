@@ -25,8 +25,8 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #ifndef _BEP_H
 #define _BEP_H
 
-typedef qboolean (*BEPEvaluteCallback_t) (const char *var);
+typedef bool (*BEPEvaluteCallback_t) (const char *var);
 
-qboolean BEP_Evaluate (const char *expr, BEPEvaluteCallback_t varFunc);
+bool BEP_Evaluate (const char *expr, BEPEvaluteCallback_t varFunc);
 
 #endif

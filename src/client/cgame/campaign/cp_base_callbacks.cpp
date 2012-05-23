@@ -67,7 +67,7 @@ static void B_Destroy_AntimaterStorage_f (void)
 
 	if (prob < atof(Cmd_Argv(1))) {
 		MS_AddNewMessage(_("Notice"), va(_("%s has been destroyed by an antimatter storage breach."), base->name));
-		cgi->UI_PopWindow(qfalse);
+		cgi->UI_PopWindow(false);
 		B_Destroy(base);
 	}
 }
@@ -198,7 +198,7 @@ static void B_SetBaseTitle_f (void)
 		Cvar_Set("mn_base_title", baseName);
 	} else {
 		MS_AddNewMessage(_("Notice"), _("You've reached the base limit."));
-		cgi->UI_PopWindow(qfalse);		/* remove the new base popup */
+		cgi->UI_PopWindow(false);		/* remove the new base popup */
 	}
 }
 
@@ -595,7 +595,7 @@ static void B_MarkBuildingDestroy (building_t* building)
 	}
 
 	if (building->buildingStatus == B_STATUS_WORKING) {
-		const qboolean hasMoreBases = B_GetCount() > 1;
+		const bool hasMoreBases = B_GetCount() > 1;
 		switch (building->buildingType) {
 		case B_HANGAR:
 		case B_SMALL_HANGAR:

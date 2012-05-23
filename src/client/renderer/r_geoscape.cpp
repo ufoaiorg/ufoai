@@ -46,7 +46,7 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
  * @param[in] iz The zoomlevel of the geoscape - see ccs.zoom
  * @param[in] map The geoscape map to draw (can be changed in the campaign definition)
  */
-void R_DrawFlatGeoscape (int x, int y, int w, int h, float p, float cx, float cy, float iz, const char *map, qboolean overlayNation, qboolean overlayXVI, qboolean overlayRadar, image_t *r_dayandnightTexture, image_t *r_xviTexture, image_t *r_radarTexture)
+void R_DrawFlatGeoscape (int x, int y, int w, int h, float p, float cx, float cy, float iz, const char *map, bool overlayNation, bool overlayXVI, bool overlayRadar, image_t *r_dayandnightTexture, image_t *r_xviTexture, image_t *r_radarTexture)
 {
 	image_t *gl;
 	float geoscape_texcoords[4 * 2];
@@ -98,7 +98,7 @@ void R_DrawFlatGeoscape (int x, int y, int w, int h, float p, float cx, float cy
 		float geoscape_nighttexcoords[4 * 2];
 
 		R_BindTexture(gl->texnum);
-		R_EnableTexture(&texunit_lightmap, qtrue);
+		R_EnableTexture(&texunit_lightmap, true);
 		R_SelectTexture(&texunit_lightmap);
 
 		geoscape_nighttexcoords[0] = geoscape_texcoords[0] + p;
@@ -122,7 +122,7 @@ void R_DrawFlatGeoscape (int x, int y, int w, int h, float p, float cx, float cy
 		R_SelectTexture(&texunit_lightmap);
 		R_BindArray(GL_TEXTURE_COORD_ARRAY, GL_FLOAT, geoscape_texcoords);
 
-		R_EnableTexture(&texunit_lightmap, qfalse);
+		R_EnableTexture(&texunit_lightmap, false);
 	}
 
 	/* draw nation overlay */
@@ -146,14 +146,14 @@ void R_DrawFlatGeoscape (int x, int y, int w, int h, float p, float cx, float cy
 
 		R_BindTexture(gl->texnum);
 
-		R_EnableTexture(&texunit_lightmap, qtrue);
+		R_EnableTexture(&texunit_lightmap, true);
 		R_BindLightmapTexture(r_xviTexture->texnum);
 
 		glDrawArrays(GL_TRIANGLE_FAN, 0, 4);
 
 		refdef.batchCount++;
 
-		R_EnableTexture(&texunit_lightmap, qfalse);
+		R_EnableTexture(&texunit_lightmap, false);
 	}
 
 	/* draw radar image */
@@ -421,7 +421,7 @@ static inline void R_RotateCelestialBody (const vec4_t v, vec4_t r, const vec3_t
  * @sa R_DrawFlatGeoscape
  * @sa R_SphereGenerate
  */
-void R_Draw3DGlobe (int x, int y, int w, int h, int day, int second, const vec3_t rotate, float zoom, const char *map, qboolean disableSolarRender, float ambient, qboolean overlayNation, qboolean overlayXVI, qboolean overlayRadar, image_t *r_xviTexture, image_t *r_radarTexture, qboolean renderNationGlow)
+void R_Draw3DGlobe (int x, int y, int w, int h, int day, int second, const vec3_t rotate, float zoom, const char *map, bool disableSolarRender, float ambient, bool overlayNation, bool overlayXVI, bool overlayRadar, image_t *r_xviTexture, image_t *r_radarTexture, bool renderNationGlow)
 {
 	/* globe scaling */
 	const float fullscale = zoom / STANDARD_3D_ZOOM;
@@ -687,14 +687,14 @@ static inline void R_DrawQuad (void)
  */
 static void R_Blur (r_framebuffer_t * source, r_framebuffer_t * dest, int tex, int dir)
 {
-	R_EnableBlur(r_state.convolve_program, qtrue, source, dest, dir);
+	R_EnableBlur(r_state.convolve_program, true, source, dest, dir);
 
 	/* draw new texture onto a flat surface */
 	R_BindTextureForTexUnit(source->textures[tex], &texunit_0);
 	R_UseViewport(source);
 	R_DrawQuad();
 
-	R_EnableBlur(r_state.convolve_program, qfalse, NULL, NULL, 0);
+	R_EnableBlur(r_state.convolve_program, false, NULL, NULL, 0);
 }
 
 /**
@@ -727,7 +727,7 @@ static void R_BlurStack (int levels, r_framebuffer_t ** sources, r_framebuffer_t
 void R_DrawBloom (void)
 {
 	int i;
-	qboolean renderBufferState;
+	bool renderBufferState;
 
 	if (!r_config.frameBufferObject || !r_postprocess->integer || !r_programs->integer)
 		return;

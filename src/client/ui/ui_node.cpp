@@ -522,7 +522,7 @@ void UI_NodeAbsoluteToRelativePos (const uiNode_t* node, int *x, int *y)
 {
 	assert(node != NULL);
 	/* if we request the position of an undrawable node, there is a problem */
-	assert(node->behaviour->isVirtual == qfalse);
+	assert(node->behaviour->isVirtual == false);
 	assert(x != NULL);
 	assert(y != NULL);
 
@@ -862,10 +862,8 @@ float UI_GetFloatFromNodeProperty (const uiNode_t* node, const value_t* property
 		}
 	} else if (property->type == V_INT) {
 		return Com_GetValue<int>(node, property);
-	} else if (property->type == V_CPPBOOL) {
-		return Com_GetValue<bool>(node, property);
 	} else if (property->type == V_BOOL) {
-		return Com_GetValue<qboolean>(node, property);
+		return Com_GetValue<bool>(node, property);
 	} else {
 #ifdef DEBUG
 		Com_Printf("UI_GetFloatFromNodeProperty: Unimplemented float getter for property '%s@%s'. If it should return a float, request it.\n", UI_GetPath(node), property->string);

@@ -96,7 +96,7 @@ static invList_t *UI_ContainerNodeGetExistingItem (const invDef_t *container, co
 	return INV_SearchInInventoryWithFilter(ui_inventory, container, item, filterType);
 }
 
-static inline qboolean UI_IsScrollContainerNode (const uiNode_t* const node)
+static inline bool UI_IsScrollContainerNode (const uiNode_t* const node)
 {
 	return EXTRADATACONST(node).container && EXTRADATACONST(node).container->scroll;
 }
@@ -209,7 +209,7 @@ void UI_DrawItem (uiNode_t *node, const vec3_t org, const item_t *item, int x, i
 
 		/* Draw the image. */
 		R_Color(color);
-		UI_DrawNormImageByName(qfalse, origin[0], origin[1], imgWidth, imgHeight, 0, 0, 0, 0, od->image);
+		UI_DrawNormImageByName(false, origin[0], origin[1], imgWidth, imgHeight, 0, 0, 0, 0, od->image);
 		R_Color(NULL);
 	} else {
 		uiModel_t *model = NULL;
@@ -326,7 +326,7 @@ static void UI_DrawDisabled (const uiNode_t* node)
 /**
  * @brief Draws the rectangle in a 'free' style on position posx/posy (pixel) in the size sizex/sizey (pixel)
  */
-static void UI_DrawFree (containerIndex_t container, const uiNode_t *node, int posx, int posy, int sizex, int sizey, qboolean showTUs)
+static void UI_DrawFree (containerIndex_t container, const uiNode_t *node, int posx, int posy, int sizex, int sizey, bool showTUs)
 {
 	const vec4_t color = { 0.0f, 1.0f, 0.0f, 0.7f };
 	invDef_t* inv = INVDEF(container);
@@ -362,7 +362,7 @@ static void UI_ContainerNodeDrawFreeSpace (uiNode_t *node, inventory_t *inv)
 	if (EXTRADATA(node).container->single) {
 		/* if container is free or the dragged-item is in it */
 		if (UI_DNDIsSourceNode(node) || INVSH_CheckToInventory(inv, od, EXTRADATA(node).container, 0, 0, dragInfoIC))
-			UI_DrawFree(EXTRADATA(node).container->id, node, nodepos[0], nodepos[1], node->box.size[0], node->box.size[1], qtrue);
+			UI_DrawFree(EXTRADATA(node).container->id, node, nodepos[0], nodepos[1], node->box.size[0], node->box.size[1], true);
 	} else {
 		/* The shape of the free positions. */
 		uint32_t free[SHAPE_BIG_MAX_HEIGHT];
@@ -548,10 +548,10 @@ static void UI_ContainerNodeDrawDropPreview (uiNode_t *target)
 
 	/* copy the DND item to not change the original one */
 	previewItem = *UI_DNDGetItem();
-	previewItem.rotated = qfalse;
+	previewItem.rotated = false;
 	checkedTo = INVSH_CheckToInventory(ui_inventory, previewItem.t, EXTRADATA(target).container, dragInfoToX, dragInfoToY, dragInfoIC);
 	if (checkedTo == INV_FITS_ONLY_ROTATED)
-		previewItem.rotated = qtrue;
+		previewItem.rotated = true;
 
 	/* no place found */
 	if (!checkedTo)
@@ -689,7 +689,7 @@ void uiContainerNode::drawTooltip (uiNode_t *node, int x, int y)
 	}
 }
 
-static qboolean UI_ContainerNodeAddItem (const invDef_t *container, invList_t *ic, containerIndex_t containerID)
+static bool UI_ContainerNodeAddItem (const invDef_t *container, invList_t *ic, containerIndex_t containerID)
 {
 	int px, py;
 	const invDef_t *target = INVDEF(containerID);
@@ -707,7 +707,7 @@ void UI_ContainerNodeAutoPlaceItem (uiNode_t* node, invList_t *ic)
 {
 	containerIndex_t target;
 	uiNode_t *targetNode;
-	qboolean ammoChanged = qfalse;
+	bool ammoChanged = false;
 	const invDef_t *container = EXTRADATA(node).container;
 
 	/* Right click: automatic item assignment/removal. */
@@ -722,7 +722,7 @@ void UI_ContainerNodeAutoPlaceItem (uiNode_t* node, invList_t *ic)
 			INV_MoveItem(ui_inventory, INVDEF(target), NONE, NONE, container, ic);
 		}
 	} else {
-		qboolean packed = qfalse;
+		bool packed = false;
 		assert(ic->item.t);
 		/* armour can only have one target */
 		if (INV_IsArmour(ic->item.t)) {
@@ -959,7 +959,7 @@ bool uiContainerNode::onDndMove (uiNode_t *target, int x, int y)
 		/* can we equip dragging item into the target item? */
 		fItem = INVSH_SearchInInventory(ui_inventory, EXTRADATA(target).container, dragInfoToX, dragInfoToY);
 		if (!fItem)
-			return qfalse;
+			return false;
 		if (EXTRADATA(target).container->single)
 			return true;
 		return INVSH_LoadableInWeapon(dragItem->t, fItem->item.t);

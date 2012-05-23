@@ -32,7 +32,7 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
  * @param port The port
  * @return @c true if the extracting went well, @c false if an error occurred
  */
-qboolean HTTP_ExtractComponents (const char *url, char *server, size_t serverLength, char *path, size_t pathLength, int *port)
+bool HTTP_ExtractComponents (const char *url, char *server, size_t serverLength, char *path, size_t pathLength, int *port)
 {
 	char *s, *buf;
 	const char *proto = "http://";
@@ -41,7 +41,7 @@ qboolean HTTP_ExtractComponents (const char *url, char *server, size_t serverLen
 	int i;
 
 	if (Q_strncasecmp(proto, url, protoLength))
-		return qfalse;
+		return false;
 
 	Q_strncpyz(buffer, url, sizeof(buffer));
 	buf = buffer;
@@ -50,7 +50,7 @@ qboolean HTTP_ExtractComponents (const char *url, char *server, size_t serverLen
 	i = 0;
 	for (s = server; *buf != '\0' && *buf != ':' && *buf != '/';) {
 		if (i >= serverLength - 1)
-			return qfalse;
+			return false;
 		i++;
 		*s++ = *buf++;
 	}
@@ -59,7 +59,7 @@ qboolean HTTP_ExtractComponents (const char *url, char *server, size_t serverLen
 	if (*buf == ':') {
 		buf++;
 		if (sscanf(buf, "%d", port) != 1)
-			return qfalse;
+			return false;
 
 		for (buf++; *buf != '\0' && *buf != '/'; buf++) {
 		}
@@ -69,7 +69,7 @@ qboolean HTTP_ExtractComponents (const char *url, char *server, size_t serverLen
 
 	Q_strncpyz(path, buf, pathLength);
 
-	return qtrue;
+	return true;
 }
 
 /**

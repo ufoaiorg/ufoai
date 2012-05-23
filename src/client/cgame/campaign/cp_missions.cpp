@@ -91,7 +91,7 @@ void CP_StartMissionMap (mission_t* mission, const battleParam_t *battleParamete
 	const char *param = NULL;
 
 	/* prepare */
-	cgi->UI_InitStack(NULL, "singleplayermission", qtrue, qfalse);
+	cgi->UI_InitStack(NULL, "singleplayermission", true, false);
 
 	assert(mission->mapDef->map);
 
@@ -138,16 +138,16 @@ void CP_StartMissionMap (mission_t* mission, const battleParam_t *battleParamete
  * @param[in] missionCat Mission category to check.
  * @return True if alien Category may be used for this mission category.
  */
-static qboolean CP_IsAlienTeamForCategory (const alienTeamCategory_t *cat, const interestCategory_t missionCat)
+static bool CP_IsAlienTeamForCategory (const alienTeamCategory_t *cat, const interestCategory_t missionCat)
 {
 	int i;
 
 	for (i = 0; i < cat->numMissionCategories; i++) {
 		if (missionCat == cat->missionCategories[i])
-			return qtrue;
+			return true;
 	}
 
-	return qfalse;
+	return false;
 }
 
 /**
@@ -198,17 +198,17 @@ static void CP_SetAlienTeamByInterest (const mission_t *mission, battleParam_t *
  * @param[in] equipPack Equipment definitions that may be used
  * @return True if equipment definition is selectable.
  */
-static qboolean CP_IsAlienEquipmentSelectable (const mission_t *mission, const equipDef_t *equip, linkedList_t *equipPack)
+static bool CP_IsAlienEquipmentSelectable (const mission_t *mission, const equipDef_t *equip, linkedList_t *equipPack)
 {
 	if (mission->initialOverallInterest > equip->maxInterest || mission->initialOverallInterest <= equip->minInterest)
-		return qfalse;
+		return false;
 
 	LIST_Foreach(equipPack, const char, name) {
 		if (Q_strstart(equip->id, name))
-			return qtrue;
+			return true;
 	}
 
-	return qfalse;
+	return false;
 }
 
 /**
@@ -623,7 +623,7 @@ void CP_MissionRemoveFromGeoscape (mission_t *mission)
 	if (!mission->onGeoscape && mission->category != INTERESTCATEGORY_BASE_ATTACK)
 		return;
 
-	mission->onGeoscape = qfalse;
+	mission->onGeoscape = false;
 
 	/* Notifications */
 	MAP_NotifyMissionRemoved(mission);
@@ -672,7 +672,7 @@ static inline const char *CP_MissionGetMessage (const mission_t *mission)
  * @param[in] force true if the mission should be added even for mission needing a probabilty test to be seen.
  * @sa CP_CheckNewMissionDetectedOnGeoscape
  */
-void CP_MissionAddToGeoscape (mission_t *mission, qboolean force)
+void CP_MissionAddToGeoscape (mission_t *mission, bool force)
 {
 	const missionDetectionStatus_t status = CP_CheckMissionVisibleOnGeoscape(mission);
 
@@ -690,7 +690,7 @@ void CP_MissionAddToGeoscape (mission_t *mission, qboolean force)
 	/* Notify the player */
 	MS_AddNewMessage(_("Notice"), CP_MissionGetMessage(mission), CP_MissionGetMessageLevel(mission));
 
-	mission->onGeoscape = qtrue;
+	mission->onGeoscape = true;
 	CP_GameTimeStop();
 	MAP_UpdateGeoscapeDock();
 }
@@ -701,13 +701,13 @@ void CP_MissionAddToGeoscape (mission_t *mission, qboolean force)
  * @sa RADAR_CheckUFOSensored
  * @return True if a new mission was detected.
  */
-qboolean CP_CheckNewMissionDetectedOnGeoscape (void)
+bool CP_CheckNewMissionDetectedOnGeoscape (void)
 {
 	/* Probability to detect UFO each DETECTION_INTERVAL
 	 * This correspond to 40 percents each 30 minutes (coded this way to be able to
 	 * change DETECTION_INTERVAL without changing the way radar works) */
 	const float missionDetectionProbability = 0.000125f * DETECTION_INTERVAL;
-	qboolean newDetection = qfalse;
+	bool newDetection = false;
 
 	MIS_Foreach(mission) {
 		const missionDetectionStatus_t status = CP_CheckMissionVisibleOnGeoscape(mission);
@@ -721,7 +721,7 @@ qboolean CP_CheckNewMissionDetectedOnGeoscape (void)
 
 		if (frand() <= missionDetectionProbability) {
 			/* mission is detected */
-			CP_MissionAddToGeoscape(mission, qtrue);
+			CP_MissionAddToGeoscape(mission, true);
 
 			/* maybe radar is not activated yet (as ufo wasn't detected before) */
 			if (!MAP_IsRadarOverlayActivated())
@@ -729,9 +729,9 @@ qboolean CP_CheckNewMissionDetectedOnGeoscape (void)
 
 			/* if mission has a UFO, detect the UFO when it takes off */
 			if (mission->ufo)
-				mission->ufo->detected = qtrue;
+				mission->ufo->detected = true;
 
-			newDetection = qtrue;
+			newDetection = true;
 		}
 	}
 	return newDetection;
@@ -751,7 +751,7 @@ void CP_UpdateMissionVisibleOnGeoscape (void)
 		} else if (!mission->onGeoscape && CP_CheckMissionVisibleOnGeoscape(mission) == MISDET_ALWAYS_DETECTED) {
 			/* only show mission that are always detected: mission that have a probability to be detected will be
 			 * tested at next half hour */
-			CP_MissionAddToGeoscape(mission, qfalse);
+			CP_MissionAddToGeoscape(mission, false);
 		}
 	}
 }
@@ -763,12 +763,12 @@ void CP_UpdateMissionVisibleOnGeoscape (void)
  * @note We don't destroy the UFO if mission is not deleted because we can use it later, e.g. if it takes off.
  * @sa UFO_RemoveFromGeoscape
  */
-void CP_UFORemoveFromGeoscape (mission_t *mission, qboolean destroyed)
+void CP_UFORemoveFromGeoscape (mission_t *mission, bool destroyed)
 {
 	assert(mission->ufo);
 
 	/* UFO is landed even if it's destroyed: crash site mission is spawned */
-	mission->ufo->landed = qtrue;
+	mission->ufo->landed = true;
 
 	/* Notications */
 	AIR_AircraftsNotifyUFORemoved(mission->ufo, destroyed);
@@ -777,7 +777,7 @@ void CP_UFORemoveFromGeoscape (mission_t *mission, qboolean destroyed)
 
 	if (destroyed) {
 		/* remove UFO from radar and update idx of ufo in radar array */
-		RADAR_NotifyUFORemoved(mission->ufo, qtrue);
+		RADAR_NotifyUFORemoved(mission->ufo, true);
 
 		/* Update UFO idx */
 		MIS_Foreach(removedMission) {
@@ -790,7 +790,7 @@ void CP_UFORemoveFromGeoscape (mission_t *mission, qboolean destroyed)
 	} else if (mission->ufo->detected && !RADAR_CheckRadarSensored(mission->ufo->pos)) {
 		/* maybe we use a high speed time: UFO was detected, but flied out of radar
 		 * range since last calculation, and mission is spawned outside radar range */
-		RADAR_NotifyUFORemoved(mission->ufo, qfalse);
+		RADAR_NotifyUFORemoved(mission->ufo, false);
 	}
 }
 
@@ -809,7 +809,7 @@ void CP_MissionRemove (mission_t *mission)
 {
 	/* Destroy UFO */
 	if (mission->ufo)
-		CP_UFORemoveFromGeoscape(mission, qtrue);		/* for the notifications */
+		CP_UFORemoveFromGeoscape(mission, true);		/* for the notifications */
 
 	/* Remove from battle parameters */
 	if (mission == ccs.battleParameters.mission)
@@ -837,9 +837,9 @@ void CP_MissionDisableTimeLimit (mission_t *mission)
  * @brief Check if mission should end because of limited time.
  * @note This function is used for better readibility.
  * @sa CP_MissionDisableTimeLimit
- * @return qtrue if function should end after finalDate
+ * @return true if function should end after finalDate
  */
-qboolean CP_CheckMissionLimitedInTime (const mission_t *mission)
+bool CP_CheckMissionLimitedInTime (const mission_t *mission)
 {
 	return mission->finalDate.day != 0;
 }
@@ -876,7 +876,7 @@ void CP_MissionNotifyInstallationDestroyed (const installation_t *installation)
 	MIS_Foreach(mission) {
 		if (mission->category == INTERESTCATEGORY_INTERCEPT && mission->data.installation) {
 			if (mission->data.installation == installation)
-				CP_InterceptMissionLeave(mission, qfalse);
+				CP_InterceptMissionLeave(mission, false);
 		}
 	}
 }
@@ -1013,7 +1013,7 @@ void CP_MissionIsOverByUFO (aircraft_t *ufocraft)
  * @param[in] base Pointer to the base to check if alien contaiment exists and have enough space
  * @param[in] missionResults Pointer to the mission result struct to get captured alien numbers
  */
-static inline qboolean CP_TransferOfAliensToOtherBaseNeeded (const base_t *base, const missionResults_t *missionResults)
+static inline bool CP_TransferOfAliensToOtherBaseNeeded (const base_t *base, const missionResults_t *missionResults)
 {
 	assert(missionResults);
 	return (missionResults->aliensStunned > 0 && !AL_CheckAliveFreeSpace(base, NULL, missionResults->aliensStunned))
@@ -1026,7 +1026,7 @@ static inline qboolean CP_TransferOfAliensToOtherBaseNeeded (const base_t *base,
  * @param[in,out] aircraft Pointer to the dropship done the mission
  * @param[in] won Boolean flag if thew mission was successful (from PHALANX's PoV)
  */
-void CP_MissionEndActions (mission_t *mission, aircraft_t *aircraft, qboolean won)
+void CP_MissionEndActions (mission_t *mission, aircraft_t *aircraft, bool won)
 {
 	/* handle base attack mission */
 	if (mission->stage == STAGE_BASE_ATTACK) {
@@ -1061,7 +1061,7 @@ void CP_MissionEndActions (mission_t *mission, aircraft_t *aircraft, qboolean wo
  * @param[in] if PHALANX won
  * @note both manual and automatic missions call this through won/lost UI screen
  */
-void CP_MissionEnd (const campaign_t *campaign, mission_t* mission, const battleParam_t* battleParameters, qboolean won)
+void CP_MissionEnd (const campaign_t *campaign, mission_t* mission, const battleParam_t* battleParameters, bool won)
 {
 	base_t *base;
 	aircraft_t *aircraft;
@@ -1128,7 +1128,7 @@ void CP_MissionEnd (const campaign_t *campaign, mission_t* mission, const battle
  * @sa UFO_CampaignRunUFOs
  * @return True if UFO is removed from global array (and therefore pointer ufocraft can't be used anymore).
  */
-qboolean CP_CheckNextStageDestination (const campaign_t* campaign, aircraft_t *ufocraft)
+bool CP_CheckNextStageDestination (const campaign_t* campaign, aircraft_t *ufocraft)
 {
 	mission_t *mission;
 
@@ -1139,13 +1139,13 @@ qboolean CP_CheckNextStageDestination (const campaign_t* campaign, aircraft_t *u
 	case STAGE_COME_FROM_ORBIT:
 	case STAGE_MISSION_GOTO:
 		CP_MissionStageEnd(campaign, mission);
-		return qfalse;
+		return false;
 	case STAGE_RETURN_TO_ORBIT:
 		CP_MissionStageEnd(campaign, mission);
-		return qtrue;
+		return true;
 	default:
 		/* Do nothing */
-		return qfalse;
+		return false;
 	}
 }
 
@@ -1192,7 +1192,7 @@ void CP_SpawnCrashSiteMission (aircraft_t *ufo)
 	if (!mission)
 		Com_Error(ERR_DROP, "CP_SpawnCrashSiteMission: No mission correspond to ufo '%s'", ufo->id);
 
-	mission->crashed = qtrue;
+	mission->crashed = true;
 
 	/* Reset mapDef. CP_ChooseMap don't overwrite if set */
 	mission->mapDef = NULL;
@@ -1203,7 +1203,7 @@ void CP_SpawnCrashSiteMission (aircraft_t *ufo)
 	}
 
 	Vector2Copy(ufo->pos, mission->pos);
-	mission->posAssigned = qtrue;
+	mission->posAssigned = true;
 
 	nation = MAP_GetNation(mission->pos);
 	if (nation) {
@@ -1215,9 +1215,9 @@ void CP_SpawnCrashSiteMission (aircraft_t *ufo)
 	mission->finalDate = Date_Add(ccs.date, Date_Random(minCrashDelay, crashDelay));
 	/* ufo becomes invisible on geoscape, but don't remove it from ufo global array
 	 * (may be used to know what items are collected from battlefield)*/
-	CP_UFORemoveFromGeoscape(mission, qfalse);
+	CP_UFORemoveFromGeoscape(mission, false);
 	/* mission appear on geoscape, player can go there */
-	CP_MissionAddToGeoscape(mission, qfalse);
+	CP_MissionAddToGeoscape(mission, false);
 }
 
 
@@ -1280,7 +1280,7 @@ void CP_SpawnRescueMission (aircraft_t *aircraft, aircraft_t *ufo)
 	}
 
 	/* create the mission */
-	mission = CP_CreateNewMission(INTERESTCATEGORY_RESCUE, qtrue);
+	mission = CP_CreateNewMission(INTERESTCATEGORY_RESCUE, true);
 	if (!mission)
 		Com_Error(ERR_DROP, "CP_SpawnRescueMission: mission could not be created");
 
@@ -1322,7 +1322,7 @@ void CP_SpawnRescueMission (aircraft_t *aircraft, aircraft_t *ufo)
  * @sa CP_MissionChooseUFO
  * @return true if mission was created, false else.
  */
-qboolean CP_MissionBegin (mission_t *mission)
+bool CP_MissionBegin (mission_t *mission)
 {
 	ufoType_t ufoType;
 
@@ -1339,14 +1339,14 @@ qboolean CP_MissionBegin (mission_t *mission)
 			Com_Printf("CP_MissionBegin: Could not add UFO '%s', remove mission %s\n",
 					Com_UFOTypeToShortName(ufoType), mission->id);
 			CP_MissionRemove(mission);
-			return qfalse;
+			return false;
 		}
 		/* Stage will finish when UFO arrives at destination */
 		CP_MissionDisableTimeLimit(mission);
 	}
 
 	mission->idx = ++ccs.campaignStats.missions;
-	return qtrue;
+	return true;
 }
 
 /**
@@ -1361,22 +1361,22 @@ ufoType_t CP_MissionChooseUFO (const mission_t *mission)
 	ufoType_t ufoTypes[UFO_MAX];
 	int numTypes = 0;
 	int idx;
-	qboolean canBeSpawnedFromGround = qfalse;
+	bool canBeSpawnedFromGround = false;
 	float groundProbability = 0.0f;	/**< Probability to start a mission from earth (without UFO) */
 	float randNumber;
 
 	switch (mission->category) {
 	case INTERESTCATEGORY_RECON:
 		numTypes = CP_ReconMissionAvailableUFOs(mission, ufoTypes);
-		canBeSpawnedFromGround = qtrue;
+		canBeSpawnedFromGround = true;
 		break;
 	case INTERESTCATEGORY_TERROR_ATTACK:
 		numTypes = CP_TerrorMissionAvailableUFOs(mission, ufoTypes);
-		canBeSpawnedFromGround = qtrue;
+		canBeSpawnedFromGround = true;
 		break;
 	case INTERESTCATEGORY_BASE_ATTACK:
 		numTypes = CP_BaseAttackMissionAvailableUFOs(mission, ufoTypes);
-		canBeSpawnedFromGround = qtrue;
+		canBeSpawnedFromGround = true;
 		break;
 	case INTERESTCATEGORY_BUILDING:
 		numTypes = CP_BuildBaseMissionAvailableUFOs(mission, ufoTypes);
@@ -1386,7 +1386,7 @@ ufoType_t CP_MissionChooseUFO (const mission_t *mission)
 		break;
 	case INTERESTCATEGORY_XVI:
 		numTypes = CP_XVIMissionAvailableUFOs(mission, ufoTypes);
-		canBeSpawnedFromGround = qtrue;
+		canBeSpawnedFromGround = true;
 		break;
 	case INTERESTCATEGORY_INTERCEPT:
 		numTypes = CP_InterceptMissionAvailableUFOs(mission, ufoTypes);
@@ -1465,7 +1465,7 @@ static inline void CP_SetMissionName (mission_t *mission)
  * @sa CP_SpawnNewMissions
  * @sa CP_MissionStageEnd
  */
-mission_t *CP_CreateNewMission (interestCategory_t category, qboolean beginNow)
+mission_t *CP_CreateNewMission (interestCategory_t category, bool beginNow)
 {
 	mission_t mission;
 	const date_t minNextSpawningDate = {0, 0};
@@ -1560,7 +1560,7 @@ void CP_SpawnNewMissions (void)
 		for (i = 0; i < newMissionNum; i++) {
 			if (frand() > nonOccurrence) {
 				const interestCategory_t type = (interestCategory_t)CP_SelectNewMissionType();
-				CP_CreateNewMission(type, qfalse);
+				CP_CreateNewMission(type, false);
 			}
 		}
 
@@ -1651,7 +1651,7 @@ static void MIS_SpawnNewMissions_f (void)
 		return;
 	}
 
-	mission = CP_CreateNewMission(category, qtrue);
+	mission = CP_CreateNewMission(category, true);
 	if (!mission) {
 		Com_Printf("CP_SpawnNewMissions_f: Could not add mission, abort\n");
 		return;
@@ -1718,7 +1718,7 @@ static void MIS_MissionSetMap_f (void)
  */
 static void MIS_MissionList_f (void)
 {
-	qboolean noMission = qtrue;
+	bool noMission = true;
 
 	MIS_Foreach(mission) {
 		Com_Printf("mission: '%s'\n", mission->id);
@@ -1733,7 +1733,7 @@ static void MIS_MissionList_f (void)
 			Com_Printf("...UFO: %s (%i/%i)\n", mission->ufo->id, (int) (mission->ufo - ccs.ufos), ccs.numUFOs - 1);
 		else
 			Com_Printf("...UFO: no UFO\n");
-		noMission = qfalse;
+		noMission = false;
 	}
 	if (noMission)
 		Com_Printf("No mission currently in game.\n");
@@ -1761,7 +1761,7 @@ static void MIS_DeleteMissions_f (void)
  * @brief Save callback for savegames in XML Format
  * @param[out] parent XML Node structure, where we write the information to
  */
-qboolean MIS_SaveXML (xmlNode_t *parent)
+bool MIS_SaveXML (xmlNode_t *parent)
 {
 	xmlNode_t *missionsNode = XML_AddNode(parent, SAVE_MISSIONS);
 
@@ -1826,18 +1826,18 @@ qboolean MIS_SaveXML (xmlNode_t *parent)
 	Com_UnregisterConstList(saveInterestConstants);
 	Com_UnregisterConstList(saveMissionConstants);
 
-	return qtrue;
+	return true;
 }
 
 /**
  * @brief Load callback for savegames in XML Format
  * @param[in] parent XML Node structure, where we get the information from
  */
-qboolean MIS_LoadXML (xmlNode_t *parent)
+bool MIS_LoadXML (xmlNode_t *parent)
 {
 	xmlNode_t *missionNode;
 	xmlNode_t *node;
-	qboolean success = qtrue;
+	bool success = true;
 
 	Com_RegisterConstList(saveInterestConstants);
 	Com_RegisterConstList(saveMissionConstants);
@@ -1846,7 +1846,7 @@ qboolean MIS_LoadXML (xmlNode_t *parent)
 			node = XML_GetNextNode(node, missionNode, SAVE_MISSIONS_MISSION)) {
 		const char *name;
 		mission_t mission;
-		qboolean defaultAssigned = qfalse;
+		bool defaultAssigned = false;
 		const char *categoryId = XML_GetString(node, SAVE_MISSIONS_CATEGORY);
 		const char *stageId = XML_GetString(node, SAVE_MISSIONS_STAGE);
 
@@ -1856,7 +1856,7 @@ qboolean MIS_LoadXML (xmlNode_t *parent)
 		mission.idx = XML_GetInt(node, SAVE_MISSIONS_MISSION_IDX, 0);
 		if (mission.idx <= 0) {
 			Com_Printf("mission has invalid or no index\n");
-			success = qfalse;
+			success = false;
 			break;
 		}
 
@@ -1873,17 +1873,17 @@ qboolean MIS_LoadXML (xmlNode_t *parent)
 
 		if (!Com_GetConstIntFromNamespace(SAVE_INTERESTCAT_NAMESPACE, categoryId, (int*) &mission.category)) {
 			Com_Printf("Invalid mission category '%s'\n", categoryId);
-			success = qfalse;
+			success = false;
 			break;
 		}
 
 		if (!Com_GetConstIntFromNamespace(SAVE_MISSIONSTAGE_NAMESPACE, stageId, (int*) &mission.stage)) {
 			Com_Printf("Invalid mission stage '%s'\n", stageId);
-			success = qfalse;
+			success = false;
 			break;
 		}
 
-		mission.active = XML_GetBool(node, SAVE_MISSIONS_ACTIVE, qfalse);
+		mission.active = XML_GetBool(node, SAVE_MISSIONS_ACTIVE, false);
 		Q_strncpyz(mission.onwin, XML_GetString(node, SAVE_MISSIONS_ONWIN), sizeof(mission.onwin));
 		Q_strncpyz(mission.onlose, XML_GetString(node, SAVE_MISSIONS_ONLOSE), sizeof(mission.onlose));
 
@@ -1914,7 +1914,7 @@ qboolean MIS_LoadXML (xmlNode_t *parent)
 						mission.data.installation = installation;
 					else {
 						Com_Printf("Mission on non-existent installation\n");
-						success = qfalse;
+						success = false;
 					}
 				}
 			}
@@ -1926,7 +1926,7 @@ qboolean MIS_LoadXML (xmlNode_t *parent)
 				if (mission.data.aircraft == NULL) {
 					Com_Printf("Error while loading rescue mission (missionidx %i, aircraftidx: %i, category: %i, stage: %i)\n",
 							mission.idx, aircraftIdx, mission.category, mission.stage);
-					success = qfalse;
+					success = false;
 				}
 			}
 			break;
@@ -1941,7 +1941,7 @@ qboolean MIS_LoadXML (xmlNode_t *parent)
 				if (!mission.data.alienBase && !CP_BasemissionIsSubvertingGovernmentMission(&mission) && mission.stage >= STAGE_BUILD_BASE) {
 					Com_Printf("Error while loading Alien Base mission (missionidx %i, baseidx: %i, category: %i, stage: %i)\n",
 							mission.idx, baseIDX, mission.category, mission.stage);
-					success = qfalse;
+					success = false;
 				}
 			}
 			break;
@@ -1957,11 +1957,11 @@ qboolean MIS_LoadXML (xmlNode_t *parent)
 		XML_GetDate(node, SAVE_MISSIONS_FINALDATE, &mission.finalDate.day, &mission.finalDate.sec);
 		XML_GetPos2(node, SAVE_MISSIONS_POS, mission.pos);
 
-		mission.crashed = XML_GetBool(node, SAVE_MISSIONS_CRASHED, qfalse);
-		mission.onGeoscape = XML_GetBool(node, SAVE_MISSIONS_ONGEOSCAPE, qfalse);
+		mission.crashed = XML_GetBool(node, SAVE_MISSIONS_CRASHED, false);
+		mission.onGeoscape = XML_GetBool(node, SAVE_MISSIONS_ONGEOSCAPE, false);
 
 		if (mission.pos[0] > 0.001 || mission.pos[1] > 0.001)
-			defaultAssigned = qtrue;
+			defaultAssigned = true;
 		mission.posAssigned = XML_GetBool(node, SAVE_MISSIONS_POSASSIGNED, defaultAssigned);
 		/* Add mission to global array */
 		LIST_Add(&ccs.missions, mission);

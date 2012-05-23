@@ -197,9 +197,9 @@ extern char *keyBindings[K_KEY_SIZE];
 extern char *menuKeyBindings[K_KEY_SIZE];
 extern char *battleKeyBindings[K_KEY_SIZE];
 
-qboolean Key_IsDown(unsigned int key);
+bool Key_IsDown(unsigned int key);
 void Key_SetDest(keydest_t key_dest);
-void Key_Event(unsigned int key, unsigned short unicode, qboolean down, unsigned time);
+void Key_Event(unsigned int key, unsigned short unicode, bool down, unsigned time);
 void Key_Init(void);
 void Key_WriteBindings(const char* filename);
 const char* Key_GetBinding(const char *binding, keyBindSpace_t space);

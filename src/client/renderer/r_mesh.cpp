@@ -68,13 +68,13 @@ static void R_DrawMeshModelShell (const mAliasMesh_t *mesh, const vec4_t color)
 
 	R_BindTexture(r_envmaptextures[1]->texnum);
 
-	R_EnableShell(qtrue);
+	R_EnableShell(true);
 
 	glDrawArrays(GL_TRIANGLES, 0, mesh->num_tris * 3);
 
 	refdef.batchCount++;
 
-	R_EnableShell(qfalse);
+	R_EnableShell(false);
 
 	R_Color(NULL);
 }
@@ -85,9 +85,9 @@ static void R_DrawMeshModelShell (const mAliasMesh_t *mesh, const vec4_t color)
  */
 static void R_DrawAliasFrameLerp (mAliasModel_t* mod, mAliasMesh_t *mesh, float backlerp, int framenum, int oldframenum, const vec4_t shellColor)
 {
-	R_FillArrayData(mod, mesh, backlerp, framenum, oldframenum, qfalse);
+	R_FillArrayData(mod, mesh, backlerp, framenum, oldframenum, false);
 
-	R_EnableAnimation(mesh, backlerp, qtrue);
+	R_EnableAnimation(mesh, backlerp, true);
 
 	glDrawArrays(GL_TRIANGLES, 0, mesh->num_tris * 3);
 
@@ -95,7 +95,7 @@ static void R_DrawAliasFrameLerp (mAliasModel_t* mod, mAliasMesh_t *mesh, float 
 
 	R_DrawMeshModelShell(mesh, shellColor);
 
-	R_EnableAnimation(NULL, 0.0, qfalse);
+	R_EnableAnimation(NULL, 0.0, false);
 
 	R_CheckError();
 }
@@ -178,19 +178,19 @@ void R_GetTags (const model_t* mod, const char* tagName, int currentFrame, int o
 	*old = R_GetTagOrientByFrame(mod, index, oldFrame);
 }
 
-qboolean R_GetTagMatrix (const model_t* mod, const char* tagName, int frame, float matrix[16])
+bool R_GetTagMatrix (const model_t* mod, const char* tagName, int frame, float matrix[16])
 {
 	const int index = R_GetTagIndexByName(mod, tagName);
 	mAliasTagOrientation_t *orient;
 
 	if (index == -1) {
 		Com_Printf("Could not get tag matrix for tag %s of model %s\n", tagName, mod->name);
-		return qfalse;
+		return false;
 	}
 
 	orient = R_GetTagOrientByFrame(mod, index, frame);
 	R_ComputeGLMatrixFromTag(matrix, orient);
-	return qtrue;
+	return true;
 }
 
 /**
@@ -437,7 +437,7 @@ void R_DrawModelParticle (modelInfo_t * mi)
  * @param[in] e The entity to check
  * @return @c false if visible, @c true if the entity is outside the current view
  */
-qboolean R_CullMeshModel (const entity_t *e)
+bool R_CullMeshModel (const entity_t *e)
 {
 	int i;
 	uint32_t aggregatemask;
@@ -507,9 +507,9 @@ qboolean R_CullMeshModel (const entity_t *e)
 	}
 
 	if (aggregatemask)
-		return qtrue;
+		return true;
 
-	return qfalse;
+	return false;
 }
 
 /**
@@ -546,8 +546,8 @@ static void R_DrawAliasTags (const mAliasModel_t *mod)
 	int i;
 	const uint32_t color[] = {0xFF0000FF, 0xFF00FF00, 0xFFFF0000};
 	glEnable(GL_LINE_SMOOTH);
-	R_EnableTexture(&texunit_diffuse, qfalse);
-	R_EnableColorArray(qtrue);
+	R_EnableTexture(&texunit_diffuse, false);
+	R_EnableColorArray(true);
 
 	for (i = 0; i < mod->num_tags; i++) {
 		int j;
@@ -574,8 +574,8 @@ static void R_DrawAliasTags (const mAliasModel_t *mod)
 	R_BindDefaultArray(GL_COLOR_ARRAY);
 	R_BindDefaultArray(GL_VERTEX_ARRAY);
 
-	R_EnableColorArray(qfalse);
-	R_EnableTexture(&texunit_diffuse, qtrue);
+	R_EnableColorArray(false);
+	R_EnableTexture(&texunit_diffuse, true);
 	glDisable(GL_LINE_SMOOTH);
 }
 
@@ -601,15 +601,15 @@ static mAliasMesh_t* R_DrawAliasModelBuffer (entity_t *e)
 	return lodMesh;
 }
 
-static qboolean R_UpdateShadowOrigin (entity_t *e)
+static bool R_UpdateShadowOrigin (entity_t *e)
 {
 	vec3_t start, end;
 
 	if (e->lighting == NULL)
-		return qfalse;
+		return false;
 
 	if (e->lighting->state == LIGHTING_READY)
-		return qtrue;
+		return true;
 
 	VectorCopy(e->origin, start);
 	VectorCopy(e->origin, end);
@@ -624,10 +624,10 @@ static qboolean R_UpdateShadowOrigin (entity_t *e)
 		/* hit something */
 		VectorCopy(refdef.trace.endpos, e->lighting->shadowOrigin);
 		e->lighting->state = LIGHTING_READY;
-		return qtrue;
+		return true;
 	}
 
-	return qfalse;
+	return false;
 }
 
 /**
@@ -661,8 +661,8 @@ static void R_RotateForMeshShadow (const entity_t *e)
 static void R_DrawMeshShadow (entity_t *e, const mAliasMesh_t *mesh)
 {
 	vec4_t color;
-	const qboolean oldBlend = r_state.blend_enabled;
-	const qboolean lighting = r_state.lighting_enabled;
+	const bool oldBlend = r_state.blend_enabled;
+	const bool lighting = r_state.lighting_enabled;
 	r_program_t *program = r_state.active_program;
 
 	if (!r_stencilshadows->integer)
@@ -688,22 +688,22 @@ static void R_DrawMeshShadow (entity_t *e, const mAliasMesh_t *mesh)
 
 	Vector4Set(color, 0.0, 0.0, 0.0, r_shadows->value * MESH_SHADOW_ALPHA);
 	R_Color(color);
-	R_EnableTexture(&texunit_diffuse, qfalse);
-	R_EnableBlend(qtrue);
+	R_EnableTexture(&texunit_diffuse, false);
+	R_EnableBlend(true);
 	R_RotateForMeshShadow(e);
-	R_EnableStencilTest(qtrue);
+	R_EnableStencilTest(true);
 
 	if (lighting)
-		R_EnableLighting(NULL, qfalse);
+		R_EnableLighting(NULL, false);
 	glDrawArrays(GL_TRIANGLES, 0, mesh->num_tris * 3);
 	refdef.batchCount++;
 	if (lighting)
-		R_EnableLighting(program, qtrue);
+		R_EnableLighting(program, true);
 
-	R_EnableStencilTest(qfalse);
+	R_EnableStencilTest(false);
 	R_RotateForMeshShadow(NULL);
 	R_EnableBlend(oldBlend);
-	R_EnableTexture(&texunit_diffuse, qtrue);
+	R_EnableTexture(&texunit_diffuse, true);
 	R_Color(NULL);
 }
 
@@ -749,7 +749,7 @@ void R_DrawAliasModel (entity_t *e)
 	R_EnableGlowMap(skin->glowmap);
 
 	R_UpdateLightList(e);
-	R_EnableModelLights(e->lights, e->numLights, e->inShadow, qtrue);
+	R_EnableModelLights(e->lights, e->numLights, e->inShadow, true);
 
 	/** @todo this breaks the encapsulation - don't call CL_* functions from within the renderer code */
 	if (r_debug_lights->integer) {
@@ -761,10 +761,10 @@ void R_DrawAliasModel (entity_t *e)
 		R_EnableBumpmap(skin->normalmap);
 
 	if (skin->specularmap)
-		R_EnableSpecularMap(skin->specularmap, qtrue);
+		R_EnableSpecularMap(skin->specularmap, true);
 
 	if (skin->roughnessmap)
-		R_EnableRoughnessMap(skin->roughnessmap, qtrue);
+		R_EnableRoughnessMap(skin->roughnessmap, true);
 
 	glPushMatrix();
 	glMultMatrixf(e->transform.matrix);
@@ -775,12 +775,12 @@ void R_DrawAliasModel (entity_t *e)
 	mesh = R_DrawAliasModelBuffer(e);
 
 	if (r_state.specularmap_enabled)
-		R_EnableSpecularMap(NULL, qfalse);
+		R_EnableSpecularMap(NULL, false);
 
 	if (r_state.roughnessmap_enabled)
-		R_EnableRoughnessMap(NULL, qfalse);
+		R_EnableRoughnessMap(NULL, false);
 
-	R_EnableModelLights(NULL, 0, qfalse, qfalse);
+	R_EnableModelLights(NULL, 0, false, false);
 
 	R_EnableGlowMap(NULL);
 

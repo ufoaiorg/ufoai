@@ -43,11 +43,11 @@ void R_SetSurfaceBumpMappingParameters (const mBspSurface_t *surf, const image_t
 		const image_t *image = surf->texinfo->image;
 		R_BindDeluxemapTexture(surf->deluxemap_texnum);
 		R_EnableBumpmap(normalMap);
-		R_EnableSpecularMap(specularMap, qtrue);
+		R_EnableSpecularMap(specularMap, true);
 		R_UseMaterial(&image->material);
 	} else {
 		R_EnableBumpmap(NULL);
-		R_EnableSpecularMap(NULL, qfalse);
+		R_EnableSpecularMap(NULL, false);
 		R_UseMaterial(NULL);
 	}
 }

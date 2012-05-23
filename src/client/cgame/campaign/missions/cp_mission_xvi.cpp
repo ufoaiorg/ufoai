@@ -70,14 +70,14 @@ static void CP_XVIMissionStart (mission_t *mission)
 	if (mission->ufo) {
 		mission->finalDate = Date_Add(ccs.date, Date_Random(minMissionDelay, missionDelay));
 		/* ufo becomes invisible on geoscape, but don't remove it from ufo global array (may reappear)*/
-		CP_UFORemoveFromGeoscape(mission, qfalse);
+		CP_UFORemoveFromGeoscape(mission, false);
 	} else {
 		/* Go to next stage on next frame */
 		mission->finalDate = ccs.date;
 	}
 
 	/* mission appear on geoscape, player can go there */
-	CP_MissionAddToGeoscape(mission, qfalse);
+	CP_MissionAddToGeoscape(mission, false);
 }
 
 /**

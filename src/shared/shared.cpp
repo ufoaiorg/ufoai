@@ -457,20 +457,20 @@ void Q_strcat (char *dest, const char *src, size_t destsize)
  * @param[in] fmt Stringformat (like printf)
  * @return false if overflowed - true otherwise
  */
-qboolean Com_sprintf (char *dest, size_t size, const char *fmt, ...)
+bool Com_sprintf (char *dest, size_t size, const char *fmt, ...)
 {
 	va_list ap;
 	int len;
 
 	if (!fmt)
-		return qfalse;
+		return false;
 
 	va_start(ap, fmt);
 	len = Q_vsnprintf(dest, size, fmt, ap);
 	va_end(ap);
 
 	if (len <= size - 1)
-		return qtrue;
+		return true;
 
 	/* number of char */
 	len = size - 1;
@@ -492,7 +492,7 @@ qboolean Com_sprintf (char *dest, size_t size, const char *fmt, ...)
 #endif
 	}
 
-	return qfalse;
+	return false;
 }
 
 /**

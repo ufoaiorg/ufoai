@@ -237,30 +237,30 @@ void UI_DrawPanel (const vec2_t pos, const vec2_t size, const char *texture, int
 		return;
 
 	/* draw top (from left to right) */
-	UI_DrawNormImage(qfalse, pos[0], pos[1], leftWidth, topHeight, texX + firstPos + leftWidth, texY + firstPosY + topHeight,
+	UI_DrawNormImage(false, pos[0], pos[1], leftWidth, topHeight, texX + firstPos + leftWidth, texY + firstPosY + topHeight,
 		texX + firstPos, texY + firstPosY, image);
-	UI_DrawNormImage(qfalse, pos[0] + leftWidth, pos[1], size[0] - leftWidth - rightWidth, topHeight, texX + secondPos + midWidth, texY + firstPosY + topHeight,
+	UI_DrawNormImage(false, pos[0] + leftWidth, pos[1], size[0] - leftWidth - rightWidth, topHeight, texX + secondPos + midWidth, texY + firstPosY + topHeight,
 		texX + secondPos, texY + firstPosY, image);
-	UI_DrawNormImage(qfalse, pos[0] + size[0] - rightWidth, pos[1], rightWidth, topHeight, texX + thirdPos + rightWidth, texY + firstPosY + topHeight,
+	UI_DrawNormImage(false, pos[0] + size[0] - rightWidth, pos[1], rightWidth, topHeight, texX + thirdPos + rightWidth, texY + firstPosY + topHeight,
 		texX + thirdPos, texY + firstPosY, image);
 
 	/* draw middle (from left to right) */
 	y = pos[1] + topHeight;
 	h = size[1] - topHeight - bottomHeight; /* height of middle */
-	UI_DrawNormImage(qfalse, pos[0], y, leftWidth, h, texX + firstPos + leftWidth, texY + secondPosY + midHeight,
+	UI_DrawNormImage(false, pos[0], y, leftWidth, h, texX + firstPos + leftWidth, texY + secondPosY + midHeight,
 		texX + firstPos, texY + secondPosY, image);
-	UI_DrawNormImage(qfalse, pos[0] + leftWidth, y, size[0] - leftWidth - rightWidth, h, texX + secondPos + midWidth, texY + secondPosY + midHeight,
+	UI_DrawNormImage(false, pos[0] + leftWidth, y, size[0] - leftWidth - rightWidth, h, texX + secondPos + midWidth, texY + secondPosY + midHeight,
 		texX + secondPos, texY + secondPosY, image);
-	UI_DrawNormImage(qfalse, pos[0] + size[0] - rightWidth, y, rightWidth, h, texX + thirdPos + rightWidth, texY + secondPosY + midHeight,
+	UI_DrawNormImage(false, pos[0] + size[0] - rightWidth, y, rightWidth, h, texX + thirdPos + rightWidth, texY + secondPosY + midHeight,
 		texX + thirdPos, texY + secondPosY, image);
 
 	/* draw bottom (from left to right) */
 	y = pos[1] + size[1] - bottomHeight;
-	UI_DrawNormImage(qfalse, pos[0], y, leftWidth, bottomHeight, texX + firstPos + leftWidth, texY + thirdPosY + bottomHeight,
+	UI_DrawNormImage(false, pos[0], y, leftWidth, bottomHeight, texX + firstPos + leftWidth, texY + thirdPosY + bottomHeight,
 		texX + firstPos, texY + thirdPosY, image);
-	UI_DrawNormImage(qfalse, pos[0] + leftWidth, y, size[0] - leftWidth - rightWidth, bottomHeight, texX + secondPos + midWidth, texY + thirdPosY + bottomHeight,
+	UI_DrawNormImage(false, pos[0] + leftWidth, y, size[0] - leftWidth - rightWidth, bottomHeight, texX + secondPos + midWidth, texY + thirdPosY + bottomHeight,
 		texX + secondPos, texY + thirdPosY, image);
-	UI_DrawNormImage(qfalse, pos[0] + size[0] - bottomHeight, y, rightWidth, bottomHeight, texX + thirdPos + rightWidth, texY + thirdPosY + bottomHeight,
+	UI_DrawNormImage(false, pos[0] + size[0] - bottomHeight, y, rightWidth, bottomHeight, texX + thirdPos + rightWidth, texY + thirdPosY + bottomHeight,
 		texX + thirdPos, texY + thirdPosY, image);
 }
 
@@ -291,11 +291,11 @@ int UI_DrawStringInBox (const char *fontID, align_t align, int x, int y, int wid
 	const int xx = x + ((width * horizontalAlign) >> 1);
 	const int yy = y + ((height * verticalAlign) >> 1);
 
-	return UI_DrawString(fontID, align, xx, yy, xx, width, 0, text, 0, 0, NULL, qfalse, method);
+	return UI_DrawString(fontID, align, xx, yy, xx, width, 0, text, 0, 0, NULL, false, method);
 }
 
 int UI_DrawString (const char *fontID, align_t align, int x, int y, int absX, int maxWidth,
-		int lineHeight, const char *c, int boxHeight, int scrollPos, int *curLine, qboolean increaseLine, longlines_t method)
+		int lineHeight, const char *c, int boxHeight, int scrollPos, int *curLine, bool increaseLine, longlines_t method)
 {
 	const uiFont_t *font = UI_GetFontByID(fontID);
 	const align_t verticalAlign = (align_t)(align / 3);  /* top, center, bottom */

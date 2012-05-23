@@ -46,7 +46,7 @@ static const uiBehaviour_t *localBehaviour;
 void uiSequenceNode::draw (uiNode_t *node)
 {
 	if (EXTRADATA(node).context != NULL && EXTRADATA(node).playing) {
-		qboolean finished = qfalse;
+		bool finished = false;
 		vec2_t pos;
 		vec2_t screenPos;
 		UI_GetNodeAbsPos(node, pos);

@@ -157,7 +157,7 @@ static void ED_CallSpawn (edict_t * ent)
 		}
 	}
 
-	ent->inuse = qfalse;
+	ent->inuse = false;
 }
 
 /**
@@ -237,10 +237,10 @@ static void ED_ParseField (const char *key, const char *value, edict_t * ent)
  */
 static const char *ED_ParseEdict (const char *data, edict_t * ent)
 {
-	qboolean init;
+	bool init;
 	char keyname[MAX_VAR];
 
-	init = qfalse;
+	init = false;
 	OBJZERO(st);
 
 	/* go through all the dictionary pairs */
@@ -262,7 +262,7 @@ static const char *ED_ParseEdict (const char *data, edict_t * ent)
 		if (c[0] == '}')
 			gi.Error("ED_ParseEntity: closing brace without data");
 
-		init = qtrue;
+		init = true;
 
 		/* keynames with a leading underscore are used for utility comments,
 		 * and are immediately discarded by ufo */
@@ -318,7 +318,7 @@ static void G_FindEdictGroups (void)
  * @sa CM_EntityString
  * @sa SV_SpawnServer
  */
-void G_SpawnEntities (const char *mapname, qboolean day, const char *entities)
+void G_SpawnEntities (const char *mapname, bool day, const char *entities)
 {
 	int entnum;
 
@@ -391,7 +391,7 @@ void G_SpawnEntities (const char *mapname, qboolean day, const char *entities)
  */
 static inline void G_InitEdict (edict_t * ent)
 {
-	ent->inuse = qtrue;
+	ent->inuse = true;
 	ent->classname = "noclass";
 	ent->number = G_EdictsGetNumber(ent);
 	ent->fieldSize = ACTOR_SIZE_NORMAL;
@@ -558,7 +558,7 @@ edict_t *G_SpawnParticle (const vec3_t origin, int spawnflags, const char *parti
 	ent->particle = particle;
 	ent->spawnflags = spawnflags;
 
-	G_CheckVis(ent, qtrue);
+	G_CheckVis(ent, true);
 
 	return ent;
 }
@@ -942,10 +942,10 @@ static void SP_misc_item (edict_t *ent)
 	G_FreeEdict(ent);
 }
 
-static qboolean Message_Use (edict_t *self, edict_t *activator)
+static bool Message_Use (edict_t *self, edict_t *activator)
 {
 	if (!activator || !G_IsActor(activator)) {
-		return qfalse;
+		return false;
 	} else {
 		player_t *player = G_PLAYER_FROM_ENT(activator);
 		const char *msg = self->message;
@@ -957,7 +957,7 @@ static qboolean Message_Use (edict_t *self, edict_t *activator)
 		if (self->spawnflags & 1)
 			G_FreeEdict(self);
 
-		return qfalse;
+		return false;
 	}
 }
 
@@ -1031,7 +1031,7 @@ static void SP_worldspawn (edict_t *ent)
 {
 	ent->solid = SOLID_BSP;
 	/* since the world doesn't use G_Spawn() */
-	ent->inuse = qtrue;
+	ent->inuse = true;
 	ent->classname = "worldspawn";
 
 	level.noEquipment = st.noEquipment;

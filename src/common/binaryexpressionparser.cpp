@@ -33,7 +33,7 @@ typedef enum
 static binaryExpressionParserError_t binaryExpressionParserError;
 static BEPEvaluteCallback_t varFunc;
 
-static qboolean CheckAND (const char **s);
+static bool CheckAND (const char **s);
 
 static void SkipWhiteSpaces (const char **s)
 {
@@ -62,9 +62,9 @@ static const char *GetSwitchName (const char **s)
 	return varName;
 }
 
-static qboolean CheckOR (const char **s)
+static bool CheckOR (const char **s)
 {
-	qboolean result = qfalse;
+	bool result = false;
 	int goon = 0;
 
 	SkipWhiteSpaces(s);
@@ -88,16 +88,16 @@ static qboolean CheckOR (const char **s)
 	return result;
 }
 
-static qboolean CheckAND (const char **s)
+static bool CheckAND (const char **s)
 {
-	qboolean result = qtrue;
-	qboolean negate = qfalse;
-	qboolean goon = qfalse;
+	bool result = true;
+	bool negate = false;
+	bool goon = false;
 	int value;
 
 	do {
 		while (**s == '!') {
-			negate ^= qtrue;
+			negate ^= true;
 			NextChar(s);
 		}
 		if (**s == '(') {
@@ -117,20 +117,20 @@ static qboolean CheckAND (const char **s)
 		}
 
 		if (**s == '&') {
-			goon = qtrue;
+			goon = true;
 			NextChar(s);
 		} else {
-			goon = qfalse;
+			goon = false;
 		}
-		negate = qfalse;
+		negate = false;
 	} while (goon && !binaryExpressionParserError);
 
 	return result;
 }
 
-qboolean BEP_Evaluate (const char *expr, BEPEvaluteCallback_t varFuncParam)
+bool BEP_Evaluate (const char *expr, BEPEvaluteCallback_t varFuncParam)
 {
-	qboolean result;
+	bool result;
 	const char *str;
 
 	binaryExpressionParserError = BEPERR_NONE;
@@ -148,13 +148,13 @@ qboolean BEP_Evaluate (const char *expr, BEPEvaluteCallback_t varFuncParam)
 		return result;
 	case BEPERR_BRACE:
 		Com_Printf("')' expected in binary expression (%s).\n", expr);
-		return qtrue;
+		return true;
 	case BEPERR_NOEND:
 		Com_Printf("Unexpected end of condition in binary expression (%s).\n", expr);
 		return result;
 	case BEPERR_NOTFOUND:
 		Com_Printf("Variable not found in binary expression (%s).\n", expr);
-		return qfalse;
+		return false;
 	}
 	Com_Error(ERR_FATAL, "Unknown CheckBEP error in binary expression (%s)", expr);
 }

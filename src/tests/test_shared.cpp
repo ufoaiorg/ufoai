@@ -29,7 +29,7 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 
 void TEST_Shutdown (void)
 {
-	SV_Shutdown("test shutdown", qfalse);
+	SV_Shutdown("test shutdown", false);
 	FS_Shutdown();
 	Cmd_Shutdown();
 	Cvar_Shutdown();
@@ -70,8 +70,8 @@ void TEST_Init (void)
 		Cbuf_Init();
 		Cmd_Init();
 		Cvar_Init();
-		FS_InitFilesystem(qtrue);
-		FS_AddGameDirectory("./unittest", qfalse);
+		FS_InitFilesystem(true);
+		FS_AddGameDirectory("./unittest", false);
 		Swap_Init();
 		SV_Init();
 		NET_Init();
@@ -157,7 +157,7 @@ static const test_property_t* TEST_GetProperty (const char* name)
  * @param name Name of the property
  * @return True if the property exists
  */
-qboolean TEST_ExistsProperty (const char* name)
+bool TEST_ExistsProperty (const char* name)
 {
 	return TEST_GetProperty(name) != NULL;
 }

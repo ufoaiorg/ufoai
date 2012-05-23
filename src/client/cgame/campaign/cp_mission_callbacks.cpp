@@ -56,7 +56,7 @@ static void AM_Go_f (void)
 		return;
 	}
 
-	cgi->UI_PopWindow(qfalse);
+	cgi->UI_PopWindow(false);
 
 	if (mission->stage != STAGE_BASE_ATTACK) {
 		if (!mission->active) {
@@ -73,7 +73,7 @@ static void AM_Go_f (void)
 	/* start the map */
 	CP_CreateBattleParameters(mission, battleParam, MAP_GetMissionAircraft());
 
-	results->won = qfalse;
+	results->won = false;
 	AM_Go(mission, MAP_GetInterceptorAircraft(), ccs.curCampaign, battleParam, results);
 }
 

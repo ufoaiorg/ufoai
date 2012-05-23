@@ -82,13 +82,13 @@ typedef struct chrScoreMission_s {
 	/* Hits/Misses */
 	int fired[SKILL_NUM_TYPES];				/**< Count of fired "firemodes" (i.e. the count of how many times the soldier started shooting) */
 	int firedTUs[SKILL_NUM_TYPES];				/**< Count of TUs used for the fired "firemodes". (direct hits only)*/
-	qboolean firedHit[KILLED_NUM_TYPES];	/** Temporarily used for shot-stats calculations and status-tracking. Not used in stats.*/
+	bool firedHit[KILLED_NUM_TYPES];	/** Temporarily used for shot-stats calculations and status-tracking. Not used in stats.*/
 	int hits[SKILL_NUM_TYPES][KILLED_NUM_TYPES];	/**< Count of hits (aliens, civilians or, teammates) per skill.
 													 * It is a sub-count of "fired".
 													 * It's planned to be increased by 1 for each series of shots that dealt _some_ damage. */
 	int firedSplash[SKILL_NUM_TYPES];	/**< Count of fired splash "firemodes". */
 	int firedSplashTUs[SKILL_NUM_TYPES];				/**< Count of TUs used for the fired "firemodes" (splash damage only). */
-	qboolean firedSplashHit[KILLED_NUM_TYPES];	/** Same as firedHit but for Splash damage. */
+	bool firedSplashHit[KILLED_NUM_TYPES];	/** Same as firedHit but for Splash damage. */
 	int hitsSplash[SKILL_NUM_TYPES][KILLED_NUM_TYPES];	/**< Count of splash hits. */
 	int hitsSplashDamage[SKILL_NUM_TYPES][KILLED_NUM_TYPES];	/**< Count of dealt splash damage (aliens, civilians or, teammates).
 																 * This is counted in overall damage (healthpoint).*/
@@ -236,8 +236,8 @@ typedef struct teamDef_s {
 
 	racetypes_t race;	/**< What is the race of this team?*/
 
-	qboolean armour;	/**< Does this team use armour. */
-	qboolean weapons;	/**< Does this team use weapons. */
+	bool armour;	/**< Does this team use armour. */
+	bool weapons;	/**< Does this team use weapons. */
 	const struct objDef_s *onlyWeapon;	/**< ods[] index - If this team is not able to use 'normal' weapons, we have to assign a weapon to it
 							 * The default value is NONE for every 'normal' actor - but e.g. bloodspiders only have
 							 * the ability to melee attack their victims. They get a weapon assigned with several
@@ -288,11 +288,11 @@ typedef struct character_s {
 /*  CHARACTER GENERATING FUNCTIONS  */
 /* ================================ */
 
-void CHRSH_CharGenAbilitySkills(character_t * chr, qboolean multiplayer) __attribute__((nonnull));
+void CHRSH_CharGenAbilitySkills(character_t * chr, bool multiplayer) __attribute__((nonnull));
 const char *CHRSH_CharGetBody(const character_t* const chr) __attribute__((nonnull));
 const char *CHRSH_CharGetHead(const character_t* const chr) __attribute__((nonnull));
-qboolean CHRSH_IsTeamDefAlien(const teamDef_t* const td) __attribute__((nonnull));
-qboolean CHRSH_IsTeamDefRobot(const teamDef_t* const td) __attribute__((nonnull));
-qboolean CHRSH_IsArmourUseableForTeam(const objDef_t *od, const teamDef_t *teamDef);
+bool CHRSH_IsTeamDefAlien(const teamDef_t* const td) __attribute__((nonnull));
+bool CHRSH_IsTeamDefRobot(const teamDef_t* const td) __attribute__((nonnull));
+bool CHRSH_IsArmourUseableForTeam(const objDef_t *od, const teamDef_t *teamDef);
 
 #endif

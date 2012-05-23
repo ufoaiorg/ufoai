@@ -84,9 +84,9 @@ typedef enum msgcategorymask_s {
  * @brief structure holding pause and notify settings for a notify type.
  */
 typedef struct messageSettings_s {
-	qboolean doPause;	/**< flag whether game should pause */
-	qboolean doNotify;	/**< flag whether game should notify */
-	qboolean doSound;	/**< flag whether game should play sound notification */
+	bool doPause;	/**< flag whether game should pause */
+	bool doNotify;	/**< flag whether game should notify */
+	bool doSound;	/**< flag whether game should play sound notification */
 } messageSettings_t;
 
 #define MAX_MESSAGECATEGORIES 16
@@ -96,7 +96,7 @@ typedef struct msgCategoryEntry_s {
 	struct msgCategoryEntry_s *next;		/**< pointer to next in category */
 	struct msgCategoryEntry_s *previous;	/**< pointer to previous in category */
 	messageSettings_t *settings;			/**< associated settings */
-	qboolean isCategory;					/**< flag indicating that this is a category and no notification type */
+	bool isCategory;					/**< flag indicating that this is a category and no notification type */
 } msgCategoryEntry_t;
 
 typedef struct msgCategory_s {
@@ -109,10 +109,10 @@ typedef struct msgCategory_s {
 extern messageSettings_t messageSettings[NT_NUM_NOTIFYTYPE];
 extern char const* const nt_strings[NT_NUM_NOTIFYTYPE];
 
-message_t *MSO_CheckAddNewMessage(const notify_t messagecategory, const char *title, const char *text, messageType_t type = MSG_STANDARD, technology_t *pedia = NULL, qboolean popup = qfalse);
+message_t *MSO_CheckAddNewMessage(const notify_t messagecategory, const char *title, const char *text, messageType_t type = MSG_STANDARD, technology_t *pedia = NULL, bool popup = false);
 void MSO_ParseSettings(const char *name, const char **text);
 void MSO_ParseCategories(const char *name, const char **text);
-void MSO_Set(const int listIndex, const notify_t type, const int optionType, const qboolean activate, const qboolean sendCommands);
+void MSO_Set(const int listIndex, const notify_t type, const int optionType, const bool activate, const bool sendCommands);
 void MSO_Init(void);
 void MSO_Shutdown(void);
 

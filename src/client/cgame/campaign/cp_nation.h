@@ -31,7 +31,7 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
  * @todo Maybe we should also move the "funding" stuff (see nation_t) in here? It is static right now though so i see no reason to do that yet.
  */
 typedef struct nationInfo_s {
-	qboolean	inuse;	/**< Is this entry used? */
+	bool	inuse;	/**< Is this entry used? */
 
 	/* Relationship */
 	float happiness;	/**< percentage (0.00 - 1.00) of how the nation appreciates PHALANX. 1.00 is the maximum happiness */
@@ -83,7 +83,7 @@ const char* NAT_GetHappinessString(const nation_t* nation);
 
 void CL_ParseNations(const char *name, const char **text);
 void CL_ParseCities(const char *name, const char **text);
-qboolean NAT_ScriptSanityCheck(void);
+bool NAT_ScriptSanityCheck(void);
 
 void NAT_HandleBudget(const struct campaign_s *campaign);
 void NAT_BackupMonthlyData(void);

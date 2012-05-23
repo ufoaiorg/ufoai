@@ -204,7 +204,7 @@ void NAT_SetHappiness (const float minhappiness, nation_t *nation, const float h
  * @brief Nation saving callback
  * @param[out] p XML Node structure, where we write the information to
  */
-qboolean NAT_SaveXML (xmlNode_t *p)
+bool NAT_SaveXML (xmlNode_t *p)
 {
 	int i;
 	xmlNode_t *n = XML_AddNode(p, SAVE_NATION_NATIONS);
@@ -232,21 +232,21 @@ qboolean NAT_SaveXML (xmlNode_t *p)
 			XML_AddInt(ss, SAVE_NATION_XVI, stats->xviInfection);
 		}
 	}
-	return qtrue;
+	return true;
 }
 
 /**
  * @brief Nation loading xml callback
  * @param[in] p XML Node structure, where we get the information from
  */
-qboolean NAT_LoadXML (xmlNode_t * p)
+bool NAT_LoadXML (xmlNode_t * p)
 {
 	xmlNode_t *n;
 	xmlNode_t *s;
 
 	n = XML_GetNode(p, SAVE_NATION_NATIONS);
 	if (!n)
-		return qfalse;
+		return false;
 
 	/* nations loop */
 	for (s = XML_GetNode(n, SAVE_NATION_NATION); s; s = XML_GetNextNode(s, n, SAVE_NATION_NATION)) {
@@ -254,7 +254,7 @@ qboolean NAT_LoadXML (xmlNode_t * p)
 		nation_t *nation = NAT_GetNationByID(XML_GetString(s, SAVE_NATION_ID));
 
 		if (!nation)
-			return qfalse;
+			return false;
 
 		/* month loop */
 		for (ss = XML_GetNode(s, SAVE_NATION_MONTH); ss; ss = XML_GetNextNode(ss, s, SAVE_NATION_MONTH)) {
@@ -262,14 +262,14 @@ qboolean NAT_LoadXML (xmlNode_t * p)
 			nationInfo_t *stats = &nation->stats[monthIDX];
 
 			if (monthIDX < 0 || monthIDX >= MONTHS_PER_YEAR)
-				return qfalse;
+				return false;
 
-			stats->inuse = qtrue;
+			stats->inuse = true;
 			stats->happiness = XML_GetFloat(ss, SAVE_NATION_HAPPINESS, 0.0);
 			stats->xviInfection = XML_GetInt(ss, SAVE_NATION_XVI, 0);
 		}
 	}
-	return qtrue;
+	return true;
 }
 
 /*==========================================
@@ -323,7 +323,7 @@ void CL_ParseNations (const char *name, const char **text)
 	nation = &ccs.nations[ccs.numNations];
 	OBJZERO(*nation);
 	nation->idx = ccs.numNations;
-	nation->stats[0].inuse = qtrue;
+	nation->stats[0].inuse = true;
 
 	if (Com_ParseBlock(name, text, nation, nation_vals, cp_campaignPool)) {
 		ccs.numNations++;
@@ -377,14 +377,14 @@ void CL_ParseCities (const char *name, const char **text)
  * @brief Checks the parsed nations and cities for errors
  * @return false if there are errors - true otherwise
  */
-qboolean NAT_ScriptSanityCheck (void)
+bool NAT_ScriptSanityCheck (void)
 {
 	int error = 0;
 
 	/* Check if there is at least one map fitting city parameter for terror mission */
 	LIST_Foreach(ccs.cities, city_t, city) {
-		qboolean cityCanBeUsed = qfalse;
-		qboolean parametersFit = qfalse;
+		bool cityCanBeUsed = false;
+		bool parametersFit = false;
 		ufoType_t ufoTypes[UFO_MAX];
 		int numTypes;
 		const mapDef_t *md;
@@ -408,7 +408,7 @@ qboolean NAT_ScriptSanityCheck (void)
 			if (MAP_PositionFitsTCPNTypes(city->pos, md->terrains, md->cultures, md->populations, NULL)) {
 				int i;
 				/* this map fits city parameter, check if we have some terror mission UFOs available for this map */
-				parametersFit = qtrue;
+				parametersFit = true;
 
 				/* no UFO on this map (LIST_ContainsString doesn't like empty string) */
 				if (!md->ufos) {
@@ -423,7 +423,7 @@ qboolean NAT_ScriptSanityCheck (void)
 				}
 			}
 			if (numTypes == 0) {
-				cityCanBeUsed = qtrue;
+				cityCanBeUsed = true;
 				break;
 			}
 		}
@@ -759,7 +759,7 @@ void NAT_HandleBudget (const campaign_t *campaign)
 
 	/* Refreshes the pilot global list.  Pilots who are already hired are unchanged, but all other
 	 * pilots are replaced.  The new pilots is evenly distributed between the nations that are happy (happiness > 0). */
-	E_RefreshUnhiredEmployeeGlobalList(EMPL_PILOT, qtrue);
+	E_RefreshUnhiredEmployeeGlobalList(EMPL_PILOT, true);
 
 	for (i = 0; i < ccs.numNations; i++) {
 		const nation_t *nation = NAT_GetNationByIDX(i);

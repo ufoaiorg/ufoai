@@ -7,7 +7,7 @@
 typedef struct mapcycle_s {
 	char *map;			/**< map name */
 	char *type;			/**< gametype to play on this map */
-	qboolean day;		/**< load the day version */
+	bool day;		/**< load the day version */
 	struct mapcycle_s* next;	/**< pointer to the next map in cycle */
 } mapcycle_t;
 
@@ -20,7 +20,7 @@ static int mapcycleCount;		/**< number of maps in the cycle */
 void SV_NextMapcycle (void)
 {
 	const char *map = NULL, *gameType = NULL;
-	qboolean day = qtrue;
+	bool day = true;
 	char *base;
 	char assembly[MAX_QPATH];
 	char expanded[MAX_QPATH];
@@ -125,7 +125,7 @@ void SV_NextMapcycle (void)
 	if (gameType && gameType[0] != '\0') {
 		Cvar_Set("sv_gametype", gameType);
 		Com_SetGameType();
-		sv_gametype->modified = qfalse;
+		sv_gametype->modified = false;
 	}
 
 	if (day)
@@ -163,7 +163,7 @@ void SV_MapcycleClear (void)
  * @todo check for maps and valid gametypes here
  * @sa SV_MapcycleClear
  */
-static void SV_MapcycleAdd (const char* mapName, qboolean day, const char* gameType)
+static void SV_MapcycleAdd (const char* mapName, bool day, const char* gameType)
 {
 	mapcycle_t* const mapcycle = Mem_PoolAllocType(mapcycle_t, sv_genericPool);
 	mapcycle->map  = Mem_PoolStrDup(mapName, sv_genericPool, 0);
@@ -203,7 +203,7 @@ static void SV_ParseMapcycle (void)
 	if (length != -1) {
 		buf = (const char*)buffer;
 		do {
-			qboolean day = qfalse;
+			bool day = false;
 			/* parse map name */
 			token = Com_Parse(&buf);
 			if (!buf)
@@ -214,7 +214,7 @@ static void SV_ParseMapcycle (void)
 			if (!buf)
 				break;
 			if (Q_streq(token, "day"))
-				day = qtrue;
+				day = true;
 			else if (!Q_streq(token, "night")) {
 				Com_Printf("Skip mapcycle parsing, expected day or night.");
 				break;
@@ -257,9 +257,9 @@ static void SV_MapcycleAdd_f (void)
 		}
 		Com_Printf("adding map '%s' with gametype '%s' to mapcycle (to add this permanently edit your mapcycle.txt)\n", map, gametype);
 		if (Q_streq(day, "day"))
-			SV_MapcycleAdd(map, qtrue, gametype);
+			SV_MapcycleAdd(map, true, gametype);
 		else
-			SV_MapcycleAdd(map, qfalse, gametype);
+			SV_MapcycleAdd(map, false, gametype);
 	} else {
 		Com_Printf("Usage: %s <mapname> <day|night> <gametype>\n", Cmd_Argv(0));
 		Com_Printf(" ...to get a list of valid maps type 'maplist'\n"

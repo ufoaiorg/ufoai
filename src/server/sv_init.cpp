@@ -110,7 +110,7 @@ static void SV_InitGame (void)
  * @sa CM_LoadMap
  * @sa Com_SetServerState
  */
-void SV_Map (qboolean day, const char *levelstring, const char *assembly)
+void SV_Map (bool day, const char *levelstring, const char *assembly)
 {
 	int i;
 	unsigned checksum = 0;

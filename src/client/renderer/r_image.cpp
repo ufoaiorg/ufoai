@@ -254,8 +254,8 @@ void R_UploadTexture (unsigned *data, int width, int height, image_t* image)
 	int samples = r_config.gl_compressed_solid_format ? r_config.gl_compressed_solid_format : r_config.gl_solid_format;
 	int i, c;
 	byte *scan;
-	const qboolean mipmap = (image->type != it_pic && image->type != it_worldrelated && image->type != it_chars);
-	const qboolean clamp = R_IsClampedImageType(image->type);
+	const bool mipmap = (image->type != it_pic && image->type != it_worldrelated && image->type != it_chars);
+	const bool clamp = R_IsClampedImageType(image->type);
 
 	/* scan the texture for any non-255 alpha */
 	c = width * height;
@@ -462,7 +462,7 @@ image_t *R_LoadImageData (const char *name, byte * pic, int width, int height, i
 	}
 	OBJZERO(*image);
 	image->material = defaultMaterial;
-	image->has_alpha = qfalse;
+	image->has_alpha = false;
 	image->type = type;
 	image->width = width;
 	image->height = height;
@@ -497,7 +497,7 @@ image_t *R_LoadImageData (const char *name, byte * pic, int width, int height, i
 image_t* R_RenderToTexture (const char *name, int x, int y, int w, int h)
 {
 	image_t *img = R_GetImage(name);
-	const qboolean dimensionDiffer = img != NULL && img->width != w && img->height != h;
+	const bool dimensionDiffer = img != NULL && img->width != w && img->height != h;
 	if (img == NULL || dimensionDiffer) {
 		if (dimensionDiffer) {
 			R_DeleteImage(img);
@@ -626,7 +626,7 @@ const image_t *R_FindPics (const char *name)
 	return image;
 }
 
-qboolean R_ImageExists (const char *pname, ...)
+bool R_ImageExists (const char *pname, ...)
 {
 	char const* const* const types = Img_GetImageTypes();
 	int i;
@@ -639,9 +639,9 @@ qboolean R_ImageExists (const char *pname, ...)
 
 	for (i = 0; types[i]; i++) {
 		if (FS_CheckFile("%s.%s", filename, types[i]) != -1)
-			return qtrue;
+			return true;
 	}
-	return qfalse;
+	return false;
 }
 
 /**

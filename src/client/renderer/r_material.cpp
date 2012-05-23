@@ -134,23 +134,23 @@ static void R_StageLighting (const mBspSurface_t *surf, const materialStage_t *s
 	/* if the surface has a lightmap, and the stage specifies lighting.. */
 	if ((surf->flags & MSURF_LIGHTMAP) &&
 			(stage->flags & (STAGE_LIGHTMAP | STAGE_LIGHTING))) {
-		R_EnableTexture(&texunit_lightmap, qtrue);
+		R_EnableTexture(&texunit_lightmap, true);
 		R_BindLightmapTexture(surf->lightmap_texnum);
 
 		/* hardware lighting */
 		if ((stage->flags & STAGE_LIGHTING)) {
-			R_EnableLighting(r_state.world_program, qtrue);
+			R_EnableLighting(r_state.world_program, true);
 			R_SetSurfaceBumpMappingParameters(surf, stage->image->normalmap, stage->image->specularmap);
 		} else {
 			R_SetSurfaceBumpMappingParameters(surf, NULL, NULL);
-			R_EnableLighting(NULL, qfalse);
+			R_EnableLighting(NULL, false);
 		}
 	} else {
 		if (!r_state.lighting_enabled)
 			return;
-		R_EnableLighting(NULL, qfalse);
+		R_EnableLighting(NULL, false);
 
-		R_EnableTexture(&texunit_lightmap, qfalse);
+		R_EnableTexture(&texunit_lightmap, false);
 	}
 }
 
@@ -169,14 +169,14 @@ static inline void R_StageVertex (const mBspSurface_t *surf, const materialStage
  */
 static inline void R_StageTextureMatrix (const mBspSurface_t *surf, const materialStage_t *stage)
 {
-	static qboolean identity = qtrue;
+	static bool identity = true;
 	float s, t;
 
 	if (!(stage->flags & STAGE_TEXTURE_MATRIX)) {
 		if (!identity)
 			glLoadIdentity();
 
-		identity = qtrue;
+		identity = true;
 		return;
 	}
 
@@ -209,7 +209,7 @@ static inline void R_StageTextureMatrix (const mBspSurface_t *surf, const materi
 	if (stage->flags & STAGE_SCROLL_T)
 		glTranslatef(0.0, stage->scroll.dt, 0.0);
 
-	identity = qfalse;
+	identity = false;
 }
 
 /**
@@ -312,9 +312,9 @@ static void R_SetSurfaceStageState (const mBspSurface_t *surf, const materialSta
 
 	/* for terrain, enable the color array */
 	if (stage->flags & (STAGE_TAPE | STAGE_TERRAIN | STAGE_DIRTMAP))
-		R_EnableColorArray(qtrue);
+		R_EnableColorArray(true);
 	else
-		R_EnableColorArray(qfalse);
+		R_EnableColorArray(false);
 
 	/* when not using the color array, resolve the shade color */
 	if (!r_state.color_array_enabled) {
@@ -330,11 +330,11 @@ static void R_SetSurfaceStageState (const mBspSurface_t *surf, const materialSta
 		/* modulate the alpha value for pulses */
 		if (stage->flags & STAGE_PULSE) {
 			/* disable fog, since it also sets alpha */
-			R_EnableFog(qfalse);
+			R_EnableFog(false);
 			color[3] = stage->pulse.dhz;
 		} else {
 			/* ensure fog is available */
-			R_EnableFog(qtrue);
+			R_EnableFog(true);
 			color[3] = 1.0;
 		}
 
@@ -409,17 +409,17 @@ void R_DrawMaterialSurfaces (const mBspSurfaces_t *surfs)
 	assert(r_state.blend_enabled);
 
 	/** @todo - integrate BSP lighting with model lighting */
-	R_EnableModelLights(NULL, 0, qfalse, qfalse);
+	R_EnableModelLights(NULL, 0, false, false);
 
-	R_EnableColorArray(qtrue);
+	R_EnableColorArray(true);
 
 	R_ResetArrayState();
 
-	R_EnableColorArray(qfalse);
+	R_EnableColorArray(false);
 
-	R_EnableLighting(NULL, qfalse);
+	R_EnableLighting(NULL, false);
 
-	R_EnableTexture(&texunit_lightmap, qfalse);
+	R_EnableTexture(&texunit_lightmap, false);
 
 	glEnable(GL_POLYGON_OFFSET_FILL);
 	glPolygonOffset(-1.f, -1.f);
@@ -458,15 +458,15 @@ void R_DrawMaterialSurfaces (const mBspSurfaces_t *surfs)
 
 	R_BlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
 
-	R_EnableFog(qtrue);
+	R_EnableFog(true);
 
-	R_EnableColorArray(qfalse);
+	R_EnableColorArray(false);
 
-	R_EnableTexture(&texunit_lightmap, qfalse);
+	R_EnableTexture(&texunit_lightmap, false);
 
 	R_EnableBumpmap(NULL);
 
-	R_EnableLighting(NULL, qfalse);
+	R_EnableLighting(NULL, false);
 
 	R_EnableGlowMap(NULL);
 
@@ -567,7 +567,7 @@ static int R_ParseStage (materialStage_t *s, const char **buffer)
 {
 	int i;
 
-	while (qtrue) {
+	while (true) {
 		const char *c = Com_Parse(buffer);
 
 		if (c[0] == '\0')
@@ -925,7 +925,7 @@ void R_LoadMaterials (const char *map)
 	char path[MAX_QPATH];
 	byte *fileBuffer;
 	const char *buffer;
-	qboolean inmaterial;
+	bool inmaterial;
 	image_t *image;
 	material_t *m;
 	materialStage_t *ss;
@@ -952,18 +952,18 @@ void R_LoadMaterials (const char *map)
 
 	buffer = (const char *)fileBuffer;
 
-	inmaterial = qfalse;
+	inmaterial = false;
 	image = NULL;
 	m = NULL;
 
-	while (qtrue) {
+	while (true) {
 		const char *c = Com_Parse(&buffer);
 
 		if (c[0] == '\0')
 			break;
 
 		if (*c == '{' && !inmaterial) {
-			inmaterial = qtrue;
+			inmaterial = true;
 			continue;
 		}
 
@@ -1075,7 +1075,7 @@ void R_LoadMaterials (const char *map)
 
 		if (*c == '}' && inmaterial) {
 			Com_DPrintf(DEBUG_RENDERER, "Parsed material %s with %d stages\n", image->name, m->num_stages);
-			inmaterial = qfalse;
+			inmaterial = false;
 			image = NULL;
 			/* multiply stage glowscale values by material glowscale */
 			ss = m->stages;

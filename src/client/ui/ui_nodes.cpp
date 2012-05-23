@@ -149,7 +149,7 @@ static uiBehaviour_t nodeBehaviourList[NUMBER_OF_BEHAVIOURS];
 /**
  * @brief Check the if conditions for a given node
  * @sa V_UI_IF
- * @returns qfalse if the node is not drawn due to not meet if conditions
+ * @returns false if the node is not drawn due to not meet if conditions
  */
 bool UI_CheckVisibility (uiNode_t *node)
 {
@@ -157,7 +157,7 @@ bool UI_CheckVisibility (uiNode_t *node)
 	if (!node->visibilityCondition)
 		return true;
 	context.source = node;
-	context.useCmdParam = qfalse;
+	context.useCmdParam = false;
 	return UI_GetBooleanFromExpression(node->visibilityCondition, &context);
 }
 
@@ -318,7 +318,7 @@ static uiNode_t* UI_AllocNodeWithoutNew (const char* name, const char* type, boo
 	nodeSize = sizeof(*node) + behaviour->extraDataSize;
 
 	if (!isDynamic) {
-		void *memory = UI_AllocHunkMemory(nodeSize, STRUCT_MEMORY_ALIGN, qtrue);
+		void *memory = UI_AllocHunkMemory(nodeSize, STRUCT_MEMORY_ALIGN, true);
 		if (memory == NULL)
 			Com_Error(ERR_FATAL, "UI_AllocNodeWithoutNew: No more memory to allocate a new node - increase the cvar ui_hunksize");
 		node = static_cast<uiNode_t*>(memory);
@@ -631,9 +631,9 @@ void UI_InitNodes (void)
 	/* compute list of node behaviours */
 	for (i = 0; i < NUMBER_OF_BEHAVIOURS; i++) {
 		OBJZERO(*current);
-		current->registration = qtrue;
+		current->registration = true;
 		registerFunctions[i](current);
-		current->registration = qfalse;
+		current->registration = false;
 		current++;
 	}
 

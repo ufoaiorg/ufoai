@@ -444,7 +444,7 @@ static void UI_BaseInventoryNodeDraw2 (uiNode_t *node, const objDef_t *highlight
 	R_FontDrawString("f_verysmall", ALIGN_UL,
 		node->box.pos[0], node->box.pos[1], node->box.pos[0], node->box.pos[1],
 		0,	0,	/* maxWidth/maxHeight */
-		0, va("%i %i/%i", EXTRADATA(node).scrollCur, visibleRows, totalRows), 0, 0, NULL, qfalse, 0);
+		0, va("%i %i/%i", EXTRADATA(node).scrollCur, visibleRows, totalRows), 0, 0, NULL, false, 0);
 #endif
 
 	/* Update display of scroll buttons if something changed. */
@@ -805,17 +805,17 @@ void UI_RegisterBaseInventoryNode (uiBehaviour_t* behaviour)
 	behaviour->extraDataSize = sizeof(EXTRADATA_TYPE);
 
 	/* Display/hide weapons. */
-	UI_RegisterExtradataNodeProperty(behaviour, "displayweapon", V_CPPBOOL, baseInventoryExtraData_t, displayWeapon);
+	UI_RegisterExtradataNodeProperty(behaviour, "displayweapon", V_BOOL, baseInventoryExtraData_t, displayWeapon);
 	/* Display/hide ammo. */
-	UI_RegisterExtradataNodeProperty(behaviour, "displayammo", V_CPPBOOL, baseInventoryExtraData_t, displayAmmo);
+	UI_RegisterExtradataNodeProperty(behaviour, "displayammo", V_BOOL, baseInventoryExtraData_t, displayAmmo);
 	/* Display/hide out of stock items. */
-	UI_RegisterExtradataNodeProperty(behaviour, "displayunavailableitem", V_CPPBOOL, baseInventoryExtraData_t, displayUnavailableItem);
+	UI_RegisterExtradataNodeProperty(behaviour, "displayunavailableitem", V_BOOL, baseInventoryExtraData_t, displayUnavailableItem);
 	/* Sort the list to display in stock items on top of the list. */
-	UI_RegisterExtradataNodeProperty(behaviour, "displayavailableontop", V_CPPBOOL, baseInventoryExtraData_t, displayAvailableOnTop);
+	UI_RegisterExtradataNodeProperty(behaviour, "displayavailableontop", V_BOOL, baseInventoryExtraData_t, displayAvailableOnTop);
 	/* Display/hide ammo near weapons. */
-	UI_RegisterExtradataNodeProperty(behaviour, "displayammoofweapon", V_CPPBOOL, baseInventoryExtraData_t, displayAmmoOfWeapon);
+	UI_RegisterExtradataNodeProperty(behaviour, "displayammoofweapon", V_BOOL, baseInventoryExtraData_t, displayAmmoOfWeapon);
 	/* Display/hide out of stock ammo near weapons. <code>displayammoofweapon</code> must be activated first. */
-	UI_RegisterExtradataNodeProperty(behaviour, "displayunavailableammoofweapon", V_CPPBOOL, baseInventoryExtraData_t, displayUnavailableAmmoOfWeapon);
+	UI_RegisterExtradataNodeProperty(behaviour, "displayunavailableammoofweapon", V_BOOL, baseInventoryExtraData_t, displayUnavailableAmmoOfWeapon);
 	/* Custom the number of column we must use to display items. */
 	UI_RegisterExtradataNodeProperty(behaviour, "columns", V_INT, baseInventoryExtraData_t, columns);
 	/* Filter items by a category. */

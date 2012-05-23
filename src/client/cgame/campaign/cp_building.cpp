@@ -33,19 +33,19 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
  * @param[in] building Pointer to the building to check
  * @note it always return @c true for buildings with {0, 0} timeStart
  */
-qboolean B_IsBuildingBuiltUp (const building_t *building)
+bool B_IsBuildingBuiltUp (const building_t *building)
 {
 	date_t due;
 
 	if (!building)
-		return qfalse;
+		return false;
 	if (building->timeStart.day == 0 && building->timeStart.sec == 0)
-		return qtrue;
+		return true;
 	due = building->timeStart;
 	due.day += building->buildTime;
 	if (Date_IsDue(&due))
-		return qtrue;
-	return qfalse;
+		return true;
+	return false;
 }
 
 /**
@@ -144,7 +144,7 @@ static const value_t valid_building_vars[] = {
  * @sa CL_ParseScriptFirst (link is false here)
  * @sa CL_ParseScriptSecond (link it true here)
  */
-void B_ParseBuildings (const char *name, const char **text, qboolean link)
+void B_ParseBuildings (const char *name, const char **text, bool link)
 {
 	building_t *building;
 	technology_t *techLink;
@@ -254,7 +254,7 @@ void B_ParseBuildings (const char *name, const char **text, qboolean link)
  * @brief Checks the parsed buildings for errors
  * @return false if there are errors - true otherwise
  */
-qboolean B_BuildingScriptSanityCheck (void)
+bool B_BuildingScriptSanityCheck (void)
 {
 	int i, error = 0;
 	building_t* b;
@@ -324,12 +324,12 @@ building_t *B_GetBuildingTemplate (const char *buildingName)
  * @param[in] building Pointer to the building to check
  * @return true if base contains needed dependence for entering building
  */
-qboolean B_CheckBuildingDependencesStatus (const building_t* building)
+bool B_CheckBuildingDependencesStatus (const building_t* building)
 {
 	assert(building);
 
 	if (!building->dependsBuilding)
-		return qtrue;
+		return true;
 
 	/* Make sure the dependsBuilding pointer is really a template .. just in case. */
 	assert(building->dependsBuilding == building->dependsBuilding->tpl);
@@ -344,7 +344,7 @@ qboolean B_CheckBuildingDependencesStatus (const building_t* building)
  * @param[in] eventType Type of the event to run
  * @return @c true if an event was fired @c false otherwise (the building may not have one)
  */
-qboolean B_FireEvent (const building_t * buildingTemplate, const base_t * base, buildingEvent_t eventType)
+bool B_FireEvent (const building_t * buildingTemplate, const base_t * base, buildingEvent_t eventType)
 {
 	const char *command = NULL;
 
@@ -370,8 +370,8 @@ qboolean B_FireEvent (const building_t * buildingTemplate, const base_t * base, 
 
 	if (command && command[0] != '\0') {
 		Cmd_ExecuteString(va("%s %i %i", command, base->idx, buildingTemplate->buildingType));
-		return qtrue;
+		return true;
 	}
 
-	return qfalse;
+	return false;
 }

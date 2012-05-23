@@ -36,9 +36,9 @@ typedef struct {
 	char		buffer[256];
 } consoleHistory_t;
 
-static qboolean stdinActive;
+static bool stdinActive;
 /* general flag to tell about tty console mode */
-static qboolean ttyConsoleActivated = qfalse;
+static bool ttyConsoleActivated = false;
 
 /* some key codes that the terminal may be using, initialised on start up */
 static int TTY_erase;
@@ -173,7 +173,7 @@ static void Sys_TTYConsoleSigCont (int signum)
 	Sys_ConsoleInit();
 }
 
-void Sys_ShowConsole (qboolean show)
+void Sys_ShowConsole (bool show)
 {
 	static int ttyConsoleHide = 0;
 
@@ -212,7 +212,7 @@ static void Sys_TTYConsoleHistoryClear (consoleHistory_t *edit)
 	OBJZERO(*edit);
 }
 
-static qboolean Sys_IsATTY (void)
+static bool Sys_IsATTY (void)
 {
 	const char* term = getenv("TERM");
 	return isatty(STDIN_FILENO) && !(term && (Q_streq(term, "raw") || Q_streq(term, "dumb")));
@@ -238,8 +238,8 @@ void Sys_ConsoleInit (void)
 
 	if (!Sys_IsATTY()) {
 		Com_Printf("tty console mode disabled\n");
-		ttyConsoleActivated = qfalse;
-		stdinActive = qtrue;
+		ttyConsoleActivated = false;
+		stdinActive = true;
 		return;
 	}
 
@@ -266,7 +266,7 @@ void Sys_ConsoleInit (void)
 	tc.c_cc[VMIN] = 1;
 	tc.c_cc[VTIME] = 0;
 	tcsetattr(STDIN_FILENO, TCSADRAIN, &tc);
-	ttyConsoleActivated = qtrue;
+	ttyConsoleActivated = true;
 }
 
 const char *Sys_ConsoleInput (void)
@@ -305,9 +305,9 @@ const char *Sys_ConsoleInput (void)
 					const size_t size = sizeof(ttyConsoleHistory.buffer);
 					const char *s = ttyConsoleHistory.buffer;
 					char *target = ttyConsoleHistory.buffer;
-					Sys_ShowConsole(qfalse);
+					Sys_ShowConsole(false);
 					Com_ConsoleCompleteCommand(s, target, size, &ttyConsoleHistory.cursor, 0);
-					Sys_ShowConsole(qtrue);
+					Sys_ShowConsole(true);
 					return NULL;
 				}
 				avail = read(STDIN_FILENO, &key, 1);
@@ -321,22 +321,22 @@ const char *Sys_ConsoleInput (void)
 							case 'A':
 								history = Sys_TTYConsoleHistoryPrevious();
 								if (history) {
-									Sys_ShowConsole(qfalse);
+									Sys_ShowConsole(false);
 									ttyConsoleHistory = *history;
-									Sys_ShowConsole(qtrue);
+									Sys_ShowConsole(true);
 								}
 								CON_FlushIn();
 								return NULL;
 								break;
 							case 'B':
 								history = Sys_TTYConsoleHistoryNext();
-								Sys_ShowConsole(qfalse);
+								Sys_ShowConsole(false);
 								if (history) {
 									ttyConsoleHistory = *history;
 								} else {
 									Sys_TTYConsoleHistoryClear(&ttyConsoleHistory);
 								}
-								Sys_ShowConsole(qtrue);
+								Sys_ShowConsole(true);
 								CON_FlushIn();
 								return NULL;
 								break;
@@ -376,7 +376,7 @@ const char *Sys_ConsoleInput (void)
 
 		len = read(STDIN_FILENO, text, sizeof(text));
 		if (len == 0) { /* eof! */
-			stdinActive = qfalse;
+			stdinActive = false;
 			return NULL;
 		}
 
@@ -399,7 +399,7 @@ void Sys_ConsoleOutput (const char *string)
 	/* BUG: for some reason, NDELAY also affects stdout (1) when used on stdin (0). */
 	const int origflags = fcntl(STDOUT_FILENO, F_GETFL, 0);
 
-	Sys_ShowConsole(qfalse);
+	Sys_ShowConsole(false);
 
 	fcntl(STDOUT_FILENO, F_SETFL, origflags & ~FNDELAY);
 	while (*string) {
@@ -410,5 +410,5 @@ void Sys_ConsoleOutput (const char *string)
 	}
 	fcntl(STDOUT_FILENO, F_SETFL, origflags);
 
-	Sys_ShowConsole(qtrue);
+	Sys_ShowConsole(true);
 }

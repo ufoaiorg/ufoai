@@ -429,7 +429,7 @@ epair_t *ParseEpair (void)
 	if (strlen(parsedToken) >= MAX_KEY - 1)
 		Sys_Error("ParseEpar: token too long");
 	e->key = Mem_StrDup(parsedToken);
-	GetToken(qfalse);
+	GetToken(false);
 	if (strlen(parsedToken) >= MAX_VALUE - 1)
 		Sys_Error("ParseEpar: token too long");
 	e->value = Mem_StrDup(parsedToken);
@@ -449,7 +449,7 @@ static entity_t* ParseEntity (void)
 {
 	entity_t *mapent;
 
-	if (!GetToken(qtrue))
+	if (!GetToken(true))
 		return NULL;
 
 	if (parsedToken[0] != '{')
@@ -462,7 +462,7 @@ static entity_t* ParseEntity (void)
 	num_entities++;
 
 	do {
-		if (!GetToken(qtrue))
+		if (!GetToken(true))
 			Sys_Error("ParseEntity: EOF without closing brace");
 		if (*parsedToken == '}') {
 			break;

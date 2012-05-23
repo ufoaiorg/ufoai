@@ -48,7 +48,7 @@ typedef struct {
 	int			firstbrush;		/**< the index of the first brush in mapbrushes in case of a bmodel */
 	int			numbrushes;		/**< the number of brushes in case of a bmodel */
 	epair_t		*epairs;		/**< the entity parameters (key, value) */
-	qboolean	skip;			/**< skip this entity in case the check functions have found an error and it should
+	bool	skip;			/**< skip this entity in case the check functions have found an error and it should
 								 * not get written back into the fixed map file */
 } entity_t;
 

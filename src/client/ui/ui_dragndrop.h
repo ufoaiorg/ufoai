@@ -45,9 +45,9 @@ void UI_DNDDrop(void);
 void UI_DNDAbort(void);
 
 /*  getter */
-qboolean UI_DNDIsDragging(void);
-qboolean UI_DNDIsTargetNode(uiNode_t* node);
-qboolean UI_DNDIsSourceNode(uiNode_t* node);
+bool UI_DNDIsDragging(void);
+bool UI_DNDIsTargetNode(uiNode_t* node);
+bool UI_DNDIsSourceNode(uiNode_t* node);
 uiNode_t* UI_DNDGetTargetNode(void);
 uiNode_t* UI_DNDGetSourceNode(void);
 int UI_DNDGetType(void);

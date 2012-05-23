@@ -48,7 +48,7 @@ extern const vec3_t vec3_origin;
 extern const vec4_t vec4_origin;
 extern const vec4_t color_white;
 
-qboolean Q_IsPowerOfTwo(int i);
+bool Q_IsPowerOfTwo(int i);
 
 /* Used to compare floats when rounding errors could occur  */
 #ifndef EQUAL
@@ -203,7 +203,7 @@ void VectorRotate(vec3_t m[3], const vec3_t va, vec3_t vb);
 void ClearBounds(vec3_t mins, vec3_t maxs);
 void AddPointToBounds(const vec3_t v, vec3_t mins, vec3_t maxs);
 int VectorCompareEps(const vec3_t v1, const vec3_t v2, float epsilon);
-qboolean VectorNearer(const vec3_t v1, const vec3_t v2, const vec3_t comp);
+bool VectorNearer(const vec3_t v1, const vec3_t v2, const vec3_t comp);
 vec_t VectorLength(const vec3_t v);
 void CrossProduct(const vec3_t v1, const vec3_t v2, vec3_t cross);
 vec_t VectorNormalize(vec3_t v);    /* returns vector length */
@@ -238,7 +238,7 @@ float AngleNormalize180(float angle);
 
 float LerpAngle(float a1, float a2, float frac);
 
-qboolean FrustumVis(const vec3_t origin, int dir, const vec3_t point);
+bool FrustumVis(const vec3_t origin, int dir, const vec3_t point);
 
 void PerpendicularVector(vec3_t dst, const vec3_t src);
 void RotatePointAroundVector(vec3_t dst, const vec3_t dir, const vec3_t point, float degrees);
@@ -255,6 +255,6 @@ void TangentVectors(const vec3_t normal, const vec3_t sdir, const vec3_t tdir, v
 void Orthogonalize(vec3_t v1, const vec3_t v2);
 void MatrixTranspose(const vec3_t m[3], vec3_t t[3]);
 
-qboolean RayIntersectAABB(const vec3_t start, const vec3_t end, const vec3_t mins, const vec3_t maxs);
+bool RayIntersectAABB(const vec3_t start, const vec3_t end, const vec3_t mins, const vec3_t maxs);
 
 #endif

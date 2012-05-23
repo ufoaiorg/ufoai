@@ -100,7 +100,7 @@ void CL_ActorAppear (const eventRegister_t *self, struct dbuffer *msg)
 	LE_Lock(le);
 
 	/* maybe added via CL_ActorAdd before */
-	le->invis = qfalse;
+	le->invis = false;
 
 	/* get the info */
 	NET_ReadFormat(msg, self->formatString,

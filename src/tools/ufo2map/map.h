@@ -65,10 +65,10 @@ typedef struct side_s {
 	struct side_s	*original;	/**< bspbrush_t sides will reference the mapbrush_t sides */
 	uint32_t	contentFlags;	/**< from miptex */
 	uint32_t	surfaceFlags;	/**< from miptex */
-	qboolean	visible;		/**< choose visible planes first */
-	qboolean	tested;			/**< this plane already checked as a split */
-	qboolean	bevel;			/**< don't ever use for bsp splitting */
-	qboolean	isCompositeMember;	/**< forms a side with sides from other brushes @sa Check_FindCompositeSides */
+	bool	visible;		/**< choose visible planes first */
+	bool	tested;			/**< this plane already checked as a split */
+	bool	bevel;			/**< don't ever use for bsp splitting */
+	bool	isCompositeMember;	/**< forms a side with sides from other brushes @sa Check_FindCompositeSides */
 
 	struct mapbrush_s *brush;		/**< backlink to the brush this side belongs to */
 } side_t;
@@ -90,9 +90,9 @@ typedef struct mapbrush_s {
 	struct	mapbrush_s **nearBrushes;
 	int	numNear;
 
-	qboolean skipWriteBack; /**< in fix mode do not write back to the source .map file */
+	bool skipWriteBack; /**< in fix mode do not write back to the source .map file */
 
-	qboolean finished;
+	bool finished;
 } mapbrush_t;
 
 /** @sa mapplanes */
@@ -115,7 +115,7 @@ typedef struct portal_s {
 	struct portal_s	*next[2];
 	winding_t	*winding;
 
-	qboolean	sidefound;		/**< false if ->side hasn't been checked */
+	bool	sidefound;		/**< false if ->side hasn't been checked */
 	struct side_s		*side;			/**< NULL = non-visible */
 	face_t		*face[2];		/**< output face in bsp file */
 } portal_t;

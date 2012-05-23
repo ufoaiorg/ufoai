@@ -6,7 +6,7 @@
 struct linkedList_t {
 	void*         data;
 	linkedList_t* next;
-	qboolean      ptr; /**< don't call Mem_Free for data if this is @c true */
+	bool      ptr; /**< don't call Mem_Free for data if this is @c true */
 };
 
 typedef int (*linkedListSort_t) (linkedList_t *entry1, linkedList_t *entry2, const void *userData);
@@ -15,10 +15,10 @@ typedef int (*linkedListSort_t) (linkedList_t *entry1, linkedList_t *entry2, con
  * @note @c var must be a simple variable name, because it is declared in the loop macro and is also used to create the name of the internal variables.
  * @note Don't try to use the internal loop variable. This variable is most likely not at the position you would expect it to be. */
 #define LIST_Foreach(list, type, var) \
-	for (qboolean var##__break = qfalse, var##__once = qtrue; var##__once; var##__once = qfalse) \
+	for (bool var##__break = false, var##__once = true; var##__once; var##__once = false) \
 		for (linkedList_t const* var##__iter = (list); !var##__break && var##__iter;) \
-			for (type* const var = (var##__break = var##__once = qtrue, (type*)var##__iter->data); var##__once; var##__break = var##__once = qfalse) \
-				if (var##__iter = var##__iter->next, qfalse) {} else
+			for (type* const var = (var##__break = var##__once = true, (type*)var##__iter->data); var##__once; var##__break = var##__once = false) \
+				if (var##__iter = var##__iter->next, false) {} else
 
 /**
  * @brief Will sort the list before loop over the sorted list. Make sure the free the sortedList after you done with the loop.
@@ -36,12 +36,12 @@ linkedList_t* LIST_Add(linkedList_t** list, void const* data, size_t length);
 const linkedList_t* LIST_ContainsString(const linkedList_t* list, const char* string);
 linkedList_t* LIST_GetPointer(linkedList_t* list, const void* data);
 void LIST_Delete(linkedList_t **list);
-qboolean LIST_RemoveEntry(linkedList_t **list, linkedList_t *entry);
-qboolean LIST_IsEmpty(const linkedList_t *list);
+bool LIST_RemoveEntry(linkedList_t **list, linkedList_t *entry);
+bool LIST_IsEmpty(const linkedList_t *list);
 int LIST_Count(const linkedList_t *list);
 linkedList_t *LIST_CopyStructure(linkedList_t* src);
 void *LIST_GetByIdx(linkedList_t *list, int index);
-qboolean LIST_Remove(linkedList_t **list, const void *data);
+bool LIST_Remove(linkedList_t **list, const void *data);
 void LIST_Sort(linkedList_t **list, linkedListSort_t sorter, const void* userData);
 
 /**

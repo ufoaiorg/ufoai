@@ -74,14 +74,14 @@ static void CP_HarvestMissionStart (mission_t *mission)
 	if (mission->ufo) {
 		mission->finalDate = Date_Add(ccs.date, Date_Random(minMissionDelay, missionDelay));
 		/* ufo becomes invisible on geoscape, but don't remove it from ufo global array (may reappear)*/
-		CP_UFORemoveFromGeoscape(mission, qfalse);
+		CP_UFORemoveFromGeoscape(mission, false);
 	} else {
 		/* Go to next stage on next frame */
 		mission->finalDate = ccs.date;
 	}
 
 	/* mission appear on geoscape, player can go there */
-	CP_MissionAddToGeoscape(mission, qfalse);
+	CP_MissionAddToGeoscape(mission, false);
 }
 
 /**
@@ -91,7 +91,7 @@ static void CP_HarvestMissionStart (mission_t *mission)
  * @note nationList should be empty if no nation should be favoured.
  * @return True if nationList has been filled, false else.
  */
-static qboolean CP_ChooseNation (const mission_t *mission, linkedList_t **nationList)
+static bool CP_ChooseNation (const mission_t *mission, linkedList_t **nationList)
 {
 	int randomNumber, max = 0;
 	/* Increase this factor to make probability to select non-infected nation higher
@@ -100,7 +100,7 @@ static qboolean CP_ChooseNation (const mission_t *mission, linkedList_t **nation
 	int i;
 
 	if (mission->ufo)
-		return qfalse;
+		return false;
 
 	/* favour mission with higher XVI level */
 	for (i = 0; i < ccs.numNations; i++) {
@@ -118,11 +118,11 @@ static qboolean CP_ChooseNation (const mission_t *mission, linkedList_t **nation
 		randomNumber -= OFFSET + stats->xviInfection;
 		if (randomNumber < 0) {
 			LIST_AddString(nationList, nation->id);
-			return qtrue;
+			return true;
 		}
 	}
 
-	return qfalse;
+	return false;
 }
 
 /**
@@ -142,13 +142,13 @@ void CP_HarvestMissionGo (mission_t *mission)
 	if (CP_ChooseMap(mission, NULL)) {
 		int counter;
 		linkedList_t *nationList = NULL;
-		const qboolean nationTest = CP_ChooseNation(mission, &nationList);
+		const bool nationTest = CP_ChooseNation(mission, &nationList);
 		for (counter = 0; counter < MAX_POS_LOOP; counter++) {
 			if (!CP_GetRandomPosOnGeoscapeWithParameters(mission->pos, mission->mapDef->terrains, mission->mapDef->cultures, mission->mapDef->populations, nationTest ? nationList : NULL))
 				continue;
 			if (MAP_PositionCloseToBase(mission->pos))
 				continue;
-			mission->posAssigned = qtrue;
+			mission->posAssigned = true;
 			break;
 		}
 		if (counter >= MAX_POS_LOOP) {

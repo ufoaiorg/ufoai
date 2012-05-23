@@ -87,7 +87,7 @@ typedef struct installation_s {
 
 	int installationDamage;			/**< Hit points of installation */
 	int buildStart;					/**< Date when the installation building started */
-	qboolean selected;				/**< current selected installation? */
+	bool selected;				/**< current selected installation? */
 } installation_t;
 
 /** Currently displayed/accessed base. */
@@ -104,7 +104,7 @@ extern vec2_t newInstallationPos;
 
 #define INS_GetInstallationIDX(installation) ((installation)->idx)
 installation_t *INS_GetByIDX(int idx);
-installation_t *INS_GetFirstUFOYard(qboolean free);
+installation_t *INS_GetFirstUFOYard(bool free);
 int INS_GetCount(void);
 
 /* Installation template */

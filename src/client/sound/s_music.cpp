@@ -49,7 +49,7 @@ typedef struct music_s {
 	char nextTrack[MAX_QPATH];
 	Mix_Music *data;
 	byte *buffer;
-	qboolean playingStream; /**< if this is set no action to M_Start and M_Stop might happen, otherwise we might run
+	bool playingStream; /**< if this is set no action to M_Start and M_Stop might happen, otherwise we might run
 							 * into a deadlock. This is due to the installed hook function for music mixing that is used
 							 * whenever we stream the music on our own */
 } music_t;
@@ -309,11 +309,11 @@ void M_Frame (void)
 {
 	if (snd_music->modified) {
 		M_Start(snd_music->string);
-		snd_music->modified = qfalse;
+		snd_music->modified = false;
 	}
 	if (snd_music_volume->modified) {
 		Mix_VolumeMusic(snd_music_volume->integer);
-		snd_music_volume->modified = qfalse;
+		snd_music_volume->modified = false;
 	}
 	if (!music.playingStream && music.nextTrack[0] != '\0') {
 		if (!Mix_PlayingMusic()) {
@@ -335,7 +335,7 @@ void M_Init (void)
 	Cmd_AddParamCompleteFunction("music_play", M_CompleteMusic);
 	snd_music = Cvar_Get("snd_music", "PsymongN3", 0, "Background music track");
 	snd_music_volume = Cvar_Get("snd_music_volume", "128", CVAR_ARCHIVE, "Music volume - default is 128.");
-	snd_music_volume->modified = qtrue;
+	snd_music_volume->modified = true;
 
 	OBJZERO(music);
 }
@@ -426,14 +426,14 @@ void M_PlayMusicStream (musicStream_t *userdata)
 {
 	M_Stop();
 
-	userdata->playing = qtrue;
-	music.playingStream = qtrue;
+	userdata->playing = true;
+	music.playingStream = true;
 	Mix_HookMusic((void (*)(void*, Uint8*, int)) M_MusicStreamCallback, userdata);
 }
 
 void M_StopMusicStream (musicStream_t *userdata)
 {
-	userdata->playing = qfalse;
-	music.playingStream = qfalse;
+	userdata->playing = false;
+	music.playingStream = false;
 	Mix_HookMusic(NULL, NULL);
 }

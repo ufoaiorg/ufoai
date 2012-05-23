@@ -51,15 +51,15 @@ void uiFuncNode::onLoaded (uiNode_t *node)
 void UI_RegisterFuncNode (uiBehaviour_t *behaviour)
 {
 	behaviour->name = "func";
-	behaviour->isVirtual = qtrue;
-	behaviour->isFunction = qtrue;
+	behaviour->isVirtual = true;
+	behaviour->isFunction = true;
 	behaviour->manager = new uiFuncNode();
 }
 
 void UI_RegisterNullNode (uiBehaviour_t *behaviour)
 {
 	behaviour->name = "";
-	behaviour->isVirtual = qtrue;
+	behaviour->isVirtual = true;
 }
 
 /**
@@ -78,7 +78,7 @@ static void UI_ConfuncCommand_f (void)
  * @param node The node to check (must be a confunc node).
  * @return @c true if the given node is a dummy node, @c false otherwise.
  */
-static qboolean UI_ConFuncIsVirtual (const uiNode_t *const node)
+static bool UI_ConFuncIsVirtual (const uiNode_t *const node)
 {
 	/* magic way to know if it is a dummy node (used for inherited confunc) */
 	const uiNode_t *dummy = static_cast<const uiNode_t*>(Cmd_GetUserdata(node->name));
@@ -110,7 +110,7 @@ void uiConFuncNode::onLoaded (uiNode_t *node)
 				return;
 		}
 
-		dummy = UI_AllocNode(node->name, "confunc", qfalse);
+		dummy = UI_AllocNode(node->name, "confunc", false);
 		Cmd_AddCommand(node->name, UI_ConfuncCommand_f, "Inherited confunc callback");
 		Cmd_AddUserdata(dummy->name, dummy);
 	}
@@ -148,8 +148,8 @@ void uiConFuncNode::onWindowClosed (uiNode_t *node)
 void UI_RegisterConFuncNode (uiBehaviour_t *behaviour)
 {
 	behaviour->name = "confunc";
-	behaviour->isVirtual = qtrue;
-	behaviour->isFunction = qtrue;
+	behaviour->isVirtual = true;
+	behaviour->isFunction = true;
 	behaviour->manager = new uiConFuncNode();
 }
 
@@ -231,8 +231,8 @@ static void UI_CvarListenerNodeForceBind (uiNode_t *node, const uiCallContext_t 
 void UI_RegisterCvarFuncNode (uiBehaviour_t *behaviour)
 {
 	behaviour->name = "cvarlistener";
-	behaviour->isVirtual = qtrue;
-	behaviour->isFunction = qtrue;
+	behaviour->isVirtual = true;
+	behaviour->isFunction = true;
 	behaviour->manager = new uiCvarNode();
 	/* Force to bind the node to the cvar */
 	UI_RegisterNodeMethod(behaviour, "forceBind", UI_CvarListenerNodeForceBind);

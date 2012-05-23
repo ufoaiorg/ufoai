@@ -59,7 +59,7 @@ static zoneNode_t dragStatus = ZONE_NONE;
 static int startX;
 static int startY;
 
-static void UI_EditorNodeHighlightNode (uiNode_t *node, const vec4_t color, qboolean displayAnchor)
+static void UI_EditorNodeHighlightNode (uiNode_t *node, const vec4_t color, bool displayAnchor)
 {
 	vec2_t pos;
 	UI_GetNodeAbsPos(node, pos);
@@ -109,7 +109,7 @@ void uiEditorNode::drawOverWindow (uiNode_t *node)
 
 	if (UI_GetMouseCapture() != node) {
 		if (anchoredNode)
-			UI_EditorNodeHighlightNode(anchoredNode, red, qfalse);
+			UI_EditorNodeHighlightNode(anchoredNode, red, false);
 		return;
 	}
 
@@ -125,10 +125,10 @@ void uiEditorNode::drawOverWindow (uiNode_t *node)
 	}
 
 	if (hovered && hovered != anchoredNode)
-		UI_EditorNodeHighlightNode(hovered, grey, qtrue);
+		UI_EditorNodeHighlightNode(hovered, grey, true);
 
 	if (anchoredNode)
-		UI_EditorNodeHighlightNode(anchoredNode, red, qtrue);
+		UI_EditorNodeHighlightNode(anchoredNode, red, true);
 }
 
 void uiEditorNode::onCapturedMouseMove (uiNode_t *node, int x, int y)

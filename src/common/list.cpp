@@ -138,7 +138,7 @@ void LIST_AddPointer (linkedList_t** listDest, void* data)
 	assert(data);
 
 	linkedList_t* const newEntry = LIST_AllocateEntry(data);
-	newEntry->ptr = qtrue;
+	newEntry->ptr = true;
 
 	LIST_AppendEntry(listDest, newEntry);
 }
@@ -151,7 +151,7 @@ void LIST_AddPointer (linkedList_t** listDest, void* data)
  * @sa LIST_Delete
  * @return @c true if the removal was successful, @c false otherwise.
  */
-qboolean LIST_RemoveEntry (linkedList_t **list, linkedList_t *entry)
+bool LIST_RemoveEntry (linkedList_t **list, linkedList_t *entry)
 {
 	assert(list);
 	assert(entry);
@@ -163,11 +163,11 @@ qboolean LIST_RemoveEntry (linkedList_t **list, linkedList_t *entry)
 			/* Delete the entry. */
 			if (!entry->ptr) Mem_Free(entry->data);
 			Mem_Free(entry);
-			return qtrue;
+			return true;
 		}
 	}
 
-	return qfalse;
+	return false;
 }
 
 /**
@@ -193,12 +193,12 @@ void LIST_Delete (linkedList_t **list)
  * @sa LIST_Add
  * @sa LIST_RemoveEntry
  */
-qboolean LIST_Remove (linkedList_t **list, const void *data)
+bool LIST_Remove (linkedList_t **list, const void *data)
 {
 	linkedList_t *l = LIST_GetPointer(*list, data);
 	if (l != NULL)
 		return LIST_RemoveEntry(list, l);
-	return qfalse;
+	return false;
 }
 
 /**
@@ -317,7 +317,7 @@ linkedList_t *LIST_CopyStructure (linkedList_t* src)
  * @param[in] list The linked list to check
  * @return @c true if empty, @c false otherwise
  */
-qboolean LIST_IsEmpty (const linkedList_t *list)
+bool LIST_IsEmpty (const linkedList_t *list)
 {
 	return list == NULL;
 }

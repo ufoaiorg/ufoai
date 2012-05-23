@@ -38,7 +38,7 @@ static int UFO_InitSuiteGame (void)
 {
 	TEST_Init();
 	/* we need the teamdefs for spawning ai actors */
-	Com_ParseScripts(qtrue);
+	Com_ParseScripts(true);
 	Cvar_Set("sv_threads", "0");
 
 	sv_genericPool = Mem_CreatePool("server-gametest");
@@ -61,7 +61,7 @@ static void testSpawnAndConnect (void)
 	char userinfo[MAX_INFO_STRING];
 	player_t *player;
 	const char *name = "name";
-	qboolean day = qtrue;
+	bool day = true;
 	byte *buf;
 	/* this entity string may not contain any inline models, we don't have the bsp tree loaded here */
 	const int size = FS_LoadFile("game/entity.txt", &buf);
@@ -101,7 +101,7 @@ static void testDoorTrigger (void)
 
 		/* the other tests didn't call the server shutdown function to clean up */
 		OBJZERO(*sv);
-		SV_Map(qtrue, mapName, NULL);
+		SV_Map(true, mapName, NULL);
 		while ((e = G_EdictsGetNextInUse(e))) {
 			cnt++;
 			if (e->type == ET_DOOR) {
@@ -113,7 +113,7 @@ static void testDoorTrigger (void)
 					CU_ASSERT_FALSE(e->doorState);
 				} else {
 					/* both of the used doors have a targetname set */
-					CU_ASSERT(qfalse);
+					CU_ASSERT(false);
 				}
 				doors++;
 			}
@@ -134,10 +134,10 @@ static void testShooting (void)
 	if (FS_CheckFile("maps/%s.bsp", mapName) != -1) {
 		/* the other tests didn't call the server shutdown function to clean up */
 		OBJZERO(*sv);
-		SV_Map(qtrue, mapName, NULL);
+		SV_Map(true, mapName, NULL);
 		/** @todo equip the soldier */
 		/** @todo set the input variables -- gi.ReadFormat(format, &pos, &i, &firemode, &from); */
-		/** @todo do the shot -- G_ClientShoot(player, ent, pos, i, firemode, &mock, qtrue, from); */
+		/** @todo do the shot -- G_ClientShoot(player, ent, pos, i, firemode, &mock, true, from); */
 		/** @todo implement the test here - e.g. extend shot_mock_t */
 		SV_ShutdownGameProgs();
 	} else {
@@ -166,13 +166,13 @@ static void testVisFlags (void)
 
 		/* the other tests didn't call the server shutdown function to clean up */
 		OBJZERO(*sv);
-		SV_Map(qtrue, mapName, NULL);
+		SV_Map(true, mapName, NULL);
 
 		num = 0;
 		ent = NULL;
 		while ((ent = G_EdictsGetNextLivingActorOfTeam(ent, TEAM_ALIEN))) {
 			const vismask_t teamMask = G_TeamToVisMask(ent->team);
-			const qboolean visible = ent->visflags & teamMask;
+			const bool visible = ent->visflags & teamMask;
 			char *visFlagsBuf = Mem_StrDup(Com_UnsignedIntToBinary(ent->visflags));
 			char *teamMaskBuf = Mem_StrDup(Com_UnsignedIntToBinary(teamMask));
 			CU_ASSERT_EQUAL(ent->team, TEAM_ALIEN);
@@ -200,7 +200,7 @@ static void testInventoryForDiedAlien (void)
 		int count;
 		/* the other tests didn't call the server shutdown function to clean up */
 		OBJZERO(*sv);
-		SV_Map(qtrue, mapName, NULL);
+		SV_Map(true, mapName, NULL);
 		level.activeTeam = TEAM_ALIEN;
 
 		/* first alien that should die and drop its inventory */
@@ -237,7 +237,7 @@ static void testInventoryForDiedAlien (void)
 			INVSH_FindSpace(&ent->chr.i, &entryToMove->item, INVDEF(csi.idBackpack), &tx, &ty, entryToMove);
 			if (tx != NONE) {
 				Com_Printf("trying to move item %s from floor into backpack to pos %i:%i\n", entryToMove->item.t->name, tx, ty);
-				CU_ASSERT_TRUE(G_ActorInvMove(ent, INVDEF(csi.idFloor), entryToMove, INVDEF(csi.idBackpack), tx, ty, qfalse));
+				CU_ASSERT_TRUE(G_ActorInvMove(ent, INVDEF(csi.idFloor), entryToMove, INVDEF(csi.idBackpack), tx, ty, false));
 				UFO_CU_ASSERT_EQUAL_INT_MSG_FATAL(GAMETEST_GetItemCount(ent, csi.idFloor), count - 1, va("item %s could not get moved successfully from floor into backpack", entryToMove->item.t->name));
 				Com_Printf("item %s was removed from floor\n", entryToMove->item.t->name);
 				UFO_CU_ASSERT_EQUAL_INT_MSG_FATAL(GAMETEST_GetItemCount(ent, csi.idBackpack), 1, va("item %s could not get moved successfully from floor into backpack", entryToMove->item.t->name));
@@ -266,7 +266,7 @@ static void testInventoryWithTwoDiedAliensOnTheSameGridTile (void)
 		int count;
 		/* the other tests didn't call the server shutdown function to clean up */
 		OBJZERO(*sv);
-		SV_Map(qtrue, mapName, NULL);
+		SV_Map(true, mapName, NULL);
 		level.activeTeam = TEAM_ALIEN;
 
 		/* first alien that should die and drop its inventory */
@@ -318,7 +318,7 @@ static void testInventoryWithTwoDiedAliensOnTheSameGridTile (void)
 			INVSH_FindSpace(&ent->chr.i, &entryToMove->item, INVDEF(csi.idBackpack), &tx, &ty, entryToMove);
 			if (tx != NONE) {
 				Com_Printf("trying to move item %s from floor into backpack to pos %i:%i\n", entryToMove->item.t->name, tx, ty);
-				CU_ASSERT_TRUE(G_ActorInvMove(ent, INVDEF(csi.idFloor), entryToMove, INVDEF(csi.idBackpack), tx, ty, qfalse));
+				CU_ASSERT_TRUE(G_ActorInvMove(ent, INVDEF(csi.idFloor), entryToMove, INVDEF(csi.idBackpack), tx, ty, false));
 				UFO_CU_ASSERT_EQUAL_INT_MSG_FATAL(GAMETEST_GetItemCount(ent, csi.idFloor), count - 1, va("item %s could not get moved successfully from floor into backpack", entryToMove->item.t->name));
 				Com_Printf("item %s was removed from floor\n", entryToMove->item.t->name);
 				UFO_CU_ASSERT_EQUAL_INT_MSG_FATAL(GAMETEST_GetItemCount(ent, csi.idBackpack), 1, va("item %s could not get moved successfully from floor into backpack", entryToMove->item.t->name));
@@ -345,7 +345,7 @@ static void testInventoryTempContainerLinks (void)
 
 		/* the other tests didn't call the server shutdown function to clean up */
 		OBJZERO(*sv);
-		SV_Map(qtrue, mapName, NULL);
+		SV_Map(true, mapName, NULL);
 		level.activeTeam = TEAM_ALIEN;
 
 		/* first alien that should die and drop its inventory */

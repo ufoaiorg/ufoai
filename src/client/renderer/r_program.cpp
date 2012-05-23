@@ -391,13 +391,13 @@ static size_t R_InitializeShader (const GLenum type, const char *name, char *out
  * @param[in] inElse If true, parsing an #else clause and shouldn't expect another #else
  * @return The number of characters added to the buffer pointed to by out.
  */
-static size_t R_PreprocessShaderR (const char *name, const char **inPtr, char *out, long *remainingOutChars, qboolean nested, qboolean inElse)
+static size_t R_PreprocessShaderR (const char *name, const char **inPtr, char *out, long *remainingOutChars, bool nested, bool inElse)
 {
 	const size_t INITIAL_REMAINING_OUT_CHARS = (size_t)*remainingOutChars;
 	/* Keep looping till we reach the end of the shader string, or a parsing error.*/
 	while (**inPtr) {
 		if ('#' == **inPtr) {
-			qboolean endBlockToken;
+			bool endBlockToken;
 			(*inPtr)++;
 
 			endBlockToken = !strncmp(*inPtr, "endif", 5);
@@ -407,7 +407,7 @@ static size_t R_PreprocessShaderR (const char *name, const char **inPtr, char *o
 					/* Error in shader! Print a message saying our preprocessor failed parsing.*/
 					Com_Error(ERR_DROP, "R_PreprocessShaderR: #else without #if: %s", name);
 				}
-				endBlockToken = qtrue;
+				endBlockToken = true;
 			}
 
 			if (endBlockToken) {
@@ -426,21 +426,21 @@ static size_t R_PreprocessShaderR (const char *name, const char **inPtr, char *o
 				/* Get the corresponding cvar value.*/
 				f = Cvar_GetValue(Com_Parse(inPtr));
 				if (f) { /* Condition is true, recursively preprocess #if block, and skip over #else block, if any */
-					int size = R_PreprocessShaderR(name, inPtr, out, remainingOutChars, qtrue, qfalse);
+					int size = R_PreprocessShaderR(name, inPtr, out, remainingOutChars, true, false);
 					if (out) out += size;
 
 					if (!strncmp((*inPtr), "else", 4)) {/* Preprocess and skip #else block */
 						(*inPtr) +=4 ;
-						R_PreprocessShaderR(name, inPtr, (char*)0, remainingOutChars, qtrue, qtrue);
+						R_PreprocessShaderR(name, inPtr, (char*)0, remainingOutChars, true, true);
 					}
 				} else {
 					/* The cvar was false, don't add to out. Lets look and see if we hit a #else, or #endif.*/
-					R_PreprocessShaderR(name, inPtr, (char*)0, remainingOutChars, qtrue, qfalse);
+					R_PreprocessShaderR(name, inPtr, (char*)0, remainingOutChars, true, false);
 					if (!strncmp((*inPtr), "else", 4)) {
 						int size;
 						/* All right, we want to add this to out.*/
 						(*inPtr) +=4 ;
-						size = R_PreprocessShaderR(name, inPtr, out, remainingOutChars, qtrue, qtrue);
+						size = R_PreprocessShaderR(name, inPtr, out, remainingOutChars, true, true);
 						if (out) out += size;
 					}
 				}
@@ -456,7 +456,7 @@ static size_t R_PreprocessShaderR (const char *name, const char **inPtr, char *o
 					(*remainingOutChars)--;
 				}
 
-				size = R_PreprocessShaderR(name, inPtr, out, remainingOutChars, qtrue, qfalse);
+				size = R_PreprocessShaderR(name, inPtr, out, remainingOutChars, true, false);
 				if (out) out += size;
 
 				if (!strncmp((*inPtr), "else", 4)) {
@@ -466,7 +466,7 @@ static size_t R_PreprocessShaderR (const char *name, const char **inPtr, char *o
 						*out++ = '#';
 						(*remainingOutChars)--;
 					}
-					size = R_PreprocessShaderR(name, inPtr, out, remainingOutChars, qtrue, qtrue);
+					size = R_PreprocessShaderR(name, inPtr, out, remainingOutChars, true, true);
 					if (out) out += size;
 				}
 
@@ -491,9 +491,9 @@ static size_t R_PreprocessShaderR (const char *name, const char **inPtr, char *o
 				bufAsChar = (const char*)buf;
 				bufAsCharPtr = &bufAsChar;
 				if (out) {
-					out += R_PreprocessShaderR(name, bufAsCharPtr, out, remainingOutChars, nested, qfalse);
+					out += R_PreprocessShaderR(name, bufAsCharPtr, out, remainingOutChars, nested, false);
 				} else {
-					R_PreprocessShaderR(name, bufAsCharPtr, out, remainingOutChars, nested, qfalse);
+					R_PreprocessShaderR(name, bufAsCharPtr, out, remainingOutChars, nested, false);
 				}
 				FS_FreeFile(buf);
 			} else if (!strncmp((*inPtr), "unroll", 6)) {
@@ -587,7 +587,7 @@ static size_t R_PreprocessShaderR (const char *name, const char **inPtr, char *o
 static size_t R_PreprocessShader (const char *name, const char *in, char *out, size_t *remainingOutChars)
 {
 	long remainingOutCharsAsLong = *remainingOutChars;
-	size_t numCharactersAddedToOutBuffer = R_PreprocessShaderR(name, &in, out, &remainingOutCharsAsLong, qfalse, qfalse);
+	size_t numCharactersAddedToOutBuffer = R_PreprocessShaderR(name, &in, out, &remainingOutCharsAsLong, false, false);
 	*remainingOutChars = remainingOutCharsAsLong;
 	return numCharactersAddedToOutBuffer;
 }
@@ -1031,7 +1031,7 @@ void R_InitPrograms (void)
 	if (!qglCreateProgram) {
 		Com_Printf("not using GLSL shaders\n");
 		Cvar_Set("r_programs", "0");
-		r_programs->modified = qfalse;
+		r_programs->modified = false;
 		return;
 	}
 
@@ -1055,7 +1055,7 @@ void R_InitPrograms (void)
 		&& r_state.convolve_program && r_state.atmosphere_program && r_state.simple_glow_program)) {
 		Com_Printf("disabled shaders because they failed to compile\n");
 		Cvar_Set("r_programs", "0");
-		r_programs->modified = qfalse;
+		r_programs->modified = false;
 	}
 }
 

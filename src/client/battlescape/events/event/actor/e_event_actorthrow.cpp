@@ -36,7 +36,7 @@ int CL_ActorDoThrowTime (const eventRegister_t *self, struct dbuffer *msg, event
 	/* the delay is encoded in the message already */
 	eventTiming->nextTime += NET_ReadShort(msg);
 	eventTiming->impactTime = eventTiming->shootTime = eventTiming->nextTime;
-	eventTiming->parsedDeath = qfalse;
+	eventTiming->parsedDeath = false;
 
 	return eventTime;
 }

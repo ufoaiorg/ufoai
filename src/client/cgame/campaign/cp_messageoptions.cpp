@@ -70,13 +70,13 @@ messageSettings_t messageSettings[NT_NUM_NOTIFYTYPE]; /**< array holding actual 
  * @param listIndex listIndex in menu to update via confunc
  * @param type notification type to update
  * @param optionType option type that should be updated
- * @param activate flag indicating whether setting should be activated (qtrue) or deactivated
+ * @param activate flag indicating whether setting should be activated (true) or deactivated
  * @param sendCommands flag indicating whether confunc command to update menu button should be sent
  * @sa MSO_Toggle_f
  * @sa MSO_Set_f
- * @note if sendCommands is qfalse, initialization of buttons is reactivated for next menu displaying
+ * @note if sendCommands is false, initialization of buttons is reactivated for next menu displaying
  */
-void MSO_Set (const int listIndex, const notify_t type, const int optionType, const qboolean activate, const qboolean sendCommands)
+void MSO_Set (const int listIndex, const notify_t type, const int optionType, const bool activate, const bool sendCommands)
 {
 	messageSettings_t *settings = &messageSettings[type];
 
@@ -104,7 +104,7 @@ void MSO_Set (const int listIndex, const notify_t type, const int optionType, co
 		cgi->UI_ExecuteConfunc("ms_btnstate %i %i %i %i", listIndex, settings->doPause, settings->doNotify, settings->doSound);
 	else
 		/* ensure that message buttons will be initialized correctly if menu is shown next time */
-		MSO_SetMenuState(MSO_MSTATE_PREPARED,qfalse, qfalse);
+		MSO_SetMenuState(MSO_MSTATE_PREPARED,false, false);
 }
 
 /**
@@ -139,7 +139,7 @@ static void MSO_Set_f (void)
 			Com_Printf("Unrecognized optionstype during set '%s' ignored\n", Cmd_Argv(2));
 			return;
 		}
-		MSO_Set(0, (notify_t)type, optionsType, atoi(Cmd_Argv(3)), qfalse);
+		MSO_Set(0, (notify_t)type, optionsType, atoi(Cmd_Argv(3)), false);
 	}
 }
 
@@ -155,7 +155,7 @@ static void MSO_SetAll_f(void)
 	else {
 		int optionsType;
 		int type;
-		qboolean activate = atoi(Cmd_Argv(2));
+		bool activate = atoi(Cmd_Argv(2));
 		if (Q_streq(Cmd_Argv(1), "pause"))
 			optionsType = MSO_PAUSE;
 		else if (Q_streq(Cmd_Argv(1), "notify"))
@@ -168,10 +168,10 @@ static void MSO_SetAll_f(void)
 		}
 		/* update settings for chosen type */
 		for (type = 0; type < NT_NUM_NOTIFYTYPE; type ++) {
-			MSO_Set(0, (notify_t)type, optionsType, activate, qfalse);
+			MSO_Set(0, (notify_t)type, optionsType, activate, false);
 		}
 		/* reinit menu */
-		MSO_SetMenuState(MSO_MSTATE_PREPARED,qtrue,qtrue);
+		MSO_SetMenuState(MSO_MSTATE_PREPARED,true,true);
 	}
 }
 
@@ -187,7 +187,7 @@ static void MSO_SetAll_f(void)
  * @return message_t pointer if message was added
  * @sa MS_AddNewMessageSound
  */
-message_t *MSO_CheckAddNewMessage (const notify_t messagecategory, const char *title, const char *text, messageType_t type, technology_t *pedia, qboolean popup)
+message_t *MSO_CheckAddNewMessage (const notify_t messagecategory, const char *title, const char *text, messageType_t type, technology_t *pedia, bool popup)
 {
 	message_t *result = NULL;
 	const messageSettings_t *settings = &messageSettings[messagecategory];
@@ -203,7 +203,7 @@ message_t *MSO_CheckAddNewMessage (const notify_t messagecategory, const char *t
  * @brief saves current notification and pause settings
  * @sa MSO_LoadXML
  */
-qboolean MSO_SaveXML (xmlNode_t *p)
+bool MSO_SaveXML (xmlNode_t *p)
 {
 	int type;
 	xmlNode_t *n = XML_AddNode(p, SAVE_MESSAGEOPTIONS_MESSAGEOPTIONS);
@@ -219,20 +219,20 @@ qboolean MSO_SaveXML (xmlNode_t *p)
 		XML_AddBoolValue(s, SAVE_MESSAGEOPTIONS_SOUND, actualSetting.doSound);
 	}
 
-	return qtrue;
+	return true;
 }
 
 /**
  * @brief Restores the notification and pause settings from savegame
  * @sa MSO_SaveXML
  */
-qboolean MSO_LoadXML (xmlNode_t *p)
+bool MSO_LoadXML (xmlNode_t *p)
 {
 	xmlNode_t *n, *s;
 
 	n = XML_GetNode(p, SAVE_MESSAGEOPTIONS_MESSAGEOPTIONS);
 	if (!n)
-		return qfalse;
+		return false;
 
 	for (s = XML_GetNode(n, SAVE_MESSAGEOPTIONS_TYPE); s; s = XML_GetNextNode(s,n, SAVE_MESSAGEOPTIONS_TYPE)) {
 		const char *messagetype = XML_GetString(s, SAVE_MESSAGEOPTIONS_NAME);
@@ -248,13 +248,13 @@ qboolean MSO_LoadXML (xmlNode_t *p)
 			Com_Printf("Unrecognized messagetype '%s' ignored while loading\n", messagetype);
 			continue;
 		}
-		MSO_Set(0, (notify_t)type, MSO_NOTIFY, XML_GetBool(s, SAVE_MESSAGEOPTIONS_NOTIFY, qfalse), qfalse);
-		MSO_Set(0, (notify_t)type, MSO_PAUSE, XML_GetBool(s, SAVE_MESSAGEOPTIONS_PAUSE, qfalse), qfalse);
-		MSO_Set(0, (notify_t)type, MSO_SOUND, XML_GetBool(s, SAVE_MESSAGEOPTIONS_SOUND, qfalse), qfalse);
+		MSO_Set(0, (notify_t)type, MSO_NOTIFY, XML_GetBool(s, SAVE_MESSAGEOPTIONS_NOTIFY, false), false);
+		MSO_Set(0, (notify_t)type, MSO_PAUSE, XML_GetBool(s, SAVE_MESSAGEOPTIONS_PAUSE, false), false);
+		MSO_Set(0, (notify_t)type, MSO_SOUND, XML_GetBool(s, SAVE_MESSAGEOPTIONS_SOUND, false), false);
 	}
 
-	MSO_SetMenuState(MSO_MSTATE_REINIT,qfalse, qfalse);
-	return qtrue;
+	MSO_SetMenuState(MSO_MSTATE_REINIT,false, false);
+	return true;
 }
 
 /**
@@ -289,7 +289,7 @@ void MSO_ParseSettings (const char *name, const char **text)
 		Cmd_ExecuteString(token);
 	} while (*text);
 	/* reset menu state, was updated by msgoptions_set */
-	MSO_SetMenuState(MSO_MSTATE_REINIT,qfalse,qfalse);
+	MSO_SetMenuState(MSO_MSTATE_REINIT,false,false);
 }
 
 /**
@@ -336,7 +336,7 @@ void MSO_ParseCategories (const char *name, const char **text)
 	category->last = category->first = &ccs.msgCategoryEntries[ccs.numMsgCategoryEntries];
 	entry->previous = NULL;
 	entry->next = NULL;
-	entry->isCategory = qtrue;
+	entry->isCategory = true;
 	entry->notifyType = category->id;
 
 	ccs.numMsgCategoryEntries++;
@@ -372,7 +372,7 @@ void MSO_ParseCategories (const char *name, const char **text)
 	} while (*text);
 
 	ccs.numMsgCategories++;
-	MSO_SetMenuState(MSO_MSTATE_REINIT,qfalse,qfalse);
+	MSO_SetMenuState(MSO_MSTATE_REINIT,false,false);
 }
 
 void MSO_Init (void)

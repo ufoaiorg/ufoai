@@ -61,8 +61,8 @@ GLOBAL TYPES
 
 /** a trace is returned when a box is swept through the world */
 typedef struct trace_s {
-	qboolean allsolid;			/**< if true, plane is not valid */
-	qboolean startsolid;		/**< if true, the initial point was in a solid area */
+	bool allsolid;			/**< if true, plane is not valid */
+	bool startsolid;		/**< if true, the initial point was in a solid area */
 	float fraction;				/**< distance traveled, 1.0 = didn't hit anything, 0.0 Inside of a brush */
 	vec3_t endpos;				/**< final position along line */
 	TR_PLANE_TYPE plane;		/**< surface plane at impact - normal is in there */
@@ -85,7 +85,7 @@ typedef struct boxtrace_s {
 	trace_t trace;
 	uint32_t contents;			/**< content flags to match again - MASK_ALL to match everything */
 	uint32_t rejects;			/**< content flags that should be rejected in a trace - ignored when MASK_ALL is given as content flags */
-	qboolean ispoint;			/* optimized case */
+	bool ispoint;			/* optimized case */
 
 	TR_TILE_TYPE *tile;
 } boxtrace_t;
@@ -116,8 +116,8 @@ trace_t TR_SingleTileBoxTrace(mapTiles_t *mapTiles, const vec3_t start, const ve
 int TR_TestLine_r(TR_TILE_TYPE *tile, int32_t nodenum, const vec3_t start, const vec3_t stop);
 trace_t TR_BoxTrace(TR_TILE_TYPE *tile, const vec3_t start, const vec3_t end, const vec3_t mins, const vec3_t maxs, const int headnode, const int brushmask, const int brushreject, const float fraction);
 
-qboolean TR_TestLine(mapTiles_t *mapTiles, const vec3_t start, const vec3_t stop, const int levelmask);
-qboolean TR_TestLineDM(mapTiles_t* mapTiles, const vec3_t start, const vec3_t stop, vec3_t end, const int levelmask);
+bool TR_TestLine(mapTiles_t *mapTiles, const vec3_t start, const vec3_t stop, const int levelmask);
+bool TR_TestLineDM(mapTiles_t* mapTiles, const vec3_t start, const vec3_t stop, vec3_t end, const int levelmask);
 trace_t TR_TileBoxTrace(TR_TILE_TYPE *myTile, const vec3_t start, const vec3_t end, const vec3_t mins, const vec3_t maxs, const int levelmask, const int brushmask, const int brushreject);
 
 #endif /* COMMON_TRACING_H */

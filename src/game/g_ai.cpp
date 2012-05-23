@@ -40,7 +40,7 @@ void AI_Init (void)
  * @param[in] ent AI that is trying to shoot
  * @param[in] target Shoot to this location
  */
-static qboolean AI_CheckFF (const edict_t * ent, const vec3_t target, float spread)
+static bool AI_CheckFF (const edict_t * ent, const vec3_t target, float spread)
 {
 	edict_t *check = NULL;
 	vec3_t dtarget, dcheck, back;
@@ -64,13 +64,13 @@ static qboolean AI_CheckFF (const edict_t * ent, const vec3_t target, float spre
 				VectorAdd(dcheck, back, dcheck);
 				VectorNormalizeFast(dcheck);
 				if (DotProduct(dtarget, dcheck) > cosSpread)
-					return qtrue;
+					return true;
 			}
 		}
 	}
 
 	/* no ally in danger */
-	return qfalse;
+	return false;
 }
 
 /**
@@ -78,26 +78,26 @@ static qboolean AI_CheckFF (const edict_t * ent, const vec3_t target, float spre
  * @todo Check whether radius and power of fd are to to big for dist
  * @todo Check whether the alien will die when shooting
  */
-static qboolean AI_FighterCheckShoot (const edict_t* ent, const edict_t* check, const fireDef_t* fd, float *dist)
+static bool AI_FighterCheckShoot (const edict_t* ent, const edict_t* check, const fireDef_t* fd, float *dist)
 {
 	/* check range */
 	*dist = VectorDist(ent->origin, check->origin);
 	if (*dist > fd->range)
-		return qfalse;
+		return false;
 
 	/* if insane, we don't check more */
 	if (G_IsInsane(ent))
-		return qtrue;
+		return true;
 
 	/* don't shoot - we are to close */
 	if (*dist < fd->splrad)
-		return qfalse;
+		return false;
 
 	/* check FF */
 	if (AI_CheckFF(ent, check->origin, fd->spread[0]))
-		return qfalse;
+		return false;
 
-	return qtrue;
+	return true;
 }
 
 /**
@@ -109,20 +109,20 @@ static qboolean AI_FighterCheckShoot (const edict_t* ent, const edict_t* check, 
  * @sa Touch_DoorTrigger
  * @todo Finish implementation
  */
-qboolean AI_CheckUsingDoor (const edict_t *ent, const edict_t *door)
+bool AI_CheckUsingDoor (const edict_t *ent, const edict_t *door)
 {
 	/* don't try to use the door in every case */
 	if (frand() < 0.3)
-		return qfalse;
+		return false;
 
 	/* not in the view frustum - don't use the door while not seeing it */
 	if (!G_FrustumVis(door, ent->origin))
-		return qfalse;
+		return false;
 
 	/* if the alien is trying to hide and the door is
 	* still opened, close it */
 	if (ent->hiding && door->doorState == STATE_OPENED)
-		return qtrue;
+		return true;
 
 	/* aliens and civilians need different handling */
 	switch (ent->team) {
@@ -143,10 +143,10 @@ qboolean AI_CheckUsingDoor (const edict_t *ent, const edict_t *door)
 			/* check whether the enemy is close enough to change the state */
 			if (VectorDist(check->origin, ent->origin) > MAX_SPOT_DIST)
 				continue;
-			actorVis = G_ActorVis(check->origin, check, ent, qtrue);
+			actorVis = G_ActorVis(check->origin, check, ent, true);
 			/* there is a visible enemy, don't use that door */
 			if (actorVis > ACTOR_VIS_0)
-				return qfalse;
+				return false;
 		}
 		}
 		break;
@@ -159,7 +159,7 @@ qboolean AI_CheckUsingDoor (const edict_t *ent, const edict_t *door)
 			ent->team, ent->type);
 		break;
 	}
-	return qtrue;
+	return true;
 }
 
 /**
@@ -167,7 +167,7 @@ qboolean AI_CheckUsingDoor (const edict_t *ent, const edict_t *door)
  * @param[in] ent The AI controlled actor to chech the state change for
  * @returns true if the actor should go into STATE_CROUCHED, false otherwise
  */
-static qboolean AI_CheckCrouch (const edict_t *ent)
+static bool AI_CheckCrouch (const edict_t *ent)
 {
 	edict_t *check = NULL;
 
@@ -184,11 +184,11 @@ static qboolean AI_CheckCrouch (const edict_t *ent)
 		/* check whether the enemy is close enough to change the state */
 		if (VectorDist(check->origin, ent->origin) > MAX_SPOT_DIST)
 			continue;
-		actorVis = G_ActorVis(check->origin, check, ent, qtrue);
+		actorVis = G_ActorVis(check->origin, check, ent, true);
 		if (actorVis >= ACTOR_VIS_50)
-			return qtrue;
+			return true;
 	}
-	return qfalse;
+	return false;
 }
 
 /**
@@ -197,7 +197,7 @@ static qboolean AI_CheckCrouch (const edict_t *ent)
  * @param[in] ent The alien edict that should (maybe) hide
  * @return @c true if hide is needed or @c false if the alien thinks that it is not needed
  */
-static qboolean AI_HideNeeded (const edict_t *ent)
+static bool AI_HideNeeded (const edict_t *ent)
 {
 	/* only brave aliens are trying to stay on the field if no dangerous actor is visible */
 	if (ent->morale > mor_brave->integer) {
@@ -228,14 +228,14 @@ static qboolean AI_HideNeeded (const edict_t *ent)
 						const int hidingTeam = AI_GetHidingTeam(ent);
 						/* now check whether this enemy is visible for this alien */
 						if (G_Vis(hidingTeam, ent, from, VT_NOFRUSTUM))
-							return qtrue;
+							return true;
 					}
 				}
 			}
 		}
-		return qfalse;
+		return false;
 	}
-	return qtrue;
+	return true;
 }
 
 /**
@@ -306,7 +306,7 @@ int AI_GetHidingTeam (const edict_t *ent)
  * @param[in] team The team from which actor tries to hide
  * @return @c true if hiding is possible, @c false otherwise
  */
-qboolean AI_FindHidingLocation (int team, edict_t *ent, const pos3_t from, int *tuLeft)
+bool AI_FindHidingLocation (int team, edict_t *ent, const pos3_t from, int *tuLeft)
 {
 	byte minX, maxX, minY, maxY;
 	const byte crouchingState = G_IsCrouched(ent) ? 1 : 0;
@@ -326,7 +326,7 @@ qboolean AI_FindHidingLocation (int team, edict_t *ent, const pos3_t from, int *
 	for (ent->pos[1] = minY; ent->pos[1] <= maxY; ent->pos[1]++) {
 		for (ent->pos[0] = minX; ent->pos[0] <= maxX; ent->pos[0]++) {
 			/* time */
-			const pos_t delta = gi.MoveLength(hidePathingTable, ent->pos, crouchingState, qfalse);
+			const pos_t delta = gi.MoveLength(hidePathingTable, ent->pos, crouchingState, false);
 			if (delta > *tuLeft || delta == ROUTING_NOT_REACHABLE)
 				continue;
 
@@ -336,11 +336,11 @@ qboolean AI_FindHidingLocation (int team, edict_t *ent, const pos3_t from, int *
 				continue;
 
 			*tuLeft -= delta;
-			return qtrue;
+			return true;
 		}
 	}
 
-	return qfalse;
+	return false;
 }
 
 /**
@@ -352,7 +352,7 @@ qboolean AI_FindHidingLocation (int team, edict_t *ent, const pos3_t from, int *
  * @param[in] target Tries to find the nearest position to this location
  * @param[in] tu The available TUs of the actor
  */
-qboolean AI_FindHerdLocation (edict_t *ent, const pos3_t from, const vec3_t target, int tu)
+bool AI_FindHerdLocation (edict_t *ent, const pos3_t from, const vec3_t target, int tu)
 {
 	byte minX, maxX, minY, maxY;
 	const byte crouchingState = G_IsCrouched(ent) ? 1 : 0;
@@ -390,7 +390,7 @@ qboolean AI_FindHerdLocation (edict_t *ent, const pos3_t from, const vec3_t targ
 	for (ent->pos[1] = minY; ent->pos[1] <= maxY; ent->pos[1]++) {
 		for (ent->pos[0] = minX; ent->pos[0] <= maxX; ent->pos[0]++) {
 			/* time */
-			const pos_t delta = gi.MoveLength(herdPathingTable, ent->pos, crouchingState, qfalse);
+			const pos_t delta = gi.MoveLength(herdPathingTable, ent->pos, crouchingState, false);
 			if (delta > tu || delta == ROUTING_NOT_REACHABLE)
 				continue;
 
@@ -412,10 +412,10 @@ qboolean AI_FindHerdLocation (edict_t *ent, const pos3_t from, const vec3_t targ
 
 	if (!VectorCompare(from, bestpos)) {
 		VectorCopy(bestpos, ent->pos);
-		return qtrue;
+		return true;
 	}
 
-	return qfalse;
+	return false;
 }
 
 /**
@@ -439,7 +439,7 @@ static edict_t *AI_SearchDestroyableObject (const edict_t *ent, const fireDef_t 
 				continue;
 
 			/* check whether target is visible enough */
-			vis = G_ActorVis(ent->origin, check, qtrue);
+			vis = G_ActorVis(ent->origin, check, true);
 			if (vis < ACTOR_VIS_0)
 				continue;
 
@@ -456,7 +456,7 @@ static edict_t *AI_SearchDestroyableObject (const edict_t *ent, const fireDef_t 
  */
 static void AI_SearchBestTarget (aiAction_t *aia, const edict_t *ent, edict_t *check, const item_t *item, shoot_types_t shootType, int tu, float *maxDmg, int *bestTime, const fireDef_t *fdArray)
 {
-	qboolean visChecked = qfalse;	/* only check visibily once for an actor */
+	bool visChecked = false;	/* only check visibily once for an actor */
 	fireDefIndex_t fdIdx;
 	float dist;
 
@@ -474,8 +474,8 @@ static void AI_SearchBestTarget (aiAction_t *aia, const edict_t *ent, edict_t *c
 
 			/* check how good the target is visible and if we have a shot */
 			if (!visChecked) {	/* only do this once per actor ! */
-				vis = G_ActorVis(ent->origin, ent, check, qtrue);
-				visChecked = qtrue;
+				vis = G_ActorVis(ent->origin, ent, check, true);
+				visChecked = true;
 
 				if (vis != ACTOR_VIS_0) {
 					/* check weapon can hit */
@@ -568,7 +568,7 @@ static float AI_FighterCalcBestAction (edict_t * ent, pos3_t to, aiAction_t * ai
 	int bestTime = -1;
 
 	move = gi.MoveLength(level.pathingMap, to,
-			G_IsCrouched(ent) ? 1 : 0, qtrue);
+			G_IsCrouched(ent) ? 1 : 0, true);
 	tu = G_ActorUsableTUs(ent) - move;
 
 	/* test for time */
@@ -686,7 +686,7 @@ static float AI_CivilianCalcBestAction (edict_t * ent, pos3_t to, aiAction_t * a
 	VectorCopy(to, aia->stop);
 	G_EdictSetOrigin(ent, to);
 
-	move = gi.MoveLength(level.pathingMap, to, crouchingState, qtrue);
+	move = gi.MoveLength(level.pathingMap, to, crouchingState, true);
 	tu = ent->TU - move;
 
 	/* test for time */
@@ -765,7 +765,7 @@ static float AI_CivilianCalcBestAction (edict_t * ent, pos3_t to, aiAction_t * a
 		if (!G_IsVisibleForTeam(check, ent->team))
 			continue;
 
-		if (G_ActorVis(check->origin, check, ent, qtrue) > 0.25)
+		if (G_ActorVis(check->origin, check, ent, true) > 0.25)
 			reactionTrap += 25.0;
 	}
 	delta -= reactionTrap;
@@ -807,7 +807,7 @@ static int AI_CheckForMissionTargets (const player_t* player, edict_t *ent, aiAc
 			/* the lower the count value - the nearer the final target */
 			if (checkPoint->count < ent->count) {
 				if (VectorDist(ent->origin, checkPoint->origin) <= WAYPOINT_CIV_DIST) {
-					const pos_t move = gi.MoveLength(level.pathingMap, checkPoint->pos, crouchingState, qtrue);
+					const pos_t move = gi.MoveLength(level.pathingMap, checkPoint->pos, crouchingState, true);
 					i++;
 					if (move == ROUTING_NOT_REACHABLE)
 						continue;
@@ -884,7 +884,7 @@ static aiAction_t AI_PrepBestAction (const player_t *player, edict_t * ent)
 	for (to[2] = 0; to[2] < PATHFINDING_HEIGHT; to[2]++)
 		for (to[1] = yl; to[1] < yh; to[1]++)
 			for (to[0] = xl; to[0] < xh; to[0]++) {
-				const pos_t move = gi.MoveLength(level.pathingMap, to, crouchingState, qtrue);
+				const pos_t move = gi.MoveLength(level.pathingMap, to, crouchingState, true);
 				if (move != ROUTING_NOT_REACHABLE && move <= ent->TU) {
 					if (G_IsCivilian(ent) || G_IsPaniced(ent))
 						bestActionPoints = AI_CivilianCalcBestAction(ent, to, &aia);
@@ -915,7 +915,7 @@ static aiAction_t AI_PrepBestAction (const player_t *player, edict_t * ent)
 
 	/* check if the actor is in crouched state and try to stand up before doing the move */
 	if (G_IsCrouched(ent))
-		G_ClientStateChange(player, ent, STATE_CROUCHED, qtrue);
+		G_ClientStateChange(player, ent, STATE_CROUCHED, true);
 
 	/* do the move */
 	G_ClientMove(player, 0, ent, bestAia.to);
@@ -976,7 +976,7 @@ static void AI_TryToReloadWeapon (edict_t *ent, containerIndex_t containerID)
 	if (G_ClientCanReload(ent, containerID)) {
 		G_ActorReload(ent, INVDEF(containerID));
 	} else {
-		G_ActorInvMove(ent, INVDEF(containerID), CONTAINER(ent, containerID), INVDEF(gi.csi->idFloor), NONE, NONE, qtrue);
+		G_ActorInvMove(ent, INVDEF(containerID), CONTAINER(ent, containerID), INVDEF(gi.csi->idFloor), NONE, NONE, true);
 	}
 }
 
@@ -1013,7 +1013,7 @@ void AI_ActorThink (player_t * player, edict_t * ent)
 		const fireDefIndex_t fdIdx = bestAia.fd ? bestAia.fd->fdIdx : 0;
 		/* shoot until no shots are left or target died */
 		while (bestAia.shots) {
-			G_ClientShoot(player, ent, bestAia.target->pos, bestAia.shootType, fdIdx, NULL, qtrue, bestAia.z_align);
+			G_ClientShoot(player, ent, bestAia.target->pos, bestAia.shootType, fdIdx, NULL, true, bestAia.z_align);
 			bestAia.shots--;
 			/* died by our own shot? */
 			if (G_IsDead(ent))
@@ -1027,7 +1027,7 @@ void AI_ActorThink (player_t * player, edict_t * ent)
 					return;
 			}
 		}
-		ent->hiding = qtrue;
+		ent->hiding = true;
 
 		/* now hide - for this we use the team of the alien actor because a phalanx soldier
 		 * might become visible during the hide movement */
@@ -1037,7 +1037,7 @@ void AI_ActorThink (player_t * player, edict_t * ent)
 
 		/* decide whether the actor wants to crouch */
 		if (AI_CheckCrouch(ent))
-			G_ClientStateChange(player, ent, STATE_CROUCHED, qtrue);
+			G_ClientStateChange(player, ent, STATE_CROUCHED, true);
 
 		/* actor is still alive - try to turn into the appropriate direction to see the target
 		 * actor once he sees the ai, too */
@@ -1045,9 +1045,9 @@ void AI_ActorThink (player_t * player, edict_t * ent)
 
 		/** @todo If possible targets that can shoot back (check their inventory for weapons, not for ammo)
 		 * are close, go into reaction fire mode, too */
-		/* G_ClientStateChange(player, ent->number, STATE_REACTION_ONCE, qtrue); */
+		/* G_ClientStateChange(player, ent->number, STATE_REACTION_ONCE, true); */
 
-		ent->hiding = qfalse;
+		ent->hiding = false;
 	}
 }
 
@@ -1176,7 +1176,7 @@ static void AI_InitPlayer (const player_t * player, edict_t * ent, const equipDe
 
 	/* no need to call G_SendStats for the AI - reaction fire is serverside only for the AI */
 	if (frand() < 0.75f)
-		G_ClientStateChange(player, ent, STATE_REACTION, qfalse);
+		G_ClientStateChange(player, ent, STATE_REACTION, false);
 
 	/* initialize the LUA AI now */
 	if (team == TEAM_CIVILIAN)
@@ -1238,7 +1238,7 @@ static void G_SpawnAIPlayers (const player_t * player, int numSpawn)
 
 	/* show visible actors */
 	G_VisFlagsClear(player->pers.team);
-	G_CheckVis(NULL, qfalse);
+	G_CheckVis(NULL, false);
 }
 
 /**
@@ -1265,7 +1265,7 @@ void AI_CheckRespawn (int team)
 		if (ent == NULL)
 			break;
 
-		const int status = G_CheckVis(ent, qfalse);
+		const int status = G_CheckVis(ent, false);
 		if (!(status & VIS_CHANGE)) {
 			G_EventActorAdd(~G_VisToPM(ent->visflags), ent);
 		}
@@ -1294,9 +1294,9 @@ player_t *AI_CreatePlayer (int team)
 	while ((p = G_PlayerGetNextAI(p))) {
 		if (!p->inuse) {
 			OBJZERO(*p);
-			p->inuse = qtrue;
+			p->inuse = true;
 			p->num = p - game.players;
-			p->pers.ai = qtrue;
+			p->pers.ai = true;
 			G_SetTeamForPlayer(p, team);
 			if (p->pers.team == TEAM_CIVILIAN) {
 				G_SpawnAIPlayers(p, ai_numcivilians->integer);

@@ -84,15 +84,15 @@ typedef struct {
 
 void UI_RegisterWindowNode(uiBehaviour_t *behaviour);
 
-qboolean UI_WindowIsFullScreen(uiNode_t const* window);
-qboolean UI_WindowIsDropDown(uiNode_t const* window);
-qboolean UI_WindowIsModal(uiNode_t const* window);
+bool UI_WindowIsFullScreen(uiNode_t const* window);
+bool UI_WindowIsDropDown(uiNode_t const* window);
+bool UI_WindowIsModal(uiNode_t const* window);
 void UI_WindowNodeRegisterKeyBinding(uiNode_t* window, struct uiKeyBinding_s *binding);
 struct uiKeyBinding_s *UI_WindowNodeGetKeyBinding(uiNode_t const* node, unsigned int key);
 vec_t *UI_WindowNodeGetNoticePosition(uiNode_t* node);
 /* child index */
 uiNode_t* UI_WindowNodeGetIndexedChild(uiNode_t* node, const char* childName);
-qboolean UI_WindowNodeAddIndexedNode(uiNode_t* node, uiNode_t* child);
-qboolean UI_WindowNodeRemoveIndexedNode(uiNode_t* node, uiNode_t* child);
+bool UI_WindowNodeAddIndexedNode(uiNode_t* node, uiNode_t* child);
+bool UI_WindowNodeRemoveIndexedNode(uiNode_t* node, uiNode_t* child);
 
 #endif

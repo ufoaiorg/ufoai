@@ -69,7 +69,7 @@ uiNode_t* UI_WindowNodeGetIndexedChild (uiNode_t* const node, const char* childN
 /**
  * @brief Add a node to the child index
  */
-qboolean UI_WindowNodeAddIndexedNode (uiNode_t* const node, uiNode_t* const child)
+bool UI_WindowNodeAddIndexedNode (uiNode_t* const node, uiNode_t* const child)
 {
 	node_index_t *a;
 	unsigned int hash;
@@ -90,22 +90,22 @@ qboolean UI_WindowNodeAddIndexedNode (uiNode_t* const node, uiNode_t* const chil
 		EXTRADATA(node).index = a;
 	}
 
-	return qfalse;
+	return false;
 }
 
 /**
  * @brief Remove a node from the child index
  */
-qboolean UI_WindowNodeRemoveIndexedNode (uiNode_t* const node, uiNode_t* const child)
+bool UI_WindowNodeRemoveIndexedNode (uiNode_t* const node, uiNode_t* const child)
 {
 	/** @todo FIXME implement it */
-	return qfalse;
+	return false;
 }
 
 /**
  * @brief Check if a window is fullscreen or not
  */
-qboolean UI_WindowIsFullScreen (const uiNode_t* const node)
+bool UI_WindowIsFullScreen (const uiNode_t* const node)
 {
 	assert(UI_NodeInstanceOf(node, "window"));
 	return EXTRADATACONST(node).isFullScreen;
@@ -145,7 +145,7 @@ void uiWindowNode::draw (uiNode_t *node)
 		UI_DrawFill(0, 0, viddef.virtualWidth, viddef.virtualHeight, modalBackground);
 
 	if (EXTRADATA(node).background) {
-		UI_DrawSpriteInBox(qfalse, EXTRADATA(node).background, SPRITE_STATUS_NORMAL, pos[0], pos[1], node->box.size[0], node->box.size[1]);
+		UI_DrawSpriteInBox(false, EXTRADATA(node).background, SPRITE_STATUS_NORMAL, pos[0], pos[1], node->box.size[0], node->box.size[1]);
 	}
 
 	/* draw the title */
@@ -301,7 +301,7 @@ vec_t *UI_WindowNodeGetNoticePosition(uiNode_t* node)
  * @param node A window node
  * @return True if the window is a drop down.
  */
-qboolean UI_WindowIsDropDown(uiNode_t const* const node)
+bool UI_WindowIsDropDown(uiNode_t const* const node)
 {
 	return EXTRADATACONST(node).dropdown;
 }
@@ -311,7 +311,7 @@ qboolean UI_WindowIsDropDown(uiNode_t const* const node)
  * @param node A window node
  * @return True if the window is a modal.
  */
-qboolean UI_WindowIsModal(uiNode_t const* const node)
+bool UI_WindowIsModal(uiNode_t const* const node)
 {
 	return EXTRADATACONST(node).modal;
 }
@@ -360,21 +360,21 @@ void UI_RegisterWindowNode (uiBehaviour_t *behaviour)
 	 * the settings take effects) you can define the position of those messages with this option. */
 	UI_RegisterExtradataNodeProperty(behaviour, "noticepos", V_POS, windowExtraData_t, noticePos);
 	/* Create subnode allowing to move the window when we click on the header. Updating this attribute at the runtime will change nothing. */
-	UI_RegisterExtradataNodeProperty(behaviour, "dragbutton", V_CPPBOOL, windowExtraData_t, dragButton);
+	UI_RegisterExtradataNodeProperty(behaviour, "dragbutton", V_BOOL, windowExtraData_t, dragButton);
 	/* Add a button on the top right the window to close it. Updating this attribute at the runtime will change nothing. */
-	UI_RegisterExtradataNodeProperty(behaviour, "closebutton", V_CPPBOOL, windowExtraData_t, closeButton);
+	UI_RegisterExtradataNodeProperty(behaviour, "closebutton", V_BOOL, windowExtraData_t, closeButton);
 	/* If true, the user can't select something outside the modal window. He must first close the window. */
-	UI_RegisterExtradataNodeProperty(behaviour, "modal", V_CPPBOOL, windowExtraData_t, modal);
+	UI_RegisterExtradataNodeProperty(behaviour, "modal", V_BOOL, windowExtraData_t, modal);
 	/* If true, if the user click outside the window, it will close it. */
-	UI_RegisterExtradataNodeProperty(behaviour, "dropdown", V_CPPBOOL, windowExtraData_t, dropdown);
+	UI_RegisterExtradataNodeProperty(behaviour, "dropdown", V_BOOL, windowExtraData_t, dropdown);
 	/* If true, the user can't use ''ESC'' key to close the window. */
-	UI_RegisterExtradataNodeProperty(behaviour, "preventtypingescape", V_CPPBOOL, windowExtraData_t, preventTypingEscape);
+	UI_RegisterExtradataNodeProperty(behaviour, "preventtypingescape", V_BOOL, windowExtraData_t, preventTypingEscape);
 	/* If true, the window is filled according to the widescreen. */
-	UI_RegisterExtradataNodeProperty(behaviour, "fill", V_CPPBOOL, windowExtraData_t, fill);
+	UI_RegisterExtradataNodeProperty(behaviour, "fill", V_BOOL, windowExtraData_t, fill);
 	/* If true, when the window size change, the window content position is updated according to the "star" layout.
 	 * @todo Need more documentation.
 	 */
-	UI_RegisterExtradataNodeProperty(behaviour, "starlayout", V_CPPBOOL, windowExtraData_t, starLayout);
+	UI_RegisterExtradataNodeProperty(behaviour, "starlayout", V_BOOL, windowExtraData_t, starLayout);
 
 	/* Invoked when the window is added to the rendering stack. */
 	UI_RegisterExtradataNodeProperty(behaviour, "onWindowOpened", V_UI_ACTION, windowExtraData_t, onWindowOpened);

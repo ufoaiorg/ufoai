@@ -48,7 +48,7 @@ typedef struct hudRadarImage_s {
 	float mapWidth;
 	float mapHeight;
 
-	qboolean isTile;
+	bool isTile;
 	int gridX, gridY;	/**< random map assembly x and y positions, @sa UNIT_SIZE */
 	int gridHeight;
 	int gridWidth;
@@ -247,17 +247,17 @@ static char const* const imageExtensions[] = {
 	"tga", "jpg", "png", NULL
 };
 
-static qboolean UI_CheckRadarImage (const char *imageName, const int level)
+static bool UI_CheckRadarImage (const char *imageName, const int level)
 {
 	char const* const* ext = imageExtensions;
 
 	while (*ext) {
 		if (FS_CheckFile("pics/radars/%s_%i.%s", imageName, level, *ext) > 0)
-			return qtrue;
+			return true;
 		ext++;
 	}
 	/* none found */
-	return qfalse;
+	return false;
 }
 
 /**
@@ -542,7 +542,7 @@ void uiRadarNode::draw (uiNode_t *node)
 	/* the cl struct is wiped with every new map */
 	if (!cl.radarInited) {
 		UI_InitRadar(node);
-		cl.radarInited = qtrue;
+		cl.radarInited = true;
 	}
 
 	/* update context */
@@ -575,7 +575,7 @@ void uiRadarNode::draw (uiNode_t *node)
 		imagePos[0] = radar.x + mapCoefX * (tile->mapX - cl.mapData->mapMin[0]);
 		imagePos[1] = radar.y + mapCoefY * (tile->mapY - cl.mapData->mapMin[1]);
 
-		UI_DrawNormImageByName(qfalse, imagePos[0], imagePos[1],
+		UI_DrawNormImageByName(false, imagePos[0], imagePos[1],
 				mapCoefX * tile->mapWidth, mapCoefY * tile->mapHeight,
 				0, 0, 0, 0, tile->path[maxlevel]);
 #ifdef RADARSIZE_DEBUG

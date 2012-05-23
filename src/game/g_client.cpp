@@ -229,7 +229,7 @@ void G_GiveTimeUnits (int team)
  * or perish. Might be @c NULL.
  * @sa CL_ActorAppear
  */
-void G_AppearPerishEvent (unsigned int playerMask, qboolean appear, edict_t *check, const edict_t *ent)
+void G_AppearPerishEvent (unsigned int playerMask, bool appear, edict_t *check, const edict_t *ent)
 {
 	vismask_t visMaskDiff;
 
@@ -316,44 +316,44 @@ int G_GetActiveTeam (void)
  * @param[in] player Which player (human player) is trying to do the action
  * @param[in] ent Which of his units is trying to do the action.
  */
-static qboolean G_ActionCheck (const player_t *player, edict_t *ent)
+static bool G_ActionCheck (const player_t *player, edict_t *ent)
 {
 	/* don't check for a player - but maybe a server action */
 	if (!player)
-		return qtrue;
+		return true;
 
 	if (!ent || !ent->inuse) {
 		G_ClientPrintf(player, PRINT_HUD, _("Can't perform action - object not present!"));
-		return qfalse;
+		return false;
 	}
 
 	if (ent->type != ET_ACTOR && ent->type != ET_ACTOR2x2) {
 		G_ClientPrintf(player, PRINT_HUD, _("Can't perform action - not an actor!"));
-		return qfalse;
+		return false;
 	}
 
 	if (G_IsStunned(ent)) {
 		G_ClientPrintf(player, PRINT_HUD, _("Can't perform action - actor is stunned!"));
-		return qfalse;
+		return false;
 	}
 
 	if (G_IsDead(ent)) {
 		G_ClientPrintf(player, PRINT_HUD, _("Can't perform action - actor is dead!"));
-		return qfalse;
+		return false;
 	}
 
 	if (ent->team != player->pers.team) {
 		G_ClientPrintf(player, PRINT_HUD, _("Can't perform action - not on same team!"));
-		return qfalse;
+		return false;
 	}
 
 	if (ent->pnum != player->num) {
 		G_ClientPrintf(player, PRINT_HUD, _("Can't perform action - no control over allied actors!"));
-		return qfalse;
+		return false;
 	}
 
 	/* could be possible */
-	return qtrue;
+	return true;
 }
 
 /**
@@ -363,20 +363,20 @@ static qboolean G_ActionCheck (const player_t *player, edict_t *ent)
  * @param[in] TU The time units to check against the ones ent has.
  * the action with
  */
-qboolean G_ActionCheckForCurrentTeam (const player_t *player, edict_t *ent, int TU)
+bool G_ActionCheckForCurrentTeam (const player_t *player, edict_t *ent, int TU)
 {
 	/* don't check for a player - but maybe a server action */
 	if (!player)
-		return qtrue;
+		return true;
 
 	/* a generic tester if an action could be possible */
 	if (level.activeTeam != player->pers.team) {
 		G_ClientPrintf(player, PRINT_HUD, _("Can't perform action - it is not your turn!"));
-		return qfalse;
+		return false;
 	}
 
 	if (TU > G_ActorUsableTUs(ent)) {
-		return qfalse;
+		return false;
 	}
 
 	return G_ActionCheck(player, ent);
@@ -390,10 +390,10 @@ qboolean G_ActionCheckForCurrentTeam (const player_t *player, edict_t *ent, int 
  * the action with
  * @sa G_ActionCheck
  */
-qboolean G_ActionCheckForReaction (const player_t *player, edict_t *ent, int TU)
+bool G_ActionCheckForReaction (const player_t *player, edict_t *ent, int TU)
 {
 	if (TU > ent->TU) {
-		return qfalse;
+		return false;
 	}
 
 	return G_ActionCheck(player, ent);
@@ -440,10 +440,10 @@ static void G_ClientStateChangeUpdate (edict_t *ent)
 	G_EventSendState(G_VisToPM(ent->visflags), ent);
 
 	/* Check if the player appears/perishes, seen from other teams. */
-	G_CheckVis(ent, qtrue);
+	G_CheckVis(ent, true);
 
 	/* Calc new vis for this player. */
-	G_CheckVisTeamAll(ent->team, qfalse, ent);
+	G_CheckVisTeamAll(ent->team, false, ent);
 
 	/* Send the new TUs. */
 	G_SendStats(ent);
@@ -461,7 +461,7 @@ static void G_ClientStateChangeUpdate (edict_t *ent)
  * don't even use the G_ActionCheckForCurrentTeam function
  * @note Use checkaction true only for e.g. spawning values
  */
-void G_ClientStateChange (const player_t* player, edict_t* ent, int reqState, qboolean checkaction)
+void G_ClientStateChange (const player_t* player, edict_t* ent, int reqState, bool checkaction)
 {
 	/* Check if any action is possible. */
 	if (checkaction && !G_ActionCheckForCurrentTeam(player, ent, 0))
@@ -516,7 +516,7 @@ void G_ClientStateChange (const player_t* player, edict_t* ent, int reqState, qb
  * @brief Returns true if actor can reload weapon
  * @sa AI_ActorThink
  */
-qboolean G_ClientCanReload (edict_t *ent, containerIndex_t containerID)
+bool G_ClientCanReload (edict_t *ent, containerIndex_t containerID)
 {
 	invList_t *ic;
 	containerIndex_t container;
@@ -529,7 +529,7 @@ qboolean G_ClientCanReload (edict_t *ent, containerIndex_t containerID)
 		containerID = gi.csi->idRight;
 		weapon = CONTAINER(ent, containerID)->item.t;
 	} else
-		return qfalse;
+		return false;
 
 	assert(weapon);
 
@@ -537,8 +537,8 @@ qboolean G_ClientCanReload (edict_t *ent, containerIndex_t containerID)
 	for (container = 0; container < gi.csi->numIDs; container++)
 		for (ic = CONTAINER(ent, container); ic; ic = ic->next)
 			if (INVSH_LoadableInWeapon(ic->item.t, weapon))
-				return qtrue;
-	return qfalse;
+				return true;
+	return false;
 }
 
 /**
@@ -587,7 +587,7 @@ void G_ClientGetWeaponFromInventory (edict_t *ent)
 
 	/* send request */
 	if (bestContainer)
-		G_ActorInvMove(ent, bestContainer, icFinal, invDef, 0, 0, qtrue);
+		G_ActorInvMove(ent, bestContainer, icFinal, invDef, 0, 0, true);
 }
 
 /**
@@ -600,14 +600,14 @@ void G_ClientGetWeaponFromInventory (edict_t *ent)
  * @sa CL_ActorUse
  * @sa G_UseEdict
  */
-qboolean G_ClientUseEdict (const player_t *player, edict_t *actor, edict_t *edict)
+bool G_ClientUseEdict (const player_t *player, edict_t *actor, edict_t *edict)
 {
 	/* check whether the actor has sufficient TUs to 'use' this edicts */
 	if (!G_ActionCheckForCurrentTeam(player, actor, edict->TU))
-		return qfalse;
+		return false;
 
 	if (!G_UseEdict(edict, actor))
-		return qfalse;
+		return false;
 
 	/* using a group of edicts only costs TUs once (for the master) */
 	G_ActorUseTU(actor, edict->TU);
@@ -616,7 +616,7 @@ qboolean G_ClientUseEdict (const player_t *player, edict_t *actor, edict_t *edic
 
 	gi.EndEvents();
 
-	return qtrue;
+	return true;
 }
 
 /**
@@ -665,12 +665,12 @@ int G_ClientAction (player_t * player)
 
 	case PA_STATE:
 		gi.ReadFormat(format, &i);
-		G_ClientStateChange(player, ent, i, qtrue);
+		G_ClientStateChange(player, ent, i, true);
 		break;
 
 	case PA_SHOOT:
 		gi.ReadFormat(format, &pos, &i, &firemode, &from);
-		G_ClientShoot(player, ent, pos, i, firemode, NULL, qtrue, from);
+		G_ClientShoot(player, ent, pos, i, firemode, NULL, true, from);
 		break;
 
 	case PA_INVMOVE:
@@ -683,7 +683,7 @@ int G_ClientAction (player_t * player)
 			const invDef_t *toPtr = INVDEF(to);
 			invList_t *fromItem = INVSH_SearchInInventory(&ent->chr.i, fromPtr, fx, fy);
 			if (fromItem)
-				G_ActorInvMove(ent, fromPtr, fromItem, toPtr, tx, ty, qtrue);
+				G_ActorInvMove(ent, fromPtr, fromItem, toPtr, tx, ty, true);
 		}
 		break;
 
@@ -800,7 +800,7 @@ static void G_GetTeam (player_t * player)
 		gi.DPrintf("Getting a multiplayer team for %s\n", player->pers.netname);
 		for (i = TEAM_CIVILIAN + 1; i < MAX_TEAMS; i++) {
 			if (level.num_spawnpoints[i]) {
-				qboolean teamAvailable = qtrue;
+				bool teamAvailable = true;
 
 				p = NULL;
 				/* check if team is in use (only human controlled players) */
@@ -808,7 +808,7 @@ static void G_GetTeam (player_t * player)
 					if (p->pers.team == i) {
 						Com_DPrintf(DEBUG_GAME, "Team %i is already in use\n", i);
 						/* team already in use */
-						teamAvailable = qfalse;
+						teamAvailable = false;
 						break;
 					}
 				}
@@ -824,7 +824,7 @@ static void G_GetTeam (player_t * player)
 			while ((p = G_PlayerGetNextActiveHuman(p))) {
 				if (p->pers.team == i) {
 					gi.BroadcastPrintf(PRINT_CONSOLE, "Removing ai player...");
-					p->inuse = qfalse;
+					p->inuse = false;
 					break;
 				}
 			}
@@ -843,20 +843,20 @@ static void G_GetTeam (player_t * player)
  * @param[in] team The team to set for the given player
  * @return <code>true</code> if the team was set successfully, <code>false</code> otherwise.
  */
-qboolean G_SetTeamForPlayer (player_t* player, const int team)
+bool G_SetTeamForPlayer (player_t* player, const int team)
 {
 	assert(player);
 	assert(team >= TEAM_NO_ACTIVE && team < MAX_TEAMS);
 
 	if (G_IsAIPlayer(player)) {
 		if (team != TEAM_ALIEN && team != TEAM_CIVILIAN)
-			return qfalse;
+			return false;
 	} else {
 		if (!sv_teamplay->integer) {
 			player_t *p = NULL;
 			while ((p = G_PlayerGetNextHuman(p)) != NULL) {
 				if (p->pers.team == team)
-					return qfalse;
+					return false;
 			}
 		}
 	}
@@ -875,7 +875,7 @@ qboolean G_SetTeamForPlayer (player_t* player, const int team)
 	if (!G_IsAIPlayer(player))
 		Info_SetValueForKeyAsInteger(player->pers.userinfo, sizeof(player->pers.userinfo), "cl_team", team);
 
-	return qtrue;
+	return true;
 }
 
 /**
@@ -899,7 +899,7 @@ int G_ClientGetTeamNumPref (const player_t * player)
 /**
  * @return @c true if the player is for starting the multiplayer match
  */
-qboolean G_ClientIsReady (const player_t * player)
+bool G_ClientIsReady (const player_t * player)
 {
 	assert(player);
 	return player->isReady;
@@ -948,7 +948,7 @@ static void G_GetStartingTeam (const player_t* player)
 		p = NULL;
 		while ((p = G_PlayerGetNextActiveHuman(p)))
 			if (p->pers.team != level.activeTeam)
-				p->roundDone = qtrue;
+				p->roundDone = true;
 	}
 }
 
@@ -999,10 +999,10 @@ static edict_t *G_ClientGetFreeSpawnPoint (const player_t * player, int spawnTyp
  * @param team The team the player is part of.
  * @return @c true if spawn is allowed, @c false otherwise.
  */
-static inline qboolean G_ActorSpawnIsAllowed (const int num, const int team)
+static inline bool G_ActorSpawnIsAllowed (const int num, const int team)
 {
 	if (sv_maxclients->integer == 1)
-		return qtrue;
+		return true;
 
 	return (num < sv_maxsoldiersperplayer->integer && level.num_spawned[team] < sv_maxsoldiersperteam->integer);
 }
@@ -1023,7 +1023,7 @@ static void G_ThinkActorDieAfterSpawn (edict_t *ent)
  */
 static void G_ThinkActorGoCrouch (edict_t *ent)
 {
-	G_ClientStateChange(G_PLAYER_FROM_ENT(ent), ent, STATE_CROUCHED, qtrue);
+	G_ClientStateChange(G_PLAYER_FROM_ENT(ent), ent, STATE_CROUCHED, true);
 	ent->think = NULL;
 }
 
@@ -1224,7 +1224,7 @@ void G_ClientInitActorStates (const player_t * player)
 
 		/* these state changes are not consuming any TUs */
 		saveTU = ent->TU;
-		G_ClientStateChange(player, ent, gi.ReadShort(), qfalse);
+		G_ClientStateChange(player, ent, gi.ReadShort(), false);
 		hand = (actorHands_t)gi.ReadShort();
 		fmIdx = gi.ReadShort();
 		objIdx = gi.ReadShort();
@@ -1313,15 +1313,15 @@ static void G_ClientSendEdictsAndBrushModels (const player_t *player)
  * @sa G_ClientStartMatch
  * @sa CL_StartGame
  */
-qboolean G_ClientBegin (player_t* player)
+bool G_ClientBegin (player_t* player)
 {
-	player->began = qtrue;
+	player->began = true;
 	level.numplayers++;
 
 	/* find a team */
 	G_GetTeam(player);
 	if (!player->began)
-		return qfalse;
+		return false;
 
 	gi.ConfigString(CS_PLAYERCOUNT, "%i", level.numplayers);
 
@@ -1340,12 +1340,12 @@ qboolean G_ClientBegin (player_t* player)
 	/* inform all clients */
 	gi.BroadcastPrintf(PRINT_CONSOLE, "%s has joined team %i\n", player->pers.netname, player->pers.team);
 
-	return qtrue;
+	return true;
 }
 
 /**
  * @brief Sets the team, init the TU and sends the player stats.
- * @return Returns qtrue if player spawns, otherwise qfalse.
+ * @return Returns true if player spawns, otherwise false.
  * @sa G_SendPlayerStats
  * @sa G_GetTeam
  * @sa G_GiveTimeUnits
@@ -1362,7 +1362,7 @@ void G_ClientStartMatch (player_t * player)
 
 	/* show visible actors and add invisible actor */
 	G_VisFlagsClear(player->pers.team);
-	G_CheckVisPlayer(player, qfalse);
+	G_CheckVisPlayer(player, false);
 	G_SendInvisible(player);
 
 	/* submit stats */
@@ -1373,7 +1373,7 @@ void G_ClientStartMatch (player_t * player)
 
 	if (sv_maxclients->integer > 1) {
 		/* ensure that we restart the round time limit */
-		sv_roundtimelimit->modified = qtrue;
+		sv_roundtimelimit->modified = true;
 	}
 
 	/* inform all clients */
@@ -1386,7 +1386,7 @@ void G_ClientStartMatch (player_t * player)
  */
 void G_ClientUserinfoChanged (player_t * player, const char *userinfo)
 {
-	const qboolean alreadyReady = player->isReady;
+	const bool alreadyReady = player->isReady;
 	const int oldTeamnum = Info_IntegerForKey(player->pers.userinfo, "cl_teamnum");
 
 	/* check for malformed or illegal info strings */
@@ -1428,7 +1428,7 @@ void G_ClientUserinfoChanged (player_t * player, const char *userinfo)
  * and reject connection if so
  * @return @c false if the connection is refused, @c true otherwise
  */
-qboolean G_ClientConnect (player_t * player, char *userinfo, size_t userinfoSize)
+bool G_ClientConnect (player_t * player, char *userinfo, size_t userinfoSize)
 {
 	const char *value;
 
@@ -1439,18 +1439,18 @@ qboolean G_ClientConnect (player_t * player, char *userinfo, size_t userinfoSize
 	/* check to see if they are on the banned IP list */
 	if (SV_FilterPacket(value)) {
 		Info_SetValueForKey(userinfo, userinfoSize, "rejmsg", REJ_BANNED);
-		return qfalse;
+		return false;
 	}
 
 	if (!G_PlayerToPM(player)) {
 		Info_SetValueForKey(userinfo, userinfoSize, "rejmsg", "Server is full");
-		return qfalse;
+		return false;
 	}
 
 	value = Info_ValueForKey(userinfo, "password");
 	if (password->string[0] != '\0' && !Q_streq(password->string, "none") && !Q_streq(password->string, value)) {
 		Info_SetValueForKey(userinfo, userinfoSize, "rejmsg", REJ_PASSWORD_REQUIRED_OR_INCORRECT);
-		return qfalse;
+		return false;
 	}
 
 	/* fix for fast reconnects after a disconnect */
@@ -1464,7 +1464,7 @@ qboolean G_ClientConnect (player_t * player, char *userinfo, size_t userinfoSize
 	G_ClientUserinfoChanged(player, userinfo);
 
 	gi.BroadcastPrintf(PRINT_CONSOLE, "%s is connecting...\n", player->pers.netname);
-	return qtrue;
+	return true;
 }
 
 /**
@@ -1497,9 +1497,9 @@ void G_ClientDisconnect (player_t * player)
 	G_MatchEndCheck();
 #endif
 
-	player->began = qfalse;
-	player->roundDone = qfalse;
-	player->isReady = qfalse;
+	player->began = false;
+	player->roundDone = false;
+	player->isReady = false;
 
 	gi.BroadcastPrintf(PRINT_CONSOLE, "%s disconnected.\n", player->pers.netname);
 }

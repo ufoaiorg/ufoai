@@ -89,7 +89,7 @@ void uiStringNode::drawTooltip (uiNode_t *node, int x, int y)
 	} else {
 		const char *font = UI_GetFontFromNode(node);
 		const char* text = UI_GetReferenceString(node, node->text);
-		qboolean isTruncated;
+		bool isTruncated;
 		if (!text)
 			return;
 

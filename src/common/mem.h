@@ -43,7 +43,7 @@ struct memPool_t;
 #define Mem_AllocTypeN(type, n)							((type*)Mem_Alloc(sizeof(type) * (n)))
 #define Mem_AllocType(type)								((type*)Mem_Alloc(sizeof(type)))
 #define Mem_Alloc(size)									Mem_PoolAlloc((size), com_genericPool, 0)
-#define Mem_PoolAlloc(size,pool,tagNum)					_Mem_Alloc((size),qtrue,(pool),(tagNum),__FILE__,__LINE__)
+#define Mem_PoolAlloc(size,pool,tagNum)					_Mem_Alloc((size),true,(pool),(tagNum),__FILE__,__LINE__)
 #define Mem_PoolAllocTypeN(type, n, pool)               static_cast<type*>(Mem_PoolAlloc(sizeof(type) * (n), (pool), 0))
 #define Mem_PoolAllocType(type, pool)                   static_cast<type*>(Mem_PoolAllocTypeN(type, 1, (pool)))
 #define Mem_ReAlloc(ptr,size)							_Mem_ReAlloc((ptr),(size),__FILE__,__LINE__)
@@ -65,7 +65,7 @@ void _Mem_DeletePool(memPool_t *pool, const char *fileName, const int fileLine);
 void _Mem_Free(void *ptr, const char *fileName, const int fileLine);
 void _Mem_FreeTag(memPool_t *pool, const int tagNum, const char *fileName, const int fileLine);
 void _Mem_FreePool(memPool_t *pool, const char *fileName, const int fileLine);
-void* _Mem_Alloc(size_t size, qboolean zeroFill, memPool_t *pool, const int tagNum, const char *fileName, const int fileLine) __attribute__ ((malloc));
+void* _Mem_Alloc(size_t size, bool zeroFill, memPool_t *pool, const int tagNum, const char *fileName, const int fileLine) __attribute__ ((malloc));
 void* _Mem_ReAlloc(void *ptr, size_t size, const char *fileName, const int fileLine);
 
 char* _Mem_PoolStrDupTo(const char *in, char **out, memPool_t *pool, const int tagNum, const char *fileName, const int fileLine);

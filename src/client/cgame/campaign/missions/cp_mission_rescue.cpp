@@ -39,7 +39,7 @@ static void CP_BeginRescueMission (mission_t *mission)
 	const date_t crashDelay = {14, 0};
 
 	assert(mission->ufo);
-	mission->posAssigned = qtrue;
+	mission->posAssigned = true;
 
 	mission->mapDef = Com_GetMapDefinitionByID("rescue");
 	if (!mission->mapDef) {
@@ -48,11 +48,11 @@ static void CP_BeginRescueMission (mission_t *mission)
 		return;
 	}
 
-	mission->ufo->landed = qtrue;
+	mission->ufo->landed = true;
 	mission->stage = STAGE_RECON_GROUND;
 	mission->finalDate = Date_Add(ccs.date, Date_Random(minCrashDelay, crashDelay));
 	/* mission appear on geoscape, player can go there */
-	CP_MissionAddToGeoscape(mission, qfalse);
+	CP_MissionAddToGeoscape(mission, false);
 }
 
 /**
@@ -61,7 +61,7 @@ static void CP_BeginRescueMission (mission_t *mission)
  * @param[in,out] aircraft Pointer to the dropship done the mission
  * @param[in] won Boolean flag if thew mission was successful (from PHALANX's PoV)
  */
-void CP_EndRescueMission (mission_t *mission, aircraft_t *aircraft, qboolean won)
+void CP_EndRescueMission (mission_t *mission, aircraft_t *aircraft, bool won)
 {
 	aircraft_t *crashedAircraft = mission->data.aircraft;
 
@@ -92,14 +92,14 @@ void CP_EndRescueMission (mission_t *mission, aircraft_t *aircraft, qboolean won
  */
 static void CP_LeaveRescueMission (mission_t *mission)
 {
-	CP_EndRescueMission(mission, NULL, qfalse);
+	CP_EndRescueMission(mission, NULL, false);
 	mission->stage = STAGE_RETURN_TO_ORBIT;
 
 	if (mission->ufo) {
 		CP_MissionDisableTimeLimit(mission);
 		UFO_SetRandomDest(mission->ufo);
 		/* Display UFO on geoscape if it is detected */
-		mission->ufo->landed = qfalse;
+		mission->ufo->landed = false;
 	} else {
 		/* Go to next stage on next frame */
 		mission->finalDate = ccs.date;

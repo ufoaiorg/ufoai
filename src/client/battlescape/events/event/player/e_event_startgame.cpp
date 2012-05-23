@@ -54,7 +54,7 @@ void CL_StartGame (const eventRegister_t *self, struct dbuffer *msg)
 	CL_ActorSelect(NULL);
 
 	/* center on first actor */
-	cl_worldlevel->modified = qtrue;
+	cl_worldlevel->modified = true;
 	if (cl.numTeamList) {
 		const le_t *le = cl.teamList[0];
 		CL_ViewCenterAtGridPosition(le->pos);

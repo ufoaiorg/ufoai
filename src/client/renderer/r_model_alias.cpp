@@ -116,7 +116,7 @@ void R_ModLoadAnims (mAliasModel_t *mod, const char *animname)
  * @param backlerp Whether to store the results in the GL arrays for the previous keyframe or the next keyframe
  * @sa R_ModCalcUniqueNormalsAndTangents
  */
-static void R_ModCalcNormalsAndTangents (mAliasMesh_t *mesh, int framenum, const vec3_t translate, qboolean backlerp)
+static void R_ModCalcNormalsAndTangents (mAliasMesh_t *mesh, int framenum, const vec3_t translate, bool backlerp)
 {
 	int i, j;
 	mAliasVertex_t *vertexes = &mesh->vertexes[framenum * mesh->num_verts];
@@ -230,7 +230,7 @@ static void R_ModCalcNormalsAndTangents (mAliasMesh_t *mesh, int framenum, const
  * @sa R_ModCalcUniqueNormalsAndTangents
  * @param mod The model to load the mdx file for
  */
-qboolean R_ModLoadMDX (model_t *mod)
+bool R_ModLoadMDX (model_t *mod)
 {
 	int i;
 	for (i = 0; i < mod->alias.num_meshes; i++) {
@@ -245,7 +245,7 @@ qboolean R_ModLoadMDX (model_t *mod)
 		Com_DefaultExtension(mdxFileName, sizeof(mdxFileName), ".mdx");
 
 		if (FS_LoadFile(mdxFileName, &buffer) == -1)
-			return qfalse;
+			return false;
 
 		buf = buffer;
 		if (strncmp((const char *) buf, IDMDXHEADER, strlen(IDMDXHEADER))) {
@@ -300,7 +300,7 @@ qboolean R_ModLoadMDX (model_t *mod)
 		FS_FreeFile(buf);
 	}
 
-	return qtrue;
+	return true;
 }
 
 /**
@@ -573,7 +573,7 @@ image_t* R_AliasModelState (const model_t *mod, int *mesh, int *frame, int *oldF
  * @note If GLSL programs are enabled, the actual interpolation will be done on the GPU, but
  * this function is still needed to fill the GL arrays for the keyframes
  */
-void R_FillArrayData (mAliasModel_t* mod, mAliasMesh_t *mesh, float backlerp, int framenum, int oldframenum, qboolean prerender)
+void R_FillArrayData (mAliasModel_t* mod, mAliasMesh_t *mesh, float backlerp, int framenum, int oldframenum, bool prerender)
 {
 	const mAliasFrame_t *frame, *oldframe;
 	vec3_t move;
@@ -608,12 +608,12 @@ void R_FillArrayData (mAliasModel_t* mod, mAliasMesh_t *mesh, float backlerp, in
 				/* if we're alternating between two keyframes, we don't need to generate
 				 * anything; otherwise, generate the "next" keyframe*/
 				if (mod->oldFrame != framenum)
-					R_ModCalcNormalsAndTangents(mesh, framenum, frame->translate, qfalse);
+					R_ModCalcNormalsAndTangents(mesh, framenum, frame->translate, false);
 			} else {
 				/* if we're starting a new animation or otherwise not rendering keyframes
 				 * in order, we need to fill the arrays for both keyframes */
-				R_ModCalcNormalsAndTangents(mesh, oldframenum, oldframe->translate, qtrue);
-				R_ModCalcNormalsAndTangents(mesh, framenum, frame->translate, qfalse);
+				R_ModCalcNormalsAndTangents(mesh, oldframenum, oldframe->translate, true);
+				R_ModCalcNormalsAndTangents(mesh, framenum, frame->translate, false);
 			}
 			/* keep track of which keyframes are currently stored in our arrays */
 			mod->oldFrame = oldframenum;
@@ -627,7 +627,7 @@ void R_FillArrayData (mAliasModel_t* mod, mAliasMesh_t *mesh, float backlerp, in
 		ov = &mesh->vertexes[oldframenum * mesh->num_verts];
 
 		if (prerender)
-			R_ModCalcNormalsAndTangents(mesh, 0, oldframe->translate, qtrue);
+			R_ModCalcNormalsAndTangents(mesh, 0, oldframe->translate, true);
 
 		for (i = 0; i < 3; i++)
 			move[i] = backlerp * oldframe->translate[i] + frontlerp * frame->translate[i];
@@ -663,7 +663,7 @@ void R_FillArrayData (mAliasModel_t* mod, mAliasMesh_t *mesh, float backlerp, in
 /**
  * @brief Allocates data arrays for animated models. Only called once at loading time.
  */
-void R_ModLoadArrayData (mAliasModel_t *mod, mAliasMesh_t *mesh, qboolean loadNormals)
+void R_ModLoadArrayData (mAliasModel_t *mod, mAliasMesh_t *mesh, bool loadNormals)
 {
 	const int v = mesh->num_tris * 3 * 3;
 	const int t = mesh->num_tris * 3 * 4;

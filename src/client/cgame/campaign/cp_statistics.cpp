@@ -151,7 +151,7 @@ void CP_StatsUpdate_f (void)
  * @brief Save callback for savegames in XML Format
  * @param[out] parent XML Node structure, where we write the information to
  */
-qboolean STATS_SaveXML (xmlNode_t *parent)
+bool STATS_SaveXML (xmlNode_t *parent)
 {
 	xmlNode_t * stats;
 
@@ -178,22 +178,22 @@ qboolean STATS_SaveXML (xmlNode_t *parent)
 	XML_AddIntValue(stats, SAVE_STATS_UFOSSTORED, ccs.campaignStats.ufosStored);
 	XML_AddIntValue(stats, SAVE_STATS_AIRCRAFTHAD, ccs.campaignStats.aircraftHad);
 
-	return qtrue;
+	return true;
 }
 
 /**
  * @brief Load callback for savegames in XML Format
  * @param[in] parent XML Node structure, where we get the information from
  */
-qboolean STATS_LoadXML (xmlNode_t *parent)
+bool STATS_LoadXML (xmlNode_t *parent)
 {
 	xmlNode_t * stats;
-	qboolean success = qtrue;
+	bool success = true;
 
 	stats = XML_GetNode(parent, SAVE_STATS_STATS);
 	if (!stats) {
 		Com_Printf("Did not find stats entry in xml!\n");
-		return qfalse;
+		return false;
 	}
 	ccs.campaignStats.missions = XML_GetInt(stats, SAVE_STATS_MISSIONS, 0);
 	ccs.campaignStats.missionsWon = XML_GetInt(stats, SAVE_STATS_MISSIONSWON, 0);

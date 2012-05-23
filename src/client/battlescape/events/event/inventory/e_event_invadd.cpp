@@ -56,7 +56,7 @@ int CL_InvAddTime (const struct eventRegister_s *self, struct dbuffer *msg, even
 {
 	if (eventTiming->parsedDeath) { /* drop items after death (caused by impact) */
 		/* EV_INV_ADD messages are the last events sent after a death */
-		eventTiming->parsedDeath = qfalse;
+		eventTiming->parsedDeath = false;
 		return eventTiming->impactTime + 400;
 	} else if (eventTiming->impactTime > cl.time) { /* item thrown on the ground */
 		return eventTiming->impactTime + 75;
@@ -79,7 +79,7 @@ void CL_InvAdd (const eventRegister_t *self, struct dbuffer *msg)
 	if (!le)
 		LE_NotFoundError(number);
 
-	le->removeNextFrame = qfalse;
+	le->removeNextFrame = false;
 
 	for (; nr-- > 0;) {
 		item_t item;

@@ -26,7 +26,7 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #ifndef CLIENT_CL_CINEMATIC_H
 #define CLIENT_CL_CINEMATIC_H
 
-#include "../../shared/ufotypes.h"	/* for qboolean */
+#include "../../shared/ufotypes.h"	/* for bool */
 #include "../../common/filesys.h"	/* for MAX_QPATH */
 
 enum {
@@ -38,11 +38,11 @@ enum {
 typedef struct cinematic_s {
 	char			name[MAX_QPATH];	/**< virtual filesystem path with file suffix */
 
-	qboolean		replay;		/**< autmatically replay in endless loop */
+	bool		replay;		/**< autmatically replay in endless loop */
 	int				x, y, w, h; /**< for drawing in the menu maybe */
 
-	qboolean		noSound;	/**< no sound while playing the cinematic */
-	qboolean		fullScreen;	/**< if true, video is displayed in fullscreen */
+	bool		noSound;	/**< no sound while playing the cinematic */
+	bool		fullScreen;	/**< if true, video is displayed in fullscreen */
 
 	int cinematicType;
 
@@ -53,7 +53,7 @@ typedef struct cinematic_s {
 
 void CIN_OpenCinematic(cinematic_t *cin, const char *name);
 void CIN_CloseCinematic(cinematic_t *cin);
-void CIN_SetParameters(cinematic_t *cin, int x, int y, int w, int h, int cinStatus, qboolean noSound);
+void CIN_SetParameters(cinematic_t *cin, int x, int y, int w, int h, int cinStatus, bool noSound);
 void CIN_RunCinematic(cinematic_t *cin);
 void CIN_InitCinematic(cinematic_t *cin);
 

@@ -89,7 +89,7 @@ typedef enum {
 	EV_CENTERVIEW,
 
 	EV_ENT_APPEAR,
-	EV_ENT_PERISH,	/**< empty container or destroy inventory - set le invis to qtrue
+	EV_ENT_PERISH,	/**< empty container or destroy inventory - set le invis to true
 		* see CL_EntPerish */
 	EV_ENT_DESTROY,
 	EV_ADD_BRUSH_MODEL,
@@ -269,7 +269,7 @@ typedef int32_t shoot_types_t;
 
 #define DOOR_OPEN_REVERSE 4
 #define GET_SLIDING_DOOR_SHIFT_VECTOR(dir, speed, vecout) \
-	do { const qboolean reverse = (dir) & DOOR_OPEN_REVERSE; VectorClear(vecout); vecout[dir & 3] = reverse ? -speed : speed; } while (0);
+	do { const bool reverse = (dir) & DOOR_OPEN_REVERSE; VectorClear(vecout); vecout[dir & 3] = reverse ? -speed : speed; } while (0);
 
 /**
  * config strings are a general means of communication from
@@ -324,21 +324,21 @@ typedef struct mapDef_s {
 	char *civTeam;			/**< the civilian team to use for this map - this can also be NULL */
 
 	/* multiplayer */
-	qboolean multiplayer;	/**< is this map multiplayer ready at all */
+	bool multiplayer;	/**< is this map multiplayer ready at all */
 	int teams;				/**< multiplayer teams */
 	linkedList_t *gameTypes;	/**< gametype strings this map is useable for */
 
 
 	/* singleplayer */
-	qboolean campaign;			/**< available in campaign mode? */
-	qboolean singleplayer;		/**< is this map available in singleplayer games? */
+	bool campaign;			/**< available in campaign mode? */
+	bool singleplayer;		/**< is this map available in singleplayer games? */
 	int maxAliens;				/**< Number of spawning points on the map */
-	qboolean hurtAliens;		/**< hurt the aliens on spawning them - e.g. for ufocrash missions */
+	bool hurtAliens;		/**< hurt the aliens on spawning them - e.g. for ufocrash missions */
 
 	linkedList_t *terrains;		/**< terrain strings this map is useable for */
 	linkedList_t *populations;	/**< population strings this map is useable for */
 	linkedList_t *cultures;		/**< culture strings this map is useable for */
-	qboolean storyRelated;		/**< Is this a mission story related? */
+	bool storyRelated;		/**< Is this a mission story related? */
 	int timesAlreadyUsed;		/**< Number of times the map has already been used */
 	linkedList_t *ufos;			/**< Type of allowed UFOs on the map */
 	linkedList_t *aircraft;		/**< Type of allowed aircraft on the map */

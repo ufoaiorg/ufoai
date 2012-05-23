@@ -35,7 +35,7 @@ typedef struct uiKeyBinding_s {
 	const struct value_s *property;		/**< Property target, else NULL. */
 	int key;							/**< Keynum to catch. */
 	const char* description;			/**< Description of this binding */
-	qboolean inherited;					/**< True if this binding is inherited from another binding. */
+	bool inherited;					/**< True if this binding is inherited from another binding. */
 	struct uiKeyBinding_s *next;		/**< Next binding from the window list. */
 } uiKeyBinding_t;
 
@@ -47,7 +47,7 @@ void UI_MouseMove(int x, int y);
 void UI_MouseDown(int x, int y, int button);
 void UI_MouseUp(int x, int y, int button);
 void UI_InvalidateMouse(void);
-qboolean UI_CheckMouseMove(void);
+bool UI_CheckMouseMove(void);
 uiNode_t* UI_GetHoveredNode(void);
 void UI_ResetInput(void);
 
@@ -55,8 +55,8 @@ void UI_ResetInput(void);
 void UI_RequestFocus(uiNode_t* node);
 bool UI_HasFocus(uiNode_t const* node);
 void UI_RemoveFocus(void);
-qboolean UI_KeyRelease(unsigned int key, unsigned short unicode);
-qboolean UI_KeyPressed(unsigned int key, unsigned short unicode);
+bool UI_KeyRelease(unsigned int key, unsigned short unicode);
+bool UI_KeyPressed(unsigned int key, unsigned short unicode);
 int UI_GetKeyBindingCount(void);
 uiKeyBinding_t* UI_GetKeyBindingByIndex(int index);
 

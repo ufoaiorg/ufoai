@@ -37,14 +37,14 @@ void UI_InitWindows(void);
 /* window stack */
 int UI_GetLastFullScreenWindow(void);
 uiNode_t* UI_PushWindow(const char *name, const char *parentName = NULL, linkedList_t *params = NULL);
-void UI_InitStack(const char* activeWindow, const char* mainWindow, qboolean popAll, qboolean pushActive);
-void UI_PopWindow(qboolean all);
+void UI_InitStack(const char* activeWindow, const char* mainWindow, bool popAll, bool pushActive);
+void UI_PopWindow(bool all);
 void UI_PopWindowWithEscKey(void);
 void UI_CloseWindow(const char* name);
 uiNode_t* UI_GetActiveWindow(void);
 int UI_CompleteWithWindow(const char *partial, const char **match);
-qboolean UI_IsWindowOnStack(const char* name);
-qboolean UI_IsMouseOnWindow(void);
+bool UI_IsWindowOnStack(const char* name);
+bool UI_IsMouseOnWindow(void);
 void UI_InvalidateStack(void);
 void UI_InsertWindow(uiNode_t* window);
 void UI_MoveWindowOnTop (uiNode_t* window);

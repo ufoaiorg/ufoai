@@ -458,7 +458,7 @@ gotit:
 	if (!bestside)
 		Verb_Printf(VERB_EXTRA, "WARNING: side not found for portal\n");
 
-	p->sidefound = qtrue;
+	p->sidefound = true;
 	p->side = bestside;
 }
 
@@ -486,7 +486,7 @@ static void MarkVisibleSides_r (node_t *node)
 		if (!p->sidefound)
 			FindPortalSide(p);
 		if (p->side)
-			p->side->visible = qtrue;
+			p->side->visible = true;
 	}
 }
 
@@ -503,7 +503,7 @@ void MarkVisibleSides (tree_t *tree, int startbrush, int endbrush)
 		int j;
 
 		for (j = 0; j < numsides; j++)
-			mb->original_sides[j].visible = qfalse;
+			mb->original_sides[j].visible = false;
 	}
 
 	/* set visible flags on the sides that are used by portals */

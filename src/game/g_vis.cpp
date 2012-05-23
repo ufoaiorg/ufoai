@@ -28,7 +28,7 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
  * @brief Checks whether a point is "visible" from the edicts position
  * @sa FrustumVis
  */
-qboolean G_FrustumVis (const edict_t *from, const vec3_t point)
+bool G_FrustumVis (const edict_t *from, const vec3_t point)
 {
 	return FrustumVis(from->origin, from->dir, point);
 }
@@ -39,7 +39,7 @@ qboolean G_FrustumVis (const edict_t *from, const vec3_t point)
  * @param[in] to The point to check visibility to
  * @return true if the points are invisible from each other (trace hit something), false otherwise.
  */
-static qboolean G_LineVis (const vec3_t from, const vec3_t to)
+static bool G_LineVis (const vec3_t from, const vec3_t to)
 {
 	return G_TestLineWithEnts(from, to);
 }
@@ -61,7 +61,7 @@ static qboolean G_LineVis (const vec3_t from, const vec3_t to)
  * particular actor.
  * @sa CL_ActorVis
  */
-float G_ActorVis (const vec3_t from, const edict_t *ent, const edict_t *check, qboolean full)
+float G_ActorVis (const vec3_t from, const edict_t *ent, const edict_t *check, bool full)
 {
 	vec3_t test, dir;
 	float delta;
@@ -148,44 +148,44 @@ float G_ActorVis (const vec3_t from, const edict_t *ent, const edict_t *check, q
  * @param[in] check The edict we want to get the visibility for
  * @param[in] flags @c VT_NOFRUSTUM, ...
  */
-qboolean G_Vis (const int team, const edict_t *from, const edict_t *check, int flags)
+bool G_Vis (const int team, const edict_t *from, const edict_t *check, int flags)
 {
 	vec3_t eye;
 
 	/* if any of them isn't in use, then they're not visible */
 	if (!from->inuse || !check->inuse)
-		return qfalse;
+		return false;
 
 	/* only actors and 2x2 units can see anything */
 	if (!G_IsLivingActor(from))
-		return qfalse;
+		return false;
 
 	/* living team members are always visible */
 	if (team >= 0 && check->team == team && !G_IsDead(check))
-		return qtrue;
+		return true;
 
 	/* standard team rules */
 	if (team >= 0 && from->team != team)
-		return qfalse;
+		return false;
 
 	/* inverse team rules */
 	if (team < 0 && (from->team == -team || G_IsCivilian(from) || check->team != -team))
-		return qfalse;
+		return false;
 
 	/* check for same pos */
 	if (VectorCompare(from->pos, check->pos))
-		return qtrue;
+		return true;
 
 	if (!G_IsVisibleOnBattlefield(check))
-		return qfalse;
+		return false;
 
 	/* view distance check */
 	if (VectorDistSqr(from->origin, check->origin) > MAX_SPOT_DIST * MAX_SPOT_DIST)
-		return qfalse;
+		return false;
 
 	/* view frustum check */
 	if (!(flags & VT_NOFRUSTUM) && !G_FrustumVis(from, check->origin))
-		return qfalse;
+		return false;
 
 	/* get viewers eye height */
 	G_ActorGetEyeVector(from, eye);
@@ -194,12 +194,12 @@ qboolean G_Vis (const int team, const edict_t *from, const edict_t *check, int f
 	switch (check->type) {
 	case ET_ACTOR:
 	case ET_ACTOR2x2:
-		return G_ActorVis(eye, from, check, qfalse) > ACTOR_VIS_0;
+		return G_ActorVis(eye, from, check, false) > ACTOR_VIS_0;
 	case ET_ITEM:
 	case ET_PARTICLE:
 		return !G_LineVis(eye, check->origin);
 	default:
-		return qfalse;
+		return false;
 	}
 }
 
@@ -238,12 +238,12 @@ int G_TestVis (const int team, edict_t * check, int flags)
 	return old;
 }
 
-static qboolean G_VisShouldStop (const edict_t *ent)
+static bool G_VisShouldStop (const edict_t *ent)
 {
 	return G_IsLivingActor(ent) && !G_IsCivilian(ent);
 }
 
-static int G_DoTestVis (const int team, edict_t * check, qboolean perish, int playerMask, const edict_t *ent)
+static int G_DoTestVis (const int team, edict_t * check, bool perish, int playerMask, const edict_t *ent)
 {
 	int status = 0;
 	const int visFlags = perish ? VT_PERISH : 0;
@@ -252,7 +252,7 @@ static int G_DoTestVis (const int team, edict_t * check, qboolean perish, int pl
 	/* visibility has changed ... */
 	if (vis & VIS_CHANGE) {
 		/* swap the vis mask for the given team */
-		const qboolean appear = (vis & VIS_YES) == VIS_YES;
+		const bool appear = (vis & VIS_YES) == VIS_YES;
 		if (playerMask == 0) {
 			G_VisFlagsSwap(check, G_TeamToVisMask(team));
 		} else {
@@ -276,7 +276,7 @@ static int G_DoTestVis (const int team, edict_t * check, qboolean perish, int pl
  * @sa G_CheckVisTeam
  * @sa G_AppearPerishEvent
  */
-int G_CheckVisPlayer (player_t* player, qboolean perish)
+int G_CheckVisPlayer (player_t* player, bool perish)
 {
 	int status = 0;
 	edict_t* ent = NULL;
@@ -313,7 +313,7 @@ int G_CheckVisPlayer (player_t* player, qboolean perish)
  * @note If something appears, the needed information for those clients that are affected
  * are also send in @c G_AppearPerishEvent
  */
-int G_CheckVisTeam (const int team, edict_t *check, qboolean perish, const edict_t *ent)
+int G_CheckVisTeam (const int team, edict_t *check, bool perish, const edict_t *ent)
 {
 	int status = 0;
 
@@ -329,7 +329,7 @@ int G_CheckVisTeam (const int team, edict_t *check, qboolean perish, const edict
 /**
  * @brief Do @c G_CheckVisTeam for all entities
  */
-int G_CheckVisTeamAll (const int team, qboolean perish, const edict_t *ent)
+int G_CheckVisTeamAll (const int team, bool perish, const edict_t *ent)
 {
 	edict_t *chk = NULL;
 	int status = 0;
@@ -348,7 +348,7 @@ void G_VisMakeEverythingVisible (void)
 	edict_t *ent = NULL;
 	while ((ent = G_EdictsGetNextInUse(ent))) {
 		const int playerMask = G_VisToPM(ent->visflags);
-		G_AppearPerishEvent(~playerMask, qtrue, ent, NULL);
+		G_AppearPerishEvent(~playerMask, true, ent, NULL);
 		if (G_IsActor(ent))
 			G_SendInventory(~G_TeamToPM(ent->team), ent);
 	}
@@ -363,7 +363,7 @@ void G_VisMakeEverythingVisible (void)
  * @return Bitmask of VIS_* values
  * @sa G_CheckVisTeam
  */
-int G_CheckVis (edict_t * check, qboolean perish)
+int G_CheckVis (edict_t * check, bool perish)
 {
 	int team;
 	int status;

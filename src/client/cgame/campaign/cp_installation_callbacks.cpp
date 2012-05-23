@@ -238,7 +238,7 @@ static void INS_FillUFOYardData_f (void)
 	if (Cmd_Argc() < 2 || atoi(Cmd_Argv(1)) < 0) {
 		ins = INS_GetCurrentSelectedInstallation();
 		if (!ins || INS_GetType(ins) != INSTALLATION_UFOYARD)
-			ins = INS_GetFirstUFOYard(qfalse);
+			ins = INS_GetFirstUFOYard(false);
 	} else {
 		ins = INS_GetByIDX(atoi(Cmd_Argv(1)));
 		if (!ins)

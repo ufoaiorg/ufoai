@@ -123,7 +123,7 @@ void ProcessModels (const char *filename)
 			ProcessSubModel(entity_num);
 
 		if (!config.verboseentities)
-			config.verbose = qfalse;	/* don't bother printing submodels */
+			config.verbose = false;	/* don't bother printing submodels */
 	}
 
 	EndBSPFile(filename);

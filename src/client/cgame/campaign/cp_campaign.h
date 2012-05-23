@@ -236,7 +236,7 @@ typedef struct mission_s {
 	int idx;						/**< unique id of this mission */
 	char id[MAX_VAR];				/**< script id */
 	mapDef_t* mapDef;				/**< mapDef used for this mission */
-	qboolean active;				/**< aircraft at place? */
+	bool active;				/**< aircraft at place? */
 	union missionData_t {
 		base_t *base;
 		aircraft_t *aircraft;
@@ -253,12 +253,12 @@ typedef struct mission_s {
 									 * if finaleDate.day == 0, then delay is not a limitating factor for next stage */
 	vec2_t pos;						/**< Position of the mission */
 	aircraft_t *ufo;				/**< UFO on geoscape fulfilling the mission (may be NULL) */
-	qboolean onGeoscape;			/**< Should the mission be displayed on geoscape */
-	qboolean crashed;				/**< is UFO crashed ? (only used if mission is spawned from a UFO */
+	bool onGeoscape;			/**< Should the mission be displayed on geoscape */
+	bool crashed;				/**< is UFO crashed ? (only used if mission is spawned from a UFO */
 
 	char onwin[MAX_VAR];			/**< trigger command after you've won a battle, @sa CP_ExecuteMissionTrigger */
 	char onlose[MAX_VAR];			/**< trigger command after you've lost a battle, @sa CP_ExecuteMissionTrigger */
-	qboolean posAssigned;			/**< is the position of this mission already set? */
+	bool posAssigned;			/**< is the position of this mission already set? */
 } mission_t;
 
 /**
@@ -274,7 +274,7 @@ typedef struct battleParam_s {
 									 * this is global for the mapDef - but we need a local mission param */
 	char alienEquipment[MAX_VAR];					/**< Equipment of alien team */
 	char civTeam[MAX_VAR];							/**< Type of civilian (European, ...) */
-	qboolean day;									/**< Mission is played during day */
+	bool day;									/**< Mission is played during day */
 	const char *zoneType;							/**< Terrain type (used for texture replacement in some missions (base, ufocrash)) */
 	int aliens, civilians;			/**< number of aliens and civilians in that particular mission */
 	struct nation_s *nation;		/**< nation where the mission takes place */
@@ -283,9 +283,9 @@ typedef struct battleParam_s {
 /** @brief Structure with mission info needed to create results summary at menu won. */
 typedef struct missionResults_s {
 	const mission_t *mission;
-	qboolean won;
-	qboolean recovery;		/**< @c true if player secured a UFO (landed or crashed). */
-	qboolean crashsite;		/**< @c true if secured UFO was crashed one. */
+	bool won;
+	bool recovery;		/**< @c true if player secured a UFO (landed or crashed). */
+	bool crashsite;		/**< @c true if secured UFO was crashed one. */
 	ufoType_t ufotype;		/**< Type of UFO secured during the mission. */
 	float ufoCondition;		/**< How much the UFO is damaged */
 	int itemTypes;			/**< Types of items gathered from a mission. */
@@ -340,11 +340,11 @@ typedef struct campaign_s {
 	float minhappiness;			/**< minimum value of mean happiness before the game is lost */
 	int negativeCreditsUntilLost;	/**< bankrupt - negative credits until you've lost the game */
 	int maxAllowedXVIRateUntilLost;	/**< 0 - 100 - the average rate of XVI over all nations before you've lost the game */
-	qboolean visible;			/**< visible in campaign menu? */
+	bool visible;			/**< visible in campaign menu? */
 	date_t date;				/**< starting date for this campaign */
 	int basecost;				/**< base building cost for empty base */
 	char firstBaseTemplate[MAX_VAR];	/**< template to use for setting up the first base */
-	qboolean finished;
+	bool finished;
 	const campaignEvents_t *events;
 	salary_t salaries;
 } campaign_t;
@@ -392,8 +392,8 @@ typedef struct ccs_s {
 	int civiliansKilled;	/**< how many civilians were killed already */
 	int aliensKilled;		/**< how many aliens were killed already */
 	date_t date;			/**< current date */
-	qboolean XVIShowMap;			/**< means that PHALANX has a map of XVI - @see CP_IsXVIResearched */
-	qboolean breathingMailSent;		/**< status flag indicating that mail about died aliens due to missing breathing tech was sent */
+	bool XVIShowMap;			/**< means that PHALANX has a map of XVI - @see CP_IsXVIResearched */
+	bool breathingMailSent;		/**< status flag indicating that mail about died aliens due to missing breathing tech was sent */
 	float timer;
 	float frametime;
 
@@ -402,7 +402,7 @@ typedef struct ccs_s {
 	float zoom;				/**< zoom used when looking at earth */
 
 	/* Smoothing variables */
-	qboolean smoothRotation;	/**< @c true if the rotation of 3D geoscape must me smooth */
+	bool smoothRotation;	/**< @c true if the rotation of 3D geoscape must me smooth */
 	vec3_t smoothFinalGlobeAngle;	/**< value of final ccs.angles for a smooth change of angle (see MAP_CenterOnPoint)*/
 	vec2_t smoothFinal2DGeoscapeCenter;		/**< value of ccs.center for a smooth change of position (see MAP_CenterOnPoint) */
 	float smoothDeltaLength;	/**< angle/position difference that we need to change when smoothing */
@@ -432,7 +432,7 @@ typedef struct ccs_s {
 	int gameLapse;
 
 	/* already paid in this month? */
-	qboolean paid;
+	bool paid;
 
 	/** Coordinates to place the new base at (long, lat) */
 	vec2_t newBasePos;
@@ -580,14 +580,14 @@ extern const cgame_import_t *cgi;
 /* Campaign functions */
 void CP_InitStartup(void);
 campaign_t* CP_GetCampaign(const char *name);
-void CP_CampaignInit(campaign_t *campaign, qboolean load);
+void CP_CampaignInit(campaign_t *campaign, bool load);
 void CP_ParseCampaignData(void);
 void CP_ReadCampaignData(const campaign_t *campaign);
-qboolean CP_IsRunning(void);
+bool CP_IsRunning(void);
 
 void CP_CampaignRun(campaign_t *campaign, float secondsSinceLastFrame);
 void CP_CheckLostCondition(const campaign_t *campaign);
-void CP_EndCampaign(qboolean won);
+void CP_EndCampaign(bool won);
 
 void CP_Shutdown(void);
 void CP_ResetCampaignData(void);
@@ -596,34 +596,34 @@ void CP_ResetCampaignData(void);
 int CP_CountMissionOnGeoscape(void);
 void CP_UpdateMissionVisibleOnGeoscape(void);
 int CP_TerrorMissionAvailableUFOs(const mission_t *mission, ufoType_t *ufoTypes);
-qboolean AIR_SendAircraftToMission(aircraft_t *aircraft, mission_t *mission);
+bool AIR_SendAircraftToMission(aircraft_t *aircraft, mission_t *mission);
 void AIR_AircraftsNotifyMissionRemoved(const mission_t *mission);
 
 void CP_UFOProceedMission(const campaign_t* campaign, aircraft_t *ufocraft);
-mission_t *CP_CreateNewMission(interestCategory_t category, qboolean beginNow);
-qboolean CP_ChooseMap(mission_t *mission, const vec2_t pos);
+mission_t *CP_CreateNewMission(interestCategory_t category, bool beginNow);
+bool CP_ChooseMap(mission_t *mission, const vec2_t pos);
 void CP_StartSelectedMission(void);
 
 void CP_HandleNationData(float minHappiness, mission_t * mis, const nation_t *nation, const missionResults_t *results);
 void CP_UpdateCharacterStats(const base_t *base, const aircraft_t *aircraft);
 
 /* Credits management */
-qboolean CP_CheckCredits (int costs);
+bool CP_CheckCredits (int costs);
 void CP_UpdateCredits(int credits);
 
 /* Other functions */
 void CP_ParseCharacterData(struct dbuffer *msg);
-qboolean CP_CheckNextStageDestination(const campaign_t* campaign, aircraft_t *ufo);
+bool CP_CheckNextStageDestination(const campaign_t* campaign, aircraft_t *ufo);
 
 const city_t * CP_GetCity(const char *id);
 
 aircraft_t* AIR_NewAircraft(base_t * base, const aircraft_t *aircraftTemplate);
 
-void CP_GetRandomPosOnGeoscape(vec2_t pos, qboolean noWater);
-qboolean CP_GetRandomPosOnGeoscapeWithParameters(vec2_t pos, const linkedList_t *terrainTypes, const linkedList_t *cultureTypes, const linkedList_t *populationTypes, const linkedList_t *nations);
+void CP_GetRandomPosOnGeoscape(vec2_t pos, bool noWater);
+bool CP_GetRandomPosOnGeoscapeWithParameters(vec2_t pos, const linkedList_t *terrainTypes, const linkedList_t *cultureTypes, const linkedList_t *populationTypes, const linkedList_t *nations);
 
 void CP_GameAutoGo(mission_t *mission, aircraft_t *aircraft, const campaign_t *campaign, const battleParam_t *battleParameters, missionResults_t *results);
 
-qboolean CP_OnGeoscape(void);
+bool CP_OnGeoscape(void);
 
 #endif /* CP_CAMPAIGN_H */

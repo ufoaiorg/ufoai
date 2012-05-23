@@ -339,10 +339,10 @@ void CP_InitializeXVIOverlay (const byte *data)
 
 /**
  * @brief Initialize radar overlay on geoscape.
- * @param[in] source Initialize the source texture if qtrue: if you are updating base radar overlay.
+ * @param[in] source Initialize the source texture if true: if you are updating base radar overlay.
  * false if you are updating aircraft radar overlay (base radar overlay will be copied to aircraft radar overlay)
  */
-void CP_InitializeRadarOverlay (qboolean source)
+void CP_InitializeRadarOverlay (bool source)
 {
 	/* Initialize Radar */
 	if (source)
@@ -359,7 +359,7 @@ void CP_InitializeRadarOverlay (qboolean source)
  * @param[in] source True if we must update the source of the radar coverage, false if the copy must be updated.
  * @pre We assume latMax - latMin <= 360 degrees.
  */
-static void CP_DrawRadarOverlayRow (float latMin, float latMax, int y, byte alpha, qboolean source)
+static void CP_DrawRadarOverlayRow (float latMin, float latMax, int y, byte alpha, bool source)
 {
 	const float radarWidthPerDegree = RADAR_WIDTH / 360.0f;
 	int x;
@@ -417,7 +417,7 @@ static void CP_DrawRadarOverlayRow (float latMin, float latMax, int y, byte alph
  * @param[in] source True if we must update the source of the radar coverage, false if the copy must be updated.
  * @pre We assume outerRadius is smaller than 180 degrees
  */
-void CP_AddRadarCoverage (const vec2_t pos, float innerRadius, float outerRadius, qboolean source)
+void CP_AddRadarCoverage (const vec2_t pos, float innerRadius, float outerRadius, bool source)
 {
 	const byte innerAlpha = 0;					/**< Alpha of the inner radar range */
 	const byte outerAlpha = 60;					/**< Alpha of the outer radar range */

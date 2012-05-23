@@ -38,7 +38,7 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #define TEAM_SAVE_FILE_VERSION 4
 
 static inventory_t game_inventory;
-static qboolean characterActive[MAX_ACTIVETEAM];
+static bool characterActive[MAX_ACTIVETEAM];
 
 typedef struct teamSaveFileHeader_s {
 	uint32_t version; /**< which savegame version */
@@ -53,7 +53,7 @@ static void GAME_UpdateActiveTeamList (void)
 
 	OBJZERO(characterActive);
 	for (i = 0; i < chrDisplayList.num; i++)
-		characterActive[i] = qtrue;
+		characterActive[i] = true;
 
 	UI_ExecuteConfunc("team_checkboxes_update %i", chrDisplayList.num);
 }
@@ -198,7 +198,7 @@ static void GAME_LoadTeamInfo (xmlNode_t *p)
 /**
  * @brief Saves a team in xml format
  */
-static qboolean GAME_SaveTeam (const char *filename, const char *name)
+static bool GAME_SaveTeam (const char *filename, const char *name)
 {
 	int requiredBufferLength;
 	teamSaveFileHeader_t header;
@@ -237,7 +237,7 @@ static qboolean GAME_SaveTeam (const char *filename, const char *name)
 	if (!buf) {
 		mxmlDelete(topNode);
 		Com_Printf("Error: Could not allocate enough memory to save this game\n");
-		return qfalse;
+		return false;
 	}
 	mxmlSaveString(topNode, (char*)buf, requiredBufferLength + 1, MXML_NO_CALLBACK);
 	mxmlDelete(topNode);
@@ -251,7 +251,7 @@ static qboolean GAME_SaveTeam (const char *filename, const char *name)
 	FS_WriteFile(fbuf, requiredBufferLength + 1 + sizeof(header), filename);
 	Mem_Free(fbuf);
 
-	return qtrue;
+	return true;
 }
 
 /**
@@ -288,7 +288,7 @@ void GAME_SaveTeam_f (void)
 /**
  * @brief Load a team from an xml file
  */
-static qboolean GAME_LoadTeam (const char *filename)
+static bool GAME_LoadTeam (const char *filename)
 {
 	qFILE f;
 	int clen;
@@ -300,7 +300,7 @@ static qboolean GAME_LoadTeam (const char *filename)
 	FS_OpenFile(filename, &f, FILE_READ);
 	if (!f.f && !f.z) {
 		Com_Printf("Couldn't open file '%s'\n", filename);
-		return qfalse;
+		return false;
 	}
 
 	clen = FS_FileLength(&f);
@@ -309,7 +309,7 @@ static qboolean GAME_LoadTeam (const char *filename)
 		Com_Printf("Warning: Could not read %i bytes from savefile\n", clen);
 		FS_CloseFile(&f);
 		Mem_Free(cbuf);
-		return qfalse;
+		return false;
 	}
 	FS_CloseFile(&f);
 
@@ -321,7 +321,7 @@ static qboolean GAME_LoadTeam (const char *filename)
 	if (header.version != TEAM_SAVE_FILE_VERSION) {
 		Com_Printf("Invalid version number\n");
 		Mem_Free(cbuf);
-		return qfalse;
+		return false;
 	}
 
 	Com_Printf("Loading team (size %d / %i)\n", clen, header.xmlSize);
@@ -330,14 +330,14 @@ static qboolean GAME_LoadTeam (const char *filename)
 	Mem_Free(cbuf);
 	if (!topNode) {
 		Com_Printf("Error: Failure in loading the xml data!");
-		return qfalse;
+		return false;
 	}
 
 	node = XML_GetNode(topNode, SAVE_TEAM_ROOTNODE);
 	if (!node) {
 		mxmlDelete(topNode);
 		Com_Printf("Error: Failure in loading the xml data! (node '" SAVE_TEAM_ROOTNODE "' not found)\n");
-		return qfalse;
+		return false;
 	}
 	Cvar_Set("mn_teamname", header.name);
 
@@ -345,7 +345,7 @@ static qboolean GAME_LoadTeam (const char *filename)
 	if (!snode) {
 		mxmlDelete(topNode);
 		Com_Printf("Error: Failure in loading the xml data! (node '" SAVE_TEAM_NODE "' not found)\n");
-		return qfalse;
+		return false;
 	}
 	GAME_LoadTeamInfo(snode);
 
@@ -353,7 +353,7 @@ static qboolean GAME_LoadTeam (const char *filename)
 	if (!snode) {
 		mxmlDelete(topNode);
 		Com_Printf("Error: Failure in loading the xml data! (node '" SAVE_TEAM_EQUIPMENT "' not found)\n");
-		return qfalse;
+		return false;
 	}
 
 	ed = GAME_GetEquipmentDefinition();
@@ -371,23 +371,23 @@ static qboolean GAME_LoadTeam (const char *filename)
 
 	mxmlDelete(topNode);
 
-	return qtrue;
+	return true;
 }
 
-qboolean GAME_LoadDefaultTeam (qboolean force)
+bool GAME_LoadDefaultTeam (bool force)
 {
 	if (cls.teamSaveSlotIndex == NO_TEAM_SLOT_LOADED) {
 		if (!force)
-			return qfalse;
+			return false;
 		cls.teamSaveSlotIndex = 0;
 	}
 
 	if (GAME_LoadTeam(va("save/team%i.mpt", cls.teamSaveSlotIndex)) && !GAME_IsTeamEmpty()) {
-		return qtrue;
+		return true;
 	}
 
 	cls.teamSaveSlotIndex = NO_TEAM_SLOT_LOADED;
-	return qfalse;
+	return false;
 }
 
 /**
@@ -637,7 +637,7 @@ static void GAME_LoadInventory (xmlNode_t *p, inventory_t *i)
  * @param[in] p The node to which we should save the character
  * @param[in] chr The character we should save
  */
-qboolean GAME_SaveCharacter (xmlNode_t *p, const character_t* chr)
+bool GAME_SaveCharacter (xmlNode_t *p, const character_t* chr)
 {
 	xmlNode_t *sScore;
 	xmlNode_t *sInventory;
@@ -702,7 +702,7 @@ qboolean GAME_SaveCharacter (xmlNode_t *p, const character_t* chr)
 	GAME_SaveInventory(sInventory, &chr->i);
 
 	Com_UnregisterConstList(saveCharacterConstants);
-	return qtrue;
+	return true;
 }
 
 /**
@@ -710,14 +710,14 @@ qboolean GAME_SaveCharacter (xmlNode_t *p, const character_t* chr)
  * @param[in] p The node from which we should load the character.
  * @param[in] chr Pointer to the character we should load.
  */
-qboolean GAME_LoadCharacter (xmlNode_t *p, character_t *chr)
+bool GAME_LoadCharacter (xmlNode_t *p, character_t *chr)
 {
 	const char *s;
 	xmlNode_t *sScore;
 	xmlNode_t *sSkill;
 	xmlNode_t *sKill;
 	xmlNode_t *sInventory;
-	qboolean success = qtrue;
+	bool success = true;
 
 	/* Load the character data */
 	Q_strncpyz(chr->name, XML_GetString(p, SAVE_CHARACTER_NAME), sizeof(chr->name));
@@ -742,7 +742,7 @@ qboolean GAME_LoadCharacter (xmlNode_t *p, character_t *chr)
 	s = XML_GetString(p, SAVE_CHARACTER_TEAMDEF);
 	chr->teamDef = Com_GetTeamDefinitionByID(s);
 	if (!chr->teamDef)
-		return qfalse;
+		return false;
 
 	Com_RegisterConstList(saveCharacterConstants);
 
@@ -754,7 +754,7 @@ qboolean GAME_LoadCharacter (xmlNode_t *p, character_t *chr)
 
 		if (!Com_GetConstIntFromNamespace(SAVE_CHARACTER_SKILLTYPE_NAMESPACE, type, &idx)) {
 			Com_Printf("Invalid skill type '%s' for %s (ucn: %i)\n", type, chr->name, chr->ucn);
-			success = qfalse;
+			success = false;
 			break;
 		}
 
@@ -768,7 +768,7 @@ qboolean GAME_LoadCharacter (xmlNode_t *p, character_t *chr)
 
 	if (!success) {
 		Com_UnregisterConstList(saveCharacterConstants);
-		return qfalse;
+		return false;
 	}
 
 	/* Load kills */
@@ -778,7 +778,7 @@ qboolean GAME_LoadCharacter (xmlNode_t *p, character_t *chr)
 
 		if (!Com_GetConstIntFromNamespace(SAVE_CHARACTER_KILLTYPE_NAMESPACE, type, &idx)) {
 			Com_Printf("Invalid kill type '%s' for %s (ucn: %i)\n", type, chr->name, chr->ucn);
-			success = qfalse;
+			success = false;
 			break;
 		}
 		chr->score.kills[idx] = XML_GetInt(sKill, SAVE_CHARACTER_KILLED, 0);
@@ -787,7 +787,7 @@ qboolean GAME_LoadCharacter (xmlNode_t *p, character_t *chr)
 
 	if (!success) {
 		Com_UnregisterConstList(saveCharacterConstants);
-		return qfalse;
+		return false;
 	}
 
 	chr->score.assignedMissions = XML_GetInt(sScore, SAVE_CHARACTER_SCORE_ASSIGNEDMISSIONS, 0);
@@ -798,5 +798,5 @@ qboolean GAME_LoadCharacter (xmlNode_t *p, character_t *chr)
 	GAME_LoadInventory(sInventory, &chr->i);
 
 	Com_UnregisterConstList(saveCharacterConstants);
-	return qtrue;
+	return true;
 }

@@ -53,9 +53,9 @@ typedef struct player_s player_t;
 #ifndef GAME_INCLUDE
 
 struct player_s {
-	qboolean inuse;
+	bool inuse;
 	int num;					/**< communicated by server to clients */
-	qboolean isReady;
+	bool isReady;
 
 	/** the game dll can add anything it wants after
 	 * this point in the structure */
@@ -63,7 +63,7 @@ struct player_s {
 
 /** @note don't change the order - also see edict_s in g_local.h */
 struct edict_s {
-	qboolean inuse;
+	bool inuse;
 	int linkcount;		/**< count the amount of server side links - if a link was called,
 						 * something on the position or the size of the entity was changed */
 
@@ -133,7 +133,7 @@ typedef struct {
 	int (IMPORT *PointContents) (vec3_t point);
 	const char* (IMPORT *GetFootstepSound) (const char* texture);
 	float (IMPORT *GetBounceFraction) (const char *texture);
-	qboolean (IMPORT *LoadModelMinsMaxs) (const char *model, int frame, vec3_t mins, vec3_t maxs);
+	bool (IMPORT *LoadModelMinsMaxs) (const char *model, int frame, vec3_t mins, vec3_t maxs);
 
 	/** links entity into the world - so that it is sent to the client and used for
 	 * collision detection, etc. Must be relinked if its size, position or solidarity changes */
@@ -144,14 +144,14 @@ typedef struct {
 	int (IMPORT *TouchEdicts) (const vec3_t mins, const vec3_t maxs, edict_t **list, int maxcount, edict_t *skip);
 
 	/** @brief fast version of a line trace but without including entities */
-	qboolean (IMPORT *TestLine) (const vec3_t start, const vec3_t stop, const int levelmask);
+	bool (IMPORT *TestLine) (const vec3_t start, const vec3_t stop, const int levelmask);
 	/** @brief fast version of a line trace that also includes entities */
-	qboolean (IMPORT *TestLineWithEnt) (const vec3_t start, const vec3_t stop, const int levelmask, const char **entlist);
-	float (IMPORT *GrenadeTarget) (const vec3_t from, const vec3_t at, float speed, qboolean launched, qboolean rolled, vec3_t v0);
+	bool (IMPORT *TestLineWithEnt) (const vec3_t start, const vec3_t stop, const int levelmask, const char **entlist);
+	float (IMPORT *GrenadeTarget) (const vec3_t from, const vec3_t at, float speed, bool launched, bool rolled, vec3_t v0);
 
 	void (IMPORT *MoveCalc) (const routing_t * map, actorSizeEnum_t actorSize, pathing_t * path, const pos3_t from, byte crouchingState, int distance, pos_t ** forbiddenList, int forbiddenListLength);
 	void (IMPORT *MoveStore) (pathing_t * path);
-	pos_t (IMPORT *MoveLength) (const pathing_t * path, const pos3_t to, byte crouchingState, qboolean stored);
+	pos_t (IMPORT *MoveLength) (const pathing_t * path, const pos3_t to, byte crouchingState, bool stored);
 	int (IMPORT *MoveNext) (const pathing_t *path, const pos3_t from, byte crouchingState);
 	int (IMPORT *GridFloor) (const routing_t * map, actorSizeEnum_t actorSize, const pos3_t pos);
 	int (IMPORT *GetTUsForDirection) (int dir, int crouched);
@@ -198,11 +198,11 @@ typedef struct {
 	void (IMPORT *ReadData) (void *buffer, int size);
 	void (IMPORT *ReadFormat) (const char *format, ...);
 
-	qboolean (IMPORT *GetConstInt) (const char *name, int *value);
-	qboolean (IMPORT *GetConstIntFromNamespace) (const char *space, const char *name, int *value);
+	bool (IMPORT *GetConstInt) (const char *name, int *value);
+	bool (IMPORT *GetConstIntFromNamespace) (const char *space, const char *name, int *value);
 	const char* (IMPORT *GetConstVariable) (const char *space, int value);
 	void (IMPORT *RegisterConstInt) (const char *name, int value);
-	qboolean (IMPORT *UnregisterConstVariable) (const char *name);
+	bool (IMPORT *UnregisterConstVariable) (const char *name);
 
 	/* misc functions */
 	void (IMPORT *GetCharacterValues) (const char *teamDefinition, character_t *chr);
@@ -238,10 +238,10 @@ typedef struct {
 	void (EXPORT *Shutdown) (void);
 
 	/* each new level entered will cause a call to G_SpawnEntities */
-	void (EXPORT *SpawnEntities) (const char *mapname, qboolean day, const char *entstring);
+	void (EXPORT *SpawnEntities) (const char *mapname, bool day, const char *entstring);
 
-	qboolean (EXPORT *ClientConnect) (player_t * client, char *userinfo, size_t userinfoSize);
-	qboolean (EXPORT *ClientBegin) (player_t * client);
+	bool (EXPORT *ClientConnect) (player_t * client, char *userinfo, size_t userinfoSize);
+	bool (EXPORT *ClientBegin) (player_t * client);
 	void (EXPORT *ClientStartMatch) (player_t * client);
 	void (EXPORT *ClientUserinfoChanged) (player_t * client, const char *userinfo);
 	void (EXPORT *ClientDisconnect) (player_t * client);
@@ -253,12 +253,12 @@ typedef struct {
 	void (EXPORT *ClientInitActorStates) (const player_t * client);
 	int (EXPORT *ClientGetTeamNum) (const player_t * client);
 	int (EXPORT *ClientGetTeamNumPref) (const player_t * client);
-	qboolean (EXPORT *ClientIsReady) (const player_t * client);
+	bool (EXPORT *ClientIsReady) (const player_t * client);
 
 	int (EXPORT *ClientGetActiveTeam) (void);
 	const char* (EXPORT *ClientGetName) (int pnum);
 
-	qboolean (EXPORT *RunFrame) (void);
+	bool (EXPORT *RunFrame) (void);
 
 	/** ServerCommand will be called when an "sv <command>" command is issued on the
 	 * server console.

@@ -49,12 +49,12 @@ typedef struct
 
 	/** @todo atm there isn't really a check for this (all "video" streams are handled
 	 * as xvid, because xvid support more than one "subtype") */
-	qboolean videoStreamIsXvid;
+	bool videoStreamIsXvid;
 #ifdef HAVE_XVID_H
 	xvid_dec_stats_t xvidDecodeStats;
 	void *xvidDecodeHandle;
 #endif
-	qboolean videoStreamIsTheora;
+	bool videoStreamIsTheora;
 #ifdef HAVE_THEORA_THEORA_H
 	theora_info th_info;
 	theora_comment th_comment;
@@ -219,7 +219,7 @@ static byte rawBuffer[SIZEOF_RAWBUFF];
 /**
  * @return true if audio wants more packets
  */
-static qboolean CIN_OGM_LoadAudioFrame (cinematic_t *cin)
+static bool CIN_OGM_LoadAudioFrame (cinematic_t *cin)
 {
 	vorbis_block vb;
 
@@ -477,22 +477,22 @@ static int CIN_OGM_LoadVideoFrame (cinematic_t *cin)
 /**
  * @return true => noDataTransfered
  */
-static qboolean CIN_OGM_LoadFrame (cinematic_t *cin)
+static bool CIN_OGM_LoadFrame (cinematic_t *cin)
 {
-	qboolean anyDataTransferred = qtrue;
-	qboolean needVOutputData = qtrue;
-	qboolean audioWantsMoreData = qfalse;
+	bool anyDataTransferred = true;
+	bool needVOutputData = true;
+	bool audioWantsMoreData = false;
 	int status;
 
 	while (anyDataTransferred && (needVOutputData || audioWantsMoreData)) {
-		anyDataTransferred = qfalse;
+		anyDataTransferred = false;
 		if (needVOutputData && (status = CIN_OGM_LoadVideoFrame(cin))) {
-			needVOutputData = qfalse;
+			needVOutputData = false;
 			if (status > 0)
-				anyDataTransferred = qtrue;
+				anyDataTransferred = true;
 			else
 				/* error (we don't need any videodata and we had no transferred) */
-				anyDataTransferred = qfalse;
+				anyDataTransferred = false;
 		}
 
 		if (needVOutputData || audioWantsMoreData) {
@@ -502,7 +502,7 @@ static qboolean CIN_OGM_LoadFrame (cinematic_t *cin)
 				anyDataTransferred |= !CIN_OGM_LoadBlockToSync(cin);
 			else
 				/* successful loadPagesToStreams() */
-				anyDataTransferred = qtrue;
+				anyDataTransferred = true;
 		}
 
 		/* load all audio after loading new pages ... */
@@ -598,7 +598,7 @@ int CIN_OGM_OpenCinematic (cinematic_t *cin, const char* filename)
 					Com_Printf("more than one video stream, in ogm-file(%s) ... we will stay at the first one\n",
 							filename);
 				} else {
-					OGMCIN.videoStreamIsTheora = qtrue;
+					OGMCIN.videoStreamIsTheora = true;
 					ogg_stream_init(&OGMCIN.os_video, ogg_page_serialno(&og));
 					ogg_stream_pagein(&OGMCIN.os_video, &og);
 				}
@@ -612,7 +612,7 @@ int CIN_OGM_OpenCinematic (cinematic_t *cin, const char* filename)
 				} else {
 					stream_header_t* sh;
 
-					OGMCIN.videoStreamIsXvid = qtrue;
+					OGMCIN.videoStreamIsXvid = true;
 
 					sh = (stream_header_t*) (og.body + 1);
 
@@ -734,22 +734,22 @@ static void CIN_OGM_DrawCinematic (cinematic_t *cin)
 /**
  * @return true if the cinematic is still running, false otherwise
  */
-qboolean CIN_OGM_RunCinematic (cinematic_t *cin)
+bool CIN_OGM_RunCinematic (cinematic_t *cin)
 {
 	/* no video stream found */
 	if (!OGMCIN.os_video.serialno)
-		return qfalse;
+		return false;
 
 	OGMCIN.currentTime = CL_Milliseconds() - OGMCIN.startTime;
 
 	while (!OGMCIN.videoFrameCount || OGMCIN.currentTime + 20 >= (int) (OGMCIN.videoFrameCount * OGMCIN.Vtime_unit / 10000)) {
 		if (CIN_OGM_LoadFrame(cin))
-			return qfalse;
+			return false;
 	}
 
 	CIN_OGM_DrawCinematic(cin);
 
-	return qtrue;
+	return true;
 }
 
 void CIN_OGM_CloseCinematic (cinematic_t *cin)

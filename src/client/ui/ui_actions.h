@@ -207,7 +207,7 @@ typedef struct uiCallContext_s {
 	/** node owning the action */
 	uiNode_t* source;
 	/** is the function can use param from command line */
-	qboolean useCmdParam;
+	bool useCmdParam;
 	linkedList_t *params;
 	int paramNumber;
 	int varPosition;
@@ -217,9 +217,9 @@ typedef struct uiCallContext_s {
 void UI_ExecuteEventActions(uiNode_t* source, const uiAction_t* firstAction);
 void UI_ExecuteConFuncActions(uiNode_t* source, const uiAction_t* firstAction);
 void UI_ExecuteEventActionsEx (uiNode_t* source, const uiAction_t* firstAction, linkedList_t *params);
-qboolean UI_IsInjectedString(const char *string);
+bool UI_IsInjectedString(const char *string);
 void UI_FreeStringProperty(void* pointer);
-const char* UI_GenInjectedString(const char* input, qboolean addNewLine, const uiCallContext_t *context);
+const char* UI_GenInjectedString(const char* input, bool addNewLine, const uiCallContext_t *context);
 int UI_GetActionTokenType(const char* token, int group);
 uiValue_t* UI_GetVariable (const uiCallContext_t *context, int relativeVarId);
 

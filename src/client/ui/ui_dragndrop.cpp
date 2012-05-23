@@ -36,8 +36,8 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 static int oldMousePosX = -1;				/**< Save position X of the mouse to know when it move */
 static int oldMousePosY = -1;				/**< Save position Y of the mouse to know when it move */
 
-static qboolean nodeAcceptDND = qfalse;		/**< Save if the current target node can accept the DND object */
-static qboolean positionAcceptDND = qfalse;	/**< Save if the current position accept the DND object */
+static bool nodeAcceptDND = false;		/**< Save if the current target node can accept the DND object */
+static bool positionAcceptDND = false;	/**< Save if the current position accept the DND object */
 
 static uiDNDType_t objectType;				/**< Save the type of the object we are dragging */
 static item_t draggingItem;					/**< Save the dragging object */
@@ -49,7 +49,7 @@ static uiNode_t *targetNode;				/**< Current node under the mouse */
 /**
  * @brief Return true if we are dragging something
  */
-qboolean UI_DNDIsDragging (void)
+bool UI_DNDIsDragging (void)
 {
 	return objectType != DND_NOTHING;
 }
@@ -57,20 +57,20 @@ qboolean UI_DNDIsDragging (void)
 /**
  * @brief Return true if the requested node is the current target of the DND
  */
-qboolean UI_DNDIsTargetNode (uiNode_t* node)
+bool UI_DNDIsTargetNode (uiNode_t* node)
 {
 	if (!UI_DNDIsDragging())
-		return qfalse;
+		return false;
 	return targetNode == node;
 }
 
 /**
  * @brief Return true if the requested node is the source of the DND
  */
-qboolean UI_DNDIsSourceNode (uiNode_t* node)
+bool UI_DNDIsSourceNode (uiNode_t* node)
 {
 	if (!UI_DNDIsDragging())
-		return qfalse;
+		return false;
 	return sourceNode == node;
 }
 
@@ -153,7 +153,7 @@ void UI_DNDAbort (void)
 	if (nodeAcceptDND && targetNode) {
 		UI_Node_DndLeave(targetNode);
 	}
-	UI_Node_DndFinished(sourceNode, qfalse);
+	UI_Node_DndFinished(sourceNode, false);
 
 	UI_DNDCleanup();
 	UI_InvalidateMouse();
@@ -166,7 +166,7 @@ void UI_DNDAbort (void)
  */
 void UI_DNDDrop (void)
 {
-	qboolean result = qfalse;
+	bool result = false;
 	assert(UI_DNDIsDragging());
 	assert(objectType != DND_NOTHING);
 	assert(sourceNode != NULL);
@@ -211,13 +211,13 @@ static void UI_DNDMouseMove (int mousePosX, int mousePosY)
 	}
 
 	if (targetNode == NULL) {
-		nodeAcceptDND = qfalse;
-		positionAcceptDND = qfalse;
+		nodeAcceptDND = false;
+		positionAcceptDND = false;
 		return;
 	}
 
 	if (!nodeAcceptDND) {
-		positionAcceptDND = qfalse;
+		positionAcceptDND = false;
 		return;
 	}
 

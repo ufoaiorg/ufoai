@@ -168,13 +168,13 @@ static void GAME_CP_Start_f (void)
 	/* Make sure that this campaign is selected */
 	Cvar_Set("cp_campaign", campaign->id);
 
-	CP_CampaignInit(campaign, qfalse);
+	CP_CampaignInit(campaign, false);
 
 	/* Intro sentences */
 	Cbuf_AddText("seq_start intro\n");
 }
 
-static inline void AL_AddAlienTypeToAircraftCargo_ (void *data, const teamDef_t *teamDef, int amount, qboolean dead)
+static inline void AL_AddAlienTypeToAircraftCargo_ (void *data, const teamDef_t *teamDef, int amount, bool dead)
 {
 	AL_AddAlienTypeToAircraftCargo((aircraft_t *) data, teamDef, amount, dead);
 }
@@ -190,14 +190,14 @@ static inline void AL_AddAlienTypeToAircraftCargo_ (void *data, const teamDef_t 
  * @param numStunned The amount of stunned actors for all teams. The first dimension contains
  * the attacker team, the second the victim team
  */
-void GAME_CP_Results (struct dbuffer *msg, int winner, int *numSpawned, int *numAlive, int numKilled[][MAX_TEAMS], int numStunned[][MAX_TEAMS], qboolean nextmap)
+void GAME_CP_Results (struct dbuffer *msg, int winner, int *numSpawned, int *numAlive, int numKilled[][MAX_TEAMS], int numStunned[][MAX_TEAMS], bool nextmap)
 {
 	int i, j;
 	int ownSurvived, ownKilled, ownStunned;
 	int aliensSurvived, aliensKilled, aliensStunned;
 	int civiliansSurvived, civiliansKilled, civiliansStunned;
 	const int currentTeam = cgi->GAME_GetCurrentTeam();
-	const qboolean won = (winner == currentTeam);
+	const bool won = (winner == currentTeam);
 	missionResults_t *results;
 	aircraft_t *aircraft = MAP_GetMissionAircraft();
 	const battleParam_t *bp = &ccs.battleParameters;
@@ -284,7 +284,7 @@ void GAME_CP_Results (struct dbuffer *msg, int winner, int *numSpawned, int *num
 		ccs.missionResultCallback(results);
 	}
 
-	cgi->UI_InitStack("geoscape", "campaign_main", qtrue, qtrue);
+	cgi->UI_InitStack("geoscape", "campaign_main", true, true);
 
 	if (won)
 		cgi->UI_PushWindow("won");
@@ -292,16 +292,16 @@ void GAME_CP_Results (struct dbuffer *msg, int winner, int *numSpawned, int *num
 		cgi->UI_PushWindow("lost");
 
 	cgi->CL_Disconnect();
-	SV_Shutdown("Mission end", qfalse);
+	SV_Shutdown("Mission end", false);
 }
 
-qboolean GAME_CP_Spawn (chrList_t *chrList)
+bool GAME_CP_Spawn (chrList_t *chrList)
 {
 	aircraft_t *aircraft = MAP_GetMissionAircraft();
 	base_t *base;
 
 	if (!aircraft)
-		return qfalse;
+		return false;
 
 	/* convert aircraft team to character list */
 	LIST_Foreach(aircraft->acTeam, employee_t, employee) {
@@ -315,12 +315,12 @@ qboolean GAME_CP_Spawn (chrList_t *chrList)
 	CP_CleanTempInventory(base);
 
 	/* activate hud */
-	HUD_InitUI(NULL, qfalse);
+	HUD_InitUI(NULL, false);
 
-	return qtrue;
+	return true;
 }
 
-qboolean GAME_CP_ItemIsUseable (const objDef_t *od)
+bool GAME_CP_ItemIsUseable (const objDef_t *od)
 {
 	const technology_t *tech = RS_GetTechForItem(od);
 	return RS_IsResearched_ptr(tech);
@@ -331,10 +331,10 @@ qboolean GAME_CP_ItemIsUseable (const objDef_t *od)
  * @param[in] teamDef The team definition of the alien team
  * @return @c true if known, @c false otherwise.
  */
-qboolean GAME_CP_TeamIsKnown (const teamDef_t *teamDef)
+bool GAME_CP_TeamIsKnown (const teamDef_t *teamDef)
 {
 	if (!CHRSH_IsTeamDefAlien(teamDef))
-		return qtrue;
+		return true;
 
 	if (!ccs.teamDefTechs[teamDef->idx])
 		Com_Error(ERR_DROP, "Could not find tech for teamdef '%s'", teamDef->id);
@@ -345,9 +345,9 @@ qboolean GAME_CP_TeamIsKnown (const teamDef_t *teamDef)
 void GAME_CP_Drop (void)
 {
 	/** @todo maybe create a savegame? */
-	cgi->UI_InitStack("geoscape", "campaign_main", qtrue, qtrue);
+	cgi->UI_InitStack("geoscape", "campaign_main", true, true);
 
-	SV_Shutdown("Mission end", qfalse);
+	SV_Shutdown("Mission end", false);
 	cgi->CL_Disconnect();
 }
 
@@ -465,5 +465,5 @@ void GAME_CP_Shutdown (void)
 
 	CP_ResetCampaignData();
 
-	SV_Shutdown("Quitting server.", qfalse);
+	SV_Shutdown("Quitting server.", false);
 }

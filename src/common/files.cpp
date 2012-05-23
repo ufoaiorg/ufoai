@@ -333,7 +333,7 @@ int FS_CheckFile (const char *fmt, ...)
  * @sa FS_LoadFile
  * @sa FS_OpenFile
  */
-int FS_Read2 (void *buffer, int len, qFILE *f, qboolean failOnEmptyRead)
+int FS_Read2 (void *buffer, int len, qFILE *f, bool failOnEmptyRead)
 {
 	int block, remaining;
 	int read;
@@ -384,7 +384,7 @@ int FS_Read2 (void *buffer, int len, qFILE *f, qboolean failOnEmptyRead)
 
 int FS_Read (void *buffer, int len, qFILE * f)
 {
-	return FS_Read2(buffer, len, f, qtrue);
+	return FS_Read2(buffer, len, f, true);
 }
 
 /**
@@ -510,7 +510,7 @@ static char const* const pakFileExt[] = {
  * @param[in] dir The directory name relative to the game dir
  * @param[in] write Add this directory as writable (config files, save games)
  */
-void FS_AddGameDirectory (const char *dir, qboolean write)
+void FS_AddGameDirectory (const char *dir, bool write)
 {
 	char **dirnames = NULL;
 	int ndirs = 0, i;
@@ -523,7 +523,7 @@ void FS_AddGameDirectory (const char *dir, qboolean write)
 			return;
 		if (write && search->write) {
 			Com_Printf("change writing directory to %s\n", dir);
-			search->write = qfalse;
+			search->write = false;
 		}
 	}
 
@@ -559,7 +559,7 @@ void FS_AddGameDirectory (const char *dir, qboolean write)
 		searchpath_t* const search = Mem_PoolAllocType(searchpath_t, com_fileSysPool);
 		search->pack = pak;
 		search->next = fs_searchpaths;
-		search->write = qfalse;
+		search->write = false;
 		fs_searchpaths = search;
 	}
 
@@ -651,7 +651,7 @@ const char *FS_NextPath (const char *prevpath)
 	return NULL;
 }
 
-static qboolean FS_GetHomeDirectory(char *gdir, size_t length)
+static bool FS_GetHomeDirectory(char *gdir, size_t length)
 {
 	char *homedir = Sys_GetHomeDirectory();
 
@@ -663,17 +663,17 @@ static qboolean FS_GetHomeDirectory(char *gdir, size_t length)
 #else
 		Com_sprintf(gdir, length, "%s/.ufoai/" UFO_VERSION, homedir);
 #endif
-		return qtrue;
+		return true;
 	}
 	Com_Printf("could not find the home directory\n");
-	return qfalse;
+	return false;
 }
 
 /**
  * @note e.g. *nix: Use ~/.ufoai/dir as gamedir
  * @sa Sys_GetHomeDirectory
  */
-static void FS_AddHomeAsGameDirectory (const char *dir, qboolean write)
+static void FS_AddHomeAsGameDirectory (const char *dir, bool write)
 {
 	char gdir[MAX_OSPATH];
 
@@ -926,13 +926,13 @@ static void FS_InitCommandsAndCvars (void)
  * @sa FS_Shutdown
  * @sa FS_RestartFilesystem
  */
-void FS_InitFilesystem (qboolean writeToHomeDir)
+void FS_InitFilesystem (bool writeToHomeDir)
 {
 	Com_Printf("\n---- filesystem initialization -----\n");
 
 #ifdef PKGDATADIR
 	/* add the system search path */
-	FS_AddGameDirectory(PKGDATADIR "/" BASEDIRNAME, qfalse);
+	FS_AddGameDirectory(PKGDATADIR "/" BASEDIRNAME, false);
 #endif
 
 	FS_AddGameDirectory("./" BASEDIRNAME, !writeToHomeDir);
@@ -977,7 +977,7 @@ static listBlock_t *fs_blocklist = NULL;
  * @note also checks for duplicates
  * @sa FS_BuildFileList
  */
-static void _AddToListBlock (linkedList_t** fl, const char* name, qboolean stripPath)
+static void _AddToListBlock (linkedList_t** fl, const char* name, bool stripPath)
 {
 	const char *f;
 
@@ -1052,23 +1052,23 @@ int FS_BuildFileList (const char *fileList)
 			for (i = 0; i < pak->numfiles; i++) {
 				/* found it! */
 				const char *fileNameEntry = pak->files[i].name;
-				qboolean matchAlsoInSubDirs = (findname[0] == '*' || !strncmp(fileNameEntry, findname, l))
+				bool matchAlsoInSubDirs = (findname[0] == '*' || !strncmp(fileNameEntry, findname, l))
 						 && (ext[0] == '*' || strstr(fileNameEntry, ext));
 				if (matchAlsoInSubDirs) {
-					qboolean add = qfalse;
+					bool add = false;
 					if (strstr(findname, "**"))
-						add = qtrue;
+						add = true;
 					else {
 						char pathName[MAX_QPATH];
 						char pathNameEntry[MAX_QPATH];
 						Com_FilePath(findname, pathName, sizeof(pathName));
 						Com_FilePath(fileNameEntry, pathNameEntry, sizeof(pathNameEntry));
 						if (Q_streq(pathNameEntry, pathName))
-							add = qtrue;
+							add = true;
 					}
 
 					if (add)
-						_AddToListBlock(&block->files, pak->files[i].name, qtrue);
+						_AddToListBlock(&block->files, pak->files[i].name, true);
 				}
 			}
 		} else if (strstr(files, "**")) {
@@ -1085,7 +1085,7 @@ int FS_BuildFileList (const char *fileList)
 			Sys_ListFilteredFiles(search->filename, findname, &findname[l + 1], &list);
 
 			LIST_Foreach(list, const char, name) {
-				_AddToListBlock(&block->files, name, qfalse);
+				_AddToListBlock(&block->files, name, false);
 			}
 
 			LIST_Delete(&list);
@@ -1099,7 +1099,7 @@ int FS_BuildFileList (const char *fileList)
 			filenames = FS_ListFiles(findname, &nfiles, 0, SFF_HIDDEN | SFF_SYSTEM);
 			if (filenames != NULL) {
 				for (i = 0; i < nfiles - 1; i++) {
-					_AddToListBlock(&block->files, filenames[i], qtrue);
+					_AddToListBlock(&block->files, filenames[i], true);
 					Mem_Free(filenames[i]);
 				}
 				Mem_Free(filenames);
@@ -1352,7 +1352,7 @@ char *FS_NextScriptHeader (const char *files, const char **name, const char **te
 /* global vars for maplisting */
 char *fs_maps[MAX_MAPS];
 int fs_numInstalledMaps = -1;
-static qboolean fs_mapsInstalledInit = qfalse;
+static bool fs_mapsInstalledInit = false;
 
 /**
  * @sa Com_MapDefSort
@@ -1416,7 +1416,7 @@ static int CheckBSPFile (const char *filename)
  * @param[in] reset If true the directory is scanned every time for new maps (useful for dedicated servers).
  * If false we only use the maps array (for clients e.g.)
  */
-void FS_GetMaps (qboolean reset)
+void FS_GetMaps (bool reset)
 {
 	char findname[MAX_OSPATH];
 	char filename[MAX_QPATH];
@@ -1533,7 +1533,7 @@ void FS_GetMaps (qboolean reset)
 		}
 	}
 
-	fs_mapsInstalledInit = qtrue;
+	fs_mapsInstalledInit = true;
 
 	qsort(fs_maps, fs_numInstalledMaps + 1, sizeof(char *), FS_MapDefSort);
 }
@@ -1638,7 +1638,7 @@ const char *FS_GetCwd (void)
  * @sa FS_CheckFile
  * @param[in] filename Full filesystem path to the file
  */
-qboolean FS_FileExists (const char *filename)
+bool FS_FileExists (const char *filename)
 {
 #ifdef _WIN32
 	return (_access(filename, 00) == 0);
@@ -1675,7 +1675,7 @@ void FS_Shutdown (void)
 	/* any FS_ calls will now be an error until reinitialized */
 	fs_searchpaths = NULL;
 	fs_links = NULL;
-	fs_mapsInstalledInit = qfalse;
+	fs_mapsInstalledInit = false;
 	fs_numInstalledMaps = -1;
 	fs_blocklist = NULL;
 
@@ -1761,7 +1761,7 @@ void FS_RemoveFile (const char *osPath)
  * @param[in] to The filename we want after the rename
  * @param[in] relative If relative is true we have to add the FS_Gamedir path for writing
  */
-qboolean FS_RenameFile (const char *from, const char *to, qboolean relative)
+bool FS_RenameFile (const char *from, const char *to, bool relative)
 {
 	char from_buf[MAX_OSPATH];
 	char to_buf[MAX_OSPATH];

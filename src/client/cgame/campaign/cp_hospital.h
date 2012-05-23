@@ -27,8 +27,8 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #define CP_HOSPITAL_H
 
 void HOS_InitStartup(void);
-qboolean HOS_HealCharacter(character_t* chr, qboolean hospital);
-qboolean HOS_HealEmployee(employee_t* employee);
+bool HOS_HealCharacter(character_t* chr, bool hospital);
+bool HOS_HealEmployee(employee_t* employee);
 void HOS_HealAll(const base_t* const base);
 void HOS_HospitalRun(void);
 

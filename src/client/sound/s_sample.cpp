@@ -83,7 +83,7 @@ static Mix_Chunk* S_LoadSampleChunk (const char *sound)
 			continue;
 		}
 
-		if (!(chunk = Mix_LoadWAV_RW(rw, qfalse)))
+		if (!(chunk = Mix_LoadWAV_RW(rw, false)))
 			Com_Printf("S_LoadSound: %s.\n", Mix_GetError());
 
 		FS_FreeFile(buf);

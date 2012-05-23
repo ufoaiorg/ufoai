@@ -32,7 +32,7 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
  * @param[out] ent
  * @sa CL_AddActor
  */
-qboolean CL_AddUGV (le_t * le, entity_t * ent)
+bool CL_AddUGV (le_t * le, entity_t * ent)
 {
 	entity_t add;
 
@@ -93,5 +93,5 @@ qboolean CL_AddUGV (le_t * le, entity_t * ent)
 			ent->flags |= RF_NEUTRAL;
 	}
 
-	return qtrue;
+	return true;
 }

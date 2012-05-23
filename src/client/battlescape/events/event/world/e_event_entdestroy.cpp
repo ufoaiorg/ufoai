@@ -41,5 +41,5 @@ void CL_EntDestroy (const eventRegister_t *self, struct dbuffer *msg)
 	if (!le)
 		return;
 
-	le->inuse = qfalse;
+	le->inuse = false;
 }

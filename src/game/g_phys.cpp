@@ -45,14 +45,14 @@ void G_PhysicsStep (edict_t *ent)
 				if (ent->moveinfo.contentFlags[ent->moveinfo.currentStep] & CONTENTS_WATER) {
 					/* looks like we already are in the water */
 					/* send water moving sound */
-					G_EventSpawnSound(~G_VisToPM(visflags), qtrue, ent, ent->origin, "footsteps/water_under");
+					G_EventSpawnSound(~G_VisToPM(visflags), true, ent, ent->origin, "footsteps/water_under");
 				} else {
 					/* send water entering sound */
-					G_EventSpawnSound(~G_VisToPM(visflags), qtrue, ent, ent->origin, "footsteps/water_in");
+					G_EventSpawnSound(~G_VisToPM(visflags), true, ent, ent->origin, "footsteps/water_in");
 				}
 			} else if (ent->contentFlags & CONTENTS_WATER) {
 				/* send water leaving sound */
-				G_EventSpawnSound(~G_VisToPM(visflags), qtrue, ent, ent->origin, "footsteps/water_out");
+				G_EventSpawnSound(~G_VisToPM(visflags), true, ent, ent->origin, "footsteps/water_out");
 			} else {
 				trace_t trace;
 				vec3_t from, to;
@@ -66,7 +66,7 @@ void G_PhysicsStep (edict_t *ent)
 				if (trace.surface) {
 					const char *snd = gi.GetFootstepSound(trace.surface->name);
 					if (snd)
-						G_EventSpawnSound(~G_VisToPM(visflags), qtrue, ent, ent->origin, snd);
+						G_EventSpawnSound(~G_VisToPM(visflags), true, ent, ent->origin, snd);
 				}
 			}
 		}
@@ -87,19 +87,19 @@ void G_PhysicsStep (edict_t *ent)
 /**
  * @brief Runs thinking code for this frame if necessary
  */
-static qboolean G_PhysicsThink (edict_t *ent)
+static bool G_PhysicsThink (edict_t *ent)
 {
 	if (ent->nextthink <= 0)
-		return qtrue;
+		return true;
 	if (ent->nextthink > level.time + 0.001f)
-		return qtrue;
+		return true;
 
 	ent->nextthink = level.time + SERVER_FRAME_SECONDS;
 	if (!ent->think)
 		gi.Error("G_PhysicsThink ent->think is NULL");
 	ent->think(ent);
 
-	return qfalse;
+	return false;
 }
 
 /**

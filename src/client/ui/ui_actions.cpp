@@ -204,7 +204,7 @@ const char* UI_GetParam (const uiCallContext_t *context, int paramID)
  * cmd "set someCvar &lt;min&gt;/&lt;max&gt;"
  * @endcode
  */
-const char* UI_GenInjectedString (const char* input, qboolean addNewLine, const uiCallContext_t *context)
+const char* UI_GenInjectedString (const char* input, bool addNewLine, const uiCallContext_t *context)
 {
 	static char cmd[256];
 	int length = sizeof(cmd) - (addNewLine ? 2 : 1);
@@ -392,7 +392,7 @@ static inline void UI_ExecuteSetAction (const uiAction_t* action, const uiCallCo
 		if (left->type == EA_VALUE_CVARNAME)
 			cvarName = left->d.terminal.d1.constString;
 		else
-			cvarName = UI_GenInjectedString(left->d.terminal.d1.constString, qfalse, context);
+			cvarName = UI_GenInjectedString(left->d.terminal.d1.constString, false, context);
 
 		textValue = UI_GetStringFromExpression(right, context);
 
@@ -407,7 +407,7 @@ static inline void UI_ExecuteSetAction (const uiAction_t* action, const uiCallCo
 	if (left->type == EA_VALUE_PATHPROPERTY)
 		path = left->d.terminal.d1.constString;
 	else if (left->type == EA_VALUE_PATHPROPERTY_WITHINJECTION)
-		path = UI_GenInjectedString(left->d.terminal.d1.constString, qfalse, context);
+		path = UI_GenInjectedString(left->d.terminal.d1.constString, false, context);
 	else
 		Com_Error(ERR_FATAL, "UI_ExecuteSetAction: Property setter with wrong type '%d'", left->type);
 
@@ -436,7 +436,7 @@ static inline void UI_ExecuteCallAction (const uiAction_t* action, const uiCallC
 	if (left->type == EA_VALUE_PATHPROPERTY || left->type == EA_VALUE_PATHNODE)
 		path = left->d.terminal.d1.constString;
 	else if (left->type == EA_VALUE_PATHPROPERTY_WITHINJECTION || left->type == EA_VALUE_PATHNODE_WITHINJECTION)
-		path = UI_GenInjectedString(left->d.terminal.d1.constString, qfalse, context);
+		path = UI_GenInjectedString(left->d.terminal.d1.constString, false, context);
 	UI_ReadNodePath(path, context->source, &callNode, &callProperty);
 
 	if (callNode == NULL) {
@@ -468,7 +468,7 @@ static inline void UI_ExecuteCallAction (const uiAction_t* action, const uiCallC
 			}
 		}
 	} else {
-		newContext.useCmdParam = qfalse;
+		newContext.useCmdParam = false;
 
 		param = action->d.nonTerminal.right;
 		while (param) {
@@ -542,7 +542,7 @@ static void UI_ExecuteAction (const uiAction_t* action, uiCallContext_t *context
 	case EA_CMD:
 		/* execute a command */
 		if (action->d.terminal.d1.constString)
-			Cbuf_AddText(UI_GenInjectedString(action->d.terminal.d1.constString, qtrue, context));
+			Cbuf_AddText(UI_GenInjectedString(action->d.terminal.d1.constString, true, context));
 		break;
 
 	case EA_CALL:
@@ -651,7 +651,7 @@ void UI_ExecuteConFuncActions (uiNode_t* source, const uiAction_t* firstAction)
 	uiCallContext_t context;
 	OBJZERO(context);
 	context.source = source;
-	context.useCmdParam = qtrue;
+	context.useCmdParam = true;
 	UI_ExecuteActions(firstAction, &context);
 }
 
@@ -660,7 +660,7 @@ void UI_ExecuteEventActions (uiNode_t* source, const uiAction_t* firstAction)
 	uiCallContext_t context;
 	OBJZERO(context);
 	context.source = source;
-	context.useCmdParam = qfalse;
+	context.useCmdParam = false;
 	UI_ExecuteActions(firstAction, &context);
 }
 
@@ -669,7 +669,7 @@ void UI_ExecuteEventActionsEx (uiNode_t* source, const uiAction_t* firstAction, 
 	uiCallContext_t context;
 	OBJZERO(context);
 	context.source = source;
-	context.useCmdParam = qfalse;
+	context.useCmdParam = false;
 	context.params = params;
 	context.paramNumber = LIST_Count(params);
 	UI_ExecuteActions(firstAction, &context);
@@ -680,7 +680,7 @@ void UI_ExecuteEventActionsEx (uiNode_t* source, const uiAction_t* firstAction, 
  * @param[in] string The string to check for injection
  * @return True if we find the following syntax in the string "<" {thing without space} ">"
  */
-qboolean UI_IsInjectedString (const char *string)
+bool UI_IsInjectedString (const char *string)
 {
 	const char *c = string;
 	assert(string);
@@ -690,7 +690,7 @@ qboolean UI_IsInjectedString (const char *string)
 			if (*d != '>') {
 				while (*d) {
 					if (*d == '>')
-						return qtrue;
+						return true;
 					if (*d == ' ' || *d == '\t' || *d == '\n' || *d == '\r')
 						break;
 					d++;
@@ -699,7 +699,7 @@ qboolean UI_IsInjectedString (const char *string)
 		}
 		c++;
 	}
-	return qfalse;
+	return false;
 }
 
 /**

@@ -29,7 +29,7 @@ struct uiNode_t;
 
 #define MAX_UFOONGEOSCAPE	8
 
-extern qboolean radarOverlayWasSet;
+extern bool radarOverlayWasSet;
 
 extern const float RADAR_BASERANGE;
 extern const float RADAR_BASETRACKINGRANGE;
@@ -54,14 +54,14 @@ void RADAR_UpdateStaticRadarCoverage(void);
 void RADAR_UpdateWholeRadarOverlay(void);
 void RADAR_DrawInMap(uiNode_t const* node, const radar_t* radar, const vec2_t pos);
 void RADAR_DeactivateRadarOverlay(void);
-void RADAR_NotifyUFORemoved(const struct aircraft_s* ufo, qboolean destroyed);
-void RADAR_Initialise(radar_t* radar, float range, float trackingRange, float level, qboolean updateSourceRadarMap);
+void RADAR_NotifyUFORemoved(const struct aircraft_s* ufo, bool destroyed);
+void RADAR_Initialise(radar_t* radar, float range, float trackingRange, float level, bool updateSourceRadarMap);
 void RADAR_InitialiseUFOs(radar_t *radar);
 void RADAR_UpdateBaseRadarCoverage_f(void);
 void RADAR_UpdateInstallationRadarCoverage(struct installation_s *installation, const float radarRange, const float trackingRadarRange);
 void RADAR_AddDetectedUFOToEveryRadar(const struct aircraft_s *ufo);
-qboolean RADAR_CheckRadarSensored(const vec2_t pos);
-qboolean RADAR_CheckUFOSensored(radar_t* radar, const vec2_t posRadar, const struct aircraft_s* ufo, qboolean detected);
+bool RADAR_CheckRadarSensored(const vec2_t pos);
+bool RADAR_CheckUFOSensored(radar_t* radar, const vec2_t posRadar, const struct aircraft_s* ufo, bool detected);
 void RADAR_SetRadarAfterLoading(void);
 
 #endif

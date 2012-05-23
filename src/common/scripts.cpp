@@ -67,7 +67,7 @@ static const char *Com_ConstIntGetVariable (const char *name)
  * @sa Com_RegisterConstInt
  * @sa Com_ParseValue
  */
-qboolean Com_GetConstInt (const char *name, int *value)
+bool Com_GetConstInt (const char *name, int *value)
 {
 	com_constNameInt_t *a;
 	unsigned int hash;
@@ -81,12 +81,12 @@ qboolean Com_GetConstInt (const char *name, int *value)
 		if (Q_streq(variable, a->name)) {
 			if (!a->fullname || variable == name || Q_streq(a->fullname, name)) {
 				*value = a->value;
-				return qtrue;
+				return true;
 			}
 		}
 	}
 
-	return qfalse;
+	return false;
 }
 
 /**
@@ -100,10 +100,10 @@ qboolean Com_GetConstInt (const char *name, int *value)
  * @sa Com_ParseValue
  * @sa Com_GetConstInt
  */
-qboolean Com_GetConstIntFromNamespace (const char *space, const char *variable, int *value)
+bool Com_GetConstIntFromNamespace (const char *space, const char *variable, int *value)
 {
 	if (Q_strnull(variable))
-		return qfalse;
+		return false;
 
 	if (Q_strnull(space))
 		return Com_GetConstInt(variable, value);
@@ -145,7 +145,7 @@ const char* Com_GetConstVariable (const char *space, int value)
  * @sa Com_RegisterConstInt
  * @sa Com_GetConstVariable
  */
-qboolean Com_UnregisterConstVariable (const char *name)
+bool Com_UnregisterConstVariable (const char *name)
 {
 	com_constNameInt_t *a;
 	com_constNameInt_t *prev = NULL;
@@ -180,13 +180,13 @@ qboolean Com_UnregisterConstVariable (const char *name)
 				}
 				Mem_Free(a->fullname);
 				Mem_Free(a);
-				return qtrue;
+				return true;
 			}
 		}
 		prev = a;
 		a = a->next;
 	}
-	return qfalse;
+	return false;
 }
 
 /**
@@ -242,10 +242,10 @@ void Com_RegisterConstInt (const char *name, int value)
  * with a NULL string ({NULL, -1}) line
  * @sa constListEntry_t
  */
-qboolean Com_UnregisterConstList (const constListEntry_t constList[])
+bool Com_UnregisterConstList (const constListEntry_t constList[])
 {
 	int i;
-	qboolean state = qtrue;
+	bool state = true;
 
 	for (i = 0; constList[i].name != NULL; i++)
 		state &= Com_UnregisterConstVariable(constList[i].name);
@@ -288,7 +288,7 @@ const char *Com_EParse (const char **text, const char *errhead, const char *erri
 	return token;
 }
 
-static qboolean versionParsed;
+static bool versionParsed;
 
 static void Com_ParseVersion (const char *version)
 {
@@ -299,7 +299,7 @@ static void Com_ParseVersion (const char *version)
 		Sys_Error("More than one version string found in the script files.");
 	}
 
-	versionParsed = qtrue;
+	versionParsed = true;
 }
 
 /**
@@ -309,7 +309,6 @@ static void Com_ParseVersion (const char *version)
 const char *const vt_names[] = {
 	"",
 	"bool",
-	"cppbool",
 	"char",
 	"int",
 	"int2",
@@ -364,8 +363,7 @@ CASSERT(lengthof(fade_names) == FADE_LAST);
 /** @brief target sizes for buffer */
 static const size_t vt_sizes[] = {
 	0,	/* V_NULL */
-	sizeof(qboolean),	/* V_BOOL */
-	sizeof(bool),	/* V_CPPBOOL */
+	sizeof(bool),	/* V_BOOL */
 	sizeof(char),	/* V_CHAR */
 	sizeof(int),	/* V_INT */
 	2 * sizeof(int),	/* V_INT2 */
@@ -400,8 +398,7 @@ CASSERT(lengthof(vt_sizes) == V_NUM_TYPES);
 /** @brief natural align for each targets */
 static const size_t vt_aligns[] = {
 	0,	/* V_NULL */
-	sizeof(qboolean),	/* V_BOOL */
-	sizeof(bool),	/* V_CPPBOOL */
+	sizeof(bool),	/* V_BOOL */
 	sizeof(char),	/* V_CHAR */
 	sizeof(int),	/* V_INT */
 	sizeof(int),	/* V_INT2 */
@@ -508,18 +505,6 @@ resultStatus_t Com_ParseValue (void *base, const char *token, valueTypes_t type,
 		break;
 
 	case V_BOOL:
-		if (Q_streq(token, "true") || *token == '1')
-			*(qboolean *)b = qtrue;
-		else if (Q_streq(token, "false") || *token == '0')
-			*(qboolean *)b = qfalse;
-		else {
-			snprintf(parseErrorMessage, sizeof(parseErrorMessage), "Illegal bool statement '%s'", token);
-			return RESULT_ERROR;
-		}
-		*writtenBytes = sizeof(qboolean);
-		break;
-
-	case V_CPPBOOL:
 		if (Q_streq(token, "true") || *token == '1')
 			*(bool *)b = true;
 		else if (Q_streq(token, "false") || *token == '0')
@@ -914,15 +899,15 @@ int Com_EParseValue (void *base, const char *token, valueTypes_t type, int ofs, 
  * @param token The token to convert into a boolean
  * @return @c false if the string could not get parsed
  */
-qboolean Com_ParseBoolean (const char *token)
+bool Com_ParseBoolean (const char *token)
 {
-	qboolean b;
+	bool b;
 	size_t writtenBytes;
 	if (Com_ParseValue(&b, token, V_BOOL, 0, sizeof(b), &writtenBytes) != RESULT_ERROR) {
 		assert(writtenBytes == sizeof(b));
 		return b;
 	}
-	return qfalse;
+	return false;
 }
 
 /**
@@ -963,13 +948,6 @@ int Com_SetValue (void *base, const void *set, valueTypes_t type, int ofs, size_
 		return 0;
 
 	case V_BOOL:
-		if (*(const qboolean *) set)
-			*(qboolean *)b = qtrue;
-		else
-			*(qboolean *)b = qfalse;
-		return sizeof(qboolean);
-
-	case V_CPPBOOL:
 		if (*(const bool *) set)
 			*(bool *)b = true;
 		else
@@ -1194,12 +1172,6 @@ const char *Com_ValueToStr (const void *base, const valueTypes_t type, const int
 			return (const char*)b;
 
 	case V_BOOL:
-		if (*b)
-			return "true";
-		else
-			return "false";
-
-	case V_CPPBOOL:
 		if (*(bool *)b)
 			return "true";
 		else
@@ -1401,7 +1373,7 @@ const char *Com_ValueToStr (const void *base, const valueTypes_t type, const int
 	}
 }
 
-qboolean Com_ParseBlockToken (const char *name, const char **text, void *base, const value_t *values, memPool_t *mempool, const char *token)
+bool Com_ParseBlockToken (const char *name, const char **text, void *base, const value_t *values, memPool_t *mempool, const char *token)
 {
 	const value_t *v;
 	const char *errhead = "Com_ParseBlockToken: unexpected end of file (";
@@ -1411,7 +1383,7 @@ qboolean Com_ParseBlockToken (const char *name, const char **text, void *base, c
 			/* found a definition */
 			token = Com_EParse(text, errhead, name);
 			if (!*text)
-				return qfalse;
+				return false;
 
 			switch (v->type) {
 			case V_TRANSLATION_STRING:
@@ -1451,7 +1423,7 @@ qboolean Com_ParseBlockToken (const char *name, const char **text, void *base, c
 	return v->string != NULL;
 }
 
-qboolean Com_ParseBlock (const char *name, const char **text, void *base, const value_t *values, memPool_t *mempool)
+bool Com_ParseBlock (const char *name, const char **text, void *base, const value_t *values, memPool_t *mempool)
 {
 	const char *errhead = "Com_ParseBlock: unexpected end of file (";
 	const char *token;
@@ -1461,7 +1433,7 @@ qboolean Com_ParseBlock (const char *name, const char **text, void *base, const 
 
 	if (!*text || *token != '{') {
 		Com_Printf("Com_ParseBlock: block \"%s\" without body ignored\n", name);
-		return qfalse;
+		return false;
 	}
 
 	do {
@@ -1475,7 +1447,7 @@ qboolean Com_ParseBlock (const char *name, const char **text, void *base, const 
 			Com_Printf("Com_ParseBlock: unknown token '%s' ignored (%s)\n", token, name);
 	} while (*text);
 
-	return qtrue;
+	return true;
 }
 
 /*
@@ -1600,7 +1572,7 @@ static const value_t fdps[] = {
 };
 
 
-static qboolean Com_ParseFire (const char *name, const char **text, fireDef_t * fd)
+static bool Com_ParseFire (const char *name, const char **text, fireDef_t * fd)
 {
 	const char *errhead = "Com_ParseFire: unexpected end of file";
 	const char *token;
@@ -1610,15 +1582,15 @@ static qboolean Com_ParseFire (const char *name, const char **text, fireDef_t * 
 
 	if (!*text || *token != '{') {
 		Com_Printf("Com_ParseFire: fire definition \"%s\" without body ignored\n", name);
-		return qfalse;
+		return false;
 	}
 
 	do {
 		token = Com_EParse(text, errhead, name);
 		if (!*text)
-			return qtrue;
+			return true;
 		if (*token == '}')
-			return qtrue;
+			return true;
 
 		if (!Com_ParseBlockToken(name, text, fd, fdps, com_genericPool, token)) {
 			if (Q_streq(token, "skill")) {
@@ -1626,7 +1598,7 @@ static qboolean Com_ParseFire (const char *name, const char **text, fireDef_t * 
 
 				token = Com_EParse(text, errhead, name);
 				if (!*text)
-					return qfalse;
+					return false;
 
 				for (skill = ABILITY_NUM_TYPES; skill < SKILL_NUM_TYPES; skill++)
 					if (Q_streq(skillNames[skill], token)) {
@@ -1638,12 +1610,12 @@ static qboolean Com_ParseFire (const char *name, const char **text, fireDef_t * 
 			} else if (Q_streq(token, "range")) {
 				token = Com_EParse(text, errhead, name);
 				if (!*text)
-					return qfalse;
+					return false;
 				fd->range = atof(token) * UNIT_SIZE;
 			} else if (Q_streq(token, "splrad")) {
 				token = Com_EParse(text, errhead, name);
 				if (!*text)
-					return qfalse;
+					return false;
 				fd->splrad = atof(token) * UNIT_SIZE;
 			} else
 				Com_Printf("Com_ParseFire: unknown token \"%s\" ignored (weapon %s)\n", token, name);
@@ -1666,10 +1638,10 @@ static qboolean Com_ParseFire (const char *name, const char **text, fireDef_t * 
 
 	if (fd->name == NULL) {
 		Com_Printf("firedef without name\n");
-		return qfalse;
+		return false;
 	}
 
-	return qtrue;
+	return true;
 }
 
 
@@ -1679,7 +1651,7 @@ static qboolean Com_ParseFire (const char *name, const char **text, fireDef_t * 
  * @note The rating values are just for menu displaying
  * @sa Com_ParseItem
  */
-static void Com_ParseArmourOrResistance (const char *name, const char **text, short *ad, qboolean rating)
+static void Com_ParseArmourOrResistance (const char *name, const char **text, short *ad, bool rating)
 {
 	const char *errhead = "Com_ParseArmourOrResistance: unexpected end of file";
 	const char *token;
@@ -1878,9 +1850,9 @@ static void Com_ParseItem (const char *name, const char **text)
 				if (i == MAX_ACITEMS)
 					Com_Printf("AII_ParseAircraftItem: \"%s\" unknown craftitem type: \"%s\" - ignored.\n", name, token);
 			} else if (Q_streq(token, "protection")) {
-				Com_ParseArmourOrResistance(name, text, od->protection, qfalse);
+				Com_ParseArmourOrResistance(name, text, od->protection, false);
 			} else if (Q_streq(token, "rating")) {
-				Com_ParseArmourOrResistance(name, text, od->ratings, qtrue);
+				Com_ParseArmourOrResistance(name, text, od->ratings, true);
 			} else if (Q_streq(token, "weapon_mod")) {
 				Com_ParseFireDefition(od, name, token, text);
 			} else {
@@ -2586,7 +2558,7 @@ static void Com_ParseTeam (const char *name, const char **text)
 	}
 
 	Q_strncpyz(td->id, name, sizeof(td->id));
-	td->armour = td->weapons = qtrue; /* default values */
+	td->armour = td->weapons = true; /* default values */
 	td->onlyWeapon = NULL;
 
 	/* get name list body body */
@@ -2651,7 +2623,7 @@ static void Com_ParseTeam (const char *name, const char **text)
 			else if (Q_streq(token, "actorsounds"))
 				Com_ParseActorSounds(name, text, td);
 			else if (Q_streq(token, "resistance"))
-				Com_ParseArmourOrResistance(name, text, td->resistance, qfalse);
+				Com_ParseArmourOrResistance(name, text, td->resistance, false);
 			else
 				Com_Printf("Com_ParseTeam: unknown token \"%s\" ignored (team %s)\n", token, name);
 		}
@@ -2959,7 +2931,7 @@ static void Com_ParseDamageTypes (const char *name, const char **text)
 		/* Gettext marker (also indicates that it is a dmgtype value - additional to being a dmgweight value) */
 		if (*token == '_') {
 			token++;
-			csi.dts[csi.numDTs].showInMenu = qtrue;
+			csi.dts[csi.numDTs].showInMenu = true;
 		}
 
 		/* search for damage types with same name */
@@ -3247,9 +3219,9 @@ static void Com_ParseMapDefinition (const char *name, const char **text)
 
 	OBJZERO(*md);
 	md->id = Mem_PoolStrDup(name, com_genericPool, 0);
-	md->singleplayer = qtrue;
-	md->campaign = qtrue;
-	md->multiplayer = qfalse;
+	md->singleplayer = true;
+	md->campaign = true;
+	md->multiplayer = false;
 
 	do {
 		token = Com_EParse(text, errhead, name);
@@ -3306,7 +3278,7 @@ mapDef_t* Com_GetMapDefinitionByID (const char *mapDefID)
  * @sa CL_ParseScriptSecond
  * @sa Qcommon_Init
  */
-void Com_ParseScripts (qboolean onlyServer)
+void Com_ParseScripts (bool onlyServer)
 {
 	const char *type, *name, *text;
 
@@ -3408,5 +3380,5 @@ void Com_Shutdown (void)
 	OBJZERO(terrainTypesHash);
 	OBJZERO(com_constNameInt_hash);
 	com_constNameInt = NULL;
-	versionParsed = qfalse;
+	versionParsed = false;
 }

@@ -74,10 +74,10 @@ typedef struct cvar_s {
 	char *oldString;		/**< value of the cvar before we changed it */
 	char *description;		/**< cvar description */
 	int flags;				/**< cvar flags CVAR_ARCHIVE|CVAR_NOSET.... */
-	qboolean modified;		/**< set each time the cvar is changed */
+	bool modified;		/**< set each time the cvar is changed */
 	float value;			/**< value as float */
 	int integer;			/**< value as integer */
-	qboolean (*check) (struct cvar_s* cvar);	/**< cvar check function */
+	bool (*check) (struct cvar_s* cvar);	/**< cvar check function */
 	cvarChangeListener_t *changeListener;
 	struct cvar_s *next;
 	struct cvar_s *prev;
@@ -154,7 +154,7 @@ void Cvar_UpdateLatchedVars(void);
  * command.  Returns true if the command was a variable reference that
  * was handled. (print or change)
  */
-qboolean Cvar_Command(void);
+bool Cvar_Command(void);
 
 void Cvar_Init(void);
 void Cvar_Shutdown(void);
@@ -172,12 +172,12 @@ const char *Cvar_Serverinfo(void);
 /**
  * @brief this function checks cvar ranges and integral values
  */
-qboolean Cvar_AssertValue(cvar_t * cvar, float minVal, float maxVal, qboolean shouldBeIntegral);
+bool Cvar_AssertValue(cvar_t * cvar, float minVal, float maxVal, bool shouldBeIntegral);
 
 /**
  * @brief Sets the check functions for a cvar (e.g. Cvar_Assert)
  */
-qboolean Cvar_SetCheckFunction(const char *varName, qboolean (*check) (cvar_t* cvar));
+bool Cvar_SetCheckFunction(const char *varName, bool (*check) (cvar_t* cvar));
 
 /**
  * @brief Registers a listener that is executed each time a cvar changed its value.
@@ -201,7 +201,7 @@ void Cvar_FixCheatVars(void);
 /**
  * @brief Function to remove the cvar and free the space
  */
-qboolean Cvar_Delete(const char *varName);
+bool Cvar_Delete(const char *varName);
 
 /**
  * @brief Searches for a cvar given by parameter
@@ -213,15 +213,15 @@ cvar_t *Cvar_FindVar(const char *varName);
  * @param flags The CVAR_* flags
  * @return true if there are pending cvars, false otherwise
  */
-qboolean Cvar_PendingCvars(int flags);
+bool Cvar_PendingCvars(int flags);
 
-void Com_SetUserinfoModified(qboolean modified);
+void Com_SetUserinfoModified(bool modified);
 
-qboolean Com_IsUserinfoModified(void);
+bool Com_IsUserinfoModified(void);
 
-void Com_SetRenderModified(qboolean modified);
+void Com_SetRenderModified(bool modified);
 
-qboolean Com_IsRenderModified(void);
+bool Com_IsRenderModified(void);
 
 void Cvar_ClearVars(int flags);
 

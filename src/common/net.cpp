@@ -94,10 +94,10 @@ static cvar_t* net_ipv4;
 struct net_stream {
 	void *data;
 
-	qboolean loopback;
-	qboolean ready;
-	qboolean closed;
-	qboolean finished;		/**< finished but maybe not yet closed */
+	bool loopback;
+	bool ready;
+	bool closed;
+	bool finished;		/**< finished but maybe not yet closed */
 	int socket;
 	int index;
 	int family;
@@ -134,8 +134,8 @@ static int maxfd;
 static struct net_stream *streams[MAX_STREAMS];
 static struct datagram_socket *datagram_sockets[MAX_DATAGRAM_SOCKETS];
 
-static qboolean loopback_ready = qfalse;
-static qboolean server_running = qfalse;
+static bool loopback_ready = false;
+static bool server_running = false;
 static stream_callback_func *server_func = NULL;
 static int server_socket = INVALID_SOCKET;
 static int server_family, server_addrlen;
@@ -244,10 +244,10 @@ static struct net_stream *NET_StreamNew (int index)
 	net_stream* const s = Mem_PoolAllocType(net_stream, com_networkPool);
 	s->data = NULL;
 	s->loopback_peer = NULL;
-	s->loopback = qfalse;
-	s->closed = qfalse;
-	s->finished = qfalse;
-	s->ready = qfalse;
+	s->loopback = false;
+	s->closed = false;
+	s->finished = false;
+	s->ready = false;
 	s->socket = INVALID_SOCKET;
 	s->inbound = NULL;
 	s->outbound = NULL;
@@ -270,7 +270,7 @@ static void NET_ShowStreams_f (void)
 	for (i = 0; i < MAX_STREAMS; i++) {
 		if (streams[i] != NULL) {
 			Com_Printf("Steam %i is opened: %s on socket %i (closed: %i, finished: %i, outbound: " UFO_SIZE_T ", inbound: " UFO_SIZE_T ")\n", i,
-				NET_StreamPeerToName(streams[i], buf, sizeof(buf), qtrue),
+				NET_StreamPeerToName(streams[i], buf, sizeof(buf), true),
 				streams[i]->socket, streams[i]->closed, streams[i]->finished,
 				dbuffer_len(streams[i]->outbound), dbuffer_len(streams[i]->inbound));
 			cnt++;
@@ -356,7 +356,7 @@ static void NET_StreamClose (struct net_stream *s)
 		s->loopback_peer->loopback_peer = NULL;
 	}
 
-	s->closed = qtrue;
+	s->closed = true;
 	Com_DPrintf(DEBUG_SERVER, "Close stream at index: %i\n", s->index);
 
 	/* If we have a loopback peer, don't free the outbound buffer,
@@ -499,7 +499,7 @@ void NET_Wait (int timeout)
 				continue;
 			}
 
-			Com_DPrintf(DEBUG_SERVER, "wrote %d bytes to stream %d (%s)\n", len, i, NET_StreamPeerToName(s, buf, sizeof(buf), qtrue));
+			Com_DPrintf(DEBUG_SERVER, "wrote %d bytes to stream %d (%s)\n", len, i, NET_StreamPeerToName(s, buf, sizeof(buf), true));
 
 			dbuffer_remove(s->outbound, len);
 		}
@@ -516,7 +516,7 @@ void NET_Wait (int timeout)
 				if (s->inbound) {
 					dbuffer_add(s->inbound, buf, len);
 
-					Com_DPrintf(DEBUG_SERVER, "read %d bytes from stream %d (%s)\n", len, i, NET_StreamPeerToName(s, buf, sizeof(buf), qtrue));
+					Com_DPrintf(DEBUG_SERVER, "read %d bytes from stream %d (%s)\n", len, i, NET_StreamPeerToName(s, buf, sizeof(buf), true));
 
 					/* Note that s is potentially invalid after the callback returns */
 					if (s->func)
@@ -564,17 +564,17 @@ void NET_Wait (int timeout)
 		}
 	}
 
-	loopback_ready = qfalse;
+	loopback_ready = false;
 }
 
-static qboolean NET_SocketSetNonBlocking (int socketNum)
+static bool NET_SocketSetNonBlocking (int socketNum)
 {
 	unsigned long t = 1;
 	if (ioctlsocket(socketNum, FIONBIO, &t) == -1) {
 		Com_Printf("ioctl FIONBIO failed: %s\n", strerror(errno));
-		return qfalse;
+		return false;
 	}
-	return qtrue;
+	return true;
 }
 
 static struct net_stream *NET_DoConnect (const char *node, const char *service, const struct addrinfo *addr, int i, stream_onclose_func *onclose)
@@ -686,13 +686,13 @@ struct net_stream *NET_ConnectToLoopBack (stream_onclose_func *onclose)
 	}
 
 	client = NET_StreamNew(client_index);
-	client->loopback = qtrue;
+	client->loopback = true;
 	client->inbound = new_dbuffer();
 	client->outbound = new_dbuffer();
 	client->onclose = onclose;
 
 	server = NET_StreamNew(server_index);
-	server->loopback = qtrue;
+	server->loopback = true;
 	server->inbound = client->outbound;
 	server->outbound = client->inbound;
 	server->func = server_func;
@@ -723,14 +723,14 @@ void NET_StreamEnqueue (struct net_stream *s, const char *data, int len)
 		FD_SET(s->socket, &write_fds);
 
 	if (s->loopback_peer) {
-		loopback_ready = qtrue;
-		s->loopback_peer->ready = qtrue;
+		loopback_ready = true;
+		s->loopback_peer->ready = true;
 	}
 }
 
-qboolean NET_StreamIsClosed (struct net_stream *s)
+bool NET_StreamIsClosed (struct net_stream *s)
 {
-	return s ? (s->closed || s->finished) : qtrue;
+	return s ? (s->closed || s->finished) : true;
 }
 
 int NET_StreamGetLength (struct net_stream *s)
@@ -786,7 +786,7 @@ void NET_StreamFree (struct net_stream *s)
 {
 	if (!s)
 		return;
-	s->finished = qtrue;
+	s->finished = true;
 	NET_StreamClose(s);
 }
 
@@ -802,7 +802,7 @@ void NET_StreamFinished (struct net_stream *s)
 	if (!s)
 		return;
 
-	s->finished = qtrue;
+	s->finished = true;
 
 	if (s->socket >= 0)
 		FD_CLR(s->socket, &read_fds);
@@ -826,7 +826,7 @@ void NET_StreamFinished (struct net_stream *s)
  * @param[in] len The length of the target buffer
  * @param[in] appendPort Also append the port number to the target buffer
  */
-const char *NET_StreamPeerToName (struct net_stream *s, char *dst, int len, qboolean appendPort)
+const char *NET_StreamPeerToName (struct net_stream *s, char *dst, int len, bool appendPort)
 {
 	if (!s)
 		return "(null)";
@@ -865,7 +865,7 @@ void NET_StreamSetCallback (struct net_stream *s, stream_callback_func *func)
 	s->func = func;
 }
 
-qboolean NET_StreamIsLoopback (struct net_stream *s)
+bool NET_StreamIsLoopback (struct net_stream *s)
 {
 	return s && s->loopback;
 }
@@ -946,14 +946,14 @@ static struct addrinfo* NET_GetAddrinfoForNode (const char *node, const char *se
  * @sa server_func
  * @sa SV_Stop
  */
-qboolean SV_Start (const char *node, const char *service, stream_callback_func *func)
+bool SV_Start (const char *node, const char *service, stream_callback_func *func)
 {
 	if (!func)
-		return qfalse;
+		return false;
 
 	if (server_running) {
 		Com_Printf("SV_Start: Server is still running - call SV_Stop before\n");
-		return qfalse;
+		return false;
 	}
 
 	if (service) {
@@ -963,13 +963,13 @@ qboolean SV_Start (const char *node, const char *service, stream_callback_func *
 		if (server_socket == INVALID_SOCKET) {
 			Com_Printf("Failed to start server on %s:%s\n", node ? node : "*", service);
 		} else {
-			server_running = qtrue;
+			server_running = true;
 			server_func = func;
 		}
 		freeaddrinfo(res);
 	} else {
 		/* Loopback server only */
-		server_running = qtrue;
+		server_running = true;
 		server_func = func;
 	}
 
@@ -981,7 +981,7 @@ qboolean SV_Start (const char *node, const char *service, stream_callback_func *
  */
 void SV_Stop (void)
 {
-	server_running = qfalse;
+	server_running = false;
 	server_func = NULL;
 	if (server_socket != INVALID_SOCKET) {
 		FD_CLR(server_socket, &read_fds);
@@ -1076,7 +1076,7 @@ struct datagram_socket *NET_DatagramSocketNew (const char *node, const char *ser
 
 	if (rc != 0) {
 		Com_Printf("Failed to resolve host %s:%s: %s\n", node ? node : "*", service, gai_strerror(rc));
-		return qfalse;
+		return false;
 	}
 
 	s = NET_DatagramSocketDoNew(res);

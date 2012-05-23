@@ -148,7 +148,7 @@ static int R_LoadObjModelFace (const model_t *mod, mobj_t *obj, const char *line
 	OBJZERO(verts);
 	i = 0;
 
-	while (qtrue) {
+	while (true) {
 		const char *c = Com_Parse(&line);
 
 		if (c[0] == '\0')  /* done */
@@ -330,16 +330,16 @@ static void R_LoadObjModel_ (model_t *mod, mobj_t *obj, const byte *buffer, int 
 {
 	char line[MAX_STRING_CHARS];
 	const byte *c;
-	qboolean comment;
+	bool comment;
 	int i;
 
 	c = buffer;
-	comment = qfalse;
+	comment = false;
 	i = 0;
 
 	while (c[0] != '\0') {
 		if (c[0] == '#') {
-			comment = qtrue;
+			comment = true;
 			c++;
 			continue;
 		}
@@ -351,7 +351,7 @@ static void R_LoadObjModel_ (model_t *mod, mobj_t *obj, const byte *buffer, int 
 			if (!comment)
 				R_LoadObjModelLine(mod, obj, Com_Trim(line));
 
-			comment = qfalse;
+			comment = false;
 			c++;
 			continue;
 		}

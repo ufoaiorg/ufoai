@@ -56,7 +56,7 @@ struct uiNode_t;
 #define MAP_SetMissionAircraft(aircraft) (ccs.geoscape.missionAircraft = (aircraft))
 
 nation_t* MAP_GetNation(const vec2_t pos);
-qboolean MAP_AllMapToScreen(uiNode_t const* node, const vec2_t pos, int *x, int *y, int *z);
+bool MAP_AllMapToScreen(uiNode_t const* node, const vec2_t pos, int *x, int *y, int *z);
 void MAP_MapDrawEquidistantPoints(uiNode_t const* node, const vec2_t center, const float angle, const vec4_t color);
 float MAP_AngleOfPath(const vec3_t start, const vec2_t end, vec3_t direction, vec3_t ortVector);
 void MAP_MapCalcLine(const vec2_t start, const vec2_t end, mapline_t* line);
@@ -67,13 +67,13 @@ base_t* MAP_PositionCloseToBase(const vec2_t pos);
 
 void MAP_Scroll_f(void);
 void MAP_Zoom_f(void);
-qboolean MAP_MapClick(uiNode_t* node, int x, int y);
+bool MAP_MapClick(uiNode_t* node, int x, int y);
 void MAP_ResetAction(void);
 void MAP_SelectAircraft(aircraft_t* aircraft);
 void MAP_SelectUFO(aircraft_t* ufo);
 mission_t* MAP_SelectMission(mission_t* mission);
 void MAP_NotifyMissionRemoved(const mission_t* mission);
-void MAP_NotifyUFORemoved(const aircraft_t* ufo, qboolean destroyed);
+void MAP_NotifyUFORemoved(const aircraft_t* ufo, bool destroyed);
 void MAP_NotifyAircraftRemoved(const aircraft_t* aircraft);
 void MAP_NotifyUFODisappear(const aircraft_t* ufo);
 void MAP_InitStartup(void);
@@ -81,17 +81,17 @@ const char* MAP_GetTerrainType(const byte* color);
 int MAP_GetCivilianNumberByPosition(const vec2_t pos);
 void MAP_PrintParameterStringByPos(const vec2_t pos);
 void MAP_CheckPositionBoundaries(float *pos);
-qboolean MAP_IsNight(const vec2_t pos);
-const byte *MAP_GetColor(const vec2_t pos, mapType_t type, qboolean *coast);
+bool MAP_IsNight(const vec2_t pos);
+const byte *MAP_GetColor(const vec2_t pos, mapType_t type, bool *coast);
 void MAP_Init(const char *map);
 void MAP_Reset(const char *map);
 void MAP_Shutdown(void);
-qboolean MAP_PositionFitsTCPNTypes(const vec2_t posT, const linkedList_t* terrainTypes, const linkedList_t* cultureTypes, const linkedList_t* populationTypes, const linkedList_t* nations);
+bool MAP_PositionFitsTCPNTypes(const vec2_t posT, const linkedList_t* terrainTypes, const linkedList_t* cultureTypes, const linkedList_t* populationTypes, const linkedList_t* nations);
 void MAP_SetOverlay(const char *overlayID);
 void MAP_DeactivateOverlay(const char *overlayID);
 void MAP_UpdateGeoscapeDock(void);
-qboolean MAP_IsRadarOverlayActivated(void);
-qboolean MAP_IsXVIOverlayActivated(void);
-qboolean MAP_IsNationOverlayActivated(void);
+bool MAP_IsRadarOverlayActivated(void);
+bool MAP_IsXVIOverlayActivated(void);
+bool MAP_IsNationOverlayActivated(void);
 
 #endif /* CLIENT_CL_MAP_H */

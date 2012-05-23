@@ -48,14 +48,14 @@ void Cbuf_InsertText(const char *text);
 
 /**
  * @brief adds all the +set commands from the command line */
-void Cbuf_AddEarlyCommands(qboolean clear);
+void Cbuf_AddEarlyCommands(bool clear);
 
 /**
  * @brief adds all the remaining + commands from the command line
  * @return true if any late commands were added, which
  * will keep the demoloop from immediately starting
  */
-qboolean Cbuf_AddLateCommands(void);
+bool Cbuf_AddLateCommands(void);
 
 /**
  * @brief Pulls off \n terminated lines of text from the command buffer and sends
@@ -120,7 +120,7 @@ bool Cmd_GenericCompleteFunction(char const* candidate, char const* partial, cha
 /**
  * @brief used by the cvar code to check for cvar / command name overlap
  */
-qboolean Cmd_Exists(const char *cmd_name);
+bool Cmd_Exists(const char *cmd_name);
 
 /**
  * @brief attempts to match a partial command for automatic command line completion
@@ -143,7 +143,7 @@ void *Cmd_Userdata(void);
  * @brief Takes a null terminated string.  Does not need to be /n terminated.
  * breaks the string up into arg tokens.
  */
-void Cmd_TokenizeString(const char *text, qboolean macroExpand);
+void Cmd_TokenizeString(const char *text, bool macroExpand);
 
 /**
  * @brief Parses a single line of text into arguments and tries to execute it

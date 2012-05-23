@@ -51,7 +51,7 @@ typedef struct {
 	int linenum;	/**< 0-based line offset from first line of text */
 	int width;		/**< text chunk rendered width in pixels */
 	/* no need for individual line height, just use font->height */
-	qboolean truncated;	/**< needs ellipsis after text */
+	bool truncated;	/**< needs ellipsis after text */
 	vec2_t texsize;	/**< texture width and height */
 	GLuint texnum;	/**< bound texture ID (0 if not textured yet) */
 } chunkCache_t;
@@ -75,7 +75,7 @@ typedef struct wrapCache_s {
 	int numChunks;		/**< number of (contiguous) chunks in chunkCache used */
 	int numLines;		/**< total line count of wrapped text */
 	int chunkIdx;		/**< first chunk in chunkCache for this text */
-	qboolean aborted;	/**< true if we can't finish the chunk generation */
+	bool aborted;	/**< true if we can't finish the chunk generation */
 } wrapCache_t;
 
 static int numFonts = 0;
@@ -352,7 +352,7 @@ static int R_FontFindFit (const font_t *f, char *text, int maxlen, int maxWidth,
  * truncated.
  * Assumes whole string won't fit.
  */
-static int R_FontFindTruncFit (const font_t *f, const char *text, int maxlen, int maxWidth, qboolean mark, int *widthp)
+static int R_FontFindTruncFit (const font_t *f, const char *text, int maxlen, int maxWidth, bool mark, int *widthp)
 {
 	char buf[BUF_SIZE];
 	int width;
@@ -385,7 +385,7 @@ static int R_FontFindTruncFit (const font_t *f, const char *text, int maxlen, in
  * entries for those chunks.
  * @return number of chunks allocated in chunkCache.
  */
-static int R_FontMakeChunks (const font_t *f, const char *text, int maxWidth, longlines_t method, int *lines, qboolean *aborted)
+static int R_FontMakeChunks (const font_t *f, const char *text, int maxWidth, longlines_t method, int *lines, bool *aborted)
 {
 	int lineno = 0;
 	int pos = 0;
@@ -401,7 +401,7 @@ static int R_FontMakeChunks (const font_t *f, const char *text, int maxWidth, lo
 		int len;
 		int utf8len;
 		int skip = 0;
-		qboolean truncated = qfalse;
+		bool truncated = false;
 
 		/* find mandatory break */
 		len = strcspn(&buf[pos], "\n");
@@ -432,7 +432,7 @@ static int R_FontMakeChunks (const font_t *f, const char *text, int maxWidth, lo
 				while (buf[pos + len + skip] == ' ')
 					skip++;
 				if (len + skip == 0) {
-					*aborted = qtrue;
+					*aborted = true;
 					break; /* could not fit even one character */
 				}
 			} else {
@@ -480,7 +480,7 @@ static wrapCache_t *R_FontWrapText (const font_t *f, const char *text, int maxWi
 	int hashValue = R_FontHash(text);
 	int chunksUsed;
 	int lines;
-	qboolean aborted = qfalse;
+	bool aborted = false;
 
 	/* String is considered a match if the part that fit in entry->string
 	 * matches. Since the hash value also matches and the hash was taken
@@ -535,7 +535,7 @@ static wrapCache_t *R_FontWrapText (const font_t *f, const char *text, int maxWi
  * @param[out] lines receives total number of lines in text, including blank ones
  * @param[out] isTruncated receives true, if the text must be trucated
  */
-void R_FontTextSize (const char *fontId, const char *text, int maxWidth, longlines_t method, int *width, int *height, int *lines, qboolean *isTruncated)
+void R_FontTextSize (const char *fontId, const char *text, int maxWidth, longlines_t method, int *width, int *height, int *lines, bool *isTruncated)
 {
 	const font_t *font = R_GetFont(fontId);
 	const wrapCache_t *wrap = R_FontWrapText(font, text, maxWidth, method);

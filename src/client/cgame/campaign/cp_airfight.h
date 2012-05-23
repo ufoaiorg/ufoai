@@ -48,7 +48,7 @@ typedef struct aircraftProjectile_s {
 	vec3_t projectedPos[MAX_MULTIPLE_PROJECTILES];	/**< Array if projected positions of the projectile (latitude and longitude). */
 	vec3_t oldDrawPos[MAX_MULTIPLE_PROJECTILES];	/**< Array if old draw positions of the projectile (latitude and longitude). */
 	int numProjectiles;      /**< Number of projectile positions used for this projectile. */
-	qboolean hasMoved;       /**< Has the projectile been moved by the CampaignRunProjectiles function */
+	bool hasMoved;       /**< Has the projectile been moved by the CampaignRunProjectiles function */
 	int numInterpolationPoints;	/**< Number of points drawn so far during interpolation. */
 	vec3_t idleTarget;		/**< target of the projectile
 							 ** used only if the projectile will miss its target (that is if aimedAircraft is NULL) */
@@ -59,21 +59,21 @@ typedef struct aircraftProjectile_s {
 								 ** used only if the projectile will touch its target (otherwise it's NULL) */
 	int time;				/**< time since the projectile has been launched */
 	float angle;			/**< angle of the missile on the geoscape */
-	qboolean bullets;		/**< projectile has active bullets on geoscape */
-	qboolean beam;			/**< projectile has an active (laser) beam on geoscape */
+	bool bullets;		/**< projectile has active bullets on geoscape */
+	bool beam;			/**< projectile has an active (laser) beam on geoscape */
 } aircraftProjectile_t;
 
 void AIRFIGHT_ExecuteActions(const struct campaign_s* campaign, aircraft_t* air, aircraft_t* ufo);
-void AIRFIGHT_ActionsAfterAirfight(const struct campaign_s* campaign, aircraft_t* shooter, aircraft_t* aircraft, qboolean phalanxWon);
+void AIRFIGHT_ActionsAfterAirfight(const struct campaign_s* campaign, aircraft_t* shooter, aircraft_t* aircraft, bool phalanxWon);
 void AIRFIGHT_CampaignRunProjectiles(const struct campaign_s* campaign, int dt);
 void AIRFIGHT_CampaignRunBaseDefence(int dt);
 int AIRFIGHT_CheckWeapon(const aircraftSlot_t *slot, float distance);
 int AIRFIGHT_ChooseWeapon(const aircraftSlot_t *slot, int maxSlot, const vec2_t pos, const vec2_t targetPos);
-qboolean AIRFIGHT_BaseCanTargetUFO(const struct base_s *base, const aircraft_t *ufo);
+bool AIRFIGHT_BaseCanTargetUFO(const struct base_s *base, const aircraft_t *ufo);
 void AIRFIGHT_RemoveProjectileAimingAircraft(const aircraft_t * aircraft);
 
-qboolean AIRFIGHT_SaveXML(xmlNode_t *parent);
-qboolean AIRFIGHT_LoadXML(xmlNode_t *parent);
+bool AIRFIGHT_SaveXML(xmlNode_t *parent);
+bool AIRFIGHT_LoadXML(xmlNode_t *parent);
 void AIRFIGHT_InitStartup(void);
 
 #endif /* CLIENT_CL_AIRFIGHT_H */

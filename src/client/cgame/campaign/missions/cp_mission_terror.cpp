@@ -82,9 +82,9 @@ void CP_TerrorMissionStart (mission_t *mission)
 	mission->finalDate = Date_Add(ccs.date, Date_Random(minMissionDelay, missionDelay));
 	/* ufo becomes invisible on geoscape, but don't remove it from ufo global array (may reappear)*/
 	if (mission->ufo)
-		CP_UFORemoveFromGeoscape(mission, qfalse);
+		CP_UFORemoveFromGeoscape(mission, false);
 	/* mission appear on geoscape, player can go there */
-	CP_MissionAddToGeoscape(mission, qfalse);
+	CP_MissionAddToGeoscape(mission, false);
 }
 
 /**
@@ -144,7 +144,7 @@ static void CP_TerrorMissionGo (mission_t *mission)
 			continue;
 
 		Vector2Copy(city->pos, mission->pos);
-		mission->posAssigned = qtrue;
+		mission->posAssigned = true;
 		Com_sprintf(mission->location, sizeof(mission->location), "%s", _(city->name));
 		break;
 	}

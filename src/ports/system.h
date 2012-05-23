@@ -53,7 +53,7 @@ char *Sys_GetHomeDirectory(void);
 
 void Sys_ConsoleShutdown(void);
 void Sys_ConsoleInit(void);
-void Sys_ShowConsole(qboolean show);
+void Sys_ShowConsole(bool show);
 
 /* pass in an attribute mask of things you wish to REJECT */
 char *Sys_FindFirst(const char *path, unsigned musthave, unsigned canthave);

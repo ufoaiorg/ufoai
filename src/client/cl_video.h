@@ -29,7 +29,7 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #ifndef CLIENT_VID_H
 #define CLIENT_VID_H
 
-#include "../shared/ufotypes.h"	/* for qboolean */
+#include "../shared/ufotypes.h"	/* for bool */
 #include "../common/mem.h"		/* for memPool_t */
 #include "../common/cvar.h"		/* for cvar_t */
 
@@ -45,7 +45,7 @@ typedef struct {
 	unsigned width;			/**< game screen/window width */
 	unsigned height;		/**< game screen/window height */
 	int mode;				/**< resolution mode - see vidmode_t */
-	qboolean fullscreen;	/**< currently in fullscreen mode? */
+	bool fullscreen;	/**< currently in fullscreen mode? */
 	int multisample;		/**< number of multisample used by the context */
 	int swapinterval;		/**< number of swapinterval used by the context */
 } viddefContext_t;
@@ -67,7 +67,7 @@ typedef struct {
 typedef struct {
 	viddefContext_t context;
 
-	qboolean stretch;		/**< currently stretch mode? */
+	bool stretch;		/**< currently stretch mode? */
 
 	float rx;		/**< horizontal screen scale factor */
 	float ry;		/**< vertical screen scale factor */
@@ -103,6 +103,6 @@ extern cvar_t *vid_grabmouse;
 void VID_Init(void);
 int VID_GetModeNums(void);
 void VID_Restart_f(void);
-qboolean VID_GetModeInfo(int modeIndex, vidmode_t *modeInfo);
+bool VID_GetModeInfo(int modeIndex, vidmode_t *modeInfo);
 
 #endif /* CLIENT_VID_H */

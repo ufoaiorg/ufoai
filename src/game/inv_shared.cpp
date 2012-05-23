@@ -46,7 +46,7 @@ void INVSH_InitCSI (const csi_t * import)
  * @param invDef The inventory definition to check
  * @return @c true if the given inventory definition is of type floor
  */
-qboolean INV_IsFloorDef (const invDef_t* invDef)
+bool INV_IsFloorDef (const invDef_t* invDef)
 {
 	return invDef->id == CSI->idFloor;
 }
@@ -56,7 +56,7 @@ qboolean INV_IsFloorDef (const invDef_t* invDef)
  * @param invDef The inventory definition to check
  * @return @c true if the given inventory definition is of type right
  */
-qboolean INV_IsRightDef (const invDef_t* invDef)
+bool INV_IsRightDef (const invDef_t* invDef)
 {
 	return invDef->id == CSI->idRight;
 }
@@ -66,7 +66,7 @@ qboolean INV_IsRightDef (const invDef_t* invDef)
  * @param invDef The inventory definition to check
  * @return @c true if the given inventory definition is of type left
  */
-qboolean INV_IsLeftDef (const invDef_t* invDef)
+bool INV_IsLeftDef (const invDef_t* invDef)
 {
 	return invDef->id == CSI->idLeft;
 }
@@ -76,7 +76,7 @@ qboolean INV_IsLeftDef (const invDef_t* invDef)
  * @param invDef The inventory definition to check
  * @return @c true if the given inventory definition is of type equip
  */
-qboolean INV_IsEquipDef (const invDef_t* invDef)
+bool INV_IsEquipDef (const invDef_t* invDef)
 {
 	return invDef->id == CSI->idEquip;
 }
@@ -86,7 +86,7 @@ qboolean INV_IsEquipDef (const invDef_t* invDef)
  * @param invDef The inventory definition to check
  * @return @c true if the given inventory definition is of type armour
  */
-qboolean INV_IsArmourDef (const invDef_t* invDef)
+bool INV_IsArmourDef (const invDef_t* invDef)
 {
 	return invDef->id == CSI->idArmour;
 }
@@ -103,14 +103,14 @@ static int cacheCheckToInventory = INV_DOES_NOT_FIT;
  * @note The function expects an already rotated shape for itemShape. Use INVSH_ShapeRotate if needed.
  * @param[in] shape Pointer to 'uint32_t shape[SHAPE_BIG_MAX_HEIGHT]'
  */
-static qboolean INVSH_CheckShapeCollision (const uint32_t *shape, const uint32_t itemShape, const int x, const int y)
+static bool INVSH_CheckShapeCollision (const uint32_t *shape, const uint32_t itemShape, const int x, const int y)
 {
 	int i;
 
 	/* Negative positions not allowed (all items are supposed to have at least one bit set in the first row and column) */
 	if (x < 0 || y < 0) {
 		Com_DPrintf(DEBUG_SHARED, "INVSH_CheckShapeCollision: x or y value negative: x=%i y=%i!\n", x, y);
-		return qtrue;
+		return true;
 	}
 
 	for (i = 0; i < SHAPE_SMALL_MAX_HEIGHT; i++) {
@@ -122,19 +122,19 @@ static qboolean INVSH_CheckShapeCollision (const uint32_t *shape, const uint32_t
 		/* Check x maximum. */
 		if (itemRowShifted >> x != itemRow)
 			/* Out of bounds (32bit; a few bits of this row in itemShape were truncated) */
-			return qtrue;
+			return true;
 
 		/* Check y maximum. */
 		if (y + i >= SHAPE_BIG_MAX_HEIGHT && itemRow)
 			/* This row (row "i" in itemShape) is outside of the max. bound and has bits in it. */
-			return qtrue;
+			return true;
 
 		/* Check for collisions of the item with the big mask. */
 		if (itemRowShifted & shape[y + i])
-			return qtrue;
+			return true;
 	}
 
-	return qfalse;
+	return false;
 }
 
 /**
@@ -146,9 +146,9 @@ static qboolean INVSH_CheckShapeCollision (const uint32_t *shape, const uint32_t
  * @param[in] y The x value in the container (SHAPE_BIG_MAX_HEIGHT is the max)
  * @param[in] ignoredItem You can ignore one item in the container (most often the currently dragged one). Use NULL if you want to check against all items in the container.
  * @sa INVSH_CheckToInventory
- * @return qfalse if the item does not fit, qtrue if it fits.
+ * @return false if the item does not fit, true if it fits.
  */
-static qboolean INVSH_CheckToInventory_shape (const inventory_t * const i, const invDef_t * container, const uint32_t itemShape, const int x, const int y, const invList_t *ignoredItem)
+static bool INVSH_CheckToInventory_shape (const inventory_t * const i, const invDef_t * container, const uint32_t itemShape, const int x, const int y, const invList_t *ignoredItem)
 {
 	invList_t *ic;
 	static uint32_t mask[SHAPE_BIG_MAX_HEIGHT];
@@ -160,7 +160,7 @@ static qboolean INVSH_CheckToInventory_shape (const inventory_t * const i, const
 
 	/* check bounds */
 	if (x < 0 || y < 0 || x >= SHAPE_BIG_MAX_WIDTH || y >= SHAPE_BIG_MAX_HEIGHT)
-		return qfalse;
+		return false;
 
 	if (!cacheCheckToInventory) {
 		int j;
@@ -182,10 +182,10 @@ static qboolean INVSH_CheckToInventory_shape (const inventory_t * const i, const
 
 	/* Test for collisions with newly generated mask. */
 	if (INVSH_CheckShapeCollision(mask, itemShape, x, y))
-		return qfalse;
+		return false;
 
 	/* Everything ok. */
-	return qtrue;
+	return true;
 }
 
 /**
@@ -253,7 +253,7 @@ int INVSH_CheckToInventory (const inventory_t * const i, const objDef_t *od, con
 				return fits;	/**< Return INV_FITS_BOTH if both if statements where true above. */
 
 			Com_DPrintf(DEBUG_SHARED, "INVSH_CheckToInventory: INFO: Moving to 'single' container but item would not fit normally.\n");
-			return INV_FITS; /**< We are returning with status qtrue (1) if the item does not fit at all - unlikely but not impossible. */
+			return INV_FITS; /**< We are returning with status true (1) if the item does not fit at all - unlikely but not impossible. */
 		}
 	}
 
@@ -277,30 +277,30 @@ int INVSH_CheckToInventory (const inventory_t * const i, const objDef_t *od, con
  * @brief Check if the (physical) information of 2 items is exactly the same.
  * @param[in] item1 First item to compare.
  * @param[in] item2 Second item to compare.
- * @return qtrue if they are identical or qfalse otherwise.
+ * @return true if they are identical or false otherwise.
  */
-qboolean INVSH_CompareItem (const item_t *const item1, const item_t *const item2)
+bool INVSH_CompareItem (const item_t *const item1, const item_t *const item2)
 {
 	if (item1 == item2)
-		return qtrue;
+		return true;
 
 	if (item1 == NULL || item2 == NULL)
-		return qfalse;
+		return false;
 
 	if (item1->t == item2->t && item1->m == item2->m && item1->a == item2->a)
-		return qtrue;
+		return true;
 
-	return qfalse;
+	return false;
 }
 
 /**
  * @brief Checks the shape if there is a 1-bit on the position x/y.
  * @param[in] shape The shape to check in. (8x4)
  */
-static qboolean INVSH_CheckShapeSmall (const uint32_t shape, const int x, const int y)
+static bool INVSH_CheckShapeSmall (const uint32_t shape, const int x, const int y)
 {
 	if (y >= SHAPE_SMALL_MAX_HEIGHT || x >= SHAPE_SMALL_MAX_WIDTH|| x < 0 || y < 0) {
-		return qfalse;
+		return false;
 	}
 
 	return shape & (0x01 << (y * SHAPE_SMALL_MAX_WIDTH + x));
@@ -313,7 +313,7 @@ static qboolean INVSH_CheckShapeSmall (const uint32_t shape, const int x, const 
  * @param[in] x The x location in the container.
  * @param[in] y The y location in the container.
  */
-static qboolean INVSH_ShapeCheckPosition (const invList_t *ic, const int x, const int y)
+static bool INVSH_ShapeCheckPosition (const invList_t *ic, const int x, const int y)
 {
 	uint32_t shape;
 
@@ -359,18 +359,18 @@ void INVSH_GetFirstShapePosition (const invList_t *ic, int* const x, int* const 
  * @param[in] inv Pointer to the inventory where we will search.
  * @param[in] container Container in the inventory.
  * @param[in] item The item to search for.
- * @return qtrue if there already is at least one item of this type, otherwise qfalse.
+ * @return true if there already is at least one item of this type, otherwise false.
  */
-qboolean INVSH_ExistsInInventory (const inventory_t* const inv, const invDef_t * container, const item_t * item)
+bool INVSH_ExistsInInventory (const inventory_t* const inv, const invDef_t * container, const item_t * item)
 {
 	invList_t *ic;
 
 	for (ic = inv->c[container->id]; ic; ic = ic->next)
 		if (INVSH_CompareItem(&ic->item, item)) {
-			return qtrue;
+			return true;
 		}
 
-	return qfalse;
+	return false;
 }
 
 /**
@@ -401,7 +401,7 @@ invList_t *INVSH_FindInInventory (const inventory_t* const inv, const invDef_t *
  * @return true if the given item is an aircraftitem item
  * @sa INV_IsBaseDefenceItem
  */
-qboolean INV_IsCraftItem (const objDef_t *obj)
+bool INV_IsCraftItem (const objDef_t *obj)
 {
 	return obj->craftitem.type != MAX_ACITEMS && !obj->isDummy;
 }
@@ -415,7 +415,7 @@ qboolean INV_IsCraftItem (const objDef_t *obj)
  * @return true if the given item is a basedefence item
  * @sa INV_IsCraftItem
  */
-qboolean INV_IsBaseDefenceItem (const objDef_t *obj)
+bool INV_IsBaseDefenceItem (const objDef_t *obj)
 {
 	return obj->craftitem.type != MAX_ACITEMS && obj->isDummy;
 }
@@ -594,7 +594,7 @@ const invDef_t *INVSH_GetInventoryDefinitionByID (const char *id)
  * @param[in] weapon The weapon (in the inventory) to check the item with. Might not be @c NULL.
  * @return @c true if the item can be used in the given weapon, otherwise @c false.
  */
-qboolean INVSH_LoadableInWeapon (const objDef_t *od, const objDef_t *weapon)
+bool INVSH_LoadableInWeapon (const objDef_t *od, const objDef_t *weapon)
 {
 	int i;
 
@@ -603,13 +603,13 @@ qboolean INVSH_LoadableInWeapon (const objDef_t *od, const objDef_t *weapon)
 
 	/* check whether the weapon is only linked to itself. */
 	if (od->numWeapons == 1 && od->weapons[0] == od)
-		return qfalse;
+		return false;
 
 	for (i = 0; i < od->numWeapons; i++)
 		if (weapon == od->weapons[i])
-			return qtrue;
+			return true;
 
-	return qfalse;
+	return false;
 }
 
 /*
@@ -702,20 +702,20 @@ void INVSH_MergeShapes (uint32_t *shape, const uint32_t itemShape, const int x, 
  * @brief Checks the shape if there is a 1-bit on the position x/y.
  * @param[in] shape Pointer to 'uint32_t shape[SHAPE_BIG_MAX_HEIGHT]'
  */
-qboolean INVSH_CheckShape (const uint32_t *shape, const int x, const int y)
+bool INVSH_CheckShape (const uint32_t *shape, const int x, const int y)
 {
 	const uint32_t row = shape[y];
 	int position = pow(2, x);
 
 	if (y >= SHAPE_BIG_MAX_HEIGHT || x >= SHAPE_BIG_MAX_WIDTH || x < 0 || y < 0) {
 		Com_Printf("INVSH_CheckShape: Bad x or y value: (x=%i, y=%i)\n", x, y);
-		return qfalse;
+		return false;
 	}
 
 	if ((row & position) == 0)
-		return qfalse;
+		return false;
 	else
-		return qtrue;
+		return true;
 }
 
 /**

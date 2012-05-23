@@ -30,9 +30,9 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #include "ufotypes.h"
 
 static char com_token[4096];
-static qboolean isUnparsedToken;
-static qboolean isQuotedToken;
-static qboolean functionScriptTokenEnabled;
+static bool isUnparsedToken;
+static bool isQuotedToken;
+static bool functionScriptTokenEnabled;
 
 /**
  * @brief Put back the last token into the parser
@@ -42,7 +42,7 @@ static qboolean functionScriptTokenEnabled;
  */
 void Com_UnParseLastToken (void)
 {
-	isUnparsedToken = qtrue;
+	isUnparsedToken = true;
 }
 
 /**
@@ -50,7 +50,7 @@ void Com_UnParseLastToken (void)
  * @return True if the token is quoted
  * @sa Com_Parse
  */
-qboolean Com_ParsedTokenIsQuoted (void)
+bool Com_ParsedTokenIsQuoted (void)
 {
 	return isQuotedToken;
 }
@@ -60,7 +60,7 @@ qboolean Com_ParsedTokenIsQuoted (void)
  * @param enable If true, enable parsing of extra tokens
  * @sa Com_Parse
  */
-void Com_EnableFunctionScriptToken (qboolean enable)
+void Com_EnableFunctionScriptToken (bool enable)
 {
 	functionScriptTokenEnabled = enable;
 }
@@ -101,12 +101,12 @@ const char *Com_Parse (const char *data_p[])
 	const char *data;
 
 	if (isUnparsedToken) {
-		isUnparsedToken = qfalse;
+		isUnparsedToken = false;
 		return com_token;
 	}
 
 	data = *data_p;
-	isQuotedToken = qfalse;
+	isQuotedToken = false;
 	len = 0;
 	com_token[0] = 0;
 
@@ -144,7 +144,7 @@ skipwhite:
 
 	/* handle quoted strings specially */
 	if (c == '\"') {
-		isQuotedToken = qtrue;
+		isQuotedToken = true;
 		data++;
 		for (;;) {
 			c = *data++;

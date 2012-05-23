@@ -59,7 +59,7 @@ aircraft_t* AIR_GetFirstFromBase (const base_t *b)
  * @param[in] base The base to check
  * @return @c true if there is at least one aircraft, @c false otherwise (or when the @c base pointer is @c NULL)
  */
-qboolean AIR_BaseHasAircraft (const base_t *base)
+bool AIR_BaseHasAircraft (const base_t *base)
 {
 	return base != NULL && AIR_GetFirstFromBase(base) != NULL;
 }
@@ -448,14 +448,14 @@ const char *AIR_AircraftStatusToName (const aircraft_t * aircraft)
 /**
  * @brief Checks whether given aircraft is in its homebase.
  * @param[in] aircraft Pointer to an aircraft.
- * @return qtrue if given aircraft is in its homebase.
- * @return qfalse if given aircraft is not in its homebase.
+ * @return true if given aircraft is in its homebase.
+ * @return false if given aircraft is not in its homebase.
  */
-qboolean AIR_IsAircraftInBase (const aircraft_t * aircraft)
+bool AIR_IsAircraftInBase (const aircraft_t * aircraft)
 {
 	if (aircraft->status == AIR_HOME || aircraft->status == AIR_REFUEL)
-		return qtrue;
-	return qfalse;
+		return true;
+	return false;
 }
 
 /**
@@ -465,7 +465,7 @@ qboolean AIR_IsAircraftInBase (const aircraft_t * aircraft)
  * @return @c false if given aircraft is not on geoscape, @c true if given aircraft is on geoscape.
  * @sa UFO_IsUFOSeenOnGeoscape
  */
-qboolean AIR_IsAircraftOnGeoscape (const aircraft_t *aircraft)
+bool AIR_IsAircraftOnGeoscape (const aircraft_t *aircraft)
 {
 	switch (aircraft->status) {
 	case AIR_IDLE:
@@ -475,13 +475,13 @@ qboolean AIR_IsAircraftOnGeoscape (const aircraft_t *aircraft)
 	case AIR_DROP:
 	case AIR_INTERCEPT:
 	case AIR_RETURNING:
-		return qtrue;
+		return true;
 	case AIR_NONE:
 	case AIR_REFUEL:
 	case AIR_HOME:
 	case AIR_TRANSFER:
 	case AIR_CRASHED:
-		return qfalse;
+		return false;
 	}
 
 	Com_Error(ERR_FATAL, "Unknown aircraft status %i", aircraft->status);
@@ -582,9 +582,9 @@ int AIR_GetRemainingRange (const aircraft_t *aircraft)
  * @param[in] aircraft Pointer to the aircraft
  * @param[in] destination Pointer to the position the aircraft should go to
  * @sa MAP_MapCalcLine
- * @return qtrue if the aircraft can go to the position, qfalse else
+ * @return true if the aircraft can go to the position, false else
  */
-qboolean AIR_AircraftHasEnoughFuel (const aircraft_t *aircraft, const vec2_t destination)
+bool AIR_AircraftHasEnoughFuel (const aircraft_t *aircraft, const vec2_t destination)
 {
 	const base_t *base;
 	float distance;
@@ -608,9 +608,9 @@ qboolean AIR_AircraftHasEnoughFuel (const aircraft_t *aircraft, const vec2_t des
  * @param[in] aircraft Pointer to the aircraft
  * @param[in] destination Pointer to the position the aircraft should go to
  * @sa MAP_MapCalcLine
- * @return qtrue if the aircraft can go to the position, qfalse else
+ * @return true if the aircraft can go to the position, false else
  */
-qboolean AIR_AircraftHasEnoughFuelOneWay (const aircraft_t *aircraft, const vec2_t destination)
+bool AIR_AircraftHasEnoughFuelOneWay (const aircraft_t *aircraft, const vec2_t destination)
 {
 	float distance;
 
@@ -762,7 +762,7 @@ aircraft_t *AIR_Add (base_t *base, const aircraft_t *aircraftTemplate)
  * @return @c true if the aircraft was removed, @c false otherwise
  * @sa AIR_Add
  */
-qboolean AIR_Delete (base_t *base, const aircraft_t *aircraft)
+bool AIR_Delete (base_t *base, const aircraft_t *aircraft)
 {
 	return LIST_Remove(&ccs.aircraft, (const void *)aircraft);
 }
@@ -801,7 +801,7 @@ aircraft_t* AIR_NewAircraft (base_t *base, const aircraft_t *aircraftTemplate)
 	MS_AddNewMessage(_("Notice"), cp_messageBuffer);
 	Com_DPrintf(DEBUG_CLIENT, "Setting aircraft to pos: %.0f:%.0f\n", base->pos[0], base->pos[1]);
 	Vector2Copy(base->pos, aircraft->pos);
-	RADAR_Initialise(&aircraft->radar, RADAR_AIRCRAFTRANGE, RADAR_AIRCRAFTTRACKINGRANGE, 1.0f, qfalse);
+	RADAR_Initialise(&aircraft->radar, RADAR_AIRCRAFTRANGE, RADAR_AIRCRAFTTRACKINGRANGE, 1.0f, false);
 	aircraft->radar.ufoDetectionProbability = 1;
 
 	/* Update base capacities. */
@@ -905,13 +905,13 @@ static void AIR_TransferItemsCarriedByCharacterToBase (character_t *chr, base_t 
 #endif
 		for (ic = CONTAINER(chr, container); ic; ic = ic->next) {
 			const objDef_t *obj = ic->item.t;
-			B_UpdateStorageAndCapacity(sourceBase, obj, -1, qfalse);
-			B_UpdateStorageAndCapacity(destBase, obj, 1, qfalse);
+			B_UpdateStorageAndCapacity(sourceBase, obj, -1, false);
+			B_UpdateStorageAndCapacity(destBase, obj, 1, false);
 
 			obj = ic->item.m;
 			if (obj) {
-				B_UpdateStorageAndCapacity(sourceBase, obj, -1, qfalse);
-				B_UpdateStorageAndCapacity(destBase, obj, 1, qfalse);
+				B_UpdateStorageAndCapacity(sourceBase, obj, -1, false);
+				B_UpdateStorageAndCapacity(destBase, obj, 1, false);
 			}
 		}
 	}
@@ -923,7 +923,7 @@ static void AIR_TransferItemsCarriedByCharacterToBase (character_t *chr, base_t 
  * @param[in] aircraft The aircraft to move into a new base
  * @param[in] base The base to move the aircraft into
  */
-qboolean AIR_MoveAircraftIntoNewHomebase (aircraft_t *aircraft, base_t *base)
+bool AIR_MoveAircraftIntoNewHomebase (aircraft_t *aircraft, base_t *base)
 {
 	base_t *oldBase;
 	baseCapacities_t capacity;
@@ -943,7 +943,7 @@ qboolean AIR_MoveAircraftIntoNewHomebase (aircraft_t *aircraft, base_t *base)
 
 	capacity = AIR_GetCapacityByAircraftWeight(aircraft);
 	if (AIR_CheckMoveIntoNewHomebase(aircraft, base, capacity))
-		return qfalse;
+		return false;
 
 	oldBase = aircraft->homebase;
 	assert(oldBase);
@@ -976,7 +976,7 @@ qboolean AIR_MoveAircraftIntoNewHomebase (aircraft_t *aircraft, base_t *base)
 		AIR_AircraftReturnToBase(aircraft);
 	}
 
-	return qtrue;
+	return true;
 }
 
 /**
@@ -992,7 +992,7 @@ void AIR_DeleteAircraft (aircraft_t *aircraft)
 	int i;
 	base_t *base;
 	/* Check if aircraft is on geoscape while it's not destroyed yet */
-	const qboolean aircraftIsOnGeoscape = AIR_IsAircraftOnGeoscape(aircraft);
+	const bool aircraftIsOnGeoscape = AIR_IsAircraftOnGeoscape(aircraft);
 
 	assert(aircraft);
 	base = aircraft->homebase;
@@ -1008,10 +1008,10 @@ void AIR_DeleteAircraft (aircraft_t *aircraft)
 	 * If you want this in the inventory you really have to call these functions
 	 * before you are destroying a craft */
 	for (i = 0; i < MAX_AIRCRAFTSLOT; i++) {
-		AII_RemoveItemFromSlot(NULL, aircraft->weapons, qfalse);
-		AII_RemoveItemFromSlot(NULL, aircraft->electronics, qfalse);
+		AII_RemoveItemFromSlot(NULL, aircraft->weapons, false);
+		AII_RemoveItemFromSlot(NULL, aircraft->electronics, false);
 	}
-	AII_RemoveItemFromSlot(NULL, &aircraft->shield, qfalse);
+	AII_RemoveItemFromSlot(NULL, &aircraft->shield, false);
 
 	if (base->aircraftCurrent == aircraft)
 		base->aircraftCurrent = NULL;
@@ -1077,7 +1077,7 @@ void AIR_DestroyAircraft (aircraft_t *aircraft)
  * @param[in] aircraft Pointer to aircraft on its way.
  * @return true if the aircraft reached its destination.
  */
-qboolean AIR_AircraftMakeMove (int dt, aircraft_t* aircraft)
+bool AIR_AircraftMakeMove (int dt, aircraft_t* aircraft)
 {
 	float dist;
 
@@ -1089,7 +1089,7 @@ qboolean AIR_AircraftMakeMove (int dt, aircraft_t* aircraft)
 
 	/* Check if destination reached */
 	if (dist >= aircraft->route.distance * (aircraft->route.numPoints - 1)) {
-		return qtrue;
+		return true;
 	} else {
 		/* calc new position */
 		float frac = dist / aircraft->route.distance;
@@ -1119,7 +1119,7 @@ qboolean AIR_AircraftMakeMove (int dt, aircraft_t* aircraft)
 		MAP_CheckPositionBoundaries(aircraft->projectedPos);
 	}
 
-	return qfalse;
+	return false;
 }
 
 static void AIR_Move (aircraft_t* aircraft, int deltaTime)
@@ -1135,7 +1135,7 @@ static void AIR_Move (aircraft_t* aircraft, int deltaTime)
 		case AIR_MISSION:
 			/* Aircraft reached its mission */
 			assert(aircraft->mission);
-			aircraft->mission->active = qtrue;
+			aircraft->mission->active = true;
 			aircraft->status = AIR_DROP;
 			MAP_SetMissionAircraft(aircraft);
 			MAP_SelectMission(aircraft->mission);
@@ -1191,12 +1191,12 @@ static void AIR_Refuel (aircraft_t *aircraft, int deltaTime)
 				Com_sprintf(cp_messageBuffer, lengthof(cp_messageBuffer),
 						_("Craft %s couldn't be completely refueled at %s. Not enough antimatter."), aircraft->name, aircraft->homebase->name);
 				MSO_CheckAddNewMessage(NT_AIRCRAFT_CANNOTREFUEL, _("Notice"), cp_messageBuffer);
-				aircraft->notifySent[AIR_CANNOT_REFUEL] = qtrue;
+				aircraft->notifySent[AIR_CANNOT_REFUEL] = true;
 			}
 		}
 
 		if (amLoad > 0)
-			B_ManageAntimatter(aircraft->homebase, amLoad, qfalse);
+			B_ManageAntimatter(aircraft->homebase, amLoad, false);
 	}
 
 	aircraft->fuel += fillup;
@@ -1207,7 +1207,7 @@ static void AIR_Refuel (aircraft_t *aircraft, int deltaTime)
 		Com_sprintf(cp_messageBuffer, lengthof(cp_messageBuffer),
 				_("Craft %s has refueled at %s."), aircraft->name, aircraft->homebase->name);
 		MSO_CheckAddNewMessage(NT_AIRCRAFT_REFUELED, _("Notice"), cp_messageBuffer);
-		aircraft->notifySent[AIR_CANNOT_REFUEL] = qfalse;
+		aircraft->notifySent[AIR_CANNOT_REFUEL] = false;
 	}
 
 }
@@ -1219,12 +1219,12 @@ static void AIR_Refuel (aircraft_t *aircraft, int deltaTime)
  * @param[in] dt time delta (may be 0 if radar overlay should be updated but no aircraft moves)
  * @param[in] updateRadarOverlay True if radar overlay should be updated (not needed if geoscape isn't updated)
  */
-void AIR_CampaignRun (const campaign_t* campaign, int dt, qboolean updateRadarOverlay)
+void AIR_CampaignRun (const campaign_t* campaign, int dt, bool updateRadarOverlay)
 {
 	/* true if at least one aircraft moved: radar overlay must be updated
 	 * This is static because aircraft can move without radar being
 	 * updated (sa CP_CampaignRun) */
-	static qboolean radarOverlayReset = qfalse;
+	static bool radarOverlayReset = false;
 
 	/* Run each aircraft */
 	AIR_Foreach(aircraft) {
@@ -1240,7 +1240,7 @@ void AIR_CampaignRun (const campaign_t* campaign, int dt, qboolean updateRadarOv
 		} else if (AIR_IsAircraftOnGeoscape(aircraft)) {
 			AIR_Move(aircraft, dt);
 			/* radar overlay should be updated */
-			radarOverlayReset = qtrue;
+			radarOverlayReset = true;
 		} else if (aircraft->status == AIR_REFUEL) {
 			AIR_Refuel(aircraft, dt);
 		}
@@ -1271,7 +1271,7 @@ void AIR_CampaignRun (const campaign_t* campaign, int dt, qboolean updateRadarOv
 
 	if (updateRadarOverlay && radarOverlayReset && MAP_IsRadarOverlayActivated()) {
 		RADAR_UpdateWholeRadarOverlay();
-		radarOverlayReset = qfalse;
+		radarOverlayReset = false;
 	}
 }
 
@@ -1296,16 +1296,16 @@ aircraft_t* AIR_AircraftGetFromIDX (int aircraftIdx)
  * @brief Sends the specified aircraft to specified mission.
  * @param[in] aircraft Pointer to aircraft to send to mission.
  * @param[in] mission Pointer to given mission.
- * @return qtrue if sending an aircraft to specified mission is possible.
+ * @return true if sending an aircraft to specified mission is possible.
  */
-qboolean AIR_SendAircraftToMission (aircraft_t *aircraft, mission_t *mission)
+bool AIR_SendAircraftToMission (aircraft_t *aircraft, mission_t *mission)
 {
 	if (!aircraft || !mission)
-		return qfalse;
+		return false;
 
 	if (AIR_GetTeamSize(aircraft) == 0) {
 		CP_Popup(_("Notice"), _("Assign one or more soldiers to this aircraft first."));
-		return qfalse;
+		return false;
 	}
 
 	/* if aircraft was in base */
@@ -1321,14 +1321,14 @@ qboolean AIR_SendAircraftToMission (aircraft_t *aircraft, mission_t *mission)
 	 * mission immediately */
 	if (B_IsUnderAttack(aircraft->homebase) && AIR_IsAircraftInBase(aircraft)) {
 		aircraft->mission = mission;
-		mission->active = qtrue;
+		mission->active = true;
 		cgi->UI_PushWindow("popup_baseattack");
-		return qtrue;
+		return true;
 	}
 
 	if (!AIR_AircraftHasEnoughFuel(aircraft, mission->pos)) {
 		MS_AddNewMessage(_("Notice"), _("Insufficient fuel."));
-		return qfalse;
+		return false;
 	}
 
 	MAP_MapCalcLine(aircraft->pos, mission->pos, &aircraft->route);
@@ -1337,7 +1337,7 @@ qboolean AIR_SendAircraftToMission (aircraft_t *aircraft, mission_t *mission)
 	aircraft->point = 0;
 	aircraft->mission = mission;
 
-	return qtrue;
+	return true;
 }
 
 /**
@@ -1413,7 +1413,7 @@ static const value_t aircraft_vals[] = {
  * @sa CL_ParseScriptSecond
  * @note parses the aircraft into our aircraft_sample array to use as reference
  */
-void AIR_ParseAircraft (const char *name, const char **text, qboolean assignAircraftItems)
+void AIR_ParseAircraft (const char *name, const char **text, bool assignAircraftItems)
 {
 	const char *errhead = "AIR_ParseAircraft: unexpected end of file (aircraft ";
 	aircraft_t *aircraftTemplate;
@@ -1745,7 +1745,7 @@ void AIR_AircraftsNotifyMissionRemoved (const mission_t *const mission)
  * @param[in] ufo Pointer to UFO that has been removed.
  * @param[in] destroyed True if the UFO has been destroyed, false if it only landed.
  */
-void AIR_AircraftsNotifyUFORemoved (const aircraft_t *const ufo, qboolean destroyed)
+void AIR_AircraftsNotifyUFORemoved (const aircraft_t *const ufo, bool destroyed)
 {
 	base_t *base;
 
@@ -2027,12 +2027,12 @@ void AIR_GetDestinationWhilePursuing (const aircraft_t *shooter, const aircraft_
  * @param[in] aircraft Pointer to an aircraft which will hunt for a UFO.
  * @param[in] ufo Pointer to a UFO.
  */
-qboolean AIR_SendAircraftPursuingUFO (aircraft_t* aircraft, aircraft_t* ufo)
+bool AIR_SendAircraftPursuingUFO (aircraft_t* aircraft, aircraft_t* ufo)
 {
 	vec2_t dest;
 
 	if (!aircraft)
-		return qfalse;
+		return false;
 
 	/* if aircraft was in base */
 	if (AIR_IsAircraftInBase(aircraft)) {
@@ -2050,7 +2050,7 @@ qboolean AIR_SendAircraftPursuingUFO (aircraft_t* aircraft, aircraft_t* ufo)
 		} else {
 			MS_AddNewMessage(_("Notice"), va(_("Craft %s has not enough fuel to intercept UFO: fly back to %s."), aircraft->name, aircraft->homebase->name));
 			AIR_AircraftReturnToBase(aircraft);
-			return qfalse;
+			return false;
 		}
 	}
 
@@ -2059,7 +2059,7 @@ qboolean AIR_SendAircraftPursuingUFO (aircraft_t* aircraft, aircraft_t* ufo)
 	aircraft->time = 0;
 	aircraft->point = 0;
 	aircraft->aircraftTarget = ufo;
-	return qtrue;
+	return true;
 }
 
 /*============================================
@@ -2081,20 +2081,20 @@ void AIR_ResetAircraftTeam (aircraft_t *aircraft)
  * @param[in] employee The employee to add to the aircraft.
  * @note this is responsible for adding soldiers to a team in dropship
  */
-qboolean AIR_AddToAircraftTeam (aircraft_t *aircraft, employee_t* employee)
+bool AIR_AddToAircraftTeam (aircraft_t *aircraft, employee_t* employee)
 {
 	if (!employee)
-		return qfalse;
+		return false;
 
 	if (!aircraft)
-		return qfalse;
+		return false;
 
 	if (AIR_GetTeamSize(aircraft) < aircraft->maxTeamSize) {
 		LIST_AddPointer(&aircraft->acTeam, employee);
-		return qtrue;
+		return true;
 	}
 
-	return qfalse;
+	return false;
 }
 
 /**
@@ -2103,7 +2103,7 @@ qboolean AIR_AddToAircraftTeam (aircraft_t *aircraft, employee_t* employee)
  * @param[in] employee Employee to check.
  * @return @c true if the given employee is assigned to the given aircraft.
  */
-qboolean AIR_IsInAircraftTeam (const aircraft_t *aircraft, const employee_t *employee)
+bool AIR_IsInAircraftTeam (const aircraft_t *aircraft, const employee_t *employee)
 {
 	assert(aircraft);
 	assert(employee);
@@ -2129,14 +2129,14 @@ int AIR_GetTeamSize (const aircraft_t *aircraft)
  * assigned), @c false if there was already a pilot assigned and we tried
  * to assign a new one (@c pilot isn't @c NULL).
  */
-qboolean AIR_SetPilot (aircraft_t *aircraft, employee_t *pilot)
+bool AIR_SetPilot (aircraft_t *aircraft, employee_t *pilot)
 {
 	if (aircraft->pilot == NULL || pilot == NULL) {
 		aircraft->pilot = pilot;
-		return qtrue;
+		return true;
 	}
 
-	return qfalse;
+	return false;
 }
 
 /**
@@ -2254,7 +2254,7 @@ static void AIR_SaveRouteXML (xmlNode_t *node, const mapline_t *route)
  * @sa B_Save
  * @sa AII_InitialiseSlot
  */
-static void AIR_SaveAircraftSlotsXML (const aircraftSlot_t* slot, const int num, xmlNode_t *p, qboolean weapon)
+static void AIR_SaveAircraftSlotsXML (const aircraftSlot_t* slot, const int num, xmlNode_t *p, bool weapon)
 {
 	int i;
 
@@ -2270,7 +2270,7 @@ static void AIR_SaveAircraftSlotsXML (const aircraftSlot_t* slot, const int num,
  * @param[in] aircraft Aircraft we save
  * @param[in] isUfo If this aircraft is a UFO
  */
-static qboolean AIR_SaveAircraftXML (xmlNode_t *p, const aircraft_t* const aircraft, qboolean const isUfo)
+static bool AIR_SaveAircraftXML (xmlNode_t *p, const aircraft_t* const aircraft, bool const isUfo)
 {
 	xmlNode_t *node;
 	xmlNode_t *subnode;
@@ -2294,11 +2294,11 @@ static qboolean AIR_SaveAircraftXML (xmlNode_t *p, const aircraft_t* const aircr
 	XML_AddInt(node, SAVE_AIRCRAFT_TIME, aircraft->time);
 
 	subnode = XML_AddNode(node, SAVE_AIRCRAFT_WEAPONS);
-	AIR_SaveAircraftSlotsXML(aircraft->weapons, aircraft->maxWeapons, subnode, qtrue);
+	AIR_SaveAircraftSlotsXML(aircraft->weapons, aircraft->maxWeapons, subnode, true);
 	subnode = XML_AddNode(node, SAVE_AIRCRAFT_SHIELDS);
-	AIR_SaveAircraftSlotsXML(&aircraft->shield, 1, subnode, qfalse);
+	AIR_SaveAircraftSlotsXML(&aircraft->shield, 1, subnode, false);
 	subnode = XML_AddNode(node, SAVE_AIRCRAFT_ELECTRONICS);
-	AIR_SaveAircraftSlotsXML(aircraft->electronics, aircraft->maxElectronics, subnode, qfalse);
+	AIR_SaveAircraftSlotsXML(aircraft->electronics, aircraft->maxElectronics, subnode, false);
 
 	AIR_SaveRouteXML(node, &aircraft->route);
 
@@ -2350,7 +2350,7 @@ static qboolean AIR_SaveAircraftXML (xmlNode_t *p, const aircraft_t* const aircr
 
 	/* All other informations are not needed for ufos */
 	if (isUfo)
-		return qtrue;
+		return true;
 
 	XML_AddInt(node, SAVE_AIRCRAFT_HANGAR, aircraft->hangar);
 
@@ -2387,7 +2387,7 @@ static qboolean AIR_SaveAircraftXML (xmlNode_t *p, const aircraft_t* const aircr
 		}
 	}
 
-	return qtrue;
+	return true;
 }
 
 /**
@@ -2396,7 +2396,7 @@ static qboolean AIR_SaveAircraftXML (xmlNode_t *p, const aircraft_t* const aircr
  * @sa B_SaveXML
  * @sa SAV_GameSaveXML
  */
-qboolean AIR_SaveXML (xmlNode_t *parent)
+bool AIR_SaveXML (xmlNode_t *parent)
 {
 	int i;
 	xmlNode_t * node, *snode;
@@ -2404,7 +2404,7 @@ qboolean AIR_SaveXML (xmlNode_t *parent)
 	/* save phalanx aircraft */
 	snode = XML_AddNode(parent, SAVE_AIRCRAFT_PHALANX);
 	AIR_Foreach(aircraft) {
-		AIR_SaveAircraftXML(snode, aircraft, qfalse);
+		AIR_SaveAircraftXML(snode, aircraft, false);
 	}
 
 	/* save the ufos on geoscape */
@@ -2413,15 +2413,15 @@ qboolean AIR_SaveXML (xmlNode_t *parent)
 		const aircraft_t *ufo = UFO_GetByIDX(i);
 		if (!ufo || (ufo->id == NULL))
 			continue;
-		AIR_SaveAircraftXML(snode, ufo, qtrue);
+		AIR_SaveAircraftXML(snode, ufo, true);
 	}
 
 	/* Save projectiles. */
 	node = XML_AddNode(parent, SAVE_AIRCRAFT_PROJECTILES);
 	if (!AIRFIGHT_SaveXML(node))
-		return qfalse;
+		return false;
 
-	return qtrue;
+	return true;
 }
 
 /**
@@ -2434,7 +2434,7 @@ qboolean AIR_SaveXML (xmlNode_t *parent)
  * @sa B_Load
  * @sa B_SaveAircraftSlots
  */
-static void AIR_LoadAircraftSlotsXML (aircraft_t *aircraft, aircraftSlot_t* slot, xmlNode_t *p, qboolean weapon, const int max)
+static void AIR_LoadAircraftSlotsXML (aircraft_t *aircraft, aircraftSlot_t* slot, xmlNode_t *p, bool weapon, const int max)
 {
 	xmlNode_t *act;
 	int i;
@@ -2452,7 +2452,7 @@ static void AIR_LoadAircraftSlotsXML (aircraft_t *aircraft, aircraftSlot_t* slot
  * @param[in] p XML Node structure, where we get the information from
  * @param[out] route Route points of the aircraft
  */
-static qboolean AIR_LoadRouteXML (xmlNode_t *p, mapline_t *route)
+static bool AIR_LoadRouteXML (xmlNode_t *p, mapline_t *route)
 {
 	xmlNode_t *actual;
 	xmlNode_t *snode;
@@ -2460,18 +2460,18 @@ static qboolean AIR_LoadRouteXML (xmlNode_t *p, mapline_t *route)
 
 	snode = XML_GetNode(p, SAVE_AIRCRAFT_ROUTE);
 	if (!snode)
-		return qfalse;
+		return false;
 
 	for (actual = XML_GetPos2(snode, SAVE_AIRCRAFT_ROUTE_POINT, route->point[count]); actual && count <= LINE_MAXPTS;
 			actual = XML_GetNextPos2(actual, snode, SAVE_AIRCRAFT_ROUTE_POINT, route->point[++count]))
 		;
 	if (count > LINE_MAXPTS) {
 		Com_Printf("AIR_Load: number of points (%i) for UFO route exceed maximum value (%i)\n", count, LINE_MAXPTS);
-		return qfalse;
+		return false;
 	}
 	route->numPoints = count;
 	route->distance = XML_GetFloat(snode, SAVE_AIRCRAFT_ROUTE_DISTANCE, 0.0);
-	return qtrue;
+	return true;
 }
 
 /**
@@ -2479,7 +2479,7 @@ static qboolean AIR_LoadRouteXML (xmlNode_t *p, mapline_t *route)
  * @param[in] p XML Node structure, where we get the information from
  * @param[out] craft Pointer to the aircraft
  */
-static qboolean AIR_LoadAircraftXML (xmlNode_t *p, aircraft_t *craft)
+static bool AIR_LoadAircraftXML (xmlNode_t *p, aircraft_t *craft)
 {
 	xmlNode_t *snode;
 	xmlNode_t *ssnode;
@@ -2500,7 +2500,7 @@ static qboolean AIR_LoadAircraftXML (xmlNode_t *p, aircraft_t *craft)
 	if (craft->idx < 0) {
 		Com_Printf("Invalid (or no) aircraft index %i\n", craft->idx);
 		Com_UnregisterConstList(saveAircraftConstants);
-		return qfalse;
+		return false;
 	}
 
 	Com_RegisterConstList(saveAircraftConstants);
@@ -2509,7 +2509,7 @@ static qboolean AIR_LoadAircraftXML (xmlNode_t *p, aircraft_t *craft)
 	if (!Com_GetConstIntFromNamespace(SAVE_AIRCRAFTSTATUS_NAMESPACE, statusId, &status)) {
 		Com_Printf("Invalid aircraft status '%s'\n", statusId);
 		Com_UnregisterConstList(saveAircraftConstants);
-		return qfalse;
+		return false;
 	}
 
 	craft->status = (aircraftStatus_t)status;
@@ -2523,7 +2523,7 @@ static qboolean AIR_LoadAircraftXML (xmlNode_t *p, aircraft_t *craft)
 
 	if (!AIR_LoadRouteXML(p, &craft->route)) {
 		Com_UnregisterConstList(saveAircraftConstants);
-		return qfalse;
+		return false;
 	}
 
 	s = XML_GetString(p, SAVE_AIRCRAFT_NAME);
@@ -2548,7 +2548,7 @@ static qboolean AIR_LoadAircraftXML (xmlNode_t *p, aircraft_t *craft)
 		if (!Com_GetConstIntFromNamespace(SAVE_AIRCRAFTSTAT_NAMESPACE, statId, &idx)) {
 			Com_Printf("Invalid aircraft stat '%s'\n", statId);
 			Com_UnregisterConstList(saveAircraftConstants);
-			return qfalse;
+			return false;
 		}
 		craft->stats[idx] = XML_GetLong(ssnode, SAVE_AIRCRAFT_VAL, 0);
 #ifdef DEBUG
@@ -2558,8 +2558,8 @@ static qboolean AIR_LoadAircraftXML (xmlNode_t *p, aircraft_t *craft)
 #endif
 	}
 
-	craft->detected = XML_GetBool(p, SAVE_AIRCRAFT_DETECTED, qfalse);
-	craft->landed = XML_GetBool(p, SAVE_AIRCRAFT_LANDED, qfalse);
+	craft->detected = XML_GetBool(p, SAVE_AIRCRAFT_DETECTED, false);
+	craft->landed = XML_GetBool(p, SAVE_AIRCRAFT_LANDED, false);
 
 	tmpInt = XML_GetInt(p, SAVE_AIRCRAFT_AIRCRAFTTARGET, -1);
 	if (tmpInt == -1)
@@ -2571,17 +2571,17 @@ static qboolean AIR_LoadAircraftXML (xmlNode_t *p, aircraft_t *craft)
 
 	/* read equipment slots */
 	snode = XML_GetNode(p, SAVE_AIRCRAFT_WEAPONS);
-	AIR_LoadAircraftSlotsXML(craft, craft->weapons, snode, qtrue, craft->maxWeapons);
+	AIR_LoadAircraftSlotsXML(craft, craft->weapons, snode, true, craft->maxWeapons);
 	snode = XML_GetNode(p, SAVE_AIRCRAFT_SHIELDS);
-	AIR_LoadAircraftSlotsXML(craft, &craft->shield, snode, qfalse, 1);
+	AIR_LoadAircraftSlotsXML(craft, &craft->shield, snode, false, 1);
 	snode = XML_GetNode(p, SAVE_AIRCRAFT_ELECTRONICS);
-	AIR_LoadAircraftSlotsXML(craft, craft->electronics, snode, qfalse, craft->maxElectronics);
+	AIR_LoadAircraftSlotsXML(craft, craft->electronics, snode, false, craft->maxElectronics);
 
 	Com_UnregisterConstList(saveAircraftConstants);
 
 	/* All other informations are not needed for ufos */
 	if (!craft->homebase)
-		return qtrue;
+		return true;
 
 	craft->hangar = XML_GetInt(p, SAVE_AIRCRAFT_HANGAR, 0);
 
@@ -2602,7 +2602,7 @@ static qboolean AIR_LoadAircraftXML (xmlNode_t *p, aircraft_t *craft)
 	else
 		AIR_SetPilot(craft, NULL);
 
-	RADAR_Initialise(&craft->radar, RADAR_AIRCRAFTRANGE, RADAR_AIRCRAFTTRACKINGRANGE, 1.0f, qfalse);
+	RADAR_Initialise(&craft->radar, RADAR_AIRCRAFTRANGE, RADAR_AIRCRAFTTRACKINGRANGE, 1.0f, false);
 	RADAR_InitialiseUFOs(&craft->radar);
 	craft->radar.ufoDetectionProbability = 1;
 
@@ -2643,7 +2643,7 @@ static qboolean AIR_LoadAircraftXML (xmlNode_t *p, aircraft_t *craft)
 	}
 	AL_SetAircraftAlienCargoTypes(craft, l);
 
-	return qtrue;
+	return true;
 }
 
 /**
@@ -2671,7 +2671,7 @@ static void AIR_CorrectAircraftSlotPointers (aircraft_t *aircraft)
 	aircraft->shield.installation = NULL;
 }
 
-qboolean AIR_LoadXML (xmlNode_t *parent)
+bool AIR_LoadXML (xmlNode_t *parent)
 {
 	xmlNode_t *snode, *ssnode;
 	xmlNode_t *projectiles;
@@ -2683,7 +2683,7 @@ qboolean AIR_LoadXML (xmlNode_t *parent)
 			ssnode = XML_GetNextNode(ssnode, snode, SAVE_AIRCRAFT_AIRCRAFT)) {
 		aircraft_t craft;
 		if (!AIR_LoadAircraftXML(ssnode, &craft))
-			return qfalse;
+			return false;
 		assert(craft.homebase);
 		AIR_CorrectAircraftSlotPointers(AIR_Add(craft.homebase, &craft));
 	}
@@ -2694,14 +2694,14 @@ qboolean AIR_LoadXML (xmlNode_t *parent)
 	for (i = 0, ssnode = XML_GetNode(snode, SAVE_AIRCRAFT_AIRCRAFT); i < MAX_UFOONGEOSCAPE && ssnode;
 			ssnode = XML_GetNextNode(ssnode, snode, SAVE_AIRCRAFT_AIRCRAFT), i++) {
 		if (!AIR_LoadAircraftXML(ssnode, UFO_GetByIDX(i)))
-			return qfalse;
+			return false;
 		ccs.numUFOs++;
 	}
 
 	/* Load projectiles. */
 	projectiles = XML_GetNode(parent, SAVE_AIRCRAFT_PROJECTILES);
 	if (!AIRFIGHT_LoadXML(projectiles))
-		return qfalse;
+		return false;
 
 	/* check UFOs - backwards */
 	for (i = ccs.numUFOs - 1; i >= 0; i--) {
@@ -2713,15 +2713,15 @@ qboolean AIR_LoadXML (xmlNode_t *parent)
 		}
 	}
 
-	return qtrue;
+	return true;
 }
 
 /**
  * @brief Set the mission pointers for all the aircraft after loading a savegame
  */
-static qboolean AIR_PostLoadInitMissions (void)
+static bool AIR_PostLoadInitMissions (void)
 {
-	qboolean success = qtrue;
+	bool success = true;
 	aircraft_t *prevUfo;
 	aircraft_t *ufo;
 
@@ -2770,7 +2770,7 @@ static qboolean AIR_PostLoadInitMissions (void)
  * @brief Actions needs to be done after loading the savegame
  * @sa SAV_GameActionsAfterLoad
  */
-qboolean AIR_PostLoadInit (void)
+bool AIR_PostLoadInit (void)
 {
 	return AIR_PostLoadInitMissions();
 }
@@ -2780,7 +2780,7 @@ qboolean AIR_PostLoadInit (void)
  * @sa B_BaseInit_f
  * @note Hangar must be accessible during base attack to make aircraft lift off and to equip soldiers.
  */
-qboolean AIR_AircraftAllowed (const base_t* base)
+bool AIR_AircraftAllowed (const base_t* base)
 {
 	return B_GetBuildingStatus(base, B_HANGAR) || B_GetBuildingStatus(base, B_SMALL_HANGAR);
 }
@@ -2789,26 +2789,26 @@ qboolean AIR_AircraftAllowed (const base_t* base)
  * @param aircraft The aircraft to check
  * @return @c true if the given aircraft can go on interceptions
  */
-qboolean AIR_CanIntercept (const aircraft_t *aircraft)
+bool AIR_CanIntercept (const aircraft_t *aircraft)
 {
 	/* if dependencies of hangar are missing, you can't send aircraft */
 	if (aircraft->size == AIRCRAFT_SMALL && !B_GetBuildingStatus(aircraft->homebase, B_SMALL_HANGAR))
-		return qfalse;
+		return false;
 	if (aircraft->size == AIRCRAFT_LARGE && !B_GetBuildingStatus(aircraft->homebase, B_HANGAR))
-		return qfalse;
+		return false;
 
 	/* we need a pilot to intercept */
 	if (AIR_GetPilot(aircraft) == NULL)
-		return qfalse;
+		return false;
 
-	return qtrue;
+	return true;
 }
 
 /**
  * @brief Checks the parsed aircraft for errors
  * @return false if there are errors - true otherwise
  */
-qboolean AIR_ScriptSanityCheck (void)
+bool AIR_ScriptSanityCheck (void)
 {
 	int i, j, k, error = 0;
 	aircraft_t* a;
@@ -2886,10 +2886,10 @@ int AIR_CalculateHangarStorage (const aircraft_t *aircraftTemplate, const base_t
  * Use @c NULL to remove the soldier from any aircraft.
  * @sa AIR_AddEmployee
  */
-qboolean AIR_RemoveEmployee (employee_t *employee, aircraft_t *aircraft)
+bool AIR_RemoveEmployee (employee_t *employee, aircraft_t *aircraft)
 {
 	if (!employee)
-		return qfalse;
+		return false;
 
 	/* If no aircraft is given we search if he is in _any_ aircraft and set
 	 * the aircraft pointer to it. */
@@ -2901,7 +2901,7 @@ qboolean AIR_RemoveEmployee (employee_t *employee, aircraft_t *aircraft)
 			}
 		}
 		if (!aircraft)
-			return qfalse;
+			return false;
 	}
 
 	Com_DPrintf(DEBUG_CLIENT, "AIR_RemoveEmployee: base: %i - aircraft->idx: %i\n",
@@ -3039,20 +3039,20 @@ void AIR_MoveEmployeeInventoryIntoStorage (const aircraft_t *aircraft, equipDef_
  * @sa AIR_RemoveEmployee
  * @sa AIR_AddToAircraftTeam
  */
-qboolean AIR_AddEmployee (employee_t *employee, aircraft_t *aircraft)
+bool AIR_AddEmployee (employee_t *employee, aircraft_t *aircraft)
 {
 	if (!employee || !aircraft)
-		return qfalse;
+		return false;
 
 	if (AIR_GetTeamSize(aircraft) < aircraft->maxTeamSize) {
 		/* Check whether the soldier is already on another aircraft */
 		if (AIR_IsEmployeeInAircraft(employee, NULL))
-			return qfalse;
+			return false;
 
 		/* Assign the soldier to the aircraft. */
 		return AIR_AddToAircraftTeam(aircraft, employee);
 	}
-	return qfalse;
+	return false;
 }
 
 /**

@@ -56,7 +56,7 @@ void XML_AddStringValue (xmlNode_t *parent, const char *name, const char *value)
  * @param[in] name Name of the attribute
  * @param[in] value Value of the attribute
  */
-void XML_AddBool (xmlNode_t *parent, const char *name, qboolean value)
+void XML_AddBool (xmlNode_t *parent, const char *name, bool value)
 {
 	mxmlElementSetAttr(parent, name, value ? "true" : "false");
 }
@@ -66,9 +66,9 @@ void XML_AddBool (xmlNode_t *parent, const char *name, qboolean value)
  * @param[out] parent XML Node structure to add to
  * @param[in] name Name of the attribute
  * @param[in] value Value of the attribute
- * @note if the value is qfalse nothing will be added
+ * @note if the value is false nothing will be added
  */
-void XML_AddBoolValue (xmlNode_t *parent, const char *name, qboolean value)
+void XML_AddBoolValue (xmlNode_t *parent, const char *name, bool value)
 {
 	if (value)
 		mxmlElementSetAttr(parent, name, value ? "true" : "false");
@@ -290,7 +290,7 @@ xmlNode_t * XML_AddNode (xmlNode_t *parent, const char *name)
  * @param[in] name Name of the attribute
  * @param[in] defaultval Default value to return if no such attribute defined
  */
-qboolean XML_GetBool (xmlNode_t *parent, const char *name, const qboolean defaultval)
+bool XML_GetBool (xmlNode_t *parent, const char *name, const bool defaultval)
 {
 	const char *txt;
 	txt = mxmlElementGetAttr(parent, name);
@@ -298,9 +298,9 @@ qboolean XML_GetBool (xmlNode_t *parent, const char *name, const qboolean defaul
 		return defaultval;
 
 	if (!strcmp(txt, "true") || !strcmp(txt, "1"))
-		return qtrue;
+		return true;
 	if (!strcmp(txt, "false") || !strcmp(txt, "0"))
-		return qfalse;
+		return false;
 
 	return defaultval;
 }

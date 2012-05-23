@@ -44,14 +44,14 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
  * @sa Com_Printf, Verb_Printf, DisplayContentFlags
  * @callergraph
  */
-void Check_Printf (verbosityLevel_t msgVerbLevel, qboolean change,
+void Check_Printf (verbosityLevel_t msgVerbLevel, bool change,
 							int entnum, int brushnum, const char *format, ...)
 {
 	static int skippingCheckLine = 0;
 	static verbosityLevel_t lastMsgVerbLevel = VERB_NORMAL;
-	static qboolean firstSuccessfulPrint = qtrue;
-	static qboolean startOfLine = qtrue;
-	const qboolean containsNewline = strchr(format, '\n') != NULL;
+	static bool firstSuccessfulPrint = true;
+	static bool startOfLine = true;
+	const bool containsNewline = strchr(format, '\n') != NULL;
 
 	/* some checking/fix functions are called when ufo2map is compiling
 	 * then the check/fix functions should be quiet */
@@ -93,7 +93,7 @@ void Check_Printf (verbosityLevel_t msgVerbLevel, qboolean change,
 
 	if (firstSuccessfulPrint && config.verbosity == VERB_MAPNAME) {
 		PrintMapName();
-		firstSuccessfulPrint = qfalse;
+		firstSuccessfulPrint = false;
 	}
 
 	{
@@ -118,7 +118,7 @@ void Check_Printf (verbosityLevel_t msgVerbLevel, qboolean change,
 	}
 
 	/* ensure next call gets brushnum and entnum printed if this is the end of the previous*/
-	startOfLine = containsNewline ? qtrue : qfalse;
+	startOfLine = containsNewline ? true : false;
 }
 
 

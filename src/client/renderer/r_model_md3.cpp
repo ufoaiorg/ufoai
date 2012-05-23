@@ -203,6 +203,6 @@ void R_ModLoadAliasMD3Model (model_t *mod, byte *buffer, int bufSize)
 
 		pinmesh = (const dmd3mesh_t *)((const byte *)pinmesh + LittleLong(pinmesh->meshsize));
 
-		R_ModLoadArrayData(&mod->alias, poutmesh, qtrue);
+		R_ModLoadArrayData(&mod->alias, poutmesh, true);
 	}
 }

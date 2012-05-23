@@ -43,6 +43,6 @@ void Info_RemoveKey(char *s, const char *key);
 void Info_SetValueForKey(char *s, const size_t size, const char *key, const char *value);
 void Info_SetValueForKeyAsInteger(char *s, const size_t size, const char *key, const int value);
 void Info_Print(const char *s);
-qboolean Info_Validate(const char *s);
+bool Info_Validate(const char *s);
 
 #endif /* __INFOSTRING_H__ */

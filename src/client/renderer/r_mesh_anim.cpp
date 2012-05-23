@@ -106,7 +106,7 @@ void R_AnimAppend (animState_t * as, const model_t * mod, const char *name)
 		as->time = anim->time;
 		as->dt = 0;
 
-		as->change = qtrue;
+		as->change = true;
 	}
 
 	R_AnimAdd(as, mod, anim);
@@ -156,7 +156,7 @@ void R_AnimChange (animState_t * as, const model_t * mod, const char *name)
 		as->time = anim->time;
 		as->dt = 0;
 
-		as->change = qtrue;
+		as->change = true;
 	} else {
 		/* next animation */
 		as->ladd = LOOPNEXT(as->lcur);
@@ -164,7 +164,7 @@ void R_AnimChange (animState_t * as, const model_t * mod, const char *name)
 			as->time = anim->time;
 		/* don't change to the same animation */
 		if (anim != R_AnimGetAliasAnim(mod, as))
-			as->change = qtrue;
+			as->change = true;
 	}
 
 	R_AnimAdd(as, mod, anim);
@@ -209,7 +209,7 @@ void R_AnimRun (animState_t * as, const model_t * mod, int msec)
 			as->time = anim->time;
 			as->oldframe = as->frame;
 			as->frame = anim->from;
-			as->change = qfalse;
+			as->change = false;
 		} else {
 			/* next frame of the same animation */
 			as->time = anim->time;

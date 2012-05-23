@@ -74,7 +74,7 @@ typedef struct seqCamera_s {
  * Render entities that represents an (animated) model
  */
 typedef struct seqEnt_s {
-	qboolean inuse;
+	bool inuse;
 	char name[MAX_VAR];
 	model_t *model;		/**< the loaded model structure */
 	int skin;			/**< the skin number of the model - starts at 0 for the first one */
@@ -94,7 +94,7 @@ typedef struct seqEnt_s {
  * @brief Represents a text object or image object
  */
 typedef struct seq2D_s {
-	qboolean inuse;			/**< still in use in this sequence? or already deactivated? */
+	bool inuse;			/**< still in use in this sequence? or already deactivated? */
 	char name[MAX_VAR];		/**< the script id for this object */
 	char *text;				/**< a placeholder for gettext (V_TRANSLATION_STRING) */
 	char font[MAX_VAR];		/**< the font to use in case this is a text object */
@@ -107,8 +107,8 @@ typedef struct seq2D_s {
 	vec4_t fade;			/**< the fade color */
 	vec4_t bgcolor;			/**< background color of the box define by @c pos, @c size */
 	align_t align;			/**< the alignment of the 2d obj */
-	qboolean inBackground;	/**< If true, display the object under the 3D objects */
-	qboolean relativePos;	/**< useful for translations when sentence length may differ */
+	bool inBackground;	/**< If true, display the object under the 3D objects */
+	bool relativePos;	/**< useful for translations when sentence length may differ */
 } seq2D_t;
 
 #define MAX_SEQCMDS		768
@@ -138,7 +138,7 @@ typedef struct sequenceContext_s {
 	/** Milliseconds the sequence is already running */
 	int time;
 	/** If the menu node the sequence is rendered in fetches a click this is true */
-	qboolean endClickLoop;
+	bool endClickLoop;
 	/** Current position in the sequence command array of the current running sequence */
 	int currentCmd;
 	/** The number of all sequence commands in the current running sequence */
@@ -352,7 +352,7 @@ static void SEQ_Render3D (sequenceContext_t *context)
  * @param[in] context Sequence context
  * @param[in] backgroundObjects if true, draw background objects, else display foreground objects
  */
-static void SEQ_Render2D (sequenceContext_t *context, qboolean backgroundObjects)
+static void SEQ_Render2D (sequenceContext_t *context, bool backgroundObjects)
 {
 	seq2D_t *s2d;
 	int i, j;
@@ -367,7 +367,7 @@ static void SEQ_Render2D (sequenceContext_t *context, qboolean backgroundObjects
 
 		if (s2d->relativePos && height > 0) {
 			s2d->pos[1] += height;
-			s2d->relativePos = qfalse;
+			s2d->relativePos = false;
 		}
 		/* advance in time */
 		for (j = 0; j < 4; j++) {
@@ -421,7 +421,7 @@ static void SEQ_Render2D (sequenceContext_t *context, qboolean backgroundObjects
  */
 void SEQ_SendClickEvent (sequenceContext_t *context)
 {
-	context->endClickLoop = qtrue;
+	context->endClickLoop = true;
 }
 
 /**
@@ -444,7 +444,7 @@ void SEQ_SetView (sequenceContext_t *context, vec2_t pos, vec2_t size)
  * @param name
  * @return True if the sequence is initialized.
  */
-qboolean SEQ_InitContext (sequenceContext_t *context, const char *name)
+bool SEQ_InitContext (sequenceContext_t *context, const char *name)
 {
 	sequence_t *sp;
 	int i;
@@ -455,7 +455,7 @@ qboolean SEQ_InitContext (sequenceContext_t *context, const char *name)
 			break;
 	if (i >= numSequences) {
 		Com_Printf("Couldn't find sequence '%s'\n", name);
-		return qfalse;
+		return false;
 	}
 
 	OBJZERO(*context);
@@ -466,12 +466,12 @@ qboolean SEQ_InitContext (sequenceContext_t *context, const char *name)
 	context->endCmd = sp->start + sp->length;
 	context->animspeed = 1000;
 
-	return qtrue;
+	return true;
 }
 
 static void SEQ_StopSequence (sequenceContext_t *context)
 {
-	context->endClickLoop = qtrue;
+	context->endClickLoop = true;
 }
 
 /**
@@ -479,7 +479,7 @@ static void SEQ_StopSequence (sequenceContext_t *context)
  * @param context
  * @return True is the sequence is alive, false if it is the end of the sequence
  */
-static qboolean SEQ_Execute (sequenceContext_t *context)
+static bool SEQ_Execute (sequenceContext_t *context)
 {
 	seqCmd_t *sc;
 
@@ -488,7 +488,7 @@ static qboolean SEQ_Execute (sequenceContext_t *context)
 		/* if we clicked a button we end the waiting loop */
 		if (context->endClickLoop) {
 			context->time = cl.time;
-			context->endClickLoop = qfalse;
+			context->endClickLoop = false;
 		}
 	}
 
@@ -497,7 +497,7 @@ static qboolean SEQ_Execute (sequenceContext_t *context)
 		/* test for finish */
 		if (context->currentCmd >= context->endCmd) {
 			SEQ_StopSequence(context);
-			return qfalse;
+			return false;
 		}
 
 		/* call handler */
@@ -505,7 +505,7 @@ static qboolean SEQ_Execute (sequenceContext_t *context)
 		context->currentCmd += sc->handler(context, sc->name, sc->data);
 	}
 
-	return qtrue;
+	return true;
 }
 
 /**
@@ -513,15 +513,15 @@ static qboolean SEQ_Execute (sequenceContext_t *context)
  * @param context Sequence context
  * @return True if the sequence is alive.
  */
-qboolean SEQ_Render (sequenceContext_t *context)
+bool SEQ_Render (sequenceContext_t *context)
 {
 	vec3_t pos;
 
 	if (!context->size[0] || !context->size[1])
-		return qtrue;
+		return true;
 
 	if (!SEQ_Execute(context))
-		return qfalse;
+		return false;
 
 	/* center screen */
 	pos[0] = context->pos[0] + (context->size[0] - VID_NORM_WIDTH) / 2;
@@ -529,12 +529,12 @@ qboolean SEQ_Render (sequenceContext_t *context)
 	pos[2] = 0;
 	UI_Transform(pos, NULL, NULL);
 
-	SEQ_Render2D(context, qtrue);
+	SEQ_Render2D(context, true);
 	SEQ_Render3D(context);
-	SEQ_Render2D(context, qfalse);
+	SEQ_Render2D(context, false);
 
 	UI_Transform(NULL, NULL, NULL);
-	return qtrue;
+	return true;
 }
 
 /**
@@ -568,7 +568,7 @@ static int SEQ_ExecuteClick (sequenceContext_t *context, const char *name, const
 {
 	/* if a CL_SequenceClick_f event was called */
 	if (context->endClickLoop) {
-		context->endClickLoop = qfalse;
+		context->endClickLoop = false;
 		/* increase the command counter by 1 */
 		return 1;
 	}
@@ -667,7 +667,7 @@ static int SEQ_ExecuteModel (sequenceContext_t *context, const char *name, const
 		}
 		/* allocate */
 		OBJZERO(*se);
-		se->inuse = qtrue;
+		se->inuse = true;
 		Q_strncpyz(se->name, name, sizeof(se->name));
 		VectorSet(se->color, 0.7, 0.7, 0.7);
 	}
@@ -687,7 +687,7 @@ static int SEQ_ExecuteModel (sequenceContext_t *context, const char *name, const
 				Com_DPrintf(DEBUG_CLIENT, "Registering model: %s\n", data);
 				se->model = R_FindModel(data);
 				if (se->model == NULL)
-					se->inuse = qfalse;
+					se->inuse = false;
 			} else if (Q_streq(data, "anim")) {
 				if (se->model == NULL)
 					Com_Error(ERR_FATAL, "could not change the animation - no model loaded yet");
@@ -752,7 +752,7 @@ static int SEQ_Execute2Dobj (sequenceContext_t *context, const char *name, const
 		OBJZERO(*s2d);
 		for (i = 0; i < 4; i++)
 			s2d->color[i] = 1.0f;
-		s2d->inuse = qtrue;
+		s2d->inuse = true;
 		Q_strncpyz(s2d->font, "f_big", sizeof(s2d->font));	/* default font */
 		Q_strncpyz(s2d->name, name, sizeof(s2d->name));
 	}
@@ -796,11 +796,11 @@ static int SEQ_ExecuteDelete (sequenceContext_t *context, const char *name, cons
 
 	se = SEQ_FindEnt(context, name);
 	if (se)
-		se->inuse = qfalse;
+		se->inuse = false;
 
 	s2d = SEQ_Find2D(context, name);
 	if (s2d) {
-		s2d->inuse = qfalse;
+		s2d->inuse = false;
 
 		Mem_Free(s2d->text);
 		s2d->text = NULL;

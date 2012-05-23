@@ -32,7 +32,7 @@ typedef void stream_onclose_func();
 typedef void stream_callback_func(struct net_stream *s);
 typedef void datagram_callback_func(struct datagram_socket *s, const char *buf, int len, struct sockaddr *from);
 
-qboolean SV_Start(const char *node, const char *service, stream_callback_func *func);
+bool SV_Start(const char *node, const char *service, stream_callback_func *func);
 void SV_Stop(void);
 
 struct datagram_socket *NET_DatagramSocketNew(const char *node, const char *service, datagram_callback_func *datagram_func);
@@ -48,14 +48,14 @@ void NET_Wait(int timeout);
 struct net_stream *NET_Connect(const char *node, const char *service, stream_onclose_func *onclose);
 struct net_stream *NET_ConnectToLoopBack(stream_onclose_func *onclose);
 void NET_StreamEnqueue(struct net_stream *s, const char *data, int len);
-qboolean NET_StreamIsClosed(struct net_stream *s);
+bool NET_StreamIsClosed(struct net_stream *s);
 int NET_StreamGetLength(struct net_stream *s);
 int NET_StreamPeek(struct net_stream *s, char *data, int len);
 int NET_StreamDequeue(struct net_stream *s, char *data, int len);
 void *NET_StreamGetData(struct net_stream *s);
 void NET_StreamSetData(struct net_stream *s, void *data);
-const char *NET_StreamPeerToName(struct net_stream *s, char *dst, int len, qboolean appendPort);
-qboolean NET_StreamIsLoopback(struct net_stream *s);
+const char *NET_StreamPeerToName(struct net_stream *s, char *dst, int len, bool appendPort);
+bool NET_StreamIsLoopback(struct net_stream *s);
 void NET_StreamFree(struct net_stream *s);
 void NET_StreamFinished(struct net_stream *s);
 void NET_StreamSetCallback(struct net_stream *s, stream_callback_func *func);

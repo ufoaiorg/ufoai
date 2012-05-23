@@ -57,7 +57,7 @@ static const char HIDECHAR = '*';	/**< use as a mask for password */
 /* global data */
 static char cvarValueBackup[MAX_CVAR_EDITING_LENGTH];
 static cvar_t *editedCvar = NULL;
-static qboolean isAborted = qfalse;
+static bool isAborted = false;
 
 /**
  * @brief callback from the keyboard
@@ -138,7 +138,7 @@ void uiTextEntryNode::onFocusGained (uiNode_t *node)
 	editedCvar = Cvar_Get(&((char*)node->text)[6]);
 	assert(editedCvar);
 	Q_strncpyz(cvarValueBackup, editedCvar->string, sizeof(cvarValueBackup));
-	isAborted = qfalse;
+	isAborted = false;
 }
 
 /**
@@ -201,7 +201,7 @@ bool uiTextEntryNode::onKeyPressed (uiNode_t *node, unsigned int key, unsigned s
 	case K_ESCAPE:
 		isAborted = true;
 		UI_RemoveFocus();
-		return qtrue;
+		return true;
 	/* validate the edition */
 	case K_ENTER:
 	case K_KP_ENTER:
@@ -244,7 +244,7 @@ void uiTextEntryNode::draw (uiNode_t *node)
 	UI_GetNodeAbsPos(node, pos);
 
 	if (EXTRADATA(node).background) {
-		UI_DrawSpriteInBox(qfalse, EXTRADATA(node).background, iconStatus, pos[0], pos[1], node->box.size[0], node->box.size[1]);
+		UI_DrawSpriteInBox(false, EXTRADATA(node).background, iconStatus, pos[0], pos[1], node->box.size[0], node->box.size[1]);
 	}
 
 	if (char const* const text = UI_GetReferenceString(node, node->text)) {
@@ -306,11 +306,11 @@ void UI_RegisterTextEntryNode (uiBehaviour_t *behaviour)
 	UI_RegisterOveridedNodeProperty(behaviour, "onChange");
 
 	/* Custom the draw behaviour by hiding each character of the text with a star (''*''). */
-	UI_RegisterExtradataNodeProperty(behaviour, "isPassword", V_CPPBOOL, textEntryExtraData_t, isPassword);
+	UI_RegisterExtradataNodeProperty(behaviour, "isPassword", V_BOOL, textEntryExtraData_t, isPassword);
 	/* ustom the mouse event behaviour. When we are editing the text, if we click out of the node, the edition is aborted. Changes on
 	 * the text are canceled, and no change event are fired.
 	 */
-	UI_RegisterExtradataNodeProperty(behaviour, "clickOutAbort", V_CPPBOOL, textEntryExtraData_t, clickOutAbort);
+	UI_RegisterExtradataNodeProperty(behaviour, "clickOutAbort", V_BOOL, textEntryExtraData_t, clickOutAbort);
 	/* Call it when we abort the edition */
 	UI_RegisterExtradataNodeProperty(behaviour, "onAbort", V_UI_ACTION, textEntryExtraData_t, onAbort);
 	/* Call it to force node edition */

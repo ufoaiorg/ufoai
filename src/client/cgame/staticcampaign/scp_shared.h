@@ -108,7 +108,7 @@ typedef struct staticCampaignData_s {
 	staticMission_t missions[MAX_STATIC_MISSIONS];
 
 	stage_t *testStage;
-	qboolean initialized;
+	bool initialized;
 } staticCampaignData_t;
 
 extern staticCampaignData_t* scd;

@@ -460,7 +460,7 @@ static winding_t *TryMergeWinding (winding_t *f1, winding_t *f2, const vec3_t pl
 	int i, j, k, l;
 	vec3_t normal, delta;
 	vec_t dot;
-	qboolean keep1, keep2;
+	bool keep1, keep2;
 
 	p1 = p2 = NULL;
 	j = 0;
@@ -502,7 +502,7 @@ static winding_t *TryMergeWinding (winding_t *f1, winding_t *f2, const vec3_t pl
 	/* not a convex polygon */
 	if (dot > CONTINUOUS_EPSILON)
 		return NULL;
-	keep1 = (qboolean)(dot < -CONTINUOUS_EPSILON);
+	keep1 = (bool)(dot < -CONTINUOUS_EPSILON);
 
 	back = f1->p[(i + 2) % f1->numpoints];
 	VectorSubtract(back, p2, delta);
@@ -515,7 +515,7 @@ static winding_t *TryMergeWinding (winding_t *f1, winding_t *f2, const vec3_t pl
 	/* not a convex polygon */
 	if (dot > CONTINUOUS_EPSILON)
 		return NULL;
-	keep2 = (qboolean)(dot < -CONTINUOUS_EPSILON);
+	keep2 = (bool)(dot < -CONTINUOUS_EPSILON);
 
 	/* build the new polygon */
 	newf = AllocWinding(f1->numpoints + f2->numpoints);
@@ -686,7 +686,7 @@ static void SubdivideNodeFaces (node_t *node)
 
 static int c_nodefaces;
 
-static face_t *FaceFromPortal (portal_t *p, qboolean pside)
+static face_t *FaceFromPortal (portal_t *p, bool pside)
 {
 	face_t *f;
 	side_t *side = p->side;

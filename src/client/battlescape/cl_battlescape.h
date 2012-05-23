@@ -43,7 +43,7 @@ typedef struct clientBattleScape_s {
 	int numTeamList;
 	int numEnemiesSpotted;
 
-	qboolean eventsBlocked;		/**< if the client interrupts the event execution, this is true */
+	bool eventsBlocked;		/**< if the client interrupts the event execution, this is true */
 
 	/** server state information */
 	int pnum;			/**< player num you have on the server */
@@ -55,7 +55,7 @@ typedef struct clientBattleScape_s {
 	model_t *model_draw[MAX_MODELS];
 	const struct cBspModel_s *model_clip[MAX_MODELS];
 
-	qboolean radarInited;		/**< every radar image (for every level [1-8]) is loaded */
+	bool radarInited;		/**< every radar image (for every level [1-8]) is loaded */
 
 	clientinfo_t clientinfo[MAX_CLIENTS]; /**< client info of all connected clients */
 
@@ -72,9 +72,9 @@ typedef struct clientBattleScape_s {
 
 	const char *leInlineModelList[MAX_EDICTS + 1];
 
-	qboolean spawned;		/**< soldiers already spawned? This is only true if we are already on battlescape but
+	bool spawned;		/**< soldiers already spawned? This is only true if we are already on battlescape but
 							 * our team is not yet spawned */
-	qboolean started;		/**< match already started? */
+	bool started;		/**< match already started? */
 
 	mapData_t *mapData;
 
@@ -87,11 +87,11 @@ typedef struct clientBattleScape_s {
 
 extern clientBattleScape_t cl;
 
-le_t* CL_BattlescapeSearchAtGridPos(const pos3_t pos, qboolean includingStunned, const le_t *actor);
-qboolean CL_OnBattlescape(void);
-qboolean CL_BattlescapeRunning(void);
+le_t* CL_BattlescapeSearchAtGridPos(const pos3_t pos, bool includingStunned, const le_t *actor);
+bool CL_OnBattlescape(void);
+bool CL_BattlescapeRunning(void);
 int CL_GetHitProbability(const le_t* actor);
-qboolean CL_OutsideMap(const vec3_t impact, const float delta);
+bool CL_OutsideMap(const vec3_t impact, const float delta);
 int CL_CountVisibleEnemies(void);
 char *CL_GetConfigString(int index);
 int CL_GetConfigStringInteger(int index);

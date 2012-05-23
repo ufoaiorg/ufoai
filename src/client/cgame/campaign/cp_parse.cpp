@@ -216,7 +216,7 @@ static void CP_ParseResearchedCampaignItems (const campaign_t *campaign, const c
 			assert(tech);
 			if (Q_streq(token, tech->id)) {
 				tech->mailSent = MAILSENT_FINISHED;
-				tech->markResearched.markOnly[tech->markResearched.numDefinitions] = qtrue;
+				tech->markResearched.markOnly[tech->markResearched.numDefinitions] = true;
 				tech->markResearched.campaign[tech->markResearched.numDefinitions] = Mem_PoolStrDup(name, cp_campaignPool, 0);
 				tech->markResearched.numDefinitions++;
 				Com_DPrintf(DEBUG_CLIENT, "...tech %s\n", tech->id);
@@ -238,7 +238,7 @@ static void CP_ParseResearchedCampaignItems (const campaign_t *campaign, const c
  * @param[in] researchable Mark them researchable or not researchable
  * @sa CP_ParseScriptFirst
  */
-static void CP_ParseResearchableCampaignStates (const campaign_t *campaign, const char *name, const char **text, qboolean researchable)
+static void CP_ParseResearchableCampaignStates (const campaign_t *campaign, const char *name, const char **text, bool researchable)
 {
 	const char *errhead = "CP_ParseResearchableCampaignStates: unexpected end of file (equipment ";
 	const char *token;
@@ -581,7 +581,7 @@ static void CP_ParseScriptFirst (const char *type, const char *name, const char 
 	if (Q_streq(type, "up_chapters"))
 		UP_ParseChapters(name, text);
 	else if (Q_streq(type, "building"))
-		B_ParseBuildings(name, text, qfalse);
+		B_ParseBuildings(name, text, false);
 	else if (Q_streq(type, "installation"))
 		INS_ParseInstallations(name, text);
 	else if (Q_streq(type, "tech"))
@@ -593,7 +593,7 @@ static void CP_ParseScriptFirst (const char *type, const char *name, const char 
 	else if (Q_streq(type, "rank"))
 		CL_ParseRanks(name, text);
 	else if (Q_streq(type, "aircraft"))
-		AIR_ParseAircraft(name, text, qfalse);
+		AIR_ParseAircraft(name, text, false);
 	else if (Q_streq(type, "mail"))
 		CL_ParseEventMails(name, text);
 	else if (Q_streq(type, "events"))
@@ -623,9 +623,9 @@ static void CP_ParseScriptSecond (const char *type, const char *name, const char
 {
 	/* check for client interpretable scripts */
 	if (Q_streq(type, "building"))
-		B_ParseBuildings(name, text, qtrue);
+		B_ParseBuildings(name, text, true);
 	else if (Q_streq(type, "aircraft"))
-		AIR_ParseAircraft(name, text, qtrue);
+		AIR_ParseAircraft(name, text, true);
 	else if (Q_streq(type, "basetemplate"))
 		B_ParseBaseTemplate(name, text);
 	else if (Q_streq(type, "campaign"))
@@ -640,42 +640,42 @@ static void CP_ParseScriptCampaignRelated (const campaign_t *campaign, const cha
 	if (Q_streq(type, "researched"))
 		CP_ParseResearchedCampaignItems(campaign, name, text);
 	else if (Q_streq(type, "researchable"))
-		CP_ParseResearchableCampaignStates(campaign, name, text, qtrue);
+		CP_ParseResearchableCampaignStates(campaign, name, text, true);
 	else if (Q_streq(type, "notresearchable"))
-		CP_ParseResearchableCampaignStates(campaign, name, text, qfalse);
+		CP_ParseResearchableCampaignStates(campaign, name, text, false);
 }
 
 /**
  * @brief Make sure values of items after parsing are proper.
  */
-static qboolean CP_ItemsSanityCheck (void)
+static bool CP_ItemsSanityCheck (void)
 {
 	int i;
-	qboolean result = qtrue;
+	bool result = true;
 
 	for (i = 0; i < csi.numODs; i++) {
 		const objDef_t *item = INVSH_GetItemByIDX(i);
 
 		/* Warn if item has no size set. */
 		if (item->size <= 0 && B_ItemIsStoredInBaseStorage(item)) {
-			result = qfalse;
+			result = false;
 			Com_Printf("CP_ItemsSanityCheck: Item %s has zero size set.\n", item->id);
 		}
 
 		/* Warn if no price is set. */
 		if (item->price <= 0 && BS_IsOnMarket(item)) {
-			result = qfalse;
+			result = false;
 			Com_Printf("CP_ItemsSanityCheck: Item %s has zero price set.\n", item->id);
 		}
 
 		if (item->price > 0 && !BS_IsOnMarket(item) && !PR_ItemIsProduceable(item)) {
-			result = qfalse;
+			result = false;
 			Com_Printf("CP_ItemsSanityCheck: Item %s has a price set though it is neither available on the market and production.\n", item->id);
 		}
 
 		/* extension and headgear are mutual exclusive */
 		if (item->extension && item->headgear) {
-			result = qfalse;
+			result = false;
 			Com_Printf("CP_ItemsSanityCheck: Item %s has both extension and headgear set.\n",  item->id);
 		}
 	}
@@ -685,7 +685,7 @@ static qboolean CP_ItemsSanityCheck (void)
 
 /** @brief struct that holds the sanity check data */
 typedef struct {
-	qboolean (*check)(void);	/**< function pointer to check function */
+	bool (*check)(void);	/**< function pointer to check function */
 	const char* name;			/**< name of the subsystem to check */
 } sanity_functions_t;
 
@@ -706,7 +706,7 @@ static const sanity_functions_t sanity_functions[] = {
  */
 void CP_ScriptSanityCheck (void)
 {
-	qboolean status;
+	bool status;
 	const sanity_functions_t *s;
 
 	Com_Printf("Sanity check for script data\n");

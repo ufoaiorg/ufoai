@@ -132,7 +132,7 @@ void uiOptionTreeNode::draw (uiNode_t *node)
 	UI_GetNodeAbsPos(node, pos);
 
 	if (EXTRADATA(node).background) {
-		UI_DrawSpriteInBox(qfalse, EXTRADATA(node).background, SPRITE_STATUS_NORMAL, pos[0], pos[1], node->box.size[0], node->box.size[1]);
+		UI_DrawSpriteInBox(false, EXTRADATA(node).background, SPRITE_STATUS_NORMAL, pos[0], pos[1], node->box.size[0], node->box.size[1]);
 	}
 
 	font = UI_GetFontFromNode(node);
@@ -203,7 +203,7 @@ void uiOptionTreeNode::draw (uiNode_t *node)
 		R_Color(textColor);
 		UI_DrawString(font, ALIGN_UL, decX, currentY + currentDecY,
 			pos[0], node->box.size[0] - node->padding - node->padding,
-			0, label, 0, 0, NULL, qfalse, LONGLINES_PRETTYCHOP);
+			0, label, 0, 0, NULL, false, LONGLINES_PRETTYCHOP);
 
 		/* next entries' position */
 		currentY += fontHeight;
@@ -327,7 +327,7 @@ static void UI_OptionTreeSetSelectedValue (uiNode_t *node, const uiCallContext_t
 	firstOption = UI_OptionTreeNodeGetFirstOption(node);
 	UI_InitOptionIteratorAtIndex(0, firstOption, &iterator);
 	/** @todo merge that into the Init iterator function */
-	iterator.skipCollapsed = qfalse;
+	iterator.skipCollapsed = false;
 	option = UI_FindOptionByValue(&iterator, value);
 
 	/* update the selection */
@@ -340,7 +340,7 @@ static void UI_OptionTreeSetSelectedValue (uiNode_t *node, const uiCallContext_t
 
 	/* expend parents */
 	for (i = 0; i < iterator.depthPos; i++)
-		OPTIONEXTRADATA(iterator.depthCache[i]).collapsed = qfalse;
+		OPTIONEXTRADATA(iterator.depthCache[i]).collapsed = false;
 	UI_OptionTreeNodeUpdateCache(node);
 	UI_OptionTreeNodeUpdateScroll(node);
 
@@ -351,7 +351,7 @@ static void UI_OptionTreeSetSelectedValue (uiNode_t *node, const uiCallContext_t
 	if (pos == -1)
 		return;
 
-	qboolean updated;
+	bool updated;
 	updated = EXTRADATA(node).scrollY.move(pos);
 	if (updated && EXTRADATA(node).onViewChange)
 		UI_ExecuteEventActions(node, EXTRADATA(node).onViewChange);
@@ -360,7 +360,7 @@ static void UI_OptionTreeSetSelectedValue (uiNode_t *node, const uiCallContext_t
 void uiOptionTreeNode::doLayout (uiNode_t *node)
 {
 	UI_OptionTreeNodeUpdateCache(node);
-	node->invalidated = qfalse;
+	node->invalidated = false;
 }
 
 /**
@@ -418,7 +418,7 @@ void UI_RegisterOptionTreeNode (uiBehaviour_t *behaviour)
 	behaviour->name = "optiontree";
 	behaviour->extends = "abstractoption";
 	behaviour->manager = new uiOptionTreeNode();
-	behaviour->drawItselfChild = qtrue;
+	behaviour->drawItselfChild = true;
 
 	/* Call it to toggle the node status. */
 	UI_RegisterNodeMethod(behaviour, "setselectedvalue", UI_OptionTreeSetSelectedValue);

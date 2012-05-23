@@ -28,6 +28,6 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 void CL_ParseLanguages(const char *name, const char **text);
 void CL_LanguageInit(void);
 void CL_LanguageShutdown(void);
-qboolean CL_LanguageTryToSet(const char *localeID);
+bool CL_LanguageTryToSet(const char *localeID);
 
 #endif

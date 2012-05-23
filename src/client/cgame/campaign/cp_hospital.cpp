@@ -37,7 +37,7 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
  * @sa HOS_HealEmployee
  * @return true if soldiers becomes healed - false otherwise
  */
-qboolean HOS_HealCharacter (character_t* chr, qboolean hospital)
+bool HOS_HealCharacter (character_t* chr, bool hospital)
 {
 	assert(chr);
 	if (chr->HP < chr->maxHP) {
@@ -55,10 +55,10 @@ qboolean HOS_HealCharacter (character_t* chr, qboolean hospital)
 			chr->HP = std::min(chr->HP + (int)(((healing / 100.0f) * chr->maxHP)), chr->maxHP);
 
 		if (chr->HP == chr->maxHP)
-			return qfalse;
-		return qtrue;
+			return false;
+		return true;
 	}
-	return qfalse;
+	return false;
 }
 
 /**
@@ -76,9 +76,9 @@ void HOS_HospitalRun (void)
 			if (!E_IsHired(employee))
 				continue;
 			if (B_GetBuildingStatus(employee->baseHired, B_HOSPITAL))
-				HOS_HealCharacter(&(employee->chr), qtrue);
+				HOS_HealCharacter(&(employee->chr), true);
 			else
-				HOS_HealCharacter(&(employee->chr), qfalse);
+				HOS_HealCharacter(&(employee->chr), false);
 		}
 	}
 }
@@ -89,10 +89,10 @@ void HOS_HospitalRun (void)
  * @sa HOS_HealCharacter
  * @sa HOS_HealAll
  */
-qboolean HOS_HealEmployee (employee_t* employee)
+bool HOS_HealEmployee (employee_t* employee)
 {
 	assert(employee);
-	return HOS_HealCharacter(&employee->chr, qtrue);
+	return HOS_HealCharacter(&employee->chr, true);
 }
 
 /**
@@ -183,10 +183,10 @@ void HOS_InitStartup (void)
  * @sa HOS_LoadXML
  * @sa SAV_GameSaveXML
  */
-qboolean HOS_SaveXML (xmlNode_t *p)
+bool HOS_SaveXML (xmlNode_t *p)
 {
 	/* nothing to save here */
-	return qtrue;
+	return true;
 }
 
 /**
@@ -194,16 +194,16 @@ qboolean HOS_SaveXML (xmlNode_t *p)
  * @sa HOS_SaveXML
  * @sa SAV_GameLoadXML
  */
-qboolean HOS_LoadXML (xmlNode_t *p)
+bool HOS_LoadXML (xmlNode_t *p)
 {
-	return qtrue;
+	return true;
 }
 
 /**
  * @brief Returns true if you can enter in the hospital
  * @sa B_BaseInit_f
  */
-qboolean HOS_HospitalAllowed (const base_t* base)
+bool HOS_HospitalAllowed (const base_t* base)
 {
 	return !B_IsUnderAttack(base) && B_GetBuildingStatus(base, B_HOSPITAL);
 }

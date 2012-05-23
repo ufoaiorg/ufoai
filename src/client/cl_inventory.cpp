@@ -57,18 +57,18 @@ const equipDef_t *INV_GetEquipmentDefinitionByID (const char *name)
  * @param[in] fItem Pointer to item being moved.
  * @note If you set px or py to -1/NONE the item is automatically placed on
  * @note a free spot in the targetContainer
- * @return qtrue if the move was successful.
+ * @return true if the move was successful.
  */
-qboolean INV_MoveItem (inventory_t* inv, const invDef_t * toContainer, int px, int py,
+bool INV_MoveItem (inventory_t* inv, const invDef_t * toContainer, int px, int py,
 	const invDef_t * fromContainer, invList_t *fItem)
 {
 	int moved;
 
 	if (px >= SHAPE_BIG_MAX_WIDTH || py >= SHAPE_BIG_MAX_HEIGHT)
-		return qfalse;
+		return false;
 
 	if (!fItem)
-		return qfalse;
+		return false;
 
 	/* move the item */
 	moved = cls.i.MoveInInventory(&cls.i, inv, fromContainer, fItem, toContainer, px, py, NULL, NULL);
@@ -76,9 +76,9 @@ qboolean INV_MoveItem (inventory_t* inv, const invDef_t * toContainer, int px, i
 	switch (moved) {
 	case IA_MOVE:
 	case IA_ARMOUR:
-		return qtrue;
+		return true;
 	default:
-		return qfalse;
+		return false;
 	}
 }
 
@@ -89,7 +89,7 @@ qboolean INV_MoveItem (inventory_t* inv, const invDef_t * toContainer, int px, i
  * @param[in] srcContainer Pointer to inventorydef where to search ammo.
  * @param[in] destContainer Pointer to inventorydef where the weapon is.
  */
-qboolean INV_LoadWeapon (const invList_t *weaponList, inventory_t *inv, const invDef_t *srcContainer, const invDef_t *destContainer)
+bool INV_LoadWeapon (const invList_t *weaponList, inventory_t *inv, const invDef_t *srcContainer, const invDef_t *destContainer)
 {
 	invList_t *ic = NULL;
 	const objDef_t *weapon;
@@ -102,7 +102,7 @@ qboolean INV_LoadWeapon (const invList_t *weaponList, inventory_t *inv, const in
 		if (ic) {
 			ic->item.a = weapon->ammo;
 			ic->item.m = weapon;
-			return qtrue;
+			return true;
 		}
 	} else {
 		const itemFilterTypes_t equipType = INV_GetFilterFromItem(weapon);
@@ -117,7 +117,7 @@ qboolean INV_LoadWeapon (const invList_t *weaponList, inventory_t *inv, const in
 			return INV_MoveItem(inv, destContainer, weaponList->x, weaponList->y, srcContainer, ic);
 	}
 
-	return qfalse;
+	return false;
 }
 
 /**
@@ -127,7 +127,7 @@ qboolean INV_LoadWeapon (const invList_t *weaponList, inventory_t *inv, const in
  * @param[in] container Pointer (invDef_t) to inventorydef where to put the removed ammo.
  * @return @c true if the unload was successful, @c false otherwise
  */
-qboolean INV_UnloadWeapon (invList_t *weapon, inventory_t *inv, const invDef_t *container)
+bool INV_UnloadWeapon (invList_t *weapon, inventory_t *inv, const invDef_t *container)
 {
 	assert(weapon);
 	if (container && inv) {
@@ -135,10 +135,10 @@ qboolean INV_UnloadWeapon (invList_t *weapon, inventory_t *inv, const invDef_t *
 		if (cls.i.AddToInventory(&cls.i, inv, &item, container, NONE, NONE, 1) != NULL) {
 			weapon->item.m = NULL;
 			weapon->item.a = 0;
-			return qtrue;
+			return true;
 		}
 	}
-	return qfalse;
+	return false;
 }
 
 #ifdef DEBUG
@@ -177,11 +177,11 @@ static void INV_InventoryList_f (void)
  * @note Check that the sum of all probabilities is smaller or equal to 100 for a weapon type.
  * @sa INVSH_EquipActor
  */
-static qboolean INV_EquipmentDefSanityCheck (void)
+static bool INV_EquipmentDefSanityCheck (void)
 {
 	int i, j;
 	int sum;
-	qboolean result = qtrue;
+	bool result = true;
 
 	for (i = 0; i < csi.numEDs; i++) {
 		const equipDef_t *const ed = &csi.eds[i];
@@ -199,7 +199,7 @@ static qboolean INV_EquipmentDefSanityCheck (void)
 		}
 		if (sum > 100) {
 			Com_Printf("INV_EquipmentDefSanityCheck: Equipment Def '%s' has a total probability for primary weapons greater than 100\n", ed->id);
-			result = qfalse;
+			result = false;
 		}
 
 		/* Check secondary */
@@ -211,7 +211,7 @@ static qboolean INV_EquipmentDefSanityCheck (void)
 		}
 		if (sum > 100) {
 			Com_Printf("INV_EquipmentDefSanityCheck: Equipment Def '%s' has a total probability for secondary weapons greater than 100\n", ed->id);
-			result = qfalse;
+			result = false;
 		}
 
 		/* Check armour */
@@ -223,7 +223,7 @@ static qboolean INV_EquipmentDefSanityCheck (void)
 		}
 		if (sum > 100) {
 			Com_Printf("INV_EquipmentDefSanityCheck: Equipment Def '%s' has a total probability for armours greater than 100\n", ed->id);
-			result = qfalse;
+			result = false;
 		}
 
 		/* Don't check misc: the total probability can be greater than 100 */
@@ -258,47 +258,47 @@ itemFilterTypes_t INV_GetFilterFromItem (const objDef_t *obj)
  * @param[in] filterType Filter type to check against.
  * @return @c true if obj is in filterType
  */
-qboolean INV_ItemMatchesFilter (const objDef_t *obj, const itemFilterTypes_t filterType)
+bool INV_ItemMatchesFilter (const objDef_t *obj, const itemFilterTypes_t filterType)
 {
 	int i;
 
 	if (!obj)
-		return qfalse;
+		return false;
 
 	switch (filterType) {
 	case FILTER_S_PRIMARY:
 		if (obj->isPrimary && !obj->isHeavy)
-			return qtrue;
+			return true;
 
 		/* Check if one of the items that uses this ammo matches this filter type. */
 		for (i = 0; i < obj->numWeapons; i++) {
 			const objDef_t *weapon = obj->weapons[i];
 			if (weapon && weapon != obj && INV_ItemMatchesFilter(weapon, filterType))
-				return qtrue;
+				return true;
 		}
 		break;
 
 	case FILTER_S_SECONDARY:
 		if (obj->isSecondary && !obj->isHeavy)
-			return qtrue;
+			return true;
 
 		/* Check if one of the items that uses this ammo matches this filter type. */
 		for (i = 0; i < obj->numWeapons; i++) {
 			const objDef_t *weapon = obj->weapons[i];
 			if (weapon && weapon != obj && INV_ItemMatchesFilter(weapon, filterType))
-				return qtrue;
+				return true;
 		}
 		break;
 
 	case FILTER_S_HEAVY:
 		if (obj->isHeavy)
-			return qtrue;
+			return true;
 
 		/* Check if one of the items that uses this ammo matches this filter type. */
 		for (i = 0; i < obj->numWeapons; i++) {
 			const objDef_t *weapon = obj->weapons[i];
 			if (weapon && weapon != obj && INV_ItemMatchesFilter(weapon, filterType))
-				return qtrue;
+				return true;
 		}
 		break;
 
@@ -333,7 +333,7 @@ qboolean INV_ItemMatchesFilter (const objDef_t *obj, const itemFilterTypes_t fil
 	}
 
 	/* The given filter type is unknown. */
-	return qfalse;
+	return false;
 }
 
 /**

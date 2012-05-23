@@ -297,18 +297,18 @@ void Qcommon_Frame(void);
 void Qcommon_Shutdown(void);
 void Com_SetGameType(void);
 void Com_ReadFromPipe(void);
-float Com_GrenadeTarget(const vec3_t from, const vec3_t at, float speed, qboolean launched, qboolean rolled, vec3_t v0);
-qboolean Com_CheckConfigStringIndex(int index);
+float Com_GrenadeTarget(const vec3_t from, const vec3_t at, float speed, bool launched, bool rolled, vec3_t v0);
+bool Com_CheckConfigStringIndex(int index);
 void Con_Print(const char *txt);
 
 /* Event timing */
 
 typedef void event_func(int now, void *data);
-typedef qboolean event_check_func(int now, void *data);
+typedef bool event_check_func(int now, void *data);
 /**
  * @return @c true to keep the event, @c false to remove it from the queue
  */
-typedef qboolean event_filter(int when, event_func *func, event_check_func *check, void *data);
+typedef bool event_filter(int when, event_func *func, event_check_func *check, void *data);
 typedef void event_clean_func(void * data);
 
 struct scheduleEvent_t {
@@ -335,14 +335,14 @@ void CL_Shutdown(void);
 int CL_Milliseconds(void);
 void CL_Frame(int now, void *data);
 void CL_SlowFrame(int now, void *data);
-qboolean CL_ParseClientData(const char *type, const char *name, const char **text);
+bool CL_ParseClientData(const char *type, const char *name, const char **text);
 void SCR_BeginLoadingPlaque(void);
 void SCR_EndLoadingPlaque(void);
 void CL_InitAfter(void);
 
 void SV_Init(void);
 void SV_Clear(void);
-void SV_Shutdown(const char *finalmsg, qboolean reconnect);
+void SV_Shutdown(const char *finalmsg, bool reconnect);
 void SV_ShutdownWhenEmpty(void);
 void SV_Frame(int now, void *);
 mapData_t* SV_GetMapData(void);
@@ -367,7 +367,7 @@ unsigned int Com_HashKey(const char *name, int hashsize);
 const char* Com_MacroExpandString(const char *text);
 void Com_UploadCrashDump(const char *crashDumpFile);
 
-qboolean Com_ConsoleCompleteCommand(const char *s, char *target, size_t bufSize, uint32_t *pos, uint32_t offset);
+bool Com_ConsoleCompleteCommand(const char *s, char *target, size_t bufSize, uint32_t *pos, uint32_t offset);
 
 void Key_Init(void);
 

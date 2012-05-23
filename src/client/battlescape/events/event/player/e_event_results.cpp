@@ -46,7 +46,7 @@ void CL_ParseResults (const eventRegister_t *self, struct dbuffer *msg)
 	/* the first dimension contains the attacker team, the second the victim team */
 	int num_kills[MAX_TEAMS][MAX_TEAMS];
 	int num_stuns[MAX_TEAMS][MAX_TEAMS];
-	qboolean nextmap;
+	bool nextmap;
 
 	OBJZERO(num_spawned);
 	OBJZERO(num_alive);

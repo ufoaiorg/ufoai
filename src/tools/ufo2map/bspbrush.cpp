@@ -235,7 +235,7 @@ bspbrush_t *CopyBrush (const bspbrush_t *brush)
 
 
 static int TestBrushToPlanenum (bspbrush_t *brush, uint16_t planenum,
-			int *numsplits, qboolean *hintsplit, int *epsilonbrush)
+			int *numsplits, bool *hintsplit, int *epsilonbrush)
 {
 	int i, s;
 	plane_t *plane;
@@ -244,7 +244,7 @@ static int TestBrushToPlanenum (bspbrush_t *brush, uint16_t planenum,
 	int front, back;
 
 	*numsplits = 0;
-	*hintsplit = qfalse;
+	*hintsplit = false;
 
 	/* if the brush actually uses the planenum,
 	 * we can tell the side for sure */
@@ -298,7 +298,7 @@ static int TestBrushToPlanenum (bspbrush_t *brush, uint16_t planenum,
 		if (front && back) {
 			(*numsplits)++;
 			if (side->surfaceFlags & SURF_HINT)
-				*hintsplit = qtrue;
+				*hintsplit = true;
 		}
 	}
 
@@ -370,7 +370,7 @@ static int BrushMostlyOnSide (const bspbrush_t *brush, const plane_t *plane)
 /**
  * @brief Checks if the plane splits the brush
  */
-static qboolean DoesPlaneSplitBrush (const bspbrush_t *brush, int planenum)
+static bool DoesPlaneSplitBrush (const bspbrush_t *brush, int planenum)
 {
 	int i, j;
 	winding_t *w;
@@ -399,9 +399,9 @@ static qboolean DoesPlaneSplitBrush (const bspbrush_t *brush, int planenum)
 #if TESTING_MOCK_SPLIT
 /* DoesPlaneSplitBrush does not yet work for all maps, namely city_train.map
  * Until we know why, let's use the old stuff. */
-static qboolean CheckPlaneAgainstVolume (int pnum, const bspbrush_t *volume)
+static bool CheckPlaneAgainstVolume (int pnum, const bspbrush_t *volume)
 {
-	qboolean good;
+	bool good;
 
 	good = DoesPlaneSplitBrush(volume, pnum);
 
@@ -409,10 +409,10 @@ static qboolean CheckPlaneAgainstVolume (int pnum, const bspbrush_t *volume)
 }
 
 #else
-static qboolean CheckPlaneAgainstVolume (uint16_t pnum, const bspbrush_t *volume)
+static bool CheckPlaneAgainstVolume (uint16_t pnum, const bspbrush_t *volume)
 {
 		bspbrush_t *front, *back;
-		qboolean good;
+		bool good;
 
 		SplitBrush(volume, pnum, &front, &back);
 
@@ -439,7 +439,7 @@ side_t *SelectSplitSide (bspbrush_t *brushes, bspbrush_t *volume)
 	int i, j, pass, numpasses;
 	int front, back, both, facing, splits;
 	int bsplits, epsilonbrush;
-	qboolean hintsplit;
+	bool hintsplit;
 
 	if (!volume)
 		return NULL; /* can't split empty brush */
@@ -488,7 +488,7 @@ side_t *SelectSplitSide (bspbrush_t *brushes, bspbrush_t *volume)
 				facing = 0;
 				splits = 0;
 				epsilonbrush = 0;
-				hintsplit = qfalse;
+				hintsplit = false;
 
 				for (test = brushes; test; test = test->next) {
 					const int s = TestBrushToPlanenum(test, pnum, &bsplits, &hintsplit, &epsilonbrush);
@@ -504,7 +504,7 @@ side_t *SelectSplitSide (bspbrush_t *brushes, bspbrush_t *volume)
 						facing++;
 						for (j = 0; j < test->numsides; j++) {
 							if ((test->sides[j].planenum &~ 1) == pnum)
-								test->sides[j].tested = qtrue;
+								test->sides[j].tested = true;
 						}
 					}
 					if (s & PSIDE_FRONT)
@@ -551,7 +551,7 @@ side_t *SelectSplitSide (bspbrush_t *brushes, bspbrush_t *volume)
 	/* clear all the tested flags we set */
 	for (brush = brushes; brush; brush = brush->next) {
 		for (i = 0; i < brush->numsides; i++)
-			brush->sides[i].tested = qfalse;
+			brush->sides[i].tested = false;
 	}
 
 	return bestside;
@@ -646,7 +646,7 @@ void SplitBrush (const bspbrush_t *brush, uint16_t planenum, bspbrush_t **front,
 			*cs = *s;
 
 			cs->winding = cw[j];
-			cs->tested = qfalse;
+			cs->tested = false;
 		}
 	}
 
@@ -693,8 +693,8 @@ void SplitBrush (const bspbrush_t *brush, uint16_t planenum, bspbrush_t **front,
 
 		cs->planenum = planenum ^ i ^ 1;
 		cs->texinfo = TEXINFO_NODE;
-		cs->visible = qfalse;
-		cs->tested = qfalse;
+		cs->visible = false;
+		cs->tested = false;
 		if (i == 0)
 			cs->winding = CopyWinding(midwinding);
 		else

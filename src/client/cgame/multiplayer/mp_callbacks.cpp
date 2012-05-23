@@ -58,7 +58,7 @@ static void CL_Connect_f (void)
 		Q_strncpyz(serverport, selectedServer->service, sizeof(serverport));
 	}
 
-	if (cgi->GAME_IsTeamEmpty() && !cgi->GAME_LoadDefaultTeam(qtrue)) {
+	if (cgi->GAME_IsTeamEmpty() && !cgi->GAME_LoadDefaultTeam(true)) {
 		cgi->UI_Popup(_("Error"), "%s", _("Assemble a team first"));
 		return;
 	}
@@ -69,14 +69,14 @@ static void CL_Connect_f (void)
 	}
 
 	/* if running a local server, kill it and reissue */
-	cgi->SV_Shutdown("Server quit.", qfalse);
+	cgi->SV_Shutdown("Server quit.", false);
 	cgi->CL_Disconnect();
 
 	cgi->GAME_SetServerInfo(server, serverport);
 
 	cgi->CL_SetClientState(ca_connecting);
 
-	cgi->UI_InitStack(NULL, "multiplayerInGame", qfalse, qfalse);
+	cgi->UI_InitStack(NULL, "multiplayerInGame", false, false);
 }
 
 static void CL_RconCallback (struct net_stream *s)
@@ -186,7 +186,7 @@ static void CL_SelectTeam_Init_f (void)
 	cgi->UI_RegisterText(TEXT_STANDARD, _("Select a free team or your coop team"));
 }
 
-static qboolean GAME_MP_SetTeamNum (int teamnum)
+static bool GAME_MP_SetTeamNum (int teamnum)
 {
 	static char buf[MAX_STRING_CHARS];
 
@@ -194,13 +194,13 @@ static qboolean GAME_MP_SetTeamNum (int teamnum)
 		cgi->Cvar_SetValue("cl_teamnum", teamnum);
 		Com_sprintf(buf, sizeof(buf), _("Current team: %i"), teamnum);
 		cgi->UI_RegisterText(TEXT_STANDARD, buf);
-		return qtrue;
+		return true;
 	}
 
 	cgi->UI_RegisterText(TEXT_STANDARD, _("Team is already in use"));
 	cgi->Com_DPrintf(DEBUG_CLIENT, "team %i is already in use: %i (max: %i)\n",
 		teamnum, teamData.teamCount[teamnum], teamData.maxPlayersPerTeam);
-	return qfalse;
+	return false;
 }
 
 /**

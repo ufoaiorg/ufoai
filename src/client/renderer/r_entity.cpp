@@ -212,7 +212,7 @@ void R_DrawEntityEffects (void)
 	GLint oldDepthFunc;
 	glGetIntegerv(GL_DEPTH_FUNC, &oldDepthFunc);
 
-	R_EnableBlend(qtrue);
+	R_EnableBlend(true);
 
 	if (actorIndicator == NULL) {
 		selectedActorIndicator = R_FindImage("pics/sfx/actor_selected", it_effect);
@@ -280,7 +280,7 @@ void R_DrawEntityEffects (void)
 
 			R_BindTexture(texnum);
 			R_Color(color);
-			R_EnableDrawAsGlow(qtrue);
+			R_EnableDrawAsGlow(true);
 
 			/* circle points */
 			R_BindArray(GL_TEXTURE_COORD_ARRAY, GL_FLOAT, texcoords);
@@ -303,7 +303,7 @@ void R_DrawEntityEffects (void)
 			R_BindDefaultArray(GL_VERTEX_ARRAY);
 
 			R_Color(NULL);
-			R_EnableDrawAsGlow(qfalse);
+			R_EnableDrawAsGlow(false);
 		}
 		glPopMatrix();
 	}
@@ -344,11 +344,11 @@ void R_DrawOpaqueMeshEntities (entity_t *ents)
 		return;
 
 	if (!(refdef.rendererFlags & RDF_NOWORLDMODEL)) {
-		R_EnableLighting(r_state.model_program, qtrue);
+		R_EnableLighting(r_state.model_program, true);
 	}
 	R_DrawMeshEntities(ents);
 	if (!(refdef.rendererFlags & RDF_NOWORLDMODEL)) {
-		R_EnableLighting(NULL, qfalse);
+		R_EnableLighting(NULL, false);
 		R_EnableGlowMap(NULL);
 	}
 }
@@ -416,15 +416,15 @@ void R_DrawBlendMeshEntities (entity_t *ents)
 		return;
 
 	if (!(refdef.rendererFlags & RDF_NOWORLDMODEL)) {
-		R_EnableLighting(r_state.model_program, qtrue);
+		R_EnableLighting(r_state.model_program, true);
 	}
-	R_EnableBlend(qtrue);
+	R_EnableBlend(true);
 
 	R_DrawMeshEntities(R_MergeSortEntList(ents));
 
-	R_EnableBlend(qfalse);
+	R_EnableBlend(false);
 	if (!(refdef.rendererFlags & RDF_NOWORLDMODEL)) {
-		R_EnableLighting(NULL, qfalse);
+		R_EnableLighting(NULL, false);
 		R_EnableGlowMap(NULL);
 	}
 }
@@ -438,7 +438,7 @@ static void R_DrawNullModel (const entity_t *e)
 	int i;
 	vec3_t points[6];
 
-	R_EnableTexture(&texunit_diffuse, qfalse);
+	R_EnableTexture(&texunit_diffuse, false);
 
 	glPushMatrix();
 	glMultMatrixf(e->transform.matrix);
@@ -469,7 +469,7 @@ static void R_DrawNullModel (const entity_t *e)
 
 	glPopMatrix();
 
-	R_EnableTexture(&texunit_diffuse, qtrue);
+	R_EnableTexture(&texunit_diffuse, true);
 }
 
 void R_DrawSpecialEntities (const entity_t *ents)
@@ -481,8 +481,8 @@ void R_DrawSpecialEntities (const entity_t *ents)
 
 	e = ents;
 
-	R_EnableBlend(qtrue);
-	R_EnableDrawAsGlow(qtrue);
+	R_EnableBlend(true);
+	R_EnableDrawAsGlow(true);
 
 	while (e) {
 		if (e->flags & RF_BOX) {
@@ -495,8 +495,8 @@ void R_DrawSpecialEntities (const entity_t *ents)
 		e = e->next;
 	}
 
-	R_EnableDrawAsGlow(qfalse);
-	R_EnableBlend(qfalse);
+	R_EnableDrawAsGlow(false);
+	R_EnableBlend(false);
 }
 
 /**
@@ -552,7 +552,7 @@ static float *R_CalcTransform (entity_t * e)
 		return t->matrix;
 
 	/* process this matrix */
-	t->processing = qtrue;
+	t->processing = true;
 	mp = NULL;
 
 	/* do parent object transformations first */
@@ -591,8 +591,8 @@ static float *R_CalcTransform (entity_t * e)
 	e->distanceFromViewOrigin = VectorDist(&t->matrix[12], refdef.viewOrigin);
 
 	/* we're done */
-	t->done = qtrue;
-	t->processing = qfalse;
+	t->done = true;
+	t->processing = false;
 
 	return t->matrix;
 }
@@ -603,16 +603,16 @@ static float *R_CalcTransform (entity_t * e)
  * @return @c false if visible, @c true is the origin of the entity is outside the
  * current frustum view
  */
-static qboolean R_CullEntity (entity_t *e)
+static bool R_CullEntity (entity_t *e)
 {
 	if (refdef.rendererFlags & RDF_NOWORLDMODEL)
-		return qfalse;
+		return false;
 
 	if (r_nocull->integer)
-		return qfalse;
+		return false;
 
 	if (!e->model)  /* don't bother culling null model ents */
-		return qfalse;
+		return false;
 
 	if (e->model->type == mod_bsp_submodel)
 		return R_CullBspModel(e);
@@ -653,7 +653,7 @@ void R_GetEntityLists (void)
 			const image_t *skin;
 			switch (e->model->type) {
 			case mod_bsp_submodel:
-				R_AddBspRRef(&(e->model->bsp), e->origin, e->angles, qtrue);
+				R_AddBspRRef(&(e->model->bsp), e->origin, e->angles, true);
 				continue;
 			case mod_alias_dpm:
 			case mod_alias_md2:

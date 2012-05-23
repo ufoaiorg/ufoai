@@ -49,7 +49,6 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 typedef enum {
 	V_NULL,
 	V_BOOL,
-	V_CPPBOOL,
 	V_CHAR,
 	V_INT,
 	V_INT2,
@@ -205,13 +204,13 @@ int Com_SetValueDebug(void *base, const void *set, valueTypes_t type, int ofs, s
 int Com_EParseValue(void *base, const char *token, valueTypes_t type, int ofs, size_t size);
 int Com_SetValue(void *base, const void *set, valueTypes_t type, int ofs, size_t size);
 #endif
-qboolean Com_ParseBlock(const char *name, const char **text, void *base, const value_t *values, memPool_t *mempool);
-qboolean Com_ParseBlockToken(const char *name, const char **text, void *base, const value_t *values, memPool_t *mempool, const char *token);
+bool Com_ParseBlock(const char *name, const char **text, void *base, const value_t *values, memPool_t *mempool);
+bool Com_ParseBlockToken(const char *name, const char **text, void *base, const value_t *values, memPool_t *mempool, const char *token);
 void* Com_AlignPtr(const void *memory, valueTypes_t type);
 const char *Com_ValueToStr(const void *base, const valueTypes_t type, const int ofs);
 const char *Com_GetLastParseError(void);
 resultStatus_t Com_ParseValue(void *base, const char *token, valueTypes_t type, int ofs, size_t size, size_t *writtenBytes);
-qboolean Com_ParseBoolean(const char *token);
+bool Com_ParseBoolean(const char *token);
 
 /*==============================================================
 SCRIPT PARSING
@@ -243,15 +242,15 @@ typedef struct constListEntry_s {
 	int value;
 } constListEntry_t;
 
-qboolean Com_GetConstInt(const char *name, int *value);
-qboolean Com_GetConstIntFromNamespace(const char *space, const char *variable, int *value);
+bool Com_GetConstInt(const char *name, int *value);
+bool Com_GetConstIntFromNamespace(const char *space, const char *variable, int *value);
 const char* Com_GetConstVariable(const char *space, int value);
-qboolean Com_UnregisterConstVariable(const char *name);
+bool Com_UnregisterConstVariable(const char *name);
 void Com_RegisterConstInt(const char *name, int value);
 void Com_RegisterConstList(const constListEntry_t constList[]);
-qboolean Com_UnregisterConstList(const constListEntry_t constList[]);
+bool Com_UnregisterConstList(const constListEntry_t constList[]);
 
-void Com_ParseScripts(qboolean onlyServer);
+void Com_ParseScripts(bool onlyServer);
 const char *Com_EParse(const char **text, const char *errhead, const char *errinfo);
 const char *Com_GetRandomMapAssemblyNameForCraft(const char *craftID);
 const char *Com_GetRandomMapAssemblyNameForCrashedCraft(const char *craftID);

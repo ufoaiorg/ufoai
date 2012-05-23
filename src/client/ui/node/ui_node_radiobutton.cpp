@@ -53,7 +53,7 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 /** Height of a status in a 4 status 256*256 texture */
 #define UI_4STATUS_TEX_HEIGHT 64
 
-static qboolean UI_RadioButtonNodeIsSelected (uiNode_t *node)
+static bool UI_RadioButtonNodeIsSelected (uiNode_t *node)
 {
 	if (EXTRADATA(node).string == NULL) {
 		const float current = UI_GetReferenceFloat(node, EXTRADATA(node).cvar);
@@ -72,10 +72,10 @@ void uiRadioButtonNode::draw (uiNode_t *node)
 {
 	vec2_t pos;
 	uiSpriteStatus_t iconStatus;
-	const qboolean disabled = node->disabled || node->parent->disabled;
+	const bool disabled = node->disabled || node->parent->disabled;
 	int texY;
 	const char *image;
-	const qboolean isSelected = UI_RadioButtonNodeIsSelected(node);
+	const bool isSelected = UI_RadioButtonNodeIsSelected(node);
 
 	if (disabled) {
 		iconStatus = SPRITE_STATUS_DISABLED;
@@ -96,12 +96,12 @@ void uiRadioButtonNode::draw (uiNode_t *node)
 	image = UI_GetReferenceString(node, node->image);
 	if (image) {
 		const int texX = 0;
-		UI_DrawNormImageByName(qfalse, pos[0], pos[1], node->box.size[0], node->box.size[1],
+		UI_DrawNormImageByName(false, pos[0], pos[1], node->box.size[0], node->box.size[1],
 			texX + node->box.size[0], texY + node->box.size[1], texX, texY, image);
 	}
 
 	if (EXTRADATA(node).background) {
-		UI_DrawSpriteInBox(qfalse, EXTRADATA(node).background, iconStatus, pos[0], pos[1], node->box.size[0], node->box.size[1]);
+		UI_DrawSpriteInBox(false, EXTRADATA(node).background, iconStatus, pos[0], pos[1], node->box.size[0], node->box.size[1]);
 	}
 
 	if (EXTRADATA(node).icon) {
@@ -166,7 +166,7 @@ void UI_RegisterRadioButtonNode (uiBehaviour_t *behaviour)
 	UI_RegisterExtradataNodeProperty(behaviour, "cvar", V_UI_CVAR, EXTRADATA_TYPE, cvar);
 	/* Icon used to display the node */
 	UI_RegisterExtradataNodeProperty(behaviour, "icon", V_UI_SPRITEREF, EXTRADATA_TYPE, icon);
-	UI_RegisterExtradataNodeProperty(behaviour, "flipicon", V_CPPBOOL, EXTRADATA_TYPE, flipIcon);
+	UI_RegisterExtradataNodeProperty(behaviour, "flipicon", V_BOOL, EXTRADATA_TYPE, flipIcon);
 	/* Sprite used to display the background */
 	UI_RegisterExtradataNodeProperty(behaviour, "background", V_UI_SPRITEREF, EXTRADATA_TYPE, background);
 }

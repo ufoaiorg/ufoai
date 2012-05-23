@@ -53,7 +53,7 @@ typedef struct lightmaps_s {
 	int lightmap_count;
 	int deluxemap_count;
 
-	qboolean incomplete_atlas;
+	bool incomplete_atlas;
 
 	int size;  /**< lightmap block size (NxN) */
 

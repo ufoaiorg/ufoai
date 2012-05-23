@@ -67,7 +67,7 @@ void RS_ResearchFinish (technology_t* tech)
 	tech->statusResearch = RS_FINISH;
 	tech->researchedDate = ccs.date;
 	if (!tech->statusResearchable) {
-		tech->statusResearchable = qtrue;
+		tech->statusResearchable = true;
 		tech->preResearchedDate = ccs.date;
 	}
 
@@ -124,7 +124,7 @@ void RS_MarkOneResearchable (technology_t* tech)
 		tech->mailSent = MAILSENT_PROPOSAL;
 	}
 
-	tech->statusResearchable = qtrue;
+	tech->statusResearchable = true;
 
 	/* only change the date if it wasn't set before */
 	if (tech->preResearchedDate.day == 0) {
@@ -141,57 +141,57 @@ void RS_MarkOneResearchable (technology_t* tech)
  * @return @c true if all requirements are satisfied otherwise @c false.
  * @todo Add support for the "delay" value.
  */
-qboolean RS_RequirementsMet (const requirements_t *requiredAND, const requirements_t *requiredOR, const base_t *base)
+bool RS_RequirementsMet (const requirements_t *requiredAND, const requirements_t *requiredOR, const base_t *base)
 {
 	int i;
-	qboolean metAND = qfalse;
-	qboolean metOR = qfalse;
+	bool metAND = false;
+	bool metOR = false;
 
 	if (!requiredAND && !requiredOR) {
 		Com_Printf("RS_RequirementsMet: No requirement list(s) given as parameter.\n");
-		return qfalse;
+		return false;
 	}
 
 	/* If there are no requirements defined at all we have 'met' them by default. */
 	if (requiredAND->numLinks == 0 && requiredOR->numLinks == 0) {
 		Com_DPrintf(DEBUG_CLIENT, "RS_RequirementsMet: No requirements set for this tech. They are 'met'.\n");
-		return qtrue;
+		return true;
 	}
 
 	if (requiredAND->numLinks) {
-		metAND = qtrue;
+		metAND = true;
 		for (i = 0; i < requiredAND->numLinks; i++) {
 			const requirement_t *req = &requiredAND->links[i];
 			switch (req->type) {
 			case RS_LINK_TECH:
 				if (!RS_IsResearched_ptr(req->link.tech))
-					metAND = qfalse;
+					metAND = false;
 				break;
 			case RS_LINK_TECH_NOT:
 				if (RS_IsResearched_ptr(req->link.tech))
-					metAND = qfalse;
+					metAND = false;
 				break;
 			case RS_LINK_ITEM:
 				/* The same code is used in "PR_RequirementsMet" */
 				if (!base || B_ItemInBase(req->link.od, base) < req->amount)
-					metAND = qfalse;
+					metAND = false;
 				break;
 			case RS_LINK_ALIEN_DEAD:
 			case RS_LINK_ALIEN:
 				if (!base || AL_GetAlienAmount(req->link.td, req->type, base) < req->amount)
-					metAND = qfalse;
+					metAND = false;
 				break;
 			case RS_LINK_ALIEN_GLOBAL:
 				if (AL_CountAll() < req->amount)
-					metAND = qfalse;
+					metAND = false;
 				break;
 			case RS_LINK_UFO:
 				if (US_UFOsInStorage(req->link.aircraft, NULL) < req->amount)
-					metAND = qfalse;
+					metAND = false;
 				break;
 			case RS_LINK_ANTIMATTER:
 				if (!base || B_AntimatterInBase(base) < req->amount)
-					metAND = qfalse;
+					metAND = false;
 				break;
 			default:
 				break;
@@ -208,33 +208,33 @@ qboolean RS_RequirementsMet (const requirements_t *requiredAND, const requiremen
 			switch (req->type) {
 			case RS_LINK_TECH:
 				if (RS_IsResearched_ptr(req->link.tech))
-					metOR = qtrue;
+					metOR = true;
 				break;
 			case RS_LINK_TECH_NOT:
 				if (!RS_IsResearched_ptr(req->link.tech))
-					metOR = qtrue;
+					metOR = true;
 				break;
 			case RS_LINK_ITEM:
 				/* The same code is used in "PR_RequirementsMet" */
 				if (base && B_ItemInBase(req->link.od, base) >= req->amount)
-					metOR = qtrue;
+					metOR = true;
 				break;
 			case RS_LINK_ALIEN:
 			case RS_LINK_ALIEN_DEAD:
 				if (base && AL_GetAlienAmount(req->link.td, req->type, base) >= req->amount)
-					metOR = qtrue;
+					metOR = true;
 				break;
 			case RS_LINK_ALIEN_GLOBAL:
 				if (AL_CountAll() >= req->amount)
-					metOR = qtrue;
+					metOR = true;
 				break;
 			case RS_LINK_UFO:
 				if (US_UFOsInStorage(req->link.aircraft, NULL) >= req->amount)
-					metOR = qtrue;
+					metOR = true;
 				break;
 			case RS_LINK_ANTIMATTER:
 				if (base && B_AntimatterInBase(base) >= req->amount)
-					metOR = qtrue;
+					metOR = true;
 				break;
 			default:
 				break;
@@ -308,7 +308,7 @@ void RS_MarkCollected (technology_t* tech)
 		tech->preResearchedDate = ccs.date;
 	}
 
-	tech->statusCollected = qtrue;
+	tech->statusCollected = true;
 }
 
 /**
@@ -318,7 +318,7 @@ void RS_MarkCollected (technology_t* tech)
  * the tree-initialisation (RS_InitTree)
  * @sa RS_MarkResearched
  */
-void RS_MarkResearchable (qboolean init, const base_t* base)
+void RS_MarkResearchable (bool init, const base_t* base)
 {
 	int i;
 	const base_t *thisBase = base;
@@ -326,7 +326,7 @@ void RS_MarkResearchable (qboolean init, const base_t* base)
 	/* Set all entries to initial value. */
 	for (i = 0; i < ccs.numTechnologies; i++) {
 		technology_t *tech = RS_GetTechByIDX(i);
-		tech->statusResearchable = qfalse;
+		tech->statusResearchable = false;
 	}
 
 	for (i = 0; i < ccs.numTechnologies; i++) {	/* i = tech-index */
@@ -463,12 +463,12 @@ technology_t* RS_GetTechForItem (const objDef_t *item)
  * Should be executed after the parsing of _all_ the ufo files and e.g. the
  * research tree/inventory/etc... are initialised.
  * @param[in] campaign The campaign data structure
- * @param[in] load qtrue if we are loading a game, qfalse otherwise
+ * @param[in] load true if we are loading a game, false otherwise
  * @todo Add a function to reset ALL research-stati to RS_NONE; -> to be called after start of a new game.
  * @todo Enhance ammo model display (see comment in code).
  * @sa CP_CampaignInit
  */
-void RS_InitTree (const campaign_t *campaign, qboolean load)
+void RS_InitTree (const campaign_t *campaign, bool load)
 {
 	int i, j;
 	technology_t *tech;
@@ -512,13 +512,13 @@ void RS_InitTree (const campaign_t *campaign, qboolean load)
 			break;
 		case RS_WEAPON:
 		case RS_ARMOUR:
-			found = qfalse;
+			found = false;
 			for (j = 0; j < csi.numODs; j++) {	/* j = item index */
 				const objDef_t *item = INVSH_GetItemByIDX(j);
 
 				/* This item has been 'provided' -> get the correct data. */
 				if (Q_streq(tech->provides, item->id)) {
-					found = qtrue;
+					found = true;
 					if (!tech->name)
 						tech->name = Mem_PoolStrDup(item->name, cp_campaignPool, 0);
 					if (!tech->mdl)
@@ -536,12 +536,12 @@ void RS_InitTree (const campaign_t *campaign, qboolean load)
 			}
 			break;
 		case RS_BUILDING:
-			found = qfalse;
+			found = false;
 			for (j = 0; j < ccs.numBuildingTemplates; j++) {
 				building_t *building = &ccs.buildingTemplates[j];
 				/* This building has been 'provided'  -> get the correct data. */
 				if (Q_streq(tech->provides, building->id)) {
-					found = qtrue;
+					found = true;
 					if (!tech->name)
 						tech->name = Mem_PoolStrDup(building->name, cp_campaignPool, 0);
 					if (!tech->image)
@@ -556,14 +556,14 @@ void RS_InitTree (const campaign_t *campaign, qboolean load)
 			}
 			break;
 		case RS_CRAFT:
-			found = qfalse;
+			found = false;
 			for (j = 0; j < ccs.numAircraftTemplates; j++) {
 				aircraft_t *aircraftTemplate = &ccs.aircraftTemplates[j];
 				/* This aircraft has been 'provided'  -> get the correct data. */
 				if (!tech->provides)
 					Com_Error(ERR_FATAL, "RS_InitTree: \"%s\" - No linked aircraft or craft-upgrade.\n", tech->id);
 				if (Q_streq(tech->provides, aircraftTemplate->id)) {
-					found = qtrue;
+					found = true;
 					if (!tech->name)
 						tech->name = Mem_PoolStrDup(aircraftTemplate->name, cp_campaignPool, 0);
 					if (!tech->mdl) {	/* DEBUG testing */
@@ -655,7 +655,7 @@ void RS_AssignScientist (technology_t* tech, base_t *base, employee_t *employee)
 			tech->scientists++;
 			tech->base = base;
 			CAP_AddCurrent(base, CAP_LABSPACE, 1);
-			employee->assigned = qtrue;
+			employee->assigned = true;
 		} else {
 			CP_Popup(_("Not enough laboratories"), _("No free space in laboratories left.\nBuild more laboratories.\n"));
 			return;
@@ -691,7 +691,7 @@ void RS_RemoveScientist (technology_t* tech, employee_t *employee)
 		tech->scientists--;
 		/* Update capacity. */
 		CAP_AddCurrent(tech->base, CAP_LABSPACE, -1);
-		employee->assigned = qfalse;
+		employee->assigned = false;
 	} else {
 		Com_Error(ERR_DROP, "No assigned scientists found - serious inconsistency.");
 	}
@@ -744,7 +744,7 @@ static void RS_MarkResearched (technology_t *tech, const base_t *base)
 {
 	RS_ResearchFinish(tech);
 	Com_DPrintf(DEBUG_CLIENT, "Research of \"%s\" finished.\n", tech->id);
-	RS_MarkResearchable(qfalse, base);
+	RS_MarkResearchable(false, base);
 }
 
 /**
@@ -752,17 +752,17 @@ static void RS_MarkResearched (technology_t *tech, const base_t *base)
  * @param techID The event technology script id to research
  * @note If there is no base available the tech is not marked as researched, too
  */
-qboolean RS_MarkStoryLineEventResearched (const char *techID)
+bool RS_MarkStoryLineEventResearched (const char *techID)
 {
 	technology_t* tech = RS_GetTechByID(techID);
 	if (!RS_IsResearched_ptr(tech)) {
 		const base_t *base = B_GetNext(NULL);
 		if (base != NULL) {
 			RS_MarkResearched(tech, base);
-			return qtrue;
+			return true;
 		}
 	}
-	return qfalse;
+	return false;
 }
 
 
@@ -1158,7 +1158,7 @@ void RS_ParseTechnologies (const char *name, const char **text)
 
 	tech->type = RS_TECH;
 	tech->statusResearch = RS_NONE;
-	tech->statusResearchable = qfalse;
+	tech->statusResearchable = false;
 
 	do {
 		/* get the name type */
@@ -1458,33 +1458,33 @@ void RS_ParseTechnologies (const char *name, const char **text)
 	tech->overallTime = tech->time;
 }
 
-static inline qboolean RS_IsValidTechIndex (int techIdx)
+static inline bool RS_IsValidTechIndex (int techIdx)
 {
 	if (techIdx == TECH_INVALID)
-		return qfalse;
+		return false;
 	if (techIdx < 0 || techIdx >= ccs.numTechnologies)
-		return qfalse;
+		return false;
 	if (techIdx >= MAX_TECHNOLOGIES)
-		return qfalse;
+		return false;
 
-	return qtrue;
+	return true;
 }
 
 /**
  * @brief Checks if the technology (tech-index) has been researched.
  * @param[in] techIdx index of the technology.
- * @return qboolean Returns qtrue if the technology has been researched, otherwise (or on error) qfalse;
+ * @return bool Returns true if the technology has been researched, otherwise (or on error) false;
  * @sa RS_IsResearched_ptr
  */
-qboolean RS_IsResearched_idx (int techIdx)
+bool RS_IsResearched_idx (int techIdx)
 {
 	if (!RS_IsValidTechIndex(techIdx))
-		return qfalse;
+		return false;
 
 	if (ccs.technologies[techIdx].statusResearch == RS_FINISH)
-		return qtrue;
+		return true;
 
-	return qfalse;
+	return false;
 }
 
 /**
@@ -1492,11 +1492,11 @@ qboolean RS_IsResearched_idx (int techIdx)
  * @sa RS_IsResearched_idx
  * Call this function if you already hold a tech pointer
  */
-qboolean RS_IsResearched_ptr (const technology_t * tech)
+bool RS_IsResearched_ptr (const technology_t * tech)
 {
 	if (tech && tech->statusResearch == RS_FINISH)
-		return qtrue;
-	return qfalse;
+		return true;
+	return false;
 }
 
 /**
@@ -1613,7 +1613,7 @@ int RS_GetTechIdxByName (const char *name)
  * @brief Returns the number of employees searching in labs in given base.
  * @param[in] base Pointer to the base
  * @sa B_ResetAllStatusAndCapacities_f
- * @note must not return 0 if hasBuilding[B_LAB] is qfalse: used to update capacity
+ * @note must not return 0 if hasBuilding[B_LAB] is false: used to update capacity
  */
 int RS_CountScientistsInBase (const base_t *base)
 {
@@ -1652,7 +1652,7 @@ void RS_RemoveScientistsExceedingCapacity (base_t *base)
  * @param[out] parent XML Node structure, where we write the information to
  * @sa RS_LoadXML
  */
-qboolean RS_SaveXML (xmlNode_t *parent)
+bool RS_SaveXML (xmlNode_t *parent)
 {
 	int i;
 	xmlNode_t *node;
@@ -1687,7 +1687,7 @@ qboolean RS_SaveXML (xmlNode_t *parent)
 	}
 	Com_UnregisterConstList(saveResearchConstants);
 
-	return qtrue;
+	return true;
 }
 
 /**
@@ -1695,15 +1695,15 @@ qboolean RS_SaveXML (xmlNode_t *parent)
  * @param[in] parent XML Node structure, where we get the information from
  * @sa RS_SaveXML
  */
-qboolean RS_LoadXML (xmlNode_t *parent)
+bool RS_LoadXML (xmlNode_t *parent)
 {
 	xmlNode_t *topnode;
 	xmlNode_t *snode;
-	qboolean success = qtrue;
+	bool success = true;
 
 	topnode = XML_GetNode(parent, SAVE_RESEARCH_RESEARCH);
 	if (!topnode)
-		return qfalse;
+		return false;
 
 	Com_RegisterConstList(saveResearchConstants);
 	for (snode = XML_GetNode(topnode, SAVE_RESEARCH_TECH); snode; snode = XML_GetNextNode(snode, topnode, "tech")) {
@@ -1720,11 +1720,11 @@ qboolean RS_LoadXML (xmlNode_t *parent)
 
 		if (!Com_GetConstIntFromNamespace(SAVE_RESEARCHSTATUS_NAMESPACE, type, (int*) &t->statusResearch)) {
 			Com_Printf("Invalid research status '%s'\n", type);
-			success = qfalse;
+			success = false;
 			break;
 		}
 
-		t->statusCollected = XML_GetBool(snode, SAVE_RESEARCH_STATUSCOLLECTED, qfalse);
+		t->statusCollected = XML_GetBool(snode, SAVE_RESEARCH_STATUSCOLLECTED, false);
 		t->time = XML_GetFloat(snode, SAVE_RESEARCH_TIME, 0.0);
 		/* Prepare base-index for later pointer-restoration in RS_PostLoadInit. */
 		baseIdx = XML_GetInt(snode, SAVE_RESEARCH_BASE, -1);
@@ -1732,7 +1732,7 @@ qboolean RS_LoadXML (xmlNode_t *parent)
 			/* even if the base is not yet loaded we can set the pointer already */
 			t->base = B_GetBaseByIDX(baseIdx);
 		t->scientists = XML_GetInt(snode, SAVE_RESEARCH_SCIENTISTS, 0);
-		t->statusResearchable = XML_GetBool(snode, SAVE_RESEARCH_STATUSRESEARCHABLE, qfalse);
+		t->statusResearchable = XML_GetBool(snode, SAVE_RESEARCH_STATUSRESEARCHABLE, false);
 		XML_GetDate(snode, SAVE_RESEARCH_PREDATE, &t->preResearchedDate.day, &t->preResearchedDate.sec);
 		XML_GetDate(snode, SAVE_RESEARCH_DATE, &t->researchedDate.day, &t->researchedDate.sec);
 		t->mailSent = (mailSentType_t)XML_GetInt(snode, SAVE_RESEARCH_MAILSENT, 0);
@@ -1742,7 +1742,7 @@ qboolean RS_LoadXML (xmlNode_t *parent)
 		for (ssnode = XML_GetNode(snode, SAVE_RESEARCH_MAIL); ssnode; ssnode = XML_GetNextNode(ssnode, snode, SAVE_RESEARCH_MAIL)) {
 			const int j= XML_GetInt(ssnode, SAVE_RESEARCH_MAIL_ID, TECHMAIL_MAX);
 			if (j < TECHMAIL_MAX)
-				t->mail[j].read = qtrue;
+				t->mail[j].read = true;
 			else
 				Com_Printf("......your save game contains unknown techmail ids... \n");
 		}
@@ -1751,7 +1751,7 @@ qboolean RS_LoadXML (xmlNode_t *parent)
 		if (t->statusResearch == RS_RUNNING && t->scientists > 0) {
 			if (!t->base) {
 				Com_Printf("No base but research is running and scientists are assigned");
-				success = qfalse;
+				success = false;
 				break;
 			}
 		}
@@ -1767,7 +1767,7 @@ qboolean RS_LoadXML (xmlNode_t *parent)
  * @sa B_BaseInit_f
  * probably menu function, but not for research gui
  */
-qboolean RS_ResearchAllowed (const base_t* base)
+bool RS_ResearchAllowed (const base_t* base)
 {
 	assert(base);
 	return !B_IsUnderAttack(base) && B_GetBuildingStatus(base, B_LAB) && E_CountHired(base, EMPL_SCIENTIST) > 0;
@@ -1777,7 +1777,7 @@ qboolean RS_ResearchAllowed (const base_t* base)
  * @brief Checks the parsed tech data for errors
  * @return false if there are errors - true otherwise
  */
-qboolean RS_ScriptSanityCheck (void)
+bool RS_ScriptSanityCheck (void)
 {
 	int i, error = 0;
 	technology_t *t;
@@ -1823,7 +1823,7 @@ qboolean RS_ScriptSanityCheck (void)
 	}
 
 	if (!error)
-		return qtrue;
+		return true;
 
-	return qfalse;
+	return false;
 }

@@ -113,14 +113,14 @@ static uiTimer_t *longPressTimer;
  * @sa Key_Event
  * @sa UI_FocusNextActionNode
  */
-static qboolean UI_FocusExecuteActionNode (void)
+static bool UI_FocusExecuteActionNode (void)
 {
 #if 0	/**< @todo need a cleanup */
 	if (IN_GetMouseSpace() != MS_UI)
-		return qfalse;
+		return false;
 
 	if (UI_GetMouseCapture())
-		return qfalse;
+		return false;
 
 	if (focusNode) {
 		if (focusNode->onClick) {
@@ -128,10 +128,10 @@ static qboolean UI_FocusExecuteActionNode (void)
 		}
 		UI_ExecuteEventActions(focusNode, focusNode->onMouseLeave);
 		focusNode = NULL;
-		return qtrue;
+		return true;
 	}
 #endif
-	return qfalse;
+	return false;
 }
 
 #if 0	/**< @todo need a cleanup */
@@ -159,16 +159,16 @@ static uiNode_t *UI_GetNextActionNode (uiNode_t* node)
  * @sa Key_Event
  * @sa UI_FocusExecuteActionNode
  */
-static qboolean UI_FocusNextActionNode (void)
+static bool UI_FocusNextActionNode (void)
 {
 #if 0	/**< @todo need a cleanup */
 	static int i = UI_MAX_WINDOWSTACK + 1;	/* to cycle between all windows */
 
 	if (IN_GetMouseSpace() != MS_UI)
-		return qfalse;
+		return false;
 
 	if (UI_GetMouseCapture())
-		return qfalse;
+		return false;
 
 	if (i >= ui_global.windowStackPos)
 		i = UI_GetLastFullScreenWindow();
@@ -185,14 +185,14 @@ static qboolean UI_FocusNextActionNode (void)
 		uiNode_t* window;
 		window = ui_global.windowStack[i++];
 		if (UI_FocusSetNode(UI_GetNextActionNode(window->firstChild)))
-			return qtrue;
+			return true;
 	}
 	i = UI_GetLastFullScreenWindow();
 
 	/* no node to focus */
 	UI_RemoveFocus();
 #endif
-	return qfalse;
+	return false;
 }
 
 /**
@@ -297,7 +297,7 @@ uiKeyBinding_t* UI_GetKeyBindingByIndex (int index)
  * @todo check: key per window must be unique
  * @todo check: key used into UI_KeyPressed can't be used
  */
-static void UI_SetKeyBindingEx (const char* path, int key, const char* description, qboolean inherited)
+static void UI_SetKeyBindingEx (const char* path, int key, const char* description, bool inherited)
 {
 	uiNode_t *node;
 	uiKeyBinding_t *binding;
@@ -341,7 +341,7 @@ static void UI_SetKeyBindingEx (const char* path, int key, const char* descripti
 		newPath[0] = '\0';
 		Q_strcat(newPath, window->name, sizeof(newPath));
 		Q_strcat(newPath, path + strlen(node->root->name), sizeof(newPath));
-		UI_SetKeyBindingEx(newPath, key, description, qtrue);
+		UI_SetKeyBindingEx(newPath, key, description, true);
 	}
 }
 
@@ -357,13 +357,13 @@ static void UI_SetKeyBindingEx (const char* path, int key, const char* descripti
  */
 void UI_SetKeyBinding (const char* path, int key, const char* description)
 {
-	UI_SetKeyBindingEx(path, key, description, qfalse);
+	UI_SetKeyBindingEx(path, key, description, false);
 }
 
 /**
  * @brief Check if a key binding exists for a window and execute it
  */
-static qboolean UI_KeyPressedInWindow (unsigned int key, const uiNode_t *window)
+static bool UI_KeyPressedInWindow (unsigned int key, const uiNode_t *window)
 {
 	uiNode_t *node;
 	const uiKeyBinding_t *binding;
@@ -371,13 +371,13 @@ static qboolean UI_KeyPressedInWindow (unsigned int key, const uiNode_t *window)
 	/* search requested key binding */
 	binding = UI_WindowNodeGetKeyBinding(window, key);
 	if (!binding)
-		return qfalse;
+		return false;
 
 	/* check node visibility */
 	node = binding->node;
 	while (node) {
 		if (node->disabled || node->invis)
-			return qfalse;
+			return false;
 		node = node->parent;
 	}
 
@@ -389,38 +389,38 @@ static qboolean UI_KeyPressedInWindow (unsigned int key, const uiNode_t *window)
 		uiCallContext_t newContext;
 		uiNodeMethod_t func = (uiNodeMethod_t) binding->property->ofs;
 		newContext.source = node;
-		newContext.useCmdParam = qfalse;
+		newContext.useCmdParam = false;
 		func(node, &newContext);
 	} else
 		Com_Printf("UI_KeyPressedInWindow: @%s not supported.", binding->property->string);
 
-	return qtrue;
+	return true;
 }
 
 /**
  * @brief Called by the client when the user released a key
  * @param[in] key key code, either K_ value or lowercase ascii
  * @param[in] unicode translated meaning of keypress in unicode
- * @return qtrue, if we used the event
+ * @return true, if we used the event
  */
-qboolean UI_KeyRelease (unsigned int key, unsigned short unicode)
+bool UI_KeyRelease (unsigned int key, unsigned short unicode)
 {
 	/* translate event into the node with focus */
 	if (focusNode) {
 		return UI_Node_KeyReleased(focusNode, key, unicode);
 	}
 
-	return qfalse;
+	return false;
 }
 
 /**
  * @brief Called by the client when the user type a key
  * @param[in] key key code, either K_ value or lowercase ascii
  * @param[in] unicode translated meaning of keypress in unicode
- * @return qtrue, if we used the event
+ * @return true, if we used the event
  * @todo think about what we should do when the mouse is captured
  */
-qboolean UI_KeyPressed (unsigned int key, unsigned short unicode)
+bool UI_KeyPressed (unsigned int key, unsigned short unicode)
 {
 	int windowId;
 	int lastWindowId;
@@ -428,50 +428,50 @@ qboolean UI_KeyPressed (unsigned int key, unsigned short unicode)
 	if (UI_DNDIsDragging()) {
 		if (key == K_ESCAPE)
 			UI_DNDAbort();
-		return qtrue;
+		return true;
 	}
 
 	/* translate event into the node with focus */
 	if (focusNode && UI_Node_KeyPressed(focusNode, key, unicode)) {
-		return qtrue;
+		return true;
 	}
 
 	/* else use common behaviour */
 	switch (key) {
 	case K_TAB:
 		if (UI_FocusNextActionNode())
-			return qtrue;
+			return true;
 		break;
 	case K_ENTER:
 	case K_KP_ENTER:
 		if (UI_FocusExecuteActionNode())
-			return qtrue;
+			return true;
 		break;
 	case K_ESCAPE:
 		if (UI_GetMouseCapture() != NULL) {
 			UI_MouseRelease();
-			return qtrue;
+			return true;
 		}
 		UI_PopWindowWithEscKey();
-		return qtrue;
+		return true;
 	}
 
 	lastWindowId = UI_GetLastFullScreenWindow();
 	if (lastWindowId < 0)
-		return qfalse;
+		return false;
 
 	/* check "active" window from top to down */
 	for (windowId = ui_global.windowStackPos - 1; windowId >= lastWindowId; windowId--) {
 		const uiNode_t *window = ui_global.windowStack[windowId];
 		if (!window)
-			return qfalse;
+			return false;
 		if (UI_KeyPressedInWindow(key, window))
-			return qtrue;
+			return true;
 		if (UI_WindowIsModal(window))
 			break;
 	}
 
-	return qfalse;
+	return false;
 }
 
 /**
@@ -550,7 +550,7 @@ void UI_InvalidateMouse (void)
 /**
  * @brief Call mouse move only if the mouse position change
  */
-qboolean UI_CheckMouseMove (void)
+bool UI_CheckMouseMove (void)
 {
 	/* is hovered node no more draw */
 	if (hoveredNode && (hoveredNode->invis || !UI_CheckVisibility(hoveredNode)))
@@ -560,10 +560,10 @@ qboolean UI_CheckMouseMove (void)
 		oldMousePosX = mousePosX;
 		oldMousePosY = mousePosY;
 		UI_MouseMove(mousePosX, mousePosY);
-		return qtrue;
+		return true;
 	}
 
-	return qfalse;
+	return false;
 }
 
 /**
@@ -674,7 +674,7 @@ static void UI_LeftClick (int x, int y)
 	if (!pressedNode && ui_global.windowStackPos != 0) {
 		uiNode_t *window = ui_global.windowStack[ui_global.windowStackPos - 1];
 		if (UI_WindowIsDropDown(window)) {
-			UI_PopWindow(qfalse);
+			UI_PopWindow(false);
 		}
 	}
 

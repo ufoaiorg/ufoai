@@ -59,9 +59,9 @@ employee_t* E_GetUnhired (employeeType_t type)
 /**
  * @brief Tells you if a employee is away from his home base (gone in mission).
  * @param[in] employee Pointer to the employee.
- * @return qboolean qtrue if the employee is away in mission, qfalse if he is not or he is unhired.
+ * @return bool true if the employee is away in mission, false if he is not or he is unhired.
  */
-qboolean E_IsAwayFromBase (const employee_t *employee)
+bool E_IsAwayFromBase (const employee_t *employee)
 {
 	const base_t *base;
 
@@ -69,16 +69,16 @@ qboolean E_IsAwayFromBase (const employee_t *employee)
 
 	/* Check that employee is hired */
 	if (!E_IsHired(employee))
-		return qfalse;
+		return false;
 
 	/* Check if employee is currently transferred. */
 	if (employee->transfer)
-		return qtrue;
+		return true;
 
 	/* for now only soldiers, ugvs and pilots can be assigned to an aircraft */
 	if (employee->type != EMPL_SOLDIER && employee->type != EMPL_ROBOT
 	 && employee->type != EMPL_PILOT)
-		return qfalse;
+		return false;
 
 	base = employee->baseHired;
 
@@ -88,9 +88,9 @@ qboolean E_IsAwayFromBase (const employee_t *employee)
 		if (aircraft->homebase != base)
 			continue;
 		if (!AIR_IsAircraftInBase(aircraft) && AIR_IsEmployeeInAircraft(employee, aircraft))
-			return qtrue;
+			return true;
 	}
-	return qfalse;
+	return false;
 }
 
 /**
@@ -140,16 +140,16 @@ void E_HireForBuilding (base_t* base, building_t * building, int num)
  * @brief Checks whether the given employee is in the given base
  * @sa E_EmployeeIsCurrentlyInBase
  */
-qboolean E_IsInBase (const employee_t* empl, const base_t* const base)
+bool E_IsInBase (const employee_t* empl, const base_t* const base)
 {
 	assert(empl != NULL);
 	assert(base != NULL);
 
 	if (!E_IsHired(empl))
-		return qfalse;
+		return false;
 	if (empl->baseHired == base)
-		return qtrue;
-	return qfalse;
+		return true;
+	return false;
 }
 
 /**
@@ -160,7 +160,7 @@ qboolean E_IsInBase (const employee_t* empl, const base_t* const base)
  * @param newBase The base where the employee should be located at
  * @return @c false if @c employee was a @c NULL pointer
  */
-qboolean E_MoveIntoNewBase (employee_t *employee, base_t *newBase)
+bool E_MoveIntoNewBase (employee_t *employee, base_t *newBase)
 {
 	if (employee) {
 		base_t *oldBase = employee->baseHired;
@@ -182,10 +182,10 @@ qboolean E_MoveIntoNewBase (employee_t *employee, base_t *newBase)
 		case MAX_EMPL:
 			break;
 		}
-		return qtrue;
+		return true;
 	}
 
-	return qfalse;
+	return false;
 }
 
 /**
@@ -347,10 +347,10 @@ employee_t* E_GetHiredRobot (const base_t* const base, const ugv_t *ugvType)
 /**
  * @brief Returns true if the employee is _only_ listed in the global list.
  * @param[in] employee The employee_t pointer to check
- * @return qboolean
+ * @return bool
  * @sa E_EmployeeIsFree
  */
-static inline qboolean E_EmployeeIsUnassigned (const employee_t * employee)
+static inline bool E_EmployeeIsUnassigned (const employee_t * employee)
 {
 	if (!employee)
 		Com_Error(ERR_DROP, "E_EmployeeIsUnassigned: Employee is NULL.\n");
@@ -404,11 +404,11 @@ employee_t* E_GetUnassignedEmployee (const base_t* const base, const employeeTyp
  * @sa E_UnhireEmployee
  * @todo handle EMPL_ROBOT capacities here?
  */
-qboolean E_HireEmployee (base_t* base, employee_t* employee)
+bool E_HireEmployee (base_t* base, employee_t* employee)
 {
 	if (CAP_GetFreeCapacity(base, CAP_EMPLOYEES) <= 0) {
 		CP_Popup(_("Not enough quarters"), _("You don't have enough quarters for your employees.\nBuild more quarters."));
-		return qfalse;
+		return false;
 	}
 
 	if (employee) {
@@ -432,9 +432,9 @@ qboolean E_HireEmployee (base_t* base, employee_t* employee)
 		case MAX_EMPL:
 			break;
 		}
-		return qtrue;
+		return true;
 	}
-	return qfalse;
+	return false;
 }
 
 /**
@@ -444,22 +444,22 @@ qboolean E_HireEmployee (base_t* base, employee_t* employee)
  * @sa E_HireEmployee
  * @sa E_UnhireEmployee
  */
-qboolean E_HireEmployeeByType (base_t* base, employeeType_t type)
+bool E_HireEmployeeByType (base_t* base, employeeType_t type)
 {
 	employee_t* employee = E_GetUnhired(type);
-	return employee ? E_HireEmployee(base, employee) : qfalse;
+	return employee ? E_HireEmployee(base, employee) : false;
 }
 
 /**
  * @brief Hires the first free employee of that type.
  * @param[in] base  Which base the ugv/robot should be hired in.
  * @param[in] ugvType What type of ugv/robot should be hired.
- * @return qtrue if everything went ok (the ugv was added), otherwise qfalse.
+ * @return true if everything went ok (the ugv was added), otherwise false.
  */
-qboolean E_HireRobot (base_t* base, const ugv_t *ugvType)
+bool E_HireRobot (base_t* base, const ugv_t *ugvType)
 {
 	employee_t* employee = E_GetUnhiredRobot(ugvType);
-	return employee ? E_HireEmployee(base, employee) : qfalse;
+	return employee ? E_HireEmployee(base, employee) : false;
 }
 
 /**
@@ -491,7 +491,7 @@ void E_ResetEmployee (employee_t *employee)
  * @sa E_RemoveEmployeeFromBuildingOrAircraft
  * @todo handle EMPL_ROBOT capacities here?
  */
-qboolean E_UnhireEmployee (employee_t* employee)
+bool E_UnhireEmployee (employee_t* employee)
 {
 	if (employee && E_IsHired(employee) && !employee->transfer) {
 		base_t *base = employee->baseHired;
@@ -517,10 +517,10 @@ qboolean E_UnhireEmployee (employee_t* employee)
 			break;
 		}
 
-		return qtrue;
+		return true;
 	} else
 		Com_DPrintf(DEBUG_CLIENT, "Could not fire employee\n");
-	return qfalse;
+	return false;
 }
 
 /**
@@ -563,7 +563,7 @@ employee_t* E_CreateEmployee (employeeType_t type, const nation_t *nation, const
 	OBJZERO(employee);
 
 	employee.baseHired = NULL;
-	employee.assigned = qfalse;
+	employee.assigned = false;
 	employee.type = type;
 	employee.nation = nation;
 	employee.ugv = ugvType;
@@ -621,12 +621,12 @@ employee_t* E_CreateEmployee (employeeType_t type, const nation_t *nation, const
  * the aircraft can point to wrong employees now. This has to be taken into
  * account
  */
-qboolean E_DeleteEmployee (employee_t *employee)
+bool E_DeleteEmployee (employee_t *employee)
 {
 	employeeType_t type;
 
 	if (!employee)
-		return qfalse;
+		return false;
 
 	type = employee->type;
 
@@ -636,7 +636,7 @@ qboolean E_DeleteEmployee (employee_t *employee)
 
 	if (employee->baseHired) {
 		/* make sure that this employee is really unhired */
-		employee->transfer = qfalse;
+		employee->transfer = false;
 		E_UnhireEmployee(employee);
 	}
 
@@ -706,14 +706,14 @@ void E_DeleteEmployeesExceedingCapacity (base_t *base)
  * send any pilots, false if happiness of nations in not considered.
  * @sa CP_NationHandleBudget
  */
-int E_RefreshUnhiredEmployeeGlobalList (const employeeType_t type, const qboolean excludeUnhappyNations)
+int E_RefreshUnhiredEmployeeGlobalList (const employeeType_t type, const bool excludeUnhappyNations)
 {
 	const nation_t *happyNations[MAX_NATIONS];
 	int numHappyNations = 0;
 	int idx, nationIdx, cnt;
 
 	happyNations[0] = NULL;
-	/* get a list of nations,  if excludeHappyNations is qtrue then also exclude
+	/* get a list of nations,  if excludeHappyNations is true then also exclude
 	 * unhappy nations (unhappy nation: happiness <= 0) from the list */
 	for (idx = 0; idx < ccs.numNations; idx++) {
 		const nation_t *nation = NAT_GetNationByIDX(idx);
@@ -757,7 +757,7 @@ int E_RefreshUnhiredEmployeeGlobalList (const employeeType_t type, const qboolea
  * @sa E_AssignEmployeeToBuilding
  * @todo are soldiers and pilots assigned to a building, too? quarters?
  */
-qboolean E_RemoveEmployeeFromBuildingOrAircraft (employee_t *employee)
+bool E_RemoveEmployeeFromBuildingOrAircraft (employee_t *employee)
 {
 	base_t *base;
 
@@ -768,7 +768,7 @@ qboolean E_RemoveEmployeeFromBuildingOrAircraft (employee_t *employee)
 		/* ... and no aircraft handling needed? */
 		if (employee->type != EMPL_SOLDIER && employee->type != EMPL_ROBOT
 		 && employee->type != EMPL_PILOT)
-			return qfalse;
+			return false;
 	}
 
 	/* get the base where the employee is hired in */
@@ -802,7 +802,7 @@ qboolean E_RemoveEmployeeFromBuildingOrAircraft (employee_t *employee)
 		break;
 	}
 
-	return qtrue;
+	return true;
 }
 
 /**
@@ -848,7 +848,7 @@ int E_CountHiredRobotByType (const base_t* const base, const ugv_t *ugvType)
  * @brief Counts all hired employees of a given base
  * @param[in] base The base where we count
  * @return count of hired employees of a given type in a given base
- * @note must not return 0 if hasBuilding[B_QUARTER] is qfalse: used to update capacity
+ * @note must not return 0 if hasBuilding[B_QUARTER] is false: used to update capacity
  * @todo What about EMPL_ROBOT?
  */
 int E_CountAllHired (const base_t* const base)
@@ -1045,7 +1045,7 @@ employee_t* E_GetEmployeeFromChrUCN (int uniqueCharacterNumber)
  * @sa CP_ParseCharacterData
  * @sa GAME_SendCurrentTeamSpawningInfo
  */
-qboolean E_SaveXML (xmlNode_t *p)
+bool E_SaveXML (xmlNode_t *p)
 {
 	int i;
 
@@ -1077,17 +1077,17 @@ qboolean E_SaveXML (xmlNode_t *p)
 	}
 	Com_UnregisterConstList(saveEmployeeConstants);
 
-	return qtrue;
+	return true;
 }
 
 /**
  * @brief Load callback for savegames in XML Format
  * @param[in] p XML Node structure, where we get the information from
  */
-qboolean E_LoadXML (xmlNode_t *p)
+bool E_LoadXML (xmlNode_t *p)
 {
 	xmlNode_t * snode;
-	qboolean success = qtrue;
+	bool success = true;
 
 	Com_RegisterConstList(saveEmployeeConstants);
 	for (snode = XML_GetNode(p, SAVE_EMPLOYEE_EMPLOYEES); snode;
@@ -1098,7 +1098,7 @@ qboolean E_LoadXML (xmlNode_t *p)
 
 		if (!Com_GetConstIntFromNamespace(SAVE_EMPLOYEETYPE_NAMESPACE, type, (int*) &emplType)) {
 			Com_Printf("Invalid employee type '%s'\n", type);
-			success = qfalse;
+			success = false;
 			break;
 		}
 
@@ -1116,12 +1116,12 @@ qboolean E_LoadXML (xmlNode_t *p)
 			baseIDX = XML_GetInt(ssnode, SAVE_EMPLOYEE_BASEHIRED, -1);
 			e.baseHired = B_GetBaseByIDX(baseIDX);
 			/* assigned to a building? */
-			e.assigned = XML_GetBool(ssnode, SAVE_EMPLOYEE_ASSIGNED, qfalse);
+			e.assigned = XML_GetBool(ssnode, SAVE_EMPLOYEE_ASSIGNED, false);
 			/* nation */
 			e.nation = NAT_GetNationByID(XML_GetString(ssnode, SAVE_EMPLOYEE_NATION));
 			if (!e.nation) {
 				Com_Printf("No nation defined for employee\n");
-				success = qfalse;
+				success = false;
 				break;
 			}
 			/* UGV-Type */
@@ -1130,12 +1130,12 @@ qboolean E_LoadXML (xmlNode_t *p)
 			chrNode = XML_GetNode(ssnode, SAVE_EMPLOYEE_CHR);
 			if (!chrNode) {
 				Com_Printf("No character definition found for employee\n");
-				success = qfalse;
+				success = false;
 				break;
 			}
 			if (!GAME_LoadCharacter(chrNode, &e.chr)) {
 				Com_Printf("Error loading character definition for employee\n");
-				success = qfalse;
+				success = false;
 				break;
 			}
 			LIST_Add(&ccs.employees[emplType], e);
@@ -1152,11 +1152,11 @@ qboolean E_LoadXML (xmlNode_t *p)
  * @brief Returns true if the current base is able to handle employees
  * @sa B_BaseInit_f
  */
-qboolean E_HireAllowed (const base_t* base)
+bool E_HireAllowed (const base_t* base)
 {
 	if (!B_IsUnderAttack(base) && B_GetBuildingStatus(base, B_QUARTERS))
-		return qtrue;
-	return qfalse;
+		return true;
+	return false;
 }
 
 /**
@@ -1179,10 +1179,10 @@ void E_RemoveInventoryFromStorage (employee_t *employee)
 		while (invList) {
 			/* Remove ammo */
 			if (invList->item.m && invList->item.m != invList->item.t)
-				B_UpdateStorageAndCapacity(employee->baseHired, invList->item.m, -1, qfalse);
+				B_UpdateStorageAndCapacity(employee->baseHired, invList->item.m, -1, false);
 			/* Remove Item */
 			if (invList->item.t)
-				B_UpdateStorageAndCapacity(employee->baseHired, invList->item.t, -1, qfalse);
+				B_UpdateStorageAndCapacity(employee->baseHired, invList->item.t, -1, false);
 
 			invList = invList->next;
 		}

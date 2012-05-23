@@ -122,7 +122,7 @@ void DoRouting (void)
 
 	/* Turn on trace debugging if requested. */
 	if (config.generateDebugTrace)
-		debugTrace = qtrue;
+		debugTrace = true;
 
 	/* Record the current mapTiles[0] state so we can remove all CLIPS when done. */
 	PushInfo();

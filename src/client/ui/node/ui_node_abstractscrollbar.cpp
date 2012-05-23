@@ -33,7 +33,7 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 void UI_RegisterAbstractScrollbarNode (uiBehaviour_t *behaviour)
 {
 	behaviour->name = "abstractscrollbar";
-	behaviour->isAbstract = qtrue;
+	behaviour->isAbstract = true;
 	behaviour->extraDataSize = sizeof(EXTRADATA_TYPE);
 	behaviour->manager = new uiAbstractScrollbarNode();
 
@@ -45,7 +45,7 @@ void UI_RegisterAbstractScrollbarNode (uiBehaviour_t *behaviour)
 	UI_RegisterExtradataNodeProperty(behaviour, "fullsize", V_INT, EXTRADATA_TYPE, fullsize);
 
 	/* If true, hide the scroll when the position is 0 and can't change (when <code>viewsize</code> >= <code>fullsize</code>). */
-	UI_RegisterExtradataNodeProperty(behaviour, "hidewhenunused", V_CPPBOOL, EXTRADATA_TYPE, hideWhenUnused);
+	UI_RegisterExtradataNodeProperty(behaviour, "hidewhenunused", V_BOOL, EXTRADATA_TYPE, hideWhenUnused);
 
 	/* Callback value set when before calling onChange. It is used to know the change apply by the user
 	 * @Deprecated

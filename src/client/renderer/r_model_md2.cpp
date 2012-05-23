@@ -104,7 +104,7 @@ static void R_ModLoadTags (model_t * mod, void *buffer, int bufSize)
 /**
  * @brief Assume that the indexArray is *NOT* filled, and load data for the model accordingly
  */
-static void R_ModLoadAliasMD2MeshUnindexed (model_t *mod, const dMD2Model_t *md2, int bufSize, qboolean loadNormals)
+static void R_ModLoadAliasMD2MeshUnindexed (model_t *mod, const dMD2Model_t *md2, int bufSize, bool loadNormals)
 {
 	int i, j;
 	const dMD2Triangle_t *pintri;
@@ -414,7 +414,7 @@ static void R_ModLoadAliasMD2MeshIndexed (model_t *mod, const dMD2Model_t *md2, 
 /**
  * @brief See if the model has an MDX file, and then load the model data appropriately for either case
  */
-static void R_ModLoadAliasMD2Mesh (model_t *mod, const dMD2Model_t *md2, int bufSize, qboolean loadNormals)
+static void R_ModLoadAliasMD2Mesh (model_t *mod, const dMD2Model_t *md2, int bufSize, bool loadNormals)
 {
 	int version;
 	size_t size;
@@ -442,11 +442,11 @@ static void R_ModLoadAliasMD2Mesh (model_t *mod, const dMD2Model_t *md2, int buf
 			R_ModLoadAliasMD2MeshIndexed(mod, md2, bufSize);
 		} else {
 			/* compute normals and tangents */
-			R_ModLoadAliasMD2MeshUnindexed(mod, md2, bufSize, qtrue);
+			R_ModLoadAliasMD2MeshUnindexed(mod, md2, bufSize, true);
 		}
 	} else {
 		/* don't load normals and tangents */
-		R_ModLoadAliasMD2MeshUnindexed(mod, md2, bufSize, qfalse);
+		R_ModLoadAliasMD2MeshUnindexed(mod, md2, bufSize, false);
 	}
 }
 
@@ -456,7 +456,7 @@ static void R_ModLoadAliasMD2Mesh (model_t *mod, const dMD2Model_t *md2, int buf
  * @param loadNormals If true, load vertex normals
  * @note We support three different levels here
  */
-static void R_ModLoadLevelOfDetailData (model_t* mod, qboolean loadNormals)
+static void R_ModLoadLevelOfDetailData (model_t* mod, bool loadNormals)
 {
 	char base[MAX_QPATH];
 	int i;
@@ -491,7 +491,7 @@ static void R_ModLoadLevelOfDetailData (model_t* mod, qboolean loadNormals)
 /**
  * @brief Load MD2 models from file.
  */
-void R_ModLoadAliasMD2Model (model_t *mod, byte *buffer, int bufSize, qboolean loadNormals)
+void R_ModLoadAliasMD2Model (model_t *mod, byte *buffer, int bufSize, bool loadNormals)
 {
 	dMD2Model_t *md2;
 	byte *tagbuf = NULL;

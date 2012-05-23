@@ -89,7 +89,7 @@ typedef struct requirements_s {
 } requirements_t;
 
 typedef struct markResearched_s {
-	qboolean markOnly[MAX_CAMPAIGNS];
+	bool markOnly[MAX_CAMPAIGNS];
 	char *campaign[MAX_CAMPAIGNS];
 	int numDefinitions;
 } markResearched_t;
@@ -115,7 +115,7 @@ typedef struct techMail_s {
 	const char *date;		/**< date string, if empty use the date of research */
 	const char *icon;		/**< name of an image file to display in the mail client */
 	const char *model;		/**< model name of the sender */
-	qboolean read;		/**< already read the mail? */
+	bool read;		/**< already read the mail? */
 } techMail_t;
 
 typedef enum {
@@ -148,7 +148,7 @@ typedef struct technology_s {
 
 	requirements_t requireAND;	/**< A list of requirements that ALL need to be met (= AND-related) See struct above. */
 	requirements_t requireOR;	/**< A list of requirements where ANY need to be met (= OR-related) See struct above. */
-	qboolean statusCollected;	/**< Did we loot any items of this tech?
+	bool statusCollected;	/**< Did we loot any items of this tech?
 					 * This is updated from the info stored in the requireOR and requireAND lists.
 					 * @see RS_CheckCollected. */
 
@@ -172,7 +172,7 @@ typedef struct technology_s {
 							 * @sa cl_research.c: RS_InitTree */
 	char *mdl;				/**< Same as "image" but it's a 3d model.. */
 
-	qboolean statusResearchable;		/**< Is this item researchable? */
+	bool statusResearchable;		/**< Is this item researchable? */
 
 	int produceTime;			/**< How many hours the production of this items runs. */
 	mailSentType_t mailSent;		/**< Store if a Mail has been sent to the commander (player). */
@@ -204,17 +204,17 @@ void RS_InitStartup(void);
 void RS_ResetTechs(void);
 int RS_ResearchRun(void);
 void RS_ParseTechnologies(const char *name, const char **text);
-qboolean RS_IsResearched_idx(int techIdx);
-qboolean RS_IsResearched_ptr(const technology_t *tech);
+bool RS_IsResearched_idx(int techIdx);
+bool RS_IsResearched_ptr(const technology_t *tech);
 
 technology_t* RS_GetTechForItem(const objDef_t *item);
 void RS_AddObjectTechs(void);
 void RS_RequiredLinksAssign(void);
-void RS_InitTree(const struct campaign_s *campaign, qboolean load);
+void RS_InitTree(const struct campaign_s *campaign, bool load);
 const char *RS_GetDescription(descriptions_t *desc);
 void RS_MarkCollected(technology_t *tech) __attribute__((nonnull));
-void RS_MarkResearchable(qboolean init, const struct base_s *base);
-qboolean RS_MarkStoryLineEventResearched(const char *techID);
+void RS_MarkResearchable(bool init, const struct base_s *base);
+bool RS_MarkStoryLineEventResearched(const char *techID);
 void RS_ResearchFinish(technology_t* tech);
 void RS_StopResearch(technology_t* tech);
 void RS_MarkOneResearchable(technology_t *tech);
@@ -230,12 +230,12 @@ technology_t* RS_GetTechByIDX(int tech_idx);
 technology_t *RS_GetTechWithMostScientists(const struct base_s *base);
 int RS_GetTechIdxByName(const char *name);
 int RS_CountScientistsInBase(const struct base_s *base);
-qboolean RS_ScriptSanityCheck(void);
+bool RS_ScriptSanityCheck(void);
 
 /* UFOpaedia function - but needs technology_t */
 void UP_AircraftDescription(const technology_t* t);
 void UP_UGVDescription(const struct ugv_s *ugvType);
 
-qboolean RS_RequirementsMet(const requirements_t *requiredAND, const requirements_t *requiredOR, const struct base_s *base);
+bool RS_RequirementsMet(const requirements_t *requiredAND, const requirements_t *requiredOR, const struct base_s *base);
 
 #endif /* CLIENT_CL_RESEARCH_H */

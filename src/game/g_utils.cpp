@@ -42,7 +42,7 @@ void G_FreeEdict (edict_t *ent)
 
 	OBJZERO(*ent);
 	ent->classname = "freed";
-	ent->inuse = qfalse;
+	ent->inuse = false;
 }
 
 /**
@@ -125,20 +125,20 @@ edict_t *G_GetEdictFromPosExcluding (const pos3_t pos, const int n, ...)
  * @brief Call the 'use' function for the given edict and all its group members
  * @param[in] ent The edict to call the use function for
  * @param[in] activator The edict that uses ent
- * @return qtrue when there is possibility to use edict being parameter.
+ * @return true when there is possibility to use edict being parameter.
  * @sa G_ClientUseEdict
  */
-qboolean G_UseEdict (edict_t *ent, edict_t* activator)
+bool G_UseEdict (edict_t *ent, edict_t* activator)
 {
 	if (!ent)
-		return qfalse;
+		return false;
 
 	/* no use function assigned */
 	if (!ent->use)
-		return qfalse;
+		return false;
 
 	if (!ent->use(ent, activator))
-		return qfalse;
+		return false;
 
 	/* only the master edict is calling the opening for the other group parts */
 	if (!(ent->flags & FL_GROUPSLAVE)) {
@@ -149,7 +149,7 @@ qboolean G_UseEdict (edict_t *ent, edict_t* activator)
 		}
 	}
 
-	return qtrue;
+	return true;
 }
 
 /**
@@ -251,7 +251,7 @@ static inline void G_TraceDraw (const vec3_t start, const vec3_t end)
  * @param end The end vector of the trace
  * @return @c false if not blocked
  */
-qboolean G_TestLineWithEnts (const vec3_t start, const vec3_t end)
+bool G_TestLineWithEnts (const vec3_t start, const vec3_t end)
 {
 	const char *entList[MAX_EDICTS];
 	/* generate entity list */
@@ -267,7 +267,7 @@ qboolean G_TestLineWithEnts (const vec3_t start, const vec3_t end)
  * @param end The end vector of the trace
  * @return @c false if not blocked
  */
-qboolean G_TestLine (const vec3_t start, const vec3_t end)
+bool G_TestLine (const vec3_t start, const vec3_t end)
 {
 	G_TraceDraw(start, end);
 	return gi.TestLine(start, end, TL_FLAG_NONE);

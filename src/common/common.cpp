@@ -215,7 +215,7 @@ TARGETING FUNCTIONS
  * calculations - a bug or just misleading documentation?
  * @sa CL_TargetingGrenade
  */
-float Com_GrenadeTarget (const vec3_t from, const vec3_t at, float speed, qboolean launched, qboolean rolled, vec3_t v0)
+float Com_GrenadeTarget (const vec3_t from, const vec3_t at, float speed, bool launched, bool rolled, vec3_t v0)
 {
 	const float rollAngle = 3.0; /* angle to throw at for rolling, in degrees. */
 	vec3_t delta;
@@ -424,11 +424,11 @@ void Com_Error (int code, const char *fmt, ...)
 {
 	va_list argptr;
 	static char msg[MAXPRINTMSG];
-	static qboolean recursive = qfalse;
+	static bool recursive = false;
 
 	if (recursive)
 		Sys_Error("recursive error after: %s", msg);
-	recursive = qtrue;
+	recursive = true;
 
 	va_start(argptr, fmt);
 	Q_vsnprintf(msg, sizeof(msg), fmt, argptr);
@@ -438,20 +438,20 @@ void Com_Error (int code, const char *fmt, ...)
 	case ERR_DISCONNECT:
 		Com_Printf("%s\n", msg);
 		CL_Drop();
-		recursive = qfalse;
+		recursive = false;
 		Com_Drop();
 	case ERR_DROP:
 		Com_Printf("********************\n");
 		Com_Printf("ERROR: %s\n", msg);
 		Com_Printf("********************\n");
 		Sys_Backtrace();
-		SV_Shutdown("Server crashed.", qfalse);
+		SV_Shutdown("Server crashed.", false);
 		CL_Drop();
-		recursive = qfalse;
+		recursive = false;
 		Com_Drop();
 	default:
 		Com_Printf("%s\n", msg);
-		SV_Shutdown("Server fatal crashed", qfalse);
+		SV_Shutdown("Server fatal crashed", false);
 
 		/* send an receive net messages a last time */
 		NET_Wait(0);
@@ -485,7 +485,7 @@ void Com_Quit (void)
 	Com_WriteConfigToFile("config.cfg");
 #endif
 
-	SV_Shutdown("Server quit.", qfalse);
+	SV_Shutdown("Server quit.", false);
 	SV_Clear();
 	CL_Shutdown();
 
@@ -517,9 +517,9 @@ void Com_SetServerState (int state)
 {
 	Com_DPrintf(DEBUG_ENGINE, "Set server state to %i\n", state);
 	if (state == ss_dead)
-		SV_Shutdown("Server shutdown", qfalse);
+		SV_Shutdown("Server shutdown", false);
 	else if (state == ss_restart)
-		SV_Shutdown("Server map change", qtrue);
+		SV_Shutdown("Server map change", true);
 	sv->state = (server_state_t)state;
 }
 
@@ -596,13 +596,13 @@ static void Com_InitArgv (int argc, char **argv)
 const char *Com_MacroExpandString (const char *text)
 {
 	int i, j, count, len;
-	qboolean inquote;
+	bool inquote;
 	const char *scan;
 	static char expanded[MAX_STRING_CHARS];
 	const char *token, *start, *cvarvalue;
 	char *pos;
 
-	inquote = qfalse;
+	inquote = false;
 	scan = text;
 	if (!text || !*text)
 		return NULL;
@@ -706,16 +706,16 @@ void Com_UploadCrashDump (const char *crashDumpFile)
  * @param[out] pos The position in the buffer after command completion
  * @param[in] offset The input buffer position to put the completed command to
  */
-qboolean Com_ConsoleCompleteCommand (const char *s, char *target, size_t bufSize, uint32_t *pos, uint32_t offset)
+bool Com_ConsoleCompleteCommand (const char *s, char *target, size_t bufSize, uint32_t *pos, uint32_t offset)
 {
 	const char *cmd = NULL, *cvar = NULL, *use = NULL;
 	char cmdLine[MAXCMDLINE] = "";
 	char cmdBase[MAXCMDLINE] = "";
-	qboolean append = qtrue;
+	bool append = true;
 	char *tmp;
 
 	if (!s[0] || s[0] == ' ')
-		return qfalse;
+		return false;
 
 	if (s[0] == '\\' || s[0] == '/') {
 		/* maybe we are using the same buffers - and we want to keep the slashes */
@@ -755,10 +755,10 @@ qboolean Com_ConsoleCompleteCommand (const char *s, char *target, size_t bufSize
 			/* append the found parameter */
 			Q_strcat(cmdLine, " ", sizeof(cmdLine));
 			Q_strcat(cmdLine, cmd, sizeof(cmdLine));
-			append = qfalse;
+			append = false;
 			use = cmdLine;
 		} else
-			return qfalse;
+			return false;
 	} else {
 		/* Cmd_GenericCompleteFunction uses one static buffer for output, so backup one completion here if available */
 		static char cmdBackup[MAX_QPATH];
@@ -772,11 +772,11 @@ qboolean Com_ConsoleCompleteCommand (const char *s, char *target, size_t bufSize
 		if (cntCmd > 0 && !cntCvar) {
 			use = cmd;
 			if (cntCmd != 1)
-				append = qfalse;
+				append = false;
 		} else if (!cntCmd && cntCvar > 0) {
 			use = cvar;
 			if (cntCvar != 1)
-				append = qfalse;
+				append = false;
 		} else if (cmd && cvar) {
 			int maxLength = std::min(strlen(cmdBackup),strlen(cvar));
 			int idx = 0;
@@ -791,7 +791,7 @@ qboolean Com_ConsoleCompleteCommand (const char *s, char *target, size_t bufSize
 			if (idx == maxLength)
 				cmdLine[idx] = '\0';
 			use = cmdLine;
-			append = qfalse;
+			append = false;
 		}
 	}
 
@@ -802,10 +802,10 @@ qboolean Com_ConsoleCompleteCommand (const char *s, char *target, size_t bufSize
 			target[(*pos)++] = ' ';
 		target[*pos] = '\0';
 
-		return qtrue;
+		return true;
 	}
 
-	return qfalse;
+	return false;
 }
 
 void Com_SetGameType (void)
@@ -855,19 +855,19 @@ static void Com_GameTypeList_f (void)
  * @note Some config strings are using one value over multiple config string
  * slots. These may not be accessed directly.
  */
-qboolean Com_CheckConfigStringIndex (int index)
+bool Com_CheckConfigStringIndex (int index)
 {
 	if (index < 0 || index >= MAX_CONFIGSTRINGS)
-		return qfalse;
+		return false;
 
 	/* CS_TILES and CS_POSITIONS can stretch over multiple configstrings,
 	 * so don't access the middle parts. */
 	if (index > CS_TILES && index < CS_POSITIONS)
-		return qfalse;
+		return false;
 	if (index > CS_POSITIONS && index < CS_MODELS)
-		return qfalse;
+		return false;
 
-	return qtrue;
+	return true;
 }
 
 #ifdef DEBUG
@@ -967,10 +967,10 @@ static void Com_DeveloperSet_f (void)
 /**
  * @brief Watches that the cvar cl_maxfps is never getting lower than 10
  */
-static qboolean Com_CvarCheckMaxFPS (cvar_t *cvar)
+static bool Com_CvarCheckMaxFPS (cvar_t *cvar)
 {
 	/* don't allow setting maxfps too low (or game could stop responding) */
-	return Cvar_AssertValue(cvar, 10, 1000, qtrue);
+	return Cvar_AssertValue(cvar, 10, 1000, true);
 }
 #endif
 
@@ -1113,10 +1113,10 @@ void Qcommon_Init (int argc, char **argv)
 		 * a basedir needs to be set before executing
 		 * config files, but we want other parms to override
 		 * the settings of the config files */
-		Cbuf_AddEarlyCommands(qfalse);
+		Cbuf_AddEarlyCommands(false);
 		Cbuf_Execute();
 
-		FS_InitFilesystem(qtrue);
+		FS_InitFilesystem(true);
 
 		Cbuf_AddText("exec default.cfg\n");
 #ifdef DEDICATED_ONLY
@@ -1125,11 +1125,11 @@ void Qcommon_Init (int argc, char **argv)
 		Cbuf_AddText("exec config.cfg\n");
 #endif
 
-		Cbuf_AddEarlyCommands(qtrue);
+		Cbuf_AddEarlyCommands(true);
 		Cbuf_Execute();
 
-		Com_SetRenderModified(qfalse);
-		Com_SetUserinfoModified(qfalse);
+		Com_SetRenderModified(false);
+		Com_SetUserinfoModified(false);
 
 		/* init commands and vars */
 		Cmd_AddCommand("saveconfig", Com_WriteConfig_f, "Write the configuration to file");
@@ -1159,10 +1159,10 @@ void Qcommon_Init (int argc, char **argv)
 		sv_dedicated = Cvar_Get("sv_dedicated", "0", CVAR_SERVERINFO | CVAR_NOSET, "Is this a dedicated server?");
 
 		/* set this to false for client - otherwise Qcommon_Frame would set the initial values to multiplayer */
-		sv_gametype->modified = qfalse;
+		sv_gametype->modified = false;
 
 		s_language = Cvar_Get("s_language", "", CVAR_ARCHIVE, "Game language - full language string e.g. en_EN.UTF-8");
-		s_language->modified = qfalse;
+		s_language->modified = false;
 		cl_maxfps = Cvar_Get("cl_maxfps", "50", CVAR_ARCHIVE);
 		Cvar_SetCheckFunction("cl_maxfps", Com_CvarCheckMaxFPS);
 #endif
@@ -1224,7 +1224,7 @@ void Qcommon_Init (int argc, char **argv)
 			Schedule_Timer(Cvar_Get("cl_slowfreq", "10", 0, NULL), &CL_SlowFrame, NULL, NULL);
 
 			/* now hide the console */
-			Sys_ShowConsole(qfalse);
+			Sys_ShowConsole(false);
 		}
 #endif
 
@@ -1251,7 +1251,7 @@ void Com_ReadFromPipe (void)
 	if (pipefile.f == NULL)
 		return;
 
-	read = FS_Read2(buffer, sizeof(buffer), &pipefile, qfalse);
+	read = FS_Read2(buffer, sizeof(buffer), &pipefile, false);
 	if (read > 0)
 		Cmd_ExecuteString(buffer);
 }
@@ -1408,7 +1408,7 @@ int CL_FilterEventQueue (event_filter *filter)
 	assert(filter);
 
 	while (event) {
-		qboolean keep = filter(event->when, event->func, event->check, event->data);
+		bool keep = filter(event->when, event->func, event->check, event->data);
 		scheduleEvent_t *freeme = event;
 
 		if (keep) {
@@ -1417,7 +1417,7 @@ int CL_FilterEventQueue (event_filter *filter)
 			continue;
 		}
 
-		/* keep == qfalse */
+		/* keep == false */
 		if (prev) {
 			event = prev->next = event->next;
 		} else {
@@ -1452,7 +1452,7 @@ void Qcommon_Frame (void)
 			event->func(event->when, event->data);
 		}
 	} catch (comRestart_t const& restart) {
-		SV_Shutdown("Restart.", qfalse);
+		SV_Shutdown("Restart.", false);
 		CL_Shutdown();
 		Qcommon_Shutdown();
 		if (restart.gamedir != NULL) {

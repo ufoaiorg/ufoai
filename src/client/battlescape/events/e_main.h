@@ -31,7 +31,7 @@ typedef struct eventTiming_s {
 	int shootTime;	/**< time when the shoot was fired */
 	int impactTime;	/**< time when the shoot hits the target. This is used to delay some events in case the
 					 * projectile needs some time to reach its target. */
-	qboolean parsedDeath;	/**< extra delay caused by death - @sa @c impactTime */
+	bool parsedDeath;	/**< extra delay caused by death - @sa @c impactTime */
 } eventTiming_t;
 
 /**
@@ -69,7 +69,7 @@ typedef struct eventRegister_s {
 	 * conflicts with other ongoing events (see @c le_t->locked ).
 	 * @return @c true if OK to run, @c false if not.
 	 */
-	qboolean (*eventCheck)(const struct eventRegister_s *self, const struct dbuffer *msg);
+	bool (*eventCheck)(const struct eventRegister_s *self, const struct dbuffer *msg);
 } eventRegister_t;
 
 const eventRegister_t *CL_GetEvent(const event_t eType);

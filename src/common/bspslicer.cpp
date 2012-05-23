@@ -10,24 +10,24 @@
 
 #define DEPTH 3
 
-static qboolean SL_CreatePNGFile (const char *filename, unsigned char *buffer, int width, int height)
+static bool SL_CreatePNGFile (const char *filename, unsigned char *buffer, int width, int height)
 {
 	qFILE f;
 
 	/* create the .bmp file... */
 	if (FS_OpenFile(filename, &f, FILE_WRITE) == -1)
-		return qfalse;
+		return false;
 
 	R_WritePNG(&f, buffer, width, height);
 
 	FS_CloseFile(&f);
 
-	return qtrue;
+	return true;
 }
 
 #define IMAGE_BUFFER_SET_BLACK(buffer, offset) do {int i; for (i = 0; i < DEPTH; i++) {buffer[offset + i] = 0xFF; } } while(0);
 
-static void SL_Bresenham (int x0, int y0, int x1, int y1, int width, int height, qboolean rotated, unsigned char *outputBuffer)
+static void SL_Bresenham (int x0, int y0, int x1, int y1, int width, int height, bool rotated, unsigned char *outputBuffer)
 {
 	int dy = y1 - y0;
 	int dx = x1 - x0;
@@ -122,23 +122,23 @@ static float SL_DistanceToIntersection (const vec3_t origin, const vec3_t vector
 /**
  * @return @c true or false if vector intersects a plane...
  */
-static qboolean SL_VectorIntersectPlane (const vec3_t origin, const vec3_t vector, const vec3_t planeOrigin, const vec3_t planeNormal, vec3_t intersectPoint)
+static bool SL_VectorIntersectPlane (const vec3_t origin, const vec3_t vector, const vec3_t planeOrigin, const vec3_t planeNormal, vec3_t intersectPoint)
 {
 	vec3_t v_temp;
 	const float dist = SL_DistanceToIntersection(origin, vector, planeOrigin, planeNormal);
 	if (dist < 0)
-		return qfalse;
+		return false;
 
 	VectorScale(vector, dist, v_temp);
 	VectorAdd(origin, v_temp, intersectPoint);
 
-	return qtrue;
+	return true;
 }
 
 /**
  * @brief slice the world in Z planes going from min_z to max_z by stepsize...
  */
-static void SL_SliceTheWorld (const TR_TILE_TYPE *tile, const vec3_t mins, const vec3_t maxs, float stepsize, int scale, qboolean singleContour, qboolean multipleContour)
+static void SL_SliceTheWorld (const TR_TILE_TYPE *tile, const vec3_t mins, const vec3_t maxs, float stepsize, int scale, bool singleContour, bool multipleContour)
 {
 	int sliceIndex;
 	vec3_t zDistance = { 0.0f, 0.0f, 0.0f };
@@ -146,7 +146,7 @@ static void SL_SliceTheWorld (const TR_TILE_TYPE *tile, const vec3_t mins, const
 	vec3_t v[2];
 	vec3_t vTemp, intersectPoint;
 	float lineX1, lineY1, lineX2, lineY2;
-	qboolean first, both;
+	bool first, both;
 	char filename[MAX_QPATH];
 	const float minX = mins[0];
 	const float maxX = maxs[0];
@@ -158,7 +158,7 @@ static void SL_SliceTheWorld (const TR_TILE_TYPE *tile, const vec3_t mins, const
 	const int numberOfSlices = (int) ((maxZ - minZ) / stepsize);
 	int width;
 	int height;
-	qboolean rotated = qfalse;
+	bool rotated = false;
 	unsigned char *pictureBuffer;
 
 	lineX1 = lineY1 = lineX2 = lineY2 = 0.0f;
@@ -168,7 +168,7 @@ static void SL_SliceTheWorld (const TR_TILE_TYPE *tile, const vec3_t mins, const
 
 	/* is the map higher than it is wide? */
 	if (height > width) {
-		rotated = qtrue; /* rotate the map 90 degrees */
+		rotated = true; /* rotate the map 90 degrees */
 		width = (int) (maxY - minY); /* swap the width and height */
 		height = (int) (maxX - minX);
 	}
@@ -196,8 +196,8 @@ static void SL_SliceTheWorld (const TR_TILE_TYPE *tile, const vec3_t mins, const
 				const dBspSurface_t *face = &tile->faces[model->firstface + faceIndex];
 				int edgeIndex;
 
-				first = qtrue;
-				both = qfalse;
+				first = true;
+				both = false;
 
 				/* for each face, loop though all of the edges, getting the vertexes... */
 				for (edgeIndex = 0; edgeIndex < face->numedges;
@@ -248,11 +248,11 @@ static void SL_SliceTheWorld (const TR_TILE_TYPE *tile, const vec3_t mins, const
 
 						/* is this the first or second Z plane intersection point? */
 						if (first) {
-							first = qfalse;
+							first = false;
 							lineX1 = intersectPoint[0];
 							lineY1 = intersectPoint[1];
 						} else {
-							both = qtrue;
+							both = true;
 							lineX2 = intersectPoint[0];
 							lineY2 = intersectPoint[1];
 						}
@@ -312,7 +312,7 @@ static void SL_SliceTheWorld (const TR_TILE_TYPE *tile, const vec3_t mins, const
 /**
  * @param[in] thickness the thickness of the brushes to render to the 2d map
  */
-void SL_BSPSlice (const TR_TILE_TYPE *model, float thickness, int scale, qboolean singleContour, qboolean multipleContour)
+void SL_BSPSlice (const TR_TILE_TYPE *model, float thickness, int scale, bool singleContour, bool multipleContour)
 {
 	int i;
 	/** @todo remove these values once the mins/maxs calculation works */

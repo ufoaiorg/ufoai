@@ -151,38 +151,38 @@ static inline const char *AIM_AircraftItemtypeName (const int equiptype)
 /**
  * @return @c true if the technology is available and matches the filter
  */
-static qboolean AIM_CrafttypeFilter (const base_t *base, aircraftItemType_t filterType, const technology_t *tech)
+static bool AIM_CrafttypeFilter (const base_t *base, aircraftItemType_t filterType, const technology_t *tech)
 {
 	const objDef_t *item;
 	if (!base)
-		return qfalse;
+		return false;
 
 	if (!RS_IsResearched_ptr(tech))
-		return qfalse;
+		return false;
 
 	item = INVSH_GetItemByID(tech->provides);
 	if (!item)
-		return qfalse;
+		return false;
 	if (item->isVirtual)
-		return qfalse;
+		return false;
 	if (!B_BaseHasItem(base, item))
-		return qfalse;
+		return false;
 
 	/* filter by type: special case for ammo because more than 1 type is an ammo type */
 	if (filterType != AC_ITEM_AMMO) {
 		if (item->craftitem.type != filterType)
-			return qfalse;
+			return false;
 	} else {
 		if (item->craftitem.type < AC_ITEM_AMMO)
-			return qfalse;
+			return false;
 	}
 
 	/* you can't install an item that does not have an installation time (alien item)
 	 * except for ammo which does not have installation time */
 	if (item->craftitem.installationTime == -1 && filterType >= AC_ITEM_AMMO)
-		return qfalse;
+		return false;
 
-	return qtrue;
+	return true;
 }
 
 /**
@@ -220,7 +220,7 @@ static void AIM_UpdateAircraftItemList (const aircraftSlot_t *slot)
 			LIST_AddString(&amountList, va("%d", amount));
 			option = cgi->UI_AddOption(&AIM_items, (*currentTech)->name, _((*currentTech)->name), va("%d", (*currentTech)->idx));
 			if (!AIM_SelectableCraftItem(slot, *currentTech))
-				option->disabled = qtrue;
+				option->disabled = true;
 		}
 		currentTech++;
 	}
@@ -494,7 +494,7 @@ static int AIM_CheckTechnologyIntoSlot (const aircraftSlot_t *slot, const techno
 /**
  * @brief Update the item description according to the tech and the slot selected
  */
-static void AIM_UpdateItemDescription (qboolean fromList, qboolean fromSlot)
+static void AIM_UpdateItemDescription (bool fromList, bool fromSlot)
 {
 	int status;
 	aircraft_t *aircraft;
@@ -668,9 +668,9 @@ static void AIM_AircraftEquipSlotSelect_f (void)
 
 	/* update description with the selected slot */
 	if (updateZone > 0)
-		AIM_UpdateItemDescription(qfalse, qtrue);
+		AIM_UpdateItemDescription(false, true);
 	else
-		AIM_UpdateItemDescription(qtrue, qfalse);
+		AIM_UpdateItemDescription(true, false);
 }
 
 /**
@@ -724,7 +724,7 @@ static void AIM_AircraftEquipZoneSelect_f (void)
 	/* Check that the selected zone is OK */
 	AIM_CheckAirequipSelectedZone(slot);
 
-	AIM_UpdateItemDescription(qfalse, qtrue);
+	AIM_UpdateItemDescription(false, true);
 }
 
 /**
@@ -766,8 +766,8 @@ static void AIM_AircraftEquipAddItem_f (void)
 		if (!slot->nextItem) {
 			/* we add the weapon, shield, item if slot is free or the installation of current item just began */
 			if (!slot->item || (slot->item && slot->installationTime == slot->item->craftitem.installationTime)) {
-				AII_RemoveItemFromSlot(base, slot, qfalse);
-				AII_AddItemToSlot(base, aimSelectedTechnology, slot, qfalse); /* Aircraft stats are updated below */
+				AII_RemoveItemFromSlot(base, slot, false);
+				AII_AddItemToSlot(base, aimSelectedTechnology, slot, false); /* Aircraft stats are updated below */
 				AII_AutoAddAmmo(slot);
 				break;
 			} else if (slot->item == INVSH_GetItemByID(aimSelectedTechnology->provides)) {
@@ -787,13 +787,13 @@ static void AIM_AircraftEquipAddItem_f (void)
 			}
 		} else {
 			/* remove weapon and ammo of next item */
-			AII_RemoveNextItemFromSlot(base, slot, qfalse);
+			AII_RemoveNextItemFromSlot(base, slot, false);
 			/* more below */
 		}
 
 		/* we change the weapon, shield, item, or base defence that will be installed AFTER the removal
 		 * of the one in the slot atm */
-		AII_AddItemToSlot(base, aimSelectedTechnology, slot, qtrue);
+		AII_AddItemToSlot(base, aimSelectedTechnology, slot, true);
 		AII_AutoAddAmmo(slot);
 		break;
 	case ZONE_AMMO:
@@ -843,15 +843,15 @@ static void AIM_AircraftEquipRemoveItem_f (void)
 			/* if the item has been installed since less than 1 hour, you don't need time to remove it */
 			if (slot->installationTime < slot->item->craftitem.installationTime) {
 				slot->installationTime = -slot->item->craftitem.installationTime;
-				AII_RemoveItemFromSlot(base, slot, qtrue); /* we remove only ammo, not item */
+				AII_RemoveItemFromSlot(base, slot, true); /* we remove only ammo, not item */
 			} else {
-				AII_RemoveItemFromSlot(base, slot, qfalse); /* we remove weapon and ammo */
+				AII_RemoveItemFromSlot(base, slot, false); /* we remove weapon and ammo */
 			}
 			/* aircraft stats are updated below */
 		} else {
 			/* we change the weapon, shield, item, or base defence that will be installed AFTER the removal
 			 * of the one in the slot atm */
-			AII_RemoveNextItemFromSlot(base, slot, qfalse); /* we remove weapon and ammo */
+			AII_RemoveNextItemFromSlot(base, slot, false); /* we remove weapon and ammo */
 			/* if you canceled next item for less than 1 hour, previous item is still functional */
 			if (slot->installationTime == -slot->item->craftitem.installationTime) {
 				slot->installationTime = 0;
@@ -862,9 +862,9 @@ static void AIM_AircraftEquipRemoveItem_f (void)
 		/* we can change ammo only if the selected item is an ammo (for weapon or base defence system) */
 		if (airequipID >= AC_ITEM_AMMO) {
 			if (slot->nextAmmo)
-				AII_RemoveNextItemFromSlot(base, slot, qtrue);
+				AII_RemoveNextItemFromSlot(base, slot, true);
 			else
-				AII_RemoveItemFromSlot(base, slot, qtrue);
+				AII_RemoveItemFromSlot(base, slot, true);
 		}
 		break;
 	default:
@@ -894,7 +894,7 @@ static void AIM_AircraftEquipMenuClick_f (void)
 	/* Which tech? */
 	techIdx = atoi(Cmd_Argv(1));
 	aimSelectedTechnology = RS_GetTechByIDX(techIdx);
-	AIM_UpdateItemDescription(qtrue, qfalse);
+	AIM_UpdateItemDescription(true, false);
 }
 
 /**

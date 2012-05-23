@@ -84,7 +84,7 @@ static void CL_LogEvent (const eventRegister_t *eventData)
  * @param block @c true to block the execution of other events until you unblock the event
  * execution again, @c false to unblock the event execution.
  */
-void CL_BlockBattlescapeEvents (qboolean block)
+void CL_BlockBattlescapeEvents (bool block)
 {
 	cl.eventsBlocked = block;
 }
@@ -92,7 +92,7 @@ void CL_BlockBattlescapeEvents (qboolean block)
 /**
  * @return if the client interrupts the event execution, this is @c true
  */
-static qboolean CL_AreBattlescapeEventsBlocked (void)
+static bool CL_AreBattlescapeEventsBlocked (void)
 {
 	return cl.eventsBlocked;
 }
@@ -104,16 +104,16 @@ static qboolean CL_AreBattlescapeEventsBlocked (void)
  * @param data The event to check.
  * @return true if it's ok to run or there is no check function, false otherwise.
  */
-static qboolean CL_CheckBattlescapeEvent (int now, void *data)
+static bool CL_CheckBattlescapeEvent (int now, void *data)
 {
 	if (CL_AreBattlescapeEventsBlocked()) {
-		return qfalse;
+		return false;
 	} else {
 		const evTimes_t *event = (evTimes_t *)data;
 		const eventRegister_t *eventData = CL_GetEvent(event->eType);
 
 		if (eventData->eventCheck == NULL)
-			return qtrue;
+			return true;
 
 		return eventData->eventCheck(eventData, event->msg);
 	}
@@ -155,20 +155,20 @@ static void CL_FreeBattlescapeEvent (void *data)
 /**
  * @return @c true to keep the event, @c false to remove it from the queue
  */
-static qboolean CL_FilterBattlescapeEvents (int when, event_func *func, event_check_func *check, void *data)
+static bool CL_FilterBattlescapeEvents (int when, event_func *func, event_check_func *check, void *data)
 {
 	if (func == &CL_ExecuteBattlescapeEvent) {
 		const evTimes_t *event = (const evTimes_t *)data;
 		Com_Printf("Remove pending event %i\n", event->eType);
-		return qfalse;
+		return false;
 	}
-	return qtrue;
+	return true;
 }
 
 int CL_ClearBattlescapeEvents (void)
 {
 	int filtered = CL_FilterEventQueue(&CL_FilterBattlescapeEvents);
-	CL_BlockBattlescapeEvents(qfalse);
+	CL_BlockBattlescapeEvents(false);
 	return filtered;
 }
 
@@ -214,7 +214,7 @@ static int CL_GetEventTime (const event_t eType, struct dbuffer *msg, eventTimin
 void CL_ParseEvent (struct dbuffer *msg)
 {
 	static eventTiming_t eventTiming;
-	qboolean now;
+	bool now;
 	const eventRegister_t *eventData;
 	int eType = NET_ReadByte(msg);
 	if (eType == EV_NULL)
@@ -222,10 +222,10 @@ void CL_ParseEvent (struct dbuffer *msg)
 
 	/* check instantly flag */
 	if (eType & EVENT_INSTANTLY) {
-		now = qtrue;
+		now = true;
 		eType &= ~EVENT_INSTANTLY;
 	} else
-		now = qfalse;
+		now = false;
 
 	/* check if eType is valid */
 	if (eType >= EV_NUM_EVENTS)

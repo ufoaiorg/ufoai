@@ -92,7 +92,7 @@ static linkedList_t *B_GetNeighbours (const building_t *building)
  * @brief Check if base coherent (every building connected to eachothers)
  * @param[in] base Pointer to the base to check
  */
-static qboolean B_IsCoherent (const base_t *base)
+static bool B_IsCoherent (const base_t *base)
 {
 	int found[MAX_BUILDINGS];
 	linkedList_t *queue = NULL;
@@ -106,7 +106,7 @@ static qboolean B_IsCoherent (const base_t *base)
 		break;
 	}
 	if (!bldg)
-		return qtrue;
+		return true;
 
 	while (!LIST_IsEmpty(queue)) {
 		bldg = (building_t*)queue->data;
@@ -126,9 +126,9 @@ static qboolean B_IsCoherent (const base_t *base)
 
 	for (i = 0; i < ccs.numBuildings[base->idx]; i++) {
 		if (found[i] != 1)
-			return qfalse;
+			return false;
 	}
-	return qtrue;
+	return true;
 }
 #endif
 
@@ -137,9 +137,9 @@ static qboolean B_IsCoherent (const base_t *base)
  * @param[in,out] base The base to add blocked tile to
  * @param[in] row Row position of the tile
  * @param[in] column Column position of the tile
- * @return qboolean value of success
+ * @return bool value of success
  */
-static qboolean B_AddBlockedTile (base_t *base, int row, int column)
+static bool B_AddBlockedTile (base_t *base, int row, int column)
 {
 	int found[BASE_SIZE][BASE_SIZE];
 	linkedList_t *queue = NULL;
@@ -149,7 +149,7 @@ static qboolean B_AddBlockedTile (base_t *base, int row, int column)
 	assert(base);
 
 	if (B_GetBuildingAt(base, column, row) != NULL)
-		return qfalse;
+		return false;
 
 	OBJZERO(found);
 	found[row][column] = -1;
@@ -165,7 +165,7 @@ static qboolean B_AddBlockedTile (base_t *base, int row, int column)
 	}
 
 	if (LIST_IsEmpty(queue))
-		return qfalse;
+		return false;
 
 	/* BS Traversal */
 	while (!LIST_IsEmpty(queue)) {
@@ -194,11 +194,11 @@ static qboolean B_AddBlockedTile (base_t *base, int row, int column)
 	for (y = 0; y < BASE_SIZE; y++) {
 		for (x = 0; x < BASE_SIZE; x++) {
 			if (!B_IsTileBlocked(base, x, y) && found[y][x] == 0)
-				return qfalse;
+				return false;
 		}
 	}
-	base->map[row][column].blocked = qtrue;
-	return qtrue;
+	base->map[row][column].blocked = true;
+	return true;
 }
 
 /**
@@ -230,7 +230,7 @@ static void B_AddBlockedTiles (base_t *base, int count)
  * @brief Returns if a base building is destroyable
  * @param[in] building Pointer to the building to check
  */
-qboolean B_IsBuildingDestroyable (const building_t *building)
+bool B_IsBuildingDestroyable (const building_t *building)
 {
 	base_t *base;
 
@@ -256,7 +256,7 @@ qboolean B_IsBuildingDestroyable (const building_t *building)
 			}
 		}
 		if (!bldg)
-			return qtrue;
+			return true;
 
 		while (!LIST_IsEmpty(queue)) {
 			bldg = (building_t*)queue->data;
@@ -276,10 +276,10 @@ qboolean B_IsBuildingDestroyable (const building_t *building)
 
 		for (i = 0; i < ccs.numBuildings[base->idx]; i++) {
 			if (found[i] != 1)
-				return qfalse;
+				return false;
 		}
 	}
-	return qtrue;
+	return true;
 }
 
 /**
@@ -400,7 +400,7 @@ building_t* B_GetNextBuildingByType (const base_t *base, building_t *lastBuildin
  * <code>if (hasBuilding[B_QUARTERS])</code> check - this should speed things up a lot
  * @return true if building with status was found
  */
-qboolean B_CheckBuildingTypeStatus (const base_t* const base, buildingType_t type, buildingStatus_t status, int *cnt)
+bool B_CheckBuildingTypeStatus (const base_t* const base, buildingType_t type, buildingStatus_t status, int *cnt)
 {
 	int cntlocal = 0;
 	building_t *building = NULL;
@@ -410,7 +410,7 @@ qboolean B_CheckBuildingTypeStatus (const base_t* const base, buildingType_t typ
 			cntlocal++;
 			/* don't count any further - the caller doesn't want to know the value */
 			if (!cnt)
-				return qtrue;
+				return true;
 		}
 	}
 
@@ -418,7 +418,7 @@ qboolean B_CheckBuildingTypeStatus (const base_t* const base, buildingType_t typ
 	if (cnt)
 		*cnt = cntlocal;
 
-	return cntlocal ? qtrue : qfalse;
+	return cntlocal ? true : false;
 }
 
 /**
@@ -488,17 +488,17 @@ buildingType_t B_GetBuildingTypeByCapacity (baseCapacities_t cap)
  * @return true if the building is functional
  * @sa B_SetBuildingStatus
  */
-qboolean B_GetBuildingStatus (const base_t* const base, const buildingType_t buildingType)
+bool B_GetBuildingStatus (const base_t* const base, const buildingType_t buildingType)
 {
 	assert(base);
 
 	if (buildingType == B_MISC)
-		return qtrue;
+		return true;
 	else if (buildingType < MAX_BUILDING_TYPE)
 		return base->hasBuilding[buildingType];
 	else {
 		Com_Printf("B_GetBuildingStatus: Building-type %i does not exist.\n", buildingType);
-		return qfalse;
+		return false;
 	}
 }
 
@@ -509,7 +509,7 @@ qboolean B_GetBuildingStatus (const base_t* const base, const buildingType_t bui
  * @param[in] newStatus New value of the status
  * @sa B_GetBuildingStatus
  */
-void B_SetBuildingStatus (base_t* const base, const buildingType_t buildingType, qboolean newStatus)
+void B_SetBuildingStatus (base_t* const base, const buildingType_t buildingType, bool newStatus)
 {
 	assert(base);
 
@@ -564,16 +564,16 @@ float B_GetMaxBuildingLevel (const base_t* base, const buildingType_t type)
  * @todo If a building is still under construction, it will be assembled as a finished part.
  * Otherwise we need mapparts for all the maps under construction.
  */
-qboolean B_AssembleMap (const base_t *base)
+bool B_AssembleMap (const base_t *base)
 {
 	int row, col;
 	char maps[2048];
 	char coords[2048];
-	qboolean used[MAX_BUILDINGS];
+	bool used[MAX_BUILDINGS];
 
 	if (!base) {
 		Com_Printf("B_AssembleMap: No base to assemble\n");
-		return qfalse;
+		return false;
 	}
 
 	maps[0] = '\0';
@@ -610,54 +610,54 @@ qboolean B_AssembleMap (const base_t *base)
 
 	Cbuf_AddText(va("map %s \"%s\" \"%s\"\n", (MAP_IsNight(base->pos) ? "night" : "day"), maps, coords));
 
-	return qtrue;
+	return true;
 }
 
 /**
  * @brief Check base status for particular buildings as well as capacities.
  * @param[in] building Pointer to building.
  * @note This function checks  base status for particular buildings and base capacities.
- * @return qtrue if a base status has been modified (but do not check capacities)
+ * @return true if a base status has been modified (but do not check capacities)
  */
-static qboolean B_CheckUpdateBuilding (building_t* building)
+static bool B_CheckUpdateBuilding (building_t* building)
 {
-	qboolean oldValue;
+	bool oldValue;
 
 	assert(building);
 
 	/* Status of Miscellenious buildings cannot change. */
 	if (building->buildingType == B_MISC)
-		return qfalse;
+		return false;
 
 	oldValue = B_GetBuildingStatus(building->base, building->buildingType);
 	if (building->buildingStatus == B_STATUS_WORKING
 	 && B_CheckBuildingDependencesStatus(building))
-		B_SetBuildingStatus(building->base, building->buildingType, qtrue);
+		B_SetBuildingStatus(building->base, building->buildingType, true);
 	else
-		B_SetBuildingStatus(building->base, building->buildingType, qfalse);
+		B_SetBuildingStatus(building->base, building->buildingType, false);
 
 	if (B_GetBuildingStatus(building->base, building->buildingType) != oldValue) {
 		Com_DPrintf(DEBUG_CLIENT, "Status of building %s is changed to %i.\n",
 			building->name, B_GetBuildingStatus(building->base, building->buildingType));
-		return qtrue;
+		return true;
 	}
 
-	return qfalse;
+	return false;
 }
 
 /**
  * @brief Update status of every building when a building has been built/destroyed
  * @param[in] base
  * @param[in] buildingType The building-type that has been built / removed.
- * @param[in] onBuilt qtrue if building has been built, qfalse else
+ * @param[in] onBuilt true if building has been built, false else
  * @sa B_BuildingDestroy
  * @sa B_UpdateAllBaseBuildingStatus
- * @return qtrue if at least one building status has been modified
+ * @return true if at least one building status has been modified
  */
-static qboolean B_UpdateStatusBuilding (base_t* base, buildingType_t buildingType, qboolean onBuilt)
+static bool B_UpdateStatusBuilding (base_t* base, buildingType_t buildingType, bool onBuilt)
 {
-	qboolean test = qfalse;
-	qboolean returnValue = qfalse;
+	bool test = false;
+	bool returnValue = false;
 	building_t *building = NULL;
 
 	/* Construction / destruction may have changed the status of other building
@@ -670,15 +670,15 @@ static qboolean B_UpdateStatusBuilding (base_t* base, buildingType_t buildingTyp
 				/* we can only activate a non operationnal building */
 				if (B_CheckUpdateBuilding(building)) {
 					B_FireEvent(building, base, B_ONENABLE);
-					test = qtrue;
-					returnValue = qtrue;
+					test = true;
+					returnValue = true;
 				}
 			} else if (!onBuilt && B_GetBuildingStatus(base, building->buildingType)) {
 				/* we can only deactivate an operationnal building */
 				if (B_CheckUpdateBuilding(building)) {
 					B_FireEvent(building, base, B_ONDISABLE);
-					test = qtrue;
-					returnValue = qtrue;
+					test = true;
+					returnValue = true;
 				}
 			}
 		}
@@ -686,20 +686,20 @@ static qboolean B_UpdateStatusBuilding (base_t* base, buildingType_t buildingTyp
 	/* and maybe some updated status have changed status of other building.
 	 * So we check again, until nothing changes. (no condition here for check, it's too complex) */
 	while (test) {
-		test = qfalse;
+		test = false;
 		building = NULL;
 		while ((building = B_GetNextBuilding(base, building))) {
 			if (onBuilt && !B_GetBuildingStatus(base, building->buildingType)) {
 				/* we can only activate a non operationnal building */
 				if (B_CheckUpdateBuilding(building)) {
 					B_FireEvent(building, base, B_ONENABLE);
-					test = qtrue;
+					test = true;
 				}
 			} else if (!onBuilt && B_GetBuildingStatus(base, building->buildingType)) {
 				/* we can only deactivate an operationnal building */
 				if (B_CheckUpdateBuilding(building)) {
 					B_FireEvent(building, base, B_ONDISABLE);
-					test = qtrue;
+					test = true;
 				}
 			}
 		}
@@ -723,12 +723,12 @@ static void B_UpdateAntimatterCap (base_t *base)
 /**
  * @brief Recalculate status and capacities of one base
  * @param[in] base Pointer to the base where status and capacities must be recalculated
- * @param[in] firstEnable qtrue if this is the first time the function is called for this base
+ * @param[in] firstEnable true if this is the first time the function is called for this base
  */
-void B_ResetAllStatusAndCapacities (base_t *base, qboolean firstEnable)
+void B_ResetAllStatusAndCapacities (base_t *base, bool firstEnable)
 {
 	int i;
-	qboolean test = qtrue;
+	bool test = true;
 
 	assert(base);
 
@@ -738,18 +738,18 @@ void B_ResetAllStatusAndCapacities (base_t *base, qboolean firstEnable)
 	for (i = 0; i < MAX_BUILDING_TYPE; i++) {
 		const buildingType_t type = (buildingType_t)i;
 		if (type != B_MISC)
-			B_SetBuildingStatus(base, type, qfalse);
+			B_SetBuildingStatus(base, type, false);
 	}
 	/* activate all buildings that needs to be activated */
 	while (test) {
 		building_t *building = NULL;
-		test = qfalse;
+		test = false;
 		while ((building = B_GetNextBuilding(base, building))) {
 			if (!B_GetBuildingStatus(base, building->buildingType)
 			 && B_CheckUpdateBuilding(building)) {
 				if (firstEnable)
 					B_FireEvent(building, base, B_ONENABLE);
-				test = qtrue;
+				test = true;
 			}
 		}
 	}
@@ -794,16 +794,16 @@ void B_ResetAllStatusAndCapacities (base_t *base, qboolean firstEnable)
  * @note Also updates capacities and sets the hasBuilding[] values in base_t
  * @sa B_BuildingDestroy_f
  */
-qboolean B_BuildingDestroy (building_t* building)
+bool B_BuildingDestroy (building_t* building)
 {
 	const buildingType_t buildingType = building->buildingType;
 	const building_t *buildingTemplate = building->tpl;
-	const qboolean runDisableCommand = building->buildingStatus == B_STATUS_WORKING;
+	const bool runDisableCommand = building->buildingStatus == B_STATUS_WORKING;
 	base_t *base = building->base;
 
 	/* Don't allow to destroy a mandatory building. */
 	if (building->mandatory)
-		return qfalse;
+		return false;
 
 	if (base->map[(int)building->pos[1]][(int)building->pos[0]].building != building) {
 		Com_Error(ERR_DROP, "B_BuildingDestroy: building mismatch at base %i pos %i,%i.",
@@ -812,7 +812,7 @@ qboolean B_BuildingDestroy (building_t* building)
 
 	/* Refuse destroying if it hurts coherency - only exception is when the whole base destroys */
 	if (!B_IsBuildingDestroyable(building)) {
-		return qfalse;
+		return false;
 	}
 
 	building->buildingStatus = B_STATUS_NOT_SET;
@@ -856,9 +856,9 @@ qboolean B_BuildingDestroy (building_t* building)
 	if (buildingType != B_MISC && buildingType != MAX_BUILDING_TYPE) {
 		if (B_GetNumberOfBuildingsInBaseByBuildingType(base, buildingType) <= 0) {
 			/* there is no more building of this type */
-			B_SetBuildingStatus(base, buildingType, qfalse);
+			B_SetBuildingStatus(base, buildingType, false);
 			/* check if this has an impact on other buildings */
-			B_UpdateStatusBuilding(base, buildingType, qfalse);
+			B_UpdateStatusBuilding(base, buildingType, false);
 			/* we may have changed status of several building: update all capacities */
 			B_UpdateBaseCapacities(MAX_CAP, base);
 		} else {
@@ -882,7 +882,7 @@ qboolean B_BuildingDestroy (building_t* building)
 
 	Cmd_ExecuteString("base_init");
 
-	return qtrue;
+	return true;
 }
 
 /**
@@ -896,11 +896,11 @@ static void B_MoveAircraftOnGeoscapeToOtherBases (const base_t *base)
 	AIR_ForeachFromBase(aircraft, base) {
 		if (AIR_IsAircraftOnGeoscape(aircraft)) {
 			base_t *newbase = NULL;
-			qboolean moved = qfalse;
+			bool moved = false;
 			while ((newbase = B_GetNext(newbase)) != NULL) {
 				/* found a new homebase? */
 				if (base != newbase && AIR_MoveAircraftIntoNewHomebase(aircraft, newbase)) {
-					moved = qtrue;
+					moved = true;
 					break;
 				}
 			}
@@ -1031,7 +1031,7 @@ void B_BuildingStatus (const building_t* building)
  */
 static void B_UpdateAllBaseBuildingStatus (building_t* building, buildingStatus_t status)
 {
-	qboolean test;
+	bool test;
 	buildingStatus_t oldStatus;
 	base_t* base = building->base;
 
@@ -1048,7 +1048,7 @@ static void B_UpdateAllBaseBuildingStatus (building_t* building, buildingStatus_
 	/* now, the status of this building may have changed the status of other building.
 	 * We check that, but only for buildings which needed building 1 */
 	if (test) {
-		B_UpdateStatusBuilding(base, building->buildingType, qtrue);
+		B_UpdateStatusBuilding(base, building->buildingType, true);
 		/* we may have changed status of several building: update all capacities */
 		B_UpdateBaseCapacities(MAX_CAP, base);
 	} else {
@@ -1075,7 +1075,7 @@ static void B_UpdateAllBaseBuildingStatus (building_t* building, buildingStatus_
  * @param[in] hire Hire employees for the building we create from the template
  * @param[in] pos The position on the base grid
  */
-static void B_AddBuildingToBasePos (base_t *base, const building_t *buildingTemplate, qboolean hire, const vec2_t pos)
+static void B_AddBuildingToBasePos (base_t *base, const building_t *buildingTemplate, bool hire, const vec2_t pos)
 {
 	/* new building in base (not a template) */
 	building_t *buildingNew;
@@ -1106,7 +1106,7 @@ static void B_AddBuildingToBasePos (base_t *base, const building_t *buildingTemp
  * @param[in] hire If hiring employee needed
  * @note It builds an empty base on NULL (or empty) templatename
  */
-static void B_BuildFromTemplate (base_t *base, const char *templateName, qboolean hire)
+static void B_BuildFromTemplate (base_t *base, const char *templateName, bool hire)
 {
 	const baseTemplate_t *baseTemplate = B_GetBaseTemplate(templateName);
 	int freeSpace = BASE_SIZE * BASE_SIZE;
@@ -1260,7 +1260,7 @@ base_t *B_Build (const campaign_t *campaign, const vec2_t pos, const char *name)
 	Vector2Copy(pos, base->pos);
 
 	base->idx = ccs.campaignStats.basesBuilt;
-	base->founded = qtrue;
+	base->founded = true;
 
 	/* increase this early because a lot of functions rely on this
 	 * value to get the base we are setting up here */
@@ -1276,9 +1276,9 @@ base_t *B_Build (const campaign_t *campaign, const vec2_t pos, const char *name)
 	if (ccs.campaignStats.basesBuilt == 0) {
 		if (campaign->firstBaseTemplate[0] == '\0')
 			Com_Error(ERR_DROP, "No base template for setting up the first base given");
-		B_BuildFromTemplate(base, campaign->firstBaseTemplate, qtrue);
+		B_BuildFromTemplate(base, campaign->firstBaseTemplate, true);
 	} else {
-		B_BuildFromTemplate(base, NULL, qtrue);
+		B_BuildFromTemplate(base, NULL, true);
 	}
 	base->baseStatus = BASE_WORKING;
 
@@ -1289,10 +1289,10 @@ base_t *B_Build (const campaign_t *campaign, const vec2_t pos, const char *name)
 
 	/* Reset Radar range */
 	level = B_GetMaxBuildingLevel(base, B_RADAR);
-	RADAR_Initialise(&base->radar, RADAR_BASERANGE, RADAR_BASETRACKINGRANGE, level, qfalse);
+	RADAR_Initialise(&base->radar, RADAR_BASERANGE, RADAR_BASETRACKINGRANGE, level, false);
 	RADAR_InitialiseUFOs(&base->radar);
 
-	B_ResetAllStatusAndCapacities(base, qtrue);
+	B_ResetAllStatusAndCapacities(base, true);
 	AL_FillInContainment(base);
 	PR_UpdateProductionCap(base);
 
@@ -1325,7 +1325,7 @@ const baseTemplate_t *B_GetBaseTemplate (const char *baseTemplateID)
  * @brief Check a base cell
  * @return True if the cell is free to build
  */
-qboolean B_MapIsCellFree (const base_t *base, int col, int row)
+bool B_MapIsCellFree (const base_t *base, int col, int row)
 {
 	return col >= 0 && col < BASE_SIZE
 	 && row >= 0 && row < BASE_SIZE
@@ -1388,12 +1388,12 @@ building_t* B_SetBuildingByClick (base_t *base, const building_t *buildingTempla
 			/* Refuse adding if it hurts coherency */
 			if (base->baseStatus == BASE_WORKING) {
 				linkedList_t *neighbours;
-				qboolean coherent = qfalse;
+				bool coherent = false;
 
 				neighbours = B_GetNeighbours(buildingNew);
 				LIST_Foreach(neighbours, building_t, bldg) {
 					if (B_IsBuildingBuiltUp(bldg)) {
-						coherent = qtrue;
+						coherent = true;
 						break;
 					}
 				}
@@ -1546,7 +1546,7 @@ int B_GetNumberOfBuildingsInBaseByBuildingType (const base_t *base, const buildi
  * @param[in] onlyWorking If we're looking only for working buildings
  * @return The building or NULL if base has no building of that type
  */
-const building_t *B_GetBuildingInBaseByType (const base_t* base, buildingType_t buildingType, qboolean onlyWorking)
+const building_t *B_GetBuildingInBaseByType (const base_t* base, buildingType_t buildingType, bool onlyWorking)
 {
 	building_t *building = NULL;
 
@@ -1575,7 +1575,7 @@ void B_ParseBaseTemplate (const char *name, const char **text)
 	baseTemplate_t* baseTemplate;
 	baseBuildingTile_t* tile;
 	vec2_t pos;
-	qboolean map[BASE_SIZE][BASE_SIZE];
+	bool map[BASE_SIZE][BASE_SIZE];
 	byte buildingNums[MAX_BUILDINGS];
 	int i;
 
@@ -1644,7 +1644,7 @@ void B_ParseBaseTemplate (const char *name, const char **text)
 		/* check for buildings on same position */
 		if (map[tile->posY][tile->posX])
 			Com_Error(ERR_DROP, "Base template '%s' has ambiguous positions for buildings set.", baseTemplate->id);
-		map[tile->posY][tile->posX] = qtrue;
+		map[tile->posY][tile->posX] = true;
 	} while (*text);
 
 	/* templates without the must-have buildings can't be used */
@@ -1683,11 +1683,11 @@ void B_SetCurrentSelectedBase (const base_t *base)
 	base_t *b = NULL;
 	while ((b = B_GetNext(b)) != NULL) {
 		if (b == base) {
-			b->selected = qtrue;
+			b->selected = true;
 			if (b->aircraftCurrent == NULL)
 				b->aircraftCurrent = AIR_GetFirstFromBase(b);
 		} else
-			b->selected = qfalse;
+			b->selected = false;
 	}
 
 	if (base) {
@@ -2146,7 +2146,7 @@ static void B_ResetAllStatusAndCapacities_f (void)
 	base = NULL;
 	while ((base = B_GetNext(base)) != NULL) {
 		/* set buildingStatus[] and capacities.max values */
-		B_ResetAllStatusAndCapacities(base, qfalse);
+		B_ResetAllStatusAndCapacities(base, false);
 	}
 }
 
@@ -2268,7 +2268,7 @@ static void B_SellOrAddItems (aircraft_t *aircraft)
 		/* If the related technology is NOT researched, don't sell items. */
 		if (!RS_IsResearched_ptr(tech)) {
 			/* Items not researched cannot be thrown out even if not enough space in storage. */
-			B_UpdateStorageAndCapacity(base, item, amount, qtrue);
+			B_UpdateStorageAndCapacity(base, item, amount, true);
 			if (amount > 0)
 				RS_MarkCollected(tech);
 			continue;
@@ -2283,7 +2283,7 @@ static void B_SellOrAddItems (aircraft_t *aircraft)
 				/* Check whether there is enough space for adding this item.
 				 * If yes - add. If not - sell. */
 				for (j = 0; j < amount; j++) {
-					if (!B_UpdateStorageAndCapacity(base, item, 1, qfalse)) {
+					if (!B_UpdateStorageAndCapacity(base, item, 1, false)) {
 						/* Not enough space, sell item. */
 						BS_SellItem(item, NULL, 1);
 						forcedgained += BS_GetItemSellingPrice(item);
@@ -2310,7 +2310,7 @@ static void B_SellOrAddItems (aircraft_t *aircraft)
 	aircraft->itemTypes = 0;
 
 	/* Mark new technologies researchable. */
-	RS_MarkResearchable(qfalse, aircraft->homebase);
+	RS_MarkResearchable(false, aircraft->homebase);
 	/* Recalculate storage capacity, to fix wrong capacity if a soldier drops something on the ground */
 	CAP_UpdateStorageCap(aircraft->homebase);
 }
@@ -2362,10 +2362,10 @@ void B_AircraftReturnedToHomeBase (aircraft_t* aircraft)
  * @param[in] base Pointer to the base to check at
  * @param[in] item Pointer to the item to check
  */
-qboolean B_BaseHasItem (const base_t *base, const objDef_t *item)
+bool B_BaseHasItem (const base_t *base, const objDef_t *item)
 {
 	if (item->isVirtual)
-		return qtrue;
+		return true;
 
 	return B_ItemInBase(item, base) > 0;
 }
@@ -2401,7 +2401,7 @@ int B_ItemInBase (const objDef_t *item, const base_t *base)
  * @param[in] base Pointer to the base.
  * @sa B_UpdateAllBaseBuildingStatus
  * @sa B_BuildingDestroy_f
- * @note If hasBuilding is qfalse, the capacity is still increase: if power plant is destroyed and rebuilt, you shouldn't have to hire employees again
+ * @note If hasBuilding is false, the capacity is still increase: if power plant is destroyed and rebuilt, you shouldn't have to hire employees again
  */
 void B_UpdateBaseCapacities (baseCapacities_t cap, base_t *base)
 {
@@ -2468,7 +2468,7 @@ void B_SaveBaseSlotsXML (const baseWeapon_t *weapons, const int numWeapons, xmlN
 
 	for (i = 0; i < numWeapons; i++) {
 		xmlNode_t *sub = XML_AddNode(node, SAVE_BASES_WEAPON);
-		AII_SaveOneSlotXML(sub, &weapons[i].slot, qtrue);
+		AII_SaveOneSlotXML(sub, &weapons[i].slot, true);
 		XML_AddBool(sub, SAVE_BASES_AUTOFIRE, weapons[i].autofire);
 		if (weapons[i].target)
 			XML_AddInt(sub, SAVE_BASES_TARGET, weapons[i].target->idx);
@@ -2480,7 +2480,7 @@ void B_SaveBaseSlotsXML (const baseWeapon_t *weapons, const int numWeapons, xmlN
  * @param[out] parent XML Node structure, where we write the information to
  * @param[in] equip Storage to save
  */
-qboolean B_SaveStorageXML (xmlNode_t *parent, const equipDef_t equip)
+bool B_SaveStorageXML (xmlNode_t *parent, const equipDef_t equip)
 {
 	int k;
 	for (k = 0; k < csi.numODs; k++) {
@@ -2493,14 +2493,14 @@ qboolean B_SaveStorageXML (xmlNode_t *parent, const equipDef_t equip)
 			XML_AddByteValue(node, SAVE_BASES_NUMLOOSE, equip.numItemsLoose[k]);
 		}
 	}
-	return qtrue;
+	return true;
 }
 
 /**
  * @brief Save callback for saving in xml format.
  * @param[out] parent XML Node structure, where we write the information to
  */
-qboolean B_SaveXML (xmlNode_t *parent)
+bool B_SaveXML (xmlNode_t *parent)
 {
 	xmlNode_t *bases;
 	base_t *b;
@@ -2515,7 +2515,7 @@ qboolean B_SaveXML (xmlNode_t *parent)
 
 		if (!b->founded) {
 			Com_Printf("B_SaveXML: Base (idx: %i) not founded!\n", b->idx);
-			return qfalse;
+			return false;
 		}
 
 		Com_RegisterConstList(saveBaseConstants);
@@ -2573,7 +2573,7 @@ qboolean B_SaveXML (xmlNode_t *parent)
 
 		Com_UnregisterConstList(saveBaseConstants);
 	}
-	return qtrue;
+	return true;
 }
 
 /**
@@ -2590,8 +2590,8 @@ int B_LoadBaseSlotsXML (baseWeapon_t* weapons, int max, xmlNode_t *p)
 	xmlNode_t *s;
 	for (i = 0, s = XML_GetNode(p, SAVE_BASES_WEAPON); s && i < max; i++, s = XML_GetNextNode(s, p, SAVE_BASES_WEAPON)) {
 		const int target = XML_GetInt(s, SAVE_BASES_TARGET, -1);
-		AII_LoadOneSlotXML(s, &weapons[i].slot, qtrue);
-		weapons[i].autofire = XML_GetBool(s, SAVE_BASES_AUTOFIRE, qtrue);
+		AII_LoadOneSlotXML(s, &weapons[i].slot, true);
+		weapons[i].autofire = XML_GetBool(s, SAVE_BASES_AUTOFIRE, true);
 		weapons[i].target = (target >= 0) ? UFO_GetByIDX(target) : NULL;
 	}
 	return i;
@@ -2601,20 +2601,20 @@ int B_LoadBaseSlotsXML (baseWeapon_t* weapons, int max, xmlNode_t *p)
  * @brief Set the capacity stuff for all the bases after loading a savegame
  * @sa B_PostLoadInit
  */
-static qboolean B_PostLoadInitCapacity (void)
+static bool B_PostLoadInitCapacity (void)
 {
 	base_t *base = NULL;
 	while ((base = B_GetNext(base)) != NULL)
-		B_ResetAllStatusAndCapacities(base, qtrue);
+		B_ResetAllStatusAndCapacities(base, true);
 
-	return qtrue;
+	return true;
 }
 
 /**
  * @brief Set the capacity stuff for all the bases after loading a savegame
  * @sa SAV_GameActionsAfterLoad
  */
-qboolean  B_PostLoadInit (void)
+bool  B_PostLoadInit (void)
 {
 	return B_PostLoadInitCapacity();
 }
@@ -2624,7 +2624,7 @@ qboolean  B_PostLoadInit (void)
  * @param[in] parent XML Node structure, where we get the information from
  * @param[out] equip Storage to load
  */
-qboolean B_LoadStorageXML (xmlNode_t *parent, equipDef_t *equip)
+bool B_LoadStorageXML (xmlNode_t *parent, equipDef_t *equip)
 {
 	xmlNode_t *node;
 	for (node = XML_GetNode(parent, SAVE_BASES_ITEM); node; node = XML_GetNextNode(node, parent, SAVE_BASES_ITEM)) {
@@ -2638,14 +2638,14 @@ qboolean B_LoadStorageXML (xmlNode_t *parent, equipDef_t *equip)
 			equip->numItemsLoose[od->idx] = XML_GetInt(node, SAVE_BASES_NUMLOOSE, 0);
 		}
 	}
-	return qtrue;
+	return true;
 }
 
 /**
  * @brief Loads base data
  * @param[in] parent XML Node structure, where we get the information from
  */
-qboolean B_LoadXML (xmlNode_t *parent)
+bool B_LoadXML (xmlNode_t *parent)
 {
 	int i;
 	int buildingIdx;
@@ -2654,7 +2654,7 @@ qboolean B_LoadXML (xmlNode_t *parent)
 	bases = XML_GetNode(parent, "bases");
 	if (!bases) {
 		Com_Printf("Error: Node 'bases' wasn't found in savegame\n");
-		return qfalse;
+		return false;
 	}
 
 	ccs.numBases = 0;
@@ -2672,13 +2672,13 @@ qboolean B_LoadXML (xmlNode_t *parent)
 		if (b->idx < 0) {
 			Com_Printf("Invalid base index %i\n", b->idx);
 			Com_UnregisterConstList(saveBaseConstants);
-			return qfalse;
+			return false;
 		}
-		b->founded = qtrue;
+		b->founded = true;
 		if (!Com_GetConstIntFromNamespace(SAVE_BASESTATUS_NAMESPACE, str, (int*) &b->baseStatus)) {
 			Com_Printf("Invalid base status '%s'\n", str);
 			Com_UnregisterConstList(saveBaseConstants);
-			return qfalse;
+			return false;
 		}
 
 		Q_strncpyz(b->name, XML_GetString(base, SAVE_BASES_NAME), sizeof(b->name));
@@ -2702,11 +2702,11 @@ qboolean B_LoadXML (xmlNode_t *parent)
 				tile->building = B_GetBuildingByIDX(i, buildingIdx);
 			else
 				tile->building = NULL;
-			tile->blocked = XML_GetBool(snode, SAVE_BASES_BLOCKED, qfalse);
+			tile->blocked = XML_GetBool(snode, SAVE_BASES_BLOCKED, false);
 			if (tile->blocked && tile->building != NULL) {
 				Com_Printf("inconstent base layout found\n");
 				Com_UnregisterConstList(saveBaseConstants);
-				return qfalse;
+				return false;
 			}
 		}
 		/* buildings */
@@ -2720,14 +2720,14 @@ qboolean B_LoadXML (xmlNode_t *parent)
 			if (buildId >= MAX_BUILDINGS) {
 				Com_Printf("building ID is greater than MAX buildings\n");
 				Com_UnregisterConstList(saveBaseConstants);
-				return qfalse;
+				return false;
 			}
 
 			Q_strncpyz(buildingType, XML_GetString(snode, SAVE_BASES_BUILDINGTYPE), sizeof(buildingType));
 			if (buildingType[0] == '\0') {
 				Com_Printf("No buildingtype set\n");
 				Com_UnregisterConstList(saveBaseConstants);
-				return qfalse;
+				return false;
 			}
 
 			buildingTemplate = B_GetBuildingTemplate(buildingType);
@@ -2740,7 +2740,7 @@ qboolean B_LoadXML (xmlNode_t *parent)
 			if (building->idx != buildId) {
 				Com_Printf("building ID doesn't match\n");
 				Com_UnregisterConstList(saveBaseConstants);
-				return qfalse;
+				return false;
 			}
 			building->base = b;
 
@@ -2748,7 +2748,7 @@ qboolean B_LoadXML (xmlNode_t *parent)
 			if (!Com_GetConstIntFromNamespace(SAVE_BUILDINGSTATUS_NAMESPACE, str, (int*) &building->buildingStatus)) {
 				Com_Printf("Invalid building status '%s'\n", str);
 				Com_UnregisterConstList(saveBaseConstants);
-				return qfalse;
+				return false;
 			}
 
 			XML_GetDate(snode, SAVE_BASES_BUILDINGTIMESTART, &building->timeStart.day, &building->timeStart.sec);
@@ -2773,7 +2773,7 @@ qboolean B_LoadXML (xmlNode_t *parent)
 		B_LoadStorageXML(node, &(b->storage));
 		/* read radar info */
 		RADAR_InitialiseUFOs(&b->radar);
-		RADAR_Initialise(&b->radar, XML_GetInt(base, SAVE_BASES_RADARRANGE, 0), XML_GetInt(base, SAVE_BASES_TRACKINGRANGE, 0), B_GetMaxBuildingLevel(b, B_RADAR), qtrue);
+		RADAR_Initialise(&b->radar, XML_GetInt(base, SAVE_BASES_RADARRANGE, 0), XML_GetInt(base, SAVE_BASES_TRACKINGRANGE, 0), B_GetMaxBuildingLevel(b, B_RADAR), true);
 
 		/** @todo can't we use something like I_DestroyInventory here? */
 		/* clear the mess of stray loaded pointers */
@@ -2781,7 +2781,7 @@ qboolean B_LoadXML (xmlNode_t *parent)
 	}
 	Com_UnregisterConstList(saveBaseConstants);
 	Cvar_SetValue("mn_base_count", B_GetCount());
-	return qtrue;
+	return true;
 }
 
 /**
@@ -2789,13 +2789,13 @@ qboolean B_LoadXML (xmlNode_t *parent)
  * @param[in] obj Pointer to the item to check.
  * @return True if item is stored in storage.
  */
-qboolean B_ItemIsStoredInBaseStorage (const objDef_t *obj)
+bool B_ItemIsStoredInBaseStorage (const objDef_t *obj)
 {
 	/* antimatter is stored in antimatter storage */
 	if (obj->isVirtual || Q_streq(obj->id, ANTIMATTER_TECH_ID))
-		return qfalse;
+		return false;
 
-	return qtrue;
+	return true;
 }
 
 /**
@@ -2844,10 +2844,10 @@ int B_AddToStorage (base_t* base, const objDef_t *obj, int amount)
  * @param[in] base The base which storage and capacity should be updated
  * @param[in] obj The item.
  * @param[in] amount Amount to be added to removed
- * @param[in] ignorecap qtrue if we won't check freespace but will just add items.
+ * @param[in] ignorecap true if we won't check freespace but will just add items.
  * @sa CL_BaseRansacked
  */
-qboolean B_UpdateStorageAndCapacity (base_t* base, const objDef_t *obj, int amount, qboolean ignorecap)
+bool B_UpdateStorageAndCapacity (base_t* base, const objDef_t *obj, int amount, bool ignorecap)
 {
 	capacities_t *cap;
 
@@ -2855,19 +2855,19 @@ qboolean B_UpdateStorageAndCapacity (base_t* base, const objDef_t *obj, int amou
 	assert(obj);
 
 	if (obj->isVirtual)
-		return qtrue;
+		return true;
 
 	cap = CAP_Get(base, CAP_ITEMS);
 	if (!B_ItemIsStoredInBaseStorage(obj)) {
 		Com_DPrintf(DEBUG_CLIENT, "B_UpdateStorageAndCapacity: Item '%s' is not stored in storage: skip\n", obj->id);
-		return qfalse;
+		return false;
 	}
 
 	if (!ignorecap && amount > 0) {
 		/* Only add items if there is enough room in storage */
 		if (cap->max - cap->cur < (obj->size * amount)) {
 			Com_DPrintf(DEBUG_CLIENT, "B_UpdateStorageAndCapacity: Not enough storage space (item: %s, amount: %i)\n", obj->id, amount);
-			return qfalse;
+			return false;
 		}
 	}
 
@@ -2891,7 +2891,7 @@ qboolean B_UpdateStorageAndCapacity (base_t* base, const objDef_t *obj, int amou
 			RS_StopResearch(tech);
 	}
 
-	return qtrue;
+	return true;
 }
 
 /**
@@ -2922,7 +2922,7 @@ int B_AntimatterInBase (const base_t *base)
  * @note This function should be called whenever we add or remove antimatter from Antimatter Storage Facility.
  * @note Call with amount = 0 if you want to remove ALL antimatter from given base.
  */
-void B_ManageAntimatter (base_t *base, int amount, qboolean add)
+void B_ManageAntimatter (base_t *base, int amount, bool add)
 {
 	const objDef_t *od;
 	capacities_t *cap;

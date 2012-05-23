@@ -32,7 +32,7 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
  * choose a random sound. See the event function for more information.
  * of the path, a random sound will be taken.
  */
-void G_EventSpawnSound (unsigned int playerMask, qboolean instant, const edict_t* ent, const vec3_t origin, const char *sound)
+void G_EventSpawnSound (unsigned int playerMask, bool instant, const edict_t* ent, const vec3_t origin, const char *sound)
 {
 	gi.AddEvent(playerMask, EV_SOUND | (instant ? EVENT_INSTANTLY : 0));
 	gi.WriteShort(ent->number);
@@ -209,7 +209,7 @@ void G_EventStartShoot (const edict_t* ent, vismask_t visMask, shoot_types_t sho
  * @param fd The firedefinition to use for the shoot
  * @param firstShoot Is this the first shoot
  */
-void G_EventShootHidden (vismask_t visMask, const fireDef_t* fd, qboolean firstShoot)
+void G_EventShootHidden (vismask_t visMask, const fireDef_t* fd, bool firstShoot)
 {
 	gi.AddEvent(~G_VisToPM(visMask), EV_ACTOR_SHOOT_HIDDEN);
 	gi.WriteByte(firstShoot);
@@ -231,7 +231,7 @@ void G_EventShootHidden (vismask_t visMask, const fireDef_t* fd, qboolean firstS
  * @param from The position the entity shoots from
  * @param impact The impact world vector for the shot
  */
-void G_EventShoot (const edict_t* ent, vismask_t visMask, const fireDef_t* fd, qboolean firstShoot, shoot_types_t shootType, int flags, const trace_t* trace, const vec3_t from, const vec3_t impact)
+void G_EventShoot (const edict_t* ent, vismask_t visMask, const fireDef_t* fd, bool firstShoot, shoot_types_t shootType, int flags, const trace_t* trace, const vec3_t from, const vec3_t impact)
 {
 	const edict_t *targetEdict = trace->ent;
 
@@ -572,7 +572,7 @@ void G_EventEndRoundAnnounce (const player_t *player)
 	gi.EndEvents();
 }
 
-void G_EventStart (const player_t *player, qboolean teamplay)
+void G_EventStart (const player_t *player, bool teamplay)
 {
 	gi.AddEvent(G_PlayerToPM(player), EV_START | EVENT_INSTANTLY);
 	gi.WriteByte(teamplay);

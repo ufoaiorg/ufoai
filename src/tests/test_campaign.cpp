@@ -108,7 +108,7 @@ static int UFO_InitSuiteCampaign (void)
 	GAME_InitStartup();
 
 	OBJZERO(cls);
-	Com_ParseScripts(qfalse);
+	Com_ParseScripts(false);
 
 	Cmd_ExecuteString("game_setmode campaigns");
 
@@ -161,7 +161,7 @@ static base_t* CreateBase (const char *name, const vec2_t pos)
 
 	CU_ASSERT_PTR_NOT_NULL_FATAL(campaign);
 
-	RS_InitTree(campaign, qfalse);
+	RS_InitTree(campaign, false);
 	E_InitialEmployees(campaign);
 	base = B_Build(campaign, pos, name);
 	CU_ASSERT_PTR_NOT_NULL_FATAL(base);
@@ -239,7 +239,7 @@ static void testAircraftHandling (void)
 	/* cleanup for the following tests */
 	E_DeleteAllEmployees(NULL);
 
-	base->founded = qfalse;
+	base->founded = false;
 }
 
 static void testEmployeeHandling (void)
@@ -293,7 +293,7 @@ static void testEmployeeHandling (void)
 		employee_t *e = E_CreateEmployee(EMPL_PILOT, NULL, NULL);
 		int cnt;
 		CU_ASSERT_PTR_NOT_NULL(e);
-		cnt = E_RefreshUnhiredEmployeeGlobalList(EMPL_PILOT, qfalse);
+		cnt = E_RefreshUnhiredEmployeeGlobalList(EMPL_PILOT, false);
 		CU_ASSERT_EQUAL(cnt, 1);
 		e = E_GetUnhired(EMPL_PILOT);
 		CU_ASSERT_PTR_NOT_NULL(e);
@@ -349,7 +349,7 @@ static void testBaseBuilding (void)
 	/* cleanup for the following tests */
 	E_DeleteAllEmployees(NULL);
 
-	base->founded = qfalse;
+	base->founded = false;
 }
 
 static void testAutoMissions (void)
@@ -386,9 +386,9 @@ static void testAutoMissions (void)
 	CU_ASSERT_PTR_NOT_NULL_FATAL(aircraft);
 	CU_ASSERT_TRUE(AIR_GetTeamSize(aircraft) > 0);
 
-	mission = CP_CreateNewMission(INTERESTCATEGORY_RECON, qfalse);
+	mission = CP_CreateNewMission(INTERESTCATEGORY_RECON, false);
 	Vector2Copy(pos, mission->pos);
-	mission->posAssigned = qtrue;
+	mission->posAssigned = true;
 	mission->mapDef = Com_GetMapDefinitionByID("farm2");
 	CU_ASSERT_PTR_NOT_NULL(mission);
 
@@ -480,7 +480,7 @@ static void testTransferItem (void)
 	/* cleanup for the following tests */
 	E_DeleteAllEmployees(NULL);
 
-	base->founded = qfalse;
+	base->founded = false;
 }
 
 static void testTransferAircraft (void)
@@ -543,7 +543,7 @@ static void testResearch (void)
 	employee_t *employee;
 
 	ResetCampaignData();
-	RS_MarkResearchable(qtrue, NULL);
+	RS_MarkResearchable(true, NULL);
 
 	laserTech = RS_GetTechByID("rs_laser");
 	CU_ASSERT_PTR_NOT_NULL_FATAL(laserTech);
@@ -562,7 +562,7 @@ static void testResearch (void)
 	CU_ASSERT_EQUAL(laserTech->scientists, 1);
 	CU_ASSERT_EQUAL(laserTech->statusResearch, RS_RUNNING);
 
-	CU_ASSERT_EQUAL(heavyLaserTech->statusResearchable, qfalse);
+	CU_ASSERT_EQUAL(heavyLaserTech->statusResearchable, false);
 
 	n = laserTech->time * 1.25;
 	for (i = 0; i < n; i++) {
@@ -573,12 +573,12 @@ static void testResearch (void)
 	CU_ASSERT_EQUAL(RS_ResearchRun(), 1);
 	CU_ASSERT_EQUAL(laserTech->statusResearch, RS_FINISH);
 
-	CU_ASSERT_EQUAL(heavyLaserTech->statusResearchable, qtrue);
+	CU_ASSERT_EQUAL(heavyLaserTech->statusResearchable, true);
 
 	/* cleanup for the following tests */
 	E_DeleteAllEmployees(NULL);
 
-	base->founded = qfalse;
+	base->founded = false;
 }
 
 static void testProductionItem (void)
@@ -623,7 +623,7 @@ static void testProductionItem (void)
 	/* cleanup for the following tests */
 	E_DeleteAllEmployees(NULL);
 
-	base->founded = qfalse;
+	base->founded = false;
 }
 
 static void testProductionAircraft (void)
@@ -692,7 +692,7 @@ static void testProductionAircraft (void)
 	/* cleanup for the following tests */
 	E_DeleteAllEmployees(NULL);
 
-	base->founded = qfalse;
+	base->founded = false;
 }
 
 static void testDisassembly (void)
@@ -743,13 +743,13 @@ static void testDisassembly (void)
 	/* cleanup for the following tests */
 	E_DeleteAllEmployees(NULL);
 
-	base->founded = qfalse;
+	base->founded = false;
 }
 
 static void testMap (void)
 {
 	vec2_t pos;
-	qboolean coast = qfalse;
+	bool coast = false;
 
 	ResetCampaignData();
 
@@ -801,7 +801,7 @@ static void testAirFight (void)
 	CU_ASSERT_TRUE(AIR_IsAircraftOnGeoscape(aircraft));
 
 	/* prepare the mission */
-	mission = CP_CreateNewMission(INTERESTCATEGORY_INTERCEPT, qtrue);
+	mission = CP_CreateNewMission(INTERESTCATEGORY_INTERCEPT, true);
 	CU_ASSERT_PTR_NOT_NULL_FATAL(mission);
 	CU_ASSERT_EQUAL(mission->stage, STAGE_NOT_ACTIVE);
 	CP_InterceptNextStage(mission);
@@ -845,7 +845,7 @@ static void testAirFight (void)
 	/* cleanup for the following tests */
 	E_DeleteAllEmployees(NULL);
 
-	base->founded = qfalse;
+	base->founded = false;
 }
 
 static void testGeoscape (void)
@@ -865,7 +865,7 @@ static void testRadar (void)
 
 	base = CreateBase("unittestradar", destination);
 
-	mission = CP_CreateNewMission(INTERESTCATEGORY_INTERCEPT, qtrue);
+	mission = CP_CreateNewMission(INTERESTCATEGORY_INTERCEPT, true);
 	ufo = UFO_AddToGeoscape(ufoType, destination, mission);
 	Vector2Copy(destination, ufo->pos);
 	UFO_SendToDestination(ufo, destination);
@@ -873,12 +873,12 @@ static void testRadar (void)
 	CU_ASSERT_TRUE(VectorEqual(ufo->pos, ufo->pos));
 	/* to ensure that the UFOs are really detected when they are in range */
 	base->radar.ufoDetectionProbability = 1.0;
-	CU_ASSERT_TRUE(RADAR_CheckUFOSensored(&base->radar, base->pos, ufo, qfalse));
+	CU_ASSERT_TRUE(RADAR_CheckUFOSensored(&base->radar, base->pos, ufo, false));
 
 	/* cleanup for the following tests */
 	E_DeleteAllEmployees(NULL);
 
-	base->founded = qfalse;
+	base->founded = false;
 }
 
 static void testNation (void)
@@ -905,7 +905,7 @@ static void testMarket (void)
 
 	campaign = GetCampaign();
 
-	RS_InitTree(campaign, qfalse);
+	RS_InitTree(campaign, false);
 
 	BS_InitMarket(campaign);
 
@@ -966,7 +966,7 @@ static void testSaveLoad (void)
 		E_DeleteAllEmployees(NULL);
 	}
 
-	base->founded = qfalse;
+	base->founded = false;
 }
 
 static void testCampaignRun (void)
@@ -985,7 +985,7 @@ static void testCampaignRun (void)
 
 	campaign = GetCampaign();
 
-	RS_InitTree(campaign, qfalse);
+	RS_InitTree(campaign, false);
 
 	BS_InitMarket(campaign);
 
@@ -999,7 +999,7 @@ static void testCampaignRun (void)
 	/* cleanup for the following tests */
 	E_DeleteAllEmployees(NULL);
 
-	base->founded = qfalse;
+	base->founded = false;
 }
 
 static void testLoad (void)
@@ -1076,7 +1076,7 @@ static void testCampaignDateHandling (void)
 
 	campaign = GetCampaign();
 
-	RS_InitTree(campaign, qfalse);
+	RS_InitTree(campaign, false);
 
 	BS_InitMarket(campaign);
 
@@ -1085,7 +1085,7 @@ static void testCampaignDateHandling (void)
 	ccs.date.sec = 23 * 60 * 60;
 	/** @todo fix magic number */
 	ccs.gameLapse = 7;
-	ccs.paid = qtrue;
+	ccs.paid = true;
 	CP_UpdateTime();
 	CP_CampaignRun(campaign, 1);
 	CU_ASSERT_FALSE(ccs.paid);
@@ -1094,7 +1094,7 @@ static void testCampaignDateHandling (void)
 	/* cleanup for the following tests */
 	E_DeleteAllEmployees(NULL);
 
-	base->founded = qfalse;
+	base->founded = false;
 }
 
 static void testHospital (void)
@@ -1135,7 +1135,7 @@ static void testHospital (void)
 	/* cleanup for the following tests */
 	E_DeleteAllEmployees(NULL);
 
-	base->founded = qfalse;
+	base->founded = false;
 }
 
 static void testBuildingConstruction (void)
@@ -1172,14 +1172,14 @@ static void testBuildingConstruction (void)
 	else
 		x += 2;
 	/* reset blocked status if set */
-	base->map[y][x].blocked = qfalse;
+	base->map[y][x].blocked = false;
 	/* try to build (should fail) */
 	building1 = B_SetBuildingByClick(base, buildingTemplate, y, x);
 	CU_ASSERT_PTR_NULL_FATAL(building1);
 
 	/* next to the entrance it should succeed */
 	x = (x + entrance->pos[0]) /2;
-	base->map[y][x].blocked = qfalse;
+	base->map[y][x].blocked = false;
 	building1 = B_SetBuildingByClick(base, buildingTemplate, y, x);
 	CU_ASSERT_PTR_NOT_NULL_FATAL(building1);
 
@@ -1226,14 +1226,14 @@ static void testBuildingConstruction (void)
 	/* cleanup for the following tests */
 	E_DeleteAllEmployees(NULL);
 
-	base->founded = qfalse;
+	base->founded = false;
 }
 
 /* https://sourceforge.net/tracker/index.php?func=detail&aid=3090011&group_id=157793&atid=805242 */
 static void test3090011 (void)
 {
 	const char *error = NULL;
-	qboolean success;
+	bool success;
 
 	ResetCampaignData();
 
@@ -1243,7 +1243,7 @@ static void test3090011 (void)
 	UFO_CU_ASSERT_TRUE_MSG(success, error);
 }
 
-static qboolean skipTest (const mapDef_t *md)
+static bool skipTest (const mapDef_t *md)
 {
 	const char *map = md->id;
 	return Q_streq(map, "baseattack") || Q_streq(map, "rescue") || Q_streq(map, "alienbase");
@@ -1309,7 +1309,7 @@ static void testTerrorMissions (void)
 			continue;
 		/* skip mapDefs which don't support UFO types that do terror missions */
 		if (!LIST_IsEmpty(md->ufos)) {
-			qboolean found = qfalse;
+			bool found = false;
 			for (i = 0; i < numUfoTypes; i++) {
 				ufoType_t ufoType = (ufoType_t)i;
 				const aircraft_t *ufo = UFO_GetByType(ufoTypes[ufoType]);
@@ -1318,7 +1318,7 @@ static void testTerrorMissions (void)
 					continue;
 
 				if (LIST_ContainsString(md->ufos, ufo->id)) {
-					found = qtrue;
+					found = true;
 					break;
 				}
 			}
@@ -1338,7 +1338,7 @@ static void testRandomPosMissions (void)
 	MapDef_ForeachSingleplayerCampaign(md) {
 		if (!skipTest(md)) {
 			mission_t mission;
-			qboolean result;
+			bool result;
 			OBJZERO(mission);
 			result = CP_GetRandomPosOnGeoscapeWithParameters(mission.pos, md->terrains, md->cultures, md->populations, NULL);
 			UFO_CU_ASSERT_TRUE_MSG(result, va("could not find a mission for mapdef %s", md->id));

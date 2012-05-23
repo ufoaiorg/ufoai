@@ -77,7 +77,7 @@ static void CP_SupplyMissionLeave (mission_t *mission)
 	CP_MissionDisableTimeLimit(mission);
 	UFO_SetRandomDest(mission->ufo);
 	/* Display UFO on geoscape if it is detected */
-	mission->ufo->landed = qfalse;
+	mission->ufo->landed = false;
 }
 
 /**
@@ -108,7 +108,7 @@ static void CP_SupplySetStayAtBase (mission_t *mission)
 	AB_SupplyBase(mission->data.alienBase, mission->ufo->detected);
 
 	/* ufo becomes invisible on geoscape */
-	CP_UFORemoveFromGeoscape(mission, qfalse);
+	CP_UFORemoveFromGeoscape(mission, false);
 }
 
 /**

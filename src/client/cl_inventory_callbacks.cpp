@@ -301,7 +301,7 @@ static void INV_UpdateObject_f (void)
 {
 	int num;
 	const objDef_t *obj;
-	qboolean changeTab;
+	bool changeTab;
 
 	/* check syntax */
 	if (Cmd_Argc() < 2) {
@@ -312,7 +312,7 @@ static void INV_UpdateObject_f (void)
 	if (Cmd_Argc() == 3)
 		changeTab = atoi(Cmd_Argv(2)) >= 1;
 	else
-		changeTab = qtrue;
+		changeTab = true;
 
 	num = atoi(Cmd_Argv(1));
 	if (num < 0 || num >= csi.numODs) {

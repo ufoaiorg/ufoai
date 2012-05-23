@@ -117,7 +117,7 @@ STATIC DEFINITION
 */
 
 /* Functions */
-static qboolean MAP_IsMapPositionSelected(const uiNode_t* node, const vec2_t pos, int x, int y);
+static bool MAP_IsMapPositionSelected(const uiNode_t* node, const vec2_t pos, int x, int y);
 static void MAP3D_ScreenToMap(const uiNode_t* node, int x, int y, vec2_t pos);
 static void MAP_ScreenToMap(const uiNode_t* node, int x, int y, vec2_t pos);
 
@@ -176,16 +176,16 @@ static void MAP_MultiSelectExecuteAction_f (void)
 {
 	int selected, id;
 	aircraft_t* aircraft;
-	qboolean multiSelection = qfalse;
+	bool multiSelection = false;
 
 	if (Cmd_Argc() < 2) {
 		/* Direct call from code, not from a popup menu */
 		selected = 0;
 	} else {
 		/* Call from a geoscape popup menu (popup_multi_selection) */
-		cgi->UI_PopWindow(qfalse);
+		cgi->UI_PopWindow(false);
 		selected = atoi(Cmd_Argv(1));
-		multiSelection = qtrue;
+		multiSelection = true;
 	}
 
 	if (selected < 0 || selected >= multiSelect.nbSelect)
@@ -274,7 +274,7 @@ static void MAP_MultiSelectExecuteAction_f (void)
  * @param[in] y Mouse click Y coordinate
  * @return True if the event is used for something
  */
-qboolean MAP_MapClick (uiNode_t* node, int x, int y)
+bool MAP_MapClick (uiNode_t* node, int x, int y)
 {
 	aircraft_t *ufo;
 	base_t *base;
@@ -296,9 +296,9 @@ qboolean MAP_MapClick (uiNode_t* node, int x, int y)
 				CP_GameTimeStop();
 				Cmd_ExecuteString("mn_set_base_title");
 				cgi->UI_PushWindow("popup_newbase");
-				return qtrue;
+				return true;
 			}
-			return qfalse;
+			return false;
 		}
 		break;
 	case MA_NEWINSTALLATION:
@@ -306,7 +306,7 @@ qboolean MAP_MapClick (uiNode_t* node, int x, int y)
 			Vector2Copy(pos, ccs.newBasePos);
 			CP_GameTimeStop();
 			cgi->UI_PushWindow("popup_newinstallation");
-			return qtrue;
+			return true;
 		}
 		break;
 	case MA_UFORADAR:
@@ -360,19 +360,19 @@ qboolean MAP_MapClick (uiNode_t* node, int x, int y)
 	if (multiSelect.nbSelect == 1) {
 		/* Execute directly action for the only one element selected */
 		Cmd_ExecuteString("multi_select_click");
-		return qtrue;
+		return true;
 	} else if (multiSelect.nbSelect > 1) {
 		/* Display popup for multi selection */
 		cgi->UI_RegisterText(TEXT_MULTISELECTION, multiSelect.popupText);
 		CP_GameTimeStop();
 		cgi->UI_PushWindow("popup_multi_selection");
-		return qtrue;
+		return true;
 	} else {
 		aircraft_t *aircraft = MAP_GetSelectedAircraft();
 		/* Nothing selected */
 		if (!aircraft) {
 			MAP_ResetAction();
-			return qfalse;
+			return false;
 		}
 
 		if (AIR_IsAircraftOnGeoscape(aircraft) && AIR_AircraftHasEnoughFuel(aircraft, pos)) {
@@ -381,10 +381,10 @@ qboolean MAP_MapClick (uiNode_t* node, int x, int y)
 			aircraft->status = AIR_TRANSIT;
 			aircraft->time = 0;
 			aircraft->point = 0;
-			return qtrue;
+			return true;
 		}
 	}
-	return qfalse;
+	return false;
 }
 
 
@@ -401,16 +401,16 @@ GEOSCAPE DRAWING AND COORDINATES
 /**
  * @brief Tell if the specified position is considered clicked
  */
-static qboolean MAP_IsMapPositionSelected (const uiNode_t* node, const vec2_t pos, int x, int y)
+static bool MAP_IsMapPositionSelected (const uiNode_t* node, const vec2_t pos, int x, int y)
 {
 	int msx, msy;
 
 	if (MAP_AllMapToScreen(node, pos, &msx, &msy, NULL))
 		if (x >= msx - UI_MAP_DIST_SELECTION && x <= msx + UI_MAP_DIST_SELECTION
 		 && y >= msy - UI_MAP_DIST_SELECTION && y <= msy + UI_MAP_DIST_SELECTION)
-			return qtrue;
+			return true;
 
-	return qfalse;
+	return false;
 }
 
 /** @brief radius of the globe in screen coordinates */
@@ -425,10 +425,10 @@ static qboolean MAP_IsMapPositionSelected (const uiNode_t* node, const vec2_t po
  * @param[out] z z value of the given latitude and longitude - might also be NULL if not needed
  * @sa MAP_MapToScreen
  * @sa MAP3D_ScreenToMap
- * @return qtrue if the point is visible, qfalse else (if it's outside the node or on the wrong side of the earth).
+ * @return true if the point is visible, false else (if it's outside the node or on the wrong side of the earth).
  * @note In the function, we do the opposite of MAP3D_ScreenToMap
  */
-static qboolean MAP_3DMapToScreen (const uiNode_t* node, const vec2_t pos, int *x, int *y, int *z)
+static bool MAP_3DMapToScreen (const uiNode_t* node, const vec2_t pos, int *x, int *y, int *z)
 {
 	vec2_t mid;
 	vec3_t v, v1, rotationAxis;
@@ -457,13 +457,13 @@ static qboolean MAP_3DMapToScreen (const uiNode_t* node, const vec2_t pos, int *
 
 	/* if the point is on the wrong side of the earth, the player cannot see it */
 	if (v[2] > 0)
-		return qfalse;
+		return false;
 
 	/* if the point is outside the screen, the player cannot see it */
 	if (*x < ccs.mapPos[0] && *y < ccs.mapPos[1] && *x > ccs.mapPos[0] + ccs.mapSize[0] && *y > ccs.mapPos[1] + ccs.mapSize[1])
-		return qfalse;
+		return false;
 
-	return qtrue;
+	return true;
 }
 
 /**
@@ -472,11 +472,11 @@ static qboolean MAP_3DMapToScreen (const uiNode_t* node, const vec2_t pos, int *
  * @param[in] pos Position on the map described by longitude and latitude
  * @param[out] x X coordinate on the screen
  * @param[out] y Y coordinate on the screen
- * @returns qtrue if the screen position is within the boundaries of the menu
- * node. Otherwise returns qfalse.
+ * @returns true if the screen position is within the boundaries of the menu
+ * node. Otherwise returns false.
  * @sa MAP_3DMapToScreen
  */
-static qboolean MAP_MapToScreen (const uiNode_t* node, const vec2_t pos, int *x, int *y)
+static bool MAP_MapToScreen (const uiNode_t* node, const vec2_t pos, int *x, int *y)
 {
 	float sx;
 
@@ -495,8 +495,8 @@ static qboolean MAP_MapToScreen (const uiNode_t* node, const vec2_t pos, int *x,
 
 	if (*x < ccs.mapPos[0] && *y < ccs.mapPos[1] &&
 		*x > ccs.mapPos[0] + ccs.mapSize[0] && *y > ccs.mapPos[1] + ccs.mapSize[1])
-		return qfalse;
-	return qtrue;
+		return false;
+	return true;
 }
 
 /**
@@ -506,11 +506,11 @@ static qboolean MAP_MapToScreen (const uiNode_t* node, const vec2_t pos, int *x,
  * @param[out] x Pointer to the X coordinate on the screen
  * @param[out] y Pointer to the Y coordinate on the screen
  * @param[out] z Pointer to the Z coordinate on the screen (may be NULL if not needed)
- * @returns qtrue if pos corresponds to a point which is visible on the screen. Otherwise returns qfalse.
+ * @returns true if pos corresponds to a point which is visible on the screen. Otherwise returns false.
  * @sa MAP_MapToScreen
  * @sa MAP_3DMapToScreen
  */
-qboolean MAP_AllMapToScreen (const uiNode_t* node, const vec2_t pos, int *x, int *y, int *z)
+bool MAP_AllMapToScreen (const uiNode_t* node, const vec2_t pos, int *x, int *y, int *z)
 {
 	if (cl_3dmap->integer)
 		return MAP_3DMapToScreen(node, pos, x, y, z);
@@ -796,7 +796,7 @@ void MAP_MapDrawEquidistantPoints (const uiNode_t* node, const vec2_t center, co
 	int i, xCircle, yCircle;
 	screenPoint_t pts[CIRCLE_DRAW_POINTS + 1];
 	vec2_t posCircle;
-	qboolean oldDraw = qfalse;
+	bool oldDraw = false;
 	int numPoints = 0;
 	vec3_t initialVector, rotationAxis, currentPoint, centerPos;
 
@@ -811,14 +811,14 @@ void MAP_MapDrawEquidistantPoints (const uiNode_t* node, const vec2_t center, co
 
 	/* Now, each equidistant point is given by a rotation around centerPos */
 	for (i = 0; i <= CIRCLE_DRAW_POINTS; i++) {
-		qboolean draw = qfalse;
+		bool draw = false;
 		const float degrees = i * 360.0f / (float)CIRCLE_DRAW_POINTS;
 		RotatePointAroundVector(currentPoint, centerPos, initialVector, degrees);
 		VecToPolar(currentPoint, posCircle);
 		if (MAP_AllMapToScreen(node, posCircle, &xCircle, &yCircle, NULL)) {
-			draw = qtrue;
+			draw = true;
 			if (!cl_3dmap->integer && numPoints != 0 && abs(pts[numPoints - 1].x - xCircle) > 512)
-				oldDraw = qfalse;
+				oldDraw = false;
 		}
 
 		/* if moving from a point of the screen to a distant one, draw the path we already calculated, and begin a new path
@@ -1058,7 +1058,7 @@ static void MAP_StartCenter (void)
 
 	ccs.smoothFinalZoom = ZOOM_LIMIT;
 	ccs.smoothDeltaZoom = fabs(ccs.smoothFinalZoom - ccs.zoom);
-	ccs.smoothRotation = qtrue;
+	ccs.smoothRotation = true;
 }
 
 /**
@@ -1205,7 +1205,7 @@ static void MAP_GetGeoscapeAngle (float *vector)
 
 /**
  * @brief Switch to next model on 2D and 3D geoscape.
- * @note Set @c smoothRotation to @c qtrue to allow a smooth rotation in MAP_DrawMap.
+ * @note Set @c smoothRotation to @c true to allow a smooth rotation in MAP_DrawMap.
  * @note This function sets the value of smoothFinalGlobeAngle (for 3D) or smoothFinal2DGeoscapeCenter (for 2D),
  *  which contains the final value that ccs.angles or ccs.centre must respectively take.
  * @sa MAP_GetGeoscapeAngle
@@ -1278,7 +1278,7 @@ static void MAP3D_SmoothRotate (void)
 
 	/* if we reach this point, that means that movement is over */
 	VectorCopy(ccs.smoothFinalGlobeAngle, ccs.angles);
-	ccs.smoothRotation = qfalse;
+	ccs.smoothRotation = false;
 	ccs.zoom = ccs.smoothFinalZoom;
 }
 
@@ -1289,7 +1289,7 @@ static void MAP3D_SmoothRotate (void)
  */
 void MAP_StopSmoothMovement (void)
 {
-	ccs.smoothRotation = qfalse;
+	ccs.smoothRotation = false;
 }
 
 #define SMOOTHING_STEP_2D	0.02f
@@ -1310,7 +1310,7 @@ static void MAP_SmoothTranslate (void)
 		ccs.center[0] = ccs.smoothFinal2DGeoscapeCenter[0];
 		ccs.center[1] = ccs.smoothFinal2DGeoscapeCenter[1];
 		ccs.zoom = ccs.smoothFinalZoom;
-		ccs.smoothRotation = qfalse;
+		ccs.smoothRotation = false;
 	} else {
 		const float diffZoom = ccs.smoothFinalZoom - ccs.zoom;
 		ccs.center[0] = ccs.center[0] + SMOOTHING_STEP_2D * dist1 / length;
@@ -1366,7 +1366,7 @@ static void MAP_DrawBeam (const uiNode_t* node, const vec3_t start, const vec3_t
 static void MAP_DrawMapOneMission (const uiNode_t* node, const mission_t *ms)
 {
 	int x, y;
-	const qboolean isCurrentSelectedMission = MAP_IsMissionSelected(ms);
+	const bool isCurrentSelectedMission = MAP_IsMissionSelected(ms);
 
 	if (isCurrentSelectedMission)
 		Cvar_Set("mn_mapdaytime", MAP_IsNight(ms->pos) ? _("Night") : _("Day"));
@@ -1410,7 +1410,7 @@ static void MAP_DrawMapOneMission (const uiNode_t* node, const mission_t *ms)
  * @pre installation is not NULL.
  */
 static void MAP_DrawMapOneInstallation (const uiNode_t* node, const installation_t *installation,
-	qboolean oneUFOVisible, const char* font)
+	bool oneUFOVisible, const char* font)
 {
 	const installationTemplate_t *tpl = installation->installationTemplate;
 	int x, y;
@@ -1453,7 +1453,7 @@ static void MAP_DrawMapOneInstallation (const uiNode_t* node, const installation
  * @param[in] font Default font.
  */
 static void MAP_DrawMapOneBase (const uiNode_t* node, const base_t *base,
-	qboolean oneUFOVisible, const char* font)
+	bool oneUFOVisible, const char* font)
 {
 	int x, y;
 
@@ -1516,7 +1516,7 @@ static void MAP_DrawAircraftHealthBar (const uiNode_t* node, const aircraft_t *a
 	vec4_t color;
 	int centerX;
 	int centerY;
-	qboolean visible;
+	bool visible;
 
 	if (!aircraft)
 		return;
@@ -1548,7 +1548,7 @@ static void MAP_DrawAircraftHealthBar (const uiNode_t* node, const aircraft_t *a
  * @param[in] aircraft Pointer to the aircraft to draw.
  * @param[in] oneUFOVisible Is there at least one UFO visible on the geoscape?
  */
-static void MAP_DrawMapOnePhalanxAircraft (const uiNode_t* node, aircraft_t *aircraft, qboolean oneUFOVisible)
+static void MAP_DrawMapOnePhalanxAircraft (const uiNode_t* node, aircraft_t *aircraft, bool oneUFOVisible)
 {
 	float angle;
 
@@ -1746,8 +1746,8 @@ static void MAP_DrawMapMarkers (const uiNode_t* node)
 	base_t *base;
 
 	const vec4_t white = {1.f, 1.f, 1.f, 0.7f};
-	qboolean showXVI = qfalse;
-	qboolean oneUFOVisible = qfalse;
+	bool showXVI = false;
+	bool oneUFOVisible = false;
 	static char buffer[512] = "";
 	int maxInterpolationPoints;
 
@@ -1832,7 +1832,7 @@ static void MAP_DrawMapMarkers (const uiNode_t* node)
 		vec3_t drawPos = {0, 0, 0};
 
 		if (projectile->hasMoved) {
-			projectile->hasMoved = qfalse;
+			projectile->hasMoved = false;
 			VectorCopy(projectile->pos[0], drawPos);
 		} else {
 			if (maxInterpolationPoints > 2 && projectile->numInterpolationPoints < maxInterpolationPoints) {
@@ -1913,7 +1913,7 @@ void MAP_DrawMap (const uiNode_t* node, const campaign_t *campaign)
 
 	/* Draw the map and markers */
 	if (cl_3dmap->integer) {
-		qboolean disableSolarRender = qfalse;
+		bool disableSolarRender = false;
 		/** @todo I think this check is wrong; isn't zoom clamped to this value already?
 		 *  A value of 3.3 seems about right for me, but this should probably be fixed...*/
 #if 0
@@ -1921,9 +1921,9 @@ void MAP_DrawMap (const uiNode_t* node, const campaign_t *campaign)
 #else
 		if (ccs.zoom > 3.3)
 #endif
-			disableSolarRender = qtrue;
+			disableSolarRender = true;
 
-		R_EnableRenderbuffer(qtrue);
+		R_EnableRenderbuffer(true);
 
 		if (ccs.smoothRotation)
 			MAP3D_SmoothRotate();
@@ -1935,7 +1935,7 @@ void MAP_DrawMap (const uiNode_t* node, const campaign_t *campaign)
 		MAP_DrawMapMarkers(node);
 
 		R_DrawBloom();
-		R_EnableRenderbuffer(qfalse);
+		R_EnableRenderbuffer(false);
 	} else {
 		/* the last q value for the 2d geoscape night overlay */
 		static float lastQ = 0.0f;
@@ -2076,7 +2076,7 @@ void MAP_NotifyMissionRemoved (const mission_t* mission)
  * @param[in] ufo Pointer to the ufo has been removed
  * @param[in] destroyed True if the UFO has been destroyed, false if it's been only set invisible (landed)
  */
-void MAP_NotifyUFORemoved (const aircraft_t* ufo, qboolean destroyed)
+void MAP_NotifyUFORemoved (const aircraft_t* ufo, bool destroyed)
 {
 	MAP_UpdateGeoscapeDock();
 
@@ -2210,7 +2210,7 @@ static const char* MAP_GetPopulationType (const byte* color)
  * @param[in] pos Map Coordinates to get the terrain type from
  * @return returns the zone name
  */
-static inline const char* MAP_GetTerrainTypeByPos (const vec2_t pos, qboolean *coast)
+static inline const char* MAP_GetTerrainTypeByPos (const vec2_t pos, bool *coast)
 {
 	const byte* color = MAP_GetColor(pos, MAPTYPE_TERRAIN, coast);
 	return MAP_GetTerrainType(color);
@@ -2274,7 +2274,7 @@ int MAP_GetCivilianNumberByPosition (const vec2_t pos)
  */
 void MAP_PrintParameterStringByPos (const vec2_t pos)
 {
-	qboolean coast = qfalse;
+	bool coast = false;
 	const char *terrainType = MAP_GetTerrainTypeByPos(pos, &coast);
 	const char *cultureType = MAP_GetCultureTypeByPos(pos);
 	const char *populationType = MAP_GetPopulationTypeByPos(pos);
@@ -2304,7 +2304,7 @@ void MAP_CheckPositionBoundaries (float *pos)
  * @param[in] pos Given position.
  * @return True if given position is Night.
  */
-qboolean MAP_IsNight (const vec2_t pos)
+bool MAP_IsNight (const vec2_t pos)
 {
 	float p, q, a, root, x;
 
@@ -2334,7 +2334,7 @@ qboolean MAP_IsNight (const vec2_t pos)
  * @sa MAP_GetCultureType
  * @sa MAP_GetPopulationType
  */
-const byte *MAP_GetColor (const vec2_t pos, mapType_t type, qboolean *coast)
+const byte *MAP_GetColor (const vec2_t pos, mapType_t type, bool *coast)
 {
 	int x, y;
 	int width, height;
@@ -2391,7 +2391,7 @@ const byte *MAP_GetColor (const vec2_t pos, mapType_t type, qboolean *coast)
 	color = mask + 4 * (x + y * width);
 	if (coast != NULL) {
 		if (MapIsWater(color)) {
-			*coast = qfalse;
+			*coast = false;
 		} else {
 			/* only check four directions */
 			const int gap = 4;
@@ -2449,30 +2449,30 @@ base_t* MAP_PositionCloseToBase (const vec2_t pos)
  * @return true if a location was found, otherwise false. If the map is over water, return false
  * @note The name TCPNTypes comes from terrain, culture, population, nation types
  */
-qboolean MAP_PositionFitsTCPNTypes (const vec2_t pos, const linkedList_t* terrainTypes, const linkedList_t* cultureTypes, const linkedList_t* populationTypes, const linkedList_t* nations)
+bool MAP_PositionFitsTCPNTypes (const vec2_t pos, const linkedList_t* terrainTypes, const linkedList_t* cultureTypes, const linkedList_t* populationTypes, const linkedList_t* nations)
 {
-	qboolean coast = qfalse;
+	bool coast = false;
 	const char *terrainType = MAP_GetTerrainTypeByPos(pos, &coast);
 	const char *cultureType = MAP_GetCultureTypeByPos(pos);
 	const char *populationType = MAP_GetPopulationTypeByPos(pos);
 
 	if (MapIsWater(MAP_GetColor(pos, MAPTYPE_TERRAIN, NULL)))
-		return qfalse;
+		return false;
 
 	if (!terrainTypes || LIST_ContainsString(terrainTypes, terrainType) || (coast && LIST_ContainsString(terrainTypes, "coast"))) {
 		if (!cultureTypes || LIST_ContainsString(cultureTypes, cultureType)) {
 			if (!populationTypes || LIST_ContainsString(populationTypes, populationType)) {
 				const nation_t *nationAtPos = MAP_GetNation(pos);
 				if (!nations)
-					return qtrue;
+					return true;
 				if (nationAtPos && (!nations || LIST_ContainsString(nations, nationAtPos->id))) {
-					return qtrue;
+					return true;
 				}
 			}
 		}
 	}
 
-	return qfalse;
+	return false;
 }
 
 void MAP_Shutdown (void)
@@ -2573,7 +2573,7 @@ void MAP_Zoom_f (void)
 	} else {
 		VectorCopy(ccs.angles, ccs.smoothFinalGlobeAngle);
 		ccs.smoothDeltaLength = 0;
-		ccs.smoothRotation = qtrue;
+		ccs.smoothRotation = true;
 		ccs.smoothDeltaZoom = fabs(ccs.smoothFinalZoom - ccs.zoom);
 	}
 }
@@ -2640,7 +2640,7 @@ void MAP_Scroll_f (void)
 
 		ccs.smoothFinalZoom = ccs.zoom;
 		ccs.smoothDeltaZoom = 0.0f;
-		ccs.smoothRotation = qtrue;
+		ccs.smoothRotation = true;
 	} else {
 		int i;
 		/* shift the map */
@@ -2745,17 +2745,17 @@ static void MAP_DeactivateOverlay_f (void)
 	MAP_DeactivateOverlay(arg);
 }
 
-qboolean MAP_IsRadarOverlayActivated (void)
+bool MAP_IsRadarOverlayActivated (void)
 {
 	return cl_geoscape_overlay->integer & OVERLAY_RADAR;
 }
 
-qboolean MAP_IsNationOverlayActivated (void)
+bool MAP_IsNationOverlayActivated (void)
 {
 	return cl_geoscape_overlay->integer & OVERLAY_NATION;
 }
 
-qboolean MAP_IsXVIOverlayActivated (void)
+bool MAP_IsXVIOverlayActivated (void)
 {
 	return cl_geoscape_overlay->integer & OVERLAY_XVI;
 }

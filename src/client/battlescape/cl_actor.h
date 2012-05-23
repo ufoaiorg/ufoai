@@ -64,12 +64,12 @@ void CL_ActorReserveTUs(const le_t *le, reservation_types_t type, int tus);
 
 int CL_ActorMoveMode(const le_t *le, int length);
 void CL_ActorSetMode(le_t *actor, actorModes_t actorMode);
-qboolean CL_ActorFireModeActivated(const actorModes_t mode);
+bool CL_ActorFireModeActivated(const actorModes_t mode);
 void CL_ActorConditionalMoveCalc(le_t *le);
-qboolean CL_ActorSelect(le_t *le);
-qboolean CL_ActorSelectList(int num);
-qboolean CL_ActorSelectNext(void);
-qboolean CL_ActorSelectPrev(void);
+bool CL_ActorSelect(le_t *le);
+bool CL_ActorSelectList(int num);
+bool CL_ActorSelectNext(void);
+bool CL_ActorSelectPrev(void);
 void CL_ActorAddToTeamList(le_t *le);
 void CL_ActorRemoveFromTeamList(le_t *le);
 void CL_ActorCleanup(le_t *le);
@@ -89,10 +89,10 @@ void CL_NextRound_f(void);
 
 void CL_ResetMouseLastPos(void);
 void CL_ActorResetMoveLength(le_t *le);
-qboolean CL_ActorMouseTrace(void);
+bool CL_ActorMouseTrace(void);
 
-qboolean CL_AddActor(le_t *le, entity_t *ent);
-qboolean CL_AddUGV(le_t *le, entity_t *ent);
+bool CL_AddActor(le_t *le, entity_t *ent);
+bool CL_AddUGV(le_t *le, entity_t *ent);
 
 void CL_AddTargeting(void);
 void CL_AddPathing(void);

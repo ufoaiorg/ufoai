@@ -49,7 +49,7 @@ static CURLM	*multi = NULL;
 static int		handleCount = 0;
 static int		pendingCount = 0;
 static int		abortDownloads = HTTPDL_ABORT_NONE;
-static qboolean	downloadingPK3 = qfalse;
+static bool	downloadingPK3 = false;
 
 static void StripHighBits (char *string)
 {
@@ -65,11 +65,11 @@ static void StripHighBits (char *string)
 	p[0] = '\0';
 }
 
-static inline qboolean isvalidchar (int c)
+static inline bool isvalidchar (int c)
 {
 	if (!isalnum(c) && c != '_' && c != '-')
-		return qfalse;
-	return qtrue;
+		return false;
+	return true;
 }
 
 /**
@@ -251,7 +251,7 @@ void CL_SetHTTPServer (const char *URL)
 /**
  * @brief Cancel all downloads and nuke the queue.
  */
-void CL_CancelHTTPDownloads (qboolean permKill)
+void CL_CancelHTTPDownloads (bool permKill)
 {
 	if (permKill)
 		abortDownloads = HTTPDL_ABORT_HARD;
@@ -289,17 +289,17 @@ static dlhandle_t *CL_GetFreeDLHandle (void)
  * @brief Called from the precache check to queue a download.
  * @sa CL_CheckOrDownloadFile
  */
-qboolean CL_QueueHTTPDownload (const char *ufoPath)
+bool CL_QueueHTTPDownload (const char *ufoPath)
 {
 	/* no http server (or we got booted) */
 	if (!cls.downloadServer[0] || abortDownloads || !cl_http_downloads->integer)
-		return qfalse;
+		return false;
 
 	dlqueue_t** anchor = &cls.downloadQueue;
 	for (; *anchor; anchor = &(*anchor)->next) {
 		/* avoid sending duplicate requests */
 		if (Q_streq(ufoPath, (*anchor)->ufoPath))
-			return qtrue;
+			return true;
 	}
 
 	dlqueue_t* const q = Mem_AllocType(dlqueue_t);
@@ -322,7 +322,7 @@ qboolean CL_QueueHTTPDownload (const char *ufoPath)
 	/* if a download entry has made it this far, CL_FinishHTTPDownload is guaranteed to be called. */
 	pendingCount++;
 
-	return qtrue;
+	return true;
 }
 
 /**
@@ -331,10 +331,10 @@ qboolean CL_QueueHTTPDownload (const char *ufoPath)
  * busy still, it'll wait and CL_FinishHTTPDownload will pick up from where
  * it left.
  */
-qboolean CL_PendingHTTPDownloads (void)
+bool CL_PendingHTTPDownloads (void)
 {
 	if (cls.downloadServer[0] == '\0')
-		return qfalse;
+		return false;
 
 	return pendingCount + handleCount;
 }
@@ -344,48 +344,48 @@ qboolean CL_PendingHTTPDownloads (void)
  * @sa CL_CheckAndQueueDownload
  * @sa CL_RequestNextDownload
  */
-qboolean CL_CheckOrDownloadFile (const char *filename)
+bool CL_CheckOrDownloadFile (const char *filename)
 {
 	static char lastfilename[MAX_OSPATH] = "";
 
 	if (Q_strnull(filename))
-		return qtrue;
+		return true;
 
 	/* r1: don't attempt same file many times */
 	if (Q_streq(filename, lastfilename))
-		return qtrue;
+		return true;
 
 	Q_strncpyz(lastfilename, filename, sizeof(lastfilename));
 
 	if (strstr(filename, "..")) {
 		Com_Printf("Refusing to check a path with .. (%s)\n", filename);
-		return qtrue;
+		return true;
 	}
 
 	if (strchr(filename, ' ')) {
 		Com_Printf("Refusing to check a path containing spaces (%s)\n", filename);
-		return qtrue;
+		return true;
 	}
 
 	if (strchr(filename, ':')) {
 		Com_Printf("Refusing to check a path containing a colon (%s)\n", filename);
-		return qtrue;
+		return true;
 	}
 
 	if (filename[0] == '/') {
 		Com_Printf("Refusing to check a path starting with / (%s)\n", filename);
-		return qtrue;
+		return true;
 	}
 
 	if (FS_LoadFile(filename, NULL) != -1) {
 		/* it exists, no need to download */
-		return qtrue;
+		return true;
 	}
 
 	if (CL_QueueHTTPDownload(filename))
-		return qfalse;
+		return false;
 
-	return qtrue;
+	return true;
 }
 
 /**
@@ -398,8 +398,8 @@ static void CL_CheckAndQueueDownload (char *path)
 {
 	size_t		length;
 	const char	*ext;
-	qboolean	pak;
-	qboolean	gameLocal;
+	bool	pak;
+	bool	gameLocal;
 
 	StripHighBits(path);
 
@@ -414,9 +414,9 @@ static void CL_CheckAndQueueDownload (char *path)
 
 	if (Q_streq(ext, "pk3")) {
 		Com_Printf("NOTICE: Filelist is requesting a .pk3 file (%s)\n", path);
-		pak = qtrue;
+		pak = true;
 	} else
-		pak = qfalse;
+		pak = false;
 
 	if (!pak &&
 			!Q_streq(ext, "bsp") &&
@@ -440,11 +440,11 @@ static void CL_CheckAndQueueDownload (char *path)
 			Com_Printf("WARNING: @ prefix used on a pk3 file (%s) in filelist.\n", path);
 			return;
 		}
-		gameLocal = qtrue;
+		gameLocal = true;
 		path++;
 		length--;
 	} else
-		gameLocal = qfalse;
+		gameLocal = false;
 
 	if (strstr(path, "..") || !isvalidchar(path[0]) || !isvalidchar(path[length - 1]) || strstr(path, "//") ||
 		strchr(path, '\\') || (!pak && !strchr(path, '/')) || (pak && strchr(path, '/'))) {
@@ -454,7 +454,7 @@ static void CL_CheckAndQueueDownload (char *path)
 
 	/* by definition pk3s are game-local */
 	if (gameLocal || pak) {
-		qboolean exists;
+		bool exists;
 
 		/* search the user homedir to find the pk3 file */
 		if (pak) {
@@ -463,9 +463,9 @@ static void CL_CheckAndQueueDownload (char *path)
 			Com_sprintf(gamePath, sizeof(gamePath), "%s/%s", FS_Gamedir(), path);
 			f = fopen(gamePath, "rb");
 			if (!f)
-				exists = qfalse;
+				exists = false;
 			else {
-				exists = qtrue;
+				exists = true;
 				fclose(f);
 			}
 		} else
@@ -587,7 +587,7 @@ static void CL_FinishHTTPDownload (void)
 	long responseCode;
 	double timeTaken, fileSize;
 	char tempName[MAX_OSPATH];
-	qboolean isFile;
+	bool isFile;
 
 	do {
 		CURLMsg *msg = curl_multi_info_read(multi, &messagesInQueue);
@@ -621,9 +621,9 @@ static void CL_FinishHTTPDownload (void)
 
 		/* filelist processing is done on read */
 		if (dl->file)
-			isFile = qtrue;
+			isFile = true;
 		else
-			isFile = qfalse;
+			isFile = false;
 
 		if (isFile) {
 			fclose(dl->file);
@@ -648,7 +648,7 @@ static void CL_FinishHTTPDownload (void)
 			if (responseCode == 404) {
 				const char *extension = Com_GetExtension(dl->queueEntry->ufoPath);
 				if (extension != NULL && Q_streq(extension, "pk3"))
-					downloadingPK3 = qfalse;
+					downloadingPK3 = false;
 
 				if (isFile)
 					FS_RemoveFile(dl->filePath);
@@ -656,7 +656,7 @@ static void CL_FinishHTTPDownload (void)
 				curl_easy_getinfo(curl, CURLINFO_SIZE_DOWNLOAD, &fileSize);
 				if (fileSize > 512) {
 					/* ick */
-					isFile = qfalse;
+					isFile = false;
 					result = CURLE_FILESIZE_EXCEEDED;
 					Com_Printf("Oversized 404 body received (%d bytes), aborting HTTP downloading.\n", (int)fileSize);
 				} else {
@@ -681,12 +681,12 @@ static void CL_FinishHTTPDownload (void)
 			curl_multi_remove_handle(multi, dl->curl);
 			if (abortDownloads)
 				continue;
-			CL_CancelHTTPDownloads(qtrue);
+			CL_CancelHTTPDownloads(true);
 			continue;
 		default:
 			i = strlen(dl->queueEntry->ufoPath);
 			if (Q_streq(dl->queueEntry->ufoPath + i - 4, ".pk3"))
-				downloadingPK3 = qfalse;
+				downloadingPK3 = false;
 			if (isFile)
 				FS_RemoveFile(dl->filePath);
 			Com_Printf("HTTP download failed: %s\n", curl_easy_strerror(result));
@@ -698,7 +698,7 @@ static void CL_FinishHTTPDownload (void)
 			/* rename the temp file */
 			Com_sprintf(tempName, sizeof(tempName), "%s/%s", FS_Gamedir(), dl->queueEntry->ufoPath);
 
-			if (!FS_RenameFile(dl->filePath, tempName, qfalse))
+			if (!FS_RenameFile(dl->filePath, tempName, false))
 				Com_Printf("Failed to rename %s for some odd reason...", dl->filePath);
 
 			/* a pk3 file is very special... */
@@ -706,7 +706,7 @@ static void CL_FinishHTTPDownload (void)
 			if (Q_streq(tempName + i - 4, ".pk3")) {
 				FS_RestartFilesystem(NULL);
 				CL_ReVerifyHTTPQueue();
-				downloadingPK3 = qfalse;
+				downloadingPK3 = false;
 			}
 		}
 
@@ -755,7 +755,7 @@ static void CL_StartNextHTTPDownload (void)
 			/* ugly hack for pk3 file single downloading */
 			len = strlen(q->ufoPath);
 			if (len > 4 && !Q_strcasecmp(q->ufoPath + len - 4, ".pk3"))
-				downloadingPK3 = qtrue;
+				downloadingPK3 = true;
 
 			break;
 		}
@@ -795,7 +795,7 @@ void CL_RunHTTPDownloads (void)
 
 	if (ret != CURLM_OK) {
 		Com_Printf("curl_multi_perform error. Aborting HTTP downloads.\n");
-		CL_CancelHTTPDownloads(qtrue);
+		CL_CancelHTTPDownloads(true);
 	}
 
 	/* not enough downloads running, queue some more! */

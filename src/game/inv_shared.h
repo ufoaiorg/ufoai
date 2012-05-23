@@ -95,11 +95,11 @@ typedef struct fireDef_s {
 						 */
 	fireDefIndex_t fdIdx;		/**< Self link of the fd in the objDef_t->fd[][fdIdx] array. */
 
-	qboolean soundOnce;		/**< when set, firing sound is played only once, see CL_ActorDoThrow() and CL_ActorShootHidden() */
-	qboolean gravity;		/**< Does gravity has any influence on this item? */
-	qboolean launched;		/**< used for calculating parabolas in Com_GrenadeTarget() */
-	qboolean rolled;		/**< Can it be rolled - e.g. grenades - used in "Roll" firemodes, see Com_GrenadeTarget() */
-	qboolean reaction;		/**< This firemode can be used/selected for reaction fire.*/
+	bool soundOnce;		/**< when set, firing sound is played only once, see CL_ActorDoThrow() and CL_ActorShootHidden() */
+	bool gravity;		/**< Does gravity has any influence on this item? */
+	bool launched;		/**< used for calculating parabolas in Com_GrenadeTarget() */
+	bool rolled;		/**< Can it be rolled - e.g. grenades - used in "Roll" firemodes, see Com_GrenadeTarget() */
+	bool reaction;		/**< This firemode can be used/selected for reaction fire.*/
 	int throughWall;		/**< allow the shooting through a wall */
 	byte dmgweight;			/**< used in G_Damage() to apply damagetype effects - redundant with obj->dmgtype */
 	float speed;			/**< projectile-related; zero value means unlimited speed (most of the cases).
@@ -211,8 +211,8 @@ typedef struct craftitem_s {
 	float weaponSpeed;			/**< The speed of the projectile on geoscape */
 	float weaponDelay;			/**< The minimum delay between 2 shots */
 	int installationTime;		/**< The time needed to install/remove the item on an aircraft */
-	qboolean bullets;			/**< create bullets for the projectiles */
-	qboolean beam;				/**< create (laser/partivle) beam particles for the projectiles */
+	bool bullets;			/**< create bullets for the projectiles */
+	bool beam;				/**< create (laser/partivle) beam particles for the projectiles */
 	vec4_t beamColor;
 } craftitem_t;
 
@@ -235,19 +235,19 @@ typedef struct objDef_s {
 
 	float scale;			/**< scale value for images? and models */
 	vec3_t center;			/**< origin for models */
-	qboolean weapon;		/**< This item is a weapon or ammo. */
-	qboolean holdTwoHanded;		/**< The soldier needs both hands to hold this object. */
-	qboolean fireTwoHanded;		/**< The soldier needs both hands to fire using object. */
-	qboolean extension;		/**< This is an extension. (may not be headgear, too). */
-	qboolean headgear;		/**< This is a headgear. (may not be extension, too). */
-	qboolean thrown;		/**< This item can be thrown. */
-	qboolean isVirtual;	/**< virtual equipment don't show up in menus, if it's an ammo no item needed for reload */
-	qboolean isPrimary;
-	qboolean isSecondary;
-	qboolean isHeavy;
-	qboolean isMisc;
-	qboolean isUGVitem;
-	qboolean isDummy;
+	bool weapon;		/**< This item is a weapon or ammo. */
+	bool holdTwoHanded;		/**< The soldier needs both hands to hold this object. */
+	bool fireTwoHanded;		/**< The soldier needs both hands to fire using object. */
+	bool extension;		/**< This is an extension. (may not be headgear, too). */
+	bool headgear;		/**< This is a headgear. (may not be extension, too). */
+	bool thrown;		/**< This item can be thrown. */
+	bool isVirtual;	/**< virtual equipment don't show up in menus, if it's an ammo no item needed for reload */
+	bool isPrimary;
+	bool isSecondary;
+	bool isHeavy;
+	bool isMisc;
+	bool isUGVitem;
+	bool isDummy;
 
 	/* Weapon specific. */
 	int ammo;			/**< This value is set for weapon and it says how many bullets currently loaded clip would
@@ -256,9 +256,9 @@ typedef struct objDef_s {
 	int reload;			/**< Time units (TUs) for reloading the weapon. */
 	char reloadSound[MAX_VAR];	/**< Sound played when weapon is reloaded */
 	float reloadAttenuation;		/**< Attenuation of reload sound - less louder over distance - */
-	qboolean oneshot;	/**< This weapon contains its own ammo (it is loaded in the base).
+	bool oneshot;	/**< This weapon contains its own ammo (it is loaded in the base).
 						 * "int ammo" of objDef_s defines the amount of ammo used in oneshoot weapons. */
-	qboolean deplete;	/**< This weapon useless after all ("oneshot") ammo is used up.
+	bool deplete;	/**< This weapon useless after all ("oneshot") ammo is used up.
 						 * If true this item will not be collected on mission-end. (see INV_CollectinItems). */
 
 	int useable;		/**< Defines which team can use this item: TEAM_*.
@@ -293,7 +293,7 @@ typedef struct objDef_s {
 	int productionCost;	/**< Production costs for this item. */
 	int size;			/**< Size of an item, used in storage capacities. */
 	int weight;			/**< The weight of the item */
-	qboolean notOnMarket;		/**< True if this item should not be available on market. */
+	bool notOnMarket;		/**< True if this item should not be available on market. */
 } objDef_t;
 
 /**
@@ -314,17 +314,17 @@ typedef struct invDef_s {
 	char name[MAX_VAR];	/**< id from script files. */
 	containerIndex_t id;				/**< Special container id. See csi_t for the values to compare it with. */
 	/** Type of this container or inventory. */
-	qboolean single;	/**< Just a single item can be stored in this container. */
-	qboolean armour;	/**< Only armour can be stored in this container. */
-	qboolean extension;	/**< Only extension items can be stored in this container. */
-	qboolean headgear;	/**< Only headgear items can be stored in this container. */
-	qboolean all;		/**< Every item type can be stored in this container. */
-	qboolean temp;		/**< This is only a pointer to another inventory definitions. */
+	bool single;	/**< Just a single item can be stored in this container. */
+	bool armour;	/**< Only armour can be stored in this container. */
+	bool extension;	/**< Only extension items can be stored in this container. */
+	bool headgear;	/**< Only headgear items can be stored in this container. */
+	bool all;		/**< Every item type can be stored in this container. */
+	bool temp;		/**< This is only a pointer to another inventory definitions. */
 	uint32_t shape[SHAPE_BIG_MAX_HEIGHT];	/**< The inventory form/shape. */
 	int in, out;	/**< parsed: TU costs for moving items in and out. */
 
 	/** Scroll information. @sa inventory_t */
-	qboolean scroll;	/**< Set if the container is scrollable */
+	bool scroll;	/**< Set if the container is scrollable */
 } invDef_t;
 
 #define MAX_CONTAINERS	MAX_INVDEFS
@@ -340,7 +340,7 @@ typedef struct item_s {
 	const objDef_t *m;	/**< Pointer to ammo type. */
 	const objDef_t *t;	/**< Pointer to weapon. */
 	int amount;		/**< The amount of items of this type on the same x and y location in the container */
-	int rotated;	/**< If the item is currently displayed rotated (qtrue or 1) or not (qfalse or 0)
+	int rotated;	/**< If the item is currently displayed rotated (true or 1) or not (false or 0)
 					 * @note don't change this to anything smaller than 4 bytes - the network
 					 * parsing functions are expecting this to be at least 4 bytes */
 } item_t;
@@ -379,7 +379,7 @@ typedef struct equipDef_s {
 
 typedef struct damageType_s {
 	char id[MAX_VAR];
-	qboolean showInMenu;	/**< true for values that contains a translatable id */
+	bool showInMenu;	/**< true for values that contains a translatable id */
 } damageType_t;
 
 /** @todo remove this and use the container id - not every unit must have two hands */
@@ -395,11 +395,11 @@ typedef enum {
 /** @param[in] hand Hand index (ACTOR_HAND_RIGHT, ACTOR_HAND_LEFT) */
 #define ACTOR_SWAP_HAND(hand) ((hand) == ACTOR_HAND_RIGHT ? ACTOR_HAND_LEFT : ACTOR_HAND_RIGHT)
 
-qboolean INV_IsFloorDef(const invDef_t* invDef);
-qboolean INV_IsRightDef(const invDef_t* invDef);
-qboolean INV_IsLeftDef(const invDef_t* invDef);
-qboolean INV_IsEquipDef(const invDef_t* invDef);
-qboolean INV_IsArmourDef(const invDef_t* invDef);
+bool INV_IsFloorDef(const invDef_t* invDef);
+bool INV_IsRightDef(const invDef_t* invDef);
+bool INV_IsLeftDef(const invDef_t* invDef);
+bool INV_IsEquipDef(const invDef_t* invDef);
+bool INV_IsArmourDef(const invDef_t* invDef);
 
 /* ================================ */
 /*  INVENTORY MANAGEMENT FUNCTIONS  */
@@ -408,20 +408,20 @@ qboolean INV_IsArmourDef(const invDef_t* invDef);
 invList_t* INVSH_HasArmour(const inventory_t *inv);
 void INVSH_InitCSI(const struct csi_s * import) __attribute__((nonnull));
 int INVSH_CheckToInventory(const inventory_t* const i, const objDef_t *ob, const invDef_t * container, const int x, const int y, const invList_t *ignoredItem);
-qboolean INVSH_CompareItem(const item_t *const item1, const item_t *const item2);
+bool INVSH_CompareItem(const item_t *const item1, const item_t *const item2);
 void INVSH_GetFirstShapePosition(const invList_t *ic, int* const x, int* const y);
-qboolean INVSH_ExistsInInventory(const inventory_t* const inv, const invDef_t * container, const item_t * item);
+bool INVSH_ExistsInInventory(const inventory_t* const inv, const invDef_t * container, const item_t * item);
 invList_t *INVSH_FindInInventory(const inventory_t* const inv, const invDef_t * container, const item_t * const );
 invList_t *INVSH_SearchInInventory(const inventory_t* const i, const invDef_t * container, const int x, const int y) __attribute__((nonnull(1)));
 invList_t *INVSH_SearchInInventoryByItem(const inventory_t* const i, const invDef_t * container, const objDef_t *item);
 void INVSH_FindSpace(const inventory_t* const inv, const item_t *item, const invDef_t * container, int * const px, int * const py, const invList_t *ignoredItem) __attribute__((nonnull(1)));
-qboolean INV_IsCraftItem(const objDef_t *obj);
-qboolean INV_IsBaseDefenceItem(const objDef_t *item);
+bool INV_IsCraftItem(const objDef_t *obj);
+bool INV_IsBaseDefenceItem(const objDef_t *item);
 
 const objDef_t *INVSH_GetItemByID(const char *id);
 const objDef_t *INVSH_GetItemByIDX(int index);
 const objDef_t *INVSH_GetItemByIDSilent(const char *id);
-qboolean INVSH_LoadableInWeapon(const objDef_t *od, const objDef_t *weapon);
+bool INVSH_LoadableInWeapon(const objDef_t *od, const objDef_t *weapon);
 
 const invDef_t *INVSH_GetInventoryDefinitionByID(const char *id);
 
@@ -439,7 +439,7 @@ const fireDef_t* FIRESH_GetFiredef(const objDef_t *obj, const weaponFireDefIndex
 const fireDef_t *FIRESH_FiredefForWeapon(const item_t *item);
 #define FIRESH_IsMedikit(firedef) ((firedef)->damage[0] < 0)
 void INVSH_MergeShapes(uint32_t *shape, const uint32_t itemShape, const int x, const int y);
-qboolean INVSH_CheckShape(const uint32_t *shape, const int x, const int y);
+bool INVSH_CheckShape(const uint32_t *shape, const int x, const int y);
 int INVSH_ShapeSize(const uint32_t shape);
 uint32_t INVSH_ShapeRotate(const uint32_t shape);
 

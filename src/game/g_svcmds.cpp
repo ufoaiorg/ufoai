@@ -59,7 +59,7 @@ typedef struct {
 static ipfilter_t ipfilters[MAX_IPFILTERS];
 static int numipfilters;
 
-static qboolean StringToFilter (const char *s, ipfilter_t * f)
+static bool StringToFilter (const char *s, ipfilter_t * f)
 {
 	char num[128];
 	int i, j;
@@ -74,7 +74,7 @@ static qboolean StringToFilter (const char *s, ipfilter_t * f)
 	for (i = 0; i < 4; i++) {
 		if (*s < '0' || *s > '9') {
 			G_ClientPrintf(NULL, PRINT_CONSOLE, "Bad filter address: %s\n", s);
-			return qfalse;
+			return false;
 		}
 
 		j = 0;
@@ -94,10 +94,10 @@ static qboolean StringToFilter (const char *s, ipfilter_t * f)
 	f->mask = *(unsigned *) m;
 	f->compare = *(unsigned *) b;
 
-	return qtrue;
+	return true;
 }
 
-qboolean SV_FilterPacket (const char *from)
+bool SV_FilterPacket (const char *from)
 {
 	int i;
 	unsigned in;

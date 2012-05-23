@@ -101,7 +101,7 @@ void CP_BaseAttackMissionLeave (mission_t *mission)
 		CP_MissionDisableTimeLimit(mission);
 		UFO_SetRandomDest(mission->ufo);
 		/* Display UFO on geoscape if it is detected */
-		mission->ufo->landed = qfalse;
+		mission->ufo->landed = false;
 	} else {
 		/* Go to next stage on next frame */
 		mission->finalDate = ccs.date;
@@ -147,7 +147,7 @@ void CP_BaseAttackStartMission (mission_t *mission)
 	CP_MissionDisableTimeLimit(mission);
 	if (mission->ufo) {
 		/* ufo becomes invisible on geoscape, but don't remove it from ufo global array (may reappear)*/
-		CP_UFORemoveFromGeoscape(mission, qfalse);
+		CP_UFORemoveFromGeoscape(mission, false);
 	}
 
 	/* we always need at least one command centre in the base - because the
@@ -167,7 +167,7 @@ void CP_BaseAttackStartMission (mission_t *mission)
 	ccs.campaignStats.basesAttacked++;
 
 	MAP_SelectMission(mission);
-	mission->active = qtrue;
+	mission->active = true;
 	ccs.mapAction = MA_BASEATTACK;
 	Com_DPrintf(DEBUG_CLIENT, "Base attack: %s at %.0f:%.0f\n", mission->id, mission->pos[0], mission->pos[1]);
 
@@ -284,7 +284,7 @@ static void CP_BaseAttackGoToBase (mission_t *mission)
 	}
 
 	Vector2Copy(base->pos, mission->pos);
-	mission->posAssigned = qtrue;
+	mission->posAssigned = true;
 
 	Com_sprintf(mission->location, sizeof(mission->location), "%s", base->name);
 

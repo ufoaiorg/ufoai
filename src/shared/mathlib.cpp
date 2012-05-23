@@ -200,7 +200,7 @@ vec_t ColorNormalize (const vec3_t in, vec3_t out)
  * @param[in] comp The vector to check the distance from
  * @return Returns true if @c v1 is closer to @c comp as @c v2
  */
-qboolean VectorNearer (const vec3_t v1, const vec3_t v2, const vec3_t comp)
+bool VectorNearer (const vec3_t v1, const vec3_t v2, const vec3_t comp)
 {
 	vec3_t d1, d2;
 
@@ -653,7 +653,7 @@ void AngleVectors (const vec3_t angles, vec3_t forward, vec3_t right, vec3_t up)
  * @param[in] dir Direction to test into
  * @param[in] point This is the point we want to check the visibility for
  */
-qboolean FrustumVis (const vec3_t origin, int dir, const vec3_t point)
+bool FrustumVis (const vec3_t origin, int dir, const vec3_t point)
 {
 	/* view frustum check */
 	vec3_t delta;
@@ -667,9 +667,9 @@ qboolean FrustumVis (const vec3_t origin, int dir, const vec3_t point)
 
 	/* test 120 frustum (cos 60 = 0.5) */
 	if ((delta[0] * dvecsn[dv][0] + delta[1] * dvecsn[dv][1]) < 0.5)
-		return qfalse;
+		return false;
 	else
-		return qtrue;
+		return true;
 }
 
 /**
@@ -979,7 +979,7 @@ void VecToAngles (const vec3_t value1, vec3_t angles)
 /**
  * @brief Checks whether i is power of two value
  */
-qboolean Q_IsPowerOfTwo (int i)
+bool Q_IsPowerOfTwo (int i)
 {
 	return (i > 0 && !(i & (i - 1)));
 }
@@ -1136,7 +1136,7 @@ void MatrixTranspose (const vec3_t m[3], vec3_t t[3])
 	}
 }
 
-qboolean RayIntersectAABB (const vec3_t start, const vec3_t end, const vec3_t mins, const vec3_t maxs)
+bool RayIntersectAABB (const vec3_t start, const vec3_t end, const vec3_t mins, const vec3_t maxs)
 {
 	float t0 = 0.0f;
 	float t1 = 1.0f;
@@ -1167,16 +1167,16 @@ qboolean RayIntersectAABB (const vec3_t start, const vec3_t end, const vec3_t mi
 		}
 
 		if (u1 < t0 || u0 > t1) {
-			return qfalse;
+			return false;
 		}
 
 		t0 = std::max(u0, t0);
 		t1 = std::min(u1, t1);
 
 		if (t1 < t0) {
-			return qfalse;
+			return false;
 		}
 	}
 
-	return qtrue;
+	return true;
 }

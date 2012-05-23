@@ -63,7 +63,7 @@ static void R_SetSDLIcon (void)
 }
 #endif
 
-qboolean Rimp_Init (void)
+bool Rimp_Init (void)
 {
 	SDL_version version;
 	int attrValue;
@@ -162,13 +162,13 @@ qboolean Rimp_Init (void)
 	SDL_EnableUNICODE(SDL_ENABLE);
 	SDL_EnableKeyRepeat(SDL_DEFAULT_REPEAT_DELAY, SDL_DEFAULT_REPEAT_INTERVAL);
 
-	return qtrue;
+	return true;
 }
 
 /**
  * @brief Init the SDL window
  */
-qboolean R_InitGraphics (const viddefContext_t *context)
+bool R_InitGraphics (const viddefContext_t *context)
 {
 	uint32_t flags;
 	int i;
@@ -208,12 +208,12 @@ qboolean R_InitGraphics (const viddefContext_t *context)
 		const char *error = SDL_GetError();
 		Com_Printf("SDL SetVideoMode failed: %s\n", error);
 		SDL_ClearError();
-		return qfalse;
+		return false;
 	}
 
 	SDL_ShowCursor(SDL_DISABLE);
 
-	return qtrue;
+	return true;
 }
 
 void Rimp_Shutdown (void)

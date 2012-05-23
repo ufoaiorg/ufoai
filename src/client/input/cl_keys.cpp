@@ -64,7 +64,7 @@ char *keyBindings[K_KEY_SIZE];
 char *menuKeyBindings[K_KEY_SIZE];
 char *battleKeyBindings[K_KEY_SIZE];
 
-static qboolean keyDown[K_KEY_SIZE];
+static bool keyDown[K_KEY_SIZE];
 
 typedef struct {
 	const char *name;
@@ -211,10 +211,10 @@ static const keyName_t keyNames[] = {
  * @param[in] key The key to check, @sa @c keyNum_t
  * @return @c true if the key is pressed, @c false otherwise
  */
-qboolean Key_IsDown (unsigned int key)
+bool Key_IsDown (unsigned int key)
 {
 	if (key >= K_KEY_SIZE)
-		return qfalse;
+		return false;
 	return keyDown[key];
 }
 
@@ -673,7 +673,7 @@ void Key_WriteBindings (const char* filename)
 {
 	int i;
 	/* this gets true in case of an error */
-	qboolean deleteFile = qfalse;
+	bool deleteFile = false;
 	qFILE f;
 	int cnt = 0;
 
@@ -693,19 +693,19 @@ void Key_WriteBindings (const char* filename)
 	for (i = 0; i < K_LAST_KEY && !deleteFile; i++)
 		if (menuKeyBindings[i] && menuKeyBindings[i][0]) {
 			if (FS_Printf(&f, "bindmenu %s \"%s\"\n", Key_KeynumToString(i), menuKeyBindings[i]) < 0)
-				deleteFile = qtrue;
+				deleteFile = true;
 			cnt++;
 		}
 	for (i = 0; i < K_LAST_KEY && !deleteFile; i++)
 		if (keyBindings[i] && keyBindings[i][0]) {
 			if (FS_Printf(&f, "bind %s \"%s\"\n", Key_KeynumToString(i), keyBindings[i]) < 0)
-				deleteFile = qtrue;
+				deleteFile = true;
 			cnt++;
 		}
 	for (i = 0; i < K_LAST_KEY && !deleteFile; i++)
 		if (battleKeyBindings[i] && battleKeyBindings[i][0]) {
 			if (FS_Printf(&f, "bindbattle %s \"%s\"\n", Key_KeynumToString(i), battleKeyBindings[i]) < 0)
-				deleteFile = qtrue;
+				deleteFile = true;
 			cnt++;
 		}
 
@@ -723,7 +723,7 @@ void Key_WriteBindings (const char* filename)
 			path = va("%s@%s", UI_GetPath(binding->node), binding->property->string);
 
 		if (FS_Printf(&f, "bindui %s \"%s\" \"%s\"\n", Key_KeynumToString(binding->key), path, binding->description ? binding->description : "") < 0)
-			deleteFile = qtrue;
+			deleteFile = true;
 	}
 
 	FS_CloseFile(&f);
@@ -840,7 +840,7 @@ void Key_SetDest (keydest_t keyDest)
  * @note Should NOT be called during an interrupt!
  * @sa Key_Message
  */
-void Key_Event (unsigned int key, unsigned short unicode, qboolean down, unsigned time)
+void Key_Event (unsigned int key, unsigned short unicode, bool down, unsigned time)
 {
 	char cmd[MAX_STRING_CHARS];
 

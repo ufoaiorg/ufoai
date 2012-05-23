@@ -58,12 +58,12 @@ void AL_RemoveAliens(struct base_s *base, const teamDef_t *alienType, int amount
 const teamDef_t* AL_GetAlienTeamDef(int alienTeamDefIdx);
 int AL_GetAlienAmount(const teamDef_t *alienType, requirementType_t reqtype, const struct base_s *base);
 void AL_ChangeAliveAlienNumber(struct base_s *base, aliensCont_t *containment, int num);
-qboolean AL_CheckAliveFreeSpace(const struct base_s *base, const aliensCont_t *containment, const int num);
+bool AL_CheckAliveFreeSpace(const struct base_s *base, const aliensCont_t *containment, const int num);
 int AL_CountInBase(const struct base_s *base);
 #define AL_GetAircraftAlienCargo(a) (a)->alienCargo
 #define AL_GetAircraftAlienCargoTypes(a) ((a)->alienCargoTypes)
 #define AL_SetAircraftAlienCargoTypes(a, i) (a)->alienCargoTypes = (i)
-qboolean AL_AddAlienTypeToAircraftCargo(struct aircraft_s *aircraft, const teamDef_t *teamDef, int amount, qboolean dead);
+bool AL_AddAlienTypeToAircraftCargo(struct aircraft_s *aircraft, const teamDef_t *teamDef, int amount, bool dead);
 
 void AL_RemoveAliensExceedingCapacity(struct base_s *base);
 /**

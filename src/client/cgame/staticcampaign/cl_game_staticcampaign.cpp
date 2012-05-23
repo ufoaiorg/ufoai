@@ -60,7 +60,7 @@ static void GAME_SCP_Frame (float secondsSinceLastFrame)
 
 		SCP_CampaignActivateFirstStage();
 
-		scd->initialized = qtrue;
+		scd->initialized = true;
 	}
 
 	GAME_CP_Frame(secondsSinceLastFrame);

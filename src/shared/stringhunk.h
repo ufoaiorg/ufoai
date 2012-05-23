@@ -37,7 +37,7 @@ typedef struct stringHunk_s {
 
 typedef void (*stringHunkVisitor_t)(const char *string);
 
-qboolean STRHUNK_Add(stringHunk_t *hunk, const char *string);
+bool STRHUNK_Add(stringHunk_t *hunk, const char *string);
 void STRHUNK_Reset(stringHunk_t *hunk);
 void STRHUNK_Visit(stringHunk_t *hunk, stringHunkVisitor_t visitor);
 stringHunk_t *STRHUNK_Create(size_t size);

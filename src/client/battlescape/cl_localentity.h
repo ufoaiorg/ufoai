@@ -45,15 +45,15 @@ typedef enum {
 #define IS_MODE_FIRE_HEADGEAR(x)	((x) == M_FIRE_HEADGEAR)
 #define IS_MODE_FIRE_PENDING(x)		((x) == M_PEND_FIRE_L || (x) == M_PEND_FIRE_R)
 
-typedef qboolean (*localEntitiyAddFunc_t) (struct le_s * le, entity_t * ent);
+typedef bool (*localEntitiyAddFunc_t) (struct le_s * le, entity_t * ent);
 typedef void (*localEntityThinkFunc_t) (struct le_s * le);
 
 /** @brief a local entity */
 typedef struct le_s {
-	qboolean inuse;
-	qboolean removeNextFrame;	/**< will set the inuse value to false in the next frame */
-	qboolean invis;
-	qboolean selected;		/**< used for actors - for the current selected actor this is true */
+	bool inuse;
+	bool removeNextFrame;	/**< will set the inuse value to false in the next frame */
+	bool invis;
+	bool selected;		/**< used for actors - for the current selected actor this is true */
 	entity_type_t type;				/**< the local entity type */
 	int entnum;				/**< the server side edict num this le belongs to */
 
@@ -145,7 +145,7 @@ typedef struct le_s {
 	/** is called before adding a le to scene */
 	localEntitiyAddFunc_t addFunc;
 
-	qboolean locked;	/**< true if there is an event going on involving
+	bool locked;	/**< true if there is an event going on involving
 						 * this le_t.  Used to limit to one event per le_t struct at any time. */
 } le_t;
 
@@ -161,7 +161,7 @@ typedef struct localModel_s {
 	char animname[MAX_QPATH];	/**< is this an animated model */
 
 	struct localModel_s *parent;	/**< in case a tag should be used to place the model a parent local model id must be given */
-	qboolean inuse;
+	bool inuse;
 
 	vec3_t origin;
 	vec3_t angles;
@@ -238,21 +238,21 @@ localModel_t *LM_AddModel(const char *model, const vec3_t origin, const vec3_t a
 void LM_Perish(struct dbuffer *msg);
 void LM_AddToScene(void);
 
-qboolean LE_BrushModelAction(le_t *le, entity_t *ent);
+bool LE_BrushModelAction(le_t *le, entity_t *ent);
 void CL_RecalcRouting(const le_t *le);
 void CL_CompleteRecalcRouting(void);
 
 void LE_LinkFloorContainer(le_t *le);
-qboolean LE_IsLivingAndVisibleActor(const le_t *le);
-qboolean LE_IsLivingActor(const le_t *le);
-qboolean LE_IsActor(const le_t *le);
+bool LE_IsLivingAndVisibleActor(const le_t *le);
+bool LE_IsLivingActor(const le_t *le);
+bool LE_IsActor(const le_t *le);
 le_t *LE_Add(int entnum);
 le_t *LE_Get(int entnum);
 le_t* LE_GetNextInUse(le_t* lastLE);
 le_t* LE_GetNext(le_t* lastLE);
 void LE_Lock(le_t *le);
 void LE_Unlock(le_t *le);
-qboolean LE_IsLocked(int entnum);
+bool LE_IsLocked(int entnum);
 #define LE_NotFoundError(entnum) _LE_NotFoundError(entnum, -1, __FILE__, __LINE__)
 #define LE_NotFoundWithTypeError(entnum, type) _LE_NotFoundError(entnum, type, __FILE__, __LINE__)
 void _LE_NotFoundError(int entnum, int type, const char *file, const int line) __attribute__((noreturn));

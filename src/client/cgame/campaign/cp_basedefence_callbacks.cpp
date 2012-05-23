@@ -190,8 +190,8 @@ static void BDEF_BaseDefenceMenuUpdate_f (void)
 	installation_t *installation = INS_GetCurrentSelectedInstallation();
 	aircraftItemType_t bdefType;
 	linkedList_t *slotList = NULL;
-	const qboolean missileResearched = RS_IsResearched_ptr(RS_GetTechByID("rs_building_missile"));
-	const qboolean laserResearched = RS_IsResearched_ptr(RS_GetTechByID("rs_building_laser"));
+	const bool missileResearched = RS_IsResearched_ptr(RS_GetTechByID("rs_building_missile"));
+	const bool laserResearched = RS_IsResearched_ptr(RS_GetTechByID("rs_building_laser"));
 
 	if (Cmd_Argc() != 2)
 		type[0] = '\0';
@@ -224,7 +224,7 @@ static void BDEF_BaseDefenceMenuUpdate_f (void)
 				Cvar_Set("mn_target", UFO_AircraftToIDOnGeoscape(installation->batteries[0].target));
 		}
 	} else if (base) {
-		qboolean autofire = qfalse;
+		bool autofire = false;
 		/* Every slot aims the same target */
 		if (base->numBatteries) {
 			autofire |= base->batteries[0].autofire;
@@ -368,8 +368,8 @@ static void BDEF_AddItem_f (void)
 		/* we add the weapon, shield, item, or base defence if slot is free or the installation of
 		 * current item just began */
 		if (!slot->item || (slot->item && slot->installationTime == slot->item->craftitem.installationTime)) {
-			AII_RemoveItemFromSlot(base, slot, qfalse);
-			AII_AddItemToSlot(base, itemTech, slot, qfalse); /* Aircraft stats are updated below */
+			AII_RemoveItemFromSlot(base, slot, false);
+			AII_AddItemToSlot(base, itemTech, slot, false); /* Aircraft stats are updated below */
 			AII_AutoAddAmmo(slot);
 		} else if (slot->item == INVSH_GetItemByID(itemTech->provides)) {
 			/* the added item is the same than the one in current slot */
@@ -382,13 +382,13 @@ static void BDEF_AddItem_f (void)
 		} else {
 			/* We start removing current item in slot, and the selected item will be installed afterwards */
 			slot->installationTime = -slot->item->craftitem.installationTime;
-			AII_AddItemToSlot(base, itemTech, slot, qtrue);
+			AII_AddItemToSlot(base, itemTech, slot, true);
 			AII_AutoAddAmmo(slot);
 		}
 	} else {
 		/* remove weapon and ammo of next item */
-		AII_RemoveItemFromSlot(base, slot, qfalse);
-		AII_AddItemToSlot(base, itemTech, slot, qtrue);
+		AII_RemoveItemFromSlot(base, slot, false);
+		AII_AddItemToSlot(base, itemTech, slot, true);
 		AII_AutoAddAmmo(slot);
 	}
 
@@ -452,14 +452,14 @@ static void BDEF_RemoveItem_f (void)
 		/* if the item has been installed since less than 1 hour, you don't need time to remove it */
 		if (slot->installationTime < slot->item->craftitem.installationTime) {
 			slot->installationTime = -slot->item->craftitem.installationTime;
-			AII_RemoveItemFromSlot(base, slot, qtrue); /* we remove only ammo, not item */
+			AII_RemoveItemFromSlot(base, slot, true); /* we remove only ammo, not item */
 		} else {
-			AII_RemoveItemFromSlot(base, slot, qfalse); /* we remove weapon and ammo */
+			AII_RemoveItemFromSlot(base, slot, false); /* we remove weapon and ammo */
 		}
 	} else {
 		/* we change the weapon, shield, item, or base defence that will be installed AFTER the removal
 		 * of the one in the slot atm */
-		AII_RemoveItemFromSlot(base, slot, qfalse); /* we remove weapon and ammo */
+		AII_RemoveItemFromSlot(base, slot, false); /* we remove weapon and ammo */
 		/* if you canceled next item for less than 1 hour, previous item is still functional */
 		if (slot->installationTime == -slot->item->craftitem.installationTime) {
 			slot->installationTime = 0;
@@ -610,7 +610,7 @@ static void BDEF_AddBattery_f (void)
  * @param[in] state New status for autofire
  * @note on turning off it also reset the target so the defence weapon stop shoting
  */
-static void BDEF_SetAutoFire (baseWeapon_t *weapon, qboolean state)
+static void BDEF_SetAutoFire (baseWeapon_t *weapon, bool state)
 {
 	assert(weapon);
 	weapon->autofire = state;

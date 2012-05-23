@@ -68,7 +68,7 @@ typedef struct s_env_s {
 	int numChannels;
 	uint16_t format;
 
-	qboolean initialized;
+	bool initialized;
 } s_env_t;
 
 extern cvar_t *snd_volume;

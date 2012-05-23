@@ -215,7 +215,7 @@ void uiText2Node::drawText (uiNode_t* node, const linkedList_t* list, bool noDra
 				R_FontTextSize (font, cur, width, (longlines_t)EXTRADATA(node).super.longlines, NULL, NULL, &lines, NULL);
 				fullSizeY += lines;
 			} else
-				UI_DrawString(font, (align_t)node->contentAlign, x1, y, x, width, EXTRADATA(node).super.lineHeight, cur, viewSizeY, EXTRADATA(node).super.super.scrollY.viewPos, &fullSizeY, qtrue, (longlines_t)EXTRADATA(node).super.longlines);
+				UI_DrawString(font, (align_t)node->contentAlign, x1, y, x, width, EXTRADATA(node).super.lineHeight, cur, viewSizeY, EXTRADATA(node).super.super.scrollY.viewPos, &fullSizeY, true, (longlines_t)EXTRADATA(node).super.longlines);
 		}
 
 		list = list->next;
@@ -234,16 +234,16 @@ void uiText2Node::updateCache (uiNode_t *node)
 	UI_TextNodeGenerateLineSplit(node);
 
 	if (EXTRADATA(node).super.dataID == TEXT_NULL && node->text != NULL) {
-		drawText(node, EXTRADATA(node).lineSplit, qtrue);
+		drawText(node, EXTRADATA(node).lineSplit, true);
 		return;
 	}
 
 	shared = &ui_global.sharedData[EXTRADATA(node).super.dataID];
 
 	if (shared->type == UI_SHARED_LINKEDLISTTEXT) {
-		drawText(node, shared->data.linkedListText, qtrue);
+		drawText(node, shared->data.linkedListText, true);
 	} else {
-		drawText(node, EXTRADATA(node).lineSplit, qtrue);
+		drawText(node, EXTRADATA(node).lineSplit, true);
 	}
 
 	EXTRADATA(node).super.versionId = shared->versionId;
@@ -259,7 +259,7 @@ void uiText2Node::draw (uiNode_t *node)
 	validateCache(node);
 
 	if (EXTRADATA(node).super.dataID == TEXT_NULL && node->text != NULL) {
-		drawText(node, EXTRADATA(node).lineSplit, qfalse);
+		drawText(node, EXTRADATA(node).lineSplit, false);
 		return;
 	}
 
@@ -267,10 +267,10 @@ void uiText2Node::draw (uiNode_t *node)
 
 	switch (shared->type) {
 	case UI_SHARED_TEXT:
-		drawText(node, EXTRADATA(node).lineSplit, qfalse);
+		drawText(node, EXTRADATA(node).lineSplit, false);
 		break;
 	case UI_SHARED_LINKEDLISTTEXT:
-		drawText(node, shared->data.linkedListText, qfalse);
+		drawText(node, shared->data.linkedListText, false);
 		break;
 	default:
 		break;

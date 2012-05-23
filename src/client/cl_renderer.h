@@ -126,8 +126,8 @@ typedef struct ptlArt_s {
 } ptlArt_t;
 
 typedef struct ptl_s {
-	qboolean inuse;			/**< particle active? */
-	qboolean invis;			/**< is this particle invisible */
+	bool inuse;			/**< particle active? */
+	bool invis;			/**< is this particle invisible */
 
 	r_program_t *program;	/**< this glsl program is bound before the particle is executed */
 
@@ -174,20 +174,20 @@ typedef struct ptl_s {
 	vec3_t v;	/**< velocity vector */
 	vec3_t oldV;	/**< old velocity vector (in case the particle e.g. bounces) */
 	vec3_t omega;	/**< the rotation vector for the particle (newAngles = oldAngles + frametime * omega) */
-	qboolean physics;	/**< basic physics */
-	qboolean autohide;	/**< only draw the particle if the current position is
+	bool physics;	/**< basic physics */
+	bool autohide;	/**< only draw the particle if the current position is
 						 * not higher than the current level (useful for weather
 						 * particles) */
-	qboolean stayalive;	/**< used for physics particles that hit the ground */
-	qboolean weather;	/**< used to identify weather particles (can be switched
+	bool stayalive;	/**< used for physics particles that hit the ground */
+	bool weather;	/**< used to identify weather particles (can be switched
 						 * off via cvar cl_particleweather) */
-	qboolean hitSolid;	/**< true if a trace (only physic particles) hits something solid */
-	qboolean stick;		/**< true if a particle sticks to the solid the trace hits before (only physic particles) */
-	qboolean bounce;	/**< true if the particle should bouce when a solid is hot (only physic particles) */
+	bool hitSolid;	/**< true if a trace (only physic particles) hits something solid */
+	bool stick;		/**< true if a particle sticks to the solid the trace hits before (only physic particles) */
+	bool bounce;	/**< true if the particle should bouce when a solid is hot (only physic particles) */
 } ptl_t;
 
 typedef struct {
-	qboolean ready;	/**< false if on new level or vid restart - if this is true the map can be rendered */
+	bool ready;	/**< false if on new level or vid restart - if this is true the map can be rendered */
 
 	float fieldOfViewX, fieldOfViewY;
 	vec3_t viewOrigin;
@@ -252,7 +252,7 @@ extern renderer_threadstate_t r_threadstate;
 
 void R_Color(const vec4_t rgba);
 
-void R_ModBeginLoading(const char *tiles, qboolean day, const char *pos, const char *mapName);
+void R_ModBeginLoading(const char *tiles, bool day, const char *pos, const char *mapName);
 void R_SwitchModelMemPoolTag(void);
 
 void R_LoadImage(const char *name, byte **pic, int *width, int *height);
@@ -262,7 +262,7 @@ void R_FontInit(void);
 void R_FontRegister(const char *name, int size, const char *path, const char *style);
 void R_FontSetTruncationMarker(const char *marker);
 
-void R_FontTextSize(const char *fontId, const char *text, int maxWidth, longlines_t method, int *width, int *height, int *lines, qboolean *isTruncated);
+void R_FontTextSize(const char *fontId, const char *text, int maxWidth, longlines_t method, int *width, int *height, int *lines, bool *isTruncated);
 int R_FontDrawString(const char *fontId, align_t align, int x, int y, int absX, int maxWidth, int lineHeight, const char *c, int boxHeight, int scrollPos, int *curLine, longlines_t method);
 
 #endif /* CLIENT_REF_H */

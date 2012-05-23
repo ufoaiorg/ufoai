@@ -456,18 +456,18 @@ static void CIN_ROQ_DecodeSoundStereo (cinematic_t *cin, const byte *data)
  * @sa CIN_ROQ_RunCinematic
  * @return true if the cinematic is still running, false otherwise
  */
-static qboolean CIN_ROQ_DecodeChunk (cinematic_t *cin)
+static bool CIN_ROQ_DecodeChunk (cinematic_t *cin)
 {
 	int frame;
 
 	if (ROQCIN.startTime + ((1000 / ROQCIN.frameRate) * ROQCIN.currentFrame) > CL_Milliseconds())
-		return qtrue;
+		return true;
 
 	frame = ROQCIN.currentFrame;
 
 	do {
 		if (ROQCIN.offset >= ROQCIN.size)
-			return qfalse;	/* Finished */
+			return false;	/* Finished */
 
 		/* Parse the chunk header */
 		ROQCIN.chunk.id = LittleShort(*(short *)&ROQCIN.header[0]);
@@ -476,8 +476,8 @@ static qboolean CIN_ROQ_DecodeChunk (cinematic_t *cin)
 
 		if (ROQCIN.chunk.id == ROQ_IDENT || ROQCIN.chunk.size > ROQ_MAX_CHUNK_SIZE) {
 			Com_Printf("Invalid chunk id during decode: %i\n", ROQCIN.chunk.id);
-			cin->replay = qfalse;
-			return qfalse;	/* Invalid chunk */
+			cin->replay = false;
+			return false;	/* Invalid chunk */
 		}
 
 		/* Read the chunk data and the next chunk header */
@@ -512,7 +512,7 @@ static qboolean CIN_ROQ_DecodeChunk (cinematic_t *cin)
 	/* loop until we finally got a new frame */
 	} while (frame == ROQCIN.currentFrame && cin->status);
 
-	return qtrue;
+	return true;
 }
 
 /**
@@ -533,9 +533,9 @@ static void CIN_ROQ_DrawCinematic (cinematic_t *cin)
 /**
  * @return true if the cinematic is still running, false otherwise
  */
-qboolean CIN_ROQ_RunCinematic (cinematic_t *cin)
+bool CIN_ROQ_RunCinematic (cinematic_t *cin)
 {
-	qboolean runState = CIN_ROQ_DecodeChunk(cin);
+	bool runState = CIN_ROQ_DecodeChunk(cin);
 	if (runState)
 		CIN_ROQ_DrawCinematic(cin);
 	return runState;
