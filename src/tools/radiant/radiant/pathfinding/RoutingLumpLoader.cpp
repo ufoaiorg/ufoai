@@ -196,12 +196,12 @@ namespace routing
 		 * model data is adjacent to a cell with existing model data. */
 
 		/* Copy the routing information into our master table */
-		minX = max(curTile.wpMins[0], 0);
-		minY = max(curTile.wpMins[1], 0);
-		minZ = max(curTile.wpMins[2], 0);
-		maxX = min(curTile.wpMaxs[0], PATHFINDING_WIDTH - 1);
-		maxY = min(curTile.wpMaxs[1], PATHFINDING_WIDTH - 1);
-		maxZ = min(curTile.wpMaxs[2], PATHFINDING_HEIGHT - 1);
+		minX = std::max(curTile.wpMins[0], 0);
+		minY = std::max(curTile.wpMins[1], 0);
+		minZ = std::max(curTile.wpMins[2], 0);
+		maxX = std::min(curTile.wpMaxs[0], PATHFINDING_WIDTH - 1);
+		maxY = std::min(curTile.wpMaxs[1], PATHFINDING_WIDTH - 1);
+		maxZ = std::min(curTile.wpMaxs[2], PATHFINDING_HEIGHT - 1);
 
 		/** @todo check whether we need this copy code */
 		for (size = 0; size < ACTOR_MAX_SIZE; size++)
