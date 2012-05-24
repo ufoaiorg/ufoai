@@ -44,6 +44,22 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 
 static const uiBehaviour_t *localBehaviour;
 
+enum spinnerMode_t {
+	/**
+	 * Normal mode. The upper side of the node increase the value
+	 * and the lower side of the node decrease the value
+	 */
+	NORMAL,
+	/**
+	 * Only increase mode. The whole node increase the value.
+	 */
+	ONLY_INCREASE,
+	/**
+	 * Only decrease mode. The whole node decrease the value.
+	 */
+	ONLY_DECREASE
+};
+
 static const int TILE_SIZE = 32;
 static const int SPINNER_WIDTH = 15;
 static const int SPINNER_HEIGHT = 19;
@@ -83,6 +99,28 @@ static void UI_SpinnerNodeRepeat (uiNode_t *node, uiTimer_t *timer)
 	b->repeat(node, timer);
 }
 
+/**
+ * @brief Check a position relative to the node to check action
+ * is can produce.
+ * @param node This node
+ * @param x Relative location x to the node
+ * @param y Relative location y to the node
+ * @return True if the current location can increase the value
+ */
+bool uiSpinnerNode::isPositionIncrease(uiNode_t *node, int x, int y)
+{
+	switch ((spinnerMode_t)EXTRADATA(node).mode) {
+	case ONLY_INCREASE:
+		return true;
+	case ONLY_DECREASE:
+		return false;
+	case NORMAL:
+		return y < node->box.size[1] * 0.5;
+	default:
+		return false;
+	}
+}
+
 void uiSpinnerNode::onMouseDown (uiNode_t *node, int x, int y, int button)
 {
 	const bool disabled = node->disabled || node->parent->disabled;
@@ -92,7 +130,7 @@ void uiSpinnerNode::onMouseDown (uiNode_t *node, int x, int y, int button)
 	if (button == K_MOUSE1) {
 		UI_SetMouseCapture(node);
 		UI_NodeAbsoluteToRelativePos(node, &x, &y);
-		capturedDownButton = y > (node->box.size[1] * 0.5);
+		capturedDownButton = !isPositionIncrease(node, x, y);
 		step(node, capturedDownButton);
 		capturedTimer = UI_AllocTimer(node, 500, UI_SpinnerNodeRepeat);
 		UI_TimerStart(capturedTimer);
@@ -156,11 +194,13 @@ void uiSpinnerNode::draw (uiNode_t *node)
 		const float min = getMin(node);
 		const float max = getMax(node);
 
+		bool increaseLocation = isPositionIncrease(node, mousePosX - pos[0], mousePosY - pos[1]);
+
 		/* top button status */
 		if (value >= max) {
 			topTexX = TILE_SIZE;
 			topTexY = TILE_SIZE;
-		} else if (node->state && mousePosY < pos[1] + node->box.size[1] * 0.5) {
+		} else if (node->state && increaseLocation) {
 			topTexX = TILE_SIZE;
 			topTexY = 0;
 		} else {
@@ -171,7 +211,7 @@ void uiSpinnerNode::draw (uiNode_t *node)
 		if (value <= min) {
 			bottomTexX = TILE_SIZE;
 			bottomTexY = TILE_SIZE;
-		} else if (node->state && mousePosY > pos[1] + node->box.size[1] * 0.5) {
+		} else if (node->state && !increaseLocation) {
 			bottomTexX = TILE_SIZE;
 			bottomTexY = 0;
 		} else {
@@ -208,10 +248,12 @@ void uiSpinnerNode::draw (uiNode_t *node)
 
 		status = SPRITE_STATUS_NORMAL;
 
+		bool increaseLocation = isPositionIncrease(node, mousePosX - pos[0], mousePosY - pos[1]);
+
 		/* top button status */
 		if (value >= max) {
 			topStatus = SPRITE_STATUS_DISABLED;
-		} else if (node->state && mousePosY < pos[1] + node->box.size[1] * 0.5) {
+		} else if (node->state && increaseLocation) {
 			topStatus = SPRITE_STATUS_HOVER;
 		} else {
 			topStatus = SPRITE_STATUS_NORMAL;
@@ -219,7 +261,7 @@ void uiSpinnerNode::draw (uiNode_t *node)
 		/* bottom button status */
 		if (value <= min) {
 			bottomStatus = SPRITE_STATUS_DISABLED;
-		} else if (node->state && mousePosY > pos[1] + node->box.size[1] * 0.5) {
+		} else if (node->state && !increaseLocation) {
 			bottomStatus = SPRITE_STATUS_HOVER;
 		} else {
 			bottomStatus = SPRITE_STATUS_NORMAL;
@@ -275,4 +317,16 @@ void UI_RegisterSpinnerNode (uiBehaviour_t *behaviour)
 	 * @brief Sprite used to decorate the bottom button of the spinner. It is displayed in the center of the node.
 	 */
 	UI_RegisterExtradataNodeProperty(behaviour, "bottomIcon", V_UI_SPRITEREF, EXTRADATA_TYPE, bottomIcon);
+
+	/**
+	 * @brief Spinner mode allow to change the input action of the spinner.
+	 * SPINNER_NORMAL is the default mode. With SPINNER_ONLY_INC anywhere it click on the node
+	 * it will increase the value. With SPINNER_ONLY_DEC anywhere it click on the node
+	 * it will decrease the value.
+	 */
+	UI_RegisterExtradataNodeProperty(behaviour, "mode", V_INT, EXTRADATA_TYPE, mode);
+
+	Com_RegisterConstInt("SPINNER_NORMAL", NORMAL);
+	Com_RegisterConstInt("SPINNER_ONLY_INC", ONLY_INCREASE);
+	Com_RegisterConstInt("SPINNER_ONLY_DEC", ONLY_DECREASE);
 }

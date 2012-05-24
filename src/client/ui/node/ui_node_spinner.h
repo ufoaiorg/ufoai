@@ -38,6 +38,7 @@ class uiSpinnerNode : public uiAbstractValueNode {
 public:
 	void repeat (uiNode_t *node, struct uiTimer_s *timer);
 protected:
+	bool isPositionIncrease(uiNode_t *node, int x, int y);
 	bool step (uiNode_t *node, bool down);
 };
 
@@ -47,7 +48,7 @@ struct spinnerExtraData_t {
 	uiSprite_t *background;	/**< Link to the background */
 	uiSprite_t *bottomIcon;		/**< Link to the icon used for the bottom button */
 	uiSprite_t *topIcon;		/**< Link to the icon used for the top button */
-
+	int mode;					/**< The way the node react to input (see spinnerMode_t) */
 };
 
 void UI_RegisterSpinnerNode(uiBehaviour_t *behaviour);
