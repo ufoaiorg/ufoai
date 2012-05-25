@@ -42,8 +42,6 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #define EXTRADATA(node) UI_EXTRADATA(node, EXTRADATA_TYPE)
 #define EXTRADATACONST(node) UI_EXTRADATACONST(node, EXTRADATA_TYPE)
 
-static const uiBehaviour_t *localBehaviour;
-
 enum spinnerMode_t {
 	/**
 	 * Normal mode. The upper side of the node increase the value
@@ -59,12 +57,6 @@ enum spinnerMode_t {
 	 */
 	ONLY_DECREASE
 };
-
-static const int TILE_SIZE = 32;
-static const int SPINNER_WIDTH = 15;
-static const int SPINNER_HEIGHT = 19;
-static const int BUTTON_TOP_SIZE = 9;
-static const int BUTTON_BOTTOM_SIZE = 10;
 
 static bool capturedDownButton;
 static uiTimer_t *capturedTimer = NULL;
@@ -173,64 +165,8 @@ bool uiSpinnerNode::onScroll (uiNode_t *node, int deltaX, int deltaY)
 void uiSpinnerNode::draw (uiNode_t *node)
 {
 	vec2_t pos;
-	int topTexX, topTexY;
-	int bottomTexX, bottomTexY;
-	const char* image = UI_GetReferenceString(node, node->image);
 	const float delta = getDelta(node);
 	const bool disabled = node->disabled || node->parent->disabled;
-
-	UI_GetNodeAbsPos(node, pos);
-
-	if (disabled || delta == 0) {
-		topTexX = TILE_SIZE;
-		topTexY = TILE_SIZE;
-		bottomTexX = TILE_SIZE;
-		bottomTexY = TILE_SIZE;
-	} else {
-		const float value = getValue(node);
-		const float min = getMin(node);
-		const float max = getMax(node);
-
-		bool increaseLocation = isPositionIncrease(node, mousePosX - pos[0], mousePosY - pos[1]);
-
-		/* top button status */
-		if (value >= max) {
-			topTexX = TILE_SIZE;
-			topTexY = TILE_SIZE;
-		} else if (node->state && increaseLocation) {
-			topTexX = TILE_SIZE;
-			topTexY = 0;
-		} else {
-			topTexX = 0;
-			topTexY = 0;
-		}
-		/* bottom button status */
-		if (value <= min) {
-			bottomTexX = TILE_SIZE;
-			bottomTexY = TILE_SIZE;
-		} else if (node->state && !increaseLocation) {
-			bottomTexX = TILE_SIZE;
-			bottomTexY = 0;
-		} else {
-			bottomTexX = 0;
-			bottomTexY = 0;
-		}
-	}
-
-	/* center the spinner */
-	pos[0] += (node->box.size[0] - SPINNER_WIDTH) * 0.5;
-	pos[1] += (node->box.size[1] - SPINNER_HEIGHT) * 0.5;
-
-	if (image) {
-		/* draw top button */
-		UI_DrawNormImageByName(false, pos[0], pos[1], SPINNER_WIDTH, BUTTON_TOP_SIZE,
-			topTexX + SPINNER_WIDTH, topTexY + BUTTON_TOP_SIZE, topTexX, topTexY, image);
-		/* draw bottom button */
-		UI_DrawNormImageByName(false, pos[0], pos[1] + BUTTON_TOP_SIZE, SPINNER_WIDTH, BUTTON_BOTTOM_SIZE,
-			bottomTexX + SPINNER_WIDTH, bottomTexY + SPINNER_HEIGHT, bottomTexX, bottomTexY + SPINNER_HEIGHT - BUTTON_BOTTOM_SIZE, image);
-	}
-
-	/* new draw code */
 
 	UI_GetNodeAbsPos(node, pos);
 
@@ -280,13 +216,10 @@ void uiSpinnerNode::draw (uiNode_t *node)
 void uiSpinnerNode::onLoading (uiNode_t *node)
 {
 	uiAbstractValueNode::onLoading(node);
-	node->box.size[0] = SPINNER_WIDTH;
-	node->box.size[1] = SPINNER_HEIGHT;
 }
 
 void UI_RegisterSpinnerNode (uiBehaviour_t *behaviour)
 {
-	localBehaviour = behaviour;
 	behaviour->name = "spinner";
 	behaviour->extends = "abstractvalue";
 	behaviour->manager = new uiSpinnerNode();
@@ -295,14 +228,6 @@ void UI_RegisterSpinnerNode (uiBehaviour_t *behaviour)
 	/* The size of the widget is uneditable. Fixed to 15x19.
 	 */
 	UI_RegisterOveridedNodeProperty(behaviour, "size");
-
-	/* Texture used for the widget. Its a 64x64 template image with all four
-	 * status. The top button take the first vertical 9 pixels, the bottom
-	 * button use the last 10 pixels. See the sample image.
-	 * @image html http://ufoai.org/wiki/images/Spinner_blue.png
-	 */
-	UI_RegisterNodeProperty(behaviour, "image", V_CVAR_OR_STRING, uiNode_t, image);
-
 
 	/**
 	 * @brief Backround used to display the spinner. It is displayed in the center of the node.
