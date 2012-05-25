@@ -179,9 +179,6 @@ void uiSpinnerNode::draw (uiNode_t *node)
 	const float delta = getDelta(node);
 	const bool disabled = node->disabled || node->parent->disabled;
 
-	if (!image)
-		return;
-
 	UI_GetNodeAbsPos(node, pos);
 
 	if (disabled || delta == 0) {
@@ -224,14 +221,18 @@ void uiSpinnerNode::draw (uiNode_t *node)
 	pos[0] += (node->box.size[0] - SPINNER_WIDTH) * 0.5;
 	pos[1] += (node->box.size[1] - SPINNER_HEIGHT) * 0.5;
 
-	/* draw top button */
-	UI_DrawNormImageByName(false, pos[0], pos[1], SPINNER_WIDTH, BUTTON_TOP_SIZE,
-		topTexX + SPINNER_WIDTH, topTexY + BUTTON_TOP_SIZE, topTexX, topTexY, image);
-	/* draw bottom button */
-	UI_DrawNormImageByName(false, pos[0], pos[1] + BUTTON_TOP_SIZE, SPINNER_WIDTH, BUTTON_BOTTOM_SIZE,
-		bottomTexX + SPINNER_WIDTH, bottomTexY + SPINNER_HEIGHT, bottomTexX, bottomTexY + SPINNER_HEIGHT - BUTTON_BOTTOM_SIZE, image);
+	if (image) {
+		/* draw top button */
+		UI_DrawNormImageByName(false, pos[0], pos[1], SPINNER_WIDTH, BUTTON_TOP_SIZE,
+			topTexX + SPINNER_WIDTH, topTexY + BUTTON_TOP_SIZE, topTexX, topTexY, image);
+		/* draw bottom button */
+		UI_DrawNormImageByName(false, pos[0], pos[1] + BUTTON_TOP_SIZE, SPINNER_WIDTH, BUTTON_BOTTOM_SIZE,
+			bottomTexX + SPINNER_WIDTH, bottomTexY + SPINNER_HEIGHT, bottomTexX, bottomTexY + SPINNER_HEIGHT - BUTTON_BOTTOM_SIZE, image);
+	}
 
 	/* new draw code */
+
+	UI_GetNodeAbsPos(node, pos);
 
 	uiSpriteStatus_t status;
 	uiSpriteStatus_t topStatus;
