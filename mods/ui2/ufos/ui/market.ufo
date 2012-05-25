@@ -26,8 +26,6 @@ window market  {
 			tooltip			"_Previous base"
 			pos				"90 6"
 			size			"18	18"
-			onMouseEnter	{ *node:this@icon = "icons/windowprev0" }
-			onMouseLeave	{ *node:this@icon = "icons/windowprev" }
 			onClick			{ cmd "ui_pop; mn_base_prev;" }
 		}
 		button next
@@ -36,8 +34,6 @@ window market  {
 			tooltip			"_Next base"
 			pos				"115 6"
 			size			"18	18"
-			onMouseEnter	{ *node:this@icon = "icons/windownext0" }
-			onMouseLeave	{ *node:this@icon = "icons/windownext" }
 			onClick			{ cmd "ui_pop; mn_base_next;" }
 		}
 		// Base name
@@ -111,8 +107,6 @@ window market  {
 					tooltip			"_Back to base"
 					pos				"683 7"
 					size			"18	18"
-					onMouseEnter	{ *node:this@icon = "icons/windownext0" }
-					onMouseLeave	{ *node:this@icon = "icons/windownext" }
 					onClick			{ cmd "ui_pop; base_init; reset_base;" }
 				}
 			}

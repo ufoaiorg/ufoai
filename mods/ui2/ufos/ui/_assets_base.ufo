@@ -61,13 +61,13 @@ component BuildingSpace extends panel
 		{
 			*node:this.label@color = "0.56 0.81 0.76 1"
 			*node:this.data@color = "0.56 0.81 0.76 1"
-			*node:this.alert@icon = "icons/windowplusb"
+			*node:this.alert@icon = "icons/windowplusb_hovered"
 		}
 		onMouseLeave
 		{
 			*node:this.label@color = "0.56 0.81 0.76 0.5"
 			*node:this.data@color = "0.56 0.81 0.76 0.5"
-			*node:this.alert@icon = "icons/windowplusb0"
+			*node:this.alert@icon = "icons/windowplusb"
 		}
 		onClick			{ cmd "buildings_click <node:this.id@string>;" }
 	}
@@ -117,11 +117,9 @@ component BuildingSpace extends panel
 	}
 	button alert
 	{
-		icon			"icons/windowplusb0"
+		icon			"icons/windowplusb"
 		pos				"266 12"
 		size			"18 18"
-//		onMouseEnter	{ *node:this@icon = "icons/windowplusb" }
-//		onMouseLeave	{ *node:this@icon = "icons/windowplusb0" }
 //		onClick			{ cmd "buildings_click <node:parent.id@string>;" }
 		ghost		true
 	}
@@ -301,11 +299,9 @@ component ResearchItem extends panel
 	}
 	button ufopaedia
 	{
-		icon	"icons/windowinfo0"
+		icon	"icons/windowinfo"
 		pos		"5 5"
 		size	"18 18"
-		onMouseEnter	{ *node:this@icon = "icons/windowinfo" }
-		onMouseLeave	{ *node:this@icon = "icons/windowinfo0" }
 		/*
 		 * This onClick is an ugly workaround because research_select calls research_init,
 		 * which would produce duplicates of the tech entries if the existing entries
@@ -344,11 +340,9 @@ component ResearchItem extends panel
 	}
 	button remove_scientist
 	{
-		icon	"icons/windowminusb0"
+		icon	"icons/windowminusb"
 		pos		"600 5"
 		size	"18 18"
-		onMouseEnter	{ *node:this@icon = "icons/windowminusb" }
-		onMouseLeave	{ *node:this@icon = "icons/windowminusb0" }
 		onClick			{
 			cmd "mn_rs_change <node:parent.itemnum@integer> -1;"
 			call *node:root.base_container.research.techs@removeAllChild
@@ -358,11 +352,9 @@ component ResearchItem extends panel
 	}
 	button add_scientist
 	{
-		icon	"icons/windowplusb0"
+		icon	"icons/windowplusb"
 		pos		"625 5"
 		size	"18 18"
-		onMouseEnter	{ *node:this@icon = "icons/windowplusb"	}
-		onMouseLeave	{ *node:this@icon = "icons/windowplusb0" }
 		onClick			{
 			cmd "mn_rs_change <node:parent.itemnum@integer> 1;"
 			call *node:root.base_container.research.techs@removeAllChild
@@ -399,11 +391,9 @@ component ExtResearchItem extends panel
 	}
 	button ufopaedia
 	{
-		icon	"icons/windowinfo0"
+		icon	"icons/windowinfo"
 		pos		"5 5"
 		size	"18 18"
-		onMouseEnter	{ *node:this@icon = "icons/windowinfo" }
-		onMouseLeave	{ *node:this@icon = "icons/windowinfo0" }
 		/*
 		 * @sa ResearchItem.ufopaedia@onClick for explanation of this hack
 		 */
@@ -485,8 +475,6 @@ component MarketItem extends panel
 		tooltip			"_Buy"
 		pos				"520 5"
 		size			"18	18"
-		onMouseEnter	{ *node:this@icon = "icons/windowprev0" }
-		onMouseLeave	{ *node:this@icon = "icons/windowprev" }
 	}
 	// Sell rate -- choose to sell 1 or 10 at a time
 	// @TODO: this is a place-holder that needs proper implementation
@@ -505,8 +493,6 @@ component MarketItem extends panel
 		tooltip			"_Sell"
 		pos				"568 5"
 		size			"18	18"
-		onMouseEnter	{ *node:this@icon = "icons/windownext0" }
-		onMouseLeave	{ *node:this@icon = "icons/windownext" }
 	}
 	// Count of items in base
 	string market

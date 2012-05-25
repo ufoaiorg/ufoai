@@ -702,8 +702,6 @@ window hud_default extends hud
 				tooltip		"_Hide squad"
 				pos			"10 0"
 				size		"18 18"
-				onMouseEnter	{ *node:this@icon = "icons/windowprev0" }
-				onMouseLeave	{ *node:this@icon = "icons/windowprev" }
 				onClick			{
 					*node:root.soldier.squadtoggle@invis = false
 					*node:parent@invis = true
@@ -832,8 +830,6 @@ window hud_default extends hud
 			pos			"115 106"
 			size		"18 18"
 			invis		true
-			onMouseEnter	{ *node:this@icon = "icons/windownext0" }
-			onMouseLeave	{ *node:this@icon = "icons/windownext" }
 			onClick			{
 				*node:parent.squad@invis = false
 				*node:this@invis = true
@@ -1000,10 +996,10 @@ window hud_default extends hud
 				}
 				// Change icon if we're at top or bottom level
 				if (*cvar:cl_worldlevel eq "0") {
-					*node:parent.down@icon = "icons/windowdown0"
+					*node:parent.down@icon = "icons/windowdown_hovered"
 					*node:parent.up@icon = "icons/windowup"
 				} elif (*cvar:cl_worldlevel eq *cvar:cl_maxworldlevel) {
-					*node:parent.up@icon = "icons/windowup0"
+					*node:parent.up@icon = "icons/windowup_hovered"
 					*node:parent.down@icon = "icons/windowdown"
 				} else {
 					*node:parent.down@icon = "icons/windowdown"
@@ -1251,8 +1247,6 @@ window inv_stats_hud
 		tooltip			"_Close"
 		pos				"530 10"
 		size			"18	18"
-		onMouseEnter	{ *node:this@icon = "icons/windowclose0" }
-		onMouseLeave	{ *node:this@icon = "icons/windowclose" }
 		onClick			{ cmd "ui_pop;" }
 	}
 	// @TODO: make next/prev soldier btns work
@@ -1262,8 +1256,6 @@ window inv_stats_hud
 		tooltip			"_Next soldier"
 		pos				"506 10"
 		size			"18	18"
-		onMouseEnter	{ *node:this@icon = "icons/windownext0" }
-		onMouseLeave	{ *node:this@icon = "icons/windownext" }
 		onClick			{ cmd "nextsoldier;" }
 	}
 	button prev
@@ -1272,8 +1264,6 @@ window inv_stats_hud
 		tooltip			"_Previous soldier"
 		pos				"482 10"
 		size			"18	18"
-		onMouseEnter	{ *node:this@icon = "icons/windowprev0" }
-		onMouseLeave	{ *node:this@icon = "icons/windowprev" }
 		onClick			{ cmd "prevsoldier;" }
 	}
 	// Inventory area
