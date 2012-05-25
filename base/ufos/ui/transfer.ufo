@@ -440,7 +440,9 @@ window transfer
 		*node:root.itemlist.trans_list@viewpos = 0
 		*node:root.itemlist.trans_list_amount@viewpos = 0
 		*node:root.itemlist.trans_list_transfered@viewpos = 0
-		cmd "trans_list_scroll <cvar:mn_itemtype> <itemlist.trans_list@viewpos>;"
+		if ( *cvar:mn_itemtype ne "" ) {
+			cmd "trans_list_scroll <cvar:mn_itemtype> <itemlist.trans_list@viewpos>;"
+		}
 	}
 
 	// ==================
