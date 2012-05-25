@@ -306,3 +306,10 @@ component ObjectInfo extends panel
 		}
 	}
 }
+
+component spinner_green extends spinner
+{
+	topIcon	"ui/spinner_up"
+	bottomIcon	"ui/spinner_down"
+	size "15 19"
+}

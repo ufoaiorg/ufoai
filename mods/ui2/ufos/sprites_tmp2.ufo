@@ -27,3 +27,23 @@ sprite icons/checkbox_ui2_indeterminate {
 	clickedtexl "64 64"
 	disabledtexl "64 96"
 }
+
+// spinner green
+
+sprite ui/spinner_up {
+	image "banks/spinner"
+	size "15 19"
+	texl "0 0"
+	hoveredtexl "32 0"
+	clickedtexl "0 32"
+	disabledtexl "32 32"
+}
+
+sprite ui/spinner_down {
+	image "banks/spinner"
+	size "15 19"
+	texl "16 0"
+	hoveredtexl "48 0"
+	clickedtexl "16 32"
+	disabledtexl "48 32"
+}

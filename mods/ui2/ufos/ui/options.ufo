@@ -1013,10 +1013,9 @@ window options
 						size		"40 20"
 					}
 
-					spinner dynamiclights_change
+					spinner_green dynamiclights_change
 					{
 						current		*cvar:r_dynamic_lights
-						image		"ui/spinner"
 						pos			"472 6"
 						width		20
 						height		25
@@ -2254,10 +2253,9 @@ window options
 					size		"40 20"
 				}
 
-				spinner tex_aniso_change
+				spinner_green tex_aniso_change
 				{
 					current		*cvar:r_anisotropic
-					image		"ui/spinner"
 					pos			"472 6"
 					min			0
 					max			16
@@ -2435,10 +2433,9 @@ window options
 					size		"40 20"
 				}
 
-				spinner multisamplebuffers_change
+				spinner_green multisamplebuffers_change
 				{
 					current		*cvar:r_multisample
-					image		"ui/spinner"
 					pos			"472 6"
 					min			0
 					max			4
@@ -2472,10 +2469,9 @@ window options
 					size		"40 20"
 				}
 
-				spinner swapinterval_change
+				spinner_green swapinterval_change
 				{
 					current		*cvar:r_swapinterval
-					image		"ui/spinner"
 					pos			"472 6"
 					min			0
 					max			2
