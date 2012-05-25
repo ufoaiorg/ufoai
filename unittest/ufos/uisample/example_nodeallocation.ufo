@@ -11,7 +11,7 @@ component myAllocatedPanel extends panel {
 		size "40 20"
 	}
 
-	spinner_blue changeValue
+	spinner changeValue
 	{
 		tooltip		"_Buy and sell item"
 		pos			"40 0"
