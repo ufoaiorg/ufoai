@@ -16,8 +16,7 @@ window unittest_spinner
 		bgcolor		"0 0 0 1"
 	}
 
-	spinner old_spinner {
-		image		"ui/spinner_blue"
+	spinner_blue old_spinner {
 		delta		1
 		pos	"3 50"
 		min			0

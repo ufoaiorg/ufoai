@@ -2,10 +2,9 @@
 // TRANSFER MENU
 // ==================
 
-component cmp_t_spinner extends spinner
+component cmp_t_spinner extends spinner_blue
 {
 	tooltip		"_Add/Remove item to transfer cargo, hold SHIFT for speed increase."
-	image		"ui/spinner_blue"
 	shiftincreasefactor	10.0
 	onChange	{
 		*cvar:tline = <node:parent.trans_list@viewpos>

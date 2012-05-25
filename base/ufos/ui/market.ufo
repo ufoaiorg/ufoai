@@ -53,9 +53,8 @@ component cmpMarketItem extends panel {
 		ghost		true
 	}
 
-	spinner buysell {
+	spinner_blue buysell {
 		tooltip		"_Buy and sell item"
-		image		"ui/spinner_blue"
 		pos			"346 0"
 		onChange {
 			if ( ( ( <node:parent.storage@string> + <node:parent.market@string> ) + <lastdiff> ) < 1 ) {

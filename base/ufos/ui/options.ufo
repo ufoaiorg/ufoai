@@ -753,11 +753,10 @@ window options
 				size		"32 20"
 			}
 			/** @todo update max with GL max anisotropic */
-			spinner aniso_change
+			spinner_blue aniso_change
 			{
 				tooltip		"_Very high values are only recommended when playing in very high screen resolutions."
 				current		*cvar:r_anisotropic
-				image		"ui/spinner_blue"
 				pos			"448 135"
 				min			0
 				max			16
@@ -863,10 +862,9 @@ window options
 					pos			"360 265"
 					size		"24 20"
 				}
-				spinner samplebuf_change
+				spinner_blue samplebuf_change
 				{
 					current		*cvar:r_multisample
-					image		"ui/spinner_blue"
 					pos			"388 265"
 					min			0
 					max			4
@@ -879,10 +877,9 @@ window options
 					pos			"420 265"
 					size		"20 20"
 				}
-				spinner swapinterval_change
+				spinner_blue swapinterval_change
 				{
 					current		*cvar:r_swapinterval
-					image		"ui/spinner_blue"
 					pos			"448 265"
 					min			0
 					max			2
@@ -921,11 +918,10 @@ window options
 					pos			"420 395"
 					size		"100 20"
 				}
-				spinner dynamiclights_change
+				spinner_blue dynamiclights_change
 				{
 					tooltip		"_Change the number of allowed hardware accelerated dynamic lights."
 					current		*cvar:r_dynamic_lights
-					image		"ui/spinner_blue"
 					pos			"448 395"
 					min			0
 					max			7

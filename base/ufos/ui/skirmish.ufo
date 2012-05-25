@@ -340,10 +340,9 @@ window skirmish
 			size		"50 20"
 			contentalign	ALIGN_CC
 		}
-		spinner ai_numactors_change
+		spinner_blue ai_numactors_change
 		{
 			current		*cvar:ai_numaliens
-			image		"ui/spinner_blue"
 			pos			"368 249"
 			min			1
 			max			30
@@ -366,10 +365,9 @@ window skirmish
 			size		"50 20"
 			contentalign	ALIGN_UC
 		}
-		spinner maxsoldierperplayer_change
+		spinner_blue maxsoldierperplayer_change
 		{
 			current		*cvar:sv_maxsoldiersperplayer
-			image		"ui/spinner_blue"
 			pos		"368 274"
 			min		1
 			max		12
@@ -392,10 +390,9 @@ window skirmish
 			size		"50 20"
 			contentalign	ALIGN_CC
 		}
-		spinner numugvs_change
+		spinner_blue numugvs_change
 		{
 			current		*cvar:cl_ugvs
-			image		"ui/spinner_blue"
 			pos			"368 299"
 			min			0
 			max			2

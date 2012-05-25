@@ -743,10 +743,9 @@ window mp_create_server extends abstract_multiplayer
 			size		"50 20"
 			contentalign	ALIGN_UC
 		}
-		spinner maxclients_change
+		spinner_blue maxclients_change
 		{
 			current		*cvar:sv_maxclients
-			image		"ui/spinner_blue"
 			pos			"390 70"
 			min			2
 			max			16
@@ -770,10 +769,9 @@ window mp_create_server extends abstract_multiplayer
 			size		"50 20"
 			contentalign	ALIGN_UC
 		}
-		spinner maxperplayer_change
+		spinner_blue maxperplayer_change
 		{
 			current		*cvar:sv_maxsoldiersperteam
-			image		"ui/spinner_blue"
 			pos			"390 90"
 			min			1
 			max			8
@@ -797,10 +795,9 @@ window mp_create_server extends abstract_multiplayer
 			size		"50 20"
 			contentalign	ALIGN_UC
 		}
-		spinner maxsoldierperplayer_change
+		spinner_blue maxsoldierperplayer_change
 		{
 			current		*cvar:sv_maxsoldiersperplayer
-			image		"ui/spinner_blue"
 			pos			"390 110"
 			min			1
 			max			8
@@ -824,10 +821,9 @@ window mp_create_server extends abstract_multiplayer
 			size		"50 20"
 			contentalign	ALIGN_UC
 		}
-		spinner maxplayersperteam_change
+		spinner_blue maxplayersperteam_change
 		{
 			current		*cvar:sv_maxplayersperteam
-			image		"ui/spinner_blue"
 			pos			"390 130"
 			min			1
 			max			8
@@ -851,10 +847,9 @@ window mp_create_server extends abstract_multiplayer
 			size		"50 20"
 			contentalign	ALIGN_UC
 		}
-		spinner ai_numactors_change
+		spinner_blue ai_numactors_change
 		{
 			current		*cvar:ai_numactors
-			image		"ui/spinner_blue"
 			pos			"390 150"
 			min			0
 			max			8
@@ -878,10 +873,9 @@ window mp_create_server extends abstract_multiplayer
 			size		"50 20"
 			contentalign	ALIGN_UC
 		}
-		spinner timelimit_change
+		spinner_blue timelimit_change
 		{
 			current		*cvar:sv_roundtimelimit
-			image		"ui/spinner_blue"
 			pos			"390 170"
 			min			30
 			max			500

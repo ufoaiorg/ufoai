@@ -39,9 +39,8 @@ component cmpResearchItem extends panel {
 		contentalign	ALIGN_UR
 	}
 
-	spinner bt_rs_change {
+	spinner_blue bt_rs_change {
 		tooltip		"_Add/Remove scientist"
-		image		"ui/spinner_blue"
 		pos			"450 0"
 		min			0
 		current		10000
