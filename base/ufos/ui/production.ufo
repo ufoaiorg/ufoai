@@ -231,7 +231,7 @@ window production
 		rows		"22"
 		lineheight	"25"
 		pos			"55 180"
-		size		"265 550"
+		size		"250 550"
 		longlines	LONGLINES_PRETTYCHOP
 		onClick		{
 			*node:root.prodlist_amount@lineselected = <node:this@lineselected>
@@ -257,9 +257,9 @@ window production
 		dataid		TEXT_PRODUCTION_AMOUNT
 		color		"0 .78 0 1"
 		contentalign	ALIGN_CR
-		pos			"330 180"
+		pos			"310 180"
 		rows		"22"
-		size		"40 550"
+		size		"60 550"
 		lineheight	"25"
 		onClick		{
 			*node:root.prodlist@lineselected = <node:this@lineselected>
@@ -284,7 +284,7 @@ window production
 	{
 		dataid		TEXT_PRODUCTION_QUEUED
 		pos			"465 180"
-		size		"30 550"
+		size		"60 550"
 		color		"0 .78 0 1"
 		lineheight	"25"
 		rows		"22"

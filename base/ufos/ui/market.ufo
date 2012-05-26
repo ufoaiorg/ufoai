@@ -34,15 +34,15 @@ component cmpMarketItem extends panel {
 	string storage {
 		color		"0 .78 0 1"
 		contentalign	ALIGN_CR
-		pos			"300 0"
-		size		"40 25"
+		pos			"280 0"
+		size		"60 25"
 		ghost		true
 	}
 	string market {
 		color		"0 .78 0 1"
 		contentalign	ALIGN_CR
-		pos			"376 0"
-		size		"40 25"
+		pos			"370 0"
+		size		"46 25"
 		ghost true
 	}
 	string price {
