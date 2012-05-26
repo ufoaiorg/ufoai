@@ -607,7 +607,7 @@ static void PR_DisassemblingFrame (base_t* base, production_t* prod)
 
 	if (PR_IsReady(prod)) {
 		storedUFO_t *ufo = prod->data.data.ufo;
-		CAP_AddCurrent(base, CAP_ITEMS, PR_DisassembleItem(base, ufo->comp, ufo->condition, qfalse));
+		PR_DisassembleItem(base, ufo->comp, ufo->condition, qfalse);
 
 		Com_sprintf(cp_messageBuffer, sizeof(cp_messageBuffer), _("The disassembling of %s at %s has finished."),
 				UFO_TypeToName(ufo->ufoTemplate->ufotype), base->name);
