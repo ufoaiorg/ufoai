@@ -176,6 +176,21 @@ static bool R_LoadModel (model_t *mod, const char *filename)
 	return true;
 }
 
+bool R_ModelExists (const char *name)
+{
+	if (Com_GetExtension(name) == NULL) {
+		int i;
+		for (i = 0; mod_extensions[i] != NULL; i++) {
+			if (FS_CheckFile("models/%s.%s", name, mod_extensions[i])) {
+				return true;
+			}
+		}
+		return false;
+	}
+
+	return FS_CheckFile("models/%s", name);
+}
+
 /**
  * @brief Tries to load a model
  * @param[in] name The model path or name (with or without extension) - see notes
@@ -203,8 +218,12 @@ model_t *R_FindModel (const char *name)
 	if (mod != NULL)
 		return mod;
 
+	/* no inline bsp models here */
+	if (name[0] == '*')
+		return NULL;
+
 	/* load model */
-	if (name[0] != '*' && (strlen(name) < 4 || name[strlen(name) - 4] != '.')) {
+	if (Com_GetExtension(name) == NULL) {
 		char filename[MAX_QPATH];
 
 		for (i = 0; mod_extensions[i] != NULL; i++) {

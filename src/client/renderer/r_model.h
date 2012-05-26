@@ -78,6 +78,7 @@ void R_LoadActorSkinsFromModel(mAliasMesh_t *outMesh, image_t * defaultSkin);
 bool R_UseActorSkin(void);
 
 model_t *R_FindModel(const char *name);
+bool R_ModelExists(const char *name);
 model_t *R_GetModel(const char *name);
 model_t *R_AllocModelSlot(void);
 

@@ -801,7 +801,7 @@ bool GAME_LoadCharacter (xmlNode_t *p, character_t *chr)
 
 	const char *body = CHRSH_CharGetBody(chr);
 	const char *head = CHRSH_CharGetHead(chr);
-	if (R_FindModel(head) == NULL || R_FindModel(body) == NULL) {
+	if (!R_ModelExists(head) || !R_ModelExists(body)) {
 		if (!Com_GetCharacterModel(chr))
 			return false;
 	}
