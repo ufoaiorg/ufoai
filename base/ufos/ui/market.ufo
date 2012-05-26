@@ -11,8 +11,8 @@ component panel cmpMarketItem
 	}
 	zone wz_buysell
 	{
-		pos			"302 0"
-		size		"120 24"
+		pos			"290 0"
+		size		"132 24"
 		onWheelUp	{ cmd "mn_buy <node:parent@num>;" }
 		onWheelDown	{ cmd "mn_sell <node:parent@num>;" }
 	}
@@ -137,7 +137,7 @@ window market extends objectinfo
 		rows		"22"
 		lineheight	"25"
 		pos			"55 177"
-		size		"265 550"
+		size		"250 550"
 		onChange	{ cmd "sync_market_scroll <lineselected> <viewpos>;market_click <lineselected>;" }
 		onWheel		{ cmd "sync_market_scroll <lineselected> <viewpos>;market_scroll <viewpos>;" }
 	}
@@ -147,9 +147,9 @@ window market extends objectinfo
 		dataid		TEXT_MARKET_STORAGE
 		color		"0 .78 0 1"
 		contentalign	ALIGN_CR
-		pos			"330 177"
+		pos			"310 177"
 		rows		"22"
-		size		"40 550"
+		size		"60 550"
 		lineheight	"25"
 		onChange	{ cmd "sync_market_scroll <lineselected> <viewpos>;market_click <lineselected>;" }
 		onWheel		{ cmd "sync_market_scroll <lineselected> <viewpos>;market_scroll <viewpos>;" }
@@ -160,9 +160,9 @@ window market extends objectinfo
 		dataid		TEXT_MARKET_MARKET
 		color		"0 .78 0 1"
 		contentalign	ALIGN_CR
-		pos			"406 177"
+		pos			"400 177"
 		rows		"22"
-		size		"40 550"
+		size		"45 550"
 		lineheight	"25"
 		onChange	{ cmd "sync_market_scroll <lineselected> <viewpos>;market_click <lineselected>;" }
 		onWheel		{ cmd "sync_market_scroll <lineselected> <viewpos>;market_scroll <viewpos>;" }
