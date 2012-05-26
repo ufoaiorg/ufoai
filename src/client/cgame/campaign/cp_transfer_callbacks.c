@@ -700,6 +700,9 @@ static void TR_TransferSelect (const base_t *srcbase, const base_t *destbase, tr
 	linkedList_t *amounts = NULL;
 	linkedList_t *transfers = NULL;
 
+	if (srcbase == NULL || destbase == NULL)
+		return;
+
 	/* reset for every new call */
 	UI_ResetData(TEXT_TRANSFER_LIST);
 	UI_ResetData(TEXT_TRANSFER_LIST_AMOUNT);

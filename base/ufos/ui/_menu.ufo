@@ -170,8 +170,8 @@ component cmpDefBaseHeader cmpBaseHeader
 	{
 		pos	"25 25"
 		size	"606 46"
-		onWheelUp	{ cmd "ui_pop; mn_base_next;" }
-		onWheelDown	{ cmd "ui_pop; mn_base_prev;" }
+		onWheelUp	{ cmd "trans_emptyairstorage; ui_pop; mn_base_next;" }
+		onWheelDown	{ cmd "trans_emptyairstorage; ui_pop; mn_base_prev;" }
 	}
 
 	button bt_edit
@@ -193,9 +193,9 @@ component cmpDefBaseHeader cmpBaseHeader
 		icon	"icons/prev"
 		pos		"30 30"
 		size	"30 30"
-		onClick	{ cmd "ui_pop; mn_base_prev;" }
-		onWheelUp	{ cmd "ui_pop; mn_base_next;" }
-		onWheelDown	{ cmd "ui_pop; mn_base_prev;" }
+		onClick	{ cmd "trans_emptyairstorage; ui_pop; mn_base_prev;" }
+		onWheelUp	{ cmd "trans_emptyairstorage; ui_pop; mn_base_next;" }
+		onWheelDown	{ cmd "trans_emptyairstorage; ui_pop; mn_base_prev;" }
 	}
 
 	custombutton next_base
@@ -204,9 +204,9 @@ component cmpDefBaseHeader cmpBaseHeader
 		icon	"icons/next"
 		pos		"600 30"
 		size	"30 30"
-		onClick	{ cmd "ui_pop; mn_base_next;" }
-		onWheelUp	{ cmd "ui_pop; mn_base_next;" }
-		onWheelDown	{ cmd "ui_pop; mn_base_prev;" }
+		onClick	{ cmd "trans_emptyairstorage; ui_pop; mn_base_next;" }
+		onWheelUp	{ cmd "trans_emptyairstorage; ui_pop; mn_base_next;" }
+		onWheelDown	{ cmd "trans_emptyairstorage; ui_pop; mn_base_prev;" }
 	}
 }
 
