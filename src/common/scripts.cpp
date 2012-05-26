@@ -2223,6 +2223,25 @@ const teamDef_t* Com_GetTeamDefinitionByID (const char *team)
 	return NULL;
 }
 
+bool Com_GetCharacterModel (character_t * chr)
+{
+	if (!chr->teamDef)
+		return false;
+
+	/* get model */
+	teamDef_t::model_t const* const model = Com_GiveModel(chr->gender, chr->teamDef);
+	if (!model)
+		return false;
+
+	Q_strncpyz(chr->path, model->path, sizeof(chr->path));
+	Q_strncpyz(chr->body, model->body, sizeof(chr->body));
+	Q_strncpyz(chr->head, model->head, sizeof(chr->head));
+	chr->bodySkin = model->bodySkin;
+	chr->headSkin = model->headSkin;
+
+	return true;
+}
+
 /**
  * @brief Assign character values, 3D models and names to a character.
  * @param[in] teamDefition The team definition id to use to generate the character values.
@@ -2263,16 +2282,8 @@ void Com_GetCharacterValues (const char *teamDefition, character_t * chr)
 			continue;
 		Q_strcat(chr->name, str, sizeof(chr->name));
 
-		/* get model */
-		teamDef_t::model_t const* const model = Com_GiveModel(gender, chr->teamDef);
-		if (!model)
+		if (!Com_GetCharacterModel(chr))
 			continue;
-
-		Q_strncpyz(chr->path, model->path, sizeof(chr->path));
-		Q_strncpyz(chr->body, model->body, sizeof(chr->body));
-		Q_strncpyz(chr->head, model->head, sizeof(chr->head));
-		chr->bodySkin = model->bodySkin;
-		chr->headSkin = model->headSkin;
 		return;
 	}
 	Com_Error(ERR_DROP, "Could not set character values for team '%s'\n", teamDefition);
