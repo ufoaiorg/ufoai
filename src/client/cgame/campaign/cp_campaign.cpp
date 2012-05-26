@@ -1120,7 +1120,7 @@ void CP_CampaignInit (campaign_t *campaign, bool load)
 
 	Cmd_ExecuteString("addeventmail prolog");
 
-	RS_MarkResearchable(true, NULL);
+	RS_MarkResearchable(NULL, true);
 	BS_InitMarket(campaign);
 
 	/* create initial employees */

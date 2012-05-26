@@ -126,21 +126,21 @@ typedef enum {
 	MAILSENT_MAX
 } mailSentType_t;
 
-typedef struct descriptions_s {
+typedef struct technologyDescriptions_s {
 	int numDescriptions;	/**< The number of descriptions. */
 	int usedDescription;	/**< The index of the first used description, so we do not get a different text each time it should be displayed. undef=-1
 				 * @todo Check if we should set this in the function that updates the research_proposals? Currently it's only in RS_GetDescription. */
 	char *text[MAX_DESCRIPTIONS];	/**< A list of descriptions (Short text-id to get the full text via gettext). */
-	char *tech[MAX_DESCRIPTIONS];	/**< The technology to check (i.e. are its requirements met?) if this decription should be displayed. */
-} descriptions_t;
+	char *tech[MAX_DESCRIPTIONS];	/**< The technology to check (i.e. are its requirements met?) if this description should be displayed. */
+} technologyDescriptions_t;
 
 /** @brief This is the technology parsed from research.ufo */
 typedef struct technology_s {
 	char *id;		/**< Short (unique) id/name. */
 	int idx;			/**< Self-link in the global list */
 	char *name;		/**< Full name of this technology. */
-	descriptions_t description;	/**< Descriptions of researched item.  */
-	descriptions_t preDescription;	/**< Descriptions of item before it's researched. */
+	technologyDescriptions_t description;	/**< Descriptions of researched item.  */
+	technologyDescriptions_t preDescription;	/**< Descriptions of item before it's researched. */
 	researchType_t type;		/**< Defines what type this tech-entry is an where to search for other information "tech", "weapon" etc... see research.ufo for more */
 
 	struct technology_s *redirect;	/**< Set this to the entry that is supposed to get displayed instead of this one.
@@ -211,9 +211,9 @@ technology_t* RS_GetTechForItem(const objDef_t *item);
 void RS_AddObjectTechs(void);
 void RS_RequiredLinksAssign(void);
 void RS_InitTree(const struct campaign_s *campaign, bool load);
-const char *RS_GetDescription(descriptions_t *desc);
+const char *RS_GetDescription(technologyDescriptions_t *desc);
 void RS_MarkCollected(technology_t *tech) __attribute__((nonnull));
-void RS_MarkResearchable(bool init, const struct base_s *base);
+void RS_MarkResearchable(const struct base_s *base, bool init = false);
 bool RS_MarkStoryLineEventResearched(const char *techID);
 void RS_ResearchFinish(technology_t* tech);
 void RS_StopResearch(technology_t* tech);

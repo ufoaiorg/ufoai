@@ -2310,7 +2310,7 @@ static void B_SellOrAddItems (aircraft_t *aircraft)
 	aircraft->itemTypes = 0;
 
 	/* Mark new technologies researchable. */
-	RS_MarkResearchable(false, aircraft->homebase);
+	RS_MarkResearchable(aircraft->homebase);
 	/* Recalculate storage capacity, to fix wrong capacity if a soldier drops something on the ground */
 	CAP_UpdateStorageCap(aircraft->homebase);
 }

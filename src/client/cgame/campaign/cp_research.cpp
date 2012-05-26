@@ -250,9 +250,9 @@ bool RS_RequirementsMet (const requirements_t *requiredAND, const requirements_t
 
 /**
  * @brief returns the currently used description for a technology.
- * @param[in] desc A list of possible descriptions (with tech-links that decide which one is the correct one)
+ * @param[in,out] desc A list of possible descriptions (with tech-links that decide which one is the correct one)
  */
-const char *RS_GetDescription (descriptions_t *desc)
+const char *RS_GetDescription (technologyDescriptions_t *desc)
 {
 	int i;
 
@@ -318,7 +318,7 @@ void RS_MarkCollected (technology_t* tech)
  * the tree-initialisation (RS_InitTree)
  * @sa RS_MarkResearched
  */
-void RS_MarkResearchable (bool init, const base_t* base)
+void RS_MarkResearchable (const base_t* base, bool init)
 {
 	int i;
 	const base_t *thisBase = base;
@@ -744,7 +744,7 @@ static void RS_MarkResearched (technology_t *tech, const base_t *base)
 {
 	RS_ResearchFinish(tech);
 	Com_DPrintf(DEBUG_CLIENT, "Research of \"%s\" finished.\n", tech->id);
-	RS_MarkResearchable(false, base);
+	RS_MarkResearchable(base);
 }
 
 /**
@@ -1104,7 +1104,7 @@ void RS_ParseTechnologies (const char *name, const char **text)
 	const char *errhead = "RS_ParseTechnologies: unexpected end of file.";
 	const char *token;
 	requirements_t *requiredTemp;
-	descriptions_t *descTemp;
+	technologyDescriptions_t *descTemp;
 	int i;
 
 	for (i = 0; i < ccs.numTechnologies; i++) {
@@ -1237,6 +1237,8 @@ void RS_ParseTechnologies (const char *name, const char **text)
 
 						descTemp->text[descTemp->numDescriptions] = Mem_PoolStrDup(token, cp_campaignPool, 0);
 						descTemp->numDescriptions++;
+					} else {
+						Com_Printf("skipped description for tech '%s'\n", tech->id);
 					}
 				} while (*text);
 

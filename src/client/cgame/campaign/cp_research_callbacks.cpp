@@ -555,7 +555,7 @@ static void RS_ResearchStart_f (void)
 		/* If all requirements are met (includes a check for "enough-collected") mark this tech as researchable.*/
 		if (RS_RequirementsMet(&tech->requireAND, &tech->requireOR, base))
 			RS_MarkOneResearchable(tech);
-		RS_MarkResearchable(false, base);	/* Re-check all other techs in case they depend on the marked one. */
+		RS_MarkResearchable(base);	/* Re-check all other techs in case they depend on the marked one. */
 	}
 
 	/* statusResearchable might have changed - check it again */
@@ -677,7 +677,7 @@ static void RS_InitGUIData (base_t* base)
 
 	assert(base);
 
-	RS_MarkResearchable(false, base);
+	RS_MarkResearchable(base);
 
 	/* update tech of the base */
 	row = 0;

@@ -543,7 +543,7 @@ static void testResearch (void)
 	employee_t *employee;
 
 	ResetCampaignData();
-	RS_MarkResearchable(true, NULL);
+	RS_MarkResearchable(NULL, true);
 
 	laserTech = RS_GetTechByID("rs_laser");
 	CU_ASSERT_PTR_NOT_NULL_FATAL(laserTech);
