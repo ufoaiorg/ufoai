@@ -798,5 +798,13 @@ bool GAME_LoadCharacter (xmlNode_t *p, character_t *chr)
 	GAME_LoadInventory(sInventory, &chr->i);
 
 	Com_UnregisterConstList(saveCharacterConstants);
+
+	const char *body = CHRSH_CharGetBody(chr);
+	const char *head = CHRSH_CharGetHead(chr);
+	if (R_FindModel(head) == NULL || R_FindModel(body) == NULL) {
+		if (!Com_GetCharacterModel(chr))
+			return false;
+	}
+
 	return true;
 }
