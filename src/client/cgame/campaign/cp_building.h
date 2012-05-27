@@ -46,7 +46,7 @@ typedef enum {
 	B_ONCONSTRUCT,					/**< building was placed on the base map */
 	B_ONENABLE,						/**< building get operational (built up and all dependencies met) */
 	B_ONDISABLE,					/**< building got disabled (ex: a dependency was destroyed) */
-	B_ONDESTROY,					/**< building was desroyed */
+	B_ONDESTROY,					/**< building was destroyed */
 	B_MAXEVENT
 } buildingEvent_t;
 

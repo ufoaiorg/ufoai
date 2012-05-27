@@ -212,7 +212,7 @@ typedef struct craftitem_s {
 	float weaponDelay;			/**< The minimum delay between 2 shots */
 	int installationTime;		/**< The time needed to install/remove the item on an aircraft */
 	bool bullets;			/**< create bullets for the projectiles */
-	bool beam;				/**< create (laser/partivle) beam particles for the projectiles */
+	bool beam;				/**< create (laser/particle) beam particles for the projectiles */
 	vec4_t beamColor;
 } craftitem_t;
 
