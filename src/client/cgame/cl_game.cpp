@@ -459,7 +459,7 @@ static const cgame_import_t* GAME_GetImportData (const cgameType_t *t)
 		cgi->UI_ExecuteConfunc = UI_ExecuteConfunc;
 		cgi->UI_InitStack = UI_InitStack;
 		cgi->UI_Popup = GAME_UI_Popup;
-		/*cgi->UI_PopupList = UI_PopupList;*/
+		cgi->UI_PopupList = UI_PopupList;
 		cgi->UI_PopWindow = UI_PopWindow;
 		cgi->UI_PushWindow = UI_PushWindow_;
 		cgi->UI_RegisterLinkedListText = UI_RegisterLinkedListText;
@@ -480,8 +480,7 @@ static const cgame_import_t* GAME_GetImportData (const cgameType_t *t)
 		cgi->UI_GetNodeByPath = UI_GetNodeByPath;
 		cgi->UI_DisplayNotice = UI_DisplayNotice;
 		cgi->UI_GetActiveWindowName = UI_GetActiveWindowName;
-
-		/*gi->UI_TextNodeSelectLine = UI_TextNodeSelectLine;*/
+		cgi->UI_TextNodeSelectLine = UI_TextNodeSelectLine;
 
 		cgi->NET_StreamSetCallback = NET_StreamSetCallback;
 		cgi->NET_Connect = NET_Connect;
