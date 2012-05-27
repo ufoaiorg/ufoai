@@ -2,6 +2,8 @@ package net.sourceforge.ufoai.preferences;
 
 import net.sourceforge.ufoai.UFOAIPlugin;
 
+import org.eclipse.jface.preference.DirectoryFieldEditor;
+import org.eclipse.jface.preference.FieldEditor;
 import org.eclipse.jface.preference.FieldEditorPreferencePage;
 import org.eclipse.jface.preference.FileFieldEditor;
 import org.eclipse.ui.IWorkbench;
@@ -11,7 +13,6 @@ public class UFOAIPreferencesPage extends FieldEditorPreferencePage implements I
 	public UFOAIPreferencesPage() {
 		super(GRID);
 		setPreferenceStore(UFOAIPlugin.getDefault().getPreferenceStore());
-		setDescription("UFOAI preferences");
 	}
 
 	@Override
@@ -20,7 +21,10 @@ public class UFOAIPreferencesPage extends FieldEditorPreferencePage implements I
 
 	@Override
 	protected void createFieldEditors() {
-		getFileEditor(PreferenceConstants.UFORADIANT_EXEC_PATH, "UFORadiant binary");
+		FieldEditor pathEditor = getDirectoryEditor(PreferenceConstants.UFORADIANT_EXEC_PATH, "UFORadiant path");
+		FieldEditor binaryEditor = getFileEditor(PreferenceConstants.UFORADIANT_BINARY, "UFORadiant binary");
+		addField(pathEditor);
+		addField(binaryEditor);
 	}
 
 	private FileFieldEditor getFileEditor(String preferenceConstant, String title, boolean emptyAllowed) {
@@ -29,7 +33,17 @@ public class UFOAIPreferencesPage extends FieldEditorPreferencePage implements I
 		return editor;
 	}
 
+	private DirectoryFieldEditor getDirectoryEditor(String preferenceConstant, String title, boolean emptyAllowed) {
+		DirectoryFieldEditor editor = new DirectoryFieldEditor(preferenceConstant, title, getFieldEditorParent());
+		editor.setEmptyStringAllowed(emptyAllowed);
+		return editor;
+	}
+
 	private FileFieldEditor getFileEditor(String id, String title) {
 		return getFileEditor(id, title, true);
+	}
+
+	private DirectoryFieldEditor getDirectoryEditor(String id, String title) {
+		return getDirectoryEditor(id, title, true);
 	}
 }

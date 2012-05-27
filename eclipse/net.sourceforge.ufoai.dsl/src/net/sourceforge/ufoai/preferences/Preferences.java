@@ -6,14 +6,11 @@ import org.eclipse.core.runtime.preferences.AbstractPreferenceInitializer;
 import org.eclipse.jface.preference.IPreferenceStore;
 
 public class Preferences extends AbstractPreferenceInitializer {
-	public static void initializeToDefault() {
-		IPreferenceStore store = getPreferences();
-		store.setDefault(PreferenceConstants.UFORADIANT_EXEC_PATH, ""); //$NON-NLS-1$
-	}
-
 	@Override
 	public void initializeDefaultPreferences() {
-		initializeToDefault();
+		IPreferenceStore store = getPreferences();
+		store.setDefault(PreferenceConstants.UFORADIANT_EXEC_PATH, "");
+		store.setDefault(PreferenceConstants.UFORADIANT_BINARY, "uforadiant");
 	}
 
 	public static IPreferenceStore getPreferences() {
