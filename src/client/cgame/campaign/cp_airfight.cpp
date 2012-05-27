@@ -155,7 +155,6 @@ static void AIRFIGHT_ProjectileList_f (void)
 static void AIRFIGHT_MissTarget (aircraftProjectile_t *projectile, bool returnToBase)
 {
 	vec3_t newTarget;
-	float distance;
 	float offset;
 
 	assert(projectile);
@@ -168,7 +167,7 @@ static void AIRFIGHT_MissTarget (aircraftProjectile_t *projectile, bool returnTo
 	}
 
 	/* get the distance between the projectile and target */
-	distance = GetDistanceOnGlobe(projectile->pos[0], newTarget);
+	const float distance = GetDistanceOnGlobe(projectile->pos[0], newTarget);
 
 	/* Work out how much the projectile should miss the target by.  We dont want it too close
 	 * or too far from the original target.
@@ -313,14 +312,12 @@ static float AIRFIGHT_ProbabilityToHit (const aircraft_t *shooter, const aircraf
  */
 void AIRFIGHT_ExecuteActions (const campaign_t* campaign, aircraft_t* shooter, aircraft_t* target)
 {
-	int slotIdx;
-
 	/* some asserts */
 	assert(shooter);
 	assert(target);
 
 	/* Check if the attacking aircraft can shoot */
-	slotIdx = AIRFIGHT_ChooseWeapon(shooter->weapons, shooter->maxWeapons, shooter->pos, target->pos);
+	const int slotIdx = AIRFIGHT_ChooseWeapon(shooter->weapons, shooter->maxWeapons, shooter->pos, target->pos);
 
 	/* if weapon found that can shoot */
 	if (slotIdx >= AIRFIGHT_WEAPON_CAN_SHOOT) {
@@ -541,7 +538,6 @@ static int AIRFIGHT_GetDamage (const objDef_t *od, const aircraft_t* target)
 static void AIRFIGHT_ProjectileHits (const campaign_t* campaign, aircraftProjectile_t *projectile)
 {
 	aircraft_t *target;
-	int damage = 0;
 
 	assert(projectile);
 	target = projectile->aimedAircraft;
@@ -551,7 +547,7 @@ static void AIRFIGHT_ProjectileHits (const campaign_t* campaign, aircraftProject
 	if (AIR_IsAircraftInBase(target))
 		return;
 
-	damage = AIRFIGHT_GetDamage(projectile->aircraftItem, target);
+	const int damage = AIRFIGHT_GetDamage(projectile->aircraftItem, target);
 
 	/* apply resulting damages - but only if damage > 0 - because the target might
 	 * already be destroyed, and we don't want to execute the actions after airfight
@@ -655,8 +651,7 @@ void AIRFIGHT_CampaignRunProjectiles (const campaign_t* campaign, int dt)
  */
 static void AIRFIGHT_BaseShoot (const base_t *base, baseWeapon_t *weapons, int maxWeapons)
 {
-	int i, test;
-	float distance;
+	int i;
 
 	for (i = 0; i < maxWeapons; i++) {
 		aircraft_t *target = weapons[i].target;
@@ -680,8 +675,8 @@ static void AIRFIGHT_BaseShoot (const base_t *base, baseWeapon_t *weapons, int m
 		}
 
 		/* Check if we can still fire on this target. */
-		distance = GetDistanceOnGlobe(base->pos, target->pos);
-		test = AIRFIGHT_CheckWeapon(slot, distance);
+		const float distance = GetDistanceOnGlobe(base->pos, target->pos);
+		const int test = AIRFIGHT_CheckWeapon(slot, distance);
 		/* weapon unable to shoot, reset target */
 		if (test == AIRFIGHT_WEAPON_CAN_NEVER_SHOOT) {
 			weapons[i].target = NULL;
@@ -711,8 +706,7 @@ static void AIRFIGHT_BaseShoot (const base_t *base, baseWeapon_t *weapons, int m
  */
 static void AIRFIGHT_InstallationShoot (const installation_t *installation, baseWeapon_t *weapons, int maxWeapons)
 {
-	int i, test;
-	float distance;
+	int i;
 
 	for (i = 0; i < maxWeapons; i++) {
 		aircraft_t *target = weapons[i].target;
@@ -736,8 +730,8 @@ static void AIRFIGHT_InstallationShoot (const installation_t *installation, base
 		}
 
 		/* Check if we can still fire on this target. */
-		distance = GetDistanceOnGlobe(installation->pos, target->pos);
-		test = AIRFIGHT_CheckWeapon(slot, distance);
+		const float distance = GetDistanceOnGlobe(installation->pos, target->pos);
+		const int test = AIRFIGHT_CheckWeapon(slot, distance);
 		/* weapon unable to shoot, reset target */
 		if (test == AIRFIGHT_WEAPON_CAN_NEVER_SHOOT) {
 			weapons[i].target = NULL;
