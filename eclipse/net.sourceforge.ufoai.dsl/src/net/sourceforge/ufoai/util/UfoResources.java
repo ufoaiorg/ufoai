@@ -4,7 +4,7 @@ import java.io.File;
 
 /**
  * UFOAI resource util to access to the content of the project.
- * QUESTION maybe we should use IResource (ecplise resource) instead of File
+ * QUESTION maybe we should use IResource (eclipse resource) instead of File
  */
 public class UfoResources {
 

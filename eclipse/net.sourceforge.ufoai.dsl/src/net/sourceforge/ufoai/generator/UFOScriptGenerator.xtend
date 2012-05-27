@@ -8,8 +8,6 @@ import org.eclipse.xtext.generator.IGenerator
 import org.eclipse.xtext.generator.IFileSystemAccess
 
 class UFOScriptGenerator implements IGenerator {
-
 	override void doGenerate(Resource resource, IFileSystemAccess fsa) {
-		//TODO implement me
 	}
 }
