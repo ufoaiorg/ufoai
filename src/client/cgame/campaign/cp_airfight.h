@@ -61,6 +61,7 @@ typedef struct aircraftProjectile_s {
 	float angle;			/**< angle of the missile on the geoscape */
 	bool bullets;		/**< projectile has active bullets on geoscape */
 	bool beam;			/**< projectile has an active (laser) beam on geoscape */
+	bool rocket;
 } aircraftProjectile_t;
 
 void AIRFIGHT_ExecuteActions(const struct campaign_s* campaign, aircraft_t* air, aircraft_t* ufo);

@@ -99,8 +99,9 @@ static bool AIRFIGHT_AddProjectile (const base_t* attackingBase, const installat
 	projectile->time = 0;
 	projectile->angle = 0.0f;
 
-	projectile->bullets = (weaponSlot->item->craftitem.bullets) ? true : false;
-	projectile->beam = (weaponSlot->item->craftitem.beam) ? true : false;
+	projectile->bullets = weaponSlot->item->craftitem.bullets;
+	projectile->beam = weaponSlot->item->craftitem.beam;
+	projectile->rocket = !projectile->bullets && !projectile->beam;
 
 	weaponSlot->ammoLeft--;
 	if (weaponSlot->ammoLeft <= 0)
@@ -113,8 +114,10 @@ static bool AIRFIGHT_AddProjectile (const base_t* attackingBase, const installat
 		sound = "geoscape/combat-gun";
 	} else if (projectile->beam) {
 		sound = "geoscape/combat-airlaser";
-	} else {
+	} else if (projectile->rocket) {
 		sound = "geoscape/combat-rocket";
+	} else {
+		sound = NULL;
 	}
 
 	if (sound != NULL)
@@ -560,7 +563,7 @@ static void AIRFIGHT_ProjectileHits (const campaign_t* campaign, aircraftProject
 			AIRFIGHT_ActionsAfterAirfight(campaign, projectile->attackingAircraft, target, target->type == AIRCRAFT_UFO);
 			S_StartLocalSample("geoscape/combat-explosion", 1.0f);
 		} else {
-			if (!projectile->beam && !projectile->bullets)
+			if (projectile->rocket)
 				S_StartLocalSample("geoscape/combat-rocket-exp", 1.0f);
 		}
 	}
