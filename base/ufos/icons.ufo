@@ -356,28 +356,28 @@ sprite icons/number_8 {
 
 sprite icons/number_9 {
 	image "banks/pack_hud"
-	texl	"129 0"
+	texl	"147 0"
 	size	"17 26"
 	pack64	true
 }
 
 sprite icons/number_10 {
 	image "banks/pack_hud"
-	texl	"129 0"
-	size	"17 26"
+	texl	"165 0"
+	size	"23 26"
 	pack64	true
 }
 
 sprite icons/number_11 {
 	image "banks/pack_hud"
-	texl	"129 0"
-	size	"17 26"
+	texl	"188 0"
+	size	"23 26"
 	pack64	true
 }
 
 sprite icons/number_12 {
 	image "banks/pack_hud"
-	texl	"129 0"
-	size	"17 26"
+	texl	"212 0"
+	size	"23 26"
 	pack64	true
 }
