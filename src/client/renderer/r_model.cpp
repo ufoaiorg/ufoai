@@ -181,14 +181,14 @@ bool R_ModelExists (const char *name)
 	if (Com_GetExtension(name) == NULL) {
 		int i;
 		for (i = 0; mod_extensions[i] != NULL; i++) {
-			if (FS_CheckFile("models/%s.%s", name, mod_extensions[i])) {
+			if (FS_CheckFile("models/%s.%s", name, mod_extensions[i]) != -1) {
 				return true;
 			}
 		}
 		return false;
 	}
 
-	return FS_CheckFile("models/%s", name);
+	return FS_CheckFile("models/%s", name) != -1;
 }
 
 /**
