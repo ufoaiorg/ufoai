@@ -32,10 +32,4 @@
             name="UFO:AI">
       </page>
    </extension>
-   <extension
-         point="org.eclipse.core.runtime.preferences">
-      <initializer
-            class="net.sourceforge.ufoai.preferences.PreferenceInitializer">
-      </initializer>
-   </extension>
 </plugin>
