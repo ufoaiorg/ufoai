@@ -564,7 +564,8 @@ static void AIRFIGHT_ProjectileHits (const campaign_t* campaign, aircraftProject
 			AIRFIGHT_ActionsAfterAirfight(campaign, projectile->attackingAircraft, target, target->type == AIRCRAFT_UFO);
 			S_StartLocalSample("geoscape/combat-explosion", 1.0f);
 		} else {
-			S_StartLocalSample("geoscape/combat-rocket-exp", 1.0f);
+			if (!projectile->beam && !projectile->bullets)
+				S_StartLocalSample("geoscape/combat-rocket-exp", 1.0f);
 		}
 	}
 }

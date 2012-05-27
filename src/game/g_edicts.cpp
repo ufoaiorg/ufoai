@@ -120,8 +120,8 @@ edict_t* G_EdictsGetNext (edict_t* lastEnt)
 	ent++;
 	if (ent >= endOfEnts)
 		return NULL;
-	else
-		return ent;
+
+	return ent;
 }
 
 edict_t* G_EdictDuplicate (const edict_t *edict)
@@ -152,8 +152,8 @@ edict_t* G_EdictsGetNewEdict (void)
 	globals.num_edicts++;
 	if (globals.num_edicts > game.sv_maxentities)
 		return NULL;
-	else
-		return ent;
+
+	return ent;
 }
 
 /**
