@@ -30,6 +30,8 @@ public class SemanticHighlightingCalculator implements ISemanticHighlightingCalc
 				UFOScript ufoScript = (UFOScript) e;
 				EList<NamedBlock> blocks = ufoScript.getBlocks();
 				for (NamedBlock block : blocks) {
+					highlightNode(getFirstFeatureNode(block, UfoScriptPackage.Literals.NAMED_BLOCK__TYPE),
+							HighlightingConfiguration.RULE_NAMED_BLOCK, acceptor);
 					EList<Property> properties = block.getProperties();
 					for (Property property : properties) {
 						highlightNode(getFirstFeatureNode(property, UfoScriptPackage.Literals.PROPERTY__TYPE),

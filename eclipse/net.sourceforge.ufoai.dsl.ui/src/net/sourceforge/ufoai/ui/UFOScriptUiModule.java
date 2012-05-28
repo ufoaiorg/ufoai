@@ -3,6 +3,8 @@
  */
 package net.sourceforge.ufoai.ui;
 
+import net.sourceforge.ufoai.ui.folding.FoldingRegionProvider;
+import net.sourceforge.ufoai.ui.hover.HoverProvider;
 import net.sourceforge.ufoai.ui.properties.UFOScriptPropertyViewer;
 import net.sourceforge.ufoai.ui.syntaxcoloring.HighlightingConfiguration;
 import net.sourceforge.ufoai.ui.syntaxcoloring.SemanticHighlightingCalculator;
@@ -10,6 +12,8 @@ import net.sourceforge.ufoai.ui.syntaxcoloring.SemanticHighlightingCalculator;
 import org.eclipse.ui.plugin.AbstractUIPlugin;
 import org.eclipse.xtext.ui.editor.XtextEditor;
 import org.eclipse.xtext.ui.editor.contentassist.XtextContentAssistProcessor;
+import org.eclipse.xtext.ui.editor.folding.DefaultFoldingRegionProvider;
+import org.eclipse.xtext.ui.editor.hover.IEObjectHoverProvider;
 import org.eclipse.xtext.ui.editor.syntaxcoloring.IHighlightingConfiguration;
 import org.eclipse.xtext.ui.editor.syntaxcoloring.ISemanticHighlightingCalculator;
 
@@ -29,6 +33,7 @@ public class UFOScriptUiModule extends net.sourceforge.ufoai.ui.AbstractUFOScrip
 		super.configure(binder);
 		Named named = com.google.inject.name.Names.named(XtextContentAssistProcessor.COMPLETION_AUTO_ACTIVATION_CHARS);
 		binder.bind(String.class).annotatedWith(named).toInstance(".,:");
+		binder.bind(IEObjectHoverProvider.class).to(HoverProvider.class);
 	}
 
 	public Class<? extends XtextEditor> bindEditor() {
@@ -41,5 +46,9 @@ public class UFOScriptUiModule extends net.sourceforge.ufoai.ui.AbstractUFOScrip
 
 	public Class<? extends IHighlightingConfiguration> bindIHighlightingConfiguration() {
 		return HighlightingConfiguration.class;
+	}
+
+	public Class<? extends DefaultFoldingRegionProvider> bindDefaultFoldingRegionProvider() {
+		return FoldingRegionProvider.class;
 	}
 }
