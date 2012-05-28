@@ -36,10 +36,10 @@ building building_aliencontainment
 	image			"base/aliencont"
 	fixcosts		92000
 	depends			building_powerplant
-	type			aliencont
+	type			"aliencont"
 	build_time		10
 	varcosts		7500
-	map_name		"aliencont"
+	map_name		"aliencont_"
 	pedia			rs_building_aliencontainment
 	size			"2 1"
 	capacity		10
@@ -51,7 +51,7 @@ building building_entrance
 	name		"_Entrance"
 	image		"base/entrance"
 	fixcosts	0
-	type		entrance
+	type		"entrance"
 	build_time	1
 	varcosts	0
 	map_name	"entrance"
@@ -66,7 +66,7 @@ building building_storage
 	image			"base/storage"
 	fixcosts		36000
 	depends			building_entrance // storage base needs just entrance
-	type			storage
+	type			"storage"
 	build_time		4
 	varcosts		3000
 	map_name		"storage"
@@ -80,7 +80,7 @@ building building_powerplant
 	image			"base/powerplant"
 	fixcosts		35000
 	depends			building_entrance
-	type			power
+	type			"power"
 	build_time		12
 	varcosts		5000
 	map_name		"powerplant"
@@ -95,7 +95,7 @@ building building_command
 	image		"base/commando"
 	fixcosts	58000
 	depends		building_powerplant
-	type		command
+	type		"command"
 	build_time	12
 	varcosts	3000
 	map_name	"commando"
@@ -114,7 +114,7 @@ building building_quarters
 	varcosts		1000
 	map_name		"quarters"
 	pedia			rs_building_quarters
-	type			quarters
+	type			"quarters"
 	capacity		20
 }
 
@@ -128,7 +128,7 @@ building building_hangar
 	varcosts			5500
 	map_name			"drop"
 	pedia				rs_building_large_hangar
-	type				hangar
+	type				"hangar"
 	size				"2 1"
 	starting_employees	8 //Number of soldiers in dropship when first base is built
 	capacity			1
@@ -145,7 +145,7 @@ building building_intercept
 	map_name		"intercept"
 	pedia			rs_building_small_hangar
 	capacity		1
-	type			smallhangar
+	type			"smallhangar"
 }
 
 building building_workshop
@@ -158,7 +158,7 @@ building building_workshop
 	varcosts			3200
 	map_name			"workshop"
 	pedia				rs_building_workshop
-	type				workshop
+	type				"workshop"
 	starting_employees	10
 	size				"2 1"
 	capacity			10
@@ -174,7 +174,7 @@ building building_radar
 	varcosts		4000
 	map_name		"radar"
 	pedia			rs_building_radar
-	type			radar
+	type			"radar"
 	onenable		"update_base_radar_coverage"
 	ondisable		"update_base_radar_coverage"
 	level			1.0
@@ -190,7 +190,7 @@ building building_radar_adv
 	varcosts		7100
 	map_name		"radar_adv"
 	pedia			rs_building_radar_adv
-	type			radar
+	type			"radar"
 	onenable		"update_base_radar_coverage"
 	ondisable		"update_base_radar_coverage"
 	level			2.0
@@ -206,7 +206,7 @@ building building_lab
 	varcosts			4300
 	map_name			"lab"
 	pedia				rs_building_lab
-	type				lab
+	type				"lab"
 	starting_employees	10
 	capacity			10
 }
@@ -222,7 +222,7 @@ building building_hospital
 	map_name			"hospital"
 	pedia				rs_building_hospital
 	max_count			1
-	type				hospital
+	type				"hospital"
 	starting_employees	10
 }
 
@@ -233,7 +233,7 @@ building building_amstorage
 	fixcosts	70000
 	build_time	20
 	varcosts	22000
-	type		amstorage
+	type		"amstorage"
 	map_name	"antimatter"
 	pedia		rs_building_antimatter
 	capacity	1000
@@ -247,7 +247,7 @@ building building_laser
 	image			"base/laser"
 	fixcosts		10000
 	depends			building_command // need to know where to shoot
-	type			laser
+	type			"laser"
 	build_time		3
 	varcosts		5000
 	map_name		"laser"
@@ -266,7 +266,7 @@ building building_missile
 	image			"base/missile"
 	fixcosts		10000
 	depends			building_command // need to know where to shoot
-	type			missile
+	type			"missile"
 	build_time		3
 	varcosts		5000
 	map_name		"missile"

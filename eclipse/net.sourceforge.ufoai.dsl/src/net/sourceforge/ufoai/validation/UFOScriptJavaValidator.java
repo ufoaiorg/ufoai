@@ -1,9 +1,6 @@
 package net.sourceforge.ufoai.validation;
 
 import java.io.File;
-import java.io.IOException;
-import java.io.InputStream;
-import java.util.Properties;
 
 import net.sourceforge.ufoai.ufoScript.NamedBlock;
 import net.sourceforge.ufoai.ufoScript.Property;
@@ -24,23 +21,6 @@ import org.eclipse.xtext.validation.Check;
 
 public class UFOScriptJavaValidator extends AbstractUFOScriptJavaValidator {
 	public static final String INVALID_NAME = "INVALID_NAME";
-
-	private static Properties properties;
-	private static String propertyFile= "/net/sourceforge/ufoai/validation/rules.properties";
-
-	static {
-		properties = new Properties();
-		InputStream stream = UFOScriptJavaValidator.class.getResourceAsStream(propertyFile);
-		if (stream == null) {
-			System.out.println("UFOAI Validator property file \"" + propertyFile + "\"not found");
-		} else {
-			try {
-				properties.load(stream);
-			} catch (IOException e) {
-				e.printStackTrace();
-			}
-		}
-	}
 
 	/**
 	 * Check for "base" dir.
@@ -86,24 +66,13 @@ public class UFOScriptJavaValidator extends AbstractUFOScriptJavaValidator {
 		return path;
 	}
 
-	private UFOTypes getType(String path) {
-		if (properties == null)
-			return null;
-		String key = path + ".type";
-		String type = properties.getProperty(key);
-		if (type == null)
-			return null;
-		try {
-			return UFOTypes.valueOf(type);
-		} catch (IllegalArgumentException e) {
-			e.printStackTrace();
-			return null;
-		}
+	private UFOType getType(String path) {
+		return UFOTypes.getInstance().getPathType(path);
 	}
 
 	private void validate(Property property) {
 		String path = getPath(property);
-		UFOTypes type = getType(path);
+		UFOType type = getType(path);
 
 		// No rules
 		if (type == null) {
@@ -111,7 +80,7 @@ public class UFOScriptJavaValidator extends AbstractUFOScriptJavaValidator {
 			return;
 		}
 
-		switch (type) {
+		switch (type.getType()) {
 		case BLOCK:
 			if (!(property.getValue() instanceof PropertyValueBlock)) {
 				error("Block is expected", UfoScriptPackage.Literals.PROPERTY__VALUE);
@@ -124,7 +93,18 @@ public class UFOScriptJavaValidator extends AbstractUFOScriptJavaValidator {
 				PropertyValueString value = (PropertyValueString) property.getValue();
 				if (!value.getValue().startsWith("_")) {
 					warning("String should be prefixed by '_' to became translatable.",
-						UfoScriptPackage.Literals.PROPERTY__VALUE);
+							UfoScriptPackage.Literals.PROPERTY__VALUE);
+				}
+			}
+			break;
+		case ENUM:
+			if (!(property.getValue() instanceof PropertyValueString)) {
+				error("Quoted string expected", UfoScriptPackage.Literals.PROPERTY__VALUE);
+			} else {
+				PropertyValueString value = (PropertyValueString) property.getValue();
+				if (!type.contains(value.getValue())) {
+					warning("Not a valide value.",
+							UfoScriptPackage.Literals.PROPERTY__VALUE);
 				}
 			}
 			break;
@@ -183,7 +163,7 @@ public class UFOScriptJavaValidator extends AbstractUFOScriptJavaValidator {
 				final File file = UfoResources.getFileFromPics(id);
 				if (file == null) {
 					warning("Image not found.",
-						UfoScriptPackage.Literals.PROPERTY__VALUE);
+							UfoScriptPackage.Literals.PROPERTY__VALUE);
 				}
 			}
 			break;
@@ -205,13 +185,13 @@ public class UFOScriptJavaValidator extends AbstractUFOScriptJavaValidator {
 	@Check
 	public void checkNamedBlock(NamedBlock block) {
 		String path = getPath(block);
-		UFOTypes type = getType(path);
+		UFOType type = getType(path);
 		if (type == null) {
 			error("Definition unknown", UfoScriptPackage.Literals.NAMED_BLOCK__TYPE);
 			return;
 		}
 
-		if (type != UFOTypes.BLOCK) {
+		if (type.getType() != UFOType.Type.BLOCK) {
 			throw new Error("Property file is wrong. Main block must be a block type.");
 		}
 	}

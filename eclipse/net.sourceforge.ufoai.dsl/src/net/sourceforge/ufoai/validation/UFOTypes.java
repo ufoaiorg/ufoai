@@ -1,52 +1,56 @@
 package net.sourceforge.ufoai.validation;
 
-public enum UFOTypes {
+import java.io.IOException;
+import java.io.InputStream;
+import java.util.HashMap;
+import java.util.Map;
+import java.util.Properties;
 
-	/**
-	 * A block
-	 */
-	BLOCK,
+public class UFOTypes {
 
-	/**
-	 * A string
-	 */
-	STRING,
+	private static UFOTypes instance;
+	private static String defaultPropertyFile = "/net/sourceforge/ufoai/validation/rules.properties";
 
-	/**
-	 * A string witch contain a link to an image relative to base/pics
-	 * and do not contains file extension
-	 */
-	PICS_IMAGE,
+	private Properties properties;
+	private Map<String, UFOType> types;
 
-	/**
-	 * A string which should be prefixed with '_'
-	 */
-	TRANSLATED_STRING,
+	private UFOTypes(Properties properties) {
+		this.properties = new Properties(properties);
+		this.types = new HashMap<String, UFOType>();
+	}
 
-	/**
-	 * An integer number
-	 */
-	INT,
+	public static UFOTypes getInstance() {
+		if (instance == null) {
+			Properties properties = new Properties();
+			InputStream stream = UFOTypes.class.getResourceAsStream(defaultPropertyFile);
+			if (stream == null) {
+				System.out.println("UFOAI Validator property file \"" + defaultPropertyFile + "\"not found");
+			} else {
+				try {
+					properties.load(stream);
+				} catch (IOException e) {
+					e.printStackTrace();
+				}
+			}
+			instance = new UFOTypes(properties);
+		}
+		return instance;
+	}
 
-	/**
-	 * A boolean
-	 */
-	BOOLEAN,
+	private UFOType computePathType(String path) {
+		String type = properties.getProperty(path + ".type");
+		if (type == null)
+			return null;
+		String values = properties.getProperty(path + ".values");
+		return new UFOType(type, values);
+	}
 
-	/**
-	 * A real number
-	 */
-	REAL,
-
-	/**
-	 * A string containing two integer
-	 */
-	VEC2,
-
-	/**
-	 * A reference to an object
-	 */
-	ID,
-	TECH_ID,
-	BUILDING_ID
+	public UFOType getPathType(String path) {
+		UFOType type = types.get(path);
+		if (type == null) {
+			type = computePathType(path);
+			types.put(path, type);
+		}
+		return type;
+	}
 }
