@@ -7,10 +7,7 @@ import java.io.InputStream;
 import java.util.HashMap;
 import java.util.Map;
 
-import net.sourceforge.ufoai.ufoScript.UIFont;
-import net.sourceforge.ufoai.ufoScript.UINode;
-import net.sourceforge.ufoai.ufoScript.UINodeComponent;
-import net.sourceforge.ufoai.ufoScript.UINodeWindow;
+import net.sourceforge.ufoai.ufoScript.NamedBlock;
 
 import org.eclipse.emf.edit.ui.provider.AdapterFactoryLabelProvider;
 import org.eclipse.swt.graphics.Image;
@@ -32,14 +29,22 @@ public class UFOScriptLabelProvider extends DefaultEObjectLabelProvider {
 		iconCache = new HashMap<String, Image>();
 	}
 
+	private String getIconURI(String name) {
+		return "/net/sourceforge/ufoai/ui/icons/" + name + ".png";
+	}
+
 	private Image getIcon(String name) {
 		Image image = iconCache.get(name);
 		if (image == null) {
-			final String uri = "/net/sourceforge/ufoai/ui/icons/" + name + ".png";
+			String uri = getIconURI(name);
 			InputStream stream = this.getClass().getResourceAsStream(uri);
 			if (stream == null) {
 				System.out.println("Image at uri " + uri + " was not found.");
-				return null;
+				uri = getIconURI("default");
+				stream = this.getClass().getResourceAsStream(uri);
+				if (stream == null) {
+					return null;
+				}
 			}
 			image = new Image(Display.getDefault(), stream);
 			iconCache.put(name, image);
@@ -47,22 +52,7 @@ public class UFOScriptLabelProvider extends DefaultEObjectLabelProvider {
 		return image;
 	}
 
-	public Image image(UINodeWindow window) {
-		return getIcon("node/window");
-	}
-
-	public Image image(UINodeComponent component) {
-		return getIcon("node/component");
-	}
-
-	public Image image(UINode node) {
-		// FIXME node type should be inside the EObject, class can be something not expected
-		String name = node.getClass().getSimpleName();
-		name = name.replaceFirst("UINode", "").replaceFirst("Impl", "").toLowerCase();
-		return getIcon("node/" + name);
-	}
-
-	public Image image(UIFont font) {
-		return getIcon("font");
+	public Image image(NamedBlock block) {
+		return getIcon(block.getType());
 	}
 }

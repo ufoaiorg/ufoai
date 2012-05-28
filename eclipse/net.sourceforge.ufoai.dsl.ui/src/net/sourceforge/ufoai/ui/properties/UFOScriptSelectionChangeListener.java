@@ -40,6 +40,8 @@ public class UFOScriptSelectionChangeListener implements ISelectionChangedListen
 						ICompositeNode rootNode = parseResult.getRootNode();
 						int offset = textSel.getOffset();
 						ILeafNode node = NodeModelUtils.findLeafNodeAtOffset(rootNode, offset);
+						if (node == null)
+							return;
 						EObject object = node.getSemanticElement();
 
 						PropertyPageInformer.informPropertyView(editor, object);
