@@ -1509,7 +1509,7 @@ mission_t *CP_CreateNewMission (interestCategory_t category, bool beginNow)
  * @brief Select new mission type.
  * @sa CP_SpawnNewMissions
  */
-static int CP_SelectNewMissionType (void)
+static interestCategory_t CP_SelectNewMissionType (void)
 {
 	int sum = 0;
 	int i, randomNumber;
@@ -1522,7 +1522,7 @@ static int CP_SelectNewMissionType (void)
 	for (i = 0; randomNumber >= 0; i++)
 		randomNumber -= ccs.interest[i];
 
-	return i - 1;
+	return (interestCategory_t)(i - 1);
 }
 
 /**
@@ -1559,7 +1559,7 @@ void CP_SpawnNewMissions (void)
 		Com_DPrintf(DEBUG_CLIENT, "interest = %d, new missions = %d\n", ccs.overallInterest, newMissionNum);
 		for (i = 0; i < newMissionNum; i++) {
 			if (frand() > nonOccurrence) {
-				const interestCategory_t type = (interestCategory_t)CP_SelectNewMissionType();
+				const interestCategory_t type = CP_SelectNewMissionType();
 				CP_CreateNewMission(type, false);
 			}
 		}
