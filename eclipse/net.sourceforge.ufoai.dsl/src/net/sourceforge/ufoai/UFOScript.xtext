@@ -19,6 +19,7 @@ PropertyValue:
 	PropertyValueString
 	| PropertyValueBoolean
 	| PropertyValueNumber
+	| PropertyValueNamedConst
 	| PropertyValueBlock
 	| PropertyValueID;
 
@@ -34,6 +35,9 @@ PropertyValueNumber:
 PropertyValueID:
 	value=[NamedBlock];
 
+PropertyValueNamedConst:
+	value=NAMED_CONST;
+
 PropertyValueBlock:
 	"{" {PropertyValueBlock} (=>properties+=Property)* "}";
 
@@ -43,6 +47,9 @@ Double:
 	(INT | REAL);
 
 /* ==================== terminals ================================ */
+
+terminal NAMED_CONST:
+	('A'..'Z') ('A'..'Z' | '0'..'9' | '_')*;
 
 terminal REAL:
 	('0'..'9')* '.' ('0'..'9')+;

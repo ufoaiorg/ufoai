@@ -7,6 +7,7 @@ import net.sourceforge.ufoai.ufoScript.Property;
 import net.sourceforge.ufoai.ufoScript.PropertyValueBlock;
 import net.sourceforge.ufoai.ufoScript.PropertyValueBoolean;
 import net.sourceforge.ufoai.ufoScript.PropertyValueID;
+import net.sourceforge.ufoai.ufoScript.PropertyValueNamedConst;
 import net.sourceforge.ufoai.ufoScript.PropertyValueNumber;
 import net.sourceforge.ufoai.ufoScript.PropertyValueString;
 import net.sourceforge.ufoai.ufoScript.UfoScriptPackage;
@@ -98,16 +99,24 @@ public class UFOScriptJavaValidator extends AbstractUFOScriptJavaValidator {
 			}
 			break;
 		case ENUM:
-			if (!(property.getValue() instanceof PropertyValueString)) {
-				error("Quoted string expected", UfoScriptPackage.Literals.PROPERTY__VALUE);
-			} else {
+		{
+			if ((property.getValue() instanceof PropertyValueString)) {
 				PropertyValueString value = (PropertyValueString) property.getValue();
 				if (!type.contains(value.getValue())) {
 					warning("Not a valide value.",
 							UfoScriptPackage.Literals.PROPERTY__VALUE);
 				}
+			} else if ((property.getValue() instanceof PropertyValueNamedConst)) {
+				PropertyValueNamedConst value = (PropertyValueNamedConst) property.getValue();
+				if (!type.contains(value.getValue())) {
+					warning("Not a valide value.",
+							UfoScriptPackage.Literals.PROPERTY__VALUE);
+				}
+			} else {
+				error("Quoted string or uppercase named const expected", UfoScriptPackage.Literals.PROPERTY__VALUE);
 			}
 			break;
+		}
 		case STRING:
 			if (!(property.getValue() instanceof PropertyValueString)) {
 				error("Quoted string expected", UfoScriptPackage.Literals.PROPERTY__VALUE);
