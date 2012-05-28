@@ -99,7 +99,7 @@ building building_command
 	build_time	12
 	varcosts	3000
 	map_name	"commando"
-	pedia		"rs_building_command"
+	pedia		rs_building_command
 	max_count	1
 	onenable	"mn_installation_update_max_count"
 	ondisable	"mn_installation_update_max_count"
