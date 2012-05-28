@@ -279,7 +279,7 @@ window skirmish
 		cmd "mn_getmaps;define cl_ugvs 0;define cl_teamdef phalanx;"
 		*cvar:mn_svmapid = "none"
 		cmd "mn_requestmaplist sk_maplist_listener;"
-		cmd	"game_teamcomments;define cl_teamdef phalanx;"
+		cmd	"game_teamcomments;sk_initequip cl_equip;sk_initequip ai_equipment;define cl_teamdef phalanx;"
 
 		// Resets map choices when Skirmish menu reloaded
 		cmd "toggle_sk_map;"

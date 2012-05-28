@@ -1418,6 +1418,8 @@ const equipDef_t *GAME_ChangeEquip (const linkedList_t *equipmentList, changeEqu
 	if (LIST_IsEmpty(equipmentList)) {
 		int index;
 		ed = INV_GetEquipmentDefinitionByID(equipID);
+		if (ed == NULL)
+			Com_Error(ERR_DROP, "Could not find the equipment definition for '%s'", equipID);
 		index = ed - csi.eds;
 
 		switch (changeType) {

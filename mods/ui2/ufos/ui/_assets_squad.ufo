@@ -162,8 +162,7 @@ component SetSquadCount extends panel
 			if (*cvar:sv_maxsoldiersperplayer < 8) {
 				*cvar:sv_maxsoldiersperplayer = (*cvar:sv_maxsoldiersperplayer + 1)
 			}
-		}
-		if (param1 eq "down") {
+		} else {
 			if (*cvar:sv_maxsoldiersperplayer > 1) {
 				*cvar:sv_maxsoldiersperplayer = (*cvar:sv_maxsoldiersperplayer - 1)
 			}
@@ -245,8 +244,7 @@ component SetUGVCount extends panel
 			if (*cvar:cl_ugvs < 2) {
 				*cvar:cl_ugvs = (*cvar:cl_ugvs + 1)
 			}
-		}
-		if (param1 eq "down") {
+		} else {
 			if (*cvar:cl_ugvs > 0) {
 				*cvar:cl_ugvs = (*cvar:cl_ugvs - 1)
 			}
@@ -417,7 +415,7 @@ component PlayerSquad extends panel
 			onMouseLeave 	{
 				*node:this@color = "1 1 1 0.5"
 				}
-			onClick		{ cmd "toggle_custom_team_opts new;" }
+			onClick		{ cmd "game_autoteam;toggle_custom_team_opts new;" }
 		}
 
 		string squad_custom_load

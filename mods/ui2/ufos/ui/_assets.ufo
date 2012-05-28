@@ -17,6 +17,7 @@ component main_bg extends image
 component screen extends texture
 {
 	pos 		"0 0"
+	// TODO: this should be always the full screen
 	size		"2048 1536"
 	bgcolor		"0 0 0 0"
 	src			"ui/screen"
