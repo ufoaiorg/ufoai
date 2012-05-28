@@ -4,10 +4,14 @@
 package net.sourceforge.ufoai.ui;
 
 import net.sourceforge.ufoai.ui.properties.UFOScriptPropertyViewer;
+import net.sourceforge.ufoai.ui.syntaxcoloring.HighlightingConfiguration;
+import net.sourceforge.ufoai.ui.syntaxcoloring.SemanticHighlightingCalculator;
 
 import org.eclipse.ui.plugin.AbstractUIPlugin;
 import org.eclipse.xtext.ui.editor.XtextEditor;
 import org.eclipse.xtext.ui.editor.contentassist.XtextContentAssistProcessor;
+import org.eclipse.xtext.ui.editor.syntaxcoloring.IHighlightingConfiguration;
+import org.eclipse.xtext.ui.editor.syntaxcoloring.ISemanticHighlightingCalculator;
 
 import com.google.inject.Binder;
 import com.google.inject.name.Named;
@@ -29,5 +33,13 @@ public class UFOScriptUiModule extends net.sourceforge.ufoai.ui.AbstractUFOScrip
 
 	public Class<? extends XtextEditor> bindEditor() {
 		return UFOScriptPropertyViewer.class;
+	}
+
+	public Class<? extends ISemanticHighlightingCalculator> bindSemanticHighlightingCalculator() {
+		return SemanticHighlightingCalculator.class;
+	}
+
+	public Class<? extends IHighlightingConfiguration> bindIHighlightingConfiguration() {
+		return HighlightingConfiguration.class;
 	}
 }
