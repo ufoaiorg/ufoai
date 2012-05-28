@@ -39,7 +39,7 @@ building building_aliencontainment
 	type			"aliencont"
 	build_time		10
 	varcosts		7500
-	map_name		"aliencont_"
+	map_name		"aliencont"
 	pedia			rs_building_aliencontainment
 	size			"2 1"
 	capacity		10
