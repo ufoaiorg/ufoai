@@ -35,6 +35,7 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #include "missions/cp_mission_supply.h"
 #include "missions/cp_mission_terror.h"
 #include "missions/cp_mission_xvi.h"
+#include "missions/cp_mission_ufocarrier.h"
 
 extern const int MAX_POS_LOOP;
 

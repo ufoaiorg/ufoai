@@ -555,6 +555,8 @@ const char* MAP_GetMissionModel (const mission_t *mission)
 		return "geoscape/icon_xvi";
 	case INTERESTCATEGORY_HARVEST:
 		return "geoscape/icon_harvest";
+	case INTERESTCATEGORY_UFOCARRIER:
+		return "geoscape/icon_ufocarrier";
 	case INTERESTCATEGORY_TERROR_ATTACK:
 		return "geoscape/icon_terror";
 	/* Should not be reached, these mission categories are not drawn on geoscape */
@@ -930,6 +932,9 @@ void CP_MissionStageEnd (const campaign_t* campaign, mission_t *mission)
 	case INTERESTCATEGORY_RESCUE:
 		CP_RescueNextStage(mission);
 		break;
+	case INTERESTCATEGORY_UFOCARRIER:
+		CP_UFOCarrierNextStage(mission);
+		break;
 	case INTERESTCATEGORY_ALIENBASE:
 	case INTERESTCATEGORY_NONE:
 	case INTERESTCATEGORY_MAX:
@@ -990,6 +995,7 @@ void CP_MissionIsOver (mission_t *mission)
 	case INTERESTCATEGORY_RESCUE:
 		CP_MissionRemove(mission);
 		break;
+	case INTERESTCATEGORY_UFOCARRIER:
 	case INTERESTCATEGORY_NONE:
 	case INTERESTCATEGORY_MAX:
 		Com_Printf("CP_MissionIsOver: Invalid type of mission (%i), remove mission\n", mission->category);
@@ -1396,6 +1402,7 @@ ufoType_t CP_MissionChooseUFO (const mission_t *mission)
 		break;
 	case INTERESTCATEGORY_ALIENBASE:
 		/* can't be spawned: alien base is the result of base building mission */
+	case INTERESTCATEGORY_UFOCARRIER:
 	case INTERESTCATEGORY_RESCUE:
 	case INTERESTCATEGORY_NONE:
 	case INTERESTCATEGORY_MAX:

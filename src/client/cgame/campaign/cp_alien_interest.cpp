@@ -185,6 +185,8 @@ const char* INT_InterestCategoryToName (interestCategory_t category)
 		return "Alien base discovered";
 	case INTERESTCATEGORY_RESCUE:
 		return "Rescue mission";
+	case INTERESTCATEGORY_UFOCARRIER:
+		return "UFO-Carrier";
 	case INTERESTCATEGORY_MAX:
 		return "Unknown mission category";
 	}

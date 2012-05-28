@@ -234,6 +234,8 @@
 		<Unit filename="..\..\src\client\cgame\campaign\missions\cp_mission_rescue.h" />
 		<Unit filename="..\..\src\client\cgame\campaign\missions\cp_mission_supply.cpp" />
 		<Unit filename="..\..\src\client\cgame\campaign\missions\cp_mission_terror.cpp" />
+		<Unit filename="..\..\src\client\cgame\campaign\missions\cp_mission_ufocarrier.cpp" />
+		<Unit filename="..\..\src\client\cgame\campaign\missions\cp_mission_ufocarrier.h" />
 		<Unit filename="..\..\src\client\cgame\campaign\missions\cp_mission_xvi.cpp" />
 		<Unit filename="..\..\src\client\cgame\cl_game.cpp" />
 		<Unit filename="..\..\src\client\cgame\cl_game_team.cpp" />

@@ -166,6 +166,7 @@ typedef enum interestCategory_s {
 	INTERESTCATEGORY_ALIENBASE,		/**< Alien base already built on earth
 									 * @note This is not a mission alien can undertake, but the result of
 									 * INTERESTCATEGORY_BUILDING */
+	INTERESTCATEGORY_UFOCARRIER,	/**< UFO-Carrier is detected */
 	INTERESTCATEGORY_RESCUE,
 
 	INTERESTCATEGORY_MAX

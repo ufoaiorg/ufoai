@@ -77,6 +77,7 @@ $(TARGET)_SRCS      = \
 	client/cgame/campaign/missions/cp_mission_rescue.cpp \
 	client/cgame/campaign/missions/cp_mission_supply.cpp \
 	client/cgame/campaign/missions/cp_mission_terror.cpp \
+	client/cgame/campaign/missions/cp_mission_ufocarrier.cpp \
 	client/cgame/campaign/missions/cp_mission_xvi.cpp
 
 ifneq ($(HARD_LINKED_CGAME),1)

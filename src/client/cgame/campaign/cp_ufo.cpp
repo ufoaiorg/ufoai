@@ -873,6 +873,7 @@ bool UFO_IsUFOSeenOnGeoscape (const aircraft_t *ufo)
  */
 void CP_SpawnUFOCarrier_f (void)
 {
+	CP_CreateNewMission(INTERESTCATEGORY_UFOCARRIER, true);
 }
 
 /**
