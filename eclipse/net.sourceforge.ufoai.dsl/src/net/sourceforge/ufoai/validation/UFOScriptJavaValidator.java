@@ -113,6 +113,11 @@ public class UFOScriptJavaValidator extends AbstractUFOScriptJavaValidator {
 				error("Quoted string expected", UfoScriptPackage.Literals.PROPERTY__VALUE);
 			}
 			break;
+		case COLOR:
+			if (!(property.getValue() instanceof PropertyValueString)) {
+				error("Quoted string expected", UfoScriptPackage.Literals.PROPERTY__VALUE);
+			}
+			break;
 		case ID:
 			if (!(property.getValue() instanceof PropertyValueID)) {
 				error("Id expected", UfoScriptPackage.Literals.PROPERTY__VALUE);
