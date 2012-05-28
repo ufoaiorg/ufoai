@@ -4,7 +4,6 @@ sequence intro // Last change 25-07-2009 by Vio
 
 	precache pics
 	{
-		"background/options_bg"
 		phalanx_badge
 		phalanx_earth
 		phalanx_lance_left
@@ -15,14 +14,6 @@ sequence intro // Last change 25-07-2009 by Vio
 
 	//fitting music, deactivate for geoscape track
 	music "PsymongN5"
-
-	2dobj i_menufade
-	{
-		image	pics/background/options_bg
-		fade "0 0 0 -1"
-	}
-	wait 3
-	rem i_menufade
 
 	2dobj i_background
 	{
