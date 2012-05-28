@@ -56,5 +56,6 @@ bool UFO_IsUFOSeenOnGeoscape(const aircraft_t *ufo);
 aircraft_t* UFO_GetByIDX(const int idx);
 aircraft_t* UFO_GetNext(aircraft_t *lastUFO);
 aircraft_t *UFO_GetNextOnGeoscape(aircraft_t *lastUFO);
+void CP_SpawnUFOCarrier_f(void);
 
 #endif

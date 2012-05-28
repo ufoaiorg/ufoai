@@ -869,6 +869,13 @@ bool UFO_IsUFOSeenOnGeoscape (const aircraft_t *ufo)
 }
 
 /**
+ * @brief Spawns a UFO-Carrier on the geoscape
+ */
+void CP_SpawnUFOCarrier_f (void)
+{
+}
+
+/**
  * @sa UI_InitStartup
  */
 void UFO_InitStartup (void)

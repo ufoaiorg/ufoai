@@ -5395,7 +5395,6 @@ tech rs_alien_strategy
 }
 
 // http://ufoai.org/wiki/index.php/Research/Orbital_UFO_Activity
-// TODO: Deactivate for 2.3 - because it requires some kind of cutscene and a specially scripted mission
 tech rs_orbital_ufo_activity
 {
 	name		"_Orbital UFO Activity"
@@ -5421,4 +5420,5 @@ tech rs_orbital_ufo_activity
 
 	time		14000
 	image		"techs/orbital_ufo_activity"
+	event		"cp_spawn_ufocarrier"
 }
