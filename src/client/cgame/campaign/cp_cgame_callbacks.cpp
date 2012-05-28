@@ -116,12 +116,15 @@ static void GAME_CP_CampaignDescription_f (void)
 	const char *racetype;
 	const campaign_t *campaign;
 
-	if (Cmd_Argc() < 2) {
-		Com_Printf("Usage: %s <campaign_id>\n", Cmd_Argv(0));
-		return;
+	if (Cmd_Argc() < 2 || Q_streq(Cmd_Argv(1), "")) {
+		if (ccs.numCampaigns > 0)
+			campaign = &ccs.campaigns[0];
+		else
+			campaign = NULL;
+	} else {
+		campaign = CP_GetCampaign(Cmd_Argv(1));
 	}
 
-	campaign = CP_GetCampaign(Cmd_Argv(1));
 	if (!campaign) {
 		Com_Printf("Invalid Campaign id: %s\n", Cmd_Argv(1));
 		return;

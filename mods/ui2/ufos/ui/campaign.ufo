@@ -253,9 +253,6 @@ window campaigns
 
 	func onWindowOpened
 	{
-		if ( ! exists *cvar:cp_campaign ) {
-			*cvar:cp_campaign = "main"
-		}
 		cmd "set sel_load_slot 0;game_setmode;cp_getcampaigns;cp_getdescription <cvar:cp_campaign>;game_comments;toggle_cmp_new;"
 	}
 
