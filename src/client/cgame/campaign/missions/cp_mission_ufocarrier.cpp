@@ -40,6 +40,8 @@ static void CP_UFOCarrierMissionStart (mission_t *mission)
 	mission->idx = ++ccs.campaignStats.missions;
 	mission->finalDate = ccs.date;
 	mission->stage = STAGE_RECON_AIR;
+
+	Cmd_ExecuteString("cp_activate_orbital_installation");
 }
 
 static void CP_UFOCarrierMissionUpdate (mission_t *mission)
@@ -48,8 +50,12 @@ static void CP_UFOCarrierMissionUpdate (mission_t *mission)
 	const date_t delay = {2, 0};
 	Date_Add(mission->finalDate, delay);
 
-	/** @todo: add a popup with the option to shoot the carrier down */
-	MS_AddNewMessage(_("UFO-Carrier"), "TODO", MSG_UFOSPOTTED, NULL, true);
+	if (INS_HasType(INSTALLATION_ORBIT)) {
+		cgi->UI_PopupButton(_("UFO-Carrier"), _("Attack the UFO-Carrier?"),
+			"ui_pop;", _("Cancel"), _("Don't attack the UFO-Carrier"),
+			"cp_attack_ufocarrier;ui_pop;", _("Attack"), _("Attack the UFO-Carrier"),
+			NULL, NULL, NULL);
+	}
 }
 
 /**

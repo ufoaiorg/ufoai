@@ -1086,6 +1086,48 @@ window popup_newinstallation_type
 		onClick		{ cmd "ui_pop; mn_base_select -1;" }
 	}
 
+	image orbit_icon
+	{
+		src		"geoscape/orbit"
+		pos			"46 158"
+	}
+	string orbit_type
+	{
+		string		"_Orbital Rocket Launcher"
+		pos			"86 158"
+		size		"170 18"
+		font		"f_small"
+	}
+	string orbit_buildtime
+	{
+		string		*cvar:mn_installation_orbit_buildtime
+		pos			"256 158"
+		size		"100 20"
+		contentalign	ALIGN_UR
+		font		"f_small"
+	}
+	string orbit_cost
+	{
+		string		*cvar:mn_installation_orbit_cost
+		pos			"356 158"
+		size		"100 20"
+		contentalign	ALIGN_UR
+		font		"f_small"
+	}
+	zone click_orbit
+	{
+		pos			"30 158"
+		size		"440 20"
+		onMouseEnter			{ *node:root.bt_highlight@invis = false *node:root.bt_highlight@pos = "26 156" }
+		onMouseLeave			{ *node:root.bt_highlight@invis = true }
+		onClick		{
+			*cvar:mn_installation_type = "orbit"
+			*cvar:mn_installation_timetobuild = *cvar:mn_installation_orbit_buildtime
+			cmd "ui_pop;"
+			cmd "mn_installation_select -1;"
+		}
+	}
+
 	/* disabled zones - for tooltip */
 	zone disabled_installation
 	{
@@ -1102,6 +1144,21 @@ window popup_newinstallation_type
 		tooltip		"_Base limit reached."
 	}
 
+	confunc cp_activate_orbital_installation
+	{
+		*node:root.click_orbit@invis = true
+		*node:root.orbit_type@disabled = true
+		*node:root.orbit_buildtime@disabled = true
+		*node:root.orbit_cost@disabled = true
+	}
+
+	func cp_deactivate_orbital_installation
+	{
+		*node:root.click_orbit@invis = false
+		*node:root.orbit_type@disabled = false
+		*node:root.orbit_buildtime@disabled = false
+		*node:root.orbit_cost@disabled = false
+	}
 
 	//
 	// Interaction
@@ -1142,6 +1199,8 @@ window popup_newinstallation_type
 			*node:root.radar_type@disabled = true
 			*node:root.radar_buildtime@disabled = true
 			*node:root.radar_cost@disabled = true
+			// TODO: only activate if researched
+			cmd "cp_activate_orbital_installation;"
 		} else {
 			*node:root.click_ufoyard@invis = false
 			*node:root.disabled_installation@invis = true
@@ -1156,6 +1215,7 @@ window popup_newinstallation_type
 			*node:root.radar_type@disabled = false
 			*node:root.radar_buildtime@disabled = false
 			*node:root.radar_cost@disabled = false
+			call *node:parent.cp_deactivate_orbital_installation
 		}
 	}
 
@@ -1274,6 +1334,9 @@ window popup_newinstallation
 		} elif ( *cvar:mn_installation_type eq "ufoyard" ) {
 			*node:root.title@string = "_New UFO yard"
 			*node:root.cost@string = *cvar:mn_installation_ufoyard_cost
+		} elif ( *cvar:mn_installation_type eq "orbit" ) {
+			*node:root.title@string = "_New Orbital Rocket Launcher"
+			*node:root.cost@string = *cvar:mn_installation_orbit_cost
 		}
 	}
 }

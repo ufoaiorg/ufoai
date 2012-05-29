@@ -1010,6 +1010,7 @@ static const cmdList_t game_commands[] = {
 	{"map_scroll", MAP_Scroll_f, NULL},
 	{"cp_start_xvi_spreading", CP_StartXVISpreading_f, "Start XVI spreading"},
 	{"cp_spawn_ufocarrier", CP_SpawnUFOCarrier_f, "Spawns a UFO-Carrier on the geoscape"},
+	{"cp_attack_ufocarrier", CP_AttackUFOCarrier_f, "Attack the UFO-Carrier"},
 #ifdef DEBUG
 	{"debug_fullcredits", CP_DebugFullCredits_f, "Debug function to give the player full credits"},
 	{"debug_additems", CP_DebugAllItems_f, "Debug function to add one item of every type to base storage and mark related tech collected"},

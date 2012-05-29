@@ -562,17 +562,14 @@ static void US_SelectStoredUfo_f (void)
  */
 static void US_DestroySoredUFO_f (void)
 {
-	storedUFO_t *ufo = NULL;
-
 	if (Cmd_Argc() < 2) {
-			Com_DPrintf(DEBUG_CLIENT, "Usage: %s <idx> [0|1]\nWhere the second, optional parameter is the confirmation.\n", Cmd_Argv(0));
-			return;
-	} else {
-		ufo = US_GetStoredUFOByIDX(atoi(Cmd_Argv(1)));
-		if (!ufo) {
-			Com_DPrintf(DEBUG_CLIENT, "Stored UFO with idx: %i does not exist\n", atoi(Cmd_Argv(1)));
-			return;
-		}
+		Com_DPrintf(DEBUG_CLIENT, "Usage: %s <idx> [0|1]\nWhere the second, optional parameter is the confirmation.\n", Cmd_Argv(0));
+		return;
+	}
+	storedUFO_t *ufo = US_GetStoredUFOByIDX(atoi(Cmd_Argv(1)));
+	if (!ufo) {
+		Com_DPrintf(DEBUG_CLIENT, "Stored UFO with idx: %i does not exist\n", atoi(Cmd_Argv(1)));
+		return;
 	}
 
 	/* Ask 'Are you sure?' by default */
@@ -595,29 +592,24 @@ static void US_DestroySoredUFO_f (void)
  */
 static void US_FillUFOTransfer_f (void)
 {
-	storedUFO_t *ufo = NULL;
-
 	if (Cmd_Argc() < 2) {
-			Com_DPrintf(DEBUG_CLIENT, "Usage: %s <idx>\n", Cmd_Argv(0));
-			return;
-	} else {
-		ufo = US_GetStoredUFOByIDX(atoi(Cmd_Argv(1)));
-		if (!ufo) {
-			Com_DPrintf(DEBUG_CLIENT, "Stored UFO with idx: %i does not exist\n", atoi(Cmd_Argv(1)));
-			return;
-		}
+		Com_DPrintf(DEBUG_CLIENT, "Usage: %s <idx>\n", Cmd_Argv(0));
+		return;
+	}
+
+	storedUFO_t *ufo = US_GetStoredUFOByIDX(atoi(Cmd_Argv(1)));
+	if (!ufo) {
+		Com_DPrintf(DEBUG_CLIENT, "Stored UFO with idx: %i does not exist\n", atoi(Cmd_Argv(1)));
+		return;
 	}
 
 	cgi->UI_ExecuteConfunc("ufotransferlist_clear");
-	INS_Foreach(ins) {
+	INS_ForeachOfType(ins, INSTALLATION_UFOYARD) {
+		if (ins == ufo->installation)
+			continue;
 		nation_t *nat = MAP_GetNation(ins->pos);
 		const char *nationName = nat ? _(nat->name) : "";
 		const int freeSpace = std::max(0, ins->ufoCapacity.max - ins->ufoCapacity.cur);
-
-		if (ins == ufo->installation)
-			continue;
-		if (INS_GetType(ins) != INSTALLATION_UFOYARD)
-			continue;
 		cgi->UI_ExecuteConfunc("ufotransferlist_addyard %d \"%s\" \"%s\" %d %d", ins->idx, ins->name, nationName, freeSpace, ins->ufoCapacity.max);
 	}
 }
@@ -627,17 +619,15 @@ static void US_FillUFOTransfer_f (void)
  */
 static void US_FillUFOTransferUFOs_f (void)
 {
-	installation_t *ins = NULL;
-
 	if (Cmd_Argc() < 2) {
 		Com_DPrintf(DEBUG_CLIENT, "Usage: %s <idx>\n", Cmd_Argv(0));
 		return;
-	} else {
-		ins = INS_GetByIDX(atoi(Cmd_Argv(1)));
-		if (!ins) {
-			Com_DPrintf(DEBUG_CLIENT, "Installation with idx: %i does not exist\n", atoi(Cmd_Argv(1)));
-			return;
-		}
+	}
+
+	installation_t *ins = INS_GetByIDX(atoi(Cmd_Argv(1)));
+	if (!ins) {
+		Com_DPrintf(DEBUG_CLIENT, "Installation with idx: %i does not exist\n", atoi(Cmd_Argv(1)));
+		return;
 	}
 
 	cgi->UI_ExecuteConfunc("ufotransferlist_clearufos %d", ins->idx);

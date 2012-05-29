@@ -86,7 +86,7 @@ void INS_SelectInstallation (installation_t *installation)
 		}
 		INS_SetCurrentSelectedInstallation(installation);
 
-		switch (INS_GetType(installation)) {
+		switch (installation->installationTemplate->type) {
 		case INSTALLATION_UFOYARD:
 			cgi->UI_PushWindow("popup_ufoyards");
 			break;
@@ -106,9 +106,7 @@ void INS_SelectInstallation (installation_t *installation)
  */
 static void INS_BuildInstallation_f (void)
 {
-	const nation_t *nation;
 	const installationTemplate_t *installationTemplate;
-	installation_t *installation;
 
 	if (Cmd_Argc() < 1) {
 		Com_Printf("Usage: %s <installationType>\n", Cmd_Argv(0));
@@ -129,13 +127,13 @@ static void INS_BuildInstallation_f (void)
 
 	if (ccs.credits - installationTemplate->cost > 0) {
 		/* set up the installation */
-		installation = INS_Build(installationTemplate, ccs.newBasePos, Cvar_GetString("mn_installation_title"));
+		installation_t *installation = INS_Build(installationTemplate, ccs.newBasePos, Cvar_GetString("mn_installation_title"));
 
 		CP_UpdateCredits(ccs.credits - installationTemplate->cost);
 		/* this cvar is used for disabling the installation build button on geoscape if MAX_INSTALLATIONS was reached */
 		Cvar_SetValue("mn_installation_count", INS_GetCount());
 
-		nation = MAP_GetNation(installation->pos);
+		const nation_t *nation = MAP_GetNation(installation->pos);
 		if (nation)
 			Com_sprintf(cp_messageBuffer, sizeof(cp_messageBuffer), _("A new installation has been built: %s (nation: %s)"), installation->name, _(nation->name));
 		else
@@ -237,7 +235,7 @@ static void INS_FillUFOYardData_f (void)
 	cgi->UI_ExecuteConfunc("ufolist_clear");
 	if (Cmd_Argc() < 2 || atoi(Cmd_Argv(1)) < 0) {
 		ins = INS_GetCurrentSelectedInstallation();
-		if (!ins || INS_GetType(ins) != INSTALLATION_UFOYARD)
+		if (!ins || ins->installationTemplate->type != INSTALLATION_UFOYARD)
 			ins = INS_GetFirstUFOYard(false);
 	} else {
 		ins = INS_GetByIDX(atoi(Cmd_Argv(1)));
@@ -255,12 +253,12 @@ static void INS_FillUFOYardData_f (void)
 		cgi->UI_ExecuteConfunc("ufolist_addufoyard %d \"%s\" \"%s\" %d %d \"%s\"", ins->idx, ins->name, nationName, ins->ufoCapacity.max, freeCap, buildTime);
 
 		US_Foreach(ufo) {
+			if (ufo->installation != ins)
+				continue;
+
 			const char *ufoName = UFO_AircraftToIDOnGeoscape(ufo->ufoTemplate);
 			const char *condition = va(_("Condition: %3.0f%%"), ufo->condition * 100);
 			const char *status = US_StoredUFOStatus(ufo);
-
-			if (ufo->installation != ins)
-				continue;
 			cgi->UI_ExecuteConfunc("ufolist_addufo %d \"%s\" \"%s\" \"%s\" \"%s\"", ufo->idx, ufoName, condition, ufo->ufoTemplate->model, status);
 		}
 	}

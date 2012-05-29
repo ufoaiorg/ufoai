@@ -34,28 +34,21 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #include "save/save_installation.h"
 
 /**
- * @brief Get the type of an installation
- * @param[in] installation Pointer to the isntallation
- * @return type of the installation
- * @sa installationType_t
- */
-installationType_t INS_GetType (const installation_t *installation)
-{
-	if (installation->installationTemplate->maxBatteries > 0)
-		return INSTALLATION_DEFENCE;
-	else if (installation->installationTemplate->maxUFOsStored > 0)
-		return INSTALLATION_UFOYARD;
-
-	/* default is radar */
-	return INSTALLATION_RADAR;
-}
-
-/**
  * @brief Get number of installations
  */
 int INS_GetCount (void)
 {
 	return LIST_Count(ccs.installations);
+}
+
+bool INS_HasType (installationType_t type)
+{
+	INS_ForeachOfType(installation, type) {
+		if (installation->installationStatus == INSTALLATION_WORKING)
+			return installation;
+	}
+
+	return NULL;
 }
 
 /**
@@ -162,8 +155,8 @@ installation_t *INS_GetCurrentSelectedInstallation (void)
 }
 
 /**
- * @brief Sets the currently selected intallation
- * @param installation Pointer to the installation ot select
+ * @brief Sets the currently selected installation
+ * @param installation Pointer to the installation to select
  * @sa INS_SelectInstallation
  */
 void INS_SetCurrentSelectedInstallation (const installation_t *installation)
@@ -202,10 +195,10 @@ static void INS_FinishInstallation (installation_t *installation)
 	/* if Radar Tower */
 	RADAR_UpdateInstallationRadarCoverage(installation, installation->installationTemplate->radarRange, installation->installationTemplate->trackingRange);
 	/* if SAM Site */
-	installation->numBatteries = installation->installationTemplate->maxBatteries;
+	installation->numBatteries = installation->installationTemplate->parameters.maxBatteries;
 	BDEF_InitialiseInstallationSlots(installation);
 	/* if UFO Yard */
-	installation->ufoCapacity.max = installation->installationTemplate->maxUFOsStored;
+	installation->ufoCapacity.max = installation->installationTemplate->parameters.maxUFOsStored;
 }
 
 #ifdef DEBUG
@@ -325,8 +318,8 @@ static const value_t installation_vals[] = {
 	{"description", V_TRANSLATION_STRING, offsetof(installationTemplate_t, description), 0},
 	{"radar_range", V_INT, offsetof(installationTemplate_t, radarRange), MEMBER_SIZEOF(installationTemplate_t, radarRange)},
 	{"radar_tracking_range", V_INT, offsetof(installationTemplate_t, trackingRange), MEMBER_SIZEOF(installationTemplate_t, trackingRange)},
-	{"max_batteries", V_INT, offsetof(installationTemplate_t, maxBatteries), MEMBER_SIZEOF(installationTemplate_t, maxBatteries)},
-	{"max_ufo_stored", V_INT, offsetof(installationTemplate_t, maxUFOsStored), MEMBER_SIZEOF(installationTemplate_t, maxUFOsStored)},
+	{"max_batteries", V_INT, offsetof(installationTemplate_t, parameters.maxBatteries), MEMBER_SIZEOF(installationTemplate_t, parameters.maxBatteries)},
+	{"max_ufo_stored", V_INT, offsetof(installationTemplate_t, parameters.maxUFOsStored), MEMBER_SIZEOF(installationTemplate_t, parameters.maxUFOsStored)},
 	{"max_damage", V_INT, offsetof(installationTemplate_t, maxDamage), MEMBER_SIZEOF(installationTemplate_t, maxDamage)},
 	{"model", V_HUNK_STRING, offsetof(installationTemplate_t, model), 0},
 	{"image", V_HUNK_STRING, offsetof(installationTemplate_t, image), 0},
@@ -377,6 +370,7 @@ void INS_ParseInstallations (const char *name, const char **text)
 	installation = &ccs.installationTemplates[ccs.numInstallationTemplates];
 	OBJZERO(*installation);
 	installation->id = Mem_PoolStrDup(name, cp_campaignPool, 0);
+	installation->type = INSTALLATION_RADAR;
 
 	Com_DPrintf(DEBUG_CLIENT, "...found installation %s\n", installation->id);
 
@@ -414,6 +408,21 @@ void INS_ParseInstallations (const char *name, const char **text)
 
 				Com_sprintf(cvarname, sizeof(cvarname), "mn_installation_%s_buildtime", installation->id);
 				Cvar_Set(cvarname, va(ngettext("%d day", "%d days", atoi(token)), atoi(token)));
+			} else if (Q_streq(token, "type")) {
+				token = Com_EParse(text, errhead, name);
+				if (!*text)
+					return;
+
+				if (Q_streq(token, "defence"))
+					installation->type = INSTALLATION_DEFENCE;
+				else if (Q_streq(token, "ufoyard"))
+					installation->type = INSTALLATION_UFOYARD;
+				else if (Q_streq(token, "radar"))
+					installation->type = INSTALLATION_RADAR;
+				else if (Q_streq(token, "orbit"))
+					installation->type = INSTALLATION_ORBIT;
+				else
+					Com_Printf("unknown type given '%s'\n", token);
 			}
 		}
 	} while (*text);
@@ -507,7 +516,7 @@ bool INS_LoadXML (xmlNode_t *p)
 		if (inst.installationStatus == INSTALLATION_WORKING) {
 			RADAR_UpdateInstallationRadarCoverage(&inst, inst.installationTemplate->radarRange, inst.installationTemplate->trackingRange);
 			/* UFO Yard */
-			inst.ufoCapacity.max = inst.installationTemplate->maxUFOsStored;
+			inst.ufoCapacity.max = inst.installationTemplate->parameters.maxUFOsStored;
 		} else {
 			inst.ufoCapacity.max = 0;
 		}
@@ -521,9 +530,9 @@ bool INS_LoadXML (xmlNode_t *p)
 			break;
 		}
 		inst.numBatteries = XML_GetInt(ss, SAVE_INSTALLATION_NUM, 0);
-		if (inst.numBatteries > inst.installationTemplate->maxBatteries) {
+		if (inst.numBatteries > inst.installationTemplate->parameters.maxBatteries) {
 			Com_Printf("Installation has more batteries than possible, using upper bound\n");
-			inst.numBatteries = inst.installationTemplate->maxBatteries;
+			inst.numBatteries = inst.installationTemplate->parameters.maxBatteries;
 		}
 
 		installation_t& instp = LIST_Add(&ccs.installations, inst);

@@ -801,10 +801,10 @@ void AIRFIGHT_CampaignRunBaseDefence (int dt)
 	INS_Foreach(installation) {
 		int idx;
 
-		if (installation->installationTemplate->maxBatteries <= 0)
+		if (installation->installationTemplate->parameters.maxBatteries <= 0)
 			continue;
 
-		for (idx = 0; idx < installation->installationTemplate->maxBatteries; idx++) {
+		for (idx = 0; idx < installation->installationTemplate->parameters.maxBatteries; idx++) {
 			baseWeapon_t *battery = &installation->batteries[idx];
 			aircraftSlot_t *slot = &battery->slot;
 			if (slot->delayNextShot > 0)
@@ -814,7 +814,7 @@ void AIRFIGHT_CampaignRunBaseDefence (int dt)
 		}
 
 		if (AII_InstallationCanShoot(installation)) {
-			AIRFIGHT_InstallationShoot(installation, installation->batteries, installation->installationTemplate->maxBatteries);
+			AIRFIGHT_InstallationShoot(installation, installation->batteries, installation->installationTemplate->parameters.maxBatteries);
 		}
 	}
 }

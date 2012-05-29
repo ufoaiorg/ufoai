@@ -856,7 +856,7 @@ void UFO_NotifyPhalanxAircraftRemoved (const aircraft_t * const aircraft)
 
 /**
  * @brief Check if an aircraft should be seen on geoscape.
- * @return true or false wether UFO should be seen or not on geoscape.
+ * @return true or false whether UFO should be seen or not on geoscape.
  * @sa AIR_IsAircraftOnGeoscape
  */
 bool UFO_IsUFOSeenOnGeoscape (const aircraft_t *ufo)
@@ -874,6 +874,11 @@ bool UFO_IsUFOSeenOnGeoscape (const aircraft_t *ufo)
 void CP_SpawnUFOCarrier_f (void)
 {
 	CP_CreateNewMission(INTERESTCATEGORY_UFOCARRIER, true);
+}
+
+void CP_AttackUFOCarrier_f (void)
+{
+	Com_Printf("attack the carrier\n");
 }
 
 /**

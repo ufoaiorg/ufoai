@@ -41,29 +41,34 @@ typedef enum {
 	INSTALLATION_WORKING				/**< nothing special, it's working */
 } installationStatus_t;
 
+typedef enum {
+	INSTALLATION_RADAR,
+	INSTALLATION_DEFENCE,
+	INSTALLATION_UFOYARD,
+	INSTALLATION_ORBIT,
+
+	INSTALLATION_TYPE_MAX
+} installationType_t;
+
 typedef struct installationTemplate_s {
 	char *id;							/**< id of the installation. */
 	char *name;							/**< Name of the installation (as you see it ingame). */
 	char *description;					/**< Short description in build dialog */
+	installationType_t type;			/**< the type of the installation */
 
 	int cost;							/**< Price of the installation. */
 	int radarRange;						/**< The range of the installation's radar.  Units is the angle of the two points from center of earth. */
 	int trackingRange;					/**< The tracking range of the installation's radar. Units are degrees. */
-	int maxBatteries;					/**< The maximum number of battery slots that can be used in an installation. */
-	int maxUFOsStored;					/**< The maximum number of ufos that can be stored in an installation. */
+	union {
+		int maxBatteries;					/**< The maximum number of battery slots that can be used in an installation. */
+		int maxUFOsStored;					/**< The maximum number of ufos that can be stored in an installation. */
+	} parameters;
 	int maxDamage;						/**< The maximum amount of damage an installation can sustain before it is destroyed. */
 	int buildTime;						/**< Time to build the installation, in days. */
 	char *model;						/**< Model used on 3D geoscape */
 	char *image;						/**< Image used on 2D geoscape */
 } installationTemplate_t;
 
-typedef enum {
-	INSTALLATION_RADAR,
-	INSTALLATION_DEFENCE,
-	INSTALLATION_UFOYARD,
-
-	INSTALLATION_TYPE_MAX
-} installationType_t;
 
 /** @brief A installation with all it's data */
 typedef struct installation_s {
@@ -98,9 +103,9 @@ extern vec2_t newInstallationPos;
 
 /* get installation */
 #define INS_Foreach(var) LIST_Foreach(ccs.installations, installation_t, var)
-#define INS_ForeachOfType(var, type) \
+#define INS_ForeachOfType(var, installationType) \
 	INS_Foreach(var) \
-		if (INS_GetType(var) != (type)) continue; else
+		if ((var)->installationTemplate->type != (installationType)) continue; else
 
 #define INS_GetInstallationIDX(installation) ((installation)->idx)
 installation_t *INS_GetByIDX(int idx);
@@ -111,8 +116,7 @@ int INS_GetCount(void);
 void INS_ParseInstallations(const char *name, const char **text);
 const installationTemplate_t *INS_GetInstallationTemplateFromInstallationID(const char *id);
 
-/* Get type */
-installationType_t INS_GetType(const installation_t *installation);
+bool INS_HasType(installationType_t type);
 
 /* Lifecycle: build/update/destroy */
 installation_t *INS_Build(const installationTemplate_t *installationTemplate, const vec2_t pos, const char *name);
