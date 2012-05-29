@@ -39,12 +39,13 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
  */
 static void INS_SetInstallationTitle (void)
 {
-	const installationTemplate_t *insTemp = INS_GetInstallationTemplateFromInstallationID(Cvar_GetString("mn_installation_type"));
+	const installationType_t type = INS_GetType(Cvar_GetString("mn_installation_type"));
+	const installationTemplate_t *insTemp = INS_GetInstallationTemplateByType(type);
 	char insName[MAX_VAR];
 
 	Com_sprintf(insName, lengthof(insName), "%s #%i", (insTemp) ? _(insTemp->name) : _("Installation"), ccs.campaignStats.installationsBuilt + 1);
 	Cvar_Set("mn_installation_title", insName);
-	if (!insTemp || !insTemp->description || !strlen(insTemp->description))
+	if (!insTemp || !Q_strvalid(insTemp->description))
 		cgi->UI_ResetData(TEXT_BUILDING_INFO);
 	else
 		cgi->UI_RegisterText(TEXT_BUILDING_INFO, _(insTemp->description));
@@ -117,7 +118,8 @@ static void INS_BuildInstallation_f (void)
 	if (B_GetInstallationLimit() <= INS_GetCount())
 		return;
 
-	installationTemplate = INS_GetInstallationTemplateFromInstallationID(Cmd_Argv(1));
+	const installationType_t type = INS_GetType(Cmd_Argv(1));
+	installationTemplate = INS_GetInstallationTemplateByType(type);
 	if (!installationTemplate) {
 		Com_Printf("The installation type %s passed for %s is not valid.\n", Cmd_Argv(1), Cmd_Argv(0));
 		return;

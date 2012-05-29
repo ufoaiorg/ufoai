@@ -137,7 +137,7 @@ static int UFO_CleanSuiteCampaign (void)
 
 static installation_t* CreateInstallation (const char *name, const vec2_t pos)
 {
-	const installationTemplate_t *installationTemplate = INS_GetInstallationTemplateFromInstallationID("ufoyard");
+	const installationTemplate_t *installationTemplate = INS_GetInstallationTemplateByType(INSTALLATION_UFOYARD);
 	installation_t *installation;
 
 	CU_ASSERT_PTR_NOT_NULL_FATAL(installationTemplate);

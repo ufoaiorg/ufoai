@@ -41,6 +41,21 @@ int INS_GetCount (void)
 	return LIST_Count(ccs.installations);
 }
 
+installationType_t INS_GetType (const char *type)
+{
+	if (Q_streq(type, "defence"))
+		return INSTALLATION_DEFENCE;
+	else if (Q_streq(type, "ufoyard"))
+		return INSTALLATION_UFOYARD;
+	else if (Q_streq(type, "radar"))
+		return INSTALLATION_RADAR;
+	else if (Q_streq(type, "orbit"))
+		return INSTALLATION_ORBIT;
+
+	Com_Printf("unknown type given '%s'\n", type);
+	return INSTALLATION_RADAR;
+}
+
 bool INS_HasType (installationType_t type)
 {
 	INS_ForeachOfType(installation, type) {
@@ -71,13 +86,13 @@ installation_t* INS_GetByIDX (int idx)
  * @param[in] id ID of the installation template to find.
  * @return corresponding installation Template, @c NULL if not found.
  */
-const installationTemplate_t* INS_GetInstallationTemplateFromInstallationID (const char *id)
+const installationTemplate_t* INS_GetInstallationTemplateByType (installationType_t type)
 {
 	int idx;
 
 	for (idx = 0; idx < ccs.numInstallationTemplates; idx++) {
 		const installationTemplate_t *t = &ccs.installationTemplates[idx];
-		if (Q_streq(t->id, id))
+		if (t->type == type)
 			return t;
 	}
 
@@ -302,9 +317,8 @@ void INS_UpdateInstallationData (void)
 {
 	INS_Foreach(installation) {
 		if (installation->installationStatus == INSTALLATION_UNDER_CONSTRUCTION
-		 && installation->buildStart
+		 && installation->buildStart > 0
 		 && installation->buildStart + installation->installationTemplate->buildTime <= ccs.date.day) {
-
 			INS_FinishInstallation(installation);
 
 			Com_sprintf(cp_messageBuffer, lengthof(cp_messageBuffer), _("Construction of installation %s finished."), installation->name);
@@ -413,16 +427,7 @@ void INS_ParseInstallations (const char *name, const char **text)
 				if (!*text)
 					return;
 
-				if (Q_streq(token, "defence"))
-					installation->type = INSTALLATION_DEFENCE;
-				else if (Q_streq(token, "ufoyard"))
-					installation->type = INSTALLATION_UFOYARD;
-				else if (Q_streq(token, "radar"))
-					installation->type = INSTALLATION_RADAR;
-				else if (Q_streq(token, "orbit"))
-					installation->type = INSTALLATION_ORBIT;
-				else
-					Com_Printf("unknown type given '%s'\n", token);
+				installation->type = INS_GetType(token);
 			}
 		}
 	} while (*text);
@@ -490,7 +495,8 @@ bool INS_LoadXML (xmlNode_t *p)
 			success = false;
 			break;
 		}
-		inst.installationTemplate = INS_GetInstallationTemplateFromInstallationID(instID);
+		const installationType_t type = INS_GetType(instID);
+		inst.installationTemplate = INS_GetInstallationTemplateByType(type);
 		if (!inst.installationTemplate) {
 			Com_Printf("Could not find installation template '%s'\n", instID);
 			success = false;

@@ -114,9 +114,10 @@ int INS_GetCount(void);
 
 /* Installation template */
 void INS_ParseInstallations(const char *name, const char **text);
-const installationTemplate_t *INS_GetInstallationTemplateFromInstallationID(const char *id);
+const installationTemplate_t *INS_GetInstallationTemplateByType(installationType_t type);
 
 bool INS_HasType(installationType_t type);
+installationType_t INS_GetType(const char *type);
 
 /* Lifecycle: build/update/destroy */
 installation_t *INS_Build(const installationTemplate_t *installationTemplate, const vec2_t pos, const char *name);
