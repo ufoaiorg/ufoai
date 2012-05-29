@@ -52,7 +52,10 @@ terminal NAMED_CONST:
 	('A'..'Z') ('A'..'Z' | '0'..'9' | '_')*;
 
 terminal REAL:
-	('0'..'9')* '.' ('0'..'9')+;
+	('-'|'+')?('0'..'9')* '.' ('0'..'9')+;
+
+terminal INT returns ecore::EInt:
+	('-'|'+')?('0'..'9')+;
 
 terminal UFO_BOOLEAN:
 	'true' | 'false';

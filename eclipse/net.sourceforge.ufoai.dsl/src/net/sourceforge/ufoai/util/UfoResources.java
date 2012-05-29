@@ -9,6 +9,7 @@ import java.io.File;
 public class UfoResources {
 
 	private static String[] supportedImageExtensions = {".png", ".jpg"};
+	private static String[] supportedModelExtensions = {".md2", ".md3", ".obj", ".mdl"};
 
 	/**
 	 * True if "base" dir already checked.
@@ -63,6 +64,15 @@ public class UfoResources {
 	 */
 	public static File getFileFromPics(String id) {
 		return getFileFromBase("pics/" + id, supportedImageExtensions);
+	}
+
+	/**
+	 * Get a file from base/models
+	 * @param name Name of the file resource
+	 * @return A file, else null if it do not exists
+	 */
+	public static File getFileFromModels(String id) {
+		return getFileFromBase("models/" + id, supportedModelExtensions);
 	}
 
 }

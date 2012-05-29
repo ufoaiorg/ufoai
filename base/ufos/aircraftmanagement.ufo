@@ -33,10 +33,10 @@
 //	when it's lower than 2, and an absolute modifier when it's higher than 2. This does NOT go for modifiers that are not V_RELABS!
 //
 //	crafttype - The type of the item. Possible values:
-//		weapon
-//		ammo
+//		"weapon"
+//		"ammo"
 //		shield
-//		electronics
+//		"electronics"
 //		base_missile
 //		base_laser
 //		base_ammo_missile
@@ -66,7 +66,7 @@
 //	wrange			- The range of the weapon, which tells the minimum distance of opening fire. (this one is not V_RELABS).
 //	delay			- The delay between 2 shots of this ammunition.
 //	wdamage			- The amount of damage a weapon with this ammo can do (this one is not V_RELABS).
-//  accuracy		- Modifier to craft accuracy when firing this weapon
+//  accuracy		- Modifier to craft accuracy when firing this "weapon"
 //	---------------------------------------------------------------------
 //
 //=========================================================================
@@ -95,7 +95,7 @@ aircraft craft_drop_firebird
 	}
 	name		"_Firebird-class Dropship"
 	defaultname	"_Firebird D"
-	type		transporter
+	type		"transporter"
 	model		"geoscape/drop_firebird"
 	price		20000
 	building	building_hangar
@@ -103,17 +103,17 @@ aircraft craft_drop_firebird
 	size		2
 	image		"geoscape/air_dropship"
 	slot {
-		type		weapon
-		position	nose_center
-		size		medium
+		type		"weapon"
+		position	"nose_center"
+		size		"medium"
 	}
 	slot {
-		type		electronics
-		position	wing_left
+		type		"electronics"
+		position	"wing_left"
 	}
 	slot {
-		type		electronics
-		position	wing_right
+		type		"electronics"
+		position	"wing_right"
 	}
 }
 
@@ -130,7 +130,7 @@ aircraft craft_drop_herakles
 	}
 	name		"_Herakles-class Heavy Lifter"
 	defaultname	"_Herakles D"
-	type		transporter
+	type		"transporter"
 	model		"geoscape/drop_herakles"
 	price		30000
 	building	building_hangar
@@ -138,17 +138,17 @@ aircraft craft_drop_herakles
 	size		2
 	image		"geoscape/air_dropship"
 	slot {
-		type		weapon
-		position	nose_center
-		size		medium
+		type		"weapon"
+		position	"nose_center"
+		size		"medium"
 	}
 	slot {
-		type		electronics
-		position	wing_left
+		type		"electronics"
+		position	"wing_left"
 	}
 	slot {
-		type		electronics
-		position	wing_right
+		type		"electronics"
+		position	"wing_right"
 	}
 }
 
@@ -166,7 +166,7 @@ aircraft craft_drop_raptor
 	}
 	name		"_Raptor-class Combat Transport"
 	defaultname	"_Raptor"
-	type		transporter
+	type		"transporter"
 	model		"geoscape/drop_raptor"
 	price		30000
 	building	building_hangar
@@ -174,27 +174,27 @@ aircraft craft_drop_raptor
 	size		2
 	image		"geoscape/air_dropship"
 	slot {
-		type		weapon
-		position	nose_center
-		size		light
+		type		"weapon"
+		position	"nose_center"
+		size		"light"
 	}
 	slot {
-		type		weapon
-		position	wing_left
-		size		medium
+		type		"weapon"
+		position	"wing_left"
+		size		"medium"
 	}
 	slot {
-		type		weapon
-		position	wing_right
-		size		medium
+		type		"weapon"
+		position	"wing_right"
+		size		"medium"
 	}
 	slot {
-		type		electronics
-		position	wing_left
+		type		"electronics"
+		position	"wing_left"
 	}
 	slot {
-		type		electronics
-		position	wing_right
+		type		"electronics"
+		position	"wing_right"
 	}
 }
 
@@ -215,7 +215,7 @@ aircraft craft_inter_stiletto
 	}
 	name		"_Stiletto-class Interceptor"
 	defaultname	"_Stiletto I"
-	type		interceptor
+	type		"interceptor"
 	model		"geoscape/inter_stiletto"
 	numteam		0
 	size		1
@@ -223,27 +223,27 @@ aircraft craft_inter_stiletto
 	building	building_intercept
 	image		"geoscape/air_interceptor"
 	slot {
-		type		weapon
-		position	nose_center
-		size		light
+		type		"weapon"
+		position	"nose_center"
+		size		"light"
 	}
 	slot {
-		type		weapon
-		position	wing_left
-		size		medium
+		type		"weapon"
+		position	"wing_left"
+		size		"medium"
 	}
 	slot {
-		type		weapon
-		position	wing_right
-		size		medium
+		type		"weapon"
+		position	"wing_right"
+		size		"medium"
 	}
 	slot {
-		type		electronics
-		position	wing_left
+		type		"electronics"
+		position	"wing_left"
 	}
 	slot {
-		type		electronics
-		position	wing_right
+		type		"electronics"
+		position	"wing_right"
 	}
 }
 
@@ -260,7 +260,7 @@ aircraft craft_inter_saracen
 	}
 	name		"_Saracen-class Interceptor"
 	defaultname	"_Saracen I"
-	type		interceptor
+	type		"interceptor"
 	model		"geoscape/inter_saracen"
 	numteam		0
 	size		2
@@ -268,22 +268,22 @@ aircraft craft_inter_saracen
 	building	building_intercept
 	image		"geoscape/air_interceptor"
 	slot {
-		type		weapon
-		position	wing_left
-		size		medium
+		type		"weapon"
+		position	"wing_left"
+		size		"medium"
 	}
 	slot {
-		type		weapon
-		position	wing_right
-		size		medium
+		type		"weapon"
+		position	"wing_right"
+		size		"medium"
 	}
 	slot {
-		type		electronics
-		position	wing_left
+		type		"electronics"
+		position	"wing_left"
 	}
 	slot {
-		type		electronics
-		position	wing_right
+		type		"electronics"
+		position	"wing_right"
 	}
 }
 
@@ -301,7 +301,7 @@ aircraft craft_inter_dragon
 	}
 	name		"_Dragon Interceptor"
 	defaultname	"_Dragon"
-	type		interceptor
+	type		"interceptor"
 	model		"geoscape/inter_dragon"
 	numteam		0
 	size		1
@@ -309,22 +309,22 @@ aircraft craft_inter_dragon
 	building	building_intercept
 	image		"geoscape/air_interceptor"
 	slot {
-		type		weapon
-		position	wing_left
-		size		medium
+		type		"weapon"
+		position	"wing_left"
+		size		"medium"
 	}
 	slot {
-		type		weapon
-		position	wing_right
-		size		medium
+		type		"weapon"
+		position	"wing_right"
+		size		"medium"
 	}
 	slot {
-		type		electronics
-		position	wing_left
+		type		"electronics"
+		position	"wing_left"
 	}
 	slot {
-		type		electronics
-		position	wing_right
+		type		"electronics"
+		position	"wing_right"
 	}
 }
 
@@ -342,7 +342,7 @@ aircraft craft_inter_starchaser
 	}
 	name		"_Starchaser-class Interceptor"
 	defaultname	"_Starchaser"
-	type		interceptor
+	type		"interceptor"
 	model		"geoscape/inter_starchaser"
 	numteam		0
 	size		1
@@ -350,27 +350,27 @@ aircraft craft_inter_starchaser
 	building	building_intercept
 	image		"geoscape/air_interceptor"
 	slot {
-		type		weapon
-		position	nose_center
-		size		light
+		type		"weapon"
+		position	"nose_center"
+		size		"light"
 	}
 	slot {
-		type		weapon
-		position	wing_left
-		size		medium
+		type		"weapon"
+		position	"wing_left"
+		size		"medium"
 	}
 	slot {
-		type		weapon
-		position	wing_right
-		size		medium
+		type		"weapon"
+		position	"wing_right"
+		size		"medium"
 	}
 	slot {
-		type		electronics
-		position	wing_left
+		type		"electronics"
+		position	"wing_left"
 	}
 	slot {
-		type		electronics
-		position	wing_right
+		type		"electronics"
+		position	"wing_right"
 	}
 }
 
@@ -388,7 +388,7 @@ aircraft craft_inter_stingray
 	}
 	name		"_Stingray Interceptor"
 	defaultname	"_Stingray"
-	type		interceptor
+	type		"interceptor"
 	model		"geoscape/inter_stingray"
 	numteam		0
 	size		1
@@ -396,27 +396,27 @@ aircraft craft_inter_stingray
 	building	building_intercept
 	image		"geoscape/air_interceptor"
 	slot {
-		type		weapon
-		position	nose_center
-		size		medium
+		type		"weapon"
+		position	"nose_center"
+		size		"medium"
 	}
 	slot {
-		type		weapon
-		position	wing_left
-		size		medium
+		type		"weapon"
+		position	"wing_left"
+		size		"medium"
 	}
 	slot {
-		type		weapon
-		position	wing_right
-		size		medium
+		type		"weapon"
+		position	"wing_right"
+		size		"medium"
 	}
 	slot {
-		type		electronics
-		position	wing_left
+		type		"electronics"
+		position	"wing_left"
 	}
 	slot {
-		type		electronics
-		position	wing_right
+		type		"electronics"
+		position	"wing_right"
 	}
 }
 
@@ -440,7 +440,7 @@ aircraft craft_ufo_scout
 	}
 	name		"_UFO - Scout"
 	defaultname	"_Scout U"
-	type		ufo
+	type		"ufo"
 	model		"geoscape/ufo_scout"
 	size		1
 	numteam		3
@@ -463,7 +463,7 @@ aircraft craft_ufo_fighter
 	}
 	name		"_UFO - Fighter"
 	defaultname	"_Fighter U"
-	type		ufo
+	type		"ufo"
 	model		"geoscape/ufo_fighter"
 	size		1
 	numteam		5
@@ -473,8 +473,8 @@ aircraft craft_ufo_fighter
 	image		"geoscape/air_ufo"
 	interestlevel 0
 	slot {
-		type		weapon
-		size		heavy
+		type		"weapon"
+		size		"heavy"
 		contains	rs_craft_weapon_particle
 		ammo		rs_craft_ammo_particle
 	}
@@ -493,7 +493,7 @@ aircraft craft_ufo_harvester
 	}
 	name		"_UFO - Harvester"
 	defaultname	"_Harvester U"
-	type		ufo
+	type		"ufo"
 	model		"geoscape/ufo_harvester"
 	size		2
 	numteam		12
@@ -502,20 +502,20 @@ aircraft craft_ufo_harvester
 	image		"geoscape/air_ufo"
 	interestlevel 0
 	slot {
-		type		weapon
-		size		heavy
+		type		"weapon"
+		size		"heavy"
 		contains	rs_craft_weapon_particle
 		ammo		rs_craft_ammo_particle
 	}
 	slot {
-		type		weapon
-		size		heavy
+		type		"weapon"
+		size		"heavy"
 		contains	rs_craft_weapon_particle
 		ammo		rs_craft_ammo_particle
 	}
 	slot {
-		type		weapon
-		size		heavy
+		type		"weapon"
+		size		"heavy"
 		contains	rs_craft_weapon_alien_launcher
 		ammo		rs_craft_ammo_am_missile
 	}
@@ -534,7 +534,7 @@ aircraft craft_ufo_gunboat
 	}
 	name		"_UFO - Gunboat"
 	defaultname	"_Gunboat U"
-	type		ufo
+	type		"ufo"
 	model		"geoscape/ufo_gunboat"
 	size		2
 	numteam		8
@@ -543,26 +543,26 @@ aircraft craft_ufo_gunboat
 	image		"geoscape/air_ufo"
 	interestlevel 300
 	slot {
-		type		weapon
-		size		heavy
+		type		"weapon"
+		size		"heavy"
 		contains	rs_craft_weapon_particle
 		ammo		rs_craft_ammo_particle
 	}
 	slot {
-		type		weapon
-		size		heavy
+		type		"weapon"
+		size		"heavy"
 		contains	rs_craft_weapon_particle
 		ammo		rs_craft_ammo_particle
 	}
 	slot {
-		type		weapon
-		size		heavy
+		type		"weapon"
+		size		"heavy"
 		contains	rs_craft_weapon_alien_launcher
 		ammo		rs_craft_ammo_am_missile
 	}
 	slot {
-		type		weapon
-		size		heavy
+		type		"weapon"
+		size		"heavy"
 		contains	rs_craft_weapon_alien_launcher
 		ammo		rs_craft_ammo_am_missile
 	}
@@ -581,7 +581,7 @@ aircraft craft_ufo_corrupter
 	}
 	name		"_UFO - Corrupter"
 	defaultname	"_Corrupter U"
-	type		ufo
+	type		"ufo"
 	model		"geoscape/ufo_corrupter"
 	size		2
 	numteam		15
@@ -589,14 +589,14 @@ aircraft craft_ufo_corrupter
 	price		27000
 	image		"geoscape/air_ufo"
 	slot {
-		type		weapon
-		size		heavy
+		type		"weapon"
+		size		"heavy"
 		contains	rs_craft_weapon_particle
 		ammo		rs_craft_ammo_particle
 	}
 	slot {
-		type		weapon
-		size		heavy
+		type		"weapon"
+		size		"heavy"
 		contains	rs_craft_weapon_particle
 		ammo		rs_craft_ammo_particle
 	}
@@ -616,7 +616,7 @@ aircraft craft_ufo_supply
 	}
 	name		"_UFO - Supply Ship"
 	defaultname	"_Supply U"
-	type		ufo
+	type		"ufo"
 	model		"geoscape/ufo_supply"
 	size		2
 	numteam		7
@@ -638,7 +638,7 @@ aircraft craft_ufo_ripper
 	}
 	name		"_UFO - Ripper"
 	defaultname	"_Ripper U"
-	type		ufo
+	type		"ufo"
 	model		"geoscape/ufo_ripper"
 	size		2
 	numteam		18
@@ -646,26 +646,26 @@ aircraft craft_ufo_ripper
 	price		30000
 	image		"geoscape/air_ufo"
 	slot {
-		type		weapon
-		size		heavy
+		type		"weapon"
+		size		"heavy"
 		contains	rs_craft_weapon_particle
 		ammo		rs_craft_ammo_particle
 	}
 	slot {
-		type		weapon
-		size		heavy
+		type		"weapon"
+		size		"heavy"
 		contains	rs_craft_weapon_particle
 		ammo		rs_craft_ammo_particle
 	}
 	slot {
-		type		weapon
-		size		heavy
+		type		"weapon"
+		size		"heavy"
 		contains	rs_craft_weapon_particle
 		ammo		rs_craft_ammo_particle
 	}
 	slot {
-		type		weapon
-		size		heavy
+		type		"weapon"
+		size		"heavy"
 		contains	rs_craft_weapon_particle
 		ammo		rs_craft_ammo_particle
 	}
@@ -684,7 +684,7 @@ aircraft craft_ufo_bomber
 	}
 	name		"_UFO - Bomber"
 	defaultname	"_Bomber U"
-	type		ufo
+	type		"ufo"
 	model		"geoscape/ufo_bomber"
 	size		2
 	numteam		25
@@ -692,20 +692,20 @@ aircraft craft_ufo_bomber
 	price		45000
 	image		"geoscape/air_ufo"
 	slot {
-		type		weapon
-		size		heavy
+		type		"weapon"
+		size		"heavy"
 		contains	rs_craft_weapon_particle
 		ammo		rs_craft_ammo_particle
 	}
 	slot {
-		type		weapon
-		size		heavy
+		type		"weapon"
+		size		"heavy"
 		contains	rs_craft_weapon_particle
 		ammo		rs_craft_ammo_particle
 	}
 	slot {
-		type		weapon
-		size		heavy
+		type		"weapon"
+		size		"heavy"
 		contains	rs_craft_weapon_particle
 		ammo		rs_craft_ammo_particle
 	}
@@ -731,7 +731,7 @@ aircraft craft_ufo_carrier
 	}
 	name		"_UFO - Carrier"
 	defaultname	"_Carrier U"
-	type		ufo
+	type		"ufo"
 	model		"geoscape/ufo_carrier"
 	size		1
 	building	building_small_ufo_hangar
@@ -754,7 +754,7 @@ aircraft craft_ufo_mothership
 	}
 	name		"_UFO - Mothership"
 	defaultname	"_Mothership U"
-	type		ufo
+	type		"ufo"
 	model		"geoscape/ufo_mothership"
 	size		1
 	building	building_small_ufo_hangar
@@ -770,8 +770,8 @@ aircraft craft_ufo_mothership
 craftitem craft_weapon_alc
 {
 	name				"_Aerial Laser Cannon"
-	crafttype			weapon
-	size				40 // light
+	crafttype			"weapon"
+	size				40 // "light"
 	installationTime	2
 	price				7000
 	model				"aircraft/craft_weapon_alc/alc"
@@ -784,7 +784,7 @@ craftitem craft_ammo_alc
 {
 	/* this ammo is virtual shouldn't be shown anywhere */
 	name				"D-F Tank"
-	crafttype			ammo
+	crafttype			"ammo"
 	craftweapon			craft_weapon_alc
 	virtual				true
 
@@ -795,14 +795,14 @@ craftitem craft_ammo_alc
 	wrange				1.8
 	wspeed				900
 	delay				200
-	size				10 // light
+	size				10 // "light"
 }
 
 craftitem craft_weapon_shiva
 {
 	name				"_Shiva Rotary Cannon"
-	crafttype			weapon
-	size				40 // light
+	crafttype			"weapon"
+	size				40 // "light"
 	installationTime	2
 	price				5000
 	bullets				true
@@ -812,7 +812,7 @@ craftitem craft_weapon_shiva
 craftitem craft_ammo_shiva_API
 {
 	name		"_SHIVA 20mm API Rounds"
-	crafttype	ammo
+	crafttype	"ammo"
 	craftweapon	craft_weapon_shiva
 	price		600
 
@@ -822,13 +822,13 @@ craftitem craft_ammo_shiva_API
 	wrange		1.07
 	wspeed		62
 	delay		3
-	size		10 // light
+	size		10 // "light"
 }
 
 craftitem craft_ammo_shiva_HEI
 {
 	name			"_SHIVA 20mm HEI Rounds"
-	crafttype		ammo
+	crafttype		"ammo"
 	craftweapon		craft_weapon_shiva
 	price			640
 
@@ -838,14 +838,14 @@ craftitem craft_ammo_shiva_HEI
 	wrange		1.07
 	wspeed		62
 	delay		60
-	size		10 // light
+	size		10 // "light"
 }
 
 craftitem craft_el_raven
 {
 	name				"_Raven ECM Unit"
-	crafttype			electronics
-	size				20 // light
+	crafttype			"electronics"
+	size				20 // "light"
 	installationTime	1
 	price				8000
 	model				"aircraft/craft_item_raven_ecm/ecm"
@@ -856,8 +856,8 @@ craftitem craft_el_raven
 craftitem craft_weapon_sparrowhawk
 {
 	name				"_Sparrowhawk AA Missile Rack"
-	crafttype			weapon
-	size				90 // medium
+	crafttype			"weapon"
+	size				90 // "medium"
 	installationTime	3
 	price				7000
 	model				"aircraft/craft_weapon_sparrow/sparrowhawk_rack"
@@ -866,10 +866,10 @@ craftitem craft_weapon_sparrowhawk
 craftitem craft_ammo_sparrowhawk
 {
 	name		"_Sparrowhawk Missile"
-	crafttype	ammo
+	crafttype	"ammo"
 	craftweapon	craft_weapon_sparrowhawk
 	price		1000
-	size		40 // light
+	size		40 // "light"
 	model		"geoscape/missile_sparrow"
 
 	ammo		7
@@ -883,8 +883,8 @@ craftitem craft_ammo_sparrowhawk
 craftitem craft_weapon_tr20
 {
 	name				"_TR-20 Rocket Pod"
-	crafttype			weapon
-	size				90 // medium
+	crafttype			"weapon"
+	size				90 // "medium"
 	installationTime	2
 	price				6000
 	model				"aircraft/craft_weapon_tr20/tr20"
@@ -896,14 +896,14 @@ craftitem craft_weapon_tr20
 craftitem craft_ammo_tr20
 {
 	name			"_TR-20 Rocket"
-	crafttype		ammo
+	crafttype		"ammo"
 	craftweapon		craft_weapon_tr20
 	price			840
 	model			"geoscape/missile_tr20"
 
 //	ammo		152
 // The value (12) below is a workaround until we can display (or fake) high numbers of projectiles in interception
-	size		10 // light
+	size		10 // "light"
 	ammo		12
 	wdamage		15
 	accuracy	0.4
@@ -915,8 +915,8 @@ craftitem craft_ammo_tr20
 craftitem craft_weapon_particle_beam
 {
 	name				"_Particle Beam Weapon"
-	crafttype			weapon
-	size				90 // medium
+	crafttype			"weapon"
+	size				90 // "medium"
 	installationTime	4
 	price				11000
 	model				"aircraft/craft_weapon_particle/pbw"
@@ -928,7 +928,7 @@ craftitem craft_ammo_particle_beam
 {
 	/* this ammo is virtual shouldn't be shown anywhere */
 	name				"Particle Beam Accelerator"
-	crafttype			ammo
+	crafttype			"ammo"
 	craftweapon			craft_weapon_particle_beam
 	virtual				true
 
@@ -939,13 +939,13 @@ craftitem craft_ammo_particle_beam
 	wrange				3
 	wspeed				900
 	delay				200
-	size				10 // light
+	size				10 // "light"
 }
 
 craftitem craft_weapon_alien_launcher
 {
 	name "_Alien Launcher"
-	crafttype weapon
+	crafttype "weapon"
 	size 90
 	installationTime 5
 	price 12000
@@ -955,10 +955,10 @@ craftitem craft_weapon_alien_launcher
 craftitem craft_ammo_am_missile
 {
 	name		"_Antimatter Missile"
-	crafttype	ammo
+	crafttype	"ammo"
 	craftweapon	craft_weapon_alien_launcher
 	price		3000
-	size		60 // medium
+	size		60 // "medium"
 	model		"geoscape/missile_antimatter"
 
 	ammo		3
@@ -972,10 +972,10 @@ craftitem craft_ammo_am_missile
 craftitem craft_ammo_hybrid_missile
 {
 	name		"_Hybrid Missile"
-	crafttype	ammo
+	crafttype	"ammo"
 	craftweapon	craft_weapon_alien_launcher
 	price		2700
-	size		50 // light
+	size		50 // "light"
 	model		"geoscape/missile" // @todo fixme!!!
 	ammo		6
 	wdamage		80
@@ -989,10 +989,10 @@ craftitem craft_ammo_hybrid_missile
 craftitem craft_el_targeting
 {
 	name				"_Targeting Computer"
-	crafttype			electronics
+	crafttype			"electronics"
 	installationTime	1
 	price				10000
-	size				20 // light
+	size				20 // "light"
 	model				"aircraft/craft_item_target/craft_item_target"
 
 	accuracy	1.25
@@ -1001,10 +1001,10 @@ craftitem craft_el_targeting
 craftitem craft_el_fuelpod
 {
 	name				"_Fuel Pod"
-	crafttype			electronics
+	crafttype			"electronics"
 	installationTime	2
 	price				3000
-	size				20 // light
+	size				20 // "light"
 	model				"aircraft/craft_item_fuel/fuel"
 
 	fuelsize	+7000
@@ -1015,10 +1015,10 @@ craftitem craft_el_fuelpod
 craftitem craft_shield_polymer
 {
 	name				"_Polymer Aircraft Armour"
-	crafttype			shield
+	crafttype			"shield"
 	installationTime	24
 	price				1200
-	size				40 // light
+	size				40 // "light"
 	model				"aircraft/craft_arm_poly/polymer"
 
 	shield		+4
@@ -1029,10 +1029,10 @@ craftitem craft_shield_polymer
 craftitem craft_shield_plating
 {
 	name				"_Alien Aircraft Plating"
-	crafttype			shield
+	crafttype			"shield"
 	installationTime	36
 	price				3000
-	size				50 // light
+	size				50 // "light"
 	model				"aircraft/craft_arm_plate/plating"
 
 	shield		+8
@@ -1043,28 +1043,28 @@ craftitem craft_shield_plating
 craftitem craft_alien_astrogation
 {
 	name				"_Alien Astrogation"
-	crafttype			electronics
+	crafttype			"electronics"
 	installationTime	-1
 	price				5000
-	size				20 // light
+	size				20 // "light"
 }
 
 craftitem craft_alien_propulsion
 {
 	name				"_Alien Propulsion"
-	crafttype			electronics
+	crafttype			"electronics"
 	installationTime	-1
 	price				6000
-	size				50 // light
+	size				50 // "light"
 }
 
 craftitem craft_alien_detection
 {
 	name				"_Alien Detection"
-	crafttype			electronics
+	crafttype			"electronics"
 	installationTime	-1
 	price				5000
-	size				20 // light
+	size				20 // "light"
 }
 
 // *********************************
@@ -1074,8 +1074,8 @@ craftitem craft_alien_detection
 craftitem base_AA51_launcher
 {
 	name				"_AA51 missile launcher"
-	crafttype			base_missile
-	size				90 // medium
+	crafttype			"base_missile"
+	size				90 // "medium"
 	installationTime	12
 	price				5000
 	is_dummy			true
@@ -1086,7 +1086,7 @@ craftitem base_ammo_AA51
 {
 	/* this ammo is virtual shouldn't be shown anywhere */
 	name			"AA51 Cicada SAM"
-	crafttype		base_ammo_missile
+	crafttype		"base_ammo_missile"
 	craftweapon		base_AA51_launcher
 	is_dummy		true
 	model			"geoscape/missile"
@@ -1098,14 +1098,14 @@ craftitem base_ammo_AA51
 	wrange			7
 	wspeed			200
 	delay			500
-	size			10 // light
+	size			10 // "light"
 }
 
 craftitem baselaser
 {
 	name				"_Base-Defence Laser Turret"
-	crafttype			base_laser
-	size				90 // medium
+	crafttype			"base_laser"
+	size				90 // "medium"
 	installationTime	12
 	price				10000
 	is_dummy			true
@@ -1119,7 +1119,7 @@ craftitem baselaser_ammo
 {
 	/* this ammo is virtual shouldn't be shown anywhere */
 	name				"D-F Tank"
-	crafttype			base_ammo_laser
+	crafttype			"base_ammo_laser"
 	craftweapon			baselaser
 	is_dummy			true
 	virtual				true
@@ -1131,5 +1131,5 @@ craftitem baselaser_ammo
 	wrange				5
 	wspeed				900
 	delay				200
-	size				10 // light
+	size				10 // "light"
 }

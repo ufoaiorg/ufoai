@@ -181,6 +181,20 @@ public class UFOScriptJavaValidator extends AbstractUFOScriptJavaValidator {
 				}
 			}
 			break;
+		case MODEL:
+			if (!(property.getValue() instanceof PropertyValueString)) {
+				error("Quoted model name expected", UfoScriptPackage.Literals.PROPERTY__VALUE);
+			} else 	{
+				checkUfoBase(property);
+				PropertyValueString value = (PropertyValueString) property.getValue();
+				final String id = value.getValue();
+				final File file = UfoResources.getFileFromModels(id);
+				if (file == null) {
+					warning("Model not found.",
+							UfoScriptPackage.Literals.PROPERTY__VALUE);
+				}
+			}
+			break;
 		case VEC2:
 			if (!(property.getValue() instanceof PropertyValueString)) {
 				error("Quoted tuple of number expected", UfoScriptPackage.Literals.PROPERTY__VALUE);

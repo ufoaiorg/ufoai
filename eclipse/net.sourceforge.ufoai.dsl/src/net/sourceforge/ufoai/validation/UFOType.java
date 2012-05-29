@@ -29,6 +29,12 @@ public class UFOType {
 		PICS_IMAGE,
 
 		/**
+		 * A string witch contain a link to a model relative to base/models
+		 * and do not contains file extension
+		 */
+		MODEL,
+
+		/**
 		 * A string which should be prefixed with '_'
 		 */
 		TRANSLATED_STRING,
