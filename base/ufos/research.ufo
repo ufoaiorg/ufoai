@@ -106,17 +106,14 @@
 // Ufopedia categories
 //========================
 
-up_chapters main
-{
-	news		"_Background"
-	crafts		"_Aircraft"
-	buildings	"_Base Facilities"
-	tech		"_Research Reports"
-	equipment	"_Equipment"
-	artifacts	"_Alien Artifacts"
-	aliens		"_Autopsies & Observation"
-	threat		"_The Alien Threat"
-}
+up_chapter news	{ name "_Background" }
+up_chapter crafts { name "_Aircraft" }
+up_chapter buildings { name "_Base Facilities" }
+up_chapter tech { name "_Research Reports" }
+up_chapter equipment { name "_Equipment" }
+up_chapter artifacts { name "_Alien Artifacts" }
+up_chapter aliens { name "_Autopsies & Observation" }
+up_chapter threat { name "_The Alien Threat" }
 
 //============================
 // Main Research Technologies

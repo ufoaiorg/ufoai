@@ -580,8 +580,8 @@ components_t *CP_GetComponentsByID (const char *id)
 static void CP_ParseScriptFirst (const char *type, const char *name, const char **text)
 {
 	/* check for client interpretable scripts */
-	if (Q_streq(type, "up_chapters"))
-		UP_ParseChapters(name, text);
+	if (Q_streq(type, "up_chapter"))
+		UP_ParseChapter(name, text);
 	else if (Q_streq(type, "building"))
 		B_ParseBuildings(name, text, false);
 	else if (Q_streq(type, "installation"))

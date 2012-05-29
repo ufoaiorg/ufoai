@@ -39,7 +39,7 @@ typedef struct pediaChapter_s {
 void UP_InitStartup(void);
 void UP_Shutdown(void);
 
-void UP_ParseChapters(const char *name, const char **text);
+void UP_ParseChapter(const char *name, const char **text);
 void UP_OpenWith(const char *name);
 void UP_OpenCopyWith(const char *name);
 void UP_AircraftItemDescription(const objDef_t *item);

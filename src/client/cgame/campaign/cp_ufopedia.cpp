@@ -1271,48 +1271,49 @@ void UP_Shutdown (void)
  * @param[in] text Text for chapter ID
  * @sa CL_ParseFirstScript
  */
-void UP_ParseChapters (const char *name, const char **text)
+void UP_ParseChapter (const char *name, const char **text)
 {
-	const char *errhead = "UP_ParseChapters: unexpected end of file (names ";
+	const char *errhead = "UP_ParseChapter: unexpected end of file (names ";
 	const char *token;
 
-	/* get name list body body */
-	token = Com_Parse(text);
+	if (ccs.numChapters >= MAX_PEDIACHAPTERS) {
+		Com_Error(ERR_DROP, "UP_ParseChapter: chapter def \"%s\": Too many chapter defs.\n", name);
+	}
 
+	pediaChapter_t chapter;
+	OBJZERO(chapter);
+	chapter.id = Mem_PoolStrDup(name, cp_campaignPool, 0);
+	chapter.idx = ccs.numChapters;	/* set self-link */
+
+	/* get begin block */
+	token = Com_Parse(text);
 	if (!*text || *token !='{') {
-		Com_Printf("UP_ParseChapters: chapter def \"%s\" without body ignored\n", name);
+		Com_Error(ERR_DROP, "UP_ParseChapter: chapter def \"%s\": '{' token expected.\n", name);
+	}
+
+	/* get the property */
+	token = Com_EParse(text, errhead, name);
+	if (!*text || !Q_streq(token, "name")) {
+		Com_Error(ERR_DROP, "UP_ParseChapter: chapter def \"%s\": Name token expected.\n", name);
+	}
+
+	/* get the name */
+	token = Com_EParse(text, errhead, name);
+	if (!*text || *token == '}') {
+		Com_Error(ERR_DROP, "UP_ParseChapter: chapter def \"%s\": Name token expected.\n", name);
+	}
+	if (*token == '_')
+		token++;
+	chapter.name = Mem_PoolStrDup(token, cp_campaignPool, 0);
+
+	/* get end block */
+	token = Com_Parse(text);
+	if (!*text || *token !='}') {
+		Com_Error(ERR_DROP, "UP_ParseChapter: chapter def \"%s\": '}' token expected.\n", name);
 		return;
 	}
 
-	do {
-		/* get the id */
-		token = Com_EParse(text, errhead, name);
-		if (!*text)
-			break;
-		if (*token == '}')
-			break;
-
-		/* add chapter */
-		if (ccs.numChapters >= MAX_PEDIACHAPTERS) {
-			Com_Printf("UP_ParseChapters: too many chapter defs\n");
-			return;
-		}
-		OBJZERO(ccs.upChapters[ccs.numChapters]);
-		ccs.upChapters[ccs.numChapters].id = Mem_PoolStrDup(token, cp_campaignPool, 0);
-		ccs.upChapters[ccs.numChapters].idx = ccs.numChapters;	/* set self-link */
-
-		/* get the name */
-		token = Com_EParse(text, errhead, name);
-		if (!*text)
-			break;
-		if (*token == '}')
-			break;
-		if (*token == '_')
-			token++;
-		if (!*token)
-			continue;
-		ccs.upChapters[ccs.numChapters].name = Mem_PoolStrDup(token, cp_campaignPool, 0);
-
-		ccs.numChapters++;
-	} while (*text);
+	/* add chapter to the game */
+	ccs.upChapters[ccs.numChapters] = chapter;
+	ccs.numChapters++;
 }
