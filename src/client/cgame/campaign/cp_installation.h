@@ -67,6 +67,7 @@ typedef struct installationTemplate_s {
 	int buildTime;						/**< Time to build the installation, in days. */
 	char *model;						/**< Model used on 3D geoscape */
 	char *image;						/**< Image used on 2D geoscape */
+	struct technology_s *tech;			/**< Link to the installation-technology. */
 } installationTemplate_t;
 
 
@@ -115,6 +116,7 @@ int INS_GetCount(void);
 /* Installation template */
 void INS_ParseInstallations(const char *name, const char **text);
 const installationTemplate_t *INS_GetInstallationTemplateByType(installationType_t type);
+void INS_LinkTechnologies(void);
 
 bool INS_HasType(installationType_t type);
 installationType_t INS_GetType(const char *type);

@@ -1313,7 +1313,6 @@ window popup_newinstallation
 	cmpPopupButton bt_build
 	{
 		string		"_Build"
-		tooltip		"_Build the radar tower"
 		pos			"109 240"
 		onClick		{ cmd "ui_pop; mn_installation_build *cvar:mn_installation_type;" }
 	}

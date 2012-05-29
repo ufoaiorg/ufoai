@@ -749,6 +749,7 @@ void CP_ParseCampaignData (void)
 	Com_DPrintf(DEBUG_CLIENT, "Second stage parsing started...\n");
 	while ((type = FS_NextScriptHeader("ufos/*.ufo", &name, &text)) != NULL)
 		CP_ParseScriptSecond(type, name, &text);
+	INS_LinkTechnologies();
 
 	for (i = 0; i < csi.numTeamDefs; i++) {
 		const teamDef_t *teamDef = &csi.teamDef[i];

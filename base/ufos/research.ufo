@@ -5416,6 +5416,7 @@ tech rs_orbital_ufo_activity
 		tech	rs_alien_strategy
 	}
 
+	provides	orbit
 	time		14000
 	image		"techs/orbital_ufo_activity"
 	event		"cp_spawn_ufocarrier"

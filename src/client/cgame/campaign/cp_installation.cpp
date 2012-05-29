@@ -433,6 +433,18 @@ void INS_ParseInstallations (const char *name, const char **text)
 	} while (*text);
 }
 
+void INS_LinkTechnologies (void)
+{
+	int i;
+
+	for (i = 0; i < ccs.numInstallationTemplates; i++) {
+		installationTemplate_t *ins = &ccs.installationTemplates[i];
+		technology_t* techLink = RS_GetTechByProvided(ins->id);
+		if (techLink)
+			ins->tech = techLink;
+	}
+}
+
 /**
  * @brief Save callback for savegames in xml
  * @param[out] p XML Node structure, where we write the information to
