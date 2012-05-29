@@ -73,3 +73,23 @@ void CP_UFOCarrierNextStage (mission_t *mission)
 		break;
 	}
 }
+
+/**
+ * @brief Spawns a UFO-Carrier on the geoscape
+ */
+void CP_SpawnUFOCarrier_f (void)
+{
+	CP_CreateNewMission(INTERESTCATEGORY_UFOCARRIER, true);
+}
+
+/**
+ * @brief Decide whether you hit and destroyed the carrier and spawns a new
+ * carrier crash site mission
+ */
+void CP_AttackUFOCarrier_f (void)
+{
+	MIS_Foreach(mission) {
+		if (mission->category == INTERESTCATEGORY_UFOCARRIER)
+			CP_MissionRemove(mission);
+	}
+}
