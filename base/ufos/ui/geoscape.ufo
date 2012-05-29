@@ -1215,7 +1215,7 @@ window popup_newinstallation_type
 			*node:root.radar_type@disabled = false
 			*node:root.radar_buildtime@disabled = false
 			*node:root.radar_cost@disabled = false
-			call *node:parent.cp_deactivate_orbital_installation
+			call *node:root.cp_deactivate_orbital_installation
 		}
 	}
 
