@@ -33,10 +33,10 @@
 //	when it's lower than 2, and an absolute modifier when it's higher than 2. This does NOT go for modifiers that are not V_RELABS!
 //
 //	crafttype - The type of the item. Possible values:
-//		"weapon"
-//		"ammo"
+//		weapon
+//		ammo
 //		shield
-//		"electronics"
+//		electronics
 //		base_missile
 //		base_laser
 //		base_ammo_missile
@@ -66,7 +66,7 @@
 //	wrange			- The range of the weapon, which tells the minimum distance of opening fire. (this one is not V_RELABS).
 //	delay			- The delay between 2 shots of this ammunition.
 //	wdamage			- The amount of damage a weapon with this ammo can do (this one is not V_RELABS).
-//  accuracy		- Modifier to craft accuracy when firing this "weapon"
+//  accuracy		- Modifier to craft accuracy when firing this weapon
 //	---------------------------------------------------------------------
 //
 //=========================================================================
