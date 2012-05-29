@@ -880,7 +880,7 @@ window popup_newinstallation_type
 {
 	{
 		pos			"264 262"
-		size		"496 247"
+		size		"496 287"
 		dragbutton	true
 		closebutton	true
 		background		"ui/popup_alpha_tile"
@@ -890,274 +890,37 @@ window popup_newinstallation_type
 	string type_label
 	{
 		string		"_Type"
-		pos			"86 50"
-		size		"140 20"
+		pos			"46 50"
 		font		"f_normal"
 	}
 	string buildtime_label
 	{
 		string		"_Build Time"
-		pos			"226 50"
-		size		"130 20"
-		contentalign	ALIGN_UR
+		pos			"206 50"
 		font		"f_normal"
 	}
 	string cost_label
 	{
 		string		"_Cost"
-		pos			"356 50"
-		size		"100 20"
-		contentalign	ALIGN_UR
+		pos			"366 50"
 		font		"f_normal"
 	}
 
-	image bt_highlight
+	text installations
 	{
-		src		"ui/popup_button_hl"
-		invis		true
-	}
-
-	image radar_icon
-	{
-		src		"geoscape/radar"
+		dataid		TEXT_LIST
 		pos			"46 78"
-	}
-	string radar_type
-	{
-		string		"_Radar tower"
-		pos			"86 78"
-		size		"170 18"
-		font		"f_small"
-	}
-	string radar_buildtime
-	{
-		string		*cvar:mn_installation_radartower_buildtime
-		pos			"256 78"
-		size		"100 20"
-		contentalign	ALIGN_UR
-		font		"f_small"
-	}
-	string radar_cost
-	{
-		string		*cvar:mn_installation_radartower_cost
-		pos			"356 78"
-		size		"100 20"
-		contentalign	ALIGN_UR
-		font		"f_small"
-	}
-	zone click_radar
-	{
-		pos			"30 78"
-		size		"440 20"
-		onMouseEnter			{ *node:root.bt_highlight@invis = false *node:root.bt_highlight@pos = "26 76" }
-		onMouseLeave			{ *node:root.bt_highlight@invis = true }
+		width		"400"
+		tabwidth	160
+		lineheight	30
+		color		"0 .78 0 1"
+		selectcolor	"1 1 1 1"
+		rows		"5"
+		mousefx		true
+		longlines	LONGLINES_PRETTYCHOP
 		onClick		{
-			*cvar:mn_installation_type = "radartower"
-			*cvar:mn_installation_timetobuild = *cvar:mn_installation_radartower_buildtime
-			cmd "ui_pop;"
-			cmd "mn_installation_select -1;"
+			cmd "ui_pop;mn_installation_click <lineselected>;"
 		}
-	}
-
-	image sam_icon
-	{
-		src		"geoscape/defence"
-		pos			"46 98"
-	}
-	string sam_type
-	{
-		string		"_SAM Site"
-		pos			"86 98"
-		size		"170 18"
-		font		"f_small"
-	}
-	string sam_buildtime
-	{
-		string		*cvar:mn_installation_samsite_buildtime
-		pos			"256 98"
-		size		"100 20"
-		contentalign	ALIGN_UR
-		font		"f_small"
-	}
-	string sam_cost
-	{
-		string		*cvar:mn_installation_samsite_cost
-		pos			"356 98"
-		size		"100 20"
-		contentalign	ALIGN_UR
-		font		"f_small"
-	}
-	zone click_sam
-	{
-		pos			"30 98"
-		size		"440 20"
-		onMouseEnter			{ *node:root.bt_highlight@invis = false *node:root.bt_highlight@pos = "26 96" }
-		onMouseLeave			{ *node:root.bt_highlight@invis = true }
-		onClick		{
-			*cvar:mn_installation_type = "samsite"
-			*cvar:mn_installation_timetobuild = *cvar:mn_installation_samsite_buildtime
-			cmd "ui_pop;"
-			cmd "mn_installation_select -1;"
-		}
-	}
-
-	image ufoyard_icon
-	{
-		src		"geoscape/ufoyard"
-		pos			"46 118"
-	}
-	string ufoyard_type
-	{
-		string		"_UFO Yard"
-		pos			"86 118"
-		size		"170 18"
-		font		"f_small"
-	}
-	string ufoyard_buildtime
-	{
-		string		*cvar:mn_installation_ufoyard_buildtime
-		pos			"256 118"
-		size		"100 20"
-		contentalign	ALIGN_UR
-		font		"f_small"
-	}
-	string ufoyard_cost
-	{
-		string		*cvar:mn_installation_ufoyard_cost
-		pos			"356 118"
-		size		"100 20"
-		contentalign	ALIGN_UR
-		font		"f_small"
-	}
-	zone click_ufoyard
-	{
-		pos			"30 118"
-		size		"440 20"
-		onMouseEnter			{ *node:root.bt_highlight@invis = false *node:root.bt_highlight@pos = "26 116" }
-		onMouseLeave			{ *node:root.bt_highlight@invis = true }
-		onClick		{
-			*cvar:mn_installation_type = "ufoyard"
-			*cvar:mn_installation_timetobuild = *cvar:mn_installation_ufoyard_buildtime
-			cmd "ui_pop;"
-			cmd "mn_installation_select -1;"
-		}
-	}
-
-	//
-	// Create a base
-	//
-
-	image base_icon
-	{
-		src		"geoscape/base"
-		pos			"46 138"
-	}
-
-	string base_type
-	{
-		string		"_Base"
-		pos			"86 138"
-		size		"170 18"
-		font		"f_small"
-	}
-
-	string base_buildtime
-	{
-		string		"_0 days"
-		pos			"256 138"
-		size		"100 20"
-		contentalign	ALIGN_UR
-		font		"f_small"
-	}
-	string base_cost
-	{
-		string		*cvar:mn_base_cost
-		pos			"356 138"
-		size		"100 20"
-		contentalign	ALIGN_UR
-		font		"f_small"
-	}
-	zone click_base
-	{
-		pos			"30 138"
-		size		"440 20"
-		onMouseEnter			{ *node:root.bt_highlight@invis = false *node:root.bt_highlight@pos = "26 136" }
-		onMouseLeave			{ *node:root.bt_highlight@invis = true }
-		onClick		{ cmd "ui_pop; mn_base_select -1;" }
-	}
-
-	image orbit_icon
-	{
-		src		"geoscape/orbit"
-		pos			"46 158"
-	}
-	string orbit_type
-	{
-		string		"_Orbital Rocket Launcher"
-		pos			"86 158"
-		size		"170 18"
-		font		"f_small"
-	}
-	string orbit_buildtime
-	{
-		string		*cvar:mn_installation_orbit_buildtime
-		pos			"256 158"
-		size		"100 20"
-		contentalign	ALIGN_UR
-		font		"f_small"
-	}
-	string orbit_cost
-	{
-		string		*cvar:mn_installation_orbit_cost
-		pos			"356 158"
-		size		"100 20"
-		contentalign	ALIGN_UR
-		font		"f_small"
-	}
-	zone click_orbit
-	{
-		pos			"30 158"
-		size		"440 20"
-		onMouseEnter			{ *node:root.bt_highlight@invis = false *node:root.bt_highlight@pos = "26 156" }
-		onMouseLeave			{ *node:root.bt_highlight@invis = true }
-		onClick		{
-			*cvar:mn_installation_type = "orbit"
-			*cvar:mn_installation_timetobuild = *cvar:mn_installation_orbit_buildtime
-			cmd "ui_pop;"
-			cmd "mn_installation_select -1;"
-		}
-	}
-
-	/* disabled zones - for tooltip */
-	zone disabled_installation
-	{
-		invis		true
-		pos			"30 78"
-		size		"440 60"
-		tooltip		"_Installation limit reached. Build more bases."
-	}
-	zone disabled_base
-	{
-		invis		true
-		pos			"30 138"
-		size		"440 20"
-		tooltip		"_Base limit reached."
-	}
-
-	confunc cp_activate_orbital_installation
-	{
-		*node:root.click_orbit@invis = true
-		*node:root.orbit_type@disabled = true
-		*node:root.orbit_buildtime@disabled = true
-		*node:root.orbit_cost@disabled = true
-	}
-
-	func cp_deactivate_orbital_installation
-	{
-		*node:root.click_orbit@invis = false
-		*node:root.orbit_type@disabled = false
-		*node:root.orbit_buildtime@disabled = false
-		*node:root.orbit_cost@disabled = false
 	}
 
 	//
@@ -1167,58 +930,13 @@ window popup_newinstallation_type
 	cmpPopupButton bt_close
 	{
 		string		"_Close"
-		pos			"297 188"
+		pos			"297 228"
 		onClick		{ cmd "ui_pop;" }
 	}
 
 	func onWindowOpened {
-		if ( *cvar:mn_base_count >= *cvar:mn_base_max ) {
-			*node:root.click_base@invis = true
-			*node:root.disabled_base@invis = false
-			*node:root.base_type@disabled = true
-			*node:root.base_buildtime@disabled = true
-			*node:root.base_cost@disabled = true
-		} else {
-			*node:root.click_base@invis = false
-			*node:root.disabled_base@invis = true
-			*node:root.base_type@disabled = false
-			*node:root.base_buildtime@disabled = false
-			*node:root.base_cost@disabled = false
-		}
-		if ( *cvar:mn_installation_count >= *cvar:mn_installation_max ) {
-			*node:root.click_ufoyard@invis = true
-			*node:root.disabled_installation@invis = false
-			*node:root.ufoyard_type@disabled = true
-			*node:root.ufoyard_buildtime@disabled = true
-			*node:root.ufoyard_cost@disabled = true
-			*node:root.click_sam@invis = true
-			*node:root.sam_type@disabled = true
-			*node:root.sam_buildtime@disabled = true
-			*node:root.sam_cost@disabled = true
-			*node:root.click_radar@invis = true
-			*node:root.radar_type@disabled = true
-			*node:root.radar_buildtime@disabled = true
-			*node:root.radar_cost@disabled = true
-			// TODO: only activate if researched
-			cmd "cp_activate_orbital_installation;"
-		} else {
-			*node:root.click_ufoyard@invis = false
-			*node:root.disabled_installation@invis = true
-			*node:root.ufoyard_type@disabled = false
-			*node:root.ufoyard_buildtime@disabled = false
-			*node:root.ufoyard_cost@disabled = false
-			*node:root.click_sam@invis = false
-			*node:root.sam_type@disabled = false
-			*node:root.sam_buildtime@disabled = false
-			*node:root.sam_cost@disabled = false
-			*node:root.click_radar@invis = false
-			*node:root.radar_type@disabled = false
-			*node:root.radar_buildtime@disabled = false
-			*node:root.radar_cost@disabled = false
-			call *node:root.cp_deactivate_orbital_installation
-		}
+		cmd "mn_installation_init;"
 	}
-
 }
 
 window popup_newinstallation
@@ -1324,19 +1042,6 @@ window popup_newinstallation
 
 	func onWindowOpened
 	{
-		if ( *cvar:mn_installation_type eq "radartower" ) {
-			*node:root.title@string = "_New radar tower"
-			*node:root.cost@string = *cvar:mn_installation_radartower_cost
-		} elif ( *cvar:mn_installation_type eq "samsite" ) {
-			*node:root.title@string = "_New SAM site"
-			*node:root.cost@string = *cvar:mn_installation_samsite_cost
-		} elif ( *cvar:mn_installation_type eq "ufoyard" ) {
-			*node:root.title@string = "_New UFO yard"
-			*node:root.cost@string = *cvar:mn_installation_ufoyard_cost
-		} elif ( *cvar:mn_installation_type eq "orbit" ) {
-			*node:root.title@string = "_New Orbital Rocket Launcher"
-			*node:root.cost@string = *cvar:mn_installation_orbit_cost
-		}
 	}
 }
 
@@ -1408,10 +1113,6 @@ window popup_installationstatus
 	{
 		cmd "game_timestop;"
 
-		/* samsite has own menu */
-		if ( *cvar:mn_installation_type eq "samsite" ) {
-			cmd "ui_pop; ui_push basedefence;"
-		}
 		/* Show/Hide time-to-build notification and manage button  */
 		if ( *cvar:mn_installation_timetobuild eq "-" ) {
 			*node:root.buildtime_label@invis = true

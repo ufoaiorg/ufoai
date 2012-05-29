@@ -335,6 +335,8 @@ static const value_t installation_vals[] = {
 	{"max_batteries", V_INT, offsetof(installationTemplate_t, parameters.maxBatteries), MEMBER_SIZEOF(installationTemplate_t, parameters.maxBatteries)},
 	{"max_ufo_stored", V_INT, offsetof(installationTemplate_t, parameters.maxUFOsStored), MEMBER_SIZEOF(installationTemplate_t, parameters.maxUFOsStored)},
 	{"max_damage", V_INT, offsetof(installationTemplate_t, maxDamage), MEMBER_SIZEOF(installationTemplate_t, maxDamage)},
+	{"cost", V_INT, offsetof(installationTemplate_t, cost), MEMBER_SIZEOF(installationTemplate_t, cost)},
+	{"buildtime", V_INT, offsetof(installationTemplate_t, buildTime), MEMBER_SIZEOF(installationTemplate_t, buildTime)},
 	{"model", V_HUNK_STRING, offsetof(installationTemplate_t, model), 0},
 	{"image", V_HUNK_STRING, offsetof(installationTemplate_t, image), 0},
 
@@ -400,29 +402,7 @@ void INS_ParseInstallations (const char *name, const char **text)
 		/* check for some standard values */
 		if (!Com_ParseBlockToken(name, text, installation, installation_vals, cp_campaignPool, token)) {
 			/* other values */
-			if (Q_streq(token, "cost")) {
-				char cvarname[MAX_VAR] = "mn_installation_";
-
-				Q_strcat(cvarname, installation->id, sizeof(cvarname));
-				Q_strcat(cvarname, "_cost", sizeof(cvarname));
-
-				token = Com_EParse(text, errhead, name);
-				if (!*text)
-					return;
-				installation->cost = atoi(token);
-
-				Cvar_Set(cvarname, va(_("%d c"), atoi(token)));
-			} else if (Q_streq(token, "buildtime")) {
-				char cvarname[MAX_VAR];
-
-				token = Com_EParse(text, errhead, name);
-				if (!*text)
-					return;
-				installation->buildTime = atoi(token);
-
-				Com_sprintf(cvarname, sizeof(cvarname), "mn_installation_%s_buildtime", installation->id);
-				Cvar_Set(cvarname, va(ngettext("%d day", "%d days", atoi(token)), atoi(token)));
-			} else if (Q_streq(token, "type")) {
+			if (Q_streq(token, "type")) {
 				token = Com_EParse(text, errhead, name);
 				if (!*text)
 					return;

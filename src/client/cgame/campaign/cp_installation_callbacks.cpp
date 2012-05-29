@@ -37,9 +37,8 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
  * @brief Sets the title of the installation to a cvar to prepare the rename menu.
  * @note it also assigns description text
  */
-static void INS_SetInstallationTitle (void)
+static void INS_SetInstallationTitle (installationType_t type)
 {
-	const installationType_t type = INS_GetType(Cvar_GetString("mn_installation_type"));
 	const installationTemplate_t *insTemp = INS_GetInstallationTemplateByType(type);
 	char insName[MAX_VAR];
 
@@ -52,54 +51,53 @@ static void INS_SetInstallationTitle (void)
 }
 
 /**
- * @brief Select an installation when clicking on it on geoscape, or build a new installation.
- * @param[in] installation If this is @c NULL we want to build a new installation
+ * @brief Select an installation when clicking on it on geoscape
+ * @param[in] installation The installation to select
  * @note This is (and should be) the only place where installationCurrent is set
  * to a value that is not @c NULL
  */
 void INS_SelectInstallation (installation_t *installation)
 {
-	/* set up a new installation */
-	if (!installation) {
-		/* if player hit the "create base" button while creating base mode is enabled
-		 * that means that player wants to quit this mode */
-		if (ccs.mapAction == MA_NEWINSTALLATION || INS_GetCount() >= B_GetInstallationLimit()) {
-			MAP_ResetAction();
-			return;
-		} else {
-			ccs.mapAction = MA_NEWINSTALLATION;
+	const int timetobuild = std::max(0, installation->installationTemplate->buildTime - (ccs.date.day - installation->buildStart));
 
-			/* show radar overlay (if not already displayed) */
-			if (!MAP_IsRadarOverlayActivated())
-				MAP_SetOverlay("radar");
-
-			INS_SetInstallationTitle();
-		}
+	Com_DPrintf(DEBUG_CLIENT, "INS_SelectInstallation: select installation with id %i\n", installation->idx);
+	ccs.mapAction = MA_NONE;
+	if (installation->installationStatus == INSTALLATION_WORKING) {
+		Cvar_Set("mn_installation_timetobuild", "-");
 	} else {
-		const int timetobuild = std::max(0, installation->installationTemplate->buildTime - (ccs.date.day - installation->buildStart));
-
-		Com_DPrintf(DEBUG_CLIENT, "INS_SelectInstallation: select installation with id %i\n", installation->idx);
-		ccs.mapAction = MA_NONE;
-		if (installation->installationStatus == INSTALLATION_WORKING) {
-			Cvar_Set("mn_installation_timetobuild", "-");
-		} else {
-			Cvar_Set("mn_installation_timetobuild", va(ngettext("%d day", "%d days", timetobuild), timetobuild));
-		}
-		INS_SetCurrentSelectedInstallation(installation);
-
-		switch (installation->installationTemplate->type) {
-		case INSTALLATION_UFOYARD:
-			cgi->UI_PushWindow("popup_ufoyards");
-			break;
-		case INSTALLATION_DEFENCE:
-			cgi->UI_PushWindow("basedefence");
-			break;
-		case INSTALLATION_RADAR:
-		default:
-			cgi->UI_PushWindow("popup_installationstatus");
-			break;
-		}
+		Cvar_Set("mn_installation_timetobuild", va(ngettext("%d day", "%d days", timetobuild), timetobuild));
 	}
+	INS_SetCurrentSelectedInstallation(installation);
+
+	switch (installation->installationTemplate->type) {
+	case INSTALLATION_UFOYARD:
+		cgi->UI_PushWindow("popup_ufoyards");
+		break;
+	case INSTALLATION_DEFENCE:
+		cgi->UI_PushWindow("basedefence");
+		break;
+	default:
+		cgi->UI_PushWindow("popup_installationstatus");
+		break;
+	}
+}
+
+/**
+ * @brief Returns the installation Template for a given installation ID.
+ * @param[in] id ID of the installation template to find.
+ * @return corresponding installation Template, @c NULL if not found.
+ */
+static const installationTemplate_t* INS_GetInstallationTemplateByID (const char *id)
+{
+	int idx;
+
+	for (idx = 0; idx < ccs.numInstallationTemplates; idx++) {
+		const installationTemplate_t *t = &ccs.installationTemplates[idx];
+		if (Q_streq(t->id, id))
+			return t;
+	}
+
+	return NULL;
 }
 
 /**
@@ -118,8 +116,7 @@ static void INS_BuildInstallation_f (void)
 	if (B_GetInstallationLimit() <= INS_GetCount())
 		return;
 
-	const installationType_t type = INS_GetType(Cmd_Argv(1));
-	installationTemplate = INS_GetInstallationTemplateByType(type);
+	installationTemplate = INS_GetInstallationTemplateByID(Cmd_Argv(1));
 	if (!installationTemplate) {
 		Com_Printf("The installation type %s passed for %s is not valid.\n", Cmd_Argv(1), Cmd_Argv(0));
 		return;
@@ -142,8 +139,10 @@ static void INS_BuildInstallation_f (void)
 			Com_sprintf(cp_messageBuffer, sizeof(cp_messageBuffer), _("A new installation has been built: %s"), installation->name);
 		MSO_CheckAddNewMessage(NT_INSTALLATION_BUILDSTART, _("Installation building"), cp_messageBuffer, MSG_CONSTRUCTION);
 	} else {
-		if (MAP_IsRadarOverlayActivated())
-			MAP_SetOverlay("radar");
+		if (installationTemplate->type == INSTALLATION_RADAR) {
+			if (MAP_IsRadarOverlayActivated())
+					MAP_SetOverlay("radar");
+		}
 		if (ccs.mapAction == MA_NEWINSTALLATION)
 			ccs.mapAction = MA_NONE;
 
@@ -168,7 +167,8 @@ static void INS_SelectInstallation_f (void)
 	installationID = atoi(Cmd_Argv(1));
 
 	installation = INS_GetByIDX(installationID);
-	INS_SelectInstallation(installation);
+	if (installation != NULL)
+		INS_SelectInstallation(installation);
 }
 
 /**
@@ -265,6 +265,62 @@ static void INS_FillUFOYardData_f (void)
 		}
 	}
 }
+
+static void INS_Init_f (void)
+{
+	linkedList_t *list = NULL;
+	int i;
+	for (i = 0; i < ccs.numInstallationTemplates; i++) {
+		const installationTemplate_t *tpl = &ccs.installationTemplates[i];
+		if (tpl->tech == NULL || RS_IsResearched_ptr(tpl->tech)) {
+			LIST_AddString(&list, va(_("%s\t%i\t%i c"), tpl->name, tpl->buildTime, tpl->cost));
+		}
+	}
+
+	LIST_AddString(&list, va(_("Base\t-\t%i c"), ccs.curCampaign->basecost));
+
+	cgi->UI_RegisterLinkedListText(TEXT_LIST, list);
+}
+
+static void INS_Click_f (void)
+{
+	if (Cmd_Argc() < 2)
+		return;
+
+	int index = atoi(Cmd_Argv(1));
+
+	Com_Printf("selected index: %i\n", index);
+
+	for (int i = 0; i < ccs.numInstallationTemplates; i++) {
+		const installationTemplate_t *tpl = &ccs.installationTemplates[i];
+		if (tpl->tech == NULL || RS_IsResearched_ptr(tpl->tech)) {
+			if (index-- == 0) {
+				/* if player hit the "create base" button while creating base mode is enabled
+				 * that means that player wants to quit this mode */
+				if (ccs.mapAction == MA_NEWINSTALLATION || INS_GetCount() >= B_GetInstallationLimit()) {
+					MAP_ResetAction();
+					return;
+				} else {
+					ccs.mapAction = MA_NEWINSTALLATION;
+
+					/* show radar overlay (if not already displayed) */
+					if (tpl->type == INSTALLATION_RADAR && !MAP_IsRadarOverlayActivated())
+						MAP_SetOverlay("radar");
+
+					INS_SetInstallationTitle(tpl->type);
+					Cvar_Set("mn_installation_type", tpl->id);
+				}
+				/* select the installation type */
+				return;
+			}
+		}
+	}
+	if (index == 0) {
+		/* base is the last */
+		B_SelectBase(NULL);
+	}
+}
+
 void INS_InitCallbacks (void)
 {
 	Cmd_AddCommand("mn_installation_select", INS_SelectInstallation_f, "Parameter is the installation index. -1 will build a new one.");
@@ -272,6 +328,8 @@ void INS_InitCallbacks (void)
 	Cmd_AddCommand("mn_installation_changename", INS_ChangeInstallationName_f, "Called after editing the cvar installation name");
 	Cmd_AddCommand("mn_installation_destroy", INS_DestroyInstallation_f, "Destroys an installation");
 	Cmd_AddCommand("mn_installation_update_max_count", INS_UpdateInstallationLimit_f, "Updates the installation count limit");
+	Cmd_AddCommand("mn_installation_init", INS_Init_f, "Initializes the installation menu");
+	Cmd_AddCommand("mn_installation_click", INS_Click_f, "Select the installation type to build");
 
 	Cmd_AddCommand("ui_fillufoyards", INS_FillUFOYardData_f, "Fills UFOYard UI with data");
 
