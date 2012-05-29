@@ -35,7 +35,7 @@ mail prolog
 	to "_mail_to_base_commander"
 	subject "_Good Luck"
 	body "_mail_prolog"
-	icon icons/mail_un
+	icon "icons/mail_un"
 }
 
 mail alienbreathing
@@ -45,7 +45,7 @@ mail alienbreathing
 	subject "_Alien died"
 	body "_mail_stunned_alien_died"
 	model "characters/navarre"
-	icon icons/mail_un
+	icon "icons/mail_un"
 }
 
 mail alien_base_discovered
@@ -55,5 +55,5 @@ mail alien_base_discovered
 	subject "_Alien Base Discovered"
 	body "_mail_alien_base_discovered"
 	model "characters/howard"
-	icon icons/mail_event
+	icon "icons/mail_event"
 }
