@@ -125,12 +125,13 @@ up_chapters main
 tech rs_laser
 {
 	name "_Continuous Wave Laser Operation"
-	type	tech
+	type	"tech"
 	up_chapter	tech
 
 	description {
 		default "_laser_txt"
 	}
+
 	pre_description {
 		default "_laser_pre_txt"
 	}
@@ -140,7 +141,7 @@ tech rs_laser
 		from	"_mail_from_paul_navarre"
 		to		"_mail_to_base_commander"
 		// subject	defined by "name"
-		icon	icons/mail_tech
+		icon	"icons/mail_tech"
 	}
 
 	mail
@@ -148,17 +149,17 @@ tech rs_laser
 		from	"_mail_from_paul_navarre"
 		to		"_mail_to_base_commander"
 		// subject	defined by "name"
-		icon	icons/mail_tech
+		icon	"icons/mail_tech"
 	}
 
 	time	6000
-	image	techs/continuous_wave_laser_operation
+	image	"techs/continuous_wave_laser_operation"
 }
 
 tech rs_baselaser
 {
 	name "_Base-Defence Laser Turret"
-	type	tech
+	type	"tech"
 	up_chapter	equipment
 
 	description {
@@ -173,7 +174,7 @@ tech rs_baselaser
 		from	"_mail_from_paul_navarre"
 		to		"_mail_to_base_commander"
 		// subject	defined by "name"
-		icon	icons/mail_tech
+		icon	"icons/mail_tech"
 	}
 
 	mail
@@ -181,7 +182,7 @@ tech rs_baselaser
 		from	"_mail_from_paul_navarre"
 		to		"_mail_to_base_commander"
 		// subject	defined by "name"
-		icon	icons/mail_tech
+		icon	"icons/mail_tech"
 	}
 
 	require_AND
@@ -196,7 +197,7 @@ tech rs_baselaser
 
 tech rs_baselaser_ammo
 {
-	type		tech
+	type		"tech"
 	/* this ammo is virtual, shouldn't be shown anywhere */
 	name		"D-F Tank"
 	provides	baselaser_ammo
@@ -207,7 +208,7 @@ tech rs_baselaser_ammo
 tech rs_antimatter
 {
 	name		"_Antimatter"
-	type		tech
+	type		"tech"
 	up_chapter	tech
 
 	description {
@@ -224,7 +225,7 @@ tech rs_antimatter
 		from	"_mail_from_paul_navarre"
 		to		"_mail_to_base_commander"
 		// subject	defined by "name"
-		icon	icons/mail_tech
+		icon	"icons/mail_tech"
 	}
 
 	mail
@@ -232,7 +233,7 @@ tech rs_antimatter
 		from	"_mail_from_paul_navarre"
 		to		"_mail_to_base_commander"
 		// subject	defined by "name"
-		icon	icons/mail_tech
+		icon	"icons/mail_tech"
 	}
 
 	require_AND
@@ -241,12 +242,12 @@ tech rs_antimatter
 	}
 
 	time 6000
-	image	techs/antimatter
+	image	"techs/antimatter"
 }
 
 tech rs_item_antimatter
 {
-	type		weapon
+	type		"weapon"
 	name		"_Antimatter"
 	description {
 		default "_antimatter_txt"
@@ -266,7 +267,7 @@ tech rs_item_antimatter
 tech rs_alien_live
 {
 	name	"_Live Alien"
-	type	tech
+	type	"tech"
 	up_chapter	aliens
 
 	description {
@@ -282,7 +283,7 @@ tech rs_alien_live
 		to		"_mail_to_base_commander"
 		// subject	defined by "name"
 		model	"characters/connor"
-		icon	icons/mail_alien
+		icon	"icons/mail_alien"
 	}
 
 	mail
@@ -291,7 +292,7 @@ tech rs_alien_live
 		to		"_mail_to_base_commander"
 		// subject	defined by "name"
 		model	"characters/connor"
-		icon	icons/mail_alien
+		icon	"icons/mail_alien"
 	}
 
 	require_AND
@@ -300,13 +301,13 @@ tech rs_alien_live
 	}
 
 	time	4000
-	image	techs/taman
+	image	"techs/taman"
 }
 
 tech rs_alien_breathing
 {
 	name		"_Alien Breathing Apparatus"
-	type		tech
+	type		"tech"
 	up_chapter	aliens
 
 	description {
@@ -322,7 +323,7 @@ tech rs_alien_breathing
 		to		"_mail_to_base_commander"
 		// subject	defined by "name"
 		model	"characters/connor"
-		icon	icons/mail_alien
+		icon	"icons/mail_alien"
 	}
 
 	mail
@@ -331,7 +332,7 @@ tech rs_alien_breathing
 		to		"_mail_to_base_commander"
 		// subject	defined by "name"
 		model	"characters/connor"
-		icon	icons/mail_alien
+		icon	"icons/mail_alien"
 	}
 
 	require_OR
@@ -343,13 +344,13 @@ tech rs_alien_breathing
 	}
 
 	time		2500
-	image		techs/alien_breathing
+	image		"techs/alien_breathing"
 }
 
 tech rs_alien_mind
 {
 	name	"_The Alien Mind"
-	type	tech
+	type	"tech"
 	up_chapter	threat
 
 	description {
@@ -365,7 +366,7 @@ tech rs_alien_mind
 		to		"_mail_to_base_commander"
 		// subject	defined by "name"
 		model	"characters/connor"
-		icon	icons/mail_alien
+		icon	"icons/mail_alien"
 	}
 
 	mail
@@ -374,7 +375,7 @@ tech rs_alien_mind
 		to		"_mail_to_base_commander"
 		// subject	defined by "name"
 		model	"characters/connor"
-		icon	icons/mail_alien
+		icon	"icons/mail_alien"
 	}
 
 	require_AND
@@ -389,7 +390,7 @@ tech rs_alien_mind
 tech rs_alien_oddbehaviour
 {
 	name		"_Odd Behaviour"
-	type		tech
+	type		"tech"
 	up_chapter	threat
 
 	description {
@@ -405,7 +406,7 @@ tech rs_alien_oddbehaviour
 		to		"_mail_to_base_commander"
 		// subject	defined by "name"
 		model	"characters/connor"
-		icon	icons/mail_alien
+		icon	"icons/mail_alien"
 	}
 
 	mail
@@ -414,7 +415,7 @@ tech rs_alien_oddbehaviour
 		to		"_mail_to_base_commander"
 		// subject	defined by "name"
 		model	"characters/connor"
-		icon	icons/mail_alien
+		icon	"icons/mail_alien"
 	}
 
 	require_AND
@@ -429,7 +430,7 @@ tech rs_alien_oddbehaviour
 tech rs_alien_communication
 {
 	name		"_Alien Communication"
-	type		tech
+	type		"tech"
 	up_chapter	threat
 
 	description {
@@ -445,7 +446,7 @@ tech rs_alien_communication
 		to	"_mail_to_base_commander"
 		// subject	defined by "name"
 		model	"characters/connor"
-		icon	icons/mail_alien
+		icon	"icons/mail_alien"
 	}
 
 	mail
@@ -454,7 +455,7 @@ tech rs_alien_communication
 		to	"_mail_to_base_commander"
 		// subject	defined by "name"
 		model	"characters/connor"
-		icon	icons/mail_alien
+		icon	"icons/mail_alien"
 	}
 
 	require_AND
@@ -467,7 +468,7 @@ tech rs_alien_communication
 
 tech rs_alien_base
 {
-	type		tech
+	type		"tech"
 	up_chapter	threat
 	name		"_Alien base"
 	description {
@@ -484,17 +485,17 @@ tech rs_alien_base
 		from	"_mail_from_paul_navarre"
 		to		"_mail_to_base_commander"
 		// subject	defined by "name"
-		icon	icons/mail_tech
+		icon	"icons/mail_tech"
 	}
 
 	time 0
-	image	techs/alien_base
+	image	"techs/alien_base"
 }
 
 tech rs_universal_serum
 {
 	name		"_The Universal Serum"
-	type		tech
+	type		"tech"
 	up_chapter	threat
 
 	description {
@@ -510,7 +511,7 @@ tech rs_universal_serum
 		to	"_mail_to_base_commander"
 		// subject	defined by "name"
 		model	"characters/connor"
-		icon	icons/mail_alien
+		icon	"icons/mail_alien"
 	}
 
 	mail
@@ -519,7 +520,7 @@ tech rs_universal_serum
 		to	"_mail_to_base_commander"
 		// subject	defined by "name"
 		model	"characters/connor"
-		icon	icons/mail_alien
+		icon	"icons/mail_alien"
 	}
 
 	require_AND
@@ -533,7 +534,7 @@ tech rs_universal_serum
 tech rs_alien_origins
 {
 	name		"_Alien Origins"
-	type		tech
+	type		"tech"
 	up_chapter	threat
 
 	description {
@@ -549,7 +550,7 @@ tech rs_alien_origins
 		to	"_mail_to_base_commander"
 		// subject	defined by "name"
 		model	"characters/falkland"
-		icon	icons/mail_intelligence
+		icon	"icons/mail_intelligence"
 	}
 
 	mail
@@ -558,7 +559,7 @@ tech rs_alien_origins
 		to	"_mail_to_base_commander"
 		// subject	defined by "name"
 		model	"characters/falkland"
-		icon	icons/mail_intelligence
+		icon	"icons/mail_intelligence"
 	}
 
 	time		5700
@@ -568,7 +569,7 @@ tech rs_alien_origins
 tech rs_alien_ufo_theory
 {
 	name		"_UFO Theory"
-	type		tech
+	type		"tech"
 	up_chapter	crafts
 
 	description {
@@ -583,7 +584,7 @@ tech rs_alien_ufo_theory
 		from	"_mail_from_paul_navarre"
 		to	"_mail_to_base_commander"
 		// subject	defined by "name"
-		icon	icons/mail_tech
+		icon	"icons/mail_tech"
 	}
 
 	mail
@@ -591,7 +592,7 @@ tech rs_alien_ufo_theory
 		from	"_mail_from_paul_navarre"
 		to	"_mail_to_base_commander"
 		// subject	defined by "name"
-		icon	icons/mail_tech
+		icon	"icons/mail_tech"
 	}
 
 	require_OR
@@ -617,7 +618,7 @@ tech rs_alien_ufo_theory
 
 tech rs_weapon_pistol
 {
-	type	weapon
+	type	"weapon"
 	up_chapter	equipment
 	description {
 		default "_pistol_txt"
@@ -636,7 +637,7 @@ tech rs_weapon_pistol
 
 tech rs_weapon_pistol_ammo
 {
-	type	weapon
+	type	"weapon"
 	up_chapter	equipment
 	description {
 		default "_pistol_mag_txt"
@@ -657,7 +658,7 @@ tech rs_weapon_pistol_ammo
 // Machine Pistol
 tech rs_weapon_pistol2
 {
-	type	weapon
+	type	"weapon"
 	up_chapter	equipment
 
 	description {
@@ -677,7 +678,7 @@ tech rs_weapon_pistol2
 
 tech rs_weapon_pistol2_ammo
 {
-	type	weapon
+	type	"weapon"
 	up_chapter	equipment
 	description {
 		default "_pistol2_mag_txt"
@@ -697,7 +698,7 @@ tech rs_weapon_pistol2_ammo
 
 tech rs_weapon_vhs
 {
-	type	weapon
+	type	"weapon"
 	up_chapter	equipment
 	description {
 		default "_vhs_assault_txt"
@@ -714,7 +715,7 @@ tech rs_weapon_vhs
 
 tech rs_weapon_assault
 {
-	type	weapon
+	type	"weapon"
 	up_chapter	equipment
 	description {
 		default "_assault_txt"
@@ -732,7 +733,7 @@ tech rs_weapon_assault
 
 tech rs_weapon_assault_ammo
 {
-	type	weapon
+	type	"weapon"
 	up_chapter	equipment
 	description {
 		default "_assault_mag_txt"
@@ -751,7 +752,7 @@ tech rs_weapon_assault_ammo
 
 tech rs_weapon_machinegun
 {
-	type	weapon
+	type	"weapon"
 	up_chapter	equipment
 	description {
 		default "_machinegun_txt"
@@ -769,7 +770,7 @@ tech rs_weapon_machinegun
 
 tech rs_weapon_machinegun_ammo
 {
-	type	weapon
+	type	"weapon"
 	up_chapter	equipment
 	description {
 		default "_machinegun_mag_txt"
@@ -788,7 +789,7 @@ tech rs_weapon_machinegun_ammo
 
 tech rs_weapon_rpg
 {
-	type	weapon
+	type	"weapon"
 	up_chapter	equipment
 	description {
 		default "_rpg_txt"
@@ -807,7 +808,7 @@ tech rs_weapon_rpg
 
 tech rs_weapon_rpg_ammo
 {
-	type	weapon
+	type	"weapon"
 	up_chapter	equipment
 	description {
 		default "_rpg_ammo_txt"
@@ -827,7 +828,7 @@ tech rs_weapon_rpg_ammo
 
 tech rs_weapon_rpg_incendiary_ammo
 {
-	type	weapon
+	type	"weapon"
 	up_chapter	equipment
 	description {
 		default "_rpg_incendiary_ammo_txt"
@@ -848,7 +849,7 @@ tech rs_weapon_rpg_incendiary_ammo
 tech rs_weapon_xaw95
 {
 	// Note: Multiplayer only
-	type	weapon
+	type	"weapon"
 	up_chapter	equipment
 	description {
 		default "_xaw95_txt"
@@ -865,7 +866,7 @@ tech rs_weapon_xaw95
 tech rs_weapon_xaw95_ammo
 {
 	// Note: Multiplayer only
-	type	weapon
+	type	"weapon"
 	up_chapter	equipment
 
 	redirect	rs_weapon_xaw95
@@ -878,7 +879,7 @@ tech rs_weapon_xaw95_ammo
 // only for in-mission spawning, not produceable or buyable
 tech rs_weapon_bombkit1
 {
-	type	weapon
+	type	"weapon"
 	up_chapter	equipment
 	description {
 		default "_bombkit1_txt"
@@ -896,7 +897,7 @@ tech rs_weapon_bombkit1
 // only for in-mission spawning, not produceable or buyable
 tech rs_weapon_bombkit2
 {
-	type	weapon
+	type	"weapon"
 	up_chapter	equipment
 	description {
 		default "_bombkit2_txt"
@@ -914,7 +915,7 @@ tech rs_weapon_bombkit2
 tech rs_weapon_chaingun
 {
 	// Note: Multiplayer only
-	type	weapon
+	type	"weapon"
 	up_chapter	equipment
 	description {
 		default "_chaingun_txt"
@@ -936,7 +937,7 @@ tech rs_weapon_chaingun
 tech rs_weapon_chaingun_ammo
 {
 	// Note: Multiplayer only
-	type	weapon
+	type	"weapon"
 	up_chapter	equipment
 
 	redirect	rs_weapon_chaingun
@@ -949,7 +950,7 @@ tech rs_weapon_chaingun_ammo
 tech rs_weapon_shotgun
 {
 	// Note: Multiplayer only
-	type	weapon
+	type	"weapon"
 	up_chapter	equipment
 	description {
 		default "_shotgun_txt"
@@ -970,7 +971,7 @@ tech rs_weapon_shotgun
 tech rs_weapon_shotgun_ammo
 {
 	// Note: Multiplayer only
-	type	weapon
+	type	"weapon"
 	up_chapter	equipment
 
 	redirect	rs_weapon_shotgun
@@ -989,7 +990,7 @@ tech rs_weapon_shotgun_ammo
 tech rs_weapon_bolterrifle
 {
 	name	"_Electromagnetic Rifle"
-	type	weapon
+	type	"weapon"
 	up_chapter	equipment
 	delay 1 // 1 day == 24 hour
 
@@ -1005,7 +1006,7 @@ tech rs_weapon_bolterrifle
 		from	"_mail_from_paul_navarre"
 		to		"_mail_to_base_commander"
 		// subject	defined by "name"
-		icon	icons/mail_tech
+		icon	"icons/mail_tech"
 	}
 
 	mail
@@ -1013,7 +1014,7 @@ tech rs_weapon_bolterrifle
 		from	"_mail_from_paul_navarre"
 		to		"_mail_to_base_commander"
 		// subject	defined by "name"
-		icon	icons/mail_tech
+		icon	"icons/mail_tech"
 	}
 
 	require_AND
@@ -1029,7 +1030,7 @@ tech rs_weapon_bolterrifle
 tech rs_weapon_bolterrifle_ammo
 {
 	name	"_Electromagnetic Rifle Magazine"
-	type	weapon
+	type	"weapon"
 	up_chapter	equipment
 
 	redirect	rs_weapon_bolterrifle
@@ -1046,7 +1047,7 @@ tech rs_weapon_bolterrifle_ammo
 
 tech rs_weapon_combatknife
 {
-	type	weapon
+	type	"weapon"
 	up_chapter	equipment
 	description {
 		default "_combatknife_txt"
@@ -1066,7 +1067,7 @@ tech rs_weapon_combatknife
 tech rs_weapon_monoknife
 {
 	name	"_Monomolecular Blades"
-	type	weapon
+	type	"weapon"
 	up_chapter	equipment
 
 	description {
@@ -1081,7 +1082,7 @@ tech rs_weapon_monoknife
 		from	"_mail_from_paul_navarre"
 		to		"_mail_to_base_commander"
 		// subject	defined by "name"
-		icon	icons/mail_tech
+		icon	"icons/mail_tech"
 	}
 
 	mail
@@ -1089,7 +1090,7 @@ tech rs_weapon_monoknife
 		from	"_mail_from_paul_navarre"
 		to		"_mail_to_base_commander"
 		// subject	defined by "name"
-		icon	icons/mail_tech
+		icon	"icons/mail_tech"
 	}
 
 	require_AND
@@ -1112,7 +1113,7 @@ tech rs_weapon_monoknife
 
 tech rs_weapon_flamer
 {
-	type	weapon
+	type	"weapon"
 	up_chapter	equipment
 	description {
 		default "_flamer_txt"
@@ -1131,7 +1132,7 @@ tech rs_weapon_flamer
 
 tech rs_weapon_flamer_ammo
 {
-	type	weapon
+	type	"weapon"
 	up_chapter	equipment
 	description {
 		default "_flamer_mag_txt"
@@ -1150,7 +1151,7 @@ tech rs_weapon_flamer_ammo
 
 tech rs_weapon_flashbang
 {
-	type	weapon
+	type	"weapon"
 	up_chapter	equipment
 	description {
 		default "_flashbang_txt"
@@ -1169,7 +1170,7 @@ tech rs_weapon_flashbang
 
 tech rs_weapon_fraggren
 {
-	type	weapon
+	type	"weapon"
 	up_chapter	equipment
 	description {
 		default "_fraggren_txt"
@@ -1188,7 +1189,7 @@ tech rs_weapon_fraggren
 
 tech rs_weapon_incgren
 {
-	type	weapon
+	type	"weapon"
 	up_chapter	equipment
 	description {
 		default "_incgren_txt"
@@ -1207,7 +1208,7 @@ tech rs_weapon_incgren
 
 tech rs_weapon_grenl
 {
-	type	weapon
+	type	"weapon"
 	up_chapter	equipment
 	description {
 		default "_grenl_txt"
@@ -1225,7 +1226,7 @@ tech rs_weapon_grenl
 
 tech rs_weapon_grenl_ammo
 {
-	type	weapon
+	type	"weapon"
 	up_chapter	equipment
 	description {
 		default "_grenl_ammo_txt"
@@ -1244,7 +1245,7 @@ tech rs_weapon_grenl_ammo
 
 tech rs_weapon_grenl_fle_ammo
 {
-	type	weapon
+	type	"weapon"
 	up_chapter	equipment
 	description {
 		default "_grenl_fle_ammo_txt"
@@ -1263,7 +1264,7 @@ tech rs_weapon_grenl_fle_ammo
 
 tech rs_weapon_grenl_incendiary_ammo
 {
-	type	weapon
+	type	"weapon"
 	up_chapter	equipment
 	description {
 		default "_grenl_incendiary_ammo_txt"
@@ -1283,7 +1284,7 @@ tech rs_weapon_grenl_incendiary_ammo
 tech rs_weapon_grenl_plasma_ammo
 {
 	name	"_Plasma And The Grenade Launcher"
-	type	weapon
+	type	"weapon"
 	up_chapter	equipment
 
 	description {
@@ -1298,7 +1299,7 @@ tech rs_weapon_grenl_plasma_ammo
 		from	"_mail_from_paul_navarre"
 		to		"_mail_to_base_commander"
 		// subject	defined by "name"
-		icon	icons/mail_tech
+		icon	"icons/mail_tech"
 	}
 
 	mail
@@ -1306,7 +1307,7 @@ tech rs_weapon_grenl_plasma_ammo
 		from	"_mail_from_paul_navarre"
 		to		"_mail_to_base_commander"
 		// subject	defined by "name"
-		icon	icons/mail_tech
+		icon	"icons/mail_tech"
 	}
 
 	require_AND
@@ -1322,7 +1323,7 @@ tech rs_weapon_grenl_plasma_ammo
 
 tech rs_irgoggles
 {
-	type	weapon
+	type	"weapon"
 
 	up_chapter	equipment
 	description {
@@ -1342,7 +1343,7 @@ tech rs_irgoggles
 tech rs_weapon_kerrblade
 {
 	name	"_Alien Artifact - Kerrblade"
-	type	weapon
+	type	"weapon"
 	up_chapter	artifacts
 
 	description {
@@ -1357,7 +1358,7 @@ tech rs_weapon_kerrblade
 		from	"_mail_from_paul_navarre"
 		to		"_mail_to_base_commander"
 		// subject	defined by "name"
-		icon	icons/mail_artifact
+		icon	"icons/mail_artifact"
 	}
 
 	mail
@@ -1365,7 +1366,7 @@ tech rs_weapon_kerrblade
 		from	"_mail_from_paul_navarre"
 		to		"_mail_to_base_commander"
 		// subject	defined by "name"
-		icon	icons/mail_artifact
+		icon	"icons/mail_artifact"
 	}
 
 	require_AND
@@ -1387,7 +1388,7 @@ tech rs_weapon_kerrblade
 
 tech rs_weapon_laserpistol
 {
-	type	weapon
+	type	"weapon"
 	up_chapter	equipment
 
 	description {
@@ -1402,7 +1403,7 @@ tech rs_weapon_laserpistol
 		from	"_mail_from_paul_navarre"
 		to		"_mail_to_base_commander"
 		// subject	defined by "name" (which in turn is parsed from weapon*.ufo files)
-		icon	icons/mail_tech
+		icon	"icons/mail_tech"
 	}
 
 	mail
@@ -1410,7 +1411,7 @@ tech rs_weapon_laserpistol
 		from	"_mail_from_paul_navarre"
 		to		"_mail_to_base_commander"
 		// subject	defined by "name"
-		icon	icons/mail_tech
+		icon	"icons/mail_tech"
 	}
 
 	require_AND
@@ -1425,7 +1426,7 @@ tech rs_weapon_laserpistol
 
 tech rs_weapon_laserrifle
 {
-	type	weapon
+	type	"weapon"
 	up_chapter	equipment
 
 	description {
@@ -1440,7 +1441,7 @@ tech rs_weapon_laserrifle
 		from	"_mail_from_paul_navarre"
 		to		"_mail_to_base_commander"
 		// subject	defined by "name" (which in turn is parsed from weapon*.ufo files)
-		icon	icons/mail_tech
+		icon	"icons/mail_tech"
 	}
 
 	mail
@@ -1448,7 +1449,7 @@ tech rs_weapon_laserrifle
 		from	"_mail_from_paul_navarre"
 		to		"_mail_to_base_commander"
 		// subject	defined by "name"
-		icon	icons/mail_tech
+		icon	"icons/mail_tech"
 	}
 
 	require_AND
@@ -1464,7 +1465,7 @@ tech rs_weapon_laserrifle
 
 tech rs_weapon_heavylaser
 {
-	type	weapon
+	type	"weapon"
 	up_chapter	equipment
 
 	description {
@@ -1479,7 +1480,7 @@ tech rs_weapon_heavylaser
 		from	"_mail_from_paul_navarre"
 		to		"_mail_to_base_commander"
 		// subject	defined by "name" (which in turn is parsed from weapon*.ufo files)
-		icon	icons/mail_tech
+		icon	"icons/mail_tech"
 	}
 
 	mail
@@ -1487,7 +1488,7 @@ tech rs_weapon_heavylaser
 		from	"_mail_from_paul_navarre"
 		to		"_mail_to_base_commander"
 		// subject	defined by "name"
-		icon	icons/mail_tech
+		icon	"icons/mail_tech"
 	}
 
 	require_AND
@@ -1503,7 +1504,7 @@ tech rs_weapon_heavylaser
 
 tech rs_weapon_electrolaser
 {
-	type	weapon
+	type	"weapon"
 	up_chapter	equipment
 
 	description {
@@ -1518,7 +1519,7 @@ tech rs_weapon_electrolaser
 		from	"_mail_from_paul_navarre"
 		to		"_mail_to_base_commander"
 		// subject	defined by "name" (which in turn is parsed from weapon*.ufo files)
-		icon	icons/mail_tech
+		icon	"icons/mail_tech"
 	}
 
 	mail
@@ -1526,7 +1527,7 @@ tech rs_weapon_electrolaser
 		from	"_mail_from_paul_navarre"
 		to		"_mail_to_base_commander"
 		// subject	defined by "name"
-		icon	icons/mail_tech
+		icon	"icons/mail_tech"
 	}
 
 	require_AND
@@ -1547,7 +1548,7 @@ tech rs_weapon_electrolaser
 // TODO fix the "provides" info. Which model should we use? I currently set it to use the laserrifle ammo.
 tech rs_weapon_laserammo
 {
-	type		weapon
+	type		"weapon"
 	up_chapter	equipment
 
 	description {
@@ -1562,7 +1563,7 @@ tech rs_weapon_laserammo
 		from	"_mail_from_paul_navarre"
 		to		"_mail_to_base_commander"
 		// subject	defined by "name" (which in turn is parsed from weapon*.ufo files)
-		icon	icons/mail_tech
+		icon	"icons/mail_tech"
 	}
 
 	mail
@@ -1570,7 +1571,7 @@ tech rs_weapon_laserammo
 		from	"_mail_from_paul_navarre"
 		to		"_mail_to_base_commander"
 		// subject	defined by "name"
-		icon	icons/mail_tech
+		icon	"icons/mail_tech"
 	}
 	require_AND
 	{
@@ -1584,7 +1585,7 @@ tech rs_weapon_laserammo
 
 tech rs_weapon_laserammo_stun
 {
-	type		weapon
+	type		"weapon"
 	up_chapter	equipment
 
 	description {
@@ -1599,7 +1600,7 @@ tech rs_weapon_laserammo_stun
 		from	"_mail_from_paul_navarre"
 		to		"_mail_to_base_commander"
 		// subject	defined by "name" (which in turn is parsed from weapon*.ufo files)
-		icon	icons/mail_tech
+		icon	"icons/mail_tech"
 	}
 
 	mail
@@ -1607,7 +1608,7 @@ tech rs_weapon_laserammo_stun
 		from	"_mail_from_paul_navarre"
 		to		"_mail_to_base_commander"
 		// subject	defined by "name"
-		icon	icons/mail_tech
+		icon	"icons/mail_tech"
 	}
 	require_AND
 	{
@@ -1621,7 +1622,7 @@ tech rs_weapon_laserammo_stun
 
 tech rs_medikit
 {
-	type	weapon
+	type	"weapon"
 	up_chapter	equipment
 	description {
 		default "_medikit_txt"
@@ -1640,7 +1641,7 @@ tech rs_medikit
 tech rs_weapon_plasatomizer
 {
 	name	"_Alien Artifact - Plasma Pistol"
-	type	weapon
+	type	"weapon"
 	up_chapter	artifacts
 
 	description {
@@ -1655,7 +1656,7 @@ tech rs_weapon_plasatomizer
 		from	"_mail_from_paul_navarre"
 		to		"_mail_to_base_commander"
 		// subject	defined by "name"
-		icon	icons/mail_artifact
+		icon	"icons/mail_artifact"
 	}
 
 	mail
@@ -1663,7 +1664,7 @@ tech rs_weapon_plasatomizer
 		from	"_mail_from_paul_navarre"
 		to		"_mail_to_base_commander"
 		// subject	defined by "name"
-		icon	icons/mail_artifact
+		icon	"icons/mail_artifact"
 	}
 
 	require_AND
@@ -1687,7 +1688,7 @@ tech rs_weapon_plasatomizer
 tech rs_weapon_plasatomizer_ammo
 {
 	name	"_Alien Artifact - Plasma Pistol"
-	type	weapon
+	type	"weapon"
 	up_chapter	artifacts
 
 	redirect	rs_weapon_plasatomizer
@@ -1711,7 +1712,7 @@ tech rs_weapon_plasatomizer_ammo
 tech rs_weapon_plasblaster
 {
 	name	"_Alien Artifact - Plasma Blaster"
-	type	weapon
+	type	"weapon"
 	up_chapter	artifacts
 
 	description {
@@ -1726,7 +1727,7 @@ tech rs_weapon_plasblaster
 		from	"_mail_from_paul_navarre"
 		to		"_mail_to_base_commander"
 		// subject	defined by "name"
-		icon	icons/mail_artifact
+		icon	"icons/mail_artifact"
 	}
 
 	mail
@@ -1734,7 +1735,7 @@ tech rs_weapon_plasblaster
 		from	"_mail_from_paul_navarre"
 		to		"_mail_to_base_commander"
 		// subject	defined by "name"
-		icon	icons/mail_artifact
+		icon	"icons/mail_artifact"
 	}
 
 	require_AND
@@ -1757,7 +1758,7 @@ tech rs_weapon_plasblaster
 tech rs_weapon_plasblaster_ammo
 {
 	name	"_Alien Artifact - Plasma Blaster"
-	type	weapon
+	type	"weapon"
 	up_chapter	artifacts
 
 	redirect	rs_weapon_plasblaster
@@ -1781,7 +1782,7 @@ tech rs_weapon_plasblaster_ammo
 tech rs_weapon_plasblade
 {
 	name	"_Alien Artifact - Plasma Blade"
-	type	weapon
+	type	"weapon"
 	up_chapter	artifacts
 
 	description {
@@ -1796,7 +1797,7 @@ tech rs_weapon_plasblade
 		from	"_mail_from_paul_navarre"
 		to		"_mail_to_base_commander"
 		// subject	defined by "name"
-		icon	icons/mail_artifact
+		icon	"icons/mail_artifact"
 	}
 
 	mail
@@ -1804,7 +1805,7 @@ tech rs_weapon_plasblade
 		from	"_mail_from_paul_navarre"
 		to		"_mail_to_base_commander"
 		// subject	defined by "name"
-		icon	icons/mail_artifact
+		icon	"icons/mail_artifact"
 	}
 
 	require_AND
@@ -1827,7 +1828,7 @@ tech rs_weapon_plasblade
 tech rs_weapon_plasmagren
 {
 	name	"_Alien Artifact - Plasma Grenade"
-	type	weapon
+	type	"weapon"
 	up_chapter	artifacts
 
 	description {
@@ -1842,7 +1843,7 @@ tech rs_weapon_plasmagren
 		from	"_mail_from_paul_navarre"
 		to		"_mail_to_base_commander"
 		// subject	defined by "name"
-		icon	icons/mail_artifact
+		icon	"icons/mail_artifact"
 	}
 
 	mail
@@ -1850,7 +1851,7 @@ tech rs_weapon_plasmagren
 		from	"_mail_from_paul_navarre"
 		to		"_mail_to_base_commander"
 		// subject	defined by "name"
-		icon	icons/mail_artifact
+		icon	"icons/mail_artifact"
 	}
 
 	require_AND
@@ -1872,7 +1873,7 @@ tech rs_weapon_plasmagren
 tech rs_weapon_plasrifle
 {
 	name	"_Alien Artifact - Plasma Rifle"
-	type	weapon
+	type	"weapon"
 	up_chapter	artifacts
 
 	description {
@@ -1887,7 +1888,7 @@ tech rs_weapon_plasrifle
 		from	"_mail_from_paul_navarre"
 		to		"_mail_to_base_commander"
 		// subject	defined by "name"
-		icon	icons/mail_artifact
+		icon	"icons/mail_artifact"
 	}
 
 	mail
@@ -1895,7 +1896,7 @@ tech rs_weapon_plasrifle
 		from	"_mail_from_paul_navarre"
 		to		"_mail_to_base_commander"
 		// subject	defined by "name"
-		icon	icons/mail_artifact
+		icon	"icons/mail_artifact"
 	}
 
 	require_AND
@@ -1918,7 +1919,7 @@ tech rs_weapon_plasrifle
 tech rs_weapon_plasrifle_ammo
 {
 	name	"_Alien Artifact - Plasma Rifle"
-	type	weapon
+	type	"weapon"
 	up_chapter	artifacts
 
 	redirect	rs_weapon_plasrifle
@@ -1942,7 +1943,7 @@ tech rs_weapon_plasrifle_ammo
 tech rs_weapon_needlergun
 {
 	name	"_Needler Gun"
-	type	weapon
+	type	"weapon"
 	up_chapter	equipment
 
 	description {
@@ -1957,7 +1958,7 @@ tech rs_weapon_needlergun
 		from	"_mail_from_paul_navarre"
 		to		"_mail_to_base_commander"
 		// subject	defined by "name"
-		icon	icons/mail_tech
+		icon	"icons/mail_tech"
 	}
 
 	mail
@@ -1965,7 +1966,7 @@ tech rs_weapon_needlergun
 		from	"_mail_from_paul_navarre"
 		to		"_mail_to_base_commander"
 		// subject	defined by "name"
-		icon	icons/mail_tech
+		icon	"icons/mail_tech"
 	}
 
 	require_AND
@@ -1988,7 +1989,7 @@ tech rs_weapon_needlergun
 tech rs_weapon_needlerheavy
 {
 	name	"_Heavy Needler Gun"
-	type	weapon
+	type	"weapon"
 	up_chapter	equipment
 
 	description {
@@ -2003,7 +2004,7 @@ tech rs_weapon_needlerheavy
 		from	"_mail_from_paul_navarre"
 		to		"_mail_to_base_commander"
 		// subject	defined by "name"
-		icon	icons/mail_tech
+		icon	"icons/mail_tech"
 	}
 
 	mail
@@ -2011,7 +2012,7 @@ tech rs_weapon_needlerheavy
 		from	"_mail_from_paul_navarre"
 		to		"_mail_to_base_commander"
 		// subject	defined by "name"
-		icon	icons/mail_tech
+		icon	"icons/mail_tech"
 	}
 
 	require_AND
@@ -2034,7 +2035,7 @@ tech rs_weapon_needlerheavy
 tech rs_weapon_needlergun_ammo
 {
 	name		"_Needler Gun"
-	type		weapon
+	type		"weapon"
 	up_chapter	equipment
 
 	redirect	rs_weapon_needlergun
@@ -2058,7 +2059,7 @@ tech rs_weapon_needlergun_ammo
 
 tech rs_weapon_coilgun
 {
-	type	weapon
+	type	"weapon"
 	up_chapter	equipment
 	description {
 		default "_coilgun_txt"
@@ -2072,7 +2073,7 @@ tech rs_weapon_coilgun
 		from	"_mail_from_paul_navarre"
 		to		"_mail_to_base_commander"
 		subject	"_Coilgun"
-		icon	icons/mail_tech
+		icon	"icons/mail_tech"
 	}
 
 	mail
@@ -2080,7 +2081,7 @@ tech rs_weapon_coilgun
 		from	"_mail_from_paul_navarre"
 		to		"_mail_to_base_commander"
 		subject	"_Coilgun"
-		icon	icons/mail_tech
+		icon	"icons/mail_tech"
 	}
 
 	require_AND
@@ -2102,7 +2103,7 @@ tech rs_weapon_coilgun
 
 tech rs_weapon_coilgun_ammo
 {
-	type		weapon
+	type		"weapon"
 	up_chapter	equipment
 
 	redirect	rs_weapon_coilgun
@@ -2126,7 +2127,7 @@ tech rs_weapon_coilgun_ammo
 tech rs_weapon_shotgun2
 {
 	// Riot Shotgun
-	type		weapon
+	type		"weapon"
 	up_chapter	equipment
 	description {
 		default "_shotgun2_txt"
@@ -2145,7 +2146,7 @@ tech rs_weapon_shotgun2
 
 tech rs_weapon_shotgun2_slug_ammo
 {
-	type		weapon
+	type		"weapon"
 	up_chapter	equipment
 	description {
 		default "_shotgun2_slug_ammo_txt"
@@ -2165,7 +2166,7 @@ tech rs_weapon_shotgun2_slug_ammo
 
 tech rs_weapon_shotgun_micro
 {
-	type	weapon
+	type	"weapon"
 
 	up_chapter	equipment
 	description {
@@ -2185,7 +2186,7 @@ tech rs_weapon_shotgun_micro
 
 tech rs_weapon_shotgun_micro_ammo
 {
-	type		weapon
+	type		"weapon"
 	up_chapter	equipment
 	description {
 		default "_shotgun_micro_ammo_txt"
@@ -2205,7 +2206,7 @@ tech rs_weapon_shotgun_micro_ammo
 
 tech rs_weapon_smg
 {
-	type	weapon
+	type	"weapon"
 	up_chapter	equipment
 	description {
 		default "_smg_txt"
@@ -2224,7 +2225,7 @@ tech rs_weapon_smg
 
 tech rs_weapon_smg_ammo
 {
-	type		weapon
+	type		"weapon"
 	up_chapter	equipment
 	description {
 		default "_smg_mag_txt"
@@ -2244,7 +2245,7 @@ tech rs_weapon_smg_ammo
 
 tech rs_weapon_smokegren
 {
-	type		weapon
+	type		"weapon"
 	up_chapter	equipment
 	description {
 		default "_smokegren_txt"
@@ -2263,7 +2264,7 @@ tech rs_weapon_smokegren
 
 tech rs_weapon_sniper
 {
-	type		weapon
+	type		"weapon"
 	up_chapter	equipment
 	description {
 		default "_sniper_txt"
@@ -2282,7 +2283,7 @@ tech rs_weapon_sniper
 
 tech rs_weapon_sniper_ammo
 {
-	type		weapon
+	type		"weapon"
 	up_chapter	equipment
 	description {
 		default "_sniper_mag_txt"
@@ -2304,7 +2305,7 @@ tech rs_weapon_sniper_ammo
 tech rs_weapon_stungren
 {
 	name		"_Anti-Alien Gas"
-	type		weapon
+	type		"weapon"
 	up_chapter	equipment
 
 	description {
@@ -2319,7 +2320,7 @@ tech rs_weapon_stungren
 		from	"_mail_from_paul_navarre"
 		to		"_mail_to_base_commander"
 		// subject	defined by "name"
-		icon	icons/mail_tech
+		icon	"icons/mail_tech"
 	}
 
 	mail
@@ -2327,7 +2328,7 @@ tech rs_weapon_stungren
 		from	"_mail_from_paul_navarre"
 		to		"_mail_to_base_commander"
 		// subject	defined by "name"
-		icon	icons/mail_tech
+		icon	"icons/mail_tech"
 	}
 
 	require_AND
@@ -2345,13 +2346,13 @@ tech rs_weapon_stungren
 	provides	stungrenade
 	time		4100
 	producetime	24
-//	image		techs/anti_alien_gas
+//	image		"techs/anti_alien_gas"
 }
 
 tech rs_weapon_stungren_alien
 {
 	name		"_Alien Anti-Human Gas"
-	type		weapon
+	type		"weapon"
 	up_chapter	artifacts
 
 	description {
@@ -2366,7 +2367,7 @@ tech rs_weapon_stungren_alien
 		from	"_mail_from_paul_navarre"
 		to		"_mail_to_base_commander"
 		// subject	defined by "name"
-		icon	icons/mail_tech
+		icon	"icons/mail_tech"
 	}
 
 	mail
@@ -2374,7 +2375,7 @@ tech rs_weapon_stungren_alien
 		from	"_mail_from_paul_navarre"
 		to		"_mail_to_base_commander"
 		// subject	defined by "name"
-		icon	icons/mail_tech
+		icon	"icons/mail_tech"
 	}
 
 	require_AND
@@ -2393,7 +2394,7 @@ tech rs_weapon_stungren_alien
 
 tech rs_weapon_stunrod
 {
-	type		weapon
+	type		"weapon"
 	up_chapter	equipment
 
 	description {
@@ -2409,7 +2410,7 @@ tech rs_weapon_stunrod
 		to		"_mail_to_base_commander"
 		// subject	defined by "name" (which in turn is parsed from weapon*.ufo files)
 		model	"characters/connor"
-		icon	icons/mail_tech
+		icon	"icons/mail_tech"
 	}
 
 	mail
@@ -2418,7 +2419,7 @@ tech rs_weapon_stunrod
 		to		"_mail_to_base_commander"
 		// subject	defined by "name"
 		model	"characters/connor"
-		icon	icons/mail_tech
+		icon	"icons/mail_tech"
 	}
 
 	require_AND
@@ -2436,7 +2437,7 @@ tech rs_weapon_stunrod
 tech rs_weapon_pbeampistol
 {
 	name		"_Alien Artifact - Particle Beam Pistol"
-	type		weapon
+	type		"weapon"
 	up_chapter	artifacts
 
 	description {
@@ -2451,7 +2452,7 @@ tech rs_weapon_pbeampistol
 		from	"_mail_from_paul_navarre"
 		to		"_mail_to_base_commander"
 		// subject	defined by "name"
-		icon	icons/mail_artifact
+		icon	"icons/mail_artifact"
 	}
 
 	mail
@@ -2459,7 +2460,7 @@ tech rs_weapon_pbeampistol
 		from	"_mail_from_paul_navarre"
 		to		"_mail_to_base_commander"
 		// subject	defined by "name"
-		icon	icons/mail_artifact
+		icon	"icons/mail_artifact"
 	}
 
 	require_AND
@@ -2481,7 +2482,7 @@ tech rs_weapon_pbeampistol
 tech rs_weapon_pbeampistol_ammo
 {
 	name		"_Alien Artifact - Particle Beam Pistol"
-	type		weapon
+	type		"weapon"
 	up_chapter	artifacts
 
 	redirect	rs_weapon_pbeam_ammo
@@ -2505,7 +2506,7 @@ tech rs_weapon_pbeampistol_ammo
 tech rs_weapon_pbeamcannon
 {
 	name		"_Alien Artifact - Particle Beam Cannon"
-	type		weapon
+	type		"weapon"
 	up_chapter	artifacts
 
 	description {
@@ -2520,7 +2521,7 @@ tech rs_weapon_pbeamcannon
 		from	"_mail_from_paul_navarre"
 		to		"_mail_to_base_commander"
 		// subject	defined by "name"
-		icon	icons/mail_artifact
+		icon	"icons/mail_artifact"
 	}
 
 	mail
@@ -2528,7 +2529,7 @@ tech rs_weapon_pbeamcannon
 		from	"_mail_from_paul_navarre"
 		to		"_mail_to_base_commander"
 		// subject	defined by "name"
-		icon	icons/mail_artifact
+		icon	"icons/mail_artifact"
 	}
 
 	require_AND
@@ -2551,7 +2552,7 @@ tech rs_weapon_pbeamcannon
 tech rs_weapon_pbeamcannon_ammo
 {
 	name		"_Alien Artifact - Particle Beam Cannon"
-	type		weapon
+	type		"weapon"
 	up_chapter	artifacts
 
 	redirect	rs_weapon_pbeam_ammo
@@ -2575,7 +2576,7 @@ tech rs_weapon_pbeamcannon_ammo
 tech rs_weapon_pbeamrifle
 {
 	name		"_Alien Artifact - Particle Beam Rifle"
-	type		weapon
+	type		"weapon"
 	up_chapter	artifacts
 
 	description {
@@ -2590,7 +2591,7 @@ tech rs_weapon_pbeamrifle
 		from	"_mail_from_paul_navarre"
 		to		"_mail_to_base_commander"
 		// subject	defined by "name"
-		icon	icons/mail_artifact
+		icon	"icons/mail_artifact"
 	}
 
 	mail
@@ -2598,7 +2599,7 @@ tech rs_weapon_pbeamrifle
 		from	"_mail_from_paul_navarre"
 		to		"_mail_to_base_commander"
 		// subject	defined by "name"
-		icon	icons/mail_artifact
+		icon	"icons/mail_artifact"
 	}
 
 	require_AND
@@ -2620,7 +2621,7 @@ tech rs_weapon_pbeamrifle
 tech rs_weapon_pbeamrifle_ammo
 {
 	name		"_Alien Artifact - Particle Beam Rifle"
-	type		weapon
+	type		"weapon"
 	up_chapter	artifacts
 
 	redirect	rs_weapon_pbeam_ammo
@@ -2645,7 +2646,7 @@ tech rs_weapon_pbeam_ammo
 {
 	//Note: this is type: tech because it provides three other technologies for ammo, not ammo itself
 	name		"_Man-Portable Particle Beams"
-	type		tech
+	type		"tech"
 	up_chapter	artifacts
 
 	description {
@@ -2660,7 +2661,7 @@ tech rs_weapon_pbeam_ammo
 		from	"_mail_from_paul_navarre"
 		to		"_mail_to_base_commander"
 		// subject	defined by "name"
-		icon	icons/mail_tech
+		icon	"icons/mail_tech"
 	}
 
 	mail
@@ -2668,7 +2669,7 @@ tech rs_weapon_pbeam_ammo
 		from	"_mail_from_paul_navarre"
 		to		"_mail_to_base_commander"
 		// subject	defined by "name"
-		icon	icons/mail_tech
+		icon	"icons/mail_tech"
 	}
 
 	require_OR
@@ -2693,7 +2694,7 @@ tech rs_weapon_pbeam_ammo
 
 tech rs_combat_armour
 {
-	type		armour
+	type		"armour"
 	up_chapter	equipment
 	description {
 		default "_combat_armour_txt"
@@ -2707,7 +2708,7 @@ tech rs_combat_armour
 
 tech rs_nano_armour
 {
-	type		armour
+	type		"armour"
 	up_chapter	equipment
 
 	description {
@@ -2722,7 +2723,7 @@ tech rs_nano_armour
 		from	"_mail_from_paul_navarre"
 		to	"_mail_to_base_commander"
 		// subject	defined by "name" (which in turn is parsed from armour*.ufo files)
-		icon	icons/mail_tech
+		icon	"icons/mail_tech"
 	}
 
 	mail
@@ -2730,7 +2731,7 @@ tech rs_nano_armour
 		from	"_mail_from_paul_navarre"
 		to	"_mail_to_base_commander"
 		// subject	defined by "name"
-		icon	icons/mail_tech
+		icon	"icons/mail_tech"
 	}
 
 	require_AND
@@ -2746,7 +2747,7 @@ tech rs_nano_armour
 tech rs_power_armour
 {
 	// Multiplayer only right now
-	type	armour
+	type	"armour"
 	up_chapter	equipment
 
 //	description {
@@ -2761,7 +2762,7 @@ tech rs_power_armour
 //		from	"_mail_from_paul_navarre"
 //		to	"_mail_to_base_commander"
 //		// subject	defined by "name" (which in turn is parsed from armour*.ufo files)
-//		icon	icons/mail_tech
+//		icon	"icons/mail_tech"
 //	}
 
 //	mail
@@ -2769,7 +2770,7 @@ tech rs_power_armour
 //		from	"_mail_from_paul_navarre"
 //		to	"_mail_to_base_commander"
 //		// subject	defined by "name"
-//		icon	icons/mail_tech
+//		icon	"icons/mail_tech"
 //	}
 
 	require_AND	// todo:fixme
@@ -2786,7 +2787,7 @@ tech rs_power_armour
 
 tech rs_alien_body_armour
 {
-	type		armour
+	type		"armour"
 	up_chapter	artifacts
 
 	description {
@@ -2801,7 +2802,7 @@ tech rs_alien_body_armour
 		from	"_mail_from_paul_navarre"
 		to	"_mail_to_base_commander"
 		// subject	defined by "name" (which in turn is parsed from armour*.ufo files)
-		icon	icons/mail_tech
+		icon	"icons/mail_tech"
 	}
 
 	mail
@@ -2809,7 +2810,7 @@ tech rs_alien_body_armour
 		from	"_mail_from_paul_navarre"
 		to	"_mail_to_base_commander"
 		// subject	defined by "name"
-		icon	icons/mail_tech
+		icon	"icons/mail_tech"
 	}
 
 	require_AND
@@ -2823,7 +2824,7 @@ tech rs_alien_body_armour
 
 tech rs_alien_medium_armour
 {
-	type		armour
+	type		"armour"
 	up_chapter	artifacts
 
 	description {
@@ -2838,7 +2839,7 @@ tech rs_alien_medium_armour
 		from	"_mail_from_paul_navarre"
 		to		"_mail_to_base_commander"
 		// subject	defined by "name" (which in turn is parsed from armour*.ufo files)
-		icon	icons/mail_tech
+		icon	"icons/mail_tech"
 	}
 
 	mail
@@ -2846,7 +2847,7 @@ tech rs_alien_medium_armour
 		from	"_mail_from_paul_navarre"
 		to		"_mail_to_base_commander"
 		// subject	defined by "name"
-		icon	icons/mail_tech
+		icon	"icons/mail_tech"
 	}
 
 	require_AND
@@ -2864,7 +2865,7 @@ tech rs_alien_medium_armour
 
 tech rs_damage_blast
 {
-	type	tech
+	type	"tech"
 	name	"_Blast Damage Type"
 	up_chapter damage
 	description {
@@ -2872,12 +2873,12 @@ tech rs_damage_blast
 	}
 
 	time	0
-//	image	techs/blast_damage
+//	image	"techs/blast_damage"
 }
 
 tech rs_damage_fire
 {
-	type	tech
+	type	"tech"
 	name	"_Fire Damage Type"
 	up_chapter	damage
 	description {
@@ -2885,12 +2886,12 @@ tech rs_damage_fire
 	}
 
 	time	0
-//	image	techs/fire_damage
+//	image	"techs/fire_damage"
 }
 
 tech rs_damage_laser
 {
-	type	tech
+	type	"tech"
 	name	"_Laser Damage Type"
 	up_chapter	damage
 	description {
@@ -2903,12 +2904,12 @@ tech rs_damage_laser
 	}
 
 	time	0
-//	image	techs/laser_damage
+//	image	"techs/laser_damage"
 }
 
 tech rs_damage_normal
 {
-	type	tech
+	type	"tech"
 	name	"_Impact Damage Type"
 	up_chapter	damage
 	description {
@@ -2916,12 +2917,12 @@ tech rs_damage_normal
 	}
 
 	time	0
-//	image	techs/normal_damage
+//	image	"techs/normal_damage"
 }
 
 tech rs_damage_shock
 {
-	type	tech
+	type	"tech"
 	name "_Shock Damage Type"
 	up_chapter	damage
 	description {
@@ -2929,12 +2930,12 @@ tech rs_damage_shock
 	}
 
 	time	0
-//	image	techs/shock_damage
+//	image	"techs/shock_damage"
 }
 
 tech rs_damage_plasma
 {
-	type		tech
+	type		"tech"
 	name		"_Plasma Damage Type"
 	up_chapter	damage
 	description {
@@ -2950,12 +2951,12 @@ tech rs_damage_plasma
 	}
 
 	time	0
-//	image	techs/plasma_damage
+//	image	"techs/plasma_damage"
 }
 
 tech rs_damage_stun
 {
-	type		tech
+	type		"tech"
 	name		"_Stun Damage Type"
 	up_chapter	damage
 	description {
@@ -2963,12 +2964,12 @@ tech rs_damage_stun
 	}
 
 	time	0
-//	image	techs/stun_damage
+//	image	"techs/stun_damage"
 }
 
 tech rs_damage_pbeam
 {
-	type		tech
+	type		"tech"
 	name		"_Particle Beam Damage Type"
 	up_chapter	damage
 	description {
@@ -2977,7 +2978,7 @@ tech rs_damage_pbeam
 
 
 	time	0
-//	image	techs/pbeam_damage
+//	image	"techs/pbeam_damage"
 }
 
 //========================
@@ -2986,7 +2987,7 @@ tech rs_damage_pbeam
 
 tech rs_skill_accuracy
 {
-	type		tech
+	type		"tech"
 	name		"_Accuracy Attribute"
 	up_chapter	skill
 	description {
@@ -2994,12 +2995,12 @@ tech rs_skill_accuracy
 	}
 
 	time	0
-//	image	techs/accuracy_skill
+//	image	"techs/accuracy_skill"
 }
 
 tech rs_skill_assault
 {
-	type		tech
+	type		"tech"
 	name		"_Assault Guns Proficiency"
 	up_chapter	skill
 	description {
@@ -3007,12 +3008,12 @@ tech rs_skill_assault
 	}
 
 	time	0
-//	image	techs/assault_skill
+//	image	"techs/assault_skill"
 }
 
 tech rs_skill_close
 {
-	type		tech
+	type		"tech"
 	name		"_Close Combat Proficiency"
 	up_chapter	skill
 	description {
@@ -3020,12 +3021,12 @@ tech rs_skill_close
 	}
 
 	time	0
-//	image	techs/close_skill
+//	image	"techs/close_skill"
 }
 
 tech rs_skill_explosive
 {
-	type		tech
+	type		"tech"
 	name		"_High-Explosives Proficiency"
 	up_chapter	skill
 	description {
@@ -3033,12 +3034,12 @@ tech rs_skill_explosive
 	}
 
 	time	0
-//	image	techs/explosive_skill
+//	image	"techs/explosive_skill"
 }
 
 tech rs_skill_heavy
 {
-	type		tech
+	type		"tech"
 	name		"_Heavy Weapons Proficiency"
 	up_chapter	skill
 	description {
@@ -3046,12 +3047,12 @@ tech rs_skill_heavy
 	}
 
 	time	0
-//	image	techs/heavy_skill
+//	image	"techs/heavy_skill"
 }
 
 tech rs_skill_mind
 {
-	type		tech
+	type		"tech"
 	name		"_Mind Attribute"
 	up_chapter	skill
 	description {
@@ -3059,12 +3060,12 @@ tech rs_skill_mind
 	}
 
 	time	0
-//	image	techs/mind_skill
+//	image	"techs/mind_skill"
 }
 
 tech rs_skill_power
 {
-	type		tech
+	type		"tech"
 	name		"_Power Attribute"
 	up_chapter	skill
 	description {
@@ -3072,12 +3073,12 @@ tech rs_skill_power
 	}
 
 	time	0
-//	image	techs/power_skill
+//	image	"techs/power_skill"
 }
 
 tech rs_skill_sniper
 {
-	type		tech
+	type		"tech"
 	name		"_Sniper Rifles Proficiency"
 	up_chapter	skill
 	description {
@@ -3085,12 +3086,12 @@ tech rs_skill_sniper
 	}
 
 	time	0
-//	image	techs/sniper_skill
+//	image	"techs/sniper_skill"
 }
 
 tech rs_skill_speed
 {
-	type		tech
+	type		"tech"
 	name		"_Speed Attribute"
 	up_chapter	skill
 	description {
@@ -3098,7 +3099,7 @@ tech rs_skill_speed
 	}
 
 	time	0
-//	image	techs/speed_skill
+//	image	"techs/speed_skill"
 }
 
 //========================
@@ -3107,7 +3108,7 @@ tech rs_skill_speed
 
 tech rs_building_aliencontainment
 {
-	type	building
+	type	"building"
 	description {
 		default "_b_aliencontainment_txt"
 	}
@@ -3125,7 +3126,7 @@ tech rs_building_aliencontainment
 
 tech rs_building_command
 {
-	type	building
+	type	"building"
 	description {
 		default "_b_command_txt"
 	}
@@ -3143,7 +3144,7 @@ tech rs_building_command
 
 tech rs_building_entrance
 {
-	type	building
+	type	"building"
 	description {
 		default "_b_entrance_txt"
 	}
@@ -3156,7 +3157,7 @@ tech rs_building_entrance
 
 tech rs_building_missile
 {
-	type	building
+	type	"building"
 	description {
 		default "_b_missile_txt"
 	}
@@ -3174,7 +3175,7 @@ tech rs_building_missile
 
 tech rs_building_laser
 {
-	type	building
+	type	"building"
 	description {
 		default "_b_baselaser_txt"
 	}
@@ -3195,7 +3196,7 @@ tech rs_building_laser
 
 tech rs_building_large_hangar
 {
-	type	building
+	type	"building"
 	description {
 		default "_b_large_hangar_txt"
 	}
@@ -3213,7 +3214,7 @@ tech rs_building_large_hangar
 
 tech rs_building_hospital
 {
-	type	building
+	type	"building"
 	description {
 		default "_b_hospital_txt"
 	}
@@ -3231,7 +3232,7 @@ tech rs_building_hospital
 
 tech rs_building_small_hangar
 {
-	type	building
+	type	"building"
 	description {
 		default "_b_small_hangar_txt"
 	}
@@ -3249,7 +3250,7 @@ tech rs_building_small_hangar
 
 tech rs_building_lab
 {
-	type	building
+	type	"building"
 	description {
 		default "_b_lab_txt"
 	}
@@ -3267,7 +3268,7 @@ tech rs_building_lab
 
 tech rs_building_powerplant
 {
-	type	building
+	type	"building"
 	description {
 		default "_b_powerplant_txt"
 	}
@@ -3285,7 +3286,7 @@ tech rs_building_powerplant
 
 tech rs_building_quarters
 {
-	type	building
+	type	"building"
 	description {
 		default "_b_quarters_txt"
 	}
@@ -3298,7 +3299,7 @@ tech rs_building_quarters
 
 tech rs_building_radar
 {
-	type	building
+	type	"building"
 	description {
 		default "_b_radar_txt"
 	}
@@ -3316,7 +3317,7 @@ tech rs_building_radar
 
 tech rs_building_radar_adv
 {
-	type	building
+	type	"building"
 	description {
 		default "_b_radar_adv_txt"
 	}
@@ -3335,7 +3336,7 @@ tech rs_building_radar_adv
 
 tech rs_building_storage
 {
-	type	building
+	type	"building"
 	description {
 		default "_b_storage_txt"
 	}
@@ -3353,7 +3354,7 @@ tech rs_building_storage
 
 tech rs_building_workshop
 {
-	type	building
+	type	"building"
 	description {
 		default "_b_workshop_txt"
 	}
@@ -3372,7 +3373,7 @@ tech rs_building_workshop
 tech rs_building_antimatter
 {
 	name	"_Antimatter Storage"
-	type		building
+	type		"building"
 	up_chapter	buildings
 
 	description {
@@ -3389,7 +3390,7 @@ tech rs_building_antimatter
 		from	"_mail_from_paul_navarre"
 		to		"_mail_to_base_commander"
 		// subject	defined by "name"
-		icon	icons/mail_alien
+		icon	"icons/mail_alien"
 	}
 
 	provides	building_amstorage
@@ -3401,7 +3402,7 @@ tech rs_building_antimatter
 //========================
 tech rs_craft_drop_firebird
 {
-	type	craft
+	type	"craft"
 	description {
 		default "_drop_firebird_txt"
 	}
@@ -3417,7 +3418,7 @@ tech rs_craft_drop_firebird
 
 tech rs_craft_drop_herakles
 {
-	type	craft
+	type	"craft"
 	description {
 		default "_drop_herakles_txt"
 	}
@@ -3430,14 +3431,14 @@ tech rs_craft_drop_herakles
 		from	"_mail_from_paul_navarre"
 		to	"_mail_to_base_commander"
 		// subject	defined by "name"
-		icon	icons/mail_tech
+		icon	"icons/mail_tech"
 	}
 	mail
 	{
 		from	"_mail_from_paul_navarre"
 		to	"_mail_to_base_commander"
 		// subject	defined by "name"
-		icon	icons/mail_tech
+		icon	"icons/mail_tech"
 	}
 
 	// FIXME
@@ -3454,7 +3455,7 @@ tech rs_craft_drop_herakles
 
 tech rs_craft_drop_raptor
 {
-	type	craft
+	type	"craft"
 	description {
 		default "_drop_raptor_txt"
 	}
@@ -3467,14 +3468,14 @@ tech rs_craft_drop_raptor
 		from	"_mail_from_paul_navarre"
 		to	"_mail_to_base_commander"
 		// subject	defined by "name"
-		icon	icons/mail_tech
+		icon	"icons/mail_tech"
 	}
 	mail
 	{
 		from	"_mail_from_paul_navarre"
 		to	"_mail_to_base_commander"
 		// subject	defined by "name"
-		icon	icons/mail_tech
+		icon	"icons/mail_tech"
 	}
 
 	require_AND {
@@ -3499,7 +3500,7 @@ tech rs_craft_drop_raptor
 
 tech rs_craft_inter_stiletto
 {
-	type	craft
+	type	"craft"
 	description {
 		default "_inter_stiletto_txt"
 	}
@@ -3515,7 +3516,7 @@ tech rs_craft_inter_stiletto
 
 tech rs_craft_inter_saracen
 {
-	type	craft
+	type	"craft"
 	description {
 		default "_inter_saracen_txt"
 	}
@@ -3531,7 +3532,7 @@ tech rs_craft_inter_saracen
 
 tech rs_craft_inter_dragon
 {
-	type	craft
+	type	"craft"
 	description {
 		default "_inter_dragon_txt"
 	}
@@ -3545,14 +3546,14 @@ tech rs_craft_inter_dragon
 		from	"_mail_from_paul_navarre"
 		to	"_mail_to_base_commander"
 		// subject	defined by "name"
-		icon	icons/mail_tech
+		icon	"icons/mail_tech"
 	}
 	mail
 	{
 		from	"_mail_from_paul_navarre"
 		to	"_mail_to_base_commander"
 		// subject	defined by "name"
-		icon	icons/mail_tech
+		icon	"icons/mail_tech"
 	}
 
 	provides	craft_inter_dragon
@@ -3576,7 +3577,7 @@ tech rs_craft_inter_dragon
 
 tech rs_craft_inter_starchaser
 {
-	type	craft
+	type	"craft"
 	description {
 		default "_inter_starchaser_txt"
 	}
@@ -3590,14 +3591,14 @@ tech rs_craft_inter_starchaser
 		from	"_mail_from_paul_navarre"
 		to	"_mail_to_base_commander"
 		// subject	defined by "name"
-		icon	icons/mail_tech
+		icon	"icons/mail_tech"
 	}
 	mail
 	{
 		from	"_mail_from_paul_navarre"
 		to	"_mail_to_base_commander"
 		// subject	defined by "name"
-		icon	icons/mail_tech
+		icon	"icons/mail_tech"
 	}
 
 	provides	craft_inter_starchaser
@@ -3620,7 +3621,7 @@ tech rs_craft_inter_starchaser
 
 tech rs_craft_inter_stingray
 {
-	type	craft
+	type	"craft"
 	description {
 		default "_inter_stingray_txt"
 	}
@@ -3634,14 +3635,14 @@ tech rs_craft_inter_stingray
 		from	"_mail_from_paul_navarre"
 		to	"_mail_to_base_commander"
 		// subject	defined by "name"
-		icon	icons/mail_tech
+		icon	"icons/mail_tech"
 	}
 	mail
 	{
 		from	"_mail_from_paul_navarre"
 		to	"_mail_to_base_commander"
 		// subject	defined by "name"
-		icon	icons/mail_tech
+		icon	"icons/mail_tech"
 	}
 
 	provides	craft_inter_stingray
@@ -3671,7 +3672,7 @@ tech rs_craft_inter_stingray
 tech rs_craft_ufo_scout
 {
 	name	"_UFO - Scout"
-	type	craft
+	type	"craft"
 	up_chapter	crafts
 
 	description {
@@ -3686,7 +3687,7 @@ tech rs_craft_ufo_scout
 		from	"_mail_from_paul_navarre"
 		to		"_mail_to_base_commander"
 		// subject	defined by "name"
-		icon	icons/mail_tech
+		icon	"icons/mail_tech"
 	}
 
 	mail
@@ -3694,7 +3695,7 @@ tech rs_craft_ufo_scout
 		from	"_mail_from_paul_navarre"
 		to		"_mail_to_base_commander"
 		// subject	defined by "name"
-		icon	icons/mail_tech
+		icon	"icons/mail_tech"
 	}
 
 	require_AND
@@ -3713,7 +3714,7 @@ tech rs_craft_ufo_scout
 tech rs_craft_ufo_fighter
 {
 	name	"_UFO - Fighter"
-	type	craft
+	type	"craft"
 	up_chapter	crafts
 
 	description {
@@ -3728,7 +3729,7 @@ tech rs_craft_ufo_fighter
 		from	"_mail_from_paul_navarre"
 		to		"_mail_to_base_commander"
 		// subject	defined by "name"
-		icon	icons/mail_tech
+		icon	"icons/mail_tech"
 	}
 
 	mail
@@ -3736,7 +3737,7 @@ tech rs_craft_ufo_fighter
 		from	"_mail_from_paul_navarre"
 		to		"_mail_to_base_commander"
 		// subject	defined by "name"
-		icon	icons/mail_tech
+		icon	"icons/mail_tech"
 	}
 
 	// FIXME
@@ -3756,7 +3757,7 @@ tech rs_craft_ufo_fighter
 tech rs_craft_ufo_supply
 {
 	name	"_UFO - Supply Ship"
-	type	craft
+	type	"craft"
 	up_chapter	crafts
 
 	description {
@@ -3771,7 +3772,7 @@ tech rs_craft_ufo_supply
 		from	"_mail_from_paul_navarre"
 		to		"_mail_to_base_commander"
 		// subject	defined by "name"
-		icon	icons/mail_tech
+		icon	"icons/mail_tech"
 	}
 
 	mail
@@ -3779,7 +3780,7 @@ tech rs_craft_ufo_supply
 		from	"_mail_from_paul_navarre"
 		to		"_mail_to_base_commander"
 		// subject	defined by "name"
-		icon	icons/mail_tech
+		icon	"icons/mail_tech"
 	}
 
 	// FIXME
@@ -3799,7 +3800,7 @@ tech rs_craft_ufo_supply
 tech rs_craft_ufo_carrier
 {
 	name	"_UFO - Carrier"
-	type	craft
+	type	"craft"
 	up_chapter	crafts
 
 	description {
@@ -3814,7 +3815,7 @@ tech rs_craft_ufo_carrier
 		from	"_mail_from_paul_navarre"
 		to		"_mail_to_base_commander"
 		// subject	defined by "name"
-		icon	icons/mail_tech
+		icon	"icons/mail_tech"
 	}
 
 	mail
@@ -3822,7 +3823,7 @@ tech rs_craft_ufo_carrier
 		from	"_mail_from_paul_navarre"
 		to		"_mail_to_base_commander"
 		// subject	defined by "name"
-		icon	icons/mail_tech
+		icon	"icons/mail_tech"
 	}
 
 	// FIXME
@@ -3842,7 +3843,7 @@ tech rs_craft_ufo_carrier
 tech rs_craft_ufo_bomber
 {
 	name	"_UFO - Bomber"
-	type	craft
+	type	"craft"
 	up_chapter	crafts
 
 	description {
@@ -3857,7 +3858,7 @@ tech rs_craft_ufo_bomber
 		from	"_mail_from_paul_navarre"
 		to		"_mail_to_base_commander"
 		// subject	defined by "name"
-		icon	icons/mail_tech
+		icon	"icons/mail_tech"
 	}
 
 	mail
@@ -3865,7 +3866,7 @@ tech rs_craft_ufo_bomber
 		from	"_mail_from_paul_navarre"
 		to		"_mail_to_base_commander"
 		// subject	defined by "name"
-		icon	icons/mail_tech
+		icon	"icons/mail_tech"
 	}
 
 	// FIXME
@@ -3885,7 +3886,7 @@ tech rs_craft_ufo_bomber
 tech rs_craft_ufo_corrupter
 {
 	name	"_UFO - Corrupter"
-	type	craft
+	type	"craft"
 	up_chapter	crafts
 
 	description {
@@ -3900,7 +3901,7 @@ tech rs_craft_ufo_corrupter
 		from	"_mail_from_paul_navarre"
 		to		"_mail_to_base_commander"
 		// subject	defined by "name"
-		icon	icons/mail_tech
+		icon	"icons/mail_tech"
 	}
 
 	mail
@@ -3908,7 +3909,7 @@ tech rs_craft_ufo_corrupter
 		from	"_mail_from_paul_navarre"
 		to		"_mail_to_base_commander"
 		// subject	defined by "name"
-		icon	icons/mail_tech
+		icon	"icons/mail_tech"
 	}
 
 	// FIXME
@@ -3928,7 +3929,7 @@ tech rs_craft_ufo_corrupter
 tech rs_craft_ufo_gunboat
 {
 	name	"_UFO - Gunboat"
-	type	craft
+	type	"craft"
 	up_chapter	crafts
 
 	description {
@@ -3943,7 +3944,7 @@ tech rs_craft_ufo_gunboat
 		from	"_mail_from_paul_navarre"
 		to		"_mail_to_base_commander"
 		// subject	defined by "name"
-		icon	icons/mail_tech
+		icon	"icons/mail_tech"
 	}
 
 	mail
@@ -3951,7 +3952,7 @@ tech rs_craft_ufo_gunboat
 		from	"_mail_from_paul_navarre"
 		to		"_mail_to_base_commander"
 		// subject	defined by "name"
-		icon	icons/mail_tech
+		icon	"icons/mail_tech"
 	}
 
 	// FIXME
@@ -3971,7 +3972,7 @@ tech rs_craft_ufo_gunboat
 tech rs_craft_ufo_ripper
 {
 	name	"_UFO - Ripper"
-	type	craft
+	type	"craft"
 	up_chapter	crafts
 
 	description {
@@ -3986,7 +3987,7 @@ tech rs_craft_ufo_ripper
 		from	"_mail_from_paul_navarre"
 		to		"_mail_to_base_commander"
 		// subject	defined by "name"
-		icon	icons/mail_tech
+		icon	"icons/mail_tech"
 	}
 
 	mail
@@ -3994,7 +3995,7 @@ tech rs_craft_ufo_ripper
 		from	"_mail_from_paul_navarre"
 		to		"_mail_to_base_commander"
 		// subject	defined by "name"
-		icon	icons/mail_tech
+		icon	"icons/mail_tech"
 	}
 
 	// FIXME
@@ -4014,7 +4015,7 @@ tech rs_craft_ufo_ripper
 tech rs_craft_ufo_harvester
 {
 	name	"_UFO - Harvester"
-	type	craft
+	type	"craft"
 	up_chapter	crafts
 
 	description {
@@ -4029,7 +4030,7 @@ tech rs_craft_ufo_harvester
 		from	"_mail_from_paul_navarre"
 		to		"_mail_to_base_commander"
 		// subject	defined by "name"
-		icon	icons/mail_tech
+		icon	"icons/mail_tech"
 	}
 
 	mail
@@ -4037,7 +4038,7 @@ tech rs_craft_ufo_harvester
 		from	"_mail_from_paul_navarre"
 		to		"_mail_to_base_commander"
 		// subject	defined by "name"
-		icon	icons/mail_tech
+		icon	"icons/mail_tech"
 	}
 
 	// FIXME
@@ -4057,7 +4058,7 @@ tech rs_craft_ufo_harvester
 tech rs_craft_ufo_mothership
 {
 	name	"_UFO - Mothership"
-	type	craft
+	type	"craft"
 	up_chapter	crafts
 
 	description {
@@ -4072,7 +4073,7 @@ tech rs_craft_ufo_mothership
 		from	"_mail_from_paul_navarre"
 		to		"_mail_to_base_commander"
 		// subject	defined by "name"
-		icon	icons/mail_tech
+		icon	"icons/mail_tech"
 	}
 
 	mail
@@ -4080,7 +4081,7 @@ tech rs_craft_ufo_mothership
 		from	"_mail_from_paul_navarre"
 		to		"_mail_to_base_commander"
 		// subject	defined by "name"
-		icon	icons/mail_tech
+		icon	"icons/mail_tech"
 	}
 
 	// FIXME
@@ -4105,7 +4106,7 @@ tech rs_craft_ufo_mothership
 /* Is this needed?
 tech rs_alien_bloodspider_live
 {
-	type	alien
+	type	"alien"
 	name	"_Live Specimen - Bloodspider"
 	description {
 		default "_bloodspider_notes_txt"
@@ -4128,7 +4129,7 @@ tech rs_alien_bloodspider_live
 tech rs_alien_bloodspider_autopsy
 {
 	name	"_Alien Autopsy - Bloodspider"
-	type	alien
+	type	"alien"
 	up_chapter	aliens
 
 	description {
@@ -4144,7 +4145,7 @@ tech rs_alien_bloodspider_autopsy
 		to		"_mail_to_base_commander"
 		// subject	defined by "name"
 		model	"characters/connor"
-		icon	icons/mail_alien
+		icon	"icons/mail_alien"
 	}
 
 	mail
@@ -4153,7 +4154,7 @@ tech rs_alien_bloodspider_autopsy
 		to		"_mail_to_base_commander"
 		// subject	defined by "name"
 		model	"characters/connor"
-		icon	icons/mail_alien
+		icon	"icons/mail_alien"
 	}
 
 	require_AND
@@ -4162,12 +4163,12 @@ tech rs_alien_bloodspider_autopsy
 	}
 	time	4500
 
-	image techs/bloodspider_dead
+	image "techs/bloodspider_dead"
 }
 
 tech rs_weapon_bloodspider
 {
-	type		weapon
+	type		"weapon"
 	up_chapter	equipment
 
 	require_AND
@@ -4185,7 +4186,7 @@ tech rs_weapon_bloodspider
 tech rs_alien_ortnok_autopsy
 {
 	name	"_Alien Autopsy - Ortnok"
-	type	alien
+	type	"alien"
 	up_chapter	aliens
 
 	description {
@@ -4203,7 +4204,7 @@ tech rs_alien_ortnok_autopsy
 		to		"_mail_to_base_commander"
 		// subject	defined by "name"
 		model	"characters/connor"
-		icon	icons/mail_alien
+		icon	"icons/mail_alien"
 	}
 
 	mail
@@ -4212,7 +4213,7 @@ tech rs_alien_ortnok_autopsy
 		to		"_mail_to_base_commander"
 		// subject	defined by "name"
 		model	"characters/connor"
-		icon	icons/mail_alien
+		icon	"icons/mail_alien"
 	}
 
 	require_AND
@@ -4221,7 +4222,7 @@ tech rs_alien_ortnok_autopsy
 	}
 	time	3500
 
-	image	techs/ortnok_dead
+	image	"techs/ortnok_dead"
 }
 
 // TAMAN
@@ -4229,7 +4230,7 @@ tech rs_alien_ortnok_autopsy
 tech rs_alien_taman_autopsy
 {
 	name	"_Alien Autopsy - Taman"
-	type	alien
+	type	"alien"
 	up_chapter	aliens
 
 	description {
@@ -4247,7 +4248,7 @@ tech rs_alien_taman_autopsy
 		to		"_mail_to_base_commander"
 		// subject	defined by "name"
 		model	"characters/connor"
-		icon	icons/mail_alien
+		icon	"icons/mail_alien"
 	}
 
 	mail
@@ -4256,7 +4257,7 @@ tech rs_alien_taman_autopsy
 		to		"_mail_to_base_commander"
 		// subject	defined by "name"
 		model	"characters/connor"
-		icon	icons/mail_alien
+		icon	"icons/mail_alien"
 	}
 
 	require_AND
@@ -4265,7 +4266,7 @@ tech rs_alien_taman_autopsy
 	}
 	time	3500
 
-	image	techs/taman_dead
+	image	"techs/taman_dead"
 }
 
 // SHEVAAR
@@ -4273,7 +4274,7 @@ tech rs_alien_taman_autopsy
 tech rs_alien_shevaar_autopsy
 {
 	name	"_Alien Autopsy - Shevaar"
-	type	alien
+	type	"alien"
 	up_chapter	aliens
 
 	description {
@@ -4291,7 +4292,7 @@ tech rs_alien_shevaar_autopsy
 		to		"_mail_to_base_commander"
 		// subject	defined by "name"
 		model	"characters/connor"
-		icon	icons/mail_alien
+		icon	"icons/mail_alien"
 	}
 
 	mail
@@ -4300,7 +4301,7 @@ tech rs_alien_shevaar_autopsy
 		to		"_mail_to_base_commander"
 		// subject	defined by "name"
 		model	"characters/connor"
-		icon	icons/mail_alien
+		icon	"icons/mail_alien"
 	}
 
 	require_AND
@@ -4309,7 +4310,7 @@ tech rs_alien_shevaar_autopsy
 	}
 	time	3500
 
-	image	techs/shevaar_dead
+	image	"techs/shevaar_dead"
 }
 
 // HOVERNET
@@ -4319,7 +4320,7 @@ tech rs_alien_shevaar_autopsy
 // -Zenerka 20.01.2007
 //tech rs_alien_stinger_notes
 //{
-//	type	alien
+//	type	"alien"
 //name	"_Live Specimen - Stinger"
 //	description	"_hovernet_notes_txt"
 //	pre_description	"_hovernet_notes_pre_txt"
@@ -4331,7 +4332,7 @@ tech rs_alien_shevaar_autopsy
 //}
 //tech rs_alien_stinger_autopsy
 //{
-//	type	alien
+//	type	"alien"
 //	name	"_Alien Autopsy - Stinger"
 //	description	"_hovernet_autopsy_txt"
 //	pre_description	"_hovernet_autopsy_pre_txt"
@@ -4348,7 +4349,7 @@ tech rs_alien_shevaar_autopsy
 
 //tech rs_alien_cyborg_ortnok_autopsy
 //{
-//	type	alien
+//	type	"alien"
 //	name	"_Alien Autopsy - Ortnok Cyborg"
 //	description	"_cyborg_ortnok_autopsy_txt"
 //	pre_description	"_cyborg_ortnok_autopsy_pre_txt"
@@ -4369,7 +4370,7 @@ tech rs_alien_shevaar_autopsy
 
 tech rs_ugv_phoenix
 {
-	type	ugv
+	type	"ugv"
 	mdl	ugv_phoenix
 
 	up_chapter	equipment
@@ -4389,7 +4390,7 @@ tech rs_ugv_phoenix
 // UGV with wheels
 tech rs_ugv_ares_w
 {
-	type	ugv
+	type	"ugv"
 	mdl	ugv_ares_w
 
 	up_chapter	equipment
@@ -4408,7 +4409,7 @@ tech rs_ugv_ares_w
 
 tech rs_ugv_chaingun
 {
-	type	weapon
+	type	"weapon"
 //	mdl			ares_w_turret // we do not need this here, but this is the correct model
 
 	up_chapter	equipment
@@ -4427,7 +4428,7 @@ tech rs_ugv_chaingun
 
 tech rs_ugv_chaingun_belt
 {
-	type	weapon
+	type	"weapon"
 //	mdl	ugv_phoenix // we do not need this here
 
 	up_chapter	equipment
@@ -4446,7 +4447,7 @@ tech rs_ugv_chaingun_belt
 
 tech rs_ugv_weapon_autocannon
 {
-	type	weapon
+	type	"weapon"
 	mdl	ugv_phoenix	// @todo fixme
 
 	up_chapter	equipment
@@ -4468,7 +4469,7 @@ tech rs_ugv_weapon_autocannon
 
 tech rs_base_AA51_launcher
 {
-	type		tech
+	type		"tech"
 	up_chapter	equipment
 	name		"_AA51 missile launcher"
 	// pre_description	"_b_missile_pre_txt"
@@ -4485,7 +4486,7 @@ tech rs_base_AA51_launcher
 
 tech rs_base_ammo_AA51
 {
-	type		tech
+	type		"tech"
 	/* this ammo is virtual shouldn't be shown anywhere */
 	name		"AA51 Cicada SAM"
 	provides	base_ammo_AA51
@@ -4499,7 +4500,7 @@ tech rs_base_ammo_AA51
 
 tech rs_craft_el_raven
 {
-	type		craftitem
+	type		"craftitem"
 	up_chapter	crafts
 	name		"_'Raven' ECM Unit"
 	// pre_description	"_craft_electronics_raven_pre_txt"
@@ -4516,7 +4517,7 @@ tech rs_craft_el_raven
 
 tech rs_craft_shield_polymer
 {
-	type		craftitem
+	type		"craftitem"
 	up_chapter	crafts
 	name		"_Polymer Aircraft Armour"
 	// pre_description	"_craft_shield_light_pre_txt"
@@ -4533,7 +4534,7 @@ tech rs_craft_shield_polymer
 
 tech rs_craft_shield_plating
 {
-	type		craftitem
+	type		"craftitem"
 	up_chapter	crafts
 	name		"_Alien Aircraft Plating"
 	pre_description {
@@ -4547,14 +4548,14 @@ tech rs_craft_shield_plating
 		from	"_mail_from_paul_navarre"
 		to	"_mail_to_base_commander"
 		// subject	defined by "name"
-		icon	icons/mail_tech
+		icon	"icons/mail_tech"
 	}
 	mail
 	{
 		from	"_mail_from_paul_navarre"
 		to	"_mail_to_base_commander"
 		// subject	defined by "name"
-		icon	icons/mail_tech
+		icon	"icons/mail_tech"
 	}
 
 	provides	craft_shield_plating
@@ -4576,7 +4577,7 @@ tech rs_craft_shield_plating
 tech rs_craft_alien_astrogation
 {
 	name		"_Alien Astrogation"
-	type		craftitem
+	type		"craftitem"
 	up_chapter	crafts
 
 	pre_description {
@@ -4590,14 +4591,14 @@ tech rs_craft_alien_astrogation
 		from	"_mail_from_paul_navarre"
 		to	"_mail_to_base_commander"
 		// subject	defined by "name"
-		icon	icons/mail_tech
+		icon	"icons/mail_tech"
 	}
 	mail
 	{
 		from	"_mail_from_paul_navarre"
 		to	"_mail_to_base_commander"
 		// subject	defined by "name"
-		icon	icons/mail_tech
+		icon	"icons/mail_tech"
 	}
 
 	provides	craft_alien_astrogation
@@ -4614,7 +4615,7 @@ tech rs_craft_alien_astrogation
 tech rs_craft_alien_propulsion
 {
 	name		"_Alien Propulsion"
-	type		craftitem
+	type		"craftitem"
 	up_chapter	crafts
 
 	pre_description {
@@ -4628,14 +4629,14 @@ tech rs_craft_alien_propulsion
 		from	"_mail_from_paul_navarre"
 		to	"_mail_to_base_commander"
 		// subject	defined by "name"
-		icon	icons/mail_tech
+		icon	"icons/mail_tech"
 	}
 	mail
 	{
 		from	"_mail_from_paul_navarre"
 		to	"_mail_to_base_commander"
 		// subject	defined by "name"
-		icon	icons/mail_tech
+		icon	"icons/mail_tech"
 	}
 	provides	craft_alien_propulsion
 	require_AND {
@@ -4651,7 +4652,7 @@ tech rs_craft_alien_propulsion
 tech rs_craft_alien_detection
 {
 	name		"_Alien Detection"
-	type		craftitem
+	type		"craftitem"
 	up_chapter	crafts
 
 	pre_description	{
@@ -4665,14 +4666,14 @@ tech rs_craft_alien_detection
 		from	"_mail_from_paul_navarre"
 		to	"_mail_to_base_commander"
 		// subject	defined by "name"
-		icon	icons/mail_tech
+		icon	"icons/mail_tech"
 	}
 	mail
 	{
 		from	"_mail_from_paul_navarre"
 		to	"_mail_to_base_commander"
 		// subject	defined by "name"
-		icon	icons/mail_tech
+		icon	"icons/mail_tech"
 	}
 	provides	craft_alien_detection
 	require_AND {
@@ -4687,7 +4688,7 @@ tech rs_craft_alien_detection
 
 tech rs_craft_weapon_alc
 {
-	type		craftitem
+	type		"craftitem"
 	up_chapter	crafts
 	name		"_Aerial Laser Cannon"
 	pre_description	{
@@ -4707,7 +4708,7 @@ tech rs_craft_weapon_alc
 		from	"_mail_from_paul_navarre"
 		to		"_mail_to_base_commander"
 		// subject	defined by "name"
-		icon	icons/mail_tech
+		icon	"icons/mail_tech"
 	}
 
 	mail
@@ -4715,7 +4716,7 @@ tech rs_craft_weapon_alc
 		from	"_mail_from_paul_navarre"
 		to		"_mail_to_base_commander"
 		// subject	defined by "name"
-		icon	icons/mail_tech
+		icon	"icons/mail_tech"
 	}
 
 	provides	craft_weapon_alc
@@ -4727,7 +4728,7 @@ tech rs_craft_weapon_alc
 
 tech rs_craft_ammo_alc
 {
-	type		tech
+	type		"tech"
 	/* this ammo is virtual, shouldn't be shown anywhere */
 	name		"D-F Tank"
 	provides	craft_ammo_alc
@@ -4737,7 +4738,7 @@ tech rs_craft_ammo_alc
 
 tech rs_craft_weapon_shiva
 {
-	type		craftitem
+	type		"craftitem"
 	up_chapter	crafts
 	name		"_SHIVA Rotary Cannon"
 	// pre_description	"_craft_weapon_shiva_pre_txt"
@@ -4754,7 +4755,7 @@ tech rs_craft_weapon_shiva
 
 tech rs_craft_ammo_shiva_1
 {
-	type		craftitem
+	type		"craftitem"
 	up_chapter	crafts
 	name		"_SHIVA 20mm API Rounds"
 	// pre_description	"_craft_ammo_shiva_1_pre_txt"
@@ -4775,7 +4776,7 @@ tech rs_craft_ammo_shiva_1
 
 tech rs_craft_ammo_shiva_2
 {
-	type		craftitem
+	type		"craftitem"
 	up_chapter	crafts
 	name		"_SHIVA 20mm HEI Rounds"
 	// pre_description	"_craft_ammo_shiva_2_pre_txt"
@@ -4796,7 +4797,7 @@ tech rs_craft_ammo_shiva_2
 
 tech rs_craft_weapon_sparrowhawk
 {
-	type		craftitem
+	type		"craftitem"
 	up_chapter	crafts
 	name		"_'Sparrowhawk' AA Missile Rack"
 	// pre_description	"_craft_weapon_sparrowhawk_pre_txt"
@@ -4813,7 +4814,7 @@ tech rs_craft_weapon_sparrowhawk
 
 tech rs_craft_ammo_sparrowhawk
 {
-	type		craftitem
+	type		"craftitem"
 	up_chapter	crafts
 	name		"_'Sparrowhawk' Missile"
 	// pre_description	"_craft_ammo_sparrowhawk_pre_txt"
@@ -4834,7 +4835,7 @@ tech rs_craft_ammo_sparrowhawk
 
 tech rs_craft_weapon_tr20
 {
-	type		craftitem
+	type		"craftitem"
 	up_chapter	crafts
 	name		"_TR-20 Rocket Pod"
 	// pre_description	"_craft_weapon_tr20_pre_txt"
@@ -4851,7 +4852,7 @@ tech rs_craft_weapon_tr20
 
 tech rs_craft_ammo_tr20
 {
-	type		craftitem
+	type		"craftitem"
 	up_chapter	crafts
 	name		"_TR-20 Rocket"
 	// pre_description	"_craft_ammo_tr20_pre_txt"
@@ -4873,7 +4874,7 @@ tech rs_craft_ammo_tr20
 tech rs_craft_weapon_particle
 {
 	name		"_Particle Beam Weapon"
-	type		craftitem
+	type		"craftitem"
 	up_chapter	crafts
 
 	pre_description {
@@ -4890,7 +4891,7 @@ tech rs_craft_weapon_particle
 		from	"_mail_from_paul_navarre"
 		to		"_mail_to_base_commander"
 		// subject	defined by "name"
-		icon	icons/mail_tech
+		icon	"icons/mail_tech"
 	}
 
 	mail
@@ -4898,7 +4899,7 @@ tech rs_craft_weapon_particle
 		from	"_mail_from_paul_navarre"
 		to		"_mail_to_base_commander"
 		// subject	defined by "name"
-		icon	icons/mail_tech
+		icon	"icons/mail_tech"
 	}
 
 	require_AND
@@ -4922,7 +4923,7 @@ tech rs_craft_weapon_particle
 
 tech rs_craft_ammo_particle
 {
-	type		tech
+	type		"tech"
 	/* this ammo is virtual, shouldn't be shown anywhere */
 	name		"Particle Beam Accelerator"
 	provides	craft_ammo_particle_beam
@@ -4933,7 +4934,7 @@ tech rs_craft_ammo_particle
 tech rs_craft_weapon_alien_launcher
 {
 	name		"_Alien Launcher"
-	type		craftitem
+	type		"craftitem"
 	up_chapter	crafts
 
 	pre_description {
@@ -4950,7 +4951,7 @@ tech rs_craft_weapon_alien_launcher
 		from	"_mail_from_paul_navarre"
 		to		"_mail_to_base_commander"
 		// subject	defined by "name"
-		icon	icons/mail_tech
+		icon	"icons/mail_tech"
 	}
 
 	mail
@@ -4958,7 +4959,7 @@ tech rs_craft_weapon_alien_launcher
 		from	"_mail_from_paul_navarre"
 		to		"_mail_to_base_commander"
 		// subject	defined by "name"
-		icon	icons/mail_tech
+		icon	"icons/mail_tech"
 	}
 
 	require_AND
@@ -4981,7 +4982,7 @@ tech rs_craft_weapon_alien_launcher
 tech rs_craft_ammo_am_missile
 {
 	name		"_Antimatter Missile"
-	type		craftitem
+	type		"craftitem"
 	up_chapter	crafts
 
 	pre_description {
@@ -4998,7 +4999,7 @@ tech rs_craft_ammo_am_missile
 		from	"_mail_from_paul_navarre"
 		to		"_mail_to_base_commander"
 		// subject	defined by "name"
-		icon	icons/mail_tech
+		icon	"icons/mail_tech"
 	}
 
 	mail
@@ -5006,7 +5007,7 @@ tech rs_craft_ammo_am_missile
 		from	"_mail_from_paul_navarre"
 		to		"_mail_to_base_commander"
 		// subject	defined by "name"
-		icon	icons/mail_tech
+		icon	"icons/mail_tech"
 	}
 
 	require_AND
@@ -5032,7 +5033,7 @@ tech rs_craft_ammo_am_missile
 tech rs_craft_ammo_hybrid_missile
 {
 	name		"_Hybrid Missile"
-	type		craftitem
+	type		"craftitem"
 	up_chapter	crafts
 
 	pre_description {
@@ -5049,7 +5050,7 @@ tech rs_craft_ammo_hybrid_missile
 		from	"_mail_from_paul_navarre"
 		to		"_mail_to_base_commander"
 		// subject	defined by "name"
-		icon	icons/mail_tech
+		icon	"icons/mail_tech"
 	}
 
 	mail
@@ -5057,7 +5058,7 @@ tech rs_craft_ammo_hybrid_missile
 		from	"_mail_from_paul_navarre"
 		to		"_mail_to_base_commander"
 		// subject	defined by "name"
-		icon	icons/mail_tech
+		icon	"icons/mail_tech"
 	}
 
 	require_AND
@@ -5080,7 +5081,7 @@ tech rs_craft_ammo_hybrid_missile
 
 tech rs_craft_el_targeting
 {
-	type		craftitem
+	type		"craftitem"
 	up_chapter	crafts
 	name		"_Targeting Computer"
 	// pre_description	"_craft_electronics_targeting_pre_txt"
@@ -5097,7 +5098,7 @@ tech rs_craft_el_targeting
 
 tech rs_craft_el_fuelpod
 {
-	type		craftitem
+	type		"craftitem"
 	up_chapter	crafts
 	name		"_Fuel Pod"
 	// pre_description	"_craft_electronics_fuelpod_pre_txt"
@@ -5120,7 +5121,7 @@ tech rs_craft_el_fuelpod
 tech rs_alien_materials
 {
 	name		"_Alien Materials"
-	type		tech
+	type		"tech"
 	up_chapter	equipment
 
 	description {
@@ -5135,7 +5136,7 @@ tech rs_alien_materials
 		from	"_mail_from_paul_navarre"
 		to	"_mail_to_base_commander"
 		// subject	defined by "name"
-		icon	icons/mail_tech
+		icon	"icons/mail_tech"
 	}
 
 	mail
@@ -5143,7 +5144,7 @@ tech rs_alien_materials
 		from	"_mail_from_paul_navarre"
 		to	"_mail_to_base_commander"
 		// subject	defined by "name"
-		icon	icons/mail_tech
+		icon	"icons/mail_tech"
 	}
 
 	require_AND
@@ -5157,7 +5158,7 @@ tech rs_alien_materials
 
 tech rs_item_alienmaterials
 {
-	type	weapon
+	type	"weapon"
 	name	"_Alien Materials"
 	description {
 		default "_alien_materials_txt"
@@ -5179,7 +5180,7 @@ tech rs_item_alienmaterials
 // http://ufoai.org/wiki/index.php/Storyline/Final#.22Political_Situation_Before_The_Invasion.22
 tech news_init_political_situation
 {
-	type	news
+	type	"news"
 	name	"_Political Situation Before The Invasion"
 	description {
 		default "_news_initial_political_situation_txt"
@@ -5192,7 +5193,7 @@ tech news_init_political_situation
 // http://ufoai.org/wiki/index.php/Storyline/Final#.22After_the_War.22
 tech news_after_the_war
 {
-	type	news
+	type	"news"
 	name	"_After The War"
 	description {
 		default "_news_after_the_war_txt"
@@ -5205,7 +5206,7 @@ tech news_after_the_war
 // http://ufoai.org/wiki/index.php/Storyline/Final#.22PHALANX_And_The_Mumbai_Aftermath.22
 tech news_phalanx_mumbai_aftermath
 {
-	type	news
+	type	"news"
 	name	"_PHALANX And The Mumbai Aftermath"
 	description {
 		default "_news_phalanx_and_mumbai_aftermath_txt"
@@ -5219,7 +5220,7 @@ tech news_phalanx_mumbai_aftermath
 tech news_new_twist
 {
 	name		"_A New Twist"
-	type		news
+	type		"news"
 	up_chapter	news
 
 	description {
@@ -5233,7 +5234,7 @@ tech news_new_twist
 		to		"_mail_to_base_commander"
 		// subject	defined by "name"
 		model	"characters/connor"
-		icon	icons/mail_intelligence
+		icon	"icons/mail_intelligence"
 	}
 
 	require_AND
@@ -5249,7 +5250,7 @@ tech news_new_twist
 tech rs_enemy_on_earth
 {
 	name		"_The Enemy On Earth"
-	type		tech
+	type		"tech"
 	up_chapter	news
 
 	description {
@@ -5266,7 +5267,7 @@ tech rs_enemy_on_earth
 		to	"_mail_to_base_commander"
 		// subject	defined by "name"
 		model	"characters/connor"
-		icon	icons/mail_intelligence
+		icon	"icons/mail_intelligence"
 	}
 	mail_pre
 	{
@@ -5274,7 +5275,7 @@ tech rs_enemy_on_earth
 		to	"_mail_to_base_commander"
 		// subject	defined by "name"
 		model	"characters/connor"
-		icon	icons/mail_intelligence
+		icon	"icons/mail_intelligence"
 	}
 	require_AND
 	{
@@ -5289,7 +5290,7 @@ tech rs_enemy_on_earth
 tech rs_xvi_census
 {
 	name		"_XVI Census"
-	type		tech
+	type		"tech"
 	up_chapter	news
 
 	description {
@@ -5305,7 +5306,7 @@ tech rs_xvi_census
 		to	"_mail_to_base_commander"
 		// subject	defined by "name"
 		model	"characters/falkland"
-		icon	icons/mail_intelligence
+		icon	"icons/mail_intelligence"
 	}
 
 	mail
@@ -5314,7 +5315,7 @@ tech rs_xvi_census
 		to	"_mail_to_base_commander"
 		// subject	defined by "name"
 		model	"characters/falkland"
-		icon	icons/mail_intelligence
+		icon	"icons/mail_intelligence"
 	}
 
 	require_AND
@@ -5330,7 +5331,7 @@ tech rs_xvi_census
 tech rs_enemy_on_earth_revisited
 {
 	name		"_The Enemy On Earth - Revisited"
-	type		tech
+	type		"tech"
 	up_chapter	news
 
 	description {
@@ -5346,7 +5347,7 @@ tech rs_enemy_on_earth_revisited
 		to	"_mail_to_base_commander"
 		// subject	defined by "name"
 		model	"characters/connor"
-		icon	icons/mail_intelligence
+		icon	"icons/mail_intelligence"
 	}
 	mail_pre
 	{
@@ -5354,7 +5355,7 @@ tech rs_enemy_on_earth_revisited
 		to	"_mail_to_base_commander"
 		// subject	defined by "name"
 		model	"characters/connor"
-		icon	icons/mail_intelligence
+		icon	"icons/mail_intelligence"
 	}
 	require_AND
 	{
@@ -5370,7 +5371,7 @@ tech rs_enemy_on_earth_revisited
 tech rs_alien_strategy
 {
 	name		"_The Alien Strategy"
-	type		tech
+	type		"tech"
 	up_chapter	news
 
 	description {
@@ -5383,7 +5384,7 @@ tech rs_alien_strategy
 		to	"_mail_to_base_commander"
 		// subject	defined by "name"
 		model	"characters/falkland"
-		icon	icons/mail_intelligence
+		icon	"icons/mail_intelligence"
 	}
 	require_OR
 	{
@@ -5398,7 +5399,7 @@ tech rs_alien_strategy
 tech rs_orbital_ufo_activity
 {
 	name		"_Orbital UFO Activity"
-	type		tech
+	type		"tech"
 	up_chapter	news
 
 	description {
@@ -5411,7 +5412,7 @@ tech rs_orbital_ufo_activity
 		to	"_mail_to_base_commander"
 		// subject	defined by "name"
 		model	"characters/falkland"
-		icon	icons/mail_intelligence
+		icon	"icons/mail_intelligence"
 	}
 	require_AND
 	{

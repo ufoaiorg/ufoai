@@ -9,7 +9,7 @@
 // Should contain _every_ enemy possible.
 //tech rs_contained_alien
 //{
-//      type    logic
+//      type    "logic"
 //      name    "LOGIC:One Live Alien"
 //      require_OR
 //      {
@@ -25,7 +25,7 @@
 // Should contain _every_ organic enemy possible.
 tech rs_contained_organic_alien
 {
-	type	logic
+	type	"logic"
 	name	"LOGIC:One Live Organic Alien"
 	require_OR
 	{
@@ -39,7 +39,7 @@ tech rs_contained_organic_alien
 
 tech rs_fighter_OR_harvester
 {
-	type logic
+	type "logic"
 	name	"LOGIC:fighter OR harvester"
 	require_OR
 	{
@@ -52,7 +52,7 @@ tech rs_fighter_OR_harvester
 
 tech rs_antimatter_extra
 {
-	type    logic
+	type    "logic"
 	name    "LOGIC:Antimatter"
 	require_AND
 	{
@@ -63,7 +63,7 @@ tech rs_antimatter_extra
 
 tech rs_taman_extra
 {
-	type	logic
+	type	"logic"
 	name	"LOGIC:Taman autopsy"
 	require_OR
 	{
@@ -75,7 +75,7 @@ tech rs_taman_extra
 
 tech rs_shevaar_extra
 {
-	type	logic
+	type	"logic"
 	name	"LOGIC:Shevaar autopsy"
 	require_OR
 	{
@@ -87,7 +87,7 @@ tech rs_shevaar_extra
 
 tech rs_ortnok_extra
 {
-	type	logic
+	type	"logic"
 	name	"LOGIC:Ortnok autopsy"
 	require_OR
 	{
@@ -103,7 +103,7 @@ tech rs_ortnok_extra
 // "XVI infection begins"
 tech rs_alien_xvi_event
 {
-	type	logic
+	type	"logic"
 	name	"LOGIC:XVI event"
 	require_AND
 	{
@@ -118,7 +118,7 @@ tech rs_alien_xvi_event
 // "Humans start attacking player"
 tech rs_enemy_on_earth_event
 {
-	type	logic
+	type	"logic"
 	name	"LOGIC:Enemy On Earth event"
 	require_AND
 	{
@@ -131,7 +131,7 @@ tech rs_enemy_on_earth_event
 // "first alien base discovered"
 tech rs_alien_base_discovered_event
 {
-	type	logic
+	type	"logic"
 	name	"LOGIC:Alien base discovered event"
 	require_AND
 	{
@@ -145,7 +145,7 @@ tech rs_alien_base_discovered_event
 // Logic techs for "Any 2 autopsies"
 tech rs_autopsy_O_T
 {
-	type	logic
+	type	"logic"
 	name	"LOGIC: Ortnok AND Taman Autopsy"
 	require_AND
 	{
@@ -157,7 +157,7 @@ tech rs_autopsy_O_T
 
 tech rs_autopsy_O_S
 {
-	type	logic
+	type	"logic"
 	name	"LOGIC: Ortnok AND Sheevar Autopsy"
 	require_AND
 	{
@@ -170,7 +170,7 @@ tech rs_autopsy_O_S
 /*
 tech rs_autopsy_O_Br
 {
-	type	logic
+	type	"logic"
 	name	"LOGIC: Ortnok AND Breeder Autopsy"
 	require_AND
 	{
@@ -183,7 +183,7 @@ tech rs_autopsy_O_Br
 
 tech rs_autopsy_T_S
 {
-	type	logic
+	type	"logic"
 	name	"LOGIC: Taman AND Shevaar Autopsy"
 	require_AND
 	{
@@ -196,7 +196,7 @@ tech rs_autopsy_T_S
 /*
 tech rs_autopsy_T_Br
 {
-	type	logic
+	type	"logic"
 	name	"LOGIC: Taman AND Breeder Autopsy"
 	require_AND
 	{
@@ -208,7 +208,7 @@ tech rs_autopsy_T_Br
 
 tech rs_autopsy_S_Br
 {
-	type	logic
+	type	"logic"
 	name	"LOGIC: Shevaar AND Breeder Autopsy"
 	require_AND
 	{
@@ -221,7 +221,7 @@ tech rs_autopsy_S_Br
 
 tech rs_any_2_autopsies
 {
-	type	logic
+	type	"logic"
 	name	"LOGIC: Any 2 autopsies (organic aliens)"
 	require_OR
 	{

@@ -8,7 +8,7 @@ UFOScript:
 	(blocks+=NamedBlock)*;
 
 NamedBlock:
-	type=ID name=ID "{"
+	type=ID name=ID "{" =>
 		(=>properties+=Property)*
 	"}";
 
@@ -16,12 +16,12 @@ Property:
 	type=ID => value=PropertyValue;
 
 PropertyValue:
-	PropertyValueString
+	=> PropertyValueBlock
 	| PropertyValueBoolean
 	| PropertyValueNumber
 	| PropertyValueNamedConst
-	| PropertyValueBlock
-	| PropertyValueID;
+	| PropertyValueID
+	| PropertyValueString;
 
 PropertyValueString:
 	value=STRING;
