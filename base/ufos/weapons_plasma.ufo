@@ -4,9 +4,9 @@
 item plaspistol
 {
 	name			"_Plasma Pistol"
-	model			weapons/plaspistol/plaspistol
+	model			"weapons/plaspistol/plaspistol"
 	weapon			true
-	type			pistol
+	type			"pistol"
 	animationindex	2
 	holdtwohanded	false
 	firetwohanded	false
@@ -15,7 +15,7 @@ item plaspistol
 	scale			1.5
 	ammo			8
 	reload			15
-	reloadsound		weapons/reload-pistol
+	reloadsound		"weapons/reload-pistol"
 	price			2000
 	size			20
 	is_secondary	true
@@ -24,8 +24,8 @@ item plaspistol
 item plaspistol_ammo
 {
 	name			"_Plasma Pistol Charger"
-	model			weapons/plaspistol/plaspistol_clip
-	type			ammo
+	model			"weapons/plaspistol/plaspistol_clip"
+	type			"ammo"
 	animationindex	0
 	shape			"0 0 1 1"
 	center			"0 0 -0.2"
@@ -33,20 +33,21 @@ item plaspistol_ammo
 	price			800
 	size			3
 	is_secondary	true
-	dmgtype			plasma
+	dmgtype			"plasma"
 
-	weapon_mod plaspistol
+	weapon_mod
 	{
+		weapon plaspistol
 		firedef
 		{
 			name				"_Snap Shot"
-			skill				close
+			skill				"close"
 			projtl				plasmaMiniPulse
 			impact				plasmaImpactCharged
 			hitbody				plasmaImpactCharged
-			firesnd				weapons/plasma-small
-			impsnd				impact/plasma-impact
-			bodysnd 			impact/plasma-bodyimpact
+			firesnd				"weapons/plasma-small"
+			impsnd				"impact/plasma-impact"
+			bodysnd 			"impact/plasma-bodyimpact"
 			speed				1500
 			spread				"2.2 2.2"
 			crouch				1
@@ -56,19 +57,19 @@ item plaspistol_ammo
 			delaybetweenshots	5
 			time				6
 			damage				"50 10"
-			dmgweight			plasma_light
+			dmgweight			"plasma_light"
 			reaction			true
 		}
 		firedef
 		{
 			name				"_Burst"
-			skill				close
+			skill				"close"
 			projtl				plasmaMiniPulse
 			impact				plasmaImpactCharged
 			hitbody				plasmaImpactCharged
-			firesnd				weapons/plasma-small
-			impsnd				impact/plasma-impact
-			bodysnd 			impact/plasma-bodyimpact
+			firesnd				"weapons/plasma-small"
+			impsnd				"impact/plasma-impact"
+			bodysnd 			"impact/plasma-bodyimpact"
 			speed				1500
 			spread				"2.8 2.8"
 			crouch				1
@@ -78,18 +79,18 @@ item plaspistol_ammo
 			delaybetweenshots	5
 			time				10
 			damage				"50 10"
-			dmgweight			plasma_light
+			dmgweight			"plasma_light"
 		}
 		firedef
 		{
 			name				"_Aimed Shot"
-			skill				close
+			skill				"close"
 			projtl				plasmaMiniPulse
 			impact				plasmaImpactCharged
 			hitbody				plasmaImpactCharged
-			firesnd				weapons/plasma-small
-			impsnd				impact/plasma-impact
-			bodysnd 			impact/plasma-bodyimpact
+			firesnd				"weapons/plasma-small"
+			impsnd				"impact/plasma-impact"
+			bodysnd 			"impact/plasma-bodyimpact"
 			speed				1500
 			spread				"2 2"
 			crouch				1
@@ -99,7 +100,7 @@ item plaspistol_ammo
 			delaybetweenshots	5
 			time				10
 			damage				"50 10"
-			dmgweight			plasma_light
+			dmgweight			"plasma_light"
 			reaction			false
 		}
 	}
@@ -112,9 +113,9 @@ item plaspistol_ammo
 item plasrifle
 {
 	name			"_Plasma Rifle"
-	model			weapons/plasrifle/plasrifle
+	model			"weapons/plasrifle/plasrifle"
 	weapon			true
-	type			biggun
+	type			"biggun"
 	animationindex	1
 	holdtwohanded	false
 	firetwohanded	true
@@ -123,7 +124,7 @@ item plasrifle
 	scale			1.25
 	ammo			20
 	reload			12
-	reloadsound		weapons/reload-rifle
+	reloadsound		"weapons/reload-rifle"
 	price			2500
 	size			40
 	is_primary		true
@@ -132,8 +133,8 @@ item plasrifle
 item plasrifle_ammo
 {
 	name			"_Plasma Rifle Charger"
-	model			weapons/plasrifle/plasrifle_clip
-	type			ammo
+	model			"weapons/plasrifle/plasrifle_clip"
+	type			"ammo"
 	animationindex	0
 	shape			"0 0 2 1"
 	center			"0 0 -0.1"
@@ -141,20 +142,21 @@ item plasrifle_ammo
 	price			1000
 	size			4
 	is_primary		true
-	dmgtype			plasma
+	dmgtype			"plasma"
 
-	weapon_mod plasrifle
+	weapon_mod
 	{
+		weapon plasrifle
 		firedef
 		{
 			name				"_Snap Shot"
-			skill				assault
+			skill				"assault"
 			projtl				plasmaPulse
 			impact				plasmaImpactCharged
 			hitbody				plasmaImpactCharged
-			firesnd				weapons/plasma-medium
-			impsnd				impact/plasma-impact
-			bodysnd 			impact/plasma-bodyimpact
+			firesnd				"weapons/plasma-medium"
+			impsnd				"impact/plasma-impact"
+			bodysnd 			"impact/plasma-bodyimpact"
 			speed				1300
 			spread				"1.2 1.2"
 			crouch				0.85
@@ -164,19 +166,19 @@ item plasrifle_ammo
 			delaybetweenshots	5
 			time				8
 			damage				"80 10"
-			dmgweight			plasma_medium
+			dmgweight			"plasma_medium"
 			reaction			true
 		}
 		firedef
 		{
 			name				"_3-Round Burst"
-			skill				assault
+			skill				"assault"
 			projtl				plasmaPulse
 			impact				plasmaImpactCharged
 			hitbody				plasmaImpactCharged
-			firesnd				weapons/plasma-medium
-			impsnd				impact/plasma-impact
-			bodysnd 			impact/plasma-bodyimpact
+			firesnd				"weapons/plasma-medium"
+			impsnd				"impact/plasma-impact"
+			bodysnd 			"impact/plasma-bodyimpact"
 			speed				1300
 			spread				"1.5 1.5"
 			crouch				0.85
@@ -186,19 +188,19 @@ item plasrifle_ammo
 			delaybetweenshots	8
 			time				12
 			damage				"80 10"
-			dmgweight			plasma_medium
+			dmgweight			"plasma_medium"
 			reaction			true
 		}
 		firedef
 		{
 			name				"_Full-Auto"
-			skill				assault
+			skill				"assault"
 			projtl				plasmaPulse
 			impact				plasmaImpactCharged
 			hitbody				plasmaImpactCharged
-			firesnd				weapons/plasma-medium
-			impsnd				impact/plasma-impact
-			bodysnd 			impact/plasma-bodyimpact
+			firesnd				"weapons/plasma-medium"
+			impsnd				"impact/plasma-impact"
+			bodysnd 			"impact/plasma-bodyimpact"
 			speed				1700
 			spread				"1.8 1.8"
 			crouch				0.85
@@ -208,19 +210,19 @@ item plasrifle_ammo
 			delaybetweenshots	8
 			time				16
 			damage				"80 10"
-			dmgweight			plasma_medium
+			dmgweight			"plasma_medium"
 			reaction			true
 		}
 		firedef
 		{
 			name				"_Aimed Shot"
-			skill				sniper
+			skill				"sniper"
 			projtl				plasmaPulse
 			impact				plasmaImpactCharged
 			hitbody				plasmaImpactCharged
-			firesnd				weapons/plasma-medium
-			impsnd				impact/plasma-impact
-			bodysnd 			impact/plasma-bodyimpact
+			firesnd				"weapons/plasma-medium"
+			impsnd				"impact/plasma-impact"
+			bodysnd 			"impact/plasma-bodyimpact"
 			speed				1300
 			spread				"1 1"
 			crouch				0.85
@@ -230,7 +232,7 @@ item plasrifle_ammo
 			delaybetweenshots	5
 			time				16
 			damage				"80 10"
-			dmgweight			plasma_medium
+			dmgweight			"plasma_medium"
 			reaction			false
 		}
 	}
@@ -243,9 +245,9 @@ item plasrifle_ammo
 item plasblaster
 {
 	name			"_Plasma Blaster"
-	model			weapons/plasblaster/plasblaster
+	model			"weapons/plasblaster/plasblaster"
 	weapon			true
-	type			biggun
+	type			"biggun"
 	animationindex	1
 	holdtwohanded	false
 	firetwohanded	true
@@ -255,7 +257,7 @@ item plasblaster
 	scale			1.06
 	ammo			50
 	reload			20
-	reloadsound		weapons/reload-rifle
+	reloadsound		"weapons/reload-rifle"
 	price			3300
 	size			60
 	is_primary		true
@@ -265,8 +267,8 @@ item plasblaster
 item plasblaster_ammo
 {
 	name			"_Plasma Blaster Charge"
-	model			weapons/plasblaster/plasblaster_clip
-	type			ammo
+	model			"weapons/plasblaster/plasblaster_clip"
+	type			"ammo"
 	animationindex	0
 	shape			"0 0 1 1"
 	center			"0 0 -0.3"
@@ -275,20 +277,21 @@ item plasblaster_ammo
 	size			7
 	is_primary		true
 	is_heavy		true
-	dmgtype			plasma
+	dmgtype			"plasma"
 
-	weapon_mod plasblaster
+	weapon_mod
 	{
+		weapon plasblaster
 		firedef
 		{
 			name				"_Snap Shot"
-			skill				close
+			skill				"close"
 			projtl				plasmaContinuous
 			impact				plasmaImpact
 			hitbody				plasmaImpact
-			firesnd				weapons/plasma-large
-			impsnd				impact/plasma-impact
-			bodysnd 			impact/plasma-bodyimpact
+			firesnd				"weapons/plasma-large"
+			impsnd				"impact/plasma-impact"
+			bodysnd 			"impact/plasma-bodyimpact"
 			sndonce				true
 			speed				0
 			spread				"3 3"
@@ -299,19 +302,19 @@ item plasblaster_ammo
 			delaybetweenshots	38
 			time				10
 			damage				"30 5"
-			dmgweight			plasma_heavy
+			dmgweight			"plasma_heavy"
 			reaction			true
 		}
 		firedef
 		{
 			name				"_5-Round Burst"
-			skill 				close
+			skill 				"close"
 			projtl				plasmaContinuous
 			impact				plasmaImpact
 			hitbody				plasmaImpact
-			firesnd				weapons/plasma-large
-			impsnd				impact/plasma-impact
-			bodysnd 			impact/plasma-bodyimpact
+			firesnd				"weapons/plasma-large"
+			impsnd				"impact/plasma-impact"
+			bodysnd 			"impact/plasma-bodyimpact"
 			sndonce				true
 			speed				0
 			spread				"3.5 3.5"
@@ -322,19 +325,19 @@ item plasblaster_ammo
 			delaybetweenshots	38
 			time				16
 			damage				"30 5"
-			dmgweight			plasma_heavy
+			dmgweight			"plasma_heavy"
 			reaction			true
 		}
 		firedef
 		{
 			name				"_Ball"
-			skill				close
+			skill				"close"
 			projtl				plasmaBigBall
 			impact				plasmaBigImpact
 			hitbody				plasmaBigImpact
-			firesnd				weapons/plasma-huge
-			impsnd				impact/plasmaball-impact
-			bodysnd 			impact/plasmaball-impact
+			firesnd				"weapons/plasma-huge"
+			impsnd				"impact/plasmaball-impact"
+			bodysnd 			"impact/plasmaball-impact"
 			speed				600
 			spread				"4 4"
 			crouch 				1
@@ -346,7 +349,7 @@ item plasblaster_ammo
 			damage				"0 0"
 			spldmg				"180 20"
 			splrad				3
-			dmgweight			plasma_heavy
+			dmgweight			"plasma_heavy"
 			reaction			true
 		}
 	}

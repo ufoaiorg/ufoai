@@ -10,6 +10,7 @@ public class UfoResources {
 
 	private static String[] supportedImageExtensions = {".png", ".jpg"};
 	private static String[] supportedModelExtensions = {".md2", ".md3", ".obj", ".mdl"};
+	private static String[] supportedSoundExtensions = {".mp3", ".ogg", ".wav"};
 
 	/**
 	 * True if "base" dir already checked.
@@ -73,6 +74,15 @@ public class UfoResources {
 	 */
 	public static File getFileFromModels(String id) {
 		return getFileFromBase("models/" + id, supportedModelExtensions);
+	}
+
+	/**
+	 * Get a file from base/sound
+	 * @param name Name of the file resource
+	 * @return A file, else null if it do not exists
+	 */
+	public static File getFileFromSound(String id) {
+		return getFileFromBase("sound/" + id, supportedSoundExtensions);
 	}
 
 }

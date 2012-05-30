@@ -8,6 +8,7 @@ import net.sourceforge.ufoai.ufoScript.PropertyValueBlock;
 import net.sourceforge.ufoai.ufoScript.PropertyValueBoolean;
 import net.sourceforge.ufoai.ufoScript.PropertyValueID;
 import net.sourceforge.ufoai.ufoScript.PropertyValueNamedConst;
+import net.sourceforge.ufoai.ufoScript.PropertyValueNull;
 import net.sourceforge.ufoai.ufoScript.PropertyValueNumber;
 import net.sourceforge.ufoai.ufoScript.PropertyValueString;
 import net.sourceforge.ufoai.ufoScript.UfoScriptPackage;
@@ -69,6 +70,19 @@ public class UFOScriptJavaValidator extends AbstractUFOScriptJavaValidator {
 
 	private UFOType getType(String path) {
 		return UFOTypes.getInstance().getPathType(path);
+	}
+
+	private void validateReference(Property property, String referenceType) {
+		if (property.getValue() instanceof PropertyValueNull) {
+			// nothing
+		} else if (property.getValue() instanceof PropertyValueID) {
+			PropertyValueID value = (PropertyValueID) property.getValue();
+			if (referenceType != null && !value.getValue().getType().equals(referenceType)) {
+				error(referenceType + " id expected", UfoScriptPackage.Literals.PROPERTY__VALUE);
+			}
+		} else {
+			error("Id expected", UfoScriptPackage.Literals.PROPERTY__VALUE);
+		}
 	}
 
 	private void validate(Property property) {
@@ -133,29 +147,16 @@ public class UFOScriptJavaValidator extends AbstractUFOScriptJavaValidator {
 			}
 			break;
 		case ID:
-			if (!(property.getValue() instanceof PropertyValueID)) {
-				error("Id expected", UfoScriptPackage.Literals.PROPERTY__VALUE);
-			}
+			validateReference(property, null);
 			break;
 		case TECH_ID:
-			if (!(property.getValue() instanceof PropertyValueID)) {
-				error("Id expected", UfoScriptPackage.Literals.PROPERTY__VALUE);
-			} else {
-				PropertyValueID value = (PropertyValueID) property.getValue();
-				if (!value.getValue().getType().equals("tech")) {
-					error("Tech id expected", UfoScriptPackage.Literals.PROPERTY__VALUE);
-				}
-			}
+			validateReference(property, "tech");
 			break;
 		case BUILDING_ID:
-			if (!(property.getValue() instanceof PropertyValueID)) {
-				error("Id expected", UfoScriptPackage.Literals.PROPERTY__VALUE);
-			} else {
-				PropertyValueID value = (PropertyValueID) property.getValue();
-				if (!value.getValue().getType().equals("building")) {
-					error("Building id expected", UfoScriptPackage.Literals.PROPERTY__VALUE);
-				}
-			}
+			validateReference(property, "building");
+			break;
+		case PARTICLE_ID:
+			validateReference(property, "particle");
 			break;
 		case INT:
 			if (!(property.getValue() instanceof PropertyValueNumber)) {
@@ -200,7 +201,27 @@ public class UFOScriptJavaValidator extends AbstractUFOScriptJavaValidator {
 				}
 			}
 			break;
+		case SOUND:
+			if (!(property.getValue() instanceof PropertyValueString)) {
+				error("Quoted sound name expected", UfoScriptPackage.Literals.PROPERTY__VALUE);
+			} else 	{
+				checkUfoBase(property);
+				PropertyValueString value = (PropertyValueString) property.getValue();
+				final String id = value.getValue();
+				final File file = UfoResources.getFileFromSound(id);
+				if (file == null) {
+					warning("Sound not found.",
+							UfoScriptPackage.Literals.PROPERTY__VALUE);
+				}
+			}
+			break;
 		case VEC2:
+		case VEC3:
+			if (!(property.getValue() instanceof PropertyValueString)) {
+				error("Quoted tuple of number expected", UfoScriptPackage.Literals.PROPERTY__VALUE);
+			}
+			break;
+		case SHAPE:
 			if (!(property.getValue() instanceof PropertyValueString)) {
 				error("Quoted tuple of number expected", UfoScriptPackage.Literals.PROPERTY__VALUE);
 			}

@@ -4,9 +4,9 @@
 item assault
 {
 	name			"_Assault Rifle"
-	model			weapons/assault/assault
+	model			"weapons/assault/assault"
 	weapon			true
-	type			rifle
+	type			"rifle"
 	animationindex	1
 	holdtwohanded	false
 	firetwohanded	true
@@ -16,7 +16,7 @@ item assault
 	scale			1.25
 	ammo			30
 	reload			12
-	reloadsound		weapons/reload-rifle
+	reloadsound		"weapons/reload-rifle"
 	price			1000
 	size			20
 	is_primary		true
@@ -25,8 +25,8 @@ item assault
 item assault_ammo
 {
 	name			"_Assault Rifle Magazine"
-	model			weapons/assault/assault_clip
-	type			ammo
+	model			"weapons/assault/assault_clip"
+	type			"ammo"
 	animationindex	0
 	shape			"0 0 1 2"
 	center			"0 0 0"
@@ -34,20 +34,21 @@ item assault_ammo
 	price			70
 	size			3
 	is_primary		true
-	dmgtype			normal
+	dmgtype			"normal"
 
-	weapon_mod assault
+	weapon_mod
 	{
+		weapon assault
 		firedef
 		{
 			name		"_Snap Shot"
-			skill		assault
+			skill		"assault"
 			projtl		bullet
 			impact		bulletImpact
 			hitbody		null
-			firesnd		weapons/bullet-rifle-1x
-			impsnd		impact/bullet-impact
-			bodysnd 	impact/bullet-bodyimpact
+			firesnd		"weapons/bullet-rifle-1x"
+			impsnd		"impact/bullet-impact"
+			bodysnd 	"impact/bullet-bodyimpact"
 			speed		3000
 			spread		"1.2 1.2"
 			crouch		0.85
@@ -56,19 +57,19 @@ item assault_ammo
 			ammo		1
 			time		8
 			damage		"42 5"
-			dmgweight	normal_medium
+			dmgweight	"normal_medium"
 			reaction	true
 		}
 		firedef
 		{
 			name				"_3-Round Burst"
-			skill				assault
+			skill				"assault"
 			projtl				bullet
 			impact				bulletImpact
 			hitbody				null
-			firesnd				weapons/bullet-rifle-3x
-			impsnd				impact/bullet-impact
-			bodysnd 			impact/bullet-bodyimpact
+			firesnd				"weapons/bullet-rifle-3x"
+			impsnd				"impact/bullet-impact"
+			bodysnd 			"impact/bullet-bodyimpact"
 			sndonce				true
 			speed				3000
 			spread				"1.4 1.4"
@@ -79,19 +80,19 @@ item assault_ammo
 			delaybetweenshots	10
 			time				12
 			damage				"42 5"
-			dmgweight			normal_medium
+			dmgweight			"normal_medium"
 			reaction			true
 		}
 		firedef
 		{
 			name				"_Full-Auto"
-			skill				assault
+			skill				"assault"
 			projtl				bullet
 			impact				bulletImpact
 			hitbody				null
-			firesnd				weapons/bullet-rifle-8x
-			impsnd				impact/bullet-impact
-			bodysnd 			impact/bullet-bodyimpact
+			firesnd				"weapons/bullet-rifle-8x"
+			impsnd				"impact/bullet-impact"
+			bodysnd 			"impact/bullet-bodyimpact"
 			sndonce				true
 			speed				3000
 			spread				"1.6 1.6"
@@ -102,18 +103,18 @@ item assault_ammo
 			delaybetweenshots	10
 			time				16
 			damage				"42 5"
-			dmgweight			normal_medium
+			dmgweight			"normal_medium"
 		}
 		firedef
 		{
 			name		"_Aimed Shot"
-			skill		sniper
+			skill		"sniper"
 			projtl		bullet
 			impact		bulletImpact
 			hitbody		null
-			firesnd		weapons/bullet-rifle-1x
-			impsnd		impact/bullet-impact
-			bodysnd 	impact/bullet-bodyimpact
+			firesnd		"weapons/bullet-rifle-1x"
+			impsnd		"impact/bullet-impact"
+			bodysnd 	"impact/bullet-bodyimpact"
 			speed		3000
 			spread		"1 1"
 			crouch		0.85
@@ -122,22 +123,23 @@ item assault_ammo
 			ammo		1
 			time		16
 			damage		"42 5"
-			dmgweight	normal_medium
+			dmgweight	"normal_medium"
 		}
 	}
 
-	weapon_mod vhs
+	weapon_mod
 	{
+		weapon vhs
 		firedef
 		{
 			name		"_Snap Shot"
-			skill		assault
+			skill		"assault"
 			projtl		bullet
 			impact		bulletImpact
 			hitbody		null
-			firesnd		weapons/bullet-rifle-1x
-			impsnd		impact/bullet-impact
-			bodysnd 	impact/bullet-bodyimpact
+			firesnd		"weapons/bullet-rifle-1x"
+			impsnd		"impact/bullet-impact"
+			bodysnd 	"impact/bullet-bodyimpact"
 			speed		3000
 			spread		"1 1"
 			crouch		0.85
@@ -146,19 +148,19 @@ item assault_ammo
 			ammo		1
 			time		10
 			damage		"42 5"
-			dmgweight	normal_medium
+			dmgweight	"normal_medium"
 			reaction	true
 		}
 		firedef
 		{
 			name				"_3-Round Burst"
-			skill				assault
+			skill				"assault"
 			projtl				bullet
 			impact				bulletImpact
 			hitbody				null
-			firesnd				weapons/bullet-rifle-1x
-			impsnd				impact/bullet-impact
-			bodysnd 			impact/bullet-bodyimpact
+			firesnd				"weapons/bullet-rifle-1x"
+			impsnd				"impact/bullet-impact"
+			bodysnd 			"impact/bullet-bodyimpact"
 			speed				3000
 			spread				"1.2 1.2"
 			crouch				0.85
@@ -168,19 +170,19 @@ item assault_ammo
 			delaybetweenshots	5
 			time				14
 			damage				"42 5"
-			dmgweight			normal_medium
+			dmgweight			"normal_medium"
 			reaction			true
 		}
 		firedef
 		{
 			name				"_Full-Auto"
-			skill				assault
+			skill				"assault"
 			projtl				bullet
 			impact				bulletImpact
 			hitbody				null
-			firesnd				weapons/bullet-rifle-1x
-			impsnd				impact/bullet-impact
-			bodysnd 			impact/bullet-bodyimpact
+			firesnd				"weapons/bullet-rifle-1x"
+			impsnd				"impact/bullet-impact"
+			bodysnd 			"impact/bullet-bodyimpact"
 			speed				3000
 			spread				"1.5 1.5"
 			crouch				0.85
@@ -190,18 +192,18 @@ item assault_ammo
 			delaybetweenshots	18
 			time				16
 			damage				"42 5"
-			dmgweight			normal_medium
+			dmgweight			"normal_medium"
 		}
 		firedef
 		{
 			name		"_Aimed Shot"
-			skill		sniper
+			skill		"sniper"
 			projtl		bullet
 			impact		bulletImpact
 			hitbody		null
-			firesnd		weapons/bullet-rifle-1x
-			impsnd		impact/bullet-impact
-			bodysnd 	impact/bullet-bodyimpact
+			firesnd		"weapons/bullet-rifle-1x"
+			impsnd		"impact/bullet-impact"
+			bodysnd 	"impact/bullet-bodyimpact"
 			speed		3000
 			spread		"0.9 0.9"
 			crouch		0.85
@@ -210,7 +212,7 @@ item assault_ammo
 			ammo		1
 			time		18
 			damage		"42 5"
-			dmgweight	normal_medium
+			dmgweight	"normal_medium"
 		}
 	}
 }
@@ -221,9 +223,9 @@ item assault_ammo
 item machinegun
 {
 	name			"_Machine Gun"
-	model			weapons/machinegun/machinegun
+	model			"weapons/machinegun/machinegun"
 	weapon			true
-	type			rifle
+	type			"rifle"
 	animationindex	1
 	holdtwohanded	false
 	firetwohanded	true
@@ -233,7 +235,7 @@ item machinegun
 	scale			1.1
 	ammo			100
 	reload			24
-	reloadsound		weapons/reload-rifle	// @todo better sound?
+	reloadsound		"weapons/reload-rifle"	// @todo better sound?
 	price			1200
 	size			20
 	is_primary		true
@@ -243,8 +245,8 @@ item machinegun
 item machinegun_ammo
 {
 	name			"_Machine Gun Magazine"
-	model			weapons/machinegun/machinegun_clip
-	type			ammo
+	model			"weapons/machinegun/machinegun_clip"
+	type			"ammo"
 	animationindex	0
 	shape			"0 0 2 2"
 	center			"0 0 0"
@@ -253,20 +255,21 @@ item machinegun_ammo
 	size			6
 	is_primary		true
 	is_heavy		true
-	dmgtype			normal
+	dmgtype			"normal"
 
-	weapon_mod machinegun
+	weapon_mod
 	{
+		weapon machinegun
 		firedef
 		{
 			name				"_5-Shot Burst"
-			skill				assault
+			skill				"assault"
 			projtl				bullet-hmg
 			impact				bulletImpact
 			hitbody				null
-			firesnd				weapons/bullet-hmg-5x
-			impsnd				impact/bullet-impact
-			bodysnd 			impact/bullet-bodyimpact
+			firesnd				"weapons/bullet-hmg-5x"
+			impsnd				"impact/bullet-impact"
+			bodysnd 			"impact/bullet-bodyimpact"
 			sndonce				true
 			speed				3000
 			spread				"1.8 1.8"
@@ -277,19 +280,19 @@ item machinegun_ammo
 			delaybetweenshots	10
 			time				14
 			damage				"42 5"
-			dmgweight			normal_medium
+			dmgweight			"normal_medium"
 			reaction			true
 		}
 		firedef
 		{
 			name				"_Full-Auto"
-			skill				assault
+			skill				"assault"
 			projtl				bullet-hmg
 			impact				bulletImpact
 			hitbody				null
-			firesnd				weapons/bullet-hmg-20x
-			impsnd				impact/bullet-impact
-			bodysnd 			impact/bullet-bodyimpact
+			firesnd				"weapons/bullet-hmg-20x"
+			impsnd				"impact/bullet-impact"
+			bodysnd 			"impact/bullet-bodyimpact"
 			sndonce				true
 			speed				3000
 			spread				"2.4 2.4"
@@ -300,19 +303,19 @@ item machinegun_ammo
 			delaybetweenshots	10
 			time				24
 			damage				"42 5"
-			dmgweight			normal_medium
+			dmgweight			"normal_medium"
 			reaction			true
 		}
 		firedef
 		{
 			name				"_Full-Auto Sweep"
-			skill				assault
+			skill				"assault"
 			projtl				bullet-hmg
 			impact				bulletImpact
 			hitbody				null
-			firesnd				weapons/bullet-hmg-20x
-			impsnd				impact/bullet-impact
-			bodysnd 			impact/bullet-bodyimpact
+			firesnd				"weapons/bullet-hmg-20x"
+			impsnd				"impact/bullet-impact"
+			bodysnd 			"impact/bullet-bodyimpact"
 			sndonce				true
 			speed				3000
 			spread				"3 20"
@@ -323,7 +326,7 @@ item machinegun_ammo
 			delaybetweenshots	10
 			time				24
 			damage				"42 5"
-			dmgweight			normal_medium
+			dmgweight			"normal_medium"
 			reaction			true
 		}
 	}
@@ -335,9 +338,9 @@ item machinegun_ammo
 item sniper
 {
 	name			"_Sniper Rifle"
-	model			weapons/sniper/sniper
+	model			"weapons/sniper/sniper"
 	weapon			true
-	type			rifle
+	type			"rifle"
 	animationindex	1
 	holdtwohanded	false
 	firetwohanded 	true
@@ -347,7 +350,7 @@ item sniper
 	scale			1.05
 	ammo			8
 	reload			15
-	reloadsound		weapons/reload-sniper
+	reloadsound		"weapons/reload-sniper"
 	price			1300
 	size			60
 	is_primary		true
@@ -356,8 +359,8 @@ item sniper
 item sniper_ammo
 {
 	name			"_Sniper Rifle Magazine"
-	model			weapons/sniper/sniper_clip
-	type			ammo
+	model			"weapons/sniper/sniper_clip"
+	type			"ammo"
 	animationindex	0
 	shape			"0 0 1 2"
 	center			"0 0 0"
@@ -365,20 +368,21 @@ item sniper_ammo
 	price			85
 	size			8
 	is_primary		true
-	dmgtype			normal
+	dmgtype			"normal"
 
-	weapon_mod sniper
+	weapon_mod
 	{
+		weapon sniper
 		firedef
 		{
 			name		"_Snap Shot"
-			skill		assault
+			skill		"assault"
 			projtl		bullet_sniper
 			impact		bulletImpact
 			hitbody		null
-			firesnd		weapons/bullet-sniper
-			impsnd		impact/bullet-impact
-			bodysnd 	impact/bullet-bodyimpact
+			firesnd		"weapons/bullet-sniper"
+			impsnd		"impact/bullet-impact"
+			bodysnd 	"impact/bullet-bodyimpact"
 			speed		3600
 			spread		"2.5 2.5"
 			crouch		1
@@ -387,20 +391,20 @@ item sniper_ammo
 			ammo		1
 			time		15
 			damage		"130 20"
-			dmgweight	normal_medium
+			dmgweight	"normal_medium"
 			reaction	true
 			throughwall 1
 		}
 		firedef
 		{
 			name		"_Aimed Shot"
-			skill		sniper
+			skill		"sniper"
 			projtl		bullet_sniper
 			impact		bulletImpact
 			hitbody		null
-			firesnd		weapons/bullet-sniper
-			impsnd		impact/bullet-impact
-			bodysnd 	impact/bullet-bodyimpact
+			firesnd		"weapons/bullet-sniper"
+			impsnd		"impact/bullet-impact"
+			bodysnd 	"impact/bullet-bodyimpact"
 			speed		3600
 			spread		"0.85 0.85"
 			crouch		0.6
@@ -409,7 +413,7 @@ item sniper_ammo
 			ammo		1
 			time		20
 			damage		"130 20"
-			dmgweight	normal_medium
+			dmgweight	"normal_medium"
 			reaction	true
 			throughwall 1
 		}
@@ -423,9 +427,9 @@ item sniper_ammo
 item coilgun
 {
 	name			"_Coilgun"
-	model			weapons/coilgun/coilgun
+	model			"weapons/coilgun/coilgun"
 	weapon			true
-	type			rifle
+	type			"rifle"
 	animationindex	1
 	holdtwohanded	false
 	firetwohanded 	true
@@ -435,7 +439,7 @@ item coilgun
 	scale			0.9
 	ammo			4
 	reload			15
-	reloadsound		weapons/reload-sniper
+	reloadsound		"weapons/reload-sniper"
 	price			3000
 	size			30
 	is_primary		true
@@ -444,8 +448,8 @@ item coilgun
 item coilgun_ammo
 {
 	name			"_Coilgun Clip"
-	model			weapons/coilgun/coilgun_ammo
-	type			ammo
+	model			"weapons/coilgun/coilgun_ammo"
+	type			"ammo"
 	animationindex	0
 	shape			"0 0 2 2"
 	center			"0 0 1.2"
@@ -453,20 +457,21 @@ item coilgun_ammo
 	price			85
 	size			4
 	is_primary		true
-	dmgtype			normal
+	dmgtype			"normal"
 
-	weapon_mod coilgun
+	weapon_mod
 	{
+		weapon coilgun
 		firedef
 		{
 			name		"_Snap Shot"
-			skill		assault
+			skill		"assault"
 			projtl		bolter
 			impact		bolterImpact
 			hitbody		null
-			firesnd		weapons/bullet-gauss
-			impsnd		impact/nail-impact
-			bodysnd 	impact/nail-bodyimpact
+			firesnd		"weapons/bullet-gauss"
+			impsnd		"impact/nail-impact"
+			bodysnd 	"impact/nail-bodyimpact"
 			speed		2000
 			spread		"2.5 2.5"
 			crouch		1
@@ -475,20 +480,20 @@ item coilgun_ammo
 			ammo		1
 			time		16
 			damage		"160 40"
-			dmgweight	normal_heavy
+			dmgweight	"normal_heavy"
 			reaction	true
 			throughwall 3
 		}
 		firedef
 		{
 			name		"_Aimed Shot"
-			skill		sniper
+			skill		"sniper"
 			projtl		bolter
 			impact		bolterImpact
 			hitbody		null
-			firesnd		weapons/bullet-gauss
-			impsnd		impact/nail-impact
-			bodysnd 	impact/nail-bodyimpact
+			firesnd		"weapons/bullet-gauss"
+			impsnd		"impact/nail-impact"
+			bodysnd 	"impact/nail-bodyimpact"
 			speed		2000
 			spread		"0.8 0.8"
 			crouch		0.6
@@ -497,7 +502,7 @@ item coilgun_ammo
 			ammo		1
 			time		24
 			damage		"160 40"
-			dmgweight	normal_heavy
+			dmgweight	"normal_heavy"
 			reaction	true
 			throughwall 3
 		}
@@ -511,9 +516,9 @@ item coilgun_ammo
 item pistol
 {
 	name			"_7.62mm Pistol"
-	model			weapons/pistol/pistol
+	model			"weapons/pistol/pistol"
 	weapon			true
-	type			pistol
+	type			"pistol"
 	animationindex	2
 	holdtwohanded	false
 	firetwohanded 	false
@@ -522,7 +527,7 @@ item pistol
 	scale			1.35
 	ammo			12
 	reload			6
-	reloadsound		weapons/reload-pistol
+	reloadsound		"weapons/reload-pistol"
 	price			900
 	size			7
 	is_secondary	true
@@ -531,8 +536,8 @@ item pistol
 item pistol_ammo
 {
 	name			"_7.62mm Pistol Magazine"
-	model			weapons/pistol/pistol_clip
-	type			ammo
+	model			"weapons/pistol/pistol_clip"
+	type			"ammo"
 	animationindex	0
 	shape			"0 0 1 1"
 	center			"0 0 -0.2"
@@ -540,20 +545,21 @@ item pistol_ammo
 	price			20
 	size			1
 	is_secondary	true
-	dmgtype			normal
+	dmgtype			"normal"
 
-	weapon_mod pistol
+	weapon_mod
 	{
+		weapon pistol
 		firedef
 		{
 			name		"_Snap Shot"
-			skill		close
+			skill		"close"
 			projtl		bullet-smg
 			impact		bulletImpact
 			hitbody		null
-			firesnd		weapons/bullet-pistol
-			impsnd		impact/bullet-impact
-			bodysnd 	impact/bullet-bodyimpact
+			firesnd		"weapons/bullet-pistol"
+			impsnd		"impact/bullet-impact"
+			bodysnd 	"impact/bullet-bodyimpact"
 			speed		3000
 			spread		"2 2"
 			crouch		1
@@ -562,19 +568,19 @@ item pistol_ammo
 			ammo		1
 			time		4
 			damage		"30 5"
-			dmgweight	normal_light
+			dmgweight	"normal_light"
 			reaction	true
 		}
 		firedef
 		{
 			name				"_Aimed Shot"
-			skill				close
+			skill				"close"
 			projtl				bullet-smg
 			impact				bulletImpact
 			hitbody				null
-			firesnd				weapons/bullet-pistol
-			impsnd				impact/bullet-impact
-			bodysnd 			impact/bullet-bodyimpact
+			firesnd				"weapons/bullet-pistol"
+			impsnd				"impact/bullet-impact"
+			bodysnd 			"impact/bullet-bodyimpact"
 			speed				3000
 			spread				"1.5 1.5"
 			crouch				1
@@ -584,7 +590,7 @@ item pistol_ammo
 			delaybetweenshots	10
 			time				8
 			damage				"30 5"
-			dmgweight			normal_light
+			dmgweight			"normal_light"
 		}
 	}
 }
@@ -595,9 +601,9 @@ item pistol_ammo
 item pistol2
 {
 	name			"_Machine Pistol"
-	model			weapons/pistol2/pistol2
+	model			"weapons/pistol2/pistol2"
 	weapon			true
-	type			pistol
+	type			"pistol"
 	animationindex	2
 	holdtwohanded	false
 	firetwohanded	false
@@ -607,7 +613,7 @@ item pistol2
 	scale			2.0
 	ammo			30
 	reload			10
-	reloadsound		weapons/reload-pistol
+	reloadsound		"weapons/reload-pistol"
 	price			1000
 	size			7
 	is_secondary	true
@@ -616,8 +622,8 @@ item pistol2
 item pistol2_ammo
 {
 	name			"_4.2mm MP Magazine"
-	model			weapons/pistol2/pistol2_clip
-	type			ammo
+	model			"weapons/pistol2/pistol2_clip"
+	type			"ammo"
 	animationindex	0
 	shape			"0 0 1 2"
 	center			"0 0 -0.21"
@@ -625,20 +631,21 @@ item pistol2_ammo
 	price			20
 	size			2
 	is_secondary	true
-	dmgtype			normal
+	dmgtype			"normal"
 
-	weapon_mod pistol2
+	weapon_mod
 	{
+		weapon pistol2
 		firedef
 		{
 			name		"_Snap Shot"
-			skill		close
+			skill		"close"
 			projtl		bullet-smg
 			impact		bulletImpact
 			hitbody		null
-			firesnd		weapons/bullet-pistol2
-			impsnd		impact/bullet-impact
-			bodysnd 	impact/bullet-bodyimpact
+			firesnd		"weapons/bullet-pistol2"
+			impsnd		"impact/bullet-impact"
+			bodysnd 	"impact/bullet-bodyimpact"
 			speed		3000
 			spread		"2 2"
 			crouch		1
@@ -648,18 +655,18 @@ item pistol2_ammo
 			time		6
 			damage		"20 5"
 			reaction	true
-			dmgweight	normal_light
+			dmgweight	"normal_light"
 		}
 		firedef
 		{
 			name				"_3-Round Burst"
-			skill				close
+			skill				"close"
 			projtl				bullet-smg
 			impact				bulletImpact
 			hitbody				null
-			firesnd				weapons/bullet-pistol2
-			impsnd				impact/bullet-impact
-			bodysnd 			impact/bullet-bodyimpact
+			firesnd				"weapons/bullet-pistol2"
+			impsnd				"impact/bullet-impact"
+			bodysnd 			"impact/bullet-bodyimpact"
 			speed				3000
 			spread				"2.5 2.5"
 			crouch				1
@@ -669,19 +676,19 @@ item pistol2_ammo
 			delaybetweenshots	10
 			time				9
 			damage				"20 5"
-			dmgweight			normal_light
+			dmgweight			"normal_light"
 			reaction			true
 		}
 		firedef
 		{
 			name				"_Full-Auto"
-			skill				close
+			skill				"close"
 			projtl				bullet-smg
 			impact				bulletImpact
 			hitbody				null
-			firesnd				weapons/bullet-pistol2
-			impsnd				impact/bullet-impact
-			bodysnd 			impact/bullet-bodyimpact
+			firesnd				"weapons/bullet-pistol2"
+			impsnd				"impact/bullet-impact"
+			bodysnd 			"impact/bullet-bodyimpact"
 			speed				3000
 			spread				"3.5 3.5"
 			crouch				1
@@ -691,7 +698,7 @@ item pistol2_ammo
 			delaybetweenshots	10
 			time				12
 			damage				"20 5"
-			dmgweight			normal_light
+			dmgweight			"normal_light"
 			reaction			true
 		}
 	}
@@ -704,9 +711,9 @@ item pistol2_ammo
 item smg
 {
 	name			"_Submachine Gun"
-	model			weapons/smg/smg
+	model			"weapons/smg/smg"
 	weapon			true
-	type			pistol
+	type			"pistol"
 	animationindex	2
 	holdtwohanded	false
 	firetwohanded	true
@@ -715,7 +722,7 @@ item smg
 	scale			1.15
 	ammo			30
 	reload			10
-	reloadsound		weapons/reload-smg
+	reloadsound		"weapons/reload-smg"
 	price			1350
 	size			8
 	is_secondary	true
@@ -724,8 +731,8 @@ item smg
 item smg_ammo
 {
 	name			"_SMG Magazine"
-	model			weapons/smg/smg_clip
-	type			ammo
+	model			"weapons/smg/smg_clip"
+	type			"ammo"
 	animationindex	0
 	shape			"0 0 1 2"
 	center			"0 0 0"
@@ -733,20 +740,21 @@ item smg_ammo
 	price			40
 	size			3
 	is_secondary	true
-	dmgtype			normal
+	dmgtype			"normal"
 
-	weapon_mod smg
+	weapon_mod
 	{
+		weapon smg
 		firedef
 		{
 			name				"_5-Round Burst"
-			skill				close
+			skill				"close"
 			projtl				bullet-smg
 			impact				bulletImpact
 			hitbody				null
-			firesnd				weapons/bullet-smg-5x
-			impsnd				impact/bullet-impact
-			bodysnd 			impact/bullet-bodyimpact
+			firesnd				"weapons/bullet-smg-5x"
+			impsnd				"impact/bullet-impact"
+			bodysnd 			"impact/bullet-bodyimpact"
 			sndonce				true
 			speed				3000
 			spread				"1.8 1.8"
@@ -757,19 +765,19 @@ item smg_ammo
 			delaybetweenshots	14
 			time				8
 			damage				"12 3"
-			dmgweight			normal_spray
+			dmgweight			"normal_spray"
 			reaction			true
 		}
 		firedef
 		{
 			name				"_Full-Auto"
-			skill				close
+			skill				"close"
 			projtl				bullet-smg
 			impact				bulletImpact
 			hitbody				null
-			firesnd				weapons/bullet-smg-15x
-			impsnd				impact/bullet-impact
-			bodysnd 			impact/bullet-bodyimpact
+			firesnd				"weapons/bullet-smg-15x"
+			impsnd				"impact/bullet-impact"
+			bodysnd 			"impact/bullet-bodyimpact"
 			sndonce				true
 			speed				3000
 			spread				"3 3"
@@ -780,7 +788,7 @@ item smg_ammo
 			delaybetweenshots	14
 			time				20
 			damage				"12 3"
-			dmgweight			normal_spray
+			dmgweight			"normal_spray"
 			reaction			true
 		}
 	}
@@ -792,9 +800,9 @@ item smg_ammo
 item shotgun2
 {
 	name			"_Riot Shotgun"
-	model			weapons/shotgun2/shotgun
+	model			"weapons/shotgun2/shotgun"
 	weapon			true
-	type			rifle
+	type			"rifle"
 	animationindex	1
 	holdtwohanded	false
 	firetwohanded	true
@@ -804,7 +812,7 @@ item shotgun2
 	scale			0.98
 	ammo			7
 	reload			14
-	reloadsound		weapons/reload-shotgun
+	reloadsound		"weapons/reload-shotgun"
 	price			1500
 	size			25
 	is_primary		true
@@ -813,8 +821,8 @@ item shotgun2
 item shotgun2_slug_ammo
 {
 	name			"_Saboted Slugs"
-	model			weapons/shotgun2/shotgun_clip
-	type			ammo
+	model			"weapons/shotgun2/shotgun_clip"
+	type			"ammo"
 	animationindex	0
 	shape			"0 0 1 2"
 	center			"0 0 0"
@@ -822,20 +830,21 @@ item shotgun2_slug_ammo
 	price			35
 	size			5
 	is_primary		true
-	dmgtype			normal
+	dmgtype			"normal"
 
-	weapon_mod shotgun2
+	weapon_mod
 	{
+		weapon shotgun2
 		firedef
 		{
 			name				"_Snap Shot"
-			skill				close
+			skill				"close"
 			projtl				bullet
 			impact				bulletImpact
 			hitbody				null
-			firesnd				weapons/bullet-shotgun
-			impsnd				impact/bullet-impact
-			bodysnd 			impact/bullet-bodyimpact
+			firesnd				"weapons/bullet-shotgun"
+			impsnd				"impact/bullet-impact"
+			bodysnd 			"impact/bullet-bodyimpact"
 			sndonce				true
 			speed				3000
 			spread				"3 3"
@@ -846,7 +855,7 @@ item shotgun2_slug_ammo
 			delaybetweenshots	0
 			time				10
 			damage				"120 20"
-			dmgweight			normal_medium
+			dmgweight			"normal_medium"
 			reaction			true
 		}
 	}
@@ -858,9 +867,9 @@ item shotgun2_slug_ammo
 item shotgun_micro
 {
 	name			"_Micro Shotgun"
-	model			weapons/shotgunmicro/shotgunmicro
+	model			"weapons/shotgunmicro/shotgunmicro"
 	weapon			true
-	type			biggun
+	type			"biggun"
 	animationindex	1
 	holdtwohanded	false
 	firetwohanded	true
@@ -869,7 +878,7 @@ item shotgun_micro
 	scale			1.2
 	ammo			7
 	reload			8
-	reloadsound		weapons/reload-shotgun
+	reloadsound		"weapons/reload-shotgun"
 	price			1350
 	size			10
 	is_secondary	true
@@ -878,8 +887,8 @@ item shotgun_micro
 item shotgun_micro_ammo
 {
 	name			"_Flechette Shells"
-	model			weapons/shotgunmicro/shotgunmicro_clip
-	type			ammo
+	model			"weapons/shotgunmicro/shotgunmicro_clip"
+	type			"ammo"
 	animationindex	0
 	shape			"0 0 1 2"
 	center			"0 0 0"
@@ -887,20 +896,21 @@ item shotgun_micro_ammo
 	price			35
 	size			4
 	is_primary		true
-	dmgtype			blast
+	dmgtype			"blast"
 
-	weapon_mod shotgun_micro // weap_fds_idx=0
+	weapon_mod // weap_fds_idx=0
 	{
+		weapon shotgun_micro
 		firedef
 		{
 			name				"_Snap Shot"
-			skill				close
+			skill				"close"
 			projtl				bullet
 			impact				bulletImpact
 			hitbody				null
-			firesnd				weapons/bullet-shotgun
-			impsnd				impact/bullet-impact
-			bodysnd 			impact/bullet-bodyimpact
+			firesnd				"weapons/bullet-shotgun"
+			impsnd				"impact/bullet-impact"
+			bodysnd 			"impact/bullet-bodyimpact"
 			sndonce				true
 			speed				3000
 			spread				"5 5"
@@ -911,23 +921,24 @@ item shotgun_micro_ammo
 			delaybetweenshots	0
 			time				10
 			damage				"20 5"
-			dmgweight			normal_spray
+			dmgweight			"normal_spray"
 			reaction			true
 		}
 	}
 
-	weapon_mod shotgun2 // weap_fds_idx=1
+	weapon_mod // weap_fds_idx=1
 	{
+		weapon shotgun2
 		firedef
 		{
 			name				"_Snap Shot"
-			skill				close
+			skill				"close"
 			projtl				bullet
 			impact				bulletImpact
 			hitbody				null
-			firesnd				weapons/bullet-shotgunmini
-			impsnd				impact/bullet-impact
-			bodysnd 			impact/bullet-bodyimpact
+			firesnd				"weapons/bullet-shotgunmini"
+			impsnd				"impact/bullet-impact"
+			bodysnd 			"impact/bullet-bodyimpact"
 			sndonce				true
 			speed				3000
 			spread				"4 4"
@@ -938,7 +949,7 @@ item shotgun_micro_ammo
 			delaybetweenshots	0
 			time				10
 			damage				"20 5"
-			dmgweight			normal_spray
+			dmgweight			"normal_spray"
 			reaction			true
 		}
 	}
@@ -950,9 +961,9 @@ item shotgun_micro_ammo
 item flamer
 {
 	name			"_Flamethrower"
-	model			weapons/flamer/flamer
+	model			"weapons/flamer/flamer"
 	weapon			true
-	type			biggun
+	type			"biggun"
 	animationindex	1
 	holdtwohanded	false
 	firetwohanded	true
@@ -961,7 +972,7 @@ item flamer
 	scale			1.2
 	ammo			4
 	reload			20
-	reloadsound		weapons/reload-pistol	// @todo better sound?
+	reloadsound		"weapons/reload-pistol"	// @todo better sound?
 	price			1500
 	size			60
 	is_primary		true
@@ -971,8 +982,8 @@ item flamer
 item flamer_ammo
 {
 	name			"_C90 Canister"
-	model			weapons/flamer/flamer_ammo
-	type			ammo
+	model			"weapons/flamer/flamer_ammo"
+	type			"ammo"
 	animationindex	0
 	shape			"0 0 2 1"
 	center			"0 0 0"
@@ -981,18 +992,19 @@ item flamer_ammo
 	size			10
 	is_primary		true
 	is_heavy		true
-	dmgtype			fire
+	dmgtype			"fire"
 
-	weapon_mod flamer
+	weapon_mod
 	{
+		weapon flamer
 		firedef
 		{
 			name				"_Candlelight"
-			skill				close
+			skill				"close"
 			projtl				fireBall
 			impact				fireImpact
 			hitbody				burning
-			firesnd				weapons/flamer-small
+			firesnd				"weapons/flamer-small"
 			sndonce				true
 			speed				300
 			spread				"1.5 0.5"
@@ -1003,17 +1015,17 @@ item flamer_ammo
 			delaybetweenshots	25
 			time				12
 			damage				"6 2"
-			dmgweight			fire_flamer
+			dmgweight			"fire_flamer"
 			reaction			true
 		}
 		firedef
 		{
 			name				"_Inferno"
-			skill				close
+			skill				"close"
 			projtl				fireBall
 			impact				fireImpact
 			hitbody				burning
-			firesnd				weapons/flamer-big
+			firesnd				"weapons/flamer-big"
 			sndonce				true
 			speed				300
 			spread				"1.5 0.5"
@@ -1024,17 +1036,17 @@ item flamer_ammo
 			delaybetweenshots	25
 			time				20
 			damage				"6 2"
-			dmgweight			fire_flamer
+			dmgweight			"fire_flamer"
 			reaction			true
 		}
 		firedef
 		{
 			name				"_Inferno Sweep"
-			skill				close
+			skill				"close"
 			projtl				fireBall
 			impact				fireImpact
 			hitbody				burning
-			firesnd				weapons/flamer-big
+			firesnd				"weapons/flamer-big"
 			sndonce				true
 			speed				300
 			spread				"1 10"
@@ -1045,7 +1057,7 @@ item flamer_ammo
 			delaybetweenshots	25
 			time				20
 			damage				"6 2"
-			dmgweight			fire_flamer
+			dmgweight			"fire_flamer"
 			reaction			true
 		}
 	}
@@ -1058,9 +1070,9 @@ item flamer_ammo
 item rpg
 {
 	name			"_Rocket Launcher"
-	model			weapons/rpg2/rpg
+	model			"weapons/rpg2/rpg"
 	weapon			true
-	type			rpg
+	type			"rpg"
 	animationindex	3
 	holdtwohanded	true
 	firetwohanded	true
@@ -1070,7 +1082,7 @@ item rpg
 	scale			0.80
 	ammo			1
 	reload			16
-	reloadsound		weapons/reload-rocket
+	reloadsound		"weapons/reload-rocket"
 	price			4000
 	size			75
 	is_primary		true
@@ -1080,8 +1092,8 @@ item rpg
 item rpg_ammo
 {
 	name			"_HE Rocket"
-	model			weapons/rpg2/rpg_ammo
-	type			ammo
+	model			"weapons/rpg2/rpg_ammo"
+	type			"ammo"
 	animationindex	0
 	shape			"0 0 1 2"
 	center			"0 0 0"
@@ -1090,20 +1102,21 @@ item rpg_ammo
 	size			6
 	is_primary		true
 	is_heavy		true
-	dmgtype			blast
+	dmgtype			"blast"
 
-	weapon_mod rpg
+	weapon_mod
 	{
+		weapon rpg
 		firedef
 		{
 			name		"_Aimed Shot"
-			skill		explosive
+			skill		"explosive"
 			projtl		rocket
 			impact		explosionRPG
 			hitbody		explosionRPG
-			firesnd		weapons/rocket-human
-			impsnd		weapons/explosion-rocket
-			bodysnd		weapons/explosion-rocket
+			firesnd		"weapons/rocket-human"
+			impsnd		"weapons/explosion-rocket"
+			bodysnd		"weapons/explosion-rocket"
 			speed		450
 			spread		"1.4 1.4"
 			crouch		0.6
@@ -1114,7 +1127,7 @@ item rpg_ammo
 			damage		"0 0"
 			spldmg		"150 20"
 			splrad		4
-			dmgweight	blast
+			dmgweight	"blast"
 		}
 	}
 }
@@ -1122,8 +1135,8 @@ item rpg_ammo
 item rpg_incendiary_ammo
 {
 	name			"_IC Rocket"
-	model			weapons/rpg2/rpg_inc_ammo
-	type			ammo
+	model			"weapons/rpg2/rpg_inc_ammo"
+	type			"ammo"
 	animationindex	0
 	shape			"0 0 1 2"
 	center			"0 0 -0.5"
@@ -1132,20 +1145,21 @@ item rpg_incendiary_ammo
 	size			6
 	is_primary		true
 	is_heavy		true
-	dmgtype			incendiary
+	dmgtype			"incendiary"
 
-	weapon_mod rpg
+	weapon_mod
 	{
+		weapon rpg
 		firedef
 		{
 			name		"_Aimed Shot"
-			skill		explosive
+			skill		"explosive"
 			projtl		rocket_inc
 			impact		fire_explosion
 			hitbody		fire_explosion
-			firesnd		weapons/rocket-human
-			impsnd		weapons/explosion-fire
-			bodysnd		weapons/explosion-fire
+			firesnd		"weapons/rocket-human"
+			impsnd		"weapons/explosion-fire"
+			bodysnd		"weapons/explosion-fire"
 			speed		450
 			spread		"1.4 1.4"
 			crouch		0.6
@@ -1156,7 +1170,7 @@ item rpg_incendiary_ammo
 			damage		"0 0"
 			spldmg		"75 20"
 			splrad		4
-			dmgweight	incendiary
+			dmgweight	"incendiary"
 			rounds		2
 		}
 	}
@@ -1168,9 +1182,9 @@ item rpg_incendiary_ammo
 item grenl
 {
 	name			"_Grenade Launcher"
-	model			weapons/grenl/grenl
+	model			"weapons/grenl/grenl"
 	weapon			true
-	type			biggun
+	type			"biggun"
 	animationindex	1
 	holdtwohanded	false
 	firetwohanded	true
@@ -1180,7 +1194,7 @@ item grenl
 	scale			1.1
 	ammo			6
 	reload			16
-	reloadsound		weapons/reload-grenade
+	reloadsound		"weapons/reload-grenade"
 	price			2500
 	size			60
 	is_primary		true
@@ -1190,8 +1204,8 @@ item grenl
 item grenl_ammo
 {
 	name			"_25mm HIT Grenades"
-	model			weapons/grenl/grenl_clip
-	type			ammo
+	model			"weapons/grenl/grenl_clip"
+	type			"ammo"
 	animationindex	0
 	shape			"0 0 1 1"
 	center			"0 0 0"
@@ -1200,21 +1214,22 @@ item grenl_ammo
 	size			6
 	is_primary		true
 	is_heavy		true
-	dmgtype			blast
+	dmgtype			"blast"
 
-	weapon_mod grenl
+	weapon_mod
 	{
+		weapon grenl
 		firedef
 		{
 			name				"_Snap Shot (Impact)"
-			skill				explosive
+			skill				"explosive"
 			projtl				grenl_ammo
 			impact				explosionGrenade
 			hitbody				explosionGrenade
-			firesnd				weapons/grenade-launcher
-			impsnd				weapons/explosion-grenade
-			bodysnd				weapons/explosion-grenade
-			bncsnd				weapons/grenade-bounce
+			firesnd				"weapons/grenade-launcher"
+			impsnd				"weapons/explosion-grenade"
+			bodysnd				"weapons/explosion-grenade"
+			bncsnd				"weapons/grenade-bounce"
 			gravity				true
 			launched			true
 			spread				"0 2"
@@ -1226,21 +1241,21 @@ item grenl_ammo
 			damage				"0 0"
 			spldmg				"130 20"
 			splrad				3
-			dmgweight			blast
+			dmgweight			"blast"
 			reaction			false
 		}
 
 		firedef
 		{
 			name				"_Aimed Shot (Impact)"
-			skill				explosive
+			skill				"explosive"
 			projtl				grenl_ammo
 			impact				explosionGrenade
 			hitbody				explosionGrenade
-			firesnd				weapons/grenade-launcher
-			impsnd				weapons/explosion-grenade
-			bodysnd				weapons/explosion-grenade
-			bncsnd				weapons/grenade-bounce
+			firesnd				"weapons/grenade-launcher"
+			impsnd				"weapons/explosion-grenade"
+			bodysnd				"weapons/explosion-grenade"
+			bncsnd				"weapons/grenade-bounce"
 			gravity				true
 			launched			true
 			spread				"0 1.5"
@@ -1252,21 +1267,21 @@ item grenl_ammo
 			damage				"0 0"
 			spldmg				"130 20"
 			splrad				3
-			dmgweight			blast
+			dmgweight			"blast"
 			reaction			false
 		}
 
 		firedef
 		{
 			name				"_Snap Shot (Timer)"
-			skill				explosive
+			skill				"explosive"
 			projtl				grenl_ammo
 			impact				explosionGrenade
 			hitbody				explosionGrenade
-			firesnd				weapons/grenade-launcher
-			impsnd				weapons/explosion-grenade
-			bodysnd				weapons/explosion-grenade
-			bncsnd				weapons/grenade-bounce
+			firesnd				"weapons/grenade-launcher"
+			impsnd				"weapons/explosion-grenade"
+			bodysnd				"weapons/explosion-grenade"
+			bncsnd				"weapons/grenade-bounce"
 			gravity				true
 			launched			true
 			delay				1
@@ -1281,21 +1296,21 @@ item grenl_ammo
 			damage				"0 0"
 			spldmg				"130 20"
 			splrad				3
-			dmgweight			blast
+			dmgweight			"blast"
 			reaction			false
 		}
 
 		firedef
 		{
 			name				"_Aimed Shot (Timer)"
-			skill				explosive
+			skill				"explosive"
 			projtl				grenl_ammo
 			impact				explosionGrenade
 			hitbody				explosionGrenade
-			firesnd				weapons/grenade-launcher
-			impsnd				weapons/explosion-grenade
-			bodysnd				weapons/explosion-grenade
-			bncsnd				weapons/grenade-bounce
+			firesnd				"weapons/grenade-launcher"
+			impsnd				"weapons/explosion-grenade"
+			bodysnd				"weapons/explosion-grenade"
+			bncsnd				"weapons/grenade-bounce"
 			gravity				true
 			launched			true
 			delay				1
@@ -1310,7 +1325,7 @@ item grenl_ammo
 			damage				"0 0"
 			spldmg				"130 20"
 			splrad				3
-			dmgweight			blast
+			dmgweight			"blast"
 			reaction			false
 		}
 	}
@@ -1319,8 +1334,8 @@ item grenl_ammo
 item grenl_incendiary_ammo
 {
 	name			"_25mm IC Grenades"
-	model			weapons/grenl/grenl_ic_clip
-	type			ammo
+	model			"weapons/grenl/grenl_ic_clip"
+	type			"ammo"
 	animationindex	0
 	shape			"0 0 1 1"
 	center			"0 0 0"
@@ -1329,21 +1344,22 @@ item grenl_incendiary_ammo
 	size			6
 	is_primary		true
 	is_heavy		true
-	dmgtype			incendiary
+	dmgtype			"incendiary"
 
-	weapon_mod grenl
+	weapon_mod
 	{
+		weapon grenl
 		firedef
 		{
 			name				"_Snap Shot (Impact)"
-			skill				explosive
+			skill				"explosive"
 			projtl				grenl_ic_ammo
 			impact				explosionGrenade
 			hitbody				explosionGrenade
-			firesnd				weapons/grenade-launcher
-			impsnd				weapons/explosion-fire
-			bodysnd				weapons/explosion-fire
-			bncsnd				weapons/grenade-bounce
+			firesnd				"weapons/grenade-launcher"
+			impsnd				"weapons/explosion-fire"
+			bodysnd				"weapons/explosion-fire"
+			bncsnd				"weapons/grenade-bounce"
 			gravity				true
 			launched			true
 			spread				"0 2"
@@ -1355,7 +1371,7 @@ item grenl_incendiary_ammo
 			damage				"0 0"
 			spldmg				"75 20"
 			splrad				3
-			dmgweight			incendiary
+			dmgweight			"incendiary"
 			reaction			false
 			rounds				2
 		}
@@ -1363,14 +1379,14 @@ item grenl_incendiary_ammo
 		firedef
 		{
 			name				"_Aimed Shot (Impact)"
-			skill				explosive
+			skill				"explosive"
 			projtl				grenl_ic_ammo
 			impact				explosionGrenade
 			hitbody				explosionGrenade
-			firesnd				weapons/grenade-launcher
-			impsnd				weapons/explosion-fire
-			bodysnd				weapons/explosion-fire
-			bncsnd				weapons/grenade-bounce
+			firesnd				"weapons/grenade-launcher"
+			impsnd				"weapons/explosion-fire"
+			bodysnd				"weapons/explosion-fire"
+			bncsnd				"weapons/grenade-bounce"
 			gravity				true
 			launched			true
 			spread				"0 1.5"
@@ -1382,7 +1398,7 @@ item grenl_incendiary_ammo
 			damage				"0 0"
 			spldmg				"75 20"
 			splrad				3
-			dmgweight			incendiary
+			dmgweight			"incendiary"
 			reaction			false
 			rounds				2
 		}
@@ -1390,14 +1406,14 @@ item grenl_incendiary_ammo
 		firedef
 		{
 			name				"_Snap Shot (Timer)"
-			skill				explosive
+			skill				"explosive"
 			projtl				grenl_ic_ammo
 			impact				explosionGrenade
 			hitbody				explosionGrenade
-			firesnd				weapons/grenade-launcher
-			impsnd				weapons/explosion-fire
-			bodysnd				weapons/explosion-fire
-			bncsnd				weapons/grenade-bounce
+			firesnd				"weapons/grenade-launcher"
+			impsnd				"weapons/explosion-fire"
+			bodysnd				"weapons/explosion-fire"
+			bncsnd				"weapons/grenade-bounce"
 			gravity				true
 			launched			true
 			delay				1
@@ -1412,7 +1428,7 @@ item grenl_incendiary_ammo
 			damage				"0 0"
 			spldmg				"75 20"
 			splrad				3
-			dmgweight			incendiary
+			dmgweight			"incendiary"
 			reaction			false
 			rounds				2
 		}
@@ -1420,14 +1436,14 @@ item grenl_incendiary_ammo
 		firedef
 		{
 			name				"_Aimed Shot (Timer)"
-			skill				explosive
+			skill				"explosive"
 			projtl				grenl_ic_ammo
 			impact				explosionGrenade
 			hitbody				explosionGrenade
-			firesnd				weapons/grenade-launcher
-			impsnd				weapons/explosion-fire
-			bodysnd				weapons/explosion-fire
-			bncsnd				weapons/grenade-bounce
+			firesnd				"weapons/grenade-launcher"
+			impsnd				"weapons/explosion-fire"
+			bodysnd				"weapons/explosion-fire"
+			bncsnd				"weapons/grenade-bounce"
 			gravity				true
 			launched			true
 			delay				1
@@ -1442,7 +1458,7 @@ item grenl_incendiary_ammo
 			damage				"0 0"
 			spldmg				"75 20"
 			splrad				3
-			dmgweight			incendiary
+			dmgweight			"incendiary"
 			reaction			false
 			rounds				2
 		}
@@ -1455,8 +1471,8 @@ item grenl_incendiary_ammo
 item grenl_fle_ammo
 {
 	name			"_25mm Flechette Grenades"
-	model			weapons/grenl/grenl_flechette_clip
-	type			ammo
+	model			"weapons/grenl/grenl_flechette_clip"
+	type			"ammo"
 	animationindex	0
 	shape			"0 0 1 1"
 	center			"0 0 0"
@@ -1465,18 +1481,19 @@ item grenl_fle_ammo
 	size			6
 	is_primary		true
 	is_heavy		true
-	dmgtype			normal
+	dmgtype			"normal"
 
-	weapon_mod grenl
+	weapon_mod
 	{
+		weapon grenl
 		firedef
 		{
 			name				"_Snap Shot"
-			skill				close
+			skill				"close"
 			projtl				bullet
 			impact				bulletImpact
 			hitbody				null
-			firesnd				weapons/bullet-flechette
+			firesnd				"weapons/bullet-flechette"
 			speed				3000
 			spread				"4 4"
 			range				10
@@ -1485,7 +1502,7 @@ item grenl_fle_ammo
 			delaybetweenshots	0
 			time				12
 			damage				"20 5"
-			dmgweight			normal_spray
+			dmgweight			"normal_spray"
 			reaction			true
 		}
 	}
@@ -1494,8 +1511,8 @@ item grenl_fle_ammo
 item grenl_plasma_ammo
 {
 	name			"_25mm PB Grenades"
-	model			weapons/grenl/grenl_plasma_clip
-	type			ammo
+	model			"weapons/grenl/grenl_plasma_clip"
+	type			"ammo"
 	animationindex	0
 	shape			"0 0 1 1"
 	center			"0 0 0"
@@ -1504,21 +1521,22 @@ item grenl_plasma_ammo
 	size			6
 	is_primary		true
 	is_heavy		true
-	dmgtype			plasma
+	dmgtype			"plasma"
 
-	weapon_mod grenl
+	weapon_mod
 	{
+		weapon grenl
 		firedef
 		{
 			name				"_Snap Shot (Impact)"
-			skill				explosive
+			skill				"explosive"
 			projtl				grenl_plasma_ammo
 			impact				plasmaBigExplosion
 			hitbody				plasmaBigExplosion
-			firesnd				weapons/grenade-launcher
-			impsnd				weapons/explosion-plasma
-			bodysnd				weapons/explosion-plasma
-			bncsnd				weapons/grenade-bounce
+			firesnd				"weapons/grenade-launcher"
+			impsnd				"weapons/explosion-plasma"
+			bodysnd				"weapons/explosion-plasma"
+			bncsnd				"weapons/grenade-bounce"
 			gravity				true
 			launched			true
 			spread				"0 2"
@@ -1530,21 +1548,21 @@ item grenl_plasma_ammo
 			damage				"0 0"
 			spldmg				"180 20"
 			splrad				3
-			dmgweight			plasma_heavy
+			dmgweight			"plasma_heavy"
 			reaction			false
 		}
 
 		firedef
 		{
 			name				"_Aimed Shot (Impact)"
-			skill				explosive
+			skill				"explosive"
 			projtl				grenl_plasma_ammo
 			impact				plasmaBigExplosion
 			hitbody				plasmaBigExplosion
-			firesnd				weapons/grenade-launcher
-			impsnd				weapons/explosion-plasma
-			bodysnd				weapons/explosion-plasma
-			bncsnd				weapons/grenade-bounce
+			firesnd				"weapons/grenade-launcher"
+			impsnd				"weapons/explosion-plasma"
+			bodysnd				"weapons/explosion-plasma"
+			bncsnd				"weapons/grenade-bounce"
 			gravity				true
 			launched			true
 			spread				"0 1.5"
@@ -1556,20 +1574,20 @@ item grenl_plasma_ammo
 			damage				"0 0"
 			spldmg				"180 20"
 			splrad				3
-			dmgweight			plasma_heavy
+			dmgweight			"plasma_heavy"
 		}
 
 		firedef
 		{
 			name				"_Snap Shot (Timer)"
-			skill				explosive
+			skill				"explosive"
 			projtl				grenl_plasma_ammo
 			impact				plasmaBigExplosion
 			hitbody				plasmaBigExplosion
-			firesnd				weapons/grenade-launcher
-			impsnd				weapons/explosion-plasma
-			bodysnd				weapons/explosion-plasma
-			bncsnd				weapons/grenade-bounce
+			firesnd				"weapons/grenade-launcher"
+			impsnd				"weapons/explosion-plasma"
+			bodysnd				"weapons/explosion-plasma"
+			bncsnd				"weapons/grenade-bounce"
 			gravity				true
 			launched			true
 			delay				1
@@ -1584,20 +1602,20 @@ item grenl_plasma_ammo
 			damage				"0 0"
 			spldmg				"180 20"
 			splrad				3
-			dmgweight			plasma_heavy
+			dmgweight			"plasma_heavy"
 		}
 
 		firedef
 		{
 			name				"_Aimed Shot (Timer)"
-			skill				explosive
+			skill				"explosive"
 			projtl				grenl_plasma_ammo
 			impact				plasmaBigExplosion
 			hitbody				plasmaBigExplosion
-			firesnd				weapons/grenade-launcher
-			impsnd				weapons/explosion-plasma
-			bodysnd				weapons/explosion-plasma
-			bncsnd				weapons/grenade-bounce
+			firesnd				"weapons/grenade-launcher"
+			impsnd				"weapons/explosion-plasma"
+			bodysnd				"weapons/explosion-plasma"
+			bncsnd				"weapons/grenade-bounce"
 			gravity				true
 			launched			true
 			delay				1
@@ -1612,7 +1630,7 @@ item grenl_plasma_ammo
 			damage				"0 0"
 			spldmg				"180 20"
 			splrad				3
-			dmgweight			plasma_heavy
+			dmgweight			"plasma_heavy"
 		}
 	}
 }
@@ -1624,9 +1642,9 @@ item grenl_plasma_ammo
 item bolterrifle
 {
 	name			"_Electromagnetic Rifle"
-	model			weapons/bolterrifle/bolterrifle
+	model			"weapons/bolterrifle/bolterrifle"
 	weapon			true
-	type			biggun
+	type			"biggun"
 	animationindex	1
 	holdtwohanded	false
 	firetwohanded	true
@@ -1635,7 +1653,7 @@ item bolterrifle
 	scale			1.2
 	ammo			2
 	reload			20
-	reloadsound		weapons/reload-rifle
+	reloadsound		"weapons/reload-rifle"
 	price			2000
 	size			45
 	is_primary		true
@@ -1645,8 +1663,8 @@ item bolterrifle
 item bolterrifle_ammo
 {
 	name			"_Electromagnetic Rifle Magazine"
-	model			weapons/bolterrifle/bolterrifle_clip
-	type			ammo
+	model			"weapons/bolterrifle/bolterrifle_clip"
+	type			"ammo"
 	animationindex	0
 	shape			"0 0 3 1"
 	center			"0 0 0"
@@ -1655,20 +1673,21 @@ item bolterrifle_ammo
 	size			9
 	is_primary		true
 	is_heavy		true
-	dmgtype			normal
+	dmgtype			"normal"
 
-	weapon_mod bolterrifle
+	weapon_mod
 	{
+		weapon bolterrifle
 		firedef
 		{
 			name		"_Snap Shot"
-			skill		assault
+			skill		"assault"
 			projtl		bolter
 			impact		bolterImpact
 			hitbody		null
-			firesnd		weapons/bullet-bolter
-			impsnd		impact/nail-impact
-			bodysnd 	impact/nail-bodyimpact
+			firesnd		"weapons/bullet-bolter"
+			impsnd		"impact/nail-impact"
+			bodysnd 	"impact/nail-bodyimpact"
 			sndonce		true
 			speed		2000
 			spread		"2.5 2.5"
@@ -1678,7 +1697,7 @@ item bolterrifle_ammo
 			ammo		1
 			time		18
 			damage		"140 20"
-			dmgweight	normal_heavy
+			dmgweight	"normal_heavy"
 			reaction	true
 			throughwall 2
 		}
@@ -1686,13 +1705,13 @@ item bolterrifle_ammo
 		firedef
 		{
 			name				"_Aimed Shot"
-			skill				sniper
+			skill				"sniper"
 			projtl				bolter
 			impact				bolterImpact
 			hitbody				null
-			firesnd				weapons/bullet-bolter
-			impsnd				impact/nail-impact
-			bodysnd 			impact/nail-bodyimpact
+			firesnd				"weapons/bullet-bolter"
+			impsnd				"impact/nail-impact"
+			bodysnd 			"impact/nail-bodyimpact"
 			speed				2000
 			spread				"0.65 0.65"
 			crouch				0.6
@@ -1701,7 +1720,7 @@ item bolterrifle_ammo
 			ammo				1
 			time				28
 			damage				"140 20"
-			dmgweight			normal_heavy
+			dmgweight			"normal_heavy"
 			reaction	true
 			throughwall 2
 		}

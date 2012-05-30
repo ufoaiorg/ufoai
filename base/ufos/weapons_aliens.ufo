@@ -4,9 +4,9 @@
 item needlergun
 {
 	name			"_Needler Gun"
-	model			weapons/needlergun/needler
+	model			"weapons/needlergun/needler"
 	weapon			true
-	type			biggun
+	type			"biggun"
 	animationindex	1
 	holdtwohanded	false
 	firetwohanded	true
@@ -16,7 +16,7 @@ item needlergun
 	scale			1.2
 	ammo			240
 	reload			14
-	reloadsound		weapons/reload-nail
+	reloadsound		"weapons/reload-nail"
 	price			5000
 	size			45
 	is_primary		true
@@ -25,9 +25,9 @@ item needlergun
 item needlerheavy
 {
 	name			"_Heavy Needler Gun"
-	model			weapons/needlerheavy/needlerheavy
+	model			"weapons/needlerheavy/needlerheavy"
 	weapon			true
-	type			biggun
+	type			"biggun"
 	animationindex	1
 	holdtwohanded   false
 	firetwohanded	true
@@ -37,7 +37,7 @@ item needlerheavy
 	scale			0.8
 	ammo			240
 	reload			18
-	reloadsound		weapons/reload-nail
+	reloadsound		"weapons/reload-nail"
 	price			5000
 	size			45
 	is_primary		true
@@ -46,8 +46,8 @@ item needlerheavy
 item needlergun_ammo
 {
 	name			"_Needler Gun Magazine"
-	model			weapons/needlergun/needler_ammo
-	type			ammo
+	model			"weapons/needlergun/needler_ammo"
+	type			"ammo"
 	animationindex	0
 	shape			"0 0 1 1"
 	center			"0 0 0"
@@ -55,20 +55,21 @@ item needlergun_ammo
 	price			400
 	size			9
 	is_primary		true
-	dmgtype			normal
+	dmgtype			"normal"
 
-	weapon_mod needlergun
+	weapon_mod
 	{
+		weapon needlergun
 		firedef
 		{
 			name		"_Short Burst"
-			skill		assault
+			skill		"assault"
 			projtl		needler-small
 			impact		bulletImpact
 			hitbody		null
-			firesnd		weapons/bullet-needler-30x
-			impsnd		impact/nail-impact
-			bodysnd 	impact/nail-bodyimpact
+			firesnd		"weapons/bullet-needler-30x"
+			impsnd		"impact/nail-impact"
+			bodysnd 	"impact/nail-bodyimpact"
 			sndonce		true
 			speed		2000
 			spread		"1.6 1.6"
@@ -79,20 +80,20 @@ item needlergun_ammo
 			ammo		30
 			time		12
 			damage		"8 2"
-			dmgweight	normal_needle
+			dmgweight	"normal_needle"
 			reaction	true
 		}
 
 		firedef
 		{
 			name		"_Cannonade"
-			skill		assault
+			skill		"assault"
 			projtl		needler-small
 			impact		bulletImpact
 			hitbody		null
-			firesnd		weapons/bullet-needler-90x
-			impsnd		impact/nail-impact
-			bodysnd 	impact/nail-bodyimpact
+			firesnd		"weapons/bullet-needler-90x"
+			impsnd		"impact/nail-impact"
+			bodysnd 	"impact/nail-bodyimpact"
 			sndonce		true
 			speed		2000
 			spread		"2 2"
@@ -103,19 +104,19 @@ item needlergun_ammo
 			ammo		90
 			time		16
 			damage		"8 2"
-			dmgweight	normal_needle
+			dmgweight	"normal_needle"
 			reaction	true
 		}
 		firedef
 		{
 			name		"_Needle Stream"
-			skill		assault
+			skill		"assault"
 			projtl		needler-small
 			impact		bulletImpact
 			hitbody		null
-			firesnd		weapons/bullet-needler-120x
-			impsnd		impact/nail-impact
-			bodysnd 	impact/nail-bodyimpact
+			firesnd		"weapons/bullet-needler-120x"
+			impsnd		"impact/nail-impact"
+			bodysnd 	"impact/nail-bodyimpact"
 			sndonce		true
 			speed		2000
 			spread		"2.5 2.5"
@@ -126,23 +127,24 @@ item needlergun_ammo
 			ammo		120
 			time		20
 			damage		"8 2"
-			dmgweight	normal_needle
+			dmgweight	"normal_needle"
 			reaction	true
 		}
 	}
 
-	weapon_mod needlerheavy
+	weapon_mod
 	{
+		weapon needlerheavy
 		firedef
 		{
 			name		"_Short Burst"
-			skill		assault
+			skill		"assault"
 			projtl		needler-heavy
 			impact		bulletImpact
 			hitbody		null
-			firesnd		weapons/bullet-heavyneedler-30x
-			impsnd		impact/nail-impact
-			bodysnd 	impact/nail-bodyimpact
+			firesnd		"weapons/bullet-heavyneedler-30x"
+			impsnd		"impact/nail-impact"
+			bodysnd 	"impact/nail-bodyimpact"
 			sndonce		true
 			speed		2000
 			spread		"1.9 1.9"
@@ -153,20 +155,20 @@ item needlergun_ammo
 			ammo		50
 			time		14
 			damage		"8 2"
-			dmgweight	normal_needle
+			dmgweight	"normal_needle"
 			reaction	true
 		}
 
 		firedef
 		{
 			name		"_Cannonade"
-			skill		assault
+			skill		"assault"
 			projtl		needler-heavy
 			impact		bulletImpact
 			hitbody		null
-			firesnd		weapons/bullet-heavyneedler-105x
-			impsnd		impact/nail-impact
-			bodysnd 	impact/nail-bodyimpact
+			firesnd		"weapons/bullet-heavyneedler-105x"
+			impsnd		"impact/nail-impact"
+			bodysnd 	"impact/nail-bodyimpact"
 			sndonce		true
 			speed		2000
 			spread		"2.5 2.5"
@@ -177,19 +179,19 @@ item needlergun_ammo
 			ammo		120
 			time		20
 			damage		"8 2"
-			dmgweight	normal_needle
+			dmgweight	"normal_needle"
 			reaction	true
 		}
 		firedef
 		{
 			name		"_Needle Stream"
-			skill		assault
+			skill		"assault"
 			projtl		needler-heavy
 			impact		bulletImpact
 			hitbody		null
-			firesnd		weapons/bullet-heavyneedler-150x
-			impsnd		impact/nail-impact
-			bodysnd 	impact/nail-bodyimpact
+			firesnd		"weapons/bullet-heavyneedler-150x"
+			impsnd		"impact/nail-impact"
+			bodysnd 	"impact/nail-bodyimpact"
 			sndonce		true
 			speed		2000
 			spread		"3 3"
@@ -200,7 +202,7 @@ item needlergun_ammo
 			ammo		200
 			time		26
 			damage		"8 2"
-			dmgweight	normal_needle
+			dmgweight	"normal_needle"
 			reaction	true
 		}
 	}

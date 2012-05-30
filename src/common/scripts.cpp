@@ -1719,21 +1719,28 @@ static linkedList_t *parseItemWeapons = NULL;
 static void Com_ParseFireDefition (objDef_t *od, const char *name, const char *token, const char **text)
 {
 	const char *errhead = "Com_ParseFireDefition: unexpected end of file (weapon_mod ";
-	/* Save the weapon id. */
-	token = Com_Parse(text);
 	if (od->numWeapons < MAX_WEAPONS_PER_OBJDEF) {
-		/* Store the current item-pointer and the weapon id for later linking of the "weapon" pointers */
-		LIST_AddPointer(&parseItemWeapons, od);
-		LIST_Add(&parseItemWeapons, od->numWeapons);
-		LIST_AddString(&parseItemWeapons, token);
 
 		/* get it's body */
 		token = Com_Parse(text);
-
 		if (!*text || *token != '{') {
 			Com_Printf("Com_ParseItem: weapon_mod \"%s\" without body ignored\n", name);
 			return;
 		}
+
+		/* get weapon property */
+		token = Com_Parse(text);
+		if (!*text || !Q_streq(token, "weapon")) {
+			Com_Printf("Com_ParseItem: weapon_mod \"%s\" weapon as first element expected.\n", name);
+			return;
+		}
+
+		/* Save the weapon id. */
+		token = Com_Parse(text);
+		/* Store the current item-pointer and the weapon id for later linking of the "weapon" pointers */
+		LIST_AddPointer(&parseItemWeapons, od);
+		LIST_Add(&parseItemWeapons, od->numWeapons);
+		LIST_AddString(&parseItemWeapons, token);
 
 		/* For each firedef entry for this weapon.  */
 		do {

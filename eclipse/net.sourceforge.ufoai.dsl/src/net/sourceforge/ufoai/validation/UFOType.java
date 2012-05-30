@@ -35,6 +35,12 @@ public class UFOType {
 		MODEL,
 
 		/**
+		 * A string witch contain a link to a sound relative to base/sound
+		 * and do not contains file extension
+		 */
+		SOUND,
+
+		/**
 		 * A string which should be prefixed with '_'
 		 */
 		TRANSLATED_STRING,
@@ -65,9 +71,19 @@ public class UFOType {
 		REAL,
 
 		/**
-		 * A string containing two integer
+		 * A string containing a 2D vector
 		 */
 		VEC2,
+
+		/**
+		 * A string containing a 3D vector
+		 */
+		VEC3,
+
+		/**
+		 * A string containing a shape
+		 */
+		SHAPE,
 
 		/**
 		 * A reference to an object
@@ -75,6 +91,7 @@ public class UFOType {
 		ID,
 		TECH_ID,
 		BUILDING_ID,
+		PARTICLE_ID,
 	}
 
 	private Type type;

@@ -24,7 +24,7 @@ particle firefield_fire
 {
 	init
 	{
-		image  sfx/fireball
+		image  "sfx/fireball"
 		blend  add
 		style  facing
 		thinkfade  out

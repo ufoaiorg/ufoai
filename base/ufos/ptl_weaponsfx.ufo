@@ -25,7 +25,7 @@ particle bolter
 {
 	init
 	{
-		image  sfx/weapons/bolt
+		image  "sfx/weapons/bolt"
 		tps    60
 		style  axis
 		blend  add
@@ -44,7 +44,7 @@ particle bolter_trail
 {
 	init
 	{
-		image  sfx/weapons/muzzleplasmaspiral
+		image  "sfx/weapons/muzzleplasmaspiral"
 		blend  add
 		style  axis
 		thinkfade  out

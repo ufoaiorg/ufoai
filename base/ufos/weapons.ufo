@@ -4,9 +4,9 @@
 item medikit
 {
 	name		"_Medikit"
-	model		weapons/medikit/medikit
+	model		"weapons/medikit/medikit"
 	weapon		false
-	type		melee
+	type		"melee"
 	animationindex	2
 	shape		"0 0 2 2"
 	center		"1 0 2"
@@ -15,17 +15,18 @@ item medikit
 	size		15
 	is_misc	true
 	thrown		true
-	dmgtype 	normal
+	dmgtype 	"normal"
 
-	weapon_mod medikit
+	weapon_mod
 	{
+		weapon medikit
 		firedef
 		{
 			name	"_Heal"
 			projtl	null
 			impact	null
 			hitbody heal
-			firesnd	weapons/medikit
+			firesnd	"weapons/medikit"
 			speed	0
 			range	1.5
 			shots	1
@@ -36,10 +37,10 @@ item medikit
 		firedef
 		{
 			name	"_Throw"
-			skill	close
+			skill	"close"
 			projtl	medikit
-			impsnd	weapons/grenade-bounce
-			bodysnd weapons/grenade-bounce
+			impsnd	"weapons/grenade-bounce"
+			bodysnd "weapons/grenade-bounce"
 			gravity	true
 			speed	220
 			range	8
@@ -48,7 +49,7 @@ item medikit
 			ammo	1
 			time	10
 			damage	"1 1"
-			dmgweight normal_medium
+			dmgweight "normal_medium"
 			reaction	false
 		}
 	}
@@ -61,9 +62,9 @@ item medikit
 item irgoggles
 {
 	name		"_IR Goggles"
-	model		weapons/irgoggles/irgoggles
+	model		"weapons/irgoggles/irgoggles"
 	weapon		false
-	type		melee
+	type		"melee"
 	animationindex	2
 	shape		"0 0 2 1"
 	center		"0 0 0"
@@ -73,14 +74,15 @@ item irgoggles
 	is_misc	true
 	thrown		true
 	headgear		true
-	dmgtype normal
+	dmgtype "normal"
 
-	weapon_mod irgoggles
+	weapon_mod
 	{
+		weapon irgoggles
 		firedef
 		{
 			name	"_Scan"
-			firesnd	weapons/irgoggles
+			firesnd	"weapons/irgoggles"
 			splrad	10
 			range	9.5
 			time	12
@@ -90,10 +92,10 @@ item irgoggles
 		firedef
 		{
 			name	"_Throw"
-			skill	close
+			skill	"close"
 			projtl	irgoggles
-			impsnd	weapons/grenade-bounce
-			bodysnd weapons/grenade-bounce
+			impsnd	"weapons/grenade-bounce"
+			bodysnd "weapons/grenade-bounce"
 			gravity	true
 			speed	220
 			range	10
@@ -102,7 +104,7 @@ item irgoggles
 			ammo	1
 			time	10
 			damage	"1 2"
-			dmgweight normal_medium
+			dmgweight "normal_medium"
 		}
 	}
 }
@@ -114,9 +116,9 @@ item irgoggles
 item fraggrenade
 {
 	name		"_Frag Grenade"
-	model		weapons/fraggren/fraggren
+	model		"weapons/fraggren/fraggren"
 	weapon		true
-	type		grenade
+	type		"grenade"
 	animationindex	0
 	shape		"0 0 1 1"
 	center		"0 0 0"
@@ -125,21 +127,22 @@ item fraggrenade
 	size		5
 	is_misc	true
 	thrown		true
-	dmgtype blast
+	dmgtype "blast"
 
-	weapon_mod fraggrenade
+	weapon_mod
 	{
+		weapon fraggrenade
 		firedef
 		{
 			name	"_Lob"
-			skill	explosive
+			skill	"explosive"
 			projtl	fraggren
 			impact	explosionGrenade
 			hitbody explosionGrenade
-			firesnd	weapons/grenade-pin
-			impsnd	weapons/explosion-grenade
-			bodysnd	weapons/explosion-grenade
-			bncsnd	weapons/grenade-bounce
+			firesnd	"weapons/grenade-pin"
+			impsnd	"weapons/explosion-grenade"
+			bodysnd	"weapons/explosion-grenade"
+			bncsnd	"weapons/grenade-bounce"
 			gravity	true
 			delay	1
 			bounce	10
@@ -152,19 +155,19 @@ item fraggrenade
 			time	8
 			spldmg	"110 30"
 			splrad	4
-			dmgweight blast
+			dmgweight "blast"
 		}
 		firedef
 		{
 			name	"_Roll"
-			skill	explosive
+			skill	"explosive"
 			projtl	fraggren
 			impact	explosionGrenade
 			hitbody explosionGrenade
-			firesnd	weapons/grenade-pin
-			impsnd	weapons/explosion-grenade
-			bodysnd	weapons/explosion-grenade
-			bncsnd	weapons/grenade-bounce
+			firesnd	"weapons/grenade-pin"
+			impsnd	"weapons/explosion-grenade"
+			bodysnd	"weapons/explosion-grenade"
+			bncsnd	"weapons/grenade-bounce"
 			gravity	true
 			rolled true
 			delay	1
@@ -178,7 +181,7 @@ item fraggrenade
 			time	8
 			spldmg	"110 30"
 			splrad	4
-			dmgweight blast
+			dmgweight "blast"
 		}
 	}
 }
@@ -190,9 +193,9 @@ item fraggrenade
 item flashbang
 {
 	name		"_Flashbang"
-	model		weapons/flashbang/flashbang
+	model		"weapons/flashbang/flashbang"
 	weapon		true
-	type		grenade
+	type		"grenade"
 	animationindex	0
 	shape		"0 0 1 1"
 	center		"0 1.5 0.6"
@@ -201,21 +204,22 @@ item flashbang
 	size		4
 	is_misc	true
 	thrown		true
-	dmgtype shock
+	dmgtype "shock"
 
-	weapon_mod flashbang
+	weapon_mod
 	{
+		weapon flashbang
 		firedef
 		{
 			name	"_Lob"
-			skill	close
+			skill	"close"
 			projtl	flashgren
 			impact	flash_explosion
 			hitbody flash_explosion
-			firesnd	weapons/grenade-pin
-			impsnd	weapons/explosion-flashbang
-			bodysnd	weapons/explosion-flashbang
-			bncsnd	weapons/grenade-bounce
+			firesnd	"weapons/grenade-pin"
+			impsnd	"weapons/explosion-flashbang"
+			bodysnd	"weapons/explosion-flashbang"
+			bncsnd	"weapons/grenade-bounce"
 			impactattenuation 0.07
 			gravity	true
 			delay	1
@@ -229,19 +233,19 @@ item flashbang
 			time	6
 			spldmg	"999 0"	// TODO: needed at all?
 			splrad	3
-			dmgweight shock
+			dmgweight "shock"
 		}
 		firedef
 		{
 			name	"_Roll"
-			skill	close
+			skill	"close"
 			projtl	flashgren
 			impact	flash_explosion
 			hitbody flash_explosion
-			firesnd	weapons/grenade-pin
-			impsnd	weapons/explosion-flashbang
-			bodysnd	weapons/explosion-flashbang
-			bncsnd	weapons/grenade-bounce
+			firesnd	"weapons/grenade-pin"
+			impsnd	"weapons/explosion-flashbang"
+			bodysnd	"weapons/explosion-flashbang"
+			bncsnd	"weapons/grenade-bounce"
 			impactattenuation 0.07
 			gravity	true
 			rolled true
@@ -256,7 +260,7 @@ item flashbang
 			time	6
 			spldmg	"999 0"	// TODO: needed at all?
 			splrad	3
-			dmgweight shock
+			dmgweight "shock"
 		}
 	}
 }
@@ -267,9 +271,9 @@ item flashbang
 item smokegrenade
 {
 	name		"_Smoke Grenade"
-	model		weapons/smokegren/smokegren
+	model		"weapons/smokegren/smokegren"
 	weapon		true
-	type		grenade
+	type		"grenade"
 	animationindex	0
 	shape		"0 0 1 1"
 	center		"0 0 -0.25"
@@ -278,19 +282,20 @@ item smokegrenade
 	size		5
 	is_misc	true
 	thrown		true
-	dmgtype smoke
+	dmgtype "smoke"
 
-	weapon_mod smokegrenade
+	weapon_mod
 	{
+		weapon smokegrenade
 		firedef
 		{
 			name	"_Lob"
-			skill	explosive
+			skill	"explosive"
 			projtl	smokegren
-			impsnd	weapons/explosion-smoke
-			bodysnd	weapons/explosion-smoke
-			bncsnd	weapons/grenade-bounce
-			firesnd	weapons/grenade-pin
+			impsnd	"weapons/explosion-smoke"
+			bodysnd	"weapons/explosion-smoke"
+			bncsnd	"weapons/grenade-bounce"
+			firesnd	"weapons/grenade-pin"
 			impactattenuation 0.07
 			gravity	true
 			delay	1
@@ -304,18 +309,18 @@ item smokegrenade
 			time	8
 			spldmg	"1 1"
 			splrad	3
-			dmgweight normal_light
+			dmgweight "normal_light"
 			rounds	2
 		}
 		firedef
 		{
 			name	"_Roll"
-			skill	explosive
+			skill	"explosive"
 			projtl	smokegren
-			impsnd	weapons/explosion-smoke
-			bodysnd	weapons/explosion-smoke
-			firesnd	weapons/grenade-pin
-			bncsnd	weapons/grenade-bounce
+			impsnd	"weapons/explosion-smoke"
+			bodysnd	"weapons/explosion-smoke"
+			firesnd	"weapons/grenade-pin"
+			bncsnd	"weapons/grenade-bounce"
 			impactattenuation 0.07
 			gravity	true
 			rolled true
@@ -330,7 +335,7 @@ item smokegrenade
 			time	8
 			spldmg	"1 1"
 			splrad	3
-			dmgweight normal_light
+			dmgweight "normal_light"
 			rounds	2
 		}
 	}
@@ -342,9 +347,9 @@ item smokegrenade
 item stungrenade
 {
 	name		"_Gas Grenade"
-	model		weapons/stungren/stungren
+	model		"weapons/stungren/stungren"
 	weapon		true
-	type		grenade
+	type		"grenade"
 	animationindex	0
 	shape		"0 0 1 1"
 	center		"0 0 0"
@@ -353,21 +358,22 @@ item stungrenade
 	size		7
 	is_misc	true
 	thrown		true
-	dmgtype stun_gas
+	dmgtype "stun_gas"
 
-	weapon_mod stungrenade
+	weapon_mod
 	{
+		weapon stungrenade
 		firedef
 		{
 			name	"_Lob"
-			skill	explosive
+			skill	"explosive"
 			projtl	stungren
 			impact	coronaImpact
 			hitbody	coronaImpact
-			impsnd	weapons/explosion-smoke
-			bodysnd	weapons/explosion-smoke
-			bncsnd	weapons/grenade-bounce
-			firesnd	weapons/grenade-pin
+			impsnd	"weapons/explosion-smoke"
+			bodysnd	"weapons/explosion-smoke"
+			bncsnd	"weapons/grenade-bounce"
+			firesnd	"weapons/grenade-pin"
 			impactattenuation 0.07
 			gravity	true
 			delay	1
@@ -381,19 +387,19 @@ item stungrenade
 			time	8
 			spldmg	"140 10"
 			splrad	4
-			dmgweight stun_gas
+			dmgweight "stun_gas"
 		}
 		firedef
 		{
 			name	"_Roll"
-			skill	explosive
+			skill	"explosive"
 			projtl	stungren
 			impact	coronaImpact
 			hitbody	coronaImpact
-			impsnd	weapons/explosion-smoke
-			bodysnd	weapons/explosion-smoke
-			bncsnd	weapons/grenade-bounce
-			firesnd	weapons/grenade-pin
+			impsnd	"weapons/explosion-smoke"
+			bodysnd	"weapons/explosion-smoke"
+			bncsnd	"weapons/grenade-bounce"
+			firesnd	"weapons/grenade-pin"
 			impactattenuation 0.07
 			gravity	true
 			rolled true
@@ -408,7 +414,7 @@ item stungrenade
 			time	8
 			spldmg	"140 10"
 			splrad	4
-			dmgweight stun_gas
+			dmgweight "stun_gas"
 		}
 	}
 }
@@ -420,9 +426,9 @@ item stungrenade
 item stungrenade_alien
 {
 	name		"_Alien Gas Grenade"
-	model		weapons/stungren_alien/stungren
+	model		"weapons/stungren_alien/stungren"
 	weapon		true
-	type		grenade
+	type		"grenade"
 	animationindex	0
 	shape		"0 0 1 1"
 	center		"0 0 0"
@@ -431,21 +437,22 @@ item stungrenade_alien
 	size		7
 	is_misc	true
 	thrown		true
-	dmgtype stun_gas
+	dmgtype "stun_gas"
 
-	weapon_mod stungrenade_alien
+	weapon_mod
 	{
+		weapon stungrenade_alien
 		firedef
 		{
 			name	"_Lob"
-			skill	explosive
+			skill	"explosive"
 			projtl	stungren_alien
 			impact	coronaImpact
 			hitbody	coronaImpact
-			impsnd	weapons/explosion-smoke
-			firesnd	weapons/grenade-pin
-			bodysnd	weapons/explosion-smoke
-			bncsnd	weapons/grenade-bounce
+			impsnd	"weapons/explosion-smoke"
+			firesnd	"weapons/grenade-pin"
+			bodysnd	"weapons/explosion-smoke"
+			bncsnd	"weapons/grenade-bounce"
 			impactattenuation 0.07
 			gravity	true
 			delay	1
@@ -459,19 +466,19 @@ item stungrenade_alien
 			time	8
 			spldmg	"180 20"
 			splrad	4
-			dmgweight stun_gas
+			dmgweight "stun_gas"
 		}
 		firedef
 		{
 			name	"_Roll"
-			skill	explosive
+			skill	"explosive"
 			projtl	stungren_alien
 			impact	coronaImpact
 			hitbody	coronaImpact
-			impsnd	weapons/explosion-smoke
-			firesnd	weapons/grenade-pin
-			bodysnd	weapons/explosion-smoke
-			bncsnd	weapons/grenade-bounce
+			impsnd	"weapons/explosion-smoke"
+			firesnd	"weapons/grenade-pin"
+			bodysnd	"weapons/explosion-smoke"
+			bncsnd	"weapons/grenade-bounce"
 			impactattenuation 0.07
 			gravity	true
 			rolled true
@@ -486,7 +493,7 @@ item stungrenade_alien
 			time	8
 			spldmg	"180 20"
 			splrad	4
-			dmgweight stun_gas
+			dmgweight "stun_gas"
 		}
 	}
 }
@@ -497,9 +504,9 @@ item stungrenade_alien
 item incgrenade
 {
 	name		"_Incendiary grenade"
-	model		weapons/incgren/incgren
+	model		"weapons/incgren/incgren"
 	weapon		true
-	type		grenade
+	type		"grenade"
 	animationindex	0
 	shape		"0 0 1 1"
 	center		"0 0 -0.3"
@@ -508,21 +515,22 @@ item incgrenade
 	size		5
 	is_misc	true
 	thrown		true
-	dmgtype 	incendiary
+	dmgtype 	"incendiary"
 
-	weapon_mod incgrenade
+	weapon_mod
 	{
+		weapon incgrenade
 		firedef
 		{
 			name	"_Lob"
-			skill	explosive
+			skill	"explosive"
 			projtl	incgren
 			impact	fire_explosion
 			hitbody fire_explosion
-			impsnd	weapons/explosion-fire
-			firesnd	weapons/grenade-pin
-			bodysnd	weapons/explosion-fire
-			bncsnd	weapons/grenade-bounce
+			impsnd	"weapons/explosion-fire"
+			firesnd	"weapons/grenade-pin"
+			bodysnd	"weapons/explosion-fire"
+			bncsnd	"weapons/grenade-bounce"
 			impactattenuation 0.07
 			gravity	true
 			delay	1
@@ -537,20 +545,20 @@ item incgrenade
 			damage	"0 0"
 			spldmg	"70 10"
 			splrad	3
-			dmgweight incendiary
+			dmgweight "incendiary"
 			rounds	2
 		}
 		firedef
 		{
 			name	"_Roll"
-			skill	explosive
+			skill	"explosive"
 			projtl	incgren
 			impact	fire_explosion
 			hitbody fire_explosion
-			impsnd	weapons/explosion-fire
-			firesnd	weapons/grenade-pin
-			bodysnd	weapons/explosion-fire
-			bncsnd	weapons/grenade-bounce
+			impsnd	"weapons/explosion-fire"
+			firesnd	"weapons/grenade-pin"
+			bodysnd	"weapons/explosion-fire"
+			bncsnd	"weapons/grenade-bounce"
 			impactattenuation 0.07
 			gravity	true
 			rolled true
@@ -566,7 +574,7 @@ item incgrenade
 			damage	"0 0"
 			spldmg	"70 10"
 			splrad	3
-			dmgweight incendiary
+			dmgweight "incendiary"
 			rounds	2
 		}
 	}
@@ -578,9 +586,9 @@ item incgrenade
 item plasmagrenade
 {
 	name		"_Plasma Grenade"
-	model		weapons/plasmagren/plasmagren
+	model		"weapons/plasmagren/plasmagren"
 	weapon		true
-	type		grenade
+	type		"grenade"
 	animationindex	0
 	shape		"0 0 1 1"
 	center		"0 0 -0.25"
@@ -589,21 +597,22 @@ item plasmagrenade
 	size		10
 	is_misc	true
 	thrown		true
-	dmgtype blast
+	dmgtype "blast"
 
-	weapon_mod plasmagrenade
+	weapon_mod
 	{
+		weapon plasmagrenade
 		firedef
 		{
 			name	"_Lob"
-			skill	explosive
+			skill	"explosive"
 			projtl	plasmagren
 			impact	plasmaBigExplosion
 			hitbody	plasmaBigExplosion
-			firesnd	weapons/grenade-pin
-			impsnd	weapons/explosion-plasma
-			bodysnd	weapons/explosion-plasma
-			bncsnd	weapons/grenade-bounce
+			firesnd	"weapons/grenade-pin"
+			impsnd	"weapons/explosion-plasma"
+			bodysnd	"weapons/explosion-plasma"
+			bncsnd	"weapons/grenade-bounce"
 			gravity	true
 			delay	1
 			bounce	10
@@ -616,19 +625,19 @@ item plasmagrenade
 			time	8
 			spldmg	"160 20"
 			splrad	6
-			dmgweight plasma_heavy
+			dmgweight "plasma_heavy"
 		}
 		firedef
 		{
 			name	"_Roll"
-			skill	explosive
+			skill	"explosive"
 			projtl	plasmagren
 			impact	plasmaBigExplosion
 			hitbody	plasmaBigExplosion
-			impsnd	weapons/explosion-plasma
-			firesnd	weapons/grenade-pin
-			bodysnd	weapons/explosion-plasma
-			bncsnd	weapons/grenade-bounce
+			impsnd	"weapons/explosion-plasma"
+			firesnd	"weapons/grenade-pin"
+			bodysnd	"weapons/explosion-plasma"
+			bncsnd	"weapons/grenade-bounce"
 			gravity	true
 			rolled true
 			delay	1
@@ -642,7 +651,7 @@ item plasmagrenade
 			time	8
 			spldmg	"160 20"
 			splrad	6
-			dmgweight plasma_heavy
+			dmgweight "plasma_heavy"
 		}
 	}
 }
@@ -655,9 +664,9 @@ item plasmagrenade
 item bomb1
 {
 	name		"_Bomb"
-	model		weapons/bombs/bomb1
+	model		"weapons/bombs/bomb1"
 	weapon		false
-	type		melee
+	type		"melee"
 	animationindex	2
 	shape		"0 0 2 2"
 	center		"0 0 0"
@@ -676,9 +685,9 @@ item bomb1
 item bomb2
 {
 	name		"_Bomb"
-	model		weapons/bombs/bomb2
+	model		"weapons/bombs/bomb2"
 	weapon		false
-	type		melee
+	type		"melee"
 	animationindex	2
 	shape		"0 0 2 2"
 	center		"0 0 0"

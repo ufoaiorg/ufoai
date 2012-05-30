@@ -8,9 +8,9 @@
 item chaingun
 {
 	name			"_Minigun"
-	model			weapons/chaingun/chaingun
+	model			"weapons/chaingun/chaingun"
 	weapon			true
-	type			biggun
+	type			"biggun"
 	animationindex	1
 	holdtwohanded	true
 	firetwohanded	true
@@ -20,7 +20,7 @@ item chaingun
 	scale			1.25
 	ammo			200
 	reload			26
-	reloadsound		weapons/reload-rifle	// @todo better sound?
+	reloadsound		"weapons/reload-rifle"	// @todo better sound?
 	is_primary		true
 	is_heavy		true
 	notonmarket		true
@@ -30,30 +30,31 @@ item chaingun
 item chaingun_ammo
 {
 	name			"_Minigun Magazine"
-	model			weapons/chaingun/chaingun_ammo
-	type			ammo
+	model			"weapons/chaingun/chaingun_ammo"
+	type			"ammo"
 	animationindex	0
 	shape			"0 0 4 2"
 	center			"-3 -6 0"
 	scale			1.6
 	is_primary		true
 	is_heavy		true
-	dmgtype			normal
+	dmgtype			"normal"
 	notonmarket		true
 	size			1
 
-	weapon_mod chaingun
+	weapon_mod
 	{
+		weapon chaingun
 		firedef
 		{
 			name				"_5-Round Burst"
-			skill				assault
+			skill				"assault"
 			projtl				bullet
 			impact				bulletImpact
 			hitbody				null
-			firesnd				weapons/bullet-chaingun-5x
-			impsnd				impact/bullet-impact
-			bodysnd 			impact/bullet-bodyimpact
+			firesnd				"weapons/bullet-chaingun-5x"
+			impsnd				"impact/bullet-impact"
+			bodysnd 			"impact/bullet-bodyimpact"
 			sndonce				true
 			speed				3000
 			spread				"2 2"
@@ -64,20 +65,20 @@ item chaingun_ammo
 			delaybetweenshots	10
 			time				16
 			damage				"20 3"
-			dmgweight			normal_spray
+			dmgweight			"normal_spray"
 			reaction			true
 			throughwall 5
 		}
 		firedef
 		{
 			name				"_Full-Auto"
-			skill				assault
+			skill				"assault"
 			projtl				bullet
 			impact				bulletImpact
 			hitbody				null
-			firesnd				weapons/bullet-chaingun-40x
-			impsnd				impact/bullet-impact
-			bodysnd 			impact/bullet-bodyimpact
+			firesnd				"weapons/bullet-chaingun-40x"
+			impsnd				"impact/bullet-impact"
+			bodysnd 			"impact/bullet-bodyimpact"
 			sndonce				true
 			speed				3000
 			spread				"4 4"
@@ -88,19 +89,19 @@ item chaingun_ammo
 			delaybetweenshots	20
 			time				28
 			damage				"20 3"
-			dmgweight			normal_spray
+			dmgweight			"normal_spray"
 			throughwall 5
 			}
 		firedef
 		{
 			name				"_Full-Auto Sweep"
-			skill				assault
+			skill				"assault"
 			projtl				bullet
 			impact				bulletImpact
 			hitbody				null
-			firesnd				weapons/bullet-chaingun-40x
-			impsnd				impact/bullet-impact
-			bodysnd 			impact/bullet-bodyimpact
+			firesnd				"weapons/bullet-chaingun-40x"
+			impsnd				"impact/bullet-impact"
+			bodysnd 			"impact/bullet-bodyimpact"
 			sndonce				true
 			speed				3000
 			spread				"4 20"
@@ -111,7 +112,7 @@ item chaingun_ammo
 			delaybetweenshots	20
 			time				28
 			damage				"20 3"
-			dmgweight			normal_spray
+			dmgweight			"normal_spray"
 			reaction			true
 			throughwall 5
 		}
@@ -125,9 +126,9 @@ item chaingun_ammo
 item shotgun
 {
 	name			"_Shotgun"
-	model			weapons/shotgun/shotgun
+	model			"weapons/shotgun/shotgun"
 	weapon			true
-	type			biggun
+	type			"biggun"
 	animationindex	1
 	holdtwohanded	false
 	firetwohanded	true
@@ -136,7 +137,7 @@ item shotgun
 	scale			1
 	ammo			2
 	reload			20
-	reloadsound		weapons/reload-shotgun
+	reloadsound		"weapons/reload-shotgun"
 	price			1500
 	size			25
 	is_primary		true
@@ -145,8 +146,8 @@ item shotgun
 item shotgun_ammo
 {
 	name			"_Flechette Shells"
-	model			weapons/shotgun/shotgun_clip
-	type			ammo
+	model			"weapons/shotgun/shotgun_clip"
+	type			"ammo"
 	animationindex	0
 	shape			"0 0 1 1"
 	center			"0 0 0"
@@ -154,20 +155,21 @@ item shotgun_ammo
 	price			35
 	size			4
 	is_primary		true
-	dmgtype			normal
+	dmgtype			"normal"
 
-	weapon_mod shotgun
+	weapon_mod
 	{
+		weapon shotgun
 		firedef
 		{
 			name				"_Single Barrel"
-			skill				close
+			skill				"close"
 			projtl				bullet-shotgun
 			impact				bulletImpact
 			hitbody				null
-			firesnd				weapons/bullet-shotgun
-			impsnd				impact/bullet-impact
-			bodysnd 			impact/bullet-bodyimpact
+			firesnd				"weapons/bullet-shotgun"
+			impsnd				"impact/bullet-impact"
+			bodysnd 			"impact/bullet-bodyimpact"
 			sndonce				true
 			speed				3000
 			spread				"3.5 3.5"
@@ -178,19 +180,19 @@ item shotgun_ammo
 			delaybetweenshots	0
 			time				10
 			damage				"20 5"
-			dmgweight			normal_spray
+			dmgweight			"normal_spray"
 			reaction			true
 		}
 		firedef
 		{
 			name				"_Double Barrel"
-			skill				close
+			skill				"close"
 			projtl				bullet-shotgun
 			impact				bulletImpact
 			hitbody				null
-			firesnd				weapons/bullet-shotgun
-			impsnd				impact/bullet-impact
-			bodysnd 			impact/bullet-bodyimpact
+			firesnd				"weapons/bullet-shotgun"
+			impsnd				"impact/bullet-impact"
+			bodysnd 			"impact/bullet-bodyimpact"
 			sndonce				true
 			speed				3000
 			spread				"4 4"
@@ -201,7 +203,7 @@ item shotgun_ammo
 			delaybetweenshots	0
 			time				10
 			damage				"20 5"
-			dmgweight			normal_spray
+			dmgweight			"normal_spray"
 			reaction			true
 		}
 	}
@@ -213,9 +215,9 @@ item shotgun_ammo
 item vhs
 {
 	name			"_VHS Assault Rifle"
-	model			weapons/vhs/vhs
+	model			"weapons/vhs/vhs"
 	weapon			true
-	type			rifle
+	type			"rifle"
 	animationindex	1
 	holdtwohanded	false
 	firetwohanded	true
@@ -225,7 +227,7 @@ item vhs
 	scale			1.2
 	ammo			30
 	reload			12
-	reloadsound		weapons/reload-rifle
+	reloadsound		"weapons/reload-rifle"
 	size			20
 	notonmarket		true
 	is_primary		true
@@ -237,9 +239,9 @@ item vhs
 item xaw95
 {
 	name			"_XAW95"
-	model			weapons/xaw95/xaw95
+	model			"weapons/xaw95/xaw95"
 	weapon			true
-	type			biggun
+	type			"biggun"
 	animationindex	1
 	holdtwohanded	true
 	firetwohanded	true
@@ -249,7 +251,7 @@ item xaw95
 	scale			1.0
 	ammo			200
 	reload			25
-	reloadsound		weapons/reload-rifle
+	reloadsound		"weapons/reload-rifle"
 	price			50000
 	size			40
 	is_primary		true
@@ -259,8 +261,8 @@ item xaw95
 item xaw95_ammo
 {
 	name			"_XAW95 Magazine"
-	model			weapons/xaw95/xaw95_ammo
-	type			ammo
+	model			"weapons/xaw95/xaw95_ammo"
+	type			"ammo"
 	animationindex	0
 	shape			"0 0 2 1"
 	center			"-3 -6 -2.5"
@@ -269,20 +271,21 @@ item xaw95_ammo
 	size			10
 	is_primary		true
 	is_heavy		true
-	dmgtype			normal
+	dmgtype			"normal"
 
-	weapon_mod xaw95
+	weapon_mod
 	{
+		weapon xaw95
 		firedef
 		{
 			name				"_10-Round Burst"
-			skill				assault
+			skill				"assault"
 			projtl				bullet
 			impact				bulletImpact
 			hitbody				null
-			firesnd				weapons/bullet-chaingun-10x
-			impsnd				impact/bullet-impact
-			bodysnd 			impact/bullet-bodyimpact
+			firesnd				"weapons/bullet-chaingun-10x"
+			impsnd				"impact/bullet-impact"
+			bodysnd 			"impact/bullet-bodyimpact"
 			sndonce				true
 			speed				3000
 			spread				"2 2"
@@ -293,20 +296,20 @@ item xaw95_ammo
 			delaybetweenshots	10
 			time				16
 			damage				"20 3"
-			dmgweight			normal_spray
+			dmgweight			"normal_spray"
 			reaction			true
 			throughwall 5
 		}
 		firedef
 		{
 			name				"_Full-Auto"
-			skill				assault
+			skill				"assault"
 			projtl				bullet
 			impact				bulletImpact
 			hitbody				null
-			firesnd				weapons/bullet-chaingun-50x
-			impsnd				impact/bullet-impact
-			bodysnd 			impact/bullet-bodyimpact
+			firesnd				"weapons/bullet-chaingun-50x"
+			impsnd				"impact/bullet-impact"
+			bodysnd 			"impact/bullet-bodyimpact"
 			sndonce				true
 			speed				3000
 			spread				"3 3"
@@ -317,19 +320,19 @@ item xaw95_ammo
 			delaybetweenshots	20
 			time				26
 			damage				"20 3"
-			dmgweight			normal_spray
+			dmgweight			"normal_spray"
 			throughwall 5
 		}
 		firedef
 		{
 			name				"_Full-Auto Sweep"
-			skill				assault
+			skill				"assault"
 			projtl				bullet
 			impact				bulletImpact
 			hitbody				null
-			firesnd				weapons/bullet-chaingun-50x
-			impsnd				impact/bullet-impact
-			bodysnd 			impact/bullet-bodyimpact
+			firesnd				"weapons/bullet-chaingun-50x"
+			impsnd				"impact/bullet-impact"
+			bodysnd 			"impact/bullet-bodyimpact"
 			sndonce				true
 			speed				3000
 			spread				"3.5 20"
@@ -340,7 +343,7 @@ item xaw95_ammo
 			delaybetweenshots	20
 			time				26
 			damage				"20 3"
-			dmgweight			normal_spray
+			dmgweight			"normal_spray"
 			reaction			true
 			throughwall 5
 		}
