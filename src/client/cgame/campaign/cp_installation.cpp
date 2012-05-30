@@ -43,11 +43,11 @@ int INS_GetCount (void)
 
 installationType_t INS_GetType (const char *type)
 {
-	if (Q_streq(type, "defence"))
+	if (Q_streq(type, "samsite"))
 		return INSTALLATION_DEFENCE;
 	else if (Q_streq(type, "ufoyard"))
 		return INSTALLATION_UFOYARD;
-	else if (Q_streq(type, "radar"))
+	else if (Q_streq(type, "radartower"))
 		return INSTALLATION_RADAR;
 	else if (Q_streq(type, "orbit"))
 		return INSTALLATION_ORBIT;
