@@ -269,17 +269,23 @@ static void INS_FillUFOYardData_f (void)
 static void INS_Init_f (void)
 {
 	linkedList_t *list = NULL;
-	int i;
-	for (i = 0; i < ccs.numInstallationTemplates; i++) {
-		const installationTemplate_t *tpl = &ccs.installationTemplates[i];
-		if (tpl->tech == NULL || RS_IsResearched_ptr(tpl->tech)) {
-			LIST_AddString(&list, va(_("%s\t%i\t%i c"), tpl->name, tpl->buildTime, tpl->cost));
+	if (INS_GetCount() < B_GetInstallationLimit()) {
+		int i;
+		for (i = 0; i < ccs.numInstallationTemplates; i++) {
+			const installationTemplate_t *tpl = &ccs.installationTemplates[i];
+			if (tpl->tech == NULL || RS_IsResearched_ptr(tpl->tech)) {
+				LIST_AddString(&list, va(_("%s\t%i\t%i c"), tpl->name, tpl->buildTime, tpl->cost));
+			}
 		}
 	}
 
-	LIST_AddString(&list, va(_("Base\t-\t%i c"), ccs.curCampaign->basecost));
+	if (B_GetCount() < MAX_BASES)
+		LIST_AddString(&list, va(_("Base\t-\t%i c"), ccs.curCampaign->basecost));
 
-	cgi->UI_RegisterLinkedListText(TEXT_LIST, list);
+	if (LIST_IsEmpty(list))
+		cgi->UI_PopWindow(false);
+	else
+		cgi->UI_RegisterLinkedListText(TEXT_LIST, list);
 }
 
 static void INS_Click_f (void)
@@ -288,8 +294,6 @@ static void INS_Click_f (void)
 		return;
 
 	int index = atoi(Cmd_Argv(1));
-
-	Com_Printf("selected index: %i\n", index);
 
 	for (int i = 0; i < ccs.numInstallationTemplates; i++) {
 		const installationTemplate_t *tpl = &ccs.installationTemplates[i];
