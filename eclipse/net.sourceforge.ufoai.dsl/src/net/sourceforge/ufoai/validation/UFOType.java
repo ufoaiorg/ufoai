@@ -50,6 +50,11 @@ public class UFOType {
 		COLOR,
 
 		/**
+		 * A string witch is a color
+		 */
+		DATE,
+
+		/**
 		 * A boolean
 		 */
 		BOOLEAN,
