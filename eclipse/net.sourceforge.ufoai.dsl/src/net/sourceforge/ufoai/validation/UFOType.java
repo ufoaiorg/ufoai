@@ -92,6 +92,7 @@ public class UFOType {
 		TECH_ID,
 		BUILDING_ID,
 		PARTICLE_ID,
+		MENU_MODEL_ID,
 	}
 
 	private Type type;

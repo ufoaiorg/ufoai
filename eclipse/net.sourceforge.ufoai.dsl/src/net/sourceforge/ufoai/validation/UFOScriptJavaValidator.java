@@ -158,6 +158,9 @@ public class UFOScriptJavaValidator extends AbstractUFOScriptJavaValidator {
 		case PARTICLE_ID:
 			validateReference(property, "particle");
 			break;
+		case MENU_MODEL_ID:
+			validateReference(property, "menu_model");
+			break;
 		case INT:
 			if (!(property.getValue() instanceof PropertyValueNumber)) {
 				error("Number expected", UfoScriptPackage.Literals.PROPERTY__VALUE);
