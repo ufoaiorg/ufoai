@@ -304,7 +304,7 @@ void BDEF_InitialiseInstallationSlots (installation_t *installation)
 {
 	int i;
 
-	for (i = 0; i < installation->installationTemplate->parameters.maxBatteries; i++) {
+	for (i = 0; i < installation->installationTemplate->maxBatteries; i++) {
 		baseWeapon_t* battery = &installation->batteries[i];
 		AII_InitialiseSlot(&battery->slot, NULL, NULL, installation, AC_ITEM_BASE_MISSILE);
 		battery->target = NULL;
@@ -401,7 +401,7 @@ void AII_UpdateInstallationDelay (void)
 	int k;
 
 	INS_Foreach(installation) {
-		for (k = 0; k < installation->installationTemplate->parameters.maxBatteries; k++)
+		for (k = 0; k < installation->installationTemplate->maxBatteries; k++)
 			AII_UpdateOneInstallationDelay(NULL, installation, NULL, &installation->batteries[k].slot);
 	}
 
@@ -1218,9 +1218,9 @@ bool AII_InstallationCanShoot (const installation_t *installation)
 	assert(installation);
 
 	if (installation->installationStatus == INSTALLATION_WORKING
-	 && installation->installationTemplate->parameters.maxBatteries > 0) {
+	 && installation->installationTemplate->maxBatteries > 0) {
 		/* installation is working and has battery */
-		return AII_WeaponsCanShoot(installation->batteries, installation->installationTemplate->parameters.maxBatteries);
+		return AII_WeaponsCanShoot(installation->batteries, installation->installationTemplate->maxBatteries);
 	}
 
 	return false;

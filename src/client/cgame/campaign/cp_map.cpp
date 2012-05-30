@@ -1418,7 +1418,7 @@ static void MAP_DrawMapOneInstallation (const uiNode_t* node, const installation
 	/* Draw weapon range if at least one UFO is visible */
 	if (oneUFOVisible && AII_InstallationCanShoot(installation)) {
 		int i;
-		for (i = 0; i < tpl->parameters.maxBatteries; i++) {
+		for (i = 0; i < tpl->maxBatteries; i++) {
 			const aircraftSlot_t *slot = &installation->batteries[i].slot;
 			if (slot->item && slot->ammoLeft != 0 && slot->installationTime == 0) {
 				MAP_MapDrawEquidistantPoints(node, installation->pos,
@@ -2268,7 +2268,7 @@ int MAP_GetCivilianNumberByPosition (const vec2_t pos)
 
 /**
  * @brief Prints positions parameter in console.
- * @param[in] pos Location (latitude, longitude) where you want to check parameters.
+ * @param[in] pos Location (latitude, longitude) where you want to check
  * @note Used for printing in console, do not translate.
  * @sa NAT_ScriptSanityCheck
  */

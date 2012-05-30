@@ -268,7 +268,7 @@ static void BDEF_BaseDefenceMenuUpdate_f (void)
 		if (installation->installationStatus != INSTALLATION_WORKING) {
 			Com_Printf("BDEF_BaseDefenceMenuUpdate_f: installation isn't working: you shouldn't be in this function.\n");
 			return;
-		} else if (installation->installationTemplate->parameters.maxBatteries < 1) {
+		} else if (installation->installationTemplate->maxBatteries < 1) {
 			Com_Printf("BDEF_BaseDefenceMenuUpdate_f: there is no defence battery in this installation: you shouldn't be in this function.\n");
 			return;
 		}
@@ -276,10 +276,10 @@ static void BDEF_BaseDefenceMenuUpdate_f (void)
 
 	if (installation) {
 		/* we are in the installation defence menu */
-		if (installation->installationTemplate->parameters.maxBatteries == 0) {
+		if (installation->installationTemplate->maxBatteries == 0) {
 			LIST_AddString(&slotList, _("No defence of this type in this installation"));
 		} else {
-			BDEF_FillSlotList(installation->batteries, installation->installationTemplate->parameters.maxBatteries, &slotList);
+			BDEF_FillSlotList(installation->batteries, installation->installationTemplate->maxBatteries, &slotList);
 		}
 	} else if (bdefType == AC_ITEM_BASE_MISSILE) {
 		/* we are in the base defence menu for missile */

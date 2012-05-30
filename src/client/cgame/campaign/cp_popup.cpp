@@ -575,7 +575,7 @@ static void CL_PopupInterceptBaseClick_f (void)
 
 	assert(base || installation);
 	if (installation) {
-		for (i = 0; i < installation->installationTemplate->parameters.maxBatteries; i++)
+		for (i = 0; i < installation->installationTemplate->maxBatteries; i++)
 			installation->batteries[i].target = MAP_GetSelectedUFO();
 	} else {
 		for (i = 0; i < base->numBatteries; i++)

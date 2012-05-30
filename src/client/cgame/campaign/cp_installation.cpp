@@ -60,10 +60,10 @@ bool INS_HasType (installationType_t type)
 {
 	INS_ForeachOfType(installation, type) {
 		if (installation->installationStatus == INSTALLATION_WORKING)
-			return installation;
+			return true;
 	}
 
-	return NULL;
+	return false;
 }
 
 /**
@@ -210,10 +210,10 @@ static void INS_FinishInstallation (installation_t *installation)
 	/* if Radar Tower */
 	RADAR_UpdateInstallationRadarCoverage(installation, installation->installationTemplate->radarRange, installation->installationTemplate->trackingRange);
 	/* if SAM Site */
-	installation->numBatteries = installation->installationTemplate->parameters.maxBatteries;
+	installation->numBatteries = installation->installationTemplate->maxBatteries;
 	BDEF_InitialiseInstallationSlots(installation);
 	/* if UFO Yard */
-	installation->ufoCapacity.max = installation->installationTemplate->parameters.maxUFOsStored;
+	installation->ufoCapacity.max = installation->installationTemplate->maxUFOsStored;
 }
 
 #ifdef DEBUG
@@ -332,8 +332,8 @@ static const value_t installation_vals[] = {
 	{"description", V_TRANSLATION_STRING, offsetof(installationTemplate_t, description), 0},
 	{"radar_range", V_INT, offsetof(installationTemplate_t, radarRange), MEMBER_SIZEOF(installationTemplate_t, radarRange)},
 	{"radar_tracking_range", V_INT, offsetof(installationTemplate_t, trackingRange), MEMBER_SIZEOF(installationTemplate_t, trackingRange)},
-	{"max_batteries", V_INT, offsetof(installationTemplate_t, parameters.maxBatteries), MEMBER_SIZEOF(installationTemplate_t, parameters.maxBatteries)},
-	{"max_ufo_stored", V_INT, offsetof(installationTemplate_t, parameters.maxUFOsStored), MEMBER_SIZEOF(installationTemplate_t, parameters.maxUFOsStored)},
+	{"max_batteries", V_INT, offsetof(installationTemplate_t, maxBatteries), MEMBER_SIZEOF(installationTemplate_t, maxBatteries)},
+	{"max_ufo_stored", V_INT, offsetof(installationTemplate_t, maxUFOsStored), MEMBER_SIZEOF(installationTemplate_t, maxUFOsStored)},
 	{"max_damage", V_INT, offsetof(installationTemplate_t, maxDamage), MEMBER_SIZEOF(installationTemplate_t, maxDamage)},
 	{"cost", V_INT, offsetof(installationTemplate_t, cost), MEMBER_SIZEOF(installationTemplate_t, cost)},
 	{"buildtime", V_INT, offsetof(installationTemplate_t, buildTime), MEMBER_SIZEOF(installationTemplate_t, buildTime)},
@@ -514,7 +514,7 @@ bool INS_LoadXML (xmlNode_t *p)
 		if (inst.installationStatus == INSTALLATION_WORKING) {
 			RADAR_UpdateInstallationRadarCoverage(&inst, inst.installationTemplate->radarRange, inst.installationTemplate->trackingRange);
 			/* UFO Yard */
-			inst.ufoCapacity.max = inst.installationTemplate->parameters.maxUFOsStored;
+			inst.ufoCapacity.max = inst.installationTemplate->maxUFOsStored;
 		} else {
 			inst.ufoCapacity.max = 0;
 		}
@@ -528,9 +528,9 @@ bool INS_LoadXML (xmlNode_t *p)
 			break;
 		}
 		inst.numBatteries = XML_GetInt(ss, SAVE_INSTALLATION_NUM, 0);
-		if (inst.numBatteries > inst.installationTemplate->parameters.maxBatteries) {
+		if (inst.numBatteries > inst.installationTemplate->maxBatteries) {
 			Com_Printf("Installation has more batteries than possible, using upper bound\n");
-			inst.numBatteries = inst.installationTemplate->parameters.maxBatteries;
+			inst.numBatteries = inst.installationTemplate->maxBatteries;
 		}
 
 		installation_t& instp = LIST_Add(&ccs.installations, inst);
