@@ -178,7 +178,6 @@ void CP_BaseAttackStartMission (mission_t *mission)
 	/* needed for transfer of alien corpses */
 	VectorCopy(base->pos, baseAttackFakeAircraft.pos);
 
-	/** this will be neccessary once more than 8 soldiers are working */
 	/* needed to spawn soldiers on map */
 	baseAttackFakeAircraft.maxTeamSize = std::min(MAX_ACTIVETEAM, E_CountByType(EMPL_SOLDIER) + E_CountByType(EMPL_ROBOT));
 
@@ -200,7 +199,7 @@ void CP_BaseAttackStartMission (mission_t *mission)
 	MAP_SetMissionAircraft(&baseAttackFakeAircraft);
 	/** @todo remove me - this is not needed because we are using the base->aircraftCurrent
 	 * pointer for resolving the aircraft - only CP_GameAutoGo needs this */
-	MAP_SetInterceptorAircraft(&baseAttackFakeAircraft);	/* needed for updating soldier stats sa CP_UpdateCharacterStats*/
+	MAP_SetInterceptorAircraft(&baseAttackFakeAircraft);	/* needed for updating soldier stats sa CP_UpdateCharacterStats */
 	B_SetCurrentSelectedBase(base);						/* needed for equipment menu */
 
 	static char popupText[1024];
