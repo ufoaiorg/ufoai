@@ -225,10 +225,6 @@ void UI_RegisterSpinnerNode (uiBehaviour_t *behaviour)
 	behaviour->manager = new uiSpinnerNode();
 	behaviour->extraDataSize = sizeof(EXTRADATA_TYPE);
 
-	/* The size of the widget is uneditable. Fixed to 15x19.
-	 */
-	UI_RegisterOveridedNodeProperty(behaviour, "size");
-
 	/**
 	 * @brief Backround used to display the spinner. It is displayed in the center of the node.
 	 */
