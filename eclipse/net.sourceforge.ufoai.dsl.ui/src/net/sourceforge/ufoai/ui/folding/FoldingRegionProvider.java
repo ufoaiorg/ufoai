@@ -1,6 +1,6 @@
 package net.sourceforge.ufoai.ui.folding;
 
-import net.sourceforge.ufoai.ufoScript.NamedBlock;
+import net.sourceforge.ufoai.ufoScript.UFONode;
 
 import org.eclipse.emf.ecore.EObject;
 import org.eclipse.xtext.resource.ILocationInFileProvider;
@@ -16,7 +16,7 @@ public class FoldingRegionProvider extends DefaultFoldingRegionProvider {
 
 	@Override
 	protected boolean isHandled(EObject eObject) {
-		if (eObject instanceof NamedBlock) {
+		if (eObject instanceof UFONode) {
 			return true;
 		}
 		return super.isHandled(eObject);

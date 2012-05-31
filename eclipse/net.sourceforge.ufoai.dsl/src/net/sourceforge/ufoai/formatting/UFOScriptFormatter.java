@@ -35,7 +35,7 @@ public class UFOScriptFormatter extends AbstractDeclarativeFormatter {
 			cfg.setSpace(" ").after(comma);
 		}
 
-		cfg.setLinewrap().after(g.getNamedBlockRule());
+		cfg.setLinewrap().after(g.getUFONodeRule());
 
 		// formatting for Comments
 		cfg.setLinewrap(0, 1, 2).before(g.getSL_COMMENTRule());

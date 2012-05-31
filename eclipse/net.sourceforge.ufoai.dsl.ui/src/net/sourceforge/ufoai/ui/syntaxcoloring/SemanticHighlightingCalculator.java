@@ -2,9 +2,7 @@ package net.sourceforge.ufoai.ui.syntaxcoloring;
 
 import java.util.List;
 
-import net.sourceforge.ufoai.ufoScript.NamedBlock;
-import net.sourceforge.ufoai.ufoScript.Property;
-import net.sourceforge.ufoai.ufoScript.PropertyValue;
+import net.sourceforge.ufoai.ufoScript.UFONode;
 import net.sourceforge.ufoai.ufoScript.UFOScript;
 import net.sourceforge.ufoai.ufoScript.UfoScriptPackage;
 
@@ -28,17 +26,18 @@ public class SemanticHighlightingCalculator implements ISemanticHighlightingCalc
 		for (EObject e : resource.getContents()) {
 			if (e instanceof UFOScript) {
 				UFOScript ufoScript = (UFOScript) e;
-				EList<NamedBlock> blocks = ufoScript.getBlocks();
-				for (NamedBlock block : blocks) {
-					highlightNode(getFirstFeatureNode(block, UfoScriptPackage.Literals.NAMED_BLOCK__TYPE),
-							HighlightingConfiguration.RULE_NAMED_BLOCK, acceptor);
-					EList<Property> properties = block.getProperties();
-					for (Property property : properties) {
-						highlightNode(getFirstFeatureNode(property, UfoScriptPackage.Literals.PROPERTY__TYPE),
+				EList<UFONode> roots = ufoScript.getRoots();
+				for (UFONode root: roots) {
+					highlightNode(getFirstFeatureNode(root, UfoScriptPackage.Literals.UFO_NODE__TYPE),
+							HighlightingConfiguration.RULE_PROPERTY_TYPE, acceptor);
+					for (UFONode child: root.getNodes()) {
+						highlightNode(getFirstFeatureNode(child, UfoScriptPackage.Literals.UFO_NODE__TYPE),
 								HighlightingConfiguration.RULE_PROPERTY_TYPE, acceptor);
+						/*
 						PropertyValue value = property.getValue();
 						highlightNode(getFirstFeatureNode(value, UfoScriptPackage.Literals.PROPERTY__VALUE),
 								HighlightingConfiguration.RULE_PROPERTY_VALUE, acceptor);
+								*/
 					}
 				}
 			}

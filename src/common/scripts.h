@@ -66,8 +66,7 @@ typedef enum {
 	V_FADE,
 	V_SHAPE_SMALL,			/**< space a weapon allocates in the inventory shapes, w, h */
 	V_SHAPE_BIG,			/**< inventory shape, x, y, w, h */
-	V_DMGTYPE,
-	V_DMGWEIGHT,
+	V_DAMAGE,
 	V_DATE,
 	V_RELABS,				/**< relative (e.g. 1.50) and absolute (e.g. +15) values */
 	V_HUNK_STRING,			/**< store the string in a mem pool */

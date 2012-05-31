@@ -326,8 +326,7 @@ const char *const vt_names[] = {
 	"fade",
 	"shapes",
 	"shapeb",
-	"dmgtype",
-	"dmgweight",
+	"damage",
 	"date",
 	"relabs",
 	"hunk_string",
@@ -381,8 +380,7 @@ static const size_t vt_sizes[] = {
 	sizeof(fade_t),	/* V_FADE */
 	sizeof(int),	/* V_SHAPE_SMALL */
 	0,	/* V_SHAPE_BIG */
-	sizeof(byte),	/* V_DMGTYPE */
-	sizeof(byte),	/* V_DMGWEIGHT */
+	sizeof(byte),	/* V_DAMAGE */
 	0,	/* V_DATE */
 	sizeof(float),	/* V_RELABS */
 	0,	/* V_HUNK_STRING */
@@ -416,8 +414,7 @@ static const size_t vt_aligns[] = {
 	sizeof(fade_t),	/* V_FADE */
 	sizeof(int),	/* V_SHAPE_SMALL */
 	sizeof(uint32_t),	/* V_SHAPE_BIG */
-	sizeof(byte),	/* V_DMGTYPE */
-	sizeof(byte),	/* V_DMGWEIGHT */
+	sizeof(byte),	/* V_DAMAGE */
 	sizeof(date_t),	/* V_DATE */
 	sizeof(float),	/* V_RELABS */
 	sizeof(char),	/* V_HUNK_STRING */
@@ -807,8 +804,7 @@ resultStatus_t Com_ParseValue (void *base, const char *token, valueTypes_t type,
 		*writtenBytes = SHAPE_BIG_MAX_HEIGHT * SHAPE_SMALL_MAX_HEIGHT;
 		break;
 
-	case V_DMGWEIGHT:
-	case V_DMGTYPE:
+	case V_DAMAGE:
 		for (num = 0; num < csi.numDTs; num++)
 			if (Q_streq(token, csi.dts[num].id))
 				break;
@@ -1133,8 +1129,7 @@ int Com_SetValue (void *base, const void *set, valueTypes_t type, int ofs, size_
 		memcpy(b, set, 64);
 		return SHAPE_BIG_MAX_HEIGHT * 4;
 
-	case V_DMGWEIGHT:
-	case V_DMGTYPE:
+	case V_DAMAGE:
 		*b = *(const byte *) set;
 		return 1;
 
@@ -1347,8 +1342,7 @@ const char *Com_ValueToStr (const void *base, const valueTypes_t type, const int
 	case V_SHAPE_BIG:
 		return "";
 
-	case V_DMGWEIGHT:
-	case V_DMGTYPE:
+	case V_DAMAGE:
 		assert(*(const byte *)b < MAX_DAMAGETYPES);
 		return csi.dts[*(const byte *)b].id;
 
@@ -1520,7 +1514,7 @@ static const value_t od_vals[] = {
 	{"speed", V_RELABS, offsetof(objDef_t, craftitem.stats[AIR_STATS_SPEED]), MEMBER_SIZEOF(objDef_t, craftitem.stats[AIR_STATS_SPEED])},
 	{"maxspeed", V_RELABS, offsetof(objDef_t, craftitem.stats[AIR_STATS_MAXSPEED]), MEMBER_SIZEOF(objDef_t, craftitem.stats[AIR_STATS_SPEED])},
 	{"fuelsize", V_RELABS, offsetof(objDef_t, craftitem.stats[AIR_STATS_FUELSIZE]), MEMBER_SIZEOF(objDef_t, craftitem.stats[AIR_STATS_FUELSIZE])},
-	{"dmgtype", V_DMGTYPE, offsetof(objDef_t, dmgtype), MEMBER_SIZEOF(objDef_t, dmgtype)},
+	{"dmgtype", V_DAMAGE, offsetof(objDef_t, dmgtype), MEMBER_SIZEOF(objDef_t, dmgtype)},
 
 	{"is_primary", V_BOOL, offsetof(objDef_t, isPrimary), MEMBER_SIZEOF(objDef_t, isPrimary)},
 	{"is_secondary", V_BOOL, offsetof(objDef_t, isSecondary), MEMBER_SIZEOF(objDef_t, isSecondary)},
@@ -1565,7 +1559,7 @@ static const value_t fdps[] = {
 	{"time", V_INT, offsetof(fireDef_t, time), MEMBER_SIZEOF(fireDef_t, time)},
 	{"damage", V_POS, offsetof(fireDef_t, damage), MEMBER_SIZEOF(fireDef_t, damage)},
 	{"spldmg", V_POS, offsetof(fireDef_t, spldmg), MEMBER_SIZEOF(fireDef_t, spldmg)},
-	{"dmgweight", V_DMGWEIGHT, offsetof(fireDef_t, dmgweight), MEMBER_SIZEOF(fireDef_t, dmgweight)},
+	{"dmgweight", V_DAMAGE, offsetof(fireDef_t, dmgweight), MEMBER_SIZEOF(fireDef_t, dmgweight)},
 	{"irgoggles", V_BOOL, offsetof(fireDef_t, irgoggles), MEMBER_SIZEOF(fireDef_t, irgoggles)},
 	{"rounds", V_INT, offsetof(fireDef_t, rounds), MEMBER_SIZEOF(fireDef_t, rounds)},
 	{NULL, V_NULL, 0, 0}

@@ -21,7 +21,7 @@ public class UFOScriptProposalProvider extends AbstractUFOScriptProposalProvider
 		super.complete_UFOScript(model, ruleCall, context, acceptor);
 
 		// compute the plain proposal
-		String proposal = "Description for model #" + model.getBlocks();
+		String proposal = "Description for model #" + model.getRoots();
 
 		// convert it to a valid STRING-terminal
 		proposal = getValueConverter().toString(proposal, "STRING");

@@ -5,45 +5,40 @@ generate ufoScript "http://ufoai.org/UFOScript"
 
 // starting point for parsing a ufo script file
 UFOScript:
-	(blocks+=NamedBlock)*;
+	(roots+=UFONode)*;
 
-NamedBlock:
-	type=ID name=ID "{" =>
-		(=>properties+=Property)*
-	=> "}";
+UFONode:
+	type=ID (
+		(=>name=ID "{" (=>nodes+=UFONode)* => "}")
+		| ("{" (nodes+=UFONode)* => "}")
+		| (value=Value)
+	);
 
-Property:
-	type=ID => value=PropertyValue;
+Value:
+	ValueBoolean
+	| ValueNull
+	| ValueNumber
+	| ValueNamedConst
+	| ValueReference
+	| ValueString;
 
-PropertyValue:
-	=> PropertyValueBlock
-	| PropertyValueBoolean
-	| PropertyValueNull
-	| PropertyValueNumber
-	| PropertyValueNamedConst
-	| PropertyValueID
-	| PropertyValueString;
-
-PropertyValueString:
+ValueString:
 	value=STRING;
 
-PropertyValueBoolean:
+ValueBoolean:
 	value=UFO_BOOLEAN;
 
-PropertyValueNumber:
+ValueNumber:
 	value=Double;
 
-PropertyValueID:
-	value=[NamedBlock];
+ValueReference:
+	value=[UFONode];
 
-PropertyValueNamedConst:
+ValueNamedConst:
 	value=NAMED_CONST;
 
-PropertyValueNull:
+ValueNull:
 	value=NULL;
-
-PropertyValueBlock:
-	"{" {PropertyValueBlock} (=>properties+=Property)* => "}";
 
 /* ==================== terminals ================================ */
 

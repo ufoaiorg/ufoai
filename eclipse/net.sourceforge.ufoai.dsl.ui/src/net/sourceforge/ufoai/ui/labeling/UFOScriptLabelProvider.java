@@ -7,7 +7,7 @@ import java.io.InputStream;
 import java.util.HashMap;
 import java.util.Map;
 
-import net.sourceforge.ufoai.ufoScript.NamedBlock;
+import net.sourceforge.ufoai.ufoScript.UFONode;
 
 import org.eclipse.emf.edit.ui.provider.AdapterFactoryLabelProvider;
 import org.eclipse.swt.graphics.Image;
@@ -52,7 +52,7 @@ public class UFOScriptLabelProvider extends DefaultEObjectLabelProvider {
 		return image;
 	}
 
-	public Image image(NamedBlock block) {
+	public Image image(UFONode block) {
 		return getIcon(block.getType());
 	}
 }
