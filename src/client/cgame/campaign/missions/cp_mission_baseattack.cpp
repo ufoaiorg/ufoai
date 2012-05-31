@@ -203,7 +203,7 @@ void CP_BaseAttackStartMission (mission_t *mission)
 	B_SetCurrentSelectedBase(base);						/* needed for equipment menu */
 
 	static char popupText[1024];
-	Com_sprintf(popupText, sizeof(popupText), _("Base '%s' is under attack! What to do ?"), base->name);
+	Com_sprintf(popupText, sizeof(popupText), _("Base '%s' is under attack! What to do?"), base->name);
 	cgi->UI_RegisterText(TEXT_POPUP, popupText);
 
 	CP_GameTimeStop();
