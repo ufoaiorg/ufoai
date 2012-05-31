@@ -56,10 +56,13 @@ installationType_t INS_GetType (const char *type)
 	return INSTALLATION_RADAR;
 }
 
-bool INS_HasType (installationType_t type)
+/**
+ * @brief Checks whether the given installation type is available
+ */
+bool INS_HasType (installationType_t type, installationStatus_t status)
 {
 	INS_ForeachOfType(installation, type) {
-		if (installation->installationStatus == INSTALLATION_WORKING)
+		if (status == INSTALLATION_NOT_USED || installation->installationStatus == status)
 			return true;
 	}
 

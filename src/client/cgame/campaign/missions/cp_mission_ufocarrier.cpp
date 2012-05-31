@@ -32,6 +32,16 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #include "../cp_xvi.h"
 #include "../cp_alien_interest.h"
 
+static mission_t *CP_GetCarrierMission (void)
+{
+	MIS_Foreach(mission) {
+		if (mission->category == INTERESTCATEGORY_UFOCARRIER)
+			return mission;
+	}
+
+	return NULL;
+}
+
 /**
  * @brief Start UFO-Carrier mission.
  */
@@ -40,15 +50,13 @@ static void CP_UFOCarrierMissionStart (mission_t *mission)
 	mission->idx = ++ccs.campaignStats.missions;
 	mission->finalDate = ccs.date;
 	mission->stage = STAGE_RECON_AIR;
-
-	Cmd_ExecuteString("cp_activate_orbital_installation");
 }
 
 static void CP_UFOCarrierMissionUpdate (mission_t *mission)
 {
 	/* delay the next update for some time */
 	const date_t delay = {2, 0};
-	Date_Add(mission->finalDate, delay);
+	mission->finalDate = Date_Add(ccs.date, delay);
 
 	if (INS_HasType(INSTALLATION_ORBIT)) {
 		cgi->UI_PopupButton(_("UFO-Carrier"), _("Attack the UFO-Carrier?"),
@@ -75,10 +83,15 @@ void CP_UFOCarrierNextStage (mission_t *mission)
 }
 
 /**
- * @brief Spawns a UFO-Carrier on the geoscape
+ * @brief Spawns a UFO-Carrier mission
  */
 void CP_SpawnUFOCarrier_f (void)
 {
+	/* only one carrier missions is allowed */
+	if (CP_GetCarrierMission() != NULL)
+		return;
+
+	Com_Printf("spawn ufo carrier mission\n");
 	CP_CreateNewMission(INTERESTCATEGORY_UFOCARRIER, true);
 }
 
@@ -88,11 +101,21 @@ void CP_SpawnUFOCarrier_f (void)
  */
 void CP_AttackUFOCarrier_f (void)
 {
-	MIS_Foreach(mission) {
-		if (mission->category == INTERESTCATEGORY_UFOCARRIER)
-			CP_MissionRemove(mission);
-	}
+	mission_t *mission = CP_GetCarrierMission();
+	if (mission == NULL)
+		return;
 
-	technology_t *tech = RS_GetTechByID("rs_craft_ufo_carrier");
-	RS_MarkOneResearchable(tech);
+	if (!INS_HasType(INSTALLATION_ORBIT))
+		return;
+
+	/* check max amount - we can't win if we can't add the ufo */
+	if (ccs.numUFOs >= MAX_UFOONGEOSCAPE)
+		return;
+
+	aircraft_t *ufo = UFO_AddToGeoscape(UFO_CARRIER, NULL, mission);
+	if (ufo == NULL) {
+		Com_Error(ERR_DROP, "Could not add UFO-Carrier to geoscape");
+		return;
+	}
+	CP_SpawnCrashSiteMission(ufo);
 }

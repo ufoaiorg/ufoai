@@ -782,6 +782,7 @@ void CP_UFORemoveFromGeoscape (mission_t *mission, bool destroyed)
 		RADAR_NotifyUFORemoved(mission->ufo, true);
 
 		/* Update UFO idx */
+		/** @todo remove me once the ufo list is a linked list */
 		MIS_Foreach(removedMission) {
 			if (removedMission->ufo && (removedMission->ufo > mission->ufo))
 				removedMission->ufo--;
