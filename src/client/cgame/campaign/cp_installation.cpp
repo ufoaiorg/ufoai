@@ -320,7 +320,7 @@ void INS_UpdateInstallationData (void)
 {
 	INS_Foreach(installation) {
 		if (installation->installationStatus == INSTALLATION_UNDER_CONSTRUCTION
-		 && installation->buildStart > 0
+		 && installation->buildStart
 		 && installation->buildStart + installation->installationTemplate->buildTime <= ccs.date.day) {
 			INS_FinishInstallation(installation);
 
