@@ -38,10 +38,10 @@ public class UFOTypes {
 	}
 
 	private UFOType computePathType(String path) {
-		String type = properties.getProperty(path + ".type");
+		String type = properties.getProperty(path);
 		if (type == null)
 			return null;
-		String values = properties.getProperty(path + ".values");
+		String values = properties.getProperty(path + ".VALUES");
 		return new UFOType(type, values);
 	}
 
