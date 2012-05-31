@@ -273,8 +273,7 @@ static void INS_Init_f (void)
 		int i;
 		for (i = 0; i < ccs.numInstallationTemplates; i++) {
 			const installationTemplate_t *tpl = &ccs.installationTemplates[i];
-			/* there may only be one orbital rocket launcher */
-			if (tpl->type == INSTALLATION_ORBIT && INS_HasType(INSTALLATION_ORBIT, INSTALLATION_NOT_USED))
+			if (tpl->once && INS_HasType(tpl->type, INSTALLATION_NOT_USED))
 				continue;
 			if (tpl->tech == NULL || RS_IsResearched_ptr(tpl->tech)) {
 				LIST_AddString(&list, va(_("%s\t%i\t%i c"), tpl->name, tpl->buildTime, tpl->cost));
@@ -301,8 +300,7 @@ static void INS_Click_f (void)
 	for (int i = 0; i < ccs.numInstallationTemplates; i++) {
 		const installationTemplate_t *tpl = &ccs.installationTemplates[i];
 		if (tpl->tech == NULL || RS_IsResearched_ptr(tpl->tech)) {
-			/* there may only be one orbital rocket launcher */
-			if (tpl->type == INSTALLATION_ORBIT && INS_HasType(INSTALLATION_ORBIT, INSTALLATION_NOT_USED))
+			if (tpl->once && INS_HasType(tpl->type, INSTALLATION_NOT_USED))
 				continue;
 			if (index-- == 0) {
 				/* if player hit the "create base" button while creating base mode is enabled

@@ -66,6 +66,7 @@ typedef struct installationTemplate_s {
 	char *model;						/**< Model used on 3D geoscape */
 	char *image;						/**< Image used on 2D geoscape */
 	struct technology_s *tech;			/**< Link to the installation-technology. */
+	bool once;
 } installationTemplate_t;
 
 

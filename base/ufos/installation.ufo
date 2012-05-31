@@ -54,9 +54,10 @@ installation orbit
 	image			"pics/geoscape/orbit"
 	cost			200000
 	radar_range		0
-	max_damage		1
-	buildtime		20
+	max_damage		0
+	buildtime		0
 	type			"orbit"
+	once			true
 
 	description 	"TODO"
 }

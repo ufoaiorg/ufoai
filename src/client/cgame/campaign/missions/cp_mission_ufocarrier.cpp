@@ -59,7 +59,7 @@ static void CP_UFOCarrierMissionUpdate (mission_t *mission)
 	mission->finalDate = Date_Add(ccs.date, delay);
 
 	if (INS_HasType(INSTALLATION_ORBIT)) {
-		cgi->UI_PopupButton(_("UFO-Carrier"), _("Attack the UFO-Carrier?"),
+		cgi->UI_PopupButton(_("UFO-Carrier"), _("The Carrier UFO is in range. Should we launch the missiles?"),
 			"ui_pop;", _("Cancel"), _("Don't attack the UFO-Carrier"),
 			"cp_attack_ufocarrier;ui_pop;", _("Attack"), _("Attack the UFO-Carrier"),
 			NULL, NULL, NULL);
@@ -91,7 +91,11 @@ void CP_SpawnUFOCarrier_f (void)
 	if (CP_GetCarrierMission() != NULL)
 		return;
 
-	Com_Printf("spawn ufo carrier mission\n");
+	const installationTemplate_t *installationTemplate = INS_GetInstallationTemplateByType(INSTALLATION_ORBIT);
+	if (!installationTemplate)
+		return;
+	const vec2_t pos = {104.9833, 39.7333};
+	INS_Build(installationTemplate, pos, _(installationTemplate->name));
 	CP_CreateNewMission(INTERESTCATEGORY_UFOCARRIER, true);
 }
 

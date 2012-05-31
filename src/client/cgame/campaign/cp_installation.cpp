@@ -340,6 +340,7 @@ static const value_t installation_vals[] = {
 	{"max_damage", V_INT, offsetof(installationTemplate_t, maxDamage), MEMBER_SIZEOF(installationTemplate_t, maxDamage)},
 	{"cost", V_INT, offsetof(installationTemplate_t, cost), MEMBER_SIZEOF(installationTemplate_t, cost)},
 	{"buildtime", V_INT, offsetof(installationTemplate_t, buildTime), MEMBER_SIZEOF(installationTemplate_t, buildTime)},
+	{"once", V_BOOL, offsetof(installationTemplate_t, once), MEMBER_SIZEOF(installationTemplate_t, once)},
 	{"model", V_HUNK_STRING, offsetof(installationTemplate_t, model), 0},
 	{"image", V_HUNK_STRING, offsetof(installationTemplate_t, image), 0},
 
