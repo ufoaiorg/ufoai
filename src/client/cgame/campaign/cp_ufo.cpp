@@ -586,6 +586,28 @@ static void UFO_ListOnGeoscape_f (void)
 /**
  * @brief Get the template data for the given ufo type
  * @param ufoType The ufo type to search the template for.
+ * @return @c NULL in case the ufoType wasn't found, or the pointer to the ufo template.
+ */
+const aircraft_t* UFO_GetTemplate (ufoType_t ufoType)
+{
+	int newUFONum;
+
+	for (newUFONum = 0; newUFONum < ccs.numAircraftTemplates; newUFONum++) {
+		const aircraft_t *tpl = &ccs.aircraftTemplates[newUFONum];
+		if (tpl->type == AIRCRAFT_UFO && ufoType == tpl->ufotype)
+			break;
+	}
+
+	/* not found */
+	if (newUFONum == ccs.numAircraftTemplates)
+		return NULL;
+
+	return &ccs.aircraftTemplates[newUFONum];
+}
+
+/**
+ * @brief Get the template data for the given ufo type
+ * @param ufoType The ufo type to search the template for.
  * @note This function will only return those templates that may appear on the geoscape!
  * @return @c NULL in case the ufoType wasn't found, or the pointer to the ufo template.
  */
@@ -612,9 +634,12 @@ static const aircraft_t* UFO_GetTemplateForGeoscape (ufoType_t ufoType)
  * @return @c NULL if the max allowed amount of ufos are already on the geoscape, otherwise
  * the newly created ufo pointer
  */
-static aircraft_t* UFO_CreateFromTemplate (const aircraft_t *ufoTemplate)
+aircraft_t* UFO_CreateFromTemplate (const aircraft_t *ufoTemplate)
 {
 	aircraft_t *ufo;
+
+	if (ufoTemplate == NULL)
+		return NULL;
 
 	/* check max amount */
 	if (ccs.numUFOs >= MAX_UFOONGEOSCAPE)
@@ -622,8 +647,6 @@ static aircraft_t* UFO_CreateFromTemplate (const aircraft_t *ufoTemplate)
 
 	/* must be an ufo */
 	assert(ufoTemplate->type == AIRCRAFT_UFO);
-	/* must be allowed to be on the geoscape */
-	assert(!ufoTemplate->notOnGeoscape);
 
 	/* get a new free slot */
 	ufo = UFO_GetByIDX(ccs.numUFOs);
@@ -861,11 +884,12 @@ void UFO_NotifyPhalanxAircraftRemoved (const aircraft_t * const aircraft)
  */
 bool UFO_IsUFOSeenOnGeoscape (const aircraft_t *ufo)
 {
+	bool seen = !ufo->landed && ufo->detected;
 #ifdef DEBUG
-	if (ufo->notOnGeoscape)
-	Com_Error(ERR_DROP, "UFO_IsUFOSeenOnGeoscape: ufo %s can't be used on geoscape", ufo->id);
+	if (seen && ufo->notOnGeoscape)
+		Com_Error(ERR_DROP, "UFO_IsUFOSeenOnGeoscape: ufo %s can't be used on geoscape", ufo->id);
 #endif
-	return (!ufo->landed && ufo->detected);
+	return seen;
 }
 
 /**

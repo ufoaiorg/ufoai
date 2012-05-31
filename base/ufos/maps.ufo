@@ -2207,6 +2207,7 @@ mapdef ufocrash
 		craft_crash_harvester
 		craft_crash_supply
 //		craft_crash_bomber
+		craft_crash_carrier
 	}
 
 	aircraft

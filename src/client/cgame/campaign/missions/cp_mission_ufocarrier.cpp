@@ -112,10 +112,18 @@ void CP_AttackUFOCarrier_f (void)
 	if (ccs.numUFOs >= MAX_UFOONGEOSCAPE)
 		return;
 
-	aircraft_t *ufo = UFO_AddToGeoscape(UFO_CARRIER, NULL, mission);
+	const aircraft_t* ufoTemplate = UFO_GetTemplate(UFO_CARRIER);
+	aircraft_t *ufo = UFO_CreateFromTemplate(ufoTemplate);
 	if (ufo == NULL) {
 		Com_Error(ERR_DROP, "Could not add UFO-Carrier to geoscape");
 		return;
 	}
+	ufo->mission = mission;
+	mission->ufo = ufo;
+	assert(mission->mapDef == NULL);
+	CP_GetRandomPosOnGeoscape(ufo->pos, true);
 	CP_SpawnCrashSiteMission(ufo);
+	if (mission->mapDef != NULL) {
+		Com_Printf("spawned mapdef: %s\n", mission->mapDef->id);
+	}
 }

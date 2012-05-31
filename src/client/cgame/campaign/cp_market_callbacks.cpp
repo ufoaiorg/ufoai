@@ -432,7 +432,7 @@ static void BS_FillMarket_f (void)
 			cgi->UI_ExecuteConfunc("ui_market_add \"aircraft-%d\" \"%s\" 1 0 0 %d - \"%s\"", aircraft->idx, aircraft->name, BS_GetAircraftSellingPrice(aircraft), AIR_IsAircraftInBase(aircraft) ? "-" : _("Aircraft is away from home"));
 		}
 		for (int i = 0; i < ccs.numAircraftTemplates; i++) {
-		const aircraft_t *aircraft = &ccs.aircraftTemplates[i];
+			const aircraft_t *aircraft = &ccs.aircraftTemplates[i];
 			if (!BS_AircraftIsOnMarket(aircraft))
 				continue;
 			if (!RS_IsResearched_ptr(aircraft->tech))
