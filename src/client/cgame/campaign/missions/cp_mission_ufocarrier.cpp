@@ -92,4 +92,7 @@ void CP_AttackUFOCarrier_f (void)
 		if (mission->category == INTERESTCATEGORY_UFOCARRIER)
 			CP_MissionRemove(mission);
 	}
+
+	technology_t *tech = RS_GetTechByID("rs_craft_ufo_carrier");
+	RS_MarkOneResearchable(tech);
 }
