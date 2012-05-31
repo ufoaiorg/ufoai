@@ -56,8 +56,6 @@ static interestCategory_t CP_GetAlienMissionTypeByID (const char *type)
 		return INTERESTCATEGORY_ALIENBASE;
 	else if (Q_streq(type, "ufocarrier"))
 		return INTERESTCATEGORY_UFOCARRIER;
-	else if (Q_streq(type, "ufocarrier"))
-		return INTERESTCATEGORY_UFOCARRIER;
 	else if (Q_streq(type, "rescue"))
 		return INTERESTCATEGORY_RESCUE;
 	else {
