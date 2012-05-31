@@ -81,6 +81,22 @@ public class UFOScriptJavaValidator extends AbstractUFOScriptJavaValidator {
 		}
 
 		switch (type.getType()) {
+		case IDENTIFIED_BLOCK:
+			if (node.getValue() != null || node.getNodes().isEmpty()) {
+				error("Block is expected", UfoScriptPackage.Literals.UFO_NODE__VALUE);
+			}
+			if (node.getName() == null) {
+				error("Identified block expected", UfoScriptPackage.Literals.UFO_NODE__VALUE);
+			}
+			break;
+		case ANONYMOUS_BLOCK:
+			if (node.getValue() != null || node.getNodes().isEmpty()) {
+				error("Block is expected", UfoScriptPackage.Literals.UFO_NODE__VALUE);
+			}
+			if (node.getName() != null) {
+				error("Anonymous block expected", UfoScriptPackage.Literals.UFO_NODE__VALUE);
+			}
+			break;
 		case BLOCK:
 			if (node.getValue() != null || node.getNodes().isEmpty()) {
 				error("Block is expected", UfoScriptPackage.Literals.UFO_NODE__VALUE);

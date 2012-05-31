@@ -8,9 +8,27 @@ public class UFOType {
 
 	enum Type {
 		/**
-		 * A block
+		 * A block, identified or not
+		 * @see IDENTIFIED_BLOCK
+		 * @see ANONYMOUS_BLOCK
 		 */
 		BLOCK,
+
+		/**
+		 * A block with an extra token identifier
+		 * blockname identifier { ... }
+		 * @see BLOCK
+		 * @see ANONYMOUS_BLOCK
+		 */
+		IDENTIFIED_BLOCK,
+
+		/**
+		 * A block without identifier
+		 * blockname { ... }
+		 * @see IDENTIFIED_BLOCK
+		 * @see BLOCK
+		 */
+		ANONYMOUS_BLOCK,
 
 		/**
 		 * A string
