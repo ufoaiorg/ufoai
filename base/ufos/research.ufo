@@ -5419,5 +5419,5 @@ tech rs_orbital_ufo_activity
 	provides	orbit
 	time		14000
 	image		"techs/orbital_ufo_activity"
-	event		"cp_spawn_ufocarrier"
+	event		"cp_spawn_ufocarrier 105 40"
 }

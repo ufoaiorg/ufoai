@@ -94,8 +94,14 @@ void CP_SpawnUFOCarrier_f (void)
 	const installationTemplate_t *installationTemplate = INS_GetInstallationTemplateByType(INSTALLATION_ORBIT);
 	if (!installationTemplate)
 		return;
-	const vec2_t pos = {104.9833, 39.7333};
-	INS_Build(installationTemplate, pos, _(installationTemplate->name));
+
+	if (Cmd_Argc() == 3) {
+		const vec2_t pos = { atof(Cmd_Argv(1)), atof(Cmd_Argv(2)) };
+		if (!MapIsWater(MAP_GetColor(pos, MAPTYPE_TERRAIN, NULL))) {
+			INS_Build(installationTemplate, pos, _(installationTemplate->name));
+		}
+	}
+
 	CP_CreateNewMission(INTERESTCATEGORY_UFOCARRIER, true);
 }
 
