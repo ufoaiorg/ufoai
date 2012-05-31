@@ -422,7 +422,32 @@ component ExtResearchItem extends panel
 	}
 }
 
+// Market category label
+component MarketCategory extends panel
+{
+	{
+		size 			"713 28"
+		bgcolor			"0.4 0.52 0.5 1"
+		onMouseEnter	{ *node:this@bgcolor = "0.56 0.81 0.76 1" }
+		onMouseLeave	{ *node:this@bgcolor = "0.4 0.52 0.5 1" }
+	}
+	string name
+	{
+		pos				"30 0"
+		size			"400 28"
+		color			"0 0 0 1"
+		contentalign	ALIGN_CL
+		ghost			true
+	}
+}
 
+// Market category list
+component MarketList extends panel
+{
+	size			"713 0"
+	layout			LAYOUT_TOP_DOWN_FLOW
+	layoutMargin	2
+}
 // Market item
 component MarketItem extends panel
 {
@@ -438,6 +463,7 @@ component MarketItem extends panel
 	data rate { integer 1 }
 	checkbox autosell
 	{
+		tooltip				"_Lock current stock level"
 		current				0
 		iconChecked			"icons/windowlock"
 		iconUnchecked		"icons/windowlock_light"
@@ -447,7 +473,7 @@ component MarketItem extends panel
 		invis				false
 		onMouseEnter		{ *node:this@iconUnchecked = "icons/windowlock" }
 		onMouseLeave		{ *node:this@iconUnchecked = "icons/windowlock_light" }
-		onClick				{ cmd "echo clicked;" cmd "ui_market_setautosell \"<node:parent.id@string>\" <node:this@string>;"}
+		onClick				{ cmd "ui_market_setautosell \"<node:parent.id@string>\" <node:this@string>;"}
 	}
 
 	string name
@@ -478,10 +504,11 @@ component MarketItem extends panel
 	}
 	// Sell rate -- choose to sell 1 or 10 at a time
 	// @TODO: this is a place-holder that needs proper implementation
+	// @TODO: when changing the icon, also change the tool tip.
 	button sell_rate
 	{
-		icon			"icons/window_single"
-		tooltip			"_Lock current stock level"
+		icon			"icons/windowsingle"
+		tooltip			"_Sell single item"
 		pos				"544 5"
 		size			"18	18"
 	}
