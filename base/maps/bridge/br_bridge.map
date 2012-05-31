@@ -4100,13 +4100,6 @@
 }
 // entity 4
 {
-"classname" "misc_model"
-"origin" "1758 192 2"
-"model" "models/objects/vegi/plants/plant_a.md2"
-"spawnflags" "255"
-}
-// entity 5
-{
 "classname" "func_group"
 // brush 0
 {
@@ -4452,112 +4445,112 @@
 ( 1248 321 156 ) ( 1248 321 163 ) ( 1248 318 163 ) tex_material/metall001 40 124 0 0.125 0.125 64512 0 0
 }
 }
-// entity 6
+// entity 5
 {
 "classname" "info_player_start"
 "team" "2"
 "origin" "2160 48 28"
 "angle" "180"
 }
-// entity 7
+// entity 6
 {
 "classname" "info_player_start"
 "team" "2"
 "origin" "2256 48 28"
 "angle" "90"
 }
-// entity 8
+// entity 7
 {
 "classname" "info_player_start"
 "team" "2"
 "origin" "2224 48 28"
 "angle" "90"
 }
-// entity 9
+// entity 8
 {
 "classname" "info_player_start"
 "team" "2"
 "origin" "2192 48 28"
 "angle" "90"
 }
-// entity 10
+// entity 9
 {
 "classname" "info_player_start"
 "team" "2"
 "origin" "2160 144 28"
 "angle" "180"
 }
-// entity 11
+// entity 10
 {
 "classname" "info_player_start"
 "team" "2"
 "origin" "2256 144 28"
 "angle" "90"
 }
-// entity 12
+// entity 11
 {
 "classname" "info_player_start"
 "team" "2"
 "origin" "2224 144 28"
 "angle" "90"
 }
-// entity 13
+// entity 12
 {
 "classname" "info_player_start"
 "team" "2"
 "origin" "2192 144 28"
 "angle" "90"
 }
-// entity 14
+// entity 13
 {
 "classname" "info_player_start"
 "team" "2"
 "origin" "2160 112 28"
 "angle" "180"
 }
-// entity 15
+// entity 14
 {
 "classname" "info_player_start"
 "team" "2"
 "origin" "2256 112 28"
 "angle" "90"
 }
-// entity 16
+// entity 15
 {
 "classname" "info_player_start"
 "team" "2"
 "origin" "2224 112 28"
 "angle" "90"
 }
-// entity 17
+// entity 16
 {
 "classname" "info_player_start"
 "team" "2"
 "origin" "2192 112 28"
 "angle" "90"
 }
-// entity 18
+// entity 17
 {
 "classname" "info_player_start"
 "team" "2"
 "origin" "2160 80 28"
 "angle" "180"
 }
-// entity 19
+// entity 18
 {
 "classname" "info_player_start"
 "team" "2"
 "origin" "2256 80 28"
 "angle" "90"
 }
-// entity 20
+// entity 19
 {
 "classname" "info_player_start"
 "team" "2"
 "origin" "2224 80 28"
 "angle" "90"
 }
-// entity 21
+// entity 20
 {
 "classname" "info_player_start"
 "team" "2"
