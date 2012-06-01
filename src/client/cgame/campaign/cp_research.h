@@ -121,7 +121,7 @@ typedef struct techMail_s {
 typedef enum {
 	MAILSENT_NONE,		/**< No mail sent yet. */
 	MAILSENT_PROPOSAL,	/**< Mail for research proposal already send. */
-	MAILSENT_FINISHED,	/**< Mail for finsihed research snet (and maybe the previous as well). */
+	MAILSENT_FINISHED,	/**< Mail for finished research sent (and maybe the previous as well). */
 
 	MAILSENT_MAX
 } mailSentType_t;

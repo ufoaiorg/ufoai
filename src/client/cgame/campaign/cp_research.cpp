@@ -74,7 +74,7 @@ void RS_ResearchFinish (technology_t* tech)
 	/* send a new message and add it to the mailclient */
 	if (tech->mailSent < MAILSENT_FINISHED && tech->type != RS_LOGIC) {
 		Com_sprintf(cp_messageBuffer, sizeof(cp_messageBuffer), _("A research project has been completed: %s\n"), _(tech->name));
-		MSO_CheckAddNewMessage( NT_RESEARCH_COMPLETED, _("Research finished"), cp_messageBuffer, MSG_RESEARCH_FINISHED, tech);
+		MSO_CheckAddNewMessage(NT_RESEARCH_COMPLETED, _("Research finished"), cp_messageBuffer, MSG_RESEARCH_FINISHED, tech);
 		tech->mailSent = MAILSENT_FINISHED;
 	}
 }
@@ -465,7 +465,6 @@ technology_t* RS_GetTechForItem (const objDef_t *item)
  * @param[in] campaign The campaign data structure
  * @param[in] load true if we are loading a game, false otherwise
  * @todo Add a function to reset ALL research-stati to RS_NONE; -> to be called after start of a new game.
- * @todo Enhance ammo model display (see comment in code).
  * @sa CP_CampaignInit
  */
 void RS_InitTree (const campaign_t *campaign, bool load)
