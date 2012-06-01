@@ -461,21 +461,16 @@ component MarketItem extends panel
 	}
 	data id { }
 	data rate { integer 1 }
-	checkbox autosell
-	{
-		tooltip				"_Lock current stock level"
-		current				0
-		iconChecked			"icons/windowlock"
-		iconUnchecked		"icons/windowlock_light"
-		iconIndeterminate	"icons/windowlock_light" // @TODO: What does this do?
-		pos					"5 5"
-		size				"18 18"
-		invis				false
-		onMouseEnter		{ *node:this@iconUnchecked = "icons/windowlock" }
-		onMouseLeave		{ *node:this@iconUnchecked = "icons/windowlock_light" }
-		onClick				{ cmd "ui_market_setautosell \"<node:parent.id@string>\" <node:this@string>;"}
-	}
 
+	// UFOPaedia link for each item
+	button sell_rate
+	{
+		icon			"icons/windowinfo"
+		tooltip			"_View UFOPaedia entry"
+		pos				"5 5"
+		size			"18	18"
+		onClick			{ cmd "market_openpedia;" } // @TODO Doesn't yet open the right thing
+	}
 	string name
 	{
 		pos				"30 0"
@@ -502,15 +497,19 @@ component MarketItem extends panel
 		pos				"520 5"
 		size			"18	18"
 	}
-	// Sell rate -- choose to sell 1 or 10 at a time
-	// @TODO: this is a place-holder that needs proper implementation
-	// @TODO: when changing the icon, also change the tool tip.
-	button sell_rate
+	checkbox autosell
 	{
-		icon			"icons/windowsingle"
-		tooltip			"_Sell single item"
-		pos				"544 5"
-		size			"18	18"
+		tooltip				"_Lock current stock level"
+		current				0
+		iconChecked			"icons/windowlock"
+		iconUnchecked		"icons/windowlock_light"
+		iconIndeterminate	"icons/windowlock_light" // @TODO: What does this do?
+		pos					"544 5"
+		size				"18 18"
+		invis				false
+		onMouseEnter		{ *node:this@iconUnchecked = "icons/windowlock" }
+		onMouseLeave		{ *node:this@iconUnchecked = "icons/windowlock_light" }
+		onClick				{ cmd "ui_market_setautosell \"<node:parent.id@string>\" <node:this@string>;"}
 	}
 	// Sell items
 	// @TODO: Make selling items work
