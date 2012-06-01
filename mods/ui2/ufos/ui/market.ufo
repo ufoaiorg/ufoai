@@ -335,12 +335,22 @@ window market  {
 		*node:root.base_container.market.list.<cvar:ui_market_category>.item_<1>.name@string = <2>
 		*node:root.base_container.market.list.<cvar:ui_market_category>.item_<1>.base@string = <3>
 		*node:root.base_container.market.list.<cvar:ui_market_category>.item_<1>.market@string = <4>
+
+		// Set buy/sell spinners
+		*node:root.base_container.market.list.<cvar:ui_market_category>.item_<1>.buy@min = 0
+		*node:root.base_container.market.list.<cvar:ui_market_category>.item_<1>.buy@current = <3>
+		*node:root.base_container.market.list.<cvar:ui_market_category>.item_<1>.buy@max = ( <3> + <4> )
+		*node:root.base_container.market.list.<cvar:ui_market_category>.item_<1>.sell@min = 0
+		*node:root.base_container.market.list.<cvar:ui_market_category>.item_<1>.sell@current = <3>
+		*node:root.base_container.market.list.<cvar:ui_market_category>.item_<1>.sell@max = ( <3> + <4> )
+
 		// Set autosell
 		if ( param7 eq "-" ) {
 			*node:root.base_container.market.list.<cvar:ui_market_category>.item_<1>.autosell@invis = true
 		} else {
 			*node:root.base_container.market.list.<cvar:ui_market_category>.item_<1>.autosell@current = <7>
 		}
+
 
 		// Increase height of category panel
 		*node:root.base_container.market.list.category_height@integer = ( *node:root.base_container.market.list.category_height@integer + 30 )

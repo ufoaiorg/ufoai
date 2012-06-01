@@ -474,7 +474,7 @@ component MarketItem extends panel
 	string name
 	{
 		pos				"30 0"
-		size			"400 28"
+		size			"290 28"
 		color			"0.56 0.81 0.76 0.7"
 		contentalign	ALIGN_CL
 		ghost			true
@@ -482,20 +482,27 @@ component MarketItem extends panel
 	// Count of items in base
 	string base
 	{
-		pos				"435 0"
+		pos				"320 0"
 		size			"80 28"
 		color			"0.56 0.81 0.76 1"
 		contentalign	ALIGN_CR
 		ghost			true
 	}
 	// Buy items
-	// @TODO: Make buying items work
-	button buy
-	{
-		icon			"icons/windowprev"
-		tooltip			"_Buy"
-		pos				"520 5"
-		size			"18	18"
+	spinner buy {
+		pos					"406 6"
+		size				"74 16"
+		topIcon				"icons/arrowtext_lft"
+		mode				SPINNER_ONLY_INC
+		delta				1
+		shiftincreasefactor	10.0
+		onMouseEnter		{ *node:this@topIcon = "icons/arrowtext_lft0" }
+		onMouseLeave		{ *node:this@topIcon = "icons/arrowtext_lft" }
+		onChange			{
+			cmd "ui_market_buy \"<node:parent.id@string>\" <lastdiff>;"
+			cmd "ui_market_fill <cvar:ui_market_category>;"
+			cmd "ui_market_select \"<node:parent.id@string>\";"
+		}
 	}
 	checkbox autosell
 	{
@@ -504,7 +511,7 @@ component MarketItem extends panel
 		iconChecked			"icons/windowlock"
 		iconUnchecked		"icons/windowlock_light"
 		iconIndeterminate	"icons/windowlock_light" // @TODO: What does this do?
-		pos					"544 5"
+		pos					"484 5"
 		size				"18 18"
 		invis				false
 		onMouseEnter		{ *node:this@iconUnchecked = "icons/windowlock" }
@@ -512,18 +519,25 @@ component MarketItem extends panel
 		onClick				{ cmd "ui_market_setautosell \"<node:parent.id@string>\" <node:this@string>;"}
 	}
 	// Sell items
-	// @TODO: Make selling items work
-	button sell
-	{
-		icon			"icons/windownext"
-		tooltip			"_Sell"
-		pos				"568 5"
-		size			"18	18"
+	spinner sell {
+		pos					"508 6"
+		size				"74 16"
+		topIcon				"icons/arrowtext_rgt"
+		mode				SPINNER_ONLY_DEC
+		delta				1
+		shiftincreasefactor	10.0
+		onMouseEnter		{ *node:this@topIcon = "icons/arrowtext_rgt0" }
+		onMouseLeave		{ *node:this@topIcon = "icons/arrowtext_rgt" }
+		onChange			{
+			cmd "ui_market_buy \"<node:parent.id@string>\" <lastdiff>;"
+			cmd "ui_market_fill <cvar:ui_market_category>;"
+			cmd "ui_market_select \"<node:parent.id@string>\";"
+		}
 	}
 	// Count of items in base
 	string market
 	{
-		pos				"590 0"
+		pos				"586 0"
 		size			"100 28"
 		color			"0.56 0.81 0.76 1"
 		contentalign	ALIGN_CL
