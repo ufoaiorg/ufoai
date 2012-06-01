@@ -463,7 +463,7 @@ component MarketItem extends panel
 	data rate { integer 1 }
 
 	// UFOPaedia link for each item
-	button sell_rate
+	button ufopaedia
 	{
 		icon			"icons/windowinfo"
 		tooltip			"_View UFOPaedia entry"
