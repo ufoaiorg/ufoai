@@ -552,7 +552,7 @@ static uiAction_t *UI_ParseValueExpression (const char **text)
 	}
 
 	/* it is a const string (or an injection tag for compatibility) */
-	if (Com_ParsedTokenIsQuoted() || token[0] == '<') {
+	if (Com_GetType(text) == TT_QUOTED_WORD || token[0] == '<') {
 		expression->d.terminal.d1.constString = UI_AllocStaticString(token, 0);
 		if (UI_IsInjectedString(token))
 			expression->type = EA_VALUE_STRING_WITHINJECTION;

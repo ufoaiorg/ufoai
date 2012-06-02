@@ -30,10 +30,23 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 
 #include "ufotypes.h"
 
+enum Com_TokenType_t {
+	TT_BEGIN_BLOCK = '{',
+	TT_END_BLOCK = '}',
+	TT_COMMA = ',',
+	TT_BEGIN_PARAM = '(',
+	TT_END_PARAM = ')',
+	TT_WORD,
+	TT_QUOTED_WORD,
+	TT_EOF = 0
+};
+
+const char *Com_GetToken(const char **data_p);
+Com_TokenType_t Com_GetType(const char **data_p);
+Com_TokenType_t Com_NextToken(const char **data_p);
+
 const char *Com_Parse(const char **data_p);
 int Com_CountTokensInBuffer(const char *buffer);
 void Com_UnParseLastToken(void);
-bool Com_ParsedTokenIsQuoted(void);
-void Com_EnableFunctionScriptToken(bool enable);
 
 #endif

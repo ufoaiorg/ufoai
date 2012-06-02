@@ -31,8 +31,7 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 
 static char com_token[4096];
 static bool isUnparsedToken;
-static bool isQuotedToken;
-static bool functionScriptTokenEnabled;
+static Com_TokenType_t type;
 
 /**
  * @brief Put back the last token into the parser
@@ -46,23 +45,31 @@ void Com_UnParseLastToken (void)
 }
 
 /**
- * @brief Check if the last read token is quoted
- * @return True if the token is quoted
- * @sa Com_Parse
+ * @brief Get the current token value
+ * @return The current token value
  */
-bool Com_ParsedTokenIsQuoted (void)
+const char *Com_GetToken(const char **data_p)
 {
-	return isQuotedToken;
+	return com_token;
 }
 
 /**
- * @brief Enable parsing of token '(', ')' and ','
- * @param enable If true, enable parsing of extra tokens
- * @sa Com_Parse
+ * @brief Get the current token type
+ * @return The current token type
  */
-void Com_EnableFunctionScriptToken (bool enable)
+Com_TokenType_t Com_GetType(const char **data_p)
 {
-	functionScriptTokenEnabled = enable;
+	return type;
+}
+
+/**
+ * @brief Compute the next token
+ * @return Type of the next token
+ */
+Com_TokenType_t Com_NextToken(const char **data_p)
+{
+	Com_Parse(data_p);
+	return type;
 }
 
 /**
@@ -106,12 +113,12 @@ const char *Com_Parse (const char *data_p[])
 	}
 
 	data = *data_p;
-	isQuotedToken = false;
 	len = 0;
 	com_token[0] = 0;
 
 	if (!data) {
 		*data_p = NULL;
+		type = TT_EOF;
 		return "";
 	}
 
@@ -120,6 +127,7 @@ skipwhite:
 	while ((c = *data) <= ' ') {
 		if (c == 0) {
 			*data_p = NULL;
+			type = TT_EOF;
 			return "";
 		}
 		data++;
@@ -144,7 +152,6 @@ skipwhite:
 
 	/* handle quoted strings specially */
 	if (c == '\"') {
-		isQuotedToken = true;
 		data++;
 		for (;;) {
 			c = *data++;
@@ -161,8 +168,10 @@ skipwhite:
 			} else if (c == '\"' || !c) {
 				com_token[len] = '\0';
 				*data_p = data;
+				type = TT_QUOTED_WORD;
 				return com_token;
 			} else if (c == '\0') {
+				// TODO here the token is wrongly formed
 				break;
 			}
 
@@ -171,15 +180,20 @@ skipwhite:
 				len++;
 			}
 		}
+
+		// TODO here the token is wrongly formed
 		com_token[len] = '\0';
 		*data_p = data;
+		type = TT_QUOTED_WORD;
 		return com_token;
 	}
 
-	if ((c == '{' || c == '}') || (functionScriptTokenEnabled && (c == '(' || c == ')' || c == ','))) {
+	if (c == '{' || c == '}' || c == '(' || c == ')' || c == ',') {
 		data++;
 		com_token[len] = c;
 		com_token[len + 1] = '\0';
+		// Com_TokenType_t contains expected values for this set of characters
+		type = (Com_TokenType_t) c;
 		len++;
 		*data_p = data;
 		return com_token;
@@ -193,9 +207,7 @@ skipwhite:
 		}
 		data++;
 		c = *data;
-		if (c == '{' || c == '}')
-			break;
-		if (functionScriptTokenEnabled && (c == '(' || c == ')' || c == ','))
+		if (c == '{' || c == '}' || c == '(' || c == ')' || c == ',')
 			break;
 	} while (c > 32);
 
@@ -205,5 +217,6 @@ skipwhite:
 	com_token[len] = '\0';
 
 	*data_p = data;
+	type = TT_WORD;
 	return com_token;
 }

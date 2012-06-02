@@ -643,13 +643,9 @@ static bool UI_ParseEventProperty (uiNode_t * node, const value_t *event, const 
 		return false;
 	}
 
-	Com_EnableFunctionScriptToken(true);
-
 	*action = UI_ParseActionList(node, text, token);
 	if (*action == NULL)
 		return false;
-
-	Com_EnableFunctionScriptToken(false);
 
 	/* block terminal already read */
 	assert((*token)[0] == '}');
@@ -679,7 +675,7 @@ static bool UI_ParseProperty (void* object, const value_t *property, const char*
 		*token = Com_EParse(text, errhead, objectName);
 		if (!*text)
 			return false;
-		if (!UI_TokenIsValue(*token, Com_ParsedTokenIsQuoted())) {
+		if (!UI_TokenIsValue(*token, Com_GetType(text) == TT_QUOTED_WORD)) {
 			Com_Printf(notWellFormedValue, *token);
 			return false;
 		}
@@ -705,7 +701,7 @@ static bool UI_ParseProperty (void* object, const value_t *property, const char*
 		*token = Com_EParse(text, errhead, objectName);
 		if (!*text)
 			return false;
-		if (!UI_TokenIsValue(*token, Com_ParsedTokenIsQuoted())) {
+		if (!UI_TokenIsValue(*token, Com_GetType(text) == TT_QUOTED_WORD)) {
 			Com_Printf(notWellFormedValue, *token);
 			return false;
 		}
@@ -736,7 +732,7 @@ static bool UI_ParseProperty (void* object, const value_t *property, const char*
 		*token = Com_EParse(text, errhead, objectName);
 		if (!*text)
 			return false;
-		if (!UI_TokenIsValue(*token, Com_ParsedTokenIsQuoted())) {
+		if (!UI_TokenIsValue(*token, Com_GetType(text) == TT_QUOTED_WORD)) {
 			Com_Printf(notWellFormedValue, *token);
 			return false;
 		}
@@ -858,14 +854,10 @@ static bool UI_ParseFunction (uiNode_t * node, const char **text, const char **t
 	uiAction_t **action;
 	assert(UI_Node_IsFunction(node));
 
-	Com_EnableFunctionScriptToken(true);
-
 	action = &node->onClick;
 	*action = UI_ParseActionList(node, text, token);
 	if (*action == NULL)
 		return false;
-
-	Com_EnableFunctionScriptToken(false);
 
 	return (*token)[0] == '}';
 }
@@ -1046,7 +1038,7 @@ static uiNode_t *UI_ParseNode (uiNode_t * parent, const char **text, const char 
 	*token = Com_EParse(text, errhead, "");
 	if (!*text)
 		return NULL;
-	if (!UI_TokenIsName(*token, Com_ParsedTokenIsQuoted())) {
+	if (!UI_TokenIsName(*token, Com_GetType(text) == TT_QUOTED_WORD)) {
 		Com_Printf("UI_ParseNode: \"%s\" is not a well formed node name ([a-zA-Z_][a-zA-Z0-9_]*)\n", *token);
 		return NULL;
 	}
@@ -1317,7 +1309,7 @@ bool UI_ParseWindow (const char *type, const char *name, const char **text)
 		return false;	/* never reached */
 	}
 
-	if (!UI_TokenIsName(name, Com_ParsedTokenIsQuoted())) {
+	if (!UI_TokenIsName(name, Com_GetType(text) == TT_QUOTED_WORD)) {
 		Com_Printf("UI_ParseWindow: \"%s\" is not a well formed node name ([a-zA-Z_][a-zA-Z0-9_]*)\n", name);
 		return false;
 	}

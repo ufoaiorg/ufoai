@@ -35,8 +35,6 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 static int UFO_InitSuiteParser (void)
 {
 	TEST_Init();
-	/* default state */
-	Com_EnableFunctionScriptToken(false);
 	return 0;
 }
 
@@ -47,7 +45,6 @@ static int UFO_InitSuiteParser (void)
 static int UFO_CleanSuiteParser (void)
 {
 	TEST_Shutdown();
-	Com_EnableFunctionScriptToken(false);
 	return 0;
 }
 
@@ -56,44 +53,40 @@ static int UFO_CleanSuiteParser (void)
  */
 static void testParser (void)
 {
-	const char* string = "aa \t\n aa,({\"bbb(bbb bbb)bbb {\"{a}\n/* foooo { } \n { } */\n// fooooo\naaaa";
+	const char* string = "aa \t\n {\"bbb(bbb bbb)bbb {\"{a}\n/* foooo { } \n { } */\n// fooooo\naaaa";
 	const char* cursor = string;
 	const char *token;
 
 	token = Com_Parse(&cursor);
-	CU_ASSERT_FALSE(Com_ParsedTokenIsQuoted());
+	CU_ASSERT_NOT_EQUAL(Com_GetType(&cursor), TT_QUOTED_WORD);
 	CU_ASSERT_STRING_EQUAL(token, "aa");
 
 	token = Com_Parse(&cursor);
-	CU_ASSERT_FALSE(Com_ParsedTokenIsQuoted());
-	CU_ASSERT_STRING_EQUAL(token, "aa,(");
-
-	token = Com_Parse(&cursor);
-	CU_ASSERT_FALSE(Com_ParsedTokenIsQuoted());
+	CU_ASSERT_NOT_EQUAL(Com_GetType(&cursor), TT_QUOTED_WORD);
 	CU_ASSERT_STRING_EQUAL(token, "{");
 
 	token = Com_Parse(&cursor);
-	CU_ASSERT_TRUE(Com_ParsedTokenIsQuoted());
+	CU_ASSERT_EQUAL(Com_GetType(&cursor), TT_QUOTED_WORD);
 	CU_ASSERT_STRING_EQUAL(token, "bbb(bbb bbb)bbb {");
 
 	token = Com_Parse(&cursor);
-	CU_ASSERT_FALSE(Com_ParsedTokenIsQuoted());
+	CU_ASSERT_NOT_EQUAL(Com_GetType(&cursor), TT_QUOTED_WORD);
 	CU_ASSERT_STRING_EQUAL(token, "{");
 
 	token = Com_Parse(&cursor);
-	CU_ASSERT_FALSE(Com_ParsedTokenIsQuoted());
+	CU_ASSERT_NOT_EQUAL(Com_GetType(&cursor), TT_QUOTED_WORD);
 	CU_ASSERT_STRING_EQUAL(token, "a");
 
 	token = Com_Parse(&cursor);
-	CU_ASSERT_FALSE(Com_ParsedTokenIsQuoted());
+	CU_ASSERT_NOT_EQUAL(Com_GetType(&cursor), TT_QUOTED_WORD);
 	CU_ASSERT_STRING_EQUAL(token, "}");
 
 	token = Com_Parse(&cursor);
-	CU_ASSERT_FALSE(Com_ParsedTokenIsQuoted());
+	CU_ASSERT_NOT_EQUAL(Com_GetType(&cursor), TT_QUOTED_WORD);
 	CU_ASSERT_STRING_EQUAL(token, "aaaa");
 
 	token = Com_Parse(&cursor);
-	CU_ASSERT_FALSE(Com_ParsedTokenIsQuoted());
+	CU_ASSERT_EQUAL(Com_GetType(&cursor), TT_EOF);
 	CU_ASSERT_STRING_EQUAL(token, "\0");
 }
 
@@ -107,11 +100,11 @@ static void testParserWithEntity (void)
 	const char *token;
 
 	token = Com_Parse(&cursor);
-	CU_ASSERT_FALSE(Com_ParsedTokenIsQuoted());
+	CU_ASSERT_NOT_EQUAL(Com_GetType(&cursor), TT_QUOTED_WORD);
 	CU_ASSERT_STRING_EQUAL(token, "aaaa");
 
 	token = Com_Parse(&cursor);
-	CU_ASSERT_TRUE(Com_ParsedTokenIsQuoted());
+	CU_ASSERT_EQUAL(Com_GetType(&cursor), TT_QUOTED_WORD);
 	CU_ASSERT_STRING_EQUAL(token, "  \n  \t  \"  ");
 }
 
@@ -125,51 +118,51 @@ static void testParserWithUnParse (void)
 	const char *token;
 
 	token = Com_Parse(&cursor);
-	CU_ASSERT_FALSE(Com_ParsedTokenIsQuoted());
+	CU_ASSERT_NOT_EQUAL(Com_GetType(&cursor), TT_QUOTED_WORD);
 	CU_ASSERT_STRING_EQUAL(token, "aaaaa");
 
 	Com_UnParseLastToken();
 
 	token = Com_Parse(&cursor);
-	CU_ASSERT_FALSE(Com_ParsedTokenIsQuoted());
+	CU_ASSERT_NOT_EQUAL(Com_GetType(&cursor), TT_QUOTED_WORD);
 	CU_ASSERT_STRING_EQUAL(token, "aaaaa");
 
 	Com_UnParseLastToken();
 
 	token = Com_Parse(&cursor);
-	CU_ASSERT_FALSE(Com_ParsedTokenIsQuoted());
+	CU_ASSERT_NOT_EQUAL(Com_GetType(&cursor), TT_QUOTED_WORD);
 	CU_ASSERT_STRING_EQUAL(token, "aaaaa");
 
 	token = Com_Parse(&cursor);
-	CU_ASSERT_FALSE(Com_ParsedTokenIsQuoted());
+	CU_ASSERT_NOT_EQUAL(Com_GetType(&cursor), TT_QUOTED_WORD);
 	CU_ASSERT_STRING_EQUAL(token, "bbbbb");
 
 	Com_UnParseLastToken();
 
 	token = Com_Parse(&cursor);
-	CU_ASSERT_FALSE(Com_ParsedTokenIsQuoted());
+	CU_ASSERT_NOT_EQUAL(Com_GetType(&cursor), TT_QUOTED_WORD);
 	CU_ASSERT_STRING_EQUAL(token, "bbbbb");
 
 	Com_UnParseLastToken();
 
 	token = Com_Parse(&cursor);
-	CU_ASSERT_FALSE(Com_ParsedTokenIsQuoted());
+	CU_ASSERT_NOT_EQUAL(Com_GetType(&cursor), TT_QUOTED_WORD);
 	CU_ASSERT_STRING_EQUAL(token, "bbbbb");
 
 	token = Com_Parse(&cursor);
-	CU_ASSERT_TRUE(Com_ParsedTokenIsQuoted());
+	CU_ASSERT_EQUAL(Com_GetType(&cursor), TT_QUOTED_WORD);
 	CU_ASSERT_STRING_EQUAL(token, "ccccc");
 
 	Com_UnParseLastToken();
 
 	token = Com_Parse(&cursor);
-	CU_ASSERT_TRUE(Com_ParsedTokenIsQuoted());
+	CU_ASSERT_EQUAL(Com_GetType(&cursor), TT_QUOTED_WORD);
 	CU_ASSERT_STRING_EQUAL(token, "ccccc");
 
 	Com_UnParseLastToken();
 
 	token = Com_Parse(&cursor);
-	CU_ASSERT_TRUE(Com_ParsedTokenIsQuoted());
+	CU_ASSERT_EQUAL(Com_GetType(&cursor), TT_QUOTED_WORD);
 	CU_ASSERT_STRING_EQUAL(token, "ccccc");
 }
 
@@ -182,54 +175,52 @@ static void testParserWithFunctionScriptToken (void)
 	const char* cursor = string;
 	const char *token;
 
-	Com_EnableFunctionScriptToken(true);
-
 	token = Com_Parse(&cursor);
-	CU_ASSERT_FALSE(Com_ParsedTokenIsQuoted());
+	CU_ASSERT_EQUAL(Com_GetType(&cursor), TT_WORD);
 	CU_ASSERT_STRING_EQUAL(token, "aa");
 
 	token = Com_Parse(&cursor);
-	CU_ASSERT_FALSE(Com_ParsedTokenIsQuoted());
+	CU_ASSERT_EQUAL(Com_GetType(&cursor), TT_WORD);
 	CU_ASSERT_STRING_EQUAL(token, "aa");
 
 	token = Com_Parse(&cursor);
-	CU_ASSERT_FALSE(Com_ParsedTokenIsQuoted());
+	CU_ASSERT_EQUAL(Com_GetType(&cursor), TT_COMMA);
 	CU_ASSERT_STRING_EQUAL(token, ",");
 
 	token = Com_Parse(&cursor);
-	CU_ASSERT_FALSE(Com_ParsedTokenIsQuoted());
+	CU_ASSERT_EQUAL(Com_GetType(&cursor), TT_BEGIN_PARAM);
 	CU_ASSERT_STRING_EQUAL(token, "(");
 
 	token = Com_Parse(&cursor);
-	CU_ASSERT_FALSE(Com_ParsedTokenIsQuoted());
+	CU_ASSERT_EQUAL(Com_GetType(&cursor), TT_BEGIN_BLOCK);
 	CU_ASSERT_STRING_EQUAL(token, "{");
 
 	token = Com_Parse(&cursor);
-	CU_ASSERT_TRUE(Com_ParsedTokenIsQuoted());
+	CU_ASSERT_EQUAL(Com_GetType(&cursor), TT_QUOTED_WORD);
 	CU_ASSERT_STRING_EQUAL(token, "bbb(bbb bbb)bbb {");
 
 	token = Com_Parse(&cursor);
-	CU_ASSERT_FALSE(Com_ParsedTokenIsQuoted());
+	CU_ASSERT_EQUAL(Com_GetType(&cursor), TT_BEGIN_BLOCK);
 	CU_ASSERT_STRING_EQUAL(token, "{");
 
 	token = Com_Parse(&cursor);
-	CU_ASSERT_FALSE(Com_ParsedTokenIsQuoted());
+	CU_ASSERT_EQUAL(Com_GetType(&cursor), TT_WORD);
 	CU_ASSERT_STRING_EQUAL(token, "a");
 
 	token = Com_Parse(&cursor);
-	CU_ASSERT_FALSE(Com_ParsedTokenIsQuoted());
+	CU_ASSERT_EQUAL(Com_GetType(&cursor), TT_END_BLOCK);
 	CU_ASSERT_STRING_EQUAL(token, "}");
 
 	token = Com_Parse(&cursor);
-	CU_ASSERT_FALSE(Com_ParsedTokenIsQuoted());
+	CU_ASSERT_EQUAL(Com_GetType(&cursor), TT_WORD);
 	CU_ASSERT_STRING_EQUAL(token, "aaaa");
 
 	token = Com_Parse(&cursor);
-	CU_ASSERT_FALSE(Com_ParsedTokenIsQuoted());
+	CU_ASSERT_EQUAL(Com_GetType(&cursor), TT_END_PARAM);
 	CU_ASSERT_STRING_EQUAL(token, ")");
 
 	token = Com_Parse(&cursor);
-	CU_ASSERT_FALSE(Com_ParsedTokenIsQuoted());
+	CU_ASSERT_EQUAL(Com_GetType(&cursor), TT_EOF);
 	CU_ASSERT_STRING_EQUAL(token, "\0");
 }
 
