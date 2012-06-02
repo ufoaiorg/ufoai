@@ -60,7 +60,7 @@ item armour_light
 {
 	name		"_Combat Armour"
 	image		"armour/light"
-	type		armour
+	type		"armour"
 	shape		"0 0 3 4"
 	center		"0 0 -5"
 	scale		0.7
@@ -123,7 +123,7 @@ item armour_medium
 {
 	name		"_Nanocomposite Armour"
 	image		"armour/medium"
-	type		armour
+	type		"armour"
 	shape		"0 0 3 4"
 	center		"0 0 -5"
 	scale		0.7
@@ -186,7 +186,7 @@ item armour_power
 {
 	name		"_Power Armour"
 	image		"armour/power"
-	type		armour
+	type		"armour"
 	shape		"0 0 3 4"
 	center		"0 0 -5"
 	scale		0.7
@@ -250,7 +250,7 @@ item armour_power
 //{
 //	name		"_Advanced Nanocomposite Armour"
 //	image		"armour/power"
-//	type		armour
+//	type		"armour"
 //	shape		"0 0 3 4"
 //	center		"0 0 -5"
 //	scale		0.7
@@ -311,7 +311,7 @@ item armour_power
 //{
 //	name		"_Advanced Power Armour"
 //	image		"armour/power"
-//	type		armour
+//	type		"armour"
 //	shape		"0 0 3 4"
 //	center		"0 0 -5"
 //	scale		0.7
@@ -372,7 +372,7 @@ item armour_power
 //{
 //	name		"_Jumpsuit"
 //	image		"armour/power"
-//	type		armour
+//	type		"armour"
 //	shape		"0 0 3 4"
 //	center		"0 0 -5"
 //	scale		0.7
@@ -436,7 +436,7 @@ item armour_light_alien
 {
 	name		"_Alien Body Armour"
 	image		"armour/taman_light"
-	type		armour
+	type		"armour"
 	shape		"0 0 3 4"
 	center		"0 0 -5"
 	scale		0.7
@@ -499,7 +499,7 @@ item armour_medium_alien
 {
 	name		"_Medium Alien Armour"
 	image		"armour/taman_medium"
-	type		armour
+	type		"armour"
 	shape		"0 0 3 4"
 	center		"0 0 -5"
 	scale		0.7

@@ -85,4 +85,8 @@ public class UfoResources {
 		return getFileFromBase("sound/" + id, supportedSoundExtensions);
 	}
 
+	public static File getFileFromMusic(String id) {
+		return getFileFromBase("music/" + id, supportedSoundExtensions);
+	}
+
 }

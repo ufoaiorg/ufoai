@@ -219,8 +219,23 @@ public class UFOScriptJavaValidator extends AbstractUFOScriptJavaValidator {
 				}
 			}
 			break;
+		case MUSIC:
+			if (!(node.getValue() instanceof ValueString)) {
+				error("Quoted music name expected", UfoScriptPackage.Literals.UFO_NODE__VALUE);
+			} else 	{
+				checkUfoBase(node);
+				ValueString value = (ValueString) node.getValue();
+				final String id = value.getValue();
+				final File file = UfoResources.getFileFromMusic(id);
+				if (file == null) {
+					warning("Music not found.",
+							UfoScriptPackage.Literals.UFO_NODE__VALUE);
+				}
+			}
+			break;
 		case VEC2:
 		case VEC3:
+		case VEC4:
 			if (!(node.getValue() instanceof ValueString)) {
 				error("Quoted tuple of number expected", UfoScriptPackage.Literals.UFO_NODE__VALUE);
 			}

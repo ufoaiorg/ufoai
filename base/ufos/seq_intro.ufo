@@ -17,7 +17,7 @@ sequence intro // Last change 25-07-2009 by Vio
 
 	2dobj i_background
 	{
-		image	pics/geoscape/map_earth_night
+		image	"pics/geoscape/map_earth_night"
 		pos	"-900 -50"
 		//speed	"0 0"
 		color "1 1 1 0"

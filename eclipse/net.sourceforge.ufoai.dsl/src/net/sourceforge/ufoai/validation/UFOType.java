@@ -59,6 +59,12 @@ public class UFOType {
 		SOUND,
 
 		/**
+		 * A string witch contain a link to a sound relative to base/music
+		 * and do not contains file extension
+		 */
+		MUSIC,
+
+		/**
 		 * A string which should be prefixed with '_'
 		 */
 		TRANSLATED_STRING,
@@ -97,6 +103,11 @@ public class UFOType {
 		 * A string containing a 3D vector
 		 */
 		VEC3,
+
+		/**
+		 * A string containing a 4D vector
+		 */
+		VEC4,
 
 		/**
 		 * A string containing a shape
