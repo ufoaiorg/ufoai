@@ -4815,8 +4815,7 @@ mapdef alienbase
 	gametypes {
 		1on1
 	}
-	// TODO: The first alien base is the end of the campaign currently
-	onwin			"cp_endgame"
+	onwin			"cp_add_researchable rs_alien_psi_device"
 }
 
 /////////////////////
