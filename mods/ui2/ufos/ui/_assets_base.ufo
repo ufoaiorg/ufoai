@@ -504,6 +504,14 @@ component MarketItem extends panel
 			cmd "ui_market_select \"<node:parent.id@string>\";"
 		}
 	}
+	string buy_price {
+		pos				"406 6"
+		size			"74 16"
+		color			"0 0 0 1"
+		font			"f_verysmall_bold"
+		contentalign	ALIGN_CR
+		ghost			true
+	}
 	checkbox autosell
 	{
 		tooltip				"_Lock current stock level"
@@ -533,6 +541,14 @@ component MarketItem extends panel
 			cmd "ui_market_fill <cvar:ui_market_category>;"
 			cmd "ui_market_select \"<node:parent.id@string>\";"
 		}
+	}
+	string sell_price {
+		pos				"508 6"
+		size			"74 16"
+		color			"0 0 0 1"
+		font			"f_verysmall_bold"
+		contentalign	ALIGN_CL
+		ghost			true
 	}
 	// Count of items in base
 	string market

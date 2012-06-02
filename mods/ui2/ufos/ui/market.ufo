@@ -335,6 +335,10 @@ window market  {
 		*node:root.base_container.market.list.<cvar:ui_market_category>.item_<1>.name@string = <2>
 		*node:root.base_container.market.list.<cvar:ui_market_category>.item_<1>.base@string = <3>
 		*node:root.base_container.market.list.<cvar:ui_market_category>.item_<1>.market@string = <4>
+		*node:root.base_container.market.list.<cvar:ui_market_category>.item_<1>.buy_price@string = "<5>c"
+		*node:root.base_container.market.list.<cvar:ui_market_category>.item_<1>.buy@tooltip = "Purchase for <5> credits each"
+		*node:root.base_container.market.list.<cvar:ui_market_category>.item_<1>.sell_price@string = "<6>c"
+		*node:root.base_container.market.list.<cvar:ui_market_category>.item_<1>.sell@tooltip = "Sell for <6> credits each"
 
 		// Set buy/sell spinners
 		*node:root.base_container.market.list.<cvar:ui_market_category>.item_<1>.buy@min = 0
