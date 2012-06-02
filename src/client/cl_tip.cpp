@@ -78,36 +78,17 @@ static void CL_GetTipOfTheDay_f (void)
 /**
  * @brief Parse all tip definitions from the script files
  */
-void CL_ParseTipsOfTheDay (const char *name, const char **text)
+void CL_ParseTipOfTheDay (const char *name, const char **text)
 {
-	const char *errhead = "CL_ParseTipsOfTheDay: unexpected end of file (tips ";
-	const char	*token;
-
-	/* get it's body */
-	token = Com_Parse(text);
-
-	if (!*text || *token != '{') {
-		Com_Printf("CL_ParseTipsOfTheDay: tips without body ignored\n");
+	if (name[0] != '_') {
+		Com_Printf("Ignore tip: '%s' - not marked translatable\n", name);
 		return;
 	}
-
-	do {
-		/* get the name type */
-		token = Com_EParse(text, errhead, name);
-		if (!*text)
-			break;
-		if (*token == '}')
-			break;
-		if (*token != '_') {
-			Com_Printf("Ignore tip: '%s' - not marked translatable\n", token);
-			continue;
-		}
-		tipOfTheDay_t* const tip = Mem_PoolAllocType(tipOfTheDay_t, cl_genericPool);
-		tip->tipString = Mem_PoolStrDup(token, cl_genericPool, 0);
-		tip->next = tipList;
-		tipList = tip;
-		tipCount++;
-	} while (*text);
+	tipOfTheDay_t* const tip = Mem_PoolAllocType(tipOfTheDay_t, cl_genericPool);
+	tip->tipString = Mem_PoolStrDup(name, cl_genericPool, 0);
+	tip->next = tipList;
+	tipList = tip;
+	tipCount++;
 }
 
 /**

@@ -802,8 +802,8 @@ bool CL_ParseClientData (const char *type, const char *name, const char **text)
 		CL_ParseSequence(name, text);
 	else if (Q_streq(type, "music"))
 		M_ParseMusic(name, text);
-	else if (Q_streq(type, "tips"))
-		CL_ParseTipsOfTheDay(name, text);
+	else if (Q_streq(type, "tip"))
+		CL_ParseTipOfTheDay(name, text);
 	else if (Q_streq(type, "language"))
 		CL_ParseLanguages(name, text);
 	else if (Q_streq(type, "window"))
