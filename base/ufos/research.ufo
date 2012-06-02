@@ -5358,10 +5358,11 @@ tech rs_enemy_on_earth_revisited
 	{
 		tech	rs_enemy_on_earth
 		tech	news_new_twist
-		//tech	rs_alien_psionics		// Fixme
+		tech	rs_alien_psi_device
 	}
 
 	time		7000
+	image		"techs/enemy_on_earth"
 }
 
 // http://ufoai.org/wiki/index.php/Research/The_Alien_Strategy
@@ -5452,4 +5453,67 @@ tech rs_alien_psi_device
 
 	time		14000
 	mdl			wormhole_device
+}
+
+// http://ufoai.org/wiki/index.php/Proposals/Alien_Infiltration
+tech rs_alien_infiltration
+{
+	name		"_Alien Infiltration"
+	type		"tech"
+	up_chapter	news
+
+	description {
+		default "_alien_infiltration_txt"
+	}
+	pre_description {
+		default "_alien_infiltration_pre_txt"
+	}
+
+	mail
+	{
+		from	"_mail_from_col_falkland"
+		to	"_mail_to_base_commander"
+		// subject	defined by "name"
+		model	"characters/falkland"
+		icon	"icons/mail_intelligence"
+	}
+	require_AND
+	{
+		tech	rs_enemy_on_earth_revisited
+	}
+
+	time		7000
+	image		"techs/alien_infiltration"
+}
+
+// http://ufoai.org/wiki/index.php/Proposals/Human_Vaccine
+tech rs_human_vaccine
+{
+	name		"_Human Vaccine"
+	type		"tech"
+	up_chapter	news
+
+	description {
+		default "_human_vaccine_txt"
+	}
+	pre_description {
+		default "_human_vaccine_pre_txt"
+	}
+
+	mail
+	{
+		from	"_mail_from_dr_connor"
+		to	"_mail_to_base_commander"
+		// subject	defined by "name"
+		model	"characters/connor"
+		icon	"icons/mail_intelligence"
+	}
+	require_OR
+	{
+		tech	rs_enemy_on_earth_revisited
+		tech	rs_enemy_on_earth
+	}
+
+	time		7000
+	image		"techs/human_vaccine"
 }
