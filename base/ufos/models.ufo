@@ -454,3 +454,29 @@ menu_model ufo_crash
 	model	"objects/alien/ufo_crashed/acrash_hull"
 	need	ufo_crash_engine
 }
+
+// ============== WORMHOLE ========================
+menu_model wormhole_cable_hi
+{
+	model	"objects/alien/wormhole/cable_hi"
+}
+menu_model wormhole_cable_low
+{
+	model	"objects/alien/wormhole/cable_low"
+	need	wormhole_cable_hi
+}
+menu_model wormhole_mid
+{
+	model	"objects/alien/wormhole/wormhole_mid"
+	need	wormhole_cable_low
+}
+menu_model wormhole_low
+{
+	model	"objects/alien/wormhole/wormhole_low"
+	need	wormhole_mid
+}
+menu_model wormhole_device
+{
+	model	"objects/alien/wormhole/wormhole_hi"
+	need	wormhole_low
+}
