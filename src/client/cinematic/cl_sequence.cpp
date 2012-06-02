@@ -730,7 +730,7 @@ static int SEQ_ExecuteSound (sequenceContext_t *context, const char *name, const
  * @sa seq2D_vals
  * @sa CL_SequenceFind2D
  */
-static int SEQ_Execute2Dobj (sequenceContext_t *context, const char *name, const char *data)
+static int SEQ_ExecuteObj2D (sequenceContext_t *context, const char *name, const char *data)
 {
 	seq2D_t *s2d;
 	const value_t *vp;
@@ -832,7 +832,7 @@ static char const* const seqCmdName[] = {
 	"precache",
 	"camera",
 	"model",
-	"2dobj",
+	"obj2d",
 	"music",
 	"sound",
 	"rem",
@@ -853,7 +853,7 @@ static sequenceHandler_t seqCmdFunc[] = {
 	SEQ_ExecutePrecache,
 	SEQ_ExecuteCamera,
 	SEQ_ExecuteModel,
-	SEQ_Execute2Dobj,
+	SEQ_ExecuteObj2D,
 	SEQ_ExecuteMusic,
 	SEQ_ExecuteSound,
 	SEQ_ExecuteDelete,

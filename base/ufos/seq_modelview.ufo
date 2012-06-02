@@ -16,7 +16,7 @@
 // .. origin:	(vec3_t)	where does it start?
 // .. angles:	(vec3_t)	rotation
 
-// 2dobj NAME
+// obj2d NAME
 // .. text	(string)
 // .. pos	(vec2_t)	x, y
 // .. align	(align_t)	ur, ul, uc, ...

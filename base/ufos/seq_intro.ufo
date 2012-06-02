@@ -15,7 +15,7 @@ sequence intro // Last change 25-07-2009 by Vio
 	//fitting music, deactivate for geoscape track
 	music "PsymongN5"
 
-	2dobj i_background
+	obj2d i_background
 	{
 		image	"pics/geoscape/map_earth_night"
 		pos	"-900 -50"
@@ -32,7 +32,7 @@ sequence intro // Last change 25-07-2009 by Vio
 		dist	500
 	}
 
-	2dobj i_sentence1
+	obj2d i_sentence1
 	{
 		text	"_intro_sentence1"
 		pos		"512 100"
@@ -44,7 +44,7 @@ sequence intro // Last change 25-07-2009 by Vio
 	}
 	wait 20 //4 lines
 
-	2dobj i_sentence2
+	obj2d i_sentence2
 	{
 		text	"_intro_sentence2"
 		pos		"512 120"
@@ -56,7 +56,7 @@ sequence intro // Last change 25-07-2009 by Vio
 	}
 	wait 52 //11 lines, abbreviated
 
-	2dobj i_sentence3
+	obj2d i_sentence3
 	{
 		text	"_intro_sentence3"
 		pos		"512 140"
@@ -70,15 +70,15 @@ sequence intro // Last change 25-07-2009 by Vio
 	wait 5.4 //16 lines total -1
 
 
-	2dobj i_sentence1
+	obj2d i_sentence1
 	{
 		fade "0 0 0 -2"
 	}
-	2dobj i_sentence2
+	obj2d i_sentence2
 	{
 		fade "0 0 0 -2"
 	}
-	2dobj i_sentence3
+	obj2d i_sentence3
 	{
 		fade "0 0 0 -2"
 	}
@@ -91,9 +91,9 @@ sequence intro // Last change 25-07-2009 by Vio
 	music "Crystan-IntroSad"
 	wait 2
 
-	2dobj i_xmumbai
+	obj2d i_xmumbai
 	{
-		image	pics/geoscape/mission
+		image	"pics/geoscape/mission"
 		pos	"532 346"
 		color "1 1 1 0"
 		fade "0 0 0 5"
@@ -101,7 +101,7 @@ sequence intro // Last change 25-07-2009 by Vio
 
 	wait 1
 
-	2dobj i_sentence4
+	obj2d i_sentence4
 	{
 		text	"_intro_sentence4"
 		pos		"512 100"		align	uc
@@ -112,14 +112,14 @@ sequence intro // Last change 25-07-2009 by Vio
 	}
 	wait 21 //7 lines
 
-	2dobj i_xmumbai
+	obj2d i_xmumbai
 	{
 		fade "0 0 0 -0.1"
 	}
 
 	wait 14 // now 35
 
-	2dobj i_sentence5
+	obj2d i_sentence5
 	{
 		text	"_intro_sentence5"
 		pos		"512 120"		align	uc
@@ -131,27 +131,27 @@ sequence intro // Last change 25-07-2009 by Vio
 
 	wait 8 // 7 lines
 
-	2dobj i_xbonn // timed with Sullencity sirens
+	obj2d i_xbonn // timed with Sullencity sirens
 	{
-		image	pics/geoscape/mission
+		image	"pics/geoscape/mission"
 		pos	"163 169"
 		fade "0 0 0 -0.05"
 	}
 
 	wait 4.5
 
-	2dobj i_xjohannes
+	obj2d i_xjohannes
 	{
-		image	pics/geoscape/mission
+		image	"pics/geoscape/mission"
 		pos	"276 603"
 		fade "0 0 0 -0.05"
 	}
 
 	wait 9
 
-	2dobj i_xbangkok
+	obj2d i_xbangkok
 	{
-		image	pics/geoscape/mission
+		image	"pics/geoscape/mission"
 		pos	"688 376"
 		fade "0 0 0 -0.05"
 	}
@@ -159,11 +159,11 @@ sequence intro // Last change 25-07-2009 by Vio
 	wait 13.5 // now 35
 	wait 5.6 //14 lines total -1
 
-	2dobj i_sentence4
+	obj2d i_sentence4
 	{
 		fade "0 0 0 -2"
 	}
-	2dobj i_sentence5
+	obj2d i_sentence5
 	{
 		fade "0 0 0 -2"
 	}
@@ -182,7 +182,7 @@ sequence intro // Last change 25-07-2009 by Vio
 	music "space"
 	wait 3
 
-	2dobj i_sentence6
+	obj2d i_sentence6
 	{
 		text	"_intro_sentence6"
 		pos		"512 100"		align	uc
@@ -193,7 +193,7 @@ sequence intro // Last change 25-07-2009 by Vio
 	}
 	wait 13 // 2.5 lines
 
-	2dobj i_sentence7
+	obj2d i_sentence7
 	{
 		text	"_intro_sentence7"
 		pos		"512 120"		align	uc
@@ -204,7 +204,7 @@ sequence intro // Last change 25-07-2009 by Vio
 	}
 	wait 17 // 3.5 lines
 
-	2dobj i_sentence8
+	obj2d i_sentence8
 	{
 		text	"_intro_sentence8"
 		pos	"512 140"		align	uc
@@ -216,25 +216,25 @@ sequence intro // Last change 25-07-2009 by Vio
 
 	wait 14 // 3 lines
 
-	2dobj i_phalanx-lance-r
+	obj2d i_phalanx-lance-r
 	{
-		image	pics/phalanx_lance_right
+		image	"pics/phalanx_lance_right"
 		pos	"1050 1039"
 		color "1 1 1 0"
 		relative false
 	}
 
-	2dobj i_phalanx-lance-l
+	obj2d i_phalanx-lance-l
 	{
-		image	pics/phalanx_lance_left
+		image	"pics/phalanx_lance_left"
 		pos	"-225 1039"
 		color "1 1 1 0"
 		relative false
 	}
 
-	2dobj i_phalanxlogo
+	obj2d i_phalanxlogo
 	{
-		image	pics/phalanx_earth
+		image	"pics/phalanx_earth"
 		pos	"384 500"
 		speed "0 -16"
 		color "1 1 1 0"
@@ -245,15 +245,15 @@ sequence intro // Last change 25-07-2009 by Vio
 	wait 1 // now 15
 	wait 3 // 10 lines total -1
 
-	2dobj i_sentence6
+	obj2d i_sentence6
 	{
 		fade "0 0 0 -2"
 	}
-	2dobj i_sentence7
+	obj2d i_sentence7
 	{
 		fade "0 0 0 -2"
 	}
-	2dobj i_sentence8
+	obj2d i_sentence8
 	{
 		fade "0 0 0 -2"
 	}
@@ -263,22 +263,22 @@ sequence intro // Last change 25-07-2009 by Vio
 	rem i_sentence7
 	rem i_sentence8
 
-	2dobj i_background
+	obj2d i_background
 	{
 		fade "0 0 0 -0.1"
 	}
 
 	wait 10
 
-	2dobj i_phalanxlogo
+	obj2d i_phalanxlogo
 	{
 		speed "0 0"
 	}
 	wait 1
 
-	2dobj i_phalanx-lance-r
+	obj2d i_phalanx-lance-r
 	{
-		image	pics/phalanx_lance_right
+		image	"pics/phalanx_lance_right"
 		pos	"1020 1039"
 		speed "-400 -500"
 		color "1 1 1 0"
@@ -286,9 +286,9 @@ sequence intro // Last change 25-07-2009 by Vio
 		relative false
 	}
 
-	2dobj i_phalanx-lance-l
+	obj2d i_phalanx-lance-l
 	{
-		image	pics/phalanx_lance_left
+		image	"pics/phalanx_lance_left"
 		pos	"-250 1039"
 		speed "400 -500"
 		color "1 1 1 0"
@@ -300,35 +300,35 @@ sequence intro // Last change 25-07-2009 by Vio
 
 	wait 0.4
 
-	sound seq/sword-fly
+	sound "seq/sword-fly"
 
 	wait 1.2
 
-	2dobj i_phalanx-lance-r
+	obj2d i_phalanx-lance-r
 	{
 		speed "0 0"
 	}
 
-	2dobj i_phalanx-lance-l
+	obj2d i_phalanx-lance-l
 	{
 		speed "0 0"
 	}
 
-	sound seq/sword-hit
+	sound "seq/sword-hit"
 
 	wait 2.4
 
-	2dobj i_phalanxlogo
+	obj2d i_phalanxlogo
 	{
 		fade "0 0 0 -1"
 	}
 
-	2dobj i_phalanx-lance-l
+	obj2d i_phalanx-lance-l
 	{
 		fade "0 0 0 -1"
 	}
 
-	2dobj i_phalanx-lance-r
+	obj2d i_phalanx-lance-r
 	{
 		fade "0 0 0 -1"
 	}
