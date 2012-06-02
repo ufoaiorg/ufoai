@@ -41,20 +41,26 @@ public class UFOType {
 		ENUM,
 
 		/**
-		 * A string witch contain a link to an image relative to base/pics
-		 * and do not contains file extension
+		 * A string witch contain a link to an image relative to "base/pics"
+		 * directory and do not contains file extension
 		 */
 		PICS_IMAGE,
 
 		/**
-		 * A string witch contain a link to a model relative to base/models
-		 * and do not contains file extension
+		 * A string witch contain a link to an image relative to "base"
+		 * directory and do not contains file extension
+		 */
+		BASE_IMAGE,
+
+		/**
+		 * A string witch contain a link to a model relative to "base/models"
+		 * directory and do not contains file extension
 		 */
 		MODEL,
 
 		/**
-		 * A string witch contain a link to a sound relative to base/sound
-		 * and do not contains file extension
+		 * A string witch contain a link to a sound relative to "base/sound"
+		 * directory and do not contains file extension
 		 */
 		SOUND,
 

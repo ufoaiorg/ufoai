@@ -184,7 +184,21 @@ public class UFOScriptJavaValidator extends AbstractUFOScriptJavaValidator {
 				checkUfoBase(node);
 				ValueString value = (ValueString) node.getValue();
 				final String id = value.getValue();
-				final File file = UfoResources.getFileFromPics(id);
+				final File file = UfoResources.getImageFileFromPics(id);
+				if (file == null) {
+					warning("Image not found.",
+							UfoScriptPackage.Literals.UFO_NODE__VALUE);
+				}
+			}
+			break;
+		case BASE_IMAGE:
+			if (!(node.getValue() instanceof ValueString)) {
+				error("Quoted image name expected", UfoScriptPackage.Literals.UFO_NODE__VALUE);
+			} else 	{
+				checkUfoBase(node);
+				ValueString value = (ValueString) node.getValue();
+				final String id = value.getValue();
+				final File file = UfoResources.getImageFileFromBase(id);
 				if (file == null) {
 					warning("Image not found.",
 							UfoScriptPackage.Literals.UFO_NODE__VALUE);
@@ -198,7 +212,7 @@ public class UFOScriptJavaValidator extends AbstractUFOScriptJavaValidator {
 				checkUfoBase(node);
 				ValueString value = (ValueString) node.getValue();
 				final String id = value.getValue();
-				final File file = UfoResources.getFileFromModels(id);
+				final File file = UfoResources.getModelFile(id);
 				if (file == null) {
 					warning("Model not found.",
 							UfoScriptPackage.Literals.UFO_NODE__VALUE);
@@ -212,7 +226,7 @@ public class UFOScriptJavaValidator extends AbstractUFOScriptJavaValidator {
 				checkUfoBase(node);
 				ValueString value = (ValueString) node.getValue();
 				final String id = value.getValue();
-				final File file = UfoResources.getFileFromSound(id);
+				final File file = UfoResources.getSoundFileFromSound(id);
 				if (file == null) {
 					warning("Sound not found.",
 							UfoScriptPackage.Literals.UFO_NODE__VALUE);
@@ -226,7 +240,7 @@ public class UFOScriptJavaValidator extends AbstractUFOScriptJavaValidator {
 				checkUfoBase(node);
 				ValueString value = (ValueString) node.getValue();
 				final String id = value.getValue();
-				final File file = UfoResources.getFileFromMusic(id);
+				final File file = UfoResources.getSoundFileFromMusic(id);
 				if (file == null) {
 					warning("Music not found.",
 							UfoScriptPackage.Literals.UFO_NODE__VALUE);

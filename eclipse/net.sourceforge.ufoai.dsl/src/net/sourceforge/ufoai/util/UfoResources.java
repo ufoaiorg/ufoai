@@ -59,12 +59,21 @@ public class UfoResources {
 	}
 
 	/**
-	 * Get a file from base/pics
+	 * Get an image file from "base/pics" directory
 	 * @param name Name of the file resource
 	 * @return A file, else null if it do not exists
 	 */
-	public static File getFileFromPics(String id) {
+	public static File getImageFileFromPics(String id) {
 		return getFileFromBase("pics/" + id, supportedImageExtensions);
+	}
+
+	/**
+	 * Get an image file from "base" directory
+	 * @param name Name of the file resource
+	 * @return A file, else null if it do not exists
+	 */
+	public static File getImageFileFromBase(String id) {
+		return getFileFromBase(id, supportedImageExtensions);
 	}
 
 	/**
@@ -72,20 +81,25 @@ public class UfoResources {
 	 * @param name Name of the file resource
 	 * @return A file, else null if it do not exists
 	 */
-	public static File getFileFromModels(String id) {
+	public static File getModelFile(String id) {
 		return getFileFromBase("models/" + id, supportedModelExtensions);
 	}
 
 	/**
-	 * Get a file from base/sound
+	 * Get a file from "base/sound" directory
 	 * @param name Name of the file resource
 	 * @return A file, else null if it do not exists
 	 */
-	public static File getFileFromSound(String id) {
+	public static File getSoundFileFromSound(String id) {
 		return getFileFromBase("sound/" + id, supportedSoundExtensions);
 	}
 
-	public static File getFileFromMusic(String id) {
+	/**
+	 * Get a file from "base/music" directory
+	 * @param name Name of the file resource
+	 * @return A file, else null if it do not exists
+	 */
+	public static File getSoundFileFromMusic(String id) {
 		return getFileFromBase("music/" + id, supportedSoundExtensions);
 	}
 
