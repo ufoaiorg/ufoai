@@ -41,12 +41,9 @@ po-check:
 	cd src; \
 	if test -f ./po/POTFILES.in; then					\
 	  files="./po/OTHER_STRINGS";							\
-	  for file in `find ./client -name '*.[ch]'` `find ./game -name '*.[ch]'`; do \
+	  for file in `find ./client -name '*.[ch]*'` `find ./game -name '*.[ch]*'`; do \
 	    case $$file in						\
-	    djgpp/* | man/*) continue;;					\
-	    esac;							\
-	    case $$file in						\
-	    *.[ch])							\
+	    *.cpp | *.h)						\
 	      base=`expr " $$file" : ' \(.*\)\..'`;			\
 	      { test -f $$base.l || test -f $$base.y; } && continue;;	\
 	    esac;							\
