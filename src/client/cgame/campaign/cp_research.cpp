@@ -76,6 +76,10 @@ void RS_ResearchFinish (technology_t* tech)
 		Com_sprintf(cp_messageBuffer, sizeof(cp_messageBuffer), _("A research project has been completed: %s\n"), _(tech->name));
 		MSO_CheckAddNewMessage(NT_RESEARCH_COMPLETED, _("Research finished"), cp_messageBuffer, MSG_RESEARCH_FINISHED, tech);
 		tech->mailSent = MAILSENT_FINISHED;
+
+		if (tech->announce) {
+			UP_OpenWith(tech->id);
+		}
 	}
 }
 
@@ -1068,6 +1072,7 @@ static const value_t valid_tech_vars[] = {
 	{"delay", V_INT, offsetof(technology_t, delay), MEMBER_SIZEOF(technology_t, delay)},
 	{"producetime", V_INT, offsetof(technology_t, produceTime), MEMBER_SIZEOF(technology_t, produceTime)},
 	{"time", V_FLOAT, offsetof(technology_t, time), MEMBER_SIZEOF(technology_t, time)},
+	{"announce", V_BOOL, offsetof(technology_t, announce), MEMBER_SIZEOF(technology_t, announce)},
 	{"image", V_HUNK_STRING, offsetof(technology_t, image), 0},
 	{"mdl", V_HUNK_STRING, offsetof(technology_t, mdl), 0},
 

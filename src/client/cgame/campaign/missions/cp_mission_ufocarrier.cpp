@@ -131,7 +131,6 @@ void CP_AttackUFOCarrier_f (void)
 	}
 	ufo->mission = mission;
 	mission->ufo = ufo;
-	assert(mission->mapDef == NULL);
 	CP_GetRandomPosOnGeoscape(ufo->pos, true);
 	CP_SpawnCrashSiteMission(ufo);
 	if (mission->mapDef != NULL) {
