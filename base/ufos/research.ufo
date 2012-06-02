@@ -5421,3 +5421,35 @@ tech rs_orbital_ufo_activity
 	image		"techs/orbital_ufo_activity"
 	event		"cp_spawn_ufocarrier 105 40"
 }
+
+// http://ufoai.org/wiki/index.php/Proposals/Psionic_Device
+tech rs_alien_psi_device
+{
+	name		"_Alien Psi Device"
+	type		"tech"
+	up_chapter	news
+
+	description {
+		default "_alien_psi_device_txt"
+	}
+	pre_description {
+		default "_alien_psi_device_pre_txt"
+	}
+
+	mail
+	{
+		from	"_mail_from_col_falkland"
+		to	"_mail_to_base_commander"
+		// subject	defined by "name"
+		model	"characters/falkland"
+		icon	"icons/mail_intelligence"
+	}
+	require_AND
+	{
+		// this is activated manually
+		tech	rs_alien_psi_device
+	}
+
+	time		14000
+	mdl			wormhole_device
+}
