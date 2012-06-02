@@ -5420,5 +5420,4 @@ tech rs_orbital_ufo_activity
 	time		14000
 	image		"techs/orbital_ufo_activity"
 	event		"cp_spawn_ufocarrier 105 40"
-	announce	true
 }

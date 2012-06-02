@@ -57,3 +57,13 @@ mail alien_base_discovered
 	model "characters/howard"
 	icon "icons/mail_event"
 }
+
+mail ufocarrier
+{
+	from "_mail_from_paul_navarre"
+	to "_mail_to_base_commander"
+	subject "_UFO-Carrier"
+	body "_mail_ufocarrier"
+	model "characters/navarre"
+	icon "icons/mail_un"
+}
