@@ -1120,7 +1120,7 @@ void CP_CampaignInit (campaign_t *campaign, bool load)
 		return;
 	}
 
-	Cmd_ExecuteString("addeventmail prolog");
+	CL_EventAddMail("prolog");
 
 	RS_MarkResearchable(NULL, true);
 	BS_InitMarket(campaign);

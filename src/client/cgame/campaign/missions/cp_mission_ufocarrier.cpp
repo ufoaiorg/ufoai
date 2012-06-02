@@ -101,7 +101,6 @@ void CP_SpawnUFOCarrier_f (void)
 			INS_Build(installationTemplate, pos, _(installationTemplate->name));
 			MAP_CenterPosition(pos);
 			CL_EventAddMail("ufocarrier");
-			UP_OpenEventMail("ufocarrier");
 		}
 	}
 

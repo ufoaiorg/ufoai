@@ -304,6 +304,8 @@ void CL_EventAddMail (const char *eventMailId)
 		m->eventMail = eventMail;
 	else
 		Com_Printf("CL_EventAddMail: Could not add message with id: %s\n", eventMailId);
+
+	UP_OpenEventMail(eventMailId);
 }
 
 /**
