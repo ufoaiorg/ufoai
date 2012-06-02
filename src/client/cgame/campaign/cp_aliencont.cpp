@@ -186,7 +186,7 @@ void AL_AddAliens (aircraft_t *aircraft)
 						messageAlreadySet = true;
 					}
 					if (!ccs.breathingMailSent) {
-						Cmd_ExecuteString("addeventmail alienbreathing");
+						CL_EventAddMail("alienbreathing");
 						ccs.breathingMailSent = true;
 					}
 				} else {
