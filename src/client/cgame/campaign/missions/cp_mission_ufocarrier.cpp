@@ -99,6 +99,7 @@ void CP_SpawnUFOCarrier_f (void)
 		const vec2_t pos = { atof(Cmd_Argv(1)), atof(Cmd_Argv(2)) };
 		if (!MapIsWater(MAP_GetColor(pos, MAPTYPE_TERRAIN, NULL))) {
 			INS_Build(installationTemplate, pos, _(installationTemplate->name));
+			MAP_CenterPosition(pos);
 		}
 	}
 

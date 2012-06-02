@@ -62,6 +62,7 @@ float MAP_AngleOfPath(const vec3_t start, const vec2_t end, vec3_t direction, ve
 void MAP_MapCalcLine(const vec2_t start, const vec2_t end, mapline_t* line);
 void MAP_DrawMap(uiNode_t const* node, const campaign_t *campaign);
 void MAP_CenterOnPoint_f(void);
+void MAP_CenterPosition(const vec2_t pos);
 void MAP_StopSmoothMovement(void);
 base_t* MAP_PositionCloseToBase(const vec2_t pos);
 

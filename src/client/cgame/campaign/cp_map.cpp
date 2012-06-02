@@ -1062,6 +1062,19 @@ static void MAP_StartCenter (void)
 }
 
 /**
+ * @brief Start to rotate or shift the globe to the given position
+ * @param[in] pos Longitude and latitude of the position to center on
+ */
+void MAP_CenterPosition (const vec2_t pos)
+{
+	if (cl_3dmap->integer)
+		MAP_ConvertObjectPositionToGeoscapePosition(ccs.smoothFinalGlobeAngle, pos);
+	else
+		MAP_ConvertObjectPositionToGeoscapePosition(ccs.smoothFinal2DGeoscapeCenter, pos);
+	MAP_StartCenter();
+}
+
+/**
  * @brief Center the view and select an object from the geoscape
  */
 static void MAP_SelectObject_f (void)
