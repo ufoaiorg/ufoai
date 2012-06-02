@@ -56,6 +56,7 @@ void CL_ParseEventMails(const char *name, const char **text);
 eventMail_t* CL_GetEventMail(const char *id, bool createCopy);
 eventMail_t* CL_NewEventMail(const char *id, const char *newID, const char *body);
 void CP_FreeDynamicEventMail(void);
+void CL_EventAddMail(const char *eventMailId);
 
 /**
  * @brief Defines campaign events when story related technologies should be researched

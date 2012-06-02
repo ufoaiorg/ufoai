@@ -275,34 +275,19 @@ void CL_ParseCampaignEvents (const char *name, const char **text)
 	} while (*text);
 }
 
-/**
- * @sa UP_OpenMail_f
- * @sa MS_AddNewMessage
- * @sa UP_SetMailHeader
- * @sa UP_OpenEventMail
- */
-void CL_EventAddMail_f (void)
+void CL_EventAddMail (const char *eventMailId)
 {
-	const char *eventMailId;
-	eventMail_t* eventMail;
 	message_t *m;
 	char dateBuf[MAX_VAR] = "";
 
-	if (Cmd_Argc() < 2) {
-		Com_Printf("Usage: %s <event_mail_id>\n", Cmd_Argv(0));
-		return;
-	}
-
-	eventMailId = Cmd_Argv(1);
-
-	eventMail = CL_GetEventMail(eventMailId, false);
+	eventMail_t* eventMail = CL_GetEventMail(eventMailId, false);
 	if (!eventMail) {
-		Com_Printf("CL_EventAddMail_f: Could not find eventmail with id '%s'\n", eventMailId);
+		Com_Printf("CL_EventAddMail: Could not find eventmail with id '%s'\n", eventMailId);
 		return;
 	}
 
 	if (!eventMail->from || !eventMail->to || !eventMail->subject || !eventMail->body) {
-		Com_Printf("CL_EventAddMail_f: mail with id '%s' has incomplete data\n", eventMailId);
+		Com_Printf("CL_EventAddMail: mail with id '%s' has incomplete data\n", eventMailId);
 		return;
 	}
 
@@ -318,5 +303,21 @@ void CL_EventAddMail_f (void)
 	if (m)
 		m->eventMail = eventMail;
 	else
-		Com_Printf("Could not add message with id: %s\n", eventMailId);
+		Com_Printf("CL_EventAddMail: Could not add message with id: %s\n", eventMailId);
+}
+
+/**
+ * @sa UP_OpenMail_f
+ * @sa MS_AddNewMessage
+ * @sa UP_SetMailHeader
+ * @sa UP_OpenEventMail
+ */
+void CL_EventAddMail_f (void)
+{
+	if (Cmd_Argc() < 2) {
+		Com_Printf("Usage: %s <event_mail_id>\n", Cmd_Argv(0));
+		return;
+	}
+
+	CL_EventAddMail(Cmd_Argv(1));
 }

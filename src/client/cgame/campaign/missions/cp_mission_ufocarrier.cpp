@@ -100,7 +100,8 @@ void CP_SpawnUFOCarrier_f (void)
 		if (!MapIsWater(MAP_GetColor(pos, MAPTYPE_TERRAIN, NULL))) {
 			INS_Build(installationTemplate, pos, _(installationTemplate->name));
 			MAP_CenterPosition(pos);
-			Cmd_ExecuteString("addeventmail ufocarrier");
+			CL_EventAddMail("ufocarrier");
+			UP_OpenEventMail("ufocarrier");
 		}
 	}
 
