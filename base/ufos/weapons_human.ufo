@@ -1223,7 +1223,7 @@ item grenl_ammo
 		{
 			name				"_Snap Shot (Impact)"
 			skill				"explosive"
-			projtl				grenl_ammo
+			projtl				grenl_ammo_ptl
 			impact				explosionGrenade
 			hitbody				explosionGrenade
 			firesnd				"weapons/grenade-launcher"
@@ -1249,7 +1249,7 @@ item grenl_ammo
 		{
 			name				"_Aimed Shot (Impact)"
 			skill				"explosive"
-			projtl				grenl_ammo
+			projtl				grenl_ammo_ptl
 			impact				explosionGrenade
 			hitbody				explosionGrenade
 			firesnd				"weapons/grenade-launcher"
@@ -1275,7 +1275,7 @@ item grenl_ammo
 		{
 			name				"_Snap Shot (Timer)"
 			skill				"explosive"
-			projtl				grenl_ammo
+			projtl				grenl_ammo_ptl
 			impact				explosionGrenade
 			hitbody				explosionGrenade
 			firesnd				"weapons/grenade-launcher"
@@ -1304,7 +1304,7 @@ item grenl_ammo
 		{
 			name				"_Aimed Shot (Timer)"
 			skill				"explosive"
-			projtl				grenl_ammo
+			projtl				grenl_ammo_ptl
 			impact				explosionGrenade
 			hitbody				explosionGrenade
 			firesnd				"weapons/grenade-launcher"
@@ -1530,7 +1530,7 @@ item grenl_plasma_ammo
 		{
 			name				"_Snap Shot (Impact)"
 			skill				"explosive"
-			projtl				grenl_plasma_ammo
+			projtl				grenl_plasma_ammo_ptl
 			impact				plasmaBigExplosion
 			hitbody				plasmaBigExplosion
 			firesnd				"weapons/grenade-launcher"
@@ -1556,7 +1556,7 @@ item grenl_plasma_ammo
 		{
 			name				"_Aimed Shot (Impact)"
 			skill				"explosive"
-			projtl				grenl_plasma_ammo
+			projtl				grenl_plasma_ammo_ptl
 			impact				plasmaBigExplosion
 			hitbody				plasmaBigExplosion
 			firesnd				"weapons/grenade-launcher"
@@ -1581,7 +1581,7 @@ item grenl_plasma_ammo
 		{
 			name				"_Snap Shot (Timer)"
 			skill				"explosive"
-			projtl				grenl_plasma_ammo
+			projtl				grenl_plasma_ammo_ptl
 			impact				plasmaBigExplosion
 			hitbody				plasmaBigExplosion
 			firesnd				"weapons/grenade-launcher"
@@ -1609,7 +1609,7 @@ item grenl_plasma_ammo
 		{
 			name				"_Aimed Shot (Timer)"
 			skill				"explosive"
-			projtl				grenl_plasma_ammo
+			projtl				grenl_plasma_ammo_ptl
 			impact				plasmaBigExplosion
 			hitbody				plasmaBigExplosion
 			firesnd				"weapons/grenade-launcher"

@@ -42,7 +42,7 @@ item knife
 		{
 			name		"_Throw"
 			skill		"close"
-			projtl		knife
+			projtl		knife_ptl
 			impact		null
 			hitbody		null
 			firesnd		"weapons/melee-throw"
@@ -105,7 +105,7 @@ item knifemono
 		{
 			name		"_Throw"
 			skill		"close"
-			projtl		knife
+			projtl		knife_ptl
 			impact		null
 			hitbody		null
 			firesnd		"weapons/melee-throw"

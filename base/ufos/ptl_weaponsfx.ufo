@@ -1608,7 +1608,7 @@ particle pbeamBigSplash
 // GRENADE LAUNCHER EFFECTS
 // ==================
 
-particle grenl_ammo
+particle grenl_ammo_ptl
 {
 	init
 	{
@@ -1653,7 +1653,7 @@ particle grenl_ic_ammo
 	}
 }
 
-particle grenl_plasma_ammo
+particle grenl_plasma_ammo_ptl
 {
 	init
 	{
@@ -1708,7 +1708,7 @@ particle glSmoke
 // GRENADE EFFECTS
 // ==================
 
-particle medikit
+particle medikit_ptl
 {
 	init
 	{
@@ -1717,7 +1717,7 @@ particle medikit
 	}
 }
 
-particle irgoggles
+particle irgoggles_ptl
 {
 	init
 	{
@@ -1794,7 +1794,7 @@ particle plasmagren
 // KNIFE EFFECTS
 // ==================
 
-particle knife
+particle knife_ptl
 {
 	init
 	{
