@@ -19,7 +19,7 @@ TokenList:
 
 Value:
 	ValueBoolean
-	| ValueNull
+//	| ValueNull
 	| ValueNumber
 	| ValueNamedConst
 	| ValueReference
@@ -44,8 +44,8 @@ ValueReference:
 ValueNamedConst:
 	value=NAMED_CONST;
 
-ValueNull:
-	value=NULL;
+//ValueNull:
+//	value=NULL;
 
 /* ==================== terminals ================================ */
 
@@ -66,8 +66,8 @@ terminal INT returns ecore::EInt:
 terminal UFO_BOOLEAN:
 	'true' | 'false';
 
-terminal NULL:
-	'null';
+//terminal NULL:
+//	'null';
 
 terminal CODE:
 	('*'|'#'|'%') (ID | '.' | ':' | '@')*;

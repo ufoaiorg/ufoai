@@ -6,7 +6,6 @@ import net.sourceforge.ufoai.ufoScript.UFONode;
 import net.sourceforge.ufoai.ufoScript.UfoScriptPackage;
 import net.sourceforge.ufoai.ufoScript.ValueBoolean;
 import net.sourceforge.ufoai.ufoScript.ValueNamedConst;
-import net.sourceforge.ufoai.ufoScript.ValueNull;
 import net.sourceforge.ufoai.ufoScript.ValueNumber;
 import net.sourceforge.ufoai.ufoScript.ValueReference;
 import net.sourceforge.ufoai.ufoScript.ValueString;
@@ -58,9 +57,11 @@ public class UFOScriptJavaValidator extends AbstractUFOScriptJavaValidator {
 	}
 
 	private void validateReference(UFONode node, String referenceType) {
-		if (node.getValue() instanceof ValueNull) {
+		/*if (node.getValue() instanceof ValueNull) {
 			// nothing
-		} else if (node.getValue() instanceof ValueReference) {
+		} else
+			*/
+		if (node.getValue() instanceof ValueReference) {
 			ValueReference value = (ValueReference) node.getValue();
 			if (referenceType != null && !value.getValue().getType().equals(referenceType)) {
 				error(referenceType + " id expected", UfoScriptPackage.Literals.UFO_NODE__VALUE);
