@@ -467,6 +467,20 @@ static void CP_ParseCampaign (const char *name, const char **text)
 		cp->difficulty = 4;
 }
 
+/** components type parsing helper */
+struct component_type_data_t {
+	char id[MAX_VAR];			/**< id of the campaign */
+	char amount[MAX_VAR];			/**< placeholder for gettext stuff */
+	char numbercrash[MAX_VAR];			/**< geoscape map */
+};
+/** components type values */
+static const value_t components_type_vals[] = {
+	{"id", V_STRING, offsetof(component_type_data_t, id), 0},
+	{"amount", V_STRING, offsetof(component_type_data_t, amount), 0},
+	{"numbercrash", V_STRING, offsetof(component_type_data_t, numbercrash), 0},
+	{NULL, V_NULL, 0, 0}
+};
+
 /**
  * @brief Parses one "components" entry in a .ufo file and writes it into the next free entry in xxxxxxxx (components_t).
  * @param[in] name The unique id of a components_t array entry.
@@ -514,25 +528,32 @@ static void CP_ParseComponents (const char *name, const char **text)
 		if (Q_streq(token, "item")) {
 			/* Defines what items need to be collected for this item to be researchable. */
 			if (comp->numItemtypes < MAX_COMP) {
-				/* Parse item name */
-				token = Com_Parse(text);
+				/* Parse block */
+				component_type_data_t itemTokens;
+				OBJZERO(itemTokens);
+				if (Com_ParseBlock ("item", text, &itemTokens, components_type_vals, NULL)) {
+					if (itemTokens.id[0] == '\0')
+						Com_Error(ERR_DROP, "CP_ParseComponents: \"item\" token id is missing.\n");
+					if (itemTokens.amount[0] == '\0')
+						Com_Error(ERR_DROP, "CP_ParseComponents: \"amount\" token id is missing.\n");
+					if (itemTokens.numbercrash[0] == '\0')
+						Com_Error(ERR_DROP, "CP_ParseComponents: \"numbercrash\" token id is missing.\n");
 
-				comp->items[comp->numItemtypes] = INVSH_GetItemByID(token);	/* item id -> item pointer */
+					comp->items[comp->numItemtypes] = INVSH_GetItemByID(itemTokens.id);	/* item id -> item pointer */
 
-				/* Parse number of items. */
-				token = Com_Parse(text);
-				comp->itemAmount[comp->numItemtypes] = atoi(token);
-				token = Com_Parse(text);
-				/* If itemcount needs to be scaled */
-				if (token[0] == '%')
-					comp->itemAmount2[comp->numItemtypes] = COMP_ITEMCOUNT_SCALED;
-				else
-					comp->itemAmount2[comp->numItemtypes] = atoi(token);
+					/* Parse number of items. */
+					comp->itemAmount[comp->numItemtypes] = atoi(itemTokens.amount);
+					/* If itemcount needs to be scaled */
+					if (itemTokens.numbercrash[0] == '%')
+						comp->itemAmount2[comp->numItemtypes] = COMP_ITEMCOUNT_SCALED;
+					else
+						comp->itemAmount2[comp->numItemtypes] = atoi(itemTokens.numbercrash);
 
-				/** @todo Set item links to NONE if needed */
-				/* comp->item_idx[comp->numItemtypes] = xxx */
+					/** @todo Set item links to NONE if needed */
+					/* comp->item_idx[comp->numItemtypes] = xxx */
 
-				comp->numItemtypes++;
+					comp->numItemtypes++;
+				}
 			} else {
 				Com_Printf("CP_ParseComponents: \"%s\" Too many 'items' defined. Limit is %i - ignored.\n", name, MAX_COMP);
 			}

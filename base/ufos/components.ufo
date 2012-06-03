@@ -3,7 +3,7 @@
 // usage:
 // components <ufo_name> {
 //	time xxx
-//	<type> <id> <number> <number-crash>
+//	item { id <id> amount <amount> numbercrash <number-crash> }
 //	<type ...
 //	...
 // }
@@ -21,8 +21,8 @@
 // <id>
 //	id of the item in the item definitions.
 //	See also otheritems.ufo and research.ufo
-// <number>
-//	The number of the defined item to be found in the ufo.
+// <amount>
+//	The amount of the defined item to be found in the ufo.
 // <number-crash>
 //	The number of the defined item to be found in the crashed ufo.
 //	If it's a '%' sign then fraction of <number> will be used depending on disassembled item/ufo's condition
@@ -38,96 +38,292 @@
 // UFO -- Scout
 components craft_ufo_scout {
 	time	300
-	item	alienmaterials			300	%
-	item	antimatter				200	0
-	item	craft_alien_propulsion	2	%
-	item	craft_alien_astrogation	1	%
-	item	craft_alien_detection	1	%
+	item {
+		id alienmaterials
+		amount 300
+		numbercrash %
+	}
+	item {
+		id antimatter
+		amount 200
+		numbercrash 0
+	}
+	item {
+		id craft_alien_propulsion
+		amount 2
+		numbercrash %
+	}
+	item {
+		id craft_alien_astrogation
+		amount 1
+		numbercrash %
+	}
+	item {
+		id craft_alien_detection
+		amount 1
+		numbercrash %
+	}
 }
 
 // UFO -- Fighter
 components craft_ufo_fighter {
 	time	330
-	item	alienmaterials				400	%
-	item	antimatter					250	0
-	item	craft_alien_propulsion		2	%
-	item	craft_alien_astrogation		1	%
-	item	craft_alien_detection		1	%
-	item	craft_weapon_particle_beam	1	%
+	item {
+		id alienmaterials
+		amount 400
+		numbercrash %
+	}
+	item {
+		id antimatter
+		amount 250
+		numbercrash 0
+	}
+	item {
+		id craft_alien_propulsion
+		amount 2
+		numbercrash %
+	}
+	item {
+		id craft_alien_astrogation
+		amount 1
+		numbercrash %
+	}
+	item {
+		id craft_alien_detection
+		amount 1
+		numbercrash %
+	}
+	item {
+		id craft_weapon_particle_beam
+		amount 1
+		numbercrash %
+	}
 }
 
 // UFO -- Harvester
 components craft_ufo_harvester {
 	time	510
-	item	alienmaterials				800	%
-	item	antimatter					450	0
-	item	craft_alien_propulsion		4	%
-	item	craft_alien_astrogation		2	%
-	item	craft_alien_detection		1	%
-	item	craft_weapon_particle_beam	2	%
-	item	craft_weapon_alien_launcher 1	%
-	item	craft_ammo_am_missile 12	%
+	item {
+		id alienmaterials
+		amount 800
+		numbercrash %
+	}
+	item {
+		id antimatter
+		amount 450
+		numbercrash 0
+	}
+	item {
+		id craft_alien_propulsion
+		amount 4
+		numbercrash %
+	}
+	item {
+		id craft_alien_astrogation
+		amount 2
+		numbercrash %
+	}
+	item {
+		id craft_alien_detection
+		amount 1
+		numbercrash %
+	}
+	item {
+		id craft_weapon_particle_beam
+		amount 2
+		numbercrash %
+	}
+	item {
+		id craft_weapon_alien_launcher
+		amount 1
+		numbercrash %
+	}
+	item {
+		id craft_ammo_am_missile
+		amount 12
+		numbercrash %
+	}
 }
 
 // UFO -- Supply Transport
 components craft_ufo_supply {
 	time	450
-	item	alienmaterials				600	%
-	item	antimatter					600	0
-	item	craft_alien_propulsion		2	%
-	item	craft_alien_astrogation		2	%
-	item	craft_alien_detection		1	%
+	item {
+		id alienmaterials
+		amount 600
+		numbercrash %
+	}
+	item {
+		id antimatter
+		amount 600
+		numbercrash 0
+	}
+	item {
+		id craft_alien_propulsion
+		amount 2
+		numbercrash %
+	}
+	item {
+		id craft_alien_astrogation
+		amount 2
+		numbercrash %
+	}
+	item {
+		id craft_alien_detection
+		amount 1
+		numbercrash %
+	}
 }
 
 // UFO -- Gunboat
 components craft_ufo_gunboat {
 	time	500
-	item	alienmaterials				600	%
-	item	antimatter					500	0
-	item	craft_alien_propulsion		4	%
-	item	craft_alien_astrogation		2	%
-	item	craft_alien_detection		1	%
-	item	craft_weapon_particle_beam	2	%
-	item	craft_weapon_alien_launcher	2	%
-	item	craft_ammo_am_missile 24	%
+	item {
+		id alienmaterials
+		amount 600
+		numbercrash %
+	}
+	item {
+		id antimatter
+		amount 500
+		numbercrash 0
+	}
+	item {
+		id craft_alien_propulsion
+		amount 4
+		numbercrash %
+	}
+	item {
+		id craft_alien_astrogation
+		amount 2
+		numbercrash %
+	}
+	item {
+		id craft_alien_detection
+		amount 1
+		numbercrash %
+	}
+	item {
+		id craft_weapon_particle_beam
+		amount 2
+		numbercrash %
+	}
+	item {
+		id craft_weapon_alien_launcher
+		amount 2
+		numbercrash %
+	}
+	item {
+		id craft_ammo_am_missile
+		amount 24
+		numbercrash %
+	}
 }
 
 // UFO -- Corrupter
 components craft_ufo_corrupter {
 	time	622
-	item	alienmaterials				800	%
-	item	antimatter					670	0
-	item	craft_alien_propulsion		3	%
-	item	craft_alien_astrogation		3	%
-	item	craft_alien_detection		1	%
-	item	craft_weapon_particle_beam	3	%
+	item {
+		id alienmaterials
+		amount 800
+		numbercrash %
+	}
+	item {
+		id antimatter
+		amount 670
+		numbercrash 0
+	}
+	item {
+		id craft_alien_propulsion
+		amount 3
+		numbercrash %
+	}
+	item {
+		id craft_alien_astrogation
+		amount 3
+		numbercrash %
+	}
+	item {
+		id craft_alien_detection
+		amount 1
+		numbercrash %
+	}
+	item {
+		id craft_weapon_particle_beam
+		amount 3
+		numbercrash %
+	}
 }
 
 // UFO -- Bomber
 components craft_ufo_bomber {
 	time	675
-	item	alienmaterials				1100	%
-	item	antimatter					810	0
-	item	craft_alien_propulsion		4	%
-	item	craft_alien_astrogation		3	%
-	item	craft_alien_detection		2	%
-	item	craft_weapon_particle_beam	3	%
+	item {
+		id alienmaterials
+		amount 1100
+		numbercrash %
+	}
+	item {
+		id antimatter
+		amount 810
+		numbercrash 0
+	}
+	item {
+		id craft_alien_propulsion
+		amount 4
+		numbercrash %
+	}
+	item {
+		id craft_alien_astrogation
+		amount 3
+		numbercrash %
+	}
+	item {
+		id craft_alien_detection
+		amount 2
+		numbercrash %
+	}
+	item {
+		id craft_weapon_particle_beam
+		amount 3
+		numbercrash %
+	}
 }
 
 // UFO -- Lander
 // Note that no such UFO in the game YET.
 //components craft_ufo_lander {
 //	time	480
-//	item	alienmaterials			500	%
-//	item	antimatter				600	0
-//	item	craft_alien_propulsion	2	%
+//	item {
+//		id alienmaterials
+//		amount 500
+//		numbercrash %
+//	}
+//	item {
+//		id antimatter
+//		amount 600
+//		numbercrash 0
+//	}
+//	item {
+//		id craft_alien_propulsion
+//		amount 2
+//		numbercrash %
+//	}
 //}
 
 // UFO -- Carrier
 // The Carrier missions are special storyline-driven missions
 components craft_ufo_carrier {
 	time	10000
-	item	alienmaterials			2000	%
-	//item	craft_alien_propulsion	8	%
-	//item	FTLdrive				1	1
+	item {
+		id alienmaterials
+		amount 2000
+		numbercrash %
+	}
+	//item {
+	//	id craft_alien_propulsion
+	//	amount 8
+	//	numbercrash %
+	//}
+	//item { id FTLdrive amount 1 numbercrash 1 }
 }

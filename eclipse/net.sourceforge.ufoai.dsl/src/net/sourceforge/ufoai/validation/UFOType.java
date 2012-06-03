@@ -128,6 +128,8 @@ public class UFOType {
 		BUILDING_ID,
 		PARTICLE_ID,
 		MENU_MODEL_ID,
+		ITEM_ID,
+		CRAFTITEM_OR_ITEM_ID,
 	}
 
 	private Type type;

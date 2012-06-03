@@ -1,10 +1,13 @@
 package net.sourceforge.ufoai.validation;
 
 import java.io.File;
+import java.util.HashSet;
+import java.util.Set;
 
 import net.sourceforge.ufoai.ufoScript.UFONode;
 import net.sourceforge.ufoai.ufoScript.UfoScriptPackage;
 import net.sourceforge.ufoai.ufoScript.ValueBoolean;
+import net.sourceforge.ufoai.ufoScript.ValueCode;
 import net.sourceforge.ufoai.ufoScript.ValueNamedConst;
 import net.sourceforge.ufoai.ufoScript.ValueNumber;
 import net.sourceforge.ufoai.ufoScript.ValueReference;
@@ -62,6 +65,21 @@ public class UFOScriptJavaValidator extends AbstractUFOScriptJavaValidator {
 
 	private UFOType getType(String path) {
 		return UFOTypes.getInstance().getPathType(path);
+	}
+
+	private void validateReference(UFONode node, String referenceType, Set<String> available) {
+		/*if (node.getValue() instanceof ValueNull) {
+			// nothing
+		} else
+			*/
+		if (node.getValue() instanceof ValueReference) {
+			ValueReference value = (ValueReference) node.getValue();
+			if (available != null && !available.contains(value.getValue().getType())) {
+				error(referenceType + " id expected", UfoScriptPackage.Literals.UFO_NODE__VALUE);
+			}
+		} else {
+			error("Id expected", UfoScriptPackage.Literals.UFO_NODE__VALUE);
+		}
 	}
 
 	private void validateReference(UFONode node, String referenceType) {
@@ -128,20 +146,23 @@ public class UFOScriptJavaValidator extends AbstractUFOScriptJavaValidator {
 			break;
 		case ENUM:
 		{
+			String value;
 			if ((node.getValue() instanceof ValueString)) {
-				ValueString value = (ValueString) node.getValue();
-				if (!type.contains(value.getValue())) {
-					warning("Not a valide value.",
-							UfoScriptPackage.Literals.UFO_NODE__VALUE);
-				}
+				value = ((ValueString) node.getValue()).getValue();
 			} else if ((node.getValue() instanceof ValueNamedConst)) {
-				ValueNamedConst value = (ValueNamedConst) node.getValue();
-				if (!type.contains(value.getValue())) {
-					warning("Not a valide value.",
-							UfoScriptPackage.Literals.UFO_NODE__VALUE);
-				}
+				value = ((ValueNamedConst) node.getValue()).getValue();
+			} else if ((node.getValue() instanceof ValueNumber)) {
+				value = ((ValueNumber) node.getValue()).getValue();
+			} else if ((node.getValue() instanceof ValueCode)) {
+				value = ((ValueCode) node.getValue()).getValue();
 			} else {
-				error("Quoted string or uppercase named const expected", UfoScriptPackage.Literals.UFO_NODE__VALUE);
+				error("Quoted string or uppercase named const usualy expected", UfoScriptPackage.Literals.UFO_NODE__VALUE);
+				return;
+			}
+
+			if (!type.contains(value)) {
+				warning("Not a valide value.",
+						UfoScriptPackage.Literals.UFO_NODE__VALUE);
 			}
 			break;
 		}
@@ -174,6 +195,15 @@ public class UFOScriptJavaValidator extends AbstractUFOScriptJavaValidator {
 			break;
 		case MENU_MODEL_ID:
 			validateReference(node, "menu_model");
+			break;
+		case ITEM_ID:
+			validateReference(node, "item");
+			break;
+		case CRAFTITEM_OR_ITEM_ID:
+			Set<String> available = new HashSet<String>();
+			available.add("item");
+			available.add("craftitem");
+			validateReference(node, "item or craftitem", available);
 			break;
 		case INT:
 			if (!(node.getValue() instanceof ValueNumber)) {
