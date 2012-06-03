@@ -4,7 +4,6 @@
 package net.sourceforge.ufoai.ui.labeling;
 
 import net.sourceforge.ufoai.ufoScript.UFONode;
-import net.sourceforge.ufoai.ui.UFOScriptUiModule;
 
 import org.eclipse.emf.edit.ui.provider.AdapterFactoryLabelProvider;
 import org.eclipse.xtext.ui.label.DefaultEObjectLabelProvider;
@@ -30,11 +29,7 @@ public class UFOScriptLabelProvider extends DefaultEObjectLabelProvider {
 		}
 	}
 
-	@Override
-	public Object doGetImage(Object block) {
-		if (block instanceof UFONode) {
-			return UFOScriptUiModule.getImageDescriptor("icons/" + ((UFONode) block).getType() + ".png");
-		}
-		return super.doGetImage(block);
+	public String image(UFONode node) {
+		return node.getType() + ".png";
 	}
 }
