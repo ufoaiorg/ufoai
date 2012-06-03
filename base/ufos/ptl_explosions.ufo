@@ -79,7 +79,7 @@ particle explosionDebrisSmoke
 	{
 		frame 0
 		endframe 3
-		image +sfx/smoke/smoke_
+		image "+sfx/smoke/smoke_"
 		blend  blend
 		style  facing
 		thinkfade  out
@@ -159,7 +159,7 @@ particle explosionDebrisSmokeSmall
 	{
 		frame 0
 		endframe 3
-		image +sfx/smoke/smoke_
+		image "+sfx/smoke/smoke_"
 		blend  blend
 		style  facing
 		thinkfade  out
@@ -189,7 +189,7 @@ particle explosionFireFlame
 {
 	init
 	{
-		image  sfx/explosions/explosions2
+		image  "sfx/explosions/explosions2"
 		blend  add
 		style  facing
 		thinkfade  out
@@ -224,7 +224,7 @@ particle explosionFireBurn
 {
 	init
 	{
-		image  sfx/weapons/rocketfire
+		image  "sfx/weapons/rocketfire"
 		blend  add
 		style  facing
 		thinkfade  out
@@ -324,7 +324,7 @@ particle explosionFlash
 {
 	init
 	{
-		image		sfx/explosions/flashbang
+		image		"sfx/explosions/flashbang"
 		blend		add
 		style		facing
 		framefade	out
@@ -345,7 +345,7 @@ particle explosionSmokeRing
 	{
 		frame 0
 		endframe 3
-		image +sfx/smoke_
+		image "+sfx/smoke_"
 		blend  blend
 		style  facing
 		thinkfade  out
@@ -374,7 +374,7 @@ particle explosionSmokeRing2
 	{
 		frame 0
 		endframe 3
-		image +sfx/smoke_
+		image "+sfx/smoke_"
 		blend  blend
 		style  facing
 		thinkfade  out

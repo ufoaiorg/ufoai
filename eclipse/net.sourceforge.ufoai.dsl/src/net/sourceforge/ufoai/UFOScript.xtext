@@ -5,14 +5,17 @@ generate ufoScript "http://ufoai.org/UFOScript"
 
 // starting point for parsing a ufo script file
 UFOScript:
-	(roots+=UFONode)*;
+	{UFOScript} roots+=UFONode*;
 
 UFONode:
-	type=ID (
-		(=>name=ID "{" (=>nodes+=UFONode)* => "}")
-		| ("{" (nodes+=UFONode)* => "}")
+	(=>type=ID (
+		((=>name=ID)? "{" ((nodes+=UFONode)* | code=TokenList) "}")
 		| (value=Value)
-	);
+	));
+
+// this is only a hack
+TokenList:
+	{TokenList} (statements+=Value)*;
 
 Value:
 	ValueBoolean
@@ -20,7 +23,11 @@ Value:
 	| ValueNumber
 	| ValueNamedConst
 	| ValueReference
+	| ValueCode
 	| ValueString;
+
+ValueCode:
+	value = CODE;
 
 ValueString:
 	value=STRING;
@@ -61,6 +68,9 @@ terminal UFO_BOOLEAN:
 
 terminal NULL:
 	'null';
+
+terminal CODE:
+	('*'|'#'|'%') (ID | '.' | ':' | '@')*;
 
 terminal ID:
 	('a'..'z'|'A'..'Z'|'_') ('a'..'z'|'A'..'Z'|'_'|'-'|'/'|'0'..'9')*;

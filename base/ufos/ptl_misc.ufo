@@ -70,7 +70,7 @@ particle smokefield_smoke
 {
 	init
 	{
-		image +sfx/smoke_
+		image "+sfx/smoke_"
 		blend  blend
 		style  facing
 		thinkfade  out
@@ -158,7 +158,7 @@ particle flash_explosion
 	{
 		frame			0
 		endframe		18
-		image			+sfx/explosions/flashbang_a
+		image			"+sfx/explosions/flashbang_a"
 		blend			blend
 		style			facing
 		framefade		none
@@ -179,7 +179,7 @@ particle grenadeFragment
 {
 	init
 	{
-		image  sfx/spark
+		image  "sfx/spark"
 		blend  add
 		style  facing
 		thinkfade  out
@@ -221,7 +221,7 @@ particle pexplosionFlame
 {
 	init
 	{
-		image  sfx/plasmadust
+		image  "sfx/plasmadust"
 		blend  add
 		style  facing
 		thinkfade  out
@@ -250,7 +250,7 @@ particle pexplosionVolumetric
 {
 	init
 	{
-		image  sfx/greenplasmaball
+		image  "sfx/greenplasmaball"
 		blend  add
 		style  facing
 		thinkfade  out
@@ -321,7 +321,7 @@ particle firetrailptl
 	{
 		frame 0
 		endframe 2
-		image +sfx/smoke/smoke_flame_
+		image "+sfx/smoke/smoke_flame_"
 		blend  add
 		style  facing
 		thinkfade  out
@@ -381,7 +381,7 @@ particle explosionFlame
 {
 	init
 	{
-		image  sfx/explosions/explosions2
+		image  "sfx/explosions/explosions2"
 		blend  add
 		style  facing
 		thinkfade  out
@@ -410,7 +410,7 @@ particle explosionFlame2
 {
 	init
 	{
-		image  sfx/explosions/explosions3
+		image  "sfx/explosions/explosions3"
 		blend  add
 		style  facing
 		thinkfade  out
@@ -439,7 +439,7 @@ particle explosionVolumetric
 {
 	init
 	{
-		image  sfx/explosions/explosion
+		image  "sfx/explosions/explosion"
 		blend  add
 		style  facing
 		thinkfade  out
@@ -468,7 +468,7 @@ particle explosionVolumetric2
 {
 	init
 	{
-		image  sfx/explosions/explosions1
+		image  "sfx/explosions/explosions1"
 		blend  add
 		style  facing
 		thinkfade  sin
@@ -496,7 +496,7 @@ particle explosionSmoke
 	{
 		frame 0
 		endframe 3
-		image +sfx/smoke/smoke_
+		image "+sfx/smoke/smoke_"
 		blend  blend
 		style  facing
 		thinkfade  out
@@ -525,7 +525,7 @@ particle explosionSmoke2
 	{
 		frame 0
 		endframe 3
-		image +sfx/smoke/smoke_
+		image "+sfx/smoke/smoke_"
 		blend  blend
 		style  facing
 		thinkfade  out
@@ -554,7 +554,7 @@ particle explosionSmoke3
 	{
 		frame 0
 		endframe 3
-		image +sfx/smoke/smoke_
+		image "+sfx/smoke/smoke_"
 		blend  blend
 		style  facing
 		thinkfade  saw
@@ -589,7 +589,7 @@ particle flash
 {
 	init
 	{
-		image		sfx/explosions/flashbang
+		image		"sfx/explosions/flashbang"
 		blend		add
 		style		facing
 		framefade	out
@@ -605,7 +605,7 @@ particle flashsmoke
 {
 	init
 	{
-		image  sfx/smoke
+		image  "sfx/smoke"
 		blend  invfilter
 		style  facing
 		thinkfade  out
@@ -627,7 +627,7 @@ particle burnFlame2				// for falcon_crash
 {
 	init
 	{
-		image  sfx/fireball
+		image  "sfx/fireball"
 		blend  add
 		style  facing
 		thinkfade  out
@@ -653,7 +653,7 @@ particle burnFlame3				// fire train particle
 {
 	init
 	{
-		image  sfx/fireball
+		image  "sfx/fireball"
 		blend  add
 		style  facing
 		thinkfade  out
@@ -698,7 +698,7 @@ particle smoking
 	{
 		frame 0
 		endframe 3
-		image +sfx/smoke_
+		image "+sfx/smoke_"
 		blend  blend
 		style  facing
 		thinkfade  out
@@ -765,7 +765,7 @@ particle burnFireFlame
 {
 	init
 	{
-		image  sfx/weapons/rocketfire
+		image  "sfx/weapons/rocketfire"
 		blend  add
 		style  facing
 		thinkfade  out
@@ -797,7 +797,7 @@ particle crashFireFlame
 {
 	init
 	{
-		image  sfx/weapons/rocketfire
+		image  "sfx/weapons/rocketfire"
 		blend  add
 		style  facing
 		thinkfade  out
@@ -842,7 +842,7 @@ particle blood
 	{
 		frame			0
 		endframe		3
-		image			+sfx/blood/bloodsplatter_d
+		image			"+sfx/blood/bloodsplatter_d"
 		blend			blend
 		style			facing
 		framefade		none
@@ -858,7 +858,7 @@ particle blood
 //{
 //	init
 //	{
-//		image  sfx/blood/blood
+//		image  "sfx/blood/blood"
 //		blend  blend
 //		style  facing
 //		thinkfade  out
@@ -959,7 +959,7 @@ particle blocked_field
 {
 	init
 	{
-		image  sfx/cross
+		image  "sfx/cross"
 		blend  blend
 		style  facing
 		size   "24 24"
@@ -971,7 +971,7 @@ particle cross
 {
 	init
 	{
-		image  sfx/cross
+		image  "sfx/cross"
 		blend  blend
 		style  facing
 		size   "24 24"
@@ -984,7 +984,7 @@ particle debug-marker
 {
 	init
 	{
-		image  sfx/cross
+		image  "sfx/cross"
 		blend  blend
 		style  facing
 		size   "24 24"
@@ -1025,7 +1025,7 @@ particle stunnedactor
 		{
 			child   spiral1
 			child   spiral2
-//			image  sfx/stunned
+//			image  "sfx/stunned"
 			blend  blend
 			style  rotated
 			angles  "0 90 0"
@@ -1038,7 +1038,7 @@ particle cross_no
 {
 	init
 	{
-		image  sfx/cross_no
+		image  "sfx/cross_no"
 		blend  blend
 		style  facing
 		size   "16 16"
@@ -1052,7 +1052,7 @@ particle energy_emit
 	{
 		life	2.9
 		thinkfade	out
-		image	sfx/flare_red
+		image	"sfx/flare_red"
 		blend	add
 		style	rotated
 		angles	"90 0 0"
@@ -1084,7 +1084,7 @@ particle shortCircuit
 {
 	init
 	{
-		image		sfx/explosions/flashbang
+		image		"sfx/explosions/flashbang"
 		blend		add
 		style		facing
 		framefade	out
@@ -1102,7 +1102,7 @@ particle shortCircuitSparks
 {
 	init
 	{
-		image  sfx/spark
+		image  "sfx/spark"
 		blend  add
 		style  facing
 		thinkfade  out
@@ -1140,7 +1140,7 @@ particle healCross
 {
 	init
 	{
-		image  sfx/heal
+		image  "sfx/heal"
 		blend  add
 		style  facing
 		thinkfade  out
@@ -1200,7 +1200,7 @@ particle smoke
 {
 	init
 	{
-		image  sfx/smoke
+		image  "sfx/smoke"
 		blend  invfilter
 		style  facing
 		thinkfade  out
@@ -1223,7 +1223,7 @@ particle smokeFire
 {
 	init
 	{
-		image  sfx/weapons/rocketfire
+		image  "sfx/weapons/rocketfire"
 		blend  add
 		style  facing
 		thinkfade  out
@@ -1250,7 +1250,7 @@ particle ptlBlast
 	{
 		frame 0
 		endframe 3
-		image +sfx/smoke/smoke_
+		image "+sfx/smoke/smoke_"
 		blend  blend
 		style  facing
 		thinkfade  out
@@ -1306,7 +1306,7 @@ particle smokePlasmaFire
 {
 	init
 	{
-		image  sfx/weapons/plasmaball-core
+		image  "sfx/weapons/plasmaball-core"
 		blend  add
 		style  facing
 		thinkfade  out
@@ -1334,7 +1334,7 @@ particle shell
 	{
 		frame			0
 		endframe		3
-		image  +sfx/misc/shell_
+		image  "+sfx/misc/shell_"
 		fps				20.0
 		tps				1.4
 		blend  blend
@@ -1362,7 +1362,7 @@ particle shell-sniper
 	{
 		frame			0
 		endframe		3
-		image  +sfx/misc/shell_
+		image  "+sfx/misc/shell_"
 		fps				20.0
 		tps				1.4
 		blend  blend
@@ -1438,7 +1438,7 @@ particle water_drop
 {
 	init
 	{
-		image		sfx/plasmaball
+		image		"sfx/plasmaball"
 		blend		add
 		style		facing
 		thinkfade	out
@@ -1475,7 +1475,7 @@ particle water_drop
 particle bubble
 {
 	init {
-		image	sfx/bubble
+		image	"sfx/bubble"
 		blend	add
 		style	facing
 		tps		0.5
@@ -1514,7 +1514,7 @@ particle bubbles
 particle white_single_smoke
 {
 	init {
-		image	sfx/smoke_gren
+		image	"sfx/smoke_gren"
 		blend	add
 		style	facing
 		color	"1 1 1 1"
@@ -1563,7 +1563,7 @@ particle smokesmall // UNKNOWN
 {
 	init
 	{
-		image  sfx/smoke
+		image  "sfx/smoke"
 		blend  invfilter
 		style  facing
 		thinkfade  out
@@ -1592,7 +1592,7 @@ particle greensmokebig
 	{
 		frame		6
 		endframe	7
-		image		+sfx/explosions/greenplas_
+		image		"+sfx/explosions/greenplas_"
 		blend		blend
 		style		facing
 		thinkfade		out
@@ -1619,7 +1619,7 @@ particle smokebig
 {
 	init
 	{
-		image		sfx/smoke
+		image		"sfx/smoke"
 		blend		add
 		style		facing
 		thinkfade		out
@@ -1646,7 +1646,7 @@ particle smokeRound2
 {
 	init
 	{
-		image		sfx/smoke
+		image		"sfx/smoke"
 		blend		invfilter
 		style		facing
 		thinkfade		out
@@ -1677,7 +1677,7 @@ particle corona
 {
 	init
 	{
-		image	sfx/corona
+		image	"sfx/corona"
 		blend	add
 		style	facing
 		size	"30 30"
@@ -1688,7 +1688,7 @@ particle corona_yellow
 {
 	init
 	{
-		image	sfx/corona_y
+		image	"sfx/corona_y"
 		blend	add
 		style	facing
 		size	"30 30"
@@ -1699,7 +1699,7 @@ particle coronaImpact
 {
 	init
 	{
-		image		sfx/corona
+		image		"sfx/corona"
 		blend		add
 		style		rotated
 		size		"40 40"
@@ -1720,7 +1720,7 @@ particle burnCorona
 {
 	init
 	{
-		image  sfx/corona_y
+		image  "sfx/corona_y"
 		blend  add
 		style  facing
 		color "0 0 0 20"
@@ -1736,7 +1736,7 @@ particle smallcampFire
 {
 	init
 	{
-		image  sfx/fireball
+		image  "sfx/fireball"
 		blend  add
 		style  facing
 		thinkfade  out
@@ -1795,7 +1795,7 @@ particle burnFlame
 {
 	init
 	{
-		image  sfx/fireball
+		image  "sfx/fireball"
 		blend  add
 		style  facing
 		thinkfade  out

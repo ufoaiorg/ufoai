@@ -26,7 +26,7 @@ particle weather_snow_flakes
 		stayalive true
 		autohide true
 		physics true
-		image  sfx/snow
+		image  "sfx/snow"
 		blend  add
 		style  facing
 		thinkfade  out
@@ -76,7 +76,7 @@ particle weather_rain_drop
 	{
 		autohide true
 		physics true
-		image  sfx/rain
+		image  "sfx/rain"
 		blend  add
 		style  facing
 		thinkfade  out
