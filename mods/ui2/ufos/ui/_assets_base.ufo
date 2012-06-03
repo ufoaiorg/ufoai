@@ -427,15 +427,15 @@ component MarketCategory extends panel
 {
 	{
 		size 			"713 28"
-		bgcolor			"0.4 0.52 0.5 1"
-		onMouseEnter	{ *node:this@bgcolor = "0.56 0.81 0.76 1" }
-		onMouseLeave	{ *node:this@bgcolor = "0.4 0.52 0.5 1" }
+		bgcolor			"0.56 0.81 0.76 0.3"
+		onMouseEnter	{ *node:this@bgcolor = "0.56 0.81 0.76 0.4" }
+		onMouseLeave	{ *node:this@bgcolor = "0.56 0.81 0.76 0.3" }
 	}
 	string name
 	{
 		pos				"30 0"
 		size			"400 28"
-		color			"0 0 0 1"
+		color			"0.56 0.81 0.76 1"
 		contentalign	ALIGN_CL
 		ghost			true
 	}
@@ -455,7 +455,7 @@ component MarketItem extends panel
 		pos				"0 0"
 		size 			"713 28"
 		bgcolor			"0.56 0.81 0.76 0.1"
-		onMouseEnter	{ *node:this@bgcolor = "0.56 0.81 0.76 0.2" }
+		onMouseEnter	{ *node:this@bgcolor = "0.56 0.81 0.76 0.15" }
 		onMouseLeave	{ *node:this@bgcolor = "0.56 0.81 0.76 0.1" }
 		onClick			{ cmd "ui_market_select <node:this.id@string>;" }
 	}
