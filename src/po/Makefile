@@ -13,6 +13,7 @@
 PACKAGE = ufoai
 PACKAGE_BUGREPORT = "tlh2000@users.sourceforge.net"
 DOMAIN = $(PACKAGE)
+Q = @
 # This is the copyright holder that gets inserted into the header of the
 # $(DOMAIN).pot file.  Set this to the copyright holder of the surrounding
 # package.  (Note that the msgstr strings, extracted from the package's
@@ -31,7 +32,7 @@ subdir = po
 top_builddir = ..
 
 # These options get passed to xgettext.
-XGETTEXT_OPTIONS = --keyword=_ --keyword=N_ --no-wrap
+XGETTEXT_OPTIONS = --sort-by-file --keyword=_ --keyword=N_
 
 GMSGFMT = msgfmt
 MSGFMT = msgfmt
@@ -52,26 +53,27 @@ POTFILES =
 .SUFFIXES: .po .gmo .mo .sed .nop .po-create .po-update
 
 .po.mo:
-	$(MSGFMT) -c -o t-$@ $< && mv t-$@ $@
+	$(Q)$(MSGFMT) -c -o t-$@ $< && mv t-$@ $@
 
 .po.gmo:
-	@lang=`echo $* | sed -e 's,.*/,,'`; \
+	$(Q)lang=`echo $* | sed -e 's,.*/,,'`; \
 	test "$(srcdir)" = . && cdcmd="" || cdcmd="cd $(srcdir) && "; \
 	cd $(srcdir) && rm -f $${lang}.gmo && $(GMSGFMT) -c --statistics -o t-$${lang}.gmo $${lang}.po && mv t-$${lang}.gmo $${lang}.gmo
 
 # This target rebuilds $(DOMAIN).pot; it is an expensive operation.
 # Note that $(DOMAIN).pot is not touched if it doesn't need to be changed.
 $(DOMAIN).pot-update: $(POTFILES) $(srcdir)/POTFILES.in remove-potcdate.sed
-	$(XGETTEXT) --default-domain=$(DOMAIN) --directory=$(top_srcdir) \
+	@echo '===> POT [$(DOMAIN).pot]'
+	$(Q)$(XGETTEXT) --default-domain=$(DOMAIN) --directory=$(top_srcdir) \
 	  --add-comments=TRANSLATORS: $(XGETTEXT_OPTIONS) \
 	  --files-from=$(srcdir)/POTFILES.in \
 	  --copyright-holder='$(COPYRIGHT_HOLDER)' \
 	  --msgid-bugs-address="$(PACKAGE_BUGREPORT)" \
 	  --no-wrap \
 	  --output=$(DOMAIN).c.po
-	sed s/charset=CHARSET/charset=UTF-8/ $(DOMAIN).c.po > $(DOMAIN).c1.po
-	${UFOPO} --directory=$(top_srcdir) `cd $(top_srcdir) && sh $(subdir)/FINDUFOS` > $(DOMAIN).ufo.po
-	$(MSGCAT) --sort-by-file $(DOMAIN).c1.po $(DOMAIN).ufo.po -o $(DOMAIN).po ;\
+	$(Q)sed s/charset=CHARSET/charset=UTF-8/ $(DOMAIN).c.po > $(DOMAIN).c1.po
+	$(Q)${UFOPO} --directory=$(top_srcdir) `cd $(top_srcdir) && sh $(subdir)/FINDUFOS` > $(DOMAIN).ufo.po
+	$(Q)$(MSGCAT) --sort-by-file $(DOMAIN).c1.po $(DOMAIN).ufo.po -o $(DOMAIN).po ;\
 	sed -f remove-potcdate.sed < $(srcdir)/$(DOMAIN).pot > $(DOMAIN).1po && \
 	sed -f remove-potcdate.sed < $(DOMAIN).po > $(DOMAIN).2po && \
 	if cmp $(DOMAIN).1po $(DOMAIN).2po >/dev/null 2>&1; then \
@@ -81,31 +83,27 @@ $(DOMAIN).pot-update: $(POTFILES) $(srcdir)/POTFILES.in remove-potcdate.sed
 	  mv $(DOMAIN).po $(srcdir)/$(DOMAIN).pot; \
 	fi
 
-# This rule has no dependencies: we don't need to update $(DOMAIN).pot at
-# every "make" invocation, only create it when it is missing.
-# Only "make $(DOMAIN).pot-update" or "make dist" will force an update.
-$(srcdir)/$(DOMAIN).pot:
-	$(MAKE) $(DOMAIN).pot-update
+$(srcdir)/$(DOMAIN).pot: $(DOMAIN).pot-update
 
 # This target rebuilds a PO file if $(DOMAIN).pot has changed.
 # Note that a PO file is not touched if it doesn't need to be changed.
 $(POFILES): $(srcdir)/$(DOMAIN).pot
-	lang=`echo $@ | sed -e 's,.*/,,' -e 's/\.po$$//'`; \
+	@echo '===> PO [$<]'
+	$(Q)lang=`echo $@ | sed -e 's,.*/,,' -e 's/\.po$$//'`; \
 	test "$(srcdir)" = . && cdcmd="" || cdcmd="cd $(srcdir) && "; \
 	cd $(srcdir) && $(MSGMERGE_UPDATE) $${lang}.po $(DOMAIN).pot
 
-update-po: Makefile
-	$(MAKE) $(DOMAIN).pot-update
-	test -z "$(UPDATEPOFILES)" || $(MAKE) $(UPDATEPOFILES)
+update-po: Makefile $(DOMAIN).pot-update $(UPDATEPOFILES)
 
 # General rule for updating PO files.
 
 .nop.po-update:
-	lang=`echo $@ | sed -e 's/\.po-update$$//'`; \
+	@echo '===> PO [$(shell echo $@ | sed -e 's/\.po-update$$//')]'
+	$(Q)lang=`echo $@ | sed -e 's/\.po-update$$//'`; \
 	tmpdir=`pwd`; \
 	test "$(srcdir)" = . && cdcmd="" || cdcmd="cd $(srcdir) && "; \
 	cd $(srcdir); \
-	if $(MSGMERGE) $$lang.po $(DOMAIN).pot --no-wrap -o $$tmpdir/$$lang.new.po; then \
+	if $(MSGMERGE) $$lang.po $(DOMAIN).pot --no-wrap -q -o $$tmpdir/$$lang.new.po; then \
 	  if cmp $$lang.po $$tmpdir/$$lang.new.po >/dev/null 2>&1; then \
 	    rm -f $$tmpdir/$$lang.new.po; \
 	  else \
