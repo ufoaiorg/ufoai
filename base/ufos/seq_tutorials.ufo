@@ -35,7 +35,7 @@ sequence tut_gameplay
 	{
 		text	"_Some notes about the gameplay"
 		pos		"512 0"
-		align	uc
+		align	"uc"
 		color	"0 0.6 0 1"
 		speed	"0 10"
 		font	"f_big"
@@ -44,7 +44,7 @@ sequence tut_gameplay
 	{
 		text	"_Click to exit"
 		pos		"512 750"
-		align	uc
+		align	"uc"
 		color	"0 0.6 0 1"
 		font	"f_small"
 	}
@@ -57,7 +57,7 @@ sequence tut_gameplay
 	{
 		text	"_Set up a base"
 		pos		"512 100"
-		align	uc
+		align	"uc"
 		color	"1 1 1 1"
 		font	"f_big"
 	}
@@ -66,21 +66,21 @@ sequence tut_gameplay
 	obj2d gameplay_pic1a
 	{
 		image	"pics/tutorial/gameplay1a"
-		align	ul
+		align	"ul"
 		pos		"64 140"
 	}
 	wait 2
 	obj2d gameplay_pic1b
 	{
 		image	"pics/tutorial/gameplay1b"
-		align	ul
+		align	"ul"
 		pos		"384 140"
 	}
 	wait 2
 	obj2d gameplay_pic1c
 	{
 		image	"pics/tutorial/gameplay1c"
-		align	ul
+		align	"ul"
 		pos		"704 140"
 	}
 	wait 4
@@ -95,7 +95,7 @@ sequence tut_gameplay
 	{
 		text	"_Hire employees: scientists, soldiers"
 		pos		"512 125"
-		align	uc
+		align	"uc"
 		color	"1 1 1 1"
 		font	"f_big"
 	}
@@ -103,21 +103,21 @@ sequence tut_gameplay
 	obj2d gameplay_pic2a
 	{
 		image	"pics/tutorial/gameplay2a"
-		align	ul
+		align	"ul"
 		pos		"64 165"
 	}
 	wait 2
 	obj2d gameplay_pic2b
 	{
 		image	"pics/tutorial/gameplay2b"
-		align	ul
+		align	"ul"
 		pos		"384 165"
 	}
 	wait 2
 	obj2d gameplay_pic2c
 	{
 		image	"pics/tutorial/gameplay2c"
-		align	ul
+		align	"ul"
 		pos		"704 165"
 	}
 	wait 4
@@ -132,7 +132,7 @@ sequence tut_gameplay
 	{
 		text	"_Start some research"
 		pos		"512 150"
-		align	uc
+		align	"uc"
 		color	"1 1 1 1"
 		font	"f_big"
 	}
@@ -140,7 +140,7 @@ sequence tut_gameplay
 	obj2d gameplay_pic3a
 	{
 		image	"pics/tutorial/gameplay3a"
-		align	ul
+		align	"ul"
 		pos		"384 190"
 	}
 	wait 4
@@ -151,7 +151,7 @@ sequence tut_gameplay
 	{
 		text	"_Buy weapons and equipment"
 		pos		"512 175"
-		align	uc
+		align	"uc"
 		color	"1 1 1 1"
 		font	"f_big"
 	}
@@ -159,21 +159,21 @@ sequence tut_gameplay
 	obj2d gameplay_pic4a
 	{
 		image	"pics/tutorial/gameplay4a"
-		align	ul
+		align	"ul"
 		pos		"64 215"
 	}
 	wait 2
 	obj2d gameplay_pic4b
 	{
 		image	"pics/tutorial/gameplay4b"
-		align	ul
+		align	"ul"
 		pos		"384 215"
 	}
 	wait 2
 	obj2d gameplay_pic4c
 	{
 		image	"pics/tutorial/gameplay4c"
-		align	ul
+		align	"ul"
 		pos		"704 215"
 	}
 	wait 4
@@ -188,7 +188,7 @@ sequence tut_gameplay
 	{
 		text	"_Equip your aircraft with soldiers and weapons"
 		pos		"512 200"
-		align	uc
+		align	"uc"
 		color	"1 1 1 1"
 		font	"f_big"
 	}
@@ -196,21 +196,21 @@ sequence tut_gameplay
 	obj2d gameplay_pic5a
 	{
 		image	"pics/tutorial/gameplay5a"
-		align	ul
+		align	"ul"
 		pos		"64 240"
 	}
 	wait 2
 	obj2d gameplay_pic5b
 	{
 		image	"pics/tutorial/gameplay5b"
-		align	ul
+		align	"ul"
 		pos		"384 240"
 	}
 	wait 2
 	obj2d gameplay_pic5c
 	{
 		image	"pics/tutorial/gameplay5c"
-		align	ul
+		align	"ul"
 		pos		"704 240"
 	}
 	wait 4
@@ -226,7 +226,7 @@ sequence tut_gameplay
 	{
 		text	"_Speed up time on geoscape until the first alien mission appears"
 		pos		"512 225"
-		align	uc
+		align	"uc"
 		color	"1 1 1 1"
 		font	"f_big"
 	}
@@ -234,14 +234,14 @@ sequence tut_gameplay
 	obj2d gameplay_pic6a
 	{
 		image	"pics/tutorial/gameplay6a"
-		align	ul
+		align	"ul"
 		pos		"172 265"
 	}
 	wait 2
 	obj2d gameplay_pic6b
 	{
 		image	"pics/tutorial/gameplay6b"
-		align	ul
+		align	"ul"
 		pos		"600 265"
 	}
 	wait 4
@@ -254,7 +254,7 @@ sequence tut_gameplay
 	{
 		text	"_Select the mission (doubleclick) and choose aircraft from list"
 		pos		"512 250"
-		align	uc
+		align	"uc"
 		color	"1 1 1 1"
 		font	"f_big"
 	}
@@ -262,7 +262,7 @@ sequence tut_gameplay
 	obj2d gameplay_pic7a
 	{
 		image	"pics/tutorial/gameplay7a"
-		align	ul
+		align	"ul"
 		pos		"384 290"
 	}
 	wait 4
@@ -273,7 +273,7 @@ sequence tut_gameplay
 	{
 		text	"_Hit the start or auto-mission button to fight the aliens"
 		pos		"512 275"
-		align	uc
+		align	"uc"
 		color	"1 1 1 1"
 		font	"f_big"
 	}
@@ -281,14 +281,14 @@ sequence tut_gameplay
 	obj2d gameplay_pic8a
 	{
 		image	"pics/tutorial/gameplay8a"
-		align	ul
+		align	"ul"
 		pos		"172 315"
 	}
 	wait 2
 	obj2d gameplay_pic8b
 	{
 		image	"pics/tutorial/gameplay8b"
-		align	ul
+		align	"ul"
 		pos		"600 315"
 	}
 	wait 4
@@ -298,7 +298,7 @@ sequence tut_gameplay
 	{
 		text	"_For further instructions watch the tactical mission tutorial"
 		pos	"512 550"
-		align	uc
+		align	"uc"
 		color	"1 1 1 1"
 		font	"f_big"
 	}
@@ -335,7 +335,7 @@ sequence tut_tacticalmission
 	// just precaching the background image
 	precache pics
 	{
-		tutorial/tactical1
+		"tutorial/tactical1"
 	}
 
 
@@ -345,7 +345,7 @@ sequence tut_tacticalmission
 	{
 		text	"_Tactical mission tutorial"
 		pos	"512 0"
-		align	uc
+		align	"uc"
 		color	"0 0.6 0 1"
 		speed	"0 40"
 		font	"f_big"
@@ -361,14 +361,14 @@ sequence tut_tacticalmission
 	obj2d tactical_bg
 	{
 		image	"pics/tutorial/tactical1"
-		align	ul
+		align	"ul"
 		pos	"0 0"
 	}
 	// dark background for text
 	obj2d text_bg
 	{
 		pos	"60 360"
-		align	lc
+		align	"lc"
 		size	"904 50"
 		bgcolor	"0 0 0 0.7"
 		color	"1 1 1 1"
@@ -381,14 +381,14 @@ sequence tut_tacticalmission
 	{
 		pos	"0 125"
 		size	"40 340"
-		align	ul
+		align	"ul"
 		bgcolor	"1 0 0 0.6"
 	}
 	obj2d switch_level_text
 	{
 		text	"_Switch view level via left mouseclick"
 		pos	"512 370"
-		align	uc
+		align	"uc"
 		color	"1 1 1 1"
 		font	"f_big"
 	}
@@ -400,7 +400,7 @@ sequence tut_tacticalmission
 	{
 		text	"_You can also use the cursor keys to switch the levels"
 		pos	"512 370"
-		align	uc
+		align	"uc"
 		color	"1 1 1 1"
 		font	"f_big"
 	}
@@ -414,14 +414,14 @@ sequence tut_tacticalmission
 	{
 		pos	"7 7"
 		size	"393 88"
-		align	ul
+		align	"ul"
 		bgcolor	"1 0 0 0.6"
 	}
 	obj2d current_soldier_text
 	{
 		text	"_The selected soldier"
 		pos	"512 370"
-		align	uc
+		align	"uc"
 		color	"1 1 1 1"
 		font	"f_big"
 	}
@@ -436,14 +436,14 @@ sequence tut_tacticalmission
 	{
 		pos	"415 0"
 		size	"265 55"
-		align	ul
+		align	"ul"
 		bgcolor	"1 0 0 0.6"
 	}
 	obj2d switch_soldier_text
 	{
 		text	"_Select soldiers via click"
 		pos	"512 370"
-		align	uc
+		align	"uc"
 		color	"1 1 1 1"
 		font	"f_big"
 	}
@@ -455,7 +455,7 @@ sequence tut_tacticalmission
 	{
 		text	"_Or via the keys 1-8 or Tab"
 		pos	"512 370"
-		align	uc
+		align	"uc"
 		color	"1 1 1 1"
 		font	"f_big"
 	}
@@ -469,14 +469,14 @@ sequence tut_tacticalmission
 	{
 		pos	"985 266"
 		size	"34 76"
-		align	ul
+		align	"ul"
 		bgcolor	"1 0 0 0.6"
 	}
 	obj2d stats_text
 	{
 		text	"_Physical stats"
 		pos	"512 370"
-		align	uc
+		align	"uc"
 		color	"1 1 1 1"
 		font	"f_big"
 	}
@@ -491,14 +491,14 @@ sequence tut_tacticalmission
 	{
 		pos	"374 657"
 		size	"366 50"
-		align	ul
+		align	"ul"
 		bgcolor	"1 0 0 0.6"
 	}
 	obj2d bars_text
 	{
 		text	"_Stats bars: movement, health and morale"
 		pos	"512 370"
-		align	uc
+		align	"uc"
 		color	"1 1 1 1"
 		font	"f_big"
 	}
@@ -513,14 +513,14 @@ sequence tut_tacticalmission
 	{
 		pos	"985 377"
 		size	"34 73"
-		align	ul
+		align	"ul"
 		bgcolor	"1 0 0 0.6"
 	}
 	obj2d inventory_text
 	{
 		text	"_Inventory"
 		pos	"512 370"
-		align	uc
+		align	"uc"
 		color	"1 1 1 1"
 		font	"f_big"
 	}
@@ -535,21 +535,21 @@ sequence tut_tacticalmission
 	{
 		pos	"7 624"
 		size	"159 87"
-		align	ul
+		align	"ul"
 		bgcolor	"1 0 0 0.6"
 	}
 	obj2d weapon_hover2
 	{
 		pos	"373 698"
 		size	"367 50"
-		align	ul
+		align	"ul"
 		bgcolor	"1 0 0 0.6"
 	}
 	obj2d weapon_text
 	{
 		text	"_Weapon in right hand"
 		pos	"512 370"
-		align	uc
+		align	"uc"
 		color	"1 1 1 1"
 		font	"f_big"
 	}
@@ -565,14 +565,14 @@ sequence tut_tacticalmission
 	{
 		pos	"7 720"
 		size	"88 35"
-		align	ul
+		align	"ul"
 		bgcolor	"1 0 0 0.6"
 	}
 	obj2d ammo_text
 	{
 		text	"_Shots remaining"
 		pos	"512 370"
-		align	uc
+		align	"uc"
 		color	"1 1 1 1"
 		font	"f_big"
 	}
@@ -587,14 +587,14 @@ sequence tut_tacticalmission
 	{
 		pos	"100 720"
 		size	"65 35"
-		align	ul
+		align	"ul"
 		bgcolor	"1 0 0 0.6"
 	}
 	obj2d reload_hover2
 	{
 		pos	"855 720"
 		size	"65 35"
-		align	ul
+		align	"ul"
 		bgcolor	"1 0 0 0.6"
 	}
 	obj2d reload_text
@@ -602,7 +602,7 @@ sequence tut_tacticalmission
 		//text	"_Reload"
 		text	"_Reload weapon"
 		pos	"512 370"
-		align	uc
+		align	"uc"
 		color	"1 1 1 1"
 		font	"f_big"
 	}
@@ -618,21 +618,21 @@ sequence tut_tacticalmission
 	{
 		pos	"175 650"
 		size	"75 50"
-		align	ul
+		align	"ul"
 		bgcolor	"1 0 0 0.6"
 	}
 	obj2d primary_attack_hover2
 	{
 		pos	"775 650"
 		size	"75 50"
-		align	ul
+		align	"ul"
 		bgcolor	"1 0 0 0.6"
 	}
 	obj2d primary_attack_text
 	{
 		text	"_Primary attack"
 		pos	"512 370"
-		align	uc
+		align	"uc"
 		color	"1 1 1 1"
 		font	"f_big"
 	}
@@ -648,21 +648,21 @@ sequence tut_tacticalmission
 	{
 		pos	"175 710"
 		size	"75 50"
-		align	ul
+		align	"ul"
 		bgcolor	"1 0 0 0.6"
 	}
 	obj2d secondary_attack_hover2
 	{
 		pos	"775 710"
 		size	"75 50"
-		align	ul
+		align	"ul"
 		bgcolor	"1 0 0 0.6"
 	}
 	obj2d secondary_attack_text
 	{
 		text	"_Secondary attack"
 		pos	"512 370"
-		align	uc
+		align	"uc"
 		color	"1 1 1 1"
 		font	"f_big"
 	}
@@ -678,14 +678,14 @@ sequence tut_tacticalmission
 	{
 		pos	"302 685"
 		size	"52 32"
-		align	ul
+		align	"ul"
 		bgcolor	"1 0 0 0.6"
 	}
 	obj2d reaction_text
 	{
 		text	"_Turn reaction-fire on or off"
 		pos	"512 370"
-		align	uc
+		align	"uc"
 		color	"1 1 1 1"
 		font	"f_big"
 	}
@@ -700,14 +700,14 @@ sequence tut_tacticalmission
 	{
 		pos	"302 724"
 		size	"52 35"
-		align	ul
+		align	"ul"
 		bgcolor	"1 0 0 0.6"
 	}
 	obj2d crouch_text
 	{
 		text	"_Crouch (kneel down) or stand up"
 		pos	"512 370"
-		align	uc
+		align	"uc"
 		color	"1 1 1 1"
 		font	"f_big"
 	}
@@ -722,14 +722,14 @@ sequence tut_tacticalmission
 	{
 		pos	"807 0"
 		size	"57 55"
-		align	ul
+		align	"ul"
 		bgcolor	"1 0 0 0.6"
 	}
 	obj2d switch_visible_aliens_text
 	{
 		text	"_Cycle through visible enemies"
 		pos	"512 370"
-		align	uc
+		align	"uc"
 		color	"1 1 1 1"
 		font	"f_big"
 	}
@@ -744,14 +744,14 @@ sequence tut_tacticalmission
 	{
 		pos	"950 0"
 		size	"62 55"
-		align	ul
+		align	"ul"
 		bgcolor	"1 0 0 0.6"
 	}
 	obj2d switch_end_round_text
 	{
 		text	"_End round"
 		pos	"512 370"
-		align	uc
+		align	"uc"
 		color	"1 1 1 1"
 		font	"f_big"
 	}
@@ -784,13 +784,13 @@ sequence tut_skirmish
 	// precaching screenshot
 	precache pics
 	{
-	tutorial/skirmish1
+		"tutorial/skirmish1"
 	}
 	obj2d skirmish_welcome
 	{
 		text	"_Skirmish tutorial"
 		pos	"512 0"
-		align	uc
+		align	"uc"
 		color	"0 0.6 0 1"
 		speed	"0 40"
 		font	"f_big"
@@ -801,7 +801,7 @@ sequence tut_skirmish
 	{
 		text	"_Skirmish is type of fast game."
 		pos	"512 250"
-		align	lc
+		align	"lc"
 		color	"0 0.6 0 1"
 		font	"f_big"
 	}
@@ -815,7 +815,7 @@ sequence tut_skirmish
 	obj2d skirmish_bg
 	{
 		image	"pics/tutorial/skirmish1"
-		align	ul
+		align	"ul"
 		pos	"0 0"
 	}
 	// dark background for text
@@ -833,7 +833,7 @@ sequence tut_skirmish
 	{
 		pos	"480 210"
 		size	"310 35"
-		align	ul
+		align	"ul"
 		bgcolor	"1 0 0 0.6"
 	}
 	obj2d equipment_text
@@ -841,7 +841,7 @@ sequence tut_skirmish
 		text	"_Equipment selection"
 		pos	"205 380"
 		size	"290 250"
-		align	uc
+		align	"uc"
 		color	"1 1 1 1"
 		font	"f_big"
 	}
@@ -853,7 +853,7 @@ sequence tut_skirmish
 	{
 		pos	"790 245"
 		size	"145 25"
-		align	ul
+		align	"ul"
 		bgcolor	"1 0 0 0.6"
 	}
 
@@ -862,7 +862,7 @@ sequence tut_skirmish
 		text	"_Day or night version of map to play"
 		pos	"205 380"
 		size	"290 250"
-		align	uc
+		align	"uc"
 		color	"1 1 1 1"
 		font	"f_big"
 	}
@@ -874,7 +874,7 @@ sequence tut_skirmish
 	{
 		pos	"790 270"
 		size	"145 25"
-		align	ul
+		align	"ul"
 		bgcolor	"1 0 0 0.6"
 	}
 
@@ -883,7 +883,7 @@ sequence tut_skirmish
 		text	"_How many aliens will fight versus you"
 		pos	"205 380"
 		size	"290 250"
-		align	uc
+		align	"uc"
 		color	"1 1 1 1"
 		font	"f_big"
 	}
@@ -895,7 +895,7 @@ sequence tut_skirmish
 	{
 		pos	"725 300"
 		size	"210 20"
-		align	ul
+		align	"ul"
 		bgcolor	"1 0 0 0.6"
 	}
 
@@ -904,7 +904,7 @@ sequence tut_skirmish
 		text	"_Select your team"
 		pos	"205 380"
 		size	"290 250"
-		align	uc
+		align	"uc"
 		color	"1 1 1 1"
 		font	"f_big"
 	}
@@ -916,7 +916,7 @@ sequence tut_skirmish
 	{
 		pos	"725 325"
 		size	"210 20"
-		align	ul
+		align	"ul"
 		bgcolor	"1 0 0 0.6"
 	}
 
@@ -925,7 +925,7 @@ sequence tut_skirmish
 		text	"_Select UFO to secure \n(if possible for current map)"
 		pos	"205 380"
 		size	"290 250"
-		align	uc
+		align	"uc"
 		color	"1 1 1 1"
 		font	"f_big"
 	}
@@ -937,7 +937,7 @@ sequence tut_skirmish
 	{
 		pos	"725 350"
 		size	"210 20"
-		align	ul
+		align	"ul"
 		bgcolor	"1 0 0 0.6"
 	}
 
@@ -946,7 +946,7 @@ sequence tut_skirmish
 		text	"_Select dropship\n(if possible for current map)"
 		pos	"205 380"
 		size	"290 250"
-		align	uc
+		align	"uc"
 		color	"1 1 1 1"
 		font	"f_big"
 	}
@@ -958,7 +958,7 @@ sequence tut_skirmish
 	{
 		pos	"480 530"
 		size	"310 35"
-		align	ul
+		align	"ul"
 		bgcolor	"1 0 0 0.6"
 	}
 
@@ -967,7 +967,7 @@ sequence tut_skirmish
 		text	"_Select map to play"
 		pos	"205 380"
 		size	"290 250"
-		align	uc
+		align	"uc"
 		color	"1 1 1 1"
 		font	"f_big"
 	}
@@ -980,7 +980,7 @@ sequence tut_skirmish
 		text	"_And..."
 		pos	"205 380"
 		size	"290 50"
-		align	uc
+		align	"uc"
 		color	"1 1 1 1"
 		font	"f_big"
 	}
@@ -989,7 +989,7 @@ sequence tut_skirmish
 	{
 		pos	"90 80"
 		size	"260 70"
-		align	ul
+		align	"ul"
 		bgcolor	"1 0 0 0.6"
 	}
 	obj2d start_text
@@ -997,7 +997,7 @@ sequence tut_skirmish
 		text	"_Start the game!"
 		pos	"205 400"
 		size	"290 200"
-		align	uc
+		align	"uc"
 		color	"1 1 1 1"
 		font	"f_big"
 	}
@@ -1009,7 +1009,7 @@ sequence tut_skirmish
 		text	"_Or..."
 		pos	"205 450"
 		size	"290 50"
-		align	uc
+		align	"uc"
 		color	"1 1 1 1"
 		font	"f_big"
 	}
@@ -1020,7 +1020,7 @@ sequence tut_skirmish
 	{
 		pos	"90 200"
 		size	"260 70"
-		align	ul
+		align	"ul"
 		bgcolor	"1 0 0 0.6"
 	}
 	obj2d exit_text
@@ -1028,7 +1028,7 @@ sequence tut_skirmish
 		text	"_Exit to main menu"
 		pos	"205 500"
 		size	"290 150"
-		align	uc
+		align	"uc"
 		color	"1 1 1 1"
 		font	"f_big"
 	}
@@ -1057,14 +1057,14 @@ sequence tut_multiplayer
 	// just precaching the background image
 	precache pics
 	{
-		tutorial/multiplayer1
+		"tutorial/multiplayer1"
 	}
 
 	obj2d port_text
 	{
 		text	"_Make sure that you've opened the TCP port 27910 in your firewall settings"
 		pos	"512 10"
-		align	uc
+		align	"uc"
 		color	"1 1 1 1"
 		font	"f_normal"
 	}
@@ -1073,7 +1073,7 @@ sequence tut_multiplayer
 	{
 		text	"_You should connect to the lobby and wait for invitations or start your own server"
 		pos	"512 40"
-		align	uc
+		align	"uc"
 		color	"1 1 1 1"
 		font	"f_normal"
 	}
@@ -1082,7 +1082,7 @@ sequence tut_multiplayer
 	{
 		text	"_While you are connected to the lobby you can play singleplayer until someone invites you"
 		pos	"512 70"
-		align	uc
+		align	"uc"
 		color	"1 1 1 1"
 		font	"f_normal"
 	}
@@ -1091,7 +1091,7 @@ sequence tut_multiplayer
 	{
 		text	"_As a server admin you should consider setting a round time limit."
 		pos	"512 100"
-		align	uc
+		align	"uc"
 		color	"1 1 1 1"
 		font	"f_normal"
 	}

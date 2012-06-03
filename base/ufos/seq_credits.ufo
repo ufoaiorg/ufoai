@@ -38,33 +38,33 @@ sequence credits
 	{
 		model	"soldiers/malelight/body"
 		skin	2
-		anim	cstand0
+		anim	"cstand0"
 		origin	"0 -15 0"
 	}
 	model head1
 	{
 		model	"soldiers/malelight/head01"
 		parent	body1
-		tag		tag_head
+		tag		"tag_head"
 	}
 
 	model body2
 	{
 		model	"soldiers/malemedium/body"
-		anim	cstand0
+		anim	"cstand0"
 		origin	"0 15 0"
 	}
 	model head2
 	{
 		model	"soldiers/malemedium/head02"
 		parent	body2
-		tag		tag_head
+		tag		"tag_head"
 	}
 
 	model body3
 	{
 		model	"soldiers/male/body"
-		anim	stand0
+		anim	"stand0"
 		skin	2
 		origin	"-10 0 5"
 	}
@@ -72,26 +72,26 @@ sequence credits
 	{
 		model	"soldiers/male/head03"
 		parent	body3
-		tag		tag_head
+		tag		"tag_head"
 	}
 
 	model body4
 	{
 		model	"soldiers/malelight/body"
-		anim	stand1
+		anim	"stand1"
 		origin	"-10 30 5"
 	}
 	model head4
 	{
 		model	"soldiers/malelight/head02"
 		parent	body4
-		tag		tag_head
+		tag		"tag_head"
 	}
 
 	model body5
 	{
 		model	"soldiers/malemedium/body"
-		anim	stand0
+		anim	"stand0"
 		origin	"-10 -30 5"
 	}
 
@@ -99,35 +99,35 @@ sequence credits
 	{
 		model	"soldiers/malemedium/head03"
 		parent	body5
-		tag		tag_head
+		tag		"tag_head"
 	}
 
 	model body6
 	{
 		model	"soldiers/male/body"
 		skin	1
-		anim	stand0
+		anim	"stand0"
 		origin	"-30 -15 10"
 	}
 	model head6
 	{
 		model	"soldiers/male/head01"
 		parent	body6
-		tag		tag_head
+		tag		"tag_head"
 	}
 
 	model body7
 	{
 		model	"soldiers/male/body"
 		skin	3
-		anim	stand1
+		anim	"stand1"
 		origin	"-30 15 10"
 	}
 	model head7
 	{
 		model	"soldiers/male/head03"
 		parent	body7
-		tag		tag_head
+		tag		"tag_head"
 	}
 	wait 2
 
@@ -138,7 +138,7 @@ sequence credits
 	{
 		text	"_Project leader"
 		pos		"1100 50"
-		align	ur
+		align	"ur"
 		color	"0 1 0 0"
 		fade	"0 0 0 1"
 		speed	"-120 0"
@@ -149,7 +149,7 @@ sequence credits
 	{
 		text	"_Martin Gerhardy (mattn/tlh2000)"
 		pos		"1100 75"
-		align	ur
+		align	"ur"
 		color	"1 1 1 0"
 		fade	"0 0 0 1"
 		speed	"-120 0"
@@ -171,7 +171,7 @@ sequence credits
 	{
 		text	"_Project leader"
 		pos		"-80 50"
-		align	ul
+		align	"ul"
 		color	"0 1 0 0"
 		fade	"0 0 0 1"
 		speed	"120 0"
@@ -182,7 +182,7 @@ sequence credits
 	{
 		text	"_Werner Hoehrer (hoehrer)"
 		pos		"-80 75"
-		align	ul
+		align	"ul"
 		color	"1 1 1 0"
 		fade	"0 0 0 1"
 		speed	"120 0"
@@ -204,7 +204,7 @@ sequence credits
 	{
 		text	"_Lead Story Developer/Game Design"
 		pos		"1100 50"
-		align	ur
+		align	"ur"
 		color	"0 1 0 0"
 		fade	"0 0 0 1"
 		speed	"-120 0"
@@ -215,7 +215,7 @@ sequence credits
 	{
 		text	"_Ryan A. Span. (Winter)"
 		pos		"974 75"
-		align	ur
+		align	"ur"
 		color	"1 1 1 0"
 		fade	"0 0 0 1"
 		speed	"-120 0"
@@ -237,7 +237,7 @@ sequence credits
 	{
 		text	"_Story Developer/Game Design"
 		pos		"-80 50"
-		align	ul
+		align	"ul"
 		color	"0 1 0 0"
 		fade	"0 0 0 1"
 		speed	"120 0"
@@ -248,7 +248,7 @@ sequence credits
 	{
 		text	"_Bas Fournier (BTAxis)"
 		pos		"-80 75"
-		align	ul
+		align	"ul"
 		color	"1 1 1 0"
 		fade	"0 0 0 1"
 		speed	"120 0"
@@ -270,7 +270,7 @@ sequence credits
 	{
 		text	"_Contributing Developer"
 		pos		"1100 50"
-		align	ur
+		align	"ur"
 		color	"0 1 0 0"
 		fade	"0 0 0 1"
 		speed	"-120 0"
@@ -281,7 +281,7 @@ sequence credits
 	{
 		text	"_Maciej Wierzbicki (Zenerka/Voovoos)"
 		pos		"1100 75"
-		align	ur
+		align	"ur"
 		color	"1 1 1 0"
 		fade	"0 0 0 1"
 		speed	"-120 0"
@@ -303,7 +303,7 @@ sequence credits
 	{
 		text	"_Technology Consultants"
 		pos		"-80 50"
-		align	ul
+		align	"ul"
 		color	"0 1 0 0"
 		fade	"0 0 0 1"
 		speed	"120 0"
@@ -314,7 +314,7 @@ sequence credits
 	{
 		text	"_Forest Hale (LordHavoc)"
 		pos		"-80 75"
-		align	ul
+		align	"ul"
 		color	"1 1 1 0"
 		fade	"0 0 0 1"
 		speed	"120 0"
@@ -325,7 +325,7 @@ sequence credits
 	{
 		text	"_Tron"
 		pos		"-80 100"
-		align	ul
+		align	"ul"
 		color	"1 1 1 0"
 		fade	"0 0 0 1"
 		speed	"120 0"
@@ -349,7 +349,7 @@ sequence credits
 	{
 		text	"_Contributing Programmers"
 		pos		"1100 50"
-		align	ur
+		align	"ur"
 		color	"0 1 0 0"
 		fade	"0 0 0 1"
 		speed	"-120 0"
@@ -360,7 +360,7 @@ sequence credits
 	{
 		text	"_Ivor Blockley (ubequitz/cassiterite)"
 		pos		"1100 75"
-		align	ur
+		align	"ur"
 		color	"1 1 1 0"
 		fade	"0 0 0 1"
 		speed	"-120 0"
@@ -371,7 +371,7 @@ sequence credits
 	{
 		text	"_Kracken"
 		pos		"1100 100"
-		align	ur
+		align	"ur"
 		color	"1 1 1 0"
 		fade	"0 0 0 1"
 		speed	"-120 0"
@@ -382,7 +382,7 @@ sequence credits
 	{
 		text	"_Tamas Fehervari (geever)"
 		pos		"1100 125"
-		align	ur
+		align	"ur"
 		color	"1 1 1 0"
 		fade	"0 0 0 1"
 		speed	"-120 0"
@@ -393,7 +393,7 @@ sequence credits
 	{
 		text	"_Edgar Simo (bobbens)"
 		pos		"1100 150"
-		align	ur
+		align	"ur"
 		color	"1 1 1 0"
 		fade	"0 0 0 1"
 		speed	"-120 0"
@@ -404,7 +404,7 @@ sequence credits
 	{
 		text	"_Andy Buckle (blondandy)"
 		pos		"1100 175"
-		align	ur
+		align	"ur"
 		color	"1 1 1 0"
 		fade	"0 0 0 1"
 		speed	"-120 0"
@@ -415,7 +415,7 @@ sequence credits
 	{
 		text	"_Michael Wilmes (wilminator)"
 		pos		"1100 200"
-		align	ur
+		align	"ur"
 		color	"1 1 1 0"
 		fade	"0 0 0 1"
 		speed	"-120 0"
@@ -447,7 +447,7 @@ sequence credits
 	{
 		text	"_General Support"
 		pos		"-80 50"
-		align	ul
+		align	"ul"
 		color	"0 1 0 0"
 		fade	"0 0 0 1"
 		speed	"120 0"
@@ -458,7 +458,7 @@ sequence credits
 	{
 		text	"_Richlv"
 		pos		"-80 75"
-		align	ul
+		align	"ul"
 		color	"1 1 1 0"
 		fade	"0 0 0 1"
 		speed	"120 0"
@@ -469,7 +469,7 @@ sequence credits
 	{
 		text	"_Kostia Romanov (Kildor)"
 		pos		"-80 100"
-		align	ul
+		align	"ul"
 		color	"1 1 1 0"
 		fade	"0 0 0 1"
 		speed	"120 0"
@@ -492,14 +492,14 @@ sequence credits
 	obj2d community_driven
 	{
 		text	"_This game is now community driven"
-		pos		"512 708"		align	uc
+		pos		"512 708"		align	"uc"
 		color	"0 1 0 1"
 		speed	"0 -80"
 	}
 	obj2d original_team
 	{
 		text	"_To honor the original development team:"
-		pos		"512 768"		align	uc
+		pos		"512 768"		align	"uc"
 		color	"0 1 0 1"
 		speed	"0 -80"
 	}
@@ -513,13 +513,13 @@ sequence credits
 	obj2d herby_text
 	{
 		text	"_Code, Visual Effects"
-		pos		"974 50"		align	ur
+		pos		"974 50"		align	"ur"
 		color	"0 1 0 0"		fade	"0 0 0 1"
 	}
 	obj2d herby_name
 	{
 		text	"_Herby"
-		pos		"974 75"		align	ur
+		pos		"974 75"		align	"ur"
 		color	"1 1 1 0"		fade	"0 0 0 1"
 	}
 	wait 4
@@ -532,13 +532,13 @@ sequence credits
 	obj2d sparx_text
 	{
 		text	"_Maps, Textures, Art"
-		pos		"50 50"		align	ul
+		pos		"50 50"		align	"ul"
 		color	"0 1 0 0"	fade	"0 0 0 1"
 	}
 	obj2d sparx_name
 	{
 		text	"_SparX"
-		pos		"50 75"		align	ul
+		pos		"50 75"		align	"ul"
 		color	"1 1 1 0"	fade	"0 0 0 1"
 	}
 	wait 4
@@ -551,13 +551,13 @@ sequence credits
 	obj2d rasta_text
 	{
 		text	"_Models, Animations"
-		pos		"974 50"	align	ur
+		pos		"974 50"	align	"ur"
 		color	"0 1 0 0"	fade	"0 0 0 1"
 	}
 	obj2d rasta_name
 	{
 		text	"_Rastaman"
-		pos		"974 75"	align	ur
+		pos		"974 75"	align	"ur"
 		color	"1 1 1 0"	fade	"0 0 0 1"
 	}
 	wait 4
@@ -570,13 +570,13 @@ sequence credits
 	obj2d vanethian_text
 	{
 		text	"_Music"
-		pos		"50 50"		align	ul
+		pos		"50 50"		align	"ul"
 		color	"0 1 0 0"	fade	"0 0 0 1"
 	}
 	obj2d vanethian_name
 	{
 		text	"_Vanethian"
-		pos		"50 75"		align	ul
+		pos		"50 75"		align	"ul"
 		color	"1 1 1 0"	fade	"0 0 0 1"
 	}
 	wait 4
@@ -589,13 +589,13 @@ sequence credits
 	obj2d ww3_text
 	{
 		text	"_Webdesign"
-		pos		"974 50"	align	ur
+		pos		"974 50"	align	"ur"
 		color	"0 1 0 0"	fade	"0 0 0 1"
 	}
 	obj2d ww3_name
 	{
 		text	"_Ww 3"
-		pos		"974 75"	align	ur
+		pos		"974 75"	align	"ur"
 		color	"1 1 1 0"	fade	"0 0 0 1"
 	}
 	wait 4
@@ -612,35 +612,35 @@ sequence credits
 	obj2d special_thx
 	{
 		text	"_Special Thanks To"
-		pos		"512 768"		align	uc
+		pos		"512 768"		align	"uc"
 		color	"0 1 0 1"
 		speed	"0 -80"
 	}
 	obj2d id
 	{
 		text	"_id Software"
-		pos		"512 810"		align	uc
+		pos		"512 810"		align	"uc"
 		color	"1 1 1 1"
 		speed	"0 -80"
 	}
 	obj2d engine
 	{
 		text	"_Quake 2 Engine"
-		pos		"512 835"		align	uc
+		pos		"512 835"		align	"uc"
 		color	".7 .7 .7 1"
 		speed	"0 -80"
 	}
 	obj2d ninex
 	{
 		text	"_NineX"
-		pos		"512 960"		align	uc
+		pos		"512 960"		align	"uc"
 		color	"1 1 1 1"
 		speed	"0 -80"
 	}
 	obj2d host
 	{
 		text	"_Our Host"
-		pos		"512 985"		align	uc
+		pos		"512 985"		align	"uc"
 		color	".7 .7 .7 1"
 		speed	"0 -80"
 	}
@@ -648,42 +648,42 @@ sequence credits
 	obj2d additional_thx
 	{
 		text	"_Additional Thanks To"
-		pos		"512 1300"		align	uc
+		pos		"512 1300"		align	"uc"
 		color	"0 1 0 1"
 		speed	"0 -80"
 	}
 	obj2d sacrusha
 	{
 		text	"_Sacrusha"
-		pos		"512 1340"		align	uc
+		pos		"512 1340"		align	"uc"
 		color	"1 1 1 1"
 		speed	"0 -80"
 	}
 	obj2d mattn
 	{
 		text	"_Mattn"
-		pos		"512 1370"		align	uc
+		pos		"512 1370"		align	"uc"
 		color	"1 1 1 1"
 		speed	"0 -80"
 	}
 	obj2d sitters
 	{
 		text	"_Sitters"
-		pos		"512 1400"		align	uc
+		pos		"512 1400"		align	"uc"
 		color	"1 1 1 1"
 		speed	"0 -80"
 	}
 	obj2d community
 	{
 		text	"_The Community"
-		pos		"512 1430"		align	uc
+		pos		"512 1430"		align	"uc"
 		color	"1 1 1 1"
 		speed	"0 -80"
 	}
 	obj2d everyone
 	{
 		text	"_Everyone who supported us"
-		pos		"512 1460"		align	uc
+		pos		"512 1460"		align	"uc"
 		color	"1 1 1 1"
 		speed	"0 -80"
 	}
@@ -722,7 +722,7 @@ sequence credits
 	obj2d ufoai
 	{
 		image	"pics/ufoai"
-		align	uc
+		align	"uc"
 		pos		"384 800"
 		speed	"0 -128"
 	}
@@ -732,13 +732,13 @@ sequence credits
 	obj2d www
 	{
 		text	"_http://ufoai.sf.net"
-		pos		"512 710"	align	uc
+		pos		"512 710"	align	"uc"
 		color	"0 1 0 0"	fade	"0 0 0 1"
 	}
 	obj2d copyright
 	{
 		text	"_Copyright 2004-2011 by UFO: AI Team"
-		pos		"512 736"	align	uc
+		pos		"512 736"	align	"uc"
 		color	"1 1 1 0"	fade	"0 0 0 1"
 	}
 	wait 8.0
