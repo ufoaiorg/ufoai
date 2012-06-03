@@ -5,10 +5,12 @@ package net.sourceforge.ufoai.ui;
 
 import net.sourceforge.ufoai.ui.folding.FoldingRegionProvider;
 import net.sourceforge.ufoai.ui.hover.HoverProvider;
+import net.sourceforge.ufoai.ui.internal.UFOScriptActivator;
 import net.sourceforge.ufoai.ui.properties.UFOScriptPropertyViewer;
 import net.sourceforge.ufoai.ui.syntaxcoloring.HighlightingConfiguration;
 import net.sourceforge.ufoai.ui.syntaxcoloring.SemanticHighlightingCalculator;
 
+import org.eclipse.jface.resource.ImageDescriptor;
 import org.eclipse.ui.plugin.AbstractUIPlugin;
 import org.eclipse.xtext.ui.editor.XtextEditor;
 import org.eclipse.xtext.ui.editor.contentassist.XtextContentAssistProcessor;
@@ -50,5 +52,9 @@ public class UFOScriptUiModule extends net.sourceforge.ufoai.ui.AbstractUFOScrip
 
 	public Class<? extends DefaultFoldingRegionProvider> bindDefaultFoldingRegionProvider() {
 		return FoldingRegionProvider.class;
+	}
+
+	public static ImageDescriptor getImageDescriptor(String path) {
+		return UFOScriptActivator.imageDescriptorFromPlugin("net.sourceforge.ufoai.dsl.ui", path);
 	}
 }

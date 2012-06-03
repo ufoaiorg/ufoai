@@ -3,15 +3,10 @@
  */
 package net.sourceforge.ufoai.ui.labeling;
 
-import java.io.InputStream;
-import java.util.HashMap;
-import java.util.Map;
-
 import net.sourceforge.ufoai.ufoScript.UFONode;
+import net.sourceforge.ufoai.ui.UFOScriptUiModule;
 
 import org.eclipse.emf.edit.ui.provider.AdapterFactoryLabelProvider;
-import org.eclipse.swt.graphics.Image;
-import org.eclipse.swt.widgets.Display;
 import org.eclipse.xtext.ui.label.DefaultEObjectLabelProvider;
 
 import com.google.inject.Inject;
@@ -21,38 +16,17 @@ import com.google.inject.Inject;
  * http://www.eclipse.org/Xtext/documentation/latest/xtext.html#labelProvider
  */
 public class UFOScriptLabelProvider extends DefaultEObjectLabelProvider {
-	private final Map<String, Image> iconCache;
 
 	@Inject
 	public UFOScriptLabelProvider(AdapterFactoryLabelProvider delegate) {
 		super(delegate);
-		iconCache = new HashMap<String, Image>();
 	}
 
-	private String getIconURI(String name) {
-		return "/net/sourceforge/ufoai/ui/icons/" + name + ".png";
-	}
-
-	private Image getIcon(String name) {
-		Image image = iconCache.get(name);
-		if (image == null) {
-			String uri = getIconURI(name);
-			InputStream stream = this.getClass().getResourceAsStream(uri);
-			if (stream == null) {
-				System.out.println("Image at uri " + uri + " was not found.");
-				uri = getIconURI("default");
-				stream = this.getClass().getResourceAsStream(uri);
-				if (stream == null) {
-					return null;
-				}
-			}
-			image = new Image(Display.getDefault(), stream);
-			iconCache.put(name, image);
+	@Override
+	public Object doGetImage(Object block) {
+		if (block instanceof UFONode) {
+			return UFOScriptUiModule.getImageDescriptor("icons/" + ((UFONode) block).getType() + ".png");
 		}
-		return image;
-	}
-
-	public Image image(UFONode block) {
-		return getIcon(block.getType());
+		return super.doGetImage(block);
 	}
 }
