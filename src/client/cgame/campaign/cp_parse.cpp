@@ -140,7 +140,7 @@ static void CP_ParseAlienTeam (const char *name, const char **text)
 					Com_Printf("CP_ParseAlienTeam: alien team category \"%s\" is used with no mission category. It won't be used in game.\n", name);
 				alienCategory->numMissionCategories++;
 			} while (*text);
-		} else if (Q_streq(token, "team")) {
+		} else if (Q_streq(token, "teaminterest")) {
 			alienTeamGroup_t *group;
 
 			token = Com_EParse(text, errhead, name);
@@ -167,12 +167,26 @@ static void CP_ParseAlienTeam (const char *name, const char **text)
 					if (!*text || *token == '}')
 						break;
 
-					/* This is an alien team */
-					if (group->numAlienTeams >= MAX_TEAMS_PER_MISSION)
-						Com_Error(ERR_DROP, "CL_ParseAlienTeam: MAX_TEAMS_PER_MISSION hit");
-					teamDef = Com_GetTeamDefinitionByID(token);
-					if (teamDef)
-						group->alienTeams[group->numAlienTeams++] = teamDef;
+					if (Q_streq(token, "team")) {
+						token = Com_EParse(text, errhead, name);
+						if (!*text || *token != '{') {
+							Com_Printf("CP_ParseAlienTeam: alien team \"%s\" has team with no opening brace\n", name);
+							break;
+						}
+						do {
+							token = Com_EParse(text, errhead, name);
+							if (!*text || *token == '}')
+								break;
+							/* This is an alien team */
+							if (group->numAlienTeams >= MAX_TEAMS_PER_MISSION)
+								Com_Error(ERR_DROP, "CL_ParseAlienTeam: MAX_TEAMS_PER_MISSION hit");
+							teamDef = Com_GetTeamDefinitionByID(token);
+							if (teamDef)
+								group->alienTeams[group->numAlienTeams++] = teamDef;
+						} while (*text);
+					} else {
+						Com_Error(ERR_DROP, "CL_ParseAlienTeam: Unknown token \"%s\"\n", token);
+					}
 				}
 			} while (*text);
 		} else {

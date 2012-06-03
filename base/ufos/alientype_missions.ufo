@@ -8,7 +8,7 @@
 //	equipment - equipment pack this alien team may use. You can enter several equipment pack.
 //		This alien team will be able to use any equipment pack from equipment_missions.ufo starting with this string.
 //
-//	team - alien races that should be use for an alien overall interest with: mininterest <= interest < maxinterest.
+//	teaminterest - alien races that should be use for an alien overall interest with: mininterest <= interest < maxinterest.
 //
 //	Notes:
 //	 * If there are several possible alien teams (either in different alien teams, or because several teams in the
@@ -27,37 +27,29 @@ alienteam default_workers
 	{
 		alien_workers
 	}
-	team
+	teaminterest
 	{
 		mininterest 0
 		maxinterest 100
-
-		taman
+		team { taman }
 	}
-	team
+	teaminterest
 	{
 		mininterest 100
 		maxinterest 300
-
-		taman
-		ortnok
+		team { taman ortnok }
 	}
-	team
+	teaminterest
 	{
 		mininterest 300
 		maxinterest 500
-
-		taman
-		ortnok
-		shevaar
+		team { taman ortnok shevaar }
 	}
-	team
+	teaminterest
 	{
 		mininterest 500
 		maxinterest 10000
-
-		ortnok
-		shevaar
+		team { ortnok shevaar }
 	}
 }
 
@@ -76,37 +68,29 @@ alienteam default_soldiers
 		alien_soldiers
 	}
 
-	team
+	teaminterest
 	{
 		mininterest 0
 		maxinterest 100
-
-		taman
+		team { taman }
 	}
-	team
+	teaminterest
 	{
 		mininterest 100
 		maxinterest 300
-
-		taman
-		ortnok
+		team { taman ortnok }
 	}
-	team
+	teaminterest
 	{
 		mininterest 300
 		maxinterest 500
-
-		taman
-		ortnok
-		shevaar
+		team { taman ortnok shevaar }
 	}
-	team
+	teaminterest
 	{
 		mininterest 500
 		maxinterest 10000
-
-		ortnok
-		shevaar
+		team { ortnok shevaar }
 	}
 }
 
@@ -122,37 +106,29 @@ alienteam harvest
 		alien_workers
 	}
 
-	team
+	teaminterest
 	{
 		mininterest 0
 		maxinterest 100
-		taman
-		bloodspider
+		team { taman bloodspider }
 	}
-	team
+	teaminterest
 	{
 		mininterest 100
 		maxinterest 300
-		taman
-		ortnok
-		bloodspider
+		team { taman ortnok bloodspider }
 	}
-	team
+	teaminterest
 	{
 		mininterest 300
 		maxinterest 500
-		taman
-		ortnok
-		shevaar
-		bloodspider
+		team { taman ortnok shevaar bloodspider }
 	}
-	team
+	teaminterest
 	{
 		mininterest 500
 		maxinterest 10000
-		ortnok
-		shevaar
-		bloodspider
+		team { ortnok shevaar bloodspider }
 	}
 }
 
@@ -168,37 +144,29 @@ alienteam xvi
 		alien_soldiers
 	}
 
-	team
+	teaminterest
 	{
 		mininterest 0
 		maxinterest 100
-		taman
-		bloodspider
+		team { taman bloodspider }
 	}
-	team
+	teaminterest
 	{
 		mininterest 100
 		maxinterest 200
-		taman
-		ortnok
-		bloodspider
+		team { taman ortnok bloodspider }
 	}
-	team
+	teaminterest
 	{
 		mininterest 200
 		maxinterest 500
-		taman
-		ortnok
-		shevaar
-		bloodspider
+		team { taman ortnok shevaar bloodspider }
 	}
-	team
+	teaminterest
 	{
 		mininterest 500
 		maxinterest 10000
-		ortnok
-		shevaar
-		bloodspider
+		team { ortnok shevaar bloodspider }
 	}
 }
 
@@ -214,13 +182,11 @@ alienteam alienbase
 		alien_base
 	}
 
-	team
+	teaminterest
 	{
 		mininterest 0 // TODO: set to 0 for debugging purpose, but this shouldn't be used before alien bases are spawned
 		maxinterest 10000
-		taman
-		ortnok
-		shevaar
+		team { taman ortnok shevaar }
 	}
 }
 
@@ -236,12 +202,10 @@ alienteam ufocarrier
 		alien_base
 	}
 
-	team
+	teaminterest
 	{
 		mininterest 0 // TODO: set to 0 for debugging purpose, but this shouldn't be used before alien bases are spawned
 		maxinterest 10000
-		taman
-		ortnok
-		shevaar
+		team { taman ortnok shevaar }
 	}
 }
