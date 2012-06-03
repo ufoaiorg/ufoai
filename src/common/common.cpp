@@ -1146,7 +1146,7 @@ void Qcommon_Init (int argc, char **argv)
 #else
 		logfile_active = Cvar_Get("logfile", "1", 0, "0 = deactivate logfile, 1 = write normal logfile, 2 = flush on every new line, 3 = always append to existing file");
 #endif
-		sv_gametype = Cvar_Get("sv_gametype", "1on1", CVAR_ARCHIVE | CVAR_SERVERINFO, "Sets the multiplayer gametype - see gametypelist command for a list of all gametypes");
+		sv_gametype = Cvar_Get("sv_gametype", "fight1on1", CVAR_ARCHIVE | CVAR_SERVERINFO, "Sets the multiplayer gametype - see gametypelist command for a list of all gametypes");
 		http_proxy = Cvar_Get("http_proxy", "", CVAR_ARCHIVE, "Use this proxy for http transfers");
 		http_timeout = Cvar_Get("http_timeout", "3", CVAR_ARCHIVE, "Http connection and read timeout");
 		port = Cvar_Get("port", DOUBLEQUOTE(PORT_SERVER), CVAR_NOSET);

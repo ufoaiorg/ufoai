@@ -166,7 +166,7 @@ void G_ClientEndRound (player_t * player)
 		level.nextEndRound = level.framenum + 20;
 	}
 
-	/* only use this for teamplay matches like coopX or 2on2 and above
+	/* only use this for teamplay matches like coopX or fight2on2 and above
 	 * also skip this for ai players, this is only called when all ai actors
 	 * have finished their 'thinking' */
 	if (!G_IsAIPlayer(player) && sv_teamplay->integer) {

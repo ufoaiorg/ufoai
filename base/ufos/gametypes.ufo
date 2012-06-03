@@ -1,5 +1,5 @@
 
-gametype 1on1
+gametype fight1on1
 {
 	name "_1on1"
 	{
@@ -12,7 +12,7 @@ gametype 1on1
 //		sv_maxplayersperteam 1
 	}
 }
-gametype 1on1on1
+gametype fight1on1on1
 {
 	name "_1on1on1"
 	{
@@ -25,7 +25,7 @@ gametype 1on1on1
 //		sv_maxplayersperteam 1
 	}
 }
-gametype 2on2
+gametype fight2on2
 {
 	name "_2on2"
 	{
@@ -38,7 +38,7 @@ gametype 2on2
 //		sv_maxplayersperteam 2
 	}
 }
-gametype 2on2on2
+gametype fight2on2on2
 {
 	name "_2on2on2"
 	{
@@ -51,7 +51,7 @@ gametype 2on2on2
 //		sv_maxplayersperteam 2
 	}
 }
-gametype 3on3
+gametype fight3on3
 {
 	name "_3on3"
 	{
@@ -64,7 +64,7 @@ gametype 3on3
 //		sv_maxplayersperteam 3
 	}
 }
-gametype 3on3on3
+gametype fight3on3on3
 {
 	name "_3on3on3"
 	{
@@ -77,7 +77,7 @@ gametype 3on3on3
 //		sv_maxplayersperteam 3
 	}
 }
-gametype 4on4
+gametype fight4on4
 {
 	name "_4on4"
 	{
@@ -90,7 +90,7 @@ gametype 4on4
 //		sv_maxplayersperteam 4
 	}
 }
-gametype 4on4on4
+gametype fight4on4on4
 {
 	name "_4on4on4"
 	{

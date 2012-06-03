@@ -57,8 +57,8 @@ mapdef africa_large
 	multiplayer		true
 	teams			2
 	gametypes {
-		1on1
-		2on2
+		fight1on1
+		fight2on2
 		coop2
 		coop3
 		coop4
@@ -109,8 +109,8 @@ mapdef africa_small
 	multiplayer		true
 	teams			2
 	gametypes {
-		1on1
-		2on2
+		fight1on1
+		fight2on2
 		coop2
 		coop3
 		coop4
@@ -253,14 +253,14 @@ mapdef bomber_city
 	multiplayer		true
 	teams			4
 	gametypes {
-		1on1
-		1on1on1
-		2on2
-		2on2on2
-		3on3
-		3on3on3
-		4on4
-		4on4on4
+		fight1on1
+		fight1on1on1
+		fight2on2
+		fight2on2on2
+		fight3on3
+		fight3on3on3
+		fight4on4
+		fight4on4on4
 		coop2
 		coop3
 		coop4
@@ -357,7 +357,7 @@ mapdef bridge_mp
 	multiplayer		true
 	teams			2
 	gametypes {
-		1on1
+		fight1on1
 		coop2
 	}
 
@@ -494,8 +494,8 @@ mapdef desert_harvester_crash
 	teams			2
 	hurtaliens		true
 	gametypes {
-		1on1
-		2on2
+		fight1on1
+		fight2on2
 		coop2
 		coop3
 		coop4
@@ -670,8 +670,8 @@ mapdef farm2
 	teams			2
 	multiplayer		true
 	gametypes {
-		1on1
-		2on2
+		fight1on1
+		fight2on2
 		coop2
 		coop3
 		coop4
@@ -1060,10 +1060,10 @@ mapdef harbour2
 	teams		2
 	gametypes
 	{
-		1on1
-		2on2
-		3on3
-		4on4
+		fight1on1
+		fight2on2
+		fight3on3
+		fight4on4
 		coop2
 		coop3
 		coop4
@@ -1459,8 +1459,8 @@ mapdef japan_large
 	teams		2
 	multiplayer	false
 	gametypes {
-		1on1
-		2on2
+		fight1on1
+		fight2on2
 		coop2
 		coop3
 		coop4
@@ -1507,8 +1507,8 @@ mapdef japan_small
 	teams		2
 	multiplayer	false
 	gametypes {
-		1on1
-		2on2
+		fight1on1
+		fight2on2
 		coop2
 		coop3
 		coop4
@@ -1558,10 +1558,10 @@ mapdef laboratory
 	multiplayer		true
 	teams			3
 	gametypes {
-		1on1
-		1on1on1
-		2on2
-		2on2on2
+		fight1on1
+		fight1on1on1
+		fight2on2
+		fight2on2on2
 		coop2
 		coop3
 		coop4
@@ -1618,14 +1618,14 @@ mapdef mansion_huge
 	teams			4
     gametypes
     {
-		1on1
-		1on1on1
-		2on2
-		2on2on2
-		3on3
-		3on3on3
-		4on4
-		4on4on4
+		fight1on1
+		fight1on1on1
+		fight2on2
+		fight2on2on2
+		fight3on3
+		fight3on3on3
+		fight4on4
+		fight4on4on4
 		coop2
 		coop3
 		coop4
@@ -1674,10 +1674,10 @@ mapdef mansion_medium
 	teams			2
 	gametypes
 	{
-		1on1
-		2on2
-		3on3
-		4on4
+		fight1on1
+		fight2on2
+		fight3on3
+		fight4on4
 	}
 	aircraft
     {
@@ -1722,10 +1722,10 @@ mapdef mansion_small
 	teams			2
 	gametypes
 	{
-		1on1
-		2on2
-		3on3
-		4on4
+		fight1on1
+		fight2on2
+		fight3on3
+		fight4on4
 	}
 
 	aircraft
@@ -1934,8 +1934,8 @@ mapdef scout_crash
 	hurtaliens		true
 	teams			2
 	gametypes {
-		1on1
-		2on2
+		fight1on1
+		fight2on2
 		coop2
 		coop3
 		coop4
@@ -2604,8 +2604,8 @@ mapdef city_disco
 	multiplayer		true
 	teams			2
 	gametypes {
-		1on1
-		2on2
+		fight1on1
+		fight2on2
 		coop2
 		coop3
 		coop4
@@ -2654,10 +2654,10 @@ mapdef community_centre
 	multiplayer		true
 	teams			3
 	gametypes {
-		1on1
-		1on1on1
-		2on2
-		2on2on2
+		fight1on1
+		fight1on1on1
+		fight2on2
+		fight2on2on2
 		coop2
 		coop3
 		coop4
@@ -2706,8 +2706,8 @@ mapdef construction
 	multiplayer		true
 	teams			2
 	gametypes {
-		1on1
-		2on2
+		fight1on1
+		fight2on2
 		coop2
 		coop3
 		coop4
@@ -2756,8 +2756,8 @@ mapdef druglord
 	multiplayer		true
 	teams			2
 	gametypes {
-		1on1
-		2on2
+		fight1on1
+		fight2on2
 		coop2
 		coop3
 		coop4
@@ -2804,8 +2804,8 @@ mapdef eaglenest
 	multiplayer		true
 	teams			2
 	gametypes {
-		1on1
-		2on2
+		fight1on1
+		fight2on2
 		coop2
 		coop3
 		coop4
@@ -2858,8 +2858,8 @@ mapdef gasstation
 	multiplayer		true
 	teams			2
 	gametypes {
-		1on1
-		2on2
+		fight1on1
+		fight2on2
 		coop2
 		coop3
 		coop4
@@ -2909,8 +2909,8 @@ mapdef italy
 	teams		2
 	multiplayer	true
 	gametypes {
-		1on1
-		2on2
+		fight1on1
+		fight2on2
 		coop2
 		coop3
 		coop4
@@ -2961,8 +2961,8 @@ mapdef japan_default
 	teams		2
 	multiplayer	true
 	gametypes {
-		1on1
-		2on2
+		fight1on1
+		fight2on2
 		coop2
 		coop3
 		coop4
@@ -3013,8 +3013,8 @@ mapdef mart
 	multiplayer	true
 	teams		2
 	gametypes {
-		1on1
-		2on2
+		fight1on1
+		fight2on2
 		coop2
 		coop3
 		coop4
@@ -3066,8 +3066,8 @@ mapdef military_convoy
 	multiplayer		true
 	teams			2
 	gametypes {
-		1on1
-		2on2
+		fight1on1
+		fight2on2
 		coop2
 		coop3
 		coop4
@@ -3114,8 +3114,8 @@ mapdef oriental_mosque
 	multiplayer		true
 	teams			2
 	gametypes {
-		1on1
-		2on2
+		fight1on1
+		fight2on2
 		coop2
 		coop3
 		coop4
@@ -3167,14 +3167,14 @@ mapdef shelter
 	teams			4
 	multiplayer		true
 	gametypes {
-		1on1
-		1on1on1
-		2on2
-		2on2on2
-		3on3
-		3on3on3
-		4on4
-		4on4on4
+		fight1on1
+		fight1on1on1
+		fight2on2
+		fight2on2on2
+		fight3on3
+		fight3on3on3
+		fight4on4
+		fight4on4on4
 		coop2
 		coop3
 		coop4
@@ -3223,8 +3223,8 @@ mapdef spedition
 	multiplayer	true
 	teams		2
 	gametypes {
-		1on1
-		2on2
+		fight1on1
+		fight2on2
 		coop2
 		coop3
 		coop4
@@ -3274,8 +3274,8 @@ mapdef stadium
 	multiplayer		true
 	teams			2
 	gametypes {
-		1on1
-		2on2
+		fight1on1
+		fight2on2
 		coop2
 		coop3
 		coop4
@@ -3326,12 +3326,12 @@ mapdef tower
 	multiplayer		true
 	teams			3
 	gametypes {
-		1on1
-		1on1on1
-		2on2
-		2on2on2
-		3on3
-		3on3on3
+		fight1on1
+		fight1on1on1
+		fight2on2
+		fight2on2on2
+		fight3on3
+		fight3on3on3
 		coop2
 		coop3
 		coop4
@@ -3381,8 +3381,8 @@ mapdef transport
 	multiplayer	true
 	teams		2
 	gametypes {
-		1on1
-		2on2
+		fight1on1
+		fight2on2
 		coop2
 		coop3
 		coop4
@@ -3429,10 +3429,10 @@ mapdef bungalow
 	multiplayer	true
 	teams		3
 	gametypes {
-		1on1
-		1on1on1
-		2on2
-		2on2on2
+		fight1on1
+		fight1on1on1
+		fight2on2
+		fight2on2on2
 		coop2
 		coop3
 	}
@@ -3473,10 +3473,10 @@ mapdef bungalow2
 	multiplayer	true
 	teams		3
 	gametypes {
-		1on1
-		1on1on1
-		2on2
-		2on2on2
+		fight1on1
+		fight1on1on1
+		fight2on2
+		fight2on2on2
 		coop2
 		coop3
 	}
@@ -3519,8 +3519,8 @@ mapdef bunker
 	multiplayer	true
 	teams		2
 	gametypes {
-		1on1
-		2on2
+		fight1on1
+		fight2on2
 		coop2
 		coop3
 		coop4
@@ -3569,8 +3569,8 @@ mapdef city_industry
 	multiplayer		true
 	teams			2
 	gametypes {
-		1on1
-		2on2
+		fight1on1
+		fight2on2
 		coop2
 		coop3
 		coop4
@@ -3614,8 +3614,8 @@ mapdef city_train
 	multiplayer		true
 	teams			2
 	gametypes {
-		1on1
-		2on2
+		fight1on1
+		fight2on2
 		coop2
 		coop3
 		coop4
@@ -3663,8 +3663,8 @@ mapdef corrupter_crash
 	teams			2
 	campaign		false // TODO: activate once the corrupter is available in the campaign
 	gametypes {
-		1on1
-		2on2
+		fight1on1
+		fight2on2
 		coop2
 		coop3
 		coop4
@@ -3708,8 +3708,8 @@ mapdef dam
 	multiplayer	true
 	teams		2
 	gametypes {
-		1on1
-		2on2
+		fight1on1
+		fight2on2
 		coop2
 		coop3
 		coop4
@@ -3757,10 +3757,10 @@ mapdef england
 	multiplayer		true
 	teams			3
 	gametypes {
-		1on1
-		1on1on1
-		2on2
-		2on2on2
+		fight1on1
+		fight1on1on1
+		fight2on2
+		fight2on2on2
 		coop2
 		coop3
 		coop4
@@ -3806,8 +3806,8 @@ mapdef estate
 	multiplayer		true
 	teams			2
 	gametypes {
-		1on1
-		2on2
+		fight1on1
+		fight2on2
 		coop2
 		coop3
 		coop4
@@ -3855,8 +3855,8 @@ mapdef excavation
 
 	civilianteam	middle
 	gametypes {
-		1on1
-		2on2
+		fight1on1
+		fight2on2
 		coop2
 		coop3
 		coop4
@@ -3902,10 +3902,10 @@ mapdef ferry
 	teams			4
 	multiplayer		true
 	gametypes {
-		1on1
-		1on1on1
-		2on2
-		2on2on2
+		fight1on1
+		fight1on1on1
+		fight2on2
+		fight2on2on2
 		coop2
 		coop3
 		coop4
@@ -3955,8 +3955,8 @@ mapdef fighter_crash
 	hurtaliens		true
 
 	gametypes {
-		1on1
-		2on2
+		fight1on1
+		fight2on2
 		coop2
 		coop3
 		coop4
@@ -4000,8 +4000,8 @@ mapdef fueldump
 	multiplayer		true
 	teams			2
 	gametypes {
-		1on1
-		2on2
+		fight1on1
+		fight2on2
 	}
 	maxaliens		10
 
@@ -4040,8 +4040,8 @@ mapdef gate
 	multiplayer		true
 	teams			2
 	gametypes {
-		1on1
-		2on2
+		fight1on1
+		fight2on2
 		coop2
 		coop3
 		coop4
@@ -4088,8 +4088,8 @@ mapdef harbour
 	multiplayer		true
 	teams			2
 	gametypes {
-		1on1
-		2on2
+		fight1on1
+		fight2on2
 		coop2
 		coop3
 		coop4
@@ -4133,8 +4133,8 @@ mapdef lake_ice
 	multiplayer		true
 	teams			2
 	gametypes {
-		1on1
-		2on2
+		fight1on1
+		fight2on2
 		coop2
 		coop3
 		coop4
@@ -4180,12 +4180,12 @@ mapdef lake_ice_big
 	maxaliens		28
 		// randomspawn enabled
 	gametypes {
-		1on1
-		1on1on1
-		2on2
-		2on2on2
-		3on3
-		3on3on3
+		fight1on1
+		fight1on1on1
+		fight2on2
+		fight2on2on2
+		fight3on3
+		fight3on3on3
 		coop2
 		coop3
 		coop4
@@ -4229,12 +4229,12 @@ mapdef mine
 	multiplayer	true
 	teams		3
 	gametypes {
-		1on1
-		1on1on1
-		2on2
-		2on2on2
-		3on3
-		3on3on3
+		fight1on1
+		fight1on1on1
+		fight2on2
+		fight2on2on2
+		fight3on3
+		fight3on3on3
 		coop2
 		coop3
 		coop4
@@ -4283,9 +4283,9 @@ mapdef neighbourhood
 	multiplayer	true
 	teams		2
 	gametypes {
-		1on1
-		2on2
-		3on3
+		fight1on1
+		fight2on2
+		fight3on3
 		coop2
 	}
 	maxaliens	17
@@ -4328,8 +4328,8 @@ mapdef office
 	multiplayer		true
 	teams			2
 	gametypes {
-		1on1
-		2on2
+		fight1on1
+		fight2on2
 		coop2
 		coop3
 		coop4
@@ -4374,8 +4374,8 @@ mapdef oriental
 	multiplayer		true
 	teams			2
 	gametypes {
-		1on1
-		2on2
+		fight1on1
+		fight2on2
 		coop2
 		coop3
 		coop4
@@ -4421,12 +4421,12 @@ mapdef pipes_const
 	multiplayer		true
 	teams			3
 	gametypes {
-		1on1
-		1on1on1
-		2on2
-		2on2on2
-		3on3
-		3on3on3
+		fight1on1
+		fight1on1on1
+		fight2on2
+		fight2on2on2
+		fight3on3
+		fight3on3on3
 		coop2
 		coop3
 		coop4
@@ -4469,8 +4469,8 @@ mapdef resort
 	multiplayer		true
 	teams			2
 	gametypes {
-		1on1
-		2on2
+		fight1on1
+		fight2on2
 		coop2
 		coop3
 		coop4
@@ -4516,14 +4516,14 @@ mapdef rivertown
 	multiplayer		true
 	teams			4
 	gametypes {
-		1on1
-		1on1on1
-		2on2
-		2on2on2
-		3on3
-		3on3on3
-		4on4
-		4on4on4
+		fight1on1
+		fight1on1on1
+		fight2on2
+		fight2on2on2
+		fight3on3
+		fight3on3on3
+		fight4on4
+		fight4on4on4
 		coop2
 		coop3
 		coop4
@@ -4634,8 +4634,8 @@ mapdef subway
 	multiplayer		true
 	teams			2
 	gametypes {
-		1on1
-		2on2
+		fight1on1
+		fight2on2
 		coop2
 		coop3
 		coop4
@@ -4681,8 +4681,8 @@ mapdef village
 	multiplayer		true
 	teams			2
 	gametypes {
-		1on1
-		2on2
+		fight1on1
+		fight2on2
 		coop2
 		coop3
 		coop4
@@ -4728,8 +4728,8 @@ mapdef wilderness
 	multiplayer		true
 	teams			2
 	gametypes {
-		1on1
-		2on2
+		fight1on1
+		fight2on2
 		coop2
 	}
 	maxaliens		16
@@ -4783,14 +4783,14 @@ mapdef city2mp
 		maxaliens       23
 		gametypes
 		{
-			1on1
-			1on1on1
-			2on2
-			2on2on2
-			3on3
-			3on3on3
-			4on4
-			4on4on4
+			fight1on1
+			fight1on1on1
+			fight2on2
+			fight2on2on2
+			fight3on3
+			fight3on3on3
+			fight4on4
+			fight4on4on4
 		}
 
 }
@@ -4813,7 +4813,7 @@ mapdef alienbase
 	multiplayer		true
 	teams			2
 	gametypes {
-		1on1
+		fight1on1
 	}
 	onwin			"cp_add_researchable rs_alien_psi_device"
 }
@@ -4875,9 +4875,9 @@ mapdef training_a
 	campaign	false
 	maxaliens	8
 	gametypes {
-		1on1
-		2on2
-		3on3
+		fight1on1
+		fight2on2
+		fight3on3
 		coop2
 		coop3
 	}
@@ -4892,6 +4892,6 @@ mapdef training_b
 	campaign	false
 	maxaliens	30
 	gametypes {
-		1on1
+		fight1on1
 	}
 }
