@@ -1,8 +1,6 @@
 package net.sourceforge.ufoai.validation;
 
 import java.io.File;
-import java.util.HashSet;
-import java.util.Set;
 
 import net.sourceforge.ufoai.ufoScript.UFONode;
 import net.sourceforge.ufoai.ufoScript.UfoScriptPackage;
@@ -12,6 +10,7 @@ import net.sourceforge.ufoai.ufoScript.ValueNamedConst;
 import net.sourceforge.ufoai.ufoScript.ValueNumber;
 import net.sourceforge.ufoai.ufoScript.ValueReference;
 import net.sourceforge.ufoai.ufoScript.ValueString;
+import net.sourceforge.ufoai.util.StringUtil;
 import net.sourceforge.ufoai.util.UfoResources;
 
 import org.eclipse.core.resources.IFile;
@@ -67,30 +66,20 @@ public class UFOScriptJavaValidator extends AbstractUFOScriptJavaValidator {
 		return UFOTypes.getInstance().getPathType(path);
 	}
 
-	private void validateReference(UFONode node, String referenceType, Set<String> available) {
+	private void validateReference(UFONode node, UFOType type) {
 		/*if (node.getValue() instanceof ValueNull) {
 			// nothing
 		} else
 			*/
 		if (node.getValue() instanceof ValueReference) {
 			ValueReference value = (ValueReference) node.getValue();
-			if (available != null && !available.contains(value.getValue().getType())) {
-				error(referenceType + " id expected", UfoScriptPackage.Literals.UFO_NODE__VALUE);
+			if (value.getValue() == null) {
+				// xtext should already warn about it
+				return;
 			}
-		} else {
-			error("Id expected", UfoScriptPackage.Literals.UFO_NODE__VALUE);
-		}
-	}
-
-	private void validateReference(UFONode node, String referenceType) {
-		/*if (node.getValue() instanceof ValueNull) {
-			// nothing
-		} else
-			*/
-		if (node.getValue() instanceof ValueReference) {
-			ValueReference value = (ValueReference) node.getValue();
-			if (referenceType != null && !value.getValue().getType().equals(referenceType)) {
-				error(referenceType + " id expected", UfoScriptPackage.Literals.UFO_NODE__VALUE);
+			if (type.hasValues() && !type.contains(value.getValue().getType())) {
+				String expected = StringUtil.join(" or ", type.getValues());
+				error(expected + " id expected", UfoScriptPackage.Literals.UFO_NODE__VALUE);
 			}
 		} else {
 			error("Id expected", UfoScriptPackage.Literals.UFO_NODE__VALUE);
@@ -182,28 +171,7 @@ public class UFOScriptJavaValidator extends AbstractUFOScriptJavaValidator {
 			}
 			break;
 		case ID:
-			validateReference(node, null);
-			break;
-		case TECH_ID:
-			validateReference(node, "tech");
-			break;
-		case BUILDING_ID:
-			validateReference(node, "building");
-			break;
-		case PARTICLE_ID:
-			validateReference(node, "particle");
-			break;
-		case MENU_MODEL_ID:
-			validateReference(node, "menu_model");
-			break;
-		case ITEM_ID:
-			validateReference(node, "item");
-			break;
-		case CRAFTITEM_OR_ITEM_ID:
-			Set<String> available = new HashSet<String>();
-			available.add("item");
-			available.add("craftitem");
-			validateReference(node, "item or craftitem", available);
+			validateReference(node, type);
 			break;
 		case INT:
 			if (!(node.getValue() instanceof ValueNumber)) {

@@ -1,6 +1,7 @@
 package net.sourceforge.ufoai.validation;
 
 import java.util.Arrays;
+import java.util.Collection;
 import java.util.HashSet;
 import java.util.Set;
 
@@ -123,13 +124,7 @@ public class UFOType {
 		/**
 		 * A reference to an object
 		 */
-		ID,
-		TECH_ID,
-		BUILDING_ID,
-		PARTICLE_ID,
-		MENU_MODEL_ID,
-		ITEM_ID,
-		CRAFTITEM_OR_ITEM_ID,
+		ID
 	}
 
 	private Type type;
@@ -150,10 +145,18 @@ public class UFOType {
 		return type;
 	}
 
+	public boolean hasValues() {
+		return values != null && !values.isEmpty();
+	}
+
 	public boolean contains(String value) {
 		if (values == null)
 			return false;
 		return values.contains(value);
+	}
+
+	public Collection<String> getValues() {
+		return values;
 	}
 
 }
