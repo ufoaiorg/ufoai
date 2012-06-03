@@ -2884,6 +2884,12 @@ static void Com_ParseGameTypes (const char *name, const char **text)
 				break;
 
 			if (!Com_ParseBlockToken(name, text, gt, gameTypeValues, NULL, token)) {
+				if (!Q_streq(token, "cvarlist"))
+					Sys_Error("Com_ParseGameTypes: gametype \"%s\" without cvarlist\n", name);
+
+				token = Com_EParse(text, errhead, name);
+				if (!*text)
+					break;
 				if (*token != '{')
 					Sys_Error("Com_ParseGameTypes: gametype \"%s\" without cvarlist\n", name);
 
