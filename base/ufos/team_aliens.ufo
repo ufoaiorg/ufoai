@@ -8,30 +8,30 @@
 team taman
 {
 	name			"_Taman"
-	tech			"rs_alien_taman_autopsy"
+	tech			rs_alien_taman_autopsy
 	race			taman
 	size			1
 	hit_particle	blood
 
 	names {
 		neutral {
-			Akrokk
-			Mkeek
-			Rniuk
-			Tranok
-			Kronuk
-			Trenakk
-			Zrokk
-			Kraerak
-			Mnookk
-			Zmolukk
-			Abtrenek
-			Uonak
-			Ktrukk
-			Onukark
-			Ebnuzuk
-			Krrnaak
-			Zmuknesk
+			"Akrokk"
+			"Mkeek"
+			"Rniuk"
+			"Tranok"
+			"Kronuk"
+			"Trenakk"
+			"Zrokk"
+			"Kraerak"
+			"Mnookk"
+			"Zmolukk"
+			"Abtrenek"
+			"Uonak"
+			"Ktrukk"
+			"Onukark"
+			"Ebnuzuk"
+			"Krrnaak"
+			"Zmuknesk"
 		}
 
 		lastname {
@@ -58,32 +58,32 @@ team taman
 
 	models {
 		neutral {
-			aliens/taman body01 head01 0 0 // Body: very high rank, Head: yellow eyes
-			aliens/taman body01 head02 1 1 // Body: high rank, Head: green eyes
-			aliens/taman body01 head03 2 2 // Body: medium rank, Head: red eyes
-			aliens/taman body01 head04 3 3 // Body: low rank, Head: blue eyes
-			aliens/taman body01 head01 1 1 // Body: high rank, Head: yellow eyes
-			aliens/taman body01 head02 2 2 // Body: medium rank, Head: green eyes
-			aliens/taman body01 head03 3 3 // Body: low rank, Head: red eyes
-			aliens/taman body01 head04 0 0 // Body: very high rank, Head: blue eyes
-			aliens/taman body01 head01 2 2 // Body: medium rank, Head: yellow eyes
-			aliens/taman body01 head02 3 3 // Body: low rank, Head: green eyes
-			aliens/taman body01 head03 0 0 // Body: very high rank, Head: red eyes
-			aliens/taman body01 head04 1 1 // Body: high rank, Head: blue eyes
-			aliens/taman body01 head01 3 3 // Body: low rank, Head: yellow eyes
-			aliens/taman body01 head02 0 0 // Body: very high rank, Head: green eyes
-			aliens/taman body01 head03 1 1 // Body: high rank, Head: red eyes
-			aliens/taman body01 head04 2 2 // Body: medium rank, Head: blue eyes
+			"aliens/taman" "body01" "head01" 0 0 // Body: very high rank, Head: yellow eyes
+			"aliens/taman" "body01" "head02" 1 1 // Body: high rank, Head: green eyes
+			"aliens/taman" "body01" "head03" 2 2 // Body: medium rank, Head: red eyes
+			"aliens/taman" "body01" "head04" 3 3 // Body: low rank, Head: blue eyes
+			"aliens/taman" "body01" "head01" 1 1 // Body: high rank, Head: yellow eyes
+			"aliens/taman" "body01" "head02" 2 2 // Body: medium rank, Head: green eyes
+			"aliens/taman" "body01" "head03" 3 3 // Body: low rank, Head: red eyes
+			"aliens/taman" "body01" "head04" 0 0 // Body: very high rank, Head: blue eyes
+			"aliens/taman" "body01" "head01" 2 2 // Body: medium rank, Head: yellow eyes
+			"aliens/taman" "body01" "head02" 3 3 // Body: low rank, Head: green eyes
+			"aliens/taman" "body01" "head03" 0 0 // Body: very high rank, Head: red eyes
+			"aliens/taman" "body01" "head04" 1 1 // Body: high rank, Head: blue eyes
+			"aliens/taman" "body01" "head01" 3 3 // Body: low rank, Head: yellow eyes
+			"aliens/taman" "body01" "head02" 0 0 // Body: very high rank, Head: green eyes
+			"aliens/taman" "body01" "head03" 1 1 // Body: high rank, Head: red eyes
+			"aliens/taman" "body01" "head04" 2 2 // Body: medium rank, Head: blue eyes
 		}
 	}
 
 	actorsounds {
 		neutral {
-			hurtsound aliens/taman/hurt1
-			hurtsound aliens/taman/hurt2
-			hurtsound aliens/taman/hurt3
-			deathsound aliens/taman/die1
-			deathsound aliens/taman/die2
+			hurtsound "aliens/taman/hurt1"
+			hurtsound "aliens/taman/hurt2"
+			hurtsound "aliens/taman/hurt3"
+			deathsound "aliens/taman/die1"
+			deathsound "aliens/taman/die2"
 		}
 	}
 
@@ -134,26 +134,26 @@ team ortnok
 	race			ortnok
 	size			1
 	//hit_particle	none
-	death_texture	pics/sfx/blood/blood_green_0
+	death_texture	"pics/sfx/blood/blood_green_0"
 
 	names {
 		neutral {
-			Oorgh
-			Ourhg
-			Uoghr
-			Uurgh
-			Morgh
-			Mrorg
-			Muurgh
-			Uoorgh
-			Moorgh
-			Muorgh
-			Oohnz
-			Ouhrz
-			Uorgz
-			Urgoz
-			Uurunz
-			Uuorgh
+			"Oorgh"
+			"Ourhg"
+			"Uoghr"
+			"Uurgh"
+			"Morgh"
+			"Mrorg"
+			"Muurgh"
+			"Uoorgh"
+			"Moorgh"
+			"Muorgh"
+			"Oohnz"
+			"Ouhrz"
+			"Uorgz"
+			"Urgoz"
+			"Uurunz"
+			"Uuorgh"
 		}
 
 		lastname {
@@ -180,33 +180,33 @@ team ortnok
 
 	models {
 		neutral {
-			aliens/ortnok body01 head01 0 0 // Body: Big open wound, Head: 2 small scars over the left eye
-			aliens/ortnok body01 head02 1 1 // Body: Big scar, Head: Big scar over the right eye
-			aliens/ortnok body01 head03 2 2 // Body: Scared legs, Head: One-eyed Ortnok
-			aliens/ortnok body01 head01 1 1 // Body: Big scar, Head: 2 small scars over the left eye
-			aliens/ortnok body01 head02 2 2 // Body: Scared legs, Head: Big scar over the right eye
-			aliens/ortnok body01 head03 0 0 // Body: Big open wound, Head: One-eyed Ortnok
-			aliens/ortnok body01 head01 2 2 // Body: Scared legs, Head: 2 small scars over the left eye
-			aliens/ortnok body01 head02 0 0 // Body: Big open wound, Head: One-eyed Ortnok
-			aliens/ortnok body01 head03 1 1 // Body: Big scar, Head: Big scar over the right eye
+			"aliens/ortnok" "body01" "head01" 0 0 // Body: Big open wound, Head: 2 small scars over the left eye
+			"aliens/ortnok" "body01" "head02" 1 1 // Body: Big scar, Head: Big scar over the right eye
+			"aliens/ortnok" "body01" "head03" 2 2 // Body: Scared legs, Head: One-eyed Ortnok
+			"aliens/ortnok" "body01" "head01" 1 1 // Body: Big scar, Head: 2 small scars over the left eye
+			"aliens/ortnok" "body01" "head02" 2 2 // Body: Scared legs, Head: Big scar over the right eye
+			"aliens/ortnok" "body01" "head03" 0 0 // Body: Big open wound, Head: One-eyed Ortnok
+			"aliens/ortnok" "body01" "head01" 2 2 // Body: Scared legs, Head: 2 small scars over the left eye
+			"aliens/ortnok" "body01" "head02" 0 0 // Body: Big open wound, Head: One-eyed Ortnok
+			"aliens/ortnok" "body01" "head03" 1 1 // Body: Big scar, Head: Big scar over the right eye
 		}
 	}
 
 	actorsounds {
 		neutral {
-			hurtsound aliens/ortnok/hurt1
-			hurtsound aliens/ortnok/hurt2
-			hurtsound aliens/ortnok/hurt3
-			hurtsound aliens/ortnok/hurt4
-			hurtsound aliens/ortnok/hurt5
-			hurtsound aliens/ortnok/hurt6
-			hurtsound aliens/ortnok/hurt7
-			hurtsound aliens/ortnok/hurt8
-			hurtsound aliens/ortnok/hurt9
-			deathsound aliens/ortnok/die1
-			deathsound aliens/ortnok/die2
-			deathsound aliens/ortnok/die3
-			deathsound aliens/ortnok/die4
+			hurtsound "aliens/ortnok/hurt1"
+			hurtsound "aliens/ortnok/hurt2"
+			hurtsound "aliens/ortnok/hurt3"
+			hurtsound "aliens/ortnok/hurt4"
+			hurtsound "aliens/ortnok/hurt5"
+			hurtsound "aliens/ortnok/hurt6"
+			hurtsound "aliens/ortnok/hurt7"
+			hurtsound "aliens/ortnok/hurt8"
+			hurtsound "aliens/ortnok/hurt9"
+			deathsound "aliens/ortnok/die1"
+			deathsound "aliens/ortnok/die2"
+			deathsound "aliens/ortnok/die3"
+			deathsound "aliens/ortnok/die4"
 		}
 	}
 
@@ -253,7 +253,7 @@ team ortnok
 team shevaar
 {
 	name			"_Shevaar"
-	tech			"rs_alien_shevaar_autopsy"
+	tech			rs_alien_shevaar_autopsy
 	race			shevaar
 	armour			false
 	size			1
@@ -261,18 +261,18 @@ team shevaar
 
 	names {
 		neutral {
-			Fsshw
-			Fhzwh
-			Fzszh
-			Sszwh
-			Swhzf
-			Szsfh
-			Whssf
-			Wwzhs
-			Wzszh
-			Zssfh
-			Zsfwz
-			Zwfss
+			"Fsshw"
+			"Fhzwh"
+			"Fzszh"
+			"Sszwh"
+			"Swhzf"
+			"Szsfh"
+			"Whssf"
+			"Wwzhs"
+			"Wzszh"
+			"Zssfh"
+			"Zsfwz"
+			"Zwfss"
 		}
 		lastname {
 			"Vso Zhozf"
@@ -292,25 +292,25 @@ team shevaar
 
 	models {
 		neutral {
-			aliens/shevaar body01 head01 0 0 // Body: Original brown skin, blue trousers, Head: Original brown skin
-			aliens/shevaar body01 head01 1 1 // Body: Dark red skin, light cyan trousers, Head: Original brown skin
-			aliens/shevaar body01 head01 2 2 // Body: Dark green skin, red trousers, Head: Original brown skin
-			aliens/shevaar body01 head02 0 0 // Body: Original brown skin, blue trousers, Head: dual-colored red skin
-			aliens/shevaar body01 head02 1 1 // Body: Dark red skin, light cyan trousers, Head: dual-colored red skin
-			aliens/shevaar body01 head02 2 2 // Body: Dark green skin, red trousers, Head: dual-colored red skin
-			aliens/shevaar body01 head03 0 0 // Body: Original brown skin, blue trousers, Head: dual-colored green skin
-			aliens/shevaar body01 head03 1 1 // Body: Dark red skin, light cyan trousers, Head: dual-colored green skin
-			aliens/shevaar body01 head03 2 2 // Body: Dark green skin, red trousers, Head: dual-colored green skin
+			"aliens/shevaar" "body01" "head01" 0 0 // Body: Original brown skin, blue trousers, Head: Original brown skin
+			"aliens/shevaar" "body01" "head01" 1 1 // Body: Dark red skin, light cyan trousers, Head: Original brown skin
+			"aliens/shevaar" "body01" "head01" 2 2 // Body: Dark green skin, red trousers, Head: Original brown skin
+			"aliens/shevaar" "body01" "head02" 0 0 // Body: Original brown skin, blue trousers, Head: dual-colored red skin
+			"aliens/shevaar" "body01" "head02" 1 1 // Body: Dark red skin, light cyan trousers, Head: dual-colored red skin
+			"aliens/shevaar" "body01" "head02" 2 2 // Body: Dark green skin, red trousers, Head: dual-colored red skin
+			"aliens/shevaar" "body01" "head03" 0 0 // Body: Original brown skin, blue trousers, Head: dual-colored green skin
+			"aliens/shevaar" "body01" "head03" 1 1 // Body: Dark red skin, light cyan trousers, Head: dual-colored green skin
+			"aliens/shevaar" "body01" "head03" 2 2 // Body: Dark green skin, red trousers, Head: dual-colored green skin
 		}
 	}
 
 	actorsounds {
 		neutral {
-			hurtsound aliens/shevaar/hurt1
-			hurtsound aliens/shevaar/hurt2
-			hurtsound aliens/shevaar/hurt3
-			deathsound aliens/shevaar/die1
-			deathsound aliens/shevaar/die2
+			hurtsound "aliens/shevaar/hurt1"
+			hurtsound "aliens/shevaar/hurt2"
+			hurtsound "aliens/shevaar/hurt3"
+			deathsound "aliens/shevaar/die1"
+			deathsound "aliens/shevaar/die2"
 		}
 	}
 
@@ -357,14 +357,14 @@ team shevaar
 team bloodspider
 {
 	name		"_Bloodspider"
-	tech		"rs_alien_bloodspider_autopsy"
+	tech		rs_alien_bloodspider_autopsy
 	race		bloodspider
 	armour		false
 	weapons		false
 	onlyWeapon	bloodspider_weapon
 	size		1
 	//hit_particle	none
-	death_texture	pics/sfx/blood/blood_oil_2
+	death_texture	"pics/sfx/blood/blood_oil_2"
 
 	names {
 		neutral {
@@ -399,20 +399,20 @@ team bloodspider
 
 	models {
 		neutral {
-			aliens/bloodspider bloodspider head 0 0
-			aliens/bloodspider bloodspider head 1 1
-			aliens/bloodspider bloodspider head 2 2
-			aliens/bloodspider bloodspider head 3 3
+			"aliens/bloodspider" "bloodspider" "head" 0 0
+			"aliens/bloodspider" "bloodspider" "head" 1 1
+			"aliens/bloodspider" "bloodspider" "head" 2 2
+			"aliens/bloodspider" "bloodspider" "head" 3 3
 		}
 	}
 
 	actorsounds {
 		neutral {
-			hurtsound aliens/bloodspider/hurt1
-			hurtsound aliens/bloodspider/hurt2
-			hurtsound aliens/bloodspider/hurt3
-			deathsound aliens/bloodspider/die1
-			deathsound aliens/bloodspider/die2
+			hurtsound "aliens/bloodspider/hurt1"
+			hurtsound "aliens/bloodspider/hurt2"
+			hurtsound "aliens/bloodspider/hurt3"
+			deathsound "aliens/bloodspider/die1"
+			deathsound "aliens/bloodspider/die2"
 		}
 	}
 

@@ -55,367 +55,367 @@
 
 team phalanx
 {
+	name	"_Phalanx"
 	size 1
 	hit_particle blood
-	name	"_Phalanx"
 
 	names {
 		female {
-			Aakriti
-			Abeba
-			Adina
-			Afra
-			Afua
-			Agnes
-			Ahalya
-			Aina
-			Aja
-			Albina
-			Alice
-			Allison
-			Amal
-			Amelia
-			An
-			Andrea
-			Anette
-			Angelica
-			Anita
-			Anna
-			Ansana
-			Asabi
-			Ashley
-			Asiya
-			Astrid
-			Ayar
-			Aza
-			Badieh
-			Bethany
-			Bianca
-			Binta
-			Carmella
-			Carmen
-			Caroline
-			Cassandra
-			Cassidy
-			Catherine
-			Chang
-			Charlotte
-			Dalila
-			Elaine
-			Eli
-			Elise
-			Eloise
-			Emma
-			Esmeralda
-			Essa
-			Evonne
-			Fadheela
-			Fathia
-			Fatima
-			Femke
-			Feng
-			Fola
-			Gaby
-			Geraldine
-			Gin
-			Girisha
-			Gurneet
-			Hendrika
-			Henna
-			Hisa
-			Hope
-			Ida
-			Ikraam
-			Irina
-			Iris
-			Jada
-			Jade
-			Jasminder
-			Jaspinder
-			Jessica
-			“Jia Li”
-			Julia
-			Kate
-			Katie
-			Keiko
-			Kim
-			Kirsi
-			Kyoko
-			Kyoumi
-			Larissa
-			Laure
-			Lauren
-			Lei
-			Lempi
-			Leona
-			Leonora
-			Leza
-			Lillian
-			Ling
-			“Li Qin”
-			Lorena
-			Lorraine
-			Lotte
-			Lucy
-			Magdalena
-			Manjusha
-			Marcella
-			Mareike
-			Maria
-			Mariana
-			Marit
-			Matsuko
-			Maud
-			Meike
-			Michelle
-			Mikayla
-			Mutsu
-			Nadezhda
-			Naeema
-			Nicole
-			Nini
-			Nyssa
-			Oksana
-			Olivia
-			Paige
-			Pirjo
-			Polina
-			Pranjeeta
-			Rafia
-			Rasha
-			Reem
-			Rei
-			Ruby
-			Ruhin
-			Sarah
-			Shakiko
-			Shamilya
-			Shuwei
-			Sophie
-			Soraya
-			Stephanie
-			Sudha
-			Suhayla
-			Sujitha
-			Sylvie
-			Tahlia
-			Taija
-			Tatijana
-			Tatu
-			Triveni
-			Ute
-			Wan
-			Wendy
-			Xena
-			Xia
-			Yasmeen
-			“Yi Min”
-			Yu
-			“Yue Yan”
-			Yvonne
-			Zahraa
-			Zalika
-			Zi
-			Zola
+			"Aakriti"
+			"Abeba"
+			"Adina"
+			"Afra"
+			"Afua"
+			"Agnes"
+			"Ahalya"
+			"Aina"
+			"Aja"
+			"Albina"
+			"Alice"
+			"Allison"
+			"Amal"
+			"Amelia"
+			"An"
+			"Andrea"
+			"Anette"
+			"Angelica"
+			"Anita"
+			"Anna"
+			"Ansana"
+			"Asabi"
+			"Ashley"
+			"Asiya"
+			"Astrid"
+			"Ayar"
+			"Aza"
+			"Badieh"
+			"Bethany"
+			"Bianca"
+			"Binta"
+			"Carmella"
+			"Carmen"
+			"Caroline"
+			"Cassandra"
+			"Cassidy"
+			"Catherine"
+			"Chang"
+			"Charlotte"
+			"Dalila"
+			"Elaine"
+			"Eli"
+			"Elise"
+			"Eloise"
+			"Emma"
+			"Esmeralda"
+			"Essa"
+			"Evonne"
+			"Fadheela"
+			"Fathia"
+			"Fatima"
+			"Femke"
+			"Feng"
+			"Fola"
+			"Gaby"
+			"Geraldine"
+			"Gin"
+			"Girisha"
+			"Gurneet"
+			"Hendrika"
+			"Henna"
+			"Hisa"
+			"Hope"
+			"Ida"
+			"Ikraam"
+			"Irina"
+			"Iris"
+			"Jada"
+			"Jade"
+			"Jasminder"
+			"Jaspinder"
+			"Jessica"
+			"Jia Li"
+			"Julia"
+			"Kate"
+			"Katie"
+			"Keiko"
+			"Kim"
+			"Kirsi"
+			"Kyoko"
+			"Kyoumi"
+			"Larissa"
+			"Laure"
+			"Lauren"
+			"Lei"
+			"Lempi"
+			"Leona"
+			"Leonora"
+			"Leza"
+			"Lillian"
+			"Ling"
+			"Li Qin"
+			"Lorena"
+			"Lorraine"
+			"Lotte"
+			"Lucy"
+			"Magdalena"
+			"Manjusha"
+			"Marcella"
+			"Mareike"
+			"Maria"
+			"Mariana"
+			"Marit"
+			"Matsuko"
+			"Maud"
+			"Meike"
+			"Michelle"
+			"Mikayla"
+			"Mutsu"
+			"Nadezhda"
+			"Naeema"
+			"Nicole"
+			"Nini"
+			"Nyssa"
+			"Oksana"
+			"Olivia"
+			"Paige"
+			"Pirjo"
+			"Polina"
+			"Pranjeeta"
+			"Rafia"
+			"Rasha"
+			"Reem"
+			"Rei"
+			"Ruby"
+			"Ruhin"
+			"Sarah"
+			"Shakiko"
+			"Shamilya"
+			"Shuwei"
+			"Sophie"
+			"Soraya"
+			"Stephanie"
+			"Sudha"
+			"Suhayla"
+			"Sujitha"
+			"Sylvie"
+			"Tahlia"
+			"Taija"
+			"Tatijana"
+			"Tatu"
+			"Triveni"
+			"Ute"
+			"Wan"
+			"Wendy"
+			"Xena"
+			"Xia"
+			"Yasmeen"
+			"Yi Min"
+			"Yu"
+			"Yue Yan"
+			"Yvonne"
+			"Zahraa"
+			"Zalika"
+			"Zi"
+			"Zola"
 		}
 
 		male {
-			Abdul-Majid
-			Adham
-			Adofo
-			Ahmed
-			Akalpreet
-			Alexander
-			Ali
-			Alif
-			Alwin
-			Aman
-			Ameet
-			Andre
-			Andreas
-			Angus
-			Antti
-			Artur
-			Atamveer
-			Azibo
-			Barindra
-			Bas
-			Benoit
-			Bindusar
-			Bjorn
-			Braden
-			Calvin
-			Camara
-			Carlos
-			Christophe
-			Cole
-			Din
-			Dmitry
-			Dobi
-			Donovan
-			Emeralde
-			Emil
-			Emmanuel
-			Eppu
-			Eric
-			Ethan
-			Fai
-			Farran
-			Flip
-			Fynn
-			Gavriil
-			Getulio
-			Giancarlo
-			Gogula
-			Guillaume
-			Gustavo
-			Habib
-			Hans
-			Hao
-			Harjyot
-			Harpreet
-			Harrison
-			Henk
-			Henri
-			Hiro
-			Hiroshi
-			Ho
-			Inderjeet
-			Jabez
-			Jacob
-			Jahi
-			James
-			Jan
-			Jarno
-			Jason
-			Jasper
-			Jassir
-			Javier
-			Jiro
-			Kaiden
-			Kenjiro
-			Kulvir
-			Lars
-			Lei
-			Leo
-			Long
-			Ludovic
-			Mahmoud
-			Mallesh
-			Manuel
-			Manute
-			Mao
-			Marc
-			Marco
-			Mario
-			Mark
-			Martin
+			"Abdul-Majid"
+			"Adham"
+			"Adofo"
+			"Ahmed"
+			"Akalpreet"
+			"Alexander"
+			"Ali"
+			"Alif"
+			"Alwin"
+			"Aman"
+			"Ameet"
+			"Andre"
+			"Andreas"
+			"Angus"
+			"Antti"
+			"Artur"
+			"Atamveer"
+			"Azibo"
+			"Barindra"
+			"Bas"
+			"Benoit"
+			"Bindusar"
+			"Bjorn"
+			"Braden"
+			"Calvin"
+			"Camara"
+			"Carlos"
+			"Christophe"
+			"Cole"
+			"Din"
+			"Dmitry"
+			"Dobi"
+			"Donovan"
+			"Emeralde"
+			"Emil"
+			"Emmanuel"
+			"Eppu"
+			"Eric"
+			"Ethan"
+			"Fai"
+			"Farran"
+			"Flip"
+			"Fynn"
+			"Gavriil"
+			"Getulio"
+			"Giancarlo"
+			"Gogula"
+			"Guillaume"
+			"Gustavo"
+			"Habib"
+			"Hans"
+			"Hao"
+			"Harjyot"
+			"Harpreet"
+			"Harrison"
+			"Henk"
+			"Henri"
+			"Hiro"
+			"Hiroshi"
+			"Ho"
+			"Inderjeet"
+			"Jabez"
+			"Jacob"
+			"Jahi"
+			"James"
+			"Jan"
+			"Jarno"
+			"Jason"
+			"Jasper"
+			"Jassir"
+			"Javier"
+			"Jiro"
+			"Kaiden"
+			"Kenjiro"
+			"Kulvir"
+			"Lars"
+			"Lei"
+			"Leo"
+			"Long"
+			"Ludovic"
+			"Mahmoud"
+			"Mallesh"
+			"Manuel"
+			"Manute"
+			"Mao"
+			"Marc"
+			"Marco"
+			"Mario"
+			"Mark"
+			"Martin"
 			"Martin Alejandro"
-			Matsuhiro
-			Matthew
-			Matti
-			Max
-			Michel
-			Midas
-			Mika
-			Mikhail
-			Mitchell
-			Naa'il
-			Negus
-			Nicholas
-			Nils
-			Nischal
-			Oko
-			Olaf
-			Omar
-			Pavel
-			Peter
-			Phillip
-			Pim
-			Pramodan
-			Pyotr
-			Rafael
-			Rajab
-			Rehyaaz
-			Ricardo
-			Riley
-			Roel
-			Rolf
-			Roman
-			Rune
-			Ryan
-			Salman
-			Sam
-			Samuel
-			Sander
-			Saurav
-			Sayeshan
-			Shawn
-			Shiro
-			Stephane
-			Sun
-			Sven
-			Sying
-			Talon
-			Tarik
-			Thierry
-			Thomas
-			Trevor
-			Tyler
-			Uttamesh
-			Vincent
-			Vitaliy
-			Vitaly
-			Waa'il
-			Xavier
-			Yoshi
-			Yves
-			Zuberi
+			"Matsuhiro"
+			"Matthew"
+			"Matti"
+			"Max"
+			"Michel"
+			"Midas"
+			"Mika"
+			"Mikhail"
+			"Mitchell"
+			"Naa'il"
+			"Negus"
+			"Nicholas"
+			"Nils"
+			"Nischal"
+			"Oko"
+			"Olaf"
+			"Omar"
+			"Pavel"
+			"Peter"
+			"Phillip"
+			"Pim"
+			"Pramodan"
+			"Pyotr"
+			"Rafael"
+			"Rajab"
+			"Rehyaaz"
+			"Ricardo"
+			"Riley"
+			"Roel"
+			"Rolf"
+			"Roman"
+			"Rune"
+			"Ryan"
+			"Salman"
+			"Sam"
+			"Samuel"
+			"Sander"
+			"Saurav"
+			"Sayeshan"
+			"Shawn"
+			"Shiro"
+			"Stephane"
+			"Sun"
+			"Sven"
+			"Sying"
+			"Talon"
+			"Tarik"
+			"Thierry"
+			"Thomas"
+			"Trevor"
+			"Tyler"
+			"Uttamesh"
+			"Vincent"
+			"Vitaliy"
+			"Vitaly"
+			"Waa'il"
+			"Xavier"
+			"Yoshi"
+			"Yves"
+			"Zuberi"
 		}
 
 		lastname {
 			"Ab Del Farak"
 			"Abu Rajab"
-			Adedayo
-			Agharia
-			Ahonen
-			Ahmadi
-			Akinkuotu
+			"Adedayo"
+			"Agharia"
+			"Ahonen"
+			"Ahmadi"
+			"Akinkuotu"
 			"Al Capone"
 			"Al Din"
 			"Al Ghadban"
 			"Al Hashimi"
 			"Al Hussein"
 			"Al Masri"
-			Anderson
-			Arafat
-			Assar
-			Avitabile
-			Bakken
-			Baldwin
-			Basantaray
-			Basset
-			Beard
-			Beaudouin
-			Beaumont
-			Berg
-			Bhat
-			Bodine
-			Boe
-			Boing
-			Bouzid
-			Bradford
-			Braun
-			Buckner
-			Bussey
-			Chan
-			Chardonais
-			Checa
-			Chernovsky
-			Coffey
-			Danielsen
-			Das
-			D'Aubigne
+			"Anderson"
+			"Arafat"
+			"Assar"
+			"Avitabile"
+			"Bakken"
+			"Baldwin"
+			"Basantaray"
+			"Basset"
+			"Beard"
+			"Beaudouin"
+			"Beaumont"
+			"Berg"
+			"Bhat"
+			"Bodine"
+			"Boe"
+			"Boing"
+			"Bouzid"
+			"Bradford"
+			"Braun"
+			"Buckner"
+			"Bussey"
+			"Chan"
+			"Chardonais"
+			"Checa"
+			"Chernovsky"
+			"Coffey"
+			"Danielsen"
+			"Das"
+			"D'Aubigne"
 			"de Boer"
 			"de Bruine"
 			"de Calderac"
@@ -423,137 +423,137 @@ team phalanx
 			"de Jesus"
 			"de la Rosa"
 			"de Vries"
-			Dekkers
-			Dijkstra
-			Dixit
-			Dong
-			Dubey
-			Dunlap
-			Dzhugashvili
-			Eitl
-			Ewegbemi
-			Eweji
-			Filippov
-			Finet
-			Fuentes
-			Fuijwara
-			Gavrilov
-			Ghate
-			Groisman
-			Guha
-			Haley
-			Haqzouk
-			Hardy
-			Harris
-			Hashimoto
-			Hassan
-			Hegede
-			Heikkinen
-			Helminen
-			Hendriks
-			Henriksen
-			Herring
-			Herrmann
-			Holland
-			Huong
-			Idowu
-			Ifasen
-			Ivanov
-			Iyengar
-			Jadhav
-			Jaitley
-			Jansen
-			Jefferson
-			Johnson
-			Karasev
-			Kaul
-			Khaleq
-			Kirk
-			Kloot
-			Kohler
-			Koster
-			Kosygin
-			Kurkela
-			Kuzmin
-			Kuznetzov
-			Lahiri
-			Lai
-			Laurens
-			Lee
-			Lehmann
-			Levine
-			L'Hostis
-			Li
-			Lien
-			Lu
-			Lukashenko
-			Luo
-			Macias
-			Maier
-			Martin
-			McClain
-			McDonald
-			Meijer
-			Melton
-			Mendez
-			Mohanta
-			Mubarak
-			Naess
-			Nahimov
-			Nakamura
-			Novak
-			Ogawa
-			Ola
-			Olakuotu
-			Parsons
-			Pavluk
-			Pekkala
-			Perkiokangas
-			Peters
-			Pillai
-			Pizarro
-			Prabhu
-			Qian
-			Raju
-			Ramirez
-			Rao
-			Rasheed
-			Rintala
-			Rowland
-			Ryan
-			Saitou
-			Sakamoto
-			Samusenko
-			Sanchez
-			Sandvik
-			Santos
-			Schmidt
-			Schroeder
-			Schultze
-			Schwartz
-			Seidl
-			Sergeev
-			Sharif
-			Simizu
-			Sivertsen
-			Snow
-			Solomon
-			Song
-			Su
-			Sulaiman
-			Suzuki
-			Takagi
-			Tao
-			Taskinen
-			Taylor
-			Thomas
-			Tickoo
-			Tilet
-			Timofeev
-			Tomihira
-			Tyson
-			Ushakov
-			Valdez
+			"Dekkers"
+			"Dijkstra"
+			"Dixit"
+			"Dong"
+			"Dubey"
+			"Dunlap"
+			"Dzhugashvili"
+			"Eitl"
+			"Ewegbemi"
+			"Eweji"
+			"Filippov"
+			"Finet"
+			"Fuentes"
+			"Fuijwara"
+			"Gavrilov"
+			"Ghate"
+			"Groisman"
+			"Guha"
+			"Haley"
+			"Haqzouk"
+			"Hardy"
+			"Harris"
+			"Hashimoto"
+			"Hassan"
+			"Hegede"
+			"Heikkinen"
+			"Helminen"
+			"Hendriks"
+			"Henriksen"
+			"Herring"
+			"Herrmann"
+			"Holland"
+			"Huong"
+			"Idowu"
+			"Ifasen"
+			"Ivanov"
+			"Iyengar"
+			"Jadhav"
+			"Jaitley"
+			"Jansen"
+			"Jefferson"
+			"Johnson"
+			"Karasev"
+			"Kaul"
+			"Khaleq"
+			"Kirk"
+			"Kloot"
+			"Kohler"
+			"Koster"
+			"Kosygin"
+			"Kurkela"
+			"Kuzmin"
+			"Kuznetzov"
+			"Lahiri"
+			"Lai"
+			"Laurens"
+			"Lee"
+			"Lehmann"
+			"Levine"
+			"L'Hostis"
+			"Li"
+			"Lien"
+			"Lu"
+			"Lukashenko"
+			"Luo"
+			"Macias"
+			"Maier"
+			"Martin"
+			"McClain"
+			"McDonald"
+			"Meijer"
+			"Melton"
+			"Mendez"
+			"Mohanta"
+			"Mubarak"
+			"Naess"
+			"Nahimov"
+			"Nakamura"
+			"Novak"
+			"Ogawa"
+			"Ola"
+			"Olakuotu"
+			"Parsons"
+			"Pavluk"
+			"Pekkala"
+			"Perkiokangas"
+			"Peters"
+			"Pillai"
+			"Pizarro"
+			"Prabhu"
+			"Qian"
+			"Raju"
+			"Ramirez"
+			"Rao"
+			"Rasheed"
+			"Rintala"
+			"Rowland"
+			"Ryan"
+			"Saitou"
+			"Sakamoto"
+			"Samusenko"
+			"Sanchez"
+			"Sandvik"
+			"Santos"
+			"Schmidt"
+			"Schroeder"
+			"Schultze"
+			"Schwartz"
+			"Seidl"
+			"Sergeev"
+			"Sharif"
+			"Simizu"
+			"Sivertsen"
+			"Snow"
+			"Solomon"
+			"Song"
+			"Su"
+			"Sulaiman"
+			"Suzuki"
+			"Takagi"
+			"Tao"
+			"Taskinen"
+			"Taylor"
+			"Thomas"
+			"Tickoo"
+			"Tilet"
+			"Timofeev"
+			"Tomihira"
+			"Tyson"
+			"Ushakov"
+			"Valdez"
 			"van Aars"
 			"van de Wijdeven"
 			"van Dorp"
@@ -561,83 +561,83 @@ team phalanx
 			"van Nispen"
 			"van Oeteldonk"
 			"van Veen"
-			Vasilenko
-			Vasquez
-			Velez
-			Vermeulen
-			Villarreal
-			Vyhodcev
-			Walker
-			Weissenbach
-			White
-			Williams
-			Yang
-			Yu
-			Zahar
-			Zamora
-			Zavala
-			Zhang
+			"Vasilenko"
+			"Vasquez"
+			"Velez"
+			"Vermeulen"
+			"Villarreal"
+			"Vyhodcev"
+			"Walker"
+			"Weissenbach"
+			"White"
+			"Williams"
+			"Yang"
+			"Yu"
+			"Zahar"
+			"Zamora"
+			"Zavala"
+			"Zhang"
 		}
 	}
 
 	models {
 		female {
-			soldiers/female body head01 0 0
-			soldiers/female body head02 0 0
-			soldiers/female body head02 0 1
-			soldiers/female body head03 0 0
-			soldiers/female body head04 0 0
-			soldiers/female body head05 0 0
-			soldiers/female body head06 0 0
-			soldiers/female body head07 0 0
+			"soldiers/female" "body" "head01" 0 0
+			"soldiers/female" "body" "head02" 0 0
+			"soldiers/female" "body" "head02" 0 1
+			"soldiers/female" "body" "head03" 0 0
+			"soldiers/female" "body" "head04" 0 0
+			"soldiers/female" "body" "head05" 0 0
+			"soldiers/female" "body" "head06" 0 0
+			"soldiers/female" "body" "head07" 0 0
 		}
 
 		male {
-			soldiers/male body head01 0 0
-			soldiers/male body head01 0 1
-			soldiers/male body head01 0 2
-			soldiers/male body head01 0 3
-			soldiers/male body head02 0 0
-			soldiers/male body head03 0 0
-			soldiers/male body head04 0 0
-			soldiers/male body head05 0 0
+			"soldiers/male" "body" "head01" 0 0
+			"soldiers/male" "body" "head01" 0 1
+			"soldiers/male" "body" "head01" 0 2
+			"soldiers/male" "body" "head01" 0 3
+			"soldiers/male" "body" "head02" 0 0
+			"soldiers/male" "body" "head03" 0 0
+			"soldiers/male" "body" "head04" 0 0
+			"soldiers/male" "body" "head05" 0 0
 		}
 	}
 
 	actorsounds {
 		female {
-			hurtsound	soldiers/femalehurt01
-			hurtsound	soldiers/femalehurt02
-			hurtsound	soldiers/femalehurt03
-			hurtsound	soldiers/femalehurt04
-			deathsound	soldiers/femaledeath01
-			deathsound	soldiers/femaledeath02
-			deathsound	soldiers/femaledeath03
-			deathsound	soldiers/femaledeath04
-			deathsound	soldiers/femaledeath05
-			deathsound	soldiers/femaledeath06
+			hurtsound	"soldiers/femalehurt01"
+			hurtsound	"soldiers/femalehurt02"
+			hurtsound	"soldiers/femalehurt03"
+			hurtsound	"soldiers/femalehurt04"
+			deathsound	"soldiers/femaledeath01"
+			deathsound	"soldiers/femaledeath02"
+			deathsound	"soldiers/femaledeath03"
+			deathsound	"soldiers/femaledeath04"
+			deathsound	"soldiers/femaledeath05"
+			deathsound	"soldiers/femaledeath06"
 		}
 		male {
-			hurtsound 	soldiers/malehurt01
-			hurtsound 	soldiers/malehurt02
-			hurtsound 	soldiers/malehurt03
-			hurtsound 	soldiers/malehurt04
-			hurtsound 	soldiers/malehurt05
-			hurtsound 	soldiers/malehurt06
-			hurtsound 	soldiers/malehurt07
-			hurtsound 	soldiers/malehurt08
-			hurtsound 	soldiers/malehurt09
-			hurtsound 	soldiers/malehurt10
-			hurtsound 	soldiers/malehurt11
-			hurtsound 	soldiers/malehurt12
-			hurtsound 	soldiers/malehurt13
-			deathsound	soldiers/maledeath01
-			deathsound	soldiers/maledeath02
-			deathsound	soldiers/maledeath03
-			deathsound	soldiers/maledeath04
-			deathsound	soldiers/maledeath05
-			deathsound	soldiers/maledeath06
-			deathsound	soldiers/maledeath07
+			hurtsound 	"soldiers/malehurt01"
+			hurtsound 	"soldiers/malehurt02"
+			hurtsound 	"soldiers/malehurt03"
+			hurtsound 	"soldiers/malehurt04"
+			hurtsound 	"soldiers/malehurt05"
+			hurtsound 	"soldiers/malehurt06"
+			hurtsound 	"soldiers/malehurt07"
+			hurtsound 	"soldiers/malehurt08"
+			hurtsound 	"soldiers/malehurt09"
+			hurtsound 	"soldiers/malehurt10"
+			hurtsound 	"soldiers/malehurt11"
+			hurtsound 	"soldiers/malehurt12"
+			hurtsound 	"soldiers/malehurt13"
+			deathsound	"soldiers/maledeath01"
+			deathsound	"soldiers/maledeath02"
+			deathsound	"soldiers/maledeath03"
+			deathsound	"soldiers/maledeath04"
+			deathsound	"soldiers/maledeath05"
+			deathsound	"soldiers/maledeath06"
+			deathsound	"soldiers/maledeath07"
 		}
 	}
 	templates {
@@ -658,370 +658,370 @@ team phalanx
 
 team phalanx_scientist
 {
+	name	"_Scientist"
 	size 1
 	hit_particle blood
-	name	"_Scientist"
 	weapons	false
 	armour	false
 	race	civilian
 
 	names {
 		female {
-			Aakriti
-			Abeba
-			Adina
-			Afra
-			Afua
-			Agnes
-			Ahalya
-			Aina
-			Aja
-			Albina
-			Alice
-			Allison
-			Amal
-			Amelia
-			An
-			Andrea
-			Anette
-			Angelica
-			Anita
-			Anna
-			Ansana
-			Asabi
-			Ashley
-			Asiya
-			Astrid
-			Ayar
-			Aza
-			Badieh
-			Bethany
-			Bianca
-			Binta
-			Carmella
-			Carmen
-			Caroline
-			Cassandra
-			Cassidy
-			Catherine
-			Chang
-			Charlotte
-			Dalila
-			Elaine
-			Eli
-			Elise
-			Eloise
-			Emma
-			Esmeralda
-			Essa
-			Evonne
-			Fadheela
-			Fathia
-			Fatima
-			Femke
-			Feng
-			Fola
-			Gaby
-			Geraldine
-			Gin
-			Girisha
-			Gurneet
-			Hendrika
-			Henna
-			Hisa
-			Hope
-			Ida
-			Ikraam
-			Irina
-			Iris
-			Jada
-			Jade
-			Jasminder
-			Jaspinder
-			Jessica
-			“Jia Li”
-			Julia
-			Kate
-			Katie
-			Keiko
-			Kim
-			Kirsi
-			Kyoko
-			Kyoumi
-			Larissa
-			Laure
-			Lauren
-			Lei
-			Lempi
-			Leona
-			Leonora
-			Leza
-			Lillian
-			Ling
-			“Li Qin”
-			Lorena
-			Lorraine
-			Lotte
-			Lucy
-			Magdalena
-			Manjusha
-			Marcella
-			Mareike
-			Maria
-			Mariana
-			Marit
-			Matsuko
-			Maud
-			Meike
-			Michelle
-			Mikayla
-			Mutsu
-			Nadezhda
-			Naeema
-			Nicole
-			Nini
-			Nyssa
-			Oksana
-			Olivia
-			Paige
-			Pirjo
-			Polina
-			Pranjeeta
-			Rafia
-			Rasha
-			Reem
-			Rei
-			Ruby
-			Ruhin
-			Sarah
-			Shakiko
-			Shamilya
-			Shuwei
-			Sophie
-			Soraya
-			Stephanie
-			Sudha
-			Suhayla
-			Sujitha
-			Sylvie
-			Tahlia
-			Taija
-			Tatijana
-			Tatu
-			Triveni
-			Ute
-			Wan
-			Wendy
-			Xena
-			Xia
-			Yasmeen
-			“Yi Min”
-			Yu
-			“Yue Yan”
-			Yvonne
-			Zahraa
-			Zalika
-			Zi
-			Zola
+			"Aakriti"
+			"Abeba"
+			"Adina"
+			"Afra"
+			"Afua"
+			"Agnes"
+			"Ahalya"
+			"Aina"
+			"Aja"
+			"Albina"
+			"Alice"
+			"Allison"
+			"Amal"
+			"Amelia"
+			"An"
+			"Andrea"
+			"Anette"
+			"Angelica"
+			"Anita"
+			"Anna"
+			"Ansana"
+			"Asabi"
+			"Ashley"
+			"Asiya"
+			"Astrid"
+			"Ayar"
+			"Aza"
+			"Badieh"
+			"Bethany"
+			"Bianca"
+			"Binta"
+			"Carmella"
+			"Carmen"
+			"Caroline"
+			"Cassandra"
+			"Cassidy"
+			"Catherine"
+			"Chang"
+			"Charlotte"
+			"Dalila"
+			"Elaine"
+			"Eli"
+			"Elise"
+			"Eloise"
+			"Emma"
+			"Esmeralda"
+			"Essa"
+			"Evonne"
+			"Fadheela"
+			"Fathia"
+			"Fatima"
+			"Femke"
+			"Feng"
+			"Fola"
+			"Gaby"
+			"Geraldine"
+			"Gin"
+			"Girisha"
+			"Gurneet"
+			"Hendrika"
+			"Henna"
+			"Hisa"
+			"Hope"
+			"Ida"
+			"Ikraam"
+			"Irina"
+			"Iris"
+			"Jada"
+			"Jade"
+			"Jasminder"
+			"Jaspinder"
+			"Jessica"
+			"Jia Li"
+			"Julia"
+			"Kate"
+			"Katie"
+			"Keiko"
+			"Kim"
+			"Kirsi"
+			"Kyoko"
+			"Kyoumi"
+			"Larissa"
+			"Laure"
+			"Lauren"
+			"Lei"
+			"Lempi"
+			"Leona"
+			"Leonora"
+			"Leza"
+			"Lillian"
+			"Ling"
+			"Li Qin"
+			"Lorena"
+			"Lorraine"
+			"Lotte"
+			"Lucy"
+			"Magdalena"
+			"Manjusha"
+			"Marcella"
+			"Mareike"
+			"Maria"
+			"Mariana"
+			"Marit"
+			"Matsuko"
+			"Maud"
+			"Meike"
+			"Michelle"
+			"Mikayla"
+			"Mutsu"
+			"Nadezhda"
+			"Naeema"
+			"Nicole"
+			"Nini"
+			"Nyssa"
+			"Oksana"
+			"Olivia"
+			"Paige"
+			"Pirjo"
+			"Polina"
+			"Pranjeeta"
+			"Rafia"
+			"Rasha"
+			"Reem"
+			"Rei"
+			"Ruby"
+			"Ruhin"
+			"Sarah"
+			"Shakiko"
+			"Shamilya"
+			"Shuwei"
+			"Sophie"
+			"Soraya"
+			"Stephanie"
+			"Sudha"
+			"Suhayla"
+			"Sujitha"
+			"Sylvie"
+			"Tahlia"
+			"Taija"
+			"Tatijana"
+			"Tatu"
+			"Triveni"
+			"Ute"
+			"Wan"
+			"Wendy"
+			"Xena"
+			"Xia"
+			"Yasmeen"
+			"Yi Min"
+			"Yu"
+			"Yue Yan"
+			"Yvonne"
+			"Zahraa"
+			"Zalika"
+			"Zi"
+			"Zola"
 		}
 
 		male {
-			Abdul-Majid
-			Adham
-			Adofo
-			Ahmed
-			Akalpreet
-			Alexander
-			Ali
-			Alif
-			Alwin
-			Aman
-			Ameet
-			Andre
-			Andreas
-			Angus
-			Antti
-			Artur
-			Atamveer
-			Azibo
-			Barindra
-			Bas
-			Benoit
-			Bindusar
-			Bjorn
-			Braden
-			Calvin
-			Camara
-			Carlos
-			Christophe
-			Cole
-			Din
-			Dmitry
-			Dobi
-			Donovan
-			Emeralde
-			Emil
-			Emmanuel
-			Eppu
-			Eric
-			Ethan
-			Fai
-			Farran
-			Flip
-			Fynn
-			Gavriil
-			Getulio
-			Giancarlo
-			Gogula
-			Guillaume
-			Gustavo
-			Habib
-			Hans
-			Hao
-			Harjyot
-			Harpreet
-			Harrison
-			Henk
-			Henri
-			Hiro
-			Hiroshi
-			Ho
-			Inderjeet
-			Jabez
-			Jacob
-			Jahi
-			James
-			Jan
-			Jarno
-			Jason
-			Jasper
-			Jassir
-			Javier
-			Jiro
-			Kaiden
-			Kenjiro
-			Kulvir
-			Lars
-			Lei
-			Leo
-			Long
-			Ludovic
-			Mahmoud
-			Mallesh
-			Manuel
-			Manute
-			Mao
-			Marc
-			Marco
-			Mario
-			Mark
-			Martin
+			"Abdul-Majid"
+			"Adham"
+			"Adofo"
+			"Ahmed"
+			"Akalpreet"
+			"Alexander"
+			"Ali"
+			"Alif"
+			"Alwin"
+			"Aman"
+			"Ameet"
+			"Andre"
+			"Andreas"
+			"Angus"
+			"Antti"
+			"Artur"
+			"Atamveer"
+			"Azibo"
+			"Barindra"
+			"Bas"
+			"Benoit"
+			"Bindusar"
+			"Bjorn"
+			"Braden"
+			"Calvin"
+			"Camara"
+			"Carlos"
+			"Christophe"
+			"Cole"
+			"Din"
+			"Dmitry"
+			"Dobi"
+			"Donovan"
+			"Emeralde"
+			"Emil"
+			"Emmanuel"
+			"Eppu"
+			"Eric"
+			"Ethan"
+			"Fai"
+			"Farran"
+			"Flip"
+			"Fynn"
+			"Gavriil"
+			"Getulio"
+			"Giancarlo"
+			"Gogula"
+			"Guillaume"
+			"Gustavo"
+			"Habib"
+			"Hans"
+			"Hao"
+			"Harjyot"
+			"Harpreet"
+			"Harrison"
+			"Henk"
+			"Henri"
+			"Hiro"
+			"Hiroshi"
+			"Ho"
+			"Inderjeet"
+			"Jabez"
+			"Jacob"
+			"Jahi"
+			"James"
+			"Jan"
+			"Jarno"
+			"Jason"
+			"Jasper"
+			"Jassir"
+			"Javier"
+			"Jiro"
+			"Kaiden"
+			"Kenjiro"
+			"Kulvir"
+			"Lars"
+			"Lei"
+			"Leo"
+			"Long"
+			"Ludovic"
+			"Mahmoud"
+			"Mallesh"
+			"Manuel"
+			"Manute"
+			"Mao"
+			"Marc"
+			"Marco"
+			"Mario"
+			"Mark"
+			"Martin"
 			"Martin Alejandro"
-			Matsuhiro
-			Matthew
-			Matti
-			Max
-			Michel
-			Midas
-			Mika
-			Mikhail
-			Mitchell
-			Naa'il
-			Negus
-			Nicholas
-			Nils
-			Nischal
-			Oko
-			Olaf
-			Omar
-			Pavel
-			Peter
-			Phillip
-			Pim
-			Pramodan
-			Pyotr
-			Rafael
-			Rajab
-			Rehyaaz
-			Ricardo
-			Riley
-			Roel
-			Rolf
-			Roman
-			Rune
-			Ryan
-			Salman
-			Sam
-			Samuel
-			Sander
-			Saurav
-			Sayeshan
-			Shawn
-			Shiro
-			Stephane
-			Sun
-			Sven
-			Sying
-			Talon
-			Tarik
-			Thierry
-			Thomas
-			Trevor
-			Tyler
-			Uttamesh
-			Vincent
-			Vitaliy
-			Vitaly
-			Waa'il
-			Xavier
-			Yoshi
-			Yves
-			Zuberi
+			"Matsuhiro"
+			"Matthew"
+			"Matti"
+			"Max"
+			"Michel"
+			"Midas"
+			"Mika"
+			"Mikhail"
+			"Mitchell"
+			"Naa'il"
+			"Negus"
+			"Nicholas"
+			"Nils"
+			"Nischal"
+			"Oko"
+			"Olaf"
+			"Omar"
+			"Pavel"
+			"Peter"
+			"Phillip"
+			"Pim"
+			"Pramodan"
+			"Pyotr"
+			"Rafael"
+			"Rajab"
+			"Rehyaaz"
+			"Ricardo"
+			"Riley"
+			"Roel"
+			"Rolf"
+			"Roman"
+			"Rune"
+			"Ryan"
+			"Salman"
+			"Sam"
+			"Samuel"
+			"Sander"
+			"Saurav"
+			"Sayeshan"
+			"Shawn"
+			"Shiro"
+			"Stephane"
+			"Sun"
+			"Sven"
+			"Sying"
+			"Talon"
+			"Tarik"
+			"Thierry"
+			"Thomas"
+			"Trevor"
+			"Tyler"
+			"Uttamesh"
+			"Vincent"
+			"Vitaliy"
+			"Vitaly"
+			"Waa'il"
+			"Xavier"
+			"Yoshi"
+			"Yves"
+			"Zuberi"
 		}
 
 		lastname {
 			"Ab Del Farak"
 			"Abu Rajab"
-			Adedayo
-			Agharia
-			Ahonen
-			Ahmadi
-			Akinkuotu
+			"Adedayo"
+			"Agharia"
+			"Ahonen"
+			"Ahmadi"
+			"Akinkuotu"
 			"Al Capone"
 			"Al Din"
 			"Al Ghadban"
 			"Al Hashimi"
 			"Al Hussein"
 			"Al Masri"
-			Anderson
-			Arafat
-			Assar
-			Avitabile
-			Bakken
-			Baldwin
-			Basantaray
-			Basset
-			Beard
-			Beaudouin
-			Beaumont
-			Berg
-			Bhat
-			Bodine
-			Boe
-			Boing
-			Bouzid
-			Bradford
-			Braun
-			Buckner
-			Bussey
-			Chan
-			Chardonais
-			Checa
-			Chernovsky
-			Coffey
-			Danielsen
-			Das
-			D'Aubigne
+			"Anderson"
+			"Arafat"
+			"Assar"
+			"Avitabile"
+			"Bakken"
+			"Baldwin"
+			"Basantaray"
+			"Basset"
+			"Beard"
+			"Beaudouin"
+			"Beaumont"
+			"Berg"
+			"Bhat"
+			"Bodine"
+			"Boe"
+			"Boing"
+			"Bouzid"
+			"Bradford"
+			"Braun"
+			"Buckner"
+			"Bussey"
+			"Chan"
+			"Chardonais"
+			"Checa"
+			"Chernovsky"
+			"Coffey"
+			"Danielsen"
+			"Das"
+			"D'Aubigne"
 			"de Boer"
 			"de Bruine"
 			"de Calderac"
@@ -1029,137 +1029,137 @@ team phalanx_scientist
 			"de Jesus"
 			"de la Rosa"
 			"de Vries"
-			Dekkers
-			Dijkstra
-			Dixit
-			Dong
-			Dubey
-			Dunlap
-			Dzhugashvili
-			Eitl
-			Ewegbemi
-			Eweji
-			Filippov
-			Finet
-			Fuentes
-			Fuijwara
-			Gavrilov
-			Ghate
-			Groisman
-			Guha
-			Haley
-			Haqzouk
-			Hardy
-			Harris
-			Hashimoto
-			Hassan
-			Hegede
-			Heikkinen
-			Helminen
-			Hendriks
-			Henriksen
-			Herring
-			Herrmann
-			Holland
-			Huong
-			Idowu
-			Ifasen
-			Ivanov
-			Iyengar
-			Jadhav
-			Jaitley
-			Jansen
-			Jefferson
-			Johnson
-			Karasev
-			Kaul
-			Khaleq
-			Kirk
-			Kloot
-			Kohler
-			Koster
-			Kosygin
-			Kurkela
-			Kuzmin
-			Kuznetzov
-			Lahiri
-			Lai
-			Laurens
-			Lee
-			Lehmann
-			Levine
-			L'Hostis
-			Li
-			Lien
-			Lu
-			Lukashenko
-			Luo
-			Macias
-			Maier
-			Martin
-			McClain
-			McDonald
-			Meijer
-			Melton
-			Mendez
-			Mohanta
-			Mubarak
-			Naess
-			Nahimov
-			Nakamura
-			Novak
-			Ogawa
-			Ola
-			Olakuotu
-			Parsons
-			Pavluk
-			Pekkala
-			Perkiokangas
-			Peters
-			Pillai
-			Pizarro
-			Prabhu
-			Qian
-			Raju
-			Ramirez
-			Rao
-			Rasheed
-			Rintala
-			Rowland
-			Ryan
-			Saitou
-			Sakamoto
-			Samusenko
-			Sanchez
-			Sandvik
-			Santos
-			Schmidt
-			Schroeder
-			Schultze
-			Schwartz
-			Seidl
-			Sergeev
-			Sharif
-			Simizu
-			Sivertsen
-			Snow
-			Solomon
-			Song
-			Su
-			Sulaiman
-			Suzuki
-			Takagi
-			Tao
-			Taskinen
-			Taylor
-			Thomas
-			Tickoo
-			Tilet
-			Timofeev
-			Tomihira
-			Tyson
-			Ushakov
-			Valdez
+			"Dekkers"
+			"Dijkstra"
+			"Dixit"
+			"Dong"
+			"Dubey"
+			"Dunlap"
+			"Dzhugashvili"
+			"Eitl"
+			"Ewegbemi"
+			"Eweji"
+			"Filippov"
+			"Finet"
+			"Fuentes"
+			"Fuijwara"
+			"Gavrilov"
+			"Ghate"
+			"Groisman"
+			"Guha"
+			"Haley"
+			"Haqzouk"
+			"Hardy"
+			"Harris"
+			"Hashimoto"
+			"Hassan"
+			"Hegede"
+			"Heikkinen"
+			"Helminen"
+			"Hendriks"
+			"Henriksen"
+			"Herring"
+			"Herrmann"
+			"Holland"
+			"Huong"
+			"Idowu"
+			"Ifasen"
+			"Ivanov"
+			"Iyengar"
+			"Jadhav"
+			"Jaitley"
+			"Jansen"
+			"Jefferson"
+			"Johnson"
+			"Karasev"
+			"Kaul"
+			"Khaleq"
+			"Kirk"
+			"Kloot"
+			"Kohler"
+			"Koster"
+			"Kosygin"
+			"Kurkela"
+			"Kuzmin"
+			"Kuznetzov"
+			"Lahiri"
+			"Lai"
+			"Laurens"
+			"Lee"
+			"Lehmann"
+			"Levine"
+			"L'Hostis"
+			"Li"
+			"Lien"
+			"Lu"
+			"Lukashenko"
+			"Luo"
+			"Macias"
+			"Maier"
+			"Martin"
+			"McClain"
+			"McDonald"
+			"Meijer"
+			"Melton"
+			"Mendez"
+			"Mohanta"
+			"Mubarak"
+			"Naess"
+			"Nahimov"
+			"Nakamura"
+			"Novak"
+			"Ogawa"
+			"Ola"
+			"Olakuotu"
+			"Parsons"
+			"Pavluk"
+			"Pekkala"
+			"Perkiokangas"
+			"Peters"
+			"Pillai"
+			"Pizarro"
+			"Prabhu"
+			"Qian"
+			"Raju"
+			"Ramirez"
+			"Rao"
+			"Rasheed"
+			"Rintala"
+			"Rowland"
+			"Ryan"
+			"Saitou"
+			"Sakamoto"
+			"Samusenko"
+			"Sanchez"
+			"Sandvik"
+			"Santos"
+			"Schmidt"
+			"Schroeder"
+			"Schultze"
+			"Schwartz"
+			"Seidl"
+			"Sergeev"
+			"Sharif"
+			"Simizu"
+			"Sivertsen"
+			"Snow"
+			"Solomon"
+			"Song"
+			"Su"
+			"Sulaiman"
+			"Suzuki"
+			"Takagi"
+			"Tao"
+			"Taskinen"
+			"Taylor"
+			"Thomas"
+			"Tickoo"
+			"Tilet"
+			"Timofeev"
+			"Tomihira"
+			"Tyson"
+			"Ushakov"
+			"Valdez"
 			"van Aars"
 			"van de Wijdeven"
 			"van Dorp"
@@ -1167,73 +1167,73 @@ team phalanx_scientist
 			"van Nispen"
 			"van Oeteldonk"
 			"van Veen"
-			Vasilenko
-			Vasquez
-			Velez
-			Vermeulen
-			Villarreal
-			Vyhodcev
-			Walker
-			Weissenbach
-			White
-			Williams
-			Yang
-			Yu
-			Zahar
-			Zamora
-			Zavala
-			Zhang
+			"Vasilenko"
+			"Vasquez"
+			"Velez"
+			"Vermeulen"
+			"Villarreal"
+			"Vyhodcev"
+			"Walker"
+			"Weissenbach"
+			"White"
+			"Williams"
+			"Yang"
+			"Yu"
+			"Zahar"
+			"Zamora"
+			"Zavala"
+			"Zhang"
 		}
 	}
 
 	models {
 		female {
-			civilians/female scientist01 head05a 0 0
-			civilians/female scientist01 head04a2 0 0
+			"civilians/female" "scientist01" "head05a" 0 0
+			"civilians/female" "scientist01" "head04a2" 0 0
 		}
 		male {
-			civilians/male scientist01 sci_head01 0 0
-			civilians/male scientist01 sci_head02a 0 0
-			civilians/male scientist01 sci_head02b 0 0
-			civilians/male scientist01 sci_head03a 0 0
-			civilians/male scientist01 sci_head03b 0 0
+			"civilians/male" "scientist01" "sci_head01" 0 0
+			"civilians/male" "scientist01" "sci_head02a" 0 0
+			"civilians/male" "scientist01" "sci_head02b" 0 0
+			"civilians/male" "scientist01" "sci_head03a" 0 0
+			"civilians/male" "scientist01" "sci_head03b" 0 0
 		}
 	}
 
 	actorsounds {
 		female {
-			hurtsound	soldiers/femalehurt01
-			hurtsound	soldiers/femalehurt02
-			hurtsound	soldiers/femalehurt03
-			hurtsound	soldiers/femalehurt04
-			deathsound	soldiers/femaledeath01
-			deathsound	soldiers/femaledeath02
-			deathsound	soldiers/femaledeath03
-			deathsound	soldiers/femaledeath04
-			deathsound	soldiers/femaledeath05
-			deathsound	soldiers/femaledeath06
+			hurtsound	"soldiers/femalehurt01"
+			hurtsound	"soldiers/femalehurt02"
+			hurtsound	"soldiers/femalehurt03"
+			hurtsound	"soldiers/femalehurt04"
+			deathsound	"soldiers/femaledeath01"
+			deathsound	"soldiers/femaledeath02"
+			deathsound	"soldiers/femaledeath03"
+			deathsound	"soldiers/femaledeath04"
+			deathsound	"soldiers/femaledeath05"
+			deathsound	"soldiers/femaledeath06"
 		}
 		male {
-			hurtsound 	soldiers/malehurt01
-			hurtsound 	soldiers/malehurt02
-			hurtsound 	soldiers/malehurt03
-			hurtsound 	soldiers/malehurt04
-			hurtsound 	soldiers/malehurt05
-			hurtsound 	soldiers/malehurt06
-			hurtsound 	soldiers/malehurt07
-			hurtsound 	soldiers/malehurt08
-			hurtsound 	soldiers/malehurt09
-			hurtsound 	soldiers/malehurt10
-			hurtsound 	soldiers/malehurt11
-			hurtsound 	soldiers/malehurt12
-			hurtsound 	soldiers/malehurt13
-			deathsound	soldiers/maledeath01
-			deathsound	soldiers/maledeath02
-			deathsound	soldiers/maledeath03
-			deathsound	soldiers/maledeath04
-			deathsound	soldiers/maledeath05
-			deathsound	soldiers/maledeath06
-			deathsound	soldiers/maledeath07
+			hurtsound 	"soldiers/malehurt01"
+			hurtsound 	"soldiers/malehurt02"
+			hurtsound 	"soldiers/malehurt03"
+			hurtsound 	"soldiers/malehurt04"
+			hurtsound 	"soldiers/malehurt05"
+			hurtsound 	"soldiers/malehurt06"
+			hurtsound 	"soldiers/malehurt07"
+			hurtsound 	"soldiers/malehurt08"
+			hurtsound 	"soldiers/malehurt09"
+			hurtsound 	"soldiers/malehurt10"
+			hurtsound 	"soldiers/malehurt11"
+			hurtsound 	"soldiers/malehurt12"
+			hurtsound 	"soldiers/malehurt13"
+			deathsound	"soldiers/maledeath01"
+			deathsound	"soldiers/maledeath02"
+			deathsound	"soldiers/maledeath03"
+			deathsound	"soldiers/maledeath04"
+			deathsound	"soldiers/maledeath05"
+			deathsound	"soldiers/maledeath06"
+			deathsound	"soldiers/maledeath07"
 		}
 	}
 	templates {
@@ -1254,202 +1254,202 @@ team phalanx_pilot
 
 	names {
 		male {
-			Abdul-Majid
-			Adham
-			Adofo
-			Ahmed
-			Akalpreet
-			Alexander
-			Ali
-			Alif
-			Alwin
-			Aman
-			Ameet
-			Andre
-			Andreas
-			Angus
-			Antti
-			Artur
-			Atamveer
-			Azibo
-			Barindra
-			Bas
-			Benoit
-			Bindusar
-			Bjorn
-			Braden
-			Calvin
-			Camara
-			Carlos
-			Christophe
-			Cole
-			Din
-			Dmitry
-			Dobi
-			Donovan
-			Emeralde
-			Emil
-			Emmanuel
-			Eppu
-			Eric
-			Ethan
-			Fai
-			Farran
-			Flip
-			Fynn
-			Gavriil
-			Getulio
-			Giancarlo
-			Gogula
-			Guillaume
-			Gustavo
-			Habib
-			Hans
-			Hao
-			Harjyot
-			Harpreet
-			Harrison
-			Henk
-			Henri
-			Hiro
-			Hiroshi
-			Ho
-			Inderjeet
-			Jabez
-			Jacob
-			Jahi
-			James
-			Jan
-			Jarno
-			Jason
-			Jasper
-			Jassir
-			Javier
-			Jiro
-			Kaiden
-			Kenjiro
-			Kulvir
-			Lars
-			Lei
-			Leo
-			Long
-			Ludovic
-			Mahmoud
-			Mallesh
-			Manuel
-			Manute
-			Mao
-			Marc
-			Marco
-			Mario
-			Mark
-			Martin
+			"Abdul-Majid"
+			"Adham"
+			"Adofo"
+			"Ahmed"
+			"Akalpreet"
+			"Alexander"
+			"Ali"
+			"Alif"
+			"Alwin"
+			"Aman"
+			"Ameet"
+			"Andre"
+			"Andreas"
+			"Angus"
+			"Antti"
+			"Artur"
+			"Atamveer"
+			"Azibo"
+			"Barindra"
+			"Bas"
+			"Benoit"
+			"Bindusar"
+			"Bjorn"
+			"Braden"
+			"Calvin"
+			"Camara"
+			"Carlos"
+			"Christophe"
+			"Cole"
+			"Din"
+			"Dmitry"
+			"Dobi"
+			"Donovan"
+			"Emeralde"
+			"Emil"
+			"Emmanuel"
+			"Eppu"
+			"Eric"
+			"Ethan"
+			"Fai"
+			"Farran"
+			"Flip"
+			"Fynn"
+			"Gavriil"
+			"Getulio"
+			"Giancarlo"
+			"Gogula"
+			"Guillaume"
+			"Gustavo"
+			"Habib"
+			"Hans"
+			"Hao"
+			"Harjyot"
+			"Harpreet"
+			"Harrison"
+			"Henk"
+			"Henri"
+			"Hiro"
+			"Hiroshi"
+			"Ho"
+			"Inderjeet"
+			"Jabez"
+			"Jacob"
+			"Jahi"
+			"James"
+			"Jan"
+			"Jarno"
+			"Jason"
+			"Jasper"
+			"Jassir"
+			"Javier"
+			"Jiro"
+			"Kaiden"
+			"Kenjiro"
+			"Kulvir"
+			"Lars"
+			"Lei"
+			"Leo"
+			"Long"
+			"Ludovic"
+			"Mahmoud"
+			"Mallesh"
+			"Manuel"
+			"Manute"
+			"Mao"
+			"Marc"
+			"Marco"
+			"Mario"
+			"Mark"
+			"Martin"
 			"Martin Alejandro"
-			Matsuhiro
-			Matthew
-			Matti
-			Max
-			Michel
-			Midas
-			Mika
-			Mikhail
-			Mitchell
-			Naa'il
-			Negus
-			Nicholas
-			Nils
-			Nischal
-			Oko
-			Olaf
-			Omar
-			Pavel
-			Peter
-			Phillip
-			Pim
-			Pramodan
-			Pyotr
-			Rafael
-			Rajab
-			Rehyaaz
-			Ricardo
-			Riley
-			Roel
-			Rolf
-			Roman
-			Rune
-			Ryan
-			Salman
-			Sam
-			Samuel
-			Sander
-			Saurav
-			Sayeshan
-			Shawn
-			Shiro
-			Stephane
-			Sun
-			Sven
-			Sying
-			Talon
-			Tarik
-			Thierry
-			Thomas
-			Trevor
-			Tyler
-			Uttamesh
-			Vincent
-			Vitaliy
-			Vitaly
-			Waa'il
-			Xavier
-			Yoshi
-			Yves
-			Zuberi
+			"Matsuhiro"
+			"Matthew"
+			"Matti"
+			"Max"
+			"Michel"
+			"Midas"
+			"Mika"
+			"Mikhail"
+			"Mitchell"
+			"Naa'il"
+			"Negus"
+			"Nicholas"
+			"Nils"
+			"Nischal"
+			"Oko"
+			"Olaf"
+			"Omar"
+			"Pavel"
+			"Peter"
+			"Phillip"
+			"Pim"
+			"Pramodan"
+			"Pyotr"
+			"Rafael"
+			"Rajab"
+			"Rehyaaz"
+			"Ricardo"
+			"Riley"
+			"Roel"
+			"Rolf"
+			"Roman"
+			"Rune"
+			"Ryan"
+			"Salman"
+			"Sam"
+			"Samuel"
+			"Sander"
+			"Saurav"
+			"Sayeshan"
+			"Shawn"
+			"Shiro"
+			"Stephane"
+			"Sun"
+			"Sven"
+			"Sying"
+			"Talon"
+			"Tarik"
+			"Thierry"
+			"Thomas"
+			"Trevor"
+			"Tyler"
+			"Uttamesh"
+			"Vincent"
+			"Vitaliy"
+			"Vitaly"
+			"Waa'il"
+			"Xavier"
+			"Yoshi"
+			"Yves"
+			"Zuberi"
 		}
 
 		lastname {
 			"Ab Del Farak"
 			"Abu Rajab"
-			Adedayo
-			Agharia
-			Ahonen
-			Ahmadi
-			Akinkuotu
+			"Adedayo"
+			"Agharia"
+			"Ahonen"
+			"Ahmadi"
+			"Akinkuotu"
 			"Al Capone"
 			"Al Din"
 			"Al Ghadban"
 			"Al Hashimi"
 			"Al Hussein"
 			"Al Masri"
-			Anderson
-			Arafat
-			Assar
-			Avitabile
-			Bakken
-			Baldwin
-			Basantaray
-			Basset
-			Beard
-			Beaudouin
-			Beaumont
-			Berg
-			Bhat
-			Bodine
-			Boe
-			Boing
-			Bouzid
-			Bradford
-			Braun
-			Buckner
-			Bussey
-			Chan
-			Chardonais
-			Checa
-			Chernovsky
-			Coffey
-			Danielsen
-			Das
-			D'Aubigne
+			"Anderson"
+			"Arafat"
+			"Assar"
+			"Avitabile"
+			"Bakken"
+			"Baldwin"
+			"Basantaray"
+			"Basset"
+			"Beard"
+			"Beaudouin"
+			"Beaumont"
+			"Berg"
+			"Bhat"
+			"Bodine"
+			"Boe"
+			"Boing"
+			"Bouzid"
+			"Bradford"
+			"Braun"
+			"Buckner"
+			"Bussey"
+			"Chan"
+			"Chardonais"
+			"Checa"
+			"Chernovsky"
+			"Coffey"
+			"Danielsen"
+			"Das"
+			"D'Aubigne"
 			"de Boer"
 			"de Bruine"
 			"de Calderac"
@@ -1457,206 +1457,206 @@ team phalanx_pilot
 			"de Jesus"
 			"de la Rosa"
 			"de Vries"
-			Dekkers
-			Dijkstra
-			Dixit
-			Dong
-			Dubey
-			Dunlap
-			Dzhugashvili
-			Eitl
-			Ewegbemi
-			Eweji
-			Filippov
-			Finet
-			Fuentes
-			Fuijwara
-			Gavrilov
-			Ghate
-			Groisman
-			Guha
-			Haley
-			Haqzouk
-			Hardy
-			Harris
-			Hashimoto
-			Hassan
-			Hegede
-			Heikkinen
-			Helminen
-			Hendriks
-			Henriksen
-			Herring
-			Herrmann
-			Holland
-			Huong
-			Idowu
-			Ifasen
-			Ivanov
-			Iyengar
-			Jadhav
-			Jaitley
-			Jansen
-			Jefferson
-			Johnson
-			Karasev
-			Kaul
-			Khaleq
-			Kirk
-			Kloot
-			Kohler
-			Koster
-			Kosygin
-			Kurkela
-			Kuzmin
-			Kuznetzov
-			Lahiri
-			Lai
-			Laurens
-			Lee
-			Lehmann
-			Levine
-			L'Hostis
-			Li
-			Lien
-			Lu
-			Lukashenko
-			Luo
-			Macias
-			Maier
-			Martin
-			McClain
-			McDonald
-			Meijer
-			Melton
-			Mendez
-			Mohanta
-			Mubarak
-			Naess
-			Nahimov
-			Nakamura
-			Novak
-			Ogawa
-			Ola
-			Olakuotu
-			Parsons
-			Pavluk
-			Pekkala
-			Perkiokangas
-			Peters
-			Pillai
-			Pizarro
-			Prabhu
-			Qian
-			Raju
-			Ramirez
-			Rao
-			Rasheed
-			Rintala
-			Rowland
-			Ryan
-			Saitou
-			Sakamoto
-			Samusenko
-			Sanchez
-			Sandvik
-			Santos
-			Schmidt
-			Schroeder
-			Schultze
-			Schwartz
-			Seidl
-			Sergeev
-			Sharif
-			Simizu
-			Sivertsen
-			Snow
-			Solomon
-			Song
-			Su
-			Sulaiman
-			Suzuki
-			Takagi
-			Tao
-			Taskinen
-			Taylor
-			Thomas
-			Tickoo
-			Tilet
-			Timofeev
-			Tomihira
-			Tyson
-			Ushakov
-			Valdez
+			"Dekkers"
+			"Dijkstra"
+			"Dixit"
+			"Dong"
+			"Dubey"
+			"Dunlap"
+			"Dzhugashvili"
+			"Eitl"
+			"Ewegbemi"
+			"Eweji"
+			"Filippov"
+			"Finet"
+			"Fuentes"
+			"Fuijwara"
+			"Gavrilov"
+			"Ghate"
+			"Groisman"
+			"Guha"
+			"Haley"
+			"Haqzouk"
+			"Hardy"
+			"Harris"
+			"Hashimoto"
+			"Hassan"
+			"Hegede"
+			"Heikkinen"
+			"Helminen"
+			"Hendriks"
+			"Henriksen"
+			"Herring"
+			"Herrmann"
+			"Holland"
+			"Huong"
+			"Idowu"
+			"Ifasen"
+			"Ivanov"
+			"Iyengar"
+			"Jadhav"
+			"Jaitley"
+			"Jansen"
+			"Jefferson"
+			"Johnson"
+			"Karasev"
+			"Kaul"
+			"Khaleq"
+			"Kirk"
+			"Kloot"
+			"Kohler"
+			"Koster"
+			"Kosygin"
+			"Kurkela"
+			"Kuzmin"
+			"Kuznetzov"
+			"Lahiri"
+			"Lai"
+			"Laurens"
+			"Lee"
+			"Lehmann"
+			"Levine"
+			"L'Hostis"
+			"Li"
+			"Lien"
+			"Lu"
+			"Lukashenko"
+			"Luo"
+			"Macias"
+			"Maier"
+			"Martin"
+			"McClain"
+			"McDonald"
+			"Meijer"
+			"Melton"
+			"Mendez"
+			"Mohanta"
+			"Mubarak"
+			"Naess"
+			"Nahimov"
+			"Nakamura"
+			"Novak"
+			"Ogawa"
+			"Ola"
+			"Olakuotu"
+			"Parsons"
+			"Pavluk"
+			"Pekkala"
+			"Perkiokangas"
+			"Peters"
+			"Pillai"
+			"Pizarro"
+			"Prabhu"
+			"Qian"
+			"Raju"
+			"Ramirez"
+			"Rao"
+			"Rasheed"
+			"Rintala"
+			"Rowland"
+			"Ryan"
+			"Saitou"
+			"Sakamoto"
+			"Samusenko"
+			"Sanchez"
+			"Sandvik"
+			"Santos"
+			"Schmidt"
+			"Schroeder"
+			"Schultze"
+			"Schwartz"
+			"Seidl"
+			"Sergeev"
+			"Sharif"
+			"Simizu"
+			"Sivertsen"
+			"Snow"
+			"Solomon"
+			"Song"
+			"Su"
+			"Sulaiman"
+			"Suzuki"
+			"Takagi"
+			"Tao"
+			"Taskinen"
+			"Taylor"
+			"Thomas"
+			"Tickoo"
+			"Tilet"
+			"Timofeev"
+			"Tomihira"
+			"Tyson"
+			"Ushakov"
+			"Valdez"
 			"van Aars"
-			"van de Wijdeven"
+			"van "de" Wijdeven"
 			"van Dorp"
 			"van Grieken"
 			"van Nispen"
 			"van Oeteldonk"
 			"van Veen"
-			Vasilenko
-			Vasquez
-			Velez
-			Vermeulen
-			Villarreal
-			Vyhodcev
-			Walker
-			Weissenbach
-			White
-			Williams
-			Yang
-			Yu
-			Zahar
-			Zamora
-			Zavala
-			Zhang
+			"Vasilenko"
+			"Vasquez"
+			"Velez"
+			"Vermeulen"
+			"Villarreal"
+			"Vyhodcev"
+			"Walker"
+			"Weissenbach"
+			"White"
+			"Williams"
+			"Yang"
+			"Yu"
+			"Zahar"
+			"Zamora"
+			"Zavala"
+			"Zhang"
 		}
 	}
 
 	models {
 		male {
-			pilots/male body head01 0 0
+			"pilots/male" "body" "head01" 0 0
 		}
 //		female {
-//			pilots/female body head01 0 0 //TODO: Animate the female pilot model
+//			"pilots/female" "body" "head01" 0 0 //TODO: Animate the female pilot model
 //		}
 	}
 
 	actorsounds {
 		female {
-			hurtsound	soldiers/femalehurt01
-			hurtsound	soldiers/femalehurt02
-			hurtsound	soldiers/femalehurt03
-			hurtsound	soldiers/femalehurt04
-			deathsound	soldiers/femaledeath01
-			deathsound	soldiers/femaledeath02
-			deathsound	soldiers/femaledeath03
-			deathsound	soldiers/femaledeath04
-			deathsound	soldiers/femaledeath05
-			deathsound	soldiers/femaledeath06
+			hurtsound	"soldiers/femalehurt01"
+			hurtsound	"soldiers/femalehurt02"
+			hurtsound	"soldiers/femalehurt03"
+			hurtsound	"soldiers/femalehurt04"
+			deathsound	"soldiers/femaledeath01"
+			deathsound	"soldiers/femaledeath02"
+			deathsound	"soldiers/femaledeath03"
+			deathsound	"soldiers/femaledeath04"
+			deathsound	"soldiers/femaledeath05"
+			deathsound	"soldiers/femaledeath06"
 		}
 		male {
-			hurtsound 	soldiers/malehurt01
-			hurtsound 	soldiers/malehurt02
-			hurtsound 	soldiers/malehurt03
-			hurtsound 	soldiers/malehurt04
-			hurtsound 	soldiers/malehurt05
-			hurtsound 	soldiers/malehurt06
-			hurtsound 	soldiers/malehurt07
-			hurtsound 	soldiers/malehurt08
-			hurtsound 	soldiers/malehurt09
-			hurtsound 	soldiers/malehurt10
-			hurtsound 	soldiers/malehurt11
-			hurtsound 	soldiers/malehurt12
-			hurtsound 	soldiers/malehurt13
-			deathsound	soldiers/maledeath01
-			deathsound	soldiers/maledeath02
-			deathsound	soldiers/maledeath03
-			deathsound	soldiers/maledeath04
-			deathsound	soldiers/maledeath05
-			deathsound	soldiers/maledeath06
-			deathsound	soldiers/maledeath07
+			hurtsound 	"soldiers/malehurt01"
+			hurtsound 	"soldiers/malehurt02"
+			hurtsound 	"soldiers/malehurt03"
+			hurtsound 	"soldiers/malehurt04"
+			hurtsound 	"soldiers/malehurt05"
+			hurtsound 	"soldiers/malehurt06"
+			hurtsound 	"soldiers/malehurt07"
+			hurtsound 	"soldiers/malehurt08"
+			hurtsound 	"soldiers/malehurt09"
+			hurtsound 	"soldiers/malehurt10"
+			hurtsound 	"soldiers/malehurt11"
+			hurtsound 	"soldiers/malehurt12"
+			hurtsound 	"soldiers/malehurt13"
+			deathsound	"soldiers/maledeath01"
+			deathsound	"soldiers/maledeath02"
+			deathsound	"soldiers/maledeath03"
+			deathsound	"soldiers/maledeath04"
+			deathsound	"soldiers/maledeath05"
+			deathsound	"soldiers/maledeath06"
+			deathsound	"soldiers/maledeath07"
 		}
 	}
 	templates {
@@ -1679,202 +1679,202 @@ team phalanx_worker
 
 	names {
 		male {
-			Abdul-Majid
-			Adham
-			Adofo
-			Ahmed
-			Akalpreet
-			Alexander
-			Ali
-			Alif
-			Alwin
-			Aman
-			Ameet
-			Andre
-			Andreas
-			Angus
-			Antti
-			Artur
-			Atamveer
-			Azibo
-			Barindra
-			Bas
-			Benoit
-			Bindusar
-			Bjorn
-			Braden
-			Calvin
-			Camara
-			Carlos
-			Christophe
-			Cole
-			Din
-			Dmitry
-			Dobi
-			Donovan
-			Emeralde
-			Emil
-			Emmanuel
-			Eppu
-			Eric
-			Ethan
-			Fai
-			Farran
-			Flip
-			Fynn
-			Gavriil
-			Getulio
-			Giancarlo
-			Gogula
-			Guillaume
-			Gustavo
-			Habib
-			Hans
-			Hao
-			Harjyot
-			Harpreet
-			Harrison
-			Henk
-			Henri
-			Hiro
-			Hiroshi
-			Ho
-			Inderjeet
-			Jabez
-			Jacob
-			Jahi
-			James
-			Jan
-			Jarno
-			Jason
-			Jasper
-			Jassir
-			Javier
-			Jiro
-			Kaiden
-			Kenjiro
-			Kulvir
-			Lars
-			Lei
-			Leo
-			Long
-			Ludovic
-			Mahmoud
-			Mallesh
-			Manuel
-			Manute
-			Mao
-			Marc
-			Marco
-			Mario
-			Mark
-			Martin
+			"Abdul-Majid"
+			"Adham"
+			"Adofo"
+			"Ahmed"
+			"Akalpreet"
+			"Alexander"
+			"Ali"
+			"Alif"
+			"Alwin"
+			"Aman"
+			"Ameet"
+			"Andre"
+			"Andreas"
+			"Angus"
+			"Antti"
+			"Artur"
+			"Atamveer"
+			"Azibo"
+			"Barindra"
+			"Bas"
+			"Benoit"
+			"Bindusar"
+			"Bjorn"
+			"Braden"
+			"Calvin"
+			"Camara"
+			"Carlos"
+			"Christophe"
+			"Cole"
+			"Din"
+			"Dmitry"
+			"Dobi"
+			"Donovan"
+			"Emeralde"
+			"Emil"
+			"Emmanuel"
+			"Eppu"
+			"Eric"
+			"Ethan"
+			"Fai"
+			"Farran"
+			"Flip"
+			"Fynn"
+			"Gavriil"
+			"Getulio"
+			"Giancarlo"
+			"Gogula"
+			"Guillaume"
+			"Gustavo"
+			"Habib"
+			"Hans"
+			"Hao"
+			"Harjyot"
+			"Harpreet"
+			"Harrison"
+			"Henk"
+			"Henri"
+			"Hiro"
+			"Hiroshi"
+			"Ho"
+			"Inderjeet"
+			"Jabez"
+			"Jacob"
+			"Jahi"
+			"James"
+			"Jan"
+			"Jarno"
+			"Jason"
+			"Jasper"
+			"Jassir"
+			"Javier"
+			"Jiro"
+			"Kaiden"
+			"Kenjiro"
+			"Kulvir"
+			"Lars"
+			"Lei"
+			"Leo"
+			"Long"
+			"Ludovic"
+			"Mahmoud"
+			"Mallesh"
+			"Manuel"
+			"Manute"
+			"Mao"
+			"Marc"
+			"Marco"
+			"Mario"
+			"Mark"
+			"Martin"
 			"Martin Alejandro"
-			Matsuhiro
-			Matthew
-			Matti
-			Max
-			Michel
-			Midas
-			Mika
-			Mikhail
-			Mitchell
-			Naa'il
-			Negus
-			Nicholas
-			Nils
-			Nischal
-			Oko
-			Olaf
-			Omar
-			Pavel
-			Peter
-			Phillip
-			Pim
-			Pramodan
-			Pyotr
-			Rafael
-			Rajab
-			Rehyaaz
-			Ricardo
-			Riley
-			Roel
-			Rolf
-			Roman
-			Rune
-			Ryan
-			Salman
-			Sam
-			Samuel
-			Sander
-			Saurav
-			Sayeshan
-			Shawn
-			Shiro
-			Stephane
-			Sun
-			Sven
-			Sying
-			Talon
-			Tarik
-			Thierry
-			Thomas
-			Trevor
-			Tyler
-			Uttamesh
-			Vincent
-			Vitaliy
-			Vitaly
-			Waa'il
-			Xavier
-			Yoshi
-			Yves
-			Zuberi
+			"Matsuhiro"
+			"Matthew"
+			"Matti"
+			"Max"
+			"Michel"
+			"Midas"
+			"Mika"
+			"Mikhail"
+			"Mitchell"
+			"Naa'il"
+			"Negus"
+			"Nicholas"
+			"Nils"
+			"Nischal"
+			"Oko"
+			"Olaf"
+			"Omar"
+			"Pavel"
+			"Peter"
+			"Phillip"
+			"Pim"
+			"Pramodan"
+			"Pyotr"
+			"Rafael"
+			"Rajab"
+			"Rehyaaz"
+			"Ricardo"
+			"Riley"
+			"Roel"
+			"Rolf"
+			"Roman"
+			"Rune"
+			"Ryan"
+			"Salman"
+			"Sam"
+			"Samuel"
+			"Sander"
+			"Saurav"
+			"Sayeshan"
+			"Shawn"
+			"Shiro"
+			"Stephane"
+			"Sun"
+			"Sven"
+			"Sying"
+			"Talon"
+			"Tarik"
+			"Thierry"
+			"Thomas"
+			"Trevor"
+			"Tyler"
+			"Uttamesh"
+			"Vincent"
+			"Vitaliy"
+			"Vitaly"
+			"Waa'il"
+			"Xavier"
+			"Yoshi"
+			"Yves"
+			"Zuberi"
 		}
 
 		lastname {
 			"Ab Del Farak"
 			"Abu Rajab"
-			Adedayo
-			Agharia
-			Ahonen
-			Ahmadi
-			Akinkuotu
+			"Adedayo"
+			"Agharia"
+			"Ahonen"
+			"Ahmadi"
+			"Akinkuotu"
 			"Al Capone"
 			"Al Din"
 			"Al Ghadban"
 			"Al Hashimi"
 			"Al Hussein"
 			"Al Masri"
-			Anderson
-			Arafat
-			Assar
-			Avitabile
-			Bakken
-			Baldwin
-			Basantaray
-			Basset
-			Beard
-			Beaudouin
-			Beaumont
-			Berg
-			Bhat
-			Bodine
-			Boe
-			Boing
-			Bouzid
-			Bradford
-			Braun
-			Buckner
-			Bussey
-			Chan
-			Chardonais
-			Checa
-			Chernovsky
-			Coffey
-			Danielsen
-			Das
-			D'Aubigne
+			"Anderson"
+			"Arafat"
+			"Assar"
+			"Avitabile"
+			"Bakken"
+			"Baldwin"
+			"Basantaray"
+			"Basset"
+			"Beard"
+			"Beaudouin"
+			"Beaumont"
+			"Berg"
+			"Bhat"
+			"Bodine"
+			"Boe"
+			"Boing"
+			"Bouzid"
+			"Bradford"
+			"Braun"
+			"Buckner"
+			"Bussey"
+			"Chan"
+			"Chardonais"
+			"Checa"
+			"Chernovsky"
+			"Coffey"
+			"Danielsen"
+			"Das"
+			"D'Aubigne"
 			"de Boer"
 			"de Bruine"
 			"de Calderac"
@@ -1882,194 +1882,194 @@ team phalanx_worker
 			"de Jesus"
 			"de la Rosa"
 			"de Vries"
-			Dekkers
-			Dijkstra
-			Dixit
-			Dong
-			Dubey
-			Dunlap
-			Dzhugashvili
-			Eitl
-			Ewegbemi
-			Eweji
-			Filippov
-			Finet
-			Fuentes
-			Fuijwara
-			Gavrilov
-			Ghate
-			Groisman
-			Guha
-			Haley
-			Haqzouk
-			Hardy
-			Harris
-			Hashimoto
-			Hassan
-			Hegede
-			Heikkinen
-			Helminen
-			Hendriks
-			Henriksen
-			Herring
-			Herrmann
-			Holland
-			Huong
-			Idowu
-			Ifasen
-			Ivanov
-			Iyengar
-			Jadhav
-			Jaitley
-			Jansen
-			Jefferson
-			Johnson
-			Karasev
-			Kaul
-			Khaleq
-			Kirk
-			Kloot
-			Kohler
-			Koster
-			Kosygin
-			Kurkela
-			Kuzmin
-			Kuznetzov
-			Lahiri
-			Lai
-			Laurens
-			Lee
-			Lehmann
-			Levine
-			L'Hostis
-			Li
-			Lien
-			Lu
-			Lukashenko
-			Luo
-			Macias
-			Maier
-			Martin
-			McClain
-			McDonald
-			Meijer
-			Melton
-			Mendez
-			Mohanta
-			Mubarak
-			Naess
-			Nahimov
-			Nakamura
-			Novak
-			Ogawa
-			Ola
-			Olakuotu
-			Parsons
-			Pavluk
-			Pekkala
-			Perkiokangas
-			Peters
-			Pillai
-			Pizarro
-			Prabhu
-			Qian
-			Raju
-			Ramirez
-			Rao
-			Rasheed
-			Rintala
-			Rowland
-			Ryan
-			Saitou
-			Sakamoto
-			Samusenko
-			Sanchez
-			Sandvik
-			Santos
-			Schmidt
-			Schroeder
-			Schultze
-			Schwartz
-			Seidl
-			Sergeev
-			Sharif
-			Simizu
-			Sivertsen
-			Snow
-			Solomon
-			Song
-			Su
-			Sulaiman
-			Suzuki
-			Takagi
-			Tao
-			Taskinen
-			Taylor
-			Thomas
-			Tickoo
-			Tilet
-			Timofeev
-			Tomihira
-			Tyson
-			Ushakov
-			Valdez
+			"Dekkers"
+			"Dijkstra"
+			"Dixit"
+			"Dong"
+			"Dubey"
+			"Dunlap"
+			"Dzhugashvili"
+			"Eitl"
+			"Ewegbemi"
+			"Eweji"
+			"Filippov"
+			"Finet"
+			"Fuentes"
+			"Fuijwara"
+			"Gavrilov"
+			"Ghate"
+			"Groisman"
+			"Guha"
+			"Haley"
+			"Haqzouk"
+			"Hardy"
+			"Harris"
+			"Hashimoto"
+			"Hassan"
+			"Hegede"
+			"Heikkinen"
+			"Helminen"
+			"Hendriks"
+			"Henriksen"
+			"Herring"
+			"Herrmann"
+			"Holland"
+			"Huong"
+			"Idowu"
+			"Ifasen"
+			"Ivanov"
+			"Iyengar"
+			"Jadhav"
+			"Jaitley"
+			"Jansen"
+			"Jefferson"
+			"Johnson"
+			"Karasev"
+			"Kaul"
+			"Khaleq"
+			"Kirk"
+			"Kloot"
+			"Kohler"
+			"Koster"
+			"Kosygin"
+			"Kurkela"
+			"Kuzmin"
+			"Kuznetzov"
+			"Lahiri"
+			"Lai"
+			"Laurens"
+			"Lee"
+			"Lehmann"
+			"Levine"
+			"L'Hostis"
+			"Li"
+			"Lien"
+			"Lu"
+			"Lukashenko"
+			"Luo"
+			"Macias"
+			"Maier"
+			"Martin"
+			"McClain"
+			"McDonald"
+			"Meijer"
+			"Melton"
+			"Mendez"
+			"Mohanta"
+			"Mubarak"
+			"Naess"
+			"Nahimov"
+			"Nakamura"
+			"Novak"
+			"Ogawa"
+			"Ola"
+			"Olakuotu"
+			"Parsons"
+			"Pavluk"
+			"Pekkala"
+			"Perkiokangas"
+			"Peters"
+			"Pillai"
+			"Pizarro"
+			"Prabhu"
+			"Qian"
+			"Raju"
+			"Ramirez"
+			"Rao"
+			"Rasheed"
+			"Rintala"
+			"Rowland"
+			"Ryan"
+			"Saitou"
+			"Sakamoto"
+			"Samusenko"
+			"Sanchez"
+			"Sandvik"
+			"Santos"
+			"Schmidt"
+			"Schroeder"
+			"Schultze"
+			"Schwartz"
+			"Seidl"
+			"Sergeev"
+			"Sharif"
+			"Simizu"
+			"Sivertsen"
+			"Snow"
+			"Solomon"
+			"Song"
+			"Su"
+			"Sulaiman"
+			"Suzuki"
+			"Takagi"
+			"Tao"
+			"Taskinen"
+			"Taylor"
+			"Thomas"
+			"Tickoo"
+			"Tilet"
+			"Timofeev"
+			"Tomihira"
+			"Tyson"
+			"Ushakov"
+			"Valdez"
 			"van Aars"
-			"van de Wijdeven"
+			"van "de" Wijdeven"
 			"van Dorp"
 			"van Grieken"
 			"van Nispen"
 			"van Oeteldonk"
 			"van Veen"
-			Vasilenko
-			Vasquez
-			Velez
-			Vermeulen
-			Villarreal
-			Vyhodcev
-			Walker
-			Weissenbach
-			White
-			Williams
-			Yang
-			Yu
-			Zahar
-			Zamora
-			Zavala
-			Zhang
+			"Vasilenko"
+			"Vasquez"
+			"Velez"
+			"Vermeulen"
+			"Villarreal"
+			"Vyhodcev"
+			"Walker"
+			"Weissenbach"
+			"White"
+			"Williams"
+			"Yang"
+			"Yu"
+			"Zahar"
+			"Zamora"
+			"Zavala"
+			"Zhang"
 		}
 	}
 
 	models {
 		male {
-			civilians/male worker01 worker01_head 0 0
-			civilians/male worker01 worker01_head 1 1
-			civilians/male worker01 worker02_head 0 0
-			civilians/male worker01 worker02_head 1 1
+			"civilians/male" "worker01" "worker01_head" 0 0
+			"civilians/male" "worker01" "worker01_head" 1 1
+			"civilians/male" "worker01" "worker02_head" 0 0
+			"civilians/male" "worker01" "worker02_head" 1 1
 		}
 	}
 
 	actorsounds {
 		male {
-			hurtsound 	soldiers/malehurt01
-			hurtsound 	soldiers/malehurt02
-			hurtsound 	soldiers/malehurt03
-			hurtsound 	soldiers/malehurt04
-			hurtsound 	soldiers/malehurt05
-			hurtsound 	soldiers/malehurt06
-			hurtsound 	soldiers/malehurt07
-			hurtsound 	soldiers/malehurt08
-			hurtsound 	soldiers/malehurt09
-			hurtsound 	soldiers/malehurt10
-			hurtsound 	soldiers/malehurt11
-			hurtsound 	soldiers/malehurt12
-			hurtsound 	soldiers/malehurt13
-			deathsound	soldiers/maledeath01
-			deathsound	soldiers/maledeath02
-			deathsound	soldiers/maledeath03
-			deathsound	soldiers/maledeath04
-			deathsound	soldiers/maledeath05
-			deathsound	soldiers/maledeath06
-			deathsound	soldiers/maledeath07
+			hurtsound 	"soldiers/malehurt01"
+			hurtsound 	"soldiers/malehurt02"
+			hurtsound 	"soldiers/malehurt03"
+			hurtsound 	"soldiers/malehurt04"
+			hurtsound 	"soldiers/malehurt05"
+			hurtsound 	"soldiers/malehurt06"
+			hurtsound 	"soldiers/malehurt07"
+			hurtsound 	"soldiers/malehurt08"
+			hurtsound 	"soldiers/malehurt09"
+			hurtsound 	"soldiers/malehurt10"
+			hurtsound 	"soldiers/malehurt11"
+			hurtsound 	"soldiers/malehurt12"
+			hurtsound 	"soldiers/malehurt13"
+			deathsound	"soldiers/maledeath01"
+			deathsound	"soldiers/maledeath02"
+			deathsound	"soldiers/maledeath03"
+			deathsound	"soldiers/maledeath04"
+			deathsound	"soldiers/maledeath05"
+			deathsound	"soldiers/maledeath06"
+			deathsound	"soldiers/maledeath07"
 		}
 	}
 	templates {
@@ -2083,10 +2083,10 @@ team phalanx_worker
 
 team phalanx_ugv_phoenix
 {
+	name	"_Phoenix UGV"
 	size	2
 	race	robot
 	//hit_particle none
-	name	"_Phoenix UGV"
 	// we can't assign any extra armour
 	armour	false
 
@@ -2101,7 +2101,7 @@ team phalanx_ugv_phoenix
 
 	models {
 		neutral {
-			soldiers/ugv_phoenix phoenix phoenix_turret 0 0
+			"soldiers/ugv_phoenix" "phoenix" "phoenix_turret" 0 0
 		}
 	}
 
@@ -2148,10 +2148,10 @@ team phalanx_ugv_phoenix
 // wheeled ares ugv
 team phalanx_ugv_ares_w
 {
+	name	"_Ares W (UGV)"
 	size	2
 	race	robot
 	//hit_particle none
-	name	"_Ares W (UGV)"
 	// we can't assign any extra armour
 	armour	false
 
@@ -2166,7 +2166,7 @@ team phalanx_ugv_ares_w
 
 	models {
 		neutral {
-			soldiers/ugv_ares ares_w ares_w_turret 0 0
+			"soldiers/ugv_ares" "ares_w" "ares_w_turret" 0 0
 		}
 	}
 
