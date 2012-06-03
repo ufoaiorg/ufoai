@@ -26,7 +26,7 @@ item alienmaterials
 
 item bloodspider_weapon
 {
-	name			"Bloodspider weapon" // TODO Will this ever be displayed? If se we would need gettext support.
+	name			"Bloodspider weapon" // TODO Will this ever be displayed? If so we would need gettext support.
 	model			"weapons/knife/knife" //FIXME
 	weapon			true
 	type			"melee"

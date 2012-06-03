@@ -444,7 +444,6 @@ aircraft craft_ufo_scout
 	model		"geoscape/ufo_scout"
 	size		1
 	numteam		3
-	building	building_small_ufo_hangar
 	price		8000
 	image		"geoscape/air_ufo"
 	interestlevel 0
@@ -467,8 +466,6 @@ aircraft craft_ufo_fighter
 	model		"geoscape/ufo_fighter"
 	size		1
 	numteam		5
-	// FIXME: should be big hangar
-	building	building_small_ufo_hangar
 	price		12000
 	image		"geoscape/air_ufo"
 	interestlevel 0
@@ -497,7 +494,6 @@ aircraft craft_ufo_harvester
 	model		"geoscape/ufo_harvester"
 	size		2
 	numteam		12
-	building	building_big_ufo_hangar
 	price		18000
 	image		"geoscape/air_ufo"
 	interestlevel 0
@@ -538,7 +534,6 @@ aircraft craft_ufo_gunboat
 	model		"geoscape/ufo_gunboat"
 	size		2
 	numteam		8
-	building	building_big_ufo_hangar
 	price		23000
 	image		"geoscape/air_ufo"
 	interestlevel 300
@@ -585,7 +580,6 @@ aircraft craft_ufo_corrupter
 	model		"geoscape/ufo_corrupter"
 	size		2
 	numteam		15
-	building	building_big_ufo_hangar
 	price		27000
 	image		"geoscape/air_ufo"
 	slot {
@@ -620,7 +614,6 @@ aircraft craft_ufo_supply
 	model		"geoscape/ufo_supply"
 	size		2
 	numteam		7
-	building	building_big_ufo_hangar
 	price		20000
 	image		"geoscape/air_ufo"
 }
@@ -642,7 +635,6 @@ aircraft craft_ufo_ripper
 	model		"geoscape/ufo_ripper"
 	size		2
 	numteam		18
-	building	building_big_ufo_hangar
 	price		30000
 	image		"geoscape/air_ufo"
 	slot {
@@ -688,7 +680,6 @@ aircraft craft_ufo_bomber
 	model		"geoscape/ufo_bomber"
 	size		2
 	numteam		25
-	building	building_big_ufo_hangar
 	price		45000
 	image		"geoscape/air_ufo"
 	slot {
@@ -734,7 +725,6 @@ aircraft craft_ufo_carrier
 	type		"ufo"
 	model		"geoscape/ufo_carrier"
 	size		1
-	building	building_small_ufo_hangar
 	price		0 //NOTE: This UFO must never be sellable!
 	image		"geoscape/air_ufo"
 	nogeoscape	true
@@ -757,7 +747,6 @@ aircraft craft_ufo_mothership
 	type		"ufo"
 	model		"geoscape/ufo_mothership"
 	size		1
-	building	building_small_ufo_hangar
 	price		0 //This UFO is not recoverable in the first place. It's the final mission!
 	image		"geoscape/air_ufo"
 	nogeoscape	true
