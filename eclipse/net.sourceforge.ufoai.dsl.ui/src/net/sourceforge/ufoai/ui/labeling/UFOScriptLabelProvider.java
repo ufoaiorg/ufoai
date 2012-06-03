@@ -22,6 +22,14 @@ public class UFOScriptLabelProvider extends DefaultEObjectLabelProvider {
 		super(delegate);
 	}
 
+	public String text(UFONode node) {
+		if (node.getName() != null) {
+			return node.getType() + " " + node.getName();
+		} else {
+			return node.getType();
+		}
+	}
+
 	@Override
 	public Object doGetImage(Object block) {
 		if (block instanceof UFONode) {
