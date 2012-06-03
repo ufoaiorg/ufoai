@@ -2,7 +2,7 @@ particle explosionFlameFlash
 {
 	init
 	{
-		image  sfx/weapons/rocketfire
+		image  "sfx/weapons/rocketfire"
 		blend  add
 		style  facing
 		thinkfade  out
@@ -50,7 +50,7 @@ particle explosionDebrisBurn
 {
 	init
 	{
-		image  sfx/weapons/rocketfire
+		image  "sfx/weapons/rocketfire"
 		blend  add
 		style  axis
 		thinkfade  out
@@ -133,7 +133,7 @@ particle explosionDebrisBurnSmall
 {
 	init
 	{
-		image  sfx/weapons/rocketfire
+		image  "sfx/weapons/rocketfire"
 		blend  add
 		style  axis
 		thinkfade  out
@@ -403,7 +403,7 @@ particle explosionSmokeRing3
 	{
 		frame 0
 		endframe 3
-		image +sfx/smoke_
+		image "+sfx/smoke_"
 		blend  blend
 		style  facing
 		thinkfade  saw

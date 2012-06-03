@@ -52,6 +52,14 @@ public class UFOScriptJavaValidator extends AbstractUFOScriptJavaValidator {
 		return path;
 	}
 
+	private Object getType(EObject object) {
+		if (object instanceof UFONode) {
+			String path = getPath((UFONode) object);
+			return getType(path);
+		}
+		return null;
+	}
+
 	private UFOType getType(String path) {
 		return UFOTypes.getInstance().getPathType(path);
 	}
@@ -77,6 +85,10 @@ public class UFOScriptJavaValidator extends AbstractUFOScriptJavaValidator {
 
 		// No rules
 		if (type == null) {
+			// Display error if the parent has no rules
+			if (getType(node.eContainer()) == null) {
+				return;
+			}
 			error("Property name unknown", UfoScriptPackage.Literals.UFO_NODE__TYPE);
 			return;
 		}
