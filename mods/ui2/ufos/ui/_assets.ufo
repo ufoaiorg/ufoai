@@ -236,7 +236,7 @@ component ObjectInfo extends panel
 			pos			"450 33"
 			size		"265 147"
 		}
-		model object_model
+		item object_model
 		{
 			src			*cvar:mn_item
 			pos			"0 0"
