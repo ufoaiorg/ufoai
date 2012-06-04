@@ -114,7 +114,7 @@ static const value_t valid_building_vars[] = {
 	{"max_count", V_INT, offsetof(building_t, maxCount), MEMBER_SIZEOF(building_t, maxCount)},	/**< How many building of the same type allowed? */
 	{"level", V_FLOAT, offsetof(building_t, level), MEMBER_SIZEOF(building_t, level)},	/**< building level */
 	{"name", V_TRANSLATION_STRING, offsetof(building_t, name), 0},	/**< The displayed building name. */
-	{"pedia", V_HUNK_STRING, offsetof(building_t, pedia), 0},	/**< The pedia-id string for the associated pedia entry. */
+	{"tech", V_HUNK_STRING, offsetof(building_t, pedia), 0},	/**< The pedia-id string for the associated pedia entry. */
 	{"status", V_INT, offsetof(building_t, buildingStatus), MEMBER_SIZEOF(building_t, buildingStatus)},	/**< The current status of the building. */
 	{"image", V_HUNK_STRING, offsetof(building_t, image), 0},	/**< Identifies the image for the building. */
 	{"size", V_POS, offsetof(building_t, size), MEMBER_SIZEOF(building_t, size)},	/**< Building size. */

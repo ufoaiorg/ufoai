@@ -11,7 +11,7 @@
 // varcosts:			The monthely maintenance cost for this facility
 // map_name:			The name of the map tile for this facility (for base defence maps)
 //							buildings without mapname are not buildable
-// pedia:				The tech ID that has the UFOpaedia entry for this facility
+// tech:				The tech ID that has the UFOpaedia entry for this facility
 // size					Size of the building (columns, rows)
 // capacity:			The capacity of this facility. The meaning of the value depends on the building type.
 // mandatory:			Automatically construct this building when a base is set up.
@@ -40,7 +40,7 @@ building building_aliencontainment
 	build_time		10
 	varcosts		7500
 	map_name		"aliencont"
-	pedia			rs_building_aliencontainment
+	tech			rs_building_aliencontainment
 	size			"2 1"
 	capacity		10
 	ondisable		"aliencont_killall"
@@ -55,7 +55,7 @@ building building_entrance
 	build_time	1
 	varcosts	0
 	map_name	"entrance"
-	pedia		rs_building_entrance
+	tech		rs_building_entrance
 	mandatory	true
 	max_count	1
 }
@@ -70,7 +70,7 @@ building building_storage
 	build_time		4
 	varcosts		3000
 	map_name		"storage"
-	pedia			rs_building_storage
+	tech			rs_building_storage
 	capacity		10000
 }
 
@@ -84,7 +84,7 @@ building building_powerplant
 	build_time		12
 	varcosts		5000
 	map_name		"powerplant"
-	pedia			rs_building_powerplant
+	tech			rs_building_powerplant
 	max_count		1
 }
 
@@ -99,7 +99,7 @@ building building_command
 	build_time	12
 	varcosts	3000
 	map_name	"commando"
-	pedia		rs_building_command
+	tech		rs_building_command
 	max_count	1
 	onenable	"mn_installation_update_max_count"
 	ondisable	"mn_installation_update_max_count"
@@ -113,7 +113,7 @@ building building_quarters
 	build_time		5
 	varcosts		1000
 	map_name		"quarters"
-	pedia			rs_building_quarters
+	tech			rs_building_quarters
 	type			"quarters"
 	capacity		20
 }
@@ -127,7 +127,7 @@ building building_hangar
 	build_time			8
 	varcosts			5500
 	map_name			"drop"
-	pedia				rs_building_large_hangar
+	tech				rs_building_large_hangar
 	type				"hangar"
 	size				"2 1"
 	starting_employees	8 //Number of soldiers in dropship when first base is built
@@ -143,7 +143,7 @@ building building_intercept
 	build_time		5
 	varcosts		5200
 	map_name		"intercept"
-	pedia			rs_building_small_hangar
+	tech			rs_building_small_hangar
 	capacity		1
 	type			"smallhangar"
 }
@@ -157,7 +157,7 @@ building building_workshop
 	build_time			12
 	varcosts			3200
 	map_name			"workshop"
-	pedia				rs_building_workshop
+	tech				rs_building_workshop
 	type				"workshop"
 	starting_employees	10
 	size				"2 1"
@@ -173,7 +173,7 @@ building building_radar
 	build_time		7
 	varcosts		4000
 	map_name		"radar"
-	pedia			rs_building_radar
+	tech			rs_building_radar
 	type			"radar"
 	onenable		"update_base_radar_coverage"
 	ondisable		"update_base_radar_coverage"
@@ -189,7 +189,7 @@ building building_radar_adv
 	build_time		7
 	varcosts		7100
 	map_name		"radar_adv"
-	pedia			rs_building_radar_adv
+	tech			rs_building_radar_adv
 	type			"radar"
 	onenable		"update_base_radar_coverage"
 	ondisable		"update_base_radar_coverage"
@@ -205,7 +205,7 @@ building building_lab
 	build_time			12
 	varcosts			4300
 	map_name			"lab"
-	pedia				rs_building_lab
+	tech				rs_building_lab
 	type				"lab"
 	starting_employees	10
 	capacity			10
@@ -220,7 +220,7 @@ building building_hospital
 	build_time			8
 	varcosts			5200
 	map_name			"hospital"
-	pedia				rs_building_hospital
+	tech				rs_building_hospital
 	max_count			1
 	type				"hospital"
 	starting_employees	10
@@ -235,7 +235,7 @@ building building_amstorage
 	varcosts	22000
 	type		"amstorage"
 	map_name	"antimatter"
-	pedia		rs_building_antimatter
+	tech		rs_building_antimatter
 	capacity	1000
 	ondestroy	"building_amdestroy 0.1"
 }
@@ -251,7 +251,7 @@ building building_laser
 	build_time		3
 	varcosts		5000
 	map_name		"laser"
-	pedia			rs_building_laser
+	tech			rs_building_laser
 	max_count		4
 	onconstruct		"add_battery laser"
 	onenable		"basedef_updatebatteries laser"
@@ -270,7 +270,7 @@ building building_missile
 	build_time		3
 	varcosts		5000
 	map_name		"missile"
-	pedia			rs_building_missile
+	tech			rs_building_missile
 	max_count		4
 	onconstruct		"add_battery missile"
 	onenable		"basedef_updatebatteries missile"
