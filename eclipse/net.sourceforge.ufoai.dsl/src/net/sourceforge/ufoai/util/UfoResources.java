@@ -3,18 +3,18 @@ package net.sourceforge.ufoai.util;
 import java.io.File;
 
 /**
- * UFOAI resource util to access to the content of the project.
- * QUESTION maybe we should use IResource (eclipse resource) instead of File
+ * UFOAI resource util to access to the content of the project. QUESTION maybe
+ * we should use IResource (eclipse resource) instead of File
  */
 public class UfoResources {
 
-	private static String[] supportedImageExtensions = {".png", ".jpg"};
-	private static String[] supportedModelExtensions = {".md2", ".md3", ".obj", ".mdl"};
-	private static String[] supportedSoundExtensions = {".mp3", ".ogg", ".wav"};
+	private static String[] supportedImageExtensions = { ".png", ".jpg" };
+	private static String[] supportedModelExtensions = { ".md2", ".md3", ".obj", ".dpm" };
+	private static String[] supportedSoundExtensions = { ".ogg", ".wav" };
 
 	/**
-	 * True if "base" dir already checked.
-	 * This value can be true, and base null, if base not found
+	 * True if "base" dir already checked. This value can be true, and base
+	 * null, if base not found
 	 */
 	private static boolean isBaseChecked;
 
@@ -49,7 +49,7 @@ public class UfoResources {
 	private static File getFileFromBase(String id, String[] expectedExtensions) {
 		if (base == null)
 			return null;
-		for (String extension: expectedExtensions) {
+		for (String extension : expectedExtensions) {
 			File file = new File(base, id + extension);
 			if (file.exists() || file.isFile()) {
 				return file;
