@@ -278,7 +278,7 @@ component ObjectInfo extends panel
 		{
 			dataid		TEXT_ITEMDESCRIPTION
 			pos			"30 10"
-			size		"420 145"
+			size		"420 135"
 			rows		"8"
 			lineheight	15
 			tabwidth	168
@@ -295,8 +295,8 @@ component ObjectInfo extends panel
 		vscrollbar description_scroll
 		{
 			image		"ui/scrollbar_v_green"
-			pos			"30 0"
-			size		"420 145"
+			pos			"430 10"
+			height		"135"
 			current		0
 			viewsize	8
 			fullsize	8
