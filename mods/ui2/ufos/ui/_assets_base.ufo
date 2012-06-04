@@ -469,7 +469,10 @@ component MarketItem extends panel
 		tooltip			"_View UFOPaedia entry"
 		pos				"5 5"
 		size			"18	18"
-		onClick			{ cmd "market_openpedia;" } // @TODO Doesn't yet open the right thing
+		onClick			{  // @TODO Doesn't yet open the right thing
+			cmd "ui_market_showinfo \"<node:parent.id@string>\";"
+			cmd "market_openpedia;"
+		}
 	}
 	string name
 	{
