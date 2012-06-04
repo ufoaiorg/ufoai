@@ -1074,7 +1074,7 @@ static const value_t valid_tech_vars[] = {
 	{"time", V_FLOAT, offsetof(technology_t, time), MEMBER_SIZEOF(technology_t, time)},
 	{"announce", V_BOOL, offsetof(technology_t, announce), MEMBER_SIZEOF(technology_t, announce)},
 	{"image", V_HUNK_STRING, offsetof(technology_t, image), 0},
-	{"mdl", V_HUNK_STRING, offsetof(technology_t, mdl), 0},
+	{"model", V_HUNK_STRING, offsetof(technology_t, mdl), 0},
 
 	{NULL, V_NULL, 0, 0}
 };

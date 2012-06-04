@@ -96,7 +96,7 @@
 //		-1 Will prevent the item to be produced. (Only needed if the thing 'provides' something and this thing is not meant for production.)
 //	image
 //		Path to the image that should be displayed on the top (big) in the ufopedia.
-//	mdl
+//	model
 //		Same as the image but for 3d-models.
 //		It overrides the image-definitions if it is provided.
 //==========================================
@@ -188,7 +188,7 @@ tech rs_baselaser
 	}
 	time	3000
 	provides baselaser
-	mdl		"objects/laserturret/laserturret"
+	model		"objects/laserturret/laserturret"
 	producetime	150
 }
 
@@ -3410,7 +3410,7 @@ tech rs_craft_drop_firebird
 	time	0
 	producetime	336 //Two weeks.
 
-	mdl		drop_firebird
+	model		drop_firebird
 }
 
 tech rs_craft_drop_herakles
@@ -3447,7 +3447,7 @@ tech rs_craft_drop_herakles
 	time	13000
 	producetime	336 //Two weeks.
 
-	mdl		drop_herakles
+	model		drop_herakles
 }
 
 tech rs_craft_drop_raptor
@@ -3492,7 +3492,7 @@ tech rs_craft_drop_raptor
 	time	13000
 	producetime	336
 
-	mdl		drop_raptor
+	model		drop_raptor
 }
 
 tech rs_craft_inter_stiletto
@@ -3508,7 +3508,7 @@ tech rs_craft_inter_stiletto
 	time	0
 	producetime	336
 
-	mdl		inter_stiletto
+	model		inter_stiletto
 }
 
 tech rs_craft_inter_saracen
@@ -3524,7 +3524,7 @@ tech rs_craft_inter_saracen
 	time	0
 	producetime	400
 
-	mdl		inter_saracen
+	model		inter_saracen
 }
 
 tech rs_craft_inter_dragon
@@ -3569,7 +3569,7 @@ tech rs_craft_inter_dragon
 		item	craft_alien_detection	1
 	}
 
-	mdl		inter_dragon
+	model		inter_dragon
 }
 
 tech rs_craft_inter_starchaser
@@ -3613,7 +3613,7 @@ tech rs_craft_inter_starchaser
 		item	craft_alien_detection	2
 	}
 
-	mdl		inter_starchaser
+	model		inter_starchaser
 }
 
 tech rs_craft_inter_stingray
@@ -3659,7 +3659,7 @@ tech rs_craft_inter_stingray
 	time	20000
 	producetime	800
 
-	mdl		inter_stingray
+	model		inter_stingray
 }
 
 //========================
@@ -3705,7 +3705,7 @@ tech rs_craft_ufo_scout
 	time	4500
 	producetime -1
 
-	mdl		ufo_scout
+	model		ufo_scout
 }
 
 tech rs_craft_ufo_fighter
@@ -3748,7 +3748,7 @@ tech rs_craft_ufo_fighter
 	time	4500
 	producetime -1
 
-	mdl		ufo_fighter
+	model		ufo_fighter
 }
 
 tech rs_craft_ufo_supply
@@ -3791,7 +3791,7 @@ tech rs_craft_ufo_supply
 	time	5000
 	producetime -1
 
-	mdl		ufo_supply
+	model		ufo_supply
 }
 
 tech rs_craft_ufo_carrier
@@ -3834,7 +3834,7 @@ tech rs_craft_ufo_carrier
 	time	6500
 	producetime -1
 
-	mdl		ufo_carrier
+	model		ufo_carrier
 }
 
 tech rs_craft_ufo_bomber
@@ -3877,7 +3877,7 @@ tech rs_craft_ufo_bomber
 	time	8500
 	producetime -1
 
-	mdl		ufo_bomber
+	model		ufo_bomber
 }
 
 tech rs_craft_ufo_corrupter
@@ -3920,7 +3920,7 @@ tech rs_craft_ufo_corrupter
 	time	8500
 	producetime -1
 
-	mdl		ufo_corrupter
+	model		ufo_corrupter
 }
 
 tech rs_craft_ufo_gunboat
@@ -3963,7 +3963,7 @@ tech rs_craft_ufo_gunboat
 	time	7500
 	producetime -1
 
-	mdl		ufo_gunboat
+	model		ufo_gunboat
 }
 
 tech rs_craft_ufo_ripper
@@ -4006,7 +4006,7 @@ tech rs_craft_ufo_ripper
 	time	7500
 	producetime -1
 
-	mdl		ufo_ripper
+	model		ufo_ripper
 }
 
 tech rs_craft_ufo_harvester
@@ -4049,7 +4049,7 @@ tech rs_craft_ufo_harvester
 	time	5500
 	producetime -1
 
-	mdl		ufo_harvester
+	model		ufo_harvester
 }
 
 tech rs_craft_ufo_mothership
@@ -4092,7 +4092,7 @@ tech rs_craft_ufo_mothership
 	time	10000
 	producetime -1
 
-	mdl		ufo_mothership
+	model		ufo_mothership
 }
 
 //========================
@@ -4119,7 +4119,7 @@ tech rs_alien_bloodspider_live
 	}
 	time	0
 
-	mdl	"aliens/bloodspider/bloodspider"
+	model	"aliens/bloodspider/bloodspider"
 }
 */
 
@@ -4325,7 +4325,7 @@ tech rs_alien_shevaar_autopsy
 //require_AND { tech TODO }
 //	time	2000
 //// menuModel - see models.ufo
-//	mdl	alien_hovernet
+//	model	alien_hovernet
 //}
 //tech rs_alien_stinger_autopsy
 //{
@@ -4339,7 +4339,7 @@ tech rs_alien_shevaar_autopsy
 //	time	1500
 //
 //	// menuModel - see models.ufo
-//	mdl	alien_hovernet
+//	model	alien_hovernet
 //}
 
 // CYBORG ORTNOK
@@ -4358,7 +4358,7 @@ tech rs_alien_shevaar_autopsy
 //	}
 //	time	1500
 //
-//	mdl	alien_cyborg_ortnok
+//	model	alien_cyborg_ortnok
 //}
 
 //========================
@@ -4368,7 +4368,7 @@ tech rs_alien_shevaar_autopsy
 tech rs_ugv_phoenix
 {
 	type	"ugv"
-	mdl	ugv_phoenix
+	model	ugv_phoenix
 
 	up_chapter	equipment
 	name	"_Phoenix UGV"
@@ -4388,7 +4388,7 @@ tech rs_ugv_phoenix
 tech rs_ugv_ares_w
 {
 	type	"ugv"
-	mdl	ugv_ares_w
+	model	ugv_ares_w
 
 	up_chapter	equipment
 	name	"_Ares W (UGV)"
@@ -4407,7 +4407,7 @@ tech rs_ugv_ares_w
 tech rs_ugv_chaingun
 {
 	type	"weapon"
-//	mdl			ares_w_turret // we do not need this here, but this is the correct model
+//	model			ares_w_turret // we do not need this here, but this is the correct model
 
 	up_chapter	equipment
 /* @todo use-me
@@ -4426,7 +4426,7 @@ tech rs_ugv_chaingun
 tech rs_ugv_chaingun_belt
 {
 	type	"weapon"
-//	mdl	ugv_phoenix // we do not need this here
+//	model	ugv_phoenix // we do not need this here
 
 	up_chapter	equipment
 /* @todo use-me
@@ -4445,7 +4445,7 @@ tech rs_ugv_chaingun_belt
 tech rs_ugv_weapon_autocannon
 {
 	type	"weapon"
-	mdl	ugv_phoenix	// @todo fixme
+	model	ugv_phoenix	// @todo fixme
 
 	up_chapter	equipment
 	description {
@@ -4478,7 +4478,7 @@ tech rs_base_AA51_launcher
 	time		0
 	producetime	200
 
-	mdl			"objects/samlauncher/samlauncher"
+	model			"objects/samlauncher/samlauncher"
 }
 
 tech rs_base_ammo_AA51
@@ -4509,7 +4509,7 @@ tech rs_craft_el_raven
 	time		0
 	producetime	100
 
-	mdl	"aircraft/craft_item_raven_ecm/ecm"
+	model	"aircraft/craft_item_raven_ecm/ecm"
 }
 
 tech rs_craft_shield_polymer
@@ -4526,7 +4526,7 @@ tech rs_craft_shield_polymer
 	time		0
 	producetime	140
 
-	mdl	"aircraft/craft_arm_poly/polymer"
+	model	"aircraft/craft_arm_poly/polymer"
 }
 
 tech rs_craft_shield_plating
@@ -4568,7 +4568,7 @@ tech rs_craft_shield_plating
 	time		3000
 	producetime	240
 
-	mdl	"aircraft/craft_arm_plate/plating"
+	model	"aircraft/craft_arm_plate/plating"
 }
 
 tech rs_craft_alien_astrogation
@@ -4606,7 +4606,7 @@ tech rs_craft_alien_astrogation
 	time		3500
 	producetime	-1
 
-	mdl		"aircraft/craft_item_astro/astrogation"
+	model		"aircraft/craft_item_astro/astrogation"
 }
 
 tech rs_craft_alien_propulsion
@@ -4643,7 +4643,7 @@ tech rs_craft_alien_propulsion
 	time		3500
 	producetime	-1
 
-	mdl		"aircraft/craft_item_prop/propulsion"
+	model		"aircraft/craft_item_prop/propulsion"
 }
 
 tech rs_craft_alien_detection
@@ -4680,7 +4680,7 @@ tech rs_craft_alien_detection
 	time		3500
 	producetime	-1
 
-	mdl		"aircraft/craft_item_det/detection"
+	model		"aircraft/craft_item_det/detection"
 }
 
 tech rs_craft_weapon_alc
@@ -4720,7 +4720,7 @@ tech rs_craft_weapon_alc
 	time		5500
 	producetime	100
 
-	mdl		"aircraft/craft_weapon_alc/alc"
+	model		"aircraft/craft_weapon_alc/alc"
 }
 
 tech rs_craft_ammo_alc
@@ -4747,7 +4747,7 @@ tech rs_craft_weapon_shiva
 	time		0
 	producetime	100
 
-	mdl		"aircraft/craft_weapon_shiva/shiva"
+	model		"aircraft/craft_weapon_shiva/shiva"
 }
 
 tech rs_craft_ammo_shiva_1
@@ -4768,7 +4768,7 @@ tech rs_craft_ammo_shiva_1
 	time		0
 	producetime	10 //Assuming a full magazine.
 
-	mdl				"aircraft/craft_weapon_shiva/ammo_api"
+	model				"aircraft/craft_weapon_shiva/ammo_api"
 }
 
 tech rs_craft_ammo_shiva_2
@@ -4789,7 +4789,7 @@ tech rs_craft_ammo_shiva_2
 	time		0
 	producetime	10 //Assuming a full magazine.
 
-	mdl				"aircraft/craft_weapon_shiva/ammo_hei"
+	model				"aircraft/craft_weapon_shiva/ammo_hei"
 }
 
 tech rs_craft_weapon_sparrowhawk
@@ -4806,7 +4806,7 @@ tech rs_craft_weapon_sparrowhawk
 	time		0
 	producetime	100
 
-	mdl		"aircraft/craft_weapon_sparrow/sparrowhawk_rack"
+	model		"aircraft/craft_weapon_sparrow/sparrowhawk_rack"
 }
 
 tech rs_craft_ammo_sparrowhawk
@@ -4827,7 +4827,7 @@ tech rs_craft_ammo_sparrowhawk
 	time		0
 	producetime	80 //10 per missile.
 
-	mdl		"aircraft/craft_weapon_sparrow/sparrowhawk"
+	model		"aircraft/craft_weapon_sparrow/sparrowhawk"
 }
 
 tech rs_craft_weapon_tr20
@@ -4844,7 +4844,7 @@ tech rs_craft_weapon_tr20
 	time		0
 	producetime	100
 
-	mdl		"aircraft/craft_weapon_tr20/tr20"
+	model		"aircraft/craft_weapon_tr20/tr20"
 }
 
 tech rs_craft_ammo_tr20
@@ -4865,7 +4865,7 @@ tech rs_craft_ammo_tr20
 	time		0
 	producetime	24 //Assuming a full 128-rocket batch! // TODO: 152 pcs?
 
-	mdl		"aircraft/craft_weapon_tr20/tr20_rocket"
+	model		"aircraft/craft_weapon_tr20/tr20_rocket"
 }
 
 tech rs_craft_weapon_particle
@@ -4915,7 +4915,7 @@ tech rs_craft_weapon_particle
 	time		8000
 	producetime	150
 
-	mdl		"aircraft/craft_weapon_particle/pbw"
+	model		"aircraft/craft_weapon_particle/pbw"
 }
 
 tech rs_craft_ammo_particle
@@ -4973,7 +4973,7 @@ tech rs_craft_weapon_alien_launcher
 	time		8000
 	producetime	150
 
-	mdl		"aircraft/craft_weapon_launcher/alien_launcher"
+	model		"aircraft/craft_weapon_launcher/alien_launcher"
 }
 
 tech rs_craft_ammo_am_missile
@@ -5024,7 +5024,7 @@ tech rs_craft_ammo_am_missile
 	time		5000
 	producetime	100
 
-	mdl		"aircraft/craft_weapon_launcher/antimatter"
+	model		"aircraft/craft_weapon_launcher/antimatter"
 }
 
 tech rs_craft_ammo_hybrid_missile
@@ -5073,7 +5073,7 @@ tech rs_craft_ammo_hybrid_missile
 	time		4500
 	producetime	75
 
-	mdl		"aircraft/craft_weapon_launcher/hybrid" // @todo add the model
+	model		"aircraft/craft_weapon_launcher/hybrid" // @todo add the model
 }
 
 tech rs_craft_el_targeting
@@ -5090,7 +5090,7 @@ tech rs_craft_el_targeting
 	time		0
 	producetime	180
 
-	mdl		"aircraft/craft_item_target/craft_item_target"
+	model		"aircraft/craft_item_target/craft_item_target"
 }
 
 tech rs_craft_el_fuelpod
@@ -5107,7 +5107,7 @@ tech rs_craft_el_fuelpod
 	time		0
 	producetime	80
 
-	mdl		"aircraft/craft_item_fuel/fuel"
+	model		"aircraft/craft_item_fuel/fuel"
 	//image	"techs/craft_electronics_fuelpod"
 }
 
@@ -5452,7 +5452,7 @@ tech rs_alien_psi_device
 	}
 
 	time		14000
-	mdl			wormhole_device
+	model			wormhole_device
 }
 
 // http://ufoai.org/wiki/index.php/Proposals/Alien_Infiltration
