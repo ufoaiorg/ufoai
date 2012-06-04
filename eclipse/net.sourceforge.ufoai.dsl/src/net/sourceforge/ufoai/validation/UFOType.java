@@ -124,7 +124,12 @@ public class UFOType {
 		/**
 		 * A reference to an object
 		 */
-		ID
+		ID,
+
+		/**
+		 * A reference to an object or a model name
+		 */
+		MODEL_OR_ID
 	}
 
 	private Type type;

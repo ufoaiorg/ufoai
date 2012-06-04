@@ -232,6 +232,22 @@ public class UFOScriptJavaValidator extends AbstractUFOScriptJavaValidator {
 				}
 			}
 			break;
+		case MODEL_OR_ID:
+			if (node.getValue() instanceof ValueReference) {
+				validateReference(node, type);
+			} else if (node.getValue() instanceof ValueString) {
+				checkUfoBase(node);
+				ValueString value = (ValueString) node.getValue();
+				final String id = value.getValue();
+				final File file = UfoResources.getModelFile(id);
+				if (file == null) {
+					warning("Model not found.",
+							UfoScriptPackage.Literals.UFO_NODE__VALUE);
+				}
+			} else {
+				error("Expected a reference to a menu_model or a model name", UfoScriptPackage.Literals.UFO_NODE__VALUE);
+			}
+			break;
 		case SOUND:
 			if (!(node.getValue() instanceof ValueString)) {
 				error("Quoted sound name expected", UfoScriptPackage.Literals.UFO_NODE__VALUE);

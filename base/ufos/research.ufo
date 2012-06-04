@@ -3830,7 +3830,7 @@ tech rs_craft_ufo_carrier
 		ufo craft_ufo_carrier 1
 	}
 
-	provides	"craft_ufo_carrier"
+	provides	craft_ufo_carrier
 	time	6500
 	producetime -1
 
@@ -3873,7 +3873,7 @@ tech rs_craft_ufo_bomber
 		ufo craft_ufo_bomber 1
 	}
 
-	provides	"craft_ufo_bomber"
+	provides	craft_ufo_bomber
 	time	8500
 	producetime -1
 
@@ -3916,7 +3916,7 @@ tech rs_craft_ufo_corrupter
 		ufo craft_ufo_corrupter 1
 	}
 
-	provides	"craft_ufo_corrupter"
+	provides	craft_ufo_corrupter
 	time	8500
 	producetime -1
 
@@ -3959,7 +3959,7 @@ tech rs_craft_ufo_gunboat
 		ufo craft_ufo_gunboat 1
 	}
 
-	provides	"craft_ufo_gunboat"
+	provides	craft_ufo_gunboat
 	time	7500
 	producetime -1
 
@@ -4002,7 +4002,7 @@ tech rs_craft_ufo_ripper
 		ufo craft_ufo_ripper 1
 	}
 
-	provides	"craft_ufo_ripper"
+	provides	craft_ufo_ripper
 	time	7500
 	producetime -1
 
@@ -4045,7 +4045,7 @@ tech rs_craft_ufo_harvester
 		ufo craft_ufo_harvester 1
 	}
 
-	provides	"craft_ufo_harvester"
+	provides	craft_ufo_harvester
 	time	5500
 	producetime -1
 
@@ -4088,7 +4088,7 @@ tech rs_craft_ufo_mothership
 		ufo craft_ufo_mothership 1
 	}
 
-	provides	"craft_ufo_mothership"
+	provides	craft_ufo_mothership
 	time	10000
 	producetime -1
 
