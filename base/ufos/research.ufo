@@ -2743,43 +2743,36 @@ tech rs_nano_armour
 
 tech rs_power_armour
 {
-	// Multiplayer only right now
 	type	"armour"
 	up_chapter	equipment
 
-//	description {
-//		default "TODO_power_armour_txt"
-//	}
-//	pre_description {
-//		default "TODO_power_armour_pre_txt"
-//	}
-
-//	mail_pre
-//	{
-//		from	"_mail_from_paul_navarre"
-//		to	"_mail_to_base_commander"
-//		// subject	defined by "name" (which in turn is parsed from armour*.ufo files)
-//		icon	"icons/mail_tech"
-//	}
-
-//	mail
-//	{
-//		from	"_mail_from_paul_navarre"
-//		to	"_mail_to_base_commander"
-//		// subject	defined by "name"
-//		icon	"icons/mail_tech"
-//	}
-
-	require_AND	// todo:fixme
-	{
-		tech rs_nano_armour
+	description {
+		default "_power_armour_txt"
 	}
+	pre_description {
+		default "_power_armour_pre_txt"
+	}
+
+	mail_pre
+	{
+		from	"_mail_from_paul_navarre"
+		to	"_mail_to_base_commander"
+		// subject	defined by "name" (which in turn is parsed from armour*.ufo files)
+		icon	"icons/mail_tech"
+	}
+
+	mail
+	{
+		from	"_mail_from_paul_navarre"
+		to	"_mail_to_base_commander"
+		// subject	defined by "name"
+		icon	"icons/mail_tech"
+	}
+
 	provides	armour_power
 
-//	time		3000
-	time		-1
-//	producetime	180
-	producetime	-1
+	time		3000
+	producetime	180
 }
 
 tech rs_alien_body_armour
