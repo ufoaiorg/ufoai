@@ -23,6 +23,7 @@ import org.eclipse.xtext.nodemodel.util.NodeModelUtils;
 import org.eclipse.xtext.resource.XtextResource;
 import org.eclipse.xtext.ui.editor.IXtextEditorCallback;
 import org.eclipse.xtext.ui.editor.XtextEditor;
+import org.eclipse.xtext.ui.editor.model.IXtextDocument;
 import org.eclipse.xtext.util.concurrent.IUnitOfWork;
 
 import com.google.inject.Inject;
@@ -104,7 +105,10 @@ public class XtextTaskCalculator extends IXtextEditorCallback.NullImpl {
 
 		private void createNewMarkers(final XtextEditor argEditor, final IProgressMonitor argMonitor) throws CoreException {
 			final IResource varResource = argEditor.getResource();
-			argEditor.getDocument().readOnly(new IUnitOfWork<Void, XtextResource>() {
+			IXtextDocument document = argEditor.getDocument();
+			if (document == null)
+				return;
+			document.readOnly(new IUnitOfWork<Void, XtextResource>() {
 				@Override
 				public java.lang.Void exec(XtextResource argState) throws Exception {
 					if (argState != null && !argState.getContents().isEmpty()) {
