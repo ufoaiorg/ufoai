@@ -5,6 +5,7 @@ import java.util.List;
 import net.sourceforge.ufoai.ufoScript.UFONode;
 import net.sourceforge.ufoai.ufoScript.UFOScript;
 import net.sourceforge.ufoai.ufoScript.UfoScriptPackage;
+import net.sourceforge.ufoai.ui.tasks.ITaskElementChecker;
 
 import org.eclipse.emf.common.util.EList;
 import org.eclipse.emf.ecore.EObject;
@@ -16,7 +17,12 @@ import org.eclipse.xtext.resource.XtextResource;
 import org.eclipse.xtext.ui.editor.syntaxcoloring.IHighlightedPositionAcceptor;
 import org.eclipse.xtext.ui.editor.syntaxcoloring.ISemanticHighlightingCalculator;
 
+import com.google.inject.Inject;
+
 public class SemanticHighlightingCalculator implements ISemanticHighlightingCalculator {
+	@Inject
+	ITaskElementChecker objElementChecker;
+
 	@Override
 	public void provideHighlightingFor(XtextResource resource, IHighlightedPositionAcceptor acceptor) {
 		if (resource == null) {
@@ -41,6 +47,17 @@ public class SemanticHighlightingCalculator implements ISemanticHighlightingCalc
 			for (UFONode child : node.getNodes()) {
 				highlightUFONode(child, acceptor);
 			}
+		}
+		if (node instanceof ILeafNode) {
+			highlightLeafNode((ILeafNode) node, acceptor);
+		}
+	}
+
+	private void highlightLeafNode(ILeafNode node, IHighlightedPositionAcceptor acceptor) {
+		String varIgnorePrefix = objElementChecker.getPrefixToIgnore(node);
+		if (varIgnorePrefix != null) {
+			int start = node.getOffset() + node.getText().indexOf(varIgnorePrefix);
+			acceptor.addPosition(start, varIgnorePrefix.length(), HighlightingConfiguration.TODO_STYLE);
 		}
 	}
 

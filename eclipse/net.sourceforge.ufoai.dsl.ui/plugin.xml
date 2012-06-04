@@ -277,4 +277,20 @@
     </provider>
   </extension>
 
+   <extension
+         id="Xtask"
+         name="Xtext-Task"
+         point="org.eclipse.core.resources.markers">
+      <super
+            type="org.eclipse.core.resources.taskmarker">
+      </super>
+   </extension>
+   <extension
+         point="org.eclipse.ui.editors.annotationTypes">
+      <type
+            markerType="de.itemis.red.ucdsl.ui.Xtask"
+            name="de.itemis.red.ucdsl.ui.XtaskAnnotation"
+            super="org.eclipse.ui.workbench.texteditor.task">
+      </type>
+   </extension>
 </plugin>

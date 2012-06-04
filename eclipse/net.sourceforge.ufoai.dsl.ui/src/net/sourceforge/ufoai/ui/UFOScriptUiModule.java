@@ -5,13 +5,16 @@ package net.sourceforge.ufoai.ui;
 
 import net.sourceforge.ufoai.ui.folding.FoldingRegionProvider;
 import net.sourceforge.ufoai.ui.hover.HoverProvider;
-import net.sourceforge.ufoai.ui.internal.UFOScriptActivator;
 import net.sourceforge.ufoai.ui.properties.UFOScriptPropertyViewer;
 import net.sourceforge.ufoai.ui.syntaxcoloring.HighlightingConfiguration;
 import net.sourceforge.ufoai.ui.syntaxcoloring.SemanticHighlightingCalculator;
+import net.sourceforge.ufoai.ui.tasks.ITaskElementChecker;
+import net.sourceforge.ufoai.ui.tasks.TaskConstants;
+import net.sourceforge.ufoai.ui.tasks.UFOScriptTaskElementChecker;
+import net.sourceforge.ufoai.ui.tasks.XtextTaskCalculator;
 
-import org.eclipse.jface.resource.ImageDescriptor;
 import org.eclipse.ui.plugin.AbstractUIPlugin;
+import org.eclipse.xtext.ui.editor.IXtextEditorCallback;
 import org.eclipse.xtext.ui.editor.XtextEditor;
 import org.eclipse.xtext.ui.editor.contentassist.XtextContentAssistProcessor;
 import org.eclipse.xtext.ui.editor.folding.DefaultFoldingRegionProvider;
@@ -21,6 +24,7 @@ import org.eclipse.xtext.ui.editor.syntaxcoloring.ISemanticHighlightingCalculato
 
 import com.google.inject.Binder;
 import com.google.inject.name.Named;
+import com.google.inject.name.Names;
 
 /**
  * Use this class to register components to be used within the IDE.
@@ -54,7 +58,12 @@ public class UFOScriptUiModule extends net.sourceforge.ufoai.ui.AbstractUFOScrip
 		return FoldingRegionProvider.class;
 	}
 
-	public static ImageDescriptor getImageDescriptor(String path) {
-		return UFOScriptActivator.imageDescriptorFromPlugin("net.sourceforge.ufoai.dsl.ui", path);
+	public void configureMatchingTagMarker(com.google.inject.Binder binder) {
+		binder.bind(IXtextEditorCallback.class).annotatedWith(Names.named(TaskConstants.XTEXT_TASKS)).to( //$NON-NLS-1$
+				XtextTaskCalculator.class);
+	}
+
+	public Class<? extends ITaskElementChecker> bindTaskElementChecker() {
+		return UFOScriptTaskElementChecker.class;
 	}
 }

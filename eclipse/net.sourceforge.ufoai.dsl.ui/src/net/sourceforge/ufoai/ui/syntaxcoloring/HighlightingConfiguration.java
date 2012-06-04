@@ -9,12 +9,20 @@ import org.eclipse.xtext.ui.editor.utils.TextStyle;
 public class HighlightingConfiguration extends DefaultHighlightingConfiguration {
 	public static final String RULE_PROPERTY_TYPE = "ufoProperty"; //$NON-NLS-1$
 	public static final String RULE_PROPERTY_VALUE = "ufoValue"; //$NON-NLS-1$
+	public static final String TODO_STYLE = "TODO_STYLE";
 
 	@Override
 	public void configure(IHighlightingConfigurationAcceptor acceptor) {
 		super.configure(acceptor);
 		acceptor.acceptDefaultHighlighting(RULE_PROPERTY_TYPE, "Property", propertyTextStyle());
 		acceptor.acceptDefaultHighlighting(RULE_PROPERTY_VALUE, "Value", valueTextStyle());
+		acceptor.acceptDefaultHighlighting(TODO_STYLE, TODO_STYLE, todoTextStyle());
+	}
+
+	private TextStyle todoTextStyle() {
+		TextStyle textStyle = commentTextStyle().copy();
+		textStyle.setStyle(SWT.BOLD);
+		return textStyle;
 	}
 
 	private TextStyle propertyTextStyle() {
