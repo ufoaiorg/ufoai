@@ -27,7 +27,7 @@ public class SemanticHighlightingCalculator implements ISemanticHighlightingCalc
 			if (e instanceof UFOScript) {
 				UFOScript ufoScript = (UFOScript) e;
 				EList<UFONode> roots = ufoScript.getRoots();
-				for (UFONode root: roots) {
+				for (UFONode root : roots) {
 					highlightUFONode(root, acceptor);
 				}
 			}
@@ -35,10 +35,10 @@ public class SemanticHighlightingCalculator implements ISemanticHighlightingCalc
 	}
 
 	private void highlightUFONode(UFONode node, IHighlightedPositionAcceptor acceptor) {
-		highlightNode(getFirstFeatureNode(node, UfoScriptPackage.Literals.UFO_NODE__TYPE),
-				HighlightingConfiguration.RULE_PROPERTY_TYPE, acceptor);
+		highlightNode(getFirstFeatureNode(node, UfoScriptPackage.Literals.UFO_NODE__TYPE), HighlightingConfiguration.RULE_PROPERTY_TYPE,
+				acceptor);
 		if (node.getNodes() != null) {
-			for (UFONode child: node.getNodes()) {
+			for (UFONode child : node.getNodes()) {
 				highlightUFONode(child, acceptor);
 			}
 		}
