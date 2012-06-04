@@ -2769,6 +2769,13 @@ tech rs_power_armour
 		icon	"icons/mail_tech"
 	}
 
+	require_AND
+	{
+		tech rs_alien_medium_armour
+		tech rs_weapon_needlerheavy
+		tech rs_weapon_plasblaster
+	}
+
 	provides	armour_power
 
 	time		3000
