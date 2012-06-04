@@ -18,7 +18,7 @@ campaign veryhard
 	market				campaign_initial_market
 	asymptotic_market	campaign_asymptotic_market
 	credits				1300000
-	map					map_earth
+	map					"map_earth"
 	visible				true
 	events				main
 
@@ -49,7 +49,7 @@ campaign hard
 	market				campaign_initial_market
 	asymptotic_market	campaign_asymptotic_market
 	credits				1300000
-	map					map_earth
+	map					"map_earth"
 	visible				true
 	events				main
 
@@ -100,7 +100,7 @@ campaign main
 	market				campaign_initial_market
 	asymptotic_market	campaign_asymptotic_market
 	credits				1300000
-	map					map_earth
+	map					"map_earth"
 	visible				true
 	events				main
 
@@ -131,7 +131,7 @@ campaign easy
 	market				campaign_initial_market
 	asymptotic_market	campaign_asymptotic_market
 	credits				1300000
-	map					map_earth
+	map					"map_earth"
 	visible				true
 	events				main
 
@@ -181,7 +181,7 @@ campaign veryeasy
 	market				campaign_initial_market
 	asymptotic_market	campaign_asymptotic_market
 	credits				1300000
-	map					map_earth
+	map					"map_earth"
 	visible				true
 	events				main
 

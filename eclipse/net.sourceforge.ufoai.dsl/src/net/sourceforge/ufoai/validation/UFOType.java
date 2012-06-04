@@ -54,6 +54,12 @@ public class UFOType {
 		BASE_IMAGE,
 
 		/**
+		 * A string witch contain a prefix to a set of images relative to "base/pics/geoscape"
+		 * directory.
+		 */
+		GEOSCAPE_IMAGE,
+
+		/**
 		 * A string witch contain a link to a model relative to "base/models"
 		 * directory and do not contains file extension
 		 */

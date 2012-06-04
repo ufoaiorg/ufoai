@@ -70,7 +70,7 @@ public class UFOScriptJavaValidator extends AbstractUFOScriptJavaValidator {
 		/*if (node.getValue() instanceof ValueNull) {
 			// nothing
 		} else
-			*/
+		 */
 		if (node.getValue() instanceof ValueReference) {
 			ValueReference value = (ValueReference) node.getValue();
 			if (value.getValue() == null) {
@@ -85,6 +85,21 @@ public class UFOScriptJavaValidator extends AbstractUFOScriptJavaValidator {
 			error("Id expected", UfoScriptPackage.Literals.UFO_NODE__VALUE);
 		}
 	}
+
+	private static String[] geoscapeImages = {
+		"_atmosphere",
+		"_culture",
+		"_day",
+		"_halo",
+		"_nations_overlay_glow",
+		"_nations_overlay",
+		"_nations",
+		"_night",
+		"_night_lights",
+		"_population",
+		"_stars",
+		"_terrain"
+	};
 
 	private void validate(UFONode node) {
 		String path = getPath(node);
@@ -215,6 +230,23 @@ public class UFOScriptJavaValidator extends AbstractUFOScriptJavaValidator {
 				if (file == null) {
 					warning("Image not found.",
 							UfoScriptPackage.Literals.UFO_NODE__VALUE);
+				}
+			}
+			break;
+		case GEOSCAPE_IMAGE:
+			if (!(node.getValue() instanceof ValueString)) {
+				error("Quoted image name expected", UfoScriptPackage.Literals.UFO_NODE__VALUE);
+			} else 	{
+				checkUfoBase(node);
+				ValueString value = (ValueString) node.getValue();
+				final String id = value.getValue();
+				for (String suffix : geoscapeImages) {
+					String fileId = "geoscape/" + id + suffix;
+					final File file = UfoResources.getImageFileFromPics(fileId);
+					if (file == null) {
+						warning("Image \"" + fileId + "\" not found.",
+								UfoScriptPackage.Literals.UFO_NODE__VALUE);
+					}
 				}
 			}
 			break;
