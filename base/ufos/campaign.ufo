@@ -2,7 +2,7 @@ campaign veryhard
 {
 	name				"_Very Hard Campaign"
 	text				"_veryhard_campaign_txt"
-	team				phalanx
+	team				"phalanx"
 	soldiers			8
 	scientists			6
 	workers			6
@@ -30,7 +30,7 @@ campaign hard
 {
 	name			"_Hard Campaign"
 	text			"_hard_campaign_txt"
-	team			phalanx
+	team			"phalanx"
 	soldiers		8
 	scientists		6
 	workers			6
@@ -61,7 +61,7 @@ campaign main
 {
 	name			"_Standard Campaign"
 	text			"_standard_campaign_txt"
-	team			phalanx
+	team			"phalanx"
 	soldiers		9
 	scientists		10
 	workers			10
@@ -112,7 +112,7 @@ campaign easy
 {
 	name			"_Easy Campaign"
 	text			"_easy_campaign_txt"
-	team			phalanx
+	team			"phalanx"
 	soldiers		25
 	scientists		16
 	workers			10
@@ -143,7 +143,7 @@ campaign veryeasy
 {
 	name			"_Very Easy Campaign"
 	text			"_veryeasy_campaign_txt"
-	team			phalanx
+	team			"phalanx"
 	soldiers		35
 	scientists		26
 	workers			20

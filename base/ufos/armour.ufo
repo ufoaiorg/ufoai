@@ -68,7 +68,7 @@ item armour_light
 	size		60
 	weight		100
 	armourpath	"light"
-	useable		phalanx
+	useable		"phalanx"
 
 	protection {
 		normal_light		20
@@ -130,7 +130,7 @@ item armour_medium
 	price		7500
 	size		120
 	weight		120
-	useable		phalanx
+	useable		"phalanx"
 	armourpath	"medium"
 
 	protection {
@@ -193,7 +193,7 @@ item armour_power
 	price		32000
 	size		150
 	weight		140
-	useable		phalanx
+	useable		"phalanx"
 	armourpath	"power"
 
 	protection {
@@ -256,7 +256,7 @@ item armour_power
 //	scale		0.7
 //	weight		130
 //	price		32000
-//	useable		phalanx
+//	useable		"phalanx"
 //	armourpath	"medium2"
 //
 //	protection {
@@ -317,7 +317,7 @@ item armour_power
 //	scale		0.7
 //	price		32000
 //	weight		140
-//	useable		phalanx
+//	useable		"phalanx"
 //	armourpath	"power2"
 //
 //	protection {
@@ -378,7 +378,7 @@ item armour_power
 //	scale		0.7
 //	price		32000
 //	weight		150
-//	useable		phalanx
+//	useable		"phalanx"
 //	armourpath	"power3"
 //
 //	protection {
@@ -443,7 +443,7 @@ item armour_light_alien
 	price		1400
 	weight		100
 	size		50
-	useable		alien
+	useable		"alien"
 	armourpath	"light"
 
 	protection {
@@ -506,7 +506,7 @@ item armour_medium_alien
 	price		7500
 	weight		120
 	size		75
-	useable		alien
+	useable		"alien"
 	armourpath	"medium"
 
 	protection {
