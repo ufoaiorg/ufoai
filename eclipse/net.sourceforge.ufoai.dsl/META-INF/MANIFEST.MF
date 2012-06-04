@@ -31,7 +31,6 @@ Import-Package: org.apache.log4j,
 Bundle-RequiredExecutionEnvironment: J2SE-1.5
 Export-Package: net.sourceforge.ufoai,
  net.sourceforge.ufoai.formatting,
- net.sourceforge.ufoai.generator,
  net.sourceforge.ufoai.jvmmodel,
  net.sourceforge.ufoai.parser.antlr,
  net.sourceforge.ufoai.parser.antlr.internal,
