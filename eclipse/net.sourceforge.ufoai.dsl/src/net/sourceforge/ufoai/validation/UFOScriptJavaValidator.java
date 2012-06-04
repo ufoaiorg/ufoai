@@ -161,21 +161,23 @@ public class UFOScriptJavaValidator extends AbstractUFOScriptJavaValidator {
 			}
 			break;
 		case COLOR:
-			if (!(node.getValue() instanceof ValueString)) {
-				error("Quoted string expected", UfoScriptPackage.Literals.UFO_NODE__VALUE);
-			}
+			validateColor(node);
 			break;
 		case DATE:
-			if (!(node.getValue() instanceof ValueString)) {
-				error("Quoted string expected", UfoScriptPackage.Literals.UFO_NODE__VALUE);
-			}
+			validateVector(node, 3, true);
 			break;
 		case ID:
 			validateReference(node, type);
 			break;
 		case INT:
 			if (!(node.getValue() instanceof ValueNumber)) {
-				error("Number expected", UfoScriptPackage.Literals.UFO_NODE__VALUE);
+				error("Integer expected", UfoScriptPackage.Literals.UFO_NODE__VALUE);
+			}
+			try {
+				String value = ((ValueNumber)node.getValue()).getValue();
+				Integer.parseInt(value);
+			} catch (NumberFormatException e) {
+				error("Integer expected but real found", UfoScriptPackage.Literals.UFO_NODE__VALUE);
 			}
 			break;
 		case REAL:
@@ -185,7 +187,7 @@ public class UFOScriptJavaValidator extends AbstractUFOScriptJavaValidator {
 			break;
 		case BOOLEAN:
 			if (!(node.getValue() instanceof ValueBoolean)) {
-				error("Number expected", UfoScriptPackage.Literals.UFO_NODE__VALUE);
+				error("Boolean expected (true or false)", UfoScriptPackage.Literals.UFO_NODE__VALUE);
 			}
 			break;
 		case PICS_IMAGE:
@@ -259,19 +261,84 @@ public class UFOScriptJavaValidator extends AbstractUFOScriptJavaValidator {
 			}
 			break;
 		case VEC2:
+			validateVector(node, 2, false);
+			break;
 		case VEC3:
+			validateVector(node, 3, false);
+			break;
 		case VEC4:
-			if (!(node.getValue() instanceof ValueString)) {
-				error("Quoted tuple of number expected", UfoScriptPackage.Literals.UFO_NODE__VALUE);
-			}
+			validateVector(node, 4, false);
 			break;
 		case SHAPE:
-			if (!(node.getValue() instanceof ValueString)) {
-				error("Quoted tuple of number expected", UfoScriptPackage.Literals.UFO_NODE__VALUE);
-			}
+			validateVector(node, 4, true);
 			break;
 		default:
 			System.out.println("Type \"" + type + "\" not yet supported");
+		}
+	}
+
+	private void validateColor(UFONode node) {
+		if (!(node.getValue() instanceof ValueString)) {
+			error("Quoted set of components expected", UfoScriptPackage.Literals.UFO_NODE__VALUE);
+			return;
+		}
+		// check useless trail
+		String value = ((ValueString)node.getValue()).getValue();
+		if (!value.trim().equals(value)) {
+			warning("Color contain extra spaces", UfoScriptPackage.Literals.UFO_NODE__VALUE);
+		}
+		// check dimension
+		String[] values = value.trim().split("\\s+");
+		if (values.length < 3 || values.length > 4) {
+			error("Color must have 3 or 4 components", UfoScriptPackage.Literals.UFO_NODE__VALUE);
+			return;
+		}
+		// check element validity
+		for (String v: values) {
+			try {
+				double d = Double.parseDouble(v);
+				if (d < 0 || d > 1) {
+					error("Color component must be between 0 and 1", UfoScriptPackage.Literals.UFO_NODE__VALUE);
+				}
+			} catch (NumberFormatException e) {
+				error("Vector contains non real values (" + v + ")", UfoScriptPackage.Literals.UFO_NODE__VALUE);
+			}
+		}
+	}
+
+	private void validateVector(UFONode node, int dimension, boolean integer) {
+		if (!(node.getValue() instanceof ValueString)) {
+			error("Quoted set of number expected", UfoScriptPackage.Literals.UFO_NODE__VALUE);
+			return;
+		}
+		// check useless trail
+		String value = ((ValueString)node.getValue()).getValue();
+		if (!value.trim().equals(value)) {
+			warning("Data contains useless spaces", UfoScriptPackage.Literals.UFO_NODE__VALUE);
+		}
+		// check dimension
+		String[] values = value.trim().split("\\s+");
+		if (values.length != dimension) {
+			error("Data must contains " + dimension + " elements", UfoScriptPackage.Literals.UFO_NODE__VALUE);
+			return;
+		}
+		// check element validity
+		for (String v: values) {
+			if (integer) {
+				try {
+					Integer.parseInt(v);
+				} catch (NumberFormatException e) {
+					error("Data contains non integer values (" + v + ")", UfoScriptPackage.Literals.UFO_NODE__VALUE);
+					break;
+				}
+			} else {
+				try {
+					Double.parseDouble(v);
+				} catch (NumberFormatException e) {
+					error("Data contains non real values (" + v + ")", UfoScriptPackage.Literals.UFO_NODE__VALUE);
+					break;
+				}
+			}
 		}
 	}
 
