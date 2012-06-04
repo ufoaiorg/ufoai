@@ -6,13 +6,15 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.Properties;
 
+import net.sourceforge.ufoai.UFOAIPlugin;
+
 public class UFOTypes {
 
 	private static UFOTypes instance;
-	private static String defaultPropertyFile = "/net/sourceforge/ufoai/validation/rules.properties";
+	private static String defaultPropertyFile = "rules.properties";
 
-	private Properties properties;
-	private Map<String, UFOType> types;
+	private final Properties properties;
+	private final Map<String, UFOType> types;
 
 	private UFOTypes(Properties properties) {
 		this.properties = new Properties(properties);
@@ -22,7 +24,7 @@ public class UFOTypes {
 	public static UFOTypes getInstance() {
 		if (instance == null) {
 			Properties properties = new Properties();
-			InputStream stream = UFOTypes.class.getResourceAsStream(defaultPropertyFile);
+			InputStream stream = UFOAIPlugin.class.getResourceAsStream(defaultPropertyFile);
 			if (stream == null) {
 				System.out.println("UFOAI Validator property file \"" + defaultPropertyFile + "\"not found");
 			} else {
