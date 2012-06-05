@@ -1392,6 +1392,43 @@ bool Com_ParseBlockToken (const char *name, const char **text, void *base, const
 	return v->string != NULL;
 }
 
+/**
+ * Parse tokens between '(' and ')' and return them into a linked list.
+ * It the list is not well formed, the returned list is null.
+ * @param[in] text Pointer to a token stream
+ * @param[out] list list to return
+ * @return True if the list is well formed, else false.
+ */
+bool Com_ParseList (const char **text, linkedList_t **list)
+{
+	*list = NULL;
+
+	if (Com_NextToken(text) != TT_BEGIN_LIST) {
+		Com_Printf("Com_ParseList: expected '(' but \"%s\" found\n", Com_GetToken(text));
+		return false;
+	}
+
+	while (true) {
+		Com_TokenType_t type = Com_NextToken(text);
+		if (type == TT_END_LIST)
+			break;
+		if (type == TT_EOF) {
+			Com_Printf("Com_ParseList: expected list content but end of file found\n");
+			LIST_Delete(list);
+			return false;
+		}
+		if (type < TT_CONTENT) {
+			Com_Printf("Com_ParseList: expected list content but \"%s\" found\n", Com_GetToken(text));
+			LIST_Delete(list);
+			return false;
+		}
+		// read content
+		LIST_AddString(list, Com_GetToken(text));
+	}
+
+	return true;
+}
+
 bool Com_ParseBlock (const char *name, const char **text, void *base, const value_t *values, memPool_t *mempool)
 {
 	const char *errhead = "Com_ParseBlock: unexpected end of file (";

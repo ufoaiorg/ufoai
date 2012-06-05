@@ -31,14 +31,16 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #include "ufotypes.h"
 
 enum Com_TokenType_t {
+	TT_EOF = 0,
 	TT_BEGIN_BLOCK = '{',
 	TT_END_BLOCK = '}',
 	TT_COMMA = ',',
-	TT_BEGIN_PARAM = '(',
-	TT_END_PARAM = ')',
+	TT_BEGIN_LIST = '(',
+	TT_END_LIST = ')',
+
+	TT_CONTENT = 0xFF,
 	TT_WORD,
-	TT_QUOTED_WORD,
-	TT_EOF = 0
+	TT_QUOTED_WORD
 };
 
 const char *Com_GetToken(const char **data_p);

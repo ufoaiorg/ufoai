@@ -188,7 +188,7 @@ static void testParserWithFunctionScriptToken (void)
 	CU_ASSERT_STRING_EQUAL(token, ",");
 
 	token = Com_Parse(&cursor);
-	CU_ASSERT_EQUAL(Com_GetType(&cursor), TT_BEGIN_PARAM);
+	CU_ASSERT_EQUAL(Com_GetType(&cursor), TT_BEGIN_LIST);
 	CU_ASSERT_STRING_EQUAL(token, "(");
 
 	token = Com_Parse(&cursor);
@@ -216,7 +216,7 @@ static void testParserWithFunctionScriptToken (void)
 	CU_ASSERT_STRING_EQUAL(token, "aaaa");
 
 	token = Com_Parse(&cursor);
-	CU_ASSERT_EQUAL(Com_GetType(&cursor), TT_END_PARAM);
+	CU_ASSERT_EQUAL(Com_GetType(&cursor), TT_END_LIST);
 	CU_ASSERT_STRING_EQUAL(token, ")");
 
 	token = Com_Parse(&cursor);
@@ -351,6 +351,93 @@ static void testParserCommonType (void)
 
 }
 
+/**
+ * @brief unittest to check well formed list
+ */
+static void testParserListOk (void)
+{
+	const char* string = " (  aaa \n \"bbb\" \t ccc \n \n ) ";
+	const char* cursor = string;
+	linkedList_t *list;
+
+	if (!Com_ParseList(&cursor, &list)) {
+		CU_FAIL_FATAL("List parsing failed");
+	}
+
+	CU_ASSERT_EQUAL_FATAL(LIST_Count(list), 3);
+
+	CU_ASSERT_STRING_EQUAL(list->data, "aaa");
+	CU_ASSERT_STRING_EQUAL(list->next->data, "bbb");
+	CU_ASSERT_STRING_EQUAL(list->next->next->data, "ccc");
+
+	LIST_Delete(&list);
+}
+
+
+/**
+ * @brief unittest to check well formed empty list
+ */
+static void testParserListOkEmpty (void)
+{
+	const char* string = " (  \n ) ()";
+	const char* cursor = string;
+	linkedList_t *list;
+
+	if (!Com_ParseList(&cursor, &list)) {
+		CU_FAIL_FATAL("List parsing failed");
+	}
+
+	CU_ASSERT_EQUAL_FATAL(LIST_Count(list), 0);
+
+	if (!Com_ParseList(&cursor, &list)) {
+		CU_FAIL_FATAL("List parsing failed");
+	}
+
+	CU_ASSERT_EQUAL_FATAL(LIST_Count(list), 0);
+}
+
+/**
+ * @brief unittest to check wrong list with EOF
+ */
+static void testParserListKoEOF (void)
+{
+	const char* string = " (  aaa \n bbb \t ccc \n \n";
+	const char* cursor = string;
+	linkedList_t *list;
+
+	if (Com_ParseList(&cursor, &list)) {
+		CU_FAIL_FATAL("List parsing succeed, which is wrong");
+	}
+}
+
+/**
+ * @brief unittest to check wrong list with unexpected token
+ */
+static void testParserListKoWrongToken (void)
+{
+	const char* string = " (  aaa \n bbb \t ccc \n \n } ";
+	const char* cursor = string;
+
+	linkedList_t *list;
+	if (Com_ParseList(&cursor, &list)) {
+		CU_FAIL_FATAL("List parsing succeed, which is wrong");
+	}
+}
+
+/**
+ * @brief unittest to check wrong list which contains another sublist
+ */
+static void testParserListKoNewList (void)
+{
+	const char* string = " (  aaa \n bbb \t ccc \n \n ( ";
+	const char* cursor = string;
+	linkedList_t *list;
+
+	if (Com_ParseList(&cursor, &list)) {
+		CU_FAIL_FATAL("List parsing succeed, which is wrong");
+	}
+}
+
 int UFO_AddParserTests (void)
 {
 	/* add a suite to the registry */
@@ -369,6 +456,17 @@ int UFO_AddParserTests (void)
 	if (CU_ADD_TEST(ParserSuite, testParserWithEntity) == NULL)
 		return CU_get_error();
 	if (CU_ADD_TEST(ParserSuite, testParserCommonType) == NULL)
+		return CU_get_error();
+
+	if (CU_ADD_TEST(ParserSuite, testParserListOk) == NULL)
+		return CU_get_error();
+	if (CU_ADD_TEST(ParserSuite, testParserListOkEmpty) == NULL)
+		return CU_get_error();
+	if (CU_ADD_TEST(ParserSuite, testParserListKoEOF) == NULL)
+		return CU_get_error();
+	if (CU_ADD_TEST(ParserSuite, testParserListKoWrongToken) == NULL)
+		return CU_get_error();
+	if (CU_ADD_TEST(ParserSuite, testParserListKoNewList) == NULL)
 		return CU_get_error();
 
 	return CUE_SUCCESS;
