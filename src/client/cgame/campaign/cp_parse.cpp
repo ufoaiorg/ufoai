@@ -114,32 +114,21 @@ static void CP_ParseAlienTeam (const char *name, const char **text)
 
 		if (Q_streq(token, "equipment")) {
 			linkedList_t **list = &alienCategory->equipment;
-			token = Com_EParse(text, errhead, name);
-			if (!*text || *token != '{') {
-				Com_Printf("CP_ParseAlienTeam: alien team category \"%s\" has equipment with no opening brace\n", name);
-				break;
+			if (!Com_ParseList(text, list)) {
+				Com_Error(ERR_DROP, "CL_ParseAlienTeam: \"%s\" Error while parsing equipment list", name);
 			}
-			do {
-				token = Com_EParse(text, errhead, name);
-				if (!*text || *token == '}')
-					break;
-				LIST_AddString(list, token);
-			} while (*text);
 		} else if (Q_streq(token, "category")) {
-			token = Com_EParse(text, errhead, name);
-			if (!*text || *token != '{') {
-				Com_Printf("CP_ParseAlienTeam: alien team category \"%s\" has category with no opening brace\n", name);
-				break;
+			linkedList_t *list;
+			if (!Com_ParseList(text, &list)) {
+				Com_Error(ERR_DROP, "CL_ParseAlienTeam: \"%s\" Error while parsing category list", name);
 			}
-			do {
-				token = Com_EParse(text, errhead, name);
-				if (!*text || *token == '}')
-					break;
-				alienCategory->missionCategories[alienCategory->numMissionCategories] = CP_GetAlienMissionTypeByID(token);
+			for (linkedList_t *element = list; element != NULL; element = element->next) {
+				alienCategory->missionCategories[alienCategory->numMissionCategories] = CP_GetAlienMissionTypeByID((char*)element->data);
 				if (alienCategory->missionCategories[alienCategory->numMissionCategories] == INTERESTCATEGORY_NONE)
 					Com_Printf("CP_ParseAlienTeam: alien team category \"%s\" is used with no mission category. It won't be used in game.\n", name);
 				alienCategory->numMissionCategories++;
-			} while (*text);
+			}
+			LIST_Delete(&list);
 		} else if (Q_streq(token, "teaminterest")) {
 			alienTeamGroup_t *group;
 
@@ -168,22 +157,18 @@ static void CP_ParseAlienTeam (const char *name, const char **text)
 						break;
 
 					if (Q_streq(token, "team")) {
-						token = Com_EParse(text, errhead, name);
-						if (!*text || *token != '{') {
-							Com_Printf("CP_ParseAlienTeam: alien team \"%s\" has team with no opening brace\n", name);
-							break;
+						linkedList_t *list;
+						if (!Com_ParseList(text, &list)) {
+							Com_Error(ERR_DROP, "CL_ParseAlienTeam: \"%s\" Error while parsing team list", name);
 						}
-						do {
-							token = Com_EParse(text, errhead, name);
-							if (!*text || *token == '}')
-								break;
-							/* This is an alien team */
+						for (linkedList_t *element = list; element != NULL; element = element->next) {
 							if (group->numAlienTeams >= MAX_TEAMS_PER_MISSION)
 								Com_Error(ERR_DROP, "CL_ParseAlienTeam: MAX_TEAMS_PER_MISSION hit");
-							teamDef = Com_GetTeamDefinitionByID(token);
+							teamDef = Com_GetTeamDefinitionByID((char*)element->data);
 							if (teamDef)
 								group->alienTeams[group->numAlienTeams++] = teamDef;
-						} while (*text);
+						}
+						LIST_Delete(&list);
 					} else {
 						Com_Error(ERR_DROP, "CL_ParseAlienTeam: Unknown token \"%s\"\n", token);
 					}

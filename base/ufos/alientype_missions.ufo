@@ -17,195 +17,187 @@
 
 alienteam default_workers
 {
-	category
-	{
-		recon
-		building
-		supply
-	}
-	equipment
-	{
-		alien_workers
-	}
+	category (recon building supply)
+	equipment (alien_workers)
 	teaminterest
 	{
 		mininterest 0
 		maxinterest 100
-		team { taman }
+		team (taman)
 	}
 	teaminterest
 	{
 		mininterest 100
 		maxinterest 300
-		team { taman ortnok }
+		team (taman ortnok)
 	}
 	teaminterest
 	{
 		mininterest 300
 		maxinterest 500
-		team { taman ortnok shevaar }
+		team (taman ortnok shevaar)
 	}
 	teaminterest
 	{
 		mininterest 500
 		maxinterest 10000
-		team { ortnok shevaar }
+		team (ortnok shevaar)
 	}
 }
 
 alienteam default_soldiers
 {
 	category
-	{
+	(
 		terror
 		baseattack
 		intercept
 		rescue
-	}
+	)
 
 	equipment
-	{
+	(
 		alien_soldiers
-	}
+	)
 
 	teaminterest
 	{
 		mininterest 0
 		maxinterest 100
-		team { taman }
+		team ( taman )
 	}
 	teaminterest
 	{
 		mininterest 100
 		maxinterest 300
-		team { taman ortnok }
+		team ( taman ortnok )
 	}
 	teaminterest
 	{
 		mininterest 300
 		maxinterest 500
-		team { taman ortnok shevaar }
+		team ( taman ortnok shevaar )
 	}
 	teaminterest
 	{
 		mininterest 500
 		maxinterest 10000
-		team { ortnok shevaar }
+		team ( ortnok shevaar )
 	}
 }
 
 alienteam harvest
 {
 	category
-	{
+	(
 		harvest
-	}
+	)
 
 	equipment
-	{
+	(
 		alien_workers
-	}
+	)
 
 	teaminterest
 	{
 		mininterest 0
 		maxinterest 100
-		team { taman bloodspider }
+		team ( taman bloodspider )
 	}
 	teaminterest
 	{
 		mininterest 100
 		maxinterest 300
-		team { taman ortnok bloodspider }
+		team ( taman ortnok bloodspider )
 	}
 	teaminterest
 	{
 		mininterest 300
 		maxinterest 500
-		team { taman ortnok shevaar bloodspider }
+		team ( taman ortnok shevaar bloodspider )
 	}
 	teaminterest
 	{
 		mininterest 500
 		maxinterest 10000
-		team { ortnok shevaar bloodspider }
+		team ( ortnok shevaar bloodspider )
 	}
 }
 
 alienteam xvi
 {
 	category
-	{
+	(
 		xvi
-	}
+	)
 
 	equipment
-	{
+	(
 		alien_soldiers
-	}
+	)
 
 	teaminterest
 	{
 		mininterest 0
 		maxinterest 100
-		team { taman bloodspider }
+		team ( taman bloodspider )
 	}
 	teaminterest
 	{
 		mininterest 100
 		maxinterest 200
-		team { taman ortnok bloodspider }
+		team ( taman ortnok bloodspider )
 	}
 	teaminterest
 	{
 		mininterest 200
 		maxinterest 500
-		team { taman ortnok shevaar bloodspider }
+		team ( taman ortnok shevaar bloodspider )
 	}
 	teaminterest
 	{
 		mininterest 500
 		maxinterest 10000
-		team { ortnok shevaar bloodspider }
+		team ( ortnok shevaar bloodspider )
 	}
 }
 
 alienteam alienbase
 {
 	category
-	{
+	(
 		alienbase
-	}
+	)
 
 	equipment
-	{
+	(
 		alien_base
-	}
+	)
 
 	teaminterest
 	{
 		mininterest 0 // TODO: set to 0 for debugging purpose, but this shouldn't be used before alien bases are spawned
 		maxinterest 10000
-		team { taman ortnok shevaar }
+		team ( taman ortnok shevaar )
 	}
 }
 
 alienteam ufocarrier
 {
 	category
-	{
+	(
 		ufocarrier
-	}
+	)
 
 	equipment
-	{
+	(
 		alien_base
-	}
+	)
 
 	teaminterest
 	{
 		mininterest 0 // TODO: set to 0 for debugging purpose, but this shouldn't be used before alien bases are spawned
 		maxinterest 10000
-		team { taman ortnok shevaar }
+		team ( taman ortnok shevaar )
 	}
 }
