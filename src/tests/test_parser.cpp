@@ -254,7 +254,7 @@ static void testParserCommonType (void)
 	CU_ASSERT_EQUAL(bytes, sizeof(bool));
 
 	bytes = 0;
-	result = Com_ParseValue (&bvalue, "foo", V_INT, 0, sizeof(int), &bytes);
+	result = Com_ParseValue (&bvalue, "foo", V_BOOL, 0, sizeof(int), &bytes);
 	CU_ASSERT_EQUAL(result, RESULT_ERROR);
 	CU_ASSERT_EQUAL(bytes, 0);
 
