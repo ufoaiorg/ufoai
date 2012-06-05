@@ -56,7 +56,6 @@ typedef enum {
 	V_POS,
 	V_VECTOR,
 	V_COLOR,
-	V_RGBA,
 	V_STRING,
 	V_TRANSLATION_STRING,	/**< remove _ but don't translate */
 	V_LONGSTRING,			/**< not buffer safe - use this only for menu node data array values! */

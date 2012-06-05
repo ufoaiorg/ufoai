@@ -293,7 +293,6 @@ static void testParserCommonType (void)
 	/** @todo V_POS */
 	/** @todo V_VECTOR */
 	/** @todo V_COLOR */
-	/** @todo V_RGBA */
 	/** @todo V_STRING */
 	/** @todo V_TRANSLATION_STRING */
 	/** @todo V_LONGSTRING */

@@ -316,7 +316,6 @@ const char *const vt_names[] = {
 	"pos",
 	"vector",
 	"color",
-	"rgba",
 	"string",
 	"translation_string",
 	"longstring",
@@ -370,7 +369,6 @@ static const size_t vt_sizes[] = {
 	sizeof(vec2_t),	/* V_POS */
 	sizeof(vec3_t),	/* V_VECTOR */
 	sizeof(vec4_t),	/* V_COLOR */
-	sizeof(vec4_t),	/* V_RGBA */
 	0,	/* V_STRING */
 	0,	/* V_TRANSLATION_STRING */
 	0,	/* V_LONGSTRING */
@@ -404,7 +402,6 @@ static const size_t vt_aligns[] = {
 	sizeof(vec_t),	/* V_POS */
 	sizeof(vec_t),	/* V_VECTOR */
 	sizeof(vec_t),	/* V_COLOR */
-	sizeof(vec_t),	/* V_RGBA */
 	sizeof(char),	/* V_STRING */
 	sizeof(char),	/* V_TRANSLATION_STRING */
 	sizeof(char),	/* V_LONGSTRING */
@@ -682,17 +679,6 @@ resultStatus_t Com_ParseValue (void *base, const char *token, valueTypes_t type,
 				return RESULT_ERROR;
 			}
 			*writtenBytes = 4 * sizeof(float);
-		}
-		break;
-
-	case V_RGBA:
-		{
-			int* i = (int *) b;
-			if (sscanf(token, "%i %i %i %i", &i[0], &i[1], &i[2], &i[3]) != 4) {
-				snprintf(parseErrorMessage, sizeof(parseErrorMessage), "Illegal rgba statement '%s'", token);
-				return RESULT_ERROR;
-			}
-			*writtenBytes = 4 * sizeof(int);
 		}
 		break;
 
@@ -1086,13 +1072,6 @@ int Com_SetValue (void *base, const void *set, valueTypes_t type, int ofs, size_
 		((float *) b)[3] = ((const float *) set)[3];
 		return 4 * sizeof(float);
 
-	case V_RGBA:
-		((int *) b)[0] = ((const int *) set)[0];
-		((int *) b)[1] = ((const int *) set)[1];
-		((int *) b)[2] = ((const int *) set)[2];
-		((int *) b)[3] = ((const int *) set)[3];
-		return 4 * sizeof(int);
-
 	case V_STRING:
 		Q_strncpyz((char *) b, (const char *) set, MAX_VAR);
 		len = (int)strlen((const char *) set) + 1;
@@ -1304,10 +1283,6 @@ const char *Com_ValueToStr (const void *base, const valueTypes_t type, const int
 
 	case V_COLOR:
 		Com_sprintf(valuestr, sizeof(valuestr), "%.2f %.2f %.2f %.2f", ((const float *) b)[0], ((const float *) b)[1], ((const float *) b)[2], ((const float *) b)[3]);
-		return valuestr;
-
-	case V_RGBA:
-		Com_sprintf(valuestr, sizeof(valuestr), "%3i %3i %3i %3i", ((const int *) b)[0], ((const int *) b)[1], ((const int *) b)[2], ((const int *) b)[3]);
 		return valuestr;
 
 	case V_TRANSLATION_STRING:
