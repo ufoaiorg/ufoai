@@ -1656,6 +1656,8 @@ void B_ParseBaseTemplate (const char *name, const char **text)
 		if (map[tile->posY][tile->posX])
 			Com_Error(ERR_DROP, "Base template '%s' has ambiguous positions for buildings set.", baseTemplate->id);
 		map[tile->posY][tile->posX] = true;
+
+		LIST_Delete(&list);
 	} while (*text);
 
 	/* templates without the must-have buildings can't be used */
