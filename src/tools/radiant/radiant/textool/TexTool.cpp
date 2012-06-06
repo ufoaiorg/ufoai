@@ -383,6 +383,8 @@ Vector2 TexTool::getTextureCoords(const double& x, const double& y) {
 		// Determine the texcoords by the according proportionality factors
 		result[0] = topLeft[0] + x * (bottomRight[0]-topLeft[0]) / _windowDims[0];
 		result[1] = topLeft[1] + y * (bottomRight[1]-topLeft[1]) / _windowDims[1];
+	} else {
+		result[0] = result[1] = 0.0;
 	}
 
 	return result;
