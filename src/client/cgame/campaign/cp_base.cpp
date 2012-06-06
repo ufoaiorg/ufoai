@@ -1608,6 +1608,23 @@ void B_ParseBaseTemplate (const char *name, const char **text)
 		if (*token == '}')
 			break;
 
+
+		if (!Q_streq(token, "building")) {
+			Com_Error(ERR_DROP, "B_ParseBaseTemplate: \"building\" token expected but \"%s\" found", token);
+		}
+
+		linkedList_t *list;
+		if (!Com_ParseList(text, &list)) {
+			Com_Error(ERR_DROP, "B_ParseBaseTemplate: error while reading building tuple");
+		}
+
+		if (LIST_Count(list) != 2) {
+			Com_Error(ERR_DROP, "B_ParseBaseTemplate: building tuple must contains 2 elements (id pos)");
+		}
+
+		const char* buildingToken = (char*)list->data;
+		const char* positionToken = (char*)list->next->data;
+
 		if (baseTemplate->numBuildings >= MAX_BASEBUILDINGS)
 			Com_Error(ERR_DROP, "B_ParseBaseTemplate: too many buildings");
 
@@ -1616,10 +1633,10 @@ void B_ParseBaseTemplate (const char *name, const char **text)
 		baseTemplate->numBuildings++;
 
 		for (i = 0; i < ccs.numBuildingTemplates; i++)
-			if (Q_streq(ccs.buildingTemplates[i].id, token)) {
+			if (Q_streq(ccs.buildingTemplates[i].id, buildingToken)) {
 				tile->building = &ccs.buildingTemplates[i];
 				if (tile->building->maxCount >= 0 && tile->building->maxCount <= buildingNums[i])
-					Com_Error(ERR_DROP, "B_ParseBaseTemplate: Found more %s than allowed in template %s (%d))", token, baseTemplate->id, tile->building->maxCount);
+					Com_Error(ERR_DROP, "B_ParseBaseTemplate: Found more %s than allowed in template %s (%d))", buildingToken, baseTemplate->id, tile->building->maxCount);
 				buildingNums[i]++;
 				break;
 			}
@@ -1628,13 +1645,7 @@ void B_ParseBaseTemplate (const char *name, const char **text)
 			Com_Error(ERR_DROP, "B_ParseBaseTemplate: Could not find building with id %s\n", baseTemplate->id);
 
 		/* get the position */
-		token = Com_EParse(text, errhead, baseTemplate->id);
-		if (!*text)
-			break;
-		if (*token == '}')
-			break;
-
-		Com_EParseValue(pos, token, V_POS, 0, sizeof(vec2_t));
+		Com_EParseValue(pos, positionToken, V_POS, 0, sizeof(vec2_t));
 		tile->posX = pos[0];
 		tile->posY = pos[1];
 		if (tile->posX < 0 || tile->posX >= BASE_SIZE || tile->posY < 0 || tile->posY >= BASE_SIZE)
