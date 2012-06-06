@@ -10,10 +10,6 @@
 /* land_li_yellow: small yellow rotating flickering light with additional flare effect (used for the torches inside the mine) */
 {
 	material tex_lights/land_li_yellow
-	{
-		{
-			texture tex_lights/land_li_yellow
-		}
 		{
 			texture tex_lights/land_li_yellow3
 			rotate 20
@@ -21,8 +17,7 @@
 		}
 		{
 			flare 2
-			size.s 2.5
+			scale.s 2.5
 			color 1.0 1.0 0.7
 		}
-	}
 }

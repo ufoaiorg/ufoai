@@ -15135,18 +15135,11 @@
 // entity 204
 {
 "classname" "misc_model"
-"origin" "1449.38 644.875 252.5"
-"model" "-"
-"spawnflags" "255"
-}
-// entity 205
-{
-"classname" "misc_model"
 "spawnflags" "48"
 "model" "models/objects/vegi/tropic/tropic04.md2"
 "origin" "785.625 491.5 260.375"
 }
-// entity 206
+// entity 205
 {
 "classname" "misc_model"
 "origin" "785.125 408.875 258.875"
@@ -15154,7 +15147,7 @@
 "spawnflags" "48"
 "skin" "1"
 }
-// entity 207
+// entity 206
 {
 "classname" "misc_model"
 "model" "models/objects/lorry/lorry.md2"
@@ -15164,7 +15157,7 @@
 "angles" "0 -90 0"
 "modelscale_vec" "1.2 0.833333 0.833333"
 }
-// entity 208
+// entity 207
 {
 "classname" "light"
 "_color" "1 0.800717 0.343923"
@@ -15172,7 +15165,7 @@
 "origin" "264 -356 310"
 "spawnflags" "181"
 }
-// entity 209
+// entity 208
 {
 "classname" "func_breakable"
 "spawnflags" "48"
@@ -15186,70 +15179,70 @@
 ( 257 -259.5 -64 ) ( 257 -257.5 -64 ) ( 257 -259.5 64 ) tex_common/nodraw 0 0 0 0.5 0.5 12290 0 0
 }
 }
-// entity 210
+// entity 209
 {
 "classname" "info_alien_start"
 "origin" "80 208 363"
 "angle" "-45"
 }
-// entity 211
+// entity 210
 {
 "classname" "info_alien_start"
 "origin" "272 144 363"
 "angle" "90"
 }
-// entity 212
+// entity 211
 {
 "classname" "info_alien_start"
 "origin" "144 -272 284"
 }
-// entity 213
+// entity 212
 {
 "classname" "info_alien_start"
 "origin" "272 -272 284"
 "angle" "-90"
 }
-// entity 214
+// entity 213
 {
 "classname" "info_alien_start"
 "origin" "304 -272 284"
 "angle" "90"
 }
-// entity 215
+// entity 214
 {
 "classname" "info_alien_start"
 "origin" "-112 -496 284"
 "angle" "45"
 }
-// entity 216
+// entity 215
 {
 "classname" "info_alien_start"
 "origin" "48 624 284"
 "angle" "180"
 }
-// entity 217
+// entity 216
 {
 "classname" "info_alien_start"
 "origin" "272 624 284"
 }
-// entity 218
+// entity 217
 {
 "classname" "info_alien_start"
 "origin" "816 -336 299"
 "angle" "180"
 }
-// entity 219
+// entity 218
 {
 "classname" "info_alien_start"
 "origin" "272 -496 284"
 }
-// entity 220
+// entity 219
 {
 "classname" "info_alien_start"
 "origin" "208 -496 284"
 "angle" "180"
 }
-// entity 221
+// entity 220
 {
 "classname" "trigger_rescue"
 "team" "1"
@@ -15264,46 +15257,46 @@
 ( -128 -160 256 ) ( 0 -160 256 ) ( -128 -160 352 ) tex_common/trigger 0 0 0 0.25 0.25 14336 0 0
 }
 }
-// entity 222
+// entity 221
 {
 "classname" "info_2x2_start"
 "origin" "-32 -288 284"
 "team" "1"
 "angle" "-90"
 }
-// entity 223
+// entity 222
 {
 "classname" "info_2x2_start"
 "origin" "352 -192 284"
 "team" "1"
 "angle" "90"
 }
-// entity 224
+// entity 223
 {
 "classname" "info_2x2_start"
 "origin" "384 -32 284"
 "team" "1"
 "angle" "-3.50824e-015"
 }
-// entity 225
+// entity 224
 {
 "classname" "info_human_start"
 "origin" "336 -112 280"
 "angle" "-90"
 }
-// entity 226
+// entity 225
 {
 "classname" "info_human_start"
 "origin" "112 -112 280"
 "angle" "-90"
 }
-// entity 227
+// entity 226
 {
 "classname" "info_human_start"
 "origin" "272 -112 280"
 "angle" "90"
 }
-// entity 228
+// entity 227
 {
 "classname" "info_human_start"
 "origin" "176 -112 280"
