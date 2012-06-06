@@ -878,7 +878,7 @@ static void UI_SelectMap_f (void)
 static const value_t cgame_vals[] = {
 	{"window", V_STRING, offsetof(cgameType_t, window), 0},
 	{"name", V_STRING, offsetof(cgameType_t, name), 0},
-	{"equipmentlist", V_LIST, offsetof(cgameType_t, equipmentList), 0},
+	{"equipments", V_LIST, offsetof(cgameType_t, equipmentList), 0},
 
 	{NULL, V_NULL, 0, 0}
 };

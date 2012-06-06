@@ -1,11 +1,11 @@
 // MAP DESCRIPTIONS
 //
 // valid terrain values:
-// * desert, arctic, cold, water, mountain, wasted, tropical, grass, coast
+// * desert, arctic, cold, water, mountain, wasted, tropical, grass, "coast"
 // valid culture values:
-// * eastern, western, oriental, african
+// * eastern, western, oriental, "african"
 // valid population values:
-// * urban, suburban, village, rural, nopopulation
+// * urban, suburban, village, rural, "nopopulation"
 // See also http://ufoai.org/wiki/index.php/Mapping/Terrain_Types
 // valid civilianteam values:
 // * Nation Civilians: africa, asia, europe, latin, middle, states, oceania, russia
@@ -56,13 +56,13 @@ mapdef africa_large
 	param			"large"
 	multiplayer		true
 	teams			2
-	gametypes {
+	gametypes (
 		fight1on1
 		fight2on2
 		coop2
 		coop3
 		coop4
-	}
+	)
 	description		"_A suburb that has received a visit from a Harvester."
 	maxaliens		16
 	// randomspawn	enabled
@@ -70,36 +70,36 @@ mapdef africa_large
 	civilianteam	africa
 
 	aircraft
-	{
+	(
 		craft_drop_firebird
 		craft_drop_herakles
 		craft_drop_raptor
-	}
+	)
 
 	ufos
-	{
+	(
 		craft_ufo_harvester
-	}
+	)
 
 	terrains
-	{
-		grass
-		tropical
-		desert
-		mountain
-	}
+	(
+		"grass"
+		"tropical"
+		"desert"
+		"mountain"
+	)
 
 	cultures
-	{
-		african
-	}
+	(
+		"african"
+	)
 
 	populations
-	{
-		village
-		suburban
-		urban
-	}
+	(
+		"village"
+		"suburban"
+		"urban"
+	)
 }
 
 mapdef africa_small
@@ -108,13 +108,13 @@ mapdef africa_small
 	param			"small"
 	multiplayer		true
 	teams			2
-	gametypes {
+	gametypes (
 		fight1on1
 		fight2on2
 		coop2
 		coop3
 		coop4
-	}
+	)
 	description		"_A suburb that has been visited by an UFO."
 	maxaliens		6
 	// randomspawn	enabled
@@ -122,37 +122,37 @@ mapdef africa_small
 	civilianteam	africa
 
 	aircraft
-	{
+	(
 		craft_drop_firebird
 		craft_drop_herakles
 		craft_drop_raptor
-	}
+	)
 
 	ufos
-	{
+	(
 		craft_ufo_scout
 		craft_ufo_fighter
-	}
+	)
 
 	terrains
-	{
-		grass
-		tropical
-		desert
-		mountain
-	}
+	(
+		"grass"
+		"tropical"
+		"desert"
+		"mountain"
+	)
 
 	cultures
-	{
-		african
-	}
+	(
+		"african"
+	)
 
 	populations
-	{
-		village
-		suburban
-		urban
-	}
+	(
+		"village"
+		"suburban"
+		"urban"
+	)
 }
 
 mapdef africa_small_crash
@@ -169,36 +169,36 @@ mapdef africa_small_crash
 	// randomspawn enabled
 
 	aircraft
-	{
+	(
 		craft_drop_firebird
 		craft_drop_raptor
 		craft_drop_herakles
-	}
+	)
 
 	ufos
-	{
+	(
 		craft_crash_fighter
-	}
+	)
 
 	terrains
-	{
-		grass
-		tropical
-		desert
-		mountain
-	}
+	(
+		"grass"
+		"tropical"
+		"desert"
+		"mountain"
+	)
 
 	cultures
-	{
-		african
-	}
+	(
+		"african"
+	)
 
 	populations
-	{
-		village
-		suburban
-		urban
-	}
+	(
+		"village"
+		"suburban"
+		"urban"
+	)
 }
 
 /////////////////////////////
@@ -215,31 +215,31 @@ mapdef beach
 	maxaliens		8
 
 	aircraft
-	{
+	(
 		//any
-	}
+	)
 
 	ufos
-	{
+	(
 		craft_crash_scout
-	}
+	)
 
 	terrains
-	{
-		desert
-		tropical
-		coast
-	}
+	(
+		"desert"
+		"tropical"
+		"coast"
+	)
 
 	cultures
-	{
+	(
 		//any
-	}
+	)
 
 	populations
-	{
-		nopopulation
-	}
+	(
+		"nopopulation"
+	)
 }
 
 /////////////////////////////
@@ -252,7 +252,7 @@ mapdef bomber_city
 	description		"_A Bomber has landed in the middle of a city."
 	multiplayer		true
 	teams			4
-	gametypes {
+	gametypes (
 		fight1on1
 		fight1on1on1
 		fight2on2
@@ -264,40 +264,40 @@ mapdef bomber_city
 		coop2
 		coop3
 		coop4
-	}
+	)
 	maxaliens		16
 	// randomspawn enabled
 
 	aircraft
-	{
+	(
 		craft_drop_firebird
 		craft_drop_herakles
 		craft_drop_raptor
-	}
+	)
 
 	ufos
-	{
+	(
 		craft_ufo_bomber
-	}
+	)
 
 	terrains
-	{
-		cold
-		grass
-		desert
-		tropical
-	}
+	(
+		"cold"
+		"grass"
+		"desert"
+		"tropical"
+	)
 
 	cultures
-	{
+	(
 		//any
-	}
+	)
 
 	populations
-	{
-		suburban
-		urban
-	}
+	(
+		"suburban"
+		"urban"
+	)
 }
 
 ////////////////////////
@@ -310,41 +310,41 @@ mapdef bridge
 	param			"default"
 	description		"_A small UFO has crashed in this mining region."
 	multiplayer		false
-	gametypes { }
+	gametypes ( )
 	maxaliens		30
 	//	randomspawn enabled
 
 	hurtaliens		true
 
 	aircraft
-	{
+	(
 		craft_drop_firebird
 		craft_drop_herakles
 		craft_drop_raptor
-	}
+	)
 
 	ufos
-	{
+	(
 		craft_crash_fighter
 		craft_crash_scout
-	}
+	)
 
 	terrains
-	{
-		desert
-		mountain
-	}
+	(
+		"desert"
+		"mountain"
+	)
 
 	cultures
-	{
+	(
 		//any
-	}
+	)
 
 	populations
-	{
-		nopopulation
-		rural
-	}
+	(
+		"nopopulation"
+		"rural"
+	)
 }
 
 mapdef bridge_mp
@@ -356,10 +356,10 @@ mapdef bridge_mp
 	singleplayer	false
 	multiplayer		true
 	teams			2
-	gametypes {
+	gametypes (
 		fight1on1
 		coop2
-	}
+	)
 
 	maxaliens		30
 	//	randomspawn enabled
@@ -367,33 +367,33 @@ mapdef bridge_mp
 	hurtaliens		true
 
 	aircraft
-	{
+	(
 		craft_drop_firebird
 		craft_drop_herakles
 		craft_drop_raptor
-	}
+	)
 
 	ufos
-	{
+	(
 		craft_crash_fighter
-	}
+	)
 
 	terrains
-	{
-		desert
-		mountain
-	}
+	(
+		"desert"
+		"mountain"
+	)
 
 	cultures
-	{
+	(
 		//any
-	}
+	)
 
 	populations
-	{
-		nopopulation
-		rural
-	}
+	(
+		"nopopulation"
+		"rural"
+	)
 }
 
 /////////////////////////
@@ -410,36 +410,36 @@ mapdef country_large
 	maxaliens	6
 
 	aircraft
-	{
+	(
 		craft_drop_firebird
 		craft_drop_raptor
 		craft_drop_herakles
-	}
+	)
 
 	ufos
-	{
+	(
 		craft_ufo_fighter
 //		craft_crash_fighter // todo
 //		craft_ufo_harvester
-	}
+	)
 
 	terrains
-	{
-		desert
-		mountain
-	}
+	(
+		"desert"
+		"mountain"
+	)
 
 	cultures
-	{
-		western
-	}
+	(
+		"western"
+	)
 
 	populations
-	{
-		village
-		rural
-		nopopulation
-	}
+	(
+		"village"
+		"rural"
+		"nopopulation"
+	)
 }
 /* disabled for now because it can break MAX_MAPTILES 64
 mapdef country_street
@@ -452,34 +452,34 @@ mapdef country_street
 	maxaliens	15
 
 	aircraft
-	{
+	(
 		craft_drop_firebird
 		craft_drop_raptor
 		craft_drop_herakles
-	}
+	)
 
 	ufos
-	{
+	(
 		craft_ufo_harvester
-	}
+	)
 
 	terrains
-	{
-		desert
-		mountain
-	}
+	(
+		"desert"
+		"mountain"
+	)
 
 	cultures
-	{
-		western
-	}
+	(
+		"western"
+	)
 
 	populations
-	{
-		village
-		rural
-		nopopulation
-	}
+	(
+		"village"
+		"rural"
+		"nopopulation"
+	)
 }
 */
 ////////////////////////////////////////
@@ -493,44 +493,44 @@ mapdef desert_harvester_crash
 	multiplayer		true
 	teams			2
 	hurtaliens		true
-	gametypes {
+	gametypes (
 		fight1on1
 		fight2on2
 		coop2
 		coop3
 		coop4
-	}
+	)
 	description		"_An alien Harvester has crashed in the wastelands."
 	maxaliens		14
 	// randomspawn	enabled
 
 	aircraft
-	{
+	(
 		craft_drop_firebird
 		craft_drop_herakles
 		craft_drop_raptor
-	}
+	)
 
 	ufos
-	{
+	(
 		craft_crash_harvester
-	}
+	)
 
 	terrains
-	{
-		desert
-	}
+	(
+		"desert"
+	)
 
 	cultures
-	{
+	(
 		//any
-	}
+	)
 
 	populations
-	{
-		rural
-		nopopulation
-	}
+	(
+		"rural"
+		"nopopulation"
+	)
 }
 
 //////////////////////
@@ -548,35 +548,35 @@ mapdef farm_large
 	maxaliens	25
 
 	aircraft
-	{
+	(
 		craft_drop_firebird
-	}
+	)
 
 	ufos
-	{
+	(
 		craft_ufo_bomber
 		craft_ufo_fighter
 		craft_ufo_harvester
 		craft_ufo_scout
-	}
+	)
 
 	terrains
-	{
-		grass
-	}
+	(
+		"grass"
+	)
 
 	cultures
-	{
+	(
 		//any
-	}
+	)
 
 	populations
-	{
-		nopopulation
-		rural
-		village
-		suburban
-	}
+	(
+		"nopopulation"
+		"rural"
+		"village"
+		"suburban"
+	)
 }
 
 mapdef farm_medium
@@ -590,32 +590,32 @@ mapdef farm_medium
 	maxaliens	14
 
 	aircraft
-	{
+	(
 		craft_drop_firebird
-	}
+	)
 
 	ufos
-	{
+	(
 		craft_ufo_harvester
-	}
+	)
 
 	terrains
-	{
-		grass
-	}
+	(
+		"grass"
+	)
 
 	cultures
-	{
+	(
 		//any
-	}
+	)
 
 	populations
-	{
-		nopopulation
-		rural
-		village
-		suburban
-	}
+	(
+		"nopopulation"
+		"rural"
+		"village"
+		"suburban"
+	)
 }
 
 mapdef farm_small
@@ -629,35 +629,35 @@ mapdef farm_small
 	maxaliens	6
 
 	aircraft
-	{
+	(
 		craft_drop_firebird
 		craft_drop_raptor
 		craft_drop_herakles
-	}
+	)
 
 	ufos
-	{
+	(
 		craft_ufo_scout
 		craft_ufo_fighter
-	}
+	)
 
 	terrains
-	{
-		grass
-	}
+	(
+		"grass"
+	)
 
 	cultures
-	{
+	(
 		//any
-	}
+	)
 
 	populations
-	{
-		nopopulation
-		rural
-		village
-		suburban
-	}
+	(
+		"nopopulation"
+		"rural"
+		"village"
+		"suburban"
+	)
 }
 
 // FARM2 MAP //
@@ -669,44 +669,44 @@ mapdef farm2
 	size			"medium"
 	teams			2
 	multiplayer		true
-	gametypes {
+	gametypes (
 		fight1on1
 		fight2on2
 		coop2
 		coop3
 		coop4
-	}
+	)
 	maxaliens		12
 
 	aircraft
-	{
+	(
 		craft_drop_firebird
 		craft_drop_raptor
 		craft_drop_herakles
-	}
+	)
 
 	ufos
-	{
+	(
 		craft_ufo_fighter
 		craft_ufo_scout
-	}
+	)
 
 	terrains
-	{
-		grass
-	}
+	(
+		"grass"
+	)
 
 	cultures
-	{
-		western
-	}
+	(
+		"western"
+	)
 
 	populations
-	{
-		rural
-		village
-		suburban
-	}
+	(
+		"rural"
+		"village"
+		"suburban"
+	)
 }
 
 ////////////////////////
@@ -723,34 +723,34 @@ mapdef forest_large
 	maxaliens	15
 
 	aircraft
-	{
+	(
 		craft_drop_firebird
 		craft_drop_raptor
 		craft_drop_herakles
-	}
+	)
 
 	ufos
-	{
+	(
 		craft_ufo_fighter
 		craft_ufo_harvester
-	}
+	)
 
 	terrains
-	{
-		grass
-		mountain
-	}
+	(
+		"grass"
+		"mountain"
+	)
 
 	cultures
-	{
+	(
 		//any
-	}
+	)
 
 	populations
-	{
-		rural
-		nopopulation
-	}
+	(
+		"rural"
+		"nopopulation"
+	)
 }
 
 mapdef forest_large_crash
@@ -764,34 +764,34 @@ mapdef forest_large_crash
 	hurtaliens	true
 
 	aircraft
-	{
+	(
 		craft_drop_firebird
 		craft_drop_raptor
 		craft_drop_herakles
-	}
+	)
 
 	ufos
-	{
+	(
 		craft_crash_fighter
 		craft_crash_harvester
-	}
+	)
 
 	terrains
-	{
-		grass
-		mountain
-	}
+	(
+		"grass"
+		"mountain"
+	)
 
 	cultures
-	{
+	(
 		//any
-	}
+	)
 
 	populations
-	{
-		rural
-		nopopulation
-	}
+	(
+		"rural"
+		"nopopulation"
+	)
 }
 
 mapdef forest_small
@@ -804,34 +804,34 @@ mapdef forest_small
 	maxaliens	6
 
 	aircraft
-	{
+	(
 		craft_drop_firebird
 		craft_drop_raptor
 		craft_drop_herakles
-	}
+	)
 
 	ufos
-	{
+	(
 		craft_ufo_scout
 		craft_ufo_fighter
-	}
+	)
 
 	terrains
-	{
-		grass
-		mountain
-	}
+	(
+		"grass"
+		"mountain"
+	)
 
 	cultures
-	{
+	(
 		//any
-	}
+	)
 
 	populations
-	{
-		rural
-		nopopulation
-	}
+	(
+		"rural"
+		"nopopulation"
+	)
 }
 
 mapdef forest_small_crash
@@ -845,34 +845,34 @@ mapdef forest_small_crash
 	maxaliens	6
 
 	aircraft
-	{
+	(
 		craft_drop_firebird
 		craft_drop_raptor
 		craft_drop_herakles
-	}
+	)
 
 	ufos
-	{
+	(
 		craft_crash_scout
 		craft_crash_fighter
-	}
+	)
 
 	terrains
-	{
-		grass
-		mountain
-	}
+	(
+		"grass"
+		"mountain"
+	)
 
 	cultures
-	{
+	(
 		//any
-	}
+	)
 
 	populations
-	{
-		rural
-		nopopulation
-	}
+	(
+		"rural"
+		"nopopulation"
+	)
 }
 
 ////////////////////////
@@ -889,37 +889,37 @@ mapdef frozen_alienlandingindustrial
 	// randomspawn enabled
 
 	aircraft
-	{
+	(
 		craft_drop_firebird
 		craft_drop_raptor
 		craft_drop_herakles
-	}
+	)
 
 	ufos
-	{
+	(
 		craft_ufo_harvester
 		craft_ufo_fighter
 		craft_ufo_supply
-	}
+	)
 
 	terrains
-	{
-		arctic
-		cold
-	}
+	(
+		"arctic"
+		"cold"
+	)
 
 	cultures
-	{
+	(
 		// any
-	}
+	)
 
 	populations
-	{
-		nopopulation
-		rural
-		village
-		suburban
-	}
+	(
+		"nopopulation"
+		"rural"
+		"village"
+		"suburban"
+	)
 }
 
 mapdef frozen_alienlandingnature
@@ -932,37 +932,37 @@ mapdef frozen_alienlandingnature
 	// randomspawn enabled
 
 	aircraft
-	{
+	(
 		craft_drop_firebird
 		craft_drop_raptor
 		craft_drop_herakles
-	}
+	)
 
 	ufos
-	{
+	(
 		craft_ufo_scout
 		craft_ufo_fighter
 		craft_ufo_supply
-	}
+	)
 
 	terrains
-	{
-		arctic
-		cold
-	}
+	(
+		"arctic"
+		"cold"
+	)
 
 	cultures
-	{
+	(
 		// any
-	}
+	)
 
 	populations
-	{
-		nopopulation
-		rural
-		village
-		suburban
-	}
+	(
+		"nopopulation"
+		"rural"
+		"village"
+		"suburban"
+	)
 }
 
 mapdef frozen_industrial
@@ -975,35 +975,35 @@ mapdef frozen_industrial
 	// randomspawn enabled
 
 	aircraft
-	{
+	(
 		craft_drop_firebird
 		craft_drop_raptor
 		craft_drop_herakles
-	}
+	)
 
 	ufos
-	{
+	(
 		// any
-	}
+	)
 
 	terrains
-	{
-		arctic
-		cold
-	}
+	(
+		"arctic"
+		"cold"
+	)
 
 	cultures
-	{
+	(
 		// any
-	}
+	)
 
 	populations
-	{
-		nopopulation
-		rural
-		village
-		suburban
-	}
+	(
+		"nopopulation"
+		"rural"
+		"village"
+		"suburban"
+	)
 }
 
 mapdef frozen_small
@@ -1016,35 +1016,35 @@ mapdef frozen_small
 	// randomspawn enabled
 
 	aircraft
-	{
+	(
 		craft_drop_firebird
 		craft_drop_raptor
 		craft_drop_herakles
-	}
+	)
 
 	ufos
-	{
+	(
 		// any
-	}
+	)
 
 	terrains
-	{
-		arctic
-		cold
-	}
+	(
+		"arctic"
+		"cold"
+	)
 
 	cultures
-	{
+	(
 		// any
-	}
+	)
 
 	populations
-	{
-		nopopulation
-		rural
-		village
-		suburban
-	}
+	(
+		"nopopulation"
+		"rural"
+		"village"
+		"suburban"
+	)
 }
 
 /////////////////////////
@@ -1059,7 +1059,7 @@ mapdef harbour2
 	multiplayer	true
 	teams		2
 	gametypes
-	{
+	(
 		fight1on1
 		fight2on2
 		fight3on3
@@ -1067,38 +1067,38 @@ mapdef harbour2
 		coop2
 		coop3
 		coop4
-	}
+	)
 	maxaliens	16
 	civilianteam	worker
 	campaign	true
 	aircraft
-	{
+	(
 		craft_drop_firebird
 		craft_drop_raptor
 		craft_drop_herakles
-	}
+	)
 
 	ufos
-	{
+	(
 		// any
-	}
+	)
 
 	terrains
-	{
-		coast
-	}
+	(
+		"coast"
+	)
 
 	cultures
-	{
+	(
 		// any
-	}
+	)
 
 	populations
-	{
-		urban
-		suburban
-		village
-	}
+	(
+		"urban"
+		"suburban"
+		"village"
+	)
 }
 
 ///////////////////////
@@ -1108,7 +1108,7 @@ mapdef harbour2
 mapdef hills_harvester
 {
 	map			"+hills"
-	param		harvester
+	param		"harvester"
 	description	"_UFO landed in hills area."
 	size		"small"
 	teams		4
@@ -1116,44 +1116,44 @@ mapdef hills_harvester
 	maxaliens	16
 
 	aircraft
-	{
+	(
 		craft_drop_firebird
 		craft_drop_raptor
 		craft_drop_herakles
-	}
+	)
 
 	ufos
-	{
+	(
 //		craft_ufo_scout
 //		craft_ufo_fighter
 		craft_ufo_harvester
-	}
+	)
 
 	terrains
-	{
-//		desert
-		cold
-		mountain
-		grass
-	}
+	(
+//		"desert"
+		"cold"
+		"mountain"
+		"grass"
+	)
 
 	cultures
-	{
-	}
+	(
+	)
 
 	populations
-	{
-		urban
-		suburban
-		village
-	}
+	(
+		"urban"
+		"suburban"
+		"village"
+	)
 }
 
 
 mapdef hills_harvester_desert
 {
 	map			"+hills"
-	param		desert_harvester
+	param		"desert_harvester"
 	description	"_UFO landed in hills area."
 	size		"small"
 	teams		4
@@ -1161,41 +1161,41 @@ mapdef hills_harvester_desert
 	maxaliens	8
 
 	aircraft
-	{
+	(
 		craft_drop_firebird
 //		craft_drop_raptor
 //		craft_drop_herakles
-	}
+	)
 
 	ufos
-	{
+	(
 //		craft_ufo_scout
 //		craft_ufo_fighter
 		craft_ufo_harvester
-	}
+	)
 
 	terrains
-	{
-		desert
-	}
+	(
+		"desert"
+	)
 
 	cultures
-	{
-	}
+	(
+	)
 
 	populations
-	{
-		urban
-		suburban
-		village
-	}
+	(
+		"urban"
+		"suburban"
+		"village"
+	)
 }
 
 
 mapdef hills_small
 {
 	map			"+hills"
-	param		small_ufo
+	param		"small_ufo"
 	description	"_UFO landed in hills area."
 	size		"small"
 	teams		4
@@ -1203,36 +1203,36 @@ mapdef hills_small
 	maxaliens	8
 
 	aircraft
-	{
+	(
 		craft_drop_firebird
 		craft_drop_raptor
 		craft_drop_herakles
-	}
+	)
 
 	ufos
-	{
+	(
 		craft_ufo_scout
 //		craft_ufo_fighter
-	}
+	)
 
 	terrains
-	{
-		desert
-		cold
-		mountain
-		grass
-	}
+	(
+		"desert"
+		"cold"
+		"mountain"
+		"grass"
+	)
 
 	cultures
-	{
-	}
+	(
+	)
 
 	populations
-	{
-		urban
-		suburban
-		village
-	}
+	(
+		"urban"
+		"suburban"
+		"village"
+	)
 }
 
 /////////////////////
@@ -1251,33 +1251,33 @@ mapdef ice_medium
 			// randomspawn enabled
 
 		aircraft
-        {
+        (
 			craft_drop_firebird
 			craft_drop_raptor
 			craft_drop_herakles
-        }
+        )
 
         ufos
-        {
+        (
 			craft_ufo_supply
 			craft_ufo_harvester
 			craft_ufo_gunboat
-		}
+		)
 
         terrains
-        {
-            arctic
-        }
+        (
+            "arctic"
+        )
 
         cultures
-        {
+        (
             // any
-        }
+        )
 
         populations
-        {
-            nopopulation
-        }
+        (
+            "nopopulation"
+        )
 }
 
 mapdef ice_small
@@ -1292,32 +1292,32 @@ mapdef ice_small
 			// randomspawn enabled
 
 		aircraft
-        {
+        (
 			craft_drop_firebird
 			craft_drop_raptor
 			craft_drop_herakles
-        }
+        )
 
         ufos
-        {
+        (
 			craft_ufo_fighter
             craft_ufo_scout
-		}
+		)
 
         terrains
-        {
-            arctic
-        }
+        (
+            "arctic"
+        )
 
         cultures
-        {
+        (
             // any
-        }
+        )
 
         populations
-        {
-            nopopulation
-        }
+        (
+            "nopopulation"
+        )
 }
 
 mapdef ice_crash_small
@@ -1333,32 +1333,32 @@ mapdef ice_crash_small
 			// randomspawn enabled
 
 		aircraft
-        {
+        (
 			craft_drop_firebird
 			craft_drop_raptor
 			craft_drop_herakles
-        }
+        )
 
         ufos
-        {
+        (
 			craft_crash_fighter
 			craft_crash_scout
-        }
+        )
 
         terrains
-        {
-            arctic
-        }
+        (
+            "arctic"
+        )
 
         cultures
-        {
+        (
             // any
-        }
+        )
 
         populations
-        {
-            nopopulation
-        }
+        (
+            "nopopulation"
+        )
 }
 
 ////////////////////////////
@@ -1377,33 +1377,33 @@ mapdef industrial_large
 	civilianteam	worker
 
 	aircraft
-	{
+	(
 		craft_drop_firebird
 		craft_drop_raptor
 		craft_drop_herakles
-	}
+	)
 
 	ufos
-	{
+	(
 		craft_ufo_harvester
 		craft_ufo_supply
-	}
+	)
 
 	terrains
-	{
-	}
+	(
+	)
 
 	cultures
-	{
-	}
+	(
+	)
 
 	populations
-	{
-		rural
-		village
-		suburban
-		urban
-	}
+	(
+		"rural"
+		"village"
+		"suburban"
+		"urban"
+	)
 }
 
 mapdef industrial_small
@@ -1418,33 +1418,33 @@ mapdef industrial_small
 	civilianteam	worker
 
 	aircraft
-	{
+	(
 		craft_drop_firebird
 		craft_drop_raptor
 		craft_drop_herakles
-	}
+	)
 
 	ufos
-	{
+	(
 		craft_ufo_scout
 		craft_ufo_fighter
-	}
+	)
 
 	terrains
-	{
-	}
+	(
+	)
 
 	cultures
-	{
-	}
+	(
+	)
 
 	populations
-	{
-		rural
-		village
-		suburban
-		urban
-	}
+	(
+		"rural"
+		"village"
+		"suburban"
+		"urban"
+	)
 }
 
 ///////////////////////
@@ -1458,45 +1458,45 @@ mapdef japan_large
 	description	"_A classic eastern suburban area."
 	teams		2
 	multiplayer	false
-	gametypes {
+	gametypes (
 		fight1on1
 		fight2on2
 		coop2
 		coop3
 		coop4
-	}
+	)
 	maxaliens	16
 	civilianteam	asia
 
 	aircraft
-	{
+	(
 		craft_drop_firebird
 		craft_drop_herakles
 		craft_drop_raptor
-	}
+	)
 
 	ufos
-	{
+	(
 		craft_ufo_harvester
-	}
+	)
 
 	terrains
-	{
-		grass
-		mountain
-		tropical
-	}
+	(
+		"grass"
+		"mountain"
+		"tropical"
+	)
 
 	cultures
-	{
-		eastern
-	}
+	(
+		"eastern"
+	)
 
 	populations
-	{
-		village
-		suburban
-	}
+	(
+		"village"
+		"suburban"
+	)
 }
 
 mapdef japan_small
@@ -1506,45 +1506,45 @@ mapdef japan_small
 	description	"_A classic eastern suburban area."
 	teams		2
 	multiplayer	false
-	gametypes {
+	gametypes (
 		fight1on1
 		fight2on2
 		coop2
 		coop3
 		coop4
-	}
+	)
 	maxaliens	6
 	civilianteam	asia
 
 	aircraft
-	{
+	(
 		craft_drop_firebird
 		craft_drop_herakles
 		craft_drop_raptor
-	}
+	)
 
 	ufos
-	{
+	(
 		craft_ufo_scout
-	}
+	)
 
 	terrains
-	{
-		grass
-		mountain
-		tropical
-	}
+	(
+		"grass"
+		"mountain"
+		"tropical"
+	)
 
 	cultures
-	{
-		eastern
-	}
+	(
+		"eastern"
+	)
 
 	populations
-	{
-		village
-		suburban
-	}
+	(
+		"village"
+		"suburban"
+	)
 }
 
 ////////////////////////////
@@ -1557,7 +1557,7 @@ mapdef laboratory
 	description		"_A laboratory where they examined found UFO wreck tiles."
 	multiplayer		true
 	teams			3
-	gametypes {
+	gametypes (
 		fight1on1
 		fight1on1on1
 		fight2on2
@@ -1565,43 +1565,43 @@ mapdef laboratory
 		coop2
 		coop3
 		coop4
-	}
+	)
 	maxaliens		24
 	// randomspawn	enabled
 
 	civilianteam	scientist
 
 	aircraft
-	{
+	(
 		craft_drop_firebird
 		craft_drop_herakles
 		craft_drop_raptor
-	}
+	)
 
 	ufos
-	{
+	(
 		craft_ufo_fighter
 		craft_ufo_scout
-	}
+	)
 
 	terrains
-	{
-		cold
-		grass
-		tropical
-	}
+	(
+		"cold"
+		"grass"
+		"tropical"
+	)
 
 	cultures
-	{
+	(
 		//any
-	}
+	)
 
 	populations
-	{
-		urban
-		suburban
-		village
-	}
+	(
+		"urban"
+		"suburban"
+		"village"
+	)
 }
 
 /////////////////////////
@@ -1617,7 +1617,7 @@ mapdef mansion_huge
     multiplayer		true
 	teams			4
     gametypes
-    {
+    (
 		fight1on1
 		fight1on1on1
 		fight2on2
@@ -1629,37 +1629,37 @@ mapdef mansion_huge
 		coop2
 		coop3
 		coop4
-    }
+    )
     aircraft
-    {
+    (
 		craft_drop_firebird
 		craft_drop_herakles
 		craft_drop_raptor
-    }
+    )
 
     ufos
-    {
+    (
 	    craft_ufo_fighter
 		craft_ufo_scout
 		craft_ufo_harvester
 		craft_ufo_supply
-    }
+    )
 
     terrains
-    {
-		coast
-    }
+    (
+		"coast"
+    )
 
     cultures
-    {
-		western
-    }
+    (
+		"western"
+    )
 
     populations
-    {
-		urban
-		village
-    }
+    (
+		"urban"
+		"village"
+    )
 }
 
 mapdef mansion_medium
@@ -1673,41 +1673,41 @@ mapdef mansion_medium
 	multiplayer		true
 	teams			2
 	gametypes
-	{
+	(
 		fight1on1
 		fight2on2
 		fight3on3
 		fight4on4
-	}
+	)
 	aircraft
-    {
+    (
 		craft_drop_firebird
 		craft_drop_herakles
 		craft_drop_raptor
-    }
+    )
 
     ufos
-    {
+    (
 	    // any
-    }
+    )
 
     terrains
-    {
-		coast
-		grass
-    }
+    (
+		"coast"
+		"grass"
+    )
 
     cultures
-    {
-		western
-    }
+    (
+		"western"
+    )
 
     populations
-    {
-		urban
-		suburban
-		village
-    }
+    (
+		"urban"
+		"suburban"
+		"village"
+    )
 }
 
 mapdef mansion_small
@@ -1721,40 +1721,40 @@ mapdef mansion_small
 	multiplayer		true
 	teams			2
 	gametypes
-	{
+	(
 		fight1on1
 		fight2on2
 		fight3on3
 		fight4on4
-	}
+	)
 
 	aircraft
-    {
+    (
 		// any
-    }
+    )
 
     ufos
-    {
+    (
 	    // any
-    }
+    )
 
     terrains
-    {
-		coast
-		grass
-    }
+    (
+		"coast"
+		"grass"
+    )
 
     cultures
-    {
-		western
-    }
+    (
+		"western"
+    )
 
     populations
-    {
-		urban
-		suburban
-		village
-    }
+    (
+		"urban"
+		"suburban"
+		"village"
+    )
 }
 
 //////////////////////////
@@ -1772,33 +1772,33 @@ mapdef oriental_large
 	civilianteam	middle
 
 	aircraft
-	{
+	(
 		craft_drop_firebird
 		craft_drop_raptor
 		craft_drop_herakles
-	}
+	)
 
 	ufos
-	{
+	(
 		craft_ufo_harvester
-	}
+	)
 
 	terrains
-	{
-		desert
-	}
+	(
+		"desert"
+	)
 
 	cultures
-	{
-		oriental
-	}
+	(
+		"oriental"
+	)
 
 	populations
-	{
-		urban
-		suburban
-		village
-	}
+	(
+		"urban"
+		"suburban"
+		"village"
+	)
 }
 
 mapdef oriental_medium
@@ -1812,34 +1812,34 @@ mapdef oriental_medium
 	civilianteam	middle
 
 	aircraft
-	{
+	(
 		craft_drop_firebird
 		craft_drop_raptor
 		craft_drop_herakles
-	}
+	)
 
 	ufos
-	{
+	(
 		craft_ufo_scout
 		craft_ufo_fighter
-	}
+	)
 
 	terrains
-	{
-		desert
-	}
+	(
+		"desert"
+	)
 
 	cultures
-	{
-		oriental
-	}
+	(
+		"oriental"
+	)
 
 	populations
-	{
-		urban
-		suburban
-		village
-	}
+	(
+		"urban"
+		"suburban"
+		"village"
+	)
 }
 
 mapdef oriental_medium_crash
@@ -1854,34 +1854,34 @@ mapdef oriental_medium_crash
 	civilianteam	middle
 
 	aircraft
-	{
+	(
 		craft_drop_firebird
 		craft_drop_raptor
 		craft_drop_herakles
-	}
+	)
 
 	ufos
-	{
+	(
 		craft_crash_fighter
 		craft_crash_scout
-	}
+	)
 
 	terrains
-	{
-		desert
-	}
+	(
+		"desert"
+	)
 
 	cultures
-	{
-		oriental
-	}
+	(
+		"oriental"
+	)
 
 	populations
-	{
-		urban
-		suburban
-		village
-	}
+	(
+		"urban"
+		"suburban"
+		"village"
+	)
 }
 
 mapdef oriental_small
@@ -1895,34 +1895,34 @@ mapdef oriental_small
 	civilianteam	middle
 
 	aircraft
-	{
+	(
 		craft_drop_firebird
 		craft_drop_raptor
 		craft_drop_herakles
-	}
+	)
 
 	ufos
-	{
+	(
 		craft_ufo_scout
 		craft_ufo_fighter
-	}
+	)
 
 	terrains
-	{
-		desert
-	}
+	(
+		"desert"
+	)
 
 	cultures
-	{
-		oriental
-	}
+	(
+		"oriental"
+	)
 
 	populations
-	{
-		urban
-		suburban
-		village
-	}
+	(
+		"urban"
+		"suburban"
+		"village"
+	)
 }
 
 // SCOUT_CRASH MAP //
@@ -1933,46 +1933,46 @@ mapdef scout_crash
 	multiplayer		true
 	hurtaliens		true
 	teams			2
-	gametypes {
+	gametypes (
 		fight1on1
 		fight2on2
 		coop2
 		coop3
 		coop4
-	}
+	)
 	maxaliens		5
 	description		"_A crashed Scout UFO."
 
 	aircraft
-	{
+	(
 		craft_drop_firebird
 		craft_drop_raptor
 		craft_drop_herakles
-	}
+	)
 
 	ufos
-	{
+	(
 		craft_crash_scout
-	}
+	)
 
 	terrains
-	{
-		grass
-		mountain
-		cold
-	}
+	(
+		"grass"
+		"mountain"
+		"cold"
+	)
 
 	cultures
-	{
-		western
-	}
+	(
+		"western"
+	)
 
 	populations
-	{
-		suburban
-		village
-		rural
-	}
+	(
+		"suburban"
+		"village"
+		"rural"
+	)
 }
 
 ////////////////////////
@@ -1989,35 +1989,35 @@ mapdef tropic_bigufo
 	// randomspawn enabled
 
 	aircraft
-	{
+	(
 		craft_drop_firebird
 		craft_drop_raptor
 		craft_drop_herakles
-	}
+	)
 
 	ufos
-	{
+	(
 		craft_ufo_corrupter
 		craft_ufo_harvester
-	}
+	)
 
 	terrains
-	{
-		tropical
-	}
+	(
+		"tropical"
+	)
 
 	cultures
-	{
+	(
 		//any
-	}
+	)
 
 	populations
-	{
-		nopopulation
-		rural
-		village
-		suburban
-	}
+	(
+		"nopopulation"
+		"rural"
+		"village"
+		"suburban"
+	)
 }
 
 mapdef tropic_drug
@@ -2030,36 +2030,36 @@ mapdef tropic_drug
 	// randomspawn enabled
 
 	aircraft
-	{
+	(
 		craft_drop_firebird
 		craft_drop_raptor
 		craft_drop_herakles
-	}
+	)
 
 	ufos
-	{
+	(
 		craft_ufo_scout
 		craft_ufo_fighter
 		craft_ufo_harvester
-	}
+	)
 
 	terrains
-	{
-		tropical
-	}
+	(
+		"tropical"
+	)
 
 	cultures
-	{
+	(
 		//any
-	}
+	)
 
 	populations
-	{
-		nopopulation
-		rural
-		village
-		suburban
-	}
+	(
+		"nopopulation"
+		"rural"
+		"village"
+		"suburban"
+	)
 }
 
 mapdef tropic_drug_crash
@@ -2073,35 +2073,35 @@ mapdef tropic_drug_crash
 	hurtaliens	true
 
 	aircraft
-	{
+	(
 		craft_drop_firebird
 		craft_drop_raptor
 		craft_drop_herakles
-	}
+	)
 
 	ufos
-	{
+	(
 		craft_crash_scout
 		craft_crash_fighter
-	}
+	)
 
 	terrains
-	{
-		tropical
-	}
+	(
+		"tropical"
+	)
 
 	cultures
-	{
+	(
 		//any
-	}
+	)
 
 	populations
-	{
-		nopopulation
-		rural
-		village
-		suburban
-	}
+	(
+		"nopopulation"
+		"rural"
+		"village"
+		"suburban"
+	)
 }
 
 mapdef tropic_river
@@ -2114,35 +2114,35 @@ mapdef tropic_river
 	// randomspawn enabled
 
 	aircraft
-	{
+	(
 		craft_drop_firebird
 		craft_drop_raptor
 		craft_drop_herakles
-	}
+	)
 
 	ufos
-	{
+	(
 		craft_ufo_scout
 		craft_ufo_fighter
-	}
+	)
 
 	terrains
-	{
-		tropical
-	}
+	(
+		"tropical"
+	)
 
 	cultures
-	{
+	(
 		//any
-	}
+	)
 
 	populations
-	{
-		nopopulation
-		rural
-		village
-		suburban
-	}
+	(
+		"nopopulation"
+		"rural"
+		"village"
+		"suburban"
+	)
 }
 
 mapdef tropic_river_crash
@@ -2156,35 +2156,35 @@ mapdef tropic_river_crash
 	// randomspawn enabled
 
 	aircraft
-	{
+	(
 		craft_drop_firebird
 		craft_drop_raptor
 		craft_drop_herakles
-	}
+	)
 
 	ufos
-	{
+	(
 		craft_crash_scout
 		craft_crash_fighter
-	}
+	)
 
 	terrains
-	{
-		tropical
-	}
+	(
+		"tropical"
+	)
 
 	cultures
-	{
+	(
 		//any
-	}
+	)
 
 	populations
-	{
-		nopopulation
-		rural
-		village
-		suburban
-	}
+	(
+		"nopopulation"
+		"rural"
+		"village"
+		"suburban"
+	)
 }
 
 //////////////////////////
@@ -2200,7 +2200,7 @@ mapdef ufocrash
 	maxaliens		30
 	hurtaliens		true
 	ufos
-	{
+	(
 		craft_crash_scout
 		craft_crash_fighter
 		craft_crash_corrupter
@@ -2208,15 +2208,15 @@ mapdef ufocrash
 		craft_crash_supply
 //		craft_crash_bomber
 		craft_crash_carrier
-	}
+	)
 
 	aircraft
-	{
+	(
 		craft_drop_firebird
 		craft_drop_herakles
 //		craft_drop_dragon
 		craft_drop_raptor
-	}
+	)
 }
 
 /////////////////////////
@@ -2232,36 +2232,36 @@ mapdef village_commercial
 	maxaliens	16
 
 	aircraft
-	{
+	(
 		craft_drop_firebird
 		craft_drop_raptor
 		craft_drop_herakles
-	}
+	)
 
 	ufos
-	{
+	(
 		craft_ufo_scout
 		craft_ufo_fighter
 		craft_ufo_harvester
-	}
+	)
 
 	terrains
-	{
-		grass
-		cold
-		tropical
-	}
+	(
+		"grass"
+		"cold"
+		"tropical"
+	)
 
 	cultures
-	{
+	(
 		//any
-	}
+	)
 
 	populations
-	{
-		village
-		suburban
-	}
+	(
+		"village"
+		"suburban"
+	)
 }
 
 /*
@@ -2274,36 +2274,36 @@ mapdef village_large
 	maxaliens	8 //TODO: This is an arbitrary value right now.
 
 	aircraft
-	{
+	(
 		craft_drop_firebird
 		craft_drop_raptor
 		craft_drop_herakles
-	}
+	)
 
 	ufos
-	{
+	(
 		craft_ufo_scout
 		craft_ufo_fighter
 		craft_ufo_harvester
-	}
+	)
 
 	terrains
-	{
-		grass
-		cold
-		tropical
-	}
+	(
+		"grass"
+		"cold"
+		"tropical"
+	)
 
 	cultures
-	{
+	(
 		//any
-	}
+	)
 
 	populations
-	{
-		village
-		suburban
-	}
+	(
+		"village"
+		"suburban"
+	)
 }
 
 mapdef village_residential
@@ -2315,36 +2315,36 @@ mapdef village_residential
 	maxaliens	8 //TODO: This is an arbitrary value right now.
 
 	aircraft
-	{
+	(
 		craft_drop_firebird
 		craft_drop_raptor
 		craft_drop_herakles
-	}
+	)
 
 	ufos
-	{
+	(
 		craft_ufo_scout
 		craft_ufo_fighter
 		craft_ufo_harvester
-	}
+	)
 
 	terrains
-	{
-		grass
-		cold
-		tropical
-	}
+	(
+		"grass"
+		"cold"
+		"tropical"
+	)
 
 	cultures
-	{
+	(
 		//any
-	}
+	)
 
 	populations
-	{
-		village
-		suburban
-	}
+	(
+		"village"
+		"suburban"
+	)
 }
 */
 
@@ -2358,35 +2358,35 @@ mapdef village_small
 	maxaliens	6
 
 	aircraft
-	{
+	(
 		craft_drop_firebird
 		craft_drop_raptor
 		craft_drop_herakles
-	}
+	)
 
 	ufos
-	{
+	(
 		craft_ufo_scout
 		craft_ufo_fighter
-	}
+	)
 
 	terrains
-	{
-		grass
-		cold
-		tropical
-	}
+	(
+		"grass"
+		"cold"
+		"tropical"
+	)
 
 	cultures
-	{
+	(
 		//any
-	}
+	)
 
 	populations
-	{
-		village
-		suburban
-	}
+	(
+		"village"
+		"suburban"
+	)
 }
 
 // ===================== //
@@ -2408,29 +2408,29 @@ mapdef base_initial
 		// randomspawn enabled
 
 	aircraft
-        {
+        (
 				// any
-        }
+        )
 
         ufos
-        {
+        (
                 // any
-        }
+        )
 
         terrains
-        {
+        (
                 // any
-        }
+        )
 
         cultures
-        {
+        (
                 // any
-        }
+        )
 
         populations
-        {
+        (
                 // any
-        }
+        )
 }
 
 mapdef base_random
@@ -2444,29 +2444,29 @@ mapdef base_random
 		// randomspawn enabled
 
 	aircraft
-        {
+        (
 				// any
-        }
+        )
 
         ufos
-        {
+        (
                 // any
-        }
+        )
 
         terrains
-        {
+        (
                 // any
-        }
+        )
 
         cultures
-        {
+        (
                 // any
-        }
+        )
 
         populations
-        {
+        (
                 // any
-        }
+        )
 }
 
 //////////////////////////
@@ -2482,33 +2482,33 @@ mapdef cemetery_main
 	maxaliens		6 //TODO: This is an arbitrary value right now.
 
 	aircraft
-	{
+	(
 		craft_drop_firebird
 		craft_drop_raptor
 		craft_drop_herakles
-	}
+	)
 
 //	ufos
 //	{
 //	}
 
 	terrains
-	{
-		grass
-		mountain
-	}
+	(
+		"grass"
+		"mountain"
+	)
 
 	cultures
-	{
+	(
 		//any
-	}
+	)
 
 	populations
-	{
-		village
-		suburban
-		urban
-	}
+	(
+		"village"
+		"suburban"
+		"urban"
+	)
 }
 
 ////////////////////////
@@ -2524,31 +2524,31 @@ mapdef city2
 		campaign		true
         maxaliens       23
         aircraft
-        {
+        (
 			craft_drop_firebird
 			craft_drop_herakles
 			craft_drop_raptor
-        }
+        )
 
         ufos
-        {
+        (
 			//any
-        }
+        )
 
         terrains
-        {
+        (
 			//any
-        }
+        )
 
         cultures
-        {
+        (
 			//any
-        }
+        )
 
         populations
-        {
-			urban
-        }
+        (
+			"urban"
+        )
 }
 
 ////////////////////////
@@ -2566,31 +2566,31 @@ mapdef city3
 		multiplayer     false
 
         aircraft
-        {
+        (
 			craft_drop_firebird
 			craft_drop_herakles
 			craft_drop_raptor
-        }
+        )
 
         ufos
-        {
+        (
 			//any
-        }
+        )
 
         terrains
-        {
+        (
 			//any
-        }
+        )
 
         cultures
-        {
+        (
 			//any
-        }
+        )
 
         populations
-        {
-			urban
-        }
+        (
+			"urban"
+        )
 }
 
 ////////////////////////////
@@ -2603,44 +2603,44 @@ mapdef city_disco
 	description		"_A small neighbourhood in a warm urban region."
 	multiplayer		true
 	teams			2
-	gametypes {
+	gametypes (
 		fight1on1
 		fight2on2
 		coop2
 		coop3
 		coop4
-	}
+	)
 	maxaliens		21
 	// randomspawn	enabled
 
 	aircraft
-	{
+	(
 		craft_drop_firebird
 		craft_drop_raptor
 		craft_drop_herakles
-	}
+	)
 
 //	ufos
 //	{
 //	}
 
 	terrains
-	{
-		grass
-		tropical
-		desert
-	}
+	(
+		"grass"
+		"tropical"
+		"desert"
+	)
 
 	cultures
-	{
+	(
 		//any
-	}
+	)
 
 	populations
-	{
-		suburban
-		urban
-	}
+	(
+		"suburban"
+		"urban"
+	)
 }
 
 //////////////////////////////////
@@ -2653,7 +2653,7 @@ mapdef community_centre
 	description		"_A place where people come to relax and mingle."
 	multiplayer		true
 	teams			3
-	gametypes {
+	gametypes (
 		fight1on1
 		fight1on1on1
 		fight2on2
@@ -2661,38 +2661,38 @@ mapdef community_centre
 		coop2
 		coop3
 		coop4
-	}
+	)
 	maxaliens		8
 
 	aircraft
-	{
+	(
 		craft_drop_firebird
 		craft_drop_herakles
 		craft_drop_raptor
-	}
+	)
 
 //	ufos
 //	{
 //	}
 
 	terrains
-	{
-		cold
-		grass
-		tropical
-	}
+	(
+		"cold"
+		"grass"
+		"tropical"
+	)
 
 	cultures
-	{
+	(
 		//any
-	}
+	)
 
 	populations
-	{
-		urban
-		suburban
-		village
-	}
+	(
+		"urban"
+		"suburban"
+		"village"
+	)
 }
 
 //////////////////////////////
@@ -2705,44 +2705,44 @@ mapdef construction
 	description		"_An office complex under construction."
 	multiplayer		true
 	teams			2
-	gametypes {
+	gametypes (
 		fight1on1
 		fight2on2
 		coop2
 		coop3
 		coop4
-	}
+	)
 	maxaliens		29
 	// randomspawn	enabled
 
 	aircraft
-	{
+	(
 		craft_drop_firebird
 		craft_drop_herakles
 		craft_drop_raptor
-	}
+	)
 
 //	ufos
 //	{
 //	}
 
 	terrains
-	{
-		grass
-		cold
-	}
+	(
+		"grass"
+		"cold"
+	)
 
 	cultures
-	{
+	(
 		//any
-	}
+	)
 
 	populations
-	{
-		village
-		suburban
-		urban
-	}
+	(
+		"village"
+		"suburban"
+		"urban"
+	)
 }
 
 //////////////////////////
@@ -2755,43 +2755,43 @@ mapdef druglord
 	description		"_A tropical area where several suspected criminals have made their homes."
 	multiplayer		true
 	teams			2
-	gametypes {
+	gametypes (
 		fight1on1
 		fight2on2
 		coop2
 		coop3
 		coop4
-	}
+	)
 	maxaliens		25
 	// randomspawn	enabled
 
 	aircraft
-	{
+	(
 		craft_drop_firebird
 		craft_drop_herakles
 		craft_drop_raptor
-	}
+	)
 
 //	ufos
 //	{
 //	}
 
 	terrains
-	{
-		tropical
-	}
+	(
+		"tropical"
+	)
 
 	cultures
-	{
+	(
 		//any
-	}
+	)
 
 	populations
-	{
-		village
-		suburban
-		rural
-	}
+	(
+		"village"
+		"suburban"
+		"rural"
+	)
 }
 
 ///////////////////////////
@@ -2803,48 +2803,48 @@ mapdef eaglenest
 	map				"+eaglenest"
 	multiplayer		true
 	teams			2
-	gametypes {
+	gametypes (
 		fight1on1
 		fight2on2
 		coop2
 		coop3
 		coop4
-	}
+	)
 	maxaliens		18
 	// randomspawn	enabled
 
 	description		"_A small estate in the mountains."
 
 	aircraft
-	{
+	(
 		craft_drop_firebird
 		craft_drop_herakles
 		craft_drop_raptor
-	}
+	)
 
 //	ufos
 //	{
 //	}
 
 	terrains
-	{
-		grass
-		mountain
-		cold
-	}
+	(
+		"grass"
+		"mountain"
+		"cold"
+	)
 
 	cultures
-	{
-		western
-		eastern
-	}
+	(
+		"western"
+		"eastern"
+	)
 
 	populations
-	{
-		village
-		suburban
-		rural
-	}
+	(
+		"village"
+		"suburban"
+		"rural"
+	)
 }
 
 ////////////////////////////
@@ -2857,45 +2857,45 @@ mapdef gasstation
 	description		"_A place where citizens come to replenish their vehicles' fuel supply."
 	multiplayer		true
 	teams			2
-	gametypes {
+	gametypes (
 		fight1on1
 		fight2on2
 		coop2
 		coop3
 		coop4
-	}
+	)
 	maxaliens		4
 
 	aircraft
-	{
+	(
 		craft_drop_firebird
 		craft_drop_herakles
 		craft_drop_raptor
-	}
+	)
 
 //	ufos
 //	{
 //	}
 
 	terrains
-	{
-		grass
-		tropical
-		desert
-		cold
-	}
+	(
+		"grass"
+		"tropical"
+		"desert"
+		"cold"
+	)
 
 	cultures
-	{
+	(
 		//any
-	}
+	)
 
 	populations
-	{
-		village
-		suburban
-		urban
-	}
+	(
+		"village"
+		"suburban"
+		"urban"
+	)
 }
 
 ///////////////////////
@@ -2908,45 +2908,45 @@ mapdef italy
 	description	"_A small office in a mountainous region."
 	teams		2
 	multiplayer	true
-	gametypes {
+	gametypes (
 		fight1on1
 		fight2on2
 		coop2
 		coop3
 		coop4
-	}
+	)
 
 	maxaliens		22
 	// randomspawn	enabled
 
 	aircraft
-	{
+	(
 		craft_drop_firebird
 		craft_drop_herakles
 		craft_drop_raptor
-	}
+	)
 
 //	ufos
 //	{
 //	}
 
 	terrains
-	{
-		cold
-		mountain
-	}
+	(
+		"cold"
+		"mountain"
+	)
 
 	cultures
-	{
+	(
 		//any
-	}
+	)
 
 	populations
-	{
-		village
-		rural
-		nopopulation
-	}
+	(
+		"village"
+		"rural"
+		"nopopulation"
+	)
 }
 
 ///////////////////////
@@ -2960,46 +2960,46 @@ mapdef japan_default
 	param		"default"
 	teams		2
 	multiplayer	true
-	gametypes {
+	gametypes (
 		fight1on1
 		fight2on2
 		coop2
 		coop3
 		coop4
-	}
+	)
 	maxaliens		16	// arc:2, bridge:2, buddha:2, harvester:14, scout:4, f1:2, f2:2, f3:2, f4:2, fill1:2, h1:6, h2:4, h3:6, h4:7, h5:0, p_bl:2, p_br:2, p_btl:2, p_h:2, p_tl:2, p_tr:0, p_v:0, sw:2, w1:0
 	// randomspawn	enabled
 
 	civilianteam	asia
 
 	aircraft
-	{
+	(
 		craft_drop_firebird
 		craft_drop_herakles
 		craft_drop_raptor
-	}
+	)
 
 //	ufos
 //	{
 //	}
 
 	terrains
-	{
-		grass
-		mountain
-		tropical
-	}
+	(
+		"grass"
+		"mountain"
+		"tropical"
+	)
 
 	cultures
-	{
-		eastern
-	}
+	(
+		"eastern"
+	)
 
 	populations
-	{
-		village
-		suburban
-	}
+	(
+		"village"
+		"suburban"
+	)
 }
 
 //////////////////////
@@ -3012,47 +3012,47 @@ mapdef mart
 	description	"_A kind of communal gathering centre annex foraging facility, known as a supermarket."
 	multiplayer	true
 	teams		2
-	gametypes {
+	gametypes (
 		fight1on1
 		fight2on2
 		coop2
 		coop3
 		coop4
-	}
+	)
 
 	maxaliens		23
 	// randomspawn	enabled
 
 	aircraft
-	{
+	(
 		craft_drop_firebird
 		craft_drop_herakles
 		craft_drop_raptor
-	}
+	)
 
 //	ufos
 //	{
 //	}
 
 	terrains
-	{
-		grass
-		tropical
-		mountain
-		cold
-	}
+	(
+		"grass"
+		"tropical"
+		"mountain"
+		"cold"
+	)
 
 	cultures
-	{
-		western
-	}
+	(
+		"western"
+	)
 
 	populations
-	{
-		urban
-		village
-		suburban
-	}
+	(
+		"urban"
+		"village"
+		"suburban"
+	)
 }
 
 /////////////////////////////////
@@ -3065,44 +3065,44 @@ mapdef military_convoy
 	description		"_A military convoy has caught the eye of the aliens."
 	multiplayer		true
 	teams			2
-	gametypes {
+	gametypes (
 		fight1on1
 		fight2on2
 		coop2
 		coop3
 		coop4
-	}
+	)
 	maxaliens		12
 	civilianteam	armysoldier
 
 	aircraft
-	{
+	(
 		craft_drop_firebird
 		craft_drop_herakles
 		craft_drop_raptor
-	}
+	)
 
 //	ufos
 //	{
 //	}
 
 	terrains
-	{
-		mountain
-		grass
-	}
+	(
+		"mountain"
+		"grass"
+	)
 
 	cultures
-	{
+	(
 		//any
-	}
+	)
 
 	populations
-	{
-		nopopulation
-		rural
-		village
-	}
+	(
+		"nopopulation"
+		"rural"
+		"village"
+	)
 }
 
 // ORIENTAL_MOSQUE MAP //
@@ -3113,46 +3113,46 @@ mapdef oriental_mosque
 	description		"_An urban district in an oriental region."
 	multiplayer		true
 	teams			2
-	gametypes {
+	gametypes (
 		fight1on1
 		fight2on2
 		coop2
 		coop3
 		coop4
-	}
+	)
 	maxaliens		20
 	// randomspawn	enabled
 
 	civilianteam	middle
 
 	aircraft
-	{
+	(
 		craft_drop_firebird
 		craft_drop_herakles
 		craft_drop_raptor
-	}
+	)
 
 	ufos
-	{
+	(
 		// any
-	}
+	)
 
 	terrains
-	{
-		desert
-	}
+	(
+		"desert"
+	)
 
 	cultures
-	{
-		oriental
-	}
+	(
+		"oriental"
+	)
 
 	populations
-	{
-		village
-		suburban
-		urban
-	}
+	(
+		"village"
+		"suburban"
+		"urban"
+	)
 }
 
 /////////////////////////
@@ -3166,7 +3166,7 @@ mapdef shelter
 	size			"medium"
 	teams			4
 	multiplayer		true
-	gametypes {
+	gametypes (
 		fight1on1
 		fight1on1on1
 		fight2on2
@@ -3178,38 +3178,38 @@ mapdef shelter
 		coop2
 		coop3
 		coop4
-	}
+	)
 	maxaliens		21 //TODO: This is an arbitrary value right now.
 		// randomspawn enabled
 	civilianteam	armysoldier
 
 	aircraft
-	{
+	(
 		craft_drop_firebird
 		craft_drop_herakles
 		craft_drop_raptor
-	}
+	)
 
 	ufos
-	{
+	(
 		// any
-	}
+	)
 
 	terrains
-	{
-		mountain
-	}
+	(
+		"mountain"
+	)
 
 	cultures
-	{
-		western
-		eastern
-	}
+	(
+		"western"
+		"eastern"
+	)
 
 	populations
-	{
+	(
 		//any
-	}
+	)
 }
 
 ///////////////////////////
@@ -3222,45 +3222,45 @@ mapdef spedition
 	description	"_A small industrial area."
 	multiplayer	true
 	teams		2
-	gametypes {
+	gametypes (
 		fight1on1
 		fight2on2
 		coop2
 		coop3
 		coop4
-	}
+	)
 	maxaliens		28
 	// randomspawn	enabled
 
 	civilianteam	worker
 
 	aircraft
-	{
+	(
 		craft_drop_firebird
 		craft_drop_herakles
 		craft_drop_raptor
-	}
+	)
 
 //	ufos
 //	{
 //	}
 
 	terrains
-	{
-		grass
-		cold
-	}
+	(
+		"grass"
+		"cold"
+	)
 
 	cultures
-	{
+	(
 		//any
-	}
+	)
 
 	populations
-	{
-		village
-		suburban
-	}
+	(
+		"village"
+		"suburban"
+	)
 }
 
 /////////////////////////
@@ -3273,46 +3273,46 @@ mapdef stadium
 	description		"_A stadium used for various recreational events."
 	multiplayer		true
 	teams			2
-	gametypes {
+	gametypes (
 		fight1on1
 		fight2on2
 		coop2
 		coop3
 		coop4
-	}
+	)
 
 	maxaliens		21
 	// randomspawn enabled
 
 	aircraft
-	{
+	(
 		craft_drop_firebird
 		craft_drop_herakles
 		craft_drop_raptor
-	}
+	)
 
 //	ufos
 //	{
 //	}
 
 	terrains
-	{
-		cold
-		grass
-	}
+	(
+		"cold"
+		"grass"
+	)
 
 	cultures
-	{
-		eastern
-		western
-	}
+	(
+		"eastern"
+		"western"
+	)
 
 	populations
-	{
-		urban
-		village
-		suburban
-	}
+	(
+		"urban"
+		"village"
+		"suburban"
+	)
 }
 
 ///////////////////////
@@ -3325,7 +3325,7 @@ mapdef tower
 	description		"_An office complex in the centre of town."
 	multiplayer		true
 	teams			3
-	gametypes {
+	gametypes (
 		fight1on1
 		fight1on1on1
 		fight2on2
@@ -3335,39 +3335,39 @@ mapdef tower
 		coop2
 		coop3
 		coop4
-	}
+	)
 	maxaliens		29
 	// randomspawn	enabled
 
 	aircraft
-	{
+	(
 		craft_drop_firebird
 		craft_drop_raptor
 		craft_drop_herakles
-	}
+	)
 
 //	ufos
 //	{
 //	}
 
 	terrains
-	{
-		desert
-		grass
-		cold
-		tropical
-	}
+	(
+		"desert"
+		"grass"
+		"cold"
+		"tropical"
+	)
 
 	cultures
-	{
+	(
 		//any
-	}
+	)
 
 	populations
-	{
-		suburban
-		urban
-	}
+	(
+		"suburban"
+		"urban"
+	)
 }
 
 ///////////////////////////
@@ -3380,42 +3380,42 @@ mapdef transport
 	description	"_An industrial area, used for loading and unloading goods."
 	multiplayer	true
 	teams		2
-	gametypes {
+	gametypes (
 		fight1on1
 		fight2on2
 		coop2
 		coop3
 		coop4
-	}
+	)
 	maxaliens	19 //TODO: This is an arbitrary value right now.
 
 	aircraft
-	{
+	(
 		craft_drop_firebird
 		craft_drop_herakles
 		craft_drop_raptor
-	}
+	)
 
 //	ufos
 //	{
 //	}
 
 	terrains
-	{
-		cold
-		grass
-	}
+	(
+		"cold"
+		"grass"
+	)
 
 	cultures
-	{
+	(
 		//any
-	}
+	)
 
 	populations
-	{
-		village
-		suburban
-	}
+	(
+		"village"
+		"suburban"
+	)
 }
 
 // ================= //
@@ -3428,42 +3428,42 @@ mapdef bungalow
 	description	"_A small bungalow."
 	multiplayer	true
 	teams		3
-	gametypes {
+	gametypes (
 		fight1on1
 		fight1on1on1
 		fight2on2
 		fight2on2on2
 		coop2
 		coop3
-	}
+	)
 	maxaliens		6
 
 	aircraft
-	{
+	(
 		// any
-	}
+	)
 
 	ufos
-	{
+	(
 		// any
-	}
+	)
 
 	terrains
-	{
-		grass
-		tropical
-	}
+	(
+		"grass"
+		"tropical"
+	)
 
 	cultures
-	{
+	(
 		// any
-	}
+	)
 
 	populations
-	{
-		village
-		rural
-	}
+	(
+		"village"
+		"rural"
+	)
 }
 
 mapdef bungalow2
@@ -3472,42 +3472,42 @@ mapdef bungalow2
 	description	"_A small bungalow."
 	multiplayer	true
 	teams		3
-	gametypes {
+	gametypes (
 		fight1on1
 		fight1on1on1
 		fight2on2
 		fight2on2on2
 		coop2
 		coop3
-	}
+	)
 	maxaliens		8
 
 	aircraft
-	{
+	(
 		// any
-	}
+	)
 
 	ufos
-	{
+	(
 		// any
-	}
+	)
 
 	terrains
-	{
-		grass
-		tropical
-	}
+	(
+		"grass"
+		"tropical"
+	)
 
 	cultures
-	{
+	(
 		//any
-	}
+	)
 
 	populations
-	{
-		village
-		rural
-	}
+	(
+		"village"
+		"rural"
+	)
 }
 
 // BUNKER MAP //
@@ -3518,46 +3518,46 @@ mapdef bunker
 	description	"_A bunker used in a previous conflict."
 	multiplayer	true
 	teams		2
-	gametypes {
+	gametypes (
 		fight1on1
 		fight2on2
 		coop2
 		coop3
 		coop4
-	}
+	)
 	maxaliens		16
 	// randomspawn enabled
 
 	civilianteam	armysoldier
 
 	aircraft
-	{
+	(
 		// any
-	}
+	)
 
 	ufos
-	{
+	(
 		// any
-	}
+	)
 
 	terrains
-	{
-		desert
-		mountain
-		cold
-	}
+	(
+		"desert"
+		"mountain"
+		"cold"
+	)
 
 	cultures
-	{
+	(
 		// any
-	}
+	)
 
 	populations
-	{
-		village
-		rural
-		nopopulation
-	}
+	(
+		"village"
+		"rural"
+		"nopopulation"
+	)
 }
 
 // CITY_INDUSTRY MAP //
@@ -3568,41 +3568,41 @@ mapdef city_industry
 	description		"_A small industry city area."
 	multiplayer		true
 	teams			2
-	gametypes {
+	gametypes (
 		fight1on1
 		fight2on2
 		coop2
 		coop3
 		coop4
-	}
+	)
 	maxaliens		18
 
 	aircraft
-	{
+	(
 		// any
-	}
+	)
 
 	ufos
-	{
+	(
 		// any
-	}
+	)
 
 	terrains
-	{
-		grass
-		tropical
-	}
+	(
+		"grass"
+		"tropical"
+	)
 
 	cultures
-	{
+	(
 		// any
-	}
+	)
 
 	populations
-	{
-		suburban
-		urban
-	}
+	(
+		"suburban"
+		"urban"
+	)
 }
 
 // CITY_TRAIN MAP //
@@ -3613,44 +3613,44 @@ mapdef city_train
 	description		"_A small neighbourhood in a warm urban region."
 	multiplayer		true
 	teams			2
-	gametypes {
+	gametypes (
 		fight1on1
 		fight2on2
 		coop2
 		coop3
 		coop4
-	}
+	)
 	maxaliens		7
 
 	aircraft
-	{
+	(
 		craft_drop_firebird
 		craft_drop_herakles
 		craft_drop_raptor
-	}
+	)
 
 	ufos
-	{
+	(
 		craft_ufo_fighter
-	}
+	)
 
 	terrains
-	{
-		grass
-		tropical
-		desert
-	}
+	(
+		"grass"
+		"tropical"
+		"desert"
+	)
 
 	cultures
-	{
+	(
 		//any
-	}
+	)
 
 	populations
-	{
-		suburban
-		urban
-	}
+	(
+		"suburban"
+		"urban"
+	)
 }
 
 // CORRUPTER_CRASH MAP //
@@ -3662,41 +3662,41 @@ mapdef corrupter_crash
 	multiplayer		true
 	teams			2
 	campaign		false // TODO: activate once the corrupter is available in the campaign
-	gametypes {
+	gametypes (
 		fight1on1
 		fight2on2
 		coop2
 		coop3
 		coop4
-	}
+	)
 	maxaliens		12
 
 	aircraft
-	{
-	}
+	(
+	)
 
 	ufos
-	{
+	(
 		craft_ufo_corrupter
-	}
+	)
 
 	terrains
-	{
-		grass
-		tropical
-		desert
-	}
+	(
+		"grass"
+		"tropical"
+		"desert"
+	)
 
 	cultures
-	{
+	(
 		//any
-	}
+	)
 
 	populations
-	{
-		suburban
-		urban
-	}
+	(
+		"suburban"
+		"urban"
+	)
 }
 
 // DAM MAP //
@@ -3707,13 +3707,13 @@ mapdef dam
 	description	"_A hydroelectricity dam that is threatened by the alien invaders."
 	multiplayer	true
 	teams		2
-	gametypes {
+	gametypes (
 		fight1on1
 		fight2on2
 		coop2
 		coop3
 		coop4
-	}
+	)
 
 	maxaliens		12
 			// randomspawn enabled
@@ -3721,31 +3721,31 @@ mapdef dam
 	civilianteam	worker
 
 	aircraft
-	{
+	(
 		// any
-	}
+	)
 
 	ufos
-	{
+	(
 		// any
-	}
+	)
 
 	terrains
-	{
+	(
 		// any
-	}
+	)
 
 	cultures
-	{
+	(
 		// any
-	}
+	)
 
 	populations
-	{
-		village
-		rural
-		nopopulation
-	}
+	(
+		"village"
+		"rural"
+		"nopopulation"
+	)
 }
 
 // ENGLAND MAP //
@@ -3756,7 +3756,7 @@ mapdef england
 	description		"_A small village."
 	multiplayer		true
 	teams			3
-	gametypes {
+	gametypes (
 		fight1on1
 		fight1on1on1
 		fight2on2
@@ -3764,37 +3764,37 @@ mapdef england
 		coop2
 		coop3
 		coop4
-	}
+	)
 
 	maxaliens		9
 
 	aircraft
-	{
+	(
 		// any
-	}
+	)
 
 	ufos
-	{
+	(
 		// any
-	}
+	)
 
 	terrains
-	{
-		grass
-		mountain
-	}
+	(
+		"grass"
+		"mountain"
+	)
 
 	cultures
-	{
-		western
-	}
+	(
+		"western"
+	)
 
 	populations
-	{
-		suburban
-		village
-		rural
-	}
+	(
+		"suburban"
+		"village"
+		"rural"
+	)
 }
 
 // ESTATE MAP //
@@ -3805,41 +3805,41 @@ mapdef estate
 	description		"_An estate owned by rich and influential people."
 	multiplayer		true
 	teams			2
-	gametypes {
+	gametypes (
 		fight1on1
 		fight2on2
 		coop2
 		coop3
 		coop4
-	}
+	)
 
 	maxaliens		12
 
 	aircraft
-	{
+	(
 		// any
-	}
+	)
 
 	ufos
-	{
+	(
 		// any
-	}
+	)
 
 	terrains
-	{
-		grass
-		mountain
-	}
+	(
+		"grass"
+		"mountain"
+	)
 
 	cultures
-	{
-		western
-	}
+	(
+		"western"
+	)
 
 	populations
-	{
+	(
 		//any
-	}
+	)
 }
 
 // EXCAVATION MAP //
@@ -3854,42 +3854,42 @@ mapdef excavation
 	// randomspawn enabled
 
 	civilianteam	middle
-	gametypes {
+	gametypes (
 		fight1on1
 		fight2on2
 		coop2
 		coop3
 		coop4
-	}
+	)
 
 
 	aircraft
-	{
+	(
 		// any
-	}
+	)
 
 	ufos
-	{
+	(
 		// any
-	}
+	)
 
 	terrains
-	{
-		desert
-	}
+	(
+		"desert"
+	)
 
 	cultures
-	{
-		african
-		oriental
-	}
+	(
+		"african"
+		"oriental"
+	)
 
 	populations
-	{
-		village
-		rural
-		nopopulation
-	}
+	(
+		"village"
+		"rural"
+		"nopopulation"
+	)
 }
 
 // FERRY MAP //
@@ -3901,7 +3901,7 @@ mapdef ferry
 	size			"medium"
 	teams			4
 	multiplayer		true
-	gametypes {
+	gametypes (
 		fight1on1
 		fight1on1on1
 		fight2on2
@@ -3909,37 +3909,37 @@ mapdef ferry
 		coop2
 		coop3
 		coop4
-	}
+	)
 	maxaliens		6
 
 	aircraft
-	{
+	(
 		// any
-	}
+	)
 
 	ufos
-	{
+	(
 		// any
-	}
+	)
 
 	terrains
-	{
-		coast
-	}
+	(
+		"coast"
+	)
 
 	cultures
-	{
-		eastern
-		western
-		oriental
-	}
+	(
+		"eastern"
+		"western"
+		"oriental"
+	)
 
 	populations
-	{
-		rural
-		village
-		suburban
-	}
+	(
+		"rural"
+		"village"
+		"suburban"
+	)
 }
 
 // FIGHTER_CRASH MAP //
@@ -3954,41 +3954,41 @@ mapdef fighter_crash
 		// randomspawn enabled
 	hurtaliens		true
 
-	gametypes {
+	gametypes (
 		fight1on1
 		fight2on2
 		coop2
 		coop3
 		coop4
-	}
+	)
 
 	aircraft
-	{
+	(
 		// any
-	}
+	)
 
 	ufos
-	{
+	(
 		craft_crash_fighter
-	}
+	)
 
 	terrains
-	{
-		desert
-		mountain
-	}
+	(
+		"desert"
+		"mountain"
+	)
 
 	cultures
-	{
+	(
 		// any
-	}
+	)
 
 	populations
-	{
-		village
-		nopopulation
-		rural
-	}
+	(
+		"village"
+		"nopopulation"
+		"rural"
+	)
 }
 
 // FUELDUMP MAP //
@@ -3999,36 +3999,36 @@ mapdef fueldump
 	description		"_A fuel depot the aliens try to destroy."
 	multiplayer		true
 	teams			2
-	gametypes {
+	gametypes (
 		fight1on1
 		fight2on2
-	}
+	)
 	maxaliens		10
 
 	aircraft
-	{
+	(
 		// any
-	}
+	)
 
 	ufos
-	{
+	(
 		// any
-	}
+	)
 
 	terrains
-	{
-		cold
-	}
+	(
+		"cold"
+	)
 
 	cultures
-	{
+	(
 		// any
-	}
+	)
 
 	populations
-	{
-		village
-	}
+	(
+		"village"
+	)
 }
 
 // GATE MAP //
@@ -4039,44 +4039,44 @@ mapdef gate
 	description		"_A depot with the name 'The Gate' where secret technology is stored."
 	multiplayer		true
 	teams			2
-	gametypes {
+	gametypes (
 		fight1on1
 		fight2on2
 		coop2
 		coop3
 		coop4
-	}
+	)
 	maxaliens		9
 
 	aircraft
-	{
+	(
 		// any
-	}
+	)
 
 	ufos
-	{
+	(
 		// any
-	}
+	)
 
 	terrains
-	{
-		grass
-		tropical
-	}
+	(
+		"grass"
+		"tropical"
+	)
 
 	cultures
-	{
+	(
 		// any
-	}
+	)
 
 	populations
-	{
-		rural
-		nopopulation
-		village
-		suburban
-		urban
-	}
+	(
+		"rural"
+		"nopopulation"
+		"village"
+		"suburban"
+		"urban"
+	)
 }
 
 // HARBOUR MAP //
@@ -4087,42 +4087,42 @@ mapdef harbour
 	description		"_A local harbour."
 	multiplayer		true
 	teams			2
-	gametypes {
+	gametypes (
 		fight1on1
 		fight2on2
 		coop2
 		coop3
 		coop4
-	}
+	)
 	maxaliens		8
 
 	aircraft
-	{
+	(
 		// any
-	}
+	)
 
 	ufos
-	{
+	(
 		// any
-	}
+	)
 
 	terrains
-	{
-		grass
-		tropical
-	}
+	(
+		"grass"
+		"tropical"
+	)
 
 	cultures
-	{
+	(
 		// any
-	}
+	)
 
 	populations
-	{
-		village
-		suburban
-		urban
-	}
+	(
+		"village"
+		"suburban"
+		"urban"
+	)
 }
 
 // LAKE_ICE MAP //
@@ -4132,41 +4132,41 @@ mapdef lake_ice
 	map				"lake_ice"
 	multiplayer		true
 	teams			2
-	gametypes {
+	gametypes (
 		fight1on1
 		fight2on2
 		coop2
 		coop3
 		coop4
-	}
+	)
 	description		"_A small settlement in winter."
 	maxaliens		16
 
 	aircraft
-	{
+	(
 		// any
-	}
+	)
 
 	ufos
-	{
+	(
 		// any
-	}
+	)
 
 	terrains
-	{
-		cold
-		arctic
-	}
+	(
+		"cold"
+		"arctic"
+	)
 
 	cultures
-	{
+	(
 		// any
-	}
+	)
 
 	populations
-	{
+	(
 		// any
-	}
+	)
 }
 
 // LAKE_ICE_BIG MAP //
@@ -4179,7 +4179,7 @@ mapdef lake_ice_big
 	description		"_A small settlement in winter."
 	maxaliens		28
 		// randomspawn enabled
-	gametypes {
+	gametypes (
 		fight1on1
 		fight1on1on1
 		fight2on2
@@ -4189,35 +4189,35 @@ mapdef lake_ice_big
 		coop2
 		coop3
 		coop4
-	}
+	)
 
 	aircraft
-	{
+	(
 		// any
-	}
+	)
 
 	ufos
-	{
+	(
 		craft_ufo_fighter
-	}
+	)
 
 	terrains
-	{
-		cold
-		arctic
-	}
+	(
+		"cold"
+		"arctic"
+	)
 
 	cultures
-	{
+	(
 		// any
-	}
+	)
 
 	populations
-	{
-		suburban
-		village
-		rural
-	}
+	(
+		"suburban"
+		"village"
+		"rural"
+	)
 }
 
 // MINE MAP //
@@ -4228,7 +4228,7 @@ mapdef mine
 	description	"_An old mine."
 	multiplayer	true
 	teams		3
-	gametypes {
+	gametypes (
 		fight1on1
 		fight1on1on1
 		fight2on2
@@ -4238,40 +4238,40 @@ mapdef mine
 		coop2
 		coop3
 		coop4
-	}
+	)
 	maxaliens	26
 	// randomspawn	enabled
 
 	civilianteam	miner
 
 	aircraft
-	{
+	(
 		// any
-	}
+	)
 
 	ufos
-	{
+	(
 		// any
-	}
+	)
 
 	terrains
-	{
-		grass
-		mountain
-	}
+	(
+		"grass"
+		"mountain"
+	)
 
 	cultures
-	{
+	(
 		// any
-	}
+	)
 
 	populations
-	{
-		village
-		suburban
-		rural
-		nopopulation
-	}
+	(
+		"village"
+		"suburban"
+		"rural"
+		"nopopulation"
+	)
 }
 
 // NEIGHBOURHOOD MAP //
@@ -4282,41 +4282,41 @@ mapdef neighbourhood
 	description	"_Neighbourhood."
 	multiplayer	true
 	teams		2
-	gametypes {
+	gametypes (
 		fight1on1
 		fight2on2
 		fight3on3
 		coop2
-	}
+	)
 	maxaliens	17
 		// randomspawn	enabled
 
 	aircraft
-	{
+	(
 		// any
-	}
+	)
 
 	ufos
-	{
+	(
 		// any
-	}
+	)
 
 	terrains
-	{
-		grass
-		mountain
-	}
+	(
+		"grass"
+		"mountain"
+	)
 
 	cultures
-	{
+	(
 		// any
-	}
+	)
 
 	populations
-	{
-		village
-		suburban
-	}
+	(
+		"village"
+		"suburban"
+	)
 }
 
 // OFFICE MAP //
@@ -4327,42 +4327,42 @@ mapdef office
 	description		"_An office complex on the outskirts of town."
 	multiplayer		true
 	teams			2
-	gametypes {
+	gametypes (
 		fight1on1
 		fight2on2
 		coop2
 		coop3
 		coop4
-	}
+	)
 	maxaliens		18
 
 	aircraft
-	{
+	(
 		// any
-	}
+	)
 
 	ufos
-	{
+	(
 		// any
-	}
+	)
 
 	terrains
-	{
-		grass
-		tropical
-		mountain
-	}
+	(
+		"grass"
+		"tropical"
+		"mountain"
+	)
 
 	cultures
-	{
+	(
 		// any
-	}
+	)
 
 	populations
-	{
-		village
-		suburban
-	}
+	(
+		"village"
+		"suburban"
+	)
 }
 
 // ORIENTAL MAP //
@@ -4373,43 +4373,43 @@ mapdef oriental
 	description		"_An urban district in an oriental region."
 	multiplayer		true
 	teams			2
-	gametypes {
+	gametypes (
 		fight1on1
 		fight2on2
 		coop2
 		coop3
 		coop4
-	}
+	)
 	maxaliens		14
 		// randomspawn enabled
 	civilianteam	middle
 
 	aircraft
-	{
+	(
 		// any
-	}
+	)
 
 	ufos
-	{
+	(
 		// any
-	}
+	)
 
 	terrains
-	{
-		desert
-	}
+	(
+		"desert"
+	)
 
 	cultures
-	{
-		oriental
-	}
+	(
+		"oriental"
+	)
 
 	populations
-	{
-		village
-		suburban
-		urban
-	}
+	(
+		"village"
+		"suburban"
+		"urban"
+	)
 }
 
 // PIPES_CONST MAP //
@@ -4420,7 +4420,7 @@ mapdef pipes_const
 	description		"_Underground pipe construction site."
 	multiplayer		true
 	teams			3
-	gametypes {
+	gametypes (
 		fight1on1
 		fight1on1on1
 		fight2on2
@@ -4430,34 +4430,34 @@ mapdef pipes_const
 		coop2
 		coop3
 		coop4
-	}
+	)
 	maxaliens		21
 	// randomspawn enabled
 
 	civilianteam	miner
 
 	ufos
-	{
+	(
 		// any
-	}
+	)
 
 	terrains
-	{
-		desert
-		grass
-		tropical
-	}
+	(
+		"desert"
+		"grass"
+		"tropical"
+	)
 
 	cultures
-	{
+	(
 		// any
-	}
+	)
 
 	populations
-	{
-		suburban
-		urban
-	}
+	(
+		"suburban"
+		"urban"
+	)
 }
 
 // RESORT MAP //
@@ -4468,43 +4468,43 @@ mapdef resort
 	description		"_A luxurious vacation resort."
 	multiplayer		true
 	teams			2
-	gametypes {
+	gametypes (
 		fight1on1
 		fight2on2
 		coop2
 		coop3
 		coop4
-	}
+	)
 	maxaliens		24
 	// randomspawn enabled
 
 	aircraft
-	{
+	(
 		// any
-	}
+	)
 
 	ufos
-	{
+	(
 		// any
-	}
+	)
 
 	terrains
-	{
-		grass
-		tropical
-	}
+	(
+		"grass"
+		"tropical"
+	)
 
 	cultures
-	{
+	(
 		// any
-	}
+	)
 
 	populations
-	{
-		village
-		suburban
-		urban
-	}
+	(
+		"village"
+		"suburban"
+		"urban"
+	)
 }
 
 // RIVERTOWN MAP //
@@ -4515,7 +4515,7 @@ mapdef rivertown
 	description		"_A rather old-fashioned suburban district."
 	multiplayer		true
 	teams			4
-	gametypes {
+	gametypes (
 		fight1on1
 		fight1on1on1
 		fight2on2
@@ -4527,36 +4527,36 @@ mapdef rivertown
 		coop2
 		coop3
 		coop4
-	}
+	)
 	maxaliens		16
 
 	aircraft
-	{
+	(
 		// any
-	}
+	)
 
 	ufos
-	{
+	(
 		// any
-	}
+	)
 
 	terrains
-	{
-		grass
-		cold
-	}
+	(
+		"grass"
+		"cold"
+	)
 
 	cultures
-	{
-		western
-	}
+	(
+		"western"
+	)
 
 	populations
-	{
-		rural
-		village
-		suburban
-	}
+	(
+		"rural"
+		"village"
+		"suburban"
+	)
 }
 
 // SMALL_HOUSE MAP //
@@ -4569,27 +4569,27 @@ mapdef small_house
 	maxaliens		8
 
 	aircraft
-	{
+	(
 		// any
-	}
+	)
 
 	ufos
-	{
+	(
 		// any
-	}
+	)
 
 	terrains
-	{
-		grass
-		mountain
-	}
+	(
+		"grass"
+		"mountain"
+	)
 
 	populations
-	{
-		suburban
-		village
-		rural
-	}
+	(
+		"suburban"
+		"village"
+		"rural"
+	)
 }
 
 // SMALL_STREET MAP //
@@ -4602,27 +4602,27 @@ mapdef small_street
 	maxaliens		6
 
 	aircraft
-	{
+	(
 		// any
-	}
+	)
 
 	ufos
-	{
+	(
 		// any
-	}
+	)
 
 	terrains
-	{
-		grass
-		mountain
-	}
+	(
+		"grass"
+		"mountain"
+	)
 
 	populations
-	{
-		suburban
-		village
-		rural
-	}
+	(
+		"suburban"
+		"village"
+		"rural"
+	)
 }
 
 // SUBWAY MAP //
@@ -4633,43 +4633,43 @@ mapdef subway
 	description		"_A subway station in a suburban part of town."
 	multiplayer		true
 	teams			2
-	gametypes {
+	gametypes (
 		fight1on1
 		fight2on2
 		coop2
 		coop3
 		coop4
-	}
+	)
 	maxaliens		8
 
 	aircraft
-	{
+	(
 		// any
-	}
+	)
 
 	ufos
-	{
+	(
 		// any
-	}
+	)
 
 	terrains
-	{
-		grass
-		tropical
-		desert
-		cold
-	}
+	(
+		"grass"
+		"tropical"
+		"desert"
+		"cold"
+	)
 
 	cultures
-	{
+	(
 		// any
-	}
+	)
 
 	populations
-	{
-		suburban
-		urban
-	}
+	(
+		"suburban"
+		"urban"
+	)
 }
 
 // VILLAGE MAP //
@@ -4680,43 +4680,43 @@ mapdef village
 	description		"_A suburban district."
 	multiplayer		true
 	teams			2
-	gametypes {
+	gametypes (
 		fight1on1
 		fight2on2
 		coop2
 		coop3
 		coop4
-	}
+	)
 	maxaliens		22
 	// randomspawn enabled
 
 	aircraft
-	{
+	(
 		// any
-	}
+	)
 
 	ufos
-	{
+	(
 		// any
-	}
+	)
 
 	terrains
-	{
-		grass
-		cold
-	}
+	(
+		"grass"
+		"cold"
+	)
 
 	cultures
-	{
-		western
-		eastern
-	}
+	(
+		"western"
+		"eastern"
+	)
 
 	populations
-	{
-		village
-		suburban
-	}
+	(
+		"village"
+		"suburban"
+	)
 }
 
 // WILDERNESS MAP //
@@ -4727,40 +4727,40 @@ mapdef wilderness
 	description		"_Wilderness terror mission."
 	multiplayer		true
 	teams			2
-	gametypes {
+	gametypes (
 		fight1on1
 		fight2on2
 		coop2
-	}
+	)
 	maxaliens		16
 	// randomspawn enabled
 
 	aircraft
-	{
+	(
 		// any
-	}
+	)
 
 	ufos
-	{
+	(
 		// any
-	}
+	)
 
 	terrains
-	{
-		grass
-		mountain
-	}
+	(
+		"grass"
+		"mountain"
+	)
 
 	cultures
-	{
+	(
 		// any
-	}
+	)
 
 	populations
-	{
-		nopopulation
-		rural
-	}
+	(
+		"nopopulation"
+		"rural"
+	)
 }
 
 // ===================== //
@@ -4782,7 +4782,7 @@ mapdef city2mp
 		teams			4
 		maxaliens       23
 		gametypes
-		{
+		(
 			fight1on1
 			fight1on1on1
 			fight2on2
@@ -4791,7 +4791,7 @@ mapdef city2mp
 			fight3on3on3
 			fight4on4
 			fight4on4on4
-		}
+		)
 
 }
 
@@ -4812,9 +4812,9 @@ mapdef alienbase
 	maxaliens		30
 	multiplayer		true
 	teams			2
-	gametypes {
+	gametypes (
 		fight1on1
-	}
+	)
 	onwin			"cp_add_researchable rs_alien_psi_device"
 }
 
@@ -4844,22 +4844,22 @@ mapdef rescue
 	maxaliens		30
 	hurtaliens		true
 	ufos
-	{
+	(
 		craft_ufo_scout
 		craft_ufo_fighter
 		craft_ufo_corrupter
 		craft_ufo_harvester
 		craft_ufo_supply
 		craft_ufo_bomber
-	}
+	)
 
 	aircraft
-	{
+	(
 		craft_drop_firebird
 //		craft_drop_herakles
 //		craft_drop_dragon
 //		craft_drop_raptor
-	}
+	)
 }
 
 ////////////////////
@@ -4874,13 +4874,13 @@ mapdef training_a
 	multiplayer	true
 	campaign	false
 	maxaliens	8
-	gametypes {
+	gametypes (
 		fight1on1
 		fight2on2
 		fight3on3
 		coop2
 		coop3
-	}
+	)
 }
 
 mapdef training_b
@@ -4891,7 +4891,7 @@ mapdef training_b
 	multiplayer	true
 	campaign	false
 	maxaliens	30
-	gametypes {
+	gametypes (
 		fight1on1
-	}
+	)
 }

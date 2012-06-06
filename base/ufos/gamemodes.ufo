@@ -1,14 +1,14 @@
 cgame multiplayer {
 	window	"multiplayer"
 	name "_Multiplayer"
-	equipmentlist {
+	equipments (
 		multiplayer_initial
 		multiplayer_alien
 		multiplayer_phalanx
 		campaign_player
 		campaign_initial_market
 		stun
-	}
+	)
 }
 
 cgame campaigns {
@@ -24,12 +24,12 @@ cgame staticcampaigns {
 cgame skirmish {
 	window	"skirmish"
 	name "_Skirmish"
-	equipmentlist {
+	equipments (
 		multiplayer_initial
 		multiplayer_alien
 		multiplayer_phalanx
 		campaign_player
 		campaign_initial_market
 		stun
-	}
+	)
 }

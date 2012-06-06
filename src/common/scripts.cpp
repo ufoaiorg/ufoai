@@ -1371,14 +1371,10 @@ bool Com_ParseBlockToken (const char *name, const char **text, void *base, const
 			case V_LIST: {
 				linkedList_t*& list = Com_GetValue<linkedList_t*>(base, v);
 				assert(!list);
-				do {
-					token = Com_EParse(text, errhead, name);
-					if (!*text)
-						break;
-					if (*token == '}')
-						break;
-					LIST_AddString(&list, token);
-				} while (*text);
+				Com_UnParseLastToken();
+				if (!Com_ParseList(text, &list)) {
+					return false;
+				}
 				break;
 			}
 			default:
