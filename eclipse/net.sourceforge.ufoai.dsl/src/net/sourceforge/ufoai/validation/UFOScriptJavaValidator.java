@@ -1,6 +1,8 @@
 package net.sourceforge.ufoai.validation;
 
 import java.io.File;
+import java.util.ArrayList;
+import java.util.List;
 
 import net.sourceforge.ufoai.ufoScript.UFONode;
 import net.sourceforge.ufoai.ufoScript.UfoScriptPackage;
@@ -18,6 +20,7 @@ import net.sourceforge.ufoai.util.UfoResources;
 import org.eclipse.core.resources.IFile;
 import org.eclipse.core.resources.ResourcesPlugin;
 import org.eclipse.core.runtime.Path;
+import org.eclipse.emf.common.util.EList;
 import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecore.resource.Resource;
 import org.eclipse.xtext.validation.Check;
@@ -303,8 +306,43 @@ public class UFOScriptJavaValidator extends AbstractUFOScriptJavaValidator {
 				for (Value child: ((ValueList)value).getValues()) {
 					validate(node, child, elementType);
 				}
-				break;
 			}
+			break;
+		}
+		case TUPLE:
+		{
+			if (!(value instanceof ValueList)) {
+				error("List expected", UfoScriptPackage.Literals.UFO_NODE__VALUE);
+			} else 	{
+				String path = getPath(node);
+				List<UFOType> elementTypes = new ArrayList<UFOType>();
+				for (int i = 1; i < 10; i++) {
+					UFOType t = getType(path + ".ELEMENT" + i);
+					if (t == null)
+						break;
+					elementTypes.add(t);
+				}
+
+				if (elementTypes.size() == 0) {
+					// We hope a tuple of 0 elements is not valid too
+					warning("Elements of the list has no validators", UfoScriptPackage.Literals.UFO_NODE__TYPE);
+					return;
+				}
+
+				EList<Value> values = ((ValueList)value).getValues();
+				if (elementTypes.size() != values.size()) {
+					error(elementTypes.size() + " elements expected, but " + values.size() + " found", UfoScriptPackage.Literals.UFO_NODE__VALUE);
+					return;
+				}
+
+				for (int i = 0; i < elementTypes.size(); i++) {
+					if (i >= values.size())
+						break;
+					UFOType t = elementTypes.get(i);
+					validate(node, values.get(i), t);
+				}
+			}
+			break;
 		}
 		default:
 			System.out.println("Type \"" + type + "\" not yet supported");

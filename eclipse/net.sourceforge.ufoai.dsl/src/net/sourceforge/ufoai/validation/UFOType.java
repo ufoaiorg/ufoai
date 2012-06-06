@@ -140,7 +140,13 @@ public class UFOType {
 		/**
 		 * A list of element of the same type
 		 */
-		LIST
+		LIST,
+
+		/**
+		 * A tuple of a know number of elements, type of the element depends
+		 * on the position of the element
+		 */
+		TUPLE
 	}
 
 	private Type type;
