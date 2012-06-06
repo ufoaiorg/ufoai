@@ -2063,45 +2063,49 @@ static void Com_ParseEquipment (const char *name, const char **text)
 
 		if (!Com_ParseBlockToken(name, text, ed, equipment_definition_vals, com_genericPool, token)) {
 			if (Q_streq(token, "item")) {
-				const objDef_t *od;
-				token = Com_EParse(text, errhead, name);
-				if (!*text || *token == '}')
-					Sys_Error("Invalid item token in equipment definition: %s", ed->id);
+				linkedList_t *list;
+				if (!Com_ParseList(text, &list)) {
+					Com_Error(ERR_DROP, "Com_ParseEquipment: error while reading equipment item tuple");
+				}
+				if (LIST_Count(list) != 2) {
+					Com_Error(ERR_DROP, "Com_ParseEquipment: equipment item tuple must contains 2 elements (id amount)");
+				}
+				const char* itemToken = (char*)list->data;
+				const char* amountToken = (char*)list->next->data;
 
-				od = INVSH_GetItemByID(token);
+				const objDef_t *od;
+				od = INVSH_GetItemByID(itemToken);
 				if (od) {
-					token = Com_EParse(text, errhead, name);
-					if (!*text || *token == '}') {
-						Com_Printf("Com_ParseEquipment: unexpected end of equipment def \"%s\"\n", name);
-						return;
-					}
-					n = atoi(token);
+					n = atoi(amountToken);
 					if (ed->numItems[od->idx])
 						Com_Printf("Com_ParseEquipment: item '%s' is used several times in def '%s'. Only last entry will be taken into account.\n",
 							od->id, name);
 					if (n)
 						ed->numItems[od->idx] = n;
 				} else {
-					Com_Printf("Com_ParseEquipment: unknown token \"%s\" ignored (equipment %s)\n", token, name);
+					Com_Printf("Com_ParseEquipment: unknown token \"%s\" ignored (equipment %s)\n", itemToken, name);
 				}
+				LIST_Delete(&list);
 			} else if (Q_streq(token, "aircraft")) {
-				humanAircraftType_t type;
-				token = Com_EParse(text, errhead, name);
-				if (!*text || *token == '}')
-					Sys_Error("Invalid aircraft token in equipment definition: %s", ed->id);
-
-				type = Com_DropShipShortNameToID(token);
-				token = Com_EParse(text, errhead, name);
-				if (!*text || *token == '}') {
-					Com_Printf("Com_ParseEquipment: unexpected end of equipment def \"%s\"\n", name);
-					return;
+				linkedList_t *list;
+				if (!Com_ParseList(text, &list)) {
+					Com_Error(ERR_DROP, "Com_ParseEquipment: error while reading equipment aircraft tuple");
 				}
-				n = atoi(token);
+				if (LIST_Count(list) != 2) {
+					Com_Error(ERR_DROP, "Com_ParseEquipment: equipment aircraft tuple must contains 2 elements (id amount)");
+				}
+				const char* aircraftToken = (char*)list->data;
+				const char* amountToken = (char*)list->next->data;
+
+				humanAircraftType_t type;
+				type = Com_DropShipShortNameToID(aircraftToken);
+				n = atoi(amountToken);
 				if (ed->numAircraft[type])
 					Com_Printf("Com_ParseEquipment: aircraft type '%i' is used several times in def '%s'. Only last entry will be taken into account.\n",
 						type, name);
 				if (n)
 					ed->numAircraft[type] = n;
+				LIST_Delete(&list);
 			} else {
 				Sys_Error("unknown token in equipment in definition %s: '%s'", ed->id, token);
 			}
