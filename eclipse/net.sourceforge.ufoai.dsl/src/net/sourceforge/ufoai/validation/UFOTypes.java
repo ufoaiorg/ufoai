@@ -11,7 +11,7 @@ import net.sourceforge.ufoai.UFOAIPlugin;
 public class UFOTypes {
 
 	private static UFOTypes instance;
-	private static String defaultPropertyFile = "rules.properties";
+	private static String defaultPropertyFile = "/rules.properties";
 
 	private final Properties properties;
 	private final Map<String, UFOType> types;
@@ -26,7 +26,7 @@ public class UFOTypes {
 			Properties properties = new Properties();
 			InputStream stream = UFOAIPlugin.class.getResourceAsStream(defaultPropertyFile);
 			if (stream == null) {
-				System.out.println("UFOAI Validator property file \"" + defaultPropertyFile + "\"not found");
+				System.out.println("UFOAI Validator property file \"" + defaultPropertyFile + "\" not found");
 			} else {
 				try {
 					properties.load(stream);

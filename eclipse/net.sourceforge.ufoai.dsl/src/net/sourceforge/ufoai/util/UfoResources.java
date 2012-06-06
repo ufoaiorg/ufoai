@@ -4,7 +4,7 @@ import java.io.File;
 
 /**
  * UFOAI resource util to access to the content of the project. QUESTION maybe
- * we should use IResource (eclipse resource) instead of File
+ * we should use IResource (eclipse resource) instead of File.
  */
 public class UfoResources {
 
@@ -14,7 +14,7 @@ public class UfoResources {
 
 	/**
 	 * True if "base" dir already checked. This value can be true, and base
-	 * null, if base not found
+	 * null, if base not found.
 	 */
 	private static boolean isBaseChecked;
 

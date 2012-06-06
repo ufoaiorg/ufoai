@@ -2,8 +2,6 @@ package net.sourceforge.ufoai.util;
 
 import java.util.Collection;
 
-import org.eclipse.jface.preference.StringFieldEditor;
-
 public class StringUtil {
 	public static boolean isNull(String str) {
 		return str == null || str.isEmpty();

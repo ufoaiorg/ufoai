@@ -135,7 +135,12 @@ public class UFOType {
 		/**
 		 * A reference to an object or a model name
 		 */
-		MODEL_OR_ID
+		MODEL_OR_ID,
+
+		/**
+		 * A list of element of the same type
+		 */
+		LIST
 	}
 
 	private Type type;

@@ -4,8 +4,10 @@ import java.io.File;
 
 import net.sourceforge.ufoai.ufoScript.UFONode;
 import net.sourceforge.ufoai.ufoScript.UfoScriptPackage;
+import net.sourceforge.ufoai.ufoScript.Value;
 import net.sourceforge.ufoai.ufoScript.ValueBoolean;
 import net.sourceforge.ufoai.ufoScript.ValueCode;
+import net.sourceforge.ufoai.ufoScript.ValueList;
 import net.sourceforge.ufoai.ufoScript.ValueNamedConst;
 import net.sourceforge.ufoai.ufoScript.ValueNumber;
 import net.sourceforge.ufoai.ufoScript.ValueReference;
@@ -54,7 +56,7 @@ public class UFOScriptJavaValidator extends AbstractUFOScriptJavaValidator {
 		return path;
 	}
 
-	private Object getType(EObject object) {
+	private UFOType getType(EObject object) {
 		if (object instanceof UFONode) {
 			String path = getPath((UFONode) object);
 			return getType(path);
@@ -64,26 +66,6 @@ public class UFOScriptJavaValidator extends AbstractUFOScriptJavaValidator {
 
 	private UFOType getType(String path) {
 		return UFOTypes.getInstance().getPathType(path);
-	}
-
-	private void validateReference(UFONode node, UFOType type) {
-		/*if (node.getValue() instanceof ValueNull) {
-			// nothing
-		} else
-		 */
-		if (node.getValue() instanceof ValueReference) {
-			ValueReference value = (ValueReference) node.getValue();
-			if (value.getValue() == null) {
-				// xtext should already warn about it
-				return;
-			}
-			if (type.hasValues() && !type.contains(value.getValue().getType())) {
-				String expected = StringUtil.join(" or ", type.getValues());
-				error(expected + " id expected", UfoScriptPackage.Literals.UFO_NODE__VALUE);
-			}
-		} else {
-			error("Id expected", UfoScriptPackage.Literals.UFO_NODE__VALUE);
-		}
 	}
 
 	private static String[] geoscapeImages = {
@@ -101,23 +83,10 @@ public class UFOScriptJavaValidator extends AbstractUFOScriptJavaValidator {
 		"_terrain"
 	};
 
-	private void validate(UFONode node) {
-		String path = getPath(node);
-		UFOType type = getType(path);
-
-		// No rules
-		if (type == null) {
-			// Display error if the parent has no rules
-			if (getType(node.eContainer()) == null) {
-				return;
-			}
-			error("Property name unknown", UfoScriptPackage.Literals.UFO_NODE__TYPE);
-			return;
-		}
-
+	private void validate(UFONode node, Value value, UFOType type) {
 		switch (type.getType()) {
 		case IDENTIFIED_BLOCK:
-			if (node.getValue() != null || node.getNodes() == null) {
+			if (value != null || node.getNodes() == null) {
 				error("Block is expected", UfoScriptPackage.Literals.UFO_NODE__VALUE);
 			}
 			if (node.getName() == null) {
@@ -125,7 +94,7 @@ public class UFOScriptJavaValidator extends AbstractUFOScriptJavaValidator {
 			}
 			break;
 		case ANONYMOUS_BLOCK:
-			if (node.getValue() != null || node.getNodes() == null) {
+			if (value != null || node.getNodes() == null) {
 				error("Block is expected", UfoScriptPackage.Literals.UFO_NODE__VALUE);
 			}
 			if (node.getName() != null) {
@@ -133,16 +102,16 @@ public class UFOScriptJavaValidator extends AbstractUFOScriptJavaValidator {
 			}
 			break;
 		case BLOCK:
-			if (node.getValue() != null || node.getNodes() == null) {
+			if (value != null || node.getNodes() == null) {
 				error("Block is expected", UfoScriptPackage.Literals.UFO_NODE__VALUE);
 			}
 			break;
 		case TRANSLATED_STRING:
-			if (!(node.getValue() instanceof ValueString)) {
+			if (!(value instanceof ValueString)) {
 				error("Quoted string expected", UfoScriptPackage.Literals.UFO_NODE__VALUE);
 			} else {
-				ValueString value = (ValueString) node.getValue();
-				if (!value.getValue().startsWith("_")) {
+				ValueString vs = (ValueString) value;
+				if (!vs.getValue().startsWith("_")) {
 					warning("String should be prefixed by '_' to became translatable.",
 							UfoScriptPackage.Literals.UFO_NODE__VALUE);
 				}
@@ -150,68 +119,68 @@ public class UFOScriptJavaValidator extends AbstractUFOScriptJavaValidator {
 			break;
 		case ENUM:
 		{
-			String value;
-			if ((node.getValue() instanceof ValueString)) {
-				value = ((ValueString) node.getValue()).getValue();
-			} else if ((node.getValue() instanceof ValueNamedConst)) {
-				value = ((ValueNamedConst) node.getValue()).getValue();
-			} else if ((node.getValue() instanceof ValueNumber)) {
-				value = ((ValueNumber) node.getValue()).getValue();
-			} else if ((node.getValue() instanceof ValueCode)) {
-				value = ((ValueCode) node.getValue()).getValue();
+			String v;
+			if ((value instanceof ValueString)) {
+				v = ((ValueString) value).getValue();
+			} else if ((value instanceof ValueNamedConst)) {
+				v = ((ValueNamedConst) value).getValue();
+			} else if ((value instanceof ValueNumber)) {
+				v = ((ValueNumber) value).getValue();
+			} else if ((value instanceof ValueCode)) {
+				v = ((ValueCode) value).getValue();
 			} else {
 				error("Quoted string or uppercase named const usualy expected", UfoScriptPackage.Literals.UFO_NODE__VALUE);
 				return;
 			}
 
-			if (!type.contains(value)) {
+			if (!type.contains(v)) {
 				warning("Not a valide value.",
 						UfoScriptPackage.Literals.UFO_NODE__VALUE);
 			}
 			break;
 		}
 		case STRING:
-			if (!(node.getValue() instanceof ValueString)) {
+			if (!(value instanceof ValueString)) {
 				error("Quoted string expected", UfoScriptPackage.Literals.UFO_NODE__VALUE);
 			}
 			break;
 		case COLOR:
-			validateColor(node);
+			validateColor(value);
 			break;
 		case DATE:
-			validateVector(node, 3, true);
+			validateVector(value, 3, true);
 			break;
 		case ID:
-			validateReference(node, type);
+			validateReference(value, type);
 			break;
 		case INT:
-			if (!(node.getValue() instanceof ValueNumber)) {
+			if (!(value instanceof ValueNumber)) {
 				error("Integer expected", UfoScriptPackage.Literals.UFO_NODE__VALUE);
 			}
 			try {
-				String value = ((ValueNumber)node.getValue()).getValue();
-				Integer.parseInt(value);
+				String string = ((ValueNumber)value).getValue();
+				Integer.parseInt(string);
 			} catch (NumberFormatException e) {
 				error("Integer expected but real found", UfoScriptPackage.Literals.UFO_NODE__VALUE);
 			}
 			break;
 		case REAL:
-			if (!(node.getValue() instanceof ValueNumber)) {
+			if (!(value instanceof ValueNumber)) {
 				error("Number expected", UfoScriptPackage.Literals.UFO_NODE__VALUE);
 			}
 			break;
 		case BOOLEAN:
-			if (!(node.getValue() instanceof ValueBoolean)) {
+			if (!(value instanceof ValueBoolean)) {
 				error("Boolean expected (true or false)", UfoScriptPackage.Literals.UFO_NODE__VALUE);
 			}
 			break;
 		case PICS_IMAGE:
-			if (!(node.getValue() instanceof ValueString)) {
+			if (!(value instanceof ValueString)) {
 				error("Quoted image name expected", UfoScriptPackage.Literals.UFO_NODE__VALUE);
 			} else 	{
 				checkUfoBase(node);
-				ValueString value = (ValueString) node.getValue();
-				final String id = value.getValue();
+				ValueString vs = (ValueString) value;
+				final String id = vs.getValue();
 				final File file = UfoResources.getImageFileFromPics(id);
 				if (file == null) {
 					warning("Image not found.",
@@ -220,12 +189,12 @@ public class UFOScriptJavaValidator extends AbstractUFOScriptJavaValidator {
 			}
 			break;
 		case BASE_IMAGE:
-			if (!(node.getValue() instanceof ValueString)) {
+			if (!(value instanceof ValueString)) {
 				error("Quoted image name expected", UfoScriptPackage.Literals.UFO_NODE__VALUE);
 			} else 	{
 				checkUfoBase(node);
-				ValueString value = (ValueString) node.getValue();
-				final String id = value.getValue();
+				ValueString vs = (ValueString) value;
+				final String id = vs.getValue();
 				final File file = UfoResources.getImageFileFromBase(id);
 				if (file == null) {
 					warning("Image not found.",
@@ -234,12 +203,12 @@ public class UFOScriptJavaValidator extends AbstractUFOScriptJavaValidator {
 			}
 			break;
 		case GEOSCAPE_IMAGE:
-			if (!(node.getValue() instanceof ValueString)) {
+			if (!(value instanceof ValueString)) {
 				error("Quoted image name expected", UfoScriptPackage.Literals.UFO_NODE__VALUE);
 			} else 	{
 				checkUfoBase(node);
-				ValueString value = (ValueString) node.getValue();
-				final String id = value.getValue();
+				ValueString vs = (ValueString) value;
+				final String id = vs.getValue();
 				for (String suffix : geoscapeImages) {
 					String fileId = "geoscape/" + id + suffix;
 					final File file = UfoResources.getImageFileFromPics(fileId);
@@ -251,12 +220,12 @@ public class UFOScriptJavaValidator extends AbstractUFOScriptJavaValidator {
 			}
 			break;
 		case MODEL:
-			if (!(node.getValue() instanceof ValueString)) {
+			if (!(value instanceof ValueString)) {
 				error("Quoted model name expected", UfoScriptPackage.Literals.UFO_NODE__VALUE);
 			} else 	{
 				checkUfoBase(node);
-				ValueString value = (ValueString) node.getValue();
-				final String id = value.getValue();
+				ValueString vs = (ValueString) value;
+				final String id = vs.getValue();
 				final File file = UfoResources.getModelFile(id);
 				if (file == null) {
 					warning("Model not found.",
@@ -265,12 +234,12 @@ public class UFOScriptJavaValidator extends AbstractUFOScriptJavaValidator {
 			}
 			break;
 		case MODEL_OR_ID:
-			if (node.getValue() instanceof ValueReference) {
-				validateReference(node, type);
-			} else if (node.getValue() instanceof ValueString) {
+			if (value instanceof ValueReference) {
+				validateReference(value, type);
+			} else if (value instanceof ValueString) {
 				checkUfoBase(node);
-				ValueString value = (ValueString) node.getValue();
-				final String id = value.getValue();
+				ValueString vs = (ValueString) value;
+				final String id = vs.getValue();
 				final File file = UfoResources.getModelFile(id);
 				if (file == null) {
 					warning("Model not found.",
@@ -281,12 +250,12 @@ public class UFOScriptJavaValidator extends AbstractUFOScriptJavaValidator {
 			}
 			break;
 		case SOUND:
-			if (!(node.getValue() instanceof ValueString)) {
+			if (!(value instanceof ValueString)) {
 				error("Quoted sound name expected", UfoScriptPackage.Literals.UFO_NODE__VALUE);
 			} else 	{
 				checkUfoBase(node);
-				ValueString value = (ValueString) node.getValue();
-				final String id = value.getValue();
+				ValueString v = (ValueString) value;
+				final String id = v.getValue();
 				final File file = UfoResources.getSoundFileFromSound(id);
 				if (file == null) {
 					warning("Sound not found.",
@@ -295,12 +264,12 @@ public class UFOScriptJavaValidator extends AbstractUFOScriptJavaValidator {
 			}
 			break;
 		case MUSIC:
-			if (!(node.getValue() instanceof ValueString)) {
+			if (!(value instanceof ValueString)) {
 				error("Quoted music name expected", UfoScriptPackage.Literals.UFO_NODE__VALUE);
 			} else 	{
 				checkUfoBase(node);
-				ValueString value = (ValueString) node.getValue();
-				final String id = value.getValue();
+				ValueString vs = (ValueString) value;
+				final String id = vs.getValue();
 				final File file = UfoResources.getSoundFileFromMusic(id);
 				if (file == null) {
 					warning("Music not found.",
@@ -309,29 +278,46 @@ public class UFOScriptJavaValidator extends AbstractUFOScriptJavaValidator {
 			}
 			break;
 		case VEC2:
-			validateVector(node, 2, false);
+			validateVector(value, 2, false);
 			break;
 		case VEC3:
-			validateVector(node, 3, false);
+			validateVector(value, 3, false);
 			break;
 		case VEC4:
-			validateVector(node, 4, false);
+			validateVector(value, 4, false);
 			break;
 		case SHAPE:
-			validateVector(node, 4, true);
+			validateVector(value, 4, true);
 			break;
+		case LIST:
+		{
+			if (!(value instanceof ValueList)) {
+				error("List expected", UfoScriptPackage.Literals.UFO_NODE__VALUE);
+			} else 	{
+				String path = getPath(node);
+				UFOType elementType = getType(path + ".ELEMENT");
+				if (elementType == null) {
+					warning("Elements of the list has no validators", UfoScriptPackage.Literals.UFO_NODE__TYPE);
+					return;
+				}
+				for (Value child: ((ValueList)value).getValues()) {
+					validate(node, child, elementType);
+				}
+				break;
+			}
+		}
 		default:
 			System.out.println("Type \"" + type + "\" not yet supported");
 		}
 	}
 
-	private void validateColor(UFONode node) {
-		if (!(node.getValue() instanceof ValueString)) {
+	private void validateColor(Value valueObject) {
+		if (!(valueObject instanceof ValueString)) {
 			error("Quoted set of components expected", UfoScriptPackage.Literals.UFO_NODE__VALUE);
 			return;
 		}
 		// check useless trail
-		String value = ((ValueString)node.getValue()).getValue();
+		String value = ((ValueString)valueObject).getValue();
 		if (!value.trim().equals(value)) {
 			warning("Color contain extra spaces", UfoScriptPackage.Literals.UFO_NODE__VALUE);
 		}
@@ -354,13 +340,13 @@ public class UFOScriptJavaValidator extends AbstractUFOScriptJavaValidator {
 		}
 	}
 
-	private void validateVector(UFONode node, int dimension, boolean integer) {
-		if (!(node.getValue() instanceof ValueString)) {
+	private void validateVector(Value valueObject, int dimension, boolean integer) {
+		if (!(valueObject instanceof ValueString)) {
 			error("Quoted set of number expected", UfoScriptPackage.Literals.UFO_NODE__VALUE);
 			return;
 		}
 		// check useless trail
-		String value = ((ValueString)node.getValue()).getValue();
+		String value = ((ValueString)valueObject).getValue();
 		if (!value.trim().equals(value)) {
 			warning("Data contains useless spaces", UfoScriptPackage.Literals.UFO_NODE__VALUE);
 		}
@@ -390,9 +376,42 @@ public class UFOScriptJavaValidator extends AbstractUFOScriptJavaValidator {
 		}
 	}
 
+	private void validateReference(Value value, UFOType type) {
+		/*if (node.getValue() instanceof ValueNull) {
+			// nothing
+		} else
+		 */
+		if (value instanceof ValueReference) {
+			ValueReference v = (ValueReference) value;
+			if (v.getValue() == null) {
+				// xtext should already warn about it
+				return;
+			}
+			if (type.hasValues() && !type.contains(v.getValue().getType())) {
+				String expected = StringUtil.join(" or ", type.getValues());
+				error(expected + " id expected", UfoScriptPackage.Literals.UFO_NODE__VALUE);
+			}
+		} else {
+			error("Id expected", UfoScriptPackage.Literals.UFO_NODE__VALUE);
+		}
+	}
+
 	@Check
-	public void checkNode(UFONode property) {
-		validate(property);
+	public void checkNode(UFONode node) {
+		String path = getPath(node);
+		UFOType type = getType(path);
+
+		// No rules
+		if (type == null) {
+			// Only display error if the parent has rules
+			UFOType parentType = getType(node.eContainer());
+			if (parentType != null) {
+				error("Property name unknown", UfoScriptPackage.Literals.UFO_NODE__TYPE);
+			}
+			return;
+		}
+
+		validate(node, node.getValue(), type);
 	}
 
 }

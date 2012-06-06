@@ -17,8 +17,8 @@
 
 alienteam default_workers
 {
-	category (recon building supply)
-	equipment (alien_workers)
+	category ("recon" "building" "supply")
+	equipment ("alien_workers")
 	teaminterest
 	{
 		mininterest 0
@@ -49,15 +49,15 @@ alienteam default_soldiers
 {
 	category
 	(
-		terror
-		baseattack
-		intercept
-		rescue
+		"terror"
+		"baseattack"
+		"intercept"
+		"rescue"
 	)
 
 	equipment
 	(
-		alien_soldiers
+		"alien_soldiers"
 	)
 
 	teaminterest
@@ -90,12 +90,12 @@ alienteam harvest
 {
 	category
 	(
-		harvest
+		"harvest"
 	)
 
 	equipment
 	(
-		alien_workers
+		"alien_workers"
 	)
 
 	teaminterest
@@ -128,12 +128,12 @@ alienteam xvi
 {
 	category
 	(
-		xvi
+		"xvi"
 	)
 
 	equipment
 	(
-		alien_soldiers
+		"alien_soldiers"
 	)
 
 	teaminterest
@@ -166,12 +166,12 @@ alienteam alienbase
 {
 	category
 	(
-		alienbase
+		"alienbase"
 	)
 
 	equipment
 	(
-		alien_base
+		"alien_base"
 	)
 
 	teaminterest
@@ -186,12 +186,12 @@ alienteam ufocarrier
 {
 	category
 	(
-		ufocarrier
+		"ufocarrier"
 	)
 
 	equipment
 	(
-		alien_base
+		"alien_base"
 	)
 
 	teaminterest

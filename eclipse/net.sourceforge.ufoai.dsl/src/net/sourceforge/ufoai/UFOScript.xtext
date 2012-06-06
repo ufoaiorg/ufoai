@@ -24,7 +24,8 @@ Value:
 	| ValueNamedConst
 	| ValueReference
 	| ValueCode
-	| ValueString;
+	| ValueString
+	| ValueList;
 
 ValueCode:
 	value = CODE;
@@ -43,6 +44,9 @@ ValueReference:
 
 ValueNamedConst:
 	value=NAMED_CONST;
+
+ValueList:
+	'(' {ValueList} values+=Value* ')';
 
 //ValueNull:
 //	value=NULL;
