@@ -686,7 +686,7 @@ static void CL_TeamDefInitMenu (void)
 		int i;
 		for (i = 0; i < csi.numTeamDefs; i++) {
 			const teamDef_t *td = &csi.teamDef[i];
-			if (td->race != RACE_CIVILIAN)
+			if (td->team != TEAM_CIVILIAN)
 				UI_AddOption(&option, td->id, va("_%s", td->name), td->id);
 		}
 		UI_RegisterOption(OPTION_TEAMDEFS, option);

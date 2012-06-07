@@ -11,8 +11,10 @@
 //		The particle that is shown if an actor from the given team was hit
 //	name
 //		The name of the team (translatable)
-//	race
-//      Race of the team
+//	team
+//      team type (alien, civilian, phalanx)
+//  robot
+//      Boolean - whether the teamdef is for a robot or not (e.g. ugv or bloodspider)
 //	armour
 //		Boolean - team can carry armour
 //	weapons
@@ -58,6 +60,7 @@ team phalanx
 	name	"_Phalanx"
 	size 1
 	hit_particle blood
+	team	phalanx
 
 	names {
 		female {
@@ -663,7 +666,7 @@ team phalanx_scientist
 	hit_particle blood
 	weapons	false
 	armour	false
-	race	civilian
+	team	civilian
 
 	names {
 		female {
@@ -1675,7 +1678,7 @@ team phalanx_worker
 	name	"_Worker"
 	weapons	false
 	armour	false
-	race	civilian
+	team	civilian
 
 	names {
 		male {
@@ -2085,7 +2088,8 @@ team phalanx_ugv_phoenix
 {
 	name	"_Phoenix UGV"
 	size	2
-	race	robot
+	team	phalanx
+	robot	true
 	//hit_particle none
 	// we can't assign any extra armour
 	armour	false
@@ -2150,7 +2154,8 @@ team phalanx_ugv_ares_w
 {
 	name	"_Ares W (UGV)"
 	size	2
-	race	robot
+	team	phalanx
+	robot	true
 	//hit_particle none
 	// we can't assign any extra armour
 	armour	false

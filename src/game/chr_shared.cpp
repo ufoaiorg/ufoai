@@ -32,8 +32,7 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
  */
 bool CHRSH_IsTeamDefAlien (const teamDef_t* const td)
 {
-	return td->race == RACE_TAMAN || td->race == RACE_ORTNOK
-		|| td->race == RACE_BLOODSPIDER || td->race == RACE_SHEVAAR;
+	return td->team == TEAM_ALIEN;
 }
 
 bool CHRSH_IsArmourUseableForTeam (const objDef_t *od, const teamDef_t *teamDef)
@@ -44,14 +43,7 @@ bool CHRSH_IsArmourUseableForTeam (const objDef_t *od, const teamDef_t *teamDef)
 	if (!teamDef->armour)
 		return false;
 
-	if (CHRSH_IsTeamDefAlien(teamDef))
-		return od->useable == TEAM_ALIEN;
-	else if (teamDef->race == RACE_PHALANX_HUMAN)
-		return od->useable == TEAM_PHALANX;
-	else if (teamDef->race == RACE_CIVILIAN)
-		return od->useable == TEAM_CIVILIAN;
-
-	return false;
+	return od->useable == teamDef->team;
 }
 
 /**
@@ -60,7 +52,7 @@ bool CHRSH_IsArmourUseableForTeam (const objDef_t *od, const teamDef_t *teamDef)
  */
 bool CHRSH_IsTeamDefRobot (const teamDef_t* const td)
 {
-	return td->race == RACE_ROBOT || td->race == RACE_BLOODSPIDER;
+	return td->robot;
 }
 
 /**
@@ -79,7 +71,7 @@ void CHRSH_CharGenAbilitySkills (character_t * chr, bool multiplayer)
 	td = chr->teamDef;
 
 	/* Add modifiers for difficulty setting here! */
-	if (multiplayer && td->race == RACE_PHALANX_HUMAN) {
+	if (multiplayer && td->team == TEAM_PHALANX) {
 		for (i = 0; i < td->numTemplates; i++) {
 			if (Q_streq(td->characterTemplates[i]->id, "soldier_mp")) {
 				ct = td->characterTemplates[i];
@@ -177,7 +169,7 @@ const char *CHRSH_CharGetHead (const character_t * const chr)
 	static char returnModel[MAX_VAR];
 
 	/* models of UGVs don't change - because they are already armoured */
-	if (INVSH_HasArmour(&chr->i) && chr->teamDef->race != RACE_ROBOT) {
+	if (INVSH_HasArmour(&chr->i) && !chr->teamDef->robot) {
 		const objDef_t *od = INVSH_HasArmour(&chr->i)->item.t;
 		const char *id = od->armourPath;
 		if (!INV_IsArmour(od))

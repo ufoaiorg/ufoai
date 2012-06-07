@@ -184,7 +184,7 @@ void CL_UpdateCharacterValues (const character_t *chr, const char *cvarPrefix)
 {
 	CL_CharacterSkillAndScoreCvars(chr, cvarPrefix);
 
-	if (chr->teamDef->race == RACE_ROBOT)
+	if (chr->teamDef->robot)
 		CL_UGVCvars(chr);
 	else
 		CL_ActorCvars(chr, cvarPrefix);

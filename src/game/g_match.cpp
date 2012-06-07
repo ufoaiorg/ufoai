@@ -152,7 +152,7 @@ static void G_UpdateCharacterSkills (edict_t *ent)
 	unsigned int maxXP, gainedXP, totalGainedXP;
 
 	/* Robots/UGVs do not get skill-upgrades. */
-	if (chr->teamDef->race == RACE_ROBOT)
+	if (chr->teamDef->robot)
 		return;
 
 	totalGainedXP = 0;

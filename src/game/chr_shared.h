@@ -184,22 +184,6 @@ typedef enum {
 	NAME_NUM_TYPES
 } nametypes_t;
 
-/**
- * @brief Different races of actors used in game
- * @todo add different robot races.
- */
-typedef enum {
-	RACE_PHALANX_HUMAN,		/**< Phalanx team */
-	RACE_CIVILIAN,			/**< Civilian team */
-
-	RACE_ROBOT,				/**< Robot */
-
-	RACE_TAMAN,				/**< Alien: taman race */
-	RACE_ORTNOK,			/**< Alien: ortnok race */
-	RACE_BLOODSPIDER,		/**< Alien: bloodspider race */
-	RACE_SHEVAAR			/**< Alien: shevaar race */
-} racetypes_t;
-
 /** @brief Defines a type of UGV/Robot */
 typedef struct ugv_s {
 	char *id;
@@ -234,8 +218,9 @@ typedef struct teamDef_s {
 	linkedList_t *sounds[SND_MAX][NAME_LAST];	/**< Sounds list per gender and per sound type. */
 	int numSounds[SND_MAX][NAME_LAST];	/**< Amount of sounds in this list for all different genders and soundtypes. */
 
-	racetypes_t race;	/**< What is the race of this team?*/
+	int team;	/**< What is the race of this team? */
 
+	bool robot;
 	bool armour;	/**< Does this team use armour. */
 	bool weapons;	/**< Does this team use weapons. */
 	const struct objDef_s *onlyWeapon;	/**< ods[] index - If this team is not able to use 'normal' weapons, we have to assign a weapon to it

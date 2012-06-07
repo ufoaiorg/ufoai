@@ -70,7 +70,6 @@ typedef enum {
 	V_RELABS,				/**< relative (e.g. 1.50) and absolute (e.g. +15) values */
 	V_HUNK_STRING,			/**< store the string in a mem pool */
 	V_TEAM,					/**< team string to int mapper */
-	V_RACE,
 	V_UFO,					/**< @brief Valid ufo types
 							 * @note Use the same values for the names as we are already using in the scriptfiles
 							 * here, otherwise they are not translatable because they don't appear in the po files

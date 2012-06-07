@@ -9,7 +9,7 @@ team taman
 {
 	name			"_Taman"
 	tech			rs_alien_taman_autopsy
-	race			taman
+	team			alien
 	size			1
 	hit_particle	blood
 
@@ -131,7 +131,7 @@ team ortnok
 {
 	name			"_Ortnok"
 	tech			rs_alien_ortnok_autopsy
-	race			ortnok
+	team			alien
 	size			1
 	//hit_particle	none
 	death_texture	"pics/sfx/blood/blood_green_0"
@@ -254,7 +254,7 @@ team shevaar
 {
 	name			"_Shevaar"
 	tech			rs_alien_shevaar_autopsy
-	race			shevaar
+	team			alien
 	armour			false
 	size			1
 	hit_particle	blood
@@ -358,8 +358,9 @@ team bloodspider
 {
 	name		"_Bloodspider"
 	tech		rs_alien_bloodspider_autopsy
-	race		bloodspider
+	team		alien
 	armour		false
+	robot		true
 	weapons		false
 	onlyWeapon	bloodspider_weapon
 	size		1

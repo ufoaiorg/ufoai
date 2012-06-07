@@ -330,7 +330,6 @@ const char *const vt_names[] = {
 	"relabs",
 	"hunk_string",
 	"team",
-	"race",
 	"ufo",
 	"ufocrashed",
 	"aircrafttype",
@@ -383,7 +382,6 @@ static const size_t vt_sizes[] = {
 	sizeof(float),	/* V_RELABS */
 	0,	/* V_HUNK_STRING */
 	sizeof(int),		/* V_TEAM */
-	sizeof(racetypes_t),		/* V_RACE */
 	sizeof(ufoType_t),	/* V_UFO */
 	sizeof(ufoType_t),	/* V_UFOCRASHED */
 	sizeof(humanAircraftType_t),		/* V_AIRCRAFTTYPE */
@@ -416,7 +414,6 @@ static const size_t vt_aligns[] = {
 	sizeof(float),	/* V_RELABS */
 	sizeof(char),	/* V_HUNK_STRING */
 	sizeof(int),		/* V_TEAM */
-	sizeof(racetypes_t),		/* V_RACE */
 	sizeof(ufoType_t),	/* V_UFO */
 	sizeof(ufoType_t),	/* V_UFOCRASHED */
 	sizeof(humanAircraftType_t),		/* V_AIRCRAFTTYPE */
@@ -533,26 +530,6 @@ resultStatus_t Com_ParseValue (void *base, const char *token, valueTypes_t type,
 		else
 			Sys_Error("Unknown team string: '%s' found in script files", token);
 		*writtenBytes = sizeof(int);
-		break;
-
-	case V_RACE:
-		if (Q_streq(token, "phalanx"))
-			*(racetypes_t *) b = RACE_PHALANX_HUMAN;
-		else if (Q_streq(token, "civilian"))
-			*(racetypes_t *) b = RACE_CIVILIAN;
-		else if (Q_streq(token, "robot"))
-			*(racetypes_t *) b = RACE_ROBOT;
-		else if (Q_streq(token, "taman"))
-			*(racetypes_t *) b = RACE_TAMAN;
-		else if (Q_streq(token, "ortnok"))
-			*(racetypes_t *) b = RACE_ORTNOK;
-		else if (Q_streq(token, "bloodspider"))
-			*(racetypes_t *) b = RACE_BLOODSPIDER;
-		else if (Q_streq(token, "shevaar"))
-			*(racetypes_t *) b = RACE_SHEVAAR;
-		else
-			Sys_Error("Unknown race type: '%s'", token);
-		*writtenBytes = sizeof(racetypes_t);
 		break;
 
 	case V_AIRCRAFTTYPE:
@@ -951,25 +928,6 @@ int Com_SetValue (void *base, const void *set, valueTypes_t type, int ofs, size_
 			Sys_Error("Unknown team given: '%s'", (const char *)set);
 		return sizeof(int);
 
-	case V_RACE:
-		if (Q_streq((const char *)set, "phalanx"))
-			*(racetypes_t *) b = RACE_PHALANX_HUMAN;
-		else if (Q_streq((const char *)set, "civilian"))
-			*(racetypes_t *) b = RACE_CIVILIAN;
-		else if (Q_streq((const char *)set, "robot"))
-			*(racetypes_t *) b = RACE_ROBOT;
-		else if (Q_streq((const char *)set, "taman"))
-			*(racetypes_t *) b = RACE_TAMAN;
-		else if (Q_streq((const char *)set, "ortnok"))
-			*(racetypes_t *) b = RACE_ORTNOK;
-		else if (Q_streq((const char *)set, "bloodspider"))
-			*(racetypes_t *) b = RACE_BLOODSPIDER;
-		else if (Q_streq((const char *)set, "shevaar"))
-			*(racetypes_t *) b = RACE_SHEVAAR;
-		else
-			Sys_Error("Unknown race type: '%s'", (const char *)set);
-		return sizeof(racetypes_t);
-
 	case V_AIRCRAFTTYPE:
 		if (Q_streq((const char *)set, "craft_drop_firebird"))
 			*(humanAircraftType_t *) b = DROPSHIP_FIREBIRD;
@@ -1165,26 +1123,6 @@ const char *Com_ValueToStr (const void *base, const valueTypes_t type, const int
 			return "alien";
 		default:
 			Sys_Error("Unknown team id '%i'", *(const int *) b);
-		}
-
-	case V_RACE:
-		switch (*(const racetypes_t *) b) {
-		case RACE_PHALANX_HUMAN:
-			return "phalanx";
-		case RACE_CIVILIAN:
-			return "civilian";
-		case RACE_ROBOT:
-			return "robot";
-		case RACE_TAMAN:
-			return "taman";
-		case RACE_ORTNOK:
-			return "ortnok";
-		case RACE_BLOODSPIDER:
-			return "bloodspider";
-		case RACE_SHEVAAR:
-			return "shevaar";
-		default:
-			Sys_Error("Unknown race type: '%i'", *(const racetypes_t *) b);
 		}
 
 	case V_AIRCRAFTTYPE:
@@ -2547,7 +2485,8 @@ static const value_t teamDefValues[] = {
 	{"size", V_INT, offsetof(teamDef_t, size), MEMBER_SIZEOF(teamDef_t, size)}, /**< What size is this unit on the field (1=1x1 or 2=2x2)? */
 	{"hit_particle", V_STRING, offsetof(teamDef_t, hitParticle), 0}, /**< What particle effect should be spawned if a unit of this type is hit? */
 	{"death_texture", V_STRING, offsetof(teamDef_t, deathTextureName), 0},
-	{"race", V_RACE, offsetof(teamDef_t, race), MEMBER_SIZEOF(teamDef_t, race)},
+	{"team", V_TEAM, offsetof(teamDef_t, team), MEMBER_SIZEOF(teamDef_t, team)},
+	{"robot", V_BOOL, offsetof(teamDef_t, robot), MEMBER_SIZEOF(teamDef_t, robot)},
 
 	{NULL, V_NULL, 0, 0}
 };
