@@ -75,6 +75,8 @@ void CP_SetMissionVars (const mission_t *mission, const battleParam_t *battlePar
 	for (i = 0; i < battleParameters->alienTeamGroup->numAlienTeams; i++) {
 		csi.alienTeams[i] = battleParameters->alienTeamGroup->alienTeams[i];
 		csi.numAlienTeams++;
+		if (csi.numAlienTeams >= MAX_TEAMS_PER_MISSION)
+			break;
 	}
 }
 

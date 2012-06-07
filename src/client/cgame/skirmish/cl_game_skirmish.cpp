@@ -66,6 +66,8 @@ static void GAME_SK_SetMissionParameters (const mapDef_t *md)
 		const teamDef_t* td = &cgi->csi->teamDef[i];
 		if (CHRSH_IsTeamDefAlien(td))
 			cgi->csi->alienTeams[cgi->csi->numAlienTeams++] = td;
+		if (cgi->csi->numAlienTeams >= MAX_TEAMS_PER_MISSION)
+			break;
 	}
 }
 
