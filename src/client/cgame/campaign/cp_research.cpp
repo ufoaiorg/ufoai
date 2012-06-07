@@ -1266,8 +1266,6 @@ void RS_ParseTechnologies (const char *name, const char **text)
 					break;
 				if (*token != '{')
 					break;
-				if (*token == '}')
-					break;
 
 				do {	/* Loop through all 'require' entries.*/
 					token = Com_EParse(text, errhead, name);
@@ -1297,16 +1295,27 @@ void RS_ParseTechnologies (const char *name, const char **text)
 					} else if (Q_streq(token, "item")) {
 						/* Defines what items need to be collected for this item to be researchable. */
 						if (requiredTemp->numLinks < MAX_TECHLINKS) {
+							linkedList_t *list;
+							if (!Com_ParseList(text, &list)) {
+								Com_Error(ERR_DROP, "RS_ParseTechnologies: error while reading required item tuple");
+							}
+
+							if (LIST_Count(list) != 2) {
+								Com_Error(ERR_DROP, "RS_ParseTechnologies: required item tuple must contains 2 elements (id pos)");
+							}
+
+							const char* idToken = (char*)list->data;
+							const char* amountToken = (char*)list->next->data;
+
 							/* Set requirement-type. */
 							requiredTemp->links[requiredTemp->numLinks].type = RS_LINK_ITEM;
 							/* Set requirement-name (id). */
-							token = Com_Parse(text);
-							requiredTemp->links[requiredTemp->numLinks].id = Mem_PoolStrDup(token, cp_campaignPool, 0);
+							requiredTemp->links[requiredTemp->numLinks].id = Mem_PoolStrDup(idToken, cp_campaignPool, 0);
 							/* Set requirement-amount of item. */
-							token = Com_Parse(text);
-							requiredTemp->links[requiredTemp->numLinks].amount = atoi(token);
+							requiredTemp->links[requiredTemp->numLinks].amount = atoi(amountToken);
 							Com_DPrintf(DEBUG_CLIENT, "RS_ParseTechnologies: require-item - %s - %i\n", requiredTemp->links[requiredTemp->numLinks].id, requiredTemp->links[requiredTemp->numLinks].amount);
 							requiredTemp->numLinks++;
+							LIST_Delete(&list);
 						} else {
 							Com_Printf("RS_ParseTechnologies: \"%s\" Too many 'required' defined. Limit is %i - ignored.\n", name, MAX_TECHLINKS);
 						}
@@ -1334,27 +1343,49 @@ void RS_ParseTechnologies (const char *name, const char **text)
 								requiredTemp->links[requiredTemp->numLinks].type = RS_LINK_ALIEN;
 								Com_DPrintf(DEBUG_CLIENT, "RS_ParseTechnologies:  require-alien alive - %s - %i\n", requiredTemp->links[requiredTemp->numLinks].id, requiredTemp->links[requiredTemp->numLinks].amount);
 							}
+
+							linkedList_t *list;
+							if (!Com_ParseList(text, &list)) {
+								Com_Error(ERR_DROP, "RS_ParseTechnologies: error while reading required alien tuple");
+							}
+
+							if (LIST_Count(list) != 2) {
+								Com_Error(ERR_DROP, "RS_ParseTechnologies: required alien tuple must contains 2 elements (id pos)");
+							}
+
+							const char* idToken = (char*)list->data;
+							const char* amountToken = (char*)list->next->data;
+
 							/* Set requirement-name (id). */
-							token = Com_Parse(text);
-							requiredTemp->links[requiredTemp->numLinks].id = Mem_PoolStrDup(token, cp_campaignPool, 0);
+							requiredTemp->links[requiredTemp->numLinks].id = Mem_PoolStrDup(idToken, cp_campaignPool, 0);
 							/* Set requirement-amount of item. */
-							token = Com_Parse(text);
-							requiredTemp->links[requiredTemp->numLinks].amount = atoi(token);
+							requiredTemp->links[requiredTemp->numLinks].amount = atoi(amountToken);
 							requiredTemp->numLinks++;
+							LIST_Delete(&list);
 						} else {
 							Com_Printf("RS_ParseTechnologies: \"%s\" Too many 'required' defined. Limit is %i - ignored.\n", name, MAX_TECHLINKS);
 						}
 					} else if (Q_streq(token, "ufo")) {
 						/* Defines what ufos need to be collected for this item to be researchable. */
 						if (requiredTemp->numLinks < MAX_TECHLINKS) {
+							linkedList_t *list;
+							if (!Com_ParseList(text, &list)) {
+								Com_Error(ERR_DROP, "RS_ParseTechnologies: error while reading required item tuple");
+							}
+
+							if (LIST_Count(list) != 2) {
+								Com_Error(ERR_DROP, "RS_ParseTechnologies: required item tuple must contains 2 elements (id pos)");
+							}
+
+							const char* idToken = (char*)list->data;
+							const char* amountToken = (char*)list->next->data;
+
 							/* Set requirement-type. */
 							requiredTemp->links[requiredTemp->numLinks].type = RS_LINK_UFO;
 							/* Set requirement-name (id). */
-							token = Com_Parse(text);
-							requiredTemp->links[requiredTemp->numLinks].id = Mem_PoolStrDup(token, cp_campaignPool, 0);
+							requiredTemp->links[requiredTemp->numLinks].id = Mem_PoolStrDup(idToken, cp_campaignPool, 0);
 							/* Set requirement-amount of item. */
-							token = Com_Parse(text);
-							requiredTemp->links[requiredTemp->numLinks].amount = atoi(token);
+							requiredTemp->links[requiredTemp->numLinks].amount = atoi(amountToken);
 							Com_DPrintf(DEBUG_CLIENT, "RS_ParseTechnologies: require-ufo - %s - %i\n", requiredTemp->links[requiredTemp->numLinks].id, requiredTemp->links[requiredTemp->numLinks].amount);
 							requiredTemp->numLinks++;
 						}

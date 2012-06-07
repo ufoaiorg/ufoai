@@ -594,15 +594,15 @@ tech rs_alien_ufo_theory
 
 	require_OR
 	{
-		ufo craft_ufo_ripper 1
-		ufo craft_ufo_gunboat 1
-		ufo craft_ufo_scout 1
-		ufo craft_ufo_fighter 1
-		ufo craft_ufo_supply 1
-		ufo craft_ufo_carrier 1
-		ufo craft_ufo_bomber 1
-		ufo craft_ufo_corrupter 1
-		ufo craft_ufo_harvester 1
+		ufo (craft_ufo_ripper 1)
+		ufo (craft_ufo_gunboat 1)
+		ufo (craft_ufo_scout 1)
+		ufo (craft_ufo_fighter 1)
+		ufo (craft_ufo_supply 1)
+		ufo (craft_ufo_carrier 1)
+		ufo (craft_ufo_bomber 1)
+		ufo (craft_ufo_corrupter 1)
+		ufo (craft_ufo_harvester 1)
 	}
 
 	time		7000
@@ -1100,7 +1100,7 @@ tech rs_weapon_monoknife
 
 	require_for_production
 	{
-	    item alienmaterials 50
+	    item (alienmaterials 50)
 	}
 
 	provides	knifemono
@@ -1368,14 +1368,14 @@ tech rs_weapon_kerrblade
 
 	require_AND
 	{
-		item kerrblade 1
+		item (kerrblade 1)
 		tech rs_skill_close
 		tech rs_damage_normal
 	}
 
 	require_for_production
 	{
-	    item alienmaterials 70
+	    item (alienmaterials 70)
 	}
 
 	provides	kerrblade
@@ -1669,12 +1669,12 @@ tech rs_weapon_plasatomizer
 		tech rs_skill_close
 	//	tech rs_skill_assault
 	//	tech rs_skill_heavy
-		item plaspistol 1
+		item (plaspistol 1)
 	}
 
 	require_for_production
 	{
-	    item alienmaterials 90
+	    item (alienmaterials 90)
 	}
 
 	provides	plaspistol
@@ -1698,7 +1698,7 @@ tech rs_weapon_plasatomizer_ammo
 
 	require_for_production
 	{
-	    item alienmaterials 10
+	    item (alienmaterials 10)
 	}
 
 	provides	plaspistol_ammo
@@ -1739,12 +1739,12 @@ tech rs_weapon_plasblaster
 	{
 		tech rs_skill_explosive
 		tech rs_skill_heavy
-		item plasblaster 1
+		item (plasblaster 1)
 	}
 
 	require_for_production
 	{
-	    item alienmaterials 120
+	    item (alienmaterials 120)
 	}
 
 	provides	plasblaster
@@ -1768,7 +1768,7 @@ tech rs_weapon_plasblaster_ammo
 
 	require_for_production
 	{
-	    item alienmaterials 15
+	    item (alienmaterials 15)
 	}
 
 	provides	plasblaster_ammo
@@ -1809,12 +1809,12 @@ tech rs_weapon_plasblade
 	{
 		tech rs_skill_close
 		tech rs_damage_plasma
-		item plasblade 1
+		item (plasblade 1)
 	}
 
 	require_for_production
 	{
-	    item alienmaterials 50
+	    item (alienmaterials 50)
 	}
 
 	provides	plasblade
@@ -1854,12 +1854,12 @@ tech rs_weapon_plasmagren
 	require_AND
 	{
 		tech rs_skill_explosive
-		item plasmagrenade 1
+		item (plasmagrenade 1)
 	}
 
 	require_for_production
 	{
-	    item alienmaterials 30
+	    item (alienmaterials 30)
 	}
 
 	provides	plasmagrenade
@@ -1900,12 +1900,12 @@ tech rs_weapon_plasrifle
 	{
 		tech rs_skill_assault
 		tech rs_skill_heavy
-		item plasrifle 1
+		item (plasrifle 1)
 	}
 
 	require_for_production
 	{
-	    item alienmaterials 110
+	    item (alienmaterials 110)
 	}
 
 	provides	plasrifle
@@ -1929,7 +1929,7 @@ tech rs_weapon_plasrifle_ammo
 
 	require_for_production
 	{
-	    item alienmaterials 13
+	    item (alienmaterials 13)
 	}
 
 	provides	plasrifle_ammo
@@ -1970,12 +1970,12 @@ tech rs_weapon_needlergun
 	{
 		tech rs_skill_sniper
 		tech rs_skill_assault
-		item needlergun 1
+		item (needlergun 1)
 	}
 
 	require_for_production
 	{
-	    item alienmaterials 140
+	    item (alienmaterials 140)
 	}
 
 	provides	needlergun
@@ -2016,12 +2016,12 @@ tech rs_weapon_needlerheavy
 	{
 		tech rs_skill_sniper
 		tech rs_skill_assault
-		item needlerheavy 1
+		item (needlerheavy 1)
 	}
 
 	require_for_production
 	{
-	    item alienmaterials 160
+	    item (alienmaterials 160)
 	}
 
 	provides	needlerheavy
@@ -2041,12 +2041,12 @@ tech rs_weapon_needlergun_ammo
 	{
 		tech rs_damage_normal
 		tech rs_weapon_needlergun
-		item needlergun_ammo 1
+		item (needlergun_ammo 1)
 	}
 
 	require_for_production
 	{
-	    item alienmaterials 20
+	    item (alienmaterials 20)
 	}
 
 	provides	needlergun_ammo
@@ -2090,7 +2090,7 @@ tech rs_weapon_coilgun
 
 	require_for_production
 	{
-	    item alienmaterials 80
+	    item (alienmaterials 80)
 	}
 
 	provides	coilgun
@@ -2113,7 +2113,7 @@ tech rs_weapon_coilgun_ammo
 
 	require_for_production
 	{
-	    item alienmaterials 10
+	    item (alienmaterials 10)
 	}
 
 	provides	coilgun_ammo
@@ -2377,7 +2377,7 @@ tech rs_weapon_stungren_alien
 
 	require_AND
 	{
-		item stungrenade_alien 1
+		item (stungrenade_alien 1)
 
 		tech rs_skill_explosive
 		tech rs_damage_stun
@@ -2463,12 +2463,12 @@ tech rs_weapon_pbeampistol
 	require_AND
 	{
 		tech rs_skill_close
-		item pbeampistol 1
+		item (pbeampistol 1)
 	}
 
 	require_for_production
 	{
-	    item alienmaterials 110
+	    item (alienmaterials 110)
 	}
 
 	provides	pbeampistol
@@ -2492,7 +2492,7 @@ tech rs_weapon_pbeampistol_ammo
 
 	require_for_production
 	{
-	    item alienmaterials 20
+	    item (alienmaterials 20)
 	}
 
 	provides	pbeampistol_ammo
@@ -2533,12 +2533,12 @@ tech rs_weapon_pbeamcannon
 	{
 		tech rs_skill_explosive
 		tech rs_skill_heavy
-		item pbeamcannon 1
+		item (pbeamcannon 1)
 	}
 
 	require_for_production
 	{
-	    item alienmaterials 200
+	    item (alienmaterials 200)
 	}
 
 	provides	pbeamcannon
@@ -2562,7 +2562,7 @@ tech rs_weapon_pbeamcannon_ammo
 
 	require_for_production
 	{
-	    item alienmaterials 30
+	    item (alienmaterials 30)
 	}
 
 	provides	pbeamcannon_ammo
@@ -2602,12 +2602,12 @@ tech rs_weapon_pbeamrifle
 	require_AND
 	{
 		tech rs_skill_assault
-		item pbeamrifle 1
+		item (pbeamrifle 1)
 	}
 
 	require_for_production
 	{
-	    item alienmaterials 180
+	    item (alienmaterials 180)
 	}
 
 	provides	pbeamrifle
@@ -2631,7 +2631,7 @@ tech rs_weapon_pbeamrifle_ammo
 
 	require_for_production
 	{
-	    item alienmaterials 20
+	    item (alienmaterials 20)
 	}
 
 	provides	pbeamrifle_ammo
@@ -2678,7 +2678,7 @@ tech rs_weapon_pbeam_ammo
 
 	require_for_production
 	{
-	    item alienmaterials 30
+	    item (alienmaterials 30)
 	}
 
 	time		8000
@@ -2812,7 +2812,7 @@ tech rs_alien_body_armour
 
 	require_AND
 	{
-		item armour_light_alien 1
+		item (armour_light_alien 1)
 	}
 	provides	armour_light_alien
 	time		4500
@@ -2849,7 +2849,7 @@ tech rs_alien_medium_armour
 
 	require_AND
 	{
-		item armour_medium_alien 1
+		item (armour_medium_alien 1)
 	}
 	provides	armour_medium_alien
 	time		6500
@@ -3482,10 +3482,10 @@ tech rs_craft_drop_raptor
 
 	require_for_production
 	{
-	    item alienmaterials 12000
-		item	craft_alien_propulsion	4
-		item	craft_alien_astrogation	1
-		item	craft_alien_detection	1
+	    item (alienmaterials 12000)
+		item	(craft_alien_propulsion	4)
+		item	(craft_alien_astrogation	1)
+		item	(craft_alien_detection	1)
 	}
 
 	provides	craft_drop_raptor
@@ -3563,10 +3563,10 @@ tech rs_craft_inter_dragon
 
 	require_for_production
 	{
-	    item alienmaterials 5000
-		item	craft_alien_propulsion	2
-		item	craft_alien_astrogation	1
-		item	craft_alien_detection	1
+	    item (alienmaterials 5000)
+		item	(craft_alien_propulsion	2)
+		item	(craft_alien_astrogation	1)
+		item	(craft_alien_detection	1)
 	}
 
 	model		inter_dragon
@@ -3607,10 +3607,10 @@ tech rs_craft_inter_starchaser
 
 	require_for_production
 	{
-	    item alienmaterials 7000
-		item	craft_alien_propulsion	2
-		item	craft_alien_astrogation	1
-		item	craft_alien_detection	2
+	    item (alienmaterials 7000)
+		item	(craft_alien_propulsion	2)
+		item	(craft_alien_astrogation	1)
+		item	(craft_alien_detection	2)
 	}
 
 	model		inter_starchaser
@@ -3649,10 +3649,10 @@ tech rs_craft_inter_stingray
 
 	require_for_production
 	{
-	    item alienmaterials 9000
-		item	craft_alien_propulsion	3
-		item	craft_alien_astrogation	1
-		item	craft_alien_detection	2
+	    item (alienmaterials 9000)
+		item	(craft_alien_propulsion	3)
+		item	(craft_alien_astrogation	1)
+		item	(craft_alien_detection	2)
 	}
 
 
@@ -3697,11 +3697,11 @@ tech rs_craft_ufo_scout
 
 	require_AND
 	{
-		ufo craft_ufo_scout 1
+		ufo (craft_ufo_scout 1)
 		tech rs_alien_ufo_theory
 	}
 
-	provides	"craft_ufo_scout"
+	provides	craft_ufo_scout
 	time	4500
 	producetime -1
 
@@ -3740,11 +3740,11 @@ tech rs_craft_ufo_fighter
 	// FIXME
 	require_AND
 	{
-		ufo craft_ufo_fighter 1
+		ufo (craft_ufo_fighter 1)
 		tech rs_alien_ufo_theory
 	}
 
-	provides	"craft_ufo_fighter"
+	provides	craft_ufo_fighter
 	time	4500
 	producetime -1
 
@@ -3784,10 +3784,10 @@ tech rs_craft_ufo_supply
 	require_AND
 	{
 		tech rs_alien_ufo_theory
-		ufo craft_ufo_supply 1
+		ufo (craft_ufo_supply 1)
 	}
 
-	provides	"craft_ufo_supply"
+	provides	craft_ufo_supply
 	time	5000
 	producetime -1
 
@@ -3827,7 +3827,7 @@ tech rs_craft_ufo_carrier
 	require_AND
 	{
 		tech rs_alien_ufo_theory
-		ufo craft_ufo_carrier 1
+		ufo (craft_ufo_carrier 1)
 	}
 
 	provides	craft_ufo_carrier
@@ -3870,7 +3870,7 @@ tech rs_craft_ufo_bomber
 	require_AND
 	{
 		tech rs_alien_ufo_theory
-		ufo craft_ufo_bomber 1
+		ufo (craft_ufo_bomber 1)
 	}
 
 	provides	craft_ufo_bomber
@@ -3913,7 +3913,7 @@ tech rs_craft_ufo_corrupter
 	require_AND
 	{
 		tech rs_alien_ufo_theory
-		ufo craft_ufo_corrupter 1
+		ufo (craft_ufo_corrupter 1)
 	}
 
 	provides	craft_ufo_corrupter
@@ -3956,7 +3956,7 @@ tech rs_craft_ufo_gunboat
 	require_AND
 	{
 		tech rs_alien_ufo_theory
-		ufo craft_ufo_gunboat 1
+		ufo (craft_ufo_gunboat 1)
 	}
 
 	provides	craft_ufo_gunboat
@@ -3999,7 +3999,7 @@ tech rs_craft_ufo_ripper
 	require_AND
 	{
 		tech rs_alien_ufo_theory
-		ufo craft_ufo_ripper 1
+		ufo (craft_ufo_ripper 1)
 	}
 
 	provides	craft_ufo_ripper
@@ -4042,7 +4042,7 @@ tech rs_craft_ufo_harvester
 	require_AND
 	{
 		tech rs_alien_ufo_theory
-		ufo craft_ufo_harvester 1
+		ufo (craft_ufo_harvester 1)
 	}
 
 	provides	craft_ufo_harvester
@@ -4085,7 +4085,7 @@ tech rs_craft_ufo_mothership
 	require_AND
 	{
 		tech rs_alien_ufo_theory
-		ufo craft_ufo_mothership 1
+		ufo (craft_ufo_mothership 1)
 	}
 
 	provides	craft_ufo_mothership
@@ -4115,7 +4115,7 @@ tech rs_alien_bloodspider_live
 
 	require_AND
 	{
-		alien bloodspider 1
+		alien (bloodspider 1)
 	}
 	time	0
 
@@ -4156,7 +4156,7 @@ tech rs_alien_bloodspider_autopsy
 
 	require_AND
 	{
-		alien_dead bloodspider 1
+		alien_dead (bloodspider 1)
 	}
 	time	4500
 
@@ -4215,7 +4215,7 @@ tech rs_alien_ortnok_autopsy
 
 	require_AND
 	{
-		alien_dead ortnok 1
+		alien_dead (ortnok 1)
 	}
 	time	3500
 
@@ -4259,7 +4259,7 @@ tech rs_alien_taman_autopsy
 
 	require_AND
 	{
-		alien_dead taman 1
+		alien_dead (taman 1)
 	}
 	time	3500
 
@@ -4303,7 +4303,7 @@ tech rs_alien_shevaar_autopsy
 
 	require_AND
 	{
-		alien_dead shevaar 1
+		alien_dead (shevaar 1)
 	}
 	time	3500
 
@@ -4562,7 +4562,7 @@ tech rs_craft_shield_plating
 
 	require_for_production
 	{
-	    item alienmaterials 300
+	    item (alienmaterials 300)
 	}
 
 	time		3000
@@ -4601,7 +4601,7 @@ tech rs_craft_alien_astrogation
 	provides	craft_alien_astrogation
 	require_AND {
 		tech	rs_alien_origins
-		item	craft_alien_astrogation 1
+		item	(craft_alien_astrogation 1)
 	}
 	time		3500
 	producetime	-1
@@ -4638,7 +4638,7 @@ tech rs_craft_alien_propulsion
 	provides	craft_alien_propulsion
 	require_AND {
 		tech	rs_alien_materials
-		item	craft_alien_propulsion 1
+		item	(craft_alien_propulsion 1)
 	}
 	time		3500
 	producetime	-1
@@ -4675,7 +4675,7 @@ tech rs_craft_alien_detection
 	provides	craft_alien_detection
 	require_AND {
 		tech	rs_alien_materials
-		item	craft_alien_detection 1
+		item	(craft_alien_detection 1)
 	}
 	time		3500
 	producetime	-1
@@ -4904,12 +4904,12 @@ tech rs_craft_weapon_particle
 //		tech rs_craft_ufo_fighter
 //		tech rs_craft_ufo_harvester
 		tech rs_fighter_OR_harvester	// LOGIC tech - see there for more
-		item craft_weapon_particle_beam 1
+		item (craft_weapon_particle_beam 1)
 	}
 
 	require_for_production
 	{
-	    item alienmaterials 250
+	    item (alienmaterials 250)
 	}
 
 	time		8000
@@ -4962,12 +4962,12 @@ tech rs_craft_weapon_alien_launcher
 	require_AND
 	{
 		tech rs_fighter_OR_harvester	// LOGIC tech - see there for more
-		item craft_weapon_alien_launcher 1
+		item (craft_weapon_alien_launcher 1)
 	}
 
 	require_for_production
 	{
-	    item alienmaterials 250
+	    item (alienmaterials 250)
 	}
 
 	time		8000
@@ -5012,13 +5012,13 @@ tech rs_craft_ammo_am_missile
 //		tech rs_craft_ufo_fighter
 //		tech rs_craft_ufo_harvester
 		tech rs_antimatter
-		item craft_ammo_am_missile 1
+		item (craft_ammo_am_missile 1)
 	}
 
 	require_for_production
 	{
-	    item alienmaterials 50
-	    item antimatter 3
+	    item (alienmaterials 50)
+	    item (antimatter 3)
 	}
 
 	time		5000
@@ -5067,7 +5067,7 @@ tech rs_craft_ammo_hybrid_missile
 
 	require_for_production
 	{
-	    item alienmaterials 50
+	    item (alienmaterials 50)
 	}
 
 	time		4500
