@@ -20,7 +20,7 @@ You should have received a copy of the GNU General Public License
 along with this program; if not, write to the Free Software
 Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 
-*/
+ */
 
 #include "s_music.h"
 #include "s_local.h"
@@ -29,6 +29,7 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #include "../../ports/system.h"
 #include "../../common/filesys.h"	/* for MAX_QPATH */
 #include "../../common/common.h"	/* for many */
+#include "../../common/scripts.h"
 #include "../cl_renderer.h"
 #include "../cl_video.h"
 #include "../battlescape/cl_camera.h"
@@ -50,8 +51,8 @@ typedef struct music_s {
 	Mix_Music *data;
 	byte *buffer;
 	bool playingStream; /**< if this is set no action to M_Start and M_Stop might happen, otherwise we might run
-							 * into a deadlock. This is due to the installed hook function for music mixing that is used
-							 * whenever we stream the music on our own */
+	 * into a deadlock. This is due to the installed hook function for music mixing that is used
+	 * whenever we stream the music on our own */
 } music_t;
 
 #define MUSIC_MAX_ENTRIES 64
@@ -68,8 +69,6 @@ static cvar_t *snd_music_volume;
  */
 void M_ParseMusic (const char *name, const char **text)
 {
-	const char *errhead = "M_ParseMusic: unexpected end of file (campaign ";
-	const char *token;
 	int i;
 
 	if (Q_streq(name, "geoscape"))
@@ -82,32 +81,28 @@ void M_ParseMusic (const char *name, const char **text)
 		i = MUSIC_MAIN;
 	else {
 		Com_Printf("M_ParseMusic: Invalid music id '%s'!\n", name);
-		FS_SkipBlock(text);
+		linkedList_t *list;
+		Com_ParseList(text, &list);
+		LIST_Delete(&list);
 		return;
 	}
 
 	/* get it's body */
-	token = Com_Parse(text);
-
-	if (!*text || *token != '{') {
-		Com_Printf("M_ParseMusic: Music def \"%s\" without body ignored!\n", name);
-		return;
+	linkedList_t *list;
+	if (!Com_ParseList(text, &list)) {
+		Com_Error(ERR_DROP, "M_ParseMusic: error while reading music \"%s\"", name);
 	}
 
-	do {
-		token = Com_EParse(text, errhead, name);
-		if (!*text)
-			break;
-		if (*token == '}')
-			break;
+	for (linkedList_t *element = list; element != NULL; element = element->next) {
 		if (musicArrayLength[i] >= MUSIC_MAX_ENTRIES) {
 			Com_Printf("M_ParseMusic: Too many music entries for category: '%s'!\n", name);
-			FS_SkipBlock(text);
 			break;
 		}
-		musicArrays[i][musicArrayLength[i]] = Mem_PoolStrDup(token, cl_genericPool, 0);
+		musicArrays[i][musicArrayLength[i]] = Mem_PoolStrDup((char*)element->data, cl_genericPool, 0);
 		musicArrayLength[i]++;
-	} while (*text);
+	}
+
+	LIST_Delete(&list);
 }
 
 /**
