@@ -219,12 +219,19 @@ static void AM_CreateUnitChr (autoUnit_t *unit, const teamDef_t *teamDef, const 
 	cgi->CL_GenerateCharacter(unit->chr, teamDef->id);
 
 	if (ed) {
-		/* Pack equipment. */
-		if (teamDef->weapons)
-			cgi->INV_EquipActor(&unit->chr->i, ed, teamDef);
-		else if (teamDef->onlyWeapon)
-			/* actor cannot handle weapons but a particular item */
-			cgi->INV_EquipActorMelee(&unit->chr->i, teamDef);
+		if (teamDef->robot && teamDef->onlyWeapon) {
+			const objDef_t *weapon = teamDef->onlyWeapon;
+			if (weapon->numAmmos > 0)
+				cgi->INV_EquipActorRobot(&unit->chr->i, weapon);
+			else if (weapon->fireTwoHanded)
+				cgi->INV_EquipActorMelee(&unit->chr->i, teamDef);
+			else
+				Com_Printf("AM_CreateUnitChr: weapon %s has no ammo assigned and must not be fired two handed\n", weapon->id);
+		} else {
+			/* Pack equipment. */
+			if (teamDef->weapons)
+				cgi->INV_EquipActor(&unit->chr->i, ed, teamDef);
+		}
 	}
 }
 
