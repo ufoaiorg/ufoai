@@ -668,10 +668,7 @@ static void AC_AddOne_f (void)
 	if (Cmd_Argc() == 3)
 		updateAlive = Com_ParseBoolean(Com_Argv(2));
 
-	/* update alien counter*/
-	if (B_GetBuildingStatus(base, B_ALIEN_CONTAINMENT)) {
-		containment = base->alienscont;
-	} else {
+	if (!B_GetBuildingStatus(base, B_ALIEN_CONTAINMENT)) {
 		return;
 	}
 
