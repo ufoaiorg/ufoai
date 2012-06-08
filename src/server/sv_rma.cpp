@@ -1312,10 +1312,8 @@ static bool SV_GapListBuild (mapInfo_t *map, int tilePosListCnt)
 		x = pos % mapW;
 		y = pos / mapW;
 		mTile_t *tile = mToPlace[ti].tile;
-		int tx, ty;
-		ty = 0;	/* for a breakpoint */
-		for (ty = 0; ty < tile->h; ty++) {
-			for (tx = 0; tx < tile->w; tx++) {
+		for (int ty = 0; ty < tile->h; ty++) {
+			for (int tx = 0; tx < tile->w; tx++) {
 				if (IS_SOLID(tile->spec[ty][tx])) {
 					gapList[x + tx][y + ty][0] += 1;
 					const int cnt = gapList[x + tx][y + ty][0];	/* get the counter */
