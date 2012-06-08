@@ -2564,30 +2564,28 @@ static void Com_ParseTeam (const char *name, const char **text)
 				else
 					Sys_Error("Com_ParseTeam: Could not get item definition for '%s'", token);
 			} else if (Q_streq(token, "templates")) {
-				token = Com_EParse(text, errhead, name);
-				if (!*text || *token != '{')
-					Com_Printf("Com_ParseTeam: template list without body ignored in team def \"%s\" \n", name);
-				else {
-					do {
-						token = Com_EParse(text, errhead, name);
-						if (*token == '}')
-							break;
-						for (i = 0; i < td->numTemplates; i++) {
-							if (Q_streq(token, td->characterTemplates[i]->id)) {
-								Com_Printf("Com_ParseTeam: template %s used more than once in team def %s second ignored", token, name);
-								break;
-							}
-						}
-						if (i >= td->numTemplates) {
-							const chrTemplate_t *ct = Com_GetCharacterTemplateByID(token);
-							if (ct)
-								td->characterTemplates[td->numTemplates++] = ct;
-							else
-								Sys_Error("Com_ParseTeam: Could not get character template for '%s' in %s", token, name);
-						} else
-							break;
-					} while (*text);
+				linkedList_t *list;
+				if (!Com_ParseList(text, &list)) {
+					Com_Error(ERR_DROP, "Com_ParseTeam: error while reading templates (team \"%s\")", name);
 				}
+
+				for (linkedList_t *element = list; element != NULL; element = element->next) {
+					for (i = 0; i < td->numTemplates; i++) {
+						if (Q_streq(token, td->characterTemplates[i]->id)) {
+							Com_Printf("Com_ParseTeam: template %s used more than once in team def %s second ignored", (char*)element->data, name);
+							break;
+						}
+					}
+					if (i >= td->numTemplates) {
+						const chrTemplate_t *ct = Com_GetCharacterTemplateByID((char*)element->data);
+						if (ct)
+							td->characterTemplates[td->numTemplates++] = ct;
+						else
+							Sys_Error("Com_ParseTeam: Could not get character template for '%s' in %s", (char*)element->data, name);
+					} else
+						break;
+				}
+				LIST_Delete(&list);
 			} else if (Q_streq(token, "models"))
 				Com_ParseActorModels(name, text, td);
 			else if (Q_streq(token, "names"))

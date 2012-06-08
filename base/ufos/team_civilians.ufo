@@ -59,9 +59,9 @@ team africa
 			deathsound	"civilians/civmaledeath02a"
 		}
 	}
-	templates {
+	templates (
 		soldier_civil
-	}
+	)
 }
 
 team asia
@@ -110,9 +110,9 @@ team asia
 			deathsound	"civilians/civmaledeath02a"
 		}
 	}
-	templates {
+	templates (
 		soldier_civil
-	}
+	)
 }
 
 team europe
@@ -203,9 +203,9 @@ team europe
 			deathsound	"civilians/civmaledeath02a"
 		}
 	}
-	templates {
+	templates (
 		soldier_civil
-	}
+	)
 }
 
 team latin
@@ -258,9 +258,9 @@ team latin
 			deathsound	"civilians/civmaledeath02a"
 		}
 	}
-	templates {
+	templates (
 		soldier_civil
-	}
+	)
 }
 
 team middle
@@ -313,9 +313,9 @@ team middle
 			deathsound	"civilians/civmaledeath02a"
 		}
 	}
-	templates {
+	templates (
 		soldier_civil
-	}
+	)
 }
 
 team states
@@ -406,9 +406,9 @@ team states
 			deathsound	"civilians/civmaledeath02a"
 		}
 	}
-	templates {
+	templates (
 		soldier_civil
-	}
+	)
 }
 
 team oceania
@@ -460,9 +460,9 @@ team oceania
 			deathsound	"civilians/civmaledeath02a"
 		}
 	}
-	templates {
+	templates (
 		soldier_civil
-	}
+	)
 }
 
 team russia
@@ -539,9 +539,9 @@ team russia
 			deathsound	"civilians/civmaledeath02a"
 		}
 	}
-	templates {
+	templates (
 		soldier_civil
-	}
+	)
 }
 
 //========================================================================
@@ -579,9 +579,9 @@ team armysoldier
 			deathsound	"civilians/maledeath03"
 		}
 	}
-	templates {
+	templates (
 		soldier_common
-	}
+	)
 }
 
 team miner
@@ -617,9 +617,9 @@ team miner
 			deathsound	"civilians/maledeath03"
 		}
 	}
-	templates {
+	templates (
 		soldier_civil
-	}
+	)
 }
 
 team scientist
@@ -672,9 +672,9 @@ team scientist
 			deathsound	"civilians/civmaledeath02a"
 		}
 	}
-	templates {
+	templates (
 		soldier_civil
-	}
+	)
 }
 
 team worker
@@ -710,7 +710,7 @@ team worker
 			deathsound	"civilians/maledeath03"
 		}
 	}
-	templates {
+	templates (
 		soldier_civil
-	}
+	)
 }
