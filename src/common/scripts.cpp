@@ -3119,7 +3119,7 @@ static void Com_AddObjectLinks (void)
 	int i;
 	for (i = 0, od = csi.ods; i < csi.numODs; i++, od++) {
 		od->numAmmos = 0;	/* Default value */
-		if (od->numWeapons == 0 && (od->weapon || od->craftitem.type <= AC_ITEM_WEAPON)) {
+		if (od->weapon || od->craftitem.type <= AC_ITEM_WEAPON) {
 			/* this is a weapon, an aircraft weapon, or a base defence system */
 			for (int n = 0; n < csi.numODs; n++) {
 				const objDef_t *weapon = INVSH_GetItemByIDX(n);
