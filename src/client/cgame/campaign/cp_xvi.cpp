@@ -96,8 +96,6 @@ void CP_UpdateNationXVIInfection (void)
 	int height;
 	float heightPerDegree;
 	float widthPerDegree;
-	/* current position (in latitude / longitude) */
-	vec2_t currentPos;
 	/* parameter used to normalize nation XVI level.
 	 * decrease this factor to increase XVI level per nation */
 	const float AREA_FACTOR = 650.0f;
@@ -124,6 +122,8 @@ void CP_UpdateNationXVIInfection (void)
 		int sum[MAX_NATIONS];
 		const byte* previousNationColor;
 		const nation_t* nation;
+		/* current position (in latitude / longitude) */
+		vec2_t currentPos;
 
 		OBJZERO(sum);
 
