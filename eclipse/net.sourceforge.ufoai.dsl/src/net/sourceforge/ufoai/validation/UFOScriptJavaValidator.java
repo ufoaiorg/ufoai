@@ -323,7 +323,7 @@ public class UFOScriptJavaValidator extends AbstractUFOScriptJavaValidator {
 		}
 		case TUPLE:
 		{
-			if (node.getNodes() != null) {
+			if (!node.getNodes().isEmpty()) {
 				error("List is expected", UfoScriptPackage.Literals.UFO_NODE__VALUE);
 				return;
 			}
