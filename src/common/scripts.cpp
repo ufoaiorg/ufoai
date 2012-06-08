@@ -1656,11 +1656,16 @@ CASSERT(lengthof(air_slot_type_strings) == MAX_ACITEMS);
  */
 static linkedList_t *parseItemWeapons = NULL;
 
+struct parseItemWeapon_t {
+	objDef_t *od;
+	int numWeapons;
+	char *token;
+};
+
 static void Com_ParseFireDefition (objDef_t *od, const char *name, const char *token, const char **text)
 {
 	const char *errhead = "Com_ParseFireDefition: unexpected end of file (weapon_mod ";
 	if (od->numWeapons < MAX_WEAPONS_PER_OBJDEF) {
-
 		/* get it's body */
 		token = Com_Parse(text);
 		if (!*text || *token != '{') {
@@ -1678,9 +1683,11 @@ static void Com_ParseFireDefition (objDef_t *od, const char *name, const char *t
 		/* Save the weapon id. */
 		token = Com_Parse(text);
 		/* Store the current item-pointer and the weapon id for later linking of the "weapon" pointers */
-		LIST_AddPointer(&parseItemWeapons, od);
-		LIST_Add(&parseItemWeapons, od->numWeapons);
-		LIST_AddString(&parseItemWeapons, token);
+		parseItemWeapon_t parse;
+		parse.od = od;
+		parse.numWeapons = od->numWeapons;
+		parse.token = Mem_StrDup(token);
+		LIST_Add(&parseItemWeapons, parse);
 
 		/* For each firedef entry for this weapon.  */
 		do {
@@ -1773,10 +1780,12 @@ static void Com_ParseItem (const char *name, const char **text)
 				/* parse a value */
 				token = Com_EParse(text, errhead, name);
 				if (od->numWeapons < MAX_WEAPONS_PER_OBJDEF) {
+					parseItemWeapon_t parse;
+					parse.od = od;
+					parse.numWeapons = od->numWeapons;
+					parse.token = Mem_StrDup(token);
 					/* Store the current item-pointer and the weapon id for later linking of the "weapon" pointers */
-					LIST_AddPointer(&parseItemWeapons, od);
-					LIST_Add(&parseItemWeapons, od->numWeapons);
-					LIST_AddString(&parseItemWeapons, token);
+					LIST_Add(&parseItemWeapons, parse);
 					od->numWeapons++;
 				} else {
 					Com_Printf("Com_ParseItem: Too many weapon_mod definitions at \"%s\". Max is %i\n", name, MAX_WEAPONS_PER_OBJDEF);
@@ -3082,51 +3091,39 @@ const ugv_t *Com_GetUGVByID (const char *ugvID)
  */
 static void Com_AddObjectLinks (void)
 {
-	linkedList_t* ll = parseItemWeapons;	/**< Use this so we do not change the original popupListData pointer. */
-	objDef_t *od;
-	int i, n, m;
-	byte k, weaponsIdx;
-	char *id;
-
 	/* Add links to weapons. */
-	while (ll) {
-		/* Get the data stored in the linked list. */
-		assert(ll);
-		od = (objDef_t *) ll->data;
-		ll = ll->next;
-
-		assert(ll);
-		weaponsIdx = *(int*)ll->data;
-		ll = ll->next;
-
-		assert(ll);
-		id = (char*)ll->data;
-		ll = ll->next;
+	LIST_Foreach (parseItemWeapons, parseItemWeapon_t, parse) {
+		const int weaponsIdx = parse->numWeapons;
+		const char *id = parse->token;
 
 		/* Link the weapon pointers for this item. */
-		od->weapons[weaponsIdx] = INVSH_GetItemByID(id);
-		if (!od->weapons[weaponsIdx]) {
+		parse->od->weapons[weaponsIdx] = INVSH_GetItemByID(id);
+		if (!parse->od->weapons[weaponsIdx]) {
 			Sys_Error("Com_AddObjectLinks: Could not get item '%s' for linking into item '%s'\n",
-				id , od->id);
+				id , parse->od->id);
 		}
 
 		/* Back-link the obj-idx inside the fds */
-		for (k = 0; k < od->numFiredefs[weaponsIdx]; k++) {
-			od->fd[weaponsIdx][k].obj = od;
+		for (int k = 0; k < parse->od->numFiredefs[weaponsIdx]; k++) {
+			parse->od->fd[weaponsIdx][k].obj = parse->od;
 		}
+
+		Mem_Free(parse->token);
 	}
 
 	/* Clear the temporary list. */
 	LIST_Delete(&parseItemWeapons);
 
 	/* Add links to ammos */
+	objDef_t *od;
+	int i;
 	for (i = 0, od = csi.ods; i < csi.numODs; i++, od++) {
 		od->numAmmos = 0;	/* Default value */
 		if (od->numWeapons == 0 && (od->weapon || od->craftitem.type <= AC_ITEM_WEAPON)) {
 			/* this is a weapon, an aircraft weapon, or a base defence system */
-			for (n = 0; n < csi.numODs; n++) {
+			for (int n = 0; n < csi.numODs; n++) {
 				const objDef_t *weapon = INVSH_GetItemByIDX(n);
-				for (m = 0; m < weapon->numWeapons; m++) {
+				for (int m = 0; m < weapon->numWeapons; m++) {
 					if (weapon->weapons[m] == od) {
 						assert(od->numAmmos <= MAX_AMMOS_PER_OBJDEF);
 						od->ammos[od->numAmmos++] = weapon;
