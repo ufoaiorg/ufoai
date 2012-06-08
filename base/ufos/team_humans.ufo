@@ -60,7 +60,7 @@ team phalanx
 	name	"_Phalanx"
 	size 1
 	hit_particle blood
-	team	phalanx
+	team	"phalanx"
 
 	names {
 		female {
@@ -666,7 +666,7 @@ team phalanx_scientist
 	hit_particle blood
 	weapons	false
 	armour	false
-	team	civilian
+	team	"civilian"
 
 	names {
 		female {
@@ -1678,7 +1678,7 @@ team phalanx_worker
 	name	"_Worker"
 	weapons	false
 	armour	false
-	team	civilian
+	team	"civilian"
 
 	names {
 		male {
@@ -2088,7 +2088,7 @@ team phalanx_ugv_phoenix
 {
 	name	"_Phoenix UGV"
 	size	2
-	team	phalanx
+	team	"phalanx"
 	robot	true
 	//hit_particle none
 	// we can't assign any extra armour
@@ -2154,7 +2154,7 @@ team phalanx_ugv_ares_w
 {
 	name	"_Ares W (UGV)"
 	size	2
-	team	phalanx
+	team	"phalanx"
 	robot	true
 	//hit_particle none
 	// we can't assign any extra armour
