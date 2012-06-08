@@ -677,7 +677,7 @@ static void I_EquipActorRobot (inventoryInterface_t *self, inventory_t* const in
 
 	/* Prepare weapon in item. */
 	item.t = weapon;
-	item.a = NONE_AMMO;
+	item.a = weapon->ammo;
 
 	/* Get ammo for item/weapon. */
 	assert(weapon->numAmmos > 0);	/* There _has_ to be at least one ammo-type. */
