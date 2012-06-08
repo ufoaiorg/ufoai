@@ -34,6 +34,7 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #include "../ui/ui_main.h"
 #include "../ui/node/ui_node_container.h"
 #include "../renderer/r_entity.h"
+#include "../renderer/r_mesh.h"
 #include "../../common/routing.h"
 #include "../../common/grid.h"
 
@@ -1432,6 +1433,8 @@ bool CL_AddActor (le_t * le, entity_t * ent)
 	if (!cl_showactors->integer)
 		return false;
 
+	bool hasTagHead = R_GetTagIndexByName(le->model1, "tag_head") != -1;
+
 	if (LE_IsStunned(le)) {
 		if (!le->ptl)
 			le->ptl = CL_ParticleSpawn("stunnedactor", 0, le->origin);
@@ -1464,7 +1467,8 @@ bool CL_AddActor (le_t * le, entity_t * ent)
 				Com_Error(ERR_DROP, "Actor model for right hand weapon wasn't found!");
 
 			/* point to the body ent which will be added last */
-			add.tagent = R_GetFreeEntity() + 2;
+			const int delta = hasTagHead ? 2 : 1;
+			add.tagent = R_GetFreeEntity() + delta;
 			add.tagname = "tag_rweapon";
 
 			R_AddEntity(&add);
@@ -1480,23 +1484,25 @@ bool CL_AddActor (le_t * le, entity_t * ent)
 		}
 	}
 
-	/* add head */
-	OBJZERO(add);
+	if (hasTagHead) {
+		/* add head */
+		OBJZERO(add);
 
-	add.alpha = le->alpha;
-	add.model = le->model2;
-	if (!add.model)
-		Com_Error(ERR_DROP, "Actor model wasn't found!");
-	add.skinnum = le->headSkin;
+		add.alpha = le->alpha;
+		add.model = le->model2;
+		if (!add.model)
+			Com_Error(ERR_DROP, "Actor model wasn't found!");
+		add.skinnum = le->headSkin;
 
-	/* point to the body ent which will be added last */
-	add.tagent = R_GetFreeEntity() + 1;
-	add.tagname = "tag_head";
+		/* point to the body ent which will be added last */
+		add.tagent = R_GetFreeEntity() + 1;
+		add.tagname = "tag_head";
 
-	if (le->team != cls.team)
-		add.flags |= RF_IRGOGGLES;
+		if (le->team != cls.team)
+			add.flags |= RF_IRGOGGLES;
 
-	R_AddEntity(&add);
+		R_AddEntity(&add);
+	}
 
 	/** Add actor special effects.
 	 * Only draw blood if the actor is dead or (if stunned) was damaged more than half its maximum HPs. */

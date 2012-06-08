@@ -259,7 +259,6 @@ int R_GetTagIndexByName (const model_t* mod, const char* tagName)
 		}
 	}
 
-	Com_Printf("Could not get tag index for tag %s of model %s\n", tagName, mod->name);
 	return -1;
 }
 
