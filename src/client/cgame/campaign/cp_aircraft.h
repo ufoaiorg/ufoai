@@ -282,7 +282,7 @@ bool AIR_AircraftHasEnoughFuel(const aircraft_t *aircraft, const vec2_t destinat
 bool AIR_AircraftHasEnoughFuelOneWay(const aircraft_t *aircraft, const vec2_t destination);
 void AIR_AircraftReturnToBase(aircraft_t *aircraft);
 bool AIR_SendAircraftToMission(aircraft_t* aircraft, struct mission_s* mission);
-void AIR_GetDestinationWhilePursuing(const aircraft_t *shooter, const aircraft_t *target, vec2_t *dest);
+void AIR_GetDestinationWhilePursuing(const aircraft_t *shooter, const aircraft_t *target, vec2_t dest);
 bool AIR_SendAircraftPursuingUFO(aircraft_t* aircraft, aircraft_t* ufo);
 void AIR_AircraftsNotifyUFORemoved(const aircraft_t *const ufo, bool destroyed);
 void AIR_AircraftsUFODisappear(const aircraft_t *const ufo);

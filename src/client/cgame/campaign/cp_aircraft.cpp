@@ -1942,7 +1942,7 @@ static float AIR_GetDestinationFindRoot (const float c, const float B, const flo
  * @sa AIR_SendAircraftPursuingUFO
  * @sa UFO_SendPursuingAircraft
  */
-void AIR_GetDestinationWhilePursuing (const aircraft_t *shooter, const aircraft_t *target, vec2_t *dest)
+void AIR_GetDestinationWhilePursuing (const aircraft_t *shooter, const aircraft_t *target, vec2_t dest)
 {
 	vec3_t shooterPos, targetPos, targetDestPos, shooterDestPos, rotationAxis;
 	vec3_t tangentVectTS, tangentVectTD;
@@ -2001,9 +2001,9 @@ void AIR_GetDestinationWhilePursuing (const aircraft_t *shooter, const aircraft_
 
 		/* Rotate target position of dist to find destination point */
 		RotatePointAroundVector(shooterDestPos, rotationAxis, targetPos, a * todeg);
-		VecToPolar(shooterDestPos, *dest);
+		VecToPolar(shooterDestPos, dest);
 
-		b = GetDistanceOnGlobe(shooter->pos, *dest) * torad;
+		b = GetDistanceOnGlobe(shooter->pos, dest) * torad;
 
 		if (fabs(b - speedRatio * a) < .1)
 			break;
@@ -2013,13 +2013,13 @@ void AIR_GetDestinationWhilePursuing (const aircraft_t *shooter, const aircraft_
 
 	if (a < 0.) {
 		/* did not find solution, go directly to target direction */
-		Vector2Copy(target->pos, (*dest));
+		Vector2Copy(target->pos, dest);
 		return;
 	}
 
 	/** @todo add EQUAL_EPSILON here? */
 	/* make sure we don't get a NAN value */
-	assert((*dest)[0] <= 180.0f && (*dest)[0] >= -180.0f && (*dest)[1] <= 90.0f && (*dest)[1] >= -90.0f);
+	assert(dest[0] <= 180.0f && dest[0] >= -180.0f && dest[1] <= 90.0f && dest[1] >= -90.0f);
 }
 
 /**
@@ -2040,7 +2040,7 @@ bool AIR_SendAircraftPursuingUFO (aircraft_t* aircraft, aircraft_t* ufo)
 		AII_ReloadAircraftWeapons(aircraft);
 	}
 
-	AIR_GetDestinationWhilePursuing(aircraft, ufo, &dest);
+	AIR_GetDestinationWhilePursuing(aircraft, ufo, dest);
 	/* check if aircraft has enough fuel */
 	if (!AIR_AircraftHasEnoughFuel(aircraft, dest)) {
 		/* did not find solution, go directly to target direction if enough fuel */
