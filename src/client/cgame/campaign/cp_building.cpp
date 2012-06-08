@@ -208,7 +208,7 @@ void B_ParseBuildings (const char *name, const char **text, bool link)
 			} else {
 				/* no linking yet */
 				if (Q_streq(token, "depends")) {
-					token = Com_EParse(text, errhead, name);
+					Com_EParse(text, errhead, name);
 					if (!*text)
 						return;
 				} else {
