@@ -112,24 +112,20 @@ void CL_ParseLanguages (const char *name, const char **text)
 		if (!*text || *token == '}')
 			break;
 		/* inner locale id definition */
-		if (*token == '{') {
-			if (!language) {
-				Com_Printf("CL_ParseLanguages: language: '%s' - found mappings with language string - ignore it\n", name);
-				return;
+		if (Q_streq(token, "code")) {
+			linkedList_t *list;
+			if (!Com_ParseList(text, &list)) {
+				Com_Error(ERR_DROP, "CL_ParseLanguages: error while reading language codes \"%s\"", name);
 			}
-			do {
-				/* get the locale mappings now type */
-				token = Com_EParse(text, errhead, name);
-				/* end of locale mappings reached */
-				if (!*text || *token == '}')
-					break;
+			for (linkedList_t *element = list; element != NULL; element = element->next) {
 				localeMapping_t* const mapping = Mem_PoolAllocType(localeMapping_t, cl_genericPool);
-				mapping->localeMapping = Mem_PoolStrDup(token, cl_genericPool, 0);
+				mapping->localeMapping = Mem_PoolStrDup((char*)element->data, cl_genericPool, 0);
 				/* link it in */
 				mapping->next = language->localeMapping;
 				language->localeMapping = mapping;
-			} while (*text);
-		} else if (strcmp(token, "name") == 0) {
+			}
+			LIST_Delete(&list);
+		} else if (Q_streq(token, "name")) {
 			token = Com_EParse(text, errhead, name);
 			if (!*text || *token == '}')
 				Com_Error(ERR_FATAL, "CL_ParseLanguages: Name expected for language \"%s\".\n", name);
@@ -137,7 +133,7 @@ void CL_ParseLanguages (const char *name, const char **text)
 				Com_Printf("CL_ParseLanguages: language: '%s' - not marked translatable (%s)\n", name, token);
 			}
 			language->localeString = Mem_PoolStrDup(token, cl_genericPool, 0);
-		} else if (strcmp(token, "native") == 0) {
+		} else if (Q_streq(token, "native")) {
 			token = Com_EParse(text, errhead, name);
 			if (!*text || *token == '}')
 				Com_Error(ERR_FATAL, "CL_ParseLanguages: Native expected for language \"%s\".\n", name);
