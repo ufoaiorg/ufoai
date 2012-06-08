@@ -1662,9 +1662,9 @@ struct parseItemWeapon_t {
 	char *token;
 };
 
-static void Com_ParseFireDefition (objDef_t *od, const char *name, const char *token, const char **text)
+static void Com_ParseFireDefinition (objDef_t *od, const char *name, const char *token, const char **text)
 {
-	const char *errhead = "Com_ParseFireDefition: unexpected end of file (weapon_mod ";
+	const char *errhead = "Com_ParseFireDefinition: unexpected end of file (weapon_mod ";
 	if (od->numWeapons < MAX_WEAPONS_PER_OBJDEF) {
 		/* get it's body */
 		token = Com_Parse(text);
@@ -1676,7 +1676,7 @@ static void Com_ParseFireDefition (objDef_t *od, const char *name, const char *t
 		/* get weapon property */
 		token = Com_Parse(text);
 		if (!*text || !Q_streq(token, "weapon")) {
-			Com_Printf("Com_ParseItem: weapon_mod \"%s\" weapon as first element expected.\n", name);
+			Com_Printf("Com_ParseFireDefinition: weapon_mod \"%s\" weapon as first element expected.\n", name);
 			return;
 		}
 
@@ -1712,7 +1712,7 @@ static void Com_ParseFireDefition (objDef_t *od, const char *name, const char *t
 					fd->weapFdsIdx = weapFdsIdx;
 					od->numFiredefs[od->numWeapons]++;
 				} else {
-					Com_Printf("Com_ParseItem: Too many firedefs at \"%s\". Max is %i\n", name, MAX_FIREDEFS_PER_WEAPON);
+					Com_Printf("Com_ParseFireDefinition: Too many firedefs at \"%s\". Max is %i\n", name, MAX_FIREDEFS_PER_WEAPON);
 				}
 			} else {
 				Com_Printf("Unknown token '%s' - expected firedef\n", token);
@@ -1810,7 +1810,7 @@ static void Com_ParseItem (const char *name, const char **text)
 			} else if (Q_streq(token, "rating")) {
 				Com_ParseArmourOrResistance(name, text, od->ratings, true);
 			} else if (Q_streq(token, "weapon_mod")) {
-				Com_ParseFireDefition(od, name, token, text);
+				Com_ParseFireDefinition(od, name, token, text);
 			} else {
 				Com_Printf("Com_ParseItem: unknown token \"%s\" ignored (weapon %s)\n", token, name);
 			}
