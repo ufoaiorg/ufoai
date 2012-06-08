@@ -750,6 +750,8 @@ static void AIM_AircraftEquipAddItem_f (void)
 	assert(aircraft);
 	base = aircraft->homebase;	/* we need to know where items will be removed */
 	slot = AII_SelectAircraftSlot(aircraft, airequipID);
+	if (slot == NULL)
+		return;
 
 	/* the clicked button doesn't correspond to the selected zone */
 	if (zone != airequipSelectedZone)
