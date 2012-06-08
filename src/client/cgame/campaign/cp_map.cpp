@@ -2127,13 +2127,14 @@ nation_t* MAP_GetNation (const vec2_t pos)
 {
 	int i;
 	const byte* color = MAP_GetColor(pos, MAPTYPE_NATIONS, NULL);
+	const vec3_t fcolor = {color[0] / 255.0, color[1] / 255.0, color[2] / 255.0};
 #ifdef PARANOID
 	Com_DPrintf(DEBUG_CLIENT, "MAP_GetNation: color value for %.0f:%.0f is r:%i, g:%i, b: %i\n", pos[0], pos[1], color[0], color[1], color[2]);
 #endif
 	for (i = 0; i < ccs.numNations; i++) {
 		nation_t *nation = NAT_GetNationByIDX(i);
 		/* compare the first three color values with color value at pos */
-		if (VectorCompare(nation->color, color))
+		if (VectorEqual(nation->color, fcolor))
 			return nation;
 	}
 	Com_DPrintf(DEBUG_CLIENT, "MAP_GetNation: No nation found at %.0f:%.0f - color: %i:%i:%i\n", pos[0], pos[1], color[0], color[1], color[2]);
