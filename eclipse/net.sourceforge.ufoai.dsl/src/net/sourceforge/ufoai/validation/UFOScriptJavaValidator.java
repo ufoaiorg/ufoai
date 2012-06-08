@@ -9,7 +9,6 @@ import net.sourceforge.ufoai.ufoScript.UfoScriptPackage;
 import net.sourceforge.ufoai.ufoScript.Value;
 import net.sourceforge.ufoai.ufoScript.ValueBoolean;
 import net.sourceforge.ufoai.ufoScript.ValueCode;
-import net.sourceforge.ufoai.ufoScript.ValueList;
 import net.sourceforge.ufoai.ufoScript.ValueNamedConst;
 import net.sourceforge.ufoai.ufoScript.ValueNumber;
 import net.sourceforge.ufoai.ufoScript.ValueReference;
@@ -89,6 +88,9 @@ public class UFOScriptJavaValidator extends AbstractUFOScriptJavaValidator {
 	private void validate(UFONode node, Value value, UFOType type) {
 		switch (type.getType()) {
 		case IDENTIFIED_BLOCK:
+			if (!node.getValues().isEmpty()) {
+				error("Block is expected", UfoScriptPackage.Literals.UFO_NODE__VALUE);
+			}
 			if (value != null || node.getNodes() == null) {
 				error("Block is expected", UfoScriptPackage.Literals.UFO_NODE__VALUE);
 			}
@@ -97,6 +99,9 @@ public class UFOScriptJavaValidator extends AbstractUFOScriptJavaValidator {
 			}
 			break;
 		case ANONYMOUS_BLOCK:
+			if (!node.getValues().isEmpty()) {
+				error("Block is expected", UfoScriptPackage.Literals.UFO_NODE__VALUE);
+			}
 			if (value != null || node.getNodes() == null) {
 				error("Block is expected", UfoScriptPackage.Literals.UFO_NODE__VALUE);
 			}
@@ -105,6 +110,9 @@ public class UFOScriptJavaValidator extends AbstractUFOScriptJavaValidator {
 			}
 			break;
 		case BLOCK:
+			if (!node.getValues().isEmpty()) {
+				error("Block is expected", UfoScriptPackage.Literals.UFO_NODE__VALUE);
+			}
 			if (value != null || node.getNodes() == null) {
 				error("Block is expected", UfoScriptPackage.Literals.UFO_NODE__VALUE);
 			}
@@ -293,54 +301,59 @@ public class UFOScriptJavaValidator extends AbstractUFOScriptJavaValidator {
 			validateVector(value, 4, true);
 			break;
 		case LIST:
+		case IDENTIFIED_LIST:
 		{
-			if (!(value instanceof ValueList)) {
-				error("List expected", UfoScriptPackage.Literals.UFO_NODE__VALUE);
-			} else 	{
-				String path = getPath(node);
-				UFOType elementType = getType(path + ".ELEMENT");
-				if (elementType == null) {
-					warning("Elements of the list has no validators", UfoScriptPackage.Literals.UFO_NODE__TYPE);
-					return;
-				}
-				for (Value child: ((ValueList)value).getValues()) {
-					validate(node, child, elementType);
-				}
+			if (!node.getNodes().isEmpty()) {
+				error("List is expected", UfoScriptPackage.Literals.UFO_NODE__VALUE);
+				return;
+			}
+			if (type.getType() == UFOType.Type.IDENTIFIED_LIST && node.getName() == null) {
+				error("Identified block expected", UfoScriptPackage.Literals.UFO_NODE__VALUE);
+			}
+			String path = getPath(node);
+			UFOType elementType = getType(path + ".ELEMENT");
+			if (elementType == null) {
+				warning("Elements of the list has no validators", UfoScriptPackage.Literals.UFO_NODE__TYPE);
+				return;
+			}
+			for (Value child: node.getValues()) {
+				validate(node, child, elementType);
 			}
 			break;
 		}
 		case TUPLE:
 		{
-			if (!(value instanceof ValueList)) {
-				error("List expected", UfoScriptPackage.Literals.UFO_NODE__VALUE);
-			} else 	{
-				String path = getPath(node);
-				List<UFOType> elementTypes = new ArrayList<UFOType>();
-				for (int i = 1; i < 10; i++) {
-					UFOType t = getType(path + ".ELEMENT" + i);
-					if (t == null)
-						break;
-					elementTypes.add(t);
-				}
+			if (node.getNodes() != null) {
+				error("List is expected", UfoScriptPackage.Literals.UFO_NODE__VALUE);
+				return;
+			}
 
-				if (elementTypes.size() == 0) {
-					// We hope a tuple of 0 elements is not valid too
-					warning("Elements of the list has no validators", UfoScriptPackage.Literals.UFO_NODE__TYPE);
-					return;
-				}
+			String path = getPath(node);
+			List<UFOType> elementTypes = new ArrayList<UFOType>();
+			for (int i = 1; i < 10; i++) {
+				UFOType t = getType(path + ".ELEMENT" + i);
+				if (t == null)
+					break;
+				elementTypes.add(t);
+			}
 
-				EList<Value> values = ((ValueList)value).getValues();
-				if (elementTypes.size() != values.size()) {
-					error(elementTypes.size() + " elements expected, but " + values.size() + " found", UfoScriptPackage.Literals.UFO_NODE__VALUE);
-					return;
-				}
+			if (elementTypes.size() == 0) {
+				// We hope a tuple of 0 elements is not valid too
+				warning("Elements of the list has no validators", UfoScriptPackage.Literals.UFO_NODE__TYPE);
+				return;
+			}
 
-				for (int i = 0; i < elementTypes.size(); i++) {
-					if (i >= values.size())
-						break;
-					UFOType t = elementTypes.get(i);
-					validate(node, values.get(i), t);
-				}
+			EList<Value> values = node.getValues();
+			if (elementTypes.size() != values.size()) {
+				error(elementTypes.size() + " elements expected, but " + values.size() + " found", UfoScriptPackage.Literals.UFO_NODE__VALUE);
+				return;
+			}
+
+			for (int i = 0; i < elementTypes.size(); i++) {
+				if (i >= values.size())
+					break;
+				UFOType t = elementTypes.get(i);
+				validate(node, values.get(i), t);
 			}
 			break;
 		}

@@ -143,6 +143,12 @@ public class UFOType {
 		LIST,
 
 		/**
+		 * A list of element of the same type,
+		 * with an extra token identifier.
+		 */
+		IDENTIFIED_LIST,
+
+		/**
 		 * A tuple of a know number of elements, type of the element depends
 		 * on the position of the element
 		 */

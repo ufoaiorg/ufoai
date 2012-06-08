@@ -9,7 +9,10 @@ UFOScript:
 
 UFONode:
 	(=>type=ID (
-		((=>name=ID)? "{" ((nodes+=UFONode)* | code=TokenList) "}")
+		((=>name=ID)?
+			(("{" ((nodes+=UFONode)* | code=TokenList) "}")
+			| ('(' values+=Value* ')'))
+		)
 		| (value=Value)
 	));
 
@@ -24,8 +27,7 @@ Value:
 	| ValueNamedConst
 	| ValueReference
 	| ValueCode
-	| ValueString
-	| ValueList;
+	| ValueString;
 
 ValueCode:
 	value = CODE;
@@ -44,9 +46,6 @@ ValueReference:
 
 ValueNamedConst:
 	value=NAMED_CONST;
-
-ValueList:
-	'(' {ValueList} values+=Value* ')';
 
 //ValueNull:
 //	value=NULL;
