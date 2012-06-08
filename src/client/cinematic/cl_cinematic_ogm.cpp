@@ -307,7 +307,7 @@ static int CIN_XVID_LoadVideoFrame (cinematic_t *cin)
 			}
 
 			/* use the rest of this packet */
-			usedBytes += CIN_XVID_Decode(cin, op.packet + usedBytes, op.bytes - usedBytes);
+			CIN_XVID_Decode(cin, op.packet + usedBytes, op.bytes - usedBytes);
 		}
 
 		/* we got a real output frame ... */
