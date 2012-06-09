@@ -462,6 +462,10 @@ public class UFOScriptJavaValidator extends AbstractUFOScriptJavaValidator {
 			return;
 		}
 
+		if (node.getCode() != null) {
+			error("This token value is not expected. It is only here for robustness", UfoScriptPackage.Literals.UFO_NODE__TYPE);
+		}
+
 		validate(node, node.getValue(), type);
 	}
 
