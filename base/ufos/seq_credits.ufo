@@ -3,8 +3,7 @@ sequence credits
 	music "Crystan-Credits"
 	animspeed 1000
 
-	precache models
-	{
+	precache models (
 		"aircraft/ufo_fighter/ufo_fighter_hull"
 		"aircraft/ufo_fighter/ufo_fighter_engines_1"
 		"aircraft/ufo_fighter/ufo_fighter_engines_2"
@@ -19,11 +18,10 @@ sequence credits
 		"soldiers/malemedium/body"
 		"soldiers/malemedium/head02"
 		"soldiers/malemedium/head03"
-	}
-	precache pics
-	{
+	)
+	precache pics (
 		"ufoai"
-	}
+	)
 	camera cam1
 	{
 		zoom	6.0

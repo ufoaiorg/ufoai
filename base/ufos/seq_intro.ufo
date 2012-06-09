@@ -2,15 +2,14 @@ sequence intro // Last change 25-07-2009 by Vio
 {
 	animspeed 100
 
-	precache pics
-	{
+	precache pics (
 		"phalanx_badge"
 		"phalanx_earth"
 		"phalanx_lance_left"
 		"phalanx_lance_right"
 		"geoscape/map_earth_night"
 		"geoscape/mission"
-	}
+	)
 
 	//fitting music, deactivate for geoscape track
 	music "PsymongN5"

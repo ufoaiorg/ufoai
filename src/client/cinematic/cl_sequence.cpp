@@ -864,6 +864,21 @@ static sequenceHandler_t seqCmdFunc[] = {
 CASSERT(lengthof(seqCmdFunc) == lengthof(seqCmdName));
 
 /**
+ * Find a sequence command by name
+ * @return The sequence command id, else -1 if not found
+ */
+static int CL_FindSequenceCommand (const char* commandName)
+{
+	int i;
+	for (i = 0; i < SEQ_NUMCMDS; i++) {
+		if (Q_streq(commandName, seqCmdName[i])) {
+			return i;
+		}
+	}
+	return -1;
+}
+
+/**
  * @brief Reads the sequence values from given text-pointer
  * @sa CL_ParseClientData
  */
@@ -906,44 +921,42 @@ void CL_ParseSequence (const char *name, const char **text)
 		token = Com_EParse(text, errhead, name);
 		if (!*text)
 			break;
-	next_cmd:
 		if (*token == '}')
 			break;
 
 		/* check for commands */
-		for (i = 0; i < SEQ_NUMCMDS; i++)
-			if (Q_streq(token, seqCmdName[i])) {
-				int maxLength = MAX_DATA_LENGTH;
-				int depth;
-				char *data;
-				seqCmd_t *sc;
+		int i = CL_FindSequenceCommand(token);
+		if (i != -1) {
+			int maxLength = MAX_DATA_LENGTH;
+			int depth;
+			char *data;
+			seqCmd_t *sc;
 
-				/* found a command */
-				token = Com_EParse(text, errhead, name);
-				if (!*text)
-					return;
+			/* found a command */
+			token = Com_EParse(text, errhead, name);
+			if (!*text)
+				return;
 
-				if (numSeqCmds >= MAX_SEQCMDS)
-					Com_Error(ERR_FATAL, "Too many sequence commands for %s", name);
+			if (numSeqCmds >= MAX_SEQCMDS)
+				Com_Error(ERR_FATAL, "Too many sequence commands for %s", name);
 
-				/* init seqCmd */
-				if (seqCmds == NULL)
-					seqCmds = Mem_PoolAllocTypeN(seqCmd_t, MAX_SEQCMDS, cl_genericPool);
-				sc = &seqCmds[numSeqCmds++];
-				OBJZERO(*sc);
-				sc->handler = seqCmdFunc[i];
-				sp->length++;
+			/* init seqCmd */
+			if (seqCmds == NULL)
+				seqCmds = Mem_PoolAllocTypeN(seqCmd_t, MAX_SEQCMDS, cl_genericPool);
+			sc = &seqCmds[numSeqCmds++];
+			OBJZERO(*sc);
+			sc->handler = seqCmdFunc[i];
+			sp->length++;
 
-				/* copy name */
-				Q_strncpyz(sc->name, token, sizeof(sc->name));
+			/* copy name */
+			Q_strncpyz(sc->name, token, sizeof(sc->name));
 
-				/* read data */
-				token = Com_EParse(text, errhead, name);
-				if (!*text)
-					return;
-				if (*token != '{')
-					goto next_cmd;
-
+			/* read data */
+			token = Com_EParse(text, errhead, name);
+			if (!*text)
+				return;
+			if (*token == '{') {
+				// TODO depth is useless IMHO (bayo)
 				depth = 1;
 				data = &sc->data[0];
 				while (depth) {
@@ -965,10 +978,28 @@ void CL_ParseSequence (const char *name, const char **text)
 						maxLength -= (strlen(token) + 1);
 					}
 				}
-				break;
+			} else if (*token == '(') {
+				linkedList_t *list;
+				Com_UnParseLastToken();
+				if (!Com_ParseList(text, &list)) {
+					Com_Error(ERR_DROP, "CL_ParseSequence: error while reading list (sequence \"%s\")", name);
+				}
+				data = &sc->data[0];
+				for (linkedList_t *element = list; element != NULL; element = element->next) {
+					if (maxLength <= 0) {
+						Com_Printf("Too much data for sequence %s", sc->name);
+						break;
+					}
+					const char* v = (char*)element->data;
+					Q_strncpyz(data, v, maxLength);
+					data += strlen(v) + 1;
+					maxLength -= (strlen(v) + 1);
+				}
+				LIST_Delete(&list);
+			} else {
+				Com_UnParseLastToken();
 			}
-
-		if (i == SEQ_NUMCMDS) {
+		} else {
 			Com_Printf("CL_ParseSequence: unknown command \"%s\" ignored (sequence %s)\n", token, name);
 			Com_EParse(text, errhead, name);
 		}

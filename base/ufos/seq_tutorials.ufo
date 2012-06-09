@@ -9,8 +9,7 @@ sequence tut_gameplay
 	music 		"Crystan-Tutorial"
 	// ==============================================
 	// precache the screenshots
-	precache pics
-	{
+	precache pics (
 		"tutorial/gameplay1a"
 		"tutorial/gameplay1b"
 		"tutorial/gameplay1c"
@@ -29,7 +28,7 @@ sequence tut_gameplay
 		"tutorial/gameplay7a"
 		"tutorial/gameplay8a"
 		"tutorial/gameplay8b"
-	}
+	)
 
 	obj2d gameplay_welcome
 	{
@@ -333,10 +332,9 @@ sequence tut_tacticalmission
 	music 		"Crystan-Tutorial"
 	// ==============================================
 	// just precaching the background image
-	precache pics
-	{
+	precache pics (
 		"tutorial/tactical1"
-	}
+	)
 
 
 	// ==============================================
@@ -782,10 +780,9 @@ sequence tut_skirmish
 	music 		"Crystan-Tutorial"
 	// ==============================================
 	// precaching screenshot
-	precache pics
-	{
+	precache pics (
 		"tutorial/skirmish1"
-	}
+	)
 	obj2d skirmish_welcome
 	{
 		text	"_Skirmish tutorial"
@@ -1055,10 +1052,9 @@ sequence tut_multiplayer
 	music 		"Crystan-Tutorial"
 	// ==============================================
 	// just precaching the background image
-	precache pics
-	{
+	precache pics (
 		"tutorial/multiplayer1"
-	}
+	)
 
 	obj2d port_text
 	{
