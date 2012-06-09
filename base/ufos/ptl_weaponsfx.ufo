@@ -403,7 +403,7 @@ particle rocket
 {
 	init
 	{
-		model  weapons/rpg2/rocket
+		model  "weapons/rpg2/rocket"
 		tps    40.0
 		color  ".5 .5 .5 1"
 		spawn rocket_muzzle
@@ -520,7 +520,7 @@ particle rocket_inc
 {
 	init
 	{
-		model  weapons/rpg2/rocket_inc
+		model  "weapons/rpg2/rocket_inc"
 		color  ".5 .5 .5 1"
 		tps    40.0
 	}
@@ -536,7 +536,7 @@ particle rocket_particle
 {
 	init
 	{
-		model  weapons/rpg2/rocket
+		model  "weapons/rpg2/rocket"
 		color  ".5 .5 .5 1"
 		tps    40.0
 	}
@@ -1612,7 +1612,7 @@ particle grenl_ammo_ptl
 {
 	init
 	{
-		model  weapons/grenl/grenl_clip2
+		model  "weapons/grenl/grenl_clip2"
 		color  ".5 .5 .5 1"
 		skin	"0"
 		tps    40.0
@@ -1627,7 +1627,7 @@ particle grenl_fle_ammo
 {
 	init
 	{
-		model  weapons/grenl/grenl_clip2
+		model  "weapons/grenl/grenl_clip2"
 		skin	"1"
 		color  ".5 .5 .5 1"
 		tps    40.0
@@ -1642,7 +1642,7 @@ particle grenl_ic_ammo
 {
 	init
 	{
-		model  weapons/grenl/grenl_clip2
+		model  "weapons/grenl/grenl_clip2"
 		skin	"2"
 		color  ".5 .5 .5 1"
 		tps    40.0
@@ -1657,7 +1657,7 @@ particle grenl_plasma_ammo_ptl
 {
 	init
 	{
-		model  weapons/grenl/grenl_clip2
+		model  "weapons/grenl/grenl_clip2"
 		skin	"3"
 		color  ".5 .5 .5 1"
 		tps    40.0
@@ -1712,7 +1712,7 @@ particle medikit_ptl
 {
 	init
 	{
-		model  weapons/medikit/medikit
+		model  "weapons/medikit/medikit"
 		color  ".5 .5 .5 1"
 	}
 }
@@ -1721,7 +1721,7 @@ particle irgoggles_ptl
 {
 	init
 	{
-		model  weapons/irgoggles/irgoggles
+		model  "weapons/irgoggles/irgoggles"
 		color  ".5 .5 .5 1"
 	}
 }
@@ -1730,7 +1730,7 @@ particle fraggren
 {
 	init
 	{
-		model  weapons/fraggren/fraggren
+		model  "weapons/fraggren/fraggren"
 		color  ".5 .5 .5 1"
 	}
 }
@@ -1739,7 +1739,7 @@ particle incgren
 {
 	init
 	{
-		model  weapons/incgren/incgren
+		model  "weapons/incgren/incgren"
 		color  ".5 .5 .5 1"
 	}
 }
@@ -1748,7 +1748,7 @@ particle flashgren
 {
 	init
 	{
-		model  weapons/flashbang/flashbang
+		model  "weapons/flashbang/flashbang"
 		color  ".5 .5 .5 1"
 	}
 }
@@ -1757,7 +1757,7 @@ particle smokegren
 {
 	init
 	{
-		model  weapons/smokegren/smokegren
+		model  "weapons/smokegren/smokegren"
 		color  ".5 .5 .5 1"
 	}
 }
@@ -1766,7 +1766,7 @@ particle stungren
 {
 	init
 	{
-		model  weapons/stungren/stungren
+		model  "weapons/stungren/stungren"
 		color  ".5 .5 .5 1"
 	}
 }
@@ -1775,7 +1775,7 @@ particle stungren_alien
 {
 	init
 	{
-		model  weapons/stungren_alien/stungren
+		model  "weapons/stungren_alien/stungren"
 		color  ".5 .5 .5 1"
 	}
 }
@@ -1784,7 +1784,7 @@ particle plasmagren
 {
 	init
 	{
-		model  weapons/plasmagren/plasmagren
+		model  "weapons/plasmagren/plasmagren"
 		color  ".5 .5 .5 1"
 	}
 }
@@ -1798,7 +1798,7 @@ particle knife_ptl
 {
 	init
 	{
-		model  weapons/knife/knife
+		model  "weapons/knife/knife"
 		color  ".5 .5 .5 1"
 		omega  "-800 0 0"
 		angles "90 0 0"
@@ -1809,7 +1809,7 @@ particle kerrblade
 {
 	init
 	{
-		model  weapons/kerrblade/kerrblade
+		model  "weapons/kerrblade/kerrblade"
 		color  ".5 .5 .5 1"
 		omega  "-800 0 0"
 		angles "90 0 0"
@@ -1820,7 +1820,7 @@ particle plasblade
 {
 	init
 	{
-		model  weapons/plasblade/plasblade
+		model  "weapons/plasblade/plasblade"
 		color  ".5 .5 .5 1"
 		omega  "-800 0 0"
 		angles "90 0 0"
@@ -1832,7 +1832,7 @@ particle fwl
 {
 	init
 	{
-		model  weapons/rpg2/rocket
+		model  "weapons/rpg2/rocket"
 		color  ".5 .5 .5 1"
 		tps    80.0
 	}
@@ -1915,7 +1915,7 @@ particle incz
 {
 	init
 	{
-		model  weapons/rpg2/rocket_inc
+		model  "weapons/rpg2/rocket_inc"
 		color  ".5 .5 .5 1"
 		tps    80.0
 	}
