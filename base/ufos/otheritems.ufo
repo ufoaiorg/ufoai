@@ -20,9 +20,9 @@ item alienmaterials
 	weapon		false
 }
 
-// ========================
-// weapons for melee actors
-// ========================
+// ================================
+// weapons for single-weapon actors
+// ================================
 
 item bloodspider_weapon
 {
@@ -55,6 +55,69 @@ item bloodspider_weapon
 			damage		"40 20" //FIXME
 			reaction	true
 			dmgweight	"normal_monomolecularblade"
+		}
+	}
+}
+
+item hovernet_plasma
+{
+	name			"_Hovernet Plasma Weapon"
+	model			"weapons/plasrifle/plasrifle"
+	weapon			true
+	type			"rifle"
+	animationindex	1
+	holdtwohanded	false
+	firetwohanded	true
+	shape			"0 0 5 2"
+	center			"9.3 0 1.5"
+	scale			1.25
+	ammo			200
+	reload			12
+	reloadsound		"weapons/reload-rifle"
+	price			2500
+	size			40
+	is_primary		true
+	virtual			true
+}
+
+item hovernet_plasma_ammo
+{
+	name			"_Hovernet Plasma Ammo"
+	model			"weapons/plaspistol/plaspistol_clip"
+	type			"ammo"
+	animationindex	0
+	shape			"0 0 1 1"
+	center			"0 0 -0.2"
+	scale			1.1
+	price			800
+	size			3
+	is_secondary	true
+	dmgtype			"plasma"
+
+	weapon_mod
+	{
+		weapon hovernet_plasma
+		firedef
+		{
+			name				"_Burst"
+			skill				"assault"
+			projtl				plasmaPulse
+			impact				plasmaImpactCharged
+			hitbody				plasmaImpactCharged
+			firesnd				"weapons/plasma-medium"
+			impsnd				"impact/plasma-impact"
+			bodysnd 			"impact/plasma-bodyimpact"
+			speed				1300
+			spread				"1.2 1.2"
+			crouch				1
+			range				70
+			shots				3
+			ammo				3
+			delaybetweenshots	8
+			time				10
+			damage				"80 10"
+			dmgweight			"plasma_medium"
+			reaction			true
 		}
 	}
 }

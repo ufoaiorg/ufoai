@@ -4311,36 +4311,78 @@ tech rs_alien_shevaar_autopsy
 }
 
 // HOVERNET
-// I am commenting this since this tech seems to have three
-// different names everywhere: HOVERNET, FLYER and STINGER
-// and nothing about it is ready anyway
-// -Zenerka 20.01.2007
-//tech rs_alien_stinger_notes
-//{
-//	type	"alien"
-//name	"_Live Specimen - Stinger"
-//	description	"_hovernet_notes_txt"
-//	pre_description	"_hovernet_notes_pre_txt"
-//	up_chapter	aliens
-//require_AND { tech TODO }
-//	time	2000
-//// menuModel - see models.ufo
-//	model	alien_hovernet
-//}
-//tech rs_alien_stinger_autopsy
-//{
-//	type	"alien"
-//	name	"_Alien Autopsy - Stinger"
-//	description	"_hovernet_autopsy_txt"
-//	pre_description	"_hovernet_autopsy_pre_txt"
-//	up_chapter	aliens
-//
-//	require_AND { tech TODO }
-//	time	1500
-//
-//	// menuModel - see models.ufo
-//	model	alien_hovernet
-//}
+
+tech rs_alien_hovernet_autopsy
+{
+	name	"_Alien Autopsy - Hovernet"
+	type	"alien"
+	up_chapter	aliens
+
+	description {
+		default "_hovernet_autopsy_txt"
+	}
+	pre_description {
+		default "_hovernet_autopsy_pre_txt"
+	}
+
+	mail_pre
+	{
+		from	"_mail_from_dr_connor"
+		to		"_mail_to_base_commander"
+		// subject	defined by "name"
+		model	"characters/connor"
+		icon	"icons/mail_alien"
+	}
+
+	mail
+	{
+		from	"_mail_from_dr_connor"
+		to		"_mail_to_base_commander"
+		// subject	defined by "name"
+		model	"characters/connor"
+		icon	"icons/mail_alien"
+	}
+
+	require_AND
+	{
+		alien_dead (hovernet 1)
+	}
+	time	3500
+
+	image	"techs/hovernet_dead"
+}
+
+tech rs_weapon_hovernet_plasma
+{
+	type		"weapon"
+	up_chapter	artifacts
+
+	require_AND
+	{
+		tech rs_weapon_hovernet_plasma
+	}
+	provides	hovernet_plasma
+	time		0
+	producetime	-1
+}
+
+tech rs_weapon_hovernet_plasma_ammo
+{
+	type	"weapon"
+	up_chapter	artifacts
+
+	redirect	rs_weapon_hovernet_plasma
+
+	require_AND
+	{
+		tech rs_weapon_hovernet_plasma_ammo
+	}
+
+	provides	hovernet_plasma_ammo
+	time	0
+	producetime	-1
+}
+
 
 // CYBORG ORTNOK
 

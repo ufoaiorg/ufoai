@@ -175,6 +175,19 @@ chrtemplate soldier_blood {
 	health	"150 150"
 }
 
+chrtemplate soldier_hovernet {
+	strength	"55 55"
+	speed	"70 70"
+	accuracy	"50 50"
+	mind	"50 50"
+	close	"50 50"
+	heavy	"50 50"
+	assault	"50 50"
+	sniper	"50 50"
+	explosive	"50 50"
+	health	"100 100"
+}
+
 chrtemplate soldier_robot {
 	strength	"55 55"
 	speed	"40 40"
