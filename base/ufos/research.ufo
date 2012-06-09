@@ -30,7 +30,7 @@
 //		Example:
 //		description {
 //			default	"_gettext_text"
-//			rs_tech_id "_gettext_text2"
+//			extra (rs_tech_id "_gettext_text2")
 //		}
 //
 //		rs_tech_id:
@@ -55,11 +55,11 @@
 //		                  Another technology that has to be researched.
 //		"tech_not" type	-	e.g "tech rs_xxx"
 //			                Another technology that must not be researched.
-//		"item" type	    - e.g "item inv_coolweapon 10"
+//		"item" type	    - e.g "item (inv_coolweapon 10)"
 //			                You need to collect at least 10 items of this thing so it can be researched.
-//		"alien"         - e.g "		alien evil_alien 1"
+//		"alien"         - e.g "		alien (evil_alien 1)"
 //                      You need to collect at least 1 live alien of this race.
-//		"alien_dead"    - e.g "		alien_dead evil_alien 1"
+//		"alien_dead"    - e.g "		alien_dead (evil_alien 1)"
 //                      You need to collect at least 1 dead alien of this race.
 //		"alienglobal"   - e.g "		alienglobal 3"
 //                      You need to have least 3 live aliens in your containments (in all bases).
@@ -210,11 +210,11 @@ tech rs_antimatter
 
 	description {
 		default "_antimatter_txt"
-		rs_antimatter_extra "_antimatter_extra_txt"
+		extra (rs_antimatter_extra "_antimatter_extra_txt")
 	}
 	pre_description {
 		default "_antimatter_pre_txt"
-		rs_antimatter_extra "_antimatter_extra_pre_txt"
+		extra (rs_antimatter_extra "_antimatter_extra_pre_txt")
 	}
 
 	mail_pre
@@ -4188,11 +4188,11 @@ tech rs_alien_ortnok_autopsy
 
 	description {
 		default "_ortnok_autopsy_txt"
-		rs_ortnok_extra "_ortnok_autopsy_extra_txt"
+		extra (rs_ortnok_extra "_ortnok_autopsy_extra_txt")
 	}
 	pre_description {
 		default "_ortnok_autopsy_pre_txt"
-		rs_ortnok_extra "_ortnok_autopsy_extra_pre_txt"
+		extra (rs_ortnok_extra "_ortnok_autopsy_extra_pre_txt")
 	}
 
 	mail_pre
@@ -4232,11 +4232,11 @@ tech rs_alien_taman_autopsy
 
 	description {
 		default "_taman_autopsy_txt"
-		rs_taman_extra "_taman_autopsy_extra_txt"
+		extra (rs_taman_extra "_taman_autopsy_extra_txt")
 	}
 	pre_description {
 		default "_taman_autopsy_pre_txt"
-		rs_taman_extra "_taman_autopsy_extra_pre_txt"
+		extra (rs_taman_extra "_taman_autopsy_extra_pre_txt")
 	}
 
 	mail_pre
@@ -4276,11 +4276,11 @@ tech rs_alien_shevaar_autopsy
 
 	description {
 		default "_shevaar_autopsy_txt"
-		rs_shevaar_extra "_shevaar_autopsy_extra_txt"
+		extra (rs_shevaar_extra "_shevaar_autopsy_extra_txt")
 	}
 	pre_description {
 		default "_shevaar_autopsy_pre_txt"
-		rs_shevaar_extra "_shevaar_autopsy_extra_pre_txt"
+		extra (rs_shevaar_extra "_shevaar_autopsy_extra_pre_txt")
 	}
 
 	mail_pre
@@ -5264,7 +5264,7 @@ tech news_new_twist
 
 	description {
 		default "_news_new_twist_txt"			// The Enemy On Earth has NOT been researched.
-		rs_enemy_on_earth "_news_new_twist_alt_txt"	// The Enemy On Earth HAS been researched.
+		extra (rs_enemy_on_earth "_news_new_twist_alt_txt")	// The Enemy On Earth HAS been researched.
 	}
 
 	mail
@@ -5294,7 +5294,7 @@ tech rs_enemy_on_earth
 
 	description {
 		default "_enemy_on_earth_alt_txt"		// A New Twist has NOT occurred
-		news_new_twist "_enemy_on_earth_txt"		// A New Twist HAS occurred
+		extra (news_new_twist "_enemy_on_earth_txt")		// A New Twist HAS occurred
 	}
 	pre_description {
 		default "_enemy_on_earth_pre_txt"

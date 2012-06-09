@@ -1217,8 +1217,6 @@ void RS_ParseTechnologies (const char *name, const char **text)
 					break;
 				if (*token != '{')
 					break;
-				if (*token == '}')
-					break;
 
 				do {	/* Loop through all descriptions in the list.*/
 					token = Com_EParse(text, errhead, name);
@@ -1227,23 +1225,44 @@ void RS_ParseTechnologies (const char *name, const char **text)
 					if (*token == '}')
 						break;
 
-					if (descTemp->numDescriptions < MAX_DESCRIPTIONS) {
-						/* Copy tech string into entry. */
-						descTemp->tech[descTemp->numDescriptions] = Mem_PoolStrDup(token, cp_campaignPool, 0);
+					linkedList_t *list;
 
-						/* Copy description text into the entry. */
+					if (Q_streq(token, "default")) {
+						list = NULL;
+						LIST_AddString(&list, token);
 						token = Com_EParse(text, errhead, name);
+						LIST_AddString(&list, token);
+					} else if (Q_streq(token, "extra")) {
+						if (!Com_ParseList(text, &list)) {
+							Com_Error(ERR_DROP, "RS_ParseTechnologies: error while reading extra description tuple");
+						}
+						if (LIST_Count(list) != 2) {
+							LIST_Delete(&list);
+							Com_Error(ERR_DROP, "RS_ParseTechnologies: extra description tuple must contains 2 elements (id string)");
+						}
+					} else {
+						Com_Error(ERR_DROP, "RS_ParseTechnologies: error while reading description: token \"%s\" not expected", token);
+					}
+
+					if (descTemp->numDescriptions < MAX_DESCRIPTIONS) {
+						const char *id = (char*)list->data;
+						const char *description = (char*)list->next->data;
+
+						/* Copy tech string into entry. */
+						descTemp->tech[descTemp->numDescriptions] = Mem_PoolStrDup(id, cp_campaignPool, 0);
+
 						/* skip translation marker */
-						if (*token == '_')
-							token++;
+						if (description[0] == '_')
+							description++;
 						else
 							Com_Error(ERR_DROP, "RS_ParseTechnologies: '%s' No gettext string for description '%s'. Abort.\n", name, descTemp->tech[descTemp->numDescriptions]);
 
-						descTemp->text[descTemp->numDescriptions] = Mem_PoolStrDup(token, cp_campaignPool, 0);
+						descTemp->text[descTemp->numDescriptions] = Mem_PoolStrDup(description, cp_campaignPool, 0);
 						descTemp->numDescriptions++;
 					} else {
 						Com_Printf("skipped description for tech '%s'\n", tech->id);
 					}
+					LIST_Delete(&list);
 				} while (*text);
 
 			} else if (Q_streq(token, "redirect")) {
