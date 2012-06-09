@@ -268,6 +268,21 @@ void Com_RegisterConstList (const constListEntry_t constList[])
 }
 
 /**
+ * Find name type id by is name
+ * @return id of the name type, else -1 if not found
+ */
+static int Com_FindNameType (const char* nameType)
+{
+	int i;
+	for (i = 0; i < NAME_NUM_TYPES; i++) {
+		if (Q_streq(nameType, name_strings[i])) {
+			return i;
+		}
+	}
+	return -1;
+}
+
+/**
  * @brief Parsing function that prints an error message when there is no text in the buffer
  * @sa Com_Parse
  */
@@ -2258,7 +2273,6 @@ static void Com_ParseActorNames (const char *name, const char **text, teamDef_t*
 {
 	const char *errhead = "Com_ParseNames: unexpected end of file (names ";
 	const char *token;
-	int i;
 
 	/* get name list body body */
 	token = Com_Parse(text);
@@ -2276,43 +2290,31 @@ static void Com_ParseActorNames (const char *name, const char **text, teamDef_t*
 		if (*token == '}')
 			break;
 
-		for (i = 0; i < NAME_NUM_TYPES; i++)
-			if (Q_streq(token, name_strings[i])) {
-				td->numNames[i] = 0;
+		int nameType = Com_FindNameType(token);
 
-				token = Com_EParse(text, errhead, name);
-				if (!*text)
-					break;
-				if (*token != '{')
-					break;
+		linkedList_t *list;
+		if (!Com_ParseList(text, &list)) {
+			Com_Error(ERR_DROP, "Com_ParseActorNames: error while reading names (%s)", name);
+		}
 
-				do {
-					/* get a name */
-					token = Com_EParse(text, errhead, name);
-					if (!*text)
-						break;
-					if (*token == '}')
-						break;
+		for (linkedList_t *element = list; element != NULL; element = element->next) {
+			/* some names can be translatable */
+			const char *n = (char*)element->data;
+			if (*n == '_')
+				token++;
+			LIST_AddString(&td->names[nameType], n);
+			td->numNames[nameType]++;
+		}
+		LIST_Delete(&list);
 
-					/* some names can be translatable */
-					if (*token == '_')
-						token++;
-					LIST_AddString(&td->names[i], token);
-					td->numNames[i]++;
-				} while (*text);
-
-				/* lastname is different */
-				/* fill female and male lastnames from neutral lastnames */
-				if (i == NAME_LAST)
-					for (i = NAME_NUM_TYPES - 1; i > NAME_LAST; i--) {
-						td->names[i] = td->names[NAME_LAST];
-						td->numNames[i] = td->numNames[NAME_LAST];
-					}
-				break;
+		/* lastname is different */
+		/* fill female and male lastnames from neutral lastnames */
+		if (nameType == NAME_LAST) {
+			for (int i = NAME_NUM_TYPES - 1; i > NAME_LAST; i--) {
+				td->names[i] = td->names[NAME_LAST];
+				td->numNames[i] = td->numNames[NAME_LAST];
 			}
-
-		if (i == NAME_NUM_TYPES)
-			Com_Printf("Com_ParseNames: unknown token \"%s\" ignored (names %s)\n", token, name);
+		}
 
 	} while (*text);
 
@@ -2333,7 +2335,6 @@ static void Com_ParseActorModels (const char *name, const char **text, teamDef_t
 {
 	const char *errhead = "Com_ParseActorModels: unexpected end of file (actors ";
 	const char *token;
-	int i, j;
 
 	/* get name list body body */
 	token = Com_Parse(text);
@@ -2351,69 +2352,41 @@ static void Com_ParseActorModels (const char *name, const char **text, teamDef_t
 		if (*token == '}')
 			break;
 
-		for (i = 0; i < NAME_NUM_TYPES; i++)
-			if (Q_streq(token, name_strings[i])) {
-				if (td->numModels[i])
-					Sys_Error("Com_ParseActorModels: Already parsed models for actor definition '%s'\n", name);
-				td->numModels[i] = 0;
-				token = Com_EParse(text, errhead, name);
-				if (!*text)
-					break;
-				if (*token != '{') {
-					Com_Printf("Com_ParseActorModels: Empty model definition '%s' for gender '%s'\n", name, name_strings[i]);
-					break;
-				}
+		const int nameType = Com_FindNameType(token);
+		if (nameType == -1) {
+			Com_Error(ERR_DROP, "Com_ParseActorModels: name type \"%s\" unknown", token);
+		}
 
-				do {
-					/* get the path, body, head and skin */
-					teamDef_t::model_t model;
-					for (j = 0; j < 5; j++) {
-						token = Com_EParse(text, errhead, name);
-						if (!*text) {
-							Com_Printf("Com_ParseActors: Premature end of script at j=%i\n", j);
-							break;
-						}
-						if (*token == '}')
-							break;
+		linkedList_t *list;
+		if (!Com_ParseList(text, &list)) {
+			Com_Error(ERR_DROP, "Com_ParseActorModels: error while reading model tuple (%s)", name);
+		}
+		if (LIST_Count(list) != 5) {
+			LIST_Delete(&list);
+			Com_Error(ERR_DROP, "Com_ParseActorModels: model tuple must contains 5 elements");
+		}
 
-						switch (j) {
-						case 0:
-							model.path = Mem_StrDup(token);
-							break;
-						case 1:
-							model.body = Mem_StrDup(token);
-							break;
-						case 2:
-							model.head = Mem_StrDup(token);
-							break;
-						case 3:
-							model.bodySkin = atoi(token);
-							break;
-						case 4:
-							model.headSkin = atoi(token);
-							break;
-						}
-					}
-					/* first token was '}' */
-					if (j == 0)
-						break;
+		linkedList_t *element = list;
+		const char* pathToken = (char*)element->data;
+		element = element->next;
+		const char* bodyToken = (char*)element->data;
+		element = element->next;
+		const char* headToken = (char*)element->data;
+		element = element->next;
+		const char* bodySkinToken = (char*)element->data;
+		element = element->next;
+		const char* headSkinToken = (char*)element->data;
 
-					/* only add complete actor info */
-					if (j == 5) {
-						LIST_Add(&td->models[i], model);
-						td->numModels[i]++;
-					} else {
-						Com_Printf("Com_ParseActors: Incomplete actor data: '%s' - j: %i\n", td->id, j);
-						break;
-					}
-				} while (*text);
-				if (!td->numModels[i])
-					Com_Printf("Com_ParseActors: actor definition '%s' with no models (gender: %s)\n", name, name_strings[i]);
-				break;
-			}
+		teamDef_t::model_t model;
+		model.path = Mem_StrDup(pathToken);
+		model.body = Mem_StrDup(bodyToken);
+		model.head = Mem_StrDup(headToken);
+		model.bodySkin = atoi(bodySkinToken);
+		model.headSkin = atoi(headSkinToken);
 
-		if (i == NAME_NUM_TYPES)
-			Com_Printf("Com_ParseActors: unknown token \"%s\" ignored (actors %s)\n", token, name);
+		LIST_Add(&td->models[nameType], model);
+		td->numModels[nameType]++;
+		LIST_Delete(&list);
 
 	} while (*text);
 }

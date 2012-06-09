@@ -63,7 +63,7 @@ team phalanx
 	team	"phalanx"
 
 	names {
-		female {
+		female (
 			"Aakriti"
 			"Abeba"
 			"Adina"
@@ -220,9 +220,9 @@ team phalanx
 			"Zalika"
 			"Zi"
 			"Zola"
-		}
+		)
 
-		male {
+		male (
 			"Abdul-Majid"
 			"Adham"
 			"Adofo"
@@ -374,9 +374,9 @@ team phalanx
 			"Yoshi"
 			"Yves"
 			"Zuberi"
-		}
+		)
 
-		lastname {
+		lastname (
 			"Ab Del Farak"
 			"Abu Rajab"
 			"Adedayo"
@@ -580,31 +580,26 @@ team phalanx
 			"Zamora"
 			"Zavala"
 			"Zhang"
-		}
+		)
 	}
 
 	models {
-		female {
-			"soldiers/female" "body" "head01" 0 0
-			"soldiers/female" "body" "head02" 0 0
-			"soldiers/female" "body" "head02" 0 1
-			"soldiers/female" "body" "head03" 0 0
-			"soldiers/female" "body" "head04" 0 0
-			"soldiers/female" "body" "head05" 0 0
-			"soldiers/female" "body" "head06" 0 0
-			"soldiers/female" "body" "head07" 0 0
-		}
-
-		male {
-			"soldiers/male" "body" "head01" 0 0
-			"soldiers/male" "body" "head01" 0 1
-			"soldiers/male" "body" "head01" 0 2
-			"soldiers/male" "body" "head01" 0 3
-			"soldiers/male" "body" "head02" 0 0
-			"soldiers/male" "body" "head03" 0 0
-			"soldiers/male" "body" "head04" 0 0
-			"soldiers/male" "body" "head05" 0 0
-		}
+		female("soldiers/female" "body" "head01" 0 0)
+		female("soldiers/female" "body" "head02" 0 0)
+		female("soldiers/female" "body" "head02" 0 1)
+		female("soldiers/female" "body" "head03" 0 0)
+		female("soldiers/female" "body" "head04" 0 0)
+		female("soldiers/female" "body" "head05" 0 0)
+		female("soldiers/female" "body" "head06" 0 0)
+		female("soldiers/female" "body" "head07" 0 0)
+		male("soldiers/male" "body" "head01" 0 0)
+		male("soldiers/male" "body" "head01" 0 1)
+		male("soldiers/male" "body" "head01" 0 2)
+		male("soldiers/male" "body" "head01" 0 3)
+		male("soldiers/male" "body" "head02" 0 0)
+		male("soldiers/male" "body" "head03" 0 0)
+		male("soldiers/male" "body" "head04" 0 0)
+		male("soldiers/male" "body" "head05" 0 0)
 	}
 
 	actorsounds {
@@ -669,7 +664,7 @@ team phalanx_scientist
 	team	"civilian"
 
 	names {
-		female {
+		female (
 			"Aakriti"
 			"Abeba"
 			"Adina"
@@ -826,9 +821,9 @@ team phalanx_scientist
 			"Zalika"
 			"Zi"
 			"Zola"
-		}
+		)
 
-		male {
+		male (
 			"Abdul-Majid"
 			"Adham"
 			"Adofo"
@@ -980,9 +975,9 @@ team phalanx_scientist
 			"Yoshi"
 			"Yves"
 			"Zuberi"
-		}
+		)
 
-		lastname {
+		lastname (
 			"Ab Del Farak"
 			"Abu Rajab"
 			"Adedayo"
@@ -1186,21 +1181,17 @@ team phalanx_scientist
 			"Zamora"
 			"Zavala"
 			"Zhang"
-		}
+		)
 	}
 
 	models {
-		female {
-			"civilians/female" "scientist01" "head05a" 0 0
-			"civilians/female" "scientist01" "head04a2" 0 0
-		}
-		male {
-			"civilians/male" "scientist01" "sci_head01" 0 0
-			"civilians/male" "scientist01" "sci_head02a" 0 0
-			"civilians/male" "scientist01" "sci_head02b" 0 0
-			"civilians/male" "scientist01" "sci_head03a" 0 0
-			"civilians/male" "scientist01" "sci_head03b" 0 0
-		}
+		female("civilians/female" "scientist01" "head05a" 0 0)
+		female("civilians/female" "scientist01" "head04a2" 0 0)
+		male("civilians/male" "scientist01" "sci_head01" 0 0)
+		male("civilians/male" "scientist01" "sci_head02a" 0 0)
+		male("civilians/male" "scientist01" "sci_head02b" 0 0)
+		male("civilians/male" "scientist01" "sci_head03a" 0 0)
+		male("civilians/male" "scientist01" "sci_head03b" 0 0)
 	}
 
 	actorsounds {
@@ -1256,7 +1247,7 @@ team phalanx_pilot
 	armour	false
 
 	names {
-		male {
+		male (
 			"Abdul-Majid"
 			"Adham"
 			"Adofo"
@@ -1408,9 +1399,9 @@ team phalanx_pilot
 			"Yoshi"
 			"Yves"
 			"Zuberi"
-		}
+		)
 
-		lastname {
+		lastname (
 			"Ab Del Farak"
 			"Abu Rajab"
 			"Adedayo"
@@ -1592,7 +1583,7 @@ team phalanx_pilot
 			"Ushakov"
 			"Valdez"
 			"van Aars"
-			"van "de" Wijdeven"
+			"van de Wijdeven"
 			"van Dorp"
 			"van Grieken"
 			"van Nispen"
@@ -1614,16 +1605,12 @@ team phalanx_pilot
 			"Zamora"
 			"Zavala"
 			"Zhang"
-		}
+		)
 	}
 
 	models {
-		male {
-			"pilots/male" "body" "head01" 0 0
-		}
-//		female {
-//			"pilots/female" "body" "head01" 0 0 //TODO: Animate the female pilot model
-//		}
+		male("pilots/male" "body" "head01" 0 0)
+		//female("pilots/female" "body" "head01" 0 0) //TODO: Animate the female pilot model)
 	}
 
 	actorsounds {
@@ -1681,7 +1668,7 @@ team phalanx_worker
 	team	"civilian"
 
 	names {
-		male {
+		male (
 			"Abdul-Majid"
 			"Adham"
 			"Adofo"
@@ -1833,9 +1820,9 @@ team phalanx_worker
 			"Yoshi"
 			"Yves"
 			"Zuberi"
-		}
+		)
 
-		lastname {
+		lastname (
 			"Ab Del Farak"
 			"Abu Rajab"
 			"Adedayo"
@@ -2017,7 +2004,7 @@ team phalanx_worker
 			"Ushakov"
 			"Valdez"
 			"van Aars"
-			"van "de" Wijdeven"
+			"van de Wijdeven"
 			"van Dorp"
 			"van Grieken"
 			"van Nispen"
@@ -2039,16 +2026,14 @@ team phalanx_worker
 			"Zamora"
 			"Zavala"
 			"Zhang"
-		}
+		)
 	}
 
 	models {
-		male {
-			"civilians/male" "worker01" "worker01_head" 0 0
-			"civilians/male" "worker01" "worker01_head" 1 1
-			"civilians/male" "worker01" "worker02_head" 0 0
-			"civilians/male" "worker01" "worker02_head" 1 1
-		}
+		male("civilians/male" "worker01" "worker01_head" 0 0)
+		male("civilians/male" "worker01" "worker01_head" 1 1)
+		male("civilians/male" "worker01" "worker02_head" 0 0)
+		male("civilians/male" "worker01" "worker02_head" 1 1)
 	}
 
 	actorsounds {
@@ -2095,18 +2080,16 @@ team phalanx_ugv_phoenix
 	armour	false
 
 	names {
-		neutral {
+		neutral (
 			"_UGV"
-		}
-		lastname {
+		)
+		lastname (
 			"_Phoenix"
-		}
+		)
 	}
 
 	models {
-		neutral {
-			"soldiers/ugv_phoenix" "phoenix" "phoenix_turret" 0 0
-		}
+		neutral("soldiers/ugv_phoenix" "phoenix" "phoenix_turret" 0 0)
 	}
 
 	//TODO: Balance values they are the same than bloodspider
@@ -2161,18 +2144,16 @@ team phalanx_ugv_ares_w
 	armour	false
 
 	names {
-		neutral {
+		neutral (
 			"_UGV"
-		}
-		lastname {
+		)
+		lastname (
 			"_Ares W"
-		}
+		)
 	}
 
 	models {
-		neutral {
-			"soldiers/ugv_ares" "ares_w" "ares_w_turret" 0 0
-		}
+		neutral("soldiers/ugv_ares" "ares_w" "ares_w_turret" 0 0)
 	}
 
 	//TODO: Balance values they are the same than bloodspider

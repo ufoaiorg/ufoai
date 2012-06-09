@@ -14,7 +14,7 @@ team taman
 	hit_particle	blood
 
 	names {
-		neutral {
+		neutral (
 			"Akrokk"
 			"Mkeek"
 			"Rniuk"
@@ -32,9 +32,9 @@ team taman
 			"Ebnuzuk"
 			"Krrnaak"
 			"Zmuknesk"
-		}
+		)
 
-		lastname {
+		lastname (
 			"Uk Kronok"
 			"Np Zlrok"
 			"T Zruujk"
@@ -53,28 +53,26 @@ team taman
 			"Ok Orokk"
 			"Sk Trevuk"
 			"Zr Znaztrk"
-		}
+		)
 	}
 
 	models {
-		neutral {
-			"aliens/taman" "body01" "head01" 0 0 // Body: very high rank, Head: yellow eyes
-			"aliens/taman" "body01" "head02" 1 1 // Body: high rank, Head: green eyes
-			"aliens/taman" "body01" "head03" 2 2 // Body: medium rank, Head: red eyes
-			"aliens/taman" "body01" "head04" 3 3 // Body: low rank, Head: blue eyes
-			"aliens/taman" "body01" "head01" 1 1 // Body: high rank, Head: yellow eyes
-			"aliens/taman" "body01" "head02" 2 2 // Body: medium rank, Head: green eyes
-			"aliens/taman" "body01" "head03" 3 3 // Body: low rank, Head: red eyes
-			"aliens/taman" "body01" "head04" 0 0 // Body: very high rank, Head: blue eyes
-			"aliens/taman" "body01" "head01" 2 2 // Body: medium rank, Head: yellow eyes
-			"aliens/taman" "body01" "head02" 3 3 // Body: low rank, Head: green eyes
-			"aliens/taman" "body01" "head03" 0 0 // Body: very high rank, Head: red eyes
-			"aliens/taman" "body01" "head04" 1 1 // Body: high rank, Head: blue eyes
-			"aliens/taman" "body01" "head01" 3 3 // Body: low rank, Head: yellow eyes
-			"aliens/taman" "body01" "head02" 0 0 // Body: very high rank, Head: green eyes
-			"aliens/taman" "body01" "head03" 1 1 // Body: high rank, Head: red eyes
-			"aliens/taman" "body01" "head04" 2 2 // Body: medium rank, Head: blue eyes
-		}
+		neutral("aliens/taman" "body01" "head01" 0 0) // Body: very high rank, Head: yellow eyes
+		neutral("aliens/taman" "body01" "head02" 1 1) // Body: high rank, Head: green eyes
+		neutral("aliens/taman" "body01" "head03" 2 2) // Body: medium rank, Head: red eyes
+		neutral("aliens/taman" "body01" "head04" 3 3) // Body: low rank, Head: blue eyes
+		neutral("aliens/taman" "body01" "head01" 1 1) // Body: high rank, Head: yellow eyes
+		neutral("aliens/taman" "body01" "head02" 2 2) // Body: medium rank, Head: green eyes
+		neutral("aliens/taman" "body01" "head03" 3 3) // Body: low rank, Head: red eyes
+		neutral("aliens/taman" "body01" "head04" 0 0) // Body: very high rank, Head: blue eyes
+		neutral("aliens/taman" "body01" "head01" 2 2) // Body: medium rank, Head: yellow eyes
+		neutral("aliens/taman" "body01" "head02" 3 3) // Body: low rank, Head: green eyes
+		neutral("aliens/taman" "body01" "head03" 0 0) // Body: very high rank, Head: red eyes
+		neutral("aliens/taman" "body01" "head04" 1 1) // Body: high rank, Head: blue eyes
+		neutral("aliens/taman" "body01" "head01" 3 3) // Body: low rank, Head: yellow eyes
+		neutral("aliens/taman" "body01" "head02" 0 0) // Body: very high rank, Head: green eyes
+		neutral("aliens/taman" "body01" "head03" 1 1) // Body: high rank, Head: red eyes
+		neutral("aliens/taman" "body01" "head04" 2 2) // Body: medium rank, Head: blue eyes
 	}
 
 	actorsounds {
@@ -137,7 +135,7 @@ team ortnok
 	death_texture	"pics/sfx/blood/blood_green_0"
 
 	names {
-		neutral {
+		neutral (
 			"Oorgh"
 			"Ourhg"
 			"Uoghr"
@@ -154,9 +152,9 @@ team ortnok
 			"Urgoz"
 			"Uurunz"
 			"Uuorgh"
-		}
+		)
 
-		lastname {
+		lastname (
 			"Uk Ohm Umhpf"
 			"Ok Uhm Uurrp"
 			"Uz Oor Ruogh"
@@ -175,21 +173,19 @@ team ortnok
 			"Wr Oro Uoroh"
 			"Fz Oru Fzsmo"
 			"Fs Ksf Urmpf"
-		}
+		)
 	}
 
 	models {
-		neutral {
-			"aliens/ortnok" "body01" "head01" 0 0 // Body: Big open wound, Head: 2 small scars over the left eye
-			"aliens/ortnok" "body01" "head02" 1 1 // Body: Big scar, Head: Big scar over the right eye
-			"aliens/ortnok" "body01" "head03" 2 2 // Body: Scared legs, Head: One-eyed Ortnok
-			"aliens/ortnok" "body01" "head01" 1 1 // Body: Big scar, Head: 2 small scars over the left eye
-			"aliens/ortnok" "body01" "head02" 2 2 // Body: Scared legs, Head: Big scar over the right eye
-			"aliens/ortnok" "body01" "head03" 0 0 // Body: Big open wound, Head: One-eyed Ortnok
-			"aliens/ortnok" "body01" "head01" 2 2 // Body: Scared legs, Head: 2 small scars over the left eye
-			"aliens/ortnok" "body01" "head02" 0 0 // Body: Big open wound, Head: One-eyed Ortnok
-			"aliens/ortnok" "body01" "head03" 1 1 // Body: Big scar, Head: Big scar over the right eye
-		}
+		neutral("aliens/ortnok" "body01" "head01" 0 0) // Body: Big open wound, Head: 2 small scars over the left eye
+		neutral("aliens/ortnok" "body01" "head02" 1 1) // Body: Big scar, Head: Big scar over the right eye
+		neutral("aliens/ortnok" "body01" "head03" 2 2) // Body: Scared legs, Head: One-eyed Ortnok
+		neutral("aliens/ortnok" "body01" "head01" 1 1) // Body: Big scar, Head: 2 small scars over the left eye
+		neutral("aliens/ortnok" "body01" "head02" 2 2) // Body: Scared legs, Head: Big scar over the right eye
+		neutral("aliens/ortnok" "body01" "head03" 0 0) // Body: Big open wound, Head: One-eyed Ortnok
+		neutral("aliens/ortnok" "body01" "head01" 2 2) // Body: Scared legs, Head: 2 small scars over the left eye
+		neutral("aliens/ortnok" "body01" "head02" 0 0) // Body: Big open wound, Head: One-eyed Ortnok
+		neutral("aliens/ortnok" "body01" "head03" 1 1) // Body: Big scar, Head: Big scar over the right eye
 	}
 
 	actorsounds {
@@ -260,7 +256,7 @@ team shevaar
 	hit_particle	blood
 
 	names {
-		neutral {
+		neutral (
 			"Fsshw"
 			"Fhzwh"
 			"Fzszh"
@@ -273,8 +269,8 @@ team shevaar
 			"Zssfh"
 			"Zsfwz"
 			"Zwfss"
-		}
-		lastname {
+		)
+		lastname (
 			"Vso Zhozf"
 			"Vso Zshff"
 			"Vso Zwfwz"
@@ -287,21 +283,19 @@ team shevaar
 			"Vzs Hzffs"
 			"Vzs Wszfs"
 			"Vzs Wfzsh"
-		}
+		)
 	}
 
 	models {
-		neutral {
-			"aliens/shevaar" "body01" "head01" 0 0 // Body: Original brown skin, blue trousers, Head: Original brown skin
-			"aliens/shevaar" "body01" "head01" 1 1 // Body: Dark red skin, light cyan trousers, Head: Original brown skin
-			"aliens/shevaar" "body01" "head01" 2 2 // Body: Dark green skin, red trousers, Head: Original brown skin
-			"aliens/shevaar" "body01" "head02" 0 0 // Body: Original brown skin, blue trousers, Head: dual-colored red skin
-			"aliens/shevaar" "body01" "head02" 1 1 // Body: Dark red skin, light cyan trousers, Head: dual-colored red skin
-			"aliens/shevaar" "body01" "head02" 2 2 // Body: Dark green skin, red trousers, Head: dual-colored red skin
-			"aliens/shevaar" "body01" "head03" 0 0 // Body: Original brown skin, blue trousers, Head: dual-colored green skin
-			"aliens/shevaar" "body01" "head03" 1 1 // Body: Dark red skin, light cyan trousers, Head: dual-colored green skin
-			"aliens/shevaar" "body01" "head03" 2 2 // Body: Dark green skin, red trousers, Head: dual-colored green skin
-		}
+		neutral("aliens/shevaar" "body01" "head01" 0 0) // Body: Original brown skin, blue trousers, Head: Original brown skin
+		neutral("aliens/shevaar" "body01" "head01" 1 1) // Body: Dark red skin, light cyan trousers, Head: Original brown skin
+		neutral("aliens/shevaar" "body01" "head01" 2 2) // Body: Dark green skin, red trousers, Head: Original brown skin
+		neutral("aliens/shevaar" "body01" "head02" 0 0) // Body: Original brown skin, blue trousers, Head: dual-colored red skin
+		neutral("aliens/shevaar" "body01" "head02" 1 1) // Body: Dark red skin, light cyan trousers, Head: dual-colored red skin
+		neutral("aliens/shevaar" "body01" "head02" 2 2) // Body: Dark green skin, red trousers, Head: dual-colored red skin
+		neutral("aliens/shevaar" "body01" "head03" 0 0) // Body: Original brown skin, blue trousers, Head: dual-colored green skin
+		neutral("aliens/shevaar" "body01" "head03" 1 1) // Body: Dark red skin, light cyan trousers, Head: dual-colored green skin
+		neutral("aliens/shevaar" "body01" "head03" 2 2) // Body: Dark green skin, red trousers, Head: dual-colored green skin
 	}
 
 	actorsounds {
@@ -368,7 +362,7 @@ team bloodspider
 	death_texture	"pics/sfx/blood/blood_oil_2"
 
 	names {
-		neutral {
+		neutral (
 			"BS/X"
 			"BS/Z"
 			"BS/A"
@@ -381,8 +375,8 @@ team bloodspider
 			"BS/R"
 			"BS/T"
 			"BS/M"
-		}
-		lastname {
+		)
+		lastname (
 			"000.1100"
 			"001.1100"
 			"010.1100"
@@ -395,16 +389,14 @@ team bloodspider
 			"001.1101"
 			"010.1101"
 			"011.1101"
-		}
+		)
 	}
 
 	models {
-		neutral {
-			"aliens/bloodspider" "bloodspider" "head" 0 0
-			"aliens/bloodspider" "bloodspider" "head" 1 1
-			"aliens/bloodspider" "bloodspider" "head" 2 2
-			"aliens/bloodspider" "bloodspider" "head" 3 3
-		}
+		neutral("aliens/bloodspider" "bloodspider" "head" 0 0)
+		neutral("aliens/bloodspider" "bloodspider" "head" 1 1)
+		neutral("aliens/bloodspider" "bloodspider" "head" 2 2)
+		neutral("aliens/bloodspider" "bloodspider" "head" 3 3)
 	}
 
 	actorsounds {
@@ -471,7 +463,7 @@ team hovernet
 	death_texture	"pics/sfx/blood/blood_oil_2"
 
 	names {
-		neutral {
+		neutral (
 			"HN/X"
 			"HN/Z"
 			"HN/A"
@@ -484,8 +476,8 @@ team hovernet
 			"HN/R"
 			"HN/T"
 			"HN/M"
-		}
-		lastname {
+		)
+		lastname (
 			"000.1100"
 			"001.1100"
 			"010.1100"
@@ -498,13 +490,11 @@ team hovernet
 			"001.1101"
 			"010.1101"
 			"011.1101"
-		}
+		)
 	}
 
 	models {
-		neutral {
-			"aliens/hovernet" "body01" "head" 0 0
-		}
+		neutral("aliens/hovernet" "body01" "head" 0 0)
 	}
 
 	actorsounds {
