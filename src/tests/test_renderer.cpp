@@ -81,6 +81,11 @@ static void testCharacterAnimationFiles (void)
 			"walk1", "walk2", "walk3", "cstand0", "cstand1", "cstand2",
 			"cstand3", "cwalk0", "cwalk1", "cwalk2", "cwalk3", "stand_menu",
 			"panic0", NULL };
+	const char* hovernet[] = { "death1", "dead1", "death2","dead2", "death3",
+			"dead3", "stand0", "walk0", "cstand0", "cwalk0", "stand1", "walk1",
+			"cstand1", "cwalk1", "stand2", "walk2", "cstand2", "cwalk2",
+			"stand3", "walk3", "cstand3", "cwalk3", "move_rifle", "shoot_rifle",
+			"cmove_rifle", "cshoot_rifle", "stand_menu", "panic0", NULL };
 	const char* soldiers[] = { "death1", "death2", "death3", "dead1", "dead2",
 			"dead3", "stand0", "stand1", "stand2", "stand3", "walk0", "walk1",
 			"walk2", "walk3", "cstand0", "cstand1", "cstand2", "cstand3",
@@ -110,6 +115,8 @@ static void testCharacterAnimationFiles (void)
 			animList = civilians;
 		else if (Q_strstart(filename, "models/aliens/bloodspider/"))
 			animList = bloodspider;
+		else if (Q_strstart(filename, "models/aliens/hovernet/"))
+			animList = hovernet;
 		else if (Q_strstart(filename, "models/aliens/"))
 			animList = soldiers;
 		else
