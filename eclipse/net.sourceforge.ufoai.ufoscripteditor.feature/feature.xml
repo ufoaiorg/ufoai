@@ -3,7 +3,7 @@
       id="net.sourceforge.ufoai.ufoscripteditor.feature"
       label="UFO-Script Editor"
       version="1.0.0.qualifier"
-      provider-name="UFO: AI Team">
+      provider-name="UFO:AI">
 
    <description url="http://ufoai.sourceforge.net">
       UFO:AI script file editor

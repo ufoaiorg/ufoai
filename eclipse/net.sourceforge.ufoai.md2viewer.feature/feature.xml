@@ -3,7 +3,7 @@
       id="net.sourceforge.ufoai.md2viewer.feature"
       label="MD2-Viewer"
       version="1.0.0.qualifier"
-      provider-name="UFO: AI Team">
+      provider-name="UFO:AI">
 
    <description url="http://ufoai.sourceforge.net">
       UFO:AI md2 model viewer

@@ -1,7 +1,7 @@
 Manifest-Version: 1.0
 Bundle-ManifestVersion: 2
 Bundle-Name: UFO:AI Editor
-Bundle-Vendor: ufoai.org
+Bundle-Vendor: UFO:AI
 Bundle-Activator: net.sourceforge.ufoai.UFOAIPlugin
 Bundle-Version: 1.0.0.qualifier
 Bundle-SymbolicName: net.sourceforge.ufoai.dsl;singleton:=true

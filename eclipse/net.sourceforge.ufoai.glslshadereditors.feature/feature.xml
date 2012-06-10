@@ -3,7 +3,7 @@
       id="net.sourceforge.ufoai.glslshadereditors.feature"
       label="GLSL-Editors"
       version="1.0.0.qualifier"
-      provider-name="UFO: AI Team">
+      provider-name="UFO:AI">
 
    <description url="http://ufoai.sourceforge.net">
       UFO:AI GLSL editors based on http://sourceforge.net/projects/glshaders/

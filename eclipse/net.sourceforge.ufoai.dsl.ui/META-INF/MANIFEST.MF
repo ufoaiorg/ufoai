@@ -1,7 +1,7 @@
 Manifest-Version: 1.0
 Bundle-ManifestVersion: 2
 Bundle-Name: net.sourceforge.ufoai.dsl.ui
-Bundle-Vendor: ufoai.org
+Bundle-Vendor: UFO:AI
 Bundle-Version: 1.0.0.qualifier
 Bundle-SymbolicName: net.sourceforge.ufoai.dsl.ui; singleton:=true
 Bundle-ActivationPolicy: lazy
