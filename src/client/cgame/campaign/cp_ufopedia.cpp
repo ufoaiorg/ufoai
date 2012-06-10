@@ -802,9 +802,13 @@ static void UP_GenerateSummary (void)
 	numChaptersDisplayList = 0;
 
 	for (i = 0; i < ccs.numChapters; i++) {
+		/* hide chapters without name */
+		pediaChapter_t *chapter = &ccs.upChapters[i];
+		if (chapter->name == NULL)
+			continue;
+
 		/* Check if there are any researched or collected items in this chapter ... */
 		bool researchedEntries = false;
-		pediaChapter_t *chapter = &ccs.upChapters[i];
 		upCurrentTech = chapter->first;
 		do {
 			if (UP_TechGetsDisplayed(upCurrentTech)) {
@@ -1291,27 +1295,26 @@ void UP_ParseChapter (const char *name, const char **text)
 		Com_Error(ERR_DROP, "UP_ParseChapter: chapter def \"%s\": '{' token expected.\n", name);
 	}
 
-	/* get the property */
-	token = Com_EParse(text, errhead, name);
-	if (!*text || !Q_streq(token, "name")) {
-		Com_Error(ERR_DROP, "UP_ParseChapter: chapter def \"%s\": Name token expected.\n", name);
-	}
+	do {
+		token = Com_Parse(text);
+		if (!*text)
+			Com_Error(ERR_DROP, "UP_ParseChapter: end of file not expected \"%s\": '{' token expected.\n", name);
+		if (token[0] == '}')
+			break;
 
-	/* get the name */
-	token = Com_EParse(text, errhead, name);
-	if (!*text || *token == '}') {
-		Com_Error(ERR_DROP, "UP_ParseChapter: chapter def \"%s\": Name token expected.\n", name);
-	}
-	if (*token == '_')
-		token++;
-	chapter.name = Mem_PoolStrDup(token, cp_campaignPool, 0);
-
-	/* get end block */
-	token = Com_Parse(text);
-	if (!*text || *token !='}') {
-		Com_Error(ERR_DROP, "UP_ParseChapter: chapter def \"%s\": '}' token expected.\n", name);
-		return;
-	}
+		if (Q_streq(token, "name")) {
+			/* get the name */
+			token = Com_EParse(text, errhead, name);
+			if (!*text || *token == '}') {
+				Com_Error(ERR_DROP, "UP_ParseChapter: chapter def \"%s\": Name token expected.\n", name);
+			}
+			if (*token == '_')
+				token++;
+			chapter.name = Mem_PoolStrDup(token, cp_campaignPool, 0);
+		} else {
+			Com_Error(ERR_DROP, "UP_ParseChapter: chapter def \"%s\": token \"%s\" not expected.\n", name, token);
+		}
+	} while (*text);
 
 	/* add chapter to the game */
 	ccs.upChapters[ccs.numChapters] = chapter;

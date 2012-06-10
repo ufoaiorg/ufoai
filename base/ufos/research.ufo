@@ -115,6 +115,10 @@ up_chapter artifacts { name "_Alien Artifacts" }
 up_chapter aliens { name "_Autopsies & Observation" }
 up_chapter threat { name "_The Alien Threat" }
 
+// chapter without name are not displayed into ufopedia
+up_chapter damage {}
+up_chapter skill {}
+
 //============================
 // Main Research Technologies
 //============================
