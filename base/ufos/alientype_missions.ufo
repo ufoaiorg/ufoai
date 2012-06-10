@@ -114,13 +114,13 @@ alienteam harvest
 	{
 		mininterest 300
 		maxinterest 500
-		team ( taman ortnok shevaar bloodspider )
+		team ( taman ortnok shevaar bloodspider_adv )
 	}
 	teaminterest
 	{
 		mininterest 500
 		maxinterest 10000
-		team ( ortnok shevaar bloodspider )
+		team ( ortnok shevaar bloodspider_adv )
 	}
 }
 
@@ -152,13 +152,13 @@ alienteam xvi
 	{
 		mininterest 200
 		maxinterest 500
-		team ( taman ortnok shevaar bloodspider )
+		team ( taman ortnok shevaar bloodspider_adv )
 	}
 	teaminterest
 	{
 		mininterest 500
 		maxinterest 10000
-		team ( ortnok shevaar bloodspider )
+		team ( ortnok shevaar bloodspider_adv )
 	}
 }
 
@@ -178,7 +178,7 @@ alienteam alienbase
 	{
 		mininterest 0 // TODO: set to 0 for debugging purpose, but this shouldn't be used before alien bases are spawned
 		maxinterest 10000
-		team ( taman ortnok shevaar hovernet )
+		team ( taman ortnok shevaar hovernet bloodspider_adv )
 	}
 }
 
@@ -198,6 +198,6 @@ alienteam ufocarrier
 	{
 		mininterest 0 // TODO: set to 0 for debugging purpose, but this shouldn't be used before alien bases are spawned
 		maxinterest 10000
-		team ( taman ortnok shevaar hovernet )
+		team ( taman ortnok shevaar hovernet bloodspider_adv )
 	}
 }
