@@ -1,7 +1,8 @@
 // Components for recovered UFOs and similar stuff.
 //
 // usage:
-// components <ufo_name> {
+// components <component_name> {
+//  aircraft <ufo_name> {
 //	time xxx
 //	item { id <id> amount <amount> numbercrash <number-crash> }
 //	<type ...
@@ -9,7 +10,7 @@
 // }
 //
 // <ufo_name>
-//	Like the id of the ufo itself in the craft- and item definitions.
+//	The id of the aircraft in witch the components definition must be used
 // 	See also aircraftmanagement.ufo and research.ufo for more uses of these names.
 // <time>
 //	The time until the disassembly is finished. The values are given in "hours", buuut....
@@ -32,11 +33,10 @@
 // TODO: type="craftitem" might be worth thinking about, see entries below.
 // TODO: add dummy-items and research topics for commented out items below
 //
-// WARNING: the components id has to be the same as items id
-//
 
 // UFO -- Scout
-components craft_ufo_scout {
+components craft_ufo_scout_cmp {
+	aircraft craft_ufo_scout
 	time	300
 	item {
 		id alienmaterials
@@ -66,7 +66,8 @@ components craft_ufo_scout {
 }
 
 // UFO -- Fighter
-components craft_ufo_fighter {
+components craft_ufo_fighter_cmp {
+	aircraft craft_ufo_fighter
 	time	330
 	item {
 		id alienmaterials
@@ -101,7 +102,8 @@ components craft_ufo_fighter {
 }
 
 // UFO -- Harvester
-components craft_ufo_harvester {
+components craft_ufo_harvester_cmp {
+	aircraft craft_ufo_harvester
 	time	510
 	item {
 		id alienmaterials
@@ -146,7 +148,8 @@ components craft_ufo_harvester {
 }
 
 // UFO -- Supply Transport
-components craft_ufo_supply {
+components craft_ufo_supply_cmp {
+	aircraft craft_ufo_supply
 	time	450
 	item {
 		id alienmaterials
@@ -176,7 +179,8 @@ components craft_ufo_supply {
 }
 
 // UFO -- Gunboat
-components craft_ufo_gunboat {
+components craft_ufo_gunboat_cmp {
+	aircraft craft_ufo_gunboat
 	time	500
 	item {
 		id alienmaterials
@@ -221,7 +225,8 @@ components craft_ufo_gunboat {
 }
 
 // UFO -- Corrupter
-components craft_ufo_corrupter {
+components craft_ufo_corrupter_cmp {
+	aircraft craft_ufo_corrupter
 	time	622
 	item {
 		id alienmaterials
@@ -256,7 +261,8 @@ components craft_ufo_corrupter {
 }
 
 // UFO -- Bomber
-components craft_ufo_bomber {
+components craft_ufo_bomber_cmp {
+	aircraft craft_ufo_bomber
 	time	675
 	item {
 		id alienmaterials
@@ -292,7 +298,8 @@ components craft_ufo_bomber {
 
 // UFO -- Lander
 // Note that no such UFO in the game YET.
-//components craft_ufo_lander {
+//components craft_ufo_lander_cmp {
+//	aircraft craft_ufo_lander
 //	time	480
 //	item {
 //		id alienmaterials
@@ -313,7 +320,8 @@ components craft_ufo_bomber {
 
 // UFO -- Carrier
 // The Carrier missions are special storyline-driven missions
-components craft_ufo_carrier {
+components craft_ufo_carrier_cmp {
+	aircraft craft_ufo_carrier
 	time	10000
 	item {
 		id alienmaterials

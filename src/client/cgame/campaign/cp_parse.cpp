@@ -495,11 +495,7 @@ static void CP_ParseComponents (const char *name, const char **text)
 
 	OBJZERO(*comp);
 
-	/* set standard values */
-	Q_strncpyz(comp->assemblyId, name, sizeof(comp->assemblyId));
-	comp->assemblyItem = INVSH_GetItemByIDSilent(comp->assemblyId);
-	if (comp->assemblyItem)
-		Com_DPrintf(DEBUG_CLIENT, "CP_ParseComponents: linked item: %s with components: %s\n", name, comp->assemblyId);
+	/* name is not used */
 
 	do {
 		/* get the name type */
@@ -510,7 +506,17 @@ static void CP_ParseComponents (const char *name, const char **text)
 			break;
 
 		/* get values */
-		if (Q_streq(token, "item")) {
+		if (Q_streq(token, "aircraft")) {
+			token = Com_EParse(text, errhead, name);
+			if (!*text)
+				break;
+
+			/* set standard values */
+			Q_strncpyz(comp->assemblyId, token, sizeof(comp->assemblyId));
+			comp->assemblyItem = INVSH_GetItemByIDSilent(comp->assemblyId);
+			if (comp->assemblyItem)
+				Com_DPrintf(DEBUG_CLIENT, "CP_ParseComponents: linked item: %s with components: %s\n", token, comp->assemblyId);
+		} else if (Q_streq(token, "item")) {
 			/* Defines what items need to be collected for this item to be researchable. */
 			if (comp->numItemtypes < MAX_COMP) {
 				/* Parse block */
@@ -550,6 +556,10 @@ static void CP_ParseComponents (const char *name, const char **text)
 			Com_Printf("CP_ParseComponents: Error in \"%s\" - unknown token: \"%s\".\n", name, token);
 		}
 	} while (*text);
+
+	if (comp->assemblyId[0] == '\0') {
+		Com_Error(ERR_DROP, "CP_ParseComponents: component \"%s\" is not applied to any aircraft.\n", name);
+	}
 }
 
 /**
