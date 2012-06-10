@@ -43,7 +43,15 @@ typedef uint8_t byte;
 #if defined _WIN32
 #	define UFO_SIZE_T "%Iu"
 #else
+#ifdef __cplusplus
+#if __WORDSIZE == 64
+# define UFO_SIZE_T "%lu"
+#else
+# define UFO_SIZE_T "%u"
+#endif
+#else
 # define UFO_SIZE_T "%zu"
+#endif
 #endif
 
 #endif /* COMMON_UFOTYPES_H */

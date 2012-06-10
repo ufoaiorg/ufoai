@@ -29,9 +29,17 @@
 #define TYPESIZE(type) printf(STRUCTFORMAT ": " SIZEFORMAT " KB\n", #type, MEMORY_HumanReadable(sizeof(type)));
 
 #if defined _WIN32
-#	define UFO_SIZE_LENGTH_T "%03Iu"
+# define UFO_SIZE_LENGTH_T "%03Iu"
+#else
+#ifdef __cplusplus
+#if __WORDSIZE == 64
+# define UFO_SIZE_LENGTH_T "%03lu"
+#else
+# define UFO_SIZE_LENGTH_T "%03u"
+#endif
 #else
 # define UFO_SIZE_LENGTH_T "%03zu"
+#endif
 #endif
 
 static const char* MEMORY_HumanReadable (size_t size)
