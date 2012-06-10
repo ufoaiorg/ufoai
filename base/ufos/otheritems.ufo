@@ -74,7 +74,6 @@ item hovernet_plasma
 	ammo			200
 	reload			12
 	reloadsound		"weapons/reload-rifle"
-	price			2500
 	size			40
 	is_primary		true
 	virtual			true
@@ -89,7 +88,6 @@ item hovernet_plasma_ammo
 	shape			"0 0 1 1"
 	center			"0 0 -0.2"
 	scale			1.1
-	price			800
 	size			3
 	is_secondary	true
 	dmgtype			"plasma"
