@@ -1805,7 +1805,8 @@ particle knife_ptl
 	}
 }
 
-particle kerrblade
+// TODO it looks like there is no references to that item
+particle kerrblade_ptl
 {
 	init
 	{
@@ -1816,7 +1817,8 @@ particle kerrblade
 	}
 }
 
-particle plasblade
+// TODO it looks like there is no references to that item
+particle plasblade_ptl
 {
 	init
 	{
