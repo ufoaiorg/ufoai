@@ -2,7 +2,7 @@ Manifest-Version: 1.0
 Bundle-ManifestVersion: 2
 Bundle-Name: GLShaderTools Plug-in
 Bundle-SymbolicName: net.sourceforget.ufoai.glsltools;singleton:=true
-Bundle-Version: 1.0.0
+Bundle-Version: 1.0.0.qualifier
 Bundle-Activator: cgTools.CgToolsPlugin
 Bundle-Localization: plugin
 Require-Bundle: org.eclipse.ui,
