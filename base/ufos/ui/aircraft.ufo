@@ -232,7 +232,6 @@ window iaircraft
 		*cvar:mn_head = ""
 		*cvar:mn_body_skin = ""
 		*cvar:mn_head_skin = ""
-		*cvar:mn_skinname = ""
 		*cvar:mn_rweapon = ""
 		*cvar:mn_lweapon = ""
 		*cvar:mn_chrmis = ""

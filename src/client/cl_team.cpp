@@ -80,19 +80,6 @@ static const actorSkin_t* CL_GetActorSkinByIDS (unsigned int idx)
 	return &cls.actorSkins[idx];
 }
 
-/**
- * @brief Translate the skin id to skin name
- * @param[in] id The id of the skin
- * @return Translated skin name
- */
-static const char* CL_GetTeamSkinName (unsigned int id)
-{
-	const actorSkin_t *skin = CL_GetActorSkinByIDS(id);
-	if (skin == NULL)
-		Com_Error(ERR_DROP, "CL_GetTeamSkinName: Unknown skin id %i", id);
-	return skin->name;
-}
-
 static void CL_CharacterSkillAndScoreCvars (const character_t *chr, const char* cvarPrefix)
 {
 	const chrScoreGlobal_t *score = &chr->score;
@@ -100,7 +87,6 @@ static void CL_CharacterSkillAndScoreCvars (const character_t *chr, const char* 
 	Cvar_ForceSet(va("%s%s", cvarPrefix, "body"), CHRSH_CharGetBody(chr));
 	Cvar_ForceSet(va("%s%s", cvarPrefix, "head"), CHRSH_CharGetHead(chr));
 	Cvar_ForceSet(va("%s%s", cvarPrefix, "skin"), va("%i", chr->bodySkin));
-	Cvar_ForceSet(va("%s%s", cvarPrefix, "skinname"), CL_GetTeamSkinName(chr->bodySkin));
 
 	Cvar_Set(va("%s%s", cvarPrefix, "vpwr"), va("%i", score->skills[ABILITY_POWER]));
 	Cvar_Set(va("%s%s", cvarPrefix, "vspd"), va("%i", score->skills[ABILITY_SPEED]));
@@ -283,7 +269,6 @@ static void CL_ChangeSkin_f (void)
 			chr->bodySkin = newSkin;
 
 			Cvar_SetValue("mn_body_skin", newSkin);
-			Cvar_Set("mn_skinname", CL_GetTeamSkinName(newSkin));
 		}
 	}
 }

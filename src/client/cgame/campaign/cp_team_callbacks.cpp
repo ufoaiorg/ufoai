@@ -311,13 +311,6 @@ static void CP_TEAM_ChangeSkin_f (void)
 		return;
 	}
 
-	/** @todo Get the skin id from the model by using the actorskin id */
-	/** @todo Or remove skins from models and convert character_t->skin to string */
-	/** @todo these functions are not accessible from here and maybe I shouldn't use them directly but set up a cgame import stuff? */
-#if 0
-	bodySkinIdx = CL_FixActorSkinIDX(bodySkinIdx);
-	Cvar_Set("mn_skinname", CL_GetTeamSkinName(bodySkinIdx));
-#endif
 	Cvar_SetValue("mn_body_skin", bodySkinIdx);
 	soldier->chr.bodySkin = bodySkinIdx;
 }
