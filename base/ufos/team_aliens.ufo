@@ -395,8 +395,6 @@ team bloodspider
 	models {
 		neutral("aliens/bloodspider" "bloodspider" "head" 0 0)
 		neutral("aliens/bloodspider" "bloodspider" "head" 1 1)
-		neutral("aliens/bloodspider" "bloodspider" "head" 2 2)
-		neutral("aliens/bloodspider" "bloodspider" "head" 3 3)
 	}
 
 	actorsounds {
