@@ -2,7 +2,9 @@ package net.sourceforge.ufoai.validation;
 
 import java.io.File;
 import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
 import net.sourceforge.ufoai.ufoScript.UFONode;
 import net.sourceforge.ufoai.ufoScript.UfoScriptPackage;
@@ -15,6 +17,7 @@ import net.sourceforge.ufoai.ufoScript.ValueReference;
 import net.sourceforge.ufoai.ufoScript.ValueString;
 import net.sourceforge.ufoai.util.StringUtil;
 import net.sourceforge.ufoai.util.UfoResources;
+import net.sourceforge.ufoai.validation.UFOType.Type;
 
 import org.eclipse.core.resources.IFile;
 import org.eclipse.core.resources.ResourcesPlugin;
@@ -107,6 +110,24 @@ public class UFOScriptJavaValidator extends AbstractUFOScriptJavaValidator {
 			}
 			if (node.getName() != null) {
 				error("Anonymous block expected", UfoScriptPackage.Literals.UFO_NODE__VALUE);
+			}
+			break;
+		case ANONYMOUS_MAP_BLOCK:
+			if (!node.getValues().isEmpty()) {
+				error("Block is expected", UfoScriptPackage.Literals.UFO_NODE__VALUE);
+			}
+			if (value != null || node.getNodes() == null) {
+				error("Block is expected", UfoScriptPackage.Literals.UFO_NODE__VALUE);
+			}
+			if (node.getName() != null) {
+				error("Anonymous block expected", UfoScriptPackage.Literals.UFO_NODE__VALUE);
+			}
+			Set<String> keys = new HashSet<String>();
+			for (UFONode child: node.getNodes()) {
+				String childType = child.getType();
+				if (!keys.add(childType)) {
+					error("Duplicated key", child, UfoScriptPackage.Literals.UFO_NODE__TYPE, 0);
+				}
 			}
 			break;
 		case BLOCK:
@@ -457,6 +478,10 @@ public class UFOScriptJavaValidator extends AbstractUFOScriptJavaValidator {
 			// Only display error if the parent has rules
 			UFOType parentType = getType(node.eContainer());
 			if (parentType != null) {
+				// There is no check for maps
+				if (parentType.getType() == Type.ANONYMOUS_MAP_BLOCK) {
+					return;
+				}
 				error("Property name unknown", UfoScriptPackage.Literals.UFO_NODE__TYPE);
 			}
 			return;

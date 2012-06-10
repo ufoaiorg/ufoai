@@ -16,6 +16,12 @@ public class UFOType {
 		BLOCK,
 
 		/**
+		 * An anonymous block, which the content looks like a map, key-values
+		 * @see ANONYMOUS_BLOCK
+		 */
+		ANONYMOUS_MAP_BLOCK,
+
+		/**
 		 * A block with an extra token identifier
 		 * blockname identifier { ... }
 		 * @see BLOCK
