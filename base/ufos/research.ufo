@@ -4181,6 +4181,59 @@ tech rs_weapon_bloodspider
 	producetime	-1
 }
 
+tech rs_alien_bloodspider_adv_autopsy
+{
+	name	"_Alien Autopsy - Combat Bloodspider"
+	type	"alien"
+	up_chapter	aliens
+
+	description {
+		default "_bloodspider_adv_autopsy_txt"
+	}
+	pre_description {
+		default "_bloodspider_adv_autopsy_pre_txt"
+	}
+
+	mail_pre
+	{
+		from	"_mail_from_dr_connor"
+		to		"_mail_to_base_commander"
+		// subject	defined by "name"
+		model	"characters/connor"
+		icon	"icons/mail_alien"
+	}
+
+	mail
+	{
+		from	"_mail_from_dr_connor"
+		to		"_mail_to_base_commander"
+		// subject	defined by "name"
+		model	"characters/connor"
+		icon	"icons/mail_alien"
+	}
+
+	require_AND
+	{
+		alien_dead (bloodspider_adv 1)
+	}
+	time	8000
+
+	image "techs/bloodspider_adv_dead"
+}
+
+tech rs_weapon_bloodspider_adv
+{
+	type		"weapon"
+	up_chapter	equipment
+
+	require_AND
+	{
+		tech rs_weapon_bloodspider_adv
+	}
+	provides	bloodspider_adv_weapon
+	time		0
+	producetime	-1
+}
 
 // ORTNOK
 

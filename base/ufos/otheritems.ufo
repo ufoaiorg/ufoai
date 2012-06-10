@@ -59,6 +59,41 @@ item bloodspider_weapon
 	}
 }
 
+item bloodspider_adv_weapon
+{
+	name			"Combat Bloodspider weapon" // TODO Will this ever be displayed? If so we would need gettext support.
+	model			"weapons/knife/knife" //FIXME
+	weapon			true
+	type			"melee"
+	animationindex	2 //FIXME
+	scale			1.0
+	size			6
+	firetwohanded	true
+	dmgtype			"normal"
+	virtual			true
+
+	weapon_mod
+	{
+		weapon bloodspider_adv_weapon
+		firedef
+		{
+			name		"_Stab"
+			skill		"close"
+			projtl		null
+			impact		null
+			hitbody		null
+			firesnd		"aliens/bloodspider/attack"
+			speed		0
+			range		2
+			shots		1 //FIXME
+			time		10 //FIXME
+			damage		"150 10" //FIXME
+			reaction	true
+			dmgweight	"normal_monomolecularblade"
+		}
+	}
+}
+
 item hovernet_plasma
 {
 	name			"_Hovernet Plasma Weapon"
