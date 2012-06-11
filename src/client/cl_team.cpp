@@ -86,7 +86,8 @@ static void CL_CharacterSkillAndScoreCvars (const character_t *chr, const char* 
 	Cvar_ForceSet(va("%s%s", cvarPrefix, "name"), chr->name);
 	Cvar_ForceSet(va("%s%s", cvarPrefix, "body"), CHRSH_CharGetBody(chr));
 	Cvar_ForceSet(va("%s%s", cvarPrefix, "head"), CHRSH_CharGetHead(chr));
-	Cvar_ForceSet(va("%s%s", cvarPrefix, "skin"), va("%i", chr->bodySkin));
+	Cvar_ForceSet(va("%s%s", cvarPrefix, "body_skin"), va("%i", chr->bodySkin));
+	Cvar_ForceSet(va("%s%s", cvarPrefix, "head_skin"), va("%i", chr->headSkin));
 
 	Cvar_Set(va("%s%s", cvarPrefix, "vpwr"), va("%i", score->skills[ABILITY_POWER]));
 	Cvar_Set(va("%s%s", cvarPrefix, "vspd"), va("%i", score->skills[ABILITY_SPEED]));

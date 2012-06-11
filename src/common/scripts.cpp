@@ -2367,15 +2367,15 @@ static void Com_ParseActorModels (const char *name, const char **text, teamDef_t
 		}
 
 		linkedList_t *element = list;
-		const char* pathToken = (char*)element->data;
+		const char* pathToken = (const char*)element->data;
 		element = element->next;
-		const char* bodyToken = (char*)element->data;
+		const char* bodyToken = (const char*)element->data;
 		element = element->next;
-		const char* headToken = (char*)element->data;
+		const char* headToken = (const char*)element->data;
 		element = element->next;
-		const char* bodySkinToken = (char*)element->data;
+		const char* bodySkinToken = (const char*)element->data;
 		element = element->next;
-		const char* headSkinToken = (char*)element->data;
+		const char* headSkinToken = (const char*)element->data;
 
 		teamDef_t::model_t model;
 		model.path = Mem_StrDup(pathToken);

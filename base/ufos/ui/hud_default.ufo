@@ -377,7 +377,7 @@ window hud_default extends hud
 			model head
 			{
 				src			*cvar:mn_hovered_head
-				skin		*cvar:mn_hovered_skin
+				skin		*cvar:mn_hovered_head_skin
 				angles		"0 60 90"
 				autoscale	true
 				pos			"26 22"

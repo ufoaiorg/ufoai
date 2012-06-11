@@ -52,7 +52,7 @@ window aircraft_pilots extends iaircraft
 	{
 		{
 			src		*cvar:mn_pilot_body
-			skin	*cvar:mn_pilot_skin_body
+			skin	*cvar:mn_pilot_body_skin
 			anim	"stand_still"
 			angles	"0 90 90"
 			scale	"5.5 5.5 5.5"
@@ -64,7 +64,7 @@ window aircraft_pilots extends iaircraft
 		model assigned_pilot_head
 		{
 			src		*cvar:mn_pilot_head
-			skin	*cvar:mn_pilot_skin_head
+			skin	*cvar:mn_pilot_head_skin
 			tag		"tag_head"
 		}
 	}
