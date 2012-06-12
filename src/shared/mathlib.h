@@ -55,6 +55,9 @@ bool Q_IsPowerOfTwo(int i);
 #define EQUAL(a,b) (fabs((a)-(b))<0.0000000001)
 #endif
 
+/* Compare floats with custom epsilon error */
+#define EQUAL2(a,b,epsilon) (fabs((a)-(b))<epsilon)
+
 /* microsoft's fabs seems to be ungodly slow... */
 #define Q_ftol(f) (long) (f)
 
@@ -140,6 +143,7 @@ extern const byte dvleft[CORE_DIRECTIONS];
 #define Vector2Set(v, x, y)     ((v)[0]=(x), (v)[1]=(y))
 #define Vector4Set(v, r, g, b, a)   ((v)[0]=(r), (v)[1]=(g), (v)[2]=(b), (v)[3]=(a))
 #define VectorCompare(a,b)      ((a)[0]==(b)[0]?(a)[1]==(b)[1]?(a)[2]==(b)[2]?true:false:false:false)
+#define VectorEqualEpsilon(a,b,epsilon)      (EQUAL2((a)[0],(b)[0],epsilon)?EQUAL2((a)[1],(b)[1],epsilon)?EQUAL2((a)[2],(b)[2],epsilon)?true:false:false:false)
 #define VectorEqual(a,b)      (EQUAL((a)[0],(b)[0])?EQUAL((a)[1],(b)[1])?EQUAL((a)[2],(b)[2])?true:false:false:false)
 #define Vector2Compare(a,b)     ((a)[0]==(b)[0]?(a)[1]==(b)[1]?true:false:false)
 #define Vector2Equal(a,b)      (EQUAL((a)[0],(b)[0])?EQUAL((a)[1],(b)[1])?true:false:false)

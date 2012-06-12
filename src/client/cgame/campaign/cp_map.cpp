@@ -2134,7 +2134,8 @@ nation_t* MAP_GetNation (const vec2_t pos)
 	for (i = 0; i < ccs.numNations; i++) {
 		nation_t *nation = NAT_GetNationByIDX(i);
 		/* compare the first three color values with color value at pos */
-		if (VectorEqual(nation->color, fcolor))
+		/* 0.02 x 255 = 5.1, which allow a variation of +-5 for each color components */
+		if (VectorEqualEpsilon(nation->color, fcolor, 0.02))
 			return nation;
 	}
 	Com_DPrintf(DEBUG_CLIENT, "MAP_GetNation: No nation found at %.0f:%.0f - color: %i:%i:%i\n", pos[0], pos[1], color[0], color[1], color[2]);
