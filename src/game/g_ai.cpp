@@ -506,10 +506,10 @@ static void AI_SearchBestTarget (aiAction_t *aia, const edict_t *ent, edict_t *c
 
 			if (dmg > check->HP && G_IsReaction(check))
 				/* reaction shooters eradication bonus */
-				dmg = check->HP + GUETE_KILL + GUETE_REACTION_ERADICATION;
+				dmg = check->HP + SCORE_KILL + SCORE_REACTION_ERADICATION;
 			else if (dmg > check->HP)
 				/* standard kill bonus */
-				dmg = check->HP + GUETE_KILL;
+				dmg = check->HP + SCORE_KILL;
 
 			/* ammo is limited and shooting gives away your position */
 			if ((dmg < 25.0 && vis < 0.2) /* too hard to hit */
@@ -519,11 +519,11 @@ static void AI_SearchBestTarget (aiAction_t *aia, const edict_t *ent, edict_t *c
 
 			/* civilian malus */
 			if (G_IsCivilian(check) && !G_IsInsane(ent))
-				dmg *= GUETE_CIV_FACTOR;
+				dmg *= SCORE_CIV_FACTOR;
 
 			/* add random effects */
 			if (dmg > 0)
-				dmg += GUETE_RANDOM * frand();
+				dmg += SCORE_RANDOM * frand();
 
 			/* check if most damage can be done here */
 			if (dmg > *maxDmg) {
@@ -621,7 +621,7 @@ static float AI_FighterCalcBestAction (edict_t * ent, pos3_t to, aiAction_t * ai
 		/* hide */
 		if (!AI_HideNeeded(ent) || !(G_TestVis(hidingTeam, ent, VT_PERISH | VT_NOFRUSTUM) & VIS_YES)) {
 			/* is a hiding spot */
-			bestActionPoints += GUETE_HIDE + (aia->target ? GUETE_CLOSE_IN : 0);
+			bestActionPoints += SCORE_HIDE + (aia->target ? SCORE_CLOSE_IN : 0);
 		} else if (aia->target && tu >= TU_MOVE_STRAIGHT) {
 			/* reward short walking to shooting spot, when seen by enemies; */
 			/** @todo do this decently, only penalizing the visible part of walk
@@ -630,7 +630,7 @@ static float AI_FighterCalcBestAction (edict_t * ent, pos3_t to, aiAction_t * ai
 			 * e.g. they may now choose only the closer doors;
 			 * however it's still better than going three times around soldier
 			 * and only then firing at him */
-			bestActionPoints += std::max(GUETE_CLOSE_IN - move, 0);
+			bestActionPoints += std::max(SCORE_CLOSE_IN - move, 0);
 
 			if (!AI_FindHidingLocation(hidingTeam, ent, to, &tu)) {
 				/* nothing found */
@@ -639,7 +639,7 @@ static float AI_FighterCalcBestAction (edict_t * ent, pos3_t to, aiAction_t * ai
 			} else {
 				/* found a hiding spot */
 				VectorCopy(ent->pos, aia->stop);
-				bestActionPoints += GUETE_HIDE;
+				bestActionPoints += SCORE_HIDE;
 				/** @todo also add bonus for fleeing from reaction fire
 				 * and a huge malus if more than 1 move under reaction */
 			}
@@ -655,7 +655,7 @@ static float AI_FighterCalcBestAction (edict_t * ent, pos3_t to, aiAction_t * ai
 			minDist = std::min(dist, minDist);
 		}
 	}
-	bestActionPoints += GUETE_CLOSE_IN * (1.0 - minDist / CLOSE_IN_DIST);
+	bestActionPoints += SCORE_CLOSE_IN * (1.0 - minDist / CLOSE_IN_DIST);
 
 	/* penalize herding */
 	check = NULL;
@@ -783,9 +783,9 @@ static float AI_CivilianCalcBestAction (edict_t * ent, pos3_t to, aiAction_t * a
 
 	/* add laziness */
 	if (ent->TU)
-		bestActionPoints += GUETE_CIV_LAZINESS * tu / ent->TU;
+		bestActionPoints += SCORE_CIV_LAZINESS * tu / ent->TU;
 	/* add random effects */
-	bestActionPoints += GUETE_CIV_RANDOM * frand();
+	bestActionPoints += SCORE_CIV_RANDOM * frand();
 
 	return bestActionPoints;
 }
@@ -824,7 +824,7 @@ static int AI_CheckForMissionTargets (const player_t* player, edict_t *ent, aiAc
 
 					/* test for time and distance */
 					length = ent->TU - move;
-					bestActionPoints = GUETE_MISSION_TARGET + length;
+					bestActionPoints = SCORE_MISSION_TARGET + length;
 
 					ent->count = checkPoint->count;
 					VectorCopy(checkPoint->pos, aia->to);
@@ -842,11 +842,11 @@ static int AI_CheckForMissionTargets (const player_t* player, edict_t *ent, aiAc
 				VectorCopy(mission->pos, aia->to);
 				aia->target = mission;
 				if (player->pers.team == mission->team) {
-					bestActionPoints = GUETE_MISSION_TARGET;
+					bestActionPoints = SCORE_MISSION_TARGET;
 					break;
 				} else {
 					/* try to prevent the phalanx from reaching their mission target */
-					bestActionPoints = GUETE_MISSION_OPPONENT_TARGET;
+					bestActionPoints = SCORE_MISSION_OPPONENT_TARGET;
 				}
 			}
 		}
