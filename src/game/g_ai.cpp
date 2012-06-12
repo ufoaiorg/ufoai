@@ -657,6 +657,16 @@ static float AI_FighterCalcBestAction (edict_t * ent, pos3_t to, aiAction_t * ai
 	}
 	bestActionPoints += GUETE_CLOSE_IN * (1.0 - minDist / CLOSE_IN_DIST);
 
+	/* penalize herding */
+	check = NULL;
+	while ((check = G_EdictsGetNextLivingActor(check))) {
+		if (check->team == ent->team) {
+			const float dist = VectorDist(ent->origin, check->origin);
+			if (dist < HERD_THRESHOLD)
+				bestActionPoints -= HERDING_PENALTY;
+		}
+	}
+
 	return bestActionPoints;
 }
 
