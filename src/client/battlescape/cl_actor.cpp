@@ -1702,7 +1702,7 @@ static void CL_TargetingGrenade (const pos3_t fromPos, actorSizeEnum_t fromActor
 		VectorAdd(from, ds, next);
 		next[2] += dt * (vz - 0.5 * GRAVITY * dt);
 		vz -= GRAVITY * dt;
-		VectorScale(v0, (i + 1.0) / GRENADE_PARTITIONS, at);
+		VectorScale(ds, i + 1.0, at);
 
 		/* trace for obstacles. Switch up to top level, to make sure our trace
 		 * doesn't go through ceilings ... */
