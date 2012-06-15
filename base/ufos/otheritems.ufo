@@ -132,7 +132,7 @@ item hovernet_plasma_ammo
 		weapon hovernet_plasma
 		firedef
 		{
-			name				"_Burst"
+			name				"_Single Shot"
 			skill				"assault"
 			projtl				plasmaPulse
 			impact				plasmaImpactCharged
@@ -144,8 +144,8 @@ item hovernet_plasma_ammo
 			spread				"1.2 1.2"
 			crouch				1
 			range				70
-			shots				3
-			ammo				3
+			shots				1
+			ammo				1
 			delaybetweenshots	8
 			time				10
 			damage				"80 10"
