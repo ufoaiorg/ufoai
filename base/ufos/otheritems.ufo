@@ -110,7 +110,6 @@ item hovernet_plasma
 	reload			12
 	reloadsound		"weapons/reload-rifle"
 	size			40
-	is_primary		true
 	virtual			true
 }
 
@@ -124,7 +123,6 @@ item hovernet_plasma_ammo
 	center			"0 0 -0.2"
 	scale			1.1
 	size			3
-	is_secondary	true
 	dmgtype			"plasma"
 
 	weapon_mod
