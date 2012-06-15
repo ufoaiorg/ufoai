@@ -539,8 +539,8 @@ team bloodspider_adv
 		particlebeam_medium	-40
 		particlebeam_heavy	-50
 
-		stun_electro	10
-		stun_gas		10
+		stun_electro	999
+		stun_gas		999
 	}
 	templates (
 		soldier_blood
