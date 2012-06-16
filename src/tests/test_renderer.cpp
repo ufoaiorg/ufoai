@@ -115,7 +115,7 @@ static void testCharacterAnimationFiles (void)
 			animList = civilians;
 		else if (Q_strstart(filename, "models/aliens/bloodspider"))
 			animList = bloodspider;
-		else if (Q_strstart(filename, "models/aliens/hovernet/"))
+		else if (Q_strstart(filename, "models/aliens/hovernet"))
 			animList = hovernet;
 		else if (Q_strstart(filename, "models/aliens/"))
 			animList = soldiers;
