@@ -372,7 +372,7 @@ typedef struct equipDef_s {
 } equipDef_t;
 
 /* Maximum number of alien teams per alien group */
-#define MAX_TEAMS_PER_MISSION 6
+#define MAX_TEAMS_PER_MISSION MAX_TEAMDEFS
 #define MAX_TERRAINS 8
 #define MAX_CULTURES 8
 #define MAX_POPULATIONS 8
