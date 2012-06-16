@@ -1,0 +1,39 @@
+// character animations
+// name				start	end		fps
+
+death1				79		80		1
+dead1				79		80		1
+death2				79		80		1
+dead2				79		80		1
+death3				79		80		1
+dead3				79		80		1
+
+stand0				0		1		1
+walk0				12		76		28
+cstand0				2		3		1
+cwalk0				2		3		1
+
+stand1				0		1		1
+walk1				12		76		28
+cstand1				2		3		1
+cwalk1				2		3		1
+
+stand2				0		1		1
+walk2				12		76		28
+cstand2 			2		3		1
+cwalk2				2		3		1
+
+stand3				0		1		1
+walk3				12		76		28
+cstand3				2		3		1
+cwalk3				2		3		1
+
+move_rifle			12		76		28
+shoot_rifle			12		76		28
+cmove_rifle			12		76		28
+cshoot_rifle		12		76		28
+
+stand_menu			0		1		1
+panic0				12		76		50
+
+stand_still			0		1		1
