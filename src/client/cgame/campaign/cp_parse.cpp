@@ -635,9 +635,7 @@ static void CP_ParseScriptFirst (const char *type, const char *name, const char 
 	else if (Q_streq(type, "alienteam"))
 		CP_ParseAlienTeam(name, text);
 	else if (Q_streq(type, "msgoptions"))
-		MSO_ParseSettings(name, text);
-	else if (Q_streq(type, "msgcategory"))
-		MSO_ParseCategories(name, text);
+		MSO_ParseMessageSettings(name, text);
 }
 
 /**
