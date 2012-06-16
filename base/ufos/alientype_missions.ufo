@@ -76,13 +76,13 @@ alienteam default_soldiers
 	{
 		mininterest 300
 		maxinterest 500
-		team ( taman ortnok hovernet shevaar )
+		team ( taman ortnok hovernet_adv shevaar )
 	}
 	teaminterest
 	{
 		mininterest 500
 		maxinterest 10000
-		team ( hovernet ortnok shevaar )
+		team ( hovernet_adv ortnok shevaar )
 	}
 }
 
@@ -178,7 +178,7 @@ alienteam alienbase
 	{
 		mininterest 0 // TODO: set to 0 for debugging purpose, but this shouldn't be used before alien bases are spawned
 		maxinterest 10000
-		team ( taman ortnok shevaar hovernet bloodspider_adv )
+		team ( taman ortnok shevaar hovernet_adv bloodspider_adv )
 	}
 }
 
@@ -198,6 +198,6 @@ alienteam ufocarrier
 	{
 		mininterest 0 // TODO: set to 0 for debugging purpose, but this shouldn't be used before alien bases are spawned
 		maxinterest 10000
-		team ( taman ortnok shevaar hovernet bloodspider_adv )
+		team ( taman ortnok shevaar hovernet_adv bloodspider_adv )
 	}
 }
