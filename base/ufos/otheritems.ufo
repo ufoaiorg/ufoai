@@ -152,3 +152,62 @@ item hovernet_plasma_ammo
 		}
 	}
 }
+
+item hovernet_adv_plasma
+{
+	name			"_Combat Hovernet Plasma Weapon"
+	model			"weapons/plasrifle/plasrifle"
+	weapon			true
+	type			"rifle"
+	animationindex	1
+	holdtwohanded	false
+	firetwohanded	true
+	shape			"0 0 5 2"
+	center			"9.3 0 1.5"
+	scale			1.25
+	ammo			200
+	reload			12
+	reloadsound		"weapons/reload-rifle"
+	size			40
+	virtual			true
+}
+
+item hovernet_adv_plasma_ammo
+{
+	name			"_Combat Hovernet Plasma Ammo"
+	model			"weapons/plaspistol/plaspistol_clip"
+	type			"ammo"
+	animationindex	0
+	shape			"0 0 1 1"
+	center			"0 0 -0.2"
+	scale			1.1
+	size			3
+	dmgtype			"plasma"
+
+	weapon_mod
+	{
+		weapon hovernet_adv_plasma
+		firedef
+		{
+			name				"_Burst"
+			skill				"assault"
+			projtl				plasmaPulse
+			impact				plasmaImpactCharged
+			hitbody				plasmaImpactCharged
+			firesnd				"weapons/plasma-medium"
+			impsnd				"impact/plasma-impact"
+			bodysnd 			"impact/plasma-bodyimpact"
+			speed				1300
+			spread				"1.2 1.2"
+			crouch				1
+			range				70
+			shots				3
+			ammo				3
+			delaybetweenshots	8
+			time				10
+			damage				"80 10"
+			dmgweight			"plasma_medium"
+			reaction			true
+		}
+	}
+}

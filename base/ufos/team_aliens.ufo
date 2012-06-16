@@ -547,6 +547,7 @@ team bloodspider_adv
 	)
 }
 
+
 team hovernet
 {
 	name		"_Hovernet"
@@ -639,6 +640,105 @@ team hovernet
 
 		stun_electro 999
 		stun_gas 999
+	}
+	templates (
+		soldier_hovernet
+	)
+}
+
+team hovernet_adv
+{
+	name		"_Combat Hovernet"
+	tech		rs_alien_hovernet_adv_autopsy
+	team		"alien"
+	armour		false
+	robot		true
+	weapons		false
+	onlyWeapon	hovernet_adv_plasma
+	size		1
+	//hit_particle	none
+	death_texture	"pics/sfx/blood/blood_oil_2"
+
+	names {
+		neutral (
+			"CHN/X"
+			"CHN/Z"
+			"CHN/A"
+			"CHN/V"
+			"CHN/W"
+			"CHN/U"
+			"CHN/P"
+			"CHN/Q"
+			"CHN/S"
+			"CHN/R"
+			"CHN/T"
+			"CHN/M"
+		)
+		lastname (
+			"000.1100"
+			"001.1100"
+			"010.1100"
+			"011.1100"
+			"100.1100"
+			"101.1100"
+			"110.1100"
+			"111.1100"
+			"000.1101"
+			"001.1101"
+			"010.1101"
+			"011.1101"
+		)
+	}
+
+	models {
+		neutral("aliens/hovernet_adv" "body01" "head" 0 0)
+	}
+
+	actorsounds {
+		neutral {
+			hurtsound "aliens/bloodspider/hurt1"
+			hurtsound "aliens/bloodspider/hurt2"
+			hurtsound "aliens/bloodspider/hurt3"
+			deathsound "aliens/bloodspider/die1"
+			deathsound "aliens/bloodspider/die2"
+		}
+	}
+
+	//TODO: Balance values
+	resistance {
+		normal_spray	25
+		normal_light	60
+		normal_medium	50
+		normal_heavy	25
+
+		normal_steelblade			60
+		normal_monomolecularblade	15
+		normal_needle		3
+
+		blast			50
+
+		fire_medium		35
+		fire_heavy		10
+		fire_flamer		2
+
+		incendiary		45
+
+		shock			0
+
+		laser_light		10
+		laser_medium	10
+		laser_heavy		10
+
+		plasma_light	50
+		plasma_medium	40
+		plasma_heavy	25
+
+		particlebeam_light	-30
+		particlebeam_medium	-40
+		particlebeam_heavy	-50
+
+		stun_electro	999
+		stun_gas		999
 	}
 	templates (
 		soldier_hovernet
