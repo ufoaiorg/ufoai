@@ -3,7 +3,6 @@
 {
 "classname" "worldspawn"
 "maxlevel" "8"
-"randomspawn" "1"
 // brush 0
 {
 ( 584 1028 120 ) ( 529 1028 120 ) ( 584 1028 60 ) tex_ctp1/bricks_c_1 60.74622 34.13336 0 0.2304688 0.234375 65024 0 0

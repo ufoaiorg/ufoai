@@ -3,7 +3,6 @@
 {
 "classname" "worldspawn"
 "maxlevel" "4"
-"randomspawn" "1"
 // brush 0
 {
 ( 256 252 56 ) ( 0 252 56 ) ( 256 256 56 ) tex_material/c_black 0 0 0 0.5 0.5 65280 0 0

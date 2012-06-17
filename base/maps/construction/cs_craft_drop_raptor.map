@@ -4,7 +4,6 @@
 "classname" "worldspawn"
 "maxlevel" "6"
 "maxteams" "2"
-"randomspawn" "1"
 // brush 0
 {
 ( 359 288 80 ) ( 338 312 80 ) ( 359 312 80 ) tex_common/weaponclip 0 36 90 1 -1 33554432 0 0

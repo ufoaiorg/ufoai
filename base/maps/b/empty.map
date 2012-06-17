@@ -3,7 +3,6 @@
 {
 "classname" "worldspawn"
 "maxlevel" "6"
-"randomspawn" "1"
 // brush 0
 {
 ( 0 516 128 ) ( 0 452 128 ) ( 0 452 68 ) tex_terrain/dummy 0 0 0 0.25 0.25 64512 0 0

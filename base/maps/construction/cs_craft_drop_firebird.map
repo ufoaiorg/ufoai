@@ -4,7 +4,6 @@
 "classname" "worldspawn"
 "maxlevel" "6"
 "maxteams" "2"
-"randomspawn" "1"
 // brush 0
 {
 ( 192 496 0 ) ( 192 336 0 ) ( 320 496 0 ) tex_common/nodraw 64 0 0 0.5 0.5 65280 0 0

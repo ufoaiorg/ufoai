@@ -3,7 +3,6 @@
 {
 "classname" "worldspawn"
 "maxlevel" "6"
-"randomspawn" "1"
 // brush 0
 {
 ( -28 423 65 ) ( -28 423 57 ) ( -28 425 57 ) tex_common/actorclip 0 0 0 0.5 0.5 0 0 0

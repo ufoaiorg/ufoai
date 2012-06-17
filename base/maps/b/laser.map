@@ -2,7 +2,6 @@
 // entity 0
 {
 "classname" "worldspawn"
-"randomspawn" "1"
 "maxlevel" "6"
 // brush 0
 {

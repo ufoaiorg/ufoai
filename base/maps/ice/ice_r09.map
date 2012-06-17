@@ -3,7 +3,6 @@
 {
 "classname" "worldspawn"
 "maxlevel" "5"
-"randomspawn" "1"
 // brush 0
 {
 ( 160 119.25 49.625 ) ( 64 119.25 49.625 ) ( 156 123.125 48.375 ) tex_material/metall001 0 0 0 0.5 0.5 65280 0 0

@@ -2,7 +2,6 @@
 // entity 0
 {
 "classname" "worldspawn"
-"randomspawn" "1"
 // brush 0
 {
 ( 38 5 -214 ) ( 61 81 -15 ) ( 120 -41 -21 ) tex_nature/pjrock16 0 33.33334 0 0.06 0.06 65280 1024 0

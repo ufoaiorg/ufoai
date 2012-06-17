@@ -4,7 +4,6 @@
 "classname" "worldspawn"
 "maxlevel" "5"
 "maxteams" "2"
-"randomspawn" "1"
 "saturation" "0.6"
 "brightness" "0.8"
 // brush 0

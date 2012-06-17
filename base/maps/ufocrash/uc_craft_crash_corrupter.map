@@ -4,7 +4,6 @@
 "classname" "worldspawn"
 "maxlevel" "5"
 "maxteams" "3"
-"randomspawn" "1"
 // brush 0
 {
 ( 912 344 136 ) ( 1364 344 136 ) ( 1364 384 136 ) tex_ufo/ufo2_01 96 176 0 0.25 0.25 64512 0 0

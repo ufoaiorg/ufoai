@@ -2,7 +2,6 @@
 // entity 0
 {
 "classname" "worldspawn"
-"randomspawn" "1"
 // brush 0
 {
 ( 864 576 48 ) ( 864 608 48 ) ( 864 608 4 ) tex_common/nodraw 0 0 0 -0.5 0.5 65024 128 0

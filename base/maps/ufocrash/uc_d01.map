@@ -4,7 +4,6 @@
 "classname" "worldspawn"
 "maxlevel" "5"
 "maxteams" "2"
-"randomspawn" "1"
 // brush 0
 {
 ( 324 360 64 ) ( 232 360 64 ) ( 232 360 48 ) tex_material/s_wood001 112 144 60 0.5 -0.5 65025 0 0

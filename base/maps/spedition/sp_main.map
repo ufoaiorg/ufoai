@@ -3,7 +3,6 @@
 {
 "classname" "worldspawn"
 "maxlevel" "4"
-"randomspawn" "1"
 // brush 0
 {
 ( 1822 866 62 ) ( 1822 708 62 ) ( 1822 708 0 ) tex_misc/container006 346.5845 34.13336 0 0.1269531 0.1171875 768 0 0

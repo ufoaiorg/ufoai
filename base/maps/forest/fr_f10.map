@@ -2,7 +2,6 @@
 // entity 0
 {
 "classname" "worldspawn"
-"randomspawn" "1"
 // brush 0
 {
 ( 405.9581 160.7806 194 ) ( 405.129 152.8237 194 ) ( 405.129 152.8237 186 ) tex_common/weaponclip 35 13 0 0.65 0.15 33554432 0 0

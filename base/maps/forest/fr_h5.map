@@ -2,7 +2,6 @@
 // entity 0
 {
 "classname" "worldspawn"
-"randomspawn" "1"
 // brush 0
 {
 ( 224 64 2 ) ( 32 64 2 ) ( 224 96 2 ) tex_buildings/cemdrk 0 0 0 0.25 0.25 65280 0 0

@@ -5,7 +5,6 @@
 "maxlevel" "8"
 "angles_day" "-75 10"
 "angles_night" "-75 20"
-"randomspawn" "1"
 // brush 0
 {
 ( 920 1088 -60 ) ( 792 1088 -60 ) ( 792 928 -60 ) tex_common/nodraw 0 0 0 -0.5 0.5 134283008 0 0

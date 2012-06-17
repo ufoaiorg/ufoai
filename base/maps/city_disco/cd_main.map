@@ -4,7 +4,6 @@
 "classname" "worldspawn"
 "maxlevel" "3"
 "target" "func_breakable"
-"randomspawn" "1"
 // brush 0
 {
 ( 306 1178 4 ) ( 306 1178 6 ) ( 300 1174 6 ) tex_material/s_wood001 64 80 90 0.25 0.25 65280 0 0

@@ -4,7 +4,6 @@
 "classname" "worldspawn"
 "maxlevel" "6"
 "maxteams" "4"
-"randomspawn" "1"
 // brush 0
 {
 ( 248 276 128 ) ( 250 276 128 ) ( 248 266 128 ) tex_buildings/concrete003 0 0 0 0.125 0.125 65024 0 0

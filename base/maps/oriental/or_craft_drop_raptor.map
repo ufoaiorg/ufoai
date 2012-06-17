@@ -5,7 +5,6 @@
 "saturation" "0.6"
 "brightness" "0.8"
 "maxteams" "2"
-"randomspawn" "1"
 "maxlevel" "5"
 // brush 0
 {

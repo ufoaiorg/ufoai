@@ -3,7 +3,6 @@
 {
 "classname" "worldspawn"
 "maxlevel" "8"
-"randomspawn" "1"
 // brush 0
 {
 ( 196 176 64 ) ( 196 160 64 ) ( 192 176 64 ) tex_buildings/wall_se07 254 255 0 0.15 0.1 65280 0 0

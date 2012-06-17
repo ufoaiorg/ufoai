@@ -3,7 +3,6 @@
 {
 "classname" "worldspawn"
 "maxlevel" "5"
-"randomspawn" "1"
 // brush 0
 {
 ( 84 96 0 ) ( 181 39 53 ) ( 181 39 0 ) tex_nature/ice001 0 0 0 0.375 0.375 65280 0 0

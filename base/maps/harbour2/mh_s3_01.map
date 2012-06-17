@@ -4,7 +4,6 @@
 "classname" "worldspawn"
 "angles_day" "-75 10"
 "angles_night" "-75 20"
-"randomspawn" "1"
 "maxlevel" "8"
 // brush 0
 {

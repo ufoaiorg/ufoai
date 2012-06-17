@@ -3,7 +3,6 @@
 {
 "classname" "worldspawn"
 "maxlevel" "3"
-"randomspawn" "1"
 // brush 0
 {
 ( 206 480 80 ) ( 0 480 80 ) ( 206 660.875 80 ) tex_common/weaponclip 0 0 -90 1 -1 33554432 0 0

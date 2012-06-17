@@ -2,7 +2,6 @@
 // entity 0
 {
 "classname" "worldspawn"
-"randomspawn" "1"
 // brush 0
 {
 ( 368 228 2 ) ( 368 -28 2 ) ( 208 228 2 ) tex_mattn/dirt003 0 0 0 0.25 0.25 65280 0 0

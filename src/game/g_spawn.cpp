@@ -132,7 +132,7 @@ static const field_t fields[] = {
 	{"angle", offsetof(edict_t, angle), F_FLOAT, 0},
 	{"message", offsetof(edict_t, message), F_LSTRING, 0},
 
-	{"randomspawn", offsetof(spawn_temp_t, randomSpawn), F_INT, FFL_SPAWNTEMP},
+	{"norandomspawn", offsetof(spawn_temp_t, noRandomSpawn), F_INT, FFL_SPAWNTEMP},
 	{"noequipment", offsetof(spawn_temp_t, noEquipment), F_INT, FFL_SPAWNTEMP},
 
 	{0, 0, F_IGNORE, 0}
@@ -1035,7 +1035,7 @@ static void SP_worldspawn (edict_t *ent)
 	ent->classname = "worldspawn";
 
 	level.noEquipment = st.noEquipment;
-	level.randomSpawn = st.randomSpawn;
+	level.noRandomSpawn = st.noRandomSpawn;
 
 	gi.ConfigString(CS_MAXCLIENTS, "%i", sv_maxclients->integer);
 

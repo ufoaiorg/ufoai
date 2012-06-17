@@ -2,7 +2,6 @@
 // entity 0
 {
 "classname" "worldspawn"
-"randomspawn" "1"
 // brush 0
 {
 ( 128 40 4 ) ( 128 40 28 ) ( 136 48 28 ) tex_misc/barrel1 64 21 0 -0.0625 0.1875 134283010 1024 0

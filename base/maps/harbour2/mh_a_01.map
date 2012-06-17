@@ -3,7 +3,6 @@
 {
 "classname" "worldspawn"
 "maxlevel" "8"
-"randomspawn" "1"
 "angles_day" "-75 10"
 "angles_night" "-75 20"
 "maxteams" "2"

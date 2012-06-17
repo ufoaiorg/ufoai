@@ -966,7 +966,14 @@ static edict_t *G_ClientGetFreeSpawnPoint (const player_t * player, int spawnTyp
 	/* Abort for non-spawnpoints */
 	assert(spawnType == ET_ACTORSPAWN || spawnType == ET_ACTOR2x2SPAWN);
 
-	if (level.randomSpawn) {
+	if (level.noRandomSpawn) {
+		while ((ent = G_EdictsGetNext(ent)))
+			if (ent->type == spawnType && player->pers.team == ent->team) {
+				if (G_GetLivingActorFromPos(ent->pos))
+					continue;
+				return ent;
+			}
+	} else {
 		edict_t *list[MAX_EDICTS];
 		int count = 0;
 		while ((ent = G_EdictsGetNext(ent)))
@@ -978,13 +985,6 @@ static edict_t *G_ClientGetFreeSpawnPoint (const player_t * player, int spawnTyp
 
 		if (count)
 			return list[rand() % count];
-	} else {
-		while ((ent = G_EdictsGetNext(ent)))
-			if (ent->type == spawnType && player->pers.team == ent->team) {
-				if (G_GetLivingActorFromPos(ent->pos))
-					continue;
-				return ent;
-			}
 	}
 
 	return NULL;

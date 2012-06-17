@@ -3,7 +3,6 @@
 {
 "classname" "worldspawn"
 "maxlevel" "4"
-"randomspawn" "1"
 // brush 0
 {
 ( 344 192 0 ) ( 344 0 0 ) ( 512 0 0 ) tex_nature/jungle002 0 0 0 0.25 0.25 65280 0 0

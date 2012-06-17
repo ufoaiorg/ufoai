@@ -3,7 +3,6 @@
 {
 "classname" "worldspawn"
 "maxlevel" "8"
-"randomspawn" "1"
 // brush 0
 {
 ( 94 164 23.875 ) ( 94 164 25.875 ) ( 94 94 88 ) tex_material/wood002 232.0031 207.312 135 0.324988 0.07499699 65281 0 0

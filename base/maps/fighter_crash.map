@@ -3,7 +3,6 @@
 {
 "classname" "worldspawn"
 "maxlevel" "3"
-"randomspawn" "1"
 // brush 0
 {
 ( 1060 -636 92 ) ( 1112 -636 92 ) ( 1112 -532 92 ) tex_common/nodraw -31 -212 0 0.375 0.375 65026 128 0

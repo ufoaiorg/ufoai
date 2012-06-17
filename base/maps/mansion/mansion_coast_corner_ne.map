@@ -3,7 +3,6 @@
 {
 "classname" "worldspawn"
 "maxlevel" "8"
-"randomspawn" "1"
 // brush 0
 {
 ( -578 -672 -28 ) ( -578 -608 -28 ) ( -546 -672 -28 ) tex_nature/water_dark 256 0 180 1 1 65280 8 0

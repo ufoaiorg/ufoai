@@ -4,7 +4,6 @@
 "classname" "worldspawn"
 "maxteams" "2"
 "maxlevel" "5"
-"randomspawn" "1"
 // brush 0
 {
 ( 504 136 4 ) ( 504 136 28 ) ( 512 144 28 ) tex_misc/barrel1 64 21 0 -0.0625 0.1875 134283010 0 0

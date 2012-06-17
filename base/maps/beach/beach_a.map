@@ -3,7 +3,6 @@
 {
 "classname" "worldspawn"
 "maxlevel" "4"
-"randomspawn" "1"
 // brush 0
 {
 ( -71 -143 4 ) ( -71 -206 4 ) ( -76 -143 4 ) tex_nature/desert007 0 0 0 0.1 0.1 65280 0 0

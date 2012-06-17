@@ -2,7 +2,6 @@
 // entity 0
 {
 "classname" "worldspawn"
-"randomspawn" "1"
 // brush 0
 {
 ( 192 210 94 ) ( 192 208 94 ) ( 192 208 92 ) tex_common/actorclip 8 0 0 0.5 0.5 65536 0 0
