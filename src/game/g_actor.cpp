@@ -353,6 +353,12 @@ void G_ActorGiveTimeUnits (edict_t *ent)
 
 void G_ActorSetTU (edict_t *ent, int tus)
 {
+	if (tus > 0 && tus < ent->TU) {
+		if (g_notu != NULL && g_notu->integer) {
+			ent->TU = G_ActorCalculateMaxTU(ent);
+			return;
+		}
+	}
 	ent->TU = std::max(tus, 0);
 }
 

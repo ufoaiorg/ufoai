@@ -475,10 +475,7 @@ void G_ClientMove (const player_t * player, int visTeam, edict_t* ent, const pos
 		}
 
 		/* submit the TUs / round down */
-		if (g_notu != NULL && g_notu->integer)
-			G_ActorSetTU(ent, initTU);
-		else
-			G_ActorSetTU(ent, initTU - usedTUs);
+		G_ActorSetTU(ent, initTU - usedTUs);
 
 		G_SendStats(ent);
 
