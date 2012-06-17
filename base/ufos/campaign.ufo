@@ -21,6 +21,8 @@ campaign veryhard
 	map					"map_earth"
 	visible				true
 	events				main
+	researchrate		0.8
+	uforeductionrate	0.65
 
 	date		"2084 79 6"
 	basecost	100000
@@ -52,6 +54,8 @@ campaign hard
 	map					"map_earth"
 	visible				true
 	events				main
+	researchrate		0.8
+	uforeductionrate	0.65
 
 	date		"2084 79 6"
 	basecost	100000
@@ -103,6 +107,8 @@ campaign main
 	map					"map_earth"
 	visible				true
 	events				main
+	researchrate		0.8
+	uforeductionrate	0.65
 
 	date		"2084 79 6"
 	basecost	100000
@@ -134,6 +140,8 @@ campaign easy
 	map					"map_earth"
 	visible				true
 	events				main
+	researchrate		0.8
+	uforeductionrate	0.65
 
 	date		"2084 79 6"
 	basecost	100000
@@ -184,6 +192,8 @@ campaign veryeasy
 	map					"map_earth"
 	visible				true
 	events				main
+	researchrate		0.8
+	uforeductionrate	0.65
 
 	date		"2084 79 6"
 	basecost	100000

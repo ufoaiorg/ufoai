@@ -797,8 +797,7 @@ int RS_ResearchRun (void)
 			const base_t *base = tech->base;
 			assert(tech->base);
 			if (RS_ResearchAllowed(base)) {
-				/** @todo Just for testing, better formular may be needed. Include employee-skill in calculation. */
-				tech->time -= tech->scientists * 0.8;
+				tech->time -= tech->scientists * ccs.curCampaign->researchRate;
 				/* Will be a good thing (think of percentage-calculation) once non-integer values are used. */
 				if (tech->time <= 0) {
 					RS_MarkResearched(tech, base);
