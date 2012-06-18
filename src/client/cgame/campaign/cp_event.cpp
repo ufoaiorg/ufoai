@@ -36,7 +36,6 @@ static linkedList_t *eventMails = NULL;
  * @note If you want to create mails that base on a script definition but have different
  * body messages, set createCopy to true
  * @param[in] id The id from the script files
- * @sa UP_SetMailHeader
  */
 eventMail_t* CL_GetEventMail (const char *id)
 {
@@ -211,6 +210,9 @@ void CL_ParseCampaignEvents (const char *name, const char **text)
 	} while (*text);
 }
 
+/**
+ * @brief Adds the event mail to the message stack. This message is going to be added to the savegame.
+ */
 void CL_EventAddMail (const char *eventMailId)
 {
 	message_t *m;
