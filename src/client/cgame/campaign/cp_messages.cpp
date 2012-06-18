@@ -228,7 +228,7 @@ bool MS_LoadXML (xmlNode_t *p)
 		Q_strncpyz(text,  XML_GetString(sn, SAVE_MESSAGES_TEXT),  sizeof(text));
 
 		if (mtype == MSG_EVENT) {
-			mail = CL_GetEventMail(XML_GetString(sn, SAVE_MESSAGES_EVENTMAILID), false);
+			mail = CL_GetEventMail(XML_GetString(sn, SAVE_MESSAGES_EVENTMAILID));
 			if (mail)
 				mail->read = XML_GetBool(sn, SAVE_MESSAGES_EVENTMAILREAD, false);
 		} else

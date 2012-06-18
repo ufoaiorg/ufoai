@@ -684,7 +684,7 @@ static void UP_Article (technology_t* tech, eventMail_t *mail)
 void UP_OpenEventMail (const char *eventMailID)
 {
 	eventMail_t* mail;
-	mail = CL_GetEventMail(eventMailID, false);
+	mail = CL_GetEventMail(eventMailID);
 	if (!mail)
 		return;
 
