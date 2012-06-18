@@ -60,8 +60,6 @@ static void MS_TimestampedText (char *text, message_t *message, size_t textsize)
  */
 message_t *MS_AddNewMessage (const char *title, const char *text, messageType_t type, technology_t *pedia, bool popup, bool playSound)
 {
-	const char *sound = NULL;
-
 	assert(type < MSG_MAX);
 
 	/* allocate memory for new message - delete this with every new game */
@@ -86,53 +84,55 @@ message_t *MS_AddNewMessage (const char *title, const char *text, messageType_t 
 	if (popup)
 		CP_PopupList(mess->title, mess->text);
 
-	switch (type) {
-	case MSG_DEBUG:
-		break;
-	case MSG_STANDARD:
-		sound = "geoscape/standard";
-		break;
-	case MSG_INFO:
-	case MSG_TRANSFERFINISHED:
-	case MSG_DEATH:
-	case MSG_CONSTRUCTION:
-	case MSG_PRODUCTION:
-		sound = "geoscape/info";
-		break;
-	case MSG_RESEARCH_PROPOSAL:
-	case MSG_RESEARCH_FINISHED:
-		assert(pedia);
-	case MSG_RESEARCH_HALTED:
-	case MSG_EVENT:
-	case MSG_NEWS:
-		/* reread the new mails in UP_GetUnreadMails */
-		ccs.numUnreadMails = -1;
-		sound = "geoscape/mail";
-		break;
-	case MSG_UFOLOST:
-		sound = "geoscape/ufolost";
-		break;
-	case MSG_UFOSPOTTED:
-		sound = "geoscape/ufospotted";
-		break;
-	case MSG_BASEATTACK:
-		sound = "geoscape/basealert";
-		break;
-	case MSG_TERRORSITE:
-		sound = "geoscape/alien-activity";
-		break;
-	case MSG_CRASHSITE:
-		sound = "geoscape/newmission";
-		break;
-	case MSG_PROMOTION:
-		sound = "geoscape/promotion";
-		break;
-	case MSG_MAX:
-		break;
-	}
+	if (playSound) {
+		const char *sound = NULL;
+		switch (type) {
+		case MSG_DEBUG:
+			break;
+		case MSG_STANDARD:
+			sound = "geoscape/standard";
+			break;
+		case MSG_INFO:
+		case MSG_TRANSFERFINISHED:
+		case MSG_DEATH:
+		case MSG_CONSTRUCTION:
+		case MSG_PRODUCTION:
+			sound = "geoscape/info";
+			break;
+		case MSG_RESEARCH_PROPOSAL:
+		case MSG_RESEARCH_FINISHED:
+			assert(pedia);
+		case MSG_RESEARCH_HALTED:
+		case MSG_EVENT:
+		case MSG_NEWS:
+			/* reread the new mails in UP_GetUnreadMails */
+			ccs.numUnreadMails = -1;
+			sound = "geoscape/mail";
+			break;
+		case MSG_UFOLOST:
+			sound = "geoscape/ufolost";
+			break;
+		case MSG_UFOSPOTTED:
+			sound = "geoscape/ufospotted";
+			break;
+		case MSG_BASEATTACK:
+			sound = "geoscape/basealert";
+			break;
+		case MSG_TERRORSITE:
+			sound = "geoscape/alien-activity";
+			break;
+		case MSG_CRASHSITE:
+			sound = "geoscape/newmission";
+			break;
+		case MSG_PROMOTION:
+			sound = "geoscape/promotion";
+			break;
+		case MSG_MAX:
+			break;
+		}
 
-	if (playSound)
 		cgi->S_StartLocalSample(sound, 1.0f);
+	}
 
 	return mess;
 }
